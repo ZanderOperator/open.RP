@@ -198,7 +198,7 @@ native WP_Hash(buffer[], len, const str[]);
 #define WEB_URL									"forum.cityofangels-roleplay.com"
 
 // !Prilikom promjene SCRIPT_VERSION, OBAVEZNO ubaciti novi Update "Changelog.txt"u /scriptfiles folder!
-#define SCRIPT_VERSION							"CoA RP v18.3.1"
+#define SCRIPT_VERSION							"CoA RP v18.3.5."
 
 //custom name
 #define Dev_Name   								"Woo"
@@ -1740,7 +1740,6 @@ new
 	Bit1:	gr_FakeGunLic			<MAX_PLAYERS>  = Bit1: false,
 	Bit1:	gr_MaskUse				<MAX_PLAYERS>  = Bit1: false,
 	Bit1:	gr_MobileSpeaker		<MAX_PLAYERS>  = Bit1: false,
-	Bit1:	gr_TimersSeted			<MAX_PLAYERS>  = Bit1: false,
 	Bit1:	gr_Taser				<MAX_PLAYERS>  = Bit1: false,
 	Bit1: 	gr_PlayerCuffed 		<MAX_PLAYERS>  = Bit1: false,
 	Bit1:	gr_SmokingCiggy			<MAX_PLAYERS>  = Bit1: false,
@@ -2263,7 +2262,6 @@ ResetPlayerVariables(playerid)
 	Bit1_Set( gr_Dice					, playerid, false );
 	Bit1_Set( gr_MaskUse				, playerid, false );
 	Bit1_Set( gr_MobileSpeaker			, playerid, false );
-	Bit1_Set( gr_TimersSeted			, playerid, false );
 	Bit1_Set( gr_Taser					, playerid, false );
 	Bit1_Set( gr_PlayerCuffed 			, playerid, false );
 	Bit1_Set( gr_SmokingCiggy			, playerid, false );
@@ -3559,11 +3557,6 @@ public OnPlayerDisconnect(playerid, reason)
 		KillTimer(PlayerMobileRingTimer[playerid]);
 		Bit8_Set( gr_RingingTime, playerid, 0 );
 	}
-	if( Bit1_Get( gr_TimersSeted, playerid ) ) {
-		// KillTimer(GlobalTimer[playerid]);
-		// KillTimer(SecondGlobalTimer[playerid]);
-		Bit1_Set( gr_TimersSeted, playerid, false );
-	}
 	if( Bit1_Get( gr_PlayerTazed, playerid ) ) {
 		KillTimer(TaserAnimTimer[playerid]);
 		KillTimer(TaserTimer[playerid]);
@@ -3724,13 +3717,13 @@ public OnPlayerSpawn(playerid)
 	UpdateNameLabel(playerid, "");
 	
 	//Player Sets
-    ResetPlayerWeapons(playerid);
     StopAudioStreamForPlayer(playerid);
     ResetPlayerMoney(playerid);
     SetCameraBehindPlayer(playerid);
     SetPlayerFightingStyle(playerid, PlayerInfo[playerid][pFightStyle]);
     InitFly(playerid);
     //Reprocess_PlayerInv(playerid);
+	
     //Player Skill
     SetPlayerSkillLevel(playerid, WEAPONSKILL_AK47,             999);
     SetPlayerSkillLevel(playerid, WEAPONSKILL_M4,               999);
@@ -3790,14 +3783,6 @@ public OnPlayerSpawn(playerid)
         TextDrawShowForPlayer( playerid, NewsLineTextDraw[ 3 ] );
         TextDrawShowForPlayer( playerid, NewsLineTextDraw[ 4 ] );
 
-
-        if( !Bit1_Get( gr_TimersSeted, playerid ) ) {
-            // SetPlayerTimerEx(playerid, "PlayerGlobalTask", 60000, true, "i", playerid);
-			// SetTimerEx("PlayerGlobalTask", 60000, true, "i", playerid);
-			// SetPlayerTimerEx(playerid, "PlayerSecondGlobalTask", 1000, true, "i", playerid);
-			// SetTimerEx("PlayerSecondGlobalTask", 1000, true, "i", playerid);
-            Bit1_Set( gr_TimersSeted, playerid, true );
-        }
 		if(PlayerInfo[playerid][pKilled] == 1)
 		{
 			SetPlayerInterior(playerid, PlayerInfo[ playerid ][ pDeathInt ]);
@@ -3854,105 +3839,109 @@ public OnPlayerSpawn(playerid)
 				SetPlayerHealth(playerid, 100);
 				return 1;
 			}
-			else switch( PlayerInfo[ playerid ][ pSpawnChange ] )
+			else 
 			{
-				case 0: {
-					SetPlayerPosEx(playerid, SPAWN_X, SPAWN_Y, SPAWN_Z, 0, 0, false);
-					SetPlayerFacingAngle(playerid, 90.00);
-					SetPlayerInterior(playerid, 0);
-					SetPlayerVirtualWorld(playerid, 0);
-					SetPlayerHealth(playerid, 100);
-				}
-				case 1: {
-					if( PlayerInfo[playerid][pHouseKey] != INVALID_HOUSE_ID || PlayerInfo[playerid][pRentKey] != INVALID_HOUSE_ID ) {
-						new
-							house;
-						if(  PlayerInfo[playerid][pHouseKey] != INVALID_HOUSE_ID )
-							house = PlayerInfo[playerid][pHouseKey];
-						else if( PlayerInfo[playerid][pRentKey] != INVALID_HOUSE_ID )
-							house = PlayerInfo[playerid][pRentKey];
-
-						SetPlayerInterior( playerid, HouseInfo[ house ][ hInt ] );
-						SetPlayerVirtualWorld( playerid, HouseInfo[ house ][ hVirtualWorld ]);
-						//Bit16_Set( gr_PlayerInHouse, playerid, house ); - da probamo napravit hoce li portat pred kucu
-						SetPlayerPosEx(playerid, HouseInfo[ house ][ hEnterX ], HouseInfo[ house ][ hEnterY ], HouseInfo[ house ][ hEnterZ ], 0, 0, true);
-						SetPlayerHealth(playerid, 100);
-						return 1;
-					}
-				}
-				case 2:
+				if(SafeSpawned[playerid])
+					AC_SetPlayerWeapons(playerid);
+					
+				switch( PlayerInfo[ playerid ][ pSpawnChange ] )
 				{
-					if(PlayerInfo[playerid][pMember] > 0)
-					{
-						switch(PlayerInfo[playerid][pMember])
-						{
-							case 1:
-							{
-								SetPlayerFacingAngle(playerid, 90.00);
-							}
-							case 2:
-							{
-								SetPlayerFacingAngle(playerid, 134.4510);
-							}
-							case 3:
-							{
-								SetPlayerFacingAngle(playerid, 270.0);
-							}
-							case 4:
-							{
-								SetPlayerFacingAngle(playerid, 293.4950);
-							}
-							case 5:
-							{
-								SetPlayerFacingAngle(playerid, 47.8250);
-							}
+					case 0: {
+						SetPlayerPosEx(playerid, SPAWN_X, SPAWN_Y, SPAWN_Z, 0, 0, false);
+						SetPlayerFacingAngle(playerid, 90.00);
+						SetPlayerInterior(playerid, 0);
+						SetPlayerVirtualWorld(playerid, 0);
+						SetPlayerHealth(playerid, 100);
+					}
+					case 1: {
+						if( PlayerInfo[playerid][pHouseKey] != INVALID_HOUSE_ID || PlayerInfo[playerid][pRentKey] != INVALID_HOUSE_ID ) {
+							new
+								house;
+							if(  PlayerInfo[playerid][pHouseKey] != INVALID_HOUSE_ID )
+								house = PlayerInfo[playerid][pHouseKey];
+							else if( PlayerInfo[playerid][pRentKey] != INVALID_HOUSE_ID )
+								house = PlayerInfo[playerid][pRentKey];
+
+							SetPlayerInterior( playerid, HouseInfo[ house ][ hInt ] );
+							SetPlayerVirtualWorld( playerid, HouseInfo[ house ][ hVirtualWorld ]);
+							//Bit16_Set( gr_PlayerInHouse, playerid, house ); - da probamo napravit hoce li portat pred kucu
+							SetPlayerPosEx(playerid, HouseInfo[ house ][ hEnterX ], HouseInfo[ house ][ hEnterY ], HouseInfo[ house ][ hEnterZ ], 0, 0, true);
+							SetPlayerHealth(playerid, 100);
+							return 1;
 						}
-						SetPlayerInterior(playerid, 0);
-						SetPlayerVirtualWorld(playerid, 0);
-						SetPlayerHealth(playerid, 100);
 					}
-					else
+					case 2:
 					{
-						SetPlayerInterior(playerid, 0);
-						SetPlayerVirtualWorld(playerid, 0);
-						SetPlayerHealth(playerid, 100);
-					}
-					return 1;
-				}
-				case 3:
-				{
-					if(PlayerInfo[playerid][pComplexRoomKey] != INVALID_COMPLEX_ID)
-					{
-						//printf("%s{%d}(%d) >> COMPLEX >> %d", GetName(playerid, true), playerid, PlayerInfo[playerid][pComplexRoomKey]);
-						new complex = PlayerInfo[playerid][pComplexRoomKey];
-						SetPlayerPosEx(playerid, ComplexRoomInfo[ complex ][ cExitX ], ComplexRoomInfo[ complex ][ cExitY ], ComplexRoomInfo[ complex ][ cExitZ ], 0, 0, true);
-						SetPlayerInterior( playerid, ComplexRoomInfo[ complex ][ cInt ] );
-						SetPlayerVirtualWorld( playerid, ComplexRoomInfo[ complex ][ cViwo ]);
-						Bit16_Set(gr_PlayerInRoom, playerid, complex);
-						SetPlayerHealth(playerid, 100);
+						if(PlayerInfo[playerid][pMember] > 0)
+						{
+							switch(PlayerInfo[playerid][pMember])
+							{
+								case 1:
+								{
+									SetPlayerFacingAngle(playerid, 90.00);
+								}
+								case 2:
+								{
+									SetPlayerFacingAngle(playerid, 134.4510);
+								}
+								case 3:
+								{
+									SetPlayerFacingAngle(playerid, 270.0);
+								}
+								case 4:
+								{
+									SetPlayerFacingAngle(playerid, 293.4950);
+								}
+								case 5:
+								{
+									SetPlayerFacingAngle(playerid, 47.8250);
+								}
+							}
+							SetPlayerInterior(playerid, 0);
+							SetPlayerVirtualWorld(playerid, 0);
+							SetPlayerHealth(playerid, 100);
+						}
+						else
+						{
+							SetPlayerInterior(playerid, 0);
+							SetPlayerVirtualWorld(playerid, 0);
+							SetPlayerHealth(playerid, 100);
+						}
 						return 1;
 					}
+					case 3:
+					{
+						if(PlayerInfo[playerid][pComplexRoomKey] != INVALID_COMPLEX_ID)
+						{
+							//printf("%s{%d}(%d) >> COMPLEX >> %d", GetName(playerid, true), playerid, PlayerInfo[playerid][pComplexRoomKey]);
+							new complex = PlayerInfo[playerid][pComplexRoomKey];
+							SetPlayerPosEx(playerid, ComplexRoomInfo[ complex ][ cExitX ], ComplexRoomInfo[ complex ][ cExitY ], ComplexRoomInfo[ complex ][ cExitZ ], 0, 0, true);
+							SetPlayerInterior( playerid, ComplexRoomInfo[ complex ][ cInt ] );
+							SetPlayerVirtualWorld( playerid, ComplexRoomInfo[ complex ][ cViwo ]);
+							Bit16_Set(gr_PlayerInRoom, playerid, complex);
+							SetPlayerHealth(playerid, 100);
+							return 1;
+						}
+					}
+					case 4:
+					{
+						SetPlayerInterior(playerid, 0);
+						SetPlayerVirtualWorld(playerid, 0);
+						SetPlayerHealth(playerid, 100);
+					}
 				}
-				case 4:
+				if( Bit1_Get( gr_PlayerInTrunk, playerid ) )
 				{
-					SetPlayerInterior(playerid, 0);
-					SetPlayerVirtualWorld(playerid, 0);
+					Bit1_Set( gr_PlayerInTrunk, playerid, false );
+					VehicleTrunk[ playerid ] = INVALID_VEHICLE_ID;
+
+					SetPlayerPosEx(playerid, PlayerTrunkPos[playerid][0], PlayerTrunkPos[playerid][1], PlayerTrunkPos[playerid][2], 0, 0, false);
+					TogglePlayerControllable( playerid, 1 );
+					SendClientMessage( playerid, COLOR_RED, "[ ! ] Izasao si iz prtljaznika.");
 					SetPlayerHealth(playerid, 100);
 				}
 			}
-			if( Bit1_Get( gr_PlayerInTrunk, playerid ) )
-			{
-				Bit1_Set( gr_PlayerInTrunk, playerid, false );
-				VehicleTrunk[ playerid ] = INVALID_VEHICLE_ID;
-
-				SetPlayerPosEx(playerid, PlayerTrunkPos[playerid][0], PlayerTrunkPos[playerid][1], PlayerTrunkPos[playerid][2], 0, 0, false);
-				TogglePlayerControllable( playerid, 1 );
-				SendClientMessage( playerid, COLOR_RED, "[ ! ] Izasao si iz prtljaznika.");
-				AC_SetPlayerWeapons(playerid);
-				ResetPlayerObjects(playerid);
-				SetPlayerHealth(playerid, 100);
-			}
-        }
+		}
 	}
     return 1;
 }
@@ -4060,7 +4049,11 @@ public OnPlayerDeath(playerid, killerid, reason)
 
 	if(IsPlayerInAnyVehicle(playerid))
 		RemovePlayerFromVehicle(playerid);
-	AC_ResetPlayerWeapons(playerid);
+	
+	if(KilledBy[playerid] != 1338) // Admin Kill
+		AC_ResetPlayerWeapons(playerid);
+	else KilledBy[playerid] = INVALID_PLAYER_ID;
+	
 	return 1;
 }
 

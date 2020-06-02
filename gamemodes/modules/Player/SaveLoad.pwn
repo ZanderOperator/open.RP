@@ -172,7 +172,7 @@ public CheckPlayerInBase(playerid)
 		format(dialogtext, sizeof(dialogtext), ""COL_WHITE"Srdacan pozdrav "COL_LIGHTBLUE"%s!\n\n\
 			"COL_WHITE"Lijepo vas je vidjeti na nasem serveru opet.\n\
 			Molimo da unesete lozinku vaseg korisnickog\n\
-			racuna i da se prijavite. Imate "COL_LIGHTBLUE"%d"COL_WHITE"sekundi da se\n\
+			racuna i da se prijavite. Imate "COL_LIGHTBLUE"%d "COL_WHITE"sekundi da se\n\
 			prijavite, ili cete biti odspojeni sa Servera.\n\n\
 			Hvala i uzivajte i dalje u igranju na City of Angels!",GetName(playerid),MAX_LOGIN_TIME
 		);					
@@ -975,8 +975,8 @@ stock SetPlayerSpawnInfo(playerid)
 							ReloadHouseFurniture(house);
 						ReloadHouseExterior(house);
 					}
-					SetSpawnInfo(playerid, 0, PlayerInfo[playerid][pChar], HouseInfo[ house ][ hExitX ], HouseInfo[ house ][ hExitY], HouseInfo[ house ][ hExitZ ], 0, 0, 0, 0, 0, 0, 0);
-					Streamer_UpdateEx(playerid,HouseInfo[ house ][ hExitX ], HouseInfo[ house ][ hExitY], HouseInfo[ house ][ hExitZ ], HouseInfo[ house ][ hVirtualWorld ], HouseInfo[ house ][ hInt ]);
+					SetSpawnInfo(playerid, 0, PlayerInfo[playerid][pChar], HouseInfo[ house ][ hEnterX ], HouseInfo[ house ][ hEnterY], HouseInfo[ house ][ hEnterZ ], 0, 0, 0, 0, 0, 0, 0);
+					Streamer_UpdateEx(playerid,HouseInfo[ house ][ hEnterX ], HouseInfo[ house ][ hEnterY], HouseInfo[ house ][ hEnterZ ], HouseInfo[ house ][ hVirtualWorld ], HouseInfo[ house ][ hInt ]);
 				}
 				else
 				{

@@ -5098,9 +5098,9 @@ CMD:respawn(playerid, params[])
     Bit16_Get(gr_PlayerInRoom, giveplayerid, 0);
     Bit16_Get(gr_PlayerInBiznis, giveplayerid, 0);
     Bit16_Get(gr_PlayerInComplex, giveplayerid, 0);
+	
     SpawnPlayer(giveplayerid);
 	
-	AC_ResetPlayerWeapons(giveplayerid);
 	return 1;
 }
 
@@ -5110,14 +5110,15 @@ CMD:akill(playerid, params[])
     if( PlayerInfo[ playerid ][ pAdmin ] < 1 ) return SendClientMessage(playerid, COLOR_RED, "ERROR: Niste ovlasteni za koristenje ove komande!");
 	new giveplayerid;
 	if( sscanf(params, "u", giveplayerid) ) return SendClientMessage(playerid, COLOR_RED, "USAGE: /akill [ID/Dio imena]");
-    if( !IsPlayerConnected(giveplayerid) ) return SendClientMessage(playerid, COLOR_RED, "ERROR: Taj igraè nije online!");
+    if( !IsPlayerConnected(giveplayerid) ) return SendClientMessage(playerid, COLOR_RED, "ERROR: Taj igrac nije online!");
 	if( !Bit1_Get( gr_PlayerSendKill, giveplayerid ) ) return SendClientMessage( playerid, COLOR_RED, "ERROR: Taj igrac ne treba ubojstvo!" );
 	
+	KilledBy[giveplayerid] = 1338;
+	ResetPlayerWeapons(giveplayerid);
 	SetPlayerHealth(giveplayerid, 0);
 	Bit1_Set( gr_PlayerSendKill, giveplayerid, false );
 	format(globalstring, sizeof(globalstring), "AdmCMD: Admin %s je odobrio kill igracu %s", GetName(playerid,false), GetName(giveplayerid,false));
 	SendAdminMessage(COLOR_RED, globalstring);
-	AC_ResetPlayerWeapons(playerid);
 	return 1;
 }
 

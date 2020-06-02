@@ -551,7 +551,9 @@ stock AC_SetPlayerAmmo(playerid, weaponid, ammo)
 
 stock AC_SetPlayerWeapons(playerid)
 {
-	for (new i = 0; i <= 12; i++) {
+	ResetPlayerWeapons(playerid);
+	for (new i = 0; i <= 12; i++) 
+	{
 		if(PlayerWeapons[playerid][pwAmmo][i] <= 0)
 			continue;
 		GivePlayerWeapon(playerid, PlayerWeapons[playerid][pwWeaponId][i], PlayerWeapons[playerid][pwAmmo][i]);
@@ -971,6 +973,18 @@ stock AC_TogglePlayerControllable(playerid, toggle)
     #define _ALS_TogglePlayerControllable
 #endif
 #define TogglePlayerControllable AC_TogglePlayerControllable
+
+stock AC_SpawnPlayer(playerid)
+{
+	SpawnPlayer(playerid);
+	CallLocalFunction("OnPlayerSpawn", "d", playerid);
+}
+#if defined _ALS_SpawnPlayer
+    #undef SpawnPlayer
+#else
+    #define _ALS_SpawnPlayer
+#endif
+#define SpawnPlayer AC_SpawnPlayer
 
 stock AC_RemovePlayerFromVehicle(playerid)
 {

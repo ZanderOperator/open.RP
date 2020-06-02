@@ -31,7 +31,8 @@ CreateMessage(playerid, bool: status) {
 		PlayerTextDrawHide(playerid, MessageTextdraw[playerid]);
 	else if(status == true) {
 		MessageTextdraw[playerid] = CreatePlayerTextDraw(playerid, 328.000091, 350.947723, "");
-		PlayerTextDrawLetterSize(playerid, MessageTextdraw[playerid], 0.163333, 0.936296);
+		//PlayerTextDrawLetterSize(playerid, MessageTextdraw[playerid], 0.163333, 0.936296);
+		PlayerTextDrawLetterSize(playerid, MessageTextdraw[playerid], 0.25, 1.0);
 		PlayerTextDrawAlignment(playerid, MessageTextdraw[playerid], 2);
 		PlayerTextDrawColor(playerid, MessageTextdraw[playerid], -1);
 		PlayerTextDrawSetShadow(playerid, MessageTextdraw[playerid], 0);
@@ -64,7 +65,7 @@ DetermineMessageDuration(const message[])
 		words = strlen(message)/word_length, // word_length
 		words_time = ((words/wpm)*60)*1000,
 		delay = 1500,  // Milliseconds before user starts reading the notification
-		bonus = 1000;  // Extra time
+		bonus = 1500;  // Extra time
 
     return delay + words_time + bonus;
 }
