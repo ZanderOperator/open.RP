@@ -1,0 +1,1027 @@
+#include <YSI\y_hooks>
+
+#if defined MODULE_WOUNDED
+	#endinput
+#endif
+#define MODULE_WOUNDED
+
+/*
+	########  ######## ######## #### ##    ## ########  ######  
+	##     ## ##       ##        ##  ###   ## ##       ##    ## 
+	##     ## ##       ##        ##  ####  ## ##       ##       
+	##     ## ######   ######    ##  ## ## ## ######    ######  
+	##     ## ##       ##        ##  ##  #### ##             ## 
+	##     ## ##       ##        ##  ##   ### ##       ##    ## 
+	########  ######## ##       #### ##    ## ########  ######  
+*/
+
+// IDovi ozlijeda
+#define PLAYER_WOUNDED_LEG					(1)
+#define PLAYER_WOUNDED_ARMS					(2)
+#define PLAYER_WOUNDED_TORSO				(3)
+#define PLAYER_WOUNDED_GROIN				(4)
+#define PLAYER_WOUNDED_HEAD					(5)
+
+// Damage
+#define WOUND_LEGS_AMOUNT					(0.02)
+#define WOUND_ARMS_AMOUNT					(0.02)
+#define WOUND_BODY_AMOUNT					(0.04)
+#define WOUND_HEAD_AMOUNT					(0.08)
+
+/*
+	##     ##    ###    ########   ######  
+	##     ##   ## ##   ##     ## ##    ## 
+	##     ##  ##   ##  ##     ## ##       
+	##     ## ##     ## ########   ######  
+	 ##   ##  ######### ##   ##         ## 
+	  ## ##   ##     ## ##    ##  ##    ## 
+	   ###    ##     ## ##     ##  ######  
+*/
+
+
+
+// TextDraws
+static stock 
+	PlayerText:WndedBcg[MAX_PLAYERS]		= { PlayerText:INVALID_TEXT_DRAW, ... },
+	PlayerText:WndedText[MAX_PLAYERS]		= { PlayerText:INVALID_TEXT_DRAW, ... };
+	
+// rBits
+new
+	Bit8:r_PlayerWounded<MAX_PLAYERS>		= { Bit8:0, ... };
+	
+// 32bit
+static stock
+	PlayerBleedTimer[ MAX_PLAYERS ];
+/*
+	 ######  ########  #######   ######  ##    ##  ######  
+	##    ##    ##    ##     ## ##    ## ##   ##  ##    ## 
+	##          ##    ##     ## ##       ##  ##   ##       
+	 ######     ##    ##     ## ##       #####     ######  
+		  ##    ##    ##     ## ##       ##  ##         ## 
+	##    ##    ##    ##     ## ##    ## ##   ##  ##    ## 
+	 ######     ##     #######   ######  ##    ##  ######  
+*/
+/*
+	TTTTTT EEEE X   X TTTTTT DDD  RRRR   AA  W     W  SSS  
+	  TT   E     X X    TT   D  D R   R A  A W     W S     
+	  TT   EEE    X     TT   D  D RRRR  AAAA W  W  W  SSS  
+	  TT   E     X X    TT   D  D R R   A  A  W W W      S 
+	  TT   EEEE X   X   TT   DDD  R  RR A  A   W W   SSSS
+*/
+
+forward HidePlayerWoundedTDs(playerid);
+public HidePlayerWoundedTDs(playerid)
+	DestroyPlayerWoundedTDs(playerid);
+
+stock ApplyWoundedAnimation(playerid, bodypart)
+{
+	if(PlayerWoundedAnim[playerid]) 
+		return 1;
+		
+	if(PlayerInfo[playerid][pKilled] == 0)
+	{
+		new cbstring[64];
+		format(cbstring, sizeof(cbstring), "* %s je ranjen i pada na pod.", GetName(playerid, true));
+		SetPlayerChatBubble(playerid, cbstring, COLOR_PURPLE, 20, 2500);
+		GameTextForPlayer(playerid, "~b~BRUTALLY WOUNDED", 5000, 3);
+		PlayerWoundedAnim[playerid] = true;
+		PlayerWounded[playerid] = true;
+		PlayerWoundedSeconds[playerid] = gettimestamp() + 30; // 30 sekundi
+		PlayerInfo[playerid][pKilled] = 1; // Wounded state
+		SetPlayerDrunkLevel(playerid, 5000);
+		CreateDeathInfos(playerid, 2); // Wounded Situation
+		if(IsPlayerInAnyVehicle(playerid))
+		{
+			new vehicleid = GetPlayerVehicleID(playerid);
+			if(IsABike(GetVehicleModel(vehicleid)) || IsAMotorBike(GetVehicleModel(vehicleid)))
+				RemovePlayerFromVehicle(playerid), defer ApplyVehicleFallAnim(playerid);
+			else 
+				ApplyAnimation(playerid, "PED", "CAR_dead_LHS", 4.1, 0, 1, 1, 1, 0);
+			return 1;
+		}
+		if(GetPlayerState(playerid) == PLAYER_STATE_ONFOOT)
+		{
+			switch(bodypart)
+			{
+				case BODY_PART_TORSO:
+					ApplyAnimation(playerid, "PED", "KO_shot_stom", 4.1,0,1,1,1,0);
+				case BODY_PART_GROIN:
+					ApplyAnimation(playerid, "PED", "KO_shot_stom", 4.1,0,1,1,1,0);
+				case BODY_PART_LEFT_ARM:
+					ApplyAnimation(playerid, "PED", "KO_shot_stom", 4.1,0,1,1,1,0);
+				case BODY_PART_RIGHT_ARM:
+					ApplyAnimation(playerid, "PED", "KO_shot_stom", 4.1,0,1,1,1,0);
+				case BODY_PART_HEAD:
+					ApplyAnimation(playerid, "PED", "KO_shot_face",4.1,0,1,1,1,0);
+				case BODY_PART_LEFT_LEG:
+					ApplyAnimation(playerid, "CRACK","crckdeth2", 4.1,0,1,1,1,0);
+				case BODY_PART_RIGHT_LEG:
+					ApplyAnimation(playerid, "CRACK","crckdeth2", 4.1,0,1,1,1,0);
+			}
+		}
+	}
+	return 1;
+}
+
+stock ResetPlayerWounded(playerid)
+{
+	if( Bit8_Get( r_PlayerWounded, playerid ) != 0 ) 
+		KillTimer(PlayerBleedTimer[ playerid ]);
+	
+	DestroyPlayerWoundedTDs(playerid);
+	Bit8_Set(r_PlayerWounded, playerid, 0);
+		
+	SetPlayerSkillLevel(playerid, WEAPONSKILL_AK47,				999);
+	SetPlayerSkillLevel(playerid, WEAPONSKILL_M4, 				999);
+	SetPlayerSkillLevel(playerid, WEAPONSKILL_MP5, 				999);
+	SetPlayerSkillLevel(playerid, WEAPONSKILL_SHOTGUN, 			999);
+	SetPlayerSkillLevel(playerid, WEAPONSKILL_SPAS12_SHOTGUN, 	999);
+	SetPlayerDrunkLevel(playerid, 0);
+	
+	PlayerWounded[ playerid ] 	= false;
+	PlayerWoundedAnim[ playerid ] = false;
+	PlayerWoundedSeconds[ playerid ] = 0;
+	PlayerWTripTime[ playerid ] = 0;
+	return 1;
+}
+
+stock InflictPlayerDamage(playerid, issuerid, bodypart, Float:damage)
+{
+	if(PlayerInfo[playerid][pKilled] != 2 && KilledBy[playerid] == INVALID_PLAYER_ID)
+	{
+		new Float:health;
+		GetPlayerHealth(playerid, health);
+		if((health - damage) <= 2.0)
+		{
+			if(PlayerWounded[playerid])
+			{
+				SetPlayerDrunkLevel(playerid, 0);
+				SetPlayerHealth(playerid, 100);
+				TogglePlayerControllable(playerid, 0);
+				AC_ResetPlayerWeapons(playerid);
+				
+				KilledBy[playerid] = issuerid;
+				KilledReason[playerid] = AC_GetPlayerWeapon(issuerid);
+				
+				PlayerInfo[playerid][pKilled] = 2;
+				SendClientMessage(playerid, COLOR_DEATH, "Smrtno si ranjen. Pricekaj 60 sekundi do ponovnog spawna!");
+				RegisterPlayerDeath(playerid, issuerid);
+
+				ApplyAnimation(playerid,"WUZI","CS_DEAD_GUY", 4.0,0,1,1,1,0);
+
+				Bit8_Set(gr_DeathCountSeconds, playerid, 61);
+				Bit1_Set(gr_DeathCountStarted, playerid, true); //ako je ovo true onda ne smije koristiti /l, /c, /me, /do
+
+				CreateDeathTD(playerid);
+				CreateDeathInfos(playerid, 1);
+
+				DeathTimer[playerid] = SetTimerEx("StartDeathCount", 1000, true, "i", playerid);
+				return (true);
+			}
+			else
+			{
+				ApplyWoundedAnimation(playerid, bodypart);
+				SendClientMessage(playerid, COLOR_RED, "[ ! ] Tesko ste ranjeni te pali na pod. Ako izgubite sav HP - DeathMode. ");
+				SendClientMessage(playerid, COLOR_DEATH, "* Tek nakon 30 sec mozete ulaziti u kola kao vozac/suvozac.");
+				GameTextForPlayer(playerid, "~b~BRUTALLY WOUNDED", 5000, 3);
+				SetPlayerHealth(playerid, 25.0);
+				SetTimerEx("SafeResetWeapons", 2000, false, "i", playerid); /// ODE
+				AC_ResetPlayerWeapons(playerid);
+				
+				new
+					wndString[135];
+				format(wndString, 135, "KillWarn: Igrac %s[%d] je bacio u wounded mode igraca %s[%d] oruzjem %s!",
+					GetName( issuerid, false ),
+					issuerid,
+					GetName( playerid, false ),
+					playerid,
+					GetWeaponNameEx(AC_GetPlayerWeapon(issuerid))
+				);
+				DMERSBroadCast(COLOR_RED, wndString, 1);
+
+
+				Log_Write("logfiles/kills.txt", "[WOUNDED] (%s) %s{%d}(%s) je bacio u wounded mode igraca %s{%d}(%s) s %s(%d).",
+					ReturnDate(),
+					GetName(issuerid, false),
+					PlayerInfo[issuerid][pSQLID],
+					GetPlayerIP(issuerid),
+					GetName(playerid, false),
+					PlayerInfo[playerid][pSQLID],
+					GetPlayerIP(playerid),
+					GetWeaponNameEx(AC_GetPlayerWeapon(issuerid)),
+					AC_GetPlayerWeapon(issuerid)
+				);
+				
+				new
+					Float:X, Float:Y, Float:Z;
+				GetPlayerPos(playerid, X, Y, Z);
+
+				PlayerInfo[ playerid ][ pDeath ][ 0 ] 	= X;
+				PlayerInfo[ playerid ][ pDeath ][ 1 ] 	= Y;
+				PlayerInfo[ playerid ][ pDeath ][ 2 ] 	= Z;
+				PlayerInfo[ playerid ][ pDeathInt ] 	= GetPlayerInterior( playerid );
+				PlayerInfo[ playerid ][ pDeathVW ] 		= GetPlayerVirtualWorld( playerid );
+				if( DeathData[ playerid ][ ddOverall ] > 0)
+				{
+					DeathTime[playerid] = gettimestamp() + 60;
+					//DropPlayerMoney(playerid); // Gubitak novca
+					//DropPlayerWeapons(playerid, X, Y);
+					//DropPlayerDrugs(playerid, X, Y, true);
+
+					new
+						deathQuery[256];
+					format(deathQuery, 256, "INSERT INTO `player_deaths`(`player_id`, `pos_x`, `pos_y`, `pos_z`, `interior`, `viwo`, `time`) VALUES ('%d','%f','%f','%f','%d','%d','%d')",
+						PlayerInfo[playerid][pSQLID],
+						PlayerInfo[playerid][pDeath][0],
+						PlayerInfo[playerid][pDeath][1],
+						PlayerInfo[playerid][pDeath][2],
+						PlayerInfo[playerid][pDeathInt],
+						PlayerInfo[playerid][pDeathVW],
+						gettimestamp()
+					);
+					mysql_tquery(g_SQL, deathQuery, "", "");
+				}
+				return (true);
+			}
+		}
+		else 
+			return SetPlayerHealth(playerid, health - damage);
+	}
+	return 1;
+}
+
+forward SafeResetWeapons(playerid);
+public SafeResetWeapons(playerid)
+{
+	AC_ResetPlayerWeapons(playerid);
+	return 1;
+}
+
+stock DealDamage(playerid, issuerid, Float: health, Float: armour, Float: damage, bodypart = BODY_PART_GROIN)
+{		
+	if(PlayerInfo[playerid][pKilled] != 2 && KilledBy[playerid] == INVALID_PLAYER_ID)
+	{		
+		new Float: rest = armour - damage;
+		if(armour > 0)
+		{
+			if(bodypart == BODY_PART_TORSO)
+			{
+				if(rest <= 0) {
+					SetPlayerArmour(playerid, 0);
+				}	
+				else
+					SetPlayerArmour(playerid, rest);
+				return (true);
+			}
+			else return InflictPlayerDamage(playerid, issuerid, bodypart, damage);
+		}
+		if((health - damage) <= 2.0)
+		{
+			if(PlayerWounded[playerid])
+			{
+				SetPlayerDrunkLevel(playerid, 0);
+				SetPlayerHealth(playerid, 100);
+				TogglePlayerControllable(playerid, 0);
+				
+				KilledBy[playerid] = issuerid;
+				KilledReason[playerid] = AC_GetPlayerWeapon(issuerid);
+				
+				PlayerInfo[playerid][pKilled] = 2;
+				SendMessage(playerid, MESSAGE_TYPE_INFO, "Smrtno si ranjen. Pricekaj 60 sekundi do ponovnog spawna!");
+				RegisterPlayerDeath(playerid, issuerid);
+
+				ApplyAnimation(playerid,"WUZI","CS_DEAD_GUY", 4.0,0,1,1,1,0);
+				
+				Bit8_Set(gr_DeathCountSeconds, playerid, 61);
+				Bit1_Set(gr_DeathCountStarted, playerid, true); //ako je ovo true onda ne smije koristiti /l, /c, /me, /do
+
+				CreateDeathTD(playerid);
+				CreateDeathInfos(playerid, 1);
+
+				DeathTimer[playerid] = SetTimerEx("StartDeathCount", 1000, true, "i", playerid);
+				return (true);
+			}
+			else
+			{
+				WoundedBy[playerid] = issuerid;
+				
+				ApplyWoundedAnimation(playerid, bodypart);
+				SendClientMessage(playerid, COLOR_RED, "[ ! ] Tesko ste ranjeni te pali na pod. Ako izgubite sav HP - DeathMode. ");
+				SendClientMessage(playerid, COLOR_DEATH, "* Tek nakon 30 sec mozete ulaziti u kola kao vozac/suvozac.");
+				SendClientMessage(playerid, COLOR_RED, "[ ! ] Da prihvatite smrt kucajte /acceptdeath");
+				SetPlayerHealth(playerid, 25.0);
+				AC_ResetPlayerWeapons(playerid);
+				new
+					wndString[135];
+				format(wndString, 135, "KillWarn: Igrac %s[%d] je bacio u wounded mode igraca %s[%d] oruzjem %s!",
+					GetName( issuerid, false ),
+					issuerid,
+					GetName( playerid, false ),
+					playerid,
+					GetWeaponNameEx(issuerid)
+				);
+				DMERSBroadCast(COLOR_RED, wndString, 1);
+
+
+				Log_Write("logfiles/kills.txt", "[WOUNDED] (%s) %s{%d}(%s) je bacio u wounded mode igraca %s{%d}(%s) s %s(%d).",
+					ReturnDate(),
+					GetName(issuerid, false),
+					PlayerInfo[issuerid][pSQLID],
+					GetPlayerIP(issuerid),
+					GetName(playerid, false),
+					PlayerInfo[playerid][pSQLID],
+					GetPlayerIP(playerid),
+					GetWeaponNameEx(AC_GetPlayerWeapon(issuerid)),
+					AC_GetPlayerWeapon(issuerid)
+				);
+				new
+					Float:X, Float:Y, Float:Z;
+				GetPlayerPos(playerid, X, Y, Z);
+
+				PlayerInfo[ playerid ][ pDeath ][ 0 ] 	= X;
+				PlayerInfo[ playerid ][ pDeath ][ 1 ] 	= Y;
+				PlayerInfo[ playerid ][ pDeath ][ 2 ] 	= Z;
+				PlayerInfo[ playerid ][ pDeathInt ] 	= GetPlayerInterior( playerid );
+				PlayerInfo[ playerid ][ pDeathVW ] 		= GetPlayerVirtualWorld( playerid );
+				if( DeathData[ playerid ][ ddOverall ] > 0)
+				{
+					DeathTime[playerid] = gettimestamp() + 60;
+					//DropPlayerMoney(playerid); // Gubitak novca
+
+					//DropPlayerWeapons(playerid, X, Y);
+					//DropPlayerDrugs(playerid, X, Y, true);
+
+					new
+						deathQuery[256];
+					format(deathQuery, 256, "INSERT INTO `player_deaths`(`player_id`, `pos_x`, `pos_y`, `pos_z`, `interior`, `viwo`, `time`) VALUES ('%d','%f','%f','%f','%d','%d','%d')",
+						PlayerInfo[playerid][pSQLID],
+						PlayerInfo[playerid][pDeath][0],
+						PlayerInfo[playerid][pDeath][1],
+						PlayerInfo[playerid][pDeath][2],
+						PlayerInfo[playerid][pDeathInt],
+						PlayerInfo[playerid][pDeathVW],
+						gettimestamp()
+					);
+					mysql_tquery(g_SQL, deathQuery, "", "");
+				}
+			}
+		}
+		else
+			return SetPlayerHealth(playerid, health - damage);
+	}
+	return 1;
+}
+
+stock static DestroyPlayerWoundedTDs(playerid)
+{
+	if( WndedBcg[ playerid ] != PlayerText:INVALID_TEXT_DRAW ) {
+		PlayerTextDrawDestroy(playerid, WndedBcg[ playerid ]);
+		WndedBcg[ playerid ] = PlayerText:INVALID_TEXT_DRAW;
+	}
+	if( WndedText[ playerid ] != PlayerText:INVALID_TEXT_DRAW ) {
+		PlayerTextDrawDestroy(playerid, WndedText[ playerid ]);
+		WndedText[ playerid ] = PlayerText:INVALID_TEXT_DRAW;
+	}
+	return 1;
+}
+
+stock static CreatePlayerWoundedTDs(playerid)
+{
+	DestroyPlayerWoundedTDs(playerid);
+	WndedBcg[playerid] = CreatePlayerTextDraw(playerid, 310.450714, 364.491943, "usebox");
+	PlayerTextDrawLetterSize(playerid, WndedBcg[playerid], 0.000000, 4.070552);
+	PlayerTextDrawTextSize(playerid, WndedBcg[playerid], 135.099548, 0.000000);
+	PlayerTextDrawAlignment(playerid, WndedBcg[playerid], 1);
+	PlayerTextDrawColor(playerid, WndedBcg[playerid], 0);
+	PlayerTextDrawUseBox(playerid, WndedBcg[playerid], true);
+	PlayerTextDrawBoxColor(playerid, WndedBcg[playerid], 102);
+	PlayerTextDrawSetShadow(playerid, WndedBcg[playerid], 0);
+	PlayerTextDrawSetOutline(playerid, WndedBcg[playerid], 0);
+	PlayerTextDrawFont(playerid, WndedBcg[playerid], 0);
+	PlayerTextDrawShow(playerid, WndedBcg[playerid]);
+	
+	WndedText[playerid] = CreatePlayerTextDraw(playerid, 144.090072, 372.623840, "~n~                        ~n~");
+	PlayerTextDrawLetterSize(playerid, WndedText[playerid], 0.219200, 0.966078);
+	PlayerTextDrawAlignment(playerid, WndedText[playerid], 1);
+	PlayerTextDrawColor(playerid, WndedText[playerid], -1);
+	PlayerTextDrawSetShadow(playerid, WndedText[playerid], 0);
+	PlayerTextDrawSetOutline(playerid, WndedText[playerid], 1);
+	PlayerTextDrawBackgroundColor(playerid, WndedText[playerid], 51);
+	PlayerTextDrawFont(playerid, WndedText[playerid], 2);
+	PlayerTextDrawSetProportional(playerid, WndedText[playerid], 1);
+	PlayerTextDrawShow(playerid, WndedText[playerid]);
+	
+	SetTimerEx("HidePlayerWoundedTDs", 10000, false, "i", playerid);
+}
+/*
+	 SSS  Y   Y  SSS  
+	S      Y Y  S     
+	 SSS    Y    SSS  
+		S   Y       S 
+	SSSS    Y   SSSS
+*/
+stock static SetPlayerBleeding(playerid, type)
+{
+	if( playerid == INVALID_PLAYER_ID ) return 0;
+	new
+		Float:health;
+	GetPlayerHealth(playerid, health);
+	switch(type) {
+		case PLAYER_WOUNDED_LEG: {
+			SetPlayerHealth(playerid, health - WOUND_LEGS_AMOUNT );
+		}
+		case PLAYER_WOUNDED_ARMS: {
+			SetPlayerHealth(playerid, health - WOUND_ARMS_AMOUNT );
+			PlayerBleedTimer[ playerid ] = SetTimerEx("OnPlayerBleed", 3500, true, "i", playerid);
+		}
+		case PLAYER_WOUNDED_TORSO, PLAYER_WOUNDED_GROIN: {
+			SetPlayerHealth(playerid, health - WOUND_BODY_AMOUNT );
+			PlayerBleedTimer[ playerid ] = SetTimerEx("OnPlayerBleed", 2200, true, "i", playerid);
+		}
+		 case PLAYER_WOUNDED_HEAD: {
+			SetPlayerHealth(playerid, health - WOUND_HEAD_AMOUNT );
+			PlayerBleedTimer[ playerid ] = SetTimerEx("OnPlayerBleed", 1500, true, "i", playerid);
+		}
+	}
+	return 1;
+}
+
+/*
+	TTTTTT III M   M EEEE RRRR   SSS  
+	  TT    I  MM MM E    R   R S     
+	  TT    I  M M M EEE  RRRR   SSS  
+	  TT    I  M   M E    R R       S 
+	  TT   III M   M EEEE R  RR SSSS 
+*/
+
+timer ApplyVehicleFallAnim[200](playerid)
+{
+	ApplyAnimation(playerid, "PED","BIKE_fall_off", 4.1,0,1,1,1,0);
+	return 1;
+}
+
+timer ApplyVehicleFallOutAnim[2600](playerid)
+{
+	ApplyAnimationEx(playerid, "SWEET", "LaFin_Sweet", 4.0999, 0, 1, 1, 1, 0, 0);
+	return 1;
+}
+
+stock CheckWoundedPlayer(playerid)
+{
+	if(!PlayerWoundedAnim[playerid] || PlayerInfo[playerid][pKilled] != 0)
+		return 1;
+	
+	if(gettimestamp() >= PlayerWoundedSeconds[playerid])
+	{
+		PlayerWoundedSeconds[playerid] = 0;
+		PlayerWoundedAnim[playerid] = false;
+	}
+	return 1;
+}
+
+forward OnPlayerBleed(playerid);
+public OnPlayerBleed(playerid)
+{
+	new
+		Float:health;
+	GetPlayerHealth(playerid, health);
+	
+	switch(Bit8_Get(r_PlayerWounded, playerid)) {
+		case PLAYER_WOUNDED_ARMS: {
+			if( ( health - WOUND_ARMS_AMOUNT ) <= 10.0 ) {
+				KillTimer(PlayerBleedTimer[ playerid ]);
+				Bit8_Set(r_PlayerWounded, playerid, 0);
+				
+				SetPlayerSkillLevel(playerid, WEAPONSKILL_AK47,				999);
+				SetPlayerSkillLevel(playerid, WEAPONSKILL_M4, 				999);
+				SetPlayerSkillLevel(playerid, WEAPONSKILL_MP5, 				999);
+				SetPlayerSkillLevel(playerid, WEAPONSKILL_SHOTGUN, 			999);
+				SetPlayerSkillLevel(playerid, WEAPONSKILL_SPAS12_SHOTGUN, 	999);
+				return 1;
+			}
+			SetPlayerHealth(playerid, health - WOUND_ARMS_AMOUNT);
+		}
+		case PLAYER_WOUNDED_TORSO, PLAYER_WOUNDED_GROIN: {			
+			if( ( health - WOUND_BODY_AMOUNT ) <= 10.0 ) {
+				KillTimer(PlayerBleedTimer[ playerid ]);
+				Bit8_Set(r_PlayerWounded, playerid, 0);
+				return 1;
+			}
+			SetPlayerHealth(playerid, health - WOUND_BODY_AMOUNT );
+		}
+		case PLAYER_WOUNDED_HEAD: {
+			if( ( health - WOUND_HEAD_AMOUNT ) <= 10.0 ) {
+				KillTimer(PlayerBleedTimer[ playerid ]);
+				Bit8_Set(r_PlayerWounded, playerid, 0);
+				return 1;
+			}
+			SetPlayerHealth(playerid, health - WOUND_HEAD_AMOUNT );
+		}
+	}
+	return 1;
+}
+
+/*
+	##     ##  #######   #######  ##    ##  ######  
+	##     ## ##     ## ##     ## ##   ##  ##    ## 
+	##     ## ##     ## ##     ## ##  ##   ##       
+	######### ##     ## ##     ## #####     ######  
+	##     ## ##     ## ##     ## ##  ##         ## 
+	##     ## ##     ## ##     ## ##   ##  ##    ## 
+	##     ##  #######   #######  ##    ##  ######  
+*/
+
+hook OnPlayerUpdate(playerid)
+{
+	if(PlayerWounded[playerid])
+	{
+		SetPlayerArmedWeapon(playerid, 0);
+		if(IsPlayerInAnyVehicle(playerid) && GetPlayerState(playerid) == PLAYER_STATE_DRIVER)
+		{
+			new engine, lights, alarm, doors, bonnet, boot, objective,
+				vehicleid = GetPlayerVehicleID(playerid);
+			GetVehicleParamsEx(vehicleid, engine, lights, alarm, doors, bonnet, boot, objective);
+			SetVehicleParamsEx(vehicleid, VEHICLE_PARAMS_OFF, VEHICLE_PARAMS_OFF, VEHICLE_PARAMS_OFF, doors, bonnet, boot, objective);
+		}
+	}
+	return 1;
+}
+
+hook OnPlayerDeath(playerid, killerid, reason)
+{
+	PlayerWoundedAnim[playerid] = false;
+	PlayerWoundedSeconds[playerid] = 0;
+	PlayerWounded[playerid] = false;
+	SetPlayerArmour(playerid, 0);
+	PlayerInfo[playerid][pArmour] = 0;
+	return 1;
+}
+
+/* LOGAN DAMAGE SYSTEM
+hook OnPlayerTakeDamage(playerid, issuerid, Float: amount, weaponid, bodypart)
+{
+	if( !IsPlayerLogged(playerid) || !IsPlayerConnected(playerid) ) return 0;
+	
+    new Float:health, Float:armour, Float:rnd;
+	
+    GetPlayerHealth(playerid, health);
+    GetPlayerArmour(playerid, armour);
+	new Float:dX, Float:dY, Float: dZ;
+	GetPlayerPos(playerid, dX, dY, dZ);
+	new Float: fDistance = GetPlayerDistanceFromPoint(issuerid, dX, dY, dZ);
+		
+    if(PlayerInfo[playerid][pKilled] == 1 || PlayerInfo[playerid][pKilled] == 2)
+    {
+        SetPlayerHealth(playerid, 100);
+        return 0;
+	}
+	if(issuerid != INVALID_PLAYER_ID && bodypart == BODY_PART_HEAD)
+	{
+	    switch(weaponid)
+	    {
+			case 0: DealDamage(playerid, issuerid, health, armour, amount, bodypart);
+	        case 1 .. 5: //Palice, pendrek, noz
+	        {
+				rnd = randomEx(8, 15);
+				DealDamage(playerid, issuerid, health, armour, rnd, bodypart);
+	        }
+	        case 22, 23: //Colt, silencer
+	        {
+	            if( Bit1_Get(gr_Taser, issuerid) == 0)
+	            {
+	            	rnd = 25/(fDistance+4)*9.0;
+	            	DealDamage(playerid, issuerid, health, armour, rnd, bodypart);
+				}
+				else
+				    SetPlayerHealth(playerid, health);
+	        }
+	        case 24: //Deagle
+			{
+			    rnd = 50/(fDistance+7)*17;
+			    DealDamage(playerid, issuerid, health, armour, rnd, bodypart);
+			}
+			case 25,27: //Shootgun
+			{
+			    if(Bit1_Get(gr_BeanBagShotgun, issuerid) == 0)
+			    {
+   					rnd = 25/(fDistance)*8.8;
+			    	DealDamage(playerid, issuerid, health, armour, rnd, bodypart);
+				}
+				else
+				    SetPlayerHealth(playerid, health);
+			}
+			case 28, 29, 32: //Uzi, MP5, Tec9
+			{
+   				rnd = 80/(fDistance+18)*9;
+			    DealDamage(playerid, issuerid, health, armour, rnd, bodypart);
+			}
+			case 30:
+			{
+				rnd = 260/(fDistance+25)*5.56;
+				DealDamage(playerid, issuerid, health, armour, rnd, bodypart);
+			}
+			case 31:
+			{
+				rnd = 100/(fDistance+8)*7.62;
+				DealDamage(playerid, issuerid, health, armour, rnd, bodypart);
+			}
+			case 33: //Rifle
+			{
+   				rnd = 300/(fDistance+25)*5.56;
+			    DealDamage(playerid, issuerid, health, armour, rnd, bodypart);
+			}
+			case 34: //Sniper
+			{
+				KilledBy[playerid] = issuerid;
+				KilledReason[playerid] = AC_GetPlayerWeapon(issuerid);
+				SetPlayerHealth(playerid, 0);
+				return 0;
+			}
+	    }
+	}
+	else if(issuerid != INVALID_PLAYER_ID && bodypart == BODY_PART_TORSO)
+	{
+	    switch(weaponid)
+	    {
+			case 0: DealDamage(playerid, issuerid, health, armour, amount, bodypart);
+	        case 1 .. 5: //Palice, pendrek, noz
+	        {
+				rnd = randomEx(8, 15);
+				DealDamage(playerid, issuerid, health, armour, rnd, bodypart);
+	        }
+	        case 22, 23: //Colt, silencer
+	        {
+	            if( Bit1_Get(gr_Taser, issuerid) == 0)
+	            {
+	            	rnd = 25/(fDistance+4)*9.0;
+	            	DealDamage(playerid, issuerid, health, armour, rnd, bodypart);
+				}
+				else
+				    SetPlayerHealth(playerid, health);
+	        }
+	        case 24: //Deagle
+			{
+			    rnd = 50/(fDistance+7)*17;
+			    DealDamage(playerid, issuerid, health, armour, rnd, bodypart);
+			}
+			case 25,27: //Shootgun
+			{
+			    if(Bit1_Get(gr_BeanBagShotgun, issuerid) == 0)
+			    {
+   					rnd = 25/(fDistance)*8.8;
+			    	DealDamage(playerid, issuerid, health, armour, rnd, bodypart);
+				}
+				else
+				    SetPlayerHealth(playerid, health);
+			}
+			case 28, 29, 32: //Uzi, MP5, Tec9
+			{
+   				rnd = 80/(fDistance+18)*9;
+			    DealDamage(playerid, issuerid, health, armour, rnd, bodypart);
+			}
+			case 30:
+			{
+				rnd = 260/(fDistance+25)*5.56;
+				DealDamage(playerid, issuerid, health, armour, rnd, bodypart);
+			}
+			case 31:
+			{
+				rnd = 100/(fDistance+8)*7.62;
+				DealDamage(playerid, issuerid, health, armour, rnd, bodypart);
+			}
+			case 33: //Rifle
+			{
+   				rnd = 300/(fDistance+25)*5.56;
+			    DealDamage(playerid, issuerid, health, armour, rnd, bodypart);
+			}
+			case 34: //Sniper
+			{
+				rnd = 300/(fDistance+25)*5.56 + random(20);
+				DealDamage(playerid, issuerid, health, armour, rnd, bodypart);
+			}
+	    }
+	}
+	else if(issuerid != INVALID_PLAYER_ID && (bodypart == BODY_PART_GROIN || bodypart == BODY_PART_LEFT_LEG || bodypart == BODY_PART_RIGHT_LEG || bodypart == BODY_PART_RIGHT_ARM || bodypart == BODY_PART_LEFT_ARM ))
+	{
+		switch(weaponid)
+		{
+			case 0: DealDamage(playerid, issuerid, health, armour, amount, bodypart);
+			case 1 .. 5: //Palice, pendrek, noZ
+			{
+				rnd = randomEx(8, 15);
+				DealDamage(playerid, issuerid, health, armour, rnd, bodypart);
+			}
+			case 22, 23: //Colt, silencer
+			{
+				if( Bit1_Get(gr_Taser, issuerid) == 0)
+				{
+					rnd = 25/(fDistance+4)*9.0;
+					DealDamage(playerid, issuerid, health, armour, rnd, bodypart);
+				}
+				else
+					SetPlayerHealth(playerid, health);
+			}
+			case 24: //Deagle
+			{
+				rnd = 50/(fDistance+7)*17;
+				DealDamage(playerid, issuerid, health, armour, rnd, bodypart);
+			}
+			case 25,27: //Shootgun
+			{
+				if(Bit1_Get(gr_BeanBagShotgun, issuerid) == 0)
+				{
+					rnd = 25/(fDistance)*8.8;
+					DealDamage(playerid, issuerid, health, armour, rnd, bodypart);
+				}
+				else
+					SetPlayerHealth(playerid, health);
+			}
+			case 28, 29, 32: //Uzi, MP5, Tec9
+			{
+				rnd = 80/(fDistance+18)*9;
+				DealDamage(playerid, issuerid, health, armour, rnd, bodypart);
+			}
+			case 30:
+			{
+				rnd = 100/(fDistance+8)*7.62;
+				DealDamage(playerid, issuerid, health, armour, rnd, bodypart);
+			}
+			case 31:
+			{
+				rnd = 260/(fDistance+25)*5.56;
+				DealDamage(playerid, issuerid, health, armour, rnd, bodypart);
+			}
+			case 33: //Rifle
+			{
+				rnd = 300/(fDistance+25)*5.56;
+				DealDamage(playerid, issuerid, health, armour, rnd, bodypart);
+			}
+			case 34: //Sniper
+			{
+				rnd = 300/(fDistance+25)*5.56 + random(20);
+				DealDamage(playerid, issuerid, health, armour, rnd, bodypart);
+			}
+		}
+	}	
+	return 0;
+}
+*/
+
+// Fixano sve za update V18 by Khawaja
+hook OnPlayerTakeDamage(playerid, issuerid, Float: amount, weaponid, bodypart)
+{
+	if( !IsPlayerLogged(playerid) || !IsPlayerConnected(playerid) ) return 0;
+	
+    new Float:health, Float:armour, Float:damage,
+		Float:dX, Float:dY, Float: dZ;
+	
+    GetPlayerHealth(playerid, health);
+    GetPlayerArmour(playerid, armour);
+	GetPlayerPos(playerid, dX, dY, dZ);
+	
+	switch (weaponid) {
+		case WEAPON_COLT45 .. WEAPON_SNIPER, WEAPON_MINIGUN, WEAPON_SPRAYCAN, WEAPON_FIREEXTINGUISHER: {
+			if(ProxDetectorS(0.7, issuerid, playerid) ) // PISTOL WHIP ANTICHEAT (https://i.gyazo.com/02a12aecf88d4224414128235a0f8d5d.gif) -L3o
+				return (true);
+		}
+	}
+		
+	if(issuerid != INVALID_PLAYER_ID && bodypart == BODY_PART_HEAD) // POGODAK U GLAVU
+	{
+			//Headshot System - na razmatranju
+		/*damage = 200;
+		DealDamage(playerid, issuerid, health, armour, damage, bodypart);*/
+		
+		switch(weaponid)
+	    {
+			case 0: DealDamage(playerid, issuerid, health, armour, amount, bodypart);
+	        case 1 .. 8:
+	        {
+				damage = 13;
+				DealDamage(playerid, issuerid, health, armour, damage, bodypart);
+	        }
+	        case 22, 23: {
+	            if( Bit1_Get(gr_Taser, issuerid) == 0) {
+	            	damage = 35;
+	            	DealDamage(playerid, issuerid, health, armour, damage, bodypart);
+				}
+				else
+				    SetPlayerHealth(playerid, health);
+	        }
+	        case 24: {
+			    damage = 50;
+			    DealDamage(playerid, issuerid, health, armour, damage, bodypart);
+			}
+			case 25,27: {
+			    if(Bit1_Get(gr_BeanBagShotgun, issuerid) == 0) {
+   					if(ProxDetectorS(5.0, issuerid, playerid) )
+						damage = 80;
+					if(!ProxDetectorS(5.0, issuerid, playerid) )
+						damage = 40;
+			    	DealDamage(playerid, issuerid, health, armour, damage, bodypart);
+				}
+				else
+				    SetPlayerHealth(playerid, health);
+			}
+			case 28: {
+   				damage = 25;
+			    DealDamage(playerid, issuerid, health, armour, damage, bodypart);
+			}
+			case 29: {
+   				damage = 35;
+			    DealDamage(playerid, issuerid, health, armour, damage, bodypart);
+			}
+			case 30: {
+				damage = 50;
+				DealDamage(playerid, issuerid, health, armour, damage, bodypart);
+			}
+			case 31: {
+				damage = 45;
+				DealDamage(playerid, issuerid, health, armour, damage, bodypart);
+			}
+			case 32: {
+				damage = 25;
+				DealDamage(playerid, issuerid, health, armour, damage, bodypart);
+			}
+			case 33: {
+   				damage = 80;
+			    DealDamage(playerid, issuerid, health, armour, damage, bodypart);
+			}
+			case 34: {
+				damage = 99;
+   				DealDamage(playerid, issuerid, health, armour, damage, bodypart);
+			}
+	    }
+	}
+	else if(issuerid != INVALID_PLAYER_ID && bodypart == BODY_PART_TORSO) // POGODAK U TORSO/TRBUH
+	{
+	    switch(weaponid)
+	    {
+			case 0: DealDamage(playerid, issuerid, health, armour, amount, bodypart);
+	        case 1 .. 8:
+	        {
+				damage = 10;
+				DealDamage(playerid, issuerid, health, armour, damage, bodypart);
+	        }
+	        case 22, 23: {
+	            if( Bit1_Get(gr_Taser, issuerid) == 0) {
+	            	damage = 25;
+	            	DealDamage(playerid, issuerid, health, armour, damage, bodypart);
+				}
+				else
+				    SetPlayerHealth(playerid, health);
+	        }
+	        case 24: {
+			    damage = 45;
+			    DealDamage(playerid, issuerid, health, armour, damage, bodypart);
+			}
+			case 25,27: {
+			    if(Bit1_Get(gr_BeanBagShotgun, issuerid) == 0) {
+   					if(ProxDetectorS(5.0, issuerid, playerid) )
+						damage = 80;
+					if(!ProxDetectorS(5.0, issuerid, playerid) )
+						damage = 40;
+			    	DealDamage(playerid, issuerid, health, armour, damage, bodypart);
+				}
+				else
+				    SetPlayerHealth(playerid, health);
+			}
+			case 28: {
+   				damage = 15;
+			    DealDamage(playerid, issuerid, health, armour, damage, bodypart);
+			}
+			case 29: {
+   				damage = 25;
+			    DealDamage(playerid, issuerid, health, armour, damage, bodypart);
+			}
+			case 30: {
+				damage = 40;
+				DealDamage(playerid, issuerid, health, armour, damage, bodypart);
+			}
+			case 31: {
+				damage = 35;
+				DealDamage(playerid, issuerid, health, armour, damage, bodypart);
+			}
+			case 32: {
+				damage = 20;
+				DealDamage(playerid, issuerid, health, armour, damage, bodypart);
+			}
+			case 33: {
+   				damage = 70;
+			    DealDamage(playerid, issuerid, health, armour, damage, bodypart);
+			}
+			case 34: {
+				damage = 99;
+   				DealDamage(playerid, issuerid, health, armour, damage, bodypart);
+			}
+	    }
+	}
+	else if(issuerid != INVALID_PLAYER_ID && (bodypart == BODY_PART_GROIN || bodypart == BODY_PART_LEFT_LEG || bodypart == BODY_PART_RIGHT_LEG || bodypart == BODY_PART_RIGHT_ARM || bodypart == BODY_PART_LEFT_ARM )) // POGODAK U NOGE,RUKE...
+	{
+		switch(weaponid)
+	    {
+			case 0: DealDamage(playerid, issuerid, health, armour, amount, bodypart);
+	        case 1 .. 8:
+	        {
+				damage = 13;
+				DealDamage(playerid, issuerid, health, armour, damage, bodypart);
+	        }
+	        case 22, 23: {
+	            if( Bit1_Get(gr_Taser, issuerid) == 0) {
+	            	damage = 15;
+	            	DealDamage(playerid, issuerid, health, armour, damage, bodypart);
+				}
+				else
+				    SetPlayerHealth(playerid, health);
+	        }
+	        case 24: {
+			    damage = 35;
+			    DealDamage(playerid, issuerid, health, armour, damage, bodypart);
+			}
+			case 25,27: {
+			    if(Bit1_Get(gr_BeanBagShotgun, issuerid) == 0) {
+   					if(ProxDetectorS(5.0, issuerid, playerid) )
+						damage = 80;
+					if(!ProxDetectorS(5.0, issuerid, playerid) )
+						damage = 40;
+			    	DealDamage(playerid, issuerid, health, armour, damage, bodypart);
+				}
+				else
+				    SetPlayerHealth(playerid, health);
+			}
+			case 28: {
+   				damage = 10;
+			    DealDamage(playerid, issuerid, health, armour, damage, bodypart);
+			}
+			case 29: {
+   				damage = 20;
+			    DealDamage(playerid, issuerid, health, armour, damage, bodypart);
+			}
+			case 30: {
+				damage = 30;
+				DealDamage(playerid, issuerid, health, armour, damage, bodypart);
+			}
+			case 31: {
+				damage = 25;
+				DealDamage(playerid, issuerid, health, armour, damage, bodypart);
+			}
+			case 32: {
+				damage = 15;
+				DealDamage(playerid, issuerid, health, armour, damage, bodypart);
+			}
+			case 33: {
+   				damage = 35;
+			    DealDamage(playerid, issuerid, health, armour, damage, bodypart);
+			}
+			case 34: {
+				damage = 99;
+   				DealDamage(playerid, issuerid, health, armour, damage, bodypart);
+			}
+	    }
+	}	
+	return 0;
+}
+
+hook OnPlayerStateChange(playerid, newstate, oldstate)
+{
+	if(PlayerWoundedAnim[playerid])
+	{
+		if(newstate == PLAYER_STATE_DRIVER || newstate == PLAYER_STATE_PASSENGER)
+		{
+			RemovePlayerFromVehicle(playerid);
+			defer ApplyVehicleFallOutAnim(playerid);
+		}
+	}
+	return 1;
+}
+
+hook OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
+{
+	if(!PlayerWounded[playerid] || PlayerWoundedAnim[playerid])
+		return 1;
+		
+	if(((newkeys & KEY_UP) && (newkeys & KEY_WALK)) || ((newkeys & KEY_DOWN) && (newkeys & KEY_WALK) || ((newkeys & KEY_WALK) && (newkeys & KEY_LEFT)) || ((newkeys & KEY_WALK) && (newkeys & KEY_RIGHT))) || (newkeys & KEY_SPRINT) || HOLDING(KEY_SPRINT))
+		ApplyAnimationEx(playerid,"PED","WALK_old",4.1,1,1,1,1,1,1,0);
+	else if(RELEASED(KEY_WALK) || RELEASED(KEY_SPRINT))
+		ClearAnim(playerid);
+	
+	return 1;
+}
+
+hook OnPlayerEnterVehicle(playerid, vehicleid, ispassenger)
+{
+	if(PlayerWoundedAnim[playerid])
+		ApplyAnimation(playerid, "PED","BIKE_fall_off", 4.1,0,1,1,1,0);
+		
+	return 1;
+}
+
+hook OnPlayerExitVehicle(playerid, vehicleid)
+{
+	if(PlayerWoundedAnim[playerid] && IsPlayerInAnyVehicle(playerid))
+	{
+		new seat = GetPlayerVehicleSeat(playerid);
+		return PutPlayerInVehicle(playerid, vehicleid, seat);
+	}
+	return 1;
+}
