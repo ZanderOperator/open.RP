@@ -268,6 +268,7 @@ native WP_Hash(buffer[], len, const str[]);
 	##       ##   ### ##     ## ##     ## ##    ##
 	######## ##    ##  #######  ##     ##  ######
 */
+new texture_buffer[10256];
 
 enum E_PLAYER_DATA
 {
@@ -1111,8 +1112,7 @@ enum {
 	DIALOG_FURNITURE_COL_SURE,
 	DIALOG_FURNITURE_SLOT_DELETE,
 	DIALOG_FURNITURE_SLOT_SURE,
-	DIALOG_FURNITURE_NAME,
-
+	
 	// Taxi
 	DIALOG_TAXI_RATING,
 
@@ -1615,8 +1615,6 @@ new
 	Fox_Online				= 0,
 	HappyHours				= 0,
 	HappyHoursLVL			= 0,
-	FurnitureObjectName[ MAX_HOUSES ][ MAX_FURNITURE_SLOTS ][ 50 char ],
-	BiznisFurnitureObjectName[ MAX_BIZZS ][ BIZZ_FURNITURE_VIP_GOLD_OBJCTS ][ 30 char ],
 	PlayerText:GlobalForumLink[MAX_PLAYERS] = { PlayerText:INVALID_TEXT_DRAW, ... },
 	bool:PlayerCarTow	[MAX_PLAYERS];
 

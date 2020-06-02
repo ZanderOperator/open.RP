@@ -465,7 +465,6 @@ public OnBizzFurnitureObjectsLoad(biznisid)
 	for( new i = 0; i < objectCount; i++ )
 	{
 		cache_get_value_name_int(i, 	"sqlid"			, BizzInfo[ biznisid ][ bFurSQL ][ i ]);
-		cache_get_value_name(i, 		"name"			, BiznisFurnitureObjectName[ biznisid ][ i ], 30);
 		cache_get_value_name_int(i, 	"modelid"		, BizzInfo[ biznisid ][ bFurModelid ][ i ]);
 		cache_get_value_name_int(i, 	"door"			, BizzInfo[ biznisid ][ bFurDoor ][ i ]);
 		cache_get_value_name_float(i, 	"door_z"		, BizzInfo[ biznisid ][ bFurDoorZ ][ i ]);
@@ -789,81 +788,82 @@ stock static GetPlayerFurnitureSlots(playerid)
 }
 stock static ShowPlayerTextureList(playerid)
 {
-	new
-		buffer[ 10256 ],
+	new motd[ 64 ],
 		dialogPos = 0,
 		amount = !( LastBizzTextureListIndex[ playerid ] - 1 ) ? 1 : (( LastBizzTextureListIndex[ playerid ] - 1 ) * 15),
 		max_amount = LastBizzTextureListIndex[ playerid ] * 15;
-
-	format(buffer, 10256, "Model\tTXD\tIme\n");
+	
+	texture_buffer[0] = EOS;
+	
+	format(texture_buffer, 10256, "Model\tTXD\tIme\n");
 	for( new i = amount; i < max_amount; i++ ) {
-		format(buffer, 10256, "%s%d\t%s\t%s\n",
-			buffer,
+		format(motd, 64, "%d\t%s\t%s\n",
 			ObjectTextures[ i ][ tModel ],
 			ObjectTextures[ i ][ tTXDName ],
 			ObjectTextures[ i ][ tName ]
 		);
+		strcat(texture_buffer, motd, 10256);
 		if( ObjectTextures[ i ][ tModel ] == 1319 )
 			break;
 		BizzTextureDialogItem[ playerid ][ dialogPos ] = i;
 		dialogPos++;
 	}
-	format(buffer, 10256, "%sPotrazi teksturu\n%s%s", buffer, ( LastBizzTextureListIndex[ playerid ] < 39 ) ? ("Dalje\n") : ("\n"), ( LastBizzTextureListIndex[ playerid ] == 0 ) ? ("") : ("\nNazad") );
-	return buffer;
+	format(texture_buffer, 10256, "%sPotrazi teksturu\n%s%s", texture_buffer, ( LastBizzTextureListIndex[ playerid ] < 39 ) ? ("Dalje\n") : ("\n"), ( LastBizzTextureListIndex[ playerid ] == 0 ) ? ("") : ("\nNazad") );
+	return texture_buffer;
 }
 stock static ShowSearchedTextureList(playerid, string[])
 {
-	new
-		buffer[ 10256 ],
+	new motd[ 64 ],
 		dialogPos = 0,
 		amount = !( LastBizzTextureListIndex[ playerid ] - 1 ) ? 1 : (( LastBizzTextureListIndex[ playerid ] - 1 ) * 15),
 		max_amount = LastBizzTextureListIndex[ playerid ] * 15;
 
-	format(buffer, 10256, "Model\tTXD\tIme\n");
+	texture_buffer[0] = EOS;
+	format(texture_buffer, 10256, "Model\tTXD\tIme\n");
 	for( new i = amount; i < max_amount; i++ )
 	{
 		if( strfind(ObjectTextures[i][tTXDName], string, true) != -1 )
 		{
-			format(buffer, 10256, "%s%d\t%s\t%s\n",
-				buffer,
+			format(motd, 64, "%d\t%s\t%s\n",
 				ObjectTextures[ i ][ tModel ],
 				ObjectTextures[ i ][ tTXDName ],
 				ObjectTextures[ i ][ tName ]
 			);
+			strcat(texture_buffer, motd, 10256);
 			if( ObjectTextures[ i ][ tModel ] == 1319 )
 				break;
 			BizzTextureDialogItem[ playerid ][ dialogPos ] = i;
 			dialogPos++;
 		}
 	}
-	format(buffer, 10256, "%sPotrazi teksturu\n%s%s", buffer, ( LastBizzTextureListIndex[ playerid ] < 39 ) ? ("Dalje\n") : ("\n"), ( LastBizzTextureListIndex[ playerid ] == 0 ) ? ("") : ("\nNazad") );
-	return buffer;
+	format(texture_buffer, 10256, "%sPotrazi teksturu\n%s%s", texture_buffer, ( LastBizzTextureListIndex[ playerid ] < 39 ) ? ("Dalje\n") : ("\n"), ( LastBizzTextureListIndex[ playerid ] == 0 ) ? ("") : ("\nNazad") );
+	return texture_buffer;
 }
 stock static ShowModelSearchedTextureList(playerid, modelid)
 {
-	new
-		buffer[ 10256 ],
+	new motd[ 64 ],
 		dialogPos = 0,
 		amount = !( LastBizzTextureListIndex[ playerid ] - 1 ) ? 1 : (( LastBizzTextureListIndex[ playerid ] - 1 ) * 15),
 		max_amount = LastBizzTextureListIndex[ playerid ] * 15;
 
-	format(buffer, 10256, "Model\tTXD\tIme\n");
+	texture_buffer[0] = EOS;
+	format(texture_buffer, 10256, "Model\tTXD\tIme\n");
 	for( new i = amount; i < max_amount; i++ ) {
 		if(ObjectTextures[i][tModel] == modelid) {
-			format(buffer, 10256, "%s%d\t%s\t%s\n",
-				buffer,
+			format(motd, 64, "%d\t%s\t%s\n",
 				ObjectTextures[ i ][ tModel ],
 				ObjectTextures[ i ][ tTXDName ],
 				ObjectTextures[ i ][ tName ]
 			);
+			strcat(texture_buffer, motd, 10256);
 			if( ObjectTextures[ i ][ tModel ] == 1319 )
 				break;
 			BizzTextureDialogItem[ playerid ][ dialogPos ] = i;
 			dialogPos++;
 		}
 	}
-	format(buffer, 10256, "%sPotrazi teksturu\n%s%s", buffer, ( LastBizzTextureListIndex[ playerid ] < 39 ) ? ("Dalje\n") : ("\n"), ( LastBizzTextureListIndex[ playerid ] == 0 ) ? ("") : ("\nNazad") );
-	return buffer;
+	format(texture_buffer, 10256, "%sPotrazi teksturu\n%s%s", texture_buffer, ( LastBizzTextureListIndex[ playerid ] < 39 ) ? ("Dalje\n") : ("\n"), ( LastBizzTextureListIndex[ playerid ] == 0 ) ? ("") : ("\nNazad") );
+	return texture_buffer;
 }
 stock static GetPlayerTextureItem(playerid, listitem)
 {
@@ -929,7 +929,6 @@ stock static CreateBiznisFurnitureObject(playerid, modelid, Float:x, Float:y, Fl
 		BizzPlayerPrwsObject[ playerid ] = INVALID_OBJECT_ID;
 	}
 
-	format(BiznisFurnitureObjectName[ biznisid ][ index ], 30, GetFurnitureObjectName(playerid, BizzPlayerPrwsIndex[ playerid ]));
 	BizzInfo[ biznisid ][ bFurModelid ][ index ]	= modelid;
 	BizzInfo[ biznisid ][ bFurPosX ][ index ]		= x;
 	BizzInfo[ biznisid ][ bFurPosY ][ index ]		= y;
@@ -952,9 +951,8 @@ stock static CreateBiznisFurnitureObject(playerid, modelid, Float:x, Float:y, Fl
 		BizzInfo[ biznisid ][ bFurDoorLckd ][ index ]	= 0;
 	}
 
-	format(insertObject, 1512, "INSERT INTO `biznis_furniture`(`biznisid`, `name`, `modelid`, `door`, `door_z`, `locked_door`, `pos_x`, `pos_y`, `pos_z`, `rot_x`, `rot_y`, `rot_z`, `texture_1`, `texture_2`, `texture_3`, `texture_4`, `color_1`, `color_2`, `color_3`, `color_4`) VALUES ('%d', '%q', '%d', '%d', '%f', '%d', '%f', '%f', '%f', '%f', '%f', '%f', '%d', '%d', '%d', '%d', '%d', '%d', '%d', '%d')",
+	format(insertObject, 1512, "INSERT INTO `biznis_furniture`(`biznisid`, `modelid`, `door`, `door_z`, `locked_door`, `pos_x`, `pos_y`, `pos_z`, `rot_x`, `rot_y`, `rot_z`, `texture_1`, `texture_2`, `texture_3`, `texture_4`, `color_1`, `color_2`, `color_3`, `color_4`) VALUES ('%d', '%d', '%d', '%f', '%d', '%f', '%f', '%f', '%f', '%f', '%f', '%d', '%d', '%d', '%d', '%d', '%d', '%d', '%d')",
 		BizzInfo[ biznisid ][ bSQLID ],
-		BiznisFurnitureObjectName[ biznisid ][ index ],
 		BizzInfo[ biznisid ][ bFurModelid ][ index ],
 		BizzInfo[ biznisid ][ bFurDoor ][ index ],
 		BizzInfo[ biznisid ][ bFurDoorZ ][ index ],
@@ -1025,7 +1023,6 @@ stock static CreateBiznisFurnitureObject(playerid, modelid, Float:x, Float:y, Fl
 			mysql_tquery(g_SQL, deleteQuery, "", "");
 		}
 
-		format(BiznisFurnitureObjectName[ biznisid ][ index ], 30, "None");
 		BizzInfo[ biznisid ][ bFurModelid ][ index ]	= 0;
 		BizzInfo[ biznisid ][ bFurPosX ][ index ]		= 0.0;
 		BizzInfo[ biznisid ][ bFurPosY ][ index ]		= 0.0;
@@ -1075,8 +1072,6 @@ stock static CopyFurnitureObject(playerid, copyid)
 	BizzInfo[ biznisid ][ bFurColId ][ index ][ 2 ]		= BizzInfo[ biznisid ][ bFurColId ][ copyid ][ 2 ];
 	BizzInfo[ biznisid ][ bFurColId ][ index ][ 3 ]		= BizzInfo[ biznisid ][ bFurColId ][ copyid ][ 3 ];
 
-	format(BiznisFurnitureObjectName[ biznisid ][ index ], 30, BiznisFurnitureObjectName[ biznisid ][ copyid ] );
-
 	BizzInfo[ biznisid ][ bFurObjectid ][ index ]	= CreateDynamicObject(BizzInfo[ biznisid ][ bFurModelid ][ index ], BizzInfo[ biznisid ][ bFurPosX ][ index ], BizzInfo[ biznisid ][ bFurPosY ][ index ], BizzInfo[ biznisid ][ bFurPosZ ][ index ], BizzInfo[ biznisid ][ bFurRotX ][ index ], BizzInfo[ biznisid ][ bFurRotY ][ index ], BizzInfo[ biznisid ][ bFurRotZ ][ index ], GetPlayerVirtualWorld(playerid), GetPlayerInterior(playerid), -1, FURNITURE_OBJECT_DRAW_DISTANCE, FURNITURE_OBJECT_DRAW_DISTANCE);
 
 	new
@@ -1100,9 +1095,8 @@ stock static CopyFurnitureObject(playerid, copyid)
 
 	new
 		insertObject[ 512 ];
-	format(insertObject, 512, "INSERT INTO `biznis_furniture` (`biznisid`,`name`,`modelid`,`door`,`door_z`,`locked_door`,`pos_x`,`pos_y`,`pos_z`,`rot_x`,`rot_y`,`rot_z`,`texture_1`,`texture_2`,`texture_3`,`texture_4`,`color_1`,`color_2`,`color_3`,`color_4`) VALUES ('%d','%q','%d','%d','%f','%d','%f','%f','%f','%f','%f','%f','%d','%d','%d','%d','%d','%d','%d','%d')",
-		biznisid,
-		BiznisFurnitureObjectName[ biznisid ][ index ],
+	format(insertObject, 512, "INSERT INTO `biznis_furniture` (`biznisid`,`modelid`,`door`,`door_z`,`locked_door`,`pos_x`,`pos_y`,`pos_z`,`rot_x`,`rot_y`,`rot_z`,`texture_1`,`texture_2`,`texture_3`,`texture_4`,`color_1`,`color_2`,`color_3`,`color_4`) VALUES ('%d','%d','%d','%f','%d','%f','%f','%f','%f','%f','%f','%d','%d','%d','%d','%d','%d','%d','%d')",
+		BizzInfo[ biznisid ][ bSQLID ],
 		BizzInfo[ biznisid ][ bFurModelid ][ index ],
 		BizzInfo[ biznisid ][ bFurDoor ][ index ],
 		BizzInfo[ biznisid ][ bFurDoorZ ][ index ],
@@ -1272,7 +1266,7 @@ stock static DeleteFurnitureObject(biznisid, index, playerid)
 
 	new
 		deleteObject[ 64 ];
-	format(deleteObject, 64, "DELETE FROM furniture WHERE sqlid = '%d'", BizzInfo[ biznisid ][ bFurSQL ][ index ]);
+	format(deleteObject, 64, "DELETE FROM biznis_furniture WHERE sqlid = '%d'", BizzInfo[ biznisid ][ bFurSQL ][ index ]);
 	mysql_tquery(g_SQL, deleteObject, "");
 
 	DestroyDynamicObject(BizzInfo[ biznisid ][ bFurObjectid ][ index ]);
@@ -1291,7 +1285,7 @@ stock static DeleteFurnitureObject(biznisid, index, playerid)
 	BizzInfo[ biznisid ][ bFurTxtId ][ index ][ 3 ]	= 0;
 	BizzInfo[ biznisid ][ bFurTxtId ][ index ][ 4 ]	= 0;
 	BizzInfo[ biznisid ][ bFurSlots ]--;
-	va_SendClientMessage(playerid, COLOR_RED, "[ ! ] Uspjesno ste obrisali %s(object id: %d).", FurnitureObjectName[ biznisid ][ index ], BizzInfo[ biznisid ][ bFurObjectid ][ index ]);
+	va_SendClientMessage(playerid, COLOR_RED, "[ ! ] Uspjesno ste obrisali objekt[Model ID: %d - Slot Index: %d].", BizzInfo[ biznisid ][ bFurObjectid ][ index ], index);
 	return 1;
 }
 stock static DestroyAllFurnitureObjects(playerid, biznisid)
@@ -1306,7 +1300,6 @@ stock static DestroyAllFurnitureObjects(playerid, biznisid)
 				BizzInfo[ biznisid ][ bFurObjectid ][ index ] = INVALID_OBJECT_ID;
 			}
 
-			format(BiznisFurnitureObjectName[ biznisid ][ index ], 30, "None");
 			BizzInfo[ biznisid ][ bFurSQL ][ index ]		= 0;
 			BizzInfo[ biznisid ][ bFurModelid ][ index ]	= 0;
 			BizzInfo[ biznisid ][ bFurPosX ][ index ]		= 0.0;
@@ -2358,28 +2351,28 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 			if( !response ) return ShowPlayerDialog(playerid, DIALOG_BIZZ_FURN_MENU, DIALOG_STYLE_LIST, "Furniture", "Kupi objekt\nUredi\nInventory", "Odaberi", "Odustani");
 			switch( listitem )
 			{
-				case 0: ShowPlayerDialog(playerid, DIALOG_BIZZ_FURN_NAME, DIALOG_STYLE_INPUT, "Uredjivanje naziva slota", "Unesite naziv slota"COL_RED"(1-29 znakova)", "Unesi", "Odustani");
-				case 1: EditFurnitureObject(playerid, BizzPlayerEditIndex[ playerid ]); // UI Edit
-				case 2: {	// Texture
+				case 0: EditFurnitureObject(playerid, BizzPlayerEditIndex[ playerid ]); // UI Edit
+				case 1: {	// Texture
 					LastBizzTextureListIndex[ playerid ] = 1;
-					new
-						buffer[ 10256 ],
+					new motd[ 64 ],
 						dialogPos = 0;
-					format(buffer, 10256, "Model\tTXD\tIme\n");
+					
+					texture_buffer[0] = EOS;
+					format(texture_buffer, 10256, "Model\tTXD\tIme\n");
 					for( new i = 1; i < 16; i++ ) {
-						format(buffer, 10256, "%s%d\t%s\t%s\n",
-							buffer,
+						format(motd, 64, "%d\t%s\t%s\n",
 							ObjectTextures[ i ][ tModel ],
 							ObjectTextures[ i ][ tTXDName ],
 							ObjectTextures[ i ][ tName ]
 						);
+						strcat(texture_buffer, motd, 10256);
 						BizzTextureDialogItem[ playerid ][ dialogPos ] = i;
 						dialogPos++;
 					}
-					format(buffer, 10256, "%sPotrazi teksturu\nDalje", buffer );
-					ShowPlayerDialog(playerid, DIALOG_BIZZ_FURN_TXTS, DIALOG_STYLE_TABLIST_HEADERS, "Furniture - Teksture", buffer, "Odaberi", "Odustani");
+					format(texture_buffer, 10256, "%sPotrazi teksturu\nDalje", texture_buffer );
+					ShowPlayerDialog(playerid, DIALOG_BIZZ_FURN_TXTS, DIALOG_STYLE_TABLIST_HEADERS, "Furniture - Teksture", texture_buffer, "Odaberi", "Odustani");
 				}
-				case 3: {	// Boje
+				case 2: {	// Boje
 					new
 						buffer[ 2625 ];
 					for( new i = 0; i < 138; i++ ) {
@@ -2391,7 +2384,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 					}
 					ShowPlayerDialog(playerid, DIALOG_BIZZ_FURN_COL_LIST, DIALOG_STYLE_LIST, "Furniture - Odabir boja", buffer, "Odaberi", "Odustani");
 				}
-				case 4: {	// Kopiraj
+				case 3: {	// Kopiraj
 					new
 						biznisid = GetPlayerFurnitureBiznis(playerid),
 						index	= BizzPlayerEditIndex[ playerid ];
@@ -2400,42 +2393,22 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 					if( !CopyFurnitureObject(playerid, index) ) return SendClientMessage(playerid, COLOR_RED, "[GRESKA]: Dogodila se pogreska! Ponovno pokusajte kopirati objekt!");
 
 				}
-				case 5: { 	// Obrisi
+				case 4: { 	// Obrisi
 					va_ShowPlayerDialog(playerid, DIALOG_BIZZ_FURN_DELETE, DIALOG_STYLE_MSGBOX, "Furniture - Brisanje", "Zelite li obrisati objekt u slotu %d?", "Da", "Ne", BizzPlayerEditIndex[ playerid ]);
 				}
-				case 6: { // Obrisi boju i teksturu
+				case 5: { // Obrisi boju i teksturu
 					ShowPlayerDialog(playerid, DIALOG_BIZZ_FURN_SLOT_DELETE, DIALOG_STYLE_INPUT, "Furniture - Brisanje tekstura i boja", "Unesite slot koji zelite ocistiti od boja i tekstura (0-4):", "Unesi", "Odustani");
 				}
 			}
 			return 1;
 		}
-		case DIALOG_BIZZ_FURN_NAME: {
-			if( !response ) return ShowPlayerDialog(playerid, DIALOG_BIZZ_FURN_EDIT_LIST, DIALOG_STYLE_LIST, "Furniture - Uredjivanje", "Uredi naziv\nUredjivanje (UI)\nTeksture\nBoje\nKopiraj objekt\nObrisi objekt\nObrisi teksture i boje", "Odaberi", "Odustani");
-			if( 1 <= strlen(inputtext) <= 29 ) {
-				new
-					biznisid = GetPlayerFurnitureBiznis(playerid),
-					slot = BizzPlayerEditIndex[ playerid ],
-					updateQuery[ 256 ];
-
-				format(BiznisFurnitureObjectName[ biznisid ][ slot ], 30, inputtext);
-				SendClientMessage(playerid, COLOR_GREEN, "[INFO]: Uspjesno ste promjenili naziv slota!");
-
-				format(updateQuery, 256, "UPDATE furniture SET name = '%q' WHERE sqlid = '%d'",
-					BiznisFurnitureObjectName[ biznisid ][ slot ],
-					BizzInfo[ biznisid ][ bFurSQL ][ slot ]
-				);
-				mysql_tquery(g_SQL, updateQuery, "");
-
-			} else ShowPlayerDialog(playerid, DIALOG_BIZZ_FURN_NAME, DIALOG_STYLE_INPUT, "Uredjivanje naziva slota", "Unesite naziv slota"COL_RED"(1-29 znakova)", "Unesi", "Odustani");
-			return 1;
-		}
 		case DIALOG_BIZZ_FURN_DELETE: {
-			if( !response ) return ShowPlayerDialog(playerid, DIALOG_BIZZ_FURN_EDIT_LIST, DIALOG_STYLE_LIST, "Furniture - Uredjivanje", "Uredi naziv\nUredjivanje (UI)\nTeksture\nBoje\nKopiraj objekt\nObrisi objekt\nObrisi teksture i boje", "Odaberi", "Odustani");
+			if( !response ) return ShowPlayerDialog(playerid, DIALOG_BIZZ_FURN_EDIT_LIST, DIALOG_STYLE_LIST, "Furniture - Uredjivanje", "Uredjivanje (UI)\nTeksture\nBoje\nKopiraj objekt\nObrisi objekt\nObrisi teksture i boje", "Odaberi", "Odustani");
 			DeleteFurnitureObject(GetPlayerFurnitureBiznis(playerid), BizzPlayerEditIndex[ playerid ], playerid);
 			return 1;
 		}
 		case DIALOG_BIZZ_FURN_TXTS: {
-			if( !response ) return ShowPlayerDialog(playerid, DIALOG_BIZZ_FURN_EDIT_LIST, DIALOG_STYLE_LIST, "Furniture - Uredjivanje", "Uredi naziv\nUredjivanje (UI)\nTeksture\nBoje\nKopiraj objekt\nObrisi objekt\nObrisi teksture i boje", "Odaberi", "Odustani");
+			if( !response ) return ShowPlayerDialog(playerid, DIALOG_BIZZ_FURN_EDIT_LIST, DIALOG_STYLE_LIST, "Furniture - Uredjivanje", "Uredjivanje (UI)\nTeksture\nBoje\nKopiraj objekt\nObrisi objekt\nObrisi teksture i boje", "Odaberi", "Odustani");
 			if( listitem == 15 ) return ShowPlayerDialog(playerid, DIALOG_BIZZ_FURN_TXTS_SRCH_1, DIALOG_STYLE_LIST, "Furniture - Pretrazivanje Tekstura", "Preko TXD Namea\nPreko TXD Modelida", "Odaberi", "Odustani");
 			if( listitem == 16 && LastBizzTextureListIndex[ playerid ] < 40 ) {
 				LastBizzTextureListIndex[ playerid ]++;
@@ -2464,7 +2437,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 			return 1;
 		}
 		case DIALOG_BIZZ_FURN_TXTS_SRCH_2: {
-			if( !response ) return va_ShowPlayerDialog(playerid, DIALOG_BIZZ_FURN_EDIT_LIST, DIALOG_STYLE_LIST, "Furniture - Uredjivanje", "Uredi naziv\nUredjivanje (UI)\nTeksture\nBoje\nKopiraj objekt\nObrisi objekt\nObrisi teksture i boje", "Odaberi", "Odustani");
+			if( !response ) return va_ShowPlayerDialog(playerid, DIALOG_BIZZ_FURN_EDIT_LIST, DIALOG_STYLE_LIST, "Furniture - Uredjivanje", "Uredjivanje (UI)\nTeksture\nBoje\nKopiraj objekt\nObrisi objekt\nObrisi teksture i boje", "Odaberi", "Odustani");
 			if( strlen(inputtext) < 3 ) {
 				SendClientMessage(playerid, COLOR_RED, "[GRESKA]: Morate unijeti minimalno 3 znaka kao ime TXD-a!");
 				ShowPlayerDialog(playerid, DIALOG_BIZZ_FURN_TXTS_SRCH_1, DIALOG_STYLE_INPUT, "Furniture - Trazilica", "Unesite znak ili djelomican naziv teksture koju trazite (ime ili ime TXD-a):", "Unesi", "Odustani");
@@ -2474,7 +2447,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 			return 1;
 		}
 		case DIALOG_BIZZ_FURN_TXTS_SRCH_3: {
-			if( !response ) return va_ShowPlayerDialog(playerid, DIALOG_BIZZ_FURN_EDIT_LIST, DIALOG_STYLE_LIST, "Furniture - Uredjivanje", "Uredi naziv\nUredjivanje (UI)\nTeksture\nBoje\nKopiraj objekt\nObrisi objekt\nObrisi teksture i boje", "Odaberi", "Odustani");
+			if( !response ) return va_ShowPlayerDialog(playerid, DIALOG_BIZZ_FURN_EDIT_LIST, DIALOG_STYLE_LIST, "Furniture - Uredjivanje", "Uredjivanje (UI)\nTeksture\nBoje\nKopiraj objekt\nObrisi objekt\nObrisi teksture i boje", "Odaberi", "Odustani");
 			if( strlen(inputtext) < 4 ) {
 				SendClientMessage(playerid, COLOR_RED, "[GRESKA]: Morate unijeti minimalno 4 znaka kao modelid TXD-a!");
 				ShowPlayerDialog(playerid, DIALOG_BIZZ_FURN_TXTS_SRCH_1, DIALOG_STYLE_LIST, "Furniture - Pretrazivanje Tekstura", "Preko TXD Namea\nPreko TXD Modelida", "Odaberi", "Odustani");
@@ -2556,7 +2529,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 			return 1;
 		}
 		case DIALOG_BIZZ_FURN_SLOT_DELETE: {
-			if( !response ) return  ShowPlayerDialog(playerid, DIALOG_BIZZ_FURN_EDIT_LIST, DIALOG_STYLE_LIST, "Furniture - Uredjivanje", "Uredi naziv\nUredjivanje (UI)\nTeksture\nBoje\nKopiraj objekt\nObrisi objekt\nObrisi teksture i boje", "Odaberi", "Odustani");
+			if( !response ) return  ShowPlayerDialog(playerid, DIALOG_BIZZ_FURN_EDIT_LIST, DIALOG_STYLE_LIST, "Furniture - Uredjivanje", "Uredjivanje (UI)\nTeksture\nBoje\nKopiraj objekt\nObrisi objekt\nObrisi teksture i boje", "Odaberi", "Odustani");
 
 			new
 				slot = strval(inputtext);
@@ -2672,7 +2645,7 @@ hook OnModelSelResponse( playerid, extraid, index, modelid, response )
 				return ShowPlayerDialog(playerid, DIALOG_BIZZ_FURN_MENU, DIALOG_STYLE_LIST, "Furniture", "Kupi objekt\nUredi\nInventory", "Odaberi", "Odustani");
 			}
 			BizzPlayerEditIndex[ playerid ] = ModelToEnumID[playerid][index];
-			va_ShowPlayerDialog(playerid, DIALOG_BIZZ_FURN_EDIT_LIST, DIALOG_STYLE_LIST, "Furniture - Uredjivanje", "Uredi naziv\nUredjivanje (UI)\nTeksture\nBoje\nKopiraj objekt\nObrisi objekt\nObrisi teksture i boje", "Odaberi", "Odustani");
+			va_ShowPlayerDialog(playerid, DIALOG_BIZZ_FURN_EDIT_LIST, DIALOG_STYLE_LIST, "Furniture - Uredjivanje", "Uredjivanje (UI)\nTeksture\nBoje\nKopiraj objekt\nObrisi objekt\nObrisi teksture i boje", "Odaberi", "Odustani");
 			ResetFurnitureShuntVar(playerid);
 		}
 		case DIALOG_BIZZ_FURN_OBJS_BUY: {

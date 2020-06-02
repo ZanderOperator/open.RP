@@ -438,19 +438,6 @@ stock AC_GivePlayerWeapon(playerid, weaponid, ammo, bool:base_update=true, bool:
 	PlayerWeapons[playerid][pwAmmo][slot] 		+= ammo;
 	PlayerWeapons[playerid][pwHidden][slot] 	= 0;
 
-	if( PlayerWeapons[playerid][pwAmmo][slot] <= 0 )
-	{
-		PlayerWeapons[playerid][pwWeaponId][slot] 	= 0;
-		PlayerWeapons[playerid][pwAmmo][slot] 		= 0;
-
-		// MySQL Query
-		new
-			weaponInsertQuery[64];
-		format(weaponInsertQuery, 64, "DELETE FROM `player_weapons` WHERE `sqlid` = '%d'",
-			PlayerWeapons[playerid][pwSQLID][slot]
-		);
-		mysql_tquery(g_SQL, weaponInsertQuery, "", "");
-	}
 
 	//Real Give Func
 	if(SafeSpawned[playerid])
@@ -564,25 +551,10 @@ stock AC_SetPlayerAmmo(playerid, weaponid, ammo)
 
 stock AC_SetPlayerWeapons(playerid)
 {
-	//Uzimamo vrijednosti oruzja
-	new Weapon[13][2];
 	for (new i = 0; i <= 12; i++) {
 		if(PlayerWeapons[playerid][pwAmmo][i] <= 0)
 			continue;
-
-		Weapon[i][0] = PlayerWeapons[playerid][pwWeaponId][i];
-		Weapon[i][1] = PlayerWeapons[playerid][pwAmmo][i];
-	}
-
-	AC_ResetPlayerWeapons(playerid, false);
-
-	for (new i = 0; i <= 12; i++) {
-
-		if(Weapon[i][1] <= 0)
-			continue;
-		if(!CheckPlayerWeapons(playerid, Weapon[i][0]))
-			continue;
-		AC_GivePlayerWeapon(playerid, Weapon[i][0], Weapon[i][1], false);
+		GivePlayerWeapon(playerid, PlayerWeapons[playerid][pwWeaponId][i], PlayerWeapons[playerid][pwAmmo][i]);
 	}
 	SetPlayerArmedWeapon(playerid, 0);
 	UpdatePlayerWeaponSettings(playerid);
@@ -638,8 +610,11 @@ stock AC_ResetPlayerWeapon(playerid, weaponid, bool:base_update=true)
 	{
 		if(PlayerWeapons[playerid][pwAmmo][i] <= 0)
 			continue;
-		if(PlayerWeapons[playerid][pwWeaponId][i] == weaponid) {
-			PlayerWeapons[playerid][pwSQLID][i]		= -1;
+		if(PlayerWeapons[playerid][pwWeaponId][i] == weaponid) 
+		{
+			if(base_update)
+				PlayerWeapons[playerid][pwSQLID][i] = -1;
+				
 			PlayerWeapons[playerid][pwWeaponId][i] 	= 0;
 			PlayerWeapons[playerid][pwAmmo][i] 		= 0;
 		}

@@ -427,6 +427,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 					if( house == INVALID_HOUSE_ID && HouseInfo[ house ][ hOwnerID ] != PlayerInfo[ playerid ][ pSQLID ] ) 
 						return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Samo vlasnik kuce moze uzeti oruzje iz sefa!");
 					
+					if (! CheckPlayerWeapons(playerid, HouseStorage[id][storageWeapons][listitem]) ) return 1;
 					AC_GivePlayerWeapon(playerid, HouseStorage[id][storageWeapons][listitem], HouseStorage[id][storageAmmo][listitem]);
 					SetAnimationForWeapon(playerid, HouseStorage[id][storageWeapons][listitem], puzavac);
 					

@@ -960,7 +960,8 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 				wname[32],
 				weaponid = WarehouseWeapons[whid][wslot][whWeaponId],
 				ammo = WarehouseWeapons[whid][wslot][whAmmo];
-	
+
+			if (! CheckPlayerWeapons(playerid, weaponid) ) return 1;
 			AC_GivePlayerWeapon(playerid, weaponid, ammo);
 			GetWeaponName(weaponid, wname, 32);
 			SendFormatMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uspjesno ste uzeli %s(%d) iz warehousea.", wname, ammo);

@@ -407,7 +407,9 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 				if (storage_id == -1)
 					return (false);
 
-				if (HouseStorage[storage_id][storageWeapons][listitem]) {	
+				if (HouseStorage[storage_id][storageWeapons][listitem]) 
+				{
+					if (! CheckPlayerWeapons(playerid, HouseStorage[storage_id][storageWeapons][listitem]) ) return 1;
 					AC_GivePlayerWeapon(playerid, HouseStorage[storage_id][storageWeapons][listitem], HouseStorage[storage_id][storageAmmo][listitem]);
 					SetAnimationForWeapon(playerid, HouseStorage[storage_id][storageWeapons][listitem], puzavac);
 

@@ -5104,13 +5104,6 @@ CMD:respawn(playerid, params[])
 	return 1;
 }
 
-forward Delay_SetPlayerWeapons(playerid);
-public Delay_SetPlayerWeapons(playerid)
-{
-	AC_SetPlayerWeapons(playerid);
-	return 1;
-}
-
 CMD:akill(playerid, params[])
 {
     
