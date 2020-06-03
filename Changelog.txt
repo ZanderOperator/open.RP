@@ -1,0 +1,7 @@
+City of Angels RolePlay 18.3.5. - BugFix
+- Velicina AMX-a smanjena za 10 MB - velika optimizacija memorije
+- Radi optimizacije obrisani nazivi slotova furniturea
+- Popravljen bug sa nestajanjem oružja i reviewan kompletni weapons code
+- Optimizirano izlistavanje/trazenje tekstura na (Biznis) Furnitureu
+- Popravljeno brisanje objekata iz Biznis Furniturea
+- Promjenjena velicina slova na PopUp Textdrawu i dodano pola sekunde za citanje

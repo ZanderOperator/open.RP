@@ -4050,10 +4050,6 @@ public OnPlayerDeath(playerid, killerid, reason)
 	if(IsPlayerInAnyVehicle(playerid))
 		RemovePlayerFromVehicle(playerid);
 	
-	if(KilledBy[playerid] != 1338) // Admin Kill
-		AC_ResetPlayerWeapons(playerid);
-	else KilledBy[playerid] = INVALID_PLAYER_ID;
-	
 	return 1;
 }
 

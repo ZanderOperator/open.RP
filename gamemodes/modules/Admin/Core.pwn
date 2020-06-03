@@ -5113,12 +5113,12 @@ CMD:akill(playerid, params[])
     if( !IsPlayerConnected(giveplayerid) ) return SendClientMessage(playerid, COLOR_RED, "ERROR: Taj igrac nije online!");
 	if( !Bit1_Get( gr_PlayerSendKill, giveplayerid ) ) return SendClientMessage( playerid, COLOR_RED, "ERROR: Taj igrac ne treba ubojstvo!" );
 	
-	KilledBy[giveplayerid] = 1338;
-	ResetPlayerWeapons(giveplayerid);
+	AC_ResetPlayerWeapons(giveplayerid);
 	SetPlayerHealth(giveplayerid, 0);
 	Bit1_Set( gr_PlayerSendKill, giveplayerid, false );
 	format(globalstring, sizeof(globalstring), "AdmCMD: Admin %s je odobrio kill igracu %s", GetName(playerid,false), GetName(giveplayerid,false));
 	SendAdminMessage(COLOR_RED, globalstring);
+	
 	return 1;
 }
 
