@@ -2191,7 +2191,7 @@ GetFurnitureSlots(playerid, donator_level) {
 		case 3,4:
 			return FURNITURE_VIP_GOLD_OBJCTS;
 		default:
-			return SendClientMessage(playerid, COLOR_LIGHTRED, "ERROR: Furniture.");
+			return SendClientMessage(playerid, COLOR_LIGHTRED, "Furniture.");
 	}
 	return FURNITURE_VIP_NONE;
 }

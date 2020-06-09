@@ -52,10 +52,10 @@ new g_AbovePresets[][E_ABOVESIREN_INFO] =
 CMD:siren(playerid, params[])
 {
 	if(!IsPlayerInAnyVehicle(playerid))
-		return SendClientMessage(playerid, COLOR_RED, "ERROR: Niste u vozilu.");
+		return SendClientMessage(playerid, COLOR_RED, "Niste u vozilu.");
 
 	if(!IsACop(playerid) && !IsASD(playerid) && !IsFDMember(playerid) && !IsAGov(playerid))
-		return SendClientMessage(playerid, COLOR_RED, "ERROR: Niste ovlasteni.");
+		return SendClientMessage(playerid, COLOR_RED, "Niste ovlasteni.");
 
 	new
 		type[7],

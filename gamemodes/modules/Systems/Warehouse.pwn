@@ -934,7 +934,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 					new fid = PlayerInfo[playerid][pMember],
 						whid = FetchWarehouseEnumFromFaction(FactionInfo[fid][fID]);
 					if(!Iter_Count(WhWeapons[whid]))
-						return SendClientMessage(playerid,  COLOR_RED, "ERROR: Warehouse nema pohranjeno oruzje!");
+						return SendClientMessage(playerid,  COLOR_RED, "Warehouse nema pohranjeno oruzje!");
 					ShowPlayerDialog(playerid, DIALOG_TAKE_WEAPON_LIST, DIALOG_STYLE_LIST, "Odaberite oruzje:", ListPlayerWarehouseWeapons(playerid, whid), "Odaberi", "Izlaz");
 				}
 				case 1:
@@ -1087,7 +1087,7 @@ CMD:warehouse(playerid, params[])
 		if(!IsAtValidWarehouse(playerid, wh))
 			return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ispred vaulta warehousea svoje organizacije!");
 		if(PlayerInfo[playerid][pWarehouseKey] != WarehouseInfo[wh][whFactionSQLID] && FactionInfo[flid][fID] != WarehouseInfo[wh][whFactionSQLID])
-			return SendClientMessage(playerid,  COLOR_RED, "ERROR: Nemate kljuc od sefa warehousea.");
+			return SendClientMessage(playerid,  COLOR_RED, "Nemate kljuc od sefa warehousea.");
 		if(WarehouseInfo[wh][whLocked] == false)
 		{
 			WarehouseInfo[wh][whLocked] = true;
@@ -1120,7 +1120,7 @@ CMD:warehouse(playerid, params[])
 		if(!DoesWarehouseExist(FactionInfo[fid][fID]))
 			return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Vasa fakcija ne posjeduje warehouse!");
 		if(PlayerInfo[playerid][pWarehouseKey] != WarehouseInfo[wh][whFactionSQLID] && FactionInfo[flid][fID] != WarehouseInfo[wh][whFactionSQLID]) 
-			return SendClientMessage(playerid,  COLOR_RED, "ERROR: Nemate kljuc od sefa warehousea / niste leader organizacije.");
+			return SendClientMessage(playerid,  COLOR_RED, "Nemate kljuc od sefa warehousea / niste leader organizacije.");
 		if( !IsPlayerLogged(giveplayerid) || !IsPlayerConnected(giveplayerid) ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Taj igrac nije ulogiran!");
 		if(PlayerInfo[giveplayerid][pMember] != PlayerInfo[playerid][pMember])
 			return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Igrac nije clan vase organizacije da bi mu mogli dati svoje kljuceve skladista!");
@@ -1156,7 +1156,7 @@ CMD:warehouse(playerid, params[])
 
 CMD:awarehouse(playerid, params[])
 {
-	if(PlayerInfo[playerid][pAdmin] < 1338) return SendClientMessage(playerid,COLOR_RED, "ERROR: Niste ovlasteni za koristenje ove komande.");
+	if(PlayerInfo[playerid][pAdmin] < 1338) return SendClientMessage(playerid,COLOR_RED, "Niste ovlasteni za koristenje ove komande.");
 	new option[16];
 	if (sscanf(params, "s[16] ",option)) {
 	    SendClientMessage(playerid, COLOR_RED, "USAGE: /awarehouse [OPCIJA]");

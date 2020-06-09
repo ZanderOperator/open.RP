@@ -1332,7 +1332,7 @@ public OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
    		if (IsPlayerInRangeOfPoint( playerid, 10.0, 785.585754, -1152.468017, 25.328947))
 		{
       		if(PlayerInfo[playerid][pSQLID] != 411 && PlayerInfo[playerid][pSQLID] != 5701)
-				return SendClientMessage(playerid, COLOR_RED, "ERROR: Niste ovlasteni");
+				return SendClientMessage(playerid, COLOR_RED, "Niste ovlasteni");
 		    if(wooGateStatus[0] == 0){
 				MoveObject(wooGate[0], 785.585754, -1152.468017, 19.598951, 3.00);
 				wooGateStatus[0] = 1;
@@ -1346,7 +1346,7 @@ public OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
 		if (IsPlayerInRangeOfPoint( playerid, 10.0, 659.517700, -1227.184692, 16.826818))
 		{
 		    if(PlayerInfo[playerid][pSQLID] != 411 && PlayerInfo[playerid][pSQLID] != 5701)
-				return SendClientMessage(playerid, COLOR_RED, "ERROR: Niste ovlasteni");
+				return SendClientMessage(playerid, COLOR_RED, "Niste ovlasteni");
 		    if(wooGateStatus[1] == 0){
 				MoveObject(wooGate[1], 659.517700, -1227.184692, 12.176794, 3.00);
 				wooGateStatus[1] = 1;
@@ -1360,7 +1360,7 @@ public OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
 		if (IsPlayerInRangeOfPoint( playerid, 10.0, 664.907043, -1309.447631, 15.290976))
 		{
 		    if(PlayerInfo[playerid][pSQLID] != 411 && PlayerInfo[playerid][pSQLID] != 5701)
-				return SendClientMessage(playerid, COLOR_RED, "ERROR: Niste ovlasteni");
+				return SendClientMessage(playerid, COLOR_RED, "Niste ovlasteni");
 		    if(wooGateStatus[2] == 0){
 				MoveObject(wooGate[2], 664.907043, -1309.447631, 9.630944, 3.00);
 				wooGateStatus[2] = 1;
@@ -1590,7 +1590,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 							return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Level 1 igraci nemaju pristup oruzju!");
 					
 					if(IsACop(playerid) || IsASD(playerid) ||IsFDMember(playerid)) 
-						return SendClientMessage(playerid,COLOR_RED, "ERROR: Ne mozes koristiti house storage ako si policajac ili FD!");
+						return SendClientMessage(playerid,COLOR_RED, "Ne mozes koristiti house storage ako si policajac ili FD!");
 					
 					if(house == INVALID_HOUSE_ID)
 						return SendErrorMessage(playerid, "Niste vlasnik kuce!");
@@ -3074,7 +3074,7 @@ CMD:houseentrance(playerid, params[])
 	new houseid;
 	if(PlayerInfo[playerid][pAdmin] < 1337) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ovlasteni!");
 	if(sscanf(params, "i", houseid)) return SendClientMessage(playerid, COLOR_RED, "USAGE: /houseentrance [houseid]");
-	if(!Iter_Contains(Houses, houseid)) return SendClientMessage(playerid,COLOR_RED, "ERROR: Morate unijeti valjani houseid!");
+	if(!Iter_Contains(Houses, houseid)) return SendClientMessage(playerid,COLOR_RED, "Morate unijeti valjani houseid!");
 
 	va_SendClientMessage(playerid, COLOR_RED, "[ ! ] Premjestili ste ulaz od kuce %d na ovo mjesto!",houseid);
 	new
@@ -3122,7 +3122,7 @@ CMD:customhouseint(playerid, params[])
 		SendClientMessage(playerid, COLOR_GREY, "NOTE: Taj ID MORA biti u skripti!");
 		return 1;
 	}
-	if(!Iter_Contains(Houses, houseid)) return SendClientMessage(playerid,COLOR_RED, "ERROR: Morate unijeti valjani houseid!");
+	if(!Iter_Contains(Houses, houseid)) return SendClientMessage(playerid,COLOR_RED, "Morate unijeti valjani houseid!");
 
 	HouseInfo[houseid][hExitX] 		= iX;
 	HouseInfo[houseid][hExitY] 		= iY;
@@ -3147,7 +3147,7 @@ CMD:houseint(playerid, params[])
 	new proplev, id2;
 	if(PlayerInfo[playerid][pAdmin] < 1338) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nisi 1338!");
 	if (sscanf(params, "ii", proplev, id2)) return SendClientMessage(playerid, COLOR_RED, "USAGE: /houseint [houseid] [id (1-42)]");
-	if(proplev > sizeof(HouseInfo) || proplev < 0) return SendClientMessage(playerid,COLOR_RED, "ERROR: House ID mora biti izmedju 0 i 558");
+	if(proplev > sizeof(HouseInfo) || proplev < 0) return SendClientMessage(playerid,COLOR_RED, "House ID mora biti izmedju 0 i 558");
  	if(id2 < 1 || id2 > 42) return SendClientMessage(playerid, COLOR_RED, "[GRESKA:] INTERIORI MOGU BITI OD 1-42.");
 	switch(id2) {
 		case 1: {
@@ -3644,7 +3644,7 @@ CMD:doorram(playerid, params[])
 }
 CMD:unrenthouse(playerid, params[])
 {
-	if(PlayerInfo[playerid][pRentKey] == INVALID_HOUSE_ID) return SendClientMessage(playerid,COLOR_RED, "ERROR: Ne iznajmljujete kucu!");
+	if(PlayerInfo[playerid][pRentKey] == INVALID_HOUSE_ID) return SendClientMessage(playerid,COLOR_RED, "Ne iznajmljujete kucu!");
 	new house = PlayerInfo[playerid][pRentKey];
 	va_SendClientMessage(playerid, COLOR_RED, "[ ! ] Prestao si iznajmljivati kucu na adresi %s.",  HouseInfo[house][hAdress]);
 	PlayerInfo[playerid][pRentKey] = INVALID_HOUSE_ID;

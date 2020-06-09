@@ -286,7 +286,7 @@ hook OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
 			new nContainer = GetNearestContainer(playerid);
 			if(nContainer != INVALID_OBJECT_ID)
 			{
-				if(garbageContainersTrash[nContainer] > 200) return SendClientMessage( playerid, COLOR_RED, "ERROR: Ovaj kontenjer je pun.");
+				if(garbageContainersTrash[nContainer] > 200) return SendClientMessage( playerid, COLOR_RED, "Ovaj kontenjer je pun.");
 				garbageContainersTrash[nContainer] = 1;
 				ClearAnimations(playerid);
 				gHasGarbage[playerid] = false;
@@ -299,7 +299,7 @@ hook OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
 			new nContainer = GetNearestContainer(playerid);
 			if(nContainer != INVALID_OBJECT_ID)
 			{
-				if(garbageContainersTrash[nContainer] == 0) return SendClientMessage( playerid, COLOR_RED, "ERROR: Ovaj kontenjer je prazan.");
+				if(garbageContainersTrash[nContainer] == 0) return SendClientMessage( playerid, COLOR_RED, "Ovaj kontenjer je prazan.");
 				gGarbagePicked[playerid] = true;
 				garbageContainersTrash[nContainer] = 0;
 				SetPlayerAttachedObject(playerid, 0, 1264, 5, 0.352547, -0.205320, 0.184597, 212.175216, 292.318084, 151.621368, 1.000000, 1.000000, 1.000000); // vreca
@@ -311,11 +311,11 @@ hook OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
 			new vID = getPlayerNearestVehicle(playerid),
 				Float:vehPos[3];
 			getPosBehindVehicle(vID, vehPos[0], vehPos[1], vehPos[2], 0.5);
-			if(!IsVehicleATrashTruck(vID)) return SendClientMessage( playerid, COLOR_RED, "ERROR: Ne ubacujete smece u TrashMastera!");
+			if(!IsVehicleATrashTruck(vID)) return SendClientMessage( playerid, COLOR_RED, "Ne ubacujete smece u TrashMastera!");
 			
 			if( !IsPlayerInRangeOfPoint(playerid, 1.5, vehPos[0], vehPos[1], vehPos[2])) return 1;
 			
-			if(pBoxes[playerid] == 10) return SendClientMessage( playerid, COLOR_RED, "ERROR: Vec ste utovarili 10 vreca! Odvezite kamion na deponij!");
+			if(pBoxes[playerid] == 10) return SendClientMessage( playerid, COLOR_RED, "Vec ste utovarili 10 vreca! Odvezite kamion na deponij!");
 			pBoxes[playerid] += 1;
 			Bit8_Set( gr_GarbageBoxesAll, playerid, pBoxes[playerid] );
 			
@@ -371,7 +371,7 @@ hook OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
 			{
 			    new vID = getPlayerNearestVehicle(playerid),
 					Float:vehPos[3];
-				if(!IsVehicleATrashTruck(vID)) return SendClientMessage( playerid, COLOR_RED, "ERROR: Ne vadite smece iz Trash Mastera!");
+				if(!IsVehicleATrashTruck(vID)) return SendClientMessage( playerid, COLOR_RED, "Ne vadite smece iz Trash Mastera!");
 				getPosBehindVehicle(vID, vehPos[0], vehPos[1], vehPos[2], 0.5);
 				if (IsPlayerInRangeOfPoint(playerid, 2.2, vehPos[0], vehPos[1], vehPos[2]))
 				{
@@ -407,7 +407,7 @@ hook OnPlayerEnterCheckpoint(playerid)
 	{	
 		if( gStartedWork[playerid] == 1 ) 
 		{
-	        if(IsPlayerInAnyVehicle(playerid)) return SendClientMessage( playerid, COLOR_RED, "ERROR: Ne smijete biti u vozilu!");
+	        if(IsPlayerInAnyVehicle(playerid)) return SendClientMessage( playerid, COLOR_RED, "Ne smijete biti u vozilu!");
 			DisablePlayerCheckpoint(playerid);
 			ApplyAnimation(playerid, "BOMBER", "BOM_PLANT", 4.1, 1, 0, 0, 0, 0);
 			defer AnimTimer(playerid);
@@ -420,7 +420,7 @@ hook OnPlayerEnterCheckpoint(playerid)
 	    else if(gStartedWork[playerid] == 2) 
 		{
 			new vID = GetPlayerVehicleID(playerid);
-			if(!IsVehicleATrashTruck(vID)) return SendClientMessage( playerid, COLOR_RED, "ERROR: Ne istovarujete smece iz TrashMastera!");
+			if(!IsVehicleATrashTruck(vID)) return SendClientMessage( playerid, COLOR_RED, "Ne istovarujete smece iz TrashMastera!");
   			gDeponyEmpty[playerid] = 1;
 		    SendMessage(playerid, MESSAGE_TYPE_INFO, "Stigli ste na mjesto za istovar smeca sad izadjite iz kamiona i istovarite smece (Koristite tipku ~k~~CONVERSATION_NO~).");
 			DisablePlayerCheckpoint(playerid);
@@ -471,9 +471,9 @@ CMD:garbage(playerid, params[])
 	
 	if( !strcmp( pick, "foot", true ) ) 
 	{
-		if( PlayerInfo[ playerid ][ pFreeWorks ] < 1 ) return SendClientMessage( playerid, COLOR_RED, "ERROR: Ne mozes vise raditi!");
-		if( !pTakedWC[playerid] ) return SendClientMessage( playerid, COLOR_RED, "ERROR: Prvo morate koristiti /garbage clothes!");
-		if( gStartedWork[playerid] != 0 ) return SendClientMessage( playerid, COLOR_RED, "ERROR: Vec radite neki posao! Kucajte /garbage stop!");
+		if( PlayerInfo[ playerid ][ pFreeWorks ] < 1 ) return SendClientMessage( playerid, COLOR_RED, "Ne mozes vise raditi!");
+		if( !pTakedWC[playerid] ) return SendClientMessage( playerid, COLOR_RED, "Prvo morate koristiti /garbage clothes!");
+		if( gStartedWork[playerid] != 0 ) return SendClientMessage( playerid, COLOR_RED, "Vec radite neki posao! Kucajte /garbage stop!");
 		
 		TogglePlayerAllDynamicCPs(playerid, false);
 		new Pos = random(sizeof(randomTrashPos));
@@ -487,11 +487,11 @@ CMD:garbage(playerid, params[])
 	}
 	if( !strcmp( pick, "truck", true ) )
 	{
-		if( PlayerInfo[ playerid ][ pFreeWorks ] < 1 ) return SendClientMessage( playerid, COLOR_RED, "ERROR: Ne mozes vise raditi!");
-		if( !pTakedWC[playerid] ) return SendClientMessage( playerid, COLOR_RED, "ERROR: Prvo morate koristiti /garbage clothes!");
-		if( GetPlayerSkillLevel(playerid, 2) < 1 ) return SendClientMessage( playerid, COLOR_RED, "ERROR: Niste smetlar skill 1!");
+		if( PlayerInfo[ playerid ][ pFreeWorks ] < 1 ) return SendClientMessage( playerid, COLOR_RED, "Ne mozes vise raditi!");
+		if( !pTakedWC[playerid] ) return SendClientMessage( playerid, COLOR_RED, "Prvo morate koristiti /garbage clothes!");
+		if( GetPlayerSkillLevel(playerid, 2) < 1 ) return SendClientMessage( playerid, COLOR_RED, "Niste smetlar skill 1!");
 		new vID = GetPlayerVehicleID(playerid);
-		if(!IsVehicleATrashTruck(vID)) return SendClientMessage( playerid, COLOR_RED, "ERROR: Niste u TrashMasteru!");
+		if(!IsVehicleATrashTruck(vID)) return SendClientMessage( playerid, COLOR_RED, "Niste u TrashMasteru!");
 		gStartedWork[playerid] = 2;
 		SendClientMessage( playerid, COLOR_RED, "[ ! ] Krenite s praznjenjem kontenjera! Potrazite kotenjere sa smecem!");
 		return 1;
@@ -501,7 +501,7 @@ CMD:garbage(playerid, params[])
 		if( !IsPlayerInRangeOfPoint(playerid, 5.0, 2199.1487,-1972.6333,13.5581 ) ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste blizu pickupa za presvlacenje!");
 		if (pTakedWC[playerid] == false)
 		{
-			if( PlayerInfo[ playerid ][ pFreeWorks ] < 1 ) return SendClientMessage( playerid, COLOR_RED, "ERROR: Ne mozes vise raditi!");
+			if( PlayerInfo[ playerid ][ pFreeWorks ] < 1 ) return SendClientMessage( playerid, COLOR_RED, "Ne mozes vise raditi!");
 			pTakedWC[playerid] = true;
 			SetPlayerSkin(playerid, 16);
 			SendMessage(playerid, MESSAGE_TYPE_INFO, "Obukli ste radnu odjecu, koristite /garbage foot ili truck da krenete raditi!");		

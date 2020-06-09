@@ -802,7 +802,7 @@ PlayerLootItem(playerid, item_id, item_type = E_ITEM_TYPE_NONE, item_amount) {
 	if(item_type == E_ITEM_TYPE_AMMO) {
 		new weaponid = AC_GetPlayerWeapon(playerid);
 		if (!weaponid)
-			return SendClientMessage(playerid, COLOR_RED, "ERROR: Ne drzite nikakvo oruzje u rukama.");
+			return SendClientMessage(playerid, COLOR_RED, "Ne drzite nikakvo oruzje u rukama.");
 			
 		format(buffer, sizeof(buffer), "~w~%s~n~+~g~%d~w~ ammo", gunname, item_amount);
 		new ammo 	= AC_GetPlayerAmmo(playerid),
@@ -1104,14 +1104,14 @@ CMD:lts(playerid, params[]) {
 	}
 	if(strcmp(action, "goto", true) == 0) {
 		if(PlayerInfo[playerid][pAdmin] < 1337)
-			return SendClientMessage(playerid, COLOR_RED, "ERROR: Niste ovlasteni za koristenje ove komande (admin lvl 1337+).");
+			return SendClientMessage(playerid, COLOR_RED, "Niste ovlasteni za koristenje ove komande (admin lvl 1337+).");
 		SetPlayerPos(playerid, -2227.8279, 2326.4094, 7.5486);
 		SetPlayerVirtualWorld(playerid, EVENT_WORLD_ID);
 	}
 	
 	if(strcmp(action,"createdrop", true) == 0) {
 		if(PlayerInfo[playerid][pAdmin] < 1337)
-			return SendClientMessage(playerid, COLOR_RED, "ERROR: Niste ovlasteni za koristenje ove komande (admin lvl 1337+).");
+			return SendClientMessage(playerid, COLOR_RED, "Niste ovlasteni za koristenje ove komande (admin lvl 1337+).");
 		new sDROP_type = minrand(1,3); 
 	
 		DestroyDynamicObject(supply_object[0]);
@@ -1137,7 +1137,7 @@ CMD:lts(playerid, params[]) {
 	
 	if(strcmp(action,"create", true) == 0) {
 		if(PlayerInfo[playerid][pAdmin] < 1337)
-			return SendClientMessage(playerid, COLOR_RED, "ERROR: Niste ovlasteni za koristenje ove komande (admin lvl 1337+).");
+			return SendClientMessage(playerid, COLOR_RED, "Niste ovlasteni za koristenje ove komande (admin lvl 1337+).");
 		if(lsm_created == true)
 			return SendErrorMessage(playerid, "Vec ste kreirali Last Team Standing event.");
 		
@@ -1157,7 +1157,7 @@ CMD:lts(playerid, params[]) {
 	
 	if(strcmp(action,"unlock", true) == 0) {
 		if(PlayerInfo[playerid][pAdmin] < 1337)
-			return SendClientMessage(playerid, COLOR_RED, "ERROR: Niste ovlasteni za koristenje ove komande (admin lvl 1337+).");
+			return SendClientMessage(playerid, COLOR_RED, "Niste ovlasteni za koristenje ove komande (admin lvl 1337+).");
 		if(lsm_locked == true)
 			return SendErrorMessage(playerid, "Event je vec otkljucan.");
 			
@@ -1192,7 +1192,7 @@ CMD:lts(playerid, params[]) {
 		if(lsm_locked == false)
 			return SendErrorMessage(playerid, "Event je trenutno zakljucan.");
 		if(PlayerInfo[playerid][pLevel] == 1) 
-			return SendClientMessage(playerid,COLOR_RED, "ERROR: Level 1/2 ne mogu uci na ovaj tip event-a.");	
+			return SendClientMessage(playerid,COLOR_RED, "Level 1/2 ne mogu uci na ovaj tip event-a.");	
 		
 		// Prepare player.
 		ResetPlayerVars_lts(playerid);
@@ -1255,7 +1255,7 @@ CMD:lts(playerid, params[]) {
 
 	if(strcmp(action,"checkteams", true) == 0) {	
 		if(PlayerInfo[playerid][pAdmin] < 1337)
-			return SendClientMessage(playerid, COLOR_RED, "ERROR: Niste ovlasteni za koristenje ove komande (admin lvl 1337+).");
+			return SendClientMessage(playerid, COLOR_RED, "Niste ovlasteni za koristenje ove komande (admin lvl 1337+).");
 			
 		SendClientMessage(playerid, COLOR_LIGHTBLUE, "|_________ [ TEAMS ] _________|");	
 		foreach(new i : Player) {
@@ -1304,7 +1304,7 @@ CMD:lts(playerid, params[]) {
 			return SendErrorMessage(playerid, "Last Team Standing event nije kreiran trenutno.");
 			
 		if(PlayerInfo[playerid][pAdmin] < 1337)
-			return SendClientMessage(playerid, COLOR_RED, "ERROR: Niste ovlasteni za koristenje ove komande (admin lvl 1337+).");
+			return SendClientMessage(playerid, COLOR_RED, "Niste ovlasteni za koristenje ove komande (admin lvl 1337+).");
 			
 		if(sscanf(params, "s[25]i", action, target_id)) {
 			SendClientMessage(playerid, COLOR_RED, "USAGE: /lts kick [playerid].");
@@ -1326,7 +1326,7 @@ CMD:lts(playerid, params[]) {
 			return SendErrorMessage(playerid, "Last Team Standing event nije kreiran trenutno.");
 			
 		if(lts_LeaderTeam[playerid] == -1)
-			return SendClientMessage(playerid, COLOR_RED, "ERROR: Morate biti team leader kako bi koristili ovu komandu.");
+			return SendClientMessage(playerid, COLOR_RED, "Morate biti team leader kako bi koristili ovu komandu.");
 			
 		if(sscanf(params, "s[25]i", action, target_id)) {
 			SendClientMessage(playerid, COLOR_RED, "USAGE: /lts tkick [playerid].");
@@ -1346,7 +1346,7 @@ CMD:lts(playerid, params[]) {
 			return SendErrorMessage(playerid, "Last Team Standing event nije kreiran trenutno.");
 			
 		if(lts_LeaderTeam[playerid] == -1)
-			return SendClientMessage(playerid, COLOR_RED, "ERROR: Morate biti team leader kako bi koristili ovu komandu.");
+			return SendClientMessage(playerid, COLOR_RED, "Morate biti team leader kako bi koristili ovu komandu.");
 			
 		if(sscanf(params, "s[25]i", action, target_id)) {
 			SendClientMessage(playerid, COLOR_RED, "USAGE: /lts invite [playerid].");
@@ -1362,7 +1362,7 @@ CMD:lts(playerid, params[]) {
 	
 	if(strcmp(action,"teamleader", true) == 0) {
 		if(PlayerInfo[playerid][pAdmin] < 1337)
-			return SendClientMessage(playerid, COLOR_RED, "ERROR: Niste ovlasteni za koristenje ove komande (admin lvl 1337+).");
+			return SendClientMessage(playerid, COLOR_RED, "Niste ovlasteni za koristenje ove komande (admin lvl 1337+).");
 			
 		if(sscanf(params, "s[25]ii", action, target_id, team_id))
 		{
@@ -1390,7 +1390,7 @@ CMD:lts(playerid, params[]) {
 		GetPlayerPos(playerid, X,Y,Z);
 		
 		if(PlayerInfo[playerid][pAdmin] < 1337)
-			return SendClientMessage(playerid, COLOR_RED, "ERROR: Niste ovlasteni za koristenje ove komande (admin lvl 1337+).");
+			return SendClientMessage(playerid, COLOR_RED, "Niste ovlasteni za koristenje ove komande (admin lvl 1337+).");
 			
 		if(sscanf(params, "s[25]iiis[32]", action, type, i_wid, i_amount, i_name))
 		{
@@ -1413,7 +1413,7 @@ CMD:lts(playerid, params[]) {
 	
 	if(strcmp(action,"maketeams", true) == 0) {
 		if(PlayerInfo[playerid][pAdmin] < 1337)
-			return SendClientMessage(playerid, COLOR_RED, "ERROR: Niste ovlasteni za koristenje ove komande (admin lvl 1337+).");
+			return SendClientMessage(playerid, COLOR_RED, "Niste ovlasteni za koristenje ove komande (admin lvl 1337+).");
 			
 		if(sscanf(params, "s[25]ii", action, target_id, team_id))
 		{

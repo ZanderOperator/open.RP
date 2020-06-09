@@ -250,7 +250,7 @@ hook OnPlayerDisconnect(playerid, reason)
 */
 CMD:resetcp(playerid, params[])
 {	
-	if(LastCPInfo[playerid][lcpLastCP] == 0) return SendClientMessage(playerid, COLOR_RED, "ERROR: Nemate aktivne CPove!");
+	if(LastCPInfo[playerid][lcpLastCP] == 0) return SendClientMessage(playerid, COLOR_RED, "Nemate aktivne CPove!");
 	if(!LastCPInfo[playerid][lcpIsDynCP])
 	{
 		SetPlayerCheckpoint(playerid, LastCPInfo[playerid][lcpPosX], LastCPInfo[playerid][lcpPosY], LastCPInfo[playerid][lcpPosZ], LastCPInfo[playerid][lcpSize]);

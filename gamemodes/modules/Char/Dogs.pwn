@@ -563,7 +563,7 @@ CMD:dog(playerid, params[])
 	}
 	else if(!strcmp(option, "locatespot", true))
 	{
-		if(PlayerDog[playerid][pdSQLID] == -1) return SendMessage(playerid, MESSAGE_TYPE_ERROR,"ERROR: Vi ne posjedujete kucnog ljubimca.");
+		if(PlayerDog[playerid][pdSQLID] == -1) return SendMessage(playerid, MESSAGE_TYPE_ERROR,"Vi ne posjedujete kucnog ljubimca.");
 		
 		SendMessage(playerid, MESSAGE_TYPE_INFO, "[DOG SPOT]: Locirali ste mjesto vaseg 'dog spota' na mapi.");
 		dog_spot[playerid] = true;

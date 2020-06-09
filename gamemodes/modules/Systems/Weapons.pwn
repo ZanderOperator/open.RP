@@ -311,13 +311,13 @@ stock static IsPlayerInRangeOfWOCrateByID(playerid, crateid, Float:range) //Ako 
 stock static TakeWeaponCrateFromFloor(playerid)
 {
 	if( IsPlayerAttachedObjectSlotUsed(playerid, 9) ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Vec nesto nosite!");
-	if( AC_GetPlayerWeapon(playerid) != 0 ) return SendClientMessage(playerid,COLOR_RED, "ERROR: Drzite oruzje u rukama, ne mozete nositi kutiju!");
+	if( AC_GetPlayerWeapon(playerid) != 0 ) return SendClientMessage(playerid,COLOR_RED, "Drzite oruzje u rukama, ne mozete nositi kutiju!");
 	if( IsPlayerInRangeOfWeaponCrate(playerid, 5.0) != -1 ) {
 		new crate = IsPlayerInRangeOfWeaponCrate(playerid, 5.0);
 		/* foreach(new i : Player) // provjera nosi li tko tu kutiju vec?
 		{
 			if(Bit16_Get( gr_PlayerCarryPackage, i) == crate)
-				return va_SendClientMessage(playerid,COLOR_RED, "ERROR: %s nosi tu kutiju!", GetName(i, true));
+				return va_SendClientMessage(playerid,COLOR_RED, "%s nosi tu kutiju!", GetName(i, true));
 		} */
 		if( IsValidDynamicObject(WOCrateInfo[ crate ][ cObject ]) ) {
 			DestroyDynamicObject( WOCrateInfo[ crate ][ cObject ] );
@@ -599,9 +599,9 @@ CMD:weapons(playerid, params[])
 	if( !strcmp( pick, "order") )
 	{
 		if( PlayerInfo[ playerid ][ pJob ] != DEALER_ID || !PlayerInfo[playerid][pMember] ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, " Niste Gun Dealer ili u skriptanoj organizaciji!");
-		if(!IsAtGovornica(playerid)) return SendClientMessage(playerid,COLOR_RED, "ERROR: Narucivati mozete samo sa govornice!");
+		if(!IsAtGovornica(playerid)) return SendClientMessage(playerid,COLOR_RED, "Narucivati mozete samo sa govornice!");
 		if( Iter_Count(WOCrates) == ( MAX_WORDER_CRATES - 1) ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, " Sva mjesta su vec pretovarena, pokusajte kasnije!");
-		if(CheckPlayerMaxCrates(playerid) >= MAX_PLAYER_WORDERS) return SendClientMessage(playerid,COLOR_RED, "ERROR: Imate maksimalan broj narudzbi!!"); 
+		if(CheckPlayerMaxCrates(playerid) >= MAX_PLAYER_WORDERS) return SendClientMessage(playerid,COLOR_RED, "Imate maksimalan broj narudzbi!!"); 
 		
 		new tmpString[256];
 		format(tmpString, 256, "Oruzje\tCijena metka\tETA min\n");

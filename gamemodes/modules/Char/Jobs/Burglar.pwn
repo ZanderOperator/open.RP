@@ -267,7 +267,7 @@ stock static InitPlayerPocket(playerid, targetid)
 		PocketDialog[ playerid ][ dialogPos ] = DIALOG_TYPE_MASK;
 		dialogPos++;
 	}
-	if( !strlen(buffer) ) return SendClientMessage( playerid, COLOR_RED, "ERROR: Odabrani gradjanin nema nista u dzepovima!");
+	if( !strlen(buffer) ) return SendClientMessage( playerid, COLOR_RED, "Odabrani gradjanin nema nista u dzepovima!");
 	new
 		caption[ MAX_PLAYER_NAME + 9 ];
 	format( caption, sizeof(caption), "DZEP OD %s", 
@@ -315,7 +315,7 @@ stock static PickPocketTargetPlayer(playerid, type)
 			}
 		}
 		case DIALOG_TYPE_WATCH: {
-			if( RobbingInfo[ playerid ][ rbSlotsGoods ][ 0 ] && RobbingInfo[ playerid ][ rbSlotsGoods ][ 1 ] && RobbingInfo[ playerid ][ rbSlotsGoods ][ 2 ] && RobbingInfo[ playerid ][ rbSlotsGoods ][ 3 ] && RobbingInfo[ playerid ][ rbSlotsGoods ][ 4 ] ) return SendClientMessage( playerid, COLOR_RED, "ERROR: Vas inventory je pun!");
+			if( RobbingInfo[ playerid ][ rbSlotsGoods ][ 0 ] && RobbingInfo[ playerid ][ rbSlotsGoods ][ 1 ] && RobbingInfo[ playerid ][ rbSlotsGoods ][ 2 ] && RobbingInfo[ playerid ][ rbSlotsGoods ][ 3 ] && RobbingInfo[ playerid ][ rbSlotsGoods ][ 4 ] ) return SendClientMessage( playerid, COLOR_RED, "Vas inventory je pun!");
 			
 			new
 				succeed = 1 + random(5);
@@ -345,7 +345,7 @@ stock static PickPocketTargetPlayer(playerid, type)
 			}
 		}		
 		case DIALOG_TYPE_MOBILE: {
-			if( RobbingInfo[ playerid ][ rbSlotsGoods ][ 0 ] && RobbingInfo[ playerid ][ rbSlotsGoods ][ 1 ] && RobbingInfo[ playerid ][ rbSlotsGoods ][ 2 ] && RobbingInfo[ playerid ][ rbSlotsGoods ][ 3 ] && RobbingInfo[ playerid ][ rbSlotsGoods ][ 4 ] ) return SendClientMessage( playerid, COLOR_RED, "ERROR: Vas inventory je pun!");
+			if( RobbingInfo[ playerid ][ rbSlotsGoods ][ 0 ] && RobbingInfo[ playerid ][ rbSlotsGoods ][ 1 ] && RobbingInfo[ playerid ][ rbSlotsGoods ][ 2 ] && RobbingInfo[ playerid ][ rbSlotsGoods ][ 3 ] && RobbingInfo[ playerid ][ rbSlotsGoods ][ 4 ] ) return SendClientMessage( playerid, COLOR_RED, "Vas inventory je pun!");
 			
 			new
 				succeed = 1 + random(5);
@@ -353,7 +353,7 @@ stock static PickPocketTargetPlayer(playerid, type)
 				
 				PlayerInfo[ targetid ][ pMobileNumber ]		= 0;
 				PlayerInfo[ targetid ][ pMobileModel ]		= 0;
-				PlayerInfo[ targetid ][ pMobileMoney ]		= 0;
+				PlayerInfo[ targetid ][ pMobileCost ]		= 0;
 				
 				new	deleteMobile[128];
 				format(deleteMobile, 128, "DELETE FROM `player_phones` WHERE `player_id` = '%d' AND `type` = '1'",
@@ -384,7 +384,7 @@ stock static PickPocketTargetPlayer(playerid, type)
 			}
 		}		
 		case DIALOG_TYPE_CRYPTO: {
-			if( RobbingInfo[ playerid ][ rbSlotsGoods ][ 0 ] && RobbingInfo[ playerid ][ rbSlotsGoods ][ 1 ] && RobbingInfo[ playerid ][ rbSlotsGoods ][ 2 ] && RobbingInfo[ playerid ][ rbSlotsGoods ][ 3 ] && RobbingInfo[ playerid ][ rbSlotsGoods ][ 4 ] ) return SendClientMessage( playerid, COLOR_RED, "ERROR: Vas inventory je pun!");
+			if( RobbingInfo[ playerid ][ rbSlotsGoods ][ 0 ] && RobbingInfo[ playerid ][ rbSlotsGoods ][ 1 ] && RobbingInfo[ playerid ][ rbSlotsGoods ][ 2 ] && RobbingInfo[ playerid ][ rbSlotsGoods ][ 3 ] && RobbingInfo[ playerid ][ rbSlotsGoods ][ 4 ] ) return SendClientMessage( playerid, COLOR_RED, "Vas inventory je pun!");
 			
 			new
 				succeed = 1 + random(5);
@@ -419,7 +419,7 @@ stock static PickPocketTargetPlayer(playerid, type)
 			}
 		}
 		case DIALOG_TYPE_MASK: {
-			if( RobbingInfo[ playerid ][ rbSlotsGoods ][ 0 ] && RobbingInfo[ playerid ][ rbSlotsGoods ][ 1 ] && RobbingInfo[ playerid ][ rbSlotsGoods ][ 2 ] && RobbingInfo[ playerid ][ rbSlotsGoods ][ 3 ] && RobbingInfo[ playerid ][ rbSlotsGoods ][ 4 ] ) return SendClientMessage( playerid, COLOR_RED, "ERROR: Vas inventory je pun!");
+			if( RobbingInfo[ playerid ][ rbSlotsGoods ][ 0 ] && RobbingInfo[ playerid ][ rbSlotsGoods ][ 1 ] && RobbingInfo[ playerid ][ rbSlotsGoods ][ 2 ] && RobbingInfo[ playerid ][ rbSlotsGoods ][ 3 ] && RobbingInfo[ playerid ][ rbSlotsGoods ][ 4 ] ) return SendClientMessage( playerid, COLOR_RED, "Vas inventory je pun!");
 			
 			new
 				succeed = 1 + random(5);
@@ -854,7 +854,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 */
 CMD:stolengoods(playerid, params[])
 {
-	if( PlayerInfo[ playerid ][ pJob ] != ROBBER_ID ) return SendClientMessage( playerid, COLOR_RED, "ERROR: Niste lopov!");
+	if( PlayerInfo[ playerid ][ pJob ] != ROBBER_ID ) return SendClientMessage( playerid, COLOR_RED, "Niste lopov!");
 	if( RobbingInfo[ playerid ][ rbSlotsGoods ][ 0 ] == 0 && RobbingInfo[ playerid ][ rbSlotsGoods ][ 1 ] == 0 && RobbingInfo[ playerid ][ rbSlotsGoods ][ 2 ] == 0 && RobbingInfo[ playerid ][ rbSlotsGoods ][ 3 ] == 0 && RobbingInfo[ playerid ][ rbSlotsGoods ][ 4 ] == 0 ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Vas inventory je prazan!");
 	ShowPlayerDialog(playerid, 0, DIALOG_STYLE_MSGBOX, "POPIS UKRADENE ROBE", ListStolenGoods(playerid), "Uredu", "");
 	return 1;
@@ -862,13 +862,13 @@ CMD:stolengoods(playerid, params[])
 
 CMD:pocketsteal(playerid, params[])
 {
-	if ( PlayerInfo[ playerid ][ pJob ] != ROBBER_ID ) return SendClientMessage( playerid, COLOR_RED, "ERROR: Niste lopov!");
+	if ( PlayerInfo[ playerid ][ pJob ] != ROBBER_ID ) return SendClientMessage( playerid, COLOR_RED, "Niste lopov!");
 	new
 		giveplayerid;
 	if( sscanf( params, "u", giveplayerid ) ) 			return SendClientMessage(playerid, COLOR_RED, "USAGE: /pocketsteal [dio imena/playerid]");
-	if( giveplayerid == INVALID_PLAYER_ID ) 			return SendClientMessage( playerid, COLOR_RED, "ERROR: Nevaljan unos playerida!");
-	if( giveplayerid == playerid ) 						return SendClientMessage( playerid, COLOR_RED, "ERROR: Ne mozete pljackati samog sebe!");
-	if( !ProxDetectorS(2.0, playerid, giveplayerid) ) 	return SendClientMessage( playerid, COLOR_RED, "ERROR: Niste blizu igraca!");
+	if( giveplayerid == INVALID_PLAYER_ID ) 			return SendClientMessage( playerid, COLOR_RED, "Nevaljan unos playerida!");
+	if( giveplayerid == playerid ) 						return SendClientMessage( playerid, COLOR_RED, "Ne mozete pljackati samog sebe!");
+	if( !ProxDetectorS(2.0, playerid, giveplayerid) ) 	return SendClientMessage( playerid, COLOR_RED, "Niste blizu igraca!");
 	InitPlayerPocket(playerid, giveplayerid);
 	return 1;
 }
@@ -891,7 +891,7 @@ CMD:sellgoods(playerid, params[])
 // SKILL 2 - HOUSE
 CMD:crack_alarm(playerid, params[])
 {
-	if( ( PlayerInfo[ playerid ][ pJob ] != ROBBER_ID ) || GetPlayerSkillLevel(playerid, 5) < 2) return SendClientMessage( playerid, COLOR_RED, "ERROR: Niste lopov ili nemate dovoljan skill level!");
+	if( ( PlayerInfo[ playerid ][ pJob ] != ROBBER_ID ) || GetPlayerSkillLevel(playerid, 5) < 2) return SendClientMessage( playerid, COLOR_RED, "Niste lopov ili nemate dovoljan skill level!");
 	new
 		house = Bit16_Get( gr_PlayerInfrontHouse, playerid );
 		
@@ -917,7 +917,7 @@ CMD:crack_alarm(playerid, params[])
 
 CMD:stealitems(playerid, params[])
 {
-	if( ( PlayerInfo[ playerid ][ pJob ] != ROBBER_ID ) || GetPlayerSkillLevel(playerid, 5) < 2 ) return SendClientMessage( playerid, COLOR_RED, "ERROR: Niste lopov ili nemate dovoljan skill level!");
+	if( ( PlayerInfo[ playerid ][ pJob ] != ROBBER_ID ) || GetPlayerSkillLevel(playerid, 5) < 2 ) return SendClientMessage( playerid, COLOR_RED, "Niste lopov ili nemate dovoljan skill level!");
 	new
 		house = Bit16_Get( gr_PlayerInHouse, playerid );
 	if( house == INVALID_HOUSE_ID || !house ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste u kuci!");
@@ -987,7 +987,7 @@ CMD:dropitem(playerid, params[])
 	if( vehicleid == INVALID_VEHICLE_ID ) { // Baci na pod
 		DumpStolenGood(playerid, slot);
 	} else { // Stavljaj u vozilo
-		if( VehicleItems[ vehicleid ][ 0 ] && VehicleItems[ vehicleid ][ 1 ] && VehicleItems[ vehicleid ][ 2 ] && VehicleItems[ vehicleid ][ 3 ] ) return SendClientMessage( playerid, COLOR_RED, "ERROR: Svi su slotovi puni!");
+		if( VehicleItems[ vehicleid ][ 0 ] && VehicleItems[ vehicleid ][ 1 ] && VehicleItems[ vehicleid ][ 2 ] && VehicleItems[ vehicleid ][ 3 ] ) return SendClientMessage( playerid, COLOR_RED, "Svi su slotovi puni!");
 		
 		if( !VehicleItems[ vehicleid ][ 0 ] ) {
 			VehicleItems[ vehicleid ][ 0 ] = RobbingInfo[ playerid ][ rbSlotsGoods ][ slot ];
@@ -1029,7 +1029,7 @@ CMD:takeitem(playerid, params[])
 	if( vehicleid == INVALID_VEHICLE_ID ) { // Uzmi s poda
 		if( !PickUpStolenGood(playerid) ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste blizu ukradene stvari!");
 	} else { // Uzmi iz auta
-		if( !VehicleItems[ vehicleid ][ 0 ] && !VehicleItems[ vehicleid ][ 1 ] && !VehicleItems[ vehicleid ][ 2 ] && !VehicleItems[ vehicleid ][ 3 ] ) return SendClientMessage( playerid, COLOR_RED, "ERROR: Svi su slotovi prazni!");
+		if( !VehicleItems[ vehicleid ][ 0 ] && !VehicleItems[ vehicleid ][ 1 ] && !VehicleItems[ vehicleid ][ 2 ] && !VehicleItems[ vehicleid ][ 3 ] ) return SendClientMessage( playerid, COLOR_RED, "Svi su slotovi prazni!");
 		PickUpVehicleStolenGood(playerid, vehicleid);
 	}	
 	return 1;
@@ -1037,8 +1037,8 @@ CMD:takeitem(playerid, params[])
 // SKILL 3 - HOUSE MONEY
 CMD:stealmoney(playerid, params[])
 {
-	if( ( PlayerInfo[ playerid ][ pJob ] != ROBBER_ID ) || GetPlayerSkillLevel(playerid, 5) < 3 ) return SendClientMessage( playerid, COLOR_RED, "ERROR: Niste lopov ili nemate dovoljan skill level!");
-	if( PlayerInfo[ playerid ][ pFreeWorks ] < 1 ) 	return SendClientMessage( playerid, COLOR_RED, "ERROR: Ne mozes vise krasti (cekajte payday)!");
+	if( ( PlayerInfo[ playerid ][ pJob ] != ROBBER_ID ) || GetPlayerSkillLevel(playerid, 5) < 3 ) return SendClientMessage( playerid, COLOR_RED, "Niste lopov ili nemate dovoljan skill level!");
+	if( PlayerInfo[ playerid ][ pFreeWorks ] < 1 ) 	return SendClientMessage( playerid, COLOR_RED, "Ne mozes vise krasti (cekajte payday)!");
 	new
 		house = Bit16_Get( gr_PlayerInHouse, playerid );
 	if( house == INVALID_HOUSE_ID || !house ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste u kuci!");

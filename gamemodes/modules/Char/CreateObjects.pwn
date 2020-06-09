@@ -529,7 +529,7 @@ CMD:aremoveallplayerobjects(playerid, params[])
 	    id = strval(params);
 	    
 	if(!IsPlayerConnected(id))
-	    return SendClientMessage(playerid,COLOR_RED, "ERROR: Taj igraè nije online!");
+	    return SendClientMessage(playerid,COLOR_RED, "Taj igraè nije online!");
 	    
     if(AreAllPObjectSlotsEmpty(id))
    		return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Taj igraè nema spawnane objekte!");

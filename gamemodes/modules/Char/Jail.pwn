@@ -8375,10 +8375,10 @@ CMD:cells(playerid, params[])
 {
 	if(IsASD(playerid) || IsACop(playerid))
 	{
-		if(!IsPlayerInRangeOfPoint(playerid, 5.0, 1847.7703, -1543.2189, 2011.8159) && !IsPlayerInRangeOfPoint(playerid, 5.0, 1852.0300,-1554.4509,2011.8259) && !IsPlayerInRangeOfPoint(playerid, 5.0, 1847.7236,-1565.3138,2011.8219)) return SendClientMessage(playerid,COLOR_RED, "ERROR: Niste u kontrolnoj sobi.");
+		if(!IsPlayerInRangeOfPoint(playerid, 5.0, 1847.7703, -1543.2189, 2011.8159) && !IsPlayerInRangeOfPoint(playerid, 5.0, 1852.0300,-1554.4509,2011.8259) && !IsPlayerInRangeOfPoint(playerid, 5.0, 1847.7236,-1565.3138,2011.8219)) return SendClientMessage(playerid,COLOR_RED, "Niste u kontrolnoj sobi.");
 
 	}
-	else	SendClientMessage(playerid,COLOR_RED, "ERROR: Niste LSPD/LSSD.");
+	else	SendClientMessage(playerid,COLOR_RED, "Niste LSPD/LSSD.");
 	return 1;
 }
 */

@@ -417,7 +417,7 @@ CMD:dakar(playerid, params[])
 	
 	if(strcmp(action,"vehdestroy", true) == 0) {
 		if(PlayerInfo[playerid][pAdmin] < 1337)
-			return SendClientMessage(playerid, COLOR_RED, "ERROR: Niste ovlasteni za koristenje ove komande (admin lvl 1337+).");
+			return SendClientMessage(playerid, COLOR_RED, "Niste ovlasteni za koristenje ove komande (admin lvl 1337+).");
 			
 		for(new i = 0; i < 21; i++) {
 			DestroyVehicle(dakarcar[i]);
@@ -426,13 +426,13 @@ CMD:dakar(playerid, params[])
 	
 	if(strcmp(action,"vehspawn", true) == 0) { 
 		if(PlayerInfo[playerid][pAdmin] < 1337)
-			return SendClientMessage(playerid, COLOR_RED, "ERROR: Niste ovlasteni za koristenje ove komande (admin lvl 1337+).");
+			return SendClientMessage(playerid, COLOR_RED, "Niste ovlasteni za koristenje ove komande (admin lvl 1337+).");
 		CreateDakarVehicles();
 	}
 	
 	if(strcmp(action, "create", true) == 0) {
 		if(PlayerInfo[playerid][pAdmin] < 1337)
-			return SendClientMessage(playerid, COLOR_RED, "ERROR: Niste ovlasteni za koristenje ove komande (admin lvl 1337+).");
+			return SendClientMessage(playerid, COLOR_RED, "Niste ovlasteni za koristenje ove komande (admin lvl 1337+).");
 			
 		SendClientMessageToAll(COLOR_ORANGE,"[DAKAR]: Administrator je pokrenuo dakar, da ucestvujete koristite (/dakar join).");
 		
@@ -445,10 +445,10 @@ CMD:dakar(playerid, params[])
 			return SendErrorMessage(playerid, "[ERROR]: Event je popunjen, nema vise mjesta.");
 			
 		if(DakarPlayer[playerid] == 1)
-			return SendClientMessage(playerid, COLOR_RED, "ERROR: Vec ste se join-ali na dakar.");
+			return SendClientMessage(playerid, COLOR_RED, "Vec ste se join-ali na dakar.");
 			
 		if(dakar_created == false)
-			return SendClientMessage(playerid, COLOR_RED, "ERROR: Administrator nije pokrenuo/kreirao dakar.");
+			return SendClientMessage(playerid, COLOR_RED, "Administrator nije pokrenuo/kreirao dakar.");
 		
 		if(DakarStarted == 1)
 			return SendClientMessage(playerid, COLOR_RED, "[SERVER] Dakar je vec pokrenut, trebate ga prije toga zaustaviti (/stopdakar).");
@@ -462,7 +462,7 @@ CMD:dakar(playerid, params[])
 	
 	if(strcmp(action,"startrace", true) == 0) {
 		if(PlayerInfo[playerid][pAdmin] < 1337)
-			return SendClientMessage(playerid, COLOR_RED, "ERROR: Niste ovlasteni za koristenje ove komande (admin lvl 1337+).");
+			return SendClientMessage(playerid, COLOR_RED, "Niste ovlasteni za koristenje ove komande (admin lvl 1337+).");
 			
 		if(DakarStarted == 1)
 			return SendClientMessage(playerid, COLOR_RED, "[SERVER] Dakar je vec pokrenut, trebate ga prije toga zaustaviti (/stopdakar).");
@@ -474,7 +474,7 @@ CMD:dakar(playerid, params[])
 	
 	if(strcmp(action,"stoprace", true) == 0) {
 		if(PlayerInfo[playerid][pAdmin] < 1337)
-			return SendClientMessage(playerid, COLOR_RED, "ERROR: Niste ovlasteni za koristenje ove komande (admin lvl 1337+).");
+			return SendClientMessage(playerid, COLOR_RED, "Niste ovlasteni za koristenje ove komande (admin lvl 1337+).");
 			
 		foreach(new i:Player)
 		{
@@ -503,7 +503,7 @@ CMD:dakar(playerid, params[])
 	
 	if(strcmp(action,"goto", true) == 0) {
 		if(PlayerInfo[playerid][pAdmin] < 2)
-			return SendClientMessage(playerid, COLOR_RED, "ERROR: Niste ovlasteni za koristenje ove komande (admin lvl 2+).");
+			return SendClientMessage(playerid, COLOR_RED, "Niste ovlasteni za koristenje ove komande (admin lvl 2+).");
 		
 		SetPlayerPos(playerid, 401.4361, 2532.7856, 16.5451);
 	}

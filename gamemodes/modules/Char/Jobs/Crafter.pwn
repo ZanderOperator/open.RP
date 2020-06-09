@@ -564,7 +564,7 @@ public OnPlayerEnterCheckpoint(playerid)
 */
 CMD:craft(playerid, params[])
 {
-	if( PlayerInfo[ playerid ][ pJob ] != PLAYER_JOB_CRAFTER ) 	return SendClientMessage( playerid, COLOR_RED, "ERROR: Niste zaposleni kao crafter!");
+	if( PlayerInfo[ playerid ][ pJob ] != PLAYER_JOB_CRAFTER ) 	return SendClientMessage( playerid, COLOR_RED, "Niste zaposleni kao crafter!");
 	if( Bit1_Get( gr_PlayerWorkCrafting, playerid ) ) {	
 		Bit4_Set( gr_CraftingCPId, 			playerid, 0 );
 		Bit4_Set( gr_CraftingGeneratorId, 	playerid, 0 );
@@ -576,8 +576,8 @@ CMD:craft(playerid, params[])
 		Bit1_Set( gr_IsWorkingJob, playerid, false );
 		return SendClientMessage( playerid, COLOR_RED, "Prestali ste raditi posao craftera!");
 	}
-	if( PlayerInfo[ playerid ][ pFreeWorks ] < 1 ) 				return SendClientMessage( playerid, COLOR_RED, "ERROR: Ne mozes vise raditi!");
-	if( !IsPlayerInRangeOfPoint(playerid, 150.0, 2560.1531, -1357.0905, 1043.1147) ) return SendClientMessage( playerid, COLOR_RED, "ERROR: Morate biti unutar tvornice!");
+	if( PlayerInfo[ playerid ][ pFreeWorks ] < 1 ) 				return SendClientMessage( playerid, COLOR_RED, "Ne mozes vise raditi!");
+	if( !IsPlayerInRangeOfPoint(playerid, 150.0, 2560.1531, -1357.0905, 1043.1147) ) return SendClientMessage( playerid, COLOR_RED, "Morate biti unutar tvornice!");
 	
 	
 	SendClientMessage( playerid, COLOR_RED, "[ ! ] Krenite do checkpointa i ukljucite sve generatore!");

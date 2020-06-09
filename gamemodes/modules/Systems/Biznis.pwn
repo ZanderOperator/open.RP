@@ -1149,7 +1149,7 @@ public OnPlayerPickUpDynamicPickup(playerid, pickupid)
 CMD:buyskin(playerid, params[])
 {
 	if(Bit16_Get(gr_PlayerSkinId, playerid) == 0 || Bit16_Get(gr_PlayerSkinPrice, playerid) == 0)
-		return SendClientMessage(playerid, COLOR_RED, "ERROR: Ne mozete koristiti ovu komandu jer niste izabrali skin na /buy!");
+		return SendClientMessage(playerid, COLOR_RED, "Ne mozete koristiti ovu komandu jer niste izabrali skin na /buy!");
 
 	new
 			dialogString[ 71 ];
@@ -1172,7 +1172,7 @@ public OnPlayerModelSelection(playerid, response, listid, modelid, price)
 
 		if(AC_GetPlayerMoney(playerid) < price)
 		{
-			va_SendClientMessage(playerid,COLOR_RED, "ERROR: Nemas dovoljno novca za kupnju skina %d ($%d)!", modelid, price);
+			va_SendClientMessage(playerid,COLOR_RED, "Nemas dovoljno novca za kupnju skina %d ($%d)!", modelid, price);
 			SetPlayerPosFinish(playerid);
 
 			return 1;
@@ -1278,7 +1278,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 			if( strlen( inputtext ) < 3 || strlen( inputtext ) > 16 )
 			{
 				ResetBizzInfo(b);
-				return SendClientMessage( playerid, COLOR_RED, "ERROR: Ime koje ste unesli nije valjano (3-16)!" );
+				return SendClientMessage( playerid, COLOR_RED, "Ime koje ste unesli nije valjano (3-16)!" );
 			}
 			format( BizzInfo[ b ][ bMessage ], 16, inputtext );
 			va_SendClientMessage( playerid, COLOR_RED, "[ ! ]  Ime biznisa promjenjeno u %s.", inputtext );
@@ -1327,7 +1327,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 						case 0:		// Info
 							PrintBizInfo( playerid, bouse );
 						case 1:	{	// Postavi artikl
-							if( GetEmptyProductSlot(bouse) == -1 ) return SendClientMessage( playerid, COLOR_RED, "ERROR: Vasa polica je puna!" );
+							if( GetEmptyProductSlot(bouse) == -1 ) return SendClientMessage( playerid, COLOR_RED, "Vasa polica je puna!" );
 							new tmpString[ 1744 ];
 							format(tmpString, 1744, GetArticleList( bouse ) );
 							ShowPlayerDialog( playerid, DIALOG_BIZNIS_ARTICLELIST, DIALOG_STYLE_LIST, "MOJ BIZNIS - LISTA ARTIKLA", tmpString, "Odaberi", "Odustani" );
@@ -1337,7 +1337,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 							new
 								string[ 870 ];
 							format( string, 870, GetStoreProducts( bouse ) );
-							if( isnull( string ) ) return SendClientMessage(playerid, COLOR_RED, "ERROR: Nemate niti jedan artikl na policama!" );
+							if( isnull( string ) ) return SendClientMessage(playerid, COLOR_RED, "Nemate niti jedan artikl na policama!" );
 							ShowPlayerDialog( playerid, DIALOG_BIZNIS_ARTICLEREM, DIALOG_STYLE_LIST, "MOJ BIZNIS - BRISANJE ARTIKLA", string, "Odaberi", "Odustani" );
 						}
 						case 3: {	// Postavi cijenu
@@ -1345,7 +1345,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 							new
 								string[ 870 ];
 							format( string, 870, GetStoreProducts( bouse ) );
-							if( isnull( string ) ) return SendClientMessage(playerid, COLOR_RED, "ERROR: Nemate niti jedan artikl na policama!" );
+							if( isnull( string ) ) return SendClientMessage(playerid, COLOR_RED, "Nemate niti jedan artikl na policama!" );
 							ShowPlayerDialog( playerid, DIALOG_BIZNIS_ARTICLEINV, DIALOG_STYLE_LIST, "MOJ BIZNIS - ARTIKLI", string, "Odaberi", "Odustani" );
 						}
 						case 4: {	// Vrata
@@ -1363,10 +1363,10 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 									format(bigquery, sizeof(bigquery), "UPDATE `bizzes` SET `locked` = '1' WHERE `id` = '%d'", BizzInfo[bouse][bSQLID]);
 									mysql_tquery(g_SQL, bigquery);
 								}
-							} else SendClientMessage( playerid, COLOR_RED, "ERROR: Niste blizu vrata od biznisa!" );
+							} else SendClientMessage( playerid, COLOR_RED, "Niste blizu vrata od biznisa!" );
 						}
 						case 5: {	// Rekonstrukcija
-							if( !BizzInfo[ bouse ][ bDestroyed ] ) return SendClientMessage(playerid, COLOR_RED, "ERROR: Vas biznis nije unisten!");
+							if( !BizzInfo[ bouse ][ bDestroyed ] ) return SendClientMessage(playerid, COLOR_RED, "Vas biznis nije unisten!");
 							new
 								bigquery[ 128 ];
 							switch( BizzInfo[ bouse ][ bDestroyed ] )
@@ -1381,7 +1381,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 										format(bigquery, sizeof(bigquery), "UPDATE `bizzes` SET `destroyed` = '%d' WHERE `id` = '%d'", BizzInfo[bouse][bDestroyed], BizzInfo[bouse][bSQLID]);
 										mysql_tquery(g_SQL, bigquery);
 									}
-									else SendClientMessage(playerid, COLOR_RED, "ERROR: Nemate 2.000$ za renoviranje!");
+									else SendClientMessage(playerid, COLOR_RED, "Nemate 2.000$ za renoviranje!");
 								}
 								case 2: //Interier
 								{
@@ -1393,7 +1393,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 										format(bigquery, sizeof(bigquery), "UPDATE `bizzes` SET `destroyed` = '%d' WHERE `id` = '%d'", BizzInfo[bouse][bDestroyed], BizzInfo[bouse][bSQLID]);
 										mysql_tquery(g_SQL, bigquery);
 									}
-									else SendClientMessage(playerid, COLOR_RED, "ERROR: Nemate 8.000$ za renoviranje!");
+									else SendClientMessage(playerid, COLOR_RED, "Nemate 8.000$ za renoviranje!");
 								}
 								case 3:
 								{
@@ -1405,7 +1405,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 										format(bigquery, sizeof(bigquery), "UPDATE `bizzes` SET `destroyed` = '%d' WHERE `id` = '%d'", BizzInfo[bouse][bDestroyed], BizzInfo[bouse][bSQLID]);
 										mysql_tquery(g_SQL, bigquery);
 									}
-									else SendClientMessage(playerid, COLOR_RED, "ERROR: Nemate 20.000$ za renoviranje!");
+									else SendClientMessage(playerid, COLOR_RED, "Nemate 20.000$ za renoviranje!");
 								}
 							}
 						}
@@ -1420,7 +1420,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 							new
 								string[ 870 ];
 							format( string, 870, GetStoreProducts( bouse ) );
-							if( isnull( string ) ) return SendClientMessage(playerid, COLOR_RED, "ERROR: Nemate niti jedan artikl na policama!" );
+							if( isnull( string ) ) return SendClientMessage(playerid, COLOR_RED, "Nemate niti jedan artikl na policama!" );
 							ShowPlayerDialog( playerid, DIALOG_BIZNIS_ARTICLEREFF, DIALOG_STYLE_LIST, "MOJ BIZNIS - REFILL ARTIKLA", string, "Odaberi", "Odustani" );
 						}
 					}
@@ -1434,7 +1434,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 						case 1: 	// Cijena ulaza
 							ShowPlayerDialog( playerid, DIALOG_BIZNIS_ENTRANCE, DIALOG_STYLE_INPUT, "BIZNIS - CIJENA ULAZA/USLUGE", "Unesite iznos nove cijene ulaza\nCijena mora biti izmedju 0 i 1.000$!", "Dalje", "Natrag" );
 						case 2:	{	// Postavi artikl
-							if( GetEmptyProductSlot(bouse) == -1 ) return SendClientMessage( playerid, COLOR_RED, "ERROR: Vasa polica je puna!" );
+							if( GetEmptyProductSlot(bouse) == -1 ) return SendClientMessage( playerid, COLOR_RED, "Vasa polica je puna!" );
 							new tmpString[ 1744 ];
 							format(tmpString, 1744, GetArticleList( bouse ) );
 							ShowPlayerDialog( playerid, DIALOG_BIZNIS_ARTICLELIST, DIALOG_STYLE_LIST, "MOJ BIZNIS - LISTA PICA", tmpString, "Odaberi", "Odustani" );
@@ -1444,7 +1444,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 							new
 								string[ 870 ];
 							format( string, 870, GetStoreProducts( bouse ) );
-							if( isnull( string ) ) return SendClientMessage(playerid, COLOR_RED, "ERROR: Nemate niti jedan artikl na policama!" );
+							if( isnull( string ) ) return SendClientMessage(playerid, COLOR_RED, "Nemate niti jedan artikl na policama!" );
 							ShowPlayerDialog( playerid, DIALOG_BIZNIS_ARTICLEREM, DIALOG_STYLE_LIST, "MOJ BIZNIS - BRISANJE PICA S MENUA", string, "Odaberi", "Odustani" );
 						}
 						case 4: {	// Postavi cijenu
@@ -1452,7 +1452,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 							new
 								string[ 870 ];
 							format( string, 870, GetStoreProducts( bouse ) );
-							if( isnull( string ) ) return SendClientMessage(playerid, COLOR_RED, "ERROR: Nemate niti jedan artikl na policama!" );
+							if( isnull( string ) ) return SendClientMessage(playerid, COLOR_RED, "Nemate niti jedan artikl na policama!" );
 							ShowPlayerDialog( playerid, DIALOG_BIZNIS_ARTICLEINV, DIALOG_STYLE_LIST, "MOJ BIZNIS - POSTAVI CIJENU PICA", string, "Odaberi", "Odustani" );
 						}
 						case 5: {	// Vrata
@@ -1470,15 +1470,15 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 									format(bigquery, sizeof(bigquery), "UPDATE `bizzes` SET `locked` = '1' WHERE `id` = '%d'", BizzInfo[bouse][bSQLID]);
 									mysql_tquery(g_SQL, bigquery);
 								}
-							} else SendClientMessage( playerid, COLOR_RED, "ERROR: Niste blizu vrata od biznisa!" );
+							} else SendClientMessage( playerid, COLOR_RED, "Niste blizu vrata od biznisa!" );
 						}
 						case 6: {	// Rekonstrukcija
-							if( !BizzInfo[ bouse ][ bDestroyed ] ) return SendClientMessage(playerid, COLOR_RED, "ERROR: Vas biznis nije unisten!");
+							if( !BizzInfo[ bouse ][ bDestroyed ] ) return SendClientMessage(playerid, COLOR_RED, "Vas biznis nije unisten!");
 							new
 								bigquery[ 128 ];
 							switch( BizzInfo[ bouse ][ bDestroyed ] ) {
 								case 1: {	// Izlog
-									if( AC_GetPlayerMoney(playerid) < 2000 ) return SendClientMessage(playerid, COLOR_RED, "ERROR: Nemate 2.000$ za renoviranje!");
+									if( AC_GetPlayerMoney(playerid) < 2000 ) return SendClientMessage(playerid, COLOR_RED, "Nemate 2.000$ za renoviranje!");
 
 									SendClientMessage(playerid, COLOR_RED, "[ ! ]  Odlucili ste popraviti izloge i prozore na vasem biznisu za 2.000$. Od sada ce ponovo normalno raditi.");
 									BizzInfo[bouse][bDestroyed] = 0;
@@ -1487,7 +1487,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 									mysql_tquery(g_SQL, bigquery);
 								}
 								case 2: {	// Interier
-									if( AC_GetPlayerMoney(playerid) < 8000 ) return SendClientMessage(playerid, COLOR_RED, "ERROR: Nemate 8.000$ za renoviranje!");
+									if( AC_GetPlayerMoney(playerid) < 8000 ) return SendClientMessage(playerid, COLOR_RED, "Nemate 8.000$ za renoviranje!");
 
 									SendClientMessage(playerid, COLOR_RED, "[ ! ]  Odlucili ste popraviti interier u vasem biznisu za 8.000$. Od sada ce ponovo normalno raditi.");
 									BizzInfo[bouse][bDestroyed] = 0;
@@ -1496,7 +1496,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 									mysql_tquery(g_SQL, bigquery);
 								}
 								case 3: {	// Komplet
-									if( AC_GetPlayerMoney(playerid) < 20000 ) return SendClientMessage(playerid, COLOR_RED, "ERROR: Nemate 20.000$ za renoviranje!");
+									if( AC_GetPlayerMoney(playerid) < 20000 ) return SendClientMessage(playerid, COLOR_RED, "Nemate 20.000$ za renoviranje!");
 
 									SendClientMessage(playerid, COLOR_RED, "[ ! ]  Odlucili ste napraviti kompletnu renovaciju na vasem biznisu za 20.000$. Od sada ce ponovo normalno raditi.");
 									BizzInfo[bouse][bDestroyed] = 0;
@@ -1517,7 +1517,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 							new
 								string[ 870 ];
 							format( string, 870, GetStoreProducts( bouse ) );
-							if( isnull( string ) ) return SendClientMessage(playerid, COLOR_RED, "ERROR: Nemate niti jedan artikl na policama!" );
+							if( isnull( string ) ) return SendClientMessage(playerid, COLOR_RED, "Nemate niti jedan artikl na policama!" );
 							ShowPlayerDialog( playerid, DIALOG_BIZNIS_ARTICLEREFF, DIALOG_STYLE_LIST, "MOJ BIZNIS - REFILL ARTIKLA", string, "Odaberi", "Odustani" );
 						}
 					}
@@ -1527,7 +1527,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 						case 0:		// Info
 							PrintBizInfo( playerid, bouse );
 						case 1:	{	// Postavi artikl
-							if( GetEmptyProductSlot(bouse) == -1 ) return SendClientMessage( playerid, COLOR_RED, "ERROR: Vasa polica je puna!" );
+							if( GetEmptyProductSlot(bouse) == -1 ) return SendClientMessage( playerid, COLOR_RED, "Vasa polica je puna!" );
 							new tmpString[ 1744 ];
 							format(tmpString, 1744, GetArticleList( bouse ) );
 							ShowPlayerDialog( playerid, DIALOG_BIZNIS_ARTICLELIST, DIALOG_STYLE_LIST, "MOJ BIZNIS - LISTA ARTIKLA", tmpString, "Odaberi", "Odustani" );
@@ -1537,7 +1537,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 							new
 								string[ 870 ];
 							format( string, 870, GetStoreProducts( bouse ) );
-							if( isnull( string ) ) return SendClientMessage(playerid, COLOR_RED, "ERROR: Nemate niti jedan artikl na policama!" );
+							if( isnull( string ) ) return SendClientMessage(playerid, COLOR_RED, "Nemate niti jedan artikl na policama!" );
 							ShowPlayerDialog( playerid, DIALOG_BIZNIS_ARTICLEREM, DIALOG_STYLE_LIST, "MOJ BIZNIS - BRISANJE ARTIKLA", string, "Odaberi", "Odustani" );
 						}
 						case 3: {	// Postavi cijenu
@@ -1545,7 +1545,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 							new
 								string[ 870 ];
 							format( string, 870, GetStoreProducts( bouse ) );
-							if( isnull( string ) ) return SendClientMessage(playerid, COLOR_RED, "ERROR: Nemate niti jedan artikl na policama!" );
+							if( isnull( string ) ) return SendClientMessage(playerid, COLOR_RED, "Nemate niti jedan artikl na policama!" );
 							ShowPlayerDialog( playerid, DIALOG_BIZNIS_ARTICLEINV, DIALOG_STYLE_LIST, "MOJ BIZNIS - ARTIKLI", string, "Odaberi", "Odustani" );
 						}
 						case 4: {	// Vrata
@@ -1563,10 +1563,10 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 									format(bigquery, sizeof(bigquery), "UPDATE `bizzes` SET `locked` = '1' WHERE `id` = '%d'", BizzInfo[bouse][bSQLID]);
 									mysql_tquery(g_SQL, bigquery);
 								}
-							} else SendClientMessage( playerid, COLOR_RED, "ERROR: Niste blizu vrata od biznisa!" );
+							} else SendClientMessage( playerid, COLOR_RED, "Niste blizu vrata od biznisa!" );
 						}
 						case 5: {	// Rekonstrukcija
-							if( !BizzInfo[ bouse ][ bDestroyed ] ) return SendClientMessage(playerid, COLOR_RED, "ERROR: Vas biznis nije unisten!");
+							if( !BizzInfo[ bouse ][ bDestroyed ] ) return SendClientMessage(playerid, COLOR_RED, "Vas biznis nije unisten!");
 							new
 								bigquery[ 128 ];
 							switch( BizzInfo[ bouse ][ bDestroyed ] )
@@ -1581,7 +1581,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 										format(bigquery, sizeof(bigquery), "UPDATE `bizzes` SET `destroyed` = '%d' WHERE `id` = '%d'", BizzInfo[bouse][bDestroyed], BizzInfo[bouse][bSQLID]);
 										mysql_tquery(g_SQL, bigquery);
 									}
-									else SendClientMessage(playerid, COLOR_RED, "ERROR: Nemate 2.000$ za renoviranje!");
+									else SendClientMessage(playerid, COLOR_RED, "Nemate 2.000$ za renoviranje!");
 								}
 								case 2: //Interier
 								{
@@ -1593,7 +1593,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 										format(bigquery, sizeof(bigquery), "UPDATE `bizzes` SET `destroyed` = '%d' WHERE `id` = '%d'", BizzInfo[bouse][bDestroyed], BizzInfo[bouse][bSQLID]);
 										mysql_tquery(g_SQL, bigquery);
 									}
-									else SendClientMessage(playerid, COLOR_RED, "ERROR: Nemate 8.000$ za renoviranje!");
+									else SendClientMessage(playerid, COLOR_RED, "Nemate 8.000$ za renoviranje!");
 								}
 								case 3:
 								{
@@ -1605,7 +1605,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 										format(bigquery, sizeof(bigquery), "UPDATE `bizzes` SET `destroyed` = '%d' WHERE `id` = '%d'", BizzInfo[bouse][bDestroyed], BizzInfo[bouse][bSQLID]);
 										mysql_tquery(g_SQL, bigquery);
 									}
-									else SendClientMessage(playerid, COLOR_RED, "ERROR: Nemate 20.000$ za renoviranje!");
+									else SendClientMessage(playerid, COLOR_RED, "Nemate 20.000$ za renoviranje!");
 								}
 							}
 						}
@@ -1634,10 +1634,10 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 									format(bigquery, sizeof(bigquery), "UPDATE `bizzes` SET `locked` = '1' WHERE `id` = '%d'", BizzInfo[bouse][bSQLID]);
 									mysql_tquery(g_SQL, bigquery);
 								}
-							} else SendClientMessage( playerid, COLOR_RED, "ERROR: Niste blizu vrata od biznisa!" );
+							} else SendClientMessage( playerid, COLOR_RED, "Niste blizu vrata od biznisa!" );
 						}
 						case 2: {	// Rekonstrukcija
-							if( !BizzInfo[ bouse ][ bDestroyed ] ) return SendClientMessage(playerid, COLOR_RED, "ERROR: Vas biznis nije unisten!");
+							if( !BizzInfo[ bouse ][ bDestroyed ] ) return SendClientMessage(playerid, COLOR_RED, "Vas biznis nije unisten!");
 							new
 								bigquery[ 128 ];
 							switch( BizzInfo[ bouse ][ bDestroyed ] )
@@ -1649,7 +1649,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 										PlayerToBudgetMoney(playerid, 2000); // novac dolazi u budget
 										format(bigquery, sizeof(bigquery), "UPDATE `bizzes` SET `destroyed` = '%d' WHERE `id` = '%d'", BizzInfo[bouse][bDestroyed], BizzInfo[bouse][bSQLID]);
 										mysql_tquery(g_SQL, bigquery);
-									} else SendClientMessage(playerid, COLOR_RED, "ERROR: Nemate 2.000$ za renoviranje!");
+									} else SendClientMessage(playerid, COLOR_RED, "Nemate 2.000$ za renoviranje!");
 								}
 								case 2: { // Interier
 									if(AC_GetPlayerMoney(playerid) >= 8000) {
@@ -1658,7 +1658,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 										PlayerToBudgetMoney(playerid, 8000); // novac dolazi u budget
 										format(bigquery, sizeof(bigquery), "UPDATE `bizzes` SET `destroyed` = '%d' WHERE `id` = '%d'", BizzInfo[bouse][bDestroyed], BizzInfo[bouse][bSQLID]);
 										mysql_tquery(g_SQL, bigquery);
-									} else SendClientMessage(playerid, COLOR_RED, "ERROR: Nemate 8.000$ za renoviranje!");
+									} else SendClientMessage(playerid, COLOR_RED, "Nemate 8.000$ za renoviranje!");
 								}
 								case 3: { // Kompletna renovacija
 									if(AC_GetPlayerMoney(playerid) >= 20000) {
@@ -1667,7 +1667,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 										PlayerToBudgetMoney(playerid, 20000); // novac dolazi u budget
 										format(bigquery, sizeof(bigquery), "UPDATE `bizzes` SET `destroyed` = '%d' WHERE `id` = '%d'", BizzInfo[bouse][bDestroyed], BizzInfo[bouse][bSQLID]);
 										mysql_tquery(g_SQL, bigquery);
-									} else SendClientMessage(playerid, COLOR_RED, "ERROR: Nemate 20.000$ za renoviranje!");
+									} else SendClientMessage(playerid, COLOR_RED, "Nemate 20.000$ za renoviranje!");
 								}
 							}
 						}
@@ -1689,9 +1689,9 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 					gplayerid = strval(inputtext),
 				    biznis = PlayerInfo[playerid][pBizzKey];
 
-				if(!IsPlayerInRangeOfPoint(playerid, 10.0, BizzInfo[ biznis ][ bEntranceX ], BizzInfo[ biznis ][ bEntranceY ], BizzInfo[ biznis ][ bEntranceZ ])) return SendClientMessage(playerid, COLOR_RED, "ERROR: Morate biti blizu vaseg biznisa!");
-				if( !ProxDetectorS(5.0, playerid, gplayerid) ) return SendClientMessage(playerid, COLOR_RED, "ERROR: Taj igrac nije blizu vas!");
-				if( PlayerInfo[ gplayerid ][ pBizzKey ] != 999 ) return SendClientMessage(playerid, COLOR_RED, "ERROR: Taj igrac vec ima biznis!");
+				if(!IsPlayerInRangeOfPoint(playerid, 10.0, BizzInfo[ biznis ][ bEntranceX ], BizzInfo[ biznis ][ bEntranceY ], BizzInfo[ biznis ][ bEntranceZ ])) return SendClientMessage(playerid, COLOR_RED, "Morate biti blizu vaseg biznisa!");
+				if( !ProxDetectorS(5.0, playerid, gplayerid) ) return SendClientMessage(playerid, COLOR_RED, "Taj igrac nije blizu vas!");
+				if( PlayerInfo[ gplayerid ][ pBizzKey ] != 999 ) return SendClientMessage(playerid, COLOR_RED, "Taj igrac vec ima biznis!");
 				GlobalSellingPlayerID[playerid] = gplayerid;
 				ShowPlayerDialog(playerid, DIALOG_SELL_BIZ_PRICE, DIALOG_STYLE_INPUT, "PRODAJA VASEG BIZNISA IGRACU", "Unesite cijenu vaseg biznisa", "Unesi", "Ponisti");
 			}
@@ -1705,7 +1705,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 				pID = GlobalSellingPlayerID[playerid];
 
 			if( biznisPrice < 1 || biznisPrice > 9999999 ) return ShowPlayerDialog(playerid, DIALOG_SELL_BIZ_PRICE, DIALOG_STYLE_INPUT, "PRODAJA VASEG BIZNISA IGRACU", "Unesite cijenu vaseg biznisa>\nCijena biznisa ne moze biti manja od 1$, a veca od 9.999.999$", "Unesi", "Ponisti");
-			if(AC_GetPlayerMoney(pID) < biznisPrice) return SendClientMessage(playerid,COLOR_RED,"ERROR: Osoba nema toliko novaca kod sebe!");
+			if(AC_GetPlayerMoney(pID) < biznisPrice) return SendClientMessage(playerid,COLOR_RED,"Osoba nema toliko novaca kod sebe!");
 
 			GlobalSellingPrice[pID] 	= biznisPrice;
 			GlobalSellingPlayerID[pID] 	= playerid;
@@ -1721,7 +1721,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 					pID 		= GlobalSellingPlayerID[playerid],
 					bizPrice 	= GlobalSellingPrice[playerid];
 
-				if( pID == INVALID_PLAYER_ID ) return SendClientMessage( playerid, COLOR_RED, "ERROR: Nitko vam nije ponudio prodaju biznisa!" );
+				if( pID == INVALID_PLAYER_ID ) return SendClientMessage( playerid, COLOR_RED, "Nitko vam nije ponudio prodaju biznisa!" );
 				PlayerInfo[ playerid ][ pBizzKey ] 	= PlayerInfo[ pID ][ pBizzKey ];
 				PlayerInfo[ pID ][ pBizzKey ]		= INVALID_BIZNIS_ID;
 
@@ -1791,7 +1791,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 					if( !response ) return ShowPlayerDialog( playerid, DIALOG_BIZNIS_MAIN, DIALOG_STYLE_LIST, "MOJ BIZNIS", "Info\nCijena ulaza\nPostavi artikl\nSkini artikl\nPostavi cijenu artikla\nVrata\nRekonstrukcija biznisa($20.000)\nPostavi cijenu produkata\nIme Biznisa\nProdaj biznis igracu", "Odaberi","Izlaz" );
 			}
 
-			if( !IsValidArticle( bouse, (listitem+100) ) ) return SendClientMessage( playerid, COLOR_RED, "ERROR: Taj je artikl vec na policama!" );
+			if( !IsValidArticle( bouse, (listitem+100) ) ) return SendClientMessage( playerid, COLOR_RED, "Taj je artikl vec na policama!" );
 
 			Bit16_Set( gr_ArticleIdInput, playerid, (listitem+100) );
 
@@ -1804,7 +1804,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 			if( !response ) return ShowPlayerDialog( playerid, DIALOG_BIZNIS_ARTICLELIST, DIALOG_STYLE_LIST, "MOJ BIZNIS - LISTA ARTIKLA", GetArticleList( bouse ), "Odaberi", "Odustani" );
 			if( 5 <= strval(inputtext) <= 1000 )
 			{
-				if( AC_GetPlayerMoney( playerid ) < 500 ) return SendClientMessage( playerid, COLOR_RED, "ERROR: Nemate 500$ u djepu!" );
+				if( AC_GetPlayerMoney( playerid ) < 500 ) return SendClientMessage( playerid, COLOR_RED, "Nemate 500$ u djepu!" );
 				// Polica
 				SetStoreProductOnSale( bouse, Bit16_Get( gr_ArticleIdInput, playerid ), strval(inputtext) );
 				new
@@ -1924,7 +1924,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 				}
 				return 1;
 			}
-			if( AC_GetPlayerMoney(playerid) < 500 ) return SendClientMessage( playerid, COLOR_RED, "ERROR: Nemate 500$!");
+			if( AC_GetPlayerMoney(playerid) < 500 ) return SendClientMessage( playerid, COLOR_RED, "Nemate 500$!");
 
 			BiznisProducts[bouse][bpAmount][ listitem ] = BizzInfo[ bouse ][ bMaxProducts ];
 			PlayerToBudgetMoney(playerid, 500); // Novac od igraca ide u proracun
@@ -1949,7 +1949,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 				}
 				return 1;
 			}
-			if( strlen( inputtext ) < 3 || strlen( inputtext ) > 15 ) return SendClientMessage( playerid, COLOR_RED, "ERROR: Ime koje ste unesli nije valjano (3-15)!" );
+			if( strlen( inputtext ) < 3 || strlen( inputtext ) > 15 ) return SendClientMessage( playerid, COLOR_RED, "Ime koje ste unesli nije valjano (3-15)!" );
 			format( BizzInfo[ bouse ][ bMessage ], 16, inputtext );
 			va_SendClientMessage( playerid, COLOR_RED, "[ ! ]  Ime biznisa promjenjeno u %s.", inputtext );
 
@@ -1974,8 +1974,8 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 
 			switch( BizzInfo[ biznis ][ bType ] ) {
 				case BIZZ_TYPE_BAR, BIZZ_TYPE_STRIP: {
-					if( BiznisProducts[biznis][bpAmount][ listitem ] < 1 ) return SendClientMessage( playerid, COLOR_RED, "ERROR: Pice nije na menu-u!" );
-					if( AC_GetPlayerMoney(playerid) < BiznisProducts[biznis][bpPrice][ listitem ] ) return SendClientMessage( playerid, COLOR_RED, "ERROR: Nemate toliko novca!" );
+					if( BiznisProducts[biznis][bpAmount][ listitem ] < 1 ) return SendClientMessage( playerid, COLOR_RED, "Pice nije na menu-u!" );
+					if( AC_GetPlayerMoney(playerid) < BiznisProducts[biznis][bpPrice][ listitem ] ) return SendClientMessage( playerid, COLOR_RED, "Nemate toliko novca!" );
 
 					BiznisProducts[biznis][bpAmount][ listitem ]--;
 					PlayerToBusinessMoneyTAX(playerid, biznis, BiznisProducts[biznis][bpPrice][ listitem ]); // Stavka koja se kupuje se oporezuje..
@@ -1995,8 +1995,8 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 					SetPlayerDrunkLevel (playerid, GetPlayerDrunkLevel(playerid) + 250 );
 				}
 				case BIZZ_TYPE_DUCAN: {
-					if( BiznisProducts[biznis][bpAmount][ listitem ] < 1 ) return SendClientMessage( playerid, COLOR_RED, "ERROR: Artikl nije na policama!" );
-					if( AC_GetPlayerMoney(playerid) < BiznisProducts[biznis][bpPrice][ listitem ] ) return SendClientMessage( playerid, COLOR_RED, "ERROR: Nemate toliko novca!" );
+					if( BiznisProducts[biznis][bpAmount][ listitem ] < 1 ) return SendClientMessage( playerid, COLOR_RED, "Artikl nije na policama!" );
+					if( AC_GetPlayerMoney(playerid) < BiznisProducts[biznis][bpPrice][ listitem ] ) return SendClientMessage( playerid, COLOR_RED, "Nemate toliko novca!" );
 
 					switch( BiznisProducts[biznis][bpType][ listitem ] ) {
 						case PRODUCT_BURGERS, PRODUCT_CAKE, PRODUCT_HOTDOG, PRODUCT_PIZZA:
@@ -2008,11 +2008,11 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 							PlayerInfo[playerid][pCiggaretes] += 20;
 						}
 						case PRODUCT_GROCERIES: {
-							if( Bit8_Get( gr_Groceries, playerid ) == 20 ) return SendClientMessage( playerid, COLOR_RED, "ERROR: Vec imate namirnice, spremite ih!" );
+							if( Bit8_Get( gr_Groceries, playerid ) == 20 ) return SendClientMessage( playerid, COLOR_RED, "Vec imate namirnice, spremite ih!" );
 							Bit8_Set( gr_Groceries, playerid, 20 );
 						}
 						case PRODUCT_MASK: {
-							if( PlayerInfo[ playerid ][ pLevel ] < 3 ) return SendClientMessage( playerid, COLOR_RED, "ERROR: Level 3+ igraci mogu kupovati maske!" );
+							if( PlayerInfo[ playerid ][ pLevel ] < 3 ) return SendClientMessage( playerid, COLOR_RED, "Level 3+ igraci mogu kupovati maske!" );
 
 							PlayerInfo[ playerid ][ pMaskID ] = 100000 + random(899999);
 
@@ -2028,45 +2028,45 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 							LogMask(log);
 						}
 						case PRODUCT_FLOWERS: {
-							if( PlayerInfo[ playerid ][ pLevel ] < 2 ) return SendClientMessage( playerid, COLOR_RED, "ERROR: Level 2+ igraci mogu kupovati oruzja!" );
+							if( PlayerInfo[ playerid ][ pLevel ] < 2 ) return SendClientMessage( playerid, COLOR_RED, "Level 2+ igraci mogu kupovati oruzja!" );
 
 							AC_GivePlayerWeapon( playerid, WEAPON_FLOWER, 2 );
 						}
 						case PRODUCT_CAMERA: {
-							if( PlayerInfo[ playerid ][ pLevel ] < 2 ) return SendClientMessage( playerid, COLOR_RED, "ERROR: Level 2+ igraci mogu kupovati oruzja!" );
+							if( PlayerInfo[ playerid ][ pLevel ] < 2 ) return SendClientMessage( playerid, COLOR_RED, "Level 2+ igraci mogu kupovati oruzja!" );
 
 							AC_GivePlayerWeapon( playerid, WEAPON_CAMERA, 100 );
 						}
 						case PRODUCT_BAT: {
-							if( PlayerInfo[ playerid ][ pLevel ] < 2 ) return SendClientMessage( playerid, COLOR_RED, "ERROR: Level 2+ igraci mogu kupovati oruzja!" );
+							if( PlayerInfo[ playerid ][ pLevel ] < 2 ) return SendClientMessage( playerid, COLOR_RED, "Level 2+ igraci mogu kupovati oruzja!" );
 
 							AC_GivePlayerWeapon( playerid, WEAPON_BAT, 2 );
 						}
 						case PRODUCT_SPRAY: {
-							if( PlayerInfo[ playerid ][ pLevel ] < 2 ) return SendClientMessage( playerid, COLOR_RED, "ERROR: Level 2+ igraci mogu kupovati oruzja!" );
+							if( PlayerInfo[ playerid ][ pLevel ] < 2 ) return SendClientMessage( playerid, COLOR_RED, "Level 2+ igraci mogu kupovati oruzja!" );
 
 							AC_GivePlayerWeapon( playerid, WEAPON_SPRAYCAN, 100 );
 						}
 						case PRODUCT_TOOLKIT: {
-							if( PlayerInfo[ playerid ][ pToolkit ] ) return SendClientMessage( playerid, COLOR_RED, "ERROR: Vec imate tool kit!" );
+							if( PlayerInfo[ playerid ][ pToolkit ] ) return SendClientMessage( playerid, COLOR_RED, "Vec imate tool kit!" );
 							PlayerInfo[ playerid ][ pToolkit ] = 1;
 						}
 						case PRODUCT_BOOMBOX: {
-							if( PlayerInfo[ playerid ][ pBoomBox ] ) return SendClientMessage( playerid, COLOR_RED, "ERROR: Vec imate kazetofon!" );
+							if( PlayerInfo[ playerid ][ pBoomBox ] ) return SendClientMessage( playerid, COLOR_RED, "Vec imate kazetofon!" );
 							PlayerInfo[ playerid ][ pBoomBox ] = 1;
 						}
 						case PRODUCT_PCREDIT:
 						{
-							PlayerInfo[playerid][pMobileMoney] += 20;
+							PlayerInfo[playerid][pMobileCost] += 20;
 							new	moneyUpdate[128];
 							format(moneyUpdate, 128, "UPDATE `player_phones` SET `money` = '%d' WHERE `player_id` = '%d' AND `type` = '1'",
-								PlayerInfo[playerid][pMobileMoney],
+								PlayerInfo[playerid][pMobileCost],
 								PlayerInfo[playerid][pSQLID]
 							);
 							mysql_tquery(g_SQL, moneyUpdate);
 						}
 						case PRODUCT_CLOCK: {
-							if( PlayerInfo[ playerid ][ pClock ] ) return SendClientMessage( playerid, COLOR_RED, "ERROR: Vec posjedujete sat!" );
+							if( PlayerInfo[ playerid ][ pClock ] ) return SendClientMessage( playerid, COLOR_RED, "Vec posjedujete sat!" );
 							PlayerInfo[ playerid ][ pClock ] = 1;
 						}
 						case PRODUCT_DICE:
@@ -2076,7 +2076,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 						case PRODUCT_ROPE:
 						    PlayerInfo[ playerid ][ hRope ] = 1;
 						case PRODUCT_RADIO: {
-						    if( PlayerInfo[ playerid ][ pToolkit ] ) return SendClientMessage( playerid, COLOR_RED, "ERROR: Vec posjedujete toolkit!" );
+						    if( PlayerInfo[ playerid ][ pToolkit ] ) return SendClientMessage( playerid, COLOR_RED, "Vec posjedujete toolkit!" );
 						    PlayerInfo[ playerid ] [ pToolkit ] = 1;
 						}
 					}
@@ -2133,7 +2133,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 					SendClientMessage(playerid, COLOR_RED, string);
 					SendClientMessage(playerid, COLOR_RED, "[ ! ]  Uspjesno ste kupili Samsung Galaxy S6!");
 					PlayerPlaySound(playerid, 1052, 0.0, 0.0, 0.0);
-					PlayerInfo[playerid][pMobileMoney] = 20;
+					PlayerInfo[playerid][pMobileCost] = 20;
 					PlayerInfo[playerid][pPhoneBG] = -1263225696;
 					PlayerInfo[playerid][pPhoneMask] = 0;
 					CreatePlayerContacts(playerid);
@@ -2149,7 +2149,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 					SendClientMessage(playerid, COLOR_RED, string);
 					SendClientMessage(playerid, COLOR_RED, "[ ! ]  Uspjesno ste kupili Samsung Galaxy Note!");
 					PlayerPlaySound(playerid, 1052, 0.0, 0.0, 0.0);
-					PlayerInfo[playerid][pMobileMoney] = 20;
+					PlayerInfo[playerid][pMobileCost] = 20;
 					PlayerInfo[playerid][pPhoneBG] = -1263225696;
 					PlayerInfo[playerid][pPhoneMask] = 0;
 					CreatePlayerContacts(playerid);
@@ -2165,7 +2165,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 					SendClientMessage(playerid, COLOR_RED, string);
 					SendClientMessage(playerid, COLOR_RED, "[ ! ]  Uspjesno ste kupili Nokia 5210!");
 					PlayerPlaySound(playerid, 1052, 0.0, 0.0, 0.0);
-					PlayerInfo[playerid][pMobileMoney] = 20;
+					PlayerInfo[playerid][pMobileCost] = 20;
 					PlayerInfo[playerid][pPhoneBG] = -1263225696;
 					PlayerInfo[playerid][pPhoneMask] = 0;
 					CreatePlayerContacts(playerid);
@@ -2181,7 +2181,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 					SendClientMessage(playerid, COLOR_RED, string);
 					SendClientMessage(playerid, COLOR_RED, "[ ! ]  Uspjesno ste kupili Sony Ericsson T18!");
 					PlayerPlaySound(playerid, 1052, 0.0, 0.0, 0.0);
-					PlayerInfo[playerid][pMobileMoney] = 20;
+					PlayerInfo[playerid][pMobileCost] = 20;
 					PlayerInfo[playerid][pPhoneBG] = -1263225696;
 					PlayerInfo[playerid][pPhoneMask] = 0;
 					CreatePlayerContacts(playerid);
@@ -2196,7 +2196,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 					format(string, sizeof(string), "[ ! ]  Vas novi broj mobilnog telefona je %d.", PlayerInfo[playerid][pMobileNumber]);
 					SendClientMessage(playerid, COLOR_RED, string);
 					SendClientMessage(playerid, COLOR_RED, "[ ! ]  Uspjesno ste kupili iPhone 6s!");
-					PlayerInfo[playerid][pMobileMoney] = 20;
+					PlayerInfo[playerid][pMobileCost] = 20;
 					PlayerPlaySound(playerid, 1052, 0.0, 0.0, 0.0);
 					PlayerInfo[playerid][pPhoneBG] = -1263225696;
 					PlayerInfo[playerid][pPhoneMask] = 0;
@@ -2212,7 +2212,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 					format(string, sizeof(string), "[ ! ]  Vas novi broj mobilnog telefona je %d.", PlayerInfo[playerid][pMobileNumber]);
 					SendClientMessage(playerid, COLOR_RED, string);
 					SendClientMessage(playerid, COLOR_RED, "[ ! ]  Uspjesno ste kupili iPhone 7!");
-					PlayerInfo[playerid][pMobileMoney] = 20;
+					PlayerInfo[playerid][pMobileCost] = 20;
 					PlayerInfo[playerid][pPhoneBG] = -1263225696;
 					PlayerInfo[playerid][pPhoneMask] = 0;
 					CreatePlayerContacts(playerid);
@@ -2228,7 +2228,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 					SendClientMessage(playerid, COLOR_RED, string);
 					SendClientMessage(playerid, COLOR_RED, "[ ! ]  Uspjesno ste kupili Motorola SmartPhone!");
 					PlayerPlaySound(playerid, 1052, 0.0, 0.0, 0.0);
-					PlayerInfo[playerid][pMobileMoney] = 20;
+					PlayerInfo[playerid][pMobileCost] = 20;
 					PlayerInfo[playerid][pPhoneBG] = -1263225696;
 					PlayerInfo[playerid][pPhoneMask] = 0;
 					CreatePlayerContacts(playerid);
@@ -2244,7 +2244,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 					SendClientMessage(playerid, COLOR_RED, string);
 					SendClientMessage(playerid, COLOR_RED, "[ ! ]  Uspjesno ste kupili Huaweii G7!");
 					PlayerPlaySound(playerid, 1052, 0.0, 0.0, 0.0);
-					PlayerInfo[playerid][pMobileMoney] = 20;
+					PlayerInfo[playerid][pMobileCost] = 20;
 					PlayerInfo[playerid][pPhoneBG] = -1263225696;
 					PlayerInfo[playerid][pPhoneMask] = 0;
 					CreatePlayerContacts(playerid);
@@ -2260,7 +2260,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 					SendClientMessage(playerid, COLOR_RED, string);
 					SendClientMessage(playerid, COLOR_RED, "[ ! ]  Uspjesno ste kupili Motorola StarTAC Rainbow!");
 					PlayerPlaySound(playerid, 1052, 0.0, 0.0, 0.0);
-					PlayerInfo[playerid][pMobileMoney] = 20;
+					PlayerInfo[playerid][pMobileCost] = 20;
 					PlayerInfo[playerid][pPhoneBG] = -1263225696;
 					PlayerInfo[playerid][pPhoneMask] = 0;
 					CreatePlayerContacts(playerid);
@@ -2276,7 +2276,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 					SendClientMessage(playerid, COLOR_RED, string);
 					SendClientMessage(playerid, COLOR_RED, "[ ! ]  Uspjesno ste kupili Nokia 3210!");
 					PlayerPlaySound(playerid, 1052, 0.0, 0.0, 0.0);
-					PlayerInfo[playerid][pMobileMoney] = 20;
+					PlayerInfo[playerid][pMobileCost] = 20;
 					PlayerInfo[playerid][pPhoneBG] = -1263225696;
 					PlayerInfo[playerid][pPhoneMask] = 0;
 					CreatePlayerContacts(playerid);
@@ -2570,7 +2570,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
             {
                 case 0:
                 {
-					if( AC_GetPlayerMoney(playerid) < 6) return SendClientMessage(playerid, COLOR_RED, "ERROR: Nemas 6$!");
+					if( AC_GetPlayerMoney(playerid) < 6) return SendClientMessage(playerid, COLOR_RED, "Nemas 6$!");
 					if(PlayerInfo[playerid][pHunger] < 3.5)
 						PlayerInfo[playerid][pHunger] += 1.5;
 		            else
@@ -2586,7 +2586,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
         		}
                 case 1:
                 {
-                    if( AC_GetPlayerMoney(playerid) < 8) return SendClientMessage(playerid, COLOR_RED, "ERROR: Nemas 8$!");
+                    if( AC_GetPlayerMoney(playerid) < 8) return SendClientMessage(playerid, COLOR_RED, "Nemas 8$!");
 					if(PlayerInfo[playerid][pHunger] < 3.2)
 						PlayerInfo[playerid][pHunger] += 1.8;
 		            else
@@ -2602,7 +2602,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 				}
 				case 2:
                 {
-                    if( AC_GetPlayerMoney(playerid) < 4) return SendClientMessage(playerid, COLOR_RED, "ERROR: Nemas 4$!");
+                    if( AC_GetPlayerMoney(playerid) < 4) return SendClientMessage(playerid, COLOR_RED, "Nemas 4$!");
 					if(PlayerInfo[playerid][pHunger] < 4.0)
 						PlayerInfo[playerid][pHunger] += 1.0;
 		            else
@@ -2619,7 +2619,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 				}
 				case 3:
                 {
-                    if( AC_GetPlayerMoney(playerid) < 2) return SendClientMessage(playerid, COLOR_RED, "ERROR: Nemas 2$!");
+                    if( AC_GetPlayerMoney(playerid) < 2) return SendClientMessage(playerid, COLOR_RED, "Nemas 2$!");
 					if(PlayerInfo[playerid][pHunger] < 4.2)
 						PlayerInfo[playerid][pHunger] += 0.8;
 		            else
@@ -2636,7 +2636,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 				}
 				case 4:
                 {
-                    if( AC_GetPlayerMoney(playerid) < 4) return SendClientMessage(playerid, COLOR_RED, "ERROR: Nemas 4$!");
+                    if( AC_GetPlayerMoney(playerid) < 4) return SendClientMessage(playerid, COLOR_RED, "Nemas 4$!");
 					if(PlayerInfo[playerid][pHunger] < 3.0)
 						PlayerInfo[playerid][pHunger] += 2.0;
 		            else
@@ -2652,7 +2652,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 				}
 				case 5:
                 {
-                    if( AC_GetPlayerMoney(playerid) < 3) return SendClientMessage(playerid, COLOR_RED, "ERROR: Nemas 3$!");
+                    if( AC_GetPlayerMoney(playerid) < 3) return SendClientMessage(playerid, COLOR_RED, "Nemas 3$!");
 					if(PlayerInfo[playerid][pHunger] < 4.8)
 		            	PlayerInfo[playerid][pHunger] += 0.2;
 		            else
@@ -2668,7 +2668,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 				}
 				case 6:
                 {
-					if( AC_GetPlayerMoney(playerid) < 1) return SendClientMessage(playerid, COLOR_RED, "ERROR: Nemas 1$!");
+					if( AC_GetPlayerMoney(playerid) < 1) return SendClientMessage(playerid, COLOR_RED, "Nemas 1$!");
 					if(PlayerInfo[playerid][pHunger] < 4.9)
 		            	PlayerInfo[playerid][pHunger] += 0.1;
 		            else
@@ -2694,7 +2694,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 			switch( listitem ) {
                 case 0:
                 {
-					if(AC_GetPlayerMoney(playerid) < 3) return SendClientMessage(playerid, COLOR_RED, "ERROR: Nemas 3$!");
+					if(AC_GetPlayerMoney(playerid) < 3) return SendClientMessage(playerid, COLOR_RED, "Nemas 3$!");
 					if(PlayerInfo[playerid][pHunger] < 4.0)
 		            	PlayerInfo[playerid][pHunger] += 1.0;
 		            else
@@ -2711,7 +2711,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
         		}
                 case 1:
                 {
-                    if(AC_GetPlayerMoney(playerid) < 5) return SendClientMessage(playerid, COLOR_RED, "ERROR: Nemas 5$!");
+                    if(AC_GetPlayerMoney(playerid) < 5) return SendClientMessage(playerid, COLOR_RED, "Nemas 5$!");
 					if(PlayerInfo[playerid][pHunger] < 3.0)
 		            	PlayerInfo[playerid][pHunger] += 2.0;
 		            else
@@ -2728,7 +2728,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 				}
 				case 2:
                 {
-                    if(AC_GetPlayerMoney(playerid) < 7) return SendClientMessage(playerid, COLOR_RED, "ERROR: Nemas 7$!");
+                    if(AC_GetPlayerMoney(playerid) < 7) return SendClientMessage(playerid, COLOR_RED, "Nemas 7$!");
 					if(PlayerInfo[playerid][pHunger] < 2.5)
 		            	PlayerInfo[playerid][pHunger] += 2.5;
 		            else
@@ -2744,7 +2744,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 				}
 				case 3:
                 {
-                    if(AC_GetPlayerMoney(playerid) < 4) return SendClientMessage(playerid, COLOR_RED, "ERROR: Nemas 4$!");
+                    if(AC_GetPlayerMoney(playerid) < 4) return SendClientMessage(playerid, COLOR_RED, "Nemas 4$!");
 					if(PlayerInfo[playerid][pHunger] < 3.0)
 		            	PlayerInfo[playerid][pHunger] += 2.0;
 		            else
@@ -2760,7 +2760,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 				}
 				case 4:
                 {
-                    if(AC_GetPlayerMoney(playerid) < 2) return SendClientMessage(playerid, COLOR_RED, "ERROR: Nemas 2$!");
+                    if(AC_GetPlayerMoney(playerid) < 2) return SendClientMessage(playerid, COLOR_RED, "Nemas 2$!");
 					if(PlayerInfo[playerid][pHunger] < 4.5)
 		            	PlayerInfo[playerid][pHunger] += 0.5;
 		            else
@@ -2776,7 +2776,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 				}
 				case 5:
                 {
-                    if(AC_GetPlayerMoney(playerid) < 3) return SendClientMessage(playerid, COLOR_RED, "ERROR: Nemas 3$!");
+                    if(AC_GetPlayerMoney(playerid) < 3) return SendClientMessage(playerid, COLOR_RED, "Nemas 3$!");
 					if(PlayerInfo[playerid][pHunger] < 4.8)
 		            	PlayerInfo[playerid][pHunger] += 0.2;
 		            else
@@ -2792,7 +2792,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 				}
 				case 6:
                 {
-					if(AC_GetPlayerMoney(playerid) < 1) return SendClientMessage(playerid, COLOR_RED, "ERROR: Nemas 1$!");
+					if(AC_GetPlayerMoney(playerid) < 1) return SendClientMessage(playerid, COLOR_RED, "Nemas 1$!");
 					if(PlayerInfo[playerid][pHunger] < 4.8)
 		            	PlayerInfo[playerid][pHunger] += 0.2;
 		            else
@@ -2817,7 +2817,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 			switch( listitem )  {
                 case 0:
                 {
-					if(AC_GetPlayerMoney(playerid) < 2) return SendClientMessage(playerid, COLOR_RED, "ERROR: Nemas 2$!");
+					if(AC_GetPlayerMoney(playerid) < 2) return SendClientMessage(playerid, COLOR_RED, "Nemas 2$!");
 					if(PlayerInfo[playerid][pHunger] < 4.0)
 		            	PlayerInfo[playerid][pHunger] += 1.0;
 		            else
@@ -2829,7 +2829,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
         		}
                 case 1:
                 {
-                    if(AC_GetPlayerMoney(playerid) < 4) return SendClientMessage(playerid, COLOR_RED, "ERROR: Nemas 4$!");
+                    if(AC_GetPlayerMoney(playerid) < 4) return SendClientMessage(playerid, COLOR_RED, "Nemas 4$!");
 					if(PlayerInfo[playerid][pHunger] < 4.0)
 		            	PlayerInfo[playerid][pHunger] += 1.0;
 		            else
@@ -2842,7 +2842,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 				}
 				case 2:
                 {
-                    if(AC_GetPlayerMoney(playerid) < 4) return SendClientMessage(playerid, COLOR_RED, "ERROR: Nemas 4$!");
+                    if(AC_GetPlayerMoney(playerid) < 4) return SendClientMessage(playerid, COLOR_RED, "Nemas 4$!");
 					if(PlayerInfo[playerid][pHunger] < 4.0)
 		            	PlayerInfo[playerid][pHunger] += 1.0;
 		            else
@@ -2854,7 +2854,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 				}
 				case 3:
                 {
-                    if(AC_GetPlayerMoney(playerid) < 3) return SendClientMessage(playerid, COLOR_RED, "ERROR: Nemas 3$!");
+                    if(AC_GetPlayerMoney(playerid) < 3) return SendClientMessage(playerid, COLOR_RED, "Nemas 3$!");
 					if(PlayerInfo[playerid][pHunger] < 4.0)
 		            	PlayerInfo[playerid][pHunger] += 1.0;
 		            else
@@ -2866,7 +2866,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 				}
 				case 4:
                 {
-                    if(AC_GetPlayerMoney(playerid) < 3) return SendClientMessage(playerid, COLOR_RED, "ERROR: Nemas 3$!");
+                    if(AC_GetPlayerMoney(playerid) < 3) return SendClientMessage(playerid, COLOR_RED, "Nemas 3$!");
 					if(PlayerInfo[playerid][pHunger] < 4.8)
 		            	PlayerInfo[playerid][pHunger] += 0.2;
 		            else
@@ -2878,7 +2878,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 				}
 				case 5:
                 {
-					if(AC_GetPlayerMoney(playerid) < 1) return SendClientMessage(playerid, COLOR_RED, "ERROR: Nemas 1$!");
+					if(AC_GetPlayerMoney(playerid) < 1) return SendClientMessage(playerid, COLOR_RED, "Nemas 1$!");
 					if(PlayerInfo[playerid][pHunger] < 4.8)
 		            	PlayerInfo[playerid][pHunger] += 0.2;
 		            else
@@ -2931,7 +2931,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 			switch( listitem )
 			{
 				case 0: {
-					if(Bit1_Get( gr_FakeGunLic, playerid)) return SendClientMessage(playerid, COLOR_RED, "ERROR: Vec imas dozvolu");
+					if(Bit1_Get( gr_FakeGunLic, playerid)) return SendClientMessage(playerid, COLOR_RED, "Vec imas dozvolu");
 					SendClientMessage(playerid, COLOR_RED, "[ ! ] Kupi ste laznu dozvolu za oruzje.");
 					Bit1_Set( gr_FakeGunLic, playerid, true );
 				}
@@ -2945,15 +2945,15 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 			switch( listitem )
 			{
 				case 0: {
-					if( AC_GetPlayerMoney(playerid) < 1 ) return SendClientMessage( playerid, COLOR_RED, "ERROR: Nemate 1$!");
+					if( AC_GetPlayerMoney(playerid) < 1 ) return SendClientMessage( playerid, COLOR_RED, "Nemate 1$!");
 					PlayerToBudgetMoney(playerid, 1); // APosto je VERONA MALL novac ide u budget
 					SendClientMessage(playerid, COLOR_RED, "[ ! ]  Kupljena kockica! [1$]" );
 					Bit1_Set( gr_Dice, playerid, true );
 					PlayerPlaySound(playerid, 1052, 0.0, 0.0, 0.0);
 				}
 				case 1: {
-					if( AC_GetPlayerMoney(playerid) < 5 ) return SendClientMessage( playerid, COLOR_RED, "ERROR: Nemate 5$!");
-					if( Bit1_Get( gr_Drink, playerid ) ) return SendClientMessage(playerid, COLOR_RED, "ERROR: Vec imate neko pice u inventoryu! Koristite /drink!" );
+					if( AC_GetPlayerMoney(playerid) < 5 ) return SendClientMessage( playerid, COLOR_RED, "Nemate 5$!");
+					if( Bit1_Get( gr_Drink, playerid ) ) return SendClientMessage(playerid, COLOR_RED, "Vec imate neko pice u inventoryu! Koristite /drink!" );
 
 					PlayerToBudgetMoney(playerid, 5); // APosto je VERONA MALL novac ide u budget
 					SendClientMessage(playerid, COLOR_RED, "[ ! ]  Kupljena Coca Cola! [5$]" );
@@ -2961,8 +2961,8 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 					PlayerPlaySound(playerid, 1052, 0.0, 0.0, 0.0);
 				}
 				case 2: {
-					if( AC_GetPlayerMoney(playerid) < 10 ) return SendClientMessage( playerid, COLOR_RED, "ERROR: Nemate 10$!");
-					if( PlayerInfo[playerid][pClock] ) return SendClientMessage(playerid, COLOR_RED, "ERROR: Vec imate sat, koristite /time!" );
+					if( AC_GetPlayerMoney(playerid) < 10 ) return SendClientMessage( playerid, COLOR_RED, "Nemate 10$!");
+					if( PlayerInfo[playerid][pClock] ) return SendClientMessage(playerid, COLOR_RED, "Vec imate sat, koristite /time!" );
 
 					PlayerToBudgetMoney(playerid, 10); // APosto je VERONA MALL novac ide u budget
 					SendClientMessage(playerid, COLOR_RED, "[ ! ]  Kupljen sat! [10$]" );
@@ -2970,9 +2970,9 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 					PlayerPlaySound(playerid, 1052, 0.0, 0.0, 0.0);
 				}
 				case 3: {
-				    if( PlayerInfo[ playerid ][ pLevel ] < 3 ) return SendClientMessage( playerid, COLOR_RED, "ERROR: Level 3+ igraci mogu kupovati maske!" );
-					if( AC_GetPlayerMoney(playerid) < 500 ) return SendClientMessage( playerid, COLOR_RED, "ERROR: Nemate 500$!");
-					if( PlayerInfo[playerid][pMaskID] > 0 ) return SendClientMessage(playerid, COLOR_RED, "ERROR: Vec imate masku!" );
+				    if( PlayerInfo[ playerid ][ pLevel ] < 3 ) return SendClientMessage( playerid, COLOR_RED, "Level 3+ igraci mogu kupovati maske!" );
+					if( AC_GetPlayerMoney(playerid) < 500 ) return SendClientMessage( playerid, COLOR_RED, "Nemate 500$!");
+					if( PlayerInfo[playerid][pMaskID] > 0 ) return SendClientMessage(playerid, COLOR_RED, "Vec imate masku!" );
 
 					PlayerToBudgetMoney(playerid, 500); // APosto je VERONA MALL novac ide u budget
 					SendClientMessage(playerid, COLOR_RED, "[ ! ]  Kupljena maska! [500$]" );
@@ -2980,7 +2980,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 					PlayerPlaySound(playerid, 1052, 0.0, 0.0, 0.0);
 				}
 				case 4: {
-					if( AC_GetPlayerMoney(playerid) < 10 ) return SendClientMessage( playerid, COLOR_RED, "ERROR: Nemate 10$!");
+					if( AC_GetPlayerMoney(playerid) < 10 ) return SendClientMessage( playerid, COLOR_RED, "Nemate 10$!");
 
 					PlayerToBudgetMoney(playerid, 10); // APosto je VERONA MALL novac ide u budget
 					SendClientMessage(playerid, COLOR_RED, "[ ! ]  Kupljene cigarete! [10$]. Koristite /usecigarette da bi zapalili cigaretu." );
@@ -2988,8 +2988,8 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 					PlayerPlaySound(playerid, 1052, 0.0, 0.0, 0.0);
 				}
 				case 5: {
-					if( AC_GetPlayerMoney(playerid) < 5 ) return SendClientMessage( playerid, COLOR_RED, "ERROR: Nemate 5$!");
-					if( PlayerInfo[playerid][pLighter] ) return SendClientMessage( playerid, COLOR_RED, "ERROR: Vec posjedujete upaljac!" );
+					if( AC_GetPlayerMoney(playerid) < 5 ) return SendClientMessage( playerid, COLOR_RED, "Nemate 5$!");
+					if( PlayerInfo[playerid][pLighter] ) return SendClientMessage( playerid, COLOR_RED, "Vec posjedujete upaljac!" );
 
 					PlayerToBudgetMoney(playerid, 5); // APosto je VERONA MALL novac ide u budget
 					SendClientMessage(playerid, COLOR_RED, "[ ! ]  Kupljen upaljac! [5$]" );
@@ -3001,7 +3001,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 				}
 				case 7:
 				{
-					if( AC_GetPlayerMoney(playerid) < 100 ) return SendClientMessage( playerid, COLOR_RED, "ERROR: Nemate 100$!");
+					if( AC_GetPlayerMoney(playerid) < 100 ) return SendClientMessage( playerid, COLOR_RED, "Nemate 100$!");
 				    PlayerToBudgetMoney(playerid, 100); // APosto je VERONA MALL novac ide u budget;
 					PlayerPlaySound(playerid, 1052, 0.0, 0.0, 0.0);
 					PlayerInfo[playerid][hRope] = 1;
@@ -3010,8 +3010,8 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 
 				case 8:
 				{
-					if( AC_GetPlayerMoney(playerid) < 50 ) return SendClientMessage( playerid, COLOR_RED, "ERROR: Nemate 50$!");
-					if( PlayerInfo[ playerid ][ pLevel ] < 2 ) return SendClientMessage( playerid, COLOR_RED, "ERROR: Level 2+ igraci mogu kupovati oruzja!" );
+					if( AC_GetPlayerMoney(playerid) < 50 ) return SendClientMessage( playerid, COLOR_RED, "Nemate 50$!");
+					if( PlayerInfo[ playerid ][ pLevel ] < 2 ) return SendClientMessage( playerid, COLOR_RED, "Level 2+ igraci mogu kupovati oruzja!" );
 					AC_GivePlayerWeapon( playerid, WEAPON_BAT, 2 );
 					PlayerPlaySound(playerid, 1052, 0.0, 0.0, 0.0);
 					PlayerToBudgetMoney(playerid, 50); // APosto je VERONA MALL novac ide u budget
@@ -3019,16 +3019,16 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 				}
 				case 9:
 				{
-					if( AC_GetPlayerMoney(playerid) < 100 ) return SendClientMessage( playerid, COLOR_RED, "ERROR: Nemate 100$!");
-					if( PlayerInfo[ playerid ][ pLevel ] < 2 ) return SendClientMessage( playerid, COLOR_RED, "ERROR: Level 2+ igraci mogu kupovati oruzja!" );
+					if( AC_GetPlayerMoney(playerid) < 100 ) return SendClientMessage( playerid, COLOR_RED, "Nemate 100$!");
+					if( PlayerInfo[ playerid ][ pLevel ] < 2 ) return SendClientMessage( playerid, COLOR_RED, "Level 2+ igraci mogu kupovati oruzja!" );
 					AC_GivePlayerWeapon( playerid, WEAPON_CAMERA, 100 );
 					PlayerPlaySound(playerid, 1052, 0.0, 0.0, 0.0);
 					PlayerToBudgetMoney(playerid, 100); // APosto je VERONA MALL novac ide u budget
 				}
 				case 10:
 				{
-					if( AC_GetPlayerMoney(playerid) < 50 ) return SendClientMessage( playerid, COLOR_RED, "ERROR: Nemate 50$!");
-					if( PlayerInfo[ playerid ][ pLevel ] < 2 ) return SendClientMessage( playerid, COLOR_RED, "ERROR: Level 2+ igraci mogu kupovati oruzja!" );
+					if( AC_GetPlayerMoney(playerid) < 50 ) return SendClientMessage( playerid, COLOR_RED, "Nemate 50$!");
+					if( PlayerInfo[ playerid ][ pLevel ] < 2 ) return SendClientMessage( playerid, COLOR_RED, "Level 2+ igraci mogu kupovati oruzja!" );
 					AC_GivePlayerWeapon( playerid, WEAPON_SPRAYCAN, 100 );
 					PlayerPlaySound(playerid, 1052, 0.0, 0.0, 0.0);
 					PlayerToBudgetMoney(playerid, 50); // APosto je VERONA MALL novac ide u budget
@@ -3037,12 +3037,12 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 				}
 				case 11:
 				{
-					if( AC_GetPlayerMoney(playerid) < 25 ) return SendClientMessage( playerid, COLOR_RED, "ERROR: Nemate 25$!");
-					PlayerInfo[playerid][pMobileMoney] += 25;
+					if( AC_GetPlayerMoney(playerid) < 25 ) return SendClientMessage( playerid, COLOR_RED, "Nemate 25$!");
+					PlayerInfo[playerid][pMobileCost] += 25;
 					PlayerPlaySound(playerid, 1052, 0.0, 0.0, 0.0);
 					new	moneyUpdate[128];
 					format(moneyUpdate, 128, "UPDATE `player_phones` SET `money` = '%d' WHERE `player_id` = '%d' AND `type` = '1'",
-						PlayerInfo[playerid][pMobileMoney],
+						PlayerInfo[playerid][pMobileCost],
 						PlayerInfo[playerid][pSQLID]
 					);
 					mysql_tquery(g_SQL, moneyUpdate);
@@ -3079,13 +3079,13 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 			switch( listitem )
 			{
 				case 0: {
-					if( AC_GetPlayerMoney(playerid) < 100 ) return SendClientMessage( playerid, COLOR_RED, "ERROR: Nemate toliko novca (100$)!" );
+					if( AC_GetPlayerMoney(playerid) < 100 ) return SendClientMessage( playerid, COLOR_RED, "Nemate toliko novca (100$)!" );
 					PlayerToBudgetMoney(playerid, 100); // APosto je VERONA MALL novac ide u budget
 					PlayerInfo[playerid][pBoomBox]		= 1;
 					PlayerInfo[playerid][pBoomBoxType] 	= 0;
 				}
 				case 1: {
-					if( AC_GetPlayerMoney(playerid) < 100 ) return SendClientMessage( playerid, COLOR_RED, "ERROR: Nemate toliko novca (100$)!" );
+					if( AC_GetPlayerMoney(playerid) < 100 ) return SendClientMessage( playerid, COLOR_RED, "Nemate toliko novca (100$)!" );
 					PlayerToBudgetMoney(playerid, 100); // APosto je VERONA MALL novac ide u budget
 					PlayerInfo[playerid][pBoomBox]		= 1;
 					PlayerInfo[playerid][pBoomBoxType] 	= 1;
@@ -3212,7 +3212,7 @@ CMD:createvip(playerid, params[])
 	new
 		pick,
 		biz = Bit16_Get( gr_PlayerInBiznis, playerid );
-	if( PlayerInfo[ playerid ][ pAdmin ] < 1337 ) return SendClientMessage( playerid, COLOR_RED, "ERROR: Niste ovlasteni za koristenje ove komande!" );
+	if( PlayerInfo[ playerid ][ pAdmin ] < 1337 ) return SendClientMessage( playerid, COLOR_RED, "Niste ovlasteni za koristenje ove komande!" );
 	if( sscanf( params, "i", pick ) ) return SendClientMessage( playerid, -1, "KORISTENJE: /createvip [0-9] (0 za micanje sobe)" );
 
 	new
@@ -3477,7 +3477,7 @@ CMD:createvip(playerid, params[])
 			BizzInfo[ biz ][ bVipCP ] = CreateDynamicCP( BizzInfo[ biz ][ bVipEnter ][ 0 ], BizzInfo[ biz ][ bVipEnter ][ 1 ], BizzInfo[ biz ][ bVipEnter ][ 2 ]-1, 3.0, BizzInfo[ biz ][ bVirtualWorld ], BizzInfo[ biz ][ bInterior ], -1, 5.0 );
 		}
 		default:
-			SendClientMessage(playerid, COLOR_RED, "ERROR: Broj sobe ne moze biti manji od 0 ili veci od 9!");
+			SendClientMessage(playerid, COLOR_RED, "Broj sobe ne moze biti manji od 0 ili veci od 9!");
 	}
 	return 1;
 }
@@ -3834,9 +3834,9 @@ CMD:biznis(playerid, params[])
 {
 	new
 		biznis = PlayerInfo[playerid][pBizzKey];
-	if( biznis == INVALID_BIZNIS_ID ) return SendClientMessage(playerid, COLOR_RED, "ERROR: Ne posjedujete biznis!");
+	if( biznis == INVALID_BIZNIS_ID ) return SendClientMessage(playerid, COLOR_RED, "Ne posjedujete biznis!");
 	if( !IsPlayerInRangeOfPoint(playerid, 20.0, BizzInfo[biznis][bEntranceX], BizzInfo[biznis][bEntranceY], BizzInfo[biznis][bEntranceZ]) )
-		return va_SendClientMessage(playerid, COLOR_RED, "ERROR: Niste blizu svoga biznisa (%s)!", BizzInfo[biznis][bMessage]);
+		return va_SendClientMessage(playerid, COLOR_RED, "Niste blizu svoga biznisa (%s)!", BizzInfo[biznis][bMessage]);
 
 	if( BizzInfo[ biznis ][ bType ] == BIZZ_TYPE_DUCAN )
 		ShowPlayerDialog( playerid, DIALOG_BIZNIS_MAIN, DIALOG_STYLE_LIST, "MOJ BIZNIS", "Info\nPostavi artikl\nSkini artikl\nPostavi cijenu artikla\nVrata\nRekonstrukcija biznisa($20.000)\nPostavi cijenu produkata\nIme Biznisa\nProdaj biznis igracu", "Odaberi","Izlaz" );
@@ -3892,19 +3892,19 @@ CMD:menu(playerid, params[])
 
 CMD:buybiznis(playerid, params[])
 {
-	if( PlayerInfo[ playerid ][ pBizzKey ] != INVALID_BIZNIS_ID ) return SendClientMessage( playerid, COLOR_RED, "ERROR: Vec posjedujete biznis!" );
+	if( PlayerInfo[ playerid ][ pBizzKey ] != INVALID_BIZNIS_ID ) return SendClientMessage( playerid, COLOR_RED, "Vec posjedujete biznis!" );
 	foreach(new biznis : Bizzes) {
 		if( IsPlayerInRangeOfPoint( playerid, 5.0, BizzInfo[ biznis ][ bEntranceX ], BizzInfo[ biznis ][ bEntranceY ], BizzInfo[ biznis ][ bEntranceZ ] ) && !BizzInfo[ biznis ][ bOwnerID ] )
 		{
 			if( PlayerInfo[ playerid ][ pLevel ] < BizzInfo[ biznis ][ bLevelNeeded ] ) {
 				new
 					tmpString[ 50 ];
-				format(tmpString, sizeof(tmpString), "ERROR: Moras biti level %d da bi kupio biznis!", BizzInfo[ biznis ][bLevelNeeded] );
+				format(tmpString, sizeof(tmpString), "Moras biti level %d da bi kupio biznis!", BizzInfo[ biznis ][bLevelNeeded] );
 				SendClientMessage( playerid, COLOR_RED, tmpString );
 				return 1;
 			}
-			if( BizzInfo[ biznis ][ bType ] == BIZZ_TYPE_BYCITY ) return SendClientMessage( playerid, COLOR_RED, "ERROR: Ne mozete kupiti biznis jer je u posjedu grada!" );
-			if( AC_GetPlayerMoney( playerid ) < BizzInfo[ biznis ][ bBuyPrice ] ) return SendClientMessage(playerid, COLOR_RED, "ERROR: Nemas novaca da bi kupio!");
+			if( BizzInfo[ biznis ][ bType ] == BIZZ_TYPE_BYCITY ) return SendClientMessage( playerid, COLOR_RED, "Ne mozete kupiti biznis jer je u posjedu grada!" );
+			if( AC_GetPlayerMoney( playerid ) < BizzInfo[ biznis ][ bBuyPrice ] ) return SendClientMessage(playerid, COLOR_RED, "Nemas novaca da bi kupio!");
 
 			// Enum
 			PlayerInfo[ playerid ][ pBizzKey ] 	= biznis;
@@ -3962,7 +3962,7 @@ CMD:buy(playerid, params[])
 		ShowModelSelectionMenu(playerid, MODEL_LIST_SKINS, "Kupovina odjece", 0x0d0c0cBB, 0x2a2a2a99, 0x3d3d3dAA);
 	}
 	else {
-		if( Bit16_Get( gr_PlayerInBiznis, playerid ) == INVALID_BIZNIS_ID || Bit16_Get( gr_PlayerInBiznis, playerid ) > MAX_BIZZS) return SendClientMessage( playerid, COLOR_RED, "ERROR: Niste u biznisu!" );
+		if( Bit16_Get( gr_PlayerInBiznis, playerid ) == INVALID_BIZNIS_ID || Bit16_Get( gr_PlayerInBiznis, playerid ) > MAX_BIZZS) return SendClientMessage( playerid, COLOR_RED, "Niste u biznisu!" );
 
 		switch( BizzInfo[ Bit16_Get( gr_PlayerInBiznis, playerid ) ][ bType ] )
 		{
@@ -4032,7 +4032,7 @@ CMD:buy(playerid, params[])
 
 CMD:bmusic(playerid, params[])
 {
-	if( PlayerInfo[ playerid ][ pBizzKey ] == INVALID_BIZNIS_ID && !Bit1_Get( gr_IsADJ, playerid ) ) return SendClientMessage(playerid, COLOR_RED, "ERROR: Ne posjedujes biznis/nisi DJ!");
+	if( PlayerInfo[ playerid ][ pBizzKey ] == INVALID_BIZNIS_ID && !Bit1_Get( gr_IsADJ, playerid ) ) return SendClientMessage(playerid, COLOR_RED, "Ne posjedujes biznis/nisi DJ!");
 
 	new bouse;
 	foreach(new i : Bizzes)
@@ -4058,7 +4058,7 @@ CMD:bmusic(playerid, params[])
 
 CMD:makedj(playerid, params[])
 {
-	if( PlayerInfo[ playerid ][ pBizzKey ] == INVALID_BIZNIS_ID ) return SendClientMessage(playerid, COLOR_RED, "ERROR: Ne posjedujes biznis!");
+	if( PlayerInfo[ playerid ][ pBizzKey ] == INVALID_BIZNIS_ID ) return SendClientMessage(playerid, COLOR_RED, "Ne posjedujes biznis!");
 
 	new
 		biznis = Bit16_Get( gr_PlayerInBiznis, playerid ),
@@ -4073,7 +4073,7 @@ CMD:makedj(playerid, params[])
 	}
 
 	if(sscanf(params, "u", giveplayerid)) return SendClientMessage(playerid, -1, "KORISTENJE: /makedj [DioImena/Playerid]");
-	if( biznis == INVALID_BIZNIS_ID || biznis != bouse ) return SendClientMessage(playerid, COLOR_RED, "ERROR: Niste unutar svojeg biznisa!" );
+	if( biznis == INVALID_BIZNIS_ID || biznis != bouse ) return SendClientMessage(playerid, COLOR_RED, "Niste unutar svojeg biznisa!" );
 
 	if( Bit1_Get( gr_IsADJ, giveplayerid ) ) {
 		Bit1_Set(	gr_IsADJ, 	giveplayerid, false);
@@ -4094,9 +4094,9 @@ CMD:makedj(playerid, params[])
 CMD:bizentrance(playerid, params[])
 {
 	new proplev;
-	if(PlayerInfo[playerid][pAdmin] < 1338) return SendClientMessage(playerid, COLOR_RED, "ERROR: Nisi 1338!");
+	if(PlayerInfo[playerid][pAdmin] < 1338) return SendClientMessage(playerid, COLOR_RED, "Nisi 1338!");
 	if (sscanf(params, "i", proplev)) return SendClientMessage(playerid, COLOR_WHITE, "USAGE: /bizentrance [bizid] - Mjenja lokacije Biza");
-	if(proplev >= MAX_BIZZS || proplev < 0) return SendClientMessage(playerid,COLOR_WHITE,"ERROR: Nema Biznisa tog ID-a!");
+	if(proplev >= MAX_BIZZS || proplev < 0) return SendClientMessage(playerid,COLOR_WHITE,"Nema Biznisa tog ID-a!");
 
 	new
 		Float:X,Float:Y,Float:Z;
@@ -4133,7 +4133,7 @@ CMD:bizentrance(playerid, params[])
 
 CMD:bizinfo(playerid, params[])
 {
-	if(PlayerInfo[playerid][pAdmin] < 4) return SendClientMessage(playerid, COLOR_RED, "ERROR: Nisi administrator!");
+	if(PlayerInfo[playerid][pAdmin] < 4) return SendClientMessage(playerid, COLOR_RED, "Nisi administrator!");
 	new biznis = INVALID_BIZNIS_ID;
 	foreach(new i : Bizzes) {
 		if( IsPlayerInRangeOfPoint( playerid, 8.0, BizzInfo[ i ][ bEntranceX ], BizzInfo[ i ][ bEntranceY ], BizzInfo[ i ][ bEntranceZ ] ) ) {
@@ -4141,7 +4141,7 @@ CMD:bizinfo(playerid, params[])
 			break;
 		}
 	}
-	if(biznis == INVALID_BIZNIS_ID) return SendClientMessage(playerid, COLOR_RED,"ERROR: Ne nalazis se ispred ulaza biznisa.");
+	if(biznis == INVALID_BIZNIS_ID) return SendClientMessage(playerid, COLOR_RED,"Ne nalazis se ispred ulaza biznisa.");
 
 	va_SendClientMessage(playerid, COLOR_YELLOW, "[INFO] Bizz ID: %d | Bizz MySQL ID: %d", biznis, BizzInfo[biznis][bSQLID]);
 	va_SendClientMessage(playerid, COLOR_RED, "[INFO] Stanje u blagajni biznisa: %d$", BizzInfo[biznis][bTill]);
@@ -4177,7 +4177,7 @@ CMD:bizwithdraw(playerid, params[])
 		cashdeposit,
 		string[64];
 
-	if (PlayerInfo[playerid][pBizzKey] == INVALID_BIZNIS_ID) return SendClientMessage(playerid, COLOR_RED, "ERROR: Ne posjedujes biznis.");
+	if (PlayerInfo[playerid][pBizzKey] == INVALID_BIZNIS_ID) return SendClientMessage(playerid, COLOR_RED, "Ne posjedujes biznis.");
 
 	foreach(new i : Bizzes)
 	{
@@ -4191,9 +4191,9 @@ CMD:bizwithdraw(playerid, params[])
 		SendClientMessage(playerid, COLOR_ORANGE, "USAGE: /bizwithdraw [Iznos koliko zelite podici iz biznisa]");
 		return 1;
     }
-	if( cashdeposit > BizzInfo[bouse][bTill] || cashdeposit < 1 ) return SendClientMessage(playerid, COLOR_RED, "ERROR: Nemate toliko novaca");
-	if( !IsPlayerInRangeOfPoint(playerid, 100.0, BizzInfo[bouse][bExitX], BizzInfo[bouse][bExitY], BizzInfo[bouse][bExitZ]) && BizzInfo[bouse][bCanEnter] == 1) return SendClientMessage(playerid, COLOR_RED, "ERROR: Previse si udaljen od biznisa");
-	if( !IsPlayerInRangeOfPoint(playerid,3,BizzInfo[bouse][bEntranceX], BizzInfo[bouse][bEntranceY],BizzInfo[bouse][bEntranceZ]) && BizzInfo[bouse][bCanEnter] == 0) return SendClientMessage(playerid, COLOR_RED, "ERROR: Previse si udaljen od biznisa");
+	if( cashdeposit > BizzInfo[bouse][bTill] || cashdeposit < 1 ) return SendClientMessage(playerid, COLOR_RED, "Nemate toliko novaca");
+	if( !IsPlayerInRangeOfPoint(playerid, 100.0, BizzInfo[bouse][bExitX], BizzInfo[bouse][bExitY], BizzInfo[bouse][bExitZ]) && BizzInfo[bouse][bCanEnter] == 1) return SendClientMessage(playerid, COLOR_RED, "Previse si udaljen od biznisa");
+	if( !IsPlayerInRangeOfPoint(playerid,3,BizzInfo[bouse][bEntranceX], BizzInfo[bouse][bEntranceY],BizzInfo[bouse][bEntranceZ]) && BizzInfo[bouse][bCanEnter] == 0) return SendClientMessage(playerid, COLOR_RED, "Previse si udaljen od biznisa");
 
 	BusinessToPlayerMoney(playerid, bouse, cashdeposit); //Novac iz biznisa ide igraèu
 
@@ -4221,7 +4221,7 @@ CMD:bizbank(playerid, params[])
 		cashdeposit,
 		string[59];
 
-	if (PlayerInfo[playerid][pBizzKey] == INVALID_BIZNIS_ID) return SendClientMessage(playerid, COLOR_RED, "ERROR: Ne posjedujes biznis.");
+	if (PlayerInfo[playerid][pBizzKey] == INVALID_BIZNIS_ID) return SendClientMessage(playerid, COLOR_RED, "Ne posjedujes biznis.");
 	foreach(new i : Bizzes)
 	{
 		if(PlayerInfo[playerid][pSQLID] == BizzInfo[i][bOwnerID])
@@ -4234,7 +4234,7 @@ CMD:bizbank(playerid, params[])
 	    SendClientMessage(playerid, COLOR_WHITE, "KORISTENJE: /bizbank [iznos]");
 		return 1;
     }
-	if( cashdeposit > AC_GetPlayerMoney(playerid) || cashdeposit < 1 ) return SendClientMessage(playerid, COLOR_RED, "ERROR: Nemas toliko novaca");
+	if( cashdeposit > AC_GetPlayerMoney(playerid) || cashdeposit < 1 ) return SendClientMessage(playerid, COLOR_RED, "Nemas toliko novaca");
 
 	PlayerToBusinessMoney(playerid, bouse, cashdeposit); // Novac od igraèa ide u biznis
 
@@ -4258,7 +4258,7 @@ CMD:bizbank(playerid, params[])
 
 CMD:createbiz(playerid, params[])
 {
-	if (PlayerInfo[playerid][pAdmin] < 1338) return SendClientMessage(playerid, COLOR_RED, "ERROR: Niste ovlasteni za koristenje ove komande!");
+	if (PlayerInfo[playerid][pAdmin] < 1338) return SendClientMessage(playerid, COLOR_RED, "Niste ovlasteni za koristenje ove komande!");
 	new
 		level, canenter, price;
 	if(sscanf(params, "iii", level, canenter, price)){
@@ -4291,10 +4291,10 @@ CMD:createbiz(playerid, params[])
 CMD:deletebiz(playerid, params[])
 {
 	if(PlayerInfo[playerid][pAdmin] < 1338)
-		return SendClientMessage(playerid, COLOR_RED, "ERROR: Niste Administrator Level 1338");
+		return SendClientMessage(playerid, COLOR_RED, "Niste Administrator Level 1338");
 	new biznis = GetPlayerNearestBiznis(playerid);
 	if(biznis == INVALID_BIZNIS_ID)
-		return SendClientMessage(playerid, COLOR_RED, "ERROR: Niste u blizini nijednog biznisa!");
+		return SendClientMessage(playerid, COLOR_RED, "Niste u blizini nijednog biznisa!");
 	new removebizstring[128];
 	FreeBizzID[playerid] = biznis;
 	format(removebizstring, sizeof(removebizstring), "Jeste li sigurni da zelite izbrisati %s %s[SQLID: %d]?", GetBiznisType(BizzInfo[biznis][bType]), BizzInfo[biznis][bMessage], BizzInfo[biznis][bSQLID]);

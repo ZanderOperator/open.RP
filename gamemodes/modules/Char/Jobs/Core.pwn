@@ -231,7 +231,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 					if(JobData[MECHANIC] == OFFICIAL_JOBS_EMPLOYERS)
 						return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ova firma trenutno ne prima radnike, pokusajte kada bude slobodnih mjesta.");
 
-					if( PlayerInfo[ playerid ][ pLevel ] < 3 ) return SendClientMessage( playerid, COLOR_RED, "ERROR: Morate biti level 3+ za ovaj posao (treba vozilo)!");
+					if( PlayerInfo[ playerid ][ pLevel ] < 3 ) return SendClientMessage( playerid, COLOR_RED, "Morate biti level 3+ za ovaj posao (treba vozilo)!");
 
 					SetPlayerJob(playerid, 3);
 					SendMessage( playerid, MESSAGE_TYPE_INFO, "Zaposlili ste se kao mehanicar!");
@@ -627,7 +627,7 @@ CMD:jobcmds(playerid, params[]) {
 CMD:takejob(playerid, params[])
 {
 	if(PlayerInfo[playerid][pJob] != 0) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Imate posao, koristite /quitjob!");
-	if( IsACop(playerid) || IsFDMember(playerid) || IsASD(playerid) || IsAGov(playerid) ) return SendClientMessage( playerid, COLOR_RED, "ERROR: Ne smijete biti u organizaciji!");
+	if( IsACop(playerid) || IsFDMember(playerid) || IsASD(playerid) || IsAGov(playerid) ) return SendClientMessage( playerid, COLOR_RED, "Ne smijete biti u organizaciji!");
 	
 	if( IsPlayerInRangeOfPoint(playerid, 7.0, 1617.5137,-1560.1582,14.1662) )
 		ShowPlayerDialog(playerid, DIALOG_IJOBS, DIALOG_STYLE_LIST, "ILEGALNI POSLOVI", "Lopov", "Odaberi", "Odustani");
@@ -640,7 +640,7 @@ CMD:takejob(playerid, params[])
 
 CMD:quitjob(playerid, params[])
 {
-	if(PlayerInfo[playerid][pJob] == 0) return SendClientMessage( playerid, COLOR_RED, "ERROR: Nemate posao!");
+	if(PlayerInfo[playerid][pJob] == 0) return SendClientMessage( playerid, COLOR_RED, "Nemate posao!");
 	if(PlayerInfo[playerid][pFreeWorks] < 15) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Pricekajte PayDay i NE radite ture da mozete dati otkaz na svome poslu!");
 	switch( PlayerInfo[playerid][pDonateRank]) {
 		case 0: {

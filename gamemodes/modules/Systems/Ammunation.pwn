@@ -359,7 +359,7 @@ CMD:issueweaplic(playerid, params[])
 		SendClientMessage(playerid, COLOR_RED, "USAGE: /issueweaplicense [playerid/name]");
 		return 1;
 	}
-	if(PlayerInfo[giveplayerid][pGunLic] == 1) return SendClientMessage(playerid, COLOR_RED, "ERROR: Osoba vec ima dozvolu za oruzje!");
+	if(PlayerInfo[giveplayerid][pGunLic] == 1) return SendClientMessage(playerid, COLOR_RED, "Osoba vec ima dozvolu za oruzje!");
 	if((IsACop(playerid) && PlayerInfo[playerid][pRank] > 5) || PlayerInfo[playerid][pLeader] == 1)
 	{
 	    PlayerInfo[giveplayerid][pGunLic] = 1;
@@ -381,7 +381,7 @@ CMD:revokeweaplic(playerid, params[])
 		SendClientMessage(playerid, COLOR_RED, "USAGE: /revokeweaplic [playerid/name]");
 		return 1;
 	}
-	if(PlayerInfo[giveplayerid][pGunLic] == 0) return SendClientMessage(playerid, COLOR_RED, "ERROR: Osoba nema dozvolu za oruzje!");
+	if(PlayerInfo[giveplayerid][pGunLic] == 0) return SendClientMessage(playerid, COLOR_RED, "Osoba nema dozvolu za oruzje!");
 	if(IsACop(playerid))
 	{
 	    PlayerInfo[giveplayerid][pGunLic] = 0;

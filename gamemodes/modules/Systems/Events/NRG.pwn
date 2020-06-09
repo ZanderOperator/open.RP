@@ -132,7 +132,7 @@ hook OnPlayerStateChange(playerid, newstate, oldstate)
         if(VehicleInfo[GetPlayerVehicleID(playerid)][vUsage] == VEHICLE_USAGE_EVENT && GetVehicleModel(GetPlayerVehicleID(playerid)) == 522 && !RaceNRGCP[playerid])
 		{
             RemovePlayerFromVehicle(playerid);
-            SendClientMessage(playerid, COLOR_RED, "ERROR: Niste unutar Anniversary NRG Race eventa!");
+            SendClientMessage(playerid, COLOR_RED, "Niste unutar Anniversary NRG Race eventa!");
             return 1;
         }
     }
@@ -142,7 +142,7 @@ hook OnPlayerStateChange(playerid, newstate, oldstate)
 CMD:callnrgs(playerid, params[])
 {
     if(PlayerInfo[playerid][pAdmin] < 2)
-		return SendClientMessage(playerid, COLOR_RED, "ERROR: Niste ovlasteni!");
+		return SendClientMessage(playerid, COLOR_RED, "Niste ovlasteni!");
 
 	new
         giveplayerid;
@@ -151,10 +151,10 @@ CMD:callnrgs(playerid, params[])
 		return SendClientMessage(playerid, COLOR_RED, "USAGE: /callnrgs [ime/playerid]");
 
 	if(giveplayerid == INVALID_PLAYER_ID)
-		return SendClientMessage(playerid, COLOR_RED, "ERROR: Krivi unos playerida!");
+		return SendClientMessage(playerid, COLOR_RED, "Krivi unos playerida!");
 
 	if(RaceNRGCP[giveplayerid] != 0)
-		return SendClientMessage(playerid, COLOR_RED, "ERROR: Taj igraè je veæ u utrci!");
+		return SendClientMessage(playerid, COLOR_RED, "Taj igraè je veæ u utrci!");
 
 
     RaceNRGCP[giveplayerid] = 1;

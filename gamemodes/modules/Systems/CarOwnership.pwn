@@ -3566,7 +3566,7 @@ Function: VehicleGlobalTimer()
 						new
 							playerid = GetVehicleDriver(vehicleid);
 							
-						SendClientMessage(playerid, COLOR_RED, "ERROR: Vase je vozilo unisteno, zovite mehanicara!");
+						SendClientMessage(playerid, COLOR_RED, "Vase je vozilo unisteno, zovite mehanicara!");
 						AC_SetVehicleHealth(vehicleid, 390.0);
 						VehicleInfo[vehicleid][vDestroyed] = true;
 
@@ -3622,7 +3622,7 @@ Function: VehicleGlobalTimer()
 				GetVehicleHealth(vehicleid, health);
 				if(health <= 390.0) {
 					if(!VehicleInfo[vehicleid][vDestroyed]) {
-						SendClientMessage(GetVehicleDriver(vehicleid), COLOR_RED, "ERROR: Vase je vozilo unisteno, zovite mehanicara!");
+						SendClientMessage(GetVehicleDriver(vehicleid), COLOR_RED, "Vase je vozilo unisteno, zovite mehanicara!");
 						AC_SetVehicleHealth(vehicleid, 390.0);
 						VehicleInfo[vehicleid][vDestroyed] = true;
 

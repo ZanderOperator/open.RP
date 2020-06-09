@@ -390,7 +390,7 @@ CMD:port(playerid, params[]) {
 CMD:agps(playerid, params[]) {
 	new 
 		action[15];
-	if(PlayerInfo[playerid][pAdmin] < 1337) return SendClientMessage(playerid,COLOR_RED, "ERROR: Niste ovlasteni za koristenje ove komande.");	
+	if(PlayerInfo[playerid][pAdmin] < 1337) return SendClientMessage(playerid,COLOR_RED, "Niste ovlasteni za koristenje ove komande.");	
 	if(sscanf(params, "s[15] ", action))
 	{
 		SendClientMessage(playerid, COLOR_RED, "[ ! ] /agps [option].");

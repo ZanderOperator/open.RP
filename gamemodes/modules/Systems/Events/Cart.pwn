@@ -147,7 +147,7 @@ hook OnPlayerStateChange(playerid, newstate, oldstate)
         if(VehicleInfo[GetPlayerVehicleID(playerid)][vUsage] == VEHICLE_USAGE_EVENT && GetVehicleModel(GetPlayerVehicleID(playerid)) == 571 && !RaceKartCP[playerid])
 		{
             RemovePlayerFromVehicle(playerid);
-            SendClientMessage(playerid, COLOR_RED, "ERROR: Niste unutar Anniversary Kart Race eventa!");
+            SendClientMessage(playerid, COLOR_RED, "Niste unutar Anniversary Kart Race eventa!");
             return 1;
         }
     }
@@ -157,7 +157,7 @@ hook OnPlayerStateChange(playerid, newstate, oldstate)
 CMD:callkarters(playerid, params[])
 {
     if(PlayerInfo[playerid][pAdmin] < 2)
-		return SendClientMessage(playerid, COLOR_RED, "ERROR: Niste ovlasteni!");
+		return SendClientMessage(playerid, COLOR_RED, "Niste ovlasteni!");
 
 	new
         giveplayerid;
@@ -165,10 +165,10 @@ CMD:callkarters(playerid, params[])
 		return SendClientMessage(playerid, COLOR_RED, "USAGE: /callkarters [ime/playerid]");
 
 	if(giveplayerid == INVALID_PLAYER_ID)
-		return SendClientMessage(playerid, COLOR_RED, "ERROR: Krivi unos playerida!");
+		return SendClientMessage(playerid, COLOR_RED, "Krivi unos playerida!");
 
 	if(RaceKartCP[giveplayerid] != 0)
-		return SendClientMessage(playerid, COLOR_RED, "ERROR: Taj igraè je veæ u utrci!");
+		return SendClientMessage(playerid, COLOR_RED, "Taj igraè je veæ u utrci!");
 
 
     RaceKartCP[giveplayerid] = 1;

@@ -243,7 +243,7 @@ stock StopScrambling(playerid)
 */
 CMD:unscramble(playerid, params[])
 {
-	if( lastScrambleId[ playerid ] == -1 )  return SendClientMessage( playerid, COLOR_RED, "ERROR: Nemate pokrenuti scramble sistem!");
+	if( lastScrambleId[ playerid ] == -1 )  return SendClientMessage( playerid, COLOR_RED, "Nemate pokrenuti scramble sistem!");
 	new
 		word[ 16 ];
 	if( sscanf( params, "s[16]", word ) ) return SendClientMessage(playerid, COLOR_RED, "USAGE: /unscramble [rijec]");
@@ -277,7 +277,7 @@ CMD:unscramble(playerid, params[])
 			KillTimer( scrambleTimer[ playerid ] );
 			scrambleTimer[ playerid ] 	= SetTimerEx("ScramblingTimer", 1000, true, "i", playerid);	
 		} else GameTextForPlayer(playerid, "~r~Krivi unos rijeci!", 1800, 1);
-	} else SendClientMessage(playerid, COLOR_RED, "ERROR: Raspon znakova u rijeci mora biti izmedju 1 i 15!");	
+	} else SendClientMessage(playerid, COLOR_RED, "Raspon znakova u rijeci mora biti izmedju 1 i 15!");	
 	return 1;
 }
 

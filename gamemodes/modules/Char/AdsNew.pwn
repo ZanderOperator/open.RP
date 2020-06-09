@@ -40,7 +40,7 @@ public PublishAdvertisment( playerid ){
         }
 	}
 
-    va_SendClientMessage(playerid, COLOR_WHITE, "{FA5656}[ ! ] Trenutno imas %d ad tokena. Koristi komandu /adcost za vise informacija!", AdData [ playerid ][ Tokens ]) ;
+	SendFormatMessage(playerid, MESSAGE_TYPE_INFO, "Trenutno imas %d ad tokena. Koristi komandu /adcost za vise informacija!", AdData[playerid][Tokens]);
 	if( Bit1_Get( a_AdNot, playerid ) ) {
 		new msg[77];
 		format( msg,sizeof( msg ), "AdmCmd: %s je upravo objavio oglas!", GetName( playerid, false ) ) ;
@@ -78,7 +78,7 @@ public MinusSecond( playerid ){
 
 CMD:adqstatus( playerid, params[ ] ){
     if (PlayerInfo[playerid][pAdmin] < 4)
-		return SendClientMessage(playerid, COLOR_RED, "ERROR: Niste ovlasteni za koristenje ove komande!");
+		return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ovlasteni za koristenje ove komande!");
 	new msg[77];
 	if( adstatus == 1 ){
 		adstatus = 0;
@@ -93,27 +93,26 @@ CMD:adqstatus( playerid, params[ ] ){
 }
 
 CMD:ad( playerid, params[] ){
-	new cost, timertime, msg[128] ;
+	new cost, timertime;
 	if( isnull( params ) ) return SendClientMessage( playerid, COLOR_WHITE, "{FA5656}[ ! ] (/ad) [text]" ) ;
- 	if(!IsPlayerInRangeOfPoint(playerid, 5.0,1128.99,-1488.91,22.769)) return SendClientMessage(playerid, COLOR_WHITE, "{FA5656}[ ! ] Niste u blizinu mjesta za oglase (Verona Mall)!");
-	format( msg, sizeof( msg ), "{FA5656}[ ! ] Nemaš dovoljno novca ($%d) za objavljivanje oglasa", cost ) ;
-	if( AC_GetPlayerMoney( playerid ) < cost ) return SendClientMessage(playerid, COLOR_WHITE, msg ) ;
-	if( adstatus == 0 ) return SendClientMessage(playerid, COLOR_WHITE, "{FA5656}ERROR: Oglasi su iskljuceni od strane administratora." ) ;
-	if( AdData[ playerid ][ ID ] != 0 ) return SendClientMessage(playerid, COLOR_WHITE, "{FA5656}ERROR: Vec imate jedan oglas na cekanju. Kucajte /adqueue za provjeru oglasa") ;
+ 	if(!PlayerInfo[playerid][pMobileNumber]) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne posjedujete mobitel!");
+	if( AC_GetPlayerMoney( playerid ) < cost ) return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "Nemas dovoljno novaca(%d$) za objavljivanje oglasa!", cost);
+	if( adstatus == 0 ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Oglasi su trenutno iskljuceni od strane Game Admina.");
+	if( AdData[ playerid ][ ID ] != 0 ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Vec imate jedan oglas na cekanju. Kucajte /adqueue za provjeru oglasa.");
 
 	if( strlen( params ) > MAXLEN )
 	{
   		new pos = MAXLEN ;
 		if(pos < MAXLEN-1) pos = MAXLEN ;
 		AdData[ playerid ][ AdLength ] = 2;
-		format( AdData [ playerid ] [ Text ],  255, "[Advertisement] %.*s ...", pos, params ) ;
-		format( AdData [ playerid ] [ Text2 ], 255, "[Advertisement] ... %s, Ph:[%d]", params[ pos ], PlayerInfo[playerid][pMobileNumber] ) ;
+		format( AdData [ playerid ] [ Text ],  255, "[Oglas] %.*s ...", pos, params ) ;
+		format( AdData [ playerid ] [ Text2 ], 255, "[Oglas] ... %s, Kontakt:[%d]", params[ pos ], PlayerInfo[playerid][pMobileNumber] ) ;
 		adqueue += 1 ;
 	}
 	else
 	{
         adqueue += 1 ;
-		format( AdData [ playerid ] [ Text ], 255, "[Advertisement] %s, Ph:[%d]", params, PlayerInfo[playerid][pMobileNumber] ) ;
+		format( AdData [ playerid ] [ Text ], 255, "[Oglas] %s, Kontakt:[%d]", params, PlayerInfo[playerid][pMobileNumber] ) ;
 	}
 
 	if( adqueue == 0 ){
@@ -133,19 +132,17 @@ CMD:ad( playerid, params[] ){
 	adtime[ playerid ] = AdData[ playerid ][ ID ] * 30;
 	SetTimerEx( "PublishAdvertisment", timertime, 0, "d", playerid ) ;
 	adtimer[ playerid ] = SetTimerEx( "MinusSecond", 1000, 0, "d", playerid ) ;
-	SendClientMessage( playerid, COLOR_GREEN, "Oglas je uspjesno postavljen na cekanje." ) ;
-	SendClientMessage( playerid, COLOR_GREEN, "Koristite komandu /adqueue kako bi provjerili informacije i status vaseg oglasa." ) ;
+	SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "Oglas je uspjesno postavljen na cekanje.Koristite komandu /adqueue kako bi provjerili informacije i status vaseg oglasa.");
 	return 1;
 }
 
 CMD:cad( playerid, params[] ){
-	new cost, timertime, msg[128] ;
-	if( isnull( params ) ) return SendClientMessage( playerid, COLOR_WHITE, "{FA5656}ERROR: /cad [text]" ) ;
- 	if(!IsPlayerInRangeOfPoint(playerid, 5.0,1128.99,-1488.91,22.769)) return SendClientMessage(playerid, COLOR_WHITE, "{FA5656}[ ! ] Niste u blizinu mjesta za oglase (Verona Mall)!");
-	format( msg, sizeof( msg ), "{FA5656}ERROR: Nemaš dovoljno novca ($%d) za objavljivanje oglasa", cost ) ;
-	if( AC_GetPlayerMoney( playerid ) < cost ) return SendClientMessage(playerid, COLOR_WHITE,msg ) ;
-	if( adstatus == 0 ) return SendClientMessage(playerid, COLOR_WHITE, "{FA5656}ERROR:  Oglasi su iskljuceni od strane administratora." ) ;
-	if( AdData[ playerid ][ ID ] != 0 ) return SendClientMessage(playerid, COLOR_WHITE, "{FA5656}ERROR: Vec imate jedan oglas na cekanju. Kucajte /adqueue za provjeru oglasa" ) ;
+	new cost, timertime;
+	if( isnull( params ) ) return SendClientMessage( playerid, COLOR_WHITE, "{FA5656}[ ! ]: /cad [text]" ) ;
+ 	if(!PlayerInfo[playerid][pMobileNumber]) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne posjedujete mobitel!");
+	if( AC_GetPlayerMoney( playerid ) < cost ) return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "Nemas dovoljno novaca(%d$) za objavljivanje oglasa!", cost);
+	if( adstatus == 0 ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Oglasi su trenutno iskljuceni od strane Game Admina.");
+	if( AdData[ playerid ][ ID ] != 0 ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Vec imate jedan oglas na cekanju. Kucajte /adqueue za provjeru oglasa.");
 	if( adqueue == 0 ){
 	    timertime = 30000;
 	}else{
@@ -163,13 +160,13 @@ CMD:cad( playerid, params[] ){
 		new pos = MAXLEN ;
 		if(pos < MAXLEN-1) pos = MAXLEN ;
 		AdData[ playerid ][ AdLength ] = 2;
-		format( AdData [ playerid ] [ Text ],  255, "[Company Advertisement] %.*s ...", pos, params ) ;
-		format( AdData [ playerid ] [ Text2 ], 255, "[Company Advertisement] ... %s", params[ pos ] ) ;
+		format( AdData [ playerid ] [ Text ],  255, "[Biznis] %.*s ...", pos, params ) ;
+		format( AdData [ playerid ] [ Text2 ], 255, "[Biznis oglas] ... %s", params[ pos ] ) ;
 		SetTimerEx( "PublishAdvertisment", timertime, 0, "d", playerid ) ;
 	}
 	else
 	{
-		format( AdData [ playerid ] [ Text ], 255, "[Company Advertisement] %s", params ) ;
+		format( AdData [ playerid ] [ Text ], 255, "[Biznis oglas] %s", params ) ;
 		SetTimerEx( "PublishAdvertisment", timertime, 0, "d", playerid ) ;
 	}
 	PlayerToBudgetMoney( playerid, cost ) ;
@@ -178,24 +175,21 @@ CMD:cad( playerid, params[] ){
 	AdData [ playerid ][ Tokens ] += 1;
 	adtime[ playerid ] = AdData[ playerid ][ ID ] * 30;
 	adtimer[ playerid ] = SetTimerEx( "MinusSecond", 1000, 0, "d", playerid ) ;
-	SendClientMessage( playerid, COLOR_GREEN, "Oglas je uspjesno postavljen na cekanje." ) ;
-	SendClientMessage( playerid, COLOR_GREEN, "Koristite komandu /adqueue kako bi provjerili informacije i status vaseg oglasa." ) ;
+	SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "Oglas je uspjesno postavljen na cekanje.Koristite komandu /adqueue kako bi provjerili informacije i status vaseg oglasa.");
 	return 1;
 }
 
 CMD:adcost( playerid, params[] ){
 	new nextcost ;
 	nextcost = (AdData[ playerid ][ Tokens ] * 250) + 1000 ;
-	if( AdData[ playerid ][ Tokens ] == 0 ) return SendClientMessage(playerid, COLOR_WHITE, "{FA5656}ERROR: Trenutno nemate dovoljno tokena!" ) ;
-	va_SendClientMessage( playerid, COLOR_WHITE, "{FA5656}[ ! ] Trenutno imaš %d ad tokena", AdData[ playerid ][ Tokens ] ) ;
-	va_SendClientMessage( playerid, COLOR_WHITE, "{FA5656}[ ! ] Sljedeci oglas ce vas kostati: $%d", nextcost ) ;
+	if( AdData[ playerid ][ Tokens ] == 0 ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Trenutno nemate dovoljno tokena!");
+	SendFormatMessage(playerid, MESSAGE_TYPE_INFO, "Trenutno imas %d tokena za oglase. Sljedeci oglas ce vas kostati %d$", AdData[playerid][Tokens], nextcost);
 	return 1 ;
 }
 
 CMD:adqueue( playerid, params[] ){
-	if( adtime[ playerid ] == 0) return SendClientMessage(playerid, COLOR_RED, "Nemas oglasa na cekanju" ) ;
-	va_SendClientMessage( playerid, COLOR_WHITE, "{EA5757}[ ! ] Tvoj oglas ce biti objavljen kroz %d sekundi.", adtime[ playerid ] ) ;
-	va_SendClientMessage( playerid, COLOR_RED, "[ ! ] Trenutno imamo %d oglasa na cekanju. Tvoj broj u nizu je: #%d", adqueue, AdData[ playerid ][ ID ] ) ;
+	if( adtime[ playerid ] == 0) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate oglasa na cekanju!");
+	SendFormatMessage(playerid, MESSAGE_TYPE_INFO, "Tvoj oglas ce biti objavljen kroz %d sekundi. Trenutno imamo %d oglasa na cekanju. Tvoj broj u nizu je #%d", adtime[playerid], adqueue, AdData[playerid][ID]);
 	return 1 ;
 }
 

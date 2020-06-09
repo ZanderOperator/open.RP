@@ -65,7 +65,7 @@ stock RemoveObject(modelid, Float:pos_x, Float:pos_y, Float:pos_z)
 	g_SlotID++;
 	if(g_SlotID == MAX_REMOVED_OBJECTS)
 	{
-		printf("Error: Limit for removed objects is reached. Open your script and change \"MAX_REMOVED_OBJECTS\" definition to a bigger value if you want to have more removed objects.");
+		printf("Limit for removed objects is reached. Open your script and change \"MAX_REMOVED_OBJECTS\" definition to a bigger value if you want to have more removed objects.");
 		g_SlotID--;
 		return INVALID_SCRIPT_ID;
 	}

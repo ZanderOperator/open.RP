@@ -121,7 +121,7 @@ hook OnPlayerStateChange(playerid, newstate, oldstate)
 	if( newstate == PLAYER_STATE_DRIVER ) {
 		if( VehicleInfo[ GetPlayerVehicleID(playerid) ][ vUsage ] == VEHICLE_USAGE_EVENT && GetVehicleModel(GetPlayerVehicleID(playerid)) == 446 && !RaceBoatCP[ playerid ] ) {
 			RemovePlayerFromVehicle(playerid);
-			SendClientMessage(playerid, COLOR_RED, "ERROR: Niste unutar Anniversary Boat Race eventa!");
+			SendClientMessage(playerid, COLOR_RED, "Niste unutar Anniversary Boat Race eventa!");
 			return 1;
 		}
 	}
@@ -182,12 +182,12 @@ hook OnPlayerDisconnect(playerid, reason)
 ///////////////////////////////////////////////////////////////////
 CMD:callboaters(playerid, params[])
 {
-	if( PlayerInfo[ playerid ][ pAdmin ] < 2 ) return SendClientMessage(playerid, COLOR_RED, "ERROR: Niste ovlasteni!");
+	if( PlayerInfo[ playerid ][ pAdmin ] < 2 ) return SendClientMessage(playerid, COLOR_RED, "Niste ovlasteni!");
 	new
 		giveplayerid;
 	if( sscanf( params, "u", giveplayerid ) ) return SendClientMessage(playerid, COLOR_RED, "USAGE: /callboaters [dio imena/playerid]");	
-	if( giveplayerid == INVALID_PLAYER_ID ) return SendClientMessage(playerid, COLOR_RED, "ERROR: Krivi unos playerida!");
-    if( RaceBoatCP[giveplayerid] != 0 ) return SendClientMessage(playerid, COLOR_RED, "ERROR: Igrac se vec trka!");
+	if( giveplayerid == INVALID_PLAYER_ID ) return SendClientMessage(playerid, COLOR_RED, "Krivi unos playerida!");
+    if( RaceBoatCP[giveplayerid] != 0 ) return SendClientMessage(playerid, COLOR_RED, "Igrac se vec trka!");
 	
 	RaceBoatCP[giveplayerid] = 1;
 	va_SendClientMessage(giveplayerid, COLOR_RED, "[ ! ] Pozvao te je admin %s na Anniversary Boat Race!", GetName(playerid, true));
@@ -197,7 +197,7 @@ CMD:callboaters(playerid, params[])
 
 CMD:startboat_race(playerid, params[])
 {
-	if( PlayerInfo[ playerid ][ pAdmin ] < 2 ) return SendClientMessage(playerid, COLOR_RED, "ERROR: Niste ovlasteni!");
+	if( PlayerInfo[ playerid ][ pAdmin ] < 2 ) return SendClientMessage(playerid, COLOR_RED, "Niste ovlasteni!");
 	foreach(Player, i) {
 		if( RaceBoatCP[ i ] == 1 ) {
 			DisablePlayerCheckpoint(i);

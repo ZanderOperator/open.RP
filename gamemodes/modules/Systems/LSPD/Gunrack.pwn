@@ -28,7 +28,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 				{
 				    if(gunrackWeapon[0][vehicleid] == 0 && weaponid == 0)
 					{
-      					SendClientMessage(playerid,COLOR_RED, "ERROR: Nemate oruzje u rukama niti imate oruzja u gunracuku.");
+      					SendClientMessage(playerid,COLOR_RED, "Nemate oruzje u rukama niti imate oruzja u gunracuku.");
 						gunrackinuse[vehicleid] = 0;
 						return 1;
      				}
@@ -75,7 +75,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 				{
 					if(gunrackWeapon[1][vehicleid] == 0 && weaponid == 0)
 	   				{
-						SendClientMessage(playerid,COLOR_RED, "ERROR: Nemate oruzje u rukama niti imate oruzja u gunracuku.");
+						SendClientMessage(playerid,COLOR_RED, "Nemate oruzje u rukama niti imate oruzja u gunracuku.");
 						gunrackinuse[vehicleid] = 0;
 						return 1;
 					}
@@ -129,7 +129,7 @@ CMD:gunrack(playerid, params[])
 	new vehicleid = GetPlayerVehicleID(playerid);
 	if(VehicleInfo[vehicleid][vUsage] == VEHICLE_USAGE_FACTION && (VehicleInfo[vehicleid][vFaction] == 1 || VehicleInfo[vehicleid][vFaction] == 3))
 	{
-  		if(gunrackinuse[vehicleid] == 1) return SendClientMessage(playerid, COLOR_RED,"ERROR: Pokusaj poslije.");
+  		if(gunrackinuse[vehicleid] == 1) return SendClientMessage(playerid, COLOR_RED,"Pokusaj poslije.");
 	    gunrackinuse[vehicleid] = 1;
 	    new str[156],
 		gun1[32],
@@ -144,7 +144,7 @@ CMD:gunrack(playerid, params[])
 	    format(str, sizeof(str),"Weapon\tAmmo\n\%s\t%i\n%s\t%i",gun1, gunrackAmmo[0][vehicleid], gun2, gunrackAmmo[1][vehicleid]);
 	    ShowPlayerDialog(playerid, DIALOG_GUNRACK, DIALOG_STYLE_TABLIST_HEADERS, "Police Gunrack",str, "Odaberi", "Odustani");
 	}
-	else SendClientMessage(playerid,COLOR_RED, "ERROR: Niste u vozilu LSPDa.");
+	else SendClientMessage(playerid,COLOR_RED, "Niste u vozilu LSPDa.");
 	return 1;
 }
 

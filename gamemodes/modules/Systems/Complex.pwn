@@ -729,7 +729,7 @@ CMD:buycomplex(playerid, params[])
 			if( PlayerInfo[ playerid ][ pLevel ] < ComplexInfo[ complex ][ cLevel ] ) {
 				new
 					tmpString[ 50 ];
-				format(tmpString, sizeof(tmpString), "ERROR: Moras biti level %d da bi kupio kompleks!", ComplexInfo[ complex ][ cLevel ] );
+				format(tmpString, sizeof(tmpString), "Moras biti level %d da bi kupio kompleks!", ComplexInfo[ complex ][ cLevel ] );
 				SendClientMessage( playerid, COLOR_RED, tmpString );
 				return 1;
 			}
@@ -772,7 +772,7 @@ CMD:buycomplex(playerid, params[])
 
 CMD:complex(playerid, params[])
 {
-	if(PlayerInfo[playerid][pComplexKey] == INVALID_COMPLEX_ID) return SendClientMessage(playerid,COLOR_RED, "ERROR: Ne posjedujete kompleks.");
+	if(PlayerInfo[playerid][pComplexKey] == INVALID_COMPLEX_ID) return SendClientMessage(playerid,COLOR_RED, "Ne posjedujete kompleks.");
 	ShowPlayerDialog(playerid, DIALOG_COMPLEX_MAIN, DIALOG_STYLE_LIST, "COMPLEX MENU", "Info\nPromjeni naziv\nSobe\nProdaj igracu\nProdaj drzavi (40000$)\nIzbaci stanara", "Enter", "Close");
 	return 1;
 }

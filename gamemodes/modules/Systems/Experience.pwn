@@ -16,7 +16,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 				case 0: // Level Up
 				{
 					if(ExpInfo[playerid][ePoints] < LEVEL_UP_EXP)
-						return va_SendClientMessage(playerid,COLOR_RED, "ERROR: Potrebno je %d EXP-a da bi iskoristili Level Up!", LEVEL_UP_EXP);
+						return va_SendClientMessage(playerid,COLOR_RED, "Potrebno je %d EXP-a da bi iskoristili Level Up!", LEVEL_UP_EXP);
 						
 					ExpInfo[playerid][ePoints] -= LEVEL_UP_EXP;
 					
@@ -43,7 +43,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 				case 1: // Permanent Furniture Slots 
 				{
 					if(ExpInfo[playerid][ePoints] < MAX_FURSLOTS_EXP)
-						return va_SendClientMessage(playerid,COLOR_RED, "ERROR: Potrebno je %d EXP-a da bi dobili %d Furniture slotova!", MAX_FURSLOTS_EXP, FURNITURE_PREMIUM_OBJECTS);
+						return va_SendClientMessage(playerid,COLOR_RED, "Potrebno je %d EXP-a da bi dobili %d Furniture slotova!", MAX_FURSLOTS_EXP, FURNITURE_PREMIUM_OBJECTS);
 					
 					ExpInfo[playerid][ePoints] -= MAX_FURSLOTS_EXP;
 					
@@ -64,7 +64,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 				case 2: // Premium Bronze paket na mjesec dana
 				{
 					if(ExpInfo[playerid][ePoints] < PREMIUM_BRONZE_EXP)
-						return va_SendClientMessage(playerid,COLOR_RED, "ERROR: Potrebno je %d EXP-a da bi dobili Premium Bronze paket!", PREMIUM_BRONZE_EXP);
+						return va_SendClientMessage(playerid,COLOR_RED, "Potrebno je %d EXP-a da bi dobili Premium Bronze paket!", PREMIUM_BRONZE_EXP);
 					
 					ExpInfo[playerid][ePoints] -= PREMIUM_BRONZE_EXP;
 					
@@ -127,7 +127,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 				case 3: // Premium Bronze paket na mjesec dana
 				{
 					if(ExpInfo[playerid][ePoints] < PREMIUM_SILVER_EXP)
-						return va_SendClientMessage(playerid,COLOR_RED, "ERROR: Potrebno je %d EXP-a da bi dobili Premium Silver paket!", PREMIUM_SILVER_EXP);
+						return va_SendClientMessage(playerid,COLOR_RED, "Potrebno je %d EXP-a da bi dobili Premium Silver paket!", PREMIUM_SILVER_EXP);
 					
 					ExpInfo[playerid][ePoints] -= PREMIUM_SILVER_EXP;
 				
@@ -189,7 +189,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 				case 4: // Premium Gold paket na mjesec dana
 				{
 					if(ExpInfo[playerid][ePoints] < PREMIUM_GOLD_EXP)
-						return va_SendClientMessage(playerid,COLOR_RED, "ERROR: Potrebno je %d EXP-a da bi dobili Premium Gold paket!", PREMIUM_GOLD_EXP);
+						return va_SendClientMessage(playerid,COLOR_RED, "Potrebno je %d EXP-a da bi dobili Premium Gold paket!", PREMIUM_GOLD_EXP);
 					
 					ExpInfo[playerid][ePoints] -= PREMIUM_GOLD_EXP;
 				
@@ -412,7 +412,7 @@ stock CanPlayerGiveExp(playerid)
 	}
 	if(ExpInfo[playerid][eDayPayDays] < MIN_GIVER_EXP_PAYDAYS)
 	{
-		va_SendClientMessage(playerid,COLOR_RED, "ERROR: Trebate skupiti minimalno %d paydaya da bi dali EXP nekome.", MIN_GIVER_EXP_PAYDAYS);
+		va_SendClientMessage(playerid,COLOR_RED, "Trebate skupiti minimalno %d paydaya da bi dali EXP nekome.", MIN_GIVER_EXP_PAYDAYS);
 		return 0;
 	}
 	return 1;
@@ -422,12 +422,12 @@ stock CanPlayerTakeExp(playerid, giveplayerid)
 {
 	if(ExpInfo[giveplayerid][eDayPayDays] < MIN_RECIEVER_EXP_PAYDAYS)
 	{
-		va_SendClientMessage(playerid,COLOR_RED, "ERROR: %s nije skupio %d paydaya da bi mogao dobiti EXP.", GetName(giveplayerid, true), MIN_RECIEVER_EXP_PAYDAYS);
+		va_SendClientMessage(playerid,COLOR_RED, "%s nije skupio %d paydaya da bi mogao dobiti EXP.", GetName(giveplayerid, true), MIN_RECIEVER_EXP_PAYDAYS);
 		return 0;
 	}
 	if(PlayerInfo[giveplayerid][pLevel] < 2)
 	{
-		va_SendClientMessage(playerid,COLOR_RED, "ERROR: %s treba biti minimalno Level 2 da bi primio EXP.", GetName(giveplayerid, true));
+		va_SendClientMessage(playerid,COLOR_RED, "%s treba biti minimalno Level 2 da bi primio EXP.", GetName(giveplayerid, true));
 		return 0;
 	}
 	new currentday, day;
@@ -436,7 +436,7 @@ stock CanPlayerTakeExp(playerid, giveplayerid)
 	
 	if(currentday != day)
 	{
-		va_SendClientMessage(playerid,COLOR_RED, "ERROR: %s nije danas imao payday te ne moze primiti EXP.", GetName(giveplayerid, true));
+		va_SendClientMessage(playerid,COLOR_RED, "%s nije danas imao payday te ne moze primiti EXP.", GetName(giveplayerid, true));
 		return 0;
 	}
 	return 1;
@@ -454,7 +454,7 @@ stock CanPlayerTakeExpEx(playerid, playername[])
     cache_get_row_count(rows);
 	if(!rows)
 	{
-		SendClientMessage(playerid,COLOR_RED, "ERROR: Ne postoji korisnik s tim nickom!");
+		SendClientMessage(playerid,COLOR_RED, "Ne postoji korisnik s tim nickom!");
 		return 0;
 	}
 	cache_get_value_name_int(0, "sqlid", sqlid);
@@ -463,7 +463,7 @@ stock CanPlayerTakeExpEx(playerid, playername[])
 	
 	if(level < 2)
 	{
-		va_SendClientMessage(playerid,COLOR_RED, "ERROR: %s je Level %d, treba biti Level 2 da bi primio EXP.", playername, level);
+		va_SendClientMessage(playerid,COLOR_RED, "%s je Level %d, treba biti Level 2 da bi primio EXP.", playername, level);
 		return 0;
 	}
 	new expstring[100];
@@ -479,12 +479,12 @@ stock CanPlayerTakeExpEx(playerid, playername[])
 	stamp2datetime(lastpayday, _, _, day, _, _, _);
 	if(currentday != day)
 	{
-		va_SendClientMessage(playerid,COLOR_RED, "ERROR: %s nije danas imao payday te ne moze primiti EXP.", playername);
+		va_SendClientMessage(playerid,COLOR_RED, "%s nije danas imao payday te ne moze primiti EXP.", playername);
 		return 0;
 	}
 	if(daypaydays < MIN_RECIEVER_EXP_PAYDAYS)
 	{
-		va_SendClientMessage(playerid,COLOR_RED, "ERROR: %s bi trebao primiti %d paydayova danas da bi dobio EXP.", playername, MIN_RECIEVER_EXP_PAYDAYS);
+		va_SendClientMessage(playerid,COLOR_RED, "%s bi trebao primiti %d paydayova danas da bi dobio EXP.", playername, MIN_RECIEVER_EXP_PAYDAYS);
 		return 0;
 	}
 	return 1;
@@ -501,7 +501,7 @@ stock GivePlayerExperience(playerid, playername[])
     cache_get_row_count(rows);
 	if(!rows)
 	{
-		va_SendClientMessage(playerid,COLOR_RED, "ERROR: Ne postoji korisnik s tim nickom!");
+		va_SendClientMessage(playerid,COLOR_RED, "Ne postoji korisnik s tim nickom!");
 		return 0;
 	}
 	cache_get_value_name_int(0, "sqlid", sqlid);

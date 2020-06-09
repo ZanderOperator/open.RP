@@ -375,7 +375,7 @@ CMD:triatlon(playerid, params[])
 	TP++;
 	if(TP == 1)
 	{
-	    if (PlayerInfo[playerid][pAdmin] < 1337) return SendClientMessage(playerid, COLOR_RED, "ERROR: Niste ovlasteni za koristenje ove komande!");
+	    if (PlayerInfo[playerid][pAdmin] < 1337) return SendClientMessage(playerid, COLOR_RED, "Niste ovlasteni za koristenje ove komande!");
 		First = 1;
 	    SendClientMessage(playerid, COLOR_RED, "[ ! ] Pokrenuli ste triatlon!");
 	    PlayerJoined[playerid] = 1;
@@ -397,7 +397,7 @@ CMD:triatlon(playerid, params[])
     return 1;
 }
 CMD:startrace(playerid, params[]){
-    if (PlayerInfo[playerid][pAdmin] < 1337) return SendClientMessage(playerid, COLOR_RED, "ERROR: Niste ovlasteni za koristenje ove komande!");
+    if (PlayerInfo[playerid][pAdmin] < 1337) return SendClientMessage(playerid, COLOR_RED, "Niste ovlasteni za koristenje ove komande!");
 	if(MiniOn) return SendClientMessage(playerid, COLOR_RED, "[ ! ] Triatlon mora biti pokrenut!");
 	if(shitstarted == false){
 	    shitstarted = true;
@@ -410,7 +410,7 @@ CMD:startrace(playerid, params[]){
 //===================================//
 CMD:stoptri(playerid, params[])
 {
-	if (PlayerInfo[playerid][pAdmin] < 1337) return SendClientMessage(playerid, COLOR_RED, "ERROR: Niste ovlasteni za koristenje ove komande!");
+	if (PlayerInfo[playerid][pAdmin] < 1337) return SendClientMessage(playerid, COLOR_RED, "Niste ovlasteni za koristenje ove komande!");
     if(!MiniOn) return SendClientMessage(playerid, COLOR_RED, "[ ! ] Triatlon nije pokrenut.");
     for(new i=0; i<MAX_PLAYERS; i++)
     {

@@ -276,7 +276,7 @@ public OnPlayerKeyStateChange(playerid, newkeys, oldkeys) {
 				return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne smijes biti u vozilu.");
 					
 			/*if(GetVehicleModel(vehid) != BizzInfo[bizid][b_VModel]) 
-				return SendClientMessage( playerid, COLOR_RED, "ERROR: Niste blizu vozila svoje firme.");*/
+				return SendClientMessage( playerid, COLOR_RED, "Niste blizu vozila svoje firme.");*/
 						
 			if(freeslot == -1) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Vozilo je puno.");
 					

@@ -553,7 +553,6 @@ hook OnPlayerDeath(playerid, killerid, reason)
 	PlayerWoundedSeconds[playerid] = 0;
 	PlayerWounded[playerid] = false;
 	SetPlayerArmour(playerid, 0);
-	PlayerInfo[playerid][pArmour] = 0;
 	return 1;
 }
 
@@ -785,6 +784,9 @@ hook OnPlayerTakeDamage(playerid, issuerid, Float: amount, weaponid, bodypart)
 				return (true);
 		}
 	}
+	
+	if(weaponid == WEAPON_PARACHUTE)
+		weaponid = 0;
 		
 	if(issuerid != INVALID_PLAYER_ID && bodypart == BODY_PART_HEAD) // POGODAK U GLAVU
 	{
@@ -797,6 +799,16 @@ hook OnPlayerTakeDamage(playerid, issuerid, Float: amount, weaponid, bodypart)
 			case 0: DealDamage(playerid, issuerid, health, armour, amount, bodypart);
 	        case 1 .. 8:
 	        {
+				damage = 13;
+				DealDamage(playerid, issuerid, health, armour, damage, bodypart);
+	        }
+			case 10 .. 13:
+			{ 
+				damage = 13;
+				DealDamage(playerid, issuerid, health, armour, damage, bodypart);
+	        }
+			case 15:
+			{
 				damage = 13;
 				DealDamage(playerid, issuerid, health, armour, damage, bodypart);
 	        }
@@ -863,6 +875,16 @@ hook OnPlayerTakeDamage(playerid, issuerid, Float: amount, weaponid, bodypart)
 				damage = 10;
 				DealDamage(playerid, issuerid, health, armour, damage, bodypart);
 	        }
+			case 10 .. 13:
+			{ 
+				damage = 10;
+				DealDamage(playerid, issuerid, health, armour, damage, bodypart);
+	        }
+			case 15:
+			{
+				damage = 10;
+				DealDamage(playerid, issuerid, health, armour, damage, bodypart);
+	        }
 	        case 22, 23: {
 	            if( Bit1_Get(gr_Taser, issuerid) == 0) {
 	            	damage = 25;
@@ -926,6 +948,16 @@ hook OnPlayerTakeDamage(playerid, issuerid, Float: amount, weaponid, bodypart)
 				damage = 13;
 				DealDamage(playerid, issuerid, health, armour, damage, bodypart);
 	        }
+			case 10 .. 13:
+			{ 
+				damage = 13;
+				DealDamage(playerid, issuerid, health, armour, damage, bodypart);
+	        }
+			case 15:
+			{
+				damage = 13;
+				DealDamage(playerid, issuerid, health, armour, damage, bodypart);
+	        }
 	        case 22, 23: {
 	            if( Bit1_Get(gr_Taser, issuerid) == 0) {
 	            	damage = 15;
@@ -976,9 +1008,37 @@ hook OnPlayerTakeDamage(playerid, issuerid, Float: amount, weaponid, bodypart)
 			case 34: {
 				damage = 99;
    				DealDamage(playerid, issuerid, health, armour, damage, bodypart);
-			}
+			}	
 	    }
-	}	
+	}
+	
+	new tmpString[128], dest[22];
+	if(issuerid != INVALID_PLAYER_ID)
+	{
+		if(PlayerInfo[playerid][pHealth] < GetPlayerHealth(playerid, health) || PlayerInfo[playerid][pArmour] < GetPlayerArmour(playerid, armour))
+		{
+			NetStats_GetIpPort(playerid, dest, sizeof(dest));
+			format(tmpString, sizeof(tmpString), "Anti-Cheat [IP: %s]: %s[%d] je moguci cheater, razlog: Health Hack.",
+				dest,
+				GetName(playerid,false),
+				playerid
+			);
+			ABroadCast(COLOR_RED,tmpString,1);
+		}
+		else if(PlayerInfo[playerid][pHealth] > GetPlayerHealth(playerid, health) || PlayerInfo[playerid][pArmour] > GetPlayerArmour(playerid, armour))
+		{
+			NetStats_GetIpPort(issuerid, dest, sizeof(dest));
+			format(tmpString, sizeof(tmpString), "Anti-Cheat [IP: %s]: %s[%d] je moguci cheater, razlog: Damage Hack.",
+				dest,
+				GetName(issuerid,false),
+				issuerid
+			);
+			ABroadCast(COLOR_RED,tmpString,1);
+			
+			SetPlayerHealth(playerid, PlayerInfo[playerid][pHealth]);
+			SetPlayerArmour(playerid, PlayerInfo[playerid][pArmour]);
+		}
+	}
 	return 0;
 }
 

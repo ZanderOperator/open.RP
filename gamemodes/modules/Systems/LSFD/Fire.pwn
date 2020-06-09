@@ -1045,7 +1045,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 			if(response)
 			{
 				new flameid = strval(inputtext);
-				if(!Iter_Contains(FlameID_Iter, flameid) ) return SendClientMessage(playerid,COLOR_RED, "ERROR: Unijeli ste pogresan ID Flame-a, trenutni upisani ID ne postoji/nije spawn-an!");
+				if(!Iter_Contains(FlameID_Iter, flameid) ) return SendClientMessage(playerid,COLOR_RED, "Unijeli ste pogresan ID Flame-a, trenutni upisani ID ne postoji/nije spawn-an!");
 				DestroyServerFlame(flameid);
 				va_SendClientMessage(playerid, COLOR_RED, "[ ! ] Uspjesno ste unistili 'vatru' pod ID-om %d.", flameid);
 			}
@@ -1057,7 +1057,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 			if(response)
 			{
 				new flameid = strval(inputtext);
-				if(!Iter_Contains(FlameID_Iter, flameid) ) return SendClientMessage(playerid,COLOR_RED, "ERROR: Unijeli ste pogreSan ID Flame-a, trenutni upisani ID ne postoji/nije spawn-an!");
+				if(!Iter_Contains(FlameID_Iter, flameid) ) return SendClientMessage(playerid,COLOR_RED, "Unijeli ste pogreSan ID Flame-a, trenutni upisani ID ne postoji/nije spawn-an!");
 				MoveServerFlame(flameid, playerid);
 				va_SendClientMessage(playerid, COLOR_RED, "[ ! ] Uspjesno ste promijenili poziciju 'vatre' id -> %d.", flameid);
 			}
@@ -1069,7 +1069,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 			{
 
 				GetFlameDialogID[playerid] = strval(inputtext);
-				if(!Iter_Contains(FlameID_Iter, GetFlameDialogID[playerid]) ) return SendClientMessage(playerid,COLOR_RED, "ERROR: Unijeli ste pogresan ID Flame-a, trenutni upisani ID ne postoji/nije spawn-an!");
+				if(!Iter_Contains(FlameID_Iter, GetFlameDialogID[playerid]) ) return SendClientMessage(playerid,COLOR_RED, "Unijeli ste pogresan ID Flame-a, trenutni upisani ID ne postoji/nije spawn-an!");
 
 				new dialogstring[128];
 				format(dialogstring, sizeof(dialogstring),"Molimo Vas unesite koliko zelite da Fire(id: %d) ima health-a.",  GetFlameDialogID[playerid]);
@@ -1368,7 +1368,7 @@ hook OnPlayerUpdate(playerid)
 CMD:fire(playerid, params[])
 {
 	new action[32], dialogstring[170];
-	if(PlayerInfo[playerid][pAdmin] < 4) return SendClientMessage(playerid,COLOR_RED, "ERROR: Niste Admin Level 4+.");
+	if(PlayerInfo[playerid][pAdmin] < 4) return SendClientMessage(playerid,COLOR_RED, "Niste Admin Level 4+.");
 	if(sscanf(params, "s[32]", action))
     {
         SendClientMessage(playerid, COLOR_RED, "USAGE: /fire [opcija].");
@@ -1409,7 +1409,7 @@ CMD:fire(playerid, params[])
 
 	if(strcmp(action,"startfire",true) == 0)
 	{
-		if(firestarted == 1) return SendClientMessage(playerid,COLOR_RED, "ERROR: Trenutno vec ima aktivnih pozara!");
+		if(firestarted == 1) return SendClientMessage(playerid,COLOR_RED, "Trenutno vec ima aktivnih pozara!");
  		RandomFireSituation();
    		SendClientMessage(playerid, COLOR_RED, "[ ! ] Uspjesno ste aktivirali random pozar.");
 	}

@@ -2193,7 +2193,7 @@ CMD:drug(playerid, params[])
 		if(slot1 == slot2) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne mozete odabrati dva identicna slota!");
 		if(ammount < 0.1) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne mozete premjestati kolicinu manju od 0.1g!");
 		if(( PlayerDrugs[playerid][dAmount][slot1-1] + ammount ) > 100 ) 
-			return SendClientMessage(playerid,COLOR_RED, "ERROR: Zbroj kolicine i droge iz slota u koji stavljate ne smije biti veci od 100g!");
+			return SendClientMessage(playerid,COLOR_RED, "Zbroj kolicine i droge iz slota u koji stavljate ne smije biti veci od 100g!");
 			
 		if( !CompareDrugs(PlayerDrugs[playerid][dCode][slot1-1], PlayerDrugs[playerid][dCode][slot2-1]) ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "U objim slotovima moraju biti iste droge(s istom formulom) da bi ih mogli mjesati!");
 		if(!CompareDrugQuality(PlayerDrugs[playerid][dCode][slot1-1], PlayerDrugs[playerid][dCode][slot2-1])) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "U objim slotovima moraju biti droge ISTE KVALITETE da bi ih mogli mjesati!");
@@ -2426,7 +2426,7 @@ CMD:drug(playerid, params[])
 	else if(strcmp(item,"startcooking",true) == 0)
 	{
 		if( PlayerDrugs[playerid][dCode][0] != 0 && PlayerDrugs[playerid][dCode][1] != 0 && PlayerDrugs[playerid][dCode][2]!= 0 && PlayerDrugs[playerid][dCode][3] != 0 && PlayerDrugs[playerid][dCode][4] != 0) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Svi su vam slotovi zauzeti!");
-		if(Bit8_Get(gr_SecondsPassed, playerid) > 0) return SendClientMessage(playerid,COLOR_RED, "ERROR: Vec kuhas methamphetamin!");
+		if(Bit8_Get(gr_SecondsPassed, playerid) > 0) return SendClientMessage(playerid,COLOR_RED, "Vec kuhas methamphetamin!");
 		new kuca = Bit16_Get(gr_PlayerInHouse, playerid);
 		if(kuca == 9999) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste u kuci!");
 		if(!IsPlayerInRangeOfPoint(playerid,20,HouseInfo[kuca][hExitX], HouseInfo[kuca][hExitY], HouseInfo[kuca][hExitZ]) && GetPlayerVirtualWorld(playerid) == HouseInfo[kuca][hVirtualWorld]) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste u kuci!");
@@ -2462,24 +2462,24 @@ CMD:drug(playerid, params[])
 		switch(comp)
 		{
 			case 1: {
-				if(!PlayerInfo[playerid][pHCl]) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "ERROR: Nemate Custic Soda!");
+				if(!PlayerInfo[playerid][pHCl]) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate Custic Soda!");
 				CheckMethComp(playerid, CookingRecipe[playerid], HCl_DILUTED);
 				PlayerInfo[playerid][pHCl] = false;
 				return 1;
 			}
 			case 2: {
-				if(!PlayerInfo[playerid][pMuAc]) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "ERROR: Nemate Muriatic Acid!");
+				if(!PlayerInfo[playerid][pMuAc]) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate Muriatic Acid!");
 				CheckMethComp(playerid, CookingRecipe[playerid], MURIATIC_ACID);
 				PlayerInfo[playerid][pMuAc] = false;
 				return 1;
 			}
 			case 3: {
-				if(!PlayerInfo[playerid][pHc]) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "ERROR: Nemate Hydrogen Chloride!");
+				if(!PlayerInfo[playerid][pHc]) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate Hydrogen Chloride!");
 				CheckMethComp(playerid, CookingRecipe[playerid], HYDROGEN_CHLORIDE);
 				PlayerInfo[playerid][pHc] = false;
 				return 1;
 			}
-			default: SendMessage(playerid, MESSAGE_TYPE_ERROR, "ERROR: Krivi odabir!");
+			default: SendMessage(playerid, MESSAGE_TYPE_ERROR, "Krivi odabir!");
 		}
 		return 1;
 	}
@@ -2491,7 +2491,7 @@ CMD:drug(playerid, params[])
 		if( !Iter_Contains(COVehicles, vehicleid) ) 
 			return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste u privatnome vozilu!");
 
-		if( Iter_Count(CODrugs[vehicleid]) == 0 ) return SendClientMessage(playerid,COLOR_RED, "ERROR: Nemate droge pohranjene u vozilu!");
+		if( Iter_Count(CODrugs[vehicleid]) == 0 ) return SendClientMessage(playerid,COLOR_RED, "Nemate droge pohranjene u vozilu!");
         ShowPlayerDialog(playerid, DIALOG_ALERT, DIALOG_STYLE_MSGBOX, "\tDroge u vozilu:", ListPlayerVehicleDrugs(playerid, vehicleid), "Close","");
 		return 1;
 	}

@@ -77,7 +77,7 @@ public OnPlayerReport(playerid, response)
 		}
 
 		if(id == -1)
-			return SendClientMessage(playerid, COLOR_RED, "ERROR: Nažalost dogodila se greška. Pokušajte kontaktirati admina putem /pma.");
+			return SendClientMessage(playerid, COLOR_RED, "Nažalost dogodila se greška. Pokušajte kontaktirati admina putem /pma.");
 
 		ReportData[id][reportExists] = true;
 		GetPlayerName(playerid, ReportData[id][reportBy], 24);
@@ -257,7 +257,7 @@ CMD:report(playerid, params[])
 CMD:reports(playerid, params[])
 {
 	if(!PlayerInfo[playerid][pAdmin])
-		return SendClientMessage(playerid, COLOR_RED, "ERROR: Niste ovlasteni");
+		return SendClientMessage(playerid, COLOR_RED, "Niste ovlasteni");
 
     SendMessage(playerid, MESSAGE_TYPE_INFO, "Ukoliko vam se nije prikazao dialog onda nema aktivnih reporta!");
 	new
@@ -277,7 +277,7 @@ CMD:reports(playerid, params[])
 CMD:reportsx(playerid, params[])
 {
 	if(!PlayerInfo[playerid][pAdmin])
-		return SendClientMessage(playerid, COLOR_RED, "ERROR: Niste ovlasteni");
+		return SendClientMessage(playerid, COLOR_RED, "Niste ovlasteni");
 
 	SendClientMessage(playerid, COLOR_SKYBLUE, "____________________REPORTS{5CD2FE}____________________");
 
@@ -297,13 +297,13 @@ CMD:reportsx(playerid, params[])
 CMD:acceptreport(playerid, params[])
 {
 	if(!PlayerInfo[playerid][pAdmin])
-		return SendClientMessage(playerid, COLOR_RED, "ERROR: Niste ovlasteni!");
+		return SendClientMessage(playerid, COLOR_RED, "Niste ovlasteni!");
 
 	new
 		reportid, str[128];
 
 	if(sscanf(params, "d", reportid))return SendClientMessage(playerid, COLOR_RED, "USAGE: /acceptreport [report id]");
-	if(reportid > MAX_REPORTS || !ReportData[reportid][reportExists]) return SendClientMessage(playerid, COLOR_RED, "ERROR: Report pod navedenim ID-om ne postoji!");
+	if(reportid > MAX_REPORTS || !ReportData[reportid][reportExists]) return SendClientMessage(playerid, COLOR_RED, "Report pod navedenim ID-om ne postoji!");
 
 	format(str, sizeof(str), "[REPORT] %s je preuzeo report ID %d od %s", GetName(playerid, false), reportid, ReportData[reportid][reportBy]);
  	SendAdminNotification(MESSAGE_TYPE_INFO, str);

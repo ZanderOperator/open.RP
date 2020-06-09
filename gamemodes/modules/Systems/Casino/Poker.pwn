@@ -594,7 +594,7 @@ CMD:poker(playerid, params[])
 				}
 		    }
 		}
-		else SendClientMessage(playerid,COLOR_RED, "ERROR: Ne igrate poker trenutno!");
+		else SendClientMessage(playerid,COLOR_RED, "Ne igrate poker trenutno!");
 	}
 	else if( !strcmp(item,"dealer",true) ) {
         new table = -1;
@@ -606,9 +606,9 @@ CMD:poker(playerid, params[])
 				}
 			}
 	    }
-		if(table == -1) return SendClientMessage(playerid,COLOR_RED, "ERROR: Niste blizu poker stola!");
-		if(Bit16_Get(r_PlayerPokerDealer, playerid) != 9999) return SendClientMessage(playerid,COLOR_RED, "ERROR: Vec ste diler!");
-		if(Bit16_Get(r_PlayingPoker, playerid) != 9999) return SendClientMessage(playerid,COLOR_RED, "ERROR: Vec igrate poker!"); 
+		if(table == -1) return SendClientMessage(playerid,COLOR_RED, "Niste blizu poker stola!");
+		if(Bit16_Get(r_PlayerPokerDealer, playerid) != 9999) return SendClientMessage(playerid,COLOR_RED, "Vec ste diler!");
+		if(Bit16_Get(r_PlayingPoker, playerid) != 9999) return SendClientMessage(playerid,COLOR_RED, "Vec igrate poker!"); 
 
 		PokerInfo[table][Dealer] = playerid;
 		Bit16_Set(r_PlayerPokerDealer, playerid, table);
@@ -618,9 +618,9 @@ CMD:poker(playerid, params[])
 		ProxDetector(10.0, playerid, tmpString, COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE);
 	}
 	else if( !strcmp(item,"invite",true) ) {
-		if(Bit16_Get(r_PlayerPokerDealer, playerid) == 9999) return SendClientMessage(playerid,COLOR_RED, "ERROR: Niste poker diler!");
-		if( !IsPlayerInRangeOfPoint(playerid, 4, PokerInfo[Bit16_Get(r_PlayerPokerDealer, playerid)][pokX], PokerInfo[Bit16_Get(r_PlayerPokerDealer, playerid)][pokY], PokerInfo[Bit16_Get(r_PlayerPokerDealer, playerid)][pokZ]) && GetPlayerVirtualWorld(playerid) != PokerInfo[Bit16_Get(r_PlayerPokerDealer, playerid)][Viwo]) return SendClientMessage(playerid,COLOR_RED, "ERROR: Niste blizu vaseg poker stola!");
-		if(PokerInfo[Bit16_Get(r_PlayerPokerDealer, playerid)][Players] >= 5) return SendClientMessage(playerid,COLOR_RED, "ERROR: Na vasem stolu vec igra 5 igraca!");
+		if(Bit16_Get(r_PlayerPokerDealer, playerid) == 9999) return SendClientMessage(playerid,COLOR_RED, "Niste poker diler!");
+		if( !IsPlayerInRangeOfPoint(playerid, 4, PokerInfo[Bit16_Get(r_PlayerPokerDealer, playerid)][pokX], PokerInfo[Bit16_Get(r_PlayerPokerDealer, playerid)][pokY], PokerInfo[Bit16_Get(r_PlayerPokerDealer, playerid)][pokZ]) && GetPlayerVirtualWorld(playerid) != PokerInfo[Bit16_Get(r_PlayerPokerDealer, playerid)][Viwo]) return SendClientMessage(playerid,COLOR_RED, "Niste blizu vaseg poker stola!");
+		if(PokerInfo[Bit16_Get(r_PlayerPokerDealer, playerid)][Players] >= 5) return SendClientMessage(playerid,COLOR_RED, "Na vasem stolu vec igra 5 igraca!");
 		if(sscanf(params, "s[10]u", item, giveplayerid)) return SendClientMessage(playerid, COLOR_RED, "USAGE: /poker invite [ID/Dio imena]");
 		if(giveplayerid == INVALID_PLAYER_ID) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nevaljan unos igraceva imena ili IDa!");
 		if(giveplayerid == playerid) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne mozes biti diler i igrac u isto vrijeme!");
@@ -636,8 +636,8 @@ CMD:poker(playerid, params[])
 		}
 	}
 	else if( !strcmp(item,"kick",true) ) {
-        if(Bit16_Get(r_PlayerPokerDealer, playerid) == 9999) return SendClientMessage(playerid,COLOR_RED, "ERROR: Niste poker diler!");
-		if(!IsPlayerInRangeOfPoint(playerid, 4, PokerInfo[Bit16_Get(r_PlayerPokerDealer, playerid)][pokX], PokerInfo[Bit16_Get(r_PlayerPokerDealer, playerid)][pokY], PokerInfo[Bit16_Get(r_PlayerPokerDealer, playerid)][pokZ]) && GetPlayerVirtualWorld(playerid) != PokerInfo[Bit16_Get(r_PlayerPokerDealer, playerid)][Viwo]) return SendClientMessage(playerid,COLOR_RED, "ERROR: Niste blizu vaseg poker stola!");
+        if(Bit16_Get(r_PlayerPokerDealer, playerid) == 9999) return SendClientMessage(playerid,COLOR_RED, "Niste poker diler!");
+		if(!IsPlayerInRangeOfPoint(playerid, 4, PokerInfo[Bit16_Get(r_PlayerPokerDealer, playerid)][pokX], PokerInfo[Bit16_Get(r_PlayerPokerDealer, playerid)][pokY], PokerInfo[Bit16_Get(r_PlayerPokerDealer, playerid)][pokZ]) && GetPlayerVirtualWorld(playerid) != PokerInfo[Bit16_Get(r_PlayerPokerDealer, playerid)][Viwo]) return SendClientMessage(playerid,COLOR_RED, "Niste blizu vaseg poker stola!");
 		if(sscanf(params, "s[10]u", item, giveplayerid)) return SendClientMessage(playerid, COLOR_RED, "USAGE: /poker kick [ID/Dio imena]");
 		if(giveplayerid == INVALID_PLAYER_ID) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nevaljan unos igraceva imena ili IDa!");
 		if(giveplayerid == playerid) return SendClientMessage(playerid, COLOR_RED, "Ne mozes sam sebe izbaciti sa stola!Diler si!");
@@ -662,11 +662,11 @@ CMD:poker(playerid, params[])
 			format(tmpString, sizeof(tmpString), "** %s oduzima zetone za igru %s.", GetName(playerid,true), GetName(giveplayerid,true));
 			ProxDetector(10.0, playerid, tmpString, COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE);
 		}
-		else SendClientMessage(playerid,COLOR_RED, "ERROR: Taj igrac je poker diler na drugom stolu/Ne igra na vasem stolu!");
+		else SendClientMessage(playerid,COLOR_RED, "Taj igrac je poker diler na drugom stolu/Ne igra na vasem stolu!");
 	}
 	else if( !strcmp(item,"deal",true) ) {
-        if(Bit16_Get(r_PlayerPokerDealer, playerid) == 9999) return SendClientMessage(playerid,COLOR_RED, "ERROR: Niste poker diler!");
-		if(!IsPlayerInRangeOfPoint(playerid, 4, PokerInfo[Bit16_Get(r_PlayerPokerDealer, playerid)][pokX], PokerInfo[Bit16_Get(r_PlayerPokerDealer, playerid)][pokY], PokerInfo[Bit16_Get(r_PlayerPokerDealer, playerid)][pokZ]) && GetPlayerVirtualWorld(playerid) != PokerInfo[Bit16_Get(r_PlayerPokerDealer, playerid)][Viwo]) return SendClientMessage(playerid,COLOR_RED, "ERROR: Niste blizu vaseg poker stola!");
+        if(Bit16_Get(r_PlayerPokerDealer, playerid) == 9999) return SendClientMessage(playerid,COLOR_RED, "Niste poker diler!");
+		if(!IsPlayerInRangeOfPoint(playerid, 4, PokerInfo[Bit16_Get(r_PlayerPokerDealer, playerid)][pokX], PokerInfo[Bit16_Get(r_PlayerPokerDealer, playerid)][pokY], PokerInfo[Bit16_Get(r_PlayerPokerDealer, playerid)][pokZ]) && GetPlayerVirtualWorld(playerid) != PokerInfo[Bit16_Get(r_PlayerPokerDealer, playerid)][Viwo]) return SendClientMessage(playerid,COLOR_RED, "Niste blizu vaseg poker stola!");
 		if(sscanf(params, "s[10]u", item, giveplayerid)) return SendClientMessage(playerid, COLOR_RED, "USAGE: /poker deal [ID/Dio imena]");
 		if(giveplayerid == INVALID_PLAYER_ID) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nevaljan unos igraceva imena ili IDa!");
 		if(giveplayerid == playerid) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne mozes sam sebi podijeliti karte! Diler si!");
@@ -694,10 +694,10 @@ CMD:poker(playerid, params[])
 			
 			format(tmpString, sizeof(tmpString), "** %s daje dvije karte %s.", GetName(playerid,true), GetName(giveplayerid,true));
 			ProxDetector(10.0, playerid, tmpString, COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE);
-		} else SendClientMessage(playerid,COLOR_RED, "ERROR: Taj igrac ne igra na vasem stolu!");
+		} else SendClientMessage(playerid,COLOR_RED, "Taj igrac ne igra na vasem stolu!");
 	}
 	else if( !strcmp(item,"cards",true) ) {
-	    if(Bit16_Get(r_PlayingPoker, playerid) == 9999 && Bit16_Get(r_PlayerPokerDealer, playerid) != 9999) return SendClientMessage(playerid,COLOR_RED, "ERROR: Ne igrate poker trenutno/Diler ste, a oni nemogu koristiti ovu komandu!");
+	    if(Bit16_Get(r_PlayingPoker, playerid) == 9999 && Bit16_Get(r_PlayerPokerDealer, playerid) != 9999) return SendClientMessage(playerid,COLOR_RED, "Ne igrate poker trenutno/Diler ste, a oni nemogu koristiti ovu komandu!");
 		if(PokerPlayerCards[playerid][0] == 500 || PokerPlayerCards[playerid][1] == 500) return SendClientMessage(playerid, COLOR_RED, "Nemate dvije karte u rukama!!");
 		if(Bit1_Get(r_DCardText1, playerid) == 1 && Bit1_Get(r_DCardText2, playerid) == 1) {
 			if(Bit1_Get(r_DCardsHiden, playerid) == 1) {
@@ -727,11 +727,11 @@ CMD:poker(playerid, params[])
 			ProxDetector(10.0, playerid, tmpString, COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE);
 		    if(Bit1_Get(r_DCardsHiden, playerid) ) Bit1_Set(r_DCardsHiden, playerid, true);
 		}
-		else SendClientMessage(playerid,COLOR_RED, "ERROR: Ne igrate poker trenutno/Diler ste, a oni nemogu koristiti ovu komandu!");
+		else SendClientMessage(playerid,COLOR_RED, "Ne igrate poker trenutno/Diler ste, a oni nemogu koristiti ovu komandu!");
 	}
 	else if( !strcmp(item,"givepot",true) ) {
-		if(Bit16_Get(r_PlayerPokerDealer, playerid) == 9999) return SendClientMessage(playerid,COLOR_RED, "ERROR: Niste poker diler!");
-		if(!IsPlayerInRangeOfPoint(playerid, 4, PokerInfo[Bit16_Get(r_PlayerPokerDealer, playerid)][pokX], PokerInfo[Bit16_Get(r_PlayerPokerDealer, playerid)][pokY], PokerInfo[Bit16_Get(r_PlayerPokerDealer, playerid)][pokZ]) && GetPlayerVirtualWorld(playerid) != PokerInfo[Bit16_Get(r_PlayerPokerDealer, playerid)][Viwo]) return SendClientMessage(playerid,COLOR_RED, "ERROR: Niste blizu vaseg poker stola!");
+		if(Bit16_Get(r_PlayerPokerDealer, playerid) == 9999) return SendClientMessage(playerid,COLOR_RED, "Niste poker diler!");
+		if(!IsPlayerInRangeOfPoint(playerid, 4, PokerInfo[Bit16_Get(r_PlayerPokerDealer, playerid)][pokX], PokerInfo[Bit16_Get(r_PlayerPokerDealer, playerid)][pokY], PokerInfo[Bit16_Get(r_PlayerPokerDealer, playerid)][pokZ]) && GetPlayerVirtualWorld(playerid) != PokerInfo[Bit16_Get(r_PlayerPokerDealer, playerid)][Viwo]) return SendClientMessage(playerid,COLOR_RED, "Niste blizu vaseg poker stola!");
 		if(sscanf(params, "s[10]ui", item, giveplayerid, money)) return SendClientMessage(playerid, COLOR_RED, "USAGE: /poker givepot [ID/Dio imena][novac]");
 		if(giveplayerid == INVALID_PLAYER_ID) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nevaljan unos igraceva imena ili IDa!");
 		if(giveplayerid == playerid) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne mozes sam sebe izbaciti sa stola!Diler si!");
@@ -747,20 +747,20 @@ CMD:poker(playerid, params[])
 			ProxDetector(10.0, playerid, tmpString, COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE);
 			CreatePokerTableChips(Bit16_Get(r_PlayerPokerDealer, playerid), 0);
 		}
-		else SendClientMessage(playerid,COLOR_RED, "ERROR: Taj igrac ne igra na vasem stolu!");
+		else SendClientMessage(playerid,COLOR_RED, "Taj igrac ne igra na vasem stolu!");
 	}
 	else if( !strcmp(item,"checkpot",true) ) {
-        if(Bit16_Get(r_PlayerPokerDealer, playerid) == 9999) return SendClientMessage(playerid,COLOR_RED, "ERROR: Niste poker diler!");
-		if(!IsPlayerInRangeOfPoint(playerid, 4, PokerInfo[Bit16_Get(r_PlayerPokerDealer, playerid)][pokX], PokerInfo[Bit16_Get(r_PlayerPokerDealer, playerid)][pokY], PokerInfo[Bit16_Get(r_PlayerPokerDealer, playerid)][pokZ]) && GetPlayerVirtualWorld(playerid) != PokerInfo[Bit16_Get(r_PlayerPokerDealer, playerid)][Viwo]) return SendClientMessage(playerid,COLOR_RED, "ERROR: Niste blizu vaseg poker stola!");
+        if(Bit16_Get(r_PlayerPokerDealer, playerid) == 9999) return SendClientMessage(playerid,COLOR_RED, "Niste poker diler!");
+		if(!IsPlayerInRangeOfPoint(playerid, 4, PokerInfo[Bit16_Get(r_PlayerPokerDealer, playerid)][pokX], PokerInfo[Bit16_Get(r_PlayerPokerDealer, playerid)][pokY], PokerInfo[Bit16_Get(r_PlayerPokerDealer, playerid)][pokZ]) && GetPlayerVirtualWorld(playerid) != PokerInfo[Bit16_Get(r_PlayerPokerDealer, playerid)][Viwo]) return SendClientMessage(playerid,COLOR_RED, "Niste blizu vaseg poker stola!");
 		new
 			tmpString[ 54 ];
 		format(tmpString, sizeof(tmpString), "* Iznos u potu: %d (( %s ))", PokerInfo[Bit16_Get(r_PlayerPokerDealer, playerid)][Pot], GetName(playerid,true));
 		ProxDetector(10.0, playerid, tmpString, COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE);
 	}
 	else if( !strcmp(item,"flop",true) ) {
-        if(Bit16_Get(r_PlayerPokerDealer, playerid) == 9999) return SendClientMessage(playerid,COLOR_RED, "ERROR: Niste poker diler!");
+        if(Bit16_Get(r_PlayerPokerDealer, playerid) == 9999) return SendClientMessage(playerid,COLOR_RED, "Niste poker diler!");
 		if(PokerInfo[Bit16_Get(r_PlayerPokerDealer, playerid)][Round] != 1) return SendClientMessage(playerid,COLOR_RED,"Flop je vec okrenut/Niste podjelili prve dvije karte.(/poker deal)");
-		if(!IsPlayerInRangeOfPoint(playerid, 4, PokerInfo[Bit16_Get(r_PlayerPokerDealer, playerid)][pokX], PokerInfo[Bit16_Get(r_PlayerPokerDealer, playerid)][pokY], PokerInfo[Bit16_Get(r_PlayerPokerDealer, playerid)][pokZ]) && GetPlayerVirtualWorld(playerid) != PokerInfo[Bit16_Get(r_PlayerPokerDealer, playerid)][Viwo]) return SendClientMessage(playerid,COLOR_RED, "ERROR: Niste blizu vaseg poker stola!");
+		if(!IsPlayerInRangeOfPoint(playerid, 4, PokerInfo[Bit16_Get(r_PlayerPokerDealer, playerid)][pokX], PokerInfo[Bit16_Get(r_PlayerPokerDealer, playerid)][pokY], PokerInfo[Bit16_Get(r_PlayerPokerDealer, playerid)][pokZ]) && GetPlayerVirtualWorld(playerid) != PokerInfo[Bit16_Get(r_PlayerPokerDealer, playerid)][Viwo]) return SendClientMessage(playerid,COLOR_RED, "Niste blizu vaseg poker stola!");
 		
 		card3 = CardRandom(playerid, 52);
 		card4 = CardRandom(playerid, 52);
@@ -826,8 +826,8 @@ CMD:poker(playerid, params[])
 		}
 	}
 	else if( !strcmp(item,"turn",true) ) {
-        if(Bit16_Get(r_PlayerPokerDealer, playerid) == 9999) return SendClientMessage(playerid,COLOR_RED, "ERROR: Niste poker diler!");
-		if(PokerInfo[Bit16_Get(r_PlayerPokerDealer, playerid)][Round] != 2) return SendClientMessage(playerid,COLOR_RED, "ERROR: 4.karta je vec na stolu/Niste okrenuli flop(/Poker flop)");
+        if(Bit16_Get(r_PlayerPokerDealer, playerid) == 9999) return SendClientMessage(playerid,COLOR_RED, "Niste poker diler!");
+		if(PokerInfo[Bit16_Get(r_PlayerPokerDealer, playerid)][Round] != 2) return SendClientMessage(playerid,COLOR_RED, "4.karta je vec na stolu/Niste okrenuli flop(/Poker flop)");
 		if(!IsPlayerInRangeOfPoint(playerid, 4, PokerInfo[Bit16_Get(r_PlayerPokerDealer, playerid)][pokX], PokerInfo[Bit16_Get(r_PlayerPokerDealer, playerid)][pokY], PokerInfo[Bit16_Get(r_PlayerPokerDealer, playerid)][pokZ]) && GetPlayerVirtualWorld(playerid) != PokerInfo[Bit16_Get(r_PlayerPokerDealer, playerid)][Viwo]) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste kod svoga stola!");
 		
 		card1 = CardRandom(playerid, 52);
@@ -859,8 +859,8 @@ CMD:poker(playerid, params[])
 		}
 	}
 	else if( !strcmp(item,"river",true) ) {
-        if(Bit16_Get(r_PlayerPokerDealer, playerid) == 9999) return SendClientMessage(playerid,COLOR_RED, "ERROR: Niste poker diler!");
-		if(PokerInfo[Bit16_Get(r_PlayerPokerDealer, playerid)][Round] != 3) return SendClientMessage(playerid,COLOR_RED, "ERROR: 5.karta je vec na stolu/Niste okrenuli flop ili turn(/Poker flop/turn)");
+        if(Bit16_Get(r_PlayerPokerDealer, playerid) == 9999) return SendClientMessage(playerid,COLOR_RED, "Niste poker diler!");
+		if(PokerInfo[Bit16_Get(r_PlayerPokerDealer, playerid)][Round] != 3) return SendClientMessage(playerid,COLOR_RED, "5.karta je vec na stolu/Niste okrenuli flop ili turn(/Poker flop/turn)");
 		if(!IsPlayerInRangeOfPoint(playerid, 4, PokerInfo[Bit16_Get(r_PlayerPokerDealer, playerid)][pokX], PokerInfo[Bit16_Get(r_PlayerPokerDealer, playerid)][pokY], PokerInfo[Bit16_Get(r_PlayerPokerDealer, playerid)][pokZ]) && GetPlayerVirtualWorld(playerid) != PokerInfo[Bit16_Get(r_PlayerPokerDealer, playerid)][Viwo]) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste kod svoga stola!");
 		
 		card1 = CardRandom(playerid, 52);
@@ -891,7 +891,7 @@ CMD:poker(playerid, params[])
 		}
 	}
 	else if( !strcmp(item,"newgame",true) ) {
-        if(Bit16_Get(r_PlayerPokerDealer, playerid) == 9999) return SendClientMessage(playerid,COLOR_RED, "ERROR: Niste poker diler!");
+        if(Bit16_Get(r_PlayerPokerDealer, playerid) == 9999) return SendClientMessage(playerid,COLOR_RED, "Niste poker diler!");
 		if(!IsPlayerInRangeOfPoint(playerid, 4, PokerInfo[Bit16_Get(r_PlayerPokerDealer, playerid)][pokX], PokerInfo[Bit16_Get(r_PlayerPokerDealer, playerid)][pokY], PokerInfo[Bit16_Get(r_PlayerPokerDealer, playerid)][pokZ]) && GetPlayerVirtualWorld(playerid) != PokerInfo[Bit16_Get(r_PlayerPokerDealer, playerid)][Viwo]) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste kod svoga stola!");
 		
 		new
@@ -919,9 +919,9 @@ CMD:poker(playerid, params[])
 	}
 	else if( !strcmp(item,"pay",true) ) 
 	{
-	    if(Bit16_Get(r_PlayingPoker, playerid) == 9999 && Bit16_Get(r_PlayerPokerDealer, playerid) != 9999) return SendClientMessage(playerid,COLOR_RED, "ERROR: Ne igrate poker trenutno/Diler ste, a oni nemogu koristiti ovu komandu!");
+	    if(Bit16_Get(r_PlayingPoker, playerid) == 9999 && Bit16_Get(r_PlayerPokerDealer, playerid) != 9999) return SendClientMessage(playerid,COLOR_RED, "Ne igrate poker trenutno/Diler ste, a oni nemogu koristiti ovu komandu!");
 		printf("PAY > %s[%d]: r_PlayingPoker = %d", GetName(playerid), playerid, Bit16_Get(r_PlayingPoker, playerid));
-		if(!IsPlayerInRangeOfPoint(playerid, 4.0, PokerInfo[Bit16_Get(r_PlayingPoker, playerid)][pokX], PokerInfo[Bit16_Get(r_PlayingPoker, playerid)][pokY], PokerInfo[Bit16_Get(r_PlayingPoker, playerid)][pokZ]) && GetPlayerVirtualWorld(playerid) != PokerInfo[Bit16_Get(r_PlayingPoker, playerid)][Viwo]) return SendClientMessage(playerid,COLOR_RED, "ERROR: Niste blizu vaseg poker stola!");
+		if(!IsPlayerInRangeOfPoint(playerid, 4.0, PokerInfo[Bit16_Get(r_PlayingPoker, playerid)][pokX], PokerInfo[Bit16_Get(r_PlayingPoker, playerid)][pokY], PokerInfo[Bit16_Get(r_PlayingPoker, playerid)][pokZ]) && GetPlayerVirtualWorld(playerid) != PokerInfo[Bit16_Get(r_PlayingPoker, playerid)][Viwo]) return SendClientMessage(playerid,COLOR_RED, "Niste blizu vaseg poker stola!");
 		if(sscanf(params, "s[10]i", item, money)) return SendClientMessage(playerid, COLOR_RED, "USAGE: /poker pay [kolicina novca]");
 		if(money < 1 || money > AC_GetPlayerMoney(playerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate toliko novaca!!");
 		
@@ -934,7 +934,7 @@ CMD:poker(playerid, params[])
 		ProxDetector(10.0, playerid, tmpString, COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE);
 	}
 	else if( !strcmp(item,"showcards",true) ) {
-	    if(Bit16_Get(r_PlayingPoker, playerid) == 9999 && Bit16_Get(r_PlayerPokerDealer, playerid) != 9999) return  SendClientMessage(playerid,COLOR_RED, "ERROR: Ne igrate poker trenutno/Diler ste, a oni nemogu koristiti ovu komandu!");
+	    if(Bit16_Get(r_PlayingPoker, playerid) == 9999 && Bit16_Get(r_PlayerPokerDealer, playerid) != 9999) return  SendClientMessage(playerid,COLOR_RED, "Ne igrate poker trenutno/Diler ste, a oni nemogu koristiti ovu komandu!");
 		if(PokerPlayerCards[playerid][0] == 500 || PokerPlayerCards[playerid][1] == 500) return SendClientMessage(playerid, COLOR_RED, "Nemate dvije karte u rukama!!");
 		if(PokerInfo[Bit16_Get(r_PlayingPoker, playerid)][Round] != 4) return SendClientMessage(playerid,COLOR_RED,"Nisu okrenute sve karte na stolu da bi mogli pokazati svoje karte!");
 		new

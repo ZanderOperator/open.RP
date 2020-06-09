@@ -341,10 +341,10 @@ hook OnPlayerDisconnect(playerid, reason)
 CMD:startmining(playerid, params[])
 {
 	if( PlayerInfo[ playerid ][ pJob ] != RUDAR_ID ) 	return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Morate biti rudar!");
-	if( !IsPlayerInRangeOfPoint( playerid, 15.0,  283.7016, -592.9161, 1702.4358 ) ) return SendClientMessage( playerid, COLOR_RED, "ERROR: Ne nalazis se na mjestu za uzimanje odore.");
+	if( !IsPlayerInRangeOfPoint( playerid, 15.0,  283.7016, -592.9161, 1702.4358 ) ) return SendClientMessage( playerid, COLOR_RED, "Ne nalazis se na mjestu za uzimanje odore.");
 	if(Bit1_Get(gr_Minerwork, playerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Vec radis posao rudara.");
-	if( MiningInfo[ playerid ][ MiningRepetition ] > 0) return SendClientMessage( playerid, COLOR_RED, "ERROR: Prvo istovarite sto se iskoristili pa onda nastavite!");
-	if( PlayerInfo[ playerid ][ pFreeWorks ] < 1 )		return SendClientMessage( playerid, COLOR_RED, "ERROR: Ne mozes vise raditi!");
+	if( MiningInfo[ playerid ][ MiningRepetition ] > 0) return SendClientMessage( playerid, COLOR_RED, "Prvo istovarite sto se iskoristili pa onda nastavite!");
+	if( PlayerInfo[ playerid ][ pFreeWorks ] < 1 )		return SendClientMessage( playerid, COLOR_RED, "Ne mozes vise raditi!");
 	MiningInfo[ playerid ][ PickUpArrow ] = CreateDynamicObject( 1318, 283.5029, -592.5479, 1701.8474, 0, 0, 0, -1, -1, playerid );
 	SendClientMessage( playerid, COLOR_RED, "[ ! ] Krenuli ste s poslom, nadjite prvi upotrebljivi komad zlata za obradu.");
 	SendClientMessage( playerid, COLOR_RED, "[ ! ] Kada dodjete do obradivog grumena pritisnite Y.");
@@ -386,9 +386,9 @@ CMD:stopmining(playerid, params[])
 CMD:loadgold(playerid, params[])
 {
 	if( PlayerInfo[ playerid ][ pJob ] != RUDAR_ID ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Morate biti rudar!");
-	if( MiningInfo[ playerid ][ MiningRepetition ] < 4 ) return SendClientMessage( playerid, COLOR_RED, "ERROR: Ne mozete istovariti zlato jer niste odradili do kraja!");
-	if( !IsPlayerInRangeOfPoint( playerid, 5.0, 268.7209, -590.4112, 1702.4358 ) ) return SendClientMessage( playerid, COLOR_RED, "ERROR: Ne nalazis se na mjestu za utovar zlata (kod kolica)!");
-	if( PlayerInfo[ playerid ][ pFreeWorks ] < 1 )		return SendClientMessage( playerid, COLOR_RED, "ERROR: Ne mozes vise raditi!");
+	if( MiningInfo[ playerid ][ MiningRepetition ] < 4 ) return SendClientMessage( playerid, COLOR_RED, "Ne mozete istovariti zlato jer niste odradili do kraja!");
+	if( !IsPlayerInRangeOfPoint( playerid, 5.0, 268.7209, -590.4112, 1702.4358 ) ) return SendClientMessage( playerid, COLOR_RED, "Ne nalazis se na mjestu za utovar zlata (kod kolica)!");
+	if( PlayerInfo[ playerid ][ pFreeWorks ] < 1 )		return SendClientMessage( playerid, COLOR_RED, "Ne mozes vise raditi!");
 	new LoadingRandomTime = minrand(30000, 60000 );
 	GameTextForPlayer( playerid, "~w~Utovar zlata je u tijeku, pricekajte...", LoadingRandomTime, 6 );
 	LoadingTimer[ playerid ] = SetTimerEx( "GoldLoading", LoadingRandomTime, false, "i", playerid );

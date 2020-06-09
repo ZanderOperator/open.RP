@@ -136,8 +136,8 @@ stock ResetTruckerInfo(playerid)
 
 stock SetTruckerJob(playerid, trName[35], trSkill, trPayCheck, trTrailer, Float:trUtovarCPx, Float:trUtovarCPy, Float:trUtovarCPz, Float:trIstovarCPx, Float:trIstovarCPy, Float:trIstovarCPz)
 {
-	if(GetPlayerSkillLevel(playerid, 7) < trSkill) return SendClientMessage( playerid, COLOR_RED, "ERROR: Nemate dovoljan skill za voznju ovog tereta!");
-    if(!TrailerType(GetVehicleTrailer(GetPlayerVehicleID(playerid)), trTrailer)) return SendClientMessage( playerid, COLOR_RED, "ERROR: Nemate zakacenu odgovarajucu prikolicu!");
+	if(GetPlayerSkillLevel(playerid, 7) < trSkill) return SendClientMessage( playerid, COLOR_RED, "Nemate dovoljan skill za voznju ovog tereta!");
+    if(!TrailerType(GetVehicleTrailer(GetPlayerVehicleID(playerid)), trTrailer)) return SendClientMessage( playerid, COLOR_RED, "Nemate zakacenu odgovarajucu prikolicu!");
     
 	TruckerInfo[playerid][tTrailerModel] 	= trTrailer;
     TruckerInfo[playerid][tUtovarCPx] 		= trUtovarCPx;
@@ -688,8 +688,8 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 		case DIALOG_TRUCKER_SELECT_INFO:
 		{
 			if(!response) return 1;
-			if(!IsPlayerInAnyVehicle(playerid)) return SendClientMessage( playerid, COLOR_RED, "ERROR: Niste u kamionu");
-			if(GetPlayerState(playerid) != PLAYER_STATE_DRIVER) return SendClientMessage( playerid, COLOR_RED, "ERROR: Niste u kamionu/Niste vozac!");
+			if(!IsPlayerInAnyVehicle(playerid)) return SendClientMessage( playerid, COLOR_RED, "Niste u kamionu");
+			if(GetPlayerState(playerid) != PLAYER_STATE_DRIVER) return SendClientMessage( playerid, COLOR_RED, "Niste u kamionu/Niste vozac!");
 			new InfoText[512];
 			SendClientMessage( playerid, COLOR_WHITE, "[OBAVJEST]: Rute su odvojene ravnom crtom(|). U uglatim zagradama[] su skill leveli potrebni za odredjenu rutu.");
 			switch(listitem)
@@ -728,9 +728,9 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 		case DIALOG_TRUCKER_SELECT_BIZ:
 		{
 			if(!response) return 1;
-	 		if(PlayerInfo[playerid][pJob] != TRUCKER_ID) return SendClientMessage( playerid, COLOR_RED, "ERROR: Niste zaposleni kao kamiondzija.");
-	 		if(!IsPlayerInAnyVehicle(playerid)) return SendClientMessage( playerid, COLOR_RED, "ERROR: Niste u kamionu/Niste vozac!");
-	 		if(GetPlayerState(playerid) != PLAYER_STATE_DRIVER) return SendClientMessage( playerid, COLOR_RED, "ERROR: Niste u kamionu/Niste vozac!");
+	 		if(PlayerInfo[playerid][pJob] != TRUCKER_ID) return SendClientMessage( playerid, COLOR_RED, "Niste zaposleni kao kamiondzija.");
+	 		if(!IsPlayerInAnyVehicle(playerid)) return SendClientMessage( playerid, COLOR_RED, "Niste u kamionu/Niste vozac!");
+	 		if(GetPlayerState(playerid) != PLAYER_STATE_DRIVER) return SendClientMessage( playerid, COLOR_RED, "Niste u kamionu/Niste vozac!");
             TruckerInfo[playerid][tDeliveryBiz] = listitem+1;
 			switch(listitem)
 		    {
@@ -832,10 +832,10 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 	 	case DIALOG_TRUCKER_SELECT_JOB:
 		{
 			if(!response) return 1;
-	 		if(PlayerInfo[playerid][pJob] != TRUCKER_ID) return SendClientMessage( playerid, COLOR_RED, "ERROR: Niste zaposleni kao kamiondzija.");
-	 		if(!IsPlayerInAnyVehicle(playerid)) return SendClientMessage( playerid, COLOR_RED, "ERROR: Niste u kamionu!");
-	 		if(GetPlayerState(playerid) != PLAYER_STATE_DRIVER) return SendClientMessage( playerid, COLOR_RED, "ERROR: Niste vozac kamiona!");
-	 		if(!IsTrailerAttachedToVehicle(GetPlayerVehicleID(playerid))) return SendClientMessage( playerid, COLOR_RED, "ERROR: Nemate zakacenu odgovarajucu prikolicu!");
+	 		if(PlayerInfo[playerid][pJob] != TRUCKER_ID) return SendClientMessage( playerid, COLOR_RED, "Niste zaposleni kao kamiondzija.");
+	 		if(!IsPlayerInAnyVehicle(playerid)) return SendClientMessage( playerid, COLOR_RED, "Niste u kamionu!");
+	 		if(GetPlayerState(playerid) != PLAYER_STATE_DRIVER) return SendClientMessage( playerid, COLOR_RED, "Niste vozac kamiona!");
+	 		if(!IsTrailerAttachedToVehicle(GetPlayerVehicleID(playerid))) return SendClientMessage( playerid, COLOR_RED, "Nemate zakacenu odgovarajucu prikolicu!");
 			switch(listitem)
 		    {
 		        case 0:
@@ -1097,7 +1097,7 @@ hook OnPlayerEnterCheckpoint(playerid)
 				TruckerInfo[playerid][tStarted] = 2;
 	        }
 	    }
-	    else return SendClientMessage( playerid, COLOR_RED, "ERROR: Morate biti vozac kamiona!");
+	    else return SendClientMessage( playerid, COLOR_RED, "Morate biti vozac kamiona!");
 	}
 	return 1;
 }
@@ -1112,7 +1112,7 @@ hook OnPlayerEnterCheckpoint(playerid)
 */
 CMD:checkbiznis(playerid, params[])
 {
-	if( (PlayerInfo[playerid][pJob] != TRUCKER_ID)) return SendClientMessage( playerid, COLOR_RED, "ERROR: Niste zaposleni kao kamiondzija.");
+	if( (PlayerInfo[playerid][pJob] != TRUCKER_ID)) return SendClientMessage( playerid, COLOR_RED, "Niste zaposleni kao kamiondzija.");
 	if(IsPlayerInAnyVehicle(playerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne smijes biti u vozilu!");
 	new
 		biznis = INVALID_BIZNIS_ID;
@@ -1123,8 +1123,8 @@ CMD:checkbiznis(playerid, params[])
 			break;
 		}
 	}
-	if(biznis == INVALID_BIZNIS_ID) return SendClientMessage(playerid,COLOR_RED, "ERROR: Ne nalazis se ispred ulaza biznisa / nemas ovlasti za dostavljanje produkata ovom biznisu.");
-	if(BizzInfo[biznis][bOwnerID] == 0) return SendClientMessage(playerid,COLOR_RED, "ERROR: Biznis nema vlasnika.");
+	if(biznis == INVALID_BIZNIS_ID) return SendClientMessage(playerid,COLOR_RED, "Ne nalazis se ispred ulaza biznisa / nemas ovlasti za dostavljanje produkata ovom biznisu.");
+	if(BizzInfo[biznis][bOwnerID] == 0) return SendClientMessage(playerid,COLOR_RED, "Biznis nema vlasnika.");
 	new
 		infoString[ 68],
 		tmp = 0;
@@ -1185,17 +1185,17 @@ CMD:trucker(playerid, params[])
 		return 1;
 	}
 	if( !strcmp(param, "info", true) ) {
-	    if(PlayerInfo[playerid][pJob] != TRUCKER_ID) return SendClientMessage( playerid, COLOR_RED, "ERROR: Niste zaposleni kao kamiondzija.");
-		if(!IsPlayerInAnyVehicle(playerid)) return SendClientMessage( playerid, COLOR_RED, "ERROR: Morate biti vozac kamiona da biste vidjeli rute!");
-		if(!IsVehicleATruck(GetPlayerVehicleID(playerid)) || GetPlayerState(playerid) != 2) return SendClientMessage( playerid, COLOR_RED, "ERROR: Morate biti vozac kamiona da biste vidjeli rute!");
+	    if(PlayerInfo[playerid][pJob] != TRUCKER_ID) return SendClientMessage( playerid, COLOR_RED, "Niste zaposleni kao kamiondzija.");
+		if(!IsPlayerInAnyVehicle(playerid)) return SendClientMessage( playerid, COLOR_RED, "Morate biti vozac kamiona da biste vidjeli rute!");
+		if(!IsVehicleATruck(GetPlayerVehicleID(playerid)) || GetPlayerState(playerid) != 2) return SendClientMessage( playerid, COLOR_RED, "Morate biti vozac kamiona da biste vidjeli rute!");
 		ShowPlayerDialog(playerid, DIALOG_TRUCKER_SELECT_INFO, DIALOG_STYLE_LIST, "Info o trailerima", "OIL\nHEAVY\nFREEZER\nCONSTRUCTION\nFRAGILE", "Select", "Cancel");
 	}
 	if( !strcmp(param, "start", true) ) {
-		if( (PlayerInfo[playerid][pJob] != TRUCKER_ID)) return SendClientMessage( playerid, COLOR_RED, "ERROR: Niste zaposleni kao kamiondzija.");
-		if(TruckerInfo[playerid][tStarted] >= 1) return SendClientMessage( playerid, COLOR_RED, "ERROR: Vec ste zapoceli voznju. Da prekinete kucajte /trucker stop!");
-		if(!IsPlayerInAnyVehicle(playerid)) return SendClientMessage( playerid, COLOR_RED, "ERROR: Morate biti vozac kamiona!");
-		if(!IsVehicleATruck(GetPlayerVehicleID(playerid)) || GetPlayerState(playerid) != 2) return SendClientMessage( playerid, COLOR_RED, "ERROR: Morate biti vozac kamiona!");
-		if( PlayerInfo[ playerid ][ pFreeWorks ] < 1 ) return SendClientMessage( playerid, COLOR_RED, "ERROR: Ne mozes vise raditi!");
+		if( (PlayerInfo[playerid][pJob] != TRUCKER_ID)) return SendClientMessage( playerid, COLOR_RED, "Niste zaposleni kao kamiondzija.");
+		if(TruckerInfo[playerid][tStarted] >= 1) return SendClientMessage( playerid, COLOR_RED, "Vec ste zapoceli voznju. Da prekinete kucajte /trucker stop!");
+		if(!IsPlayerInAnyVehicle(playerid)) return SendClientMessage( playerid, COLOR_RED, "Morate biti vozac kamiona!");
+		if(!IsVehicleATruck(GetPlayerVehicleID(playerid)) || GetPlayerState(playerid) != 2) return SendClientMessage( playerid, COLOR_RED, "Morate biti vozac kamiona!");
+		if( PlayerInfo[ playerid ][ pFreeWorks ] < 1 ) return SendClientMessage( playerid, COLOR_RED, "Ne mozes vise raditi!");
 		ShowPlayerDialog(playerid, DIALOG_TRUCKER_SELECT_BIZ, DIALOG_STYLE_LIST, "ODABIR FIRME", "LS Construction Co. (Skill: 400+)\n\
 			LS Mechanic Garage (Skill: 400+)\n\
 			LS Medical Department (Skill: 400+)\n\
@@ -1208,8 +1208,8 @@ CMD:trucker(playerid, params[])
 		"Select", "Cancel");
 	}
 	else if( !strcmp(param, "stop", true) ) {
-		if( (PlayerInfo[playerid][pJob] != TRUCKER_ID)) return SendClientMessage( playerid, COLOR_RED, "ERROR: Niste zaposleni kao kamiondzija.");
-		if(TruckerInfo[playerid][tStarted] == 0) return SendClientMessage( playerid, COLOR_RED, "ERROR: Nemate pokrenutu voznju!");
+		if( (PlayerInfo[playerid][pJob] != TRUCKER_ID)) return SendClientMessage( playerid, COLOR_RED, "Niste zaposleni kao kamiondzija.");
+		if(TruckerInfo[playerid][tStarted] == 0) return SendClientMessage( playerid, COLOR_RED, "Nemate pokrenutu voznju!");
 		if(TruckerInfo[playerid][tStarted] == 2)
 		{
 		    KillTimer(TruckerDeliveryTimer[playerid]);
@@ -1244,10 +1244,10 @@ CMD:tc(playerid, params[])
 	#endif
 	new message[64];
 	if(sscanf(params,"s[64]", message)) return SendClientMessage(playerid, -1, "[KORISTENJE]: /tchannel [poruka]");
-	if( (PlayerInfo[playerid][pJob] != TRUCKER_ID)) return SendClientMessage( playerid, COLOR_RED, "ERROR: Niste zaposleni kao kamiondzija.");
+	if( (PlayerInfo[playerid][pJob] != TRUCKER_ID)) return SendClientMessage( playerid, COLOR_RED, "Niste zaposleni kao kamiondzija.");
 	new vehicleid = GetPlayerVehicleID(playerid);
 	if(GetVehicleModel(vehicleid) != 514 && GetVehicleModel(vehicleid) != 515 && GetVehicleModel(vehicleid) != 403) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste u kamionu.");
-	if(VehicleInfo[vehicleid][vJob] != 15 && VehicleInfo[vehicleid][vUsage] != VEHICLE_USAGE_PRIVATE) return SendClientMessage(playerid,COLOR_RED, "ERROR: Morate biti vozac kamiona!");
+	if(VehicleInfo[vehicleid][vJob] != 15 && VehicleInfo[vehicleid][vUsage] != VEHICLE_USAGE_PRIVATE) return SendClientMessage(playerid,COLOR_RED, "Morate biti vozac kamiona!");
 	new string [104],
 		name[MAX_PLAYER_NAME];
     GetPlayerName( playerid, name, sizeof(name) );
@@ -1258,7 +1258,7 @@ CMD:tc(playerid, params[])
 
 CMD:atrailers(playerid, params[])
 {
-	if(PlayerInfo[playerid][pAdmin] < 1) return SendClientMessage(playerid, COLOR_RED, "ERROR: Niste ovlasteni!");
+	if(PlayerInfo[playerid][pAdmin] < 1) return SendClientMessage(playerid, COLOR_RED, "Niste ovlasteni!");
 	new ptv[1024];
 	format(ptv,1024,"Trailer #1 - OIL - FLINT - id: 6\nTrailer #2 - HEAVY - FLINT - id: 7\nTrailer #3 - FREEZER - FLINT - id: 8\nTrailer #4 - CONSTRUCTION - FLINT - id: 9\nTrailer #5 - FRAGILE - FLINT - id: 10\nTrailer #6\nTrailer #7\nTrailer #8\nTrailer #9\nTrailer #10");
 	ShowPlayerDialog(playerid, DIALOG_ATRAILER, DIALOG_STYLE_LIST, "{FBE204}TRUCKER TRAILER", ptv, "Odaberi", "Izadji");

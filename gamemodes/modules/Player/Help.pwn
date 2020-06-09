@@ -59,7 +59,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext [])
 					case 2: 
 					{
 						if(PlayerInfo[playerid][pMember] == 0)
-							return SendClientMessage(playerid,COLOR_RED, "ERROR: Niste clan ni jedne legalne organizacije!");
+							return SendClientMessage(playerid,COLOR_RED, "Niste clan ni jedne legalne organizacije!");
 						else
 						{
 							if(IsACop(playerid))

@@ -206,7 +206,7 @@ ShowNosCap(playerid)
 CMD:checknos(playerid, params[])
 {
 	if(!PlayerInfo[playerid][pAdmin])
-		return SendClientMessage(playerid,COLOR_RED, "ERROR: Ne mozete koristiti ovu komandu!");
+		return SendClientMessage(playerid,COLOR_RED, "Ne mozete koristiti ovu komandu!");
 	
 	new
 		veh;
@@ -215,7 +215,7 @@ CMD:checknos(playerid, params[])
 		return SendClientMessage(playerid, COLOR_RED, "USAGE: /checknos [vozilo id]");
 	
 	if(veh == INVALID_VEHICLE_ID)
-		return SendClientMessage(playerid,COLOR_RED, "ERROR: Krivi id vozila");
+		return SendClientMessage(playerid,COLOR_RED, "Krivi id vozila");
 		
 	va_SendClientMessage(playerid, COLOR_RED, "[ ! ] Vozilo ID %d ima %d nitra.", veh, VehicleInfo[veh][vNOSCap]);
 	return 1;
@@ -224,13 +224,13 @@ CMD:checknos(playerid, params[])
 CMD:refillnos(playerid, params[])
 {
 	if(PlayerInfo[playerid][pAdmin] < 3)
-		return SendClientMessage(playerid,COLOR_RED, "ERROR: Ne mozete koristiti ovu komandu!");
+		return SendClientMessage(playerid,COLOR_RED, "Ne mozete koristiti ovu komandu!");
 	
 	new
 		car;
 		
 	if((car = GetPlayerVehicleID(playerid)) == 0)
-		return SendClientMessage(playerid,COLOR_RED, "ERROR: Nisi u vozilu!");
+		return SendClientMessage(playerid,COLOR_RED, "Nisi u vozilu!");
 	
 	VehicleInfo[car][vNOSCap] = 100;
 	ShowNosCap(playerid);

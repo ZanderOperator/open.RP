@@ -198,11 +198,11 @@ CMD:pizza(playerid, params[])
 {
 	new 
 		pick[8];
-	if( PlayerInfo[ playerid ][ pJob ] != 2 ) return SendClientMessage( playerid, COLOR_RED, "ERROR: Niste Pizza Boy!"); 
+	if( PlayerInfo[ playerid ][ pJob ] != 2 ) return SendClientMessage( playerid, COLOR_RED, "Niste Pizza Boy!"); 
 	if( sscanf( params, "s[8] ", pick ) ) return SendClientMessage(playerid, COLOR_RED, "USAGE: /pizza [order/take/put/deliver/skin/stop]");
 	if( !strcmp( pick, "skin", true ) )
 	{
-		if( !IsPlayerInRangeOfPoint( playerid, 5.0, 368.9829, -114.9067, 1001.5000 ) ) return SendClientMessage( playerid, COLOR_RED, "ERROR: Niste u Pizza Stack svlacionici!");
+		if( !IsPlayerInRangeOfPoint( playerid, 5.0, 368.9829, -114.9067, 1001.5000 ) ) return SendClientMessage( playerid, COLOR_RED, "Niste u Pizza Stack svlacionici!");
 		if( Bit1_Get( gr_UsingPizzaSkin, playerid ) ) {
 			SetPlayerSkin(playerid, PlayerInfo[ playerid ][ pChar ] );
 			Bit1_Set( gr_UsingPizzaSkin, playerid, false );
@@ -216,8 +216,8 @@ CMD:pizza(playerid, params[])
 		new 
 			Float:X, Float:Y, Float:Z,
 			vehicleid = INVALID_VEHICLE_ID;
-		if( IsPlayerInAnyVehicle(playerid) ) 				return SendClientMessage( playerid, COLOR_RED, "ERROR: Ne smijete biti u vozilu!");
-		if( !Bit8_Get( gr_PlayerPizzas, playerid ) ) 		return SendClientMessage( playerid, COLOR_RED, "ERROR: Niste uzeli pizzu iz Well Stacked Pizze!");
+		if( IsPlayerInAnyVehicle(playerid) ) 				return SendClientMessage( playerid, COLOR_RED, "Ne smijete biti u vozilu!");
+		if( !Bit8_Get( gr_PlayerPizzas, playerid ) ) 		return SendClientMessage( playerid, COLOR_RED, "Niste uzeli pizzu iz Well Stacked Pizze!");
 
 		foreach(new i : Vehicles) {
 			if( VehicleInfo[ i ][ vJob ] == 2 ) {
@@ -230,7 +230,7 @@ CMD:pizza(playerid, params[])
 				}
 			}
 		}
-		if( vehicleid == INVALID_VEHICLE_ID ) return SendClientMessage( playerid, COLOR_RED, "ERROR: Niste blizu pizzaboy motora!");
+		if( vehicleid == INVALID_VEHICLE_ID ) return SendClientMessage( playerid, COLOR_RED, "Niste blizu pizzaboy motora!");
 		
 		if( IsPlayerAttachedObjectSlotUsed( playerid, 7 ) ) 
 			RemovePlayerAttachedObject( playerid, 7 );
@@ -242,9 +242,9 @@ CMD:pizza(playerid, params[])
 	if( !strcmp( pick, "deliver", true ) )
 	{
 		if( IsPlayerInAnyVehicle(playerid) ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne smijete biti u vozilu!");
-		if( !IsPlayerInCheckpoint(playerid) && IsPlayerInAnyVehicle(playerid) ) return SendClientMessage( playerid, COLOR_RED, "ERROR: Niste u checkpointu ili se nalazite na motoru!");
-		if( !Bit8_Get( gr_PlayerPizzas, playerid ) ) return SendClientMessage( playerid, COLOR_RED, "ERROR: Nemate kartone pizze u rukama!");
-		if( !IsPlayerInRangeOfPoint( playerid, 15.0, PizzaHousePos[playerid][0], PizzaHousePos[playerid][1], PizzaHousePos[playerid][2] ) ) return SendClientMessage( playerid, COLOR_RED, "ERROR: Nisi blizu kuce koja je narucila pizzu!");
+		if( !IsPlayerInCheckpoint(playerid) && IsPlayerInAnyVehicle(playerid) ) return SendClientMessage( playerid, COLOR_RED, "Niste u checkpointu ili se nalazite na motoru!");
+		if( !Bit8_Get( gr_PlayerPizzas, playerid ) ) return SendClientMessage( playerid, COLOR_RED, "Nemate kartone pizze u rukama!");
+		if( !IsPlayerInRangeOfPoint( playerid, 15.0, PizzaHousePos[playerid][0], PizzaHousePos[playerid][1], PizzaHousePos[playerid][2] ) ) return SendClientMessage( playerid, COLOR_RED, "Nisi blizu kuce koja je narucila pizzu!");
 		
 		new tmpString[ 14 ];
 			
@@ -267,11 +267,11 @@ CMD:pizza(playerid, params[])
 	{
 		if(Bit1_Get( gr_UsingPizzaSkin, playerid ))
 		{
-			if( !IsPlayerInRangeOfPoint( playerid, 5.0, 373.1682, -119.7975, 1000.4898 ) ) return SendClientMessage( playerid, COLOR_RED, "ERROR: Niste blizu sanka od Well Stacked Pizze!");
+			if( !IsPlayerInRangeOfPoint( playerid, 5.0, 373.1682, -119.7975, 1000.4898 ) ) return SendClientMessage( playerid, COLOR_RED, "Niste blizu sanka od Well Stacked Pizze!");
 
-			if(Bit8_Get( gr_PlayerPizzas, playerid ) ) return SendClientMessage( playerid, COLOR_RED, "ERROR: Vec ste narucili pizzu! Sjednite u vozilo i raznosite ju!");
-			if( PizzaHouseCP{playerid} == 10 ) return SendClientMessage( playerid, COLOR_RED, "ERROR: Vec vam je ukljucen CP!");
-			if( PlayerInfo[ playerid ][ pFreeWorks ] < 1 ) return SendClientMessage( playerid, COLOR_RED, "ERROR: Ne mozes vise raditi!");
+			if(Bit8_Get( gr_PlayerPizzas, playerid ) ) return SendClientMessage( playerid, COLOR_RED, "Vec ste narucili pizzu! Sjednite u vozilo i raznosite ju!");
+			if( PizzaHouseCP{playerid} == 10 ) return SendClientMessage( playerid, COLOR_RED, "Vec vam je ukljucen CP!");
+			if( PlayerInfo[ playerid ][ pFreeWorks ] < 1 ) return SendClientMessage( playerid, COLOR_RED, "Ne mozes vise raditi!");
 			new
 				amount;
 			if( sscanf( params, "s[8]i", pick, amount ) ) return SendClientMessage(playerid, COLOR_RED, "USAGE: /pizza order [kolicina pizza]");
@@ -287,9 +287,9 @@ CMD:pizza(playerid, params[])
 				);
 				SendClientMessage( playerid, COLOR_RED, tmpString );
 				Bit1_Set( gr_FirstUsing, playerid, true );
-			} else return SendClientMessage( playerid, COLOR_RED, "ERROR: Morate unijeti kolicinu pizza u rasponu od 1 do 8!");
+			} else return SendClientMessage( playerid, COLOR_RED, "Morate unijeti kolicinu pizza u rasponu od 1 do 8!");
 		}
-		else return SendClientMessage( playerid, COLOR_RED, "ERROR: Niste uzeli odjecu!");
+		else return SendClientMessage( playerid, COLOR_RED, "Niste uzeli odjecu!");
 	}
 	if( !strcmp( pick, "stop", true ) )
 	{
@@ -323,9 +323,9 @@ CMD:pizza(playerid, params[])
 	}
 	if( !strcmp( pick, "put", true ) ) {
 
-		if( !Bit8_Get( gr_PlayerPizzas, playerid ) ) return SendClientMessage( playerid, COLOR_RED, "ERROR: Niste narucili pizzu u WSPu! Idite unutra i kucajte /pizza order!");
+		if( !Bit8_Get( gr_PlayerPizzas, playerid ) ) return SendClientMessage( playerid, COLOR_RED, "Niste narucili pizzu u WSPu! Idite unutra i kucajte /pizza order!");
 
-		if(GetVehicleModel(getPlayerNearestVehicle(playerid)) != 448 ) return SendClientMessage( playerid, COLOR_RED, "ERROR: Niste blizu pizzaboy motora!");
+		if(GetVehicleModel(getPlayerNearestVehicle(playerid)) != 448 ) return SendClientMessage( playerid, COLOR_RED, "Niste blizu pizzaboy motora!");
 		if( IsPlayerAttachedObjectSlotUsed( playerid, 7 ) ) 
 			RemovePlayerAttachedObject( playerid, 7 );
 		if( IsPlayerAttachedObjectSlotUsed( playerid, 8 ) ) 

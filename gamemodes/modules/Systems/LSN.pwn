@@ -272,7 +272,7 @@ CMD:reset_news(playerid, params[])
 CMD:callnews(playerid,params[])
 {
 	if( !PlayerInfo[ playerid ][ pMobileNumber ] ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, " Nemate mobitel!");
-	if( PlayerInfo[ playerid ][ pMobileMoney ] < 3 ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, " Nemate novca na mobitelnom racunu da biste pozvali taxi!");
+	if( PlayerInfo[ playerid ][ pMobileCost ] < 3 ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, " Nemate novca na mobitelnom racunu da biste pozvali taxi!");
 
 	new string[256], result[64];
 	if( sscanf( params, "s[64]",result ) ) return SendClientMessage(playerid,-1,"KORISTI: /callnews [opis stanja]");
@@ -287,11 +287,11 @@ CMD:callnews(playerid,params[])
 	SetPlayerChatBubble(playerid, string, COLOR_PURPLE, 20, 5000);
 	SendClientMessage(playerid, COLOR_YELLOW, "* Poslao si poziv u LSN ured!");
 
-	PlayerInfo[playerid][pMobileMoney] -= 3;
+	PlayerInfo[playerid][pMobileCost] -= 3;
 
 	new	moneyUpdate[128];
 	format(moneyUpdate, 128, "UPDATE `player_phones` SET `money` = '%d' WHERE `player_id` = '%d' AND `type` = '1'",
-		PlayerInfo[playerid][pMobileMoney],
+		PlayerInfo[playerid][pMobileCost],
 		PlayerInfo[playerid][pSQLID]
 	);
 	mysql_tquery(g_SQL, moneyUpdate);
@@ -304,7 +304,7 @@ CMD:wt(playerid,params[])
 	if(isnull(params))
 		return SendErrorMessage(playerid, "Ne mozete poslati prazan /wt!");
 	new member = PlayerInfo[playerid][pMember],string[256];
-    if (PlayerInfo[playerid][pMember] == 0) return SendClientMessage(playerid,COLOR_RED, "ERROR: Moras biti clan organizacije da bi koristio ovu komandu!");
+    if (PlayerInfo[playerid][pMember] == 0) return SendClientMessage(playerid,COLOR_RED, "Moras biti clan organizacije da bi koristio ovu komandu!");
     if(IsANews(playerid))
 	{
 		format(string, sizeof(string), "**[811 WT] %s: %s", GetName(playerid, true), params);
@@ -313,8 +313,8 @@ CMD:wt(playerid,params[])
 		format(string, sizeof(string), "**  %s prica na walkie-talkie.", GetName(playerid, true));
 		SetPlayerChatBubble(playerid, string, COLOR_PURPLE, 20, 2000);
 	}
-    else SendClientMessage(playerid,COLOR_RED, "ERROR: Niste ovlašteni!");*/
-    SendClientMessage(playerid, COLOR_RED, "ERROR: Komanda je izbacena");
+    else SendClientMessage(playerid,COLOR_RED, "Niste ovlašteni!");*/
+    SendClientMessage(playerid, COLOR_RED, "Komanda je izbacena");
     return 1;
 }
 

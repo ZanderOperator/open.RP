@@ -113,7 +113,7 @@ stock HOOK_BanEx(playerid, const playername[], const playerip[], adminid, const 
 	if( strlen(reason) > MAX_REASON_LEN || strlen(reason) < MIN_REASON_LEN ) {
 		new
 			tmpString[ 39 ];
-		format( tmpString, 39, "ERROR: Nevaljan unos razloga(%d-%d)",
+		format( tmpString, 39, "Nevaljan unos razloga(%d-%d)",
 			MIN_REASON_LEN,
 			MAX_REASON_LEN
 		);

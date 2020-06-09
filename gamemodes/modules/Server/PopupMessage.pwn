@@ -32,7 +32,7 @@ CreateMessage(playerid, bool: status) {
 	else if(status == true) {
 		MessageTextdraw[playerid] = CreatePlayerTextDraw(playerid, 328.000091, 350.947723, "");
 		//PlayerTextDrawLetterSize(playerid, MessageTextdraw[playerid], 0.163333, 0.936296);
-		PlayerTextDrawLetterSize(playerid, MessageTextdraw[playerid], 0.25, 1.0);
+		PlayerTextDrawLetterSize(playerid, MessageTextdraw[playerid], 0.2, 1.0);
 		PlayerTextDrawAlignment(playerid, MessageTextdraw[playerid], 2);
 		PlayerTextDrawColor(playerid, MessageTextdraw[playerid], -1);
 		PlayerTextDrawSetShadow(playerid, MessageTextdraw[playerid], 0);
@@ -49,7 +49,7 @@ CreateMessage(playerid, bool: status) {
 GetMessagePrefix(MESSAGE_TYPE = MESSAGE_TYPE_NONE) {
 	new prefix[21];
 	switch(MESSAGE_TYPE) {
-		case MESSAGE_TYPE_ERROR: prefix = "~r~~h~ERROR:";
+		case MESSAGE_TYPE_ERROR: prefix = "~r~~h~[ ! ]:";
 		case MESSAGE_TYPE_INFO: prefix = "~y~[ ! ]";
 		case MESSAGE_TYPE_SUCCESS: prefix = "~g~~h~[ ! ]";
 		default: prefix = "~b~~h~~h~~h~[CoA.RP]";

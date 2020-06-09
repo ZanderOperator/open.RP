@@ -52,7 +52,7 @@ forward OnPlayerCartonFinish(playerid, const playername[]);
 public OnPlayerCartonFinish(playerid, const playername[])
 {
 	new rows = cache_num_rows();
-	if(!rows) return SendClientMessage(playerid,COLOR_RED, "ERROR: U bazi nije pronadjena trazena osoba.");
+	if(!rows) return SendClientMessage(playerid,COLOR_RED, "U bazi nije pronadjena trazena osoba.");
 
 	new 
 		buffer[ 2056 ],

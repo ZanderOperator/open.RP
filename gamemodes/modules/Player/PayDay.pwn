@@ -5,9 +5,9 @@
 #endif
 #define MODULE_PAY_DAY
 #define SOCIAL_HELP 		(1000) // Taggano sa SOCIAL_HELP
-#define PD_SD_SALARY 		(700) // Glavnica za PD/SD pla?u
-#define FD_LSN_SALARY 		(800) // Glavnica za FD/LSN pla?u
-#define GOV_SALARY	 		(1000) // Glavnica za GOV pla?u
+#define PD_SD_SALARY 		(700) // Glavnica za PD/SD placu
+#define FD_LSN_SALARY 		(800) // Glavnica za FD/LSN placu
+#define GOV_SALARY	 		(1000) // Glavnica za GOV placu
 
 
 /*
@@ -33,14 +33,42 @@ GivePlayerPayCheck(playerid)
 		p_dialog[2048],
 		f_dialog[256];
 
-	format(f_dialog,sizeof(f_dialog), "\n{3C95C2}Imovina:\n");
+	format(p_dialog, sizeof(p_dialog), "\t\t\t\t\t");
+	// Pretplata na CRYPTO 50 dolara
+	if(PlayerInfo[playerid][pCryptoNumber] != 0 || PlayerInfo[playerid][pMobileCost] > 0)
+	{
+		format(f_dialog,sizeof(f_dialog), "\n{3C95C2}Troskovi pretplate:");
+		strcat(p_dialog,f_dialog, sizeof(p_dialog));
+	}
+	if(PlayerInfo[playerid][pCryptoNumber] != 0){
+
+		format(f_dialog,sizeof(f_dialog), "\n\tCrypto pretplata: -50$");
+		strcat(p_dialog,f_dialog, sizeof(p_dialog));
+		PlayerToIllegalBudgetMoney(playerid, 50);
+	}
+	// Mobilna pretplata - 1$ po SMS-u, 2$ po minuti poziva
+	if(PlayerInfo[playerid][pMobileCost] > 0)
+	{
+		format(f_dialog, sizeof(f_dialog), "\n\tMobilna pretplata: -%s", FormatNumber(PlayerInfo[playerid][pMobileCost])); 
+		strcat(p_dialog,f_dialog, sizeof(p_dialog));
+		PlayerToBudgetMoney(playerid, PlayerInfo[playerid][pMobileCost]);
+		PlayerInfo[playerid][pMobileCost] = 0;
+		
+		new	moneyUpdate[100];
+		format(moneyUpdate, 100, "UPDATE `player_phones` SET `money` = '%d' WHERE `player_id` = '%d' AND `type` = '1'",
+			PlayerInfo[playerid][pMobileCost],
+			PlayerInfo[playerid][pSQLID]
+		);
+		mysql_tquery(g_SQL, moneyUpdate);
+	}
+	format(f_dialog,sizeof(f_dialog), "\n{3C95C2}Imovina:");
 	strcat(p_dialog,f_dialog, sizeof(p_dialog));
-	// Posjeduje ku?u -> bills
+	// Posjeduje kucu -> bills
 	if(PlayerInfo[playerid][pHouseKey] != INVALID_HOUSE_ID && PlayerInfo[playerid][pHouseKey] > 0) {
 		new house = PlayerInfo[playerid][pHouseKey];
 
 		houselost += floatround( 0.001 * HouseInfo[ house ][ hValue ] );
-		format(f_dialog,sizeof(f_dialog), "Troskovi kuce: %s.\n", FormatNumber(houselost));
+		format(f_dialog,sizeof(f_dialog), "\n\tTroskovi kuce: %s", FormatNumber(houselost));
 		strcat(p_dialog,f_dialog, sizeof(p_dialog));
 		PlayerBankToBudgetMoney(playerid, houselost); // u proracun novac od kuce
 	}
@@ -50,7 +78,7 @@ GivePlayerPayCheck(playerid)
 		if(PlayerInfo[playerid][pBank] >= HouseInfo[ house ][ hRent ])
 		{
 			rentlost += HouseInfo[ house ][ hRent ];
-			format(f_dialog,sizeof(f_dialog), "Troskovi najma kuce: %s.\n", FormatNumber(rentlost));
+			format(f_dialog,sizeof(f_dialog), "\n\tTroskovi najma kuce: %s", FormatNumber(rentlost));
 			strcat(p_dialog,f_dialog, sizeof(p_dialog));
 			PlayerBankToHouseMoneyTAX(playerid, house, HouseInfo[ house ][ hRent ]); // Novac iz banke igraca ide u kucu vlasnika kuce koji renta
 		}
@@ -72,7 +100,7 @@ GivePlayerPayCheck(playerid)
 		    if(ComplexInfo[c][cSQLID] == ComplexRoomInfo[PlayerInfo[playerid][pComplexRoomKey]][cComplexID])
 		    {
 				PlayerBankToComplexMoneyTAX(playerid, c, complexroomlost);
-				format(f_dialog,sizeof(f_dialog), "Najam complex sobe: %s.\n", FormatNumber(complexroomlost));
+				format(f_dialog,sizeof(f_dialog), "\n\tNajam complex sobe: %s", FormatNumber(complexroomlost));
 				strcat(p_dialog,f_dialog, sizeof(p_dialog));
 				break;
 		    }
@@ -83,7 +111,7 @@ GivePlayerPayCheck(playerid)
         //complexlost += floatround( 25 * PlayerInfo[ playerid ][ pLevel ] );
 		// pogurati malo komplekse da ih ljudi kupuju
 		complexlost += minrand(200, 1000);
-		format(f_dialog,sizeof(f_dialog), "Dobit complexa: +%s.\n", FormatNumber(complexlost)); // Troskovi prebaceni u dobit
+		format(f_dialog,sizeof(f_dialog), "\n\tDobit complexa: +%s", FormatNumber(complexlost)); // Troskovi prebaceni u dobit
 		strcat(p_dialog,f_dialog, sizeof(p_dialog));
 		BudgetToPlayerBankMoney(playerid, complexlost);
     }
@@ -93,12 +121,12 @@ GivePlayerPayCheck(playerid)
 			possibility = minrand(0, 800);
 		if (possibility >= 200) {
 			BudgetToBusinessMoney ( bizid, possibility);
-			format(f_dialog,sizeof(f_dialog), "Poslovanja biznisa: +%s.\n", FormatNumber(possibility));
+			format(f_dialog,sizeof(f_dialog), "\n\tPoslovanja biznisa: +%s", FormatNumber(possibility));
 			strcat(p_dialog,f_dialog, sizeof(p_dialog));
 		}
 		else {
 			BusinessToBudgetMoney ( bizid, possibility); // novac iz blagajne biznisa ide u proracun
-			format(f_dialog,sizeof(f_dialog), "Poslovanja biznisa: -%s.\n", FormatNumber(possibility));
+			format(f_dialog,sizeof(f_dialog), "\n\tPoslovanja biznisa: -%s", FormatNumber(possibility));
 			strcat(p_dialog,f_dialog, sizeof(p_dialog));
 		}
 	}
@@ -123,16 +151,16 @@ GivePlayerPayCheck(playerid)
 					kreditlost += 300;
 			}
 		}
-		format(f_dialog,sizeof(f_dialog), "\n{3C95C2}Banka:\n");
+		format(f_dialog,sizeof(f_dialog), "\n{3C95C2}Banka:");
 		strcat(p_dialog,f_dialog, sizeof(p_dialog));
 		PlayerInfo[ playerid ][ pRate ] += 1; // dodaje mu ratu kredita za jedan
-		format(f_dialog,sizeof(f_dialog), "Rata kredita: -%s\n", FormatNumber(kreditlost));
+		format(f_dialog,sizeof(f_dialog), "\n\tRata kredita: -%s", FormatNumber(kreditlost));
 		strcat(p_dialog,f_dialog, sizeof(p_dialog));
 		PlayerBankToBudgetMoney(playerid, kreditlost); // Novac od rate kredita ide u proracun
 		if( PlayerInfo[ playerid ][ pRate ] >= 251 ) { //ako je rata kredita 251, kredit mu je otplacen
 			PlayerInfo[ playerid ][ pRate ] 		= 0;
 			PlayerInfo[ playerid ][ pCreditType ] 	= 0;
-			format(f_dialog,sizeof(f_dialog), "Otplatili ste zadnju ratu kredita!\n");
+			format(f_dialog,sizeof(f_dialog), "\n\tOtplatili ste zadnju ratu kredita!");
 			strcat(p_dialog,f_dialog, sizeof(p_dialog));
 		}
 	}
@@ -168,9 +196,9 @@ GivePlayerPayCheck(playerid)
 			mysql_pquery(g_SQL, savingsQuery);
 
 			// Poruke
-			format(f_dialog,sizeof(f_dialog), "\n{3C95C2}Stednja:\n");
+			format(f_dialog,sizeof(f_dialog), "\n\t{3C95C2}Stednja:");
 			strcat(p_dialog,f_dialog, sizeof(p_dialog));
-			format(f_dialog,sizeof(f_dialog), "Proslo je vase vrijeme orocene stednje, te se primili %s na svoj bankovni racun!\n", FormatNumber(totalmoney));
+			format(f_dialog,sizeof(f_dialog), "\nProslo je vase vrijeme orocene stednje, te se primili %s na svoj bankovni racun!", FormatNumber(totalmoney));
 			strcat(p_dialog,f_dialog, sizeof(p_dialog));
 		}
 	}
@@ -187,7 +215,7 @@ GivePlayerPayCheck(playerid)
 		);
 		mysql_tquery(g_SQL, savingsQuery);
 	}
-	format(f_dialog,sizeof(f_dialog), "\n{3C95C2}Ostalo:\n");
+	format(f_dialog,sizeof(f_dialog), "\n{3C95C2}Prihodi:");
 	strcat(p_dialog,f_dialog, sizeof(p_dialog));
 	// Dobitak ako je u organizaciji I AKO NIJE
 	if(PlayerInfo[playerid][pMember] > 0 )
@@ -219,7 +247,7 @@ GivePlayerPayCheck(playerid)
 		BudgetToPlayerBankMoney(playerid, orgsalary); 													// Novac iz prora?una igra?u na bank. racun
 		OrgToPlayerBankMoney( playerid, FactionInfo[PlayerInfo[playerid][pMember]][fType], orgbonus); 		// Novac iz factionbanke igra?u na bank.ra?un.
 		orgsalary += orgbonus;
-		format(f_dialog,sizeof(f_dialog), "Placa: %s (Bonus: %s).\n", FormatNumber(orgsalary), FormatNumber(orgbonus));
+		format(f_dialog,sizeof(f_dialog), "\n\tPlaca: %s (Bonus: %s)", FormatNumber(orgsalary), FormatNumber(orgbonus));
 		strcat(p_dialog,f_dialog, sizeof(p_dialog));
 	}
 	else { // Ako nema posao dobiva socijalnu pomoc
@@ -243,7 +271,7 @@ GivePlayerPayCheck(playerid)
 				}
 			}
 			BudgetToPlayerBankMoney(playerid, bsalary); // treba prebaciti na bankovni racun
-			format(f_dialog,sizeof(f_dialog), "Socijalna pomoc: %s.\n", FormatNumber(bsalary));
+			format(f_dialog,sizeof(f_dialog), "\n\tSocijalna pomoc: %s", FormatNumber(bsalary));
 			strcat(p_dialog,f_dialog, sizeof(p_dialog));
 		}
 	}
@@ -258,7 +286,7 @@ GivePlayerPayCheck(playerid)
 			BudgetToPlayerBankMoney(playerid, taxi_job);  // bonus
 			BusinessToPlayerMoney(playerid, 128, PlayerInfo[playerid][pPayDayMoney]); // koliko je zaradio IC.
 
-			format(f_dialog,sizeof(f_dialog), "Taxi Company bonus: %s.\n", FormatNumber(calculate));
+			format(f_dialog,sizeof(f_dialog), "\n\tTaxi Company bonus: %s", FormatNumber(calculate));
 			strcat(p_dialog,f_dialog, sizeof(p_dialog));
 			PlayerInfo[playerid][pPayDayMoney] = 0;
 		}
@@ -268,16 +296,9 @@ GivePlayerPayCheck(playerid)
 				workingbonus = 700;
 
 			BudgetToPlayerBankMoney(playerid, workingbonus); // bonus
-			format(f_dialog,sizeof(f_dialog), "Mechanic Company bonus: %s.\n", FormatNumber(workingbonus));
+			format(f_dialog,sizeof(f_dialog), "\n\tMechanic Company bonus: %s", FormatNumber(workingbonus));
 			strcat(p_dialog,f_dialog, sizeof(p_dialog));
 		}
-	}
- 	// Pretplata na CRYPTO 100 dolara
-	if(PlayerInfo[playerid][pCryptoNumber] != 0){
-
-		format(f_dialog,sizeof(f_dialog), "\nCrypto pretplata: -$100\n");
-		strcat(p_dialog,f_dialog, sizeof(p_dialog));
-		PlayerToIllegalBudgetMoney(playerid, 100);
 	}
 	if(PlayerInfo[playerid][pJob] > 0 && PlayerInfo[playerid][pContractTime] >= 1) // OOC poslovi
 	{
@@ -289,7 +310,7 @@ GivePlayerPayCheck(playerid)
 				if(workingbonus > 500)
 					workingbonus = 500; // Maksimum je 500$ po paydayu
 				BudgetToPlayerBankMoney(playerid, workingbonus); // treba prebaciti na bankovni racun
-				format(f_dialog,sizeof(f_dialog), "Poticaj na radni staz: %s.\n", FormatNumber(workingbonus));
+				format(f_dialog,sizeof(f_dialog), "\n\tPoticaj na radni staz: %s", FormatNumber(workingbonus));
 				strcat(p_dialog,f_dialog, sizeof(p_dialog));
 			}
 		}
@@ -342,7 +363,7 @@ GivePlayerPayCheck(playerid)
 		if( PlayerInfo[ playerid ][ pMuscle ] <= 0 ) PlayerInfo[ playerid ][ pMuscle ] = 0;
 		else
 		{
-			format(f_dialog,sizeof(f_dialog), "{3C95C2}(MUSCLE) Zbog nemara vas se muscle level spustio na %d!\n", PlayerInfo[ playerid ][ pMuscle ]);
+			format(f_dialog,sizeof(f_dialog), "\n{3C95C2}(MUSCLE) Zbog nemara vas se muscle level spustio na %d!", PlayerInfo[ playerid ][ pMuscle ]);
 			strcat(p_dialog,f_dialog, sizeof(p_dialog));
 			PlayerInfo[ playerid ][ pGymCounter ] = 0;
 		}
@@ -351,7 +372,7 @@ GivePlayerPayCheck(playerid)
 		PlayerInfo[ playerid ][ pGymCounter ] += 2;
 		if( PlayerInfo[ playerid ][ pGymCounter ] >= 6 ) {
 			PlayerInfo[ playerid ][ pMuscle ]--;
-			format(f_dialog,sizeof(f_dialog), "{3C95C2}(MUSCLE) Zbog nemara vas se muscle level spustio na %d!\n", PlayerInfo[ playerid ][ pMuscle ]);
+			format(f_dialog,sizeof(f_dialog), "\n{3C95C2}(MUSCLE) Zbog nemara vas se muscle level spustio na %d!\n", PlayerInfo[ playerid ][ pMuscle ]);
 			strcat(p_dialog,f_dialog, sizeof(p_dialog));
 			PlayerInfo[ playerid ][ pGymCounter ] = 0;
 		}
@@ -405,6 +426,5 @@ GivePlayerPayCheck(playerid)
 
 	strcat(PlayerInfo[playerid][pPayDayDialog], p_dialog, 2048);
 	strcat(PlayerInfo[playerid][pPayDayDate], ReturnDate(), 32);
-	return (true);
+	return 1;
 }
-

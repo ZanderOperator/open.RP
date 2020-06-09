@@ -718,7 +718,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 		case DIALOG_DESTROYFIRE: {
 			if(response) {
 				if(!Iter_Contains(FlameID_Iter, strval(inputtext))) 
-					return SendClientMessage(playerid,COLOR_RED, "ERROR: Unijeli ste pogresan ID Flame-a, trenutni upisani ID ne postoji/nije spawn-an!");
+					return SendClientMessage(playerid,COLOR_RED, "Unijeli ste pogresan ID Flame-a, trenutni upisani ID ne postoji/nije spawn-an!");
 					
 				DestroyServerFlame(strval(inputtext));
 				va_SendClientMessage(playerid, COLOR_RED, "[ ! ] Uspjesno ste unistili 'vatru' pod ID-om %d.", strval(inputtext));
@@ -726,7 +726,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 		}
 		case DIALOG_MOVEFIRE: {
 			if(response) {
-				if(!Iter_Contains(FlameID_Iter, strval(inputtext)) ) return SendClientMessage(playerid,COLOR_RED, "ERROR: Unijeli ste pogresan ID Flame-a, trenutni upisani ID ne postoji/nije spawn-an!");
+				if(!Iter_Contains(FlameID_Iter, strval(inputtext)) ) return SendClientMessage(playerid,COLOR_RED, "Unijeli ste pogresan ID Flame-a, trenutni upisani ID ne postoji/nije spawn-an!");
 				MoveServerFlame(strval(inputtext), playerid);
 				va_SendClientMessage(playerid, COLOR_RED, "[ ! ] Uspjesno ste promijenili poziciju 'vatre' id -> %d.", strval(inputtext));
 			}
@@ -736,7 +736,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 
 				GetFlameDialogID[playerid] = strval(inputtext);
 				if(!Iter_Contains(FlameID_Iter, GetFlameDialogID[playerid]) ) 
-					return SendClientMessage(playerid,COLOR_RED, "ERROR: Unijeli ste pogresan ID Flame-a, trenutni upisani ID ne postoji/nije spawn-an!");
+					return SendClientMessage(playerid,COLOR_RED, "Unijeli ste pogresan ID Flame-a, trenutni upisani ID ne postoji/nije spawn-an!");
 
 				new buffer[128];
 				format(buffer, sizeof(buffer),"Molimo vas unesite koliko zelite da Fire(id: %d) ima health-a.",  GetFlameDialogID[playerid]);
@@ -831,7 +831,7 @@ CMD:afire(playerid, params[]) {
 	new action[32], dialogstring[170];
 	
 	if(PlayerInfo[playerid][pAdmin] < 4) 
-		return SendClientMessage(playerid,COLOR_RED, "ERROR: Niste Admin Level 4+.");
+		return SendClientMessage(playerid,COLOR_RED, "Niste Admin Level 4+.");
 	if(sscanf(params, "s[32]", action))
     {
         SendClientMessage(playerid, COLOR_RED, "USAGE: /afire [opcija].");
@@ -865,7 +865,7 @@ CMD:afire(playerid, params[]) {
 
 	if(strcmp(action,"startfire",true) == 0) {
 		if(fire_activated == true) 
-			return SendClientMessage(playerid,COLOR_RED, "ERROR: Trenutno vec ima aktivnih pozara!");
+			return SendClientMessage(playerid,COLOR_RED, "Trenutno vec ima aktivnih pozara!");
 			
  		RandomFireSituation();
 		fire_activated = true;

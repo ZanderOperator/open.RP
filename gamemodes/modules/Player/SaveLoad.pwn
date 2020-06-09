@@ -99,7 +99,6 @@ timer SetPlayerCrash[6000](playerid)
 	SafeSpawned[ playerid ] = true;
 	AC_SetPlayerWeapons(playerid);
 	LoadPlayerSkills(playerid);
-	LoadPlayerDog(playerid);
 	LoadPlayerObjects(playerid);
 	return 1;
 }
@@ -596,6 +595,8 @@ public OnAccountFinish(playerid)
 	Bit1_Set(gr_PlayerLoggedIn, playerid, true);
 	DestroyLoginTextdraws(playerid);
 	
+	CreateLogoTD(playerid);
+	
 	//Tutorial
 	SpawnPlayer(playerid);
     return 1;
@@ -637,6 +638,8 @@ SafeSpawnPlayer(playerid)
 
 	// Micanje ulaznih textdrawova
 	DestroyLoginTextdraws(playerid);
+	// Forum URL Textdraw
+	CreateLogoTD(playerid);
 	// AFK timer
 	SetPlayerAFKLimit(playerid);
 
@@ -713,7 +716,7 @@ SafeSpawnPlayer(playerid)
 	AntiCheatData[playerid][acLoginDialog] = false;
 	
  	if(!isnull(PlayerInfo[playerid][pAdminMsg]))
-		SendClientMessage(playerid, COLOR_RED, "ERROR: Imate poruku od admina! Koristite /showmessage kako bi provjerili poruku.");
+		SendClientMessage(playerid, COLOR_RED, "Imate poruku od admina! Koristite /showmessage kako bi provjerili poruku.");
 
 	CallLocalFunction("OnPlayerSpawn", "i", playerid);
 	return 1;
@@ -722,7 +725,7 @@ SafeSpawnPlayer(playerid)
 CMD:showmessage(playerid, params[])
 {
    	if(PlayerInfo[playerid][pAdmMsgConfirm] == 0)
-		return SendClientMessage(playerid, COLOR_RED, "ERROR: Nemate poruka od admina!");
+		return SendClientMessage(playerid, COLOR_RED, "Nemate poruka od admina!");
 	new 
 		string[174];
 		

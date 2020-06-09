@@ -10,11 +10,13 @@
 	########  ######## ##       #### ##    ## ########  ######  
 */
 
-#define ADS_TIME_DURATION				(3600000)			// 1h
-#define MAX_AD_TEXT						(82)
+#define ADS_TIME_DURATION				(300)			// 5 min
+#define ADS_TIME_DELAY					(60)			// 1 min - razmak izmedu oglasa
+#define MAX_AD_TEXT						(128)
 #define MAX_ADS							(60)
+#define PRICE_PER_CHAR					(4)
 
-
+new Iterator:Ads<MAX_ADS>;
 // Tip oglasa
 enum {
 	AD_STYLE_SELL = 0,		// Prodaja
@@ -45,7 +47,8 @@ static stock
 static stock
 	LastAdsListIndex[MAX_PLAYERS],
 	lastAdId	= -1,
-	lastAdShown = -1;
+	lastAdShown = -1,
+	lastAdStamp = -1;
 
 /*
 	 ######  ########  #######   ######  ##    ##  ######  
@@ -69,23 +72,10 @@ stock static GetAdStyleString(styleid)
 	return buffer;
 }
 
-stock static CheckAdsDuration()
-{
-	for( new i = 0; i < MAX_ADS; i++ ) {
-		if(AdsInfo[i][adTimeStamp] < gettimestamp()) {
-			AdsInfo[i][adSenderId]	= 0;
-			AdsInfo[i][adStyle] 	= -1;
-			AdsInfo[i][adPrice]		= 0;
-			AdsInfo[i][adText][ 0 ] = EOS;
-			AdsInfo[i][adTimeStamp] = 0; 
-			AdsInfo[i][adTimes]		= 0;
-		}	
-	}
-}
 stock static PlayerGotAd(playerid)
 {
 
-	for(new i=0; i<MAX_ADS; i++)
+	foreach(new i: Ads)
 	{
 		if(AdsInfo[i][adSenderId] == PlayerInfo[playerid][pSQLID])
 		{
@@ -97,17 +87,20 @@ stock static PlayerGotAd(playerid)
 stock static ShowPlayerAdsList()
 {
 	new
-		buffer[ 10000 ];
-	format(buffer, 10000, "Tip\tKontakt\tTekst\tCijena\n");
-	for( new i = 0; i < MAX_ADS; i++ ) {
-	    if( AdsInfo[i][adSenderId] != 0 ) {
-			format(buffer, 10000, ""COL_WHITE"%s%s\t%d\t%s\t"COL_GREEN"%d$\n",
-				buffer,
+		buffer[ 4096 ],
+		motd[200];
+	format(buffer, 4096, "Tip\tKontakt\tTekst\tCijena\n");
+	foreach(new i: Ads)
+	{
+	    if( AdsInfo[i][adSenderId] != 0 )
+		{
+			format(motd, 200, ""COL_WHITE"%s\t%d\t%s\t"COL_GREEN"%d$\n",
 				GetAdStyleString(AdsInfo[i][adStyle]),
 				GetPlayerMobileNumberFromSQL(AdsInfo[i][adSenderId]),
 				AdsInfo[i][adText],
 				AdsInfo[i][adPrice]
 			);
+			strcat(buffer, motd, 4096);
 		}
 	}
 	return buffer;
@@ -119,27 +112,24 @@ stock static GetPlayerAdsInput(playerid)
 		buffer[1024];
 	if(PlayerAdsInfo[playerid][padStyle] == 0) {
 		if(PlayerAdsInfo[playerid][padPrice] < 1) {
-			format(buffer, sizeof(buffer), "[%s] %s (cijena PO DOGOVORU) | Kontakt: %s (MOB: %d)",
+			format(buffer, sizeof(buffer), "[%s] %s (cijena PO DOGOVORU) | Kontakt: [%d]",
 				GetAdStyleString(PlayerAdsInfo[playerid][padStyle]),
 				PlayerAdsInfo[playerid][padText],
-				GetName(playerid, false),
 				PlayerInfo[playerid][pMobileNumber]
 			);
 		}
 		else {
-			format(buffer, sizeof(buffer), "[%s] %s (cijena %d$) | Kontakt: %s (MOB: %d)",
+			format(buffer, sizeof(buffer), "[%s] %s (cijena %d$) | Kontakt: [%d]",
 				GetAdStyleString(PlayerAdsInfo[playerid][padStyle]),
 				PlayerAdsInfo[playerid][padText],
 				PlayerAdsInfo[playerid][padPrice],
-				GetName(playerid, false),
 				PlayerInfo[playerid][pMobileNumber]
 			);
 		}
 	} else {
-			format(buffer, sizeof(buffer), "[%s] %s | Kontakt: %s (MOB: %d)",
+			format(buffer, sizeof(buffer), "[%s] %s | Kontakt: [%d]",
 				GetAdStyleString(PlayerAdsInfo[playerid][padStyle]),
 				PlayerAdsInfo[playerid][padText],
-				GetName(playerid, false),
 				PlayerInfo[playerid][pMobileNumber]
 			);
 	}
@@ -153,26 +143,23 @@ stock static SendAdMessage(index)
 	
 	if(AdsInfo[index][adStyle] == 0) {
 		if(AdsInfo[index][adPrice] < 1) {
-			format(buffer, sizeof(buffer), "[%s] %s (cijena PO DOGOVORU) | Kontakt: %s (MOB: %d)",
+			format(buffer, sizeof(buffer), "[%s] %s (cijena PO DOGOVORU) | Kontakt: [%d]",
 				GetAdStyleString(AdsInfo[index][adStyle]),
 				AdsInfo[index][adText],
-				GetPlayerNameFromSQL(AdsInfo[index][adSenderId]),
 				GetPlayerMobileNumberFromSQL(AdsInfo[index][adSenderId])
 			);
 		} else {
-			format(buffer, sizeof(buffer), "[%s] %s (cijena %d$) | Kontakt: %s (MOB: %d)",
+			format(buffer, sizeof(buffer), "[%s] %s (cijena %d$) | Kontakt: [%d]",
 				GetAdStyleString(AdsInfo[index][adStyle]),
 				AdsInfo[index][adText],
 				AdsInfo[index][adPrice],
-				GetPlayerNameFromSQL(AdsInfo[index][adSenderId]),
 				GetPlayerMobileNumberFromSQL(AdsInfo[index][adSenderId])
 			);
 		}
 	} else {
-		format(buffer, sizeof(buffer), "[%s] %s | Kontakt: %s (MOB: %d)",
+		format(buffer, sizeof(buffer), "[%s] %s | Kontakt: [%d]",
 			GetAdStyleString(AdsInfo[index][adStyle]),
 			AdsInfo[index][adText],
-			GetPlayerNameFromSQL(AdsInfo[index][adSenderId]),
 			GetPlayerMobileNumberFromSQL(AdsInfo[index][adSenderId])
 		);
 	}
@@ -180,50 +167,27 @@ stock static SendAdMessage(index)
 	return buffer;
 }
 
-stock static GetAdsFreeIndex()
-{
-	new
-		index = -1;
-	for(new i = 0; i < MAX_ADS; i++) {
-		if(!AdsInfo[i][adSenderId]) {
-			index = i;
-			break;
-		}
-	}
-	return index;
-}
 stock static CreateAdForPlayer(playerid)
-{		
-	if(PlayerAdsInfo[playerid][padStyle] == AD_STYLE_CMRC) {
-		new 
-			price = strlen(PlayerAdsInfo[playerid][padText]) * 4;
-		if(PlayerInfo[playerid][pDonateRank] > 0)
-		    price = 0;
-		PlayerToOrgMoneyTAX( playerid, FACTION_TYPE_NEWS, price); // placanje oglasa novac u faction bank od LSNa
-		va_GameTextForPlayer(playerid, "~r~Placeno za reklamu: $%d", 5000, 5, price);
-		va_SendClientMessageToAll(COLOR_GREEN, "[REKLAMA] %s, Kontakt: %s (Mob: %d)", PlayerAdsInfo[playerid][padText], GetName(playerid, false), PlayerInfo[playerid][pMobileNumber]);
-	} else {
-		new
-			index = GetAdsFreeIndex();
-		if(index == -1) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "ERROR: Svi slotovi za oglase su popunjeni!");
-		
-		AdsInfo[index][adSenderId]				= PlayerInfo[playerid][pSQLID];
-		AdsInfo[index][adStyle] 				= PlayerAdsInfo[playerid][padStyle];
-		AdsInfo[index][adPrice]					= PlayerAdsInfo[playerid][padPrice];
-		format(AdsInfo[index][adText], MAX_AD_TEXT, PlayerAdsInfo[playerid][padText]);
-		AdsInfo[index][adTimes]					= PlayerAdsInfo[playerid][padTimes];
-		AdsInfo[index][adTimeStamp] 			= gettimestamp() + ( ADS_TIME_DURATION * AdsInfo[index][adTimes]);
-		
-		new 
-			price = floatround(strlen(AdsInfo[index][adText]) * 3) * AdsInfo[index][adTimes];
-		if(PlayerInfo[playerid][pDonateRank] > 0)
-		    price = 0;
-		PlayerToOrgMoneyTAX( playerid, FACTION_TYPE_NEWS, price); // placanje oglasa novac u faction bank od LSNa
-		va_GameTextForPlayer(playerid, "~r~Placeno za reklamu: $%d", 5000, 5, price);
-		
-		lastAdId = index;		
-		SendFormatMessage(playerid, MESSAGE_TYPE_INFO, "Uspjesno ste postavili oglas. Trenutno je %i oglas/a za prikazivanje prije tvog.", index);
-	}
+{			
+	new index = Iter_Free(Ads);
+	if(index == -1) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Svi slotovi za oglase su popunjeni!");
+	
+	AdsInfo[index][adSenderId]				= PlayerInfo[playerid][pSQLID];
+	AdsInfo[index][adStyle] 				= PlayerAdsInfo[playerid][padStyle];
+	AdsInfo[index][adPrice]					= PlayerAdsInfo[playerid][padPrice];
+	format(AdsInfo[index][adText], MAX_AD_TEXT, PlayerAdsInfo[playerid][padText]);
+	AdsInfo[index][adTimes]					= PlayerAdsInfo[playerid][padTimes];
+	AdsInfo[index][adTimeStamp] 			= gettimestamp();
+	Iter_Add(Ads, index);
+	
+	new price = floatround(strlen(AdsInfo[index][adText]) * PRICE_PER_CHAR) * AdsInfo[index][adTimes];
+	if(PlayerInfo[playerid][pDonateRank] > 0)
+		price = 0;
+	PlayerToOrgMoneyTAX( playerid, FACTION_TYPE_NEWS, price); // placanje oglasa novac u faction bank od LSNa
+	va_GameTextForPlayer(playerid, "~r~Placeno za reklamu: $%d", 5000, 5, price);
+	
+	lastAdId = index;		
+	SendFormatMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uspjesno ste postavili oglas. Trenutno je %i oglas/a za prikazivanje prije tvog.", index);
 	
 	PlayerAdsInfo[playerid][padStyle] 		= -1;
 	PlayerAdsInfo[playerid][padPrice]		= 0;
@@ -234,32 +198,38 @@ stock static CreateAdForPlayer(playerid)
 
 Function: SendAutomaticAdMessage()
 {
-	if( gettimestamp() >= AdsTimer )
+	new delad = -1;
+	foreach(new i: Ads)
 	{
-		AdsTimer = gettimestamp() + 300;
-		for( new i = 0; i < MAX_ADS; i++ ) {
-			if(AdsInfo[i][adSenderId] != 0 && AdsInfo[i][adTimes] >= 1 && i > lastAdShown) {
-				va_SendClientMessageToAll(COLOR_GREEN, SendAdMessage(i));
-				AdsInfo[i][adTimes]--;
-				AdsInfo[i][adTimeStamp] = gettimestamp() + ( ADS_TIME_DURATION );
+		if(AdsInfo[i][adSenderId] != 0 && AdsInfo[i][adTimes] >= 1 && gettimestamp() >= AdsInfo[i][adTimeStamp] && gettimestamp() > (lastAdStamp + ADS_TIME_DELAY) && i > lastAdShown) 
+		{
+			va_SendClientMessageToAll(COLOR_GREEN, SendAdMessage(i));
+			AdsInfo[i][adTimes]--;
+			AdsInfo[i][adTimeStamp] = gettimestamp() + ( ADS_TIME_DURATION );
+			lastAdStamp = gettimestamp();
+			
+			if(AdsInfo[i][adTimes] == 0) 
+			{
+				AdsInfo[i][adSenderId]	= 0;
+				AdsInfo[i][adStyle] 	= -1;
+				AdsInfo[i][adPrice]		= 0;
+				AdsInfo[i][adText][ 0 ] = EOS;
+				AdsInfo[i][adTimeStamp] = 0;
+				AdsInfo[i][adTimes]		= 0;
 				
-				if(AdsInfo[i][adTimes] == 0) {
-					AdsInfo[i][adSenderId]	= 0;
-					AdsInfo[i][adStyle] 	= -1;
-					AdsInfo[i][adPrice]		= 0;
-					AdsInfo[i][adText][ 0 ] = EOS;
-					AdsInfo[i][adTimeStamp] = 0;
-					AdsInfo[i][adTimes]		= 0;
-				}
-				
-				if(lastAdId == i)
-					lastAdShown = -1;
-				else
-					lastAdShown = i;
-				break;
+				delad = i;
 			}
+			
+			if(lastAdId == i)
+				lastAdShown = -1;
+			else
+				lastAdShown = i;
+			break;
 		}
 	}
+	if(delad != -1)
+		Iter_Remove(Ads, delad);
+		
 	return 1;
 }
 
@@ -295,10 +265,11 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 			switch(listitem) 
 			{
 				case 0:  {
-				    if(PlayerGotAd(playerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "ERROR: Vec imate postavljen oglas.");
+				    if(PlayerGotAd(playerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Vec imate postavljen oglas.");
 					ShowPlayerDialog(playerid, DIALOG_ADS_CREATE_STYLE, DIALOG_STYLE_LIST, "LS OGLASNIK - Stil oglasa", "Prodaja\nKupovina\nReklama", "Odaberi", "Odustani");
 				}
-				case 1: {
+				case 1: 
+				{
 					LastAdsListIndex[ playerid ] = 0;
 					ShowPlayerDialog(playerid, DIALOG_ADS_WHOLE, DIALOG_STYLE_TABLIST_HEADERS, "LS OGLASNIK - Oglasi", ShowPlayerAdsList(), "Odaberi", "Odustani");
 					
@@ -329,7 +300,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 			if(!response) return ShowPlayerDialog(playerid, DIALOG_ADS_CREATE_STYLE, DIALOG_STYLE_LIST, "LS OGLASNIK - Stil oglasa", "Prodaja\nKupovina\nReklama", "Odaberi", "Odustani");
 			if(10 <= strlen(inputtext) <= (MAX_AD_TEXT - 1)) {
 				if(CheckStringForURL(inputtext) || CheckStringForIP(inputtext)) {
-					SendMessage(playerid, MESSAGE_TYPE_ERROR, "ERROR: Nedozvoljene rijeci/znakovi u oglasu!");
+					SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nedozvoljene rijeci/znakovi u oglasu!");
 					new
 						tmpString[ 128 ];
 					format(tmpString, sizeof(tmpString), "AdmWarn: Igrac %s ID:[%d] je poslao ilegalan oglas. Sadrzaj: %s", GetName(playerid, false), playerid, inputtext);
@@ -340,7 +311,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
  				format(PlayerAdsInfo[playerid][padText], MAX_AD_TEXT, inputtext);
 		 		ShowPlayerDialog(playerid, DIALOG_ADS_CREATE_TIMES, DIALOG_STYLE_LIST, "LS OGLASNIK - Koliko cete puta prikazivati", "1\n2\n3\n4\n5", "Odaberi", "Odustani");
 			} else {
-				ShowPlayerDialog(playerid, DIALOG_ADS_CREATE_BUY, DIALOG_STYLE_INPUT, "LS OGLASNIK - Tekst oglasa", "Unesite tekst oglasa za kupovinu "COL_RED"(Min. 10, Max. 31 znak)"COL_WHITE":", "Predaj", "Odustani");
+				ShowPlayerDialog(playerid, DIALOG_ADS_CREATE_BUY, DIALOG_STYLE_INPUT, "LS OGLASNIK - Tekst oglasa", "Unesite tekst oglasa za kupovinu "COL_RED"(Min. 10, Max. 128 znak)"COL_WHITE":", "Predaj", "Odustani");
 				return 1;
 			}
 		}
@@ -348,7 +319,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 			if(!response) return ShowPlayerDialog(playerid, DIALOG_ADS_CREATE_STYLE, DIALOG_STYLE_LIST, "LS OGLASNIK - Stil oglasa", "Prodaja\nKupovina\nReklama", "Odaberi", "Odustani");
 			if(10 <= strlen(inputtext) <= (MAX_AD_TEXT - 1)) {
 				if(CheckStringForURL(inputtext) || CheckStringForIP(inputtext)) {
-					SendMessage(playerid, MESSAGE_TYPE_ERROR, "ERROR: Nedozvoljene rijeci/znakovi u oglasu!");
+					SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nedozvoljene rijeci/znakovi u oglasu!");
 					new
 						tmpString[ 128 ];
 					format(tmpString, sizeof(tmpString), "AdmWarn: Igrac %s ID:[%d] je poslao ilegalan oglas. Sadrzaj: %s", GetName(playerid, false), playerid, inputtext);
@@ -359,7 +330,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
  				format(PlayerAdsInfo[playerid][padText], MAX_AD_TEXT, inputtext);
 		 		ShowPlayerDialog(playerid, DIALOG_ADS_CREATE_TIMES, DIALOG_STYLE_LIST, "LS OGLASNIK - Koliko cete puta prikazivati", "1\n2\n3\n4\n5", "Odaberi", "Odustani");
 			} else {
-				ShowPlayerDialog(playerid, DIALOG_ADS_CREATE_BUY, DIALOG_STYLE_INPUT, "LS OGLASNIK - Tekst oglasa", "Unesite tekst oglasa za prodaju "COL_RED"(Min. 10, Max. 31 znak)"COL_WHITE":", "Predaj", "Odustani");
+				ShowPlayerDialog(playerid, DIALOG_ADS_CREATE_BUY, DIALOG_STYLE_INPUT, "LS OGLASNIK - Tekst oglasa", "Unesite tekst oglasa za prodaju "COL_RED"(Min. 10, Max. 128 znak)"COL_WHITE":", "Predaj", "Odustani");
 				return 1;
 			}
 		}
@@ -367,22 +338,22 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 			if(!response) return ShowPlayerDialog(playerid, DIALOG_ADS_CREATE_STYLE, DIALOG_STYLE_LIST, "LS OGLASNIK - Stil oglasa", "Prodaja\nKupovina\nReklama", "Odaberi", "Odustani");
 			if(10 <= strlen(inputtext) <= (MAX_AD_TEXT - 1)) {
 				if(CheckStringForURL(inputtext) || CheckStringForIP(inputtext)) {
-					SendMessage(playerid, MESSAGE_TYPE_ERROR, "ERROR: Nedozvoljene rijeci/znakovi u oglasu!");
+					SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nedozvoljene rijeci/znakovi u oglasu!");
 					new
 						tmpString[ 128 ];
 					format(tmpString, sizeof(tmpString), "AdmWarn: Igrac %s ID:[%d] je poslao ilegalan oglas. Sadrzaj: %s", GetName(playerid, false), playerid, inputtext);
 					ABroadCast(COLOR_RED, tmpString, 1);
 					
-					if(PlayerAdsInfo[playerid][padStyle] == AD_STYLE_CMRC) ShowPlayerDialog(playerid, DIALOG_ADS_CREATE_CMRC, DIALOG_STYLE_INPUT, "LS OGLASNIK - Tekst reklame", "Unesite tekst reklame "COL_RED"(Min. 10, Max. 31 znak)"COL_WHITE":", "Predaj", "Odustani");
-					else ShowPlayerDialog(playerid, DIALOG_ADS_CREATE_CMRC, DIALOG_STYLE_INPUT, "LS OGLASNIK - Tekst reklame", "Unesite dodatni tekst reklame (naziv predmeta ili adresu kuce/biznisa)"COL_RED"[Min. 10, Max. 31 znakova]"COL_WHITE":", "Predaj", "Odustani");
+					if(PlayerAdsInfo[playerid][padStyle] == AD_STYLE_CMRC) ShowPlayerDialog(playerid, DIALOG_ADS_CREATE_CMRC, DIALOG_STYLE_INPUT, "LS OGLASNIK - Tekst reklame", "Unesite tekst reklame "COL_RED"(Min. 10, Max. 128 znak)"COL_WHITE":", "Predaj", "Odustani");
+					else ShowPlayerDialog(playerid, DIALOG_ADS_CREATE_CMRC, DIALOG_STYLE_INPUT, "LS OGLASNIK - Tekst reklame", "Unesite dodatni tekst reklame (naziv predmeta ili adresu kuce/biznisa)"COL_RED"[Min. 10, Max. 128 znakova]"COL_WHITE":", "Predaj", "Odustani");
 					return 1;
 				}
 				
 				format(PlayerAdsInfo[playerid][padText], MAX_AD_TEXT, inputtext);
-				va_ShowPlayerDialog(playerid, DIALOG_ADS_FINISH, DIALOG_STYLE_MSGBOX, "LS OGLASNIK - Zavrsetak", ""COL_WHITE"Zelite li predati oglas?\n"COL_GREEN"%s\n"COL_WHITE"On ce se prikazivati "COL_ORANGE"%d "COL_WHITE"puta.", "Predaj", "Odustani", GetPlayerAdsInput(playerid), PlayerAdsInfo[playerid][padTimes]);
+		 		ShowPlayerDialog(playerid, DIALOG_ADS_CREATE_TIMES, DIALOG_STYLE_LIST, "LS OGLASNIK - Koliko cete puta prikazivati", "1\n2\n3\n4\n5", "Odaberi", "Odustani");
 			} else {
-				if(PlayerAdsInfo[playerid][padStyle] == AD_STYLE_CMRC) ShowPlayerDialog(playerid, DIALOG_ADS_CREATE_CMRC, DIALOG_STYLE_INPUT, "LS OGLASNIK - Tekst reklame", "Unesite tekst reklame "COL_RED"(Min. 10, Max. 31 znak)"COL_WHITE":", "Predaj", "Odustani");
-				else ShowPlayerDialog(playerid, DIALOG_ADS_CREATE_CMRC, DIALOG_STYLE_INPUT, "LS OGLASNIK - Tekst reklame", "Unesite dodatni tekst reklame (naziv predmeta ili adresu kuce/biznisa)"COL_RED"[Min. 10, Max. 31 znakova]"COL_WHITE":", "Predaj", "Odustani");
+				if(PlayerAdsInfo[playerid][padStyle] == AD_STYLE_CMRC) ShowPlayerDialog(playerid, DIALOG_ADS_CREATE_CMRC, DIALOG_STYLE_INPUT, "LS OGLASNIK - Tekst reklame", "Unesite tekst reklame "COL_RED"(Min. 10, Max. 128 znak)"COL_WHITE":", "Predaj", "Odustani");
+				else ShowPlayerDialog(playerid, DIALOG_ADS_CREATE_CMRC, DIALOG_STYLE_INPUT, "LS OGLASNIK - Tekst reklame", "Unesite dodatni tekst reklame (naziv predmeta ili adresu kuce/biznisa)"COL_RED"[Min. 10, Max. 128 znakova]"COL_WHITE":", "Predaj", "Odustani");
 				return 1;
 			}
 			return 1;
@@ -394,6 +365,8 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 				va_ShowPlayerDialog(playerid, DIALOG_ADS_FINISH, DIALOG_STYLE_MSGBOX, "LS OGLASNIK - Zavrsetak", ""COL_WHITE"Zelite li predati oglas?\n"COL_GREEN"%s\n"COL_WHITE"On ce se prikazivati "COL_ORANGE"%d "COL_WHITE"puta.", "Predaj", "Odustani", GetPlayerAdsInput(playerid), PlayerAdsInfo[playerid][padTimes]);
 			else if(PlayerAdsInfo[playerid][padStyle] == AD_STYLE_SELL)
 				ShowPlayerDialog(playerid, DIALOG_ADS_CREATE_PRICE, DIALOG_STYLE_INPUT, "LS OGLASNIK - Tekst oglasa", "Unesite cijenu za prodaju oglasa:", "Predaj", "Odustani");
+			else if (PlayerAdsInfo[playerid][padStyle] == AD_STYLE_CMRC)
+				va_ShowPlayerDialog(playerid, DIALOG_ADS_FINISH, DIALOG_STYLE_MSGBOX, "LS OGLASNIK - Zavrsetak", ""COL_WHITE"Zelite li predati oglas?\n"COL_GREEN"%s\n"COL_WHITE"On ce se prikazivati "COL_ORANGE"%d "COL_WHITE"puta.", "Predaj", "Odustani", GetPlayerAdsInput(playerid), PlayerAdsInfo[playerid][padTimes]);
 			return 1;
 		}
 		case DIALOG_ADS_CREATE_PRICE:{
@@ -409,25 +382,17 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 			va_ShowPlayerDialog(playerid, DIALOG_ADS_FINISH, DIALOG_STYLE_MSGBOX, "LS OGLASNIK - Zavrsetak", ""COL_WHITE"Zelite li predati oglas?\n"COL_GREEN"%s\n"COL_WHITE"On ce se prikazivati "COL_ORANGE"%d "COL_WHITE"puta.", "Predaj", "Odustani", GetPlayerAdsInput(playerid), PlayerAdsInfo[playerid][padTimes]);
 			return 1;
 		}
-		case DIALOG_ADS_FINISH: {
-			if(!response) return ShowPlayerDialog(playerid, DIALOG_ADS_CREATE_STYLE, DIALOG_STYLE_LIST, "LS OGLASNIK - Stil oglasa", "Prodaja\nKupovina\nReklama", "Odaberi", "Odustani");
-			CheckAdsDuration();
-			if(PlayerAdsInfo[playerid][padStyle] == AD_STYLE_CMRC) {
-				new 
-					price = strlen(PlayerAdsInfo[playerid][padText]) * 4;
-				if(PlayerInfo[playerid][pDonateRank] > 0)
-					price = 0;
-				else
-					if(price > AC_GetPlayerMoney(playerid)) return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "[GRESKA] Nemate dovoljno novaca za platiti oglas. Cijena oglasa je %d$.", price);
-			}
-			else {
-				new 
-					price = strlen(PlayerAdsInfo[playerid][padText]) * 3;
-				if(PlayerInfo[playerid][pDonateRank] > 0)
-					price = 0;
-				else
-					if(price > AC_GetPlayerMoney(playerid)) return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "[GRESKA] Nemate dovoljno novaca za platiti oglas. Cijena oglasa je %d$.", price);
-			}
+		case DIALOG_ADS_FINISH: 
+		{
+			if(!response) 
+				return ShowPlayerDialog(playerid, DIALOG_ADS_CREATE_STYLE, DIALOG_STYLE_LIST, "LS OGLASNIK - Stil oglasa", "Prodaja\nKupovina\nReklama", "Odaberi", "Odustani");
+
+			new price = strlen(PlayerAdsInfo[playerid][padText]) * PRICE_PER_CHAR * PlayerAdsInfo[playerid][padTimes];
+			if(PlayerInfo[playerid][pDonateRank] > 0)
+				price = 0;
+			else
+				if(price > AC_GetPlayerMoney(playerid)) return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "[GRESKA] Nemate dovoljno novaca za platiti oglas. Cijena oglasa je %d$.", price);
+			
 			CreateAdForPlayer(playerid);
 			return 1;
 		}
@@ -466,7 +431,7 @@ CMD:carad(playerid, params[])
 		new text[64], partOne[22], partTwo[22], partThree[22];
 		if(sscanf(params, "s[8]s[64]", pick, text)) return SendClientMessage(playerid, COLOR_RED, "USAGE: /carad set [text (64 znaka max)]");
 		new money = strlen(text) * 6;
-		if(AC_GetPlayerMoney(playerid) < money) return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "ERROR: Nemate dovoljno novaca za postavljanje oglasa (%d$)", money);
+		if(AC_GetPlayerMoney(playerid) < money) return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate dovoljno novaca za postavljanje oglasa (%d$)", money);
 		if(VehicleInfo[ vehicleid ][ vVehicleAdId ] != Text3D:INVALID_3DTEXT_ID)  return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "[GRESKA] Vec postoji oglas na vasem vozilu! Prvo korisite /carad delete");
 		strmid(partOne, text, 0, 21);
 		strmid(partTwo, text, 22, 43);

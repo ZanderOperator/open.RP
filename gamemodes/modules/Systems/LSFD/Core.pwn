@@ -335,7 +335,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 			switch( listitem ) {
 				case 0: { 	// Onduty
                     // Onduty
-                    if(PlayerInfo[playerid][pLawDuty] == 1) return  SendClientMessage(playerid,COLOR_RED, "ERROR: Vec ste na duznosti!");
+                    if(PlayerInfo[playerid][pLawDuty] == 1) return  SendClientMessage(playerid,COLOR_RED, "Vec ste na duznosti!");
 
 					PlayerPlaySound(playerid, 1057, 0.0, 0.0, 0.0);
 					PlayerInfo[playerid][pLawDuty] = 1;
@@ -352,7 +352,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 					ProxDetector(10.0, playerid, tmpString, COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE);
 				}
 				case 1: { 	// Offduty
-     				if(PlayerInfo[playerid][pLawDuty] == 0) return  SendClientMessage(playerid,COLOR_RED, "ERROR: Niste na duznosti!");
+     				if(PlayerInfo[playerid][pLawDuty] == 0) return  SendClientMessage(playerid,COLOR_RED, "Niste na duznosti!");
 
 					PlayerPlaySound(playerid, 1057, 0.0, 0.0, 0.0);
 					SetPlayerArmour(playerid, 0.0);
@@ -415,7 +415,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 			switch( listitem ) {
 				case 0:
 				{ 	// Onduty
-                    if(PlayerInfo[playerid][pLawDuty] == 1) return  SendClientMessage(playerid,COLOR_RED, "ERROR: Vec ste na duznosti.!");
+                    if(PlayerInfo[playerid][pLawDuty] == 1) return  SendClientMessage(playerid,COLOR_RED, "Vec ste na duznosti.!");
 
 					PlayerPlaySound(playerid, 1057, 0.0, 0.0, 0.0);
 					PlayerInfo[playerid][pLawDuty] = 1;
@@ -432,7 +432,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 					ProxDetector(10.0, playerid, tmpString, COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE);
 				}
 				case 1: { 	// Offduty
-				    if(PlayerInfo[playerid][pLawDuty] == 0) return  SendClientMessage(playerid,COLOR_RED, "ERROR: Niste na duznosti!");
+				    if(PlayerInfo[playerid][pLawDuty] == 0) return  SendClientMessage(playerid,COLOR_RED, "Niste na duznosti!");
                     
 					PlayerPlaySound(playerid, 1057, 0.0, 0.0, 0.0);
 					SetPlayerArmour(playerid, 0.0);
@@ -604,7 +604,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 			switch( listitem ) {
 				case 0:
 				{ 	// Onduty
-                    if(PlayerInfo[playerid][pLawDuty] == 1) return  SendClientMessage(playerid,COLOR_RED, "ERROR: Vec ste na duznosti.!");
+                    if(PlayerInfo[playerid][pLawDuty] == 1) return  SendClientMessage(playerid,COLOR_RED, "Vec ste na duznosti.!");
 					if (! CheckPlayerWeapons(playerid, 24) ) return 1;
             		AC_ResetPlayerWeapons(playerid); // da se ne skuplja po 1000+ metaka digla
 				
@@ -630,7 +630,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 					ProxDetector(10.0, playerid, tmpString, COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE);
 				}
 				case 1: { 	// Offduty
-				    if(PlayerInfo[playerid][pLawDuty] == 0) return  SendClientMessage(playerid,COLOR_RED, "ERROR: Niste na duznosti!");
+				    if(PlayerInfo[playerid][pLawDuty] == 0) return  SendClientMessage(playerid,COLOR_RED, "Niste na duznosti!");
 					AC_ResetPlayerWeapons(playerid);
 					Bit1_Set( gr_PDOnDuty, playerid, false );
 					PlayerPlaySound(playerid, 1057, 0.0, 0.0, 0.0);
@@ -673,8 +673,8 @@ CMD:enablesiren(playerid, params[])
 {
 	new vehicleid = GetPlayerVehicleID(playerid),
  		siren = GetVehicleParamsSirenState(vehicleid);
-	if(!IsAGov(playerid)) return SendClientMessage(playerid,COLOR_RED, "ERROR: Nisi pripadnik vlade!");
-	if(!IsPlayerInAnyVehicle(playerid)) return SendClientMessage(playerid,COLOR_RED, "ERROR: Nisi u vozilu.");
+	if(!IsAGov(playerid)) return SendClientMessage(playerid,COLOR_RED, "Nisi pripadnik vlade!");
+	if(!IsPlayerInAnyVehicle(playerid)) return SendClientMessage(playerid,COLOR_RED, "Nisi u vozilu.");
 	{
 	if(siren == 1)
 		{
@@ -792,7 +792,7 @@ CMD:recover(playerid, params[])
 	if( giveplayerid == INVALID_PLAYER_ID ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, " Nevaljan playerid!");
 	if( !PlayerInfo[ giveplayerid ][ pKilled ] && !PlayerWounded[giveplayerid] ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, " Igrac nije ubijen/ozlijedjen!");
 	if(!ProxDetectorS(3.0, playerid, giveplayerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Igrac nije dovoljno blizu vas!");
-	if(Bit1_Get(gr_DeathCountStarted, giveplayerid)) return SendClientMessage( playerid, COLOR_RED, "ERROR: Igrac je mrtav i ne moze se reviveati!");
+	if(Bit1_Get(gr_DeathCountStarted, giveplayerid)) return SendClientMessage( playerid, COLOR_RED, "Igrac je mrtav i ne moze se reviveati!");
 	DestroyDeathInfo(giveplayerid);
 	DestroyDeathTDs(giveplayerid);
 	KillTimer(DeathTimer[giveplayerid]);
@@ -830,13 +830,13 @@ CMD:recover(playerid, params[])
 
 CMD:stretcher(playerid, params[])
 {
-	if(!IsFDMember(playerid)) return SendClientMessage(playerid,COLOR_RED, "ERROR: Nisi clan LSFDa.");
+	if(!IsFDMember(playerid)) return SendClientMessage(playerid,COLOR_RED, "Nisi clan LSFDa.");
 	new 
 		param[10];
 	if(sscanf(params, "s[16] ", param)) return SendClientMessage(playerid, COLOR_RED, "USAGE: /stretcher [get/drop/pick/destroy]");
 	if(!strcmp(param, "get", true, 3)) {
-		if(IsPlayerInAnyVehicle(playerid)) return SendClientMessage(playerid,COLOR_RED, "ERROR: Ne mozes koristiti ovo u vozilu.");
-		if(Bit1_Get(gr_StretcherSpawned, playerid)) return SendClientMessage(playerid,COLOR_RED, "ERROR: Vec si spawnao jedna nosila.");
+		if(IsPlayerInAnyVehicle(playerid)) return SendClientMessage(playerid,COLOR_RED, "Ne mozes koristiti ovo u vozilu.");
+		if(Bit1_Get(gr_StretcherSpawned, playerid)) return SendClientMessage(playerid,COLOR_RED, "Vec si spawnao jedna nosila.");
 
 		new 
 			Float:X, Float:Y, Float:Z, Float:angle;
@@ -857,7 +857,7 @@ CMD:stretcher(playerid, params[])
 		Bit1_Set(gr_StretcherSpawned, playerid, 1);
 	}
 	else if(!strcmp(param, "drop", true, 4)) {
-		if(!Bit1_Get(gr_UsingStretcher, playerid)) return SendClientMessage(playerid,COLOR_RED, "ERROR: Ne koristis nosila.");
+		if(!Bit1_Get(gr_UsingStretcher, playerid)) return SendClientMessage(playerid,COLOR_RED, "Ne koristis nosila.");
     	
 		new Float:X, Float:Y, Float:Z, Float:R;
         GetPlayerPos(playerid, X, Y, Z);
@@ -876,7 +876,7 @@ CMD:stretcher(playerid, params[])
 		Bit1_Set(gr_StretcherSpawned, playerid, true);
 	}
 	else if(!strcmp(param, "destroy", true, 7)) {
-		if(!Bit1_Get(gr_StretcherSpawned, playerid)) return SendClientMessage(playerid,COLOR_RED, "ERROR: Nisi spawnao nosila.");
+		if(!Bit1_Get(gr_StretcherSpawned, playerid)) return SendClientMessage(playerid,COLOR_RED, "Nisi spawnao nosila.");
         
 		if(IsValidDynamicObject(Stretcher[playerid])) {
 			DestroyDynamicObject(Stretcher[playerid]);
@@ -907,7 +907,7 @@ CMD:stretcher(playerid, params[])
 			SetPlayerSpecialAction(playerid, SPECIAL_ACTION_CARRY);
 	  		Bit1_Set(gr_UsingStretcher, playerid, 1);
         }
-        else SendClientMessage(playerid,COLOR_RED, "ERROR: Nisi blizu nosila ili ih koristis.");
+        else SendClientMessage(playerid,COLOR_RED, "Nisi blizu nosila ili ih koristis.");
 	}
 	return 1;
 }

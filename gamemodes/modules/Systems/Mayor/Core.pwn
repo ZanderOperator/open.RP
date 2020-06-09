@@ -141,7 +141,7 @@ hook OnPlayerKeyStateChange(playerid, newkeys, oldkeys) {
 
 CMD:govgarage(playerid, params[]) {
 	if(FactionInfo[PlayerInfo[playerid][pMember]][fType] != FACTION_TYPE_LEGAL)
-		return SendClientMessage(playerid,COLOR_RED, "ERROR: Nisi pripadnik vlade!");
+		return SendClientMessage(playerid,COLOR_RED, "Nisi pripadnik vlade!");
 		
 	if(IsPlayerInRangeOfPoint(playerid, 15.0, 1480.7675,-1827.8673,13.5469) && GetPlayerVirtualWorld(playerid) == 0)
     {

@@ -688,7 +688,7 @@ public DestroyingCar(playerid, vehicleid)
 		DestroyMechanicTextDraw(playerid);
 		KillTimer(DestroyingCarTimer[playerid]);
 		
-		SendClientMessage(playerid,COLOR_RED, "ERROR: Uspjesno ste rastavili vozilo. Sakrijte ga da biste dobili svoj novac! (/jacker leave)");
+		SendClientMessage(playerid,COLOR_RED, "Uspjesno ste rastavili vozilo. Sakrijte ga da biste dobili svoj novac! (/jacker leave)");
 	}
 	return 1;
 }

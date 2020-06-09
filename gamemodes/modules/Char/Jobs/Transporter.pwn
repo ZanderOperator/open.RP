@@ -255,19 +255,19 @@ CMD:transporter(playerid, params[])
 		if(PlayerInfo[playerid][pJob] != TRANSPORTER_ID)
 			return SendClientMessage(playerid, COLOR_RED, "[GRESKA]: Nemas posao dostavljaca!");
 		if(TWorking[playerid] >= 1)
-			return SendClientMessage( playerid, COLOR_RED, "ERROR: Vec ste zapoceli voznju. Da prekinete kucajte /transporter stop!");
+			return SendClientMessage( playerid, COLOR_RED, "Vec ste zapoceli voznju. Da prekinete kucajte /transporter stop!");
         if(!IsPlayerInAnyVehicle(playerid))
-			return SendClientMessage( playerid, COLOR_RED, "ERROR: Morate biti vozac kamiona!");
+			return SendClientMessage( playerid, COLOR_RED, "Morate biti vozac kamiona!");
         if(!IsVehicleTransproter(GetPlayerVehicleID(playerid)) || GetPlayerState(playerid) != 2)
-			return SendClientMessage( playerid, COLOR_RED, "ERROR: Morate biti vozac kamiona!");
+			return SendClientMessage( playerid, COLOR_RED, "Morate biti vozac kamiona!");
 		if(PlayerInfo[playerid][pFreeWorks] < 1)
-			return SendClientMessage(playerid, COLOR_RED, "ERROR: Odradio si dovoljno za ovaj payday! Pricekaj iduci.");
+			return SendClientMessage(playerid, COLOR_RED, "Odradio si dovoljno za ovaj payday! Pricekaj iduci.");
 
 		ShowPlayerDialog(playerid, DIALOG_ADRIAPOSAO, DIALOG_STYLE_MSGBOX, "{FA5656}Transporter", "Jeste li sigurni da želite zapoceti dostavu?", "Da", "Ne");
 	}
 	else if( !strcmp(param, "stop", true) ) {
-		if( (PlayerInfo[playerid][pJob] != TRANSPORTER_ID)) return SendClientMessage( playerid, COLOR_RED, "ERROR: Niste zaposleni kao kamiondzija.");
-		if(TWorking[playerid] == 0) return SendClientMessage( playerid, COLOR_RED, "ERROR: Nemate pokrenutu voznju!");
+		if( (PlayerInfo[playerid][pJob] != TRANSPORTER_ID)) return SendClientMessage( playerid, COLOR_RED, "Niste zaposleni kao kamiondzija.");
+		if(TWorking[playerid] == 0) return SendClientMessage( playerid, COLOR_RED, "Nemate pokrenutu voznju!");
 		if(TWorking[playerid] > 0)
   		{
     		TWorking[playerid] = 0;

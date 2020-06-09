@@ -74,7 +74,7 @@ hook OnPlayerEnterCheckpoint(playerid)
 		if( Bit1_Get( r_Sweeping, playerid ) && !IsValidDynamicCP(PlayerGPS[playerid]) ) 
 		{
 			new vID = GetPlayerVehicleID(playerid);
-			if(!IsVehicleASweep(vID)) return SendClientMessage( playerid, COLOR_RED, "ERROR: Ne cistite ulice sa Sweeperom!");
+			if(!IsVehicleASweep(vID)) return SendClientMessage( playerid, COLOR_RED, "Ne cistite ulice sa Sweeperom!");
 			DisablePlayerCheckpoint(playerid);
 			PlayerCleanerCP[playerid]++;
 			if( PlayerCleanerCP[playerid] == 13 ) {
@@ -119,7 +119,7 @@ CMD:sweep(playerid, params[])
 		pick[ 8 ];
 	if( sscanf( params, "s[8] ", pick ) ) return SendClientMessage(playerid, -1, "[KORISTENJE]: /sweep [start/stop]");
 	if (strcmp(pick, "start", true) == 0) {
-		if( PlayerInfo[ playerid ][ pFreeWorks ] < 1 ) return SendClientMessage( playerid, COLOR_RED, "ERROR: Ne mozes vise raditi!");
+		if( PlayerInfo[ playerid ][ pFreeWorks ] < 1 ) return SendClientMessage( playerid, COLOR_RED, "Ne mozes vise raditi!");
 		if( IsVehicleASweep(vehicleID) ) 
 		{
 			if( Bit1_Get( r_Sweeping, playerid ) ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Vec ste poceli sa poslom!");

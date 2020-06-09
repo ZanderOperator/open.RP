@@ -351,14 +351,14 @@ CMD:changepass(playerid, params[]) {
 	new Cache: mysql_search, usersql, mysql_buffer[128], usernick[MAX_PLAYER_NAME],
 		reversepass[32], finalpassword[128], updquery[256], passnew[32];
 	
-	if( !IsPlayerAdmin(playerid) && PlayerInfo[playerid][pAdmin] < 1338 ) return SendClientMessage(playerid, COLOR_RED, "ERROR: Niste ovlasteni za koristenje ove komande!");
+	if( !IsPlayerAdmin(playerid) && PlayerInfo[playerid][pAdmin] < 1338 ) return SendClientMessage(playerid, COLOR_RED, "Niste ovlasteni za koristenje ove komande!");
 	if(sscanf(params, "s[24]s[32]", usernick, passnew)) return SendClientMessage(playerid, COLOR_RED, "USAGE: /changepass [Ime_Prezime] [password].");
 	
 	// mysql search
 	format(mysql_buffer, sizeof(mysql_buffer), "SELECT sqlid FROM `accounts` WHERE `name` = '%q' LIMIT 0,1", usernick);
 	mysql_search = mysql_query(g_SQL, mysql_buffer);
 	if(!cache_num_rows())
-		return va_SendClientMessage(playerid,COLOR_RED, "ERROR: Account %s ne postoji!", usernick), cache_delete(mysql_search);
+		return va_SendClientMessage(playerid,COLOR_RED, "Account %s ne postoji!", usernick), cache_delete(mysql_search);
 	cache_get_value_name_int(0, "sqlid"	, usersql);
 	cache_delete(mysql_search);
 	

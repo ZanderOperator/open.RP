@@ -252,7 +252,7 @@ hook OnPlayerKeyInputEnds(playerid, type, succeeded)
 */
 CMD:buybait(playerid, params[])
 {
-	if(PlayerInfo[playerid][pFishWorks] == 1) return SendClientMessage(playerid,COLOR_RED, "ERROR: Vec ste kupili 10 mamaca u sat vremena!");
+	if(PlayerInfo[playerid][pFishWorks] == 1) return SendClientMessage(playerid,COLOR_RED, "Vec ste kupili 10 mamaca u sat vremena!");
 	if(!IsAt247(playerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste unutar 24/7!");
 	if(FishingInfo[playerid][fFishingBait] == 50) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Vec imate dovoljan broj mamaca!");
 	if(AC_GetPlayerMoney(playerid) < 150) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate dovoljno novca za mamce!");

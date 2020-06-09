@@ -19,8 +19,7 @@ static stock
 	PlayerText:Speed[MAX_PLAYERS]		= { PlayerText:INVALID_TEXT_DRAW, ... },
 	PlayerText:GasText[MAX_PLAYERS]		= { PlayerText:INVALID_TEXT_DRAW, ... },
 	PlayerText:LockedText[MAX_PLAYERS]	= { PlayerText:INVALID_TEXT_DRAW, ... },
-	PlayerText:SpeedVar[MAX_PLAYERS]	= { PlayerText:INVALID_TEXT_DRAW, ... },
-	Bit1: gr_PlayerUsingSpeedo	<MAX_PLAYERS> = {Bit1:false, ... };
+	PlayerText:SpeedVar[MAX_PLAYERS]	= { PlayerText:INVALID_TEXT_DRAW, ... };
 
 stock CreateSpeedoTextDraws(playerid)
 {
@@ -125,15 +124,19 @@ Float:GetVSpeed(playerid, pvid=0)
 	return floatmul(floatmul(rtn, 100), 1.959);
 }
 
-hook OnPlayerUpdate(playerid)
+hook OnPlayerUpdate(playerid) // PHONE_HIDE = 0
 {
-	if( IsPlayerInAnyVehicle(playerid) ) {
-		if(GetPlayerState(playerid) == PLAYER_STATE_DRIVER)
+	if( IsPlayerInAnyVehicle(playerid) )
+	{
+		if(GetPlayerState(playerid) == PLAYER_STATE_DRIVER && PhoneStatus[playerid] == 0)
 		{
 			new
 				tmpstring[12],
 				pvid = GetPlayerVehicleID(playerid);
 
+			if(!Bit1_Get(gr_PlayerUsingSpeedo, playerid))
+				CreateSpeedoTextDraws(playerid);
+				
             new vehicleName[MAX_VEHICLE_NAME];
             GetVehicleNameById(GetPlayerVehicleID(playerid), vehicleName, MAX_VEHICLE_NAME);
   			PlayerTextDrawSetString(playerid, VehicleName[playerid], vehicleName);

@@ -986,6 +986,30 @@ stock AC_SpawnPlayer(playerid)
 #endif
 #define SpawnPlayer AC_SpawnPlayer
 
+stock AC_SetPlayerHealth(playerid, Float:health)
+{
+	PlayerInfo[playerid][pHealth] = health;
+	return SetPlayerHealth(playerid, health);
+}
+#if defined _ALS_SetPlayerHealth
+    #undef SetPlayerHealth
+#else
+    #define _ALS_SetPlayerHealth
+#endif
+#define SetPlayerHealth AC_SetPlayerHealth
+
+stock AC_SetPlayerArmour(playerid, Float:armour)
+{
+	PlayerInfo[playerid][pArmour] = armour;
+	return SetPlayerArmour(playerid, armour);
+}
+#if defined _ALS_SetPlayerArmour
+    #undef SetPlayerArmour
+#else
+    #define _ALS_SetPlayerArmour
+#endif
+#define SetPlayerArmour AC_SetPlayerArmour
+
 stock AC_RemovePlayerFromVehicle(playerid)
 {
 	GetPlayerPos( playerid, AntiCheatData[ playerid ] [ acLastFootPos ][ 0 ], AntiCheatData[ playerid ] [ acLastFootPos ][ 1 ], AntiCheatData[ playerid ] [ acLastFootPos ][ 2 ] );
@@ -1897,7 +1921,7 @@ public OnPlayerCheat(playerid, extraid, type)
 */
 CMD:anticheat(playerid, params[])
 {
-	if( PlayerInfo[ playerid ][ pAdmin ] < 1338 ) return SendClientMessage(playerid, COLOR_RED, "ERROR: Niste ovlasteni za koristenje ove komande!");
+	if( PlayerInfo[ playerid ][ pAdmin ] < 1338 ) return SendClientMessage(playerid, COLOR_RED, "Niste ovlasteni za koristenje ove komande!");
 	ShowAdminACInterface(playerid);
 	return 1;
 }

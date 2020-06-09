@@ -129,7 +129,7 @@ stock static CreateMowingTDs(playerid)
 
 stock InitMowerJob(playerid)
 {
-	if( GetVehicleModel( GetPlayerVehicleID(playerid) ) != 572 ) return SendClientMessage( playerid, COLOR_RED, "ERROR: Morate biti unutar Mowera!");
+	if( GetVehicleModel( GetPlayerVehicleID(playerid) ) != 572 ) return SendClientMessage( playerid, COLOR_RED, "Morate biti unutar Mowera!");
 	
 	Bit1_Set( gr_PlayerWorkingMower, playerid, true );
 	PlayerMowingMeters[ playerid ] = 0;
@@ -175,7 +175,7 @@ public IsPlayerInMowingArea(playerid)
 		SetTimerEx("OnPlayerIsntInMowingArea", 29000, false, "i", playerid);
 	} else {
 		if( !Bit1_Get( gr_FirstEnter, playerid ) ) {
-			if( GetVehicleModel( GetPlayerVehicleID(playerid) ) != 572 ) return SendClientMessage( playerid, COLOR_RED, "ERROR: Morate biti unutar Mowera!");
+			if( GetVehicleModel( GetPlayerVehicleID(playerid) ) != 572 ) return SendClientMessage( playerid, COLOR_RED, "Morate biti unutar Mowera!");
 			DestroyDynamicMapIcon(PlayerMowingIcon[ playerid ]);
 			CreateMowingTDs(playerid);
 			
@@ -293,8 +293,8 @@ CMD:mow(playerid, params[])
 		new
 			vehicleid = GetPlayerVehicleID(playerid);
 			
-		if( VehicleInfo[ vehicleid ][ vJob ] != GRASSMOWER_ID || GetVehicleModel(vehicleid) != 572 ) return SendClientMessage( playerid, COLOR_RED, "ERROR: Morate biti u kosilici!");
-		if( PlayerInfo[ playerid ][ pFreeWorks ] < 1 ) return SendClientMessage( playerid, COLOR_RED, "ERROR: Ne mozes vise raditi, pricekajte Pay Day!");
+		if( VehicleInfo[ vehicleid ][ vJob ] != GRASSMOWER_ID || GetVehicleModel(vehicleid) != 572 ) return SendClientMessage( playerid, COLOR_RED, "Morate biti u kosilici!");
+		if( PlayerInfo[ playerid ][ pFreeWorks ] < 1 ) return SendClientMessage( playerid, COLOR_RED, "Ne mozes vise raditi, pricekajte Pay Day!");
 		InitMowerJob(playerid);
 	} else {
 		DestroyMowingTDs(playerid);

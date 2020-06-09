@@ -48,7 +48,7 @@ stock LoadAdminConnectionTime(playerid)
 
 stock static GetAdminConnectionTime(playerid, giveplayerid)
 {
-	if( giveplayerid == INVALID_PLAYER_ID ) return SendClientMessage(playerid, COLOR_RED, "ERROR: Nevaljan unos playerid!");
+	if( giveplayerid == INVALID_PLAYER_ID ) return SendClientMessage(playerid, COLOR_RED, "Nevaljan unos playerid!");
 	va_SendClientMessage(playerid, COLOR_RED, "[ ! ] Admin je u ovome mjesecu proveo %d sati na serveru.",  PlayerInfo[ playerid ][ pAdminHours ]);
 	return 1;
 }

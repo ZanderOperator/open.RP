@@ -1678,7 +1678,7 @@ CMD:tuning(playerid, params[]) {
 	if(!IsPlayerInRangeOfPoint(playerid, 30.0, 2321.9822, -1355.6526, 23.3999) ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste u mehanicarskoj garazi!");
 	new vehicleid = GetPlayerVehicleID(playerid);
 	if(PlayerInfo[playerid][pSpawnedCar] != vehicleid) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Morate se nalaziti u svome CO-u!");
-	if( GetPlayerState( playerid ) != PLAYER_STATE_DRIVER ) return SendErrorMessage( playerid, "ERROR: Morate biti na mjestu vozaca!");
+	if( GetPlayerState( playerid ) != PLAYER_STATE_DRIVER ) return SendErrorMessage( playerid, "Morate biti na mjestu vozaca!");
 	if( Bit1_Get(gr_PlayerInTuningMode, playerid) ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Vec namjestate tuning na svom vozilu!");
 	
 	if(!strcmp(pick, "buy", true)) 

@@ -1506,7 +1506,7 @@ public OnPlayerIceUpdate(playerid)
 	}
     if(!IsPlayerInRangeOfPoint(playerid, 35.0, 1947.5088, -1198.3165, 18.7285) && !IsPlayerInRangeOfPoint(playerid, 35.0, 1996.2863, -1200.5106, 18.7355) && !IsPlayerInRangeOfPoint(playerid, 60.0, 1971.9452, -1200.5581, 18.7339))
     {
-        SendClientMessage(playerid, COLOR_RED, "ERROR: Napustili ste klizaliste pa se ne mozete klizati!");
+        SendClientMessage(playerid, COLOR_RED, "Napustili ste klizaliste pa se ne mozete klizati!");
         PlayerIceSkates[playerid] = false;
         ApplyAnimationEx(playerid, "CARRY","crry_prtial",4.0,0,0,0,0,0,1,0);
         KillTimer(IceUpdateTimer[playerid]);
@@ -1526,8 +1526,8 @@ public OnPlayerIceUpdate(playerid)
 /*
 CMD:rent_skije(playerid, params[])
 {
-	if( !IsPlayerInRangeOfPoint(playerid, 8.0, -1463.7601, -953.3459, 204.3 ) ) return SendClientMessage(playerid, COLOR_RED, "ERROR: Niste blizu resort shopa!");
-	if( AC_GetPlayerMoney(playerid) < 80 ) return SendClientMessage(playerid, COLOR_RED, "ERROR: Nemate 80$!");
+	if( !IsPlayerInRangeOfPoint(playerid, 8.0, -1463.7601, -953.3459, 204.3 ) ) return SendClientMessage(playerid, COLOR_RED, "Niste blizu resort shopa!");
+	if( AC_GetPlayerMoney(playerid) < 80 ) return SendClientMessage(playerid, COLOR_RED, "Nemate 80$!");
 	
 	PlayerToBudgetMoney(playerid, 80);
 	new
@@ -1612,8 +1612,8 @@ CMD:rent_skije(playerid, params[])
 
 /* CMD:make_snowball(playerid, params[])
 {
-	if( GetPlayerInterior(playerid) ) return SendClientMessage(playerid, COLOR_RED, "ERROR: Morate biti vani da biste uzeli snijeg!");
-	if( Bit1_Get(gr_PlayerHaveSnowBall, playerid ) ) return SendClientMessage(playerid, COLOR_RED, "ERROR: Vec imate grudu u rukama! Pucate s tipkom ~k~~PED_FIREWEAPON~!");
+	if( GetPlayerInterior(playerid) ) return SendClientMessage(playerid, COLOR_RED, "Morate biti vani da biste uzeli snijeg!");
+	if( Bit1_Get(gr_PlayerHaveSnowBall, playerid ) ) return SendClientMessage(playerid, COLOR_RED, "Vec imate grudu u rukama! Pucate s tipkom ~k~~PED_FIREWEAPON~!");
 	
 	ApplyAnimationEx(playerid, "BOMBER", "BOM_Plant_Loop", 3.1, 1,0,0,1000,0,1,0);
 	Bit1_Set(gr_PlayerHaveSnowBall, playerid, true );
@@ -1622,7 +1622,7 @@ CMD:rent_skije(playerid, params[])
 } */
 CMD:snow_on(playerid, params[])
 {
-	if( PlayerInfo[playerid][pAdmin] < 4 ) return SendClientMessage(playerid,COLOR_RED, "ERROR: Niste ovlasteni!");
+	if( PlayerInfo[playerid][pAdmin] < 4 ) return SendClientMessage(playerid,COLOR_RED, "Niste ovlasteni!");
 	ServerSnowing = true;
 	foreach(new i : Player) 
 	{
@@ -1634,7 +1634,7 @@ CMD:snow_on(playerid, params[])
 }
 CMD:snow_off(playerid, params[])
 {
-	if( PlayerInfo[playerid][pAdmin] < 4 ) return SendClientMessage(playerid,COLOR_RED, "ERROR: Niste ovlasteni!");
+	if( PlayerInfo[playerid][pAdmin] < 4 ) return SendClientMessage(playerid,COLOR_RED, "Niste ovlasteni!");
 	foreach(new i : Player) 
 	{
 		DestroyPlayerSnow(i);
@@ -1644,7 +1644,7 @@ CMD:snow_off(playerid, params[])
 }
 /* CMD:wish(playerid, params[])
 {
-	if( PlayerInfo[playerid][pWish] != 0 ) return SendClientMessage(playerid,COLOR_RED, "ERROR: Vec ste zazeljeli zelju!");
+	if( PlayerInfo[playerid][pWish] != 0 ) return SendClientMessage(playerid,COLOR_RED, "Vec ste zazeljeli zelju!");
 	if(isnull(params))
 		return SendClientMessage(playerid, COLOR_RED, "USAGE: /wish [zelja]");
 		
@@ -1680,7 +1680,7 @@ CMD:snow_off(playerid, params[])
     }
     else
     {
-        return SendClientMessage(playerid, COLOR_RED, "ERROR: Niste blizu klizaliSta!");
+        return SendClientMessage(playerid, COLOR_RED, "Niste blizu klizaliSta!");
     }
     return 1;
 }

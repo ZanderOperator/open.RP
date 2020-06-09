@@ -391,7 +391,7 @@ CMD:locktoll(playerid, params[])
 CMD:atoll(playerid, params[])
 {
 	new tollid;
- 	if (PlayerInfo[playerid][pAdmin] < 1) return SendClientMessage(playerid, COLOR_RED, "ERROR: Niste ovlasteni za koristenje ove komande!");
+ 	if (PlayerInfo[playerid][pAdmin] < 1) return SendClientMessage(playerid, COLOR_RED, "Niste ovlasteni za koristenje ove komande!");
 	if(sscanf(params, "d", tollid))
 	{
 	    SendClientMessage(playerid, COLOR_RED, "USAGE: /locktoll [ID naplatne kucice]");

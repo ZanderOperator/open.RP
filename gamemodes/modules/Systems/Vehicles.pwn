@@ -878,7 +878,7 @@ hook OnPlayerStateChange(playerid, newstate, oldstate)
 			return 1;
 		}
 		if( VehicleInfo[ vehicleid ][ vDestroyed ] )
-			SendClientMessage(GetVehicleDriver( vehicleid ), COLOR_RED, "ERROR: Vase je vozilo unisteno, zovite mehanicara ili pronadjite obliznji Pay 'n' Spray!");
+			SendClientMessage(GetVehicleDriver( vehicleid ), COLOR_RED, "Vase je vozilo unisteno, zovite mehanicara ili pronadjite obliznji Pay 'n' Spray!");
 
 		if( vehicleid == INVALID_VEHICLE_ID || vehicleid == 0 ) return 1;
 		if( PlayerInfo[ playerid ][ pMember ] != VehicleInfo[ vehicleid ][ vFaction ] && VehicleInfo[ vehicleid ][ vFaction ] > 0  ) {

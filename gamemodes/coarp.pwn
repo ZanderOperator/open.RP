@@ -66,11 +66,15 @@
 #include <fixes>
 // Streamer
 #include <streamer>
+#include <modelsizes>
+#define OD_METHOD METHOD_SPHERE
+#include <optidraw> // Dynamic Object Draw Distance Regulator via modelsizes
 
 // AntiCheat
 #include <Anti_cheat_pack>
 
 // New SA-MP callbacks by Emmet
+#include <AC_Damage> // Damage AntiCheat
 #include <callbacks>
 
 // YSI
@@ -198,10 +202,10 @@ native WP_Hash(buffer[], len, const str[]);
 #define WEB_URL									"forum.cityofangels-roleplay.com"
 
 // !Prilikom promjene SCRIPT_VERSION, OBAVEZNO ubaciti novi Update "Changelog.txt"u /scriptfiles folder!
-#define SCRIPT_VERSION							"CoA RP v18.3.5."
+#define SCRIPT_VERSION							"CoA RP v18.3.6."
 
 //custom name
-#define Dev_Name   								"Woo"
+#define Dev_Name   								"Woo-Logan"
 
 //Macros
 #define Function:%0(%1) \
@@ -347,7 +351,7 @@ enum E_PLAYER_DATA
 	Float:pCrashHealth,
 	Float:pCrashPos[3], //0 - X, 1 - Y, 2 - Z
 	pSkin,
-	pMobileMoney,
+	pMobileCost,
 	pMobileNumber,
 	pMobileModel,
 	pCryptoNumber,
@@ -522,7 +526,7 @@ enum E_HIDDEN_WEAPON
 }
 new HiddenWeapon[MAX_PLAYERS][E_HIDDEN_WEAPON];
 
-new pPhoneStatus[ MAX_PLAYERS ];
+new PhoneStatus[ MAX_PLAYERS ];
 
 enum E_HOUSES_INFO {
 	hSQLID,
@@ -1606,7 +1610,6 @@ new
 	ghour 					= 0,
 	GMX 					= 0,
 	WeatherTimer 			= 0,
-	//AdsTimer 				= 0,
 	VehicleTimer			= 0,
 	GlobalVehicleStamp		= 0,
 	Prognozasys 			= 10,
@@ -1917,7 +1920,7 @@ new
 #include "modules/Admin/Logs.pwn"
 #include "modules/Admin/Connections.pwn"
 #include "modules/Admin/BlockIp.pwn"
-#include "modules/Admin/report.pwn"
+#include "modules/Admin/Report.pwn"
 // Misc
 #include "modules/Char/Jobs/Core.pwn"
 #include "modules/Char/ActorSystem.pwn"
@@ -2004,10 +2007,10 @@ new
 #include "modules/Char/Spraynpay.pwn"
 #include "modules/Char/Food.pwn"
 #include "modules/Char/Skills.pwn"
-#include "modules/Char/AdsNew.pwn"
+#include "modules/Char/Ads.pwn"
 #include "modules/Char/CreateObjects.pwn"
 #include "modules/Char/Travel.pwn"
-#include "modules/Char/Dogs.pwn"
+//#include "modules/Char/Dogs.pwn"
 #include "modules/Char/WeaponAttach.pwn"
 
 // Casino
@@ -2173,7 +2176,7 @@ RegisterPlayerDeath(playerid, killerid) // funkcija
 
 	// Mobile Dissapear
 	PhoneAction(playerid, PHONE_HIDE);
-	pPhoneStatus[playerid] = PHONE_HIDE;
+	PhoneStatus[playerid] = PHONE_HIDE;
 	CancelSelectTextDraw(playerid);
 
 	if(Bit1_Get( gr_MaskUse, playerid ) && IsValidDynamic3DTextLabel(NameText[playerid]))
@@ -2218,9 +2221,6 @@ Function: ResetIterators()
 ResetPlayerVariables(playerid)
 {	
 	//aprilfools[playerid] = false;
-	//ADs
-	adtime[ playerid ] = 0 ;
-	KillTimer( adtimer[ playerid ] ) ;
 	
     entering[playerid] = 0;
     onexit[playerid] = 0;
@@ -2234,6 +2234,7 @@ ResetPlayerVariables(playerid)
 	PlayerInfo[playerid][pFishingSkill] = 0;
     GotRod[playerid] = 0;
 	//
+	PhoneStatus[playerid] = 0;
 	MDC[playerid] = 0;
 	//PD Callsign
 	format(PlayerInfo[playerid][pCallsign], 60, "");
@@ -2523,6 +2524,7 @@ ResetPlayerVariables(playerid)
 	PlayerInfo[playerid][pCryptoNumber]		= 0;
 	PlayerInfo[playerid][pMobileNumber]		= 0;
 	PlayerInfo[playerid][pMobileModel]		= 0;
+	PlayerInfo[playerid][pMobileCost] 		= 0;
 	PlayerInfo[playerid][pRate]				= 0;
 	PlayerInfo[playerid][pCreditType]		= 0;
 	PlayerInfo[playerid][pKilled]			= 0;
@@ -3200,7 +3202,7 @@ task GlobalServerTask[1000]() // izvodi se svakih sekundu
 	GlobalServerTimer();
 	CheckWarehouseRobberyProgress();
 	VehicleGlobalTimer();
-	//SendAutomaticAdMessage();
+	SendAutomaticAdMessage();
 	DynamicWeather();
 	PokerPulse();
 	return 1;
@@ -3455,9 +3457,6 @@ public OnPlayerDisconnect(playerid, reason)
 	plyrName[playerid][0] = '\0';
 	DestroyDynamic3DTextLabel(pNameTag[playerid]);
 	PlayerPaused[playerid] = 0;
-	
-	adtime[ playerid ] = 0 ;
-	KillTimer( adtimer[ playerid ] ) ;
 	
 	pNameTag[playerid] = Text3D:65535;
 	WalkStyle[playerid] = 0;
@@ -4083,301 +4082,48 @@ public OnPlayerText(playerid, text[])
 	}
 
 	text[0] = toupper(text[0]);
-	if( CallingId[ playerid ] != 999 )
-	{
-		new
-			idx,
-			tmp[ 128 ];
-		tmp = strtok(text, idx);
-		if( CallingId[ playerid ] == 911 ) {
-			if(!strlen(tmp)) {
-				SendClientMessage(playerid, COLOR_ALLDEPT, "HITNA LINIJA: Oprostite ne razumijem, da li trebate policiju ili hitnu pomoc?");
-				return 0;
-			}
-			else if ((strcmp("police", tmp, true, strlen(tmp)) == 0) && (strlen(tmp) == strlen("police"))) {
-				SendClientMessage(playerid, COLOR_ALLDEPT, "HITNA LINIJA: Spajam vas sa LSPD-om, ostanite na liniji.");
-				CallingId[ playerid ] =  912;
-				SendClientMessage(playerid, COLOR_DBLUE, "HITNA LINIJA: Molimo Vas recite nam svoju lokaciju.");
-				return 0;
-			}
-			else if ((strcmp("ambulance", tmp, true, strlen(tmp)) == 0) && (strlen(tmp) == strlen("ambulance"))) {
-				SendClientMessage(playerid, COLOR_ALLDEPT, "HITNA LINIJA: Spajam vas sa LSFD-om, ostanite na liniji.");
-				CallingId[ playerid ] =  916;
-				SendClientMessage(playerid, 0xFF8282AA, "HITNA LINIJA: Molimo Vas recite nam svoju lokaciju.");
-				return 0;
-			} else {
-				SendClientMessage(playerid, COLOR_ALLDEPT, "HITNA LINIJA: Oprostite ne razumijem, da li trebate policiju ili hitnu pomoc?");
-				return 0;
-			}
-		}
-		if(CallingId[ playerid ] == 916) {
-			if(!strlen(tmp)) {
-				SendClientMessage(playerid, COLOR_ALLDEPT, "HITNA LINIJA: Oprostite ali ne razumijem?");
-				return 0;
-			}
-			strmid(PlayerInjured[playerid][pVictimLocation], text, 0, strlen(text), 255);
-			SendClientMessage(playerid, 0xFF8282AA, "HITNA LINIJA:Molimo vas ukratko opisite incident.");
-			CallingId[ playerid ] =  915;
-			return 0;
-		}
-		if(CallingId[ playerid ] == 915) {
-			if(!strlen(tmp)) {
-				SendClientMessage(playerid, 0xFF8282AA, "HITNA LINIJA: Oprostite ali ne razumijem?");
-				return 0;
-			}
-   			new wanted[128];
-		    new turner[MAX_PLAYER_NAME];
-		    new zone[100];
-		   	format( zone, 100, "%s, %s", GetPlayerStreet(playerid), GetPlayerZone(playerid));
-		    GetPlayerName(playerid, turner, sizeof(turner));
-			SendClientMessage(playerid, COLOR_WHITE, "HITNA LINIJA: Obavijestili smo sve jedinice.");
-			SendClientMessage(playerid, COLOR_WHITE, "Jedinica dolazi u sto kracem mogucem roku!");
-			SendRadioMessage(2, COLOR_LIGHTRED,"*__________ EMERGENCY CALL (911) __________*");
-			format(wanted, sizeof(wanted), "* Pozivatelj: %s || Locirani broj: %d",turner, ( !IsAtGovornica(playerid) ? PlayerInfo[playerid][pMobileNumber] : 0 ));
-			SendRadioMessage(2, COLOR_WHITE, wanted);
-			format(wanted, sizeof(wanted), "Incident: %s",text);
-			SendRadioMessage(2, COLOR_WHITE, wanted);
-			format(wanted, sizeof(wanted), "Prijavljena lokacija: %s",PlayerInjured[playerid][pVictimLocation]);
-			SendRadioMessage(2, COLOR_WHITE, wanted);
-			format(wanted, sizeof(wanted), "Lokacija broja: %s", zone);
-			SendRadioMessage(2, COLOR_WHITE, wanted);
-			SendRadioMessage(2, COLOR_LIGHTRED,"________________________________________");
-		    SendClientMessage(playerid, COLOR_GRAD2, "Prekinuli su...");
-			CallingId[ playerid ] =  999;
-			SetPlayerSpecialAction(playerid, SPECIAL_ACTION_STOPUSECELLPHONE);
-			if( IsPlayerAttachedObjectSlotUsed(playerid, 9) )
-				RemovePlayerAttachedObject( playerid, 9 );
-			return 0;
-		}
-		if(CallingId[ playerid ] == 913) {
-			if(!strlen(tmp)) {
-				SendClientMessage(playerid, COLOR_ALLDEPT, "HITNA LINIJA: Oprostite ali ne razumijem?");
-				return 0;
-			}
-			new wanted[128],
-				turner[MAX_PLAYER_NAME],
-				zone[100];
-
-			format( zone, 100, "%s, %s", GetPlayerStreet(playerid), GetPlayerZone(playerid));
-			GetPlayerName(playerid, turner, sizeof(turner));
-
-			strmid(PlayerCrime[playerid][pAccusing], text, 0, strlen(text), 255);
-			SendClientMessage(playerid, COLOR_WHITE, "HITNA LINIJA: Obavijestili smo sve jedinice.");
-			SendClientMessage(playerid, COLOR_WHITE, "Zahvaljujemo na prijavi zlocina.");
-         	SendRadioMessage(1, 0x418BFBFF,"* ________ EMERGENCY CALL (911) __________ *");
-			SendRadioMessage(3, 0x418BFBFF,"* ________ EMERGENCY CALL (911) __________ *");
-			format(wanted, sizeof(wanted), "* Prijavio: %s || Locirani broj: %d", turner, ( !IsAtGovornica(playerid) ? PlayerInfo[playerid][pMobileNumber] : 0 ));
-			SendRadioMessage(1, COLOR_WHITE, wanted);
-			SendRadioMessage(3, COLOR_WHITE, wanted);
-			format(wanted, sizeof(wanted), "Stanje: %s",PlayerCrime[playerid][pAccusing]);
-			SendRadioMessage(1, COLOR_WHITE, wanted);
-			SendRadioMessage(3, COLOR_WHITE, wanted);
-			format(wanted, sizeof(wanted), "Prijavljena lokacija: %s", PlayerCrime[playerid][pLocation]);
-			SendRadioMessage(1, COLOR_WHITE, wanted);
-			SendRadioMessage(3, COLOR_WHITE, wanted);
-			format(wanted, sizeof(wanted), "Lokacija broja: %s", zone);
-			SendRadioMessage(1, COLOR_WHITE, wanted);
-			SendRadioMessage(3, COLOR_WHITE, wanted);
-  	        SendRadioMessage(1, 0x418BFBFF, "* __________________________________________ *");
-			SendRadioMessage(3, 0x418BFBFF, "* __________________________________________ *");
-
-			CallingId[ playerid ] =  999;
-			SetPlayerSpecialAction(playerid, SPECIAL_ACTION_STOPUSECELLPHONE);
-			if( IsPlayerAttachedObjectSlotUsed(playerid, 9) )
-				RemovePlayerAttachedObject( playerid, 9 );
-			return 0;
-		}
-		if(CallingId[ playerid ] == 912) {
-			if(!strlen(tmp)) {
-				SendClientMessage(playerid, COLOR_ALLDEPT, "HITNA LINIJA: Oprostite ali ne razumijem?");
-				return 0;
-			}
-			strmid(PlayerCrime[playerid][pLocation], text, 0, strlen(text), 255);
-			SendClientMessage(playerid, 0xFF8282AA, "HITNA LINIJA:Molimo vas ukratko opisite zlocin.");
-			CallingId[ playerid ] =  913;
-			return 0;
-		}
-		if( CallingId[ playerid ] == 555 ) {
-			if(!strlen(tmp)) return SendClientMessage(playerid, COLOR_YELLOW, "Dispatcher: Oprostite ali ne razumijem?"), 0;
-			strmid(PlayerCrime[playerid][pAccusing], text, 0, strlen(text), 255);
-			SendClientMessage(playerid, COLOR_YELLOW, "Dispatcher: Uredu. Recite vasu trenutnu lokaciju?");
-			CallingId[ playerid ] = 556;
-			return 0;
-		}
-		if( CallingId[ playerid ] == 32715 ) {
-			if(!strlen(tmp)) {
-				SendClientMessage(playerid, COLOR_YELLOW, "Maska 64361 kaze (mobitel): Priblizi se tom telefonu kurca te ne cujem.");
-				return 0;
-			}
-            else if(strfind(tmp, "weapons", true) != -1 || strfind(tmp, "weapon", true) != -1 || strfind(tmp, "gun", true) != -1 || strfind(tmp, "guns", true) != -1)
-            {
-                new buffer[512],
-					motd[64];
-				format(buffer, sizeof(buffer), "{3C95C2}Weapon\t{3C95C2}Price per bullet\n");
-				for( new i = 0; i < MAX_LISTED_WEAPONS; i++ )
-				{
-					format(motd, sizeof(motd), "%s\t%s\n", show_WeaponList[i][wep_Name], FormatNumber(show_WeaponList[i][wep_Price]));
-					strcat(buffer, motd, sizeof(buffer));
-				}
-				ShowPlayerDialog(playerid, DIALOG_PACKAGE_ORDER, DIALOG_STYLE_TABLIST_HEADERS, "{3C95C2}* Package - List", buffer, "(select)", "(x)");
-                SendClientMessage(playerid, COLOR_YELLOW, "Maska 64361 kaze (mobitel): Reci mi sta trebas od ponudjenog?");
-                SendClientMessage(playerid, COLOR_RED, "[ ! ] Potrebno je da kroz dialog odaberes sta zelis da sadrzi tvoja narudzba!");
-				CallingId[ playerid ] =  32715;
-				return 0;
-			}
-			else if(strfind(tmp, "droga", true) != -1 || strfind(tmp, "drug", true) != -1 || strfind(tmp, "drugs", true) != -1)
-            {
-                if(PlayerInfo[playerid][pDrugOrder] > 0)
-				{
-					va_SendClientMessage(playerid, COLOR_YELLOW, "Maska 64361 kaze (mobitel): Nazovi me za %d minuta, nemam sad vremena zauzet sam.", PlayerInfo[playerid][pDrugOrder]);
-					PlayerHangup(playerid);
-					CallingId[ playerid ] =  999;
-					SetPlayerSpecialAction(playerid, SPECIAL_ACTION_STOPUSECELLPHONE);
-					return 0;
-				}
-				new 
-					buffer[512],
-					motd[64];
-				
-				format(buffer, sizeof(buffer), "{3C95C2}Drugs\t{3C95C2}Price per gram\n");
-				for( new i = 1; i < sizeof(drugs); i++ )
-				{
-					format(motd, sizeof(motd), "%s\t%s\n", drugs[i][dName], FormatNumber(drugs[i][dPricePG]));
-					strcat(buffer, motd, sizeof(buffer));
-				}
-				Dialog_Open(playerid, DRUG_ORDER_PACKAGE, DIALOG_STYLE_TABLIST_HEADERS, "{3C95C2}* Package - List", buffer, "(select)", "(x)");
-                SendClientMessage(playerid, COLOR_YELLOW, "Maska 64361 kaze (mobitel): Reci mi sta trebas od ponudjenog?");
-                SendClientMessage(playerid, COLOR_RED, "[ ! ] Potrebno je da kroz dialog odaberes sta zelis da sadrzi tvoja narudzba!");
-				CallingId[ playerid ] =  32715;
-				return 0;
-			}
-			else if(strfind(tmp, "pizza", true) != -1 || strfind(tmp, "oruzje", true) != -1 || strfind(tmp, "vatreno oruzje", true) != -1)
-            {
-                SendClientMessage(playerid, COLOR_YELLOW, "Maska 64361 kaze (mobitel): Dobili ste pogresan broj. Ugodna ostatak dana!");
-				PlayerHangup(playerid);
-				CallingId[ playerid ] =  999;
-                SetPlayerSpecialAction(playerid, SPECIAL_ACTION_STOPUSECELLPHONE);
-			}
-		 	else 
-			{
-				SendClientMessage(playerid, COLOR_YELLOW, "Maska 64361 kaze (mobitel): sta mumlas koju picku materinu, znas li normalno izgovorit?");
-                CallingId[ playerid ] =  999;
-                SetPlayerSpecialAction(playerid, SPECIAL_ACTION_STOPUSECELLPHONE);
-                PlayerHangup(playerid);
-				return 0;
-			}
-		}
-		if( CallingId[ playerid ] == 556 ) {
-			if(!strlen(tmp)) return SendClientMessage(playerid, COLOR_YELLOW, "Dispatcher: Oprostite ali ne razumijem?"), 0;
-			new
-				wanted[ 37 ];
-			SendJobMessage(3, 0x418BFBFF, "* ________ EMERGENCY CALL (555) __________ *");
-			format(wanted, sizeof(wanted), "* Prijavio: %s", GetName(playerid, false));
-			SendJobMessage(3, COLOR_WHITE, wanted);
-			format(wanted, sizeof(wanted), "* Tip kvara: %s", PlayerCrime[playerid][pAccusing]);
-			SendJobMessage(3, COLOR_WHITE, wanted);
-			format(wanted, sizeof(wanted), "* Lokacija: %s", text);
-			SendJobMessage(3, COLOR_WHITE, wanted);
-			SendJobMessage(3, 0x418BFBFF, "* __________________________________________ *");
-
-			SendClientMessage(playerid, COLOR_YELLOW, "Dispatcher: Aktivnim mehanicarima je javljen vas poziv. Pricekajte na prijavljenoj lokaciji!");
-
-			CallingId[ playerid ] =  999;
-			SetPlayerSpecialAction(playerid, SPECIAL_ACTION_STOPUSECELLPHONE);
-			if( IsPlayerAttachedObjectSlotUsed(playerid, 9) )
-				RemovePlayerAttachedObject( playerid, 9 );
-			return 0;
-		}
-		if( CallingId[ playerid ] == 444 ) {
-			if(!strlen(tmp)) return SendClientMessage(playerid, COLOR_YELLOW, "Dispatcher: Oprostite ali ne razumijem?"), 0;
-			new dispatcher[ 37 ];
-			SendJobMessage(6, COLOR_YELLOW, "* ________ DISPATCHER CALL (444) __________ *");
-			format(dispatcher, sizeof(dispatcher), "* Pozivaoc: %s.", GetName(playerid, false));
-			SendJobMessage(6, COLOR_WHITE, dispatcher);
-			format(dispatcher, sizeof(dispatcher), "* Lokacija: %s.", text);
-			SendJobMessage(6, COLOR_WHITE, dispatcher);
-			SendJobMessage(6, COLOR_YELLOW, "* __________________________________________ *");
-
-			SendMessage(playerid, MESSAGE_TYPE_INFO, "Aktivnim Taxistama je javljen vas poziv. Pricekajte na prijavljenoj lokaciji.");
-
-			CallingId[ playerid ] =  999;
-			SetPlayerSpecialAction(playerid, SPECIAL_ACTION_STOPUSECELLPHONE);
-			if( IsPlayerAttachedObjectSlotUsed(playerid, 9) )
-				RemovePlayerAttachedObject( playerid, 9 );
-			return 0;
-		}
-		new
-			gplayerid = CallingId[ playerid ],
-			mobileText[ 128 ];
-
-		if( Bit1_Get( gr_PlayerUsingGov, playerid ) )
-			format( mobileText, 128, "%s %s(govornica): %s",
-				GetName( playerid, true ),
-				PrintAccent( playerid ),
-				text
-			);
-		else
-			format( mobileText, 128, "%s %s(mobitel): %s",
-				GetName( playerid, true ),
-				PrintAccent( playerid ),
-				text
-			);
-
-		PhoneMessage(playerid, mobileText); // Proxy Detector da se vidi sta igrac prica okolo njega
-
-		if( Bit16_Get( gr_PlayerTracing, playerid ) != INVALID_PLAYER_ID )
-			SendClientMessage( Bit16_Get( gr_PlayerTracing, playerid ), COLOR_YELLOW, mobileText);
-		else if( Bit16_Get( gr_PlayerTracing, gplayerid ) != INVALID_PLAYER_ID )
-			SendClientMessage( Bit16_Get( gr_PlayerTracing, gplayerid ), COLOR_YELLOW, mobileText);
-
-		SendClientMessage( playerid, COLOR_YELLOW, mobileText );
-		SendClientMessage( gplayerid, COLOR_YELLOW, mobileText );
-
+	
+	new
+		tmpString[180];
+	if( IsPlayerInAnyVehicle(playerid) ) {
+		format(tmpString, sizeof(tmpString), "%s kaze%s(vozilo): %s", GetName(playerid), PrintAccent(playerid), text);
+		RealProxDetector(6.5, playerid, tmpString,COLOR_FADE1,COLOR_FADE2,COLOR_FADE3,COLOR_FADE4,COLOR_FADE5);
 	}
 	else
 	{
-		new
-			tmpString[180];
-		if( IsPlayerInAnyVehicle(playerid) ) {
-			format(tmpString, sizeof(tmpString), "%s kaze%s(vozilo): %s", GetName(playerid), PrintAccent(playerid), text);
-			RealProxDetector(6.5, playerid, tmpString,COLOR_FADE1,COLOR_FADE2,COLOR_FADE3,COLOR_FADE4,COLOR_FADE5);
-		}
-		else
-		{
-			format(tmpString, sizeof(tmpString), "%s kaze%s: %s", GetName(playerid), PrintAccent(playerid), text);
-			RealProxDetector(6.5, playerid, tmpString,COLOR_FADE1,COLOR_FADE2,COLOR_FADE3,COLOR_FADE4,COLOR_FADE5);
-		}
-		if(Bit1_Get( gr_animchat, playerid) && !PlayerAnim[playerid])
-		{
-		    TogglePlayerControllable(playerid, 1);
-			if(strlen(text) > 0 && strlen(text) < 10) ApplyAnimationEx(playerid,"PED","IDLE_CHAT",4.0,0,0,0,0,500,1,0);
-			else if(strlen(text) >= 10 && strlen(text) < 20) ApplyAnimationEx(playerid,"PED","IDLE_CHAT",4.0,0,0,0,0,1000,1,0);
-			else if(strlen(text) >= 20 && strlen(text) < 30) ApplyAnimationEx(playerid,"PED","IDLE_CHAT",4.0,0,0,0,0,1500,1,0);
-			else if(strlen(text) >= 30 && strlen(text) < 40) ApplyAnimationEx(playerid,"PED","IDLE_CHAT",4.0,0,0,0,0,2000,1,0);
-			else if(strlen(text) >= 40 && strlen(text) < 50) ApplyAnimationEx(playerid,"PED","IDLE_CHAT",4.0,0,0,0,0,2500,1,0);
-			else if(strlen(text) >= 50 && strlen(text) < 61) ApplyAnimationEx(playerid,"PED","IDLE_CHAT",4.0,0,0,0,0,3000,1,0);
-			else if(strlen(text) >= 61 && strlen(text) < 71) ApplyAnimationEx(playerid,"PED","IDLE_CHAT",4.0,0,0,0,0,3500,1,0);
-			else if(strlen(text) >= 71 && strlen(text) < 81) ApplyAnimationEx(playerid,"PED","IDLE_CHAT",4.0,1,0,0,0,4000,1,0);
-			else if(strlen(text) >= 81 && strlen(text) < 91) ApplyAnimationEx(playerid,"PED","IDLE_CHAT",4.0,1,0,0,0,4500,1,0);
-			else if(strlen(text) >= 91 && strlen(text) < 101) ApplyAnimationEx(playerid,"PED","IDLE_CHAT",4.0,1,0,0,0,5000,1,0);
-			else if(strlen(text) >= 101 && strlen(text) < 111) ApplyAnimationEx(playerid,"PED","IDLE_CHAT",4.0,1,0,0,0,5500,1,0);
-			else if(strlen(text) >= 111 && strlen(text) < 121) ApplyAnimationEx(playerid,"PED","IDLE_CHAT",4.0,1,0,0,0,6000,1,0);
-			else if(strlen(text) >= 121 && strlen(text) < 131) ApplyAnimationEx(playerid,"PED","IDLE_CHAT",4.0,1,0,0,0,6500,1,0);
-			else if(strlen(text) >= 131 && strlen(text) < 141) ApplyAnimationEx(playerid,"PED","IDLE_CHAT",4.0,1,0,0,0,7000,1,0);
-			else if(strlen(text) >= 141 && strlen(text) < 151) ApplyAnimationEx(playerid,"PED","IDLE_CHAT",4.0,1,0,0,0,7500,1,0);
-		}
+		format(tmpString, sizeof(tmpString), "%s kaze%s: %s", GetName(playerid), PrintAccent(playerid), text);
+		RealProxDetector(6.5, playerid, tmpString,COLOR_FADE1,COLOR_FADE2,COLOR_FADE3,COLOR_FADE4,COLOR_FADE5);
+	}
+	if(Bit1_Get( gr_animchat, playerid) && !PlayerAnim[playerid])
+	{
+		TogglePlayerControllable(playerid, 1);
+		if(strlen(text) > 0 && strlen(text) < 10) ApplyAnimationEx(playerid,"PED","IDLE_CHAT",4.0,0,0,0,0,500,1,0);
+		else if(strlen(text) >= 10 && strlen(text) < 20) ApplyAnimationEx(playerid,"PED","IDLE_CHAT",4.0,0,0,0,0,1000,1,0);
+		else if(strlen(text) >= 20 && strlen(text) < 30) ApplyAnimationEx(playerid,"PED","IDLE_CHAT",4.0,0,0,0,0,1500,1,0);
+		else if(strlen(text) >= 30 && strlen(text) < 40) ApplyAnimationEx(playerid,"PED","IDLE_CHAT",4.0,0,0,0,0,2000,1,0);
+		else if(strlen(text) >= 40 && strlen(text) < 50) ApplyAnimationEx(playerid,"PED","IDLE_CHAT",4.0,0,0,0,0,2500,1,0);
+		else if(strlen(text) >= 50 && strlen(text) < 61) ApplyAnimationEx(playerid,"PED","IDLE_CHAT",4.0,0,0,0,0,3000,1,0);
+		else if(strlen(text) >= 61 && strlen(text) < 71) ApplyAnimationEx(playerid,"PED","IDLE_CHAT",4.0,0,0,0,0,3500,1,0);
+		else if(strlen(text) >= 71 && strlen(text) < 81) ApplyAnimationEx(playerid,"PED","IDLE_CHAT",4.0,1,0,0,0,4000,1,0);
+		else if(strlen(text) >= 81 && strlen(text) < 91) ApplyAnimationEx(playerid,"PED","IDLE_CHAT",4.0,1,0,0,0,4500,1,0);
+		else if(strlen(text) >= 91 && strlen(text) < 101) ApplyAnimationEx(playerid,"PED","IDLE_CHAT",4.0,1,0,0,0,5000,1,0);
+		else if(strlen(text) >= 101 && strlen(text) < 111) ApplyAnimationEx(playerid,"PED","IDLE_CHAT",4.0,1,0,0,0,5500,1,0);
+		else if(strlen(text) >= 111 && strlen(text) < 121) ApplyAnimationEx(playerid,"PED","IDLE_CHAT",4.0,1,0,0,0,6000,1,0);
+		else if(strlen(text) >= 121 && strlen(text) < 131) ApplyAnimationEx(playerid,"PED","IDLE_CHAT",4.0,1,0,0,0,6500,1,0);
+		else if(strlen(text) >= 131 && strlen(text) < 141) ApplyAnimationEx(playerid,"PED","IDLE_CHAT",4.0,1,0,0,0,7000,1,0);
+		else if(strlen(text) >= 141 && strlen(text) < 151) ApplyAnimationEx(playerid,"PED","IDLE_CHAT",4.0,1,0,0,0,7500,1,0);
+	}
 
-		foreach(new i : Player) {
-			if( Bit1_Get( gr_PlayerPlacedMole, i ) )
+	foreach(new i : Player) {
+		if( Bit1_Get( gr_PlayerPlacedMole, i ) )
+		{
+			if( IsPlayerInRangeOfPoint(playerid, 10.0, MolePosition[ i ][ 0 ], MolePosition[ i ][ 1 ], MolePosition[ i ][ 2 ] ) )
 			{
-				if( IsPlayerInRangeOfPoint(playerid, 10.0, MolePosition[ i ][ 0 ], MolePosition[ i ][ 1 ], MolePosition[ i ][ 2 ] ) )
-				{
-					format(tmpString, sizeof(tmpString), "[UREDAJ] %s: %s", GetName(playerid), text);
-					if( Bit2_Get( gr_PlayerListenMole, i ) == 1 )
-						SendClientMessage(i, COLOR_YELLOW, tmpString);
-					else if( Bit2_Get( gr_PlayerListenMole, i ) == 2 )
-						RealProxDetector(8.0, i, tmpString, COLOR_YELLOW, COLOR_YELLOW, COLOR_YELLOW, COLOR_YELLOW, COLOR_YELLOW);
-				}
+				format(tmpString, sizeof(tmpString), "[UREDAJ] %s: %s", GetName(playerid), text);
+				if( Bit2_Get( gr_PlayerListenMole, i ) == 1 )
+					SendClientMessage(i, COLOR_YELLOW, tmpString);
+				else if( Bit2_Get( gr_PlayerListenMole, i ) == 2 )
+					RealProxDetector(8.0, i, tmpString, COLOR_YELLOW, COLOR_YELLOW, COLOR_YELLOW, COLOR_YELLOW, COLOR_YELLOW);
 			}
 		}
 	}

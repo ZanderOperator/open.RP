@@ -477,7 +477,7 @@ CMD:drug(playerid, params[]) // FindEmptyCarDrugSlot(vehicleid) << put/take
 	else if(!strcmp(item, "use", true))
 	{
 		if(PlayerInfo[playerid][pDrugSeconds] != 0)
-			return SendClientMessage(playerid, COLOR_RED, "[GRESKA]: Ne možete još koristiti drogu!");
+			return SendClientMessage(playerid, COLOR_RED, "[GRESKA]: Ne mozete jos koristiti drogu!");
 
 		if(sscanf(params, "s[8]if", item, slot, damnt))
 		{
@@ -510,10 +510,10 @@ CMD:drug(playerid, params[]) // FindEmptyCarDrugSlot(vehicleid) << put/take
 			limit = 0.3;
 
 		if(damnt > limit)
-			return SendClientMessage(playerid, COLOR_RED, "[GRESKA]: Ne možete toliko droge koristiti! Predozirat æete se!");
+			return SendClientMessage(playerid, COLOR_RED, "[GRESKA]: Ne mozete toliko droge koristiti! Predozirat cete se!");
 
 		if(damnt < 0.1)
-			return va_SendClientMessage(playerid, COLOR_RED, "[GRESKA]: Ne možete koristiti manje od 0.1 %s!", (drugs[PlayerDrugs[playerid][dCode][slot]][dEffect] < 4) ? ("grama") : ("tablete"));
+			return va_SendClientMessage(playerid, COLOR_RED, "[GRESKA]: Ne mozete koristiti manje od 0.1 %s!", (drugs[PlayerDrugs[playerid][dCode][slot]][dEffect] < 4) ? ("grama") : ("tablete"));
 
 		time = CalculatePayDayTime(dtyp, drugQ); //drugs[dtyp][dPayDayT];
 
@@ -557,7 +557,7 @@ CMD:drug(playerid, params[]) // FindEmptyCarDrugSlot(vehicleid) << put/take
 		GivePlayerHealth(playerid, float(time));
 
 		// debug
-		va_SendClientMessage(playerid, COLOR_YELLOW, "Iskoristili ste %.2f grama/tableta droge %s te ste oduzeli %d minuta sa payday vremena, %d hp-a i možete opet koristit za %d minuta.", damnt, drugs[dtyp][dName], time, time, drugs[dtyp][dUseTime]);
+		va_SendClientMessage(playerid, COLOR_YELLOW, "Iskoristili ste %.2f grama/tableta droge %s te ste oduzeli %d minuta sa payday vremena, %d hp-a i mozete opet koristit za %d minuta.", damnt, drugs[dtyp][dName], time, time, drugs[dtyp][dUseTime]);
 		va_SendClientMessage(playerid, COLOR_YELLOW, "Droga je imala %d kvalitetu!", ReturnDrugQuality(drugQ));
 		//
 
@@ -590,10 +590,10 @@ CMD:drug(playerid, params[]) // FindEmptyCarDrugSlot(vehicleid) << put/take
 		if(sscanf(params, "s[8]ddf", item, slot, slot2, damnt))
 		{
 			SendClientMessage(playerid, COLOR_WHITE, "KORISTI: /drug combine [slot] [sa slotom] [kolicina]");
-			SendClientMessage(playerid, COLOR_YELLOW, "[TIP]: Kombiniranjem droge upropaštavate kvalitetu iste za veæu kolièinu.");
+			SendClientMessage(playerid, COLOR_YELLOW, "[TIP]: Kombiniranjem droge upropastavate kvalitetu iste za vecu kolicsinu.");
 			SendClientMessage(playerid, COLOR_YELLOW, "[TIP]: Prvi slot vam je slot iz kojeg cete prebaciti drogu.");
 			SendClientMessage(playerid, COLOR_YELLOW, "[TIP]: Nakon prebacivanja koristi /drug taste kako bi vidio kvalitetu droge!");
-			SendClientMessage(playerid, COLOR_RED, "[TIP]: Kombiniranjem postoji rizik da skroz uništite drogu!");
+			SendClientMessage(playerid, COLOR_RED, "[TIP]: Kombiniranjem postoji rizik da skroz unistite drogu!");
 			return 1;
 		}
 		if((slot > 5 || slot < 1) || (slot2 > 5 || slot2 < 1))
@@ -606,16 +606,16 @@ CMD:drug(playerid, params[]) // FindEmptyCarDrugSlot(vehicleid) << put/take
 			return SendClientMessage(playerid, COLOR_RED, "[GRESKA]: Taj slot vam je prazan!");
 
 		if(PlayerDrugs[playerid][dCode][slot2] == 0)
-			return SendClientMessage(playerid, COLOR_RED, "[GRESKA]: Slot u koji želite prebacit drogu je prazan!");
+			return SendClientMessage(playerid, COLOR_RED, "[GRESKA]: Slot u koji zelite prebacit drogu je prazan!");
 
 		if(PlayerDrugs[playerid][dCode][slot] != PlayerDrugs[playerid][dCode][slot2])
 			return SendClientMessage(playerid, COLOR_RED, "[GRESKA]: Ne mozete spojiti %s sa %s!", drugs[PlayerDrugs[playerid][dCode][slot]][dName], drugs[PlayerDrugs[playerid][dCode][slot2]][dName]);
 
 		if(damnt < 0 || damnt > PlayerDrugs[playerid][dAmount][slot])
-			return SendClientMessage(playerid, COLOR_RED, "[GRESKA]: Nemaš tolko droge u tom slotu!");
+			return SendClientMessage(playerid, COLOR_RED, "[GRESKA]: Nemas tolko droge u tom slotu!");
 
 		if((PlayerDrugs[playerid][dAmount][slot2] + damnt) > MAX_DRUG_AMOUNT)
-			return va_SendClientMessage(playerid, COLOR_RED, "[GRESKA]: Ne mozes imati toliko droge u jednom slotu! Možeš imat maksimalno %d u jednom slotu!", MAX_DRUG_AMOUNT);
+			return va_SendClientMessage(playerid, COLOR_RED, "[GRESKA]: Ne mozes imati toliko droge u jednom slotu! Mozes imat maksimalno %d u jednom slotu!", MAX_DRUG_AMOUNT);
 
 		if(PlayerDrugs[playerid][dEffect][slot] != PlayerDrugs[playerid][dEffect][slot2])
 		{
@@ -648,7 +648,7 @@ CMD:drug(playerid, params[]) // FindEmptyCarDrugSlot(vehicleid) << put/take
 			return 1;
 		}
 
-		va_SendClientMessage(playerid, COLOR_YELLOW, "[INFO]: Pomjesao si %d %s droge %s i sad imaš %.2f %s u slotu %d!",
+		va_SendClientMessage(playerid, COLOR_YELLOW, "[INFO]: Pomjesao si %d %s droge %s i sad imas %.2f %s u slotu %d!",
 			damnt,
 			(drugs[PlayerDrugs[playerid][dCode][slot]][dEffect] < 4) ? ("grama") : ("tablete"),
 			drugs[PlayerDrugs[playerid][dCode][slot]][dName],

@@ -506,7 +506,7 @@ LoadKartMap()
 CMD:karthelp(playerid, params[])
 {
     if(!PlayerInfo[playerid][pAdmin])
-	    return SendClientMessage(playerid,COLOR_RED, "ERROR: Nisi admin!");
+	    return SendClientMessage(playerid,COLOR_RED, "Nisi admin!");
 
 	SendClientMessage(playerid, -1, "/karto, /kartc, /startkart(kad svi udju u vozila), /approvekart (id/ime)");
 	SendClientMessage(playerid, -1, "/removefromkart (id/ime), /gotokart, /karters ( lista svih trkaca) ");
@@ -556,13 +556,13 @@ public OnCountDownKart()
 CMD:startkart(playerid, params[])
 {
     if(!PlayerInfo[playerid][pAdmin])
-	    return SendClientMessage(playerid,COLOR_RED, "ERROR: Nisi admin!");
+	    return SendClientMessage(playerid,COLOR_RED, "Nisi admin!");
 	    
 	if(!Iter_Count(GoKartPlayers))
-	    return SendClientMessage(playerid,COLOR_RED, "ERROR: Nema dovoljno igraca kako bi se zapocela utrka!");
+	    return SendClientMessage(playerid,COLOR_RED, "Nema dovoljno igraca kako bi se zapocela utrka!");
 	    
 	if(KartStarted)
-	    return SendClientMessage(playerid,COLOR_RED, "ERROR: Kart je vec pokrenut! Koristite /karters kako bi vidjeli listu igraca.");
+	    return SendClientMessage(playerid,COLOR_RED, "Kart je vec pokrenut! Koristite /karters kako bi vidjeli listu igraca.");
 
 	KartStarted = true;
 	kart_count = 11;
@@ -573,7 +573,7 @@ CMD:startkart(playerid, params[])
 CMD:karto(playerid, params[])
 {
 	if(!PlayerInfo[playerid][pAdmin])
-	    return SendClientMessage(playerid,COLOR_RED, "ERROR: Nisi admin!");
+	    return SendClientMessage(playerid,COLOR_RED, "Nisi admin!");
 
 	SetObjectPos(kartgate1, 2469.35254, -2100.46069, 11.29773);
 	SetObjectPos(kartgate2, 2469.34692, -2095.66162, 11.29773);
@@ -583,7 +583,7 @@ CMD:karto(playerid, params[])
 CMD:kartc(playerid, params[])
 {
 	if(!PlayerInfo[playerid][pAdmin])
-	    return SendClientMessage(playerid,COLOR_RED, "ERROR: Nisi admin!");
+	    return SendClientMessage(playerid,COLOR_RED, "Nisi admin!");
 	    
  	SetObjectPos(kartgate1, 2469.35254, -2100.46069, 13.21661);
 	SetObjectPos(kartgate2, 2469.34692, -2095.66162, 13.21661);
@@ -593,10 +593,10 @@ CMD:kartc(playerid, params[])
 CMD:approvekart(playerid, params[])
 {
 	if(!PlayerInfo[playerid][pAdmin])
-		return SendClientMessage(playerid,COLOR_RED, "ERROR: Nisi admin!");
+		return SendClientMessage(playerid,COLOR_RED, "Nisi admin!");
 		
 	if(KartStarted)
-	    return SendClientMessage(playerid,COLOR_RED, "ERROR: Ne moZete dodavati igrace zato Sto je joS utrka u toku!"), SendClientMessage(playerid, 0xfa5555AA, "Koristi /karters te kickaj preostalog igraca kako bi utrka zavrsila!");
+	    return SendClientMessage(playerid,COLOR_RED, "Ne moZete dodavati igrace zato Sto je joS utrka u toku!"), SendClientMessage(playerid, 0xfa5555AA, "Koristi /karters te kickaj preostalog igraca kako bi utrka zavrsila!");
 		
 	new
 	    user;
@@ -605,13 +605,13 @@ CMD:approvekart(playerid, params[])
 	    return SendClientMessage(playerid, -1, "KORISTI: /approvekart [Ime/IdIgraca]");
 	    
 	if(go_kart_approved[user])
-	    return SendClientMessage(playerid,COLOR_RED, "ERROR: Igrac je vec pozvan na go kart!");
+	    return SendClientMessage(playerid,COLOR_RED, "Igrac je vec pozvan na go kart!");
 	    
 	if(user == INVALID_PLAYER_ID)
-	    return SendClientMessage(playerid,COLOR_RED, "ERROR: Nepoznati igrac!");
+	    return SendClientMessage(playerid,COLOR_RED, "Nepoznati igrac!");
 	    
 	if(Iter_Count(GoKartPlayers) == 6)
-	    return SendClientMessage(playerid,COLOR_RED, "ERROR: Samo 6 igraca moze sudjelovati u eventu u jednoj trci!");
+	    return SendClientMessage(playerid,COLOR_RED, "Samo 6 igraca moze sudjelovati u eventu u jednoj trci!");
 	    
     go_kart_approved[user] = true;
     
@@ -627,10 +627,10 @@ CMD:approvekart(playerid, params[])
 CMD:removefromkart(playerid, params[])
 {
     if(!PlayerInfo[playerid][pAdmin])
-		return SendClientMessage(playerid,COLOR_RED, "ERROR: Nisi admin!");
+		return SendClientMessage(playerid,COLOR_RED, "Nisi admin!");
 		
  	if(Iter_Count(GoKartPlayers) == 0)
-		return SendClientMessage(playerid,COLOR_RED, "ERROR: Nema igraca u utrci!");
+		return SendClientMessage(playerid,COLOR_RED, "Nema igraca u utrci!");
 
 	new
 	    user;
@@ -639,7 +639,7 @@ CMD:removefromkart(playerid, params[])
 	    return SendClientMessage(playerid, -1, "KORISTI: /approvekart [Ime/IdIgraca]");
 
 	if(!Iter_Contains(GoKartPlayers, user))
-		return SendClientMessage(playerid,COLOR_RED, "ERROR: Taj igrac nije u utrci!");
+		return SendClientMessage(playerid,COLOR_RED, "Taj igrac nije u utrci!");
 		
 	Iter_Remove(GoKartPlayers, user);
 	
@@ -665,7 +665,7 @@ CMD:removefromkart(playerid, params[])
 CMD:gotokart(playerid, params[])
 {
 	if(!PlayerInfo[playerid][pAdmin])
-		return SendClientMessage(playerid,COLOR_RED, "ERROR: Nisi admin!");
+		return SendClientMessage(playerid,COLOR_RED, "Nisi admin!");
 
 	SetPlayerPos(playerid, 2469.1602,-2086.4277,13.5469);
 	return 1;
@@ -674,7 +674,7 @@ CMD:gotokart(playerid, params[])
 CMD:karters(playerid, params[])
 {
     if(!PlayerInfo[playerid][pAdmin])
-		return SendClientMessage(playerid,COLOR_RED, "ERROR: Nisi admin!");
+		return SendClientMessage(playerid,COLOR_RED, "Nisi admin!");
 		
 	new
 	    count = 0;
@@ -687,7 +687,7 @@ CMD:karters(playerid, params[])
 	}
 
 	if(!count)
-	    return SendClientMessage(playerid,COLOR_RED, "ERROR: Nema igraca koji koriste kart!");
+	    return SendClientMessage(playerid,COLOR_RED, "Nema igraca koji koriste kart!");
 
 	return 1;
 }

@@ -663,8 +663,8 @@ CMD:machine(playerid, params[])
 	}
 	else if( !strcmp(param, "repair", true) )
 	{
-		if(PlayerInfo[playerid][pJob] != 15) return SendClientMessage(playerid,COLOR_RED, "ERROR: Niste zaposleni kao kamiondzija.");
-		if( PlayerInfo[ playerid ][ pFreeWorks ] < 1 ) return SendClientMessage( playerid, COLOR_RED, "ERROR: Ne mozes vise raditi!");
+		if(PlayerInfo[playerid][pJob] != 15) return SendClientMessage(playerid,COLOR_RED, "Niste zaposleni kao kamiondzija.");
+		if( PlayerInfo[ playerid ][ pFreeWorks ] < 1 ) return SendClientMessage( playerid, COLOR_RED, "Ne mozes vise raditi!");
 		new 
 			slot = GetNearSprunk(playerid);
 		if(slot != -1)
@@ -685,8 +685,8 @@ CMD:machine(playerid, params[])
 	}
 	else if( !strcmp(param, "refill", true) )
 	{
-		if(PlayerInfo[playerid][pJob] != 15) return SendClientMessage(playerid,COLOR_RED, "ERROR: Niste zaposleni kao kamiondzija.");
-		if( PlayerInfo[ playerid ][ pFreeWorks ] < 1 ) return SendClientMessage( playerid, COLOR_RED, "ERROR: Ne mozes vise raditi!");
+		if(PlayerInfo[playerid][pJob] != 15) return SendClientMessage(playerid,COLOR_RED, "Niste zaposleni kao kamiondzija.");
+		if( PlayerInfo[ playerid ][ pFreeWorks ] < 1 ) return SendClientMessage( playerid, COLOR_RED, "Ne mozes vise raditi!");
 		new 
 			slot = GetNearSprunk(playerid);
 		if(slot != -1)
@@ -750,7 +750,7 @@ CMD:acreatemachine(playerid, params[])
 }
 CMD:gotomachine(playerid, params[])
 {
-	if(PlayerInfo[playerid][pAdmin] < 3) return SendClientMessage(playerid,COLOR_RED, "ERROR: Niste ovlasteni za koristenje ove komande!");
+	if(PlayerInfo[playerid][pAdmin] < 3) return SendClientMessage(playerid,COLOR_RED, "Niste ovlasteni za koristenje ove komande!");
 	new
 		slot;
 	if(sscanf(params,"i",slot)) return SendClientMessage(playerid, COLOR_RED, "USAGE: /gotomachine [id]");
@@ -763,7 +763,7 @@ CMD:gotomachine(playerid, params[])
 }
 CMD:refillmachines(playerid, params[])
 {
-	if(PlayerInfo[playerid][pAdmin] < 3) return SendClientMessage(playerid,COLOR_RED, "ERROR: Niste ovlasteni za koristenje ove komande!");
+	if(PlayerInfo[playerid][pAdmin] < 3) return SendClientMessage(playerid,COLOR_RED, "Niste ovlasteni za koristenje ove komande!");
 	
 	for(new i = 0; i < MAX_SPRUNKS; i++)
 	{

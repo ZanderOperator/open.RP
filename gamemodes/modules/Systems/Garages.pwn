@@ -842,7 +842,7 @@ CMD:garageentrance(playerid, params[])
 	new proplev;
 	if(PlayerInfo[playerid][pAdmin] < 1337) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nisi 1337!");
 	if (sscanf(params, "i", proplev)) return SendClientMessage(playerid, COLOR_RED, "USAGE: /garageentrance [garageid]");
-	if(proplev >= MAX_GARAGES || proplev < 0) return SendClientMessage(playerid,COLOR_RED, "ERROR: Nema garaze tog ID-a!");
+	if(proplev >= MAX_GARAGES || proplev < 0) return SendClientMessage(playerid,COLOR_RED, "Nema garaze tog ID-a!");
 
 	new
 		Float:X,Float:Y,Float:Z;
@@ -879,7 +879,7 @@ CMD:customgarageint(playerid, params[])
 		SendClientMessage(playerid, COLOR_GREY, "NOTE: Taj ID MORA biti u skripti!");
 		return 1;
 	}
-	if(garageid >= MAX_GARAGES || garageid < 0) return SendClientMessage(playerid,COLOR_RED, "ERROR: Nema garaze tog ID-a!");
+	if(garageid >= MAX_GARAGES || garageid < 0) return SendClientMessage(playerid,COLOR_RED, "Nema garaze tog ID-a!");
 
 	GarageInfo[garageid][gExitX] 		= iX;
 	GarageInfo[garageid][gExitY] 		= iY;

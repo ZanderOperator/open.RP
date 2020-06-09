@@ -72,7 +72,7 @@ new ActorText[MAX_ACTORS];
 // Commands
 CMD:spawnactor(playerid, params[])
 {
- 	if (PlayerInfo[playerid][pAdmin] < 1337) return SendClientMessage(playerid, COLOR_RED, "ERROR: Niste ovlasteni za koristenje ove komande!");
+ 	if (PlayerInfo[playerid][pAdmin] < 1337) return SendClientMessage(playerid, COLOR_RED, "Niste ovlasteni za koristenje ove komande!");
 	new Float:Pos[3],skinid,invulnerability,Float:Angle;
     if(sscanf(params,"il",skinid,invulnerability)) return SendClientMessage(playerid,COLOR_RED, "USAGE: /spawnactor [skinid] [[ ! ] Ranjivost (0: DISABLED | 1: ENABLED)]");
     if(invulnerability != 1 && invulnerability != 0) return SendClientMessage(playerid,COLOR_RED,"[ ! ] Ranjivost (0: DISABLED | 1: ENABLED)");
@@ -118,7 +118,7 @@ CMD:spawnactor(playerid, params[])
 
 CMD:removeactor(playerid, params[])
 {
-	if (PlayerInfo[playerid][pAdmin] < 1337) return SendClientMessage(playerid, COLOR_RED, "ERROR: Niste ovlasteni za koristenje ove komande!");
+	if (PlayerInfo[playerid][pAdmin] < 1337) return SendClientMessage(playerid, COLOR_RED, "Niste ovlasteni za koristenje ove komande!");
 	new actorid,str[256];
     if(sscanf(params,"i",actorid)) return SendClientMessage(playerid,COLOR_RED, "USAGE: /removeactor [actor id]");
     format(str,sizeof(str),"[ ! ] Actor %d je obrisan.",actorid);
@@ -128,13 +128,13 @@ CMD:removeactor(playerid, params[])
         DestroyActor(actorid);
         ClearLabel(actorid);
 	}
-	else return SendClientMessage(playerid,COLOR_RED,"ERROR: Pogrešan actor ID.");
+	else return SendClientMessage(playerid,COLOR_RED,"Pogrešan actor ID.");
 	return 1;
 }
 
 CMD:removeallactors(playerid, params[])
 {
-	if (PlayerInfo[playerid][pAdmin] < 1337) return SendClientMessage(playerid, COLOR_RED, "ERROR: Niste ovlasteni za koristenje ove komande!");
+	if (PlayerInfo[playerid][pAdmin] < 1337) return SendClientMessage(playerid, COLOR_RED, "Niste ovlasteni za koristenje ove komande!");
     for(new i = 0, j = GetActorPoolSize(); i <= j; i++)
     {
         if(IsValidActor(i))
@@ -148,7 +148,7 @@ CMD:removeallactors(playerid, params[])
 
 CMD:gotoactor(playerid, params[])
 {
-	if (PlayerInfo[playerid][pAdmin] < 1337) return SendClientMessage(playerid, COLOR_RED, "ERROR: Niste ovlasteni za koristenje ove komande!");
+	if (PlayerInfo[playerid][pAdmin] < 1337) return SendClientMessage(playerid, COLOR_RED, "Niste ovlasteni za koristenje ove komande!");
     new Float:Pos[3],actorid;
     if(sscanf(params,"i",actorid)) return SendClientMessage(playerid,COLOR_RED,"USAGE: /gotoactor [actor id]");
     if(IsValidActor(actorid))
@@ -157,13 +157,13 @@ CMD:gotoactor(playerid, params[])
 		SetPlayerPos(playerid,Pos[0]+1,Pos[1],Pos[2]);
 		va_SendClientMessage(playerid,COLOR_RED,"[ ! ] Portali ste se do Actora ID: %d!",actorid);
 	}
-	else return SendClientMessage(playerid,COLOR_RED,"ERROR: Pogrešan actor ID.");
+	else return SendClientMessage(playerid,COLOR_RED,"Pogrešan actor ID.");
 	return 1;
 }
 
 CMD:allactors(playerid, params[])
 {
-	if (PlayerInfo[playerid][pAdmin] < 1337) return SendClientMessage(playerid, COLOR_RED, "ERROR: Niste ovlasteni za koristenje ove komande!");
+	if (PlayerInfo[playerid][pAdmin] < 1337) return SendClientMessage(playerid, COLOR_RED, "Niste ovlasteni za koristenje ove komande!");
 	SendClientMessage(playerid,COLOR_RED,"_______________________________________________");
     for(new i = 0, j = GetActorPoolSize(); i <= j; i++)
     {
@@ -183,7 +183,7 @@ CMD:allactors(playerid, params[])
 
 CMD:setactoranim(playerid, params[])
 {
-	if (PlayerInfo[playerid][pAdmin] < 1337) return SendClientMessage(playerid, COLOR_RED, "ERROR: Niste ovlasteni za koristenje ove komande!");
+	if (PlayerInfo[playerid][pAdmin] < 1337) return SendClientMessage(playerid, COLOR_RED, "Niste ovlasteni za koristenje ove komande!");
 	new animation[256],actorid;
 	if(sscanf(params,"is[100]",actorid,animation)) return SendClientMessage(playerid,COLOR_RED,"USAGE:/setactoranim [actor id] [animation]");
 	if(IsValidActor(actorid))
@@ -278,13 +278,13 @@ CMD:setactoranim(playerid, params[])
 			va_SendClientMessage(playerid,COLOR_RED,"[ ! ] Postavljena je animacija '%s' na Actora %d",animation,actorid);
 		}
 	}
-	else return SendClientMessage(playerid,COLOR_RED,"ERROR: Pogrešan actor ID.");
+	else return SendClientMessage(playerid,COLOR_RED,"Pogrešan actor ID.");
 	return 1;
 }
 
 CMD:cancelactoranim(playerid, params[])
 {
-	if (PlayerInfo[playerid][pAdmin] < 1337) return SendClientMessage(playerid, COLOR_RED, "ERROR: Niste ovlasteni za koristenje ove komande!");
+	if (PlayerInfo[playerid][pAdmin] < 1337) return SendClientMessage(playerid, COLOR_RED, "Niste ovlasteni za koristenje ove komande!");
 	new actorid;
 	if(sscanf(params,"i",actorid)) return SendClientMessage(playerid,COLOR_RED,"USAGE: /cancelactoranim [actor id]");
 	if(IsValidActor(actorid))
@@ -292,13 +292,13 @@ CMD:cancelactoranim(playerid, params[])
 		ClearActorAnimations(actorid);
 		SendClientMessage(playerid,COLOR_RED,"[ ! ] Animacija prekinuta");
 	}
-	else return SendClientMessage(playerid,COLOR_RED,"ERROR: Pogrešan actor ID.");
+	else return SendClientMessage(playerid,COLOR_RED,"Pogrešan actor ID.");
 	return 1;
 }
 
 CMD:cancelallactorsanim(playerid, params[])
 {
-	if (PlayerInfo[playerid][pAdmin] < 1337) return SendClientMessage(playerid, COLOR_RED, "ERROR: Niste ovlasteni za koristenje ove komande!");
+	if (PlayerInfo[playerid][pAdmin] < 1337) return SendClientMessage(playerid, COLOR_RED, "Niste ovlasteni za koristenje ove komande!");
     for(new i = 0, j = GetActorPoolSize(); i <= j; i++)
     {
     	ClearActorAnimations(i);
@@ -309,7 +309,7 @@ CMD:cancelallactorsanim(playerid, params[])
 
 CMD:getactor(playerid, params[])
 {
-	if (PlayerInfo[playerid][pAdmin] < 1337) return SendClientMessage(playerid, COLOR_RED, "ERROR: Niste ovlasteni za koristenje ove komande!");
+	if (PlayerInfo[playerid][pAdmin] < 1337) return SendClientMessage(playerid, COLOR_RED, "Niste ovlasteni za koristenje ove komande!");
 	new actorid,str[256],Float:pPos[3],Float:aPos[3],Float:newPos[3];
 	if(sscanf(params,"i",actorid)) return SendClientMessage(playerid,COLOR_RED,"USAGE: /getactor [actor id]");
 	if(IsValidActor(actorid))
@@ -335,13 +335,13 @@ CMD:getactor(playerid, params[])
 			}
     	}
 	}
-	else return SendClientMessage(playerid,COLOR_RED,"ERROR: Pogrešan actor.");
+	else return SendClientMessage(playerid,COLOR_RED,"Pogrešan actor.");
 	return 1;
 }
 
 CMD:actorstext(playerid,params[])
 {
-	if (PlayerInfo[playerid][pAdmin] < 1337) return SendClientMessage(playerid, COLOR_RED, "ERROR: Niste ovlasteni za koristenje ove komande!");
+	if (PlayerInfo[playerid][pAdmin] < 1337) return SendClientMessage(playerid, COLOR_RED, "Niste ovlasteni za koristenje ove komande!");
 	for(new i = 0, j = GetActorPoolSize(); i <= j; i++)
 	{
 		if(ActorText[i] == 0)
@@ -364,10 +364,10 @@ CMD:actorstext(playerid,params[])
 
 CMD:updateactor(playerid,params[])
 {
-    if (PlayerInfo[playerid][pAdmin] < 1337) return SendClientMessage(playerid, COLOR_RED, "ERROR: Niste ovlasteni za koristenje ove komande!");
+    if (PlayerInfo[playerid][pAdmin] < 1337) return SendClientMessage(playerid, COLOR_RED, "Niste ovlasteni za koristenje ove komande!");
     new actorid,skinid,invulnerability,Float:Pos[3],Float:Angle,str2[256];
     if(sscanf(params,"iil",actorid,skinid,invulnerability)) return SendClientMessage(playerid,COLOR_RED,"[ ! ] USAGE: /updateactor [actor id] [skin id] [ranjivost]");
-    if(!IsValidActor(actorid)) return SendClientMessage(playerid,COLOR_RED,"ERROR: Pogrešan actor ID");
+    if(!IsValidActor(actorid)) return SendClientMessage(playerid,COLOR_RED,"Pogrešan actor ID");
     if(invulnerability > 1 || invulnerability < 0) return SendClientMessage(playerid,COLOR_RED,"[ ! ] Ranjivost (0: DISABLED / 1: ENABLED)");
     GetPlayerFacingAngle(playerid, Angle);
     GetActorPos(actorid,Pos[0],Pos[1],Pos[2]);
@@ -405,7 +405,7 @@ CMD:updateactor(playerid,params[])
 }
 CMD:actorhelp(playerid,params[])
 {
-    if (PlayerInfo[playerid][pAdmin] < 1337) return SendClientMessage(playerid, COLOR_RED, "ERROR: Niste ovlasteni za koristenje ove komande!");
+    if (PlayerInfo[playerid][pAdmin] < 1337) return SendClientMessage(playerid, COLOR_RED, "Niste ovlasteni za koristenje ove komande!");
     new text[500],text2[500],text3[500],everything[1000];
     format(text,sizeof(text),"{A9A9A9}** {ff0000}/spawnactor [skin id] [Ranjivost (0: DISABLED / 1: ENABLED)] > Spawna Actora tamo gdje igrac gleda\n{A9A9A9}** {ff0000}/removeactor [actor id] > Uklanja odredjenog actora.\n{A9A9A9}** {ff0000}/removeallactors > Uklanja sve actore");
     format(text2,sizeof(text2),"\n{A9A9A9}** {ff0000}/gotoactor [actor id] > Porta vas do actora\n{A9A9A9}** {ff0000}/setactoranim [anim] > Postavlja animaciju na actora\n{ff0000}    ANIMACIJE: handsup / lean / sit / injured / dance / laugh / hide / dealstance / crossarms / riotchant / wave / talk / fucku / tired");

@@ -261,7 +261,7 @@ CMD:weapons(playerid, params[])
 {
 	new
 		pick[ 12 ];
-	if( PlayerInfo[ playerid ][ pJob ] != DEALER_ID || !PlayerInfo[playerid][pMember] ) return SendClientMessage( playerid, COLOR_RED, "ERROR: Niste Gun Dealer ili u skriptanoj organizaciji!");
+	if( PlayerInfo[ playerid ][ pJob ] != DEALER_ID || !PlayerInfo[playerid][pMember] ) return SendClientMessage( playerid, COLOR_RED, "Niste Gun Dealer ili u skriptanoj organizaciji!");
 	if( sscanf( params, "s[12] ", pick ) ) {
 		SendClientMessage(playerid, COLOR_RED, "USAGE:  /weapons [odabir]");
 		SendClientMessage( playerid, COLOR_GREY, "[ODABIR]: order - view - assembly");
@@ -269,9 +269,9 @@ CMD:weapons(playerid, params[])
 	}
 	if( !strcmp( pick, "order") )
 	{
-		if(!IsAtGovornica(playerid)) return SendClientMessage(playerid,COLOR_RED, "ERROR: Narucivati mozete samo sa govornice!");
-		if( Iter_Count(ITools) == ( MAX_WORDER_CRATES - 1) ) return SendClientMessage( playerid, COLOR_RED, "ERROR: Sva mjesta su vec pretovarena, pokusajte kasnije!");
-		if(CheckPlayerIllegalTools(playerid) >= 3) return SendClientMessage(playerid,COLOR_RED, "ERROR: Imate maksimalan broj narudzbi!!"); 
+		if(!IsAtGovornica(playerid)) return SendClientMessage(playerid,COLOR_RED, "Narucivati mozete samo sa govornice!");
+		if( Iter_Count(ITools) == ( MAX_WORDER_CRATES - 1) ) return SendClientMessage( playerid, COLOR_RED, "Sva mjesta su vec pretovarena, pokusajte kasnije!");
+		if(CheckPlayerIllegalTools(playerid) >= 3) return SendClientMessage(playerid,COLOR_RED, "Imate maksimalan broj narudzbi!!"); 
 		
 		new tmpString[256];
 		format(tmpString, 256, "Oruzje\tCijena metka\tETA min\n");
@@ -296,12 +296,12 @@ CMD:weapons(playerid, params[])
 		}
 		new cratelocation = PlayerITInfo[slotid][cLocation];
 		if(!IsPlayerInRangeOfPoint(playerid, 3.0, WoDeliver[cratelocation][woPosX], WoDeliver[cratelocation][woPosY], WoDeliver[cratelocation][woPosZ])) 
-			return SendClientMessage( playerid, COLOR_RED, "ERROR: Niste u blizini narucenog paketa."); 
+			return SendClientMessage( playerid, COLOR_RED, "Niste u blizini narucenog paketa."); 
 		if(!AtLeastTwoMembers(playerid, 50.0, WoDeliver[cratelocation][woPosX], WoDeliver[cratelocation][woPosY], WoDeliver[cratelocation][woPosZ]))
-			return SendClientMessage( playerid, COLOR_RED, "ERROR: Ne mozete sami u akciju preuzimanja paketa."); 
-		if (PlayerITInfo[slotid][itdPlayerSQLID] != PlayerInfo[playerid][pSQLID]) return SendClientMessage( playerid, COLOR_RED, "ERROR: To nije vas paket.");
-		if (PlayerITInfo[slotid][itdTime] > gettimestamp()) return SendClientMessage( playerid, COLOR_RED, "ERROR: Paket jos nije stigao.");
-		if (ammo <= 0 || ammo > PlayerITInfo[slotid][cWeaponAmmo]) return va_SendClientMessage( playerid, COLOR_RED, "ERROR: U kutiji nema toliko metaka! min. 1 -  max. %d", PlayerITInfo[slotid][cWeaponAmmo]);
+			return SendClientMessage( playerid, COLOR_RED, "Ne mozete sami u akciju preuzimanja paketa."); 
+		if (PlayerITInfo[slotid][itdPlayerSQLID] != PlayerInfo[playerid][pSQLID]) return SendClientMessage( playerid, COLOR_RED, "To nije vas paket.");
+		if (PlayerITInfo[slotid][itdTime] > gettimestamp()) return SendClientMessage( playerid, COLOR_RED, "Paket jos nije stigao.");
+		if (ammo <= 0 || ammo > PlayerITInfo[slotid][cWeaponAmmo]) return va_SendClientMessage( playerid, COLOR_RED, "U kutiji nema toliko metaka! min. 1 -  max. %d", PlayerITInfo[slotid][cWeaponAmmo]);
 		
 		if (! CheckPlayerWeapons(playerid, gun) ) return 1;
 		PlayerITInfo[slotid][cWeaponAmmo] -= ammo;
@@ -332,7 +332,7 @@ CMD:weapons(playerid, params[])
 CMD:worders(playerid, params[])
 {
 	new pick[ 12 ];
-	if( PlayerInfo[ playerid ][ pAdmin ] < 4 ) return SendClientMessage( playerid, COLOR_RED, "ERROR: Nemate ovlasti!");
+	if( PlayerInfo[ playerid ][ pAdmin ] < 4 ) return SendClientMessage( playerid, COLOR_RED, "Nemate ovlasti!");
 	if( sscanf( params, "s[12] ", pick ) ) {
 		SendClientMessage(playerid, COLOR_RED, "USAGE:  /weapons [odabir]");
 		SendClientMessage( playerid, COLOR_GREY, "[ODABIR]: list - delete");
@@ -365,7 +365,7 @@ CMD:worders(playerid, params[])
 			SendClientMessage(playerid, COLOR_RED, "USAGE: /weapons delete [ID]");
 			return 1;
 		}
-		if (1 > slotid > 10) return va_SendClientMessage( playerid, COLOR_RED, "ERROR: ID je od 0 - 10", PlayerITInfo[slotid][cWeaponAmmo]);
+		if (1 > slotid > 10) return va_SendClientMessage( playerid, COLOR_RED, "ID je od 0 - 10", PlayerITInfo[slotid][cWeaponAmmo]);
 		new string [128];
 		format(string, sizeof(string), "[!] Admin %s obrisao weapon order paket pod ID %d", GetName(playerid,false), slotid);
 		SendAdminMessage(COLOR_RED, string);

@@ -654,7 +654,7 @@ CMD:cuttree(playerid, params[])
 		return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste drvosjeca!");
 		
     if(PlayerInfo[ playerid ][ pFreeWorks ] < 1)
-		return SendClientMessage( playerid, COLOR_RED, "ERROR: Ne mozes vise raditi, pricekajte Pay Day!");
+		return SendClientMessage( playerid, COLOR_RED, "Ne mozes vise raditi, pricekajte Pay Day!");
 	    
 	if(IsPlayerInAnyVehicle(playerid))
 	    return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne mozes to raditi dok si u vozilu!");
@@ -840,7 +840,7 @@ CMD:checkvehwood(playerid, params[])
 		}
 		//cmd_me(playerid, "baca pogled unutar gepeka.");
 	}
-	else return SendClientMessage(playerid,COLOR_RED, "ERROR: Niste blizu vozila!");
+	else return SendClientMessage(playerid,COLOR_RED, "Niste blizu vozila!");
 	return 1;
 }
 

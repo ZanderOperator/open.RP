@@ -68,7 +68,7 @@ hook OnPlayerStateChange(playerid, newstate, oldstate)
 		if(GetVehicleModel(GetPlayerVehicleID(playerid)) == 471 && !QuadPlayer[playerid] && QuadPlayerCP[playerid] > 0 )
 		{
 			RemovePlayerFromVehicle(playerid);
-			SendClientMessage(playerid, COLOR_RED, "ERROR: Niste prijavljeni za Quad event!");
+			SendClientMessage(playerid, COLOR_RED, "Niste prijavljeni za Quad event!");
 			return 1;
 		}
 	}
@@ -510,7 +510,7 @@ CMD:quad(playerid, params[])  {
 	
 	if(strcmp(action,"vehdestroy", true) == 0) {
 		if(PlayerInfo[playerid][pAdmin] < 1337)
-			return SendClientMessage(playerid, COLOR_RED, "ERROR: Niste ovlasteni za koristenje ove komande (admin lvl 1337+).");
+			return SendClientMessage(playerid, COLOR_RED, "Niste ovlasteni za koristenje ove komande (admin lvl 1337+).");
 			
 		for(new i = 0; i < 20; i++) {
 			DestroyVehicle(quadcar[i]);
@@ -519,13 +519,13 @@ CMD:quad(playerid, params[])  {
 	
 	if(strcmp(action,"vehspawn", true) == 0) { 
 		if(PlayerInfo[playerid][pAdmin] < 1337)
-			return SendClientMessage(playerid, COLOR_RED, "ERROR: Niste ovlasteni za koristenje ove komande (admin lvl 1337+).");
+			return SendClientMessage(playerid, COLOR_RED, "Niste ovlasteni za koristenje ove komande (admin lvl 1337+).");
 		CreateQuadVehicles();
 	}
 	
 	if(strcmp(action, "create", true) == 0) {
 		if(PlayerInfo[playerid][pAdmin] < 1337)
-			return SendClientMessage(playerid, COLOR_RED, "ERROR: Niste ovlasteni za koristenje ove komande (admin lvl 1337+).");
+			return SendClientMessage(playerid, COLOR_RED, "Niste ovlasteni za koristenje ove komande (admin lvl 1337+).");
 			
 		SendClientMessageToAll(COLOR_ORANGE,"[QUAD EVENT]: Administrator je pokrenuo quad event, da ucestvujete koristite (/quad join).");
 		
@@ -538,10 +538,10 @@ CMD:quad(playerid, params[])  {
 			return SendErrorMessage(playerid, "[ERROR]: Event je popunjen, nema vise mjesta.");
 			
 		if(QuadPlayer[playerid] == 1)
-			return SendClientMessage(playerid, COLOR_RED, "ERROR: Vec ste se join-ali na quad.");
+			return SendClientMessage(playerid, COLOR_RED, "Vec ste se join-ali na quad.");
 			
 		if(quad_created == false)
-			return SendClientMessage(playerid, COLOR_RED, "ERROR: Administrator nije pokrenuo/kreirao quad.");
+			return SendClientMessage(playerid, COLOR_RED, "Administrator nije pokrenuo/kreirao quad.");
 			
 		if(QuadStarted == 1)
 			return SendClientMessage(playerid, COLOR_RED, "Quad je vec pokrenut, trebate ga prije toga zaustaviti (/stopquad).");
@@ -560,7 +560,7 @@ CMD:quad(playerid, params[])  {
 			return SendClientMessage(playerid, COLOR_RED, "Niste ovlasteni za koristenje ove komande.");
 	
 		if(quad_created == false)
-			return SendClientMessage(playerid, COLOR_RED, "ERROR: Administrator nije pokrenuo/kreirao quad.");
+			return SendClientMessage(playerid, COLOR_RED, "Administrator nije pokrenuo/kreirao quad.");
 			
 		if(QuadStarted == 1)
 			return SendClientMessage(playerid, COLOR_RED, "Quad je vec pokrenut, trebate ga prije toga zaustaviti (/stopquad).");
@@ -573,7 +573,7 @@ CMD:quad(playerid, params[])  {
 	
 	if(strcmp(action,"stoprace", true) == 0) {
 		if(PlayerInfo[playerid][pAdmin] < 1337)
-			return SendClientMessage(playerid, COLOR_RED, "ERROR: Niste ovlasteni za koristenje ove komande (admin lvl 1337+).");
+			return SendClientMessage(playerid, COLOR_RED, "Niste ovlasteni za koristenje ove komande (admin lvl 1337+).");
 			
 		foreach(new i:Player) {
 			if(QuadPlayer[i] == 1)
@@ -598,7 +598,7 @@ CMD:quad(playerid, params[])  {
 	
 	if(strcmp(action,"goto", true) == 0) {
 		if(PlayerInfo[playerid][pAdmin] < 2)
-			return SendClientMessage(playerid, COLOR_RED, "ERROR: Niste ovlasteni za koristenje ove komande (admin lvl 2+).");
+			return SendClientMessage(playerid, COLOR_RED, "Niste ovlasteni za koristenje ove komande (admin lvl 2+).");
 		
 		SetPlayerPos(playerid, -318.7222, 1527.6124, 75.3570);
 	}

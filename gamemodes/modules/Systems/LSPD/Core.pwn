@@ -1625,11 +1625,11 @@ CMD:govskin(playerid, params[]) {
 CMD:govrepair(playerid, params[])
 {
     new vehicleid = GetPlayerVehicleID(playerid);
-	if(VehicleInfo[vehicleid][vFaction] != 1 && VehicleInfo[vehicleid][vFaction] != 2 && VehicleInfo[vehicleid][vFaction] != 3 && VehicleInfo[vehicleid][vFaction] != 4 && VehicleInfo[vehicleid][vFaction] != 5) return SendClientMessage(playerid,COLOR_RED, "ERROR: Mozes popravljati samo vozila organizacije!");
+	if(VehicleInfo[vehicleid][vFaction] != 1 && VehicleInfo[vehicleid][vFaction] != 2 && VehicleInfo[vehicleid][vFaction] != 3 && VehicleInfo[vehicleid][vFaction] != 4 && VehicleInfo[vehicleid][vFaction] != 5) return SendClientMessage(playerid,COLOR_RED, "Mozes popravljati samo vozila organizacije!");
     if(!IsPlayerInAnyVehicle(playerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste u vozilu!");
 	new fid =  PlayerInfo[playerid][pMember];
 	if( fid != 4 ) {
-		if(FactionInfo[fid][fFactionBank] < 100) return SendClientMessage(playerid,COLOR_RED, "ERROR: Vasa organizacija nema novaca!");
+		if(FactionInfo[fid][fFactionBank] < 100) return SendClientMessage(playerid,COLOR_RED, "Vasa organizacija nema novaca!");
 		if(IsACop(playerid))
 		{
 			if(PlayerInfo[playerid][pMember] == 1) {
@@ -1706,7 +1706,7 @@ CMD:govrepair(playerid, params[])
     	}
 		else SendClientMessage(playerid, COLOR_RED, "[ ! ] Niste na mjestu za popravak vozila!");
 	}
-	else SendClientMessage(playerid,COLOR_RED, "ERROR: Nisi ovlasten za koristenje ove komande.");
+	else SendClientMessage(playerid,COLOR_RED, "Nisi ovlasten za koristenje ove komande.");
 	return 1;
 }
 CMD:codes(playerid, params[])
@@ -1720,7 +1720,7 @@ CMD:codes(playerid, params[])
 CMD:swat(playerid, params[])
 {
 	if(!IsACop(playerid) && !IsASD(playerid)) return SendClientMessage(playerid, COLOR_RED, "[ ! ] Niste LSPD.");
-	if(PlayerInfo[playerid][pLawDuty] == 0) return  SendClientMessage(playerid,COLOR_RED, "ERROR: Niste na du?nosti!");
+	if(PlayerInfo[playerid][pLawDuty] == 0) return  SendClientMessage(playerid,COLOR_RED, "Niste na du?nosti!");
 	if(PlayerInfo[playerid][pLevel] < 2) return SendMessage(playerid, MESSAGE_TYPE_ERROR, " Ne mozete koristiti ovu komandu dok ste level 1!");
 
 	new
@@ -2147,7 +2147,7 @@ CMD:fdgarage(playerid, params[]) {
 CMD:pdgarage(playerid, params[])
 {
 	if(!IsACop(playerid) && PlayerInfo[playerid][pLeader] != 1)
-		return SendClientMessage(playerid,COLOR_RED, "ERROR: Niste policajac!");
+		return SendClientMessage(playerid,COLOR_RED, "Niste policajac!");
 
 	if(IsPlayerInRangeOfPoint(playerid, 15.0, 755.9906,-1431.2805,13.5234) && GetPlayerVirtualWorld(playerid) == 0)
     {
@@ -2200,7 +2200,7 @@ CMD:pdgarage(playerid, params[])
 CMD:pdgarage1(playerid, params[])
 {
 	if(!IsACop(playerid) && PlayerInfo[playerid][pLeader] != 1)
-		return SendClientMessage(playerid,COLOR_RED, "ERROR: Niste policajac!");
+		return SendClientMessage(playerid,COLOR_RED, "Niste policajac!");
 	//MAIN HQ
 	if(IsPlayerInRangeOfPoint(playerid, 15.0, 2150.9697,-2190.0781,13.2593) && GetPlayerVirtualWorld(playerid) == 0)
     {
@@ -2254,7 +2254,7 @@ CMD:pdgarage1(playerid, params[])
 CMD:sdgarage(playerid, params[])
 {
     if(!IsASD(playerid) && PlayerInfo[playerid][pLeader] != 1)
-		return SendClientMessage(playerid,COLOR_RED, "ERROR: Niste policajac!");
+		return SendClientMessage(playerid,COLOR_RED, "Niste policajac!");
 	//MAIN HQ
 	if(IsPlayerInRangeOfPoint(playerid, 15.0, 629.1385,-625.4520,17.0423) && GetPlayerVirtualWorld(playerid) == 0)
     {
@@ -2308,7 +2308,7 @@ CMD:sdgarage(playerid, params[])
 CMD:pdunlock(playerid, params[])
 {
 	if(!IsACop(playerid) && PlayerInfo[playerid][pLeader] != 1 && !IsASD(playerid) && PlayerInfo[playerid][pLeader] != 3)
-		return SendClientMessage(playerid,COLOR_RED, "ERROR: Niste policajac!");
+		return SendClientMessage(playerid,COLOR_RED, "Niste policajac!");
 	if(!IsPlayerInRangeOfPoint(playerid, 30.0, 1985.1077, -2183.0867, 13.5469))
 		return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste na mjestu za koristenje /pdunlock komande!");
 
@@ -2342,9 +2342,9 @@ CMD:pdunlock(playerid, params[])
 
 CMD:cleartrunk(playerid, params[])
 {
-	if(!IsACop(playerid) && PlayerInfo[playerid][pLeader] != 1) return SendClientMessage(playerid,COLOR_RED, "ERROR: Niste policajac!");
+	if(!IsACop(playerid) && PlayerInfo[playerid][pLeader] != 1) return SendClientMessage(playerid,COLOR_RED, "Niste policajac!");
 	if(PlayerInfo[playerid][pRank] < FactionInfo[PlayerInfo[playerid][pMember]][rClrTrunk])
-		 return va_SendClientMessage(playerid,COLOR_RED, "ERROR: Niste policajac R%d+!", FactionInfo[PlayerInfo[playerid][pMember]][rClrTrunk]);
+		 return va_SendClientMessage(playerid,COLOR_RED, "Niste policajac R%d+!", FactionInfo[PlayerInfo[playerid][pMember]][rClrTrunk]);
 	new vehicleid = INVALID_VEHICLE_ID,
 		carname[32];
 	foreach(new i : COVehicles)
@@ -2700,8 +2700,8 @@ CMD:housetake(playerid, params[])
 }
 CMD:returnduty(playerid, params[])
 {
-    if(!IsACop(playerid) && !IsFDMember(playerid) && !IsASD(playerid) && !IsAGov(playerid)) return SendClientMessage(playerid,COLOR_RED, "ERROR: Niste ovlasteni!");
-	if(PlayerInfo[playerid][pLawDuty] == 1) return  SendClientMessage(playerid,COLOR_RED, "ERROR: Vec ste na duznosti!");
+    if(!IsACop(playerid) && !IsFDMember(playerid) && !IsASD(playerid) && !IsAGov(playerid)) return SendClientMessage(playerid,COLOR_RED, "Niste ovlasteni!");
+	if(PlayerInfo[playerid][pLawDuty] == 1) return  SendClientMessage(playerid,COLOR_RED, "Vec ste na duznosti!");
 	new tmpstring [ 120 ];
     new
 		Float:X, Float:Y, Float:Z, vehicleid = -1;
@@ -2769,7 +2769,7 @@ CMD:returnduty(playerid, params[])
 CMD:callsign(playerid, params[])
 {
 	if( !IsACop(playerid) && !IsASD(playerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste pripadnik PDa/SDa!");
-    if(PlayerInfo[playerid][pLawDuty] == 0) return  SendClientMessage(playerid,COLOR_RED, "ERROR: Morate biti na duznosti!");
+    if(PlayerInfo[playerid][pLawDuty] == 0) return  SendClientMessage(playerid,COLOR_RED, "Morate biti na duznosti!");
 	if(isnull(params))
 		return SendClientMessage(playerid, COLOR_RED, "USAGE: /callsign [UNIT]");
 
@@ -2819,7 +2819,7 @@ CMD:cargun(playerid, params[])
 	}
 	if(vehicleid == -1)
 		return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nisi blizu PD vozila!");
-    if(PlayerInfo[playerid][pLawDuty] == 0) return  SendClientMessage(playerid,COLOR_RED, "ERROR: Morate biti na duznosti!");
+    if(PlayerInfo[playerid][pLawDuty] == 0) return  SendClientMessage(playerid,COLOR_RED, "Morate biti na duznosti!");
 
 
 	new
@@ -2888,7 +2888,7 @@ CMD:cargun(playerid, params[])
 		format(tmpString, sizeof(tmpString), "** %s sprema oruzje u vozilo.", GetName(playerid, true));
 		ProxDetector(20.0, playerid, tmpString, COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE);
 	}*/
-	SendClientMessage(playerid, COLOR_RED, "ERROR: Komanda je izbacena, koristite /gunrack");
+	SendClientMessage(playerid, COLOR_RED, "Komanda je izbacena, koristite /gunrack");
 	return 1;
 }
 

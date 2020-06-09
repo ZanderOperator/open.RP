@@ -41,17 +41,17 @@ Dialog:eDIALOG_LICENSE(playerid, response, listitem, inputtext[])
 			case 0:
 			{
 				if(PlayerInfo[playerid][pCarLic] == 1)
-					return SendClientMessage(playerid, COLOR_RED, "ERROR: Vec imas vozacku dozvolu!");
+					return SendClientMessage(playerid, COLOR_RED, "Vec imas vozacku dozvolu!");
 				
 				Dialog_Open(playerid, eDIALOG_LICENSE_CONFIRM, DIALOG_STYLE_MSGBOX, "Vozacka Dozvola", "Jeste li sigurni da zelite zapoceti test?\nTest ce vas kostati 1000$, 100$ po pokusaju.", "Da", "Natrag");
 				PlayerAnswers[playerid] = 0;
 			}
 			case 1:
-				SendClientMessage(playerid, COLOR_RED, "ERROR: Trenutno nije dozvoljena kupovina license za oruzje. ((Zahtjev za licensu postavite na forumu!))");
+				SendClientMessage(playerid, COLOR_RED, "Trenutno nije dozvoljena kupovina license za oruzje. ((Zahtjev za licensu postavite na forumu!))");
 			case 2:
 			{
 				if(PlayerInfo[playerid][pFlyLic] == 1)
-					return SendClientMessage(playerid, COLOR_RED, "ERROR: Vec imas dozvolu za letenje!");
+					return SendClientMessage(playerid, COLOR_RED, "Vec imas dozvolu za letenje!");
 				
 				Dialog_Open(playerid, eDIALOG_LICENSE_CONFIRM, DIALOG_STYLE_MSGBOX, "Dozvola za letenje", "Jeste li sigurni da zelite kupiti dozvolu za letenje?\nDozvola kosta 3000$.", "Da", "Natrag");
 				PlayerAnswers[playerid] = -1;
@@ -59,7 +59,7 @@ Dialog:eDIALOG_LICENSE(playerid, response, listitem, inputtext[])
 			case 3:
 			{
 				if(PlayerInfo[playerid][pBoatLic] == 1)
-					return SendClientMessage(playerid, COLOR_RED, "ERROR: Vec imas dozvolu za brod!");
+					return SendClientMessage(playerid, COLOR_RED, "Vec imas dozvolu za brod!");
 				
 				Dialog_Open(playerid, eDIALOG_LICENSE_CONFIRM, DIALOG_STYLE_MSGBOX, "Dozvola za brod", "Jeste li sigurni da zelite kupiti dozvolu za brod?\nDozvola kosta 3000$.", "Da", "Natrag");
 				PlayerAnswers[playerid] = -2;
@@ -67,7 +67,7 @@ Dialog:eDIALOG_LICENSE(playerid, response, listitem, inputtext[])
 			case 4:
 			{
 				if(PlayerInfo[playerid][pFishLic] == 1)
-					return SendClientMessage(playerid, COLOR_RED, "ERROR: Vec imas dozvolu za ribolov!");
+					return SendClientMessage(playerid, COLOR_RED, "Vec imas dozvolu za ribolov!");
 				
 				Dialog_Open(playerid, eDIALOG_LICENSE_CONFIRM, DIALOG_STYLE_MSGBOX, "Dozvola za ribolov", "Jeste li sigurni da zelite kupiti dozvolu za ribolov?\nDozvola kosta 800$.", "Da", "Natrag");
 				PlayerAnswers[playerid] = -3;
@@ -87,7 +87,7 @@ Dialog:eDIALOG_LICENSE_CONFIRM(playerid, response, listitem, inputtext[])
 		case 0:
 		{
 			if(GetPlayerMoney(playerid) < 1000) 
-				return SendClientMessage(playerid, COLOR_RED, "ERROR: Nemas dovoljno novca (1000$).");
+				return SendClientMessage(playerid, COLOR_RED, "Nemas dovoljno novca (1000$).");
 			
 			if(response)
 			{
@@ -100,7 +100,7 @@ Dialog:eDIALOG_LICENSE_CONFIRM(playerid, response, listitem, inputtext[])
 		case -1:
 		{
 			if(GetPlayerMoney(playerid) < 3000) 
-				return SendClientMessage(playerid, COLOR_RED, "ERROR: Nemas dovoljno novca (3000$).");
+				return SendClientMessage(playerid, COLOR_RED, "Nemas dovoljno novca (3000$).");
 			
 			Dialog_Open(playerid, empty, DIALOG_STYLE_MSGBOX, "Dozvola za letenje", "Kupio si dozvolu za letenje!\nZelimo vam siguran i ugodan let.", "Izlaz", "");
 			PlayerInfo[playerid][pFlyLic] = 1;
@@ -110,7 +110,7 @@ Dialog:eDIALOG_LICENSE_CONFIRM(playerid, response, listitem, inputtext[])
 		case -2:
 		{
 			if(GetPlayerMoney(playerid) < 3000) 
-				return SendClientMessage(playerid, COLOR_RED, "ERROR: Nemas dovoljno novca (3000$).");
+				return SendClientMessage(playerid, COLOR_RED, "Nemas dovoljno novca (3000$).");
 			
 			Dialog_Open(playerid, empty, DIALOG_STYLE_MSGBOX, "Dozvola za brod", "Kupio si dozvolu za brod!\nZelimo vam sigurnu i ugodnu voznju.", "Izlaz", "");
 			PlayerInfo[playerid][pBoatLic] = 1;
@@ -120,7 +120,7 @@ Dialog:eDIALOG_LICENSE_CONFIRM(playerid, response, listitem, inputtext[])
 		case -3:
 		{
 			if(GetPlayerMoney(playerid) < 800) 
-				return SendClientMessage(playerid, COLOR_RED, "ERROR: Nemas dovoljno novca (800$).");
+				return SendClientMessage(playerid, COLOR_RED, "Nemas dovoljno novca (800$).");
 			
 			Dialog_Open(playerid, empty, DIALOG_STYLE_MSGBOX, "Dozvola za letenje", "Kupio si dozvolu za ribolov!.", "Izlaz", "");
 			PlayerInfo[playerid][pFishLic] = 1;

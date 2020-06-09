@@ -66,7 +66,7 @@ CMD:vote(playerid, params[])
 	if(!IsPlayerInRangeOfPoint(playerid, 3, 1299.5887, 764.5737, -98.6427)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne nalazis se pored kutije za glasanje.(vijecnica)");
 	if(PlayerInfo[playerid][pLevel] < 3) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nisi level 3+ da bi mogao koristiti ovu komandu");
 	if(lockvotes == true) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Glasanje je trenutno zatvoreno.");
-	if(PlayerInfo[playerid][pVoted] == 1) return SendClientMessage(playerid,COLOR_RED, "ERROR: Vec si dao svoj glas");
+	if(PlayerInfo[playerid][pVoted] == 1) return SendClientMessage(playerid,COLOR_RED, "Vec si dao svoj glas");
 	ShowPlayerDialog(playerid, DIALOG_FOR_ELECTIONS, DIALOG_STYLE_MSGBOX, "Glasanje", "Referendumom Los Santos vrsi zadnji korak prema ocjepljenju od\n drzave San Andreas, ukoliko podrzavate referendum zaokruzite 'Za'\n a ukoliko ste protiv ocjepljenja zaokruzite 'Protiv'.", "Ok", "Izadji");
 	return 1;
 }
