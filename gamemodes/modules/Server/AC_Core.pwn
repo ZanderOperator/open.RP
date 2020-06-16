@@ -976,7 +976,9 @@ stock AC_TogglePlayerControllable(playerid, toggle)
 
 stock AC_SpawnPlayer(playerid)
 {
+	Streamer_SetVisibleItems(STREAMER_TYPE_OBJECT, OBJECT_STREAM_LIMIT, playerid);
 	SpawnPlayer(playerid);
+	Streamer_Update(playerid);
 	CallLocalFunction("OnPlayerSpawn", "d", playerid);
 }
 #if defined _ALS_SpawnPlayer

@@ -1776,4 +1776,3 @@ hook OnGameModeInit()
     hotel_maps = CreateDynamicObject(635,4768.823,1268.123,2.806,1.499,270.000,173.699,4,-1,-1,300.000,300.000);
 	return 1;
 }
-

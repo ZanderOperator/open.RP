@@ -1,0 +1,231 @@
+; core.PT
+;
+; Portuguese translation by Los from the SA:MP forums
+;
+; http://forum.sa-mp.com/member.php?u=104612
+
+[ysi_properties]
+
+YSI_PROP_NAME = {>GREEN}Propriedade: "%s" Custo: $%d Recompensa: $%d{RED}
+YSI_PROP_BUY_HOUSE = Digite "/%n" para comprar essa casa por $%d
+YSI_PROP_BUY = Digite "/%n" para comprar
+YSI_PROP_OWN = Você já tem essa propriedade
+YSI_PROP_YOURS = Essa propriedade já é sua
+YSI_PROP_OUT = A propriedade {>X11_ALICE_BLUE}"%s" foi comprada pelo jogador %s {SALMON}(%d)
+YSI_PROP_OWNER = {>RED}O dono desta propriedade é %s (%d){YELLOW}
+YSI_PROP_BOUGHT = Você comprou a propriedade "%s" por $%d
+YSI_PROP_BOUGHT_HOUSE = {>GREEN}Você comprou esta casa por $%d{RED}
+YSI_PROP_HOUSE_OWNED = O dono desta casa é %s
+YSI_PROP_NOT = Você não está em uma propriedade
+YSI_PROP_CP = Você não está no checkpoint da propriedade
+YSI_PROP_AFFORD = Você não tem dinheiro o suficiente para comprar
+YSI_PROP_EARNT = Você arrecadou $%d com as suas propriedades
+YSI_PROP_SELL = Digite "/%n %d" para vender essa propriedade
+YSI_PROP_ANN = ~r~%s comprou %s
+YSI_PROP_MAX = Você não pode comprar mais propriedades.
+YSI_PROP_MAX_HOUSE = Você não pode comprar mais casas.
+YSI_PROP_ENTER = Digite "/%n" para entrar, e "/%n" para sair.
+; Você não precisa dos parâmetros, mas somente na ordem de tras para frente
+; YSI_PROP_SELL = Digite "/%n %d" para vender essa propriedade por $%d
+
+YSI_BUY_HELP@1 = Permite que você compre uma propriedade - elas ganham
+YSI_BUY_HELP@2 = dinheiro conforme o tempo, e podem ser muito rentáveis
+YSI_BUY_HELP@3 = Você precisa estar em uma propriedade para usar esse comando
+YSI_BUY_HELP@4 = mas você será avisado caso não estiver
+
+YSI_ENTER_HELP@1 = Permite que você entre em uma de suas casas
+YSI_ENTER_HELP@2 = Digite este comando para entrar na casa
+YSI_ENTER_NOT_YOURS = Você não pode entrar dentro de uma casa que não é sua.
+YSI_ENTER_NO_HOUSE = Não tem nenhuma casa aqui
+
+YSI_EXIT_HELP@1 = Permite que você saia da casa atual
+YSI_EXIT_NOT_IN = Você não está em uma casa
+YSI_EXIT_NEAR = Você precisa estar próximo a porta para sair
+
+YSI_SELL_HELP@1 = Vende uma propriedade sua.  Pode ser
+YSI_SELL_HELP@2 = um pouco mais barato do que você pagou por ela.
+YSI_SELL_HELP@3 = Você precisa digitar o ID da propriedade que você quer vender
+YSI_SELL_HELP@4 = mas você não precisa estar na propriedade
+YSI_SELL_NO_ID = Você precisa digitar um ID válido
+YSI_SELL_CANT = Você não pode vender essa propriedade
+YSI_SELL_OWNER = Você não é dono dessa propriedade
+YSI_SELL_SOLD = Propriedade vendida por $%d
+
+YSI_FORBIDDEN = Você está entrando em uma área restrita
+YSI_FORBIDDEN@2 = Atenção. Você está entrando em %s
+
+YSI_LIST_MULTI = "%s": %d proprietários
+YSI_LIST_FORM = "%s": proprietário "%s"
+YSI_LIST_PAGES = Use "/%n <página>" aonde <página> é 1 - %d para listar
+YSI_LIST_MORE = Mais de 8 propriedades foram encontradas
+
+YSI_BANK_NAME = Bem vindo ao banco %s
+YSI_BANK_WELCOME = Bem vindo ao banco
+YSI_BANK_HELP_1 = Digite "/%n <quantia>" para depositar
+YSI_BANK_HELP_2 = Digite "/%n <quantia>" para sacar
+YSI_BANK_HELP_3 = Digite "/%n" a qualquer momento para ver seu saldo
+YSI_BANK_BALANCE = Seu saldo atual é de $%d
+YSI_BANK_NOT = Você não está em um banco
+YSI_BANK_CP = Você precisa estar no checkpoint do banco
+YSI_BANK_HELP@1 = Permite você depositar dinheiro na sua conta
+YSI_BANK_HELP@2 = Você precisa ter a quantia que
+YSI_BANK_HELP@3 = quer depositar, e precisa estar no banco
+YSI_BANK_HELP@4 = Uso: "/%n <quantia>"
+YSI_BANK_BANKED = $%d depositado, seu novo saldo é de $%d
+YSI_BANK_INSUFFICIENT = Dinheiro insuficiente para a transação
+
+YSI_BAL_HELP = Mostra o saldo atual da sua conta
+
+YSI_WITH_HELP_1 = Permite você sacar dinheiro da sua conta
+YSI_WITH_HELP_2 = Você precisa ter dinheiro
+YSI_WITH_HELP_3 = o suficiente na conta e precisa estar no banco
+YSI_WITH_HELP_4 = Uso: "/%n <quantia>"
+YSI_WITHDREW = $%d sacado, seu novo saldo é de $%d
+
+YSI_TELS_NAME = Teletransportado para %s
+YSI_TELS_TELE = Teletransportado
+YSI_TELS_MONEY = Dinheiro insuficiente, você precisa de $%d para se teletransportar
+
+YSI_AMMU_NO_MONEY = Você não tem dinheiro o suficiente para comprar esta arma
+
+YSI_LIST_HELP@1 = Mostra uma lista de propriedades e seus donos
+YSI_LIST_HELP@2 = Se tiver mais de 8 propriedades então tem
+YSI_LIST_HELP@3 = múltiplas páginas de propriedades
+YSI_LIST_NONE = Nenhuma propriedade foi encontrada
+
+[ysi_race]
+
+YSI_RACE_COUNTDOWN = %d
+YSI_RACE_GO = VAI VAI VAI!!!
+
+[ysi_text]
+
+YSI_TEXT_NOT_FOUND = Texto "%s" não encontrado
+
+[ysi_commands]
+
+YSI_COMM_BLEVEL = Você não pode usar esse comando
+YSI_COMM_LIST = "/%s"
+YSI_COMM_PAGES = Use "/%n <página>" aonde <página> é 1 - %d para listar
+YSI_COMM_MORE = Mais de 8 comandos foram encontrados
+
+YSI_COMM_HELP@1 = Mostra uma lista de comandos do script\n
+YSI_COMM_HELP@2 = Se tiver mais de 8 comandos então tem múltiplas páginas\n
+YSI_COMM_HELP@3 = Comandos são mostrados por prefixos e qualquer outro nome alternativo
+
+[ysi_langs]
+
+YSI_LANGS_HELP@1 = Caso não tiver parâmetros, ele mostra uma lista de idiomas
+YSI_LANGS_HELP@2 = Com parâmetros, ele altera o idioma para o escolhido
+YSI_LANGS_DISP = Idioma %d: %s (%s)
+YSI_LANGS_MORE = Digite "/%n" novamente para mostrar mais idiomas
+YSI_LANGS_SET = Digite "/%n <id>" para escolher um idioma
+YSI_LANGS_DONE = Idioma alterado para %d (%s)
+YSI_LANGS_INV = Idioma inválido
+
+[ysi_help]
+
+YSI_HELP_HELP@1 = Mostra ajuda no script ou no comando.
+YSI_HELP_HELP@2 = Digite "/%n" para ajuda no script, "/%n <comando>"
+YSI_HELP_HELP@3 = para ajuda em comandos ou "/%n" para uma lista de comandos
+YSI_HELP_NOTF = Função desconhecida, ajuda não está disponível.
+
+YSI_HELP@1 = <O nome do seu script aqui>\n
+YSI_HELP@2 = por <seu nome aqui>,\n
+YSI_HELP@3 = baseado em YSI por Alex "Y_Less" Cole. \n
+YSI_HELP@4 = Personalize esse texto no core.PT na sua pasta\n
+YSI_HELP@5 = scriptfiles/YSI (padrão).
+
+;YSI_HELP@6 = Deixe linhas em branco caso você não precisar delas, e elas serão ignoradas.
+;YSI_HELP@7 = ; Essa linha não vai aparecer no chat, pois está em branco (; quer dizer que é um comentário)
+;YSI_HELP@8 = 
+
+; Essa linha é a única que pode conter %n para comandos
+;YSI_HELP@9 = Digite: "/%n" para ajuda em qualquer comando e "/%n <comando>"
+;YSI_HELP@10 = para ajuda em um comando específico (incluindo o comando)
+
+[ysi_players]
+
+YSI_LOGIN_HELP@1 = Permite a você logar no sistema de usuários usando uma senha que você registrou.
+
+YSI_REGISTER_HELP@1 = Permite a você se registrar no servidor. Vai ser necessário o uso de uma senha e confirma-la.
+
+YSI_GROUP_HELP@1 = Permite a você adicionar seu usuário atual para outro
+YSI_GROUP_HELP@2 = grupo de usuários, e então os apelidos compartilharão os mesmos
+YSI_GROUP_HELP@3 = dados.  Use "/%n <usuário> <senha>" aonde <usuário> é
+YSI_GROUP_HELP@4 = um usuário registrado, e <senha> é a senha dele
+YSI_GROUP_HELP@5 = para entrar no grupo.
+
+YSI_NSGROUP_PARAMS = Uso: "/%n <usuário registrado> <senha do usuário>"
+
+YSI_REG_TAKEN = Desculpa, esse nome já está registrado.
+YSI_LOGIN_WRONG = Senha incorreta.
+YSI_LOGIN_INDERR = Falha da leitura de índice, tente novamente.
+YSI_LOGIN_LOGIN = Logado!
+YSI_LOGIN_NOTF = Nome de usuário não encontrado
+YSI_LOGIN_NOLOAD = Erro ao abrir o arquivo do usuário.
+YSI_LOGIN_FAILED = Login recusado.
+YSI_ADDU_INDER_1 = Erro de adicionar arquivo de usuário 1.
+YSI_ADDU_INDER_2 = Erro de adicionar arquivo de usuário 2.
+YSI_ADDU_SUCC = Registrado com sucesso.
+YSI_LOGIN_ENTER = Você precisa inserir uma senha.
+YSI_LOGIN_LENGTH = Você precisa inserir uma senha de no mínimo 6 caracteres.
+
+YSI_LOGIN_ALREADY = Você já está logado.
+
+YSI_LOGIN_OPTS = Opções de login
+YSI_LOGIN_OPTIONS_A = Login\r\nAlterar Usuário\r\nAlterar Idioma\r\nSair
+YSI_LOGIN_OPTIONS_B = Registrar\r\nAlterar Usuário\r\nAlterar Idioma\r\nSair
+
+YSI_GROUP_TITLE = Nomes do Grupo
+YSI_GROUP_NAME = Você gostaria de adicionar esse nome ao grupo permanentemente?
+
+[ysi_groups]
+YSI_CONGRP_HELP@1 = Uso: "/%n <playerid> <grupo> <adicionar>" ou:
+YSI_CONGRP_HELP@2 = "/%n <página>"
+YSI_CONGRP_HELP@3 = A primeira opção atribui um jogador ao grupo
+YSI_CONGRP_HELP@4 = A segunda opção vê a lista de grupos
+YSI_CONGRP_HELP@5 = Se adicionar for 1, então eles vão ser adicionados no
+YSI_CONGRP_HELP@6 = grupo especificado, caso contrário, eles serão removidos.
+YSI_GROUP_LIST_NAME = Grupo %d: "%s"
+YSI_GROUP_LIST_TEMP = Grupo %d: <grupo temporariamente sem nome>
+YSI_GROUP_LIST_PAGES = Use "/%n <página>" aonde <página> é 1 - %d para listar
+YSI_GROUP_LIST_MORE = Mais de 8 grupos foram encontrados
+YSI_GROUP_LIST_ASS = Ou "/%n <playerid> <grupo> <alterar>" para atribuir um grupo
+YSI_CONGRP_ASSIGNED = Grupo do jogador %d foi atribuído
+YSI_CONGRP_INVALID = Grupo ou jogador inválido
+
+[ysi_extras]
+
+YSI_EXTRA_LOGIN_TITLE = Login
+YSI_EXTRA_LOGIN_PROMPT = Por favor, digite uma senha para logar:
+
+YSI_EXTRA_REGISTER_TITLE = Registro
+YSI_EXTRA_REGISTER_PROMPT = Por favor, digite uma senha para se registrar:
+YSI_EXTRA_REGISTER_MISMATCH = As senhas não são iguais.  Por favor tente novamente.
+
+YSI_EXTRA_CONFIRM_PROMPT = Por favor, confirme sua senha:
+
+[ysi_dialog]
+
+DIALOG_ACCEPT = Aceitar
+DIALOG_CANCEL = Cancelar
+DIALOG_OK = Ok
+DIALOG_YES = Sim
+DIALOG_NO = Não
+;DIALOG_OK = Ok
+DIALOG_CLOSE = Fechar
+DIALOG_BACK = Voltar
+DIALOG_FORWARD = Avançar
+DIALOG_PREVIOUS = Voltar
+DIALOG_NEXT = Próximo
+DIALOG_EXIT = Sair
+DIALOG_OPTIONS = Opções
+DIALOG_SELECT = Selecionar
+DIALOG_ADD = Adicionar
+DIALOG_REMOVE = Remover
+DIALOG_QUIT = Sair
+DIALOG_NONE =
+
+[ysi_zonenames]
+YSI_ZONE_NAME = %s

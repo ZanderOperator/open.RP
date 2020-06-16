@@ -703,7 +703,7 @@ SafeSpawnPlayer(playerid)
 	
 	defer SetPlayerCrash(playerid);
 	defer SafeHealPlayer(playerid);
-	Streamer_SetVisibleItems(STREAMER_TYPE_OBJECT, 900, playerid);
+	Streamer_SetVisibleItems(STREAMER_TYPE_OBJECT, OBJECT_STREAM_LIMIT, playerid);
 	Bit1_Set( gr_FristSpawn, playerid, true );
 	Bit1_Set(gr_PlayerLoggedIn, playerid, true);
 	Bit1_Set(gr_PlayerLoggingIn, playerid, false);

@@ -1011,34 +1011,6 @@ hook OnPlayerTakeDamage(playerid, issuerid, Float: amount, weaponid, bodypart)
 			}	
 	    }
 	}
-	
-	new tmpString[128], dest[22];
-	if(issuerid != INVALID_PLAYER_ID)
-	{
-		if(PlayerInfo[playerid][pHealth] < GetPlayerHealth(playerid, health) || PlayerInfo[playerid][pArmour] < GetPlayerArmour(playerid, armour))
-		{
-			NetStats_GetIpPort(playerid, dest, sizeof(dest));
-			format(tmpString, sizeof(tmpString), "Anti-Cheat [IP: %s]: %s[%d] je moguci cheater, razlog: Health Hack.",
-				dest,
-				GetName(playerid,false),
-				playerid
-			);
-			ABroadCast(COLOR_RED,tmpString,1);
-		}
-		else if(PlayerInfo[playerid][pHealth] > GetPlayerHealth(playerid, health) || PlayerInfo[playerid][pArmour] > GetPlayerArmour(playerid, armour))
-		{
-			NetStats_GetIpPort(issuerid, dest, sizeof(dest));
-			format(tmpString, sizeof(tmpString), "Anti-Cheat [IP: %s]: %s[%d] je moguci cheater, razlog: Damage Hack.",
-				dest,
-				GetName(issuerid,false),
-				issuerid
-			);
-			ABroadCast(COLOR_RED,tmpString,1);
-			
-			SetPlayerHealth(playerid, PlayerInfo[playerid][pHealth]);
-			SetPlayerArmour(playerid, PlayerInfo[playerid][pArmour]);
-		}
-	}
 	return 0;
 }
 

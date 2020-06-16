@@ -566,8 +566,8 @@ CMD:admins(playerid, params[])
 
 CMD:payday(playerid, params[])
 {
-	new title[80];
-	format(title, sizeof(title), "* [%s]%s", PlayerInfo[playerid][pPayDayDate], GetName(playerid));
+	new title[64];
+	format(title, sizeof(title), "* [%s] %s", PlayerInfo[playerid][pPayDayDate], GetName(playerid));
 	ShowPlayerDialog(playerid, 0, DIALOG_STYLE_MSGBOX, title, PlayerInfo[playerid][pPayDayDialog], "Zatvori", "");
 	return 1;
 }
@@ -1038,6 +1038,7 @@ CMD:frisk(playerid, params[])
 	va_SendClientMessage(playerid, COLOR_WHITE, "	Toolkit: %s", PlayerInfo[giveplayerid][pToolkit] ? ("Da") : ("Ne"));
 	va_SendClientMessage(playerid, COLOR_WHITE, "	Kazetofon: %s", PlayerInfo[giveplayerid][pCDPlayer] ? ("Da") : ("Ne"));
 	va_SendClientMessage(playerid, COLOR_WHITE, "	Sat: %s", PlayerInfo[giveplayerid][pClock] ? ("Da") : ("Ne"));
+	va_SendClientMessage(playerid, COLOR_WHITE, "	Mobitel: %s", GetMobileName(PlayerInfo[playerid][pMobileModel]));
 	SendClientMessage(playerid, COLOR_LIGHTBLUE, "*_________________________ ORUZJA _________________________*");
 	for(new slot = 0; slot < 13; slot++)
 	{

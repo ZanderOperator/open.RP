@@ -42,7 +42,7 @@
 #define MAX_NPCS 								(1)
 
 #undef MAX_PLAYERS
-#define MAX_PLAYERS 							(300)
+#define MAX_PLAYERS 							(100)
 
 #undef MAX_VEHICLES
 #define MAX_VEHICLES                      		(1000)	// aSamp
@@ -66,10 +66,7 @@
 #include <fixes>
 // Streamer
 #include <streamer>
-#include <modelsizes>
-#define OD_METHOD METHOD_SPHERE
-#include <optidraw> // Dynamic Object Draw Distance Regulator via modelsizes
-
+#define OBJECT_STREAM_LIMIT		(700)
 // AntiCheat
 #include <Anti_cheat_pack>
 
@@ -202,7 +199,7 @@ native WP_Hash(buffer[], len, const str[]);
 #define WEB_URL									"forum.cityofangels-roleplay.com"
 
 // !Prilikom promjene SCRIPT_VERSION, OBAVEZNO ubaciti novi Update "Changelog.txt"u /scriptfiles folder!
-#define SCRIPT_VERSION							"CoA RP v18.3.6."
+#define SCRIPT_VERSION							"CoA RP v18.3.7."
 
 //custom name
 #define Dev_Name   								"Woo-Logan"
@@ -707,31 +704,7 @@ enum E_BIZNIS_INFO
 	bFurTxtId[ MAX_BIZNIS_FURNITURE_SLOTS ],
 	bFurColId[ MAX_BIZNIS_FURNITURE_SLOTS ],
 	bool:bFurLoaded,
-	//Gas Station
-    bGasPrice,
-	// workers
-	b_WorkerSQL[5],
-	b_Worker1[MAX_PLAYER_NAME+1],
-	b_Worker2[MAX_PLAYER_NAME+1],
-	b_Worker3[MAX_PLAYER_NAME+1],
-	b_Worker4[MAX_PLAYER_NAME+1],
-	b_Worker5[MAX_PLAYER_NAME+1],
-	b_Wrole1[32],
-	b_Wrole2[32],
-	b_Wrole3[32],
-	b_Wrole4[32],
-	b_Wrole5[32],
-	b_Wsalary[5],
-	b_Wearned[5],
-	b_WTime[5],
-	// vehicleid
-	b_VSQLID,
-	b_VehicleID,
-	bool: b_Vehicle,
-	bool: b_VSpawned,
-	b_VModel,
-	b_VColor,
-	Float: b_Vpos[4]
+    bGasPrice
 }
 new BizzInfo[MAX_BIZZS][E_BIZNIS_INFO];
 
@@ -1032,6 +1005,12 @@ enum {
 
 	//adminmsg
 	DIALOG_ADMIN_MSG,
+	
+	//CreateObjects,
+	DIALOG_CREATE_COBJECT,
+	DIALOG_DELETE_COBJECT,
+	DIALOG_ADMIN_DEL_COBJECT,
+	DIALOG_EDIT_COBJECT,
 
 	//Pm
 	DIALOG_ADMINPM,
@@ -1375,6 +1354,9 @@ enum {
 
 	// APB
 	DIALOG_APB_CHECK,
+	DIALOG_APB_OPIS,
+	DIALOG_APB_TYPE,
+	DIALOG_APB_NAME,
 
 	// AR
 	DIALOG_AR_NAME,
@@ -1384,6 +1366,7 @@ enum {
 	DIALOG_MDC_MAIN,
 	DIALOG_MDC_PLAYER,
 	DIALOG_MDC_VEHICLE,
+	DIALOG_MDC_PHONE,
 
 	DIALOG_MDC_RECORD,
 	DIALOG_MDC_CRECORD,
@@ -1394,7 +1377,7 @@ enum {
 	DIALOG_MDC_CTICKET,
 	DIALOG_MDC_DTICKET_ID,
 	DIALOG_MDC_DTICKET,
-
+	
 	DIALOG_ROADBLOCKS,
 	DIALOG_ROADBLOCK_LIST,
 	DIALOG_ACTIVE_ROADBLOCKS,
@@ -1908,7 +1891,6 @@ new
 #include "modules/Server/Zones.pwn"
 #include "modules/Server/Utils.pwn"
 #include "modules/Server/Pickups.pwn"
-//#include "modules/Server/Scramble.pwn"
 #include "modules/Systems/Garages.pwn"
 #include "modules/Systems/Experience.pwn"
 #include "modules/Systems/NOS.pwn"
@@ -1921,6 +1903,7 @@ new
 #include "modules/Admin/Connections.pwn"
 #include "modules/Admin/BlockIp.pwn"
 #include "modules/Admin/Report.pwn"
+
 // Misc
 #include "modules/Char/Jobs/Core.pwn"
 #include "modules/Char/ActorSystem.pwn"
@@ -1930,23 +1913,19 @@ new
 #include "modules/Server/AC_Core.pwn"
 #include "modules/Server/AntiCheat.pwn"
 #include "modules/Server/AntiBunnyHop.pwn"
-//#include "modules/Server/AntiAimBot.pwn"
 #include "modules/Char/Bombs.pwn"
 #include "modules/Systems/GPS.pwn"
-#include "modules/Systems/SpeedoK.pwn"
+#include "modules/Systems/Speedo.pwn"
 #include "modules/Systems/Vehicles.pwn"
 #include "modules/Systems/Orgs.pwn"
 #include "modules/Systems/WepPackage.pwn"
 #include "modules/Systems/Warehouse.pwn"
 #include "modules/Systems/Events/Dakar.pwn"
 #include "modules/Systems/Events/Quad.pwn"
-// #include "modules/Systems/Events/LastManStanding.pwn" - izbaceno, khawaja 2020
 #include "modules/Char/BoomBox.pwn"
 #include "modules/Char/Death.pwn"
-//#include "modules/Char/Corpse.pwn"
 #include "modules/Admin/Core.pwn"
 #include "modules/Char/Jobs/Taxi.pwn"
-#include "modules/Char/Jobs/newfisher.pwn"
 #include "modules/Player/Core.pwn"
 #include "modules/Player/Help.pwn"
 
@@ -1958,13 +1937,12 @@ new
 // Systems
 #include "modules/Systems/Ammunation.pwn"
 #include "modules/Systems/Biznis.pwn"
-#include "modules/Systems/NewTuning.pwn"
+#include "modules/Systems/Tuning.pwn"
 #include "modules/Systems/CarOwnership.pwn"
 #include "modules/Systems/Crib.pwn"
 #include "modules/Systems/HouseStorage.pwn"
 #include "modules/Systems/Complex.pwn"
 #include "modules/Systems/Rentveh.pwn"
-#include "modules/Systems/VeronaMall.pwn"
 #include "modules/Systems/LSN.pwn"
 #include "modules/Systems/Furniture.pwn"
 #include "modules/Systems/ExteriorFurniture.pwn"
@@ -1974,9 +1952,8 @@ new
 #include "modules/Systems/PawnShop.pwn"
 #include "modules/Systems/Toll.pwn"
 #include "modules/Systems/BasketballNew.pwn"// Update
-//#include "modules/Systems/Aviation.pwn"
 
-#include "modules/Char/DrugNEW.pwn"
+#include "modules/Char/Drugs.pwn"
 
 // LSPD
 #include "modules/Systems/LSPD/Core.pwn"
@@ -2010,14 +1987,12 @@ new
 #include "modules/Char/Ads.pwn"
 #include "modules/Char/CreateObjects.pwn"
 #include "modules/Char/Travel.pwn"
-//#include "modules/Char/Dogs.pwn"
 #include "modules/Char/WeaponAttach.pwn"
 
 // Casino
 #include "modules/Systems/Casino/Rulet.pwn"
 #include "modules/Systems/Casino/BlackJack.pwn"
-//#include "modules/Systems/Casino/Poker.pwn"
-#include "modules/Systems/Casino/PokerNew.pwn"
+#include "modules/Systems/Casino/Poker.pwn"
 
 // Char
 #include "modules/Char/Gym.pwn"
@@ -2029,17 +2004,14 @@ new
 #include "modules/Char/Jobs/Mower.pwn"
 #include "modules/Char/Jobs/Mechanic.pwn"
 #include "modules/Char/Jobs/Crafter.pwn"
-//#include "modules/Char/Jobs/Burglar.pwn"
 #include "modules/Char/Jobs/Farmer.pwn"
 #include "modules/Char/Jobs/Jacker.pwn"
-//#include "modules/Char/Jobs/Rudar.pwn"
-//#include "modules/Char/Jobs/Trucker.pwn"
 #include "modules/Char/Jobs/Logger.pwn"
 #include "modules/Systems/RobStorage.pwn"
 #include "modules/Char/Jobs/Impounder.pwn"
 #include "modules/Char/Jobs/Transporter.pwn"
 // Hobiji
-//#include "modules/Char/Hobby/Fishmen.pwn"
+#include "modules/Char/Hobby/Fisher.pwn"
 #include "modules/Char/Jobs/Hunter.pwn"
 
 // Player
@@ -2050,10 +2022,10 @@ new
 #include "modules/Player/RPQuiz.pwn"
 #include "modules/Player/PayDay.pwn"
 #include "modules/Player/CMD.pwn"
-//#include "modules/Player/Inventory.pwn"
-// Ekonomija & cirkularne poruke
+
+// Ekonomija
 #include "modules/Server/Economy.pwn"
-//#include "modules/Server/ServerTips.pwn"
+
 /*
 	########    ###     ######  ##    ##  ######
 	   ##      ## ##   ##    ## ##   ##  ##    ##
@@ -2235,7 +2207,6 @@ ResetPlayerVariables(playerid)
     GotRod[playerid] = 0;
 	//
 	PhoneStatus[playerid] = 0;
-	MDC[playerid] = 0;
 	//PD Callsign
 	format(PlayerInfo[playerid][pCallsign], 60, "");
 	//rBits
@@ -3074,7 +3045,7 @@ public OnGameModeInit()
 	ResetHouseEnumerator();
 	ResetPlayerEnumerator();
 
-	 // Loadanje custom modela(alternativa za artconfig.txt)
+	 // Loadanje custom modela iz artconfig.pwn modula(alternativa za artconfig.txt)
 	LoadCustomModels();
 
 	// SQL stuff
@@ -3091,7 +3062,7 @@ public OnGameModeInit()
 	MapAndreas_Init(MAP_ANDREAS_MODE_MINIMAL, "scriptfiles/SAmin.hmap");
 
 	// Streamer config
-	Streamer_SetVisibleItems(STREAMER_TYPE_OBJECT, 600, -1);
+	Streamer_SetVisibleItems(STREAMER_TYPE_OBJECT, OBJECT_STREAM_LIMIT, -1);
 	Streamer_SetVisibleItems(STREAMER_TYPE_PICKUP, 3900, -1);
 	Streamer_SetVisibleItems(STREAMER_TYPE_3D_TEXT_LABEL, 1000, -1);
 
@@ -3150,7 +3121,7 @@ public OnGameModeInit()
 
 	// Global Loads
 	GMX = 2;
-	cseconds = 300;
+	cseconds = 120; // 2 min
 	LoadGPS();
 	LoadHstorage(); // House Storage Load
 	LoadCityStuff();
@@ -4349,10 +4320,10 @@ public OnPlayerClickTextDraw(playerid, Text:clickedid)
 			DestroyPreviewScene(playerid);
 			PlayerPlaySound(playerid, 1085, 0.0, 0.0, 0.0);
 		}
-		else if( MDCK1[playerid] != PlayerText:INVALID_TEXT_DRAW ) {
-			DestroyMDC(playerid);
-			MDC[playerid] = 0;
-		}
+		else if( MDCBg1[ playerid ] != PlayerText:INVALID_TEXT_DRAW ) 
+		{
+			DestroyMDCTextDraws(playerid);
+		}	
         return 1;
 	}
 	return 1;

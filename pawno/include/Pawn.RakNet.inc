@@ -1,7 +1,7 @@
 /*
  * The MIT License (MIT)
  *
- * Copyright (c) 2017-2019 urShadow
+ * Copyright (c) 2016-2020 urShadow
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -25,7 +25,7 @@
 #if !defined PAWNRAKNET_INC_
     #define PAWNRAKNET_INC_
 
-    #define PAWNRAKNET_INCLUDE_VERSION 130
+    #define PAWNRAKNET_INCLUDE_VERSION 140
 
     #define PR_MAX_HANDLERS 255
 
@@ -35,6 +35,8 @@
         PR_INCOMING_RPC,
         PR_OUTCOMING_PACKET,
         PR_OUTCOMING_RPC,
+        PR_INCOMING_RAW_PACKET,
+
         PR_NUMBER_OF_EVENT_TYPES
     };
 
@@ -65,7 +67,13 @@
         PR_FLOAT3,
         PR_FLOAT4,
         PR_VECTOR,
-        PR_NORM_QUAT
+        PR_NORM_QUAT,
+
+        PR_STRING8,
+        PR_STRING32,
+
+        // shift the write or read pointer
+        PR_IGNORE_BITS,
     };
 
     enum PR_PacketPriority
@@ -89,38 +97,26 @@
         public _pawnraknet_version = PAWNRAKNET_INCLUDE_VERSION;
         #pragma unused _pawnraknet_version
 
-        #define IRPC:%0(%1) \
-        forward pr_rir_%0(); \
-        public pr_rir_%0() \
-            PR_RegHandler(%0, "pr_ir_"#%0, PR_INCOMING_RPC); \
-        forward pr_ir_%0(%1); \
-        public pr_ir_%0(%1)
+        #define PR_BITS_TO_BYTES(%0) (((%0)+7)>>3)
+        #define PR_BYTES_TO_BITS(%0) ((%0)<<3)
 
-        #define IPacket:%0(%1) \
-        forward pr_rip_%0(); \
-        public pr_rip_%0() \
-            PR_RegHandler(%0, "pr_ip_"#%0, PR_INCOMING_PACKET); \
-        forward pr_ip_%0(%1); \
-        public pr_ip_%0(%1)
+        #define PR_Handler<%0,%1>:%2(%3) \
+        forward pr_r%1_%2(); \
+        public pr_r%1_%2() PR_RegHandler(%2,"pr_"#%1"_"#%2,%0); \
+        forward pr_%1_%2(%3); \
+        public pr_%1_%2(%3)
 
-        #define ORPC:%0(%1) \
-        forward pr_ror_%0(); \
-        public pr_ror_%0() \
-            PR_RegHandler(%0, "pr_or_"#%0, PR_OUTCOMING_RPC); \
-        forward pr_or_%0(%1); \
-        public pr_or_%0(%1)
+        #define IPacket:%0(%1) PR_Handler<PR_INCOMING_PACKET,ip>:%0(%1)
+        #define IRPC:%0(%1) PR_Handler<PR_INCOMING_RPC,ir>:%0(%1)
+        #define OPacket:%0(%1) PR_Handler<PR_OUTCOMING_PACKET,op>:%0(%1)
+        #define ORPC:%0(%1) PR_Handler<PR_OUTCOMING_RPC,or>:%0(%1)
+        #define IRawPacket:%0(%1) PR_Handler<PR_INCOMING_RAW_PACKET,irp>:%0(%1)
 
-        #define OPacket:%0(%1) \
-        forward pr_rop_%0(); \
-        public pr_rop_%0() \
-            PR_RegHandler(%0, "pr_op_"#%0, PR_OUTCOMING_PACKET); \
-        forward pr_op_%0(%1); \
-        public pr_op_%0(%1)
-
-        #define IncomingRPC IRPC
-        #define OutcomingRPC ORPC
         #define IncomingPacket IPacket
+        #define IncomingRPC IRPC
         #define OutcomingPacket OPacket
+        #define OutcomingRPC ORPC
+        #define IncomingRawPacket IRawPacket
 
         #define PR_MAX_WEAPON_SLOTS 13
 
@@ -235,16 +231,38 @@
             PR_slotWeaponId[PR_MAX_WEAPON_SLOTS],
             PR_slotWeaponAmmo[PR_MAX_WEAPON_SLOTS],
 
-            PR_slotUpdated[PR_MAX_WEAPON_SLOTS] // helping field
+            PR_slotUpdated[PR_MAX_WEAPON_SLOTS] // internal helping field
         };
 
-        native BS_Send(BitStream:bs, playerid, PR_PacketPriority:priority = PR_HIGH_PRIORITY, PR_PacketReliability:reliability = PR_RELIABLE_ORDERED);
-        native BS_RPC(BitStream:bs, playerid, rpcid, PR_PacketPriority:priority = PR_HIGH_PRIORITY, PR_PacketReliability:reliability = PR_RELIABLE_ORDERED);
+        enum PR_StatsUpdate
+        {
+            PR_money,
+            PR_drunkLevel
+        };
 
-        native BS_EmulateIncomingPacket(BitStream:bs, playerid);
-        native BS_EmulateIncomingRPC(BitStream:bs, playerid, rpcid);
+        enum PR_RconCommand
+        {
+            PR_command[256]
+        };
+
+        native PR_SendPacket(BitStream:bs, playerid, PR_PacketPriority:priority = PR_HIGH_PRIORITY, PR_PacketReliability:reliability = PR_RELIABLE_ORDERED);
+        native PR_SendRPC(BitStream:bs, playerid, rpcid, PR_PacketPriority:priority = PR_HIGH_PRIORITY, PR_PacketReliability:reliability = PR_RELIABLE_ORDERED);
+
+        #pragma deprecated Use PR_SendPacket instead
+        native BS_Send(BitStream:bs, playerid, PR_PacketPriority:priority = PR_HIGH_PRIORITY, PR_PacketReliability:reliability = PR_RELIABLE_ORDERED) = PR_SendPacket;
+        #pragma deprecated Use PR_SendRPC instead
+        native BS_RPC(BitStream:bs, playerid, rpcid, PR_PacketPriority:priority = PR_HIGH_PRIORITY, PR_PacketReliability:reliability = PR_RELIABLE_ORDERED) = PR_SendRPC;
+
+        native PR_EmulateIncomingPacket(BitStream:bs, playerid);
+        native PR_EmulateIncomingRPC(BitStream:bs, playerid, rpcid);
+
+        #pragma deprecated Use PR_EmulateIncomingPacket instead
+        native BS_EmulateIncomingPacket(BitStream:bs, playerid) = PR_EmulateIncomingPacket;
+        #pragma deprecated Use PR_EmulateIncomingRPC instead
+        native BS_EmulateIncomingRPC(BitStream:bs, playerid, rpcid) = PR_EmulateIncomingRPC;
 
         native BitStream:BS_New();
+        native BitStream:BS_NewCopy(BitStream:bs);
         native BS_Delete(&BitStream:bs);
 
         native BS_Reset(BitStream:bs);
@@ -289,6 +307,13 @@
         #define BS_ReadCompressedString(%0,%1,%2) BS_ReadValue(%0,PR_CSTRING,%1,%2)
 
         #define BS_ReadBits(%0,%1,%2) BS_ReadValue(%0,PR_BITS,%1,%2)
+        #define BS_ReadFloat3(%0,%1) BS_ReadValue(%0,PR_FLOAT3,%1)
+        #define BS_ReadFloat4(%0,%1) BS_ReadValue(%0,PR_FLOAT4,%1)
+        #define BS_ReadVector(%0,%1) BS_ReadValue(%0,PR_VECTOR,%1)
+        #define BS_ReadNormQuat(%0,%1) BS_ReadValue(%0,PR_NORM_QUAT,%1)
+
+        #define BS_ReadString8(%0,%1) BS_ReadValue(%0,PR_STRING8,%1,sizeof(%1))
+        #define BS_ReadString32(%0,%1) BS_ReadValue(%0,PR_STRING32,%1,sizeof(%1))
 
         #define BS_WriteInt8(%0,%1) BS_WriteValue(%0,PR_INT8,%1)
         #define BS_WriteInt16(%0,%1) BS_WriteValue(%0,PR_INT16,%1)
@@ -311,6 +336,13 @@
         #define BS_WriteCompressedString(%0,%1) BS_WriteValue(%0,PR_CSTRING,%1)
 
         #define BS_WriteBits(%0,%1,%2) BS_WriteValue(%0,PR_BITS,%1,%2)
+        #define BS_WriteFloat3(%0,%1) BS_WriteValue(%0,PR_FLOAT3,%1)
+        #define BS_WriteFloat4(%0,%1) BS_WriteValue(%0,PR_FLOAT4,%1)
+        #define BS_WriteVector(%0,%1) BS_WriteValue(%0,PR_VECTOR,%1)
+        #define BS_WriteNormQuat(%0,%1) BS_WriteValue(%0,PR_NORM_QUAT,%1)
+
+        #define BS_WriteString8(%0,%1) BS_WriteValue(%0,PR_STRING8,%1)
+        #define BS_WriteString32(%0,%1) BS_WriteValue(%0,PR_STRING32,%1)
 
         #define PR_EXPAND_ARR3(%0) %0[0],%0[1],%0[2]
         #define PR_EXPAND_ARR4(%0) %0[0],%0[1],%0[2],%0[3]
@@ -613,6 +645,23 @@
             }
         }
 
+        stock BS_ReadStatsUpdate(BitStream:bs, data[PR_StatsUpdate])
+        {
+            BS_ReadValue(
+                bs,
+                PR_INT32, data[PR_money],
+                PR_INT32, data[PR_drunkLevel]
+            );
+        }
+
+        stock BS_ReadRconCommand(BitStream:bs, data[PR_RconCommand])
+        {
+            BS_ReadValue(
+                bs,
+                PR_STRING32, data[PR_command], sizeof(data[PR_command])
+            );
+        }
+
         stock BS_WriteOnFootSync(BitStream:bs, data[PR_OnFootSync], outcoming = false)
         {
             if (outcoming) {
@@ -862,10 +911,88 @@
             }
         }
 
+        stock BS_WriteStatsUpdate(BitStream:bs, data[PR_StatsUpdate])
+        {
+            BS_WriteValue(
+                bs,
+                PR_INT32, data[PR_money],
+                PR_INT32, data[PR_drunkLevel]
+            );
+        }
+
+        stock BS_WriteRconCommand(BitStream:bs, data[PR_RconCommand])
+        {
+            BS_WriteValue(
+                bs,
+                PR_STRING32, data[PR_command]
+            );
+        }
+
+        stock PR_SendPacketToPlayerStream(BitStream:bs, playerid, PR_PacketPriority:priority = PR_HIGH_PRIORITY, PR_PacketReliability:reliability = PR_RELIABLE_ORDERED)
+        {
+            #if defined foreach
+            foreach (new i : Player) {
+            #else
+            for (new i = GetPlayerPoolSize(); i >= 0; --i) {
+            #endif
+                if (!IsPlayerStreamedIn(i, playerid)) {
+                    continue;
+                }
+
+                PR_SendPacket(bs, i, priority, reliability);
+            }
+        }
+
+        stock PR_SendRPCToPlayerStream(BitStream:bs, playerid, rpcid, PR_PacketPriority:priority = PR_HIGH_PRIORITY, PR_PacketReliability:reliability = PR_RELIABLE_ORDERED)
+        {
+            #if defined foreach
+            foreach (new i : Player) {
+            #else
+            for (new i = GetPlayerPoolSize(); i >= 0; --i) {
+            #endif
+                if (!IsPlayerStreamedIn(i, playerid)) {
+                    continue;
+                }
+
+                PR_SendRPC(bs, i, rpcid, priority, reliability);
+            }
+        }
+
+        stock PR_SendPacketToVehicleStream(BitStream:bs, vehicleid, excludedplayerid = INVALID_PLAYER_ID, PR_PacketPriority:priority = PR_HIGH_PRIORITY, PR_PacketReliability:reliability = PR_RELIABLE_ORDERED)
+        {
+            #if defined foreach
+            foreach (new i : Player) {
+            #else
+            for (new i = GetPlayerPoolSize(); i >= 0; --i) {
+            #endif
+                if (i == excludedplayerid || !IsVehicleStreamedIn(vehicleid, i)) {
+                    continue;
+                }
+
+                PR_SendPacket(bs, i, priority, reliability);
+            }
+        }
+
+        stock PR_SendRPCToVehicleStream(BitStream:bs, vehicleid, rpcid, excludedplayerid = INVALID_PLAYER_ID, PR_PacketPriority:priority = PR_HIGH_PRIORITY, PR_PacketReliability:reliability = PR_RELIABLE_ORDERED)
+        {
+            #if defined foreach
+            foreach (new i : Player) {
+            #else
+            for (new i = GetPlayerPoolSize(); i >= 0; --i) {
+            #endif
+                if (i == excludedplayerid || !IsVehicleStreamedIn(vehicleid, i)) {
+                    continue;
+                }
+
+                PR_SendRPC(bs, i, rpcid, priority, reliability);
+            }
+        }
+
         forward OnIncomingPacket(playerid, packetid, BitStream:bs);
         forward OnIncomingRPC(playerid, rpcid, BitStream:bs);
         forward OnOutcomingPacket(playerid, packetid, BitStream:bs);
         forward OnOutcomingRPC(playerid, rpcid, BitStream:bs);
+        forward OnIncomingRawPacket(playerid, packetid, BitStream:bs);
 
         #if defined FILTERSCRIPT
             public OnFilterScriptInit()

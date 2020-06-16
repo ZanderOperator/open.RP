@@ -119,6 +119,27 @@ new MaskColors[][] =
 	{ 0x808000FF , "Olive"}
 };
 
+enum E_PHONE_MODEL_INFO
+{
+	phModelID,
+	phModelName[ 30 ],
+	phModelPrice
+}
+
+new	PhoneModels[][ E_PHONE_MODEL_INFO ] = {
+	{-2022, "Samsung Galaxy S6"				, 350},
+	{-2027, "Samsung Galaxy Note"			, 330},
+	{18867, "Nokia 5210"					, 79},
+	{18868, "Sony Ericsson T18"				, 50},
+	{-2025, "iPhone 6s"						, 350},
+	{-2023, "iPhone 7"						, 400},
+	{-2024, "Motorola StarPhone"			, 300},
+	{-2026, "Huaweii G7"					, 350},
+	{18873, "Motorola StarTAC Rainbow"		, 175},
+	{18873, "Nokia 3210"					, 89}
+};
+
+
 // rBits
 new
 	Bit1:	gr_MobileOn				<MAX_PLAYERS>  	= { Bit1: true, ...},
@@ -411,12 +432,32 @@ stock PhoneMessage(playerid, phonestring[])
 {
 	foreach (new i : Player)
 	{
-	    if( ProxDetectorS(5.0, playerid, i) )
+	    if( ProxDetectorS(5.0, playerid, i) && playerid != i)
 	    {
 	    	SendClientMessage(i, COLOR_FADE1, phonestring);
 	    }
     }
     return 1;
+}
+stock GetMobileName(modelid)
+{
+	new mobilename[30],
+		bool:found = false;
+		
+	for(new i = 0; i < sizeof(PhoneModels); i++)
+	{
+		if(PhoneModels[i][phModelID] == modelid)
+		{
+			strcat(mobilename, PhoneModels[i][phModelName], 30);
+			found = true;
+			break;
+		}
+	}
+	
+	if(modelid == 0 || !found)
+		format(mobilename, 30, "Ne posjeduje ga");
+	
+	return mobilename;
 }
 
 forward OnPlayerMobileLoad(playerid);
@@ -2518,8 +2559,6 @@ stock GetPlayerSignal(playerid)
 
 stock PlayerHangup(playerid)
 {
-	new giveplayerid = PlayerCallPlayer[playerid];
-
 	// pozvatelj
 	Bit8_Set( gr_RingingTime, playerid, 0 );
 	Bit1_Set( gr_CanHangup, playerid, false );
@@ -2531,17 +2570,21 @@ stock PlayerHangup(playerid)
 	PlayerCallPlayer[ playerid ] = INVALID_PLAYER_ID;
 	Bit1_Set( gr_PlayerUsingGov		, playerid, false );
 
-	// osoba koju je nazvao
-	if(!IsPlayerConnected(giveplayerid)) return 1;
-	Bit8_Set( gr_RingingTime, giveplayerid, 0 );
-	Bit1_Set( gr_CanHangup, giveplayerid, false );
-	KillTimer(PlayerMobileRingTimer[giveplayerid]);
-	CallingId[ giveplayerid ] 	=  999;
-	StartCallTimestamp[giveplayerid] = 0;
-	CancelPlayerPhone(giveplayerid);
-	SendClientMessage( giveplayerid, COLOR_YELLOW, "** Poziv zavrsen **");
-	PlayerCallPlayer[ giveplayerid ] = INVALID_PLAYER_ID;
-	Bit1_Set( gr_PlayerUsingGov	, giveplayerid, false );
+	new giveplayerid = PlayerCallPlayer[playerid];
+	if(giveplayerid != INVALID_PLAYER_ID)
+	{
+		// osoba koju je nazvao
+		if(!IsPlayerConnected(giveplayerid)) return 1;
+		Bit8_Set( gr_RingingTime, giveplayerid, 0 );
+		Bit1_Set( gr_CanHangup, giveplayerid, false );
+		KillTimer(PlayerMobileRingTimer[giveplayerid]);
+		CallingId[ giveplayerid ] 	=  999;
+		StartCallTimestamp[giveplayerid] = 0;
+		CancelPlayerPhone(giveplayerid);
+		SendClientMessage( giveplayerid, COLOR_YELLOW, "** Poziv zavrsen **");
+		PlayerCallPlayer[ giveplayerid ] = INVALID_PLAYER_ID;
+		Bit1_Set( gr_PlayerUsingGov	, giveplayerid, false );
+	}
 	return 1;
 }
 
@@ -2631,10 +2674,7 @@ hook OnPlayerText(playerid, text[])
 			SendRadioMessage(2, COLOR_WHITE, wanted);
 			SendRadioMessage(2, COLOR_LIGHTRED,"________________________________________");
 		    SendClientMessage(playerid, COLOR_GRAD2, "Prekinuli su...");
-			CallingId[ playerid ] =  999;
-			SetPlayerSpecialAction(playerid, SPECIAL_ACTION_STOPUSECELLPHONE);
-			if( IsPlayerAttachedObjectSlotUsed(playerid, 9) )
-				RemovePlayerAttachedObject( playerid, 9 );
+			PlayerHangup(playerid);
 			return 0;
 		}
 		if(CallingId[ playerid ] == 913) {
@@ -2669,10 +2709,7 @@ hook OnPlayerText(playerid, text[])
   	        SendRadioMessage(1, 0x418BFBFF, "* __________________________________________ *");
 			SendRadioMessage(3, 0x418BFBFF, "* __________________________________________ *");
 
-			CallingId[ playerid ] =  999;
-			SetPlayerSpecialAction(playerid, SPECIAL_ACTION_STOPUSECELLPHONE);
-			if( IsPlayerAttachedObjectSlotUsed(playerid, 9) )
-				RemovePlayerAttachedObject( playerid, 9 );
+			PlayerHangup(playerid);
 			return 0;
 		}
 		if(CallingId[ playerid ] == 912) {
@@ -2719,8 +2756,6 @@ hook OnPlayerText(playerid, text[])
 				{
 					va_SendClientMessage(playerid, COLOR_YELLOW, "Maska 64361 kaze (mobitel): Nazovi me za %d minuta, nemam sad vremena zauzet sam.", PlayerInfo[playerid][pDrugOrder]);
 					PlayerHangup(playerid);
-					CallingId[ playerid ] =  999;
-					SetPlayerSpecialAction(playerid, SPECIAL_ACTION_STOPUSECELLPHONE);
 					return 0;
 				}
 				new 
@@ -2743,14 +2778,10 @@ hook OnPlayerText(playerid, text[])
             {
                 SendClientMessage(playerid, COLOR_YELLOW, "Maska 64361 kaze (mobitel): Dobili ste pogresan broj. Ugodna ostatak dana!");
 				PlayerHangup(playerid);
-				CallingId[ playerid ] =  999;
-                SetPlayerSpecialAction(playerid, SPECIAL_ACTION_STOPUSECELLPHONE);
 			}
 		 	else 
 			{
 				SendClientMessage(playerid, COLOR_YELLOW, "Maska 64361 kaze (mobitel): sta mumlas koju picku materinu, znas li normalno izgovorit?");
-                CallingId[ playerid ] =  999;
-                SetPlayerSpecialAction(playerid, SPECIAL_ACTION_STOPUSECELLPHONE);
                 PlayerHangup(playerid);
 				return 0;
 			}
@@ -2769,11 +2800,7 @@ hook OnPlayerText(playerid, text[])
 			SendJobMessage(3, 0x418BFBFF, "* __________________________________________ *");
 
 			SendClientMessage(playerid, COLOR_YELLOW, "Dispatcher: Aktivnim mehanicarima je javljen vas poziv. Pricekajte na prijavljenoj lokaciji!");
-
-			CallingId[ playerid ] =  999;
-			SetPlayerSpecialAction(playerid, SPECIAL_ACTION_STOPUSECELLPHONE);
-			if( IsPlayerAttachedObjectSlotUsed(playerid, 9) )
-				RemovePlayerAttachedObject( playerid, 9 );
+			PlayerHangup(playerid);
 			return 0;
 		}
 		if( CallingId[ playerid ] == 444 ) {
@@ -2786,12 +2813,8 @@ hook OnPlayerText(playerid, text[])
 			SendJobMessage(6, COLOR_WHITE, dispatcher);
 			SendJobMessage(6, COLOR_YELLOW, "* __________________________________________ *");
 
-			SendMessage(playerid, MESSAGE_TYPE_INFO, "Aktivnim Taxistama je javljen vas poziv. Pricekajte na prijavljenoj lokaciji.");
-
-			CallingId[ playerid ] =  999;
-			SetPlayerSpecialAction(playerid, SPECIAL_ACTION_STOPUSECELLPHONE);
-			if( IsPlayerAttachedObjectSlotUsed(playerid, 9) )
-				RemovePlayerAttachedObject( playerid, 9 );
+			SendClientMessage(playerid, COLOR_YELLOW, "Aktivnim Taxistama je javljen vas poziv. Pricekajte na prijavljenoj lokaciji!");
+			PlayerHangup(playerid);
 			return 0;
 		}
 		new
@@ -2813,20 +2836,30 @@ hook OnPlayerText(playerid, text[])
 
 		PhoneMessage(playerid, mobileText); // Proxy Detector da se vidi sta igrac prica okolo njega
 
+		if( Bit1_Get( gr_PlayerUsingGov, playerid ) )
+		{
+			format( mobileText, 150, "%s(govornica): %s",
+				PrintAccent( playerid ),
+				text
+			);
+		}
+		else
+		{
+			new contactstring[12];
+			format(contactstring, 12, "%s", GetContactNumberName(gplayerid, PlayerInfo[playerid][pMobileNumber]));
+			format( mobileText, 150, "%s %s(mobitel): %s",
+				contactstring,
+				PrintAccent( playerid ),
+				text
+			);
+		}
+			
 		if( Bit16_Get( gr_PlayerTracing, playerid ) != INVALID_PLAYER_ID )
 			SendClientMessage( Bit16_Get( gr_PlayerTracing, playerid ), COLOR_YELLOW, mobileText);
 		else if( Bit16_Get( gr_PlayerTracing, gplayerid ) != INVALID_PLAYER_ID )
 			SendClientMessage( Bit16_Get( gr_PlayerTracing, gplayerid ), COLOR_YELLOW, mobileText);
 
-		new contactstring[12];
-		format(contactstring, 12, "%s", GetContactNumberName(gplayerid, PlayerInfo[playerid][pMobileNumber]));
-		format( mobileText, 150, "%s %s(mobitel): %s",
-			contactstring,
-			PrintAccent( playerid ),
-			text
-		);
 		SendClientMessage( gplayerid, COLOR_YELLOW, mobileText );
-
 	}
 	return 0;
 }

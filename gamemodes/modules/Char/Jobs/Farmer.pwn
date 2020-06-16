@@ -1753,7 +1753,7 @@ CMD:eggs(playerid, params[])
 				GetVehiclePos(PlayerInfo[playerid][pSpawnedCar], X, Y, Z);
 				if( !IsPlayerInRangeOfPoint(playerid, 4.0, X, Y, Z)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne nalazite se blizu svog kamiona!");
 
-				if( TruckInfo[playerid][tLimit] == 20)
+				if( TruckInfo[playerid][tLimit] >= 20)
 				{
 					SendMessage(playerid, MESSAGE_TYPE_ERROR, "Kamion je pun!");
 					return SendClientMessage(playerid, COLOR_RED, "[ ! ] Vozite do tvornice za preradu jaja i kucajte /eggs sell kako bi prodali jaja.");
@@ -1783,7 +1783,7 @@ CMD:eggs(playerid, params[])
 				GetVehiclePos(PlayerInfo[playerid][pSpawnedCar], X, Y, Z);
 				if( !IsPlayerInRangeOfPoint(playerid, 4.0, X, Y, Z)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne nalazite se blizu svog kamiona!");
 
-				if( TruckInfo[playerid][tLimit] == 20)
+				if( TruckInfo[playerid][tLimit] >= 20)
 				{
 					SendMessage(playerid, MESSAGE_TYPE_ERROR, "Kamion je pun!");
 					return SendClientMessage(playerid, COLOR_RED, "[ ! ] Vozite do tvornice za preradu jaja i kucajte /eggs sell kako bi prodali jaja.");
@@ -1813,7 +1813,7 @@ CMD:eggs(playerid, params[])
 				GetVehiclePos(PlayerInfo[playerid][pSpawnedCar], X, Y, Z);
 				if( !IsPlayerInRangeOfPoint(playerid, 4.0, X, Y, Z)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne nalazite se blizu svog kamiona!");
 
-				if( TruckInfo[playerid][tLimit] == 20)
+				if( TruckInfo[playerid][tLimit] >= 20)
 				{
 					SendMessage(playerid, MESSAGE_TYPE_ERROR, "Kamion je pun!");
 					return SendClientMessage(playerid, COLOR_RED, "[ ! ] Vozite do tvornice za preradu jaja i kucajte /eggs sell kako bi prodali jaja.");

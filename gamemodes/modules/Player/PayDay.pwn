@@ -33,7 +33,11 @@ GivePlayerPayCheck(playerid)
 		p_dialog[2048],
 		f_dialog[256];
 
-	format(p_dialog, sizeof(p_dialog), "\t\t\t\t\t");
+	PlayerInfo[playerid][pPayDayDate][0] = EOS;
+	strcat(PlayerInfo[playerid][pPayDayDate], ReturnDate(), 32);
+	
+	format(p_dialog, sizeof(p_dialog), "\t %s - Financijsko izvjesce - %s", PlayerInfo[playerid][pPayDayDate], GetName(playerid));
+	
 	// Pretplata na CRYPTO 50 dolara
 	if(PlayerInfo[playerid][pCryptoNumber] != 0 || PlayerInfo[playerid][pMobileCost] > 0)
 	{
@@ -49,7 +53,7 @@ GivePlayerPayCheck(playerid)
 	// Mobilna pretplata - 1$ po SMS-u, 2$ po minuti poziva
 	if(PlayerInfo[playerid][pMobileCost] > 0)
 	{
-		format(f_dialog, sizeof(f_dialog), "\n\tMobilna pretplata: -%s", FormatNumber(PlayerInfo[playerid][pMobileCost])); 
+		format(f_dialog, sizeof(f_dialog), "\n\tMobilna pretplata: -%d$", PlayerInfo[playerid][pMobileCost]); 
 		strcat(p_dialog,f_dialog, sizeof(p_dialog));
 		PlayerToBudgetMoney(playerid, PlayerInfo[playerid][pMobileCost]);
 		PlayerInfo[playerid][pMobileCost] = 0;
@@ -247,7 +251,7 @@ GivePlayerPayCheck(playerid)
 		BudgetToPlayerBankMoney(playerid, orgsalary); 													// Novac iz prora?una igra?u na bank. racun
 		OrgToPlayerBankMoney( playerid, FactionInfo[PlayerInfo[playerid][pMember]][fType], orgbonus); 		// Novac iz factionbanke igra?u na bank.ra?un.
 		orgsalary += orgbonus;
-		format(f_dialog,sizeof(f_dialog), "\n\tPlaca: %s (Bonus: %s)", FormatNumber(orgsalary), FormatNumber(orgbonus));
+		format(f_dialog,sizeof(f_dialog), "\n\tPlaca: +%s (Bonus: %s)", FormatNumber(orgsalary), FormatNumber(orgbonus));
 		strcat(p_dialog,f_dialog, sizeof(p_dialog));
 	}
 	else { // Ako nema posao dobiva socijalnu pomoc
@@ -413,18 +417,15 @@ GivePlayerPayCheck(playerid)
 	SavePlayerExperience(playerid);
 	
 	// Dialog - Payday
-	new title[80];
+	new title[64];
 	if(!IsPlayerInVehicle(playerid, GetPlayerVehicleID(playerid))) {
-		format(title, sizeof(title), "* %s - PayDay (( /payday ))", GetName(playerid));
+		format(title, sizeof(title), "* Placa");
 		ShowPlayerDialog(playerid, 0, DIALOG_STYLE_MSGBOX, title, p_dialog, "Zatvori", "");
 	}
 	else if(IsPlayerInVehicle(playerid, GetPlayerVehicleID(playerid))) {
 		SendMessage(playerid, MESSAGE_TYPE_INFO, "Stigao vam je PayDay (( /payday ))");
 	}
 	PlayerInfo[playerid][pPayDayDialog] 	= EOS;
-	PlayerInfo[playerid][pPayDayDate] 		= EOS;
-
 	strcat(PlayerInfo[playerid][pPayDayDialog], p_dialog, 2048);
-	strcat(PlayerInfo[playerid][pPayDayDate], ReturnDate(), 32);
 	return 1;
 }

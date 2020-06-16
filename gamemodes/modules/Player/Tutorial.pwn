@@ -212,7 +212,6 @@ timer OnPlayerFirstTimeEnter[12000](playerid, step)
 			SafeSpawned[playerid] = true;
 			SpawnPlayer(playerid);
 			TogglePlayerControllable(playerid, 1);
-			Streamer_SetVisibleItems(STREAMER_TYPE_OBJECT, 950, playerid);
 			TutorialStep[playerid] = 0;
 		} 
 	}

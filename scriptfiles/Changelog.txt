@@ -1,0 +1,20 @@
+City of Angels RolePlay 18.3.6. - Stabilization Update
+- Napravljena nova i funkcionalna AntiCrash skripta
+- Ogromna optimizacija ucitavanja mapa & dynamic draw distancea za sve objekte
+- Ubacen Damage AntiCheat
+- Izbaceni krediti za mobitel, ubacena pretplata koja po PayDayu uzme koliko ste trosili
+- Izbacen novi AD system
+- Vracen i popravljen stari AD system, cisto radi kompatibilnosti sa mobitelom
+- Izbacena Dog skripta radi nekoristenja, zbugganosti i nesvrsishodnosti
+- Prilikom poziva/SMS-a, ispisuje vam samo broj mobitela/spremljeni kontakt(ako postoji)
+- Izbacena komanda /setmobilecredits
+- Popravljen bug sa koristenjem mobitela tokom voznje i speedometar TextDrawom
+- Vracen stari MDC radi disproporcionalnosti teksta i problema sa crashanjem
+
+City of Angels RolePlay 18.3.5. - BugFix
+- Velicina AMX-a smanjena za 10 MB - velika optimizacija memorije
+- Radi optimizacije obrisani nazivi slotova furniturea
+- Popravljen bug sa nestajanjem oruzja i reviewan kompletni weapons code
+- Optimizirano izlistavanje/trazenje tekstura na (Biznis) Furnitureu
+- Popravljeno brisanje objekata iz Biznis Furniturea
+- Promjenjena velicina slova na PopUp Textdrawu i dodano pola sekunde za citanje

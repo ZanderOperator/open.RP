@@ -4403,7 +4403,6 @@ CMD:jailex(playerid, params[])
 
 CMD:jail(playerid, params[])
 {
-    
 	if (PlayerInfo[playerid][pAdmin] < 2) return SendClientMessage(playerid, COLOR_RED, "Niste ovlasteni za koristenje ove komande!");
 	new
 	    giveplayerid,
@@ -4447,6 +4446,7 @@ CMD:unjail(playerid, params[])
 		format(globalstring, sizeof(globalstring), "* Oslobodio vas je Admin %s.", GetName(playerid,false));
 		SendClientMessage(giveplayerid, COLOR_RED, globalstring);
 		SetPVarInt(giveplayerid, "WantedPoints", 0);
+		AC_SetPlayerWeapons(giveplayerid);
 		PlayerInfo[giveplayerid][pJailed] = 0;
 		PlayerInfo[giveplayerid][pJailTime] = 0;
 		PlayerInfo[playerid][pBailPrice] = 0;
@@ -5549,12 +5549,12 @@ CMD:approveobjects(playerid, params[]) {
 	if(Bit1_Get(gr_CreateObject, giveplayerid)) {
 		Bit1_Set(gr_CreateObject, giveplayerid, false);
 		SendFormatMessage(giveplayerid, MESSAGE_TYPE_INFO, "%s vam je zabranio/maknuo kreiranje objekata.", GetName(playerid));
-		format(globalstring, sizeof(globalstring), "AdmCMD: %s je zabranio/maknuo igracu %s da koristi /createobjects.", GetName(playerid,false), GetName(giveplayerid,false));
+		format(globalstring, sizeof(globalstring), "AdmCMD: %s je zabranio/maknuo igracu %s da koristi /createobject.", GetName(playerid,false), GetName(giveplayerid,false));
 	}
 	else if(!Bit1_Get(gr_CreateObject, giveplayerid)) {
 		Bit1_Set(gr_CreateObject, giveplayerid, true);
 		SendFormatMessage(giveplayerid, MESSAGE_TYPE_INFO, "%s vam je dopustio kreiranje objekata, komanda: /createobject.", GetName(playerid));
-		format(globalstring, sizeof(globalstring), "AdmCMD: %s je dopustio igracu %s da koristi /createobjects.", GetName(playerid,false), GetName(giveplayerid,false));	
+		format(globalstring, sizeof(globalstring), "AdmCMD: %s je dopustio igracu %s da koristi /createobject.", GetName(playerid,false), GetName(giveplayerid,false));	
 	}	
 	SendAdminMessage(COLOR_LIGHTBLUE, globalstring);
 	return (true);

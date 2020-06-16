@@ -308,45 +308,54 @@ hook OnPlayerSelectDynObject(playerid, objectid, modelid, Float:x, Float:y, Floa
 
 hook OnModelSelResponse( playerid, extraid, index, modelid, response )
 {
-	if((extraid == 1 && response))
+	switch(extraid)
 	{
-		new
-			Float:x,
-			Float:y,
-			Float:z;
-		GetPlayerPos(playerid, x, y, z);
-		GetXYInFrontOfPlayer(playerid, x, y, 3.0);
-		CreatePlayerObjectsObject(playerid, modelid, x, y, z, 0.0, 0.0, 0.0);
-	}
-	if((extraid == 2))
-	{
-	    if(response && chosenpID[playerid] != -1)
-	    {
-			if(!IsPlayerConnected(chosenpID[playerid]))
-			    return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Igraè je otisao offline!"), chosenpID[playerid] = -1;
-			    
-			new
-				name[24];
+		case DIALOG_CREATE_COBJECT:
+		{
+			if(!response)
+				return 1;
 				
-			GetPlayerName(chosenpID[playerid], name, 24);
-            chosenpObject[playerid] = index;
-			va_ShowPlayerDialog(playerid, 3556, DIALOG_STYLE_MSGBOX, "Brisanje objekta", "Jeste li sigurni da zelite izbrisati objekat igracu\n%s\nObjekt: %d u slotu: %d?", "Da", "Ne", name, modelid, index);
+			new
+				Float:x,
+				Float:y,
+				Float:z;
+			GetPlayerPos(playerid, x, y, z);
+			GetXYInFrontOfPlayer(playerid, x, y, 3.0);
+			CreatePlayerObjectsObject(playerid, modelid, x, y, z, 0.0, 0.0, 0.0);
 		}
-		else
+		case DIALOG_ADMIN_DEL_COBJECT:
 		{
-		    chosenpID[playerid] = -1;
+			if(response && chosenpID[playerid] != -1)
+			{
+				if(!IsPlayerConnected(chosenpID[playerid]))
+					return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Igraè je otisao offline!"), chosenpID[playerid] = -1;
+					
+				new
+					name[24];
+					
+				GetPlayerName(chosenpID[playerid], name, 24);
+				chosenpObject[playerid] = index;
+				va_ShowPlayerDialog(playerid, 3556, DIALOG_STYLE_MSGBOX, "Brisanje objekta", "Jeste li sigurni da zelite izbrisati objekat igracu\n%s\nObjekt: %d u slotu: %d?", "Da", "Ne", name, modelid, index);
+			}
+			else
+			{
+				chosenpID[playerid] = -1;
+			}
 		}
-	}
-	if(extraid == 3 && response)
-	{
-		DeletePlayerObjectsObject(playerid, index);
-		SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "Obrisali ste izabrani objekat.");
-	}
-	if(extraid == 4 && response)
-	{	    
-	    if(IsValidDynamicObject(PlayerObjectsInfo[playerid][index][poObjectid]))
+		case DIALOG_DELETE_COBJECT:
 		{
-			EditPOObject(playerid, index);
+			if(!response)
+				return 1;
+				
+			DeletePlayerObjectsObject(playerid, index);
+			SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "Obrisali ste izabrani objekat.");
+		}
+		case DIALOG_EDIT_COBJECT:
+		{	  
+			if(IsValidDynamicObject(PlayerObjectsInfo[playerid][index][poObjectid]) && response)
+			{
+				EditPOObject(playerid, index);
+			}
 		}
 	}
 	return 1;
@@ -487,8 +496,8 @@ CMD:editobject(playerid, params[])
 	    po_objects[po] = PlayerObjectsInfo[playerid][po][poModelid];
 	}
 
-	SendClientMessage(playerid, -1, "Odaberi objekat koji zelis editati!");
-    ShowModelESelectionMenu(playerid, "Izmjeni objekt:", 4, po_objects, sizeof(po_objects), 0.0, 0.0, 0.0, 1.0, -1, true, po_objects);
+	SendMessage(playerid, MESSAGE_TYPE_INFO, "Odaberi objekat koji zelis editati!");
+    ShowModelESelectionMenu(playerid, "Izmjeni objekt:", DIALOG_EDIT_COBJECT, po_objects, sizeof(po_objects), 0.0, 0.0, 0.0, 1.0, -1, true, po_objects);
 	return 1;
 }
 
@@ -501,7 +510,7 @@ CMD:createobject(playerid, params[])
 		return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate dozvolu od admina za /createobject komandu.");
 	
 	if(isnull(params))
-		return ShowModelESelectionMenu(playerid, "Odaberi objekat", 1, objects, sizeof(objects), 0.0, 0.0, 0.0, 1.0, -1, true, objects);
+		return ShowModelESelectionMenu(playerid, "Odaberi objekat", DIALOG_CREATE_COBJECT, objects, sizeof(objects), 0.0, 0.0, 0.0, 1.0, -1, true, objects);
 	else
 	{
 	    if(!PlayerInfo[playerid][pAdmin]) return 1;
@@ -534,7 +543,9 @@ CMD:aremoveallplayerobjects(playerid, params[])
     if(AreAllPObjectSlotsEmpty(id))
    		return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Taj igraè nema spawnane objekte!");
 
-	for(new p_o = 0; p_o != MAX_PLAYER_OBJECTS; ++p_o) if(PlayerObjectsInfo[id][p_o][poPlaced]) DeletePlayerObjectsObject(id, p_o);
+	for(new p_o = 0; p_o != MAX_PLAYER_OBJECTS; ++p_o) 
+		if(PlayerObjectsInfo[id][p_o][poPlaced]) 
+			DeletePlayerObjectsObject(id, p_o);
 	
 	SendClientMessage(playerid, COLOR_RED, "[ ! ] Uspjesno ste izbrisali sve spawnane objekte odabranom igraèu!");
 	return 1;
@@ -572,7 +583,7 @@ CMD:checkplayerobjects(playerid, params[]) {
 	format(string, sizeof(string), "Trenutno gledate spawnane objekte od igraca: %s[%d]!", po_name, giveplayerid);
 	SendClientMessage(playerid, COLOR_WHITE, string);
 
-	ShowModelESelectionMenu(playerid, po_name, 2, pobjects, sizeof(pobjects), 0.0, 0.0, 0.0, 1.0, -1, true, pobjects);
+	ShowModelESelectionMenu(playerid, po_name, DIALOG_ADMIN_DEL_COBJECT, pobjects, sizeof(pobjects), 0.0, 0.0, 0.0, 1.0, -1, true, pobjects);
 	
 	return 1;
 }
@@ -590,7 +601,7 @@ CMD:deleteobject( playerid, params[] )
 	    po_objects[po] = PlayerObjectsInfo[playerid][po][poModelid];
 	}
 
-	SendClientMessage(playerid, -1, "Odaberi objekat koji Zelis obrisati!");
+	SendClientMessage(playerid, -1, "Odaberi objekat koji zelis obrisati!");
     ShowModelESelectionMenu(playerid, "Kreirani objekti:", 3, po_objects, sizeof(po_objects), 0.0, 0.0, 0.0, 1.0, -1, true, po_objects);
 	return 1;
 }

@@ -1,0 +1,8 @@
+[ysi_test]
+TEST_STRING_A = {FFAA44}Hello {>GREEN}World{RED}
+TEST_STRING_B = {FFAA44}Hello {>GREEN}%s{RED}
+TEST_STRING_C = Hello {>GREEN}%s{RED}
+TEST_STRING_D@1 = {FFAA44}Hello
+TEST_STRING_D@2 = {ALICE_BLUE}Nice
+TEST_STRING_D@3 = ~p~World
+

@@ -89,7 +89,7 @@ public HouseStorage_Load()
 		Storage_RackRefresh(i);
 		Iter_Add(HStorage_Iter, i);
 	}
-	printf("(debug report): House Storage(racks) Loaded (%d/%d).", Iter_Count(HStorage_Iter), MAX_HOUSE_STORAGE);
+	printf("MySQL Report: House Storage Racks Loaded (%d/%d).", Iter_Count(HStorage_Iter), MAX_HOUSE_STORAGE);
 	return (true);
 }
 

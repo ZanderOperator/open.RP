@@ -265,72 +265,72 @@ hook OnGameModeInit()
 {
 	// Factory - B-Matt
 	new 
-		tmpobjid;
-	tmpobjid = CreateDynamicObject(19433,2563.897,-1360.889,1043.599,90.000,0.000,90.000, 	-1, -1, -1, FACTORY_DRAW_MEDIUM, FACTORY_DRAW_MEDIUM);
-	SetDynamicObjectMaterial(tmpobjid, 0, 1259, "billbrd", "bluemetal02", 0);
-	SetDynamicObjectMaterial(tmpobjid, 1, 1259, "billbrd", "bluemetal02", 0);
+		cftobjid;
+	cftobjid = CreateDynamicObject(19433,2563.897,-1360.889,1043.599,90.000,0.000,90.000, 	-1, -1, -1, FACTORY_DRAW_MEDIUM, FACTORY_DRAW_MEDIUM);
+	SetDynamicObjectMaterial(cftobjid, 0, 1259, "billbrd", "bluemetal02", 0);
+	SetDynamicObjectMaterial(cftobjid, 1, 1259, "billbrd", "bluemetal02", 0);
 
-	tmpobjid = CreateDynamicObject(19433,2567.377,-1360.011,1043.599,90.000,0.000,90.000, 	-1, -1, -1, FACTORY_DRAW_MEDIUM, FACTORY_DRAW_MEDIUM);
-	SetDynamicObjectMaterial(tmpobjid, 0, 1259, "billbrd", "bluemetal02", 0);
-	SetDynamicObjectMaterial(tmpobjid, 1, 1259, "billbrd", "bluemetal02", 0);
+	cftobjid = CreateDynamicObject(19433,2567.377,-1360.011,1043.599,90.000,0.000,90.000, 	-1, -1, -1, FACTORY_DRAW_MEDIUM, FACTORY_DRAW_MEDIUM);
+	SetDynamicObjectMaterial(cftobjid, 0, 1259, "billbrd", "bluemetal02", 0);
+	SetDynamicObjectMaterial(cftobjid, 1, 1259, "billbrd", "bluemetal02", 0);
 
-	tmpobjid = CreateDynamicObject(19433,2560.427,-1360.011,1043.599,90.000,0.000,90.000, 	-1, -1, -1, FACTORY_DRAW_MEDIUM, FACTORY_DRAW_MEDIUM);
-	SetDynamicObjectMaterial(tmpobjid, 0, 1259, "billbrd", "bluemetal02", 0);
-	SetDynamicObjectMaterial(tmpobjid, 1, 1259, "billbrd", "bluemetal02", 0);
+	cftobjid = CreateDynamicObject(19433,2560.427,-1360.011,1043.599,90.000,0.000,90.000, 	-1, -1, -1, FACTORY_DRAW_MEDIUM, FACTORY_DRAW_MEDIUM);
+	SetDynamicObjectMaterial(cftobjid, 0, 1259, "billbrd", "bluemetal02", 0);
+	SetDynamicObjectMaterial(cftobjid, 1, 1259, "billbrd", "bluemetal02", 0);
 
-	tmpobjid = CreateDynamicObject(19433,2567.377,-1360.889,1043.599,90.000,0.000,90.000, 	-1, -1, -1, FACTORY_DRAW_MEDIUM, FACTORY_DRAW_MEDIUM);
-	SetDynamicObjectMaterial(tmpobjid, 0, 1259, "billbrd", "bluemetal02", 0);
-	SetDynamicObjectMaterial(tmpobjid, 1, 1259, "billbrd", "bluemetal02", 0);
+	cftobjid = CreateDynamicObject(19433,2567.377,-1360.889,1043.599,90.000,0.000,90.000, 	-1, -1, -1, FACTORY_DRAW_MEDIUM, FACTORY_DRAW_MEDIUM);
+	SetDynamicObjectMaterial(cftobjid, 0, 1259, "billbrd", "bluemetal02", 0);
+	SetDynamicObjectMaterial(cftobjid, 1, 1259, "billbrd", "bluemetal02", 0);
 
-	tmpobjid = CreateDynamicObject(19433,2563.897,-1360.011,1043.599,90.000,0.000,90.000, 	-1, -1, -1, FACTORY_DRAW_MEDIUM, FACTORY_DRAW_MEDIUM);
-	SetDynamicObjectMaterial(tmpobjid, 0, 1259, "billbrd", "bluemetal02", 0);
-	SetDynamicObjectMaterial(tmpobjid, 1, 1259, "billbrd", "bluemetal02", 0);
+	cftobjid = CreateDynamicObject(19433,2563.897,-1360.011,1043.599,90.000,0.000,90.000, 	-1, -1, -1, FACTORY_DRAW_MEDIUM, FACTORY_DRAW_MEDIUM);
+	SetDynamicObjectMaterial(cftobjid, 0, 1259, "billbrd", "bluemetal02", 0);
+	SetDynamicObjectMaterial(cftobjid, 1, 1259, "billbrd", "bluemetal02", 0);
 
-	tmpobjid = CreateDynamicObject(19433,2560.427,-1360.889,1043.599,90.000,0.000,90.000, 	-1, -1, -1, FACTORY_DRAW_MEDIUM, FACTORY_DRAW_MEDIUM);
-	SetDynamicObjectMaterial(tmpobjid, 0, 1259, "billbrd", "bluemetal02", 0);
-	SetDynamicObjectMaterial(tmpobjid, 1, 1259, "billbrd", "bluemetal02", 0);
+	cftobjid = CreateDynamicObject(19433,2560.427,-1360.889,1043.599,90.000,0.000,90.000, 	-1, -1, -1, FACTORY_DRAW_MEDIUM, FACTORY_DRAW_MEDIUM);
+	SetDynamicObjectMaterial(cftobjid, 0, 1259, "billbrd", "bluemetal02", 0);
+	SetDynamicObjectMaterial(cftobjid, 1, 1259, "billbrd", "bluemetal02", 0);
 
-	tmpobjid = CreateDynamicObject(1271,2568.700,-1360.449,1044.000,0.000,0.000,0.000, 	-1, -1, -1, FACTORY_DRAW_MEDIUM, FACTORY_DRAW_MEDIUM);
-	SetDynamicObjectMaterial(tmpobjid, 0, 5126, "imrancomp_las2", "sanpdconv", 0);
+	cftobjid = CreateDynamicObject(1271,2568.700,-1360.449,1044.000,0.000,0.000,0.000, 	-1, -1, -1, FACTORY_DRAW_MEDIUM, FACTORY_DRAW_MEDIUM);
+	SetDynamicObjectMaterial(cftobjid, 0, 5126, "imrancomp_las2", "sanpdconv", 0);
 
-	tmpobjid = CreateDynamicObject(1271,2566.620,-1360.444,1044.000,0.000,0.000,180.000, 	-1, -1, -1, FACTORY_DRAW_MEDIUM, FACTORY_DRAW_MEDIUM);
-	SetDynamicObjectMaterial(tmpobjid, 0, 5126, "imrancomp_las2", "sanpdconv", 0);
+	cftobjid = CreateDynamicObject(1271,2566.620,-1360.444,1044.000,0.000,0.000,180.000, 	-1, -1, -1, FACTORY_DRAW_MEDIUM, FACTORY_DRAW_MEDIUM);
+	SetDynamicObjectMaterial(cftobjid, 0, 5126, "imrancomp_las2", "sanpdconv", 0);
 
-	tmpobjid = CreateDynamicObject(1271,2568.019,-1360.449,1044.000,0.000,0.000,-180.000, -1, -1, -1, FACTORY_DRAW_MEDIUM, FACTORY_DRAW_MEDIUM);
-	SetDynamicObjectMaterial(tmpobjid, 0, 5126, "imrancomp_las2", "sanpdconv", 0);
+	cftobjid = CreateDynamicObject(1271,2568.019,-1360.449,1044.000,0.000,0.000,-180.000, -1, -1, -1, FACTORY_DRAW_MEDIUM, FACTORY_DRAW_MEDIUM);
+	SetDynamicObjectMaterial(cftobjid, 0, 5126, "imrancomp_las2", "sanpdconv", 0);
 
-	tmpobjid = CreateDynamicObject(1271,2567.298,-1360.449,1044.000,0.000,0.000,0.000, 	-1, -1, -1, FACTORY_DRAW_MEDIUM, FACTORY_DRAW_MEDIUM);
-	SetDynamicObjectMaterial(tmpobjid, 0, 5126, "imrancomp_las2", "sanpdconv", 0);
+	cftobjid = CreateDynamicObject(1271,2567.298,-1360.449,1044.000,0.000,0.000,0.000, 	-1, -1, -1, FACTORY_DRAW_MEDIUM, FACTORY_DRAW_MEDIUM);
+	SetDynamicObjectMaterial(cftobjid, 0, 5126, "imrancomp_las2", "sanpdconv", 0);
 
-	tmpobjid = CreateDynamicObject(943,2564.908,-1360.461,1044.915,0.000,0.000,89.699, 	-1, -1, -1, FACTORY_DRAW_MEDIUM, FACTORY_DRAW_MEDIUM);
-	SetDynamicObjectMaterial(tmpobjid, 0, 1259, "billbrd", "bluemetal02", 0);
-	SetDynamicObjectMaterial(tmpobjid, 1, 1259, "billbrd", "bluemetal02", 0);
+	cftobjid = CreateDynamicObject(943,2564.908,-1360.461,1044.915,0.000,0.000,89.699, 	-1, -1, -1, FACTORY_DRAW_MEDIUM, FACTORY_DRAW_MEDIUM);
+	SetDynamicObjectMaterial(cftobjid, 0, 1259, "billbrd", "bluemetal02", 0);
+	SetDynamicObjectMaterial(cftobjid, 1, 1259, "billbrd", "bluemetal02", 0);
 
-	tmpobjid = CreateDynamicObject(1271,2563.119,-1360.444,1044.000,0.000,0.000,0.000, 	-1, -1, -1, FACTORY_DRAW_MEDIUM, FACTORY_DRAW_MEDIUM);
-	SetDynamicObjectMaterial(tmpobjid, 0, 5126, "imrancomp_las2", "sanpdconv", 0);
+	cftobjid = CreateDynamicObject(1271,2563.119,-1360.444,1044.000,0.000,0.000,0.000, 	-1, -1, -1, FACTORY_DRAW_MEDIUM, FACTORY_DRAW_MEDIUM);
+	SetDynamicObjectMaterial(cftobjid, 0, 5126, "imrancomp_las2", "sanpdconv", 0);
 
-	tmpobjid = CreateDynamicObject(1271,2562.434,-1360.444,1044.000,0.000,0.000,180.000, 	-1, -1, -1, FACTORY_DRAW_MEDIUM, FACTORY_DRAW_MEDIUM);
-	SetDynamicObjectMaterial(tmpobjid, 0, 5126, "imrancomp_las2", "sanpdconv", 0);
+	cftobjid = CreateDynamicObject(1271,2562.434,-1360.444,1044.000,0.000,0.000,180.000, 	-1, -1, -1, FACTORY_DRAW_MEDIUM, FACTORY_DRAW_MEDIUM);
+	SetDynamicObjectMaterial(cftobjid, 0, 5126, "imrancomp_las2", "sanpdconv", 0);
 
-	tmpobjid = CreateDynamicObject(1271,2561.717,-1360.444,1044.000,0.000,0.000,0.000, 		-1, -1, -1, FACTORY_DRAW_MEDIUM, FACTORY_DRAW_MEDIUM);
-	SetDynamicObjectMaterial(tmpobjid, 0, 5126, "imrancomp_las2", "sanpdconv", 0);
+	cftobjid = CreateDynamicObject(1271,2561.717,-1360.444,1044.000,0.000,0.000,0.000, 		-1, -1, -1, FACTORY_DRAW_MEDIUM, FACTORY_DRAW_MEDIUM);
+	SetDynamicObjectMaterial(cftobjid, 0, 5126, "imrancomp_las2", "sanpdconv", 0);
 
-	tmpobjid = CreateDynamicObject(1271,2561.027,-1360.444,1044.000,0.000,0.000,180.000, 	-1, -1, -1, FACTORY_DRAW_MEDIUM, FACTORY_DRAW_MEDIUM);
-	SetDynamicObjectMaterial(tmpobjid, 0, 5126, "imrancomp_las2", "sanpdconv", 0);
+	cftobjid = CreateDynamicObject(1271,2561.027,-1360.444,1044.000,0.000,0.000,180.000, 	-1, -1, -1, FACTORY_DRAW_MEDIUM, FACTORY_DRAW_MEDIUM);
+	SetDynamicObjectMaterial(cftobjid, 0, 5126, "imrancomp_las2", "sanpdconv", 0);
 
-	tmpobjid = CreateDynamicObject(1271,2560.302,-1360.444,1044.000,0.000,0.000,0.000, 		-1, -1, -1, FACTORY_DRAW_MEDIUM, FACTORY_DRAW_MEDIUM);
-	SetDynamicObjectMaterial(tmpobjid, 0, 5126, "imrancomp_las2", "sanpdconv", 0);
+	cftobjid = CreateDynamicObject(1271,2560.302,-1360.444,1044.000,0.000,0.000,0.000, 		-1, -1, -1, FACTORY_DRAW_MEDIUM, FACTORY_DRAW_MEDIUM);
+	SetDynamicObjectMaterial(cftobjid, 0, 5126, "imrancomp_las2", "sanpdconv", 0);
 
-	tmpobjid = CreateDynamicObject(1271,2559.610,-1360.444,1044.000,0.000,0.000,180.000, 	-1, -1, -1, FACTORY_DRAW_MEDIUM, FACTORY_DRAW_MEDIUM);
-	SetDynamicObjectMaterial(tmpobjid, 0, 5126, "imrancomp_las2", "sanpdconv", 0);
+	cftobjid = CreateDynamicObject(1271,2559.610,-1360.444,1044.000,0.000,0.000,180.000, 	-1, -1, -1, FACTORY_DRAW_MEDIUM, FACTORY_DRAW_MEDIUM);
+	SetDynamicObjectMaterial(cftobjid, 0, 5126, "imrancomp_las2", "sanpdconv", 0);
 
-	tmpobjid = CreateDynamicObject(7923,2559.14551, -1347.08838, 1042.93005,0.000,0.000,90.000, -1, -1, -1, FACTORY_DRAW_MEDIUM, FACTORY_DRAW_MEDIUM);
-	SetDynamicObjectMaterial(tmpobjid, 0, 1259, "billbrd", "bluemetal02", 0);
-	SetDynamicObjectMaterial(tmpobjid, 1, 1259, "billbrd", "bluemetal02", 0);
+	cftobjid = CreateDynamicObject(7923,2559.14551, -1347.08838, 1042.93005,0.000,0.000,90.000, -1, -1, -1, FACTORY_DRAW_MEDIUM, FACTORY_DRAW_MEDIUM);
+	SetDynamicObjectMaterial(cftobjid, 0, 1259, "billbrd", "bluemetal02", 0);
+	SetDynamicObjectMaterial(cftobjid, 1, 1259, "billbrd", "bluemetal02", 0);
 
-	tmpobjid = CreateDynamicObject(7923, 2568.69482, -1347.14954, 1042.93005,0.000,0.000,90.000, -1, -1, -1, FACTORY_DRAW_MEDIUM, FACTORY_DRAW_MEDIUM);
-	SetDynamicObjectMaterial(tmpobjid, 0, 1259, "billbrd", "bluemetal02", 0);
-	SetDynamicObjectMaterial(tmpobjid, 1, 1259, "billbrd", "bluemetal02", 0);
+	cftobjid = CreateDynamicObject(7923, 2568.69482, -1347.14954, 1042.93005,0.000,0.000,90.000, -1, -1, -1, FACTORY_DRAW_MEDIUM, FACTORY_DRAW_MEDIUM);
+	SetDynamicObjectMaterial(cftobjid, 0, 1259, "billbrd", "bluemetal02", 0);
+	SetDynamicObjectMaterial(cftobjid, 1, 1259, "billbrd", "bluemetal02", 0);
 
 	CreateDynamicObject(2567, 2567.36084, -1345.02600, 1044.90002,   0.00000, 0.00000, 0.00000, 	-1, -1, -1, FACTORY_DRAW_MEDIUM, FACTORY_DRAW_MEDIUM);
 	CreateDynamicObject(14412, 2563.36206, -1357.53796, 1052.46802,   0.00000, 0.00000, 0.00000, 	-1, -1, -1, FACTORY_DRAW_MEDIUM, FACTORY_DRAW_MEDIUM);
