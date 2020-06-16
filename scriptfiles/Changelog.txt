@@ -1,3 +1,14 @@
+City of Angels RolePlay 18.3.7. - Update
+- Mape vracene na staro i maknut framework za optimizaciju radi neefikasnosti i bugganja
+- Sredjen furniture
+- Popravljen Roadblock za SD/FD
+- Popravljen spamm sa porukama tokom razgovora na mobitelu
+- Svima su mobilni troskovi/bonovi resetirani na 0 
+- U MDC-u dodana opcija pretrazivanja po broju mobitela - ispisuje ime modela mobitela i vlasnika vezanog uz broj
+- Ukoliko vas PD prisluskuje, vide samo brojeve, odnosno imena spremljenih kontakata pod te brojeve(ne nickove)
+- Prilikom /friska osoba koja pretrazuje vidi marku mobitela
+- Popravljeni bugovi sa ispisom paydaya i njegovog naslova u Dialogu
+
 City of Angels RolePlay 18.3.6. - Stabilization Update
 - Napravljena nova i funkcionalna AntiCrash skripta
 - Ogromna optimizacija ucitavanja mapa & dynamic draw distancea za sve objekte
@@ -10,11 +21,3 @@ City of Angels RolePlay 18.3.6. - Stabilization Update
 - Izbacena komanda /setmobilecredits
 - Popravljen bug sa koristenjem mobitela tokom voznje i speedometar TextDrawom
 - Vracen stari MDC radi disproporcionalnosti teksta i problema sa crashanjem
-
-City of Angels RolePlay 18.3.5. - BugFix
-- Velicina AMX-a smanjena za 10 MB - velika optimizacija memorije
-- Radi optimizacije obrisani nazivi slotova furniturea
-- Popravljen bug sa nestajanjem oruzja i reviewan kompletni weapons code
-- Optimizirano izlistavanje/trazenje tekstura na (Biznis) Furnitureu
-- Popravljeno brisanje objekata iz Biznis Furniturea
-- Promjenjena velicina slova na PopUp Textdrawu i dodano pola sekunde za citanje
