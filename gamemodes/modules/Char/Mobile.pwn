@@ -2899,7 +2899,7 @@ hook OnPlayerText(playerid, text[])
 		
 		if(!SpeakerPhone[gplayerid])
 			SendClientMessage( gplayerid, COLOR_YELLOW, mobileText );
-		else RealProxDetector(10.0, gplayerid, mobileText,COLOR_YELLOW,COLOR_YELLOW,COLOR_YELLOW,COLOR_YELLOW,COLOR_YELLOW);
+		else RealProxDetector(7.5, gplayerid, mobileText,COLOR_YELLOW,COLOR_YELLOW,COLOR_YELLOW,COLOR_YELLOW,COLOR_YELLOW);
 	}
 	return 0;
 }
