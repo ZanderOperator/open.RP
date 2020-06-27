@@ -69,7 +69,7 @@ hook OnPlayerEditDynObject(playerid, objectid, response, Float:x, Float:y, Float
 			    SetDynamicObjectPos(objectid, ATMInfo[pEditingATM[playerid]][atm_x], ATMInfo[pEditingATM[playerid]][atm_y], ATMInfo[pEditingATM[playerid]][atm_z]);
 			    SetDynamicObjectRot(objectid, ATMInfo[pEditingATM[playerid]][atm_rx], ATMInfo[pEditingATM[playerid]][atm_ry], ATMInfo[pEditingATM[playerid]][atm_rz]);
 
-				va_SendClientMessage(playerid, COLOR_RED, "[INFO]: Odustao si od ureðivanja ATM-a %d!", pEditingATM[playerid]);
+				va_SendClientMessage(playerid, COLOR_RED, "[INFO]: Odustao si od ureï¿½ivanja ATM-a %d!", pEditingATM[playerid]);
 				pEditingATM[playerid] = -1;
 
 				return 1;
@@ -267,7 +267,7 @@ CMD:atm(playerid, params[])
 		return SendClientMessage(playerid, COLOR_RED, "[GRESKA]: Nisi blizu ATMa te nemozes koristiti ovu komandu!");
 		
 	if(IsPlayerInAnyVehicle(playerid))
-	    return SendClientMessage(playerid, COLOR_RED, "[GRESKA]: Ne možeš koristiti ovu komandu dok si u vozilu!");
+	    return SendClientMessage(playerid, COLOR_RED, "[GRESKA]: Ne moï¿½eï¿½ koristiti ovu komandu dok si u vozilu!");
 
 	new
 		option[9],
@@ -282,7 +282,7 @@ CMD:atm(playerid, params[])
 	}
 	if(!strcmp(option, "status", true))
     {
-		format(string, sizeof(string), "ATM: Trenutno stanje na vašem raèunu je: %d$!", PlayerInfo[playerid][pBank]);
+		format(string, sizeof(string), "ATM: Trenutno stanje na vaï¿½em raï¿½unu je: %d$!", PlayerInfo[playerid][pBank]);
 		SendClientMessage(playerid, COLOR_GREY, string);
 		return 1;
 	}
@@ -291,7 +291,7 @@ CMD:atm(playerid, params[])
 		if(sscanf(params, "s[9]i", option, amount))
 		{
 			SendClientMessage(playerid, COLOR_GREY, "KORISTI: /atm withdraw [iznos]");
-  			format(string, sizeof(string), "ATM: Trenutno stanje na vašem raèunu je: %d$!", PlayerInfo[playerid][pBank]);
+  			format(string, sizeof(string), "ATM: Trenutno stanje na vaï¿½em raï¿½unu je: %d$!", PlayerInfo[playerid][pBank]);
 			return SendClientMessage(playerid, COLOR_GREY, string);
 		}
 		if(amount > PlayerInfo[playerid][pBank])
@@ -314,7 +314,7 @@ CMD:atm(playerid, params[])
 		
 		Log_Write("logfiles/atm_withdraw.txt", "(%s) Igrac %s[%d]{%d} je podignuo %d$ sa bankomata (%d)! Preostalo mu je %d$ na racunu.", ReturnDate(), ReturnName(playerid), playerid, PlayerInfo[playerid][pSQLID], amount, atm_n_id, PlayerInfo[playerid][pBank]);
 		
-		format(string, sizeof(string), "[ATM]: Uzeli ste %d$ s vašeg raèuna! Preostalo vam je %d$ na vasem raèunu!", amount, PlayerInfo[playerid][pBank]);
+		format(string, sizeof(string), "[ATM]: Uzeli ste %d$ s vaï¿½eg raï¿½una! Preostalo vam je %d$ na vasem raï¿½unu!", amount, PlayerInfo[playerid][pBank]);
 		SendClientMessage(playerid, COLOR_GREY, string);
 	}
 	return 1;
@@ -323,7 +323,7 @@ CMD:atm(playerid, params[])
 CMD:aatm(playerid, params[])
 {
 	if(PlayerInfo[playerid][pAdmin] != 1338)
-	    return SendClientMessage(playerid, COLOR_RED, "[GRESKA]: Ne možete koristiti ovu komandu!");
+	    return SendClientMessage(playerid, COLOR_RED, "[GRESKA]: Ne moï¿½ete koristiti ovu komandu!");
 	    
 	new
 	    option;
@@ -358,7 +358,7 @@ CMD:aatm(playerid, params[])
 			if((ATM_id = ATM_Create(pi_x, pi_y, pi_z, GetPlayerInterior(playerid), GetPlayerVirtualWorld(playerid))) != -1)
 			    return va_SendClientMessage(playerid, COLOR_RED, "[INFO]: Kreirao si ATM (%d)! Koristi /aatm 2 kako bi uredio poziciju ATM-a!", ATM_id);
 			else
-			    SendClientMessage(playerid, COLOR_RED, "[GREŠKA]: Nema slobodnih ATM slotova!");
+			    SendClientMessage(playerid, COLOR_RED, "[GREï¿½KA]: Nema slobodnih ATM slotova!");
 
 			return 1;
 	    }
@@ -368,13 +368,13 @@ CMD:aatm(playerid, params[])
 				return SendClientMessage(playerid, -1, "KORISTI: /aatm edit [id]");
 				
 			if(id < 0 || id > 50)
-			    return SendClientMessage(playerid, COLOR_RED, "[GREŠKA]: Nepravilan ID ATM-a!");
+			    return SendClientMessage(playerid, COLOR_RED, "[GREï¿½KA]: Nepravilan ID ATM-a!");
 			    
 			if(!Iter_Contains(Atm, id))
-			    return SendClientMessage(playerid, COLOR_RED, "[GREŠKA]: Taj ATM nije kreiran!");
+			    return SendClientMessage(playerid, COLOR_RED, "[GREï¿½KA]: Taj ATM nije kreiran!");
 				
 			if(!IsPlayerInRangeOfPoint(playerid, 10.0, ATMInfo[id][atm_x], ATMInfo[id][atm_y], ATMInfo[id][atm_z]) && GetPlayerInterior(playerid) != ATMInfo[id][atm_interior] && GetPlayerVirtualWorld(playerid) != ATMInfo[id][atm_virtualworld])
-			    return SendClientMessage(playerid, COLOR_RED, "[GREŠKA]: Niste blizu tog ATM-a!");
+			    return SendClientMessage(playerid, COLOR_RED, "[GREï¿½KA]: Niste blizu tog ATM-a!");
 				
 			pEditingATM[playerid] = id;
 			EditDynamicObject(playerid, ATMInfo[id][atm_objid]);
@@ -387,15 +387,15 @@ CMD:aatm(playerid, params[])
 				return SendClientMessage(playerid, -1, "KORISTI: /aatm delete [id]");
 
 			if(id < 0 || id > 50)
-			    return SendClientMessage(playerid, COLOR_RED, "[GREŠKA]: Nepravilan ID ATM-a!");
+			    return SendClientMessage(playerid, COLOR_RED, "[GREï¿½KA]: Nepravilan ID ATM-a!");
 			    
             if(!Iter_Contains(Atm, id))
-			    return SendClientMessage(playerid, COLOR_RED, "[GREŠKA]: Taj ATM nije kreiran!");
+			    return SendClientMessage(playerid, COLOR_RED, "[GREï¿½KA]: Taj ATM nije kreiran!");
 			    
             if(ATM_Delete(id))
-                return va_SendClientMessage(playerid, COLOR_RED, "[INFO]: Uspješno si izbrisao ATM %d sa servera!", id);
+                return va_SendClientMessage(playerid, COLOR_RED, "[INFO]: Uspjeï¿½no si izbrisao ATM %d sa servera!", id);
 			else
-			    return SendClientMessage(playerid, COLOR_RED, "[GREŠKA]: Taj ATM nije kreiran!");
+			    return SendClientMessage(playerid, COLOR_RED, "[GREï¿½KA]: Taj ATM nije kreiran!");
 	    }
 	    default:
 			SendClientMessage(playerid, COLOR_RED, "[OPCIJE]: 1) create, 2) edit, 3) delete");
@@ -406,7 +406,7 @@ CMD:aatm(playerid, params[])
 CMD:atmid(playerid, params[])
 {
     if(PlayerInfo[playerid][pAdmin] != 1338)
-	    return SendClientMessage(playerid, COLOR_RED, "[GRESKA]: Ne možete koristiti ovu komandu!");
+	    return SendClientMessage(playerid, COLOR_RED, "[GRESKA]: Ne moï¿½ete koristiti ovu komandu!");
 
 	new
 	    p_vw = GetPlayerVirtualWorld(playerid),

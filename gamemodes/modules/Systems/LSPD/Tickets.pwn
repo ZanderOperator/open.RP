@@ -292,7 +292,7 @@ CMD:ticket(playerid, params[])
 CMD:giveticket(playerid, params[])
 {
 	if( !IsACop(playerid) && !IsASD(playerid) ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste autorizovani!");
-	if(PlayerInfo[playerid][pLawDuty] == 0) return  SendClientMessage(playerid,COLOR_RED, "Niste na dužnosti!");
+	if(PlayerInfo[playerid][pLawDuty] == 0) return  SendClientMessage(playerid,COLOR_RED, "Niste na duï¿½nosti!");
 	if( IsPlayerInAnyVehicle(playerid) ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, " Morate biti izvan vozila!");
 	
 	new giveplayerid, pick[8];

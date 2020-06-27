@@ -660,7 +660,7 @@ CMD:helpme(playerid, params[])
 	if (sscanf(params, "s[180]", result)) return SendClientMessage(playerid, COLOR_RED, "USAGE: \"/helpme <tekst>\"");
 
 	format(string, sizeof(string), "HELP %s[%d]: %s", GetName(playerid, true), playerid, result);
-	//SendHelperMessage(0x5DCF8AFF,string,1); - Nema helpera, a igraèi šalju poruke
+	//SendHelperMessage(0x5DCF8AFF,string,1); - Nema helpera, a igraï¿½i ï¿½alju poruke
     SendAdminMessage(0x5DCF8AFF,string);
 
 	format(string,sizeof(string),"Poslani HelpMe glasi: "COL_SERVER"%s",result);
@@ -1038,7 +1038,7 @@ CMD:frisk(playerid, params[])
 	va_SendClientMessage(playerid, COLOR_WHITE, "	Toolkit: %s", PlayerInfo[giveplayerid][pToolkit] ? ("Da") : ("Ne"));
 	va_SendClientMessage(playerid, COLOR_WHITE, "	Kazetofon: %s", PlayerInfo[giveplayerid][pCDPlayer] ? ("Da") : ("Ne"));
 	va_SendClientMessage(playerid, COLOR_WHITE, "	Sat: %s", PlayerInfo[giveplayerid][pClock] ? ("Da") : ("Ne"));
-	va_SendClientMessage(playerid, COLOR_WHITE, "	Mobitel: %s", GetMobileName(PlayerInfo[playerid][pMobileModel]));
+	va_SendClientMessage(playerid, COLOR_WHITE, "	Mobitel: %s", GetMobileName(PlayerInfo[giveplayerid][pMobileModel]));
 	SendClientMessage(playerid, COLOR_LIGHTBLUE, "*_________________________ ORUZJA _________________________*");
 	for(new slot = 0; slot < 13; slot++)
 	{
@@ -1766,12 +1766,12 @@ CMD:dice(playerid, params[])
 CMD:kill(playerid, params[])
 {
 	new 
-		result[16];
-	if( sscanf( params, "s[16]", result ) ) return SendClientMessage(playerid, COLOR_RED, "USAGE: /kill [razlog]");
+		result[64];
+	if( sscanf( params, "s[64]", result ) ) return SendClientMessage(playerid, COLOR_RED, "USAGE: /kill [razlog]");
 	if( PlayerTick[ playerid ][ ptKill ] ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Pricekajte 5 sekundi izmedju slanja kill zahtjeva!");
 	
 	new
-		tmpString[ 96 ];
+		tmpString[ 146 ];
 	format(tmpString, sizeof(tmpString), "AdmWarn: %s (%d) je poslao zahtjev za kill, razlog: %s.",
 		GetName(playerid, false), 
 		playerid, 
@@ -2795,7 +2795,7 @@ CMD:usetoolkit(playerid, params[])
 	
 	AC_SetVehicleHealth(playerid, health+100);
 	PlayerInfo[playerid][pToolkit] = 0;
-	SendClientMessage(playerid, COLOR_RED, "[ ! ] Popravili ste vaše vozilo za dodatnih 100hp.");
+	SendClientMessage(playerid, COLOR_RED, "[ ! ] Popravili ste vaï¿½e vozilo za dodatnih 100hp.");
 	return 1;
 }
 CMD:usecigarette(playerid, params[])

@@ -313,7 +313,7 @@ CMD:wt(playerid,params[])
 		format(string, sizeof(string), "**  %s prica na walkie-talkie.", GetName(playerid, true));
 		SetPlayerChatBubble(playerid, string, COLOR_PURPLE, 20, 2000);
 	}
-    else SendClientMessage(playerid,COLOR_RED, "Niste ovlašteni!");*/
+    else SendClientMessage(playerid,COLOR_RED, "Niste ovlaï¿½teni!");*/
     SendClientMessage(playerid, COLOR_RED, "Komanda je izbacena");
     return 1;
 }

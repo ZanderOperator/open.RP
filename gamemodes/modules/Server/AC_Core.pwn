@@ -1496,7 +1496,7 @@ hook OnPlayerStateChange(playerid, newstate, oldstate)
 				return 1;
 			}
 		}
-		//SetPlayerArmedWeapon(playerid, 0); - Ako vratiš ovo razjebat aeš Gunrack skriptu.
+		//SetPlayerArmedWeapon(playerid, 0); - Ako vratiï¿½ ovo razjebat aeï¿½ Gunrack skriptu.
 		/*if(GetPlayerWeapon(playerid) == WEAPON_DEAGLE || GetPlayerWeapon(playerid) == WEAPON_SNIPER ||
 		GetPlayerWeapon(playerid) == WEAPON_TEC9 ||  GetPlayerWeapon(playerid) == WEAPON_UZI)
 			SetPlayerArmedWeapon(playerid, 0);*/

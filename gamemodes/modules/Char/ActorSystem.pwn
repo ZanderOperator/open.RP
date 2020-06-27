@@ -128,7 +128,7 @@ CMD:removeactor(playerid, params[])
         DestroyActor(actorid);
         ClearLabel(actorid);
 	}
-	else return SendClientMessage(playerid,COLOR_RED,"Pogrešan actor ID.");
+	else return SendClientMessage(playerid,COLOR_RED,"Pogreï¿½an actor ID.");
 	return 1;
 }
 
@@ -157,7 +157,7 @@ CMD:gotoactor(playerid, params[])
 		SetPlayerPos(playerid,Pos[0]+1,Pos[1],Pos[2]);
 		va_SendClientMessage(playerid,COLOR_RED,"[ ! ] Portali ste se do Actora ID: %d!",actorid);
 	}
-	else return SendClientMessage(playerid,COLOR_RED,"Pogrešan actor ID.");
+	else return SendClientMessage(playerid,COLOR_RED,"Pogreï¿½an actor ID.");
 	return 1;
 }
 
@@ -278,7 +278,7 @@ CMD:setactoranim(playerid, params[])
 			va_SendClientMessage(playerid,COLOR_RED,"[ ! ] Postavljena je animacija '%s' na Actora %d",animation,actorid);
 		}
 	}
-	else return SendClientMessage(playerid,COLOR_RED,"Pogrešan actor ID.");
+	else return SendClientMessage(playerid,COLOR_RED,"Pogreï¿½an actor ID.");
 	return 1;
 }
 
@@ -292,7 +292,7 @@ CMD:cancelactoranim(playerid, params[])
 		ClearActorAnimations(actorid);
 		SendClientMessage(playerid,COLOR_RED,"[ ! ] Animacija prekinuta");
 	}
-	else return SendClientMessage(playerid,COLOR_RED,"Pogrešan actor ID.");
+	else return SendClientMessage(playerid,COLOR_RED,"Pogreï¿½an actor ID.");
 	return 1;
 }
 
@@ -335,7 +335,7 @@ CMD:getactor(playerid, params[])
 			}
     	}
 	}
-	else return SendClientMessage(playerid,COLOR_RED,"Pogrešan actor.");
+	else return SendClientMessage(playerid,COLOR_RED,"Pogreï¿½an actor.");
 	return 1;
 }
 
@@ -367,7 +367,7 @@ CMD:updateactor(playerid,params[])
     if (PlayerInfo[playerid][pAdmin] < 1337) return SendClientMessage(playerid, COLOR_RED, "Niste ovlasteni za koristenje ove komande!");
     new actorid,skinid,invulnerability,Float:Pos[3],Float:Angle,str2[256];
     if(sscanf(params,"iil",actorid,skinid,invulnerability)) return SendClientMessage(playerid,COLOR_RED,"[ ! ] USAGE: /updateactor [actor id] [skin id] [ranjivost]");
-    if(!IsValidActor(actorid)) return SendClientMessage(playerid,COLOR_RED,"Pogrešan actor ID");
+    if(!IsValidActor(actorid)) return SendClientMessage(playerid,COLOR_RED,"Pogreï¿½an actor ID");
     if(invulnerability > 1 || invulnerability < 0) return SendClientMessage(playerid,COLOR_RED,"[ ! ] Ranjivost (0: DISABLED / 1: ENABLED)");
     GetPlayerFacingAngle(playerid, Angle);
     GetActorPos(actorid,Pos[0],Pos[1],Pos[2]);

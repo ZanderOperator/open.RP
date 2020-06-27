@@ -995,7 +995,7 @@ stock static CreateBiznisFurnitureObject(playerid, modelid, Float:x, Float:y, Fl
 		new
 			price = GetFurnitureObjectPrice(playerid, BizzPlayerPrwsIndex[ playerid ]);
 		va_SendClientMessage(playerid, COLOR_GREEN, "[INFO]: Kupili ste objekt za %d$ i stavili ga u slot %d!", price, index + 1);
-		PlayerToBudgetMoney(playerid, price); // Novac ide u proraèun
+		PlayerToBudgetMoney(playerid, price); // Novac ide u proraï¿½un
 		Bit4_Set( r_PlayerBizzEditState, playerid, 0 );
 
 		new

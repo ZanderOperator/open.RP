@@ -2131,7 +2131,7 @@ stock static BuyVehicle(playerid)
 
     if(LandVehicles[PreviewType[playerid]][viPremium]){
         PlayerInfo[playerid][pDonatorVehPerms] -= 1;
-        SendClientMessage(playerid, COLOR_RED, "[ ! ] Kupili ste VIP vozilo, potrošili ste jednu donatrsku dozvolu");
+        SendClientMessage(playerid, COLOR_RED, "[ ! ] Kupili ste VIP vozilo, potroï¿½ili ste jednu donatrsku dozvolu");
 
         new donatorVehPerms[128];
 		format(donatorVehPerms, 128, "UPDATE `accounts` SET `dvehperms` = '%d' WHERE `sqlid` = '%d'", PlayerInfo[playerid][pDonatorVehPerms], PlayerInfo[playerid][pSQLID]);
@@ -4023,7 +4023,7 @@ hook OnPlayerClickPlayerTD(playerid, PlayerText:playertextid)
 			if(LandVehicles[PreviewType[playerid]][viPremium] == 3 && PlayerInfo[playerid][pDonateRank] != 3) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste VIP Gold korisnik!");
 			if(LandVehicles[PreviewType[playerid]][viPremium] == 4 && PlayerInfo[playerid][pDonateRank] != 4) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste VIP Platinum korisnik!");
 
-			if(LandVehicles[PreviewType[playerid]][viPremium] && PlayerInfo[playerid][pDonatorVehPerms] == 0) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nije vam ostalo više mjesta za donator vozila");
+			if(LandVehicles[PreviewType[playerid]][viPremium] && PlayerInfo[playerid][pDonatorVehPerms] == 0) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nije vam ostalo viï¿½e mjesta za donator vozila");
 
 			Bit1_Set(gr_PreviewCar, playerid, false);
 			BuyVehicle(playerid);

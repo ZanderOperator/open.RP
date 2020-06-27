@@ -2106,12 +2106,15 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 		    if(!response)
 		        return 1;
 
-			if(listitem == 0) ShowPlayerDialog(playerid,DIALOG_BIZNIS_MOBILEBUY,DIALOG_STYLE_LIST,"Odaberite mobitel","Samsung Galaxy S6 - 350$\nSamsung Galaxy Note - 330$\nNokia 5210 - 79$\nSony Ericsson T18 - 50$\niPhone 6s - 350$\niPhone 7 - 400$\nMotorola SmartPhone - 300$\nHuaweii G7 - 350$\nMotorola StarTAC Rainbow - 175$\nNokia 3210 - 89$","Kupi","Izlaz");
-			else if(listitem == 1) ShowPlayerDialog(playerid, DIALOG_BIZNIS_CRYPTOBUY, DIALOG_STYLE_LIST, "Odaberite crypto...", "Motorola T-900 Crypto - 50$\nAppollo Gold T25 - 70$\nX3 Crypto - 100$", "Odaberi", "Odustani");
-			else if(listitem == 2)
+			switch(listitem)
 			{
-			    if( !PlayerInfo[playerid][pMobileNumber] ) return SendErrorMessage(playerid, "Nemate mobitel!");
-			    PhoneMaskMenu(playerid);
+				case 0: ShowPlayerDialog(playerid,DIALOG_BIZNIS_MOBILEBUY,DIALOG_STYLE_LIST,"Odaberite mobitel", ListPhonesForSale(), "Kupi", "Izlaz");
+				case 1: ShowPlayerDialog(playerid, DIALOG_BIZNIS_CRYPTOBUY, DIALOG_STYLE_LIST, "Odaberite crypto...", "Motorola T-900 Crypto - 50$\nAppollo Gold T25 - 70$\nX3 Crypto - 100$", "Odaberi", "Odustani");
+				case 2:
+				{
+					if( !PlayerInfo[playerid][pMobileNumber] ) return SendErrorMessage(playerid, "Nemate mobitel!");
+					PhoneMaskMenu(playerid);
+				}
 			}
 		}
 		case DIALOG_BIZNIS_MOBILEBUY:
@@ -2119,170 +2122,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 			if( !response )
 				return ShowPlayerDialog(playerid, DIALOG_BIZNIS_CRYPTOORMOBILE, DIALOG_STYLE_LIST, "Odaberite proizvod..", "Mobiteli\nCrypto i ostalo", "Odaberi", "Odustani");
 
-			new
-				string[ 51 ];
-			switch( listitem )
-			{
-				case 0: {
-					if(AC_GetPlayerMoney(playerid) < 350) return SendClientMessage(playerid, COLOR_WHITE, "Nemas dovoljno novca da kupis ovaj mobitel(350$)!");
-
-					PlayerToBudgetMoney(playerid, 350); // Novac ide u proracun jer je Verona Mall
-					PlayerInfo[playerid][pMobileModel] = -2022;
-					PlayerInfo[playerid][pMobileNumber] = 100000 + random(899999);
-					format(string, sizeof(string), "[ ! ]  Vas novi broj mobilnog telefona je %d.", PlayerInfo[playerid][pMobileNumber]);
-					SendClientMessage(playerid, COLOR_RED, string);
-					SendClientMessage(playerid, COLOR_RED, "[ ! ]  Uspjesno ste kupili Samsung Galaxy S6!");
-					PlayerPlaySound(playerid, 1052, 0.0, 0.0, 0.0);
-					PlayerInfo[playerid][pMobileCost] = 20;
-					PlayerInfo[playerid][pPhoneBG] = -1263225696;
-					PlayerInfo[playerid][pPhoneMask] = 0;
-					CreatePlayerContacts(playerid);
-					SavePlayerMobile(playerid);
-				}
-				case 1: {
-					if(AC_GetPlayerMoney(playerid) < 330) return SendClientMessage(playerid, COLOR_WHITE, "Nemas dovoljno novca da kupis ovaj mobitel(330$)!");
-
-					PlayerToBudgetMoney(playerid, 330); // Novac ide u proracun jer je Verona Mall
-					PlayerInfo[playerid][pMobileModel] = -2027;
-					PlayerInfo[playerid][pMobileNumber] = 100000 + random(899999);
-					format(string, sizeof(string), "[ ! ]  Vas novi broj mobilnog telefona je %d.", PlayerInfo[playerid][pMobileNumber]);
-					SendClientMessage(playerid, COLOR_RED, string);
-					SendClientMessage(playerid, COLOR_RED, "[ ! ]  Uspjesno ste kupili Samsung Galaxy Note!");
-					PlayerPlaySound(playerid, 1052, 0.0, 0.0, 0.0);
-					PlayerInfo[playerid][pMobileCost] = 20;
-					PlayerInfo[playerid][pPhoneBG] = -1263225696;
-					PlayerInfo[playerid][pPhoneMask] = 0;
-					CreatePlayerContacts(playerid);
-					SavePlayerMobile(playerid);
-				}
-				case 2: {
-					if(AC_GetPlayerMoney(playerid) < 79) return SendClientMessage(playerid, COLOR_WHITE, "Nemas dovoljno novca da kupis ovaj mobitel(79$)!");
-
-					PlayerToBudgetMoney(playerid, 79); // Novac ide u proracun jer je Verona Mall
-					PlayerInfo[playerid][pMobileModel] = 18867;
-					PlayerInfo[playerid][pMobileNumber] = 100000 + random(899999);
-					format(string, sizeof(string), "[ ! ]  Vas novi broj mobilnog telefona je %d.", PlayerInfo[playerid][pMobileNumber]);
-					SendClientMessage(playerid, COLOR_RED, string);
-					SendClientMessage(playerid, COLOR_RED, "[ ! ]  Uspjesno ste kupili Nokia 5210!");
-					PlayerPlaySound(playerid, 1052, 0.0, 0.0, 0.0);
-					PlayerInfo[playerid][pMobileCost] = 20;
-					PlayerInfo[playerid][pPhoneBG] = -1263225696;
-					PlayerInfo[playerid][pPhoneMask] = 0;
-					CreatePlayerContacts(playerid);
-					SavePlayerMobile(playerid);
-				}
-				case 3: {
-					if(AC_GetPlayerMoney(playerid) < 50) return SendClientMessage(playerid, COLOR_WHITE, "Nemas dovoljno novca da kupis ovaj mobitel(50$)!");
-
-					PlayerToBudgetMoney(playerid, 50); // Novac ide u proracun jer je Verona Mall
-					PlayerInfo[playerid][pMobileModel] = 18868;
-					PlayerInfo[playerid][pMobileNumber] = 100000 + random(899999);
-					format(string, sizeof(string), "[ ! ]  Vas novi broj mobilnog telefona je %d.", PlayerInfo[playerid][pMobileNumber]);
-					SendClientMessage(playerid, COLOR_RED, string);
-					SendClientMessage(playerid, COLOR_RED, "[ ! ]  Uspjesno ste kupili Sony Ericsson T18!");
-					PlayerPlaySound(playerid, 1052, 0.0, 0.0, 0.0);
-					PlayerInfo[playerid][pMobileCost] = 20;
-					PlayerInfo[playerid][pPhoneBG] = -1263225696;
-					PlayerInfo[playerid][pPhoneMask] = 0;
-					CreatePlayerContacts(playerid);
-					SavePlayerMobile(playerid);
-				}
-				case 4: {
-					if(AC_GetPlayerMoney(playerid) < 350) return SendClientMessage(playerid, COLOR_WHITE, "Nemas dovoljno novca da kupis ovaj mobitel(350$)!");
-
-					PlayerToBudgetMoney(playerid, 350); // Novac ide u proracun jer je Verona Mall
-					PlayerInfo[playerid][pMobileModel] = -2025;
-					PlayerInfo[playerid][pMobileNumber] = 100000 + random(899999);
-					format(string, sizeof(string), "[ ! ]  Vas novi broj mobilnog telefona je %d.", PlayerInfo[playerid][pMobileNumber]);
-					SendClientMessage(playerid, COLOR_RED, string);
-					SendClientMessage(playerid, COLOR_RED, "[ ! ]  Uspjesno ste kupili iPhone 6s!");
-					PlayerInfo[playerid][pMobileCost] = 20;
-					PlayerPlaySound(playerid, 1052, 0.0, 0.0, 0.0);
-					PlayerInfo[playerid][pPhoneBG] = -1263225696;
-					PlayerInfo[playerid][pPhoneMask] = 0;
-					CreatePlayerContacts(playerid);
-					SavePlayerMobile(playerid);
-				}
-				case 5: {
-					if(AC_GetPlayerMoney(playerid) < 400) return SendClientMessage(playerid, COLOR_WHITE, "Nemas dovoljno novca da kupis ovaj mobitel(400$)!");
-
-					PlayerToBudgetMoney(playerid, 400); // Novac ide u proracun jer je Verona Mall
-					PlayerInfo[playerid][pMobileModel] = -2023;
-					PlayerInfo[playerid][pMobileNumber] = 100000 + random(899999);
-					format(string, sizeof(string), "[ ! ]  Vas novi broj mobilnog telefona je %d.", PlayerInfo[playerid][pMobileNumber]);
-					SendClientMessage(playerid, COLOR_RED, string);
-					SendClientMessage(playerid, COLOR_RED, "[ ! ]  Uspjesno ste kupili iPhone 7!");
-					PlayerInfo[playerid][pMobileCost] = 20;
-					PlayerInfo[playerid][pPhoneBG] = -1263225696;
-					PlayerInfo[playerid][pPhoneMask] = 0;
-					CreatePlayerContacts(playerid);
-					SavePlayerMobile(playerid);
-				}
-				case 6: {
-					if(AC_GetPlayerMoney(playerid) < 300) return SendClientMessage(playerid, COLOR_WHITE, "Nemas dovoljno novca da kupis ovaj mobitel(300$)!");
-
-					PlayerToBudgetMoney(playerid, 300); // Novac ide u proracun jer je Verona Mall
-					PlayerInfo[playerid][pMobileModel] = -2024;
-					PlayerInfo[playerid][pMobileNumber] = 100000 + random(899999);
-					format(string, sizeof(string), "[ ! ]  Vas novi broj mobilnog telefona je %d.", PlayerInfo[playerid][pMobileNumber]);
-					SendClientMessage(playerid, COLOR_RED, string);
-					SendClientMessage(playerid, COLOR_RED, "[ ! ]  Uspjesno ste kupili Motorola SmartPhone!");
-					PlayerPlaySound(playerid, 1052, 0.0, 0.0, 0.0);
-					PlayerInfo[playerid][pMobileCost] = 20;
-					PlayerInfo[playerid][pPhoneBG] = -1263225696;
-					PlayerInfo[playerid][pPhoneMask] = 0;
-					CreatePlayerContacts(playerid);
-					SavePlayerMobile(playerid);
-				}
-				case 7: {
-					if(AC_GetPlayerMoney(playerid) < 350) return SendClientMessage(playerid, COLOR_WHITE, "Nemas dovoljno novca da kupis ovaj mobitel(350$)!");
-
-					PlayerToBudgetMoney(playerid, 350); // Novac ide u proracun jer je Verona Mall
-					PlayerInfo[playerid][pMobileModel] = -2026;
-					PlayerInfo[playerid][pMobileNumber] = 100000 + random(899999);
-					format(string, sizeof(string), "[ ! ]  Vas novi broj mobilnog telefona je %d.", PlayerInfo[playerid][pMobileNumber]);
-					SendClientMessage(playerid, COLOR_RED, string);
-					SendClientMessage(playerid, COLOR_RED, "[ ! ]  Uspjesno ste kupili Huaweii G7!");
-					PlayerPlaySound(playerid, 1052, 0.0, 0.0, 0.0);
-					PlayerInfo[playerid][pMobileCost] = 20;
-					PlayerInfo[playerid][pPhoneBG] = -1263225696;
-					PlayerInfo[playerid][pPhoneMask] = 0;
-					CreatePlayerContacts(playerid);
-					SavePlayerMobile(playerid);
-				}
-				case 8: {
-					if(AC_GetPlayerMoney(playerid) < 175) return SendClientMessage(playerid, COLOR_WHITE, "Nemas dovoljno novca da kupis ovaj mobitel(175$)!");
-
-					PlayerToBudgetMoney(playerid, 175); // Novac ide u proracun jer je Verona Mall
-					PlayerInfo[playerid][pMobileModel] = 18873;
-					PlayerInfo[playerid][pMobileNumber] = 100000 + random(899999);
-					format(string, sizeof(string), "[ ! ]  Vas novi broj mobilnog telefona je %d.", PlayerInfo[playerid][pMobileNumber]);
-					SendClientMessage(playerid, COLOR_RED, string);
-					SendClientMessage(playerid, COLOR_RED, "[ ! ]  Uspjesno ste kupili Motorola StarTAC Rainbow!");
-					PlayerPlaySound(playerid, 1052, 0.0, 0.0, 0.0);
-					PlayerInfo[playerid][pMobileCost] = 20;
-					PlayerInfo[playerid][pPhoneBG] = -1263225696;
-					PlayerInfo[playerid][pPhoneMask] = 0;
-					CreatePlayerContacts(playerid);
-					SavePlayerMobile(playerid);
-				}
-				case 9: {
-					if(AC_GetPlayerMoney(playerid) < 89) return SendClientMessage(playerid, COLOR_WHITE, "Nemas dovoljno novca da kupis ovaj mobitel(89$)!");
-
-					PlayerToBudgetMoney(playerid, 89); // Novac ide u proracun jer je Verona Mall
-					PlayerInfo[playerid][pMobileModel] = 18874;
-					PlayerInfo[playerid][pMobileNumber] = 100000 + random(899999);
-					format(string, sizeof(string), "[ ! ]  Vas novi broj mobilnog telefona je %d.", PlayerInfo[playerid][pMobileNumber]);
-					SendClientMessage(playerid, COLOR_RED, string);
-					SendClientMessage(playerid, COLOR_RED, "[ ! ]  Uspjesno ste kupili Nokia 3210!");
-					PlayerPlaySound(playerid, 1052, 0.0, 0.0, 0.0);
-					PlayerInfo[playerid][pMobileCost] = 20;
-					PlayerInfo[playerid][pPhoneBG] = -1263225696;
-					PlayerInfo[playerid][pPhoneMask] = 0;
-					CreatePlayerContacts(playerid);
-					SavePlayerMobile(playerid);
-				}
-			}
+			BuyPlayerPhone(playerid, listitem);
 			return 1;
 		}
 		case DIALOG_BIZNIS_CRYPTOBUY:
@@ -3912,7 +3752,7 @@ CMD:buybiznis(playerid, params[])
 			BizzInfo[ biznis ][ bOwnerID ]		= PlayerInfo[ playerid ][ pSQLID ];
 			PlayerPlayTrackSound(playerid);
 			// Transakcija
-			PlayerToBudgetMoney(playerid, BizzInfo[ biznis ][ bBuyPrice ]); // Novac od igraèa ide u proraèu
+			PlayerToBudgetMoney(playerid, BizzInfo[ biznis ][ bBuyPrice ]); // Novac od igraï¿½a ide u proraï¿½u
 			// SQL
 			new
 				buybizQuery[ 158 ];
@@ -4195,7 +4035,7 @@ CMD:bizwithdraw(playerid, params[])
 	if( !IsPlayerInRangeOfPoint(playerid, 100.0, BizzInfo[bouse][bExitX], BizzInfo[bouse][bExitY], BizzInfo[bouse][bExitZ]) && BizzInfo[bouse][bCanEnter] == 1) return SendClientMessage(playerid, COLOR_RED, "Previse si udaljen od biznisa");
 	if( !IsPlayerInRangeOfPoint(playerid,3,BizzInfo[bouse][bEntranceX], BizzInfo[bouse][bEntranceY],BizzInfo[bouse][bEntranceZ]) && BizzInfo[bouse][bCanEnter] == 0) return SendClientMessage(playerid, COLOR_RED, "Previse si udaljen od biznisa");
 
-	BusinessToPlayerMoney(playerid, bouse, cashdeposit); //Novac iz biznisa ide igraèu
+	BusinessToPlayerMoney(playerid, bouse, cashdeposit); //Novac iz biznisa ide igraï¿½u
 
 	format(string, sizeof(string), "[ ! ]  Podigli ste $%d sa vaseg biznisa. Ukupno: $%d.",
 		cashdeposit,
@@ -4236,7 +4076,7 @@ CMD:bizbank(playerid, params[])
     }
 	if( cashdeposit > AC_GetPlayerMoney(playerid) || cashdeposit < 1 ) return SendClientMessage(playerid, COLOR_RED, "Nemas toliko novaca");
 
-	PlayerToBusinessMoney(playerid, bouse, cashdeposit); // Novac od igraèa ide u biznis
+	PlayerToBusinessMoney(playerid, bouse, cashdeposit); // Novac od igraï¿½a ide u biznis
 
 	format(string, sizeof(string), "[ ! ]  Stavio si $%d u tvoj biznis. Ukupno: $%d.",
 		cashdeposit,

@@ -154,7 +154,7 @@ CMD:callnrgs(playerid, params[])
 		return SendClientMessage(playerid, COLOR_RED, "Krivi unos playerida!");
 
 	if(RaceNRGCP[giveplayerid] != 0)
-		return SendClientMessage(playerid, COLOR_RED, "Taj igraè je veæ u utrci!");
+		return SendClientMessage(playerid, COLOR_RED, "Taj igraï¿½ je veï¿½ u utrci!");
 
 
     RaceNRGCP[giveplayerid] = 1;
@@ -178,7 +178,7 @@ CMD:nrgo(playerid, params[])
 		}
 	}
 	MoveDynamicObject(nrggate, 1339.31201, -2504.64624, 10.95230, 5.0, 0.0, 0.0, 0.0);
-	SendClientMessageToAll(COLOR_GREEN, "[ANNOUNCMENT]: NRG Race je zapoèeo!");
+	SendClientMessageToAll(COLOR_GREEN, "[ANNOUNCMENT]: NRG Race je zapoï¿½eo!");
 	return 1;
 }
 

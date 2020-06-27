@@ -1,3 +1,8 @@
+City of Angels Rolelay 18.3.8. - HotFix
+- Popravljen bug sa /hangup
+- Popravljen ispis broja/imena spremljenog kontakta tokom poziva/primitka poziva/SMS-a
+- Popravljen string buffer overflow u SMS komandi
+
 City of Angels RolePlay 18.3.7. - Update
 - Mape vracene na staro i maknut framework za optimizaciju radi neefikasnosti i bugganja
 - Sredjen furniture

@@ -100,6 +100,7 @@ timer SetPlayerCrash[6000](playerid)
 	AC_SetPlayerWeapons(playerid);
 	LoadPlayerSkills(playerid);
 	LoadPlayerObjects(playerid);
+	CheckPlayerInteriors(playerid);
 	return 1;
 }
 

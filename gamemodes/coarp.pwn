@@ -28,7 +28,7 @@
 #define GMT_ZONE_DIFFERENCE						(2)		// GMT + 2
 // 0.3DL
 #define NEGATIVE_MODEL_ID 						-40000 // Negativna vrijednost radi Custom Object Modela koji su u minusu
-#define HTTP_RESTART_REQUEST 					"51.77.200.63/ogp_api.php?gamemanager/restart&token=bdabc58154485eaca17aad240b3cfba5aee57bfce17511280c0af4cdc4c355a5&ip=51.77.200.63&port=7777&mod_key=default"
+#define HTTP_RESTART_REQUEST 					"51.77.200.63/ogp_api.php?gamemanager/restart&token=3a4aaa4509a0ff91f8597734eaecf1f4a85a5dd80b0c1455137f2428808d8820&ip=51.77.200.63&port=7777&mod_key=default"
 
 #define FIX_OnPlayerEnterVehicle 	0
 #define FIX_OnPlayerEnterVehicle_2 	0
@@ -199,7 +199,7 @@ native WP_Hash(buffer[], len, const str[]);
 #define WEB_URL									"forum.cityofangels-roleplay.com"
 
 // !Prilikom promjene SCRIPT_VERSION, OBAVEZNO ubaciti novi Update "Changelog.txt"u /scriptfiles folder!
-#define SCRIPT_VERSION							"CoA RP v18.3.7."
+#define SCRIPT_VERSION							"CoA RP v18.4.0."
 
 //custom name
 #define Dev_Name   								"Woo-Logan"
@@ -1655,6 +1655,7 @@ new
 	MarriagePartner[ MAX_PLAYERS ],
 	InjectPlayer[MAX_PLAYERS],
 	CallingId[ MAX_PLAYERS ] = { 999, ... },
+	//PlayerCallPlayer[ MAX_PLAYERS ] = {	INVALID_PLAYER_ID, ... },
 	PlayerAFK[MAX_PLAYERS],
 	LastVehicle[MAX_PLAYERS] = INVALID_VEHICLE_ID,
 	PlayerTuningVehicle[ MAX_PLAYERS ] = INVALID_VEHICLE_ID;
@@ -1664,7 +1665,7 @@ new
 new
 	Iterator:COVehicles<MAX_VEHICLES>,
 	Iterator:Vehicles<MAX_VEHICLES>,
-	//Iterator:TruckTrailers<MAX_VEHICLES>, - trucker.pwn - izbaèen
+	//Iterator:TruckTrailers<MAX_VEHICLES>, - trucker.pwn - izbaï¿½en
 	Iterator:Pickups<MAX_PICKUP>,
 	Iterator:Factions<MAX_FACTIONS>,
 	Iterator:Houses<MAX_HOUSES>,
@@ -3077,6 +3078,8 @@ public OnGameModeInit()
 	// YCMD
 	Command_AddAltNamed("whisper"		, 	"w");
 	Command_AddAltNamed("hangup"		, 	"h");
+	Command_AddAltNamed("speakerphone"	, 	"sf");
+	Command_AddAltNamed("doorshout"		, 	"ds");
 	Command_AddAltNamed("close"			, 	"c");
 	Command_AddAltNamed("shout"			, 	"s");
 	Command_AddAltNamed("carwhisper"	, 	"cw");
@@ -3337,6 +3340,11 @@ public OnPlayerCommandText(playerid, cmdtext[])
 
 public e_COMMAND_ERRORS:OnPlayerCommandReceived(playerid, cmdtext[], e_COMMAND_ERRORS:success)
 {
+	if(strlen(cmdtext) > 128)
+	{
+		SendMessage(playerid, MESSAGE_TYPE_ERROR, "Unos u chatbox ne smije biti duzi od 128 znakova!");
+		return COMMAND_ZERO_RET;
+	}
 	switch(success)
 	{
 		case COMMAND_OK:
@@ -4027,6 +4035,9 @@ public OnPlayerText(playerid, text[])
 {
 	if(!text[0])
 		return Kick(playerid);
+	
+	if(strlen(text) > 128)
+		return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Unos u chatbox ne smije biti duzi od 128 znakova!");
 
 	if(Bit1_Get(gr_DeathCountStarted, playerid))
 	{
@@ -4051,38 +4062,41 @@ public OnPlayerText(playerid, text[])
 		SendMessage(playerid, MESSAGE_TYPE_ERROR,"Niste sigurno spawnani, ne mozete koristiti chat!");
 		return 0;
 	}
-
+	
+	new tmpString[180];
 	text[0] = toupper(text[0]);
 	
-	new
-		tmpString[180];
-	if( IsPlayerInAnyVehicle(playerid) ) {
-		format(tmpString, sizeof(tmpString), "%s kaze%s(vozilo): %s", GetName(playerid), PrintAccent(playerid), text);
-		RealProxDetector(6.5, playerid, tmpString,COLOR_FADE1,COLOR_FADE2,COLOR_FADE3,COLOR_FADE4,COLOR_FADE5);
-	}
-	else
+	if(CallingId[playerid] == 999 && PlayerCallPlayer[playerid] == INVALID_PLAYER_ID) // Igrac nije u pozivu
 	{
-		format(tmpString, sizeof(tmpString), "%s kaze%s: %s", GetName(playerid), PrintAccent(playerid), text);
-		RealProxDetector(6.5, playerid, tmpString,COLOR_FADE1,COLOR_FADE2,COLOR_FADE3,COLOR_FADE4,COLOR_FADE5);
-	}
-	if(Bit1_Get( gr_animchat, playerid) && !PlayerAnim[playerid])
-	{
-		TogglePlayerControllable(playerid, 1);
-		if(strlen(text) > 0 && strlen(text) < 10) ApplyAnimationEx(playerid,"PED","IDLE_CHAT",4.0,0,0,0,0,500,1,0);
-		else if(strlen(text) >= 10 && strlen(text) < 20) ApplyAnimationEx(playerid,"PED","IDLE_CHAT",4.0,0,0,0,0,1000,1,0);
-		else if(strlen(text) >= 20 && strlen(text) < 30) ApplyAnimationEx(playerid,"PED","IDLE_CHAT",4.0,0,0,0,0,1500,1,0);
-		else if(strlen(text) >= 30 && strlen(text) < 40) ApplyAnimationEx(playerid,"PED","IDLE_CHAT",4.0,0,0,0,0,2000,1,0);
-		else if(strlen(text) >= 40 && strlen(text) < 50) ApplyAnimationEx(playerid,"PED","IDLE_CHAT",4.0,0,0,0,0,2500,1,0);
-		else if(strlen(text) >= 50 && strlen(text) < 61) ApplyAnimationEx(playerid,"PED","IDLE_CHAT",4.0,0,0,0,0,3000,1,0);
-		else if(strlen(text) >= 61 && strlen(text) < 71) ApplyAnimationEx(playerid,"PED","IDLE_CHAT",4.0,0,0,0,0,3500,1,0);
-		else if(strlen(text) >= 71 && strlen(text) < 81) ApplyAnimationEx(playerid,"PED","IDLE_CHAT",4.0,1,0,0,0,4000,1,0);
-		else if(strlen(text) >= 81 && strlen(text) < 91) ApplyAnimationEx(playerid,"PED","IDLE_CHAT",4.0,1,0,0,0,4500,1,0);
-		else if(strlen(text) >= 91 && strlen(text) < 101) ApplyAnimationEx(playerid,"PED","IDLE_CHAT",4.0,1,0,0,0,5000,1,0);
-		else if(strlen(text) >= 101 && strlen(text) < 111) ApplyAnimationEx(playerid,"PED","IDLE_CHAT",4.0,1,0,0,0,5500,1,0);
-		else if(strlen(text) >= 111 && strlen(text) < 121) ApplyAnimationEx(playerid,"PED","IDLE_CHAT",4.0,1,0,0,0,6000,1,0);
-		else if(strlen(text) >= 121 && strlen(text) < 131) ApplyAnimationEx(playerid,"PED","IDLE_CHAT",4.0,1,0,0,0,6500,1,0);
-		else if(strlen(text) >= 131 && strlen(text) < 141) ApplyAnimationEx(playerid,"PED","IDLE_CHAT",4.0,1,0,0,0,7000,1,0);
-		else if(strlen(text) >= 141 && strlen(text) < 151) ApplyAnimationEx(playerid,"PED","IDLE_CHAT",4.0,1,0,0,0,7500,1,0);
+		
+		if( IsPlayerInAnyVehicle(playerid) ) {
+			format(tmpString, sizeof(tmpString), "%s kaze%s(vozilo): %s", GetName(playerid), PrintAccent(playerid), text);
+			RealProxDetector(6.5, playerid, tmpString,COLOR_FADE1,COLOR_FADE2,COLOR_FADE3,COLOR_FADE4,COLOR_FADE5);
+		}
+		else
+		{
+			format(tmpString, sizeof(tmpString), "%s kaze%s: %s", GetName(playerid), PrintAccent(playerid), text);
+			RealProxDetector(6.5, playerid, tmpString,COLOR_FADE1,COLOR_FADE2,COLOR_FADE3,COLOR_FADE4,COLOR_FADE5);
+		}
+		if(Bit1_Get( gr_animchat, playerid) && !PlayerAnim[playerid] )
+		{
+			TogglePlayerControllable(playerid, 1);
+			if(strlen(text) > 0 && strlen(text) < 10) ApplyAnimationEx(playerid,"PED","IDLE_CHAT",4.0,0,0,0,0,500,1,0);
+			else if(strlen(text) >= 10 && strlen(text) < 20) ApplyAnimationEx(playerid,"PED","IDLE_CHAT",4.0,0,0,0,0,1000,1,0);
+			else if(strlen(text) >= 20 && strlen(text) < 30) ApplyAnimationEx(playerid,"PED","IDLE_CHAT",4.0,0,0,0,0,1500,1,0);
+			else if(strlen(text) >= 30 && strlen(text) < 40) ApplyAnimationEx(playerid,"PED","IDLE_CHAT",4.0,0,0,0,0,2000,1,0);
+			else if(strlen(text) >= 40 && strlen(text) < 50) ApplyAnimationEx(playerid,"PED","IDLE_CHAT",4.0,0,0,0,0,2500,1,0);
+			else if(strlen(text) >= 50 && strlen(text) < 61) ApplyAnimationEx(playerid,"PED","IDLE_CHAT",4.0,0,0,0,0,3000,1,0);
+			else if(strlen(text) >= 61 && strlen(text) < 71) ApplyAnimationEx(playerid,"PED","IDLE_CHAT",4.0,0,0,0,0,3500,1,0);
+			else if(strlen(text) >= 71 && strlen(text) < 81) ApplyAnimationEx(playerid,"PED","IDLE_CHAT",4.0,1,0,0,0,4000,1,0);
+			else if(strlen(text) >= 81 && strlen(text) < 91) ApplyAnimationEx(playerid,"PED","IDLE_CHAT",4.0,1,0,0,0,4500,1,0);
+			else if(strlen(text) >= 91 && strlen(text) < 101) ApplyAnimationEx(playerid,"PED","IDLE_CHAT",4.0,1,0,0,0,5000,1,0);
+			else if(strlen(text) >= 101 && strlen(text) < 111) ApplyAnimationEx(playerid,"PED","IDLE_CHAT",4.0,1,0,0,0,5500,1,0);
+			else if(strlen(text) >= 111 && strlen(text) < 121) ApplyAnimationEx(playerid,"PED","IDLE_CHAT",4.0,1,0,0,0,6000,1,0);
+			else if(strlen(text) >= 121 && strlen(text) < 131) ApplyAnimationEx(playerid,"PED","IDLE_CHAT",4.0,1,0,0,0,6500,1,0);
+			else if(strlen(text) >= 131 && strlen(text) < 141) ApplyAnimationEx(playerid,"PED","IDLE_CHAT",4.0,1,0,0,0,7000,1,0);
+			else if(strlen(text) >= 141 && strlen(text) < 151) ApplyAnimationEx(playerid,"PED","IDLE_CHAT",4.0,1,0,0,0,7500,1,0);
+		}
 	}
 
 	foreach(new i : Player) {

@@ -2206,7 +2206,7 @@ stock RemovePassangersFromVehicle(vehicleid)
 	    {
 			RemovePlayerFromVehicle(i);
 			SetPlayerPos(i, 2275.5793, -1104.3652, 38.6000);
-			SendClientMessage(i, COLOR_RED, "[ ! ] Izbaèeni ste iz vozila zbog toga Sto je vozaè istog uSao u tuning garaZu!");
+			SendClientMessage(i, COLOR_RED, "[ ! ] Izbaï¿½eni ste iz vozila zbog toga Sto je vozaï¿½ istog uSao u tuning garaZu!");
 	    }
 	}
 	return 0;
