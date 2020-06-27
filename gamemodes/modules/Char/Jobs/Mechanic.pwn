@@ -677,7 +677,7 @@ CMD:parts(playerid, params[])
 	}
 	else if(strcmp(item,"give",true) == 0)
 	{
-	    if( Bit1_Get( gr_UsingMechanic, playerid ) ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne možeS davati dijelove dok popravljaS vozilo!");
+	    if( Bit1_Get( gr_UsingMechanic, playerid ) ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne moï¿½eS davati dijelove dok popravljaS vozilo!");
 		if(Repairing[playerid] == (true)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Trenutno popravljate vozilo, sacekajte da prvo popravite vozilo.");
 
 	    new

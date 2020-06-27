@@ -118,7 +118,7 @@ stock PutPlayerInSector(playerid)
 		case 17: SetPlayerPosEx(playerid, 222.7668,1903.2522,1378.0582, 7, 0, true); //a18
 	}
  	
- 	//Celije zatvora za block B i C. Blockovi su izbaèeni zbog slabe upotrebe i male koncentracije ljudi.
+ 	//Celije zatvora za block B i C. Blockovi su izbaï¿½eni zbog slabe upotrebe i male koncentracije ljudi.
  	/*
 	else if(type == 2)
 	{

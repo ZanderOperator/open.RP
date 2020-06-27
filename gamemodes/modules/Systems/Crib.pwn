@@ -3419,49 +3419,102 @@ CMD:knock(playerid, params[])
 CMD:doorshout(playerid, params[])
 {
 	if(AntiSpamInfo[playerid][asDoorShout] > gettimestamp()) return va_SendClientMessage(playerid, COLOR_RED, "[ANTI-SPAM]: Ne spamajte sa komandom! Pricekajte %d sekundi pa nastavite!", ANTI_SPAM_DOOR_SHOUT);
-	if(!IsPlayerInDynamicCP(playerid, PlayerHouseCP[playerid])) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ispred kuce (niste u checkpointu)!");
-	if(Bit16_Get(gr_PlayerInfrontHouse, playerid) == INVALID_HOUSE_ID) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ispred kuce (niste u checkpointu)!");
+	if(Bit16_Get(gr_PlayerInfrontHouse, playerid) == INVALID_HOUSE_ID && Bit16_Get(gr_PlayerInHouse, playerid) == INVALID_HOUSE_ID) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ispred kuce/u kuci!");
 	new
-		result[64],
-		house = Bit16_Get(gr_PlayerInfrontHouse, playerid);
-	if(sscanf(params, "s[64]", result)) return SendClientMessage(playerid, COLOR_RED, "USAGE: /doorshout [text]");
-	if(IsPlayerInRangeOfPoint(playerid,2.0, HouseInfo[house][hEnterX], HouseInfo[house][hEnterY], HouseInfo[house][hEnterZ]) && HouseInfo[house][h3dViwo] == GetPlayerVirtualWorld(playerid)) 
+		result[100],
+		house;
+		
+	if(sscanf(params, "s[100]", result)) return SendClientMessage(playerid, COLOR_RED, "USAGE: /doorshout [text]");
+	
+	if(Bit16_Get(gr_PlayerInfrontHouse, playerid) != INVALID_HOUSE_ID)
 	{
-		AntiSpamInfo[playerid][asDoorShout] = gettimestamp() + ANTI_SPAM_DOOR_SHOUT;
-		new
-			tmpString[128],
-			color = COLOR_FADE1;
-		if(Bit1_Get(a_AdminOnDuty, playerid) == 1)
+		house = Bit16_Get(gr_PlayerInfrontHouse, playerid);
+		if(IsPlayerInRangeOfPoint(playerid, 2.0, HouseInfo[house][hEnterX], HouseInfo[house][hEnterY], HouseInfo[house][hEnterZ]) && HouseInfo[house][h3dViwo] == GetPlayerVirtualWorld(playerid)) 
 		{
-			format(tmpString, sizeof(tmpString), "((Admin %s se dere[VRATA]: %s))", GetName(playerid, true), result);
-			ProxDetector(30.0, playerid, tmpString, COLOR_ORANGE,COLOR_ORANGE,COLOR_ORANGE,COLOR_ORANGE,COLOR_ORANGE);
-			color = COLOR_ORANGE;
-		}
-		if(Bit1_Get(h_HelperOnDuty, playerid) == 1)
-		{
-			format(tmpString, sizeof(tmpString), "((Helper %s se dere[VRATA]: %s))", GetName(playerid, true), result);
-			ProxDetector(30.0, playerid, tmpString, COLOR_HELPER,COLOR_HELPER,COLOR_HELPER,COLOR_HELPER,COLOR_HELPER);
-			color = COLOR_ORANGE;
-		}
-		if(Bit1_Get(gr_MaskUse, playerid) && Bit1_Get(a_AdminOnDuty, playerid) == 0)
-		{
-			format(tmpString, sizeof(tmpString), "Maska_%d se dere[VRATA]: %s !!", PlayerInfo[playerid][pMaskID], result);
-			ProxDetector(30.0, playerid, tmpString, COLOR_FADE1,COLOR_FADE2,COLOR_FADE3,COLOR_FADE4,COLOR_FADE5);
-			color = COLOR_FADE1;
-		}
-		if(Bit1_Get(a_AdminOnDuty, playerid) == 0 && !Bit1_Get(gr_MaskUse, playerid))
-		{
-			format(tmpString, sizeof(tmpString), "%s se dere[VRATA]: %s !!", GetName(playerid, true), result);
-			ProxDetector(30.0, playerid, tmpString, COLOR_FADE1,COLOR_FADE2,COLOR_FADE3,COLOR_FADE4,COLOR_FADE5);
-			color = COLOR_FADE1;
-		}
-		foreach(new i : Player)
-		{
-			if(IsPlayerInRangeOfPoint(i, 30.0, HouseInfo[house][hExitX], HouseInfo[house][hExitY], HouseInfo[house][hExitZ]) && GetPlayerInterior(i) == HouseInfo[house][hInt] &&  GetPlayerVirtualWorld(i) == HouseInfo[house][hVirtualWorld])
+			AntiSpamInfo[playerid][asDoorShout] = gettimestamp() + ANTI_SPAM_DOOR_SHOUT;
+			new
+				tmpString[144],
+				color = COLOR_FADE1;
+			if(Bit1_Get(a_AdminOnDuty, playerid) == 1)
 			{
-				SendClientMessage(i, color, tmpString);
-				continue;
+				format(tmpString, sizeof(tmpString), "(( Admin %s se dere[VRATA]: %s ))", GetName(playerid, true), result);
+				ProxDetector(30.0, playerid, tmpString, COLOR_ORANGE,COLOR_ORANGE,COLOR_ORANGE,COLOR_ORANGE,COLOR_ORANGE);
+				color = COLOR_ORANGE;
 			}
+			if(Bit1_Get(h_HelperOnDuty, playerid) == 1)
+			{
+				format(tmpString, sizeof(tmpString), "(( Helper %s se dere[VRATA]: %s ))", GetName(playerid, true), result);
+				ProxDetector(30.0, playerid, tmpString, COLOR_HELPER,COLOR_HELPER,COLOR_HELPER,COLOR_HELPER,COLOR_HELPER);
+				color = COLOR_ORANGE;
+			}
+			if(Bit1_Get(gr_MaskUse, playerid) && Bit1_Get(a_AdminOnDuty, playerid) == 0)
+			{
+				format(tmpString, sizeof(tmpString), "Maska_%d se dere[VRATA]: %s !!", PlayerInfo[playerid][pMaskID], result);
+				ProxDetector(30.0, playerid, tmpString, COLOR_FADE1,COLOR_FADE2,COLOR_FADE3,COLOR_FADE4,COLOR_FADE5);
+				color = COLOR_FADE1;
+			}
+			if(Bit1_Get(a_AdminOnDuty, playerid) == 0 && !Bit1_Get(gr_MaskUse, playerid))
+			{
+				format(tmpString, sizeof(tmpString), "%s se dere[VRATA]: %s !!", GetName(playerid, true), result);
+				ProxDetector(30.0, playerid, tmpString, COLOR_FADE1,COLOR_FADE2,COLOR_FADE3,COLOR_FADE4,COLOR_FADE5);
+				color = COLOR_FADE1;
+			}
+			foreach(new i : Player)
+			{
+				if(IsPlayerInRangeOfPoint(i, 30.0, HouseInfo[house][hExitX], HouseInfo[house][hExitY], HouseInfo[house][hExitZ]) && GetPlayerInterior(i) == HouseInfo[house][hInt] &&  GetPlayerVirtualWorld(i) == HouseInfo[house][hVirtualWorld])
+				{
+					SendClientMessage(i, color, tmpString);
+					continue;
+				}
+			}
+		}
+		else return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Morate biti vrlo blizu vrata od kuce!");
+	}
+	else
+	{
+		if(Bit16_Get(gr_PlayerInHouse, playerid) != INVALID_HOUSE_ID)
+		{
+			house = Bit16_Get(gr_PlayerInHouse, playerid);
+			if(IsPlayerInRangeOfPoint(playerid, 5.0, HouseInfo[house][hExitX], HouseInfo[house][hExitY], HouseInfo[house][hExitZ]) && HouseInfo[house][hVirtualWorld] == GetPlayerVirtualWorld(playerid)) 
+			{
+				AntiSpamInfo[playerid][asDoorShout] = gettimestamp() + ANTI_SPAM_DOOR_SHOUT;
+				new
+					tmpString[144],
+					color = COLOR_FADE1;
+				if(Bit1_Get(a_AdminOnDuty, playerid) == 1)
+				{
+					format(tmpString, sizeof(tmpString), "(( Admin %s se dere[VRATA]: %s ))", GetName(playerid, true), result);
+					ProxDetector(30.0, playerid, tmpString, COLOR_ORANGE,COLOR_ORANGE,COLOR_ORANGE,COLOR_ORANGE,COLOR_ORANGE);
+					color = COLOR_ORANGE;
+				}
+				if(Bit1_Get(h_HelperOnDuty, playerid) == 1)
+				{
+					format(tmpString, sizeof(tmpString), "(( Helper %s se dere[VRATA]: %s ))", GetName(playerid, true), result);
+					ProxDetector(30.0, playerid, tmpString, COLOR_HELPER,COLOR_HELPER,COLOR_HELPER,COLOR_HELPER,COLOR_HELPER);
+					color = COLOR_ORANGE;
+				}
+				if(Bit1_Get(gr_MaskUse, playerid) && Bit1_Get(a_AdminOnDuty, playerid) == 0)
+				{
+					format(tmpString, sizeof(tmpString), "Maska_%d se dere[VRATA]: %s !!", PlayerInfo[playerid][pMaskID], result);
+					ProxDetector(30.0, playerid, tmpString, COLOR_FADE1,COLOR_FADE2,COLOR_FADE3,COLOR_FADE4,COLOR_FADE5);
+					color = COLOR_FADE1;
+				}
+				if(Bit1_Get(a_AdminOnDuty, playerid) == 0 && !Bit1_Get(gr_MaskUse, playerid))
+				{
+					format(tmpString, sizeof(tmpString), "%s se dere[VRATA]: %s !!", GetName(playerid, true), result);
+					ProxDetector(30.0, playerid, tmpString, COLOR_FADE1,COLOR_FADE2,COLOR_FADE3,COLOR_FADE4,COLOR_FADE5);
+					color = COLOR_FADE1;
+				}
+				foreach(new i : Player)
+				{
+					if(IsPlayerInRangeOfPoint(i, 30.0, HouseInfo[house][hEnterX], HouseInfo[house][hEnterY], HouseInfo[house][hEnterZ]))
+					{
+						SendClientMessage(i, color, tmpString);
+						continue;
+					}
+				}
+			}
+			else return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Morate biti vrlo blizu vrata od kuce!");
 		}
 	}
 	return 1;

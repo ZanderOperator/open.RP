@@ -456,7 +456,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 	switch(dialogid)  {
 		case DIALOG_PACKAGE_ORDER: {
 			if(!response){
-				SendClientMessage(playerid, COLOR_YELLOW, "Maska 64361 kaze (mobitel): Šta me drkaš koju picku materinu, daj odjebi!");
+				SendClientMessage(playerid, COLOR_YELLOW, "Maska 64361 kaze (mobitel): ï¿½ta me drkaï¿½ koju picku materinu, daj odjebi!");
                 PlayerHangup(playerid);
 				return 0;
 			}
@@ -470,7 +470,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 		}
 		case DIALOG_PACKAGE_AMOUNT: {
 			if(!response){
-				SendClientMessage(playerid, COLOR_YELLOW, "Maska 64361 kaze (mobitel): Šta me drkaš koju picku materinu, daj odjebi!");
+				SendClientMessage(playerid, COLOR_YELLOW, "Maska 64361 kaze (mobitel): ï¿½ta me drkaï¿½ koju picku materinu, daj odjebi!");
                 PlayerHangup(playerid);
 				return 0;
 			}
@@ -502,7 +502,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 		}
 		case DIALOG_PACKAGE_CONFIRM: {
 			if(!response){
-				SendClientMessage(playerid, COLOR_YELLOW, "Maska 64361 kaze (mobitel): Šta me drkaš koju picku materinu, daj odjebi!");
+				SendClientMessage(playerid, COLOR_YELLOW, "Maska 64361 kaze (mobitel): ï¿½ta me drkaï¿½ koju picku materinu, daj odjebi!");
                 PlayerHangup(playerid);
 				return 0;
 			}
@@ -514,7 +514,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 			if( Iter_Count(PACKAGES) == 10 )
 				return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Trenutno je aktivno previse posiljka, pricekajte neko vrijeme da mozete naruciti posiljku.");
 			if( AC_GetPlayerMoney(playerid) < package_price ){
-				SendClientMessage(playerid, COLOR_YELLOW, "Maska 64361 kaze (mobitel): Nemaš ni centa, a u neke bi vece šeme, hah.");
+				SendClientMessage(playerid, COLOR_YELLOW, "Maska 64361 kaze (mobitel): Nemaï¿½ ni centa, a u neke bi vece ï¿½eme, hah.");
 				PlayerHangup(playerid);
 				return 0;
 			}
@@ -541,7 +541,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 			PackageData[free_id][PackageWeapon] = show_WeaponList[package_wep][wep_ID];
 			Iter_Add(PACKAGES, free_id);
 			
-			va_SendClientMessage(playerid, COLOR_YELLOW, "%s (mobitel): Uredu treba mi %s, sa %d metaka. Nemoj štedjeti na meni!", GetName(playerid, false), weapon_name, package_amount);
+			va_SendClientMessage(playerid, COLOR_YELLOW, "%s (mobitel): Uredu treba mi %s, sa %d metaka. Nemoj ï¿½tedjeti na meni!", GetName(playerid, false), weapon_name, package_amount);
             SendClientMessage(playerid, COLOR_YELLOW, "Maska 64361 kaze (mobitel): Dogovoreno. Kroz par minuta ces dobiti koordinate gdje da dodjes.");
 			PlayerHangup(playerid);
 

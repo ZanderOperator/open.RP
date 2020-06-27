@@ -75,6 +75,66 @@ new
 	##        #######  ##    ##  ######     ##    ####  #######  ##    ##  ######  
 */
 
+stock CheckPlayerInteriors(playerid)
+{
+	new interior = -1, virtualworld = -1;
+	interior = GetPlayerInterior(playerid);
+	virtualworld = GetPlayerVirtualWorld(playerid);
+	if(interior != 0 || virtualworld != -1)
+	{
+		foreach(new h: Houses)
+		{
+			if(IsPlayerInRangeOfPoint(playerid, 100.0, HouseInfo[h][hExitX], HouseInfo[h][hExitY], HouseInfo[h][hExitZ]) && HouseInfo[h][hInt] == interior && HouseInfo[h][hVirtualWorld] == virtualworld)
+			{
+				Bit16_Set(gr_PlayerInHouse, playerid, h);
+				return 1;
+			}
+		}
+		foreach(new b: Bizzes)
+		{
+			if(IsPlayerInRangeOfPoint(playerid, 100.0, BizzInfo[b][bExitX], BizzInfo[b][bExitY], BizzInfo[b][bExitZ]) && BizzInfo[b][bInterior] == interior && BizzInfo[b][bVirtualWorld] == virtualworld)
+			{
+				Bit16_Set(gr_PlayerInBiznis, playerid, b);
+				return 1;
+			}
+		}
+		foreach(new pickup: Pickups)
+		{
+			if(IsPlayerInRangeOfPoint(playerid, 100.0, PickupInfo[pickup][epExitx],PickupInfo[pickup][epExity],PickupInfo[pickup][epExitz]) && PickupInfo[pickup][epInt] == interior && PickupInfo[pickup][epViwo] == virtualworld)
+			{
+				Bit16_Set(gr_PlayerInPickup, playerid, pickup);
+				return 1;
+			}
+		}
+		foreach(new c: Complex) 
+		{
+			if(IsPlayerInRangeOfPoint(playerid, 100.0, ComplexInfo[c][cExitX], ComplexInfo[c][cExitY], ComplexInfo[c][cExitZ]) && ComplexInfo[c][cInt] == interior && ComplexInfo[c][cViwo] == virtualworld) 
+			{
+				Bit16_Set(gr_PlayerInComplex, playerid, c);
+				return 1;
+			}
+		}
+		foreach(new cr: ComplexRooms)
+		{
+			if(IsPlayerInRangeOfPoint(playerid, 100.0, ComplexRoomInfo[cr][cExitX], ComplexRoomInfo[cr][cExitY], ComplexRoomInfo[cr][cEnterZ]) && interior == ComplexRoomInfo[cr][cIntExit] && virtualworld == ComplexRoomInfo[cr][cVWExit] ) 
+			{
+				Bit16_Set(gr_PlayerInRoom, playerid, cr);
+				return 1;
+			}
+		}
+		foreach(new garage: Garages)
+		{
+			if(IsPlayerInRangeOfPoint(playerid, 100.0, GarageInfo[ garage ][ gExitX ], GarageInfo[ garage ][ gExitY ], GarageInfo[ garage ][ gExitZ ]))
+			{
+				Bit16_Set(gr_PlayerInGarage, playerid, garage);
+				return 1;
+			}
+		}
+	}
+	return 1;
+}
+		
+
 forward KickPlayer(playerid);
 public KickPlayer(playerid)
 	return Kick(playerid);
@@ -921,30 +981,30 @@ stock ShowPlayerStats(playerid, targetid)
     strcat(pDialog,motd, sizeof(pDialog));
 
 	switch(PlayerInfo[targetid][pJob])  {
-         case 1:  format(tmpString, 11, "Cistac ulica");
-         case 2:  format(tmpString, 11, "Pizza Boy");
-         case 3:  format(tmpString, 11, "Mehanicar");
-         case 4:  format(tmpString, 13, "Kosac trave");
-         case 5:  format(tmpString, 18, "Tvornicki radnik");
-         case 6:  format(tmpString, 11, "Taksist");
-         case 7:  format(tmpString, 11, "Farmer");
-		 case 8:  format(tmpString, 11, "Nepoznato");
-         case 9:  format(tmpString, 11, "Nepoznato");
-         case 12: format(tmpString, 12, "Gun Dealer");
-         case 13: format(tmpString, 12, "Car Jacker");
-         case 14: strcat(tmpString, "Drvosjeca", 12);
-         case 15: format(tmpString, 12, "Nepoznato");
-         case 16: format(tmpString, 11, "Smetlar");
-         case 17: format(tmpString, 11, "Vehicle Impounder");
-         case 18: format(tmpString, 11, "Transporter");
-         case 19: format(tmpString, 11, "Nepoznato");
-         case 20: format(tmpString, 11, "Nepoznato");
-         case 21: format(tmpString, 11, "Nepoznato");
-		 case 22: format(tmpString, 11, "Nepoznato");
-		 case 23: format(tmpString, 11, "Nepoznato");
-         case 24: format(tmpString, 11, "Nepoznato");
-         case 25: format(tmpString, 11, "Nepoznato");
-         default: format(tmpString, 11, "Nezaposlen");
+         case 1:  format(tmpString, 20, "Cistac ulica");
+         case 2:  format(tmpString, 20, "Pizza Boy");
+         case 3:  format(tmpString, 20, "Mehanicar");
+         case 4:  format(tmpString, 20, "Kosac trave");
+         case 5:  format(tmpString, 20, "Tvornicki radnik");
+         case 6:  format(tmpString, 20, "Taksist");
+         case 7:  format(tmpString, 20, "Farmer");
+		 case 8:  format(tmpString, 20, "Nepoznato");
+         case 9:  format(tmpString, 20, "Nepoznato");
+         case 12: format(tmpString, 20, "Gun Dealer");
+         case 13: format(tmpString, 20, "Car Jacker");
+         case 14: format(tmpString, 20, "Drvosjeca");
+         case 15: format(tmpString, 20, "Nepoznato");
+         case 16: format(tmpString, 20, "Smetlar");
+         case 17: format(tmpString, 20, "Vehicle Impounder");
+         case 18: format(tmpString, 20, "Transporter");
+         case 19: format(tmpString, 20, "Nepoznato");
+         case 20: format(tmpString, 20, "Nepoznato");
+         case 21: format(tmpString, 20, "Nepoznato");
+		 case 22: format(tmpString, 20, "Nepoznato");
+		 case 23: format(tmpString, 20, "Nepoznato");
+         case 24: format(tmpString, 20, "Nepoznato");
+         case 25: format(tmpString, 20, "Nepoznato");
+         default: format(tmpString, 20, "Nezaposlen");
     }
 	/*new
 		tmpMarried[MAX_PLAYER_NAME];
@@ -976,12 +1036,12 @@ stock ShowPlayerStats(playerid, targetid)
 	strcat(pDialog,motd, sizeof(pDialog));
 
 	switch( PlayerInfo[targetid][pDonateRank] ) {
-		case 1: format(tmpString, 11, "Bronze");
-		case 2:	format(tmpString, 11, "Silver");
-		case 3:	format(tmpString, 11, "Gold");
-		case 4: format(tmpString, 11, "Platinum");
+		case 1: format(tmpString, 20, "Bronze");
+		case 2:	format(tmpString, 20, "Silver");
+		case 3:	format(tmpString, 20, "Gold");
+		case 4: format(tmpString, 20, "Platinum");
 		default:
-			format(tmpString, 11, "Nista");
+			format(tmpString, 20, "Nista");
 	}
 
     format(motd, sizeof(motd),""COL_COABLUE"OOC STATS:\n\n"COL_WHITE"SQL ID: [%d] | Level: [%d] | Premium Account: [%s] | Sati igranja: [%d] | Respekti: [%d/%d]\n",
@@ -1333,7 +1393,7 @@ CMD:checkfreq(playerid, params[])
 	if(sscanf(params, "i", channel))
 		return SendClientMessage(playerid, COLOR_RED, "USAGE: /checkfreq [frequency]");
 
-	if(channel < 1 || channel > 100000)return SendClientMessage(playerid, COLOR_RED, "Pogrešna frekvencija.");
+	if(channel < 1 || channel > 100000)return SendClientMessage(playerid, COLOR_RED, "Pogreï¿½na frekvencija.");
 
 	va_SendClientMessage(playerid, COLOR_RED, "Igraci na frekvenciji %d:", channel);
 

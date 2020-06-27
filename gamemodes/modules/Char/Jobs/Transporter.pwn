@@ -212,7 +212,7 @@ FailedToDeliver(playerid)
     TogglePlayerControllable(playerid, 1);
    	TDone[playerid] = 0;
 	kurcinaTimer[playerid] = 0;
-   	GameTextForPlayer(playerid, "~r~Stigli ste na distanaciju prije moguæmoguceg vremena.~n~Niste dobili platu!", 10000, 3);
+   	GameTextForPlayer(playerid, "~r~Stigli ste na distanaciju prije moguï¿½moguceg vremena.~n~Niste dobili platu!", 10000, 3);
     new str[256];
     format(str,256,"{FA5656}[ADMIN] %s je zavrsio posao prije moguceg vremena. Provjerite ga!",GetName(playerid));
     SendAdminMessage(COLOR_RED,str);
@@ -263,7 +263,7 @@ CMD:transporter(playerid, params[])
 		if(PlayerInfo[playerid][pFreeWorks] < 1)
 			return SendClientMessage(playerid, COLOR_RED, "Odradio si dovoljno za ovaj payday! Pricekaj iduci.");
 
-		ShowPlayerDialog(playerid, DIALOG_ADRIAPOSAO, DIALOG_STYLE_MSGBOX, "{FA5656}Transporter", "Jeste li sigurni da želite zapoceti dostavu?", "Da", "Ne");
+		ShowPlayerDialog(playerid, DIALOG_ADRIAPOSAO, DIALOG_STYLE_MSGBOX, "{FA5656}Transporter", "Jeste li sigurni da ï¿½elite zapoceti dostavu?", "Da", "Ne");
 	}
 	else if( !strcmp(param, "stop", true) ) {
 		if( (PlayerInfo[playerid][pJob] != TRANSPORTER_ID)) return SendClientMessage( playerid, COLOR_RED, "Niste zaposleni kao kamiondzija.");

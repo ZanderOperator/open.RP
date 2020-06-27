@@ -126,7 +126,7 @@ hook OnPlayerStateChange(playerid, newstate, oldstate)
         	{
         	    //SetPlayerCheckpoint(playerid, go_kart_cps[0][0], go_kart_cps[0][1], go_kart_cps[0][2], 10.0);
         	    TogglePlayerControllable(playerid, 0);
-        	    SendClientMessage(playerid, COLOR_RED, "[ ! ] USli ste u kart vozilo! Prièekajte ostale igraèe kako bi utrka zapoèela!");
+        	    SendClientMessage(playerid, COLOR_RED, "[ ! ] USli ste u kart vozilo! Priï¿½ekajte ostale igraï¿½e kako bi utrka zapoï¿½ela!");
 			}
         	else RemovePlayerFromVehicle(playerid);
     	}

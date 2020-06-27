@@ -5,7 +5,7 @@
 	PizzaBoy 		- 	1
 	Smetlar			-	2
 	Crafter			-	3
-	Kosaè trave		-	4
+	Kosaï¿½ trave		-	4
 	Lopov			-	5
 	Car jacker		- 	6
 	Trucker         -   7

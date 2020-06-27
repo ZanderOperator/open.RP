@@ -1961,7 +1961,7 @@ CMD:explode(playerid, params[])
 	new giveplayerid;
  	if (PlayerInfo[playerid][pAdmin] < 1337) return SendClientMessage(playerid, COLOR_RED, "Komanda /explode ne postoji!");
   	if(sscanf(params, "u", giveplayerid)) return SendClientMessage(playerid, 0xFFFFFFFF, "USAGE: [ID/DioImena]");
-  	if (!IsPlayerConnected(giveplayerid)) return SendClientMessage(playerid, COLOR_RED, "Taj igrac¨ nije online!");
+  	if (!IsPlayerConnected(giveplayerid)) return SendClientMessage(playerid, COLOR_RED, "Taj igracï¿½ nije online!");
 
     new Float:SLX, Float:SLY, Float:SLZ;
     GetPlayerPos(giveplayerid, SLX, SLY,SLZ);
@@ -1984,7 +1984,7 @@ CMD:crash(playerid, params[])
 	if (PlayerInfo[playerid][pAdmin] < 1338) return SendClientMessage(playerid, COLOR_RED, "Komanda '/crash' ne postoji!");
 	new giveplayerid;
 	if(sscanf(params, "u", giveplayerid)) return SendClientMessage(playerid, COLOR_RED, "USAGE: /crash [ID/DioImena]");
-    if (!IsPlayerConnected(giveplayerid)) return SendClientMessage(playerid, COLOR_RED, "Taj igrac¨ nije online!");
+    if (!IsPlayerConnected(giveplayerid)) return SendClientMessage(playerid, COLOR_RED, "Taj igracï¿½ nije online!");
 	GameTextForPlayer(giveplayerid, "??!$$%&'()*+,-./01~!@#$^&*()_-+={[}]:;'<,>.?/", 1000, 0);
 	GameTextForPlayer(giveplayerid, "??!$$%&'()*+,-./01~!@#$^&*()_-+={[}]:;'<,>.?/", 2000, 1);
 	GameTextForPlayer(giveplayerid, "??!$$%&'()*+,-./01~!@#$^&*()_-+={[}]:;'<,>.?/", 3000, 2);
@@ -2631,26 +2631,26 @@ CMD:asellcomplex(playerid, params[])
 			}
 		}
 		
-		new TmpQuery[64], TmpQuery2[128], TmpQuery3[128];
+		new TmpQuery[128];
 		
 		// Update Complex MySQL table
-		format(TmpQuery, 64, "UPDATE `server_complex` SET `owner_id`='0' WHERE `owner_id` = '%d'", ComplexInfo[ complex ][cOwnerID]);
+		format(TmpQuery, 128, "UPDATE `server_complex` SET `owner_id`= '0' WHERE `id` = '%d'", ComplexInfo[ complex ][ cSQLID ]);
 		mysql_tquery(g_SQL, TmpQuery, "", "");
 		
 		if(foundonline == 0)
 		{
 			// Update accounts
-			format( TmpQuery2, sizeof(TmpQuery2), "UPDATE `accounts` SET `handMoney` = `handMoney` + '%d' WHERE `sqlid` = '%d'", 
+			format( TmpQuery, sizeof(TmpQuery), "UPDATE `accounts` SET `handMoney` = `handMoney` + '%d' WHERE `sqlid` = '%d'", 
 				ComplexInfo[complex][cPrice],
 				ComplexInfo[complex][cOwnerID]
 			);
-			mysql_tquery(g_SQL, TmpQuery2, "", "");
+			mysql_tquery(g_SQL, TmpQuery, "", "");
 			
 			// Update proracun
-			format( TmpQuery3, sizeof(TmpQuery3), "UPDATE `city` SET `budget` = `budget` - '%d'", 
+			format( TmpQuery, sizeof(TmpQuery), "UPDATE `city` SET `budget` = `budget` - '%d'", 
 				ComplexInfo[complex][cPrice]
 			);
-			mysql_tquery(g_SQL, TmpQuery3, "", "");
+			mysql_tquery(g_SQL, TmpQuery, "", "");
 		}
 				
 		ComplexInfo[complex][cOwnerID]		= 0;
@@ -3975,7 +3975,7 @@ CMD:ban(playerid, params[])
 	new string[128];
 	if(PlayerInfo[giveplayerid][pAdmin] > PlayerInfo[playerid][pAdmin])
 	{
-		format(string, sizeof(string), "AdmCmd: %s je dobio automatski kick pokušavajuci banovati veceg admina.", GetName(playerid, true));
+		format(string, sizeof(string), "AdmCmd: %s je dobio automatski kick pokuï¿½avajuci banovati veceg admina.", GetName(playerid, true));
 		SendAdminMessage(COLOR_RED,string);
 		KickMessage(playerid);
 		return 1;
@@ -5572,7 +5572,7 @@ CMD:apm(playerid, params[])
 		giveplayerid;
     if( sscanf( params, "us[160]", giveplayerid, result ) ) return SendClientMessage(playerid, COLOR_RED, "USAGE: /apm [ID/Dio Imena][text]" );
 	if( giveplayerid == INVALID_PLAYER_ID ) return SendClientMessage( playerid, COLOR_RED, "Krivi unos playerida/imena!" );
-	if( giveplayerid == playerid ) return SendClientMessage(playerid, COLOR_RED, "A ti i na viberu sam sebi pišeš?" );
+	if( giveplayerid == playerid ) return SendClientMessage(playerid, COLOR_RED, "A ti i na viberu sam sebi piï¿½eï¿½?" );
 	if( strlen(result) > 160 ) return SendClientMessage(playerid, COLOR_RED, "Maksimalna velicina unosa je 90!" );
 	if( PlayerInfo[playerid][pAdmin] ) {
 	
@@ -5946,7 +5946,7 @@ CMD:banip(playerid,params[]) {
 	format(string,sizeof string,"banip %s",params);
 	SendRconCommand(string);
 	SendRconCommand("reloadbans");
-	format(string,sizeof string,"[ ! ] Uspješno ste banovali IP.");
+	format(string,sizeof string,"[ ! ] Uspjeï¿½no ste banovali IP.");
 	return SendClientMessage(playerid,-1,string);
 }
 CMD:ptp(playerid, params[])
@@ -5962,7 +5962,7 @@ CMD:ptp(playerid, params[])
 	
 	va_SendClientMessage(targetid, COLOR_RED, "[ ! ] Admin je teleportova igraca %s do vas.", GetName(giveplayerid));
 	va_SendClientMessage(giveplayerid, COLOR_RED, "[ ! ] Admin vas je teleportovao do igraca %s", GetName(targetid));
-    va_SendClientMessage(playerid, COLOR_RED, "[ ! ] Uspješno ste teleportovali %s do %s", GetName(giveplayerid), GetName(targetid));
+    va_SendClientMessage(playerid, COLOR_RED, "[ ! ] Uspjeï¿½no ste teleportovali %s do %s", GetName(giveplayerid), GetName(targetid));
 	return 1;
 }
 CMD:forceduty(playerid, params[])

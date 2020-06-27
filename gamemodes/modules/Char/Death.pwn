@@ -379,13 +379,13 @@ public StartDeathCount(playerid)
 			DestroyDeathTDs(playerid);
 			
 			
-			//Izbaèeno da igraè gubi ogromne svote novca.
+			//Izbaï¿½eno da igraï¿½ gubi ogromne svote novca.
 			/*new
 				money = floatround(PlayerInfo[ playerid ][ pBank ] * 0.01);
 			SendFormatMessage(playerid, MESSAGE_TYPE_INFO, "Platio si bolnicke troskove u visini od %d$!", money);
 			PlayerToOrgMoneyTAX(playerid, FACTION_TYPE_FD, money); // novac bolnici i proracunu*/
 			
-			//Alternativa èisto da FD ima prihod novca.
+			//Alternativa ï¿½isto da FD ima prihod novca.
 			
             SendClientMessage(playerid, COLOR_RED, "[ ! ] Platio si bolnicke troskove u visini od 500$!");
 			PlayerToOrgMoneyTAX(playerid, FACTION_TYPE_FD, 500); // novac bolnici i proracunu*/

@@ -1024,7 +1024,7 @@ CMD:injectp(playerid, params[])
     	giveplayerid;
 	if( sscanf(params, "u", giveplayerid) ) return SendClientMessage(playerid, COLOR_RED, "USAGE: /injectp [playerid/dio imena]");
 	if( giveplayerid == INVALID_PLAYER_ID ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Krivi playerid!");
-    if( giveplayerid == playerid ) 	return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne mozete sami sebe lijeèiti.");
+    if( giveplayerid == playerid ) 	return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne mozete sami sebe lijeï¿½iti.");
 	if( !ProxDetectorS(5.0, playerid, giveplayerid) ) 	return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nisi blizu tog igraca!");
 
 	va_SendClientMessage(playerid, COLOR_RED, "[ ! ] Poslali ste zahtjev za injekciju %s", GetName(giveplayerid));

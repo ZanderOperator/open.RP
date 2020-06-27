@@ -727,7 +727,7 @@ BoatFishing(playerid)
 		}
 		else return  SendClientMessage(playerid, COLOR_RED, "[ ! ] Dostigli ste maksimalnu kolicinu ulova. Otidjite, i prodajte ga.");
 	}
-	else return SendClientMessage(playerid, COLOR_RED, "[ ! ] Ribu možete loviti samo na teritoriji Santa Maria Beacha");
+	else return SendClientMessage(playerid, COLOR_RED, "[ ! ] Ribu moï¿½ete loviti samo na teritoriji Santa Maria Beacha");
 	return 1;
 }
 
@@ -743,10 +743,10 @@ CMD:fishinghelp(playerid, params[])
 CMD:fishingskills(playerid, params[])
 {
     new level = PlayerInfo[playerid][pFishingSkill], string[61];
-   	if(level >=0 && level < 80) SendClientMessage(playerid, COLOR_RED, "Fishing skill = 1"), format(string, sizeof(string), "Morate uspješno pecati još %d puta da bi dobili skill-up.", 50 - level), SendClientMessage(playerid, COLOR_RED, string);
-    else if(level >= 80 && level < 130) SendClientMessage(playerid, COLOR_RED, "Fishing skill = 2"), format(string, sizeof(string), "Morate uspješno pecati još %d puta da bi dobili skill-up.", 100 - level), SendClientMessage(playerid, COLOR_RED, string);
-	else if(level >=130 && level < 240) SendClientMessage(playerid, COLOR_RED, "Fishing skill = 3"), format(string, sizeof(string), "Morate uspješno pecati još %d puta da bi dobili skill-up.", 200 - level), SendClientMessage(playerid, COLOR_RED, string);
-	else if(level >=240 && level < 440) SendClientMessage(playerid, COLOR_RED, "Fishing skill = 4"), format(string, sizeof(string), "Morate uspješno pecati još %d puta da bi dobili skill-up.", 400 - level), SendClientMessage(playerid, COLOR_RED, string);
+   	if(level >=0 && level < 80) SendClientMessage(playerid, COLOR_RED, "Fishing skill = 1"), format(string, sizeof(string), "Morate uspjeï¿½no pecati joï¿½ %d puta da bi dobili skill-up.", 50 - level), SendClientMessage(playerid, COLOR_RED, string);
+    else if(level >= 80 && level < 130) SendClientMessage(playerid, COLOR_RED, "Fishing skill = 2"), format(string, sizeof(string), "Morate uspjeï¿½no pecati joï¿½ %d puta da bi dobili skill-up.", 100 - level), SendClientMessage(playerid, COLOR_RED, string);
+	else if(level >=130 && level < 240) SendClientMessage(playerid, COLOR_RED, "Fishing skill = 3"), format(string, sizeof(string), "Morate uspjeï¿½no pecati joï¿½ %d puta da bi dobili skill-up.", 200 - level), SendClientMessage(playerid, COLOR_RED, string);
+	else if(level >=240 && level < 440) SendClientMessage(playerid, COLOR_RED, "Fishing skill = 4"), format(string, sizeof(string), "Morate uspjeï¿½no pecati joï¿½ %d puta da bi dobili skill-up.", 400 - level), SendClientMessage(playerid, COLOR_RED, string);
 	else if(level >=440) SendClientMessage(playerid, COLOR_RED, "Fishing skill = 5");
 	return 1;
 }

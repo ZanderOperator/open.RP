@@ -168,7 +168,7 @@ CMD:callkarters(playerid, params[])
 		return SendClientMessage(playerid, COLOR_RED, "Krivi unos playerida!");
 
 	if(RaceKartCP[giveplayerid] != 0)
-		return SendClientMessage(playerid, COLOR_RED, "Taj igraè je veæ u utrci!");
+		return SendClientMessage(playerid, COLOR_RED, "Taj igraï¿½ je veï¿½ u utrci!");
 
 
     RaceKartCP[giveplayerid] = 1;

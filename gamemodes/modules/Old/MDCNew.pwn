@@ -716,7 +716,7 @@ stock GetPlayerMDCRecord(playerid, const playername[])
 forward CCTVExit(playerid);
 public CCTVExit(playerid)
 {
-    SendClientMessage(playerid, -1, "'Vraceni ste u vozilo nakon napuštanja CCTVa.");
+    SendClientMessage(playerid, -1, "'Vraceni ste u vozilo nakon napuï¿½tanja CCTVa.");
 	PutPlayerInVehicle(playerid, CCTVCar[playerid], CCTVSeat[playerid]);
 	SetCameraBehindPlayer(playerid);
     KillTimer(cctvcam[playerid]);
@@ -2225,7 +2225,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 			{
 			    new house;
 				house = strval(inputtext);
-                va_SendClientMessage(playerid, COLOR_RED, "[ ! ] Uspjesno ste pokrenuli traženje kuce ID: %d", house);
+                va_SendClientMessage(playerid, COLOR_RED, "[ ! ] Uspjesno ste pokrenuli traï¿½enje kuce ID: %d", house);
 				SetPlayerCheckpoint(playerid, HouseInfo[ house ][ hEnterX ], HouseInfo[ house ][ hEnterY ], HouseInfo[ house ][ hEnterZ ], 2);
                 house_spot[playerid] = true;
 			}
@@ -2257,7 +2257,7 @@ hook OnPlayerEnterCheckpoint(playerid)
     if(house_spot[playerid] == true)
 	{
 		DisablePlayerCheckpoint(playerid);
-		GameTextForPlayer(playerid, "~g~Uspjesno ste pronašli kucu.", 2000, 1);
+		GameTextForPlayer(playerid, "~g~Uspjesno ste pronaï¿½li kucu.", 2000, 1);
 		house_spot[playerid] = false;
 	}
 	return 1;
