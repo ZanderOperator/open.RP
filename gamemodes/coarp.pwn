@@ -199,7 +199,7 @@ native WP_Hash(buffer[], len, const str[]);
 #define WEB_URL									"forum.cityofangels-roleplay.com"
 
 // !Prilikom promjene SCRIPT_VERSION, OBAVEZNO ubaciti novi Update "Changelog.txt"u /scriptfiles folder!
-#define SCRIPT_VERSION							"CoA RP v18.4.0."
+#define SCRIPT_VERSION							"CoA RP v18.4.1."
 
 //custom name
 #define Dev_Name   								"Woo-Logan"
@@ -3254,34 +3254,7 @@ public OnQueryError(errorid, const error[], const callback[], const query[], MyS
 public OnPlayerEditDynamicObject(playerid, objectid, response, Float:x, Float:y, Float:z, Float:rx, Float:ry, Float:rz)
 {
     PokerTableEdit(playerid, objectid, response, x, y, z, rx, ry, rz);
-	if(response == EDIT_RESPONSE_FINAL)
-	{
-		if (p_EditRack[playerid] != INVALID_PLAYER_ID)
-	    {
-			if(HouseStorage[p_EditRack[playerid]][storageExists])
-			{
-				HouseStorage[p_EditRack[playerid]][storagePos][0] = x;
-				HouseStorage[p_EditRack[playerid]][storagePos][1] = y;
-				HouseStorage[p_EditRack[playerid]][storagePos][2] = z;
-				HouseStorage[p_EditRack[playerid]][storagePos][3] = rz;
-				ShowPlayerDialog(playerid, DIALOG_HSTORAGE_EDIT, DIALOG_STYLE_MSGBOX, "{3C95C2}House Storage - Stalak", "\nJeste li sigurni da zelite ovdje postaviti Stalak?\n[!] - Nakon postavljanja, stalku vise ne mozete promijeniti poziciju.", "(ok)", "(x)");
-			}
-		}
-	}
-	if(response == EDIT_RESPONSE_CANCEL)
-	{
-		if (p_EditRack[playerid] != INVALID_PLAYER_ID)
-	    {
-			if(HouseStorage[p_EditRack[playerid]][storageExists])
-			{
-				HouseStorage[p_EditRack[playerid]][storagePos][0] = x;
-				HouseStorage[p_EditRack[playerid]][storagePos][1] = y;
-				HouseStorage[p_EditRack[playerid]][storagePos][2] = z;
-				HouseStorage[p_EditRack[playerid]][storagePos][3] = rz;
-				ShowPlayerDialog(playerid, DIALOG_HSTORAGE_EDIT, DIALOG_STYLE_MSGBOX, "{3C95C2}House Storage - Stalak", "\nJeste li sigurni da zelite ovdje postaviti Stalak?\n[!] - Nakon postavljanja, stalku vise ne mozete promijeniti poziciju.", "(ok)", "(x)");
-			}
-		}
-	}
+	StorageObjectEdit(playerid, objectid, response, x, y, z, rx, ry, rz);
 	return (true);
 }
 

@@ -183,7 +183,7 @@ stock InflictPlayerDamage(playerid, issuerid, bodypart, Float:damage)
 				ApplyWoundedAnimation(playerid, bodypart);
 				SendClientMessage(playerid, COLOR_RED, "[ ! ] Tesko ste ranjeni te pali na pod. Ako izgubite sav HP - DeathMode. ");
 				SendClientMessage(playerid, COLOR_DEATH, "* Tek nakon 30 sec mozete ulaziti u kola kao vozac/suvozac.");
-				GameTextForPlayer(playerid, "~b~BRUTALLY WOUNDED", 5000, 3);
+				GameTextForPlayer(playerid, "~b~TESKO RANJEN", 5000, 3);
 				SetPlayerHealth(playerid, 25.0);
 				SetTimerEx("SafeResetWeapons", 2000, false, "i", playerid); /// ODE
 				AC_ResetPlayerWeapons(playerid);
@@ -318,7 +318,7 @@ stock DealDamage(playerid, issuerid, Float: health, Float: armour, Float: damage
 					issuerid,
 					GetName( playerid, false ),
 					playerid,
-					GetWeaponNameEx(issuerid)
+					GetWeaponNameEx(AC_GetPlayerWeapon(issuerid))
 				);
 				DMERSBroadCast(COLOR_RED, wndString, 1);
 

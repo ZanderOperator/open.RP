@@ -866,6 +866,9 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 						ammo = AC_GetPlayerAmmo(playerid);
 					if(weaponid == 0 || ammo == 0)
 						return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate nikakvo oruzje u ruci/oruzje nema municije.");
+					
+					if(!WeaponHackCheck(playerid))
+						return 1;
 					else PutWeaponInWarehouse(playerid, weaponid, ammo);
 				}
 				case 1:

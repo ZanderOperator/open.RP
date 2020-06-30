@@ -438,6 +438,7 @@ timer PlayerGlobalTask[1000](playerid)
 	SprayingTaggTimer(playerid);
 	
 	PacketLossCheck(playerid);
+	WeaponHackCheck(playerid);
 	return 1;
 }
 

@@ -5446,15 +5446,8 @@ CMD:trunk(playerid, params[])
 		if(weaponid == 0 || ammo == 0)
 			return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate nikakvo oruzje u ruci/oruzje nema municije.");
 			
-		if(weaponid != 0 && ammo != 0 && PlayerWeapons[playerid][pwSQLID][GetWeaponSlot(weaponid)] == -1)
-		{
-			new banreason[18];
-			format(banreason, 18, "Weapon Hack"); 
-			HOOK_Ban(playerid, INVALID_PLAYER_ID, banreason, -1,  true);
-			va_SendClientMessage(playerid, COLOR_RED, "Anti-Cheat: Dobio si ban, razlog: %s!", banreason);
-			BanMessage(playerid);
+		if(!WeaponHackCheck(playerid))
 			return 1;
-		}
 		else PutPlayerWeaponInTrunk(playerid, vehicleid, weaponid);
 		return 1;
 	}
