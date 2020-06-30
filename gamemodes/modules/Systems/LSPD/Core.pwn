@@ -918,7 +918,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 					AC_ResetPlayerWeapon(playerid, WEAPON_DEAGLE);
 					Bit1_Set( gr_PlayerACSafe, playerid, true );
 					AC_GivePlayerWeapon(playerid, WEAPON_DEAGLE, 50);
-					SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uzeli ste Desert Eagle iz lockera..");
+					SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uzeli ste Desert Eagle iz lockera.");
 					format(tmpString, sizeof(tmpString), "** %s je uzeo Desert Eagle iz lockera.", GetName(playerid, true));
 					ProxDetector(20.0, playerid, tmpString, COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE);
                 }
@@ -927,7 +927,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 					AC_ResetPlayerWeapon(playerid, WEAPON_SHOTGUN);
 					Bit1_Set( gr_PlayerACSafe, playerid, true );
 					AC_GivePlayerWeapon(playerid, WEAPON_SHOTGUN, 50);
-					SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uzeli ste Shotgun iz lockera..");
+					SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uzeli ste Shotgun iz lockera.");
 					format(tmpString, sizeof(tmpString), "** %s je uzeo Shotgun iz lockera.", GetName(playerid, true));
 					ProxDetector(20.0, playerid, tmpString, COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE);
                 }
@@ -936,8 +936,8 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 					AC_ResetPlayerWeapon(playerid, WEAPON_MP5);
 					Bit1_Set( gr_PlayerACSafe, playerid, true );
 					AC_GivePlayerWeapon(playerid, WEAPON_MP5, 150);
-					SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uzeli ste Mp5 iz lockera..");
-					format(tmpString, sizeof(tmpString), "** %s je uzeo Mp5 iz lockera.", GetName(playerid, true));
+					SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uzeli ste MP5 iz lockera.");
+					format(tmpString, sizeof(tmpString), "** %s je uzeo MP5 iz lockera.", GetName(playerid, true));
 					ProxDetector(20.0, playerid, tmpString, COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE);
 				}
 				case 3: {
@@ -945,7 +945,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 					AC_ResetPlayerWeapon(playerid, WEAPON_M4);
 					Bit1_Set( gr_PlayerACSafe, playerid, true );
 					AC_GivePlayerWeapon(playerid, WEAPON_M4, 200);
-					SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uzeli ste M4 iz lockera..");
+					SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uzeli ste M4 iz lockera.");
 					format(tmpString, sizeof(tmpString), "** %s je uzeo M4 iz lockera.", GetName(playerid, true));
 					ProxDetector(20.0, playerid, tmpString, COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE);
 				}
@@ -954,7 +954,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 					AC_ResetPlayerWeapon(playerid, WEAPON_SNIPER);
 					Bit1_Set( gr_PlayerACSafe, playerid, true );
 					AC_GivePlayerWeapon(playerid, WEAPON_SNIPER, 50);
-					SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uzeli ste Sniper Rifle iz lockera..");
+					SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uzeli ste Sniper Rifle iz lockera.");
 					format(tmpString, sizeof(tmpString), "** %s je uzeo Sniper Rifle iz lockera.", GetName(playerid, true));
 					ProxDetector(20.0, playerid, tmpString, COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE);
 				}
@@ -963,7 +963,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 					AC_ResetPlayerWeapon(playerid, WEAPON_KNIFE);
 					Bit1_Set( gr_PlayerACSafe, playerid, true );
 					AC_GivePlayerWeapon(playerid, WEAPON_KNIFE, 1);
-					SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uzeli ste Knife iz lockera..");
+					SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uzeli ste Knife iz lockera.");
 					format(tmpString, sizeof(tmpString), "** %s je uzeo Knife iz lockera.", GetName(playerid, true));
 					ProxDetector(20.0, playerid, tmpString, COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE);
 				}
@@ -972,7 +972,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 					AC_ResetPlayerWeapon(playerid, WEAPON_TEARGAS);
 					Bit1_Set( gr_PlayerACSafe, playerid, true );
 					AC_GivePlayerWeapon(playerid, WEAPON_TEARGAS, 10);
-					SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uzeli ste Teargas iz lockera..");
+					SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uzeli ste Teargas iz lockera.");
 					format(tmpString, sizeof(tmpString), "** %s je uzeo Teargas iz lockera.", GetName(playerid, true));
 					ProxDetector(20.0, playerid, tmpString, COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE);
 				}
@@ -990,7 +990,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 					AC_ResetPlayerWeapon(playerid, WEAPON_SILENCED);
 					Bit1_Set( gr_PlayerACSafe, playerid, true );
 					AC_GivePlayerWeapon(playerid, WEAPON_SILENCED, 50);
-					SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uzeli ste Silenced iz lockera..");
+					SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uzeli ste Silenced iz lockera.");
 					format(tmpString, sizeof(tmpString), "** %s je uzeo Silenced iz lockera.", GetName(playerid, true));
 					ProxDetector(20.0, playerid, tmpString, COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE);
 				}
@@ -1008,7 +1008,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 					AC_ResetPlayerWeapon(playerid, WEAPON_NITESTICK);
 					Bit1_Set( gr_PlayerACSafe, playerid, true );
 					AC_GivePlayerWeapon(playerid, WEAPON_NITESTICK, 1);
-					SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uzeli ste Nitestick iz lockera..");
+					SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uzeli ste Nitestick iz lockera.");
 					format(tmpString, sizeof(tmpString), "** %s je uzeo Nitestick iz lockera.", GetName(playerid, true));
 					ProxDetector(20.0, playerid, tmpString, COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE);
                 }
@@ -1026,7 +1026,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 					AC_ResetPlayerWeapon(playerid, WEAPON_RIFLE);
 					Bit1_Set( gr_PlayerACSafe, playerid, true );
 					AC_GivePlayerWeapon(playerid, WEAPON_RIFLE, 50);
-					SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uzeli ste Rifle iz lockera..");
+					SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uzeli ste Rifle iz lockera.");
 					format(tmpString, sizeof(tmpString), "** %s je uzeo Rifle iz lockera.", GetName(playerid, true));
 					ProxDetector(20.0, playerid, tmpString, COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE);
 				}

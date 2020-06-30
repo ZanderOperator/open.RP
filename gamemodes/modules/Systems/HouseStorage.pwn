@@ -56,6 +56,39 @@ HouseStorage_SaveWep(storage_id, wepid)
 	return (true);
 }
 
+Function: StorageObjectEdit(playerid, objectid, response, Float:fX, Float:fY, Float:fZ, Float:fRotX, Float:fRotY, Float:fRotZ)
+{
+	if(response == EDIT_RESPONSE_FINAL)
+	{
+		if (p_EditRack[playerid] != INVALID_PLAYER_ID)
+	    {
+			if(HouseStorage[p_EditRack[playerid]][storageExists])
+			{
+				HouseStorage[p_EditRack[playerid]][storagePos][0] = fX;
+				HouseStorage[p_EditRack[playerid]][storagePos][1] = fY;
+				HouseStorage[p_EditRack[playerid]][storagePos][2] = fZ;
+				HouseStorage[p_EditRack[playerid]][storagePos][3] = fRotZ;
+				ShowPlayerDialog(playerid, DIALOG_HSTORAGE_EDIT, DIALOG_STYLE_MSGBOX, "{3C95C2}House Storage - Stalak", "\nJeste li sigurni da zelite ovdje postaviti Stalak?\n[!] - Nakon postavljanja, stalku vise ne mozete promijeniti poziciju.", "OK", "Zatvori");
+			}
+		}
+	}
+	if(response == EDIT_RESPONSE_CANCEL)
+	{
+		if (p_EditRack[playerid] != INVALID_PLAYER_ID)
+	    {
+			if(HouseStorage[p_EditRack[playerid]][storageExists])
+			{
+				HouseStorage[p_EditRack[playerid]][storagePos][0] = fX;
+				HouseStorage[p_EditRack[playerid]][storagePos][1] = fY;
+				HouseStorage[p_EditRack[playerid]][storagePos][2] = fZ;
+				HouseStorage[p_EditRack[playerid]][storagePos][3] = fRotZ;
+				ShowPlayerDialog(playerid, DIALOG_HSTORAGE_EDIT, DIALOG_STYLE_MSGBOX, "{3C95C2}House Storage - Stalak", "\nJeste li sigurni da zelite ovdje postaviti Stalak?\n[!] - Nakon postavljanja, stalku vise ne mozete promijeniti poziciju.", "OK", "Zatvori");
+			}
+		}
+	}
+	return 1;
+}
+
 forward HouseStorage_Load();
 public HouseStorage_Load()
 {
@@ -476,31 +509,35 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 			if (response)
 			{
 				new id = Storage_RackNear(playerid),
-				weapon 	= AC_GetPlayerWeapon(playerid);
+				weapon = AC_GetPlayerWeapon(playerid),
+				ammo = AC_GetPlayerAmmo(playerid);
 
 				if (id == -1)
 					return false;
 
 				if (!HouseStorage[id][storageWeapons][listitem])
 				{
-					if (!AC_GetPlayerWeapon(playerid))
-						return SendErrorMessage(playerid, "Morate drzati oruzje da bi ste ga ostavili.");
+					if(weapon == 0 || ammo == 0)
+						return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate nikakvo oruzje u ruci/oruzje nema municije.");
+						
+					if(!WeaponHackCheck(playerid))
+						return 1;
 
-					if(AC_GetPlayerAmmo(playerid) > 500)
+					if(ammo > 500)
 						return SendErrorMessage(playerid, "Ne mozete ostaviti vise od 500 metaka na stalak.");
 						
-					HouseStorage[id][storageWeapons][listitem] = GetPlayerWeapon(playerid);
-					HouseStorage[id][storageAmmo][listitem] = GetPlayerAmmo(playerid);
+					HouseStorage[id][storageWeapons][listitem] = weapon;
+					HouseStorage[id][storageAmmo][listitem] = ammo;
 
 					AC_ResetPlayerWeapon(playerid, weapon);
 					
 					new
 						tmpLog[ 128 ];
-					format( tmpLog, 128, "%s je ostavio oruzje (name: %s || ammo: %d) u gunrack id %d.",
+					format( tmpLog, 128, "%s je ostavio %s (ammo: %d) u House Storageu [SQLID: %d].",
 						GetName(playerid, false),
 						GetWeaponNameEx(HouseStorage[id][storageWeapons][listitem]),
 						HouseStorage[id][storageAmmo][listitem],
-						id
+						HouseStorage[id][storageID]
 					);
 					LogGunrack(tmpLog);
 

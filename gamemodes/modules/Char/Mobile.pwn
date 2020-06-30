@@ -2418,24 +2418,27 @@ stock PhoneCall(playerid, callnumber)
 		SendClientMessage(playerid, COLOR_WHITE, "HINT: Sada mozete koristiti T da bi ste razgovarali na telefon, ukucajte /hangup da bi ste prekinuli poziv");
 		SendClientMessage(playerid, COLOR_ALLDEPT, "HITNA LINIJA: Za policiju recite 'police'{FF8282},a za Hitnu pomoc/Vatrogasce recite 'ambulance'");
 		CallingId[ playerid ] =  911;
+		Bit1_Set( gr_CanHangup, playerid, true );
 		return 1;
 	}
 	if( callnumber == 444 ) { // Taxisti
 		SetPlayerSpecialAction(playerid, SPECIAL_ACTION_USECELLPHONE);
 		SendClientMessage(playerid, COLOR_RED, "Taxi Dispatcher: Pozdrav, recite nam vasu lokaciju?");
 		CallingId[ playerid ] =  444;
+		Bit1_Set( gr_CanHangup, playerid, true );
 		return 1;
 	}
 	if( callnumber == 555 ) { // Mehanicari
 		SetPlayerSpecialAction(playerid, SPECIAL_ACTION_USECELLPHONE);
 		SendClientMessage(playerid, COLOR_RED, "Dispatcher: Pozdrav, recite tip vaseg kvara.?");
 		CallingId[ playerid ] =  555;
+		Bit1_Set( gr_CanHangup, playerid, true );
 		return 1;
 	}
 	if( callnumber == 32715 ) { // Weapon Order
 	    new fid = PlayerInfo[playerid][pLeader];
      	if(!DoesWarehouseExist(FactionInfo[fid][fID]))
-			return SendClientMessage(playerid, COLOR_RED, "[ ! ] Nemaš pristup ovome.");
+			return SendClientMessage(playerid, COLOR_RED, "[ ! ] Nemas pristup ovome.");
 		if( IsACop(playerid) || IsASD(playerid) || IsFDMember(playerid) )
 			return SendClientMessage(playerid, COLOR_RED, "[ ! ] Ne smijete to koristiti!");
 
@@ -2443,6 +2446,7 @@ stock PhoneCall(playerid, callnumber)
 		SetPlayerSpecialAction(playerid, SPECIAL_ACTION_USECELLPHONE);
 		SendClientMessage(playerid, COLOR_YELLOW, "Maska 64361 kaze (mobitel): Los Santos Sanitary, izvolite?");
 		CallingId[ playerid ] =  32715;
+		Bit1_Set( gr_CanHangup, playerid, true );
 		return 1;
 	}
 	if( callnumber == 222 ) {
@@ -2585,7 +2589,6 @@ stock GetPlayerSignal(playerid)
 
 stock PlayerHangup(playerid)
 {
-	new giveplayerid = PlayerCallPlayer[playerid];
 
 	// pozvatelj
 	Bit8_Set( gr_RingingTime, playerid, 0 );
@@ -2600,6 +2603,7 @@ stock PlayerHangup(playerid)
 	Bit1_Set( gr_PlayerUsingGov		, playerid, false );
 
 	// osoba koju je nazvao
+	new giveplayerid = PlayerCallPlayer[playerid];
 	if(!IsPlayerConnected(giveplayerid)) return 1;
 	Bit8_Set( gr_RingingTime, giveplayerid, 0 );
 	Bit1_Set( gr_CanHangup, giveplayerid, false );

@@ -1501,7 +1501,7 @@ CMD:accept(playerid, params[])
 	else if(strcmp(pick,"buygun",true) == 0) 
 	{
 		if(FactionInfo[PlayerInfo[playerid][pMember]][rABuyGun] == 0)
-			return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Komanda /accept buygun je trenutno izgaSena od strane lidera! Koristite /buygun kako bi uzeli oruZije.");
+			return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Komanda /accept buygun je trenutno izgasena od strane lidera! Koristite /buygun kako bi uzeli oruzje.");
 		new giveplayerid;
 	    if(sscanf(params, "s[16]u", pick, giveplayerid)) return SendClientMessage(playerid, COLOR_RED, "USAGE: /accept buygun [ID/Dio Imena]");
 		if(giveplayerid == INVALID_PLAYER_ID) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Taj igrac nije online!");

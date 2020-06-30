@@ -481,6 +481,20 @@ stock ResetWeaponSlots(playerid)
 	return 1;
 }
 
+stock WeaponHackCheck(playerid)
+{
+	if(GetPlayerWeapon(playerid) != 0 && GetPlayerAmmo(playerid) != 0 && PlayerWeapons[playerid][pwSQLID][GetWeaponSlot(GetPlayerWeapon(playerid))] == -1)
+	{
+		new banreason[18];
+		format(banreason, 18, "Weapon Hack"); 
+		HOOK_Ban(playerid, INVALID_PLAYER_ID, banreason, -1,  true);
+		va_SendClientMessage(playerid, COLOR_RED, "Anti-Cheat: Dobio si ban, razlog: %s!", banreason);
+		BanMessage(playerid);
+		return 0;
+	}
+	return 1;
+}
+
 stock CheckPlayerWeapons(playerid, weaponid, bool:hidden_fetch=false)
 {
 	new bool:value = false,

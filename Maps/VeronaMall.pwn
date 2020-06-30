@@ -10,8 +10,8 @@
 	   ###    ##     ## ##     ##  ######
 */
 
-#define MALL_MED_DD			100.0
-#define MALL_SMALL_DD		50.0
+#define MALL_MED_DD			200.0
+#define MALL_SMALL_DD		150.0
 
 /*
 	 ######  ########  #######   ######  ##    ## 
@@ -972,10 +972,5 @@ hook OnFilterScriptInit()
 	CreateDynamicObject(8325, 1162.30, -1434.77, 28.42,   0.00, 0.00, 0.25, -1, -1, -1, MALL_MED_DD);
 	CreateDynamicObject(2456, 1101.85, -1455.96, 14.80,   0.00, 0.00, 90.00, -1, -1, -1, MALL_SMALL_DD);
 	CreateDynamicObject(2736, 1101.96, -1440.20, 19.40,   0.00, 0.00, 90.00, -1, -1, -1, MALL_SMALL_DD);
-	return 1;
-}
-
-hook OnPlayerConnect(playerid)
-{
 	return 1;
 }
