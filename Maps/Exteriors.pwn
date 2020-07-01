@@ -349,7 +349,7 @@ hook OnFilterScriptInit() {
 	exterior_maps = CreateDynamicObject(2668, 2632.726318, -1378.766479, 31.489748, 0.000000, 0.000000, -90.000000, -1, -1, -1, 300.00, 300.00);
 
 
-	/* Verona Mall - Jibbrah
+	// Verona Mall - Jibbrah
 	exterior_maps = CreateDynamicObject(18766, 1129.026611, -1449.587402, 10.783200, 0.000000, 90.000000, 0.000000, -1, -1, -1, 150.00, 150.00);
 	SetDynamicObjectMaterial(exterior_maps, 0, 3998, "civic04_lan", "twintconc_LAn", 0x00000000);
 	exterior_maps = CreateDynamicObject(18766, 1131.044189, -1451.593261, 10.782400, 0.000000, 90.000000, 90.000000, -1, -1, -1, 150.00, 150.00);
@@ -1856,7 +1856,7 @@ hook OnFilterScriptInit() {
 	exterior_maps = CreateDynamicObject(1360, 1151.145263, -1483.441528, 22.029300, 0.000000, 0.000000, 90.000000, -1, -1, -1, 150.00, 150.00);
 	exterior_maps = CreateDynamicObject(1360, 1144.963378, -1483.494018, 22.029300, 0.000000, 0.000000, 90.000000, -1, -1, -1, 150.00, 150.00);
 	exterior_maps = CreateDynamicObject(1360, 1114.356323, -1483.508300, 22.029300, 0.000000, 0.000000, 90.000000, -1, -1, -1, 150.00, 150.00);
-	exterior_maps = CreateDynamicObject(1360, 1107.267578, -1483.498779, 22.029300, 0.000000, 0.000000, 90.000000, -1, -1, -1, 150.00, 150.00);*/
+	exterior_maps = CreateDynamicObject(1360, 1107.267578, -1483.498779, 22.029300, 0.000000, 0.000000, 90.000000, -1, -1, -1, 150.00, 150.00);
 
 
 	// Marina - Crusher

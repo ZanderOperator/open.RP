@@ -20,7 +20,6 @@
 #include "../Maps/Gangs.pwn" // Sve mape za Ilegaflne organizacije  (+ hoods).
 
 /*	MISC	*/
-#include "../Maps/VeronaMall.pwn" // Sve mape za Evente. -
 #include "../Maps/Events.pwn" // Sve mape za Evente. -
 #include "../Maps/Interiors.pwn" // Sve mape kreirane u interior-u.
 #include "../Maps/Exteriors.pwn" // Sve mape kreirane za izgled grada(exteriori).

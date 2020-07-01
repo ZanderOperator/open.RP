@@ -1,3 +1,8 @@
+City of Angels v18.4.1. - HotFix
+- Popravljena mapa kod Verone
+- Popravci gramatickih gresaka, te ispisa na nekim logovima
+- Dodan neprobojni Weapon Anticheat
+
 City of Angels v18.4.0.
 - Ubacen /speakerphone(kratica /sf) - tokom poziva mozete staviti poziv na speakerphone za sve u radiusu od 7.5
 - /ds mozete koristiti i u kuci kod vrata, te se moze koristiti za dvosmjernu komunikaciju preko vrata
