@@ -20,7 +20,7 @@ stock InsertPlayerCarton(playerid, giveplayerid, const disease[])
 		tmpQuery[ 258 ];
 	getdate(Year, Month, Day);
 	format( date, 24, "%02d.%02d.%d.", Day, Month, Year);
-	format( tmpQuery, sizeof(tmpQuery), "INSERT INTO anamneza (`pacient`, `disease`, `doctor`, `date`) VALUES ('%s', '%s', '%s', '%s')",
+	format( tmpQuery, sizeof(tmpQuery), "INSERT INTO anamneza (`pacient`, `disease`, `doctor`, `date`) VALUES ('%q', '%q', '%q', '%q')",
 		GetName(giveplayerid,false),
 		disease,
 		GetName(playerid,false),

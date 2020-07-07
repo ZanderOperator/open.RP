@@ -7,6 +7,7 @@
 	Web: www.cityofangels-roleplay.com
 ===========================================================================================
 */
+#include <crashdetect>
 #include <a_samp>
 #include <a_http>
 //#include <profiler> // Test
@@ -59,7 +60,6 @@
 	 ##  ##   ### ##    ## ##       ##     ## ##     ## ##       ##    ##
 	#### ##    ##  ######	########  #######  ########  ########  ######
 */
-
 // Fixes
 #define FIX_file_inc 0
 
@@ -71,7 +71,6 @@
 #include <Anti_cheat_pack>
 
 // New SA-MP callbacks by Emmet
-#include <AC_Damage> // Damage AntiCheat
 #include <callbacks>
 
 // YSI
@@ -3059,7 +3058,7 @@ public OnGameModeInit()
 	new gstring[64];
 	format(gstring, sizeof(gstring), "hostname %s", HOSTNAME);
 	SendRconCommand(gstring);
-	mysql_log(INFO | ERROR);
+	mysql_log(ALL);
 	MapAndreas_Init(MAP_ANDREAS_MODE_MINIMAL, "scriptfiles/SAmin.hmap");
 
 	// Streamer config
@@ -3140,7 +3139,6 @@ public OnGameModeInit()
 	LoadTags();
 	LoadGarages();
     LoadServerGarages();
-	LoadPokerTables();
 	LoadBizz();
 	CreateBaskets(); // Update - BasketballNew.pwn
 	//Load_InventoryDrop();
@@ -3247,7 +3245,9 @@ public OnModelSelectionResponse(playerid, extraid, index, modelid, response)
 
 public OnQueryError(errorid, const error[], const callback[], const query[], MySQL:handle)
 {
-	printf("MySQL Error ID: %d\nError %s: Callback %s\nQuery: %s", errorid, error, callback, query);
+	new backtrace[2048];
+	GetAmxBacktrace(backtrace, 2048);
+	printf("[%s] - MySQL Error ID: %d\nError %s: Callback %s\nQuery: %s\n%s", ReturnDate(), errorid, error, callback, query, backtrace);
 	return 1;
 }
 

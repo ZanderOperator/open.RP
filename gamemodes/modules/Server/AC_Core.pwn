@@ -116,6 +116,7 @@ new
 	acPlayerVehicle[MAX_PLAYERS]  = { 0, ... };
 
 new
+	bool:SafeGiveWeapon[MAX_PLAYERS],
 	godEntry[MAX_PLAYERS],
 	acPlayerState[ MAX_PLAYERS ],
 	LastPullingVehicle[MAX_VEHICLES],
@@ -134,6 +135,12 @@ new
 timer ResetVehicleSafeTeleport[60](vehicleid)
 {
 	VehicleInfo[vehicleid][vServerTeleport] = false;
+	return 1;
+}
+
+timer SafeWeaponFunc[250](playerid)
+{
+	SafeGiveWeapon[playerid] = false;
 	return 1;
 }
 
@@ -373,7 +380,7 @@ stock AC_SavePlayerWeapon(playerid, slotid)
 		weaponUpdate[160];
 	if(PlayerWeapons[playerid][pwSQLID][slotid] != -1 && PlayerWeapons[playerid][pwAmmo][slotid] > 0)
 	{
-		format(weaponUpdate, 149, "UPDATE `player_weapons` SET `player_id` = '%d', `weapon_id` = '%d', `weapon_ammo` = '%d', `hidden` = '%d' WHERE `sqlid` = '%d'",
+		format(weaponUpdate, 160, "UPDATE `player_weapons` SET `player_id` = '%d', `weapon_id` = '%d', `weapon_ammo` = '%d', `hidden` = '%d' WHERE `sqlid` = '%d'",
 			PlayerInfo[playerid][pSQLID],
 			PlayerWeapons[playerid][pwWeaponId][slotid],
 			PlayerWeapons[playerid][pwAmmo][slotid],
@@ -384,7 +391,7 @@ stock AC_SavePlayerWeapon(playerid, slotid)
 	}
 	else if(PlayerWeapons[playerid][pwSQLID][slotid] == -1 && PlayerWeapons[playerid][pwAmmo][slotid] > 0)
 	{
-		format(weaponUpdate, 149, "INSERT INTO `player_weapons` (`player_id`, `weapon_id`, `weapon_ammo`, `hidden`) VALUES ('%d', '%d', '%d', '%d')",
+		format(weaponUpdate, 160, "INSERT INTO `player_weapons` (`player_id`, `weapon_id`, `weapon_ammo`, `hidden`) VALUES ('%d', '%d', '%d', '%d')",
 			PlayerInfo[playerid][pSQLID],
 			PlayerWeapons[playerid][pwWeaponId][slotid],
 			PlayerWeapons[playerid][pwAmmo][slotid],
@@ -438,8 +445,9 @@ stock AC_GivePlayerWeapon(playerid, weaponid, ammo, bool:base_update=true, bool:
 	PlayerWeapons[playerid][pwAmmo][slot] 		+= ammo;
 	PlayerWeapons[playerid][pwHidden][slot] 	= 0;
 
-
+	
 	//Real Give Func
+	SafeGiveWeapon[playerid] = true;
 	if(SafeSpawned[playerid])
 		GivePlayerWeapon(playerid, weaponid, ammo);
 
@@ -447,6 +455,7 @@ stock AC_GivePlayerWeapon(playerid, weaponid, ammo, bool:base_update=true, bool:
 		AC_SavePlayerWeapon(playerid, slot);
 
 	//Tick 3sec
+	defer SafeWeaponFunc(playerid);
 	PlayerTick[playerid][ptWeapon] = gettimestamp() + 2;
 	return 1;
 }
@@ -483,14 +492,25 @@ stock ResetWeaponSlots(playerid)
 
 stock WeaponHackCheck(playerid)
 {
-	if(GetPlayerWeapon(playerid) != 0 && GetPlayerAmmo(playerid) != 0 && PlayerWeapons[playerid][pwSQLID][GetWeaponSlot(GetPlayerWeapon(playerid))] == -1)
+	if(GetPlayerWeapon(playerid) != 0 && GetPlayerAmmo(playerid) != 0)
 	{
 		new banreason[18];
-		format(banreason, 18, "Weapon Hack"); 
-		HOOK_Ban(playerid, INVALID_PLAYER_ID, banreason, -1,  true);
-		va_SendClientMessage(playerid, COLOR_RED, "Anti-Cheat: Dobio si ban, razlog: %s!", banreason);
-		BanMessage(playerid);
-		return 0;
+		if(PlayerWeapons[playerid][pwSQLID][GetWeaponSlot(GetPlayerWeapon(playerid))] == -1 && !SafeGiveWeapon[playerid])
+		{
+			format(banreason, 18, "Weapon Hack"); 
+			HOOK_Ban(playerid, INVALID_PLAYER_ID, banreason, -1,  true);
+			va_SendClientMessage(playerid, COLOR_RED, "Anti-Cheat: Dobio si ban, razlog: %s!", banreason);
+			BanMessage(playerid);
+			return 0;
+		}
+		if((PlayerWeapons[playerid][pwAmmo][GetWeaponSlot(GetPlayerWeapon(playerid))] + 5) <= GetPlayerAmmo(playerid))
+		{
+			format(banreason, 18, "Ammo Hack"); 
+			HOOK_Ban(playerid, INVALID_PLAYER_ID, banreason, -1,  true);
+			va_SendClientMessage(playerid, COLOR_RED, "Anti-Cheat: Dobio si ban, razlog: %s!", banreason);
+			BanMessage(playerid);
+			return 0;
+		}
 	}
 	return 1;
 }
@@ -1265,13 +1285,13 @@ public OnPlayerWeaponShot(playerid, weaponid, hittype, hitid, Float:fX, Float:fY
         }
     }
 	new slot = GetWeaponSlot(weaponid);
-	if( PlayerWeapons[playerid][pwWeaponId][slot] != weaponid && GetPlayerAmmo(playerid) != PlayerWeapons[playerid][pwAmmo][slot] )
+	if(GetPlayerWeapon(playerid) == PlayerWeapons[playerid][pwWeaponId][slot] && (PlayerWeapons[playerid][pwAmmo][slot] + 5) <= GetPlayerAmmo(playerid)) // + 5 bullets in case of lagg
 	{
 		if( IsACop(playerid) && IsFDMember(playerid) ) return 1;
 		if(Bit1_Get( gr_OnEvent, playerid)) return (true);
 
 
-		printf("ANTI-CHEAT: %s je moguci cheater jer ima oruzje i ammo koji nisu serverom stavljeni (W:%d | A:%d)!", GetName(playerid, false), GetPlayerWeapon(playerid), GetPlayerAmmo(playerid));
+		printf("ANTI-CHEAT: %s je cheater jer ima oruzje i ammo koji nisu serverom stavljeni (W:%d | A:%d)!", GetName(playerid, false), GetPlayerWeapon(playerid), GetPlayerAmmo(playerid));
 		AC_ResetPlayerWeapons(playerid);
 		SendClientMessage(playerid, COLOR_RED, "Anti-Cheat: Dobio si ban, razlog: Weapon Cheat!");
 
@@ -1320,6 +1340,7 @@ public OnPlayerWeaponShot(playerid, weaponid, hittype, hitid, Float:fX, Float:fY
 
 hook OnPlayerConnect(playerid)
 {
+	SafeGiveWeapon[playerid] = false;
 	AntiCheatData[playerid][acKicked] = false;
 	return 1;
 }

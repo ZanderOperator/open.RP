@@ -1177,7 +1177,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 
 				}
 				case 1: {
-					ShowPlayerDialog(playerid, 0, DIALOG_STYLE_MSGBOX, "{3C95C2}LSPD - Response Codes.", "\n{3C95C2}[Code 0] Hitno potrebna asistencija, ostavite sve ?to radite i odazovite se.\n\
+					ShowPlayerDialog(playerid, 0, DIALOG_STYLE_MSGBOX, "{3C95C2}LSPD - Response Codes.", "\n{3C95C2}[Code 0] Hitno potrebna asistencija, ostavite sve sto radite i odazovite se.\n\
 						{3C95C2}[Code 1] Odazovite se na radio.\n\
 						{3C95C2}[Code 2] Odazivanje na poziv bez upaljene sirene i rotacij.\n\
 						{3C95C2}[Code 2A] Potreban additional unit (dodatna jedinica).\n\
@@ -1233,7 +1233,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 */
 
 CMD:beanbag(playerid, params[]) {
-	if(!IsACop(playerid) && !IsASD(playerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ovla?teni");
+	if(!IsACop(playerid) && !IsASD(playerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ovlasteni");
 	if(AC_GetPlayerWeapon(playerid) != 25)
 		return SendClientMessage(playerid, COLOR_LIGHTRED, "[ERROR]: Kako bi uzeli gumene metke morate imati shotgun.");
 	if(Bit1_Get(gr_BeanBagShotgun, playerid) == 0) {
@@ -1361,7 +1361,7 @@ CMD:tazer(playerid, params[])
 
 				Bit1_Set(gr_Taser, playerid, false);
 			}
-			else SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate tazer u ruci (( Morate imati Silenced pistol u ruci to jest Tazer))!");
+			else SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate tazer u ruci (( Morate imati Silenced pistol u ruci to jest Tazer ))!");
         }
     }
     return 1;
@@ -1720,7 +1720,7 @@ CMD:codes(playerid, params[])
 CMD:swat(playerid, params[])
 {
 	if(!IsACop(playerid) && !IsASD(playerid)) return SendClientMessage(playerid, COLOR_RED, "[ ! ] Niste LSPD.");
-	if(PlayerInfo[playerid][pLawDuty] == 0) return  SendClientMessage(playerid,COLOR_RED, "Niste na du?nosti!");
+	if(PlayerInfo[playerid][pLawDuty] == 0) return  SendClientMessage(playerid,COLOR_RED, "Niste na duznosti!");
 	if(PlayerInfo[playerid][pLevel] < 2) return SendMessage(playerid, MESSAGE_TYPE_ERROR, " Ne mozete koristiti ovu komandu dok ste level 1!");
 
 	new
@@ -1865,7 +1865,7 @@ CMD:take(playerid, params[])
 		new
 		tmpString[ 120 ];
 
-		format(tmpString, sizeof(tmpString), "*[HQ] %s %s je oduzeo vozaeku dozvolu %s.", ReturnPlayerRankName(playerid), GetName(playerid), GetName(giveplayerid));
+		format(tmpString, sizeof(tmpString), "*[HQ] %s %s je oduzeo vozacku dozvolu %s.", ReturnPlayerRankName(playerid), GetName(playerid), GetName(giveplayerid));
 		SendRadioMessage(PlayerInfo[playerid][pMember], COLOR_COP, tmpString);
 
 		SendClientMessage(giveplayerid, COLOR_LIGHTBLUE, "|_____________________ Oduzeta vozacka dozvola ______________________|");
@@ -1937,7 +1937,7 @@ CMD:take(playerid, params[])
 		if(ProxDetectorS(5.0, playerid, giveplayerid)) {
 			new
 				tmpString[ 120 ];
-            format(tmpString, sizeof(tmpString), "*[HQ] %s %s je oduzeo dozvolu za oru?je %s.", ReturnPlayerRankName(playerid), GetName(playerid), GetName(giveplayerid));
+            format(tmpString, sizeof(tmpString), "*[HQ] %s %s je oduzeo dozvolu za oruzje %s.", ReturnPlayerRankName(playerid), GetName(playerid), GetName(giveplayerid));
 			SendRadioMessage(PlayerInfo[playerid][pMember], COLOR_COP, tmpString);
 
 			format(tmpString, sizeof(tmpString), "[ ! ] Policajac %s vam je oduzeo dozvolu za oruzje.", GetName(playerid));
