@@ -548,7 +548,7 @@ stock CreateTower(towerid)
 {
 	new
 		tmpQuery[ 256 ];
-	format(tmpQuery, sizeof(tmpQuery), "INSERT INTO `signaltowers` (`network`,`posx`,`posy`,`posz`,`posrx`,`posry`,`posrz`,`radius`) VALUES ('%s','%f','%f','%f','%f','%f','%f','%f')",
+	format(tmpQuery, sizeof(tmpQuery), "INSERT INTO `signaltowers` (`network`,`posx`,`posy`,`posz`,`posrx`,`posry`,`posrz`,`radius`) VALUES ('%q','%f','%f','%f','%f','%f','%f','%f')",
 		TowerInfo[ towerid ][ twNetwork ],
 		TowerInfo[ towerid ][ twPosX ],
 		TowerInfo[ towerid ][ twPosY ],

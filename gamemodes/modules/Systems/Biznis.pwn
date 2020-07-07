@@ -230,7 +230,9 @@ stock IsAt247(playerid)
 
 stock LoadBizz()
 {
-	mysql_pquery(g_SQL, "SELECT * FROM `bizzes` WHERE 1", "OnServerBizzesLoad");
+	new loadQuery[64];
+	format(loadQuery, 64, "SELECT * FROM `bizzes` WHERE 1");
+	mysql_tquery(g_SQL, loadQuery, "OnServerBizzesLoad", "");
 	return 1;
 }
 

@@ -328,7 +328,7 @@ hook OnModelSelResponse( playerid, extraid, index, modelid, response )
 			if(response && chosenpID[playerid] != -1)
 			{
 				if(!IsPlayerConnected(chosenpID[playerid]))
-					return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Igra� je otisao offline!"), chosenpID[playerid] = -1;
+					return SendMessage(playerid, MESSAGE_TYPE_ERROR, "igrac je otisao offline!"), chosenpID[playerid] = -1;
 					
 				new
 					name[24];
@@ -538,16 +538,16 @@ CMD:aremoveallplayerobjects(playerid, params[])
 	    id = strval(params);
 	    
 	if(!IsPlayerConnected(id))
-	    return SendClientMessage(playerid,COLOR_RED, "Taj igra� nije online!");
+	    return SendClientMessage(playerid,COLOR_RED, "Taj igrac nije online!");
 	    
     if(AreAllPObjectSlotsEmpty(id))
-   		return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Taj igra� nema spawnane objekte!");
+   		return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Taj igrac nema spawnane objekte!");
 
 	for(new p_o = 0; p_o != MAX_PLAYER_OBJECTS; ++p_o) 
 		if(PlayerObjectsInfo[id][p_o][poPlaced]) 
 			DeletePlayerObjectsObject(id, p_o);
 	
-	SendClientMessage(playerid, COLOR_RED, "[ ! ] Uspjesno ste izbrisali sve spawnane objekte odabranom igra�u!");
+	SendClientMessage(playerid, COLOR_RED, "[ ! ] Uspjesno ste izbrisali sve spawnane objekte odabranom igracu!");
 	return 1;
 }
 
@@ -568,7 +568,7 @@ CMD:checkplayerobjects(playerid, params[]) {
 		return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Taj igrac nije online.");
 		
  	if(AreAllPObjectSlotsEmpty(giveplayerid))
-	    return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Taj igra� nema spawnanih objekata!");
+	    return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Taj igrac nema spawnanih objekata!");
 
 	static
 		pobjects[MAX_PLAYER_OBJECTS];
@@ -602,6 +602,6 @@ CMD:deleteobject( playerid, params[] )
 	}
 
 	SendClientMessage(playerid, -1, "Odaberi objekat koji zelis obrisati!");
-    ShowModelESelectionMenu(playerid, "Kreirani objekti:", 3, po_objects, sizeof(po_objects), 0.0, 0.0, 0.0, 1.0, -1, true, po_objects);
+    ShowModelESelectionMenu(playerid, "Kreirani objekti:", DIALOG_DELETE_COBJECT, po_objects, sizeof(po_objects), 0.0, 0.0, 0.0, 1.0, -1, true, po_objects);
 	return 1;
 }

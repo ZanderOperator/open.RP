@@ -335,9 +335,6 @@ public OnRuntimeError(code, &bool:suppress)
 		P:0(YSI_g_scErrorMessage2);
 		P:0(YSI_g_scErrorMessage3);
 	}
-	#if defined Malloc_OnRuntimeError
-		Malloc_OnRuntimeError(code);
-	#endif
 	if (code == 12)
 	{
 		// Make sure our heap is correctly set still...
