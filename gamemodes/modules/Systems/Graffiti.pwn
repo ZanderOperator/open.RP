@@ -298,7 +298,7 @@ stock InsertGraffitIntoDB(grafid)
     mysql_tquery(g_SQL, "BEGIN", "");
 	new
 		tmpQuery[ 256 ];
-	format(tmpQuery, 256, "INSERT INTO `graffiti` (`text`,`font`,`fontsize`,`fontcolor`,`posx`,`posy`,`posz`,`rotx`,`roty`,`rotz`,`author`) VALUES ('%q','%d','%d','%d','%f','%f','%f','%f','%f','%f','%q')",
+	mysql_format(g_SQL, tmpQuery, 256, "INSERT INTO `graffiti` (`text`,`font`,`fontsize`,`fontcolor`,`posx`,`posy`,`posz`,`rotx`,`roty`,`rotz`,`author`) VALUES ('%e','%d','%d','%d','%f','%f','%f','%f','%f','%f','%e')",
 		GraffitInfo[grafid][gText],
 		GraffitInfo[grafid][gFont],
 		GraffitInfo[grafid][gFontSize],
@@ -644,7 +644,7 @@ stock InsertSprayTagIntoDB(tagid)
 {
 	new 
 		insertSprayString[1024];	
-	format(insertSprayString, 1024, "INSERT INTO spraytags (`modelid`,`posx`,`posy`,`posz`,`rotx`,`roty`,`rotz`,`faction`,`author`) VALUES ('%d','%f','%f','%f','%f','%f','%f','%d','%q')",
+	mysql_format(g_SQL, insertSprayString, 1024, "INSERT INTO spraytags (`modelid`,`posx`,`posy`,`posz`,`rotx`,`roty`,`rotz`,`faction`,`author`) VALUES ('%d','%f','%f','%f','%f','%f','%f','%d','%e')",
 		TagInfo[tagid][tModelid],
 		TagInfo[tagid][tPosX],
 		TagInfo[tagid][tPosY],

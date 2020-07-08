@@ -979,7 +979,7 @@ stock SendUsageMessage(playerid, smsgstring[])
 stock RemoveBuildings(playerid)
 {
 	RemoveBuildingForPlayer(playerid, 6130, 1117.5859, -1490.0078, 32.7188, 0.25);
-	RemoveBuildingForPlayer(playerid, 6255, 1117.5859, -1490.0078, 32.7188, 0.25);
+	//RemoveBuildingForPlayer(playerid, 6255, 1117.5859, -1490.0078, 32.7188, 0.25);
 }
 strtok(const string[], &index)
 {
@@ -1794,7 +1794,7 @@ stock CheckStringForIP(text[])
 stock ConvertNameToSQLID(const name[])
 {
 	new sqlid, sqlquery[128];
-	format( sqlquery, sizeof(sqlquery), "SELECT `sqlid` FROM `accounts` WHERE `name` = '%q' LIMIT 0,1", name);
+	mysql_format(g_SQL, sqlquery, sizeof(sqlquery), "SELECT `sqlid` FROM `accounts` WHERE `name` = '%e' LIMIT 0,1", name);
 	
 	new 
 		Cache:result = mysql_query(g_SQL, sqlquery);

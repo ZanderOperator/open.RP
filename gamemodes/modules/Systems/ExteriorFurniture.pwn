@@ -283,7 +283,7 @@ stock static CreateExteriorObject(playerid)
 	// Insert query
 	new
 		extInsert[256];
-	format(extInsert, 256, "INSERT INTO `house_exteriors`(`house_id`, `modelid`, `name`, `pos_x`, `pos_y`, `pos_z`, `rot_x`, `rot_y`, `rot_z`) VALUES ('%d','%d','%q','%f','%f','%f','%f','%f','%f')",
+	mysql_format(g_SQL, extInsert, 256, "INSERT INTO `house_exteriors`(`house_id`, `modelid`, `name`, `pos_x`, `pos_y`, `pos_z`, `rot_x`, `rot_y`, `rot_z`) VALUES ('%d','%d','%e','%f','%f','%f','%f','%f','%f')",
 		HouseInfo[PlayerInfo[playerid][pHouseKey]][hSQLID],
 		PlayerExteriorInfo[playerid][peModelId],
 		PlayerExteriorInfo[playerid][peName],

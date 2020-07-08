@@ -103,7 +103,7 @@ public GPS_Load()
 
 GPS_Save(gpsid) {
 	new query[ 256 ];	
-	format( query, 256, "UPDATE `gps` SET `gpsName` = '%q', `gpsPosX` = '%.4f', `gpsPosY` = '%.4f', `gpsPosZ` = '%.4f', `gpsMapIcon` = '%d', `admin_gps` = '%d' WHERE `id` = '%d'",
+	mysql_format(g_SQL, query, 256, "UPDATE `gps` SET `gpsName` = '%e', `gpsPosX` = '%.4f', `gpsPosY` = '%.4f', `gpsPosZ` = '%.4f', `gpsMapIcon` = '%d', `admin_gps` = '%d' WHERE `id` = '%d'",
 		GPS_data[gpsid][gpsName],
 		GPS_data[gpsid][gpsPos][0],
 		GPS_data[gpsid][gpsPos][1],

@@ -991,7 +991,7 @@ stock ResetBizzInfo(biz)
 stock InsertNewBizz(playerid, biz)
 {
 	new bizInsertQuery[256];
-	format(bizInsertQuery, 256, "INSERT INTO `bizzes`(`id`, `message`, `canenter`,`entrancex`, `entrancey`, `entrancez`, `levelneeded`, `buyprice`, `type`, `fur_slots`) VALUES (null, '%q','%d','%f','%f','%f','%d','%d','%d','%d')",
+	mysql_format(g_SQL, bizInsertQuery, 256, "INSERT INTO `bizzes`(`id`, `message`, `canenter`,`entrancex`, `entrancey`, `entrancez`, `levelneeded`, `buyprice`, `type`, `fur_slots`) VALUES (null, '%e','%d','%f','%f','%f','%d','%d','%d','%d')",
 		BizzInfo[biz][bMessage],
 		BizzInfo[biz][bCanEnter],
 		BizzInfo[biz][bEntranceX],
@@ -1957,7 +1957,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 
 			new
 				tmpBizQuery[128];
-			format(tmpBizQuery, sizeof( tmpBizQuery ), "UPDATE `bizzes` SET `message` = '%q' WHERE `id` = '%d' LIMIT 1", inputtext, BizzInfo[ bouse ][ bSQLID ] );
+			mysql_format(g_SQL, tmpBizQuery, sizeof( tmpBizQuery ), "UPDATE `bizzes` SET `message` = '%e' WHERE `id` = '%d' LIMIT 1", inputtext, BizzInfo[ bouse ][ bSQLID ] );
 			mysql_tquery( g_SQL, tmpBizQuery, "", "" );
 
 			switch( BizzInfo[ bouse ][ bType ] ) {

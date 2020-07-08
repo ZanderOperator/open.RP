@@ -2039,7 +2039,7 @@ stock static BuyVehicle(playerid)
 	new insertCoQuery[1500];
 
 	mysql_tquery(g_SQL, "BEGIN", "");
-	format(insertCoQuery, 1500, "INSERT INTO `cocars`(`modelid`, `color1`, `color2`, `numberplate`, `parkX`, `parkY`, `parkZ`, `angle`, `interior`, `viwo`, `ownerid`, `enginetype`, `enginelife`, `enginescrewed`, `heat`, `overheated`, `fuel`, `batterylife`, `insurance`, `panels`, `doors`, `tires`, `lights`, `travel`, `lock`, `alarm`, `immob`, `audio`, `canstart`, `parts`, `destroys`, `health`, `batterytype`, `hydraulics`, `impounded`, `sirenon`, `sparekey1`, `sparekey2`, `bodyarmor`, `tirearmor`, `nos`) VALUES ('%d','%d','%d','%q','%.2f','%.2f','%.2f','%.2f','%d','%d','%d','%d','%d','%d','%f','%d','%d','%d','%d','%d','%d','%d','%d','%f','%d','%d','%d','%d','%d','%d','%d','%f','%d','%d','%d','%d','%d','%d','%d','%d', '%d')",
+	mysql_format(g_SQL, insertCoQuery, 1500, "INSERT INTO `cocars`(`modelid`, `color1`, `color2`, `numberplate`, `parkX`, `parkY`, `parkZ`, `angle`, `interior`, `viwo`, `ownerid`, `enginetype`, `enginelife`, `enginescrewed`, `heat`, `overheated`, `fuel`, `batterylife`, `insurance`, `panels`, `doors`, `tires`, `lights`, `travel`, `lock`, `alarm`, `immob`, `audio`, `canstart`, `parts`, `destroys`, `health`, `batterytype`, `hydraulics`, `impounded`, `sirenon`, `sparekey1`, `sparekey2`, `bodyarmor`, `tirearmor`, `nos`) VALUES ('%d','%d','%d','%e','%.2f','%.2f','%.2f','%.2f','%d','%d','%d','%d','%d','%d','%f','%d','%d','%d','%d','%d','%d','%d','%d','%f','%d','%d','%d','%d','%d','%d','%d','%f','%d','%d','%d','%d','%d','%d','%d','%d', '%d')",
 		modelid,
 		PreviewColor1[playerid],
 		PreviewColor2[playerid],
@@ -4649,6 +4649,9 @@ hook OnPlayerEditObject(playerid, playerobject, objectid, response, Float:fX, Fl
 			}
 			case 1:
 			{
+				if(!WeaponHackCheck(playerid))
+					return 1;
+					
 				Bit1_Set(gr_PlayerTrunkEdit, playerid, false);
 				new model = EditingTrunkWeaponModel[playerid],
 					wslot = Bit4_Get(gr_WeaponTrunkEditSlot, playerid),
@@ -5307,7 +5310,7 @@ CMD:car(playerid, params[])
 
 		new
 			bigquery[128];
-		format(bigquery, sizeof(bigquery), "UPDATE `cocars` SET `numberplate` = '%q' WHERE `id` = '%d'",
+		mysql_format(g_SQL, bigquery, sizeof(bigquery), "UPDATE `cocars` SET `numberplate` = '%e' WHERE `id` = '%d'",
 			VehicleInfo[PlayerInfo[playerid][pSpawnedCar]][vNumberPlate],
 			VehicleInfo[PlayerInfo[playerid][pSpawnedCar]][vSQLID]
 		);
@@ -5633,7 +5636,7 @@ CMD:veh_plate(playerid, params[])
 
 		new
 			bigquery[128];
-		format(bigquery, sizeof(bigquery), "UPDATE `cocars` SET `numberplate` = '%q' WHERE `id` = '%d'",
+		mysql_format(g_SQL, bigquery, sizeof(bigquery), "UPDATE `cocars` SET `numberplate` = '%e' WHERE `id` = '%d'",
 			VehicleInfo[vehicleid][vNumberPlate],
 			VehicleInfo[vehicleid][vSQLID]
 		);

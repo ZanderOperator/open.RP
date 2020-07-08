@@ -132,7 +132,7 @@ stock static CreateNewPickup(playerid, pickup)
 		bigquery[556];
 	mysql_tquery(g_SQL, "BEGIN", "");
 	
-	format(bigquery, sizeof(bigquery), "INSERT INTO server_pickups (`pickupmodel`,`pickuptype`,`canenter`,`entrancex`, `entrancey`, `entrancez`,`exitx`,`exity`,`exitz`,`enterdiscription`, `discription`, `viwo`, `organizations`, `job`, `pint`) VALUES ('%d', '%d', '%d', '%f', '%f', '%f', '%f', '%f', '%f', '%q', '%q', '%d', '%d', '%d', '%d')",
+	mysql_format(g_SQL, bigquery, sizeof(bigquery), "INSERT INTO server_pickups (`pickupmodel`,`pickuptype`,`canenter`,`entrancex`, `entrancey`, `entrancez`,`exitx`,`exity`,`exitz`,`enterdiscription`, `discription`, `viwo`, `organizations`, `job`, `pint`) VALUES ('%d', '%d', '%d', '%f', '%f', '%f', '%f', '%f', '%f', '%e', '%e', '%d', '%d', '%d', '%d')",
 		PickupInfo[pickup][epPickupModel],
 		PickupInfo[pickup][epPickupType],
 		PickupInfo[pickup][epCanEnter],

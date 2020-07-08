@@ -237,7 +237,7 @@ stock SavePlayerContacts(playerid, bool:reason = false)
 	{
 		new
 			mobileUpdate[560];
-		format(mobileUpdate, 560, "UPDATE `player_mobile_contacts` SET `title_1` = '%q', `title_2` = '%q', `title_3` = '%q', `title_4` = '%q', `title_5` = '%q', `title_6` = '%q', `title_7` = '%q', `title_8` = '%q', `title_9` = '%q', `title_10` = '%q' WHERE `player_id` = '%d'",
+		mysql_format(g_SQL, mobileUpdate, 560, "UPDATE `player_mobile_contacts` SET `title_1` = '%e', `title_2` = '%e', `title_3` = '%e', `title_4` = '%e', `title_5` = '%e', `title_6` = '%e', `title_7` = '%e', `title_8` = '%e', `title_9` = '%e', `title_10` = '%e' WHERE `player_id` = '%d'",
 			PlayerContactName[playerid][0],
 			PlayerContactName[playerid][1],
 			PlayerContactName[playerid][2],
@@ -278,70 +278,70 @@ stock SavePlayerContactSlot(playerid, slotid)
 	switch(slotid)
 	{
 		case 0: {
-			format(mobileUpdate, 130, "UPDATE `player_mobile_contacts` SET `title_1` = '%q', `number_1` = '%d' WHERE `player_id` = '%d'",
+			mysql_format(g_SQL, mobileUpdate, 130, "UPDATE `player_mobile_contacts` SET `title_1` = '%e', `number_1` = '%d' WHERE `player_id` = '%d'",
 				PlayerContactName[playerid][0],
 				PlayerContactNumber[playerid][0],
 				PlayerInfo[playerid][pSQLID]
 			);
 		}
 		case 1: {
-			format(mobileUpdate, 130, "UPDATE `player_mobile_contacts` SET `title_2` = '%q', `number_2` = '%d' WHERE `player_id` = '%d'",
+			mysql_format(g_SQL, mobileUpdate, 130, "UPDATE `player_mobile_contacts` SET `title_2` = '%e', `number_2` = '%d' WHERE `player_id` = '%d'",
 				PlayerContactName[playerid][1],
 				PlayerContactNumber[playerid][1],
 				PlayerInfo[playerid][pSQLID]
 			);
 		}
 		case 2: {
-			format(mobileUpdate, 130, "UPDATE `player_mobile_contacts` SET `title_3` = '%q', `number_3` = '%d' WHERE `player_id` = '%d'",
+			mysql_format(g_SQL, mobileUpdate, 130, "UPDATE `player_mobile_contacts` SET `title_3` = '%e', `number_3` = '%d' WHERE `player_id` = '%d'",
 				PlayerContactName[playerid][2],
 				PlayerContactNumber[playerid][2],
 				PlayerInfo[playerid][pSQLID]
 			);
 		}
 		case 3: {
-			format(mobileUpdate, 130, "UPDATE `player_mobile_contacts` SET `title_4` = '%q', `number_4` = '%d' WHERE `player_id` = '%d'",
+			mysql_format(g_SQL, mobileUpdate, 130, "UPDATE `player_mobile_contacts` SET `title_4` = '%e', `number_4` = '%d' WHERE `player_id` = '%d'",
 				PlayerContactName[playerid][3],
 				PlayerContactNumber[playerid][3],
 				PlayerInfo[playerid][pSQLID]
 			);
 		}
 		case 4: {
-			format(mobileUpdate, 130, "UPDATE `player_mobile_contacts` SET `title_5` = '%q', `number_5` = '%d' WHERE `player_id` = '%d'",
+			mysql_format(g_SQL, mobileUpdate, 130, "UPDATE `player_mobile_contacts` SET `title_5` = '%e', `number_5` = '%d' WHERE `player_id` = '%d'",
 				PlayerContactName[playerid][4],
 				PlayerContactNumber[playerid][4],
 				PlayerInfo[playerid][pSQLID]
 			);
 		}
 		case 5: {
-			format(mobileUpdate, 130, "UPDATE `player_mobile_contacts` SET `title_6` = '%q', `number_6` = '%d' WHERE `player_id` = '%d'",
+			mysql_format(g_SQL, mobileUpdate, 130, "UPDATE `player_mobile_contacts` SET `title_6` = '%e', `number_6` = '%d' WHERE `player_id` = '%d'",
 				PlayerContactName[playerid][5],
 				PlayerContactNumber[playerid][5],
 				PlayerInfo[playerid][pSQLID]
 			);
 		}
 		case 6: {
-			format(mobileUpdate, 130, "UPDATE `player_mobile_contacts` SET `title_7` = '%q', `number_7` = '%d' WHERE `player_id` = '%d'",
+			mysql_format(g_SQL, mobileUpdate, 130, "UPDATE `player_mobile_contacts` SET `title_7` = '%e', `number_7` = '%d' WHERE `player_id` = '%d'",
 				PlayerContactName[playerid][6],
 				PlayerContactNumber[playerid][6],
 				PlayerInfo[playerid][pSQLID]
 			);
 		}
 		case 7: {
-			format(mobileUpdate, 130, "UPDATE `player_mobile_contacts` SET `title_8` = '%q', `number_8` = '%d' WHERE `player_id` = '%d'",
+			mysql_format(g_SQL, mobileUpdate, 130, "UPDATE `player_mobile_contacts` SET `title_8` = '%e', `number_8` = '%d' WHERE `player_id` = '%d'",
 				PlayerContactName[playerid][7],
 				PlayerContactNumber[playerid][7],
 				PlayerInfo[playerid][pSQLID]
 			);
 		}
 		case 8: {
-			format(mobileUpdate, 130, "UPDATE `player_mobile_contacts` SET `title_9` = '%q', `number_9` = '%d' WHERE `player_id` = '%d'",
+			mysql_format(g_SQL, mobileUpdate, 130, "UPDATE `player_mobile_contacts` SET `title_9` = '%e', `number_9` = '%d' WHERE `player_id` = '%d'",
 				PlayerContactName[playerid][8],
 				PlayerContactNumber[playerid][8],
 				PlayerInfo[playerid][pSQLID]
 			);
 		}
 		case 9: {
-			format(mobileUpdate, 130, "UPDATE `player_mobile_contacts` SET `title_10` = '%q', `number_10` = '%d' WHERE `player_id` = '%d'",
+			mysql_format(g_SQL, mobileUpdate, 130, "UPDATE `player_mobile_contacts` SET `title_10` = '%e', `number_10` = '%d' WHERE `player_id` = '%d'",
 				PlayerContactName[playerid][9],
 				PlayerContactNumber[playerid][9],
 				PlayerInfo[playerid][pSQLID]
@@ -548,7 +548,7 @@ stock CreateTower(towerid)
 {
 	new
 		tmpQuery[ 256 ];
-	format(tmpQuery, sizeof(tmpQuery), "INSERT INTO `signaltowers` (`network`,`posx`,`posy`,`posz`,`posrx`,`posry`,`posrz`,`radius`) VALUES ('%q','%f','%f','%f','%f','%f','%f','%f')",
+	mysql_format(g_SQL, tmpQuery, sizeof(tmpQuery), "INSERT INTO `signaltowers` (`network`,`posx`,`posy`,`posz`,`posrx`,`posry`,`posrz`,`radius`) VALUES ('%e','%f','%f','%f','%f','%f','%f','%f')",
 		TowerInfo[ towerid ][ twNetwork ],
 		TowerInfo[ towerid ][ twPosX ],
 		TowerInfo[ towerid ][ twPosY ],

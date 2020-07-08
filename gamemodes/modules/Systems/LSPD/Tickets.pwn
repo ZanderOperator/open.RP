@@ -48,7 +48,7 @@ stock InsertPlayerTicket(playerid, giveplayerid, money, const reason[])
 	new tmpQuery[ 512 ];
 	mysql_tquery(g_SQL, "BEGIN");
 	
-	format( tmpQuery, sizeof(tmpQuery), "INSERT INTO tickets (`primatelj`, `officer`, `novac`, `razlog`, `datum`) VALUES ('%q', '%q', '%d', '%q', '%q')",
+	mysql_format(g_SQL, tmpQuery, sizeof(tmpQuery), "INSERT INTO tickets (`primatelj`, `officer`, `novac`, `razlog`, `datum`) VALUES ('%e', '%e', '%d', '%e', '%e')",
 		TicketInfo[ giveplayerid ][ tkPrimatelj ],
 		TicketInfo[ giveplayerid ][ tkOfficer ],
 		TicketInfo[ giveplayerid ][ tkNovac ],
@@ -123,7 +123,7 @@ stock LoadPlayerTickets(playerid, const playername[])
 	new
 		mysqlQuery[ 128 ];
 	
-	format(mysqlQuery, 256, "SELECT * FROM tickets WHERE `primatelj` = '%q'", playername);
+	mysql_format(g_SQL, mysqlQuery, 256, "SELECT * FROM tickets WHERE `primatelj` = '%e'", playername);
 		
 	inline OnTicketLoad() 
 	{
@@ -354,7 +354,7 @@ CMD:giveticket(playerid, params[])
 						// MySQL Query
 						new
 							ticketInsertQuery[256];
-						format(ticketInsertQuery, 256, "INSERT INTO `cocars_tickets`(`vehicle_id`, `isShown`, `price`, `reason`, `time`) VALUES ('%d','0','%d','%q','%d')",
+						mysql_format(g_SQL, ticketInsertQuery, 256, "INSERT INTO `cocars_tickets`(`vehicle_id`, `isShown`, `price`, `reason`, `time`) VALUES ('%d','0','%d','%e','%d')",
 							VehicleInfo[vehicleid][vSQLID],
 							VehicleInfo[vehicleid][vTickets][t],
 							reason,

@@ -80,7 +80,7 @@ stock UpdateRegisteredPassword(playerid)
 	
 	new
 		updatePasswordQuery[256];
-	format(updatePasswordQuery, sizeof(updatePasswordQuery), "UPDATE `accounts` SET `password` = '%q' WHERE `sqlid` = '%d' LIMIT 1",
+	mysql_format(g_SQL, updatePasswordQuery, sizeof(updatePasswordQuery), "UPDATE `accounts` SET `password` = '%e' WHERE `sqlid` = '%d' LIMIT 1",
 		PlayerInfo[playerid][pPassword],
 		PlayerInfo[playerid][pSQLID]
 	);
@@ -197,7 +197,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 			
 			new
 				tmpQuery[ 512 ];
-			format(tmpQuery, sizeof(tmpQuery), "UPDATE `accounts` SET `secquestion` = '%d', `secawnser` = '%q' WHERE `sqlid` = '%d' LIMIT 1",
+			mysql_format(g_SQL, tmpQuery, sizeof(tmpQuery), "UPDATE `accounts` SET `secquestion` = '%d', `secawnser` = '%e' WHERE `sqlid` = '%d' LIMIT 1",
 				PlayerInfo[playerid][pSecQuestion],
 				PlayerInfo[playerid][pSecQuestAnswer],
 				PlayerInfo[playerid][pSQLID]
@@ -227,7 +227,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 			
 			new
 				tmpQuery[ 512 ];
-			format(tmpQuery, sizeof(tmpQuery), "UPDATE `accounts` SET `email` = '%q' WHERE `sqlid` = '%d' LIMIT 1",
+			mysql_format(g_SQL, tmpQuery, sizeof(tmpQuery), "UPDATE `accounts` SET `email` = '%e' WHERE `sqlid` = '%d' LIMIT 1",
 				PlayerInfo[playerid][pEmail],
 				PlayerInfo[playerid][pSQLID]
 			);
@@ -267,7 +267,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 			
 			new
 				updatePasswordQuery[256];
-			format(updatePasswordQuery, sizeof(updatePasswordQuery), "UPDATE `accounts` SET `password` = '%q' WHERE `sqlid` = '%d' LIMIT 1",
+			mysql_format(g_SQL, updatePasswordQuery, sizeof(updatePasswordQuery), "UPDATE `accounts` SET `password` = '%e' WHERE `sqlid` = '%d' LIMIT 1",
 				PlayerInfo[playerid][pPassword],
 				PlayerInfo[playerid][pSQLID]
 			);
@@ -355,7 +355,7 @@ CMD:changepass(playerid, params[]) {
 	if(sscanf(params, "s[24]s[32]", usernick, passnew)) return SendClientMessage(playerid, COLOR_RED, "USAGE: /changepass [Ime_Prezime] [password].");
 	
 	// mysql search
-	format(mysql_buffer, sizeof(mysql_buffer), "SELECT sqlid FROM `accounts` WHERE `name` = '%q' LIMIT 0,1", usernick);
+	mysql_format(g_SQL, mysql_buffer, sizeof(mysql_buffer), "SELECT sqlid FROM `accounts` WHERE `name` = '%e' LIMIT 0,1", usernick);
 	mysql_search = mysql_query(g_SQL, mysql_buffer);
 	if(!cache_num_rows())
 		return va_SendClientMessage(playerid,COLOR_RED, "Account %s ne postoji!", usernick), cache_delete(mysql_search);
@@ -369,7 +369,7 @@ CMD:changepass(playerid, params[]) {
 	WP_Hash(_VarGetPass[playerid], 129, finalpassword);
 
 	// save
-	format(updquery, sizeof(updquery), "UPDATE `accounts` SET `password` = '%q' WHERE `sqlid` = '%d' LIMIT 1",
+	mysql_format(g_SQL, updquery, sizeof(updquery), "UPDATE `accounts` SET `password` = '%e' WHERE `sqlid` = '%d' LIMIT 1",
 		_VarGetPass[playerid],
 		usersql
 	);

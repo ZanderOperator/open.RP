@@ -20,7 +20,7 @@ stock InsertPlayerCarton(playerid, giveplayerid, const disease[])
 		tmpQuery[ 258 ];
 	getdate(Year, Month, Day);
 	format( date, 24, "%02d.%02d.%d.", Day, Month, Year);
-	format( tmpQuery, sizeof(tmpQuery), "INSERT INTO anamneza (`pacient`, `disease`, `doctor`, `date`) VALUES ('%q', '%q', '%q', '%q')",
+	mysql_format(g_SQL, tmpQuery, sizeof(tmpQuery), "INSERT INTO anamneza (`pacient`, `disease`, `doctor`, `date`) VALUES ('%e', '%e', '%e', '%e')",
 		GetName(giveplayerid,false),
 		disease,
 		GetName(playerid,false),
@@ -43,7 +43,7 @@ stock CheckPlayerCarton(playerid, const name[])
 {
 	new financesQuery[160];
 		
-	format(financesQuery, sizeof(financesQuery), "SELECT * FROM anamneza WHERE `pacient` = '%q' ORDER BY id DESC", name );
+	mysql_format(g_SQL, financesQuery, sizeof(financesQuery), "SELECT * FROM anamneza WHERE `pacient` = '%e' ORDER BY id DESC", name );
 	mysql_tquery(g_SQL, financesQuery, "OnPlayerCartonFinish", "is", playerid, name);
 	return 1;
 }

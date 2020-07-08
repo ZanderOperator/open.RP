@@ -198,7 +198,7 @@ native WP_Hash(buffer[], len, const str[]);
 #define WEB_URL									"forum.cityofangels-roleplay.com"
 
 // !Prilikom promjene SCRIPT_VERSION, OBAVEZNO ubaciti novi Update "Changelog.txt"u /scriptfiles folder!
-#define SCRIPT_VERSION							"CoA RP v18.4.1."
+#define SCRIPT_VERSION							"CoA RP v18.4.2."
 
 //custom name
 #define Dev_Name   								"Woo-Logan"
@@ -3058,7 +3058,7 @@ public OnGameModeInit()
 	new gstring[64];
 	format(gstring, sizeof(gstring), "hostname %s", HOSTNAME);
 	SendRconCommand(gstring);
-	mysql_log(ALL);
+	mysql_log(ERROR | WARNING);
 	MapAndreas_Init(MAP_ANDREAS_MODE_MINIMAL, "scriptfiles/SAmin.hmap");
 
 	// Streamer config
@@ -3247,6 +3247,7 @@ public OnQueryError(errorid, const error[], const callback[], const query[], MyS
 {
 	new backtrace[2048];
 	GetAmxBacktrace(backtrace, 2048);
+	Log_Write("logfiles/AMX_Query_Log.txt", "\n[%s] - MySQL Error ID: %d\nError %s: Callback %s\nQuery: %s\n%s", ReturnDate(), errorid, error, callback, query, backtrace);
 	printf("[%s] - MySQL Error ID: %d\nError %s: Callback %s\nQuery: %s\n%s", ReturnDate(), errorid, error, callback, query, backtrace);
 	return 1;
 }
@@ -3614,7 +3615,7 @@ public OnPlayerRequestClass(playerid, classid)
 			checkquery[128];
 
 		GetPlayerIp(playerid, PlayerInfo[playerid][cIP], 24);
-		format(checkquery,sizeof(checkquery),"SELECT * FROM `accounts` WHERE `name` = '%q' LIMIT 0,1", tmpname);
+		mysql_format(g_SQL, checkquery,sizeof(checkquery),"SELECT * FROM `accounts` WHERE `name` = '%e' LIMIT 0,1", tmpname);
 		mysql_tquery(g_SQL, checkquery, "CheckPlayerInBase", "i", playerid);
 	}
 	return 1;
