@@ -1649,7 +1649,7 @@ CMD:snow_off(playerid, params[])
 		return SendClientMessage(playerid, COLOR_RED, "USAGE: /wish [zelja]");
 		
 	new insertQuery[ 256 ], string[128];
-	format(insertQuery, sizeof(insertQuery), "INSERT INTO wish (playerid, wish) VALUES ('%d', '%q')",
+	format(insertQuery, sizeof(insertQuery), "INSERT INTO wish (playerid, wish) VALUES ('%d', '%e')",
 		PlayerInfo[ playerid ][ pSQLID ],
 		params
 	);

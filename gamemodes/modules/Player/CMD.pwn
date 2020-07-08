@@ -2430,7 +2430,7 @@ CMD:setlook(playerid, params[])
 		
 		new
 			tmpQuery[ 315 ];
-		format(tmpQuery, 315, "UPDATE `accounts` SET `look` = '%q' WHERE `sqlid` = '%d'",
+		mysql_format(g_SQL, tmpQuery, 315, "UPDATE `accounts` SET `look` = '%e' WHERE `sqlid` = '%d'",
 			PlayerInfo[ playerid ][ pLook ], 
 			PlayerInfo[ playerid ][ pSQLID ]
 		);

@@ -80,7 +80,7 @@ stock static UpdateAmmuWeapon(slotid) // Updateanje ourzja u listi
 {
 	new
 		tmpQuery[ 256 ];
-	format(tmpQuery, sizeof(tmpQuery), "UPDATE ammunation_weapons SET name = '%q', weapon = '%d', price = '%d', license = '%d', maxbullets = '%d' WHERE id = '%d'",
+	mysql_format(g_SQL, tmpQuery, sizeof(tmpQuery), "UPDATE ammunation_weapons SET name = '%e', weapon = '%d', price = '%d', license = '%d', maxbullets = '%d' WHERE id = '%d'",
 		AmmuInfo[ slotid ][ aiName ],
 		AmmuInfo[ slotid ][ aiWeapon ],
 		AmmuInfo[ slotid ][ aiPrice ],
@@ -104,7 +104,7 @@ stock static DeleteAmmuWeapon(slotid) // Delete oruzja iz liste
 stock static InsertAmmuWeapon(slotid) // Dodavanje novog oruzja
 {
 	new insertQuery[ 256 ];
-	format(insertQuery, sizeof(insertQuery), "INSERT INTO ammunation_weapons (name, weapon, price, license, maxbullets) VALUES ('%q', '%d', '%d', '%d', '%d')",
+	mysql_format(g_SQL, insertQuery, sizeof(insertQuery), "INSERT INTO ammunation_weapons (name, weapon, price, license, maxbullets) VALUES ('%e', '%d', '%d', '%d', '%d')",
 		AmmuInfo[ slotid ][ aiName ],
 		AmmuInfo[ slotid ][ aiWeapon ],
 		AmmuInfo[ slotid ][ aiPrice ],

@@ -451,7 +451,7 @@ public OnServerHousesLoad()
 stock static InsertHouseInDB(houseid, playerid) // Dodavanje nove kuce
 {
 	new insertQuery[512];
-	format(insertQuery, sizeof(insertQuery), "INSERT INTO houses (`level`, `value`, `adress`, `enterX`, `enterY`, `enterZ`, `exitX`, `exitY`, `exitZ`, `ownerid`, `owned`, `int`) VALUES ('%d', '%d', '%q', '%f', '%f', '%f', '%f', '%f', '%f', '0', '0', '%d')",
+	mysql_format(g_SQL, insertQuery, sizeof(insertQuery), "INSERT INTO houses (`level`, `value`, `adress`, `enterX`, `enterY`, `enterZ`, `exitX`, `exitY`, `exitZ`, `ownerid`, `owned`, `int`) VALUES ('%d', '%d', '%e', '%f', '%f', '%f', '%f', '%f', '%f', '0', '0', '%d')",
 		HouseInfo[houseid][hLevel],
 		HouseInfo[houseid][hValue],
 		HouseInfo[houseid][hAdress],
@@ -473,7 +473,7 @@ stock SaveHouses()
 		saveString[1300];
 	mysql_tquery(g_SQL, "BEGIN");
 	foreach(new b : Houses) {
-		format(saveString, 1300, "UPDATE `houses` SET `enterX` = '%f', `enterY` = '%f', `enterZ` = '%f', `exitX` = '%f', `exitY` = '%f', `exitZ` = '%f', `adress` = '%q', `value` = '%d', `int` = '%d', `viwo` = '%d', `lock` = '%d', `rent` = '%d', `rentabil` = '%d', `takings` = '%d', `level` = '%d', `freeze` = '%d', `viwoexit` = '%d', `safestatus` = '%d', `safepass` = '%d', `safe` = '%d', `ormar` = '%d', `skin1` = '%d', `skin2` = '%d', `skin3` = '%d', `groceries` = '%d', `doorlevel` = '%d', `alarm` = '%d', `locklevel` = '%d', `phone` = '%d', `phonenumber` = '%d', `moneysafe` = '%d', `radio` = '%d', `tv` = '%d', `microwave` = '%d', `storage_alarm` = '%d' WHERE `id` = '%d'",
+		mysql_format(g_SQL, saveString, 1300, "UPDATE `houses` SET `enterX` = '%f', `enterY` = '%f', `enterZ` = '%f', `exitX` = '%f', `exitY` = '%f', `exitZ` = '%f', `adress` = '%e', `value` = '%d', `int` = '%d', `viwo` = '%d', `lock` = '%d', `rent` = '%d', `rentabil` = '%d', `takings` = '%d', `level` = '%d', `freeze` = '%d', `viwoexit` = '%d', `safestatus` = '%d', `safepass` = '%d', `safe` = '%d', `ormar` = '%d', `skin1` = '%d', `skin2` = '%d', `skin3` = '%d', `groceries` = '%d', `doorlevel` = '%d', `alarm` = '%d', `locklevel` = '%d', `phone` = '%d', `phonenumber` = '%d', `moneysafe` = '%d', `radio` = '%d', `tv` = '%d', `microwave` = '%d', `storage_alarm` = '%d' WHERE `id` = '%d'",
 			HouseInfo[b][hEnterX],
 			HouseInfo[b][hEnterY],
 			HouseInfo[b][hEnterZ],

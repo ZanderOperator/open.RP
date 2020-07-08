@@ -120,7 +120,7 @@ stock LogTransaction ( playerid, giveplayerid, money, logtype )
 			format(desc, sizeof(desc), "Adresa garaze: %s", GarageInfo[garage][gAdress]);
 		}
 	}
-	format(TmpQuery, 384, "INSERT INTO `server_transactions` (`sendername`, `recievername`, `money`, `logtype`, `date`, `description`) VALUES ('%q','%q','%d','%d','%q','%q')",
+	mysql_format(g_SQL, TmpQuery, 384, "INSERT INTO `server_transactions` (`sendername`, `recievername`, `money`, `logtype`, `date`, `description`) VALUES ('%e','%e','%d','%d','%e','%e')",
 		GetName(playerid, false),
 		GetName(giveplayerid, false),
 		money,

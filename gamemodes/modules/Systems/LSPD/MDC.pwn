@@ -101,7 +101,7 @@ stock static OnPlayerMDCDataLoad(playerid, const playername[])
 {
 	new mysqlQuery[128];
 	
-	format(mysqlQuery, 128, "SELECT * FROM accounts WHERE `name` = '%q' LIMIT 0,1", playername);
+	mysql_format(g_SQL, mysqlQuery, 128, "SELECT * FROM accounts WHERE `name` = '%e' LIMIT 0,1", playername);
 	inline OnPlayerMDCLoad()
 	{
 		if(!cache_num_rows()) 
@@ -194,7 +194,7 @@ stock static OnPlayerArrestDataLoad(playerid, const playername[])
 {
 	new mysqlQuery[128];
 	
-	format(mysqlQuery, 128, "SELECT * FROM jail WHERE `suspect` = '%q'", playername);
+	mysql_format(g_SQL, mysqlQuery, 128, "SELECT * FROM jail WHERE `suspect` = '%e'", playername);
 	inline OnArrestLoad()
 	{
 		new buffer[ 2048];
@@ -248,7 +248,7 @@ stock static OnPlayerTicketsLoad(playerid, const playername[])
 {
 	new mysqlQuery[128];
 	
-	format(mysqlQuery, 128, "SELECT * FROM tickets WHERE `primatelj` = '%q' LIMIT 10", playername);
+	mysql_format(g_SQL, mysqlQuery, 128, "SELECT * FROM tickets WHERE `primatelj` = '%e' LIMIT 10", playername);
 	inline OnTicketsLoad()
 	{
 		new buffer[ 2048 ];
@@ -369,7 +369,7 @@ stock static OnPlayerAPBLoad(playerid, const playername[])
 {
 	new mysqlQuery[128];
 	
-	format(mysqlQuery, 128, "SELECT * FROM apb WHERE `suspect` = '%q'", playername);
+	mysql_format(g_SQL, mysqlQuery, 128, "SELECT * FROM apb WHERE `suspect` = '%e'", playername);
 	inline OnAPBLoad()
 	{
 		new buffer[ 2048 ];
@@ -479,7 +479,7 @@ stock GetSuspectAPB(playerid, const playername[])
 {
 	new mysqlQuery[128];
 	
-	format(mysqlQuery, 128, "SELECT * FROM apb WHERE `suspect` = '%q'", playername);
+	mysql_format(g_SQL, mysqlQuery, 128, "SELECT * FROM apb WHERE `suspect` = '%e'", playername);
 	inline OnAPBLoad()
 	{
 		if(!cache_num_rows()) 
@@ -615,7 +615,7 @@ stock InsertPlayerMDCCrime(playerid, giveplayerid, reason[], jailtime)
 		tmpQuery[ 512 ];
 	mysql_tquery(g_SQL, "BEGIN");
 	
-	format(tmpQuery, sizeof(tmpQuery), "INSERT INTO `jail` (`suspect`, `policeman`, `reason`, `jailtime`, `date`) VALUES ('%q', '%q', '%q', '%d', '%q')",
+	mysql_format(g_SQL, tmpQuery, sizeof(tmpQuery), "INSERT INTO `jail` (`suspect`, `policeman`, `reason`, `jailtime`, `date`) VALUES ('%e', '%e', '%e', '%d', '%e')",
 		JailInfo[ giveplayerid ][ jSuspectName ],
 		JailInfo[ giveplayerid ][ jPoliceName ],
 		JailInfo[ giveplayerid ][ jReason ],
@@ -639,7 +639,7 @@ stock static InsertAPBInfo(playerid, const suspect[], const description[], type)
 {
 	new
 		tmpQuery[ 256 ];
-	format(tmpQuery, 256, "INSERT INTO `apb`(`suspect`, `description`, `type`, `pdname`) VALUES ('%q','%q','%d','%q')",
+	mysql_format(g_SQL, tmpQuery, 256, "INSERT INTO `apb`(`suspect`, `description`, `type`, `pdname`) VALUES ('%e','%e','%d','%e')",
 		suspect,
 		description,
 		type,
@@ -681,7 +681,7 @@ stock GetPlayerMDCRecord(playerid, const playername[])
 		tmp[ 32 ],
 		mysqlQuery[ 128 ];
 	
-	format(mysqlQuery, 256, "SELECT * FROM jail WHERE `suspect` = '%q'", playername);
+	mysql_format(g_SQL, mysqlQuery, 256, "SELECT * FROM jail WHERE `suspect` = '%e'", playername);
 		
 	inline OnSuspectLoad() {		
 		format(buffer, sizeof(buffer), "{A4BDDE}ID | IME/PREZIME | OFFICER | RAZLOG | VRIJEME KAZNE | DATUM UHICENJA"COL_WHITE"\n");
@@ -1182,7 +1182,7 @@ hook OnPlayerClickPlayerTD(playerid, PlayerText:playertextid)
 				player_sqlid,
 				sqlstring[128];
 	
-			format(sqlstring, sizeof(sqlstring), "SELECT sqlid FROM `accounts` WHERE `name` = '%q' LIMIT 0,1", TargetName[playerid]);
+			mysql_format(g_SQL, sqlstring, sizeof(sqlstring), "SELECT sqlid FROM `accounts` WHERE `name` = '%e' LIMIT 0,1", TargetName[playerid]);
 			result = mysql_query(g_SQL, sqlstring);
 			//counts = cache_num_rows();
 			cache_get_value_name_int(0, "sqlid"	, player_sqlid);
@@ -1243,7 +1243,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 				new motd[150];
 					
 				format(motd, sizeof(motd), "\t\tLS Telefonica - %s\nBroj mobitela: %d\nModel mobitela: %s\nVlasnik mobitela: %s", ReturnDate(), mobilenumber, GetMobileName(modelid), GetPlayerNameFromSQL(playersql));
-				ShowPlayerDialog(playerid, -1, DIALOG_STYLE_MSGBOX, "MDC - MOBILE", motd, "Zatvori", "");
+				ShowPlayerDialog(playerid, 0, DIALOG_STYLE_MSGBOX, "MDC - MOBILE", motd, "Zatvori", "");
 			}
 			mysql_tquery_inline(g_SQL, mysqlQuery, using inline OnMobileNumberCheck, "");
 			return 1;	

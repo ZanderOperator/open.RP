@@ -445,7 +445,7 @@ stock CanPlayerTakeExp(playerid, giveplayerid)
 stock CanPlayerTakeExpEx(playerid, playername[]) 
 {
 	new sqlid, level, idQuery[100];
-	format(idQuery, sizeof(idQuery), "SELECT * FROM `accounts` WHERE `name` = '%q' LIMIT 0,1", playername);
+	mysql_format(g_SQL, idQuery, sizeof(idQuery), "SELECT * FROM `accounts` WHERE `name` = '%e' LIMIT 0,1", playername);
 	
 	new 
 		Cache:result = mysql_query(g_SQL, idQuery),
@@ -494,7 +494,7 @@ stock GivePlayerExperience(playerid, playername[])
 {
 	new sqlid, idQuery[100];
 	
-	format(idQuery, sizeof(idQuery), "SELECT `sqlid` FROM `accounts` WHERE `name` = '%q' LIMIT 0,1", playername);
+	mysql_format(g_SQL, idQuery, sizeof(idQuery), "SELECT `sqlid` FROM `accounts` WHERE `name` = '%e' LIMIT 0,1", playername);
 	new Cache:result = mysql_query(g_SQL, idQuery),
 		rows;
 		

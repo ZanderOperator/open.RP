@@ -1,3 +1,9 @@
+City of Angels v18.4.2. - Critical Update
+- Popravljene sve rupe sa SQL injectionom - zahvale Khawaji i Runneru
+- Uvelike poboljsana sigurnost baze podataka
+- Popravljen potencijalni abuse sa spremanjem oruzja u gepek
+- Fixana mapa kod Verona Malla
+
 City of Angels v18.4.1. - HotFix
 - Popravljena mapa kod Verone
 - Popravci gramatickih gresaka, te ispisa na nekim logovima
@@ -9,5 +15,3 @@ City of Angels v18.4.0.
 - Obrisana dupla mapa Verona Malla
 - Bugfix za mapu bolnice by Khawaja
 
-Malo priopcenje. Nakon duze vrijeme postigli smo stabilnost, kvalitetu i kontinuitet skripte bez da pada.
-Bez obzira sto je mozda manji broj igrac, hvala vam svima sto ste uz nas!

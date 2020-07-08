@@ -571,7 +571,7 @@ CMD:create_garage(playerid, params[])
 
 	new
 	    query[ 600 ];
-	format(query, 600, "INSERT INTO `server_garages` (`ownerid`, `adress`, `price`, `locked`, `houseid`, `enterX`, `enterY`, `enterZ`, `exitX`, `exitY`, `exitZ`) VALUES ('0', '%q', '%d', '0', '%d', '%.4f', '%.4f', '%.4f', '%.4f', '%.4f', '%.4f')",
+	mysql_format(g_SQL, query, 600, "INSERT INTO `server_garages` (`ownerid`, `adress`, `price`, `locked`, `houseid`, `enterX`, `enterY`, `enterZ`, `exitX`, `exitY`, `exitZ`) VALUES ('0', '%e', '%d', '0', '%d', '%.4f', '%.4f', '%.4f', '%.4f', '%.4f', '%.4f')",
 		GarageInfo[ garage ][ gAdress ],
 		GarageInfo[ garage ][ gPrice ],
 		GarageInfo[ garage ][ gHouseID ],

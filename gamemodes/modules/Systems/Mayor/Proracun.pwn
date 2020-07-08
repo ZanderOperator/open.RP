@@ -217,7 +217,7 @@ stock CheckPlayerTransactions(playerid, const name[])
 {
 	new financesQuery[160];
 		
-	format(financesQuery, sizeof(financesQuery), "SELECT * FROM `server_transactions` WHERE `sendername` = '%q' OR `recievername` = '%q' ORDER BY `id` DESC",
+	mysql_format(g_SQL, financesQuery, sizeof(financesQuery), "SELECT * FROM `server_transactions` WHERE `sendername` = '%e' OR `recievername` = '%e' ORDER BY `id` DESC",
 		name,
 		name
 	);

@@ -478,7 +478,7 @@ stock ChangePlayerName(playerid, newname[], type, bool:admin_cn = false)
 		counts,
 		cnQuery[ 200 ];
 	
-	format(cnQuery, sizeof(cnQuery), "SELECT * FROM `accounts` WHERE `name` = '%q' LIMIT 0,1", newname);
+	mysql_format(g_SQL, cnQuery, sizeof(cnQuery), "SELECT * FROM `accounts` WHERE `name` = '%e' LIMIT 0,1", newname);
 	result = mysql_query(g_SQL, cnQuery);
 	counts = cache_num_rows();
 	cache_delete(result);
@@ -501,14 +501,14 @@ stock ChangePlayerName(playerid, newname[], type, bool:admin_cn = false)
 	);
 	
 	// MySQL
-	format(cnQuery, sizeof(cnQuery), "INSERT INTO `player_changenames`(`player_id`, `old_name`, `new_name`) VALUES ('%d','%q','%q')",
+	mysql_format(g_SQL, cnQuery, sizeof(cnQuery), "INSERT INTO `player_changenames`(`player_id`, `old_name`, `new_name`) VALUES ('%d','%e','%e')",
 		PlayerInfo[ playerid ][ pSQLID ],
 		oldname,
 		newname
 	);
 	mysql_pquery(g_SQL, cnQuery, "");
 	
-	format(cnQuery, sizeof(cnQuery), "UPDATE `accounts` SET `name` = '%q', `sex` = '%d' WHERE `sqlid` = '%d'",
+	mysql_format(g_SQL, cnQuery, sizeof(cnQuery), "UPDATE `accounts` SET `name` = '%e', `sex` = '%d' WHERE `sqlid` = '%d'",
 		newname,
 		PlayerInfo[ playerid ][pAge],
 		PlayerInfo[ playerid ][ pSQLID ]

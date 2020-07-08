@@ -213,7 +213,7 @@ stock SaveFaction(orgid)
 	
 	new
 		tmpQuery[ 1024 ];
-	format(tmpQuery, 1024, "INSERT INTO `server_factions` (`id`, `used`,`name`,`type`,`rank1`,`rank2`,`rank3`,`rank4`,`rank5`,`rank6`,`rank7`,`rank8`, `rank9`,`rank10`,`rank11`,`rank12`,`rank13`,`rank14`,`rank15`,`ranks`,`factionbank`) VALUES ('%d','%d','%q','%d','%q','%q','%q','%q','%q','%q','%q','%q','%q','%q','%q','%q','%q','%q','%q','%d','%d')",
+	mysql_format(g_SQL, tmpQuery, 1024, "INSERT INTO `server_factions` (`id`, `used`,`name`,`type`,`rank1`,`rank2`,`rank3`,`rank4`,`rank5`,`rank6`,`rank7`,`rank8`, `rank9`,`rank10`,`rank11`,`rank12`,`rank13`,`rank14`,`rank15`,`ranks`,`factionbank`) VALUES ('%d','%d','%e','%d','%e','%e','%e','%e','%e','%e','%e','%e','%e','%e','%e','%e','%e','%e','%e','%d','%d')",
 		orgid,
 		FactionInfo[ orgid ][ fUsed ],
 		FactionInfo[ orgid ][ fName ],
@@ -547,7 +547,7 @@ public UninvitePlayer(playerid, const targetname[])
 		if ( playerMember == PlayerInfo[playerid][pMember] || playerLeader == PlayerInfo[playerid][pLeader])
 		{
 			new tmpQuery[ 512 ];
-			format(tmpQuery, sizeof(tmpQuery), "UPDATE `accounts` SET `spawnchange` = '0', `facMemId` = 0, `facLeadId` = 0, `facRank` = 0 WHERE `name` = '%q' LIMIT 1", targetname);
+			mysql_format(g_SQL, tmpQuery, sizeof(tmpQuery), "UPDATE `accounts` SET `spawnchange` = '0', `facMemId` = 0, `facLeadId` = 0, `facRank` = 0 WHERE `name` = '%e' LIMIT 1", targetname);
 			mysql_pquery(g_SQL, tmpQuery);
 			
 			format(tmpQuery, 128, "DELETE FROM `player_weapons` WHERE `player_id` = '%d'", playerSQLID);
@@ -861,7 +861,7 @@ CMD:afaction(playerid,params[])
 	    format(FactionInfo[fid][fName],24,"%s",newname);
         SendFormatMessage(playerid, MESSAGE_TYPE_INFO, "Promjenio si ime fakcije ID %d na %s.",fid,newname);
 		new tmpQuery[ 128 ];
-		format( tmpQuery, 128, "UPDATE `server_factions` SET `name` = '%q' WHERE `id` = '%d'", newname, fid );
+		mysql_format(g_SQL, tmpQuery, 128, "UPDATE `server_factions` SET `name` = '%e' WHERE `id` = '%d'", newname, fid );
 		mysql_tquery(g_SQL, tmpQuery, "");
 	}
     if(strcmp(option,"ranks",true) == 0)
@@ -910,7 +910,7 @@ CMD:afaction(playerid,params[])
 		new
 			logText[ 146 ];
 		format(logText, 146, "%s je postao lider %s", GetName(playerid,false), FactionInfo[ fid ][ fName ]);
-		format(tmpQuery, 256, "INSERT INTO `faction_logs`(`faction_id`, `log_text`, `time`) VALUES ('%d','%q',NOW())",
+		mysql_format(g_SQL, tmpQuery, 256, "INSERT INTO `faction_logs`(`faction_id`, `log_text`, `time`) VALUES ('%d','%e',NOW())",
 			fid,
 			logText
 		);
@@ -972,7 +972,7 @@ CMD:afaction(playerid,params[])
 		if(rankid == 15) { format(FactionInfo[fid][fRankName15],24,"%s",rankname); }
 		new
 			tmpQuery[ 128 ];
-		format( tmpQuery, 128, "UPDATE `server_factions` SET `rank%d` = '%q' WHERE `id` = '%d'", rankid, rankname, FactionInfo[fid][fID] );
+		mysql_format(g_SQL, tmpQuery, 128, "UPDATE `server_factions` SET `rank%d` = '%e' WHERE `id` = '%d'", rankid, rankname, FactionInfo[fid][fID] );
 		mysql_tquery(g_SQL, tmpQuery);
 		
   	    format(string,sizeof(string),"[ ! ] Promjenio si ime ranka fakcije ID %d (ID RANKA: %d) na %s.", fid,rankid,rankname);
@@ -1059,7 +1059,7 @@ CMD:faction(playerid,params[])
 		new
 			logText[ 190 ];
 		format(logText, 190, "%s je pozvao %s u %s", GetName(playerid,false), GetName(targetid,false), FactionInfo[ PlayerInfo[targetid][pMember] ][ fName ]);
-		format(tmpQuery, 512, "INSERT INTO `faction_logs`(`faction_id`, `log_text`, `time`) VALUES ('%d','%q',NOW())",
+		mysql_format(g_SQL, tmpQuery, 512, "INSERT INTO `faction_logs`(`faction_id`, `log_text`, `time`) VALUES ('%d','%e',NOW())",
 			PlayerInfo[targetid][pMember],
 			logText
 		);
@@ -1163,7 +1163,7 @@ CMD:faction(playerid,params[])
 		
 		new
 			facPermUpdate[128];
-		format(facPermUpdate, 128, "UPDATE `server_factions_permissions` SET `%q` = '%d' WHERE `server_factions_permissions`.`id` = '%d'",
+		mysql_format(g_SQL, facPermUpdate, 128, "UPDATE `server_factions_permissions` SET `%e` = '%d' WHERE `server_factions_permissions`.`id` = '%d'",
 			cmdname,
 			rnk,
 			mmbr
@@ -1212,7 +1212,7 @@ CMD:faction(playerid,params[])
 		new
 			logText[ 195 ];
 		format(logText, 195, "%s je izbacio %s iz %s", GetName(playerid,false), GetName(targetid,false), FactionInfo[ PlayerInfo[playerid][pLeader] ][ fName ]);
-		format(tmpQuery, 512, "INSERT INTO `faction_logs`(`faction_id`, `log_text`, `time`) VALUES ('%d','%q',NOW())",
+		mysql_format(g_SQL, tmpQuery, 512, "INSERT INTO `faction_logs`(`faction_id`, `log_text`, `time`) VALUES ('%d','%e',NOW())",
 			PlayerInfo[playerid][pLeader],
 			logText
 		);
@@ -1265,7 +1265,7 @@ CMD:faction(playerid,params[])
 		new
 			logText[ 135 ];
 		format(logText, 135, "%s je stavio %s rank %d", GetName(playerid,false), GetName(targetid,false), PlayerInfo[targetid][pRank]);
-		format(tmpQuery, 512, "INSERT INTO `faction_logs`(`faction_id`, `log_text`, `time`) VALUES ('%d','%q',NOW())",
+		mysql_format(g_SQL, tmpQuery, 512, "INSERT INTO `faction_logs`(`faction_id`, `log_text`, `time`) VALUES ('%d','%e',NOW())",
 			PlayerInfo[playerid][pLeader],
 			logText
 		);
@@ -1344,7 +1344,7 @@ CMD:faction(playerid,params[])
 		new
 			tmpQuery[ 128 ];
 		
-		format(tmpQuery, 128, "SELECT * FROM accounts WHERE name = '%q'", targetname);
+		mysql_format(g_SQL, tmpQuery, 128, "SELECT * FROM accounts WHERE name = '%e'", targetname);
 		mysql_tquery(g_SQL, tmpQuery, "UninvitePlayer", "is", playerid, targetname);
 		
 	}
@@ -1488,7 +1488,7 @@ CMD:quitfaction(playerid, params[])
 		new
 			logText[ 195 ];
 		format(logText, 195, "%s je izasao iz %s", GetName(playerid,false), FactionInfo[ PlayerInfo[playerid][pLeader] ][ fName ]);
-		format(tmpQuery, 280, "INSERT INTO `faction_logs`(`faction_id`, `log_text`, `time`) VALUES ('%d','%q',NOW())",
+		mysql_format(g_SQL, tmpQuery, 280, "INSERT INTO `faction_logs`(`faction_id`, `log_text`, `time`) VALUES ('%d','%e',NOW())",
 			PlayerInfo[playerid][pMember],
 			logText
 		);

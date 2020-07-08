@@ -72,7 +72,7 @@ stock static SaveARInfo(slotid)
 {
 	new
 		tmpQuery[ 2300 ];
-	format(tmpQuery, sizeof(tmpQuery), "UPDATE arrestrecords SET suspect = '%q', cop = '%q', description = '%q', time = '%s' WHERE id = '%d'",
+	format(tmpQuery, sizeof(tmpQuery), "UPDATE arrestrecords SET suspect = '%e', cop = '%e', description = '%e', time = '%s' WHERE id = '%d'",
 		ARInfo[ slotid ][ arSuspect ],
 		ARInfo[ slotid ][ arCop ],
 		ARInfo[ slotid ][ arDescription ],

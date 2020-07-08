@@ -1049,7 +1049,7 @@ stock static CreateWeed(weedid, Objectid, viwo, Planted, Hourspassed, Ready, Gra
 	mysql_tquery(g_SQL, "BEGIN", "");
 	new
 		tmpQuery[ 256 ];
-	format(tmpQuery, 256, "INSERT INTO weed (`objectid`, `planted`, `hourspassed`, `ready`, `viwo`, `grams`, `plantx`, `planty`, `plantz`, `author`) VALUES ('%d', '%d', '%d', '%d', '%d','%d','%f','%f','%f','%q')",
+	format(tmpQuery, 256, "INSERT INTO weed (`objectid`, `planted`, `hourspassed`, `ready`, `viwo`, `grams`, `plantx`, `planty`, `plantz`, `author`) VALUES ('%d', '%d', '%d', '%d', '%d','%d','%f','%f','%f','%e')",
 		Objectid,
 		Planted,
 		Hourspassed,
