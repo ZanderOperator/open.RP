@@ -4649,8 +4649,6 @@ hook OnPlayerEditObject(playerid, playerobject, objectid, response, Float:fX, Fl
 			}
 			case 1:
 			{
-				if(!WeaponHackCheck(playerid))
-					return 1;
 					
 				Bit1_Set(gr_PlayerTrunkEdit, playerid, false);
 				new model = EditingTrunkWeaponModel[playerid],
