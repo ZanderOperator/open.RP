@@ -1181,16 +1181,16 @@ public OnVehicleBuy(playerid, vehicleid)
 	
 	for(new wslot = 0; wslot < MAX_WEAPON_SLOTS; wslot++)
 	{
-		VehicleInfo[vehicleid][vWeaponSQLID][wslot] 			= -1;
+		VehicleInfo[vehicleid][vWeaponSQLID][wslot] 		= -1;
 		VehicleInfo[vehicleid][vWeaponId][wslot]			= 0;
-		VehicleInfo[vehicleid][vWeaponAmmo][wslot]		= 0;
+		VehicleInfo[vehicleid][vWeaponAmmo][wslot]			= 0;
 		VehicleInfo[vehicleid][vWeaponObjectID][wslot]		= INVALID_OBJECT_ID;
 		VehicleInfo[vehicleid][vOffsetx][wslot]      		= 0;
 		VehicleInfo[vehicleid][vOffsety][wslot]      		= 0;
 		VehicleInfo[vehicleid][vOffsetz][wslot]      		= 0;
 		VehicleInfo[vehicleid][vOffsetxR][wslot]     		= 0;
-		VehicleInfo[vehicleid][vOffsetyR][wslot]      	= 0;
-		VehicleInfo[vehicleid][vOffsetzR][wslot]      	= 0;
+		VehicleInfo[vehicleid][vOffsetyR][wslot]      		= 0;
+		VehicleInfo[vehicleid][vOffsetzR][wslot]      		= 0;
 	}
 	
 	VehicleInfo[vehicleid][vSpareKey1]     		= -1;
@@ -4658,6 +4658,13 @@ hook OnPlayerEditObject(playerid, playerobject, objectid, response, Float:fX, Fl
 				AttachVehID = PlayerInfo[playerid][pSpawnedCar];
 				if(AttachVehID != -1)
 				{	
+					if(VehicleInfo[AttachVehID][vWeaponSQLID][wslot] <= 0) // 0, -1, ..
+					{
+						CancelEdit(playerid);
+						SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nazalost, dogodila se greska u pohrani lokacije oruzja. Pokusajte ponovno!");
+						EditPlayerObject(playerid, EditingTrunkWeaponObject[playerid]);
+						return 1;
+					}
 					new	Float:ofx, Float:ofy, Float:ofz, Float:ofaz,
 						Float:finalx, Float:finaly,
 						Float:px, Float:py, Float:pz, Float:roz;
@@ -5407,6 +5414,9 @@ CMD:car(playerid, params[])
 
 CMD:trunk(playerid, params[])
 {
+	if(strlen(params) >= 10)
+		return SendClientMessage(playerid, -1, "KORISTENJE: /trunk [open/take/put/break]");
+		
 	new
 		vehicleid = GetPlayerNearestPrivateVehicle(playerid),
 		engine, lights, alarm, doors, bonnet, boot, objective,
@@ -5414,7 +5424,7 @@ CMD:trunk(playerid, params[])
 
 	if(vehicleid == INVALID_VEHICLE_ID) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste u blizini privatnog vozila!");
 	if(!IsPlayerNearTrunk(playerid, vehicleid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste kod prtljaznika privatnog vozila!");
-	if(sscanf(params, "s[10]", pick)) return SendClientMessage(playerid, COLOR_RED, "USAGE: /trunk [open/take/put/break]");
+	if(sscanf(params, "s[10]", pick)) return SendClientMessage(playerid, -1, "KORISTENJE: /trunk [open/take/put/break]");
 	if(PlayerInfo[playerid][pLevel] < 2) return SendMessage(playerid, MESSAGE_TYPE_ERROR, " Ne mozete koristiti ovu komandu kao level 1.");
 	if(!strcmp(pick, "open", true)) 
 	{

@@ -1243,7 +1243,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 				new motd[150];
 					
 				format(motd, sizeof(motd), "\t\tLS Telefonica - %s\nBroj mobitela: %d\nModel mobitela: %s\nVlasnik mobitela: %s", ReturnDate(), mobilenumber, GetMobileName(modelid), GetPlayerNameFromSQL(playersql));
-				ShowPlayerDialog(playerid, 0, DIALOG_STYLE_MSGBOX, "MDC - MOBILE", motd, "Zatvori", "");
+				ShowPlayerDialog(playerid, DIALOG_MDC_PHONE_INFO, DIALOG_STYLE_MSGBOX, "MDC - MOBILE", motd, "Zatvori", "");
 			}
 			mysql_tquery_inline(g_SQL, mysqlQuery, using inline OnMobileNumberCheck, "");
 			return 1;	

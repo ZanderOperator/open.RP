@@ -804,6 +804,112 @@ public OfflineJailPlayer(playerid, playername[], jailtime)
 	return 1;
 }
 
+stock CheckInactivePlayer(playerid, sql)
+{
+	new tmpQuery[128], dialogstring[2056];
+	format(tmpQuery, sizeof(tmpQuery), "SELECT * FROM  `inactive_accounts` WHERE `sqlid` = '%d' LIMIT 0,1", sql);
+	inline OnInactivePlayerLoad()
+	{	
+		new 
+			sqlid,
+			startstamp,
+			endstamp,
+			startdate[6],
+			enddate[6],
+			reason[64],
+			motd[150];
+			
+		cache_get_value_name_int(0, "sqlid"				, sqlid);
+		cache_get_value_name_int(0, "startstamp"		, startstamp);
+		cache_get_value_name_int(0, "endstamp"			, endstamp);
+		cache_get_value_name(0, 	"reason"			, reason, 64);
+
+		stamp2datetime(startstamp, startdate[0], startdate[1] ,startdate[2], startdate[3], startdate[4], startdate[5], 1);
+		stamp2datetime(endstamp, enddate[0], enddate[1] ,enddate[2], enddate[3], enddate[4], enddate[5], 1);
+		
+		format(motd, sizeof(motd), "%s - [SQLID: %d] | Pocetak: %02d/%02d/%02d %02d:%02d:%02d | Traje do: %02d/%02d/%02d %02d:%02d:%02d | Razlog: %s\n",
+			GetPlayerNameFromSQL(sqlid),
+			sqlid,
+			startdate[2],
+			startdate[1],
+			startdate[0],
+			startdate[3],
+			startdate[4],
+			startdate[5],
+			enddate[2],
+			enddate[1],
+			enddate[0],
+			enddate[3],
+			enddate[4],
+			enddate[5],
+			reason
+		);
+		strcat(dialogstring, motd, sizeof(dialogstring));
+
+		ShowPlayerDialog(playerid, DIALOG_INACTIVITY_CHECK, DIALOG_STYLE_MSGBOX, "Provjera neaktivnosti igraca:", dialogstring, "Zatvori", "");
+		return 1;
+	}
+	mysql_tquery_inline(g_SQL, tmpQuery, using inline OnInactivePlayerLoad, "i", playerid);
+	return 1;
+}
+
+stock ListInactivePlayers(playerid)
+{
+	new tmpQuery[128], dialogstring[2056];
+	format(tmpQuery, sizeof(tmpQuery), "SELECT * FROM  `inactive_accounts` ORDER BY `inactive_accounts`.`id` DESC LIMIT 0 , 30");
+	inline OnInactiveAccountsList()
+	{
+		new rows;
+		cache_get_row_count(rows);
+		if(rows)
+		{
+			new 
+				sqlid,
+				startstamp,
+				endstamp,
+				startdate[6],
+				enddate[6],
+				reason[64],
+				motd[150];
+				
+			for( new i = 0; i < rows; i++ ) 
+			{
+				cache_get_value_name_int(i, "sqlid"				, sqlid);
+				cache_get_value_name_int(i, "startstamp"		, startstamp);
+				cache_get_value_name_int(i, "endstamp"			, endstamp);
+				cache_get_value_name(i, 	"reason"			, reason, 64);
+
+				stamp2datetime(startstamp, startdate[0], startdate[1] ,startdate[2], startdate[3], startdate[4], startdate[5], 1);
+				stamp2datetime(endstamp, enddate[0], enddate[1] ,enddate[2], enddate[3], enddate[4], enddate[5], 1);
+				
+				format(motd, sizeof(motd), "%s - [SQLID: %d] | Pocetak: %02d/%02d/%02d %02d:%02d:%02d | Traje do: %02d/%02d/%02d %02d:%02d:%02d | Razlog: %s\n",
+					GetPlayerNameFromSQL(sqlid),
+					sqlid,
+					startdate[2],
+					startdate[1],
+					startdate[0],
+					startdate[3],
+					startdate[4],
+					startdate[5],
+					enddate[2],
+					enddate[1],
+					enddate[0],
+					enddate[3],
+					enddate[4],
+					enddate[5],
+					reason
+				);
+				strcat(dialogstring, motd, sizeof(dialogstring));
+			}
+			ShowPlayerDialog(playerid, DIALOG_INACTIVITY_LIST, DIALOG_STYLE_MSGBOX, "Najnovije neaktivnosti:", dialogstring, "Zatvori", "");
+			return 1;
+		}
+		else return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Trenutno nema prijavljenih neaktivnosti u bazi podataka!");
+	}
+	mysql_tquery_inline(g_SQL, tmpQuery, using inline OnInactiveAccountsList, "i", playerid);
+	return 1;
+}
+
 /*
 Function: ChargePlayer(playerid, const targetname[], money)
 {
@@ -1672,6 +1778,149 @@ CMD:makehelper(playerid, params[])
 	return 1;
 }
 
+CMD:inactivity(playerid, params[])
+{
+	new choice[12], playername[24], giveplayerid, bool:online=false, days, reason[64];
+	
+	if(PlayerInfo[playerid][pAdmin] < 3)
+		return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste Game Admin Level 3+!");
+		
+	if(sscanf(params, "s[12] ", choice)) 
+	{
+		SendClientMessage(playerid, COLOR_RED, "USAGE: /inactivity [opcija]");
+		SendClientMessage(playerid, COLOR_RED, "OPCIJE: add, remove, check, list");
+		return 1;
+	}
+	if( !strcmp(choice, "check", true) )
+	{
+		if (sscanf(params, "s[12]s[24]", choice, playername))
+		{
+			SendClientMessage(playerid, COLOR_RED, "USAGE: /inactivity check [Ime_Prezime]");
+			return 1;
+		}
+		new sqlid = ConvertNameToSQLID(playername);
+		if(sqlid == -1)
+			return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "Account %s ne postoji u bazi podataka.", playername);
+			
+		if(!IsValidInactivity(sqlid))
+			return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "Account %s nema registriranu neaktivnost u bazi podataka!");
+			
+		CheckInactivePlayer(playerid, sqlid);
+	}		
+		
+	if( !strcmp(choice, "list", true) )
+		ListInactivePlayers(playerid);
+		
+	if( !strcmp(choice, "add", true) )
+	{
+		new startstamp, endstamp;
+		if (sscanf(params, "s[12]s[24]is[64] ", choice, playername, days, reason))
+		{
+			SendClientMessage(playerid, COLOR_RED, "USAGE: /inactivity add [Ime_Prezime][broj dana][razlog]");
+			return 1;
+		}
+		if(days < 1 || days > 45)
+			return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Neaktivnost ne moze biti kraca od 1, ni dulja od 45 dana!");
+		if(strlen(reason) < 1 || strlen(reason) >= 64)
+			return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Razlog ne moze biti kraci od 1, ni dulji od 64 znaka!");
+		new sqlid = ConvertNameToSQLID(playername);
+		if(sqlid == -1)
+			return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "Account %s ne postoji u bazi podataka.", playername);
+			
+		if(IsValidInactivity(sqlid))
+			return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "Account %s vec ima registriranu neaktivnost u bazi podataka!");
+		
+		startstamp = gettimestamp();
+		endstamp = gettimestamp() + (3600 * 24 * days);
+		
+		foreach(new i : Player)
+		{
+			if(IsPlayerConnected(i) && SafeSpawned[playerid])
+			{
+				new playername2[MAX_PLAYER_NAME];
+				GetPlayerName(i, playername2, sizeof(playername2));
+				if(strcmp(playername2, playername, true, strlen(playername)) == 0)
+				{
+					online = true;
+					giveplayerid = i;
+					break;
+				}
+			}
+		}
+		new insertQuery[200];
+		mysql_format(g_SQL, insertQuery, sizeof(insertQuery), "INSERT INTO `inactive_accounts`(`sqlid`, `startstamp`, `endstamp`, `reason`) VALUES ('%d','%d','%d','%e')",
+			sqlid,
+			startstamp,
+			endstamp,
+			reason
+		);
+		mysql_pquery(g_SQL, insertQuery, "", "");
+		
+		Log_Write("logfiles/a_inactive_players.txt", "(%s) %s[A%d] je odobrio %s[SQLID: %d] neaktivnost od %d dana. Razlog: %s",
+			ReturnDate(),
+			GetName(playerid,false),
+			PlayerInfo[playerid][pAdmin],
+			playername,
+			sqlid,
+			days,
+			reason
+		);
+		
+		if(online)
+		{
+			va_SendClientMessage(giveplayerid, COLOR_LIGHTBLUE, "Game Admin %s vam je odobrio neaktivnost od %d dana, razlog: %s.", GetName(playerid, false), days, reason);
+			SendClientMessage(giveplayerid, COLOR_LIGHTRED, "UPOZORENJE: Ukoliko se ulogirate na account za vrijeme neaktivnosti, ona se automatski ponistava!");
+		}
+		va_SendClientMessage(playerid, COLOR_LIGHTBLUE, "Uspjesno ste registrirali neaktivnost %s[SQLID: %d] na %d dana. Razlog: %s", playername, sqlid, days, reason);
+	}
+	if( !strcmp(choice, "remove", true) )
+	{
+		if (sscanf(params, "s[12]s[24]", choice, playername))
+		{
+			SendClientMessage(playerid, COLOR_RED, "USAGE: /inactivity remove [Ime_Prezime]");
+			return 1;
+		}
+		new sqlid = ConvertNameToSQLID(playername);
+		if(sqlid == -1)
+			return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "Account %s ne postoji u bazi podataka.", playername);
+			
+		if(!IsValidInactivity(sqlid))
+			return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "Account %s nema ima registriranu neaktivnost u bazi podataka!");
+		
+		foreach(new i : Player)
+		{
+			if(IsPlayerConnected(i) && SafeSpawned[playerid])
+			{
+				new playername2[MAX_PLAYER_NAME];
+				GetPlayerName(i, playername2, sizeof(playername2));
+				if(strcmp(playername2, playername, true, strlen(playername)) == 0)
+				{
+					online = true;
+					giveplayerid = i;
+					break;
+				}
+			}
+		}
+		new deleteQuery[200];
+		mysql_format(g_SQL, deleteQuery, sizeof(deleteQuery), "DELETE FROM `inactive_accounts` WHERE `sqlid` = '%d'", sqlid);
+		mysql_tquery(g_SQL, deleteQuery, "", "");
+		
+		Log_Write("logfiles/a_inactive_players.txt", "(%s) %s[A%d] je obrisao %s[SQLID: %d] registriranu neaktivnost iz baze podataka",
+			ReturnDate(),
+			GetName(playerid,false),
+			PlayerInfo[playerid][pAdmin],
+			playername,
+			sqlid
+		);
+		
+		if(online)
+			va_SendClientMessage(giveplayerid, COLOR_LIGHTRED, "Game Admin %s vam je ponistio registriranu neaktivnost.", GetName(playerid, false));
+			
+		va_SendClientMessage(playerid, COLOR_LIGHTBLUE, "Uspjesno ste ponistili registriranu neaktivnost %s[SQLID: %d]", playername, sqlid);
+	}
+	return 1;
+}
+
 CMD:hon(playerid, params[])
 {
 	if(Bit1_Get(h_HelperOnDuty, playerid))
@@ -1894,7 +2143,7 @@ CMD:makeadminex(playerid, params[])
 		new
 			level,
 			gplayername[MAX_PLAYER_NAME];
-		if(sscanf(params, "s[24]i", gplayername)) return SendClientMessage(playerid, COLOR_RED, "USAGE: /makeadminex [Ime_Prezime] [Level(1-1338)]");
+		if(sscanf(params, "s[24] ", gplayername)) return SendClientMessage(playerid, COLOR_RED, "USAGE: /makeadminex [Ime_Prezime] [Level(1-1338)]");
 		mysql_format(g_SQL, mysqlquery, sizeof(mysqlquery), "UPDATE `accounts` SET `adminLvl` = '%d' WHERE `name` = '%e' LIMIT 1", level, gplayername);
 		mysql_tquery(g_SQL, mysqlquery, "", "");
 	}
