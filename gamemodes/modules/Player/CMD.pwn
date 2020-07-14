@@ -1112,7 +1112,7 @@ CMD:pay(playerid, params[])
 	new giveplayerid, moneys;
 	
 	if( PlayerInfo[playerid][pKilled] ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne mozes koristiti ovu komandu dok si u DeathModeu!");
-	if( sscanf( params, "uds[32]", giveplayerid, moneys ) ) return SendClientMessage(playerid, COLOR_RED, "USAGE: /pay [ID Igraca/Dio Imena][kolicina]");
+	if( sscanf( params, "ui", giveplayerid, moneys ) ) return SendClientMessage(playerid, COLOR_RED, "USAGE: /pay [ID Igraca/Dio Imena][kolicina]");
 	if( giveplayerid == INVALID_PLAYER_ID ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Krivi unos igraca!");
 	if( giveplayerid == playerid) return SendClientMessage(playerid,COLOR_RED, "Ne mozes sam sebi dati novce!");
 	if( moneys < 1 || moneys > 1000000 ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nemojte slati manje od 1, ili vise od 1.000.000 odjednom.");
@@ -2372,7 +2372,7 @@ CMD:changename(playerid, params[])
 		type,
 		sex;
 
-	if( sscanf( params, "s[24]dd", novoime, type, years, sex ) )
+	if( sscanf( params, "s[24]iii ", novoime, type, years, sex ) )
 		return SendClientMessage(playerid, COLOR_RED, "USAGE: /changename [Ime_Prezime] [tip] [godine] [spol]"), SendClientMessage(playerid, -1, "SPOL: 2 - Zensko, 1 - Musko | TIP : 1 - standardni CN | 2- donatorski CN");
 		
 	switch(type)

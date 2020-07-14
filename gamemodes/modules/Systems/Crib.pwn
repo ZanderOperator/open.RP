@@ -3526,7 +3526,7 @@ CMD:rent(playerid, params[])
 	new
 		pick[11];
 
-	if(sscanf(params, "s[11] ", pick)) return SendClientMessage(playerid, COLOR_RED, "USAGE: /rent [house/vehicle]");
+	if(sscanf(params, "s[11] ", pick)) return SendClientMessage(playerid, -1, "KORISTENJE: /rent [house/vehicle]");
 
 	if(!strcmp(pick, "house", true)) {
 		new
@@ -3574,6 +3574,7 @@ CMD:rent(playerid, params[])
 			SendFormatMessage(playerid, MESSAGE_TYPE_SUCCESS, "Prestali ste iznajmljivati kucu na adresi %s.", HouseInfo[house][hAdress]);
 			PlayerInfo[playerid][pRentKey] = INVALID_HOUSE_ID;
 			PlayerInfo[playerid][pSpawnChange] = 0;
+			SetPlayerSpawnInfo(playerid);
 		}
 	}
 	return 1;

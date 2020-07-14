@@ -469,6 +469,24 @@ enum E_PLAYER_DATA
 }
 new PlayerInfo[ MAX_PLAYERS ][ E_PLAYER_DATA ];
 
+enum E_GARAGE_DATA {
+	gSQLID,
+	gOwnerID,
+	gAdress[16],
+	gEnterPck,
+	gPrice,
+	gLocked,
+	Float:gEnterX,
+	Float:gEnterY,
+	Float:gEnterZ,
+	Float:gExitX,
+	Float:gExitY,
+	Float:gExitZ,
+	gHouseID
+}
+new
+	GarageInfo[ MAX_GARAGES ][ E_GARAGE_DATA ];
+
 new
 	Text3D:pNameTag[MAX_PLAYERS],
 	plyrName[MAX_PLAYERS][MAX_PLAYER_NAME],
@@ -486,7 +504,8 @@ enum E_EXP_INFO
 	eAllPoints,
 	ePoints,
 	eLastPayDayStamp,
-	eDayPayDays
+	eDayPayDays,
+	eMonthPayDays
 }
 new ExpInfo[ MAX_PLAYERS ][ E_EXP_INFO ];
 
@@ -1366,6 +1385,7 @@ enum {
 	DIALOG_MDC_PLAYER,
 	DIALOG_MDC_VEHICLE,
 	DIALOG_MDC_PHONE,
+	DIALOG_MDC_PHONE_INFO,
 
 	DIALOG_MDC_RECORD,
 	DIALOG_MDC_CRECORD,
@@ -1537,6 +1557,10 @@ enum {
 	DIALOG_EXP_CHOOSE,
 	DIALOG_MOST_TEMPEXP,
 	DIALOG_MOST_OVERALLEXP,
+	
+	// Account Inactivity,
+	DIALOG_INACTIVITY_LIST,
+	DIALOG_INACTIVITY_CHECK,
 
 	// GranTurismo.pwn - Racing Leauge
 	DIALOG_RACE_PICK,
@@ -2889,7 +2913,7 @@ Function: GlobalServerTimer()
 	if(GMX != 1 && tmphour == 5 && tmpmins == 5 && tmpsecs < 10)//if(tmphour == 5 && tmpmins == 5 && tmpsecs == 10)
 	{
 		GMX = 1;
-		CheckAccountsForInactivity(); // Skidanje poslova neaktivnim igracima
+		CheckAccountsForInactivity(); // Skidanje posla i imovine neaktivnim igracima
 		StartGMX();
 	}
 	return 1;
@@ -3419,7 +3443,6 @@ public OnPlayerDisconnect(playerid, reason)
 		stop FinishPlayerSpawn(playerid);
 	// Login Time && IP fetch
 	format(PlayerInfo[playerid][pLastLogin], 24, ReturnDate());
-	PlayerInfo[playerid][pLastLoginTimestamp] = gettimestamp();
 	//GetPlayerIp(playerid, PlayerInfo[playerid][pLastIP], MAX_PLAYER_IP);
 	PlayerInfo[playerid][pAdmMsgConfirm] = 0;
 	GotRod[playerid] = 0;

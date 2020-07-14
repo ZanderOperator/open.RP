@@ -1428,14 +1428,14 @@ CMD:orghelp(playerid, params[])
 }
 CMD:f(playerid,params[])
 {
+	if(strlen(params) >= 64)
+		return SendMessage(playerid,MESSAGE_TYPE_ERROR, "Predugacka poruka. Maksimalno 64 karaktera!");
 	new member = PlayerInfo[playerid][pMember],result[64],playername[MAX_PLAYER_NAME],string[256];
 	if(member == 0) return SendMessage(playerid,MESSAGE_TYPE_ERROR, "Moras biti clan organizacije da bi koristio ovu komandu!");
 	if(blockfam[member] == 1) return SendMessage(playerid,MESSAGE_TYPE_ERROR, "Chat organizacije je blokiran!");
-	if(strlen(params) > 64)
-		return SendMessage(playerid,MESSAGE_TYPE_ERROR, "Predugacka poruka.. Maksimalno 64 karaktera!");
 	if( !Bit1_Get( gr_FactionChatTog, playerid)) return SendMessage(playerid,MESSAGE_TYPE_ERROR, "Iskljucen vam je faction chat!");
 
-	if (sscanf(params, "s[64]",result)) return SendClientMessage(playerid, COLOR_RED, "USAGE: /f [TEKST]");
+	if (sscanf(params, "s[64] ",result)) return SendClientMessage(playerid, COLOR_RED, "USAGE: /f [TEKST]");
 	GetPlayerName(playerid,playername,sizeof(playername));
 
     if(IsACop(playerid))

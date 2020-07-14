@@ -495,7 +495,7 @@ stock WeaponHackCheck(playerid)
 	if(GetPlayerWeapon(playerid) != 0 && GetPlayerAmmo(playerid) != 0)
 	{
 		new banreason[18];
-		if(PlayerWeapons[playerid][pwSQLID][GetWeaponSlot(GetPlayerWeapon(playerid))] == -1 && !SafeGiveWeapon[playerid])
+		if(PlayerWeapons[playerid][pwSQLID][GetWeaponSlot(GetPlayerWeapon(playerid))] <= 0 && !SafeGiveWeapon[playerid])
 		{
 			format(banreason, 18, "Weapon Hack"); 
 			HOOK_Ban(playerid, INVALID_PLAYER_ID, banreason, -1,  true);

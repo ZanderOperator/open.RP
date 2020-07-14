@@ -1793,7 +1793,7 @@ stock CheckStringForIP(text[])
 
 stock ConvertNameToSQLID(const name[])
 {
-	new sqlid, sqlquery[128];
+	new sqlid = -1, sqlquery[128];
 	mysql_format(g_SQL, sqlquery, sizeof(sqlquery), "SELECT `sqlid` FROM `accounts` WHERE `name` = '%e' LIMIT 0,1", name);
 	
 	new 

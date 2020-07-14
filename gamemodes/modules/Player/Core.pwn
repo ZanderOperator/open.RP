@@ -10,6 +10,10 @@
 	##     ## ##     ##  ######  ##     ##  #######   ######  
 */
 
+// Max Inactivity Time for Job/Property
+#define MAX_JOB_INACTIVITY_TIME			(604800) // 7 dana u sekundama
+#define MAX_INACTIVITY_TIME				(2592000) // 30 dana u sekundama
+
 //Igrac je novi na serveru ili je stari
 #define MAX_ADO_LABELS  200
 #define PlayerNewUser_Set(%0,%1) \
@@ -74,6 +78,243 @@ new
 	##       ##     ## ##   ### ##    ##    ##     ##  ##     ## ##   ### ##    ## 
 	##        #######  ##    ##  ######     ##    ####  #######  ##    ##  ######  
 */
+
+Function: CheckAccountsForInactivity()
+{
+	new inactivetimestamp = gettimestamp() - MAX_JOB_INACTIVITY_TIME;
+	
+	new
+		loadString[ 128 ];
+	mysql_format(g_SQL, loadString, 128, "SELECT * FROM `accounts` WHERE lastloginstamp <= '%d'",inactivetimestamp);
+	inline OnInactiveAccsLoad()
+	{
+		new rows;
+		cache_get_row_count(rows);
+		if( rows == 0 ) 
+			return Log_Write("logfiles/inactive_players.txt", "(%s) - Ne postoji account kojem je potrebno micati posao/nekretninu.", ReturnDate());
+			
+		new 
+			sqlid, 
+			jobkey, 
+			contracttime, 
+			loginstamp, 
+			propertytimestamp, 
+			playername[24], 
+			updateQuery[128];
+			
+		new 
+			donaterank = 0,
+			bool:skip = false,
+			bankmoney = 0,
+			houseid = INVALID_HOUSE_ID,
+			bizzid = INVALID_BIZNIS_ID, 
+			cid = INVALID_COMPLEX_ID, 
+			crid = INVALID_COMPLEX_ID,
+			garageid = INVALID_HOUSE_ID,
+			Cache:Data,
+			currentday;
+			
+		stamp2datetime(gettimestamp(), _, _, currentday, _, _, _);
+		if(currentday == 1) // 1st in Month - Reset of Monthly paydays
+		{
+			mysql_format(g_SQL, updateQuery, 128, "UPDATE `experience` SET `monthpaydays` = '0' WHERE 1");
+			mysql_tquery(g_SQL, updateQuery, "", "");
+		}
+		Data = cache_save();
+			
+		for( new i=0; i < rows; i++ ) 
+		{
+			donaterank = 0;
+			skip = false;
+			bankmoney = 0;
+			houseid = INVALID_HOUSE_ID;
+			bizzid = INVALID_BIZNIS_ID;
+			cid = INVALID_COMPLEX_ID;
+			crid = INVALID_COMPLEX_ID;
+			garageid = INVALID_HOUSE_ID;
+			
+			
+			cache_get_value_name_int(i, "sqlid", sqlid);
+			
+			if(IsValidInactivity(sqlid)) // Ukoliko postoji prijavljena neaktivnost koja jos uvijek traje
+				continue;
+			
+			cache_set_active(Data); // Povratak cachea nakon provjere neaktivnosti u bazi
+				
+			cache_get_value_name(i, 	"name"	, playername, 24);
+			cache_get_value_name_int(i, "jobkey", jobkey);
+			cache_get_value_name_int(i, "contracttime", contracttime);
+			cache_get_value_name_int(i, "lastloginstamp", loginstamp);
+			cache_get_value_name_int(i, "vipRank", donaterank);
+			
+			switch(donaterank)
+			{
+				case 1: loginstamp += (5 * 24 * 3600);
+				case 2: loginstamp += (10 * 24 * 3600);
+				case 3,4: skip = true;
+			}
+			if(skip)
+			{
+				skip = false;
+				continue;
+			}
+			
+			if(jobkey != 0 && loginstamp <= (gettimestamp() - MAX_JOB_INACTIVITY_TIME))
+			{
+				format(updateQuery, 128, "UPDATE `accounts` SET `jobkey` = '0', `contracttime` = '0' WHERE `sqlid` = '%d'", sqlid);
+				mysql_tquery(g_SQL, updateQuery, "", "");
+				
+				RemoveOfflineJob(jobkey);
+				
+				Log_Write("logfiles/inactive_players.txt", "(%s) %s[SQLID: %d] je radi neaktivnosti izgubio posao ID %d i %d sati ugovora.",
+					ReturnDate(),
+					playername,
+					sqlid,
+					jobkey,
+					contracttime
+				);
+			}
+			// Property Inactivity Check
+			propertytimestamp = gettimestamp() - MAX_INACTIVITY_TIME;
+			if(loginstamp <= propertytimestamp)
+			{
+				
+				cache_get_value_name_int(i, "bankMoney"	, bankmoney);
+				
+				foreach(new h: Houses)
+				{
+					if(HouseInfo[h][hOwnerID] == sqlid)
+					{
+						houseid = h;
+						break;
+					}
+				}
+				foreach(new b: Bizzes)
+				{
+					if(BizzInfo[b][bOwnerID] == sqlid)
+					{
+						bizzid = b;
+						break;
+					}
+				}
+				foreach(new c: Complex)
+				{
+					if(ComplexInfo[c][cOwnerID] == sqlid)
+					{
+						cid = c;
+						break;
+					}
+				}
+				foreach(new cr: ComplexRooms)
+				{
+					if(ComplexRoomInfo[cr][cOwnerID] == sqlid)
+					{
+						crid = cr;
+						break;
+					}
+				}
+				foreach(new g: Garages)
+				{
+					if(GarageInfo[g][gOwnerID] == sqlid)
+					{
+						garageid = g;
+						break;
+					}
+				}
+				if(houseid != INVALID_HOUSE_ID)
+				{
+					bankmoney += HouseInfo[houseid][hValue];
+					format(updateQuery, 128, "UPDATE `accounts` SET `bankMoney` = '%d' WHERE `sqlid` = '%d'", bankmoney, sqlid);
+					mysql_tquery(g_SQL, updateQuery, "", "");
+					
+					format(updateQuery, 128, "UPDATE `houses` SET `ownerid` = '0' WHERE `id` = '%d'", HouseInfo[houseid][hSQLID]);
+					mysql_tquery(g_SQL, updateQuery, "", "");
+					
+					Log_Write("logfiles/inactive_players.txt", "(%s) %s[SQLID: %d] je radi neaktivnosti izgubio kucu na adresi %s[SQLID: %d] i dobio %d$ naknade u banku.",
+						ReturnDate(),
+						playername,
+						sqlid,
+						HouseInfo[houseid][hAdress],
+						HouseInfo[houseid][hSQLID],
+						HouseInfo[houseid][hValue]
+					);
+				}
+				if(garageid != INVALID_HOUSE_ID)
+				{
+					bankmoney += GarageInfo[garageid][gPrice];
+					format(updateQuery, 128, "UPDATE `accounts` SET `bankMoney` = '%d' WHERE `sqlid` = '%d'", bankmoney, sqlid);
+					mysql_tquery(g_SQL, updateQuery, "", "");
+					
+					format( updateQuery, sizeof(updateQuery), "UPDATE `server_garages` SET `ownerid` = '0' WHERE `id` = '%d'", 
+						GarageInfo[garageid][gSQLID]
+					);
+					mysql_tquery(g_SQL, updateQuery, "", "");
+					
+					Log_Write("logfiles/inactive_players.txt", "(%s) %s[SQLID: %d] je radi neaktivnosti izgubio garazu %s[SQLID: %d] i dobio %d$ naknade u banku.",
+						ReturnDate(),
+						playername,
+						sqlid,
+						GarageInfo[garageid][gAdress],
+						GarageInfo[garageid][gSQLID],
+						GarageInfo[garageid][gPrice]
+					);
+				}
+				if(bizzid != INVALID_BIZNIS_ID)
+				{
+					bankmoney += BizzInfo[bizzid][bBuyPrice];
+					format(updateQuery, 128, "UPDATE `accounts` SET `bankMoney` = '%d' WHERE `sqlid` = '%d'", bankmoney, sqlid);
+					mysql_tquery(g_SQL, updateQuery, "", "");
+					
+					format(updateQuery, 128, "UPDATE `bizzes` SET `ownerid` = '0' WHERE `id` = '%d'", BizzInfo[bizzid][bSQLID]);
+					mysql_tquery(g_SQL, updateQuery, "", "");
+					
+					Log_Write("logfiles/inactive_players.txt", "(%s) %s[SQLID: %d] je radi neaktivnosti izgubio Biznis %s[SQLID: %d] i dobio %d$ naknade u banku.",
+						ReturnDate(),
+						playername,
+						sqlid,
+						BizzInfo[bizzid][bMessage],
+						BizzInfo[bizzid][bSQLID],
+						BizzInfo[bizzid][bBuyPrice]
+					);
+				}
+				if(cid != INVALID_COMPLEX_ID)
+				{
+					bankmoney += ComplexInfo[cid][cPrice];
+					format(updateQuery, 128, "UPDATE `accounts` SET `bankMoney` = '%d' WHERE `sqlid` = '%d'", bankmoney, sqlid);
+					mysql_tquery(g_SQL, updateQuery, "", "");
+					
+					format(updateQuery, 128, "UPDATE `server_complex` SET `owner_id` = '0' WHERE `id` = '%d'", ComplexInfo[cid][cSQLID]);
+					mysql_tquery(g_SQL, updateQuery, "", "");
+					
+					Log_Write("logfiles/inactive_players.txt", "(%s) %s[SQLID: %d] je radi neaktivnosti izgubio Complex %s[SQLID: %d] i dobio %d$ naknade u banku.",
+						ReturnDate(),
+						playername,
+						sqlid,
+						ComplexInfo[cid][cName],
+						ComplexInfo[cid][cSQLID],
+						ComplexInfo[cid][cPrice]
+					);
+				}
+				if(crid != INVALID_COMPLEX_ID)
+				{	
+					format(updateQuery, 128, "UPDATE `server_complex_rooms` SET `ownerid` = '0' WHERE `id` = '%d'", ComplexRoomInfo[crid][cSQLID]);
+					mysql_tquery(g_SQL, updateQuery, "", "");
+					
+					Log_Write("logfiles/inactive_players.txt", "(%s) %s[SQLID: %d] je radi neaktivnosti izgubio Complex sobu[SQLID: %d].",
+						ReturnDate(),
+						playername,
+						sqlid,
+						ComplexRoomInfo[crid][cSQLID]
+					);
+				}
+			}
+		}
+		cache_delete(Data);
+		return 1;
+	}
+	mysql_tquery_inline(g_SQL, loadString, using inline OnInactiveAccsLoad, "");
+	return 1;
+}
 
 stock CheckPlayerInteriors(playerid)
 {
@@ -755,6 +996,35 @@ stock GetPlayerFPS(playerid)
         -
     </remarks>
 */
+stock IsValidInactivity(sqlid)
+{
+	new	Cache:result,
+		rows,
+		bool:value = false,
+		endstamp,
+		inactiveQuery[ 128 ];
+
+	format(inactiveQuery, sizeof(inactiveQuery), "SELECT `sqlid`, `endstamp` FROM `inactive_accounts` WHERE `sqlid` = '%d' LIMIT 0 , 1", sqlid);
+	result = mysql_query(g_SQL, inactiveQuery);
+	rows = cache_num_rows();
+	if(!rows)
+		value = false;
+	else
+	{
+		cache_get_value_name_int(0, "endstamp", endstamp);
+		if(endstamp >= gettimestamp()) // Prijavljena neaktivnost jos uvijek traje
+			value = true;
+		else // Prijavljena neaktivnost je istekla
+		{
+			format(inactiveQuery, sizeof(inactiveQuery), "DELETE FROM `inactive_accounts` WHERE `sqlid` = '%d'", sqlid);
+			mysql_tquery(g_SQL, inactiveQuery, "", "");
+			value = false;
+		}
+	}
+	cache_delete(result);
+	return value;
+}
+
 stock GetPlayerNameFromSQL(sqlid)
 {
     new
@@ -968,7 +1238,7 @@ stock ShowPlayerStats(playerid, targetid)
 		format(b_coowner, sizeof(b_coowner), "Ne");
 		
     new pDialog[1500];
-	format(motd, sizeof(motd),"\t\t\t\t\t%s\n"COL_COABLUE"IC STATS:\n\n"COL_WHITE"%s | Spol: [%s] | Godina: [%d] | Crypto broj: [%d] | Novac: [$%d]\nBanka: [$%d] | Broj telefona: [%d]\n",
+	format(motd, sizeof(motd),"Datum: %s\n\n"COL_COABLUE"IC STATS:\n\n"COL_WHITE"%s | Spol: [%s] | Godina: [%d] | Crypto broj: [%d] | Novac: [$%d] | Banka: [$%d] | Broj telefona: [%d]\n",
 		ReturnDate(),
 		GetName(targetid,true),
 		gender,

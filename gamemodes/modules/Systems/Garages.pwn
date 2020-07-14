@@ -36,23 +36,7 @@ static stock
 			{ 1217.2489, -780.5413, 1086.6000 }
 	};
 
-enum E_GARAGE_DATA {
-	gSQLID,
-	gOwnerID,
-	gAdress[16],
-	gEnterPck,
-	gPrice,
-	gLocked,
-	Float:gEnterX,
-	Float:gEnterY,
-	Float:gEnterZ,
-	Float:gExitX,
-	Float:gExitY,
-	Float:gExitZ,
-	gHouseID
-}
 new
-	GarageInfo[ MAX_GARAGES ][ E_GARAGE_DATA ],
 	PlayerSafeExit[ MAX_PLAYERS ][E_SAFE_EXIT];
 
     

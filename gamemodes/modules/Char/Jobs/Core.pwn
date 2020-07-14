@@ -11,8 +11,7 @@
 
 /*
 	- enumerator & defines
-*/	
-#define MAX_INACTIVITY_TIME			(864000) // Mjesec dana u sekundama
+*/
 
 enum {
 	NORMAL_JOBS_EMPLOYERS = (25),  /* OOC POSLOVI */
@@ -44,42 +43,6 @@ new JobData[E_JOBS_DATA];
 /*
 	- mySQL
 */
-CheckAccountsForInactivity()
-{
-	new inactivetimestamp = gettimestamp() - MAX_INACTIVITY_TIME;
-	
-	new
-		loadString[ 128 ];
-	format(loadString, 128, "SELECT * FROM `accounts` WHERE lastloginstamp <= '%d' AND jobkey != '0'",inactivetimestamp);
-	mysql_pquery(g_SQL, loadString, "OnInactiveAccountsLoad", "");
-}
-
-Function: OnInactiveAccountsLoad()
-{
-	if( !cache_num_rows() ) return printf( "MySQL Report: Ne postoje neaktivni igraci kojima se mice posao/imovina.");
-	new sqlid, jobkey, contracttime, playername[24], updateQuery[128];
-	for( new i=0; i < cache_num_rows(); i++ ) 
-	{
-		cache_get_value_name_int(i, "sqlid", sqlid);
-		cache_get_value_name(i, 	"name"	, playername, 24);
-		cache_get_value_name_int(i, "jobkey", jobkey);
-		cache_get_value_name_int(i, "contracttime", contracttime);
-		
-		format(updateQuery, 128, "UPDATE `accounts` SET `jobkey` = '0', `contracttime` = '0' WHERE `sqlid` = '%d'", sqlid);
-		mysql_tquery(g_SQL, updateQuery, "", "");
-		
-		RemoveOfflineJob(jobkey);
-		
-		Log_Write("logfiles/inactive_players.txt", "(%s) %s[SQLID: %d] je radi neaktivnosti izgubio posao ID %d i %d sati ugovora.",
-			ReturnDate(),
-			playername,
-			sqlid,
-			jobkey,
-			contracttime
-		);
-	}
-	return 1;
-}
 
 SaveJobData() {
 	new query[300];

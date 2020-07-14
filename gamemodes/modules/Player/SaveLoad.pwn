@@ -101,6 +101,7 @@ timer SetPlayerCrash[6000](playerid)
 	LoadPlayerSkills(playerid);
 	LoadPlayerObjects(playerid);
 	CheckPlayerInteriors(playerid);
+	CheckPlayerInactivity(playerid);
 	return 1;
 }
 
@@ -113,6 +114,28 @@ forward OnAccountFinish(playerid);
 
 
 //Publics
+CheckPlayerInactivity(playerid)
+{
+	new tmpQuery[128], rows;
+	format(tmpQuery, sizeof(tmpQuery), "SELECT * FROM `inactive_accounts` WHERE `sqlid` = '%d' LIMIT 0,1", PlayerInfo[playerid][pSQLID]);
+	inline OnPlayerInactivityCheck()
+	{
+		rows = cache_num_rows();
+		if(!rows)
+			return 1;
+		else
+		{
+			new deleteQuery[128];
+			format(deleteQuery, sizeof(deleteQuery), "DELETE FROM `inactive_accounts` WHERE `sqlid` = '%d'", PlayerInfo[playerid][pSQLID]);
+			mysql_tquery(g_SQL, deleteQuery, "", "");
+			SendClientMessage(playerid, COLOR_LIGHTRED, "[SERVER]: Neaktivnost koju ste imali prijavljenu u bazi podataka je deaktivirana.");
+		}
+		return 1;
+	}
+	mysql_tquery_inline(g_SQL, tmpQuery, using inline OnPlayerInactivityCheck, "i", playerid);
+	return 1;
+}
+
 public PasswordForQuery(playerid, const inputtext[])
 {
 	new rows;

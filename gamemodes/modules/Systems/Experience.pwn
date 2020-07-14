@@ -275,12 +275,13 @@ stock ResetPlayerExperience(playerid)
 	ExpInfo[playerid][ePoints] = 0;
 	ExpInfo[playerid][eLastPayDayStamp] = 0;
 	ExpInfo[playerid][eDayPayDays] = 0;
+	ExpInfo[playerid][eMonthPayDays] = 0;
 	return 1;
 }
 
 stock ListBestTemporaryEXP(playerid)
 {
-	new tempExpQuery[100], dialogstring[1930];
+	new tempExpQuery[100], dialogstring[2056];
 	format(tempExpQuery, sizeof(tempExpQuery), "SELECT * FROM  `experience` ORDER BY `experience`.`points` DESC LIMIT 0 , 30");
 	inline OnPlayerLoadTempBestEXP()
 	{
@@ -367,12 +368,13 @@ Function: OnPlayerLoadExperience(playerid)
 		cache_get_value_name_int(0, "points"			, ExpInfo[playerid][ePoints]);
 		cache_get_value_name_int(0, "lastpayday"		, ExpInfo[playerid][eLastPayDayStamp]);
 		cache_get_value_name_int(0, "daypaydays"		, ExpInfo[playerid][eDayPayDays]);
+		cache_get_value_name_int(0, "monthpaydays"		, ExpInfo[playerid][eMonthPayDays]);
 		return 1;
 	}
 	else
 	{
 		new insertQuery[200];
-		format(insertQuery, sizeof(insertQuery), "INSERT INTO experience (sqlid,givenexp,allpoints,points,lastpayday,daypaydays) VALUES ('%d', '0', '0', '0', '0', '0')",
+		format(insertQuery, sizeof(insertQuery), "INSERT INTO experience (sqlid,givenexp,allpoints,points,lastpayday,daypaydays,monthpaydays) VALUES ('%d', '0', '0', '0', '0', '0', '0')",
 			PlayerInfo[playerid][pSQLID]
 		);
 		mysql_query(g_SQL, insertQuery);
@@ -386,12 +388,13 @@ stock SavePlayerExperience(playerid)
 		return 1;
 	
 	new mysqlUpdate[200];
-	format(mysqlUpdate, 200, "UPDATE `experience` SET `givenexp` = '%d',`allpoints` = '%d',`points` = '%d',`lastpayday` = '%d',`daypaydays` = '%d' WHERE `sqlid` = '%d'",
+	format(mysqlUpdate, 200, "UPDATE `experience` SET `givenexp` = '%d', `allpoints` = '%d', `points` = '%d', `lastpayday` = '%d', `daypaydays` = '%d', `monthpaydays` = '%d' WHERE `sqlid` = '%d'",
 		ExpInfo[playerid][eGivenEXP],
 		ExpInfo[playerid][eAllPoints],
 		ExpInfo[playerid][ePoints],
 		ExpInfo[playerid][eLastPayDayStamp],
 		ExpInfo[playerid][eDayPayDays],
+		ExpInfo[playerid][eMonthPayDays],
 		PlayerInfo[playerid][pSQLID]
 	);
 	mysql_tquery(g_SQL, mysqlUpdate, "", "");

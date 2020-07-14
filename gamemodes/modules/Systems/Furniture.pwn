@@ -4475,13 +4475,16 @@ CMD:bint(playerid, params[])
 */
 CMD:furniture(playerid, params[])
 {
+	if(strlen(params) >= 8)
+		return SendClientMessage(playerid, -1, "KORISTENJE: /furniture [approve/menu]");
+		
 	new
 		param[ 8 ],
 		furhouse = GetPlayerFurnitureHouse(playerid);
 
 	if( furhouse == INVALID_HOUSE_ID || (  556 < furhouse < 575 ) ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Morate posjedovati kucu/imati dozvolu za namjestanje interijera-");
 	GetHouseFurnitureSlot(playerid, furhouse);
-	if(sscanf(params, "s[8]", param))
+	if(sscanf(params, "s[8] ", param))
 	{
 		SendClientMessage(playerid, COLOR_RED, "USAGE: /furniture [approve/menu]");
 		va_SendClientMessage(playerid, COLOR_RED, "[ ! ] Trenutno imate %d/%d popunjenih slotova u vasoj kuci.", FreeFurniture_Slot[playerid], GetFurnitureSlots(playerid, PlayerInfo[playerid][pDonateRank]));
