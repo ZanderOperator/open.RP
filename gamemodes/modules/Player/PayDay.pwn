@@ -394,7 +394,7 @@ GivePlayerPayCheck(playerid)
 	stamp2datetime(ExpInfo[playerid][eLastPayDayStamp], _, _, day, _, _, _);
 	ExpInfo[playerid][eLastPayDayStamp] = gettimestamp();
 	ExpInfo[playerid][eMonthPayDays]++;
-	if(ExpInfo[playerid][eMonthPayDays] >= 10)
+	if((ExpInfo[playerid][eMonthPayDays] % 2) == 0)
 		PlayerInfo[playerid][pLastLoginTimestamp] = gettimestamp();
 
 	if(currentday == day)

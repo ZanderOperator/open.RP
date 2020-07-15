@@ -993,7 +993,7 @@ CMD:warehouse(playerid, params[])
 {
 	new option[16];
 	if (sscanf(params, "s[16] ",option)) {
-	    SendClientMessage(playerid, COLOR_RED, "USAGE: /warehouse [OPCIJA]");
+	    SendClientMessage(playerid, COLOR_RED, "[ ? ]: /warehouse [OPCIJA]");
 		SendClientMessage(playerid, COLOR_RED, "[ ! ] enter - exit - info - put - take - lock - givekeys - rob");
 	    return 1;
 	}
@@ -1117,7 +1117,7 @@ CMD:warehouse(playerid, params[])
 			wh = FetchWarehouseEnumFromFaction(FactionInfo[fid][fID]),
 			giveplayerid;
 		
-		if (sscanf(params, "s[16]u", option, giveplayerid)) return SendClientMessage(playerid, COLOR_RED, "USAGE: /warehouse givekeys [ID/DioImena]");
+		if (sscanf(params, "s[16]u", option, giveplayerid)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /warehouse givekeys [ID/DioImena]");
 		if(giveplayerid == playerid)
 			return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne mozete sami sebi dati kljuceve!");
 		if(!DoesWarehouseExist(FactionInfo[fid][fID]))
@@ -1162,7 +1162,7 @@ CMD:awarehouse(playerid, params[])
 	if(PlayerInfo[playerid][pAdmin] < 1338) return SendClientMessage(playerid,COLOR_RED, "Niste ovlasteni za koristenje ove komande.");
 	new option[16];
 	if (sscanf(params, "s[16] ",option)) {
-	    SendClientMessage(playerid, COLOR_RED, "USAGE: /awarehouse [OPCIJA]");
+	    SendClientMessage(playerid, COLOR_RED, "[ ? ]: /awarehouse [OPCIJA]");
 		SendClientMessage(playerid, COLOR_RED, "[ ! ] list - add - remove - move - goto");
 	    return 1;
 	}
@@ -1183,7 +1183,7 @@ CMD:awarehouse(playerid, params[])
 		new facID;
 		if (sscanf(params, "s[16]i", option, facID)) 
 		{
-			SendClientMessage(playerid, COLOR_RED, "USAGE: /awarehouse add [Faction ID]");
+			SendClientMessage(playerid, COLOR_RED, "[ ? ]: /awarehouse add [Faction ID]");
 			SendClientMessage(playerid, COLOR_RED, "[ ! ] Da bi dosli do Faction ID-a, koristite /afaction list");
 			return 1;
 		}
@@ -1208,7 +1208,7 @@ CMD:awarehouse(playerid, params[])
 		new facID;
 		if (sscanf(params, "s[16]i", option, facID)) 
 		{
-			SendClientMessage(playerid, COLOR_RED, "USAGE: awarehouse remove [Faction ID]");
+			SendClientMessage(playerid, COLOR_RED, "[ ? ]: awarehouse remove [Faction ID]");
 			SendClientMessage(playerid, COLOR_RED, "[ ! ] Da bi dosli do Faction ID-a, koristite /afaction list");
 			return 1;
 		}
@@ -1233,7 +1233,7 @@ CMD:awarehouse(playerid, params[])
 		new facID;
 		if (sscanf(params, "s[16]i", option, facID)) 
 		{
-			SendClientMessage(playerid, COLOR_RED, "USAGE: /awarehouse move [Faction ID]");
+			SendClientMessage(playerid, COLOR_RED, "[ ? ]: /awarehouse move [Faction ID]");
 			SendClientMessage(playerid, COLOR_RED, "[ ! ] Da bi dosli do Faction ID-a, koristite /afaction list");
 			return 1;
 		}
@@ -1257,7 +1257,7 @@ CMD:awarehouse(playerid, params[])
 		new facID, whid;
 		if (sscanf(params, "s[16]i", option, facID)) 
 		{
-			SendClientMessage(playerid, COLOR_RED, "USAGE: /awarehouse goto [Faction ID]");
+			SendClientMessage(playerid, COLOR_RED, "[ ? ]: /awarehouse goto [Faction ID]");
 			SendClientMessage(playerid, COLOR_RED, "[ ! ] Da bi dosli do Faction ID-a, koristite /afaction list");
 		}
 		if(facID < 1 || facID > MAX_FACTIONS) 

@@ -2474,7 +2474,7 @@ CMD:apb(playerid, params[])
 		suspect[24],
 		desc[57],
 		type;
-	if( sscanf( params, "s[7] ", pick ) ) return SendClientMessage(playerid, COLOR_RED, "USAGE:  /apb [ list / add / delete / check]");
+	if( sscanf( params, "s[7] ", pick ) ) return SendClientMessage(playerid, COLOR_RED, "[ ? ]:  /apb [ list / add / delete / check]");
 
 	if( !strcmp(pick, "list", true) )
 	{
@@ -2484,7 +2484,7 @@ CMD:apb(playerid, params[])
 	{
 		if( sscanf( params, "s[7]is[24]s[57]", pick, type, suspect, desc ) )
 		{
-			SendClientMessage(playerid, COLOR_RED, "USAGE: /apb add [tip 1/2/3] [Ime_Prezime] [PenalCode-Zlocin]");
+			SendClientMessage(playerid, COLOR_RED, "[ ? ]: /apb add [tip 1/2/3] [Ime_Prezime] [PenalCode-Zlocin]");
 			SendClientMessage(playerid, COLOR_RED, "[ ! ] Tip: 1. Ne naoruzan i nije opasan | 2. Srednje opasan | 3. Naoruzan i opasan");
 			return 1;
 		}
@@ -2508,7 +2508,7 @@ CMD:apb(playerid, params[])
 
 		new
 			sqlid;
-		if( sscanf(params, "s[7]i", pick, sqlid ) ) return SendClientMessage(playerid, COLOR_RED, "USAGE: /apb delete [id]");
+		if( sscanf(params, "s[7]i", pick, sqlid ) ) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /apb delete [id]");
 		RemoveAPBInfo(sqlid);
 		va_SendClientMessage(playerid, COLOR_LIGHTBLUE, "[APB] Obrisali ste APB slot %d!", sqlid);
 

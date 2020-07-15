@@ -220,7 +220,7 @@ CMD:setskill(playerid, params[])
 		skillid,
 		value;
 	if( sscanf( params, "uii",giveplayerid, skillid, value ) ){
-		SendClientMessage(playerid, COLOR_RED, "USAGE: /setskill [playerid][skillid][points]");
+		SendClientMessage(playerid, COLOR_RED, "[ ? ]: /setskill [playerid][skillid][points]");
 		SendClientMessage(playerid, COLOR_RED, "[skillid]: Farmer - 0      PizzaBoy - 1    Cistac - 2");
 		SendClientMessage(playerid, COLOR_RED, "[skillid]: Crafter - 3     Kosac - 4       Lopov - 5");
 		SendClientMessage(playerid, COLOR_RED, "[skillid]: Jacker - 6		 Trucker - 7	 Drug Dealer - 8");

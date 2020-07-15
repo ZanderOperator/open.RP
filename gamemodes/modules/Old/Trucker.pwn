@@ -1180,7 +1180,7 @@ CMD:trucker(playerid, params[])
 	new
 		param[12];
 	if( sscanf(params, "s[12] ", param ) ) {
-		SendClientMessage(playerid, COLOR_RED, "USAGE: /trucker [odabir]");
+		SendClientMessage(playerid, COLOR_RED, "[ ? ]: /trucker [odabir]");
 		SendClientMessage(playerid, COLOR_GREY, "[ODABIR]: info - start - stop");
 		return 1;
 	}
@@ -1230,7 +1230,7 @@ CMD:trucker(playerid, params[])
 	    SendClientMessage(playerid, COLOR_RED, "[ ! ] Uspjesno ste zaustavili rutu prevoza tereta.");
 	}
 	else {
-		SendClientMessage(playerid, COLOR_RED, "USAGE: /trucker [odabir]");
+		SendClientMessage(playerid, COLOR_RED, "[ ? ]: /trucker [odabir]");
 		SendClientMessage(playerid, COLOR_GREY, "[ODABIR]: start - info - hire - stop");
 		return 1;
 	}

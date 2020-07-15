@@ -1702,7 +1702,7 @@ CMD:remove_tuning(playerid, params[])
 	if( PlayerInfo[ playerid ][ pAdmin ] < 4 ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ovlasteni da koristite ovu komandu!");
 	new
 		vehicleid;
-	if( sscanf( params, "i", vehicleid ) ) return SendClientMessage(playerid, COLOR_RED, "USAGE: /remove_tuning [vehicleid] (Koristite /dl)");
+	if( sscanf( params, "i", vehicleid ) ) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /remove_tuning [vehicleid] (Koristite /dl)");
 	if( !vehicleid || vehicleid == INVALID_VEHICLE_ID || !IsVehicleStreamedIn(vehicleid, playerid) ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nevaljan unos vehicleida!");
 	DeleteVehicleTuning(vehicleid);
 	ResetTuning(vehicleid); 

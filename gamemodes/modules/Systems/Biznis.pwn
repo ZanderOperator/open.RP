@@ -3327,7 +3327,7 @@ CMD:createvip(playerid, params[])
 CMD:setfuelprice(playerid, params[]){
 	new biz, fuelprice;
  	if(PlayerInfo[playerid][pAdmin] < 3) return SendClientMessage(playerid, COLOR_RED, "GRESKA: Niste ovlasteni za koristenje ove komande!");
-    if(sscanf(params, "ii", biz, fuelprice)) return SendClientMessage(playerid, COLOR_RED, "USAGE: /setfuelprice [biznisid][naftaprice]");
+    if(sscanf(params, "ii", biz, fuelprice)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /setfuelprice [biznisid][naftaprice]");
     if(fuelprice < 1 || fuelprice > 10) return SendClientMessage(playerid, COLOR_RED, "Krivi odabir (1-10)!");
 
     va_SendClientMessage(playerid, COLOR_RED, "[ ! ] Uspjesno ste cijenu nafte na - "COL_WHITE"%i"COL_YELLOW".", fuelprice);
@@ -3937,7 +3937,7 @@ CMD:bizentrance(playerid, params[])
 {
 	new proplev;
 	if(PlayerInfo[playerid][pAdmin] < 1338) return SendClientMessage(playerid, COLOR_RED, "Nisi 1338!");
-	if (sscanf(params, "i", proplev)) return SendClientMessage(playerid, COLOR_WHITE, "USAGE: /bizentrance [bizid] - Mjenja lokacije Biza");
+	if (sscanf(params, "i", proplev)) return SendClientMessage(playerid, COLOR_WHITE, "[ ? ]: /bizentrance [bizid] - Mjenja lokacije Biza");
 	if(proplev >= MAX_BIZZS || proplev < 0) return SendClientMessage(playerid,COLOR_WHITE,"Nema Biznisa tog ID-a!");
 
 	new
@@ -4030,7 +4030,7 @@ CMD:bizwithdraw(playerid, params[])
 	{
 		format(string, sizeof(string), "Imate $%d u vasem biznisu.", BizzInfo[bouse][bTill]);
 		SendClientMessage(playerid, COLOR_WHITE, string);
-		SendClientMessage(playerid, COLOR_ORANGE, "USAGE: /bizwithdraw [Iznos koliko zelite podici iz biznisa]");
+		SendClientMessage(playerid, COLOR_ORANGE, "[ ? ]: /bizwithdraw [Iznos koliko zelite podici iz biznisa]");
 		return 1;
     }
 	if( cashdeposit > BizzInfo[bouse][bTill] || cashdeposit < 1 ) return SendClientMessage(playerid, COLOR_RED, "Nemate toliko novaca");
@@ -4148,7 +4148,7 @@ CMD:microphone(playerid, params[]){
 	if( PlayerInfo[ playerid ][ pBizzKey ] == INVALID_BIZNIS_ID && !Bit1_Get( gr_IsADJ, playerid ) ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne posjedujes biznis/nisi DJ!");
 
 	new motd[256],playername[MAX_PLAYER_NAME];
-	if(isnull(params)) return SendClientMessage(playerid, COLOR_RED, "USAGE: (/mic)rophone  [text]");
+	if(isnull(params)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: (/mic)rophone  [text]");
 	if(PlayerInfo[playerid][pMuted] == 1) return SendClientMessage(playerid, COLOR_RED, "Nemozete pricati, usutkani ste");
 	GetPlayerName(playerid,playername,sizeof(playername));
 

@@ -761,7 +761,7 @@ CMD:afaction(playerid,params[])
 	new option[16], otext[128], string[1024];
 	if (sscanf(params, "s[16] ",option))
 	{
-	    SendClientMessage(playerid, COLOR_RED, "USAGE: /afaction [OPCIJA]");
+	    SendClientMessage(playerid, COLOR_RED, "[ ? ]: /afaction [OPCIJA]");
 	    SendClientMessage(playerid, COLOR_RED, "[ ! ] create, list, type, changename, ranks, rankname, checkranks");
 		SendClientMessage(playerid, COLOR_RED, "[ ! ] delete, makeleader, removeleader, checkonline, save");
 	    return 1;
@@ -775,7 +775,7 @@ CMD:afaction(playerid,params[])
     if(strcmp(option,"delete",true) == 0)
     {
 		new fid;
-		if (sscanf(params, "s[16]i",option,fid)) return SendClientMessage(playerid, COLOR_RED, "USAGE: /afaction delete [ID]");
+		if (sscanf(params, "s[16]i",option,fid)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /afaction delete [ID]");
 		if(IsFreeSlot(fid)) return SendClientMessage(playerid,COLOR_RED, "Na tom slotu nije kreirana fakcija!");
 		va_ShowPlayerDialog(playerid, DIALOG_FDELETE, DIALOG_STYLE_MSGBOX,"Obrisi fakciju", "Jesi li siguran da ZeliS obrisati organizaciju iz slota ID "COL_WHITE"%d (%s)"COL_DEFAULT"?", "Da", "Ne", fid, FactionInfo[fid][fName]);
 		deletingFaction[playerid] = fid;
@@ -783,7 +783,7 @@ CMD:afaction(playerid,params[])
     if(strcmp(option,"checkonline",true) == 0)
     {
 		new fid,name[MAX_PLAYER_NAME];
-		if (sscanf(params, "s[16]i",option,fid)) return SendClientMessage(playerid, COLOR_RED, "USAGE: /afaction checkoline [ID]");
+		if (sscanf(params, "s[16]i",option,fid)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /afaction checkoline [ID]");
 		if(IsFreeSlot(fid)) return SendClientMessage(playerid,COLOR_RED, "Na tom slotu nije kreirana fakcija!");
 		SendClientMessage(playerid,-1,"");
 		format(string, sizeof(string),"Online clanovi organizacije ID %d - %s",fid,FactionInfo[fid][fName]);
@@ -856,7 +856,7 @@ CMD:afaction(playerid,params[])
     if(strcmp(option,"changename",true) == 0)
     {
 		new newname[64], fid;
-		if (sscanf(params, "s[16]is[64]",option,fid,newname)) return SendClientMessage(playerid, COLOR_RED, "USAGE: /afaction changename [ID] [NOVO IME]");
+		if (sscanf(params, "s[16]is[64]",option,fid,newname)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /afaction changename [ID] [NOVO IME]");
 		if(IsFreeSlot(fid)) return SendClientMessage(playerid,COLOR_RED, "Na tom slotu nije kreirana fakcija!");
 	    format(FactionInfo[fid][fName],24,"%s",newname);
         SendFormatMessage(playerid, MESSAGE_TYPE_INFO, "Promjenio si ime fakcije ID %d na %s.",fid,newname);
@@ -867,7 +867,7 @@ CMD:afaction(playerid,params[])
     if(strcmp(option,"ranks",true) == 0)
     {
 		new ranks, fid;
-		if (sscanf(params, "s[16]ii",option,fid,ranks)) return SendClientMessage(playerid, COLOR_RED, "USAGE: /afaction ranks [ID] [Broj rankova (1-15)]");
+		if (sscanf(params, "s[16]ii",option,fid,ranks)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /afaction ranks [ID] [Broj rankova (1-15)]");
 		if(IsFreeSlot(fid)) return SendClientMessage(playerid,COLOR_RED, "Na tom slotu nije kreirana fakcija!");
 		FactionInfo[fid][fRanks] = ranks;
         SendFormatMessage(playerid, MESSAGE_TYPE_INFO, "Promjenio si broj rankova fakcije ID %d na %d.", fid, ranks);
@@ -882,7 +882,7 @@ CMD:afaction(playerid,params[])
     if(strcmp(option,"makeleader",true) == 0)
     {
 		new targetid, fid;
-		if (sscanf(params, "s[16]ui",option,targetid,fid)) return SendClientMessage(playerid, COLOR_RED, "USAGE: /afaction makeleader [ID/Dio Imena] [ID Organizacije]");
+		if (sscanf(params, "s[16]ui",option,targetid,fid)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /afaction makeleader [ID/Dio Imena] [ID Organizacije]");
 		if (targetid == INVALID_PLAYER_ID) return SendClientMessage(playerid,COLOR_RED, "Invalidan ID igraca!");
 		PlayerInfo[targetid][pLeader] 	= fid;
 		PlayerInfo[targetid][pMember] 	= fid;
@@ -922,7 +922,7 @@ CMD:afaction(playerid,params[])
     if(strcmp(option,"removeleader",true) == 0)
     {
 		new targetid;
-		if (sscanf(params, "s[16]u",option,targetid)) return SendClientMessage(playerid, COLOR_RED, "USAGE: /afaction removeleader [ID/Dio Imena]");
+		if (sscanf(params, "s[16]u",option,targetid)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /afaction removeleader [ID/Dio Imena]");
 		if(targetid == INVALID_PLAYER_ID) return SendClientMessage(playerid,COLOR_RED, "Invalidan ID igraca!");
 		if(PlayerInfo[targetid][pLeader] == 0) return SendClientMessage(playerid,COLOR_RED,"Taj igrac nije lider!");
 		new
@@ -951,7 +951,7 @@ CMD:afaction(playerid,params[])
     if(strcmp(option,"rankname",true) == 0)
     {
 		new rankid,rankname[24], fid;
-		if (sscanf(params, "s[16]iis[24]",option,fid,rankid,rankname)) return SendClientMessage(playerid, COLOR_RED, "USAGE: /afaction rankname [ID] [Broj ranka (1-11)] [Ime ranka]");
+		if (sscanf(params, "s[16]iis[24]",option,fid,rankid,rankname)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /afaction rankname [ID] [Broj ranka (1-11)] [Ime ranka]");
 		if(strlen(rankname) < 1 || strlen(rankname) >  24) return SendClientMessage(playerid,COLOR_RED, "Prevelik ili premal broj slova!");
 		if(rankid < 1 || rankid > FactionInfo[fid][fRanks]) return SendClientMessage(playerid,COLOR_RED, "Invalidan ID ranka!");
 		if(IsFreeSlot(fid)) return SendClientMessage(playerid,COLOR_RED, "Na tom slotu nije kreirana fakcija!");
@@ -981,7 +981,7 @@ CMD:afaction(playerid,params[])
     if(strcmp(option,"checkranks",true) == 0)
     {
 		new fid,rankname[16][24];
-		if (sscanf(params, "s[16]i",option,fid)) return SendClientMessage(playerid, COLOR_RED, "USAGE: /afaction checkranks [ID fakcije]");
+		if (sscanf(params, "s[16]i",option,fid)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /afaction checkranks [ID fakcije]");
 		if(fid < 1 || fid >  MAX_FACTIONS) return SendClientMessage(playerid,COLOR_RED, "Invalidan ID fakcije");
 		if(IsFreeSlot(fid)) return SendClientMessage(playerid,COLOR_RED, "Na tom slotu nije kreirana fakcija!");
 	    format(rankname[0],24,"%s",FactionInfo[fid][fRankName1]);
@@ -1025,7 +1025,7 @@ CMD:faction(playerid,params[])
 {
 	new option[16], string[256];
 	if (sscanf(params, "s[16] ",option)) {
-	    SendClientMessage(playerid, COLOR_RED, "USAGE: /faction [OPCIJA]");
+	    SendClientMessage(playerid, COLOR_RED, "[ ? ]: /faction [OPCIJA]");
 		if( PlayerInfo[playerid][pLeader] != 0 )
 			SendClientMessage(playerid, COLOR_RED, "[ ! ] invite - uninvite - setrank - blockchat - uninviteex - allmembers - permissions - resetcars - skin");
 		SendClientMessage(playerid, COLOR_RED, "[ ! ] members - counts - bank");
@@ -1036,7 +1036,7 @@ CMD:faction(playerid,params[])
 		new
 			targetid;
 		if( !PlayerInfo[playerid][pLeader] ) return SendClientMessage(playerid,COLOR_RED, "Da bi koristili ovu komandu moras biti lider!");
-	   	if( sscanf( params, "s[16]u",option,targetid ) ) return SendClientMessage(playerid, COLOR_RED, "USAGE: /faction invite [ID/DioImena]");
+	   	if( sscanf( params, "s[16]u",option,targetid ) ) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /faction invite [ID/DioImena]");
 		if( targetid == INVALID_PLAYER_ID ) return SendClientMessage(playerid,COLOR_RED, "Invalidan ID igraca!");
 		if( PlayerInfo[targetid][pMember] != 0) return SendClientMessage(playerid,COLOR_RED, "Taj igrac je vec u nekoj organizaciji!");
 		
@@ -1084,7 +1084,7 @@ CMD:faction(playerid,params[])
 		if( !PlayerInfo[playerid][pLeader] ) return SendClientMessage(playerid,COLOR_RED, "Da bi koristili ovu komandu morate biti lider!");
 	   	if( sscanf( params, "s[16]s[16]d",option, cmdname, rnk ) )
 		{
-			SendClientMessage(playerid, COLOR_RED, "USAGE: /faction permissions [komanda][rank]");
+			SendClientMessage(playerid, COLOR_RED, "[ ? ]: /faction permissions [komanda][rank]");
 			switch(FactionInfo[mmbr][fType])
 			{
 				case FACTION_TYPE_LAW:
@@ -1174,7 +1174,7 @@ CMD:faction(playerid,params[])
 	{
         new playername[MAX_PLAYER_NAME],targetname[MAX_PLAYER_NAME],targetid;
 		if(PlayerInfo[playerid][pLeader] == 0) return SendClientMessage(playerid,COLOR_RED, "Da bi koristili ovu komandu morate biti lider!");
-	   	if (sscanf(params, "s[16]u",option,targetid)) return SendClientMessage(playerid, COLOR_RED, "USAGE: /faction uninvite [ID/DioImena]");
+	   	if (sscanf(params, "s[16]u",option,targetid)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /faction uninvite [ID/DioImena]");
 		if(targetid == INVALID_PLAYER_ID) return SendClientMessage(playerid,COLOR_RED, "Invalidan ID igraca!");
 		if(PlayerInfo[targetid][pMember] != PlayerInfo[playerid][pLeader]) return SendClientMessage(playerid,COLOR_RED, "Taj igrac nije u tvojoj organizaciji!");
 		
@@ -1240,7 +1240,7 @@ CMD:faction(playerid,params[])
 	{
       	new playername[MAX_PLAYER_NAME],targetname[MAX_PLAYER_NAME],targetid,rank;
 		if(PlayerInfo[playerid][pLeader] == 0) return SendClientMessage(playerid,COLOR_RED, "Da bi koristili ovu komandu moras biti lider!");
-	   	if (sscanf(params, "s[16]ui",option,targetid,rank)) return SendClientMessage(playerid, COLOR_RED, "USAGE: /faction setrank [ID/DioImena] [Broj ranka]");
+	   	if (sscanf(params, "s[16]ui",option,targetid,rank)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /faction setrank [ID/DioImena] [Broj ranka]");
 		if(targetid == INVALID_PLAYER_ID) return SendClientMessage(playerid,COLOR_RED, "Invalidan ID igraca!");
 		if(PlayerInfo[targetid][pMember] != PlayerInfo[playerid][pLeader]) return SendClientMessage(playerid,COLOR_RED, "Taj igrac nije u tvojoj organizaciji!");
 		if(rank < 1 || rank >  FactionInfo[PlayerInfo[playerid][pLeader]][fRanks]) return SendClientMessage(playerid,COLOR_RED, "Nepravilan rank!");
@@ -1338,7 +1338,7 @@ CMD:faction(playerid,params[])
 		if( !PlayerInfo[playerid][pLeader] ) return SendClientMessage(playerid,COLOR_RED, "Da bi koristili ovu komandu moras biti lider!");
 	   	new
 			targetname[ MAX_PLAYER_NAME ];
-		if( sscanf( params, "s[16]s[24]",option,targetname ) ) return SendClientMessage(playerid, COLOR_RED, "USAGE: /faction uninviteex [ime]");
+		if( sscanf( params, "s[16]s[24]",option,targetname ) ) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /faction uninviteex [ime]");
 		if( !IsValidNick(targetname) ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Morate unijeti roleplay nick!");
 		
 		new
@@ -1387,7 +1387,7 @@ CMD:faction(playerid,params[])
 	{
 	    new targetid, skin;
 		if( !PlayerInfo[playerid][pLeader] ) return SendClientMessage(playerid,COLOR_RED, "Da bi koristili ovu komandu morate biti lider!");
-		if (sscanf(params, "s[16]ui",option,targetid,skin)) return SendClientMessage(playerid, COLOR_RED, "USAGE: /faction skin [ID/DioImena] [ID SKINA]");
+		if (sscanf(params, "s[16]ui",option,targetid,skin)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /faction skin [ID/DioImena] [ID SKINA]");
 		if(PlayerInfo[targetid][pMember] != PlayerInfo[playerid][pLeader]) return SendClientMessage(playerid,COLOR_RED, "Taj igrac nije u tvojoj organizaciji!");
 		if(targetid == INVALID_PLAYER_ID) return SendClientMessage(playerid,COLOR_RED, "Invalidan ID igraca!");
 		
@@ -1435,7 +1435,7 @@ CMD:f(playerid,params[])
 	if(blockfam[member] == 1) return SendMessage(playerid,MESSAGE_TYPE_ERROR, "Chat organizacije je blokiran!");
 	if( !Bit1_Get( gr_FactionChatTog, playerid)) return SendMessage(playerid,MESSAGE_TYPE_ERROR, "Iskljucen vam je faction chat!");
 
-	if (sscanf(params, "s[64] ",result)) return SendClientMessage(playerid, COLOR_RED, "USAGE: /f [TEKST]");
+	if (sscanf(params, "s[64] ",result)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /f [TEKST]");
 	GetPlayerName(playerid,playername,sizeof(playername));
 
     if(IsACop(playerid))
@@ -1515,7 +1515,7 @@ CMD:quitfaction(playerid, params[])
 CMD:m(playerid, params[])
 {
 	new motd[256],playername[MAX_PLAYER_NAME];
-	if(isnull(params)) return SendClientMessage(playerid, COLOR_RED, "USAGE: (/m)egaphone [megaphone chat]");
+	if(isnull(params)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: (/m)egaphone [megaphone chat]");
 	if(PlayerInfo[playerid][pMuted] == 1) return SendClientMessage(playerid, COLOR_RED, "Nemozete pricati, usutkani ste");
 	GetPlayerName(playerid,playername,sizeof(playername));
 	
@@ -1792,7 +1792,7 @@ CMD:emsbk(playerid, params[])
 }
 
 CMD:gov(playerid, params[]) {
-	if(isnull(params)) return SendClientMessage(playerid, COLOR_RED, "USAGE: /gov [text]");
+	if(isnull(params)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /gov [text]");
 	if(PlayerInfo[playerid][pMuted] == 1) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nemozete pricati, usutkani ste");
 	if((IsACop(playerid) && PlayerInfo[playerid][pRank] >= 4) || (IsFDMember(playerid) && PlayerInfo[playerid][pRank] >= 4) || (IsAGov(playerid) && PlayerInfo[playerid][pRank] >= 6) || (IsASD(playerid) && PlayerInfo[playerid][pRank] >= 6)) {
 		va_SendClientMessageToAll(0x6CA1FFFF, "[Government Announcement] %s", params);
@@ -1810,7 +1810,7 @@ CMD:showbadge(playerid, params[])
 {	
 	new member = PlayerInfo[playerid][pMember], giveplayerid;
 	if(sscanf( params, "u", giveplayerid))
-		return SendClientMessage(playerid, COLOR_RED, "USAGE: /showbadge [ID/Dio Imena]");
+		return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /showbadge [ID/Dio Imena]");
 	if(member == 0)
 		return SendClientMessage(playerid,COLOR_RED, "Moras biti clan organizacije da bi koristio ovu komandu!");
 	if(giveplayerid == INVALID_PLAYER_ID || !IsPlayerNearPlayer(playerid, giveplayerid, 5.0))
@@ -1829,7 +1829,7 @@ CMD:showbadge(playerid, params[])
 CMD:showaccreditation(playerid, params[])
 {
 	new member = PlayerInfo[playerid][pMember], giveplayerid;
-	if(sscanf( params, "u", giveplayerid)) return SendClientMessage(playerid, COLOR_RED, "USAGE: /showaccreditation [ID/Dio Imena]");
+	if(sscanf( params, "u", giveplayerid)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /showaccreditation [ID/Dio Imena]");
 	if(member == 0)
 		return SendClientMessage(playerid,COLOR_RED, "Moras biti clan LSN organizacije da bi koristio ovu komandu!");
 	if(giveplayerid == INVALID_PLAYER_ID || !IsPlayerNearPlayer(playerid, giveplayerid, 5.0))
@@ -1860,14 +1860,14 @@ CMD:carsign(playerid, params[])
 			return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "Morate biti rank %d kako bi ste mogli koristiti ovu komandu!", FactionInfo[PlayerInfo[playerid][pMember]][rCarSign]);
 		
 		if(sscanf(params, "s[8] ", pick)) {
-			SendClientMessage(playerid, COLOR_RED, "USAGE: /carsign [odabir]");
+			SendClientMessage(playerid, COLOR_RED, "[ ? ]: /carsign [odabir]");
 			SendClientMessage(playerid, COLOR_RED, "[ ! ] update, detach, attach");
 			return 1;
 		}
 		if(strcmp("update", pick) == 0)
 		{
 			new text[21];
-			if(sscanf(params, "s[8]s[21]", pick, text)) return SendClientMessage(playerid, COLOR_RED, "USAGE: /carsign update [text]");
+			if(sscanf(params, "s[8]s[21]", pick, text)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /carsign update [text]");
 			if(strlen(text) >  20 || strlen(text) < 0) return SendClientMessage(playerid, COLOR_RED, "Text ne moze biti prazan ili veci od 20 karaktera!");
 			if(VehicleInfo[vehicleid][vFactionTextOn] == 0) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Automobil nema 3DText! Koristi /carsign attach.");
 			
@@ -1920,7 +1920,7 @@ CMD:callsign(playerid, params[])
 		pick[6],
 		globalstring[ 128 ];
 	if(sscanf(params, "s[6] ", pick)) {
-		SendClientMessage(playerid, COLOR_RED, "USAGE: /callsign [odabir]");
+		SendClientMessage(playerid, COLOR_RED, "[ ? ]: /callsign [odabir]");
 		SendClientMessage(playerid, COLOR_RED, "[ ! ] set, show, all");
 		return 1;
 	}
@@ -1929,7 +1929,7 @@ CMD:callsign(playerid, params[])
 		if(PlayerInfo[playerid][pLeader] == 1 || PlayerInfo[playerid][pLeader] == 2 || PlayerInfo[playerid][pLeader] == 3 || PlayerInfo[playerid][pLeader] == 4)
 		{
 			new sign[26], gplayerid;
-			if(sscanf(params, "s[6]us[20]", pick, gplayerid, sign)) return SendClientMessage(playerid, COLOR_RED, "USAGE: /callsign set [playerid/dio imena][text]");
+			if(sscanf(params, "s[6]us[20]", pick, gplayerid, sign)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /callsign set [playerid/dio imena][text]");
 			if(gplayerid == INVALID_PLAYER_ID) return SendClientMessage(playerid, COLOR_RED, "Krivi playerid!");
 			if((PlayerInfo[gplayerid][pMember] != 1 && PlayerInfo[gplayerid][pRank] < 1) && PlayerInfo[playerid][pLeader] == 1) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "On nije pripadnik LSPDa ili nema rank 1+!");
 			else if((PlayerInfo[gplayerid][pMember] != 2 && PlayerInfo[gplayerid][pRank] < 1) && PlayerInfo[playerid][pLeader] == 2) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "On nije pripadnik LSFDa ili nema rank 1+!");
@@ -1952,7 +1952,7 @@ CMD:callsign(playerid, params[])
 		if( IsACop(playerid) )
 		{
 			new gplayerid;
-			if(sscanf(params, "s[6]u", pick, gplayerid)) return SendClientMessage(playerid, COLOR_RED, "USAGE: /callsign show [playerid/dio imena]");
+			if(sscanf(params, "s[6]u", pick, gplayerid)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /callsign show [playerid/dio imena]");
 			if(gplayerid == INVALID_PLAYER_ID) return SendClientMessage(playerid, COLOR_RED, "Krivi playerid!");
 			if(strlen(PlayerInfo[gplayerid][pSign]) < 3) return SendClientMessage(playerid, -1, "Nema stavljen callsign!");
 			format(globalstring, sizeof(globalstring), "* %s callsign: %s *", GetName(gplayerid), PlayerInfo[gplayerid][pSign]);
@@ -1961,7 +1961,7 @@ CMD:callsign(playerid, params[])
 		else if( IsFDMember(playerid) )
 		{
 			new gplayerid;
-			if(sscanf(params, "s[6]u", pick, gplayerid)) return SendClientMessage(playerid, COLOR_RED, "USAGE: /callsign show [playerid/dio imena]");
+			if(sscanf(params, "s[6]u", pick, gplayerid)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /callsign show [playerid/dio imena]");
 			if(gplayerid == INVALID_PLAYER_ID) return SendClientMessage(playerid, COLOR_RED, "Krivi playerid!");
 			if(strlen(PlayerInfo[gplayerid][pSign]) < 3) return SendClientMessage(playerid, -1, "Nema stavljen callsign!");
 			format(globalstring, sizeof(globalstring), "* %s callsign: %s *", GetName(gplayerid), PlayerInfo[gplayerid][pSign]);
@@ -2018,7 +2018,7 @@ CMD:frtc(playerid, params[])
 {
 	new
 		vehid;
-	if(sscanf(params, "i", vehid)) return SendClientMessage(playerid, COLOR_RED, "USAGE: /frtc [vehicleid]");
+	if(sscanf(params, "i", vehid)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /frtc [vehicleid]");
 	if( PlayerInfo[playerid][pLeader] == 1 || PlayerInfo[playerid][pLeader] == 4 || PlayerInfo[playerid][pLeader] == 5 || PlayerInfo[playerid][pLeader] == 2) {
 		if(PlayerInfo[playerid][pLeader] == VehicleInfo[vehid][vFaction]) {
 			SetVehicleToRespawn(vehid);

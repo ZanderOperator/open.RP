@@ -63,7 +63,7 @@ CMD:siren(playerid, params[])
 		
     if(sscanf(params, "s[7]", type))
     {
-        SendClientMessage(playerid, COLOR_RED, "USAGE: /siren [opcija]");
+        SendClientMessage(playerid, COLOR_RED, "[ ? ]: /siren [opcija]");
         SendClientMessage(playerid, COLOR_RED, "[ ! ] front, rear, above, off");
         return 1;
     }

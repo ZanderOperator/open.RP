@@ -418,7 +418,7 @@ CMD:dog(playerid, params[])
 	new option[12];
     if(sscanf(params, "s[12] ", option))
 	{
-		SendClientMessage(playerid, COLOR_RED, "USAGE: /dog [opcija].");
+		SendClientMessage(playerid, COLOR_RED, "[ ? ]: /dog [opcija].");
 		SendClientMessage(playerid, COLOR_RED, "[ ! ] buy - spawn - follow - throwball, locatespot");
 		SendClientMessage(playerid, COLOR_RED, "[ ! ] buyspot - sleep - whistle - delete");
 		return 1;

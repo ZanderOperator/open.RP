@@ -1802,7 +1802,7 @@ enum E_WALL_OBJECT_DATA
 	wlName[18],
 	wlPrice
 }
-new
+static
 	ObjectsWalls[][ E_WALL_OBJECT_DATA ] = {
 		{ 19430	, "Mali zid 2x4"		, 600  },
 		{ 19355	, "Srednji zid 4x4"		, 950  },
@@ -2258,11 +2258,14 @@ public OnFurnitureObjectsLoad(houseid)
 		cache_get_value_name_int(i, 	"texture_2"		, HouseInfo[ houseid ][ hFurTxtId ][ i ][ 1 ]);
 		cache_get_value_name_int(i, 	"texture_3"		, HouseInfo[ houseid ][ hFurTxtId ][ i ][ 2 ]);
 		cache_get_value_name_int(i, 	"texture_4"		, HouseInfo[ houseid ][ hFurTxtId ][ i ][ 3 ]);
+		cache_get_value_name_int(i, 	"texture_5"		, HouseInfo[ houseid ][ hFurTxtId ][ i ][ 4 ]);
 		cache_get_value_name_int(i, 	"color_1"		, HouseInfo[ houseid ][ hFurColId ][ i ][ 0 ]);
 		cache_get_value_name_int(i, 	"color_2"		, HouseInfo[ houseid ][ hFurColId ][ i ][ 1 ]);
 		cache_get_value_name_int(i, 	"color_3"		, HouseInfo[ houseid ][ hFurColId ][ i ][ 2 ]);
 		cache_get_value_name_int(i, 	"color_4"		, HouseInfo[ houseid ][ hFurColId ][ i ][ 3 ]);
+		cache_get_value_name_int(i, 	"color_5"		, HouseInfo[ houseid ][ hFurColId ][ i ][ 4 ]);
 	}
+	
 	for( i = 0; i < objectCount; i++)
 	{
 		HouseInfo[ houseid ][ hFurObjectid ][ i ]	= CreateDynamicObject(HouseInfo[ houseid ][ hFurModelid ][ i ], HouseInfo[ houseid ][ hFurPosX ][ i ], HouseInfo[ houseid ][ hFurPosY ][ i ], HouseInfo[ houseid ][ hFurPosZ ][ i ], HouseInfo[ houseid ][ hFurRotX ][ i ], HouseInfo[ houseid ][ hFurRotY ][ i ], HouseInfo[ houseid ][ hFurRotZ ][ i ], HouseInfo[ houseid ][ hVirtualWorld ], HouseInfo[ houseid ][ hInt ], -1, FURNITURE_OBJECT_DRAW_DISTANCE, FURNITURE_OBJECT_DRAW_DISTANCE);
@@ -2270,31 +2273,15 @@ public OnFurnitureObjectsLoad(houseid)
 		new
 			colorid;
 
-		if( HouseInfo[ houseid ][ hFurColId ][ i ][ 0 ] > -1 ) {
-			sscanf(ColorList[ HouseInfo[ houseid ][ hFurColId ][ i ][ 0 ] ][ clRGB ], "h", colorid);
-			SetDynamicObjectMaterial(HouseInfo[ houseid ][ hFurObjectid ][ i ], 0, ObjectTextures[ HouseInfo[ houseid ][ hFurTxtId ][ i ][ 0 ] ][ tModel ], ObjectTextures[ HouseInfo[ houseid ][ hFurTxtId ][ i ][ 0 ] ][ tTXDName ], ObjectTextures[ HouseInfo[ houseid ][ hFurTxtId ][ i ][ 0 ] ][ tName ], colorid);
+		for(new colslot = 0; colslot < 5; colslot++)
+		{
+			if( HouseInfo[ houseid ][ hFurColId ][ i ][ colslot ] > -1 ) {
+				sscanf(ColorList[ HouseInfo[ houseid ][ hFurColId ][ i ][ colslot ] ][ clRGB ], "h", colorid);
+				SetDynamicObjectMaterial(HouseInfo[ houseid ][ hFurObjectid ][ i ], colslot, ObjectTextures[ HouseInfo[ houseid ][ hFurTxtId ][ i ][ colslot ] ][ tModel ], ObjectTextures[ HouseInfo[ houseid ][ hFurTxtId ][ i ][ colslot ] ][ tTXDName ], ObjectTextures[ HouseInfo[ houseid ][ hFurTxtId ][ i ][ colslot ] ][ tName ], colorid);
+			}
+			else 
+				SetDynamicObjectMaterial(HouseInfo[ houseid ][ hFurObjectid ][ i ], colslot, ObjectTextures[ HouseInfo[ houseid ][ hFurTxtId ][ i ][ colslot ] ][ tModel ], ObjectTextures[ HouseInfo[ houseid ][ hFurTxtId ][ i ][ colslot ] ][ tTXDName ], ObjectTextures[ HouseInfo[ houseid ][ hFurTxtId ][ i ][ colslot ] ][ tName ], 0);
 		}
-		else
-			SetDynamicObjectMaterial(HouseInfo[ houseid ][ hFurObjectid ][ i ], 0, ObjectTextures[ HouseInfo[ houseid ][ hFurTxtId ][ i ][ 0 ] ][ tModel ], ObjectTextures[ HouseInfo[ houseid ][ hFurTxtId ][ i ][ 0 ] ][ tTXDName ], ObjectTextures[ HouseInfo[ houseid ][ hFurTxtId ][ i ][ 0 ] ][ tName ], 0);
-
-		if( HouseInfo[ houseid ][ hFurColId ][ i ][ 1 ] > -1 ) {
-			sscanf(ColorList[ HouseInfo[ houseid ][ hFurColId ][ i ][ 1 ] ][ clRGB ], "h", colorid);
-			SetDynamicObjectMaterial(HouseInfo[ houseid ][ hFurObjectid ][ i ], 1, ObjectTextures[ HouseInfo[ houseid ][ hFurTxtId ][ i ][ 1 ] ][ tModel ], ObjectTextures[ HouseInfo[ houseid ][ hFurTxtId ][ i ][ 1 ] ][ tTXDName ], ObjectTextures[ HouseInfo[ houseid ][ hFurTxtId ][ i ][ 1 ] ][ tName ], colorid);
-		}
-		else
-			SetDynamicObjectMaterial(HouseInfo[ houseid ][ hFurObjectid ][ i ], 1, ObjectTextures[ HouseInfo[ houseid ][ hFurTxtId ][ i ][ 1 ] ][ tModel ], ObjectTextures[ HouseInfo[ houseid ][ hFurTxtId ][ i ][ 1 ] ][ tTXDName ], ObjectTextures[ HouseInfo[ houseid ][ hFurTxtId ][ i ][ 1 ] ][ tName ], 0);
-		if( HouseInfo[ houseid ][ hFurColId ][ i ][ 2 ] > -1 ) {
-			sscanf(ColorList[ HouseInfo[ houseid ][ hFurColId ][ i ][ 2 ] ][ clRGB ], "h", colorid);
-			SetDynamicObjectMaterial(HouseInfo[ houseid ][ hFurObjectid ][ i ], 2, ObjectTextures[ HouseInfo[ houseid ][ hFurTxtId ][ i ][ 2 ] ][ tModel ], ObjectTextures[ HouseInfo[ houseid ][ hFurTxtId ][ i ][ 2 ] ][ tTXDName ], ObjectTextures[ HouseInfo[ houseid ][ hFurTxtId ][ i ][ 2 ] ][ tName ], colorid);
-		}
-		else
-			SetDynamicObjectMaterial(HouseInfo[ houseid ][ hFurObjectid ][ i ], 2, ObjectTextures[ HouseInfo[ houseid ][ hFurTxtId ][ i ][ 2 ] ][ tModel ], ObjectTextures[ HouseInfo[ houseid ][ hFurTxtId ][ i ][ 2 ] ][ tTXDName ], ObjectTextures[ HouseInfo[ houseid ][ hFurTxtId ][ i ][ 2 ] ][ tName ], 0);
-		if( HouseInfo[ houseid ][ hFurColId ][ i ][ 3 ] > -1 ) {
-			sscanf(ColorList[ HouseInfo[ houseid ][ hFurColId ][ i ][ 3 ] ][ clRGB ], "h", colorid);
-			SetDynamicObjectMaterial(HouseInfo[ houseid ][ hFurObjectid ][ i ], 3, ObjectTextures[ HouseInfo[ houseid ][ hFurTxtId ][ i ][ 3 ] ][ tModel ], ObjectTextures[ HouseInfo[ houseid ][ hFurTxtId ][ i ][ 3 ] ][ tTXDName ], ObjectTextures[ HouseInfo[ houseid ][ hFurTxtId ][ i ][ 3 ] ][ tName ], colorid);
-		}
-		else
-			SetDynamicObjectMaterial(HouseInfo[ houseid ][ hFurObjectid ][ i ], 3, ObjectTextures[ HouseInfo[ houseid ][ hFurTxtId ][ i ][ 3 ] ][ tModel ], ObjectTextures[ HouseInfo[ houseid ][ hFurTxtId ][ i ][ 3 ] ][ tTXDName ], ObjectTextures[ HouseInfo[ houseid ][ hFurTxtId ][ i ][ 3 ] ][ tName ], 0);
 	}
 	HouseInfo[houseid][hFurLoaded] = true;
 	return 1;
@@ -2344,6 +2331,11 @@ stock ResetHouseFurnitureEnum(houseid)
 		HouseInfo[ houseid ][ hFurRotX ][ index ]		= 0.0;
 		HouseInfo[ houseid ][ hFurRotY ][ index ]		= 0.0;
 		HouseInfo[ houseid ][ hFurRotZ ][ index ]		= 0.0;
+		HouseInfo[ houseid ][ hFurColId ][ index ][ 0 ]	= -1;
+		HouseInfo[ houseid ][ hFurColId ][ index ][ 1 ]	= -1;
+		HouseInfo[ houseid ][ hFurColId ][ index ][ 2 ]	= -1;
+		HouseInfo[ houseid ][ hFurColId ][ index ][ 3 ]	= -1;
+		HouseInfo[ houseid ][ hFurColId ][ index ][ 4 ]	= -1;
 		HouseInfo[ houseid ][ hFurTxtId ][ index ][ 0 ]	= 0;
 		HouseInfo[ houseid ][ hFurTxtId ][ index ][ 1 ]	= 0;
 		HouseInfo[ houseid ][ hFurTxtId ][ index ][ 2 ]	= 0;
@@ -2731,10 +2723,12 @@ stock static CreateFurnitureObject(playerid, modelid, Float:x, Float:y, Float:z,
 	HouseInfo[ houseid ][ hFurTxtId ][ index ][ 1 ]	= 0;
 	HouseInfo[ houseid ][ hFurTxtId ][ index ][ 2 ]	= 0;
 	HouseInfo[ houseid ][ hFurTxtId ][ index ][ 3 ]	= 0;
+	HouseInfo[ houseid ][ hFurTxtId ][ index ][ 4 ] = 0;
 	HouseInfo[ houseid ][ hFurColId ][ index ][ 0 ]	= -1;
 	HouseInfo[ houseid ][ hFurColId ][ index ][ 1 ]	= -1;
 	HouseInfo[ houseid ][ hFurColId ][ index ][ 2 ]	= -1;
 	HouseInfo[ houseid ][ hFurColId ][ index ][ 3 ]	= -1;
+	HouseInfo[ houseid ][ hFurColId ][ index ][ 4 ] = -1;
 	HouseInfo[houseid][hExists][index] = 1;
 	HouseInfo[houseid][hFurCounter]++;
 
@@ -2752,7 +2746,7 @@ stock static CreateFurnitureObject(playerid, modelid, Float:x, Float:y, Float:z,
 
 	new
 		insertObject[ 512 ];
-	format(insertObject, sizeof(insertObject), "INSERT INTO `furniture`(`houseid`, `modelid`, `door`, `door_z`, `locked_door`, `pos_x`, `pos_y`, `pos_z`, `rot_x`, `rot_y`, `rot_z`, `texture_1`, `texture_2`, `texture_3`, `texture_4`, `color_1`, `color_2`, `color_3`, `color_4`) VALUES ('%d', '%d', '%d', '%f', '%d', '%f', '%f', '%f', '%f', '%f', '%f', '%d', '%d', '%d', '%d', '%d', '%d', '%d', '%d')",
+	format(insertObject, sizeof(insertObject), "INSERT INTO `furniture`(`houseid`, `modelid`, `door`, `door_z`, `locked_door`, `pos_x`, `pos_y`, `pos_z`, `rot_x`, `rot_y`, `rot_z`, `texture_1`, `texture_2`, `texture_3`, `texture_4`, `texture_5`, `color_1`, `color_2`, `color_3`, `color_4`, `color_5`) VALUES ('%d', '%d', '%d', '%f', '%d', '%f', '%f', '%f', '%f', '%f', '%f', '%d', '%d', '%d', '%d', '%d', '%d', '%d', '%d', '%d', '%d')",
 		HouseInfo[houseid][hSQLID],
 		modelid,
 		HouseInfo[ houseid ][ hFurDoor ][ index ],
@@ -2768,10 +2762,12 @@ stock static CreateFurnitureObject(playerid, modelid, Float:x, Float:y, Float:z,
 		HouseInfo[ houseid ][ hFurTxtId ][ index ][ 1 ],
 		HouseInfo[ houseid ][ hFurTxtId ][ index ][ 2 ],
 		HouseInfo[ houseid ][ hFurTxtId ][ index ][ 3 ],
+		HouseInfo[ houseid ][ hFurTxtId ][ index ][ 4 ],
 		HouseInfo[ houseid ][ hFurColId ][ index ][ 0 ],
 		HouseInfo[ houseid ][ hFurColId ][ index ][ 1 ],
 		HouseInfo[ houseid ][ hFurColId ][ index ][ 2 ],
-		HouseInfo[ houseid ][ hFurColId ][ index ][ 3 ]
+		HouseInfo[ houseid ][ hFurColId ][ index ][ 3 ],
+		HouseInfo[ houseid ][ hFurColId ][ index ][ 4 ]
 	);
 	mysql_tquery(g_SQL, insertObject, "OnFurnitureObjectCreates", "ii", houseid, index);
 
@@ -2826,11 +2822,13 @@ stock static CreateFurnitureObject(playerid, modelid, Float:x, Float:y, Float:z,
 		HouseInfo[ houseid ][ hFurTxtId ][ index ][ 1 ]	= 0;
 		HouseInfo[ houseid ][ hFurTxtId ][ index ][ 2 ]	= 0;
 		HouseInfo[ houseid ][ hFurTxtId ][ index ][ 3 ]	= 0;
+		HouseInfo[ houseid ][ hFurTxtId ][ index ][ 4 ] = 0;
 
 		HouseInfo[ houseid ][ hFurColId ][ index ][ 0 ]	= -1;
 		HouseInfo[ houseid ][ hFurColId ][ index ][ 1 ]	= -1;
 		HouseInfo[ houseid ][ hFurColId ][ index ][ 2 ]	= -1;
 		HouseInfo[ houseid ][ hFurColId ][ index ][ 3 ]	= -1;
+		HouseInfo[ houseid ][ hFurColId ][ index ][ 4 ] = -1;
 
 		va_SendClientMessage(playerid, COLOR_RED, "[MySQL ERROR #%d]: Dogodila se pogreska prilikom spremanja objekta (index: %d) u bazu podataka! Vasi novci nisu oduzeti, pokusajte ponovno kasnije!", mysql_errno(), index);
 	}
@@ -2863,36 +2861,28 @@ stock static CopyFurnitureObject(playerid, copyid)
 	HouseInfo[ houseid ][ hFurTxtId ][ index ][ 1 ]		= HouseInfo[ houseid ][ hFurTxtId ][ copyid ][ 1 ];
 	HouseInfo[ houseid ][ hFurTxtId ][ index ][ 2 ]		= HouseInfo[ houseid ][ hFurTxtId ][ copyid ][ 2 ];
 	HouseInfo[ houseid ][ hFurTxtId ][ index ][ 3 ]		= HouseInfo[ houseid ][ hFurTxtId ][ copyid ][ 3 ];
+	HouseInfo[ houseid ][ hFurTxtId ][ index ][ 4 ]		= HouseInfo[ houseid ][ hFurTxtId ][ copyid ][ 4 ];
 	HouseInfo[ houseid ][ hFurColId ][ index ][ 0 ]		= HouseInfo[ houseid ][ hFurColId ][ copyid ][ 0 ];
 	HouseInfo[ houseid ][ hFurColId ][ index ][ 1 ]		= HouseInfo[ houseid ][ hFurColId ][ copyid ][ 1 ];
 	HouseInfo[ houseid ][ hFurColId ][ index ][ 2 ]		= HouseInfo[ houseid ][ hFurColId ][ copyid ][ 2 ];
 	HouseInfo[ houseid ][ hFurColId ][ index ][ 3 ]		= HouseInfo[ houseid ][ hFurColId ][ copyid ][ 3 ];
+	HouseInfo[ houseid ][ hFurColId ][ index ][ 4 ]		= HouseInfo[ houseid ][ hFurColId ][ copyid ][ 4 ];
 
 	HouseInfo[ houseid ][ hFurObjectid ][ index ]	= CreateDynamicObject(HouseInfo[ houseid ][ hFurModelid ][ index ], HouseInfo[ houseid ][ hFurPosX ][ index ], HouseInfo[ houseid ][ hFurPosY ][ index ], HouseInfo[ houseid ][ hFurPosZ ][ index ], HouseInfo[ houseid ][ hFurRotX ][ index ], HouseInfo[ houseid ][ hFurRotY ][ index ], HouseInfo[ houseid ][ hFurRotZ ][ index ], HouseInfo[ houseid ][ hVirtualWorld ], HouseInfo[ houseid ][ hInt ], -1, FURNITURE_OBJECT_DRAW_DISTANCE, FURNITURE_OBJECT_DRAW_DISTANCE);
 
-	new
-		colorid;
-	if( HouseInfo[ houseid ][ hFurColId ][ index ][ 0 ] > -1 ) {
-		sscanf(ColorList[ HouseInfo[ houseid ][ hFurColId ][ index ][ 0 ] ][ clRGB ], "h", colorid);
-		SetDynamicObjectMaterial(HouseInfo[ houseid ][ hFurObjectid ][ index ], 0, ObjectTextures[ HouseInfo[ houseid ][ hFurTxtId ][ index ][ 0 ] ][ tModel ], ObjectTextures[ HouseInfo[ houseid ][ hFurTxtId ][ index ][ 0 ] ][ tTXDName ], ObjectTextures[ HouseInfo[ houseid ][ hFurTxtId ][ index ][ 0 ] ][ tName ], colorid);
+	new colorid;
+	for(new colslot = 0; colslot < 5; colslot++)
+	{
+		if( HouseInfo[ houseid ][ hFurColId ][ index ][ colslot ] > -1 ) {
+			sscanf(ColorList[ HouseInfo[ houseid ][ hFurColId ][ index ][ colslot ] ][ clRGB ], "h", colorid);
+			SetDynamicObjectMaterial(HouseInfo[ houseid ][ hFurObjectid ][ index ], colslot, ObjectTextures[ HouseInfo[ houseid ][ hFurTxtId ][ index ][ colslot ] ][ tModel ], ObjectTextures[ HouseInfo[ houseid ][ hFurTxtId ][ index ][ colslot ] ][ tTXDName ], ObjectTextures[ HouseInfo[ houseid ][ hFurTxtId ][ index ][ colslot ] ][ tName ], colorid);
+		}
+		else  SetDynamicObjectMaterial(HouseInfo[ houseid ][ hFurObjectid ][ index ], colslot, ObjectTextures[ HouseInfo[ houseid ][ hFurTxtId ][ index ][ colslot ] ][ tModel ], ObjectTextures[ HouseInfo[ houseid ][ hFurTxtId ][ index ][ colslot ] ][ tTXDName ], ObjectTextures[ HouseInfo[ houseid ][ hFurTxtId ][ index ][ colslot ] ][ tName ], 0);
 	}
-	if( HouseInfo[ houseid ][ hFurColId ][ index ][ 1 ] > -1 ) {
-		sscanf(ColorList[ HouseInfo[ houseid ][ hFurColId ][ index ][ 1 ] ][ clRGB ], "h", colorid);
-		SetDynamicObjectMaterial(HouseInfo[ houseid ][ hFurObjectid ][ index ], 1, ObjectTextures[ HouseInfo[ houseid ][ hFurTxtId ][ index ][ 1 ] ][ tModel ], ObjectTextures[ HouseInfo[ houseid ][ hFurTxtId ][ index ][ 1 ] ][ tTXDName ], ObjectTextures[ HouseInfo[ houseid ][ hFurTxtId ][ index ][ 1 ] ][ tName ], colorid);
-	}
-	if( HouseInfo[ houseid ][ hFurColId ][ index ][ 2 ] > -1 ) {
-		sscanf(ColorList[ HouseInfo[ houseid ][ hFurColId ][ index ][ 2 ] ][ clRGB ], "h", colorid);
-		SetDynamicObjectMaterial(HouseInfo[ houseid ][ hFurObjectid ][ index ], 2, ObjectTextures[ HouseInfo[ houseid ][ hFurTxtId ][ index ][ 2 ] ][ tModel ], ObjectTextures[ HouseInfo[ houseid ][ hFurTxtId ][ index ][ 2 ] ][ tTXDName ], ObjectTextures[ HouseInfo[ houseid ][ hFurTxtId ][ index ][ 2 ] ][ tName ], colorid);
-	}
-	if( HouseInfo[ houseid ][ hFurColId ][ index ][ 3 ] > -1 ) {
-		sscanf(ColorList[ HouseInfo[ houseid ][ hFurColId ][ index ][ 3 ] ][ clRGB ], "h", colorid);
-		SetDynamicObjectMaterial(HouseInfo[ houseid ][ hFurObjectid ][ index ], 3, ObjectTextures[ HouseInfo[ houseid ][ hFurTxtId ][ index ][ 3 ] ][ tModel ], ObjectTextures[ HouseInfo[ houseid ][ hFurTxtId ][ index ][ 3 ] ][ tTXDName ], ObjectTextures[ HouseInfo[ houseid ][ hFurTxtId ][ index ][ 3 ] ][ tName ], colorid);
-	}
-	SetDynamicObjectMaterial(HouseInfo[ houseid ][ hFurObjectid ][ index ], 3, ObjectTextures[ HouseInfo[ houseid ][ hFurTxtId ][ index ][ 3 ] ][ tModel ], ObjectTextures[ HouseInfo[ houseid ][ hFurTxtId ][ index ][ 3 ] ][ tTXDName ], ObjectTextures[ HouseInfo[ houseid ][ hFurTxtId ][ index ][ 3 ] ][ tName ], 0);
 
 	new
 		insertObject[ 512 ];
-	format(insertObject, sizeof(insertObject), "INSERT INTO `furniture`(`houseid`, `modelid`, `door`, `door_z`, `locked_door`, `pos_x`, `pos_y`, `pos_z`, `rot_x`, `rot_y`, `rot_z`, `texture_1`, `texture_2`, `texture_3`, `texture_4`, `color_1`, `color_2`, `color_3`, `color_4`) VALUES ('%d', '%d', '%d', '%f', '%d', '%f', '%f', '%f', '%f', '%f', '%f', '%d', '%d', '%d', '%d', '%d', '%d', '%d', '%d')",
+	format(insertObject, sizeof(insertObject), "INSERT INTO `furniture`(`houseid`, `modelid`, `door`, `door_z`, `locked_door`, `pos_x`, `pos_y`, `pos_z`, `rot_x`, `rot_y`, `rot_z`, `texture_1`, `texture_2`, `texture_3`, `texture_4`, `texture_5`, `color_1`, `color_2`, `color_3`, `color_4`, `color_5`) VALUES ('%d', '%d', '%d', '%f', '%d', '%f', '%f', '%f', '%f', '%f', '%f', '%d', '%d', '%d', '%d', '%d', '%d', '%d', '%d', '%d', '%d')",
 		HouseInfo[houseid][hSQLID],
 		HouseInfo[ houseid ][ hFurModelid ][ index ],
 		HouseInfo[ houseid ][ hFurDoor ][ index ],
@@ -2908,10 +2898,12 @@ stock static CopyFurnitureObject(playerid, copyid)
 		HouseInfo[ houseid ][ hFurTxtId ][ index ][ 1 ],
 		HouseInfo[ houseid ][ hFurTxtId ][ index ][ 2 ],
 		HouseInfo[ houseid ][ hFurTxtId ][ index ][ 3 ],
+		HouseInfo[ houseid ][ hFurTxtId ][ index ][ 4 ],
 		HouseInfo[ houseid ][ hFurColId ][ index ][ 0 ],
 		HouseInfo[ houseid ][ hFurColId ][ index ][ 1 ],
 		HouseInfo[ houseid ][ hFurColId ][ index ][ 2 ],
-		HouseInfo[ houseid ][ hFurColId ][ index ][ 3 ]
+		HouseInfo[ houseid ][ hFurColId ][ index ][ 3 ],
+		HouseInfo[ houseid ][ hFurColId ][ index ][ 4 ]
 	);
 	mysql_tquery(g_SQL, insertObject, "OnFurnitureObjectCreates", "ii", houseid, index);
 
@@ -2977,17 +2969,14 @@ stock static SetFurnitureObjectPos(playerid, Float:x, Float:y, Float:z, Float:rx
 	);
 	mysql_tquery(g_SQL, editObject, "");
 
-	new
-		slot,
-		colorid;
-
-	if(HouseInfo[ houseid ][ hFurColId ][ index ][ slot ] != -1)
-		sscanf(ColorList[ HouseInfo[ houseid ][ hFurColId ][ index ][ slot ] ][ clRGB ], "h", colorid);
-
-
-	for( new i = 0; i < 5; i++ ) {
-		slot = HouseInfo[ houseid ][ hFurTxtId ][ index ][ i ];
-		SetDynamicObjectMaterial(HouseInfo[ houseid ][ hFurObjectid ][ index ], i, ObjectTextures[ slot ][ tModel ], ObjectTextures[ slot ][ tTXDName ], ObjectTextures[ slot ][ tName ], colorid);
+	new colorid;
+	for(new colslot = 0; colslot < 5; colslot++)
+	{
+		if( HouseInfo[ houseid ][ hFurColId ][ index ][ colslot ] > -1 ) {
+			sscanf(ColorList[ HouseInfo[ houseid ][ hFurColId ][ index ][ colslot ] ][ clRGB ], "h", colorid);
+			SetDynamicObjectMaterial(HouseInfo[ houseid ][ hFurObjectid ][ index ], colslot, ObjectTextures[ HouseInfo[ houseid ][ hFurTxtId ][ index ][ colslot ] ][ tModel ], ObjectTextures[ HouseInfo[ houseid ][ hFurTxtId ][ index ][ colslot ] ][ tTXDName ], ObjectTextures[ HouseInfo[ houseid ][ hFurTxtId ][ index ][ colslot ] ][ tName ], colorid);
+		}
+		else  SetDynamicObjectMaterial(HouseInfo[ houseid ][ hFurObjectid ][ index ], colslot, ObjectTextures[ HouseInfo[ houseid ][ hFurTxtId ][ index ][ colslot ] ][ tModel ], ObjectTextures[ HouseInfo[ houseid ][ hFurTxtId ][ index ][ colslot ] ][ tTXDName ], ObjectTextures[ HouseInfo[ houseid ][ hFurTxtId ][ index ][ colslot ] ][ tName ], 0);
 	}
 
 	Streamer_Update(playerid);
@@ -3015,12 +3004,12 @@ stock static SetFurnitureObjectTexture(playerid, slot, index, slotid)
 	new
 		textObject[ 128 ];
 	format(textObject, 128, "UPDATE furniture SET `texture_%d` = '%d' WHERE sqlid = '%d'",
-		slot + 1,
+		(slot+1),
 		HouseInfo[ houseid ][ hFurTxtId ][ slotid ][ slot ],
 		HouseInfo[ houseid ][ hFurSQL ][ slotid ]
 	);
 	mysql_tquery(g_SQL, textObject, "");
-	va_SendClientMessage(playerid, COLOR_RED, "[ ! ] Uspijesno ste postavili texturu na vas namjestaj.");
+	SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uspjesno ste postavili texturu na vas namjestaj.");
 	return 1;
 }
 
@@ -3092,6 +3081,11 @@ stock static DeleteFurnitureObject(houseid, playerid, index)
 	HouseInfo[ houseid ][ hFurTxtId ][ index ][ 2 ]	= 0;
 	HouseInfo[ houseid ][ hFurTxtId ][ index ][ 3 ]	= 0;
 	HouseInfo[ houseid ][ hFurTxtId ][ index ][ 4 ]	= 0;
+	HouseInfo[ houseid ][ hFurColId ][ index ][ 0 ] = -1;
+	HouseInfo[ houseid ][ hFurColId ][ index ][ 1 ] = -1;
+	HouseInfo[ houseid ][ hFurColId ][ index ][ 2 ] = -1;
+	HouseInfo[ houseid ][ hFurColId ][ index ][ 3 ] = -1;
+	HouseInfo[ houseid ][ hFurColId ][ index ][ 4 ] = -1;
 	
 	HouseInfo[houseid][hFurCounter]--;
 	HouseInfo[houseid][hExists][index] = 0;
@@ -3124,6 +3118,11 @@ stock static DestroyAllFurnitureObjects(playerid, houseid)
 			HouseInfo[ houseid ][ hFurTxtId ][ index ][ 2 ]	= 0;
 			HouseInfo[ houseid ][ hFurTxtId ][ index ][ 3 ]	= 0;
 			HouseInfo[ houseid ][ hFurTxtId ][ index ][ 4 ]	= 0;
+			HouseInfo[ houseid ][ hFurColId ][ index ][ 0 ] = -1;
+			HouseInfo[ houseid ][ hFurColId ][ index ][ 1 ] = -1;
+			HouseInfo[ houseid ][ hFurColId ][ index ][ 2 ] = -1;
+			HouseInfo[ houseid ][ hFurColId ][ index ][ 3 ] = -1;
+			HouseInfo[ houseid ][ hFurColId ][ index ][ 4 ] = -1;
 		}
 	}
 	HouseInfo[ houseid ][ hFurSlots ] = GetFurnitureSlots(playerid, PlayerInfo[playerid][pDonateRank]);
@@ -4089,13 +4088,16 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 				}
 				case 2: {	// Boje
 					new
-						buffer[ 2625 ];
-					for( new i = 0; i < 138; i++ ) {
-						format(buffer, 2625, "%s%s%s\n",
-							buffer,
+						buffer[ 4096 ],
+						motd[ 64 ];
+						
+					for( new i = 0; i < sizeof(ColorList); i++ ) 
+					{
+						format(motd, sizeof(motd), "%s%s\n",
 							ColorList[ i ][ clEmbedCol ],
 							ColorList[ i ][ clName ]
 						);
+						strcat(buffer, motd, 4096);
 					}
 					ShowPlayerDialog(playerid, DIALOG_FURNITURE_COL_LIST, DIALOG_STYLE_LIST, "Furniture - Odabir boja", buffer, "Odaberi", "Odustani");
 				}
@@ -4187,16 +4189,16 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 				return SendErrorMessage(playerid, "Niste u svojoj kuci / nemate dozvolu za postavljanje namjestaja.");
 			new
 				slot = strval(inputtext);
-			if( 0 <= slot <= 4 ) {
+			if( 1 <= slot <= 5 ) {
 				va_ShowPlayerDialog(playerid, DIALOG_FURNITURE_TXTS_SURE, DIALOG_STYLE_MSGBOX, "Furniture - Teksture", "Zelite li staviti odabranu teksturu na objekt u slot %d?", "Da", "Ne", slot);
-				PlayerEditTxtSlot[ playerid ] = slot;
+				PlayerEditTxtSlot[ playerid ] = slot - 1;
 
 				new
 					index = PlayerEditTxtIndex[ playerid ];
 				SetDynamicObjectMaterial(HouseInfo[ houseid ][ hFurObjectid ][ PlayerEditIndex[ playerid ] ], slot, ObjectTextures[ index ][ tModel ], ObjectTextures[ index ][ tTXDName ], ObjectTextures[ index ][ tName ], 0);
 
 			} else
-				ShowPlayerDialog(playerid, DIALOG_FURNITURE_TXTS_SLOT, DIALOG_STYLE_INPUT, "Furniture - Texture Slots", "Unesite slot u koji zelite staviti teksturu "COL_RED"(0-4)", "Unesi", "Odustani");
+				ShowPlayerDialog(playerid, DIALOG_FURNITURE_TXTS_SLOT, DIALOG_STYLE_INPUT, "Furniture - Texture Slots", "Unesite slot u koji zelite staviti teksturu "COL_RED"(1-5)", "Unesi", "Odustani");
 			return 1;
 		}
 		case DIALOG_FURNITURE_TXTS_SURE: {
@@ -4212,16 +4214,21 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 			return 1;
 		}
 		case DIALOG_FURNITURE_COL_SLOT: {
-			if( !response ) {
+			if( !response ) 
+			{
 				new
-					buffer[ 2625 ];
-				for( new i = 0; i < sizeof(ColorList); i++ ) {
-					format(buffer, 2625, "%s%s%s",
-						buffer,
+					buffer[ 4096 ],
+					motd[ 64 ];
+					
+				for( new i = 0; i < sizeof(ColorList); i++ ) 
+				{
+					format(motd, sizeof(motd), "%s%s\n",
 						ColorList[ i ][ clEmbedCol ],
 						ColorList[ i ][ clName ]
 					);
+					strcat(buffer, motd, 4096);
 				}
+				
 				ShowPlayerDialog(playerid, DIALOG_FURNITURE_COL_LIST, DIALOG_STYLE_LIST, "Furniture - Odabir boja", buffer, "Odaberi", "Odustani");
 				return 1;
 			}
@@ -4230,9 +4237,9 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 				return SendErrorMessage(playerid, "Niste u svojoj kuci / nemate dozvolu za postavljanje namjestaja.");
 			new
 				slotid = strval(inputtext);
-			if( 0 <= slotid <= 4 ) {
+			if( 1 <= slotid <= 5 ) {
 				va_ShowPlayerDialog(playerid, DIALOG_FURNITURE_COL_SURE, DIALOG_STYLE_MSGBOX, "Furniture - Boje", "Zelite li staviti odabranu boju u slot %d?", "Da", "Ne", slotid);
-				PlayerEditTxtSlot[ playerid ] = slotid;
+				PlayerEditTxtSlot[ playerid ] = slotid - 1;
 
 				new
 					colorid,
@@ -4241,11 +4248,11 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 				SetDynamicObjectMaterial(HouseInfo[ houseid ][ hFurObjectid ][ PlayerEditIndex[ playerid ] ], slotid, ObjectTextures[ HouseInfo[ houseid ][ hFurTxtId ][ index ][ slotid ] ][ tModel ], ObjectTextures[ HouseInfo[ houseid ][ hFurTxtId ][ index ][ slotid ] ][ tTXDName ], ObjectTextures[ HouseInfo[ houseid ][ hFurTxtId ][ index ][ slotid ] ][ tName ], colorid);
 
 			} else
-				ShowPlayerDialog(playerid, DIALOG_FURNITURE_COL_SLOT, DIALOG_STYLE_INPUT, "Furniture - Color Slots", "Unesite slot u koji zelite staviti odabranu boju (0-4)!", "Unesi", "Odustani");
+				ShowPlayerDialog(playerid, DIALOG_FURNITURE_COL_SLOT, DIALOG_STYLE_INPUT, "Furniture - Color Slots", "Unesite slot u koji zelite staviti odabranu boju (1-5)!", "Unesi", "Odustani");
 			return 1;
 		}
 		case DIALOG_FURNITURE_COL_SURE: {
-			if( !response ) return ShowPlayerDialog(playerid, DIALOG_FURNITURE_COL_SLOT, DIALOG_STYLE_INPUT, "Furniture - Color Slots", "Unesite slot u koji zelite staviti odabranu boju (0-4)!", "Unesi", "Odustani");
+			if( !response ) return ShowPlayerDialog(playerid, DIALOG_FURNITURE_COL_SLOT, DIALOG_STYLE_INPUT, "Furniture - Color Slots", "Unesite slot u koji zelite staviti odabranu boju (1-5)!", "Unesi", "Odustani");
 
 			if( !SetFurnitureObjectColor(playerid, PlayerEditTxtSlot[ playerid ], PlayerEditTxtIndex[ playerid ], PlayerEditIndex[ playerid ]) ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Doslo je do greske. Pokusajte ponovno!");
 			return 1;
@@ -4255,12 +4262,12 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 
 			new
 				slot = strval(inputtext);
-			if( 0 <= slot <= 4 ) {
-				PlayerEditClsIndex[ playerid ] = slot;
+			if( 1 <= slot <= 5 ) {
+				PlayerEditClsIndex[ playerid ] = slot - 1;
 				va_ShowPlayerDialog(playerid, DIALOG_FURNITURE_SLOT_SURE, DIALOG_STYLE_MSGBOX, "Furniture - Brisanje tekstura i boja", "Zelite li obrisati teksture i boje na slotu %d?", "Da", "Ne", slot);
 			}
 			else
-				ShowPlayerDialog(playerid, DIALOG_FURNITURE_SLOT_DELETE, DIALOG_STYLE_INPUT, "Furniture - Brisanje tekstura i boja", "Unesite slot koji zelite ocistiti od boja i tekstura "COL_YELLOW"(0-4)", "Unesi", "Odustani");
+				ShowPlayerDialog(playerid, DIALOG_FURNITURE_SLOT_DELETE, DIALOG_STYLE_INPUT, "Furniture - Brisanje tekstura i boja", "Unesite slot koji zelite ocistiti od boja i tekstura "COL_YELLOW"(1-5)", "Unesi", "Odustani");
 			return 1;
 		}
 		case DIALOG_FURNITURE_SLOT_SURE: {
@@ -4434,7 +4441,7 @@ CMD:bint(playerid, params[])
 	//if( !PlayerInfo[ playerid ][ pAdmin ] ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ovlasteni!");
 	new
 		param[ 6 ];
-	if( sscanf( params, "s[6] ", param ) ) return SendClientMessage(playerid, COLOR_RED, "USAGE: /bint [test/buy/exit]");
+	if( sscanf( params, "s[6] ", param ) ) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /bint [test/buy/exit]");
 	if( !strcmp(param, "test", true ) ) {
 		new
 			houseid = PlayerInfo[ playerid ][ pHouseKey ];
@@ -4486,7 +4493,7 @@ CMD:furniture(playerid, params[])
 	GetHouseFurnitureSlot(playerid, furhouse);
 	if(sscanf(params, "s[8] ", param))
 	{
-		SendClientMessage(playerid, COLOR_RED, "USAGE: /furniture [approve/menu]");
+		SendClientMessage(playerid, COLOR_RED, "[ ? ]: /furniture [approve/menu]");
 		va_SendClientMessage(playerid, COLOR_RED, "[ ! ] Trenutno imate %d/%d popunjenih slotova u vasoj kuci.", FreeFurniture_Slot[playerid], GetFurnitureSlots(playerid, PlayerInfo[playerid][pDonateRank]));
 		return (true);
 	}
@@ -4512,7 +4519,7 @@ CMD:furniture(playerid, params[])
 		if( PlayerInfo[ playerid ][ pHouseKey ] == INVALID_HOUSE_ID ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne posjedujete kucu!");
 		new
 			giveplayerid;
-		if( sscanf(params, "s[8]u", param, giveplayerid) ) return SendClientMessage(playerid, COLOR_RED, "USAGE: /furniture approve [dio imena/playerid]");
+		if( sscanf(params, "s[8]u", param, giveplayerid) ) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /furniture approve [dio imena/playerid]");
 		if( giveplayerid == INVALID_PLAYER_ID ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Krivi unos playerida!");
 		if( !ProxDetectorS(8.0, playerid, giveplayerid) ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Taj igrac nije blizu vas!");
 		if( PlayerEditingHouse[ giveplayerid ] == PlayerInfo[ playerid ][ pHouseKey ] ) {
@@ -4583,7 +4590,7 @@ CMD:afurniture(playerid, params[]) { // leo - novo.
 			return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ovlasteni za koristenje ove komande (admin lvl 3+).");
 
 		if(sscanf(params, "s[15]i", action, house_id)) {
-			SendClientMessage(playerid, COLOR_RED, "USAGE: /afurniture reload [house_id].");
+			SendClientMessage(playerid, COLOR_RED, "[ ? ]: /afurniture reload [house_id].");
 			return (true);
 		}
 		ReloadHouseFurniture(house_id);
@@ -4594,7 +4601,7 @@ CMD:afurniture(playerid, params[]) { // leo - novo.
 			return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ovlasteni za koristenje ove komande (admin lvl 4+).");
 
 		if(sscanf(params, "s[15]ii", action, target_id, house_id)) {
-			SendClientMessage(playerid, COLOR_RED, "USAGE: /afurniture checkslots [playerid] [house_id].");
+			SendClientMessage(playerid, COLOR_RED, "[ ? ]: /afurniture checkslots [playerid] [house_id].");
 			return (true);
 		}
 		GetHouseFurnitureSlot(target_id, house_id);
@@ -4605,7 +4612,7 @@ CMD:afurniture(playerid, params[]) { // leo - novo.
 			return SendClientMessage(playerid, COLOR_LIGHTRED, "[ERROR]: Vi ne mozete koristit ovu komandu.");
 
 		if(sscanf(params, "s[15]ii", action, target_id, house_id)) {
-			SendClientMessage(playerid, COLOR_RED, "USAGE: /afurniture setpremium [playerid] [house_id].");
+			SendClientMessage(playerid, COLOR_RED, "[ ? ]: /afurniture setpremium [playerid] [house_id].");
 			return (true);
 		}
 		SetPlayerPremiumFurniture(target_id, house_id);
@@ -4617,7 +4624,7 @@ CMD:afurniture(playerid, params[]) { // leo - novo.
 			return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ovlasteni za koristenje ove komande (admin lvl 1337+).");
 
 		if(sscanf(params, "s[15]i", action, target_id)) {
-			SendClientMessage(playerid, COLOR_RED, "USAGE: /afurniture update [playerid].");
+			SendClientMessage(playerid, COLOR_RED, "[ ? ]: /afurniture update [playerid].");
 			return (true);
 		}
 		SendFormatMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uspjesno ste refreshali furniture slotove igracu %s.", GetName(target_id, true));

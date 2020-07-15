@@ -4653,10 +4653,10 @@ hook OnPlayerEditObject(playerid, playerobject, objectid, response, Float:fX, Fl
 				Bit1_Set(gr_PlayerTrunkEdit, playerid, false);
 				new model = EditingTrunkWeaponModel[playerid],
 					wslot = Bit4_Get(gr_WeaponTrunkEditSlot, playerid),
-					AttachVehID = -1;
+					AttachVehID = INVALID_VEHICLE_ID;
 					
-				AttachVehID = PlayerInfo[playerid][pSpawnedCar];
-				if(AttachVehID != -1)
+				AttachVehID = GetPlayerNearestPrivateVehicle(playerid);
+				if(AttachVehID != INVALID_VEHICLE_ID)
 				{	
 					if(VehicleInfo[AttachVehID][vWeaponSQLID][wslot] <= 0) // 0, -1, ..
 					{
@@ -4788,13 +4788,13 @@ CMD:duplicatekey(playerid, params[])
 
 	if(PlayerInfo[playerid][pSpawnedCar] != vehicleid) return SendMessage(playerid, MESSAGE_TYPE_ERROR, " Morate se nalaziti u svom vozilu!");
 	if(sscanf(params, "s[8] ", pickstr)) {
-		SendClientMessage(playerid, COLOR_RED, "USAGE: /duplicatekey [odabir]");
+		SendClientMessage(playerid, COLOR_RED, "[ ? ]: /duplicatekey [odabir]");
 		SendClientMessage(playerid, COLOR_RED, "[ ! ] give, keys");
 		return 1;
 	}
 	if(!strcmp(pickstr, "give", true))
 	{
-     	if(sscanf(params, "s[8]d", pickstr, plid))  return SendClientMessage(playerid, COLOR_RED, "USAGE: /duplicatekey give [playerid]");
+     	if(sscanf(params, "s[8]d", pickstr, plid))  return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /duplicatekey give [playerid]");
 	    if(plid == INVALID_PLAYER_ID)
 			return SendMessage(playerid, MESSAGE_TYPE_ERROR, " Ne valjan unos playerida!");
 
@@ -4867,7 +4867,7 @@ CMD:car(playerid, params[])
 {
 	new pick[11];
 	if(sscanf(params, "s[11] ", pick)) {
-		SendClientMessage(playerid, COLOR_RED, "USAGE: /car [odabir]");
+		SendClientMessage(playerid, COLOR_RED, "[ ? ]: /car [odabir]");
 		SendClientMessage(playerid, COLOR_GREY, "[ODABIR]: buy - delete - info - get - tickets - buypark - park");
 		SendClientMessage(playerid, COLOR_GREY, "[ODABIR]: parklocate - locate - tow - upgrade - breaklock");
 		SendClientMessage(playerid, COLOR_GREY, "[ODABIR]: register - unregister - sell - junksell - refresh");
@@ -4923,7 +4923,7 @@ CMD:car(playerid, params[])
 		new
 			take;
 		if(sscanf(params, "s[11]i ", pick, take)) {
-			SendClientMessage(playerid, COLOR_RED, "USAGE: /car color [odabir]");
+			SendClientMessage(playerid, COLOR_RED, "[ ? ]: /car color [odabir]");
 			SendClientMessage(playerid, COLOR_GREY, "[ODABIR]: 1 - Lista boja, 2 - Obojaj vozilo");
 			return 1;
 		}
@@ -4960,7 +4960,7 @@ CMD:car(playerid, params[])
 				if(AC_GetPlayerMoney(playerid) < 500) return SendMessage(playerid, MESSAGE_TYPE_ERROR, " Nemate dovoljno novca (500$)! ");
 				new
 					slot, color;
-				if(sscanf(params, "s[11]iii", pick, take, slot, color)) return SendClientMessage(playerid, COLOR_RED, "USAGE: /car color [boja (1/2)][ID boje]");
+				if(sscanf(params, "s[11]iii", pick, take, slot, color)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /car color [boja (1/2)][ID boje]");
 
 				if(IsAPlane(VehicleInfo[PlayerInfo[playerid][pSpawnedCar]][vModel])) {
 					if(!IsPlayerInRangeOfPoint(playerid, 9.0, 114.3532, -1937.9978, 0.2384)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ispod dizalice za bojanje brodova.");
@@ -5351,7 +5351,7 @@ CMD:car(playerid, params[])
 			giveplayerid,
 			vehiclePrice;
 
-		if(sscanf(params, "s[11]ui", pick, giveplayerid, vehiclePrice)) return SendClientMessage(playerid, COLOR_RED, "USAGE: /car sell [playerid/dio imena][cijena]");
+		if(sscanf(params, "s[11]ui", pick, giveplayerid, vehiclePrice)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /car sell [playerid/dio imena][cijena]");
 		if(giveplayerid == INVALID_PLAYER_ID) return SendMessage(playerid, MESSAGE_TYPE_ERROR, " Nevaljan unos igraceva ID-a!");
 		if(giveplayerid == playerid) return SendMessage(playerid, MESSAGE_TYPE_ERROR, " Ne mozete samom sebi prodati vozilo!");
 		if(!IsPlayerConnected(giveplayerid) || !SafeSpawned[giveplayerid]) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Taj igrac nije sigurno spawnan/online!");
@@ -5533,7 +5533,7 @@ CMD:fill(playerid, params[])
 	if( bizid == INVALID_BIZNIS_ID ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, " Niste u blizini benzinske postaje!");
 	if( ( vehicleid == 0 || vehicleid == -1 ) || IsABike( GetVehicleModel( vehicleid ) ) ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, " Nepravilno vozilo!");
 	if( sscanf(params, "i", fuel ) ) {
-		SendClientMessage(playerid, COLOR_RED, "USAGE: /fill [litara]");
+		SendClientMessage(playerid, COLOR_RED, "[ ? ]: /fill [litara]");
 		return 1;
 	}
 	#if defined EVENTSTARTED
@@ -5558,7 +5558,7 @@ CMD:showcostats(playerid, params[])
 		globalstring[100];
 	if (sscanf(params, "u", giveplayerid))
 	{
-		SendClientMessage(playerid, COLOR_RED, "USAGE: /showcostats [playerid/PartOfName]");
+		SendClientMessage(playerid, COLOR_RED, "[ ? ]: /showcostats [playerid/PartOfName]");
 		return 1;
 	}
     if(IsPlayerConnected(giveplayerid))
@@ -5628,7 +5628,7 @@ CMD:veh_plate(playerid, params[])
 	if(!IsPlayerInAnyVehicle(playerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, " Niste u vozilu!");
 	new
 		plate[8];
-	if(sscanf(params, "s[8]", plate)) return SendClientMessage(playerid, COLOR_RED, "USAGE: /veh_plate [tablica]");
+	if(sscanf(params, "s[8]", plate)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /veh_plate [tablica]");
 	if(1 <= strlen(plate) <= 7) {
 		PlayerPlaySound(playerid, 1052, 0.0, 0.0, 0.0);
 		new
@@ -5660,46 +5660,46 @@ CMD:setcostats(playerid, params[])
 		pick[10],
 		input, vehicleid;
 	if(sscanf(params, "s[10]i ", pick, vehicleid)) {
-		SendClientMessage(playerid, COLOR_RED, "USAGE: /setcostats [odabir][vehicleid]");
+		SendClientMessage(playerid, COLOR_RED, "[ ? ]: /setcostats [odabir][vehicleid]");
 		SendClientMessage(playerid, COLOR_GREY, "[ODABIR]: destroys - alarm - immob - lock - insurance");
 		return 1;
 	}
 	if(!strcmp(pick, "destroys", true)) {
-		if(sscanf(params, "s[10]ii", pick, vehicleid, input)) return SendClientMessage(playerid, COLOR_RED, "USAGE: /setcostats destroys [kolicina]");
+		if(sscanf(params, "s[10]ii", pick, vehicleid, input)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /setcostats destroys [kolicina]");
 		if(input < 0 || input > 7) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nevaljan unos (0-7)!");
 		if(!Iter_Contains(COVehicles, vehicleid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste unijeli CO vozilo (/dl)!");
 		VehicleInfo[vehicleid][vDestroys] = input;
 		SendFormatMessage(playerid, MESSAGE_TYPE_INFO, "Namjestili ste unistenja na vozilu id %d na %d.", vehicleid, input);
 	}
 	else if(!strcmp(pick, "alarm", true)) {
-		if(sscanf(params, "s[10]ii", pick, vehicleid, input)) return SendClientMessage(playerid, COLOR_RED, "USAGE: /setcostats alarm [level]");
+		if(sscanf(params, "s[10]ii", pick, vehicleid, input)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /setcostats alarm [level]");
 		if(input < 1 || input > 4) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nevaljan unos (1-4)!");
 		if(!Iter_Contains(COVehicles, vehicleid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste unijeli CO vozilo (/dl)!");
 		VehicleInfo[vehicleid][vAlarm] = input;
 		SendFormatMessage(playerid, MESSAGE_TYPE_INFO, "Namjestili ste alarm na vozilu id %d na level %d.", vehicleid, input);
 	}
 	else if(!strcmp(pick, "immob", true)) {
-		if(sscanf(params, "s[10]ii", pick, vehicleid, input)) return SendClientMessage(playerid, COLOR_RED, "USAGE: /setcostats immob [level]");
+		if(sscanf(params, "s[10]ii", pick, vehicleid, input)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /setcostats immob [level]");
 		if(input < 1 || input > 5) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nevaljan unos (1-5)!");
 		if(!Iter_Contains(COVehicles, vehicleid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste unijeli CO vozilo (/dl)!");
 		VehicleInfo[vehicleid][vImmob] = input;
 		SendFormatMessage(playerid, MESSAGE_TYPE_INFO, "Namjestili ste imobilizator na vozilu id %d na level %d.", vehicleid, input);
 	}
 	else if(!strcmp(pick, "lock", true)) {
-		if(sscanf(params, "s[10]ii", pick, vehicleid, input)) return SendClientMessage(playerid, COLOR_RED, "USAGE: /setcostats lock [level]");
+		if(sscanf(params, "s[10]ii", pick, vehicleid, input)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /setcostats lock [level]");
 		if(input < 1 || input > 3) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nevaljan unos (1-3)!");
 		if(!Iter_Contains(COVehicles, vehicleid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste unijeli CO vozilo (/dl)!");
 		VehicleInfo[vehicleid][vLock] = input;
 		SendFormatMessage(playerid, MESSAGE_TYPE_INFO, "Namjestili ste bravu na vozilu id %d na level %d.", vehicleid, input);
 	}
 	else if(!strcmp(pick, "insurance", true)) {
-		if(sscanf(params, "s[10]ii", pick, vehicleid, input)) return SendClientMessage(playerid, COLOR_RED, "USAGE: /setcostats lock [level]");
+		if(sscanf(params, "s[10]ii", pick, vehicleid, input)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /setcostats lock [level]");
 		if(input < 0 || input > 3) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nevaljan unos (0-3)!");
 		if(!Iter_Contains(COVehicles, vehicleid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste unijeli CO vozilo (/dl)!");
 		VehicleInfo[vehicleid][vInsurance] = input;
 		SendFormatMessage(playerid, MESSAGE_TYPE_INFO, "Namjestili ste osiguranje na vozilu id %d na level %d.", vehicleid, input);
 	} else {
-		SendClientMessage(playerid, COLOR_RED, "USAGE: /setcostats [odabir]");
+		SendClientMessage(playerid, COLOR_RED, "[ ? ]: /setcostats [odabir]");
 		SendClientMessage(playerid, COLOR_GREY, "[ODABIR]: destroys - alarm - immob - lock - insurance");
 	}
 	return 1;

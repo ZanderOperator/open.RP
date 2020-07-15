@@ -538,8 +538,8 @@ CMD:create_garage(playerid, params[])
 		garage = Iter_Free(Garages),
 		adress[16];
 
-	if( sscanf(params, "ddds[16] ", type, price, houseid, adress) ) return SendClientMessage(playerid, COLOR_RED, "USAGE: /create_garage [tip][cijena][houseid][adresa]");
-	if( type > 3 || type < 0) return SendClientMessage(playerid, COLOR_RED, "USAGE: /create_garage [tip] [cijena] [houseid] [adresa]"), SendClientMessage(playerid, COLOR_GREY, "[!] - Ako ne zelite da garaza bude spojena uz kucu unesite pod 'houseid' -> 9999'.");
+	if( sscanf(params, "ddds[16] ", type, price, houseid, adress) ) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /create_garage [tip][cijena][houseid][adresa]");
+	if( type > 3 || type < 0) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /create_garage [tip] [cijena] [houseid] [adresa]"), SendClientMessage(playerid, COLOR_GREY, "[!] - Ako ne zelite da garaza bude spojena uz kucu unesite pod 'houseid' -> 9999'.");
 	if(strlen(adress) < 1 || strlen(adress) > 16) return SendErrorMessage(playerid, "Adresa mora imati minimalno 1, a maksimalno 16 slova!");
 	
 	GetPlayerPos(playerid, GarageInfo[ garage ][ gEnterX ], GarageInfo[ garage ][ gEnterY ], GarageInfo[ garage ][ gEnterZ ]);
@@ -578,7 +578,7 @@ CMD:garage(playerid, params[])
 	    param[10],
 		garage = PlayerInfo[playerid][pGarageKey];
 	if(sscanf(params, "s[10] ", param)) {
-	    SendClientMessage(playerid, COLOR_RED, "USAGE: /garage [odabir]");
+	    SendClientMessage(playerid, COLOR_RED, "[ ? ]: /garage [odabir]");
 	    SendClientMessage(playerid, COLOR_GREY, "[ODABIR]: buy - sell - lock - locate - changeint(admin)");
 	    return 1;
 	}
@@ -635,7 +635,7 @@ CMD:garage(playerid, params[])
 		new
 	        giveplayerid,
 			price;
-		if( sscanf( params, "s[10]ud", param, giveplayerid, price ) ) return SendClientMessage(playerid, COLOR_RED, "USAGE: /garage sell [playerid/dio imena][cijena]");
+		if( sscanf( params, "s[10]ud", param, giveplayerid, price ) ) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /garage sell [playerid/dio imena][cijena]");
 		if( !IsPlayerConnected(giveplayerid) || !SafeSpawned[giveplayerid] ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Taj igrac nije sigurno spawnan/online!");
         if( !ProxDetectorS(5.0, playerid, giveplayerid) ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Taj igrac nije blizu vas!");
 		if( PlayerInfo[ giveplayerid ][ pGarageKey ] != -1 ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Kupac vec posjeduje garazu!");
@@ -660,8 +660,8 @@ CMD:garage(playerid, params[])
 	    if( PlayerInfo[ playerid ][ pAdmin ] < 1337 ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ovlasteni za koristenje ove komande!");
 	    new
 	        type, garageid;
-		if( sscanf(params, "s[10]ii", param, garageid, type) ) return SendClientMessage(playerid, COLOR_RED, "USAGE: /garage changeint [garageid][tip (0-3)]");
-		if( type > 3 || type < 0) return SendClientMessage(playerid, COLOR_RED, "USAGE: /garage changeint [tip (0-3)]");
+		if( sscanf(params, "s[10]ii", param, garageid, type) ) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /garage changeint [garageid][tip (0-3)]");
+		if( type > 3 || type < 0) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /garage changeint [tip (0-3)]");
 		if( !Iter_Contains(Garages, garageid )) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Taj ID garaze ne postoji!");
 
 		GarageInfo[ garageid ][ gExitX ]				= GaragesIntInfo[ type ][ giX ];
@@ -713,7 +713,7 @@ CMD:garage(playerid, params[])
 		GarageInfo[ garageid ][ gExitZ ]				= 0.0;
 	}
 	else {
-	    SendClientMessage(playerid, COLOR_RED, "USAGE: /garage [odabir]");
+	    SendClientMessage(playerid, COLOR_RED, "[ ? ]: /garage [odabir]");
 	    SendClientMessage(playerid, COLOR_GREY, "[ODABIR]: buy - sell - lock - locate - changeint(admin) - delete(admin)");
 	    return 1;
 	}
@@ -767,7 +767,7 @@ CMD:asellgarage(playerid, params[])
     new garage,
 	globalstring[184],
 		TmpQuery[158];
-    if(sscanf(params, "i", garage)) return SendClientMessage(playerid, COLOR_RED, "USAGE: /asellgarage [garageid]");
+    if(sscanf(params, "i", garage)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /asellgarage [garageid]");
 	
 	if( !Iter_Contains(Garages, garage )) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Taj ID garaze ne postoji!");
 		
@@ -807,7 +807,7 @@ CMD:garageo(playerid, params[])
 	if (PlayerInfo[playerid][pAdmin] < 1) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ovlasteni za koristenje ove komande!");
 	new
 		garage;
-	if( sscanf( params, "i", garage ) ) return SendClientMessage(playerid, COLOR_RED, "USAGE: /garageo [garageid]");
+	if( sscanf( params, "i", garage ) ) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /garageo [garageid]");
 	if( 0 <= garage <= MAX_GARAGES ) 
 	{
 		if(GarageInfo[garage][gSQLID] == 0)
@@ -816,7 +816,7 @@ CMD:garageo(playerid, params[])
 		SetPlayerPosEx(playerid, GarageInfo[ garage ][ gEnterX ], GarageInfo[ garage ][ gEnterY ], GarageInfo[ garage ][ gEnterZ ], 0, 0, true);
 	} 
 	else 
-		SendClientMessage(playerid, COLOR_RED, "USAGE: /garageo [garageid]");
+		SendClientMessage(playerid, COLOR_RED, "[ ? ]: /garageo [garageid]");
 	
 	return 1;
 }
@@ -825,7 +825,7 @@ CMD:garageentrance(playerid, params[])
 {
 	new proplev;
 	if(PlayerInfo[playerid][pAdmin] < 1337) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nisi 1337!");
-	if (sscanf(params, "i", proplev)) return SendClientMessage(playerid, COLOR_RED, "USAGE: /garageentrance [garageid]");
+	if (sscanf(params, "i", proplev)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /garageentrance [garageid]");
 	if(proplev >= MAX_GARAGES || proplev < 0) return SendClientMessage(playerid,COLOR_RED, "Nema garaze tog ID-a!");
 
 	new
@@ -859,7 +859,7 @@ CMD:customgarageint(playerid, params[])
 
 	if(PlayerInfo[playerid][pAdmin] < 1337) return SendClientMessage(playerid, COLOR_RED, "GRESKA: Niste ovlasteni za koristenje ove komande!");
 	if(sscanf(params, "ifff", garageid, iX, iY, iZ)) {
-		SendClientMessage(playerid, COLOR_RED, "USAGE: /customgarageint [garageid][X][Y][Z]");
+		SendClientMessage(playerid, COLOR_RED, "[ ? ]: /customgarageint [garageid][X][Y][Z]");
 		SendClientMessage(playerid, COLOR_GREY, "NOTE: Taj ID MORA biti u skripti!");
 		return 1;
 	}

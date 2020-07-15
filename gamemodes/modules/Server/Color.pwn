@@ -53,6 +53,9 @@
 #define COLOR_FADEB4                         0x97ABBf8C
 #define COLOR_FADEB5                         0x8B9EAF6E
 
+#define COLOR_PLAYER						0xFFFFFF00
+#define COLOR_PLAYER_DEAD                   0xBFC0C200
+
 #define COLOR_SAMP_BLUE                     0xA9C4E4FF
 #define COLOR_SAMP_GREEN                    0x88AA62FF
 

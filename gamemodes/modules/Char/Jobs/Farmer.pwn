@@ -779,7 +779,7 @@ CMD:milk(playerid, params[])
 	new
 		param[ 9 ];
 	if( sscanf( params, "s[9] ", param ) ) {
-		SendClientMessage(playerid, COLOR_RED, "USAGE: /milk [odabir]");
+		SendClientMessage(playerid, COLOR_RED, "[ ? ]: /milk [odabir]");
 		SendClientMessage(playerid, COLOR_GREY, "[ODABIR]: milking - transfer - store - take - put - check - sell - stop");
 		return 1;
 	}
@@ -1094,7 +1094,7 @@ CMD:seeds(playerid, params[])
 	new 
 		param[ 6 ];
 	if( sscanf(params, "s[6] ", param ) ) {
-		SendClientMessage(playerid, COLOR_RED, "USAGE: /seeds [odabir]");
+		SendClientMessage(playerid, COLOR_RED, "[ ? ]: /seeds [odabir]");
 		SendClientMessage(playerid, COLOR_GREY, "[ODABIR]: take - drop - check - put");
 		return 1;
 	}
@@ -1332,7 +1332,7 @@ CMD:crops(playerid, params[])
 	new
 		param[ 7 ];
 	if( sscanf( params, "s[7] ", param ) ) {
-		SendClientMessage(playerid, COLOR_RED, "USAGE: /crops [odabir]");
+		SendClientMessage(playerid, COLOR_RED, "[ ? ]: /crops [odabir]");
 	    SendClientMessage(playerid, COLOR_GREY, "[ODABIR]: drop - store - take - put - check - sell");
 		return 1;
 	}
@@ -1627,7 +1627,7 @@ CMD:eggs(playerid, params[])
 	new 
 		param[ 8 ];
 	if( sscanf( params, "s[8] ", param ) ) {
-		SendClientMessage(playerid, COLOR_RED, "USAGE: /eggs [odabir]");
+		SendClientMessage(playerid, COLOR_RED, "[ ? ]: /eggs [odabir]");
 		SendClientMessage(playerid, COLOR_GREY, "[ODABIR]: collect - process - store - take - put - check - sell");
 		return 1;
 	}
@@ -1932,7 +1932,7 @@ CMD:transport(playerid, params[])
 	
     if( (PlayerInfo[playerid][pJob] != FARMER_ID)) return SendClientMessage( playerid, COLOR_RED, "Niste farmer!");
     if( PlayerInfo[playerid][pFreeWorks] < 5 ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne mozete vise raditi! Pricekajte payday.");
-	if (sscanf(params, "i", transportchoice)) return SendClientMessage(playerid, COLOR_RED, "USAGE: /transport [1(usjevi) / 2(mlijeko) / 3(jaja)]");
+	if (sscanf(params, "i", transportchoice)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /transport [1(usjevi) / 2(mlijeko) / 3(jaja)]");
 	if( SeedInfo[playerid][sTransporting] || MilkInfo[playerid][mTransporting] || EggInfo[playerid][eTransporting]) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Vec ste zapoceli sa transportiranjem!");
 	
 	switch(transportchoice)

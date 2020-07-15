@@ -247,6 +247,16 @@ new
 		{ 18682	, "Explosion Large"	, 2800 }
 };
 
+static
+	ObjectsWalls[][ E_WALL_OBJECT_DATA ] = {
+		{ 19430	, "Mali zid 2x4"		, 600  },
+		{ 19355	, "Srednji zid 4x4"		, 950  },
+		{ 19449	, "Veliki zid 8x4"		, 1000 },
+		{ 19387	, "Zid za vrata"		, 650  },
+		{ 19403	, "Zid za prozor"		, 625  },
+		{ 19379	, "Pod 10x10"			, 1150 }
+};
+
 // rBits
 static stock
 	Bit1: r_PlayerPrwsBizzBInt	<MAX_PLAYERS>,
@@ -479,41 +489,25 @@ public OnBizzFurnitureObjectsLoad(biznisid)
 		cache_get_value_name_int(i, 	"texture_2"		, BizzInfo[ biznisid ][ bFurTxtId ][ i ][ 1 ]);
 		cache_get_value_name_int(i, 	"texture_3"		, BizzInfo[ biznisid ][ bFurTxtId ][ i ][ 2 ]);
 		cache_get_value_name_int(i, 	"texture_4"		, BizzInfo[ biznisid ][ bFurTxtId ][ i ][ 3 ]);
+		cache_get_value_name_int(i, 	"texture_5"		, BizzInfo[ biznisid ][ bFurTxtId ][ i ][ 4 ]);
 		cache_get_value_name_int(i, 	"color_1"		, BizzInfo[ biznisid ][ bFurColId ][ i ][ 0 ]);
 		cache_get_value_name_int(i, 	"color_2"		, BizzInfo[ biznisid ][ bFurColId ][ i ][ 1 ]);
 		cache_get_value_name_int(i, 	"color_3"		, BizzInfo[ biznisid ][ bFurColId ][ i ][ 2 ]);
 		cache_get_value_name_int(i, 	"color_4"		, BizzInfo[ biznisid ][ bFurColId ][ i ][ 3 ]);
+		cache_get_value_name_int(i, 	"color_5"		, BizzInfo[ biznisid ][ bFurColId ][ i ][ 4 ]);
 
 		BizzInfo[ biznisid ][ bFurObjectid ][ i ]	= CreateDynamicObject(BizzInfo[ biznisid ][ bFurModelid ][ i ], BizzInfo[ biznisid ][ bFurPosX ][ i ], BizzInfo[ biznisid ][ bFurPosY ][ i ], BizzInfo[ biznisid ][ bFurPosZ ][ i ], BizzInfo[ biznisid ][ bFurRotX ][ i ], BizzInfo[ biznisid ][ bFurRotY ][ i ], BizzInfo[ biznisid ][ bFurRotZ ][ i ], BizzInfo[ biznisid ][ bVirtualWorld ], BizzInfo[ biznisid ][ bInterior ], -1, FURNITURE_OBJECT_DRAW_DISTANCE, FURNITURE_OBJECT_DRAW_DISTANCE);
 
-		new
-			colorid;
-
-		if( BizzInfo[ biznisid ][ bFurColId ][ i ][ 0 ] > -1 ) {
-			sscanf(ColorList[ BizzInfo[ biznisid ][ bFurColId ][ i ][ 0 ] ][ clRGB ], "h", colorid);
-			SetDynamicObjectMaterial(BizzInfo[ biznisid ][ bFurObjectid ][ i ], 0, ObjectTextures[ BizzInfo[ biznisid ][ bFurTxtId ][ i ][ 0 ] ][ tModel ], ObjectTextures[ BizzInfo[ biznisid ][ bFurTxtId ][ i ][ 0 ] ][ tTXDName ], ObjectTextures[ BizzInfo[ biznisid ][ bFurTxtId ][ i ][ 0 ] ][ tName ], colorid);
+		new colorid;
+		for(new slot = 0; slot < MAX_TEXTURE_SLOTS; slot++)
+		{	
+			if( BizzInfo[ biznisid ][ bFurColId ][ i ][ slot ] > -1 ) {
+				sscanf(ColorList[ BizzInfo[ biznisid ][ bFurColId ][ i ][ slot ] ][ clRGB ], "h", colorid);
+				SetDynamicObjectMaterial(BizzInfo[ biznisid ][ bFurObjectid ][ i ], slot, ObjectTextures[ BizzInfo[ biznisid ][ bFurTxtId ][ i ][ slot ] ][ tModel ], ObjectTextures[ BizzInfo[ biznisid ][ bFurTxtId ][ i ][ slot ] ][ tTXDName ], ObjectTextures[ BizzInfo[ biznisid ][ bFurTxtId ][ i ][ slot ] ][ tName ], colorid);
+			}
+			else
+				SetDynamicObjectMaterial(BizzInfo[ biznisid ][ bFurObjectid ][ i ], slot, ObjectTextures[ BizzInfo[ biznisid ][ bFurTxtId ][ i ][ slot ] ][ tModel ], ObjectTextures[ BizzInfo[ biznisid ][ bFurTxtId ][ i ][ slot ] ][ tTXDName ], ObjectTextures[ BizzInfo[ biznisid ][ bFurTxtId ][ i ][ slot ] ][ tName ], 0);
 		}
-		else
-			SetDynamicObjectMaterial(BizzInfo[ biznisid ][ bFurObjectid ][ i ], 0, ObjectTextures[ BizzInfo[ biznisid ][ bFurTxtId ][ i ][ 0 ] ][ tModel ], ObjectTextures[ BizzInfo[ biznisid ][ bFurTxtId ][ i ][ 0 ] ][ tTXDName ], ObjectTextures[ BizzInfo[ biznisid ][ bFurTxtId ][ i ][ 0 ] ][ tName ], 0);
-
-		if( BizzInfo[ biznisid ][ bFurColId ][ i ][ 1 ] > -1 ) {
-			sscanf(ColorList[ BizzInfo[ biznisid ][ bFurColId ][ i ][ 1 ] ][ clRGB ], "h", colorid);
-			SetDynamicObjectMaterial(BizzInfo[ biznisid ][ bFurObjectid ][ i ], 1, ObjectTextures[ BizzInfo[ biznisid ][ bFurTxtId ][ i ][ 1 ] ][ tModel ], ObjectTextures[ BizzInfo[ biznisid ][ bFurTxtId ][ i ][ 1 ] ][ tTXDName ], ObjectTextures[ BizzInfo[ biznisid ][ bFurTxtId ][ i ][ 1 ] ][ tName ], colorid);
-		}
-		else
-			SetDynamicObjectMaterial(BizzInfo[ biznisid ][ bFurObjectid ][ i ], 1, ObjectTextures[ BizzInfo[ biznisid ][ bFurTxtId ][ i ][ 1 ] ][ tModel ], ObjectTextures[ BizzInfo[ biznisid ][ bFurTxtId ][ i ][ 1 ] ][ tTXDName ], ObjectTextures[ BizzInfo[ biznisid ][ bFurTxtId ][ i ][ 1 ] ][ tName ], 0);
-		if( BizzInfo[ biznisid ][ bFurColId ][ i ][ 2 ] > -1 ) {
-			sscanf(ColorList[ BizzInfo[ biznisid ][ bFurColId ][ i ][ 2 ] ][ clRGB ], "h", colorid);
-			SetDynamicObjectMaterial(BizzInfo[ biznisid ][ bFurObjectid ][ i ], 2, ObjectTextures[ BizzInfo[ biznisid ][ bFurTxtId ][ i ][ 2 ] ][ tModel ], ObjectTextures[ BizzInfo[ biznisid ][ bFurTxtId ][ i ][ 2 ] ][ tTXDName ], ObjectTextures[ BizzInfo[ biznisid ][ bFurTxtId ][ i ][ 2 ] ][ tName ], colorid);
-		}
-		else
-			SetDynamicObjectMaterial(BizzInfo[ biznisid ][ bFurObjectid ][ i ], 2, ObjectTextures[ BizzInfo[ biznisid ][ bFurTxtId ][ i ][ 2 ] ][ tModel ], ObjectTextures[ BizzInfo[ biznisid ][ bFurTxtId ][ i ][ 2 ] ][ tTXDName ], ObjectTextures[ BizzInfo[ biznisid ][ bFurTxtId ][ i ][ 2 ] ][ tName ], 0);
-		if( BizzInfo[ biznisid ][ bFurColId ][ i ][ 3 ] > -1 ) {
-			sscanf(ColorList[ BizzInfo[ biznisid ][ bFurColId ][ i ][ 3 ] ][ clRGB ], "h", colorid);
-			SetDynamicObjectMaterial(BizzInfo[ biznisid ][ bFurObjectid ][ i ], 3, ObjectTextures[ BizzInfo[ biznisid ][ bFurTxtId ][ i ][ 3 ] ][ tModel ], ObjectTextures[ BizzInfo[ biznisid ][ bFurTxtId ][ i ][ 3 ] ][ tTXDName ], ObjectTextures[ BizzInfo[ biznisid ][ bFurTxtId ][ i ][ 3 ] ][ tName ], colorid);
-		}
-		else
-			SetDynamicObjectMaterial(BizzInfo[ biznisid ][ bFurObjectid ][ i ], 3, ObjectTextures[ BizzInfo[ biznisid ][ bFurTxtId ][ i ][ 3 ] ][ tModel ], ObjectTextures[ BizzInfo[ biznisid ][ bFurTxtId ][ i ][ 3 ] ][ tTXDName ], ObjectTextures[ BizzInfo[ biznisid ][ bFurTxtId ][ i ][ 3 ] ][ tName ], 0);
 	}
 	return 1;
 }
@@ -936,22 +930,20 @@ stock static CreateBiznisFurnitureObject(playerid, modelid, Float:x, Float:y, Fl
 	BizzInfo[ biznisid ][ bFurRotX ][ index ]		= rx;
 	BizzInfo[ biznisid ][ bFurRotY ][ index ]		= ry;
 	BizzInfo[ biznisid ][ bFurRotZ ][ index ]		= rz;
-	BizzInfo[ biznisid ][ bFurTxtId ][ index ][ 0 ]	= 0;
-	BizzInfo[ biznisid ][ bFurTxtId ][ index ][ 1 ]	= 0;
-	BizzInfo[ biznisid ][ bFurTxtId ][ index ][ 2 ]	= 0;
-	BizzInfo[ biznisid ][ bFurTxtId ][ index ][ 3 ]	= 0;
-	BizzInfo[ biznisid ][ bFurColId ][ index ][ 0 ]	= -1;
-	BizzInfo[ biznisid ][ bFurColId ][ index ][ 1 ]	= -1;
-	BizzInfo[ biznisid ][ bFurColId ][ index ][ 2 ]	= -1;
-	BizzInfo[ biznisid ][ bFurColId ][ index ][ 3 ]	= -1;
-
+	
+	for(new i = 0; i < MAX_TEXTURE_SLOTS; i++)
+	{
+		BizzInfo[ biznisid ][ bFurTxtId ][ index ][ i ]	= 0;
+		BizzInfo[ biznisid ][ bFurColId ][ index ][ i ]	= -1;
+	}
+	
 	if( doors ) {
 		BizzInfo[ biznisid ][ bFurDoor ][ index ] 		= 1;
 		BizzInfo[ biznisid ][ bFurDoorZ ][ index ] 		= -1.0;
 		BizzInfo[ biznisid ][ bFurDoorLckd ][ index ]	= 0;
 	}
 
-	format(insertObject, 1512, "INSERT INTO `biznis_furniture`(`biznisid`, `modelid`, `door`, `door_z`, `locked_door`, `pos_x`, `pos_y`, `pos_z`, `rot_x`, `rot_y`, `rot_z`, `texture_1`, `texture_2`, `texture_3`, `texture_4`, `color_1`, `color_2`, `color_3`, `color_4`) VALUES ('%d', '%d', '%d', '%f', '%d', '%f', '%f', '%f', '%f', '%f', '%f', '%d', '%d', '%d', '%d', '%d', '%d', '%d', '%d')",
+	format(insertObject, 1512, "INSERT INTO `biznis_furniture`(`biznisid`, `modelid`, `door`, `door_z`, `locked_door`, `pos_x`, `pos_y`, `pos_z`, `rot_x`, `rot_y`, `rot_z`, `texture_1`, `texture_2`, `texture_3`, `texture_4`, `texture_5`, `color_1`, `color_2`, `color_3`, `color_4`, `color_5`) VALUES ('%d', '%d', '%d', '%f', '%d', '%f', '%f', '%f', '%f', '%f', '%f', '%d', '%d', '%d', '%d', '%d', '%d', '%d', '%d', '%d', '%d')",
 		BizzInfo[ biznisid ][ bSQLID ],
 		BizzInfo[ biznisid ][ bFurModelid ][ index ],
 		BizzInfo[ biznisid ][ bFurDoor ][ index ],
@@ -967,10 +959,12 @@ stock static CreateBiznisFurnitureObject(playerid, modelid, Float:x, Float:y, Fl
 		BizzInfo[ biznisid ][ bFurTxtId ][ index ][ 1 ],
 		BizzInfo[ biznisid ][ bFurTxtId ][ index ][ 2 ],
 		BizzInfo[ biznisid ][ bFurTxtId ][ index ][ 3 ],
+		BizzInfo[ biznisid ][ bFurTxtId ][ index ][ 4 ],
 		BizzInfo[ biznisid ][ bFurColId ][ index ][ 0 ],
 		BizzInfo[ biznisid ][ bFurColId ][ index ][ 1 ],
 		BizzInfo[ biznisid ][ bFurColId ][ index ][ 2 ],
-		BizzInfo[ biznisid ][ bFurColId ][ index ][ 3 ]
+		BizzInfo[ biznisid ][ bFurColId ][ index ][ 3 ],
+		BizzInfo[ biznisid ][ bFurColId ][ index ][ 4 ]
 	);
 	mysql_tquery(g_SQL, insertObject, "OnBizzFurnitureObjectCreate", "ii", biznisid, index);
 	printf("[DEBUG]: %s (errno %d)", insertObject, mysql_errno());
@@ -1031,15 +1025,11 @@ stock static CreateBiznisFurnitureObject(playerid, modelid, Float:x, Float:y, Fl
 		BizzInfo[ biznisid ][ bFurRotY ][ index ]		= 0.0;
 		BizzInfo[ biznisid ][ bFurRotZ ][ index ]		= 0.0;
 
-		BizzInfo[ biznisid ][ bFurTxtId ][ index ][ 0 ]	= 0;
-		BizzInfo[ biznisid ][ bFurTxtId ][ index ][ 1 ]	= 0;
-		BizzInfo[ biznisid ][ bFurTxtId ][ index ][ 2 ]	= 0;
-		BizzInfo[ biznisid ][ bFurTxtId ][ index ][ 3 ]	= 0;
-
-		BizzInfo[ biznisid ][ bFurColId ][ index ][ 0 ]	= -1;
-		BizzInfo[ biznisid ][ bFurColId ][ index ][ 1 ]	= -1;
-		BizzInfo[ biznisid ][ bFurColId ][ index ][ 2 ]	= -1;
-		BizzInfo[ biznisid ][ bFurColId ][ index ][ 3 ]	= -1;
+		for(new i = 0; i < MAX_TEXTURE_SLOTS; i++)
+		{
+			BizzInfo[ biznisid ][ bFurTxtId ][ index ][ i ]	= 0;
+			BizzInfo[ biznisid ][ bFurColId ][ index ][ i ]	= -1;
+		}
 
 		va_SendClientMessage(playerid, COLOR_RED, "[MySQL ERROR #%d]: Dogodila se pogreska prilikom spremanja objekta (index: %d) u bazu podataka! Vasi novci nisu oduzeti, pokusajte ponovno kasnije!", mysql_errno(), index);
 	}
@@ -1063,39 +1053,29 @@ stock static CopyFurnitureObject(playerid, copyid)
 	BizzInfo[ biznisid ][ bFurRotX ][ index ]			= BizzInfo[ biznisid ][ bFurRotX ][ copyid ];
 	BizzInfo[ biznisid ][ bFurRotY ][ index ]			= BizzInfo[ biznisid ][ bFurRotY ][ copyid ];
 	BizzInfo[ biznisid ][ bFurRotZ ][ index ]			= BizzInfo[ biznisid ][ bFurRotZ ][ copyid ];
-	BizzInfo[ biznisid ][ bFurTxtId ][ index ][ 0 ]		= BizzInfo[ biznisid ][ bFurTxtId ][ copyid ][ 0 ];
-	BizzInfo[ biznisid ][ bFurTxtId ][ index ][ 1 ]		= BizzInfo[ biznisid ][ bFurTxtId ][ copyid ][ 1 ];
-	BizzInfo[ biznisid ][ bFurTxtId ][ index ][ 2 ]		= BizzInfo[ biznisid ][ bFurTxtId ][ copyid ][ 2 ];
-	BizzInfo[ biznisid ][ bFurTxtId ][ index ][ 3 ]		= BizzInfo[ biznisid ][ bFurTxtId ][ copyid ][ 3 ];
-	BizzInfo[ biznisid ][ bFurColId ][ index ][ 0 ]		= BizzInfo[ biznisid ][ bFurColId ][ copyid ][ 0 ];
-	BizzInfo[ biznisid ][ bFurColId ][ index ][ 1 ]		= BizzInfo[ biznisid ][ bFurColId ][ copyid ][ 1 ];
-	BizzInfo[ biznisid ][ bFurColId ][ index ][ 2 ]		= BizzInfo[ biznisid ][ bFurColId ][ copyid ][ 2 ];
-	BizzInfo[ biznisid ][ bFurColId ][ index ][ 3 ]		= BizzInfo[ biznisid ][ bFurColId ][ copyid ][ 3 ];
+	
+	for(new i = 0; i < MAX_TEXTURE_SLOTS; i++)
+	{
+		BizzInfo[ biznisid ][ bFurTxtId ][ index ][ i ]		= BizzInfo[ biznisid ][ bFurTxtId ][ copyid ][ i ];
+		BizzInfo[ biznisid ][ bFurColId ][ index ][ i ]		= BizzInfo[ biznisid ][ bFurColId ][ copyid ][ i ];
+	}
 
 	BizzInfo[ biznisid ][ bFurObjectid ][ index ]	= CreateDynamicObject(BizzInfo[ biznisid ][ bFurModelid ][ index ], BizzInfo[ biznisid ][ bFurPosX ][ index ], BizzInfo[ biznisid ][ bFurPosY ][ index ], BizzInfo[ biznisid ][ bFurPosZ ][ index ], BizzInfo[ biznisid ][ bFurRotX ][ index ], BizzInfo[ biznisid ][ bFurRotY ][ index ], BizzInfo[ biznisid ][ bFurRotZ ][ index ], GetPlayerVirtualWorld(playerid), GetPlayerInterior(playerid), -1, FURNITURE_OBJECT_DRAW_DISTANCE, FURNITURE_OBJECT_DRAW_DISTANCE);
 
-	new
-		colorid;
-	if( BizzInfo[ biznisid ][ bFurColId ][ index ][ 0 ] > -1 ) {
-		sscanf(ColorList[ BizzInfo[ biznisid ][ bFurColId ][ index ][ 0 ] ][ clRGB ], "h", colorid);
-		SetDynamicObjectMaterial(BizzInfo[ biznisid ][ bFurObjectid ][ index ], 0, ObjectTextures[ BizzInfo[ biznisid ][ bFurTxtId ][ index ][ 0 ] ][ tModel ], ObjectTextures[ BizzInfo[ biznisid ][ bFurTxtId ][ index ][ 0 ] ][ tTXDName ], ObjectTextures[ BizzInfo[ biznisid ][ bFurTxtId ][ index ][ 0 ] ][ tName ], colorid);
-	}
-	if( BizzInfo[ biznisid ][ bFurColId ][ index ][ 1 ] > -1 ) {
-		sscanf(ColorList[ BizzInfo[ biznisid ][ bFurColId ][ index ][ 1 ] ][ clRGB ], "h", colorid);
-		SetDynamicObjectMaterial(BizzInfo[ biznisid ][ bFurObjectid ][ index ], 1, ObjectTextures[ BizzInfo[ biznisid ][ bFurTxtId ][ index ][ 1 ] ][ tModel ], ObjectTextures[ BizzInfo[ biznisid ][ bFurTxtId ][ index ][ 1 ] ][ tTXDName ], ObjectTextures[ BizzInfo[ biznisid ][ bFurTxtId ][ index ][ 1 ] ][ tName ], colorid);
-	}
-	if( BizzInfo[ biznisid ][ bFurColId ][ index ][ 2 ] > -1 ) {
-		sscanf(ColorList[ BizzInfo[ biznisid ][ bFurColId ][ index ][ 2 ] ][ clRGB ], "h", colorid);
-		SetDynamicObjectMaterial(BizzInfo[ biznisid ][ bFurObjectid ][ index ], 2, ObjectTextures[ BizzInfo[ biznisid ][ bFurTxtId ][ index ][ 2 ] ][ tModel ], ObjectTextures[ BizzInfo[ biznisid ][ bFurTxtId ][ index ][ 2 ] ][ tTXDName ], ObjectTextures[ BizzInfo[ biznisid ][ bFurTxtId ][ index ][ 2 ] ][ tName ], colorid);
-	}
-	if( BizzInfo[ biznisid ][ bFurColId ][ index ][ 3 ] > -1 ) {
-		sscanf(ColorList[ BizzInfo[ biznisid ][ bFurColId ][ index ][ 3 ] ][ clRGB ], "h", colorid);
-		SetDynamicObjectMaterial(BizzInfo[ biznisid ][ bFurObjectid ][ index ], 3, ObjectTextures[ BizzInfo[ biznisid ][ bFurTxtId ][ index ][ 3 ] ][ tModel ], ObjectTextures[ BizzInfo[ biznisid ][ bFurTxtId ][ index ][ 3 ] ][ tTXDName ], ObjectTextures[ BizzInfo[ biznisid ][ bFurTxtId ][ index ][ 3 ] ][ tName ], colorid);
+	new colorid;
+	for(new slot = 0; slot < MAX_TEXTURE_SLOTS; slot++)
+	{	
+		if( BizzInfo[ biznisid ][ bFurColId ][ index ][ slot ] > -1 ) {
+			sscanf(ColorList[ BizzInfo[ biznisid ][ bFurColId ][ index ][ slot ] ][ clRGB ], "h", colorid);
+			SetDynamicObjectMaterial(BizzInfo[ biznisid ][ bFurObjectid ][ index ], slot, ObjectTextures[ BizzInfo[ biznisid ][ bFurTxtId ][ index ][ slot ] ][ tModel ], ObjectTextures[ BizzInfo[ biznisid ][ bFurTxtId ][ index ][ slot ] ][ tTXDName ], ObjectTextures[ BizzInfo[ biznisid ][ bFurTxtId ][ index ][ slot ] ][ tName ], colorid);
+		}
+		else
+			SetDynamicObjectMaterial(BizzInfo[ biznisid ][ bFurObjectid ][ index ], slot, ObjectTextures[ BizzInfo[ biznisid ][ bFurTxtId ][ index ][ slot ] ][ tModel ], ObjectTextures[ BizzInfo[ biznisid ][ bFurTxtId ][ index ][ slot ] ][ tTXDName ], ObjectTextures[ BizzInfo[ biznisid ][ bFurTxtId ][ index ][ slot ] ][ tName ], 0);
 	}
 
 	new
 		insertObject[ 512 ];
-	format(insertObject, 512, "INSERT INTO `biznis_furniture` (`biznisid`,`modelid`,`door`,`door_z`,`locked_door`,`pos_x`,`pos_y`,`pos_z`,`rot_x`,`rot_y`,`rot_z`,`texture_1`,`texture_2`,`texture_3`,`texture_4`,`color_1`,`color_2`,`color_3`,`color_4`) VALUES ('%d','%d','%d','%f','%d','%f','%f','%f','%f','%f','%f','%d','%d','%d','%d','%d','%d','%d','%d')",
+	format(insertObject, 512, "INSERT INTO `biznis_furniture` (`biznisid`,`modelid`,`door`,`door_z`,`locked_door`,`pos_x`,`pos_y`,`pos_z`,`rot_x`,`rot_y`,`rot_z`,`texture_1`,`texture_2`,`texture_3`,`texture_4`,`texture_5`,`color_1`,`color_2`,`color_3`,`color_4`,`color_5`) VALUES ('%d','%d','%d','%f','%d','%f','%f','%f','%f','%f','%f','%d','%d','%d','%d','%d','%d','%d','%d','%d','%d')",
 		BizzInfo[ biznisid ][ bSQLID ],
 		BizzInfo[ biznisid ][ bFurModelid ][ index ],
 		BizzInfo[ biznisid ][ bFurDoor ][ index ],
@@ -1111,10 +1091,12 @@ stock static CopyFurnitureObject(playerid, copyid)
 		BizzInfo[ biznisid ][ bFurTxtId ][ index ][ 1 ],
 		BizzInfo[ biznisid ][ bFurTxtId ][ index ][ 2 ],
 		BizzInfo[ biznisid ][ bFurTxtId ][ index ][ 3 ],
+		BizzInfo[ biznisid ][ bFurTxtId ][ index ][ 4 ],
 		BizzInfo[ biznisid ][ bFurColId ][ index ][ 0 ],
 		BizzInfo[ biznisid ][ bFurColId ][ index ][ 1 ],
 		BizzInfo[ biznisid ][ bFurColId ][ index ][ 2 ],
-		BizzInfo[ biznisid ][ bFurColId ][ index ][ 3 ]
+		BizzInfo[ biznisid ][ bFurColId ][ index ][ 3 ],
+		BizzInfo[ biznisid ][ bFurColId ][ index ][ 4 ]
 	);
 	mysql_tquery(g_SQL, insertObject, "OnBizzFurnitureObjectCreate", "ii", biznisid, index);
 	Streamer_Update(playerid);
@@ -1179,17 +1161,15 @@ stock static SetFurnitureObjectPos(playerid, Float:x, Float:y, Float:z, Float:rx
 	);
 	mysql_tquery(g_SQL, editObject, "");
 
-	new
-		slot,
-		colorid;
-
-	if(BizzInfo[ biznisid ][ bFurColId ][ index ][ slot ] != -1)
-		sscanf(ColorList[ BizzInfo[ biznisid ][ bFurColId ][ index ][ slot ] ][ clRGB ], "h", colorid);
-
-
-	for( new i = 0; i < 5; i++ ) {
-		slot = BizzInfo[ biznisid ][ bFurTxtId ][ index ][ i ];
-		SetDynamicObjectMaterial(BizzInfo[ biznisid ][ bFurObjectid ][ index ], i, ObjectTextures[ slot ][ tModel ], ObjectTextures[ slot ][ tTXDName ], ObjectTextures[ slot ][ tName ], colorid);
+	new colorid;
+	for(new slot = 0; slot < MAX_TEXTURE_SLOTS; slot++)
+	{	
+		if( BizzInfo[ biznisid ][ bFurColId ][ index ][ slot ] > -1 ) {
+			sscanf(ColorList[ BizzInfo[ biznisid ][ bFurColId ][ index ][ slot ] ][ clRGB ], "h", colorid);
+			SetDynamicObjectMaterial(BizzInfo[ biznisid ][ bFurObjectid ][ index ], slot, ObjectTextures[ BizzInfo[ biznisid ][ bFurTxtId ][ index ][ slot ] ][ tModel ], ObjectTextures[ BizzInfo[ biznisid ][ bFurTxtId ][ index ][ slot ] ][ tTXDName ], ObjectTextures[ BizzInfo[ biznisid ][ bFurTxtId ][ index ][ slot ] ][ tName ], colorid);
+		}
+		else
+			SetDynamicObjectMaterial(BizzInfo[ biznisid ][ bFurObjectid ][ index ], slot, ObjectTextures[ BizzInfo[ biznisid ][ bFurTxtId ][ index ][ slot ] ][ tModel ], ObjectTextures[ BizzInfo[ biznisid ][ bFurTxtId ][ index ][ slot ] ][ tTXDName ], ObjectTextures[ BizzInfo[ biznisid ][ bFurTxtId ][ index ][ slot ] ][ tName ], 0);
 	}
 
 	Streamer_Update(playerid);
@@ -1279,11 +1259,11 @@ stock static DeleteFurnitureObject(biznisid, index, playerid)
 	BizzInfo[ biznisid ][ bFurRotX ][ index ]		= 0.0;
 	BizzInfo[ biznisid ][ bFurRotY ][ index ]		= 0.0;
 	BizzInfo[ biznisid ][ bFurRotZ ][ index ]		= 0.0;
-	BizzInfo[ biznisid ][ bFurTxtId ][ index ][ 0 ]	= 0;
-	BizzInfo[ biznisid ][ bFurTxtId ][ index ][ 1 ]	= 0;
-	BizzInfo[ biznisid ][ bFurTxtId ][ index ][ 2 ]	= 0;
-	BizzInfo[ biznisid ][ bFurTxtId ][ index ][ 3 ]	= 0;
-	BizzInfo[ biznisid ][ bFurTxtId ][ index ][ 4 ]	= 0;
+	for(new i = 0; i < MAX_TEXTURE_SLOTS; i++)
+	{
+		BizzInfo[ biznisid ][ bFurTxtId ][ index ][ i ]	= 0;
+		BizzInfo[ biznisid ][ bFurColId ][ index ][ i ]	= -1;
+	}
 	BizzInfo[ biznisid ][ bFurSlots ]--;
 	va_SendClientMessage(playerid, COLOR_RED, "[ ! ] Uspjesno ste obrisali objekt[Model ID: %d - Slot Index: %d].", BizzInfo[ biznisid ][ bFurObjectid ][ index ], index);
 	return 1;
@@ -1308,11 +1288,11 @@ stock static DestroyAllFurnitureObjects(playerid, biznisid)
 			BizzInfo[ biznisid ][ bFurRotX ][ index ]		= 0.0;
 			BizzInfo[ biznisid ][ bFurRotY ][ index ]		= 0.0;
 			BizzInfo[ biznisid ][ bFurRotZ ][ index ]		= 0.0;
-			BizzInfo[ biznisid ][ bFurTxtId ][ index ][ 0 ]	= 0;
-			BizzInfo[ biznisid ][ bFurTxtId ][ index ][ 1 ]	= 0;
-			BizzInfo[ biznisid ][ bFurTxtId ][ index ][ 2 ]	= 0;
-			BizzInfo[ biznisid ][ bFurTxtId ][ index ][ 3 ]	= 0;
-			BizzInfo[ biznisid ][ bFurTxtId ][ index ][ 4 ]	= 0;
+			for(new i = 0; i < MAX_TEXTURE_SLOTS; i++)
+			{
+				BizzInfo[ biznisid ][ bFurTxtId ][ index ][ i ]	= 0;
+				BizzInfo[ biznisid ][ bFurColId ][ index ][ i ]	= -1;
+			}
 		}
 	}
 	BizzInfo[ biznisid ][ bFurSlots ] = GetPlayerFurnitureSlots(playerid);
@@ -1402,11 +1382,11 @@ stock ReloadBizzFurniture(biznisid)
 			BizzInfo[ biznisid ][ bFurRotX ][ index ]		= 0.0;
 			BizzInfo[ biznisid ][ bFurRotY ][ index ]		= 0.0;
 			BizzInfo[ biznisid ][ bFurRotZ ][ index ]		= 0.0;
-			BizzInfo[ biznisid ][ bFurTxtId ][ index ][ 0 ]	= 0;
-			BizzInfo[ biznisid ][ bFurTxtId ][ index ][ 1 ]	= 0;
-			BizzInfo[ biznisid ][ bFurTxtId ][ index ][ 2 ]	= 0;
-			BizzInfo[ biznisid ][ bFurTxtId ][ index ][ 3 ]	= 0;
-			BizzInfo[ biznisid ][ bFurTxtId ][ index ][ 4 ]	= 0;
+			for(new i = 0; i < MAX_TEXTURE_SLOTS; i++)
+			{
+				BizzInfo[ biznisid ][ bFurTxtId ][ index ][ i ]	= 0;
+				BizzInfo[ biznisid ][ bFurColId ][ index ][ i ]	= -1;
+			}
 		}
 	}
 	LoadBiznisFurnitureObjects(biznisid);
@@ -1868,8 +1848,8 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 					BizzFurnObjectsType[ playerid ] = 4;
 				}
 				case 4: { // Ostalo
-					ShowPlayerDialog(playerid, DIALOG_BIZZ_FURN_OBJCS, DIALOG_STYLE_LIST, "Biznis Furniture - Ostalo", "SkladiSte\nParticles\nZidovi\nSigurnost", "Odaberi", "Odustani");
-					BizzFurnObjectsType[ playerid ] = 4;
+					ShowPlayerDialog(playerid, DIALOG_BIZZ_FURN_OBJCS, DIALOG_STYLE_LIST, "Biznis Furniture - Ostalo", "Skladiste\nParticles\nZidovi\nSigurnost", "Odaberi", "Odustani");
+					BizzFurnObjectsType[ playerid ] = 5;
 				}
 			}
 			return 1;
@@ -2374,13 +2354,16 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 				}
 				case 2: {	// Boje
 					new
-						buffer[ 2625 ];
-					for( new i = 0; i < 138; i++ ) {
-						format(buffer, 2625, "%s%s%s\n",
-							buffer,
+						buffer[ 4096 ],
+						motd[ 64 ];
+						
+					for( new i = 0; i < sizeof(ColorList); i++ ) 
+					{
+						format(motd, sizeof(motd), "%s%s\n",
 							ColorList[ i ][ clEmbedCol ],
 							ColorList[ i ][ clName ]
 						);
+						strcat(buffer, motd, 4096);
 					}
 					ShowPlayerDialog(playerid, DIALOG_BIZZ_FURN_COL_LIST, DIALOG_STYLE_LIST, "Furniture - Odabir boja", buffer, "Odaberi", "Odustani");
 				}
@@ -2466,7 +2449,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 			if( !response ) return ShowPlayerDialog(playerid, DIALOG_BIZZ_FURN_TXTS, DIALOG_STYLE_TABLIST_HEADERS, "Furniture - Teksture", ShowPlayerTextureList(playerid), "Odaberi", "Odustani");
 			new
 				slot = strval(inputtext);
-			if( 0 <= slot <= 4 ) {
+			if( 0 <= slot <= 3 ) {
 				va_ShowPlayerDialog(playerid, DIALOG_BIZZ_FURN_TXTS_SURE, DIALOG_STYLE_MSGBOX, "Furniture - Teksture", "Zelite li staviti odabranu teksturu na objekt u slot %d?", "Da", "Ne", slot);
 				BizzPlayerEditTxtSlot[ playerid ] = slot;
 
@@ -2475,7 +2458,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 				SetDynamicObjectMaterial(BizzInfo[ GetPlayerFurnitureBiznis(playerid) ][ bFurObjectid ][ BizzPlayerEditIndex[ playerid ] ], slot, ObjectTextures[ index ][ tModel ], ObjectTextures[ index ][ tTXDName ], ObjectTextures[ index ][ tName ], 0);
 
 			} else
-				ShowPlayerDialog(playerid, DIALOG_BIZZ_FURN_TXTS_SLOT, DIALOG_STYLE_INPUT, "Furniture - Texture Slots", "Unesite slot u koji zelite staviti teksturu "COL_RED"(0-4)", "Unesi", "Odustani");
+				ShowPlayerDialog(playerid, DIALOG_BIZZ_FURN_TXTS_SLOT, DIALOG_STYLE_INPUT, "Furniture - Texture Slots", "Unesite slot u koji zelite staviti teksturu "COL_RED"(0-3)", "Unesi", "Odustani");
 			return 1;
 		}
 		case DIALOG_BIZZ_FURN_TXTS_SURE: {
@@ -2493,13 +2476,16 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 		case DIALOG_BIZZ_FURN_COL_SLOT: {
 			if( !response ) {
 				new
-					buffer[ 2625 ];
-				for( new i = 0; i < sizeof(ColorList); i++ ) {
-					format(buffer, 2625, "%s%s%s",
-						buffer,
+					buffer[ 4096 ],
+					motd[ 64 ];
+					
+				for( new i = 0; i < sizeof(ColorList); i++ ) 
+				{
+					format(motd, sizeof(motd), "%s%s\n",
 						ColorList[ i ][ clEmbedCol ],
 						ColorList[ i ][ clName ]
 					);
+					strcat(buffer, motd, 4096);
 				}
 				ShowPlayerDialog(playerid, DIALOG_BIZZ_FURN_COL_LIST, DIALOG_STYLE_LIST, "Furniture - Odabir boja", buffer, "Odaberi", "Odustani");
 				return 1;
@@ -2507,9 +2493,9 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 
 			new
 				slotid = strval(inputtext);
-			if( 0 <= slotid <= 4 ) {
+			if( 1 <= slotid <= MAX_TEXTURE_SLOTS ) {
 				va_ShowPlayerDialog(playerid, DIALOG_BIZZ_FURN_COL_SURE, DIALOG_STYLE_MSGBOX, "Furniture - Boje", "Zelite li staviti odabranu boju u slot %d?", "Da", "Ne", slotid);
-				BizzPlayerEditTxtSlot[ playerid ] = slotid;
+				BizzPlayerEditTxtSlot[ playerid ] = slotid - 1;
 
 				new
 					colorid,
@@ -2519,11 +2505,11 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 				SetDynamicObjectMaterial(BizzInfo[ biznisid ][ bFurObjectid ][ BizzPlayerEditIndex[ playerid ] ], slotid, ObjectTextures[ BizzInfo[ biznisid ][ bFurTxtId ][ index ][ slotid ] ][ tModel ], ObjectTextures[ BizzInfo[ biznisid ][ bFurTxtId ][ index ][ slotid ] ][ tTXDName ], ObjectTextures[ BizzInfo[ biznisid ][ bFurTxtId ][ index ][ slotid ] ][ tName ], colorid);
 
 			} else
-				ShowPlayerDialog(playerid, DIALOG_BIZZ_FURN_COL_SLOT, DIALOG_STYLE_INPUT, "Furniture - Color Slots", "Unesite slot u koji zelite staviti odabranu boju (0-4)!", "Unesi", "Odustani");
+				ShowPlayerDialog(playerid, DIALOG_BIZZ_FURN_COL_SLOT, DIALOG_STYLE_INPUT, "Furniture - Color Slots", "Unesite slot u koji zelite staviti odabranu boju (1-5)!", "Unesi", "Odustani");
 			return 1;
 		}
 		case DIALOG_BIZZ_FURN_COL_SURE: {
-			if( !response ) return ShowPlayerDialog(playerid, DIALOG_BIZZ_FURN_COL_SLOT, DIALOG_STYLE_INPUT, "Furniture - Color Slots", "Unesite slot u koji zelite staviti odabranu boju (0-4)!", "Unesi", "Odustani");
+			if( !response ) return ShowPlayerDialog(playerid, DIALOG_BIZZ_FURN_COL_SLOT, DIALOG_STYLE_INPUT, "Furniture - Color Slots", "Unesite slot u koji zelite staviti odabranu boju (1-5)!", "Unesi", "Odustani");
 
 			if( !SetFurnitureObjectColor(playerid, BizzPlayerEditTxtSlot[ playerid ], BizzPlayerEditTxtIndex[ playerid ], BizzPlayerEditIndex[ playerid ]) ) return SendClientMessage(playerid, COLOR_RED, "[GRESKA]: Doslo je do greske. Pokusajte ponovno!");
 			return 1;
@@ -2533,8 +2519,8 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 
 			new
 				slot = strval(inputtext);
-			if( 0 <= slot <= 4 ) {
-				BizzPlayerEditClsIndex[ playerid ] = slot;
+			if( 1 <= slot <= MAX_TEXTURE_SLOTS ) {
+				BizzPlayerEditClsIndex[ playerid ] = slot - 1;
 				va_ShowPlayerDialog(playerid, DIALOG_BIZZ_FURN_SLOT_SURE, DIALOG_STYLE_MSGBOX, "Furniture - Brisanje tekstura i boja", "Zelite li obrisati teksture i boje na slotu %d?", "Da", "Ne", slot);
 			}
 			else

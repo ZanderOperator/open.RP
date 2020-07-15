@@ -2589,7 +2589,8 @@ stock GetPlayerSignal(playerid)
 
 stock PlayerHangup(playerid)
 {
-
+	new giveplayerid = PlayerCallPlayer[playerid];
+	
 	// pozvatelj
 	Bit8_Set( gr_RingingTime, playerid, 0 );
 	Bit1_Set( gr_CanHangup, playerid, false );
@@ -2603,7 +2604,7 @@ stock PlayerHangup(playerid)
 	Bit1_Set( gr_PlayerUsingGov		, playerid, false );
 
 	// osoba koju je nazvao
-	new giveplayerid = PlayerCallPlayer[playerid];
+	if(giveplayerid == INVALID_PLAYER_ID) return 1;
 	if(!IsPlayerConnected(giveplayerid)) return 1;
 	Bit8_Set( gr_RingingTime, giveplayerid, 0 );
 	Bit1_Set( gr_CanHangup, giveplayerid, false );
@@ -3818,7 +3819,7 @@ CMD:createtower(playerid, params[])
 {
 	if (PlayerInfo[playerid][pAdmin] < 1338) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ovlasteni za koristenje ove komande!");
 	new ctnetwork[24], Float:ctradius;
-	if(sscanf(params, "s[24]f", ctnetwork, ctradius)) return SendClientMessage(playerid, COLOR_RED, "USAGE: /createtower [network name] [radius]");
+	if(sscanf(params, "s[24]f", ctnetwork, ctradius)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /createtower [network name] [radius]");
 	new
 		Float:x, Float:y, Float:z;
 	GetPlayerPos(playerid, x, y, z);
@@ -3834,7 +3835,7 @@ CMD:destroytower(playerid, params[])
 {
 	if (PlayerInfo[playerid][pAdmin] < 1338) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ovlasteni za koristenje ove komande!");
 	new dtowerid;
-	if(sscanf(params, "i", dtowerid)) return SendClientMessage(playerid, COLOR_RED, "USAGE: /destroytower [id]");
+	if(sscanf(params, "i", dtowerid)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /destroytower [id]");
 	if(!DeleteTower(dtowerid)) SendFormatMessage(playerid, MESSAGE_TYPE_ERROR,"Taj toranj ne postoji u bazi podataka (koristite IG id, a ne SQLID)!");
 	va_SendInfoMessage(playerid, "Unistili ste toranj ID %d!", dtowerid);
 	return 1;
@@ -3907,7 +3908,7 @@ CMD:pcall(playerid, params[])
 		number;
 
 	if( sscanf( params, "i", number ) ) {
-		SendClientMessage(playerid, COLOR_RED, "USAGE: /pcall [broj]");
+		SendClientMessage(playerid, COLOR_RED, "[ ? ]: /pcall [broj]");
 		SendClientMessage(playerid, COLOR_GREY, "HITNI POZIVI: 555 (mehanicari), 911 (LSPD/LSFD), 444 (taxi)");
 		return 1;
 	}
@@ -3973,7 +3974,7 @@ CMD:sms(playerid, params[])
 		return SendClientMessage(playerid,COLOR_RED, "ERROR: Ne mozes koristiti ovu komandu dok imas opciju /die!");
 	if( !PlayerInfo[ playerid ][ pMobileNumber ] )
 		return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR,"Nemate mobitel!");
-	if(isnull(params)) return SendClientMessage(playerid, COLOR_RED, "USAGE: /sms  [broj][tekst]");
+	if(isnull(params)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /sms  [broj][tekst]");
 	if(strlen(params) > 110) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Prevelika poruka (max. 110 znakova)!");
 
 	new
@@ -3981,7 +3982,7 @@ CMD:sms(playerid, params[])
 		string[8],
 		smsText[110];
 
-	if( sscanf( params, "is[110]", number, smsText ) ) return SendClientMessage(playerid, COLOR_RED, "USAGE: /sms [broj][text]");
+	if( sscanf( params, "is[110]", number, smsText ) ) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /sms [broj][text]");
 	if( strlen(smsText) < 2 || strlen(smsText) > 110 ) return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR,"SMS text mora biti u rasponu od 2 do 110 slova!");
 	valstr(string, number);
 	if( strlen(string) == 6 )
@@ -4059,7 +4060,7 @@ CMD:cryptotext(playerid, params[])
 	new
 		cryptonumber, inputstring[80];
 
-    if(sscanf(params, "is[80]", cryptonumber, inputstring)) return SendClientMessage(playerid, COLOR_RED, "USAGE: /cryptotext [crypto number] [text]");
+    if(sscanf(params, "is[80]", cryptonumber, inputstring)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /cryptotext [crypto number] [text]");
  	if(PlayerInfo[playerid][pCryptoNumber] == 0) return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR,"Nemate crypto.");
 	if(PlayerInfo[playerid][pJailed] != 0) return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR,"Nemozete trenutno poslati poruku!");
     if(strlen(inputstring) > 80) return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR,"Poruka je preduga,nemoze imati vise od 80 znakova!");
@@ -4089,7 +4090,7 @@ CMD:cryptotext(playerid, params[])
 CMD:cryptonumber(playerid, params[]) {
 	new _crypt;
 
-    if(sscanf(params, "i", _crypt)) return SendClientMessage(playerid, COLOR_RED, "USAGE: /cryptonumber [crypto number]");
+    if(sscanf(params, "i", _crypt)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /cryptonumber [crypto number]");
  	if(PlayerInfo[playerid][pCryptoNumber] == 0) return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR,"Nemate crypto.");
 	if(PlayerInfo[playerid][pJailed] != 0) return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR,"Nemozete trenutno poslati poruku!");
 	if(_crypt < 100 || _crypt > 999999) return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR,"Broj moze biti izmedju 100 i 999999!");
@@ -4129,7 +4130,7 @@ CMD:tracenumber(playerid, params[])
 	new
 		number,
 		string[8];
-	if( sscanf( params, "i", number ) ) return SendClientMessage(playerid, COLOR_RED, "USAGE: /tracenumber [broj mobitela]");
+	if( sscanf( params, "i", number ) ) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /tracenumber [broj mobitela]");
 	valstr(string, number);
 	if( strlen(string) != 6 ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Unesite broj mobitela!");
 	foreach(new gplayerid : Player)

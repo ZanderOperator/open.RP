@@ -394,7 +394,7 @@ CMD:atoll(playerid, params[])
  	if (PlayerInfo[playerid][pAdmin] < 1) return SendClientMessage(playerid, COLOR_RED, "Niste ovlasteni za koristenje ove komande!");
 	if(sscanf(params, "d", tollid))
 	{
-	    SendClientMessage(playerid, COLOR_RED, "USAGE: /locktoll [ID naplatne kucice]");
+	    SendClientMessage(playerid, COLOR_RED, "[ ? ]: /locktoll [ID naplatne kucice]");
 	    SendClientMessage(playerid, -1, "Tool ID 1 - Lock all || Toll ID 2 - Unlock all");
 	    return 1;
 	}

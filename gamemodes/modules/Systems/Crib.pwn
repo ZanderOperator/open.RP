@@ -3073,7 +3073,7 @@ CMD:houseentrance(playerid, params[])
 {
 	new houseid;
 	if(PlayerInfo[playerid][pAdmin] < 1337) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ovlasteni!");
-	if(sscanf(params, "i", houseid)) return SendClientMessage(playerid, COLOR_RED, "USAGE: /houseentrance [houseid]");
+	if(sscanf(params, "i", houseid)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /houseentrance [houseid]");
 	if(!Iter_Contains(Houses, houseid)) return SendClientMessage(playerid,COLOR_RED, "Morate unijeti valjani houseid!");
 
 	va_SendClientMessage(playerid, COLOR_RED, "[ ! ] Premjestili ste ulaz od kuce %d na ovo mjesto!",houseid);
@@ -3118,7 +3118,7 @@ CMD:customhouseint(playerid, params[])
 
 	if(PlayerInfo[playerid][pAdmin] < 1338) return SendClientMessage(playerid, COLOR_RED, "GRESKA: Niste ovlasteni za koristenje ove komande!");
 	if(sscanf(params, "iifff", houseid, hint, iX, iY, iZ)) {
-		SendClientMessage(playerid, COLOR_RED, "USAGE: /custombizint [houseid][int][X][Y][Z]");
+		SendClientMessage(playerid, COLOR_RED, "[ ? ]: /custombizint [houseid][int][X][Y][Z]");
 		SendClientMessage(playerid, COLOR_GREY, "NOTE: Taj ID MORA biti u skripti!");
 		return 1;
 	}
@@ -3146,7 +3146,7 @@ CMD:houseint(playerid, params[])
 {
 	new proplev, id2;
 	if(PlayerInfo[playerid][pAdmin] < 1338) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nisi 1338!");
-	if (sscanf(params, "ii", proplev, id2)) return SendClientMessage(playerid, COLOR_RED, "USAGE: /houseint [houseid] [id (1-42)]");
+	if (sscanf(params, "ii", proplev, id2)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /houseint [houseid] [id (1-42)]");
 	if(proplev > sizeof(HouseInfo) || proplev < 0) return SendClientMessage(playerid,COLOR_RED, "House ID mora biti izmedju 0 i 558");
  	if(id2 < 1 || id2 > 42) return SendClientMessage(playerid, COLOR_RED, "[GRESKA:] INTERIORI MOGU BITI OD 1-42.");
 	switch(id2) {
@@ -3424,7 +3424,7 @@ CMD:doorshout(playerid, params[])
 		result[100],
 		house;
 		
-	if(sscanf(params, "s[100]", result)) return SendClientMessage(playerid, COLOR_RED, "USAGE: /doorshout [text]");
+	if(sscanf(params, "s[100]", result)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /doorshout [text]");
 	
 	if(Bit16_Get(gr_PlayerInfrontHouse, playerid) != INVALID_HOUSE_ID)
 	{
@@ -3533,7 +3533,7 @@ CMD:rent(playerid, params[])
 			hpick[11];
 
 		if(sscanf(params, "s[11]s[11]", pick, hpick)) {
-			SendClientMessage(playerid, COLOR_RED, "USAGE: /rent house [odabir]");
+			SendClientMessage(playerid, COLOR_RED, "[ ? ]: /rent house [odabir]");
 			SendClientMessage(playerid, COLOR_GREY, "[ODABIR]: start - stop");
 			return 1;
 		}
@@ -3610,7 +3610,7 @@ CMD:picklock(playerid, params[])
 	if(house == INVALID_HOUSE_ID) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Morate biti ispred kuce(u checkpointu)!");
 	if(!IsOwnerOfHouseOnline(house)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Mozete provaljivati samo kada je vlasnik online!");
 	if(sscanf(params, "s[6] ", pick)) {
-		SendClientMessage(playerid, COLOR_RED, "USAGE: /picklock [odabir]");
+		SendClientMessage(playerid, COLOR_RED, "[ ? ]: /picklock [odabir]");
 		SendClientMessage(playerid, COLOR_GREY, "[ODABIR]: card, tools");
 		return 1;
 	}
@@ -3652,7 +3652,7 @@ CMD:doorram(playerid, params[])
 	if(house == INVALID_HOUSE_ID) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Morate biti ispred kuce(u checkpointu)!");
 	if(!HouseInfo[house][hLock]) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Vrata su otkljucana!");
 	if(!IsOwnerOfHouseOnline(house)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Mozete provaljivati samo kada je vlasnik online!");
-	if(sscanf(params, "s[8]", param)) return SendClientMessage(playerid, COLOR_RED, "USAGE: /doorram [foot/crowbar]");
+	if(sscanf(params, "s[8]", param)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /doorram [foot/crowbar]");
 
 	if(!strcmp("foot", param, true)) {
 		if(Bit1_Get(gr_PlayerFootKicking, playerid)) {
@@ -3714,7 +3714,7 @@ CMD:createhouse(playerid, params[])
 		for(new i = 0; i < sizeof(HouseInts); i++) {
 			va_SendClientMessage(playerid, COLOR_GRAD2, "Interior: [%d] %s", i, HouseInts[i][iDescription]);
 		}
-		SendClientMessage(playerid, COLOR_RED, "USAGE: /createhouse [level][price][interior][address]");
+		SendClientMessage(playerid, COLOR_RED, "[ ? ]: /createhouse [level][price][interior][address]");
 		return 1;
 	}
 	if(strlen(address) <= 0 || strlen(address) > 32)

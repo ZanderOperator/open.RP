@@ -212,7 +212,7 @@ CMD:checknos(playerid, params[])
 		veh;
 	
 	if(sscanf(params, "d", veh))
-		return SendClientMessage(playerid, COLOR_RED, "USAGE: /checknos [vozilo id]");
+		return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /checknos [vozilo id]");
 	
 	if(veh == INVALID_VEHICLE_ID)
 		return SendClientMessage(playerid,COLOR_RED, "Krivi id vozila");

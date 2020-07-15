@@ -1581,7 +1581,7 @@ CMD:drug(playerid, params[])
 	if (sscanf(params, "s[16] ", item))
 	{
 		SendClientMessage(playerid, COLOR_RED, "___________________________________________________________________");
-		SendClientMessage(playerid, COLOR_RED, "USAGE: /drug [opcija]");
+		SendClientMessage(playerid, COLOR_RED, "[ ? ]: /drug [opcija]");
      	SendClientMessage(playerid, COLOR_RED, "[ ! ] give, view, use, put, take, vehinfo, test, slotreplace");
      	SendClientMessage(playerid, COLOR_RED, "[ ! ] produce, harvest, destroy, cut");
      	SendClientMessage(playerid, COLOR_RED, "[ ! ] buyseeds, test, ingredients, giveingredients");
@@ -1593,7 +1593,7 @@ CMD:drug(playerid, params[])
 	{
 	    new cijena;
 	    if(PlayerInfo[playerid][pJob] != DRUG_DEALER_ID) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nisi diler droge!");
-	    if(sscanf(params, "s[16]i", item, kolicina)) 	return SendClientMessage(playerid, COLOR_RED, "USAGE: /drug buyseeds [kolicina]");
+	    if(sscanf(params, "s[16]i", item, kolicina)) 	return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /drug buyseeds [kolicina]");
 	    if(kolicina < 1 || kolicina > 100) 			return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne mozete uzeti vise od 100 sjemenki odjednom!");
 		if(PlayerInfo[playerid][pSeeds] >= 100) 		return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne mozete imati vise od 100 sjemenki kod sebe!");
 		if(!IsPlayerInRangeOfPoint(playerid, 5.0, 2485.8137, -1328.7324, 38.6563)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nisi u blizini mjesta za kupovinu sjemenki!");
@@ -1610,7 +1610,7 @@ CMD:drug(playerid, params[])
     else if(strcmp(item,"test",true) == 0)
 	{
 		if( PlayerInfo[playerid][pJob] != DRUG_DEALER_ID && PlayerInfo[playerid][pDrugUses] < 50) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste diler droge/iskusnjara s drogom!");
-	    if( sscanf( params, "s[16]i", item, slot ) ) return SendClientMessage(playerid, COLOR_RED, "USAGE: /drug test [slot]");
+	    if( sscanf( params, "s[16]i", item, slot ) ) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /drug test [slot]");
 	    if(slot < 1 || slot > 5) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Krivi broj slota!");
 	    slot2 = slot-1;
 	    if( !PlayerDrugs[playerid][dCode][slot2] ) 	return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Taj slot vam je prazan!");
@@ -1630,7 +1630,7 @@ CMD:drug(playerid, params[])
 		if (sscanf(params, "s[16]uis[8] ", item, giveplayerid, slot, ammountstr))
 		{
 			SendClientMessage(playerid, COLOR_SKYBLUE, "___________________________________________________________________");
-			SendClientMessage(playerid, COLOR_RED, "USAGE: /drug give [playerid/dio imena][slot][kolicina]");
+			SendClientMessage(playerid, COLOR_RED, "[ ? ]: /drug give [playerid/dio imena][slot][kolicina]");
 	     	SendClientMessage(playerid, COLOR_WHITE, "[Pomoc] Slot znaci broj vaseg mjesta droge, moze biti od 1 do 5.");
 	     	SendClientMessage(playerid, COLOR_WHITE, "[Pomoc] Ukucajte /drug view ako zelite slot vase droge!");
 	        SendClientMessage(playerid, COLOR_SKYBLUE, "___________________________________________________________________");
@@ -1719,7 +1719,7 @@ CMD:drug(playerid, params[])
 		new Float:amount;
         if (sscanf(params, "s[16]if", item, slot, amount)) {
 			SendClientMessage(playerid, COLOR_SKYBLUE, "___________________________________________________________________");
-			SendClientMessage(playerid, COLOR_RED, "USAGE: /drug use [slot] [kolicina]");
+			SendClientMessage(playerid, COLOR_RED, "[ ? ]: /drug use [slot] [kolicina]");
 	     	SendClientMessage(playerid, COLOR_RED, "[ ! ] Slot znaci broj vaseg mjesta droge, moze biti od 1 do 5.");
 	     	SendClientMessage(playerid, COLOR_RED, "[ ! ] Ukucajte /drug view ako zelite vidjeti slot vase droge!");
 	        SendClientMessage(playerid, COLOR_SKYBLUE, "___________________________________________________________________");
@@ -1935,7 +1935,7 @@ CMD:drug(playerid, params[])
 	else if(strcmp(item,"put",true) == 0)
     {
         vehicleid = GetPlayerVehicleID(playerid);
-        if (sscanf(params, "s[16]if", item, slot, ammount)) return SendClientMessage(playerid, COLOR_RED, "USAGE: /drug put [slot][kolicina]");
+        if (sscanf(params, "s[16]if", item, slot, ammount)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /drug put [slot][kolicina]");
 		if(!IsPlayerInAnyVehicle(playerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ovu komandu mozete pisati samo dok ste u vozilu!");
 		if( !Iter_Contains(COVehicles, vehicleid) ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste u privatnome vozilu!");
 		if( !CheckVehicleDrugCapacities(playerid, vehicleid) )
@@ -2070,7 +2070,7 @@ CMD:drug(playerid, params[])
 		else if(strcmp(opcija,"crack",true) == 0)
 		{
 		    new kuca = Bit16_Get(gr_PlayerInHouse, playerid), soda, formula;
-		    if (sscanf(params, "s[32]s[20]ii", item, opcija, slot, soda)) return SendClientMessage(playerid, COLOR_RED, "USAGE: /drug produce crack [slot kokaina] [kolicina sode u gramima]");
+		    if (sscanf(params, "s[32]s[20]ii", item, opcija, slot, soda)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /drug produce crack [slot kokaina] [kolicina sode u gramima]");
 		    if(kuca == 9999) return SendClientMessage(playerid, COLOR_RED, "Niste u kuci!");
 			if (IsPlayerInRangeOfPoint(playerid,20,HouseInfo[kuca][hExitX], HouseInfo[kuca][hExitY], HouseInfo[kuca][hExitZ]) && GetPlayerVirtualWorld(playerid) == HouseInfo[kuca][hVirtualWorld])
 			{
@@ -2112,7 +2112,7 @@ CMD:drug(playerid, params[])
 		}
 		if(strcmp(opcija,"cocaine",true) == 0)
 		{
-		    if (sscanf(params, "s[32]s[20]ii", item, opcija, slot, soda)) return SendClientMessage(playerid, COLOR_RED, "USAGE: /drug cut cocaine [slot kokaina] [kolicina sode u gramima]");
+		    if (sscanf(params, "s[32]s[20]ii", item, opcija, slot, soda)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /drug cut cocaine [slot kokaina] [kolicina sode u gramima]");
 		    if(kuca == 9999) return SendClientMessage(playerid, COLOR_RED, "Niste u kuci!");
 			if (IsPlayerInRangeOfPoint(playerid,20,HouseInfo[kuca][hExitX], HouseInfo[kuca][hExitY], HouseInfo[kuca][hExitZ]) && GetPlayerVirtualWorld(playerid) == HouseInfo[kuca][hVirtualWorld])
 			{
@@ -2146,7 +2146,7 @@ CMD:drug(playerid, params[])
 		}
 		else if(strcmp(opcija,"heroin",true) == 0)
 		{
-		    if (sscanf(params, "s[32]s[20]ii", item, opcija, slot, soda)) return SendClientMessage(playerid, COLOR_RED, "USAGE: /drug cut heroin [slot heroina] [kolicina sode u gramima]");
+		    if (sscanf(params, "s[32]s[20]ii", item, opcija, slot, soda)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /drug cut heroin [slot heroina] [kolicina sode u gramima]");
 		    if(kuca == 9999) return SendClientMessage(playerid, COLOR_RED, "Niste u kuci!");
 			if (IsPlayerInRangeOfPoint(playerid,20,HouseInfo[kuca][hExitX], HouseInfo[kuca][hExitY], HouseInfo[kuca][hExitZ]) && GetPlayerVirtualWorld(playerid) == HouseInfo[kuca][hVirtualWorld])
 			{
@@ -2185,7 +2185,7 @@ CMD:drug(playerid, params[])
 			slot1;
 	    if (sscanf(params, "s[16]iif", item, slot1, slot2, ammount))
 		{
-			SendClientMessage(playerid, COLOR_RED, "USAGE: /drug slotreplace [slot u koji prebacujes] [slot iz kojeg prebacujes] [kolicina]");
+			SendClientMessage(playerid, COLOR_RED, "[ ? ]: /drug slotreplace [slot u koji prebacujes] [slot iz kojeg prebacujes] [kolicina]");
 			return 1;
 		}
 		if(slot1 < 1 || slot1 > 5) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Krivi broj slota 1!");
@@ -2370,7 +2370,7 @@ CMD:drug(playerid, params[])
 		new
 			ingredient, tmpString[ 80 ];
 		if(sscanf(params, "s[16]ui", item, giveplayerid, ingredient)) {
-			SendClientMessage(playerid, COLOR_RED, "USAGE: /drug giveingredients [Playerid/DioImena][ID Sastojka]");
+			SendClientMessage(playerid, COLOR_RED, "[ ? ]: /drug giveingredients [Playerid/DioImena][ID Sastojka]");
 			SendClientMessage(playerid, COLOR_RED, "[ ! ] (1 - Caustic Soda), (2 - Muriatic Acid), (3- Hydrogen Chloride), (4 - Baking soda)");
 			return 1;
 		}
@@ -2455,7 +2455,7 @@ CMD:drug(playerid, params[])
 		new comp;
 		if(sscanf(params, "s[16]i", item, comp))
 		{
-			SendClientMessage(playerid, COLOR_RED, "USAGE: /cookmeth putcomp [odabir]");
+			SendClientMessage(playerid, COLOR_RED, "[ ? ]: /cookmeth putcomp [odabir]");
 			SendClientMessage(playerid, COLOR_RED, "[ ! ] 1 - Custic Soda, 2 - Muriatic Acid, 3 - Hydrogen Chloride");
 			return 1;
 		}
@@ -2503,7 +2503,7 @@ CMD:agivedrug(playerid, params[])
     if(PlayerInfo[playerid][pAdmin] < 1337) return SendClientMessage(playerid, COLOR_RED, "Niste ovlasteni za koristenje ove komande(1337+).");
 	if(sscanf(params, "uif", giveplayerid, item, amount))
 	{
-		SendClientMessage(playerid, COLOR_RED, "USAGE: /agivedrug [Playerid/DioImena][Vrsta][Amount]");
+		SendClientMessage(playerid, COLOR_RED, "[ ? ]: /agivedrug [Playerid/DioImena][Vrsta][Amount]");
 		SendClientMessage(playerid, COLOR_GREY, "(1 - Marijuana), (2 - Cocaine), (3 - Crack), (4 - Methamphetamine), (5 - Ecstasy), (6 - Heroin)");
 		return 1;
 	}

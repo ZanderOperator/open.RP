@@ -187,7 +187,7 @@ CMD:mask(playerid, params[])
 		/*foreach(new i : Player) {
 			ShowPlayerNameTagForPlayer(i, playerid, 0);
 		}*/
-		SendClientMessage(playerid, COLOR_RED, "[INVENTORY]: Stavili ste masku na glavu, da ju maknete odaberite opet 'koristi' u inventory-u.");
+		SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "Stavili ste masku na glavu. Korsitite /mask opet ukoliko je zelite skinuti.");
 		Bit1_Set( gr_MaskUse, playerid, true);
 		/*format(buffer, sizeof(buffer), "* %s stavlja masku na glavu.", GetName(playerid, true));
 		SendClientMessage(playerid, COLOR_PURPLE, buffer);
@@ -249,7 +249,7 @@ CMD:taxcalculator(playerid, params[])
 {
 	new pick, iznos; 
 	if(sscanf(params, "ii", pick, iznos)) {
-		SendClientMessage(playerid, COLOR_RED, "USAGE: /taxcalculator [opcija 1 ili 2] [iznos]");
+		SendClientMessage(playerid, COLOR_RED, "[ ? ]: /taxcalculator [opcija 1 ili 2] [iznos]");
 		SendClientMessage(playerid, -1, "OPCIJA 1: Dodaj porez na iznos ");
 		SendClientMessage(playerid, -1, "OPCIJA 2: Makni porez sa iznosa");
 		return 1;
@@ -341,7 +341,7 @@ CMD:me(playerid, params[])
 		return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne mozes pricati!");
 		
 	if(isnull(params))
-		return SendClientMessage(playerid, COLOR_RED, "USAGE: /me [radnja]");
+		return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /me [radnja]");
 	new string[200];
 	format(string, sizeof(string), "* %s %s", GetName(playerid), params);
 	ProxDetector(22.0, playerid, string, COLOR_PURPLE, COLOR_PURPLE, COLOR_PURPLE, COLOR_PURPLE, COLOR_PURPLE);
@@ -353,7 +353,7 @@ CMD:lowme(playerid, params[])
 		return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne mozes pricati!");
 
 	if(isnull(params))
-		return SendClientMessage(playerid, COLOR_RED, "USAGE: /lowme [radnja]");
+		return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /lowme [radnja]");
 	new string[200];
 	format(string, sizeof(string), "* %s %s", GetName(playerid), params);
 	RealProxDetector(5.0, playerid, string, COLOR_PURPLE, COLOR_PURPLE, COLOR_PURPLE, COLOR_PURPLE, COLOR_PURPLE);
@@ -366,7 +366,7 @@ CMD:ame(playerid, params[])
 		
 	if(PlayerInfo[playerid][pMuted]) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne mozes pricati!");
 	//if( Bit1_Get( gr_DeathCountStarted, playerid ) ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne mozete pricati, u post death stanju ste!");
-	if(isnull(params)) return SendClientMessage(playerid, COLOR_RED, "USAGE: /ame [radnja]");
+	if(isnull(params)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /ame [radnja]");
 	format(string, sizeof(string), "> %s %s", GetName(playerid), params);
     SendClientMessage(playerid, COLOR_PURPLE, string);
     SetPlayerChatBubble(playerid, string, COLOR_PURPLE, 20, 20000);
@@ -378,7 +378,7 @@ CMD:do(playerid, params[])
 		
 	if(PlayerInfo[playerid][pMuted]) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne mozes pricati!");
 	//if( Bit1_Get( gr_DeathCountStarted, playerid ) ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne mozete pricati, u post death stanju ste!");
-	if(sscanf(params, "s[128]", result)) return SendClientMessage(playerid, COLOR_RED, "USAGE: /do [radnja]");
+	if(sscanf(params, "s[128]", result)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /do [radnja]");
 
 	format(result, sizeof(result), "* %s (( %s )).", params, GetName(playerid));
 	ProxDetector(22.0, playerid, result, COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE);
@@ -389,7 +389,7 @@ CMD:lowdo(playerid, params[])
 	new result[256];
 
 	if(PlayerInfo[playerid][pMuted]) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne mozes pricati!");
-	if(sscanf(params, "s[128]", result)) return SendClientMessage(playerid, COLOR_RED, "USAGE: /do [radnja]");
+	if(sscanf(params, "s[128]", result)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /do [radnja]");
 
 	format(result, sizeof(result), "* %s (( %s )).", params, GetName(playerid));
 	RealProxDetector(5.0, playerid, result, COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE);
@@ -399,7 +399,7 @@ CMD:close(playerid, params[])
 {
 	if(PlayerInfo[playerid][pMuted]) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne mozes pricati!");
 	//if( Bit1_Get( gr_DeathCountStarted, playerid ) ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne mozete pricati, u post death stanju ste!");
-	if(isnull(params)) return SendClientMessage(playerid, COLOR_RED, "USAGE: /(c)lose [poruka]");
+	if(isnull(params)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /(c)lose [poruka]");
 	new string[128];
 	params[0] = toupper(params[0]);
 	if(IsPlayerInAnyVehicle(playerid)) {
@@ -415,7 +415,7 @@ CMD:shout(playerid, params[])
 {
 	if(PlayerInfo[playerid][pMuted]) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne mozes pricati!");
 	if( Bit1_Get( gr_DeathCountStarted, playerid ) ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne mozete pricati, u post death stanju ste!");
-	if(isnull(params)) return SendClientMessage(playerid, COLOR_RED, "USAGE: /(s)hout [poruka]");
+	if(isnull(params)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /(s)hout [poruka]");
 	params[0] = toupper(params[0]);
 	new string[128];
 	if(IsPlayerInAnyVehicle(playerid)) {
@@ -432,7 +432,7 @@ CMD:carwhisper(playerid, params[])
 	if( !IsPlayerInAnyVehicle(playerid ) ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste u vozilu!");
 	if(PlayerInfo[playerid][pMuted]) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne mozes pricati!");
 	//if( Bit1_Get( gr_DeathCountStarted, playerid ) ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne mozete pricati, u post death stanju ste!");
-	if(isnull(params)) return SendClientMessage(playerid, COLOR_RED, "USAGE: /(c)lose [poruka]");
+	if(isnull(params)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /(c)lose [poruka]");
 	new 
 		string[128];
 	format(string, sizeof(string), "%s %s tiho: %s", GetName(playerid), PrintAccent(playerid), params);
@@ -446,7 +446,7 @@ CMD:whisper(playerid, params[])
 		message[72];
 		
 	if(PlayerInfo[playerid][pMuted]) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne mozes pricati!");
-	if(sscanf(params, "us[72]", giveplayerid, message)) return SendClientMessage(playerid, COLOR_RED, "USAGE: /(w)hisper [dio imena/playerid][poruka]");
+	if(sscanf(params, "us[72]", giveplayerid, message)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /(w)hisper [dio imena/playerid][poruka]");
 	if(giveplayerid == INVALID_PLAYER_ID) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Krivi playerid/dio imena!");
 	if(PlayerInfo[giveplayerid][pKilled]) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Korisnik je mrtav!");
 	if(giveplayerid == playerid) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne mozete sami sebi saptati!");
@@ -513,7 +513,7 @@ CMD:blockb(playerid, params[])
 CMD:b(playerid, params[])
 {
 	if(PlayerInfo[playerid][pMuted]) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne mozes pricati!");
-	if(isnull(params)) return SendClientMessage(playerid, COLOR_RED, "USAGE: /b [tekst]");
+	if(isnull(params)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /b [tekst]");
 	if(strlen(params) > 128) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Prevelika poruka (max. 128 znakova)!");
 	
 	new tmpString[128];
@@ -657,7 +657,7 @@ CMD:helpme(playerid, params[])
 	SendClientMessage(playerid, COLOR_RED, "[ ! ]  Koritite /report, helperi su izbaceni!");
 
 	/*new result[180], string[256];
-	if (sscanf(params, "s[180]", result)) return SendClientMessage(playerid, COLOR_RED, "USAGE: \"/helpme <tekst>\"");
+	if (sscanf(params, "s[180]", result)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: \"/helpme <tekst>\"");
 
 	format(string, sizeof(string), "HELP %s[%d]: %s", GetName(playerid, true), playerid, result);
 	//SendHelperMessage(0x5DCF8AFF,string,1); - Nema helpera, a igra�i �alju poruke
@@ -673,7 +673,7 @@ CMD:report(playerid, params[])
 	if( !Bit1_Get(gr_PlayerLoggedIn,playerid) )	return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Morate se ulogirati da saljete report!");
 	if(Bit1_Get(gr_Blockedreport, playerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne mozes slati reporte.");
 	if( PlayerTick[playerid][ptReport] >= gettimestamp() ) return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "Pricekajte %d sekundi za ponovno slanje reporta!", PlayerTick[playerid][ptReport] - gettimestamp());
-	if(isnull(params)) return SendClientMessage(playerid, COLOR_RED, "USAGE: \report [tekst]");
+	if(isnull(params)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: \report [tekst]");
 
 	new
 		result[256];
@@ -709,7 +709,7 @@ CMD:pm(playerid, params[])
 		text[128];
 
 	if(sscanf(params, "us[128]", giveplayerid, text))
-		return SendClientMessage(playerid, COLOR_RED, "USAGE: /pm [playerid/DioImena] [text]");
+		return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /pm [playerid/DioImena] [text]");
 
     if( giveplayerid == INVALID_PLAYER_ID ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Krivi unos playerida/imena!");
     if( Bit1_Get( gr_ForbiddenPM, playerid ) && !PlayerInfo[playerid][pAdmin]) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Zabranjeno ti je slanje PMova!");
@@ -792,7 +792,7 @@ CMD:eject(playerid, params[])
 		para1;
 
 	if(sscanf(params, "u", para1))
-		 return SendClientMessage(playerid, COLOR_RED, "USAGE: /eject [Playerid/DioImena]");
+		 return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /eject [Playerid/DioImena]");
 
 	if(!IsPlayerInAnyVehicle(playerid))
 	    return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste u vozilu te ne mozete koristiti ovu komandu!");
@@ -833,7 +833,7 @@ CMD:blindfold(playerid, params[])
 		giveplayerid;
 
 	if(sscanf(params, "u", giveplayerid))
-		 return SendClientMessage(playerid, COLOR_RED, "USAGE: /blindfold [Playerid/DioImena]");
+		 return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /blindfold [Playerid/DioImena]");
 	
 	if(!ProxDetectorS(3.0, playerid, giveplayerid))
 		return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Igrac nije dovoljno blizu vas!");
@@ -882,7 +882,7 @@ CMD:tie(playerid, params[])
 	new
 		giveplayerid;
 	if(sscanf(params, "u", giveplayerid))
-		 return SendClientMessage(playerid, COLOR_RED, "USAGE: /tie [Playerid/DioImena]");
+		 return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /tie [Playerid/DioImena]");
 
 	if(!ProxDetectorS(3.0, playerid, giveplayerid))
 		return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Igrac nije dovoljno blizu vas!");
@@ -983,7 +983,7 @@ CMD:sid(playerid, params[])
 CMD:showlicenses(playerid, params[])
 {
     new giveplayerid;
-    if( sscanf(params, "u", giveplayerid)) return SendClientMessage(playerid, COLOR_RED, "USAGE: /showlicenses [playerid/dio imena]");
+    if( sscanf(params, "u", giveplayerid)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /showlicenses [playerid/dio imena]");
 	if( giveplayerid == INVALID_PLAYER_ID ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Krivi unos ida/imena!");
 	if( IsPlayerReconing(giveplayerid) ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Taj igrac nije blizu vas!");
 	if( !ProxDetectorS(5.0, playerid, giveplayerid) ) 
@@ -1026,7 +1026,7 @@ CMD:showlicenses(playerid, params[])
 CMD:frisk(playerid, params[])
 {
     new giveplayerid, weapon[13],bullets[13], weapon_name[16];
-    if( sscanf(params, "u", giveplayerid) ) return SendClientMessage(playerid, COLOR_RED, "USAGE: /frisk [ID/Dio Imena]");
+    if( sscanf(params, "u", giveplayerid) ) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /frisk [ID/Dio Imena]");
 	if( giveplayerid == INVALID_PLAYER_ID ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Taj igrac nije online !"); 
 	if( giveplayerid == playerid ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne mozes pretrest sam sebe!");
 	if( IsPlayerInAnyVehicle(playerid) ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Morate biti izvan vozila!");
@@ -1112,7 +1112,7 @@ CMD:pay(playerid, params[])
 	new giveplayerid, moneys;
 	
 	if( PlayerInfo[playerid][pKilled] ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne mozes koristiti ovu komandu dok si u DeathModeu!");
-	if( sscanf( params, "ui", giveplayerid, moneys ) ) return SendClientMessage(playerid, COLOR_RED, "USAGE: /pay [ID Igraca/Dio Imena][kolicina]");
+	if( sscanf( params, "ui", giveplayerid, moneys ) ) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /pay [ID Igraca/Dio Imena][kolicina]");
 	if( giveplayerid == INVALID_PLAYER_ID ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Krivi unos igraca!");
 	if( giveplayerid == playerid) return SendClientMessage(playerid,COLOR_RED, "Ne mozes sam sebi dati novce!");
 	if( moneys < 1 || moneys > 1000000 ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nemojte slati manje od 1, ili vise od 1.000.000 odjednom.");
@@ -1164,7 +1164,7 @@ CMD:handshake(playerid, params[])
 		giveplayerid,
 		shakeid;
 		
-	if (sscanf(params, "ui", giveplayerid, shakeid)) return SendClientMessage(playerid, COLOR_RED, "USAGE: /handshake [ID Igraca/Dio Imena] [vrsta rukovanja(1-9)]");
+	if (sscanf(params, "ui", giveplayerid, shakeid)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /handshake [ID Igraca/Dio Imena] [vrsta rukovanja(1-9)]");
 	if( giveplayerid == INVALID_PLAYER_ID ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Krivi unos playerida!");
 	if( !ProxDetectorS(3.0, playerid, giveplayerid) ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Taj igrac nije blizu tebe!");
 	if( giveplayerid == playerid ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nemozes se rukovati sam sa sobom!");
@@ -1191,7 +1191,7 @@ CMD:accept(playerid, params[])
 		pick[ 16 ];
 		
 	if( sscanf( params, "s[16] ", pick ) ) {
-		SendClientMessage(playerid, COLOR_RED, "USAGE: /accept [odabir]");
+		SendClientMessage(playerid, COLOR_RED, "[ ? ]: /accept [odabir]");
 		SendClientMessage( playerid, COLOR_GREY, "[ODABIR]: handshake - buygun - govrepair - mechanicservice - swat - fire - undercover - marriage - igarage");
 		return 1;
 	}/*
@@ -1199,7 +1199,7 @@ CMD:accept(playerid, params[])
 		if( !IsFDMember(playerid) ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste LSFD!");
 		new
 			flameid;
-		if( sscanf( params, "s[16]i", pick, flameid ) ) return SendClientMessage(playerid, COLOR_RED, "USAGE: /accept fire [flameid]");
+		if( sscanf( params, "s[16]i", pick, flameid ) ) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /accept fire [flameid]");
 		
 		AcceptFireManCall(playerid, flameid);
 	}*/
@@ -1222,7 +1222,7 @@ CMD:accept(playerid, params[])
 	if( !strcmp( pick, "undercover", true ) ) {
 		new
 			giveplayerid;
-		if( sscanf(params, "s[16]u", pick, giveplayerid)) return SendClientMessage(playerid, COLOR_RED, "USAGE: /accept undercover [ID/Dio Imena]");
+		if( sscanf(params, "s[16]u", pick, giveplayerid)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /accept undercover [ID/Dio Imena]");
 	    if( giveplayerid == INVALID_PLAYER_ID) return SendClientMessage(playerid,COLOR_RED, "Taj igrac nije online.");
 		if(PlayerInfo[playerid][pLeader] != 1 && (PlayerInfo[playerid][pRank] < 5 && !IsACop(playerid)) || PlayerInfo[playerid][pLeader] != 3 && (PlayerInfo[playerid][pRank] < 6 && !IsASD(playerid)))  
 			return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste lider PD-a/SD-a/R6+!");
@@ -1237,7 +1237,7 @@ CMD:accept(playerid, params[])
 	if( !strcmp( pick, "swat", true ) ) {
 		new
 			giveplayerid;
-		if( sscanf(params, "s[16]u", pick, giveplayerid) ) return SendClientMessage(playerid, COLOR_RED, "USAGE: /accept swat [ID/Dio Imena]");
+		if( sscanf(params, "s[16]u", pick, giveplayerid) ) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /accept swat [ID/Dio Imena]");
 	    if( giveplayerid == INVALID_PLAYER_ID ) return SendClientMessage(playerid,COLOR_RED, "Taj igrac nije online.");
 		if( ( IsACop(playerid) && PlayerInfo[playerid][pRank] >= FactionInfo[PlayerInfo[playerid][pMember]][rABuyGun] ) || ( IsASD(playerid) && PlayerInfo[playerid][pRank] >= FactionInfo[PlayerInfo[playerid][pMember]][rABuyGun]) ) {
 			SendFormatMessage(playerid, MESSAGE_TYPE_INFO, "Dopustili ste %s da moze koristit /swat komandu.", GetName(giveplayerid,true));
@@ -1487,7 +1487,7 @@ CMD:accept(playerid, params[])
 			member = PlayerInfo[playerid][pMember],
 			giveplayerid;
 			
-	    if( sscanf(params, "s[16]u", pick, giveplayerid)) return SendClientMessage(playerid, COLOR_RED, "USAGE: /accept govrepair [ID/Dio Imena]");
+	    if( sscanf(params, "s[16]u", pick, giveplayerid)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /accept govrepair [ID/Dio Imena]");
 	    if( giveplayerid == INVALID_PLAYER_ID ) return SendClientMessage(playerid,COLOR_RED,"Taj igrac nije online.");
 		
 		if(rank < FactionInfo[member][rAGovRepair]) 
@@ -1503,7 +1503,7 @@ CMD:accept(playerid, params[])
 		if(FactionInfo[PlayerInfo[playerid][pMember]][rABuyGun] == 0)
 			return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Komanda /accept buygun je trenutno izgasena od strane lidera! Koristite /buygun kako bi uzeli oruzje.");
 		new giveplayerid;
-	    if(sscanf(params, "s[16]u", pick, giveplayerid)) return SendClientMessage(playerid, COLOR_RED, "USAGE: /accept buygun [ID/Dio Imena]");
+	    if(sscanf(params, "s[16]u", pick, giveplayerid)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /accept buygun [ID/Dio Imena]");
 		if(giveplayerid == INVALID_PLAYER_ID) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Taj igrac nije online!");
 		if(!IsACop(playerid) && !IsASD(playerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Samo LSPD/SASD mogu davati dozvole za uzimanje oruzja u Armoury-u.");
 		if(!IsACop(giveplayerid) && !IsASD(giveplayerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Samo LSPD/SASD mogu uzimati dozvole za uzimanje oruzja u Armoury-u.");
@@ -1518,7 +1518,7 @@ CMD:accept(playerid, params[])
 	else if(strcmp(pick,"igarage",true) == 0) 
 	{
 		new giveplayerid;
-	    if( sscanf(params, "s[16]u", pick, giveplayerid)) return SendClientMessage(playerid, COLOR_RED, "USAGE: /accept igarage [ID/Dio Imena]");
+	    if( sscanf(params, "s[16]u", pick, giveplayerid)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /accept igarage [ID/Dio Imena]");
 		if( giveplayerid == INVALID_PLAYER_ID) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Taj igrac nije online!");
 		if( ( IsACop(playerid) && PlayerInfo[playerid][pRank] >= 2 ) ) 
 		{
@@ -1599,7 +1599,7 @@ CMD:changeseat(playerid, params[])
 	if(!IsPlayerInAnyVehicle(playerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste unutar vozila!");
 	new seatid;
 	if(sscanf(params, "i", seatid)) {
-		SendClientMessage(playerid, COLOR_RED, "USAGE: /changeseat [seatid]");
+		SendClientMessage(playerid, COLOR_RED, "[ ? ]: /changeseat [seatid]");
 		SendClientMessage(playerid, COLOR_GREY, "POMOC: 0 - Vozac, 1 - Suvozac, 2 - Suputnik #1 (iza), 3 - Suputnik #2 (iza)");
 		return 1;
 	}
@@ -1629,7 +1629,7 @@ CMD:windows(playerid, params[])
 {
 	new
 		window, status;
-	if( sscanf( params, "ii", window, status ) ) return SendClientMessage(playerid, COLOR_RED, "USAGE: /windows [1/2/3/4][1(otvori)/0(zatvori]");
+	if( sscanf( params, "ii", window, status ) ) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /windows [1/2/3/4][1(otvori)/0(zatvori]");
 	if( window > 4 || window < 0 ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Morate koristiti vrijednosti od 1-4!");
 	
     if(IsPlayerInAnyVehicle(playerid)) {
@@ -1674,7 +1674,7 @@ CMD:doors(playerid, params[])
 {
 	new
 		door, status;
-	if( sscanf( params, "ii", door, status ) ) return SendClientMessage(playerid, COLOR_RED, "USAGE: /doors [1/2/3/4][1(otvori)/0(zatvori]");
+	if( sscanf( params, "ii", door, status ) ) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /doors [1/2/3/4][1(otvori)/0(zatvori]");
 	if( door > 4 || door < 0 ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Morate koristiti vrijednosti od 1-4!");
 	
     if(IsPlayerInAnyVehicle(playerid)) {
@@ -1713,7 +1713,7 @@ CMD:doors(playerid, params[])
 }
 CMD:attempt(playerid, params[])
 {
-	if(isnull(params)) return SendClientMessage(playerid, COLOR_RED, "USAGE: /attempt [akcija]");
+	if(isnull(params)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /attempt [akcija]");
 	if( PlayerInfo[playerid][pMuted] ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Usutkani ste");
 	new succeed = 1 + random(2);
 	new
@@ -1767,7 +1767,7 @@ CMD:kill(playerid, params[])
 {
 	new 
 		result[64];
-	if( sscanf( params, "s[64]", result ) ) return SendClientMessage(playerid, COLOR_RED, "USAGE: /kill [razlog]");
+	if( sscanf( params, "s[64]", result ) ) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /kill [razlog]");
 	if( PlayerTick[ playerid ][ ptKill ] ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Pricekajte 5 sekundi izmedju slanja kill zahtjeva!");
 	
 	new
@@ -1795,7 +1795,7 @@ CMD:dump(playerid, params[])
 	if(!strlen(param1))
 	{
 		SendClientMessage(playerid, COLOR_RED, "|__________________ Mozete baciti slijedece stvari{FA5656} __________________|");
-		SendClientMessage(playerid, COLOR_RED, "USAGE: /dump [opcija]");
+		SendClientMessage(playerid, COLOR_RED, "[ ? ]: /dump [opcija]");
 		SendClientMessage(playerid, COLOR_RED, "[ ! ] gun - phone - crypto");
 		SendClientMessage(playerid, COLOR_RED, "|___________________________________________________|");
 		return 1;
@@ -1910,7 +1910,7 @@ CMD:get(playerid, params[])
 	new
 		param[6];
 	if( sscanf( params, "s[6] ", param ) ) {
-		SendClientMessage(playerid, COLOR_RED, "USAGE: /get [opcija]");
+		SendClientMessage(playerid, COLOR_RED, "[ ? ]: /get [opcija]");
 		SendClientMessage(playerid, COLOR_RED, "[ ! ] fuel");
 	}
 	if( !strcmp( param, "fuel", true ) )
@@ -1918,7 +1918,7 @@ CMD:get(playerid, params[])
 		new
 			type, fuel, total;
 			
-		if( sscanf( params, "s[6]ii", param, type, fuel ) ) return SendClientMessage(playerid, COLOR_RED, "USAGE: /get fuel [0 - Benzin, 1 - Dizel][kolicina]");
+		if( sscanf( params, "s[6]ii", param, type, fuel ) ) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /get fuel [0 - Benzin, 1 - Dizel][kolicina]");
 		if( !IsPlayerNearGasStation( playerid ) ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste blizu benzinske stanice!");
 		total = PlayerInfo[ playerid ][ pCanisterLiters ] + fuel;
 		if (total > 25 ) return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "Maksimalno 25 litara, treutno imate %d", PlayerInfo[ playerid ][ pCanisterLiters ]);
@@ -1984,7 +1984,7 @@ CMD:give(playerid, params[])
 		
 	if (sscanf(params, "s[32] ", x_nr))
 	{
-		SendClientMessage(playerid, COLOR_RED, "USAGE: /give [Opcija] [IgracevID/DioImena] [kolicina]");
+		SendClientMessage(playerid, COLOR_RED, "[ ? ]: /give [Opcija] [IgracevID/DioImena] [kolicina]");
 		SendClientMessage(playerid, COLOR_RED, "[ ! ] Weapon, Magazine, Watch, Job");
 		SendClientMessage(playerid, COLOR_RED, "[ ! ] Cigarette, Lighter, Weaponlicense, Dice");
 		return 1;
@@ -1996,7 +1996,7 @@ CMD:give(playerid, params[])
 	{
 	    if(PlayerInfo[playerid][pKilled]) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne mozes koristiti ovu komandu dok si u DeathModeu!");
 		if(PlayerInfo[playerid][pLevel] == 1) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Level 1 igraci nemaju pristup oruzju!");
-		if(sscanf(params, "s[32]u", x_nr, giveplayerid)) return SendClientMessage(playerid, COLOR_RED, "USAGE: /give weapon [Playerid/DioImena]");
+		if(sscanf(params, "s[32]u", x_nr, giveplayerid)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /give weapon [Playerid/DioImena]");
 		if(!IsPlayerConnected(giveplayerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Igrac nije online");
 		if(!SafeSpawned[giveplayerid]) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Igrac nije sigurno spawnan");
 		if(PlayerInfo[giveplayerid][pLevel] == 1) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Level 1 igraci nemaju pristup oruzju!");
@@ -2055,7 +2055,7 @@ CMD:give(playerid, params[])
 		if(PlayerInfo[playerid][pLevel] == 1) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Level 1 igraci nemaju pristup oruzju!");
 		new magamount;
 		if(sscanf(params, "s[32]ui", x_nr, giveplayerid, magamount)) {
-			SendClientMessage(playerid, COLOR_RED, "USAGE: /give magazine [Playerid/DioImena] [Broj sanzera]");
+			SendClientMessage(playerid, COLOR_RED, "[ ? ]: /give magazine [Playerid/DioImena] [Broj sanzera]");
 			SendClientMessage(playerid, COLOR_RED, "[ ! ] Single fire oruzja kao sto su Shotgun, Country & Sniper Rifle idu po 5 metaka u sanzeru.");
 			return 1;
 		}
@@ -2125,7 +2125,7 @@ CMD:give(playerid, params[])
     else if(strcmp(x_nr,"cigarette",true) == 0)
 	{
 	    if(PlayerInfo[playerid][pKilled]) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne mozes koristiti ovu komandu dok si u DeathModeu!");
-    	if(sscanf(params, "s[32]ui", x_nr, giveplayerid, moneys)) return SendClientMessage(playerid, COLOR_RED, "USAGE: /give cigarette [Playerid/DioImena] [Kolicina]");
+    	if(sscanf(params, "s[32]ui", x_nr, giveplayerid, moneys)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /give cigarette [Playerid/DioImena] [Kolicina]");
 		if(giveplayerid == playerid) return SendClientMessage(playerid, COLOR_RED, "Ne mozete sami sebi davati cigarete!");
 		if(Bit1_Get(gr_PlayerLoggedIn, giveplayerid) != 0)
 		{
@@ -2200,7 +2200,7 @@ CMD:give(playerid, params[])
 	{
     	if (sscanf(params, "s[32]us[32]", x_nr, giveplayerid, posao))
 		{
-			SendClientMessage(playerid, COLOR_RED, "USAGE: /give job [Playerid/DioImena] [Posao]");
+			SendClientMessage(playerid, COLOR_RED, "[ ? ]: /give job [Playerid/DioImena] [Posao]");
 			SendClientMessage(playerid, COLOR_WHITE, "Poslovi: gundealer - carjacker");
 			return 1;
 		}
@@ -2229,7 +2229,7 @@ CMD:give(playerid, params[])
    	else if(strcmp(x_nr,"lighter",true) == 0)
     {
         if(PlayerInfo[playerid][pKilled]) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne mozes koristiti ovu komandu dok si u DeathModeu!");
-    	if(sscanf(params, "s[32]u", x_nr, giveplayerid)) return SendClientMessage(playerid, COLOR_RED, "USAGE: /give lighter [Playerid/DioImena]");
+    	if(sscanf(params, "s[32]u", x_nr, giveplayerid)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /give lighter [Playerid/DioImena]");
 		if( IsPlayerReconing(giveplayerid) ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Taj igrac nije dovoljno blizu vas.");
 		if( giveplayerid == INVALID_PLAYER_ID ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Taj igrac nije online!");
 		if( !ProxDetectorS(3.0, playerid, giveplayerid) ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Taj igrac nije blizu vas!");
@@ -2247,7 +2247,7 @@ CMD:give(playerid, params[])
     else if(strcmp(x_nr,"watch",true) == 0)
 	{
      	if( PlayerInfo[playerid][pKilled] ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne mozes koristiti ovu komandu dok si u DeathModeu!");
-    	if( sscanf(params, "s[32]u", x_nr, giveplayerid) ) return SendClientMessage(playerid, COLOR_RED, "USAGE: /give watch [Playerid/DioImena]");
+    	if( sscanf(params, "s[32]u", x_nr, giveplayerid) ) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /give watch [Playerid/DioImena]");
 		if( IsPlayerReconing(playerid) ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Taj igrac nije dovoljno blizu vas.");
 		if( giveplayerid == INVALID_PLAYER_ID ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Taj igrac nije online !");
      	if( !ProxDetectorS(5.0, playerid, giveplayerid) ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Taj igrac nije blizu vas !");
@@ -2265,7 +2265,7 @@ CMD:give(playerid, params[])
     else if(strcmp(x_nr,"dice",true) == 0)
 	{
 	    if(PlayerInfo[playerid][pKilled]) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne mozes koristiti ovu komandu dok si u DeathModeu!");
-    	if (sscanf(params, "s[32]u", x_nr, giveplayerid)) return SendClientMessage(playerid, COLOR_RED, "USAGE: /give dice [Playerid/DioImena]");
+    	if (sscanf(params, "s[32]u", x_nr, giveplayerid)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /give dice [Playerid/DioImena]");
 		if( IsPlayerReconing(playerid) ) return SendClientMessage(playerid, COLOR_RED, "Taj igrac nije dovoljno blizu vas.");
 		if( !Bit1_Get( gr_Dice, playerid ) ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nemas kockicu");
 		if(giveplayerid == playerid) return SendClientMessage(playerid, COLOR_RED, "Ne mozete sami sebi davati kocku!");
@@ -2290,7 +2290,7 @@ CMD:give(playerid, params[])
 	else if(strcmp(x_nr,"flicense",true) == 0)
 	{
 		if(PlayerInfo[playerid][pKilled]) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne mozes koristiti ovu komandu dok si u DeathModeu!");
-		if (sscanf(params, "s[32]u", x_nr, giveplayerid)) return SendClientMessage(playerid, COLOR_RED, "USAGE: /give flicense [Playerid/DioImena]");
+		if (sscanf(params, "s[32]u", x_nr, giveplayerid)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /give flicense [Playerid/DioImena]");
 		if( IsPlayerReconing(giveplayerid) ) return SendClientMessage(playerid, COLOR_RED, "Taj igrac nije dovoljno blizu vas.");
 		if(Bit1_Get( gr_FakeGunLic, playerid ) ) return SendClientMessage(playerid, COLOR_RED, " Nemate laznu dozvolu za oruzje");
 		if (Bit1_Get(gr_PlayerLoggedIn, giveplayerid) != 0)
@@ -2373,7 +2373,7 @@ CMD:changename(playerid, params[])
 		sex;
 
 	if( sscanf( params, "s[24]iii ", novoime, type, years, sex ) )
-		return SendClientMessage(playerid, COLOR_RED, "USAGE: /changename [Ime_Prezime] [tip] [godine] [spol]"), SendClientMessage(playerid, -1, "SPOL: 2 - Zensko, 1 - Musko | TIP : 1 - standardni CN | 2- donatorski CN");
+		return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /changename [Ime_Prezime] [tip] [godine] [spol]"), SendClientMessage(playerid, -1, "SPOL: 2 - Zensko, 1 - Musko | TIP : 1 - standardni CN | 2- donatorski CN");
 		
 	switch(type)
 	{
@@ -2420,7 +2420,7 @@ CMD:setlook(playerid, params[])
 	new
 		inputLook[ 120 ];
 	
-	if( sscanf(params, "s[120]", inputLook) ) return SendClientMessage(playerid, COLOR_RED, "USAGE: /setlook [opis]");
+	if( sscanf(params, "s[120]", inputLook) ) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /setlook [opis]");
 	if( strlen(inputLook) > 1 || strlen(inputLook) <= 120 )
 	{
 		if( CheckStringForURL(inputLook) || CheckStringForIP(inputLook) )
@@ -2459,7 +2459,7 @@ CMD:showme(playerid, params[])
 CMD:examine(playerid, params[])
 {
 	new giveplayerid;
-	if (sscanf(params, "u", giveplayerid)) return SendClientMessage(playerid, COLOR_RED, "USAGE: /examine [ID/Dio imena]");
+	if (sscanf(params, "u", giveplayerid)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /examine [ID/Dio imena]");
 	if( giveplayerid == INVALID_PLAYER_ID ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Taj igrac nije online !"); 
 	if( giveplayerid == playerid ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Koristi /showme");
 	if( IsPlayerReconing(giveplayerid) ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Taj igrac nije blizu vas!");
@@ -2715,7 +2715,7 @@ CMD:marry(playerid, params[])
  	new
     	giveplayerid;
 	if( !IsPlayerInRangeOfPoint(playerid, 30.0, 367.7090, 2325.3110, 1889.6040) ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste unutar crkve!");
-	if( sscanf(params, "u", giveplayerid) ) return SendClientMessage(playerid, COLOR_RED, "USAGE: /marry [playerid/dio imena]");
+	if( sscanf(params, "u", giveplayerid) ) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /marry [playerid/dio imena]");
 	if( giveplayerid == INVALID_PLAYER_ID ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Krivi playerid!");
     if( giveplayerid == playerid ) 	return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne mozete sami sebe vjencati.");
 	if( !ProxDetectorS(5.0, playerid, giveplayerid) ) 	return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nisi blizu tog igraca!");

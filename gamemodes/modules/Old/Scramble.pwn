@@ -246,7 +246,7 @@ CMD:unscramble(playerid, params[])
 	if( lastScrambleId[ playerid ] == -1 )  return SendClientMessage( playerid, COLOR_RED, "Nemate pokrenuti scramble sistem!");
 	new
 		word[ 16 ];
-	if( sscanf( params, "s[16]", word ) ) return SendClientMessage(playerid, COLOR_RED, "USAGE: /unscramble [rijec]");
+	if( sscanf( params, "s[16]", word ) ) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /unscramble [rijec]");
 	if( 1 <= strlen(word) <= 15 ) {
 		if( UnscrambleWord(playerid, word) ) {			
 			if( --scrambleCounter[ playerid ] == 0 ) {

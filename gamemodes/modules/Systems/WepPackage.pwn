@@ -641,7 +641,7 @@ CMD:package(playerid, params[]) {
 	new action[25], weapon_name[16], carname[36];
 
 	if(sscanf(params, "s[25] ", action)) {
-		SendClientMessage(playerid, COLOR_RED, "USAGE: /package [option].");
+		SendClientMessage(playerid, COLOR_RED, "[ ? ]: /package [option].");
 		SendClientMessage(playerid, COLOR_RED, "(options): stats, checkorder, unpackage, give");
 		SendClientMessage(playerid, COLOR_RED, "(vehicle): vehstats, vehput, vehtake");
 		if(PlayerInfo[playerid][pAdmin] != 0)
@@ -655,7 +655,7 @@ CMD:package(playerid, params[]) {
 			return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ovlasteni za koristenje ove komande (admin lvl 1337+).");
 
 		if(sscanf(params, "s[25]iii", action, targetid, weapon_id, ammo_amount)) {
-			SendClientMessage(playerid, COLOR_RED, "USAGE: /package givepackage [targetid] [weapon_id] [ammo_amount].");
+			SendClientMessage(playerid, COLOR_RED, "[ ? ]: /package givepackage [targetid] [weapon_id] [ammo_amount].");
 			return (true);
 		}
 		if( Iter_Count(P_PACKAGES[targetid]) == MAX_PLAYER_PACKAGES )
@@ -681,7 +681,7 @@ CMD:package(playerid, params[]) {
 			return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ovlasteni za koristenje ove komande (admin lvl 1337+).");
 
 		if(sscanf(params, "s[25]i", action, vehicleid)) {
-			SendClientMessage(playerid, COLOR_RED, "USAGE: /package vresetpackages [vehicleid].");
+			SendClientMessage(playerid, COLOR_RED, "[ ? ]: /package vresetpackages [vehicleid].");
 			return (true);
 		}
 		foreach(new i : V_PACKAGES[vehicleid]) {
@@ -706,7 +706,7 @@ CMD:package(playerid, params[]) {
 			return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ovlasteni za koristenje ove komande (admin lvl 3+).");
 
 		if(sscanf(params, "s[25]i", action, vehicleid)) {
-			SendClientMessage(playerid, COLOR_RED, "USAGE: /package checkveh [vehicleid].");
+			SendClientMessage(playerid, COLOR_RED, "[ ? ]: /package checkveh [vehicleid].");
 			return (true);
 		}
 		strunpack(carname, Model_Name(VehicleInfo[vehicleid][vModel]));
@@ -745,7 +745,7 @@ CMD:package(playerid, params[]) {
 		GetVehiclePos(vehicleid, X, Y, Z);
 
 		if(sscanf(params, "s[25]i", action, package_id)) {
-			SendClientMessage(playerid, COLOR_RED, "USAGE: /package vehtake [package_id].");
+			SendClientMessage(playerid, COLOR_RED, "[ ? ]: /package vehtake [package_id].");
 			SendClientMessage(playerid, 0xAFAFAFAA, "[=>] package_id provijeravate na /package vehstats.");
 			return (true);
 		}
@@ -780,7 +780,7 @@ CMD:package(playerid, params[]) {
 		GetVehiclePos(vehicleid, X, Y, Z);
 
 		if(sscanf(params, "s[25]i", action, package_id)) {
-			SendClientMessage(playerid, COLOR_RED, "USAGE: /package vehput [package_id].");
+			SendClientMessage(playerid, COLOR_RED, "[ ? ]: /package vehput [package_id].");
 			SendClientMessage(playerid, 0xAFAFAFAA, "[=>] package_id provijeravate na /package stats.");
 			return (true);
 		}
@@ -813,7 +813,7 @@ CMD:package(playerid, params[]) {
 		new targetid, package_id;
 
 		if(sscanf(params, "s[25]ii", action, targetid, package_id)) {
-			SendClientMessage(playerid, COLOR_RED, "USAGE: /package give [playerid] [package_id].");
+			SendClientMessage(playerid, COLOR_RED, "[ ? ]: /package give [playerid] [package_id].");
 			SendClientMessage(playerid, 0xAFAFAFAA, "[=>] package_id provijeravate na /package stats.");
 			return (true);
 		}
@@ -863,7 +863,7 @@ CMD:package(playerid, params[]) {
 		GetPlayerArmour(playerid, get_armor);
 
 		if(sscanf(params, "s[25]i", action, package_id)) {
-			SendClientMessage(playerid, COLOR_RED, "USAGE: /package unpackage [package_id].");
+			SendClientMessage(playerid, COLOR_RED, "[ ? ]: /package unpackage [package_id].");
 			SendClientMessage(playerid, COLOR_GRAD2, "[=>] package_id provijeravate na /package stats.");
 			return (true);
 		}
@@ -923,7 +923,7 @@ CMD:package(playerid, params[]) {
 			return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ovlasteni za koristenje ove komande (admin lvl 3+).");
 
 		if(sscanf(params, "s[25]i", action, targetid)) {
-			SendClientMessage(playerid, COLOR_RED, "USAGE: /package checkplayer [targetid].");
+			SendClientMessage(playerid, COLOR_RED, "[ ? ]: /package checkplayer [targetid].");
 			return (true);
 		}
 		va_SendClientMessage(playerid, COLOR_RED, "[ ! ] |________ [ %s - Weapon Packages ] ________|", GetName(targetid));
@@ -942,7 +942,7 @@ CMD:package(playerid, params[]) {
 			return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ovlasteni za koristenje ove komande (admin lvl 1337+).");
 
 		if(sscanf(params, "s[25]i", action, targetid)) {
-			SendClientMessage(playerid, COLOR_RED, "USAGE: /package resetpackages [targetid].");
+			SendClientMessage(playerid, COLOR_RED, "[ ? ]: /package resetpackages [targetid].");
 			return (true);
 		}
 		foreach(new i : P_PACKAGES[targetid])

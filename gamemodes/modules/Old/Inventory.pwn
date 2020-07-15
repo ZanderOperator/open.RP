@@ -860,7 +860,7 @@ CMD:item_give(playerid, params[]) {
 		return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ovlasteni za koristenje ove komande!");
 	if(sscanf(params,"is[32]ii", targetid, item_name, item_objectid, itemtype)) 
 	{
- 		SendClientMessage(playerid, COLOR_RED, "USAGE: /item_give (playerid) (item ime) (item objectid) (item type).");
+ 		SendClientMessage(playerid, COLOR_RED, "[ ? ]: /item_give (playerid) (item ime) (item objectid) (item type).");
 		SendClientMessage(playerid, COLOR_RED, "[ITEM TYPE]: (1-Food) (2-Drink) (3-Other).");
 		return (true);
 	}
@@ -912,7 +912,7 @@ CMD:checkinv(playerid, params[]) {
 	
 	new targetid;
 	if( sscanf(params, "u", targetid)) 
-		return SendClientMessage(playerid, COLOR_RED, "USAGE: /checkinv [ID/Dio imena]");
+		return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /checkinv [ID/Dio imena]");
     if( !IsPlayerConnected(targetid)) 
 		return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Taj igraè nije online!");
 	

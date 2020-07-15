@@ -467,7 +467,7 @@ CMD:garbage(playerid, params[])
 	new
 		pick[ 8 ];
 	if(PlayerInfo[playerid][pJob] != PLAYER_JOB_GARBAGE) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste zaposleni kao smetlar!");
-	if( sscanf( params, "s[8] ", pick ) ) return SendClientMessage(playerid, COLOR_RED, "USAGE: /garbage [foot/truck/clothes/stop]");
+	if( sscanf( params, "s[8] ", pick ) ) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /garbage [foot/truck/clothes/stop]");
 	
 	if( !strcmp( pick, "foot", true ) ) 
 	{

@@ -246,7 +246,7 @@ CMD:report(playerid, params[])
 
 	new	string[678];
 	if(isnull(params))
-		return SendClientMessage(playerid, COLOR_RED, "USAGE: /report [tekst]");
+		return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /report [tekst]");
 	format(PlayerReport[playerid], 128, "%s", params);
 
 	format(string, sizeof(string), "{5CD2FE}WARNING:\nPoruka koju saljete ce biti prikazana svi online adminima.\n\nRazlog: %s\n\nUkoliko vam je neko nanio stetu predlazemo da prijavite na forumu.\nUkoliko admin nije prisustvovao situaciji on ne mo�e ni�ta uraditi bez valjanih dokaza.\nUkoliko vam je potreban teleport, unfreeze, slap, ili nesto slicno morate navesti valjan razlog.\nGeneralno bi trebali slati reporte u kojima je navedeno sto vise detalja kako bi vam admin mogao sto prije pomoci\n\nforum.cityofangels-roleplay.com", params);
@@ -302,7 +302,7 @@ CMD:acceptreport(playerid, params[])
 	new
 		reportid, str[128];
 
-	if(sscanf(params, "d", reportid))return SendClientMessage(playerid, COLOR_RED, "USAGE: /acceptreport [report id]");
+	if(sscanf(params, "d", reportid))return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /acceptreport [report id]");
 	if(reportid > MAX_REPORTS || !ReportData[reportid][reportExists]) return SendClientMessage(playerid, COLOR_RED, "Report pod navedenim ID-om ne postoji!");
 
 	format(str, sizeof(str), "[REPORT] %s je preuzeo report ID %d od %s", GetName(playerid, false), reportid, ReportData[reportid][reportBy]);

@@ -871,7 +871,7 @@ CMD:update_garage(playerid,params[])
 	if( PlayerInfo[ playerid ][ pAdmin ] < 1338 ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ovlasteni!");
 	new
 		garage;
-	if( sscanf(params, "i", garage) ) return SendClientMessage(playerid, COLOR_RED, "USAGE: /update_garage [garageid]");
+	if( sscanf(params, "i", garage) ) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /update_garage [garageid]");
 	UpdateIlegalGarages(garage);
 	SendFormatMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uspjesno ste updejtali garazu id %d.", garage);
 	return 1;
@@ -882,7 +882,7 @@ CMD:jacker(playerid, params[])
 	if( PlayerInfo[ playerid ][ pJob ] != JACKER_JOB_ID ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste car jacker!");
 	new
 		param[ 7 ];
-	if( sscanf( params, "s[7] ", param ) ) return SendClientMessage(playerid, COLOR_RED, "USAGE: /jacker [pick/chop/leave/stop]");
+	if( sscanf( params, "s[7] ", param ) ) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /jacker [pick/chop/leave/stop]");
 	if( !strcmp(param, "pick", true) ) {
 		JackerIlegalGarage[ playerid ] = GetJackerIlegalGarage(playerid);
 		if( JackerIlegalGarage[ playerid ] == -1 ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste kod pickupa za ostavljanje vozila!");
@@ -979,7 +979,7 @@ CMD:igarage(playerid, params[])
 	new
 		param[ 8 ];
 	if( sscanf( params, "s[8] ", param ) ) {
-		SendClientMessage(playerid, COLOR_RED, "USAGE: /igarage [options]");
+		SendClientMessage(playerid, COLOR_RED, "[ ? ]: /igarage [options]");
 		SendClientMessage(playerid, COLOR_RED, "[ ! ] buy - info - bribe");
 		return 1;
 	}
@@ -1020,7 +1020,7 @@ CMD:igarage(playerid, params[])
 			money;
 		
 		if( garage == -1 || IlegalGarage[ garage ][ igOwner ] != PlayerInfo[ playerid ][ pSQLID ] ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste blizu svoje car jacker garaze ili nemate garazu!");
-		if( sscanf( params, "s[8]s[8]i", param, pick, money ) ) return SendClientMessage(playerid, COLOR_RED, "USAGE: /igarage money [take/put][kolicina]");
+		if( sscanf( params, "s[8]s[8]i", param, pick, money ) ) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /igarage money [take/put][kolicina]");
 		if( !strcmp(pick, "take", true) ) {
 			if( money >  IlegalGarage[ garage ][ igMoney ] || money < 1 ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate toliko novaca u garazi!");
 			

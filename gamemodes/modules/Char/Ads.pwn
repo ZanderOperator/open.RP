@@ -425,11 +425,11 @@ CMD:carad(playerid, params[])
 	new vehicleid = GetPlayerVehicleID(playerid);
 	if(PlayerInfo[ playerid ][ pSpawnedCar ] > -1 && PlayerInfo[ playerid ][ pSpawnedCar ] != vehicleid) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Morate imati spawnati CO i morate biti u njemu!");
 	new pick[8];
-	if(sscanf(params, "s[8] ", pick)) return SendClientMessage(playerid, COLOR_RED, "USAGE: /carad [set/delete]");
+	if(sscanf(params, "s[8] ", pick)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /carad [set/delete]");
 	if(!strcmp(pick, "set", true))
 	{
 		new text[64], partOne[22], partTwo[22], partThree[22];
-		if(sscanf(params, "s[8]s[64]", pick, text)) return SendClientMessage(playerid, COLOR_RED, "USAGE: /carad set [text (64 znaka max)]");
+		if(sscanf(params, "s[8]s[64]", pick, text)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /carad set [text (64 znaka max)]");
 		new money = strlen(text) * 6;
 		if(AC_GetPlayerMoney(playerid) < money) return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate dovoljno novaca za postavljanje oglasa (%d$)", money);
 		if(VehicleInfo[ vehicleid ][ vVehicleAdId ] != Text3D:INVALID_3DTEXT_ID)  return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "[GRESKA] Vec postoji oglas na vasem vozilu! Prvo korisite /carad delete");

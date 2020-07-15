@@ -539,7 +539,7 @@ CMD:poker(playerid, params[])
 	new item[10], giveplayerid, card1, card2, card3, card4, card5, money;
     if (sscanf(params, "s[10] ", item)) {
 		SendClientMessage(playerid, COLOR_SKYBLUE, "___________________________________________________________________");
-		SendClientMessage(playerid, COLOR_RED, "USAGE: /poker [opcija]");
+		SendClientMessage(playerid, COLOR_RED, "[ ? ]: /poker [opcija]");
      	SendClientMessage(playerid, COLOR_WHITE, "[Akcije] dealer, invite, cancel, kick, deal, cards, fold, givepot");
      	SendClientMessage(playerid, COLOR_WHITE, "[Akcije] flop, turn, river, showcards, newgame, pay, checkpot");
         SendClientMessage(playerid, COLOR_SKYBLUE, "___________________________________________________________________");
@@ -621,7 +621,7 @@ CMD:poker(playerid, params[])
 		if(Bit16_Get(r_PlayerPokerDealer, playerid) == 9999) return SendClientMessage(playerid,COLOR_RED, "Niste poker diler!");
 		if( !IsPlayerInRangeOfPoint(playerid, 4, PokerInfo[Bit16_Get(r_PlayerPokerDealer, playerid)][pokX], PokerInfo[Bit16_Get(r_PlayerPokerDealer, playerid)][pokY], PokerInfo[Bit16_Get(r_PlayerPokerDealer, playerid)][pokZ]) && GetPlayerVirtualWorld(playerid) != PokerInfo[Bit16_Get(r_PlayerPokerDealer, playerid)][Viwo]) return SendClientMessage(playerid,COLOR_RED, "Niste blizu vaseg poker stola!");
 		if(PokerInfo[Bit16_Get(r_PlayerPokerDealer, playerid)][Players] >= 5) return SendClientMessage(playerid,COLOR_RED, "Na vasem stolu vec igra 5 igraca!");
-		if(sscanf(params, "s[10]u", item, giveplayerid)) return SendClientMessage(playerid, COLOR_RED, "USAGE: /poker invite [ID/Dio imena]");
+		if(sscanf(params, "s[10]u", item, giveplayerid)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /poker invite [ID/Dio imena]");
 		if(giveplayerid == INVALID_PLAYER_ID) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nevaljan unos igraceva imena ili IDa!");
 		if(giveplayerid == playerid) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne mozes biti diler i igrac u isto vrijeme!");
 		if(Bit4_Get(gr_SpecateId, playerid) != 0) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Taj igrac nije dovoljno blizu vas.");
@@ -638,7 +638,7 @@ CMD:poker(playerid, params[])
 	else if( !strcmp(item,"kick",true) ) {
         if(Bit16_Get(r_PlayerPokerDealer, playerid) == 9999) return SendClientMessage(playerid,COLOR_RED, "Niste poker diler!");
 		if(!IsPlayerInRangeOfPoint(playerid, 4, PokerInfo[Bit16_Get(r_PlayerPokerDealer, playerid)][pokX], PokerInfo[Bit16_Get(r_PlayerPokerDealer, playerid)][pokY], PokerInfo[Bit16_Get(r_PlayerPokerDealer, playerid)][pokZ]) && GetPlayerVirtualWorld(playerid) != PokerInfo[Bit16_Get(r_PlayerPokerDealer, playerid)][Viwo]) return SendClientMessage(playerid,COLOR_RED, "Niste blizu vaseg poker stola!");
-		if(sscanf(params, "s[10]u", item, giveplayerid)) return SendClientMessage(playerid, COLOR_RED, "USAGE: /poker kick [ID/Dio imena]");
+		if(sscanf(params, "s[10]u", item, giveplayerid)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /poker kick [ID/Dio imena]");
 		if(giveplayerid == INVALID_PLAYER_ID) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nevaljan unos igraceva imena ili IDa!");
 		if(giveplayerid == playerid) return SendClientMessage(playerid, COLOR_RED, "Ne mozes sam sebe izbaciti sa stola!Diler si!");
 		if(Bit4_Get(gr_SpecateId, playerid) != 0) return SendClientMessage(playerid, COLOR_RED, "Taj igrac nije dovoljno blizu vas.");
@@ -667,7 +667,7 @@ CMD:poker(playerid, params[])
 	else if( !strcmp(item,"deal",true) ) {
         if(Bit16_Get(r_PlayerPokerDealer, playerid) == 9999) return SendClientMessage(playerid,COLOR_RED, "Niste poker diler!");
 		if(!IsPlayerInRangeOfPoint(playerid, 4, PokerInfo[Bit16_Get(r_PlayerPokerDealer, playerid)][pokX], PokerInfo[Bit16_Get(r_PlayerPokerDealer, playerid)][pokY], PokerInfo[Bit16_Get(r_PlayerPokerDealer, playerid)][pokZ]) && GetPlayerVirtualWorld(playerid) != PokerInfo[Bit16_Get(r_PlayerPokerDealer, playerid)][Viwo]) return SendClientMessage(playerid,COLOR_RED, "Niste blizu vaseg poker stola!");
-		if(sscanf(params, "s[10]u", item, giveplayerid)) return SendClientMessage(playerid, COLOR_RED, "USAGE: /poker deal [ID/Dio imena]");
+		if(sscanf(params, "s[10]u", item, giveplayerid)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /poker deal [ID/Dio imena]");
 		if(giveplayerid == INVALID_PLAYER_ID) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nevaljan unos igraceva imena ili IDa!");
 		if(giveplayerid == playerid) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne mozes sam sebi podijeliti karte! Diler si!");
 		if(Bit4_Get(gr_SpecateId, playerid) != 0) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Taj igrac nije dovoljno blizu vas.");
@@ -732,7 +732,7 @@ CMD:poker(playerid, params[])
 	else if( !strcmp(item,"givepot",true) ) {
 		if(Bit16_Get(r_PlayerPokerDealer, playerid) == 9999) return SendClientMessage(playerid,COLOR_RED, "Niste poker diler!");
 		if(!IsPlayerInRangeOfPoint(playerid, 4, PokerInfo[Bit16_Get(r_PlayerPokerDealer, playerid)][pokX], PokerInfo[Bit16_Get(r_PlayerPokerDealer, playerid)][pokY], PokerInfo[Bit16_Get(r_PlayerPokerDealer, playerid)][pokZ]) && GetPlayerVirtualWorld(playerid) != PokerInfo[Bit16_Get(r_PlayerPokerDealer, playerid)][Viwo]) return SendClientMessage(playerid,COLOR_RED, "Niste blizu vaseg poker stola!");
-		if(sscanf(params, "s[10]ui", item, giveplayerid, money)) return SendClientMessage(playerid, COLOR_RED, "USAGE: /poker givepot [ID/Dio imena][novac]");
+		if(sscanf(params, "s[10]ui", item, giveplayerid, money)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /poker givepot [ID/Dio imena][novac]");
 		if(giveplayerid == INVALID_PLAYER_ID) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nevaljan unos igraceva imena ili IDa!");
 		if(giveplayerid == playerid) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne mozes sam sebe izbaciti sa stola!Diler si!");
 		if(Bit4_Get(gr_SpecateId, playerid) != 0) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Taj igrac nije dovoljno blizu vas.");
@@ -922,7 +922,7 @@ CMD:poker(playerid, params[])
 	    if(Bit16_Get(r_PlayingPoker, playerid) == 9999 && Bit16_Get(r_PlayerPokerDealer, playerid) != 9999) return SendClientMessage(playerid,COLOR_RED, "Ne igrate poker trenutno/Diler ste, a oni nemogu koristiti ovu komandu!");
 		printf("PAY > %s[%d]: r_PlayingPoker = %d", GetName(playerid), playerid, Bit16_Get(r_PlayingPoker, playerid));
 		if(!IsPlayerInRangeOfPoint(playerid, 4.0, PokerInfo[Bit16_Get(r_PlayingPoker, playerid)][pokX], PokerInfo[Bit16_Get(r_PlayingPoker, playerid)][pokY], PokerInfo[Bit16_Get(r_PlayingPoker, playerid)][pokZ]) && GetPlayerVirtualWorld(playerid) != PokerInfo[Bit16_Get(r_PlayingPoker, playerid)][Viwo]) return SendClientMessage(playerid,COLOR_RED, "Niste blizu vaseg poker stola!");
-		if(sscanf(params, "s[10]i", item, money)) return SendClientMessage(playerid, COLOR_RED, "USAGE: /poker pay [kolicina novca]");
+		if(sscanf(params, "s[10]i", item, money)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /poker pay [kolicina novca]");
 		if(money < 1 || money > AC_GetPlayerMoney(playerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate toliko novaca!!");
 		
 		printf("PAY > %s[%d]: r_PlayingPoker = %d {$ %d}", GetName(playerid), playerid, Bit16_Get(r_PlayingPoker, playerid), money);
