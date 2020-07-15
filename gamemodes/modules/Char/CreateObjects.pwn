@@ -532,7 +532,7 @@ CMD:aremoveallplayerobjects(playerid, params[])
 		return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ovlasteni sa koristenje ove komande.");
 
 	if(isnull(params))
-	    return SendClientMessage(playerid, COLOR_RED, "USAGE: /aremoveallplayerobjects [playerid]");
+	    return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /aremoveallplayerobjects [playerid]");
 	    
 	new
 	    id = strval(params);
@@ -562,7 +562,7 @@ CMD:checkplayerobjects(playerid, params[]) {
 		po_name[24];
 		
 	if(sscanf(params, "u", giveplayerid))
-		return SendClientMessage(playerid, COLOR_RED, "USAGE: /checkplayerobjects [playerid/dio imena]");
+		return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /checkplayerobjects [playerid/dio imena]");
 
 	if(!IsPlayerConnected(giveplayerid))
 		return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Taj igrac nije online.");

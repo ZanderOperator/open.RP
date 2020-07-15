@@ -162,7 +162,7 @@ CMD:ar(playerid, params[])
 	else if( !strcmp(pick, "view", true) ) {
 		new
 			slotid;
-		if( sscanf(params, "s[8]i", pick, slotid ) ) return SendClientMessage(playerid, COLOR_RED, "USAGE: /ar view [slotid]");
+		if( sscanf(params, "s[8]i", pick, slotid ) ) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /ar view [slotid]");
 		if( slotid < 0 && slotid > MAX_AR_SLOTS ) return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, " Nevaljan slot ID (0-%d).", MAX_AR_SLOTS-1 );
 		if(!strcmp(ARInfo[ slotid ][ arDescription ], "", true)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, " Nevaljan slot ID. Arrest record ne postoji pod tim ID-om!");
 		if(!strcmp(ARInfo[ slotid ][ arSuspect ], "None", true)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, " Nevaljan slot ID. Arrest record ne postoji pod tim ID-om!");
@@ -175,7 +175,7 @@ CMD:ar(playerid, params[])
 	    if( PlayerInfo[ playerid ][ pRank ] < 5 ) SendMessage(playerid, MESSAGE_TYPE_ERROR, " Niste rank 5!");
 		new
 			slotid;
-		if( sscanf(params, "s[8]i", pick, slotid ) ) return SendClientMessage(playerid, COLOR_RED, "USAGE: /ar delete [slotid]");
+		if( sscanf(params, "s[8]i", pick, slotid ) ) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /ar delete [slotid]");
 		if( slotid < 0 && slotid > MAX_AR_SLOTS ) return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, " Nevaljan slot ID (0-%d).", MAX_AR_SLOTS-1 );
 		format(ARInfo[ slotid ][ arSuspect ], 24, "None");
 		format(ARInfo[ slotid ][ arCop ], 24, "None");
@@ -185,7 +185,7 @@ CMD:ar(playerid, params[])
 	}
 	else if( !strcmp(pick, "search", true) ) {
 		new searchnick[24], arCount = 0;
-		if( sscanf(params, "s[8]s[24]", pick, searchnick ) ) return SendClientMessage(playerid, COLOR_RED, "USAGE: /ar search [Ime i prezime]");
+		if( sscanf(params, "s[8]s[24]", pick, searchnick ) ) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /ar search [Ime i prezime]");
 		if(strlen(searchnick) < 6) return SendMessage(playerid, MESSAGE_TYPE_ERROR, " Prekratko ime i prezime!");
 		for(new i = 0; i < MAX_AR_SLOTS; i++)
 		{

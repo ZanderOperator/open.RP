@@ -227,7 +227,7 @@ CMD:createpickup(playerid, params[])
 	    viwo,org,job,interior;
 	if(PlayerInfo[playerid][pAdmin] < 1338) return SendClientMessage(playerid, COLOR_RED, "Nisi ovlasten za koristenje komande!");
 	if(sscanf(params, "iiifffiiii", model,type,canenter,exitx,exity,exitz, \
-	    viwo,org,job,interior)) return SendClientMessage(playerid, COLOR_RED, "USAGE: /createpickup [model][type][canenter][exitx][exity][exitz][viwo][org][job][int]");
+	    viwo,org,job,interior)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /createpickup [model][type][canenter][exitx][exity][exitz][viwo][org][job][int]");
     NewPickupID[playerid] = GetPickupID();
 	if(NewPickupID[playerid] >= (MAX_PICKUP-1)) {
 		SendClientMessage(playerid, COLOR_RED, "MySQL: Baza je puna! Povecajte MAX_PICKUP u 'defines.inc'!");
@@ -288,7 +288,7 @@ CMD:pickupint(playerid, params[])
 	new 
 		pickup, viwo,
 		Float:X, Float:Y, Float:Z;
-    if(sscanf(params, "ifffi", pickup, X, Y, Z, viwo)) return SendClientMessage(playerid, COLOR_RED, "USAGE: /pickupint [pickup][x][y][z][viwo]");
+    if(sscanf(params, "ifffi", pickup, X, Y, Z, viwo)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /pickupint [pickup][x][y][z][viwo]");
 	
 	PickupInfo[pickup][epExitx] = X;
 	PickupInfo[pickup][epExity] = Y;

@@ -422,7 +422,7 @@ public StartDeathCount(playerid)
 CMD:pickitem(playerid, params[])
 {
 	new str[32];
-	if(sscanf(params, "s[32]", str)) return SendClientMessage(playerid, COLOR_RED, "USAGE: /pickitem [weapon]");
+	if(sscanf(params, "s[32]", str)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /pickitem [weapon]");
 	if(PlayerInfo[playerid][pKilled] > 0)
 	    return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne mozes uzimat predmete sa poda dok si u death stanju.");
 	if(strcmp(str, "weapon", true) == 0)
@@ -439,7 +439,7 @@ CMD:pickitem(playerid, params[])
 		return 1;
     }
     else
-        SendClientMessage(playerid, COLOR_RED, "USAGE: /pickitem [weapon/money]");
+        SendClientMessage(playerid, COLOR_RED, "[ ? ]: /pickitem [weapon/money]");
 	return 1;
 }
 
@@ -454,7 +454,7 @@ CMD:alldamages(playerid, params[])
 		
 	if (sscanf(params, "u", gplayerid))
 	{
-		SendClientMessage(playerid, COLOR_RED, "USAGE: /alldamages [PlayerID/DioImena]");
+		SendClientMessage(playerid, COLOR_RED, "[ ? ]: /alldamages [PlayerID/DioImena]");
 		return 1;
 	}
 	if( !IsPlayerConnected(gplayerid) ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Pogresan ID igraca/nick!!");

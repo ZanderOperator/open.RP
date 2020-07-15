@@ -263,7 +263,7 @@ CMD:weapons(playerid, params[])
 		pick[ 12 ];
 	if( PlayerInfo[ playerid ][ pJob ] != DEALER_ID || !PlayerInfo[playerid][pMember] ) return SendClientMessage( playerid, COLOR_RED, "Niste Gun Dealer ili u skriptanoj organizaciji!");
 	if( sscanf( params, "s[12] ", pick ) ) {
-		SendClientMessage(playerid, COLOR_RED, "USAGE:  /weapons [odabir]");
+		SendClientMessage(playerid, COLOR_RED, "[ ? ]:  /weapons [odabir]");
 		SendClientMessage( playerid, COLOR_GREY, "[ODABIR]: order - view - assembly");
 		return 1;
 	}
@@ -290,7 +290,7 @@ CMD:weapons(playerid, params[])
 			ammo;
 		if (sscanf(params, "s[12]ii", pick, slotid, ammo))
 		{
-			SendClientMessage(playerid, COLOR_RED, "USAGE: /weapons assembly [ID] [ammo]");
+			SendClientMessage(playerid, COLOR_RED, "[ ? ]: /weapons assembly [ID] [ammo]");
 			SendClientMessage(playerid, COLOR_RED, "[ ! ] Koristite /weapons view da vidite ID kutije!");
 			return 1;
 		}
@@ -334,7 +334,7 @@ CMD:worders(playerid, params[])
 	new pick[ 12 ];
 	if( PlayerInfo[ playerid ][ pAdmin ] < 4 ) return SendClientMessage( playerid, COLOR_RED, "Nemate ovlasti!");
 	if( sscanf( params, "s[12] ", pick ) ) {
-		SendClientMessage(playerid, COLOR_RED, "USAGE:  /weapons [odabir]");
+		SendClientMessage(playerid, COLOR_RED, "[ ? ]:  /weapons [odabir]");
 		SendClientMessage( playerid, COLOR_GREY, "[ODABIR]: list - delete");
 		return 1;
 	}
@@ -362,7 +362,7 @@ CMD:worders(playerid, params[])
 		new slotid;
 		if (sscanf(params, "s[12]i", pick, slotid))
 		{
-			SendClientMessage(playerid, COLOR_RED, "USAGE: /weapons delete [ID]");
+			SendClientMessage(playerid, COLOR_RED, "[ ? ]: /weapons delete [ID]");
 			return 1;
 		}
 		if (1 > slotid > 10) return va_SendClientMessage( playerid, COLOR_RED, "ID je od 0 - 10", PlayerITInfo[slotid][cWeaponAmmo]);

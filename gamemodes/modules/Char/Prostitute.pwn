@@ -300,7 +300,7 @@ CMD:prostitute(playerid, const params[]) {
 		new p_i = Iter_Free(PROSTITUTE);
 
 		if(sscanf(params, "s[25]i", action, skin_id)) {
-			SendClientMessage(playerid, COLOR_RED, "USAGE: /prostitute create [skin_id].");
+			SendClientMessage(playerid, COLOR_RED, "[ ? ]: /prostitute create [skin_id].");
 			return (true);
 		}
 		CreateProstitute(playerid, skin_id, p_i);
@@ -309,7 +309,7 @@ CMD:prostitute(playerid, const params[]) {
 	if(strcmp(action,"changeskin", (true)) == 0) {
 
 		if(sscanf(params, "s[25]ii", action, prostitute_id, skin_id)) {
-			SendClientMessage(playerid, COLOR_RED, "USAGE: /prostitute changeskin [prostitute_id] [skin_id].");
+			SendClientMessage(playerid, COLOR_RED, "[ ? ]: /prostitute changeskin [prostitute_id] [skin_id].");
 			return (true);
 		}
 		ChangeProstituteSkin(playerid, prostitute_id, skin_id);
@@ -318,7 +318,7 @@ CMD:prostitute(playerid, const params[]) {
 	if(strcmp(action,"check", (true)) == 0) {
 
 		if(sscanf(params, "s[25]i", action, prostitute_id)) {
-			SendClientMessage(playerid, COLOR_RED, "USAGE: /prostitute check [prostitute_id].");
+			SendClientMessage(playerid, COLOR_RED, "[ ? ]: /prostitute check [prostitute_id].");
 			return (true);
 		}
 		ShowPlayerDialog(playerid, 0, DIALOG_STYLE_MSGBOX, "{3C95C2}* Prostitute - Check", CheckProstitute(prostitute_id), "(x)", "");
@@ -328,7 +328,7 @@ CMD:prostitute(playerid, const params[]) {
 		new alt_command[15];
 
 		if(sscanf(params, "s[25]s[15]", action, alt_command)) {
-			SendClientMessage(playerid, COLOR_RED, "USAGE: /prostitute earned [stats/withdraw].");
+			SendClientMessage(playerid, COLOR_RED, "[ ? ]: /prostitute earned [stats/withdraw].");
 			return (true);
 		}
 
@@ -371,7 +371,7 @@ CMD:prostitute(playerid, const params[]) {
 		new prostitute_name[MAX_PLAYER_NAME];
 
 		if(sscanf(params, "s[25]is[24]", action, prostitute_id, prostitute_name)) {
-			SendClientMessage(playerid, COLOR_RED, "USAGE: /prostitute setname [prostitute_id] [name].");
+			SendClientMessage(playerid, COLOR_RED, "[ ? ]: /prostitute setname [prostitute_id] [name].");
 			SendClientMessage(playerid, COLOR_WHITE, "[HINT]: Da maknete ime, pod 'name' upisite 'None'.");
 			return (true);
 		}
@@ -382,7 +382,7 @@ CMD:prostitute(playerid, const params[]) {
 		new tipmoney;
 
 		if(sscanf(params, "s[25]ii", action, prostitute_id, tipmoney)) {
-			SendClientMessage(playerid, COLOR_RED, "USAGE: /prostitute tipmoney [prostitute_id] [price].");
+			SendClientMessage(playerid, COLOR_RED, "[ ? ]: /prostitute tipmoney [prostitute_id] [price].");
 			SendClientMessage(playerid, COLOR_WHITE, "[HINT]: Da maknete mogucnost dobivanja baksisa, stavite cijenu na '0'.");
 			return (true);
 		}
@@ -394,7 +394,7 @@ CMD:prostitute(playerid, const params[]) {
 
 	if(strcmp(action,"delete", (true)) == 0) {
 		if(sscanf(params, "s[25]i", action, prostitute_id)) {
-			SendClientMessage(playerid, COLOR_RED, "USAGE: /prostitute delete [prostitute_id].");
+			SendClientMessage(playerid, COLOR_RED, "[ ? ]: /prostitute delete [prostitute_id].");
 			return (true);
 		}
 		DeleteProstitute(playerid, prostitute_id);
@@ -403,7 +403,7 @@ CMD:prostitute(playerid, const params[]) {
 	if(strcmp(action,"move", (true)) == 0) {
 
 		if(sscanf(params, "s[25]i", action, prostitute_id)) {
-			SendClientMessage(playerid, COLOR_RED, "USAGE: /prostitute move [prostitute_id].");
+			SendClientMessage(playerid, COLOR_RED, "[ ? ]: /prostitute move [prostitute_id].");
 			return (true);
 		}
 		MoveProstitute(playerid, prostitute_id);
@@ -412,7 +412,7 @@ CMD:prostitute(playerid, const params[]) {
 		new anim_id;
 
 		if(sscanf(params, "s[25]ii", action, prostitute_id, anim_id)) {
-			SendClientMessage(playerid, COLOR_RED, "USAGE: /prostitute setanim [prostitute_id] [anim_id].");
+			SendClientMessage(playerid, COLOR_RED, "[ ? ]: /prostitute setanim [prostitute_id] [anim_id].");
 			SendClientMessage(playerid, 0xAFAFAFAA, "[DANCE ANIM] 1..=>..14");
 			SendClientMessage(playerid, 0xAFAFAFAA, "[STRIP ANIM] 15..=>..33");
 			SendClientMessage(playerid, 0xAFAFAFAA, "[BLOWJOB ANIM] 34..=>..37");

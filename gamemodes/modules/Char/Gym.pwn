@@ -661,7 +661,7 @@ CMD:rgym(playerid, params[])
 	new
 		pid;
 	
-	if(sscanf(params, "u", pid)) return SendClientMessage(playerid, COLOR_RED, "USAGE: /rgym [ID/Ime]");
+	if(sscanf(params, "u", pid)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /rgym [ID/Ime]");
 	
 	ResetGymVars(pid);
 	return 1;

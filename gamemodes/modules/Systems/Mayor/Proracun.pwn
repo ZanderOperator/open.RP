@@ -844,11 +844,11 @@ CMD:setcity(playerid, params[])
 		pick[ 8 ],
 		tmpQuery[ 128 ],
 		moneys;
-	if( sscanf( params, "s[8] ", pick ) ) return SendClientMessage(playerid, COLOR_RED, "USAGE: : /setcity [budget/ibudget/tax]");
+	if( sscanf( params, "s[8] ", pick ) ) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: : /setcity [budget/ibudget/tax]");
 	
 	if( !strcmp(pick, "budget", true) ) {
 		if( sscanf( params, "s[8]i", pick, moneys ) )  {
-			SendClientMessage(playerid, COLOR_RED, "USAGE: : /setcity budget [money]");
+			SendClientMessage(playerid, COLOR_RED, "[ ? ]: : /setcity budget [money]");
 			va_SendClientMessage(playerid, COLOR_GREY, "[PRORACUN]: Stanje: %d$", CityInfo[ cBudget ] );
 			return 1;
 		}
@@ -861,7 +861,7 @@ CMD:setcity(playerid, params[])
 	}
 	else if( !strcmp(pick, "tax", true) ) {
 		if( sscanf( params, "s[8]i", pick, moneys ) )  {
-			SendClientMessage(playerid, COLOR_RED, "USAGE: : /setcity tax [money]");
+			SendClientMessage(playerid, COLOR_RED, "[ ? ]: : /setcity tax [money]");
 			va_SendClientMessage(playerid, COLOR_GREY, "[PRORACUN]: Stanje: %d$", CityInfo[ cBudget ] );
 			return 1;
 		}
@@ -875,7 +875,7 @@ CMD:setcity(playerid, params[])
 	}
 	else if( !strcmp(pick, "ibudget", true) ) {
 		if( sscanf( params, "s[8]i", pick, moneys ) )  {
-			SendClientMessage(playerid, COLOR_RED, "USAGE: : /setcity ibudget [money]");
+			SendClientMessage(playerid, COLOR_RED, "[ ? ]: : /setcity ibudget [money]");
 			va_SendClientMessage(playerid, COLOR_GREY, "[ILEGALNI PRORACUN]: Stanje: %d$", CityInfo[ cIllegalBudget ] );
 			return 1;
 		}
@@ -902,7 +902,7 @@ CMD:charity(playerid, params[])
 	if( PlayerInfo[ playerid ][ pLevel ] < 3 ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, " Samo igraci level 3+ mogu donirati!");
 	new
 		pay, string[128];
-	if( sscanf( params, "i", pay ) ) return SendClientMessage(playerid, COLOR_RED, "USAGE: /charity [novci]");
+	if( sscanf( params, "i", pay ) ) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /charity [novci]");
 	if( pay < 0 ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, " Ne mozete donirati manje novca!");
 	if( pay > AC_GetPlayerMoney(playerid) ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, " Ne mozete vise donirati nego sto imate novca!");
 
@@ -930,7 +930,7 @@ CMD:finance(playerid, params[])
 		
 	if(FactionInfo[fid][fType] != FACTION_TYPE_LEGAL) return SendClientMessage(playerid,COLOR_RED, "Niste pripadnik Los Santos Govermenta!");
 	if(sscanf(params, "s[10] ", pick)) {
-		SendClientMessage(playerid, COLOR_RED, "USAGE: /finance [opcija]");
+		SendClientMessage(playerid, COLOR_RED, "[ ? ]: /finance [opcija]");
 		SendClientMessage(playerid, COLOR_RED, "[ ! ] check, delete");
 		return 1;
 	}
@@ -958,7 +958,7 @@ CMD:govmdc(playerid, params[])
 {
     if (PlayerInfo[playerid][pMember] != 4) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ovlasteni za koristenje ove komande!");
     new giveplayerid;
-    if (sscanf(params, "u", giveplayerid)) return SendClientMessage(playerid, COLOR_RED, "USAGE: /govmdc [ID/DioImena]");
+    if (sscanf(params, "u", giveplayerid)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /govmdc [ID/DioImena]");
 	if (!IsPlayerLogged(giveplayerid) || !IsPlayerConnected(giveplayerid) ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Taj igrac nije ulogiran!");
 	Bit8_Set(gr_GovMDC, playerid, giveplayerid);
     ShowGovMDC(playerid, giveplayerid);

@@ -542,7 +542,7 @@ CMD:experience(playerid, params[])
 	new choice[12], playername[24], giveplayerid, bool:online=false;
 	if(sscanf(params, "s[12] ", choice)) 
 	{
-		SendClientMessage(playerid, COLOR_RED, "USAGE: /experience [opcija]");
+		SendClientMessage(playerid, COLOR_RED, "[ ? ]: /experience [opcija]");
 		SendClientMessage(playerid, COLOR_RED, "[ ! ] check, give, buy");
 		if(PlayerInfo[playerid][pAdmin] == 1338)
 			SendClientMessage(playerid, COLOR_RED, "[ ! ](admin) reset, bestplayers, setexp");
@@ -567,7 +567,7 @@ CMD:experience(playerid, params[])
 		}
 		if (sscanf(params, "s[12]u", choice, giveplayerid))
 		{
-			SendClientMessage(playerid, COLOR_RED, "USAGE: /experience reset [Ime_Prezime]");
+			SendClientMessage(playerid, COLOR_RED, "[ ? ]: /experience reset [Ime_Prezime]");
 			return 1;
 		}
 		ResetPlayerExperience(giveplayerid);
@@ -586,7 +586,7 @@ CMD:experience(playerid, params[])
 		}
 		if (sscanf(params, "s[12]ui", choice, giveplayerid, exps))
 		{
-			SendClientMessage(playerid, COLOR_RED, "USAGE: /experience setexp [playerid] [exp]");
+			SendClientMessage(playerid, COLOR_RED, "[ ? ]: /experience setexp [playerid] [exp]");
 			return 1;
 		}
 		ExpInfo[giveplayerid][ePoints] = exps;
@@ -605,7 +605,7 @@ CMD:experience(playerid, params[])
 	{
 		if (sscanf(params, "s[12]s[24]", choice, playername))
 		{
-			SendClientMessage(playerid, COLOR_RED, "USAGE: /experience give [Ime_Prezime]");
+			SendClientMessage(playerid, COLOR_RED, "[ ? ]: /experience give [Ime_Prezime]");
 			return 1;
 		}
 		if(!CanPlayerGiveExp(playerid))

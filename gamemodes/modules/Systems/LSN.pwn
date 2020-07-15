@@ -222,16 +222,16 @@ CMD:lsnstat(playerid, params[])
 	new
 		param[7],
 		giveplayerid;
-	if( sscanf( params, "s[7] ", param ) ) return SendClientMessage(playerid, COLOR_RED, "USAGE: /lsnstat [check/delete]");
+	if( sscanf( params, "s[7] ", param ) ) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /lsnstat [check/delete]");
 
 	if( !strcmp(param, "check", true ) ) {
-		if( sscanf( params, "s[7]u", param, giveplayerid ) ) return SendClientMessage(playerid, COLOR_RED, "USAGE: /lsnstat check [dio imena/playerid]");
+		if( sscanf( params, "s[7]u", param, giveplayerid ) ) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /lsnstat check [dio imena/playerid]");
 		if( giveplayerid == INVALID_PLAYER_ID ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, " Igrac nije online!");
 		if( !IsANews(giveplayerid) ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, " Igrac nije novinar!");
 		SendFormatMessage(playerid, MESSAGE_TYPE_INFO, "Igrac je poslao %d poruka i zaradio %d$!", PlayerInfo[ giveplayerid ][ pNews ], ( PlayerInfo[ giveplayerid ][ pNews ] * 15 )  );
 	}
 	else if( !strcmp(param, "delete", true ) ) 	{
-		if( sscanf( params, "s[7]u", param, giveplayerid ) ) return SendClientMessage(playerid, COLOR_RED, "USAGE: /lsnstat check [dio imena/playerid]");
+		if( sscanf( params, "s[7]u", param, giveplayerid ) ) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /lsnstat check [dio imena/playerid]");
 		if( giveplayerid == INVALID_PLAYER_ID ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, " Igrac nije online!");
 		if( !IsANews(giveplayerid) ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, " Igrac nije novinar!");
 		PlayerInfo[ giveplayerid ][ pNews ]	= 0;

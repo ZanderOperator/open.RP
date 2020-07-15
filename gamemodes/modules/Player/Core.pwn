@@ -13,6 +13,8 @@
 // Max Inactivity Time for Job/Property
 #define MAX_JOB_INACTIVITY_TIME			(604800) // 7 dana u sekundama
 #define MAX_INACTIVITY_TIME				(2592000) // 30 dana u sekundama
+#define MIN_MONTH_JOB_PAYDAYS			(5)	// Potrebno imati barem 5 paydayova
+#define MIN_MONTH_PROP_PAYDAYS			(10) // Potrebno imati barem 10 paydayova
 
 //Igrac je novi na serveru ili je stari
 #define MAX_ADO_LABELS  200
@@ -80,12 +82,25 @@ new
 */
 
 Function: CheckAccountsForInactivity()
-{
-	new inactivetimestamp = gettimestamp() - MAX_JOB_INACTIVITY_TIME;
+{	
+	new currentday, currentmonth, loadString[ 128 ];
+	stamp2datetime(gettimestamp(), _, currentmonth, currentday, _, _, _);
 	
-	new
-		loadString[ 128 ];
+	if(currentday < 10) // Aktivno oduzimanje imovine tek od 10.
+		return 1;
+	if(currentmonth < 8) // Postpone do pocetka 8. mjeseca
+		return 1;
+	
+	if(currentday == 1) // 1st in Month - Reset of Monthly paydays
+	{
+		mysql_format(g_SQL, loadString, 128, "UPDATE `experience` SET `monthpaydays` = '0' WHERE 1");
+		mysql_tquery(g_SQL, loadString, "", "");
+		return 1;
+	}
+			
+	new inactivetimestamp = gettimestamp() - MAX_JOB_INACTIVITY_TIME;
 	mysql_format(g_SQL, loadString, 128, "SELECT * FROM `accounts` WHERE lastloginstamp <= '%d'",inactivetimestamp);
+	
 	inline OnInactiveAccsLoad()
 	{
 		new rows;
@@ -97,7 +112,7 @@ Function: CheckAccountsForInactivity()
 			sqlid, 
 			jobkey, 
 			contracttime, 
-			loginstamp, 
+			loginstamp,
 			propertytimestamp, 
 			playername[24], 
 			updateQuery[128];
@@ -112,14 +127,8 @@ Function: CheckAccountsForInactivity()
 			crid = INVALID_COMPLEX_ID,
 			garageid = INVALID_HOUSE_ID,
 			Cache:Data,
-			currentday;
+			paydaycount = 0;
 			
-		stamp2datetime(gettimestamp(), _, _, currentday, _, _, _);
-		if(currentday == 1) // 1st in Month - Reset of Monthly paydays
-		{
-			mysql_format(g_SQL, updateQuery, 128, "UPDATE `experience` SET `monthpaydays` = '0' WHERE 1");
-			mysql_tquery(g_SQL, updateQuery, "", "");
-		}
 		Data = cache_save();
 			
 		for( new i=0; i < rows; i++ ) 
@@ -132,12 +141,13 @@ Function: CheckAccountsForInactivity()
 			cid = INVALID_COMPLEX_ID;
 			crid = INVALID_COMPLEX_ID;
 			garageid = INVALID_HOUSE_ID;
-			
+			paydaycount = 0;
 			
 			cache_get_value_name_int(i, "sqlid", sqlid);
 			
 			if(IsValidInactivity(sqlid)) // Ukoliko postoji prijavljena neaktivnost koja jos uvijek traje
 				continue;
+			paydaycount = GetPlayerPaydayCount(sqlid); // Sati aktivne igre
 			
 			cache_set_active(Data); // Povratak cachea nakon provjere neaktivnosti u bazi
 				
@@ -159,7 +169,7 @@ Function: CheckAccountsForInactivity()
 				continue;
 			}
 			
-			if(jobkey != 0 && loginstamp <= (gettimestamp() - MAX_JOB_INACTIVITY_TIME))
+			if(jobkey != 0 && loginstamp <= (gettimestamp() - MAX_JOB_INACTIVITY_TIME) && paydaycount < MIN_MONTH_JOB_PAYDAYS) // 
 			{
 				format(updateQuery, 128, "UPDATE `accounts` SET `jobkey` = '0', `contracttime` = '0' WHERE `sqlid` = '%d'", sqlid);
 				mysql_tquery(g_SQL, updateQuery, "", "");
@@ -176,7 +186,7 @@ Function: CheckAccountsForInactivity()
 			}
 			// Property Inactivity Check
 			propertytimestamp = gettimestamp() - MAX_INACTIVITY_TIME;
-			if(loginstamp <= propertytimestamp)
+			if(loginstamp <= propertytimestamp && paydaycount < MIN_MONTH_PROP_PAYDAYS)
 			{
 				
 				cache_get_value_name_int(i, "bankMoney"	, bankmoney);
@@ -224,10 +234,13 @@ Function: CheckAccountsForInactivity()
 				if(houseid != INVALID_HOUSE_ID)
 				{
 					bankmoney += HouseInfo[houseid][hValue];
+					if(HouseInfo[houseid][hTakings] > 0)
+						bankmoney += HouseInfo[houseid][hTakings];
+						
 					format(updateQuery, 128, "UPDATE `accounts` SET `bankMoney` = '%d' WHERE `sqlid` = '%d'", bankmoney, sqlid);
 					mysql_tquery(g_SQL, updateQuery, "", "");
 					
-					format(updateQuery, 128, "UPDATE `houses` SET `ownerid` = '0' WHERE `id` = '%d'", HouseInfo[houseid][hSQLID]);
+					format(updateQuery, 128, "UPDATE `houses` SET `ownerid` = '0', `takings` = '0' WHERE `id` = '%d'", HouseInfo[houseid][hSQLID]);
 					mysql_tquery(g_SQL, updateQuery, "", "");
 					
 					Log_Write("logfiles/inactive_players.txt", "(%s) %s[SQLID: %d] je radi neaktivnosti izgubio kucu na adresi %s[SQLID: %d] i dobio %d$ naknade u banku.",
@@ -262,6 +275,9 @@ Function: CheckAccountsForInactivity()
 				if(bizzid != INVALID_BIZNIS_ID)
 				{
 					bankmoney += BizzInfo[bizzid][bBuyPrice];
+					if(BizzInfo[ bizzid ][ bTill ] > 0)
+						bankmoney += BizzInfo[bizzid][bTill];
+						
 					format(updateQuery, 128, "UPDATE `accounts` SET `bankMoney` = '%d' WHERE `sqlid` = '%d'", bankmoney, sqlid);
 					mysql_tquery(g_SQL, updateQuery, "", "");
 					
@@ -996,6 +1012,26 @@ stock GetPlayerFPS(playerid)
         -
     </remarks>
 */
+
+stock GetPlayerPaydayCount(sqlid)
+{
+	new	Cache:result,
+		rows,
+		value = 0,
+		inactiveQuery[ 128 ];
+
+	format(inactiveQuery, sizeof(inactiveQuery), "SELECT `monthpaydays` FROM `experience` WHERE `sqlid` = '%d' LIMIT 0 , 1", sqlid);
+	result = mysql_query(g_SQL, inactiveQuery);
+	rows = cache_num_rows();
+	if(!rows)
+		value = 0;
+	else
+		cache_get_value_name_int(0, "monthpaydays", value);
+	
+	cache_delete(result);
+	return value;
+}
+
 stock IsValidInactivity(sqlid)
 {
 	new	Cache:result,
@@ -1661,7 +1697,7 @@ CMD:checkfreq(playerid, params[])
 	new channel;
     if (PlayerInfo[playerid][pAdmin] < 3) return SendClientMessage(playerid, COLOR_RED, "Niste ovlasteni za koristenje ove komande(A3+)!");
 	if(sscanf(params, "i", channel))
-		return SendClientMessage(playerid, COLOR_RED, "USAGE: /checkfreq [frequency]");
+		return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /checkfreq [frequency]");
 
 	if(channel < 1 || channel > 100000)return SendClientMessage(playerid, COLOR_RED, "Pogre�na frekvencija.");
 
@@ -1682,7 +1718,7 @@ CMD:playerfreq(playerid, params[])
     new giveplayerid;
     if (PlayerInfo[playerid][pAdmin] < 3) return SendClientMessage(playerid, COLOR_RED, "Niste ovlasteni za koristenje ove komande(A3+)!");
 	if(sscanf(params, "u", giveplayerid))
-		return SendClientMessage(playerid, COLOR_RED, "USAGE: /checkfreq [playerid]");
+		return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /checkfreq [playerid]");
 		
 	va_SendClientMessage(playerid, COLOR_RED, "[ ! ] Igrac %s se nalazi na frekvencijama %d, %d, %d.",
 		GetName(giveplayerid, false),
@@ -1700,7 +1736,7 @@ CMD:setslot(playerid, params[])
 	new string[128], slotid;
 
 	if(!PlayerInfo[playerid][pHasRadio])return SendClientMessage(playerid, COLOR_RED, "Nemate radio.");
-	if(sscanf(params, "d", slotid))return SendClientMessage(playerid, COLOR_RED, "USAGE: /setslot [slotid]");
+	if(sscanf(params, "d", slotid))return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /setslot [slotid]");
 	if(slotid < 1 || slotid > 3)return SendClientMessage(playerid, COLOR_RED, "Slotovi moraju biti izmedju 1-3.");
 
 	format(string, sizeof(string), "Lokalni kanal setovan na slot %d!", slotid);
@@ -1716,7 +1752,7 @@ CMD:setchannel(playerid, params[])
 
     new channel, slotid, query[90];
     if(!PlayerInfo[playerid][pHasRadio]) return SendClientMessage(playerid, COLOR_RED, "Nemate radio.");
-    if(sscanf(params, "dd", channel, slotid))return SendClientMessage(playerid, COLOR_RED, "USAGE: /setchannel [frekvencija][slot]");
+    if(sscanf(params, "dd", channel, slotid))return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /setchannel [frekvencija][slot]");
     if(channel < 1 || channel > 100000)return SendClientMessage(playerid, COLOR_RED, "Samo kanali izmedju 1 - 100000 su podrzani.");
 	if(slotid < 1 || slotid > 3)return SendClientMessage(playerid, COLOR_RED, "Slotovi moraju biti izmedju 1-3.");
 	if(PlayerInfo[playerid][pRadio][1] == channel || PlayerInfo[playerid][pRadio][2] == channel || PlayerInfo[playerid][pRadio][3] == channel)  return SendClientMessage(playerid, COLOR_RED, "[ ! ] Jedan od vasih slotova vec je na tom kanalu.");
@@ -1762,7 +1798,7 @@ CMD:radio(playerid, params[])
 		return SendClientMessage(playerid, COLOR_RED, "Niste u radio kanalu.");
 
 	if(isnull(params))
-		return SendClientMessage(playerid, COLOR_RED, "USAGE: /radio [text] {FF6346}, /rlow [text] {FF6346}, /r2 [text] {FF6346}ili /r3 ");
+		return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /radio [text] {FF6346}, /rlow [text] {FF6346}, /r2 [text] {FF6346}ili /r3 ");
 
 	new string[128], radioChan = PlayerInfo[playerid][pRadio][PlayerInfo[playerid][pMainSlot]];
 
@@ -1841,7 +1877,7 @@ CMD:radiolow(playerid, params[])
 		return SendClientMessage(playerid, COLOR_RED, "Niste u radio kanalu.");
 
 	if(isnull(params))
-		return SendClientMessage(playerid, COLOR_RED, "USAGE: /radio [text] {FF6346}, /rlow [text] {FF6346}, /r2 [text] {FF6346}ili /r3 ");
+		return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /radio [text] {FF6346}, /rlow [text] {FF6346}, /r2 [text] {FF6346}ili /r3 ");
 
 	new string[128], radioChan = PlayerInfo[playerid][pRadio][PlayerInfo[playerid][pMainSlot]];
 
@@ -1896,7 +1932,7 @@ CMD:r2(playerid, params[])
 		return SendClientMessage(playerid, COLOR_RED, "Iskljucen vam je radio! Koristite /togradio.");
 
 	if(!PlayerInfo[playerid][pRadio][2])return SendClientMessage(playerid, COLOR_RED, "Niste u radio kanalu.");
-	if(isnull(params))return SendClientMessage(playerid, COLOR_RED, "USAGE: /r2 [radio text]");
+	if(isnull(params))return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /r2 [radio text]");
 
 	new chan;
 	chan = PlayerInfo[playerid][pRadio][2];
@@ -1946,7 +1982,7 @@ CMD:r3(playerid, params[])
 		return SendClientMessage(playerid, COLOR_RED, "Iskljucen vam je radio! Koristite /togradio.");
 
 	if(!PlayerInfo[playerid][pRadio][3])return SendClientMessage(playerid, COLOR_RED, "Niste u radio kanalu.");
-	if(isnull(params))return SendClientMessage(playerid, COLOR_RED, "USAGE: /r3 [radio text]");
+	if(isnull(params))return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /r3 [radio text]");
 
 	new chan;
 	chan = PlayerInfo[playerid][pRadio][3];
@@ -2009,7 +2045,7 @@ CMD:leaver(playerid, params[])
 	if(!PlayerInfo[playerid][pHasRadio]) return SendClientMessage(playerid, COLOR_RED, "Nemate radio.");
 	if(!Bit1_Get(gr_PlayerRadio, playerid))
 		return SendClientMessage(playerid, COLOR_RED, "Iskljucen vam je radio! Koristite /togradio.");
-	if(sscanf(params, "d", slotid)) return SendClientMessage(playerid, COLOR_RED, "USAGE: /leaver [slotid]");
+	if(sscanf(params, "d", slotid)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /leaver [slotid]");
 	if(slotid < 1 || slotid > 3) return SendClientMessage(playerid, COLOR_RED, "Slotovi moraju biti izmedju 1-5.");
 
 	PlayerInfo[playerid][pRadio][slotid] = 0;

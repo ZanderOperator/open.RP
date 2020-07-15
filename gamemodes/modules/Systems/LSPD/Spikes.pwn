@@ -112,7 +112,7 @@ hook OnPlayerUpdate(playerid) // maknit stavit onplayerenterdynamicrectangle
 CMD:putspike(playerid, params[])
 {
 	new type;
-	if(sscanf(params,"i", type)) return SendClientMessage(playerid, COLOR_RED, "USAGE: /putspike [type] (1 | 2).");
+	if(sscanf(params,"i", type)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /putspike [type] (1 | 2).");
 	if(type < 1 || type > 2) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Pogresan tip spikea!");
 	if(IsACop(playerid) || IsASD(playerid))
 	{

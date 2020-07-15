@@ -168,6 +168,8 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 		{
 			if(response)
 	     	{
+				if(PlayerInfo[playerid][pFreeWorks] < 1)
+					return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Odradio si dovoljno za ovaj payday! Pricekaj iduci.");
 	      		SendClientMessage(playerid,-1,"{FA5656}[ ! ] Idi do stovarista (kutija) da uzmes kutiju proizvoda (levi klik kada dodjete).");
 	        	TWorking[playerid] = 1;
 	        	carjob[playerid] = GetPlayerVehicleID(playerid);
@@ -247,11 +249,12 @@ CMD:transporter(playerid, params[])
 	new
 		param[12];
 	if( sscanf(params, "s[12] ", param ) ) {
-		SendClientMessage(playerid, COLOR_RED, "USAGE: /trucker [odabir]");
+		SendClientMessage(playerid, COLOR_RED, "[ ? ]: /trucker [odabir]");
 		SendClientMessage(playerid, COLOR_GREY, "[OPTION]: start - stop");
 		return 1;
 	}
-	if( !strcmp(param, "start", true) ) {
+	if( !strcmp(param, "start", true) ) 
+	{
 		if(PlayerInfo[playerid][pJob] != TRANSPORTER_ID)
 			return SendClientMessage(playerid, COLOR_RED, "[GRESKA]: Nemas posao dostavljaca!");
 		if(TWorking[playerid] >= 1)
@@ -261,7 +264,7 @@ CMD:transporter(playerid, params[])
         if(!IsVehicleTransproter(GetPlayerVehicleID(playerid)) || GetPlayerState(playerid) != 2)
 			return SendClientMessage( playerid, COLOR_RED, "Morate biti vozac kamiona!");
 		if(PlayerInfo[playerid][pFreeWorks] < 1)
-			return SendClientMessage(playerid, COLOR_RED, "Odradio si dovoljno za ovaj payday! Pricekaj iduci.");
+			return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Odradio si dovoljno za ovaj payday! Pricekaj iduci.");
 
 		ShowPlayerDialog(playerid, DIALOG_ADRIAPOSAO, DIALOG_STYLE_MSGBOX, "{FA5656}Transporter", "Jeste li sigurni da �elite zapoceti dostavu?", "Da", "Ne");
 	}
@@ -287,7 +290,7 @@ CMD:transporter(playerid, params[])
 		SendClientMessage(playerid, -1, "Ako ste na duznosti, ne zaboravite da odete sa nje. Takodje, ako ste uzeli opremu, nemojte zaboraviti da je ostavite.");
 	}
 	else {
-		SendClientMessage(playerid, COLOR_RED, "USAGE: /trucker [odabir]");
+		SendClientMessage(playerid, COLOR_RED, "[ ? ]: /trucker [odabir]");
 		SendClientMessage(playerid, COLOR_GREY, "[OPTION]: start - stop");
 		return 1;
 	}

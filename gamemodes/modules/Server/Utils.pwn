@@ -972,7 +972,7 @@ stock SendInfoMessage(playerid, smsgstring[])
 stock SendUsageMessage(playerid, smsgstring[])
 {
 	new msgstring[256];
-	format(msgstring, sizeof(msgstring), "USAGE: /%s", smsgstring);
+	format(msgstring, sizeof(msgstring), "[ ? ]: /%s", smsgstring);
 	return SendClientMessage(playerid, COLOR_RED, msgstring);
 }
 
@@ -1224,7 +1224,7 @@ stock IsValidNick(name[])
 		Underscore;
 	
 	split(name, namesplit, '_');
-	if(strcmp(imedeva, Dev_Name, true)) return 1;
+	if(strcmp(imedeva, DEV_NAME, true)) return 1;
     if (strlen(namesplit[0]) > 1 && strlen(namesplit[1]) > 1)
     {
         // Firstname and Lastname contains more than 1 character + it there are separated with '_' char. Continue...

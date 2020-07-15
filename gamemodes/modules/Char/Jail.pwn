@@ -8365,7 +8365,7 @@ CMD:jail_alert(playerid, params[])
     if(!IsPlayerInRangeOfPoint(playerid, 15.0, 1849.7317,-1554.1625,2011.8259 ) && !IsPlayerInRangeOfPoint(playerid, 5.0, 1772.4279,-1543.7100,23.0249 ) ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste blizu kontrolne sobe.");
 	new
 		string[156], result[86];
-	if(sscanf(params, "s[86]", result)) return SendClientMessage(playerid, COLOR_RED, "USAGE: /jail_alert [text]");
+	if(sscanf(params, "s[86]", result)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /jail_alert [text]");
 	format(string, sizeof(string), "[Jail Alert] %s %s: %s", ReturnPlayerRankName(playerid), GetName(playerid, false), result);
 	SendRadioMessage(PlayerInfo[playerid][pMember], COLOR_COP, string);
 	return 1;

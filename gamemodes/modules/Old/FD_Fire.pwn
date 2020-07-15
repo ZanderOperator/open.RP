@@ -834,7 +834,7 @@ CMD:afire(playerid, params[]) {
 		return SendClientMessage(playerid,COLOR_RED, "Niste Admin Level 4+.");
 	if(sscanf(params, "s[32]", action))
     {
-        SendClientMessage(playerid, COLOR_RED, "USAGE: /afire [opcija].");
+        SendClientMessage(playerid, COLOR_RED, "[ ? ]: /afire [opcija].");
 		SendClientMessage(playerid, COLOR_RED, "[ ! ] spawnfire, destroyfire, destroyall, fdannounce, movefire, startfire, firehealth");
 		if(fire_activated == true) 
 			SendFormatMessage(playerid, MESSAGE_TYPE_INFO, "Trenutno je spawnano %d pozara.", Iter_Count(FlameID_Iter));

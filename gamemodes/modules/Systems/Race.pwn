@@ -426,14 +426,14 @@ CMD:race(playerid, params[])
 	if( IsARacer(playerid) && PlayerInfo[playerid][pRank] >= FactionInfo[PlayerInfo[playerid][pMember]][rRace] ) {
 		new
 			param[ 8 ];
-		if( sscanf( params, "s[8] ", param ) ) return SendClientMessage(playerid, COLOR_RED, "USAGE: /race [menu/invite/start]");
+		if( sscanf( params, "s[8] ", param ) ) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /race [menu/invite/start]");
 		if( !strcmp(param, "menu", true) ) {
 			ShowPlayerDialog(playerid, DIALOG_RACE_MAIN, DIALOG_STYLE_LIST, "RACING SYSTEM", "Dodaj checkpoint\nObrisi checkpoint", "Odaberi", "Odustani");
 		}
 		else if( !strcmp(param, "invite", true) ) {
 			new
 				giveplayerid;
-			if( sscanf( params, "s[8]i", param, giveplayerid ) ) return SendClientMessage(playerid, COLOR_RED, "USAGE: /race invite [playerid/dio imena]");
+			if( sscanf( params, "s[8]i", param, giveplayerid ) ) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /race invite [playerid/dio imena]");
 			if( giveplayerid == INVALID_PLAYER_ID ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Unijeli ste nevaljan playerid!");
 			if( giveplayerid == playerid ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne mozete sami sebe zvati, vase je mjesto osigurano!");
 			CallRaceContestant(playerid, giveplayerid);

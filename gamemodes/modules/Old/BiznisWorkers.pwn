@@ -410,7 +410,7 @@ CMD:workers(playerid, params[]) {
 		biznis = PlayerInfo[playerid][pBizzKey];
 		
 	if (sscanf(params, "s[18] ", action)) {
-		SendClientMessage(playerid, COLOR_RED, "USAGE: /workers [opcija].");
+		SendClientMessage(playerid, COLOR_RED, "[ ? ]: /workers [opcija].");
 		SendClientMessage(playerid, COLOR_RED, "[ ! ] add, remove, check, salary, role, pay");
 		SendClientMessage(playerid, COLOR_RED, "[ ! ] stats, quit");
 		return (true);

@@ -754,62 +754,69 @@ setTire(vehid, tireid, stat)
 	return 1;
 }
 
-public OnVehicleDamageStatusUpdate(vehicleid, playerid)
+hook OnPlayerUpdate(playerid)
 {
-	if(VehicleInfo[ vehicleid ][ vTireArmor ] == 1)
+	if(GetPlayerState(playerid) == PLAYER_STATE_DRIVER)
 	{
-	    if(getTire(vehicleid, F_L_TIRE) != 0)
-	    {
-	        if(vTireHP[vehicleid][0] > 0)
+		new vehicleid = GetPlayerVehicleID(playerid);
+		if(!Iter_Contains(Vehicles, vehicleid))
+			return 1;
+			
+		if(VehicleInfo[ vehicleid ][ vTireArmor ] == 1)
+		{
+			if(getTire(vehicleid, F_L_TIRE) != 0)
 			{
-		        setTire(vehicleid, F_L_TIRE, 0);
-			    vTireHP[vehicleid][0] -= 35;
-		    }
-		    else if(vTireHP[vehicleid][0] < 0) vTireHP[vehicleid][0] = 0;
-	    }
-	    if(getTire(vehicleid, B_L_TIRE) != 0)
-	    {
-	        if(vTireHP[vehicleid][1] > 0)
+				if(vTireHP[vehicleid][0] > 0)
+				{
+					setTire(vehicleid, F_L_TIRE, 0);
+					vTireHP[vehicleid][0] -= 35;
+				}
+				else if(vTireHP[vehicleid][0] < 0) vTireHP[vehicleid][0] = 0;
+			}
+			if(getTire(vehicleid, B_L_TIRE) != 0)
 			{
-		        setTire(vehicleid, B_L_TIRE, 0);
-			    vTireHP[vehicleid][1] -= 35;
-		    }
-		    else if(vTireHP[vehicleid][1] < 0) vTireHP[vehicleid][1] = 0;
-	    }
-	    if(getTire(vehicleid, F_R_TIRE) != 0)
-	    {
-	        if(vTireHP[vehicleid][2] > 0)
+				if(vTireHP[vehicleid][1] > 0)
+				{
+					setTire(vehicleid, B_L_TIRE, 0);
+					vTireHP[vehicleid][1] -= 35;
+				}
+				else if(vTireHP[vehicleid][1] < 0) vTireHP[vehicleid][1] = 0;
+			}
+			if(getTire(vehicleid, F_R_TIRE) != 0)
 			{
-		        setTire(vehicleid, F_R_TIRE, 0);
-			    vTireHP[vehicleid][2] -= 35;
-		    }
-		    else if(vTireHP[vehicleid][2] < 0) vTireHP[vehicleid][2] = 0;
-	    }
-	    if(getTire(vehicleid, B_R_TIRE) != 0)
-	    {
-	        if(vTireHP[vehicleid][3] > 0)
+				if(vTireHP[vehicleid][2] > 0)
+				{
+					setTire(vehicleid, F_R_TIRE, 0);
+					vTireHP[vehicleid][2] -= 35;
+				}
+				else if(vTireHP[vehicleid][2] < 0) vTireHP[vehicleid][2] = 0;
+			}
+			if(getTire(vehicleid, B_R_TIRE) != 0)
 			{
-		        setTire(vehicleid, B_R_TIRE, 0);
-			    vTireHP[vehicleid][3] -= 35;
-		    }
-		    else if(vTireHP[vehicleid][3] < 0) vTireHP[vehicleid][3] = 0;
-	    }
-    }
-	if(VehicleInfo[ vehicleid ][ vBodyArmor ] == 1)
-	{
-		new Float:Vhealth;
-		GetVehicleHealth(vehicleid, Vhealth);
-	    if(Vhealth > 600.00)
-	    {
-	        new engine, lights, alarm, doors, bonnet, boot, objective;
-	        GetVehicleParamsEx(vehicleid, engine, lights, alarm, doors, bonnet, boot, objective);
-			SetVehicleParamsEx(vehicleid, engine, lights, alarm, doors, bonnet, boot, objective);
-	        new vcpanels, vcdoors, vclights, vctires;
-			GetVehicleDamageStatus(vehicleid, vcpanels, vcdoors, vclights, vctires);
-		    UpdateVehicleDamageStatus(vehicleid, 0, 0, 0, vctires);
+				if(vTireHP[vehicleid][3] > 0)
+				{
+					setTire(vehicleid, B_R_TIRE, 0);
+					vTireHP[vehicleid][3] -= 35;
+				}
+				else if(vTireHP[vehicleid][3] < 0) vTireHP[vehicleid][3] = 0;
+			}
 		}
-    }
-    return 1;
+		if(VehicleInfo[ vehicleid ][ vBodyArmor ] == 1)
+		{
+			new Float:Vhealth;
+			GetVehicleHealth(vehicleid, Vhealth);
+			if(Vhealth > 600.00)
+			{
+				new engine, lights, alarm, doors, bonnet, boot, objective;
+				GetVehicleParamsEx(vehicleid, engine, lights, alarm, doors, bonnet, boot, objective);
+				SetVehicleParamsEx(vehicleid, engine, lights, alarm, doors, bonnet, boot, objective);
+				new vcpanels, vcdoors, vclights, vctires;
+				GetVehicleDamageStatus(vehicleid, vcpanels, vcdoors, vclights, vctires);
+				UpdateVehicleDamageStatus(vehicleid, 0, 0, 0, vctires);
+			}
+		}
+	}
+	return 1;
 }
 
 hook OnVehicleSpawn(vehicleid)
@@ -1251,7 +1258,7 @@ CMD:createvehicle(playerid, params[])
 		Float:X, Float:Y, Float:Z, Float:Angle;
 
 	new engine,lights,alarm,doors,bonnet,boot,objective;
-	if(sscanf(params, "iiiiiiiifi", model, color1, color2, respawndelay, usage, type, faction, job, health, sirenon)) return SendClientMessage(playerid, COLOR_RED, "USAGE: /createvehicle [model][color1][color2][respawndelay][usage][type][faction][job][health][siren]");
+	if(sscanf(params, "iiiiiiiifi", model, color1, color2, respawndelay, usage, type, faction, job, health, sirenon)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /createvehicle [model][color1][color2][respawndelay][usage][type][faction][job][health][siren]");
 	GetPlayerPos(playerid, X, Y, Z);
 	GetPlayerFacingAngle(playerid, Angle);
 
@@ -1318,7 +1325,7 @@ CMD:deletevehicle(playerid, params[])
 
 	if(PlayerInfo[playerid][pAdmin] < 4) return SendClientMessage(playerid, COLOR_RED, "Nisi ovlasten za koristenje ove komande.");
 	if(sscanf(params, "i", pick)) {
-		SendClientMessage(playerid, COLOR_RED, "USAGE: /deletevehicle [odabir]");
+		SendClientMessage(playerid, COLOR_RED, "[ ? ]: /deletevehicle [odabir]");
 		SendClientMessage(playerid, COLOR_RED, "[ ! ] 1 - Vehicle (/veh), 2 - Car Ownership, 3 - Faction/Job");
 		return 1;
 	}

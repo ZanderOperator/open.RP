@@ -102,13 +102,13 @@ CMD:anamneza(playerid, params[])
 	if(PlayerInfo[playerid][pRank] < 1) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Moras biti rank 1 ili vise da bi koristio ovo !");
 	if( sscanf( params, "s[20] ", opcija ) )
 	{
-		SendClientMessage(playerid, COLOR_RED, "USAGE: /anamneza [opcija]");
+		SendClientMessage(playerid, COLOR_RED, "[ ? ]: /anamneza [opcija]");
 		SendClientMessage(playerid, COLOR_RED, "[ ! ] check - insert - delete");
 		return 1;
 	}
 	if(strcmp(opcija,"check",true) == 0) // check
 	{
-		if( sscanf( params, "s[20]s[30]", opcija, pacient ) ) return SendClientMessage(playerid, COLOR_RED, "USAGE: /anamneza [opcija] [Ime_Prezime]");
+		if( sscanf( params, "s[20]s[30]", opcija, pacient ) ) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /anamneza [opcija] [Ime_Prezime]");
 		if( 1 <= strlen( pacient ) <= MAX_PLAYER_NAME )
 			{
 				if( strfind(pacient, "_", true) == -1 ) return SendClientMessage(playerid, COLOR_RED, "NAPOMENA: Mora biti s znakom '_'! ");
@@ -117,14 +117,14 @@ CMD:anamneza(playerid, params[])
 	}
 	else if(strcmp(opcija,"insert",true) == 0) //  insert
 	{
-		if( sscanf( params, "s[20]us[100]", opcija, giveplayerid, disease ) ) return SendClientMessage(playerid, COLOR_RED, "USAGE: /anamneza insert [ID/Ime_Prezime] [Opis bolesti]");
+		if( sscanf( params, "s[20]us[100]", opcija, giveplayerid, disease ) ) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /anamneza insert [ID/Ime_Prezime] [Opis bolesti]");
 		if (strlen(disease) >= 100) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Opis bolesti moze imati max 100 znakova!");
 		if( giveplayerid == INVALID_PLAYER_ID ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, " Igrac nije online!");
 		InsertPlayerCarton(playerid, giveplayerid, disease);
 	}
 	else if(strcmp(opcija,"delete",true) == 0) // delete
 	{
-		if( sscanf( params, "s[20]i", opcija, ID ) ) return SendClientMessage(playerid, COLOR_RED, "USAGE: /anamneza delete [rbr]");
+		if( sscanf( params, "s[20]i", opcija, ID ) ) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /anamneza delete [rbr]");
 		if( PlayerInfo[ playerid ][ pRank ] < 6 ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Samo doktori sa vecom pozicijom! ((r6+))");
 		DeletePlayerCarton(playerid, ID);
 	}

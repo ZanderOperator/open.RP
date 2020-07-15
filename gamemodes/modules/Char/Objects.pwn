@@ -1122,7 +1122,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
             EditAttachedObject(playerid, Bit4_Get(gr_AttachmentIndexSel, playerid));
            
 			Bit2_Set(gr_TipEdita, playerid, 1);
-            SendClientMessage(playerid, COLOR_RED, "USAGE: ~k~~PED_SPRINT~ da okrenes kameru.");
+            SendClientMessage(playerid, COLOR_RED, "[ ? ]: ~k~~PED_SPRINT~ da okrenes kameru.");
 			return 1;
 		}
 		case DIALOG_NEWCLOTHING: {
@@ -1446,7 +1446,7 @@ CMD:objects(playerid, params[])
 	new item[16], izbor;
     if (sscanf(params, "s[16] ", item))
 	{
-		SendClientMessage(playerid, COLOR_RED, "USAGE: /objects [opcija]");
+		SendClientMessage(playerid, COLOR_RED, "[ ? ]: /objects [opcija]");
 		SendClientMessage(playerid, COLOR_RED, "[ ! ] buy, delete, attach, detach, edit, changebone");
 		return 1;
 	}
@@ -1645,7 +1645,7 @@ CMD:objects(playerid, params[])
 	}	
 	else if(strcmp(item,"attach",true) == 0)
 	{
-	    if (sscanf(params, "s[16]i", item, izbor)) return SendClientMessage(playerid, COLOR_RED, "USAGE: /objects attach [0-6]");
+	    if (sscanf(params, "s[16]i", item, izbor)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /objects attach [0-6]");
 		if(izbor < 0 || izbor > 6) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Index objekta ne moze biti manji od 0 i veci od 6!");
 		if(IsPlayerAttachedObjectSlotUsed(playerid, izbor)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Vec postoji nekakav objekt na tom mjestu!");
 		if(PlayerObject[playerid][izbor][poPlaced] == 1) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Vec postoji nekakav objekt na tom mjestu!");
@@ -1658,7 +1658,7 @@ CMD:objects(playerid, params[])
 	}
 	else if(strcmp(item,"detach",true) == 0)
 	{
-        if (sscanf(params, "s[16]i", item, izbor)) return SendClientMessage(playerid, COLOR_RED, "USAGE: /objects detach [0-6]");
+        if (sscanf(params, "s[16]i", item, izbor)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /objects detach [0-6]");
 		if(izbor < 0 || izbor > 6) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Index objekta ne moze biti manji od 0 i veci od 6!");
 		if(!IsPlayerAttachedObjectSlotUsed(playerid, izbor)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne postoji nikakav objekt na tom mjestu!");
 		if(PlayerObject[playerid][izbor][poPlaced] == 0) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne postoji nikakav objekt na tom mjestu!");
@@ -1671,7 +1671,7 @@ CMD:objects(playerid, params[])
 	{
 		new
 			pick[ 6 ];
-        if (sscanf(params, "s[16]s[6]i", item, pick, izbor)) return SendClientMessage(playerid, COLOR_RED, "USAGE: /objects edit [color/edit][0-6]");
+        if (sscanf(params, "s[16]s[6]i", item, pick, izbor)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /objects edit [color/edit][0-6]");
 		if(izbor < 0 || izbor > 6) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Index objekta ne moze biti manji od 0 i veci od 6!");
 		if(!IsPlayerAttachedObjectSlotUsed(playerid, izbor)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne postoji nikakav objekt na tom mjestu!");
 		if(PlayerObject[playerid][izbor][poPlaced] == 0) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne postoji nikakav objekt na tom mjestu!");
@@ -1682,7 +1682,7 @@ CMD:objects(playerid, params[])
 			Bit2_Set(gr_TipEdita, playerid, 2);
 			
 			SendMessage(playerid, MESSAGE_TYPE_INFO, "Usli ste u editanje objekta.Mozete mjenjati poziciju, velicinu i ostalo.");
-			SendClientMessage(playerid, COLOR_RED, "USAGE: ~k~~PED_SPRINT~ da okrenes kameru.");
+			SendClientMessage(playerid, COLOR_RED, "[ ? ]: ~k~~PED_SPRINT~ da okrenes kameru.");
 		}
 		else if( !strcmp(pick, "color", true) ) {
 			Bit4_Set(r_ColorSlotId, playerid, izbor);
@@ -1692,14 +1692,14 @@ CMD:objects(playerid, params[])
 			Bit1_Set(r_ColorSelect, playerid, true);
 			SendMessage(playerid, MESSAGE_TYPE_INFO, "Odaberite boju za svoj objekt!");
 		}
-		else return SendClientMessage(playerid, COLOR_RED, "USAGE: /objects edit [color/edit][0-6]");
+		else return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /objects edit [color/edit][0-6]");
 	}
 	else if(strcmp(item,"changebone",true) == 0)
 	{
 	    new bone[16], selectedmodelid;
         if (sscanf(params, "s[16]is[16]", item, izbor, bone))
 		{
-			SendClientMessage(playerid, COLOR_RED, "USAGE: /objects changebone [0-6] [bone]");
+			SendClientMessage(playerid, COLOR_RED, "[ ? ]: /objects changebone [0-6] [bone]");
 			SendClientMessage(playerid, COLOR_WHITE, "Bone IDs: spine, head, leftupperarm, rightupperarm, lefthand, righthand");
 			SendClientMessage(playerid, COLOR_WHITE, "leftthigh, rightthigh, leftfoot, rightfoot, rightcalf, leftcalf, leftforearm");
 			SendClientMessage(playerid, COLOR_WHITE, "rightforearm, leftclavicle, rightclavicle, neck, jaw");
@@ -1717,7 +1717,7 @@ CMD:objects(playerid, params[])
 		    PlayerObject[playerid][izbor][poBoneId] = 1;
             
 			SendMessage(playerid, MESSAGE_TYPE_INFO, "Promjenili ste bone id, sada ga mozete editati!");
-            SendClientMessage(playerid, COLOR_RED, "USAGE: ~k~~PED_SPRINT~ da okrenes kameru.");
+            SendClientMessage(playerid, COLOR_RED, "[ ? ]: ~k~~PED_SPRINT~ da okrenes kameru.");
             
 			selectedmodelid = PlayerObject[playerid][izbor][poModelid];
 			SetPlayerAttachedObject(playerid, izbor, selectedmodelid,PlayerObject[playerid][izbor][poBoneId],PlayerObject[playerid][izbor][poPosX],PlayerObject[playerid][izbor][poPosY],PlayerObject[playerid][izbor][poPosZ],PlayerObject[playerid][izbor][poRotX],PlayerObject[playerid][izbor][poRotY],PlayerObject[playerid][izbor][poRotZ],PlayerObject[playerid][izbor][poScaleX],PlayerObject[playerid][izbor][poScaleY],PlayerObject[playerid][izbor][poScaleZ],PlayerObject[playerid][izbor][poColor1],PlayerObject[playerid][izbor][poColor2]);
@@ -1731,7 +1731,7 @@ CMD:objects(playerid, params[])
 		    PlayerObject[playerid][izbor][poBoneId] = 2;
             
 			SendMessage(playerid, MESSAGE_TYPE_INFO, "Promjenili ste bone id, sada ga mozete editati!");
-            SendClientMessage(playerid, COLOR_RED, "USAGE: ~k~~PED_SPRINT~ da okrenes kameru.");
+            SendClientMessage(playerid, COLOR_RED, "[ ? ]: ~k~~PED_SPRINT~ da okrenes kameru.");
 			
             selectedmodelid = PlayerObject[playerid][izbor][poModelid];
 			SetPlayerAttachedObject(playerid, izbor, selectedmodelid,PlayerObject[playerid][izbor][poBoneId],PlayerObject[playerid][izbor][poPosX],PlayerObject[playerid][izbor][poPosY],PlayerObject[playerid][izbor][poPosZ],PlayerObject[playerid][izbor][poRotX],PlayerObject[playerid][izbor][poRotY],PlayerObject[playerid][izbor][poRotZ],PlayerObject[playerid][izbor][poScaleX],PlayerObject[playerid][izbor][poScaleY],PlayerObject[playerid][izbor][poScaleZ],PlayerObject[playerid][izbor][poColor1],PlayerObject[playerid][izbor][poColor2]);
@@ -1745,7 +1745,7 @@ CMD:objects(playerid, params[])
 		    PlayerObject[playerid][izbor][poBoneId] = 3;
             
 			SendMessage(playerid, MESSAGE_TYPE_INFO, "Promjenili ste bone id, sada ga mozete editati!");
-            SendClientMessage(playerid, COLOR_RED, "USAGE: ~k~~PED_SPRINT~ da okrenes kameru.");
+            SendClientMessage(playerid, COLOR_RED, "[ ? ]: ~k~~PED_SPRINT~ da okrenes kameru.");
             
 			selectedmodelid = PlayerObject[playerid][izbor][poModelid];
 			SetPlayerAttachedObject(playerid, izbor, selectedmodelid,PlayerObject[playerid][izbor][poBoneId],PlayerObject[playerid][izbor][poPosX],PlayerObject[playerid][izbor][poPosY],PlayerObject[playerid][izbor][poPosZ],PlayerObject[playerid][izbor][poRotX],PlayerObject[playerid][izbor][poRotY],PlayerObject[playerid][izbor][poRotZ],PlayerObject[playerid][izbor][poScaleX],PlayerObject[playerid][izbor][poScaleY],PlayerObject[playerid][izbor][poScaleZ],PlayerObject[playerid][izbor][poColor1],PlayerObject[playerid][izbor][poColor2]);
@@ -1759,7 +1759,7 @@ CMD:objects(playerid, params[])
 		    PlayerObject[playerid][izbor][poBoneId] = 4;
             
 			SendMessage(playerid, MESSAGE_TYPE_INFO, "Promjenili ste bone id, sada ga mozete editati!");
-            SendClientMessage(playerid, COLOR_RED, "USAGE: ~k~~PED_SPRINT~ da okrenes kameru.");
+            SendClientMessage(playerid, COLOR_RED, "[ ? ]: ~k~~PED_SPRINT~ da okrenes kameru.");
             
 			selectedmodelid = PlayerObject[playerid][izbor][poModelid];
 			SetPlayerAttachedObject(playerid, izbor, selectedmodelid,PlayerObject[playerid][izbor][poBoneId],PlayerObject[playerid][izbor][poPosX],PlayerObject[playerid][izbor][poPosY],PlayerObject[playerid][izbor][poPosZ],PlayerObject[playerid][izbor][poRotX],PlayerObject[playerid][izbor][poRotY],PlayerObject[playerid][izbor][poRotZ],PlayerObject[playerid][izbor][poScaleX],PlayerObject[playerid][izbor][poScaleY],PlayerObject[playerid][izbor][poScaleZ],PlayerObject[playerid][izbor][poColor1],PlayerObject[playerid][izbor][poColor2]);
@@ -1773,7 +1773,7 @@ CMD:objects(playerid, params[])
 		    PlayerObject[playerid][izbor][poBoneId] = 5;
             
 			SendMessage(playerid, MESSAGE_TYPE_INFO, "Promjenili ste bone id, sada ga mozete editati!");
-           	SendClientMessage(playerid, COLOR_RED, "USAGE: ~k~~PED_SPRINT~ da okrenes kameru.");
+           	SendClientMessage(playerid, COLOR_RED, "[ ? ]: ~k~~PED_SPRINT~ da okrenes kameru.");
            
 			selectedmodelid = PlayerObject[playerid][izbor][poModelid];
 			SetPlayerAttachedObject(playerid, izbor, selectedmodelid,PlayerObject[playerid][izbor][poBoneId],PlayerObject[playerid][izbor][poPosX],PlayerObject[playerid][izbor][poPosY],PlayerObject[playerid][izbor][poPosZ],PlayerObject[playerid][izbor][poRotX],PlayerObject[playerid][izbor][poRotY],PlayerObject[playerid][izbor][poRotZ],PlayerObject[playerid][izbor][poScaleX],PlayerObject[playerid][izbor][poScaleY],PlayerObject[playerid][izbor][poScaleZ],PlayerObject[playerid][izbor][poColor1],PlayerObject[playerid][izbor][poColor2]);
@@ -1787,7 +1787,7 @@ CMD:objects(playerid, params[])
 		    PlayerObject[playerid][izbor][poBoneId] = 6;
             
 			SendMessage(playerid, MESSAGE_TYPE_INFO, "Promjenili ste bone id, sada ga mozete editati!");
-           	SendClientMessage(playerid, COLOR_RED, "USAGE: ~k~~PED_SPRINT~ da okrenes kameru.");
+           	SendClientMessage(playerid, COLOR_RED, "[ ? ]: ~k~~PED_SPRINT~ da okrenes kameru.");
             
 			selectedmodelid = PlayerObject[playerid][izbor][poModelid];
 			SetPlayerAttachedObject(playerid, izbor, selectedmodelid,PlayerObject[playerid][izbor][poBoneId],PlayerObject[playerid][izbor][poPosX],PlayerObject[playerid][izbor][poPosY],PlayerObject[playerid][izbor][poPosZ],PlayerObject[playerid][izbor][poRotX],PlayerObject[playerid][izbor][poRotY],PlayerObject[playerid][izbor][poRotZ],PlayerObject[playerid][izbor][poScaleX],PlayerObject[playerid][izbor][poScaleY],PlayerObject[playerid][izbor][poScaleZ],PlayerObject[playerid][izbor][poColor1],PlayerObject[playerid][izbor][poColor2]);
@@ -1801,7 +1801,7 @@ CMD:objects(playerid, params[])
 		    PlayerObject[playerid][izbor][poBoneId] = 7;
             
 			SendMessage(playerid, MESSAGE_TYPE_INFO, "Promjenili ste bone id, sada ga mozete editati!");
-            SendClientMessage(playerid, COLOR_RED, "USAGE: ~k~~PED_SPRINT~ da okrenes kameru.");
+            SendClientMessage(playerid, COLOR_RED, "[ ? ]: ~k~~PED_SPRINT~ da okrenes kameru.");
             
 			selectedmodelid = PlayerObject[playerid][izbor][poModelid];
 			SetPlayerAttachedObject(playerid, izbor, selectedmodelid,PlayerObject[playerid][izbor][poBoneId],PlayerObject[playerid][izbor][poPosX],PlayerObject[playerid][izbor][poPosY],PlayerObject[playerid][izbor][poPosZ],PlayerObject[playerid][izbor][poRotX],PlayerObject[playerid][izbor][poRotY],PlayerObject[playerid][izbor][poRotZ],PlayerObject[playerid][izbor][poScaleX],PlayerObject[playerid][izbor][poScaleY],PlayerObject[playerid][izbor][poScaleZ],PlayerObject[playerid][izbor][poColor1],PlayerObject[playerid][izbor][poColor2]);
@@ -1815,7 +1815,7 @@ CMD:objects(playerid, params[])
 		    PlayerObject[playerid][izbor][poBoneId] = 8;
             
 			SendMessage(playerid, MESSAGE_TYPE_INFO, "Promjenili ste bone id, sada ga mozete editati!");
-            SendClientMessage(playerid, COLOR_RED, "USAGE: ~k~~PED_SPRINT~ da okrenes kameru.");
+            SendClientMessage(playerid, COLOR_RED, "[ ? ]: ~k~~PED_SPRINT~ da okrenes kameru.");
             
 			selectedmodelid = PlayerObject[playerid][izbor][poModelid];
 			SetPlayerAttachedObject(playerid, izbor, selectedmodelid,PlayerObject[playerid][izbor][poBoneId],PlayerObject[playerid][izbor][poPosX],PlayerObject[playerid][izbor][poPosY],PlayerObject[playerid][izbor][poPosZ],PlayerObject[playerid][izbor][poRotX],PlayerObject[playerid][izbor][poRotY],PlayerObject[playerid][izbor][poRotZ],PlayerObject[playerid][izbor][poScaleX],PlayerObject[playerid][izbor][poScaleY],PlayerObject[playerid][izbor][poScaleZ],PlayerObject[playerid][izbor][poColor1],PlayerObject[playerid][izbor][poColor2]);
@@ -1829,7 +1829,7 @@ CMD:objects(playerid, params[])
 		    PlayerObject[playerid][izbor][poBoneId] = 9;
             
 			SendMessage(playerid, MESSAGE_TYPE_INFO, "Promjenili ste bone id, sada ga mozete editati!");
-            SendClientMessage(playerid, COLOR_RED, "USAGE: ~k~~PED_SPRINT~ da okrenes kameru.");
+            SendClientMessage(playerid, COLOR_RED, "[ ? ]: ~k~~PED_SPRINT~ da okrenes kameru.");
             
 			selectedmodelid = PlayerObject[playerid][izbor][poModelid];
 			SetPlayerAttachedObject(playerid, izbor, selectedmodelid,PlayerObject[playerid][izbor][poBoneId],PlayerObject[playerid][izbor][poPosX],PlayerObject[playerid][izbor][poPosY],PlayerObject[playerid][izbor][poPosZ],PlayerObject[playerid][izbor][poRotX],PlayerObject[playerid][izbor][poRotY],PlayerObject[playerid][izbor][poRotZ],PlayerObject[playerid][izbor][poScaleX],PlayerObject[playerid][izbor][poScaleY],PlayerObject[playerid][izbor][poScaleZ],PlayerObject[playerid][izbor][poColor1],PlayerObject[playerid][izbor][poColor2]);
@@ -1843,7 +1843,7 @@ CMD:objects(playerid, params[])
 		    PlayerObject[playerid][izbor][poBoneId] = 10;
             
 			SendMessage(playerid, MESSAGE_TYPE_INFO, "Promjenili ste bone id, sada ga mozete editati!");
-            SendClientMessage(playerid, COLOR_RED, "USAGE: ~k~~PED_SPRINT~ da okrenes kameru.");
+            SendClientMessage(playerid, COLOR_RED, "[ ? ]: ~k~~PED_SPRINT~ da okrenes kameru.");
             
 			selectedmodelid = PlayerObject[playerid][izbor][poModelid];
 			SetPlayerAttachedObject(playerid, izbor, selectedmodelid,PlayerObject[playerid][izbor][poBoneId],PlayerObject[playerid][izbor][poPosX],PlayerObject[playerid][izbor][poPosY],PlayerObject[playerid][izbor][poPosZ],PlayerObject[playerid][izbor][poRotX],PlayerObject[playerid][izbor][poRotY],PlayerObject[playerid][izbor][poRotZ],PlayerObject[playerid][izbor][poScaleX],PlayerObject[playerid][izbor][poScaleY],PlayerObject[playerid][izbor][poScaleZ],PlayerObject[playerid][izbor][poColor1],PlayerObject[playerid][izbor][poColor2]);
@@ -1857,7 +1857,7 @@ CMD:objects(playerid, params[])
 		    PlayerObject[playerid][izbor][poBoneId] = 11;
            
 			SendMessage(playerid, MESSAGE_TYPE_INFO, "Promjenili ste bone id, sada ga mozete editati!");
-            SendClientMessage(playerid, COLOR_RED, "USAGE: ~k~~PED_SPRINT~ da okrenes kameru.");
+            SendClientMessage(playerid, COLOR_RED, "[ ? ]: ~k~~PED_SPRINT~ da okrenes kameru.");
             
 			selectedmodelid = PlayerObject[playerid][izbor][poModelid];
 			SetPlayerAttachedObject(playerid, izbor, selectedmodelid,PlayerObject[playerid][izbor][poBoneId],PlayerObject[playerid][izbor][poPosX],PlayerObject[playerid][izbor][poPosY],PlayerObject[playerid][izbor][poPosZ],PlayerObject[playerid][izbor][poRotX],PlayerObject[playerid][izbor][poRotY],PlayerObject[playerid][izbor][poRotZ],PlayerObject[playerid][izbor][poScaleX],PlayerObject[playerid][izbor][poScaleY],PlayerObject[playerid][izbor][poScaleZ],PlayerObject[playerid][izbor][poColor1],PlayerObject[playerid][izbor][poColor2]);
@@ -1871,7 +1871,7 @@ CMD:objects(playerid, params[])
 		    PlayerObject[playerid][izbor][poBoneId] = 12;
             
 			SendMessage(playerid, MESSAGE_TYPE_INFO, "Promjenili ste bone id, sada ga mozete editati!");
-            SendClientMessage(playerid, COLOR_RED, "USAGE: ~k~~PED_SPRINT~ da okrenes kameru.");
+            SendClientMessage(playerid, COLOR_RED, "[ ? ]: ~k~~PED_SPRINT~ da okrenes kameru.");
            
 			selectedmodelid = PlayerObject[playerid][izbor][poModelid];
 			SetPlayerAttachedObject(playerid, izbor, selectedmodelid,PlayerObject[playerid][izbor][poBoneId],PlayerObject[playerid][izbor][poPosX],PlayerObject[playerid][izbor][poPosY],PlayerObject[playerid][izbor][poPosZ],PlayerObject[playerid][izbor][poRotX],PlayerObject[playerid][izbor][poRotY],PlayerObject[playerid][izbor][poRotZ],PlayerObject[playerid][izbor][poScaleX],PlayerObject[playerid][izbor][poScaleY],PlayerObject[playerid][izbor][poScaleZ],PlayerObject[playerid][izbor][poColor1],PlayerObject[playerid][izbor][poColor2]);
@@ -1885,7 +1885,7 @@ CMD:objects(playerid, params[])
 		    PlayerObject[playerid][izbor][poBoneId] = 13;
             
 			SendMessage(playerid, MESSAGE_TYPE_INFO, "Promjenili ste bone id, sada ga mozete editati!");
-            SendClientMessage(playerid, COLOR_RED, "USAGE: ~k~~PED_SPRINT~ da okrenes kameru.");
+            SendClientMessage(playerid, COLOR_RED, "[ ? ]: ~k~~PED_SPRINT~ da okrenes kameru.");
             
 			selectedmodelid = PlayerObject[playerid][izbor][poModelid];
 			SetPlayerAttachedObject(playerid, izbor, selectedmodelid,PlayerObject[playerid][izbor][poBoneId],PlayerObject[playerid][izbor][poPosX],PlayerObject[playerid][izbor][poPosY],PlayerObject[playerid][izbor][poPosZ],PlayerObject[playerid][izbor][poRotX],PlayerObject[playerid][izbor][poRotY],PlayerObject[playerid][izbor][poRotZ],PlayerObject[playerid][izbor][poScaleX],PlayerObject[playerid][izbor][poScaleY],PlayerObject[playerid][izbor][poScaleZ],PlayerObject[playerid][izbor][poColor1],PlayerObject[playerid][izbor][poColor2]);
@@ -1899,7 +1899,7 @@ CMD:objects(playerid, params[])
 		    PlayerObject[playerid][izbor][poBoneId] = 14;
             
 			SendMessage(playerid, MESSAGE_TYPE_INFO, "Promjenili ste bone id, sada ga mozete editati!");
-            SendClientMessage(playerid, COLOR_RED, "USAGE: ~k~~PED_SPRINT~ da okrenes kameru.");
+            SendClientMessage(playerid, COLOR_RED, "[ ? ]: ~k~~PED_SPRINT~ da okrenes kameru.");
             
 			selectedmodelid = PlayerObject[playerid][izbor][poModelid];
 			SetPlayerAttachedObject(playerid, izbor, selectedmodelid,PlayerObject[playerid][izbor][poBoneId],PlayerObject[playerid][izbor][poPosX],PlayerObject[playerid][izbor][poPosY],PlayerObject[playerid][izbor][poPosZ],PlayerObject[playerid][izbor][poRotX],PlayerObject[playerid][izbor][poRotY],PlayerObject[playerid][izbor][poRotZ],PlayerObject[playerid][izbor][poScaleX],PlayerObject[playerid][izbor][poScaleY],PlayerObject[playerid][izbor][poScaleZ],PlayerObject[playerid][izbor][poColor1],PlayerObject[playerid][izbor][poColor2]);
@@ -1913,7 +1913,7 @@ CMD:objects(playerid, params[])
 		    PlayerObject[playerid][izbor][poBoneId] = 15;
             
 			SendMessage(playerid, MESSAGE_TYPE_INFO, "Promjenili ste bone id, sada ga mozete editati!");
-            SendClientMessage(playerid, COLOR_RED, "USAGE: ~k~~PED_SPRINT~ da okrenes kameru.");
+            SendClientMessage(playerid, COLOR_RED, "[ ? ]: ~k~~PED_SPRINT~ da okrenes kameru.");
             
 			selectedmodelid = PlayerObject[playerid][izbor][poModelid];
 			SetPlayerAttachedObject(playerid, izbor, selectedmodelid,PlayerObject[playerid][izbor][poBoneId],PlayerObject[playerid][izbor][poPosX],PlayerObject[playerid][izbor][poPosY],PlayerObject[playerid][izbor][poPosZ],PlayerObject[playerid][izbor][poRotX],PlayerObject[playerid][izbor][poRotY],PlayerObject[playerid][izbor][poRotZ],PlayerObject[playerid][izbor][poScaleX],PlayerObject[playerid][izbor][poScaleY],PlayerObject[playerid][izbor][poScaleZ],PlayerObject[playerid][izbor][poColor1],PlayerObject[playerid][izbor][poColor2]);
@@ -1927,7 +1927,7 @@ CMD:objects(playerid, params[])
 			PlayerObject[playerid][izbor][poBoneId] = 16;
             
 			SendMessage(playerid, MESSAGE_TYPE_INFO, "Promjenili ste bone id, sada ga mozete editati!");
-            SendClientMessage(playerid, COLOR_RED, "USAGE: ~k~~PED_SPRINT~ da okrenes kameru.");
+            SendClientMessage(playerid, COLOR_RED, "[ ? ]: ~k~~PED_SPRINT~ da okrenes kameru.");
             
 			selectedmodelid = PlayerObject[playerid][izbor][poModelid];
 			SetPlayerAttachedObject(playerid, izbor, selectedmodelid,PlayerObject[playerid][izbor][poBoneId],PlayerObject[playerid][izbor][poPosX],PlayerObject[playerid][izbor][poPosY],PlayerObject[playerid][izbor][poPosZ],PlayerObject[playerid][izbor][poRotX],PlayerObject[playerid][izbor][poRotY],PlayerObject[playerid][izbor][poRotZ],PlayerObject[playerid][izbor][poScaleX],PlayerObject[playerid][izbor][poScaleY],PlayerObject[playerid][izbor][poScaleZ],PlayerObject[playerid][izbor][poColor1],PlayerObject[playerid][izbor][poColor2]);
@@ -1941,7 +1941,7 @@ CMD:objects(playerid, params[])
 			PlayerObject[playerid][izbor][poBoneId] = 17;
            
 			SendMessage(playerid, MESSAGE_TYPE_INFO, "Promjenili ste bone id, sada ga mozete editati!");
-            SendClientMessage(playerid, COLOR_RED, "USAGE: ~k~~PED_SPRINT~ da okrenes kameru.");
+            SendClientMessage(playerid, COLOR_RED, "[ ? ]: ~k~~PED_SPRINT~ da okrenes kameru.");
             
 			selectedmodelid = PlayerObject[playerid][izbor][poModelid];
 			SetPlayerAttachedObject(playerid, izbor, selectedmodelid,PlayerObject[playerid][izbor][poBoneId],PlayerObject[playerid][izbor][poPosX],PlayerObject[playerid][izbor][poPosY],PlayerObject[playerid][izbor][poPosZ],PlayerObject[playerid][izbor][poRotX],PlayerObject[playerid][izbor][poRotY],PlayerObject[playerid][izbor][poRotZ],PlayerObject[playerid][izbor][poScaleX],PlayerObject[playerid][izbor][poScaleY],PlayerObject[playerid][izbor][poScaleZ],PlayerObject[playerid][izbor][poColor1],PlayerObject[playerid][izbor][poColor2]);
@@ -1955,7 +1955,7 @@ CMD:objects(playerid, params[])
 			PlayerObject[playerid][izbor][poBoneId] = 18;
             
 			SendMessage(playerid, MESSAGE_TYPE_INFO, "Promjenili ste bone id, sada ga mozete editati!");
-            SendClientMessage(playerid, COLOR_RED, "USAGE: ~k~~PED_SPRINT~ da okrenes kameru.");
+            SendClientMessage(playerid, COLOR_RED, "[ ? ]: ~k~~PED_SPRINT~ da okrenes kameru.");
             
 			selectedmodelid = PlayerObject[playerid][izbor][poModelid];
 			SetPlayerAttachedObject(playerid, izbor, selectedmodelid,PlayerObject[playerid][izbor][poBoneId],PlayerObject[playerid][izbor][poPosX],PlayerObject[playerid][izbor][poPosY],PlayerObject[playerid][izbor][poPosZ],PlayerObject[playerid][izbor][poRotX],PlayerObject[playerid][izbor][poRotY],PlayerObject[playerid][izbor][poRotZ],PlayerObject[playerid][izbor][poScaleX],PlayerObject[playerid][izbor][poScaleY],PlayerObject[playerid][izbor][poScaleZ],PlayerObject[playerid][izbor][poColor1],PlayerObject[playerid][izbor][poColor2]);

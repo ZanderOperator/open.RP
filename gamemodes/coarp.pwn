@@ -10,19 +10,19 @@
 #include <crashdetect>
 #include <a_samp>
 #include <a_http>
-//#include <profiler> // Test
+
 /*
 ==============================================================================
 	Preinclude defines
 ==============================================================================
 */
+
 //#define	WC_DEBUG							false
 //#define _DEBUG								0 											// YSI
 //#define MOD_DEBUG								true										// Gamemode Debug
 
 #define MYSQL_USE_YINLINE						true
 // #define COA_UCP
-
 #define FIXES_ServerVarMsg 0
 
 // GMT Zone
@@ -30,21 +30,18 @@
 // 0.3DL
 #define NEGATIVE_MODEL_ID 						-40000 // Negativna vrijednost radi Custom Object Modela koji su u minusu
 #define HTTP_RESTART_REQUEST 					"51.77.200.63/ogp_api.php?gamemanager/restart&token=3a4aaa4509a0ff91f8597734eaecf1f4a85a5dd80b0c1455137f2428808d8820&ip=51.77.200.63&port=7777&mod_key=default"
-
+// Fixes.inc
 #define FIX_OnPlayerEnterVehicle 	0
 #define FIX_OnPlayerEnterVehicle_2 	0
 #define FIX_OnPlayerEnterVehicle_3 	0
 #define FIX_OnDialogResponse		0
 #define FIX_GetPlayerDialog			0
-
 #define	MAX_IP_CONNECTS 			3
 
 // SA-MP config
 #define MAX_NPCS 								(1)
-
 #undef MAX_PLAYERS
-#define MAX_PLAYERS 							(100)
-
+#define MAX_PLAYERS 							(200)
 #undef MAX_VEHICLES
 #define MAX_VEHICLES                      		(1000)	// aSamp
 
@@ -60,13 +57,15 @@
 	 ##  ##   ### ##    ## ##       ##     ## ##     ## ##       ##    ##
 	#### ##    ##  ######	########  #######  ########  ########  ######
 */
+
 // Fixes
 #define FIX_file_inc 0
-
 #include <fixes>
+
 // Streamer
 #include <streamer>
 #define OBJECT_STREAM_LIMIT		(700)
+
 // AntiCheat
 #include <Anti_cheat_pack>
 
@@ -111,12 +110,9 @@ native WP_Hash(buffer[], len, const str[]);
 	########  ######## ##       #### ##    ## ########  ######
 */
 
-//Limits - https://wiki.sa-mp.com/wiki/Limits - L3o.
+//Limits - https://wiki.sa-mp.com/wiki/Limits.
 
-
-// Define when to split the text into another line!
-#define EX_SPLITLENGTH 							(90)
-
+#define EX_SPLITLENGTH 							(90) // Define when to split the text into another line!
 #define MAX_DIALOG_TEXT                 		(756)
 #define MAX_LOGIN_TRIES							(3)
 #define MAX_PLAYER_MAIL							(32)
@@ -144,9 +140,6 @@ native WP_Hash(buffer[], len, const str[]);
 #define MAX_SERVER_SKINS						(600)
 #define MAX_ILEGAL_GARAGES						(3)
 
-#define MAX_FURNITURE_SLOTS						(700)
-#define MAX_FURNITURE_SLOT_FIELDS				(3500) // 1 slot = 5 textures. (MAX_FURNITURE_SLOTS*5)
-
 // Experience.pwn
 #define MIN_GIVER_EXP_PAYDAYS					(2) // Mora imati minimalno 2 paydaya taj dan da bi mogao davati exp
 #define MIN_RECIEVER_EXP_PAYDAYS				(1) // Mora imati minimalno 1 payday taj dan da bi primio exp
@@ -156,11 +149,15 @@ native WP_Hash(buffer[], len, const str[]);
 #define PREMIUM_SILVER_EXP						(200) // Mjesec dana Premium Silver paketa
 #define PREMIUM_GOLD_EXP						(250) // Mjesec dana Premium Gold paketa
 
+#define MAX_TEXTURE_SLOTS						(5)
+// Furniture
 #define FURNITURE_PREMIUM_OBJECTS				(700) // => CMD: /afurniture setpremium [player_id] [house_id]
 #define FURNITURE_VIP_GOLD_OBJCTS				(500)
 #define FURNITURE_VIP_SILVER_OBJCTS				(400)
 #define FURNITURE_VIP_BRONZE_OBJCTS				(300)
 #define FURNITURE_VIP_NONE						(200)
+#define MAX_FURNITURE_SLOTS						(700)
+#define MAX_FURNITURE_SLOT_FIELDS				(3500) // 1 slot = 5 textures. (MAX_FURNITURE_SLOTS*5)
 
 // Bizz Furniture
 #define BIZZ_FURNITURE_VIP_GOLD_OBJCTS			(500)
@@ -181,10 +178,10 @@ native WP_Hash(buffer[], len, const str[]);
 #define INVALID_HOUSE_ID						(9999)
 #define INVALID_COMPLEX_ID                      (999)
 
-//Streaming
+// Streaming
 #define PRISON_DRAW_DISTANCE            		(250.0)
 
-//First Time User
+// Newly Registered User
 #define NEW_PLAYER_BANK 						(2500)
 #define NEW_PLAYER_MONEY 						(500)
 
@@ -196,32 +193,22 @@ native WP_Hash(buffer[], len, const str[]);
 //#define HOSTNAME 								"CoA Testing time"
 #define COPYRIGHT                           	"Copyright (c) 2020 City of Angels Roleplay"
 #define WEB_URL									"forum.cityofangels-roleplay.com"
+#define SCRIPT_VERSION							"CoA RP v18.4.5."  // [ ! ] Prilikom promjene SCRIPT_VERSION, OBAVEZNO ubaciti novi Update "Changelog.txt"u /scriptfiles folder [ ! ]
+#define DEV_NAME   								"Woo-Logan"
 
-// !Prilikom promjene SCRIPT_VERSION, OBAVEZNO ubaciti novi Update "Changelog.txt"u /scriptfiles folder!
-#define SCRIPT_VERSION							"CoA RP v18.4.2."
-
-//custom name
-#define Dev_Name   								"Woo-Logan"
-
-//Macros
+// Macros
 #define Function:%0(%1) \
 		forward%0(%1); \
 		public%0(%1)
-
 #define IsPlayerLogged(%0) \
 	Bit1_Get(gr_PlayerLoggedIn,%0)
-
 #define IsPlayerLogging(%0) \
 	Bit1_Get(gr_PlayerLoggingIn,%0)
-
-// Provjerava dali je igrac ziv!
 #define IsPlayerAlive(%0) \
 	Bit1_Get(gr_PlayerAlive, %0)
-
 #define IsPlayerSafeBreaking(%0)	Bit1_Get( gr_SafeBreaking, playerid )
-
 #define IsPlayerReconing(%0) Bit4_Get(gr_SpecateId, %0)
-
+/*
 //Colors
 #define COLOR_FADE1                         0xE6E6E6E6
 #define COLOR_FADE2                         0xC8C8C8C8
@@ -230,7 +217,7 @@ native WP_Hash(buffer[], len, const str[]);
 #define COLOR_FADE5                         0x6E6E6E6E
 
 #define COLOR_PLAYER						0xFFFFFF00
-#define COLOR_PLAYER_DEAD                   0xBFC0C200
+#define COLOR_PLAYER_DEAD                   0xBFC0C200*/
 
 //Spawn
 #define SPAWN_X								(1107.3832)
@@ -603,8 +590,8 @@ enum E_HOUSES_INFO {
 new
 	HouseInfo[MAX_HOUSES][E_HOUSES_INFO];
 
-#define hFurTxtId][%1][%2] hFurTxtId][((%1)*5)+(%2)]			// Hakiramo kompajler da imamo HouseInfo[ houseid ][ hFurTxtId ][ 0 ][ 0 ]
-#define hFurColId][%1][%2] hFurColId][((%1)*5)+(%2)]			// Hakiramo kompajler da imamo HouseInfo[ houseid ][ hFurColId ][ 0 ][ 0 ]
+#define hFurTxtId][%1][%2] hFurTxtId][((%1)*MAX_TEXTURE_SLOTS)+(%2)]			// Hakiramo kompajler da imamo HouseInfo[ houseid ][ hFurTxtId ][ 0 ][ 0 ]
+#define hFurColId][%1][%2] hFurColId][((%1)*MAX_TEXTURE_SLOTS)+(%2)]			// Hakiramo kompajler da imamo HouseInfo[ houseid ][ hFurColId ][ 0 ][ 0 ]
 
 enum E_COMPLEX_INFO {
 	cSQLID,
@@ -672,7 +659,7 @@ enum E_COMPLEX_ROOM_INFO {
 new
 	ComplexRoomInfo[MAX_COMPLEX_ROOMS][E_COMPLEX_ROOM_INFO];
 
-#define MAX_BIZNIS_FURNITURE_SLOTS  	( BIZZ_FURNITURE_VIP_GOLD_OBJCTS * 5 )
+#define MAX_BIZNIS_FURNITURE_SLOTS  	( BIZZ_FURNITURE_VIP_GOLD_OBJCTS * MAX_TEXTURE_SLOTS )
 enum E_BIZNIS_INFO
 {
 	bSQLID,

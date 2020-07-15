@@ -32,7 +32,7 @@ CMD:atm(playerid, params[])
 	new option[9], amount, string[77];
     if(sscanf(params, "s[9] ", option))
 	{
-		SendClientMessage(playerid, COLOR_RED, "USAGE: /atm [opcija]");
+		SendClientMessage(playerid, COLOR_RED, "[ ? ]: /atm [opcija]");
 		SendClientMessage(playerid, COLOR_RED, "[ ! ] withdraw, status");
 		return 1;
 	}
@@ -44,7 +44,7 @@ CMD:atm(playerid, params[])
 	}
 	else if(!strcmp(option, "withdraw", true))
 	{
-		if(sscanf(params, "s[9]i", option, amount)) return SendClientMessage(playerid, COLOR_RED, "USAGE: /atm withdraw [iznos]");
+		if(sscanf(params, "s[9]i", option, amount)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /atm withdraw [iznos]");
 		if (amount > PlayerInfo[playerid][pBank] || amount < 1) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate toliko novaca!");
 		BankToPlayerMoney(playerid, amount); // novac dolazi igracu na ruke iz banke
 		format(string, sizeof(string), "Uzeli ste %d$ s vaseg racuna! Preostalo vam je %d$ na vasem racunu!", amount, PlayerInfo[playerid][pBank]);

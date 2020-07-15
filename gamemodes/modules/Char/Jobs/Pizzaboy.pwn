@@ -199,7 +199,7 @@ CMD:pizza(playerid, params[])
 	new 
 		pick[8];
 	if( PlayerInfo[ playerid ][ pJob ] != 2 ) return SendClientMessage( playerid, COLOR_RED, "Niste Pizza Boy!"); 
-	if( sscanf( params, "s[8] ", pick ) ) return SendClientMessage(playerid, COLOR_RED, "USAGE: /pizza [order/take/put/deliver/skin/stop]");
+	if( sscanf( params, "s[8] ", pick ) ) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /pizza [order/take/put/deliver/skin/stop]");
 	if( !strcmp( pick, "skin", true ) )
 	{
 		if( !IsPlayerInRangeOfPoint( playerid, 5.0, 368.9829, -114.9067, 1001.5000 ) ) return SendClientMessage( playerid, COLOR_RED, "Niste u Pizza Stack svlacionici!");
@@ -274,7 +274,7 @@ CMD:pizza(playerid, params[])
 			if( PlayerInfo[ playerid ][ pFreeWorks ] < 1 ) return SendClientMessage( playerid, COLOR_RED, "Ne mozes vise raditi!");
 			new
 				amount;
-			if( sscanf( params, "s[8]i", pick, amount ) ) return SendClientMessage(playerid, COLOR_RED, "USAGE: /pizza order [kolicina pizza]");
+			if( sscanf( params, "s[8]i", pick, amount ) ) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /pizza order [kolicina pizza]");
 			if( 1 <= amount <= 8 ) {
 				Bit8_Set( gr_PlayerPizzas, playerid, amount );
 				Bit8_Set( gr_PlayerPizzasTotal, playerid, amount );

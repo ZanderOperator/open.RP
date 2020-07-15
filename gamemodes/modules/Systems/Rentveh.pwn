@@ -229,7 +229,7 @@ CMD:rentveh(playerid, params[])
 	new param[9];
 	if(sscanf(params, "s[9] ", param))
 	{
-		SendClientMessage(playerid, COLOR_RED, "USAGE: /rentveh [odabir]");
+		SendClientMessage(playerid, COLOR_RED, "[ ? ]: /rentveh [odabir]");
 		SendClientMessage(playerid, COLOR_GREY, "[ODABIR]: take, locate, giveback, trunk");
 		return 1;
 	}
