@@ -92,14 +92,15 @@ timer SetPlayerCrash[6000](playerid)
 		LearnPlayer(playerid, 1);
 	}
 	if(strcmp(PlayerInfo[playerid][pLastUpdateVer], SCRIPT_VERSION, true) != 0)
-	{
-		PlayerReward[playerid] = true;
-		ShowPlayerUpdateList(playerid);
-	}	
+		va_SendClientMessage(playerid, COLOR_LIGHTBLUE, "[City of Angels]: "COL_WHITE"Server je updatean na verziju "COL_LIGHTBLUE"%s"COL_WHITE", za vise informacija - /update.", SCRIPT_VERSION);
+	if(!isnull(PlayerInfo[playerid][pAdminMsg]) && PlayerInfo[playerid][pAdmMsgConfirm] == 0)
+		ShowAdminMessage(playerid);
+		
 	SafeSpawned[ playerid ] = true;
 	AC_SetPlayerWeapons(playerid);
 	LoadPlayerSkills(playerid);
 	LoadPlayerObjects(playerid);
+	LoadPlayerCredit(playerid);
 	CheckPlayerInteriors(playerid);
 	CheckPlayerInactivity(playerid);
 	return 1;
@@ -123,13 +124,12 @@ CheckPlayerInactivity(playerid)
 		rows = cache_num_rows();
 		if(!rows)
 			return 1;
-		else
-		{
-			new deleteQuery[128];
-			format(deleteQuery, sizeof(deleteQuery), "DELETE FROM `inactive_accounts` WHERE `sqlid` = '%d'", PlayerInfo[playerid][pSQLID]);
-			mysql_tquery(g_SQL, deleteQuery, "", "");
-			SendClientMessage(playerid, COLOR_LIGHTRED, "[SERVER]: Neaktivnost koju ste imali prijavljenu u bazi podataka je deaktivirana.");
-		}
+		
+		new deleteQuery[128];
+		format(deleteQuery, sizeof(deleteQuery), "DELETE FROM `inactive_accounts` WHERE `sqlid` = '%d'", PlayerInfo[playerid][pSQLID]);
+		mysql_tquery(g_SQL, deleteQuery, "", "");
+		SendClientMessage(playerid, COLOR_LIGHTRED, "[SERVER]: Neaktivnost koju ste imali prijavljenu u bazi podataka je deaktivirana.");
+		
 		return 1;
 	}
 	mysql_tquery_inline(g_SQL, tmpQuery, using inline OnPlayerInactivityCheck, "i", playerid);
@@ -299,8 +299,6 @@ public CheckPlayerLoginInput(playerid)
 
         cache_get_value_name_int(0,  "playaSkin"	, PlayerInfo[playerid][pChar]);
 		format(PlayerInfo[playerid][pAccent]		, sizeof(string), string);
-		cache_get_value_name_int(0,	 "rate"			, PlayerInfo[playerid][pRate]);
-		cache_get_value_name_int(0,	 "credittype"	, PlayerInfo[playerid][pCreditType]);
 		cache_get_value_name(0,		 "marriedto"	, PlayerInfo[playerid][pMarriedTo]	, MAX_PLAYER_NAME);
 
 		cache_get_value_name_int(0,  "carlic"		, PlayerInfo[playerid][pCarLic]);
@@ -329,6 +327,7 @@ public CheckPlayerLoginInput(playerid)
 		cache_get_value_name_int(0, "lighter"		, PlayerInfo[playerid][pLighter]);		
 		cache_get_value_name_int(0, "playaPayDay"	, PlayerInfo[playerid][pPayDay]);	
 		cache_get_value_name_int(0, "playaPDMoney"	, PlayerInfo[playerid][pPayDayMoney]);
+		cache_get_value_name_int(0, "profit"		, PlayerInfo[playerid][pProfit]);
 		cache_get_value_name(0, 	"paydayDialog"	, PlayerInfo[playerid][pPayDayDialog], 2048);
 		cache_get_value_name(0, 	"paydaydate"	, PlayerInfo[playerid][pPayDayDate], 32);
 
@@ -381,7 +380,7 @@ public CheckPlayerLoginInput(playerid)
 		cache_get_value_name_int(0, "lastdrug", PlayerInfo[playerid][pDrugOrder]);
 		
 		//Adminmsg
-		cache_get_value_name(0, "AdminMessage", PlayerInfo[playerid][pAdminMsg], 128);
+		cache_get_value_name(0, "AdminMessage", PlayerInfo[playerid][pAdminMsg], 2048);
 		cache_get_value_name(0, "AdminMessageBy", PlayerInfo[playerid][pAdminMsgBy], 60);
 		cache_get_value_name_int(0, "AdmMessageConfirm", PlayerInfo[playerid][pAdmMsgConfirm]);
 		
@@ -426,18 +425,19 @@ public CheckPlayerLoginInput(playerid)
 
 			PlayerInfo[ playerid ][ pUnbanTime ] 		= 0;
 			PlayerInfo[ playerid ][ pBanReason ][ 0 ] 	= EOS;
-		} else {
-			new diff_secs 		= PlayerInfo[ playerid ][ pUnbanTime ] - gettimestamp();
-			new remain_hours 	= floatround( diff_secs / (60 * 60) );
-			new remain_mins 	= floatround( diff_secs / 60  );
-			new remain_secs 	=  diff_secs % 60;
-
-			va_SendClientMessage( playerid, COLOR_YELLOW, "[CoA-RP Server]: Vasa zabrana igranja zavrsava za %d sati, %d minuta, %d sekundi. Razlog: %s",
-				remain_hours,
-				remain_mins,
-				remain_secs,
-				PlayerInfo[ playerid ][ pBanReason ]
+		} else 
+		{
+			new date[6];
+			stamp2datetime(PlayerInfo[ playerid ][ pUnbanTime ], date[0], date[1] ,date[2], date[3], date[4], date[5]); // formatiranje vremena iz unixa u normalno
+			va_SendClientMessage(playerid, COLOR_LIGHTRED, "[CoA-RP Server]: Vasa zabrana igranja zavrsava "COL_SERVER"%02d/%02d/%02d %02d:%02d:%02d.",
+				date[2],
+				date[1],
+				date[0],
+				date[3],
+				date[4],
+				date[5]
 			);
+			va_SendClientMessage(playerid, COLOR_LIGHTRED, "Razlog bana: %s", PlayerInfo[ playerid ][ pBanReason ]);
 
 			KickMessage(playerid);
 			return 1;
@@ -595,6 +595,7 @@ public OnAccountFinish(playerid)
 	PlayerInfo[playerid][pLevel] 			= 1;
 	PlayerInfo[playerid][pChar] 			= 29;
 	PlayerInfo[playerid][pPayDayMoney] 		= 0;
+	PlayerInfo[playerid][pProfit]			= 0;
 	PlayerInfo[playerid][pFreeWorks] 		= 15;
 	PlayerInfo[playerid][pMuted] 			= true;
 	PlayerInfo[playerid][pAdmin] 			= 0;
@@ -738,15 +739,11 @@ SafeSpawnPlayer(playerid)
 	StopAudioStreamForPlayer(playerid);
 	va_SendClientMessage(playerid, COLOR_LIGHTBLUE, "[City of Angels]: "COL_WHITE"Dobrodosao natrag, "COL_LIGHTBLUE"%s"COL_WHITE"!", GetName(playerid));
 	AntiCheatData[playerid][acLoginDialog] = false;
-	
- 	if(!isnull(PlayerInfo[playerid][pAdminMsg]))
-		SendClientMessage(playerid, COLOR_RED, "Imate poruku od admina! Koristite /showmessage kako bi provjerili poruku.");
-
 	CallLocalFunction("OnPlayerSpawn", "i", playerid);
 	return 1;
 }
 
-CMD:showmessage(playerid, params[])
+stock ShowAdminMessage(playerid)
 {
    	if(PlayerInfo[playerid][pAdmMsgConfirm] == 0)
 		return SendClientMessage(playerid, COLOR_RED, "Nemate poruka od admina!");
@@ -762,7 +759,8 @@ stock SavePlayerData(playerid)
 {
     if( !SafeSpawned[playerid] )	
 		return 1;
-		
+	
+	SavePlayerCredit(playerid);
 	SavePlayerExperience(playerid);
 	UpdatePlayerMobile(playerid);
 	AC_SavePlayerWeapons(playerid);
@@ -775,9 +773,9 @@ stock SavePlayerData(playerid)
 	#endif
 	
 	new 
-		mysqlUpdate[256];
+		mysqlUpdate[4096];
 	mysql_tquery(g_SQL, "START TRANSACTION");
-	mysql_format(g_SQL, mysqlUpdate, 256, "UPDATE `accounts` SET `online` = '0',`registered` = '%d',`adminLvl` = '%d',`helper` = '%d',`playaWarns` = '%d',`lastlogin` = '%e',`lastloginstamp` = '%d', `lastip` = '%e'  WHERE `sqlid` = '%d'",
+	mysql_format(g_SQL, mysqlUpdate, sizeof(mysqlUpdate), "UPDATE `accounts` SET `online` = '0',`registered` = '%d',`adminLvl` = '%d',`helper` = '%d',`playaWarns` = '%d',`lastlogin` = '%e',`lastloginstamp` = '%d', `lastip` = '%e'  WHERE `sqlid` = '%d'",
 		PlayerInfo[playerid][pRegistered],
 		PlayerInfo[playerid][pTempRank][0],
 		PlayerInfo[playerid][pTempRank][1],
@@ -789,7 +787,7 @@ stock SavePlayerData(playerid)
 	);
 	mysql_tquery(g_SQL, mysqlUpdate, "", "");
 
-	mysql_format(g_SQL, mysqlUpdate, 256, "UPDATE `accounts` SET `muted` = '%d', `sex` = '%d', `age` = '%d', `changenames` = '%d', `changetimes` = '%d', `handMoney` = '%d', `bankMoney` = '%d' WHERE `sqlid` = '%d'",
+	mysql_format(g_SQL, mysqlUpdate, sizeof(mysqlUpdate), "UPDATE `accounts` SET `muted` = '%d', `sex` = '%d', `age` = '%d', `changenames` = '%d', `changetimes` = '%d', `handMoney` = '%d', `bankMoney` = '%d' WHERE `sqlid` = '%d'",
 		PlayerInfo[playerid][pMuted],
 		PlayerInfo[playerid][pSex],
 		PlayerInfo[playerid][pAge],
@@ -801,7 +799,7 @@ stock SavePlayerData(playerid)
 	);
 	mysql_tquery(g_SQL, mysqlUpdate, "", "");
 	
-	mysql_format(g_SQL, mysqlUpdate, 256, "UPDATE `accounts` SET `connecttime` = '%d', `contracttime` = '%d', `freeworks` = '%d', `fishworks` = '%d', `fishsqlid` = '%d', `levels` = '%d', `respects` = '%d' WHERE `sqlid` = '%d'",
+	mysql_format(g_SQL, mysqlUpdate, sizeof(mysqlUpdate), "UPDATE `accounts` SET `connecttime` = '%d', `contracttime` = '%d', `freeworks` = '%d', `fishworks` = '%d', `fishsqlid` = '%d', `levels` = '%d', `respects` = '%d' WHERE `sqlid` = '%d'",
 		PlayerInfo[playerid][pConnectTime],
 		PlayerInfo[playerid][pContractTime],
 		PlayerInfo[playerid][pFreeWorks],
@@ -813,7 +811,7 @@ stock SavePlayerData(playerid)
 	);
 	mysql_pquery(g_SQL, mysqlUpdate);
 
-	mysql_format(g_SQL, mysqlUpdate, 256, "UPDATE `accounts` SET `jobkey` = '%d',  `parts` = '%d', `contracttime` = '%d', `health` = '%f', `FishingSkill` = '%d', `TransporterSkill` = '%d' WHERE `sqlid` = '%d'",
+	mysql_format(g_SQL, mysqlUpdate, sizeof(mysqlUpdate), "UPDATE `accounts` SET `jobkey` = '%d',  `parts` = '%d', `contracttime` = '%d', `health` = '%f', `FishingSkill` = '%d', `TransporterSkill` = '%d' WHERE `sqlid` = '%d'",
 		PlayerInfo[playerid][pJob],
 		PlayerInfo[playerid][pParts],
 		PlayerInfo[playerid][pContractTime],
@@ -824,14 +822,7 @@ stock SavePlayerData(playerid)
 	);
 	mysql_tquery(g_SQL, mysqlUpdate, "", "");
 
-	mysql_format(g_SQL, mysqlUpdate, 256, "UPDATE `accounts` SET `rate` = '%d', `credittype` = '%d' WHERE `sqlid` = '%d'",
-		PlayerInfo[playerid][pRate],
-		PlayerInfo[playerid][pCreditType],
-		PlayerInfo[playerid][pSQLID]
-	);
-	mysql_tquery(g_SQL, mysqlUpdate, "", "");
-
-	mysql_format(g_SQL, mysqlUpdate, 256, "UPDATE `accounts` SET `jailed` = '%d', `jailtime` = '%d', `bailprice` = '%d' WHERE `sqlid` = '%d'",
+	mysql_format(g_SQL, mysqlUpdate, sizeof(mysqlUpdate), "UPDATE `accounts` SET `jailed` = '%d', `jailtime` = '%d', `bailprice` = '%d' WHERE `sqlid` = '%d'",
 		PlayerInfo[playerid][pJailed],
 		PlayerInfo[playerid][pJailTime],
 		PlayerInfo[playerid][pBailPrice],
@@ -839,7 +830,7 @@ stock SavePlayerData(playerid)
 	);
 	mysql_tquery(g_SQL, mysqlUpdate, "", "");
 
-	mysql_format(g_SQL, mysqlUpdate, 256, "UPDATE `accounts` SET `carlic` = '%d', `gunlic` = '%d', `boatlic` = '%d', `fishlic` = '%d', `flylic` = '%d' WHERE `sqlid` = '%d'",
+	mysql_format(g_SQL, mysqlUpdate, sizeof(mysqlUpdate), "UPDATE `accounts` SET `carlic` = '%d', `gunlic` = '%d', `boatlic` = '%d', `fishlic` = '%d', `flylic` = '%d' WHERE `sqlid` = '%d'",
 		PlayerInfo[playerid][pCarLic],
 		PlayerInfo[playerid][pGunLic],
 		PlayerInfo[playerid][pBoatLic],
@@ -849,7 +840,7 @@ stock SavePlayerData(playerid)
 	);
 	mysql_tquery(g_SQL, mysqlUpdate, "", "");
 		
-	mysql_format(g_SQL, mysqlUpdate, 256, "UPDATE `accounts` SET `rentkey` = '%d', `maskid` = '%d', `hunger` = '%f' WHERE `sqlid` = '%d'",
+	mysql_format(g_SQL, mysqlUpdate, sizeof(mysqlUpdate), "UPDATE `accounts` SET `rentkey` = '%d', `maskid` = '%d', `hunger` = '%f' WHERE `sqlid` = '%d'",
 		PlayerInfo[playerid][pRentKey],
 		PlayerInfo[playerid][pMaskID],
 		PlayerInfo[playerid][pHunger],
@@ -857,7 +848,7 @@ stock SavePlayerData(playerid)
 	);
 	mysql_tquery(g_SQL, mysqlUpdate, "", "");
 
-	mysql_format(g_SQL, mysqlUpdate, 256, "UPDATE `accounts` SET `spawnedcar` = '%d', `armour` = '%f', `muscle` = '%d', `arrested` = '%d', `fightstyle` = '%d' WHERE `sqlid` = '%d'",
+	mysql_format(g_SQL, mysqlUpdate, sizeof(mysqlUpdate), "UPDATE `accounts` SET `spawnedcar` = '%d', `armour` = '%f', `muscle` = '%d', `arrested` = '%d', `fightstyle` = '%d' WHERE `sqlid` = '%d'",
 		PlayerInfo[playerid][pSpawnedCar],
 		PlayerInfo[playerid][pArmour],
 		PlayerInfo[playerid][pMuscle],
@@ -867,18 +858,19 @@ stock SavePlayerData(playerid)
 	);
 	mysql_tquery(g_SQL, mysqlUpdate, "", "");
 
-	mysql_format(g_SQL, mysqlUpdate, 256, "UPDATE `accounts` SET `clock` = '%d', `rope` = '%d', `cigaretes` = '%d', `lighter` = '%d', `playaPayDay` = '%d', `playaPDMoney` = '%d' WHERE `sqlid` = '%d'",
+	mysql_format(g_SQL, mysqlUpdate, sizeof(mysqlUpdate), "UPDATE `accounts` SET `clock` = '%d', `rope` = '%d', `cigaretes` = '%d', `lighter` = '%d', `playaPayDay` = '%d', `playaPDMoney` = '%d', `profit` = '%d' WHERE `sqlid` = '%d'",
 		PlayerInfo[playerid][pClock],
 		PlayerInfo[playerid][hRope],
 		PlayerInfo[playerid][pCiggaretes],
 		PlayerInfo[playerid][pLighter],
 		PlayerInfo[playerid][pPayDay],
 		PlayerInfo[playerid][pPayDayMoney],
+		PlayerInfo[playerid][pProfit],
 		PlayerInfo[playerid][pSQLID]
 	);
 	mysql_tquery(g_SQL, mysqlUpdate, "", "");
 	
-	mysql_format(g_SQL, mysqlUpdate, 256, "UPDATE `accounts` SET `lijektimer` = '%d' WHERE `sqlid` = '%d'",
+	mysql_format(g_SQL, mysqlUpdate, sizeof(mysqlUpdate), "UPDATE `accounts` SET `lijektimer` = '%d' WHERE `sqlid` = '%d'",
 		PlayerInfo[playerid][pLijekTimer],
 		PlayerInfo[playerid][pSQLID]
 	);
@@ -930,12 +922,11 @@ stock SavePlayerData(playerid)
 		PlayerInfo[playerid][pSQLID]);
 	mysql_tquery(g_SQL, mysqlUpdate, "", "");
 	
-	new paydayquery[2500];
-	mysql_format(g_SQL, paydayquery, sizeof(paydayquery), "UPDATE `accounts` SET `paydayDialog` = '%e', `paydaydate` = '%e' WHERE `sqlid` = '%d'",
+	mysql_format(g_SQL, mysqlUpdate, sizeof(mysqlUpdate), "UPDATE `accounts` SET `paydayDialog` = '%e', `paydaydate` = '%e' WHERE `sqlid` = '%d'",
 		PlayerInfo[playerid][pPayDayDialog],
 		PlayerInfo[playerid][pPayDayDate],
 		PlayerInfo[playerid][pSQLID]);
-	mysql_tquery(g_SQL, paydayquery, "", "");
+	mysql_tquery(g_SQL, mysqlUpdate, "", "");
 	
 	mysql_format(g_SQL, mysqlUpdate, sizeof(mysqlUpdate), "UPDATE `accounts` SET `Radio1` = '%d', `Slot1` = '%d', `Radio2` = '%d', `Slot2` = '%d', `Radio3` = '%d', `Slot3` = '%d' WHERE `sqlid` = '%d'",
 		PlayerInfo[playerid][pRadio][1], PlayerInfo[playerid][pRadioSlot][1],

@@ -54,7 +54,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext [])
 			{
 				switch(listitem)
 				{
-					case 0: ShowPlayerDialog(playerid, DIALOG_HELPACC, DIALOG_STYLE_MSGBOX, "Account", "/stats\n/levelup\n/changename\n/setlook\n/showme\n/pay\n/setwalk\n/spawnchange\n/account\n/resetcp\n/id\n/kill\n/inventory", "Ok", "Saznaj vise");
+					case 0: ShowPlayerDialog(playerid, DIALOG_HELPACC, DIALOG_STYLE_MSGBOX, "Account", "/stats\n/levelup\n/changename\n/setlook\n/showme\n/pay\n/setwalk\n/spawnchange\n/account\n/resetcp\n/id\n/kill\n/experience", "Ok", "Saznaj vise");
 					case 1: ShowPlayerDialog(playerid, DIALOG_HELP, DIALOG_STYLE_MSGBOX, "Vozilo", "/gps\n/car\n/fillcar\n/get fuel\n/tow\n/oldcar\n/doors\n/windows\n/trunk\n/seatbelt\n/showcostats\n/duplicatekey\n/tuning\n/bonnet\n/eject", "Ok", "");
 					case 2: 
 					{
@@ -63,11 +63,11 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext [])
 						else
 						{
 							if(IsACop(playerid))
-								ShowPlayerDialog(playerid, DIALOG_HELP, DIALOG_STYLE_MSGBOX, "PD", "/status/checkseatbelt/tazer/arrest/cuff/uncuff/unfree/pdtrunk/pdramp/onduty/lawskin\n\
+								ShowPlayerDialog(playerid, DIALOG_HELP, DIALOG_STYLE_MSGBOX, "PD", "/tazer/arrest/cuff/uncuff/unfree/pdtrunk/pdramp/onduty/lawskin\n\
 									 /pd1/m/pd2/siren/codes/pdlif/suspend/flares/deflares/impund/checktrunk/listensms\n\
 									 /cleartrunk\n/udercover\n/listennumber/checkhouse/housetake/cargun/mdc/apb/erb/rb/rrb/removeall\n\
 									 /putspike/removespike/ticket/giveticket/siren/afaction/faction/quitfaction/showbadge/r\n\
-									 /rlow/f/togf/carsign/bk/bkc/bkall", "Ok", "");
+									 /rlow/f/togf/carsign/bk/bkc/bkall/jail_alert", "Ok", "");
 							else if(IsFDMember(playerid))
 								ShowPlayerDialog(playerid, DIALOG_HELP, DIALOG_STYLE_MSGBOX, "FD", "/enablesiren/equipment/oxygen/createexplosion/fdcarenter/fdenter/rtcfdcars/fdlift/recover/stretcher/selldrug/treatment\n\
 									 /confirmation\n/fire\n/f\n/togf\n/bk\n/bkc\n/bkall\n/carsign\n/siren\n/faction\n/quitfaction\n/showcreditation", "Ok", "");
@@ -81,11 +81,11 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext [])
 					case 4: ShowPlayerDialog(playerid, DIALOG_BANK, DIALOG_STYLE_MSGBOX, "ATM/BANKA", "/atm\n/bank\n/payout(City Hall)", "Ok", "");
 					case 5: ShowPlayerDialog(playerid, DIALOG_HELP, DIALOG_STYLE_MSGBOX, "Music", "/music", "Ok", "");
 					case 6: ShowPlayerDialog(playerid, DIALOG_HELP, DIALOG_STYLE_MSGBOX, "Objekti", "/createobject\n/editobject\n/deleteobject\n/objects (buy,attach,detach,changebone,edit)", "Ok", "");
-					case 7: ShowPlayerDialog(playerid, DIALOG_HELP, DIALOG_STYLE_MSGBOX, "Death system", "/pickitem(money,weapon,drug)\n/alldamages", "Ok", "");
+					case 7: ShowPlayerDialog(playerid, DIALOG_HELP, DIALOG_STYLE_MSGBOX, "Death system", "/alldamages", "Ok", "");
 					case 8: ShowPlayerDialog(playerid, DIALOG_HELP, DIALOG_STYLE_MSGBOX, "Drugs", "/drug\n", "Ok", "");
-					case 9: ShowPlayerDialog(playerid, DIALOG_HELP, DIALOG_STYLE_MSGBOX, "Hunger", "/order\n/menu\n/meal", "Ok", "");
-					case 10: ShowPlayerDialog(playerid, DIALOG_HOBI, DIALOG_STYLE_MSGBOX, "Hobi", "RIBOLOVAC:\t\n/buybait\n/fish\n/sellfish\n/fish_inventory\n\nLOVAC:\n/usewhistle\n/cutdeer\n/buywhistle\n/sellmeat\n/checkmeat", "Ok", "Saznaj vise");					case 11: ShowPlayerDialog(playerid, DIALOG_HELP, DIALOG_STYLE_MSGBOX, "License", "/license(DMV centar)\n/licenses\n/showlicenses\n/sid(osobna)", "Ok", "");
-					case 12: ShowPlayerDialog(playerid, DIALOG_HELP, DIALOG_STYLE_MSGBOX, "Mobitel", "/togphone\n/ph\n/phone\n/call\n/sms\n/pcall\n/hangup\n/cryptotext\n/cryptonumber\n/phonebook", "Ok", "");
+					case 9: ShowPlayerDialog(playerid, DIALOG_HELP, DIALOG_STYLE_MSGBOX, "Hunger", "/menu\n/meal", "Ok", "");
+					case 10: ShowPlayerDialog(playerid, DIALOG_HOBI, DIALOG_STYLE_MSGBOX, "Hobi", "RIBOLOVAC:\t\n/fish\n/sellfish\n\nLOVAC:\n/usewhistle\n/cutdeer\n/buywhistle\n/sellmeat\n/checkmeat", "Ok", "Saznaj vise");					case 11: ShowPlayerDialog(playerid, DIALOG_HELP, DIALOG_STYLE_MSGBOX, "License", "/license(DMV centar)\n/licenses\n/showlicenses\n/sid(osobna)", "Ok", "");
+					case 12: ShowPlayerDialog(playerid, DIALOG_HELP, DIALOG_STYLE_MSGBOX, "Mobitel", "/togphone\n/ph\n/phone\n/call\n/speakerphone\n/sms\n/pcall\n/hangup\n/cryptotext\n/cryptonumber", "Ok", "");
 					case 13: ShowPlayerDialog(playerid, DIALOG_HELP, DIALOG_STYLE_MSGBOX, "Skills", "/skills", "Ok", "");
 					case 14: ShowPlayerDialog(playerid, DIALOG_HELP, DIALOG_STYLE_MSGBOX, "Weapon", "/weapon\n/buygun\n/weapon hide", "Ok", "");
 					case 15: ShowPlayerDialog(playerid, DIALOG_HELP, DIALOG_STYLE_MSGBOX, "Chats", "/me\n/do\n/ame\n/c(lose)\n/s(hout)\n/carwhisper\n/w(hisper)\n/b\n/blockb\n/pm\n/blockpm\n/accent\n/mic\n/clearmychat\n/attempt", "Ok", "");
@@ -94,8 +94,8 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext [])
 					case 18: ShowPlayerDialog(playerid, DIALOG_HELP, DIALOG_STYLE_MSGBOX, "Complex", "/buycomplex\n/complex\n/rentroom\n/unrentroom", "Ok", "");
 					case 19: ShowPlayerDialog(playerid, DIALOG_HELP, DIALOG_STYLE_MSGBOX, "House&Furniture", "/house\n/bint\n/buyhouse\n/ring\n/knock\n/doorshout\n/picklock\n/doorram\n/renthouse\n/unrenthouse\n/furniture", "Ok", "");
 					case 20: ShowPlayerDialog(playerid, DIALOG_HELP, DIALOG_STYLE_MSGBOX, "Roleplay", "/rphelp\n/toganimchat\n/blindfold\n/screenfade\n/tie\n/frisk\n/handshake\n/accept\n/time\n/prisontime\n/coin\n/dice\n/dump\n/get\n/give\n/graffit\n/examine\n/putintrunk\n/entertrunk\n/exittrunk\n/paperdivorce\n/marry\n/rand\n/card\n/mycigars\n/taxcalculator\n/animations", "Ok", "");
-					case 21: ShowPlayerDialog(playerid, DIALOG_KASINO, DIALOG_STYLE_MSGBOX, "Kasino", "/poker\n/rulet\n/rulethelp ", "Ok", "Saznaj vise");
-					case 22: ShowPlayerDialog(playerid, DIALOG_HELP, DIALOG_STYLE_MSGBOX, "Ostalo", "/jobduty\n/prostitute\n/admins\n/helpers\n/hh\n/helpme\n/report\n/colors\n/flight\n/fr\n/buymelee\n/dog\n/jail_alert", "Ok", "");
+					case 21: ShowPlayerDialog(playerid, DIALOG_KASINO, DIALOG_STYLE_MSGBOX, "Kasino", "/poker\n/rulet\n/rulethelp ", "Ok", "");
+					case 22: ShowPlayerDialog(playerid, DIALOG_HELP, DIALOG_STYLE_MSGBOX, "Ostalo", "/jobduty\n/prostitute\n/admins\n/helpers\n/hh\n/helpme\n/report\n/colors\n/fr\n/buymelee", "Ok", "");
 				 }
 			}
 			return 1;
@@ -219,30 +219,8 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext [])
 			return 1;
 		}
 		case DIALOG_KASINO:
-		{
-			if(!response)
-			{
-				ShowPlayerDialog(playerid,DIALOG_HELP,DIALOG_STYLE_LIST,"POMOC","1.Account \n2.Vozilo \n3.Organizacije \n4.Biznis \n5.Novac \n6.Muzika \n7.Objekti \n8.Death system \n9.Droga \n10.Hunger \n11.Hobi \n12.License \n13.Mobitel \n14.Skills \n15.Oruzje \n16.Chat \n17.Poslovi \n18.Garaze \n19.Complexi \n20.House&Furniture\n21.Biznis\n22.Kasino \n23.Ostalo","Zatvori","");
-				return 1;
-			}
-			else
-			{
-				new casinostring [1024];
-				strcat(casinostring, "Da biste zapoceli igru pokera morate se nalaziti u prostoriji kasina, potrebno je minimalno 2 igraca za stolom kako bi nastavili sa igrom( /poker start )\n\
-					Da bi diler sjeo za stol koristi se komanda /poker dealer. Ukoliko zelite prekinuti igrati, /poker cancel \n\
-					Da bi diler nekog pozvao na poker koristi se /poker invite. Da bi ga kickao /poker kick.\n\
-					Da bi diler promjesao karte koristi se /poker newgame. Da bi podijelio karte, /poker deal. \n\
-					Dealer: Flop(prve 3 karte): /poker flop | Turn(4. karta): /poker turn | River(5. karta): /poker river. \n\
-					Dealer uvijek treba dati vremena za dizanje uloga izmedju rundi!\n\n\
-					Da bi provjerili svoje karte koristite /poker cards. Da bi digli ulog, koristite /poker pay. Da bi odustali, /poker fold. \n\
-					Ukoliko zelite provjeriti iznos novaca na stolu, /poker checkpot. Ukoliko zelite pokazati svoje karte na kraju igre: /poker showcards.\n\n\
-					Da biste zapoceli rulet u prostoriji kasina pored stola za rulet kucate komandu /rulet, nakon toga vam ne trebaju dodatne komande i nastavljate igru po zelji.", 
-					sizeof(casinostring)
-				);
-				ShowPlayerDialog(playerid,DIALOG_KASINO, DIALOG_STYLE_MSGBOX, "KASINO", casinostring , "Zatvori", "");
-			}
 			return 1;
-		}
+			
 		case DIALOG_HOBI:
 		{
 			if(!response)

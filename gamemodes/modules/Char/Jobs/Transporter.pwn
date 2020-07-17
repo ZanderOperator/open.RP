@@ -79,27 +79,32 @@ hook OnPlayerEnterCheckpoint(playerid)
 		        PlayerInfo[playerid][pSkillTransporter]++;
 				if(PlayerInfo[playerid][pSkillTransporter] < 10) {
 
-                    BudgetToPayDayMoney(playerid, 600);
+                    BudgetToPlayerBankMoney(playerid, 600);
+					PlayerInfo[playerid][pPayDayMoney] += 600; 
 					SendClientMessage(playerid, -1, "{FA5656}[ ! ] Posto vam je skill ovog posla 1, dobili ste bonus od $600 na platu!");
 				}
         		else if(PlayerInfo[playerid][pSkillTransporter] < 25)
 		        {
-					BudgetToPayDayMoney(playerid, 700);
+					BudgetToPlayerBankMoney(playerid, 700);
+					PlayerInfo[playerid][pPayDayMoney] += 700; 
 					SendClientMessage(playerid, -1, "{FA5656}[ ! ] Posto vam je skill ovog posla 2, dobili ste bonus od $700 na platu!");
 	      		}
 	        	else if(PlayerInfo[playerid][pSkillTransporter] < 35)
 		        {
-             		BudgetToPayDayMoney(playerid, 800);
+             		BudgetToPlayerBankMoney(playerid, 800);
+					PlayerInfo[playerid][pPayDayMoney] += 800; 
 					SendClientMessage(playerid, -1, "{FA5656}[ ! ] Posto vam je skill ovog posla 3, dobili ste bonus od $800 na platu!");
 		        }
 		        else if(PlayerInfo[playerid][pSkillTransporter] < 50)
 		        {
-          			BudgetToPayDayMoney(playerid, 900);
+          			BudgetToPlayerBankMoney(playerid, 900);
+					PlayerInfo[playerid][pPayDayMoney] += 900; 
 					SendClientMessage(playerid, -1, "{FA5656}[ ! ] Posto vam je skill ovog posla 4, dobili ste bonus od $900 na platu!");
 				}
 				else
 				{
-    				BudgetToPayDayMoney(playerid, 1100);
+    				BudgetToPlayerBankMoney(playerid, 1100);
+					PlayerInfo[playerid][pPayDayMoney] += 1100; 
 					SendClientMessage(playerid, -1, "{FA5656}[ ! ] Posto vam je skill ovog posla 5 (maksimalan), dobili ste bonus od $1100 na platu!");
 				}
 				

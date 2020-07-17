@@ -240,7 +240,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 			);
 			LogITools(log); 
 			// -------------------------------------
-			stamp2datetime(wotime, date[0], date[1] ,date[2], date[3], date[4], date[5], 2);
+			stamp2datetime(wotime, date[0], date[1] ,date[2], date[3], date[4], date[5]);
 			SendClientMessage(playerid, COLOR_RED, "**Nepoznat** (govornica): Paket poslan **Hangup**!");
 			return 1;
 		}
@@ -343,7 +343,7 @@ CMD:worders(playerid, params[])
 		new date[6];
 		SendClientMessage( playerid, COLOR_GREEN, "---------------Popis narucenih paketa oruzja ---------------");
 		foreach (new i : ITools) {
-			stamp2datetime(PlayerITInfo[i][itdTime], date[0], date[1] ,date[2], date[3], date[4], date[5], 2);
+			stamp2datetime(PlayerITInfo[i][itdTime], date[0], date[1] ,date[2], date[3], date[4], date[5]);
 			va_SendClientMessage(playerid, COLOR_WHITE, "ID[%d] SQLID igraca: %d / Oruzje: %s ( %d ) / ETA: %02d/%02d/%02d %02d:%02d",
 				i,
 				PlayerITInfo[ i ][ itdPlayerSQLID ],

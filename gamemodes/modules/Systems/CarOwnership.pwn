@@ -5201,7 +5201,7 @@ CMD:car(playerid, params[])
 		new slot;
 		if(sscanf(params, "s[8]i", pick, slot))
 		{
-			SendClientMessage(playerid, -1, "KORISTENJE: /car get [slot vozila]");
+			SendClientMessage(playerid, -1, "[ ? ]: /car get [slot vozila]");
 			SendClientMessage(playerid, COLOR_YELLOW, "[INFO]: Ukoliko ne znate slot u kojem se vozilo nalazi, kucajte /car list.");
 			return 1;
 		}
@@ -5415,7 +5415,7 @@ CMD:car(playerid, params[])
 CMD:trunk(playerid, params[])
 {
 	if(strlen(params) >= 10)
-		return SendClientMessage(playerid, -1, "KORISTENJE: /trunk [open/take/put/break]");
+		return SendClientMessage(playerid, -1, "[ ? ]: /trunk [open/take/put/break]");
 		
 	new
 		vehicleid = GetPlayerNearestPrivateVehicle(playerid),
@@ -5424,7 +5424,7 @@ CMD:trunk(playerid, params[])
 
 	if(vehicleid == INVALID_VEHICLE_ID) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste u blizini privatnog vozila!");
 	if(!IsPlayerNearTrunk(playerid, vehicleid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste kod prtljaznika privatnog vozila!");
-	if(sscanf(params, "s[10]", pick)) return SendClientMessage(playerid, -1, "KORISTENJE: /trunk [open/take/put/break]");
+	if(sscanf(params, "s[10]", pick)) return SendClientMessage(playerid, -1, "[ ? ]: /trunk [open/take/put/break]");
 	if(PlayerInfo[playerid][pLevel] < 2) return SendMessage(playerid, MESSAGE_TYPE_ERROR, " Ne mozete koristiti ovu komandu kao level 1.");
 	if(!strcmp(pick, "open", true)) 
 	{

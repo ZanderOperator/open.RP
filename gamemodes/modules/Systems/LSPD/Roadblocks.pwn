@@ -97,7 +97,7 @@ CMD:rb(playerid, params[])
 	{
 		if (sscanf(params, "i", rb))
 		{
-			SendClientMessage(playerid, COLOR_WHITE, "KORISTENJE: /roadblock(/rb) [Roadblock ID]");
+			SendClientMessage(playerid, COLOR_WHITE, "[ ? ]: /roadblock(/rb) [Roadblock ID]");
 			SendClientMessage(playerid, COLOR_LIGHTBLUE, "Dostupne blokade:");
 			SendClientMessage(playerid, COLOR_GRAD1, " 1: Mala blokada | 2: Velika blokada | 3: Cunj | 4: Znak usmjeravanja");
 			SendClientMessage(playerid, COLOR_GRAD1, " 5: Znak upozorenja| 6: Blokada usmjeravanja | 7: Veliki cunj | 8: Duga ograda");

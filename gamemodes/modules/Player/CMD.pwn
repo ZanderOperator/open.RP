@@ -311,30 +311,7 @@ CMD:levelup(playerid, params[])
 	}
 	return 1;
 }
-CMD:payout(playerid, params[])
-{
-    if(IsPlayerInRangeOfPoint(playerid, 7.0, 1301.4661, 764.3820, -98.6427))
-	{
-		if(PlayerInfo[playerid][pPayDayMoney] > 0)
-		{
-			new
-				tmpString[61];
-  			format(tmpString, sizeof(tmpString), "[ ! ] Preuzeli ste %d dolara sa vaseg deviznog racuna.", PlayerInfo[playerid][pPayDayMoney]);
-		    SendClientMessage(playerid, COLOR_GREEN, tmpString);
-			PayDayToPlayerMoney(playerid, PlayerInfo[playerid][pPayDayMoney]);
-			
-			Log_Write("logfiles/transporterlogs.txt", "(%s) %s{%d} je podigao %d $ sa svog racuna!",
-				ReturnDate(),
-				GetName(playerid),
-				PlayerInfo[playerid][pSQLID],
-				PlayerInfo[playerid][pPayDayMoney]
-			);
-		}
-		else SendClientMessage(playerid, COLOR_RED, "Nemate nista novca na deviznom racunu!");
-	}
-	else SendClientMessage(playerid, COLOR_RED, "Niste blizu ureda za podizanja novca sa deviznog racuna u City Hallu!");
-    return 1;
-}
+
 CMD:me(playerid, params[])
 {
 	if(PlayerInfo[playerid][pMuted])
@@ -1328,6 +1305,7 @@ CMD:accept(playerid, params[])
 		if( AC_GetPlayerMoney(playerid) < price )		return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate toliko novca!");
 	    
 		PlayerToPlayerMoneyTAX(playerid, repairman, price, false);
+		PlayerInfo[repairman][pPayDayMoney] += price; 
 		
 	    switch(Bit4_Get( gr_TipUsluge, playerid)) {
 			case 1: {
@@ -2167,7 +2145,7 @@ CMD:give(playerid, params[])
 	    if(PlayerInfo[playerid][pKilled]) return SendClientMessage(playerid,COLOR_RED,"Ne mozes koristiti ovu komandu dok imas opciju /die!");
     	if (sscanf(params, "s[32]ui", x_nr, giveplayerid, vrsta))
 		{
-			SendClientMessage(playerid, COLOR_WHITE, "KORISTENJE: /give weaponlicense [Playerid/DioImena] [vrsta]");
+			SendClientMessage(playerid, COLOR_WHITE, "[ ? ]: /give weaponlicense [Playerid/DioImena] [vrsta]");
 			SendClientMessage(playerid, COLOR_GREEN, "Vrste: 1 Purchase Firearm (PF),  2 Concealed Carry Weapon(CCW)");
 			return 1;
 		}
@@ -2649,7 +2627,7 @@ CMD:paperdivorce(playerid, params[])
 CMD:setwalk(playerid, params[])
 {
 	new walkStyle;
-	if(sscanf(params, "i", walkStyle)) return SendClientMessage(playerid, COLOR_WHITE,"KORISTENJE: /setwalk [ID stila]");
+	if(sscanf(params, "i", walkStyle)) return SendClientMessage(playerid, COLOR_WHITE,"[ ? ]: /setwalk [ID stila]");
 	if(walkStyle < 1  || walkStyle > 29) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Krivi unos ID stila! (1-29)");
 	WalkStyle[playerid] = walkStyle;
     SendFormatMessage(playerid, MESSAGE_TYPE_INFO, "Odabrali ste stil hodanja #%d.", walkStyle);
@@ -2659,7 +2637,7 @@ CMD:spawnchange(playerid, params[])
 {
 	new spawn;
 	if(PlayerInfo[playerid][pJailed] == 1) return SendMessage(playerid, MESSAGE_TYPE_ERROR,"U zatvoru ste, ne mozete to!");
-	if(sscanf(params, "i", spawn)) { SendClientMessage(playerid, COLOR_WHITE,"KORISTENJE: /spawnchange [0-5]"); SendClientMessage(playerid, COLOR_WHITE,"0 - Standardno | 1 - Kuca | 2 - Organizacija (LSPD/LSFD/LSN/GOV) | 3 - complex room | 4 - LSPD Wilshire Station. |5 LSPD Harbor"); return 1; }
+	if(sscanf(params, "i", spawn)) { SendClientMessage(playerid, COLOR_WHITE,"[ ? ]: /spawnchange [0-5]"); SendClientMessage(playerid, COLOR_WHITE,"0 - Standardno | 1 - Kuca | 2 - Organizacija (LSPD/LSFD/LSN/GOV) | 3 - complex room | 4 - LSPD Wilshire Station. |5 LSPD Harbor"); return 1; }
 	if(spawn < 0 || spawn > 5) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Neispravan ID spawna! (0-5)");
 	if(spawn == 4) {
 		if( !IsACop(playerid) && !IsASD(playerid) )	return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste policajac!");
@@ -2756,7 +2734,7 @@ CMD:rand(playerid, params[])
 	new TempString[128];
 	new MaxNum, RandAction[64];
 	if(PlayerInfo[playerid][pMuted]) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne mozes pricati!");
-	if(sscanf(params, "ds[64]", MaxNum, RandAction)) return SendClientMessage(playerid, COLOR_WHITE,"KORISTENJE: /rand [Maksimalna vrijednost] [Akcija]");
+	if(sscanf(params, "ds[64]", MaxNum, RandAction)) return SendClientMessage(playerid, COLOR_WHITE,"[ ? ]: /rand [Maksimalna vrijednost] [Akcija]");
 	if(MaxNum > 10000 || MaxNum < 2) return SendErrorMessage(playerid, "Maksimalna vrijednost moze ici od 2 do 10,000!");
 	new RandNum = 1+random(MaxNum);
 	format(TempString, sizeof(TempString), "** %s %s - %d (Max:%d)", GetName(playerid, true), RandAction, RandNum, MaxNum);

@@ -827,7 +827,7 @@ CMD:afaction(playerid,params[])
     {
 		new type, fid;
 		if (sscanf(params, "s[16]ii",option,fid,type)) {
-			SendClientMessage(playerid,-1, "KORISTENJE: /afaction type [ID] [TIP FAKCIJE] ");
+			SendClientMessage(playerid,-1, "[ ? ]: /afaction type [ID] [TIP FAKCIJE] ");
 			SendClientMessage(playerid,-1, "Tipovi: 1 - Law, 2 - FireDept, 3 - Legalna, 4 - Mafija, 5 - Banda, 6 - Raceri, 7 - News, 8 - Law2");
 			return 1;
 		}

@@ -3526,7 +3526,7 @@ CMD:rent(playerid, params[])
 	new
 		pick[11];
 
-	if(sscanf(params, "s[11] ", pick)) return SendClientMessage(playerid, -1, "KORISTENJE: /rent [house/vehicle]");
+	if(sscanf(params, "s[11] ", pick)) return SendClientMessage(playerid, -1, "[ ? ]: /rent [house/vehicle]");
 
 	if(!strcmp(pick, "house", true)) {
 		new
@@ -3661,18 +3661,11 @@ CMD:doorram(playerid, params[])
 			return 1;
 		}
 		if(Bit1_Get(gr_PlayerFootKicking, playerid)) 	return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Vec razvaljujete vrata!");
-		if(2 <= HouseInfo[house][hLockLevel] <= 3) {
-			if(HouseInfo[house][hDoorLevel] > 3) {
-				SendClientMessage(playerid, COLOR_RED, "[ ! ] Vrata su precvrsta da biste ih mogli razvaliti nogom!");
-				new
-					Float:tmpHealth;
-				GetPlayerHealth(playerid, tmpHealth);
-				SetPlayerHealth(playerid, tmpHealth - 15.0);
-				return 1;
-			}
-			SendMessage(playerid, MESSAGE_TYPE_INFO, "Za udaranje nogom u vrata koristite tipku ~k~~PED_SPRINT~, a za prestak koristite /doorram foot!");
-			SetPlayerFootEntering(playerid);
-		} else SendMessage(playerid, MESSAGE_TYPE_ERROR, "Brava je preslaba da bi ju mogli razbiti nogom!");
+		if(HouseInfo[house][hDoorLevel] > 3) 
+			return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Vrata su precvrsta da biste ih mogli razvaliti nogom!");
+			
+		SendMessage(playerid, MESSAGE_TYPE_INFO, "Za udaranje nogom u vrata koristite tipku ~k~~PED_SPRINT~, a za prestak koristite /doorram foot!");
+		SetPlayerFootEntering(playerid); 
 	}
 	if(!strcmp("crowbar", param, true)) {
 		if(Bit1_Get(gr_CrowbarBreaking, playerid)) {
@@ -3681,8 +3674,6 @@ CMD:doorram(playerid, params[])
 			Bit1_Set(gr_CrowbarBreaking, playerid, false);
 			return 1;
 		}
-		if(HouseInfo[house][hDoorLevel] < 4) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne mozete pajserom obijati slabija vrata!");
-		if(HouseInfo[house][hLockLevel] < 4) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Brava je preslaba da bi ju mogli razbiti nogom!");
 
 		#if defined MODULE_OBJECTS
 		new

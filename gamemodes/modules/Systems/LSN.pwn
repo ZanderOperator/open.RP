@@ -156,7 +156,7 @@ CMD:live(playerid, params[])
 {
 	if( !IsANews(playerid) ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, " Niste novinar!");
 	new giveplayerid, playerName[MAX_PLAYER_NAME], newsName[MAX_PLAYER_NAME];
-	if( sscanf(params, "u", giveplayerid) ) return SendClientMessage(playerid, COLOR_WHITE, "KORISTENJE: /live [playerid/dio imena]");
+	if( sscanf(params, "u", giveplayerid) ) return SendClientMessage(playerid, COLOR_WHITE, "[ ? ]: /live [playerid/dio imena]");
 	if( giveplayerid == INVALID_PLAYER_ID ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Krivi ste ID unijeli!");
 
 	GetPlayerName(playerid, playerName, MAX_PLAYER_NAME);

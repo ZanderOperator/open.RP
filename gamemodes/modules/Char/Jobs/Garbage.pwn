@@ -131,7 +131,8 @@ stock static CheckGarbages(playerid)
 		new money = (TRASH_PRICE * 10) + (GetPlayerSkillLevel(playerid, 2) * 25); 
 		va_SendClientMessage(playerid, COLOR_RED, "[ ! ] Zaradio si $%d, placa ti je sjela na racun.", money);
 
-		BudgetToPayDayMoney (playerid, money ); // novac sjeda na radnu knjizicu iz proracuna
+		BudgetToPlayerBankMoney (playerid, money ); // novac sjeda na radnu knjizicu iz proracuna
+		PlayerInfo[playerid][pPayDayMoney] += money;
 		PlayerInfo[playerid][pFreeWorks] -= 5;
 		UpgradePlayerSkill(playerid, 2);
 		gStartedWork[playerid] = 0;
@@ -348,9 +349,9 @@ hook OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
 					}
 					money += (GetPlayerSkillLevel(playerid, 2) * 30);
 					va_SendClientMessage(playerid, COLOR_RED, "[ ! ] Zaradio si $%d, placa ti je sjela na racun.", money);
-					printf("DEBUG: placa(%d) | boxes(%d)", money, Bit8_Get( gr_GarbageBoxesAll, playerid ) );
 
-					BudgetToPayDayMoney (playerid, money ); // novac sjeda na radnu knjizicu iz proracuna
+					BudgetToPlayerBankMoney (playerid, money ); // novac sjeda na radnu knjizicu iz proracuna
+					PlayerInfo[playerid][pPayDayMoney] += money;
 					PlayerInfo[playerid][pFreeWorks] -= 5;
 					UpgradePlayerSkill(playerid, 2);
 					gStartedWork[playerid] = 0;

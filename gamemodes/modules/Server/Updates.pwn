@@ -75,6 +75,9 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 
 CMD:update(playerid, params[])
 {
+	if(strcmp(PlayerInfo[playerid][pLastUpdateVer], SCRIPT_VERSION, true) != 0)
+		PlayerReward[playerid] = true;
+		
 	ShowPlayerUpdateList(playerid);
 	return 1;
 }

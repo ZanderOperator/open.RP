@@ -969,7 +969,8 @@ CMD:sellwood(playerid, params[])
 	// Placa
 	new money = pWood[playerid] + 200 + (GetPlayerSkillLevel(playerid, 4) * 25);
 	va_SendClientMessage(playerid, COLOR_RED, "[ ! ] Zaradio si $%d, placa ti je sjela na racun.", money);
-	BudgetToPayDayMoney( playerid, money); // novac sjeda na racun iz proracuna
+	BudgetToPlayerBankMoney(playerid, money); // novac sjeda na racun iz proracuna
+	PlayerInfo[playerid][pPayDayMoney] += money;
 	PlayerInfo[playerid][pFreeWorks] -= 5;
 	Bit1_Set( gr_IsWorkingJob, playerid, true );
 	

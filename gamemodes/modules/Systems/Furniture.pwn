@@ -4483,7 +4483,7 @@ CMD:bint(playerid, params[])
 CMD:furniture(playerid, params[])
 {
 	if(strlen(params) >= 8)
-		return SendClientMessage(playerid, -1, "KORISTENJE: /furniture [approve/menu]");
+		return SendClientMessage(playerid, -1, "[ ? ]: /furniture [approve/menu]");
 		
 	new
 		param[ 8 ],

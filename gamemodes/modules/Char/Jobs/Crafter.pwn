@@ -161,9 +161,10 @@ public OnPlayerCrafting(playerid, type)
 			
 			new
 				money = 350 + (GetPlayerSkillLevel(playerid,3) * 25);
-			va_SendClientMessage(playerid, COLOR_RED, "[ ! ] Zaradio si $%d, placa ti je sjela na racun.", money);
+			va_SendClientMessage(playerid, COLOR_RED, "[ ! ] Zaradio si $%d, placa ti je sjela na bankovni racun.", money);
 			UpgradePlayerSkill(playerid, 3);
-			BudgetToPayDayMoney(playerid, money); // sjeda mu placa na pPayDayMoney iz proracuna
+			BudgetToPlayerBankMoney(playerid, money); // sjeda mu placa na bankovni racun iz proracuna
+			PlayerInfo[playerid][pPayDayMoney] += money;
 			PlayerInfo[playerid][pFreeWorks] 	-= 5;
 			
 			TogglePlayerControllable(playerid, true);

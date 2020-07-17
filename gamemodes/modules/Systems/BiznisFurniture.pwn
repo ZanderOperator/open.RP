@@ -2689,7 +2689,7 @@ CMD:biznis_bint(playerid, params[])
 	if( PlayerInfo[playerid][pBizzKey] == INVALID_BIZNIS_ID ) return SendClientMessage(playerid, COLOR_RED, "[GRESKA]: Morate posjedovati biznis.");
 	new
 		param[ 6 ];
-	if( sscanf( params, "s[6] ", param ) ) return SendClientMessage(playerid, -1, "KORISTENJE: /biznis_bint [test/buy/exit]");
+	if( sscanf( params, "s[6] ", param ) ) return SendClientMessage(playerid, -1, "[ ? ]: /biznis_bint [test/buy/exit]");
 	if( !strcmp(param, "test", true ) )
 	{
 		new biznisid = GetPlayerFurnitureBiznis(playerid);
@@ -2728,7 +2728,7 @@ CMD:biznis_bint(playerid, params[])
 CMD:biznis_furniture(playerid, params[])
 {
 	new param[ 8 ];
-	if( sscanf( params, "s[8] ", param ) ) return SendClientMessage(playerid, -1, "KORISTENJE: /biznis_furniture [approve/menu]");
+	if( sscanf( params, "s[8] ", param ) ) return SendClientMessage(playerid, -1, "[ ? ]: /biznis_furniture [approve/menu]");
 	if( !strcmp( "menu", param, true ) )
 	{
 		new biznisid = GetPlayerFurnitureBiznis(playerid);
@@ -2753,7 +2753,7 @@ CMD:biznis_furniture(playerid, params[])
 
 		new
 			giveplayerid;
-		if( sscanf(params, "s[8]u", param, giveplayerid) ) return SendClientMessage(playerid, -1, "KORISTENJE: /biznis_furniture approve [dio imena/playerid]");
+		if( sscanf(params, "s[8]u", param, giveplayerid) ) return SendClientMessage(playerid, -1, "[ ? ]: /biznis_furniture approve [dio imena/playerid]");
 		if( giveplayerid == INVALID_PLAYER_ID ) return SendClientMessage(playerid, COLOR_RED, "[GRESKA]: Krivi unos playerida!");
 		if( !ProxDetectorS(10.0, playerid, giveplayerid) ) return SendClientMessage(playerid, COLOR_RED, "[GRESKA]: Taj igrac nije blizu vas!");
 		if( PlayerEditingBiznis[ giveplayerid ] == PlayerInfo[ playerid ][ pBizzKey ] )
@@ -2774,7 +2774,7 @@ CMD:reload_bfurniture(playerid, params[])
 	if( PlayerInfo[ playerid ][ pAdmin ] < 2 ) return SendClientMessage(playerid, COLOR_RED, "[GRESKA]: Niste ovlasteni!");
 	new
 		biznisid;
-	if( sscanf(params, "i", biznisid ) ) return SendClientMessage(playerid, -1, "KORISTENJE: /reload_furniture [biznisid]");
+	if( sscanf(params, "i", biznisid ) ) return SendClientMessage(playerid, -1, "[ ? ]: /reload_furniture [biznisid]");
 	if(biznisid == INVALID_BIZNIS_ID) return SendClientMessage(playerid, COLOR_RED, "[GRESKA]: Krivi biznisid!");
 
 	ReloadBizzFurniture(biznisid);

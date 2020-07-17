@@ -90,7 +90,8 @@ CheckPlayerPizzas(playerid) {
 		SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "Zavrsio si s dostavljanjem pizza!");
 		new money = (Bit8_Get( gr_PlayerPizzasTotal, playerid ) * 60) + (GetPlayerSkillLevel(playerid, 1) * 25);	
 		va_SendClientMessage(playerid, COLOR_RED, "[ ! ] Zaradio si $%d, placa ti je sjela na racun.", money);
-		BudgetToPayDayMoney(playerid, money); // dobiva novac na knjizicu iz proracuna
+		BudgetToPlayerBankMoney(playerid, money); // dobiva novac na knjizicu iz proracuna
+		PlayerInfo[playerid][pPayDayMoney] += money;
 		Bit1_Set( gr_IsWorkingJob, playerid, false );
 		
 		UpgradePlayerSkill(playerid, 1);
