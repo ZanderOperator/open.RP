@@ -3055,7 +3055,7 @@ CMD:createvip(playerid, params[])
 		pick,
 		biz = Bit16_Get( gr_PlayerInBiznis, playerid );
 	if( PlayerInfo[ playerid ][ pAdmin ] < 1337 ) return SendClientMessage( playerid, COLOR_RED, "Niste ovlasteni za koristenje ove komande!" );
-	if( sscanf( params, "i", pick ) ) return SendClientMessage( playerid, -1, "KORISTENJE: /createvip [0-9] (0 za micanje sobe)" );
+	if( sscanf( params, "i", pick ) ) return SendClientMessage( playerid, -1, "[ ? ]: /createvip [0-9] (0 za micanje sobe)" );
 
 	new
 		Float:X, Float:Y,Float:Z;
@@ -3343,7 +3343,7 @@ CMD:bizint(playerid, params[])
 {
 	new pick, biz;
     if(PlayerInfo[playerid][pAdmin] < 1338) return SendClientMessage(playerid, COLOR_RED, "  GRESKA: Niste ovlasteni za koristenje ove komande!");
-    if(sscanf(params, "ii", biz, pick)) return SendClientMessage(playerid, COLOR_WHITE, "KORISTENJE: /bizint [biznisid][pick] (0 - brisanje)");
+    if(sscanf(params, "ii", biz, pick)) return SendClientMessage(playerid, COLOR_WHITE, "[ ? ]: /bizint [biznisid][pick] (0 - brisanje)");
     if(pick < 0 || pick > 37) return SendClientMessage(playerid, COLOR_RED, "Krivi odabir (1-37)!");
     if(biz > sizeof(BizzInfo) || biz <= 0) return SendClientMessage(playerid, COLOR_RED, "Pogresan biznis ID!");
 	switch(pick)
@@ -3643,7 +3643,7 @@ CMD:custombizint(playerid, params[])
 	    Float:iX, Float:iY, Float:iZ;
 	if(PlayerInfo[playerid][pAdmin] < 1338) return SendClientMessage(playerid, COLOR_RED, "  GRESKA: Niste ovlasteni za koristenje ove komande!");
 	if(sscanf(params, "iifff", bizid, bint, iX, iY, iZ)) {
-		SendClientMessage(playerid, COLOR_WHITE, "KORISTENJE: /custombizint [bizid][int][X][Y][Z]");
+		SendClientMessage(playerid, COLOR_WHITE, "[ ? ]: /custombizint [bizid][int][X][Y][Z]");
 		SendClientMessage(playerid, COLOR_GREY, "NOTE: Taj ID MORA biti u skripti!");
 		return 1;
 	}
@@ -3914,7 +3914,7 @@ CMD:makedj(playerid, params[])
 		bouse = i;
 	}
 
-	if(sscanf(params, "u", giveplayerid)) return SendClientMessage(playerid, -1, "KORISTENJE: /makedj [DioImena/Playerid]");
+	if(sscanf(params, "u", giveplayerid)) return SendClientMessage(playerid, -1, "[ ? ]: /makedj [DioImena/Playerid]");
 	if( biznis == INVALID_BIZNIS_ID || biznis != bouse ) return SendClientMessage(playerid, COLOR_RED, "Niste unutar svojeg biznisa!" );
 
 	if( Bit1_Get( gr_IsADJ, giveplayerid ) ) {
@@ -4073,7 +4073,7 @@ CMD:bizbank(playerid, params[])
 	{
 		format(string, sizeof(string), "  Imate $%d u vasem biznisu.", BizzInfo[bouse][bTill]);
 		SendClientMessage(playerid, COLOR_GREY, string);
-	    SendClientMessage(playerid, COLOR_WHITE, "KORISTENJE: /bizbank [iznos]");
+	    SendClientMessage(playerid, COLOR_WHITE, "[ ? ]: /bizbank [iznos]");
 		return 1;
     }
 	if( cashdeposit > AC_GetPlayerMoney(playerid) || cashdeposit < 1 ) return SendClientMessage(playerid, COLOR_RED, "Nemas toliko novaca");
@@ -4104,7 +4104,7 @@ CMD:createbiz(playerid, params[])
 	new
 		level, canenter, price;
 	if(sscanf(params, "iii", level, canenter, price)){
-		SendClientMessage(playerid, COLOR_WHITE, "KORISTENJE: /createbiz [level][ulaz][cijena]");
+		SendClientMessage(playerid, COLOR_WHITE, "[ ? ]: /createbiz [level][ulaz][cijena]");
 		return 1;
 	}
 	new Float:x, Float:y, Float:z, freeslot;

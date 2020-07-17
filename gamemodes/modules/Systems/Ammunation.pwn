@@ -118,10 +118,10 @@ stock static InsertAmmuWeapon(slotid) // Dodavanje novog oruzja
 stock static PlayerAmmunationBuyTime(playerid, days)
 {
 	new	ammutime, date[ 6 ];
-	ammutime = days * 79200; // days su dani zadani, a 86400 su sekunde po danu, za promjenu dana zabrane promjenti samo brojku 7 ? // 79200 -2 sata jer gospodinu iz solina triba udovoljit degen
+	ammutime = days * 86400; 
 	ammutime += gettimestamp(); // dodaje se trenutno vrijeme
 	PlayerInfo[ playerid ][ pAmmuTime] = ammutime; // igracu se u varijablu dodaje vrijeme
-	stamp2datetime(ammutime, date[0], date[1] ,date[2], date[3], date[4], date[5], 1); // formatiranje vremena iz unixa u normalno
+	stamp2datetime(ammutime, date[0], date[1] ,date[2], date[3], date[4], date[5]); // formatiranje vremena iz unixa u normalno
 	
 	va_SendClientMessage(playerid, COLOR_RED, "[AMMUNATION INFO]: Sljedeci put mozete kupovati nakon %d dana (%02d/%02d/%02d %02d:%02d:%02d)",
 		days,
@@ -220,7 +220,7 @@ CMD:buyweapon(playerid, params[])
 	else {
 		new datum = PlayerInfo[ playerid ][ pAmmuTime ],
 			date[ 6 ];
-		stamp2datetime(datum, date[0], date[1] ,date[2], date[3], date[4], date[5], 1);
+		stamp2datetime(datum, date[0], date[1] ,date[2], date[3], date[4], date[5]);
 		va_SendClientMessage( playerid, COLOR_RED, "[ ! ] Nije vam dozvoljena kupnja do %d.%d.%d. - %d:%d",
 			date[2],
 			date[1],

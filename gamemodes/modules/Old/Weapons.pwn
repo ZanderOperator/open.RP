@@ -195,7 +195,7 @@ static stock CheckPlayerOrderedCrates(playerid)
 				case 1: format(location, sizeof(location), "SF");
 				case 2: format(location, sizeof(location), "LV");
 			}
-			stamp2datetime(WOCrateInfo[i][cTime], date[0], date[1] ,date[2], date[3], date[4], date[5], 2);
+			stamp2datetime(WOCrateInfo[i][cTime], date[0], date[1] ,date[2], date[3], date[4], date[5]);
 			if(WOCrateInfo[i][cTime] < gettimestamp())
 				format(status, sizeof(status), "Stigao");
 			else
@@ -512,7 +512,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 			);
 			LogWOCrates(log); 
 			// -------------------------------------
-			stamp2datetime(wotime, date[0], date[1] ,date[2], date[3], date[4], date[5], 2);
+			stamp2datetime(wotime, date[0], date[1] ,date[2], date[3], date[4], date[5]);
 			SendClientMessage(playerid, COLOR_RED, "**Nepoznat** (govornica): Paket poslan **Hangup**!");
 			return 1;
 		} 
@@ -792,7 +792,7 @@ CMD:worders(playerid, params[])
 		new date[6];
 		SendClientMessage( playerid, COLOR_GREEN, "---------------Popis narucenih paketa oruzja ---------------");
 		foreach (new i : WOCrates) {
-			stamp2datetime(WOCrateInfo[i][cTime], date[0], date[1] ,date[2], date[3], date[4], date[5], 2);
+			stamp2datetime(WOCrateInfo[i][cTime], date[0], date[1] ,date[2], date[3], date[4], date[5]);
 			va_SendClientMessage(playerid, COLOR_WHITE, "[%d] pSQLID: %d-%s (%d) - %02d/%02d/%02d %02d:%02d / VehSQLID: %d / Pos: %.2f, %.2f, %.2f",
 				i,
 				WOCrateInfo[ i ][ cPlayerSQLID ],

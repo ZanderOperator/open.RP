@@ -83,7 +83,8 @@ hook OnPlayerEnterCheckpoint(playerid)
 					money = minrand(400, 450) + (GetPlayerSkillLevel(playerid, 2) * 25); 
 				va_SendClientMessage(playerid, COLOR_RED, "[ ! ] Zaradio si $%d, placa ti je sjela na racun.", money);
 
-				BudgetToPayDayMoney(playerid, money); // dobiva novac na knjizicu iz proracuna
+				BudgetToPlayerBankMoney(playerid, money); // dobiva novac na knjizicu iz proracuna
+				PlayerInfo[playerid][pPayDayMoney] += money;
 				UpgradePlayerSkill(playerid, 2);
 				PlayerInfo[playerid][pFreeWorks] -= 5;
 				Bit1_Set( r_Sweeping, playerid, false );

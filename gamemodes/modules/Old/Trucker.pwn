@@ -257,7 +257,7 @@ public DeliveryTimer(playerid)
 			new money = TruckerInfo[playerid][tPayCheck] + 400 + (GetPlayerSkillLevel(playerid, 7) * 32);
 			va_SendClientMessage(playerid, COLOR_RED, "[ ! ] Zaradio si "COL_YELLOW"$%d"COL_WHITE", placa ti je sjela na racun.", money);
 			UpgradePlayerSkill(playerid, 7);
-			BudgetToPayDayMoney(playerid, money);
+			BudgetToPlayerBankMoney(playerid, money);
 			/*else
 			{
 				new vehicleid = GetPlayerVehicleID(playerid),

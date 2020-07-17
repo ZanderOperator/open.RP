@@ -93,7 +93,7 @@ stock static GetNearestRoom(playerid)
 	return cmID;
 }
 
-stock static GetComplexEnumID(roomid)
+stock GetComplexEnumID(roomid)
 {	
 	new value;
 	foreach(new c: Complex)

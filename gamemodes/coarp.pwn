@@ -10,7 +10,6 @@
 #include <crashdetect>
 #include <a_samp>
 #include <a_http>
-
 /*
 ==============================================================================
 	Preinclude defines
@@ -308,6 +307,7 @@ enum E_PLAYER_DATA
 	pDutySystem,
 	pPayDay,
 	pPayDayMoney,
+	pProfit,
 	pPayDayHad,
 	pPayDayDialog[2048],
 	pPayDayDate[32],
@@ -341,8 +341,6 @@ enum E_PLAYER_DATA
 	pMarriedTo[MAX_PLAYER_NAME],
 	pAccent[19],
 	pKilled,
-	pRate,
-	pCreditType,
 	pCarLic,
 	pGunLic,
 	pBoatLic,
@@ -446,7 +444,7 @@ enum E_PLAYER_DATA
  	//speedo
  	pSpeedo,
 	//admin msgs
-	pAdminMsg[128],
+	pAdminMsg[2048],
 	pAdminMsgBy[60],
 	pAdmMsgConfirm,
 	//pm
@@ -455,6 +453,16 @@ enum E_PLAYER_DATA
 	pSkillTransporter
 }
 new PlayerInfo[ MAX_PLAYERS ][ E_PLAYER_DATA ];
+
+enum E_CREDIT_INFO
+{
+	cCreditType,
+	cRate,
+	cAmount,
+	cUnpaid,
+	bool:cUsed
+}
+new CreditInfo[ MAX_PLAYERS ][ E_CREDIT_INFO ];
 
 enum E_GARAGE_DATA {
 	gSQLID,
@@ -2493,6 +2501,7 @@ ResetPlayerVariables(playerid)
 	PlayerInfo[playerid][pDutySystem]		= 0;
 	PlayerInfo[playerid][pPayDay]			= 0;
 	PlayerInfo[playerid][pPayDayMoney]		= 0;
+	PlayerInfo[playerid][pProfit]			= 0;
 	PlayerInfo[playerid][pPayDayHad]		= 0;
 	PlayerInfo[playerid][pHouseKey]			= 9999;
 	PlayerInfo[playerid][pRentKey]			= 9999;
@@ -2507,8 +2516,6 @@ ResetPlayerVariables(playerid)
 	PlayerInfo[playerid][pMobileNumber]		= 0;
 	PlayerInfo[playerid][pMobileModel]		= 0;
 	PlayerInfo[playerid][pMobileCost] 		= 0;
-	PlayerInfo[playerid][pRate]				= 0;
-	PlayerInfo[playerid][pCreditType]		= 0;
 	PlayerInfo[playerid][pKilled]			= 0;
 	PlayerInfo[playerid][pDeathInt] 		= 0;
 	PlayerInfo[playerid][pDeathVW] 			= 0;
@@ -2544,6 +2551,8 @@ ResetPlayerVariables(playerid)
 	PlayerInfo[playerid][pBoomBoxType] 		= 0;
 	PlayerInfo[playerid][pHasRadio] 		= 0;
 	PlayerInfo[playerid][pMainSlot] 		= 0;
+	
+	ResetCreditVars(playerid);
 
 	PlayerInfo[playerid][pRadio][1] 		= 0;
 	PlayerInfo[playerid][pRadio][2] 		= 0;

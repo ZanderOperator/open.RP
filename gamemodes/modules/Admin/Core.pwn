@@ -824,8 +824,8 @@ stock CheckInactivePlayer(playerid, sql)
 		cache_get_value_name_int(0, "endstamp"			, endstamp);
 		cache_get_value_name(0, 	"reason"			, reason, 64);
 
-		stamp2datetime(startstamp, startdate[0], startdate[1] ,startdate[2], startdate[3], startdate[4], startdate[5], 1);
-		stamp2datetime(endstamp, enddate[0], enddate[1] ,enddate[2], enddate[3], enddate[4], enddate[5], 1);
+		stamp2datetime(startstamp, startdate[0], startdate[1] ,startdate[2], startdate[3], startdate[4], startdate[5]);
+		stamp2datetime(endstamp, enddate[0], enddate[1] ,enddate[2], enddate[3], enddate[4], enddate[5]);
 		
 		format(motd, sizeof(motd), "%s - [SQLID: %d] | Pocetak: %02d/%02d/%02d %02d:%02d:%02d | Traje do: %02d/%02d/%02d %02d:%02d:%02d | Razlog: %s\n",
 			GetPlayerNameFromSQL(sqlid),
@@ -879,8 +879,8 @@ stock ListInactivePlayers(playerid)
 				cache_get_value_name_int(i, "endstamp"			, endstamp);
 				cache_get_value_name(i, 	"reason"			, reason, 64);
 
-				stamp2datetime(startstamp, startdate[0], startdate[1] ,startdate[2], startdate[3], startdate[4], startdate[5], 1);
-				stamp2datetime(endstamp, enddate[0], enddate[1] ,enddate[2], enddate[3], enddate[4], enddate[5], 1);
+				stamp2datetime(startstamp, startdate[0], startdate[1] ,startdate[2], startdate[3], startdate[4], startdate[5]);
+				stamp2datetime(endstamp, enddate[0], enddate[1] ,enddate[2], enddate[3], enddate[4], enddate[5]);
 				
 				format(motd, sizeof(motd), "%s - [SQLID: %d] | Pocetak: %02d/%02d/%02d %02d:%02d:%02d | Traje do: %02d/%02d/%02d %02d:%02d:%02d | Razlog: %s\n",
 					GetPlayerNameFromSQL(sqlid),
@@ -1258,7 +1258,7 @@ public CheckLastLogin(playerid, const name[])
 	new lastip[MAX_PLAYER_IP], lastdate, date[6];
 	cache_get_value_name_int(0, 	"time"	, lastdate);
 	cache_get_value_name(0,			"aip"	, lastip, MAX_PLAYER_IP);
-	stamp2datetime(lastdate, date[0], date[1] ,date[2], date[3], date[4], date[5], 2); // formatiranje vremena iz unixa u normalno
+	stamp2datetime(lastdate, date[0], date[1] ,date[2], date[3], date[4], date[5]); // formatiranje vremena iz unixa u normalno
 	
 	if(PlayerInfo[playerid][pAdmin])
 	{
@@ -1572,10 +1572,9 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 		}
 		case DIALOG_ADMIN_MSG:
         {
-            if (!response){
+            if (!response)
 	           	PlayerInfo[playerid][pAdmMsgConfirm] = true;
-	           	SendClientMessage(playerid, COLOR_RED, "Otvorili ste admin poruku, kada izadjete sa servera ona ce nestati.");
-   			}
+
    			return 1;
         }
 	}
@@ -2550,7 +2549,7 @@ CMD:achangename(playerid, params[])
 	return 1;
 }
 
-/* CMD:aname(playerid, params[]) {
+CMD:aname(playerid, params[]) {
 	if( !isnull(PlayerExName[playerid]) ) {
 		SetPlayerName(playerid, PlayerExName[playerid]);
 		SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uspjesno ste vratili svoj prijasnji nick!");
@@ -2569,7 +2568,7 @@ CMD:achangename(playerid, params[])
 		case 1: SendFormatMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uspjesno ste promjenili nick u %s", newName); 
 	}
 	return (true);
-} */
+} 
 
 CMD:givemoney(playerid, params[])
 {
@@ -2762,7 +2761,7 @@ CMD:asellbiz(playerid, params[])
 				}
 			}
 		}
-		new TmpQuery[128], TmpQuery2[128], TmpQuery3[128];
+		new TmpQuery[128];
 		// Update bizzes
 		format( TmpQuery, sizeof(TmpQuery), "UPDATE `bizzes` SET `ownerid` = '0', `co_ownerid` = '0' WHERE `id` = '%d'", 
 			BizzInfo[ biz ][bSQLID]
@@ -2771,16 +2770,16 @@ CMD:asellbiz(playerid, params[])
 		if(foundonline == 0)
 		{
 			// Update accounts
-			format( TmpQuery2, sizeof(TmpQuery2), "UPDATE `accounts` SET `handMoney` = `handMoney` + '%d' WHERE `sqlid` = '%d'", 
+			format( TmpQuery, sizeof(TmpQuery), "UPDATE `accounts` SET `handMoney` = `handMoney` + '%d' WHERE `sqlid` = '%d'", 
 				BizzInfo[ biz ][bBuyPrice],
 				BizzInfo[ biz ][bOwnerID]
 			);
-			mysql_tquery(g_SQL, TmpQuery2, "", "");
+			mysql_tquery(g_SQL, TmpQuery, "", "");
 			// Update proracun
-			format( TmpQuery3, sizeof(TmpQuery3), "UPDATE `city` SET `budget` = `budget` - '%d'", 
+			format( TmpQuery, sizeof(TmpQuery), "UPDATE `city` SET `budget` = `budget` - '%d'", 
 				BizzInfo[ biz ][bBuyPrice]
 			);
-			mysql_tquery(g_SQL, TmpQuery3, "", "");
+			mysql_tquery(g_SQL, TmpQuery, "", "");
 		}
 		
 		//------------------------------------------------------
@@ -2819,25 +2818,25 @@ CMD:asellhouse(playerid, params[])
 				break;
 			}				
 		}
-		new TmpQuery[128], TmpQuery2[128], TmpQuery3[128];
+		new TmpQuery[128];
 		// Update houses
-		format(TmpQuery, 64, "UPDATE `houses` SET `ownerid`='0' WHERE `ownerid` = '%d'", HouseInfo[ house ][hOwnerID]);
+		format(TmpQuery, 128, "UPDATE `houses` SET `ownerid`='0' WHERE `ownerid` = '%d'", HouseInfo[ house ][hOwnerID]);
 		mysql_tquery(g_SQL, TmpQuery, "", "");
 		
 		if(foundonline == 0)
 		{
 			// Update accounts
-			format( TmpQuery2, sizeof(TmpQuery2), "UPDATE `accounts` SET `handMoney` = `handMoney` + '%d' WHERE `sqlid` = '%d'", 
+			format( TmpQuery, sizeof(TmpQuery), "UPDATE `accounts` SET `handMoney` = `handMoney` + '%d' WHERE `sqlid` = '%d'", 
 				HouseInfo[ house ][hValue],
 				HouseInfo[ house ][hOwnerID]
 			);
-			mysql_tquery(g_SQL, TmpQuery2, "", "");
+			mysql_tquery(g_SQL, TmpQuery, "", "");
 			
 			// Update proracun
-			format( TmpQuery3, sizeof(TmpQuery3), "UPDATE `city` SET `budget` = `budget` - '%d'", 
+			format( TmpQuery, sizeof(TmpQuery), "UPDATE `city` SET `budget` = `budget` - '%d'", 
 				HouseInfo[ house ][hValue]
 			);
-			mysql_tquery(g_SQL, TmpQuery3, "", "");
+			mysql_tquery(g_SQL, TmpQuery, "", "");
 		}
 		
 			
@@ -2941,7 +2940,7 @@ CMD:asellcomplexroom(playerid, params[])
 		
 		//SQL
 		new
-			Query[ 188 ];
+			Query[ 128 ];
 		format( Query, sizeof(Query), "UPDATE `server_complex_rooms` SET `ownerid` = '0' WHERE `id` = '%d'",
 			ComplexRoomInfo[ complex ][cSQLID]
 		);
@@ -3500,7 +3499,7 @@ CMD:givelicense(playerid, params[])
 				//new vrsta;
 				if (sscanf(params, "uii", giveplayerid, item))
 				{
-					SendClientMessage(playerid, COLOR_WHITE, "KORISTENJE: /givelicense [Playerid/DioImena] [odabir] ");
+					SendClientMessage(playerid, COLOR_WHITE, "[ ? ]: /givelicense [Playerid/DioImena] [odabir] ");
 					//SendClientMessage(playerid, COLOR_GREEN, "Tipovi: 1 - Concealed Carry Weapon(CCW),  2 - Open Carry Weapons + CC (OCW)");
 					return 1;
 				}

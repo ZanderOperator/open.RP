@@ -939,7 +939,7 @@ CMD:finance(playerid, params[])
 	if( !strcmp(pick,"delete",true) )  {
 		new id;
 		if(sscanf(params, "s[10]i", pick, id)) {
-			SendClientMessage(playerid,-1,"KORISTENJE: /finance delete [ID transakcije]");
+			SendClientMessage(playerid,-1,"[ ? ]: /finance delete [ID transakcije]");
 			return 1;
 		}
 		if(id < 0) return SendClientMessage(playerid,COLOR_RED, "ID transakcije ne moze biti manji od 0!");

@@ -114,7 +114,7 @@ static stock
 enum E_EXTERIOR_FURNITURE_DATA
 {
 	efModelid,
-	efName[16],
+	efName[24],
 	efPrice
 }
 static stock 
@@ -132,7 +132,16 @@ static stock
 		{ 2901, "Marijuana", 200 },
 		{ 2069, "Lampa", 150 },
 		{ 1646, "Ljezaljka2", 200 },
-		{ 941, "Radni stol", 250 }
+		{ 941, "Radni stol", 250 },
+		{ 2627, "Traka za trcanje", 300 },
+		{ 2630, "Fiksni bicikl", 200 },
+		{ 2629, "Bench1", 300 },
+		{ 2628, "Bench2", 150 },
+		{ 2631, "Gym Prostirka1", 150 },
+		{ 2632, "Gym Prostirka2", 150 },
+		{ 11727, "Zidna lampa", 100 },
+		{ 1645, "Ljezaljka3", 250 },
+		{ 1712, "Kauc", 200 }
 	};
 	
 enum E_EXTERIOR_MISC_DATA
@@ -162,7 +171,20 @@ static stock
 		{ 19632 , "Drvo i vatra"		, 150 },
 		{ 19860 , "Vrata1"				, 150 },
 		{ 1505  , "Vrata2"				, 150 },
-		{ 1569 	, "Vrata3"				, 150 }
+		{ 1569 	, "Vrata3"				, 150 },
+		{ 11743 ,"Kafe aparat"			, 100 },
+		{ 2229  , "Zvucnik"   			, 100 },
+		{ 2233  , "Zvucnik2"  			, 150 },
+		{ 1958  , "Mikseta1" 		    , 250 },
+		{ 14820 , "Mikseta2"		    , 300 },
+		{ 3031  , "Satelit"   			, 200 },
+		{ 1670  , "Jelo za stol1"       , 100 },
+		{ 2800  , "Jelo za stol2"       , 100 },
+		{ 2801  , "Jelo za stol3"       , 100 },
+		{ 1478  , "Posta sanduce"       , 150 },
+		{ 2672  , "Smece1"              , 50  },
+		{ 2675  , "Smece2"              , 50  },
+		{ 2673  , "Smece3"              , 50  }
 	};	
 
 /*

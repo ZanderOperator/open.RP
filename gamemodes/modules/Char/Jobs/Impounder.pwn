@@ -253,7 +253,8 @@ OPUnTowIV(playerid, veh)
 		money = minrand(350, 450);
 		
 	va_SendClientMessage(playerid, COLOR_GREEN, "[ ! ] Zaradio si $%d, placa ti je sjela na racun.", money);
-	BudgetToPayDayMoney(playerid, money);
+	BudgetToPlayerBankMoney(playerid, money);
+	PlayerInfo[playerid][pPayDayMoney] += money;
 	
 	ResetImpoundVars(playerid);
 	

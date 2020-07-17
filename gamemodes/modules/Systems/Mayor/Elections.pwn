@@ -73,7 +73,7 @@ CMD:vote(playerid, params[])
 CMD:votes(playerid, params[])
 {
 	new option[32];
-	if(sscanf(params, "s[32]", option)) return SendClientMessage(playerid, COLOR_WHITE, "KORISTENJE: /votes [lock, check]");
+	if(sscanf(params, "s[32]", option)) return SendClientMessage(playerid, COLOR_WHITE, "[ ? ]: /votes [lock, check]");
 	if(strcmp(option,"lock",true) == 0)
 	{
 		if(PlayerInfo[playerid][pLeader] != 4) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Samo gradonacelnik moze koristiti ovu komunadu.");
