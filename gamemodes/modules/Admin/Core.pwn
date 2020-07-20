@@ -5155,7 +5155,7 @@ CMD:gotopos(playerid, params[])
 		Float:tmpPos[3], tmpInt, tmpViWo;
 	if( sscanf( params, "fffii", tmpPos[0], tmpPos[1], tmpPos[2], tmpInt, tmpViWo ) ) 
 		return SendClientMessage(playerid, COLOR_RED, "[ ? ]:  /gotopos [X][Y][Z][Interior ID][Virtual World ID]");
-	SetPlayerPosEx(playerid, tmpPos[0], tmpPos[1], tmpPos[2], tmpViwo, tmpInt)
+	SetPlayerPosEx(playerid, tmpPos[0], tmpPos[1], tmpPos[2], tmpViWo, tmpInt);
 	return 1;
 }
 

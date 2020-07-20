@@ -3643,14 +3643,14 @@ CMD:bizint(playerid, params[])
 CMD:custombizint(playerid, params[])
 {
 	new
-	    bizid, bint, bviwo
+	    bizid, bint, bviwo,
 	    Float:iX, Float:iY, Float:iZ;
 	if(PlayerInfo[playerid][pAdmin] < 1338) return SendClientMessage(playerid, COLOR_RED, "  GRESKA: Niste ovlasteni za koristenje ove komande!");
-	if(sscanf(params, "iiifff", bizid, bint, bviwo iX, iY, iZ)) {
+	if(sscanf(params, "iiifff", bizid, bint, bviwo, iX, iY, iZ)) {
 		SendClientMessage(playerid, COLOR_WHITE, "[ ? ]: /custombizint [bizid][Interior ID][Virtual World ID][X][Y][Z]");
 		return 1;
 	}
-	if(!Iter_Contains(Bizzes, biz)) return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "Biznis ID %d ne postoji na serveru!");
+	if(!Iter_Contains(Bizzes, bizid)) return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "Biznis ID %d ne postoji na serveru!");
 		
 	BizzInfo[bizid][bExitX] = iX;
 	BizzInfo[bizid][bExitY] = iY;
