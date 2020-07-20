@@ -11,7 +11,7 @@
 
 /*
 	- enumerator & defines
-*/
+*/	
 
 enum {
 	NORMAL_JOBS_EMPLOYERS = (25),  /* OOC POSLOVI */
@@ -32,10 +32,10 @@ enum E_JOBS_DATA {
 	CRAFTER,     /* [id:5] */
 	TAXI, 	     /* [id:6] */
 	FARMER,      /* [id:7] */
-	//RUDAR,       /* [id:8] */
 	LOGGER,      /* [id:14] */
 	TRUCKER,     /* [id:15] */
 	GARBAGE,    /* [id:16] */
+	IMPOUNDER,  /* [id:17 ] */
 	TRANSPORTER    /* [id:18 */
 }
 new JobData[E_JOBS_DATA];
@@ -46,7 +46,7 @@ new JobData[E_JOBS_DATA];
 
 SaveJobData() {
 	new query[300];
-	format(query, sizeof(query), "UPDATE `server_jobs` SET `Sweeper` = '%d', `Pizzaboy` = '%d', `Mechanic` = '%d', `Mower` = '%d', `Crafter` = '%d', `Taxi` = '%d', `Farmer` = '%d', `Logger` = '%d', `Garbage` = '%d', `Transporter` = '%d' WHERE 1",
+	format(query, sizeof(query), "UPDATE `server_jobs` SET `Sweeper` = '%d', `Pizzaboy` = '%d', `Mechanic` = '%d', `Mower` = '%d', `Crafter` = '%d', `Taxi` = '%d', `Farmer` = '%d', `Logger` = '%d', `Garbage` = '%d', `Impounder` = '%d', `Transporter` = '%d' WHERE 1",
 		JobData[SWEEPER],
 		JobData[PIZZABOY],
 		JobData[MECHANIC],
@@ -56,6 +56,7 @@ SaveJobData() {
 		JobData[FARMER],
 		JobData[LOGGER],
 		JobData[GARBAGE],
+		JobData[IMPOUNDER],
 		JobData[TRANSPORTER]
 	);
 	return mysql_tquery(g_SQL, query);
@@ -81,6 +82,7 @@ public OnServerJobsLoaded() {
 	cache_get_value_name_int(0, "Logger", JobData[LOGGER]);
 	cache_get_value_name_int(0, "Trucker", JobData[TRUCKER]);
 	cache_get_value_name_int(0, "Garbage", JobData[GARBAGE]);
+	cache_get_value_name_int(0, "Impounder", JobData[IMPOUNDER]);
 	cache_get_value_name_int(0, "Transporter", JobData[TRANSPORTER]);
 	return (true);
 }
@@ -101,6 +103,7 @@ SetPlayerJob(playerid, job_id) {
 		case 14: JobData[LOGGER] ++;
 		case 15: JobData[TRUCKER] ++;
 		case 16: JobData[GARBAGE] ++;
+		case 17: JobData[IMPOUNDER] ++;
 		case 18: JobData[TRANSPORTER] ++;
 	}
 	PlayerInfo[playerid][pJob] = job_id;
@@ -120,6 +123,7 @@ RemovePlayerJob(playerid) {
 		case 7: JobData[FARMER] --;
 		case 14: JobData[LOGGER] --;
 		case 16: JobData[GARBAGE] --;
+		case 17: JobData[IMPOUNDER] --;
 		case 18: JobData[TRANSPORTER] --;
 	}
 	PlayerInfo[playerid][pJob] 	= 0;
@@ -138,10 +142,10 @@ RemoveOfflineJob(jobid)
 		case 5: JobData[CRAFTER] --;
 		case 6: JobData[TAXI] --;
 		case 7: JobData[FARMER] --;
-		//case 8: JobData[RUDAR] --;
 		case 14: JobData[LOGGER] --;
 		case 15: JobData[TRUCKER] --;
 		case 16: JobData[GARBAGE] --;
+		case 17: JobData[IMPOUNDER] --;
 		case 18: JobData[TRANSPORTER] --;
 	}
 	SaveJobData();
@@ -151,7 +155,7 @@ RemoveOfflineJob(jobid)
 JobsList() {
 	new buffer[512];
 			
-	format(buffer, sizeof(buffer), "{3C95C2}Job\t{3C95C2}Workers\nCistac ulica\t[%d/%d]\nPizzaboy\t[%d/%d]\nMehanicar\t[%d/%d]\nKosac Trave\t[%d/%d]\nTvornicki radnik\t[%d/%d]\nTaksista\t[%d/%d]\nFarmer\t[%d/%d]\nDrvosjeca\t[%d/%d]\nSmetlar\t[%d/%d]\nVehicle Impounder\nTransporter",
+	format(buffer, sizeof(buffer), "{3C95C2}Job\t{3C95C2}Workers\nCistac ulica\t[%d/%d]\nPizzaboy\t[%d/%d]\nMehanicar\t[%d/%d]\nKosac Trave\t[%d/%d]\nTvornicki radnik\t[%d/%d]\nTaksista\t[%d/%d]\nFarmer\t[%d/%d]\nDrvosjeca\t[%d/%d]\nSmetlar\t[%d/%d]\nVehicle Impounder[%d/%d]\nTransporter[%d/%d]",
 		JobData[SWEEPER], NORMAL_JOBS_EMPLOYERS,
 		JobData[PIZZABOY], NORMAL_JOBS_EMPLOYERS,
 		JobData[MECHANIC], OFFICIAL_JOBS_EMPLOYERS,
@@ -160,7 +164,9 @@ JobsList() {
 		JobData[TAXI], OFFICIAL_JOBS_EMPLOYERS,
 		JobData[FARMER], NORMAL_JOBS_EMPLOYERS,
 		JobData[LOGGER], NORMAL_JOBS_EMPLOYERS,
-		JobData[GARBAGE], NORMAL_JOBS_EMPLOYERS
+		JobData[GARBAGE], NORMAL_JOBS_EMPLOYERS,
+		JobData[IMPOUNDER], OFFICIAL_JOBS_EMPLOYERS,
+		JobData[TRANSPORTER], NORMAL_JOBS_EMPLOYERS
 	);
 	return (buffer);
 }
@@ -172,25 +178,31 @@ JobsList() {
 hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 {
 	new jstring[1500];
-	switch(dialogid) {
-		case DIALOG_JOBS: {
+	switch(dialogid) 
+	{
+		case DIALOG_JOBS: 
+		{
 			if( !response ) return (true);
-			switch( listitem ) {
-				case 0: {
+			switch( listitem )
+			 {
+				case 0: 
+				{
 					if(JobData[SWEEPER] == NORMAL_JOBS_EMPLOYERS)
 						return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ova firma trenutno ne prima radnike, pokusajte kada bude slobodnih mjesta.");
 
 					SetPlayerJob(playerid, 1);
 					SendMessage( playerid, MESSAGE_TYPE_INFO, "Zaposlili ste se kao cistac ulica!");
 				}
-				case 1: {
+				case 1: 
+				{
 					if(JobData[PIZZABOY] == NORMAL_JOBS_EMPLOYERS)
 						return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ova firma trenutno ne prima radnike, pokusajte kada bude slobodnih mjesta.");
 
 					SetPlayerJob(playerid, 2);
 					SendMessage( playerid, MESSAGE_TYPE_INFO, "Zaposlili ste se kao Raznosac pizza!");
 				}
-				case 2: {
+				case 2: 
+				{
 					if(JobData[MECHANIC] == OFFICIAL_JOBS_EMPLOYERS)
 						return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ova firma trenutno ne prima radnike, pokusajte kada bude slobodnih mjesta.");
 
@@ -199,21 +211,24 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 					SetPlayerJob(playerid, 3);
 					SendMessage( playerid, MESSAGE_TYPE_INFO, "Zaposlili ste se kao mehanicar!");
 				}
-				case 3: {
+				case 3: 
+				{
 					if(JobData[MOWER] == NORMAL_JOBS_EMPLOYERS)
 						return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ova firma trenutno ne prima radnike, pokusajte kada bude slobodnih mjesta.");
 
 					SetPlayerJob(playerid, 4);
 					SendMessage( playerid, MESSAGE_TYPE_INFO, "Zaposlili ste se kao kosac trave!");
 				}
-				case 4: {
+				case 4: 
+				{
 					if(JobData[CRAFTER] == NORMAL_JOBS_EMPLOYERS)
 						return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ova firma trenutno ne prima radnike, pokusajte kada bude slobodnih mjesta.");
 
 					SetPlayerJob(playerid, 5);
 					SendMessage( playerid, MESSAGE_TYPE_INFO, "Zaposlili ste se kao tvornicki radnik!");
 				}
-				case 5: {
+				case 5: 
+				{
 					if( PlayerInfo[ playerid ][ pLevel ] < 3 ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Samo igraci level 3+ mogu biti taksisti.");
 					if(JobData[TAXI] == OFFICIAL_JOBS_EMPLOYERS)
 						return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ova firma trenutno ne prima radnike, pokusajte kada bude slobodnih mjesta.");
@@ -221,38 +236,42 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 					SetPlayerJob(playerid, 6);
 					SendMessage( playerid, MESSAGE_TYPE_INFO, "Zaposlili ste se kao taksista!");
 				}
-				case 6: {
+				case 6: 
+				{
 					if(JobData[FARMER] == NORMAL_JOBS_EMPLOYERS)
 						return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ova firma trenutno ne prima radnike, pokusajte kada bude slobodnih mjesta.");
 
 					SetPlayerJob(playerid, 7);
 					SendMessage( playerid, MESSAGE_TYPE_INFO, "Zaposlili ste se kao farmer!");
 				}
-				case 7: {
+				case 7: 
+				{
 					if(JobData[LOGGER] == NORMAL_JOBS_EMPLOYERS)
 						return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ova firma trenutno ne prima radnike, pokusajte kada bude slobodnih mjesta.");
 
 					SetPlayerJob(playerid, 14);
 					SendMessage( playerid, MESSAGE_TYPE_INFO, "Zaposlili ste se kao drvosjeca!");
 				}
-				case 8: {
+				case 8: 
+				{
 					if(JobData[GARBAGE] == NORMAL_JOBS_EMPLOYERS)
 						return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ova firma trenutno ne prima radnike, pokusajte kada bude slobodnih mjesta.");
 
 					SetPlayerJob(playerid, 16);
 					SendMessage( playerid, MESSAGE_TYPE_INFO, "Zaposlili ste se kao smetlar!");
 				}
-				case 9: {
-					SendMessage( playerid, MESSAGE_TYPE_INFO, "Posao izbacen!!");
-				}
-				case 10:
+				case 9:
 				{
 					if( PlayerInfo[ playerid ][ pLevel ] < 5 ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Samo igraci level 5+ mogu biti veh impounderi.");
+					if(JobData[GARBAGE] == OFFICIAL_JOBS_EMPLOYERS)
+						return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ova firma trenutno ne prima radnike, pokusajte kada bude slobodnih mjesta.");
 					SetPlayerJob(playerid, 17);
 					SendMessage( playerid, MESSAGE_TYPE_INFO, "Zaposlili ste se kao impounder!");
 				}
-				case 11:
+				case 10:
 				{
+					if(JobData[GARBAGE] == NORMAL_JOBS_EMPLOYERS)
+						return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ova firma trenutno ne prima radnike, pokusajte kada bude slobodnih mjesta.");
 					SetPlayerJob(playerid, 18);
 					SendMessage( playerid, MESSAGE_TYPE_INFO, "Zaposlili ste se kao transporter!");
 				}
@@ -371,35 +390,27 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
     				ShowPlayerDialog(playerid, 0, DIALOG_STYLE_MSGBOX, "TAKSISTA", jstring, "U redu", "");
     			}
     			case 10: {
-    				/*strcat(jstring, "Za lokaciju rudara koristite /gps.\n\n");
-    				strcat(jstring, "Da biste zapoceli ovaj posao potrebno je kucati /startmining nakon cega se morate popeti na grumen zlata i pritisnuti Y/Z kako bi aktivirali obradjivanje zlata.\n");
-    				strcat(jstring, "Tada vam se pojavljuje progress i vi morate pritiskati SPACE da bi zavrsili obradu.\n");
-    				strcat(jstring, "U jednoj turi radite po pet grumena zlata, a po paydayu mozete ukupno raditi tri ture.\n");
-    				ShowPlayerDialog(playerid, 0, DIALOG_STYLE_MSGBOX, "RUDAR", jstring, "U redu", "");*/
-					SendMessage( playerid, MESSAGE_TYPE_INFO, "Posao izbacen!!");
-    			}
-    			case 11: {
     				strcat(jstring, "Kod ovog posla imate jednu osnovnu komandu, a to je /drug, ona vam ispise sve potrebne komande.\n\n");
     				strcat(jstring, "Sa ovim poslom mozete saditi marihuanu na nekom vasem tajnom mjestu, ali prethodno morate kupiti sjemenke u East Los Santos.\n");
     				strcat(jstring, "Takodje, mozete kuvati metamfetamin u svojoj kuci, ali naravno morate uzeti u Magic Shop klorovodicnu kiselinu, mravlju kiselinu i klorovodicni hidroksid.\n");
     				strcat(jstring, "Pored ove dvije droge koje mozete praviti/uzgajati, takodje imate opciju da pravite crack,\nali za ovu drogu morate imati kokain (Ilegalni trucker) i naravno uzeti u Magic Shop sodu bikarbonu kako bi mogli pomjesati.\n");
     				ShowPlayerDialog(playerid, 0, DIALOG_STYLE_MSGBOX, "DRUG-DEALER", jstring, "U redu", "");
     			}
-    			case 12: {
+    			case 11: {
     				strcat(jstring, "Komanda kojom vas zaposljavaju je /trucker hire. Narko bossovi mogu birati izmedju kokaina/heroina/ekstazija.\n\n");
     				strcat(jstring, "Roba dolazi svakih tjedan dana, te svaka mafija ima pravo uzeti jednaku kolicinu.\n");
     				strcat(jstring, "Nije potreban proces proizvodnje. Potreban je igrac sa kljucevima Warehousea/Leader koji narucuje transport od vas.\n");
     				strcat(jstring, "Novac iz Warehousea se skida pri istovaru, a Warehouse dobiva odredjenu kolicinu narucene droge.\n");
     				ShowPlayerDialog(playerid, 0, DIALOG_STYLE_MSGBOX, "ILLEGAL TRUCKER(Drug Smuggler)", jstring, "U redu", "");
     			}
-    			case 13: {
+    			case 12: {
     				strcat(jstring, "Sjediste ovog posla jeste kao mehanicarska garaza koja se nalazi na Ocean Docks.\n\n");
     				strcat(jstring, "U njoj se nalazi tabla sa vozilima koja su potrebna da se ukradu.\n");
     				strcat(jstring, "Koristite komandu /jacker gdje imate pick da izaberete vozilo, chop da isjecete vozilo kad ga dovucete, leave da napustite misiju i stop da pauzirate misiju.\n");
     				strcat(jstring, "Kad zavrsite sa rastavljanjem vozila, budete isplaceni zavisno od vozila do vozila od strane te garaze.\n");
     				ShowPlayerDialog(playerid, 0, DIALOG_STYLE_MSGBOX, "CAR-JACKER", jstring, "U redu", "");
     			}
-    			case 14: {
+    			case 13: {
     				strcat(jstring, "Lokacija ovog posla je Civic Center, u blizini LSPD stanice.\n\n");
     				strcat(jstring, "Ovaj posao je ilegalan, svakoga koga policija uhvati u obavljanju ovog cina ima pravo uhapsiti.\n");
     				strcat(jstring, "Zbog opisa posla i opasnosti da budete uhvaceni od strane policije ili vlasnika kuca koje pljackate, prihodi su malo veci od ostalih poslova.\n");
@@ -483,7 +494,6 @@ CMD:jobhelp(playerid, params[]) {
 		Pizza Boy\n\
 		Farmer\n\
 		Taksista\n\
-		Rudar\n\
 		Gun dealer\n\
 		Car jacker\n\
 		Lopov", "(odaberi)", "(x)"
@@ -525,12 +535,6 @@ CMD:jobcmds(playerid, params[]) {
 			SendClientMessage(playerid, -1, "\t TAKSIST: /taxi");
 			SendClientMessage(playerid, COLOR_LIGHTBLUE, "* ______________________________________________________________ *");
 		}
-		case 8: {
-			/*SendClientMessage(playerid, COLOR_LIGHTBLUE, "* _______________________ JOB COMMANDS _______________________ *");			
-			SendClientMessage(playerid, -1, "\t RUDAR: /startmining - /loadgold - /stopmining");
-			SendClientMessage(playerid, COLOR_LIGHTBLUE, "* ______________________________________________________________ *");*/
-			SendMessage( playerid, MESSAGE_TYPE_INFO, "Posao izbacen!!");
-		}
 		case 7: {
 			SendClientMessage(playerid, COLOR_LIGHTBLUE, "* _______________________ JOB COMMANDS _______________________ *");			
 			SendClientMessage(playerid, -1, "\t FARMER: /work - /finish - /takebucket - /dropbucket - /milk - /dropcanister");
@@ -557,12 +561,6 @@ CMD:jobcmds(playerid, params[]) {
 			SendClientMessage(playerid, -1, "\t DRVOSJECA: /cuttree - /stopcuttree - /treeinfo - /putwood - /checkvehwood");
 			SendClientMessage(playerid, -1, "\t DRVOSJECA: /checkmywood - /pickupwood - /takewood - /sellwood");
 			SendClientMessage(playerid, COLOR_LIGHTBLUE, "* ______________________________________________________________ *");
-		}
-		case 15: {
-			/*SendClientMessage(playerid, COLOR_LIGHTBLUE, "* _______________________ JOB COMMANDS _______________________ *");			
-			SendClientMessage(playerid, -1, "\t TRUCKER: /trucker - /checkbiznis - /products");
-			SendClientMessage(playerid, COLOR_LIGHTBLUE, "* ______________________________________________________________ *");*/
-			SendMessage( playerid, MESSAGE_TYPE_INFO, "Posao izbacen!!");
 		}
 		case 16: {
 			SendClientMessage(playerid, COLOR_LIGHTBLUE, "* _______________________ JOB COMMANDS _______________________ *");
