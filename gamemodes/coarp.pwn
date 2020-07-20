@@ -120,6 +120,7 @@ native WP_Hash(buffer[], len, const str[]);
 #define MAX_LOGIN_TIME							(60)
 #define MAX_PLAYER_PASSWORD             		(129)
 #define MAX_PLAYER_CIDR							(32)
+#define MAX_SKILLS								(9)
 #define MAX_WARNS								(3)
 #define MAX_PICKUP								(150)
 #define MAX_GARBAGE_CONTAINERS					(88)
@@ -412,8 +413,7 @@ enum E_PLAYER_DATA
 	pVoted,
 	pPassport,
 	hRope,
-	pSkillId,
-	pSkills[10],
+	pSkills[MAX_SKILLS],
 	pPhoneBG,
 	pPhoneMask,
 	pAmmuTime,
@@ -2572,7 +2572,6 @@ ResetPlayerVariables(playerid)
 	PlayerInfo[playerid][pGrafID]			= -1;
 	PlayerInfo[playerid][pTagID]			= -1;
 	PlayerInfo[playerid][hRope] 			= 0;
-	PlayerInfo[playerid][pSkillId]			= -1;
 	PlayerInfo[playerid][pAmmuTime]			= 0;
 	PlayerInfo[playerid][pDonatorVehicle] 	= 0;
 	PlayerInfo[playerid][pDonatorVehPerms] 	= 0;

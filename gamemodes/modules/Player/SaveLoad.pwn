@@ -387,9 +387,6 @@ public CheckPlayerLoginInput(playerid)
 		//Fisher
 		cache_get_value_name_int(0, "FishingSkill", PlayerInfo[playerid][pFishingSkill]);
 		
-		//Transporter
-		cache_get_value_name_int(0, "TransporterSkill", PlayerInfo[playerid][pSkillTransporter]);
-		
 		if( PlayerInfo[ playerid ][ pUnbanTime ] == -1 )
 		{
 			SendClientMessage( playerid, COLOR_RED, "[CoA-RP Server]: Dobili ste dozivotnu zabranu igranja na ovome serveru! Ukoliko mislite da niste zasluzili zalite se na forumu! www.cityofangels-roleplay.com");
@@ -764,7 +761,7 @@ stock SavePlayerData(playerid)
 	SavePlayerExperience(playerid);
 	UpdatePlayerMobile(playerid);
 	AC_SavePlayerWeapons(playerid);
-	SavePlayerSkill(playerid, PlayerInfo[playerid][pSQLID]);
+	SavePlayerSkill(playerid);
 	//SavePlayerFishes(playerid);
 	
 	#if defined MODULE_ADMIN_CONNECTIONS
@@ -811,13 +808,12 @@ stock SavePlayerData(playerid)
 	);
 	mysql_pquery(g_SQL, mysqlUpdate);
 
-	mysql_format(g_SQL, mysqlUpdate, sizeof(mysqlUpdate), "UPDATE `accounts` SET `jobkey` = '%d',  `parts` = '%d', `contracttime` = '%d', `health` = '%f', `FishingSkill` = '%d', `TransporterSkill` = '%d' WHERE `sqlid` = '%d'",
+	mysql_format(g_SQL, mysqlUpdate, sizeof(mysqlUpdate), "UPDATE `accounts` SET `jobkey` = '%d',  `parts` = '%d', `contracttime` = '%d', `health` = '%f', `FishingSkill` = '%d' WHERE `sqlid` = '%d'",
 		PlayerInfo[playerid][pJob],
 		PlayerInfo[playerid][pParts],
 		PlayerInfo[playerid][pContractTime],
 		PlayerInfo[playerid][pHealth],
 		PlayerInfo[playerid][pFishingSkill],
-		PlayerInfo[playerid][pSkillTransporter],
 		PlayerInfo[playerid][pSQLID]
 	);
 	mysql_tquery(g_SQL, mysqlUpdate, "", "");

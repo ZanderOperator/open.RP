@@ -60,6 +60,9 @@ hook OnPlayerEnterCheckpoint(playerid)
 	{
 		if(GetPlayerState(playerid) == PLAYER_STATE_DRIVER)
 		{
+			if(!IsVehicleTransproter(GetPlayerVehicleID(playerid)))
+				return SendClientMessage( playerid, COLOR_RED, "Morate biti vozac kamiona!");
+
 		    if(TWorking[playerid] == 1)
 	        {
 				if(kurcinaTimer[playerid] == 1) return FailedToDeliver(playerid);
@@ -76,42 +79,28 @@ hook OnPlayerEnterCheckpoint(playerid)
 		        TCarry[playerid] = 0;
 		        DisablePlayerCheckpoint(playerid);
 		        PlayerInfo[playerid][pFreeWorks] -= 5;
-		        PlayerInfo[playerid][pSkillTransporter]++;
-				if(PlayerInfo[playerid][pSkillTransporter] < 10) {
-
-                    BudgetToPlayerBankMoney(playerid, 600);
-					PlayerInfo[playerid][pPayDayMoney] += 600; 
-					SendClientMessage(playerid, -1, "{FA5656}[ ! ] Posto vam je skill ovog posla 1, dobili ste bonus od $600 na platu!");
-				}
-        		else if(PlayerInfo[playerid][pSkillTransporter] < 25)
-		        {
-					BudgetToPlayerBankMoney(playerid, 700);
-					PlayerInfo[playerid][pPayDayMoney] += 700; 
-					SendClientMessage(playerid, -1, "{FA5656}[ ! ] Posto vam je skill ovog posla 2, dobili ste bonus od $700 na platu!");
-	      		}
-	        	else if(PlayerInfo[playerid][pSkillTransporter] < 35)
-		        {
-             		BudgetToPlayerBankMoney(playerid, 800);
-					PlayerInfo[playerid][pPayDayMoney] += 800; 
-					SendClientMessage(playerid, -1, "{FA5656}[ ! ] Posto vam je skill ovog posla 3, dobili ste bonus od $800 na platu!");
-		        }
-		        else if(PlayerInfo[playerid][pSkillTransporter] < 50)
-		        {
-          			BudgetToPlayerBankMoney(playerid, 900);
-					PlayerInfo[playerid][pPayDayMoney] += 900; 
-					SendClientMessage(playerid, -1, "{FA5656}[ ! ] Posto vam je skill ovog posla 4, dobili ste bonus od $900 na platu!");
-				}
-				else
-				{
-    				BudgetToPlayerBankMoney(playerid, 1100);
-					PlayerInfo[playerid][pPayDayMoney] += 1100; 
-					SendClientMessage(playerid, -1, "{FA5656}[ ! ] Posto vam je skill ovog posla 5 (maksimalan), dobili ste bonus od $1100 na platu!");
-				}
+		        UpgradePlayerSkill(playerid, 7);
 				
-				Log_Write("logfiles/transporterlogs.txt", "(%s) %s{%d} je zavrsio posao transportera.",
+				new money;
+				switch(GetPlayerSkillLevel(playerid, 7)) // Skill ID 7 - Transporter Skill
+				{
+					case 1: money = 600;
+					case 2: money = 700;
+					case 3: money = 800;
+					case 4: money = 900;
+					case 5: money = 1100;
+				}
+
+
+				BudgetToPlayerBankMoney(playerid, money);
+				PlayerInfo[playerid][pPayDayMoney] += money;
+				va_SendClientMessage(playerid, COLOR_GREEN, "[ ! ] Zaradio si $%d, placa ti je sjela na racun.", money);
+				
+				Log_Write("logfiles/transporterlogs.txt", "(%s) %s{%d} je zavrsio posao Transportera i zaradio %d$.",
 					ReturnDate(),
 					GetName(playerid),
-					PlayerInfo[playerid][pSQLID]
+					PlayerInfo[playerid][pSQLID],
+					money
 				);
 	        }
 		}

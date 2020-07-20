@@ -3067,7 +3067,7 @@ CMD:setstat(playerid, params[])
 		SendClientMessage(playerid, COLOR_GREY, "(13 - Seeds), (14 - Players Job), (15 - PlayerContractTime), (16 - VrijemeDoPlace)");
 		SendClientMessage(playerid, COLOR_GREY, "(17 - Job Key), (18 - Muscle Skill), (19 - Puta uhicen), (20 - Changename Dozvola)");
 		SendClientMessage(playerid, COLOR_GREY, "(21 - PayDay Money), (22 - DonateRank), (23 - Casino cool), (24 - Garage key)");
-		SendClientMessage(playerid, COLOR_GREY, "(25 - Complex Key), (26 - Complex Room Key), (27 - Fishing skill), (28 - Transporter skill)");
+		SendClientMessage(playerid, COLOR_GREY, "(25 - Complex Key), (26 - Complex Room Key), (27 - Fishing skill)");
 		return 1;
     }
     if (!IsPlayerConnected(giveplayerid)) return SendClientMessage(playerid, COLOR_RED, "Taj igraè nije online!");
@@ -3237,11 +3237,6 @@ CMD:setstat(playerid, params[])
 		{
 		    PlayerInfo[playerid][pFishingSkill] = amount;
 			format(globalstring, sizeof(globalstring), "   Korisnik sada ima skill posla ribar  %d.", amount);
-  		}
-		case 28:
-		{
-		    PlayerInfo[playerid][pSkillTransporter] = amount;
-			format(globalstring, sizeof(globalstring), "   Korisnik sada ima skill posla transporter  %d.", amount);
   		}
 		default:
 			SendClientMessage(playerid, COLOR_RED, "Krivi kod stats-a!");
