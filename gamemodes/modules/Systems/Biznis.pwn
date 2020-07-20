@@ -3055,6 +3055,7 @@ CMD:createvip(playerid, params[])
 		pick,
 		biz = Bit16_Get( gr_PlayerInBiznis, playerid );
 	if( PlayerInfo[ playerid ][ pAdmin ] < 1337 ) return SendClientMessage( playerid, COLOR_RED, "Niste ovlasteni za koristenje ove komande!" );
+	if( biz == INVALID_BIZNIS_ID) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne nalazite se unutar biznisa!");
 	if( sscanf( params, "i", pick ) ) return SendClientMessage( playerid, -1, "[ ? ]: /createvip [0-9] (0 za micanje sobe)" );
 
 	new
@@ -3328,6 +3329,8 @@ CMD:setfuelprice(playerid, params[]){
 	new biz, fuelprice;
  	if(PlayerInfo[playerid][pAdmin] < 3) return SendClientMessage(playerid, COLOR_RED, "GRESKA: Niste ovlasteni za koristenje ove komande!");
     if(sscanf(params, "ii", biz, fuelprice)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /setfuelprice [biznisid][naftaprice]");
+	if(!Iter_Contains(Bizzes, biz)) return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "Biznis sa ID-em %d ne postoji na serveru!", biz);
+	if(BizzInfo[biz][bType] != BIZZ_TYPE_GASSTATION) return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "Biznis %s[ID %d] nije benzinska postaja!", BizzInfo[biz][bMessage], biz);
     if(fuelprice < 1 || fuelprice > 10) return SendClientMessage(playerid, COLOR_RED, "Krivi odabir (1-10)!");
 
     va_SendClientMessage(playerid, COLOR_RED, "[ ! ] Uspjesno ste cijenu nafte na - "COL_WHITE"%i"COL_YELLOW".", fuelprice);
@@ -3345,6 +3348,7 @@ CMD:bizint(playerid, params[])
     if(PlayerInfo[playerid][pAdmin] < 1338) return SendClientMessage(playerid, COLOR_RED, "  GRESKA: Niste ovlasteni za koristenje ove komande!");
     if(sscanf(params, "ii", biz, pick)) return SendClientMessage(playerid, COLOR_WHITE, "[ ? ]: /bizint [biznisid][pick] (0 - brisanje)");
     if(pick < 0 || pick > 37) return SendClientMessage(playerid, COLOR_RED, "Krivi odabir (1-37)!");
+	if(!Iter_Contains(Bizzes, biz)) return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "Biznis ID %d ne postoji na serveru!");
     if(biz > sizeof(BizzInfo) || biz <= 0) return SendClientMessage(playerid, COLOR_RED, "Pogresan biznis ID!");
 	switch(pick)
     {
@@ -3639,19 +3643,20 @@ CMD:bizint(playerid, params[])
 CMD:custombizint(playerid, params[])
 {
 	new
-	    bizid, bint,
+	    bizid, bint, bviwo
 	    Float:iX, Float:iY, Float:iZ;
 	if(PlayerInfo[playerid][pAdmin] < 1338) return SendClientMessage(playerid, COLOR_RED, "  GRESKA: Niste ovlasteni za koristenje ove komande!");
-	if(sscanf(params, "iifff", bizid, bint, iX, iY, iZ)) {
-		SendClientMessage(playerid, COLOR_WHITE, "[ ? ]: /custombizint [bizid][int][X][Y][Z]");
-		SendClientMessage(playerid, COLOR_GREY, "NOTE: Taj ID MORA biti u skripti!");
+	if(sscanf(params, "iiifff", bizid, bint, bviwo iX, iY, iZ)) {
+		SendClientMessage(playerid, COLOR_WHITE, "[ ? ]: /custombizint [bizid][Interior ID][Virtual World ID][X][Y][Z]");
 		return 1;
 	}
+	if(!Iter_Contains(Bizzes, biz)) return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "Biznis ID %d ne postoji na serveru!");
+		
 	BizzInfo[bizid][bExitX] = iX;
 	BizzInfo[bizid][bExitY] = iY;
 	BizzInfo[bizid][bExitZ] = iZ;
 	BizzInfo[bizid][bInterior] = bint;
-	BizzInfo[bizid][bVirtualWorld] = BizzInfo[bizid][bInterior] + BizzInfo[bizid][bSQLID];
+	BizzInfo[bizid][bVirtualWorld] = bviwo;
 
 	if( !BizzInfo[bizid][bCanEnter] )
 		BizzInfo[bizid][bCanEnter] = 1;
@@ -3937,8 +3942,9 @@ CMD:bizentrance(playerid, params[])
 {
 	new proplev;
 	if(PlayerInfo[playerid][pAdmin] < 1338) return SendClientMessage(playerid, COLOR_RED, "Nisi 1338!");
-	if (sscanf(params, "i", proplev)) return SendClientMessage(playerid, COLOR_WHITE, "[ ? ]: /bizentrance [bizid] - Mjenja lokacije Biza");
-	if(proplev >= MAX_BIZZS || proplev < 0) return SendClientMessage(playerid,COLOR_WHITE,"Nema Biznisa tog ID-a!");
+	if (sscanf(params, "i", proplev)) return SendClientMessage(playerid, COLOR_WHITE, "[ ? ]: /bizentrance [bizid] - izmjena ulaza biznisa");
+	if(!Iter_Contains(Bizzes, proplev))
+		return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "Biznis ID %d ne postoji na serveru!", proplev);
 
 	new
 		Float:X,Float:Y,Float:Z;

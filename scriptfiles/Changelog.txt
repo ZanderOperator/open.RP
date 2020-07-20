@@ -1,3 +1,20 @@
+City of Angels v18.4.5. - Update + BugFixes
+- Dodan automatski property remover - vise informacija na Forumu
+- Dodana komanda /inactivity za Admine Lvl 3+ da mogu upravljati neaktivnostima igraca
+- Popravljen /trunk put da ga i drugi mogu koristiti ukoliko je gepek otvoren, a ne samo vlasnik
+- Popravljeni warninzi izdati od novog sscanf plugina
+- Popravljena provjera broja mobitela na MDC-u 
+- Popravljeni/dodani 5. Color/Texture Slotovi za Furniture i Biznis Furniture
+- Popravljeni svi objekti pod sekcijom "Ostalo" na Biznis Furnitureu(Zidovi, itd...)
+- Dodana MASIVNA kolicina novih objekata u Furniture, Biznis Furniture, Exterior Furniture i /creatobjects objekte!
+- Popravljen /hangup za drugog igraca nakon prekida linije
+- Popravljeno popravljanje blindiranog vozila/guma
+- Popravljen limit za posao na Transporteru
+- Updatean /help i /ahelp
+- Svi USAGE: i KORISTENJE: prefixi command hintova zamjenjeni sa [ ? ] radi preglednosti
+- Popravljeno i optimizirano izlistavanje i odabir boja na Furnitureu i Biznis furnitureu
+- 
+
 City of Angels v18.4.2. - Critical Update
 - Popravljene sve rupe sa SQL injectionom - zahvale Khawaji i Runneru
 - Uvelike poboljsana sigurnost baze podataka
