@@ -494,8 +494,8 @@ CMD:jobhelp(playerid, params[]) {
 		Pizza Boy\n\
 		Farmer\n\
 		Taksista\n\
-		Gun dealer\n\
-		Car jacker\n\
+		Gun Dealer\n\
+		Car Jacker\n\
 		Lopov", "(odaberi)", "(x)"
 	);
 	return (true);
