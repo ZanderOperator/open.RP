@@ -4,6 +4,20 @@
 #define PROPERTY_TYPE_BIZZ			(2)
 
 static stock Bit16:r_SavingsMoney<MAX_PLAYERS> = {Bit16:0, ...};
+
+/*
+	####  ######     ###    ######## 
+	 ##  ##    ##   ## ##      ##    
+	 ##  ##        ##   ##     ##    
+	 ##   ######  ##     ##    ##    
+	 ##        ## #########    ##    
+	 ##  ##    ## ##     ##    ##    
+	####  ######  ##     ##    ##    
+*/
+stock IsAtBank(playerid) {
+	return IsPlayerInRangeOfPoint(playerid, 50.0, 1396.864900, -23.823700, 1001.003800);
+}
+
 /*
 	##     ##  #######   #######  ##    ## 
 	##     ## ##     ## ##     ## ##   ##  
@@ -123,7 +137,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 		    }
 			case 4: // Namjenski kredit za vozilo 
 			{
-				if(PlayerInfo[playerid][pLevel] < 4) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Morate biti level 4 da biste mogli podici ovaj tip kredita.");
+				if(PlayerInfo[playerid][pLevel] < 5) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Morate biti level 4 da biste mogli podici ovaj tip kredita.");
 				if(CreditInfo[playerid][cCreditType] >= 1) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Da bi ste podigli novi kredit, predhodni morate otplatiti.");
 				if(!IsPlayerCredible(playerid, 100000)) return 1;
 
@@ -133,8 +147,38 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 				CreditInfo[playerid][cCreditType] = 5;	
 				CreditInfo[playerid][cRate] = 1;
 				CreditInfo[playerid][cAmount] = 100000;
+				CreditInfo[playerid][cUsed] = false;
+		    }
+			case 5: // Namjenski kredit za kucu 
+			{
+				if(PlayerInfo[playerid][pLevel] < 5) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Morate biti level 4 da biste mogli podici ovaj tip kredita.");
+				if(CreditInfo[playerid][cCreditType] >= 1) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Da bi ste podigli novi kredit, predhodni morate otplatiti.");
+				if(!IsPlayerCredible(playerid, 100000)) return 1;
+
+				SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uspjesno ste potpisali namjenski kredit za kupovinu kuce do iznosa od 100 000$. Naplata se pokrece od trenutka kupovine!");
+				format(string, sizeof(string), "* %s uzima penkalu te potpisuje namjenski kredit za kupovinu kuce.", GetName(playerid, true));
+				ProxDetector(8.0, playerid, string, COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE);
+				CreditInfo[playerid][cCreditType] = 6;	
+				CreditInfo[playerid][cRate] = 1;
+				CreditInfo[playerid][cAmount] = 100000;
+				CreditInfo[playerid][cUsed] = false;
+		    }
+			case 6: // Namjenski kredit za biznis 
+			{
+				if(PlayerInfo[playerid][pLevel] < 10) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Morate biti level 4 da biste mogli podici ovaj tip kredita.");
+				if(CreditInfo[playerid][cCreditType] >= 1) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Da bi ste podigli novi kredit, predhodni morate otplatiti.");
+				if(!IsPlayerCredible(playerid, 100000)) return 1;
+
+				SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uspjesno ste potpisali namjenski kredit za kupovinu biznisa do iznosa od 100 000$. Naplata se pokrece od trenutka kupovine!");
+				format(string, sizeof(string), "* %s uzima penkalu te potpisuje namjenski kredit za kupovinu biznisa.", GetName(playerid, true));
+				ProxDetector(8.0, playerid, string, COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE);
+				CreditInfo[playerid][cCreditType] = 7;	
+				CreditInfo[playerid][cRate] = 1;
+				CreditInfo[playerid][cAmount] = 100000;
+				CreditInfo[playerid][cUsed] = false;
 		    }
 		}
+		SavePlayerCredit(playerid);
 		return 1;
 	}
 	if(dialogid == DIALOG_ACCEPT_SAVINGS) {

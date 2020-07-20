@@ -746,7 +746,7 @@ public OfflineBanPlayer(playerid, playername[], reason[], days)
 forward AddAdminMessage(playerid, user_name[], reason[]);
 public AddAdminMessage(playerid, user_name[], reason[])
 {
-	new rows, query[222], string[128];
+	new rows, query[4096], string[128];
 	
     cache_get_row_count(rows);
 	if (rows)
@@ -777,7 +777,7 @@ public AddAdminMessage(playerid, user_name[], reason[])
 				return 1;
 			}
 		}	
-		mysql_format( g_SQL, query, sizeof(query), "UPDATE `accounts` SET `AdminMessage` = '%e', `AdminMessageBy` = '%e', `AdmMessageConfirm` = '1' WHERE `name` = '%e'",
+		mysql_format( g_SQL, query, sizeof(query), "UPDATE `accounts` SET `AdminMessage` = '%e', `AdminMessageBy` = '%e', `AdmMessageConfirm` = '0' WHERE `name` = '%e'",
 			reason, GetName(playerid, true), user_name);
 		mysql_tquery(g_SQL, query, "", "");
 
@@ -787,6 +787,16 @@ public AddAdminMessage(playerid, user_name[], reason[])
 	else return SendClientMessage(playerid, COLOR_RED, "[GRESKA - MySQL]: Ne postoji korisnik s tim nickom!");
 	
 	return 1;
+}
+
+Function: SendServerMessage(sqlid, reason[])
+{
+	new query[4096];
+	mysql_format( g_SQL, query, sizeof(query), "UPDATE `accounts` SET `AdminMessage` = '%e', `AdminMessageBy` = 'Server', `AdmMessageConfirm` = '0' WHERE `sqlid` = '%d'",
+		reason, 
+		sqlid
+	);
+	mysql_tquery(g_SQL, query, "", "");
 }
 
 forward OfflineJailPlayer(playerid, playername[], jailtime);
@@ -5142,11 +5152,10 @@ CMD:gotopos(playerid, params[])
 	if( PlayerInfo[playerid][pAdmin] < 1 ) return SendClientMessage(playerid, COLOR_RED, "Niste ovlasteni za koristenje ove komande!");
 	
 	new
-		Float:tmpPos[3], tmpInt;
-	if( sscanf( params, "fffi", tmpPos[0], tmpPos[1], tmpPos[2], tmpInt ) ) return SendClientMessage(playerid, COLOR_RED, "[ ? ]:  /gotopos [X][Y][Z][INT]");
-	
-	SetPlayerPos( playerid, tmpPos[0], tmpPos[1], tmpPos[2] );
-	SetPlayerInterior( playerid, tmpInt );
+		Float:tmpPos[3], tmpInt, tmpViWo;
+	if( sscanf( params, "fffii", tmpPos[0], tmpPos[1], tmpPos[2], tmpInt, tmpViWo ) ) 
+		return SendClientMessage(playerid, COLOR_RED, "[ ? ]:  /gotopos [X][Y][Z][Interior ID][Virtual World ID]");
+	SetPlayerPosEx(playerid, tmpPos[0], tmpPos[1], tmpPos[2], tmpViwo, tmpInt)
 	return 1;
 }
 

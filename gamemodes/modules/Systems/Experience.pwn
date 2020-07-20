@@ -536,6 +536,26 @@ stock GivePlayerExperience(playerid, playername[])
 	SavePlayerExperience(playerid);
 	return 1;
 }
+
+stock RewardPlayerForActivity(sqlid, amount)
+{	
+	new expstring[100];
+	format(expstring, sizeof(expstring), "SELECT * FROM `experience` WHERE `sqlid` = '%d'", sqlid);
+	new Cache:result2 = mysql_query(g_SQL, expstring),
+		points,
+		allpoints;
+	
+	cache_get_value_name_int(0, "points", points);
+	cache_get_value_name_int(0, "points", allpoints);
+	points += amount;
+	allpoints +=amount;
+	cache_delete(result2);
+		
+	new expQuery[150];
+	format(expQuery, sizeof(expQuery), "UPDATE `experience` SET `points` = '%d', `allpoints` = '%d' WHERE `sqlid` = '%d'", points, allpoints, sqlid);
+	mysql_tquery(g_SQL, expQuery, "");
+	return 1;
+}
 	
 CMD:experience(playerid, params[])
 {
@@ -589,6 +609,8 @@ CMD:experience(playerid, params[])
 			SendClientMessage(playerid, COLOR_RED, "[ ? ]: /experience setexp [playerid] [exp]");
 			return 1;
 		}
+		if(!IsPlayerConnected(giveplayerid)) SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "ID %d nije online!", giveplayerid);
+		if(!SafeSpawned[giveplayerid]) SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "ID %d nije online!", giveplayerid);
 		ExpInfo[giveplayerid][ePoints] = exps;
 		ExpInfo[giveplayerid][eAllPoints] = exps;
 		SavePlayerExperience(giveplayerid);

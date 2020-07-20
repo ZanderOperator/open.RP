@@ -81,9 +81,17 @@ new
 	##        #######  ##    ##  ######     ##    ####  #######  ##    ##  ######  
 */
 
+ResetMonthPaydays()
+{
+	new resetString[128];
+	mysql_format(g_SQL, resetString, sizeof(resetString), "UPDATE `experience` SET `monthpaydays` = '0' WHERE 1");
+	mysql_tquery(g_SQL, resetString, "", "");
+	return 1;
+}
+
 Function: CheckAccountsForInactivity()
 {	
-	new currentday, currentmonth, loadString[ 128 ];
+	new currentday, currentmonth, loadString[ 128 ], logString[2048];
 	stamp2datetime(gettimestamp(), _, currentmonth, currentday, _, _, _);
 	
 	if(currentday < 10) // Aktivno oduzimanje imovine tek od 10.
@@ -93,8 +101,110 @@ Function: CheckAccountsForInactivity()
 	
 	if(currentday == 1) // 1st in Month - Reset of Monthly paydays
 	{
-		mysql_format(g_SQL, loadString, 128, "UPDATE `experience` SET `monthpaydays` = '0' WHERE 1");
-		mysql_tquery(g_SQL, loadString, "", "");
+		mysql_format(g_SQL, loadString, sizeof(loadString), "SELECT * FROM  `experience` ORDER BY `experience`.`monthpaydays` DESC LIMIT 0 , 4");
+		inline OnRewardActivePlayers()
+		{
+			new rows, sql, monthpaydays;
+			cache_get_row_count(rows);
+			for(new i = 0; i < rows; i++)
+			{
+				logString[0] = EOS;
+				cache_get_value_name_int(i, "sqlid", sql);
+				cache_get_value_name_int(i, "monthpaydays", monthpaydays);
+				switch(i)
+				{
+					case 0: 
+					{
+						RewardPlayerForActivity(sql, PREMIUM_GOLD_EXP);
+						Log_Write("logfiles/rewarded_players.txt", "(%s) - %s je dobio %d EXP-a kao nagradu za najaktivnijeg igraca %d. mjeseca sa %d paydayova.", 
+							ReturnDate(),
+							ConvertSQLIDToName(sql),
+							PREMIUM_GOLD_EXP,
+							currentmonth,
+							monthpaydays
+						);
+						format(logString, sizeof(logString), "[%s] - Dobili ste %d EXP-a kao najaktivniji igrac %d. mjeseca sa %d EXP-a.\nOvom nagradom mozete iskoristiti brojne pogodnosti koje Vam server nudi sa komandom /exp buy.\nVelike cestitke od City of Angels Teama!",
+							ReturnDate(),
+							PREMIUM_GOLD_EXP,
+							currentmonth,
+							monthpaydays
+						);
+						SendServerMessage(sql, logString);
+					}
+					case 1: 
+					{
+						RewardPlayerForActivity(sql, 100);
+						Log_Write("logfiles/rewarded_players.txt", "(%s) - %s je dobio 100 EXP-a kao nagradu za najaktivnijeg igraca %d. mjeseca sa %d EXP-a.", 
+							ReturnDate(),
+							ConvertSQLIDToName(sql),
+							currentmonth,
+							monthpaydays
+						);
+						format(logString, sizeof(logString), "[%s] - Dobili ste %d EXP-a kao 2. najaktivniji igrac %d. mjeseca sa %d EXP-a.\nOvom nagradom mozete iskoristiti brojne pogodnosti koje Vam server nudi sa komandom /exp buy.\nVelike cestitke od City of Angels Teama!",
+							ReturnDate(),
+							100,
+							currentmonth,
+							monthpaydays
+						);
+						SendServerMessage(sql, logString);
+					}
+					case 2: 
+					{
+						RewardPlayerForActivity(sql, 75);
+						Log_Write("logfiles/rewarded_players.txt", "(%s) - %s je dobio 75 EXP-a kao nagradu za najaktivnijeg igraca %d. mjeseca sa %d EXP-a.", 
+							ReturnDate(),
+							ConvertSQLIDToName(sql),
+							currentmonth,
+							monthpaydays
+						);
+						format(logString, sizeof(logString), "[%s] - Dobili ste %d EXP-a kao 3. najaktivniji igrac %d. mjeseca sa %d EXP-a.\nOvom nagradom mozete iskoristiti brojne pogodnosti koje Vam server nudi sa komandom /exp buy.\nVelike cestitke od City of Angels Teama!",
+							ReturnDate(),
+							75,
+							currentmonth,
+							monthpaydays
+						);
+						SendServerMessage(sql, logString);
+					}
+					case 3: 
+					{
+						RewardPlayerForActivity(sql, 50);
+						Log_Write("logfiles/rewarded_players.txt", "(%s) - %s je dobio 50 EXP-a kao nagradu za najaktivnijeg igraca %d. mjeseca sa %d EXP-a.", 
+							ReturnDate(),
+							ConvertSQLIDToName(sql),
+							currentmonth,
+							monthpaydays
+						);
+						format(logString, sizeof(logString), "[%s] - Dobili ste %d EXP-a kao 4. najaktivniji igrac %d. mjeseca sa %d EXP-a.\nOvom nagradom mozete iskoristiti brojne pogodnosti koje Vam server nudi sa komandom /exp buy.\nVelike cestitke od City of Angels Teama!",
+							ReturnDate(),
+							50,
+							currentmonth,
+							monthpaydays
+						);
+						SendServerMessage(sql, logString);
+					}
+					case 4: 
+					{
+						RewardPlayerForActivity(sql, 25);
+						Log_Write("logfiles/rewarded_players.txt", "(%s) - %s je dobio 25 EXP-a kao nagradu za najaktivnijeg igraca %d. mjeseca sa %d EXP-a.", 
+							ReturnDate(),
+							ConvertSQLIDToName(sql),
+							currentmonth,
+							monthpaydays
+						);
+						format(logString, sizeof(logString), "[%s] - Dobili ste %d EXP-a kao 5. najaktivniji igrac %d. mjeseca sa %d EXP-a.\nOvom nagradom mozete iskoristiti brojne pogodnosti koje Vam server nudi sa komandom /exp buy.\nVelike cestitke od City of Angels Teama!",
+							ReturnDate(),
+							25,
+							currentmonth,
+							monthpaydays
+						);
+						SendServerMessage(sql, logString);
+					}
+				}
+			}
+			ResetMonthPaydays();
+			return 1;
+		}	
+		mysql_tquery_inline(g_SQL, loadString, using inline OnRewardActivePlayers, "");
 		return 1;
 	}
 			
@@ -115,8 +225,7 @@ Function: CheckAccountsForInactivity()
 			loginstamp,
 			propertytimestamp, 
 			playername[24], 
-			updateQuery[2512],
-			logString[2048],
+			updateQuery[150],
 			motd[256],
 			tmpString[20];
 			
@@ -145,11 +254,13 @@ Function: CheckAccountsForInactivity()
 			crid = INVALID_COMPLEX_ID;
 			garageid = INVALID_HOUSE_ID;
 			paydaycount = 0;
+			logString[0] = EOS;
 			
 			cache_get_value_name_int(i, "sqlid", sqlid);
 			
 			if(IsValidInactivity(sqlid)) // Ukoliko postoji prijavljena neaktivnost koja jos uvijek traje
 				continue;
+				
 			paydaycount = GetPlayerPaydayCount(sqlid); // Sati aktivne igre
 			
 			cache_set_active(Data); // Povratak cachea nakon provjere neaktivnosti u bazi
@@ -433,13 +544,13 @@ Function: CheckAccountsForInactivity()
 					);
 					
 					if(isnull(logString))
-						format(motd, sizeof(motd), "[%s] - Izgubili ste sobu %s u Complexu %d radi nedovoljne aktivnosti.", 
+						format(motd, sizeof(motd), "[%s] - Izgubili ste sobu %s u Complexu %s radi nedovoljne aktivnosti.", 
 							ReturnDate(),
 							ComplexRoomInfo[crid][cAdress],
 							ComplexInfo[GetComplexEnumID(crid)][cName]
 						);
 					else
-						format(motd, sizeof(motd), "\n[%s] - Izgubili ste sobu %s u Complexu %d radi nedovoljne aktivnosti.", 
+						format(motd, sizeof(motd), "\n[%s] - Izgubili ste sobu %s u Complexu %s radi nedovoljne aktivnosti.", 
 							ReturnDate(),
 							ComplexRoomInfo[crid][cAdress],
 							ComplexInfo[GetComplexEnumID(crid)][cName]
@@ -447,10 +558,7 @@ Function: CheckAccountsForInactivity()
 						
 					strcat(logString, motd, 2048);
 				}
-				mysql_format(g_SQL, updateQuery, sizeof(updateQuery), "UPDATE `accounts` SET `AdmMessageConfirm` = '0', `AdminMessage` = '%e', `AdminMessageBy` = '%e' WHERE `sqlid` = '%d'",
-					logString,
-					sqlid);
-				mysql_tquery(g_SQL, updateQuery, "", "");
+				SendServerMessage(sqlid, logString);
 			}
 		}
 		cache_delete(Data);

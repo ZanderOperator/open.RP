@@ -189,6 +189,10 @@ stock static CreateAdForPlayer(playerid)
 	lastAdId = index;		
 	SendFormatMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uspjesno ste postavili oglas. Trenutno je %i oglas/a za prikazivanje prije tvog.", index);
 	
+	new log[144];
+	format( log, sizeof(log), "[AdTrace] - [%dx]: %s | %s", AdsInfo[index][adTimes], GetName(playerid, false), AdsInfo[index][adText]);
+	SendAdminMessage(COLOR_RED, log);
+	
 	PlayerAdsInfo[playerid][padStyle] 		= -1;
 	PlayerAdsInfo[playerid][padPrice]		= 0;
 	PlayerAdsInfo[playerid][padText][ 0 ] 	= EOS;

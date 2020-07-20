@@ -2124,14 +2124,14 @@ stock static BuyVehicle(playerid)
 		PlayerInfo[playerid][pDonatorVehicle] = modelid;
 		
 		new donatorVehUpdate[128];
-		format(donatorVehUpdate, 128, "UPDATE `accounts` SET `donateveh` = '%d' WHERE `sqlid` = '%d'", PlayerInfo[playerid][pSQLID]);
+		format(donatorVehUpdate, 128, "UPDATE `accounts` SET `donateveh` = '%d' WHERE `sqlid` = '%d'", PlayerInfo[playerid][pDonatorVehicle], PlayerInfo[playerid][pSQLID]);
 		mysql_tquery(g_SQL, donatorVehUpdate);
 	}
 
 
     if(LandVehicles[PreviewType[playerid]][viPremium]){
         PlayerInfo[playerid][pDonatorVehPerms] -= 1;
-        SendClientMessage(playerid, COLOR_RED, "[ ! ] Kupili ste VIP vozilo, potro�ili ste jednu donatrsku dozvolu");
+        SendClientMessage(playerid, COLOR_RED, "[ ! ] Kupili ste VIP vozilo, potrosili ste jednu donatorsku dozvolu.");
 
         new donatorVehPerms[128];
 		format(donatorVehPerms, 128, "UPDATE `accounts` SET `dvehperms` = '%d' WHERE `sqlid` = '%d'", PlayerInfo[playerid][pDonatorVehPerms], PlayerInfo[playerid][pSQLID]);
