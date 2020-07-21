@@ -4105,16 +4105,16 @@ hook OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
 
 				switch(AC_GetPlayerWeapon(playerid))
 				{
-					case 0,1: {
+					case 0: {
 						switch(GetPlayerAnimationIndex(playerid)) {
 							case 504, 505, 473, 474, 483, 484, 494, 495, 1136, 1137, 1138, 1165:
-								VehicleInfo[vehicleid][vDoorHealth] -= 3.2;
+								VehicleInfo[vehicleid][vDoorHealth] -= (3.2 + ((PlayerInfo[playerid][pMuscle] / 50) * 1));
 						}
 					}
-					case 2 .. 14: {
+					case 1 .. 14: {
 						switch(GetPlayerAnimationIndex(playerid)) {
 							case 17, 18, 19, 312, 313, 314, 473, 474, 483, 484, 494, 495, 423, 424, 425, 504, 505, 533, 749, 750, 751, 1136, 1137, 1138, 1165, 1545, 1546, 1547 :
-								VehicleInfo[vehicleid][vDoorHealth] -= 16.0;
+								VehicleInfo[vehicleid][vDoorHealth] -= (16.0 + ((PlayerInfo[playerid][pMuscle] / 50) * 1));
 						}
 					}
 				}
@@ -4137,16 +4137,16 @@ hook OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
 
 				switch(AC_GetPlayerWeapon(playerid))
 				{
-					case 0,1: {
+					case 0: {
 						switch(GetPlayerAnimationIndex(playerid)) {
 							case 504, 505, 473, 474, 483, 484, 494, 495, 1136, 1137, 1138, 1165:
-								VehicleInfo[vehicleid][vTrunkHealth] -= 3.2;
+								VehicleInfo[vehicleid][vTrunkHealth] -= (3.2 + ((PlayerInfo[playerid][pMuscle] / 50) * 1));
 						}
 					}
-					case 2 .. 14: {
+					case 1 .. 14: {
 						switch(GetPlayerAnimationIndex(playerid)) {
 							case 17, 18, 19, 312, 313, 314, 473, 474, 483, 484, 494, 495, 423, 424, 425, 504, 505, 533, 749, 750, 751, 1136, 1137, 1138, 1165, 1545, 1546, 1547 :
-								VehicleInfo[vehicleid][vTrunkHealth] -= 16.0;
+								VehicleInfo[vehicleid][vTrunkHealth] -= (16.0 + ((PlayerInfo[playerid][pMuscle] / 50) * 1));
 						}
 					}
 				}

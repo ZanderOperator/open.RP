@@ -1,4 +1,4 @@
-City of Angels v18.5.0. - Update + BugFixes
+City of Angels v18.5.0. - Summer Update + BugFixes
 - Dodan automatski property remover - vise informacija na Forumu
 - Prilikom gubitka bilo kojeg tipa imovine/posla radi neaktivnosti, nakon logina ce vam ispisati detaljnu obavijest u Dialogu
 - Update Dialog preseljen na /update komandu UKOLIKO niste vidli update listu i ako vas ceka Server/Admin Message
@@ -9,11 +9,12 @@ City of Angels v18.5.0. - Update + BugFixes
 - Popravljena provjera broja mobitela na MDC-u 
 - Popravljeni/dodani 5. Color/Texture Slotovi za Furniture i Biznis Furniture
 - Popravljeni svi objekti pod sekcijom "Ostalo" na Biznis Furnitureu(Zidovi, itd...)
-- Ogroman update svih vrsta objekata na serveru:
-	- Dodano 135 novih(30 custom) objekata u Biznis Furniture - Credits to Kijo
-	- Dodano preko 30 novih objekata na Exterior Furniture
+- Ogroman update svih vrsta objekata na serveru: - Credits to Kijo & Apps
+	- Dodano 135 novih(30 custom) objekata u Biznis Furniture
+	- Dodano 36(3 custom) novih objekata na Exterior Furniture
 	- Dodano XY novih objekata na House Furniture
-	- Dodano preko 30 novih objekata na /createobjects
+	- Dodano 44 novih(8 custom) objekata na /createobjects
+- Omoguceno kreiranje house exteriora do 10 objekata za igrace koji nisu donatori
 - Popravljen /hangup za drugog igraca nakon prekida linije
 - Popravljeno popravljanje blindiranog vozila/guma
 - Updatean /help i /ahelp
@@ -36,5 +37,8 @@ City of Angels v18.5.0. - Update + BugFixes
 - Popravljeni svi bugovi sa ispisom skillova na /skills
 - Popravljen limit abuse sa Transporterom, gdje bi mogao svaki PayDay neograniceno raditi
 - Popravljen abuse sa Transporterom, gdje bi mogao sa bilokojim vozilom raditi posao
+- Popravljen bug sa objektom guna prilikom /trunk put
+- Popravljeni svi prijavljeni Maps Bugovi
+
 
 
