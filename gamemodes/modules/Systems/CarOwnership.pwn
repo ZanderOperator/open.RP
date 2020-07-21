@@ -4023,7 +4023,7 @@ hook OnPlayerClickPlayerTD(playerid, PlayerText:playertextid)
 			if(LandVehicles[PreviewType[playerid]][viPremium] == 3 && PlayerInfo[playerid][pDonateRank] != 3) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste VIP Gold korisnik!");
 			if(LandVehicles[PreviewType[playerid]][viPremium] == 4 && PlayerInfo[playerid][pDonateRank] != 4) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste VIP Platinum korisnik!");
 
-			if(LandVehicles[PreviewType[playerid]][viPremium] && PlayerInfo[playerid][pDonatorVehPerms] == 0) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nije vam ostalo vi�e mjesta za donator vozila");
+			if(LandVehicles[PreviewType[playerid]][viPremium] && PlayerInfo[playerid][pDonatorVehPerms] == 0) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nije vam ostalo vise mjesta za donator vozila");
 
 			Bit1_Set(gr_PreviewCar, playerid, false);
 			BuyVehicle(playerid);

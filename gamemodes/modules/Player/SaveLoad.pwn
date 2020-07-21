@@ -91,11 +91,29 @@ timer SetPlayerCrash[6000](playerid)
 		GetPlayerPreviousInfo(playerid);
 		LearnPlayer(playerid, 1);
 	}
-	if(strcmp(PlayerInfo[playerid][pLastUpdateVer], SCRIPT_VERSION, true) != 0)
+
+
+
+	if(strcmp(PlayerInfo[playerid][pLastUpdateVer], SCRIPT_VERSION, true) != 0 && !isnull(PlayerInfo[playerid][pAdminMsg]) && PlayerInfo[playerid][pAdmMsgConfirm] == 0)
+	{
 		va_SendClientMessage(playerid, COLOR_LIGHTBLUE, "[City of Angels]: "COL_WHITE"Server je updatean na verziju "COL_LIGHTBLUE"%s"COL_WHITE", za vise informacija - /update.", SCRIPT_VERSION);
-	if(!isnull(PlayerInfo[playerid][pAdminMsg]) && PlayerInfo[playerid][pAdmMsgConfirm] == 0)
 		ShowAdminMessage(playerid);
-		
+		goto spawn_end;
+	}
+	else if(strcmp(PlayerInfo[playerid][pLastUpdateVer], SCRIPT_VERSION, true) != 0 && (PlayerInfo[playerid][pAdmMsgConfirm] || isnull(PlayerInfo[playerid][pAdminMsg])))
+	{
+		if(strcmp(PlayerInfo[playerid][pLastUpdateVer], SCRIPT_VERSION, true) != 0)
+			PlayerReward[playerid] = true;
+		ShowPlayerUpdateList(playerid);
+		goto spawn_end;
+	}
+	else if(!isnull(PlayerInfo[playerid][pAdminMsg]) && PlayerInfo[playerid][pAdmMsgConfirm] == 0 && strcmp(PlayerInfo[playerid][pLastUpdateVer], SCRIPT_VERSION, true) == 0)
+	{
+		ShowAdminMessage(playerid);
+		goto spawn_end;
+	}
+
+	spawn_end:	
 	SafeSpawned[ playerid ] = true;
 	AC_SetPlayerWeapons(playerid);
 	LoadPlayerSkills(playerid);
@@ -747,7 +765,7 @@ stock ShowAdminMessage(playerid)
 	new 
 		string[174];
 		
-	format(string, sizeof(string), "%s\n\nPoslano od: %s", PlayerInfo[playerid][pAdminMsg], PlayerInfo[playerid][pAdminMsgBy]);
+	format(string, sizeof(string), "Obavijest od %s\n%s", PlayerInfo[playerid][pAdminMsgBy], PlayerInfo[playerid][pAdminMsg]);
 	ShowPlayerDialog(playerid, DIALOG_ADMIN_MSG, DIALOG_STYLE_MSGBOX, "Admin Message", string, "Razumijem", "");
 	return 1;
 }
