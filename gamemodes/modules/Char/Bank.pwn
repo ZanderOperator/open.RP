@@ -3,6 +3,8 @@
 #define PROPERTY_TYPE_HOUSE			(1)
 #define PROPERTY_TYPE_BIZZ			(2)
 
+#define MAX_CREDIT_USAGE_TIME		(3600*3) // 3h
+
 static stock Bit16:r_SavingsMoney<MAX_PLAYERS> = {Bit16:0, ...};
 
 /*
@@ -30,25 +32,26 @@ stock IsAtBank(playerid) {
 
 LoadPlayerCredit(playerid)
 {
-	new tmpQuery[150], rows;
+	new tmpQuery[200], rows;
 	mysql_format(g_SQL, tmpQuery, sizeof(tmpQuery), "SELECT * FROM `player_credits` WHERE `sqlid` = '%d' LIMIT 0,1", PlayerInfo[playerid][pSQLID]);
 	inline OnPlayerCreditLoad()
 	{
 		rows = cache_num_rows();
 		if(!rows)
 		{
-			mysql_format(g_SQL, tmpQuery, sizeof(tmpQuery), "INSERT INTO `player_credits`(`sqlid`, `type`, `rate`, `amount`, `unpaid`, `used`) VALUES ('%d', '0', '0', '0', '0', '0')",
+			mysql_format(g_SQL, tmpQuery, sizeof(tmpQuery), "INSERT INTO `player_credits`(`sqlid`, `type`, `rate`, `amount`, `unpaid`, `used`, `timestamp`) VALUES ('%d', '0', '0', '0', '0', '0', '0')",
 				PlayerInfo[ playerid ][ pSQLID ]
 			);
 			mysql_tquery(g_SQL, tmpQuery, "");
 			return 1;
 		}
 			
-		cache_get_value_name_int(0, "type"	, CreditInfo[playerid][cCreditType]);
-		cache_get_value_name_int(0, "rate"	, CreditInfo[playerid][cRate]);
-		cache_get_value_name_int(0, "amount", CreditInfo[playerid][cAmount]);
-		cache_get_value_name_int(0, "unpaid", CreditInfo[playerid][cUnpaid]);
-		cache_get_value_name_int(0, "used"	, CreditInfo[playerid][cUsed]);
+		cache_get_value_name_int(0, "type"		, CreditInfo[playerid][cCreditType]);
+		cache_get_value_name_int(0, "rate"		, CreditInfo[playerid][cRate]);
+		cache_get_value_name_int(0, "amount"	, CreditInfo[playerid][cAmount]);
+		cache_get_value_name_int(0, "unpaid"	, CreditInfo[playerid][cUnpaid]);
+		cache_get_value_name_int(0, "used"		, CreditInfo[playerid][cUsed]);
+		cache_get_value_name_int(0, "timestamp"	, CreditInfo[playerid][cTimestamp]);
 		return 1;
 	}
 	mysql_tquery_inline(g_SQL, tmpQuery, using inline OnPlayerCreditLoad, "i", playerid);
@@ -57,13 +60,14 @@ LoadPlayerCredit(playerid)
 
 SavePlayerCredit(playerid)
 {
-	new mysqlQuery[150];
-	format(mysqlQuery, sizeof(mysqlQuery), "UPDATE `player_credits` SET `rate` = '%d', `type` = '%d', `amount` = '%d', `unpaid` = '%d', `used` = '%d' WHERE `sqlid` = '%d' LIMIT 1",
+	new mysqlQuery[200];
+	format(mysqlQuery, sizeof(mysqlQuery), "UPDATE `player_credits` SET `rate` = '%d', `type` = '%d', `amount` = '%d', `unpaid` = '%d', `used` = '%d', `timestamp` = '%d' WHERE `sqlid` = '%d' LIMIT 1",
 		CreditInfo[playerid][cRate],
 		CreditInfo[playerid][cCreditType],
 		CreditInfo[playerid][cAmount],
 		CreditInfo[playerid][cUnpaid],
 		CreditInfo[playerid][cUsed],
+		CreditInfo[playerid][cTimestamp],
 		PlayerInfo[playerid][pSQLID]
 	);
 	mysql_tquery(g_SQL, mysqlQuery, "", "");
@@ -84,9 +88,11 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 		{	
 			if( !response ) return 1;
 			new 
-				string[61];
-			switch(listitem) {
-				case 0: {	// mali kredit
+				string[144];
+			switch(listitem) 
+			{
+				case 0: 
+				{	// mali kredit
 					if(PlayerInfo[playerid][pLevel] < 5) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Morate biti level 5 da biste mogli podici ovaj tip kredita.");
 					if(CreditInfo[playerid][cCreditType] >= 1) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Da bi ste podigli novi kredit, predhodni morate otplatiti.");
 					if(!IsPlayerCredible(playerid, 10000)) return 1;
@@ -94,11 +100,13 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 					SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uspjesno ste podigli kredit u iznosu od 10 000$.");
 					format(string, sizeof(string), "* %s otvara kofer potom sprema 10.000$ u njega.", GetName(playerid, true));
 					ProxDetector(8.0, playerid, string, COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE);
+					
 					CreditInfo[playerid][cRate] = 1;
 					CreditInfo[playerid][cCreditType] = 1;
 					CreditInfo[playerid][cAmount] = 10000;
 				}
-				case 1: { 	// srednji kredit
+				case 1: 
+				{ 	// srednji kredit
 					if(PlayerInfo[playerid][pLevel] < 7) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Morate biti level 7 da biste mogli podici ovaj tip kredita.");
 					if(CreditInfo[playerid][cCreditType] >= 1) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Da bi ste podigli novi kredit, predhodni morate otplatiti.");
 					if(!IsPlayerCredible(playerid, 25000)) return 1;
@@ -107,11 +115,13 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 					SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uspjesno ste podigli kredit u iznosu od 25 000$.");
 					format(string, sizeof(string), "* %s otvara kofer potom sprema 25.000$ u njega.", GetName(playerid, true));
 					ProxDetector(8.0, playerid, string, COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE);
+					
 					CreditInfo[playerid][cCreditType] = 2;	
 					CreditInfo[playerid][cRate] = 1;
 					CreditInfo[playerid][cAmount] = 25000;
 				}
-				case 2:  {	// veliki kredit
+				case 2:  
+				{	// veliki kredit
 					if(PlayerInfo[playerid][pLevel] < 10) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Morate biti level 10 da biste mogli podici ovaj tip kredita.");
 					if(CreditInfo[playerid][cCreditType] >= 1) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Da bi ste podigli novi kredit, predhodni morate otplatiti.");
 					if(!IsPlayerCredible(playerid, 50000)) return 1;
@@ -120,11 +130,13 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 					SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uspjesno ste podigli kredit u iznosu od 50 000$.");
 					format(string, sizeof(string), "* %s otvara kofer potom sprema 50.000$ u njega.", GetName(playerid, true));
 					ProxDetector(8.0, playerid, string, COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE);
+					
 					CreditInfo[playerid][cCreditType] = 3;	
 					CreditInfo[playerid][cRate] = 1;
 					CreditInfo[playerid][cAmount] = 50000;
 				}
-				case 3:  {	// veliki kredit v2
+				case 3:  
+				{	// veliki kredit v2
 					if(PlayerInfo[playerid][pLevel] < 15) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Morate biti level 15 da biste mogli podici ovaj tip kredita.");
 					if(CreditInfo[playerid][cCreditType] >= 1) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Da bi ste podigli novi kredit, predhodni morate otplatiti.");
 					if(!IsPlayerCredible(playerid, 100000)) return 1;
@@ -133,6 +145,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 					SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uspjesno ste podigli kredit u iznosu od 100 000$.");
 					format(string, sizeof(string), "* %s otvara kofer potom sprema 100.000$ u njega.", GetName(playerid, true));
 					ProxDetector(8.0, playerid, string, COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE);
+					
 					CreditInfo[playerid][cCreditType] = 4;	
 					CreditInfo[playerid][cRate] = 1;
 					CreditInfo[playerid][cAmount] = 100000;
@@ -146,10 +159,12 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 					SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uspjesno ste potpisali namjenski kredit za kupovinu vozila do iznosa od 100 000$. Naplata se pokrece od trenutka kupovine!");
 					format(string, sizeof(string), "* %s uzima penkalu te potpisuje namjenski kredit za kupovinu vozila.", GetName(playerid, true));
 					ProxDetector(8.0, playerid, string, COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE);
+					
 					CreditInfo[playerid][cCreditType] = 5;	
 					CreditInfo[playerid][cRate] = 1;
 					CreditInfo[playerid][cAmount] = 100000;
 					CreditInfo[playerid][cUsed] = false;
+					CreditInfo[playerid][cTimestamp] = gettimestamp() + MAX_CREDIT_USAGE_TIME;
 				}
 				case 5: // Namjenski kredit za kucu 
 				{
@@ -160,10 +175,12 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 					SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uspjesno ste potpisali namjenski kredit za kupovinu kuce do iznosa od 100 000$. Naplata se pokrece od trenutka kupovine!");
 					format(string, sizeof(string), "* %s uzima penkalu te potpisuje namjenski kredit za kupovinu kuce.", GetName(playerid, true));
 					ProxDetector(8.0, playerid, string, COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE);
+					
 					CreditInfo[playerid][cCreditType] = 6;	
 					CreditInfo[playerid][cRate] = 1;
 					CreditInfo[playerid][cAmount] = 100000;
 					CreditInfo[playerid][cUsed] = false;
+					CreditInfo[playerid][cTimestamp] = gettimestamp() + MAX_CREDIT_USAGE_TIME;
 				}
 				case 6: // Namjenski kredit za biznis 
 				{
@@ -174,10 +191,12 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 					SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uspjesno ste potpisali namjenski kredit za kupovinu biznisa do iznosa od 100 000$. Naplata se pokrece od trenutka kupovine!");
 					format(string, sizeof(string), "* %s uzima penkalu te potpisuje namjenski kredit za kupovinu biznisa.", GetName(playerid, true));
 					ProxDetector(8.0, playerid, string, COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE);
+					
 					CreditInfo[playerid][cCreditType] = 7;	
 					CreditInfo[playerid][cRate] = 1;
 					CreditInfo[playerid][cAmount] = 100000;
 					CreditInfo[playerid][cUsed] = false;
+					CreditInfo[playerid][cTimestamp] = gettimestamp() + MAX_CREDIT_USAGE_TIME;
 				}
 			}
 			SavePlayerCredit(playerid);
@@ -185,39 +204,38 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 		}
 		case DIALOG_ACCEPT_SAVINGS: 
 		{
-			if( !response ) return ResetSavingsVars(playerid), SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "Odbili ste staviti novac na stedni racun.");
-			if(response) {
+			if( !response ) 
+				return ResetSavingsVars(playerid), SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "Odbili ste staviti novac na stedni racun.");
 			
-				PlayerInfo[playerid][pSavingsCool] = 0;
-				PlayerInfo[playerid][pSavingsType] = PlayerInfo[playerid][pSavingsTime];
-				PlayerInfo[playerid][pBank] -= PlayerInfo[playerid][pSavingsMoney];
-				
-				// MySQL update
-				
-				new savingsQuery[256];
-				format(savingsQuery, 256, "UPDATE `accounts` SET `bankMoney` = '%d', `savings_cool` = '%d', `savings_time` = '%d', `savings_type` = '%d', `savings_money` = '%d' WHERE `sqlid` = '%d'",
-					PlayerInfo[playerid][pBank],
-					PlayerInfo[playerid][pSavingsCool],
-					PlayerInfo[playerid][pSavingsTime],
-					PlayerInfo[playerid][pSavingsType],
-					PlayerInfo[playerid][pSavingsMoney],
-					PlayerInfo[playerid][pSQLID]
-				);
-				mysql_pquery(g_SQL, savingsQuery);
-				
-				// Message
-				SendFormatMessage(playerid, MESSAGE_TYPE_INFO, "Orocio si %d$ na %d h po kamatnoj stopi od %d%! Novac je prebacen sa bankovnog racuna na orocenje.", FormatNumber(PlayerInfo[playerid][pSavingsMoney]), PlayerInfo[playerid][pSavingsTime], PlayerInfo[playerid][pSavingsTime]);
-				
-				// Log
-				Log_Write("logfiles/bank_savings.txt", "(%s) Igrac %s[%d] je uzeo orocenje na %d h(Kamatna stopa: %d) i ulozio %d$.", 
-					ReturnDate(), 
-					GetName(playerid), 
-					PlayerInfo[playerid][pSQLID], 
-					PlayerInfo[playerid][pSavingsTime],
-					PlayerInfo[playerid][pSavingsTime],
-					PlayerInfo[playerid][pSavingsMoney]
-				);
-			}	
+			PlayerInfo[playerid][pSavingsCool] = 0;
+			PlayerInfo[playerid][pSavingsType] = PlayerInfo[playerid][pSavingsTime];
+			PlayerInfo[playerid][pBank] -= PlayerInfo[playerid][pSavingsMoney];
+			
+			// MySQL update
+			
+			new savingsQuery[256];
+			format(savingsQuery, 256, "UPDATE `accounts` SET `bankMoney` = '%d', `savings_cool` = '%d', `savings_time` = '%d', `savings_type` = '%d', `savings_money` = '%d' WHERE `sqlid` = '%d'",
+				PlayerInfo[playerid][pBank],
+				PlayerInfo[playerid][pSavingsCool],
+				PlayerInfo[playerid][pSavingsTime],
+				PlayerInfo[playerid][pSavingsType],
+				PlayerInfo[playerid][pSavingsMoney],
+				PlayerInfo[playerid][pSQLID]
+			);
+			mysql_pquery(g_SQL, savingsQuery);
+			
+			// Message
+			SendFormatMessage(playerid, MESSAGE_TYPE_INFO, "Orocio si %d$ na %d h po kamatnoj stopi od %d%! Novac je prebacen sa bankovnog racuna na orocenje.", FormatNumber(PlayerInfo[playerid][pSavingsMoney]), PlayerInfo[playerid][pSavingsTime], PlayerInfo[playerid][pSavingsTime]);
+			
+			// Log
+			Log_Write("logfiles/bank_savings.txt", "(%s) Igrac %s[%d] je uzeo orocenje na %d h(Kamatna stopa: %d) i ulozio %d$.", 
+				ReturnDate(), 
+				GetName(playerid), 
+				PlayerInfo[playerid][pSQLID], 
+				PlayerInfo[playerid][pSavingsTime],
+				PlayerInfo[playerid][pSavingsTime],
+				PlayerInfo[playerid][pSavingsMoney]
+			);	
 		}
 		case DIALOG_VEH_PAYMENT:
 		{
@@ -486,6 +504,7 @@ ResetCreditVars(playerid)
 	CreditInfo[playerid][cAmount] 		= 0;
 	CreditInfo[playerid][cUnpaid] 		= 0;
 	CreditInfo[playerid][cUsed]			= false;
+	CreditInfo[playerid][cTimestamp]	= 0;
 	paymentBuyPrice[playerid] 			= 0;
 	buyBizID[playerid] 					= -1;
 	return 1;

@@ -465,7 +465,8 @@ enum E_CREDIT_INFO
 	cRate,
 	cAmount,
 	cUnpaid,
-	bool:cUsed
+	bool:cUsed,
+	cTimestamp
 }
 new CreditInfo[ MAX_PLAYERS ][ E_CREDIT_INFO ];
 
@@ -977,7 +978,8 @@ new
 	CityInfo[ E_CITY_DATA ];
 
 //Dialogs
-enum {
+enum 
+{
 	DIALOG_LOGIN			= 10001,
 	DIALOG_REGISTER,
 	DIALOG_REG_AGREE,
