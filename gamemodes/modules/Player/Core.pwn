@@ -804,6 +804,12 @@ Function: PlayerMinuteTask(playerid)
 		LastVehicleDriver[LastVehicle[playerid]] = INVALID_PLAYER_ID;
 		LastVehicle[playerid] = INVALID_VEHICLE_ID;
 	}
+	if( (CreditInfo[playerid][cCreditType] == 5 || CreditInfo[playerid][cCreditType] == 6 || CreditInfo[playerid][cCreditType] == 7) && !CreditInfo[playerid][cUsed] && gettimestamp() >= CreditInfo[playerid][cTimestamp]) 
+	{
+		ResetCreditVars(playerid);
+		SavePlayerCredit(playerid);
+		SendClientMessage(playerid, COLOR_YELLOW, "[SMS]: Automatski vam je ponisten namjenski kredit radi neobavljanja kupovne obveze.");
+	}
 	PlayerInfo[playerid][pPayDay] += 1;
 	if(PlayerInfo[playerid][pPayDay] >= 60)
 		GivePlayerPayCheck(playerid);

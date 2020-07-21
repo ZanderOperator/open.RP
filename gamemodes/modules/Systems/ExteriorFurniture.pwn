@@ -9,10 +9,10 @@
 	##     ## ##       ##        ##  ##   ### ##       ##    ## 
 	########  ######## ##       #### ##    ## ########  ######  
 */
-#define EXTERIOR_OBJS_VIP_GOLD				(15)
-#define EXTERIOR_OBJS_VIP_SILVER			(10)
-#define EXTERIOR_OBJS_VIP_BRONZE			(8)
-#define EXTERIOR_OBJS_VIP_NONE				(5)
+#define EXTERIOR_OBJS_VIP_GOLD				(25)
+#define EXTERIOR_OBJS_VIP_SILVER			(20)
+#define EXTERIOR_OBJS_VIP_BRONZE			(15)
+#define EXTERIOR_OBJS_VIP_NONE				(10)
 
 #define MAX_EXTERIOR_OBJECTS				(60)
 
@@ -52,14 +52,12 @@ static stock
 	######## ##    ##  #######  ##     ##  ######  
 */
 
-#define MAX_EXTERIOR_SLOTS			( EXTERIOR_OBJS_VIP_GOLD * 31 )
 enum E_HOUSE_EXTERIOR_DATA
 {
 	heSQLID[EXTERIOR_OBJS_VIP_GOLD],
 	heObjectId[EXTERIOR_OBJS_VIP_GOLD],
 	heHouseId[EXTERIOR_OBJS_VIP_GOLD],
 	heModelId[EXTERIOR_OBJS_VIP_GOLD],
-	heName[MAX_EXTERIOR_SLOTS],
 	Float:hePosX[EXTERIOR_OBJS_VIP_GOLD],
 	Float:hePosY[EXTERIOR_OBJS_VIP_GOLD],
 	Float:hePosZ[EXTERIOR_OBJS_VIP_GOLD],
@@ -69,13 +67,10 @@ enum E_HOUSE_EXTERIOR_DATA
 }
 new ExteriorInfo[MAX_HOUSES][E_HOUSE_EXTERIOR_DATA];
 
-#define heName][%1][%2] heName][((%1)*5)+(%2)]
-
 enum E_PLAYER_EXTERIOR_DATA
 {
 	peObjectId,
 	peModelId,
-	peName[24],
 	pePrice,
 	Float:pePosX,
 	Float:pePosY,
@@ -90,10 +85,10 @@ static stock
 enum E_EXTERIOR_PLANTS_DATA
 {
 	epModelid,
-	epName[20],
+	epName[32],
 	epPrice
 }
-static stock 
+static stock
 	ExteriorPlants[][E_EXTERIOR_PLANTS_DATA] = {
 		{ 628, "Palma", 250 },
 		{ 2253, "Cvijece u kalju", 150 },
@@ -102,11 +97,12 @@ static stock
 		{ 870, "Cvijece", 60 },
 		{ 802, "Grmlje2", 120 },
 		{ 753, "Mali kakstusi", 650 },
-		{ 808, "Srednje grmlje", 420 }, 
+		{ 808, "Srednje grmlje", 420 },
 		{ 871, "Srednje cvijece", 245 },
 		{ 3810, "Visece cvijece", 700 },
 		{ 3802, "Visece cvijece1", 700 },
 		{ 3439, "Cvijece u stupu",	800 },
+		{ 948, "Cvijece u betonskoj vazi",	700 },
 		{ 639, "Brsljan", 150 },
 		{ 2901, "Marijuana", 200 }
 	};
@@ -114,24 +110,28 @@ static stock
 enum E_EXTERIOR_FURNITURE_DATA
 {
 	efModelid,
-	efName[24],
+	efName[32],
 	efPrice
 }
-static stock 
+static stock
 	ExteriorFurniture[][E_EXTERIOR_FURNITURE_DATA] = {
 		{ 1255, "Ljezaljka",  500 },
 		{ 1280, "Klupa", 50 },
-		{ 1281, "Stol", 100 },
+		{ 2370, "Stol", 430 },
 		{ 1432, "Stol i stolice", 250 },
 		{ 1594, "Stol i stolice2", 180 },
 		{ 1648, "Peskir", 380 },
 		{ 1421, "Kutije", 150 },
+		{ 2452, "Frizider", 600 },
 		{ 946,  "Kos", 800 },
 		{ 11319, "Garazna vrata", 900 },
+		{ 11686, "Sank", 1000 },
 		{ 11725, "Kamin", 1500 },
 		{ 2901, "Marijuana", 200 },
 		{ 2069, "Lampa", 150 },
 		{ 1646, "Ljezaljka2", 200 },
+        { 1645, "Ljezaljka3", 250 },
+        { -2037, "Laptop",   800 },
 		{ 941, "Radni stol", 250 },
 		{ 2627, "Traka za trcanje", 300 },
 		{ 2630, "Fiksni bicikl", 200 },
@@ -140,19 +140,27 @@ static stock
 		{ 2631, "Gym Prostirka1", 150 },
 		{ 2632, "Gym Prostirka2", 150 },
 		{ 11727, "Zidna lampa", 100 },
-		{ 1645, "Ljezaljka3", 250 },
+		{ 1711, "Fotelja", 100 },
 		{ 1712, "Kauc", 200 }
 	};
-	
+
+
 enum E_EXTERIOR_MISC_DATA
 {
 	emModelid,
 	emName[16],
 	emPrice
 }
-static stock 
+static stock
 	ExteriorMisc[][E_EXTERIOR_MISC_DATA] = {
 		{ 1481	, "Rostilj"				, 320 },
+		{ -2039	, "Piksla"				, 320 },
+		{ 2680	, "Katanac"				, 80 },
+		{ 2048	, "Zastava1"			, 50 },
+		{ 2063	, "Police"		    	, 500 },
+		{ 1328	, "Kanta za smece"		, 100 },
+		{ 2047	, "Zastava2"			, 50 },
+		{ 11245	, "LS Zastava"			, 100 },
 		{ 1966	, "Garazna vrata"		, 625 },
 		{ 19897	, "Kutija cigara"		, 20  },
 		{ 19831	, "Rostilj2"			, 345 },
@@ -172,20 +180,22 @@ static stock
 		{ 19860 , "Vrata1"				, 150 },
 		{ 1505  , "Vrata2"				, 150 },
 		{ 1569 	, "Vrata3"				, 150 },
-		{ 11743 ,"Kafe aparat"			, 100 },
-		{ 2229  , "Zvucnik"   			, 100 },
-		{ 2233  , "Zvucnik2"  			, 150 },
-		{ 1958  , "Mikseta1" 		    , 250 },
-		{ 14820 , "Mikseta2"		    , 300 },
-		{ 3031  , "Satelit"   			, 200 },
-		{ 1670  , "Jelo za stol1"       , 100 },
-		{ 2800  , "Jelo za stol2"       , 100 },
-		{ 2801  , "Jelo za stol3"       , 100 },
-		{ 1478  , "Posta sanduce"       , 150 },
-		{ 2672  , "Smece1"              , 50  },
-		{ 2675  , "Smece2"              , 50  },
-		{ 2673  , "Smece3"              , 50  }
-	};	
+		{ 11743 , "Kafe aparat"		    , 100 },
+		{ 2229 	, "Zvucnik1"		    , 100 },
+		{ 2233 	, "Zvucnik2"		    , 150 },
+		{ 1958	, "Mikseta1"            , 250 },
+		{ 14820	, "Mikseta2"            , 300 },
+		{ 3031	, "Satelit"             , 200 },
+		{ 1670	, "Jelo za stol1"       , 100 },
+		{ 2800	, "Jelo za stol2"       , 100 },
+		{ -2034	, "Burger kesa"         , 100 },
+		{ 2801	, "Jelo za stol3"       , 100 },
+		{ 1478	, "Posta sanduce"       , 150 },
+		{ 2672	, "Smece1"              , 50  },
+		{ 2675	, "Smece2"              , 50  },
+		{ 2673	, "Smece3"              , 50  }
+	};
+
 
 /*
 	 ######  ########  #######   ######  ##    ##  ######  
@@ -218,7 +228,6 @@ stock ReloadHouseExterior(houseid)
 			ExteriorInfo[houseid][heSQLID][index] = -1;
 			ExteriorInfo[houseid][heHouseId][index] = 0;
 			ExteriorInfo[houseid][heModelId][index] = 0;
-			ExteriorInfo[houseid][heName][index][0] = EOS;
 			ExteriorInfo[houseid][hePosX][index] = 0.0;
 			ExteriorInfo[houseid][hePosY][index] = 0.0;
 			ExteriorInfo[houseid][hePosZ][index] = 0.0;
@@ -294,7 +303,6 @@ stock static CreateExteriorObject(playerid)
 													
 	ExteriorInfo[houseid][heHouseId][index]		= HouseInfo[houseid][hSQLID];
 	ExteriorInfo[houseid][heModelId][index]		= PlayerExteriorInfo[playerid][peModelId];
-	format(ExteriorInfo[houseid][heName][index], 30, PlayerExteriorInfo[playerid][peName]);
 	ExteriorInfo[houseid][hePosX][index]		= PlayerExteriorInfo[playerid][pePosX];
 	ExteriorInfo[houseid][hePosY][index]		= PlayerExteriorInfo[playerid][pePosY];
 	ExteriorInfo[houseid][hePosZ][index]		= PlayerExteriorInfo[playerid][pePosZ];
@@ -305,10 +313,9 @@ stock static CreateExteriorObject(playerid)
 	// Insert query
 	new
 		extInsert[256];
-	mysql_format(g_SQL, extInsert, 256, "INSERT INTO `house_exteriors`(`house_id`, `modelid`, `name`, `pos_x`, `pos_y`, `pos_z`, `rot_x`, `rot_y`, `rot_z`) VALUES ('%d','%d','%e','%f','%f','%f','%f','%f','%f')",
+	mysql_format(g_SQL, extInsert, 256, "INSERT INTO `house_exteriors`(`house_id`, `modelid`, `pos_x`, `pos_y`, `pos_z`, `rot_x`, `rot_y`, `rot_z`) VALUES ('%d','%d','%e','%f','%f','%f','%f','%f','%f')",
 		HouseInfo[PlayerInfo[playerid][pHouseKey]][hSQLID],
 		PlayerExteriorInfo[playerid][peModelId],
-		PlayerExteriorInfo[playerid][peName],
 		PlayerExteriorInfo[playerid][pePosX],
 		PlayerExteriorInfo[playerid][pePosY],
 		PlayerExteriorInfo[playerid][pePosZ],
@@ -440,7 +447,6 @@ stock static DeleteExteriorObject(houseid, index)
 	ExteriorInfo[houseid][heSQLID][index]		= -1;
 	ExteriorInfo[houseid][heHouseId][index]		= 0;
 	ExteriorInfo[houseid][heModelId][index]		= 0;
-	ExteriorInfo[houseid][heName][index][0]		= EOS;
 	ExteriorInfo[houseid][hePosX][index]		= 0.0;
 	ExteriorInfo[houseid][hePosY][index]		= 0.0;
 	ExteriorInfo[houseid][hePosZ][index]		= 0.0;
@@ -460,7 +466,6 @@ stock static ResetPlayerExteriorVars(playerid)
 	}
 	
 	PlayerExteriorInfo[playerid][peModelId]		= 0;
-	PlayerExteriorInfo[playerid][peName][0]		= EOS;
 	PlayerExteriorInfo[playerid][pePosX]		= 0.0;
 	PlayerExteriorInfo[playerid][pePosY]		= 0.0;
 	PlayerExteriorInfo[playerid][pePosZ]		= 0.0;
@@ -533,7 +538,6 @@ public OnHouseExteriorLoad(houseid)
 	{
 		cache_get_value_name_int(i		, "id"				, ExteriorInfo[houseid][heSQLID][i]);
 		cache_get_value_name_int(i		, "modelid"			, ExteriorInfo[houseid][heModelId][i]);
-		cache_get_value_name(i			, "name"			, ExteriorInfo[houseid][heName][i], 30);
 		cache_get_value_name_float(i	, "pos_x"			, ExteriorInfo[houseid][hePosX][i]);
 		cache_get_value_name_float(i	, "pos_y"			, ExteriorInfo[houseid][hePosY][i]);
 		cache_get_value_name_float(i	, "pos_z"			, ExteriorInfo[houseid][hePosZ][i]);
@@ -656,44 +660,47 @@ hook OnPlayerEditObject(playerid, playerobject, objectid, response, Float:fX, Fl
 
 hook OnModelSelResponse( playerid, extraid, index, modelid, response )
 {
-	if(extraid == DIALOG_EXTERIOR_BUY)
+	switch(extraid)
 	{
-		if(!response) return ShowPlayerDialog(playerid, DIALOG_EXTERIOR_BUY_TYPE, DIALOG_STYLE_LIST, "Exteriors - Kupovina objekta (Tip)", "Biljke\nNamjestaj\nOstalo", "Odaberi", "Odustani");
-		switch(Bit16_Get(r_ExteriorBuyType, playerid))
+		case DIALOG_EXTERIOR_BUY:
 		{
-			case 0: {	// Biljke
-				va_ShowPlayerDialog(playerid, DIALOG_EXTERIOR_SURE, DIALOG_STYLE_MSGBOX, "Exteriors - Sigurni?", ""COL_WHITE"Zelite li kupiti ovaj objekt?\n"COL_CYAN"Ime: "COL_WHITE"%s\n"COL_CYAN"Cijena: "COL_WHITE"%d"COL_GREEN"$", "Kupi", "Odustani",
-					ExteriorPlants[index][epName], 
-					ExteriorPlants[index][epPrice]
-				);
-				Bit16_Set(r_ExteriorObjectsId, playerid, index);
-			}
-			case 1: {	// Furniture
-				va_ShowPlayerDialog(playerid, DIALOG_EXTERIOR_SURE, DIALOG_STYLE_MSGBOX, "Exteriors - Sigurni?", ""COL_WHITE"Zelite li kupiti ovaj objekt?\n"COL_CYAN"Ime: "COL_WHITE"%s\n"COL_CYAN"Cijena: "COL_WHITE"%d"COL_GREEN"$", "Kupi", "Odustani",
-					ExteriorFurniture[index][efName], 
-					ExteriorFurniture[index][efPrice]
-				);
-				Bit16_Set(r_ExteriorObjectsId, playerid, index);
-			}
-			case 2: {	// Misc
-				va_ShowPlayerDialog(playerid, DIALOG_EXTERIOR_SURE, DIALOG_STYLE_MSGBOX, "Exteriors - Sigurni?", ""COL_WHITE"Zelite li kupiti ovaj objekt?\n"COL_CYAN"Ime: "COL_WHITE"%s\n"COL_CYAN"Cijena: "COL_WHITE"%d"COL_GREEN"$", "Kupi", "Odustani",
-					ExteriorMisc[index][emName], 
-					ExteriorMisc[index][emPrice]
-				);
-				Bit16_Set(r_ExteriorObjectsId, playerid, index);
+			if(!response) return ShowPlayerDialog(playerid, DIALOG_EXTERIOR_BUY_TYPE, DIALOG_STYLE_LIST, "Exteriors - Kupovina objekta (Tip)", "Biljke\nNamjestaj\nOstalo", "Odaberi", "Odustani");
+			switch(Bit16_Get(r_ExteriorBuyType, playerid))
+			{
+				case 0: {	// Biljke
+					va_ShowPlayerDialog(playerid, DIALOG_EXTERIOR_SURE, DIALOG_STYLE_MSGBOX, "Exteriors - Sigurni?", ""COL_WHITE"Zelite li kupiti ovaj objekt?\n"COL_CYAN"Ime: "COL_WHITE"%s\n"COL_CYAN"Cijena: "COL_WHITE"%d"COL_GREEN"$", "Kupi", "Odustani",
+						ExteriorPlants[index][epName], 
+						ExteriorPlants[index][epPrice]
+					);
+					Bit16_Set(r_ExteriorObjectsId, playerid, index);
+				}
+				case 1: {	// Furniture
+					va_ShowPlayerDialog(playerid, DIALOG_EXTERIOR_SURE, DIALOG_STYLE_MSGBOX, "Exteriors - Sigurni?", ""COL_WHITE"Zelite li kupiti ovaj objekt?\n"COL_CYAN"Ime: "COL_WHITE"%s\n"COL_CYAN"Cijena: "COL_WHITE"%d"COL_GREEN"$", "Kupi", "Odustani",
+						ExteriorFurniture[index][efName], 
+						ExteriorFurniture[index][efPrice]
+					);
+					Bit16_Set(r_ExteriorObjectsId, playerid, index);
+				}
+				case 2: {	// Misc
+					va_ShowPlayerDialog(playerid, DIALOG_EXTERIOR_SURE, DIALOG_STYLE_MSGBOX, "Exteriors - Sigurni?", ""COL_WHITE"Zelite li kupiti ovaj objekt?\n"COL_CYAN"Ime: "COL_WHITE"%s\n"COL_CYAN"Cijena: "COL_WHITE"%d"COL_GREEN"$", "Kupi", "Odustani",
+						ExteriorMisc[index][emName], 
+						ExteriorMisc[index][emPrice]
+					);
+					Bit16_Set(r_ExteriorObjectsId, playerid, index);
+				}
 			}
 		}
-	}
-	else if(extraid == DIALOG_EXTERIOR_EDIT)
-	{
-		if(!response) return ShowPlayerDialog(playerid, DIALOG_EXTERIOR_MENU, DIALOG_STYLE_LIST, "Exteriors", "Kupi objekt\nUredi object\nObrisati objekt\nObrisati SVE objekte\nInventory", "Odaberi", "Odustani");
-		EditExteriorObject(playerid, index);
-	}
-	else if(extraid == DIALOG_EXTERIOR_DELETE)
-	{
-		if(!response) return ShowPlayerDialog(playerid, DIALOG_EXTERIOR_MENU, DIALOG_STYLE_LIST, "Exteriors", "Kupi objekt\nUredi object\nObrisati objekt\nObrisati SVE objekte\nInventory", "Odaberi", "Odustani");
-		DeleteExteriorObject(PlayerInfo[playerid][pHouseKey], index);
-		SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uspjesno ste obrisali objekt!");
+		case DIALOG_EXTERIOR_EDIT:
+		{
+			if(!response) return ShowPlayerDialog(playerid, DIALOG_EXTERIOR_MENU, DIALOG_STYLE_LIST, "Exteriors", "Kupi objekt\nUredi object\nObrisati objekt\nObrisati SVE objekte\nInventory", "Odaberi", "Odustani");
+			EditExteriorObject(playerid, index);
+		}
+		case DIALOG_EXTERIOR_DELETE:
+		{
+			if(!response) return ShowPlayerDialog(playerid, DIALOG_EXTERIOR_MENU, DIALOG_STYLE_LIST, "Exteriors", "Kupi objekt\nUredi object\nObrisati objekt\nObrisati SVE objekte\nInventory", "Odaberi", "Odustani");
+			DeleteExteriorObject(PlayerInfo[playerid][pHouseKey], index);
+			SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uspjesno ste obrisali objekt!");
+		}
 	}
 	return 1;
 }
@@ -820,7 +827,6 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 					// Enum set
 					PlayerExteriorInfo[playerid][peModelId] = ExteriorPlants[index][epModelid];
 					PlayerExteriorInfo[playerid][pePrice] 	= ExteriorPlants[index][epPrice];
-					format(PlayerExteriorInfo[playerid][peName], 24, ExteriorPlants[index][epName]);
 					
 					// Reset Vars
 					Bit16_Set(r_ExteriorObjectsId, playerid, 0);
@@ -835,7 +841,6 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 					// Enum set
 					PlayerExteriorInfo[playerid][peModelId] = ExteriorFurniture[index][efModelid];
 					PlayerExteriorInfo[playerid][pePrice] 	= ExteriorFurniture[index][efPrice];
-					format(PlayerExteriorInfo[playerid][peName], 24, ExteriorFurniture[index][efName]);
 					
 					// Reset Vars
 					Bit16_Set(r_ExteriorObjectsId, playerid, 0);
@@ -850,7 +855,6 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 					// Enum set
 					PlayerExteriorInfo[playerid][peModelId] = ExteriorMisc[index][emModelid];
 					PlayerExteriorInfo[playerid][pePrice] 	= ExteriorMisc[index][emPrice];
-					format(PlayerExteriorInfo[playerid][peName], 24, ExteriorMisc[index][emName]);
 					
 					// Reset Vars
 					Bit16_Set(r_ExteriorObjectsId, playerid, 0);

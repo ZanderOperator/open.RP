@@ -76,7 +76,15 @@ new
 		{ 1541 	, "Tocionik piva"   	, 800 },
 		{ 2425 	, "Tocionik Sprunka"   	, 700 },
 		{ 2427 	, "Tocionik Sprunka"   	, 750 },
-		{ 11686 , "Sank i tocionici"   	, 1500}
+		{ 11686 , "Sank i tocionici"   	, 1500},
+		{ -2114, "Coa beerbottles1" , 150 },
+        { -2115, "Coa beerbottles2" , 100 },
+        { -2116, "Coa beerbottles3" , 200 },
+        { -2117, "Coa beerbottles4" , 125 },
+        { -2118, "Coa beerbottles5" ,  80 },
+        { -2119, "Coa beerbottles6" , 250 },
+        { -2120, "Coa beerbottles7" , 100 },
+        { -2121, "Coa beerbottles8" , 500 }
 };
 
 enum E_247_FRIDGES_OBJECTS_DATA
@@ -134,7 +142,41 @@ new
 		{ 2493  , "Igracke1"			, 150 },
 		{ 2494  , "Igracke2"			, 150 },
 		{ 2496  , "Igracke3"			, 150 },
-		{ 2694  , "Kutija za obucu"		, 10  }
+		{ 2694  , "Kutija za obucu"		, 10  },
+		{ 1513  , "Police"		, 30  },
+		{ 1842  , "Sanduk hrane1"		, 100  },
+		{ 1843  , "Sanduk hrane2"		, 120  },
+		{ 1844  , "Sanduk hrane3"		, 120  },
+		{ 1845  , "Sanduk hrane4"		, 80   },
+		{ 1847  , "Sanduk hrane5"		, 100  },
+		{ 1848  , "Sanduk hrane6"		, 120  },
+		{ 1883  , "Sanduk hrane7"		, 100  },
+		{ 1884  , "Sanduk hrane8"		, 100  },
+		{ 1887  , "Sanduk hrane9"		, 100  },
+		{ 1888  , "Sanduk hrane10"		, 150  },
+		{ 1889  , "Sanduk hrane11"		, 150  },
+		{ 1890  , "Sanduk hrane12"		, 115  },
+		{ 1891  , "Sanduk hrane13"		, 80   },
+		{ 2413  , "Izlog1"		, 80   },
+		{ 2433  , "Izlog2"		, 80   },
+		{ 2436  , "Izlog3"		, 80   },
+		{ 2488  , "Casopis1"		, 80   },
+		{ 2489  , "Casopis2"		, 80   },
+		{ 2490  , "Casopis3"		, 80   },
+		{ 2492  , "Casopis4"		, 80   },
+		{ 2493  , "Casopis5"		, 80   },
+		{ 2494  , "Casopis6"		, 80   },
+		{ 2495  , "Casopis7"		, 80   },
+		{ 2496  , "Casopis8"		, 80   },
+		{ 2495  , "Casopis9"		, 80   },
+		{ -2114, "Coa beerbottles1" , 150 },
+        { -2115, "Coa beerbottles2" , 100 },
+        { -2116, "Coa beerbottles3" , 200 },
+        { -2117, "Coa beerbottles4" , 125 },
+        { -2118, "Coa beerbottles5" ,  80 },
+        { -2119, "Coa beerbottles6" , 250 },
+        { -2120, "Coa beerbottles7" , 100 },
+        { -2121, "Coa beerbottles8" , 500 }
 };
 
 enum E_CASH_REGISTER_OBJECTS_DATA
@@ -179,26 +221,117 @@ new
 		{ 2400	, "Hobby Polica5"		, 100 	},
 		{ 2708	, "Hobby Polica6"		, 100 	},
 		{ 19938	, "Modern Polica1"		, 200 	},
-		{ 19939	, "Modern Polica2"		, 200 	}
+		{ 19939	, "Modern Polica2"		, 200 	},
+		{ 2089  , "Drvena polica"		, 150   },
+		{ 2089  , "Drvena polica"		, 150   },
+		{ 2078  , "Starinski ormar"		, 150   },
+		{ 2161  , "Niska polica1"		, 200   },
+		{ 2162  , "Niska polica2"		, 100   },
+		{ 2163  , "Kancelarijski ormar"		, 250   },
+		{ 2164  , "Ormar sa policom"		, 200   },
+		{ 2167  , "Uski ormar"		, 120   },
+		{ 2191  , "Plava polica"		, 215   },
+		{ 2200  , "Veliki ormar"		, 225   },
+		{ 2204  , "Ormar sa policom"		, 225   },
+		{ 2063  , "Stare police"		, 200   }
 };
 
 enum E_WAREHOUSE_OBJECTS_DATA
 {
     whId,
-	whName[20],
+	whName[23],
     whPrice
 }
 new
 	ObjectsWareHouse[][ E_WAREHOUSE_OBJECTS_DATA ] = {
-		{ 922	, "Kutije"			, 100	},
+		{ 922	, "Kutije1"			, 100	},
 		{ 939	, "Polica Kutija"	, 1000	},
 		{ 1271 	, "Kutija"			, 800	},
-		{ 1431 	, "Drvene Kutije"	, 300	},
+		{ 1431 	, "Drvene Kutije1"	, 300	},
 		{ 2973 	, "Cargo Kutija"	, 900	},
 		{ 3630 	, "Velike Kutije"	, 2500	},
 		{ 925	, "Bacve"			, 160	},
 		{ 929	, "Generator"		, 2000	},
-		{ 930	, "O2 Spremnik"		, 3500	}
+		{ 930	, "O2 Spremnik"		, 3500	},
+		{ 3390	, "Stol1"		, 250	},
+		{ 3391	, "Stol2"		, 250	},
+		{ 3392	, "Stol3"		, 200	},
+		{ 3393	, "Stol4"		, 200	},
+		{ 3394	, "Stol5"		, 225	},
+		{ 3395	, "Stol6"		, 200	},
+		{ 3396	, "Stol7"		, 225	},
+		{ 3397	, "Stol8"		, 180	},
+		{ 11729	, "Ormaric1"		, 100	},
+		{ 11730	, "Ormaric2"		, 100	},
+		{ 2332	, "Sef"		, 250	},
+		{ 19813	, "Steker1"		, 50	},
+		{ 19814	, "Steker2"		, 50	},
+		{ 19826	, "Prekidac1"		, 75	},
+		{ 19827	, "Prekidac2"		, 75	},
+		{ 19828	, "Prekidac3"		, 75	},
+		{ 19829	, "Prekidac4"		, 75	},
+		{ 19807	, "Fiksni telefon"		, 100	},
+		{ 19808	, "Tastatura"		, 100	},
+		{ 2312	, "Televizor1"		, 120	},
+		{ 2316	, "Televizor2"		, 120	},
+		{ 2317	, "Televizor3"		, 150	},
+		{ 2318	, "Televizor4"		, 120	},
+		{ 2320	, "Televizor5"		, 120	},
+		{ 2322	, "Televizor6"		, 150	},
+		{ 1421	, "Drvene kutije2"		, 300	},
+		{ 1421	, "Drvene kutije2"		, 300	},
+		{ 2254  , "Zidna slika1"              , 200 },
+        { 2255  , "Zidna slika2"              , 250 },
+        { 2256  , "Zidna slika3"              , 350 },
+        { 2257  , "Zidna slika4"              , 370 },
+        { 2258  , "Zidna slika5"              , 200 },
+        { 2259  , "Zidna slika6"              , 200 },
+        { 918  , "Bacva1"           , 150 },
+        { 1217  , "Bacva2"          , 150 },
+        { 1218  , "Bacva3"          , 150 },
+        { 1222  , "Bacva4"          , 150 },
+        { 1225  , "Bacva5"          , 100 },
+        { 1464  , "Skela1"          , 500 },
+        { 1466  , "Skela2"          , 500 },
+        { 1438  , "Kutije2"         , 150 },
+        { 1440  , "Kutije3"         , 200 },
+        { 1441  , "Kutije4"         , 300 },
+        { 1702, "Svijetlo smedi kauc" , 100 },
+        { 1703, "Crni kauc"           , 100 },
+        { 1706, "Ljubicasti kauc"     , 100 },
+        { 1707, "Lazybag kauc"        , 100 },
+        { 1709, "Ugaona garnitura"    , 150 },
+        { 1710, "Cetvorosed"          , 100 },
+        { 1712, "Dvosjed"             , 100 },
+        { 1713, "Plavi kauc"          , 100 },
+        { 1723, "Crni kauc"           , 150 },
+        { 1726, "Kauc - crna koza"    , 250 },
+        { 1728, "Krem dvosed"         , 100 },
+        { 1753, "Smedi trosed - koza" , 200 },
+        { 1756, "Ukraseni dvosed"     , 100 },
+        { 1757, "Rozi dvosed"         , 150 },
+        { 1760, "Plavi trosed"        , 250 },
+        { 1761, "Smedi drveni trosed" , 100 },
+        { 1763, "Rozi dvosed - mali"  , 100 },
+        { 1764, "Braon sofa"          , 100 },
+        { 1766, "Siva sofa"           , 100 },
+        { 1768, "Plavi trosed"        , 100 },
+        { 2290, "Smedi sofa - trosed" , 150 },
+        { 11685,"Smedi kauc sa naslonom", 150 },
+        { -2035, "Kutija oruzje1" , 800 },
+        { -2036, "Kutija oruzje2" , 500 },
+        { -2037, "Coa laptop" , 250 },
+        { -2039, "Coa pepeljara" , 200 },
+        { -2041, "Coa shisa" , 400 },
+        { -2042, "Coa vaga" , 200 },
+        { -2114, "Coa beerbottles1" , 150 },
+        { -2115, "Coa beerbottles2" , 100 },
+        { -2116, "Coa beerbottles3" , 200 },
+        { -2117, "Coa beerbottles4" , 125 },
+        { -2118, "Coa beerbottles5" ,  80 },
+        { -2119, "Coa beerbottles6" , 250 },
+        { -2120, "Coa beerbottles7" , 100 },
+        { -2121, "Coa beerbottles8" , 500 }
 };
 
 enum E_SECURITY_OBJECTS_DATA
@@ -213,7 +346,12 @@ new
 		{ 1892	, "Detektor"			, 4000},
 		{ 1622	, "Sigurnosna Kamera"	, 500 },
 		{ 2886	, "Keypad"				, 150 },
-		{ 1615	, "Alarm"				, 100 }
+		{ 1615	, "Alarm"				, 100 },
+		{ 1424	, "Ogradica1"			, 100 },
+		{ 1423	, "Ogradica2"			, 100 },
+		{ 1427	, "Ogradica3"			, 100 },
+		{ 1459	, "Ogradica4"			, 100 },
+		{ 1459	, "Ogradica4"			, 100 }
 };
 
 enum E_PARTICLES_OBJECTS_DATA
@@ -245,16 +383,6 @@ new
 		{ 18685	, "Explosion Small"	, 3000 },
 		{ 18683	, "Explosion Medium", 2800 },
 		{ 18682	, "Explosion Large"	, 2800 }
-};
-
-static
-	ObjectsWalls[][ E_WALL_OBJECT_DATA ] = {
-		{ 19430	, "Mali zid 2x4"		, 600  },
-		{ 19355	, "Srednji zid 4x4"		, 950  },
-		{ 19449	, "Veliki zid 8x4"		, 1000 },
-		{ 19387	, "Zid za vrata"		, 650  },
-		{ 19403	, "Zid za prozor"		, 625  },
-		{ 19379	, "Pod 10x10"			, 1150 }
 };
 
 // rBits
