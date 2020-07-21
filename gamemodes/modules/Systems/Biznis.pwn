@@ -617,6 +617,44 @@ stock DestroyBizzInfoTD(playerid)
 	return 1;
 }
 
+stock BuyBiznis(playerid, bool:credit_activated = false)
+{
+	new biznis = buyBizID[playerid];
+
+	PlayerInfo[ playerid ][ pBizzKey ] 	= biznis;
+	//BizzInfo[ biznis ][ bTill ] 		= 0;
+	BizzInfo[ biznis ][ bOwnerID ]		= PlayerInfo[ playerid ][ pSQLID ];
+	PlayerPlayTrackSound(playerid);
+	
+	// Money
+	new price = BizzInfo[ biznis ][ bBuyPrice ];
+	if(credit_activated)
+		price -= CreditInfo[playerid][cAmount];
+	PlayerToBudgetMoney(playerid, price); 
+	
+	// SQL
+	new
+		buybizQuery[ 158 ];
+	format( buybizQuery, sizeof(buybizQuery), "UPDATE `bizzes` SET `ownerid` = '%d', `till` = '%d' WHERE `id` = '%d'",
+		PlayerInfo[ playerid ][ pSQLID ],
+		BizzInfo[ biznis ][ bTill ],
+		BizzInfo[ biznis ][bSQLID]
+	);
+	mysql_tquery( g_SQL, buybizQuery, "", "" );
+
+	SendClientMessage( playerid, COLOR_RED, "[ ! ]  Kupili ste biznis, koristite /help za vise informacija!" );
+
+	// Log
+	new log[128];
+	format(log, sizeof(log), "%s je kupio biznis %d($%d) (%s).",
+		GetName(playerid, false),
+		biznis,
+		BizzInfo[ biznis ][bBuyPrice],
+		GetPlayerIP(playerid)
+	);
+	LogBuyBiznis(log);
+}
+
 /*
 	d8888b. db    db  .o88b.  .d8b.  d8b   db
 	88  `8D 88    88 d8P  Y8 d8' `8b 888o  88
@@ -3740,47 +3778,20 @@ CMD:menu(playerid, params[])
 CMD:buybiznis(playerid, params[])
 {
 	if( PlayerInfo[ playerid ][ pBizzKey ] != INVALID_BIZNIS_ID ) return SendClientMessage( playerid, COLOR_RED, "Vec posjedujete biznis!" );
-	foreach(new biznis : Bizzes) {
+	foreach(new biznis : Bizzes) 
+	{
 		if( IsPlayerInRangeOfPoint( playerid, 5.0, BizzInfo[ biznis ][ bEntranceX ], BizzInfo[ biznis ][ bEntranceY ], BizzInfo[ biznis ][ bEntranceZ ] ) && !BizzInfo[ biznis ][ bOwnerID ] )
 		{
-			if( PlayerInfo[ playerid ][ pLevel ] < BizzInfo[ biznis ][ bLevelNeeded ] ) {
-				new
-					tmpString[ 50 ];
-				format(tmpString, sizeof(tmpString), "Moras biti level %d da bi kupio biznis!", BizzInfo[ biznis ][bLevelNeeded] );
-				SendClientMessage( playerid, COLOR_RED, tmpString );
-				return 1;
-			}
-			if( BizzInfo[ biznis ][ bType ] == BIZZ_TYPE_BYCITY ) return SendClientMessage( playerid, COLOR_RED, "Ne mozete kupiti biznis jer je u posjedu grada!" );
-			if( AC_GetPlayerMoney( playerid ) < BizzInfo[ biznis ][ bBuyPrice ] ) return SendClientMessage(playerid, COLOR_RED, "Nemas novaca da bi kupio!");
+			if( PlayerInfo[ playerid ][ pLevel ] < BizzInfo[ biznis ][ bLevelNeeded ] ) 
+				return va_SendClientMessage(playerid, COLOR_LIGHTRED, "Moras biti level %d da bi kupio biznis!", BizzInfo[ biznis ][bLevelNeeded]);
+			if( BizzInfo[ biznis ][ bType ] == BIZZ_TYPE_BYCITY ) 
+				return SendClientMessage( playerid, COLOR_RED, "Ne mozete kupiti biznis jer je u posjedu grada!" );
+			if(CalculatePlayerBuyMoney(playerid, BUY_TYPE_BIZZ) < BizzInfo[ biznis ][ bBuyPrice ]) 
+				return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nemas dovoljno novca za kupovinu ovog biznisa!");
 
-			// Enum
-			PlayerInfo[ playerid ][ pBizzKey ] 	= biznis;
-			//BizzInfo[ biznis ][ bTill ] 		= 0;
-			BizzInfo[ biznis ][ bOwnerID ]		= PlayerInfo[ playerid ][ pSQLID ];
-			PlayerPlayTrackSound(playerid);
-			// Transakcija
-			PlayerToBudgetMoney(playerid, BizzInfo[ biznis ][ bBuyPrice ]); // Novac od igra�a ide u prora�u
-			// SQL
-			new
-				buybizQuery[ 158 ];
-			format( buybizQuery, sizeof(buybizQuery), "UPDATE `bizzes` SET `ownerid` = '%d', `till` = '%d' WHERE `id` = '%d'",
-				PlayerInfo[ playerid ][ pSQLID ],
-				BizzInfo[ biznis ][ bTill ],
-				BizzInfo[ biznis ][bSQLID]
-			);
-			mysql_tquery( g_SQL, buybizQuery, "", "" );
-
-			SendClientMessage( playerid, COLOR_RED, "[ ! ]  Kupili ste biznis, koristite /help za vise informacija!" );
-
-			// Log
-			new log[128];
-			format(log, sizeof(log), "%s je kupio biznis %d($%d) (%s).",
-				GetName(playerid, false),
-				biznis,
-				BizzInfo[ biznis ][bBuyPrice],
-				GetPlayerIP(playerid)
-			);
-			LogBuyBiznis(log);
+			buyBizID[playerid] = biznis;
+			paymentBuyPrice[playerid] = BizzInfo[ biznis ][ bBuyPrice ];
+			GetPlayerPaymentOption(playerid, BUY_TYPE_BIZZ);
 			break;
 		}
 	}
