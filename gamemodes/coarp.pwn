@@ -185,8 +185,13 @@ native WP_Hash(buffer[], len, const str[]);
 #define NEW_PLAYER_BANK 						(2500)
 #define NEW_PLAYER_MONEY 						(500)
 
-//Economy
+// Economy
 #define INFLATION_INDEX							(3)
+
+// Bank - Credits
+#define BUY_TYPE_VEHICLE						(1)
+#define BUY_TYPE_HOUSE							(2)
+#define BUY_TYPE_BIZZ							(3)
 
 //Server informations
 #define HOSTNAME 								"City of Angels Role Play [0.3DL]"
@@ -993,6 +998,9 @@ enum {
 	DIALOG_SEC_SAMPID,
 	DIALOG_NETWORK_STATS,
 	DIALOG_CREDIT,
+	DIALOG_VEH_PAYMENT,
+	DIALOG_HOUSE_PAYMENT,
+	DIALOG_BIZZ_PAYMENT,
 	DIALOG_PORT,
 	DIALOG_RULES,
 	DIALOG_IJOBS,
@@ -1703,6 +1711,10 @@ new GunObjectIDs[200] ={
 };
 //fisher
 new GotRod[MAX_PLAYERS];
+
+// Bank Credits
+new paymentBuyPrice[MAX_PLAYERS],
+	buyBizID[MAX_PLAYERS];
 
 // Vehicles
 new

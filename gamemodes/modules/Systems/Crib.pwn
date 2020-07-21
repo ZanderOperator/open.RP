@@ -813,6 +813,54 @@ Function: ResetHouseEnumerator()
 	return 1;
 }
 
+stock BuyHouse(playerid, bool:credit_activated = false)
+{
+	new house =  Bit16_Get(gr_PlayerInfrontHouse, playerid);
+	// Houses Sets
+	PlayerInfo[playerid][pHouseKey] = house;
+	PlayerInfo[playerid][pSpawnChange] = 1;
+	HouseInfo[house][hOwnerID] 		= PlayerInfo[playerid][pSQLID];
+	//BizzInfo[2][bTill] += HouseInfo[house][hValue];
+
+	// MySQL
+	new tmpQuery[128];
+	format(tmpQuery, 128, "UPDATE `houses` SET `ownerid` = '%d' WHERE `id` = '%d'",
+		HouseInfo[house][hOwnerID],
+		HouseInfo[house][hSQLID]
+	);
+	mysql_tquery(g_SQL, tmpQuery);
+	
+	format(tmpQuery, 128, "UPDATE `accounts` SET `spawnchange` = '%d' WHERE `sqlid` = '%d'", 
+		PlayerInfo[playerid][pSpawnChange],
+		PlayerInfo[playerid][pSQLID]
+	);
+	mysql_tquery(g_SQL, tmpQuery);
+	SendClientMessage(playerid, COLOR_RED, "[ ! ] Spawn Vam je automatski prebacen na kupljenu kucu.");
+	
+	// Money
+	new price = HouseInfo[house][hValue];
+	if(credit_activated)
+		price -= CreditInfo[playerid][cAmount];
+	PlayerToBudgetMoney(playerid, price); // Novac ide u proracun od kupnje kuce na /buy
+	SetPlayerSpawnInfo(playerid);
+
+	// Player Sets
+	SetPlayerPos(playerid, HouseInfo[house][hExitX], HouseInfo[house][hExitY], HouseInfo[house][hExitZ]);
+	SetPlayerInterior(playerid, HouseInfo[house][hInt]);
+	SetPlayerVirtualWorld(playerid, HouseInfo[house][hVirtualWorld]);
+	Bit16_Set(gr_PlayerInHouse, playerid, house);
+	PlayerInfo[playerid][pSpawnChange] = 1;
+	
+	format(tmpQuery, 128, "UPDATE `accounts` SET `spawnchange` = '%d' WHERE `sqlid` = '%d'", 
+		PlayerInfo[playerid][pSpawnChange],
+		PlayerInfo[playerid][pSQLID]
+	);
+	mysql_tquery(g_SQL, tmpQuery);
+
+	// Message
+	SendClientMessage(playerid, COLOR_RED, "[ ! ] Ukucajte /help da bi ste vidjeli sve komande vezane uz kucu !");
+	return 1;
+}
 
 stock static GetLastHouseSQLID()
 {
@@ -3021,51 +3069,11 @@ CMD:buyhouse(playerid, params[])
 	if(PlayerInfo[playerid][pHouseKey] != INVALID_HOUSE_ID && HouseInfo[PlayerInfo[playerid][pHouseKey]][hOwnerID] == PlayerInfo[playerid][pSQLID]) 
 		return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Vec posjedujete kucu!");
 
-	if(AC_GetPlayerMoney(playerid) >= HouseInfo[house][hValue]) 
-	{
-		// Houses Sets
-		PlayerInfo[playerid][pHouseKey] = house;
-		PlayerInfo[playerid][pSpawnChange] = 1;
-		HouseInfo[house][hOwnerID] 		= PlayerInfo[playerid][pSQLID];
-		//BizzInfo[2][bTill] += HouseInfo[house][hValue];
+	if(CalculatePlayerBuyMoney(playerid, BUY_TYPE_HOUSE) < HouseInfo[house][hValue]) 
+		return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nemas dovoljno novca za kupovinu ove kuce!");
 
-		// MySQL
-		new tmpQuery[128];
-		format(tmpQuery, 128, "UPDATE `houses` SET `ownerid` = '%d' WHERE `id` = '%d'",
-			HouseInfo[house][hOwnerID],
-			HouseInfo[house][hSQLID]
-		);
-		mysql_tquery(g_SQL, tmpQuery);
-		
-		new scQuery[70];
-		format(scQuery, 70, "UPDATE `accounts` SET `spawnchange` = '%d' WHERE `sqlid` = '%d'", 
-			PlayerInfo[playerid][pSpawnChange],
-			PlayerInfo[playerid][pSQLID]
-		);
-		mysql_tquery(g_SQL, scQuery);
-		SendClientMessage(playerid, COLOR_RED, "[ ! ] Spawn Vam je automatski prebacen na kupljenu kucu.");
-		// Money
-		PlayerToBudgetMoney(playerid, HouseInfo[house][hValue]); // Novac ide u proracun od kupnje kuce na /buy
-		SetPlayerSpawnInfo(playerid);
-
-		// Player Sets
-		SetPlayerPos(playerid, HouseInfo[house][hExitX], HouseInfo[house][hExitY], HouseInfo[house][hExitZ]);
-		SetPlayerInterior(playerid, HouseInfo[house][hInt]);
-		SetPlayerVirtualWorld(playerid, HouseInfo[house][hVirtualWorld]);
-		Bit16_Set(gr_PlayerInHouse, playerid, house);
-		PlayerInfo[playerid][pSpawnChange] = 1;
-		
-		format(tmpQuery, 128, "UPDATE `accounts` SET `spawnchange` = '%d' WHERE `sqlid` = '%d'", 
-			PlayerInfo[playerid][pSpawnChange],
-			PlayerInfo[playerid][pSQLID]
-		);
-		mysql_tquery(g_SQL, tmpQuery);
-
-		// Message
-		SendClientMessage(playerid, COLOR_RED, "[ ! ] Ukucajte /help da bi ste vidjeli sve komande vezane uz kucu !");
-		return 1;
-	}
-	else SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate dovoljno novca!");
+	paymentBuyPrice[playerid] = HouseInfo[house][hValue];
+	GetPlayerPaymentOption(playerid, BUY_TYPE_HOUSE);
 	return 1;
 }
 

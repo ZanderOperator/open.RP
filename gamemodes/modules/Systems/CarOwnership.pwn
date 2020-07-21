@@ -1993,7 +1993,8 @@ stock static CreateTestCar(playerid)
 	88   8D 88b  d88    88          `8bd8'  88.     88   88
 	Y8888P' ~Y8888P'    YP            YP    Y88888P YP   YP
 */
-stock static BuyVehicle(playerid)
+
+stock BuyVehicle(playerid, bool:credit_activated = false)
 {
 	//Car
 	AC_DestroyVehicle(PreviewCar[playerid]);
@@ -2025,7 +2026,8 @@ stock static BuyVehicle(playerid)
 			engineType = AirVehicles[PreviewType[playerid]][viEngineType]; 
 		}
 	}
-
+	if(credit_activated)
+		price -= CreditInfo[playerid][cAmount];
 	new
 		cCar = AC_CreateVehicle(modelid, VehicleBuyPos[PlayerDealer[playerid]][0],VehicleBuyPos[PlayerDealer[playerid]][1],VehicleBuyPos[PlayerDealer[playerid]][2],VehicleBuyPos[PlayerDealer[playerid]][3], PreviewColor1[playerid], PreviewColor2[playerid], -1, 0);
 	ResetVehicleInfo(cCar);
@@ -2145,6 +2147,9 @@ stock static BuyVehicle(playerid)
 		modelid,
 		price
 	);
+	
+	// Message
+	va_SendClientMessage(playerid, COLOR_GREEN, "[ ! ]: Uspjesno ste kupili %s.", ReturnVehicleName(modelid));
 
 	//Preview Vars
 	PreviewColor1[playerid] = 0;
@@ -3999,23 +4004,32 @@ hook OnPlayerClickPlayerTD(playerid, PlayerText:playertextid)
 			LastShopCamera(playerid);
 		}
 		if(playertextid == BuyButton[playerid]) {
-			switch(PlayerDealer[playerid]) {
+			new buyprice = 0;
+			switch(PlayerDealer[playerid]) 
+			{
 				case VEH_DEALER_CARS:
-					if(AC_GetPlayerMoney(playerid) < LandVehicles[PreviewType[playerid]][viPrice]) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nemas dovoljno novca za kupovinu ovog vozila!");
+				{
+					if(CalculatePlayerBuyMoney(playerid, BUY_TYPE_VEHICLE) < LandVehicles[PreviewType[playerid]][viPrice]) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nemas dovoljno novca za kupovinu ovog vozila!");
+					buyprice = LandVehicles[PreviewType[playerid]][viPrice];
+				}
 				case VEH_DEALER_BOAT:
-					if(AC_GetPlayerMoney(playerid) < SeaVehicles[PreviewType[playerid]][viPrice]) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nemas dovoljno novca za kupovinu ovog vozila!");
+				{
+					if(CalculatePlayerBuyMoney(playerid, BUY_TYPE_VEHICLE) < SeaVehicles[PreviewType[playerid]][viPrice]) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nemas dovoljno novca za kupovinu ovog vozila!");
+					buyprice = SeaVehicles[PreviewType[playerid]][viPrice];
+				}
 				case VEH_DEALER_PLANE:
 				{
 					if(PlayerInfo[playerid][pDonateRank] == 4 && AirVehicles[PreviewType[playerid]][viModelid] == 469) // Premium Diamond Sparrow
 					{
-						if(AC_GetPlayerMoney(playerid) < (AirVehicles[PreviewType[playerid]][viPrice]/2)) 
+						if(CalculatePlayerBuyMoney(playerid, BUY_TYPE_VEHICLE) < (AirVehicles[PreviewType[playerid]][viPrice]/2)) 
 							return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Diamond VIP pokriva samo polovinu vrijednosti ovog vozila!");
 					}
 					else
 					{
-						if(AC_GetPlayerMoney(playerid) < AirVehicles[PreviewType[playerid]][viPrice]) 
+						if(CalculatePlayerBuyMoney(playerid, BUY_TYPE_VEHICLE) < AirVehicles[PreviewType[playerid]][viPrice]) 
 							return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nemas dovoljno novca za kupovinu ovog vozila!");
 					}
+					buyprice = AirVehicles[PreviewType[playerid]][viPrice];
 				}
 			}
 			if(LandVehicles[PreviewType[playerid]][viPremium] == 1 && PlayerInfo[playerid][pDonateRank] != 1) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste VIP Bronze korisnik!");
@@ -4026,7 +4040,8 @@ hook OnPlayerClickPlayerTD(playerid, PlayerText:playertextid)
 			if(LandVehicles[PreviewType[playerid]][viPremium] && PlayerInfo[playerid][pDonatorVehPerms] == 0) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nije vam ostalo vise mjesta za donator vozila");
 
 			Bit1_Set(gr_PreviewCar, playerid, false);
-			BuyVehicle(playerid);
+			paymentBuyPrice[playerid] = buyprice;
+			GetPlayerPaymentOption(playerid, BUY_TYPE_VEHICLE);
 			CancelSelectTextDraw(playerid);
 		}
 		if(playertextid == TryButton[playerid]) {
@@ -5209,8 +5224,7 @@ CMD:car(playerid, params[])
 		if(PlayerInfo[playerid][pSpawnedCar] != -1) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Vec ste spawnali svoje vozilo!");
 		if( VehicleInfoSQLID[ playerid ][ slot-1 ] == -1 ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate automobil pohranjen u tome slotu!");
 		SpawnVehicleInfo( playerid, VehicleInfoSQLID[ playerid ][ slot-1 ] );
-		new model = GetVehicleByModel(VehicleInfoModel[ playerid ][ slot - 1]);
-		SendFormatMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uspjesno ste spawnali vas %s!", LandVehicles[model][viName]);
+		SendFormatMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uspjesno ste spawnali vas %s!", ReturnVehicleName(VehicleInfoModel[ playerid ][ slot-1 ]));
 	}
 
 	else if(!strcmp(pick,"list", true))
