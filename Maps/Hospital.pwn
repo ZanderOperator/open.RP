@@ -8,43 +8,34 @@ new hospital_maps,
 
 hook OnFilterScriptInit() {
 
-	// LEO LSFD/LSMD - GLAVNA BOLNICA - UREDENA
-	CreateDynamicObject(870, 1174.74695, -1333.60498, 13.18200,   0.00000, 0.00000, 0.00000);
-	CreateDynamicObject(870, 1174.57202, -1331.62305, 13.18200,   0.00000, 0.00000, 0.00000);
-	CreateDynamicObject(870, 1176.62598, -1331.52795, 13.18200,   0.00000, 0.00000, 0.00000);
-	CreateDynamicObject(870, 1176.64001, -1333.42004, 13.18200,   0.00000, 0.00000, 0.00000);
-	CreateDynamicObject(870, 1178.32166, -1333.38245, 13.18200,   0.00000, 0.00000, 0.00000);
-	CreateDynamicObject(870, 1178.14294, -1331.31104, 13.18200,   0.00000, 0.00000, 0.00000);
-	CreateDynamicObject(870, 1174.51001, -1316.28894, 13.18200,   0.00000, 0.00000, 0.00000);
-	CreateDynamicObject(870, 1174.46301, -1314.14697, 13.18200,   0.00000, 0.00000, 0.00000);
-	CreateDynamicObject(870, 1176.37500, -1316.30103, 13.18200,   0.00000, 0.00000, 0.00000);
-	CreateDynamicObject(870, 1176.49402, -1314.24805, 13.18200,   0.00000, 0.00000, 0.00000);
-	CreateDynamicObject(870, 1178.09302, -1314.17798, 13.18200,   0.00000, 0.00000, 0.00000);
-	CreateDynamicObject(870, 1177.95398, -1316.23206, 13.18200,   0.00000, 0.00000, 0.00000);
-	CreateDynamicObject(869, 1176.61499, -1314.98206, 13.40400,   0.00000, 0.00000, 0.00000);
-	CreateDynamicObject(869, 1176.56604, -1332.27197, 13.40400,   0.00000, 0.00000, 0.00000);
-	CreateDynamicObject(970, 1180.39795, -1331.28699, 13.67800,   0.00000, 0.00000, 90.00000);
-	CreateDynamicObject(970, 1180.40198, -1333.37195, 13.67800,   0.00000, 0.00000, 90.00000);
-	CreateDynamicObject(970, 1178.27405, -1329.19299, 13.58600,   0.00000, -2.50000, 0.00000);
-	CreateDynamicObject(970, 1178.28198, -1335.46899, 13.58600,   0.00000, -2.50000, 0.00000);
-	CreateDynamicObject(970, 1174.14294, -1335.47595, 13.50600,   0.00000, 0.00000, 0.00000);
-	CreateDynamicObject(970, 1178.18005, -1318.32703, 13.58600,   0.00000, -2.50000, 0.00000);
-	CreateDynamicObject(970, 1180.29102, -1316.22498, 13.67800,   0.00000, 0.00000, 90.00000);
-	CreateDynamicObject(970, 1180.28503, -1314.12000, 13.67800,   0.00000, 0.00000, 90.00000);
-	CreateDynamicObject(970, 1178.15503, -1312.04395, 13.58600,   0.00000, -2.50000, 0.00000);
-	CreateDynamicObject(970, 1174.02698, -1312.04199, 13.50600,   0.00000, 0.00000, 0.00000);
-	CreateDynamicObject(1214, 1180.37195, -1312.03296, 13.07600,   0.00000, 0.00000, 0.00000);
-	CreateDynamicObject(1214, 1172.85706, -1312.01697, 12.87500,   0.00000, 0.00000, 0.00000);
-	CreateDynamicObject(1214, 1180.25806, -1318.30505, 13.07600,   0.00000, 0.00000, 0.00000);
-	CreateDynamicObject(1214, 1175.90601, -1318.36804, 12.85100,   0.00000, 0.00000, 0.00000);
-	CreateDynamicObject(1214, 1175.99695, -1329.18896, 12.85500,   0.00000, 0.00000, 0.00000);
-	CreateDynamicObject(1214, 1180.32495, -1329.17700, 13.07600,   0.00000, 0.00000, 0.00000);
-	CreateDynamicObject(1214, 1180.30603, -1335.41394, 13.07600,   0.00000, 0.00000, 0.00000);
-	CreateDynamicObject(1214, 1172.80200, -1335.47705, 12.87800,   0.00000, 0.00000, 0.00000);
-	
-	// Fire Department Interior by sWipero
+	// ALL SAINTS GENERAL HOSPITAL EXTERIOR BY APPS
 
-	hospital_maps = CreateDynamicObject(19379, 1075.208129, -1763.677734, -38.298133, 0.000000, 90.000000, 90.000000, -1, 3, -1, 300.00, 300.00);
+	hospital_maps = CreateDynamicObject(19447, 1187.621704, -1327.126464, 11.782981, -9.099998, -90.000000, -90.000000, -1, -1, -1, 300.00, 300.00);
+	SetDynamicObjectMaterial(hospital_maps, 0, 6282, "beafron2_law2", "concretebigb256128", 0x00000000);
+	hospital_maps = CreateDynamicObject(19447, 1177.890258, -1328.792480, 11.774833, -10.500002, -180.000000, -90.000000, -1, -1, -1, 300.00, 300.00);
+	SetDynamicObjectMaterial(hospital_maps, 0, 6282, "beafron2_law2", "concretebigb256128", 0x00000000);
+	hospital_maps = CreateDynamicObject(19447, 1178.132690, -1327.126464, 13.424534, -10.500002, -90.000000, -90.000000, -1, -1, -1, 300.00, 300.00);
+	SetDynamicObjectMaterial(hospital_maps, 0, 6282, "beafron2_law2", "concretebigb256128", 0x00000000);
+	hospital_maps = CreateDynamicObject(983, 1176.750244, -1325.432373, 14.508880, 10.499999, 0.000000, 90.300003, -1, -1, -1, 300.00, 300.00);
+	SetDynamicObjectMaterial(hospital_maps, 5, 6282, "beafron2_law2", "fire_esc_fence", 0x00000000);
+	hospital_maps = CreateDynamicObject(19447, 1177.890258, -1325.460571, 11.774833, -10.500002, -180.000000, -90.000000, -1, -1, -1, 300.00, 300.00);
+	SetDynamicObjectMaterial(hospital_maps, 0, 6282, "beafron2_law2", "concretebigb256128", 0x00000000);
+	hospital_maps = CreateDynamicObject(983, 1176.767456, -1328.862915, 14.508880, 10.499999, 0.000000, 90.300003, -1, -1, -1, 300.00, 300.00);
+	SetDynamicObjectMaterial(hospital_maps, 5, 6282, "beafron2_law2", "fire_esc_fence", 0x00000000);
+	hospital_maps = CreateDynamicObject(2263, 1180.559936, -1327.121704, 13.565212, -78.999961, 1.100000, 91.400001, -1, -1, -1, 300.00, 300.00);
+	SetDynamicObjectMaterial(hospital_maps, 0, 3899, "hospital2", "AmbulanceParking_64", 0x00000000);
+	SetDynamicObjectMaterial(hospital_maps, 1, 3899, "hospital2", "AmbulanceParking_64", 0x00000000);
+	hospital_maps = CreateDynamicObject(19992, 1189.854614, -1301.668090, 12.487941, 0.000000, 0.000000, 147.300003, -1, -1, -1, 300.00, 300.00);
+	SetDynamicObjectMaterial(hospital_maps, 2, 3899, "hospital2", "HospitalCarPark_64", 0x00000000);
+	hospital_maps = CreateDynamicObject(2263, 1172.229492, -1324.797607, 15.401194, 0.700036, 0.400000, 91.400001, -1, -1, -1, 300.00, 300.00);
+	SetDynamicObjectMaterial(hospital_maps, 0, 3899, "hospital2", "hospitalboard_128a", 0x00000000);
+	hospital_maps = CreateDynamicObject(17951, 1172.890869, -1338.874389, 14.708100, 0.000000, 0.000000, 0.000000, -1, -1, -1, 300.00, 300.00);
+	hospital_maps = CreateDynamicObject(11714, 1157.581054, -1333.328247, 31.729600, 0.000000, 0.000000, 0.000000, -1, -1, -1, 300.00, 300.00);
+	hospital_maps = CreateDynamicObject(1211, 1188.063720, -1347.101928, 12.955100, 0.000000, 0.000000, -105.000000, -1, -1, -1, 300.00, 300.00);
+
+		// Fire Department Interior by sWipero
+
+    hospital_maps = CreateDynamicObject(19379, 1075.208129, -1763.677734, -38.298133, 0.000000, 90.000000, 90.000000, -1, 3, -1, 300.00, 300.00);
 	SetDynamicObjectMaterial(hospital_maps, 0, 16640, "a51", "ws_stationfloor", 0x00000000);
 	hospital_maps = CreateDynamicObject(19379, 1075.208129, -1774.167968, -38.298133, 0.000000, 90.000000, 90.000000, -1, 3, -1, 300.00, 300.00);
 	SetDynamicObjectMaterial(hospital_maps, 0, 16640, "a51", "ws_stationfloor", 0x00000000);
@@ -5714,33 +5705,33 @@ hook OnPlayerKeyStateChange(playerid, newkeys, oldkeys) {
 		
 		if(IsPlayerInRangeOfPoint(playerid, 2.5, 1178.424926, -1340.011352, -53.450050)) {
 			if(lsfd_dstatus[4] == 0) {
-				SetDynamicObjectRot(lsfd_door[4], 0, 0, 0);
+				SetDynamicObjectRot(lsfd_door[4], 0, 0, -90);
 				lsfd_dstatus[4] = 1;
 			}
 			else if(lsfd_dstatus[4] == 1) {
-				SetDynamicObjectRot(lsfd_door[4], 0, 0, 90);
+				SetDynamicObjectRot(lsfd_door[4], 0, 0, 180);
 				lsfd_dstatus[4] = 0;
 			}
 		}
 		
 		if(IsPlayerInRangeOfPoint(playerid, 2.5, 1185.087036, -1340.011352, -53.450050)) {
 			if(lsfd_dstatus[5] == 0) {
-				SetDynamicObjectRot(lsfd_door[5], 0, 0, 0);
+				SetDynamicObjectRot(lsfd_door[5], 0, 0, -90);
 				lsfd_dstatus[5] = 1;
 			}
 			else if(lsfd_dstatus[5] == 1) {
-				SetDynamicObjectRot(lsfd_door[5], 0, 0, 90);
+				SetDynamicObjectRot(lsfd_door[5], 0, 0, 180);
 				lsfd_dstatus[5] = 0;
 			}
 		}
 		
 		if(IsPlayerInRangeOfPoint(playerid, 2.5, 1160.775146, -1311.189819, -53.440052)) {
 			if(lsfd_dstatus[6] == 0) {
-				SetDynamicObjectRot(lsfd_door[6], 0, 0, 0);
+				SetDynamicObjectRot(lsfd_door[6], 0, 0, -90);
 				lsfd_dstatus[6] = 1;
 			}
 			else if(lsfd_dstatus[6] == 1) {
-				SetDynamicObjectRot(lsfd_door[6], 0, 0, 90);
+				SetDynamicObjectRot(lsfd_door[6], 0, 0, 180);
 				lsfd_dstatus[6] = 0;
 			}
 		}
@@ -5751,25 +5742,25 @@ hook OnPlayerKeyStateChange(playerid, newkeys, oldkeys) {
 				lsfd_dstatus[7] = 1;
 			}
 			else if(lsfd_dstatus[7] == 1) {
-				SetDynamicObjectRot(lsfd_door[7], 0, 0, 90);
+				SetDynamicObjectRot(lsfd_door[7], 0, 0, -90);
 				lsfd_dstatus[7] = 0;
 			}
 		}
 		
 		if(IsPlayerInRangeOfPoint(playerid, 2.5, 1144.233520, -1329.078369, -53.430061)) {
 			if(lsfd_dstatus[8] == 0) {
-				SetDynamicObjectRot(lsfd_door[8], 0, 0, 0);
+				SetDynamicObjectRot(lsfd_door[8], 0, 0, -180);
 				lsfd_dstatus[8] = 1;
 			}
 			else if(lsfd_dstatus[8] == 1) {
-				SetDynamicObjectRot(lsfd_door[8], 0, 0, 90);
+				SetDynamicObjectRot(lsfd_door[8], 0, 0, -90);
 				lsfd_dstatus[8] = 0;
 			}
 		}
 		
 		if(IsPlayerInRangeOfPoint(playerid, 2.5, 1144.233520, -1332.060546, -53.430061)) {
 			if(lsfd_dstatus[9] == 0) {
-				SetDynamicObjectRot(lsfd_door[9], 0, 0, 0);
+				SetDynamicObjectRot(lsfd_door[9], 0, 0, -180);
 				lsfd_dstatus[9] = 1;
 			}
 			else if(lsfd_dstatus[9] == 1) {
@@ -5780,18 +5771,18 @@ hook OnPlayerKeyStateChange(playerid, newkeys, oldkeys) {
 		
 		if(IsPlayerInRangeOfPoint(playerid, 2.5, 1140.460693, -1341.441650, -53.430061)) {
 			if(lsfd_dstatus[10] == 0) {
-				SetDynamicObjectRot(lsfd_door[10], 0, 0, 0);
+				SetDynamicObjectRot(lsfd_door[10], 0, 0, -90);
 				lsfd_dstatus[10] = 1;
 			}
 			else if(lsfd_dstatus[10] == 1) {
-				SetDynamicObjectRot(lsfd_door[10], 0, 0, 90);
+				SetDynamicObjectRot(lsfd_door[10], 0, 0, 0);
 				lsfd_dstatus[10] = 0;
 			}
 		}
 		
 		if(IsPlayerInRangeOfPoint(playerid, 2.5, 1136.861938, -1317.121093, -53.470054)) {
 			if(lsfd_dstatus[11] == 0) {
-				SetDynamicObjectRot(lsfd_door[11], 0, 0, 0);
+				SetDynamicObjectRot(lsfd_door[11], 0, 0, 180);
 				lsfd_dstatus[11] = 1;
 			}
 			else if(lsfd_dstatus[11] == 1) {
@@ -5802,18 +5793,18 @@ hook OnPlayerKeyStateChange(playerid, newkeys, oldkeys) {
 		
 		if(IsPlayerInRangeOfPoint(playerid, 2.5, 1134.859985, -1333.161376, -53.430061)) {
 			if(lsfd_dstatus[12] == 0) {
-				SetDynamicObjectRot(lsfd_door[12], 0, 0, 0);
+				SetDynamicObjectRot(lsfd_door[12], 0, 0, -90);
 				lsfd_dstatus[12] = 1;
 			}
 			else if(lsfd_dstatus[12] == 1) {
-				SetDynamicObjectRot(lsfd_door[12], 0, 0, 90);
+				SetDynamicObjectRot(lsfd_door[12], 0, 0, 180);
 				lsfd_dstatus[12] = 0;
 			}
 		}
 		
 		if(IsPlayerInRangeOfPoint(playerid, 2.5, 1132.257934, -1341.493774, -53.470054)) {
 			if(lsfd_dstatus[13] == 0) {
-				SetDynamicObjectRot(lsfd_door[13], 0, 0, 0);
+				SetDynamicObjectRot(lsfd_door[13], 0, 0, 180);
 				lsfd_dstatus[13] = 1;
 			}
 			else if(lsfd_dstatus[13] == 1) {
@@ -5824,7 +5815,7 @@ hook OnPlayerKeyStateChange(playerid, newkeys, oldkeys) {
 		
 		if(IsPlayerInRangeOfPoint(playerid, 2.5, 1132.257934, -1349.084106, -53.470054)) {
 			if(lsfd_dstatus[14] == 0) {
-				SetDynamicObjectRot(lsfd_door[14], 0, 0, 0);
+				SetDynamicObjectRot(lsfd_door[14], 0, 0, 180);
 				lsfd_dstatus[14] = 1;
 			}
 			else if(lsfd_dstatus[14] == 1) {
@@ -5835,11 +5826,11 @@ hook OnPlayerKeyStateChange(playerid, newkeys, oldkeys) {
 		
 		if(IsPlayerInRangeOfPoint(playerid, 2.5, 1134.342529, -1313.759643, -59.240108)) {
 			if(lsfd_dstatus[15] == 0) {
-				SetDynamicObjectRot(lsfd_door[15], 0, 0, 0);
+				SetDynamicObjectRot(lsfd_door[15], 0, 0, -90);
 				lsfd_dstatus[15] = 1;
 			}
 			else if(lsfd_dstatus[15] == 1) {
-				SetDynamicObjectRot(lsfd_door[15], 0, 0, 90);
+				SetDynamicObjectRot(lsfd_door[15], 0, 0, 180);
 				lsfd_dstatus[15] = 0;
 			}
 		}
@@ -5850,7 +5841,7 @@ hook OnPlayerKeyStateChange(playerid, newkeys, oldkeys) {
 				lsfd_dstatus[16] = 1;
 			}
 			else if(lsfd_dstatus[16] == 1) {
-				SetDynamicObjectRot(lsfd_door[16], 0, 0, 90);
+				SetDynamicObjectRot(lsfd_door[16], 0, 0, -90);
 				lsfd_dstatus[16] = 0;
 			}
 		}
@@ -5868,7 +5859,7 @@ hook OnPlayerKeyStateChange(playerid, newkeys, oldkeys) {
 		
 		if(IsPlayerInRangeOfPoint(playerid, 2.5, 1131.791992, -1326.622314, -59.250106)) {
 			if(lsfd_dstatus[18] == 0) {
-				SetDynamicObjectRot(lsfd_door[18], 0, 0, 0);
+				SetDynamicObjectRot(lsfd_door[18], 0, 0, 180);
 				lsfd_dstatus[18] = 1;
 			}
 			else if(lsfd_dstatus[18] == 1) {
@@ -5883,18 +5874,18 @@ hook OnPlayerKeyStateChange(playerid, newkeys, oldkeys) {
 				lsfd_dstatus[19] = 1;
 			}
 			else if(lsfd_dstatus[19] == 1) {
-				SetDynamicObjectRot(lsfd_door[19], 0, 0, 90);
+				SetDynamicObjectRot(lsfd_door[19], 0, 0, -90);
 				lsfd_dstatus[19] = 0;
 			}
 		}
 		
 		if(IsPlayerInRangeOfPoint(playerid, 2.5, 1119.697875, -1317.971191, -59.250106)) {
 			if(lsfd_dstatus[20] == 0) {
-				SetDynamicObjectRot(lsfd_door[20], 0, 0, 0);
+				SetDynamicObjectRot(lsfd_door[20], 0, 0, -90);
 				lsfd_dstatus[20] = 1;
 			}
 			else if(lsfd_dstatus[20] == 1) {
-				SetDynamicObjectRot(lsfd_door[20], 0, 0, 90);
+				SetDynamicObjectRot(lsfd_door[20], 0, 0, 0);
 				lsfd_dstatus[20] = 0;
 			}
 		}
@@ -5905,36 +5896,36 @@ hook OnPlayerKeyStateChange(playerid, newkeys, oldkeys) {
 				lsfd_dstatus[21] = 1;
 			}
 			else if(lsfd_dstatus[21] == 1) {
-				SetDynamicObjectRot(lsfd_door[21], 0, 0, 90);
+				SetDynamicObjectRot(lsfd_door[21], 0, 0, -90);
 				lsfd_dstatus[21] = 0;
 			}
 		}
 		
 		if(IsPlayerInRangeOfPoint(playerid, 2.5, 1443.167358, 1485.880615, -69.093788)) {
 			if(lsfd_dstatus[22] == 0) {
-				SetDynamicObjectRot(lsfd_door[22], 0, 0, 0);
+				SetDynamicObjectRot(lsfd_door[22], 0, 0, -90);
 				lsfd_dstatus[22] = 1;
 			}
 			else if(lsfd_dstatus[22] == 1) {
-				SetDynamicObjectRot(lsfd_door[22], 0, 0, 90);
+				SetDynamicObjectRot(lsfd_door[22], 0, 0, 0);
 				lsfd_dstatus[22] = 0;
 			}
 		}
-		
+
 		if(IsPlayerInRangeOfPoint(playerid, 2.5, 1446.138305, 1485.880615, -69.093788)) {
 			if(lsfd_dstatus[23] == 0) {
-				SetDynamicObjectRot(lsfd_door[23], 0, 0, 0);
+				SetDynamicObjectRot(lsfd_door[23], 0, 0, -90);
 				lsfd_dstatus[23] = 1;
 			}
 			else if(lsfd_dstatus[23] == 1) {
-				SetDynamicObjectRot(lsfd_door[23], 0, 0, 90);
+				SetDynamicObjectRot(lsfd_door[23], 0, 0, 180);
 				lsfd_dstatus[23] = 0;
 			}
 		}
 		
 		if(IsPlayerInRangeOfPoint(playerid, 2.5, 1442.296508, 1490.031127, -69.083778)) {
 			if(lsfd_dstatus[24] == 0) {
-				SetDynamicObjectRot(lsfd_door[24], 0, 0, 0);
+				SetDynamicObjectRot(lsfd_door[24], 0, 0, -180);
 				lsfd_dstatus[24] = 1;
 			}
 			else if(lsfd_dstatus[24] == 1) {
@@ -5945,7 +5936,7 @@ hook OnPlayerKeyStateChange(playerid, newkeys, oldkeys) {
 		
 		if(IsPlayerInRangeOfPoint(playerid, 2.5, 1442.296508, 1496.410400, -69.083778)) {
 			if(lsfd_dstatus[25] == 0) {
-				SetDynamicObjectRot(lsfd_door[25], 0, 0, 0);
+				SetDynamicObjectRot(lsfd_door[25], 0, 0, -180);
 				lsfd_dstatus[25] = 1;
 			}
 			else if(lsfd_dstatus[25] == 1) {
@@ -5956,7 +5947,7 @@ hook OnPlayerKeyStateChange(playerid, newkeys, oldkeys) {
 		
 		if(IsPlayerInRangeOfPoint(playerid, 2.5, 1442.296508, 1502.780761, -69.083778)) {
 			if(lsfd_dstatus[26] == 0) {
-				SetDynamicObjectRot(lsfd_door[26], 0, 0, 0);
+				SetDynamicObjectRot(lsfd_door[26], 0, 0, -180);
 				lsfd_dstatus[26] = 1;
 			}
 			else if(lsfd_dstatus[26] == 1) {
@@ -5967,18 +5958,18 @@ hook OnPlayerKeyStateChange(playerid, newkeys, oldkeys) {
 		
 		if(IsPlayerInRangeOfPoint(playerid, 2.5, 1441.515747, 1512.351806, -69.083778)) {
 			if(lsfd_dstatus[27] == 0) {
-				SetDynamicObjectRot(lsfd_door[27], 0, 0, 0);
+				SetDynamicObjectRot(lsfd_door[27], 0, 0, 90);
 				lsfd_dstatus[27] = 1;
 			}
 			else if(lsfd_dstatus[27] == 1) {
-				SetDynamicObjectRot(lsfd_door[27], 0, 0, 90);
+				SetDynamicObjectRot(lsfd_door[27], 0, 0, 180);
 				lsfd_dstatus[27] = 0;
 			}
 		}
 		
 		if(IsPlayerInRangeOfPoint(playerid, 2.5, 1438.384155, 1513.242553, -69.083778)) {
 			if(lsfd_dstatus[28] == 0) {
-				SetDynamicObjectRot(lsfd_door[28], 0, 0, 0);
+				SetDynamicObjectRot(lsfd_door[28], 0, 0, -180);
 				lsfd_dstatus[28] = 1;
 			}
 			else if(lsfd_dstatus[28] == 1) {
@@ -5989,7 +5980,7 @@ hook OnPlayerKeyStateChange(playerid, newkeys, oldkeys) {
 		
 		if(IsPlayerInRangeOfPoint(playerid, 2.5, 1438.384155, 1516.432373, -69.083778)) {
 			if(lsfd_dstatus[29] == 0) {
-				SetDynamicObjectRot(lsfd_door[29], 0, 0, 0);
+				SetDynamicObjectRot(lsfd_door[29], 0, 0, -180);
 				lsfd_dstatus[29] = 1;
 			}
 			else if(lsfd_dstatus[29] == 1) {
@@ -6000,11 +5991,11 @@ hook OnPlayerKeyStateChange(playerid, newkeys, oldkeys) {
 		
 		if(IsPlayerInRangeOfPoint(playerid, 2.5, 1451.293457, 1512.371582, -69.083778)) {
 			if(lsfd_dstatus[30] == 0) {
-				SetDynamicObjectRot(lsfd_door[30], 0, 0, 0);
+				SetDynamicObjectRot(lsfd_door[30], 0, 0, 90);
 				lsfd_dstatus[30] = 1;
 			}
 			else if(lsfd_dstatus[30] == 1) {
-				SetDynamicObjectRot(lsfd_door[30], 0, 0, 90);
+				SetDynamicObjectRot(lsfd_door[30], 0, 0, 180);
 				lsfd_dstatus[30] = 0;
 			}
 		}
@@ -6068,67 +6059,67 @@ hook OnPlayerKeyStateChange(playerid, newkeys, oldkeys) {
 				lsfd_dstatus[36] = 1;
 			}
 			else if(lsfd_dstatus[36] == 1) {
-				SetDynamicObjectRot(lsfd_door[36], 0, 0, 90);
+				SetDynamicObjectRot(lsfd_door[36], 0, 0, -90);
 				lsfd_dstatus[36] = 0;
 			}
 		}
 		if(IsPlayerInRangeOfPoint(playerid, 2.5, 1454.441284, 1473.528442, -69.083778)) {
 			if(lsfd_dstatus[37] == 0) {
-				SetDynamicObjectRot(lsfd_door[37], 0, 0, 0);
+				SetDynamicObjectRot(lsfd_door[37], 0, 0, 90);
 				lsfd_dstatus[37] = 1;
 			}
 			else if(lsfd_dstatus[37] == 1) {
-				SetDynamicObjectRot(lsfd_door[37], 0, 0, 90);
+				SetDynamicObjectRot(lsfd_door[37], 0, 0, 0);
 				lsfd_dstatus[37] = 0;
 			}
 		}
 		if(IsPlayerInRangeOfPoint(playerid, 2.5, 1457.641601, 1473.528442, -69.083778)) {
 			if(lsfd_dstatus[38] == 0) {
-				SetDynamicObjectRot(lsfd_door[38], 0, 0, 0);
+				SetDynamicObjectRot(lsfd_door[38], 0, 0, 90);
 				lsfd_dstatus[38] = 1;
 			}
 			else if(lsfd_dstatus[38] == 1) {
-				SetDynamicObjectRot(lsfd_door[38], 0, 0, 90);
+				SetDynamicObjectRot(lsfd_door[38], 0, 0, 0);
 				lsfd_dstatus[38] = 0;
 			}
 		}
 		if(IsPlayerInRangeOfPoint(playerid, 2.5, 1464.021972, 1473.528442, -69.083778)) {
 			if(lsfd_dstatus[39] == 0) {
-				SetDynamicObjectRot(lsfd_door[39], 0, 0, 0);
+				SetDynamicObjectRot(lsfd_door[39], 0, 0, 90);
 				lsfd_dstatus[39] = 1;
 			}
 			else if(lsfd_dstatus[39] == 1) {
-				SetDynamicObjectRot(lsfd_door[39], 0, 0, 90);
+				SetDynamicObjectRot(lsfd_door[39], 0, 0, 0);
 				lsfd_dstatus[39] = 0;
 			}
 		}
 		if(IsPlayerInRangeOfPoint(playerid, 2.5, 1470.801513, 1475.068725, -69.083778)) {
 			if(lsfd_dstatus[40] == 0) {
-				SetDynamicObjectRot(lsfd_door[40], 0, 0, 0);
+				SetDynamicObjectRot(lsfd_door[40], 0, 0, 90);
 				lsfd_dstatus[40] = 1;
 			}
 			else if(lsfd_dstatus[40] == 1) {
-				SetDynamicObjectRot(lsfd_door[40], 0, 0, 90);
+				SetDynamicObjectRot(lsfd_door[40], 0, 0, 0);
 				lsfd_dstatus[40] = 0;
 			}
 		}
 		if(IsPlayerInRangeOfPoint(playerid, 2.5, 1473.782470, 1475.068725, -69.083778)) {
 			if(lsfd_dstatus[41] == 0) {
-				SetDynamicObjectRot(lsfd_door[41], 0, 0, 0);
+				SetDynamicObjectRot(lsfd_door[41], 0, 0, 90);
 				lsfd_dstatus[41] = 1;
 			}
 			else if(lsfd_dstatus[41] == 1) {
-				SetDynamicObjectRot(lsfd_door[41], 0, 0, 90);
+				SetDynamicObjectRot(lsfd_door[41], 0, 0, 180);
 				lsfd_dstatus[41] = 0;
 			}
 		}
 		if(IsPlayerInRangeOfPoint(playerid, 2.5, 1477.704589, 1475.068725, -69.083778)) {
 			if(lsfd_dstatus[42] == 0) {
-				SetDynamicObjectRot(lsfd_door[42], 0, 0, 0);
+				SetDynamicObjectRot(lsfd_door[42], 0, 0, -90);
 				lsfd_dstatus[42] = 1;
 			}
 			else if(lsfd_dstatus[42] == 1) {
-				SetDynamicObjectRot(lsfd_door[42], 0, 0, 90);
+				SetDynamicObjectRot(lsfd_door[42], 0, 0, 180);
 				lsfd_dstatus[42] = 0;
 			}
 		}
@@ -6138,27 +6129,27 @@ hook OnPlayerKeyStateChange(playerid, newkeys, oldkeys) {
 				lsfd_dstatus[43] = 1;
 			}
 			else if(lsfd_dstatus[43] == 1) {
-				SetDynamicObjectRot(lsfd_door[43], 0, 0, 90);
+				SetDynamicObjectRot(lsfd_door[43], 0, 0, 180);
 				lsfd_dstatus[43] = 0;
 			}
 		}
 		if(IsPlayerInRangeOfPoint(playerid, 2.5, 1473.755371, 1468.078613, -69.083778)) {
 			if(lsfd_dstatus[44] == 0) {
-				SetDynamicObjectRot(lsfd_door[44], 0, 0, 0);
+				SetDynamicObjectRot(lsfd_door[44], 0, 0, -90);
 				lsfd_dstatus[44] = 1;
 			}
 			else if(lsfd_dstatus[44] == 1) {
-				SetDynamicObjectRot(lsfd_door[44], 0, 0, 90);
+				SetDynamicObjectRot(lsfd_door[44], 0, 0, 180);
 				lsfd_dstatus[44] = 0;
 			}
 		}
 		if(IsPlayerInRangeOfPoint(playerid, 2.5, 1470.794555, 1468.078613, -69.083778)) {
 			if(lsfd_dstatus[45] == 0) {
-				SetDynamicObjectRot(lsfd_door[45], 0, 0, 0);
+				SetDynamicObjectRot(lsfd_door[45], 0, 0, -90);
 				lsfd_dstatus[45] = 1;
 			}
 			else if(lsfd_dstatus[45] == 1) {
-				SetDynamicObjectRot(lsfd_door[45], 0, 0, 90);
+				SetDynamicObjectRot(lsfd_door[45], 0, 0, 0);
 				lsfd_dstatus[45] = 0;
 			}
 		}
@@ -6168,27 +6159,27 @@ hook OnPlayerKeyStateChange(playerid, newkeys, oldkeys) {
 				lsfd_dstatus[46] = 1;
 			}
 			else if(lsfd_dstatus[46] == 1) {
-				SetDynamicObjectRot(lsfd_door[46], 0, 0, 90);
+				SetDynamicObjectRot(lsfd_door[46], 0, 0, -90);
 				lsfd_dstatus[46] = 0;
 			}
 		}
 		if(IsPlayerInRangeOfPoint(playerid, 2.5, 1465.964111, 1469.619140, -69.083778)) {
 			if(lsfd_dstatus[47] == 0) {
-				SetDynamicObjectRot(lsfd_door[47], 0, 0, 0);
+				SetDynamicObjectRot(lsfd_door[47], 0, 0, -90);
 				lsfd_dstatus[47] = 1;
 			}
 			else if(lsfd_dstatus[47] == 1) {
-				SetDynamicObjectRot(lsfd_door[47], 0, 0, 90);
+				SetDynamicObjectRot(lsfd_door[47], 0, 0, 180);
 				lsfd_dstatus[47] = 0;
 			}
 		}
 		if(IsPlayerInRangeOfPoint(playerid, 2.5, 1459.594238, 1469.619140, -69.083778)) {
 			if(lsfd_dstatus[48] == 0) {
-				SetDynamicObjectRot(lsfd_door[48], 0, 0, 0);
+				SetDynamicObjectRot(lsfd_door[48], 0, 0, -90);
 				lsfd_dstatus[48] = 1;
 			}
 			else if(lsfd_dstatus[48] == 1) {
-				SetDynamicObjectRot(lsfd_door[48], 0, 0, 90);
+				SetDynamicObjectRot(lsfd_door[48], 0, 0, 180);
 				lsfd_dstatus[48] = 0;
 			}
 		}
@@ -6198,7 +6189,7 @@ hook OnPlayerKeyStateChange(playerid, newkeys, oldkeys) {
 				lsfd_dstatus[49] = 1;
 			}
 			else if(lsfd_dstatus[49] == 1) {
-				SetDynamicObjectRot(lsfd_door[49], 0, 0, 90);
+				SetDynamicObjectRot(lsfd_door[49], 0, 0, -90);
 				lsfd_dstatus[49] = 0;
 			}
 		}
@@ -6215,7 +6206,7 @@ hook OnPlayerKeyStateChange(playerid, newkeys, oldkeys) {
 		//SPORT CENTER VRATA
 		if(IsPlayerInRangeOfPoint(playerid, 2.5, 1066.554321, 1310.174072, -65.053741)) {
 			if(lsfd_dstatus[51] == 0) {
-				SetDynamicObjectRot(lsfd_door[51], 0, 0, 0);
+				SetDynamicObjectRot(lsfd_door[51], 0, 0, -180);
 				lsfd_dstatus[51] = 1;
 			}
 			else if(lsfd_dstatus[51] == 1) {

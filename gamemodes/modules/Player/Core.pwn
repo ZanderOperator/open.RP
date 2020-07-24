@@ -449,7 +449,7 @@ Function: CheckAccountsForInactivity()
 	mysql_tquery_inline(g_SQL, loadString, using inline OnInactiveAccsLoad, "");
 
 	stamp2datetime(gettimestamp(), _, currentmonth, currentday, _, _, _);
-	if(currentmonth <= 8) // Postpone do pocetka 8. mjeseca
+	if(currentmonth <= 8) // Postpone do 9. mjeseca
 		return 1;
 	
 	if(currentday == 1) // 1st in Month - Reset of Monthly paydays

@@ -25,16 +25,16 @@ enum {
 };
 
 enum E_JOBS_DATA {
-	SWEEPER,     /* [id:1] */
-	MECHANIC,    /* [id:3] */
-	CRAFTER,     /* [id:5] */
-	TAXI, 	     /* [id:6] */
-	FARMER,      /* [id:7] */
-	LOGGER,      /* [id:14] */
-	TRUCKER,     /* [id:15] */
+	SWEEPER,    /* [id:1] */
+	MECHANIC,   /* [id:3] */
+	CRAFTER,    /* [id:5] */
+	TAXI, 	    /* [id:6] */
+	FARMER,     /* [id:7] */
+	LOGGER,     /* [id:14] */
+	TRUCKER,    /* [id:15] */
 	GARBAGE,    /* [id:16] */
-	IMPOUNDER,  /* [id:17 ] */
-	TRANSPORTER    /* [id:18 */
+	IMPOUNDER,  /* [id:17] */
+	TRANSPORTER /* [id:18] */
 }
 new JobData[E_JOBS_DATA];
 
