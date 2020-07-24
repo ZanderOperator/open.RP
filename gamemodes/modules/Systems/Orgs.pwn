@@ -1405,27 +1405,6 @@ CMD:faction(playerid,params[])
 	return 1;
 }
 
-CMD:orghelp(playerid, params[])
-{
-	if( IsACop(playerid) || IsASD(playerid) ) {
-		SendClientMessage( playerid, COLOR_LIGHTBLUE, "*_______________Dostupne LAW komande_____________*");
-		SendClientMessage( playerid, -1, "/mdc /anpr /gate /tazer /status /r /cuff /uncuff /pdtrunk /impoundgate /pdunlock /ramdoor /listensms");
-		SendClientMessage( playerid, -1, "/pdramp /pd1 /pd2 /onduty /buygun /govrepair /lawskin /siren /rb /rrb /removeall /giveticket /pa /cargun");
-		SendClientMessage( playerid, -1, "/lawdoors /cleartrunk /listennumber /mole /tracenumber /barrier /unfree /carsign /hq /checkhouse /housetake");
-		SendClientMessage( playerid, -1, "/codes /editarrest /arrest /checkseatbelt /heal /swat /suspend /flares /dflares /daflares /rubberbulets");
-        SendClientMessage( playerid, -1, "Ammunation | Player Online - /issueweaplic, /revokeweaplic || Player Offline - /issueweaplicex, /revokeweaplicex");
-		SendClientMessage( playerid, COLOR_LIGHTBLUE, "*________________________________________________*");
-	}
-	else if ( IsFDMember(playerid)) {
-		SendClientMessage(playerid, COLOR_LIGHTBLUE, "*___Dostupne komande za Fire Department___*");
-        SendClientMessage(playerid, -1, "/fdcarenter /fdenter /treatment /confirmation /recover /siren /bk /bkc /bkall");
-        SendClientMessage(playerid, -1, "/pa /flares /dflares /rb /erb /rrb /removeall");
-        SendClientMessage(playerid, -1, "/showbadge /equipment /fdlift");
-		SendClientMessage( playerid, COLOR_LIGHTBLUE, "*_______________________________________*");
-	}
-	else SendClientMessage(playerid,COLOR_RED, "Samo LSPD/LSSD/LSFD mogu koristiti ovu komandu!");
-	return 1;
-}
 CMD:f(playerid,params[])
 {
 	if(strlen(params) >= 64)

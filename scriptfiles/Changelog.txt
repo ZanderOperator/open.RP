@@ -1,4 +1,10 @@
 City of Angels v18.5.0. - Summer Update + BugFixes
+- Popravljen bug sa /ticket pay
+- Popravljeni svi zahtjevi za dodavanjem lokacija komandi/povecavanja radiusa od strane LSPD-a
+- Popravljen /poker table brisanje stola
+- Popravljen bug sa POLICE tablicama na server vozilima za poslove/neke fakcije
+- Izbacen /marry radi nesvrsishodnosti
+- Sve komande vezane uz kanale radia prebacene na /channel. Stare ostale jedino /togradio, /radio, /radiolow, /r1, /r2, /r3
 - Dodan automatski property remover - vise informacija na Forumu
 - Prilikom gubitka bilo kojeg tipa imovine/posla radi neaktivnosti, nakon logina ce vam ispisati detaljnu obavijest u Dialogu
 - Update Dialog preseljen na /update komandu UKOLIKO niste vidli update listu i ako vas ceka Server/Admin Message
@@ -39,7 +45,6 @@ City of Angels v18.5.0. - Summer Update + BugFixes
 - Popravljen abuse sa Transporterom, gdje bi mogao sa bilokojim vozilom raditi posao
 - Popravljen /takejob, te uzimanje posla vehicle impoundera
 - Popravljen bug sa objektom guna prilikom /trunk put
-- Popravljeni svi prijavljeni Maps Bugovi
 
 
 

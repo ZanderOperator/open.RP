@@ -15,15 +15,15 @@ hook OnFilterScriptInit()	{
 	CreateDynamicObject(1496, 1582.59705, -1637.99231, 12.36000,   0.00000, 0.00000, 0.00000);
 	CreateDynamicObject(3037, 1603.80786, -1651.72449, 14.60000,   0.00000, 0.00000, 0.00000);
 	
-	//SD Garage
+	/* //SD Garage
 	pd_maps = CreateDynamicObject(19447, -1635.248413, 688.399841, 9.257508, 0.000000, 180.000000, 90.000000, 70, -1, -1, 300.00, 300.00);
 	pd_maps = CreateDynamicObject(19447, -1625.649414, 688.399841, 9.257508, 0.000000, 180.000000, 90.000000, 70, -1, -1, 300.00, 300.00);
 	pd_maps = CreateDynamicObject(19447, -1625.649414, 688.399841, 5.757511, 0.000000, 180.000000, 90.000000, 70, -1, -1, 300.00, 300.00);
 	pd_maps = CreateDynamicObject(19447, -1635.289184, 688.399841, 5.767513, 0.000000, 180.000000, 90.000000, 70, -1, -1, 300.00, 300.00);
-	pd_maps = CreateDynamicObject(19447, -1622.000000, 691.889892, 5.757511, 90.000000, 360.000000, 180.000000, 70, -1, -1, 300.00, 300.00);
+	pd_maps = CreateDynamicObject(19447, -1622.000000, 691.889892, 5.757511, 90.000000, 360.000000, 180.000000, 70, -1, -1, 300.00, 300.00); */
 
 	
-	//SD by swipero
+	/*  //SD by swipero --UKINUTA MAPA; NEMA SDa--
 
 	pd_maps = CreateDynamicObject(19375, 610.824096, -568.672973, 37.922584, 0.000000, 90.000007, 89.999969, 8, -1, -1, 600.00, 600.00);
 	SetDynamicObjectMaterial(pd_maps, 0, 10871, "blacksky_sfse", "ws_slatetiles", 0xFFFFFFFF);
@@ -1010,8 +1010,8 @@ hook OnFilterScriptInit()	{
 	pd_maps = CreateDynamicObject(1893, 603.479614, -571.127685, 45.008556, 0.000007, 0.000000, 179.999954, 8, -1, -1, 600.00, 600.00);
 	pd_maps = CreateDynamicObject(1620, 605.947998, -567.932250, 41.918514, 0.000000, -0.000007, -89.999984, 8, -1, -1, 600.00, 600.00);
 	pd_maps = CreateDynamicObject(1620, 610.543090, -565.013305, 45.388423, 0.000007, 0.000000, 179.999954, 8, -1, -1, 600.00, 600.00);
-	
-	//Sd
+	*/
+ 	/* //Sd
 	pd_maps = CreateObject(6053, 612.060546, -573.554565, 20.629755, 0.000000, 0.000000, 810.000000, 600.00);
 	SetObjectMaterial(pd_maps, 2, 9593, "hosbibalsfw", "2hospital6sfw", 0x00000000);
 	SetObjectMaterial(pd_maps, 3, 9593, "hosbibalsfw", "2hospital4sfw", 0x00000000);
@@ -1241,7 +1241,7 @@ hook OnFilterScriptInit()	{
 	pd_maps = CreateObject(997, 615.632446, -540.207031, 15.245935, 0.000000, -0.000015, 179.999908, 600.00);
 	pd_maps = CreateObject(997, 612.432983, -540.207031, 15.245935, 0.000000, -0.000022, 179.999862, 600.00);
 	pd_maps = CreateObject(997, 609.222778, -540.207031, 15.245935, 0.000000, -0.000022, 179.999862, 600.00);
-	pd_maps = CreateObject(997, 605.963134, -540.207031, 15.245935, 0.000000, -0.000022, 179.999862, 600.00);
+	pd_maps = CreateObject(997, 605.963134, -540.207031, 15.245935, 0.000000, -0.000022, 179.999862, 600.00); */
 	
 	//East Station Exterior
 	pd_maps = CreateDynamicObject(6134, 2150.121093, -2177.105468, 16.696870, 0.000000, 0.000000, 45.400009, -1, -1, -1, 600.00, 600.00);
@@ -7930,7 +7930,7 @@ hook OnPlayerConnect(playerid) {
 	RemoveBuildingForPlayer(playerid, 646, 1553.869, -1677.729, 16.437, 0.250);
 	RemoveBuildingForPlayer(playerid, 646, 1553.869, -1673.459, 16.437, 0.250);
 
-	//Sd
+	/* //Sd
 	RemoveBuildingForPlayer(playerid, 1522, 626.531, -571.007, 16.898, 0.250);
 	RemoveBuildingForPlayer(playerid, 12855, 622.945, -577.062, 21.812, 0.250);
 	RemoveBuildingForPlayer(playerid, 13250, 622.945, -577.062, 21.812, 0.250);
@@ -7945,7 +7945,7 @@ hook OnPlayerConnect(playerid) {
 	RemoveBuildingForPlayer(playerid, 780, 604.015, -542.343, 15.070, 0.250);
 	RemoveBuildingForPlayer(playerid, 1294, 632.578, -583.593, 19.820, 0.250);
 	RemoveBuildingForPlayer(playerid, 709, 626.679, -629.757, 15.476, 0.250);
-	RemoveBuildingForPlayer(playerid, 782, 643.148, -614.562, 15.281, 0.250);
+	RemoveBuildingForPlayer(playerid, 782, 643.148, -614.562, 15.281, 0.250); */
 
 	// WILSHIRE Station by Carlos
 	RemoveBuildingForPlayer(playerid, 6147, 743.156, -1428.656, 16.726, 0.250);

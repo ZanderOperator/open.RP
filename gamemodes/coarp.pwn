@@ -193,11 +193,11 @@ native WP_Hash(buffer[], len, const str[]);
 #define BUY_TYPE_BIZZ							(3)
 
 //Server informations
-#define HOSTNAME 								"City of Angels Role Play [0.3DL]"
+#define HOSTNAME 								"Coa.RP[0.3DL] - 18:00h 26.7. Open"
 //#define HOSTNAME 								"CoA Testing time"
 #define COPYRIGHT                           	"Copyright (c) 2020 City of Angels Roleplay"
 #define WEB_URL									"forum.cityofangels-roleplay.com"
-#define SCRIPT_VERSION							"CoA RP v18.4.5."  // [ ! ] Prilikom promjene SCRIPT_VERSION, OBAVEZNO ubaciti novi Update "Changelog.txt"u /scriptfiles folder [ ! ]
+#define SCRIPT_VERSION							"CoA RP v18.5.0."  // [ ! ] Prilikom promjene SCRIPT_VERSION, OBAVEZNO ubaciti novi Update "Changelog.txt"u /scriptfiles folder [ ! ]
 #define DEV_NAME   								"Woo-Logan"
 
 // Macros
@@ -3144,8 +3144,11 @@ public OnGameModeInit()
 	MODEL_LIST_SKINS = LoadModelSelectionMenu( "skins.txt");
 
 	// Global Loads
+	
+	/*
 	GMX = 2;
 	cseconds = 120; // 2 min
+	*/
 	LoadGPS();
 	LoadHstorage(); // House Storage Load
 	LoadCityStuff();

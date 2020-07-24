@@ -880,7 +880,6 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 */
 CMD:exterior(playerid, params[])
 {
-    if(PlayerInfo[playerid][pDonateRank] < 1) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste VIP korisnik!");
 	new houseid = PlayerInfo[playerid][pHouseKey];
 	if(houseid == INVALID_HOUSE_ID) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne posjedujete kucu!");
 	if(!IsPlayerInRangeOfPoint(playerid, EXTERIOR_HOUSE_DISTANCE, HouseInfo[houseid][hEnterX], HouseInfo[houseid][hEnterY], HouseInfo[houseid][hEnterZ])) 

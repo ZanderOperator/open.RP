@@ -368,13 +368,13 @@ GetPlayerPaymentOption(playerid, type)
 		}
 		case BUY_TYPE_HOUSE:
 		{
-			if(CreditInfo[playerid][cCreditType] == 5 && !CreditInfo[playerid][cUsed])
+			if(CreditInfo[playerid][cCreditType] == 6 && !CreditInfo[playerid][cUsed])
 				va_ShowPlayerDialog(playerid, DIALOG_HOUSE_PAYMENT, DIALOG_STYLE_INPUT, "Iznos namjenskog kredita", "Imate dostupan kredit od %d$. Unesite koliki iznos od cijene kuce(%d$) zelite da se naplati iz kredita:", "Unos", "Bez krede", CreditInfo[playerid][cAmount], paymentBuyPrice[playerid]);
 			else BuyHouse(playerid);
 		}
 		case BUY_TYPE_BIZZ:
 		{
-			if(CreditInfo[playerid][cCreditType] == 5 && !CreditInfo[playerid][cUsed])
+			if(CreditInfo[playerid][cCreditType] == 7 && !CreditInfo[playerid][cUsed])
 				va_ShowPlayerDialog(playerid, DIALOG_BIZZ_PAYMENT, DIALOG_STYLE_INPUT, "Iznos namjenskog kredita", "Imate dostupan kredit od %d$. Unesite koliki iznos od cijene biznisa(%d$) zelite da se naplati iz kredita:", "Unos", "Bez krede", CreditInfo[playerid][cAmount], paymentBuyPrice[playerid]);
 			else BuyBiznis(playerid);
 		}
@@ -746,12 +746,12 @@ CMD:bank(playerid, params[])
 			}
 			case 5 .. 7:
 			{
-				if (cashdeposit > CreditInfo[playerid][cRate] || cashdeposit < 1) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate toliko rata kredita !");
+				if (cashdeposit > rest || cashdeposit < 1) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate toliko rata kredita !");
 				money = cashdeposit * (CreditInfo[playerid][cAmount] / 250);
 				if(AC_GetPlayerMoney(playerid) >= money) 
 				{
 					PlayerToBudgetMoney(playerid, money); // novac dolazi u proracun
-					CreditInfo[playerid][cUnpaid] -= cashdeposit;
+					CreditInfo[playerid][cRate] += cashdeposit;
 					SendFormatMessage(playerid, MESSAGE_TYPE_INFO, "Platili ste %d rata namjenskog kredita za $%d.", cashdeposit, money);
 				}
 				else return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "Trebate imati %d$ da bi otplatili %d rata kredita!", money, cashdeposit);

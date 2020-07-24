@@ -29,7 +29,7 @@
 #include "../Maps/Other.pwn" // Sve ostale mape koje nemaju kategoriji.
 #include "../Maps/newenvmaps.pwn" // Nove mape ubacene 2020. by Khawaja
 #include "../Maps/khawajamaps.pwn"
-#include "../Maps/Sheriffs.pwn"
+/* #include "../Maps/Sheriffs.pwn" // Ukinute mape zato sto nemaju funkcije bez SDa */
 /* #include "../Maps/Backup.pwn" // Sve ostale mape koje ce se mozda koristiti u buducnosti. */
 
 
@@ -183,11 +183,11 @@ public OnFilterScriptInit()
 	eastStationDoor[15] = CreateDynamicObject(1495, 2879.107177, -832.352050, -22.719406, 0.000000, 0.000000, 270.000000, 12, 3, -1, 600.00, 600.00);
 	SetDynamicObjectMaterial(eastStationDoor[15], 2, 18250, "cw_junkbuildcs_t", "Was_scrpyd_baler_locker", 0x00000000);
 
-	//SD
+	/*/SD
 	sdIntDoors1 = CreateDynamicObject(1569, 602.049438, -565.793701, 41.418514, 0.000000, -0.000007, -89.999984, 8, -1, -1, 600.00, 600.00);
 	sdIntDoors2 = CreateDynamicObject(1569, 604.469482, -568.015014, 41.418514, 0.000007, 0.000000, 179.999954, 8, -1, -1, 600.00, 600.00);
 	sdIntDoors3 = CreateDynamicObject(1569, 617.409057, -560.354003, 44.888515, 0.000000, -0.000007, -89.999984, 8, -1, -1, 600.00, 600.00);
-	sdIntDoors4 = CreateDynamicObject(1569, 617.409057, -558.494506, 44.888515, -0.000000, 0.000007, 89.999969, 8, -1, -1, 600.00, 600.00);
+	sdIntDoors4 = CreateDynamicObject(1569, 617.409057, -558.494506, 44.888515, -0.000000, 0.000007, 89.999969, 8, -1, -1, 600.00, 600.00);*/
 
 	// New house int - Putnik
 	CreateDynamicObject(19864, 2577.23535, -1300.28516, 1062.48743,   0.00000, 0.00000, 90.00000);
@@ -325,9 +325,9 @@ public OnPlayerConnect(playerid) {
 
 stock RemovePlayerBuildings(playerid)
 {
-	//SD
+	/*//SD
     RemoveBuildingForPlayer(playerid, 13484, 738.3984, -553.9844, 21.9609, 0.25);
-	RemoveBuildingForPlayer(playerid, 13137, 646.1641, -527.8984, 28.0703, 0.25);
+	RemoveBuildingForPlayer(playerid, 13137, 646.1641, -527.8984, 28.0703, 0.25);*/
 
 	//PD Station
 	RemoveBuildingForPlayer(playerid, 3622, 2135.739, -2186.449, 15.671, 0.250);
@@ -874,7 +874,7 @@ public OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
 {
 	if( PRESSED(KEY_YES) ) // Tipka Y
 	{
-	    if( IsPlayerInRangeOfPoint(playerid, 5.0, 2163.574462, -2158.066650, 13.286876)) {
+	    if( IsPlayerInRangeOfPoint(playerid, 10.0, 2163.574462, -2158.066650, 13.286876)) {
 			if(rampastatus == 0) {
     			SetDynamicObjectRot(rampa, 0.0000, 0.0000, 0.0000);
 				rampastatus = 1;
