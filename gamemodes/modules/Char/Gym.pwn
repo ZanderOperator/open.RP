@@ -242,6 +242,8 @@ public OnPlayerUsingGym(playerid, mode)
 				
 				if( floatround(GymInfo[ playerid ][ gmDistance ]) >= GymInfo[ playerid ][ gmNeeded ] ) {
 					PlayerInfo[ playerid ][ pMuscle ]++;
+					if(PlayerInfo[ playerid ][ pMuscle ] >= 50)
+							PlayerInfo[ playerid ][ pMuscle ] = 50;
 					GymInfo[ playerid ][ gmNeeded ] = ( PlayerInfo[ playerid ][ pMuscle ] * 50 );
 					SendFormatMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uspjesno ste podigli svoj muscle level na %d!", PlayerInfo[ playerid ][ pMuscle ]);
 				}
@@ -271,6 +273,8 @@ public OnPlayerUsingGym(playerid, mode)
 				
 				if( floatround(GymInfo[ playerid ][ gmDistance ]) >= GymInfo[ playerid ][ gmNeeded ] ) {
 					PlayerInfo[ playerid ][ pMuscle ]++;
+					if(PlayerInfo[ playerid ][ pMuscle ] >= 50)
+							PlayerInfo[ playerid ][ pMuscle ] = 50;
 					GymInfo[ playerid ][ gmNeeded ] = ( PlayerInfo[ playerid ][ pMuscle ] * 75 );
 					SendFormatMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uspjesno ste podigli svoj muscle level na %d!", PlayerInfo[ playerid ][ pMuscle ]);
 				}
@@ -793,6 +797,8 @@ hook OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
 					
 					if( GymInfo[ playerid ][ gmReps ] >= GymInfo[ playerid ][ gmNeeded ] ) {
 						PlayerInfo[ playerid ][ pMuscle ]++;
+						if(PlayerInfo[ playerid ][ pMuscle ] >= 50)
+							PlayerInfo[ playerid ][ pMuscle ] = 50;
 						GymInfo[ playerid ][ gmNeeded ] = ( PlayerInfo[ playerid ][ pMuscle ] * 10 );
 						SendFormatMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uspjesno ste podigli svoj muscle level na %d!", PlayerInfo[ playerid ][ pMuscle ]);
 					}
@@ -827,6 +833,8 @@ hook OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
 
 					if( GymInfo[ playerid ][ gmReps ] >= GymInfo[ playerid ][ gmNeeded ] ) {
 						PlayerInfo[ playerid ][ pMuscle ]++;
+						if(PlayerInfo[ playerid ][ pMuscle ] >= 50)
+							PlayerInfo[ playerid ][ pMuscle ] = 50;
 						GymInfo[ playerid ][ gmNeeded ] = ( PlayerInfo[ playerid ][ pMuscle ] * 10 );
 						SendFormatMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uspjesno ste podigli svoj muscle level na %d!", PlayerInfo[ playerid ][ pMuscle ]);
 					}

@@ -1,0 +1,6 @@
+- Dodati inactive_accounts tablicu
+- Maknuti UNSIGNED attribute sa bone-a u player_objects tablici
+- Povecati adminmsg u accounts na 2048 znakova
+- Obrisati sve credit varijable iz accounts
+- Dodati player_credits tablicu
+- Dodati monthpaydays polje u experience tablicu

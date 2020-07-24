@@ -2564,16 +2564,6 @@ LeavePokerTable(playerid)
 		PokerTable[tableid][pkrActivePlayerID] = -1;
 	PokerTable[tableid][pkrSlot][PlayingTableSlot[playerid]] = -1;
 
-	// Check & Stop the Game Loop if No Players at the Table
-	if(PokerTable[tableid][pkrPlayers] == 1)
-	{
-		for(new i = 0; i < 6; i++)
-		{
-			if(PokerTable[tableid][pkrSlot][i] != -1)
-				LeavePokerTable(PokerTable[tableid][pkrSlot][i]);
-		}
-	}
-
 	if(PokerTable[tableid][pkrPlayers] == 0)
 	{
 		new tmpString[128];
@@ -3029,7 +3019,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 						}
 						case 1: // Destroy Poker Table
 						{
-							if(PokerTable[tableid][pkrActive] > 0)
+							if(PokerTable[tableid][pkrPlayers] > 0)
 								return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Poker stol je aktivan, ne mozete ga obrisati dok ima igraca!");
 							DestroyPokerTable(tableid);
 							ResetPokerTableEnum(tableid);

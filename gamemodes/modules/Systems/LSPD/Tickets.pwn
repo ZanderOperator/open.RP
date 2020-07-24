@@ -66,14 +66,14 @@ Function: OnVehicleTicketInsert(vehicleid, slot)
 	return 1;
 }
 
-stock DeletePlayerTicket(playerid, sqlid) 
+stock DeletePlayerTicket(playerid, sqlid, bool:notification = false) 
 {
 	new
 		destroyQuery[ 256 ];
 	format( destroyQuery, sizeof(destroyQuery), "DELETE FROM tickets WHERE `id` = '%d'", sqlid);
 	mysql_tquery(g_SQL, destroyQuery, "");
-	va_SendClientMessage(playerid, COLOR_RED, "[ ! ] ", sqlid);
-	mysql_tquery(g_SQL, "COMMIT");
+	if(notification)
+		SendFormatMessage(playerid, MESSAGE_TYPE_SUCCESS, "Kazna #%d je uspjesno izbrisana iz baze podataka.", sqlid);
 }
 
 stock LoadVehicleTickets(vehicleid)
@@ -231,7 +231,7 @@ CMD:ticket(playerid, params[])
 			
 		format(ticketsQuery, 62, "SELECT id, primatelj, novac FROM tickets WHERE id = '%d'", id);
 		result = mysql_query(g_SQL, ticketsQuery);
-		if(!cache_num_rows()) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate kazne u bazi podataka!");
+		if(!cache_num_rows()) return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "Ne postoji kazna sa ID-em #%d !", id);
 		
 		new ticketId, moneys;	
 		cache_get_value_name(0, "primatelj", tmp, sizeof(tmp));
@@ -243,7 +243,7 @@ CMD:ticket(playerid, params[])
 			if(AC_GetPlayerMoney(playerid) < moneys) return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate dovoljno novaca, fali vam %d$.", moneys-AC_GetPlayerMoney(playerid));
 
 			PlayerToOrgMoney(playerid, FACTION_TYPE_LAW, moneys); // Novac dolazi u faction bank
-			DeletePlayerTicket(playerid, id);
+			DeletePlayerTicket(playerid, id, false);
 			SendFormatMessage(playerid, MESSAGE_TYPE_SUCCESS, "Platili ste kaznu #%d (%d$).", id, moneys);
 		}
 		else SendMessage(playerid, MESSAGE_TYPE_ERROR, " To nije vasa kazna!"); // provjera ima li sta u bazi

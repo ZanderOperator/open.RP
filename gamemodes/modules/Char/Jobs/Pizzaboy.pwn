@@ -362,5 +362,3 @@ CMD:pizza(playerid, params[])
 	}
 	return 1;
 }
-
-

@@ -123,7 +123,6 @@ native WP_Hash(buffer[], len, const str[]);
 #define MAX_SKILLS								(9)
 #define MAX_WARNS								(3)
 #define MAX_PICKUP								(150)
-#define MAX_GARBAGE_CONTAINERS					(88)
 #define MAX_HOUSES                      		(800)
 #define	MAX_COMPLEX_ROOMS                       (50)
 #define MAX_COMPLEX                             (10)
@@ -2031,10 +2030,8 @@ new
 #include "modules/Char/Gym.pwn"
 
 // Jobs
-#include "modules/Char/Jobs/Pizzaboy.pwn"
 #include "modules/Char/Jobs/Garbage.pwn"
 #include "modules/Char/Jobs/Sweeper.pwn"
-#include "modules/Char/Jobs/Mower.pwn"
 #include "modules/Char/Jobs/Mechanic.pwn"
 #include "modules/Char/Jobs/Crafter.pwn"
 #include "modules/Char/Jobs/Farmer.pwn"
@@ -2427,14 +2424,6 @@ ResetPlayerVariables(playerid)
 		Bit1_Set(gr_PlayerOnTutorial, playerid, false);
 		stop TutTimer[playerid];
 	}
-
-	// Mower
-	DestroyMowerVars(playerid);
-	Bit1_Set( gr_UsingPizzaSkin		, playerid, false );
-	Bit1_Set( gr_FirstUsing			, playerid, false );
-	Bit8_Set( gr_PlayerPizzas		, playerid, 0 );
-	Bit8_Set( gr_PlayerPizzasTotal	, playerid, 0 );
-	Bit16_Set( gr_LastPizzaCrib		, playerid, INVALID_HOUSE_ID );
 
 
 	// Rent Veh

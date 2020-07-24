@@ -12,6 +12,7 @@
 #define PLAYER_JOB_GARBAGE      			(16) 	// ID posla smecara zamjeni sa kojim zelis
 #define TRASH_PRICE                         (43) 	// ovo je cijena vrece smeca u randomu
 #define PRICE_TRASH                         (50) 	// cijena vrece dobijat ce jos random(150)
+#define MAX_GARBAGE_CONTAINERS				(88)
 
 /*
 	##     ##    ###    ########   ######  

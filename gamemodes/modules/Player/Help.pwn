@@ -54,48 +54,49 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext [])
 			{
 				switch(listitem)
 				{
-					case 0: ShowPlayerDialog(playerid, DIALOG_HELPACC, DIALOG_STYLE_MSGBOX, "Account", "/stats\n/levelup\n/changename\n/setlook\n/showme\n/pay\n/setwalk\n/spawnchange\n/account\n/resetcp\n/id\n/kill\n/experience", "Ok", "Saznaj vise");
-					case 1: ShowPlayerDialog(playerid, DIALOG_HELP, DIALOG_STYLE_MSGBOX, "Vozilo", "/gps\n/car\n/fillcar\n/get fuel\n/tow\n/oldcar\n/doors\n/windows\n/trunk\n/seatbelt\n/showcostats\n/duplicatekey\n/tuning\n/bonnet\n/eject", "Ok", "");
+					case 0: ShowPlayerDialog(playerid, DIALOG_HELPACC, DIALOG_STYLE_MSGBOX, "Account", "/stats\n/levelup\n/changename\n/setlook\n/showme\n/pay\n/setwalk\n/spawnchange\n/sid\n/account\n/id\n/kill", "Ok", "Saznaj vise");
+					case 1: ShowPlayerDialog(playerid, DIALOG_HELP, DIALOG_STYLE_MSGBOX, "Vozilo", "/gps\n/car\n/fill\n/get fuel\n/tow\n/oldcar\n/doors\n/windows\n/trunk\n/showcostats\n/duplicatekey\n/tuning\n/bonnet\n/eject", "Ok", "");
 					case 2: 
 					{
 						if(PlayerInfo[playerid][pMember] == 0)
-							return SendClientMessage(playerid,COLOR_RED, "Niste clan ni jedne legalne organizacije!");
+							return SendClientMessage(playerid,COLOR_RED, "ERROR:{FFFFFF} Niste clan ni jedne legalne organizacije!");
 						else
 						{
 							if(IsACop(playerid))
-								ShowPlayerDialog(playerid, DIALOG_HELP, DIALOG_STYLE_MSGBOX, "PD", "/tazer/arrest/cuff/uncuff/unfree/pdtrunk/pdramp/onduty/lawskin\n\
-									 /pd1/m/pd2/siren/codes/pdlif/suspend/flares/deflares/impund/checktrunk/listensms\n\
-									 /cleartrunk\n/udercover\n/listennumber/checkhouse/housetake/cargun/mdc/apb/erb/rb/rrb/removeall\n\
+								ShowPlayerDialog(playerid, DIALOG_HELP, DIALOG_STYLE_MSGBOX, "PD", "/tazer/arrest/cuff/uncuff/pdtrunk/pdramp/onduty/lawskin\n\
+									 /m/siren/pdlif/flares/dflares/impound/checktrunk\n\
+									 /cleartrunk\n/gunrack\n/udercover\n/listennumber/checkhouse/housetake/cargun/mdc/apb/erb/rb/rrb/removeall\n\
 									 /putspike/removespike/ticket/giveticket/siren/afaction/faction/quitfaction/showbadge/r\n\
-									 /rlow/f/togf/carsign/bk/bkc/bkall/jail_alert", "Ok", "");
+									 /rlow/f/togf/carsign/bk/bkc/bkall", "Ok", "");
 							else if(IsFDMember(playerid))
-								ShowPlayerDialog(playerid, DIALOG_HELP, DIALOG_STYLE_MSGBOX, "FD", "/enablesiren/equipment/oxygen/createexplosion/fdcarenter/fdenter/rtcfdcars/fdlift/recover/stretcher/selldrug/treatment\n\
-									 /confirmation\n/fire\n/f\n/togf\n/bk\n/bkc\n/bkall\n/carsign\n/siren\n/faction\n/quitfaction\n/showcreditation", "Ok", "");
+								ShowPlayerDialog(playerid, DIALOG_HELP, DIALOG_STYLE_MSGBOX, "FD", "/equipment/oxygen/rtdfdcars/fdlift/recover/stretcher\n\
+									 /confirmation\n/f\n/togf\n/bk\n/bkc\n/bkall\n/carsign\n/siren\n/faction\n/quitfaction", "Ok", "");
 							else if(IsAGov(playerid))
-								ShowPlayerDialog(playerid, DIALOG_HELP, DIALOG_STYLE_MSGBOX, "GOV", "/showbadge\n/govskin\n/heal\n/m\n/cuff\n/uncuff\n/vote\n/votes\n/setcity\n/city\n/govmdc\n/charity\n/finance\n/faction\n/r\n/rlow\n/f\n/togf\n/gov\n/govramp\n/carsign\n/siren\n/quitfaction ", "Ok", "");
+								ShowPlayerDialog(playerid, DIALOG_HELP, DIALOG_STYLE_MSGBOX, "GOV", "/showbadge\n/equipment\n/m\n/cuff\n/uncuff\n/vote\n/votes\n/govmdc\n/charity\n/finance\n/faction\n/r\n/rlow\n/f\n/togf\n/gov\n/carsign\n/siren\n/quitfaction ", "Ok", "");
 							else if(IsANews(playerid))
-								ShowPlayerDialog(playerid, DIALOG_HELP, DIALOG_STYLE_MSGBOX, "LSN", "/lsncamera\n/live\n/news\n/lsnstat\n/lsnup\n/lsndown\n/reset_news\n/callnews\n/faction\n/faction members\n/quitfaction ", "Ok", "");
+								ShowPlayerDialog(playerid, DIALOG_HELP, DIALOG_STYLE_MSGBOX, "LSN", "/lsncamera\n/live\n/news\n/lsnstat\n/lsnstat\n/faction skin\n/reset_news\n/callnews\n/faction\n/faction members\n/quitfaction ", "Ok", "");
 						}
 					}
-					case 3: ShowPlayerDialog(playerid, DIALOG_HELP, DIALOG_STYLE_MSGBOX, "Biznis", "/createvip\n/biznis\n/menu\n/bmusic\n/buybiznis\n/buy\n/makedj\n/bizinfo\n/bizbank\n/bizwithdraw\n/biznis_bint\n/biznis_furniture", "Ok", "");
+					case 3: ShowPlayerDialog(playerid, DIALOG_HELP, DIALOG_STYLE_MSGBOX, "Biznis", "/biznis\n/menu\n/bmusic\n/buy\n/makedj\n/bizinfo\n/bizbank\n/bizwithdraw\n/biznis_bint\n/biznis_furniture", "Ok", "");
 					case 4: ShowPlayerDialog(playerid, DIALOG_BANK, DIALOG_STYLE_MSGBOX, "ATM/BANKA", "/atm\n/bank\n/payout(City Hall)", "Ok", "");
-					case 5: ShowPlayerDialog(playerid, DIALOG_HELP, DIALOG_STYLE_MSGBOX, "Music", "/music", "Ok", "");
+					case 5: ShowPlayerDialog(playerid, DIALOG_HELP, DIALOG_STYLE_MSGBOX, "Music", "/music\n/bmusic\n/makedj", "Ok", "");
 					case 6: ShowPlayerDialog(playerid, DIALOG_HELP, DIALOG_STYLE_MSGBOX, "Objekti", "/createobject\n/editobject\n/deleteobject\n/objects (buy,attach,detach,changebone,edit)", "Ok", "");
-					case 7: ShowPlayerDialog(playerid, DIALOG_HELP, DIALOG_STYLE_MSGBOX, "Death system", "/alldamages", "Ok", "");
+					case 7: ShowPlayerDialog(playerid, DIALOG_HELP, DIALOG_STYLE_MSGBOX, "Death system", "/pickitem(weapon,drug)\n/alldamages\n/acceptdeath", "Ok", "");
 					case 8: ShowPlayerDialog(playerid, DIALOG_HELP, DIALOG_STYLE_MSGBOX, "Drugs", "/drug\n", "Ok", "");
-					case 9: ShowPlayerDialog(playerid, DIALOG_HELP, DIALOG_STYLE_MSGBOX, "Hunger", "/menu\n/meal", "Ok", "");
-					case 10: ShowPlayerDialog(playerid, DIALOG_HOBI, DIALOG_STYLE_MSGBOX, "Hobi", "RIBOLOVAC:\t\n/fish\n/sellfish\n\nLOVAC:\n/usewhistle\n/cutdeer\n/buywhistle\n/sellmeat\n/checkmeat", "Ok", "Saznaj vise");					case 11: ShowPlayerDialog(playerid, DIALOG_HELP, DIALOG_STYLE_MSGBOX, "License", "/license(DMV centar)\n/licenses\n/showlicenses\n/sid(osobna)", "Ok", "");
-					case 12: ShowPlayerDialog(playerid, DIALOG_HELP, DIALOG_STYLE_MSGBOX, "Mobitel", "/togphone\n/ph\n/phone\n/call\n/speakerphone\n/sms\n/pcall\n/hangup\n/cryptotext\n/cryptonumber", "Ok", "");
+					case 9: ShowPlayerDialog(playerid, DIALOG_HELP, DIALOG_STYLE_MSGBOX, "Hunger", "/menu", "Ok", "");
+					case 10: ShowPlayerDialog(playerid, DIALOG_HOBI, DIALOG_STYLE_MSGBOX, "Hobi", "RIBOLOVAC:\t\n/rentarod\n/fish\n/sellfish\n/myfish\n\nLOVAC:\n/cutdeer\n/sellmeat\n/checkmeat", "Ok", "Saznaj vise");					
+                    case 11: ShowPlayerDialog(playerid, DIALOG_HELP, DIALOG_STYLE_MSGBOX, "Licence", "/license(DMV centar)\n/licenses\n/showlicenses\n/sid(osobna)\n/showcostats", "Ok", "");
+					case 12: ShowPlayerDialog(playerid, DIALOG_HELP, DIALOG_STYLE_MSGBOX, "Mobitel", "/togphone\n/phone\n/call\n/sms\n/pcall\n/hangup\n/cryptotext\n/cryptonumber", "Ok", "");
 					case 13: ShowPlayerDialog(playerid, DIALOG_HELP, DIALOG_STYLE_MSGBOX, "Skills", "/skills", "Ok", "");
-					case 14: ShowPlayerDialog(playerid, DIALOG_HELP, DIALOG_STYLE_MSGBOX, "Weapon", "/weapon\n/buygun\n/weapon hide", "Ok", "");
-					case 15: ShowPlayerDialog(playerid, DIALOG_HELP, DIALOG_STYLE_MSGBOX, "Chats", "/me\n/do\n/ame\n/c(lose)\n/s(hout)\n/carwhisper\n/w(hisper)\n/b\n/blockb\n/pm\n/blockpm\n/accent\n/mic\n/clearmychat\n/attempt", "Ok", "");
-					case 16: ShowPlayerDialog(playerid, DIALOG_JOBHELP, DIALOG_STYLE_LIST, "Poslovi", "Kosac trave\nTvornicki radnik\nCistac ulice\nSmecar\nTrucker\nDrvosjeca\nMehanicar\nPizza Boy\nFarmer\nTaksista\nGun dealer\nDrug dealer\nIllegal trucker\nCar jacker\nLopov\nPilot", "Odaberi","Natrag");
+					case 14: ShowPlayerDialog(playerid, DIALOG_HELP, DIALOG_STYLE_MSGBOX, "Weapon", "/weapon\n/buygun", "Ok", "");
+					case 15: ShowPlayerDialog(playerid, DIALOG_HELP, DIALOG_STYLE_MSGBOX, "Chats", "/me\n/do\n/ame\n/c(lose)\n/s(hout)\n/carwhisper\n/w(hisper)\n/b\n/blockb\n/pm\n/accent\n/mic\n/clearmychat\n/attempt", "Ok", "");
+					case 16: ShowPlayerDialog(playerid, DIALOG_JOBHELP, DIALOG_STYLE_LIST, "Poslovi", "Tvornicki radnik\nCistac ulice\nSmecar\nDrvosjeca\nMehanicar\nFarmer\nTaksista\nDrug dealer\nCar jacker\nLopov", "Odaberi","Natrag");
 					case 17: ShowPlayerDialog(playerid, DIALOG_HELP, DIALOG_STYLE_MSGBOX, "Garage", "/garage\n/genter", "Ok", "");
 					case 18: ShowPlayerDialog(playerid, DIALOG_HELP, DIALOG_STYLE_MSGBOX, "Complex", "/buycomplex\n/complex\n/rentroom\n/unrentroom", "Ok", "");
-					case 19: ShowPlayerDialog(playerid, DIALOG_HELP, DIALOG_STYLE_MSGBOX, "House&Furniture", "/house\n/bint\n/buyhouse\n/ring\n/knock\n/doorshout\n/picklock\n/doorram\n/renthouse\n/unrenthouse\n/furniture", "Ok", "");
+					case 19: ShowPlayerDialog(playerid, DIALOG_HELP, DIALOG_STYLE_MSGBOX, "House&Furniture", "/house\n/bint\n/buyhouse\n/ring\n/knock\n/doorshout\n/renthouse\n/unrenthouse\n/furniture", "Ok", "");
 					case 20: ShowPlayerDialog(playerid, DIALOG_HELP, DIALOG_STYLE_MSGBOX, "Roleplay", "/rphelp\n/toganimchat\n/blindfold\n/screenfade\n/tie\n/frisk\n/handshake\n/accept\n/time\n/prisontime\n/coin\n/dice\n/dump\n/get\n/give\n/graffit\n/examine\n/putintrunk\n/entertrunk\n/exittrunk\n/paperdivorce\n/marry\n/rand\n/card\n/mycigars\n/taxcalculator\n/animations", "Ok", "");
-					case 21: ShowPlayerDialog(playerid, DIALOG_KASINO, DIALOG_STYLE_MSGBOX, "Kasino", "/poker\n/rulet\n/rulethelp ", "Ok", "");
-					case 22: ShowPlayerDialog(playerid, DIALOG_HELP, DIALOG_STYLE_MSGBOX, "Ostalo", "/jobduty\n/prostitute\n/admins\n/helpers\n/hh\n/helpme\n/report\n/colors\n/fr\n/buymelee", "Ok", "");
+					case 21: ShowPlayerDialog(playerid, DIALOG_KASINO, DIALOG_STYLE_MSGBOX, "Kasino", "/poker\n/rulet\n/rulethelp ", "Ok", "Saznaj vise");
+					case 22: ShowPlayerDialog(playerid, DIALOG_HELP, DIALOG_STYLE_MSGBOX, "Ostalo", "/jobduty\n\n/admins\n/report\n/colors", "Ok", "");
 				 }
 			}
 			return 1;
@@ -107,10 +108,10 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext [])
 				switch(listitem)
 				{
 					case 0:ShowPlayerDialog(playerid, DIALOG_ADMHELP, DIALOG_STYLE_MSGBOX, "KOMANDE - Admin level 1","/checklastlogin,/check,/setint,/mute,/kick,/disconnect,/cnn,/a(dmin) chat,/am,/pweapons,/port\n\
-						   /pm,/aon,/recon,/setviwo,/masked,/dmers,/clearchat,/slap,/checknetstats\n\
+						   /pm,/aon,/recon,/setviwo,/masked,/dmers,/clearchat,/slap\n\
 						   /learn,/freeze,/unfreeze,/akill,/count,/checkoffline,/lastdriver\n\
 						   /fly,/lt,/rt,/goto,/rtc,/togadminwarns,/houseo,/bizo,/complexo\n\
-						   /biznis_id,/house_id,/complex_id,/triatlonhelp", "Zatvori", "");
+						   /biznis_id,/house_id,/complex_id", "Zatvori", "");
 					case 1:
 					{
 						if(PlayerInfo[playerid][pAdmin] < 2)
@@ -125,8 +126,8 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext [])
 					{
 						if(PlayerInfo[playerid][pAdmin] < 3)
 							return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste Admin Level 3+!");
-						else ShowPlayerDialog(playerid, DIALOG_ADMHELP, DIALOG_STYLE_MSGBOX, "KOMANDE - Admin level 3","/mark,/gotomark,/entercar,/getcar,/fpm,/fpmed,/removetuning,/setmobilecredits\n\
-						   /blockreport,/setph,/findobjectowner,/aremoveallplayerobjects,/checkplayerobjects\n\
+						else ShowPlayerDialog(playerid, DIALOG_ADMHELP, DIALOG_STYLE_MSGBOX, "KOMANDE - Admin level 3","/mark,/gotomark,/entercar,/getcar,/fpm,/fpmed\n\
+						   /blockreport,/setph,/findobjectowner,/aremoveallplayerobjects,/checkplayerobjects,/approveobjects,/afurniture,/inactivity\n\
 						   /tod", "Zatvori", "");
 					}
 					case 3:
@@ -134,24 +135,24 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext [])
 						if(PlayerInfo[playerid][pAdmin] < 4)
 							return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste Admin Level 4+!");
 						else ShowPlayerDialog(playerid, DIALOG_ADMHELP, DIALOG_STYLE_MSGBOX, "KOMANDE - Admin level 4","/mutearound,/atake,/aunlock,/bigears,/givegun,/fixveh,/setpharound\n\
-						   /setarmoraround,/freezearound,/unfreezearound,/undie,/givelicense\n\
-						   /veh,/getspawnedvehs,/setarmour,/rac,/skin,/worders,/bizinfo", "Zatvori", "");
+						   /setarmoraround,/freezearound,/unfreezearound,/undie\n\
+						   /veh,/setarmour,/rac,/skin,/worders,/bizinfo", "Zatvori", "");
 				   }
 					case 4:
 					{
 						if(PlayerInfo[playerid][pAdmin] < 1337)
 							return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste Admin Level 1337+!");
-						else ShowPlayerDialog(playerid, DIALOG_ADMHELP, DIALOG_STYLE_MSGBOX, "KOMANDE - Admin level 1337","/fstyle,/skin,/setstat, /setcostats ,/weather,/healcar,/createvip,/createware,/fuelcars,/fuelcar,/edit\n\
-						   /asellhouse,/asellbiz,/asellcomplex,/asellcomplexroom,/checkbizowner,/address,/afaction", "Zatvori", "");
+						else ShowPlayerDialog(playerid, DIALOG_ADMHELP, DIALOG_STYLE_MSGBOX, "KOMANDE - Admin level 1337","/fstyle,/skin,/setstat, /setcostats ,/weather,/healcar,/createvip,/fuelcars,/fuelcar,/edit\n\
+						   /asellhouse,/asellbiz,/asellcomplex,/givelicense,/asellcomplexroom,/address,/afaction", "Zatvori", "");
 					}
 					case 5:
 					{
 						if(PlayerInfo[playerid][pAdmin] < 1338)
 							return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste Admin Level 1338!");
-						else ShowPlayerDialog(playerid, DIALOG_ADMHELP, DIALOG_STYLE_MSGBOX, "KOMANDE - Admin level 1338","/setmoney,/givemoney,/achangename,/achangenameex,/makeadminex,/setvehplates,/makehelper\n\
+						else ShowPlayerDialog(playerid, DIALOG_ADMHELP, DIALOG_STYLE_MSGBOX, "KOMANDE - Admin level 1338",",/givemoney,/achangename,/makeadminex,/setvehplates,/makehelper\n\
 						   /givepremium,/removewarn,/houseint,/houseentrance,/bizentrance,/veh_plate,/approve_tax\n\
 						   /happyhours,/togpm,/crash,/deletebiz,/createbiz,/customhouseint,/custombizint\n\
-						   /createtower,/destroytower,/viewtowers,/item,/agps", "Zatvori", "");
+						   /createtower,/destroytower,/viewtowers,/agps", "Zatvori", "");
 					}
 				}
 			}
@@ -202,25 +203,46 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext [])
 			{
 				new accstring [1024],
 					acc [128];
-				format(acc, sizeof(acc), "Zabranjeno je bilo kakvo posudjivanje racuna drugim osobama\n");
+				format(acc, sizeof(acc), "Zabranjeno je bilo kakvo posudjivanje racuna drugim osobama.\n");
 				strcat(accstring, acc, sizeof(accstring));
-				format(acc,sizeof(acc), "Odaberite password koji niti na kojin nacin nije povezan sa vama i koji je siguran\n");
+				format(acc,sizeof(acc), "Odaberite password koji niti na kojin nacin nije povezan sa vama i koji je siguran.\n");
 				strcat(accstring, acc, sizeof(accstring));
-				format(acc,sizeof(acc), "Tim ne odgovara za izgubljene passworde ili ostale informacije racuna\n");
+				format(acc,sizeof(acc), "Tim ne odgovara za izgubljene passworde ili ostale informacije racuna.\n");
 				strcat(accstring, acc, sizeof(accstring));
-				format(acc,sizeof(acc), "Ukoliko primetite da na vasem racunu igra netko,momentalno ga prijavite administratorima\n");
+				format(acc,sizeof(acc), "Ukoliko primetite da na vasem racunu igra netko,momentalno ga prijavite administratorima.\n");
 				strcat(accstring, acc, sizeof(accstring));
-				format(acc,sizeof(acc), "Prodavanje vasih server racuna je strogo zabranjeno\n");
+				format(acc,sizeof(acc), "Prodavanje vasih server racuna je strogo zabranjeno.\n");
 				strcat(accstring, acc, sizeof(accstring));
-				format(acc,sizeof(acc), "Dozvoljeno je posjedovati dva ili vise racuna samo ukoliko izmedju njih nema povezanosti");
+				format(acc,sizeof(acc), "Dozvoljeno je posjedovati dva ili vise racuna samo ukoliko izmedju njih nema povezanosti.");
 				strcat(accstring, acc, sizeof(accstring));
 				ShowPlayerDialog(playerid,DIALOG_HELPACC, DIALOG_STYLE_MSGBOX, "Account", accstring , "Zatvori", "");
 			}
 			return 1;
 		}
 		case DIALOG_KASINO:
+		{
+			if(!response)
+			{
+				ShowPlayerDialog(playerid,DIALOG_HELP,DIALOG_STYLE_LIST,"POMOC","1.Account \n2.Vozilo \n3.Organizacije \n4.Biznis \n5.Novac \n6.Muzika \n7.Objekti \n8.Death system \n9.Droga \n10.Hunger \n11.Hobi \n12.License \n13.Mobitel \n14.Skills \n15.Oruzje \n16.Chat \n17.Poslovi \n18.Garaze \n19.Complexi \n20.House&Furniture\n21.Biznis\n22.Kasino \n23.Ostalo","Zatvori","");
+				return 1;
+			}
+			else
+			{
+				new casinostring [1024];
+				strcat(casinostring, "Za pocetak igra pokera, potrebna su dva ili vise igraca. Igru mora pokrenuti dealer(/poker table), nakon cega pravi podesavanja sobe.\n\
+					Ostali ucesnici kucaju /poker play, te kolicinu novca s kojom zele sudjelovati. \n\
+					Nakon toga, runda zapocinje i morate sacekati 15sekundi.\n\
+					Nakon 15 sekundi dolaze karte, pojavljuje vam se kratak dialog sa CHECK,RAISE i FOLD.  \n\
+					CHECK je potvrdjivanje i nastavak ide bez ulaganja. \n\
+					RAISE ukoliko zelite da podignete ulog na stolu.\n\
+					FOLD ukoliko zelite da vratite karte i odustanete od runde. \n\
+					Da biste zapoceli rulet u prostoriji kasina pored stola za rulet kucate komandu /rulet, nakon toga vam ne trebaju dodatne komande i nastavljate igru po zelji.", 
+					sizeof(casinostring)
+				);
+				ShowPlayerDialog(playerid,DIALOG_KASINO, DIALOG_STYLE_MSGBOX, "KASINO", casinostring , "Zatvori", "");
+			}
 			return 1;
-			
+		}
 		case DIALOG_HOBI:
 		{
 			if(!response)
@@ -232,18 +254,18 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext [])
 			{
 				new hobistring [1300];
 				new fish [256];
-				format(fish, sizeof(fish), "RIBOLOVAC:\nDa biste se mogli koristiti komandu /fish potrebno je da kupite objekat stapa u Verona Mall-u.\n");
+				format(fish, sizeof(fish), "RIBOLOVAC:\nDa biste se mogli koristiti komandu /rentarod potrebno je da odete do drvene platforme Santa Maria.\n");
 				strcat(hobistring, fish, sizeof(hobistring));
-				format(fish,sizeof(fish), "Ispod prodavnice u kojoj ste kupili stap se nalazi 24/7 u kojem kupujete mamac /buybait.\n");
+				format(fish,sizeof(fish), "Nakon sto rentate stap, odlazite do ograde na kojoj mozete kucati komandu /fish.\n");
 				strcat(hobistring, fish, sizeof(hobistring));
-				format(fish,sizeof(fish), "Mesta za pecanje su: 1) Glen Park jezero 2) Malo jezero na zapadnoj strani aerodroma 3) Drvena platforma u Santa Maria Beachu (ringispil).\n");
+				format(fish,sizeof(fish), "Mjesto za pecanje je Drvena platforma u Santa Maria Beachu (ringispil).\n");
 				strcat(hobistring, fish, sizeof(hobistring));
-				format(fish,sizeof(fish), "Iako mozete pecati na vise mesta, na razlicitom mestu mozete upecati ribe razlicite velicine. Ribe mozete prodati u bilo kojem 24/7.\n\n");
+				format(fish,sizeof(fish), "Pecati mozete sa drvene platforme, kao i sa broda. Kolicinu provjeravate sa /myfish, a ribu prodajete sa /sellfish.\n\n");
 				strcat(hobistring, fish, sizeof(hobistring));
 				
-				format(fish,sizeof(fish), "LOVAC:\nPistaljku kupujete u 24/7 marketu. Koristeci nju mozete prizvati jelena. Nakon sto ubijete jelena koristite komandu /cutdeer za koju je potrebno imati noz.\n");
+				format(fish,sizeof(fish), "LOVAC:\nNakon sto spremite odredjeno oruzje (Rifle) i noz, mozete se zaputiti u Palomino Creek sumu.\n");
 				strcat(hobistring, fish, sizeof(hobistring));
-				format(fish,sizeof(fish), "Ukoliko zelite prestati sa secenjem mesa koristite komandu /stopcutdeer. Kako biste videli koliko mesa imate kod sebe koristite komandu /checkmeat.\n");
+				format(fish,sizeof(fish), "Nakon sto ubijete srnu, odlazite do nje sa komandom /cutdeer. Kako biste videli koliko mesa imate kod sebe koristite komandu /checkmeat.\n");
 				strcat(hobistring, fish, sizeof(hobistring));
 				format(fish,sizeof(fish), "Zatim, odlaskom u bilo koji 24/7 market komandom /sellmeat prodajete meso, te zaradjujete novac.");
 				strcat(hobistring, fish, sizeof(hobistring));
@@ -255,31 +277,25 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext [])
 		case DIALOG_JOBHELP: {
 			if(!response) return (true);
 			new jstring[4096];
-    		switch(listitem) {
+    		switch(listitem) 
+			{
     			case 0: {
-    				strcat(jstring, "Sjediste kosca trave se nalazi nadomak Glen Park.\n");
-    				strcat(jstring, "Kada dodjete na zelenu povrsinu sa kosilicom, koristite komandu /mow. Zatim pocinjete kosnjavu sve dok ne ispunite kvotu od 100 metara.\n");
-    				strcat(jstring, "Kada se kvota ispuni, kosilica ce vam nestati. Ako zelite opet da odradite jednu turu, opet se zaputite prema kosilicama gdje ponavljate proces.\n");
-    				strcat(jstring, "Maksimalan broj tura je 3 puta u jednom satu igre. Iznos koji zaradite se prebacuje na devizni racun koji podizete u vijenici sa komandom /payout.\n");
-    				ShowPlayerDialog(playerid, 0, DIALOG_STYLE_MSGBOX, "KOSAC TRAVE", jstring, "U redu", "");
-    			}
-    			case 1: {
-    				strcat(jstring, "Lokacija posla je nadomak El Corone.\n");
+    				strcat(jstring, "Lokacija tvornickog radnika je u blizini El Corone.(/GPS)\n");
     				strcat(jstring, "Ovaj posao je jednostavan, jer je potrebno samo da pratite checkpointe koje vam skripta izbacuje. Koristite komandu /craft kako biste zapoceli posao.\n");
     				strcat(jstring, "Pocetna zarada na ovom poslu je 350$, a svakih 50 delivera vam se povecava za 25$.\n");
-    				strcat(jstring, "Maksimalan broj delivera u jednom satu je 3, a zaradjeni novac sa radne knjizice podizete u vijecnici sa komandom /payout.\n");
+    				strcat(jstring, "Maksimalan broj delivera u jednom satu je 3.\n");
     				ShowPlayerDialog(playerid, 0, DIALOG_STYLE_MSGBOX, "TVORNICKI RADNIK", jstring, "U redu", "");
     			}
-    			case 2: {
-    				strcat(jstring, "Posao se uzima u vijecnici sa komandom /takejob.\n");
-    				strcat(jstring, "Nakon toga odlazite iza iste, gdje cete vidjeti male kamioncice/sweepere u koji ulazite i komandom /sweep start zapocinjete posao.\n");
+    			case 1: {
+    				strcat(jstring, "Posao se uzima u vijecnici sa komandom /takejob.(/GPS)\n");
+    				strcat(jstring, "Nakon toga odlazite iza iste, gdje cete vidjeti male sweepere u koji ulazite i komandom /sweep start zapocinjete posao.\n");
     				strcat(jstring, "Sve sto je dalje potrebno jeste pratiti markere/checkpointe kroz grad.\n");
     				strcat(jstring, "Nakon toga, dolazite nazad do lokacije posla i dobijate zaradu shodno vasem skillu (zarada varira ovisno o vasem skill levelu).\n\n");
     				strcat(jstring, "HINT: Izlaskom iz vozila NE PONISTAVA se vasa ruta.\n");
     				ShowPlayerDialog(playerid, 0, DIALOG_STYLE_MSGBOX, "CISTAC ULICE", jstring, "U redu", "");
     			}
-    			case 3: {
-    				strcat(jstring, "Smecar sam po sebi daje nam na izbor da obavljamo kao /garbage foot ili /garbage truck.\n");
+    			case 2: {
+    				strcat(jstring, "Smecar sam po sebi daje nam na izbor da obavljamo kao /garbage foot ili /garbage truck.(/GPS)\n");
     				strcat(jstring, "Sa skill levelom 0 ostaje nam odabir samog /garbage foot kojeg mozemo obavljati osobnim automobilom.\n");
     				strcat(jstring, "Prije samog pocetka, moramo uzeti odjecu komandom /garbage clothes na istoj lokaciji gdje se nalaze sami smetlarski kamioni (iza vijecnice),\nna serveru je prikazan pickup majice gdje kucate tu komandu.\n");
     				strcat(jstring, "Idite do najblizeg kontejnera i stiskom lijevog klika misa, ubacite smece u kontejner.\n");
@@ -289,80 +305,50 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext [])
     				strcat(jstring, "Pocetkom posla pratite marker do random kontejnera koji ce vm biti zadan i ponovo klikom lijevog misa izbacite smece iz kontejnera.\nDodjite do zadnjeg dijela vaseg kamiona i lijevim klikom misa ubacite ga.\n");
     				strcat(jstring, "Nakon odradjenog broja tura dolazite na deponiju i tamo izbacujete smece, gdje vam i zarada lijeze na devizni racun.\n");
     				ShowPlayerDialog(playerid, 0, DIALOG_STYLE_MSGBOX, "SMECAR", jstring, "U redu", "");
+    			
     			}
-    			case 4: {
-    				/*strcat(jstring, "Posao ima dvije mogucnosti: prevoz teretne prikolice kamionom i prevoz produkata kombijem.\nObe se mogucnosti svode na preuzimanje produkata i njihovu dostavu biznisima.\n");
-    				strcat(jstring, "Za dostavu kamionom koristite komandu /trucker koja vam automatski nudi listu svih raspolozivih komandi.\nKamion uzimate na dvije lokacije (/gps -> Angel Pine trucks ili Desert trucks).\n");
-					strcat(jstring, "Prije svega, vazno je znati koja rutu mozete voziti sa kojim skillom i sa kojom prikolicom. Da bi to doznali, koristite /trucker info\n");
-    				strcat(jstring, "Nakon sjedanja u kamion, odaberite teretnu prikolicu pogodnu za rutu koju cete odraditi komandom /trucker start.\nMorate pokupiti produkte u tvornici oznacenoj na lokaciji koje kasnije dostavljate biznisima.\n");
-    				strcat(jstring, "Posao mozete zaustaviti u bilo kojem trenutku komandom /trucker stop.\n");
-    				strcat(jstring, "Za bolji ugodjaj, motorolom mozete komunicirati sa svim prisutnim kamiondzijama, /tc komanda.\n");
-    				ShowPlayerDialog(playerid, 0, DIALOG_STYLE_MSGBOX, "TRUCKER", jstring, "U redu", "");*/
-					SendClientMessage(playerid, COLOR_RED, "[ ! ] Posao izbacenen");
-    			}
-    			case 5: {
-    				strcat(jstring, "Kada uzmete posao drvosjece, idete do Palomino Creek farme kako bi sjekli drvece.\n");
+    			case 43: {
+    				strcat(jstring, "Kada uzmete posao drvosjece, idete do Palomino Creek farme kako bi sjekli drvece.(/GPS)\n");
     				strcat(jstring, "Stanete pored izmapanog drveta, te kucate /cuttree. Nakon 60 sekundi drvo pada, te idete na drugi checkpoint kako bi isjekli grane (proces traje 30 sekundi).\n");
     				strcat(jstring, "Poslije toga kucate /pickupwood, te otvara gepek vaseg vozila i kucate /putwood. Poslije toga se vozite do lokacije The Paonopticon gdje stajete na zuti marker.\n");
     				strcat(jstring, "Izlazite iz vozila, otvarate gepek te kucate /checkvehwood da vidite na kojem je slotu drvo, zatim /takewood ID. Kada ste uzeli jednostavno u zuti marker kucate /sellwood.\n\n");
     				strcat(jstring, "HINT: Za ovaj posao je potrebno posjedovati vozilo marke Bobcat, Sadler, Picador, Yosemite ili Walton.\n");
     				ShowPlayerDialog(playerid, 0, DIALOG_STYLE_MSGBOX, "DRVOSJECA", jstring, "U redu", "");
     			}
-    			case 6: {
-    				strcat(jstring, "Posao mozete obavljati u mehanicarskoj garazi (/gps) u Willowfield ili bilo gdje ako se nalazite u tow truck (s tim da imate dovoljno dijelova).\n");
+    			case 4: {
+    				strcat(jstring, "Posao mozete obavljati u mehanicarskoj garazi (/GPS) u Jeffersonu ili bilo gdje ako se nalazite u tow trucku (s tim da imate dovoljno dijelova).\n");
     				strcat(jstring, "Za obavljanje posla su vam potrebni mehanicarski dijelovi koji se kupuju iza tvornice pored junkyarda, oni se kupuju komandom /parts buy.\n");
     				strcat(jstring, "Vozila popravljate sa /repair, a blindirate sa /armorcar. Imate tri vrste popravki; popravka motora (/repair engine),\npopravka limarije (/repair bodykit) i skidanje unistenja (/repair dents).\n");
-    				strcat(jstring, "Svaka popravka oduzima odredjen broj dijelova iz vaseg inventara.\n");
+    				strcat(jstring, "Svaka popravka oduzima odredjen broj dijelova, na duznosti idete /mechanic onduty/offduty.\n");
     				ShowPlayerDialog(playerid, 0, DIALOG_STYLE_MSGBOX, "MEHANICAR", jstring, "U redu", "");
     			}
-    			case 7: {
-    				strcat(jstring, "Sjediste ovog posla se nalazi unutar Pizza Stack u Idlewood.\n");
-    				strcat(jstring, "Unutar objekta imate marker gdje uzimate /pizza skin. Onda kod sank narucujete broj pizza sa komandom /pizza order (1-8).\n");
-    				strcat(jstring, "Nakon toga, pizze koje ste uzeli nosite van i /pizza put ih u motore postavljate koji se nalaze pored.\n");
-    				strcat(jstring, "Kad sjednete na motor pojavljivace vam se random checkpoints raznih kuca na mapi.\n");
-    				strcat(jstring, "/pizza take kad dodjete na checkpoint, zatim /pizza deliver. Mozete raditi tri ture sa po 8 pizza.\n");
-    				ShowPlayerDialog(playerid, 0, DIALOG_STYLE_MSGBOX, "PIZZA-BOY", jstring, "U redu", "");
-    			}
-    			case 8: {
+    			case 5: {
     				ShowPlayerDialog(playerid, DIALOG_FARMERHELP, DIALOG_STYLE_LIST, "FARMER", "Milk Man\nEgg Picker\nPlanter\nTransporter\nCombine Driver", "U redu", "");
     			}
-    			case 9: {
-    				strcat(jstring, "Za posao taksiste vam je potrebno vozilo koje se kupuje u Wang Cars (/gps).\n");
-    				strcat(jstring, "Kada kupite vozilo pocinjete sa radom i cekate klijente. Kad vas neko od klijenata pozove, odlazite na lokaciju.\n");
-    				strcat(jstring, "Od trenutka kada klijent udje u vozilo, vi kucate komandu /taxi (taksimetar koji ce vam ocitavati potrebne podatke).\n");
-    				strcat(jstring, "U slucaju da ima vise taksista na duznosti osim vas, koristite komandu /tr (radio) da bi se dogovorili i rasporedili poslove.\n");
+    			case 6: {
+    				strcat(jstring, "Za posao taksiste vam je potrebno vozilo koje se kupuje u Grottiu ili posudjuje iz firme.(/GPS)\n");
+    				strcat(jstring, "Kada uzmete vozilo pocinjete sa radom i cekate klijente. Kad vas neko od klijenata pozove, odlazite na lokaciju.\n");
+    				strcat(jstring, "Od trenutka kada klijent udje u vozilo prijavite duznost (taxi start)-(taksimetar koji ce vam ocitavati potrebne podatke).\n");
+    				strcat(jstring, "U slucaju da ima vise taksista na duznosti setajte radio stanicu, kako bi se dogovorili o preuzimanju poslova. /taxi setfare - namjestanje taksimetra.\n");
     				ShowPlayerDialog(playerid, 0, DIALOG_STYLE_MSGBOX, "TAKSISTA", jstring, "U redu", "");
+    			
     			}
-    			case 10: {
-    				/*strcat(jstring, "Za lokaciju rudara koristite /gps.\n\n");
-    				strcat(jstring, "Da biste zapoceli ovaj posao potrebno je kucati /startmining nakon cega se morate popeti na grumen zlata i pritisnuti Y/Z kako bi aktivirali obradjivanje zlata.\n");
-    				strcat(jstring, "Tada vam se pojavljuje progress i vi morate pritiskati SPACE da bi zavrsili obradu.\n");
-    				strcat(jstring, "U jednoj turi radite po pet grumena zlata, a po paydayu mozete ukupno raditi tri ture.\n");
-    				ShowPlayerDialog(playerid, 0, DIALOG_STYLE_MSGBOX, "RUDAR", jstring, "U redu", "");*/
-					SendClientMessage(playerid, COLOR_RED, "[ ! ] Posao izbacenen");
-    			}
-    			case 11: {
+    			case 7: {
     				strcat(jstring, "Kod ovog posla imate jednu osnovnu komandu, a to je /drug, ona vam ispise sve potrebne komande.\n\n");
     				strcat(jstring, "Sa ovim poslom mozete saditi marihuanu na nekom vasem tajnom mjestu, ali prethodno morate kupiti sjemenke u East Los Santos.\n");
-    				strcat(jstring, "Takodje, mozete kuvati metamfetamin u svojoj kuci, ali naravno morate uzeti u Magic Shop klorovodicnu kiselinu, mravlju kiselinu i klorovodicni hidroksid.\n");
+    				strcat(jstring, "Takodje, mozete kuhati metamfetamin u svojoj kuci, ali naravno morate uzeti u Magic Shop klorovodicnu kiselinu, mravlju kiselinu i klorovodicni hidroksid.\n");
     				strcat(jstring, "Pored ove dvije droge koje mozete praviti/uzgajati, takodje imate opciju da pravite crack,\nali za ovu drogu morate imati kokain (Ilegalni trucker) i naravno uzeti u Magic Shop sodu bikarbonu kako bi mogli pomjesati.\n");
     				ShowPlayerDialog(playerid, 0, DIALOG_STYLE_MSGBOX, "DRUG-DEALER", jstring, "U redu", "");
+    			
     			}
-    			case 12: {
-    				strcat(jstring, "Komanda kojom vas zaposljavaju je /trucker hire. Narko bossovi mogu birati izmedju kokaina/heroina/ekstazija.\n\n");
-    				strcat(jstring, "Roba dolazi svakih tjedan dana, te svaka mafija ima pravo uzeti jednaku kolicinu.\n");
-    				strcat(jstring, "Nije potreban proces proizvodnje. Potreban je igrac sa kljucevima Warehousea/Leader koji narucuje transport od vas.\n");
-    				strcat(jstring, "Novac iz Warehousea se skida pri istovaru, a Warehouse dobiva odredjenu kolicinu narucene droge.\n");
-    				ShowPlayerDialog(playerid, 0, DIALOG_STYLE_MSGBOX, "ILLEGAL TRUCKER(Drug Smuggler)", jstring, "U redu", "");
-    			}
-    			case 13: {
+    			case 8: {
     				strcat(jstring, "Sjediste ovog posla jeste kao mehanicarska garaza koja se nalazi na Ocean Docks.\n\n");
     				strcat(jstring, "U njoj se nalazi tabla sa vozilima koja su potrebna da se ukradu.\n");
     				strcat(jstring, "Koristite komandu /jacker gdje imate pick da izaberete vozilo, chop da isjecete vozilo kad ga dovucete, leave da napustite misiju i stop da pauzirate misiju.\n");
     				strcat(jstring, "Kad zavrsite sa rastavljanjem vozila, budete isplaceni zavisno od vozila do vozila od strane te garaze.\n");
     				ShowPlayerDialog(playerid, 0, DIALOG_STYLE_MSGBOX, "CAR-JACKER", jstring, "U redu", "");
     			}
-    			case 14: {
+    			case 9: {
     				strcat(jstring, "Lokacija ovog posla je Civic Center, u blizini LSPD stanice.\n\n");
     				strcat(jstring, "Za dzeparenje igraca koristite komandu /pocketsteal, gdje mozete igracu ukrasti pare, sat i telefon iz dzepa.\n");
     				strcat(jstring, "Pljackanje kuce > skill level 2\n/crack_alarm /stealitems /dropitem /takeitem /picklock\n\n");
@@ -424,7 +410,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext [])
     				ShowPlayerDialog(playerid, 0, DIALOG_STYLE_MSGBOX, "COMBINE-DRIVER", jstring, "U redu", "");
     			}
     		}
-    	}
+		}
 	}
 	return 1;
 }
