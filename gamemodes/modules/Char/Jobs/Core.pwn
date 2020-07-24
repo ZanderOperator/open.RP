@@ -172,7 +172,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 			 {
 				case 0: 
 				{
-					if(JobData[SWEEPER] == NORMAL_JOBS_EMPLOYERS)
+					if(JobData[SWEEPER] >= NORMAL_JOBS_EMPLOYERS)
 						return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ova firma trenutno ne prima radnike, pokusajte kada bude slobodnih mjesta.");
 
 					SetPlayerJob(playerid, 1);
@@ -180,7 +180,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 				}
 				case 1: 
 				{
-					if(JobData[MECHANIC] == OFFICIAL_JOBS_EMPLOYERS)
+					if(JobData[MECHANIC] >= OFFICIAL_JOBS_EMPLOYERS)
 						return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ova firma trenutno ne prima radnike, pokusajte kada bude slobodnih mjesta.");
 
 					if( PlayerInfo[ playerid ][ pLevel ] < 3 ) return SendClientMessage( playerid, COLOR_RED, "Morate biti level 3+ za ovaj posao (treba vozilo)!");
@@ -190,7 +190,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 				}
 				case 2: 
 				{
-					if(JobData[CRAFTER] == NORMAL_JOBS_EMPLOYERS)
+					if(JobData[CRAFTER] >= NORMAL_JOBS_EMPLOYERS)
 						return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ova firma trenutno ne prima radnike, pokusajte kada bude slobodnih mjesta.");
 
 					SetPlayerJob(playerid, 5);
@@ -199,7 +199,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 				case 3: 
 				{
 					if( PlayerInfo[ playerid ][ pLevel ] < 3 ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Samo igraci level 3+ mogu biti taksisti.");
-					if(JobData[TAXI] == OFFICIAL_JOBS_EMPLOYERS)
+					if(JobData[TAXI] >= OFFICIAL_JOBS_EMPLOYERS)
 						return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ova firma trenutno ne prima radnike, pokusajte kada bude slobodnih mjesta.");
 
 					SetPlayerJob(playerid, 6);
@@ -207,7 +207,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 				}
 				case 4: 
 				{
-					if(JobData[FARMER] == NORMAL_JOBS_EMPLOYERS)
+					if(JobData[FARMER] >= NORMAL_JOBS_EMPLOYERS)
 						return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ova firma trenutno ne prima radnike, pokusajte kada bude slobodnih mjesta.");
 
 					SetPlayerJob(playerid, 7);
@@ -215,7 +215,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 				}
 				case 5: 
 				{
-					if(JobData[LOGGER] == NORMAL_JOBS_EMPLOYERS)
+					if(JobData[LOGGER] >= NORMAL_JOBS_EMPLOYERS)
 						return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ova firma trenutno ne prima radnike, pokusajte kada bude slobodnih mjesta.");
 
 					SetPlayerJob(playerid, 14);
@@ -223,7 +223,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 				}
 				case 6: 
 				{
-					if(JobData[GARBAGE] == NORMAL_JOBS_EMPLOYERS)
+					if(JobData[GARBAGE] >= NORMAL_JOBS_EMPLOYERS)
 						return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ova firma trenutno ne prima radnike, pokusajte kada bude slobodnih mjesta.");
 
 					SetPlayerJob(playerid, 16);
@@ -232,14 +232,14 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 				case 7:
 				{
 					if( PlayerInfo[ playerid ][ pLevel ] < 5 ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Samo igraci level 5+ mogu biti veh impounderi.");
-					if(JobData[GARBAGE] == OFFICIAL_JOBS_EMPLOYERS)
+					if(JobData[GARBAGE] >= OFFICIAL_JOBS_EMPLOYERS)
 						return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ova firma trenutno ne prima radnike, pokusajte kada bude slobodnih mjesta.");
 					SetPlayerJob(playerid, 17);
 					SendMessage( playerid, MESSAGE_TYPE_INFO, "Zaposlili ste se kao impounder!");
 				}
 				case 8:
 				{
-					if(JobData[GARBAGE] == NORMAL_JOBS_EMPLOYERS)
+					if(JobData[GARBAGE] >= NORMAL_JOBS_EMPLOYERS)
 						return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ova firma trenutno ne prima radnike, pokusajte kada bude slobodnih mjesta.");
 					SetPlayerJob(playerid, 18);
 					SendMessage( playerid, MESSAGE_TYPE_INFO, "Zaposlili ste se kao transporter!");
@@ -286,96 +286,6 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 /*
 	- Commands
 */
-
-CMD:jobhelp(playerid, params[]) {
-	ShowPlayerDialog(playerid, DIALOG_JOBHELP, DIALOG_STYLE_LIST, "JOB-HELP", "Tvornicki radnik\n\
-		Cistac ulice\n\
-		Smecar\n\
-		Trucker\n\
-		Drvosjeca\n\
-		Mehanicar\n\
-		Farmer\n\
-		Taksista\n\
-		Gun Dealer\n\
-		Car Jacker\n\
-		Lopov", "(odaberi)", "(x)"
-	);
-	return (true);
-}
-
-CMD:jobcmds(playerid, params[]) {
-	switch(PlayerInfo[playerid][pJob])
-	{
-		case 1: {
-			SendClientMessage(playerid, COLOR_LIGHTBLUE, "* _______________________ JOB COMMANDS _______________________ *");
-			SendClientMessage(playerid, -1, "\t CISTAC ULICA: /sweep");
-			SendClientMessage(playerid, COLOR_LIGHTBLUE, "* ______________________________________________________________ *");
-		}
-		case 3: {
-			SendClientMessage(playerid, COLOR_LIGHTBLUE, "* _______________________ JOB COMMANDS _______________________ *");		
-			SendClientMessage(playerid, -1, "\t MEHANICAR: 'Y - otvaranje garaze' - /repair - /parts - /armorcar");
-			SendClientMessage(playerid, -1, "\t MEHANICAR: /mechanic - /tow");
-			SendClientMessage(playerid, COLOR_LIGHTBLUE, "* ______________________________________________________________ *");
-		}
-		case 5: {
-			SendClientMessage(playerid, COLOR_LIGHTBLUE, "* _______________________ JOB COMMANDS _______________________ *");
-			SendClientMessage(playerid, -1, "\t TVORNICKI RADNIK: /craft");
-			SendClientMessage(playerid, COLOR_LIGHTBLUE, "* ______________________________________________________________ *");
-		}
-		case 6: {
-			SendClientMessage(playerid, COLOR_LIGHTBLUE, "* _______________________ JOB COMMANDS _______________________ *");
-			SendClientMessage(playerid, -1, "\t TAKSIST: /taxi");
-			SendClientMessage(playerid, COLOR_LIGHTBLUE, "* ______________________________________________________________ *");
-		}
-		case 7: {
-			SendClientMessage(playerid, COLOR_LIGHTBLUE, "* _______________________ JOB COMMANDS _______________________ *");			
-			SendClientMessage(playerid, -1, "\t FARMER: /work - /finish - /takebucket - /dropbucket - /milk - /dropcanister");
-			SendClientMessage(playerid, -1, "\t FARMER: /seeds - /attach_trailer - /detach_trailer - /plant");
-			SendClientMessage(playerid, -1, "\t FARMER: /takespade - /dropspade - /checkplant - /harvest - /crops");
-			SendClientMessage(playerid, -1, "\t FARMER: /takecarton - /dropcarton - /eggs");
-			SendClientMessage(playerid, -1, "\t FARMER: /transport - /stoptransport");
-			SendClientMessage(playerid, COLOR_LIGHTBLUE, "* ______________________________________________________________ *");
-		}
-		case 9: {
-			SendClientMessage(playerid, COLOR_LIGHTBLUE, "* _______________________ JOB COMMANDS _______________________ *");
-			SendClientMessage(playerid, -1, "\t LOPOV: /stolengoods - /pocketsteal - /sellgoods - /picklock - /doorram");
-			SendClientMessage(playerid, -1, "\t LOPOV: /crack_alarm - /stealitems - /dropitem - /takeitem - /stealmoney");
-			SendClientMessage(playerid, -1, "\t HOUSE: /gunrack_rob(gunrack) - /storage_rob(drugs)");
-			SendClientMessage(playerid, COLOR_LIGHTBLUE, "* ______________________________________________________________ *");
-		}
-		case 13: {
-			SendClientMessage(playerid, COLOR_LIGHTBLUE, "* _______________________ JOB COMMANDS _______________________ *");			
-			SendClientMessage(playerid, -1, "\t CAR JACKER: /jacker - /igarage");
-			SendClientMessage(playerid, COLOR_LIGHTBLUE, "* ______________________________________________________________ *");
-		}
-		case 14: {
-			SendClientMessage(playerid, COLOR_LIGHTBLUE, "* _______________________ JOB COMMANDS _______________________ *");		
-			SendClientMessage(playerid, -1, "\t DRVOSJECA: /cuttree - /stopcuttree - /treeinfo - /putwood - /checkvehwood");
-			SendClientMessage(playerid, -1, "\t DRVOSJECA: /checkmywood - /pickupwood - /takewood - /sellwood");
-			SendClientMessage(playerid, COLOR_LIGHTBLUE, "* ______________________________________________________________ *");
-		}
-		case 16: {
-			SendClientMessage(playerid, COLOR_LIGHTBLUE, "* _______________________ JOB COMMANDS _______________________ *");
-			SendClientMessage(playerid, -1, "\t SMETLAR: /garbage");
-			SendClientMessage(playerid, COLOR_LIGHTBLUE, "* ______________________________________________________________ *");
-		}
-		case 17:
-		{
-			SendClientMessage(playerid, COLOR_LIGHTBLUE, "* _______________________ JOB COMMANDS _______________________ *");
-			SendClientMessage(playerid, -1, "\t IMPOUNDER: /jobimpound - /stopimpound - /tow");
-			SendClientMessage(playerid, COLOR_LIGHTBLUE, "* ______________________________________________________________ *");
-		}
-		case 18:
-		{
-			SendClientMessage(playerid, COLOR_LIGHTBLUE, "* _______________________ JOB COMMANDS _______________________ *");
-			SendClientMessage(playerid, -1, "\t TRANSPORTER: /transporter");
-			SendClientMessage(playerid, COLOR_LIGHTBLUE, "* ______________________________________________________________ *");
-		}
-		default:
-			SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate posao!");
-	}
-	return 1;
-}
 
 CMD:takejob(playerid, params[])
 {

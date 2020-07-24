@@ -363,7 +363,7 @@ CMD:channel(playerid, params[])
 	if(sscanf(params, "s[16] ", choice)) 
 	{
 		SendClientMessage(playerid, -1, "[ ? ]: /channel [opcija]");
-		SendClientMessage(playerid, -1, "[ ? ] OPCIJE: help, setslot, leave, set, playerfreq, checkfreq");
+		SendClientMessage(playerid, -1, "[ ? ] OPCIJE: setslot, leave, set, playerfreq, checkfreq");
 		return 1;
 	}
 	if( !strcmp( choice, "setslot", true ) ) 
