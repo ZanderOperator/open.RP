@@ -1327,7 +1327,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 		}
 		case DIALOG_MDC_DTICKET: {
 			if( !response ) return 1;
-			DeletePlayerTicket(playerid, DeletingTicketID[playerid]);
+			DeletePlayerTicket(playerid, DeletingTicketID[playerid], true);
 			return 1;
 		}
 		case DIALOG_APB_CHECK: {

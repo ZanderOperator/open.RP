@@ -1632,8 +1632,10 @@ CMD:govrepair(playerid, params[])
 		if(FactionInfo[fid][fFactionBank] < 100) return SendClientMessage(playerid,COLOR_RED, "Vasa organizacija nema novaca!");
 		if(IsACop(playerid))
 		{
-			if(PlayerInfo[playerid][pMember] == 1) {
-				if(IsPlayerInRangeOfPoint(playerid, 10.0, 755.9906,-1431.2805,13.5234) || IsPlayerInRangeOfPoint(playerid, 10.0, 1136.7454,2286.2957,10.8203) || IsPlayerInRangeOfPoint(playerid, 10.0, 2055.0149,-2150.2551,26.1129)) {
+			if(PlayerInfo[playerid][pMember] == 1) 
+			{
+				if(IsPlayerInRangeOfPoint(playerid, 5.0, 1570.4080,-1632.6095,13.3828) || IsPlayerInRangeOfPoint(playerid, 10.0, 755.9906,-1431.2805,13.5234) || IsPlayerInRangeOfPoint(playerid, 10.0, 1136.7454,2286.2957,10.8203) || IsPlayerInRangeOfPoint(playerid, 10.0, 2055.0149,-2150.2551,26.1129)) 
+				{
 					AC_RepairVehicle(vehicleid);
 					AC_SetVehicleHealth(vehicleid, 1200.0);
 					VehicleInfo[vehicleid][vFuel] = 100;
@@ -1643,8 +1645,8 @@ CMD:govrepair(playerid, params[])
 					OrgToBudgetMoney( FACTION_TYPE_LAW, 100); // Novac ide iz factionbank u proraeun
 					SendClientMessage(playerid, COLOR_RED, "[ ! ] Vase vozilo je popravljeno i napunjeno gorivom.");
 				}
+				else return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste na mjestu za popravak vozila!");
 			}
-			else SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste na mjestu za popravak vozila!");
 		}
 		else if(IsASD(playerid))
 		{
@@ -1658,7 +1660,7 @@ CMD:govrepair(playerid, params[])
 				OrgToBudgetMoney( FACTION_TYPE_LAW2, 100); // Novac ide iz factionbank u proraeun
 				SendClientMessage(playerid, COLOR_RED, "[ ! ] Vase vozilo je popravljeno i napunjeno gorivom.");
 			}
-			else SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste na mjestu za popravak vozila!");
+			else return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste na mjestu za popravak vozila!");
 		}
  	 	else if(IsANews(playerid) )
 		{
@@ -1673,7 +1675,7 @@ CMD:govrepair(playerid, params[])
 				OrgToBudgetMoney( FACTION_TYPE_NEWS, 100); // Novac ide iz factionbank u proraeun
 				SendClientMessage(playerid, COLOR_LIGHTBLUE, "Vase vozilo je popravljeno i napunjeno gorivom.");
 			}
-			else SendClientMessage(playerid, COLOR_RED, "[ ! ] Niste na mjestu za popravak vozila!");
+			else return SendClientMessage(playerid, COLOR_RED, "[ ! ] Niste na mjestu za popravak vozila!");
 		}
 		else if( IsFDMember(playerid) )
 		{
@@ -1688,7 +1690,7 @@ CMD:govrepair(playerid, params[])
 				OrgToBudgetMoney( FACTION_TYPE_FD, 100); // Novac ide iz factionbank u proraeun
 				SendClientMessage(playerid, COLOR_LIGHTBLUE, "Vase vozilo je popravljeno i napunjeno gorivom.");
 			}
-			else SendClientMessage(playerid, COLOR_RED, "[ ! ] Niste na mjestu za popravak vozila!");
+			else return SendClientMessage(playerid, COLOR_RED, "[ ! ] Niste na mjestu za popravak vozila!");
 		}
 	}
 	else if( IsAGov(playerid) )
@@ -1704,7 +1706,7 @@ CMD:govrepair(playerid, params[])
 			Bit1_Set( gr_GovRepair, playerid, false );
 	        SendClientMessage(playerid, COLOR_LIGHTBLUE, "Vase vozilo je popravljeno i napunjeno gorivom.");
     	}
-		else SendClientMessage(playerid, COLOR_RED, "[ ! ] Niste na mjestu za popravak vozila!");
+		else return SendClientMessage(playerid, COLOR_RED, "[ ! ] Niste na mjestu za popravak vozila!");
 	}
 	else SendClientMessage(playerid,COLOR_RED, "Nisi ovlasten za koristenje ove komande.");
 	return 1;
@@ -1726,7 +1728,7 @@ CMD:swat(playerid, params[])
 	new
 		swString[70];
 		
-	if(IsPlayerInRangeOfPoint(playerid,5.0,2040.6858,1260.2460,-11.1115) || IsPlayerInRangeOfPoint(playerid, 10.0, -1167.5934, -1662.6095, 896.1174) || IsPlayerInRangeOfPoint(playerid,5.0,2032.1844,2206.1392,-31.4410) || IsPlayerInRangeOfPoint(playerid,5.0,-882.4293,288.5243,535.341) )
+	if(IsPlayerInRangeOfPoint(playerid, 5.0, 2877.2317,-843.6631,-21.6994) || IsPlayerInRangeOfPoint(playerid,5.0,2040.6858,1260.2460,-11.1115) || IsPlayerInRangeOfPoint(playerid, 10.0, -1167.5934, -1662.6095, 896.1174) || IsPlayerInRangeOfPoint(playerid,5.0,2032.1844,2206.1392,-31.4410) || IsPlayerInRangeOfPoint(playerid,5.0,-882.4293,288.5243,535.341) )
 	{
 		if( !Bit1_Get( gr_PlayerIsSWAT, playerid ) ) {
 			SetPlayerSkin(playerid, 285);
@@ -2398,7 +2400,8 @@ CMD:cleartrunk(playerid, params[])
 CMD:undercover(playerid, params[])
 {
     if( !IsACop(playerid) && !IsASD(playerid) ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste pripadnik LSPDa/USMSa!");
-	if( !IsPlayerInRangeOfPoint(playerid,6.0,2040.6858,1260.2460,-11.1115) && !IsPlayerInRangeOfPoint(playerid, 10.0, -1167.5934, -1662.6095, 896.1174) && !IsPlayerInRangeOfPoint(playerid,5.0,1073.3243,1309.4116,-47.7425) ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Morate biti unutar LSPD/SASD armorya da bi ste mogli koristiti ovu komandu.");
+	if( !IsPlayerInRangeOfPoint(playerid, 6.0, 2877.2317,-843.6631,-21.6994) && !IsPlayerInRangeOfPoint(playerid,6.0,2040.6858,1260.2460,-11.1115) && !IsPlayerInRangeOfPoint(playerid, 10.0, -1167.5934, -1662.6095, 896.1174) && !IsPlayerInRangeOfPoint(playerid,5.0,1073.3243,1309.4116,-47.7425) ) 
+		return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Morate biti unutar LSPD/SASD armorya da bi ste mogli koristiti ovu komandu.");
 
 	if( !isnull(PlayerExName[ playerid ]) ) {
 		SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uspjesno ste vratili svoj pravi nick!");
@@ -2505,7 +2508,8 @@ CMD:listennumber(playerid, params[])
 		return 1;
 	}
 
-	if( !IsPlayerInRangeOfPoint(playerid, 5.0, 1907.0248,627.1588,-14.942) ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste u policijskoj stanici!");
+	if( !IsPlayerInRangeOfPoint(playerid, 5.0, -1194.4789,-1649.6088,900.7064) && !IsPlayerInRangeOfPoint(playerid, 5.0, 2845.8594,-846.8279,-21.6994) && !IsPlayerInRangeOfPoint(playerid, 5.0, 1907.0248,627.1588,-14.942) ) 
+		return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste u policijskoj stanici!");
 	new
 		number,
 		string[8];
@@ -2528,7 +2532,7 @@ CMD:listennumber(playerid, params[])
 CMD:listensms(playerid, params[])
 {
 	if(!IsACop(playerid) && PlayerInfo[playerid][pRank] < FactionInfo[PlayerInfo[playerid][pMember]][rLstnSMS]) return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "Niste policajac r%d+!", FactionInfo[PlayerInfo[playerid][pMember]][rLstnSMS]);
-	if( !IsPlayerInRangeOfPoint(playerid, 5.0, 1907.0248,627.1588,-14.942) ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste u policijskoj stanici!");
+	if( !IsPlayerInRangeOfPoint(playerid, 5.0, 1907.0248,627.1588,-14.942) && !IsPlayerInRangeOfPoint(playerid, 5.0, -1194.4789,-1649.6088,900.7064) && !IsPlayerInRangeOfPoint(playerid, 5.0, 2845.8594,-846.8279,-21.6994) ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste u policijskoj stanici!");
 	if( Bit1_Get( gr_PlayerTraceSMS, playerid ) ) {
 		Bit1_Set( gr_PlayerTraceSMS, playerid, false );
 		SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "Prestali ste pratiti SMSove!");
