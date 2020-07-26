@@ -1,6 +1,6 @@
 #include <YSI\y_hooks>
 
-#define MAX_PLAYER_OBJECTS 					(10)
+#define MAX_PLAYER_OBJECTS 					(20)
 #define PO_DRAW_DIST 						(100.0)
 #define OBJECT_FROM_PLAYER_Y				(10.0)
 

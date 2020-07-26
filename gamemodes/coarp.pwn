@@ -260,6 +260,7 @@ native WP_Hash(buffer[], len, const str[]);
 	######## ##    ##  #######  ##     ##  ######
 */
 new texture_buffer[10256];
+new PlayerUpdatePage[MAX_PLAYERS] = 0;
 
 enum E_PLAYER_DATA
 {
@@ -2218,7 +2219,7 @@ Function: ResetIterators()
 ResetPlayerVariables(playerid)
 {	
 	//aprilfools[playerid] = false;
-	
+	PlayerUpdatePage[playerid] = 0;
     entering[playerid] = 0;
     onexit[playerid] = 0;
    	TWorking[playerid] = 0;
