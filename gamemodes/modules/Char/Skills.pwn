@@ -153,37 +153,27 @@ CMD:skills(playerid, params[])
 {
 	SendMessage(playerid, MESSAGE_TYPE_INFO, "Maksimalni iznos skill pointova je 250.");
 	SendClientMessage(playerid, COLOR_LIGHTBLUE, "*_________________* SKILLS *_________________*");
-	va_SendClientMessage(playerid, COLOR_RED, "Farmer (%d/%d, Level %d) | Pizza Boy (%d/%d, Level %d)",
+	va_SendClientMessage(playerid, COLOR_RED, "Farmer (%d/%d, Level %d) | Smetlar (%d/%d, Level %d) ",
 		PlayerInfo[ playerid ][ pSkills ][ 0 ],
 		(GetPlayerSkillLevel(playerid, 0) + 1) * 50,
 		GetPlayerSkillLevel(playerid, 0),
-		PlayerInfo[ playerid ][ pSkills ][ 1 ],	
-		(GetPlayerSkillLevel(playerid, 1) + 1) * 50,		
-		GetPlayerSkillLevel(playerid, 1)
-	);
-	va_SendClientMessage(playerid, COLOR_RED, "Smetlar (%d/%d, Level %d) | Tvornicki radnik (%d/%d, Level %d)", 
 		PlayerInfo[ playerid ][ pSkills ][ 2 ],
 		(GetPlayerSkillLevel(playerid, 2) + 1) * 50,
-		GetPlayerSkillLevel(playerid, 2),
-		PlayerInfo[ playerid ][ pSkills ][ 3 ],		
-		(GetPlayerSkillLevel(playerid, 3) + 1) * 50,	
-		GetPlayerSkillLevel(playerid, 3)
+		GetPlayerSkillLevel(playerid, 2)
 	);
-	va_SendClientMessage(playerid, COLOR_RED, "Kosac trave (%d/%d, Level %d) | Lopov (%d/%d, Level %d)", 
-		PlayerInfo[ playerid ][ pSkills ][ 4 ],
-		(GetPlayerSkillLevel(playerid, 4) + 1) * 50,
-		GetPlayerSkillLevel(playerid, 4),
-		PlayerInfo[ playerid ][ pSkills ][ 5 ],	
-		(GetPlayerSkillLevel(playerid, 5) + 1) * 50,		
-		GetPlayerSkillLevel(playerid, 5)
-	);
-	va_SendClientMessage(playerid, COLOR_RED, "Jacker (%d/%d, Level %d) | Transporter (%d/%d, Level %d)", 
+	va_SendClientMessage(playerid, COLOR_RED, "Car Jacker (%d/%d, Level %d) | Transporter (%d/%d, Level %d)", 
 		PlayerInfo[ playerid ][ pSkills ][ 6 ],
 		(GetPlayerSkillLevel(playerid, 6) + 1) * 50,
 		GetPlayerSkillLevel(playerid, 6),
 		PlayerInfo[ playerid ][ pSkills ][ 7 ],	
 		(GetPlayerSkillLevel(playerid, 7) + 1) * 50,	
 		GetPlayerSkillLevel(playerid, 7)
+	);
+	va_SendClientMessage(playerid, COLOR_RED, "Tvornicki radnik (%d/%d, Level %d)", 
+		
+		PlayerInfo[ playerid ][ pSkills ][ 3 ],		
+		(GetPlayerSkillLevel(playerid, 3) + 1) * 50,	
+		GetPlayerSkillLevel(playerid, 3)
 	);
 	SendClientMessage(playerid, COLOR_LIGHTBLUE, "*____________________________________________*");
 	return 1;

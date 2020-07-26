@@ -1,4 +1,7 @@
 City of Angels v18.5.0. - Summer Update + BugFixes
+- Vraceni stari nametagovi
+- Popravljen Fake Weapon Cheat ban dok bi bili u shootoutu i pali bi u wounded stanje
+- Popravljen bug sa /treatment - odsad porta u ASGH intenzivnu i vraca vas ispred ASGH ulaza nakon zavrsetka
 - Popravljen bug sa /ticket pay
 - Popravljeni svi zahtjevi za dodavanjem lokacija komandi/povecavanja radiusa od strane LSPD-a
 - Popravljen /poker table brisanje stola

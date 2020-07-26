@@ -487,11 +487,6 @@ enum E_GARAGE_DATA {
 new
 	GarageInfo[ MAX_GARAGES ][ E_GARAGE_DATA ];
 
-new
-	Text3D:pNameTag[MAX_PLAYERS],
-	plyrName[MAX_PLAYERS][MAX_PLAYER_NAME],
-	PlayerPaused[MAX_PLAYERS];
-
 #define GetPlayerIP(%0) \
 		PlayerInfo[%0][cIP]
 
@@ -3123,11 +3118,8 @@ public OnGameModeInit()
 	Command_AddAltNamed("blacklist"		, 	"bl");
 
 	// SA-MP gamemode settings
-	ShowNameTags(0);
-    SetNameTagDrawDistance(0.0);
-	
-	//ShowNameTags(1);
-    //SetNameTagDrawDistance(15.0);
+	ShowNameTags(1);
+    SetNameTagDrawDistance(15.0);
 	AllowInteriorWeapons(1);
 	DisableInteriorEnterExits();
 	EnableStuntBonusForAll(0);
@@ -3431,12 +3423,7 @@ public OnPlayerConnect(playerid)
 }
 
 public OnPlayerDisconnect(playerid, reason)
-{
-	plyrName[playerid][0] = '\0';
-	DestroyDynamic3DTextLabel(pNameTag[playerid]);
-	PlayerPaused[playerid] = 0;
-	
-	pNameTag[playerid] = Text3D:65535;
+{	
 	WalkStyle[playerid] = 0;
 	entering[playerid] = 0;
 	onexit[playerid] = 0;
@@ -3479,6 +3466,11 @@ public OnPlayerDisconnect(playerid, reason)
 	}
 
 	if( !isnull(PlayerExName[playerid]) ) SetPlayerName(playerid, PlayerExName[playerid]);
+	if(IsValidDynamic3DTextLabel(NameText[playerid]))
+	{
+		DestroyDynamic3DTextLabel(NameText[playerid]);
+		NameText[playerid] = Text3D:INVALID_3DTEXT_ID;
+	}
 	if(PlayerInfo[playerid][pAdmin] > 0 || PlayerInfo[playerid][pHelper] > 0)
 		SaveAdminConnectionTime(playerid);
 	if( (reason == 0 || reason == 2) && IsPlayerAlive(playerid) && GMX == 0)
@@ -3689,9 +3681,7 @@ public OnPlayerFinishedDownloading(playerid, virtualworld)
 }
 
 public OnPlayerSpawn(playerid)
-{
-	UpdateNameLabel(playerid, "");
-	
+{	
 	//Player Sets
     StopAudioStreamForPlayer(playerid);
     ResetPlayerMoney(playerid);
@@ -4289,7 +4279,7 @@ public OnPlayerInteriorChange(playerid, newinteriorid, oldinteriorid)
 	return 1;
 }
 
-/*public OnPlayerStreamIn(playerid, forplayerid)
+public OnPlayerStreamIn(playerid, forplayerid)
 {
 	if(Bit1_Get(gr_MaskUse, forplayerid)) {
 	    if(PlayerInfo[playerid][pAdmin] > 0 && Bit1_Get(a_AdminOnDuty, playerid))
@@ -4299,16 +4289,6 @@ public OnPlayerInteriorChange(playerid, newinteriorid, oldinteriorid)
 	}
 	else
 	    ShowPlayerNameTagForPlayer(playerid, forplayerid, true);
-	return 1;
-}*/
-public OnPlayerStreamIn(playerid, forplayerid)
-{
-	if(!IsValidDynamic3DTextLabel(pNameTag[playerid]))
-		UpdateNameLabel(playerid, "");
-	
-	if(PlayerInfo[playerid][pAdmin] > 0 && Bit1_Get(a_AdminOnDuty, playerid))
-		ShowPlayerNameTagForPlayer(playerid, forplayerid, true);
-	
 	return 1;
 }
 

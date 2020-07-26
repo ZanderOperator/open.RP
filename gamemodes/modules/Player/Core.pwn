@@ -1100,7 +1100,7 @@ Function: PlayerMinuteTask(playerid)
 			SetPlayerPosEx(playerid, 90.6552, -236.3789, 1.5781, 0, 0, false);
 			SetPlayerWorldBounds(playerid, 20000.0000, -20000.0000, 20000.0000, -20000.0000);
 			SetPlayerColor(playerid, COLOR_PLAYER);
-			SendClientMessage(playerid, COLOR_LIGHTBLUE, "Slobodni ste, platili ste svoj dug drustvu!");
+			SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "Slobodni ste, platili ste svoj dug drustvu!");
 		}
 		else if( PlayerInfo[playerid][pJailed] == 2 )
 		{
@@ -1112,7 +1112,14 @@ Function: PlayerMinuteTask(playerid)
 		else if( PlayerInfo[playerid][pJailed] == 3 )
 		{
 			SetPlayerPosEx(playerid, 636.7744,-601.3240,16.3359, 0, 0, false);
-			GameTextForPlayer(playerid, "Slobodni ste, platili ste svoj dug drustvu!", 4000, 1);
+			SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "Slobodni ste, platili ste svoj dug drustvu!");
+		}
+		else if( PlayerInfo[playerid][pJailed] == 5 ) // Treatment
+		{
+			TogglePlayerControllable(playerid, 1);
+			ClearAnim(playerid);
+			SetPlayerPosEx(playerid, 1185.4681,-1323.8542,13.5720, 0, 0, false);
+			SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "Zavrsilo je vase lijecenje, otpusteni ste iz bolnice!");
 		}
 		PlayerInfo[playerid][pJailed] = 0;
 		PlayerInfo[playerid][pJailTime] = 0;

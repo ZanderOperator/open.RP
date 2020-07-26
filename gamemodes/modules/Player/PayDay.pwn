@@ -299,26 +299,28 @@ GivePlayerPayCheck(playerid)
 		strcat(p_dialog,f_dialog, sizeof(p_dialog));
 		profit += PlayerInfo[playerid][pPayDayMoney];
 	}
-	else { // Ako nema posao dobiva socijalnu pomoc
+	if(PlayerInfo[playerid][pDonateRank] > 0)
+	{
+		new vipmoney = 0;
+		switch(PlayerInfo[playerid][pDonateRank])
+		{
+			case 1,2,3: vipmoney = 200;
+			case 4: vipmoney = 300;
+		}
+		BudgetToPlayerBankMoney(playerid, vipmoney); // treba prebaciti na bankovni racun
+		profit += vipmoney;
+		format(f_dialog,sizeof(f_dialog), "\n\tBonus gradskog ureda za demografiju: %s", FormatNumber(vipmoney));
+		strcat(p_dialog,f_dialog, sizeof(p_dialog));
+	}
+	if(PlayerInfo[playerid][pLevel] < 5) // Ako nema posao dobiva socijalnu pomoc
+	{
 		new levelrespect = ( PlayerInfo[playerid][pLevel] + 1 ) * 4; // Trenutni respekti za njegov level
-		if ( PlayerInfo[playerid][pRespects] <= levelrespect ) { // Ako ima manje respekata od za trenutni level
+		if ( PlayerInfo[playerid][pRespects] <= levelrespect ) 
+		{ // Ako ima manje respekata od za trenutni level
 			new level = PlayerInfo[playerid][pLevel],
 				fsalary = 1000 / level, // SOCIAL_HELP
 				bsalary = floatround(floatabs(fsalary));
 
-			switch(PlayerInfo[playerid][pDonateRank])
-			{
-				case 1,2,3:
-				{
-					if(bsalary < 200)
-						bsalary = 200;
-				}
-				case 4:
-				{
-					if(bsalary < 300)
-						bsalary = 300;
-				}
-			}
 			BudgetToPlayerBankMoney(playerid, bsalary); // treba prebaciti na bankovni racun
 			profit += bsalary;
 			format(f_dialog,sizeof(f_dialog), "\n\tSocijalna pomoc: %s", FormatNumber(bsalary));
@@ -375,7 +377,7 @@ GivePlayerPayCheck(playerid)
 		else
 			PlayerInfo[playerid][pRespects]++;
  	}
-	format(f_dialog,sizeof(f_dialog), "\n\tUkupni profit: "COL_GREEN"+%s "COL_RED"(Izracun ne sadrzi troskove kredita i dobitke stednje)", FormatNumber(profit));
+	format(f_dialog,sizeof(f_dialog), "\nUkupni profit: "COL_GREEN"+%s "COL_RED"(Izracun ne sadrzi troskove kredita i dobitke stednje)", FormatNumber(profit));
 	strcat(p_dialog,f_dialog, sizeof(p_dialog));
 	PlayerInfo[playerid][pProfit] = profit;
 
@@ -389,17 +391,15 @@ GivePlayerPayCheck(playerid)
 		PlayerInfo[playerid][pLijekTimer] = 0;	// Skidanje 1 sata za timer koristenja Aspirina/Metadona/Naltrexona
 
 	PlayerInfo[playerid][pConnectTime]++; 		// sati igranja
-	PlayerInfo[playerid][pGymTimes]		= 0; 	// resetiranje GYM varijable
-	if(PlayerInfo[playerid][pDonateRank] == 0)
-		PlayerInfo[playerid][pFreeWorks] 	= 15;
-	else if(PlayerInfo[playerid][pDonateRank] == 1)
-		PlayerInfo[playerid][pFreeWorks] 	= 25;
-	else if(PlayerInfo[playerid][pDonateRank] == 2)
-		PlayerInfo[playerid][pFreeWorks] 	= 25;
-	else if(PlayerInfo[playerid][pDonateRank] == 3)
-		PlayerInfo[playerid][pFreeWorks] 	= 30;
-	else if(PlayerInfo[playerid][pDonateRank] == 4)
-		PlayerInfo[playerid][pFreeWorks] 	= 50;
+
+	switch(PlayerInfo[playerid][pDonateRank])
+	{
+		case 0: PlayerInfo[playerid][pFreeWorks] = 15;
+		case 1: PlayerInfo[playerid][pFreeWorks] = 25;
+		case 2: PlayerInfo[playerid][pFreeWorks] = 25;
+		case 3: PlayerInfo[playerid][pFreeWorks] = 30;
+		case 4: PlayerInfo[playerid][pFreeWorks] = 50;
+	}
 
 	PlayerInfo[playerid][pFishWorks] 	= 0;
 	PlayerInfo[playerid][pCasinoCool]	= 10;	// resetiranje kasino varijabli
@@ -416,20 +416,33 @@ GivePlayerPayCheck(playerid)
 		if( PlayerInfo[ playerid ][ pMuscle ] <= 0 ) PlayerInfo[ playerid ][ pMuscle ] = 0;
 		else
 		{
-			format(f_dialog,sizeof(f_dialog), "\n{3C95C2}(MUSCLE) Zbog nemara vas se muscle level spustio na %d!", PlayerInfo[ playerid ][ pMuscle ]);
+			format(f_dialog,sizeof(f_dialog), "\n{3C95C2}(MUSCLE) Zbog nemara vas se Muscle Level spustio na %d!", PlayerInfo[ playerid ][ pMuscle ]);
 			strcat(p_dialog,f_dialog, sizeof(p_dialog));
 			PlayerInfo[ playerid ][ pGymCounter ] = 0;
 		}
 	}
-	if( PlayerInfo[ playerid ][ pHunger ] == 5.0 ) {
+	if( PlayerInfo[ playerid ][ pHunger ] == 5.0 ) 
+	{
 		PlayerInfo[ playerid ][ pGymCounter ] += 2;
-		if( PlayerInfo[ playerid ][ pGymCounter ] >= 6 ) {
+		if( PlayerInfo[ playerid ][ pGymCounter ] >= 6 ) 
+		{
 			PlayerInfo[ playerid ][ pMuscle ]--;
-			format(f_dialog,sizeof(f_dialog), "\n{3C95C2}(MUSCLE) Zbog nemara vas se muscle level spustio na %d!\n", PlayerInfo[ playerid ][ pMuscle ]);
+			format(f_dialog,sizeof(f_dialog), "\n{3C95C2}(MUSCLE) Zbog nemara i lose prehrane Muscle Level Vam se spustio na %d!\n", PlayerInfo[ playerid ][ pMuscle ]);
 			strcat(p_dialog,f_dialog, sizeof(p_dialog));
 			PlayerInfo[ playerid ][ pGymCounter ] = 0;
 		}
 	}
+	if(PlayerInfo[playerid][pGymTimes] > 0) 
+	{
+		PlayerInfo[playerid][pGymTimes]++;
+		if(PlayerInfo[playerid][pGymTimes] == 4)
+		{
+			PlayerInfo[playerid][pGymTimes] = 0;
+			format(f_dialog,sizeof(f_dialog), "\n{3C95C2}(GYM) Ponovno mozete u teretanu. Odradite trening ukoliko ne zelite izgubiti snagu!\n", PlayerInfo[ playerid ][ pMuscle ]);
+			strcat(p_dialog,f_dialog, sizeof(p_dialog));
+		}
+	}
+
 	new expamount = (PlayerInfo[playerid][pLevel] + 1) * 4;
 	if (PlayerInfo[playerid][pRespects] == expamount) {
 		LevelUp(playerid);

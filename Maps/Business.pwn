@@ -1877,7 +1877,7 @@
 		CreateDynamicObject(19873,2831.640,137.396,809.959,0.000,0.000,0.000);
 		CreateDynamicObject(19873,2831.633,135.528,809.959,0.000,0.000,0.000);
 
-		// El Corona Bar(nude shop)- Zen
+	/*	// El Corona Bar(nude shop)- Zen
 		business_maps = CreateDynamicObject(5017, 1932.430053, -2123.409912, 15.945300, 0.000000, 0.000000, 0.000000);
 		SetDynamicObjectMaterial(business_maps, 0, 18048, "gen_mun_xtars2", "star_spang", 0x00000000);
 		SetDynamicObjectMaterial(business_maps, 1, 13077, "cunte_bar1", "alleydoor4", 0x00000000);
@@ -1961,7 +1961,7 @@
 		CreateDynamicObject(1216, 1937.639038, -2135.225341, 13.365237, 0.000000, 0.000000, 0.000000);
 		CreateDynamicObject(2670, 1937.136230, -2135.210693, 12.772321, 0.000000, 0.000000, -53.599990);
 		CreateDynamicObject(1440, 1922.488891, -2135.640380, 13.044272, 0.000000, 0.000000, 0.000000);
-		CreateDynamicObject(1372, 1925.170654, -2135.444580, 12.640893, 0.000000, 0.000000, 0.000000);
+		CreateDynamicObject(1372, 1925.170654, -2135.444580, 12.640893, 0.000000, 0.000000, 0.000000);*/
 
 		// KAFIC EXTERIOR - Geo
 		CreateDynamicObject(2773, 1420.00000, -1622.70422, 13.06870,   0.00000, 0.00000, 90.00000);

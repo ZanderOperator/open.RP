@@ -1414,7 +1414,7 @@ CMD:f(playerid,params[])
 	if(blockfam[member] == 1) return SendMessage(playerid,MESSAGE_TYPE_ERROR, "Chat organizacije je blokiran!");
 	if( !Bit1_Get( gr_FactionChatTog, playerid)) return SendMessage(playerid,MESSAGE_TYPE_ERROR, "Iskljucen vam je faction chat!");
 
-	if (sscanf(params, "s[64] ",result)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /f [TEKST]");
+	if (sscanf(params, "s[64]",result)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /f [TEKST]");
 	GetPlayerName(playerid,playername,sizeof(playername));
 
     if(IsACop(playerid))

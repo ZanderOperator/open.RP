@@ -1371,7 +1371,7 @@ CMD:arrest(playerid, params[])
 	new giveplayerid, moneys, jailtime, reason[24], string[128];
 	if(!IsACop(playerid) && !IsASD(playerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste LSPD/USMS.");
 	if(!IsAtArrest(playerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste na mjestu za uhicenje!");
-	if(sscanf(params, "uiis[24] ", giveplayerid, moneys, jailtime, reason)){
+	if(sscanf(params, "uiis[24]", giveplayerid, moneys, jailtime, reason)){
 		SendClientMessage(playerid, COLOR_RED, "[ ? ]: /arrest [playerid][cijena][minute][razlog]");
 		return 1;
 	}
