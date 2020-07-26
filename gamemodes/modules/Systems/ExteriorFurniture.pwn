@@ -692,12 +692,12 @@ hook OnModelSelResponse( playerid, extraid, index, modelid, response )
 		}
 		case DIALOG_EXTERIOR_EDIT:
 		{
-			if(!response) return ShowPlayerDialog(playerid, DIALOG_EXTERIOR_MENU, DIALOG_STYLE_LIST, "Exteriors", "Kupi objekt\nUredi object\nObrisati objekt\nObrisati SVE objekte\nInventory", "Odaberi", "Odustani");
+			if(!response) return ShowPlayerDialog(playerid, DIALOG_EXTERIOR_MENU, DIALOG_STYLE_LIST, "Exteriors", "Kupi objekt\nUredi object\nObrisati objekt\nObrisati SVE objekte", "Odaberi", "Odustani");
 			EditExteriorObject(playerid, index);
 		}
 		case DIALOG_EXTERIOR_DELETE:
 		{
-			if(!response) return ShowPlayerDialog(playerid, DIALOG_EXTERIOR_MENU, DIALOG_STYLE_LIST, "Exteriors", "Kupi objekt\nUredi object\nObrisati objekt\nObrisati SVE objekte\nInventory", "Odaberi", "Odustani");
+			if(!response) return ShowPlayerDialog(playerid, DIALOG_EXTERIOR_MENU, DIALOG_STYLE_LIST, "Exteriors", "Kupi objekt\nUredi object\nObrisati objekt\nObrisati SVE objekte", "Odaberi", "Odustani");
 			DeleteExteriorObject(PlayerInfo[playerid][pHouseKey], index);
 			SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uspjesno ste obrisali objekt!");
 		}
@@ -770,7 +770,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 		}
 		case DIALOG_EXTERIOR_BUY_TYPE:
 		{
-			if(!response) return ShowPlayerDialog(playerid, DIALOG_EXTERIOR_MENU, DIALOG_STYLE_LIST, "Exteriors", "Kupi objekt\nUredi object\nObrisati objekt\nObrisati SVE objekte\nInventory", "Odaberi", "Odustani");
+			if(!response) return ShowPlayerDialog(playerid, DIALOG_EXTERIOR_MENU, DIALOG_STYLE_LIST, "Exteriors", "Kupi objekt\nUredi object\nObrisati objekt\nObrisati SVE objekte", "Odaberi", "Odustani");
 			
 			switch(listitem)
 			{
@@ -884,7 +884,7 @@ CMD:exterior(playerid, params[])
 	if(houseid == INVALID_HOUSE_ID) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne posjedujete kucu!");
 	if(!IsPlayerInRangeOfPoint(playerid, EXTERIOR_HOUSE_DISTANCE, HouseInfo[houseid][hEnterX], HouseInfo[houseid][hEnterY], HouseInfo[houseid][hEnterZ])) 
 			return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste blizu svoje kuce! Susjedima je ZABRANJENO mapati eksterijer!");
-	ShowPlayerDialog(playerid, DIALOG_EXTERIOR_MENU, DIALOG_STYLE_LIST, "Exteriors", "Kupi objekt\nUredi object\nObrisati objekt\nObrisati SVE objekte\nInventory", "Odaberi", "Odustani");
+	ShowPlayerDialog(playerid, DIALOG_EXTERIOR_MENU, DIALOG_STYLE_LIST, "Exteriors", "Kupi objekt\nUredi object\nObrisati objekt\nObrisati SVE objekte", "Odaberi", "Odustani");
 	return 1;
 }
 CMD:deleteext(playerid, params[])

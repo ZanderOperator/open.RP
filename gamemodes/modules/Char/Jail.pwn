@@ -205,12 +205,12 @@ stock PutPlayerInJail(playerid, time, type)
 		SetPlayerInterior(playerid, 7);
 		PutPlayerInSector(playerid, 3); // Stavlja ga u tamnica sektor
 	}*/
-	else if(type == 5) 
-	{// Treatment
+	else if(type == 5) // ASGH Intenzivna - Treatment
+	{
 		PlayerInfo[playerid][pJailed] = 5;
 		PlayerInfo[playerid][pJailTime] = time;
-		SetPlayerPosEx(playerid, 1439.6251, 1506.4286, -68.6758, 10, 0); // Intenzivna jedinica ASGH
-		ApplyAnimationEx(playerid,"CRACK","crckidle4", 4.0, 1, 0, 0, 0, 0);
+		SetPlayerPosEx(playerid, 1439.6251, 1506.4286, -68.6758, 10, 4); // Intenzivna jedinica ASGH
+		ApplyAnimation(playerid,"CRACK","crckidle4", 4.0, 1, 0, 0, 1, 0);
 	}
 	ResetPlayerWeapons(playerid);
 	SetPlayerSpecialAction(playerid,SPECIAL_ACTION_NONE);

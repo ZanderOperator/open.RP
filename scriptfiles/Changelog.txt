@@ -1,53 +1,59 @@
 City of Angels v18.5.0. - Summer Update + BugFixes
-- Vraceni stari nametagovi
+
+BugFixes 
+- Popravljeni svi bugovi sa ispisom skillova na /skills
+- Popravljen limit abuse sa Transporterom, gdje bi mogao svaki PayDay neograniceno raditi
+- Popravljen abuse sa Transporterom, gdje bi mogao sa bilokojim vozilom raditi posao
+- Popravljen /takejob, te uzimanje posla vehicle impoundera
+- Popravljen bug sa objektom guna prilikom /trunk put
 - Popravljen Fake Weapon Cheat ban dok bi bili u shootoutu i pali bi u wounded stanje
 - Popravljen bug sa /treatment - odsad porta u ASGH intenzivnu i vraca vas ispred ASGH ulaza nakon zavrsetka
 - Popravljen bug sa /ticket pay
 - Popravljeni svi zahtjevi za dodavanjem lokacija komandi/povecavanja radiusa od strane LSPD-a
 - Popravljen /poker table brisanje stola
 - Popravljen bug sa POLICE tablicama na server vozilima za poslove/neke fakcije
-- Izbacen /marry radi nesvrsishodnosti
-- Sve komande vezane uz kanale radia prebacene na /channel. Stare ostale jedino /togradio, /radio, /radiolow, /r1, /r2, /r3
-- Dodan automatski property remover - vise informacija na Forumu
-- Prilikom gubitka bilo kojeg tipa imovine/posla radi neaktivnosti, nakon logina ce vam ispisati detaljnu obavijest u Dialogu
-- Update Dialog preseljen na /update komandu UKOLIKO niste vidli update listu i ako vas ceka Server/Admin Message
 - Popravljeno spremanje objekata nakon /objects buy
-- Dodana komanda /inactivity za Admine Lvl 3+ da mogu upravljati neaktivnostima igraca
 - Popravljen /trunk put da ga i drugi mogu koristiti ukoliko je gepek otvoren, a ne samo vlasnik
 - Popravljeni warninzi izdati od novog sscanf plugina
 - Popravljena provjera broja mobitela na MDC-u 
 - Popravljeni/dodani 5. Color/Texture Slotovi za Furniture i Biznis Furniture
 - Popravljeni svi objekti pod sekcijom "Ostalo" na Biznis Furnitureu(Zidovi, itd...)
+- Popravljen /hangup za drugog igraca nakon prekida linije
+- Popravljeno popravljanje blindiranog vozila/guma
+- Popravljeno i optimizirano izlistavanje i odabir boja na House i Biznis Furnitureu
+- Popravljen Trasnporter abuse sa neogranicenim radom
+- Popravljen Trasnporter abuse da se moze radit iz bilokojeg vozila
+
+Novosti i izmjene
+- Vraceni stari nametagovi
+- Izbacen /marry radi nesvrsishodnosti
+- /createobjects limit povecan do 20 objekata
+- Sve komande vezane uz kanale radia prebacene na /channel. Stare ostale jedino /togradio, /radio, /radiolow, /r1, /r2, /r3
+- Dodan automatski property remover - vise informacija na Forumu
+- Dodana komanda /inactivity za Admine Lvl 3+ da mogu upravljati neaktivnostima igraca
+- Prilikom gubitka bilo kojeg tipa imovine/posla radi neaktivnosti, nakon logina ce vam ispisati detaljnu obavijest u Dialogu
+- Update Dialog preko 1280 znakova cijepa na novi Dialog radi bolje preglednosti, dostupne 4 stranice
+- Update Dialog preseljen na /update komandu UKOLIKO niste vidli update listu i ako vas ceka Server/Admin Message
 - Ogroman update svih vrsta objekata na serveru: - Credits to Kijo & Apps
 	- Dodano 135 novih(30 custom) objekata u Biznis Furniture
 	- Dodano 36(3 custom) novih objekata na Exterior Furniture
 	- Dodano XY novih objekata na House Furniture
 	- Dodano 44 novih(8 custom) objekata na /createobjects
 - Omoguceno kreiranje house exteriora do 10 objekata za igrace koji nisu donatori
-- Popravljen /hangup za drugog igraca nakon prekida linije
-- Popravljeno popravljanje blindiranog vozila/guma
 - Updatean /help i /ahelp
 - Svi USAGE: i KORISTENJE: prefixi command hintova zamjenjeni sa [ ? ] radi preglednosti
-- Popravljeno i optimizirano izlistavanje i odabir boja na Furnitureu i Biznis furnitureu
 - Dodan AdTrace obavijest za admine cim igrac preda oglas(prije njegovog objavljivanja) sa imenom igraca i tekstom
 - Dodan automatski mjesecni reward system za top 5 igraca sa najvise skupljenih PayDayova - vise informacija na forumu
 - Na /gotopos komandu dodan parametar Virtual World ID-a
 - Na /custombizint komandu dodan parametar Virtual World ID-a
-- Znatno olaksan i fixan kompletan Gym system
+- Znatno olaksan i fixan kompletan Gym system te dodan ispis koliko repova/distance treba za Muscle Level Up
+- Odsad ce se Muscle Level moci dignut samo jednom na 3 paydaya
 - Prilikom dolaska na svaku od sprava, izbacuje ti koliku distancu/koliko ponavljanja je potrebno za Muscle Level Up
 - Dodana svrha muscle levelu. Svaki udarac meleeom/rukom ce uzimati DO 1 HP-a za najveci skill level. 
-- Muscle Level ce takoder znaciti lakse obijanje gepeka/vrata vozila rukama/melee oruzjem, skidat ce vise HP-a toj komponenti koju obijate
+- Muscle Level ce znaciti lakse obijanje gepeka/vrata vozila rukama/melee oruzjem, skidat ce maskimalno 2.36 Door/Trunk HP-a!
 - Dodani namjenski krediti za vozila(Level 5+), kuce(Level 5+) i biznise(Level 10+) do 100 000$ - vise informacija na forumu
 - Svi novci koje zaradite na legalnom poslu(izuzev mehanicara itd. koji novce primaju na ruke), instant dobivate na bankovni racun
 - Dodan "Profit" koji se ispisuje na paydayu, koji je razlika svih prihoda i rashoda(izuzev stednje i kredita) kao kriterij za kredit
 - Izbacena komanda /payout
 - Ukoliko nemate dovoljno novaca za platiti ratu bilokoje vrste kredita na bankovnom racunu - dobivate upozorenje.
 - Ako skupite 3 neplacene rate radi nedovoljnog iznosa na bankovnom racunu, sljedeci PayDay Vam banka oduzima imovinu u iznosu kredita
-- Popravljeni svi bugovi sa ispisom skillova na /skills
-- Popravljen limit abuse sa Transporterom, gdje bi mogao svaki PayDay neograniceno raditi
-- Popravljen abuse sa Transporterom, gdje bi mogao sa bilokojim vozilom raditi posao
-- Popravljen /takejob, te uzimanje posla vehicle impoundera
-- Popravljen bug sa objektom guna prilikom /trunk put
-
-
-
