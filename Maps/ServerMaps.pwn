@@ -108,10 +108,10 @@ new
 
 stock CreateMapIcons()
 {
-	CreateDynamicMapIcon(1481.0137, -1772.4517, 17.7345, 42, 0, -1, -1, -1, 300.0, MAPICON_LOCAL);  // Vjecnica
-	CreateDynamicMapIcon(1554.7473, -1675.6938, 16.1953, 30, 0, -1, -1, -1, 300.0, MAPICON_LOCAL);  // LSPD
-	CreateDynamicMapIcon(2034.3123, -1401.8442, 17.2961, 22, 0, -1, -1, -1, 300.0, MAPICON_LOCAL);  // LSFD
-	CreateDynamicMapIcon(1129.1273, -1490.1561, 21.7366, 17, 0, -1, -1, -1, 300.0, MAPICON_LOCAL);  // Verona Mall
+	CreateDynamicMapIcon(1481.0137, -1772.4517, 17.7345, 40, 0, -1, -1, -1, 300.0, MAPICON_LOCAL);  // Vjecnica
+	CreateDynamicMapIcon(1554.7473, -1675.6938, 16.1953, 30, 0, -1, -1, -1, 500.0, MAPICON_LOCAL);  // LSPD
+	CreateDynamicMapIcon(1173.3197, -1323.3169, 15.3934, 22, 0, -1, -1, -1, 400.0, MAPICON_LOCAL);  // HOSPITAL
+	CreateDynamicMapIcon(1129.1273, -1490.1561, 21.7366, 17, 0, -1, -1, -1, 500.0, MAPICON_LOCAL);  // Verona Mall
 	CreateDynamicMapIcon(110.1072,  -1818.6821, 0.9792,	 9,  0, -1, -1, -1, 300.0, MAPICON_LOCAL); 	// Boat
 	CreateDynamicMapIcon(1958.5725, -2270.2456, 12.5152, 5,  0, -1, -1, -1, 300.0, MAPICON_LOCAL); 	// Aero
 	CreateDynamicMapIcon(2115.0952, -1806.4358, 21.2020, 29, 0, -1, -1, -1, 300.0, MAPICON_LOCAL); 	// Pizza
@@ -119,7 +119,10 @@ stock CreateMapIcons()
 	CreateDynamicMapIcon(1199.2405, -919.0047,  42.1115, 10, 0, -1, -1, -1, 300.0, MAPICON_LOCAL); 	// Burg
 	CreateDynamicMapIcon(592.6005, -1236.4147, 18.5241, 52, 0, -1, -1, -1, 300.0, MAPICON_LOCAL); 	// Banka
 	CreateDynamicMapIcon(546.5988, -1287.6221, 17.3315, 46, 0, -1, -1, -1, 300.0, MAPICON_LOCAL); 	// Wangs
-	CreateDynamicMapIcon(327.37140, -620.70010, 8.70690, 11, 0, -1, -1, -1, 500.0, MAPICON_LOCAL); 	// Rudnik
+	CreateDynamicMapIcon(327.37140, -620.70010, 8.70690, 11, 0, -1, -1, -1, 300.0, MAPICON_LOCAL); 	// Rudnik
+	CreateDynamicMapIcon(1328.3898, 272.4136, 19.3820, 51, 0, -1, -1, -1, 300.0, MAPICON_LOCAL); //Transporter
+	CreateDynamicMapIcon(1154.2377,-1770.3418,16.5938, 55, 0, -1, -1, -1, 300.0, MAPICON_LOCAL); //DMV
+	CreateDynamicMapIcon(1126.3856,-2036.8966,69.8837, 42, 0, -1, -1, -1, 300.0, MAPICON_LOCAL); //GOVERNORS MANSION
 	return 1;
 }
 

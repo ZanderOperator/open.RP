@@ -1823,7 +1823,7 @@ CMD:inactivity(playerid, params[])
 	if( !strcmp(choice, "add", true) )
 	{
 		new startstamp, endstamp;
-		if (sscanf(params, "s[12]s[24]is[64] ", choice, playername, days, reason))
+		if (sscanf(params, "s[12]s[24]is[64]", choice, playername, days, reason))
 		{
 			SendClientMessage(playerid, COLOR_RED, "[ ? ]: /inactivity add [Ime_Prezime][broj dana][razlog]");
 			return 1;

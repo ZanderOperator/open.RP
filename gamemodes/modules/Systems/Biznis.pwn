@@ -642,8 +642,6 @@ stock BuyBiznis(playerid, bool:credit_activated = false)
 	);
 	mysql_tquery( g_SQL, buybizQuery, "", "" );
 
-	SendClientMessage( playerid, COLOR_RED, "[ ! ]  Kupili ste biznis, koristite /help za vise informacija!" );
-
 	// Log
 	new log[128];
 	format(log, sizeof(log), "%s je kupio biznis %d($%d) (%s).",
@@ -653,6 +651,9 @@ stock BuyBiznis(playerid, bool:credit_activated = false)
 		GetPlayerIP(playerid)
 	);
 	LogBuyBiznis(log);
+
+	SendClientMessage( playerid, COLOR_RED, "[ ! ]  Kupili ste biznis, koristite /help za vise informacija!" );
+	return 1;
 }
 
 /*

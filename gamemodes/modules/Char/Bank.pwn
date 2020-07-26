@@ -301,7 +301,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 			{
 				if(GetPlayerMoney(playerid) < paymentBuyPrice[playerid])
 					return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "Nemas dovoljno novca u rukama za kupovinu ovog biznisa(%d$)!", paymentBuyPrice[playerid]);
-				else return BuyHouse(playerid);
+				else return BuyBiznis(playerid);
 			}
 			if(strval(inputtext) < 1 || strval(inputtext) > CreditInfo[playerid][cAmount])
 			{
@@ -602,9 +602,8 @@ CMD:bank(playerid, params[])
 		new 
 			ostatak = (251) - (CreditInfo[playerid][cRate]);
 		if(!IsAtBank(playerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Morate biti u banci da bi ste mogli koristit ovu komandu !");
-		
 		if(CreditInfo[playerid][cCreditType] == 0) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nemas podignut kredit.");
-		SendFormatMessage(playerid, MESSAGE_TYPE_INFO, "[BANKA]: Preostalo vam je %d rata od %d za otplatu kredita.", ostatak);
+		SendFormatMessage(playerid, MESSAGE_TYPE_INFO, "[BANKA]: Preostalo vam je %d(%d neplacenih) rata od %d za otplatu kredita. Iznos kredita je %d$.", ostatak, CreditInfo[playerid][cUnpaid], CreditInfo[playerid][cAmount]);
 		return 1;
 	}
 	else if(!strcmp(pick, "savings", true))
@@ -647,6 +646,9 @@ CMD:bank(playerid, params[])
 	else if(!strcmp(pick, "paycredit", true))
 	{
 		if( PlayerInfo[ playerid ][ pKilled ] ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne mozes koristiti ovu komandu dok si u DeathModeu!");
+		if(CreditInfo[playerid][cCreditType] == 0) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ti nemas dignut kredit");
+		if(CreditInfo[playerid][cCreditType] > 4 && !CreditInfo[playerid][cUsed]) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Jos uvijek niste iskoristili namjenski kredit, prvo obavite kupovinu!");
+		
 		new 
 			rest = (251 - CreditInfo[playerid][cRate]), 
 			money, 
@@ -659,8 +661,6 @@ CMD:bank(playerid, params[])
 			va_SendClientMessage(playerid, COLOR_RED, "[ ! ] Imate jos %d rata za otplatiti.", rest);
 			return 1;
 		}
-
-		if(CreditInfo[playerid][cCreditType] == 0) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ti nemas dignut kredit");
 		if( AntiSpamInfo[ playerid ][ asCreditPay ] > gettimestamp() ) return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "[ANTI-SPAM]: Ne spamajte sa komandom! Pricekajte %d sekundi pa nastavite!", ANTI_SPAM_BANK_CREDITPAY);
 		if (cashdeposit > rest || cashdeposit < 1) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate toliko rata !");
 		

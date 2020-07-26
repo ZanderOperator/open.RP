@@ -201,9 +201,6 @@ public PasswordForQuery(playerid, const inputtext[])
 }
 public CheckPlayerInBase(playerid)
 {
-	GetPlayerName(playerid, plyrName[playerid], 24);
-	UpdateNameLabel(playerid, "");
-	
 	if(cache_num_rows()) { //Registriran
 		// Player Camera
 		TogglePlayerControllable(playerid, false);

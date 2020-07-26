@@ -1285,7 +1285,7 @@ public OnPlayerWeaponShot(playerid, weaponid, hittype, hitid, Float:fX, Float:fY
         }
     }
 	new slot = GetWeaponSlot(weaponid);
-	if(GetPlayerWeapon(playerid) == PlayerWeapons[playerid][pwWeaponId][slot] && (PlayerWeapons[playerid][pwAmmo][slot] + 5) <= GetPlayerAmmo(playerid)) // + 5 bullets in case of lagg
+	if(GetPlayerWeapon(playerid) == PlayerWeapons[playerid][pwWeaponId][slot] && (PlayerWeapons[playerid][pwAmmo][slot] + 5) <= GetPlayerAmmo(playerid) && !PlayerInfo[playerid][pKilled]) // + 5 bullets in case of lagg
 	{
 		if( IsACop(playerid) && IsFDMember(playerid) ) return 1;
 		if(Bit1_Get( gr_OnEvent, playerid)) return (true);
@@ -1411,7 +1411,7 @@ hook OnPlayerTakeDamage(playerid, issuerid, Float:amount, weaponid)
 				}
 			}
 		}
-		else if(IsWeaponWearable(weaponid))
+		else if(IsWeaponWearable(weaponid) && !PlayerInfo[issuerid][pKilled]) // Fake Ban in Wounded State protection
 		{
 			if(PlayerWeapons[issuerid][pwSQLID][GetWeaponSlot(weaponid)] == -1)
 			{

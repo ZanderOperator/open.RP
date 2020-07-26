@@ -923,7 +923,7 @@ CMD:treatment(playerid, params[])
 	if( giveplayerid == playerid ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne mozete sami sebe stavljati na tretman!");
 	if( PlayerInfo[ giveplayerid ][ pJailed ] ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Igrac je vec na tretmanu ili je zatvoren!");
 	
-	PutPlayerInJail(giveplayerid, time, 3); // 3 je treatment program
+	PutPlayerInJail(giveplayerid, time, 5); // 5 je treatment program
 	SendFormatMessage(playerid, MESSAGE_TYPE_INFO, "Postavio si %s na lijecenje.",GetName(giveplayerid, true));
 	va_SendClientMessage(giveplayerid, COLOR_RED, "[ ! ] Postavljen si na lijecenje od strane doktora %s.",GetName(playerid, true));
 	return 1;

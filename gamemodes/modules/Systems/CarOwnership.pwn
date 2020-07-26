@@ -429,13 +429,13 @@ new
 //rBits
 static stock
 	Bit1:	gr_CarSlide				<MAX_PLAYERS>,
-	Bit1:	gr_UsingDealer			<3>,
 	Bit1:	gr_VehicleBlinking		<MAX_VEHICLES>,
 	Bit1:	gr_ColorDialogActive	<MAX_PLAYERS>,
 	Bit2:	gr_HotWireClicks		<MAX_PLAYERS>,
 	Bit1:	gr_PlayerBreaking		<MAX_PLAYERS>,
 	Bit1: 	gr_PlayerBreakingTrunk	<MAX_PLAYERS>,
 	Bit8:	gr_BreakLockTDSecs		<MAX_PLAYERS>,
+	Bit8:	gr_UsingDealer			<3>,
 	Bit16: 	gr_PlayerTestSeconds	<MAX_PLAYERS>;
 
 // Global global vars
@@ -919,6 +919,12 @@ stock ResetCarOwnershipVariables(playerid)
 {
 	if(Bit1_Get(gr_PreviewCar, 	playerid))
 		DestroyPreviewScene(playerid);
+	
+	if(PlayerDealer[playerid] > 0)
+	{
+		if(Bit8_Get(gr_UsingDealer, PlayerDealer[playerid]) == playerid)
+			Bit8_Set(gr_UsingDealer, PlayerDealer[playerid], 0);
+	}
 
 	// Regular vars
 	PreviewModel		[playerid]		= 0;
@@ -1626,7 +1632,7 @@ stock static CreatePreviewScene(playerid, dealer)
 	KillTimer(PlayerTestBackTimer[playerid]);
 
 	//Koristi li dealera?
-	Bit1_Set(gr_UsingDealer, 	dealer, 	true);
+	Bit8_Set(gr_UsingDealer, 	dealer, 	playerid);
 	Bit1_Set(gr_PreviewCar, 	playerid, 	true);
 
 	//Destroying old vehicle
@@ -1695,7 +1701,7 @@ stock DestroyPreviewScene(playerid)
 	PreviewCar[playerid] = INVALID_VEHICLE_ID;
 
 	//Koristi li dealera?
-	Bit1_Set(gr_UsingDealer, 	PlayerDealer[playerid], false);
+	Bit8_Set(gr_UsingDealer, 	PlayerDealer[playerid], 0);
 	Bit1_Set(gr_PreviewCar, 	playerid, 				false);
 
 	//TD
@@ -1947,7 +1953,7 @@ stock static CreateTestCar(playerid)
 	PreviewCar[playerid] = INVALID_VEHICLE_ID;
 
 	//Koristi li dealera?
-	Bit1_Set(gr_UsingDealer, PlayerDealer[playerid], false);
+	Bit8_Set(gr_UsingDealer, PlayerDealer[playerid], 0);
 
 	//Player Sets
 	DestroyCarsTextDraws(playerid);
@@ -2118,7 +2124,7 @@ stock BuyVehicle(playerid, bool:credit_activated = false)
 	Bit1_Set(gr_PreviewCar, playerid, false);
 
 	//Koristi li dealera?
-	Bit1_Set(gr_UsingDealer, PlayerDealer[playerid], false);
+	Bit8_Set(gr_UsingDealer, PlayerDealer[playerid], 0);
 
 	// Donator vozilo
 	if(LandVehicles[PreviewType[playerid]][viPremium] && PlayerInfo[playerid][pDonateRank] != 0)
@@ -4641,6 +4647,7 @@ hook OnPlayerDisconnect(playerid, reason)
 		BreakTrunkKickTick[playerid]		= gettimestamp();
 		Bit1_Set(gr_PlayerBreakingTrunk, playerid, false);
 	}
+
 	EditingTrunkWeaponObject[playerid] = 0;
 	EditingTrunkWeaponModel[playerid] = 0;
 	
@@ -4897,7 +4904,7 @@ CMD:car(playerid, params[])
 			
 		if(IsPlayerInRangeOfPoint(playerid, 10.0, DealerInfo[0][flPosX], DealerInfo[0][flPosY], DealerInfo[0][flPosZ])) {		// Auti
 			//Dali netko vec koristi tog dealera?
-			if(Bit1_Get(gr_UsingDealer, VEH_DEALER_CARS)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Netko vec gleda vozila! Probajte malo kasnije!");
+			if(Bit8_Get(gr_UsingDealer, VEH_DEALER_CARS)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Netko vec gleda vozila! Probajte malo kasnije!");
 
 			//Kreiranje scene
 			CreatePreviewScene(playerid, VEH_DEALER_CARS);
@@ -4909,7 +4916,7 @@ CMD:car(playerid, params[])
 			InterpolateCameraLookAt(playerid, PreviewPos[0][0], PreviewPos[0][1], PreviewPos[0][2], PreviewPos[0][0], PreviewPos[0][1], PreviewPos[0][2],  1000000, CAMERA_MOVE);
 		}
 		else if(IsPlayerInRangeOfPoint(playerid, 5.0, DealerInfo[1][flPosX], DealerInfo[1][flPosY], DealerInfo[1][flPosZ])) {	// Brodovi
-			if(Bit1_Get(gr_UsingDealer, VEH_DEALER_BOAT)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Netko vec gleda vozila! Probajte malo kasnije!");
+			if(Bit8_Get(gr_UsingDealer, VEH_DEALER_BOAT)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Netko vec gleda vozila! Probajte malo kasnije!");
 
 			//Player Sets
 			SetPlayerPos(playerid, 123.7875, -1766.9968, 3.5263);
@@ -4921,7 +4928,7 @@ CMD:car(playerid, params[])
 		}
 		else if(IsPlayerInRangeOfPoint(playerid, 5.0, DealerInfo[2][flPosX], DealerInfo[2][flPosY], DealerInfo[2][flPosZ])) {	// Avioni
 
-			if(Bit1_Get(gr_UsingDealer, VEH_DEALER_PLANE)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Netko vec gleda vozila! Probajte malo kasnije!");
+			if(Bit8_Get(gr_UsingDealer, VEH_DEALER_PLANE)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Netko vec gleda vozila! Probajte malo kasnije!");
 
 			//Player Sets
 			SetPlayerPos(playerid, 2110.7529, -2405.1841, 14.3317);

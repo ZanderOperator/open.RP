@@ -45,7 +45,7 @@ bool:StartFly(playerid)
 	SetPlayerPos(playerid,x,y,z+5.0);
 	ApplyAnimation(playerid,"PARACHUTE","PARA_steerR",6.1,1,1,1,1,0,1);
 	Fly(playerid);
-	GameTextForPlayer(playerid,"~y~KHAWAJA AIRLINES~n~~r~~k~~PED_FIREWEAPON~ ~w~- increase height~n~~r~RMB ~w~- reduce height~n~\
+	GameTextForPlayer(playerid,"~n~~r~~k~~PED_FIREWEAPON~ ~w~- increase height~n~~r~RMB ~w~- reduce height~n~\
 	~r~~k~~PED_SPRINT~ ~w~- increase spd~n~\
 	~r~~k~~SNEAK_ABOUT~ ~w~- reduce spd",10000,3);
 	return true;

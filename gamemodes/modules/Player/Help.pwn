@@ -158,7 +158,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext [])
 						}
 					}
 					case 3: ShowPlayerDialog(playerid, DIALOG_HELP, DIALOG_STYLE_MSGBOX, "Biznis", "/biznis\n/menu\n/bmusic\n/buy\n/makedj\n/bizinfo\n/bizbank\n/bizwithdraw\n/biznis_bint\n/biznis_furniture", "Ok", "");
-					case 4: ShowPlayerDialog(playerid, DIALOG_BANK, DIALOG_STYLE_MSGBOX, "ATM/BANKA", "/atm\n/bank\n/payout(City Hall)", "Ok", "");
+					case 4: ShowPlayerDialog(playerid, DIALOG_BANK, DIALOG_STYLE_MSGBOX, "ATM/BANKA", "/atm\n/bank", "Ok", "");
 					case 5: ShowPlayerDialog(playerid, DIALOG_HELP, DIALOG_STYLE_MSGBOX, "Music", "/music\n/bmusic\n/makedj", "Ok", "");
 					case 6: ShowPlayerDialog(playerid, DIALOG_HELP, DIALOG_STYLE_MSGBOX, "Objekti", "/createobject\n/editobject\n/deleteobject\n/objects (buy,attach,detach,changebone,edit)", "Ok", "");
 					case 7: ShowPlayerDialog(playerid, DIALOG_HELP, DIALOG_STYLE_MSGBOX, "Death system", "/pickitem(weapon,drug)\n/alldamages\n/acceptdeath", "Ok", "");
@@ -176,7 +176,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext [])
 					case 19: ShowPlayerDialog(playerid, DIALOG_HELP, DIALOG_STYLE_MSGBOX, "House&Furniture", "/house\n/bint\n/buyhouse\n/ring\n/knock\n/doorshout\n/renthouse\n/unrenthouse\n/furniture", "Ok", "");
 					case 20: ShowPlayerDialog(playerid, DIALOG_HELP, DIALOG_STYLE_MSGBOX, "Roleplay", "/rphelp\n/toganimchat\n/blindfold\n/screenfade\n/tie\n/frisk\n/handshake\n/accept\n/time\n/prisontime\n/coin\n/dice\n/dump\n/get\n/give\n/graffit\n/examine\n/putintrunk\n/entertrunk\n/exittrunk\n/paperdivorce\n/marry\n/rand\n/card\n/mycigars\n/taxcalculator\n/animations", "Ok", "");
 					case 21: ShowPlayerDialog(playerid, DIALOG_KASINO, DIALOG_STYLE_MSGBOX, "Kasino", "/poker\n/rulet\n/rulethelp ", "Ok", "Saznaj vise");
-					case 22: ShowPlayerDialog(playerid, DIALOG_HELP, DIALOG_STYLE_MSGBOX, "Radio", "/channel,\n/chanel setslot\n/chanel leave \n/chanel set\n/check playerfreq\n/check checkfreq\n/radio\n/radiolow\n/r2\n/r3\n/togradio", "Ok", "");
+					case 22: ShowPlayerDialog(playerid, DIALOG_HELP, DIALOG_STYLE_MSGBOX, "Radio", "/channel,\n/chanel setslot,\n/chanel leave, \n/chanel set,\n/check playerfreq\n/check checkfreq", "Ok", "");
 					case 23: ShowPlayerDialog(playerid, DIALOG_HELP, DIALOG_STYLE_MSGBOX, "Ostalo", "/jobduty\n\n/admins\n/report\n/colors", "Ok", "");
 				 }
 			}
@@ -188,7 +188,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext [])
 			{
 				switch(listitem)
 				{
-					case 0: ShowPlayerDialog(playerid, DIALOG_ADMHELP, DIALOG_STYLE_MSGBOX, "KOMANDE - Admin level 1","/checklastlogin,/check,/setint,/mute,/kick,/disconnect,/cnn,/a(dmin) chat,/am,/pweapons,/port\n\
+					case 0:ShowPlayerDialog(playerid, DIALOG_ADMHELP, DIALOG_STYLE_MSGBOX, "KOMANDE - Admin level 1","/checklastlogin,/check,/setint,/mute,/kick,/disconnect,/cnn,/a(dmin) chat,/am,/pweapons,/port\n\
 						   /pm,/aon,/recon,/setviwo,/masked,/dmers,/clearchat,/slap\n\
 						   /learn,/freeze,/unfreeze,/akill,/count,/checkoffline,/lastdriver\n\
 						   /fly,/lt,/rt,/goto,/rtc,/togadminwarns,/houseo,/bizo,/complexo\n\
@@ -392,7 +392,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext [])
     				strcat(jstring, "Kada se zaposlite kao transporter, lokaciju posla vidite na /GPS.\n");
 					strcat(jstring, "Kada dodjete na lokaciju, vidjet cete truckere s kojim obavljate posao.\n");
 					strcat(jstring, "Nakon pokretanja vozila, koristite komandu da krenete s poslom. (/trucker start)\n");
-					strcat(jstring, "Krenite sa rutom, stanite kod obližnjeg skladišta i desnim klikom uzimate kutiju.\n");
+					strcat(jstring, "Krenite sa rutom, stanite kod obliznjeg skladista i desnim klikom uzimate kutiju.\n");
 					strcat(jstring, "Kutiju pospremite u prtljaznik vozila, te se zaputite na marker na mapi gdje dostavljate kutiju.\n");
 					strcat(jstring, "Kada zelite prestati raditi, kucajte komandu /trucker stop.\n");
     				ShowPlayerDialog(playerid, 0, DIALOG_STYLE_MSGBOX, "Transporter", jstring, "U redu", "");
@@ -400,10 +400,11 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext [])
 				case 4: { 
     				strcat(jstring, "Posao imponudera uzimate u CityHallu.\n");
 					strcat(jstring, "Nakon sto ste uzeli posao, odlazite na lokaciju posla. (/GPS)\n");
-					strcat(jstring, "Na lokaciji posla, nalaze se vasa vozila s kojim obavljate posao. (/impound start)\n");
+					strcat(jstring, "Na lokaciji posla, nalaze se vasa vozila s kojim obavljate posao. (/jobimpound)\n");
 					strcat(jstring, "Nakon toga na mapi ce vam se pokazati markeri, gdje su oznacena vozila.\n");
+					strcat(jstring, "Nakon sto dodjete do vozila, zakacite vozilo za vase vozilo. (/tow)\n");
 					strcat(jstring, "Vozila koja impoundate moraju biti po propisima preuzeta, te odvezena do impound lota. (LS Airport)\n");
-					strcat(jstring, "Ukoliko zelite prestati raditi posao, potrebno je da ukucate komandu /impound stop, kojom ce se prekinuti vasa radnja.\n");
+					strcat(jstring, "Ukoliko zelite prestati raditi posao, potrebno je da ukucate komandu /stopimpound , kojom ce se prekinuti vasa radnja.\n");
     				ShowPlayerDialog(playerid, 0, DIALOG_STYLE_MSGBOX, "Impounder", jstring, "U redu", "");
     			}
 				case 5: {
