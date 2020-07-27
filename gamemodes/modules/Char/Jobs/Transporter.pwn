@@ -243,7 +243,7 @@ CMD:transporter(playerid, params[])
 	new
 		param[12];
 	if( sscanf(params, "s[12] ", param ) ) {
-		SendClientMessage(playerid, COLOR_RED, "[ ? ]: /trucker [odabir]");
+		SendClientMessage(playerid, COLOR_RED, "[ ? ]: transporter [odabir]");
 		SendClientMessage(playerid, COLOR_GREY, "[OPTION]: start - stop");
 		return 1;
 	}
@@ -284,7 +284,7 @@ CMD:transporter(playerid, params[])
 		SendClientMessage(playerid, -1, "Ako ste na duznosti, ne zaboravite da odete sa nje. Takodje, ako ste uzeli opremu, nemojte zaboraviti da je ostavite.");
 	}
 	else {
-		SendClientMessage(playerid, COLOR_RED, "[ ? ]: /trucker [odabir]");
+		SendClientMessage(playerid, COLOR_RED, "[ ? ]: transporter [odabir]");
 		SendClientMessage(playerid, COLOR_GREY, "[OPTION]: start - stop");
 		return 1;
 	}

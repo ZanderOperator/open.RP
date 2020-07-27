@@ -50,7 +50,7 @@ stock UpgradePlayerSkill(playerid, skillid, points = 1)
 	else if(PlayerInfo[playerid][pSkills][skillid] == 199)
 		skill = 4;
 	else if(PlayerInfo[playerid][pSkills][skillid] == 249)
-		skill = 4;
+		skill = 5;
 	if(skill > 0) {
 		SendFormatMessage(playerid, MESSAGE_TYPE_SUCCESS, "Vas Skill Level posla se povecao na Level %d.", skill);
 	}
@@ -155,24 +155,24 @@ CMD:skills(playerid, params[])
 	SendClientMessage(playerid, COLOR_LIGHTBLUE, "*_________________* SKILLS *_________________*");
 	va_SendClientMessage(playerid, COLOR_RED, "Farmer (%d/%d, Level %d) | Smetlar (%d/%d, Level %d) ",
 		PlayerInfo[ playerid ][ pSkills ][ 0 ],
-		(GetPlayerSkillLevel(playerid, 0) + 1) * 50,
+		GetPlayerSkillLevel(playerid, 0) * 50,
 		GetPlayerSkillLevel(playerid, 0),
 		PlayerInfo[ playerid ][ pSkills ][ 2 ],
-		(GetPlayerSkillLevel(playerid, 2) + 1) * 50,
+		GetPlayerSkillLevel(playerid, 2) * 50,
 		GetPlayerSkillLevel(playerid, 2)
 	);
 	va_SendClientMessage(playerid, COLOR_RED, "Car Jacker (%d/%d, Level %d) | Transporter (%d/%d, Level %d)", 
 		PlayerInfo[ playerid ][ pSkills ][ 6 ],
-		(GetPlayerSkillLevel(playerid, 6) + 1) * 50,
+		GetPlayerSkillLevel(playerid, 6) * 50,
 		GetPlayerSkillLevel(playerid, 6),
 		PlayerInfo[ playerid ][ pSkills ][ 7 ],	
-		(GetPlayerSkillLevel(playerid, 7) + 1) * 50,	
+		GetPlayerSkillLevel(playerid, 7) * 50,	
 		GetPlayerSkillLevel(playerid, 7)
 	);
 	va_SendClientMessage(playerid, COLOR_RED, "Tvornicki radnik (%d/%d, Level %d)", 
 		
 		PlayerInfo[ playerid ][ pSkills ][ 3 ],		
-		(GetPlayerSkillLevel(playerid, 3) + 1) * 50,	
+		GetPlayerSkillLevel(playerid, 3) * 50,	
 		GetPlayerSkillLevel(playerid, 3)
 	);
 	SendClientMessage(playerid, COLOR_LIGHTBLUE, "*____________________________________________*");
