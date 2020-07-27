@@ -391,10 +391,10 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext [])
 				case 3: { 
     				strcat(jstring, "Kada se zaposlite kao transporter, lokaciju posla vidite na /GPS.\n");
 					strcat(jstring, "Kada dodjete na lokaciju, vidjet cete truckere s kojim obavljate posao.\n");
-					strcat(jstring, "Nakon pokretanja vozila, koristite komandu da krenete s poslom. (/trucker start)\n");
+					strcat(jstring, "Nakon pokretanja vozila, koristite komandu da krenete s poslom. (/transporter start)\n");
 					strcat(jstring, "Krenite sa rutom, stanite kod obliznjeg skladista i desnim klikom uzimate kutiju.\n");
 					strcat(jstring, "Kutiju pospremite u prtljaznik vozila, te se zaputite na marker na mapi gdje dostavljate kutiju.\n");
-					strcat(jstring, "Kada zelite prestati raditi, kucajte komandu /trucker stop.\n");
+					strcat(jstring, "Kada zelite prestati raditi, kucajte komandu /transporter stop.\n");
     				ShowPlayerDialog(playerid, 0, DIALOG_STYLE_MSGBOX, "Transporter", jstring, "U redu", "");
     			}
 				case 4: { 

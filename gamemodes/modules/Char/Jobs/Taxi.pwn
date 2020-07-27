@@ -232,7 +232,7 @@ Taxi_Biznis(playerid, taxi_points, fare) {
 		
 	// calculate
 	final_bonus = fare+bonuses;
-	PlayerInfo[playerid][pBank] += final_bonus;
+	BudgetToPlayerBankMoney(playerid, final_bonus);
 	PlayerInfo[playerid][pPayDayMoney] += final_bonus;
 	return (true);
 }

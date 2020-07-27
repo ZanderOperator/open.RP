@@ -3016,9 +3016,28 @@ CMD:spawnchange(playerid, params[])
 {
 	new spawn;
 	if(PlayerInfo[playerid][pJailed] == 1) return SendMessage(playerid, MESSAGE_TYPE_ERROR,"U zatvoru ste, ne mozete to!");
-	if(sscanf(params, "i", spawn)) { SendClientMessage(playerid, COLOR_WHITE,"[ ? ]: /spawnchange [0-5]"); SendClientMessage(playerid, COLOR_WHITE,"0 - Standardno | 1 - Kuca | 2 - Organizacija (LSPD/LSFD/LSN/GOV) | 3 - complex room | 4 - LSPD Wilshire Station. |5 LSPD Harbor"); return 1; }
+	if(sscanf(params, "i", spawn)) { SendClientMessage(playerid, COLOR_WHITE,"[ ? ]: /spawnchange [0-5]"); SendClientMessage(playerid, COLOR_WHITE,"0 - Standardno | 1 - Kuca | 2 - Organizacija (LSPD/LSFD/LSN/GOV) | 3 - Complex Room | 4 - LSPD Wilshire Station. |5 LSPD Harbor"); return 1; }
 	if(spawn < 0 || spawn > 5) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Neispravan ID spawna! (0-5)");
-	if(spawn == 4) {
+	if(spawn == 1)
+	{
+		if(PlayerInfo[playerid][pHouseKey] == INVALID_HOUSE_ID)
+			return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne posjedujete kucu!");
+	}
+	else if(spawn == 2)
+	{
+		if(PlayerInfo[playerid][pMember] == 0 && PlayerInfo[playerid][pLeader] == 0)
+			return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste clan organizacije!");
+		
+		new factionid = PlayerInfo[playerid][pMember];
+		if(FactionInfo[factionid][fType] != 1 || FactionInfo[factionid][fType] != 2 || FactionInfo[factionid][fType] != 3 || FactionInfo[factionid][fType] != 7 || FactionInfo[factionid][fType] != 8) // Legalne fakcije
+			return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste clan legalne organizacije!");
+	}
+	else if(spawn == 3)
+	{
+		if(PlayerInfo[playerid][pComplexRoomKey] == INVALID_COMPLEX_ID)
+			return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne iznajmljujete stan u Complexu!");
+	}
+	else if(spawn == 4) {
 		if( !IsACop(playerid) && !IsASD(playerid) )	return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste policajac!");
 		PlayerInfo[playerid][pSpawnChange] = spawn;
 		SetPlayerSpawnInfo(playerid);

@@ -850,55 +850,53 @@ stock CheckPlayerInteriors(playerid)
 	new interior = -1, virtualworld = -1;
 	interior = GetPlayerInterior(playerid);
 	virtualworld = GetPlayerVirtualWorld(playerid);
-	if(interior != 0 || virtualworld != -1)
+
+	foreach(new h: Houses)
 	{
-		foreach(new h: Houses)
+		if(IsPlayerInRangeOfPoint(playerid, 100.0, HouseInfo[h][hExitX], HouseInfo[h][hExitY], HouseInfo[h][hExitZ]) && HouseInfo[h][hInt] == interior && HouseInfo[h][hVirtualWorld] == virtualworld)
 		{
-			if(IsPlayerInRangeOfPoint(playerid, 100.0, HouseInfo[h][hExitX], HouseInfo[h][hExitY], HouseInfo[h][hExitZ]) && HouseInfo[h][hInt] == interior && HouseInfo[h][hVirtualWorld] == virtualworld)
-			{
-				Bit16_Set(gr_PlayerInHouse, playerid, h);
-				return 1;
-			}
+			Bit16_Set(gr_PlayerInHouse, playerid, h);
+			return 1;
 		}
-		foreach(new b: Bizzes)
+	}
+	foreach(new b: Bizzes)
+	{
+		if(IsPlayerInRangeOfPoint(playerid, 100.0, BizzInfo[b][bExitX], BizzInfo[b][bExitY], BizzInfo[b][bExitZ]) && BizzInfo[b][bInterior] == interior && BizzInfo[b][bVirtualWorld] == virtualworld)
 		{
-			if(IsPlayerInRangeOfPoint(playerid, 100.0, BizzInfo[b][bExitX], BizzInfo[b][bExitY], BizzInfo[b][bExitZ]) && BizzInfo[b][bInterior] == interior && BizzInfo[b][bVirtualWorld] == virtualworld)
-			{
-				Bit16_Set(gr_PlayerInBiznis, playerid, b);
-				return 1;
-			}
+			Bit16_Set(gr_PlayerInBiznis, playerid, b);
+			return 1;
 		}
-		foreach(new pickup: Pickups)
+	}
+	foreach(new pickup: Pickups)
+	{
+		if(IsPlayerInRangeOfPoint(playerid, 100.0, PickupInfo[pickup][epExitx],PickupInfo[pickup][epExity],PickupInfo[pickup][epExitz]) && PickupInfo[pickup][epInt] == interior && PickupInfo[pickup][epViwo] == virtualworld)
 		{
-			if(IsPlayerInRangeOfPoint(playerid, 100.0, PickupInfo[pickup][epExitx],PickupInfo[pickup][epExity],PickupInfo[pickup][epExitz]) && PickupInfo[pickup][epInt] == interior && PickupInfo[pickup][epViwo] == virtualworld)
-			{
-				Bit16_Set(gr_PlayerInPickup, playerid, pickup);
-				return 1;
-			}
+			Bit16_Set(gr_PlayerInPickup, playerid, pickup);
+			return 1;
 		}
-		foreach(new c: Complex) 
+	}
+	foreach(new c: Complex) 
+	{
+		if(IsPlayerInRangeOfPoint(playerid, 100.0, ComplexInfo[c][cExitX], ComplexInfo[c][cExitY], ComplexInfo[c][cExitZ]) && ComplexInfo[c][cInt] == interior && ComplexInfo[c][cViwo] == virtualworld) 
 		{
-			if(IsPlayerInRangeOfPoint(playerid, 100.0, ComplexInfo[c][cExitX], ComplexInfo[c][cExitY], ComplexInfo[c][cExitZ]) && ComplexInfo[c][cInt] == interior && ComplexInfo[c][cViwo] == virtualworld) 
-			{
-				Bit16_Set(gr_PlayerInComplex, playerid, c);
-				return 1;
-			}
+			Bit16_Set(gr_PlayerInComplex, playerid, c);
+			return 1;
 		}
-		foreach(new cr: ComplexRooms)
+	}
+	foreach(new cr: ComplexRooms)
+	{
+		if(IsPlayerInRangeOfPoint(playerid, 100.0, ComplexRoomInfo[cr][cExitX], ComplexRoomInfo[cr][cExitY], ComplexRoomInfo[cr][cEnterZ]) && interior == ComplexRoomInfo[cr][cIntExit] && virtualworld == ComplexRoomInfo[cr][cVWExit] ) 
 		{
-			if(IsPlayerInRangeOfPoint(playerid, 100.0, ComplexRoomInfo[cr][cExitX], ComplexRoomInfo[cr][cExitY], ComplexRoomInfo[cr][cEnterZ]) && interior == ComplexRoomInfo[cr][cIntExit] && virtualworld == ComplexRoomInfo[cr][cVWExit] ) 
-			{
-				Bit16_Set(gr_PlayerInRoom, playerid, cr);
-				return 1;
-			}
+			Bit16_Set(gr_PlayerInRoom, playerid, cr);
+			return 1;
 		}
-		foreach(new garage: Garages)
+	}
+	foreach(new garage: Garages)
+	{
+		if(IsPlayerInRangeOfPoint(playerid, 100.0, GarageInfo[ garage ][ gExitX ], GarageInfo[ garage ][ gExitY ], GarageInfo[ garage ][ gExitZ ]))
 		{
-			if(IsPlayerInRangeOfPoint(playerid, 100.0, GarageInfo[ garage ][ gExitX ], GarageInfo[ garage ][ gExitY ], GarageInfo[ garage ][ gExitZ ]))
-			{
-				Bit16_Set(gr_PlayerInGarage, playerid, garage);
-				return 1;
-			}
+			Bit16_Set(gr_PlayerInGarage, playerid, garage);
+			return 1;
 		}
 	}
 	return 1;

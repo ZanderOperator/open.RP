@@ -458,7 +458,7 @@ CMD:alldamages(playerid, params[])
 	}
 	if( !IsPlayerConnected(gplayerid) ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Pogresan ID igraca/nick!!");
 	if( !SafeSpawned[gplayerid]) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Igrac nije sigurno spawnan!");
-	if ( !PlayerInfo[gplayerid][pKilled] ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Igrac u Wounded/Death Modeu!");
+	if ( !PlayerInfo[gplayerid][pKilled] ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Igrac nije u Wounded/Death Modeu!");
 
 	new Float: pX, Float: pY, Float: pZ;
 	GetPlayerPos(gplayerid, pX, pY, pZ);

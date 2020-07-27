@@ -456,6 +456,7 @@ Function: LearnPlayer(playerid, learnid)
 			SetPlayerInterior(playerid, 0);
 			TogglePlayerControllable(playerid, 0);
 			RandomPlayerCameraView(playerid);
+		    SendClientMessage(playerid, COLOR_GREY," ");
 			SendClientMessage(playerid, COLOR_GREY," ");
 			SendClientMessage(playerid, COLOR_GREY," ");
 			SendClientMessage(playerid, COLOR_GREY," ");
@@ -464,14 +465,13 @@ Function: LearnPlayer(playerid, learnid)
 			SendClientMessage(playerid, COLOR_GREY," ");
 			SendClientMessage(playerid, COLOR_GREY," ");
 			SendClientMessage(playerid, COLOR_GREY," ");
-			SendClientMessage(playerid, COLOR_GREY," ");
-		 	SendClientMessage(playerid, COLOR_RED, "[ ! ] ~ Sto je RolePlay(RP)? ~");
+			SendClientMessage(playerid, COLOR_RED, "[ ! ] â€˘ Sto je RolePlay ? â€˘");
 		  	SendClientMessage(playerid, COLOR_WHITE, " ");
-		  	SendClientMessage(playerid, COLOR_WHITE, "RP-ati jednostavno znaci glumiti.Vi glumite svog In Character(IC) lika.");
-		    SendClientMessage(playerid, COLOR_WHITE, "RolePlay je igra simulacije stvarnog zivota.");
-		    SendClientMessage(playerid, COLOR_WHITE, "Pri takvoj igri vazno je znati i postovati pravila RolePlaya.");
-		    SendClientMessage(playerid, COLOR_WHITE, "Pozeljno je da RP-ate na svakom koraku, jer su vam tada vece sanse za uspjeh.");
-		    SendClientMessage(playerid, COLOR_WHITE, "Ako ste novi igrac, i Vi mozete nauciti pravila RP-a lako i brzo.");
+		  	SendClientMessage(playerid, COLOR_WHITE, "Roleplay je simulacija stvarnoga zivota. ");
+		    SendClientMessage(playerid, COLOR_WHITE, "Pri takvoj igrici, vazno je dobro poznavati RolePlay pravila. ");
+		    SendClientMessage(playerid, COLOR_WHITE, "Pozeljno je da sto vise vremena provodite u RolePlayu.");
+		    SendClientMessage(playerid, COLOR_WHITE, "Kvalitetnim RolePlayom,povecava Vam se sansa za uspjeh na serveru. ");
+		    SendClientMessage(playerid, COLOR_WHITE, "Ukoliko ste novi igrac, Vi lako mozete nauciti RolePlay pravila.");
 			KillTimer(LearnTimer[playerid]);
 			LearnTimer[playerid] = SetTimerEx("LearnPlayer", 28000, 0, "ii", playerid, 2);
 		}
@@ -486,12 +486,12 @@ Function: LearnPlayer(playerid, learnid)
 			SendClientMessage(playerid, COLOR_GREY," ");
 			SendClientMessage(playerid, COLOR_GREY," ");
 			SendClientMessage(playerid, COLOR_GREY," ");
-		 	SendClientMessage(playerid, COLOR_RED, "[ ! ] ~ RP Termini ~");
+		 	SendClientMessage(playerid, COLOR_RED, "[ ! ] â€˘ RolePlay terminologija â€˘");
 	   		SendClientMessage(playerid, COLOR_WHITE, " ");
-	        SendClientMessage(playerid, COLOR_WHITE, "Postoji mnogo RP termina na mnogim RP serverima, tako i ovdje!");
-	        SendClientMessage(playerid, COLOR_WHITE, "Vecina tih termina je zabranjena na RP serveru.");
-	        SendClientMessage(playerid, COLOR_WHITE, "Culi ste vec za MetaGaming, PowerGaming, BunnyHop, GunFromAss?");
-	        SendClientMessage(playerid, COLOR_WHITE, "Sada cemo vam sve objasniti u ovom tutorialu. Pa krenimo...");
+	        SendClientMessage(playerid, COLOR_WHITE, "Obzirom da je ovo Hardcore RolePlay server, postuju se i RolePlay pravila!");
+	        SendClientMessage(playerid, COLOR_WHITE, "Neki RolePlay termini su Vam vec poznati?");
+	        SendClientMessage(playerid, COLOR_WHITE, "Kroz ovaj kratak tutorial, dobit' cete uvid u osnovne termine RolePlaya.");
+	        SendClientMessage(playerid, COLOR_WHITE, "Krenimo polako !");
 		    KillTimer(LearnTimer[playerid]);
 			LearnTimer[playerid] = SetTimerEx("LearnPlayer", 25000, 0, "ii", playerid, 3);
 		}
@@ -506,14 +506,17 @@ Function: LearnPlayer(playerid, learnid)
 			SendClientMessage(playerid, COLOR_GREY," ");
 			SendClientMessage(playerid, COLOR_GREY," ");
 			SendClientMessage(playerid, COLOR_GREY," ");
-		 	SendClientMessage(playerid, COLOR_RED, "[ ! ] ~ In Character i Out of Character(OOC) Chat ~");
-	   		SendClientMessage(playerid, COLOR_WHITE, "Vazno je znati razliku izmedju ova dva chata!");
-	        SendClientMessage(playerid, COLOR_WHITE, "IC Chat vezan je direktno za vaseg IC lika, lika kojeg vi glumite u igri.");
-	        SendClientMessage(playerid, COLOR_WHITE, "U tom Chatu se NE SMIJU pisati stvari iz stvarnog zivota i ostale OOC stvari.");
-	        SendClientMessage(playerid, COLOR_WHITE, "Primjer za IC chat: Dobar dan gospodine, mogu li znati vase ime?");
-	       	SendClientMessage(playerid, COLOR_WHITE, "OOC Chat je vezan za stvari koje nisu direktno povezane s vasim likom u igri.");
-	       	SendClientMessage(playerid, COLOR_WHITE, "Primjeri za OOC Chat: Jesi vidio onu temu na forumu? | Mi mozes zvat admina?");
-	       	SendClientMessage(playerid, COLOR_WHITE, "IC chatovi su: poziv sa /phone, SMS, /c, /w dok u OOC spadaju /b i /o chat!");
+		 	SendClientMessage(playerid, COLOR_RED, "[ ! ] â€˘ In Character i Out of Character(OOC) Chat â€˘");
+			SendClientMessage(playerid, COLOR_WHITE," ");
+	   		SendClientMessage(playerid, COLOR_WHITE, "Vrlo je vazno znati razliku izmedju ova dva chata.");
+			SendClientMessage(playerid, COLOR_WHITE," ");
+	        SendClientMessage(playerid, COLOR_WHITE, "In Character (IC) je vezan direktno za Vasega lika, kojega glumite u igri. ");
+	        SendClientMessage(playerid, COLOR_WHITE, "Unutar IC chata, ne smije postojati stvari iz Vasega privatnog zivota i ostale OOC stvari.");
+	        SendClientMessage(playerid, COLOR_WHITE, "Primjer IC chata: 'Dobar dan, zovem se Mike. Odakle dolazite gospodine?')");
+	       	SendClientMessage(playerid, COLOR_WHITE, "In Character tekstovi su /phone, /sms, /ct, /c, /w, /s.");
+			SendClientMessage(playerid, COLOR_WHITE," ");
+	       	SendClientMessage(playerid, COLOR_WHITE, "Out of Character(OOC) je vezan za stvari koje nisu direktno povezane s Vama u igrici.");
+	       	SendClientMessage(playerid, COLOR_WHITE, "Primjer OOC chata: '/b Jesi pogledao novu temu na forumu? Tko su admini na ovome serveru?'");
 			KillTimer(LearnTimer[playerid]);
 			LearnTimer[playerid] = SetTimerEx("LearnPlayer", 30000, 0, "ii", playerid, 4);
 		}
@@ -528,13 +531,13 @@ Function: LearnPlayer(playerid, learnid)
 			SendClientMessage(playerid, COLOR_GREY," ");
 			SendClientMessage(playerid, COLOR_GREY," ");
 			SendClientMessage(playerid, COLOR_GREY," ");
-		 	SendClientMessage(playerid, COLOR_RED, "[ ! ] ~ Sto je to MetaGaming(MG)? ~");
+		 	SendClientMessage(playerid, COLOR_RED, "[ ! ] â€˘ Sto je to MetaGaming(MG)? â€˘");
 	   		SendClientMessage(playerid, COLOR_WHITE, " ");
-	        SendClientMessage(playerid, COLOR_WHITE, "MetaGaming je koristenje OOC informacija u IC korist i strogo se kaznjava");
-	        SendClientMessage(playerid, COLOR_WHITE, "Primjer: Vidite necije ime iznad glave i po tome ga nazovete, a niste ga saznali na RP nacin.");
-	        SendClientMessage(playerid, COLOR_WHITE, "Necije ime morate saznati na RP nacin tako da ga pitate IC,iako ga vidite iznad glave.");
-	        SendClientMessage(playerid, COLOR_WHITE, "2.Primjer: Na osnovu skina prepoznavanje necije pripadnosti organizaciji/bandi!");
-	        SendClientMessage(playerid, COLOR_WHITE, "Recimo dodje vam lik u Grove Street skinu i kaze sjedi samnom, a ti kazes necu, banda si.");
+	        SendClientMessage(playerid, COLOR_WHITE, "Metagaming je koristenje Out of Character (OOC) informacija u In Character (IC) svrhe.");
+	        SendClientMessage(playerid, COLOR_WHITE, "Primjer Metagaminga je koristenje necijega imena, bez da ste to na RolePlay nacin saznali.");
+	        SendClientMessage(playerid, COLOR_WHITE, "Kada ugledate ime igraca na serveru, iznad njegove glave, Vi njegovo ime ne znate, sve dok Vam ga on ne kaze.");
+	        SendClientMessage(playerid, COLOR_WHITE, "Takodjer, ukoliko vidite osobu u odjeci bande/mafie, nemate pravo toj osobi iznositi da je pripadnik ilegalne organizacije.");
+	        SendClientMessage(playerid, COLOR_WHITE, "Metagaming je strogo kaznjiv kao i svako ostalo krsenje RolePlay pravila.");
 			KillTimer(LearnTimer[playerid]);
 			LearnTimer[playerid] = SetTimerEx("LearnPlayer", 30000, 0, "ii", playerid, 5);
 		}
@@ -549,13 +552,13 @@ Function: LearnPlayer(playerid, learnid)
 			SendClientMessage(playerid, COLOR_GREY," ");
 			SendClientMessage(playerid, COLOR_GREY," ");
 			SendClientMessage(playerid, COLOR_GREY," ");
-		 	SendClientMessage(playerid, COLOR_RED, "[ ! ] ~ Sto je to PowerGaming(PG)? ~");
+		 	SendClientMessage(playerid, COLOR_RED, "[ ! ] â€˘ Sto je to PowerGaming(PG)? â€˘");
 			SendClientMessage(playerid, COLOR_WHITE, " ");
-	        SendClientMessage(playerid, COLOR_WHITE, "Radnja koja se u RLu nemoze izvesti u trenutnom trenutku ili uopce,strogo se kaznjava.");
-	        SendClientMessage(playerid, COLOR_WHITE, "Da bi vi pocetnici razumjeli PG, nasim rijecima cemo reci ovako....");
-	        SendClientMessage(playerid, COLOR_WHITE, "...Radnja koju nemozete u RL napraviti, pa ni ovdje.");
-	        SendClientMessage(playerid, COLOR_WHITE, "Primjeri za PG:Lopov vas pljacka, opisuje sve /me komandama a vi se ladno sjednete u auto i odete.");
-	        SendClientMessage(playerid, COLOR_WHITE, "Padnete sa zgrade, s 20ak metara i prezivite, te nastavite normalno trcati bez da ste upisali /crack.");
+	        SendClientMessage(playerid, COLOR_WHITE, "Powergaming je odradjivanje radnje koju u stvarnom zivotu ne mozete odraditi. ");
+	        SendClientMessage(playerid, COLOR_WHITE, "Naime, radnja koju ne mozete izvrsiti ili u odredjenom momentu ili uopce ne mozete izvrsiti tu radnju. ");
+	        SendClientMessage(playerid, COLOR_WHITE, "Najbolji opis Powergaminga se moze vidjeti ukoliko Vas netko zeli opljackati, prijeti oruzjem - Vi skocite iz auta i krente bjezati.");
+	        SendClientMessage(playerid, COLOR_WHITE, "Takodjer, ukoliko padnete sa odredjene visine i nastavite se normalno kretati.");
+	        SendClientMessage(playerid, COLOR_WHITE, "PowerGaming je strogo kaznjiv kao i svako ostalo krsenje RolePlay pravila.");
 		    KillTimer(LearnTimer[playerid]);
 			LearnTimer[playerid] = SetTimerEx("LearnPlayer", 30000, 0, "ii", playerid, 6);
 		}
@@ -570,9 +573,11 @@ Function: LearnPlayer(playerid, learnid)
 			SendClientMessage(playerid, COLOR_GREY," ");
 			SendClientMessage(playerid, COLOR_GREY," ");
 			SendClientMessage(playerid, COLOR_GREY," ");
-		 	SendClientMessage(playerid, COLOR_RED, "[ ! ] ~ Sto je to Bunnyhop(BH)? ~");
+		 	SendClientMessage(playerid, COLOR_RED, "[ ! ] â€˘ Sto je to Bunnyhop(BH)? â€˘");
 	   		SendClientMessage(playerid, COLOR_WHITE, " ");
-	        SendClientMessage(playerid, COLOR_WHITE, "To je ucestalo skakanje dok trcite,da bi bili brzi. Nije nikako RP i kaznjivo je!");
+	        SendClientMessage(playerid, COLOR_WHITE, "Bunnyhop je ucestalo skakanje prilikom Vasega kretanja.");
+			SendClientMessage(playerid, COLOR_WHITE, "Bunnyhop se koristi kako bi se ubrzali, sto nikako nije RolePlay.");
+			SendClientMessage(playerid, COLOR_WHITE, "Bunnyhop je strogo kaznjiv kao i svako ostalo krsenje RolePlay pravila.");
 			KillTimer(LearnTimer[playerid]);
 			LearnTimer[playerid] = SetTimerEx("LearnPlayer", 17000, 0, "ii", playerid, 7);
 		}
@@ -587,12 +592,12 @@ Function: LearnPlayer(playerid, learnid)
 			SendClientMessage(playerid, COLOR_GREY," ");
 			SendClientMessage(playerid, COLOR_GREY," ");
 			SendClientMessage(playerid, COLOR_GREY," ");
-		 	SendClientMessage(playerid, COLOR_RED, "[ ! ] ~ Sto je to Revenge Kill(RK)? ~");
+		 	SendClientMessage(playerid, COLOR_RED, "[ ! ] â€˘ Sto je to Revenge Kill(RK)? â€˘");
 	   		SendClientMessage(playerid, COLOR_WHITE, " ");
-	        SendClientMessage(playerid, COLOR_WHITE, "Kao sto i samo ime pojma govori, RK je ubojstvo iz osvete.");
-	        SendClientMessage(playerid, COLOR_WHITE, "Ubijanje iz osvete je zabranjeno jer se ne poklapa sa RP pravilima.");
-	        SendClientMessage(playerid, COLOR_WHITE, "Primjerice vas netko ubije, vi nabavite oruzje, nadjete ga i ubijete ga pomocu OOC informacija!");
-			SendClientMessage(playerid, COLOR_WHITE, "Po pravilima, vi se nakon ubojstva ne sjecate gdje ste uopce bili i tko vas je ubio...");
+	        SendClientMessage(playerid, COLOR_WHITE, "Revenge Kill je ubojstvo iz osvete.");
+	        SendClientMessage(playerid, COLOR_WHITE, "Primjer Revenge Killa je kada Vas netko ubije, Vi se usredotocite na to da nabavite oruzje i ubijete natrag tu osobu.");
+	        SendClientMessage(playerid, COLOR_WHITE, "Kada se dogodi PK, Vi zaboravljate situaciju u kojoj ste se nasli, te ljude koji su Vas ubili!");
+			SendClientMessage(playerid, COLOR_WHITE, "Revenge Kill je strogo kaznjiv kao i svako ostalo krsenje RolePlay pravila.");
 		    KillTimer(LearnTimer[playerid]);
 			LearnTimer[playerid] = SetTimerEx("LearnPlayer", 22000, 0, "ii", playerid, 8);
 		}
@@ -607,16 +612,16 @@ Function: LearnPlayer(playerid, learnid)
 			SendClientMessage(playerid, COLOR_GREY," ");
 			SendClientMessage(playerid, COLOR_GREY," ");
 			SendClientMessage(playerid, COLOR_GREY," ");
-		 	SendClientMessage(playerid, COLOR_RED, "[ ! ] ~ /me i /ame /do komanda? ~");
+		 	SendClientMessage(playerid, COLOR_RED, "[ ! ] â€˘ /me i /ame /do komanda? â€˘");
 	   		SendClientMessage(playerid, COLOR_WHITE, "");
-	        SendClientMessage(playerid, COLOR_RED, "[ ! ] /me i /ame komande sluze za iskazivanje radnji i kretnji vaseg lika!");
-	        SendClientMessage(playerid, COLOR_WHITE, "Ona je temelj dobrog RP-a i pravi RP-er je koristi jako cesto pri RP akcijama.");
-	        SendClientMessage(playerid, COLOR_WHITE, "Primjer: /me gleda oko sebe pa potajno vadi vrecicu s travom iz dzepa. ...itd!");
-			SendClientMessage(playerid, COLOR_RED, "[ ! ] /ame komanda je ista kao /me samo se koristi za kratke radnje lika.");
-			SendClientMessage(playerid, COLOR_WHITE, "Primjer: /ame se smijeska, /ame promatra situaciju, /ame se naslanja na zid.");
-			SendClientMessage(playerid, COLOR_RED, "[ ! ] /do komanda sluzi za opisivanje RP situacija i okoline");
-			SendClientMessage(playerid, COLOR_WHITE, "Primjer: /do Jimmy je ovisan o drogama, /do Jacob je vidno umoran");
-			SendClientMessage(playerid, COLOR_WHITE, "Primjer: /do Moze se primjetiti da je na podu krv.");
+	        SendClientMessage(playerid, COLOR_RED, "[ ! ] /me - komanda koja se koristi za trenutnu radnju Vaseg IC karaktera koja se dogodila u trenutku. ");
+	        SendClientMessage(playerid, COLOR_WHITE, "Naravno, /me komanda ne smije biti koristena kako bi se izvukli iz nekog RolePlaya.");
+	        SendClientMessage(playerid, COLOR_WHITE, "Primjer: /me uzima sok sa stola te ispija gutljaj.");
+			SendClientMessage(playerid, COLOR_RED, "[ ! ] /ame - komanda koja se koristi za trenutnu radnju Vaseg IC karaktera i koja poslje odredjenog vremena i dalje traje.");
+			SendClientMessage(playerid, COLOR_WHITE, "Primjer: /ame se osmjehuje, /ame klima glavom potvrdno, /ame se naslanja na zid.");
+			SendClientMessage(playerid, COLOR_RED, "[ ! ] /do - komanda kojom se opisuje trenutna IC situacija.");
+			SendClientMessage(playerid, COLOR_WHITE, " /do se pise u trecem licu odnosno u pogledu posmatraca, moze opisivati i okolinu.");
+			SendClientMessage(playerid, COLOR_WHITE, "Primjer: Sta bi se nalazilo ispred Johnnya na stolu? (( Patricia Vargas ))");
 		    KillTimer(LearnTimer[playerid]);
 			LearnTimer[playerid] = SetTimerEx("LearnPlayer", 23000, 0, "ii", playerid, 9);
 		}
@@ -631,11 +636,11 @@ Function: LearnPlayer(playerid, learnid)
 			SendClientMessage(playerid, COLOR_GREY," ");
 			SendClientMessage(playerid, COLOR_GREY," ");
 			SendClientMessage(playerid, COLOR_GREY," ");
-		 	SendClientMessage(playerid, COLOR_RED, "[ ! ] ~ Sto je to Drive By(DB)? ~");
+		 	SendClientMessage(playerid, COLOR_RED, "[ ! ] â€˘ Sto je to Drive By(DB)? â€˘");
 	   		SendClientMessage(playerid, COLOR_WHITE, " ");
-	        SendClientMessage(playerid, COLOR_WHITE, "Pucanje s mjesta vozaca iz bilo kojeg vozila na pjesake, motore ili bicikle.!");
-	        SendClientMessage(playerid, COLOR_WHITE, "Takodjer je zabranjeno ubijanje elisom helikoptera i gazenje pjesaka vozilom.");
-	        SendClientMessage(playerid, COLOR_WHITE, "Drive By je strogo zabranjen, za krsenje ovog pravila nema postede!");
+	        SendClientMessage(playerid, COLOR_WHITE, "Drive By je pucanje oruzjem s mjesta vozaca iz bilo kojeg mjesta u vozilu na civile, motore ili bicikle.");
+	        SendClientMessage(playerid, COLOR_WHITE, "Takodjer je zabranjeno ubijanje propelerom helikoptera i gazenje igraca vozilom.");
+	        SendClientMessage(playerid, COLOR_WHITE, "Drive By je strogo kaznjiv kao i svako ostalo krsenje RolePlay pravila.");
 		    KillTimer(LearnTimer[playerid]);
 			LearnTimer[playerid] = LearnTimer[playerid] = SetTimerEx("LearnPlayer", 23000, 0, "ii", playerid, 10);
 		}
@@ -652,14 +657,14 @@ Function: LearnPlayer(playerid, learnid)
 			SendClientMessage(playerid, COLOR_GREY," ");
 			SendClientMessage(playerid, COLOR_GREY," ");
 			SendClientMessage(playerid, COLOR_GREY," ");
-	   		SendClientMessage(playerid, COLOR_RED, "[ ! ] ~ KRAJ TUTORIALA ~");
+	   		SendClientMessage(playerid, COLOR_RED, "[ ! ] â€˘ KRAJ TUTORIALA â€˘");
 	        SendClientMessage(playerid, COLOR_WHITE, " ");
-	        SendClientMessage(playerid, COLOR_WHITE, "Nadam se da ste nesto naucili iz ovog tutoriala...");
-	        SendClientMessage(playerid, COLOR_WHITE, "...te da vise necete krsiti RP pravila!");
-	        SendClientMessage(playerid, COLOR_WHITE, "Slijedi kviz od 10 pitanja da se uvjerimo da ste nas pratili!");
-	        SendClientMessage(playerid, COLOR_WHITE, "Pravila: Maksimalno 2 puta krivi odgovor na isto pitanje.");
+	        SendClientMessage(playerid, COLOR_WHITE, "Nadamo se da ste naucili nesto iz nasega tutoriala!");
+	        SendClientMessage(playerid, COLOR_WHITE, "Takodjer se nadamo, da vise necete krsiti RolePlay pravila.");
+	        SendClientMessage(playerid, COLOR_WHITE, "Uskoro slijedi kviz od deset pitanja.");
+	        SendClientMessage(playerid, COLOR_WHITE, "Mozete maksimalno dati krivi odgovor dva puta na jedno pitanje.");
 			StartKnowledgeQuiz(playerid);
-			
+
 		}
 	}
 	return 1;
@@ -5600,6 +5605,7 @@ CMD:aon(playerid, params[])
 	} else {
 	    SetPlayerColor(playerid, COLOR_PLAYER);
 		SetPlayerHealth(playerid, 100);
+		SetPlayerArmour(playerid, 0);
 		Bit1_Set(a_AdminOnDuty, playerid, false);
 
 		SetPlayerArmour(playerid, PlayerInfo[playerid][pArmour]);
