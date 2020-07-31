@@ -972,9 +972,10 @@ stock AC_SpawnPlayer(playerid)
 #endif
 #define SpawnPlayer AC_SpawnPlayer
 
-stock AC_SetPlayerHealth(playerid, Float:health)
+stock AC_SetPlayerHealth(playerid, Float:health, bool:admin_duty = false)
 {
-	PlayerInfo[playerid][pHealth] = health;
+	if(!admin_duty)
+		PlayerInfo[playerid][pHealth] = health;
 	return SetPlayerHealth(playerid, health);
 }
 #if defined _ALS_SetPlayerHealth
@@ -984,9 +985,10 @@ stock AC_SetPlayerHealth(playerid, Float:health)
 #endif
 #define SetPlayerHealth AC_SetPlayerHealth
 
-stock AC_SetPlayerArmour(playerid, Float:armour)
+stock AC_SetPlayerArmour(playerid, Float:armour, bool:admin_duty = false)
 {
-	PlayerInfo[playerid][pArmour] = armour;
+	if(!admin_duty)
+		PlayerInfo[playerid][pArmour] = armour;
 	return SetPlayerArmour(playerid, armour);
 }
 #if defined _ALS_SetPlayerArmour
