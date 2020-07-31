@@ -1005,21 +1005,31 @@ stock SendSplitMessage(playerid, color, const final[])
     new len = strlen(final);
     if(len >= 100)
     {
-		new buffer[EX_SPLITLENGTH+10],	
+		new buffer[EX_SPLITLENGTH+10],
+			colorstring[9] = EOS, colorstart = 0, colorend = 0,	
 			buffer2[128], spacepos = 0, bool:broken = false;
+
 		for(new j = 60; j < len; j++)
 		{
+			if(final[j] == '{')
+				colorstart = j;
+
+			if(final[j] == '}')
+				colorend = j + 1;
+
 			if(final[j] == ' ')
 				spacepos = j;
 
-			if(j >= EX_SPLITLENGTH && spacepos >= 60)
+			if(j >= EX_SPLITLENGTH && spacepos >= 60 && (colorstart == 0 || (colorstart != 0 && colorend > colorstart)))
 			{
 				broken = true;
+				if(colorstart != 0 && colorend != 0)
+					strmid(colorstring, final, colorstart, colorend, sizeof(colorstring));
 				strmid(buffer, final, 0, spacepos);
 				format(buffer, sizeof(buffer), "%s...", buffer);
 				SendClientMessage(playerid, color, buffer);
 				strmid(buffer2, final, spacepos+1, len);
-				format(buffer2, sizeof(buffer2), "...%s", buffer2);
+				format(buffer2, sizeof(buffer2), "%s...%s", colorstring, buffer2);
 				SendClientMessage(playerid, color, buffer2);
 				return 1;
 			}
@@ -1036,21 +1046,31 @@ stock SendSplitMessageToAll(color, const final[])
     new len = strlen(final);
     if(len >= 100)
     {
-		new buffer[EX_SPLITLENGTH+10],	
+		new buffer[EX_SPLITLENGTH+10],
+			colorstring[9] = EOS, colorstart = 0, colorend = 0,	
 			buffer2[128], spacepos = 0, bool:broken=false;
+
 		for(new j = 60; j < len; j++)
 		{
 			if(final[j] == ' ')
 				spacepos = j;
+			
+			if(final[j] == '{')
+				colorstart = j;
+				
+			if(final[j] == '}')
+				colorend = j + 1;
 
-			if(j >= EX_SPLITLENGTH && spacepos >= 60)
+			if(j >= EX_SPLITLENGTH && spacepos >= 60 && (colorstart == 0 || (colorstart != 0 && colorend > colorstart)))
 			{
 				broken = true;
+				if(colorstart != 0 && colorend != 0)
+					strmid(colorstring, final, colorstart, colorend, sizeof(colorstring));
 				strmid(buffer, final, 0, spacepos);
 				format(buffer, sizeof(buffer), "%s...", buffer);
 				SendClientMessageToAll(color, buffer);
 				strmid(buffer2, final, spacepos+1, len);
-				format(buffer2, sizeof(buffer2), "...%s", buffer2);
+				format(buffer2, sizeof(buffer2), "%s...%s", colorstring, buffer2);
 				SendClientMessageToAll(color, buffer2);
 				return 1;
 			}

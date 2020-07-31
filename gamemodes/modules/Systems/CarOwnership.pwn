@@ -2037,6 +2037,13 @@ stock BuyVehicle(playerid, bool:credit_activated = false)
 	new
 		cCar = AC_CreateVehicle(modelid, VehicleBuyPos[PlayerDealer[playerid]][0],VehicleBuyPos[PlayerDealer[playerid]][1],VehicleBuyPos[PlayerDealer[playerid]][2],VehicleBuyPos[PlayerDealer[playerid]][3], PreviewColor1[playerid], PreviewColor2[playerid], -1, 0);
 	ResetVehicleInfo(cCar);
+
+	VehiclePrevInfo[cCar][vPosX] = VehicleBuyPos[PlayerDealer[playerid]][0];
+	VehiclePrevInfo[cCar][vPosY] = VehicleBuyPos[PlayerDealer[playerid]][1];
+	VehiclePrevInfo[cCar][vPosZ] = VehicleBuyPos[PlayerDealer[playerid]][2];
+	VehiclePrevInfo[cCar][vRotZ] = VehicleBuyPos[PlayerDealer[playerid]][3];
+	VehiclePrevInfo[cCar][vPosDiff] = 0.0;
+
 	PlayerInfo[playerid][pSpawnedCar] 	= cCar;
 	PlayerModel[playerid]				= modelid;
 	PlayerEngine[playerid] 				= engineType;
@@ -2564,6 +2571,12 @@ stock SpawnVehicleInfo(playerid, pick)
 			vehicleid = AC_CreateVehicle(modelid, Pos[0], Pos[1], Pos[2], Pos[3], color[0], color[1], -1, 0);
 			// Resetiranje varijabli
 			ResetVehicleInfo(vehicleid);
+
+			VehiclePrevInfo[vehicleid][vPosX] = Pos[0];
+			VehiclePrevInfo[vehicleid][vPosY] = Pos[1];
+			VehiclePrevInfo[vehicleid][vPosZ] = Pos[2];
+			VehiclePrevInfo[vehicleid][vRotZ] = Pos[3];
+			VehiclePrevInfo[vehicleid][vPosDiff] = 0.0;
 			
 			LinkVehicleToInterior(vehicleid, interior);
 			SetVehicleVirtualWorld(vehicleid, GetPlayerVirtualWorld(playerid)); //viwo??

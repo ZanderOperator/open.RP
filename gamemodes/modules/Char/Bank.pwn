@@ -600,7 +600,7 @@ CMD:bank(playerid, params[])
 	else if(!strcmp(pick, "checkcredit", true))
 	{
 		new 
-			ostatak = (251) - (CreditInfo[playerid][cRate]);
+			ostatak = (250) - (CreditInfo[playerid][cRate]);
 		if(!IsAtBank(playerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Morate biti u banci da bi ste mogli koristit ovu komandu !");
 		if(CreditInfo[playerid][cCreditType] == 0) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nemas podignut kredit.");
 		SendFormatMessage(playerid, MESSAGE_TYPE_INFO, "[BANKA]: Preostalo vam je %d(%d neplacenih) rata od %d za otplatu kredita. Iznos kredita je %d$.", ostatak, CreditInfo[playerid][cUnpaid], CreditInfo[playerid][cAmount]);
@@ -650,7 +650,7 @@ CMD:bank(playerid, params[])
 		if(CreditInfo[playerid][cCreditType] > 4 && !CreditInfo[playerid][cUsed]) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Jos uvijek niste iskoristili namjenski kredit, prvo obavite kupovinu!");
 		
 		new 
-			rest = (251 - CreditInfo[playerid][cRate]), 
+			rest = (250 - CreditInfo[playerid][cRate]), 
 			money, 
 			cashdeposit;
 			
@@ -689,7 +689,7 @@ CMD:bank(playerid, params[])
 					PlayerToBudgetMoney(playerid, money); // novac dolazi u proracun
 					CreditInfo[playerid][cRate] += cashdeposit;
 					SendFormatMessage(playerid, MESSAGE_TYPE_INFO, "Platili ste %d rata za $%d.", cashdeposit, money);
-					if(CreditInfo[playerid][cRate] >= 251) {
+					if(CreditInfo[playerid][cRate] >= 250) {
 						CreditInfo[playerid][cRate] = 0;
 						CreditInfo[playerid][cCreditType] = 0;
 						SendClientMessage(playerid, COLOR_NICERED, "Upravo ste otplatili zadnju ratu kredita! Mozete dignuti novi kredit!");
@@ -705,7 +705,7 @@ CMD:bank(playerid, params[])
 					PlayerToBudgetMoney(playerid, money); // novac dolazi u proracun
 					CreditInfo[playerid][cRate] += cashdeposit;
 					SendFormatMessage(playerid, MESSAGE_TYPE_INFO, "Platili ste %d rata za $%d.", cashdeposit, money);
-					if(CreditInfo[playerid][cRate] >= 251)
+					if(CreditInfo[playerid][cRate] >= 250)
 					{
 						CreditInfo[playerid][cRate] = 0;
 						CreditInfo[playerid][cCreditType] = 0;
@@ -722,7 +722,7 @@ CMD:bank(playerid, params[])
 					PlayerToBudgetMoney(playerid, money); // novac dolazi u proracun
 					CreditInfo[playerid][cRate] += cashdeposit;
 					SendFormatMessage(playerid, MESSAGE_TYPE_INFO, "Platili ste %d rata za $%d.", cashdeposit, money);
-					if(CreditInfo[playerid][cRate] >= 251) {
+					if(CreditInfo[playerid][cRate] >= 250) {
 						ResetCreditVars(playerid);
 						SendClientMessage(playerid, COLOR_RED, "[ ! ] Upravo ste otplatili zadnju ratu kredita! Mozete dignuti novi kredit!");
 					}
@@ -737,7 +737,7 @@ CMD:bank(playerid, params[])
 					PlayerToBudgetMoney(playerid, money); // novac dolazi u proracun
 					CreditInfo[playerid][cRate] += cashdeposit;
 					SendFormatMessage(playerid, MESSAGE_TYPE_INFO, "Platili ste %d rata za $%d.", cashdeposit, money);
-					if(CreditInfo[playerid][cRate] >= 251) {
+					if(CreditInfo[playerid][cRate] >= 250) {
 						ResetCreditVars(playerid);
 						SendClientMessage(playerid, COLOR_RED, "[ ! ] Upravo ste otplatili zadnju ratu kredita! Mozete dignuti novi kredit!");
 					}

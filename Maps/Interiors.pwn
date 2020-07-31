@@ -3039,9 +3039,7 @@ hook OnFilterScriptInit() {
     interiors_maps = CreateDynamicObject(2525, 218.890945, -2083.914062, 0.720032, 0.000000, 0.000000, -179.999954, 15, -1, -1, 300.00, 300.00);
     interiors_maps = CreateDynamicObject(1569, 236.700302, -2081.266601, 0.602180, 0.000000, 0.000000, 0.000000, 15, 1, -1, 300.00, 300.00);
     interiors_maps = CreateDynamicObject(1569, 239.690307, -2081.268798, 0.602180, 0.000000, 0.000000, 179.899993, 15, -1, -1, 300.00, 300.00);
-    interiors_maps = CreateDynamicObject(2176, 235.687042, -2080.967773, 2.331169, 0.000000, 0.000000, 0.000000, 15, -1, -1, 300.00, 300.00);
-    interiors_maps = CreateDynamicObject(2176, 240.717071, -2080.967773, 2.331169, 0.000000, 0.000000, 0.000000, 15, -1, -1, 300.00, 300.00);
-
+    
 	// SCHOOL INTERIOR BY CARLOS
 	interiors_maps = CreateDynamicObject(19379, 1347.128906, 1319.271606, -57.489704, 0.000000, 90.000000, 0.000000, 6, -1, -1, 999.90, 999.90); 
 	SetDynamicObjectMaterial(interiors_maps, 0, 14847, "mp_policesf", "mp_cop_tile", 0x00000000);

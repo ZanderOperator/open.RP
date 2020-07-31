@@ -11,7 +11,7 @@
 */
 
 // Max Inactivity Time for Job/Property
-#define MAX_JOB_INACTIVITY_TIME			(604800) // 7 dana u sekundama
+#define MAX_JOB_INACTIVITY_TIME			(864000) // 10 dana u sekundama
 #define MAX_INACTIVITY_TIME				(2592000) // 30 dana u sekundama
 #define MIN_MONTH_PAYDAYS				(10) // Potrebno imati barem 10 paydayova
 
@@ -845,6 +845,16 @@ Function: CheckAccountsForInactivity()
 	return 1;
 }
 
+stock CheckPlayerMasks(playerid)
+{
+	foreach(new i : Player) 
+	{
+		if(Bit1_Get(gr_MaskUse, i)) 	
+			ShowPlayerNameTagForPlayer(playerid, i, 0);
+	}
+	return 1;
+}
+
 stock CheckPlayerInteriors(playerid)
 {
 	new interior = -1, virtualworld = -1;
@@ -1170,7 +1180,7 @@ timer PlayerGlobalTask[1000](playerid)
 	{
 		if( !IsPlayerAdmin(playerid) && !IsACop(playerid) && !PlayerInfo[playerid][pAdmin] && !PlayerInfo[playerid][pHelper] && !Bit1_Get( gr_PlayerACSafe, playerid ) )
 		{
-			AC_WeaponDetect(playerid);
+			AC_JetpackDetect(playerid);
 			PlayerTick[playerid][ptWeapon] = gettimestamp();
 			return 1;
 		}

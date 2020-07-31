@@ -4142,7 +4142,7 @@ CMD:createbiz(playerid, params[])
 	BizzInfo[ freeslot ][ bEntranceCost ] = 0;
 	BizzInfo[ freeslot ][ bDestroyed ] = 0;
 	BizzInfo[ freeslot ][ bFurSlots ] = BIZZ_FURNITURE_VIP_NONE;
-	BizzInfo[ freeslot][ bGasPrice ] = 3;
+	BizzInfo[ freeslot ][ bGasPrice ] = 3;
 	BizzInfo[ freeslot ][ bEnterPICK ] = CreateDynamicPickup( 1272, 2, BizzInfo[ freeslot ][bEntranceX], BizzInfo[ freeslot ][bEntranceY], BizzInfo[ freeslot ][bEntranceZ], -1, -1, -1, 100.0 );
 
 	ShowPlayerDialog(playerid, DIALOG_NEWBIZNIS_NAME, DIALOG_STYLE_INPUT, "Unos imena biznisa:", "Molimo Vas unesite ime novog biznisa.", "Unesi", "Izlaz");

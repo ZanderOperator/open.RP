@@ -121,6 +121,7 @@ timer SetPlayerCrash[6000](playerid)
 	LoadPlayerCredit(playerid);
 	CheckPlayerInteriors(playerid);
 	CheckPlayerInactivity(playerid);
+	CheckPlayerMasks(playerid);
 	return 1;
 }
 
@@ -757,10 +758,8 @@ SafeSpawnPlayer(playerid)
 
 stock ShowAdminMessage(playerid)
 {
-   	if(PlayerInfo[playerid][pAdmMsgConfirm] == 0)
-		return SendClientMessage(playerid, COLOR_RED, "Nemate poruka od admina!");
 	new 
-		string[174];
+		string[2048];
 		
 	format(string, sizeof(string), "Obavijest od %s\n%s", PlayerInfo[playerid][pAdminMsgBy], PlayerInfo[playerid][pAdminMsg]);
 	ShowPlayerDialog(playerid, DIALOG_ADMIN_MSG, DIALOG_STYLE_MSGBOX, "Admin Message", string, "Razumijem", "");
