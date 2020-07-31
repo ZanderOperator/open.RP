@@ -5597,8 +5597,8 @@ CMD:aon(playerid, params[])
 	if (!Bit1_Get(a_AdminOnDuty, playerid))
 	{
 	    SetPlayerColor(playerid, COLOR_ORANGE);
-		SetPlayerHealth(playerid, 100);
-		SetPlayerArmour(playerid, 100);
+		SetPlayerHealth(playerid, 100, true);
+		SetPlayerArmour(playerid, 100, true);
 		
 	    Bit1_Set(a_AdminOnDuty, playerid, true);
 	    SendClientMessage(playerid, -1, "Sada ste na admin duznosti!");
@@ -5606,13 +5606,14 @@ CMD:aon(playerid, params[])
 		{
 	  		SetPlayerMarkerForPlayer(i, playerid, COLOR_ORANGE);
 		}
-	} else {
+	} 
+	else 
+	{
 	    SetPlayerColor(playerid, COLOR_PLAYER);
-		SetPlayerHealth(playerid, 100);
-		SetPlayerArmour(playerid, 0);
+		SetPlayerHealth(playerid, PlayerInfo[playerid][pHealth]);
+		SetPlayerArmour(playerid, PlayerInfo[playerid][pArmour]);
 		Bit1_Set(a_AdminOnDuty, playerid, false);
 
-		SetPlayerArmour(playerid, PlayerInfo[playerid][pArmour]);
 		SendClientMessage(playerid, -1, "Vise niste na admin duznosti!");
 		foreach (new i : Player)
 		{
