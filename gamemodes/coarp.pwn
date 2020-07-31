@@ -61,6 +61,12 @@
 #define FIX_file_inc 0
 #include <fixes>
 
+// Pawn RakNet
+#include <Pawn.RakNet>
+
+// Aim Anti-Cheat
+#include <BustAim>
+
 // Streamer
 #include <streamer>
 #define OBJECT_STREAM_LIMIT		(700)
@@ -126,7 +132,7 @@ native WP_Hash(buffer[], len, const str[]);
 #define MAX_HOUSES                      		(800)
 #define	MAX_COMPLEX_ROOMS                       (50)
 #define MAX_COMPLEX                             (10)
-#define MAX_BIZZS         						(135)
+#define MAX_BIZZS         						(200)
 #define MAX_SALE_PRODUCTS						(10)
 #define MAX_PLANTS								(200)
 #define MAX_CUSTOMIZED_OBJECTS          		(7)
@@ -197,7 +203,7 @@ native WP_Hash(buffer[], len, const str[]);
 //#define HOSTNAME 								"CoA Testing time"
 #define COPYRIGHT                           	"Copyright (c) 2020 City of Angels Roleplay"
 #define WEB_URL									"forum.cityofangels-roleplay.com"
-#define SCRIPT_VERSION							"CoA RP v18.5.1."  // [ ! ] Prilikom promjene SCRIPT_VERSION, OBAVEZNO ubaciti novi Update "Changelog.txt"u /scriptfiles folder [ ! ]
+#define SCRIPT_VERSION							"CoA RP v18.5.2."  // [ ! ] Prilikom promjene SCRIPT_VERSION, OBAVEZNO ubaciti novi Update "Changelog.txt"u /scriptfiles folder [ ! ]
 #define DEV_NAME   								"Woo-Logan"
 
 // Macros
@@ -746,7 +752,8 @@ enum E_PLAYER_TICKS {
 	ptFire,
 	ptHelperHelp,
 	ptAirBrake,
-	ptFlyHack
+	ptFlyHack,
+	ptVehiclePort
 }
 new PlayerTick[MAX_PLAYERS][E_PLAYER_TICKS];
 
@@ -896,6 +903,7 @@ enum E_VEHICLE_PREV_DATA
 	Float:vPosY,
 	Float:vPosZ,
 	Float:vRotZ,
+	Float:vPosDiff,
 	Float:vHealth,
 	vPanels,
 	vDoors,
@@ -1697,8 +1705,7 @@ new
 	Iterator:ComplexRooms<MAX_COMPLEX_ROOMS>,
 	Iterator:Garages<MAX_GARAGES>,
 	Iterator:IllegalGarages<MAX_ILEGAL_GARAGES>,
-	Iterator:COWObjects	[MAX_VEHICLES]<MAX_WEAPON_SLOTS>,
-	Iterator:DamagedByCheater <MAX_PLAYERS>;
+	Iterator:COWObjects	[MAX_VEHICLES]<MAX_WEAPON_SLOTS>;
 
 new GunObjectIDs[200] ={
 
@@ -1938,6 +1945,7 @@ new
 #include "modules/Char/Hotel.pwn"
 #include "modules/Server/KeyInput.pwn"
 #include "modules/Char/Animations.pwn"
+#include "modules/Server/RaknetAC.pwn"
 #include "modules/Server/AC_Core.pwn"
 #include "modules/Server/AntiCheat.pwn"
 #include "modules/Server/AntiBunnyHop.pwn"
@@ -2441,6 +2449,7 @@ ResetPlayerVariables(playerid)
 	PlayerTick[playerid][ptHelperHelp]		= gettimestamp();
 	PlayerTick[playerid][ptAirBrake] 		= gettimestamp();
 	PlayerTick[playerid][ptKill]			= 0;
+	PlayerTick[playerid][ptVehiclePort]		= 0;
 	PlayerTaskTStamp[playerid] 				= 0;
 
 	//Enums

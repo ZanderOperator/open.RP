@@ -1587,9 +1587,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 		}
 		case DIALOG_ADMIN_MSG:
         {
-            if (!response)
-	           	PlayerInfo[playerid][pAdmMsgConfirm] = true;
-
+	        PlayerInfo[playerid][pAdmMsgConfirm] = true;
    			return 1;
         }
 	}
@@ -1640,13 +1638,13 @@ CMD:ahelp(playerid, params[])
 		strcat(p_dialog,f_dialog, sizeof(p_dialog));
 	}
 	if (PlayerInfo[playerid][pAdmin] >= 4) {
-		format(f_dialog,sizeof(f_dialog), "\n{FF9933}[A 4]: /aname, /rac, /timeout, /setarmour, /veh, /veh_spawned, /undie, /unfreezearound, /freezearound, /setarmouraround.");
+		format(f_dialog,sizeof(f_dialog), "\n{FF9933}[A 4]: /aname, /rac, /setarmour, /veh, /veh_spawned, /undie, /unfreezearound, /freezearound, /setarmouraround.");
 		strcat(p_dialog,f_dialog, sizeof(p_dialog));
 		format(f_dialog,sizeof(f_dialog), "\n{FF9933}[A 4]: /sethparound, /fixveh, /aunlock, /atake, /mutearound, /togreport, /fire, /deletevehicle, /bizinfo, /hidestatus.\n");
 		strcat(p_dialog,f_dialog, sizeof(p_dialog));
 	}
 	if (PlayerInfo[playerid][pAdmin] >= 1337) {
-		format(f_dialog,sizeof(f_dialog), "\n{FF9933}[A 1337]: /fakekick, /givemoney, /address, /edit(biz/house), /asellbiz, /asellhouse, /asellcomplex, /asellcomplexroom, /fuelcars.");
+		format(f_dialog,sizeof(f_dialog), "\n{FF9933}[A 1337]: /fakekick, /timeout, /givemoney, /address, /edit(biz/house), /asellbiz, /asellhouse, /asellcomplex, /asellcomplexroom, /fuelcars.");
 		strcat(p_dialog,f_dialog, sizeof(p_dialog));
 		format(f_dialog,sizeof(f_dialog), "\n{FF9933}[A 1337]: /fuelcar, /factionmembers, /weather, /setstat, /fstyle, /givelicense, /givegun, /ac, /healcar, /create_garage, /garage.");
 		strcat(p_dialog,f_dialog, sizeof(p_dialog));
@@ -3367,7 +3365,7 @@ hook OnPlayerConnect(playerid)
 
 CMD:timeout(playerid, params[])
 {
-	if(PlayerInfo[playerid][pAdmin] < 4)
+	if(PlayerInfo[playerid][pAdmin] < 1337)
 		return SendClientMessage(playerid, COLOR_RED, "Niste ovlasteni za koristenje ove komande!");
 		
 	new
@@ -3449,6 +3447,12 @@ CMD:veh(playerid, params[])
 	GetPlayerFacingAngle(playerid, ang);
 	new carid = AC_CreateVehicle(car, X, Y+4, Z+3, ang, color1, color2, 60000,0);
 	ResetVehicleInfo(carid);
+
+	VehiclePrevInfo[carid][vPosX] = X;
+	VehiclePrevInfo[carid][vPosY] = Y;
+	VehiclePrevInfo[carid][vPosZ] = Z;
+	VehiclePrevInfo[carid][vRotZ] = 0.0;
+	VehiclePrevInfo[carid][vPosDiff] = 0.0;
 	
 	VehicleInfo[ carid ][ vModel ] 		= car;
 	VehicleInfo[ carid ][ vColor1 ] 	= color1;

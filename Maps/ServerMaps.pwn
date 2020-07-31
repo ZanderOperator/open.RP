@@ -9,7 +9,7 @@
 #define PRESSED(%0) \
 	(((newkeys & (%0)) == (%0)) && ((oldkeys & (%0)) != (%0)))
 
-
+//UPDATE
 // Include Maps
 
 /* FACTIONS	*/
@@ -1777,7 +1777,7 @@ public OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
 				sdDoorsStatus4 = 0;
 			}
 		}
-	}
+	/*}
 	if( PRESSED(KEY_SECONDARY_ATTACK) ) { // Tipka F
 		if(IsPlayerInRangeOfPoint(playerid, 2.5, 2070.0911,2185.0234,-31.4410)) { //LSSD Lift prvi sprat za drugi
 			SetPlayerPosEx(playerid, 2034.8427,2185.9893,-31.4410, 6, 20, true);
@@ -1799,7 +1799,7 @@ public OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
 		}
 		else if(IsPlayerInRangeOfPoint(playerid, 2.5, 2044.8350,2186.1943,-31.4410)) { //LSSD HELIO EXIT
             SetPlayerPosEx(playerid,621.2169,-569.2618,26.2097, 0, 0, true);
-            GameTextForPlayer(playerid, "SASD helio", 3000, 1);
+            GameTextForPlayer(playerid, "SASD helio", 3000, 1); */
 		}
 		else if(IsPlayerInRangeOfPoint(playerid, 2.5, 1333.6085,1088.5511,-20.3352)) { //LSPD ulaz u holding room
             SetPlayerPosEx(playerid,1435.3768,1088.4629,-20.5684, 0, 27, true);
@@ -1809,7 +1809,6 @@ public OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
             SetPlayerPosEx(playerid,1333.6085,1088.5511,-20.3352, 0, 27, true);
             GameTextForPlayer(playerid, "LSPD Lobby", 3000, 1);
 		}
-	}
 	return 1;
 }
 

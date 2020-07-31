@@ -112,7 +112,7 @@ Float:GetVSpeed(playerid, pvid=0)
 {
 	if(!pvid)
 		pvid = GetPlayerVehicleID(playerid);
-
+		
 	new
 		Float:Vx,
 	    Float:Vy,

@@ -198,7 +198,7 @@ GivePlayerPayCheck(playerid)
 			format(f_dialog,sizeof(f_dialog), "\n\tRata kredita: -%s", FormatNumber(kreditlost));
 			strcat(p_dialog,f_dialog, sizeof(p_dialog));
 		}
-		if( CreditInfo[ playerid ][ cRate ] >= 251 ) { //ako je rata kredita 251(250.), kredit mu je otplacen
+		if( CreditInfo[ playerid ][ cRate ] >= 250 ) { //ako je rata kredita 250(250.), kredit mu je otplacen
 			CreditInfo[ playerid ][ cRate ] 		= 0;
 			CreditInfo[ playerid ][ cCreditType ] 	= 0;
 			format(f_dialog,sizeof(f_dialog), "\n\tOtplatili ste zadnju ratu kredita!");

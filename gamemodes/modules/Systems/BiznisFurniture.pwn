@@ -1095,7 +1095,6 @@ stock static CreateBiznisFurnitureObject(playerid, modelid, Float:x, Float:y, Fl
 		BizzInfo[ biznisid ][ bFurColId ][ index ][ 4 ]
 	);
 	mysql_tquery(g_SQL, insertObject, "OnBizzFurnitureObjectCreate", "ii", biznisid, index);
-	printf("[DEBUG]: %s (errno %d)", insertObject, mysql_errno());
 
 	#if defined MOD_DEBUG
 		printf("[DEBUG] FURNITURE BUY: player(%s) | index(%d) | biznisid(%d) | modelid(%d) | pos(%.2f, %.2f, %.2f)",
@@ -1117,7 +1116,7 @@ stock static CreateBiznisFurnitureObject(playerid, modelid, Float:x, Float:y, Fl
 		new
 			price = GetFurnitureObjectPrice(playerid, BizzPlayerPrwsIndex[ playerid ]);
 		va_SendClientMessage(playerid, COLOR_GREEN, "[INFO]: Kupili ste objekt za %d$ i stavili ga u slot %d!", price, index + 1);
-		PlayerToBudgetMoney(playerid, price); // Novac ide u prora�un
+		PlayerToBudgetMoney(playerid, price); // Novac ide u proracun
 		Bit4_Set( r_PlayerBizzEditState, playerid, 0 );
 
 		new

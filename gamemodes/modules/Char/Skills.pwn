@@ -120,9 +120,12 @@ public OnPlayerSkillsLoad(playerid)
 	}
 	else
 	{
+		if(PlayerInfo[playerid][pSQLID] == 0)
+			return 1;
+			
 		new
 			skillQuery[ 300 ];
-			
+
 		format(skillQuery, sizeof(skillQuery), "INSERT INTO `skill` (`player_id`, `skill0`, `skill1`, `skill2`, `skill3`, `skill4`, `skill5`, `skill6`, `skill7`, `skill8`) VALUES ('%d', '%d', '%d', '%d', '%d', '%d', '%d', '%d', '%d', '%d')",
 			PlayerInfo[playerid][pSQLID],
 			PlayerInfo[playerid][pSkills][0],

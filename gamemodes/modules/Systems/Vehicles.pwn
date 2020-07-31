@@ -77,6 +77,12 @@ public OnServerVehicleLoad()
 		vCarID = AC_CreateVehicle( carLoad[vModel], carLoad[vParkX], carLoad[vParkY], carLoad[vParkZ], carLoad[vAngle], carLoad[vColor1], carLoad[vColor2], carLoad[vRespawn], carLoad[vSirenon] );
 		ResetVehicleInfo(vCarID);
 
+		VehiclePrevInfo[vCarID][vPosX] = carLoad[ vParkX ];
+		VehiclePrevInfo[vCarID][vPosY] = carLoad[ vParkY ];
+		VehiclePrevInfo[vCarID][vPosZ] = carLoad[ vParkZ ];
+		VehiclePrevInfo[vCarID][vRotZ] = carLoad[ vAngle ];
+		VehiclePrevInfo[vCarID][vPosDiff] = 0.0;
+
 		VehicleInfo[ vCarID ][ vModel ] 			= carLoad[ vModel ];
 		VehicleInfo[ vCarID ][ vParkX ] 			= carLoad[ vParkX ];
 		VehicleInfo[ vCarID ][ vParkY ] 			= carLoad[ vParkY ];
@@ -380,6 +386,7 @@ stock ResetVehicleInfo(vehicleid)
 	VehiclePrevInfo[vehicleid][vDoors]					= 0;
 	VehiclePrevInfo[vehicleid][vTires]					= 0;
 	VehiclePrevInfo[vehicleid][vLights]					= 0;
+	
 	// Ints
 	VehicleInfo[ vehicleid ][ vSQLID ]					= -1;
 	VehicleInfo[ vehicleid ][ vModel ]                  = 400;
@@ -1264,6 +1271,12 @@ CMD:createvehicle(playerid, params[])
 
 	vehCarId = AC_CreateVehicle(model, X, Y, Z, floatround(Angle), color1, color2, respawndelay, sirenon);
 	ResetVehicleInfo(vehCarId);
+
+	VehiclePrevInfo[vehCarId][vPosX] = X;
+	VehiclePrevInfo[vehCarId][vPosY] = Y;
+	VehiclePrevInfo[vehCarId][vPosZ] = Z;
+	VehiclePrevInfo[vehCarId][vRotZ] = floatround(Angle);
+	VehiclePrevInfo[vehCarId][vPosDiff] = 0.0;
 
 	VehicleInfo[vehCarId][vModel]		= model;
 	VehicleInfo[vehCarId][vParkX] 		= X;

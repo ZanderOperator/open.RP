@@ -1,4 +1,12 @@
-City of Angels v18.5.0. - Summer Update + BugFixes
+City of Angels v18.5.1 - 27.7.2020. - MiniUpdate
+- Updatean /learn - credits to Cruella
+- Odsad odlazak sa Admin Dutya skida Armour
+- Popravljen ispis na /skills
+- Popravljen ispis komanda za Transportera u /help
+- /spawnchange miniupdate - ne mozes vise spawnchangeat na kucu ako je nemas/org/complex room...
+- Popravljen bug sa nemogucnosti /exit-a iz interijera nakon crasha
+
+City of Angels v18.5.0. - 26.7.2020. - Summer Update + BugFixes
 
 BugFixes 
 - Popravljeni svi bugovi sa ispisom skillova na /skills
