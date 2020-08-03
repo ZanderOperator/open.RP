@@ -32,7 +32,7 @@ public OnIncomingPacket(playerid, packetid, BitStream:bs)
 				ABroadCast(COLOR_LIGHTRED, string, 1);
 				KickMessage(playerid);
 			}
-			if(!Iter_Contains(Vehicles, inCarData[PR_vehicleId]))
+			if(!IsValidVehicle(inCarData[PR_vehicleId]) && !Iter_Contains(Vehicles, inCarData[PR_vehicleId]) && !VehicleInfo[inCarData[PR_vehicleId]][vDeleted])
 			{
 				new string[144];
 				format(string, sizeof(string), "[Anti-Cheat]: %s je pokusao koristiti Vehicle Hack na nepostojecem vozilu te je kickan.", GetName(playerid, false));

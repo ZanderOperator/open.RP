@@ -31,7 +31,7 @@
 		 \______  (____  /__|_|  /\___  >____  >
 		        \/     \/      \/     \/     \/
 
-		  Developed By Dan 'GhoulSlayeR' Reed
+		  Developed By Dan 'GhoulSlayeR' Reed | Rewritten by Logan
 			     mrdanreed@gmail.com
 
 ===========================================================
@@ -44,8 +44,12 @@ Changelog:
 1.0.0 - Inital Release
 ===========================================================
 
-
 */
+
+//Card rank = (array index % 13) | Card native index = 4 * rank + suit
+#define GetCardNativeIndex(%0) 			((4*((%0) % 13))+_:CardData[(%0)][E_CARD_SUIT])
+
+native calculate_hand_worth(const hands[], count = sizeof(hands));
 
 #include <YSI\y_hooks>
 
@@ -153,69 +157,101 @@ new Float:PokerTableMiscObjOffsets[MAX_POKERTABLEMISCOBJS][6] = {
 {-0.01, -1.85, 0.1, 0.0, 0.0, -90.0} // (Slot 3)
 };
 
-new DeckTextdrw[53][] = {
-"LD_CARD:cdback", // CARD BACK
-"LD_CARD:cd1c", // A Clubs - 0
-"LD_CARD:cd2c", // 2 Clubs - 1
-"LD_CARD:cd3c", // 3 Clubs - 2
-"LD_CARD:cd4c", // 4 Clubs - 3
-"LD_CARD:cd5c", // 5 Clubs - 4
-"LD_CARD:cd6c", // 6 Clubs - 5
-"LD_CARD:cd7c", // 7 Clubs - 6
-"LD_CARD:cd8c", // 8 Clubs - 7
-"LD_CARD:cd9c", // 9 Clubs - 8
-"LD_CARD:cd10c", // 10 Clubs - 9
-"LD_CARD:cd11c", // J Clubs - 10
-"LD_CARD:cd12c", // Q Clubs - 11
-"LD_CARD:cd13c", // K Clubs - 12
-"LD_CARD:cd1d", // A Diamonds - 13
-"LD_CARD:cd2d", // 2 Diamonds - 14
-"LD_CARD:cd3d", // 3 Diamonds - 15
-"LD_CARD:cd4d", // 4 Diamonds - 16
-"LD_CARD:cd5d", // 5 Diamonds - 17
-"LD_CARD:cd6d", // 6 Diamonds - 18
-"LD_CARD:cd7d", // 7 Diamonds - 19
-"LD_CARD:cd8d", // 8 Diamonds - 20
-"LD_CARD:cd9d", // 9 Diamonds - 21
-"LD_CARD:cd10d", // 10 Diamonds - 22
-"LD_CARD:cd11d", // J Diamonds - 23
-"LD_CARD:cd12d", // Q Diamonds - 24
-"LD_CARD:cd13d", // K Diamonds - 25
-"LD_CARD:cd1h", // A Heats - 26
-"LD_CARD:cd2h", // 2 Heats - 27
-"LD_CARD:cd3h", // 3 Heats - 28
-"LD_CARD:cd4h", // 4 Heats - 29
-"LD_CARD:cd5h", // 5 Heats - 30
-"LD_CARD:cd6h", // 6 Heats - 31
-"LD_CARD:cd7h", // 7 Heats - 32
-"LD_CARD:cd8h", // 8 Heats - 33
-"LD_CARD:cd9h", // 9 Heats - 34
-"LD_CARD:cd10h", // 10 Heats - 35
-"LD_CARD:cd11h", // J Heats - 36
-"LD_CARD:cd12h", // Q Heats - 37
-"LD_CARD:cd13h", // K Heats - 38
-"LD_CARD:cd1s", // A Spades - 39
-"LD_CARD:cd2s", // 2 Spades - 40
-"LD_CARD:cd3s", // 3 Spades - 41
-"LD_CARD:cd4s", // 4 Spades - 42
-"LD_CARD:cd5s", // 5 Spades - 43
-"LD_CARD:cd6s", // 6 Spades - 44
-"LD_CARD:cd7s", // 7 Spades - 45
-"LD_CARD:cd8s", // 8 Spades - 46
-"LD_CARD:cd9s", // 9 Spades - 47
-"LD_CARD:cd10s", // 10 Spades - 48
-"LD_CARD:cd11s", // J Spades - 49
-"LD_CARD:cd12s", // Q Spades - 50
-"LD_CARD:cd13s" // K Spades - 51
+new const HAND_RANKS[][] =
+{
+	{"Undefined"}, //will never occur
+	{"High Card"},
+	{"Pair"},
+	{"Two Pair"},
+	{"Three of a Kind"},
+	{"Straight"},
+	{"Flush"},
+	{"Full House"},
+	{"Four of a Kind"},
+	{"Straight Flush"},
+	{"Royal Flush"}
+};
+enum E_CARD_SUITS
+{
+	SUIT_SPADES,
+	SUIT_HEARTS,
+	SUIT_CLUBS,
+	SUIT_DIAMONDS
+};
+
+enum E_CARD_DATA
+{
+	E_CARD_TEXTDRAW[48],
+	E_CARD_NAME[48],
+	E_CARD_SUITS:E_CARD_SUIT,
+	E_CARD_RANK
+};
+
+
+new const CardData[ 52 ] [E_CARD_DATA] = {
+
+	//Spades
+    {"LD_CARD:cd2s", 		"Two of Spades", 		SUIT_SPADES,		0},
+    {"LD_CARD:cd3s", 		"Three of Spades", 		SUIT_SPADES,		1},
+    {"LD_CARD:cd4s", 		"Four of Spades", 		SUIT_SPADES,		2},
+    {"LD_CARD:cd5s", 		"Five of Spades", 		SUIT_SPADES,		3},
+    {"LD_CARD:cd6s", 		"Six of Spades", 		SUIT_SPADES,		4},
+    {"LD_CARD:cd7s", 		"Seven of Spades", 		SUIT_SPADES,		5},
+    {"LD_CARD:cd8s", 		"Eight of Spades", 		SUIT_SPADES,		6},
+    {"LD_CARD:cd9s", 		"Nine of Spades", 		SUIT_SPADES,		7},
+    {"LD_CARD:cd10s",		"Ten of Spades",		SUIT_SPADES,		8},
+    {"LD_CARD:cd11s",		"Jack of Spades", 		SUIT_SPADES,		9},
+    {"LD_CARD:cd12s",		"Queen of Spades", 		SUIT_SPADES,		10},
+    {"LD_CARD:cd13s", 		"King of Spades", 		SUIT_SPADES,		11},
+    {"LD_CARD:cd1s", 		"Ace of Spades", 		SUIT_SPADES,		12},
+
+	//Hearts
+    {"LD_CARD:cd2h", 		"Two of Hearts", 		SUIT_HEARTS,		0},
+    {"LD_CARD:cd3h", 		"Three of Hearts", 		SUIT_HEARTS,		1},
+    {"LD_CARD:cd4h", 		"Four of Hearts", 		SUIT_HEARTS,		2},
+    {"LD_CARD:cd5h", 		"Five of Hearts", 		SUIT_HEARTS,		3},
+    {"LD_CARD:cd6h", 		"Six of Hearts", 		SUIT_HEARTS,		4},
+    {"LD_CARD:cd7h", 		"Seven of Hearts", 		SUIT_HEARTS,		5},
+    {"LD_CARD:cd8h", 		"Eight of Hearts", 		SUIT_HEARTS,		6},
+    {"LD_CARD:cd9h", 		"Nine of Hearts", 		SUIT_HEARTS,		7},
+    {"LD_CARD:cd10h",		"Ten of Hearts",		SUIT_HEARTS,		8},
+    {"LD_CARD:cd11h",		"Jack of Hearts", 		SUIT_HEARTS,		9},
+    {"LD_CARD:cd12h",		"Queen of Hearts", 		SUIT_HEARTS,		10},
+    {"LD_CARD:cd13h",		"King of Hearts", 		SUIT_HEARTS,		11},
+    {"LD_CARD:cd1h", 		"Ace of Hearts", 		SUIT_HEARTS,		12},
+
+	//Clubs
+    {"LD_CARD:cd2c", 		"Two of Clubs", 		SUIT_CLUBS, 		0},
+    {"LD_CARD:cd3c", 		"Three of Clubs", 		SUIT_CLUBS, 		1},
+    {"LD_CARD:cd4c", 		"Four of Clubs", 		SUIT_CLUBS, 		2},
+    {"LD_CARD:cd5c", 		"Five of Clubs", 		SUIT_CLUBS, 		3},
+    {"LD_CARD:cd6c", 		"Six of Clubs", 		SUIT_CLUBS, 		4},
+    {"LD_CARD:cd7c", 		"Seven of Clubs", 		SUIT_CLUBS, 		5},
+    {"LD_CARD:cd8c", 		"Eight of Clubs", 		SUIT_CLUBS, 		6},
+    {"LD_CARD:cd9c", 		"Nine of Clubs", 		SUIT_CLUBS, 		7},
+    {"LD_CARD:cd10c",		"Ten of Clubs",			SUIT_CLUBS, 		8},
+    {"LD_CARD:cd11c",		"Jack of Clubs", 		SUIT_CLUBS, 		9},
+    {"LD_CARD:cd12c",		"Queen of Clubs", 		SUIT_CLUBS, 		10},
+    {"LD_CARD:cd13c",		"King of Clubs", 		SUIT_CLUBS, 		11},
+    {"LD_CARD:cd1c", 		"Ace of Clubs", 		SUIT_CLUBS, 		12},
+
+    //Diamonds
+    {"LD_CARD:cd2d", 		"Two of Diamonds", 		SUIT_DIAMONDS, 		0},
+    {"LD_CARD:cd3d", 		"Three of Diamonds", 	SUIT_DIAMONDS, 		1},
+    {"LD_CARD:cd4d", 		"Four of Diamonds", 	SUIT_DIAMONDS, 		2},
+    {"LD_CARD:cd5d", 		"Five of Diamonds", 	SUIT_DIAMONDS, 		3},
+    {"LD_CARD:cd6d", 		"Six of Diamonds", 		SUIT_DIAMONDS, 		4},
+    {"LD_CARD:cd7d", 		"Seven of Diamonds", 	SUIT_DIAMONDS, 		5},
+    {"LD_CARD:cd8d", 		"Eight of Diamonds", 	SUIT_DIAMONDS, 		6},
+    {"LD_CARD:cd9d", 		"Nine of Diamonds", 	SUIT_DIAMONDS, 		7},
+    {"LD_CARD:cd10d",		"Ten of Diamonds", 		SUIT_DIAMONDS, 		8},
+    {"LD_CARD:cd11d",		"Jack of Diamonds", 	SUIT_DIAMONDS, 		9},
+    {"LD_CARD:cd12d",		"Queen of Diamonds", 	SUIT_DIAMONDS, 		10},
+    {"LD_CARD:cd13d",		"King of Diamonds", 	SUIT_DIAMONDS, 		11},
+    {"LD_CARD:cd1d", 		"Ace of Diamonds", 		SUIT_DIAMONDS, 		12}
 };
 
 //------------------------------------------------
-
-hook OnGameModeInit()
-{
-	InitPokerTables();
-	return 1;
-}
 
 hook OnGameModeExit()
 {
@@ -229,364 +265,6 @@ hook OnGameModeExit()
 	return 1;
 }
 //------------------------------------------------
-
-// Winning High Card analyzer
-PokerArrayIndex(color, hand)
-{
-	new index = 0;
-	switch(color)
-	{
-		case 0: index = hand;
-		case 1: index = 13 + hand;
-		case 2: index = 26 + hand;
-		case 4: index = 39 + hand;
-	}
-	return index;
-}
-
-// Note: 0, 1 should be the hand, the rest are community cards.
-AnalyzePokerHand(playerid, Hand[])
-{
-	new pokerArray[7];
-	for(new i = 0; i < sizeof(pokerArray); i++) {
-		pokerArray[i] = Hand[i];
-	}
-
-	new suitArray[4][13];
-	new HighCard = -1;
-	new FinalHighCard[8];
-	new FinalScore = 0;
-	new tmp = 0;
-	new pairs = 0;
-	new bool:isRoyalFlush = false;
-	new bool:isFlush = false;
-	new bool:isStraight = false;
-	new bool:isFour = false;
-	new bool:isThree = false;
-	new bool:isTwoPair = false;
-	new bool:isPair = false;
-	
-	for(new p = 0; p < 8; p++)
-	{
-		FinalHighCard[p] = -1;
-	}
-
-	// Convert Hand[] (AKA pokerArray) to suitArray[]
-	for(new i = 0; i < sizeof(pokerArray); i++) 
-	{
-		if(pokerArray[i] <= 12) { // Clubs (0 - 12)
-			suitArray[0][pokerArray[i]] = 1;
-		}
-		if(pokerArray[i] <= 25 && pokerArray[i] >= 13) { // Diamonds (13 - 25)
-			suitArray[1][pokerArray[i]-13] = 1;
-		}
-		if(pokerArray[i] <= 38 && pokerArray[i] >= 26) { // Hearts (26 - 38)
-			suitArray[2][pokerArray[i]-26] = 1;
-		}
-		if(pokerArray[i] <= 51 && pokerArray[i] >= 39) { // Spades (39 - 51)
-			suitArray[3][pokerArray[i]-39] = 1;
-		}
-	}
-
-	// Royal Check
-	for(new i = 0; i < 4; i++) 
-	{
-		if(suitArray[i][0] == 1) 
-		{
-			if(pokerArray[0] == PokerArrayIndex(i,0) || pokerArray[1] == PokerArrayIndex(i,0))
-			{
-				if( HighCard != 0 )
-					HighCard = 0;
-			}	
-			if(suitArray[i][9] == 1) 
-			{
-				if(pokerArray[0] == PokerArrayIndex(i,9) || pokerArray[1] == PokerArrayIndex(i,9))
-				{
-					if( HighCard < 9 && HighCard != 0 )
-						HighCard = 9;
-				}
-				if(suitArray[i][10] == 1) 
-				{
-					if(pokerArray[0] == PokerArrayIndex(i,10) || pokerArray[1] == PokerArrayIndex(i,10))
-					{
-						if( HighCard < 10 && HighCard != 0 )
-							HighCard = 10;
-					}
-					if(suitArray[i][11] == 1) 
-					{
-						if(pokerArray[0] == PokerArrayIndex(i,11) || pokerArray[1] == PokerArrayIndex(i,11))
-						{
-							if( HighCard < 11 && HighCard != 0 )
-								HighCard = 11;
-						}
-						if(suitArray[i][12] == 1) 
-						{
-							if(pokerArray[0] == PokerArrayIndex(i,12) || pokerArray[1] == PokerArrayIndex(i,12))
-							{
-								if( HighCard < 12 && HighCard != 0 )
-									HighCard = 12;
-							}
-							FinalHighCard[ROYAL_FLUSH] = HighCard;
-							isRoyalFlush = true;
-							break;
-						}
-					}
-				}
-			}
-		}
-	}
-	HighCard = -1;
-	tmp = 0;
-
-	// Flush Check
-	for(new i = 0; i < 4; i++) 
-	{
-		for(new j = 0; j < 13; j++) 
-		{
-			if(suitArray[i][j] == 1) 
-			{
-				if(pokerArray[0] == PokerArrayIndex(i,j) || pokerArray[1] == PokerArrayIndex(i,j))
-				{
-					if( (j != 0 && HighCard < j) || j == 0 )
-						HighCard = j;
-				}	
-				tmp++;
-			}
-		}
-		if(tmp > 4) 
-		{
-			FinalHighCard[FLUSH] = HighCard;
-			isFlush = true;
-			break;
-		} 
-		else tmp = 0;
-	}
-	HighCard = -1;
-	tmp = 0;
-
-	// Four of a Kind Check
-	// Three of a Kind Check
-	for(new i = 0; i < 4; i++) 
-	{
-		for(new j = 0; j < 13; j++) 
-		{
-			if(suitArray[i][j] == 1) 
-			{
-				for(new c = 0; c < 4; c++) 
-				{
-					if(suitArray[c][j] == 1) 
-					{
-						if(pokerArray[0] == PokerArrayIndex(c,j) || pokerArray[1] == PokerArrayIndex(c,j))
-						{
-							if( (j != 0 && HighCard < j) || j == 0 )
-								HighCard = j;
-						}
-						tmp++;
-					}
-				}
-				if(tmp == 4)
-				{
-					isFour = true;
-					FinalHighCard[FOUR_KIND] = HighCard;
-				}
-				else if(tmp == 3) 
-				{
-					isThree = true;
-					FinalHighCard[THREE_KIND] = HighCard;
-				}
-				else tmp = 0;
-			}
-		}
-	}
-	HighCard = -1;
-	tmp = 0;
-
-	// Two Pair & Pair Check
-	for(new j = 0; j < 13; j++) 
-	{
-		tmp = 0;
-		for(new i = 0; i < 4; i++) 
-		{
-			if(suitArray[i][j] == 1) 
-			{
-				if(pokerArray[0] == PokerArrayIndex(i,j) || pokerArray[1] == PokerArrayIndex(i,j))
-				{
-					if( (j != 0 && HighCard < j) || j == 0 )
-						HighCard = j;
-				}
-				tmp++;
-				if(tmp >= 2) 
-				{
-					isPair = true;
-					FinalHighCard[ONE_PAIR] = HighCard;
-					pairs++;
-
-					if(pairs >= 2) 
-					{
-						isTwoPair = true;
-						FinalHighCard[TWO_PAIR] = HighCard;
-					}
-				}
-			}
-		}
-	}
-	HighCard = -1;
-	tmp = 0;
-
-	// Straight Check
-	for(new j = 0; j < 13; j++) {
-		for(new i = 0; i < 4; i++) {
-			if(suitArray[i][j] == 1) {
-				for(new s = 0; s < 5; s++) {
-					for(new c = 0; c < 4; c++) {
-						if(j+s == 13)
-						{
-							if(suitArray[c][0] == 1) 
-							{
-								if(pokerArray[0] == PokerArrayIndex(c,0) || pokerArray[1] == PokerArrayIndex(c,0))
-								{
-									if( (j != 0 && HighCard < j) || j == 0 )
-										HighCard = j;
-								}
-								tmp++;
-								break;
-							}
-						}
-						else if (j+s >= 14)
-						{
-							break;
-						}
-						else
-						{
-							if(suitArray[c][j+s] == 1) 
-							{
-								if(pokerArray[0] == PokerArrayIndex(c, (j+s)) || pokerArray[1] == PokerArrayIndex(c, (j+s)))
-								{
-									if( ((j+s) != 0 && HighCard < (j+s)) || (j+s) == 0 )
-										HighCard = j + s;
-								}
-								tmp++;
-								break;
-							}
-						}
-					}
-				}
-			}
-			if(tmp >= 5) 
-			{
-				FinalHighCard[STRAIGHT] = HighCard;
-				isStraight = true;
-			}
-			tmp = 0;
-		}
-	}
-	HighCard = -1;
-	tmp = 0;
-	
-	// Convert Hand to Singles
-
-		// Card 1
-	if(pokerArray[0] > 12 && pokerArray[0] < 26) pokerArray[0] -= 13;
-	if(pokerArray[0] > 25 && pokerArray[0] < 39) pokerArray[0] -= 26;
-	if(pokerArray[0] > 38 && pokerArray[0] < 52) pokerArray[0] -= 39;
-	if(pokerArray[0] == 0) pokerArray[0] = 13; // Convert Aces to worth 13.
-
-		// Card 2
-	if(pokerArray[1] > 12 && pokerArray[1] < 26) pokerArray[1] -= 13;
-	if(pokerArray[1] > 25 && pokerArray[1] < 39) pokerArray[1] -= 26;
-	if(pokerArray[1] > 38 && pokerArray[1] < 52) pokerArray[1] -= 39;
-	if(pokerArray[1] == 0) pokerArray[1] = 13; // Convert Aces to worth 13.
-	
-	// High Card Calculator
-	
-	if(pokerArray[0] > pokerArray[1] || pokerArray[0] == 0)
-	{
-		if(pokerArray[0] == 0)
-			pokerArray[0] = 13;
-		FinalHighCard[HIGH_CARD] = pokerArray[0];
-	}
-	else 
-	{
-		if(pokerArray[1] == 0)
-			pokerArray[1] = 13;
-		FinalHighCard[HIGH_CARD] = pokerArray[1];
-	}
-	
-	for(new hc = 0; hc < 8; hc++)
-	{
-		if(FinalHighCard[hc] == 0) 
-			FinalHighCard[hc] = 13;
-		else if(FinalHighCard[hc] == -1)
-			FinalHighCard[hc] = 0;
-	}
-		
-
-	// 10) POKER_RESULT_ROYAL_FLUSH - A, K, Q, J, 10 (SAME SUIT) * ROYAL + FLUSH *
-	if(isRoyalFlush) 
-	{
-		SetPVarString(playerid, "pkrResultString", "Royal Flush");
-		FinalScore += 1200 + FinalHighCard[ROYAL_FLUSH];
-	}
-
-	// 9) POKER_RESULT_STRAIGHT_FLUSH - Any five card squence. (SAME SUIT) * STRAIGHT + FLUSH *
-	if(isStraight && isFlush) 
-	{
-		SetPVarString(playerid, "pkrResultString", "Straight Flush");
-		FinalScore += 600 + FinalHighCard[FLUSH] + 500 + FinalHighCard[STRAIGHT];
-	}
-
-	// 8) POKER_RESULT_FOUR_KIND - All four cards of the same rank. * FOUR KIND *
-	if(isFour && !isThree) {
-		SetPVarString(playerid, "pkrResultString", "Four of a Kind");
-		FinalScore += 800 + FinalHighCard[FOUR_KIND];
-	}
-
-	// 7) POKER_RESULT_FULL_HOUSE - Three of a kind combined with a pair. * THREE KIND + PAIR *
-	if(isThree && isTwoPair) 
-	{
-		SetPVarString(playerid, "pkrResultString", "Full House");
-		FinalScore += 400 + FinalHighCard[THREE_KIND] + 300 + FinalHighCard[TWO_PAIR];
-	}
-
-	// 6) POKER_RESULT_FLUSH - Any five cards of the same suit, no sequence. * FLUSH *
-	if(isFlush && !isStraight) {
-		SetPVarString(playerid, "pkrResultString", "Flush");
-		FinalScore += 600 + FinalHighCard[FLUSH];
-	}
-
-	// 5) POKER_RESULT_STRAIGHT - Five cards in sequence, but not in the same suit. * STRAIGHT *
-	if(isStraight && !isFlush) {
-		SetPVarString(playerid, "pkrResultString", "Straight");
-		FinalScore += 500 + FinalHighCard[STRAIGHT];
-	}
-
-	// 4) POKER_RESULT_THREE_KIND - Three cards of the same rank. * THREE KIND *
-	if(isThree && !isFour && !isTwoPair) {
-		SetPVarString(playerid, "pkrResultString", "Three of a Kind");
-		FinalScore += 400 + FinalHighCard[THREE_KIND];
-	}
-
-	// 3) POKER_RESULT_TWO_PAIR - Two seperate pair. * TWO PAIR *
-	if(isTwoPair && !isPair && !isThree) {
-		SetPVarString(playerid, "pkrResultString", "Two Pair");
-		FinalScore += 300 + FinalHighCard[TWO_PAIR];
-	}
-
-	// 2) POKER_RESULT_PAIR - Two cards of the same rank. * PAIR *
-	if(isPair && !isTwoPair) {
-		SetPVarString(playerid, "pkrResultString", "Pair");
-		FinalScore += 200 + FinalHighCard[ONE_PAIR];
-	}
-
-	// 1) POKER_RESULT_HIGH_CARD - Highest card.
-	if( (FinalScore % 100) == 0 || FinalScore == 0)
-	{
-		FinalScore += 100 + FinalHighCard[HIGH_CARD];
-		SetPVarString(playerid, "pkrResultString", "High Card");
-	}
-	return FinalScore;
-}
-
 SetPlayerPosObjectOffset(objectid, playerid, Float:offset_x, Float:offset_y, Float:offset_z)
 {
 	new Float:object_px,
@@ -669,7 +347,7 @@ Function: PokerPulse()
 				}
 			}
 
-			if(PokerTable[tableid][pkrActivePlayers] >= 2 && PokerTable[tableid][pkrActive] == 2)
+			if(PokerTable[tableid][pkrActive] == 2)
 			{
 				// Count the number of active players with more than $0, activate the round if more than 1 gets counted.
 				new tmpCount = 0;
@@ -706,9 +384,11 @@ Function: PokerPulse()
 					}
 				}
 
-				if(PokerTable[tableid][pkrDelay] > 0) {
+				if(PokerTable[tableid][pkrDelay] > 0) 
+				{
 					PokerTable[tableid][pkrDelay]--;
-					if(PokerTable[tableid][pkrDelay] <= 5 && PokerTable[tableid][pkrDelay] > 0) {
+					if(PokerTable[tableid][pkrDelay] <= 5 && PokerTable[tableid][pkrDelay] > 0) 
+					{
 						for(new i = 0; i < 6; i++) {
 							new playerid = PokerTable[tableid][pkrSlot][i];
 
@@ -721,25 +401,30 @@ Function: PokerPulse()
 					return ResetPokerRound(tableid);
 				}
 
-				if(PokerTable[tableid][pkrDelay] == 19) {
+				if(PokerTable[tableid][pkrDelay] == 19) 
+				{
 					// Anaylze Cards
-					new resultArray[6];
-					for(new i = 0; i < 6; i++) {
+					new resultArray[6], cards[7];
+
+					// Community Cards/ Cards on Table
+					cards[2] = GetCardNativeIndex(PokerTable[tableid][pkrCCards][0]);
+					cards[3] = GetCardNativeIndex(PokerTable[tableid][pkrCCards][1]);
+					cards[4] = GetCardNativeIndex(PokerTable[tableid][pkrCCards][2]);
+					cards[5] = GetCardNativeIndex(PokerTable[tableid][pkrCCards][3]);
+					cards[6] = GetCardNativeIndex(PokerTable[tableid][pkrCCards][4]);
+
+					for(new i = 0; i < 6; i++) 
+					{
 						new playerid = PokerTable[tableid][pkrSlot][i];
-						new cards[7];
 
-						if(playerid != -1) {
-							if(GetPVarInt(playerid, "pkrActiveHand")) {
-								cards[0] = GetPVarInt(playerid, "pkrCard1");
-								cards[1] = GetPVarInt(playerid, "pkrCard2");
-
-								new tmp = 0;
-								for(new c = 2; c < 7; c++) {
-									cards[c] = PokerTable[tableid][pkrCCards][tmp];
-									tmp++;
-								}
-
-								SetPVarInt(playerid, "pkrResult", AnalyzePokerHand(playerid, cards));
+						if(playerid != -1) 
+						{
+							if(GetPVarInt(playerid, "pkrActiveHand")) 
+							{
+								cards[0] = GetCardNativeIndex(GetPVarInt(playerid, "pkrCard1"));
+								cards[1] = GetCardNativeIndex(GetPVarInt(playerid, "pkrCard2"));
+								SetPVarInt(playerid, "pkrResult", calculate_hand_worth(cards, 7));
+								SetPVarString(playerid, "pkrResultString", HAND_RANKS[GetPVarInt(playerid, "pkrResult") >> 12]);
 							}
 						}
 					}
@@ -832,19 +517,22 @@ Function: PokerPulse()
 				// Assign Blinds & Active Player
 				if(PokerTable[tableid][pkrRound] == 0 && PokerTable[tableid][pkrDelay] == 5)
 				{
-					for(new i = 0; i < 6; i++) {
-						new playerid = PokerTable[tableid][pkrSlot][i];
+					if(PokerTable[tableid][pkrActivePlayers] >= 2)
+					{
+						for(new i = 0; i < 6; i++) {
+							new playerid = PokerTable[tableid][pkrSlot][i];
 
-						if(playerid != -1) {
-							SetPVarInt(playerid, "pkrStatus", 1);
+							if(playerid != -1) {
+								SetPVarInt(playerid, "pkrStatus", 1);
+							}
 						}
+						PokerAssignBlinds(tableid);
 					}
-
-					PokerAssignBlinds(tableid);
+					else ResetPokerRound(tableid);
 				}
 
 				// If no round active, start it.
-				if(PokerTable[tableid][pkrRound] == 0 && PokerTable[tableid][pkrDelay] == 0)
+				if(PokerTable[tableid][pkrRound] == 0 && PokerTable[tableid][pkrDelay] == 0 && PokerTable[tableid][pkrActivePlayers] >= 2)
 				{
 					PokerTable[tableid][pkrRound] = 1;
 
@@ -890,7 +578,6 @@ Function: PokerPulse()
 					}
 				}
 			}
-
 			// Update GUI
 			for(new i = 0; i < 6; i++)
 			{
@@ -941,19 +628,19 @@ Function: PokerPulse()
 							{
 								if(playerid != pid) {
 									if(PokerTable[tableid][pkrActive] == 4 && PokerTable[tableid][pkrDelay] <= 19 && GetPVarInt(playerid, "pkrHide") != 1) {
-										format(tmpString, sizeof(tmpString), "%s", DeckTextdrw[GetPVarInt(playerid, "pkrCard1")+1]);
+										format(tmpString, sizeof(tmpString), "%s", CardData[GetPVarInt(playerid, "pkrCard1")][E_CARD_TEXTDRAW]);
 										PlayerTextDrawSetString(pid, PlayerPokerUI[pid][2+tmp], tmpString);
-										format(tmpString, sizeof(tmpString), "%s", DeckTextdrw[GetPVarInt(playerid, "pkrCard2")+1]);
+										format(tmpString, sizeof(tmpString), "%s", CardData[GetPVarInt(playerid, "pkrCard2")][E_CARD_TEXTDRAW]);
 										PlayerTextDrawSetString(pid, PlayerPokerUI[pid][3+tmp], tmpString);
 									} else {
-										PlayerTextDrawSetString(pid, PlayerPokerUI[pid][2+tmp], DeckTextdrw[0]);
-										PlayerTextDrawSetString(pid, PlayerPokerUI[pid][3+tmp], DeckTextdrw[0]);
+										PlayerTextDrawSetString(pid, PlayerPokerUI[pid][2+tmp], "LD_CARD:cdback");
+										PlayerTextDrawSetString(pid, PlayerPokerUI[pid][3+tmp], "LD_CARD:cdback");
 									}
 								} else {
-									format(tmpString, sizeof(tmpString), "%s", DeckTextdrw[GetPVarInt(playerid, "pkrCard1")+1]);
+									format(tmpString, sizeof(tmpString), "%s", CardData[GetPVarInt(playerid, "pkrCard1")][E_CARD_TEXTDRAW]);
 									PlayerTextDrawSetString(playerid, PlayerPokerUI[playerid][2+tmp], tmpString);
 
-									format(tmpString, sizeof(tmpString), "%s", DeckTextdrw[GetPVarInt(playerid, "pkrCard2")+1]);
+									format(tmpString, sizeof(tmpString), "%s", CardData[GetPVarInt(playerid, "pkrCard2")][E_CARD_TEXTDRAW]);
 									PlayerTextDrawSetString(playerid, PlayerPokerUI[playerid][3+tmp], tmpString);
 								}
 							} else {
@@ -1085,35 +772,35 @@ Function: PokerPulse()
 						}
 						case 1: // Flop
 						{
-							PlayerTextDrawSetString(playerid, PlayerPokerUI[playerid][31], DeckTextdrw[PokerTable[tableid][pkrCCards][0]+1]);
-							PlayerTextDrawSetString(playerid, PlayerPokerUI[playerid][32], DeckTextdrw[PokerTable[tableid][pkrCCards][1]+1]);
-							PlayerTextDrawSetString(playerid, PlayerPokerUI[playerid][33], DeckTextdrw[PokerTable[tableid][pkrCCards][2]+1]);
+							PlayerTextDrawSetString(playerid, PlayerPokerUI[playerid][31], CardData[PokerTable[tableid][pkrCCards][0]][E_CARD_TEXTDRAW]);
+							PlayerTextDrawSetString(playerid, PlayerPokerUI[playerid][32], CardData[PokerTable[tableid][pkrCCards][1]][E_CARD_TEXTDRAW]);
+							PlayerTextDrawSetString(playerid, PlayerPokerUI[playerid][33], CardData[PokerTable[tableid][pkrCCards][2]][E_CARD_TEXTDRAW]);
 							PlayerTextDrawSetString(playerid, PlayerPokerUI[playerid][34], "LD_CARD:cdback");
 							PlayerTextDrawSetString(playerid, PlayerPokerUI[playerid][35], "LD_CARD:cdback");
 						}
 						case 2: // Turn
 						{
-							PlayerTextDrawSetString(playerid, PlayerPokerUI[playerid][31], DeckTextdrw[PokerTable[tableid][pkrCCards][0]+1]);
-							PlayerTextDrawSetString(playerid, PlayerPokerUI[playerid][32], DeckTextdrw[PokerTable[tableid][pkrCCards][1]+1]);
-							PlayerTextDrawSetString(playerid, PlayerPokerUI[playerid][33], DeckTextdrw[PokerTable[tableid][pkrCCards][2]+1]);
-							PlayerTextDrawSetString(playerid, PlayerPokerUI[playerid][34], DeckTextdrw[PokerTable[tableid][pkrCCards][3]+1]);
+							PlayerTextDrawSetString(playerid, PlayerPokerUI[playerid][31], CardData[PokerTable[tableid][pkrCCards][0]][E_CARD_TEXTDRAW]);
+							PlayerTextDrawSetString(playerid, PlayerPokerUI[playerid][32], CardData[PokerTable[tableid][pkrCCards][1]][E_CARD_TEXTDRAW]);
+							PlayerTextDrawSetString(playerid, PlayerPokerUI[playerid][33], CardData[PokerTable[tableid][pkrCCards][2]][E_CARD_TEXTDRAW]);
+							PlayerTextDrawSetString(playerid, PlayerPokerUI[playerid][34], CardData[PokerTable[tableid][pkrCCards][3]][E_CARD_TEXTDRAW]);
 							PlayerTextDrawSetString(playerid, PlayerPokerUI[playerid][35], "LD_CARD:cdback");
 						}
 						case 3: // River
 						{
-							PlayerTextDrawSetString(playerid, PlayerPokerUI[playerid][31], DeckTextdrw[PokerTable[tableid][pkrCCards][0]+1]);
-							PlayerTextDrawSetString(playerid, PlayerPokerUI[playerid][32], DeckTextdrw[PokerTable[tableid][pkrCCards][1]+1]);
-							PlayerTextDrawSetString(playerid, PlayerPokerUI[playerid][33], DeckTextdrw[PokerTable[tableid][pkrCCards][2]+1]);
-							PlayerTextDrawSetString(playerid, PlayerPokerUI[playerid][34], DeckTextdrw[PokerTable[tableid][pkrCCards][3]+1]);
-							PlayerTextDrawSetString(playerid, PlayerPokerUI[playerid][35], DeckTextdrw[PokerTable[tableid][pkrCCards][4]+1]);
+							PlayerTextDrawSetString(playerid, PlayerPokerUI[playerid][31], CardData[PokerTable[tableid][pkrCCards][0]][E_CARD_TEXTDRAW]);
+							PlayerTextDrawSetString(playerid, PlayerPokerUI[playerid][32], CardData[PokerTable[tableid][pkrCCards][1]][E_CARD_TEXTDRAW]);
+							PlayerTextDrawSetString(playerid, PlayerPokerUI[playerid][33], CardData[PokerTable[tableid][pkrCCards][2]][E_CARD_TEXTDRAW]);
+							PlayerTextDrawSetString(playerid, PlayerPokerUI[playerid][34], CardData[PokerTable[tableid][pkrCCards][3]][E_CARD_TEXTDRAW]);
+							PlayerTextDrawSetString(playerid, PlayerPokerUI[playerid][35], CardData[PokerTable[tableid][pkrCCards][4]][E_CARD_TEXTDRAW]);
 						}
 						case 4: // Win
 						{
-							PlayerTextDrawSetString(playerid, PlayerPokerUI[playerid][31], DeckTextdrw[PokerTable[tableid][pkrCCards][0]+1]);
-							PlayerTextDrawSetString(playerid, PlayerPokerUI[playerid][32], DeckTextdrw[PokerTable[tableid][pkrCCards][1]+1]);
-							PlayerTextDrawSetString(playerid, PlayerPokerUI[playerid][33], DeckTextdrw[PokerTable[tableid][pkrCCards][2]+1]);
-							PlayerTextDrawSetString(playerid, PlayerPokerUI[playerid][34], DeckTextdrw[PokerTable[tableid][pkrCCards][3]+1]);
-							PlayerTextDrawSetString(playerid, PlayerPokerUI[playerid][35], DeckTextdrw[PokerTable[tableid][pkrCCards][4]+1]);
+							PlayerTextDrawSetString(playerid, PlayerPokerUI[playerid][31], CardData[PokerTable[tableid][pkrCCards][0]][E_CARD_TEXTDRAW]);
+							PlayerTextDrawSetString(playerid, PlayerPokerUI[playerid][32], CardData[PokerTable[tableid][pkrCCards][1]][E_CARD_TEXTDRAW]);
+							PlayerTextDrawSetString(playerid, PlayerPokerUI[playerid][33], CardData[PokerTable[tableid][pkrCCards][2]][E_CARD_TEXTDRAW]);
+							PlayerTextDrawSetString(playerid, PlayerPokerUI[playerid][34], CardData[PokerTable[tableid][pkrCCards][3]][E_CARD_TEXTDRAW]);
+							PlayerTextDrawSetString(playerid, PlayerPokerUI[playerid][35], CardData[PokerTable[tableid][pkrCCards][4]][E_CARD_TEXTDRAW]);
 						}
 					}
 				} else {
@@ -1289,7 +976,8 @@ PokerShuffleDeck(tableid)
 
 	// Randomize the array (AKA Shuffle Algorithm)
 	new rand, tmp, i;
-	for(i = 52; i > 1; i--) {
+	for(i = 52; i > 1; i--) 
+	{
 		rand = random(52) % i;
 		tmp = PokerTable[tableid][pkrDeck][rand];
 		PokerTable[tableid][pkrDeck][rand] = PokerTable[tableid][pkrDeck][i-1];
@@ -1475,7 +1163,10 @@ PokerRotateActivePlayer(tableid)
 		}
 
 		PokerTable[tableid][pkrSlotRotations]++;
-		if(PokerTable[tableid][pkrSlotRotations] >= 6) {
+		if(PokerTable[tableid][pkrSlotRotations] >= 6) 
+		{
+			if(PokerTable[tableid][pkrActive] == 4) // Winner Loop
+				return 1;
 			PokerTable[tableid][pkrSlotRotations] -= 6;
 		}
 
@@ -1503,7 +1194,7 @@ PokerRotateActivePlayer(tableid)
 
 		if(playerid != -1)
 		{
-			if( (GetPVarInt(playerid, "pkrCurrentBet") < PokerTable[tableid][pkrActiveBet] && PokerTable[tableid][pkrActiveBet] != 0) || (GetPVarInt(playerid, "pkrCurrentBet") == PokerTable[tableid][pkrActiveBet] && PokerTable[tableid][pkrActiveBet] == 0) )
+			if( (GetPVarInt(playerid, "pkrCurrentBet") < PokerTable[tableid][pkrActiveBet] && PokerTable[tableid][pkrActiveBet] != 0) || (GetPVarInt(playerid, "pkrCurrentBet") == PokerTable[tableid][pkrActiveBet] && PokerTable[tableid][pkrActiveBet] == 0) && GetPVarInt(playerid, "pkrStatus") )
 			{
 				nextactiveid = playerid;
 				PokerTable[tableid][pkrActivePlayerID] = playerid;
@@ -1551,7 +1242,7 @@ PokerRotateActivePlayer(tableid)
 	return 1;
 }
 
-InitPokerTables()
+Function: InitPokerTables()
 {
 	for(new i = 0; i < MAX_POKERTABLES; i++) {
 		PokerTable[i][pkrSQL] = -1;
@@ -1597,10 +1288,10 @@ InitPokerTables()
 	return 1;
 }
 
-LoadPokerTables()
+stock LoadPokerTables()
 {
 	new loadQuery[64];
-	format(loadQuery, 64, "SELECT * FROM poker_tables");
+	format(loadQuery, 64, "SELECT * FROM poker_tables WHERE 1");
 	mysql_tquery(g_SQL, loadQuery, "OnPokerTablesLoaded", "");
 	return 1;
 }
@@ -2474,7 +2165,7 @@ DetectPokerTable(playerid)
 {
 	foreach(new i: PokerTables)
 	{
-		if(IsPlayerInRangeOfPoint(playerid, 10.0, PokerTable[i][pkrX], PokerTable[i][pkrY], PokerTable[i][pkrZ]))
+		if(IsPlayerInRangeOfPoint(playerid, 10.0, PokerTable[i][pkrX], PokerTable[i][pkrY], PokerTable[i][pkrZ]) && GetPlayerInterior(playerid) == PokerTable[i][pkrInt] && GetPlayerVirtualWorld(playerid) == PokerTable[i][pkrVW])
 			return i;
 	}
 	return -1;
@@ -2566,7 +2257,7 @@ LeavePokerTable(playerid)
 
 	if(PokerTable[tableid][pkrPlayers] == 0)
 	{
-		new tmpString[128];
+		new tmpString[150];
 		format(tmpString, sizeof(tmpString), "Poker stol\n\n Buy-In Maximum/Minimum: {00FF00}$%d{FFFFFF}/{00FF00}$%d{FFFFFF}\n\n[/poker play]", PokerTable[tableid][pkrBuyInMax], PokerTable[tableid][pkrBuyInMin]);
 		UpdateDynamic3DTextLabelText(PokerTable[tableid][pkrText3DID], COLOR_YELLOW, tmpString);
 
@@ -2574,9 +2265,8 @@ LeavePokerTable(playerid)
 		ResetPokerTable(tableid);
 	}
 
-	if(PokerTable[tableid][pkrRound] == 0 && PokerTable[tableid][pkrDelay] < 5) {
+	if(PokerTable[tableid][pkrRound] == 0 && PokerTable[tableid][pkrDelay] < 5 && PokerTable[tableid][pkrActivePlayers] >= 2)
 		ResetPokerRound(tableid);
-	}
 
 	// Convert prkChips to money
 	AC_GivePlayerMoney(playerid, GetPVarInt(playerid, "pkrChips"));
@@ -3190,7 +2880,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 				else if(PokerTable[PlayingTableID[playerid]][pkrActive] < 3) {
 					SetPVarInt(playerid, "pkrStatus", 1);
 				}
-
+			
 				if(PokerTable[PlayingTableID[playerid]][pkrActive] == 1 && GetPVarInt(playerid, "pkrRoomLeader")) {
 					PokerTable[PlayingTableID[playerid]][pkrActive] = 2;
 					SelectTextDraw(playerid, COLOR_YELLOW);

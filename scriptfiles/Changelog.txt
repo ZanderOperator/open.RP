@@ -1,3 +1,10 @@
+City of Angels v18.5.3. - 3.8.2020 - Critical BugFix
+- Ispravke na AntiCheatu
+- Popravljen /spawnchange za fakcije
+- Popravljen problem sa /poker table - "Nemate permisije nad ovim stolom!"
+- Popravljen kriticni bug sa crashanjem skripte 5 sekundi prije pocetka poker runde
+- Minor BugFixes
+
 City of Angels v18.5.2. - 31.7.2020 - MiniUpdate
 - Razlamanje teksta u 2 reda odsad prenosi boju namjenjenu za ostatak teksta u drugi red
 - Popravljen bug sa ispisom Server Message Dialoga prilikom oduzete imovine radi neaktivnosti

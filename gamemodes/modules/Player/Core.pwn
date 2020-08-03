@@ -118,6 +118,7 @@ Function: CheckAccountsForInactivity()
 		new 
 			donaterank = 0,
 			bool:skip = false,
+			monthpaydays = 0,
 			bankmoney = 0,
 			houseid = INVALID_HOUSE_ID,
 			bizzid = INVALID_BIZNIS_ID, 
@@ -132,6 +133,7 @@ Function: CheckAccountsForInactivity()
 		{
 			donaterank = 0;
 			skip = false;
+			monthpaydays = 0;
 			bankmoney = 0;
 			houseid = INVALID_HOUSE_ID;
 			bizzid = INVALID_BIZNIS_ID;
@@ -144,6 +146,8 @@ Function: CheckAccountsForInactivity()
 			
 			if(IsValidInactivity(sqlid)) // Ukoliko postoji prijavljena neaktivnost koja jos uvijek traje
 				continue;
+
+			monthpaydays = GetPlayerPaydayCount(sqlid);
 			
 			cache_set_active(Data); // Povratak cachea nakon provjere u bazi
 				
@@ -167,7 +171,7 @@ Function: CheckAccountsForInactivity()
 			
 			cache_get_value_name(0, "AdminMessage", logString, 2048); 
 			
-			if(jobkey != 0 && loginstamp <= (gettimestamp() - MAX_JOB_INACTIVITY_TIME)) // 
+			if(jobkey != 0 && loginstamp <= (gettimestamp() - MAX_JOB_INACTIVITY_TIME) && monthpaydays < 3) // 
 			{
 				mysql_format(g_SQL, updateQuery, sizeof(updateQuery), "UPDATE `accounts` SET `jobkey` = '0', `contracttime` = '0' WHERE `sqlid` = '%d'", sqlid);
 				mysql_tquery(g_SQL, updateQuery, "", "");
@@ -447,8 +451,7 @@ Function: CheckAccountsForInactivity()
 		return 1;
 	}
 	mysql_tquery_inline(g_SQL, loadString, using inline OnInactiveAccsLoad, "");
-
-	stamp2datetime(gettimestamp(), _, currentmonth, currentday, _, _, _);
+	getdate(_, currentmonth, currentday);
 	if(currentmonth <= 8 && currentday == 1) // Postpone do 9. mjeseca
 		return ResetMonthPaydays();
 	

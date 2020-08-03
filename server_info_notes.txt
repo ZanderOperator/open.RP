@@ -1,4 +1,4 @@
-fControl Panel - https://evolution-host.com/controlPanel/login.php
+Control Panel - https://evolution-host.com/controlPanel/login.php
 
 username: siladinikola
 pass: novasifrasenikadneceprobit788448

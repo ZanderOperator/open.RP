@@ -3029,7 +3029,7 @@ CMD:spawnchange(playerid, params[])
 			return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste clan organizacije!");
 		
 		new factionid = PlayerInfo[playerid][pMember];
-		if(FactionInfo[factionid][fType] != 1 || FactionInfo[factionid][fType] != 2 || FactionInfo[factionid][fType] != 3 || FactionInfo[factionid][fType] != 7 || FactionInfo[factionid][fType] != 8) // Legalne fakcije
+		if(FactionInfo[factionid][fType] != 1 && FactionInfo[factionid][fType] != 2 && FactionInfo[factionid][fType] != 3 && FactionInfo[factionid][fType] != 7 && FactionInfo[factionid][fType] != 8) // Legalne fakcije
 			return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste clan legalne organizacije!");
 	}
 	else if(spawn == 3)
