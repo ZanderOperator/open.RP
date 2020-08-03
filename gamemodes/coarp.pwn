@@ -203,7 +203,7 @@ native WP_Hash(buffer[], len, const str[]);
 //#define HOSTNAME 								"CoA Testing time"
 #define COPYRIGHT                           	"Copyright (c) 2020 City of Angels Roleplay"
 #define WEB_URL									"forum.cityofangels-roleplay.com"
-#define SCRIPT_VERSION							"CoA RP v18.5.2."  // [ ! ] Prilikom promjene SCRIPT_VERSION, OBAVEZNO ubaciti novi Update "Changelog.txt"u /scriptfiles folder [ ! ]
+#define SCRIPT_VERSION							"CoA RP v18.5.3."  // [ ! ] Prilikom promjene SCRIPT_VERSION, OBAVEZNO ubaciti novi Update "Changelog.txt"u /scriptfiles folder [ ! ]
 #define DEV_NAME   								"Woo-Logan"
 
 // Macros
@@ -341,7 +341,6 @@ enum E_PLAYER_DATA
 	pCrashId,
 	pCrashVW,
 	pCrashInt,
-	pCrashViwo,
 	Float:pCrashArmour,
 	Float:pCrashHealth,
 	Float:pCrashPos[3], //0 - X, 1 - Y, 2 - Z
@@ -854,6 +853,7 @@ enum E_VEHICLE_DATA
 	vViwo,
 	Float:vHealth,
 	bool:vDestroyed,
+	bool:vDeleted,
 	vRespawn,
 	bool:vGPS,
 	bool:vTuned,
@@ -3165,6 +3165,7 @@ public OnGameModeInit()
 	LoadGarages();
     LoadServerGarages();
 	LoadBizz();
+	InitPokerTables();
 	CreateBaskets(); // Update - BasketballNew.pwn
 	//Load_InventoryDrop();
 	PhoneTDVars();
@@ -3508,7 +3509,7 @@ public OnPlayerDisconnect(playerid, reason)
 				PlayerInfo[playerid][pCrashPos][1],
 				PlayerInfo[playerid][pCrashPos][2],
 				PlayerInfo[playerid][pCrashInt],
-				PlayerInfo[playerid][pCrashViwo],
+				PlayerInfo[playerid][pCrashVW],
 				PlayerInfo[playerid][pCrashArmour],
 				PlayerInfo[playerid][pCrashHealth],
 				PlayerInfo[playerid][pSkin],

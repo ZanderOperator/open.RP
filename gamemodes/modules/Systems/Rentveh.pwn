@@ -74,7 +74,6 @@ new Float:RandomVehicleRentSpawn[3][4] =
 stock DestroyRentVehicle(vehicleid)
 {
 	ResetVehicleInfo(vehicleid);
-	AC_DestroyVehicle(vehicleid);
 	foreach(new i: Player)
 	{
 		if(rentedVehID[i] == vehicleid)

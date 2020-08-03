@@ -22,6 +22,9 @@
 	######## ##    ##  #######  ##     ##
 */
 
+// Anti Vehicle Teleport
+new Float: SAMP_AC_VEHICLE_POSITION[MAX_VEHICLES];
+
 enum E_PLAYER_CHEAT_WEAPONS
 {
 	pwSQLID[13],
@@ -64,7 +67,6 @@ enum {
 
 new AimWarns[MAX_PLAYERS] = 0,
 	AimWarnStamp[MAX_PLAYERS] = 0; //Needs to be reset on OnPlayerConnect
-new bool:PlayerAimed[ MAX_PLAYERS ];
 
 /*
 	########  ######## ######## #### ##    ## ########  ######
@@ -133,6 +135,12 @@ new
 timer ResetVehicleSafeTeleport[60](vehicleid)
 {
 	VehicleInfo[vehicleid][vServerTeleport] = false;
+	return 1;
+}
+
+timer ResetVehicleSafeDelete[100](vehicleid)
+{
+	VehicleInfo[vehicleid][vDeleted] = false;
 	return 1;
 }
 
@@ -782,7 +790,6 @@ stock DoesVehicleHavePlayers(vehicleid)
 	return 0;
 }
 
-
 stock AC_CreateVehicle(vehicletype, Float:x, Float:y, Float:z, Float:rotation, color1, color2, respawn_delay = -1, sirenon = 0)
 {
 	new
@@ -812,7 +819,8 @@ stock AC_CreateVehicle(vehicletype, Float:x, Float:y, Float:z, Float:rotation, c
 stock AC_DestroyVehicle(vehicleid)
 {
 	if( vehicleid == INVALID_VEHICLE_ID ) 		return 0;
-	if( !Iter_Contains(Vehicles, vehicleid) ) 	return 0;
+	if( !Iter_Contains(Vehicles, vehicleid) || !IsValidVehicle(vehicleid) )	
+		return 0;
 
 	RemoveAllVehicleTuning(vehicleid);
 	VehicleObjectCheck(vehicleid);
@@ -822,6 +830,7 @@ stock AC_DestroyVehicle(vehicleid)
 	if(VehicleInfo[vehicleid][vUsage] == 5) // VEHICLE_USAGE_RENT
 		DestroyRentVehicle(vehicleid);
 
+	VehicleInfo[vehicleid][vDeleted]					= true;
 	// Vehicle Previous Info
 	VehiclePrevInfo[vehicleid][vPosX] 					= 0.0;
 	VehiclePrevInfo[vehicleid][vPosY] 					= 0.0;
@@ -843,8 +852,8 @@ stock AC_DestroyVehicle(vehicleid)
 	VehicleInfo[vehicleid][vEngineRunning] = 0;
 	Bit1_Set(gr_VehicleAlarmStarted, vehicleid, false);
 	DestroyVehicle(vehicleid);
-
 	Iter_Remove(Vehicles, vehicleid);
+	defer ResetVehicleSafeDelete(vehicleid);
 	return 1;
 }
 
@@ -1179,34 +1188,7 @@ public OnPlayerWeaponShot(playerid, weaponid, hittype, hitid, Float:fX, Float:fY
 		ApplyAnimation(playerid, "COLT45", "colt45_reload", 4.1, 0, 0, 0, 0, 0);
 		SetTimerEx("OnTaserShoot", 1100, false, "i", playerid);
 	}
-	if(PlayerAimed[playerid] == false)
-	{
-	    static bool:validweapon;
-		switch(weaponid)
-		{
-		    case WEAPON_COLT45,
-			WEAPON_SAWEDOFF,
-			WEAPON_UZI, WEAPON_MP5, WEAPON_TEC9,
-			WEAPON_AK47, WEAPON_M4,
-			WEAPON_MOLTOV, WEAPON_FLAMETHROWER: validweapon = false;
-			default: validweapon = true;
-		}
-		if(validweapon == true) // Trigger Bot
-		{
-			new str[144],
-				wname[32];
 
-			GetWeaponName(weaponid,wname,sizeof(wname));
-			AimWarns[playerid]++;
-			format(str,sizeof(str),"[%d. warn]%s(%d) potencijalno koristi Trigger Bot.", AimWarns[playerid], GetName(playerid,false), wname);
-			if(gettimestamp() >= AimWarnStamp[playerid])
-				ABroadCast(COLOR_YELLOW,str,1);
-			AimWarnStamp[playerid] = gettimestamp() + 5;
-			Log_Write("logfiles/suspected_aimbot.txt", "%s - %s", ReturnDate(), str);
-		}
-		return 0;
-	}
-	else PlayerAimed[playerid] = false;
 	
 	if(weaponid == PlayerWeapons[playerid][pwWeaponId][GetWeaponSlot(weaponid)] && (PlayerWeapons[playerid][pwAmmo][GetWeaponSlot(weaponid)] + 5) <= GetPlayerAmmo(playerid) && !PlayerInfo[playerid][pKilled]) // + 5 bullets in case of lagg
 	{
@@ -1266,7 +1248,6 @@ hook OnPlayerConnect(playerid)
 {
 	SafeGiveWeapon[playerid] = false;
 	AntiCheatData[playerid][acKicked] = false;
-	PlayerAimed[playerid] = false;
 	AimWarns[playerid] = 0;
 	AimWarnStamp[playerid] = 0;
 	LastInfractionTime{playerid} = 0;
@@ -1508,14 +1489,6 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 
 hook OnPlayerUpdate(playerid)
 {
-	if(PlayerAimed[playerid] == false)
-	{
-	    static cameramode, Keys[ 3 ];
-		cameramode = GetPlayerCameraMode(playerid);
-		GetPlayerKeys(playerid, Keys[ 0 ], Keys[ 1 ], Keys[ 2 ]);
-	    if((cameramode == 53 || cameramode == 7) || Keys[ 0 ] == KEY_FIRE)
-	        PlayerAimed[playerid] = true;
-	}
 	if(GetPlayerCameraMode(playerid) == 53)
     {
         new Float:kLibPos[3];
@@ -1646,7 +1619,7 @@ public OnUnoccupiedVehicleUpdate(vehicleid, playerid, passenger_seat, Float:new_
             return 0;
         }
     }
-	new ac_gtc = GetTickCount(), ac_gpp = GetPlayerPing(playerid), Float:ac_x, Float:ac_y, Float:ac_z, Float:ac_dist;
+	new Float:ac_x, Float:ac_y, Float:ac_z, Float:ac_dist;
 	GetVehiclePos(vehicleid, ac_x, ac_y, ac_z);	
 	ac_dist = GetPlayerDistanceFromPoint(playerid, new_x, new_y, new_z);
 	if(ac_dist >= 120.0)
@@ -1672,18 +1645,24 @@ public OnUnoccupiedVehicleUpdate(vehicleid, playerid, passenger_seat, Float:new_
 			KickMessage(playerid);
 		}
 	}
-	ac_dist = GetVehicleDistanceFromPoint(vehicleid, VehiclePrevInfo[vehicleid][vPosX], VehiclePrevInfo[vehicleid][vPosY], VehiclePrevInfo[vehicleid][vPosZ]);
-	if((ac_dist >= 25.0 || ac_dist >= 15.0 && ac_gtc - PlayerTick[playerid][ptVehiclePort] > ac_gpp) &&
-	ac_dist - VehiclePrevInfo[vehicleid][vPosDiff] > (ac_dist / 3.0) * 1.6 &&
-	(VehiclePrevInfo[vehicleid][vPosZ] >= -45.0 || VectorSize(ac_x - VehiclePrevInfo[vehicleid][vPosX], ac_y - VehiclePrevInfo[vehicleid][vPosY], 0.0) >= 180.0))
+	if(passenger_seat == 0)
 	{
-		new string[144];
-		format(string, sizeof(string), "[Anti-Cheat]: %s je pokusao koristiti Vehicle Teleporter/Kicker te je kickan.", GetName(playerid, false));
-		ABroadCast(COLOR_LIGHTRED, string, 1);
-		KickMessage(playerid);
-		SetVehicleZAngle(vehicleid, VehiclePrevInfo[vehicleid][vRotZ]);
-		SetVehiclePos(vehicleid, VehiclePrevInfo[vehicleid][vPosX], VehiclePrevInfo[vehicleid][vPosY], VehiclePrevInfo[vehicleid][vPosZ]);
-		return 0;
+		new
+			Float: SAMP_AC_POS_VX, Float: SAMP_AC_POS_VZ,
+			Float: SAMP_AC_POS_VY, Float: SAMP_AC_POS_VR;
+
+		new Float: SAMP_AC_DISTANCE = GetVehicleDistanceFromPoint(vehicleid, new_x, new_y, new_z);
+
+		GetVehiclePos(vehicleid, SAMP_AC_POS_VX, SAMP_AC_POS_VY, SAMP_AC_POS_VZ);
+		GetVehicleZAngle(vehicleid, SAMP_AC_POS_VR);
+
+		if(SAMP_AC_DISTANCE > 15.0 && SAMP_AC_POS_VZ > -70.0 && SAMP_AC_DISTANCE > SAMP_AC_VEHICLE_POSITION[vehicleid] + ((SAMP_AC_DISTANCE / 3) * 1.6))
+		{
+			SetVehiclePos(vehicleid, SAMP_AC_POS_VX, SAMP_AC_POS_VY, SAMP_AC_POS_VZ);
+			SetVehicleZAngle(vehicleid, SAMP_AC_POS_VR);
+			return false;
+		}
+		SAMP_AC_VEHICLE_POSITION[vehicleid] = SAMP_AC_DISTANCE;
 	}
 	VehiclePrevInfo[vehicleid][vPosX] = ac_x;
 	VehiclePrevInfo[vehicleid][vPosY] = ac_y;

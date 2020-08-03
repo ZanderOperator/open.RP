@@ -1342,7 +1342,8 @@ CMD:deletevehicle(playerid, params[])
 		SendClientMessage(playerid, COLOR_RED, "[ ! ] 1 - Vehicle (/veh), 2 - Car Ownership, 3 - Faction/Job");
 		return 1;
 	}
-	switch(pick) {
+	switch(pick) 
+	{
 		case 1: {
 			DestroyFarmerObjects(playerid);
 			AC_DestroyVehicle(vehicleid);
