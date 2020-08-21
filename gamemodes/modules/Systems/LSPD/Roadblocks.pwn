@@ -1,6 +1,8 @@
 #include <YSI\y_hooks>
 
-#define MAX_ROADBLOCKS                ( 50 )
+#define MAX_ROADBLOCKS                (50)
+
+new Iterator: Roadblocks <MAX_ROADBLOCKS>;
 
 enum E_ROADBLOCK_DATA
 {
@@ -24,26 +26,20 @@ new Roadblocks[ MAX_ROADBLOCKS ][ E_ROADBLOCK_DATA ];
 
 stock CreateRoadblock(Object, Float:x, Float:y, Float:z, Float:Angle)
 {
-    for(new i = 0; i < sizeof(Roadblocks); i++)
-  	{
-  	    if(Roadblocks[i][sCreated] == 0)
-  	    {
-            Roadblocks[i][sCreated] = 1;
-            Roadblocks[i][sX] = x;
-            Roadblocks[i][sY] = y;
-            Roadblocks[i][sZ] = z-0.7;
-            Roadblocks[i][sObject] = CreateDynamicObject(Object, x, y, z-0.9, 0, 0, Angle);
-	        return 1;
-  	    }
-  	}
-	return 0;
+	new i = Iter_Free(Roadblocks);
+	Roadblocks[i][sCreated] = 1;
+	Roadblocks[i][sX] = x;
+	Roadblocks[i][sY] = y;
+	Roadblocks[i][sZ] = z-0.7;
+	Roadblocks[i][sObject] = CreateDynamicObject(Object, x, y, z-0.9, 0, 0, Angle);
+	return 1;
 }
 
 stock DeleteAllRoadblocks(playerid)
 {
-    for(new i = 0; i < sizeof(Roadblocks); i++)
+    foreach(new i: Roadblocks)
   	{
-  	    if(IsPlayerInRangeOfPoint(playerid, 100, Roadblocks[i][sX], Roadblocks[i][sY], Roadblocks[i][sZ]))
+  	    if(IsPlayerInRangeOfPoint(playerid, 100.0, Roadblocks[i][sX], Roadblocks[i][sY], Roadblocks[i][sZ]))
         {
 	  	    if(Roadblocks[i][sCreated] == 1)
 	  	    {
@@ -55,12 +51,14 @@ stock DeleteAllRoadblocks(playerid)
 	  	    }
   	    }
 	}
+	Iter_Clear(Roadblocks);
 	return 1;
 }
 
 stock DeleteClosestRoadblock(playerid)
 {
-    for(new i = 0; i < sizeof(Roadblocks); i++)
+	new drb = -1;
+    foreach(new i: Roadblocks)
   	{
   	    if(IsPlayerInRangeOfPoint(playerid, 5.0, Roadblocks[i][sX], Roadblocks[i][sY], Roadblocks[i][sZ]))
         {
@@ -71,10 +69,13 @@ stock DeleteClosestRoadblock(playerid)
                 Roadblocks[i][sY] = 0;
                 Roadblocks[i][sZ] = 0;
                 DestroyDynamicObject(Roadblocks[i][sObject]);
+				drb = i;
                 return 1;
   	        }
   	    }
   	}
+	if(drb != -1)
+		Iter_Remove(Roadblocks, drb);
   	return 1;
 }
 

@@ -40,9 +40,9 @@
 // SA-MP config
 #define MAX_NPCS 								(1)
 #undef MAX_PLAYERS
-#define MAX_PLAYERS 							(200)
+#define MAX_PLAYERS 							(300)
 #undef MAX_VEHICLES
-#define MAX_VEHICLES                      		(1000)	// aSamp
+#define MAX_VEHICLES                      		(1000)
 
 // Script settings
 //#define COA_TEST
@@ -146,15 +146,17 @@ native WP_Hash(buffer[], len, const str[]);
 #define MAX_ILEGAL_GARAGES						(3)
 
 // Experience.pwn
-#define MIN_GIVER_EXP_PAYDAYS					(2) // Mora imati minimalno 2 paydaya taj dan da bi mogao davati exp
-#define MIN_RECIEVER_EXP_PAYDAYS				(1) // Mora imati minimalno 1 payday taj dan da bi primio exp
-#define LEVEL_UP_EXP							(25) // 25 EXP - Level Update
-#define MAX_FURSLOTS_EXP						(100) // 100 EXP - Max Furniture Slots forever
-#define PREMIUM_BRONZE_EXP						(150) // Mjesec dana Premium Bronze paketa
-#define PREMIUM_SILVER_EXP						(200) // Mjesec dana Premium Silver paketa
-#define PREMIUM_GOLD_EXP						(250) // Mjesec dana Premium Gold paketa
+#define MIN_GIVER_EXP_PAYDAYS					(2) 
+#define MIN_RECIEVER_EXP_PAYDAYS				(1) 
+#define LEVEL_UP_EXP							(25) 
+#define MAX_FURSLOTS_EXP						(100) 
+#define PREMIUM_BRONZE_EXP						(150) 
+#define PREMIUM_SILVER_EXP						(200) 
+#define PREMIUM_GOLD_EXP						(250)
 
-#define MAX_TEXTURE_SLOTS						(5)
+// Furniture Texture Enum Slots 
+#define MAX_TEXTURE_SLOTS						(5) //  1 Furniture Object - 5 Textures
+
 // Furniture
 #define FURNITURE_PREMIUM_OBJECTS				(700) // => CMD: /afurniture setpremium [player_id] [house_id]
 #define FURNITURE_VIP_GOLD_OBJCTS				(500)
@@ -162,17 +164,18 @@ native WP_Hash(buffer[], len, const str[]);
 #define FURNITURE_VIP_BRONZE_OBJCTS				(300)
 #define FURNITURE_VIP_NONE						(200)
 #define MAX_FURNITURE_SLOTS						(700)
-#define MAX_FURNITURE_SLOT_FIELDS				(3500) // 1 slot = 5 textures. (MAX_FURNITURE_SLOTS*5)
+#define MAX_FURNITURE_SLOT_FIELDS				(FURNITURE_PREMIUM_OBJECTS * MAX_TEXTURE_SLOTS)
 
 // Bizz Furniture
 #define BIZZ_FURNITURE_VIP_GOLD_OBJCTS			(500)
 #define BIZZ_FURNITURE_VIP_SILVER_OBJCTS		(400)
 #define BIZZ_FURNITURE_VIP_BRONZE_OBJCTS		(300)
 #define BIZZ_FURNITURE_VIP_NONE					(200)
+#define MAX_BIZNIS_FURNITURE_SLOTS  			(BIZZ_FURNITURE_VIP_GOLD_OBJCTS * MAX_TEXTURE_SLOTS)
 
 // Trunk - Slot Limits
 #define MAX_WEAPON_SLOTS						(10)
-#define MAX_PACKAGE_VEHICLE						(15) // Maximalno weapon package-a u vozilu.
+#define MAX_PACKAGE_VEHICLE						(15) 
 
 // OnPlayerTakeDamage - Anti Cheat
 #define DAMAGE_DRIVEBY_HELI						(2)
@@ -198,12 +201,11 @@ native WP_Hash(buffer[], len, const str[]);
 #define BUY_TYPE_HOUSE							(2)
 #define BUY_TYPE_BIZZ							(3)
 
-//Server informations
+// Server Informations - Prilikom promjene SCRIPT_VERSION, OBAVEZNO ubaciti novi "Changelog.txt" u /scriptfiles
 #define HOSTNAME 								"CoA.RP [0.3DL] - Summer Update"
-//#define HOSTNAME 								"CoA Testing time"
 #define COPYRIGHT                           	"Copyright (c) 2020 City of Angels Roleplay"
 #define WEB_URL									"forum.cityofangels-roleplay.com"
-#define SCRIPT_VERSION							"CoA RP v18.5.3."  // [ ! ] Prilikom promjene SCRIPT_VERSION, OBAVEZNO ubaciti novi Update "Changelog.txt"u /scriptfiles folder [ ! ]
+#define SCRIPT_VERSION							"CoA RP v18.5.3." 
 #define DEV_NAME   								"Woo-Logan"
 
 // Macros
@@ -218,18 +220,8 @@ native WP_Hash(buffer[], len, const str[]);
 	Bit1_Get(gr_PlayerAlive, %0)
 #define IsPlayerSafeBreaking(%0)	Bit1_Get( gr_SafeBreaking, playerid )
 #define IsPlayerReconing(%0) Bit4_Get(gr_SpecateId, %0)
-/*
-//Colors
-#define COLOR_FADE1                         0xE6E6E6E6
-#define COLOR_FADE2                         0xC8C8C8C8
-#define COLOR_FADE3                         0xAAAAAAAA
-#define COLOR_FADE4                         0x8C8C8C8C
-#define COLOR_FADE5                         0x6E6E6E6E
 
-#define COLOR_PLAYER						0xFFFFFF00
-#define COLOR_PLAYER_DEAD                   0xBFC0C200*/
-
-//Spawn
+// Spawn Coordinates
 #define SPAWN_X								(1107.3832)
 #define SPAWN_Y								(-1389.9144)
 #define SPAWN_Z								(13.6500)
@@ -240,6 +232,7 @@ native WP_Hash(buffer[], len, const str[]);
 #define B_R_TIRE 3
 
 // Anti-Spam
+
 #define ANTI_SPAM_PRIVATE_MESSAGE 			(5)
 #define ANTI_SPAM_BANK_CREDITPAY 			(5)
 #define ANTI_SPAM_CRIB_WEAPON				(5)
@@ -248,7 +241,7 @@ native WP_Hash(buffer[], len, const str[]);
 #define ANTI_SPAM_BUY_TIME					(5)
 #define ANTI_SPAM_DOOR_SHOUT				(3)
 
-// ############################################# Tipovi typeloga(Defineovi za logove porezne) - CheckPlayerTransactions ########################################
+// Definicije za logove porezne - CheckPlayerTransactions
 
 #define LOG_TYPE_BIZSELL 		1
 #define LOG_TYPE_HOUSESELL 		2
@@ -265,6 +258,23 @@ native WP_Hash(buffer[], len, const str[]);
 	##       ##   ### ##     ## ##     ## ##    ##
 	######## ##    ##  #######  ##     ##  ######
 */
+
+// Main Database Connection Handler
+new MySQL:g_SQL;
+
+// Iterators
+new Iterator:COVehicles<MAX_VEHICLES>,
+	Iterator:Vehicles<MAX_VEHICLES>,
+	Iterator:Pickups<MAX_PICKUP>,
+	Iterator:Factions<MAX_FACTIONS>,
+	Iterator:Houses<MAX_HOUSES>,
+	Iterator:Bizzes<MAX_BIZZS>,
+	Iterator:Complex<MAX_COMPLEX>,
+	Iterator:ComplexRooms<MAX_COMPLEX_ROOMS>,
+	Iterator:Garages<MAX_GARAGES>,
+	Iterator:IllegalGarages<MAX_ILEGAL_GARAGES>,
+	Iterator:COWObjects	[MAX_VEHICLES]<MAX_WEAPON_SLOTS>;
+
 new texture_buffer[10256];
 new PlayerUpdatePage[MAX_PLAYERS] = 0;
 
@@ -673,7 +683,6 @@ enum E_COMPLEX_ROOM_INFO {
 new
 	ComplexRoomInfo[MAX_COMPLEX_ROOMS][E_COMPLEX_ROOM_INFO];
 
-#define MAX_BIZNIS_FURNITURE_SLOTS  	( BIZZ_FURNITURE_VIP_GOLD_OBJCTS * MAX_TEXTURE_SLOTS )
 enum E_BIZNIS_INFO
 {
 	bSQLID,
@@ -793,7 +802,6 @@ enum PLAYER_OBJECT_DATA
 new PlayerObject[MAX_PLAYERS][MAX_CUSTOMIZED_OBJECTS][PLAYER_OBJECT_DATA];
 
 new vTireHP[MAX_VEHICLES][4];
-#define MAX_TICKETS_SIZE ( MAX_VEHICLE_TICKETS * 64 )// MAX_VEHICLE_TICKETS * sizeof(vTicketsReason)
 
 enum E_VEHICLE_DATA
 {
@@ -1546,12 +1554,6 @@ enum
 	// Spraynpay.pwn
 	DIALOG_SPRAY_CONFIRM,
 
-	/*// Inventory.pwn
-	DIALOG_INVENTORY_MENU,
-	DIALOG_INVENTORY_DROP,
-	DIALOG_INVENTORY_GIVE,
-	DIALOG_INVENTORY_GIVE_QUANTITY,*/
-
 	// RobStorage.pwn
 	DIALOG_ROB_STORAGE,
 	DIALOG_ROB_DSTORAGE,
@@ -1584,25 +1586,6 @@ enum
 	// UPDATES.pwn
 	DIALOG_UPDATE_LIST
 };
-
-/*
-// Inventory.pwn
-
-#define MODEL_SELECTION_INVENTORY 		(999)
-#define MODEL_SELECTION_CHECK_INVENTORY (989)
-#define MAX_LISTED_ITEMS 				(10)
-#define MAX_INV_DROPPED_ITEMS 			(1000)
-#define INVENTORY_ATTACHED_OBJECT		(9)
-#define MASK_SLOT						(8)
-#define MAX_INVENTORY_SLOTS 			(30)
-
-// Item Types
-#define	ITEM_TYPE_NONE     				(0)
-#define	ITEM_TYPE_FOOD 	   				(1)
-#define	ITEM_TYPE_DRINK    				(2)
-#define	ITEM_TYPE_OTHER    				(3)
-*/
-
 
 /*
 	##     ##    ###    ########   ######
@@ -1691,21 +1674,6 @@ new
 	LastVehicle[MAX_PLAYERS] = INVALID_VEHICLE_ID,
 	PlayerTuningVehicle[ MAX_PLAYERS ] = INVALID_VEHICLE_ID;
 	//bool:aprilfools[MAX_PLAYERS] = true;
-
-//Iterators
-new
-	Iterator:COVehicles<MAX_VEHICLES>,
-	Iterator:Vehicles<MAX_VEHICLES>,
-	//Iterator:TruckTrailers<MAX_VEHICLES>, - trucker.pwn - izba�en
-	Iterator:Pickups<MAX_PICKUP>,
-	Iterator:Factions<MAX_FACTIONS>,
-	Iterator:Houses<MAX_HOUSES>,
-	Iterator:Bizzes<MAX_BIZZS>,
-	Iterator:Complex<MAX_COMPLEX>,
-	Iterator:ComplexRooms<MAX_COMPLEX_ROOMS>,
-	Iterator:Garages<MAX_GARAGES>,
-	Iterator:IllegalGarages<MAX_ILEGAL_GARAGES>,
-	Iterator:COWObjects	[MAX_VEHICLES]<MAX_WEAPON_SLOTS>;
 
 new GunObjectIDs[200] ={
 
@@ -1836,10 +1804,6 @@ new
 	Bit16:	gr_PlayerInComplex		<MAX_PLAYERS>  = Bit16: INVALID_COMPLEX_ID,
 	Bit16:	gr_PlayerInPickup		<MAX_PLAYERS>  = Bit16: -1,
 	Bit16:	gr_PlayerTracing		<MAX_PLAYERS>  = Bit16: 9999;
-
-//MySQL
-new
-	MySQL:g_SQL;
 
 new
     secquestattempt[MAX_PLAYERS] = 3,
