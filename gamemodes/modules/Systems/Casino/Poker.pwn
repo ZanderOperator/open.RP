@@ -517,18 +517,19 @@ Function: PokerPulse()
 				// Assign Blinds & Active Player
 				if(PokerTable[tableid][pkrRound] == 0 && PokerTable[tableid][pkrDelay] == 5)
 				{
-					if(PokerTable[tableid][pkrActivePlayers] >= 2)
+					for(new i = 0; i < 6; i++) 
 					{
-						for(new i = 0; i < 6; i++) {
-							new playerid = PokerTable[tableid][pkrSlot][i];
+						new playerid = PokerTable[tableid][pkrSlot][i];
 
-							if(playerid != -1) {
-								SetPVarInt(playerid, "pkrStatus", 1);
-							}
-						}
-						PokerAssignBlinds(tableid);
+						if(playerid != -1)
+							SetPVarInt(playerid, "pkrStatus", 1);
 					}
-					else ResetPokerRound(tableid);
+					if(PokerTable[tableid][pkrActivePlayers] < 2)
+					{
+						ResetPokerRound(tableid);
+						continue;
+					}
+					else PokerAssignBlinds(tableid);
 				}
 
 				// If no round active, start it.
@@ -988,13 +989,14 @@ PokerShuffleDeck(tableid)
 PokerFindPlayerOrder(tableid, index)
 {
 	new tmpIndex = -1;
-	for(new i = 0; i < 6; i++) {
+	for(new i = 0; i < 6; i++) 
+	{
 		new playerid = PokerTable[tableid][pkrSlot][i];
-
-		if(playerid != -1) {
+		if(playerid != -1) 
+		{
 			tmpIndex++;
-
-			if(tmpIndex == index) {
+			if(tmpIndex == index) 
+			{
 				if(GetPVarInt(playerid, "pkrStatus") == 1)
 					return playerid;
 			}
@@ -1005,47 +1007,52 @@ PokerFindPlayerOrder(tableid, index)
 
 PokerAssignBlinds(tableid)
 {
-	if(PokerTable[tableid][pkrPos] == 6) {
-		PokerTable[tableid][pkrPos] = 0;
-	}
-
 	// Find where to start & distubute blinds.
-	new bool:roomDealer = false, bool:roomBigBlind = false, bool:roomSmallBlind = false;
+	new bool:roomDealer = false, bool:roomBigBlind = false, bool:roomSmallBlind = false,
+	dealerSlot = -1,
+	bigBlindSlot = -1,
+	smallBlindSlot = -1;
 
 	// Find the Dealer.
 	new tmpPos = PokerTable[tableid][pkrPos];
-	while(roomDealer == false) {
-		if(tmpPos == 6) {
+	while(roomDealer == false) 
+	{
+		if(tmpPos == 6)
 			tmpPos = 0;
-		}
 
 		new playerid = PokerFindPlayerOrder(tableid, tmpPos);
 
-		if(playerid != -1) {
-			SetPVarInt(playerid, "pkrRoomDealer", 1);
-			SetPVarString(playerid, "pkrStatusString", "Dealer");
-			roomDealer = true;
-		} else {
-			tmpPos++;
-		}
+		if(playerid != -1) 
+		{
+			if(bigBlindSlot != tmpPos && dealerSlot != tmpPos && smallBlindSlot != tmpPos)
+			{
+				SetPVarInt(playerid, "pkrRoomDealer", 1);
+				SetPVarString(playerid, "pkrStatusString", "Dealer");
+				roomDealer = true;
+				dealerSlot = tmpPos;
+			}
+		} 
+		else tmpPos++;
 	}
 
 	// Find the player after the Dealer.
-	tmpPos = PokerTable[tableid][pkrPos];
-	while(roomBigBlind == false) {
-		if(tmpPos == 6) {
+	tmpPos = dealerSlot;
+	while(roomBigBlind == false) 
+	{
+		if(tmpPos == 6)
 			tmpPos = 0;
-		}
 
 		new playerid = PokerFindPlayerOrder(tableid, tmpPos);
-
-		if(playerid != -1) {
-			if(GetPVarInt(playerid, "pkrRoomDealer") != 1 && GetPVarInt(playerid, "pkrRoomBigBlind") != 1 && GetPVarInt(playerid, "pkrRoomSmallBlind") != 1) {
+		if(playerid != -1) 
+		{
+			if(bigBlindSlot != tmpPos && dealerSlot != tmpPos && smallBlindSlot != tmpPos)
+			{
 				SetPVarInt(playerid, "pkrRoomBigBlind", 1);
 				new tmpString[128];
 				format(tmpString, sizeof(tmpString), "~r~BB -$%d", PokerTable[tableid][pkrBlind]);
 				SetPVarString(playerid, "pkrStatusString", tmpString);
 				roomBigBlind = true;
+				bigBlindSlot = tmpPos;
 
 				if(GetPVarInt(playerid, "pkrChips") < PokerTable[tableid][pkrBlind]) {
 					PokerTable[tableid][pkrPot] += GetPVarInt(playerid, "pkrChips");
@@ -1058,34 +1065,34 @@ PokerAssignBlinds(tableid)
 				SetPVarInt(playerid, "pkrCurrentBet", PokerTable[tableid][pkrBlind]);
 				PokerTable[tableid][pkrActiveBet] = PokerTable[tableid][pkrBlind];
 
-			} else {
-				tmpPos++;
-			}
-		} else {
-			tmpPos++;
-		}
+			} 
+			else tmpPos++;
+		} 
+		else tmpPos++;
 	}
 
 	// Small Blinds are active only if there are more than 2 players.
-	if(PokerTable[tableid][pkrActivePlayers] > 2) {
+	if(PokerTable[tableid][pkrActivePlayers] > 2) 
+	{
+		if(tmpPos == 6)
+			tmpPos = 0;
 
 		// Find the player after the Big Blind.
-		tmpPos = PokerTable[tableid][pkrPos];
-		while(roomSmallBlind == false) {
-			if(tmpPos == 6) {
-				tmpPos = 0;
-			}
-
+		tmpPos = bigBlindSlot;
+		while(roomSmallBlind == false) 
+		{
 			new playerid = PokerFindPlayerOrder(tableid, tmpPos);
 
-			if(playerid != -1) {
-				if(GetPVarInt(playerid, "pkrRoomDealer") != 1 && GetPVarInt(playerid, "pkrRoomBigBlind") != 1 && GetPVarInt(playerid, "pkrRoomSmallBlind") != 1) {
+			if(playerid != -1) 
+			{
+				if(bigBlindSlot != tmpPos && dealerSlot != tmpPos && smallBlindSlot != tmpPos)
+				{
 					SetPVarInt(playerid, "pkrRoomSmallBlind", 1);
 					new tmpString[128];
 					format(tmpString, sizeof(tmpString), "~r~SB -$%d", PokerTable[tableid][pkrBlind]/2);
 					SetPVarString(playerid, "pkrStatusString", tmpString);
 					roomSmallBlind = true;
-
+					smallBlindSlot = tmpPos;
 					if(GetPVarInt(playerid, "pkrChips") < (PokerTable[tableid][pkrBlind]/2)) {
 						PokerTable[tableid][pkrPot] += GetPVarInt(playerid, "pkrChips");
 						SetPVarInt(playerid, "pkrChips", 0);
@@ -1104,7 +1111,8 @@ PokerAssignBlinds(tableid)
 			}
 		}
 	}
-	PokerTable[tableid][pkrPos]++;
+	PokerTable[tableid][pkrPos] = bigBlindSlot;
+	return 1;
 }
 
 PokerRotateActivePlayer(tableid)
@@ -1377,7 +1385,8 @@ ResetPokerRound(tableid)
 	for(new i = 0; i < 6; i++) {
 		new playerid = PokerTable[tableid][pkrSlot][i];
 
-		if(playerid != -1) {
+		if(playerid != -1) 
+		{
 			DeletePVar(playerid, "pkrWinner");
 			DeletePVar(playerid, "pkrRoomBigBlind");
 			DeletePVar(playerid, "pkrRoomSmallBlind");
@@ -1400,7 +1409,6 @@ ResetPokerRound(tableid)
 			DeletePVar(playerid, "pkrHide");
 		}
 	}
-
 	return 1;
 }
 ResetPokerTable(tableid)
@@ -2113,7 +2121,6 @@ JoinPokerTable(playerid, tableid)
 					ShowCasinoGamesMenu(playerid, DIALOG_CGAMESBUYINPOKER);
 					SelectTextDraw(playerid, COLOR_YELLOW);
 				}
-
 				CameraRadiusSetPos(playerid, PokerTable[tableid][pkrX], PokerTable[tableid][pkrY], PokerTable[tableid][pkrZ], 90.0, 4.7, 0.1);
 
 				new Float:tmpPos[3];
@@ -2254,6 +2261,21 @@ LeavePokerTable(playerid)
 	if(PokerTable[tableid][pkrActivePlayerID] == playerid)
 		PokerTable[tableid][pkrActivePlayerID] = -1;
 	PokerTable[tableid][pkrSlot][PlayingTableSlot[playerid]] = -1;
+
+	// Sprijecavanje da counter igraca ide u minus/da se smanjuje vise nego sto bi se trebao
+	new players = 0, activeplayers = 0;
+	for(new i = 0; i < 6; i++)
+	{
+		if(PokerTable[tableid][pkrSlot][i] != -1)
+		{	
+			players++;
+			if(GetPVarInt(PokerTable[tableid][pkrSlot][i], "pkrStatus"))
+				activeplayers++;
+		}
+	}
+	PokerTable[tableid][pkrPlayers] = players;
+	PokerTable[tableid][pkrActivePlayers] = activeplayers;
+
 
 	if(PokerTable[tableid][pkrPlayers] == 0)
 	{
@@ -2857,7 +2879,8 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 		}
 		case DIALOG_CGAMESBUYINPOKER:
 		{
-			if(response) {
+			if(response) 
+			{
 				if(strval(inputtext) < 1)
 				{
 					SendMessage(playerid, MESSAGE_TYPE_ERROR, "Buy-In ne moze biti manji od 1$!");
@@ -2872,7 +2895,6 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 				PokerTable[PlayingTableID[playerid]][pkrActivePlayers]++;
 				SetPVarInt(playerid, "pkrChips", GetPVarInt(playerid, "pkrChips")+strval(inputtext));
 				AC_GivePlayerMoney(playerid, -strval(inputtext));
-
 
 				if(PokerTable[PlayingTableID[playerid]][pkrActive] == 3 && PokerTable[PlayingTableID[playerid]][pkrRound] == 0 && PokerTable[PlayingTableID[playerid]][pkrDelay] >= 6) {
 					SetPVarInt(playerid, "pkrStatus", 1);

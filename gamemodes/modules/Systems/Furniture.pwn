@@ -2381,7 +2381,7 @@ stock static GetPlayerFurnitureHouse(playerid)
 	{
 		new
 			house = PlayerEditingHouse[ playerid ];
-		if( IsPlayerInRangeOfPoint( playerid, 150.0, HouseInfo[ house ][ hExitX ], HouseInfo[ house ][ hExitY ], HouseInfo[ house ][ hExitZ ] )
+		if( IsPlayerInRangeOfPoint( playerid, 250.0, HouseInfo[ house ][ hExitX ], HouseInfo[ house ][ hExitY ], HouseInfo[ house ][ hExitZ ] )
 			&& GetPlayerInterior(playerid) == HouseInfo[ house ][ hInt ] && GetPlayerVirtualWorld(playerid) == HouseInfo[ house ][ hVirtualWorld ])
 		{
 			return PlayerEditingHouse[ playerid ];
@@ -2390,7 +2390,7 @@ stock static GetPlayerFurnitureHouse(playerid)
 
 	if( PlayerInfo[ playerid ][ pHouseKey ] != INVALID_HOUSE_ID )
 	{
-		if( IsPlayerInRangeOfPoint( playerid, 150.0, HouseInfo[ PlayerInfo[ playerid ][ pHouseKey ] ][ hExitX ], HouseInfo[ PlayerInfo[ playerid ][ pHouseKey ] ][ hExitY ], HouseInfo[ PlayerInfo[ playerid ][ pHouseKey ] ][ hExitZ ] )
+		if( IsPlayerInRangeOfPoint( playerid, 250.0, HouseInfo[ PlayerInfo[ playerid ][ pHouseKey ] ][ hExitX ], HouseInfo[ PlayerInfo[ playerid ][ pHouseKey ] ][ hExitY ], HouseInfo[ PlayerInfo[ playerid ][ pHouseKey ] ][ hExitZ ] )
 			&& GetPlayerInterior(playerid) == HouseInfo[ PlayerInfo[ playerid ][ pHouseKey ] ][ hInt ] && GetPlayerVirtualWorld(playerid) == HouseInfo[ PlayerInfo[ playerid ][ pHouseKey ] ][ hVirtualWorld ])
 		{
 			return PlayerInfo[ playerid ][ pHouseKey ];

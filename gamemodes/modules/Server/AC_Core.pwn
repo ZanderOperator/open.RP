@@ -1740,6 +1740,7 @@ stock AC_AttachTrailerToVehicle(trailerid,vehicleid)
 
 stock AC_SetVehiclePos(vehicleid,Float:x,Float:y,Float:z)
 {
+	if(!Iter_Contains(Vehicles, vehicleid)) return 1;
 	VehicleInfo[vehicleid][vServerTeleport] = true;
 	VehiclePrevInfo[vehicleid][vPosX] = x;
 	VehiclePrevInfo[vehicleid][vPosY] = y;

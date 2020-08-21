@@ -78,6 +78,7 @@ hook OnPlayerEnterCheckpoint(playerid)
 		        TWorking[playerid] = 0;
 		        TCarry[playerid] = 0;
 		        DisablePlayerCheckpoint(playerid);
+				Bit1_Set(gr_IsWorkingJob, playerid, false);
 		        PlayerInfo[playerid][pFreeWorks] -= 5;
 		        UpgradePlayerSkill(playerid, 7);
 				
@@ -165,7 +166,8 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 				if(PlayerInfo[playerid][pFreeWorks] < 1)
 					return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Odradio si dovoljno za ovaj payday! Pricekaj iduci.");
 	      		SendClientMessage(playerid,-1,"{FA5656}[ ! ] Idi do stovarista (kutija) da uzmes kutiju proizvoda (levi klik kada dodjete).");
-	        	TWorking[playerid] = 1;
+	        	Bit1_Set(gr_IsWorkingJob, playerid, true);
+				TWorking[playerid] = 1;
 	        	carjob[playerid] = GetPlayerVehicleID(playerid);
 	        	TogglePlayerControllable(playerid, 1);
 	         	TDone[playerid] = 1;
@@ -175,6 +177,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 	        else
 	        {
 	            TDone[playerid] = 0;
+				Bit1_Set(gr_IsWorkingJob, playerid, false);
 	        	SetVehicleToRespawn(GetPlayerVehicleID(playerid));
 	         	RemovePlayerFromVehicle(playerid);
 	         	TogglePlayerControllable(playerid, 1);
