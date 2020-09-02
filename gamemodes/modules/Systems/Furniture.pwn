@@ -4661,4 +4661,3 @@ CMD:afurniture(playerid, params[]) { // leo - novo.
 	}
 	return (true);
 }
-

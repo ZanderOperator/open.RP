@@ -9,46 +9,6 @@ static
 		updatestring[1280*4],
 		updateCaption[80];
 
-/*
-stock LoadUpdateList()
-{
-	page1[0] = EOS;
-	page2[0] = EOS;
-	page3[0] = EOS;
-	page4[0] = EOS;
-
-	new File:handle = fopen("Changelog.txt", io_read),
-		buffer[200],
-		len = 0,
-		buflen = 0;
-
-	if(handle)
-	{
-		while(handle)
-		{
-			buflen = fread(handle, buffer);
-			len += buflen;
-			switch(len)
-			{
-				case 0 .. 1280: 	strcat(page1, buffer, sizeof(page1));
-				case 1281 .. 2560:	strcat(page2, buffer, sizeof(page2));
-				case 2561 .. 3840:	strcat(page3, buffer, sizeof(page3));
-				case 3841 .. 5120:	strcat(page4, buffer, sizeof(page4));
-			}
-		}	
-		format(updateCaption, sizeof(updateCaption), "%s Update", SCRIPT_VERSION);
-		fclose(handle);
-
-		if(!isnull(page1)) allpages++;
-		if(!isnull(page2)) allpages++;
-		if(!isnull(page3)) allpages++;
-		if(!isnull(page4)) allpages++;
-	}
-	else print("The file \"changelog.txt\" does not exists, or can't be opened.");
-	return 1;
-}
-*/
-
 stock LoadUpdateList()
 {
     new File:handle = fopen("Changelog.txt", io_read),

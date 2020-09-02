@@ -1,8 +1,8 @@
 /*
 ===========================================================================================
 
-	City of Angels Role Play
-	Authors:  cofi(Jacob_Williams), B-Matt, Woo, Logan, kiddo, ShadY, hodza, Runner, Khawaja
+	City of Angels Role Play v18.5.3.
+	Authors:  cofi(Jacob_Williams), Logan, Woo, B-Matt, kiddo, ShadY, hodza, Runner, Khawaja
 	(c) 2020 City of Angels - All Rights Reserved.
 	Web: www.cityofangels-roleplay.com
 ===========================================================================================
@@ -144,6 +144,11 @@ native WP_Hash(buffer[], len, const str[]);
 #define MAX_GARAGES                 			(300)
 #define MAX_SERVER_SKINS						(600)
 #define MAX_ILEGAL_GARAGES						(3)
+
+// Max Inactivity Time & Minimum Month PayDays for Job/Property Removal
+#define MAX_JOB_INACTIVITY_TIME					(864000) // 10 days
+#define MAX_INACTIVITY_TIME						(2592000) // 30 days
+#define MIN_MONTH_PAYDAYS						(10)
 
 // Experience.pwn
 #define MIN_GIVER_EXP_PAYDAYS					(2) 
@@ -1882,6 +1887,7 @@ new
 // Colors
 #include "modules/Server/Checkpoints.pwn"
 #include "modules/Server/Color.pwn"
+
 // Server
 #include "modules/Server/Artconfig.pwn"
 #include "modules/Server/PopupMessage.pwn"
@@ -1894,7 +1900,6 @@ new
 #include "modules/Systems/Experience.pwn"
 #include "modules/Systems/NOS.pwn"
 #include "modules/Server/Logo.pwn"
-
 
 // Admin
 #include "modules/Admin/Ban.pwn"
@@ -1952,7 +1957,6 @@ new
 #include "modules/Systems/PawnShop.pwn"
 #include "modules/Systems/Toll.pwn"
 #include "modules/Systems/BasketballNew.pwn"// Update
-
 #include "modules/Char/Drugs.pwn"
 
 // LSPD
@@ -1966,11 +1970,13 @@ new
 #include "modules/Systems/LSPD/Gunrack.pwn"
 #include "modules/Systems/LSPD/MobileCommand.pwn"
 #include "modules/Systems/LSPD/Siren.pwn"
+
 // LSFD
 #include "modules/Systems/LSFD/Core.pwn"
 #include "modules/Systems/LSFD/Ambulance.pwn"
 #include "modules/Systems/LSFD/Anamneza.pwn"
 #include "modules/Systems/LSFD/Rope.pwn"
+
 // Char
 #include "modules/Char/Bank.pwn"
 #include "modules/Char/Mobile.pwn"
@@ -2008,6 +2014,7 @@ new
 #include "modules/Systems/RobStorage.pwn"
 #include "modules/Char/Jobs/Impounder.pwn"
 #include "modules/Char/Jobs/Transporter.pwn"
+
 // Hobiji
 #include "modules/Char/Hobby/Fisher.pwn"
 #include "modules/Char/Jobs/Hunter.pwn"
@@ -2095,7 +2102,7 @@ RegisterPlayerDeath(playerid, killerid) // funkcija
 	);
 	mysql_tquery(g_SQL, tmpQuery);
 
-	Log_Write("logfiles/kills.txt", "(%s) %s{%d}(%s) je ubio %s{%d}(%s) s %s(%d).",
+	Log_Write("logfiles/kills.txt", "(%s) %s{%d}(%s) je ubio %s{%d}(%s) sa %s(%d).",
 		ReturnDate(),
 		GetName(killerid, false),
 		PlayerInfo[killerid][pSQLID],
@@ -2553,6 +2560,7 @@ ResetPlayerVariables(playerid)
 	PlayerInfo[playerid][pRaceSQL]			= -1;
 	PlayerInfo[playerid][pMustRead]			= false;
 	PlayerInfo[playerid][pRaceCreator]		= false;
+	
 	//Floats
 	PlayerInfo[playerid][pHealth]			= 0.0;
 	PlayerInfo[playerid][pArmour]			= 0.0;
@@ -2590,133 +2598,27 @@ ResetPlayerVariables(playerid)
 	PlayerInfo[playerid][pBusinessWorkTime]	= 0;
 
 	// Objects
-	PlayerObject[ playerid ][0][poSQLID]		= -1;
-	PlayerObject[ playerid ][0][ poModelid ]	= -1;
-	PlayerObject[ playerid ][0][ poBoneId ]		= 0;
-	PlayerObject[ playerid ][0][ poPlaced ]		= 0;
-	PlayerObject[ playerid ][0][ poPosX ]   	= 0.0;
-	PlayerObject[ playerid ][0][ poPosY ]		= 0.0;
-	PlayerObject[ playerid ][0][ poPosZ ]		= 0.0;
-	PlayerObject[ playerid ][0][ poRotX ]		= 0.0;
-	PlayerObject[ playerid ][0][ poRotY ]		= 0.0;
-	PlayerObject[ playerid ][0][ poRotZ ]		= 0.0;
-	PlayerObject[ playerid ][0][ poScaleX ]		= 1.0;
-	PlayerObject[ playerid ][0][ poScaleY ]		= 1.0;
-	PlayerObject[ playerid ][0][ poScaleZ ]		= 1.0;
-	PlayerObject[ playerid ][0][ poColor1 ] 	= 0;
-	PlayerObject[ playerid ][0][ poColor2 ] 	= 0;
+	for(new i = 0; i < MAX_CUSTOMIZED_OBJECTS; i++)
+	{
+		PlayerObject[ playerid ][i][poSQLID]		= -1;
+		PlayerObject[ playerid ][i][ poModelid ]	= -1;
+		PlayerObject[ playerid ][i][ poBoneId ]		= 0;
+		PlayerObject[ playerid ][i][ poPlaced ]		= 0;
+		PlayerObject[ playerid ][i][ poPosX ]   	= 0.0;
+		PlayerObject[ playerid ][i][ poPosY ]		= 0.0;
+		PlayerObject[ playerid ][i][ poPosZ ]		= 0.0;
+		PlayerObject[ playerid ][i][ poRotX ]		= 0.0;
+		PlayerObject[ playerid ][i][ poRotY ]		= 0.0;
+		PlayerObject[ playerid ][i][ poRotZ ]		= 0.0;
+		PlayerObject[ playerid ][i][ poScaleX ]		= 1.0;
+		PlayerObject[ playerid ][i][ poScaleY ]		= 1.0;
+		PlayerObject[ playerid ][i][ poScaleZ ]		= 1.0;
+		PlayerObject[ playerid ][i][ poColor1 ] 	= 0;
+		PlayerObject[ playerid ][i][ poColor2 ] 	= 0;
 
-	if( IsPlayerAttachedObjectSlotUsed(playerid, 0) )
-		RemovePlayerAttachedObject( playerid, 0 );
-
-	PlayerObject[ playerid ][1][poSQLID]		= -1;
-	PlayerObject[ playerid ][1][ poModelid ]	= -1;
-	PlayerObject[ playerid ][1][ poBoneId ]		= 0;
-	PlayerObject[ playerid ][1][ poPlaced ]		= 0;
-	PlayerObject[ playerid ][1][ poPosX ]   	= 0.0;
-	PlayerObject[ playerid ][1][ poPosY ]		= 0.0;
-	PlayerObject[ playerid ][1][ poPosZ ]		= 0.0;
-	PlayerObject[ playerid ][1][ poRotX ]		= 0.0;
-	PlayerObject[ playerid ][1][ poRotY ]		= 0.0;
-	PlayerObject[ playerid ][1][ poRotZ ]		= 0.0;
-	PlayerObject[ playerid ][1][ poScaleX ]		= 1.0;
-	PlayerObject[ playerid ][1][ poScaleY ]		= 1.0;
-	PlayerObject[ playerid ][1][ poScaleZ ]		= 1.0;
-	PlayerObject[ playerid ][1][ poColor1 ] 	= 0;
-	PlayerObject[ playerid ][1][ poColor2 ] 	= 0;
-	if( IsPlayerAttachedObjectSlotUsed(playerid, 1) )
-		RemovePlayerAttachedObject( playerid, 1 );
-
-	PlayerObject[ playerid ][2][ poSQLID ]		= -1;
-	PlayerObject[ playerid ][2][ poModelid ]	= -1;
-	PlayerObject[ playerid ][2][ poBoneId ]		= 0;
-	PlayerObject[ playerid ][2][ poPlaced ]		= 0;
-	PlayerObject[ playerid ][2][ poPosX ]   	= 0.0;
-	PlayerObject[ playerid ][2][ poPosY ]		= 0.0;
-	PlayerObject[ playerid ][2][ poPosZ ]		= 0.0;
-	PlayerObject[ playerid ][2][ poRotX ]		= 0.0;
-	PlayerObject[ playerid ][2][ poRotY ]		= 0.0;
-	PlayerObject[ playerid ][2][ poRotZ ]		= 0.0;
-	PlayerObject[ playerid ][2][ poScaleX ]		= 1.0;
-	PlayerObject[ playerid ][2][ poScaleY ]		= 1.0;
-	PlayerObject[ playerid ][2][ poScaleZ ]		= 1.0;
-	PlayerObject[ playerid ][2][ poColor1 ] 	= 0;
-	PlayerObject[ playerid ][2][ poColor2 ] 	= 0;
-	if( IsPlayerAttachedObjectSlotUsed(playerid, 2) )
-		RemovePlayerAttachedObject( playerid, 2 );
-
-	PlayerObject[ playerid ][3][ poSQLID ]		= -1;
-	PlayerObject[ playerid ][3][ poModelid ]	= -1;
-	PlayerObject[ playerid ][3][ poBoneId ]		= 0;
-	PlayerObject[ playerid ][3][ poPlaced ]		= 0;
-	PlayerObject[ playerid ][3][ poPosX ]   	= 0.0;
-	PlayerObject[ playerid ][3][ poPosY ]		= 0.0;
-	PlayerObject[ playerid ][3][ poPosZ ]		= 0.0;
-	PlayerObject[ playerid ][3][ poRotX ]		= 0.0;
-	PlayerObject[ playerid ][3][ poRotY ]		= 0.0;
-	PlayerObject[ playerid ][3][ poRotZ ]		= 0.0;
-	PlayerObject[ playerid ][3][ poScaleX ]		= 1.0;
-	PlayerObject[ playerid ][3][ poScaleY ]		= 1.0;
-	PlayerObject[ playerid ][3][ poScaleZ ]		= 1.0;
-	PlayerObject[ playerid ][3][ poColor1 ] 	= 0;
-	PlayerObject[ playerid ][3][ poColor2 ] 	= 0;
-	if( IsPlayerAttachedObjectSlotUsed(playerid, 3) )
-		RemovePlayerAttachedObject( playerid, 3 );
-
-	PlayerObject[ playerid ][4][ poSQLID ]		= -1;
-	PlayerObject[ playerid ][4][ poModelid ]	= -1;
-	PlayerObject[ playerid ][4][ poBoneId ]		= 0;
-	PlayerObject[ playerid ][4][ poPlaced ]		= 0;
-	PlayerObject[ playerid ][4][ poPosX ]   	= 0.0;
-	PlayerObject[ playerid ][4][ poPosY ]		= 0.0;
-	PlayerObject[ playerid ][4][ poPosZ ]		= 0.0;
-	PlayerObject[ playerid ][4][ poRotX ]		= 0.0;
-	PlayerObject[ playerid ][4][ poRotY ]		= 0.0;
-	PlayerObject[ playerid ][4][ poRotZ ]		= 0.0;
-	PlayerObject[ playerid ][4][ poScaleX ]		= 1.0;
-	PlayerObject[ playerid ][4][ poScaleY ]		= 1.0;
-	PlayerObject[ playerid ][4][ poScaleZ ]		= 1.0;
-	PlayerObject[ playerid ][4][ poColor1 ] 	= 0;
-	PlayerObject[ playerid ][4][ poColor2 ] 	= 0;
-	if( IsPlayerAttachedObjectSlotUsed(playerid, 4) )
-		RemovePlayerAttachedObject( playerid, 4 );
-
-	PlayerObject[ playerid ][5][poSQLID]		= -1;
-	PlayerObject[ playerid ][5][ poModelid ]	= -1;
-	PlayerObject[ playerid ][5][ poBoneId ]		= 0;
-	PlayerObject[ playerid ][5][ poPlaced ]		= 0;
-	PlayerObject[ playerid ][5][ poPosX ]   	= 0.0;
-	PlayerObject[ playerid ][5][ poPosY ]		= 0.0;
-	PlayerObject[ playerid ][5][ poPosZ ]		= 0.0;
-	PlayerObject[ playerid ][5][ poRotX ]		= 0.0;
-	PlayerObject[ playerid ][5][ poRotY ]		= 0.0;
-	PlayerObject[ playerid ][5][ poRotZ ]		= 0.0;
-	PlayerObject[ playerid ][5][ poScaleX ]		= 1.0;
-	PlayerObject[ playerid ][5][ poScaleY ]		= 1.0;
-	PlayerObject[ playerid ][5][ poScaleZ ]		= 1.0;
-	PlayerObject[ playerid ][5][ poColor1 ] 	= 0;
-	PlayerObject[ playerid ][5][ poColor2 ] 	= 0;
-
-	if( IsPlayerAttachedObjectSlotUsed(playerid, 5) )
-		RemovePlayerAttachedObject( playerid, 5 );
-
-	PlayerObject[ playerid ][6][poSQLID]		= -1;
-	PlayerObject[ playerid ][6][ poModelid ]	= -1;
-	PlayerObject[ playerid ][6][ poBoneId ]		= 0;
-	PlayerObject[ playerid ][6][ poPlaced ]		= 0;
-	PlayerObject[ playerid ][6][ poPosX ]   	= 0.0;
-	PlayerObject[ playerid ][6][ poPosY ]		= 0.0;
-	PlayerObject[ playerid ][6][ poPosZ ]		= 0.0;
-	PlayerObject[ playerid ][6][ poRotX ]		= 0.0;
-	PlayerObject[ playerid ][6][ poRotY ]		= 0.0;
-	PlayerObject[ playerid ][6][ poRotZ ]		= 0.0;
-	PlayerObject[ playerid ][6][ poScaleX ]		= 1.0;
-	PlayerObject[ playerid ][6][ poScaleY ]		= 1.0;
-	PlayerObject[ playerid ][6][ poScaleZ ]		= 1.0;
-	PlayerObject[ playerid ][6][ poColor1 ] 	= 0;
-	PlayerObject[ playerid ][6][ poColor2 ] 	= 0;
-	if( IsPlayerAttachedObjectSlotUsed(playerid, 6) )
-		RemovePlayerAttachedObject( playerid, 6 );
+		if( IsPlayerAttachedObjectSlotUsed(playerid, i) )
+			RemovePlayerAttachedObject( playerid, i );
+	}
 	if( IsPlayerAttachedObjectSlotUsed(playerid, 7) )
 		RemovePlayerAttachedObject( playerid, 7 );
 	if( IsPlayerAttachedObjectSlotUsed(playerid, 8) )
@@ -2724,60 +2626,14 @@ ResetPlayerVariables(playerid)
 	if( IsPlayerAttachedObjectSlotUsed(playerid, 9) )
 		RemovePlayerAttachedObject( playerid, 9 );
 
-// Weapon Enum reset
-	PlayerWeapons[playerid][pwSQLID][0] = -1;
-	PlayerWeapons[playerid][pwWeaponId][0] = 0;
-	PlayerWeapons[playerid][pwAmmo][0] = 0;
-	PlayerWeapons[playerid][pwHidden][0] = 0;
-	PlayerWeapons[playerid][pwSQLID][1] = -1;
-	PlayerWeapons[playerid][pwWeaponId][1] = 0;
-	PlayerWeapons[playerid][pwAmmo][1] = 0;
-	PlayerWeapons[playerid][pwHidden][1] = 0;
-	PlayerWeapons[playerid][pwSQLID][2] = -1;
-	PlayerWeapons[playerid][pwWeaponId][2] = 0;
-	PlayerWeapons[playerid][pwAmmo][2] = 0;
-	PlayerWeapons[playerid][pwHidden][2] = 0;
-	PlayerWeapons[playerid][pwSQLID][3] = -1;
-	PlayerWeapons[playerid][pwWeaponId][3] = 0;
-	PlayerWeapons[playerid][pwAmmo][3] = 0;
-	PlayerWeapons[playerid][pwHidden][3] = 0;
-	PlayerWeapons[playerid][pwSQLID][4] = -1;
-	PlayerWeapons[playerid][pwWeaponId][4] = 0;
-	PlayerWeapons[playerid][pwAmmo][4] = 0;
-	PlayerWeapons[playerid][pwHidden][4] = 0;
-	PlayerWeapons[playerid][pwSQLID][5] = -1;
-	PlayerWeapons[playerid][pwWeaponId][5] = 0;
-	PlayerWeapons[playerid][pwAmmo][5] = 0;
-	PlayerWeapons[playerid][pwHidden][5] = 0;
-	PlayerWeapons[playerid][pwSQLID][6] = -1;
-	PlayerWeapons[playerid][pwWeaponId][6] = 0;
-	PlayerWeapons[playerid][pwAmmo][6] = 0;
-	PlayerWeapons[playerid][pwHidden][6] = 0;
-	PlayerWeapons[playerid][pwSQLID][7] = -1;
-	PlayerWeapons[playerid][pwWeaponId][7] = 0;
-	PlayerWeapons[playerid][pwAmmo][7] = 0;
-	PlayerWeapons[playerid][pwHidden][7] = 0;
-	PlayerWeapons[playerid][pwSQLID][8] = -1;
-	PlayerWeapons[playerid][pwWeaponId][8] = 0;
-	PlayerWeapons[playerid][pwAmmo][8] = 0;
-	PlayerWeapons[playerid][pwHidden][8] = 0;
-	PlayerWeapons[playerid][pwSQLID][9] = -1;
-	PlayerWeapons[playerid][pwWeaponId][9] = 0;
-	PlayerWeapons[playerid][pwAmmo][9] = 0;
-	PlayerWeapons[playerid][pwHidden][9] = 0;
-	PlayerWeapons[playerid][pwSQLID][10] = -1;
-	PlayerWeapons[playerid][pwWeaponId][10] = 0;
-	PlayerWeapons[playerid][pwAmmo][10] = 0;
-	PlayerWeapons[playerid][pwHidden][10] = 0;
-	PlayerWeapons[playerid][pwSQLID][11] = -1;
-	PlayerWeapons[playerid][pwWeaponId][11] = 0;
-	PlayerWeapons[playerid][pwAmmo][11] = 0;
-	PlayerWeapons[playerid][pwHidden][11] = 0;
-	PlayerWeapons[playerid][pwSQLID][12] = -1;
-	PlayerWeapons[playerid][pwWeaponId][12] = 0;
-	PlayerWeapons[playerid][pwAmmo][12] = 0;
-	PlayerWeapons[playerid][pwHidden][12] = 0;
-
+	// Weapon Enum reset
+	for(new wslot = 0; wslot < 13; wslot++)
+	{
+		PlayerWeapons[playerid][pwSQLID][wslot] = -1;
+		PlayerWeapons[playerid][pwWeaponId][wslot] = 0;
+		PlayerWeapons[playerid][pwAmmo][wslot] = 0;
+		PlayerWeapons[playerid][pwHidden][wslot] = 0;
+	}
 	HiddenWeapon[playerid][pwSQLID] = -1;
 	HiddenWeapon[playerid][pwWeaponId] = 0;
 	HiddenWeapon[playerid][pwAmmo] = 0;
@@ -2802,7 +2658,6 @@ ResetPlayerVariables(playerid)
 	PlayerSprayPrice[playerid]		= 0;
 	PlayerSprayVID[playerid]		= 0;
 	PlayerAction[playerid]			= 0;
-
 
 	PlayerInfo[playerid][cIP] = '\0';
 
@@ -2839,7 +2694,8 @@ ResetPlayerVariables(playerid)
 	ResetRuletArrays(playerid);
 	ResetRuletTable(playerid);
 	//ResetBlackJack(playerid);
-	for(new i = 0; i < MAX_PLAYERS; i++)
+	
+	foreach(new i : Player)
 	{
 		CanPMAdmin[playerid][i] = 0;
 	}

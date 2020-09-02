@@ -10,11 +10,6 @@
 	##     ## ##     ##  ######  ##     ##  #######   ######  
 */
 
-// Max Inactivity Time for Job/Property
-#define MAX_JOB_INACTIVITY_TIME			(864000) // 10 dana u sekundama
-#define MAX_INACTIVITY_TIME				(2592000) // 30 dana u sekundama
-#define MIN_MONTH_PAYDAYS				(10) // Potrebno imati barem 10 paydayova
-
 //Igrac je novi na serveru ili je stari
 #define MAX_ADO_LABELS  200
 #define PlayerNewUser_Set(%0,%1) \
@@ -451,11 +446,9 @@ Function: CheckAccountsForInactivity()
 		return 1;
 	}
 	mysql_tquery_inline(g_SQL, loadString, using inline OnInactiveAccsLoad, "");
-	getdate(_, currentmonth, currentday);
-	if(currentmonth <= 8 && currentday == 1) // Postpone do 9. mjeseca
-		return ResetMonthPaydays();
 	
-	if(currentday == 1) // 1st in Month - Reset of Monthly paydays
+	getdate(_, currentmonth, currentday);
+	if(currentday == 1) 
 	{
 		mysql_format(g_SQL, loadString, 128, "SELECT * FROM `experience` WHERE monthpaydays < '%d'", MIN_MONTH_PAYDAYS);
 		inline OnMinPayDayAccsLoad()
