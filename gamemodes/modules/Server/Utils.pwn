@@ -1003,7 +1003,7 @@ strtok(const string[], &index)
 stock SendSplitMessage(playerid, color, const final[])
 {
     new len = strlen(final);
-    if(len >= 100)
+    if(len >= EX_SPLITLENGTH)
     {
 		new buffer[EX_SPLITLENGTH+10],
 			colorstring[9] = EOS, colorstart = 0, colorend = 0,	
@@ -1044,7 +1044,7 @@ stock SendSplitMessage(playerid, color, const final[])
 stock SendSplitMessageToAll(color, const final[])
 {
     new len = strlen(final);
-    if(len >= 100)
+    if(len >= EX_SPLITLENGTH)
     {
 		new buffer[EX_SPLITLENGTH+10],
 			colorstring[9] = EOS, colorstart = 0, colorend = 0,	
