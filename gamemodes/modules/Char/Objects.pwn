@@ -828,45 +828,42 @@ stock IsObjectAttached(playerid, modelid)
 	}
 	return found;
 }
+
 stock SetPlayerObjects(playerid)
 {
-	new modelid[MAX_CUSTOMIZED_OBJECTS] = NEGATIVE_MODEL_ID ; // Radi negativnih vrijednosti Custom Object Model ID-eva
-	for (new i = 0;i < MAX_CUSTOMIZED_OBJECTS; i++)
-		modelid[i] = PlayerObject[playerid][i][poModelid];
-		
-	if( PlayerObject[playerid][0][poModelid] != -1 && !IsPlayerAttachedObjectSlotUsed(playerid, 0) ) {
-		PlayerObject[playerid][0][poPlaced] = 1;
-		SetPlayerAttachedObject(playerid, 0, modelid[0], PlayerObject[playerid][0][poBoneId],PlayerObject[playerid][0][poPosX],PlayerObject[playerid][0][poPosY],PlayerObject[playerid][0][poPosZ],PlayerObject[playerid][0][poRotX],PlayerObject[playerid][0][poRotY],PlayerObject[playerid][0][poRotZ],PlayerObject[playerid][0][poScaleX],PlayerObject[playerid][0][poScaleY],PlayerObject[playerid][0][poScaleZ],PlayerObject[playerid][0][poColor1],PlayerObject[playerid][0][poColor2]);
+	if( PlayerObject[playerid][0][poModelid] != -1 && !IsPlayerAttachedObjectSlotUsed(playerid, 0) && PlayerObject[playerid][0][poPlaced]) {
+		PlayerObject[playerid][0][poPlaced] = true;
+		SetPlayerAttachedObject(playerid, 0, PlayerObject[playerid][0][poModelid], PlayerObject[playerid][0][poBoneId],PlayerObject[playerid][0][poPosX],PlayerObject[playerid][0][poPosY],PlayerObject[playerid][0][poPosZ],PlayerObject[playerid][0][poRotX],PlayerObject[playerid][0][poRotY],PlayerObject[playerid][0][poRotZ],PlayerObject[playerid][0][poScaleX],PlayerObject[playerid][0][poScaleY],PlayerObject[playerid][0][poScaleZ],PlayerObject[playerid][0][poColor1],PlayerObject[playerid][0][poColor2]);
 	}
 	
-	if( PlayerObject[playerid][1][poModelid] != -1 && !IsPlayerAttachedObjectSlotUsed(playerid, 1) ) {
-		PlayerObject[playerid][1][poPlaced] = 1;
-		SetPlayerAttachedObject(playerid, 1, modelid[1], PlayerObject[playerid][1][poBoneId],PlayerObject[playerid][1][poPosX],PlayerObject[playerid][1][poPosY],PlayerObject[playerid][1][poPosZ],PlayerObject[playerid][1][poRotX],PlayerObject[playerid][1][poRotY],PlayerObject[playerid][1][poRotZ],PlayerObject[playerid][1][poScaleX],PlayerObject[playerid][1][poScaleY],PlayerObject[playerid][1][poScaleZ],PlayerObject[playerid][1][poColor1],PlayerObject[playerid][1][poColor2]);
+	if( PlayerObject[playerid][1][poModelid] != -1 && !IsPlayerAttachedObjectSlotUsed(playerid, 1) && PlayerObject[playerid][1][poPlaced]) {
+		PlayerObject[playerid][1][poPlaced] = true;
+		SetPlayerAttachedObject(playerid, 1, PlayerObject[playerid][1][poModelid], PlayerObject[playerid][1][poBoneId],PlayerObject[playerid][1][poPosX],PlayerObject[playerid][1][poPosY],PlayerObject[playerid][1][poPosZ],PlayerObject[playerid][1][poRotX],PlayerObject[playerid][1][poRotY],PlayerObject[playerid][1][poRotZ],PlayerObject[playerid][1][poScaleX],PlayerObject[playerid][1][poScaleY],PlayerObject[playerid][1][poScaleZ],PlayerObject[playerid][1][poColor1],PlayerObject[playerid][1][poColor2]);
 	}
 	
-	if( PlayerObject[playerid][2][poModelid] != -1 && !IsPlayerAttachedObjectSlotUsed(playerid, 2) ) {
-		PlayerObject[playerid][2][poPlaced] = 1;
-		SetPlayerAttachedObject(playerid, 2, modelid[2], PlayerObject[playerid][2][poBoneId],PlayerObject[playerid][2][poPosX],PlayerObject[playerid][2][poPosY],PlayerObject[playerid][2][poPosZ],PlayerObject[playerid][2][poRotX],PlayerObject[playerid][2][poRotY],PlayerObject[playerid][2][poRotZ],PlayerObject[playerid][2][poScaleX],PlayerObject[playerid][2][poScaleY],PlayerObject[playerid][2][poScaleZ],PlayerObject[playerid][2][poColor1],PlayerObject[playerid][2][poColor2]);
+	if( PlayerObject[playerid][2][poModelid] != -1 && !IsPlayerAttachedObjectSlotUsed(playerid, 2) && PlayerObject[playerid][2][poPlaced]) {
+		PlayerObject[playerid][2][poPlaced] = true;
+		SetPlayerAttachedObject(playerid, 2, PlayerObject[playerid][2][poModelid], PlayerObject[playerid][2][poBoneId],PlayerObject[playerid][2][poPosX],PlayerObject[playerid][2][poPosY],PlayerObject[playerid][2][poPosZ],PlayerObject[playerid][2][poRotX],PlayerObject[playerid][2][poRotY],PlayerObject[playerid][2][poRotZ],PlayerObject[playerid][2][poScaleX],PlayerObject[playerid][2][poScaleY],PlayerObject[playerid][2][poScaleZ],PlayerObject[playerid][2][poColor1],PlayerObject[playerid][2][poColor2]);
 	}
 	
-	if( PlayerObject[playerid][3][poModelid] != -1 && !IsPlayerAttachedObjectSlotUsed(playerid, 3) ) {
-		PlayerObject[playerid][3][poPlaced] = 1;
-		SetPlayerAttachedObject(playerid, 3,modelid[3], PlayerObject[playerid][3][poBoneId],PlayerObject[playerid][3][poPosX],PlayerObject[playerid][3][poPosY],PlayerObject[playerid][3][poPosZ],PlayerObject[playerid][3][poRotX],PlayerObject[playerid][3][poRotY],PlayerObject[playerid][3][poRotZ],PlayerObject[playerid][3][poScaleX],PlayerObject[playerid][3][poScaleY],PlayerObject[playerid][3][poScaleZ],PlayerObject[playerid][3][poColor1],PlayerObject[playerid][3][poColor2]);
+	if( PlayerObject[playerid][3][poModelid] != -1 && !IsPlayerAttachedObjectSlotUsed(playerid, 3) && PlayerObject[playerid][3][poPlaced]) {
+		PlayerObject[playerid][3][poPlaced] = true;
+		SetPlayerAttachedObject(playerid, 3, PlayerObject[playerid][3][poModelid], PlayerObject[playerid][3][poBoneId],PlayerObject[playerid][3][poPosX],PlayerObject[playerid][3][poPosY],PlayerObject[playerid][3][poPosZ],PlayerObject[playerid][3][poRotX],PlayerObject[playerid][3][poRotY],PlayerObject[playerid][3][poRotZ],PlayerObject[playerid][3][poScaleX],PlayerObject[playerid][3][poScaleY],PlayerObject[playerid][3][poScaleZ],PlayerObject[playerid][3][poColor1],PlayerObject[playerid][3][poColor2]);
 	}
 	
-	if( PlayerObject[playerid][4][poModelid] != -1 && !IsPlayerAttachedObjectSlotUsed(playerid, 4) ) {
-		PlayerObject[playerid][4][poPlaced] = 1;
-		SetPlayerAttachedObject(playerid, 4, modelid[4], PlayerObject[playerid][4][poBoneId],PlayerObject[playerid][4][poPosX],PlayerObject[playerid][4][poPosY],PlayerObject[playerid][4][poPosZ],PlayerObject[playerid][4][poRotX],PlayerObject[playerid][4][poRotY],PlayerObject[playerid][4][poRotZ],PlayerObject[playerid][4][poScaleX],PlayerObject[playerid][4][poScaleY],PlayerObject[playerid][4][poScaleZ],PlayerObject[playerid][4][poColor1],PlayerObject[playerid][4][poColor2]);
+	if( PlayerObject[playerid][4][poModelid] != -1 && !IsPlayerAttachedObjectSlotUsed(playerid, 4) && PlayerObject[playerid][4][poPlaced]) {
+		PlayerObject[playerid][4][poPlaced] = true;
+		SetPlayerAttachedObject(playerid, 4, PlayerObject[playerid][4][poModelid], PlayerObject[playerid][4][poBoneId],PlayerObject[playerid][4][poPosX],PlayerObject[playerid][4][poPosY],PlayerObject[playerid][4][poPosZ],PlayerObject[playerid][4][poRotX],PlayerObject[playerid][4][poRotY],PlayerObject[playerid][4][poRotZ],PlayerObject[playerid][4][poScaleX],PlayerObject[playerid][4][poScaleY],PlayerObject[playerid][4][poScaleZ],PlayerObject[playerid][4][poColor1],PlayerObject[playerid][4][poColor2]);
 	}
 	
-	if( PlayerObject[playerid][5][poModelid] != -1 && !IsPlayerAttachedObjectSlotUsed(playerid, 5) ) {
-		PlayerObject[playerid][5][poPlaced] = 1;
-		SetPlayerAttachedObject(playerid, 5, modelid[5], PlayerObject[playerid][5][poBoneId],PlayerObject[playerid][5][poPosX],PlayerObject[playerid][5][poPosY],PlayerObject[playerid][5][poPosZ],PlayerObject[playerid][5][poRotX],PlayerObject[playerid][5][poRotY],PlayerObject[playerid][5][poRotZ],PlayerObject[playerid][5][poScaleX],PlayerObject[playerid][5][poScaleY],PlayerObject[playerid][5][poScaleZ],PlayerObject[playerid][5][poColor1],PlayerObject[playerid][5][poColor2]);
+	if( PlayerObject[playerid][5][poModelid] != -1 && !IsPlayerAttachedObjectSlotUsed(playerid, 5) && PlayerObject[playerid][5][poPlaced]) {
+		PlayerObject[playerid][5][poPlaced] = true;
+		SetPlayerAttachedObject(playerid, 5, PlayerObject[playerid][5][poModelid], PlayerObject[playerid][5][poBoneId],PlayerObject[playerid][5][poPosX],PlayerObject[playerid][5][poPosY],PlayerObject[playerid][5][poPosZ],PlayerObject[playerid][5][poRotX],PlayerObject[playerid][5][poRotY],PlayerObject[playerid][5][poRotZ],PlayerObject[playerid][5][poScaleX],PlayerObject[playerid][5][poScaleY],PlayerObject[playerid][5][poScaleZ],PlayerObject[playerid][5][poColor1],PlayerObject[playerid][5][poColor2]);
 	}
 	
-	if( PlayerObject[playerid][6][poModelid] != -1 && !IsPlayerAttachedObjectSlotUsed(playerid, 6) ) {
-		PlayerObject[playerid][6][poPlaced] = 1;
-		SetPlayerAttachedObject(playerid, 6, modelid[6], PlayerObject[playerid][6][poBoneId],PlayerObject[playerid][6][poPosX],PlayerObject[playerid][6][poPosY],PlayerObject[playerid][6][poPosZ],PlayerObject[playerid][6][poRotX],PlayerObject[playerid][6][poRotY],PlayerObject[playerid][6][poRotZ],PlayerObject[playerid][6][poScaleX],PlayerObject[playerid][6][poScaleY],PlayerObject[playerid][6][poScaleZ],PlayerObject[playerid][6][poColor1],PlayerObject[playerid][6][poColor2]);
+	if( PlayerObject[playerid][6][poModelid] != -1 && !IsPlayerAttachedObjectSlotUsed(playerid, 6) && PlayerObject[playerid][6][poPlaced]) {
+		PlayerObject[playerid][6][poPlaced] = true;
+		SetPlayerAttachedObject(playerid, 6, PlayerObject[playerid][6][poModelid], PlayerObject[playerid][6][poBoneId],PlayerObject[playerid][6][poPosX],PlayerObject[playerid][6][poPosY],PlayerObject[playerid][6][poPosZ],PlayerObject[playerid][6][poRotX],PlayerObject[playerid][6][poRotY],PlayerObject[playerid][6][poRotZ],PlayerObject[playerid][6][poScaleX],PlayerObject[playerid][6][poScaleY],PlayerObject[playerid][6][poScaleZ],PlayerObject[playerid][6][poColor1],PlayerObject[playerid][6][poColor2]);
 	}
 	return 1;
 }
@@ -881,22 +878,11 @@ stock ResetObjectsVariables(playerid)
 	return 1;
 }
 
-stock ResetPlayerObjects(playerid)
-{
-	for(new i=0;i<MAX_CUSTOMIZED_OBJECTS;i++)
-	{
-		if(IsPlayerAttachedObjectSlotUsed(playerid, i))
-			RemovePlayerAttachedObject(playerid, i);
-		PlayerObject[playerid][i][poPlaced] = 0;
-	}
-	return 1;
-}
-
 stock ResetObjectEnum(playerid, slotid)
 {
 	PlayerObject[playerid][slotid][poModelid] = -1;
 	PlayerObject[playerid][slotid][poBoneId] 	= 0;
-	PlayerObject[playerid][slotid][poPlaced] 	= 0;
+	PlayerObject[playerid][slotid][poPlaced] 	= false;
 				
 	PlayerObject[playerid][slotid][poPosX] 	= 0.0;
 	PlayerObject[playerid][slotid][poPosY] 	= 0.0;
@@ -924,6 +910,7 @@ stock ResetObjectEnum(playerid, slotid)
 	##    ## ##     ## ##       ##       ##     ## ##     ## ##    ## ##   ##  ##    ## 
 	 ######  ##     ## ######## ######## ########  ##     ##  ######  ##    ##  ######  
 */
+
 forward OnPlayerObjectsLoad(playerid);
 public OnPlayerObjectsLoad(playerid)
 {
@@ -952,9 +939,7 @@ public OnPlayerObjectsLoad(playerid)
 			cache_get_value_name_int(i, 	"color2"	, PlayerObject[playerid][i][poColor2]);
 		}
 	}
-	ResetPlayerObjects(playerid);
-	// Kod logina da se stvaraju objekti
-	//SetPlayerObjects(playerid);
+	SetPlayerObjects(playerid);
 	return 1;
 }
 
@@ -978,9 +963,11 @@ public OnPlayerObjectInsert(playerid, slot)
 
 hook OnPlayerDeath(playerid, killerid, reason)
 {
-	for(new i = 0; i < 7; i++)
-	    PlayerObject[playerid][i][poPlaced] = 0;
-    
+	for(new i = 0; i < MAX_CUSTOMIZED_OBJECTS; i++)
+	{
+	    PlayerObject[playerid][i][poPlaced] = false;
+		SaveObjectSlot(playerid, i);
+	}
     return 1;
 }
 
@@ -1286,7 +1273,7 @@ public OnPlayerEditAttachedObject(playerid, response, index, modelid, boneid, Fl
 		if(Bit2_Get(gr_TipEdita, playerid) == 1) { //Kupnja	
 	        PlayerObject[playerid][index][poModelid] 	= modelid;
 			PlayerObject[playerid][index][poBoneId] 	= boneid;
-			PlayerObject[playerid][index][poPlaced] 	= 1;
+			PlayerObject[playerid][index][poPlaced] 	= true;
 						
 	        PlayerObject[playerid][index][poPosX] 		= fOffsetX;
 	        PlayerObject[playerid][index][poPosY]		= fOffsetY;
@@ -1319,7 +1306,7 @@ public OnPlayerEditAttachedObject(playerid, response, index, modelid, boneid, Fl
 						
 			PlayerObject[playerid][index][poModelid] 	= modelid;
 			PlayerObject[playerid][index][poBoneId] 	= boneid;
-			PlayerObject[playerid][index][poPlaced] 	= 1;
+			PlayerObject[playerid][index][poPlaced] 	= true;
 			
 	        PlayerObject[playerid][index][poPosX] 		= fOffsetX;
 	        PlayerObject[playerid][index][poPosY] 		= fOffsetY;
@@ -1645,10 +1632,11 @@ CMD:objects(playerid, params[])
 	    if (sscanf(params, "s[16]i", item, izbor)) return SendClientMessage(playerid, COLOR_WHITE, "KORISTENJE: /objects attach [0-6]");
 		if(izbor < 0 || izbor > 6) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Index objekta ne moze biti manji od 0 i veci od 6!");
 		if(IsPlayerAttachedObjectSlotUsed(playerid, izbor)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Vec postoji nekakav objekt na tom mjestu!");
-		if(PlayerObject[playerid][izbor][poPlaced] == 1) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Vec postoji nekakav objekt na tom mjestu!");
+		if(PlayerObject[playerid][izbor][poPlaced]) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Vec postoji nekakav objekt na tom mjestu!");
 		if(PlayerObject[playerid][izbor][poModelid] == -1) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate objekt pod tim slotom!");
 		
-		PlayerObject[playerid][izbor][poPlaced] = 1;
+		PlayerObject[playerid][izbor][poPlaced] = true;
+		SaveObjectSlot(playerid, izbor);
 		new attachmodelid = PlayerObject[playerid][izbor][poModelid];
 		SetPlayerAttachedObject(playerid, izbor, attachmodelid, PlayerObject[playerid][izbor][poBoneId],PlayerObject[playerid][izbor][poPosX],PlayerObject[playerid][izbor][poPosY],PlayerObject[playerid][izbor][poPosZ],PlayerObject[playerid][izbor][poRotX],PlayerObject[playerid][izbor][poRotY],PlayerObject[playerid][izbor][poRotZ],PlayerObject[playerid][izbor][poScaleX],PlayerObject[playerid][izbor][poScaleY],PlayerObject[playerid][izbor][poScaleZ],PlayerObject[playerid][izbor][poColor1],PlayerObject[playerid][izbor][poColor2]);
 		SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "Stavili ste objekt, mozete ga skinuti s /objects detach");
@@ -1658,9 +1646,10 @@ CMD:objects(playerid, params[])
         if (sscanf(params, "s[16]i", item, izbor)) return SendClientMessage(playerid, COLOR_WHITE, "KORISTENJE: /objects detach [0-6]");
 		if(izbor < 0 || izbor > 6) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Index objekta ne moze biti manji od 0 i veci od 6!");
 		if(!IsPlayerAttachedObjectSlotUsed(playerid, izbor)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne postoji nikakav objekt na tom mjestu!");
-		if(PlayerObject[playerid][izbor][poPlaced] == 0) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne postoji nikakav objekt na tom mjestu!");
+		if(!PlayerObject[playerid][izbor][poPlaced]) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne postoji nikakav objekt na tom mjestu!");
 		if(PlayerObject[playerid][izbor][poModelid] == -1) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate objekt pod tim slotom!");
-		PlayerObject[playerid][izbor][poPlaced] = 0;
+		PlayerObject[playerid][izbor][poPlaced] = false;
+		SaveObjectSlot(playerid, izbor);
 		RemovePlayerAttachedObject(playerid, izbor);
 		SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "Skinuli ste objekt, mozete ga opet staviti s /objects attach");
 	}
@@ -1671,14 +1660,14 @@ CMD:objects(playerid, params[])
         if (sscanf(params, "s[16]s[6]i", item, pick, izbor)) return SendClientMessage(playerid, COLOR_WHITE, "KORISTENJE: /objects edit [color/edit][0-6]");
 		if(izbor < 0 || izbor > 6) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Index objekta ne moze biti manji od 0 i veci od 6!");
 		if(!IsPlayerAttachedObjectSlotUsed(playerid, izbor)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne postoji nikakav objekt na tom mjestu!");
-		if(PlayerObject[playerid][izbor][poPlaced] == 0) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne postoji nikakav objekt na tom mjestu!");
+		if(!PlayerObject[playerid][izbor][poPlaced]) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne postoji nikakav objekt na tom mjestu!");
 		if(PlayerObject[playerid][izbor][poModelid] == -1) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate objekt pod tim slotom!");
 		
 		if( !strcmp(pick, "edit", true) ) {
 			EditAttachedObject(playerid, izbor);
 			Bit2_Set(gr_TipEdita, playerid, 2);
 			
-			SendMessage(playerid, MESSAGE_TYPE_INFO, "Usli ste u editanje objekta.Mozete mjenjati poziciju, velicinu i ostalo.");
+			SendMessage(playerid, MESSAGE_TYPE_INFO, "Usli ste u editanje objekta. Mozete mjenjati poziciju, velicinu i ostalo.");
 			SendClientMessage(playerid, COLOR_YELLOW, "HINT: KORISTENJE {FFFF00}~k~~PED_SPRINT~{FFFFFF} da okrenes kameru.");
 		}
 		else if( !strcmp(pick, "color", true) ) {
@@ -1705,7 +1694,7 @@ CMD:objects(playerid, params[])
 		if(izbor < 0 || izbor > 6) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Index objekta ne moze biti manji od 0 i veci od 6!");
 		if(!IsPlayerAttachedObjectSlotUsed(playerid, izbor)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne postoji nikakav objekt na tom mjestu!");
 		
-		if(PlayerObject[playerid][izbor][poPlaced] == 0) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne postoji nikakav objekt na tom mjestu!");
+		if(!PlayerObject[playerid][izbor][poPlaced]) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne postoji nikakav objekt na tom mjestu!");
 		if(PlayerObject[playerid][izbor][poModelid] == -1) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate objekt pod tim slotom!");
 		
 		if(strcmp(bone,"Spine",true) == 0)
