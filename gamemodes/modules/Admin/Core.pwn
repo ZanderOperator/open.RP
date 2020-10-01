@@ -5583,7 +5583,7 @@ CMD:return(playerid, params[])
     if( PlayerInfo[playerid][pAdmin] < 1 ) return SendClientMessage(playerid, COLOR_RED, "Niste ovlasteni za koristenje ove komande!");
 	if( !Bit1_Get( a_PlayerReconed, playerid ) ) return SendClientMessage(playerid, COLOR_RED, "Ovu komandu mozete koristiti samo jednom!");
 	SendClientMessage(playerid, COLOR_RED, "[ ! ] Uspjesno ste vratili oruzja i objekte koje ste imali.");
-	ResetPlayerObjects(playerid);
+	SetPlayerObjects(playerid);
 	AC_SetPlayerWeapons(playerid);
 	SetPlayerArmour(playerid, PlayerInfo[playerid][pArmour]);
 	SetPlayerSkin(playerid, oldskin[playerid]);

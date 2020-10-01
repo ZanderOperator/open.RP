@@ -1,7 +1,7 @@
 /*
 ===========================================================================================
 
-	City of Angels Role Play v18.5.3.
+	City of Angels Role Play v18.5.5.
 	Authors:  cofi(Jacob_Williams), Logan, Woo, B-Matt, kiddo, ShadY, hodza, Runner, Khawaja
 	(c) 2020 City of Angels - All Rights Reserved.
 	Web: www.cityofangels-roleplay.com
@@ -44,7 +44,7 @@
 #undef MAX_VEHICLES
 #define MAX_VEHICLES                      		(1000)
 
-// Script settings
+// Script Mode settings
 //#define COA_TEST
 
 /*
@@ -210,7 +210,7 @@ native WP_Hash(buffer[], len, const str[]);
 #define HOSTNAME 								"CoA.RP [0.3DL] - Summer Update"
 #define COPYRIGHT                           	"Copyright (c) 2020 City of Angels Roleplay"
 #define WEB_URL									"forum.cityofangels-roleplay.com"
-#define SCRIPT_VERSION							"CoA RP v18.5.3." 
+#define SCRIPT_VERSION							"CoA RP v18.5.5."
 #define DEV_NAME   								"Woo-Logan"
 
 // Macros
@@ -791,7 +791,7 @@ enum PLAYER_OBJECT_DATA
 	poSQLID,
 	poModelid,
 	poBoneId,
-	poPlaced,
+	bool:poPlaced,
 	Float:poPosX,
 	Float:poPosY,
 	Float:poPosZ,
@@ -2603,7 +2603,7 @@ ResetPlayerVariables(playerid)
 		PlayerObject[ playerid ][i][poSQLID]		= -1;
 		PlayerObject[ playerid ][i][ poModelid ]	= -1;
 		PlayerObject[ playerid ][i][ poBoneId ]		= 0;
-		PlayerObject[ playerid ][i][ poPlaced ]		= 0;
+		PlayerObject[ playerid ][i][ poPlaced ]		= false;
 		PlayerObject[ playerid ][i][ poPosX ]   	= 0.0;
 		PlayerObject[ playerid ][i][ poPosY ]		= 0.0;
 		PlayerObject[ playerid ][i][ poPosZ ]		= 0.0;
@@ -2685,7 +2685,6 @@ ResetPlayerVariables(playerid)
 	DestroySpeedoTextDraws(playerid);
 	//ResetPlayerDrivingVars(playerid);
 	//ResetPlayerFishingVars(playerid);
-	//EmptyPlayerInventory(playerid);
 	DisablePlayerKeyInput(playerid);
 	ResetPlayerRace(playerid, false);
 	ResetPlayerRacing(playerid);
@@ -2921,7 +2920,7 @@ public OnGameModeInit()
 	cseconds        = 0;
 	regenabled		= 1;
 
-	// YCMD
+	// Alternative Commands
 	Command_AddAltNamed("whisper"		, 	"w");
 	Command_AddAltNamed("hangup"		, 	"h");
 	Command_AddAltNamed("speakerphone"	, 	"sf");
@@ -2936,7 +2935,6 @@ public OnGameModeInit()
 	Command_AddAltNamed("animations"	, 	"anims");
 	Command_AddAltNamed("cryptotext"	, 	"ct");
     Command_AddAltNamed("experience"	, 	"exp");
-	//Command_AddAltNamed("inventory"		, 	"inv");
 	Command_AddAltNamed("radio"			, 	"r");
 	Command_AddAltNamed("radiolow"		, 	"rlow");
 	Command_AddAltNamed("beanbag"		, 	"bb");
@@ -2987,10 +2985,10 @@ public OnGameModeInit()
 	LoadBizz();
 	InitPokerTables();
 	CreateBaskets(); // Update - BasketballNew.pwn
-	//Load_InventoryDrop();
 	PhoneTDVars();
 	CreateNewsTextDraws();
 	LoadServerJobs();
+	LoadUpdateList();
 	
 	//Initilazing
 	//InitRuletTables();
@@ -3004,12 +3002,9 @@ public OnGameModeInit()
 	SendRconCommand("messageholelimit 9000");
 	SendRconCommand("ackslimit 11000");
 
-	new
-		tmphour, tmpmins, tmpsecs;
+	new tmphour, tmpmins, tmpsecs;
 	GetServerTime(tmphour, tmpmins, tmpsecs);
 	SetWorldTime(tmphour);
-
-	LoadUpdateList();
 	return 1;
 }
 
@@ -3610,7 +3605,7 @@ public OnPlayerSpawn(playerid)
 			Streamer_UpdateEx(playerid, PlayerInfo[playerid][pDeath][0], PlayerInfo[playerid][pDeath][1], PlayerInfo[playerid][pDeath][2], PlayerInfo[playerid][ pDeathVW], PlayerInfo[playerid][pDeathInt]);
 
 			SendClientMessage(playerid, COLOR_LIGHTRED, "Vi ste u death stanju. Vraceni ste na lokaciju gdje ste ubijeni.**");
-			SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "** Ne mozete koristiti /l chat i /me komandu. Samo /c, /ame i /do radi RP-a **");
+			SendMessage(playerid, MESSAGE_TYPE_ERROR, "** Ne mozete koristiti /l chat i /me komandu. Samo /c, /ame i /do radi RP-a **");
 
 			Bit1_Set( gr_MaskUse, playerid, false );
 			if( PlayerInfo[ playerid ][ pMaskID ])
