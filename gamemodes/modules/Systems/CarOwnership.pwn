@@ -4028,12 +4028,14 @@ hook OnPlayerClickPlayerTD(playerid, PlayerText:playertextid)
 			{
 				case VEH_DEALER_CARS:
 				{
-					if(CalculatePlayerBuyMoney(playerid, BUY_TYPE_VEHICLE) < LandVehicles[PreviewType[playerid]][viPrice]) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nemas dovoljno novca za kupovinu ovog vozila!");
+					if(CalculatePlayerBuyMoney(playerid, BUY_TYPE_VEHICLE) < LandVehicles[PreviewType[playerid]][viPrice]) 
+						return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nemas dovoljno novca za kupovinu ovog vozila!");
 					buyprice = LandVehicles[PreviewType[playerid]][viPrice];
 				}
 				case VEH_DEALER_BOAT:
 				{
-					if(CalculatePlayerBuyMoney(playerid, BUY_TYPE_VEHICLE) < SeaVehicles[PreviewType[playerid]][viPrice]) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nemas dovoljno novca za kupovinu ovog vozila!");
+					if(CalculatePlayerBuyMoney(playerid, BUY_TYPE_VEHICLE) < SeaVehicles[PreviewType[playerid]][viPrice]) 
+						return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nemas dovoljno novca za kupovinu ovog vozila!");
 					buyprice = SeaVehicles[PreviewType[playerid]][viPrice];
 				}
 				case VEH_DEALER_PLANE:

@@ -91,9 +91,6 @@ timer SetPlayerCrash[6000](playerid)
 		GetPlayerPreviousInfo(playerid);
 		LearnPlayer(playerid, 1);
 	}
-
-
-
 	if(strcmp(PlayerInfo[playerid][pLastUpdateVer], SCRIPT_VERSION, true) != 0 && !isnull(PlayerInfo[playerid][pAdminMsg]) && PlayerInfo[playerid][pAdmMsgConfirm] == 0)
 	{
 		va_SendClientMessage(playerid, COLOR_LIGHTBLUE, "[City of Angels]: "COL_WHITE"Server je updatean na verziju "COL_LIGHTBLUE"%s"COL_WHITE", za vise informacija - /update.", SCRIPT_VERSION);

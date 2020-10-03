@@ -4574,7 +4574,7 @@ CMD:weatherall(playerid, params[])
 	
 	SendClientMessage(playerid, COLOR_GREY, "Vrijeme postavljeno svima!");
 	format(globalstring, 128, "AdmWarn: %s je stavio vrijeme ID %d", GetName(playerid,false), weather);
-	Prognozasys = weather;
+	WeatherSys = weather;
 	SendAdminMessage(COLOR_RED, globalstring);
 	return 1;
 }
