@@ -113,6 +113,113 @@ public BasketBallPickup(playerid)
 	}
 }
 
+Function: BallOutTimer()
+{	
+	// East Los Santos tereni
+	if(IsValidObject(BasketInfo[0][lopta]) && BasketInfo[0][hasball] == NONE)
+	{
+		new Float:otX, Float:otY, Float:otZ;
+		GetObjectPos(BasketInfo[0][lopta], otX, otY, otZ);
+		if(otX < 2306.7295)
+		{
+			ClearBasketAnim(0);
+			BasketInfo[0][hasball] = NONE;
+			BasketInfo[0][LoptaState] = 0;
+			BasketInfo[0][bShooter] = NONE;
+			BasketInfo[0][Dodavac] = NONE;
+			SetObjectPos(BasketInfo[0][lopta], 2306.7295, otY, 24.50041);
+		}
+		if(otX > 2326.7322)
+		{
+			ClearBasketAnim(0);
+			BasketInfo[0][hasball] = NONE;
+			BasketInfo[0][LoptaState] = 0;
+			BasketInfo[0][bShooter] = NONE;
+			BasketInfo[0][Dodavac] = NONE;
+			SetObjectPos(BasketInfo[0][lopta], 2326.7322, otY, 24.50041);
+		}
+		if(otY < -1542.3517)
+		{
+			ClearBasketAnim(0);
+			BasketInfo[0][hasball] = NONE;
+			BasketInfo[0][LoptaState] = 0;
+			BasketInfo[0][bShooter] = NONE;
+			BasketInfo[0][Dodavac] = NONE;
+			SetObjectPos(BasketInfo[0][lopta], otX, -1542.3517, 24.50041);
+		}
+		if(otY > -1513.5808)
+		{
+			ClearBasketAnim(0);
+			BasketInfo[0][hasball] = NONE;
+			BasketInfo[0][LoptaState] = 0;
+			BasketInfo[0][bShooter] = NONE;
+			BasketInfo[0][Dodavac] = NONE;
+			SetObjectPos(BasketInfo[0][lopta], otX, -1513.5808, 24.50041);
+		}
+		if(otZ < 24.50041)
+		{
+			ClearBasketAnim(0);
+			BasketInfo[0][hasball] = NONE;
+			BasketInfo[0][LoptaState] = 0;
+			BasketInfo[0][bShooter] = NONE;
+			BasketInfo[0][Dodavac] = NONE;
+			SetObjectPos(BasketInfo[0][lopta], otX, otY, 24.50041);
+		}
+	}
+	// Sevilla tereni
+	if(IsValidObject(BasketInfo[2][lopta]) && BasketInfo[2][hasball] == NONE)
+	{
+		new Float:otX2, Float:otY2, Float:otZ2;
+		GetObjectPos(BasketInfo[2][lopta], otX2, otY2, otZ2);
+		if(otX2 < 2767.2166)
+		{
+			ClearBasketAnim(2);
+			BasketInfo[2][hasball] = NONE;
+			BasketInfo[2][LoptaState] = 0;
+			BasketInfo[2][bShooter] = NONE;
+			BasketInfo[2][Dodavac] = NONE;
+			SetObjectPos(BasketInfo[2][lopta], 2767.2166, otY2, 12.7144);
+		}
+		if(otX2 > 2796.4238)
+		{
+			ClearBasketAnim(2);
+			BasketInfo[2][hasball] = NONE;
+			BasketInfo[2][LoptaState] = 0;
+			BasketInfo[2][bShooter] = NONE;
+			BasketInfo[2][Dodavac] = NONE;
+			SetObjectPos(BasketInfo[2][lopta], 2796.4238, otY2, 12.7144);
+		}
+		if(otY2 > -2009.1941)
+		{
+			ClearBasketAnim(2);
+			BasketInfo[2][hasball] = NONE;
+			BasketInfo[2][LoptaState] = 0;
+			BasketInfo[2][bShooter] = NONE;
+			BasketInfo[2][Dodavac] = NONE;
+			SetObjectPos(BasketInfo[2][lopta], otX2, -2009.1941, 12.7144);
+		}
+		if(otY2 < -2029.6168)
+		{
+			ClearBasketAnim(2);
+			BasketInfo[2][hasball] = NONE;
+			BasketInfo[2][LoptaState] = 0;
+			BasketInfo[2][bShooter] = NONE;
+			BasketInfo[2][Dodavac] = NONE;
+			SetObjectPos(BasketInfo[2][lopta], otX2, -2029.6168, 12.7144);
+		}
+		if(otZ2 < 12.5)
+		{
+			ClearBasketAnim(2);
+			BasketInfo[2][hasball] = NONE;
+			BasketInfo[2][LoptaState] = 0;
+			BasketInfo[2][bShooter] = NONE;
+			BasketInfo[2][Dodavac] = NONE;
+			SetObjectPos(BasketInfo[2][lopta], otX2, otY2, 12.7144);
+		}
+	}
+	return 1;
+}
+
 hook OnObjectMoved(objectid)
 {
 	new found = 0, id;
@@ -314,114 +421,6 @@ stock ClearBasketAnim(basketid)
 			GetAnimationName(GetPlayerAnimationIndex(i), animlib, 32, animname, 32);
 			if(strcmp(animlib, "BSKTBALL", true) == 0)
 				ClearAnim(i);
-		}
-	}
-	return 1;
-}
-
-
-stock OutTimer()
-{	
-	// East Los Santos tereni
-	if(IsValidObject(BasketInfo[0][lopta]) && BasketInfo[0][hasball] == NONE)
-	{
-		new Float:otX, Float:otY, Float:otZ;
-		GetObjectPos(BasketInfo[0][lopta], otX, otY, otZ);
-		if(otX < 2306.7295)
-		{
-			ClearBasketAnim(0);
-			BasketInfo[0][hasball] = NONE;
-			BasketInfo[0][LoptaState] = 0;
-			BasketInfo[0][bShooter] = NONE;
-			BasketInfo[0][Dodavac] = NONE;
-			SetObjectPos(BasketInfo[0][lopta], 2306.7295, otY, 24.50041);
-		}
-		if(otX > 2326.7322)
-		{
-			ClearBasketAnim(0);
-			BasketInfo[0][hasball] = NONE;
-			BasketInfo[0][LoptaState] = 0;
-			BasketInfo[0][bShooter] = NONE;
-			BasketInfo[0][Dodavac] = NONE;
-			SetObjectPos(BasketInfo[0][lopta], 2326.7322, otY, 24.50041);
-		}
-		if(otY < -1542.3517)
-		{
-			ClearBasketAnim(0);
-			BasketInfo[0][hasball] = NONE;
-			BasketInfo[0][LoptaState] = 0;
-			BasketInfo[0][bShooter] = NONE;
-			BasketInfo[0][Dodavac] = NONE;
-			SetObjectPos(BasketInfo[0][lopta], otX, -1542.3517, 24.50041);
-		}
-		if(otY > -1513.5808)
-		{
-			ClearBasketAnim(0);
-			BasketInfo[0][hasball] = NONE;
-			BasketInfo[0][LoptaState] = 0;
-			BasketInfo[0][bShooter] = NONE;
-			BasketInfo[0][Dodavac] = NONE;
-			SetObjectPos(BasketInfo[0][lopta], otX, -1513.5808, 24.50041);
-		}
-		if(otZ < 24.50041)
-		{
-			ClearBasketAnim(0);
-			BasketInfo[0][hasball] = NONE;
-			BasketInfo[0][LoptaState] = 0;
-			BasketInfo[0][bShooter] = NONE;
-			BasketInfo[0][Dodavac] = NONE;
-			SetObjectPos(BasketInfo[0][lopta], otX, otY, 24.50041);
-		}
-	}
-	// Sevilla tereni
-	if(IsValidObject(BasketInfo[2][lopta]) && BasketInfo[2][hasball] == NONE)
-	{
-		new Float:otX2, Float:otY2, Float:otZ2;
-		GetObjectPos(BasketInfo[2][lopta], otX2, otY2, otZ2);
-		if(otX2 < 2767.2166)
-		{
-			ClearBasketAnim(2);
-			BasketInfo[2][hasball] = NONE;
-			BasketInfo[2][LoptaState] = 0;
-			BasketInfo[2][bShooter] = NONE;
-			BasketInfo[2][Dodavac] = NONE;
-			SetObjectPos(BasketInfo[2][lopta], 2767.2166, otY2, 12.7144);
-		}
-		if(otX2 > 2796.4238)
-		{
-			ClearBasketAnim(2);
-			BasketInfo[2][hasball] = NONE;
-			BasketInfo[2][LoptaState] = 0;
-			BasketInfo[2][bShooter] = NONE;
-			BasketInfo[2][Dodavac] = NONE;
-			SetObjectPos(BasketInfo[2][lopta], 2796.4238, otY2, 12.7144);
-		}
-		if(otY2 > -2009.1941)
-		{
-			ClearBasketAnim(2);
-			BasketInfo[2][hasball] = NONE;
-			BasketInfo[2][LoptaState] = 0;
-			BasketInfo[2][bShooter] = NONE;
-			BasketInfo[2][Dodavac] = NONE;
-			SetObjectPos(BasketInfo[2][lopta], otX2, -2009.1941, 12.7144);
-		}
-		if(otY2 < -2029.6168)
-		{
-			ClearBasketAnim(2);
-			BasketInfo[2][hasball] = NONE;
-			BasketInfo[2][LoptaState] = 0;
-			BasketInfo[2][bShooter] = NONE;
-			BasketInfo[2][Dodavac] = NONE;
-			SetObjectPos(BasketInfo[2][lopta], otX2, -2029.6168, 12.7144);
-		}
-		if(otZ2 < 12.5)
-		{
-			ClearBasketAnim(2);
-			BasketInfo[2][hasball] = NONE;
-			BasketInfo[2][LoptaState] = 0;
-			BasketInfo[2][bShooter] = NONE;
-			BasketInfo[2][Dodavac] = NONE;
-			SetObjectPos(BasketInfo[2][lopta], otX2, otY2, 12.7144);
 		}
 	}
 	return 1;
