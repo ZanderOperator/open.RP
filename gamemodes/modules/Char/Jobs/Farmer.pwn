@@ -430,7 +430,8 @@ public Combine(playerid)
 		va_SendClientMessage(playerid, COLOR_RED, "[ ! ] Zaradio si $%d, placa ti je sjela na racun.", Profit);
 		ResetFarmerVars(playerid);
 		UpgradePlayerSkill(playerid, 0);
-		BudgetToPayDayMoney(playerid, Profit);
+		BudgetToPlayerBankMoney(playerid, Profit);
+		PlayerInfo[playerid][pPayDayMoney] += Profit;
 		
 		Log_Write("logfiles/farmerabjuzv2.txt", "(%s) %s{%d} je zavrsio posao s combineom te zaradio $%d.", 
 			ReturnDate(), 
@@ -779,7 +780,7 @@ CMD:milk(playerid, params[])
 	new
 		param[ 9 ];
 	if( sscanf( params, "s[9] ", param ) ) {
-		SendClientMessage(playerid, COLOR_RED, "USAGE: /milk [odabir]");
+		SendClientMessage(playerid, COLOR_RED, "[ ? ]: /milk [odabir]");
 		SendClientMessage(playerid, COLOR_GREY, "[ODABIR]: milking - transfer - store - take - put - check - sell - stop");
 		return 1;
 	}
@@ -839,7 +840,7 @@ CMD:milk(playerid, params[])
 		RemovePlayerAttachedObject(playerid, 9);
 		SetPlayerSpecialAction(playerid, 0);
 		new moneys = (MilkInfo[playerid][mLiters] * 150) + (GetPlayerSkillLevel(playerid, 0) * 20);
-		BudgetToPayDayMoney (playerid, moneys); // sjeda na radnu knjizicu
+		BudgetToPlayerBankMoney (playerid, moneys); // sjeda na radnu knjizicu
 		
 		Log_Write("logfiles/farmerabjuzv2.txt", "(%s) %s{%d} je zavrsio s poslom te prodao kanistar mljeka za $%d.", 
 			ReturnDate(), 
@@ -1025,7 +1026,8 @@ CMD:milk(playerid, params[])
 		TruckInfo[playerid][tXOffes] = 0.0;
 		TruckInfo[playerid][tYOffes] = 0.0;
 
-    	BudgetToPayDayMoney (playerid, moneys);
+    	BudgetToPlayerBankMoney (playerid, moneys);
+		PlayerInfo[playerid][pPayDayMoney] += moneys;
 		PlayerInfo[playerid][pFreeWorks] -= 5;
 		MilkInfo[playerid][mTransportCP] = 0;
 		MilkInfo[playerid][mFactoryCP] = 0;
@@ -1094,7 +1096,7 @@ CMD:seeds(playerid, params[])
 	new 
 		param[ 6 ];
 	if( sscanf(params, "s[6] ", param ) ) {
-		SendClientMessage(playerid, COLOR_RED, "USAGE: /seeds [odabir]");
+		SendClientMessage(playerid, COLOR_RED, "[ ? ]: /seeds [odabir]");
 		SendClientMessage(playerid, COLOR_GREY, "[ODABIR]: take - drop - check - put");
 		return 1;
 	}
@@ -1332,7 +1334,7 @@ CMD:crops(playerid, params[])
 	new
 		param[ 7 ];
 	if( sscanf( params, "s[7] ", param ) ) {
-		SendClientMessage(playerid, COLOR_RED, "USAGE: /crops [odabir]");
+		SendClientMessage(playerid, COLOR_RED, "[ ? ]: /crops [odabir]");
 	    SendClientMessage(playerid, COLOR_GREY, "[ODABIR]: drop - store - take - put - check - sell");
 		return 1;
 	}
@@ -1356,7 +1358,8 @@ CMD:crops(playerid, params[])
 		if( !SeedInfo[playerid][sPlantsNumber]) {
 			new moneys = SeedInfo[playerid][sStored] * 20 + (GetPlayerSkillLevel(playerid, 0) * 20);
 			PlayerInfo[playerid][pFreeWorks] -= 5;
-			BudgetToPayDayMoney (playerid, moneys); // sjeda novac na knjizicu
+			BudgetToPlayerBankMoney (playerid, moneys); // sjeda novac na knjizicu
+			PlayerInfo[playerid][pPayDayMoney] += moneys;
 			va_SendClientMessage(playerid, COLOR_RED, "[ ! ] Zaradio si $%d, placa ti je sjela na racun.", moneys);
 			ResetFarmerVars(playerid);
 			UpgradePlayerSkill(playerid, 0);
@@ -1555,7 +1558,8 @@ CMD:crops(playerid, params[])
 		TruckInfo[playerid][tYOffes] = 0.0;
 		TruckInfo[playerid][tZOffes] = 0.0;
 
-    	BudgetToPayDayMoney (playerid, moneys); // novac iz proracuna ide na knjizicu
+    	BudgetToPlayerBankMoney (playerid, moneys); // novac iz proracuna ide na knjizicu
+		PlayerInfo[playerid][pPayDayMoney] += moneys;
 		PlayerInfo[playerid][pFreeWorks] -= 5;
 
 		SeedInfo[playerid][sTransportCP] = 0;
@@ -1627,7 +1631,7 @@ CMD:eggs(playerid, params[])
 	new 
 		param[ 8 ];
 	if( sscanf( params, "s[8] ", param ) ) {
-		SendClientMessage(playerid, COLOR_RED, "USAGE: /eggs [odabir]");
+		SendClientMessage(playerid, COLOR_RED, "[ ? ]: /eggs [odabir]");
 		SendClientMessage(playerid, COLOR_GREY, "[ODABIR]: collect - process - store - take - put - check - sell");
 		return 1;
 	}
@@ -1689,7 +1693,7 @@ CMD:eggs(playerid, params[])
 		RemovePlayerAttachedObject(playerid, 8);
 		SetPlayerSpecialAction(playerid, 0);
 		new Profit = EggInfo[playerid][eEggs]*(random(45)+70);
-		BudgetToPayDayMoney (playerid, Profit); // novac sjeda na radnu knjizicu iz proracuna
+		BudgetToPlayerBankMoney (playerid, Profit); // novac sjeda na radnu knjizicu iz proracuna
 		PlayerInfo[playerid][pFreeWorks] -= 3;
 		EggInfo[playerid][eStorageCP] = 0;
 		DisablePlayerCheckpoint(playerid);
@@ -1903,7 +1907,8 @@ CMD:eggs(playerid, params[])
 		TruckInfo[playerid][tYOffes] = 0.0;
 		TruckInfo[playerid][tZOffes] = 0.0;
 
-		BudgetToPayDayMoney (playerid, Profit); // novac sjeda na knjizicu iz proracuna
+		BudgetToPlayerBankMoney (playerid, Profit); // novac sjeda na knjizicu iz proracuna
+		PlayerInfo[playerid][pPayDayMoney] += Profit;
 		PlayerInfo[playerid][pFreeWorks] -= 5;
 		EggInfo[playerid][eTransportCP] = 0;
 		EggInfo[playerid][eFactoryCP] = 0;
@@ -1911,6 +1916,7 @@ CMD:eggs(playerid, params[])
 		DisablePlayerCheckpoint(playerid);
 		EggInfo[playerid][eTransporting] = 0;
 		va_SendClientMessage(playerid, COLOR_RED, "[ ! ] Zaradio si $%d, placa ti je sjela na racun.", Profit);
+	
 		ResetFarmerVars(playerid);
 		UpgradePlayerSkill(playerid, 0);
 		
@@ -1932,7 +1938,7 @@ CMD:transport(playerid, params[])
 	
     if( (PlayerInfo[playerid][pJob] != FARMER_ID)) return SendClientMessage( playerid, COLOR_RED, "Niste farmer!");
     if( PlayerInfo[playerid][pFreeWorks] < 5 ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne mozete vise raditi! Pricekajte payday.");
-	if (sscanf(params, "i", transportchoice)) return SendClientMessage(playerid, COLOR_RED, "USAGE: /transport [1(usjevi) / 2(mlijeko) / 3(jaja)]");
+	if (sscanf(params, "i", transportchoice)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /transport [1(usjevi) / 2(mlijeko) / 3(jaja)]");
 	if( SeedInfo[playerid][sTransporting] || MilkInfo[playerid][mTransporting] || EggInfo[playerid][eTransporting]) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Vec ste zapoceli sa transportiranjem!");
 	
 	switch(transportchoice)

@@ -891,7 +891,7 @@ CMD:products(playerid, params[]) {
 	new action[18],
 		biznis = PlayerInfo[playerid][pBizzKey];
 	if(sscanf(params, "s[18] ", action)) {
-		SendClientMessage(playerid, COLOR_RED, "USAGE: /products [opcije].");
+		SendClientMessage(playerid, COLOR_RED, "[ ? ]: /products [opcije].");
 		SendClientMessage(playerid, COLOR_RED, "[ ! ] warehouse, order, drop.");
 		SendClientMessage(playerid, COLOR_RED, "[ ! ] buypark, park, spawn, delete, buyveh, locate, storage.");
 		return 1;

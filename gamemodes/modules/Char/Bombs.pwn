@@ -184,7 +184,7 @@ CMD:bomb(playerid, params[])
 {
 	new
 		param[8];
-	if( sscanf( params, "s[8] ", param) ) return SendClientMessage(playerid, COLOR_RED, "USAGE: /bomb [buy/approve/plant]");
+	if( sscanf( params, "s[8] ", param) ) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /bomb [buy/approve/plant]");
 	if( !strcmp(param, "buy", true) ) {
 		if( !IsPlayerInRangeOfPoint(playerid, 8.0, 2116.0029, 182.7116, 0.4943) ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste blizu mjesta gdje se kupuju bombe!");
 		if( !Bit1_Get( r_BombAccept, playerid ) ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Morate traziti admina level 4+ za dopustenje!");
@@ -195,7 +195,7 @@ CMD:bomb(playerid, params[])
 		if( PlayerInfo[ playerid ][ pAdmin ] < 4 ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ovlasteni za koristenje ove komande!");
 		new 
 			giveplayerid;
-		if( sscanf(params, "s[8]u", param, giveplayerid) ) return SendClientMessage(playerid, COLOR_RED, "USAGE: /bomb approve [dio imena/playerid]");
+		if( sscanf(params, "s[8]u", param, giveplayerid) ) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /bomb approve [dio imena/playerid]");
 		if( giveplayerid == INVALID_PLAYER_ID ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nevaljan unos playerida!");
 		Bit1_Set( r_BombAccept, giveplayerid, true );
 		va_SendClientMessage(giveplayerid, COLOR_RED, "[ ! ] Admin %s vam je dozvolio postavljanje bombe!", GetName(playerid, false));
@@ -210,14 +210,14 @@ CMD:bomb(playerid, params[])
 			case BOMB_TYPE_C4_TIME: {
 				new
 					time;
-				if( sscanf( params, "s[8]i", param, time ) ) return SendClientMessage(playerid, COLOR_RED, "USAGE: /bomb plant [vrijeme (u sekundama)]");
+				if( sscanf( params, "s[8]i", param, time ) ) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /bomb plant [vrijeme (u sekundama)]");
 				if( time < MIN_BOMB_TIME || time > MAX_BOMB_TIME ) return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "Timer na bombi mora biti u rasponu od %d do %d.", MIN_BOMB_TIME, MAX_BOMB_TIME); 
 				CreateBomb(playerid, BOMB_TYPE_C4_TIME, time, INVALID_VEHICLE_ID);
 			}
 			case BOMB_TYPE_CAR: {
 				new
 					vehicle;
-				if( sscanf( params, "s[8]i", param, vehicle ) ) return SendClientMessage(playerid, COLOR_RED, "USAGE: /bomb plant [vehicleid]");
+				if( sscanf( params, "s[8]i", param, vehicle ) ) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /bomb plant [vehicleid]");
 				new	
 					Float:vPos[3];
 				GetVehiclePos(vehicle, vPos[0], vPos[1], vPos[2]);

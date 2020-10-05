@@ -422,7 +422,7 @@ public StartDeathCount(playerid)
 CMD:pickitem(playerid, params[])
 {
 	new str[32];
-	if(sscanf(params, "s[32]", str)) return SendClientMessage(playerid, COLOR_RED, "USAGE: /pickitem [weapon]");
+	if(sscanf(params, "s[32]", str)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /pickitem [weapon]");
 	if(PlayerInfo[playerid][pKilled] > 0)
 	    return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne mozes uzimat predmete sa poda dok si u death stanju.");
 	if(strcmp(str, "weapon", true) == 0)
@@ -439,7 +439,7 @@ CMD:pickitem(playerid, params[])
 		return 1;
     }
     else
-        SendClientMessage(playerid, COLOR_RED, "USAGE: /pickitem [weapon/money]");
+        SendClientMessage(playerid, COLOR_RED, "[ ? ]: /pickitem [weapon/money]");
 	return 1;
 }
 
@@ -447,18 +447,19 @@ CMD:alldamages(playerid, params[])
 {
 	new
 		damageString[ 160 ],
-		damageNameString[50],
-		motd[500],
-		damageLen = 0,
+		damageNameString[ 30 ],
+		motd[1024],
 		gplayerid = INVALID_PLAYER_ID;
 		
 	if (sscanf(params, "u", gplayerid))
 	{
-		SendClientMessage(playerid, COLOR_RED, "USAGE: /alldamages [PlayerID/DioImena]");
+		SendClientMessage(playerid, COLOR_RED, "[ ? ]: /alldamages [PlayerID/DioImena]");
 		return 1;
 	}
 	if( !IsPlayerConnected(gplayerid) ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Pogresan ID igraca/nick!!");
-	
+	if( !SafeSpawned[gplayerid]) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Igrac nije sigurno spawnan!");
+	if ( !PlayerInfo[gplayerid][pKilled] ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Igrac nije u Wounded/Death Modeu!");
+
 	new Float: pX, Float: pY, Float: pZ;
 	GetPlayerPos(gplayerid, pX, pY, pZ);
 	if(GetPlayerDistanceFromPoint(playerid, pX, pY, pZ) >= 50.0)
@@ -467,15 +468,16 @@ CMD:alldamages(playerid, params[])
 		return 1;
 	}
 	
-	damageString[ 0 ] = EOS;
-	damageLen = 0;
+	damageNameString[ 0 ] = EOS;
 	format(damageNameString, sizeof(damageNameString), "Glava:\n");
 	strcat(motd, damageNameString, sizeof(motd));
 	
-	for( new weaponid = 0; weaponid != 34; weaponid++ ) {
+	for( new weaponid = 0; weaponid != 34; weaponid++ ) 
+	{
 		if( DeathData[ gplayerid ][ ddHead ][ weaponid ] )
 		{
-			format(damageString[(damageLen = strlen(damageString))], sizeof(damageString) - damageLen, "\tOruzje: %s | Nanesene rane: %d puta\n", 
+			damageString[ 0 ] = EOS;
+			format(damageString, sizeof(damageString), "\tOruzje: %s | Nanesene rane: %d puta\n", 
 				GetWeaponNameEx(weaponid), 
 				DeathData[ gplayerid ][ ddHead ][ weaponid ]
 			);
@@ -483,24 +485,24 @@ CMD:alldamages(playerid, params[])
 		}
 	}
 
-	damageString[ 0 ] = EOS;
-	damageLen = 0;
+	damageNameString[ 0 ] = EOS;
 	format(damageNameString, sizeof(damageNameString), "Torzo(trup):\n");
 	strcat(motd, damageNameString, sizeof(motd));
 	
-	for( new weaponid = 0; weaponid != 34; weaponid++ ) {
+	for( new weaponid = 0; weaponid != 34; weaponid++ ) 
+	{
 		if( DeathData[ gplayerid ][ ddTorso ][ weaponid ] )
 		{
-			format(damageString[(damageLen = strlen(damageString))], sizeof(damageString) - damageLen, "\tOruzje: %s | Nanesene rane: %d puta\n", 
-				GetWeaponNameEx(weaponid),
+			damageString[ 0 ] = EOS;
+			format(damageString, sizeof(damageString), "\tOruzje: %s | Nanesene rane: %d puta\n", 
+				GetWeaponNameEx(weaponid), 
 				DeathData[ gplayerid ][ ddTorso ][ weaponid ]
 			);
 			strcat(motd, damageString, sizeof(motd));
 		}
 	}
 	
-	damageString[ 0 ] = EOS;
-	damageLen = 0;
+	damageNameString[ 0 ] = EOS;
 	format(damageNameString, sizeof(damageNameString), "Prepone:\n");
 	strcat(motd, damageNameString, sizeof(motd));
 	
@@ -508,7 +510,8 @@ CMD:alldamages(playerid, params[])
 	{
 		if( DeathData[ gplayerid ][ ddGroin ][ weaponid ] )
 		{
-			format(damageString[(damageLen = strlen(damageString))], sizeof(damageString) - damageLen, "\tOruzje: %s | Nanesene rane: %d puta\n", 
+			damageString[ 0 ] = EOS;
+			format(damageString, sizeof(damageString), "\tOruzje: %s | Nanesene rane: %d puta\n", 
 				GetWeaponNameEx(weaponid), 
 				DeathData[ gplayerid ][ ddGroin ][ weaponid ]
 			);
@@ -516,8 +519,7 @@ CMD:alldamages(playerid, params[])
 		}
 	}
 	
-	damageString[ 0 ] = EOS;
-	damageLen = 0;
+	damageNameString[ 0 ] = EOS;
 	format(damageNameString, sizeof(damageNameString), "Lijeva ruka:\n");
 	strcat(motd, damageNameString, sizeof(motd));
 	
@@ -525,7 +527,8 @@ CMD:alldamages(playerid, params[])
 	{
 		if( DeathData[ gplayerid ][ ddLArm ][ weaponid ] )
 		{
-			format(damageString[(damageLen = strlen(damageString))], sizeof(damageString) - damageLen, "\tOruzje: %s | Nanesene rane: %d puta\n", 
+			damageString[ 0 ] = EOS;
+			format(damageString, sizeof(damageString), "\tOruzje: %s | Nanesene rane: %d puta\n", 
 				GetWeaponNameEx(weaponid), 
 				DeathData[ gplayerid ][ ddLArm ][ weaponid ]
 			);
@@ -533,8 +536,7 @@ CMD:alldamages(playerid, params[])
 		}
 	}
 	
-	damageString[ 0 ] = EOS;
-	damageLen = 0;
+	damageNameString[ 0 ] = EOS;
 	format(damageNameString, sizeof(damageNameString), "Desna ruka:\n");
 	strcat(motd, damageNameString, sizeof(motd));
 	
@@ -542,7 +544,8 @@ CMD:alldamages(playerid, params[])
 	{
 		if( DeathData[ gplayerid ][ ddRArm ][ weaponid ] )
 		{
-			format(damageString[(damageLen = strlen(damageString))], sizeof(damageString) - damageLen, "\tOruzje: %s | Nanesene rane: %d puta\n", 
+			damageString[ 0 ] = EOS;
+			format(damageString, sizeof(damageString), "\tOruzje: %s | Nanesene rane: %d puta\n", 
 				GetWeaponNameEx(weaponid), 
 				DeathData[ gplayerid ][ ddRArm ][ weaponid ]
 			);
@@ -550,8 +553,7 @@ CMD:alldamages(playerid, params[])
 		}
 	}
 	
-	damageString[ 0 ] = EOS;
-	damageLen = 0;
+	damageNameString[ 0 ] = EOS;
 	format(damageNameString, sizeof(damageNameString), "Lijeva noga:\n");
 	strcat(motd, damageNameString, sizeof(motd));
 	
@@ -559,31 +561,33 @@ CMD:alldamages(playerid, params[])
 	{
 		if( DeathData[ gplayerid ][ ddLLeg ][ weaponid ] )
 		{
-			format(damageString[(damageLen = strlen(damageString))], sizeof(damageString) - damageLen, "\tOruzje: %s | Nanesene rane: %d puta\n", 
-				GetWeaponNameEx(weaponid),  
+			damageString[ 0 ] = EOS;
+			format(damageString, sizeof(damageString), "\tOruzje: %s | Nanesene rane: %d puta\n", 
+				GetWeaponNameEx(weaponid), 
 				DeathData[ gplayerid ][ ddLLeg ][ weaponid ]
 			);
 			strcat(motd, damageString, sizeof(motd));
 		}
 	}
 	
-	damageString[ 0 ] = EOS;
-	damageLen = 0;
+	damageNameString[ 0 ] = EOS;
 	format(damageNameString, sizeof(damageNameString), "Desna noga:\n");
 	strcat(motd, damageNameString, sizeof(motd));
 	
-	for( new weaponid = 0; weaponid != 34; weaponid++ ) {
+	for( new weaponid = 0; weaponid != 34; weaponid++ ) 
+	{
 		if( DeathData[ gplayerid ][ ddRLeg ][ weaponid ] )
 		{
-			format(damageString[(damageLen = strlen(damageString))], sizeof(damageString) - damageLen, "\tOruzje: %s | Nanesene rane: %d puta\n", 
-				GetWeaponNameEx(weaponid),  
+			damageString[ 0 ] = EOS;
+			format(damageString, sizeof(damageString), "\tOruzje: %s | Nanesene rane: %d puta\n", 
+				GetWeaponNameEx(weaponid), 
 				DeathData[ gplayerid ][ ddRLeg ][ weaponid ]
 			);
 			strcat(motd, damageString, sizeof(motd));
 		}
 	}
 	new dcaption[90];
-	format(dcaption, sizeof(dcaption), "Ozlijede na %s:", GetName(gplayerid));
+	format(dcaption, sizeof(dcaption), "Ozljede na %s:", GetName(gplayerid));
 	ShowPlayerDialog(playerid, PLAYER_DAMAGES_DIALOG, DIALOG_STYLE_MSGBOX, dcaption, motd, "Izlaz","");
 	return 1;
 }

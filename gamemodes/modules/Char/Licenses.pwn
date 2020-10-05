@@ -370,7 +370,7 @@ CMD:buylicenses(playerid, params[])
 	
 	new
 		pick[6];
-	if( sscanf( params, "s[6]", pick ) ) return SendClientMessage(playerid, COLOR_RED, "USAGE: /buylicenses [fly/fish]");
+	if( sscanf( params, "s[6]", pick ) ) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /buylicenses [fly/fish]");
 	if( !strcmp( pick, "fly") ) {
 		if( PlayerInfo[playerid][pFlyLic] )			return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Vec imate dozvolu za letenje!");
 		if( AC_GetPlayerMoney(playerid) < FLY_LICENSE_PRICE ) 	return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate %d$!", FLY_LICENSE_PRICE );

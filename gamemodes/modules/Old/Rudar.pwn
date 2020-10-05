@@ -124,7 +124,7 @@ public GoldLoading(playerid)
 
 	ClearAnimations(playerid);
 	ApplyAnimationEx(playerid, "CARRY", "crry_prtial", 4.0, 0, 0, 0, 0, 0, 1, 0);
-	BudgetToPayDayMoney(playerid, money); // dobiva novac na knjizicu iz proracuna
+	BudgetToPlayerBankMoney(playerid, money); // dobiva novac na knjizicu iz proracuna
 	PlayerInfo[playerid][pFreeWorks] 	-= 5;
 	Bit1_Set(gr_Minerwork, playerid, false);
 	MiningInfo[playerid][GoldGrams] = 0;

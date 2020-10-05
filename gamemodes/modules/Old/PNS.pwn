@@ -66,7 +66,7 @@ CMD:pnsedit(playerid, params[])
 	new string[128], choice[32], sprayid, amount;
 	if(sscanf(params, "s[32]dD", choice, sprayid, amount))
 	{
-		va_SendClientMessage(playerid, COLOR_GREY, "USAGE: /pnsedit [name] [sprayid] [amount]");
+		va_SendClientMessage(playerid, COLOR_GREY, "[ ? ]: /pnsedit [name] [sprayid] [amount]");
 		va_SendClientMessage(playerid, COLOR_GREY, "Available names: Position, GroupCost, RegCost, Delete");
 		return 1;
 	}
@@ -164,7 +164,7 @@ CMD:pnsstatus(playerid, params[])
 	new sprayid;
 	if(sscanf(params, "i", sprayid))
 	{
-		va_SendClientMessage(playerid, COLOR_GREY, "USAGE: /pnsstatus [sprayid]");
+		va_SendClientMessage(playerid, COLOR_GREY, "[ ? ]: /pnsstatus [sprayid]");
 		return 1;
 	}
 	if (PlayerInfo[playerid][pAdmin] >= 4)
@@ -213,7 +213,7 @@ CMD:gotopaynspray(playerid, params[])
 	if(PlayerInfo[playerid][pAdmin] >= 4)
 	{
 		new sprayid;
-		if(sscanf(params, "d", sprayid)) return va_SendClientMessage(playerid, COLOR_GREY, "USAGE: /gotopaynspray [sprayid]");
+		if(sscanf(params, "d", sprayid)) return va_SendClientMessage(playerid, COLOR_GREY, "[ ? ]: /gotopaynspray [sprayid]");
 
 		SetPlayerPos(playerid, PayNSprays[sprayid][pnsPosX], PayNSprays[sprayid][pnsPosY], PayNSprays[sprayid][pnsPosZ]);
 		SetPlayerInterior(playerid, PayNSprays[sprayid][pnsInt]);

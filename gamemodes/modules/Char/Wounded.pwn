@@ -796,20 +796,24 @@ hook OnPlayerTakeDamage(playerid, issuerid, Float: amount, weaponid, bodypart)
 		
 		switch(weaponid)
 	    {
-			case 0: DealDamage(playerid, issuerid, health, armour, amount, bodypart);
+			case 0: 
+			{
+				damage += ((PlayerInfo[playerid][pMuscle] / 50) * 1);
+				DealDamage(playerid, issuerid, health, armour, amount, bodypart);
+			}
 	        case 1 .. 8:
 	        {
-				damage = 13;
+				damage = 13 + ((PlayerInfo[playerid][pMuscle] / 50) * 1);
 				DealDamage(playerid, issuerid, health, armour, damage, bodypart);
 	        }
 			case 10 .. 13:
 			{ 
-				damage = 13;
+				damage = 13 + ((PlayerInfo[playerid][pMuscle] / 50) * 1);
 				DealDamage(playerid, issuerid, health, armour, damage, bodypart);
 	        }
 			case 15:
 			{
-				damage = 13;
+				damage = 13 + ((PlayerInfo[playerid][pMuscle] / 50) * 1);
 				DealDamage(playerid, issuerid, health, armour, damage, bodypart);
 	        }
 	        case 22, 23: {
@@ -869,20 +873,24 @@ hook OnPlayerTakeDamage(playerid, issuerid, Float: amount, weaponid, bodypart)
 	{
 	    switch(weaponid)
 	    {
-			case 0: DealDamage(playerid, issuerid, health, armour, amount, bodypart);
+			case 0: 
+			{
+				damage += ((PlayerInfo[playerid][pMuscle] / 50) * 1);
+				DealDamage(playerid, issuerid, health, armour, amount, bodypart);
+			}
 	        case 1 .. 8:
 	        {
-				damage = 10;
+				damage = 13 + ((PlayerInfo[playerid][pMuscle] / 50) * 1);
 				DealDamage(playerid, issuerid, health, armour, damage, bodypart);
 	        }
 			case 10 .. 13:
 			{ 
-				damage = 10;
+				damage = 13 + ((PlayerInfo[playerid][pMuscle] / 50) * 1);
 				DealDamage(playerid, issuerid, health, armour, damage, bodypart);
 	        }
 			case 15:
 			{
-				damage = 10;
+				damage = 13 + ((PlayerInfo[playerid][pMuscle] / 50) * 1);
 				DealDamage(playerid, issuerid, health, armour, damage, bodypart);
 	        }
 	        case 22, 23: {
@@ -942,20 +950,24 @@ hook OnPlayerTakeDamage(playerid, issuerid, Float: amount, weaponid, bodypart)
 	{
 		switch(weaponid)
 	    {
-			case 0: DealDamage(playerid, issuerid, health, armour, amount, bodypart);
+			case 0: 
+			{
+				damage += ((PlayerInfo[playerid][pMuscle] / 50) * 1);
+				DealDamage(playerid, issuerid, health, armour, amount, bodypart);
+			}
 	        case 1 .. 8:
 	        {
-				damage = 13;
+				damage = 13 + ((PlayerInfo[playerid][pMuscle] / 50) * 1);
 				DealDamage(playerid, issuerid, health, armour, damage, bodypart);
 	        }
 			case 10 .. 13:
 			{ 
-				damage = 13;
+				damage = 13 + ((PlayerInfo[playerid][pMuscle] / 50) * 1);
 				DealDamage(playerid, issuerid, health, armour, damage, bodypart);
 	        }
 			case 15:
 			{
-				damage = 13;
+				damage = 13 + ((PlayerInfo[playerid][pMuscle] / 50) * 1);
 				DealDamage(playerid, issuerid, health, armour, damage, bodypart);
 	        }
 	        case 22, 23: {

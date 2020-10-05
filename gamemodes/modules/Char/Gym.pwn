@@ -14,7 +14,7 @@
 
 // Modes
 #define GYM_MODE_SPRINT			(1)
-#define GYM_MODE_BELLS			(2)
+//#define GYM_MODE_BELLS			(2)
 #define GYM_MODE_BIKE			(3)
 #define GYM_MODE_BENCH			(4)
 
@@ -69,16 +69,16 @@ static stock
 */
 
 // 32bit
-static stock
-		objectBells,
+new
+		//objectBells,
         objectBench,
 		sprintStatus 	= 0,
 		benchStatus 	= 0,
-		bellsStatus 	= 0,
+		//bellsStatus 	= 0,
 		bikeStatus 		= 0,
 		pickupSprint,
 		pickupBench,
-		pickupBells,
+		//pickupBells,
 		pickupBike,
 		pickupBags;
 
@@ -107,11 +107,13 @@ static stock
 	 ######     ##     #######   ######  ##    ##  ######  
 */
 // Callbacks
-forward SetPlayerBells(playerid);
-public SetPlayerBells(playerid) {
+
+/*timer SetPlayerBells[1610](playerid)
+{
 	SetPlayerAttachedObject(playerid, 8, 3072, 5);
 	SetPlayerAttachedObject(playerid, 9, 3071, 6);
-}
+	return 1;
+}*/
 
 hook OnPlayerDisconnect(playerid, reason)
 {
@@ -134,11 +136,10 @@ hook OnPlayerDisconnect(playerid, reason)
 	return 1;
 }
 
-forward StartGymBench(playerid, mode);
-public StartGymBench(playerid, mode) 
+timer StartGymBench[50](playerid, mode) 
 {
 	switch(mode) {
-		case GYM_MODE_BELLS: {			
+		/*case GYM_MODE_BELLS: {			
 			// TextDraws
 			CreateGymProgressTD(playerid);
 			PlayerTextDrawSetString(playerid, GymProgressTxt2[playerid], "REPS: 0");
@@ -156,18 +157,18 @@ public StartGymBench(playerid, mode)
 			GymInfo[ playerid ][ gmReps ]		= 0;
 			GymInfo[ playerid ][ gmValue ] 		= 0.0;
 			GymInfo[ playerid ][ gmTimer ] 		= SetTimerEx("OnPlayerUsingGym", 225, true, "ii", playerid, mode);
-			GymInfo[ playerid ][ gmNeeded ] 	= ( PlayerInfo[ playerid ][ pMuscle ] * 10 ) + minrand(1, 75);
-			SendMessage(playerid, MESSAGE_TYPE_INFO, "Sto brze stiscite ~k~~PED_SPRINT~ za bolji progres, a ~k~~VEHICLE_ENTER_EXIT~ za izlazak!");
+			GymInfo[ playerid ][ gmNeeded ] 	= floatround( PlayerInfo[ playerid ][ pMuscle ] * 2.4 );
+			SendFormatMessage(playerid, MESSAGE_TYPE_INFO, "Sto brze stiscite ~k~~PED_SPRINT~ za bolji progres, a ~k~~VEHICLE_ENTER_EXIT~ za izlazak!\nPotrebno je napraviti %d liftova za Level Up!", GymInfo[ playerid ][ gmNeeded ] );
 			
 			Bit1_Set(r_GymStop, playerid, false);
 			
-			if( IsValidDynamicObject(objectBells) )
-				DestroyDynamicObject(objectBells);
-		}
+			if( IsValidObject(objectBells) )
+				DestroyObject(objectBells);
+		}*/
 		case GYM_MODE_BENCH: {
 			// TextDraws
 			CreateGymProgressTD(playerid);
-			PlayerTextDrawSetString(playerid, GymProgressTxt2[playerid], "REPS: 0");
+			PlayerTextDrawSetString(playerid, GymProgressTxt2[playerid], "REPS: 0/0");
 			PlayerTextDrawSetString(playerid, GymProgressTxt[playerid], "Bench");
 		
 			if( IsValidPlayerProgressBar(playerid, GymInfo[ playerid ][ gmBar ]) ) {
@@ -182,31 +183,32 @@ public StartGymBench(playerid, mode)
 			GymInfo[ playerid ][ gmReps ]		= 0;
 			GymInfo[ playerid ][ gmValue ] 		= 0.0;
 			GymInfo[ playerid ][ gmTimer ] 		= SetTimerEx("OnPlayerUsingGym", 225, true, "ii", playerid, mode);
-			GymInfo[ playerid ][ gmNeeded ] 	= ( PlayerInfo[ playerid ][ pMuscle ] * 10 ) + PlayerInfo[ playerid ][ pLevel ];
-			SendMessage(playerid, MESSAGE_TYPE_INFO, "Sto brze stiscite ~k~~PED_SPRINT~ za bolji progres, a ~k~~VEHICLE_ENTER_EXIT~ za izlazak!");
+			GymInfo[ playerid ][ gmNeeded ] 	= floatround( PlayerInfo[ playerid ][ pMuscle ] * 2.4 );
+			if(GymInfo[ playerid ][ gmNeeded ] <= 20)
+				GymInfo[ playerid ][ gmNeeded ] = 20 + (PlayerInfo[playerid][pMuscle] * 2); 
+			SendFormatMessage(playerid, MESSAGE_TYPE_INFO, "Sto brze stiscite ~k~~PED_SPRINT~ za bolji progres, a ~k~~VEHICLE_ENTER_EXIT~ za izlazak!\nPotrebno je napraviti %d liftova za Level Up!", GymInfo[ playerid ][ gmNeeded ] );
 			
 			SetPlayerAttachedObject(playerid, 9, 2913, 6);
 			Bit1_Set(r_GymStop, playerid, false);
 			
-			if( IsValidDynamicObject(objectBench) )
-				DestroyDynamicObject(objectBench);
+			if( IsValidObject(objectBench) )
+				DestroyObject(objectBench);
 		}
 	}
 }
 
-forward EndGymBench(playerid, mode);
-public EndGymBench(playerid, mode)
+timer EndGymBench[50](playerid, mode)
 {
 	TogglePlayerControllable(playerid, true);
 	switch(mode) {
-		case GYM_MODE_BELLS: {
+		/*case GYM_MODE_BELLS: {
 			RemovePlayerFromGym(playerid, GymInfo[ playerid ][ gmMode ]);
-			objectBells = CreateDynamicObject(2915, 772.80933, 5.56540, 999.90002,   0.00000, 0.00000, 90.00000);
+			objectBells = CreateObject(2915, 772.80933, 5.56540, 999.90002,   0.00000, 0.00000, 90.00000);
 			Streamer_Update(playerid);
-		}
+		}*/
 		case GYM_MODE_BENCH: {
 			RemovePlayerFromGym(playerid, GymInfo[ playerid ][ gmMode ]);
-			objectBench = CreateDynamicObject(2913, 774.37433, 1.90330, 1000.59998,   90.00000, 0.00000, 0.00000);
+			objectBench = CreateObject(2913, 774.37433, 1.90330, 1000.59998,   90.00000, 0.00000, 0.00000);
 			Streamer_Update(playerid);
 		}
 	}
@@ -218,7 +220,8 @@ public OnPlayerUsingGym(playerid, mode)
 	if( playerid == INVALID_PLAYER_ID ) KillTimer(GymInfo[ playerid ][ gmTimer ]);
 	switch( mode ) {
 		case GYM_MODE_SPRINT: {
-			if( GymInfo[ playerid ][ gmValue ] >= 0.18 ) GymInfo[ playerid ][ gmValue ] -= 0.18;
+			if( GymInfo[ playerid ][ gmValue ] >= 100.0 ) GymInfo[ playerid ][ gmValue ] = 100.0; 
+			if( GymInfo[ playerid ][ gmValue ] >= 0.75 ) GymInfo[ playerid ][ gmValue ] -= 0.75;
 			else {
 				if( ++GymInfo[ playerid ][ gmCount ] >= 16 ) {
 					TogglePlayerControllable(playerid, true);
@@ -227,27 +230,30 @@ public OnPlayerUsingGym(playerid, mode)
 				}
 			}
 			if( GymInfo[ playerid ][ gmValue ] > 0.5 ) {
-				GymInfo[ playerid ][ gmDistance ] += 0.15;
 				new
 					tmpString[ 32 ];
-				format(tmpString, 32, "DISTANCE: %d", floatround(GymInfo[ playerid ][ gmDistance ], floatround_floor));
+				format(tmpString, 32, "DISTANCE: %d/%d", floatround(GymInfo[ playerid ][ gmDistance ], floatround_floor), GymInfo[ playerid ][ gmNeeded ]);
 				PlayerTextDrawSetString(playerid, GymProgressTxt2[playerid], tmpString);
 				
-				if( floatround(GymInfo[ playerid ][ gmDistance ]) == GymInfo[ playerid ][ gmNeeded ] ) {
+				if( floatround(GymInfo[ playerid ][ gmDistance ]) >= GymInfo[ playerid ][ gmNeeded ] ) {
 					PlayerInfo[ playerid ][ pMuscle ]++;
-					GymInfo[ playerid ][ gmNeeded ] = ( ( PlayerInfo[ playerid ][ pMuscle ] * 100 ) + minrand(5, 150) ) * 2;
+					if(PlayerInfo[ playerid ][ pMuscle ] >= 50)
+							PlayerInfo[ playerid ][ pMuscle ] = 50;
 					SendFormatMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uspjesno ste podigli svoj muscle level na %d!", PlayerInfo[ playerid ][ pMuscle ]);
+					PlayerInfo[ playerid ][ pGymTimes ]++;
+					LeavePlayerGym(playerid, GymInfo[ playerid ][ gmMode ]);
 				}
 			}
 		}
-		case GYM_MODE_BELLS: {
+		/*case GYM_MODE_BELLS: {
 			if( GymInfo[ playerid ][ gmValue ] >= 2.5 ) {
 				GymInfo[ playerid ][ gmValue ] -= 2.5;
 				ApplyAnimationEx(playerid,"Freeweights","gym_free_down", 2.8, 0, 0, 0, 1, 0, 1, 0);
 			}
-		}
+		}*/
 		case GYM_MODE_BIKE: {
-			if( GymInfo[ playerid ][ gmValue ] >= 0.12 ) GymInfo[ playerid ][ gmValue ] -= 0.12;
+			if( GymInfo[ playerid ][ gmValue ] >= 100.0 ) GymInfo[ playerid ][ gmValue ] = 100.0; 
+			if( GymInfo[ playerid ][ gmValue ] >= 0.75 ) GymInfo[ playerid ][ gmValue ] -= 0.75;
 			else {
 				if( ++GymInfo[ playerid ][ gmCount ] >= 16 ) {
 					TogglePlayerControllable(playerid, true);
@@ -256,16 +262,18 @@ public OnPlayerUsingGym(playerid, mode)
 				}
 			}
 			if( GymInfo[ playerid ][ gmValue ] > 1.0 ) {
-				GymInfo[ playerid ][ gmDistance ] += 0.13;
 				new
 					tmpString[ 32 ];
-				format(tmpString, 32, "DISTANCE: %d", floatround(GymInfo[ playerid ][ gmDistance ], floatround_floor));
+				format(tmpString, 32, "DISTANCE: %d/%d", floatround(GymInfo[ playerid ][ gmDistance ], floatround_floor), GymInfo[ playerid ][ gmNeeded ]);
 				PlayerTextDrawSetString(playerid, GymProgressTxt2[playerid], tmpString);
 				
-				if( floatround(GymInfo[ playerid ][ gmDistance ]) == GymInfo[ playerid ][ gmNeeded ] ) {
+				if( floatround(GymInfo[ playerid ][ gmDistance ]) >= GymInfo[ playerid ][ gmNeeded ] ) {
 					PlayerInfo[ playerid ][ pMuscle ]++;
-					GymInfo[ playerid ][ gmNeeded ] = ( ( PlayerInfo[ playerid ][ pMuscle ] * 1000 ) + minrand(50, 500) ) * 2;
+					if(PlayerInfo[ playerid ][ pMuscle ] >= 50)
+							PlayerInfo[ playerid ][ pMuscle ] = 50;
 					SendFormatMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uspjesno ste podigli svoj muscle level na %d!", PlayerInfo[ playerid ][ pMuscle ]);
+					PlayerInfo[ playerid ][ pGymTimes ]++;
+					LeavePlayerGym(playerid, GymInfo[ playerid ][ gmMode ]);
 				}
 			}
 		}
@@ -298,14 +306,14 @@ public OnPlayerHitAnimation(playerid, mode)
 {
 	if( playerid == INVALID_PLAYER_ID || !mode ) return 0;
 	switch(mode) {
-		case GYM_MODE_BELLS: {
+		/*case GYM_MODE_BELLS: {
 			ApplyAnimationEx(playerid,"Freeweights","gym_free_down", 3.2, 0, 0, 0, 1, 0, 1, 0);
 			Bit1_Set( r_GymStop, playerid, false );
 			GymInfo[ playerid ][ gmTimer ] = SetTimerEx("OnPlayerUsingGym", 225, true, "ii", playerid, mode);
 			
 			GymInfo[ playerid ][ gmValue ] = 0.0;
 			SetPlayerProgressBarValue(playerid, GymInfo[ playerid ][ gmBar ], GymInfo[ playerid ][ gmValue ]);
-		}
+		}*/
 		case GYM_MODE_BENCH: {
 			ApplyAnimationEx(playerid,"benchpress","gym_bp_down", 3.2, 0, 0, 0, 1, 0, 1, 0);
 			Bit1_Set( r_GymStop, playerid, false );
@@ -319,6 +327,33 @@ public OnPlayerHitAnimation(playerid, mode)
 }
 
 // Stocks
+stock static LeavePlayerGym(playerid, mode = -1)
+{
+	switch(mode)
+	{
+		case GYM_MODE_SPRINT: {
+			TogglePlayerControllable(playerid, true);
+			ApplyAnimationEx(playerid,"GYMNASIUM","gym_walk_falloff", 4.1, 0, 0, 0, 0, 0, 1, 0);
+			RemovePlayerFromGym(playerid, GymInfo[ playerid ][ gmMode ]);
+		}
+		/*case GYM_MODE_BELLS: {
+			ApplyAnimationEx(playerid,"Freeweights","gym_free_putdown", 4.1, 0, 1, 1, 0, 0, 1, 0);
+			defer EndGymBench[2500](playerid, GYM_MODE_BELLS);
+		}*/
+		case GYM_MODE_BIKE: {
+			TogglePlayerControllable(playerid, true);
+			SetPlayerPos(playerid, 772.1906, 8.6423, 1000.9000);
+			ApplyAnimationEx(playerid,"GYMNASIUM","gym_bike_getoff", 4.1, 0, 0, 0, 0, 0, 1, 0);
+			RemovePlayerFromGym(playerid, GymInfo[ playerid ][ gmMode ]);
+		}
+		case GYM_MODE_BENCH: {
+			ApplyAnimationEx(playerid,"benchpress","gym_bp_getoff", 4.1, 0, 0, 0, 0, 0, 1, 0);
+			defer EndGymBench[3500](playerid, GYM_MODE_BENCH);
+		}
+	}
+	return 1;
+}
+
 stock static RemovePlayerFromGym(playerid, mode = -1)
 {
 	if( playerid == INVALID_PLAYER_ID || mode == -1 ) return 0;
@@ -337,7 +372,7 @@ stock static RemovePlayerFromGym(playerid, mode = -1)
 	switch( mode ) {
 		case GYM_MODE_SPRINT: 	sprintStatus 	= 0;
 		case GYM_MODE_BENCH: 	benchStatus 	= 0;
-		case GYM_MODE_BELLS: 	bellsStatus 	= 0;
+		//case GYM_MODE_BELLS: 	bellsStatus 	= 0;
 		case GYM_MODE_BIKE: 	bikeStatus 		= 0;
 	}
 		
@@ -463,8 +498,7 @@ stock static InitPlayerGym(playerid, mode = -1)
 			ApplyAnimationEx(playerid,"GYMNASIUM","gym_tread_geton", 4.1, 0, 0, 0, 1, 0, 1, 0);
 			InterpolateCameraPos(playerid, 774.1841, -4.7128, 1001.5000, 774.1841, -4.7128, 1001.5000, 100000000);
 			InterpolateCameraLookAt(playerid, 773.3922, -2.4008, 1000.8000, 773.3922, -2.4008, 1000.8000, 100000000);
-			PlayerTextDrawSetString(playerid, GymProgressTxt2[playerid], "DISTANCE: 0");
-			SendMessage(playerid, MESSAGE_TYPE_INFO, "Sto brze stiscite ~k~~PED_SPRINT~ za bolji progres, a ~k~~VEHICLE_ENTER_EXIT~ za izlazak!");
+			PlayerTextDrawSetString(playerid, GymProgressTxt2[playerid], "DISTANCE: 0/0");
 			
 			// Vars
 			GymInfo[ playerid ][ gmMode ] 		= mode;
@@ -474,21 +508,29 @@ stock static InitPlayerGym(playerid, mode = -1)
 			GymInfo[ playerid ][ gmWntdValue ] 	= GetGymModeWantedProgress(mode);
 			GymInfo[ playerid ][ gmWntdTimer ]	= SetTimerEx("OnPlayerGymsWantedValue", GYM_WANTED_TIME, false, "i", playerid);
 			GymInfo[ playerid ][ gmTimer ] 		= SetTimerEx("OnPlayerUsingGym", 250, true, "ii", playerid, mode);
-			GymInfo[ playerid ][ gmNeeded ] 	= ( PlayerInfo[ playerid ][ pMuscle ] * 100 ) + minrand(5, 150);
+			GymInfo[ playerid ][ gmNeeded ] 	= floatround( PlayerInfo[ playerid ][ pMuscle ] * 13 );
+			if(GymInfo[ playerid ][ gmNeeded ] <= 50)
+				GymInfo[ playerid ][ gmNeeded ] = 50 + (PlayerInfo[playerid][pMuscle] * 6);
 			sprintStatus = 1;
+
+			SendFormatMessage(playerid, MESSAGE_TYPE_INFO, "Sto brze stiscite ~k~~PED_SPRINT~ za bolji progres, a ~k~~VEHICLE_ENTER_EXIT~ za izlazak!\nPotrebno je pretrcati %d distance za Level Up!", GymInfo[ playerid ][ gmNeeded ] );
 			//BizzInfo[ 12 ][ bTill ] -= 5;
 		}
-		case GYM_MODE_BELLS: {			
+		/*case GYM_MODE_BELLS: {			
 			SetPlayerPos(playerid, 772.3107, 5.2600, 1000.8000);
 			SetPlayerFacingAngle(playerid, 270.0);
 			ApplyAnimationEx(playerid,"Freeweights","gym_free_pickup", 4.1, 0, 1, 1, 1, 0, 1, 0);
 			InterpolateCameraPos(playerid, 774.3997, 5.3319, 1001.2000, 774.3997, 5.3319, 1001.2000, 100000000);
 			InterpolateCameraLookAt(playerid, 772.5566, 5.3319, 1001.2000, 772.5566, 5.3319, 1001.2000, 100000000);
-			SetTimerEx("SetPlayerBells", 1610, false, "i", playerid);
-			SetTimerEx("StartGymBench", 3200, false, "ii", playerid, mode);
+			if(IsPlayerAttachedObjectSlotUsed(playerid, 8))
+				RemovePlayerAttachedObject(playerid, 8);
+			if(IsPlayerAttachedObjectSlotUsed(playerid, 9))
+				RemovePlayerAttachedObject(playerid, 9);
+			defer SetPlayerBells(playerid);
+			defer StartGymBench[3000](playerid, mode);
 			bellsStatus = 1;
 			//BizzInfo[ 12 ][ bTill ] -= 2;
-		}
+		}*/
 		case GYM_MODE_BIKE: {
 			if( IsValidPlayerProgressBar(playerid, GymInfo[ playerid ][ gmBar ]) ) {
 				DestroyPlayerProgressBar(playerid, GymInfo[ playerid ][ gmBar ]);
@@ -506,15 +548,18 @@ stock static InitPlayerGym(playerid, mode = -1)
 			InterpolateCameraLookAt(playerid, 772.3679, 9.4039, 1001.2, 772.3679, 9.4039, 1001.2, 100000000);
 			PlayerTextDrawSetString(playerid, GymProgressTxt2[playerid], "DISTANCE: 0");
 			PlayerTextDrawSetString(playerid, GymProgressTxt[playerid], "Bicikl");
-			SendMessage(playerid, MESSAGE_TYPE_INFO, "Sto brze stiscite ~k~~PED_SPRINT~ za bolji progres, a ~k~~VEHICLE_ENTER_EXIT~ za izlazak!");
 		
 			// Vars
 			GymInfo[ playerid ][ gmMode ] 		= mode;
 			GymInfo[ playerid ][ gmCount ]		= 0;
 			GymInfo[ playerid ][ gmValue ] 		= 0.0;
 			GymInfo[ playerid ][ gmTimer ] 		= SetTimerEx("OnPlayerUsingGym", 250, true, "ii", playerid, mode);
-			GymInfo[ playerid ][ gmNeeded ] 	= ( PlayerInfo[ playerid ][ pMuscle ] * 1000 ) + minrand(50, 500);
+			GymInfo[ playerid ][ gmNeeded ] 	= floatround( PlayerInfo[ playerid ][ pMuscle ] * 13 );
+			if(GymInfo[ playerid ][ gmNeeded ] <= 50)
+				GymInfo[ playerid ][ gmNeeded ] = 50 + (PlayerInfo[playerid][pMuscle] * 6);
 			bikeStatus = 1;
+
+			SendFormatMessage(playerid, MESSAGE_TYPE_INFO, "Sto brze stiscite ~k~~PED_SPRINT~ za bolji progres, a ~k~~VEHICLE_ENTER_EXIT~ za izlazak!\nPotrebno je pretrcati %d distance za Level Up!", GymInfo[ playerid ][ gmNeeded ] );
 			//BizzInfo[ 12 ][ bTill ] -= 10;
 		}
 		case GYM_MODE_BENCH: {
@@ -524,7 +569,7 @@ stock static InitPlayerGym(playerid, mode = -1)
 			ApplyAnimationEx(playerid,"benchpress", "gym_bp_geton", 4.1, 0, 0, 0, 1, 0, 1, 0);
 			InterpolateCameraPos(playerid, 772.7518, 2.9976, 1001.0000, 772.7518, 2.9976, 1001.0000, 100000000);
 			InterpolateCameraLookAt(playerid, 774.2678, 1.4269, 1000.5500, 774.2678, 1.4269, 1000.5500, 100000000);
-			SetTimerEx("StartGymBench", 3600, false, "ii", playerid, mode);
+			defer StartGymBench[3500](playerid, mode);
 			benchStatus = 0;
 			//BizzInfo[ 12 ][ bTill ] -= 2;
 		}
@@ -561,7 +606,7 @@ stock static GetPlayerGymMachineStatus(playerid)
 	switch( Bit4_Get( r_PlayerGymMachine, playerid ) ) {
 		case GYM_MODE_SPRINT: 	{ if( !sprintStatus ) 	index = 1; }
 		case GYM_MODE_BENCH: 	{ if( !benchStatus ) 	index = 1; }
-		case GYM_MODE_BELLS: 	{ if( !bellsStatus ) 	index = 1; }
+		//case GYM_MODE_BELLS: 	{ if( !bellsStatus ) 	index = 1; }
 		case GYM_MODE_BIKE: 	{ if( !bikeStatus ) 	index = 1; }
 	}
 	return index;
@@ -572,7 +617,7 @@ stock static GetPlayerGymMachine(playerid)
 	
 	if( IsPlayerInRangeOfPoint(playerid, 2.0, 773.4731, -2.5509, 1000.5000) ) { Bit4_Set( r_PlayerGymMachine, playerid, GYM_MODE_SPRINT ); return 1; }
 	else if( IsPlayerInRangeOfPoint(playerid, 2.0, 773.8419, 1.4023, 1000.1384) ) { Bit4_Set( r_PlayerGymMachine, playerid, GYM_MODE_BENCH ); return 1; }
-	else if( IsPlayerInRangeOfPoint(playerid, 2.0, 773.0122, 5.4767, 1000.5000) ) { Bit4_Set( r_PlayerGymMachine, playerid, GYM_MODE_BELLS ); return 1; }
+	//else if( IsPlayerInRangeOfPoint(playerid, 2.0, 773.0122, 5.4767, 1000.5000) ) { Bit4_Set( r_PlayerGymMachine, playerid, GYM_MODE_BELLS ); return 1; }
 	else if( IsPlayerInRangeOfPoint(playerid, 2.0, 772.2685, 9.4388, 1000.5000) ) { Bit4_Set( r_PlayerGymMachine, playerid, GYM_MODE_BIKE ); return 1; }
 	return 0;
 }
@@ -633,13 +678,13 @@ stock static InitPlayerTraining(playerid, mode=-1)
 */
 hook OnGameModeInit()
 {
-	objectBells = CreateDynamicObject(2915, 772.80933, 5.56540, 999.90002,   0.00000, 0.00000, 90.00000);	// Bells
-	objectBench = CreateDynamicObject(2913, 774.37433, 1.90330, 1000.59998,   90.00000, 0.00000, 0.00000); 	// Bench
+	//objectBells = CreateObject(2915, 772.80933, 5.56540, 999.90002,   0.00000, 0.00000, 90.00000);	// Bells
+	objectBench = CreateObject(2913, 774.37433, 1.90330, 1000.59998,   90.00000, 0.00000, 0.00000); 	// Bench
 	
 	// Info Pickups
 	pickupSprint = CreateDynamicPickup(19300, 2, 773.4230, -1.1890, 1000.5000, -1, 5, -1, 15.0);
 	pickupBench  = CreateDynamicPickup(19300, 2, 772.7550, 1.4146, 1000.5000, -1, 5, -1, 15.0);
-	pickupBells  = CreateDynamicPickup(19300, 2, 770.5363, 5.3818, 1000.5000, -1, 5, -1, 15.0);
+	//pickupBells  = CreateDynamicPickup(19300, 2, 770.5363, 5.3818, 1000.5000, -1, 5, -1, 15.0);
 	pickupBike   = CreateDynamicPickup(19300, 2, 772.0385, 8.6523, 1000.5000, -1, 5, -1, 15.0);
 	pickupBags   = CreateDynamicPickup(19300, 2, 769.4525, -2.4896, 1000.5000, -1, 5, -1, 15.0);
 	return 1;
@@ -661,7 +706,7 @@ CMD:rgym(playerid, params[])
 	new
 		pid;
 	
-	if(sscanf(params, "u", pid)) return SendClientMessage(playerid, COLOR_RED, "USAGE: /rgym [ID/Ime]");
+	if(sscanf(params, "u", pid)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /rgym [ID/Ime]");
 	
 	ResetGymVars(pid);
 	return 1;
@@ -734,7 +779,7 @@ hook OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
 		if( 5 <= GymInfo[ playerid ][ gmMode ] <= 9 ) {
 			if( IsPlayerInRangeOfPoint(playerid, 3.5, 769.4609, -3.2109, 1002.4531) ) {
 				if( GetPlayerAnimationIndex(playerid) == 1137 || GetPlayerAnimationIndex(playerid) == 1138 ) return 1;
-				if( ++GymInfo[ playerid ][ gmCount ] == GymInfo[ playerid ][ gmNeeded ] ) {
+				if( ++GymInfo[ playerid ][ gmCount ] >= GymInfo[ playerid ][ gmNeeded ] ) {
 					switch( ++GymInfo[ playerid ][ gmHits ] ) {
 						case 1: GameTextForPlayer(playerid,"~b~]~y~ ] ]", 200000, 4);
 						case 2: GameTextForPlayer(playerid,"~b~] ] ~y~]", 200000, 4);
@@ -757,13 +802,14 @@ hook OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
 	if( (newkeys & KEY_SPRINT) && !(oldkeys & KEY_SPRINT) ) {
 		switch( GymInfo[ playerid ][ gmMode ] ) {
 			case GYM_MODE_SPRINT: {
-				GymInfo[ playerid ][ gmValue ] += 0.40;
-				if( GymInfo[ playerid ][ gmValue ] >= 100.0 ) GymInfo[ playerid ][ gmValue ] = 100.0;
+				GymInfo[ playerid ][ gmValue ] += 1.5;
+				if( GymInfo[ playerid ][ gmValue ] >= 75.0 ) 
+					GymInfo[ playerid ][ gmDistance ] += 0.14;
 				SetPlayerProgressBarValue(playerid, GymInfo[ playerid ][ gmBar ], GymInfo[ playerid ][ gmValue ]);
 				SetPlayerGymAnimation(playerid, GymInfo[ playerid ][ gmMode ], GymInfo[ playerid ][ gmValue ]);
 				GymInfo[ playerid ][ gmHits ]++;
 			}
-			case GYM_MODE_BELLS: {
+			/*case GYM_MODE_BELLS: {
 				if( Bit1_Get( r_GymStop, playerid ) ) return 1;
 				GymInfo[ playerid ][ gmValue ] += 5.0;
 				SetPlayerProgressBarValue(playerid, GymInfo[ playerid ][ gmBar ], GymInfo[ playerid ][ gmValue ]);
@@ -778,22 +824,26 @@ hook OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
 					// TextDraws
 					new
 						tmpString[ 32 ];
-					format(tmpString, 32, "REPS: %d", GymInfo[ playerid ][ gmReps ]);
+					format(tmpString, 32, "REPS: %d/%d", GymInfo[ playerid ][ gmReps ], GymInfo[ playerid ][ gmNeeded ]);
 					PlayerTextDrawSetString(playerid, GymProgressTxt2[playerid], tmpString);
 					GymInfo[ playerid ][ gmValue ] = 0.0;
 					
-					if( GymInfo[ playerid ][ gmReps ] == GymInfo[ playerid ][ gmNeeded ] ) {
+					if( GymInfo[ playerid ][ gmReps ] >= GymInfo[ playerid ][ gmNeeded ] ) {
 						PlayerInfo[ playerid ][ pMuscle ]++;
-						GymInfo[ playerid ][ gmNeeded ] = ( ( PlayerInfo[ playerid ][ pMuscle ] * 10 ) + minrand(1, 75) ) * 2;
+						if(PlayerInfo[ playerid ][ pMuscle ] >= 50)
+							PlayerInfo[ playerid ][ pMuscle ] = 50;
 						SendFormatMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uspjesno ste podigli svoj muscle level na %d!", PlayerInfo[ playerid ][ pMuscle ]);
+						PlayerInfo[ playerid ][ pGymTimes ]++;
+						LeavePlayerGym(playerid, GymInfo[ playerid ][ gmMode ]);
 					}
 					return 1;
 				}
 				ApplyAnimationEx(playerid,"Freeweights","gym_free_B", 2.5, 0, 0, 0, 1, 0, 1, 0);
-			}
+			}*/
 			case GYM_MODE_BIKE: {
-				GymInfo[ playerid ][ gmValue ] += 0.55;
-				if( GymInfo[ playerid ][ gmValue ] >= 100.0 ) GymInfo[ playerid ][ gmValue ] = 100.0;
+				GymInfo[ playerid ][ gmValue ] += 1.5;
+				if( GymInfo[ playerid ][ gmValue ] >= 75.0 ) 
+					GymInfo[ playerid ][ gmDistance ] += 0.14;
 				SetPlayerProgressBarValue(playerid, GymInfo[ playerid ][ gmBar ], GymInfo[ playerid ][ gmValue ]);
 				SetPlayerGymAnimation(playerid, GymInfo[ playerid ][ gmMode ], GymInfo[ playerid ][ gmValue ]);
 			}
@@ -812,14 +862,17 @@ hook OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
 					// TextDraws
 					new
 						tmpString[ 32 ];
-					format(tmpString, 32, "REPS: %d", GymInfo[ playerid ][ gmReps ]);
+					format(tmpString, 32, "REPS: %d/%d", GymInfo[ playerid ][ gmReps ], GymInfo[ playerid ][ gmNeeded ]);
 					PlayerTextDrawSetString(playerid, GymProgressTxt2[playerid], tmpString);
 					GymInfo[ playerid ][ gmValue ] = 0.0;
 
-					if( GymInfo[ playerid ][ gmReps ] == GymInfo[ playerid ][ gmNeeded ] ) {
+					if( GymInfo[ playerid ][ gmReps ] >= GymInfo[ playerid ][ gmNeeded ] ) {
 						PlayerInfo[ playerid ][ pMuscle ]++;
-						GymInfo[ playerid ][ gmNeeded ] = ( ( PlayerInfo[ playerid ][ pMuscle ] * 10 ) + PlayerInfo[ playerid ][ pLevel ] ) * 2;
+						if(PlayerInfo[ playerid ][ pMuscle ] >= 50)
+							PlayerInfo[ playerid ][ pMuscle ] = 50;
 						SendFormatMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uspjesno ste podigli svoj muscle level na %d!", PlayerInfo[ playerid ][ pMuscle ]);
+						PlayerInfo[ playerid ][ pGymTimes ]++;
+						LeavePlayerGym(playerid, GymInfo[ playerid ][ gmMode ]);
 					}
 					return 1;
 				}
@@ -834,7 +887,7 @@ hook OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
 				return 1;
 			}
 			
-			if( PlayerInfo[playerid][pGymTimes] == 2 ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Previse ste puta vjezbali!");
+			if( PlayerInfo[playerid][pGymTimes] > 0 ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Treba proci 3 barem Paydaya od zadnjeg treninga da bi ponovno trenirali!");
 			if( !GetPlayerGymMachine(playerid) ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ispred sprava u teretani!");
 			if( !GetPlayerGymMachineStatus(playerid) ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Sprava je zauzeta!");
 			//if( PlayerInfo[ playerid ][ pHunger ] < 1.5 ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne mozete gladni vjezbati (minimalno 1.5 level)!");
@@ -842,29 +895,10 @@ hook OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
 		}
 	}
 	
-	if( PRESSED(KEY_SECONDARY_ATTACK) ) {
+	if( PRESSED(KEY_SECONDARY_ATTACK) ) 
+	{
 		if( Bit1_Get( r_PlayerExitingGym, playerid ) ) return 1;
-		switch( GymInfo[ playerid ][ gmMode ] ) {
-			case GYM_MODE_SPRINT: {
-				TogglePlayerControllable(playerid, true);
-				ApplyAnimationEx(playerid,"GYMNASIUM","gym_walk_falloff", 4.1, 0, 0, 0, 0, 0, 1, 0);
-				RemovePlayerFromGym(playerid, GymInfo[ playerid ][ gmMode ]);
-			}
-			case GYM_MODE_BELLS: {
-				ApplyAnimationEx(playerid,"Freeweights","gym_free_putdown", 4.1, 0, 1, 1, 0, 0, 1, 0);
-				SetTimerEx("EndGymBench", 2500, false, "ii", playerid, GYM_MODE_BELLS);
-			}
-			case GYM_MODE_BIKE: {
-				TogglePlayerControllable(playerid, true);
-				SetPlayerPos(playerid, 772.1906, 8.6423, 1000.9000);
-				ApplyAnimationEx(playerid,"GYMNASIUM","gym_bike_getoff", 4.1, 0, 0, 0, 0, 0, 1, 0);
-				RemovePlayerFromGym(playerid, GymInfo[ playerid ][ gmMode ]);
-			}
-			case GYM_MODE_BENCH: {
-				ApplyAnimationEx(playerid,"benchpress","gym_bp_getoff", 4.1, 0, 0, 0, 0, 0, 1, 0);
-				SetTimerEx("EndGymBench", 3500, false, "ii", playerid, GYM_MODE_BENCH);
-			}
-		}
+		LeavePlayerGym(playerid, GymInfo[ playerid ][ gmMode] );
 	}
 	return 1;
 }
@@ -895,7 +929,7 @@ hook OnPlayerPickUpDynPickup(playerid, pickupid)
 		PlayerTextDrawSetString( playerid, RuletNote[playerid], "Kliknite tipku ~k~~CONVERSATION_YES~ za vjezbanje");
 		SetTimerEx( "FadeRuletWagesTD", 3500, false, "i", playerid );
 	}
-	else if( pickupid == pickupBells ) {
+	/*else if( pickupid == pickupBells ) {
 		ShowRuletPickupTDs(playerid);
 		new	
 			tmpString[ 46 ];
@@ -906,7 +940,7 @@ hook OnPlayerPickUpDynPickup(playerid, pickupid)
 		PlayerTextDrawSetString(playerid, RuletWages[playerid], tmpString);
 		PlayerTextDrawSetString( playerid, RuletNote[playerid], "Kliknite tipku ~k~~CONVERSATION_YES~ za vjezbanje");
 		SetTimerEx( "FadeRuletWagesTD", 3500, false, "i", playerid );
-	}
+	}*/
 	else if( pickupid == pickupBike ) {
 		ShowRuletPickupTDs(playerid);
 		new	

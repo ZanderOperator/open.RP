@@ -9,7 +9,7 @@
 #define PRESSED(%0) \
 	(((newkeys & (%0)) == (%0)) && ((oldkeys & (%0)) != (%0)))
 
-
+//UPDATE
 // Include Maps
 
 /* FACTIONS	*/
@@ -29,7 +29,7 @@
 #include "../Maps/Other.pwn" // Sve ostale mape koje nemaju kategoriji.
 #include "../Maps/newenvmaps.pwn" // Nove mape ubacene 2020. by Khawaja
 #include "../Maps/khawajamaps.pwn"
-#include "../Maps/Sheriffs.pwn"
+/* #include "../Maps/Sheriffs.pwn" // Ukinute mape zato sto nemaju funkcije bez SDa */
 /* #include "../Maps/Backup.pwn" // Sve ostale mape koje ce se mozda koristiti u buducnosti. */
 
 
@@ -108,10 +108,10 @@ new
 
 stock CreateMapIcons()
 {
-	CreateDynamicMapIcon(1481.0137, -1772.4517, 17.7345, 42, 0, -1, -1, -1, 300.0, MAPICON_LOCAL);  // Vjecnica
-	CreateDynamicMapIcon(1554.7473, -1675.6938, 16.1953, 30, 0, -1, -1, -1, 300.0, MAPICON_LOCAL);  // LSPD
-	CreateDynamicMapIcon(2034.3123, -1401.8442, 17.2961, 22, 0, -1, -1, -1, 300.0, MAPICON_LOCAL);  // LSFD
-	CreateDynamicMapIcon(1129.1273, -1490.1561, 21.7366, 17, 0, -1, -1, -1, 300.0, MAPICON_LOCAL);  // Verona Mall
+	CreateDynamicMapIcon(1481.0137, -1772.4517, 17.7345, 40, 0, -1, -1, -1, 300.0, MAPICON_LOCAL);  // Vjecnica
+	CreateDynamicMapIcon(1554.7473, -1675.6938, 16.1953, 30, 0, -1, -1, -1, 500.0, MAPICON_LOCAL);  // LSPD
+	CreateDynamicMapIcon(1173.3197, -1323.3169, 15.3934, 22, 0, -1, -1, -1, 400.0, MAPICON_LOCAL);  // HOSPITAL
+	CreateDynamicMapIcon(1129.1273, -1490.1561, 21.7366, 17, 0, -1, -1, -1, 500.0, MAPICON_LOCAL);  // Verona Mall
 	CreateDynamicMapIcon(110.1072,  -1818.6821, 0.9792,	 9,  0, -1, -1, -1, 300.0, MAPICON_LOCAL); 	// Boat
 	CreateDynamicMapIcon(1958.5725, -2270.2456, 12.5152, 5,  0, -1, -1, -1, 300.0, MAPICON_LOCAL); 	// Aero
 	CreateDynamicMapIcon(2115.0952, -1806.4358, 21.2020, 29, 0, -1, -1, -1, 300.0, MAPICON_LOCAL); 	// Pizza
@@ -119,7 +119,10 @@ stock CreateMapIcons()
 	CreateDynamicMapIcon(1199.2405, -919.0047,  42.1115, 10, 0, -1, -1, -1, 300.0, MAPICON_LOCAL); 	// Burg
 	CreateDynamicMapIcon(592.6005, -1236.4147, 18.5241, 52, 0, -1, -1, -1, 300.0, MAPICON_LOCAL); 	// Banka
 	CreateDynamicMapIcon(546.5988, -1287.6221, 17.3315, 46, 0, -1, -1, -1, 300.0, MAPICON_LOCAL); 	// Wangs
-	CreateDynamicMapIcon(327.37140, -620.70010, 8.70690, 11, 0, -1, -1, -1, 500.0, MAPICON_LOCAL); 	// Rudnik
+	CreateDynamicMapIcon(327.37140, -620.70010, 8.70690, 11, 0, -1, -1, -1, 300.0, MAPICON_LOCAL); 	// Rudnik
+	CreateDynamicMapIcon(1328.3898, 272.4136, 19.3820, 51, 0, -1, -1, -1, 300.0, MAPICON_LOCAL); //Transporter
+	CreateDynamicMapIcon(1154.2377,-1770.3418,16.5938, 55, 0, -1, -1, -1, 300.0, MAPICON_LOCAL); //DMV
+	CreateDynamicMapIcon(1126.3856,-2036.8966,69.8837, 42, 0, -1, -1, -1, 300.0, MAPICON_LOCAL); //GOVERNORS MANSION
 	return 1;
 }
 
@@ -183,11 +186,11 @@ public OnFilterScriptInit()
 	eastStationDoor[15] = CreateDynamicObject(1495, 2879.107177, -832.352050, -22.719406, 0.000000, 0.000000, 270.000000, 12, 3, -1, 600.00, 600.00);
 	SetDynamicObjectMaterial(eastStationDoor[15], 2, 18250, "cw_junkbuildcs_t", "Was_scrpyd_baler_locker", 0x00000000);
 
-	//SD
+	/*/SD
 	sdIntDoors1 = CreateDynamicObject(1569, 602.049438, -565.793701, 41.418514, 0.000000, -0.000007, -89.999984, 8, -1, -1, 600.00, 600.00);
 	sdIntDoors2 = CreateDynamicObject(1569, 604.469482, -568.015014, 41.418514, 0.000007, 0.000000, 179.999954, 8, -1, -1, 600.00, 600.00);
 	sdIntDoors3 = CreateDynamicObject(1569, 617.409057, -560.354003, 44.888515, 0.000000, -0.000007, -89.999984, 8, -1, -1, 600.00, 600.00);
-	sdIntDoors4 = CreateDynamicObject(1569, 617.409057, -558.494506, 44.888515, -0.000000, 0.000007, 89.999969, 8, -1, -1, 600.00, 600.00);
+	sdIntDoors4 = CreateDynamicObject(1569, 617.409057, -558.494506, 44.888515, -0.000000, 0.000007, 89.999969, 8, -1, -1, 600.00, 600.00);*/
 
 	// New house int - Putnik
 	CreateDynamicObject(19864, 2577.23535, -1300.28516, 1062.48743,   0.00000, 0.00000, 90.00000);
@@ -325,9 +328,9 @@ public OnPlayerConnect(playerid) {
 
 stock RemovePlayerBuildings(playerid)
 {
-	//SD
+	/*//SD
     RemoveBuildingForPlayer(playerid, 13484, 738.3984, -553.9844, 21.9609, 0.25);
-	RemoveBuildingForPlayer(playerid, 13137, 646.1641, -527.8984, 28.0703, 0.25);
+	RemoveBuildingForPlayer(playerid, 13137, 646.1641, -527.8984, 28.0703, 0.25);*/
 
 	//PD Station
 	RemoveBuildingForPlayer(playerid, 3622, 2135.739, -2186.449, 15.671, 0.250);
@@ -874,7 +877,7 @@ public OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
 {
 	if( PRESSED(KEY_YES) ) // Tipka Y
 	{
-	    if( IsPlayerInRangeOfPoint(playerid, 5.0, 2163.574462, -2158.066650, 13.286876)) {
+	    if( IsPlayerInRangeOfPoint(playerid, 10.0, 2163.574462, -2158.066650, 13.286876)) {
 			if(rampastatus == 0) {
     			SetDynamicObjectRot(rampa, 0.0000, 0.0000, 0.0000);
 				rampastatus = 1;
@@ -1774,7 +1777,7 @@ public OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
 				sdDoorsStatus4 = 0;
 			}
 		}
-	}
+	/*}
 	if( PRESSED(KEY_SECONDARY_ATTACK) ) { // Tipka F
 		if(IsPlayerInRangeOfPoint(playerid, 2.5, 2070.0911,2185.0234,-31.4410)) { //LSSD Lift prvi sprat za drugi
 			SetPlayerPosEx(playerid, 2034.8427,2185.9893,-31.4410, 6, 20, true);
@@ -1796,7 +1799,7 @@ public OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
 		}
 		else if(IsPlayerInRangeOfPoint(playerid, 2.5, 2044.8350,2186.1943,-31.4410)) { //LSSD HELIO EXIT
             SetPlayerPosEx(playerid,621.2169,-569.2618,26.2097, 0, 0, true);
-            GameTextForPlayer(playerid, "SASD helio", 3000, 1);
+            GameTextForPlayer(playerid, "SASD helio", 3000, 1); */
 		}
 		else if(IsPlayerInRangeOfPoint(playerid, 2.5, 1333.6085,1088.5511,-20.3352)) { //LSPD ulaz u holding room
             SetPlayerPosEx(playerid,1435.3768,1088.4629,-20.5684, 0, 27, true);
@@ -1806,7 +1809,6 @@ public OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
             SetPlayerPosEx(playerid,1333.6085,1088.5511,-20.3352, 0, 27, true);
             GameTextForPlayer(playerid, "LSPD Lobby", 3000, 1);
 		}
-	}
 	return 1;
 }
 

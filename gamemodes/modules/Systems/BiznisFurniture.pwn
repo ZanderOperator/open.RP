@@ -76,7 +76,15 @@ new
 		{ 1541 	, "Tocionik piva"   	, 800 },
 		{ 2425 	, "Tocionik Sprunka"   	, 700 },
 		{ 2427 	, "Tocionik Sprunka"   	, 750 },
-		{ 11686 , "Sank i tocionici"   	, 1500}
+		{ 11686 , "Sank i tocionici"   	, 1500},
+		{ -2114, "Coa beerbottles1" , 150 },
+        { -2115, "Coa beerbottles2" , 100 },
+        { -2116, "Coa beerbottles3" , 200 },
+        { -2117, "Coa beerbottles4" , 125 },
+        { -2118, "Coa beerbottles5" ,  80 },
+        { -2119, "Coa beerbottles6" , 250 },
+        { -2120, "Coa beerbottles7" , 100 },
+        { -2121, "Coa beerbottles8" , 500 }
 };
 
 enum E_247_FRIDGES_OBJECTS_DATA
@@ -134,7 +142,41 @@ new
 		{ 2493  , "Igracke1"			, 150 },
 		{ 2494  , "Igracke2"			, 150 },
 		{ 2496  , "Igracke3"			, 150 },
-		{ 2694  , "Kutija za obucu"		, 10  }
+		{ 2694  , "Kutija za obucu"		, 10  },
+		{ 1513  , "Police"		, 30  },
+		{ 1842  , "Sanduk hrane1"		, 100  },
+		{ 1843  , "Sanduk hrane2"		, 120  },
+		{ 1844  , "Sanduk hrane3"		, 120  },
+		{ 1845  , "Sanduk hrane4"		, 80   },
+		{ 1847  , "Sanduk hrane5"		, 100  },
+		{ 1848  , "Sanduk hrane6"		, 120  },
+		{ 1883  , "Sanduk hrane7"		, 100  },
+		{ 1884  , "Sanduk hrane8"		, 100  },
+		{ 1887  , "Sanduk hrane9"		, 100  },
+		{ 1888  , "Sanduk hrane10"		, 150  },
+		{ 1889  , "Sanduk hrane11"		, 150  },
+		{ 1890  , "Sanduk hrane12"		, 115  },
+		{ 1891  , "Sanduk hrane13"		, 80   },
+		{ 2413  , "Izlog1"		, 80   },
+		{ 2433  , "Izlog2"		, 80   },
+		{ 2436  , "Izlog3"		, 80   },
+		{ 2488  , "Casopis1"		, 80   },
+		{ 2489  , "Casopis2"		, 80   },
+		{ 2490  , "Casopis3"		, 80   },
+		{ 2492  , "Casopis4"		, 80   },
+		{ 2493  , "Casopis5"		, 80   },
+		{ 2494  , "Casopis6"		, 80   },
+		{ 2495  , "Casopis7"		, 80   },
+		{ 2496  , "Casopis8"		, 80   },
+		{ 2495  , "Casopis9"		, 80   },
+		{ -2114, "Coa beerbottles1" , 150 },
+        { -2115, "Coa beerbottles2" , 100 },
+        { -2116, "Coa beerbottles3" , 200 },
+        { -2117, "Coa beerbottles4" , 125 },
+        { -2118, "Coa beerbottles5" ,  80 },
+        { -2119, "Coa beerbottles6" , 250 },
+        { -2120, "Coa beerbottles7" , 100 },
+        { -2121, "Coa beerbottles8" , 500 }
 };
 
 enum E_CASH_REGISTER_OBJECTS_DATA
@@ -179,26 +221,117 @@ new
 		{ 2400	, "Hobby Polica5"		, 100 	},
 		{ 2708	, "Hobby Polica6"		, 100 	},
 		{ 19938	, "Modern Polica1"		, 200 	},
-		{ 19939	, "Modern Polica2"		, 200 	}
+		{ 19939	, "Modern Polica2"		, 200 	},
+		{ 2089  , "Drvena polica"		, 150   },
+		{ 2089  , "Drvena polica"		, 150   },
+		{ 2078  , "Starinski ormar"		, 150   },
+		{ 2161  , "Niska polica1"		, 200   },
+		{ 2162  , "Niska polica2"		, 100   },
+		{ 2163  , "Kancelarijski ormar"		, 250   },
+		{ 2164  , "Ormar sa policom"		, 200   },
+		{ 2167  , "Uski ormar"		, 120   },
+		{ 2191  , "Plava polica"		, 215   },
+		{ 2200  , "Veliki ormar"		, 225   },
+		{ 2204  , "Ormar sa policom"		, 225   },
+		{ 2063  , "Stare police"		, 200   }
 };
 
 enum E_WAREHOUSE_OBJECTS_DATA
 {
     whId,
-	whName[20],
+	whName[23],
     whPrice
 }
 new
 	ObjectsWareHouse[][ E_WAREHOUSE_OBJECTS_DATA ] = {
-		{ 922	, "Kutije"			, 100	},
+		{ 922	, "Kutije1"			, 100	},
 		{ 939	, "Polica Kutija"	, 1000	},
 		{ 1271 	, "Kutija"			, 800	},
-		{ 1431 	, "Drvene Kutije"	, 300	},
+		{ 1431 	, "Drvene Kutije1"	, 300	},
 		{ 2973 	, "Cargo Kutija"	, 900	},
 		{ 3630 	, "Velike Kutije"	, 2500	},
 		{ 925	, "Bacve"			, 160	},
 		{ 929	, "Generator"		, 2000	},
-		{ 930	, "O2 Spremnik"		, 3500	}
+		{ 930	, "O2 Spremnik"		, 3500	},
+		{ 3390	, "Stol1"		, 250	},
+		{ 3391	, "Stol2"		, 250	},
+		{ 3392	, "Stol3"		, 200	},
+		{ 3393	, "Stol4"		, 200	},
+		{ 3394	, "Stol5"		, 225	},
+		{ 3395	, "Stol6"		, 200	},
+		{ 3396	, "Stol7"		, 225	},
+		{ 3397	, "Stol8"		, 180	},
+		{ 11729	, "Ormaric1"		, 100	},
+		{ 11730	, "Ormaric2"		, 100	},
+		{ 2332	, "Sef"		, 250	},
+		{ 19813	, "Steker1"		, 50	},
+		{ 19814	, "Steker2"		, 50	},
+		{ 19826	, "Prekidac1"		, 75	},
+		{ 19827	, "Prekidac2"		, 75	},
+		{ 19828	, "Prekidac3"		, 75	},
+		{ 19829	, "Prekidac4"		, 75	},
+		{ 19807	, "Fiksni telefon"		, 100	},
+		{ 19808	, "Tastatura"		, 100	},
+		{ 2312	, "Televizor1"		, 120	},
+		{ 2316	, "Televizor2"		, 120	},
+		{ 2317	, "Televizor3"		, 150	},
+		{ 2318	, "Televizor4"		, 120	},
+		{ 2320	, "Televizor5"		, 120	},
+		{ 2322	, "Televizor6"		, 150	},
+		{ 1421	, "Drvene kutije2"		, 300	},
+		{ 1421	, "Drvene kutije2"		, 300	},
+		{ 2254  , "Zidna slika1"              , 200 },
+        { 2255  , "Zidna slika2"              , 250 },
+        { 2256  , "Zidna slika3"              , 350 },
+        { 2257  , "Zidna slika4"              , 370 },
+        { 2258  , "Zidna slika5"              , 200 },
+        { 2259  , "Zidna slika6"              , 200 },
+        { 918  , "Bacva1"           , 150 },
+        { 1217  , "Bacva2"          , 150 },
+        { 1218  , "Bacva3"          , 150 },
+        { 1222  , "Bacva4"          , 150 },
+        { 1225  , "Bacva5"          , 100 },
+        { 1464  , "Skela1"          , 500 },
+        { 1466  , "Skela2"          , 500 },
+        { 1438  , "Kutije2"         , 150 },
+        { 1440  , "Kutije3"         , 200 },
+        { 1441  , "Kutije4"         , 300 },
+        { 1702, "Svijetlo smedi kauc" , 100 },
+        { 1703, "Crni kauc"           , 100 },
+        { 1706, "Ljubicasti kauc"     , 100 },
+        { 1707, "Lazybag kauc"        , 100 },
+        { 1709, "Ugaona garnitura"    , 150 },
+        { 1710, "Cetvorosed"          , 100 },
+        { 1712, "Dvosjed"             , 100 },
+        { 1713, "Plavi kauc"          , 100 },
+        { 1723, "Crni kauc"           , 150 },
+        { 1726, "Kauc - crna koza"    , 250 },
+        { 1728, "Krem dvosed"         , 100 },
+        { 1753, "Smedi trosed - koza" , 200 },
+        { 1756, "Ukraseni dvosed"     , 100 },
+        { 1757, "Rozi dvosed"         , 150 },
+        { 1760, "Plavi trosed"        , 250 },
+        { 1761, "Smedi drveni trosed" , 100 },
+        { 1763, "Rozi dvosed - mali"  , 100 },
+        { 1764, "Braon sofa"          , 100 },
+        { 1766, "Siva sofa"           , 100 },
+        { 1768, "Plavi trosed"        , 100 },
+        { 2290, "Smedi sofa - trosed" , 150 },
+        { 11685,"Smedi kauc sa naslonom", 150 },
+        { -2035, "Kutija oruzje1" , 800 },
+        { -2036, "Kutija oruzje2" , 500 },
+        { -2037, "Coa laptop" , 250 },
+        { -2039, "Coa pepeljara" , 200 },
+        { -2041, "Coa shisa" , 400 },
+        { -2042, "Coa vaga" , 200 },
+        { -2114, "Coa beerbottles1" , 150 },
+        { -2115, "Coa beerbottles2" , 100 },
+        { -2116, "Coa beerbottles3" , 200 },
+        { -2117, "Coa beerbottles4" , 125 },
+        { -2118, "Coa beerbottles5" ,  80 },
+        { -2119, "Coa beerbottles6" , 250 },
+        { -2120, "Coa beerbottles7" , 100 },
+        { -2121, "Coa beerbottles8" , 500 }
 };
 
 enum E_SECURITY_OBJECTS_DATA
@@ -213,7 +346,12 @@ new
 		{ 1892	, "Detektor"			, 4000},
 		{ 1622	, "Sigurnosna Kamera"	, 500 },
 		{ 2886	, "Keypad"				, 150 },
-		{ 1615	, "Alarm"				, 100 }
+		{ 1615	, "Alarm"				, 100 },
+		{ 1424	, "Ogradica1"			, 100 },
+		{ 1423	, "Ogradica2"			, 100 },
+		{ 1427	, "Ogradica3"			, 100 },
+		{ 1459	, "Ogradica4"			, 100 },
+		{ 1459	, "Ogradica4"			, 100 }
 };
 
 enum E_PARTICLES_OBJECTS_DATA
@@ -479,41 +617,25 @@ public OnBizzFurnitureObjectsLoad(biznisid)
 		cache_get_value_name_int(i, 	"texture_2"		, BizzInfo[ biznisid ][ bFurTxtId ][ i ][ 1 ]);
 		cache_get_value_name_int(i, 	"texture_3"		, BizzInfo[ biznisid ][ bFurTxtId ][ i ][ 2 ]);
 		cache_get_value_name_int(i, 	"texture_4"		, BizzInfo[ biznisid ][ bFurTxtId ][ i ][ 3 ]);
+		cache_get_value_name_int(i, 	"texture_5"		, BizzInfo[ biznisid ][ bFurTxtId ][ i ][ 4 ]);
 		cache_get_value_name_int(i, 	"color_1"		, BizzInfo[ biznisid ][ bFurColId ][ i ][ 0 ]);
 		cache_get_value_name_int(i, 	"color_2"		, BizzInfo[ biznisid ][ bFurColId ][ i ][ 1 ]);
 		cache_get_value_name_int(i, 	"color_3"		, BizzInfo[ biznisid ][ bFurColId ][ i ][ 2 ]);
 		cache_get_value_name_int(i, 	"color_4"		, BizzInfo[ biznisid ][ bFurColId ][ i ][ 3 ]);
+		cache_get_value_name_int(i, 	"color_5"		, BizzInfo[ biznisid ][ bFurColId ][ i ][ 4 ]);
 
 		BizzInfo[ biznisid ][ bFurObjectid ][ i ]	= CreateDynamicObject(BizzInfo[ biznisid ][ bFurModelid ][ i ], BizzInfo[ biznisid ][ bFurPosX ][ i ], BizzInfo[ biznisid ][ bFurPosY ][ i ], BizzInfo[ biznisid ][ bFurPosZ ][ i ], BizzInfo[ biznisid ][ bFurRotX ][ i ], BizzInfo[ biznisid ][ bFurRotY ][ i ], BizzInfo[ biznisid ][ bFurRotZ ][ i ], BizzInfo[ biznisid ][ bVirtualWorld ], BizzInfo[ biznisid ][ bInterior ], -1, FURNITURE_OBJECT_DRAW_DISTANCE, FURNITURE_OBJECT_DRAW_DISTANCE);
 
-		new
-			colorid;
-
-		if( BizzInfo[ biznisid ][ bFurColId ][ i ][ 0 ] > -1 ) {
-			sscanf(ColorList[ BizzInfo[ biznisid ][ bFurColId ][ i ][ 0 ] ][ clRGB ], "h", colorid);
-			SetDynamicObjectMaterial(BizzInfo[ biznisid ][ bFurObjectid ][ i ], 0, ObjectTextures[ BizzInfo[ biznisid ][ bFurTxtId ][ i ][ 0 ] ][ tModel ], ObjectTextures[ BizzInfo[ biznisid ][ bFurTxtId ][ i ][ 0 ] ][ tTXDName ], ObjectTextures[ BizzInfo[ biznisid ][ bFurTxtId ][ i ][ 0 ] ][ tName ], colorid);
+		new colorid;
+		for(new slot = 0; slot < MAX_TEXTURE_SLOTS; slot++)
+		{	
+			if( BizzInfo[ biznisid ][ bFurColId ][ i ][ slot ] > -1 ) {
+				sscanf(ColorList[ BizzInfo[ biznisid ][ bFurColId ][ i ][ slot ] ][ clRGB ], "h", colorid);
+				SetDynamicObjectMaterial(BizzInfo[ biznisid ][ bFurObjectid ][ i ], slot, ObjectTextures[ BizzInfo[ biznisid ][ bFurTxtId ][ i ][ slot ] ][ tModel ], ObjectTextures[ BizzInfo[ biznisid ][ bFurTxtId ][ i ][ slot ] ][ tTXDName ], ObjectTextures[ BizzInfo[ biznisid ][ bFurTxtId ][ i ][ slot ] ][ tName ], colorid);
+			}
+			else
+				SetDynamicObjectMaterial(BizzInfo[ biznisid ][ bFurObjectid ][ i ], slot, ObjectTextures[ BizzInfo[ biznisid ][ bFurTxtId ][ i ][ slot ] ][ tModel ], ObjectTextures[ BizzInfo[ biznisid ][ bFurTxtId ][ i ][ slot ] ][ tTXDName ], ObjectTextures[ BizzInfo[ biznisid ][ bFurTxtId ][ i ][ slot ] ][ tName ], 0);
 		}
-		else
-			SetDynamicObjectMaterial(BizzInfo[ biznisid ][ bFurObjectid ][ i ], 0, ObjectTextures[ BizzInfo[ biznisid ][ bFurTxtId ][ i ][ 0 ] ][ tModel ], ObjectTextures[ BizzInfo[ biznisid ][ bFurTxtId ][ i ][ 0 ] ][ tTXDName ], ObjectTextures[ BizzInfo[ biznisid ][ bFurTxtId ][ i ][ 0 ] ][ tName ], 0);
-
-		if( BizzInfo[ biznisid ][ bFurColId ][ i ][ 1 ] > -1 ) {
-			sscanf(ColorList[ BizzInfo[ biznisid ][ bFurColId ][ i ][ 1 ] ][ clRGB ], "h", colorid);
-			SetDynamicObjectMaterial(BizzInfo[ biznisid ][ bFurObjectid ][ i ], 1, ObjectTextures[ BizzInfo[ biznisid ][ bFurTxtId ][ i ][ 1 ] ][ tModel ], ObjectTextures[ BizzInfo[ biznisid ][ bFurTxtId ][ i ][ 1 ] ][ tTXDName ], ObjectTextures[ BizzInfo[ biznisid ][ bFurTxtId ][ i ][ 1 ] ][ tName ], colorid);
-		}
-		else
-			SetDynamicObjectMaterial(BizzInfo[ biznisid ][ bFurObjectid ][ i ], 1, ObjectTextures[ BizzInfo[ biznisid ][ bFurTxtId ][ i ][ 1 ] ][ tModel ], ObjectTextures[ BizzInfo[ biznisid ][ bFurTxtId ][ i ][ 1 ] ][ tTXDName ], ObjectTextures[ BizzInfo[ biznisid ][ bFurTxtId ][ i ][ 1 ] ][ tName ], 0);
-		if( BizzInfo[ biznisid ][ bFurColId ][ i ][ 2 ] > -1 ) {
-			sscanf(ColorList[ BizzInfo[ biznisid ][ bFurColId ][ i ][ 2 ] ][ clRGB ], "h", colorid);
-			SetDynamicObjectMaterial(BizzInfo[ biznisid ][ bFurObjectid ][ i ], 2, ObjectTextures[ BizzInfo[ biznisid ][ bFurTxtId ][ i ][ 2 ] ][ tModel ], ObjectTextures[ BizzInfo[ biznisid ][ bFurTxtId ][ i ][ 2 ] ][ tTXDName ], ObjectTextures[ BizzInfo[ biznisid ][ bFurTxtId ][ i ][ 2 ] ][ tName ], colorid);
-		}
-		else
-			SetDynamicObjectMaterial(BizzInfo[ biznisid ][ bFurObjectid ][ i ], 2, ObjectTextures[ BizzInfo[ biznisid ][ bFurTxtId ][ i ][ 2 ] ][ tModel ], ObjectTextures[ BizzInfo[ biznisid ][ bFurTxtId ][ i ][ 2 ] ][ tTXDName ], ObjectTextures[ BizzInfo[ biznisid ][ bFurTxtId ][ i ][ 2 ] ][ tName ], 0);
-		if( BizzInfo[ biznisid ][ bFurColId ][ i ][ 3 ] > -1 ) {
-			sscanf(ColorList[ BizzInfo[ biznisid ][ bFurColId ][ i ][ 3 ] ][ clRGB ], "h", colorid);
-			SetDynamicObjectMaterial(BizzInfo[ biznisid ][ bFurObjectid ][ i ], 3, ObjectTextures[ BizzInfo[ biznisid ][ bFurTxtId ][ i ][ 3 ] ][ tModel ], ObjectTextures[ BizzInfo[ biznisid ][ bFurTxtId ][ i ][ 3 ] ][ tTXDName ], ObjectTextures[ BizzInfo[ biznisid ][ bFurTxtId ][ i ][ 3 ] ][ tName ], colorid);
-		}
-		else
-			SetDynamicObjectMaterial(BizzInfo[ biznisid ][ bFurObjectid ][ i ], 3, ObjectTextures[ BizzInfo[ biznisid ][ bFurTxtId ][ i ][ 3 ] ][ tModel ], ObjectTextures[ BizzInfo[ biznisid ][ bFurTxtId ][ i ][ 3 ] ][ tTXDName ], ObjectTextures[ BizzInfo[ biznisid ][ bFurTxtId ][ i ][ 3 ] ][ tName ], 0);
 	}
 	return 1;
 }
@@ -936,22 +1058,20 @@ stock static CreateBiznisFurnitureObject(playerid, modelid, Float:x, Float:y, Fl
 	BizzInfo[ biznisid ][ bFurRotX ][ index ]		= rx;
 	BizzInfo[ biznisid ][ bFurRotY ][ index ]		= ry;
 	BizzInfo[ biznisid ][ bFurRotZ ][ index ]		= rz;
-	BizzInfo[ biznisid ][ bFurTxtId ][ index ][ 0 ]	= 0;
-	BizzInfo[ biznisid ][ bFurTxtId ][ index ][ 1 ]	= 0;
-	BizzInfo[ biznisid ][ bFurTxtId ][ index ][ 2 ]	= 0;
-	BizzInfo[ biznisid ][ bFurTxtId ][ index ][ 3 ]	= 0;
-	BizzInfo[ biznisid ][ bFurColId ][ index ][ 0 ]	= -1;
-	BizzInfo[ biznisid ][ bFurColId ][ index ][ 1 ]	= -1;
-	BizzInfo[ biznisid ][ bFurColId ][ index ][ 2 ]	= -1;
-	BizzInfo[ biznisid ][ bFurColId ][ index ][ 3 ]	= -1;
-
+	
+	for(new i = 0; i < MAX_TEXTURE_SLOTS; i++)
+	{
+		BizzInfo[ biznisid ][ bFurTxtId ][ index ][ i ]	= 0;
+		BizzInfo[ biznisid ][ bFurColId ][ index ][ i ]	= -1;
+	}
+	
 	if( doors ) {
 		BizzInfo[ biznisid ][ bFurDoor ][ index ] 		= 1;
 		BizzInfo[ biznisid ][ bFurDoorZ ][ index ] 		= -1.0;
 		BizzInfo[ biznisid ][ bFurDoorLckd ][ index ]	= 0;
 	}
 
-	format(insertObject, 1512, "INSERT INTO `biznis_furniture`(`biznisid`, `modelid`, `door`, `door_z`, `locked_door`, `pos_x`, `pos_y`, `pos_z`, `rot_x`, `rot_y`, `rot_z`, `texture_1`, `texture_2`, `texture_3`, `texture_4`, `color_1`, `color_2`, `color_3`, `color_4`) VALUES ('%d', '%d', '%d', '%f', '%d', '%f', '%f', '%f', '%f', '%f', '%f', '%d', '%d', '%d', '%d', '%d', '%d', '%d', '%d')",
+	format(insertObject, 1512, "INSERT INTO `biznis_furniture`(`biznisid`, `modelid`, `door`, `door_z`, `locked_door`, `pos_x`, `pos_y`, `pos_z`, `rot_x`, `rot_y`, `rot_z`, `texture_1`, `texture_2`, `texture_3`, `texture_4`, `texture_5`, `color_1`, `color_2`, `color_3`, `color_4`, `color_5`) VALUES ('%d', '%d', '%d', '%f', '%d', '%f', '%f', '%f', '%f', '%f', '%f', '%d', '%d', '%d', '%d', '%d', '%d', '%d', '%d', '%d', '%d')",
 		BizzInfo[ biznisid ][ bSQLID ],
 		BizzInfo[ biznisid ][ bFurModelid ][ index ],
 		BizzInfo[ biznisid ][ bFurDoor ][ index ],
@@ -967,13 +1087,14 @@ stock static CreateBiznisFurnitureObject(playerid, modelid, Float:x, Float:y, Fl
 		BizzInfo[ biznisid ][ bFurTxtId ][ index ][ 1 ],
 		BizzInfo[ biznisid ][ bFurTxtId ][ index ][ 2 ],
 		BizzInfo[ biznisid ][ bFurTxtId ][ index ][ 3 ],
+		BizzInfo[ biznisid ][ bFurTxtId ][ index ][ 4 ],
 		BizzInfo[ biznisid ][ bFurColId ][ index ][ 0 ],
 		BizzInfo[ biznisid ][ bFurColId ][ index ][ 1 ],
 		BizzInfo[ biznisid ][ bFurColId ][ index ][ 2 ],
-		BizzInfo[ biznisid ][ bFurColId ][ index ][ 3 ]
+		BizzInfo[ biznisid ][ bFurColId ][ index ][ 3 ],
+		BizzInfo[ biznisid ][ bFurColId ][ index ][ 4 ]
 	);
 	mysql_tquery(g_SQL, insertObject, "OnBizzFurnitureObjectCreate", "ii", biznisid, index);
-	printf("[DEBUG]: %s (errno %d)", insertObject, mysql_errno());
 
 	#if defined MOD_DEBUG
 		printf("[DEBUG] FURNITURE BUY: player(%s) | index(%d) | biznisid(%d) | modelid(%d) | pos(%.2f, %.2f, %.2f)",
@@ -995,7 +1116,7 @@ stock static CreateBiznisFurnitureObject(playerid, modelid, Float:x, Float:y, Fl
 		new
 			price = GetFurnitureObjectPrice(playerid, BizzPlayerPrwsIndex[ playerid ]);
 		va_SendClientMessage(playerid, COLOR_GREEN, "[INFO]: Kupili ste objekt za %d$ i stavili ga u slot %d!", price, index + 1);
-		PlayerToBudgetMoney(playerid, price); // Novac ide u prora�un
+		PlayerToBudgetMoney(playerid, price); // Novac ide u proracun
 		Bit4_Set( r_PlayerBizzEditState, playerid, 0 );
 
 		new
@@ -1031,15 +1152,11 @@ stock static CreateBiznisFurnitureObject(playerid, modelid, Float:x, Float:y, Fl
 		BizzInfo[ biznisid ][ bFurRotY ][ index ]		= 0.0;
 		BizzInfo[ biznisid ][ bFurRotZ ][ index ]		= 0.0;
 
-		BizzInfo[ biznisid ][ bFurTxtId ][ index ][ 0 ]	= 0;
-		BizzInfo[ biznisid ][ bFurTxtId ][ index ][ 1 ]	= 0;
-		BizzInfo[ biznisid ][ bFurTxtId ][ index ][ 2 ]	= 0;
-		BizzInfo[ biznisid ][ bFurTxtId ][ index ][ 3 ]	= 0;
-
-		BizzInfo[ biznisid ][ bFurColId ][ index ][ 0 ]	= -1;
-		BizzInfo[ biznisid ][ bFurColId ][ index ][ 1 ]	= -1;
-		BizzInfo[ biznisid ][ bFurColId ][ index ][ 2 ]	= -1;
-		BizzInfo[ biznisid ][ bFurColId ][ index ][ 3 ]	= -1;
+		for(new i = 0; i < MAX_TEXTURE_SLOTS; i++)
+		{
+			BizzInfo[ biznisid ][ bFurTxtId ][ index ][ i ]	= 0;
+			BizzInfo[ biznisid ][ bFurColId ][ index ][ i ]	= -1;
+		}
 
 		va_SendClientMessage(playerid, COLOR_RED, "[MySQL ERROR #%d]: Dogodila se pogreska prilikom spremanja objekta (index: %d) u bazu podataka! Vasi novci nisu oduzeti, pokusajte ponovno kasnije!", mysql_errno(), index);
 	}
@@ -1063,39 +1180,29 @@ stock static CopyFurnitureObject(playerid, copyid)
 	BizzInfo[ biznisid ][ bFurRotX ][ index ]			= BizzInfo[ biznisid ][ bFurRotX ][ copyid ];
 	BizzInfo[ biznisid ][ bFurRotY ][ index ]			= BizzInfo[ biznisid ][ bFurRotY ][ copyid ];
 	BizzInfo[ biznisid ][ bFurRotZ ][ index ]			= BizzInfo[ biznisid ][ bFurRotZ ][ copyid ];
-	BizzInfo[ biznisid ][ bFurTxtId ][ index ][ 0 ]		= BizzInfo[ biznisid ][ bFurTxtId ][ copyid ][ 0 ];
-	BizzInfo[ biznisid ][ bFurTxtId ][ index ][ 1 ]		= BizzInfo[ biznisid ][ bFurTxtId ][ copyid ][ 1 ];
-	BizzInfo[ biznisid ][ bFurTxtId ][ index ][ 2 ]		= BizzInfo[ biznisid ][ bFurTxtId ][ copyid ][ 2 ];
-	BizzInfo[ biznisid ][ bFurTxtId ][ index ][ 3 ]		= BizzInfo[ biznisid ][ bFurTxtId ][ copyid ][ 3 ];
-	BizzInfo[ biznisid ][ bFurColId ][ index ][ 0 ]		= BizzInfo[ biznisid ][ bFurColId ][ copyid ][ 0 ];
-	BizzInfo[ biznisid ][ bFurColId ][ index ][ 1 ]		= BizzInfo[ biznisid ][ bFurColId ][ copyid ][ 1 ];
-	BizzInfo[ biznisid ][ bFurColId ][ index ][ 2 ]		= BizzInfo[ biznisid ][ bFurColId ][ copyid ][ 2 ];
-	BizzInfo[ biznisid ][ bFurColId ][ index ][ 3 ]		= BizzInfo[ biznisid ][ bFurColId ][ copyid ][ 3 ];
+	
+	for(new i = 0; i < MAX_TEXTURE_SLOTS; i++)
+	{
+		BizzInfo[ biznisid ][ bFurTxtId ][ index ][ i ]		= BizzInfo[ biznisid ][ bFurTxtId ][ copyid ][ i ];
+		BizzInfo[ biznisid ][ bFurColId ][ index ][ i ]		= BizzInfo[ biznisid ][ bFurColId ][ copyid ][ i ];
+	}
 
 	BizzInfo[ biznisid ][ bFurObjectid ][ index ]	= CreateDynamicObject(BizzInfo[ biznisid ][ bFurModelid ][ index ], BizzInfo[ biznisid ][ bFurPosX ][ index ], BizzInfo[ biznisid ][ bFurPosY ][ index ], BizzInfo[ biznisid ][ bFurPosZ ][ index ], BizzInfo[ biznisid ][ bFurRotX ][ index ], BizzInfo[ biznisid ][ bFurRotY ][ index ], BizzInfo[ biznisid ][ bFurRotZ ][ index ], GetPlayerVirtualWorld(playerid), GetPlayerInterior(playerid), -1, FURNITURE_OBJECT_DRAW_DISTANCE, FURNITURE_OBJECT_DRAW_DISTANCE);
 
-	new
-		colorid;
-	if( BizzInfo[ biznisid ][ bFurColId ][ index ][ 0 ] > -1 ) {
-		sscanf(ColorList[ BizzInfo[ biznisid ][ bFurColId ][ index ][ 0 ] ][ clRGB ], "h", colorid);
-		SetDynamicObjectMaterial(BizzInfo[ biznisid ][ bFurObjectid ][ index ], 0, ObjectTextures[ BizzInfo[ biznisid ][ bFurTxtId ][ index ][ 0 ] ][ tModel ], ObjectTextures[ BizzInfo[ biznisid ][ bFurTxtId ][ index ][ 0 ] ][ tTXDName ], ObjectTextures[ BizzInfo[ biznisid ][ bFurTxtId ][ index ][ 0 ] ][ tName ], colorid);
-	}
-	if( BizzInfo[ biznisid ][ bFurColId ][ index ][ 1 ] > -1 ) {
-		sscanf(ColorList[ BizzInfo[ biznisid ][ bFurColId ][ index ][ 1 ] ][ clRGB ], "h", colorid);
-		SetDynamicObjectMaterial(BizzInfo[ biznisid ][ bFurObjectid ][ index ], 1, ObjectTextures[ BizzInfo[ biznisid ][ bFurTxtId ][ index ][ 1 ] ][ tModel ], ObjectTextures[ BizzInfo[ biznisid ][ bFurTxtId ][ index ][ 1 ] ][ tTXDName ], ObjectTextures[ BizzInfo[ biznisid ][ bFurTxtId ][ index ][ 1 ] ][ tName ], colorid);
-	}
-	if( BizzInfo[ biznisid ][ bFurColId ][ index ][ 2 ] > -1 ) {
-		sscanf(ColorList[ BizzInfo[ biznisid ][ bFurColId ][ index ][ 2 ] ][ clRGB ], "h", colorid);
-		SetDynamicObjectMaterial(BizzInfo[ biznisid ][ bFurObjectid ][ index ], 2, ObjectTextures[ BizzInfo[ biznisid ][ bFurTxtId ][ index ][ 2 ] ][ tModel ], ObjectTextures[ BizzInfo[ biznisid ][ bFurTxtId ][ index ][ 2 ] ][ tTXDName ], ObjectTextures[ BizzInfo[ biznisid ][ bFurTxtId ][ index ][ 2 ] ][ tName ], colorid);
-	}
-	if( BizzInfo[ biznisid ][ bFurColId ][ index ][ 3 ] > -1 ) {
-		sscanf(ColorList[ BizzInfo[ biznisid ][ bFurColId ][ index ][ 3 ] ][ clRGB ], "h", colorid);
-		SetDynamicObjectMaterial(BizzInfo[ biznisid ][ bFurObjectid ][ index ], 3, ObjectTextures[ BizzInfo[ biznisid ][ bFurTxtId ][ index ][ 3 ] ][ tModel ], ObjectTextures[ BizzInfo[ biznisid ][ bFurTxtId ][ index ][ 3 ] ][ tTXDName ], ObjectTextures[ BizzInfo[ biznisid ][ bFurTxtId ][ index ][ 3 ] ][ tName ], colorid);
+	new colorid;
+	for(new slot = 0; slot < MAX_TEXTURE_SLOTS; slot++)
+	{	
+		if( BizzInfo[ biznisid ][ bFurColId ][ index ][ slot ] > -1 ) {
+			sscanf(ColorList[ BizzInfo[ biznisid ][ bFurColId ][ index ][ slot ] ][ clRGB ], "h", colorid);
+			SetDynamicObjectMaterial(BizzInfo[ biznisid ][ bFurObjectid ][ index ], slot, ObjectTextures[ BizzInfo[ biznisid ][ bFurTxtId ][ index ][ slot ] ][ tModel ], ObjectTextures[ BizzInfo[ biznisid ][ bFurTxtId ][ index ][ slot ] ][ tTXDName ], ObjectTextures[ BizzInfo[ biznisid ][ bFurTxtId ][ index ][ slot ] ][ tName ], colorid);
+		}
+		else
+			SetDynamicObjectMaterial(BizzInfo[ biznisid ][ bFurObjectid ][ index ], slot, ObjectTextures[ BizzInfo[ biznisid ][ bFurTxtId ][ index ][ slot ] ][ tModel ], ObjectTextures[ BizzInfo[ biznisid ][ bFurTxtId ][ index ][ slot ] ][ tTXDName ], ObjectTextures[ BizzInfo[ biznisid ][ bFurTxtId ][ index ][ slot ] ][ tName ], 0);
 	}
 
 	new
 		insertObject[ 512 ];
-	format(insertObject, 512, "INSERT INTO `biznis_furniture` (`biznisid`,`modelid`,`door`,`door_z`,`locked_door`,`pos_x`,`pos_y`,`pos_z`,`rot_x`,`rot_y`,`rot_z`,`texture_1`,`texture_2`,`texture_3`,`texture_4`,`color_1`,`color_2`,`color_3`,`color_4`) VALUES ('%d','%d','%d','%f','%d','%f','%f','%f','%f','%f','%f','%d','%d','%d','%d','%d','%d','%d','%d')",
+	format(insertObject, 512, "INSERT INTO `biznis_furniture` (`biznisid`,`modelid`,`door`,`door_z`,`locked_door`,`pos_x`,`pos_y`,`pos_z`,`rot_x`,`rot_y`,`rot_z`,`texture_1`,`texture_2`,`texture_3`,`texture_4`,`texture_5`,`color_1`,`color_2`,`color_3`,`color_4`,`color_5`) VALUES ('%d','%d','%d','%f','%d','%f','%f','%f','%f','%f','%f','%d','%d','%d','%d','%d','%d','%d','%d','%d','%d')",
 		BizzInfo[ biznisid ][ bSQLID ],
 		BizzInfo[ biznisid ][ bFurModelid ][ index ],
 		BizzInfo[ biznisid ][ bFurDoor ][ index ],
@@ -1111,10 +1218,12 @@ stock static CopyFurnitureObject(playerid, copyid)
 		BizzInfo[ biznisid ][ bFurTxtId ][ index ][ 1 ],
 		BizzInfo[ biznisid ][ bFurTxtId ][ index ][ 2 ],
 		BizzInfo[ biznisid ][ bFurTxtId ][ index ][ 3 ],
+		BizzInfo[ biznisid ][ bFurTxtId ][ index ][ 4 ],
 		BizzInfo[ biznisid ][ bFurColId ][ index ][ 0 ],
 		BizzInfo[ biznisid ][ bFurColId ][ index ][ 1 ],
 		BizzInfo[ biznisid ][ bFurColId ][ index ][ 2 ],
-		BizzInfo[ biznisid ][ bFurColId ][ index ][ 3 ]
+		BizzInfo[ biznisid ][ bFurColId ][ index ][ 3 ],
+		BizzInfo[ biznisid ][ bFurColId ][ index ][ 4 ]
 	);
 	mysql_tquery(g_SQL, insertObject, "OnBizzFurnitureObjectCreate", "ii", biznisid, index);
 	Streamer_Update(playerid);
@@ -1179,17 +1288,15 @@ stock static SetFurnitureObjectPos(playerid, Float:x, Float:y, Float:z, Float:rx
 	);
 	mysql_tquery(g_SQL, editObject, "");
 
-	new
-		slot,
-		colorid;
-
-	if(BizzInfo[ biznisid ][ bFurColId ][ index ][ slot ] != -1)
-		sscanf(ColorList[ BizzInfo[ biznisid ][ bFurColId ][ index ][ slot ] ][ clRGB ], "h", colorid);
-
-
-	for( new i = 0; i < 5; i++ ) {
-		slot = BizzInfo[ biznisid ][ bFurTxtId ][ index ][ i ];
-		SetDynamicObjectMaterial(BizzInfo[ biznisid ][ bFurObjectid ][ index ], i, ObjectTextures[ slot ][ tModel ], ObjectTextures[ slot ][ tTXDName ], ObjectTextures[ slot ][ tName ], colorid);
+	new colorid;
+	for(new slot = 0; slot < MAX_TEXTURE_SLOTS; slot++)
+	{	
+		if( BizzInfo[ biznisid ][ bFurColId ][ index ][ slot ] > -1 ) {
+			sscanf(ColorList[ BizzInfo[ biznisid ][ bFurColId ][ index ][ slot ] ][ clRGB ], "h", colorid);
+			SetDynamicObjectMaterial(BizzInfo[ biznisid ][ bFurObjectid ][ index ], slot, ObjectTextures[ BizzInfo[ biznisid ][ bFurTxtId ][ index ][ slot ] ][ tModel ], ObjectTextures[ BizzInfo[ biznisid ][ bFurTxtId ][ index ][ slot ] ][ tTXDName ], ObjectTextures[ BizzInfo[ biznisid ][ bFurTxtId ][ index ][ slot ] ][ tName ], colorid);
+		}
+		else
+			SetDynamicObjectMaterial(BizzInfo[ biznisid ][ bFurObjectid ][ index ], slot, ObjectTextures[ BizzInfo[ biznisid ][ bFurTxtId ][ index ][ slot ] ][ tModel ], ObjectTextures[ BizzInfo[ biznisid ][ bFurTxtId ][ index ][ slot ] ][ tTXDName ], ObjectTextures[ BizzInfo[ biznisid ][ bFurTxtId ][ index ][ slot ] ][ tName ], 0);
 	}
 
 	Streamer_Update(playerid);
@@ -1279,11 +1386,11 @@ stock static DeleteFurnitureObject(biznisid, index, playerid)
 	BizzInfo[ biznisid ][ bFurRotX ][ index ]		= 0.0;
 	BizzInfo[ biznisid ][ bFurRotY ][ index ]		= 0.0;
 	BizzInfo[ biznisid ][ bFurRotZ ][ index ]		= 0.0;
-	BizzInfo[ biznisid ][ bFurTxtId ][ index ][ 0 ]	= 0;
-	BizzInfo[ biznisid ][ bFurTxtId ][ index ][ 1 ]	= 0;
-	BizzInfo[ biznisid ][ bFurTxtId ][ index ][ 2 ]	= 0;
-	BizzInfo[ biznisid ][ bFurTxtId ][ index ][ 3 ]	= 0;
-	BizzInfo[ biznisid ][ bFurTxtId ][ index ][ 4 ]	= 0;
+	for(new i = 0; i < MAX_TEXTURE_SLOTS; i++)
+	{
+		BizzInfo[ biznisid ][ bFurTxtId ][ index ][ i ]	= 0;
+		BizzInfo[ biznisid ][ bFurColId ][ index ][ i ]	= -1;
+	}
 	BizzInfo[ biznisid ][ bFurSlots ]--;
 	va_SendClientMessage(playerid, COLOR_RED, "[ ! ] Uspjesno ste obrisali objekt[Model ID: %d - Slot Index: %d].", BizzInfo[ biznisid ][ bFurObjectid ][ index ], index);
 	return 1;
@@ -1308,11 +1415,11 @@ stock static DestroyAllFurnitureObjects(playerid, biznisid)
 			BizzInfo[ biznisid ][ bFurRotX ][ index ]		= 0.0;
 			BizzInfo[ biznisid ][ bFurRotY ][ index ]		= 0.0;
 			BizzInfo[ biznisid ][ bFurRotZ ][ index ]		= 0.0;
-			BizzInfo[ biznisid ][ bFurTxtId ][ index ][ 0 ]	= 0;
-			BizzInfo[ biznisid ][ bFurTxtId ][ index ][ 1 ]	= 0;
-			BizzInfo[ biznisid ][ bFurTxtId ][ index ][ 2 ]	= 0;
-			BizzInfo[ biznisid ][ bFurTxtId ][ index ][ 3 ]	= 0;
-			BizzInfo[ biznisid ][ bFurTxtId ][ index ][ 4 ]	= 0;
+			for(new i = 0; i < MAX_TEXTURE_SLOTS; i++)
+			{
+				BizzInfo[ biznisid ][ bFurTxtId ][ index ][ i ]	= 0;
+				BizzInfo[ biznisid ][ bFurColId ][ index ][ i ]	= -1;
+			}
 		}
 	}
 	BizzInfo[ biznisid ][ bFurSlots ] = GetPlayerFurnitureSlots(playerid);
@@ -1402,11 +1509,11 @@ stock ReloadBizzFurniture(biznisid)
 			BizzInfo[ biznisid ][ bFurRotX ][ index ]		= 0.0;
 			BizzInfo[ biznisid ][ bFurRotY ][ index ]		= 0.0;
 			BizzInfo[ biznisid ][ bFurRotZ ][ index ]		= 0.0;
-			BizzInfo[ biznisid ][ bFurTxtId ][ index ][ 0 ]	= 0;
-			BizzInfo[ biznisid ][ bFurTxtId ][ index ][ 1 ]	= 0;
-			BizzInfo[ biznisid ][ bFurTxtId ][ index ][ 2 ]	= 0;
-			BizzInfo[ biznisid ][ bFurTxtId ][ index ][ 3 ]	= 0;
-			BizzInfo[ biznisid ][ bFurTxtId ][ index ][ 4 ]	= 0;
+			for(new i = 0; i < MAX_TEXTURE_SLOTS; i++)
+			{
+				BizzInfo[ biznisid ][ bFurTxtId ][ index ][ i ]	= 0;
+				BizzInfo[ biznisid ][ bFurColId ][ index ][ i ]	= -1;
+			}
 		}
 	}
 	LoadBiznisFurnitureObjects(biznisid);
@@ -1868,8 +1975,8 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 					BizzFurnObjectsType[ playerid ] = 4;
 				}
 				case 4: { // Ostalo
-					ShowPlayerDialog(playerid, DIALOG_BIZZ_FURN_OBJCS, DIALOG_STYLE_LIST, "Biznis Furniture - Ostalo", "SkladiSte\nParticles\nZidovi\nSigurnost", "Odaberi", "Odustani");
-					BizzFurnObjectsType[ playerid ] = 4;
+					ShowPlayerDialog(playerid, DIALOG_BIZZ_FURN_OBJCS, DIALOG_STYLE_LIST, "Biznis Furniture - Ostalo", "Skladiste\nParticles\nZidovi\nSigurnost", "Odaberi", "Odustani");
+					BizzFurnObjectsType[ playerid ] = 5;
 				}
 			}
 			return 1;
@@ -2374,13 +2481,16 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 				}
 				case 2: {	// Boje
 					new
-						buffer[ 2625 ];
-					for( new i = 0; i < 138; i++ ) {
-						format(buffer, 2625, "%s%s%s\n",
-							buffer,
+						buffer[ 4096 ],
+						motd[ 64 ];
+						
+					for( new i = 0; i < sizeof(ColorList); i++ ) 
+					{
+						format(motd, sizeof(motd), "%s%s\n",
 							ColorList[ i ][ clEmbedCol ],
 							ColorList[ i ][ clName ]
 						);
+						strcat(buffer, motd, 4096);
 					}
 					ShowPlayerDialog(playerid, DIALOG_BIZZ_FURN_COL_LIST, DIALOG_STYLE_LIST, "Furniture - Odabir boja", buffer, "Odaberi", "Odustani");
 				}
@@ -2466,7 +2576,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 			if( !response ) return ShowPlayerDialog(playerid, DIALOG_BIZZ_FURN_TXTS, DIALOG_STYLE_TABLIST_HEADERS, "Furniture - Teksture", ShowPlayerTextureList(playerid), "Odaberi", "Odustani");
 			new
 				slot = strval(inputtext);
-			if( 0 <= slot <= 4 ) {
+			if( 0 <= slot <= 3 ) {
 				va_ShowPlayerDialog(playerid, DIALOG_BIZZ_FURN_TXTS_SURE, DIALOG_STYLE_MSGBOX, "Furniture - Teksture", "Zelite li staviti odabranu teksturu na objekt u slot %d?", "Da", "Ne", slot);
 				BizzPlayerEditTxtSlot[ playerid ] = slot;
 
@@ -2475,7 +2585,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 				SetDynamicObjectMaterial(BizzInfo[ GetPlayerFurnitureBiznis(playerid) ][ bFurObjectid ][ BizzPlayerEditIndex[ playerid ] ], slot, ObjectTextures[ index ][ tModel ], ObjectTextures[ index ][ tTXDName ], ObjectTextures[ index ][ tName ], 0);
 
 			} else
-				ShowPlayerDialog(playerid, DIALOG_BIZZ_FURN_TXTS_SLOT, DIALOG_STYLE_INPUT, "Furniture - Texture Slots", "Unesite slot u koji zelite staviti teksturu "COL_RED"(0-4)", "Unesi", "Odustani");
+				ShowPlayerDialog(playerid, DIALOG_BIZZ_FURN_TXTS_SLOT, DIALOG_STYLE_INPUT, "Furniture - Texture Slots", "Unesite slot u koji zelite staviti teksturu "COL_RED"(0-3)", "Unesi", "Odustani");
 			return 1;
 		}
 		case DIALOG_BIZZ_FURN_TXTS_SURE: {
@@ -2493,13 +2603,16 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 		case DIALOG_BIZZ_FURN_COL_SLOT: {
 			if( !response ) {
 				new
-					buffer[ 2625 ];
-				for( new i = 0; i < sizeof(ColorList); i++ ) {
-					format(buffer, 2625, "%s%s%s",
-						buffer,
+					buffer[ 4096 ],
+					motd[ 64 ];
+					
+				for( new i = 0; i < sizeof(ColorList); i++ ) 
+				{
+					format(motd, sizeof(motd), "%s%s\n",
 						ColorList[ i ][ clEmbedCol ],
 						ColorList[ i ][ clName ]
 					);
+					strcat(buffer, motd, 4096);
 				}
 				ShowPlayerDialog(playerid, DIALOG_BIZZ_FURN_COL_LIST, DIALOG_STYLE_LIST, "Furniture - Odabir boja", buffer, "Odaberi", "Odustani");
 				return 1;
@@ -2507,9 +2620,9 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 
 			new
 				slotid = strval(inputtext);
-			if( 0 <= slotid <= 4 ) {
+			if( 1 <= slotid <= MAX_TEXTURE_SLOTS ) {
 				va_ShowPlayerDialog(playerid, DIALOG_BIZZ_FURN_COL_SURE, DIALOG_STYLE_MSGBOX, "Furniture - Boje", "Zelite li staviti odabranu boju u slot %d?", "Da", "Ne", slotid);
-				BizzPlayerEditTxtSlot[ playerid ] = slotid;
+				BizzPlayerEditTxtSlot[ playerid ] = slotid - 1;
 
 				new
 					colorid,
@@ -2519,11 +2632,11 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 				SetDynamicObjectMaterial(BizzInfo[ biznisid ][ bFurObjectid ][ BizzPlayerEditIndex[ playerid ] ], slotid, ObjectTextures[ BizzInfo[ biznisid ][ bFurTxtId ][ index ][ slotid ] ][ tModel ], ObjectTextures[ BizzInfo[ biznisid ][ bFurTxtId ][ index ][ slotid ] ][ tTXDName ], ObjectTextures[ BizzInfo[ biznisid ][ bFurTxtId ][ index ][ slotid ] ][ tName ], colorid);
 
 			} else
-				ShowPlayerDialog(playerid, DIALOG_BIZZ_FURN_COL_SLOT, DIALOG_STYLE_INPUT, "Furniture - Color Slots", "Unesite slot u koji zelite staviti odabranu boju (0-4)!", "Unesi", "Odustani");
+				ShowPlayerDialog(playerid, DIALOG_BIZZ_FURN_COL_SLOT, DIALOG_STYLE_INPUT, "Furniture - Color Slots", "Unesite slot u koji zelite staviti odabranu boju (1-5)!", "Unesi", "Odustani");
 			return 1;
 		}
 		case DIALOG_BIZZ_FURN_COL_SURE: {
-			if( !response ) return ShowPlayerDialog(playerid, DIALOG_BIZZ_FURN_COL_SLOT, DIALOG_STYLE_INPUT, "Furniture - Color Slots", "Unesite slot u koji zelite staviti odabranu boju (0-4)!", "Unesi", "Odustani");
+			if( !response ) return ShowPlayerDialog(playerid, DIALOG_BIZZ_FURN_COL_SLOT, DIALOG_STYLE_INPUT, "Furniture - Color Slots", "Unesite slot u koji zelite staviti odabranu boju (1-5)!", "Unesi", "Odustani");
 
 			if( !SetFurnitureObjectColor(playerid, BizzPlayerEditTxtSlot[ playerid ], BizzPlayerEditTxtIndex[ playerid ], BizzPlayerEditIndex[ playerid ]) ) return SendClientMessage(playerid, COLOR_RED, "[GRESKA]: Doslo je do greske. Pokusajte ponovno!");
 			return 1;
@@ -2533,8 +2646,8 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 
 			new
 				slot = strval(inputtext);
-			if( 0 <= slot <= 4 ) {
-				BizzPlayerEditClsIndex[ playerid ] = slot;
+			if( 1 <= slot <= MAX_TEXTURE_SLOTS ) {
+				BizzPlayerEditClsIndex[ playerid ] = slot - 1;
 				va_ShowPlayerDialog(playerid, DIALOG_BIZZ_FURN_SLOT_SURE, DIALOG_STYLE_MSGBOX, "Furniture - Brisanje tekstura i boja", "Zelite li obrisati teksture i boje na slotu %d?", "Da", "Ne", slot);
 			}
 			else
@@ -2703,7 +2816,7 @@ CMD:biznis_bint(playerid, params[])
 	if( PlayerInfo[playerid][pBizzKey] == INVALID_BIZNIS_ID ) return SendClientMessage(playerid, COLOR_RED, "[GRESKA]: Morate posjedovati biznis.");
 	new
 		param[ 6 ];
-	if( sscanf( params, "s[6] ", param ) ) return SendClientMessage(playerid, -1, "KORISTENJE: /biznis_bint [test/buy/exit]");
+	if( sscanf( params, "s[6] ", param ) ) return SendClientMessage(playerid, -1, "[ ? ]: /biznis_bint [test/buy/exit]");
 	if( !strcmp(param, "test", true ) )
 	{
 		new biznisid = GetPlayerFurnitureBiznis(playerid);
@@ -2742,7 +2855,7 @@ CMD:biznis_bint(playerid, params[])
 CMD:biznis_furniture(playerid, params[])
 {
 	new param[ 8 ];
-	if( sscanf( params, "s[8] ", param ) ) return SendClientMessage(playerid, -1, "KORISTENJE: /biznis_furniture [approve/menu]");
+	if( sscanf( params, "s[8] ", param ) ) return SendClientMessage(playerid, -1, "[ ? ]: /biznis_furniture [approve/menu]");
 	if( !strcmp( "menu", param, true ) )
 	{
 		new biznisid = GetPlayerFurnitureBiznis(playerid);
@@ -2767,7 +2880,7 @@ CMD:biznis_furniture(playerid, params[])
 
 		new
 			giveplayerid;
-		if( sscanf(params, "s[8]u", param, giveplayerid) ) return SendClientMessage(playerid, -1, "KORISTENJE: /biznis_furniture approve [dio imena/playerid]");
+		if( sscanf(params, "s[8]u", param, giveplayerid) ) return SendClientMessage(playerid, -1, "[ ? ]: /biznis_furniture approve [dio imena/playerid]");
 		if( giveplayerid == INVALID_PLAYER_ID ) return SendClientMessage(playerid, COLOR_RED, "[GRESKA]: Krivi unos playerida!");
 		if( !ProxDetectorS(10.0, playerid, giveplayerid) ) return SendClientMessage(playerid, COLOR_RED, "[GRESKA]: Taj igrac nije blizu vas!");
 		if( PlayerEditingBiznis[ giveplayerid ] == PlayerInfo[ playerid ][ pBizzKey ] )
@@ -2788,7 +2901,7 @@ CMD:reload_bfurniture(playerid, params[])
 	if( PlayerInfo[ playerid ][ pAdmin ] < 2 ) return SendClientMessage(playerid, COLOR_RED, "[GRESKA]: Niste ovlasteni!");
 	new
 		biznisid;
-	if( sscanf(params, "i", biznisid ) ) return SendClientMessage(playerid, -1, "KORISTENJE: /reload_furniture [biznisid]");
+	if( sscanf(params, "i", biznisid ) ) return SendClientMessage(playerid, -1, "[ ? ]: /reload_furniture [biznisid]");
 	if(biznisid == INVALID_BIZNIS_ID) return SendClientMessage(playerid, COLOR_RED, "[GRESKA]: Krivi biznisid!");
 
 	ReloadBizzFurniture(biznisid);

@@ -749,7 +749,7 @@ CMD:createexplosion(playerid, params[])
 	{
 		new Float:X, Float:Y, Float:Z,
 			type;
-		if(sscanf(params, "d", type)) return SendClientMessage(playerid, COLOR_RED, "USAGE: /createexplosion [type]");
+		if(sscanf(params, "d", type)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /createexplosion [type]");
 		
 		GetPlayerPos(playerid, X, Y, Z);
 		CreateExplosion(X, Y, Z, type, 15.0);
@@ -788,7 +788,7 @@ CMD:recover(playerid, params[])
 
 	new
 		giveplayerid;
-	if( sscanf( params, "u", giveplayerid ) ) return SendClientMessage(playerid, COLOR_RED, "USAGE: /recover [dio imena/playerid]");
+	if( sscanf( params, "u", giveplayerid ) ) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /recover [dio imena/playerid]");
 	if( giveplayerid == INVALID_PLAYER_ID ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, " Nevaljan playerid!");
 	if( !PlayerInfo[ giveplayerid ][ pKilled ] && !PlayerWounded[giveplayerid] ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, " Igrac nije ubijen/ozlijedjen!");
 	if(!ProxDetectorS(3.0, playerid, giveplayerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Igrac nije dovoljno blizu vas!");
@@ -833,7 +833,7 @@ CMD:stretcher(playerid, params[])
 	if(!IsFDMember(playerid)) return SendClientMessage(playerid,COLOR_RED, "Nisi clan LSFDa.");
 	new 
 		param[10];
-	if(sscanf(params, "s[16] ", param)) return SendClientMessage(playerid, COLOR_RED, "USAGE: /stretcher [get/drop/pick/destroy]");
+	if(sscanf(params, "s[16] ", param)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /stretcher [get/drop/pick/destroy]");
 	if(!strcmp(param, "get", true, 3)) {
 		if(IsPlayerInAnyVehicle(playerid)) return SendClientMessage(playerid,COLOR_RED, "Ne mozes koristiti ovo u vozilu.");
 		if(Bit1_Get(gr_StretcherSpawned, playerid)) return SendClientMessage(playerid,COLOR_RED, "Vec si spawnao jedna nosila.");
@@ -917,13 +917,13 @@ CMD:treatment(playerid, params[])
 	if(!IsFDMember(playerid)) return SendClientMessage(playerid, COLOR_RED, "Niste doktor!");
 	new
 		giveplayerid, time;
-	if( sscanf( params, "ui", giveplayerid, time ) ) return SendClientMessage(playerid, COLOR_RED, "USAGE: /treatment [playerid/dio imena][minute]");
+	if( sscanf( params, "ui", giveplayerid, time ) ) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /treatment [playerid/dio imena][minute]");
 	if( giveplayerid == INVALID_PLAYER_ID ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, " Unijeli ste krivi playerid!");
 	if( time < 0 || time > 100 ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nevaljan unos vremena tretmana!");
 	if( giveplayerid == playerid ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne mozete sami sebe stavljati na tretman!");
 	if( PlayerInfo[ giveplayerid ][ pJailed ] ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Igrac je vec na tretmanu ili je zatvoren!");
 	
-	PutPlayerInJail(giveplayerid, time, 3); // 3 je treatment program
+	PutPlayerInJail(giveplayerid, time, 5); // 5 je treatment program
 	SendFormatMessage(playerid, MESSAGE_TYPE_INFO, "Postavio si %s na lijecenje.",GetName(giveplayerid, true));
 	va_SendClientMessage(giveplayerid, COLOR_RED, "[ ! ] Postavljen si na lijecenje od strane doktora %s.",GetName(playerid, true));
 	return 1;
@@ -939,7 +939,7 @@ CMD:confirmation(playerid, params[])
 	if (sscanf(params, "s[20]u", opcija, giveplayerid))
 		{
 			SendClientMessage(playerid, COLOR_RED, "|__________________ {FA5656]Davanje uvjerenja __________________|");
-			SendClientMessage(playerid, COLOR_RED, "USAGE: /confirmation [opcija] [Ime_Igraca/ID]");
+			SendClientMessage(playerid, COLOR_RED, "[ ? ]: /confirmation [opcija] [Ime_Igraca/ID]");
 	  		SendClientMessage(playerid, COLOR_RED, "[ ! ] psihicka_sposobnost, zdrav_sposobnost, radna_sposobnost");
 			SendClientMessage(playerid, COLOR_RED, "|_______________________________________________________|");
 			return 1;
@@ -1022,7 +1022,7 @@ CMD:injectp(playerid, params[])
 {
  	new
     	giveplayerid;
-	if( sscanf(params, "u", giveplayerid) ) return SendClientMessage(playerid, COLOR_RED, "USAGE: /injectp [playerid/dio imena]");
+	if( sscanf(params, "u", giveplayerid) ) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /injectp [playerid/dio imena]");
 	if( giveplayerid == INVALID_PLAYER_ID ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Krivi playerid!");
     if( giveplayerid == playerid ) 	return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne mozete sami sebe lije�iti.");
 	if( !ProxDetectorS(5.0, playerid, giveplayerid) ) 	return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nisi blizu tog igraca!");

@@ -60,6 +60,9 @@ hook OnPlayerEnterCheckpoint(playerid)
 	{
 		if(GetPlayerState(playerid) == PLAYER_STATE_DRIVER)
 		{
+			if(!IsVehicleTransproter(GetPlayerVehicleID(playerid)))
+				return SendClientMessage( playerid, COLOR_RED, "Morate biti vozac kamiona!");
+
 		    if(TWorking[playerid] == 1)
 	        {
 				if(kurcinaTimer[playerid] == 1) return FailedToDeliver(playerid);
@@ -75,38 +78,30 @@ hook OnPlayerEnterCheckpoint(playerid)
 		        TWorking[playerid] = 0;
 		        TCarry[playerid] = 0;
 		        DisablePlayerCheckpoint(playerid);
+				Bit1_Set(gr_IsWorkingJob, playerid, false);
 		        PlayerInfo[playerid][pFreeWorks] -= 5;
-		        PlayerInfo[playerid][pSkillTransporter]++;
-				if(PlayerInfo[playerid][pSkillTransporter] < 10) {
-
-                    BudgetToPayDayMoney(playerid, 600);
-					SendClientMessage(playerid, -1, "{FA5656}[ ! ] Posto vam je skill ovog posla 1, dobili ste bonus od $600 na platu!");
-				}
-        		else if(PlayerInfo[playerid][pSkillTransporter] < 25)
-		        {
-					BudgetToPayDayMoney(playerid, 700);
-					SendClientMessage(playerid, -1, "{FA5656}[ ! ] Posto vam je skill ovog posla 2, dobili ste bonus od $700 na platu!");
-	      		}
-	        	else if(PlayerInfo[playerid][pSkillTransporter] < 35)
-		        {
-             		BudgetToPayDayMoney(playerid, 800);
-					SendClientMessage(playerid, -1, "{FA5656}[ ! ] Posto vam je skill ovog posla 3, dobili ste bonus od $800 na platu!");
-		        }
-		        else if(PlayerInfo[playerid][pSkillTransporter] < 50)
-		        {
-          			BudgetToPayDayMoney(playerid, 900);
-					SendClientMessage(playerid, -1, "{FA5656}[ ! ] Posto vam je skill ovog posla 4, dobili ste bonus od $900 na platu!");
-				}
-				else
-				{
-    				BudgetToPayDayMoney(playerid, 1100);
-					SendClientMessage(playerid, -1, "{FA5656}[ ! ] Posto vam je skill ovog posla 5 (maksimalan), dobili ste bonus od $1100 na platu!");
-				}
+		        UpgradePlayerSkill(playerid, 7);
 				
-				Log_Write("logfiles/transporterlogs.txt", "(%s) %s{%d} je zavrsio posao transportera.",
+				new money;
+				switch(GetPlayerSkillLevel(playerid, 7)) // Skill ID 7 - Transporter Skill
+				{
+					case 1: money = 600;
+					case 2: money = 700;
+					case 3: money = 800;
+					case 4: money = 900;
+					case 5: money = 1100;
+				}
+
+
+				BudgetToPlayerBankMoney(playerid, money);
+				PlayerInfo[playerid][pPayDayMoney] += money;
+				va_SendClientMessage(playerid, COLOR_GREEN, "[ ! ] Zaradio si $%d, placa ti je sjela na racun.", money);
+				
+				Log_Write("logfiles/transporterlogs.txt", "(%s) %s{%d} je zavrsio posao Transportera i zaradio %d$.",
 					ReturnDate(),
 					GetName(playerid),
-					PlayerInfo[playerid][pSQLID]
+					PlayerInfo[playerid][pSQLID],
+					money
 				);
 	        }
 		}
@@ -168,8 +163,11 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 		{
 			if(response)
 	     	{
+				if(PlayerInfo[playerid][pFreeWorks] < 1)
+					return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Odradio si dovoljno za ovaj payday! Pricekaj iduci.");
 	      		SendClientMessage(playerid,-1,"{FA5656}[ ! ] Idi do stovarista (kutija) da uzmes kutiju proizvoda (levi klik kada dodjete).");
-	        	TWorking[playerid] = 1;
+	        	Bit1_Set(gr_IsWorkingJob, playerid, true);
+				TWorking[playerid] = 1;
 	        	carjob[playerid] = GetPlayerVehicleID(playerid);
 	        	TogglePlayerControllable(playerid, 1);
 	         	TDone[playerid] = 1;
@@ -179,6 +177,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 	        else
 	        {
 	            TDone[playerid] = 0;
+				Bit1_Set(gr_IsWorkingJob, playerid, false);
 	        	SetVehicleToRespawn(GetPlayerVehicleID(playerid));
 	         	RemovePlayerFromVehicle(playerid);
 	         	TogglePlayerControllable(playerid, 1);
@@ -247,11 +246,12 @@ CMD:transporter(playerid, params[])
 	new
 		param[12];
 	if( sscanf(params, "s[12] ", param ) ) {
-		SendClientMessage(playerid, COLOR_RED, "USAGE: /trucker [odabir]");
+		SendClientMessage(playerid, COLOR_RED, "[ ? ]: transporter [odabir]");
 		SendClientMessage(playerid, COLOR_GREY, "[OPTION]: start - stop");
 		return 1;
 	}
-	if( !strcmp(param, "start", true) ) {
+	if( !strcmp(param, "start", true) ) 
+	{
 		if(PlayerInfo[playerid][pJob] != TRANSPORTER_ID)
 			return SendClientMessage(playerid, COLOR_RED, "[GRESKA]: Nemas posao dostavljaca!");
 		if(TWorking[playerid] >= 1)
@@ -261,7 +261,7 @@ CMD:transporter(playerid, params[])
         if(!IsVehicleTransproter(GetPlayerVehicleID(playerid)) || GetPlayerState(playerid) != 2)
 			return SendClientMessage( playerid, COLOR_RED, "Morate biti vozac kamiona!");
 		if(PlayerInfo[playerid][pFreeWorks] < 1)
-			return SendClientMessage(playerid, COLOR_RED, "Odradio si dovoljno za ovaj payday! Pricekaj iduci.");
+			return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Odradio si dovoljno za ovaj payday! Pricekaj iduci.");
 
 		ShowPlayerDialog(playerid, DIALOG_ADRIAPOSAO, DIALOG_STYLE_MSGBOX, "{FA5656}Transporter", "Jeste li sigurni da �elite zapoceti dostavu?", "Da", "Ne");
 	}
@@ -287,7 +287,7 @@ CMD:transporter(playerid, params[])
 		SendClientMessage(playerid, -1, "Ako ste na duznosti, ne zaboravite da odete sa nje. Takodje, ako ste uzeli opremu, nemojte zaboraviti da je ostavite.");
 	}
 	else {
-		SendClientMessage(playerid, COLOR_RED, "USAGE: /trucker [odabir]");
+		SendClientMessage(playerid, COLOR_RED, "[ ? ]: transporter [odabir]");
 		SendClientMessage(playerid, COLOR_GREY, "[OPTION]: start - stop");
 		return 1;
 	}

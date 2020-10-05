@@ -285,7 +285,7 @@ CMD:weapon(playerid, params[])
 
 	if (isnull(params))
 	if(sscanf(params, "s[12] ", option))
-		return SendClientMessage(playerid, COLOR_RED, "USAGE: /weapon [adjust/bone/hide]");
+		return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /weapon [adjust/bone/hide]");
 
 	if (!strcmp(params, "adjust", true))
 	{
@@ -383,6 +383,6 @@ CMD:weapon(playerid, params[])
 			AC_ResetPlayerWeapon(playerid, HiddenWeapon[playerid][pwWeaponId], false);
 		}
 	}
-	else SendClientMessage(playerid, COLOR_RED, "USAGE: /weapon [adjust/bone/hide]");
+	else SendClientMessage(playerid, COLOR_RED, "[ ? ]: /weapon [adjust/bone/hide]");
 	return 1;
 }

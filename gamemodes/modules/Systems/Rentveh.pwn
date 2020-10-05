@@ -74,7 +74,6 @@ new Float:RandomVehicleRentSpawn[3][4] =
 stock DestroyRentVehicle(vehicleid)
 {
 	ResetVehicleInfo(vehicleid);
-	AC_DestroyVehicle(vehicleid);
 	foreach(new i: Player)
 	{
 		if(rentedVehID[i] == vehicleid)
@@ -100,6 +99,13 @@ stock static PlayerRentVehicle(playerid, modelid, price)
 	VehicleInfo[ rentedVehID[playerid] ][ vParkY ]				= RandomVehicleRentSpawn[rvPos][1];
 	VehicleInfo[ rentedVehID[playerid] ][ vParkZ ]				= RandomVehicleRentSpawn[rvPos][2];
 	VehicleInfo[ rentedVehID[playerid] ][ vAngle ]				= RandomVehicleRentSpawn[rvPos][3];
+
+	VehiclePrevInfo[rentedVehID[playerid]][vPosX] = VehicleInfo[ rentedVehID[playerid] ][ vParkX ];
+	VehiclePrevInfo[rentedVehID[playerid]][vPosY] = VehicleInfo[ rentedVehID[playerid] ][ vParkY ];
+	VehiclePrevInfo[rentedVehID[playerid]][vPosZ] = VehicleInfo[ rentedVehID[playerid] ][ vParkZ ];
+	VehiclePrevInfo[rentedVehID[playerid]][vRotZ] = VehicleInfo[ rentedVehID[playerid] ][ vAngle ];
+	VehiclePrevInfo[rentedVehID[playerid]][vPosDiff] = 0.0;
+
 	VehicleInfo[ rentedVehID[playerid] ][ vColor1 ]				= color1;
 	VehicleInfo[ rentedVehID[playerid] ][ vColor2 ]				= color2;
 	VehicleInfo[ rentedVehID[playerid] ][ vInt ]				= GetPlayerInterior(playerid);
@@ -229,7 +235,7 @@ CMD:rentveh(playerid, params[])
 	new param[9];
 	if(sscanf(params, "s[9] ", param))
 	{
-		SendClientMessage(playerid, COLOR_RED, "USAGE: /rentveh [odabir]");
+		SendClientMessage(playerid, COLOR_RED, "[ ? ]: /rentveh [odabir]");
 		SendClientMessage(playerid, COLOR_GREY, "[ODABIR]: take, locate, giveback, trunk");
 		return 1;
 	}

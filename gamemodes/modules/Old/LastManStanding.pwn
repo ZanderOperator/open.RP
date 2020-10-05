@@ -1307,7 +1307,7 @@ CMD:lts(playerid, params[]) {
 			return SendClientMessage(playerid, COLOR_RED, "Niste ovlasteni za koristenje ove komande (admin lvl 1337+).");
 			
 		if(sscanf(params, "s[25]i", action, target_id)) {
-			SendClientMessage(playerid, COLOR_RED, "USAGE: /lts kick [playerid].");
+			SendClientMessage(playerid, COLOR_RED, "[ ? ]: /lts kick [playerid].");
 			return (true);
 		}
 		if(lts_PlayerTeam[target_id] != -1)
@@ -1329,7 +1329,7 @@ CMD:lts(playerid, params[]) {
 			return SendClientMessage(playerid, COLOR_RED, "Morate biti team leader kako bi koristili ovu komandu.");
 			
 		if(sscanf(params, "s[25]i", action, target_id)) {
-			SendClientMessage(playerid, COLOR_RED, "USAGE: /lts tkick [playerid].");
+			SendClientMessage(playerid, COLOR_RED, "[ ? ]: /lts tkick [playerid].");
 			return (true);
 		}
 		if(lts_PlayerTeam[target_id] != lts_LeaderTeam[playerid])
@@ -1349,7 +1349,7 @@ CMD:lts(playerid, params[]) {
 			return SendClientMessage(playerid, COLOR_RED, "Morate biti team leader kako bi koristili ovu komandu.");
 			
 		if(sscanf(params, "s[25]i", action, target_id)) {
-			SendClientMessage(playerid, COLOR_RED, "USAGE: /lts invite [playerid].");
+			SendClientMessage(playerid, COLOR_RED, "[ ? ]: /lts invite [playerid].");
 			return (true);
 		}
 		if(lts_PlayerTeam[target_id] != -1)
@@ -1366,7 +1366,7 @@ CMD:lts(playerid, params[]) {
 			
 		if(sscanf(params, "s[25]ii", action, target_id, team_id))
 		{
-			SendClientMessage(playerid, COLOR_RED, "USAGE: /lts teamleader [playerid] [team_id].");
+			SendClientMessage(playerid, COLOR_RED, "[ ? ]: /lts teamleader [playerid] [team_id].");
 			SendClientMessage(playerid, COLOR_GREY, "[TEAM 1]: Red.");
 			SendClientMessage(playerid, COLOR_GREY, "[TEAM 2]: Blue.");
 			SendClientMessage(playerid, COLOR_GREY, "[TEAM 3]: Green.");
@@ -1394,7 +1394,7 @@ CMD:lts(playerid, params[]) {
 			
 		if(sscanf(params, "s[25]iiis[32]", action, type, i_wid, i_amount, i_name))
 		{
-			SendClientMessage(playerid, COLOR_RED, "USAGE: /lts createitem [item_type] [item_weaponid(-1 ako nije oruzje)] [item_amount] [item_name].");
+			SendClientMessage(playerid, COLOR_RED, "[ ? ]: /lts createitem [item_type] [item_weaponid(-1 ako nije oruzje)] [item_amount] [item_name].");
 			SendClientMessage(playerid, COLOR_GREY, "[TYPE 1]: Weapon");
 			SendClientMessage(playerid, COLOR_GREY, "[TYPE 2]: Ammo box");
 			SendClientMessage(playerid, COLOR_GREY, "[TYPE 3]: Health Box");
@@ -1417,7 +1417,7 @@ CMD:lts(playerid, params[]) {
 			
 		if(sscanf(params, "s[25]ii", action, target_id, team_id))
 		{
-			SendClientMessage(playerid, COLOR_RED, "USAGE: /lts maketeams [playerid] [team_id].");
+			SendClientMessage(playerid, COLOR_RED, "[ ? ]: /lts maketeams [playerid] [team_id].");
 			SendClientMessage(playerid, COLOR_GREY, "[TEAM 1]: Red");
 			SendClientMessage(playerid, COLOR_GREY, "[TEAM 2]: Blue");
 			SendClientMessage(playerid, COLOR_GREY, "[TEAM 3]: Green");

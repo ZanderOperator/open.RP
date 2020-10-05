@@ -65,7 +65,7 @@ DetermineMessageDuration(const message[])
 		words = strlen(message)/word_length, // word_length
 		words_time = ((words/wpm)*60)*1000,
 		delay = 1500,  // Milliseconds before user starts reading the notification
-		bonus = 1500;  // Extra time
+		bonus = 2500;  // Extra time
 
     return delay + words_time + bonus;
 }
@@ -147,7 +147,6 @@ Function: RemoveMessage(playerid) {
 	KillTimer(_PopUpTimer[playerid]);
 	return (true);
 }
-
 
 /*
 	- Hooks

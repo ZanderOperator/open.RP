@@ -864,7 +864,7 @@ CMD:pocketsteal(playerid, params[])
 {
 	new
 		giveplayerid;
-	if( sscanf( params, "u", giveplayerid ) ) 			return SendClientMessage(playerid, COLOR_RED, "USAGE: /pocketsteal [dio imena/playerid]");
+	if( sscanf( params, "u", giveplayerid ) ) 			return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /pocketsteal [dio imena/playerid]");
 	if( giveplayerid == INVALID_PLAYER_ID ) 			return SendClientMessage( playerid, COLOR_RED, "Nevaljan unos playerida!");
 	if( giveplayerid == playerid ) 						return SendClientMessage( playerid, COLOR_RED, "Ne mozete pljackati samog sebe!");
 	if( !ProxDetectorS(2.0, playerid, giveplayerid) ) 	return SendClientMessage( playerid, COLOR_RED, "Niste blizu igraca!");
@@ -922,7 +922,7 @@ CMD:stealitems(playerid, params[])
 	new	
 		param;
 	if( sscanf( params, "i", param ) ) {
-		SendClientMessage(playerid, COLOR_RED, "USAGE: /stealitems [odabir]");
+		SendClientMessage(playerid, COLOR_RED, "[ ? ]: /stealitems [odabir]");
 		SendClientMessage(playerid, COLOR_GREY, "[ODABIR]: 1 - Radio, 2 - TV, 3 - Mikrovalna");
 		return 1;
 	}

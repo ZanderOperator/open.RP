@@ -58,7 +58,7 @@ WarehouseToIllegalBudgetMoney ( whid, money )
 // RADNA KNJIZICA IGRAcA i PRORACUN 
 
 PayDayToBudgetMoney (playerid, money )
-BudgetToPayDayMoney (playerid, money )
+BudgetToPlayerBankMoney (playerid, money )
 
 // RADNA KNJIZICA i IGRAc
 
@@ -780,7 +780,7 @@ stock WarehouseToIllegalBudgetMoney(whid, money)
 	return 1;
 }
 // IGRAc RADNA KNJIZICA - PRORACUN (NEOPOREZIVA) -----------------------------------------------------------------------------
-stock PayDayToBudgetMoney (playerid, money )
+/*stock PayDayToBudgetMoney (playerid, money )
 {
 	new safemoney = floatround(floatabs(money)), 			// Puni iznos
 		TmpQuery[64],
@@ -802,7 +802,7 @@ stock PayDayToBudgetMoney (playerid, money )
 	return 1;
 }
 // PRORAcUN - IGRAc RADNA KNJIZICA (NEOPOREZIVA) -----------------------------------------------------------------------------
-stock BudgetToPayDayMoney (playerid, money )
+stock BudgetToPlayerBankMoney (playerid, money )
 {
 	new safemoney = floatround(floatabs(money)), 			// Puni iznos
 		TmpQuery[64],
@@ -840,7 +840,7 @@ stock PayDayToPlayerMoney (playerid, money )
 		);
 	mysql_tquery(g_SQL, TmpQuery, "", "");
 	return 1;
-}
+}*/
 // BANKA - IGRAc (NEOPOREZIVA) -----------------------------------------------------------------------------
 stock BankToPlayerMoney (playerid, money )
 {

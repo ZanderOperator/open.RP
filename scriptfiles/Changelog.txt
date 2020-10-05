@@ -1,17 +1,25 @@
-City of Angels v18.4.2. - Critical Update
-- Popravljene sve rupe sa SQL injectionom - zahvale Khawaji i Runneru
-- Uvelike poboljsana sigurnost baze podataka
-- Popravljen potencijalni abuse sa spremanjem oruzja u gepek
-- Fixana mapa kod Verona Malla
+City of Angels v18.5.3. - 3.8.2020 - Critical BugFix
+- Ispravke na AntiCheatu
+- Popravljen /spawnchange za fakcije
+- Popravljen problem sa /poker table - "Nemate permisije nad ovim stolom!"
+- Popravljen kriticni bug sa crashanjem skripte 5 sekundi prije pocetka poker runde
+- Minor BugFixes
 
-City of Angels v18.4.1. - HotFix
-- Popravljena mapa kod Verone
-- Popravci gramatickih gresaka, te ispisa na nekim logovima
-- Dodan neprobojni Weapon Anticheat
+City of Angels v18.5.2. - 31.7.2020 - MiniUpdate
+- Razlamanje teksta u 2 reda odsad prenosi boju namjenjenu za ostatak teksta u drugi red
+- Popravljen bug sa ispisom Server Message Dialoga prilikom oduzete imovine radi neaktivnosti
+- Maksimum Biznisa mogucih u GameModeu povecan sa 135 na 200
+- Odsad, nakon odlaska sa Admin Dutya, vraca se stari HP i armour
+- Poboljsanja AntiCheata(work in progress)
+- Popravljen bug sa maskom, gdje bi neki vidjeli NameTag maskiranih igraca
+- Posao odsad skida tek nakon 10 dana neaktivnosti
+- /timeout stavljen pod Admin Level 1337+ komande
+- MiniUpdate mapa by Mapping Team
 
-City of Angels v18.4.0.
-- Ubacen /speakerphone(kratica /sf) - tokom poziva mozete staviti poziv na speakerphone za sve u radiusu od 7.5
-- /ds mozete koristiti i u kuci kod vrata, te se moze koristiti za dvosmjernu komunikaciju preko vrata
-- Obrisana dupla mapa Verona Malla
-- Bugfix za mapu bolnice by Khawaja
-
+City of Angels v18.5.1 - 27.7.2020. - MiniUpdate
+- Updatean /learn - credits to Cruella
+- Odsad odlazak sa Admin Dutya skida Armour
+- Popravljen ispis na /skills
+- Popravljen ispis komanda za Transportera u /help
+- /spawnchange miniupdate - ne mozes vise spawnchangeat na kucu ako je nemas/org/complex room...
+- Popravljen bug sa nemogucnosti /exit-a iz interijera nakon crasha

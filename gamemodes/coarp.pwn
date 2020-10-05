@@ -1,54 +1,57 @@
 /*
-===========================================================================================
+=============================================================================================
 
-	City of Angels Role Play
-	Authors:  cofi(Jacob_Williams), B-Matt, Woo, Logan, kiddo, ShadY, hodza, Runner, Khawaja
+	City of Angels Role Play v18.5.5.
+	Authors:  cofi(Jacob_Williams), Logan, Woo, B-Matt, kiddo, ShadY, hodza, Runner, Khawaja
 	(c) 2020 City of Angels - All Rights Reserved.
 	Web: www.cityofangels-roleplay.com
-===========================================================================================
+=============================================================================================
 */
 #include <crashdetect>
 #include <a_samp>
 #include <a_http>
-//#include <profiler> // Test
 /*
 ==============================================================================
 	Preinclude defines
 ==============================================================================
 */
+
+// Server Players, NPC's and Vehicle Config
+#define MAX_NPCS 								(1)
+#undef MAX_PLAYERS
+#define MAX_PLAYERS 							(300)
+#undef MAX_VEHICLES
+#define MAX_VEHICLES                      		(1000)
+
 //#define	WC_DEBUG							false
 //#define _DEBUG								0 											// YSI
-//#define MOD_DEBUG								true										// Gamemode Debug
-
+//#define MOD_DEBUG								true
+										// Gamemode Debug
+// MySQL inline query functions
 #define MYSQL_USE_YINLINE						true
 // #define COA_UCP
-
 #define FIXES_ServerVarMsg 0
 
 // GMT Zone
 #define GMT_ZONE_DIFFERENCE						(2)		// GMT + 2
+
 // 0.3DL
 #define NEGATIVE_MODEL_ID 						-40000 // Negativna vrijednost radi Custom Object Modela koji su u minusu
-#define HTTP_RESTART_REQUEST 					"51.77.200.63/ogp_api.php?gamemanager/restart&token=3a4aaa4509a0ff91f8597734eaecf1f4a85a5dd80b0c1455137f2428808d8820&ip=51.77.200.63&port=7777&mod_key=default"
 
+// Server Restart Configuration
+#define HTTP_RESTART_REQUEST 					"SERVER_RESTART_API_REQUEST_LINK"
+
+// Fixes.inc
 #define FIX_OnPlayerEnterVehicle 	0
 #define FIX_OnPlayerEnterVehicle_2 	0
 #define FIX_OnPlayerEnterVehicle_3 	0
 #define FIX_OnDialogResponse		0
 #define FIX_GetPlayerDialog			0
-
 #define	MAX_IP_CONNECTS 			3
+#define FIX_file_inc 0
 
-// SA-MP config
-#define MAX_NPCS 								(1)
 
-#undef MAX_PLAYERS
-#define MAX_PLAYERS 							(100)
-
-#undef MAX_VEHICLES
-#define MAX_VEHICLES                      		(1000)	// aSamp
-
-// Script settings
+// Script Mode settings
 //#define COA_TEST
 
 /*
@@ -60,20 +63,27 @@
 	 ##  ##   ### ##    ## ##       ##     ## ##     ## ##       ##    ##
 	#### ##    ##  ######	########  #######  ########  ########  ######
 */
-// Fixes
-#define FIX_file_inc 0
 
+// Fixes
 #include <fixes>
+
+// Pawn RakNet by urShadow
+#include <Pawn.RakNet>
+
+// Aim Anti-Cheat by Yashas
+#include <BustAim>
+
 // Streamer
 #include <streamer>
 #define OBJECT_STREAM_LIMIT		(700)
-// AntiCheat
+
+// AntiCheat by RogueDrifter
 #include <Anti_cheat_pack>
 
 // New SA-MP callbacks by Emmet
 #include <callbacks>
 
-// YSI
+// YSI by Y_Less
 #include <YSI\y_hooks>
 #include <YSI\y_timers>
 #include <YSI\y_iterate>
@@ -81,7 +91,7 @@
 #include <YSI\y_vehicledata>
 #include <YSI\y_flooding>
 
-// REST
+// Other pre-includes
 #include <OnPlayerSlowUpdate>
 #include <animsfix>
 #include <rBits>
@@ -94,7 +104,7 @@
 #include <vSync> // mici sve osim seats ids
 #include <fly>
 
-// Whirlpool
+// Whirlpool Hasher
 native WP_Hash(buffer[], len, const str[]);
 
 // MySQL
@@ -111,12 +121,28 @@ native WP_Hash(buffer[], len, const str[]);
 	########  ######## ##       #### ##    ## ########  ######
 */
 
-//Limits - https://wiki.sa-mp.com/wiki/Limits - L3o.
+// Server Informations - When chaning SCRIPT_VERSION, you MUST upload new "Changelog.txt" in /scriptfiles
+#define HOSTNAME 								"CoA.RP [0.3DL] - Summer Update"
+#define COPYRIGHT                           	"Copyright (c) 2020 City of Angels Roleplay"
+#define WEB_URL									"forum.cityofangels-roleplay.com"
+#define SCRIPT_VERSION							"CoA RP v18.5.5."
+#define DEV_NAME   								"Woo-Logan"
 
+// Macros
+#define Function:%0(%1) \
+		forward%0(%1); \
+		public%0(%1)
+#define IsPlayerLogged(%0) \
+	Bit1_Get(gr_PlayerLoggedIn,%0)
+#define IsPlayerLogging(%0) \
+	Bit1_Get(gr_PlayerLoggingIn,%0)
+#define IsPlayerAlive(%0) \
+	Bit1_Get(gr_PlayerAlive, %0)
+#define IsPlayerSafeBreaking(%0)	Bit1_Get( gr_SafeBreaking, playerid )
+#define IsPlayerReconing(%0) Bit4_Get(gr_SpecateId, %0)
 
-// Define when to split the text into another line!
-#define EX_SPLITLENGTH 							(90)
-
+// Limits - https://www.open.mp/docs/scripting/resources/limits
+#define EX_SPLITLENGTH 							(90) // Define when to split SendClientMessage into another line!
 #define MAX_DIALOG_TEXT                 		(756)
 #define MAX_LOGIN_TRIES							(3)
 #define MAX_PLAYER_MAIL							(32)
@@ -125,13 +151,13 @@ native WP_Hash(buffer[], len, const str[]);
 #define MAX_LOGIN_TIME							(60)
 #define MAX_PLAYER_PASSWORD             		(129)
 #define MAX_PLAYER_CIDR							(32)
+#define MAX_SKILLS								(9)
 #define MAX_WARNS								(3)
 #define MAX_PICKUP								(150)
-#define MAX_GARBAGE_CONTAINERS					(88)
 #define MAX_HOUSES                      		(800)
 #define	MAX_COMPLEX_ROOMS                       (50)
 #define MAX_COMPLEX                             (10)
-#define MAX_BIZZS         						(135)
+#define MAX_BIZZS         						(200)
 #define MAX_SALE_PRODUCTS						(10)
 #define MAX_PLANTS								(200)
 #define MAX_CUSTOMIZED_OBJECTS          		(7)
@@ -144,33 +170,42 @@ native WP_Hash(buffer[], len, const str[]);
 #define MAX_SERVER_SKINS						(600)
 #define MAX_ILEGAL_GARAGES						(3)
 
-#define MAX_FURNITURE_SLOTS						(700)
-#define MAX_FURNITURE_SLOT_FIELDS				(3500) // 1 slot = 5 textures. (MAX_FURNITURE_SLOTS*5)
+// Max Inactivity Time & Minimum Month PayDays before Job/Property Removal
+#define MAX_JOB_INACTIVITY_TIME					(864000) // 10 days
+#define MAX_INACTIVITY_TIME						(2592000) // 30 days
+#define MIN_MONTH_PAYDAYS						(10)
 
 // Experience.pwn
-#define MIN_GIVER_EXP_PAYDAYS					(2) // Mora imati minimalno 2 paydaya taj dan da bi mogao davati exp
-#define MIN_RECIEVER_EXP_PAYDAYS				(1) // Mora imati minimalno 1 payday taj dan da bi primio exp
-#define LEVEL_UP_EXP							(25) // 25 EXP - Level Update
-#define MAX_FURSLOTS_EXP						(100) // 100 EXP - Max Furniture Slots forever
-#define PREMIUM_BRONZE_EXP						(150) // Mjesec dana Premium Bronze paketa
-#define PREMIUM_SILVER_EXP						(200) // Mjesec dana Premium Silver paketa
-#define PREMIUM_GOLD_EXP						(250) // Mjesec dana Premium Gold paketa
+#define MIN_GIVER_EXP_PAYDAYS					(2) 
+#define MIN_RECIEVER_EXP_PAYDAYS				(1) 
+#define LEVEL_UP_EXP							(25) 
+#define MAX_FURSLOTS_EXP						(100) 
+#define PREMIUM_BRONZE_EXP						(150) 
+#define PREMIUM_SILVER_EXP						(200) 
+#define PREMIUM_GOLD_EXP						(250)
 
+// Furniture Texture Enum Slots 
+#define MAX_TEXTURE_SLOTS						(5) //  1 Furniture Object - 5 Textures
+
+// Furniture
 #define FURNITURE_PREMIUM_OBJECTS				(700) // => CMD: /afurniture setpremium [player_id] [house_id]
 #define FURNITURE_VIP_GOLD_OBJCTS				(500)
 #define FURNITURE_VIP_SILVER_OBJCTS				(400)
 #define FURNITURE_VIP_BRONZE_OBJCTS				(300)
 #define FURNITURE_VIP_NONE						(200)
+#define MAX_FURNITURE_SLOTS						(700)
+#define MAX_FURNITURE_SLOT_FIELDS				(FURNITURE_PREMIUM_OBJECTS * MAX_TEXTURE_SLOTS)
 
 // Bizz Furniture
 #define BIZZ_FURNITURE_VIP_GOLD_OBJCTS			(500)
 #define BIZZ_FURNITURE_VIP_SILVER_OBJCTS		(400)
 #define BIZZ_FURNITURE_VIP_BRONZE_OBJCTS		(300)
 #define BIZZ_FURNITURE_VIP_NONE					(200)
+#define MAX_BIZNIS_FURNITURE_SLOTS  			(BIZZ_FURNITURE_VIP_GOLD_OBJCTS * MAX_TEXTURE_SLOTS)
 
 // Trunk - Slot Limits
 #define MAX_WEAPON_SLOTS						(10)
-#define MAX_PACKAGE_VEHICLE						(15) // Maximalno weapon package-a u vozilu.
+#define MAX_PACKAGE_VEHICLE						(15) 
 
 // OnPlayerTakeDamage - Anti Cheat
 #define DAMAGE_DRIVEBY_HELI						(2)
@@ -181,62 +216,27 @@ native WP_Hash(buffer[], len, const str[]);
 #define INVALID_HOUSE_ID						(9999)
 #define INVALID_COMPLEX_ID                      (999)
 
-//Streaming
+// Streaming
 #define PRISON_DRAW_DISTANCE            		(250.0)
 
-//First Time User
+// Newly Registered User
 #define NEW_PLAYER_BANK 						(2500)
 #define NEW_PLAYER_MONEY 						(500)
 
-//Economy
+// Economy
 #define INFLATION_INDEX							(3)
 
-//Server informations
-#define HOSTNAME 								"City of Angels Role Play [0.3DL]"
-//#define HOSTNAME 								"CoA Testing time"
-#define COPYRIGHT                           	"Copyright (c) 2020 City of Angels Roleplay"
-#define WEB_URL									"forum.cityofangels-roleplay.com"
+// Bank - Credits
+#define BUY_TYPE_VEHICLE						(1)
+#define BUY_TYPE_HOUSE							(2)
+#define BUY_TYPE_BIZZ							(3)
 
-// !Prilikom promjene SCRIPT_VERSION, OBAVEZNO ubaciti novi Update "Changelog.txt"u /scriptfiles folder!
-#define SCRIPT_VERSION							"CoA RP v18.4.2."
-
-//custom name
-#define Dev_Name   								"Woo-Logan"
-
-//Macros
-#define Function:%0(%1) \
-		forward%0(%1); \
-		public%0(%1)
-
-#define IsPlayerLogged(%0) \
-	Bit1_Get(gr_PlayerLoggedIn,%0)
-
-#define IsPlayerLogging(%0) \
-	Bit1_Get(gr_PlayerLoggingIn,%0)
-
-// Provjerava dali je igrac ziv!
-#define IsPlayerAlive(%0) \
-	Bit1_Get(gr_PlayerAlive, %0)
-
-#define IsPlayerSafeBreaking(%0)	Bit1_Get( gr_SafeBreaking, playerid )
-
-#define IsPlayerReconing(%0) Bit4_Get(gr_SpecateId, %0)
-
-//Colors
-#define COLOR_FADE1                         0xE6E6E6E6
-#define COLOR_FADE2                         0xC8C8C8C8
-#define COLOR_FADE3                         0xAAAAAAAA
-#define COLOR_FADE4                         0x8C8C8C8C
-#define COLOR_FADE5                         0x6E6E6E6E
-
-#define COLOR_PLAYER						0xFFFFFF00
-#define COLOR_PLAYER_DEAD                   0xBFC0C200
-
-//Spawn
+// Spawn Coordinates
 #define SPAWN_X								(1107.3832)
 #define SPAWN_Y								(-1389.9144)
 #define SPAWN_Z								(13.6500)
 
+// Vehicle Tire Defines
 #define F_L_TIRE 0
 #define B_L_TIRE 1
 #define F_R_TIRE 2
@@ -251,8 +251,7 @@ native WP_Hash(buffer[], len, const str[]);
 #define ANTI_SPAM_BUY_TIME					(5)
 #define ANTI_SPAM_DOOR_SHOUT				(3)
 
-// ############################################# Tipovi typeloga(Defineovi za logove porezne) - CheckPlayerTransactions ########################################
-
+// IRS Tax Logs - CheckPlayerTransactions
 #define LOG_TYPE_BIZSELL 		1
 #define LOG_TYPE_HOUSESELL 		2
 #define LOG_TYPE_VEHICLESELL	3
@@ -268,7 +267,25 @@ native WP_Hash(buffer[], len, const str[]);
 	##       ##   ### ##     ## ##     ## ##    ##
 	######## ##    ##  #######  ##     ##  ######
 */
+
+// Main Database Connection Handler
+new MySQL:g_SQL;
+
+// Iterators
+new Iterator:COVehicles<MAX_VEHICLES>,
+	Iterator:Vehicles<MAX_VEHICLES>,
+	Iterator:Pickups<MAX_PICKUP>,
+	Iterator:Factions<MAX_FACTIONS>,
+	Iterator:Houses<MAX_HOUSES>,
+	Iterator:Bizzes<MAX_BIZZS>,
+	Iterator:Complex<MAX_COMPLEX>,
+	Iterator:ComplexRooms<MAX_COMPLEX_ROOMS>,
+	Iterator:Garages<MAX_GARAGES>,
+	Iterator:IllegalGarages<MAX_ILEGAL_GARAGES>,
+	Iterator:COWObjects	[MAX_VEHICLES]<MAX_WEAPON_SLOTS>;
+
 new texture_buffer[10256];
+new PlayerUpdatePage[MAX_PLAYERS] = 0;
 
 enum E_PLAYER_DATA
 {
@@ -321,6 +338,7 @@ enum E_PLAYER_DATA
 	pDutySystem,
 	pPayDay,
 	pPayDayMoney,
+	pProfit,
 	pPayDayHad,
 	pPayDayDialog[2048],
 	pPayDayDate[32],
@@ -342,10 +360,9 @@ enum E_PLAYER_DATA
 	pCrashId,
 	pCrashVW,
 	pCrashInt,
-	pCrashViwo,
 	Float:pCrashArmour,
 	Float:pCrashHealth,
-	Float:pCrashPos[3], //0 - X, 1 - Y, 2 - Z
+	Float:pCrashPos[3],
 	pSkin,
 	pMobileCost,
 	pMobileNumber,
@@ -354,8 +371,6 @@ enum E_PLAYER_DATA
 	pMarriedTo[MAX_PLAYER_NAME],
 	pAccent[19],
 	pKilled,
-	pRate,
-	pCreditType,
 	pCarLic,
 	pGunLic,
 	pBoatLic,
@@ -427,8 +442,7 @@ enum E_PLAYER_DATA
 	pVoted,
 	pPassport,
 	hRope,
-	pSkillId,
-	pSkills[10],
+	pSkills[MAX_SKILLS],
 	pPhoneBG,
 	pPhoneMask,
 	pAmmuTime,
@@ -459,7 +473,7 @@ enum E_PLAYER_DATA
  	//speedo
  	pSpeedo,
 	//admin msgs
-	pAdminMsg[128],
+	pAdminMsg[2048],
 	pAdminMsgBy[60],
 	pAdmMsgConfirm,
 	//pm
@@ -469,10 +483,34 @@ enum E_PLAYER_DATA
 }
 new PlayerInfo[ MAX_PLAYERS ][ E_PLAYER_DATA ];
 
+enum E_CREDIT_INFO
+{
+	cCreditType,
+	cRate,
+	cAmount,
+	cUnpaid,
+	bool:cUsed,
+	cTimestamp
+}
+new CreditInfo[ MAX_PLAYERS ][ E_CREDIT_INFO ];
+
+enum E_GARAGE_DATA {
+	gSQLID,
+	gOwnerID,
+	gAdress[16],
+	gEnterPck,
+	gPrice,
+	gLocked,
+	Float:gEnterX,
+	Float:gEnterY,
+	Float:gEnterZ,
+	Float:gExitX,
+	Float:gExitY,
+	Float:gExitZ,
+	gHouseID
+}
 new
-	Text3D:pNameTag[MAX_PLAYERS],
-	plyrName[MAX_PLAYERS][MAX_PLAYER_NAME],
-	PlayerPaused[MAX_PLAYERS];
+	GarageInfo[ MAX_GARAGES ][ E_GARAGE_DATA ];
 
 #define GetPlayerIP(%0) \
 		PlayerInfo[%0][cIP]
@@ -486,7 +524,8 @@ enum E_EXP_INFO
 	eAllPoints,
 	ePoints,
 	eLastPayDayStamp,
-	eDayPayDays
+	eDayPayDays,
+	eMonthPayDays
 }
 new ExpInfo[ MAX_PLAYERS ][ E_EXP_INFO ];
 
@@ -584,8 +623,8 @@ enum E_HOUSES_INFO {
 new
 	HouseInfo[MAX_HOUSES][E_HOUSES_INFO];
 
-#define hFurTxtId][%1][%2] hFurTxtId][((%1)*5)+(%2)]			// Hakiramo kompajler da imamo HouseInfo[ houseid ][ hFurTxtId ][ 0 ][ 0 ]
-#define hFurColId][%1][%2] hFurColId][((%1)*5)+(%2)]			// Hakiramo kompajler da imamo HouseInfo[ houseid ][ hFurColId ][ 0 ][ 0 ]
+#define hFurTxtId][%1][%2] hFurTxtId][((%1)*MAX_TEXTURE_SLOTS)+(%2)] // Hacking the compiler to have HouseInfo[ houseid ][ hFurTxtId ][ 0 ][ 0 ]
+#define hFurColId][%1][%2] hFurColId][((%1)*MAX_TEXTURE_SLOTS)+(%2)] // // Hacking the compiler to have HouseInfo[ houseid ][ hFurColId ][ 0 ][ 0 ]
 
 enum E_COMPLEX_INFO {
 	cSQLID,
@@ -653,7 +692,6 @@ enum E_COMPLEX_ROOM_INFO {
 new
 	ComplexRoomInfo[MAX_COMPLEX_ROOMS][E_COMPLEX_ROOM_INFO];
 
-#define MAX_BIZNIS_FURNITURE_SLOTS  	( BIZZ_FURNITURE_VIP_GOLD_OBJCTS * 5 )
 enum E_BIZNIS_INFO
 {
 	bSQLID,
@@ -731,7 +769,8 @@ enum E_PLAYER_TICKS {
 	ptFire,
 	ptHelperHelp,
 	ptAirBrake,
-	ptFlyHack
+	ptFlyHack,
+	ptVehiclePort
 }
 new PlayerTick[MAX_PLAYERS][E_PLAYER_TICKS];
 
@@ -756,7 +795,7 @@ enum PLAYER_OBJECT_DATA
 	poSQLID,
 	poModelid,
 	poBoneId,
-	poPlaced,
+	bool:poPlaced,
 	Float:poPosX,
 	Float:poPosY,
 	Float:poPosZ,
@@ -772,7 +811,6 @@ enum PLAYER_OBJECT_DATA
 new PlayerObject[MAX_PLAYERS][MAX_CUSTOMIZED_OBJECTS][PLAYER_OBJECT_DATA];
 
 new vTireHP[MAX_VEHICLES][4];
-#define MAX_TICKETS_SIZE ( MAX_VEHICLE_TICKETS * 64 )// MAX_VEHICLE_TICKETS * sizeof(vTicketsReason)
 
 enum E_VEHICLE_DATA
 {
@@ -832,6 +870,7 @@ enum E_VEHICLE_DATA
 	vViwo,
 	Float:vHealth,
 	bool:vDestroyed,
+	bool:vDeleted,
 	vRespawn,
 	bool:vGPS,
 	bool:vTuned,
@@ -881,6 +920,7 @@ enum E_VEHICLE_PREV_DATA
 	Float:vPosY,
 	Float:vPosZ,
 	Float:vRotZ,
+	Float:vPosDiff,
 	Float:vHealth,
 	vPanels,
 	vDoors,
@@ -889,7 +929,6 @@ enum E_VEHICLE_PREV_DATA
 }
 new VehiclePrevInfo[MAX_VEHICLES][E_VEHICLE_PREV_DATA];
 
-// Anti Spam protection
 enum E_ANTI_SPAM_DATA
 {
 	asPrivateMsg,
@@ -902,8 +941,6 @@ enum E_ANTI_SPAM_DATA
 }
 new
 	AntiSpamInfo[MAX_PLAYERS][E_ANTI_SPAM_DATA];
-
-// Faction enums
 
 enum E_FACTION_DATA
 {
@@ -947,7 +984,6 @@ enum E_FACTION_DATA
 new
 	FactionInfo[MAX_FACTIONS][E_FACTION_DATA];
 
-// City enums
 enum E_CITY_DATA
 {
 	cBudget,
@@ -957,8 +993,8 @@ enum E_CITY_DATA
 new
 	CityInfo[ E_CITY_DATA ];
 
-//Dialogs
-enum {
+enum 
+{
 	DIALOG_LOGIN			= 10001,
 	DIALOG_REGISTER,
 	DIALOG_REG_AGREE,
@@ -979,6 +1015,9 @@ enum {
 	DIALOG_SEC_SAMPID,
 	DIALOG_NETWORK_STATS,
 	DIALOG_CREDIT,
+	DIALOG_VEH_PAYMENT,
+	DIALOG_HOUSE_PAYMENT,
+	DIALOG_BIZZ_PAYMENT,
 	DIALOG_PORT,
 	DIALOG_RULES,
 	DIALOG_IJOBS,
@@ -1162,7 +1201,7 @@ enum {
 	DIALOG_CASINO_PARNEPAR,
 	DIALOG_CASINO_STUPAC,
 
-	//Elections
+	// Elections
 	DIALOG_FOR_ELECTIONS,
 	DIALOG_ELECTIONS_VOTE,
 
@@ -1221,7 +1260,7 @@ enum {
 	DIALOG_HOUSE_DSTORAGE,
 	DIALOG_HSTORAGE_EDIT,
 
-	// OBJECTS
+	// Objects
 	DIALOG_PREVIEW_CLOTHING_BUY,
 	DIALOG_OBJECTS_BUY,
 	DIALOG_OBJECT_BONE_SELECTION,
@@ -1366,6 +1405,7 @@ enum {
 	DIALOG_MDC_PLAYER,
 	DIALOG_MDC_VEHICLE,
 	DIALOG_MDC_PHONE,
+	DIALOG_MDC_PHONE_INFO,
 
 	DIALOG_MDC_RECORD,
 	DIALOG_MDC_CRECORD,
@@ -1518,12 +1558,6 @@ enum {
 	// Spraynpay.pwn
 	DIALOG_SPRAY_CONFIRM,
 
-	/*// Inventory.pwn
-	DIALOG_INVENTORY_MENU,
-	DIALOG_INVENTORY_DROP,
-	DIALOG_INVENTORY_GIVE,
-	DIALOG_INVENTORY_GIVE_QUANTITY,*/
-
 	// RobStorage.pwn
 	DIALOG_ROB_STORAGE,
 	DIALOG_ROB_DSTORAGE,
@@ -1537,6 +1571,10 @@ enum {
 	DIALOG_EXP_CHOOSE,
 	DIALOG_MOST_TEMPEXP,
 	DIALOG_MOST_OVERALLEXP,
+	
+	// Account Inactivity,
+	DIALOG_INACTIVITY_LIST,
+	DIALOG_INACTIVITY_CHECK,
 
 	// GranTurismo.pwn - Racing Leauge
 	DIALOG_RACE_PICK,
@@ -1554,25 +1592,6 @@ enum {
 };
 
 /*
-// Inventory.pwn
-
-#define MODEL_SELECTION_INVENTORY 		(999)
-#define MODEL_SELECTION_CHECK_INVENTORY (989)
-#define MAX_LISTED_ITEMS 				(10)
-#define MAX_INV_DROPPED_ITEMS 			(1000)
-#define INVENTORY_ATTACHED_OBJECT		(9)
-#define MASK_SLOT						(8)
-#define MAX_INVENTORY_SLOTS 			(30)
-
-// Item Types
-#define	ITEM_TYPE_NONE     				(0)
-#define	ITEM_TYPE_FOOD 	   				(1)
-#define	ITEM_TYPE_DRINK    				(2)
-#define	ITEM_TYPE_OTHER    				(3)
-*/
-
-
-/*
 	##     ##    ###    ########   ######
 	##     ##   ## ##   ##     ## ##    ##
 	##     ##  ##   ##  ##     ## ##
@@ -1581,6 +1600,7 @@ enum {
 	  ## ##   ##     ## ##    ##  ##    ##
 	   ###    ##     ## ##     ##  ######
 */
+
 new adminfly[MAX_PLAYERS];
 
 new playeReport[MAX_PLAYERS] = { -1, ... };
@@ -1594,7 +1614,7 @@ new
 	WeatherTimer 			= 0,
 	VehicleTimer			= 0,
 	GlobalVehicleStamp		= 0,
-	Prognozasys 			= 10,
+	WeatherSys 			= 10,
 	GoC_Online 				= 0,
 	Troll_Online 			= 0,
 	Fox_Online				= 0,
@@ -1606,6 +1626,7 @@ new
 new ModelToEnumID[MAX_PLAYERS][MAX_FURNITURE_SLOTS];
 //FLY
 new Float:ACPosX[MAX_PLAYERS], Float:ACPosY[MAX_PLAYERS], Float:ACPosZ[MAX_PLAYERS];
+
 // Players 32 bit
 new
 	//_QuickTimer[MAX_PLAYERS] = 0,
@@ -1660,22 +1681,6 @@ new
 	PlayerTuningVehicle[ MAX_PLAYERS ] = INVALID_VEHICLE_ID;
 	//bool:aprilfools[MAX_PLAYERS] = true;
 
-//Iterators
-new
-	Iterator:COVehicles<MAX_VEHICLES>,
-	Iterator:Vehicles<MAX_VEHICLES>,
-	//Iterator:TruckTrailers<MAX_VEHICLES>, - trucker.pwn - izba�en
-	Iterator:Pickups<MAX_PICKUP>,
-	Iterator:Factions<MAX_FACTIONS>,
-	Iterator:Houses<MAX_HOUSES>,
-	Iterator:Bizzes<MAX_BIZZS>,
-	Iterator:Complex<MAX_COMPLEX>,
-	Iterator:ComplexRooms<MAX_COMPLEX_ROOMS>,
-	Iterator:Garages<MAX_GARAGES>,
-	Iterator:IllegalGarages<MAX_ILEGAL_GARAGES>,
-	Iterator:COWObjects	[MAX_VEHICLES]<MAX_WEAPON_SLOTS>,
-	Iterator:DamagedByCheater <MAX_PLAYERS>;
-
 new GunObjectIDs[200] ={
 
    1575,  331, 333, 334, 335, 336, 337, 338, 339, 341, 321, 322, 323, 324, 325, 326, 342, 343, 344, -1,  -1 , -1 ,
@@ -1684,6 +1689,10 @@ new GunObjectIDs[200] ={
 };
 //fisher
 new GotRod[MAX_PLAYERS];
+
+// Bank Credits
+new paymentBuyPrice[MAX_PLAYERS],
+	buyBizID[MAX_PLAYERS];
 
 // Vehicles
 new
@@ -1802,10 +1811,6 @@ new
 	Bit16:	gr_PlayerInPickup		<MAX_PLAYERS>  = Bit16: -1,
 	Bit16:	gr_PlayerTracing		<MAX_PLAYERS>  = Bit16: 9999;
 
-//MySQL
-new
-	MySQL:g_SQL;
-
 new
     secquestattempt[MAX_PLAYERS] = 3,
 	EditingWeapon[MAX_PLAYERS] = 0,
@@ -1879,10 +1884,10 @@ new
 	##     ##  #######  ########   #######  ######## ########  ######
 */
 
-
 // Colors
 #include "modules/Server/Checkpoints.pwn"
 #include "modules/Server/Color.pwn"
+
 // Server
 #include "modules/Server/Artconfig.pwn"
 #include "modules/Server/PopupMessage.pwn"
@@ -1895,7 +1900,6 @@ new
 #include "modules/Systems/Experience.pwn"
 #include "modules/Systems/NOS.pwn"
 #include "modules/Server/Logo.pwn"
-
 
 // Admin
 #include "modules/Admin/Ban.pwn"
@@ -1910,6 +1914,7 @@ new
 #include "modules/Char/Hotel.pwn"
 #include "modules/Server/KeyInput.pwn"
 #include "modules/Char/Animations.pwn"
+#include "modules/Server/RaknetAC.pwn"
 #include "modules/Server/AC_Core.pwn"
 #include "modules/Server/AntiCheat.pwn"
 #include "modules/Server/AntiBunnyHop.pwn"
@@ -1952,7 +1957,6 @@ new
 #include "modules/Systems/PawnShop.pwn"
 #include "modules/Systems/Toll.pwn"
 #include "modules/Systems/BasketballNew.pwn"// Update
-
 #include "modules/Char/Drugs.pwn"
 
 // LSPD
@@ -1966,11 +1970,13 @@ new
 #include "modules/Systems/LSPD/Gunrack.pwn"
 #include "modules/Systems/LSPD/MobileCommand.pwn"
 #include "modules/Systems/LSPD/Siren.pwn"
+
 // LSFD
 #include "modules/Systems/LSFD/Core.pwn"
 #include "modules/Systems/LSFD/Ambulance.pwn"
 #include "modules/Systems/LSFD/Anamneza.pwn"
 #include "modules/Systems/LSFD/Rope.pwn"
+
 // Char
 #include "modules/Char/Bank.pwn"
 #include "modules/Char/Mobile.pwn"
@@ -1998,10 +2004,8 @@ new
 #include "modules/Char/Gym.pwn"
 
 // Jobs
-#include "modules/Char/Jobs/Pizzaboy.pwn"
 #include "modules/Char/Jobs/Garbage.pwn"
 #include "modules/Char/Jobs/Sweeper.pwn"
-#include "modules/Char/Jobs/Mower.pwn"
 #include "modules/Char/Jobs/Mechanic.pwn"
 #include "modules/Char/Jobs/Crafter.pwn"
 #include "modules/Char/Jobs/Farmer.pwn"
@@ -2010,6 +2014,7 @@ new
 #include "modules/Systems/RobStorage.pwn"
 #include "modules/Char/Jobs/Impounder.pwn"
 #include "modules/Char/Jobs/Transporter.pwn"
+
 // Hobiji
 #include "modules/Char/Hobby/Fisher.pwn"
 #include "modules/Char/Jobs/Hunter.pwn"
@@ -2060,8 +2065,7 @@ StartGMX()
 	format(rconstring, sizeof(rconstring), "hostname CoA.RP [Pohrana podataka u MySQL bazu]");
 	SendRconCommand(rconstring);
 	SendRconCommand("password devtest");
-	SendClientMessageToAll(COLOR_RED, "[SERVER] Pokrenuta je priprema za Game Mode Restart. Molimo Vas pricekajte da Vam server spremi podatke.");
-	SendClientMessageToAll(COLOR_RED, "[SERVER] Ukoliko ne zelite izgubiti zadnjih 10-30 min gameplaya, cekajte da Vas server autom. kicka.");
+	SendClientMessageToAll(COLOR_RED, "[SERVER]: Server Restart procedure initiated. Please stay in game until server stores your data...");
 	SaveAll();
 	return 1;
 }
@@ -2078,7 +2082,7 @@ RegisterPlayerDeath(playerid, killerid) // funkcija
 {
 	new
 		tmpString[135];
-	format(tmpString, 135, "KillWarn: Igrac %s[%d] je ubio igraca %s[%d] oruzjem %s!",
+	format(tmpString, 135, "KillWarn: Player %s[%d] killed player %s[%d] with %s!",
 		GetName( killerid, false ),
 		killerid,
 		GetName( playerid, false ),
@@ -2097,7 +2101,7 @@ RegisterPlayerDeath(playerid, killerid) // funkcija
 	);
 	mysql_tquery(g_SQL, tmpQuery);
 
-	Log_Write("logfiles/kills.txt", "(%s) %s{%d}(%s) je ubio %s{%d}(%s) s %s(%d).",
+	Log_Write("logfiles/kills.txt", "(%s) %s{%d}(%s) has killed %s{%d}(%s) with %s(%d).",
 		ReturnDate(),
 		GetName(killerid, false),
 		PlayerInfo[killerid][pSQLID],
@@ -2193,7 +2197,7 @@ Function: ResetIterators()
 ResetPlayerVariables(playerid)
 {	
 	//aprilfools[playerid] = false;
-	
+	PlayerUpdatePage[playerid] = 0;
     entering[playerid] = 0;
     onexit[playerid] = 0;
    	TWorking[playerid] = 0;
@@ -2395,14 +2399,6 @@ ResetPlayerVariables(playerid)
 		stop TutTimer[playerid];
 	}
 
-	// Mower
-	DestroyMowerVars(playerid);
-	Bit1_Set( gr_UsingPizzaSkin		, playerid, false );
-	Bit1_Set( gr_FirstUsing			, playerid, false );
-	Bit8_Set( gr_PlayerPizzas		, playerid, 0 );
-	Bit8_Set( gr_PlayerPizzasTotal	, playerid, 0 );
-	Bit16_Set( gr_LastPizzaCrib		, playerid, INVALID_HOUSE_ID );
-
 
 	// Rent Veh
 	rentedVehicle[playerid] 	= false;
@@ -2423,6 +2419,7 @@ ResetPlayerVariables(playerid)
 	PlayerTick[playerid][ptHelperHelp]		= gettimestamp();
 	PlayerTick[playerid][ptAirBrake] 		= gettimestamp();
 	PlayerTick[playerid][ptKill]			= 0;
+	PlayerTick[playerid][ptVehiclePort]		= 0;
 	PlayerTaskTStamp[playerid] 				= 0;
 
 	//Enums
@@ -2482,9 +2479,10 @@ ResetPlayerVariables(playerid)
 	PlayerInfo[playerid][pDutySystem]		= 0;
 	PlayerInfo[playerid][pPayDay]			= 0;
 	PlayerInfo[playerid][pPayDayMoney]		= 0;
+	PlayerInfo[playerid][pProfit]			= 0;
 	PlayerInfo[playerid][pPayDayHad]		= 0;
-	PlayerInfo[playerid][pHouseKey]			= 9999;
-	PlayerInfo[playerid][pRentKey]			= 9999;
+	PlayerInfo[playerid][pHouseKey]			= INVALID_HOUSE_ID;
+	PlayerInfo[playerid][pRentKey]			= INVALID_HOUSE_ID;
 	PlayerInfo[playerid][pLeader]			= 0;
 	PlayerInfo[playerid][pMember]			= 0;
 	PlayerInfo[playerid][pRank]				= 0;
@@ -2496,8 +2494,6 @@ ResetPlayerVariables(playerid)
 	PlayerInfo[playerid][pMobileNumber]		= 0;
 	PlayerInfo[playerid][pMobileModel]		= 0;
 	PlayerInfo[playerid][pMobileCost] 		= 0;
-	PlayerInfo[playerid][pRate]				= 0;
-	PlayerInfo[playerid][pCreditType]		= 0;
 	PlayerInfo[playerid][pKilled]			= 0;
 	PlayerInfo[playerid][pDeathInt] 		= 0;
 	PlayerInfo[playerid][pDeathVW] 			= 0;
@@ -2516,9 +2512,9 @@ ResetPlayerVariables(playerid)
 	PlayerInfo[playerid][pViwo]				= 0;
 	PlayerInfo[playerid][pMaskID]			= -1;
 	PlayerInfo[playerid][pSpawnedCar]		= -1;
-	PlayerInfo[playerid][pBizzKey]			= 999;
-	PlayerInfo[playerid][pComplexKey]		= 999;
-	PlayerInfo[playerid][pComplexRoomKey]	= 999;
+	PlayerInfo[playerid][pBizzKey]			= INVALID_BIZNIS_ID;
+	PlayerInfo[playerid][pComplexKey]		= INVALID_COMPLEX_ID;
+	PlayerInfo[playerid][pComplexRoomKey]	= INVALID_COMPLEX_ID;
 	PlayerInfo[playerid][pGarageKey]		= -1;
 	PlayerInfo[playerid][pIllegalGarageKey]	= -1;
 	PlayerInfo[playerid][pSeeds]			= 0;
@@ -2533,6 +2529,8 @@ ResetPlayerVariables(playerid)
 	PlayerInfo[playerid][pBoomBoxType] 		= 0;
 	PlayerInfo[playerid][pHasRadio] 		= 0;
 	PlayerInfo[playerid][pMainSlot] 		= 0;
+	
+	ResetCreditVars(playerid);
 
 	PlayerInfo[playerid][pRadio][1] 		= 0;
 	PlayerInfo[playerid][pRadio][2] 		= 0;
@@ -2552,7 +2550,6 @@ ResetPlayerVariables(playerid)
 	PlayerInfo[playerid][pGrafID]			= -1;
 	PlayerInfo[playerid][pTagID]			= -1;
 	PlayerInfo[playerid][hRope] 			= 0;
-	PlayerInfo[playerid][pSkillId]			= -1;
 	PlayerInfo[playerid][pAmmuTime]			= 0;
 	PlayerInfo[playerid][pDonatorVehicle] 	= 0;
 	PlayerInfo[playerid][pDonatorVehPerms] 	= 0;
@@ -2562,6 +2559,7 @@ ResetPlayerVariables(playerid)
 	PlayerInfo[playerid][pRaceSQL]			= -1;
 	PlayerInfo[playerid][pMustRead]			= false;
 	PlayerInfo[playerid][pRaceCreator]		= false;
+	
 	//Floats
 	PlayerInfo[playerid][pHealth]			= 0.0;
 	PlayerInfo[playerid][pArmour]			= 0.0;
@@ -2599,133 +2597,27 @@ ResetPlayerVariables(playerid)
 	PlayerInfo[playerid][pBusinessWorkTime]	= 0;
 
 	// Objects
-	PlayerObject[ playerid ][0][poSQLID]		= -1;
-	PlayerObject[ playerid ][0][ poModelid ]	= -1;
-	PlayerObject[ playerid ][0][ poBoneId ]		= 0;
-	PlayerObject[ playerid ][0][ poPlaced ]		= 0;
-	PlayerObject[ playerid ][0][ poPosX ]   	= 0.0;
-	PlayerObject[ playerid ][0][ poPosY ]		= 0.0;
-	PlayerObject[ playerid ][0][ poPosZ ]		= 0.0;
-	PlayerObject[ playerid ][0][ poRotX ]		= 0.0;
-	PlayerObject[ playerid ][0][ poRotY ]		= 0.0;
-	PlayerObject[ playerid ][0][ poRotZ ]		= 0.0;
-	PlayerObject[ playerid ][0][ poScaleX ]		= 1.0;
-	PlayerObject[ playerid ][0][ poScaleY ]		= 1.0;
-	PlayerObject[ playerid ][0][ poScaleZ ]		= 1.0;
-	PlayerObject[ playerid ][0][ poColor1 ] 	= 0;
-	PlayerObject[ playerid ][0][ poColor2 ] 	= 0;
+	for(new i = 0; i < MAX_CUSTOMIZED_OBJECTS; i++)
+	{
+		PlayerObject[ playerid ][i][poSQLID]		= -1;
+		PlayerObject[ playerid ][i][ poModelid ]	= -1;
+		PlayerObject[ playerid ][i][ poBoneId ]		= 0;
+		PlayerObject[ playerid ][i][ poPlaced ]		= false;
+		PlayerObject[ playerid ][i][ poPosX ]   	= 0.0;
+		PlayerObject[ playerid ][i][ poPosY ]		= 0.0;
+		PlayerObject[ playerid ][i][ poPosZ ]		= 0.0;
+		PlayerObject[ playerid ][i][ poRotX ]		= 0.0;
+		PlayerObject[ playerid ][i][ poRotY ]		= 0.0;
+		PlayerObject[ playerid ][i][ poRotZ ]		= 0.0;
+		PlayerObject[ playerid ][i][ poScaleX ]		= 1.0;
+		PlayerObject[ playerid ][i][ poScaleY ]		= 1.0;
+		PlayerObject[ playerid ][i][ poScaleZ ]		= 1.0;
+		PlayerObject[ playerid ][i][ poColor1 ] 	= 0;
+		PlayerObject[ playerid ][i][ poColor2 ] 	= 0;
 
-	if( IsPlayerAttachedObjectSlotUsed(playerid, 0) )
-		RemovePlayerAttachedObject( playerid, 0 );
-
-	PlayerObject[ playerid ][1][poSQLID]		= -1;
-	PlayerObject[ playerid ][1][ poModelid ]	= -1;
-	PlayerObject[ playerid ][1][ poBoneId ]		= 0;
-	PlayerObject[ playerid ][1][ poPlaced ]		= 0;
-	PlayerObject[ playerid ][1][ poPosX ]   	= 0.0;
-	PlayerObject[ playerid ][1][ poPosY ]		= 0.0;
-	PlayerObject[ playerid ][1][ poPosZ ]		= 0.0;
-	PlayerObject[ playerid ][1][ poRotX ]		= 0.0;
-	PlayerObject[ playerid ][1][ poRotY ]		= 0.0;
-	PlayerObject[ playerid ][1][ poRotZ ]		= 0.0;
-	PlayerObject[ playerid ][1][ poScaleX ]		= 1.0;
-	PlayerObject[ playerid ][1][ poScaleY ]		= 1.0;
-	PlayerObject[ playerid ][1][ poScaleZ ]		= 1.0;
-	PlayerObject[ playerid ][1][ poColor1 ] 	= 0;
-	PlayerObject[ playerid ][1][ poColor2 ] 	= 0;
-	if( IsPlayerAttachedObjectSlotUsed(playerid, 1) )
-		RemovePlayerAttachedObject( playerid, 1 );
-
-	PlayerObject[ playerid ][2][ poSQLID ]		= -1;
-	PlayerObject[ playerid ][2][ poModelid ]	= -1;
-	PlayerObject[ playerid ][2][ poBoneId ]		= 0;
-	PlayerObject[ playerid ][2][ poPlaced ]		= 0;
-	PlayerObject[ playerid ][2][ poPosX ]   	= 0.0;
-	PlayerObject[ playerid ][2][ poPosY ]		= 0.0;
-	PlayerObject[ playerid ][2][ poPosZ ]		= 0.0;
-	PlayerObject[ playerid ][2][ poRotX ]		= 0.0;
-	PlayerObject[ playerid ][2][ poRotY ]		= 0.0;
-	PlayerObject[ playerid ][2][ poRotZ ]		= 0.0;
-	PlayerObject[ playerid ][2][ poScaleX ]		= 1.0;
-	PlayerObject[ playerid ][2][ poScaleY ]		= 1.0;
-	PlayerObject[ playerid ][2][ poScaleZ ]		= 1.0;
-	PlayerObject[ playerid ][2][ poColor1 ] 	= 0;
-	PlayerObject[ playerid ][2][ poColor2 ] 	= 0;
-	if( IsPlayerAttachedObjectSlotUsed(playerid, 2) )
-		RemovePlayerAttachedObject( playerid, 2 );
-
-	PlayerObject[ playerid ][3][ poSQLID ]		= -1;
-	PlayerObject[ playerid ][3][ poModelid ]	= -1;
-	PlayerObject[ playerid ][3][ poBoneId ]		= 0;
-	PlayerObject[ playerid ][3][ poPlaced ]		= 0;
-	PlayerObject[ playerid ][3][ poPosX ]   	= 0.0;
-	PlayerObject[ playerid ][3][ poPosY ]		= 0.0;
-	PlayerObject[ playerid ][3][ poPosZ ]		= 0.0;
-	PlayerObject[ playerid ][3][ poRotX ]		= 0.0;
-	PlayerObject[ playerid ][3][ poRotY ]		= 0.0;
-	PlayerObject[ playerid ][3][ poRotZ ]		= 0.0;
-	PlayerObject[ playerid ][3][ poScaleX ]		= 1.0;
-	PlayerObject[ playerid ][3][ poScaleY ]		= 1.0;
-	PlayerObject[ playerid ][3][ poScaleZ ]		= 1.0;
-	PlayerObject[ playerid ][3][ poColor1 ] 	= 0;
-	PlayerObject[ playerid ][3][ poColor2 ] 	= 0;
-	if( IsPlayerAttachedObjectSlotUsed(playerid, 3) )
-		RemovePlayerAttachedObject( playerid, 3 );
-
-	PlayerObject[ playerid ][4][ poSQLID ]		= -1;
-	PlayerObject[ playerid ][4][ poModelid ]	= -1;
-	PlayerObject[ playerid ][4][ poBoneId ]		= 0;
-	PlayerObject[ playerid ][4][ poPlaced ]		= 0;
-	PlayerObject[ playerid ][4][ poPosX ]   	= 0.0;
-	PlayerObject[ playerid ][4][ poPosY ]		= 0.0;
-	PlayerObject[ playerid ][4][ poPosZ ]		= 0.0;
-	PlayerObject[ playerid ][4][ poRotX ]		= 0.0;
-	PlayerObject[ playerid ][4][ poRotY ]		= 0.0;
-	PlayerObject[ playerid ][4][ poRotZ ]		= 0.0;
-	PlayerObject[ playerid ][4][ poScaleX ]		= 1.0;
-	PlayerObject[ playerid ][4][ poScaleY ]		= 1.0;
-	PlayerObject[ playerid ][4][ poScaleZ ]		= 1.0;
-	PlayerObject[ playerid ][4][ poColor1 ] 	= 0;
-	PlayerObject[ playerid ][4][ poColor2 ] 	= 0;
-	if( IsPlayerAttachedObjectSlotUsed(playerid, 4) )
-		RemovePlayerAttachedObject( playerid, 4 );
-
-	PlayerObject[ playerid ][5][poSQLID]		= -1;
-	PlayerObject[ playerid ][5][ poModelid ]	= -1;
-	PlayerObject[ playerid ][5][ poBoneId ]		= 0;
-	PlayerObject[ playerid ][5][ poPlaced ]		= 0;
-	PlayerObject[ playerid ][5][ poPosX ]   	= 0.0;
-	PlayerObject[ playerid ][5][ poPosY ]		= 0.0;
-	PlayerObject[ playerid ][5][ poPosZ ]		= 0.0;
-	PlayerObject[ playerid ][5][ poRotX ]		= 0.0;
-	PlayerObject[ playerid ][5][ poRotY ]		= 0.0;
-	PlayerObject[ playerid ][5][ poRotZ ]		= 0.0;
-	PlayerObject[ playerid ][5][ poScaleX ]		= 1.0;
-	PlayerObject[ playerid ][5][ poScaleY ]		= 1.0;
-	PlayerObject[ playerid ][5][ poScaleZ ]		= 1.0;
-	PlayerObject[ playerid ][5][ poColor1 ] 	= 0;
-	PlayerObject[ playerid ][5][ poColor2 ] 	= 0;
-
-	if( IsPlayerAttachedObjectSlotUsed(playerid, 5) )
-		RemovePlayerAttachedObject( playerid, 5 );
-
-	PlayerObject[ playerid ][6][poSQLID]		= -1;
-	PlayerObject[ playerid ][6][ poModelid ]	= -1;
-	PlayerObject[ playerid ][6][ poBoneId ]		= 0;
-	PlayerObject[ playerid ][6][ poPlaced ]		= 0;
-	PlayerObject[ playerid ][6][ poPosX ]   	= 0.0;
-	PlayerObject[ playerid ][6][ poPosY ]		= 0.0;
-	PlayerObject[ playerid ][6][ poPosZ ]		= 0.0;
-	PlayerObject[ playerid ][6][ poRotX ]		= 0.0;
-	PlayerObject[ playerid ][6][ poRotY ]		= 0.0;
-	PlayerObject[ playerid ][6][ poRotZ ]		= 0.0;
-	PlayerObject[ playerid ][6][ poScaleX ]		= 1.0;
-	PlayerObject[ playerid ][6][ poScaleY ]		= 1.0;
-	PlayerObject[ playerid ][6][ poScaleZ ]		= 1.0;
-	PlayerObject[ playerid ][6][ poColor1 ] 	= 0;
-	PlayerObject[ playerid ][6][ poColor2 ] 	= 0;
-	if( IsPlayerAttachedObjectSlotUsed(playerid, 6) )
-		RemovePlayerAttachedObject( playerid, 6 );
+		if( IsPlayerAttachedObjectSlotUsed(playerid, i) )
+			RemovePlayerAttachedObject( playerid, i );
+	}
 	if( IsPlayerAttachedObjectSlotUsed(playerid, 7) )
 		RemovePlayerAttachedObject( playerid, 7 );
 	if( IsPlayerAttachedObjectSlotUsed(playerid, 8) )
@@ -2733,60 +2625,14 @@ ResetPlayerVariables(playerid)
 	if( IsPlayerAttachedObjectSlotUsed(playerid, 9) )
 		RemovePlayerAttachedObject( playerid, 9 );
 
-// Weapon Enum reset
-	PlayerWeapons[playerid][pwSQLID][0] = -1;
-	PlayerWeapons[playerid][pwWeaponId][0] = 0;
-	PlayerWeapons[playerid][pwAmmo][0] = 0;
-	PlayerWeapons[playerid][pwHidden][0] = 0;
-	PlayerWeapons[playerid][pwSQLID][1] = -1;
-	PlayerWeapons[playerid][pwWeaponId][1] = 0;
-	PlayerWeapons[playerid][pwAmmo][1] = 0;
-	PlayerWeapons[playerid][pwHidden][1] = 0;
-	PlayerWeapons[playerid][pwSQLID][2] = -1;
-	PlayerWeapons[playerid][pwWeaponId][2] = 0;
-	PlayerWeapons[playerid][pwAmmo][2] = 0;
-	PlayerWeapons[playerid][pwHidden][2] = 0;
-	PlayerWeapons[playerid][pwSQLID][3] = -1;
-	PlayerWeapons[playerid][pwWeaponId][3] = 0;
-	PlayerWeapons[playerid][pwAmmo][3] = 0;
-	PlayerWeapons[playerid][pwHidden][3] = 0;
-	PlayerWeapons[playerid][pwSQLID][4] = -1;
-	PlayerWeapons[playerid][pwWeaponId][4] = 0;
-	PlayerWeapons[playerid][pwAmmo][4] = 0;
-	PlayerWeapons[playerid][pwHidden][4] = 0;
-	PlayerWeapons[playerid][pwSQLID][5] = -1;
-	PlayerWeapons[playerid][pwWeaponId][5] = 0;
-	PlayerWeapons[playerid][pwAmmo][5] = 0;
-	PlayerWeapons[playerid][pwHidden][5] = 0;
-	PlayerWeapons[playerid][pwSQLID][6] = -1;
-	PlayerWeapons[playerid][pwWeaponId][6] = 0;
-	PlayerWeapons[playerid][pwAmmo][6] = 0;
-	PlayerWeapons[playerid][pwHidden][6] = 0;
-	PlayerWeapons[playerid][pwSQLID][7] = -1;
-	PlayerWeapons[playerid][pwWeaponId][7] = 0;
-	PlayerWeapons[playerid][pwAmmo][7] = 0;
-	PlayerWeapons[playerid][pwHidden][7] = 0;
-	PlayerWeapons[playerid][pwSQLID][8] = -1;
-	PlayerWeapons[playerid][pwWeaponId][8] = 0;
-	PlayerWeapons[playerid][pwAmmo][8] = 0;
-	PlayerWeapons[playerid][pwHidden][8] = 0;
-	PlayerWeapons[playerid][pwSQLID][9] = -1;
-	PlayerWeapons[playerid][pwWeaponId][9] = 0;
-	PlayerWeapons[playerid][pwAmmo][9] = 0;
-	PlayerWeapons[playerid][pwHidden][9] = 0;
-	PlayerWeapons[playerid][pwSQLID][10] = -1;
-	PlayerWeapons[playerid][pwWeaponId][10] = 0;
-	PlayerWeapons[playerid][pwAmmo][10] = 0;
-	PlayerWeapons[playerid][pwHidden][10] = 0;
-	PlayerWeapons[playerid][pwSQLID][11] = -1;
-	PlayerWeapons[playerid][pwWeaponId][11] = 0;
-	PlayerWeapons[playerid][pwAmmo][11] = 0;
-	PlayerWeapons[playerid][pwHidden][11] = 0;
-	PlayerWeapons[playerid][pwSQLID][12] = -1;
-	PlayerWeapons[playerid][pwWeaponId][12] = 0;
-	PlayerWeapons[playerid][pwAmmo][12] = 0;
-	PlayerWeapons[playerid][pwHidden][12] = 0;
-
+	// Weapon Enum reset
+	for(new wslot = 0; wslot < 13; wslot++)
+	{
+		PlayerWeapons[playerid][pwSQLID][wslot] = -1;
+		PlayerWeapons[playerid][pwWeaponId][wslot] = 0;
+		PlayerWeapons[playerid][pwAmmo][wslot] = 0;
+		PlayerWeapons[playerid][pwHidden][wslot] = 0;
+	}
 	HiddenWeapon[playerid][pwSQLID] = -1;
 	HiddenWeapon[playerid][pwWeaponId] = 0;
 	HiddenWeapon[playerid][pwAmmo] = 0;
@@ -2811,7 +2657,6 @@ ResetPlayerVariables(playerid)
 	PlayerSprayPrice[playerid]		= 0;
 	PlayerSprayVID[playerid]		= 0;
 	PlayerAction[playerid]			= 0;
-
 
 	PlayerInfo[playerid][cIP] = '\0';
 
@@ -2839,7 +2684,6 @@ ResetPlayerVariables(playerid)
 	DestroySpeedoTextDraws(playerid);
 	//ResetPlayerDrivingVars(playerid);
 	//ResetPlayerFishingVars(playerid);
-	//EmptyPlayerInventory(playerid);
 	DisablePlayerKeyInput(playerid);
 	ResetPlayerRace(playerid, false);
 	ResetPlayerRacing(playerid);
@@ -2848,7 +2692,8 @@ ResetPlayerVariables(playerid)
 	ResetRuletArrays(playerid);
 	ResetRuletTable(playerid);
 	//ResetBlackJack(playerid);
-	for(new i = 0; i < MAX_PLAYERS; i++)
+	
+	foreach(new i : Player)
 	{
 		CanPMAdmin[playerid][i] = 0;
 	}
@@ -2857,7 +2702,7 @@ ResetPlayerVariables(playerid)
 
 Function: SaveAll()
 {
-	printf("[CoA RP GMX] Zapocelo je spremanje podataka u MySQL bazu podataka. ((Pozvano Restartom.))");
+	printf("[SERVER]: Automatic scheduled restart initiated. Storing data into MySQL database.");
 	if(Iter_Count(Player) > 0)
 	{
 		foreach (new i : Player) {
@@ -2889,7 +2734,7 @@ Function: GlobalServerTimer()
 	if(GMX != 1 && tmphour == 5 && tmpmins == 5 && tmpsecs < 10)//if(tmphour == 5 && tmpmins == 5 && tmpsecs == 10)
 	{
 		GMX = 1;
-		CheckAccountsForInactivity(); // Skidanje poslova neaktivnim igracima
+		CheckAccountsForInactivity(); // Skidanje posla i imovine neaktivnim igracima
 		StartGMX();
 	}
 	return 1;
@@ -2915,44 +2760,44 @@ Function: DynamicWeather()
 				case 0:
 				{
 					SetWeather(1);
-					Prognozasys = 1;
+					WeatherSys = 1;
 				}
 				case 1:
 				{
 					SetWeather(7);
-					Prognozasys = 7;
+					WeatherSys = 7;
 				}
 				case 2:
 				{
 					SetWeather(8);
-					Prognozasys = 8;
+					WeatherSys = 8;
 				}
 				case 3:
 				{
 					SetWeather(13);
-					Prognozasys = 13;
+					WeatherSys = 13;
 				}
 				case 4:
 				{
 					SetWeather(15);
-					Prognozasys = 15;
+					WeatherSys = 15;
 				}
 				case 5:
 				{
 					SetWeather(17);
-					Prognozasys = 17;
+					WeatherSys = 17;
 				}
 				case 6:
 				{
 					SetWeather(10);
-					Prognozasys = 10;
+					WeatherSys = 10;
 				}
 			}
 		}
 		else if(tmphour >= 21 && tmphour <= 5)
 		{
 			SetWeather(10);
-			Prognozasys = 10;
+			WeatherSys = 10;
 		}
 	}
 	return 1;
@@ -2969,11 +2814,10 @@ Function: GMXTimer()
 		if(cseconds < 1)
 		{
 			GMX = 0;
-			GameTextForAll("~g~Pohrana zavrsena.", 6000, 4);
 			KillTimer(CountingTimer);
 			foreach(new i : Player) {
 				if(PlayerInfo[i][pAdmin] >= 1338) {
-					SendClientMessage(i, COLOR_RED, "[OBAVIJEST]: Pohrana u MySQL je zavrsena. Server se resetira.");
+					SendClientMessage(i, COLOR_RED, "[INFO]: Storing the data in server is done. Restarting Server...");
 					KickMessage(i);
 				}
 			}
@@ -2999,7 +2843,7 @@ forward ServerRestartRequest(index, response_code, data[]);
 public ServerRestartRequest(index, response_code, data[])
 {
     if(response_code != 200)
-        printf("Server Restart nije uspijesan! Response_code: %d", response_code);
+        printf("[ERROR]: Automatic Server Restart via API was unsucessful! Response Code: %d", response_code);
 }
 
 FormatNumber(number, prefix[] = "$")
@@ -3045,14 +2889,14 @@ public OnGameModeInit()
 	ResetHouseEnumerator();
 	ResetPlayerEnumerator();
 
-	 // Loadanje custom modela iz artconfig.pwn modula(alternativa za artconfig.txt)
+	 // Loading of custom models derives from artconfig.pwn module(artconfig.txt alternative)
 	LoadCustomModels();
 
 	// SQL stuff
 	g_SQL = mysql_connect_file();
 	if(g_SQL == MYSQL_INVALID_HANDLE)
 	{
-		print("[SERVER ERROR]: Nije se spojila baza podataka!");
+		print("[SERVER ERROR]: Failed to connect MySQL Database!");
 		return 1;
 	}
 	new gstring[64];
@@ -3067,14 +2911,14 @@ public OnGameModeInit()
 	Streamer_SetVisibleItems(STREAMER_TYPE_3D_TEXT_LABEL, 1000, -1);
 
 	// Global config
-	Prognozasys 	= 10;
+	WeatherSys 	= 10;
 	GoC_Online 		= 1;
 	Troll_Online 	= 1;
 	Fox_Online		= 0;
 	cseconds        = 0;
 	regenabled		= 1;
 
-	// YCMD
+	// Alternative Commands
 	Command_AddAltNamed("whisper"		, 	"w");
 	Command_AddAltNamed("hangup"		, 	"h");
 	Command_AddAltNamed("speakerphone"	, 	"sf");
@@ -3089,7 +2933,6 @@ public OnGameModeInit()
 	Command_AddAltNamed("animations"	, 	"anims");
 	Command_AddAltNamed("cryptotext"	, 	"ct");
     Command_AddAltNamed("experience"	, 	"exp");
-	//Command_AddAltNamed("inventory"		, 	"inv");
 	Command_AddAltNamed("radio"			, 	"r");
 	Command_AddAltNamed("radiolow"		, 	"rlow");
 	Command_AddAltNamed("beanbag"		, 	"bb");
@@ -3101,11 +2944,8 @@ public OnGameModeInit()
 	Command_AddAltNamed("blacklist"		, 	"bl");
 
 	// SA-MP gamemode settings
-	ShowNameTags(0);
-    SetNameTagDrawDistance(0.0);
-	
-	//ShowNameTags(1);
-    //SetNameTagDrawDistance(15.0);
+	ShowNameTags(1);
+    SetNameTagDrawDistance(15.0);
 	AllowInteriorWeapons(1);
 	DisableInteriorEnterExits();
 	EnableStuntBonusForAll(0);
@@ -3122,6 +2962,7 @@ public OnGameModeInit()
 	MODEL_LIST_SKINS = LoadModelSelectionMenu( "skins.txt");
 
 	// Global Loads
+	
 	GMX = 2;
 	cseconds = 120; // 2 min
 	LoadGPS();
@@ -3140,11 +2981,12 @@ public OnGameModeInit()
 	LoadGarages();
     LoadServerGarages();
 	LoadBizz();
+	InitPokerTables();
 	CreateBaskets(); // Update - BasketballNew.pwn
-	//Load_InventoryDrop();
 	PhoneTDVars();
 	CreateNewsTextDraws();
 	LoadServerJobs();
+	LoadUpdateList();
 	
 	//Initilazing
 	//InitRuletTables();
@@ -3158,12 +3000,9 @@ public OnGameModeInit()
 	SendRconCommand("messageholelimit 9000");
 	SendRconCommand("ackslimit 11000");
 
-	new
-		tmphour, tmpmins, tmpsecs;
+	new tmphour, tmpmins, tmpsecs;
 	GetServerTime(tmphour, tmpmins, tmpsecs);
 	SetWorldTime(tmphour);
-
-	LoadUpdateList();
 	return 1;
 }
 
@@ -3316,7 +3155,7 @@ public e_COMMAND_ERRORS:OnPlayerCommandReceived(playerid, cmdtext[], e_COMMAND_E
 {
 	if(strlen(cmdtext) > 128)
 	{
-		SendMessage(playerid, MESSAGE_TYPE_ERROR, "Unos u chatbox ne smije biti duzi od 128 znakova!");
+		SendMessage(playerid, MESSAGE_TYPE_ERROR, "Command can't be more than 128 chars long!");
 		return COMMAND_ZERO_RET;
 	}
 	switch(success)
@@ -3328,24 +3167,24 @@ public e_COMMAND_ERRORS:OnPlayerCommandReceived(playerid, cmdtext[], e_COMMAND_E
 
 			if(Dialog_Opened(playerid))
 			{
-				SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne mozete koristiti komande dokle vam je Dialog otvoren!");
+				SendMessage(playerid, MESSAGE_TYPE_ERROR, "You can't use commands while having a Dialog opened!");
 				return COMMAND_ZERO_RET;
 			}
 			if(!SafeSpawned[playerid] || OnSecurityBreach[playerid])
 			{
-				SendMessage(playerid, MESSAGE_TYPE_ERROR,"Niste sigurno spawnani, ne mozete koristiti komande!");
+				SendMessage(playerid, MESSAGE_TYPE_ERROR,"You're not safely spawned, you can't use commands!");
 				return COMMAND_ZERO_RET;
 			}
 			if(!cmdtext[0])
 			{
-				Kick(playerid); // because it's impossible to send valid NULL command
+				Kick(playerid); // Because it's impossible to send valid NULL command
 				return COMMAND_ZERO_RET;
 			}
 			PlayerAFK[playerid] = 0;
 
 			if(!IsPlayerAdmin(playerid))
 			{
-				Log_Write("logfiles/cmd_timestamp.txt", "(%s) Igrac %s[%d]{%d}(%s) je koristio komandu '%s'.",
+				Log_Write("logfiles/cmd_timestamp.txt", "(%s)Player %s[%d]{%d}(%s) used command '%s'.",
 					ReturnDate(),
 					GetName(playerid, false),
 					playerid,
@@ -3360,7 +3199,7 @@ public e_COMMAND_ERRORS:OnPlayerCommandReceived(playerid, cmdtext[], e_COMMAND_E
 		{
 			SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "Komanda '%s' ne postoji!", cmdtext);
 
-			Log_Write("logfiles/cmd_unknown.txt", "(%s) Igrac %s[%d]{%d}(%s) je koristio nepostojecu komandu '%s'.",
+			Log_Write("logfiles/cmd_unknown.txt", "(%s)Player %s[%d]{%d}(%s) used non-existing command '%s'.",
 				ReturnDate(),
 				GetName(playerid, false),
 				playerid,
@@ -3373,7 +3212,7 @@ public e_COMMAND_ERRORS:OnPlayerCommandReceived(playerid, cmdtext[], e_COMMAND_E
 		}
 		case COMMAND_NO_PLAYER:
 		{
-			Log_Write("logfiles/cmd_timestamp.txt", "(%s)Igrac %s je koristio neuspjesno koristio komandu %s [Error: Igrac ne bi trebao postojati?].",
+			Log_Write("logfiles/cmd_timestamp.txt", "(%s)Player %s unsucessfuly used command %s [Error: He shouldn't exist?].",
 				ReturnDate(),
 				GetName(playerid, false),
 				cmdtext
@@ -3382,13 +3221,13 @@ public e_COMMAND_ERRORS:OnPlayerCommandReceived(playerid, cmdtext[], e_COMMAND_E
 		}
 		case COMMAND_BAD_PREFIX, COMMAND_INVALID_INPUT:
 		{
-			SendMessage(playerid, MESSAGE_TYPE_ERROR,"Krivo ste upisali prefiks komande / krivi format komande!");
+			SendMessage(playerid, MESSAGE_TYPE_ERROR,"You have entered wrong prefix / format of the command!");
 			return COMMAND_ZERO_RET;
 		}
 	}
 	if(!success)
 	{
-		Log_Write("logfiles/cmd_timestamp.txt", "(%s)Igrac %s je koristio komandu %s te je komanda neuspjesno izvrsena.",
+		Log_Write("logfiles/cmd_timestamp.txt", "(%s)Player %s used a command %s and it wasn't executed.",
 			ReturnDate(),
 			GetName(playerid, false),
 			cmdtext
@@ -3406,12 +3245,7 @@ public OnPlayerConnect(playerid)
 }
 
 public OnPlayerDisconnect(playerid, reason)
-{
-	plyrName[playerid][0] = '\0';
-	DestroyDynamic3DTextLabel(pNameTag[playerid]);
-	PlayerPaused[playerid] = 0;
-	
-	pNameTag[playerid] = Text3D:65535;
+{	
 	WalkStyle[playerid] = 0;
 	entering[playerid] = 0;
 	onexit[playerid] = 0;
@@ -3419,7 +3253,6 @@ public OnPlayerDisconnect(playerid, reason)
 		stop FinishPlayerSpawn(playerid);
 	// Login Time && IP fetch
 	format(PlayerInfo[playerid][pLastLogin], 24, ReturnDate());
-	PlayerInfo[playerid][pLastLoginTimestamp] = gettimestamp();
 	//GetPlayerIp(playerid, PlayerInfo[playerid][pLastIP], MAX_PLAYER_IP);
 	PlayerInfo[playerid][pAdmMsgConfirm] = 0;
 	GotRod[playerid] = 0;
@@ -3437,7 +3270,7 @@ public OnPlayerDisconnect(playerid, reason)
     };
 
 	if( !IsPlayerReconing(playerid) && GMX == 0) {
-		format( szString, sizeof szString, "(( %s[%d] je napustio server (%s) ))",
+		format( szString, sizeof szString, "(( %s[%d] just left the server. (%s) ))",
 			GetName(playerid, false ),
 			playerid,
 			szDisconnectReason[ reason ]
@@ -3455,6 +3288,11 @@ public OnPlayerDisconnect(playerid, reason)
 	}
 
 	if( !isnull(PlayerExName[playerid]) ) SetPlayerName(playerid, PlayerExName[playerid]);
+	if(IsValidDynamic3DTextLabel(NameText[playerid]))
+	{
+		DestroyDynamic3DTextLabel(NameText[playerid]);
+		NameText[playerid] = Text3D:INVALID_3DTEXT_ID;
+	}
 	if(PlayerInfo[playerid][pAdmin] > 0 || PlayerInfo[playerid][pHelper] > 0)
 		SaveAdminConnectionTime(playerid);
 	if( (reason == 0 || reason == 2) && IsPlayerAlive(playerid) && GMX == 0)
@@ -3484,7 +3322,7 @@ public OnPlayerDisconnect(playerid, reason)
 				PlayerInfo[playerid][pCrashPos][1],
 				PlayerInfo[playerid][pCrashPos][2],
 				PlayerInfo[playerid][pCrashInt],
-				PlayerInfo[playerid][pCrashViwo],
+				PlayerInfo[playerid][pCrashVW],
 				PlayerInfo[playerid][pCrashArmour],
 				PlayerInfo[playerid][pCrashHealth],
 				PlayerInfo[playerid][pSkin],
@@ -3495,7 +3333,7 @@ public OnPlayerDisconnect(playerid, reason)
 			if(reason == 0)
 			{
 				new	tmpString[ 73 ];
-				format(tmpString, sizeof(tmpString), "AdmWarn: Igracu %s je upravo crashao SA-MP client.",GetName(playerid,false));
+				format(tmpString, sizeof(tmpString), "AdmWarn: Player %s just had a Client Crash.",GetName(playerid,false));
 				ABroadCast(COLOR_LIGHTRED,tmpString,1);
 			}
 		}
@@ -3540,10 +3378,10 @@ public OnPlayerDisconnect(playerid, reason)
 	if( Bit16_Get( gr_PlayerTracing, playerid ) )
 		SendClientMessage(Bit16_Get( gr_PlayerTracing, playerid ), COLOR_RED, "[ ! ] Linija je zauzeta (( Igrac je offline ))!");
 
-	// Save
+	// Main Player Account Save Func.
 	SavePlayerData(playerid);
+	
 	// Player Sets
-
 	ResetGPSVars(playerid);
 	secquestattempt[playerid] = 3;
 	if(GMX == 1) {
@@ -3556,14 +3394,15 @@ public OnPlayerDisconnect(playerid, reason)
     	PlayerInfo[playerid][pSQLID]
 	);
 	mysql_tquery(g_SQL, query, "", "");
-	defer SafeResetPlayerVariables(playerid); // Jednostavno stavit da kad se drugi igrac logira da mu resetira sve i onda mu prikaze login screen tako da se mogu podaci koristit i kad igrac crasha/ode off
+
+	defer SafeResetPlayerVariables(playerid); 
 	return 1;
 }
 
 public OnPlayerRequestClass(playerid, classid)
 {
 	if(GMX == 1) {
-		SendClientMessage(playerid,COLOR_RED, "ERROR: Server je trenutno u fazi pohrane podataka u bazu podataka te slijedi GMX kroz par minuta. Automatski ste kickani.");
+		SendClientMessage(playerid,COLOR_RED, "ERROR: Server is currently in data storing pre-restart procedure. You have been automatically kicked.");
 		KickMessage(playerid);
 		return 1;
 	}
@@ -3585,7 +3424,7 @@ public OnPlayerRequestClass(playerid, classid)
 
 		GetPlayerName(playerid, tmpname, MAX_PLAYER_NAME);
 		if(!IsValidNick(tmpname)) {
-			SendClientMessage(playerid, COLOR_SAMP_GREEN, "ERROR: Nepravilan roleplay nadimak, posjetite "WEB_URL"za vise informacija!");
+			SendClientMessage(playerid, COLOR_SAMP_GREEN, "ERROR: Invalid RolePlay nickname, please visit "WEB_URL" for more info!");
 			KickMessage(playerid);
 			return 0;
 		}
@@ -3596,7 +3435,7 @@ public OnPlayerRequestClass(playerid, classid)
 
 		//PlayerSets
 		SetPlayerColor(playerid, 	COLOR_PLAYER);
-		SetPlayerWeather(playerid, 	Prognozasys);
+		SetPlayerWeather(playerid, 	WeatherSys);
 
 		new
 			hour, minute;
@@ -3642,7 +3481,7 @@ public OnPlayerRequestDownload(playerid, type, crc)
 	new fullurl[256+1];
 	new dlfilename[64+1];
 	new foundfilename=0;
-	new SERVER_DOWNLOAD[] = "http://51.77.200.63/samp_models/"; //"https://themastergames.com/cdn/models/";
+	new SERVER_DOWNLOAD[] = "http://51.77.200.63/samp_models/"; // Models Redirect Download Link for faster download speed
 
 	if(type == DOWNLOAD_REQUEST_TEXTURE_FILE) {
 		foundfilename = FindTextureFileNameFromCRC(crc,dlfilename,64);
@@ -3665,18 +3504,15 @@ public OnPlayerFinishedDownloading(playerid, virtualworld)
 }
 
 public OnPlayerSpawn(playerid)
-{
-	UpdateNameLabel(playerid, "");
-	
-	//Player Sets
+{	
+	// Player Sets
     StopAudioStreamForPlayer(playerid);
     ResetPlayerMoney(playerid);
     SetCameraBehindPlayer(playerid);
     SetPlayerFightingStyle(playerid, PlayerInfo[playerid][pFightStyle]);
     InitFly(playerid);
-    //Reprocess_PlayerInv(playerid);
 	
-    //Player Skill
+    // Player Skill
     SetPlayerSkillLevel(playerid, WEAPONSKILL_AK47,             999);
     SetPlayerSkillLevel(playerid, WEAPONSKILL_M4,               999);
     SetPlayerSkillLevel(playerid, WEAPONSKILL_MP5,              999);
@@ -3720,7 +3556,7 @@ public OnPlayerSpawn(playerid)
 
     if(IsANewUser(playerid))
 	{
-        //Tutorial
+        // Tutorial
         SendPlayerOnFirstTimeTutorial(playerid, 1);
         TogglePlayerSpectating(playerid, 1);
     }
@@ -3742,8 +3578,8 @@ public OnPlayerSpawn(playerid)
 			SetPlayerPos(playerid, PlayerInfo[ playerid ][ pDeath ][ 0 ], PlayerInfo[ playerid ][ pDeath ][ 1 ], PlayerInfo[ playerid ][ pDeath ][ 2 ]);
 			Streamer_UpdateEx(playerid, PlayerInfo[playerid][pDeath][0], PlayerInfo[playerid][pDeath][1], PlayerInfo[playerid][pDeath][2], PlayerInfo[playerid][ pDeathVW], PlayerInfo[playerid][pDeathInt]);
 
-			SendClientMessage(playerid, COLOR_LIGHTRED, "** Vraceni ste lokaciju na kojoj ste ranjeni radi RP-a **");
-			SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "** Ne mozete koristiti /l chat i /me komandu. Samo /c, /ame i /do radi RP-a **");
+			SendClientMessage(playerid, COLOR_LIGHTRED, "** You are returned to position where you were wounded. **");
+			SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "** You can't use /l chat and /me command. /c, /ame i /do are allowed during RP **");
 
 			Bit1_Set( gr_MaskUse, playerid, false );
 			if( PlayerInfo[ playerid ][ pMaskID ])
@@ -3766,8 +3602,8 @@ public OnPlayerSpawn(playerid)
 			SetPlayerPos(playerid, PlayerInfo[ playerid ][ pDeath ][ 0 ], PlayerInfo[ playerid ][ pDeath ][ 1 ], PlayerInfo[ playerid ][ pDeath ][ 2 ]);
 			Streamer_UpdateEx(playerid, PlayerInfo[playerid][pDeath][0], PlayerInfo[playerid][pDeath][1], PlayerInfo[playerid][pDeath][2], PlayerInfo[playerid][ pDeathVW], PlayerInfo[playerid][pDeathInt]);
 
-			SendClientMessage(playerid, COLOR_LIGHTRED, "Vi ste u death stanju. Vraceni ste na lokaciju gdje ste ubijeni.**");
-			SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "** Ne mozete koristiti /l chat i /me komandu. Samo /c, /ame i /do radi RP-a **");
+			SendClientMessage(playerid, COLOR_LIGHTRED, "You are in DeathMode. You have been returned to location of your death.**");
+			SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "** You can't use /l chat and /me command. /c, /ame i /do are allowed during RP **");
 
 			Bit1_Set( gr_MaskUse, playerid, false );
 			if( PlayerInfo[ playerid ][ pMaskID ])
@@ -3798,14 +3634,16 @@ public OnPlayerSpawn(playerid)
 					
 				switch( PlayerInfo[ playerid ][ pSpawnChange ] )
 				{
-					case 0: {
+					case 0: 
+					{
 						SetPlayerPosEx(playerid, SPAWN_X, SPAWN_Y, SPAWN_Z, 0, 0, false);
 						SetPlayerFacingAngle(playerid, 90.00);
 						SetPlayerInterior(playerid, 0);
 						SetPlayerVirtualWorld(playerid, 0);
 						SetPlayerHealth(playerid, 100);
 					}
-					case 1: {
+					case 1: 
+					{
 						if( PlayerInfo[playerid][pHouseKey] != INVALID_HOUSE_ID || PlayerInfo[playerid][pRentKey] != INVALID_HOUSE_ID ) {
 							new
 								house;
@@ -3889,7 +3727,7 @@ public OnPlayerSpawn(playerid)
 
 					SetPlayerPosEx(playerid, PlayerTrunkPos[playerid][0], PlayerTrunkPos[playerid][1], PlayerTrunkPos[playerid][2], 0, 0, false);
 					TogglePlayerControllable( playerid, 1 );
-					SendClientMessage( playerid, COLOR_RED, "[ ! ] Izasao si iz prtljaznika.");
+					SendClientMessage( playerid, COLOR_RED, "[ ! ] You exited the trunk.");
 					SetPlayerHealth(playerid, 100);
 				}
 			}
@@ -3904,7 +3742,7 @@ public OnPlayerExitVehicle(playerid, vehicleid)
 	{
 		new iSeat = GetPlayerVehicleSeat(playerid);
 		PutPlayerInVehicle(playerid, vehicleid, iSeat);
-		GameTextForPlayer( playerid, "~r~Vozilo zakljucano", 3000, 4 );
+		GameTextForPlayer( playerid, "~w~Vehicle ~r~locked~", 3000, 4 );
 	}
 	return 1;
 }
@@ -3936,7 +3774,7 @@ public OnPlayerTakeDamage(playerid, issuerid, Float:amount, weaponid, bodypart)
 			new
 				damageString[ 87 ];
 
-			format(damageString, sizeof(damageString), "** %s pogadja %s tazerom i on pada na pod!",
+			format(damageString, sizeof(damageString), "** %s shoots %s with tazer and he falls down!",
 				GetName(issuerid, true),
 				GetName(playerid, true)
 			);
@@ -3961,7 +3799,7 @@ public OnPlayerTakeDamage(playerid, issuerid, Float:amount, weaponid, bodypart)
 			new
 				damageString[ 87 ];
 
-			format(damageString, sizeof(damageString), "** %s pogadja %s bean bag metkom i on pada na pod!",
+			format(damageString, sizeof(damageString), "** %s shoots %s with bean bag bullet and he falls!",
 				GetName(issuerid, true),
 				GetName(playerid, true)
 			);
@@ -3997,7 +3835,8 @@ public OnPlayerDeath(playerid, killerid, reason)
 	if(KilledBy[playerid] == INVALID_PLAYER_ID && killerid == INVALID_PLAYER_ID || playerid == INVALID_PLAYER_ID || !SafeSpawned[playerid])
 		return 1;
 
-	if( !SafeSpawned[ KilledBy[playerid] ] ) return SendClientMessage(KilledBy[playerid], COLOR_RED, "[ANTI-CHEAT]: Niste se sigurno spawnali stoga ste banani!"), BanMessage(KilledBy[playerid]), 0;
+	if( !SafeSpawned[ KilledBy[playerid] ] ) 
+		return SendClientMessage(KilledBy[playerid], COLOR_RED, "[ANTI-CHEAT]: You are not safely spawned, therefore, banned!"), BanMessage(KilledBy[playerid]), 0;
 
 	if(IsPlayerInAnyVehicle(playerid))
 		RemovePlayerFromVehicle(playerid);
@@ -4011,15 +3850,15 @@ public OnPlayerText(playerid, text[])
 		return Kick(playerid);
 	
 	if(strlen(text) > 128)
-		return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Unos u chatbox ne smije biti duzi od 128 znakova!");
+		return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Chatbox input can't be longer than 128 chars!");
 
 	if(Bit1_Get(gr_DeathCountStarted, playerid))
 	{
-		SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne mozete pricati, u post death stanju ste!");
+		SendMessage(playerid, MESSAGE_TYPE_ERROR, "You can't talk, you are dead!");
 		return 0;
 	}
 	if(PlayerInfo[playerid][pMuted]) {
-		SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne mozete pricati, usutkani ste!");
+		SendMessage(playerid, MESSAGE_TYPE_ERROR, "You can't talk while being muted!");
 		return 0;
 	}
 	if(!IsPlayerLogged(playerid) || !IsPlayerConnected(playerid) )
@@ -4027,13 +3866,13 @@ public OnPlayerText(playerid, text[])
 
 	if(Dialog_Opened(playerid))
 	{
-		SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne mozete koristiti chat dokle vam je Dialog otvoren!");
+		SendMessage(playerid, MESSAGE_TYPE_ERROR, "You can't talk while having a Dialog opened!");
 		return 0;
 	}
 
 	if(!SafeSpawned[playerid] || OnSecurityBreach[playerid])
 	{
-		SendMessage(playerid, MESSAGE_TYPE_ERROR,"Niste sigurno spawnani, ne mozete koristiti chat!");
+		SendMessage(playerid, MESSAGE_TYPE_ERROR,"You can't use chat if you're not safely spawned!");
 		return 0;
 	}
 	
@@ -4044,12 +3883,12 @@ public OnPlayerText(playerid, text[])
 	{
 		
 		if( IsPlayerInAnyVehicle(playerid) ) {
-			format(tmpString, sizeof(tmpString), "%s kaze%s(vozilo): %s", GetName(playerid), PrintAccent(playerid), text);
+			format(tmpString, sizeof(tmpString), "%s says%s(vehicle): %s", GetName(playerid), PrintAccent(playerid), text);
 			RealProxDetector(6.5, playerid, tmpString,COLOR_FADE1,COLOR_FADE2,COLOR_FADE3,COLOR_FADE4,COLOR_FADE5);
 		}
 		else
 		{
-			format(tmpString, sizeof(tmpString), "%s kaze%s: %s", GetName(playerid), PrintAccent(playerid), text);
+			format(tmpString, sizeof(tmpString), "%s says%s: %s", GetName(playerid), PrintAccent(playerid), text);
 			RealProxDetector(6.5, playerid, tmpString,COLOR_FADE1,COLOR_FADE2,COLOR_FADE3,COLOR_FADE4,COLOR_FADE5);
 		}
 		if(Bit1_Get( gr_animchat, playerid) && !PlayerAnim[playerid] )
@@ -4078,7 +3917,7 @@ public OnPlayerText(playerid, text[])
 		{
 			if( IsPlayerInRangeOfPoint(playerid, 10.0, MolePosition[ i ][ 0 ], MolePosition[ i ][ 1 ], MolePosition[ i ][ 2 ] ) )
 			{
-				format(tmpString, sizeof(tmpString), "[UREDAJ] %s: %s", GetName(playerid), text);
+				format(tmpString, sizeof(tmpString), "[DEVICE] %s: %s", GetName(playerid), text);
 				if( Bit2_Get( gr_PlayerListenMole, i ) == 1 )
 					SendClientMessage(i, COLOR_YELLOW, tmpString);
 				else if( Bit2_Get( gr_PlayerListenMole, i ) == 2 )
@@ -4111,7 +3950,7 @@ public OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
 
 			new
 				tmpString[ 50 ];
-		  	format(tmpString, sizeof(tmpString), "** %s baca cigaretu na pod.",
+		  	format(tmpString, sizeof(tmpString), "** %s puts out a cigarette.",
 				GetName(playerid, true)
 			);
 		  	ProxDetector(15.0, playerid, tmpString, COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE);
@@ -4123,7 +3962,7 @@ public OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
 
 			new
 				tmpString[ 50 ];
-		  	format(tmpString, sizeof(tmpString), "** %s ostavlja pice sa strane.",
+		  	format(tmpString, sizeof(tmpString), "** %s puts his drink aside.",
 				GetName(playerid, true)
 			);
 		  	ProxDetector(15.0, playerid, tmpString, COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE);
@@ -4206,7 +4045,6 @@ public OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
 
 public OnPlayerUpdate(playerid)
 {
-	//if( !SafeSpawning[ playerid ] && !Bit1_Get(gr_PlayerDownloading, playerid) ) return SendClientMessage(playerid, COLOR_RED, "[ANTI-CHEAT]: Niste se sigurno spawnali stoga ste banani!"), BanMessage(playerid), 0;
 	CheckPlayerRemoteJacking(playerid);
 	if( Bit1_Get(gr_PlayerExiting, playerid) && GetPlayerInterior(playerid) == 0)
 		defer SafeExitCheck(playerid);
@@ -4228,7 +4066,7 @@ public OnPlayerUpdate(playerid)
 
 				new
 					tmpString[ 128 ];
-				format(tmpString, sizeof(tmpString), "Anti-Cheat: %s[%d] je moguci cheater, razlog: Speed Hack.",
+				format(tmpString, sizeof(tmpString), "Anti-Cheat: %s[%d] is possible cheater. Reason: Speed Hack.",
 					GetName(playerid,false),
 					playerid
 				);
@@ -4239,7 +4077,7 @@ public OnPlayerUpdate(playerid)
 			}
 		}
 	}
-	// Int & ViWo sync check
+	// Int & ViWo Sync Check
 	new
 		complexid = Bit16_Get( gr_PlayerInComplex, playerid ),
 		roomid 	= Bit16_Get( gr_PlayerInRoom, playerid ),
@@ -4265,7 +4103,7 @@ public OnPlayerInteriorChange(playerid, newinteriorid, oldinteriorid)
 	return 1;
 }
 
-/*public OnPlayerStreamIn(playerid, forplayerid)
+public OnPlayerStreamIn(playerid, forplayerid)
 {
 	if(Bit1_Get(gr_MaskUse, forplayerid)) {
 	    if(PlayerInfo[playerid][pAdmin] > 0 && Bit1_Get(a_AdminOnDuty, playerid))
@@ -4275,16 +4113,6 @@ public OnPlayerInteriorChange(playerid, newinteriorid, oldinteriorid)
 	}
 	else
 	    ShowPlayerNameTagForPlayer(playerid, forplayerid, true);
-	return 1;
-}*/
-public OnPlayerStreamIn(playerid, forplayerid)
-{
-	if(!IsValidDynamic3DTextLabel(pNameTag[playerid]))
-		UpdateNameLabel(playerid, "");
-	
-	if(PlayerInfo[playerid][pAdmin] > 0 && Bit1_Get(a_AdminOnDuty, playerid))
-		ShowPlayerNameTagForPlayer(playerid, forplayerid, true);
-	
 	return 1;
 }
 
@@ -4316,100 +4144,3 @@ public OnPlayerClickTextDraw(playerid, Text:clickedid)
 	}
 	return 1;
 }
-
-
-/*
-CMD:aprilfools(playerid, params[])
-{
-	if(getdate() != 92)
-		return SendClientMessage(playerid, COLOR_RED, "GRESKA: Nije prvi april");
-	
-	if(PlayerInfo[playerid][pAdmin] < 1337)
-		return SendClientMessage(playerid, COLOR_RED, "GRESKA: Nisi admin!");
-		
-	new
-		targetid;
-		
-	if(sscanf(params, "u", targetid))
-		return SendClientMessage(playerid, -1, "KORISTI: /aprilfools [ID/Ime igraca]");
-		
-	if(!IsPlayerConnected(playerid))
-		return SendClientMessage(playerid, COLOR_RED, "GRESKA: Nepravilan ID igraca!");
-	
-	if(PlayerInfo[playerid][pAdmin] < PlayerInfo[targetid][pAdmin])
-		targetid = playerid;
-		
-	if(aprilfools[targetid] == false)
-		aprilfools[targetid] = true;
-	else
-		aprilfools[targetid] = false;
-	
-	if(targetid != playerid)
-	{
-		va_SendClientMessage(playerid, COLOR_RED, "INFO: %s si prvi april skriptu igracu %s[%d]", (aprilfools[targetid]) ? ("Ukljucio") : ("Iskljucio"), GetName(targetid), targetid);
-		
-		new
-			afstring[128];
-				
-		format(afstring, sizeof(afstring), "ADMWARN: Admin %s[%d] je %s skriptu prvi april igracu %s[%d]!", GetName(playerid), playerid, (aprilfools[targetid]) ? ("ukljucio") : ("iskljucio"), GetName(targetid), targetid);
-		ABroadCast(COLOR_YELLOW, afstring, 1337);
-	}
-	return 1;
-}
-
-CMD:afoolers(playerid, params[])
-{
-	if(!PlayerInfo[playerid][pAdmin])
-		return SendClientMessage(playerid, COLOR_RED, "GRESKA: Nisi admin!");
-	
-	new
-		c = 0;
-		
-	SendClientMessage(playerid, COLOR_YELLOW, "Igraci s april fools skriptom:");
-	
-	foreach (new i : Player)
-	{
-		if(aprilfools[i])
-			va_SendClientMessage(playerid, -1, "#%d - %s[%d]", c, GetName(i), i), ++c;
-	}
-	
-	if(c == 0)
-		SendClientMessage(playerid, COLOR_RED, "Nitko.");
-	
-	return 1;
-}
-CMD:afrotate(playerid, params[])
-{
-	if(!PlayerInfo[playerid][pAdmin])
-		return SendClientMessage(playerid, COLOR_RED, "GRESKA: Nisi admin!");
-
-	new
-		targetid;
-		
-	if(sscanf(params, "u", targetid))
-		return SendClientMessage(playerid, -1, "KORISTI: /afrotate [ID/Ime igraca]");
-		
-	if(!aprilfools[targetid])
-		return SendClientMessage(playerid, COLOR_RED, "GRESKA: Igrac nema upaljenu april fools skriptu! /afoolers za listu, /aprilfools za aktiviranje.");
-		
-	new
-		Float:ang, 
-		veh = GetPlayerVehicleID(targetid);
-		
-	if(veh != 0)
-	{
-		GetVehicleZAngle(veh, ang);
-		SetVehicleZAngle(veh, ang - 180.0);
-	}
-	else
-		return SendClientMessage(playerid, COLOR_RED, "GRESKA: Igrac nije u vozilu!");
-	
-	new
-		afstring[128];
-				
-	format(afstring, sizeof(afstring), "ADMWARN: Admin %s[%d] je zarotirao vozilo igracu %s[%d]!", GetName(playerid), playerid, GetName(targetid), targetid);
-	ABroadCast(COLOR_YELLOW, afstring, 1);
-	
-	return 1;
-}
-*/

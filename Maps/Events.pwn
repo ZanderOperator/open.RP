@@ -6,7 +6,7 @@ new	event_maps;
 
 hook OnFilterScriptInit() {
 
-	// Paintball eventmap - WizzCycann
+/*	// Paintball eventmap - WizzCycann
 	
     CreateDynamicObject(694, 815.39386, -2.09463, 56.13860,   356.85840, 0.00000, -1.62980);
     CreateDynamicObject(694, 767.20959, -9.84450, 48.32960,   356.85840, 0.00000, -1.62980);
@@ -56,8 +56,8 @@ hook OnFilterScriptInit() {
     CreateDynamicObject(789, 783.14966, -108.09361, 22.84220,   0.00000, 0.00000, 0.00000);
     CreateDynamicObject(789, 744.99982, -93.35701, 22.84220,   0.00000, 0.00000, 0.00000);
     CreateDynamicObject(789, 812.70966, -88.45204, 22.84220,   0.00000, 0.00000, 0.00000);
-	
-	// LAST TEAM STANDING MAP - BY CARLOS
+	*/
+	/*// LAST TEAM STANDING MAP - BY CARLOS
 	event_maps = CreateDynamicObject(19650, -2715.699707, 2330.660156, 71.863853, 0.000000, 90.000000, 13.199998, 99, -1, -1, 600.00, 600.00); 
 	SetDynamicObjectMaterial(event_maps, 0, 16093, "a51_ext", "BLOCK", 0x00000000);
 	event_maps = CreateDynamicObject(19650, -2708.484619, 2308.513671, 71.863853, 0.000000, 90.000000, 22.700002, 99, -1, -1, 600.00, 600.00); 
@@ -630,7 +630,7 @@ hook OnFilterScriptInit() {
 	event_maps = CreateDynamicObject(3066, -2251.097412, 2344.651611, 4.812502, 0.000000, 0.000000, 51.699996, 99, -1, -1, 600.00, 600.00); 
 	event_maps = CreateDynamicObject(3066, -2466.135253, 2239.200439, 4.839244, 0.000000, 0.000000, 90.000000, 99, -1, -1, 600.00, 600.00); 
 	event_maps = CreateDynamicObject(3066, -2488.147949, 2311.225097, 4.928340, 0.000000, 0.000000, 0.000000, 99, -1, -1, 600.00, 600.00); 
-	event_maps = CreateDynamicObject(3066, -2487.727050, 2294.451416, 4.928340, 0.000000, 0.000000, 90.000000, 99, -1, -1, 600.00, 600.00);
+	event_maps = CreateDynamicObject(3066, -2487.727050, 2294.451416, 4.928340, 0.000000, 0.000000, 90.000000, 99, -1, -1, 600.00, 600.00);*/
 	
 	/// MONSTERJAM < Garfildov event neki jebaji ga
 	event_maps = CreateDynamicObject(17091, -1635.842773, -1046.140014, -36.858394, 0.000000, 0.000000, 90.000000, -1, -1, -1, 600.00, 600.00); 
