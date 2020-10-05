@@ -35,10 +35,11 @@ stock HOOK_Ban(playerid, adminid, const reason[], days=-1, bool:anticheat=false)
 		forumname[ MAX_PLAYER_NAME ],
 		banString[ 128 ];
 
-	if( adminid == INVALID_PLAYER_ID ) {
+	if( adminid == INVALID_PLAYER_ID ) 
+	{
 		if(days != -3)
 		{
-			format( banString, 128, "AdmCMD: %s je dobio ban od Anti-Cheata, razlog: %s",
+			format( banString, 128, "AdmCMD: %s is banned by Anti-Cheat. Reason: %s",
 				GetName( playerid, false ),
 				reason
 			);
@@ -46,17 +47,24 @@ stock HOOK_Ban(playerid, adminid, const reason[], days=-1, bool:anticheat=false)
 		}
 		else
 		{
-		    format( banString, 128, "AdmCMD: Racun %s je automatski zakljucan od strane sistema, razlog: %s",
+		    format( banString, 128, "AdmCMD: Account %s je is automatically locked by the server. Reason: %s",
 				GetName( playerid, false ),
 				reason
 			);
-			format( forumname, MAX_PLAYER_NAME, "Sistem");
+			format( forumname, MAX_PLAYER_NAME, "AutoServerLock");
 		}
 	}
-	else if( adminid != INVALID_PLAYER_ID ) {
-		format( banString, 128, "AdmCMD: %s je dobio ban od admina %s, razlog: %s",
+	else if( adminid != INVALID_PLAYER_ID ) 
+	{
+		if( strlen(reason) > MAX_REASON_LEN || strlen(reason) < MIN_REASON_LEN ) 
+		{
+			SendFormatMessage(adminid, MESSAGE_TYPE_ERROR, "Invalid reason input (%d[min]-%d[max] chars required).", MIN_REASON_LEN, MAX_REASON_LEN);
+			return 1;
+		}
+		format( banString, 128, "AdmCMD: %s is banned by Game Admin %s(%s). Reason: %s",
 			GetName( playerid, false ),
 			PlayerInfo[adminid][pForumName],
+			GetName( adminid, false),
 			reason
 		);
 	}
@@ -110,19 +118,15 @@ stock HOOK_Ban(playerid, adminid, const reason[], days=-1, bool:anticheat=false)
 
 stock HOOK_BanEx(playerid, const playername[], const playerip[], adminid, const reason[], days=-1)
 {
-	if( strlen(reason) > MAX_REASON_LEN || strlen(reason) < MIN_REASON_LEN ) {
-		new
-			tmpString[ 39 ];
-		format( tmpString, 39, "Nevaljan unos razloga(%d-%d)",
-			MIN_REASON_LEN,
-			MAX_REASON_LEN
-		);
-		SendClientMessage( adminid, COLOR_RED, tmpString);
+	if( strlen(reason) > MAX_REASON_LEN || strlen(reason) < MIN_REASON_LEN ) 
+	{
+		SendFormatMessage(adminid, MESSAGE_TYPE_ERROR, "Invalid reason input (%d[min]-%d[max] chars required).", MIN_REASON_LEN, MAX_REASON_LEN);
 		return 1;
 	}
-	va_SendClientMessageToAll( COLOR_RED, "AdmCMD: %s je dobio ban od admina %s, razlog: %s",
-		playername,
-		PlayerInfo[playerid][pForumName],
+	va_SendClientMessageToAll( COLOR_RED,"AdmCMD: %s is banned by Game Admin %s(%s). Reason: %s",
+		GetName( playerid, false ),
+		PlayerInfo[adminid][pForumName],
+		GetName( adminid, false),
 		reason
 	);
 
@@ -172,11 +176,11 @@ stock HOOK_BanEx(playerid, const playername[], const playerip[], adminid, const 
 stock UnbanPlayerName(const playername[], adminid)
 {
 	new unbanQuery[135];
-	mysql_format( g_SQL, unbanQuery, 135, "UPDATE `accounts` SET `playaUnbanTime` = '0', `playaBanReason` = '' WHERE `name` = '%e'",
+	mysql_format(g_SQL, unbanQuery, 135, "UPDATE `accounts` SET `playaUnbanTime` = '0', `playaBanReason` = '' WHERE `name` = '%e'",
 		playername
 	);
-	mysql_tquery( g_SQL, unbanQuery);
-	SendClientMessage( adminid, COLOR_RED, "[ ! ] Uspjesno ste unbanali igraca!" );
+	mysql_tquery(g_SQL, unbanQuery);
+	va_SendClientMessage(adminid, COLOR_RED, "[ ! ]: You have sucesfully unbanned account %s!", playername);
 
 	#if defined UNBAN_LOGGING
 		new
@@ -184,10 +188,9 @@ stock UnbanPlayerName(const playername[], adminid)
 			days, months, years;
 
 		getdate(years, months, days);
-		format( tmpString, sizeof( tmpString ), "[%02d/%02d/%d] Admin %s(%s) je unbanao igraca %s",
-			days,
-			months,
-			years,
+		format( tmpString, sizeof( tmpString ), "[%s] Game Admin %s[%s](%s) je unbanao igraca %s.",
+			ReturnDate(),
+			PlayerInfo[adminid][pForumName],
 			GetName( adminid, false ),
 			GetPlayerIP( adminid ),
 			playername
@@ -203,7 +206,7 @@ stock UnbanPlayerIP(const playerip[], adminid)
 	new dformat[64];
 	format(dformat,sizeof dformat,"unbanip %s",playerip);
 	SendRconCommand(dformat);
-	va_SendClientMessage( adminid, COLOR_RED, "[ ! ] Uspjesno ste unbanali IP: %s", playerip);
+	va_SendClientMessage( adminid, COLOR_RED, "[ ! ]: You have sucessfully unbanned IP %s", playerip);
 
 	#if defined UNBAN_LOGGING
 		new
@@ -211,7 +214,7 @@ stock UnbanPlayerIP(const playerip[], adminid)
 			days, months, years;
 
 		getdate(years, months, days);
-		format( tmpString, sizeof( tmpString ), "[%02d/%02d/%d] Admin %s(%s) je unbanao IP %s",
+		format( tmpString, sizeof( tmpString ), "[%02d/%02d/%d] Game Admin %s(%s) unbanned IP %s",
 			days,
 			months,
 			years,

@@ -49,7 +49,7 @@ stock LoadAdminConnectionTime(playerid)
 stock static GetAdminConnectionTime(playerid, giveplayerid)
 {
 	if( giveplayerid == INVALID_PLAYER_ID ) return SendClientMessage(playerid, COLOR_RED, "Nevaljan unos playerid!");
-	va_SendClientMessage(playerid, COLOR_RED, "[ ! ] Admin je u ovome mjesecu proveo %d sati na serveru.",  PlayerInfo[ playerid ][ pAdminHours ]);
+	va_SendClientMessage(playerid, COLOR_RED, "[ ! ] Game Admin spent %d hours of gameplay on server this month.",  PlayerInfo[ playerid ][ pAdminHours ]);
 	return 1;
 }
 
@@ -79,10 +79,10 @@ Function: OnAdminConnectionTimeExLoad(playerid)
 		new
 			hours;
 		cache_get_value_index_int(0, 0, hours);
-		va_SendClientMessage(playerid, COLOR_RED, "[ ! ] Admin je u ovome mjesecu proveo %d sati na serveru.",  hours);
+		va_SendClientMessage(playerid, COLOR_RED, "[ ! ]: Game Admin spent %d hours of gameplay on server.",  hours);
 	}
 	else
-		SendClientMessage(playerid, COLOR_RED, "[ ! ] Admin se nije spojio na server u ovome mjesecu!");
+		SendClientMessage(playerid, COLOR_RED, "[ ! ]: Game Admin doesn't exist/didn't spend time on server this month!");
 	return 1;
 }
 
@@ -97,6 +97,9 @@ Function: OnAdminConnectionTimeExLoad(playerid)
 */
 CMD:admactivity(playerid, params[])
 {
+	if(PlayerInfo[playerid][pAdmin] < 4)
+		return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You are not Game Admin Level 4+!");
+		
 	new
 		giveplayerid;
 	if( sscanf( params, "u", giveplayerid ) ) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /admactivity [dio imena/playerid]");
@@ -105,9 +108,12 @@ CMD:admactivity(playerid, params[])
 }
 CMD:admactivityex(playerid, params[])
 {
+	if(PlayerInfo[playerid][pAdmin] < 4)
+		return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You are not Game Admin Level 4+!");
+		
 	new
 		sqlid;
-	if( sscanf( params, "i", sqlid ) ) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /admactivityex [sqlid]");
+	if( sscanf( params, "s[24]", sqlid ) ) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /admactivityex [sqlid]");
 	GetAdminConnectionTimeEx(playerid, sqlid);
 	return 1;
 }

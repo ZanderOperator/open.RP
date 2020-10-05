@@ -762,46 +762,7 @@ CMD:genter(playerid, params[])
 	}
 	return 1;
 }
-CMD:asellgarage(playerid, params[])
-{
-    new garage,
-	globalstring[184],
-		TmpQuery[158];
-    if(sscanf(params, "i", garage)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /asellgarage [garageid]");
-	
-	if( !Iter_Contains(Garages, garage )) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Taj ID garaze ne postoji!");
-		
-	if(GarageInfo[garage][gSQLID] == 0)
-		return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ta garaza ne postoji!");
-	
-	if(PlayerInfo[playerid][pAdmin] >= 1337)
-	{	
-		foreach(new i : Player)
-		{
-			if(PlayerInfo[i][pGarageKey] == garage)
-			{
-				PlayerInfo[i][pGarageKey] = -1;
-				SendClientMessage(i, COLOR_RED, "[ ! ] Garaza vam je iseljena od strane admina!");
-				break;
-			}				
-		}
-		
-		format( TmpQuery, sizeof(TmpQuery), "UPDATE `server_garages` SET `ownerid` = '0' WHERE `id` = '%d'", 
-			GarageInfo[garage][gSQLID]
-		);
-		mysql_tquery(g_SQL, TmpQuery, "", "");
-		
-		GarageInfo[garage][gOwnerID] 				= 0;
-		GarageInfo[ garage ][ gLocked ] 			= 1;
-		PlayerPlaySound(playerid, 1052, 0.0, 0.0, 0.0);
-		SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "Prodao si garazu admin komandom!");
-		format(globalstring, sizeof(globalstring), "*Admin %s je iselio garazu %i.",GetName(playerid, false), garage);
-		SendAdminMessage(COLOR_LIGHTBLUE, globalstring);
-		LogASellBiznis(globalstring);
-	}
-	else SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ovlasteni za koristenje ove komande!");
-	return 1;
-}
+
 CMD:garageo(playerid, params[])
 {
 	if (PlayerInfo[playerid][pAdmin] < 1) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ovlasteni za koristenje ove komande!");
@@ -820,13 +781,14 @@ CMD:garageo(playerid, params[])
 	
 	return 1;
 }
+
 //khawaja garages
 CMD:garageentrance(playerid, params[])
 {
 	new proplev;
 	if(PlayerInfo[playerid][pAdmin] < 1337) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nisi 1337!");
 	if (sscanf(params, "i", proplev)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /garageentrance [garageid]");
-	if(proplev >= MAX_GARAGES || proplev < 0) return SendClientMessage(playerid,COLOR_RED, "Nema garaze tog ID-a!");
+	if(!Iter_Contains(Garages, proplev)) return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "Garage ID %d doesn't exist!", proplev);
 
 	new
 		Float:X,Float:Y,Float:Z;

@@ -464,15 +464,14 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 					AC_GivePlayerWeapon(playerid, HouseStorage[id][storageWeapons][listitem], HouseStorage[id][storageAmmo][listitem]);
 					SetAnimationForWeapon(playerid, HouseStorage[id][storageWeapons][listitem], puzavac);
 					
-					new
-						tmpLog[ 128 ];
-					format( tmpLog, 128, "%s je uzeo oruzje (name: %s || ammo: %d) iz gunrack id %d.",
+					Log_Write("/logfiles/gunrack.txt", "(%s) %s took a weapon %s(Ammo:%d) from gunrack ID %d[SQLID: %d].", 
+						ReturnDate(),
 						GetName(playerid, false),
 						GetWeaponNameEx(HouseStorage[id][storageWeapons][listitem]),
 						HouseStorage[id][storageAmmo][listitem],
-						id
+						id,
+						HouseStorage[id][storageID]
 					);
-					LogGunrack(tmpLog);
 
 					HouseStorage[id][storageWeapons][listitem] = 0;
 					HouseStorage[id][storageAmmo][listitem] = 0;
@@ -531,15 +530,14 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 
 					AC_ResetPlayerWeapon(playerid, weapon);
 					
-					new
-						tmpLog[ 128 ];
-					format( tmpLog, 128, "%s je ostavio %s (ammo: %d) u House Storageu [SQLID: %d].",
+					Log_Write("/logfiles/gunrack.txt", "(%s) %s put a weapon %s(Ammo:%d) on gunrack ID %d[SQLID: %d].", 
+						ReturnDate(), 
 						GetName(playerid, false),
 						GetWeaponNameEx(HouseStorage[id][storageWeapons][listitem]),
 						HouseStorage[id][storageAmmo][listitem],
+						id,
 						HouseStorage[id][storageID]
 					);
-					LogGunrack(tmpLog);
 
 					Storage_RackRefresh(id);
 					HouseStorage_SaveWep(id, listitem);
