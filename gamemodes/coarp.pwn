@@ -7,9 +7,11 @@
 	Web: www.cityofangels-roleplay.com
 =============================================================================================
 */
+
 #include <crashdetect>
 #include <a_samp>
 #include <a_http>
+
 /*
 ==============================================================================
 	Preinclude defines
@@ -25,10 +27,11 @@
 
 //#define	WC_DEBUG							false
 //#define _DEBUG								0 											// YSI
-//#define MOD_DEBUG								true
-										// Gamemode Debug
+//#define MOD_DEBUG								true  										// Gamemode Debug
+
 // MySQL inline query functions
 #define MYSQL_USE_YINLINE						true
+
 // #define COA_UCP
 #define FIXES_ServerVarMsg 0
 
@@ -49,7 +52,6 @@
 #define FIX_GetPlayerDialog			0
 #define	MAX_IP_CONNECTS 			3
 #define FIX_file_inc 0
-
 
 // Script Mode settings
 //#define COA_TEST
@@ -129,17 +131,15 @@ native WP_Hash(buffer[], len, const str[]);
 #define DEV_NAME   								"Woo-Logan"
 
 // Macros
-#define Function:%0(%1) \
+#define Function:%0(%1) \				
 		forward%0(%1); \
 		public%0(%1)
-#define IsPlayerLogged(%0) \
-	Bit1_Get(gr_PlayerLoggedIn,%0)
-#define IsPlayerLogging(%0) \
-	Bit1_Get(gr_PlayerLoggingIn,%0)
-#define IsPlayerAlive(%0) \
-	Bit1_Get(gr_PlayerAlive, %0)
+		
+#define IsPlayerLogged(%0) 			Bit1_Get(gr_PlayerLoggedIn,%0)
+#define IsPlayerLogging(%0) 		Bit1_Get(gr_PlayerLoggingIn,%0)
+#define IsPlayerAlive(%0) 			Bit1_Get(gr_PlayerAlive, %0)
 #define IsPlayerSafeBreaking(%0)	Bit1_Get( gr_SafeBreaking, playerid )
-#define IsPlayerReconing(%0) Bit4_Get(gr_SpecateId, %0)
+#define IsPlayerReconing(%0) 		Bit4_Get(gr_SpecateId, %0)
 
 // Limits - https://www.open.mp/docs/scripting/resources/limits
 #define EX_SPLITLENGTH 							(90) // Define when to split SendClientMessage into another line!
@@ -3008,7 +3008,7 @@ public OnGameModeInit()
 
 task GlobalServerTask[1000]() // izvodi se svakih sekundu
 {
-	OutTimer(); // Update - BasketballNew.pwn
+	BallOutTimer(); 
 	GMXTimer();
 	GlobalServerTimer();
 	CheckWarehouseRobberyProgress();
@@ -3197,7 +3197,7 @@ public e_COMMAND_ERRORS:OnPlayerCommandReceived(playerid, cmdtext[], e_COMMAND_E
 		}
 		case COMMAND_UNDEFINED:
 		{
-			SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "Komanda '%s' ne postoji!", cmdtext);
+			SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "Command '%s' does not exist!", cmdtext);
 
 			Log_Write("logfiles/cmd_unknown.txt", "(%s)Player %s[%d]{%d}(%s) used non-existing command '%s'.",
 				ReturnDate(),
@@ -3376,7 +3376,7 @@ public OnPlayerDisconnect(playerid, reason)
 
 	//Tracing
 	if( Bit16_Get( gr_PlayerTracing, playerid ) )
-		SendClientMessage(Bit16_Get( gr_PlayerTracing, playerid ), COLOR_RED, "[ ! ] Linija je zauzeta (( Igrac je offline ))!");
+		SendClientMessage(Bit16_Get( gr_PlayerTracing, playerid ), COLOR_RED, "[ ! ]: Line is busy (( Player is offline ))!");
 
 	// Main Player Account Save Func.
 	SavePlayerData(playerid);
@@ -3402,7 +3402,7 @@ public OnPlayerDisconnect(playerid, reason)
 public OnPlayerRequestClass(playerid, classid)
 {
 	if(GMX == 1) {
-		SendClientMessage(playerid,COLOR_RED, "ERROR: Server is currently in data storing pre-restart procedure. You have been automatically kicked.");
+		SendClientMessage(playerid,COLOR_RED, "ERROR: Server is currently in data storing pre-restart process. You have been automatically kicked.");
 		KickMessage(playerid);
 		return 1;
 	}
@@ -3602,7 +3602,7 @@ public OnPlayerSpawn(playerid)
 			SetPlayerPos(playerid, PlayerInfo[ playerid ][ pDeath ][ 0 ], PlayerInfo[ playerid ][ pDeath ][ 1 ], PlayerInfo[ playerid ][ pDeath ][ 2 ]);
 			Streamer_UpdateEx(playerid, PlayerInfo[playerid][pDeath][0], PlayerInfo[playerid][pDeath][1], PlayerInfo[playerid][pDeath][2], PlayerInfo[playerid][ pDeathVW], PlayerInfo[playerid][pDeathInt]);
 
-			SendClientMessage(playerid, COLOR_LIGHTRED, "You are in DeathMode. You have been returned to location of your death.**");
+			SendClientMessage(playerid, COLOR_LIGHTRED, "You are in Death Mode. You have been returned to location of your death.**");
 			SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "** You can't use /l chat and /me command. /c, /ame i /do are allowed during RP **");
 
 			Bit1_Set( gr_MaskUse, playerid, false );
@@ -3727,7 +3727,7 @@ public OnPlayerSpawn(playerid)
 
 					SetPlayerPosEx(playerid, PlayerTrunkPos[playerid][0], PlayerTrunkPos[playerid][1], PlayerTrunkPos[playerid][2], 0, 0, false);
 					TogglePlayerControllable( playerid, 1 );
-					SendClientMessage( playerid, COLOR_RED, "[ ! ] You exited the trunk.");
+					SendClientMessage( playerid, COLOR_RED, "[ ! ]: You exited the trunk.");
 					SetPlayerHealth(playerid, 100);
 				}
 			}
