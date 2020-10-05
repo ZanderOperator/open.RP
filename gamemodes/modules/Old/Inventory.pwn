@@ -309,9 +309,7 @@ inventory_process(playerid, cmdtext[]) {
 				maskName[24];
 			format(maskName, sizeof(maskName), "Maska_%d", PlayerInfo[playerid][pMaskID]);
 			
-			UpdateNameLabel(playerid, maskName);
-			
-			/*new
+			new
 				maskName[24];
 			format(maskName, sizeof(maskName), "Maska_%d", PlayerInfo[playerid][pMaskID]);
 			if(IsValidDynamic3DTextLabel(NameText[playerid]))
@@ -320,28 +318,27 @@ inventory_process(playerid, cmdtext[]) {
 				NameText[playerid] = Text3D:INVALID_3DTEXT_ID;
 			}
 			NameText[playerid] = CreateDynamic3DTextLabel(maskName, 0xB2B2B2AA, 0, 0, -20, 25, playerid, INVALID_VEHICLE_ID, 1);
-			Streamer_SetFloatData(STREAMER_TYPE_3D_TEXT_LABEL, NameText[playerid] , E_STREAMER_ATTACH_OFFSET_Z, 0.18);*/
+			Streamer_SetFloatData(STREAMER_TYPE_3D_TEXT_LABEL, NameText[playerid] , E_STREAMER_ATTACH_OFFSET_Z, 0.18);
 			return (true);
 		}
 		else {
-			/*foreach(new i : Player) {
+			foreach(new i : Player) {
 				ShowPlayerNameTagForPlayer(i, playerid, 1);
-			}*/
+			}
 					
 			Bit1_Set( gr_MaskUse, playerid, false );
-			/*format(buffer, sizeof(buffer), "* %s skida masku sa glave.", GetName(playerid, true));
+			format(buffer, sizeof(buffer), "* %s skida masku sa glave.", GetName(playerid, true));
 			SendClientMessage(playerid, COLOR_PURPLE, buffer);
-			SetPlayerChatBubble(playerid, buffer, COLOR_PURPLE, 20, 10000);*/
+			SetPlayerChatBubble(playerid, buffer, COLOR_PURPLE, 20, 10000);
 			
 			GameTextForPlayer(playerid, "~b~SKINULI STE MASKU", 5000, 4);
 			RemovePlayerAttachedObject(playerid, MASK_SLOT);
 				
-			/*if(IsValidDynamic3DTextLabel(NameText[playerid]))
+			if(IsValidDynamic3DTextLabel(NameText[playerid]))
 			{
 				DestroyDynamic3DTextLabel(NameText[playerid]);
 				NameText[playerid] = Text3D:INVALID_3DTEXT_ID;
-			}*/
-			UpdateNameLabel(playerid, GetName(playerid, true));
+			}
 			return (true);
 		}
 	}
@@ -860,7 +857,7 @@ CMD:item_give(playerid, params[]) {
 		return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ovlasteni za koristenje ove komande!");
 	if(sscanf(params,"is[32]ii", targetid, item_name, item_objectid, itemtype)) 
 	{
- 		SendClientMessage(playerid, COLOR_RED, "USAGE: /item_give (playerid) (item ime) (item objectid) (item type).");
+ 		SendClientMessage(playerid, COLOR_RED, "[ ? ]: /item_give (playerid) (item ime) (item objectid) (item type).");
 		SendClientMessage(playerid, COLOR_RED, "[ITEM TYPE]: (1-Food) (2-Drink) (3-Other).");
 		return (true);
 	}
@@ -912,7 +909,7 @@ CMD:checkinv(playerid, params[]) {
 	
 	new targetid;
 	if( sscanf(params, "u", targetid)) 
-		return SendClientMessage(playerid, COLOR_RED, "USAGE: /checkinv [ID/Dio imena]");
+		return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /checkinv [ID/Dio imena]");
     if( !IsPlayerConnected(targetid)) 
 		return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Taj igraè nije online!");
 	

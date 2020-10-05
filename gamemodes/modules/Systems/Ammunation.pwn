@@ -118,10 +118,10 @@ stock static InsertAmmuWeapon(slotid) // Dodavanje novog oruzja
 stock static PlayerAmmunationBuyTime(playerid, days)
 {
 	new	ammutime, date[ 6 ];
-	ammutime = days * 79200; // days su dani zadani, a 86400 su sekunde po danu, za promjenu dana zabrane promjenti samo brojku 7 ? // 79200 -2 sata jer gospodinu iz solina triba udovoljit degen
+	ammutime = days * 86400; 
 	ammutime += gettimestamp(); // dodaje se trenutno vrijeme
 	PlayerInfo[ playerid ][ pAmmuTime] = ammutime; // igracu se u varijablu dodaje vrijeme
-	stamp2datetime(ammutime, date[0], date[1] ,date[2], date[3], date[4], date[5], 1); // formatiranje vremena iz unixa u normalno
+	stamp2datetime(ammutime, date[0], date[1] ,date[2], date[3], date[4], date[5]); // formatiranje vremena iz unixa u normalno
 	
 	va_SendClientMessage(playerid, COLOR_RED, "[AMMUNATION INFO]: Sljedeci put mozete kupovati nakon %d dana (%02d/%02d/%02d %02d:%02d:%02d)",
 		days,
@@ -220,7 +220,7 @@ CMD:buyweapon(playerid, params[])
 	else {
 		new datum = PlayerInfo[ playerid ][ pAmmuTime ],
 			date[ 6 ];
-		stamp2datetime(datum, date[0], date[1] ,date[2], date[3], date[4], date[5], 1);
+		stamp2datetime(datum, date[0], date[1] ,date[2], date[3], date[4], date[5]);
 		va_SendClientMessage( playerid, COLOR_RED, "[ ! ] Nije vam dozvoljena kupnja do %d.%d.%d. - %d:%d",
 			date[2],
 			date[1],
@@ -238,7 +238,7 @@ CMD:ammunation(playerid, params[])
 	new pick[ 8 ], id, weapon, price, license, maxbullets, name[ 32 ], freeslot;
 	if( sscanf( params, "s[8] ", pick ) ) return SendClientMessage( playerid, -1, "KORISTENJE /ammunation [list/add/edit/delete/rpt (resetplayertime)]");
 	if( !strcmp(pick, "add", true) ) {
-		if( sscanf(params, "s[8]iiiis[32]", pick, weapon, price, license, maxbullets, name ) ) return SendClientMessage(playerid, COLOR_RED, "USAGE: /ammu add [weapon_id] [cijena po metku] [licenca (1/2)] [max bullets] [ime oruzja]");
+		if( sscanf(params, "s[8]iiiis[32]", pick, weapon, price, license, maxbullets, name ) ) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /ammu add [weapon_id] [cijena po metku] [licenca (1/2)] [max bullets] [ime oruzja]");
 		if( 1 > weapon > 44 )	return SendMessage(playerid, MESSAGE_TYPE_ERROR, " Krivi weapon ID!");
 		if( 1 > price > 9999 )	return SendMessage(playerid, MESSAGE_TYPE_ERROR, " Cijena po metku moze biti od 1 - 9999");
 		if( 1 > license > 2 )	return SendMessage(playerid, MESSAGE_TYPE_ERROR, " Licenca moze biti 1 (CCW) ili 2 (OCW)!");
@@ -265,7 +265,7 @@ CMD:ammunation(playerid, params[])
 	}
 	else if( !strcmp(pick, "delete", true) ) {
 		new slotid;
-		if( sscanf(params, "s[8]i", pick, slotid ) ) return SendClientMessage(playerid, COLOR_RED, "USAGE: /ammunation delete [slotid]");
+		if( sscanf(params, "s[8]i", pick, slotid ) ) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /ammunation delete [slotid]");
 		if( slotid < 0 && slotid > MAX_AMMU_SLOTS ) return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, " Nevaljan slot ID (0-%d).", MAX_AMMU_SLOTS-1 );
 	
 		AmmuInfo[ slotid ][ aiSQLID ] = 0;
@@ -280,7 +280,7 @@ CMD:ammunation(playerid, params[])
 		va_SendClientMessage(playerid, COLOR_RED, "[ ! ] (DELETE) Obrisali ste ID[%d] %s!", slotid, name);
 	}
 	else if( !strcmp(pick, "edit", true) ) {
-		if( sscanf(params, "s[8]iiiiis[32]", pick, id, weapon, price, license, maxbullets, name ) ) return SendClientMessage(playerid, COLOR_RED, "USAGE: /ammunation edit [slotID] [weapon_id] [cijena po metku] [licenca (1/2)] [max bullets] [ime oruzja]");
+		if( sscanf(params, "s[8]iiiiis[32]", pick, id, weapon, price, license, maxbullets, name ) ) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /ammunation edit [slotID] [weapon_id] [cijena po metku] [licenca (1/2)] [max bullets] [ime oruzja]");
 		if( 1 > weapon > 44 )	return SendMessage(playerid, MESSAGE_TYPE_ERROR, " Krivi weapon ID!");
 		if( 1 > price > 9999 )	return SendMessage(playerid, MESSAGE_TYPE_ERROR, " Cijena po metku moze biti od 1 - 9999");
 		if( 1 > license > 2 )	return SendMessage(playerid, MESSAGE_TYPE_ERROR, " Licenca moze biti 1 (CCW) ili 2 (OCW)!");
@@ -303,7 +303,7 @@ CMD:ammunation(playerid, params[])
 		);
 	}
 	else if( !strcmp(pick, "list", true) ) {
-		if( sscanf(params, "s[8]", pick ) ) return SendClientMessage(playerid, COLOR_RED, "USAGE: /ammunation list");
+		if( sscanf(params, "s[8]", pick ) ) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /ammunation list");
 		if( Iter_Count(AMMU) == 0) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Baza je prazna!");
 		SendClientMessage( playerid, COLOR_SAMP_BLUE, "--------- AMMUNATION LISTA ORUZJA --------");
 		foreach(new i : AMMU) {
@@ -319,7 +319,7 @@ CMD:ammunation(playerid, params[])
 	}
 	else if( !strcmp(pick, "rpt", true) ) {
 		new giveplayerid;
-		if( sscanf(params, "s[8]u", pick, giveplayerid ) ) return SendClientMessage(playerid, COLOR_RED, "USAGE: /ammunation rpt [ID/PlayerName]");
+		if( sscanf(params, "s[8]u", pick, giveplayerid ) ) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /ammunation rpt [ID/PlayerName]");
 		PlayerInfo[giveplayerid][pAmmuTime] = 0;
 		new rQuery[ 128 ];
 		format( rQuery, sizeof(rQuery), "UPDATE `accounts` SET `ammutime` = '0' WHERE `sqlid` = '%d'", PlayerInfo[giveplayerid][pSQLID]);
@@ -356,7 +356,7 @@ CMD:issueweaplic(playerid, params[])
 	new giveplayerid;
     if (sscanf(params, "u", giveplayerid))
 	{
-		SendClientMessage(playerid, COLOR_RED, "USAGE: /issueweaplicense [playerid/name]");
+		SendClientMessage(playerid, COLOR_RED, "[ ? ]: /issueweaplicense [playerid/name]");
 		return 1;
 	}
 	if(PlayerInfo[giveplayerid][pGunLic] == 1) return SendClientMessage(playerid, COLOR_RED, "Osoba vec ima dozvolu za oruzje!");
@@ -378,7 +378,7 @@ CMD:revokeweaplic(playerid, params[])
     new giveplayerid;
     if (sscanf(params, "u", giveplayerid))
 	{
-		SendClientMessage(playerid, COLOR_RED, "USAGE: /revokeweaplic [playerid/name]");
+		SendClientMessage(playerid, COLOR_RED, "[ ? ]: /revokeweaplic [playerid/name]");
 		return 1;
 	}
 	if(PlayerInfo[giveplayerid][pGunLic] == 0) return SendClientMessage(playerid, COLOR_RED, "Osoba nema dozvolu za oruzje!");

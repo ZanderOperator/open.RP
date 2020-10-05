@@ -66,14 +66,14 @@ Function: OnVehicleTicketInsert(vehicleid, slot)
 	return 1;
 }
 
-stock DeletePlayerTicket(playerid, sqlid) 
+stock DeletePlayerTicket(playerid, sqlid, bool:notification = false) 
 {
 	new
 		destroyQuery[ 256 ];
 	format( destroyQuery, sizeof(destroyQuery), "DELETE FROM tickets WHERE `id` = '%d'", sqlid);
 	mysql_tquery(g_SQL, destroyQuery, "");
-	va_SendClientMessage(playerid, COLOR_RED, "[ ! ] ", sqlid);
-	mysql_tquery(g_SQL, "COMMIT");
+	if(notification)
+		SendFormatMessage(playerid, MESSAGE_TYPE_SUCCESS, "Kazna #%d je uspjesno izbrisana iz baze podataka.", sqlid);
 }
 
 stock LoadVehicleTickets(vehicleid)
@@ -202,7 +202,7 @@ stock ShowVehicleTickets(playerid, vehicleid)
 CMD:ticket(playerid, params[])
 {
 	new param[ 12 ], id;
-	if( sscanf( params, "s[12] ", param ) ) return SendClientMessage(playerid, COLOR_RED, "USAGE: /ticket [show / vehicleshow / pay / vehiclepay ]");
+	if( sscanf( params, "s[12] ", param ) ) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /ticket [show / vehicleshow / pay / vehiclepay ]");
 	
 	if( !strcmp(param, "show", true ) )
 	{
@@ -221,7 +221,7 @@ CMD:ticket(playerid, params[])
 	if( !strcmp(param, "pay", true ) )
 	{
 		if( !IsPlayerInRangeOfPoint(playerid, 30.0, 1301.4661, 764.3820, -98.6427) ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste unutar City Hall-a!");
-		if( sscanf( params, "s[12]i", param, id ) ) return SendClientMessage(playerid, COLOR_RED, "USAGE: /ticket pay [ID kazne]");
+		if( sscanf( params, "s[12]i", param, id ) ) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /ticket pay [ID kazne]");
 		
 		new 
 			ticketsQuery[ 62 ], 
@@ -231,7 +231,7 @@ CMD:ticket(playerid, params[])
 			
 		format(ticketsQuery, 62, "SELECT id, primatelj, novac FROM tickets WHERE id = '%d'", id);
 		result = mysql_query(g_SQL, ticketsQuery);
-		if(!cache_num_rows()) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate kazne u bazi podataka!");
+		if(!cache_num_rows()) return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "Ne postoji kazna sa ID-em #%d !", id);
 		
 		new ticketId, moneys;	
 		cache_get_value_name(0, "primatelj", tmp, sizeof(tmp));
@@ -243,7 +243,7 @@ CMD:ticket(playerid, params[])
 			if(AC_GetPlayerMoney(playerid) < moneys) return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate dovoljno novaca, fali vam %d$.", moneys-AC_GetPlayerMoney(playerid));
 
 			PlayerToOrgMoney(playerid, FACTION_TYPE_LAW, moneys); // Novac dolazi u faction bank
-			DeletePlayerTicket(playerid, id);
+			DeletePlayerTicket(playerid, id, false);
 			SendFormatMessage(playerid, MESSAGE_TYPE_SUCCESS, "Platili ste kaznu #%d (%d$).", id, moneys);
 		}
 		else SendMessage(playerid, MESSAGE_TYPE_ERROR, " To nije vasa kazna!"); // provjera ima li sta u bazi
@@ -254,7 +254,7 @@ CMD:ticket(playerid, params[])
 		if( !IsPlayerInRangeOfPoint(playerid, 30.0, 1301.4661, 764.3820, -98.6427) ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste unutar City Hall-a!");
 		new
 			vehicleid, slot;
-		if( sscanf( params, "s[12]i", param, slot ) ) return SendClientMessage(playerid, COLOR_RED, "USAGE: /payticket vehicle [slot (1-5)]");
+		if( sscanf( params, "s[12]i", param, slot ) ) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /payticket vehicle [slot (1-5)]");
 		if( PlayerInfo[playerid][pSpawnedCar] == -1) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate spawnano svoje vozilo!");
 		vehicleid = PlayerInfo[playerid][pSpawnedCar];
 		if( !VehicleInfo[ vehicleid ][ vTickets ][ 0 ] && !VehicleInfo[ vehicleid ][ vTickets ][ 1 ] && !VehicleInfo[ vehicleid ][ vTickets ][ 2 ] && !VehicleInfo[ vehicleid ][ vTickets ][ 3 ] && !VehicleInfo[ vehicleid ][ vTickets ][ 4 ] ) 
@@ -297,13 +297,13 @@ CMD:giveticket(playerid, params[])
 	
 	new giveplayerid, pick[8];
 		
-	if( sscanf( params, "s[8] ", pick ) ) return SendClientMessage(playerid, COLOR_RED, "USAGE: /giveticket [person/vehicle]");
+	if( sscanf( params, "s[8] ", pick ) ) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /giveticket [person/vehicle]");
 		
 		
 	new reason[ 100 ], moneys;
 	if( !strcmp(pick, "person", true) )
 	{
-		if( sscanf( params, "s[8]uis[99]", pick, giveplayerid, moneys, reason ) ) return SendClientMessage(playerid, COLOR_RED, "USAGE: /giveticket person [playerid/dio imena] [novci] [razlog]");
+		if( sscanf( params, "s[8]uis[99]", pick, giveplayerid, moneys, reason ) ) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /giveticket person [playerid/dio imena] [novci] [razlog]");
 		if( giveplayerid == INVALID_PLAYER_ID ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, " Igrac nije online!");
 		if( !ProxDetectorS(5.0, playerid, giveplayerid) ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Igrac nije blizu vas!");
 		if (strlen(reason) >= 100) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Razlog moze imati max 100 znakova!");
@@ -322,7 +322,7 @@ CMD:giveticket(playerid, params[])
 	else if( !strcmp(pick, "vehicle", true) )
 	{
 		new vehicleid;
-		if( sscanf( params, "s[8]iis[64]", pick, vehicleid, moneys, reason ) ) return SendClientMessage(playerid, COLOR_RED, "USAGE: /giveticket vehicle [vehicleid ((/DL))][iznos kazne][razlog]");
+		if( sscanf( params, "s[8]iis[64]", pick, vehicleid, moneys, reason ) ) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /giveticket vehicle [vehicleid ((/DL))][iznos kazne][razlog]");
 		if( vehicleid == INVALID_VEHICLE_ID ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, " Vozilo nije spawnano! (( ID vozila na /DL! ))");
 			
 		new

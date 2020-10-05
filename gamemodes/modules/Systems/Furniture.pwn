@@ -816,12 +816,12 @@ new
 enum E_CHOUCH_OBJECT_DATA
 {
     ceId,
-	ceName[ 23 ],
+    ceName[ 23 ],
     cePrice
 }
 new
-	ObjectsCouch[ ][ E_CHOUCH_OBJECT_DATA ] = {
-		{ 1702, "Svijetlo smedi kauc" ,   100 },
+    ObjectsCouch[ ][ E_CHOUCH_OBJECT_DATA ] = {
+        { 1702, "Svijetlo smedi kauc" ,   100 },
         { 1703, "Crni kauc"           ,   100 },
         { 1706, "Ljubicasti kauc"     ,   100 },
         { 1707, "Lazybag kauc"        ,   100 },
@@ -848,12 +848,12 @@ new
 enum E_ARMCHAIR_OBJECT_DATA
 {
     armId,
-	armName[33],
+    armName[33],
     armPrice
 }
 new
-	ObjectsArmChair[  ][ E_ARMCHAIR_OBJECT_DATA ] = {
-	{ 1704, "Crna fotelja"                ,   100 },
+    ObjectsArmChair[  ][ E_ARMCHAIR_OBJECT_DATA ] = {
+    { 1704, "Crna fotelja"                ,   100 },
     { 1705, "Braon fotelja"               ,   100 },
     { 1708, "Plava fotelja"               ,   100 },
     { 1711, "Braon fotelja, garnitura"    ,   80  },
@@ -876,19 +876,19 @@ new
 enum E_TABLE_OBJECTS_DATA
 {
     tabId,
-	tabName[32],
+    tabName[32],
     tabPrice
 }
 
 enum E_CABINETS_OBJECT_DATA
 {
     cabId,
-	cabName[41],
+    cabName[41],
     cabPrice
 }
 new
-	ObjectsCabinets[][ E_CABINETS_OBJECT_DATA ] = {
-	{ 2046,     "Orman za puske"                  ,   100 },
+    ObjectsCabinets[][ E_CABINETS_OBJECT_DATA ] = {
+    { 2046,     "Orman za puske"                  ,   100 },
     { 2078,     "Starinski drveni orman"          ,   225 },
     { 2089,     "Drvena polica"                   ,   150 },
     { 2161,     "Puna niska polica za knjige"     ,   100 },
@@ -905,12 +905,12 @@ new
 enum E_TELEVISION_OBJECT_DATA
 {
     tvId,
-	tvName[40],
+    tvName[40],
     tvPrice
 }
 new
-	ObjectsTelevision[  ][ E_TELEVISION_OBJECT_DATA ] = {
-	{ 1429      , "Stari televizor"               , 200  },
+    ObjectsTelevision[  ][ E_TELEVISION_OBJECT_DATA ] = {
+    { 1429      , "Stari televizor"               , 200  },
     { 1518      , "Stari televizor, crni"         , 225  },
     { 1717      , "Televizor i stakleni stol"     , 550  },
     { 1747      , "Stari televizor, drvena kutija", 250  },
@@ -935,12 +935,12 @@ new
 enum E_VIDEO_OBJECT_DATA
 {
     vidId,
-	vidName[20],
+    vidName[20],
     vidPrice
 }
 new
-	ObjectsVideo[][ E_VIDEO_OBJECT_DATA ] = {
-		{ 1782  ,   "iBox 65"             , 300 },
+    ObjectsVideo[][ E_VIDEO_OBJECT_DATA ] = {
+        { 1782  ,   "iBox 65"             , 300 },
         { 1783  ,   "Playhouse 4"         , 250 },
         { 1785  ,   "Playhouse 3"         , 200 },
         { 1787  ,   "Iomy CD player"      , 250 },
@@ -952,12 +952,12 @@ new
 enum E_HIFI_OBJECT_DATA
 {
     hfId,
-	hfName[45],
+    hfName[45],
     hfPrice
 }
 new
-	ObjectsHiFi[][ E_HIFI_OBJECT_DATA ] = {
-		{ 1809  , "Kucno kino"                    , 450  },
+    ObjectsHiFi[][ E_HIFI_OBJECT_DATA ] = {
+        { 1809  , "Kucno kino"                    , 450  },
         { 2099  , "Drveni ormaric i tehnika1"     , 550 },
         { 2010  , "Drveni ormaric i tehnika2"     , 550 },
         { 2102  , "Crni zvucnici"                 , 200  },
@@ -974,12 +974,12 @@ new
 enum E_STEREO_OBJECT_DATA
 {
     stId,
-	stName[34],
+    stName[34],
     stPrice
 }
 new
-	ObjectsStereo[][ E_STEREO_OBJECT_DATA ] = {
-		{ 1840  , "Beli zvucnik"                      , 250  },
+    ObjectsStereo[][ E_STEREO_OBJECT_DATA ] = {
+        { 1840  , "Beli zvucnik"                      , 250  },
         { 2229  , "Visoki crni zvucnik"               , 350 },
         { 2230  , "Visoki zvucnik sa drvenom kutijom" , 400  },
         { 2231  , "Niski zvucnik sa drvenom kutijom"  , 300  },
@@ -989,12 +989,12 @@ new
 enum E_RUG_OBJECT_DATA
 {
     rId,
-	rName[20],
+    rName[20],
     rPrice
 }
 new
-	ObjectsRugs[][ E_RUG_OBJECT_DATA ] = {
-		{ 1828  , "Tepih"         , 200},
+    ObjectsRugs[][ E_RUG_OBJECT_DATA ] = {
+        { 1828  , "Tepih"         , 200},
         { 2815  , "Rozi tepih"    , 300 },
         { 2817  , "Svetloplavi "  , 400 },
         { 2818  , "Crveni tepih"  , 430 },
@@ -1008,12 +1008,12 @@ new
 };
 enum E_FRIDGE_OBJECT_DATA {
     frId,
-	frName[22],
+    frName[22],
     frPrice
 }
 new
-	ObjectsFridge[ ][ E_FRIDGE_OBJECT_DATA ] = {
-		{ 2127  , "Dupli crveni frizider" , 480 },
+    ObjectsFridge[ ][ E_FRIDGE_OBJECT_DATA ] = {
+        { 2127  , "Dupli crveni frizider" , 480 },
         { 2128  , "Crveni frizider"       , 400 },
         { 2131  , "Siroki beli frizider"  , 500 },
         { 2140  , "Drveni frizider"       , 465 },
@@ -1026,13 +1026,14 @@ new
 enum E_KITCH_CABINETS_OBJECT_DATA
 {
     kcId,
-	kcName[37],
+    kcName[37],
     kcPrice
 }
 new
-	ObjectsKitchenCabinets[ ][ E_KITCH_CABINETS_OBJECT_DATA ] = {
-		{ 2014  , "Zidni ormar i radni deo1"          , 360   },
+    ObjectsKitchenCabinets[ ][ E_KITCH_CABINETS_OBJECT_DATA ] = {
+        { 2014  , "Zidni ormar i radni deo1"          , 360   },
         { 2015  , "Zidni ormar i radni deo2"          , 360   },
+        { 11686 , "Drveni sank"                       , 500   },
         { 2016  , "Zidni ormar i radni deo3"          , 360   },
         { 2022  , "Ugaoni radni deo i ormar"          , 360   },
         { 2129  , "Crveni ormar i radni1"             , 360   },
@@ -1052,12 +1053,12 @@ new
 enum E_KITCH_DISHES_OBJECT_DATA
 {
     dishId,
-	dishName[18],
+    dishName[18],
     dishPrice
 }
 new
-	ObjectsKitchenDishes[ ][ E_KITCH_DISHES_OBJECT_DATA ] = {
-		{ 11718 , "Lonac"         , 50    },
+    ObjectsKitchenDishes[ ][ E_KITCH_DISHES_OBJECT_DATA ] = {
+        { 11718 , "Lonac"         , 50    },
         { 19584 , "Lonac2"        , 50    },
         { 19585 , "Lonac3"        , 50    },
         { 19581 , "Tava"          , 70    },
@@ -1082,12 +1083,12 @@ new
 enum E_SINK_OBJECT_DATA
 {
     snkId,
-	snkName[41],
+    snkName[41],
     snkPrice
 }
 new
-	ObjectsSink[ ][ E_SINK_OBJECT_DATA ] = {
-		{ 2013  , "Drveni ormar sa sudoperom"     , 450   },
+    ObjectsSink[ ][ E_SINK_OBJECT_DATA ] = {
+        { 2013  , "Drveni ormar sa sudoperom"     , 450   },
         { 2132  , "Beli ormar sa sudoperom"       , 500   },
         { 2136  , "Drveni element sa sudoperom"   , 550   },
         { 2160  , "Zeleni ormar sa sudoperom"     , 350   },
@@ -1098,26 +1099,27 @@ new
 enum E_TABLES_OBJECT_DATA
 {
     tablId,
-	tablName[33],
+    tablName[33],
     tablPrice
 }
 new
-	ObjectsTables[ ][ E_TABLES_OBJECT_DATA ] = {
-		{ 2126      , "Mali stol"                 , 150 },
-		{ 2209      , "Kancelarijski stol"        , 200 },
-		{ 2210      , "Staklena polica1"          , 190 },
-		{ 2211      , "Staklena polica2"          , 190 },
-		{ 2311      , "Siroki drveni stol"        , 100 },
-		{ 2313      , "Televizor sa CD playerom"  , 80  },
-		{ 2314      , "Sto za televizor"          , 100 },
-		{ 2315      , "Drveni stol za televizor"  , 100 },
-		{ 2319      , "Starinski stol za televizor", 90  },
-		{ 2346      , "Siroki kredenac"           , 90  },
-		{ 2370      , "Niska polica"              , 90  },
-		{ 2024      , "Stakleni stol"             , 250 },
-		{ 19922     , "Siroki stol"               , 200 },
-		{ 19997     , "Stol na rasklapanje"       , 150 },
-		{ 1433  , "Mali drveni kockasti1" , 490 },
+    ObjectsTables[ ][ E_TABLES_OBJECT_DATA ] = {
+        { 2126      , "Mali stol"                 , 150 },
+        { 2331      , "Mali stol2"                , 100 },
+        { 2209      , "Kancelarijski stol"        , 200 },
+        { 2210      , "Staklena polica1"          , 190 },
+        { 2211      , "Staklena polica2"          , 190 },
+        { 2311      , "Siroki drveni stol"        , 100 },
+        { 2313      , "Televizor sa CD playerom"  , 80  },
+        { 2314      , "Sto za televizor"          , 100 },
+        { 2315      , "Drveni stol za televizor"  , 100 },
+        { 2319      , "Starinski stol za televizor", 90  },
+        { 2346      , "Siroki kredenac"           , 90  },
+        { 2370      , "Niska polica"              , 90  },
+        { 2024      , "Stakleni stol"             , 250 },
+        { 19922     , "Siroki stol"               , 200 },
+        { 19997     , "Stol na rasklapanje"       , 150 },
+        { 1433  , "Mali drveni kockasti1" , 490 },
         { 1516  , "Mali drveni kockasti2" , 490 },
         { 1737  , "Moderni drveni"        , 560 },
         { 1770  , "Stari beli"            , 350 },
@@ -1160,12 +1162,12 @@ new
 enum E_CHAIRS_OBJECT_DATA
 {
     chId,
-	chName[30],
+    chName[30],
     chPrice
 }
 new
-	ObjectsChair[ ][ E_CHAIRS_OBJECT_DATA ] = {
-		{ 1720  , "Visoka bela"           , 100 },
+    ObjectsChair[ ][ E_CHAIRS_OBJECT_DATA ] = {
+        { 1720  , "Visoka bela"           , 100 },
         { 1721  , "Uglasta"               , 50 },
         { 1739  , "Visoka braon"          , 200 },
         { 1810  , "Stolica na rasklapanje", 50 },
@@ -1186,12 +1188,12 @@ new
 enum E_STOVE_OBJECT_DATA
 {
     stId,
-	stName[33],
+    stName[33],
     stPrice
 }
 new
-	ObjectsStove[][ E_STOVE_OBJECT_DATA ] = {
-		{ 1733  , "Zastareli stednjak"    , 150  },
+    ObjectsStove[][ E_STOVE_OBJECT_DATA ] = {
+        { 1733  , "Zastareli stednjak"    , 150  },
         { 1777  , "Uski zastareli stednjak", 250  },
         { 2135  , "Moderni sa ormarom"    , 550 },
         { 2144  , "Bijeli stednjak1"      , 270  },
@@ -1207,23 +1209,23 @@ new
 enum E_MICROWAVE_OBJECT_DATA
 {
     mwId,
-	mwName[25],
+    mwName[25],
     mwPrice
 }
 new
-	ObjectsMicroWave[ ][ E_MICROWAVE_OBJECT_DATA ] = {
-		{ 2421	, "Moderna bela mikrovalna1", 150 },
-		{ 2149	, "Moderna bela mirkovalna2", 170 }
+    ObjectsMicroWave[ ][ E_MICROWAVE_OBJECT_DATA ] = {
+        { 2421  , "Moderna bela mikrovalna1", 150 },
+        { 2149  , "Moderna bela mirkovalna2", 170 }
 };
 enum E_TRASH_CAN_OBJECT_DATA
 {
     tcId,
-	tcName[29],
+    tcName[29],
     tcPrice
 }
 new
-	ObjectsTrashCan[ ][ E_TRASH_CAN_OBJECT_DATA ] = {
-		{ 1235  , "Crna mrezna kanta"         , 100 },
+    ObjectsTrashCan[ ][ E_TRASH_CAN_OBJECT_DATA ] = {
+        { 1235  , "Crna mrezna kanta"         , 100 },
         { 1300  , "Gradska metalna kanta"     , 150 },
         { 1328  , "Kucna metalna kanta"       , 100 },
         { 1329  , "Bijela kanta"              , 50 },
@@ -1236,28 +1238,33 @@ new
 enum E_TOILET_OBJECT_DATA
 {
     toId,
-	toName[30],
+    toName[30],
     toPrice
 }
 new
-	ObjectsToilet[ ][ E_TOILET_OBJECT_DATA ] = {
-		{ 2514  , "Bijela WC skoljka"     , 190 },
+    ObjectsToilet[ ][ E_TOILET_OBJECT_DATA ] = {
+        { 2514  , "Bijela WC skoljka"     , 190 },
         { 2521  , "Moderna bela WC skoljka", 250 },
         { 2525  , "Bijela WC skoljka"     , 200 },
         { 2528  , "Braon-bela WC skoljka" , 270 },
+        { 11707 , "Drzac za peskire"      , 100 },
+        { 2602  , "Lavabo"                , 300 },
+        { 2739  , "Lavabo2"               , 280 },
         { 19874 , "Sapun"                 , 30  },
         { 19873 , "Toilet papir"          , 10  }
 };
 enum E_BATH_OBJECT_DATA
 {
     baId,
-	baName[29],
+    baName[29],
     baPrice
 }
 new
-	ObjectsBath[ ][ E_BATH_OBJECT_DATA ] = {
-		{ 2517  , "Uska kabina za tusiranje"  , 350  },
+    ObjectsBath[ ][ E_BATH_OBJECT_DATA ] = {
+        { 2517  , "Uska kabina za tusiranje"  , 350  },
+        { 14481  , "Zastor za kadu"           , 350  },
         { 2519  , "Bijela kada"               , 400  },
+        { 2742  , "Fen za ruke"               , 300  },
         { 2520  , "Moderna kabina za tusiranje", 400  },
         { 2527  , "Otvorena kabina za tusiranje", 400  },
         { 2522  , "Moderna kada"              , 500  },
@@ -1267,22 +1274,22 @@ new
 enum E_MIRROR_OBJECT_DATA
 {
     miId,
-	miName[9],
+    miName[9],
     miPrice
 }
 new
-	ObjectsMirror[ ][ E_MIRROR_OBJECT_DATA ] = {
-		{ 14684	, "Ogledalo"	, 100 }
+    ObjectsMirror[ ][ E_MIRROR_OBJECT_DATA ] = {
+        { 14684 , "Ogledalo"    , 100 }
 };
 enum E_BEDS_OBJECT_DATA
 {
     bdId,
-	bdName[41],
+    bdName[41],
     bdPrice
 }
 new
-	ObjectsBed[][ E_BEDS_OBJECT_DATA ] = {
-		{ 1700  , "Bracni krevet sa roze posteljinom"     , 300 },
+    ObjectsBed[][ E_BEDS_OBJECT_DATA ] = {
+        { 1700  , "Bracni krevet sa roze posteljinom"     , 300 },
         { 1701  , "Bracni krevet sa krem posteljinom"     , 400 },
         { 1725  , "Bracni krevet sa smedjom posteljinom"  , 400 },
         { 1745  , "Bracni krevet sa plavom posteljinom"   , 100 },
@@ -1307,25 +1314,25 @@ new
 };
 enum E_NIGHTSTAND_OBJECT_DATA
 {
-	nsId,
-	nsName[32],
+    nsId,
+    nsName[32],
     nsPrice
 }
 new
-	ObjectsNightStand[ ][ E_NIGHTSTAND_OBJECT_DATA ] = {
-		{ 1740	, "Otvoreni drveni kredenac"		, 100 },
-		{ 2095	, "Zatvoreni drveni kredenac"		, 100 },
-		{ 2328	, "Zatvoreni niski drveni kredenac"	, 100 }
+    ObjectsNightStand[ ][ E_NIGHTSTAND_OBJECT_DATA ] = {
+        { 1740  , "Otvoreni drveni kredenac"        , 100 },
+        { 2095  , "Zatvoreni drveni kredenac"       , 100 },
+        { 2328  , "Zatvoreni niski drveni kredenac" , 100 }
 };
 enum E_CHEST_OBJECT_DATA
 {
-	cId,
-	cName[29],
+    cId,
+    cName[29],
     cPrice
 }
 new
-	ObjectsChest[][ E_CHEST_OBJECT_DATA ] = {
-		{ 1417  , "Zatvoreni drveni ormar"        ,450 },
+    ObjectsChest[][ E_CHEST_OBJECT_DATA ] = {
+        { 1417  , "Zatvoreni drveni ormar"        ,450 },
         { 1741  , "Niski zatvoreni drveni"        ,150 },
         { 1743  , "Niski ormar sa fiokama"        ,200 },
         { 2088  , "Zatvoreni drveni ormar"        ,400 },
@@ -1335,13 +1342,13 @@ new
 };
 enum E_CLOTHES_OBJECT_DATA
 {
-	cloId,
-	cloName[29],
+    cloId,
+    cloName[29],
     cloPrice
 }
 new
-	ObjectsClothes[ ][ E_CLOTHES_OBJECT_DATA ] = {
-		{ 2390  , "Donji delovi zelene trenerke"  , 50 },
+    ObjectsClothes[ ][ E_CLOTHES_OBJECT_DATA ] = {
+        { 2390  , "Donji delovi zelene trenerke"  , 50 },
         { 2391  , "Niz odece1"                    , 60 },
         { 2394  , "Niz odece2"                    , 60 },
         { 2396  , "Gornji delovi crne trenerke"   , 50 },
@@ -1358,17 +1365,18 @@ new
 };
 enum E_PLANTS_OBJECT_DATA
 {
-	plntId,
-	plntName[38],
+    plntId,
+    plntName[38],
     plntPrice
 }
 new
-	ObjectsPlants[][ E_PLANTS_OBJECT_DATA ] = {
-		{ 638   , "Zbunasta biljka u dugackoj vazi"       , 150},
+    ObjectsPlants[][ E_PLANTS_OBJECT_DATA ] = {
+        { 638   , "Zbunasta biljka u dugackoj vazi"       , 150},
         { 948   , "Cvece u modernoj beloj vazi"           , 50  },
         { 949   , "Cvece u staroj sivoj vazi"             , 40  },
         { 950   , "Cvece u sirokoj staroj sivoj vazi"     , 60  },
         { 2001  , "Palma u rozoj vazi1"                   , 60  },
+        { 1361  , "Zbunasta biljka u betonskoj vazi"      , 250},
         { 2010  , "Palma u rozoj vazi2"                   , 60  },
         { 2011  , "Palma u sivoj vazi"                    , 60  },
         { 2194  , "Niska biljka u narandzastoj vazi1"     , 50  },
@@ -1377,6 +1385,7 @@ new
         { 2241  , "Niska biljka u narandzastoj vazi3"     , 60  },
         { 2244  , "Niska biljka u kockastoj drvenoj vazi" , 60  },
         { 2245  , "Niska biljka u narandzastoj vazi4"     , 60  },
+        { 2811  , "Cvece u keramickoj vazi"               , 70  },
         { 2247  , "Cvece u staklenoj vazi1"               , 40  },
         { 2249  , "Cvece u staklenoj vazi2"               , 40  },
         { 2250  , "Cvece u staklenoj vazi3"               , 40  },
@@ -1389,13 +1398,13 @@ new
 };
 enum E_PAINTINGS_OBJECT_DATA
 {
-	pntId,
-	pntName[30],
+    pntId,
+    pntName[30],
     pntPrice
 }
 new
-	ObjectsPaint[][ E_PAINTINGS_OBJECT_DATA ] = {
-		{ 1736  , "Jelenova glava za zid"     , 600},
+    ObjectsPaint[][ E_PAINTINGS_OBJECT_DATA ] = {
+        { 1736  , "Jelenova glava za zid"     , 600},
         { 2254  , "Zidna slika1"              , 200 },
         { 2255  , "Zidna slika2"              , 250 },
         { 2256  , "Zidna slika3"              , 350 },
@@ -1436,22 +1445,24 @@ new
 
 enum E_FUN_OBJECT_DATA
 {
-	fnId,
-	fnName[30],
+    fnId,
+    fnName[30],
     fnPrice
 }
 new
-	ObjectsFun[][ E_FUN_OBJECT_DATA ] = {
-		{ 1598  , "Lopta za plazu"        , 100  },
+    ObjectsFun[][ E_FUN_OBJECT_DATA ] = {
+        { 1598  , "Lopta za plazu"        , 100  },
         { 1742  , "Velika polica za knjige", 400  },
+        { 2779  , "Aparat za kockanje"     , 800  },
         { 1946  , "Kosarkaska lopta"      , 100  },
         { -2080 , "Studio mikrofon"       , 400 },
         { 2190  , "Kompjuter #1"          , 350 },
         { -2043 , "Kompjuter #2"          , 350 },
         { -2037 , "Laptop"                , 600 },
         { -2059 , "iPad"                  , 500 },
-        { -2033 , "Karte"                 , 10	},
+        { -2033 , "Karte"                 , 10  },
         { 2188  , "Blackjack stol"        , 1000 },
+        { 955  ,  "Sprunk aparat"         , 500 },
         { 2824  , "Razbacane knjige1"     , 50  },
         { 2825  , "Razbacane knjige2"     , 50  },
         { 2826  , "Razbacane knjige3"     , 50  },
@@ -1499,35 +1510,38 @@ new
         { 2812  , "Prljavo sudje"         , 80  },
         { 2673  , "Razbacan Sprunk"       , 100 },
         { 2674  , "Cigare i papir"        , 120 },
-        {-2047 , "Cigarete #1"           , 50  },
-        {-2048 , "Cigarete #2"           , 50  },
-        {2675  , "Razbacani burgeri"     , 125 },
-        {2676  , "Razbacani burgeri #2"  , 130 },
-        {2677  , "Razbacani burgeri #3"  , 150 },
-        {-2034 , "Burger bag"            , 5   },
-        {2670  , "Cigarete i papiri"     , 120 },
-        {19609 , "Bubnjevi"              , 500 },
-        {19612 , "Guitar amp #1"         , 250 },
-        {19613 , "Guitar amp #2"         , 250 },
-        {19614 , "Guitar amp #3"         , 250 },
-        {19615 , "Guitar amp #4"         , 250 },
-        {19616 , "Guitar amp #5"         , 250 },
-        {19317 , "Gitara"                , 300},
-		{-2136 , "iMac"              	   , 300},
-		{-2146 , "Aktovka sa novcima"	   , 400}
+        { -2047 , "Cigarete #1"           , 50  },
+        { -2048 , "Cigarete #2"           , 50  },
+        { 2675  , "Razbacani burgeri"     , 125 },
+        { 2676  , "Razbacani burgeri #2"  , 130 },
+        { 2677  , "Razbacani burgeri #3"  , 150 },
+        { -2034 , "Burger bag"            , 5   },
+        { 2670  , "Cigarete i papiri"     , 120 },
+        { 19617 , "GoldRecord1"           , 100 },
+        { 19609 , "Bubnjevi"              , 500 },
+        { 19612 , "Guitar amp #1"         , 250 },
+        { 19613 , "Guitar amp #2"         , 250 },
+        { 19614 , "Guitar amp #3"         , 250 },
+        { 19615 , "Guitar amp #4"         , 250 },
+        { 19616 , "Guitar amp #5"         , 250 },
+        { 1957  , "Mixing console"        , 200 },
+        { 19317 , "Gitara"                , 300},
+        { -2136 , "iMac"                    , 300},
+        { -2146 , "Aktovka sa novcima"      , 400},
+        { 1255 ,  "Wooden cot"              , 200}
 
 };
 
 enum E_SPORTS_OBJECT_DATA
 {
-	gmId,
-	gmName[30],
+    gmId,
+    gmName[30],
     gmPrice
 }
 
 new
-	ObjectsSports[][ E_SPORTS_OBJECT_DATA ] = {
-		{ 1985  , "Vreca za udaranje"         , 450 },
+    ObjectsSports[][ E_SPORTS_OBJECT_DATA ] = {
+        { 1985  , "Vreca za udaranje"         , 450 },
         { 2627  , "Traka za trcanje"          , 700 },
         { 2628  , "Bench1"                    , 750 },
         { 2629  , "Bench2"                    , 800 },
@@ -1564,13 +1578,13 @@ new
 };
 enum E_LIGHTS_OBJECT_DATA
 {
-	lgtId,
-	lgtName[32],
+    lgtId,
+    lgtName[32],
     lgtPrice
 }
 new
-	ObjectsLights[][ E_LIGHTS_OBJECT_DATA ] = {
-		{ 921   , "Zidno svjetlo"             , 200 },
+    ObjectsLights[][ E_LIGHTS_OBJECT_DATA ] = {
+        { 921   , "Zidno svjetlo"             , 200 },
         { 940   , "Plafnoska svjetla"         , 200 },
         { 1731  , "Malo zidno svjetlo"        , 200 },
         { 1734  , "Malo zidno svjetlo2"       , 200 },
@@ -1593,70 +1607,74 @@ new
         { 2071  , "Sobno svjetlo1"            , 110 },
         { 2070  , "Sobno svjetlo2"            , 58  },
         { 16780 , "UFO Light"                 , 500 },
-        { 19806 , "Barokni luster"            , 450 }
+        { 19806 , "Barokni luster"            , 450 },
+        { 19154 , "Party lamp"                , 250 },
+        { 2176 , "Casino light2"              , 1000 }
+        
 };
 enum E_HEATER_OBJECT_DATA
 {
-	htrId,
-	htrName[30],
-	htrPrice
+    htrId,
+    htrName[30],
+    htrPrice
 }
 new
-	ObjectsHeater[][ E_HEATER_OBJECT_DATA ] = {
-		{ 1738	, "Radijator"		, 700 },
-		{ 1971	, "Plava grijalica"	, 650 }
+    ObjectsHeater[][ E_HEATER_OBJECT_DATA ] = {
+        { 1738  , "Radijator"       , 700 },
+        { 1971  , "Plava grijalica" , 650 }
 };
 enum E_DRINKS_OBJECT_DATA
 {
-	drnksId,
-	drnksName[30],
-	drnksPrice
+    drnksId,
+    drnksName[30],
+    drnksPrice
 }
 new
-	ObjectsDrinks[][ E_DRINKS_OBJECT_DATA ] = {
-		{ 1486  , "Corona"            , 50  },
+    ObjectsDrinks[][ E_DRINKS_OBJECT_DATA ] = {
+        { 1486  , "Corona"            , 50  },
         { 1512  , "Don Perignon wine" , 70  },
         { 1520  , "Jack Daniels"      , 150 },
         { 1543  , "Budlight strawberry", 50  },
         { 1544  , "Budlight lime"     , 50  },
         { 1546  , "Sprunk"            , 40  },
         { 1667  , "Wine glass"        , 60  },
+        { 1545  , "B_OPTIC1"        , 50  },
         { 1668  , "Atlantic vodka"    , 80  },
         { 1669  , "Imperia vodka"     , 100 },
         { 1670  , "Drinking set"      , 200 },
         { 1209  , "Automat za sokove" , 700},
-		{ -2114  , "Pivo 1"            , 50  },
-		{ -2115  , "Pivo 2"            , 50  },
-		{ -2116  , "Pivo 3"            , 50  },
-		{ -2117  , "Pivo 4"            , 50  },
-		{ -2118  , "Gajba Piva 1"      , 50  },
-		{ -2119  , "Gajba Piva 2"      , 50  },
-		{ -2120  , "Gajba Piva 3"      , 50  },
-		{ -2121  , "Gajba Piva 4"      , 50  },
-		{ -2122  , "Flasa soka 1"            , 50  },
-		{ -2123  , "Flasa soka 2"            , 50  },
-		{ -2124  , "Limenka soka 1"            , 50  },
-		{ -2125  , "Limenka soka 2"            , 50  },
-		{ -2126  , "Flasa Vodke 1"            , 50  },
-		{ -2127  , "Flasa Vodke 2"            , 50  },
-		{ -2128  , "Flasa Ruma"            , 50  },
-		{ -2129  , "Sampanjac"            , 50  },
-		{ -2130  , "New English pivo"            , 50  },
-		{ -2131  , "Pivo iz marketa"            , 50  },
-		{ -2132  , "Krigla piva"            , 50  },
-		{ -2133  , "Limunada"            , 50  },
-		{ -2134  , "Casa vina 1"            , 50  },
-		{ -2135  , "Casa vina 2"            , 50  }
+        { -2114  , "Pivo 1"            , 50  },
+        { -2115  , "Pivo 2"            , 50  },
+        { -2116  , "Pivo 3"            , 50  },
+        { -2117  , "Pivo 4"            , 50  },
+        { -2118  , "Gajba Piva 1"      , 50  },
+        { -2119  , "Gajba Piva 2"      , 50  },
+        { -2120  , "Gajba Piva 3"      , 50  },
+        { -2121  , "Gajba Piva 4"      , 50  },
+        { -2122  , "Flasa soka 1"            , 50  },
+        { -2123  , "Flasa soka 2"            , 50  },
+        { -2124  , "Limenka soka 1"            , 50  },
+        { -2125  , "Limenka soka 2"            , 50  },
+        { -2126  , "Flasa Vodke 1"            , 50  },
+        { -2127  , "Flasa Vodke 2"            , 50  },
+        { -2128  , "Flasa Ruma"            , 50  },
+        { -2129  , "Sampanjac"            , 50  },
+        { -2130  , "New English pivo"            , 50  },
+        { -2131  , "Pivo iz marketa"            , 50  },
+        { -2132  , "Krigla piva"            , 50  },
+        { -2133  , "Limunada"            , 50  },
+        { -2134  , "Casa vina 1"            , 50  },
+        { -2135  , "Casa vina 2"            , 50  }
 };
 enum E_MISC_OBJECT_DATA
 {
-	etcId,
-	etcName[30],
-	etcPrice
+    etcId,
+    etcName[30],
+    etcPrice
 }
 new
-	ObjectsRest[][ E_MISC_OBJECT_DATA ] = {
-		{ -2078 , "Kutija sa Jordanicama" , 150  },
+    ObjectsRest[][ E_MISC_OBJECT_DATA ] = {
+        { -2078 , "Kutija sa Jordanicama" , 150  },
         { 1428  , "Male ljestve"          , 50  },
         { 1485  , "Joint"                 , 20  },
         { 3027  , "Cigara"                , 40  },
@@ -1670,6 +1688,9 @@ new
         { 2711  , "Tatoo masinica"        , 85  },
         { 2680  , "Kljucanica"            , 20  },
         { 14693 , "Tatoo stol"            , 500 },
+        { 14693 , "Tatoo stol"            , 500 },
+        { 19273 , "KeypadNonDynamic"      , 200 },
+        { 929   , "Generator"             , 300 },
         { 1481  , "Rostilj"               , 550 },
         { 1208  , "Perilica rublja"       , 800 },
         { 1661  , "Plafonski ventilator"  , 1000},
@@ -1745,14 +1766,14 @@ new
 };
 enum E_DOOR_OBJECTS_DATA
 {
-	doorId,
-	doorName[24],
-	doorPrice,
-	bool:doorCanMove
+    doorId,
+    doorName[24],
+    doorPrice,
+    bool:doorCanMove
 }
 new
-	ObjectsDoor[][ E_DOOR_OBJECTS_DATA ] = {
-		{ 3093  , "Bijela drvena"         , 80    , true  },
+    ObjectsDoor[][ E_DOOR_OBJECTS_DATA ] = {
+        { 3093  , "Bijela drvena"         , 80    , true  },
         { 3089  , "Drvena uredska"        , 150   , true  },
         { 2959  , "Crvena velika"         , 300   , true  },
         { 2970  , "Plava apartmanska"     , 450   , true  },
@@ -1761,7 +1782,8 @@ new
         { 2948  , "Siva izlozna"          , 225   , true  },
         { 2911  , "Bijela drvena"         , 136   , true  },
         { 977   , "Drvena s prozorom"     , 425   , true  },
-        { 1491  , "Drvena s urezima"      , 160   , false },
+        { 1491  , "Drvena s urezima"      , 200   , false },
+        { 1523  , "Bela sa prozorcicem"   , 160   , false },
         { 1492  , "Zelena drvena"         , 225   , false },
         { 1493  , "Crvena s mrezom"       , 260   , true  },
         { 1494  , "Tamno plava drvena"    , 125   , false },
@@ -1786,40 +1808,41 @@ new
 };
 enum E_CURTAINS_OBJECT_DATA
 {
-	crtId,
-	crtName[15],
-	crtPrice
+    crtId,
+    crtName[15],
+    crtPrice
 }
 new
-	ObjectsCurtains[][ E_CURTAINS_OBJECT_DATA ] = {
-		{ 2558	, "Male zavjese"	, 85  },
-		{ 2560  , "Siroke zavjese", 125 },
-		{ 2561	, "Velike zavjese"	, 115 }
+    ObjectsCurtains[][ E_CURTAINS_OBJECT_DATA ] = {
+        { 2558  , "Male zavjese"     , 85  },
+        { 2560  , "Siroke zavjese"   , 125 },
+        { 2561  , "Velike zavjese"   , 115 },
+        { 16732  , "Roletne"         , 200 }
 };
 enum E_WALL_OBJECT_DATA
 {
-	wlId,
-	wlName[18],
-	wlPrice
+    wlId,
+    wlName[18],
+    wlPrice
 }
 new
-	ObjectsWalls[][ E_WALL_OBJECT_DATA ] = {
-		{ 19430	, "Mali zid 2x4"		, 600  },
-		{ 19355	, "Srednji zid 4x4"		, 950  },
-		{ 19449	, "Veliki zid 8x4"		, 1000 },
-		{ 19387	, "Zid za vrata"		, 650  },
-		{ 19403	, "Zid za prozor"		, 625  },
-		{ 19379	, "Pod 10x10"			, 1150 }
+    ObjectsWalls[][ E_WALL_OBJECT_DATA ] = {
+        { 19430 , "Mali zid 2x4"        , 600  },
+        { 19355 , "Srednji zid 4x4"     , 950  },
+        { 19449 , "Veliki zid 8x4"      , 1000 },
+        { 19387 , "Zid za vrata"        , 650  },
+        { 19403 , "Zid za prozor"       , 625  },
+        { 19379 , "Pod 10x10"           , 1150 }
 };
 enum E_ANIMALS_OBJECT_DATA
 {
     amId,
-	amName[34],
+    amName[34],
     amPrice
 }
 new
-	ObjectsAnimals[][ E_ANIMALS_OBJECT_DATA ] = {
-		{ 1599  , "Zuta riba"     , 150   },
+    ObjectsAnimals[][ E_ANIMALS_OBJECT_DATA ] = {
+        { 1599  , "Zuta riba"     , 150   },
         { 1600  , "Plava riba"    , 100   },
         { 1601  , "Plave ribe"    , 300   },
         { 1605  , "Zute ribe"     , 300   },
@@ -1836,33 +1859,35 @@ new
 enum E_WINDOWS_OBJECT_DATA
 {
     wnId,
-	wnName[34],
+    wnName[34],
     wnPrice
 }
 new
-	ObjectsWindows[][ E_WINDOWS_OBJECT_DATA ] = {
-		{ 19466     , "Malo staklo"   , 200 },
+    ObjectsWindows[][ E_WINDOWS_OBJECT_DATA ] = {
+        { 19466     , "Malo staklo"   , 200 },
         { 19325     , "Veliko staklo" , 500 },
         { 1651      , "Srednje staklo", 350 }
 };
 enum E_OFFICE_OBJECTS_DATA
 {
     ofId,
-	ofName[34],
+    ofName[34],
     ofPrice
 }
 new
-	ObjectsOffice[][ E_OFFICE_OBJECTS_DATA ] = {
-		{ 1806  , "Plava stolica" , 150   },
+    ObjectsOffice[][ E_OFFICE_OBJECTS_DATA ] = {
+        { 1806  , "Plava stolica" , 150   },
         { 1998  , "Stol1"         , 800   },
         { 1999  , "Stol2"         , 500   },
         { 2008  , "Stol3"         , 700   },
         { 2009  , "Stol4"         , 900   },
+        { 2202  , "Stampac"       , 500   },
         { 2161  , "Kif kuf police", 150   },
         { 2309  , "Stolac"        , 100   },
         { 9362  , "Cijeli ured"   , 3000 },
         { 16378 , "Cijeli ured1"  , 2500 },
         { 11631 , "Ranch stol"    , 1500  },
+        { 2172  , "OFFICE2_DESK"  , 1500  },
         { 19825 , "Sat"           , 600   },
         { 2007  , "Uredski ormarici", 600   },
         { 19999 , "Moderna stolica", 300   }
@@ -1871,64 +1896,68 @@ new
 enum E_FM_OBJECTS_DATA
 {
     fmId,
-	fmName[34],
+    fmName[34],
     fmPrice
 }
 new
-	FurnitureM[][ E_FM_OBJECTS_DATA ] = {
-		{ 18260 , "Velike kutije" 		, 800   },
-        { 1895  , "Casino"        		, 1300   },
-        { 1978  , "Casino stol"   		, 700   },
-        { 13817 , "Garazna vrata" 		, 700   },
-        { 1826  , "Stol za casino x2" 	, 900   },
-        { 1896  , "Stol za casino x3"	, 1000   },
-        { 2166  , "Kutni stol"			, 700   },
-        { 8572  , "Stepenice"  			, 3000 },
-        { 7073  , "Covjek" 				, 2500 },
-        { 19172 , "Slika1" 				, 600  },
-        { 19173 , "Slika2"           	, 600   },
-        { 19174 , "Slika3"				, 600   },
-        { 19175 , "Slika4"				, 600   },
-        { 1833  , "Slot1"           	, 600   },
-        { 1835  , "Slot2"				, 600   },
+    FurnitureM[][ E_FM_OBJECTS_DATA ] = {
+        { 18260 , "Velike kutije"       , 800   },
+        { 19087 , "Kanap"               , 1000   },
+        { 1895  , "Casino"              , 1300   },
+        { 1978  , "Casino stol"         , 700   },
+        { 2343  , "BARB_CHAIR"          , 400   },
+        { 2986  , "Ventilacija"         , 100   },
+        { 13817 , "Garazna vrata"       , 700   },
+        { 1826  , "Stol za casino x2"   , 900   },
+        { 1085  , "Guma"                , 50   },
+        { 1896  , "Stol za casino x3"   , 1000   },
+        { 2166  , "Kutni stol"          , 700   },
+        { 8572  , "Stepenice"           , 3000 },
+        { 7073  , "Covjek"              , 2500 },
+        { 19172 , "Slika1"              , 600  },
+        { 19173 , "Slika2"              , 600   },
+        { 19174 , "Slika3"              , 600   },
+        { 19175 , "Slika4"              , 600   },
+        { 1833  , "Slot1"               , 600   },
+        { 1835  , "Slot2"               , 600   },
         { 1836  , "Vise slotova"        , 600   },
-        { 14607 , "Ulaz u casino"		, 600   },
-        { 18740 , "Voda1"           	, 600   },
-        { 18720 , "Voda2"				, 600   },
-        { 18744 , "Vode3" 				, 600   },
-        { 18742 , "Voda4"				, 600   },
-        { 18743 , "Vode5"           	, 600   },
+        { 14607 , "Ulaz u casino"       , 600   },
+        { 18740 , "Voda1"               , 600   },
+        { 18720 , "Voda2"               , 600   },
+        { 18744 , "Vode3"               , 600   },
+        { 18742 , "Voda4"               , 600   },
+        { 18743 , "Vode5"               , 600   },
         { 18648 , "Blue Neon"           , 600   },
         { 18649 , "Green Neon"          , 600   },
         { 18651 , "Purple Neon"         , 600   },
-        { 18647 , "Red Neon"           	, 600   },
+        { 18647 , "Red Neon"            , 600   },
         { 18650 , "Yellow Neon"         , 600   },
         { 18658 , "Blue Reflector"      , 900   },
         { 18657 , "Red Reflector"       , 900   },
-        { 19610 , "Mikrofon"     		, 900   },
-        { 19611 , "Stalak za mikrofon"	, 900   },
-        { 2491 , "Stalak za odjecu"    	, 900   },
-        { 2614 , "SAD Flag"    			, 900   },
-        { 2606 , "Few TVs"    			, 2000  },
-        { 1715 , "Uredska stolica"    	, 1000  },
-        { 1886 , "Canon 500D"    		, 1000  },
-        { 1759 , "Fotelja"    			, 1000  },
-        { 2184 , "Office Desk"    		, 2000  },
-        { 1714 , "Kozna fotelja"   		, 1000  },
-        { 2773 , "Fancy ograda"    		, 1000  },
-        { 11245, "US Flag"	    		, 1000  },
-        { 11724, "Kamin"	    		, 1000  }
+        { 19610 , "Mikrofon"            , 900   },
+        { 19611 , "Stalak za mikrofon"  , 900   },
+        { 2491 , "Stalak za odjecu"     , 900   },
+        { 2614 , "SAD Flag"             , 900   },
+        { 2606 , "Few TVs"              , 2000  },
+        { 1715 , "Uredska stolica"      , 1000  },
+        { 1886 , "Canon 500D"           , 1000  },
+        { 1759 , "Fotelja"              , 1000  },
+        { 2184 , "Office Desk"          , 2000  },
+        { 1714 , "Kozna fotelja"        , 1000  },
+        { 2773 , "Fancy ograda"         , 1000  },
+        { 11245, "US Flag"              , 1000  },
+        { 11724, "Kamin"                , 1000  }
 };
 
 enum E_FOOD_OBJECTS_DATA
 {
     foodId,
-	foodName[34],
+    foodName[34],
     foodPrice
 }
 new
-	ObjectsFood[][ E_FOOD_OBJECTS_DATA ] = {
-		{ 2703  , "Hamburger"     , 20    },
+    ObjectsFood[][ E_FOOD_OBJECTS_DATA ] = {
+        { 2703  , "Hamburger"     , 20    },
         { 2768  , "Cluckin' meal" , 20    },
         { 2769  , "Burg Wrap"     , 22    },
         { 2804  , "Meat1"         , 50    },
@@ -2258,11 +2287,14 @@ public OnFurnitureObjectsLoad(houseid)
 		cache_get_value_name_int(i, 	"texture_2"		, HouseInfo[ houseid ][ hFurTxtId ][ i ][ 1 ]);
 		cache_get_value_name_int(i, 	"texture_3"		, HouseInfo[ houseid ][ hFurTxtId ][ i ][ 2 ]);
 		cache_get_value_name_int(i, 	"texture_4"		, HouseInfo[ houseid ][ hFurTxtId ][ i ][ 3 ]);
+		cache_get_value_name_int(i, 	"texture_5"		, HouseInfo[ houseid ][ hFurTxtId ][ i ][ 4 ]);
 		cache_get_value_name_int(i, 	"color_1"		, HouseInfo[ houseid ][ hFurColId ][ i ][ 0 ]);
 		cache_get_value_name_int(i, 	"color_2"		, HouseInfo[ houseid ][ hFurColId ][ i ][ 1 ]);
 		cache_get_value_name_int(i, 	"color_3"		, HouseInfo[ houseid ][ hFurColId ][ i ][ 2 ]);
 		cache_get_value_name_int(i, 	"color_4"		, HouseInfo[ houseid ][ hFurColId ][ i ][ 3 ]);
+		cache_get_value_name_int(i, 	"color_5"		, HouseInfo[ houseid ][ hFurColId ][ i ][ 4 ]);
 	}
+	
 	for( i = 0; i < objectCount; i++)
 	{
 		HouseInfo[ houseid ][ hFurObjectid ][ i ]	= CreateDynamicObject(HouseInfo[ houseid ][ hFurModelid ][ i ], HouseInfo[ houseid ][ hFurPosX ][ i ], HouseInfo[ houseid ][ hFurPosY ][ i ], HouseInfo[ houseid ][ hFurPosZ ][ i ], HouseInfo[ houseid ][ hFurRotX ][ i ], HouseInfo[ houseid ][ hFurRotY ][ i ], HouseInfo[ houseid ][ hFurRotZ ][ i ], HouseInfo[ houseid ][ hVirtualWorld ], HouseInfo[ houseid ][ hInt ], -1, FURNITURE_OBJECT_DRAW_DISTANCE, FURNITURE_OBJECT_DRAW_DISTANCE);
@@ -2270,31 +2302,15 @@ public OnFurnitureObjectsLoad(houseid)
 		new
 			colorid;
 
-		if( HouseInfo[ houseid ][ hFurColId ][ i ][ 0 ] > -1 ) {
-			sscanf(ColorList[ HouseInfo[ houseid ][ hFurColId ][ i ][ 0 ] ][ clRGB ], "h", colorid);
-			SetDynamicObjectMaterial(HouseInfo[ houseid ][ hFurObjectid ][ i ], 0, ObjectTextures[ HouseInfo[ houseid ][ hFurTxtId ][ i ][ 0 ] ][ tModel ], ObjectTextures[ HouseInfo[ houseid ][ hFurTxtId ][ i ][ 0 ] ][ tTXDName ], ObjectTextures[ HouseInfo[ houseid ][ hFurTxtId ][ i ][ 0 ] ][ tName ], colorid);
+		for(new colslot = 0; colslot < 5; colslot++)
+		{
+			if( HouseInfo[ houseid ][ hFurColId ][ i ][ colslot ] > -1 ) {
+				sscanf(ColorList[ HouseInfo[ houseid ][ hFurColId ][ i ][ colslot ] ][ clRGB ], "h", colorid);
+				SetDynamicObjectMaterial(HouseInfo[ houseid ][ hFurObjectid ][ i ], colslot, ObjectTextures[ HouseInfo[ houseid ][ hFurTxtId ][ i ][ colslot ] ][ tModel ], ObjectTextures[ HouseInfo[ houseid ][ hFurTxtId ][ i ][ colslot ] ][ tTXDName ], ObjectTextures[ HouseInfo[ houseid ][ hFurTxtId ][ i ][ colslot ] ][ tName ], colorid);
+			}
+			else 
+				SetDynamicObjectMaterial(HouseInfo[ houseid ][ hFurObjectid ][ i ], colslot, ObjectTextures[ HouseInfo[ houseid ][ hFurTxtId ][ i ][ colslot ] ][ tModel ], ObjectTextures[ HouseInfo[ houseid ][ hFurTxtId ][ i ][ colslot ] ][ tTXDName ], ObjectTextures[ HouseInfo[ houseid ][ hFurTxtId ][ i ][ colslot ] ][ tName ], 0);
 		}
-		else
-			SetDynamicObjectMaterial(HouseInfo[ houseid ][ hFurObjectid ][ i ], 0, ObjectTextures[ HouseInfo[ houseid ][ hFurTxtId ][ i ][ 0 ] ][ tModel ], ObjectTextures[ HouseInfo[ houseid ][ hFurTxtId ][ i ][ 0 ] ][ tTXDName ], ObjectTextures[ HouseInfo[ houseid ][ hFurTxtId ][ i ][ 0 ] ][ tName ], 0);
-
-		if( HouseInfo[ houseid ][ hFurColId ][ i ][ 1 ] > -1 ) {
-			sscanf(ColorList[ HouseInfo[ houseid ][ hFurColId ][ i ][ 1 ] ][ clRGB ], "h", colorid);
-			SetDynamicObjectMaterial(HouseInfo[ houseid ][ hFurObjectid ][ i ], 1, ObjectTextures[ HouseInfo[ houseid ][ hFurTxtId ][ i ][ 1 ] ][ tModel ], ObjectTextures[ HouseInfo[ houseid ][ hFurTxtId ][ i ][ 1 ] ][ tTXDName ], ObjectTextures[ HouseInfo[ houseid ][ hFurTxtId ][ i ][ 1 ] ][ tName ], colorid);
-		}
-		else
-			SetDynamicObjectMaterial(HouseInfo[ houseid ][ hFurObjectid ][ i ], 1, ObjectTextures[ HouseInfo[ houseid ][ hFurTxtId ][ i ][ 1 ] ][ tModel ], ObjectTextures[ HouseInfo[ houseid ][ hFurTxtId ][ i ][ 1 ] ][ tTXDName ], ObjectTextures[ HouseInfo[ houseid ][ hFurTxtId ][ i ][ 1 ] ][ tName ], 0);
-		if( HouseInfo[ houseid ][ hFurColId ][ i ][ 2 ] > -1 ) {
-			sscanf(ColorList[ HouseInfo[ houseid ][ hFurColId ][ i ][ 2 ] ][ clRGB ], "h", colorid);
-			SetDynamicObjectMaterial(HouseInfo[ houseid ][ hFurObjectid ][ i ], 2, ObjectTextures[ HouseInfo[ houseid ][ hFurTxtId ][ i ][ 2 ] ][ tModel ], ObjectTextures[ HouseInfo[ houseid ][ hFurTxtId ][ i ][ 2 ] ][ tTXDName ], ObjectTextures[ HouseInfo[ houseid ][ hFurTxtId ][ i ][ 2 ] ][ tName ], colorid);
-		}
-		else
-			SetDynamicObjectMaterial(HouseInfo[ houseid ][ hFurObjectid ][ i ], 2, ObjectTextures[ HouseInfo[ houseid ][ hFurTxtId ][ i ][ 2 ] ][ tModel ], ObjectTextures[ HouseInfo[ houseid ][ hFurTxtId ][ i ][ 2 ] ][ tTXDName ], ObjectTextures[ HouseInfo[ houseid ][ hFurTxtId ][ i ][ 2 ] ][ tName ], 0);
-		if( HouseInfo[ houseid ][ hFurColId ][ i ][ 3 ] > -1 ) {
-			sscanf(ColorList[ HouseInfo[ houseid ][ hFurColId ][ i ][ 3 ] ][ clRGB ], "h", colorid);
-			SetDynamicObjectMaterial(HouseInfo[ houseid ][ hFurObjectid ][ i ], 3, ObjectTextures[ HouseInfo[ houseid ][ hFurTxtId ][ i ][ 3 ] ][ tModel ], ObjectTextures[ HouseInfo[ houseid ][ hFurTxtId ][ i ][ 3 ] ][ tTXDName ], ObjectTextures[ HouseInfo[ houseid ][ hFurTxtId ][ i ][ 3 ] ][ tName ], colorid);
-		}
-		else
-			SetDynamicObjectMaterial(HouseInfo[ houseid ][ hFurObjectid ][ i ], 3, ObjectTextures[ HouseInfo[ houseid ][ hFurTxtId ][ i ][ 3 ] ][ tModel ], ObjectTextures[ HouseInfo[ houseid ][ hFurTxtId ][ i ][ 3 ] ][ tTXDName ], ObjectTextures[ HouseInfo[ houseid ][ hFurTxtId ][ i ][ 3 ] ][ tName ], 0);
 	}
 	HouseInfo[houseid][hFurLoaded] = true;
 	return 1;
@@ -2344,6 +2360,11 @@ stock ResetHouseFurnitureEnum(houseid)
 		HouseInfo[ houseid ][ hFurRotX ][ index ]		= 0.0;
 		HouseInfo[ houseid ][ hFurRotY ][ index ]		= 0.0;
 		HouseInfo[ houseid ][ hFurRotZ ][ index ]		= 0.0;
+		HouseInfo[ houseid ][ hFurColId ][ index ][ 0 ]	= -1;
+		HouseInfo[ houseid ][ hFurColId ][ index ][ 1 ]	= -1;
+		HouseInfo[ houseid ][ hFurColId ][ index ][ 2 ]	= -1;
+		HouseInfo[ houseid ][ hFurColId ][ index ][ 3 ]	= -1;
+		HouseInfo[ houseid ][ hFurColId ][ index ][ 4 ]	= -1;
 		HouseInfo[ houseid ][ hFurTxtId ][ index ][ 0 ]	= 0;
 		HouseInfo[ houseid ][ hFurTxtId ][ index ][ 1 ]	= 0;
 		HouseInfo[ houseid ][ hFurTxtId ][ index ][ 2 ]	= 0;
@@ -2360,7 +2381,7 @@ stock static GetPlayerFurnitureHouse(playerid)
 	{
 		new
 			house = PlayerEditingHouse[ playerid ];
-		if( IsPlayerInRangeOfPoint( playerid, 150.0, HouseInfo[ house ][ hExitX ], HouseInfo[ house ][ hExitY ], HouseInfo[ house ][ hExitZ ] )
+		if( IsPlayerInRangeOfPoint( playerid, 250.0, HouseInfo[ house ][ hExitX ], HouseInfo[ house ][ hExitY ], HouseInfo[ house ][ hExitZ ] )
 			&& GetPlayerInterior(playerid) == HouseInfo[ house ][ hInt ] && GetPlayerVirtualWorld(playerid) == HouseInfo[ house ][ hVirtualWorld ])
 		{
 			return PlayerEditingHouse[ playerid ];
@@ -2369,7 +2390,7 @@ stock static GetPlayerFurnitureHouse(playerid)
 
 	if( PlayerInfo[ playerid ][ pHouseKey ] != INVALID_HOUSE_ID )
 	{
-		if( IsPlayerInRangeOfPoint( playerid, 150.0, HouseInfo[ PlayerInfo[ playerid ][ pHouseKey ] ][ hExitX ], HouseInfo[ PlayerInfo[ playerid ][ pHouseKey ] ][ hExitY ], HouseInfo[ PlayerInfo[ playerid ][ pHouseKey ] ][ hExitZ ] )
+		if( IsPlayerInRangeOfPoint( playerid, 250.0, HouseInfo[ PlayerInfo[ playerid ][ pHouseKey ] ][ hExitX ], HouseInfo[ PlayerInfo[ playerid ][ pHouseKey ] ][ hExitY ], HouseInfo[ PlayerInfo[ playerid ][ pHouseKey ] ][ hExitZ ] )
 			&& GetPlayerInterior(playerid) == HouseInfo[ PlayerInfo[ playerid ][ pHouseKey ] ][ hInt ] && GetPlayerVirtualWorld(playerid) == HouseInfo[ PlayerInfo[ playerid ][ pHouseKey ] ][ hVirtualWorld ])
 		{
 			return PlayerInfo[ playerid ][ pHouseKey ];
@@ -2731,10 +2752,12 @@ stock static CreateFurnitureObject(playerid, modelid, Float:x, Float:y, Float:z,
 	HouseInfo[ houseid ][ hFurTxtId ][ index ][ 1 ]	= 0;
 	HouseInfo[ houseid ][ hFurTxtId ][ index ][ 2 ]	= 0;
 	HouseInfo[ houseid ][ hFurTxtId ][ index ][ 3 ]	= 0;
+	HouseInfo[ houseid ][ hFurTxtId ][ index ][ 4 ] = 0;
 	HouseInfo[ houseid ][ hFurColId ][ index ][ 0 ]	= -1;
 	HouseInfo[ houseid ][ hFurColId ][ index ][ 1 ]	= -1;
 	HouseInfo[ houseid ][ hFurColId ][ index ][ 2 ]	= -1;
 	HouseInfo[ houseid ][ hFurColId ][ index ][ 3 ]	= -1;
+	HouseInfo[ houseid ][ hFurColId ][ index ][ 4 ] = -1;
 	HouseInfo[houseid][hExists][index] = 1;
 	HouseInfo[houseid][hFurCounter]++;
 
@@ -2752,7 +2775,7 @@ stock static CreateFurnitureObject(playerid, modelid, Float:x, Float:y, Float:z,
 
 	new
 		insertObject[ 512 ];
-	format(insertObject, sizeof(insertObject), "INSERT INTO `furniture`(`houseid`, `modelid`, `door`, `door_z`, `locked_door`, `pos_x`, `pos_y`, `pos_z`, `rot_x`, `rot_y`, `rot_z`, `texture_1`, `texture_2`, `texture_3`, `texture_4`, `color_1`, `color_2`, `color_3`, `color_4`) VALUES ('%d', '%d', '%d', '%f', '%d', '%f', '%f', '%f', '%f', '%f', '%f', '%d', '%d', '%d', '%d', '%d', '%d', '%d', '%d')",
+	format(insertObject, sizeof(insertObject), "INSERT INTO `furniture`(`houseid`, `modelid`, `door`, `door_z`, `locked_door`, `pos_x`, `pos_y`, `pos_z`, `rot_x`, `rot_y`, `rot_z`, `texture_1`, `texture_2`, `texture_3`, `texture_4`, `texture_5`, `color_1`, `color_2`, `color_3`, `color_4`, `color_5`) VALUES ('%d', '%d', '%d', '%f', '%d', '%f', '%f', '%f', '%f', '%f', '%f', '%d', '%d', '%d', '%d', '%d', '%d', '%d', '%d', '%d', '%d')",
 		HouseInfo[houseid][hSQLID],
 		modelid,
 		HouseInfo[ houseid ][ hFurDoor ][ index ],
@@ -2768,10 +2791,12 @@ stock static CreateFurnitureObject(playerid, modelid, Float:x, Float:y, Float:z,
 		HouseInfo[ houseid ][ hFurTxtId ][ index ][ 1 ],
 		HouseInfo[ houseid ][ hFurTxtId ][ index ][ 2 ],
 		HouseInfo[ houseid ][ hFurTxtId ][ index ][ 3 ],
+		HouseInfo[ houseid ][ hFurTxtId ][ index ][ 4 ],
 		HouseInfo[ houseid ][ hFurColId ][ index ][ 0 ],
 		HouseInfo[ houseid ][ hFurColId ][ index ][ 1 ],
 		HouseInfo[ houseid ][ hFurColId ][ index ][ 2 ],
-		HouseInfo[ houseid ][ hFurColId ][ index ][ 3 ]
+		HouseInfo[ houseid ][ hFurColId ][ index ][ 3 ],
+		HouseInfo[ houseid ][ hFurColId ][ index ][ 4 ]
 	);
 	mysql_tquery(g_SQL, insertObject, "OnFurnitureObjectCreates", "ii", houseid, index);
 
@@ -2826,11 +2851,13 @@ stock static CreateFurnitureObject(playerid, modelid, Float:x, Float:y, Float:z,
 		HouseInfo[ houseid ][ hFurTxtId ][ index ][ 1 ]	= 0;
 		HouseInfo[ houseid ][ hFurTxtId ][ index ][ 2 ]	= 0;
 		HouseInfo[ houseid ][ hFurTxtId ][ index ][ 3 ]	= 0;
+		HouseInfo[ houseid ][ hFurTxtId ][ index ][ 4 ] = 0;
 
 		HouseInfo[ houseid ][ hFurColId ][ index ][ 0 ]	= -1;
 		HouseInfo[ houseid ][ hFurColId ][ index ][ 1 ]	= -1;
 		HouseInfo[ houseid ][ hFurColId ][ index ][ 2 ]	= -1;
 		HouseInfo[ houseid ][ hFurColId ][ index ][ 3 ]	= -1;
+		HouseInfo[ houseid ][ hFurColId ][ index ][ 4 ] = -1;
 
 		va_SendClientMessage(playerid, COLOR_RED, "[MySQL ERROR #%d]: Dogodila se pogreska prilikom spremanja objekta (index: %d) u bazu podataka! Vasi novci nisu oduzeti, pokusajte ponovno kasnije!", mysql_errno(), index);
 	}
@@ -2863,36 +2890,28 @@ stock static CopyFurnitureObject(playerid, copyid)
 	HouseInfo[ houseid ][ hFurTxtId ][ index ][ 1 ]		= HouseInfo[ houseid ][ hFurTxtId ][ copyid ][ 1 ];
 	HouseInfo[ houseid ][ hFurTxtId ][ index ][ 2 ]		= HouseInfo[ houseid ][ hFurTxtId ][ copyid ][ 2 ];
 	HouseInfo[ houseid ][ hFurTxtId ][ index ][ 3 ]		= HouseInfo[ houseid ][ hFurTxtId ][ copyid ][ 3 ];
+	HouseInfo[ houseid ][ hFurTxtId ][ index ][ 4 ]		= HouseInfo[ houseid ][ hFurTxtId ][ copyid ][ 4 ];
 	HouseInfo[ houseid ][ hFurColId ][ index ][ 0 ]		= HouseInfo[ houseid ][ hFurColId ][ copyid ][ 0 ];
 	HouseInfo[ houseid ][ hFurColId ][ index ][ 1 ]		= HouseInfo[ houseid ][ hFurColId ][ copyid ][ 1 ];
 	HouseInfo[ houseid ][ hFurColId ][ index ][ 2 ]		= HouseInfo[ houseid ][ hFurColId ][ copyid ][ 2 ];
 	HouseInfo[ houseid ][ hFurColId ][ index ][ 3 ]		= HouseInfo[ houseid ][ hFurColId ][ copyid ][ 3 ];
+	HouseInfo[ houseid ][ hFurColId ][ index ][ 4 ]		= HouseInfo[ houseid ][ hFurColId ][ copyid ][ 4 ];
 
 	HouseInfo[ houseid ][ hFurObjectid ][ index ]	= CreateDynamicObject(HouseInfo[ houseid ][ hFurModelid ][ index ], HouseInfo[ houseid ][ hFurPosX ][ index ], HouseInfo[ houseid ][ hFurPosY ][ index ], HouseInfo[ houseid ][ hFurPosZ ][ index ], HouseInfo[ houseid ][ hFurRotX ][ index ], HouseInfo[ houseid ][ hFurRotY ][ index ], HouseInfo[ houseid ][ hFurRotZ ][ index ], HouseInfo[ houseid ][ hVirtualWorld ], HouseInfo[ houseid ][ hInt ], -1, FURNITURE_OBJECT_DRAW_DISTANCE, FURNITURE_OBJECT_DRAW_DISTANCE);
 
-	new
-		colorid;
-	if( HouseInfo[ houseid ][ hFurColId ][ index ][ 0 ] > -1 ) {
-		sscanf(ColorList[ HouseInfo[ houseid ][ hFurColId ][ index ][ 0 ] ][ clRGB ], "h", colorid);
-		SetDynamicObjectMaterial(HouseInfo[ houseid ][ hFurObjectid ][ index ], 0, ObjectTextures[ HouseInfo[ houseid ][ hFurTxtId ][ index ][ 0 ] ][ tModel ], ObjectTextures[ HouseInfo[ houseid ][ hFurTxtId ][ index ][ 0 ] ][ tTXDName ], ObjectTextures[ HouseInfo[ houseid ][ hFurTxtId ][ index ][ 0 ] ][ tName ], colorid);
+	new colorid;
+	for(new colslot = 0; colslot < 5; colslot++)
+	{
+		if( HouseInfo[ houseid ][ hFurColId ][ index ][ colslot ] > -1 ) {
+			sscanf(ColorList[ HouseInfo[ houseid ][ hFurColId ][ index ][ colslot ] ][ clRGB ], "h", colorid);
+			SetDynamicObjectMaterial(HouseInfo[ houseid ][ hFurObjectid ][ index ], colslot, ObjectTextures[ HouseInfo[ houseid ][ hFurTxtId ][ index ][ colslot ] ][ tModel ], ObjectTextures[ HouseInfo[ houseid ][ hFurTxtId ][ index ][ colslot ] ][ tTXDName ], ObjectTextures[ HouseInfo[ houseid ][ hFurTxtId ][ index ][ colslot ] ][ tName ], colorid);
+		}
+		else  SetDynamicObjectMaterial(HouseInfo[ houseid ][ hFurObjectid ][ index ], colslot, ObjectTextures[ HouseInfo[ houseid ][ hFurTxtId ][ index ][ colslot ] ][ tModel ], ObjectTextures[ HouseInfo[ houseid ][ hFurTxtId ][ index ][ colslot ] ][ tTXDName ], ObjectTextures[ HouseInfo[ houseid ][ hFurTxtId ][ index ][ colslot ] ][ tName ], 0);
 	}
-	if( HouseInfo[ houseid ][ hFurColId ][ index ][ 1 ] > -1 ) {
-		sscanf(ColorList[ HouseInfo[ houseid ][ hFurColId ][ index ][ 1 ] ][ clRGB ], "h", colorid);
-		SetDynamicObjectMaterial(HouseInfo[ houseid ][ hFurObjectid ][ index ], 1, ObjectTextures[ HouseInfo[ houseid ][ hFurTxtId ][ index ][ 1 ] ][ tModel ], ObjectTextures[ HouseInfo[ houseid ][ hFurTxtId ][ index ][ 1 ] ][ tTXDName ], ObjectTextures[ HouseInfo[ houseid ][ hFurTxtId ][ index ][ 1 ] ][ tName ], colorid);
-	}
-	if( HouseInfo[ houseid ][ hFurColId ][ index ][ 2 ] > -1 ) {
-		sscanf(ColorList[ HouseInfo[ houseid ][ hFurColId ][ index ][ 2 ] ][ clRGB ], "h", colorid);
-		SetDynamicObjectMaterial(HouseInfo[ houseid ][ hFurObjectid ][ index ], 2, ObjectTextures[ HouseInfo[ houseid ][ hFurTxtId ][ index ][ 2 ] ][ tModel ], ObjectTextures[ HouseInfo[ houseid ][ hFurTxtId ][ index ][ 2 ] ][ tTXDName ], ObjectTextures[ HouseInfo[ houseid ][ hFurTxtId ][ index ][ 2 ] ][ tName ], colorid);
-	}
-	if( HouseInfo[ houseid ][ hFurColId ][ index ][ 3 ] > -1 ) {
-		sscanf(ColorList[ HouseInfo[ houseid ][ hFurColId ][ index ][ 3 ] ][ clRGB ], "h", colorid);
-		SetDynamicObjectMaterial(HouseInfo[ houseid ][ hFurObjectid ][ index ], 3, ObjectTextures[ HouseInfo[ houseid ][ hFurTxtId ][ index ][ 3 ] ][ tModel ], ObjectTextures[ HouseInfo[ houseid ][ hFurTxtId ][ index ][ 3 ] ][ tTXDName ], ObjectTextures[ HouseInfo[ houseid ][ hFurTxtId ][ index ][ 3 ] ][ tName ], colorid);
-	}
-	SetDynamicObjectMaterial(HouseInfo[ houseid ][ hFurObjectid ][ index ], 3, ObjectTextures[ HouseInfo[ houseid ][ hFurTxtId ][ index ][ 3 ] ][ tModel ], ObjectTextures[ HouseInfo[ houseid ][ hFurTxtId ][ index ][ 3 ] ][ tTXDName ], ObjectTextures[ HouseInfo[ houseid ][ hFurTxtId ][ index ][ 3 ] ][ tName ], 0);
 
 	new
 		insertObject[ 512 ];
-	format(insertObject, sizeof(insertObject), "INSERT INTO `furniture`(`houseid`, `modelid`, `door`, `door_z`, `locked_door`, `pos_x`, `pos_y`, `pos_z`, `rot_x`, `rot_y`, `rot_z`, `texture_1`, `texture_2`, `texture_3`, `texture_4`, `color_1`, `color_2`, `color_3`, `color_4`) VALUES ('%d', '%d', '%d', '%f', '%d', '%f', '%f', '%f', '%f', '%f', '%f', '%d', '%d', '%d', '%d', '%d', '%d', '%d', '%d')",
+	format(insertObject, sizeof(insertObject), "INSERT INTO `furniture`(`houseid`, `modelid`, `door`, `door_z`, `locked_door`, `pos_x`, `pos_y`, `pos_z`, `rot_x`, `rot_y`, `rot_z`, `texture_1`, `texture_2`, `texture_3`, `texture_4`, `texture_5`, `color_1`, `color_2`, `color_3`, `color_4`, `color_5`) VALUES ('%d', '%d', '%d', '%f', '%d', '%f', '%f', '%f', '%f', '%f', '%f', '%d', '%d', '%d', '%d', '%d', '%d', '%d', '%d', '%d', '%d')",
 		HouseInfo[houseid][hSQLID],
 		HouseInfo[ houseid ][ hFurModelid ][ index ],
 		HouseInfo[ houseid ][ hFurDoor ][ index ],
@@ -2908,10 +2927,12 @@ stock static CopyFurnitureObject(playerid, copyid)
 		HouseInfo[ houseid ][ hFurTxtId ][ index ][ 1 ],
 		HouseInfo[ houseid ][ hFurTxtId ][ index ][ 2 ],
 		HouseInfo[ houseid ][ hFurTxtId ][ index ][ 3 ],
+		HouseInfo[ houseid ][ hFurTxtId ][ index ][ 4 ],
 		HouseInfo[ houseid ][ hFurColId ][ index ][ 0 ],
 		HouseInfo[ houseid ][ hFurColId ][ index ][ 1 ],
 		HouseInfo[ houseid ][ hFurColId ][ index ][ 2 ],
-		HouseInfo[ houseid ][ hFurColId ][ index ][ 3 ]
+		HouseInfo[ houseid ][ hFurColId ][ index ][ 3 ],
+		HouseInfo[ houseid ][ hFurColId ][ index ][ 4 ]
 	);
 	mysql_tquery(g_SQL, insertObject, "OnFurnitureObjectCreates", "ii", houseid, index);
 
@@ -2977,17 +2998,14 @@ stock static SetFurnitureObjectPos(playerid, Float:x, Float:y, Float:z, Float:rx
 	);
 	mysql_tquery(g_SQL, editObject, "");
 
-	new
-		slot,
-		colorid;
-
-	if(HouseInfo[ houseid ][ hFurColId ][ index ][ slot ] != -1)
-		sscanf(ColorList[ HouseInfo[ houseid ][ hFurColId ][ index ][ slot ] ][ clRGB ], "h", colorid);
-
-
-	for( new i = 0; i < 5; i++ ) {
-		slot = HouseInfo[ houseid ][ hFurTxtId ][ index ][ i ];
-		SetDynamicObjectMaterial(HouseInfo[ houseid ][ hFurObjectid ][ index ], i, ObjectTextures[ slot ][ tModel ], ObjectTextures[ slot ][ tTXDName ], ObjectTextures[ slot ][ tName ], colorid);
+	new colorid;
+	for(new colslot = 0; colslot < 5; colslot++)
+	{
+		if( HouseInfo[ houseid ][ hFurColId ][ index ][ colslot ] > -1 ) {
+			sscanf(ColorList[ HouseInfo[ houseid ][ hFurColId ][ index ][ colslot ] ][ clRGB ], "h", colorid);
+			SetDynamicObjectMaterial(HouseInfo[ houseid ][ hFurObjectid ][ index ], colslot, ObjectTextures[ HouseInfo[ houseid ][ hFurTxtId ][ index ][ colslot ] ][ tModel ], ObjectTextures[ HouseInfo[ houseid ][ hFurTxtId ][ index ][ colslot ] ][ tTXDName ], ObjectTextures[ HouseInfo[ houseid ][ hFurTxtId ][ index ][ colslot ] ][ tName ], colorid);
+		}
+		else  SetDynamicObjectMaterial(HouseInfo[ houseid ][ hFurObjectid ][ index ], colslot, ObjectTextures[ HouseInfo[ houseid ][ hFurTxtId ][ index ][ colslot ] ][ tModel ], ObjectTextures[ HouseInfo[ houseid ][ hFurTxtId ][ index ][ colslot ] ][ tTXDName ], ObjectTextures[ HouseInfo[ houseid ][ hFurTxtId ][ index ][ colslot ] ][ tName ], 0);
 	}
 
 	Streamer_Update(playerid);
@@ -3015,12 +3033,12 @@ stock static SetFurnitureObjectTexture(playerid, slot, index, slotid)
 	new
 		textObject[ 128 ];
 	format(textObject, 128, "UPDATE furniture SET `texture_%d` = '%d' WHERE sqlid = '%d'",
-		slot + 1,
+		(slot+1),
 		HouseInfo[ houseid ][ hFurTxtId ][ slotid ][ slot ],
 		HouseInfo[ houseid ][ hFurSQL ][ slotid ]
 	);
 	mysql_tquery(g_SQL, textObject, "");
-	va_SendClientMessage(playerid, COLOR_RED, "[ ! ] Uspijesno ste postavili texturu na vas namjestaj.");
+	SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uspjesno ste postavili texturu na vas namjestaj.");
 	return 1;
 }
 
@@ -3092,6 +3110,11 @@ stock static DeleteFurnitureObject(houseid, playerid, index)
 	HouseInfo[ houseid ][ hFurTxtId ][ index ][ 2 ]	= 0;
 	HouseInfo[ houseid ][ hFurTxtId ][ index ][ 3 ]	= 0;
 	HouseInfo[ houseid ][ hFurTxtId ][ index ][ 4 ]	= 0;
+	HouseInfo[ houseid ][ hFurColId ][ index ][ 0 ] = -1;
+	HouseInfo[ houseid ][ hFurColId ][ index ][ 1 ] = -1;
+	HouseInfo[ houseid ][ hFurColId ][ index ][ 2 ] = -1;
+	HouseInfo[ houseid ][ hFurColId ][ index ][ 3 ] = -1;
+	HouseInfo[ houseid ][ hFurColId ][ index ][ 4 ] = -1;
 	
 	HouseInfo[houseid][hFurCounter]--;
 	HouseInfo[houseid][hExists][index] = 0;
@@ -3124,6 +3147,11 @@ stock static DestroyAllFurnitureObjects(playerid, houseid)
 			HouseInfo[ houseid ][ hFurTxtId ][ index ][ 2 ]	= 0;
 			HouseInfo[ houseid ][ hFurTxtId ][ index ][ 3 ]	= 0;
 			HouseInfo[ houseid ][ hFurTxtId ][ index ][ 4 ]	= 0;
+			HouseInfo[ houseid ][ hFurColId ][ index ][ 0 ] = -1;
+			HouseInfo[ houseid ][ hFurColId ][ index ][ 1 ] = -1;
+			HouseInfo[ houseid ][ hFurColId ][ index ][ 2 ] = -1;
+			HouseInfo[ houseid ][ hFurColId ][ index ][ 3 ] = -1;
+			HouseInfo[ houseid ][ hFurColId ][ index ][ 4 ] = -1;
 		}
 	}
 	HouseInfo[ houseid ][ hFurSlots ] = GetFurnitureSlots(playerid, PlayerInfo[playerid][pDonateRank]);
@@ -4089,13 +4117,16 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 				}
 				case 2: {	// Boje
 					new
-						buffer[ 2625 ];
-					for( new i = 0; i < 138; i++ ) {
-						format(buffer, 2625, "%s%s%s\n",
-							buffer,
+						buffer[ 4096 ],
+						motd[ 64 ];
+						
+					for( new i = 0; i < sizeof(ColorList); i++ ) 
+					{
+						format(motd, sizeof(motd), "%s%s\n",
 							ColorList[ i ][ clEmbedCol ],
 							ColorList[ i ][ clName ]
 						);
+						strcat(buffer, motd, 4096);
 					}
 					ShowPlayerDialog(playerid, DIALOG_FURNITURE_COL_LIST, DIALOG_STYLE_LIST, "Furniture - Odabir boja", buffer, "Odaberi", "Odustani");
 				}
@@ -4187,16 +4218,16 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 				return SendErrorMessage(playerid, "Niste u svojoj kuci / nemate dozvolu za postavljanje namjestaja.");
 			new
 				slot = strval(inputtext);
-			if( 0 <= slot <= 4 ) {
+			if( 1 <= slot <= 5 ) {
 				va_ShowPlayerDialog(playerid, DIALOG_FURNITURE_TXTS_SURE, DIALOG_STYLE_MSGBOX, "Furniture - Teksture", "Zelite li staviti odabranu teksturu na objekt u slot %d?", "Da", "Ne", slot);
-				PlayerEditTxtSlot[ playerid ] = slot;
+				PlayerEditTxtSlot[ playerid ] = slot - 1;
 
 				new
 					index = PlayerEditTxtIndex[ playerid ];
 				SetDynamicObjectMaterial(HouseInfo[ houseid ][ hFurObjectid ][ PlayerEditIndex[ playerid ] ], slot, ObjectTextures[ index ][ tModel ], ObjectTextures[ index ][ tTXDName ], ObjectTextures[ index ][ tName ], 0);
 
 			} else
-				ShowPlayerDialog(playerid, DIALOG_FURNITURE_TXTS_SLOT, DIALOG_STYLE_INPUT, "Furniture - Texture Slots", "Unesite slot u koji zelite staviti teksturu "COL_RED"(0-4)", "Unesi", "Odustani");
+				ShowPlayerDialog(playerid, DIALOG_FURNITURE_TXTS_SLOT, DIALOG_STYLE_INPUT, "Furniture - Texture Slots", "Unesite slot u koji zelite staviti teksturu "COL_RED"(1-5)", "Unesi", "Odustani");
 			return 1;
 		}
 		case DIALOG_FURNITURE_TXTS_SURE: {
@@ -4212,16 +4243,21 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 			return 1;
 		}
 		case DIALOG_FURNITURE_COL_SLOT: {
-			if( !response ) {
+			if( !response ) 
+			{
 				new
-					buffer[ 2625 ];
-				for( new i = 0; i < sizeof(ColorList); i++ ) {
-					format(buffer, 2625, "%s%s%s",
-						buffer,
+					buffer[ 4096 ],
+					motd[ 64 ];
+					
+				for( new i = 0; i < sizeof(ColorList); i++ ) 
+				{
+					format(motd, sizeof(motd), "%s%s\n",
 						ColorList[ i ][ clEmbedCol ],
 						ColorList[ i ][ clName ]
 					);
+					strcat(buffer, motd, 4096);
 				}
+				
 				ShowPlayerDialog(playerid, DIALOG_FURNITURE_COL_LIST, DIALOG_STYLE_LIST, "Furniture - Odabir boja", buffer, "Odaberi", "Odustani");
 				return 1;
 			}
@@ -4230,9 +4266,9 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 				return SendErrorMessage(playerid, "Niste u svojoj kuci / nemate dozvolu za postavljanje namjestaja.");
 			new
 				slotid = strval(inputtext);
-			if( 0 <= slotid <= 4 ) {
+			if( 1 <= slotid <= 5 ) {
 				va_ShowPlayerDialog(playerid, DIALOG_FURNITURE_COL_SURE, DIALOG_STYLE_MSGBOX, "Furniture - Boje", "Zelite li staviti odabranu boju u slot %d?", "Da", "Ne", slotid);
-				PlayerEditTxtSlot[ playerid ] = slotid;
+				PlayerEditTxtSlot[ playerid ] = slotid - 1;
 
 				new
 					colorid,
@@ -4241,11 +4277,11 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 				SetDynamicObjectMaterial(HouseInfo[ houseid ][ hFurObjectid ][ PlayerEditIndex[ playerid ] ], slotid, ObjectTextures[ HouseInfo[ houseid ][ hFurTxtId ][ index ][ slotid ] ][ tModel ], ObjectTextures[ HouseInfo[ houseid ][ hFurTxtId ][ index ][ slotid ] ][ tTXDName ], ObjectTextures[ HouseInfo[ houseid ][ hFurTxtId ][ index ][ slotid ] ][ tName ], colorid);
 
 			} else
-				ShowPlayerDialog(playerid, DIALOG_FURNITURE_COL_SLOT, DIALOG_STYLE_INPUT, "Furniture - Color Slots", "Unesite slot u koji zelite staviti odabranu boju (0-4)!", "Unesi", "Odustani");
+				ShowPlayerDialog(playerid, DIALOG_FURNITURE_COL_SLOT, DIALOG_STYLE_INPUT, "Furniture - Color Slots", "Unesite slot u koji zelite staviti odabranu boju (1-5)!", "Unesi", "Odustani");
 			return 1;
 		}
 		case DIALOG_FURNITURE_COL_SURE: {
-			if( !response ) return ShowPlayerDialog(playerid, DIALOG_FURNITURE_COL_SLOT, DIALOG_STYLE_INPUT, "Furniture - Color Slots", "Unesite slot u koji zelite staviti odabranu boju (0-4)!", "Unesi", "Odustani");
+			if( !response ) return ShowPlayerDialog(playerid, DIALOG_FURNITURE_COL_SLOT, DIALOG_STYLE_INPUT, "Furniture - Color Slots", "Unesite slot u koji zelite staviti odabranu boju (1-5)!", "Unesi", "Odustani");
 
 			if( !SetFurnitureObjectColor(playerid, PlayerEditTxtSlot[ playerid ], PlayerEditTxtIndex[ playerid ], PlayerEditIndex[ playerid ]) ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Doslo je do greske. Pokusajte ponovno!");
 			return 1;
@@ -4255,12 +4291,12 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 
 			new
 				slot = strval(inputtext);
-			if( 0 <= slot <= 4 ) {
-				PlayerEditClsIndex[ playerid ] = slot;
+			if( 1 <= slot <= 5 ) {
+				PlayerEditClsIndex[ playerid ] = slot - 1;
 				va_ShowPlayerDialog(playerid, DIALOG_FURNITURE_SLOT_SURE, DIALOG_STYLE_MSGBOX, "Furniture - Brisanje tekstura i boja", "Zelite li obrisati teksture i boje na slotu %d?", "Da", "Ne", slot);
 			}
 			else
-				ShowPlayerDialog(playerid, DIALOG_FURNITURE_SLOT_DELETE, DIALOG_STYLE_INPUT, "Furniture - Brisanje tekstura i boja", "Unesite slot koji zelite ocistiti od boja i tekstura "COL_YELLOW"(0-4)", "Unesi", "Odustani");
+				ShowPlayerDialog(playerid, DIALOG_FURNITURE_SLOT_DELETE, DIALOG_STYLE_INPUT, "Furniture - Brisanje tekstura i boja", "Unesite slot koji zelite ocistiti od boja i tekstura "COL_YELLOW"(1-5)", "Unesi", "Odustani");
 			return 1;
 		}
 		case DIALOG_FURNITURE_SLOT_SURE: {
@@ -4434,7 +4470,7 @@ CMD:bint(playerid, params[])
 	//if( !PlayerInfo[ playerid ][ pAdmin ] ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ovlasteni!");
 	new
 		param[ 6 ];
-	if( sscanf( params, "s[6] ", param ) ) return SendClientMessage(playerid, COLOR_RED, "USAGE: /bint [test/buy/exit]");
+	if( sscanf( params, "s[6] ", param ) ) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /bint [test/buy/exit]");
 	if( !strcmp(param, "test", true ) ) {
 		new
 			houseid = PlayerInfo[ playerid ][ pHouseKey ];
@@ -4475,15 +4511,18 @@ CMD:bint(playerid, params[])
 */
 CMD:furniture(playerid, params[])
 {
+	if(strlen(params) >= 8)
+		return SendClientMessage(playerid, -1, "[ ? ]: /furniture [approve/menu]");
+		
 	new
 		param[ 8 ],
 		furhouse = GetPlayerFurnitureHouse(playerid);
 
 	if( furhouse == INVALID_HOUSE_ID || (  556 < furhouse < 575 ) ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Morate posjedovati kucu/imati dozvolu za namjestanje interijera-");
 	GetHouseFurnitureSlot(playerid, furhouse);
-	if(sscanf(params, "s[8]", param))
+	if(sscanf(params, "s[8] ", param))
 	{
-		SendClientMessage(playerid, COLOR_RED, "USAGE: /furniture [approve/menu]");
+		SendClientMessage(playerid, COLOR_RED, "[ ? ]: /furniture [approve/menu]");
 		va_SendClientMessage(playerid, COLOR_RED, "[ ! ] Trenutno imate %d/%d popunjenih slotova u vasoj kuci.", FreeFurniture_Slot[playerid], GetFurnitureSlots(playerid, PlayerInfo[playerid][pDonateRank]));
 		return (true);
 	}
@@ -4509,7 +4548,7 @@ CMD:furniture(playerid, params[])
 		if( PlayerInfo[ playerid ][ pHouseKey ] == INVALID_HOUSE_ID ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne posjedujete kucu!");
 		new
 			giveplayerid;
-		if( sscanf(params, "s[8]u", param, giveplayerid) ) return SendClientMessage(playerid, COLOR_RED, "USAGE: /furniture approve [dio imena/playerid]");
+		if( sscanf(params, "s[8]u", param, giveplayerid) ) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /furniture approve [dio imena/playerid]");
 		if( giveplayerid == INVALID_PLAYER_ID ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Krivi unos playerida!");
 		if( !ProxDetectorS(8.0, playerid, giveplayerid) ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Taj igrac nije blizu vas!");
 		if( PlayerEditingHouse[ giveplayerid ] == PlayerInfo[ playerid ][ pHouseKey ] ) {
@@ -4580,7 +4619,7 @@ CMD:afurniture(playerid, params[]) { // leo - novo.
 			return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ovlasteni za koristenje ove komande (admin lvl 3+).");
 
 		if(sscanf(params, "s[15]i", action, house_id)) {
-			SendClientMessage(playerid, COLOR_RED, "USAGE: /afurniture reload [house_id].");
+			SendClientMessage(playerid, COLOR_RED, "[ ? ]: /afurniture reload [house_id].");
 			return (true);
 		}
 		ReloadHouseFurniture(house_id);
@@ -4591,7 +4630,7 @@ CMD:afurniture(playerid, params[]) { // leo - novo.
 			return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ovlasteni za koristenje ove komande (admin lvl 4+).");
 
 		if(sscanf(params, "s[15]ii", action, target_id, house_id)) {
-			SendClientMessage(playerid, COLOR_RED, "USAGE: /afurniture checkslots [playerid] [house_id].");
+			SendClientMessage(playerid, COLOR_RED, "[ ? ]: /afurniture checkslots [playerid] [house_id].");
 			return (true);
 		}
 		GetHouseFurnitureSlot(target_id, house_id);
@@ -4602,7 +4641,7 @@ CMD:afurniture(playerid, params[]) { // leo - novo.
 			return SendClientMessage(playerid, COLOR_LIGHTRED, "[ERROR]: Vi ne mozete koristit ovu komandu.");
 
 		if(sscanf(params, "s[15]ii", action, target_id, house_id)) {
-			SendClientMessage(playerid, COLOR_RED, "USAGE: /afurniture setpremium [playerid] [house_id].");
+			SendClientMessage(playerid, COLOR_RED, "[ ? ]: /afurniture setpremium [playerid] [house_id].");
 			return (true);
 		}
 		SetPlayerPremiumFurniture(target_id, house_id);
@@ -4614,7 +4653,7 @@ CMD:afurniture(playerid, params[]) { // leo - novo.
 			return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ovlasteni za koristenje ove komande (admin lvl 1337+).");
 
 		if(sscanf(params, "s[15]i", action, target_id)) {
-			SendClientMessage(playerid, COLOR_RED, "USAGE: /afurniture update [playerid].");
+			SendClientMessage(playerid, COLOR_RED, "[ ? ]: /afurniture update [playerid].");
 			return (true);
 		}
 		SendFormatMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uspjesno ste refreshali furniture slotove igracu %s.", GetName(target_id, true));
@@ -4622,4 +4661,3 @@ CMD:afurniture(playerid, params[]) { // leo - novo.
 	}
 	return (true);
 }
-

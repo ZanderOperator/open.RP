@@ -59,7 +59,7 @@ stock GenerateQuestion(playerid)
 	{
 		SendClientMessage(playerid, COLOR_RED, "[ ! ] Previse puta ste netocno odgovorili na pitanja te ste zbog toga kickani!");
 		SendClientMessage(playerid, COLOR_RED, "Uzitak na nasem serveru ovisi upravo o postivanju pravila i simulaciji pravog zivota.");
-		va_SendClientMessage(playerid, COLOR_RED, "SAVJET: Ukoliko niste uspjeli pohvatati RP pravila naseg servera, posjetite forum.cityofangels-roleplay.com");
+		SendClientMessage(playerid, COLOR_RED, "SAVJET: Ukoliko niste uspjeli pohvatati RP pravila naseg servera, posjetite forum.cityofangels-roleplay.com");
 		KickMessage(playerid);
 		return 1;
 	}
@@ -157,7 +157,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 				{
 					WrongAnswers[playerid]++;
 					wrest = MAX_WRONG_ANSWERS - WrongAnswers[playerid];
-					if(WrongAnswers[playerid] < 3)
+					if(WrongAnswers[playerid] < MAX_WRONG_ANSWERS)
 					{
 						va_SendClientMessage(playerid, COLOR_RED, "Netocan odgovor, imas pravo jos %d puta netocno odgovoriti na ovo pitanje.", wrest);
 						va_SendClientMessage(playerid, COLOR_RED, "Ukoliko %d puta netocno odgovoris, cijeli kviz krece isponova.", MAX_WRONG_ANSWERS);

@@ -907,7 +907,7 @@ CMD:takewood(playerid, params[])
 		    slot;
 
 		if(sscanf(params, "d", slot))
-		    return SendClientMessage(playerid, COLOR_RED, "USAGE: /takewood [slot]");
+		    return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /takewood [slot]");
 		    
 		if(slot <= 0 || slot >= 6)
 		    return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Slot vozila ne moZe biti manji od 1 ni ve�i od 5!");
@@ -969,7 +969,8 @@ CMD:sellwood(playerid, params[])
 	// Placa
 	new money = pWood[playerid] + 200 + (GetPlayerSkillLevel(playerid, 4) * 25);
 	va_SendClientMessage(playerid, COLOR_RED, "[ ! ] Zaradio si $%d, placa ti je sjela na racun.", money);
-	BudgetToPayDayMoney( playerid, money); // novac sjeda na racun iz proracuna
+	BudgetToPlayerBankMoney(playerid, money); // novac sjeda na racun iz proracuna
+	PlayerInfo[playerid][pPayDayMoney] += money;
 	PlayerInfo[playerid][pFreeWorks] -= 5;
 	Bit1_Set( gr_IsWorkingJob, playerid, true );
 	

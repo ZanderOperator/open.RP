@@ -972,7 +972,7 @@ stock SendInfoMessage(playerid, smsgstring[])
 stock SendUsageMessage(playerid, smsgstring[])
 {
 	new msgstring[256];
-	format(msgstring, sizeof(msgstring), "USAGE: /%s", smsgstring);
+	format(msgstring, sizeof(msgstring), "[ ? ]: /%s", smsgstring);
 	return SendClientMessage(playerid, COLOR_RED, msgstring);
 }
 
@@ -1003,23 +1003,33 @@ strtok(const string[], &index)
 stock SendSplitMessage(playerid, color, const final[])
 {
     new len = strlen(final);
-    if(len >= 100)
+    if(len >= EX_SPLITLENGTH)
     {
-		new buffer[EX_SPLITLENGTH+10],	
+		new buffer[EX_SPLITLENGTH+10],
+			colorstring[9] = EOS, colorstart = 0, colorend = 0,	
 			buffer2[128], spacepos = 0, bool:broken = false;
+
 		for(new j = 60; j < len; j++)
 		{
+			if(final[j] == '{')
+				colorstart = j;
+
+			if(final[j] == '}')
+				colorend = j + 1;
+
 			if(final[j] == ' ')
 				spacepos = j;
 
-			if(j >= EX_SPLITLENGTH && spacepos >= 60)
+			if(j >= EX_SPLITLENGTH && spacepos >= 60 && (colorstart == 0 || (colorstart != 0 && colorend > colorstart)))
 			{
 				broken = true;
+				if(colorstart != 0 && colorend != 0)
+					strmid(colorstring, final, colorstart, colorend, sizeof(colorstring));
 				strmid(buffer, final, 0, spacepos);
 				format(buffer, sizeof(buffer), "%s...", buffer);
 				SendClientMessage(playerid, color, buffer);
 				strmid(buffer2, final, spacepos+1, len);
-				format(buffer2, sizeof(buffer2), "...%s", buffer2);
+				format(buffer2, sizeof(buffer2), "%s...%s", colorstring, buffer2);
 				SendClientMessage(playerid, color, buffer2);
 				return 1;
 			}
@@ -1034,23 +1044,33 @@ stock SendSplitMessage(playerid, color, const final[])
 stock SendSplitMessageToAll(color, const final[])
 {
     new len = strlen(final);
-    if(len >= 100)
+    if(len >= EX_SPLITLENGTH)
     {
-		new buffer[EX_SPLITLENGTH+10],	
+		new buffer[EX_SPLITLENGTH+10],
+			colorstring[9] = EOS, colorstart = 0, colorend = 0,	
 			buffer2[128], spacepos = 0, bool:broken=false;
+
 		for(new j = 60; j < len; j++)
 		{
 			if(final[j] == ' ')
 				spacepos = j;
+			
+			if(final[j] == '{')
+				colorstart = j;
+				
+			if(final[j] == '}')
+				colorend = j + 1;
 
-			if(j >= EX_SPLITLENGTH && spacepos >= 60)
+			if(j >= EX_SPLITLENGTH && spacepos >= 60 && (colorstart == 0 || (colorstart != 0 && colorend > colorstart)))
 			{
 				broken = true;
+				if(colorstart != 0 && colorend != 0)
+					strmid(colorstring, final, colorstart, colorend, sizeof(colorstring));
 				strmid(buffer, final, 0, spacepos);
 				format(buffer, sizeof(buffer), "%s...", buffer);
 				SendClientMessageToAll(color, buffer);
 				strmid(buffer2, final, spacepos+1, len);
-				format(buffer2, sizeof(buffer2), "...%s", buffer2);
+				format(buffer2, sizeof(buffer2), "%s...%s", colorstring, buffer2);
 				SendClientMessageToAll(color, buffer2);
 				return 1;
 			}
@@ -1224,7 +1244,7 @@ stock IsValidNick(name[])
 		Underscore;
 	
 	split(name, namesplit, '_');
-	if(strcmp(imedeva, Dev_Name, true)) return 1;
+	if(strcmp(imedeva, DEV_NAME, true)) return 1;
     if (strlen(namesplit[0]) > 1 && strlen(namesplit[1]) > 1)
     {
         // Firstname and Lastname contains more than 1 character + it there are separated with '_' char. Continue...
@@ -1793,7 +1813,7 @@ stock CheckStringForIP(text[])
 
 stock ConvertNameToSQLID(const name[])
 {
-	new sqlid, sqlquery[128];
+	new sqlid = -1, sqlquery[128];
 	mysql_format(g_SQL, sqlquery, sizeof(sqlquery), "SELECT `sqlid` FROM `accounts` WHERE `name` = '%e' LIMIT 0,1", name);
 	
 	new 
@@ -1941,19 +1961,6 @@ stock IsSafeForTextDraw(str[])
 		}
 	}
 	return true;
-}
-
-/*
-	####  ######     ###    ######## 
-	 ##  ##    ##   ## ##      ##    
-	 ##  ##        ##   ##     ##    
-	 ##   ######  ##     ##    ##    
-	 ##        ## #########    ##    
-	 ##  ##    ## ##     ##    ##    
-	####  ######  ##     ##    ##    
-*/
-stock IsAtBank(playerid) {
-	return IsPlayerInRangeOfPoint(playerid, 50.0, 1396.5443,-8.5233,1001.0038);
 }
 
 /*
@@ -2131,112 +2138,4 @@ stock randomString(strDest[], strLen = 10)
 {
     while(strLen--)
         strDest[strLen] = random(2) ? (random(26) + (random(2) ? 'a' : 'A')) : (random(10) + '0');
-}
-
-public OnPlayerPause(playerid)
-{
-	if(SafeSpawned[playerid])
-	{
-		PlayerPaused[playerid] = 1;
-		UpdateNameLabel(playerid, "");
-	}
-	return 1;
-}
-
-hook OnPlayerUpdate(playerid)
-{
-	if(PlayerPaused[playerid])
-	{
-		PlayerPaused[playerid] = 0;
-		UpdateNameLabel(playerid, "");
-	}
-	return 1;
-}
-
-AC_SetPlayerName(playerid, nameplaya[])
-{
-	if(!SetPlayerName(playerid, nameplaya))
-		return 0;
-		
-	format(plyrName[playerid], MAX_PLAYER_NAME, nameplaya);
-	
-	UpdateNameLabel(playerid, plyrName[playerid]);
-	return 1;
-}
-
-#if defined _ALS_SetPlayerName
-    #undef SetPlayerName
-#else
-    #define _ALS_SetPlayerName
-#endif
-#define SetPlayerName AC_SetPlayerName
-
-
-CreateNameLabel(playerid)
-{
-	GetPlayerName(playerid, plyrName[playerid], 24);
-	pNameTag[playerid] = CreateDynamic3DTextLabel(plyrName[playerid], 0xFFFFFFFF, 0.0, 0.0, 0.1, 15.0, playerid, INVALID_VEHICLE_ID, 1, -1, -1, -1, STREAMER_3D_TEXT_LABEL_SD, -1);
-	UpdateNameLabel(playerid, "");
-	return 1;
-}
-
-UpdateNameLabel(playerid, namep[])
-{
-	if(!IsValidDynamic3DTextLabel(pNameTag[playerid]))
-	{
-		CreateNameLabel(playerid);
-		return 0;
-	}
-	new
-		playaname[40],
-		cname[MAX_PLAYER_NAME];
-		
-	if(isnull(namep))
-	{
-		if(isnull(PlayerExName[playerid]))
-			GetPlayerName(playerid, cname, 24);
-		else
-			format(cname, 24, PlayerExName[playerid]);
-	}
-	else
-		format(cname, 24, namep);
-	
-	if(Bit1_Get(gr_MaskUse, playerid))
-	{
-		if(PlayerPaused[playerid])
-			format(playaname, 40, "Maska_%d {F81414}AFK", PlayerInfo[playerid][pMaskID]);
-		else
-			format(playaname, 40, "Maska_%d", PlayerInfo[playerid][pMaskID]);
-	}
-	else
-	{
-		if(PlayerPaused[playerid])
-			format(playaname, 40, "%s (%d) {F81414}AFK", cname, playerid);
-		else
-			format(playaname, 40, "%s (%d)", cname, playerid);
-	}
-	strreplace(playaname, '_', ' ');
-
-	UpdateDynamic3DTextLabelText(pNameTag[playerid], 0xFFFFFFFF, playaname);
-	return 1;
-}
-
-CMD:refreshname(playerid, params[])
-{
-	if(PlayerInfo[playerid][pAdmin] < 1)
-		return 1;
-		
-	new
-		giveplayerid;
-	
-	if(!IsNumeric(params))
-		return 1;
-		
-	giveplayerid = strval(params);
-		
-	UpdateNameLabel(giveplayerid, "");
-	
-	va_SendClientMessage(playerid, -1, "Igracevo ime ID:%d %s", giveplayerid, plyrName[giveplayerid]);
-	va_SendClientMessage(playerid, -1, "Igracov Dynamic3DTextLabel %s", (IsValidDynamic3DTextLabel(pNameTag[giveplayerid])) ? ("je validan") : ("nije validan"));
-	return 1;
 }

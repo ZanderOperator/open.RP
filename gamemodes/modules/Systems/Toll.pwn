@@ -239,7 +239,7 @@ CMD:locktoll(playerid, params[])
 	if(!IsACop(playerid) && !IsASD(playerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate pristup ovoj komandi!");
 	if(sscanf(params, "d", tollid))
 	{
-	    SendClientMessage(playerid, -1, "{AFAFAF}Koristenje: /locktoll [ID naplatne kucice]");
+	    SendClientMessage(playerid, -1, "{AFAFAF}[ ? ]: /locktoll [ID naplatne kucice]");
 	    SendClientMessage(playerid, -1, "Naplatne kucice: {BFC0C2}1) LS-LV Highway | 2) LS-SF Tunnel | 3) LS-SF Airport | 4) LS-LV Bridge");
 	    SendClientMessage(playerid, -1, "{BFC0C2} | 5) LS-LV Optional pass | 6) LS-SF Heavy pass | 7) LS-SF Highway | 8) Lock All | 9) Unlock All");
 	    return 1;
@@ -394,7 +394,7 @@ CMD:atoll(playerid, params[])
  	if (PlayerInfo[playerid][pAdmin] < 1) return SendClientMessage(playerid, COLOR_RED, "Niste ovlasteni za koristenje ove komande!");
 	if(sscanf(params, "d", tollid))
 	{
-	    SendClientMessage(playerid, COLOR_RED, "USAGE: /locktoll [ID naplatne kucice]");
+	    SendClientMessage(playerid, COLOR_RED, "[ ? ]: /locktoll [ID naplatne kucice]");
 	    SendClientMessage(playerid, -1, "Tool ID 1 - Lock all || Toll ID 2 - Unlock all");
 	    return 1;
 	}

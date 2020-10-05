@@ -136,7 +136,7 @@ CMD:fr(playerid, params[])
 	new frString[128], frInput[90];
 	if(!IsPlayerInAnyVehicle(playerid)) return SendErrorMessage(playerid, "Ne nalazite se u vozilu koje posjeduje radio prijemnik spojen na frekvenciju kontrolnog tornja!");
 	if(!IsAPlane(GetVehicleModel(GetPlayerVehicleID(playerid))) && !IsAHelio(GetVehicleModel(GetPlayerVehicleID(playerid)))) return SendErrorMessage(playerid, "Ne nalazite se u vozilu koje posjeduje radio prijemnik spojen na frekvenciju kontrolnog tornja!");
-	if( sscanf( params, "s[90]", frInput ) ) return SendClientMessage(playerid, COLOR_RED, "USAGE: /fr [text]");
+	if( sscanf( params, "s[90]", frInput ) ) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /fr [text]");
 	format(frString, sizeof(frString), "** [AIR] %s: %s **", GetName(playerid, false), frInput);
 	SendFlightMessage(TEAM_BLUE_COLOR, frString);
 	return 1;
@@ -147,8 +147,8 @@ CMD:flight(playerid, params[])
 	new pick[ 16 ];
 	if( sscanf( params, "s[16]  ", pick ) )
 	{
-		if( !IsACop(playerid) && !IsASD(playerid) && !IsAGov(playerid) ) return SendClientMessage(playerid, COLOR_RED, "USAGE: /flight [report/cancel]");
-		SendClientMessage(playerid, COLOR_RED, "USAGE: /flight [report/cancel/view/accept/decline/all]");
+		if( !IsACop(playerid) && !IsASD(playerid) && !IsAGov(playerid) ) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /flight [report/cancel]");
+		SendClientMessage(playerid, COLOR_RED, "[ ? ]: /flight [report/cancel/view/accept/decline/all]");
 		return 1;
 	}
 	if( !strcmp(pick, "report", true) )
@@ -158,7 +158,7 @@ CMD:flight(playerid, params[])
 	    if(FlightInfo[playerid][FlightApprove] == 0) return SendErrorMessage(playerid, "Morate pricekati malo prije prijavljivanja drugog leta!");
 	    if(!IsPlayerInAnyVehicle(playerid)) return SendErrorMessage(playerid, "Ne nalazite se u vozilu koje posjeduje radio prijemnik spojen na frekvenciju kontrolnog tornja!");
 	    if(!IsAPlane(GetVehicleModel(GetPlayerVehicleID(playerid))) && !IsAHelio(GetVehicleModel(GetPlayerVehicleID(playerid)))) return SendErrorMessage(playerid, "Ne nalazite se u vozilu koje posjeduje radio prijemnik spojen na frekvenciju kontrolnog tornja!");
-	    if( sscanf(params, "s[16]s[128]", pick, avOpisStr ) ) return SendClientMessage(playerid, COLOR_RED, "USAGE: /flight report [opis rute i destinacije]");
+	    if( sscanf(params, "s[16]s[128]", pick, avOpisStr ) ) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /flight report [opis rute i destinacije]");
 	    if(strlen(avOpisStr) < 20 || strlen(avOpisStr) > 120) return SendErrorMessage(playerid, "Opis rute i destinacije mora biti izmedju 20 i 120 znakvova!");
 	    FlightInfo[playerid][FlightRequested] = 1;
 		FlightInfo[playerid][FlightVehicle] = GetPlayerVehicleID(playerid);
@@ -185,7 +185,7 @@ CMD:flight(playerid, params[])
 			Float:vhPosX,
 			Float:vhPosY,
 			Float:vhPosZ;
-		if( sscanf(params, "s[16]i", pick, slotid ) ) return SendClientMessage(playerid, COLOR_RED, "USAGE: /flight view [id]");
+		if( sscanf(params, "s[16]i", pick, slotid ) ) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /flight view [id]");
 		if( slotid < 0 && slotid > MAX_AVIATION_INFO ) return va_SendErrorMessage(playerid, "Nevaljan flight ID (0-%d).", MAX_AVIATION_INFO-1 );
 		if(AviationInfo[slotid][avTaken] == 0) return SendErrorMessage(playerid, "Nevaljan flight ID. Ne postoji prijavljen let pod tim ID-om!");
 		new FlightInfoString[512], avVehicleModel[128], avFlightDescription[128], avFDOne[64], avFDTwo[64];
@@ -210,7 +210,7 @@ CMD:flight(playerid, params[])
 			flighttime,
 			tmpString[256],
 			avPickID = -1;
-		if( sscanf(params, "s[16]ii", pick, playvid, flighttime ) ) return SendClientMessage(playerid, COLOR_RED, "USAGE: /flight accept [playerid] [vrijeme do isteka dozvole (minute)");
+		if( sscanf(params, "s[16]ii", pick, playvid, flighttime ) ) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /flight accept [playerid] [vrijeme do isteka dozvole (minute)");
 		if(flighttime < 10 || flighttime > 120) return SendErrorMessage(playerid, "Vrijeme do isteka dozvole za letenje moze biti izmedu 10 i 120 minuta!");
 		if(!IsPlayerConnected(playvid)) return SendErrorMessage(playerid, "Taj igrac nije na serveru!");
 		if(FlightInfo[playvid][FlightRequested] == 0) return SendErrorMessage(playerid, "Taj igrac nije prijavio let!");
@@ -241,7 +241,7 @@ CMD:flight(playerid, params[])
 	    if( PlayerInfo[ playerid ][ pRank ] < 5 ) SendErrorMessage(playerid, "Niste rank 5!");
 		new
 			playvid;
-		if( sscanf(params, "s[16]i", pick, playvid ) ) return SendClientMessage(playerid, COLOR_RED, "USAGE: /flight decline [playerid]");
+		if( sscanf(params, "s[16]i", pick, playvid ) ) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /flight decline [playerid]");
 		if(!IsPlayerConnected(playvid)) return SendErrorMessage(playerid, "Taj igrac nije na serveru!");
 		if(FlightInfo[playvid][FlightRequested] == 0) return SendErrorMessage(playerid, "Taj igrac nije prijavio let!");
 		FlightInfo[playerid][FlightRequested] = 0;
@@ -267,7 +267,7 @@ CMD:flight(playerid, params[])
 	else
 	{
 		if( !IsACop(playerid) && !IsASD(playerid) && !IsAGov(playerid) ) return SendClientMessage( playerid, -1, "KORISTENJE /flight [report]");
-		SendClientMessage(playerid, COLOR_RED, "USAGE: /flight [report/cancel/view/accept/all]");
+		SendClientMessage(playerid, COLOR_RED, "[ ? ]: /flight [report/cancel/view/accept/all]");
 		return 1;
 	}
 	return 1;

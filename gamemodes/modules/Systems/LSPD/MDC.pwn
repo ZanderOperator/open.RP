@@ -1243,7 +1243,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 				new motd[150];
 					
 				format(motd, sizeof(motd), "\t\tLS Telefonica - %s\nBroj mobitela: %d\nModel mobitela: %s\nVlasnik mobitela: %s", ReturnDate(), mobilenumber, GetMobileName(modelid), GetPlayerNameFromSQL(playersql));
-				ShowPlayerDialog(playerid, 0, DIALOG_STYLE_MSGBOX, "MDC - MOBILE", motd, "Zatvori", "");
+				ShowPlayerDialog(playerid, DIALOG_MDC_PHONE_INFO, DIALOG_STYLE_MSGBOX, "MDC - MOBILE", motd, "Zatvori", "");
 			}
 			mysql_tquery_inline(g_SQL, mysqlQuery, using inline OnMobileNumberCheck, "");
 			return 1;	
@@ -1327,7 +1327,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 		}
 		case DIALOG_MDC_DTICKET: {
 			if( !response ) return 1;
-			DeletePlayerTicket(playerid, DeletingTicketID[playerid]);
+			DeletePlayerTicket(playerid, DeletingTicketID[playerid], true);
 			return 1;
 		}
 		case DIALOG_APB_CHECK: {
@@ -1401,7 +1401,7 @@ CMD:apb(playerid, params[])
 	
 		new
 			sqlid;
-		if( sscanf(params, "s[7]i", pick, sqlid ) ) return SendClientMessage( playerid, -1, "KORISTENJE: /apb delete [id]");
+		if( sscanf(params, "s[7]i", pick, sqlid ) ) return SendClientMessage( playerid, -1, "[ ? ]: /apb delete [id]");
 		RemoveAPBInfo(sqlid);
 		va_SendClientMessage(playerid, COLOR_LIGHTBLUE, "[APB] Obrisali ste APB slot %d!", sqlid);
 

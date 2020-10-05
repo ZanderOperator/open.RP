@@ -1169,7 +1169,7 @@ CMD:spraytag(playerid, params[])
 {
 	new pick[8];
 	if(sscanf(params, "s[8] ", pick)) {
-		SendClientMessage(playerid, COLOR_RED, "USAGE: /spraytag [odabir]");
+		SendClientMessage(playerid, COLOR_RED, "[ ? ]: /spraytag [odabir]");
 		SendClientMessage(playerid, -1, "[Odabir]: edit, delete, adelete, author");
 		return 1;
 	}
@@ -1215,7 +1215,7 @@ CMD:graffit(playerid, params[])
 {
 	new pick[9];
 	if(sscanf(params, "s[9] ", pick)) {
-		SendClientMessage(playerid, COLOR_RED, "USAGE: /graffit [odabir] (create)");
+		SendClientMessage(playerid, COLOR_RED, "[ ? ]: /graffit [odabir] (create)");
 		SendClientMessage(playerid, -1, "[Odabir]: create, edit, delete, adelete, author, approve");
 		return 1;
 	}
@@ -1264,7 +1264,7 @@ CMD:graffit(playerid, params[])
 	else if(!strcmp(pick, "approve", true)) {
 		new gplayerid;
 		if(PlayerInfo[playerid][pAdmin] < 3) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ovlasteni za koristenje ove komande!");
-		if(sscanf(params, "s[9]u", pick, gplayerid)) return SendClientMessage(playerid, COLOR_RED, "USAGE: /graffit aprove [playerid/dio imena]");
+		if(sscanf(params, "s[9]u", pick, gplayerid)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /graffit aprove [playerid/dio imena]");
 		if(gplayerid == INVALID_PLAYER_ID) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Krivi playerid!");
 		
 		Bit1_Set(r_GrafApprove, gplayerid, true);

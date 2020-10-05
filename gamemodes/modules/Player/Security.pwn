@@ -352,7 +352,7 @@ CMD:changepass(playerid, params[]) {
 		reversepass[32], finalpassword[128], updquery[256], passnew[32];
 	
 	if( !IsPlayerAdmin(playerid) && PlayerInfo[playerid][pAdmin] < 1338 ) return SendClientMessage(playerid, COLOR_RED, "Niste ovlasteni za koristenje ove komande!");
-	if(sscanf(params, "s[24]s[32]", usernick, passnew)) return SendClientMessage(playerid, COLOR_RED, "USAGE: /changepass [Ime_Prezime] [password].");
+	if(sscanf(params, "s[24]s[32]", usernick, passnew)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /changepass [Ime_Prezime] [password].");
 	
 	// mysql search
 	mysql_format(g_SQL, mysql_buffer, sizeof(mysql_buffer), "SELECT sqlid FROM `accounts` WHERE `name` = '%e' LIMIT 0,1", usernick);

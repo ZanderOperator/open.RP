@@ -234,7 +234,8 @@ public OnPlayerMowing(playerid)
 					// Placa
 					new money = (PlayerMowingMeters[ playerid ] * 3) + (GetPlayerSkillLevel(playerid, 4) * 25);
 					va_SendClientMessage(playerid, COLOR_RED, "[ ! ] Zaradio si $%d, placa ti je sjela na racun.", money);
-					BudgetToPayDayMoney(playerid, money);  // dobiva novac na knjizicu iz proracuna
+					BudgetToPlayerBankMoney(playerid, money);  // dobiva novac na knjizicu iz proracuna
+					PlayerInfo[playerid][pPayDayMoney] += money;
 					PlayerInfo[playerid][pFreeWorks] -= 5;
 					
 					UpgradePlayerSkill(playerid,4);
@@ -303,7 +304,8 @@ CMD:mow(playerid, params[])
 		new money = ( PlayerMowingMeters[ playerid ] * 3 ) + (GetPlayerSkillLevel(playerid,4) * 25);
 		va_SendClientMessage(playerid, COLOR_RED, "[ ! ] Zaradio si $%d, placa ti je sjela na racun.", money);
 		
-		BudgetToPayDayMoney(playerid, money); // dobiva novac na knjizicu iz proracuna
+		BudgetToPlayerBankMoney(playerid, money); // dobiva novac na knjizicu iz proracuna
+		PlayerInfo[playerid][pPayDayMoney] += money;
 		PlayerInfo[playerid][pFreeWorks] 	-= 5;
 		UpgradePlayerSkill(playerid,4);
 		// Area

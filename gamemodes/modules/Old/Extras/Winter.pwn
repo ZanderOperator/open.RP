@@ -1646,7 +1646,7 @@ CMD:snow_off(playerid, params[])
 {
 	if( PlayerInfo[playerid][pWish] != 0 ) return SendClientMessage(playerid,COLOR_RED, "Vec ste zazeljeli zelju!");
 	if(isnull(params))
-		return SendClientMessage(playerid, COLOR_RED, "USAGE: /wish [zelja]");
+		return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /wish [zelja]");
 		
 	new insertQuery[ 256 ], string[128];
 	format(insertQuery, sizeof(insertQuery), "INSERT INTO wish (playerid, wish) VALUES ('%d', '%e')",

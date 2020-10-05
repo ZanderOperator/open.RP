@@ -593,7 +593,7 @@ CMD:machine(playerid, params[])
 		param[10];
 	if(sscanf(params, "s[10]", param))
 	{	
-		SendClientMessage(playerid, COLOR_RED, "USAGE: /machine [pick]");
+		SendClientMessage(playerid, COLOR_RED, "[ ? ]: /machine [pick]");
 		SendClientMessage(playerid, COLOR_ORANGE, "PICK(admin): edit, remove, check");
 		SendClientMessage(playerid, COLOR_GREY, "PICK: refill, repair, steal");
 		return 1;
@@ -715,7 +715,7 @@ CMD:acreatemachine(playerid, params[])
 		amount,
 		type;
 	if(sscanf(params,"iii", destroyed, amount, type)){
-		SendClientMessage(playerid, COLOR_RED, "USAGE: /acreatemachine [destroyed] [amount] [type]");
+		SendClientMessage(playerid, COLOR_RED, "[ ? ]: /acreatemachine [destroyed] [amount] [type]");
 		SendClientMessage(playerid, COLOR_GREY,"Type: 0  - SPRUNK");
 		SendClientMessage(playerid, COLOR_GREY,"Type: 1  - SNACK");
 		SendClientMessage(playerid, COLOR_GREY,"Type: 2  - SODA");
@@ -753,7 +753,7 @@ CMD:gotomachine(playerid, params[])
 	if(PlayerInfo[playerid][pAdmin] < 3) return SendClientMessage(playerid,COLOR_RED, "Niste ovlasteni za koristenje ove komande!");
 	new
 		slot;
-	if(sscanf(params,"i",slot)) return SendClientMessage(playerid, COLOR_RED, "USAGE: /gotomachine [id]");
+	if(sscanf(params,"i",slot)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /gotomachine [id]");
 	if(slot < 0 || slot > 100) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nevazeci slot sprunk masine.");
 	if(SprunkInfo[slot][spID] == 0) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Taj slot nema sprunk masinu.");
 	SetPlayerPos(playerid, SprunkInfo[slot][spPos][0], SprunkInfo[slot][spPos][1]+1, SprunkInfo[slot][spPos][2]+0.2 );

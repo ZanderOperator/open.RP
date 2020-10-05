@@ -240,7 +240,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 			);
 			LogITools(log); 
 			// -------------------------------------
-			stamp2datetime(wotime, date[0], date[1] ,date[2], date[3], date[4], date[5], 2);
+			stamp2datetime(wotime, date[0], date[1] ,date[2], date[3], date[4], date[5]);
 			SendClientMessage(playerid, COLOR_RED, "**Nepoznat** (govornica): Paket poslan **Hangup**!");
 			return 1;
 		}
@@ -263,7 +263,7 @@ CMD:weapons(playerid, params[])
 		pick[ 12 ];
 	if( PlayerInfo[ playerid ][ pJob ] != DEALER_ID || !PlayerInfo[playerid][pMember] ) return SendClientMessage( playerid, COLOR_RED, "Niste Gun Dealer ili u skriptanoj organizaciji!");
 	if( sscanf( params, "s[12] ", pick ) ) {
-		SendClientMessage(playerid, COLOR_RED, "USAGE:  /weapons [odabir]");
+		SendClientMessage(playerid, COLOR_RED, "[ ? ]:  /weapons [odabir]");
 		SendClientMessage( playerid, COLOR_GREY, "[ODABIR]: order - view - assembly");
 		return 1;
 	}
@@ -290,7 +290,7 @@ CMD:weapons(playerid, params[])
 			ammo;
 		if (sscanf(params, "s[12]ii", pick, slotid, ammo))
 		{
-			SendClientMessage(playerid, COLOR_RED, "USAGE: /weapons assembly [ID] [ammo]");
+			SendClientMessage(playerid, COLOR_RED, "[ ? ]: /weapons assembly [ID] [ammo]");
 			SendClientMessage(playerid, COLOR_RED, "[ ! ] Koristite /weapons view da vidite ID kutije!");
 			return 1;
 		}
@@ -334,7 +334,7 @@ CMD:worders(playerid, params[])
 	new pick[ 12 ];
 	if( PlayerInfo[ playerid ][ pAdmin ] < 4 ) return SendClientMessage( playerid, COLOR_RED, "Nemate ovlasti!");
 	if( sscanf( params, "s[12] ", pick ) ) {
-		SendClientMessage(playerid, COLOR_RED, "USAGE:  /weapons [odabir]");
+		SendClientMessage(playerid, COLOR_RED, "[ ? ]:  /weapons [odabir]");
 		SendClientMessage( playerid, COLOR_GREY, "[ODABIR]: list - delete");
 		return 1;
 	}
@@ -343,7 +343,7 @@ CMD:worders(playerid, params[])
 		new date[6];
 		SendClientMessage( playerid, COLOR_GREEN, "---------------Popis narucenih paketa oruzja ---------------");
 		foreach (new i : ITools) {
-			stamp2datetime(PlayerITInfo[i][itdTime], date[0], date[1] ,date[2], date[3], date[4], date[5], 2);
+			stamp2datetime(PlayerITInfo[i][itdTime], date[0], date[1] ,date[2], date[3], date[4], date[5]);
 			va_SendClientMessage(playerid, COLOR_WHITE, "ID[%d] SQLID igraca: %d / Oruzje: %s ( %d ) / ETA: %02d/%02d/%02d %02d:%02d",
 				i,
 				PlayerITInfo[ i ][ itdPlayerSQLID ],
@@ -362,7 +362,7 @@ CMD:worders(playerid, params[])
 		new slotid;
 		if (sscanf(params, "s[12]i", pick, slotid))
 		{
-			SendClientMessage(playerid, COLOR_RED, "USAGE: /weapons delete [ID]");
+			SendClientMessage(playerid, COLOR_RED, "[ ? ]: /weapons delete [ID]");
 			return 1;
 		}
 		if (1 > slotid > 10) return va_SendClientMessage( playerid, COLOR_RED, "ID je od 0 - 10", PlayerITInfo[slotid][cWeaponAmmo]);

@@ -74,7 +74,7 @@ CMD:spawnactor(playerid, params[])
 {
  	if (PlayerInfo[playerid][pAdmin] < 1337) return SendClientMessage(playerid, COLOR_RED, "Niste ovlasteni za koristenje ove komande!");
 	new Float:Pos[3],skinid,invulnerability,Float:Angle;
-    if(sscanf(params,"il",skinid,invulnerability)) return SendClientMessage(playerid,COLOR_RED, "USAGE: /spawnactor [skinid] [[ ! ] Ranjivost (0: DISABLED | 1: ENABLED)]");
+    if(sscanf(params,"il",skinid,invulnerability)) return SendClientMessage(playerid,COLOR_RED, "[ ? ]: /spawnactor [skinid] [[ ! ] Ranjivost (0: DISABLED | 1: ENABLED)]");
     if(invulnerability != 1 && invulnerability != 0) return SendClientMessage(playerid,COLOR_RED,"[ ! ] Ranjivost (0: DISABLED | 1: ENABLED)");
     GetPlayerPos(playerid,Pos[0],Pos[1],Pos[2]);
     GetPlayerFacingAngle(playerid, Angle);
@@ -120,7 +120,7 @@ CMD:removeactor(playerid, params[])
 {
 	if (PlayerInfo[playerid][pAdmin] < 1337) return SendClientMessage(playerid, COLOR_RED, "Niste ovlasteni za koristenje ove komande!");
 	new actorid,str[256];
-    if(sscanf(params,"i",actorid)) return SendClientMessage(playerid,COLOR_RED, "USAGE: /removeactor [actor id]");
+    if(sscanf(params,"i",actorid)) return SendClientMessage(playerid,COLOR_RED, "[ ? ]: /removeactor [actor id]");
     format(str,sizeof(str),"[ ! ] Actor %d je obrisan.",actorid);
     if(IsValidActor(actorid))
     {
@@ -150,7 +150,7 @@ CMD:gotoactor(playerid, params[])
 {
 	if (PlayerInfo[playerid][pAdmin] < 1337) return SendClientMessage(playerid, COLOR_RED, "Niste ovlasteni za koristenje ove komande!");
     new Float:Pos[3],actorid;
-    if(sscanf(params,"i",actorid)) return SendClientMessage(playerid,COLOR_RED,"USAGE: /gotoactor [actor id]");
+    if(sscanf(params,"i",actorid)) return SendClientMessage(playerid,COLOR_RED,"[ ? ]: /gotoactor [actor id]");
     if(IsValidActor(actorid))
 	{
 		GetActorPos(actorid,Pos[0],Pos[1],Pos[2]);
@@ -185,7 +185,7 @@ CMD:setactoranim(playerid, params[])
 {
 	if (PlayerInfo[playerid][pAdmin] < 1337) return SendClientMessage(playerid, COLOR_RED, "Niste ovlasteni za koristenje ove komande!");
 	new animation[256],actorid;
-	if(sscanf(params,"is[100]",actorid,animation)) return SendClientMessage(playerid,COLOR_RED,"USAGE:/setactoranim [actor id] [animation]");
+	if(sscanf(params,"is[100]",actorid,animation)) return SendClientMessage(playerid,COLOR_RED,"[ ? ]:/setactoranim [actor id] [animation]");
 	if(IsValidActor(actorid))
 	{
 		if(!strcmp(animation, "injured"))
@@ -286,7 +286,7 @@ CMD:cancelactoranim(playerid, params[])
 {
 	if (PlayerInfo[playerid][pAdmin] < 1337) return SendClientMessage(playerid, COLOR_RED, "Niste ovlasteni za koristenje ove komande!");
 	new actorid;
-	if(sscanf(params,"i",actorid)) return SendClientMessage(playerid,COLOR_RED,"USAGE: /cancelactoranim [actor id]");
+	if(sscanf(params,"i",actorid)) return SendClientMessage(playerid,COLOR_RED,"[ ? ]: /cancelactoranim [actor id]");
 	if(IsValidActor(actorid))
 	{
 		ClearActorAnimations(actorid);
@@ -311,7 +311,7 @@ CMD:getactor(playerid, params[])
 {
 	if (PlayerInfo[playerid][pAdmin] < 1337) return SendClientMessage(playerid, COLOR_RED, "Niste ovlasteni za koristenje ove komande!");
 	new actorid,str[256],Float:pPos[3],Float:aPos[3],Float:newPos[3];
-	if(sscanf(params,"i",actorid)) return SendClientMessage(playerid,COLOR_RED,"USAGE: /getactor [actor id]");
+	if(sscanf(params,"i",actorid)) return SendClientMessage(playerid,COLOR_RED,"[ ? ]: /getactor [actor id]");
 	if(IsValidActor(actorid))
 	{
 	    ClearLabel(actorid);
@@ -366,7 +366,7 @@ CMD:updateactor(playerid,params[])
 {
     if (PlayerInfo[playerid][pAdmin] < 1337) return SendClientMessage(playerid, COLOR_RED, "Niste ovlasteni za koristenje ove komande!");
     new actorid,skinid,invulnerability,Float:Pos[3],Float:Angle,str2[256];
-    if(sscanf(params,"iil",actorid,skinid,invulnerability)) return SendClientMessage(playerid,COLOR_RED,"[ ! ] USAGE: /updateactor [actor id] [skin id] [ranjivost]");
+    if(sscanf(params,"iil",actorid,skinid,invulnerability)) return SendClientMessage(playerid,COLOR_RED,"[ ! ] [ ? ]: /updateactor [actor id] [skin id] [ranjivost]");
     if(!IsValidActor(actorid)) return SendClientMessage(playerid,COLOR_RED,"Pogre�an actor ID");
     if(invulnerability > 1 || invulnerability < 0) return SendClientMessage(playerid,COLOR_RED,"[ ! ] Ranjivost (0: DISABLED / 1: ENABLED)");
     GetPlayerFacingAngle(playerid, Angle);

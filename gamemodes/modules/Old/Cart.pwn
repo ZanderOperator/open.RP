@@ -162,7 +162,7 @@ CMD:callkarters(playerid, params[])
 	new
         giveplayerid;
     if(sscanf(params, "u", giveplayerid))
-		return SendClientMessage(playerid, COLOR_RED, "USAGE: /callkarters [ime/playerid]");
+		return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /callkarters [ime/playerid]");
 
 	if(giveplayerid == INVALID_PLAYER_ID)
 		return SendClientMessage(playerid, COLOR_RED, "Krivi unos playerida!");

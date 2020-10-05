@@ -340,9 +340,13 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 	return (true);
 }
 //=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~ (commands)
-CMD:gps(playerid, params[]) {
-	if(Bit1_Get(gr_IsWorkingJob, playerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne mozete koristiti GPS dok radite!");
-	if(Bit1_Get(gps_Activated, playerid)) {
+CMD:gps(playerid, params[]) 
+{
+	if(Bit1_Get(gr_IsWorkingJob, playerid)) 
+		return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne mozete koristiti GPS dok radite!");
+	
+	if(Bit1_Get(gps_Activated, playerid)) 
+	{
 		SendClientMessage(playerid, COLOR_RED, "[ ! ] Deaktivirali ste stari GPS.");
 		Bit1_Set(gps_Activated, playerid, false);
 		DisablePlayerCheckpoint(playerid);

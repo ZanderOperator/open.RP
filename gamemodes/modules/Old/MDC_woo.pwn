@@ -1021,7 +1021,7 @@ CMD:apb(playerid, params[])
 	
 		new
 			sqlid;
-		if( sscanf(params, "s[7]i", pick, sqlid ) ) return SendClientMessage( playerid, -1, "KORISTENJE: /apb delete [id]" );
+		if( sscanf(params, "s[7]i", pick, sqlid ) ) return SendClientMessage( playerid, -1, "[ ? ]: /apb delete [id]" );
 		RemoveAPBInfo(sqlid);
 		va_SendClientMessage(playerid, COLOR_LIGHTBLUE, "[APB] Obrisali ste APB slot %d!", sqlid);
 

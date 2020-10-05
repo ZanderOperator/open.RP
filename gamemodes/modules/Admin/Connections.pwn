@@ -99,7 +99,7 @@ CMD:admactivity(playerid, params[])
 {
 	new
 		giveplayerid;
-	if( sscanf( params, "u", giveplayerid ) ) return SendClientMessage(playerid, COLOR_RED, "USAGE: /admactivity [dio imena/playerid]");
+	if( sscanf( params, "u", giveplayerid ) ) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /admactivity [dio imena/playerid]");
 	GetAdminConnectionTime(playerid, giveplayerid);
 	return 1;
 }
@@ -107,7 +107,7 @@ CMD:admactivityex(playerid, params[])
 {
 	new
 		sqlid;
-	if( sscanf( params, "i", sqlid ) ) return SendClientMessage(playerid, COLOR_RED, "USAGE: /admactivityex [sqlid]");
+	if( sscanf( params, "i", sqlid ) ) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /admactivityex [sqlid]");
 	GetAdminConnectionTimeEx(playerid, sqlid);
 	return 1;
 }

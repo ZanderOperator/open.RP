@@ -185,7 +185,7 @@ CMD:callboaters(playerid, params[])
 	if( PlayerInfo[ playerid ][ pAdmin ] < 2 ) return SendClientMessage(playerid, COLOR_RED, "Niste ovlasteni!");
 	new
 		giveplayerid;
-	if( sscanf( params, "u", giveplayerid ) ) return SendClientMessage(playerid, COLOR_RED, "USAGE: /callboaters [dio imena/playerid]");	
+	if( sscanf( params, "u", giveplayerid ) ) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /callboaters [dio imena/playerid]");	
 	if( giveplayerid == INVALID_PLAYER_ID ) return SendClientMessage(playerid, COLOR_RED, "Krivi unos playerida!");
     if( RaceBoatCP[giveplayerid] != 0 ) return SendClientMessage(playerid, COLOR_RED, "Igrac se vec trka!");
 	

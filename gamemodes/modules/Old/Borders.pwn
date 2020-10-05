@@ -70,7 +70,7 @@ CMD:passport(playerid, params[])
 	if(sscanf(params,"s[5]", pick))
 	{	
 		SendClientMessage(playerid, COLOR_WHITE, "|__________________ PASSPORT __________________|");
-		SendClientMessage(playerid, COLOR_GREY, "KORISTENJE: /passport [opcija]");
+		SendClientMessage(playerid, COLOR_GREY, "[ ? ]: /passport [opcija]");
 		SendClientMessage(playerid, COLOR_GREY, "OPCIJA: show, get");
 		SendClientMessage(playerid, COLOR_WHITE, "|_______________________________________________|");
 		

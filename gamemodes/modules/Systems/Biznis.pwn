@@ -617,6 +617,45 @@ stock DestroyBizzInfoTD(playerid)
 	return 1;
 }
 
+stock BuyBiznis(playerid, bool:credit_activated = false)
+{
+	new biznis = buyBizID[playerid];
+
+	PlayerInfo[ playerid ][ pBizzKey ] 	= biznis;
+	//BizzInfo[ biznis ][ bTill ] 		= 0;
+	BizzInfo[ biznis ][ bOwnerID ]		= PlayerInfo[ playerid ][ pSQLID ];
+	PlayerPlayTrackSound(playerid);
+	
+	// Money
+	new price = BizzInfo[ biznis ][ bBuyPrice ];
+	if(credit_activated)
+		price -= CreditInfo[playerid][cAmount];
+	PlayerToBudgetMoney(playerid, price); 
+	
+	// SQL
+	new
+		buybizQuery[ 158 ];
+	format( buybizQuery, sizeof(buybizQuery), "UPDATE `bizzes` SET `ownerid` = '%d', `till` = '%d' WHERE `id` = '%d'",
+		PlayerInfo[ playerid ][ pSQLID ],
+		BizzInfo[ biznis ][ bTill ],
+		BizzInfo[ biznis ][bSQLID]
+	);
+	mysql_tquery( g_SQL, buybizQuery, "", "" );
+
+	// Log
+	new log[128];
+	format(log, sizeof(log), "%s je kupio biznis %d($%d) (%s).",
+		GetName(playerid, false),
+		biznis,
+		BizzInfo[ biznis ][bBuyPrice],
+		GetPlayerIP(playerid)
+	);
+	LogBuyBiznis(log);
+
+	SendClientMessage( playerid, COLOR_RED, "[ ! ]  Kupili ste biznis, koristite /help za vise informacija!" );
+	return 1;
+}
+
 /*
 	d8888b. db    db  .o88b.  .d8b.  d8b   db
 	88  `8D 88    88 d8P  Y8 d8' `8b 888o  88
@@ -3055,7 +3094,8 @@ CMD:createvip(playerid, params[])
 		pick,
 		biz = Bit16_Get( gr_PlayerInBiznis, playerid );
 	if( PlayerInfo[ playerid ][ pAdmin ] < 1337 ) return SendClientMessage( playerid, COLOR_RED, "Niste ovlasteni za koristenje ove komande!" );
-	if( sscanf( params, "i", pick ) ) return SendClientMessage( playerid, -1, "KORISTENJE: /createvip [0-9] (0 za micanje sobe)" );
+	if( biz == INVALID_BIZNIS_ID) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne nalazite se unutar biznisa!");
+	if( sscanf( params, "i", pick ) ) return SendClientMessage( playerid, -1, "[ ? ]: /createvip [0-9] (0 za micanje sobe)" );
 
 	new
 		Float:X, Float:Y,Float:Z;
@@ -3327,7 +3367,9 @@ CMD:createvip(playerid, params[])
 CMD:setfuelprice(playerid, params[]){
 	new biz, fuelprice;
  	if(PlayerInfo[playerid][pAdmin] < 3) return SendClientMessage(playerid, COLOR_RED, "GRESKA: Niste ovlasteni za koristenje ove komande!");
-    if(sscanf(params, "ii", biz, fuelprice)) return SendClientMessage(playerid, COLOR_RED, "USAGE: /setfuelprice [biznisid][naftaprice]");
+    if(sscanf(params, "ii", biz, fuelprice)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /setfuelprice [biznisid][naftaprice]");
+	if(!Iter_Contains(Bizzes, biz)) return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "Biznis sa ID-em %d ne postoji na serveru!", biz);
+	if(BizzInfo[biz][bType] != BIZZ_TYPE_GASSTATION) return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "Biznis %s[ID %d] nije benzinska postaja!", BizzInfo[biz][bMessage], biz);
     if(fuelprice < 1 || fuelprice > 10) return SendClientMessage(playerid, COLOR_RED, "Krivi odabir (1-10)!");
 
     va_SendClientMessage(playerid, COLOR_RED, "[ ! ] Uspjesno ste cijenu nafte na - "COL_WHITE"%i"COL_YELLOW".", fuelprice);
@@ -3343,8 +3385,9 @@ CMD:bizint(playerid, params[])
 {
 	new pick, biz;
     if(PlayerInfo[playerid][pAdmin] < 1338) return SendClientMessage(playerid, COLOR_RED, "  GRESKA: Niste ovlasteni za koristenje ove komande!");
-    if(sscanf(params, "ii", biz, pick)) return SendClientMessage(playerid, COLOR_WHITE, "KORISTENJE: /bizint [biznisid][pick] (0 - brisanje)");
+    if(sscanf(params, "ii", biz, pick)) return SendClientMessage(playerid, COLOR_WHITE, "[ ? ]: /bizint [biznisid][pick] (0 - brisanje)");
     if(pick < 0 || pick > 37) return SendClientMessage(playerid, COLOR_RED, "Krivi odabir (1-37)!");
+	if(!Iter_Contains(Bizzes, biz)) return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "Biznis ID %d ne postoji na serveru!");
     if(biz > sizeof(BizzInfo) || biz <= 0) return SendClientMessage(playerid, COLOR_RED, "Pogresan biznis ID!");
 	switch(pick)
     {
@@ -3639,19 +3682,20 @@ CMD:bizint(playerid, params[])
 CMD:custombizint(playerid, params[])
 {
 	new
-	    bizid, bint,
+	    bizid, bint, bviwo,
 	    Float:iX, Float:iY, Float:iZ;
 	if(PlayerInfo[playerid][pAdmin] < 1338) return SendClientMessage(playerid, COLOR_RED, "  GRESKA: Niste ovlasteni za koristenje ove komande!");
-	if(sscanf(params, "iifff", bizid, bint, iX, iY, iZ)) {
-		SendClientMessage(playerid, COLOR_WHITE, "KORISTENJE: /custombizint [bizid][int][X][Y][Z]");
-		SendClientMessage(playerid, COLOR_GREY, "NOTE: Taj ID MORA biti u skripti!");
+	if(sscanf(params, "iiifff", bizid, bint, bviwo, iX, iY, iZ)) {
+		SendClientMessage(playerid, COLOR_WHITE, "[ ? ]: /custombizint [bizid][Interior ID][Virtual World ID][X][Y][Z]");
 		return 1;
 	}
+	if(!Iter_Contains(Bizzes, bizid)) return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "Biznis ID %d ne postoji na serveru!");
+		
 	BizzInfo[bizid][bExitX] = iX;
 	BizzInfo[bizid][bExitY] = iY;
 	BizzInfo[bizid][bExitZ] = iZ;
 	BizzInfo[bizid][bInterior] = bint;
-	BizzInfo[bizid][bVirtualWorld] = BizzInfo[bizid][bInterior] + BizzInfo[bizid][bSQLID];
+	BizzInfo[bizid][bVirtualWorld] = bviwo;
 
 	if( !BizzInfo[bizid][bCanEnter] )
 		BizzInfo[bizid][bCanEnter] = 1;
@@ -3735,47 +3779,20 @@ CMD:menu(playerid, params[])
 CMD:buybiznis(playerid, params[])
 {
 	if( PlayerInfo[ playerid ][ pBizzKey ] != INVALID_BIZNIS_ID ) return SendClientMessage( playerid, COLOR_RED, "Vec posjedujete biznis!" );
-	foreach(new biznis : Bizzes) {
+	foreach(new biznis : Bizzes) 
+	{
 		if( IsPlayerInRangeOfPoint( playerid, 5.0, BizzInfo[ biznis ][ bEntranceX ], BizzInfo[ biznis ][ bEntranceY ], BizzInfo[ biznis ][ bEntranceZ ] ) && !BizzInfo[ biznis ][ bOwnerID ] )
 		{
-			if( PlayerInfo[ playerid ][ pLevel ] < BizzInfo[ biznis ][ bLevelNeeded ] ) {
-				new
-					tmpString[ 50 ];
-				format(tmpString, sizeof(tmpString), "Moras biti level %d da bi kupio biznis!", BizzInfo[ biznis ][bLevelNeeded] );
-				SendClientMessage( playerid, COLOR_RED, tmpString );
-				return 1;
-			}
-			if( BizzInfo[ biznis ][ bType ] == BIZZ_TYPE_BYCITY ) return SendClientMessage( playerid, COLOR_RED, "Ne mozete kupiti biznis jer je u posjedu grada!" );
-			if( AC_GetPlayerMoney( playerid ) < BizzInfo[ biznis ][ bBuyPrice ] ) return SendClientMessage(playerid, COLOR_RED, "Nemas novaca da bi kupio!");
+			if( PlayerInfo[ playerid ][ pLevel ] < BizzInfo[ biznis ][ bLevelNeeded ] ) 
+				return va_SendClientMessage(playerid, COLOR_LIGHTRED, "Moras biti level %d da bi kupio biznis!", BizzInfo[ biznis ][bLevelNeeded]);
+			if( BizzInfo[ biznis ][ bType ] == BIZZ_TYPE_BYCITY ) 
+				return SendClientMessage( playerid, COLOR_RED, "Ne mozete kupiti biznis jer je u posjedu grada!" );
+			if(CalculatePlayerBuyMoney(playerid, BUY_TYPE_BIZZ) < BizzInfo[ biznis ][ bBuyPrice ]) 
+				return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nemas dovoljno novca za kupovinu ovog biznisa!");
 
-			// Enum
-			PlayerInfo[ playerid ][ pBizzKey ] 	= biznis;
-			//BizzInfo[ biznis ][ bTill ] 		= 0;
-			BizzInfo[ biznis ][ bOwnerID ]		= PlayerInfo[ playerid ][ pSQLID ];
-			PlayerPlayTrackSound(playerid);
-			// Transakcija
-			PlayerToBudgetMoney(playerid, BizzInfo[ biznis ][ bBuyPrice ]); // Novac od igra�a ide u prora�u
-			// SQL
-			new
-				buybizQuery[ 158 ];
-			format( buybizQuery, sizeof(buybizQuery), "UPDATE `bizzes` SET `ownerid` = '%d', `till` = '%d' WHERE `id` = '%d'",
-				PlayerInfo[ playerid ][ pSQLID ],
-				BizzInfo[ biznis ][ bTill ],
-				BizzInfo[ biznis ][bSQLID]
-			);
-			mysql_tquery( g_SQL, buybizQuery, "", "" );
-
-			SendClientMessage( playerid, COLOR_RED, "[ ! ]  Kupili ste biznis, koristite /help za vise informacija!" );
-
-			// Log
-			new log[128];
-			format(log, sizeof(log), "%s je kupio biznis %d($%d) (%s).",
-				GetName(playerid, false),
-				biznis,
-				BizzInfo[ biznis ][bBuyPrice],
-				GetPlayerIP(playerid)
-			);
-			LogBuyBiznis(log);
+			buyBizID[playerid] = biznis;
+			paymentBuyPrice[playerid] = BizzInfo[ biznis ][ bBuyPrice ];
+			GetPlayerPaymentOption(playerid, BUY_TYPE_BIZZ);
 			break;
 		}
 	}
@@ -3914,7 +3931,7 @@ CMD:makedj(playerid, params[])
 		bouse = i;
 	}
 
-	if(sscanf(params, "u", giveplayerid)) return SendClientMessage(playerid, -1, "KORISTENJE: /makedj [DioImena/Playerid]");
+	if(sscanf(params, "u", giveplayerid)) return SendClientMessage(playerid, -1, "[ ? ]: /makedj [DioImena/Playerid]");
 	if( biznis == INVALID_BIZNIS_ID || biznis != bouse ) return SendClientMessage(playerid, COLOR_RED, "Niste unutar svojeg biznisa!" );
 
 	if( Bit1_Get( gr_IsADJ, giveplayerid ) ) {
@@ -3937,8 +3954,9 @@ CMD:bizentrance(playerid, params[])
 {
 	new proplev;
 	if(PlayerInfo[playerid][pAdmin] < 1338) return SendClientMessage(playerid, COLOR_RED, "Nisi 1338!");
-	if (sscanf(params, "i", proplev)) return SendClientMessage(playerid, COLOR_WHITE, "USAGE: /bizentrance [bizid] - Mjenja lokacije Biza");
-	if(proplev >= MAX_BIZZS || proplev < 0) return SendClientMessage(playerid,COLOR_WHITE,"Nema Biznisa tog ID-a!");
+	if (sscanf(params, "i", proplev)) return SendClientMessage(playerid, COLOR_WHITE, "[ ? ]: /bizentrance [bizid] - izmjena ulaza biznisa");
+	if(!Iter_Contains(Bizzes, proplev))
+		return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "Biznis ID %d ne postoji na serveru!", proplev);
 
 	new
 		Float:X,Float:Y,Float:Z;
@@ -4030,7 +4048,7 @@ CMD:bizwithdraw(playerid, params[])
 	{
 		format(string, sizeof(string), "Imate $%d u vasem biznisu.", BizzInfo[bouse][bTill]);
 		SendClientMessage(playerid, COLOR_WHITE, string);
-		SendClientMessage(playerid, COLOR_ORANGE, "USAGE: /bizwithdraw [Iznos koliko zelite podici iz biznisa]");
+		SendClientMessage(playerid, COLOR_ORANGE, "[ ? ]: /bizwithdraw [Iznos koliko zelite podici iz biznisa]");
 		return 1;
     }
 	if( cashdeposit > BizzInfo[bouse][bTill] || cashdeposit < 1 ) return SendClientMessage(playerid, COLOR_RED, "Nemate toliko novaca");
@@ -4073,7 +4091,7 @@ CMD:bizbank(playerid, params[])
 	{
 		format(string, sizeof(string), "  Imate $%d u vasem biznisu.", BizzInfo[bouse][bTill]);
 		SendClientMessage(playerid, COLOR_GREY, string);
-	    SendClientMessage(playerid, COLOR_WHITE, "KORISTENJE: /bizbank [iznos]");
+	    SendClientMessage(playerid, COLOR_WHITE, "[ ? ]: /bizbank [iznos]");
 		return 1;
     }
 	if( cashdeposit > AC_GetPlayerMoney(playerid) || cashdeposit < 1 ) return SendClientMessage(playerid, COLOR_RED, "Nemas toliko novaca");
@@ -4104,7 +4122,7 @@ CMD:createbiz(playerid, params[])
 	new
 		level, canenter, price;
 	if(sscanf(params, "iii", level, canenter, price)){
-		SendClientMessage(playerid, COLOR_WHITE, "KORISTENJE: /createbiz [level][ulaz][cijena]");
+		SendClientMessage(playerid, COLOR_WHITE, "[ ? ]: /createbiz [level][ulaz][cijena]");
 		return 1;
 	}
 	new Float:x, Float:y, Float:z, freeslot;
@@ -4124,7 +4142,7 @@ CMD:createbiz(playerid, params[])
 	BizzInfo[ freeslot ][ bEntranceCost ] = 0;
 	BizzInfo[ freeslot ][ bDestroyed ] = 0;
 	BizzInfo[ freeslot ][ bFurSlots ] = BIZZ_FURNITURE_VIP_NONE;
-	BizzInfo[ freeslot][ bGasPrice ] = 3;
+	BizzInfo[ freeslot ][ bGasPrice ] = 3;
 	BizzInfo[ freeslot ][ bEnterPICK ] = CreateDynamicPickup( 1272, 2, BizzInfo[ freeslot ][bEntranceX], BizzInfo[ freeslot ][bEntranceY], BizzInfo[ freeslot ][bEntranceZ], -1, -1, -1, 100.0 );
 
 	ShowPlayerDialog(playerid, DIALOG_NEWBIZNIS_NAME, DIALOG_STYLE_INPUT, "Unos imena biznisa:", "Molimo Vas unesite ime novog biznisa.", "Unesi", "Izlaz");
@@ -4148,7 +4166,7 @@ CMD:microphone(playerid, params[]){
 	if( PlayerInfo[ playerid ][ pBizzKey ] == INVALID_BIZNIS_ID && !Bit1_Get( gr_IsADJ, playerid ) ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne posjedujes biznis/nisi DJ!");
 
 	new motd[256],playername[MAX_PLAYER_NAME];
-	if(isnull(params)) return SendClientMessage(playerid, COLOR_RED, "USAGE: (/mic)rophone  [text]");
+	if(isnull(params)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: (/mic)rophone  [text]");
 	if(PlayerInfo[playerid][pMuted] == 1) return SendClientMessage(playerid, COLOR_RED, "Nemozete pricati, usutkani ste");
 	GetPlayerName(playerid,playername,sizeof(playername));
 

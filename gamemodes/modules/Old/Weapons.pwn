@@ -195,7 +195,7 @@ static stock CheckPlayerOrderedCrates(playerid)
 				case 1: format(location, sizeof(location), "SF");
 				case 2: format(location, sizeof(location), "LV");
 			}
-			stamp2datetime(WOCrateInfo[i][cTime], date[0], date[1] ,date[2], date[3], date[4], date[5], 2);
+			stamp2datetime(WOCrateInfo[i][cTime], date[0], date[1] ,date[2], date[3], date[4], date[5]);
 			if(WOCrateInfo[i][cTime] < gettimestamp())
 				format(status, sizeof(status), "Stigao");
 			else
@@ -512,7 +512,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 			);
 			LogWOCrates(log); 
 			// -------------------------------------
-			stamp2datetime(wotime, date[0], date[1] ,date[2], date[3], date[4], date[5], 2);
+			stamp2datetime(wotime, date[0], date[1] ,date[2], date[3], date[4], date[5]);
 			SendClientMessage(playerid, COLOR_RED, "**Nepoznat** (govornica): Paket poslan **Hangup**!");
 			return 1;
 		} 
@@ -591,7 +591,7 @@ CMD:weapons(playerid, params[])
 	new
 		pick[ 12 ];
 	if( sscanf( params, "s[12] ", pick ) ) {
-		SendClientMessage(playerid, COLOR_RED, "USAGE: /weapons [odabir]");
+		SendClientMessage(playerid, COLOR_RED, "[ ? ]: /weapons [odabir]");
 		SendClientMessage( playerid, COLOR_GREY, "[ODABIR]: order - view - pickup - assembly - approve - disapprove");
 		SendClientMessage( playerid, COLOR_GREY, "[ODABIR]: take - drop - vehput - vehtake - vehinfo");
 		return 1;
@@ -615,7 +615,7 @@ CMD:weapons(playerid, params[])
 		new giveplayerid;
 		if (sscanf(params, "s[12]ui", pick, giveplayerid))
 		{
-			SendClientMessage(playerid, COLOR_RED, "USAGE: /weapons approve [ID/Dio Imena]");
+			SendClientMessage(playerid, COLOR_RED, "[ ? ]: /weapons approve [ID/Dio Imena]");
 			SendClientMessage(playerid, COLOR_RED, "[ ! ] Dozvolite osobi da moze vaditi oruzje iz paketa, koristite /weapons view da vidite ID paketa!");
 			return 1;
 		}	
@@ -633,7 +633,7 @@ CMD:weapons(playerid, params[])
 		new giveplayerid;
 		if (sscanf(params, "s[12]ui", pick, giveplayerid))
 		{
-			SendClientMessage(playerid, COLOR_RED, "USAGE: /weapons disapprove [ID/Dio Imena]");
+			SendClientMessage(playerid, COLOR_RED, "[ ? ]: /weapons disapprove [ID/Dio Imena]");
 			SendClientMessage(playerid, COLOR_RED, "[ ! ] Dozvolite osobi da moze vaditi oruzje iz paketa, koristite /weapons view da vidite ID paketa!");
 			return 1;
 		}	
@@ -649,7 +649,7 @@ CMD:weapons(playerid, params[])
 		new slotid;
 		if (sscanf(params, "s[12]i", pick, slotid))
 		{
-			SendClientMessage(playerid, COLOR_RED, "USAGE: /weapons pickup [packageID]");
+			SendClientMessage(playerid, COLOR_RED, "[ ? ]: /weapons pickup [packageID]");
 			CheckPlayerOrderedCrates(playerid);
 			return 1;
 		}
@@ -690,7 +690,7 @@ CMD:weapons(playerid, params[])
 		new crateid;
 		if (sscanf(params, "s[12]ii", pick, crateid))
 		{
-			SendClientMessage(playerid, COLOR_RED, "USAGE: /weapons vehtake [packageID]");
+			SendClientMessage(playerid, COLOR_RED, "[ ? ]: /weapons vehtake [packageID]");
 			SendClientMessage(playerid, COLOR_WHITE, "Za ID kutije sjedni u vozilo koristi /weapons vehinfo.");
 			return 1;
 		}
@@ -730,7 +730,7 @@ CMD:weapons(playerid, params[])
 		new slotid, ammo;
 		if (sscanf(params, "s[12]ii", pick, slotid, ammo))
 		{
-			SendClientMessage(playerid, COLOR_RED, "USAGE: /weapons assembly [packageID] [ammo]");
+			SendClientMessage(playerid, COLOR_RED, "[ ? ]: /weapons assembly [packageID] [ammo]");
 			CheckPlayerOrderedCrates(playerid);
 			return 1;
 		}
@@ -783,7 +783,7 @@ CMD:worders(playerid, params[])
 	new pick[ 12 ];
 	if( PlayerInfo[ playerid ][ pAdmin ] < 4 ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, " Nemate ovlasti!");
 	if( sscanf( params, "s[12] ", pick ) ) {
-		SendClientMessage(playerid, COLOR_RED, "USAGE: /weapons [odabir]");
+		SendClientMessage(playerid, COLOR_RED, "[ ? ]: /weapons [odabir]");
 		SendClientMessage( playerid, COLOR_GREY, "[ODABIR]: list - delete");
 		return 1;
 	}
@@ -792,7 +792,7 @@ CMD:worders(playerid, params[])
 		new date[6];
 		SendClientMessage( playerid, COLOR_GREEN, "---------------Popis narucenih paketa oruzja ---------------");
 		foreach (new i : WOCrates) {
-			stamp2datetime(WOCrateInfo[i][cTime], date[0], date[1] ,date[2], date[3], date[4], date[5], 2);
+			stamp2datetime(WOCrateInfo[i][cTime], date[0], date[1] ,date[2], date[3], date[4], date[5]);
 			va_SendClientMessage(playerid, COLOR_WHITE, "[%d] pSQLID: %d-%s (%d) - %02d/%02d/%02d %02d:%02d / VehSQLID: %d / Pos: %.2f, %.2f, %.2f",
 				i,
 				WOCrateInfo[ i ][ cPlayerSQLID ],
@@ -816,7 +816,7 @@ CMD:worders(playerid, params[])
 		new slotid;
 		if (sscanf(params, "s[12]i", pick, slotid))
 		{
-			SendClientMessage(playerid, COLOR_RED, "USAGE: /weapons delete [ID]");
+			SendClientMessage(playerid, COLOR_RED, "[ ? ]: /weapons delete [ID]");
 			return 1;
 		}
 		if (1 > slotid > 10) return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, " ID je od 0 - 10", WOCrateInfo[slotid][cWeaponAmmo]);

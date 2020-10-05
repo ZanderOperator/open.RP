@@ -395,7 +395,7 @@ CMD:music(playerid, params[])
 	else if(!strcmp(option, "approve"))
 	{
 		new giveplayerid;
-		if( sscanf( params, "s[12]u", option, giveplayerid ) ) return SendClientMessage(playerid, COLOR_RED, "USAGE: /music approve [playerid]");
+		if( sscanf( params, "s[12]u", option, giveplayerid ) ) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /music approve [playerid]");
 		if(PlayerInfo[playerid][pAdmin] < 2) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste Admin Level 2+");
 		if(Bit1_Get(gr_MusicApproved, giveplayerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Igrac vec ima odobreno pustanje glazbe!");
 		Bit1_Set(gr_MusicApproved, giveplayerid, true);
@@ -412,7 +412,7 @@ CMD:music(playerid, params[])
 		}
 		new
 			url[200], radius;
-		if( sscanf( params, "s[12]s[200]i", option, url, radius ) ) return SendClientMessage(playerid, COLOR_RED, "USAGE: /music url [MP3_download_link/Stream link] [radius]");
+		if( sscanf( params, "s[12]s[200]i", option, url, radius ) ) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /music url [MP3_download_link/Stream link] [radius]");
 		if( radius < 10 || radius > 200) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Radius ne moze biti manji od 10 ni veci od 200!");
 		GetDynamicObjectPos(BoomBoxObject[playerid], ox, oy, oz);
 		if(!IsPlayerInRangeOfPoint(playerid, 2.0, ox, oy, oz)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste blizu postavljenog boom boxa!");
@@ -437,7 +437,7 @@ CMD:music(playerid, params[])
 	{
 		new
 			url[200];
-		if( sscanf( params, "s[12]s[200]", option, url ) ) return SendClientMessage(playerid, COLOR_RED, "USAGE: /music stream [www.internet-radio.com Stream link]");
+		if( sscanf( params, "s[12]s[200]", option, url ) ) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /music stream [www.internet-radio.com Stream link]");
 		if( IsPlayerInMusicCircle(playerid) ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Vec netko u vasoj blizini koristi BoomBox. Udaljite se 20m i pokusajte ponovno!");
 		GetDynamicObjectPos(BoomBoxObject[playerid], ox, oy, oz);
 		if(!IsPlayerInRangeOfPoint(playerid, 2.0, ox, oy, oz)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste blizu postavljenog boom boxa!");
@@ -459,7 +459,7 @@ CMD:music(playerid, params[])
 	{
 		new
 			pick;
-		if( sscanf( params, "s[12]i", option, pick ) ) return SendClientMessage(playerid, COLOR_RED, "USAGE: /music play [1-foot/2-auto/3-kuca]");
+		if( sscanf( params, "s[12]i", option, pick ) ) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /music play [1-foot/2-auto/3-kuca]");
 
 		if( pick == 1 ) {
 			GetDynamicObjectPos(BoomBoxObject[playerid], ox, oy, oz);

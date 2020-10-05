@@ -504,7 +504,7 @@ CMD:meal(playerid, params[])
 	if( !Bit1_Get(r_PlayerBoughtMeal, playerid) ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste kupili jelo u restoranu (Pizza/Burg/Cluckin')!");
 	new
 		param[ 5 ];
-	if( sscanf( params, "s[5] ", param ) ) return SendClientMessage(playerid, COLOR_RED, "USAGE: /meal [edit/put/take/dump]");
+	if( sscanf( params, "s[5] ", param ) ) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /meal [edit/put/take/dump]");
 	if( !strcmp(param, "edit", true) ) {
 		if( !Bit1_Get(r_CarryMeal, playerid) ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne nosite jelo u rukama!");
 		EditAttachedObject(playerid, MEAL_OBJECT_INDEX);

@@ -205,6 +205,13 @@ stock PutPlayerInJail(playerid, time, type)
 		SetPlayerInterior(playerid, 7);
 		PutPlayerInSector(playerid, 3); // Stavlja ga u tamnica sektor
 	}*/
+	else if(type == 5) // ASGH Intenzivna - Treatment
+	{
+		PlayerInfo[playerid][pJailed] = 5;
+		PlayerInfo[playerid][pJailTime] = time;
+		SetPlayerPosEx(playerid, 1439.6251, 1506.4286, -68.6758, 10, 4); // Intenzivna jedinica ASGH
+		ApplyAnimation(playerid,"CRACK","crckidle4", 4.0, 1, 0, 0, 1, 0);
+	}
 	ResetPlayerWeapons(playerid);
 	SetPlayerSpecialAction(playerid,SPECIAL_ACTION_NONE);
 	if(IsPlayerAttachedObjectSlotUsed(playerid, 7)) RemovePlayerAttachedObject(playerid, 7);
@@ -8365,7 +8372,7 @@ CMD:jail_alert(playerid, params[])
     if(!IsPlayerInRangeOfPoint(playerid, 15.0, 1849.7317,-1554.1625,2011.8259 ) && !IsPlayerInRangeOfPoint(playerid, 5.0, 1772.4279,-1543.7100,23.0249 ) ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste blizu kontrolne sobe.");
 	new
 		string[156], result[86];
-	if(sscanf(params, "s[86]", result)) return SendClientMessage(playerid, COLOR_RED, "USAGE: /jail_alert [text]");
+	if(sscanf(params, "s[86]", result)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /jail_alert [text]");
 	format(string, sizeof(string), "[Jail Alert] %s %s: %s", ReturnPlayerRankName(playerid), GetName(playerid, false), result);
 	SendRadioMessage(PlayerInfo[playerid][pMember], COLOR_COP, string);
 	return 1;

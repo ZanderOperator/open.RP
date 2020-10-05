@@ -148,7 +148,7 @@ CMD:callnrgs(playerid, params[])
         giveplayerid;
         
     if(sscanf(params, "u", giveplayerid))
-		return SendClientMessage(playerid, COLOR_RED, "USAGE: /callnrgs [ime/playerid]");
+		return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /callnrgs [ime/playerid]");
 
 	if(giveplayerid == INVALID_PLAYER_ID)
 		return SendClientMessage(playerid, COLOR_RED, "Krivi unos playerida!");

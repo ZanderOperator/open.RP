@@ -12,6 +12,7 @@
 #define PLAYER_JOB_GARBAGE      			(16) 	// ID posla smecara zamjeni sa kojim zelis
 #define TRASH_PRICE                         (43) 	// ovo je cijena vrece smeca u randomu
 #define PRICE_TRASH                         (50) 	// cijena vrece dobijat ce jos random(150)
+#define MAX_GARBAGE_CONTAINERS				(88)
 
 /*
 	##     ##    ###    ########   ######  
@@ -131,7 +132,8 @@ stock static CheckGarbages(playerid)
 		new money = (TRASH_PRICE * 10) + (GetPlayerSkillLevel(playerid, 2) * 25); 
 		va_SendClientMessage(playerid, COLOR_RED, "[ ! ] Zaradio si $%d, placa ti je sjela na racun.", money);
 
-		BudgetToPayDayMoney (playerid, money ); // novac sjeda na radnu knjizicu iz proracuna
+		BudgetToPlayerBankMoney (playerid, money ); // novac sjeda na radnu knjizicu iz proracuna
+		PlayerInfo[playerid][pPayDayMoney] += money;
 		PlayerInfo[playerid][pFreeWorks] -= 5;
 		UpgradePlayerSkill(playerid, 2);
 		gStartedWork[playerid] = 0;
@@ -348,9 +350,9 @@ hook OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
 					}
 					money += (GetPlayerSkillLevel(playerid, 2) * 30);
 					va_SendClientMessage(playerid, COLOR_RED, "[ ! ] Zaradio si $%d, placa ti je sjela na racun.", money);
-					printf("DEBUG: placa(%d) | boxes(%d)", money, Bit8_Get( gr_GarbageBoxesAll, playerid ) );
 
-					BudgetToPayDayMoney (playerid, money ); // novac sjeda na radnu knjizicu iz proracuna
+					BudgetToPlayerBankMoney (playerid, money ); // novac sjeda na radnu knjizicu iz proracuna
+					PlayerInfo[playerid][pPayDayMoney] += money;
 					PlayerInfo[playerid][pFreeWorks] -= 5;
 					UpgradePlayerSkill(playerid, 2);
 					gStartedWork[playerid] = 0;
@@ -467,7 +469,7 @@ CMD:garbage(playerid, params[])
 	new
 		pick[ 8 ];
 	if(PlayerInfo[playerid][pJob] != PLAYER_JOB_GARBAGE) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste zaposleni kao smetlar!");
-	if( sscanf( params, "s[8] ", pick ) ) return SendClientMessage(playerid, COLOR_RED, "USAGE: /garbage [foot/truck/clothes/stop]");
+	if( sscanf( params, "s[8] ", pick ) ) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /garbage [foot/truck/clothes/stop]");
 	
 	if( !strcmp( pick, "foot", true ) ) 
 	{

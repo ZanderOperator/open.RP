@@ -787,7 +787,7 @@ CMD:sellfish(playerid, params[]) {
         {
         	if(sscanf(params, "d", amount))
 			{
-				SendClientMessage(playerid, COLOR_GREY, "USAGE: /sellfish [amount]");
+				SendClientMessage(playerid, COLOR_GREY, "[ ? ]: /sellfish [amount]");
 				format(fstring, sizeof fstring, "[ ! ] Kolicina ribe: %d kg.", PlayerInfo[playerid][pFishWeight]);
 				return SendClientMessage(playerid, COLOR_RED, fstring);
 			}

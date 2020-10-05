@@ -813,6 +813,54 @@ Function: ResetHouseEnumerator()
 	return 1;
 }
 
+stock BuyHouse(playerid, bool:credit_activated = false)
+{
+	new house =  Bit16_Get(gr_PlayerInfrontHouse, playerid);
+	// Houses Sets
+	PlayerInfo[playerid][pHouseKey] = house;
+	PlayerInfo[playerid][pSpawnChange] = 1;
+	HouseInfo[house][hOwnerID] 		= PlayerInfo[playerid][pSQLID];
+	//BizzInfo[2][bTill] += HouseInfo[house][hValue];
+
+	// MySQL
+	new tmpQuery[128];
+	format(tmpQuery, 128, "UPDATE `houses` SET `ownerid` = '%d' WHERE `id` = '%d'",
+		HouseInfo[house][hOwnerID],
+		HouseInfo[house][hSQLID]
+	);
+	mysql_tquery(g_SQL, tmpQuery);
+	
+	format(tmpQuery, 128, "UPDATE `accounts` SET `spawnchange` = '%d' WHERE `sqlid` = '%d'", 
+		PlayerInfo[playerid][pSpawnChange],
+		PlayerInfo[playerid][pSQLID]
+	);
+	mysql_tquery(g_SQL, tmpQuery);
+	SendClientMessage(playerid, COLOR_RED, "[ ! ] Spawn Vam je automatski prebacen na kupljenu kucu.");
+	
+	// Money
+	new price = HouseInfo[house][hValue];
+	if(credit_activated)
+		price -= CreditInfo[playerid][cAmount];
+	PlayerToBudgetMoney(playerid, price); // Novac ide u proracun od kupnje kuce na /buy
+	SetPlayerSpawnInfo(playerid);
+
+	// Player Sets
+	SetPlayerPos(playerid, HouseInfo[house][hExitX], HouseInfo[house][hExitY], HouseInfo[house][hExitZ]);
+	SetPlayerInterior(playerid, HouseInfo[house][hInt]);
+	SetPlayerVirtualWorld(playerid, HouseInfo[house][hVirtualWorld]);
+	Bit16_Set(gr_PlayerInHouse, playerid, house);
+	PlayerInfo[playerid][pSpawnChange] = 1;
+	
+	format(tmpQuery, 128, "UPDATE `accounts` SET `spawnchange` = '%d' WHERE `sqlid` = '%d'", 
+		PlayerInfo[playerid][pSpawnChange],
+		PlayerInfo[playerid][pSQLID]
+	);
+	mysql_tquery(g_SQL, tmpQuery);
+
+	// Message
+	SendClientMessage(playerid, COLOR_RED, "[ ! ] Ukucajte /help da bi ste vidjeli sve komande vezane uz kucu !");
+	return 1;
+}
 
 stock static GetLastHouseSQLID()
 {
@@ -3021,51 +3069,11 @@ CMD:buyhouse(playerid, params[])
 	if(PlayerInfo[playerid][pHouseKey] != INVALID_HOUSE_ID && HouseInfo[PlayerInfo[playerid][pHouseKey]][hOwnerID] == PlayerInfo[playerid][pSQLID]) 
 		return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Vec posjedujete kucu!");
 
-	if(AC_GetPlayerMoney(playerid) >= HouseInfo[house][hValue]) 
-	{
-		// Houses Sets
-		PlayerInfo[playerid][pHouseKey] = house;
-		PlayerInfo[playerid][pSpawnChange] = 1;
-		HouseInfo[house][hOwnerID] 		= PlayerInfo[playerid][pSQLID];
-		//BizzInfo[2][bTill] += HouseInfo[house][hValue];
+	if(CalculatePlayerBuyMoney(playerid, BUY_TYPE_HOUSE) < HouseInfo[house][hValue]) 
+		return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nemas dovoljno novca za kupovinu ove kuce!");
 
-		// MySQL
-		new tmpQuery[128];
-		format(tmpQuery, 128, "UPDATE `houses` SET `ownerid` = '%d' WHERE `id` = '%d'",
-			HouseInfo[house][hOwnerID],
-			HouseInfo[house][hSQLID]
-		);
-		mysql_tquery(g_SQL, tmpQuery);
-		
-		new scQuery[70];
-		format(scQuery, 70, "UPDATE `accounts` SET `spawnchange` = '%d' WHERE `sqlid` = '%d'", 
-			PlayerInfo[playerid][pSpawnChange],
-			PlayerInfo[playerid][pSQLID]
-		);
-		mysql_tquery(g_SQL, scQuery);
-		SendClientMessage(playerid, COLOR_RED, "[ ! ] Spawn Vam je automatski prebacen na kupljenu kucu.");
-		// Money
-		PlayerToBudgetMoney(playerid, HouseInfo[house][hValue]); // Novac ide u proracun od kupnje kuce na /buy
-		SetPlayerSpawnInfo(playerid);
-
-		// Player Sets
-		SetPlayerPos(playerid, HouseInfo[house][hExitX], HouseInfo[house][hExitY], HouseInfo[house][hExitZ]);
-		SetPlayerInterior(playerid, HouseInfo[house][hInt]);
-		SetPlayerVirtualWorld(playerid, HouseInfo[house][hVirtualWorld]);
-		Bit16_Set(gr_PlayerInHouse, playerid, house);
-		PlayerInfo[playerid][pSpawnChange] = 1;
-		
-		format(tmpQuery, 128, "UPDATE `accounts` SET `spawnchange` = '%d' WHERE `sqlid` = '%d'", 
-			PlayerInfo[playerid][pSpawnChange],
-			PlayerInfo[playerid][pSQLID]
-		);
-		mysql_tquery(g_SQL, tmpQuery);
-
-		// Message
-		SendClientMessage(playerid, COLOR_RED, "[ ! ] Ukucajte /help da bi ste vidjeli sve komande vezane uz kucu !");
-		return 1;
-	}
-	else SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate dovoljno novca!");
+	paymentBuyPrice[playerid] = HouseInfo[house][hValue];
+	GetPlayerPaymentOption(playerid, BUY_TYPE_HOUSE);
 	return 1;
 }
 
@@ -3073,7 +3081,7 @@ CMD:houseentrance(playerid, params[])
 {
 	new houseid;
 	if(PlayerInfo[playerid][pAdmin] < 1337) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ovlasteni!");
-	if(sscanf(params, "i", houseid)) return SendClientMessage(playerid, COLOR_RED, "USAGE: /houseentrance [houseid]");
+	if(sscanf(params, "i", houseid)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /houseentrance [houseid]");
 	if(!Iter_Contains(Houses, houseid)) return SendClientMessage(playerid,COLOR_RED, "Morate unijeti valjani houseid!");
 
 	va_SendClientMessage(playerid, COLOR_RED, "[ ! ] Premjestili ste ulaz od kuce %d na ovo mjesto!",houseid);
@@ -3118,7 +3126,7 @@ CMD:customhouseint(playerid, params[])
 
 	if(PlayerInfo[playerid][pAdmin] < 1338) return SendClientMessage(playerid, COLOR_RED, "GRESKA: Niste ovlasteni za koristenje ove komande!");
 	if(sscanf(params, "iifff", houseid, hint, iX, iY, iZ)) {
-		SendClientMessage(playerid, COLOR_RED, "USAGE: /custombizint [houseid][int][X][Y][Z]");
+		SendClientMessage(playerid, COLOR_RED, "[ ? ]: /custombizint [houseid][int][X][Y][Z]");
 		SendClientMessage(playerid, COLOR_GREY, "NOTE: Taj ID MORA biti u skripti!");
 		return 1;
 	}
@@ -3146,7 +3154,7 @@ CMD:houseint(playerid, params[])
 {
 	new proplev, id2;
 	if(PlayerInfo[playerid][pAdmin] < 1338) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nisi 1338!");
-	if (sscanf(params, "ii", proplev, id2)) return SendClientMessage(playerid, COLOR_RED, "USAGE: /houseint [houseid] [id (1-42)]");
+	if (sscanf(params, "ii", proplev, id2)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /houseint [houseid] [id (1-42)]");
 	if(proplev > sizeof(HouseInfo) || proplev < 0) return SendClientMessage(playerid,COLOR_RED, "House ID mora biti izmedju 0 i 558");
  	if(id2 < 1 || id2 > 42) return SendClientMessage(playerid, COLOR_RED, "[GRESKA:] INTERIORI MOGU BITI OD 1-42.");
 	switch(id2) {
@@ -3424,7 +3432,7 @@ CMD:doorshout(playerid, params[])
 		result[100],
 		house;
 		
-	if(sscanf(params, "s[100]", result)) return SendClientMessage(playerid, COLOR_RED, "USAGE: /doorshout [text]");
+	if(sscanf(params, "s[100]", result)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /doorshout [text]");
 	
 	if(Bit16_Get(gr_PlayerInfrontHouse, playerid) != INVALID_HOUSE_ID)
 	{
@@ -3526,14 +3534,14 @@ CMD:rent(playerid, params[])
 	new
 		pick[11];
 
-	if(sscanf(params, "s[11] ", pick)) return SendClientMessage(playerid, COLOR_RED, "USAGE: /rent [house/vehicle]");
+	if(sscanf(params, "s[11] ", pick)) return SendClientMessage(playerid, -1, "[ ? ]: /rent [house/vehicle]");
 
 	if(!strcmp(pick, "house", true)) {
 		new
 			hpick[11];
 
 		if(sscanf(params, "s[11]s[11]", pick, hpick)) {
-			SendClientMessage(playerid, COLOR_RED, "USAGE: /rent house [odabir]");
+			SendClientMessage(playerid, COLOR_RED, "[ ? ]: /rent house [odabir]");
 			SendClientMessage(playerid, COLOR_GREY, "[ODABIR]: start - stop");
 			return 1;
 		}
@@ -3574,6 +3582,7 @@ CMD:rent(playerid, params[])
 			SendFormatMessage(playerid, MESSAGE_TYPE_SUCCESS, "Prestali ste iznajmljivati kucu na adresi %s.", HouseInfo[house][hAdress]);
 			PlayerInfo[playerid][pRentKey] = INVALID_HOUSE_ID;
 			PlayerInfo[playerid][pSpawnChange] = 0;
+			SetPlayerSpawnInfo(playerid);
 		}
 	}
 	return 1;
@@ -3609,7 +3618,7 @@ CMD:picklock(playerid, params[])
 	if(house == INVALID_HOUSE_ID) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Morate biti ispred kuce(u checkpointu)!");
 	if(!IsOwnerOfHouseOnline(house)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Mozete provaljivati samo kada je vlasnik online!");
 	if(sscanf(params, "s[6] ", pick)) {
-		SendClientMessage(playerid, COLOR_RED, "USAGE: /picklock [odabir]");
+		SendClientMessage(playerid, COLOR_RED, "[ ? ]: /picklock [odabir]");
 		SendClientMessage(playerid, COLOR_GREY, "[ODABIR]: card, tools");
 		return 1;
 	}
@@ -3651,7 +3660,7 @@ CMD:doorram(playerid, params[])
 	if(house == INVALID_HOUSE_ID) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Morate biti ispred kuce(u checkpointu)!");
 	if(!HouseInfo[house][hLock]) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Vrata su otkljucana!");
 	if(!IsOwnerOfHouseOnline(house)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Mozete provaljivati samo kada je vlasnik online!");
-	if(sscanf(params, "s[8]", param)) return SendClientMessage(playerid, COLOR_RED, "USAGE: /doorram [foot/crowbar]");
+	if(sscanf(params, "s[8]", param)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /doorram [foot/crowbar]");
 
 	if(!strcmp("foot", param, true)) {
 		if(Bit1_Get(gr_PlayerFootKicking, playerid)) {
@@ -3660,18 +3669,11 @@ CMD:doorram(playerid, params[])
 			return 1;
 		}
 		if(Bit1_Get(gr_PlayerFootKicking, playerid)) 	return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Vec razvaljujete vrata!");
-		if(2 <= HouseInfo[house][hLockLevel] <= 3) {
-			if(HouseInfo[house][hDoorLevel] > 3) {
-				SendClientMessage(playerid, COLOR_RED, "[ ! ] Vrata su precvrsta da biste ih mogli razvaliti nogom!");
-				new
-					Float:tmpHealth;
-				GetPlayerHealth(playerid, tmpHealth);
-				SetPlayerHealth(playerid, tmpHealth - 15.0);
-				return 1;
-			}
-			SendMessage(playerid, MESSAGE_TYPE_INFO, "Za udaranje nogom u vrata koristite tipku ~k~~PED_SPRINT~, a za prestak koristite /doorram foot!");
-			SetPlayerFootEntering(playerid);
-		} else SendMessage(playerid, MESSAGE_TYPE_ERROR, "Brava je preslaba da bi ju mogli razbiti nogom!");
+		if(HouseInfo[house][hDoorLevel] > 3) 
+			return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Vrata su precvrsta da biste ih mogli razvaliti nogom!");
+			
+		SendMessage(playerid, MESSAGE_TYPE_INFO, "Za udaranje nogom u vrata koristite tipku ~k~~PED_SPRINT~, a za prestak koristite /doorram foot!");
+		SetPlayerFootEntering(playerid); 
 	}
 	if(!strcmp("crowbar", param, true)) {
 		if(Bit1_Get(gr_CrowbarBreaking, playerid)) {
@@ -3680,8 +3682,6 @@ CMD:doorram(playerid, params[])
 			Bit1_Set(gr_CrowbarBreaking, playerid, false);
 			return 1;
 		}
-		if(HouseInfo[house][hDoorLevel] < 4) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne mozete pajserom obijati slabija vrata!");
-		if(HouseInfo[house][hLockLevel] < 4) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Brava je preslaba da bi ju mogli razbiti nogom!");
 
 		#if defined MODULE_OBJECTS
 		new
@@ -3713,7 +3713,7 @@ CMD:createhouse(playerid, params[])
 		for(new i = 0; i < sizeof(HouseInts); i++) {
 			va_SendClientMessage(playerid, COLOR_GRAD2, "Interior: [%d] %s", i, HouseInts[i][iDescription]);
 		}
-		SendClientMessage(playerid, COLOR_RED, "USAGE: /createhouse [level][price][interior][address]");
+		SendClientMessage(playerid, COLOR_RED, "[ ? ]: /createhouse [level][price][interior][address]");
 		return 1;
 	}
 	if(strlen(address) <= 0 || strlen(address) > 32)

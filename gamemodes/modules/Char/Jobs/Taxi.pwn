@@ -232,6 +232,7 @@ Taxi_Biznis(playerid, taxi_points, fare) {
 		
 	// calculate
 	final_bonus = fare+bonuses;
+	BudgetToPlayerBankMoney(playerid, final_bonus);
 	PlayerInfo[playerid][pPayDayMoney] += final_bonus;
 	return (true);
 }
@@ -266,15 +267,15 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 			new taxist = TaxiData[playerid][eTaxiDriver],
 				rating = listitem+1;
 			if(!response) 
-				ResetTaxiVariables(playerid), SendMessage(playerid, MESSAGE_TYPE_INFO, "Odustali ste od davanja ocijene taxisti.");
+				ResetTaxiVariables(playerid), SendMessage(playerid, MESSAGE_TYPE_INFO, "Odustali ste od davanja ocjene taxisti.");
 			if(response) {			
 				PlayerInfo[taxist][taxiPoints] += rating;
 				PlayerInfo[taxist][taxiVoted] += 1;
 				
 				new Float: t_overall = float(PlayerInfo[taxist][taxiPoints]) / (PlayerInfo[taxist][taxiVoted]);
 				
-				SendFormatMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uspjesno ste dali Taxisti %s ocijenu %d za voznju.", GetName(taxist), rating);
-				SendFormatMessage(taxist, MESSAGE_TYPE_SUCCESS, "Uspjesno ste dobili ocijenu %d za vasu taxi voznju, sada imate ukupnu ocijenu %.1f", rating, t_overall);
+				SendFormatMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uspjesno ste dali Taxisti %s ocjenu %d za voznju.", GetName(taxist), rating);
+				SendFormatMessage(taxist, MESSAGE_TYPE_SUCCESS, "Uspjesno ste dobili ocjenu %d za vasu taxi voznju, sada imate ukupnu ocjenu %.1f", rating, t_overall);
 				
 				SaveTaxiPoints(taxist, PlayerInfo[taxist][taxiPoints], PlayerInfo[taxist][taxiVoted]);
 				Taxi_Biznis(taxist, PlayerInfo[taxist][taxiPoints], TaxiData[playerid][eTaxiPayment]);
@@ -302,7 +303,7 @@ hook OnPlayerExitVehicle(playerid, vehicleid) {
 					FormatNumber(TaxiData[playerid][eTaxiPayment])
 				);
 				if(TaxiData[playerid][eTaxiTraveled] > 1)
-					ShowPlayerDialog(playerid, DIALOG_TAXI_RATING, DIALOG_STYLE_LIST, "{F3FF02}* Taxi - Rating", "1\n2\n3\n4\n5", "(ocijeni)", "(x)");
+					ShowPlayerDialog(playerid, DIALOG_TAXI_RATING, DIALOG_STYLE_LIST, "{F3FF02}* Taxi - Rating", "1\n2\n3\n4\n5", "(ocjeni)", "(x)");
 				
 				PlayerToPlayerMoney(playerid, taxist, TaxiData[playerid][eTaxiPayment]);
 					
