@@ -87,12 +87,9 @@ stock GetNearDroppedWeapon(playerid)
 	{
 	    if(IsPlayerInRangeOfPoint(playerid, 4.0, DroppedWeapons[slotid][dPos][0], DroppedWeapons[slotid][dPos][1], DroppedWeapons[slotid][dPos][2]))
 		{
-			new string[128];
-
 			if (! CheckPlayerWeapons(playerid, DroppedWeapons[slotid][dWeaponID]) ) return 1;
 			AC_GivePlayerWeapon(playerid, DroppedWeapons[slotid][dWeaponID], DroppedWeapons[slotid][dWeaponAmmo]);
-			format(string, sizeof(string), "%s je uzeo oruzje(id - %d, ammo - %d) sa poda.", GetName(playerid), DroppedWeapons[slotid][dWeaponID], DroppedWeapons[slotid][dWeaponAmmo]);
-			LogPickItem(string);
+			Log_Write("/logfiles/pickitems.txt", "(%s) %s je uzeo oruzje(id - %d, ammo - %d) sa poda.", ReturnDate(), GetName(playerid), DroppedWeapons[slotid][dWeaponID], DroppedWeapons[slotid][dWeaponAmmo]);
 		
 			DestroyDynamicObject(DroppedWeapons[slotid][dWeaponObject]);
 			DroppedWeapons[slotid][dWeaponID] = 0;
@@ -100,6 +97,7 @@ stock GetNearDroppedWeapon(playerid)
 			DroppedWeapons[slotid][dPos][0] = 0;
 			DroppedWeapons[slotid][dPos][1] = 0;
 			DroppedWeapons[slotid][dPos][2] = 0;
+			new string[80];
 			format(string, sizeof(string), "%s uzima nesto sa poda.", GetName(playerid));
 			ProxDetector(30.0, playerid, string, COLOR_PURPLE, COLOR_PURPLE, COLOR_PURPLE, COLOR_PURPLE, COLOR_PURPLE);
 			return 1;
@@ -111,7 +109,7 @@ stock GetNearDroppedWeapon(playerid)
 stock DropPlayerWeapon(playerid, weaponid, Float:x, Float:y)
 {
     new
-		Float:Z, str[156];
+		Float:Z;
 	MapAndreas_FindAverageZ(x, y, Z);
 	new i = GetWeaponSlot(weaponid);
 	if(PlayerWeapons[playerid][pwAmmo][i] > 0)
@@ -130,8 +128,8 @@ stock DropPlayerWeapon(playerid, weaponid, Float:x, Float:y)
 			DroppedWeapons[slot][dPos][0] = x;
 			DroppedWeapons[slot][dPos][1] = y;
 			DroppedWeapons[slot][dPos][2] = Z;
-			format(str, sizeof(str), "%s je ispustio oruzje %d sa %d metaka na pod.", GetName(playerid),  DroppedWeapons[slot][dWeaponID], DroppedWeapons[slot][dWeaponAmmo]);
-			LogDropItem(str);
+
+			Log_Write("/logfiles/dropitems.txt", "(%s) %s dropped a weapon %s(Ammo:%d) on the floor.", ReturnDate(), GetName(playerid),  GetWeaponNameEx(DroppedWeapons[slot][dWeaponID]), DroppedWeapons[slot][dWeaponAmmo]);
 		}
 	}
 	AC_ResetPlayerWeapon(playerid, weaponid);
@@ -140,7 +138,7 @@ stock DropPlayerWeapon(playerid, weaponid, Float:x, Float:y)
 stock DropPlayerWeapons(playerid, Float:x, Float:y)
 {
     new
-		Float:Z, str[156];
+		Float:Z;
 	MapAndreas_FindAverageZ(x, y, Z);
 	for(new i = 0; i <= 12; i++) 
 	{
@@ -163,8 +161,8 @@ stock DropPlayerWeapons(playerid, Float:x, Float:y)
                 DroppedWeapons[slot][dPos][0] = x;
                 DroppedWeapons[slot][dPos][1] = y;
                 DroppedWeapons[slot][dPos][2] = Z;
-				format(str, sizeof(str), "%s je ispustio oruzje %d sa %d metaka na pod nakon smrti.", GetName(playerid),  DroppedWeapons[slot][dWeaponID], DroppedWeapons[slot][dWeaponAmmo]);
-	            LogDropItem(str);
+
+				Log_Write("/logfiles/dropitems.txt", "(%s) %s dropped a weapon %s(Ammo:%d) on the floor after death.", ReturnDate(), GetName(playerid),  GetWeaponNameEx(DroppedWeapons[slot][dWeaponID]), DroppedWeapons[slot][dWeaponAmmo]);
 			}
         }
 	}
@@ -172,7 +170,7 @@ stock DropPlayerWeapons(playerid, Float:x, Float:y)
 	return 1;
 }
 
-//Radi, ali je izbaceno da igrac dropa novac. - Khawaja
+
 /*
 stock DropPlayerMoney(playerid) // Na Death Modeu
 {

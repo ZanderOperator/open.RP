@@ -2637,11 +2637,11 @@ CMD:address(playerid, params[])
 }
 CMD:edit(playerid, params[])
 {
-	new x_job[32], proplev;
-	if(PlayerInfo[playerid][pAdmin] < 1337) return SendClientMessage(playerid, COLOR_RED, "Niste ovlasteni !");
+	new x_job[32], proplev, proptype = 0, propid = -1;
+	if(PlayerInfo[playerid][pAdmin] < 1337) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You don't have premissions to use this command!");
 	if (sscanf(params, "s[32]i", x_job, proplev)) {
-		SendClientMessage(playerid, COLOR_RED, "|__________________ Edit{FA5656} __________________|");
-		SendClientMessage(playerid, COLOR_RED, "[ ? ]: /edit [ime] [varijabla] (Koristi se za kuce i biznise)");
+		SendClientMessage(playerid, COLOR_RED, "|___________ Edit Houses/Business ___________|");
+		SendClientMessage(playerid, COLOR_RED, "[ ? ]: /edit [option] [value]");
 		SendClientMessage(playerid, COLOR_RED, "[ ! ] Level, Price, Funds, Locked, BizViwo");
 		SendClientMessage(playerid, COLOR_RED, "[ ! ] DoorLevel, LockLevel, AlarmLevel, hviwo");
 		SendClientMessage(playerid, COLOR_RED, "|____________________________________________|");
@@ -2652,46 +2652,58 @@ CMD:edit(playerid, params[])
 		if (IsPlayerInRangeOfPoint(playerid,2,HouseInfo[i][hEnterX], HouseInfo[i][hEnterY], HouseInfo[i][hEnterZ]) && HouseInfo[i][h3dViwo] == GetPlayerVirtualWorld(playerid))
 		{
 		    new TmpQuery[128];
-			format(globalstring, sizeof(globalstring), "Kuca: %d", i);
-			SendClientMessage(playerid, COLOR_GRAD2, globalstring);
 			if(proplev > 0)
 			{
 			    if(strcmp(x_job,"level",true) == 0)
 			    {
+					proptype = 1;
+					propid = i;
 					HouseInfo[i][hLevel] = proplev;
 					format(TmpQuery, 128, "UPDATE `houses` SET `level` = '%d' WHERE `id` = '%d'", proplev, HouseInfo[i][hSQLID]);
 					mysql_tquery(g_SQL, TmpQuery, "", "");
 				}
 				else if(strcmp(x_job,"price",true) == 0)
 				{
+					proptype = 1;
+					propid = i;
 					HouseInfo[i][hValue] = proplev;
 					format(TmpQuery, 128, "UPDATE `houses` SET `value` = '%d' WHERE `id` = '%d'", proplev, HouseInfo[i][hSQLID]);
 					mysql_tquery(g_SQL, TmpQuery, "", "");
 				}
 				else if(strcmp(x_job,"locked",true) == 0)
 				{
+					proptype = 1;
+					propid = i;
 					HouseInfo[i][hLock] = proplev;
 				}
 				else if(strcmp(x_job,"doorlevel",true) == 0)
 				{
+					proptype = 1;
+					propid = i;
 					HouseInfo[i][hDoorLevel] = proplev;
 					format(TmpQuery, 128, "UPDATE `houses` SET `doorlevel` = '%d' WHERE `id` = '%d'", proplev, HouseInfo[i][hSQLID]);
 					mysql_tquery(g_SQL, TmpQuery, "", "");
 				}
 				else if(strcmp(x_job,"locklevel",true) == 0)
 				{
+					proptype = 1;
+					propid = i;
 					HouseInfo[i][hLockLevel] = proplev;
 					format(TmpQuery, 128, "UPDATE `houses` SET `locklevel` = '%d' WHERE `id` = '%d'", proplev, HouseInfo[i][hSQLID]);
 					mysql_tquery(g_SQL, TmpQuery, "", "");
 				}
 				else if(strcmp(x_job,"alarmlevel",true) == 0)
 				{
+					proptype = 1;
+					propid = i;
 					HouseInfo[i][hAlarm] = proplev;
 					format(TmpQuery, 128, "UPDATE `houses` SET `alarm` = '%d' WHERE `id` = '%d'", proplev, HouseInfo[i][hSQLID]);
 					mysql_tquery(g_SQL, TmpQuery, "", "");
 				}
 				else if(strcmp(x_job,"hviwo",true) == 0)
 				{
+					proptype = 1;
+					propid = i;
 					HouseInfo[i][hVirtualWorld] = proplev;
 					format(TmpQuery, 128, "UPDATE `houses` SET `viwo` = '%d' WHERE `id` = '%d'", proplev, HouseInfo[i][hSQLID]);
 					mysql_tquery(g_SQL, TmpQuery, "", "");
@@ -2704,49 +2716,67 @@ CMD:edit(playerid, params[])
 		if (IsPlayerInRangeOfPoint(playerid,3,BizzInfo[i][bEntranceX], BizzInfo[i][bEntranceY], BizzInfo[i][bEntranceZ]))
 		{
 		    new TmpQuery[128];
-			format(globalstring, sizeof(globalstring), "Biz: %d", i);
-			SendClientMessage(playerid, COLOR_GRAD2, globalstring);
 			if(proplev >= 0)
 			{
 			    if(strcmp(x_job,"level",true) == 0)
 			    {
+					proptype = 2;
+					propid = i;
 					BizzInfo[i][bLevelNeeded] = proplev;
 					format(TmpQuery, 128, "UPDATE `bizzes` SET `levelneeded` = '%d' WHERE `id` = '%d'", proplev, BizzInfo[i][bSQLID]);
 					mysql_tquery(g_SQL, TmpQuery, "", "");
 				}
 				else if(strcmp(x_job,"price",true) == 0)
 				{
+					proptype = 2;
+					propid = i;
 					BizzInfo[i][bBuyPrice] = proplev;
 					format(TmpQuery, 128, "UPDATE `bizzes` SET `buyprice` = '%d' WHERE `id` = '%d'", proplev, BizzInfo[i][bSQLID]);
 					mysql_tquery(g_SQL, TmpQuery, "", "");
 				}
 				else if(strcmp(x_job,"funds",true) == 0)
 				{
+					proptype = 2;
+					propid = i;
 					BizzInfo[i][bTill] = proplev;
 					format(TmpQuery, 128, "UPDATE `bizzes` SET `till` = '%d' WHERE `id` = '%d'", proplev, BizzInfo[i][bSQLID]);
 					mysql_tquery(g_SQL, TmpQuery, "", "");
 				}
 				else if(strcmp(x_job,"locked",true) == 0)
 				{
+					proptype = 2;
+					propid = i;
 					BizzInfo[i][bLocked] = proplev;
 				}
 				else if(strcmp(x_job,"bizviwo",true) == 0)
 				{
+					proptype = 2;
+					propid = i;
 					BizzInfo[i][bVirtualWorld] = proplev;
 					format(TmpQuery, 128, "UPDATE `bizzes` SET `virtualworld` = '%d' WHERE `id` = '%d'", proplev, BizzInfo[i][bSQLID]);
 					mysql_tquery(g_SQL, TmpQuery, "", "");
 				}
 				else if(strcmp(x_job,"type",true) == 0)
 				{
-					if(proplev > 14) return SendClientMessage(playerid, COLOR_RED, "[ ! ] Od 0-14 type");
+					proptype = 2;
+					propid = i;
+					if(proplev < 0 || proplev > 14) return SendClientMessage(playerid, COLOR_RED, "[ ! ]: Type range is 0-14!");
 					BizzInfo[i][bType] = proplev;
 					format(TmpQuery, 128, "UPDATE `bizzes` SET `type` = '%d' WHERE `id` = '%d'", proplev, BizzInfo[i][bSQLID]);
 					mysql_tquery(g_SQL, TmpQuery, "", "");
 				}
 			}
 		}
-	} 
-	va_SendClientMessage(playerid, COLOR_RED, "[ ! ] Upravo ste namjestili: %s.", x_job);
+	}
+	if(proptype != 0 && propid != -1)
+	{
+		switch(proptype)
+		{
+			case 1: va_SendClientMessage(playerid, COLOR_RED, "[ ! ]: You just adjusted %s on House ID %d[SQLID: %d][Adress: %s] on value %d.", x_job, propid, HouseInfo[propid][hSQLID], HouseInfo[propid][hAdress], proplev);
+			case 2: va_SendClientMessage(playerid, COLOR_RED, "[ ! ]: You just adjusted %s on Bizz ID %d[SQLID: %d][Name: %s] on value %d.", x_job, propid, BizzInfo[propid][bSQLID], BizzInfo[propid][bMessage], proplev);
+		}
+	}
+	else SendMessage(playerid, MESSAGE_TYPE_ERROR, "Unfortunately, house/business for editing wasn't found in proximity.");
 	return 1;
 }
 CMD:asellbiz(playerid, params[])
@@ -2762,7 +2792,7 @@ CMD:asellbiz(playerid, params[])
 				if(PlayerInfo[i][pSQLID] == BizzInfo[biz][bOwnerID])
 				{
 					PlayerInfo[i][pBizzKey] = INVALID_BIZNIS_ID;
-					va_SendClientMessage(i, COLOR_RED, "[ ! ] Iseljen Vam je biznis od strane Game Admina %s, dobili ste %s naknade na ruke.", GetName(playerid, false), FormatNumber(BizzInfo[biz][bBuyPrice]));
+					va_SendClientMessage(i, COLOR_RED, "[ ! ]: Your business has been moved out by Game Admin %s, you got %s refund in return.", GetName(playerid, false), FormatNumber(BizzInfo[biz][bBuyPrice]));
 					BudgetToPlayerMoney(i, BizzInfo[biz][bBuyPrice]);
 					foundonline = 1;
 				}
@@ -2770,7 +2800,7 @@ CMD:asellbiz(playerid, params[])
 				{
 					PlayerInfo[i][pBusiness] = INVALID_BIZNIS_ID;
 					PlayerInfo[playerid][BizCoOwner] = false;
-					va_SendClientMessage(i, COLOR_RED, "[ ! ] Iseljen je biznis gdje ste suvlasnik od strane Game Admina %s.", GetName(playerid, false));
+					va_SendClientMessage(i, COLOR_RED, "[ ! ] Your co-owned business has been moved out by Game Admin %s.", GetName(playerid, false));
 				}
 			}
 		}
@@ -2802,15 +2832,55 @@ CMD:asellbiz(playerid, params[])
 		BizzInfo[biz][bco_OwnerID] = 0;
 		
 		PlayerPlaySound(playerid, 1052, 0.0, 0.0, 0.0);
-		SendClientMessage(playerid, COLOR_RED, "[ ! ] Prodao si biznis admin komandom!");
-		format(globalstring, sizeof(globalstring), "Admin %s je iselio biznis %i.",GetName(playerid, false), biz);
+		va_SendClientMessage(playerid, COLOR_RED, "[ ! ]: You sold Business %s with admin command, buy price was returned to the previous owner!", BizzInfo[biz][bMessage]);
+		format(globalstring, sizeof(globalstring), "Game Admin %s moved out Business %s [ID %d][SQLID: %d].",GetName(playerid, false), BizzInfo[biz][bMessage], biz, BizzInfo[biz][bSQLID]);
 		SendAdminMessage(COLOR_LIGHTBLUE, globalstring);
 		#if defined MODULE_LOGS
-		LogASellBiznis(globalstring);
+		Log_Write("/logfiles/a_sellbiz.txt", "(%s) Game Admin %s moved out Business %s[ID %d][SQLID: %d]", ReturnDate(), GetName(playerid, false), BizzInfo[biz][bMessage], biz, BizzInfo[biz][bSQLID]);
 		#endif
 		
 	}
-	else SendClientMessage(playerid, COLOR_RED, "Niste ovlasteni za koristenje ove komande!");
+	else SendMessage(playerid, MESSAGE_TYPE_ERROR, "You don't have permissions to use this command.");
+	return 1;
+}
+
+CMD:asellgarage(playerid, params[])
+{
+    new garage,
+		TmpQuery[158];
+    if(sscanf(params, "i", garage)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /asellgarage [garageid]");
+	
+	if(!Iter_Contains(Garages, garage)) return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "Garage ID %d doesn't exist!", garage);
+		
+	
+	if(PlayerInfo[playerid][pAdmin] >= 1337)
+	{	
+		foreach(new i : Player)
+		{
+			if(PlayerInfo[i][pGarageKey] == garage)
+			{
+				PlayerInfo[i][pGarageKey] = -1;
+				va_SendClientMessage(i, COLOR_RED, "[ ! ]: Your garage has been moved out by Game Admin %s!", GetName(playerid, false));
+				break;
+			}				
+		}
+		
+		format( TmpQuery, sizeof(TmpQuery), "UPDATE `server_garages` SET `ownerid` = '0' WHERE `id` = '%d'", 
+			GarageInfo[garage][gSQLID]
+		);
+		mysql_tquery(g_SQL, TmpQuery, "", "");
+		
+		GarageInfo[garage][gOwnerID] 				= 0;
+		GarageInfo[ garage ][ gLocked ] 			= 1;
+		PlayerPlaySound(playerid, 1052, 0.0, 0.0, 0.0);
+		SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "You sold garage %s with admin command!");
+		format(globalstring, sizeof(globalstring), "Game Admin %s moved out garage %s[ID: %d][SQLID: %d].", GetName(playerid, false), GarageInfo[garage][gAdress], garage, GarageInfo[garage][gSQLID]);
+		SendAdminMessage(COLOR_LIGHTBLUE, globalstring);
+		#if defined MODULE_LOGS
+		Log_Write("/logfiles/a_sellhouse.txt", "(%s) Game Admin %s moved out garage %s[ID: %d][SQLID: %d].", ReturnDate(), GetName(playerid, false), GarageInfo[garage][gAdress], garage, GarageInfo[garage][gSQLID]);
+		#endif
+	}
+	else SendMessage(playerid, MESSAGE_TYPE_ERROR, "You don't have permissions to use this command.");
 	return 1;
 }
 
@@ -2825,7 +2895,7 @@ CMD:asellhouse(playerid, params[])
 			if(PlayerInfo[i][pOnline] == true && PlayerInfo[i][pSQLID] == HouseInfo[house][hOwnerID])
 			{
 				PlayerInfo[i][pHouseKey] = INVALID_HOUSE_ID;
-				SendClientMessage(i, COLOR_RED, "[ ! ] Iseljena vam je kuca od strane admina, dobili ste cijenu kuce na ruke!");
+				va_SendClientMessage(i, COLOR_RED, "[ ! ]: Your house has been moved out by Game Admin %s, you got refunded buy price in return!", GetName(playerid, false));
 				BudgetToPlayerMoney(i, HouseInfo[house][hValue]);
 				foundonline = 1;
 				break;
@@ -2860,14 +2930,14 @@ CMD:asellhouse(playerid, params[])
 	    HouseInfo[house][hOrmar] 		= 0;
 		
 		PlayerPlaySound(playerid, 1052, 0.0, 0.0, 0.0);
-		SendClientMessage(playerid, COLOR_RED, "[ ! ] Prodao si kucu admin komandom, igracu je vracen novac u iznosu pocetne cijene kuce!");
-		format(globalstring, sizeof(globalstring), "Admin %s je iselio kucu %i.",GetName(playerid, false), house);
+		va_SendClientMessage(playerid, COLOR_RED, "[ ! ]: You sold a house on adress %s, buy price was returned to the previous owner!", HouseInfo[house][hAdress]);
+		format(globalstring, sizeof(globalstring), "Game Admin %s moved out House on adress %s[ID %d][SQLID: %d]", GetName(playerid, false), HouseInfo[house][hAdress], house, HouseInfo[house][hSQLID]);
 		SendAdminMessage(COLOR_LIGHTBLUE, globalstring);
 		#if defined MODULE_LOGS
-		LogASellHouse(globalstring);
+		Log_Write("/logfiles/a_sellhouse.txt", "(%s) Game Admin %s moved out House on adress %s[ID %d][SQLID: %d]", ReturnDate(), GetName(playerid, false), HouseInfo[house][hAdress], house, HouseInfo[house][hSQLID]);
 		#endif
 	}
-	else SendClientMessage(playerid, COLOR_RED, "Niste ovlasteni za koristenje ove komande!");
+	else SendMessage(playerid, MESSAGE_TYPE_ERROR, "You don't have permissions to use this command.");
 	return 1;
 }
 
@@ -2884,7 +2954,7 @@ CMD:asellcomplex(playerid, params[])
 				if(PlayerInfo[i][pSQLID] == ComplexInfo[complex][cOwnerID]) 
 				{
 					PlayerInfo[i][pComplexKey] = INVALID_COMPLEX_ID;
-					SendClientMessage(i, COLOR_RED, "[ ! ] Iseljen vam je COMPLEX od strane Admina, dobili ste pocetnu vrijednost COMPLEXa na ruke!");
+					va_SendClientMessage(i, COLOR_RED, "[ ! ]: Your Complex has been moved out by Game Admin %s, you got refunded buy price of it!", GetName(playerid, false));
 					BudgetToPlayerMoney(i, ComplexInfo[ complex ][ cPrice ]);
 					foundonline = 1;
 					break;
@@ -2917,14 +2987,14 @@ CMD:asellcomplex(playerid, params[])
 		ComplexInfo[complex][cOwnerID]		= 0;
 		
 		PlayerPlaySound(playerid, 1052, 0.0, 0.0, 0.0);
-		SendClientMessage(playerid, COLOR_RED, "[ ! ] Prodao si COMPLEX admin komandom, vlasnik je dobio pocetnu vrijednost COMPLEXa!");
-		format(globalstring, sizeof(globalstring), "Admin %s je iselio COMPLEX %i.",GetName(playerid, false), complex);
+		va_SendClientMessage(playerid, COLOR_RED, "[ ! ]: You sold Complex %s with admin command, the owner got the buy price of Complex in return!", ComplexInfo[complex][cName]);
+		format(globalstring, sizeof(globalstring), "Game Admin %s moved out Complex %s[ID %d][SQLID: %d]", GetName(playerid, false), ComplexInfo[complex][cName], complex, ComplexInfo[complex][cSQLID]);
 		SendAdminMessage(COLOR_LIGHTBLUE, globalstring);
 		#if defined MODULE_LOGS
-		LogASellComplex(globalstring);
+		Log_Write("/logfiles/a_sellcomplex.txt", "(%s) Game Admin %s moved out Complex %s[ID %d][SQLID: %d]", ReturnDate(), GetName(playerid, false), ComplexInfo[complex][cName], complex, ComplexInfo[complex][cSQLID]);
 		#endif
 	}
-	else SendClientMessage(playerid, COLOR_RED, "Niste ovlasteni za koristenje ove komande!");
+	else SendMessage(playerid, MESSAGE_TYPE_ERROR, "You don't have permissions to use this command.");
 	return 1;
 }
 
@@ -2940,7 +3010,7 @@ CMD:asellcomplexroom(playerid, params[])
 				if(PlayerInfo[i][pSQLID] == ComplexRoomInfo[complex][cOwnerID]) 
 				{
 					PlayerInfo[i][pComplexKey] = INVALID_COMPLEX_ID;
-					va_SendClientMessage(i, COLOR_RED, "[ ! ] Iseljeni ste iz complex sobe od strane Admina %s", GetName(playerid, true));
+					va_SendClientMessage(i, COLOR_RED, "[ ! ]: You got moved out of Complex Room on adress %s by Game Admin %s!", ComplexRoomInfo[complex][cAdress], GetName(playerid, false));
 					break;
 				}
 			}
@@ -2967,13 +3037,13 @@ CMD:asellcomplexroom(playerid, params[])
 
 		PlayerPlaySound(playerid, 1052, 0.0, 0.0, 0.0);
 		SendClientMessage(playerid, COLOR_RED, "[ ! ] Iselio si complex sobu admin komandom!");
-		format(globalstring, sizeof(globalstring), "Admin %s je iselio COMPLEX ROOM %i.",GetName(playerid, false), complex);
+		format(globalstring, sizeof(globalstring), "Game Admin %s moved out Complex Room on adress %s[ID %d][SQLID: %d]", GetName(playerid, false), ComplexRoomInfo[complex][cAdress], complex, ComplexRoomInfo[complex][cSQLID]);
 		SendAdminMessage(COLOR_LIGHTBLUE, globalstring);
 		#if defined MODULE_LOGS
-		LogASellComplex(globalstring);
+		Log_Write("/logfiles/a_sellcomplex.txt", "(%s) Game Admin %s moved out Complex Room on adress %s[ID %d][SQLID: %d]", ReturnDate(), GetName(playerid, false), ComplexRoomInfo[complex][cAdress], complex, ComplexRoomInfo[complex][cSQLID]);
 		#endif
 	}
-	else SendClientMessage(playerid, COLOR_RED, "Niste ovlasteni za koristenje ove komande!");
+	else SendMessage(playerid, MESSAGE_TYPE_ERROR, "You don't have permissions to use this command.");
 	return 1;
 }
 
