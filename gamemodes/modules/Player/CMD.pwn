@@ -72,19 +72,17 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 				
                 CanPMAdmin[playerid][giveplayerid] = 1;
 
-                //PM Logovi
-                new log[128],
-					playerip[MAX_PLAYER_IP];
+				#if defined MODULE_LOGS
+				new playerip[MAX_PLAYER_IP];
 				GetPlayerIp(playerid, playerip, sizeof(playerip));
-
-                format(log, sizeof(log), "%s(%s) za %s: %s",
+				Log_Write("/logfiles/a_pm.txt", "(%s) %s(%s) za %s: %s",
+					ReturnDate(),
 					GetName(playerid, false),
 					playerip,
 					GetName(giveplayerid, false),
 					text
 				);
-				LogPM(log);
-                return 1;
+				#endif
             }
             else format(PlayerInfo[playerid][pPMText], 128, "");
             return 1;
@@ -1111,19 +1109,17 @@ CMD:pm(playerid, params[])
 			va_SendClientMessage(i, 0xFFD1D1FF, "[PM] %s[%i] za %s[%i]: %s", GetName(playerid, false), playerid, GetName(giveplayerid, false), giveplayerid, text);
 		}
 	}
-
-	//PM Logovi
- 	new log[128],
-		playerip[MAX_PLAYER_IP];
+	#if defined MODULE_LOGS
+	new playerip[MAX_PLAYER_IP];
 	GetPlayerIp(playerid, playerip, sizeof(playerip));
-
-    format(log, sizeof(log), "%s(%s) za %s: %s",
+	Log_Write("/logfiles/a_pm.txt", "(%s) %s(%s) za %s: %s",
+		ReturnDate(),
 		GetName(playerid, false),
 		playerip,
 		GetName(giveplayerid, false),
 		text
 	);
-	LogPM(log);
+	#endif
 	return 1;
 }
 
@@ -1498,17 +1494,16 @@ CMD:pay(playerid, params[])
 		format(emoteTxt, sizeof(emoteTxt), "** %s daje novac %s (( Pay ))", GetName(playerid, true), GetName(giveplayerid, true));
 		ProxDetector(20.0, playerid, emoteTxt, COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE);
 		
-		//Logs
-		new
-			log[ 128 ];
-		format(log, sizeof(log), "%s(%s) je platio $%d %su (%s)", 
+		#if defined MODULE_LOGS
+		Log_Write("/logfiles/pay.txt", "(%s) %s(%s) paid $%d in cash to %s(%s).", 
+			ReturnDate(),
 			GetName( playerid, false ), 
 			GetPlayerIP(playerid),
 			moneys, 
 			GetName( giveplayerid, false ),
 			GetPlayerIP(giveplayerid)
 		);
-		PayLog(log);
+		#endif
 	}
 	else SendClientMessage(playerid, COLOR_RED, "Nepravilan iznos transakcije.");
 	return 1;
@@ -2464,15 +2459,14 @@ CMD:give(playerid, params[])
 					ProxDetector(5.0, playerid, globalstring, COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE);
 					new	puzavac = IsCrounching(giveplayerid);
 					SetAnimationForWeapon(giveplayerid, weapon, puzavac);
-					new
-						tmpLog[ 128 ];
-					format( tmpLog, 128, "Igrac %s je dao %s %d metaka (Oruzje: %s).",
+					#if defined MODULE_LOGS
+					Log_Write("/logfiles/a_givegun.txt", "(%s) %s gave %s %s with %d bullets.",
 						GetName(playerid, false),
 						GetName(giveplayerid, false),
-						finalammo,
-						WeapNames[weapon]
+						WeapNames[weapon],
+						finalammo
 					);
-					LogGiveGun(tmpLog);
+					#endif
 				}
 				else SendClientMessage(playerid, COLOR_RED, "Taj igrac nije blizu vas !");
  			}

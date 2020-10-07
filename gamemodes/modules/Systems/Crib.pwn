@@ -1820,15 +1820,16 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 			SendClientMessage(playerid, COLOR_RED, tmpString);
 			
 			#if defined MODULE_LOGS
-			new
-				log[126],
-				playerip[MAX_PLAYER_IP];
-
+			new playerip[MAX_PLAYER_IP];
 			GetPlayerIp(playerid, playerip, sizeof(playerip));
-
-			format(log, sizeof(log), "%s(%s) je stavio %d$ iz kucnog fonda (houseid: %d).",
-				GetName(playerid, false), playerip, length, bouse);
-			LogHouseMoney(log);
+			Log_Write("/logfiles/a_house_cash.txt", "(%s) %s(%s) put %d$ in house on adress %s[SQLID: %d].",
+				ReturnDate(),
+				GetName(playerid, false), 
+				playerip, 
+				length, 
+				HouseInfo[bouse][hAdress],
+				HouseInfo[bouse][hSQLID]
+			);
 			#endif
 			return 1;
 		}
@@ -1849,15 +1850,16 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 			SendClientMessage(playerid, COLOR_RED, tmpString);
 			
 			#if defined MODULE_LOGS
-			new
-				log[126],
-				playerip[MAX_PLAYER_IP];
-
+			new playerip[MAX_PLAYER_IP];
 			GetPlayerIp(playerid, playerip, sizeof(playerip));
-
-			format(log, sizeof(log), "%s(%s) je podigao %d$ iz kucnog fonda (houseid: %d).",
-				GetName(playerid, false), playerip, length, bouse);
-			LogHouseMoney(log);
+			Log_Write("/logfiles/a_house_cash.txt", "(%s) %s(%s) took %d$ from house on adress %s[SQLID: %d].",
+				ReturnDate(),
+				GetName(playerid, false), 
+				playerip, 
+				length, 
+				HouseInfo[bouse][hAdress],
+				HouseInfo[bouse][hSQLID]
+			);
 			#endif
 			return 1;
 		}

@@ -182,20 +182,14 @@ stock UnbanPlayerName(const playername[], adminid)
 	mysql_tquery(g_SQL, unbanQuery);
 	va_SendClientMessage(adminid, COLOR_RED, "[ ! ]: You have sucesfully unbanned account %s!", playername);
 
-	#if defined UNBAN_LOGGING
-		new
-			tmpString[ 128 ],
-			days, months, years;
-
-		getdate(years, months, days);
-		format( tmpString, sizeof( tmpString ), "[%s] Game Admin %s[%s](%s) je unbanao igraca %s.",
-			ReturnDate(),
-			PlayerInfo[adminid][pForumName],
-			GetName( adminid, false ),
-			GetPlayerIP( adminid ),
-			playername
-		);
-		LogAdminBan(tmpString);
+	#if defined MODULE_LOGS
+	Log_Write("/logfiles/a_unban.txt", "[%s] Game Admin %s[%s](%s) unbanned account %s.",
+		ReturnDate(),
+		PlayerInfo[adminid][pForumName],
+		GetName( adminid, false ),
+		GetPlayerIP( adminid ),
+		playername
+	);
 	#endif
 	return 1;
 }
@@ -208,21 +202,13 @@ stock UnbanPlayerIP(const playerip[], adminid)
 	SendRconCommand(dformat);
 	va_SendClientMessage( adminid, COLOR_RED, "[ ! ]: You have sucessfully unbanned IP %s", playerip);
 
-	#if defined UNBAN_LOGGING
-		new
-			tmpString[ 128 ],
-			days, months, years;
-
-		getdate(years, months, days);
-		format( tmpString, sizeof( tmpString ), "[%02d/%02d/%d] Game Admin %s(%s) unbanned IP %s",
-			days,
-			months,
-			years,
-			GetName( adminid, false ),
-			GetPlayerIP( adminid ),
-			playerip
-		);
-		LogAdminBan(tmpString);
+	#if defined MODULE_LOGS
+	Log_Write("/logfiles/a_unban.txt", "[%s] Game Admin %s(%s) unbanned IP %s",
+		ReturnDate(),
+		GetName( adminid, false ),
+		GetPlayerIP( adminid ),
+		playerip
+	);
 	#endif
 	return 1;
 }

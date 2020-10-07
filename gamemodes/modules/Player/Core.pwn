@@ -1004,57 +1004,6 @@ stock LevelUp(playerid)
 	}
 	return 1;
 }
- 
-stock BankTransferMoney(playerid, giveplayerid, MoneyAmmount)
-{
-	new
-		btmpString[ 128 ],
-		bankTransferQuery[128];
-	PlayerInfo[ playerid ][ pBank ] -= MoneyAmmount;
-	PlayerInfo[ giveplayerid ][ pBank ] += MoneyAmmount;
-	va_SendInfoMessage(playerid, "Prebacili ste $%d na racun %s!", MoneyAmmount, GetName(giveplayerid,true));
-	va_SendInfoMessage(giveplayerid, "%s vam je prebacio $%d na bankovni racun.", GetName(playerid,true), MoneyAmmount);
-	format(bankTransferQuery, sizeof(bankTransferQuery), "UPDATE `accounts` SET `bankmoney` = '%d' WHERE sqlid = '%d'",
-			PlayerInfo[ playerid ][ pBank ],
-			PlayerInfo[ playerid ][ pSQLID]
-		);
-	mysql_tquery(g_SQL, bankTransferQuery, "");
-	format(bankTransferQuery, sizeof(bankTransferQuery), "UPDATE `accounts` SET `bankmoney` = '%d' WHERE sqlid = '%d'",
-			PlayerInfo[ giveplayerid ][ pBank ],
-			PlayerInfo[ giveplayerid ][ pSQLID]
-		);
-	mysql_tquery(g_SQL, bankTransferQuery, "");
-		
-	if(MoneyAmmount >= 1000) {
-		format(btmpString, sizeof(btmpString), "[A] Bank transfer: %s je prebacio $%d igracu %s", GetName(playerid, false), MoneyAmmount, GetName(giveplayerid, false));
-		ABroadCast(COLOR_YELLOW,btmpString,1);
-	}
-
-	new
-		balog[128];
-	format(balog, sizeof(balog), "(%s) %s[%d] je prebacio $%d igracu %s[%d]",
-		ReturnDate(),
-		GetName(playerid, false),
-		PlayerInfo[playerid][pSQLID],
-		MoneyAmmount,
-		GetName(giveplayerid, false),
-		PlayerInfo[giveplayerid][pSQLID]
-	);
-	BankLog(balog);
-	return 1;
-}
-
-/*SendRadioPoruku(radioChan, color, sstring[])
-{
-	foreach (new i : Player)
-	{
-		for(new s = 1 ; s < 3 ; s ++)
-		{
-			if(PlayerInfo[i][pRadio][s] == radioChan && PlayerInfo[i][pHasRadio] && Bit1_Get( gr_PlayerRadio, i ) )
-			SendClientMessage(i, color, sstring);
-		}
-	}
-}*/
 
 /*
 	######## #### ##     ## ######## ########   ######  
