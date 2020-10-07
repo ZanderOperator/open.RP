@@ -1,5 +1,5 @@
 #include <YSI\y_hooks>
-
+				
 // Server Updates Dialog by Logan - July 2019.
 static 	
 		page1[1280],
@@ -12,19 +12,19 @@ static
 stock LoadUpdateList()
 {
     new File:handle = fopen("Changelog.txt", io_read),
-        buffer[200];
+        buffer[256];
     
     if(handle)
     {
         while(fread(handle, buffer))
 		{
-			if(strlen(updatestring) < 1280)
+			if(strlen(updatestring) < DIALOG_UPDATE_LIST_CHAR)
 				strcat(page1, buffer, sizeof(page1));
-			else if(strlen(updatestring) >= 1280 && strlen(updatestring) < (1280*2))
+			else if(strlen(updatestring) >= DIALOG_UPDATE_LIST_CHAR && strlen(updatestring) < (DIALOG_UPDATE_LIST_CHAR*2))
 				strcat(page2, buffer, sizeof(page2));
-			else if(strlen(updatestring) >= (1280*2) && strlen(updatestring) < (1280*3))
+			else if(strlen(updatestring) >= (DIALOG_UPDATE_LIST_CHAR*2) && strlen(updatestring) < (DIALOG_UPDATE_LIST_CHAR*3))
 				strcat(page3, buffer, sizeof(page3));
-			else if(strlen(updatestring) >= (1280*3))
+			else if(strlen(updatestring) >= (DIALOG_UPDATE_LIST_CHAR*3))
 				strcat(page4, buffer, sizeof(page4));
 
             strcat(updatestring, buffer, sizeof(updatestring));
@@ -56,21 +56,21 @@ stock RewardPlayer(playerid)
 			case 0..49:
 			{
 				BudgetToPlayerMoney(playerid, 500);
-				SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "Povodom novog updatea, nagradjeni ste sa 500$. Ugodnu igru zeli Vam City of Angels Team!");
+				SendFormatMessage(playerid, MESSAGE_TYPE_SUCCESS, "Povodom novog updatea, nagradjeni ste sa 500$. Ugodnu igru zeli Vam %s Team!", SERVER_NAME);
 			}
 			case 50..89:
 			{
 				ExpInfo[playerid][ePoints] += 1;
 				ExpInfo[playerid][eAllPoints] += 1;
 				SavePlayerExperience(playerid);
-				SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "Povodom novog updatea, nagradjeni ste sa 1 EXP bodom. Ugodnu igru zeli Vam City of Angels Team!");
+				SendFormatMessage(playerid, MESSAGE_TYPE_SUCCESS, "Povodom novog updatea, nagradjeni ste sa 1 EXP bodom. Ugodnu igru zeli Vam %s Team!", SERVER_NAME);
 			}
 			case 90..99:
 			{
 				ExpInfo[playerid][ePoints] += 5;
 				ExpInfo[playerid][eAllPoints] += 5;
 				SavePlayerExperience(playerid);
-				SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "Povodom novog updatea, nagradjeni ste sa 5 EXP bodova. Ugodnu igru zeli Vam City of Angels Team!");
+				SendFormatMessage(playerid, MESSAGE_TYPE_SUCCESS, "Povodom novog updatea, nagradjeni ste sa 5 EXP bodova. Ugodnu igru zeli Vam %s Team!", SERVER_NAME);
 			}
 		}
 		PlayerReward[playerid] = false;

@@ -4063,15 +4063,16 @@ CMD:bizwithdraw(playerid, params[])
 	);
 	SendClientMessage(playerid, COLOR_RED, string);
 
-	new
-		log[128];
-	format(log, sizeof(log), "%s(%s) je uzeo %d$ iz biznisa %d.",
+	#if defined MODULE_LOGS
+	Log_Write("/logfiles/a_biznis.txt", "(%s) %s(%s) took %d$ from Business %s[SQLID: %d].",
+		ReturnDate(),
 		GetName(playerid, false),
 		GetPlayerIP(playerid),
 		cashdeposit,
-		bouse
+		BizzInfo[bouse][bMessage],
+		BizzInfo[bouse][bSQLID]
 	);
-	LogBizBank(log);
+	#endif
 	return 1;
 }
 CMD:bizbank(playerid, params[])
@@ -4104,15 +4105,16 @@ CMD:bizbank(playerid, params[])
 	);
 	SendClientMessage(playerid, COLOR_RED, string);
 
-	new
-		log[128];
-	format(log, sizeof(log), "%s(%s) je stavio %d$ na biznis %d.",
+	#if defined MODULE_LOGS
+	Log_Write("/logfiles/a_biznis.txt", "(%s) %s(%s) deposited %d$ in Business %s[SQLID: %d].",
+		ReturnDate(),
 		GetName(playerid, false),
 		GetPlayerIP(playerid),
 		cashdeposit,
-		bouse
+		BizzInfo[bouse][bMessage],
+		BizzInfo[bouse][bSQLID]
 	);
-	LogBizBank(log);
+	#endif
 	return 1;
 }
 

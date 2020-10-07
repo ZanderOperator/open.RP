@@ -25,9 +25,10 @@
 #undef MAX_VEHICLES
 #define MAX_VEHICLES                      		(1000)
 
-//#define	WC_DEBUG							false
-//#define _DEBUG								0 											// YSI
-//#define MOD_DEBUG								true  										// Gamemode Debug
+#define 	MODULE_LOGS																			// Player/Game Admin Command/Actions logging feature 
+//#define		WC_DEBUG								false
+//#define 		_DEBUG									0 											// YSI
+//#define 		MOD_DEBUG								true  										// Gamemode Debug
 
 // MySQL inline query functions
 #define MYSQL_USE_YINLINE						true
@@ -125,6 +126,7 @@ native WP_Hash(buffer[], len, const str[]);
 
 // Server Informations - When chaning SCRIPT_VERSION, you MUST upload new "Changelog.txt" in /scriptfiles
 #define HOSTNAME 								"CoA.RP [0.3DL] - Summer Update"
+#define SERVER_NAME								"City of Angels"
 #define COPYRIGHT                           	"Copyright (c) 2020 City of Angels Roleplay"
 #define WEB_URL									"forum.cityofangels-roleplay.com"
 #define SCRIPT_VERSION							"CoA RP v18.5.5."
@@ -135,14 +137,15 @@ native WP_Hash(buffer[], len, const str[]);
 		forward%0(%1); \
 		public%0(%1)
 		
-#define IsPlayerLogged(%0) 			Bit1_Get(gr_PlayerLoggedIn,%0)
-#define IsPlayerLogging(%0) 		Bit1_Get(gr_PlayerLoggingIn,%0)
-#define IsPlayerAlive(%0) 			Bit1_Get(gr_PlayerAlive, %0)
-#define IsPlayerSafeBreaking(%0)	Bit1_Get( gr_SafeBreaking, playerid )
-#define IsPlayerReconing(%0) 		Bit4_Get(gr_SpecateId, %0)
+#define IsPlayerLogged(%0) 						Bit1_Get(gr_PlayerLoggedIn,%0)
+#define IsPlayerLogging(%0) 					Bit1_Get(gr_PlayerLoggingIn,%0)
+#define IsPlayerAlive(%0) 						Bit1_Get(gr_PlayerAlive, %0)
+#define IsPlayerSafeBreaking(%0)				Bit1_Get( gr_SafeBreaking, playerid )
+#define IsPlayerReconing(%0) 					Bit4_Get(gr_SpecateId, %0)
 
 // Limits - https://www.open.mp/docs/scripting/resources/limits
 #define EX_SPLITLENGTH 							(90) // Define when to split SendClientMessage into another line!
+#define DIALOG_UPDATE_LIST_CHAR					(1280) // How many chars can fit into 1/4 pages of Update Info Dialog
 #define MAX_DIALOG_TEXT                 		(756)
 #define MAX_LOGIN_TRIES							(3)
 #define MAX_PLAYER_MAIL							(32)
@@ -232,9 +235,9 @@ native WP_Hash(buffer[], len, const str[]);
 #define BUY_TYPE_BIZZ							(3)
 
 // Spawn Coordinates
-#define SPAWN_X								(1107.3832)
-#define SPAWN_Y								(-1389.9144)
-#define SPAWN_Z								(13.6500)
+#define SPAWN_X									(1107.3832)
+#define SPAWN_Y									(-1389.9144)
+#define SPAWN_Z									(13.6500)
 
 // Vehicle Tire Defines
 #define F_L_TIRE 0
@@ -243,20 +246,20 @@ native WP_Hash(buffer[], len, const str[]);
 #define B_R_TIRE 3
 
 // Anti-Spam
-#define ANTI_SPAM_PRIVATE_MESSAGE 			(5)
-#define ANTI_SPAM_BANK_CREDITPAY 			(5)
-#define ANTI_SPAM_CRIB_WEAPON				(5)
-#define ANTI_SPAM_CAR_WEAPON				(5)
-#define ANTI_SPAM_STEAL_MONEY				(60)
-#define ANTI_SPAM_BUY_TIME					(5)
-#define ANTI_SPAM_DOOR_SHOUT				(3)
+#define ANTI_SPAM_PRIVATE_MESSAGE 				(5)
+#define ANTI_SPAM_BANK_CREDITPAY 				(5)
+#define ANTI_SPAM_CRIB_WEAPON					(5)
+#define ANTI_SPAM_CAR_WEAPON					(5)
+#define ANTI_SPAM_STEAL_MONEY					(60)
+#define ANTI_SPAM_BUY_TIME						(5)
+#define ANTI_SPAM_DOOR_SHOUT					(3)
 
 // IRS Tax Logs - CheckPlayerTransactions
-#define LOG_TYPE_BIZSELL 		1
-#define LOG_TYPE_HOUSESELL 		2
-#define LOG_TYPE_VEHICLESELL	3
-#define LOG_TYPE_COMPLEXSELL    4
-#define LOG_TYPE_GARAGESELL     5
+#define LOG_TYPE_BIZSELL 						1
+#define LOG_TYPE_HOUSESELL 						2
+#define LOG_TYPE_VEHICLESELL					3
+#define LOG_TYPE_COMPLEXSELL    				4
+#define LOG_TYPE_GARAGESELL     				5
 
 /*
 	######## ##    ## ##     ## ##     ##  ######

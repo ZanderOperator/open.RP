@@ -1031,9 +1031,8 @@ public LoadPlayerWarns(playerid, targetname[],reason[])
 		OfflineBanPlayer(playerid, targetname, "3. Warn", 10);
         SendClientMessage(playerid,COLOR_RED, "[ ! ] Taj igrac je imao 3. warna te je automatski banan!");
         va_SendClientMessageToAll(COLOR_RED,"AdmCMD: %s [Offline] je dobio ban od admina %s, razlog: 3. Warn",targetname,GetName(playerid,false));
-        format(globalstring, sizeof(globalstring),"%s [OFFLINE] je dobio ban od admina %s, razlog: 3. Warn", targetname, GetName(playerid, false));
 		#if defined MODULE_LOGS
-		LogAdminBan(globalstring);
+		Log_Write("/logfiles/a_ban.txt", "(%s) %s [OFFLINE] got banned from Game Admin %s. Reason: 3. Warn", ReturnDate(), targetname, GetName(playerid, false));
 		#endif
 		mysql_format(g_SQL, mysqlquery, sizeof(mysqlquery), "UPDATE `accounts` SET `playaWarns` = '0' WHERE `name` = '%e' LIMIT 1", targetname);
         mysql_tquery(g_SQL, mysqlquery, "", "");
@@ -1982,7 +1981,7 @@ CMD:hm(playerid, params[])
 		format(motd, sizeof(motd), "(( HELPER %s:  %s ))", GetName(playerid, true), params);
 		SendClientMessageToAll(COLOR_HELPER, motd);
 		#if defined MODULE_LOGS
-		LogAdminMessage(globalstring);
+		Log_Write("/logfiles/a_adminmessage.txt", globalstring);
 		#endif
  	}
     else SendClientMessage(playerid, COLOR_RED, "Niste autorizirani za koristenje ove komande!");
@@ -2592,9 +2591,8 @@ CMD:givemoney(playerid, params[])
     BudgetToPlayerMoney(giveplayerid, amount); // budjet - igrac
 	format(globalstring, sizeof(globalstring), "AdmCMD: %s je stvorio igracu %s $%d (/Givemoney)", GetName(playerid,false), GetName(giveplayerid,false), amount);
 	SendAdminMessage(COLOR_RED, globalstring);
-	format(globalstring, sizeof(globalstring), "%s[%s] je dao %s %d$ putem /givemoney.", playerid, GetName(playerid,false), GetName(giveplayerid,false), amount);
 	#if defined MODULE_LOGS
-	LogAdminGiveMoney(globalstring);
+	Log_Write("/logfiles/a_givemoney.txt", "(%s) Game Admin %s[%s] gave %s %d$ with /givemoney.", ReturnDate(), playerid, GetName(playerid,false), GetName(giveplayerid,false), amount);
 	#endif
     return 1;
 }
@@ -2607,10 +2605,9 @@ CMD:giveallmoney(playerid, params[])
 	foreach( new giveplayerid : Player)
 	{
 		if (!IsPlayerLogged(giveplayerid) || !IsPlayerConnected(playerid) ) continue;
-		BudgetToPlayerMoney(giveplayerid, amount); // budjet - igrac
-		format(globalstring, sizeof(globalstring), "%s[%s] je dao %s %d$ putem /givemoney.", playerid, GetName(playerid,false), GetName(giveplayerid,false), amount);		
+		BudgetToPlayerMoney(giveplayerid, amount); // budjet - igrac		
 		#if defined MODULE_LOGS
-		LogAdminGiveMoney(globalstring);
+		Log_Write("/logfiles/a_givemoney.txt", "(%s) Game Admin %s[%s] gave %s %d$ with /givemoney.", ReturnDate(), playerid, GetName(playerid,false), GetName(giveplayerid,false), amount);
 		#endif
 	}
 	format(globalstring, sizeof(globalstring), "AdmCMD: %s je stvorio svim igracima $%d (/givemoneyallmoney)", GetName(playerid,false), amount);
@@ -2776,7 +2773,7 @@ CMD:edit(playerid, params[])
 			case 2: va_SendClientMessage(playerid, COLOR_RED, "[ ! ]: You just adjusted %s on Bizz ID %d[SQLID: %d][Name: %s] on value %d.", x_job, propid, BizzInfo[propid][bSQLID], BizzInfo[propid][bMessage], proplev);
 		}
 	}
-	else SendMessage(playerid, MESSAGE_TYPE_ERROR, "Unfortunately, house/business for editing wasn't found in proximity.");
+	else SendMessage(playerid, MESSAGE_TYPE_ERROR, "Unfortunately, house/business for editing wasn't found in your proximity.");
 	return 1;
 }
 CMD:asellbiz(playerid, params[])
@@ -3115,7 +3112,6 @@ CMD:factionmembers(playerid, params[])
 
 CMD:weather(playerid, params[])
 {
-    
     if (PlayerInfo[playerid][pAdmin] < 1337) return SendClientMessage(playerid, COLOR_RED, "Niste ovlasteni za koristenje ove komande!");
 	new weather;
 	if (sscanf(params, "i", weather)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /weather [Weatherid]");
@@ -3208,15 +3204,11 @@ CMD:setstat(playerid, params[])
 		{
 		    PlayerInfo[giveplayerid][pConnectTime] = amount;
 			format(globalstring, sizeof(globalstring), "   Korisnikovo ukupno vrijeme provedeno na serveru je postavljeno na %d.", amount);
-			new log[126], Day, Month, Year,
-				playerip[MAX_PLAYER_IP];
-			getdate(Year,Month,Day);
+			new playerip[MAX_PLAYER_IP];
 			GetPlayerIp(playerid, playerip, sizeof(playerip));
 			
 			#if defined MODULE_LOGS
-			format(log, sizeof(log), "[%02d/%02d/%d] %s[%s] je stavio vrijeme %s na %d sata.", Day, Month, Year, \
-				GetName(playerid,false), playerip, GetName(giveplayerid,false), PlayerInfo[giveplayerid][pConnectTime]);
-			LogSetStatConnectedTime(log);
+			Log_Write("/logfiles/a_setstat_connectedtime.txt", "(%s) Game Admin %s[%s] set %s's playing hours on %d.", ReturnDate(), GetName(playerid,false), playerip, GetName(giveplayerid,false), PlayerInfo[giveplayerid][pConnectTime]);
 			#endif
   		}
 		case 12:
@@ -4340,9 +4332,8 @@ CMD:unprison(playerid, params[])
 	SetPlayerWorldBounds(giveplayerid, 20000.0000, -20000.0000, 20000.0000, -20000.0000);
 	new playerip[MAX_PLAYER_IP];
 	GetPlayerIp(giveplayerid, playerip, sizeof(playerip));
-	format(globalstring, sizeof(globalstring), "%s je oslobodio %s iz F.DeMorgan (%s)", GetName(playerid,false), GetName(giveplayerid,false), playerip);
 	#if defined MODULE_LOGS
-	LogAdminUnPrison(globalstring);
+	Log_Write("/logfiles/a_unprison.txt", "(%s) Game Admin %s released %s from F.DeMorgan (%s)", ReturnDate(), GetName(playerid,false), GetName(giveplayerid,false), playerip);
 	#endif
     return 1;
 }
@@ -4419,7 +4410,7 @@ CMD:charge(playerid, params[])
  	if(money < 1) return SendClientMessage(playerid, COLOR_RED, "Cijena kazne nemoze biti manja od $1!");
 	format(globalstring, sizeof(globalstring), "AdmCMD: %s je novcano kaznio igraca %s sa $%d, razlog: %s", PlayerInfo[playerid][pForumName], GetName(giveplayerid,false), money, result);
 	#if defined MODULE_LOGS
-	LogAdminCharge(globalstring);
+	Log_Write("/logfiles/a_charge.txt", "(%s) %s fined player %s. Amount: $%d. Reason:: %s", ReturnDate(), PlayerInfo[playerid][pForumName], GetName(giveplayerid,false), money, result);
 	#endif
 	format(globalstring, sizeof(globalstring), "AdmCMD: %s je novcano kaznio igraca %s sa $%d, razlog: %s", PlayerInfo[playerid][pForumName], GetName(giveplayerid,false), money, result);
 	SendClientMessageToAll(COLOR_RED, globalstring);
@@ -4757,10 +4748,11 @@ CMD:jail(playerid, params[])
 		SendClientMessage(giveplayerid, COLOR_RED, "[ ! ] Nakon sto ste uhiceni, ostali ste bez dozvole za oruzje!");
 		PlayerInfo[giveplayerid][pGunLic] = 0;
 	}
+	#if defined MODULE_LOGS
 	new playerip[MAX_PLAYER_IP];
 	GetPlayerIp(playerid, playerip, sizeof(playerip));
-	format(globalstring, sizeof(globalstring), "Admin %s(%s) je zatvorio %s na %d", PlayerInfo[playerid][pForumName], playerip, GetName(giveplayerid,false), time);
-	LogAdminJail(globalstring);
+	Log_Write("/logfiles/a_jail.txt", "(%s) Game Admin %s(%s) jailed player %s on %d minutes.", ReturnDate(), PlayerInfo[playerid][pForumName], playerip, GetName(giveplayerid,false), time);
+	#endif
 	return 1;
 }
 
@@ -4785,11 +4777,10 @@ CMD:unjail(playerid, params[])
 		SetPlayerPos(giveplayerid, 90.6552, -236.3789, 1.5781);
 		SetPlayerInterior(playerid, 0);
 
+		#if defined MODULE_LOGS
 		new playerip[MAX_PLAYER_IP];
 		GetPlayerIp(playerid, playerip, sizeof(playerip));
-		format(globalstring, sizeof(globalstring), "%s(%s) je oslobodio %s", GetName(playerid,false), playerip, GetName(giveplayerid,false));
-		#if defined MODULE_LOGS
-		LogAdminUnJail(globalstring);
+		Log_Write("/logfiles/a_unjail.txt", "(%s) Game Admin %s(%s) released %s from jail.", ReturnDate(), GetName(playerid,false), playerip, GetName(giveplayerid,false));
 		#endif
 	}
 	else SendClientMessage(playerid, COLOR_RED, "Taj igrac nije u zatvoru!");
@@ -4890,10 +4881,6 @@ CMD:unban(playerid, params[])
 	UnbanPlayerName(targetname, playerid);
 	#endif
 	format(globalstring, sizeof(globalstring), "%s[%s] je unbanao %s", GetName(playerid,false), GetPlayerIP(playerid), targetname);
-	
-	#if defined MODULE_LOGS
-	LogAdminUnban(globalstring);
-	#endif
 	return 1;
 }
 
@@ -5035,21 +5022,21 @@ CMD:a(playerid, params[])
 		format(result, sizeof(result), "{FA5555}A[%d] {819BC6}%s: %s", PlayerInfo[playerid][pAdmin], GetName(playerid, false), params);
 		AHBroadCast(0x819BC6FF, result, 1);
 		#if defined MODULE_LOGS
-		LogAdminChat(result);
+		Log_Write("/logfiles/a_adminchat.txt", result);
 		#endif
 	}
 	else if( PlayerInfo[playerid][pAdmin] >= 1 ) {
 		format(result, sizeof(result), "{FF9933}A[%d] {819BC6}%s: %s", PlayerInfo[playerid][pAdmin], GetName(playerid,false), params);
 		AHBroadCast(0x819BC6FF, result, 1);
 		#if defined MODULE_LOGS
-		LogAdminChat(result);
+		Log_Write("/logfiles/a_adminchat.txt", result);
 		#endif
 	}
 	else if( PlayerInfo[playerid][pHelper] >= 1 ) {
 		format(result, sizeof(result), "{91FABB}H[%d] {819BC6}%s: %s", PlayerInfo[playerid][pHelper], GetName(playerid,false), params);
 		AHBroadCast(0x819BC6FF, result, 1);
 		#if defined MODULE_LOGS
-		LogAdminChat(result);
+		Log_Write("/logfiles/a_adminchat.txt", result);
 		#endif
 	}
 	else SendClientMessage(playerid, COLOR_RED, "Niste ovlasteni za koristenje ove komande!");
@@ -5723,7 +5710,7 @@ CMD:am(playerid, params[])
 	format(globalstring, sizeof(globalstring), "(( ADMIN %s: %s ))", PlayerInfo[playerid][pForumName], params);
 	SendClientMessageToAll(COLOR_YELLOW2, globalstring);
 	#if defined MODULE_LOGS
-	LogAdminMessage(globalstring);
+	Log_Write("/logfiles/a_adminmessage.txt", globalstring);
 	#endif
     return 1;
 }
@@ -5861,9 +5848,8 @@ CMD:kick(playerid, params[])
 	if(PlayerInfo[giveplayerid][pAdmin] > PlayerInfo[playerid][pAdmin])
 		return SendClientMessage(playerid, COLOR_RED, "Ne mozes kickati admina veceg levela!");
 	
-	format(globalstring, sizeof(globalstring), "%s je dobio kick od Admina %s, razlog: %s", GetName(giveplayerid,false), PlayerInfo[playerid][pForumName], reason);
 	#if defined MODULE_LOGS
-	LogAdminKick(globalstring);
+	Log_Write("/logfiles/a_kick.txt", "(%s) %s got kicked by Game Admin %s. Reason: %s", ReturnDate(), GetName(giveplayerid,false), PlayerInfo[playerid][pForumName], reason);
 	#endif
 	format(globalstring, sizeof(globalstring), "AdmCMD: %s je dobio kick od Admina %s, razlog: %s", GetName(giveplayerid,false), PlayerInfo[playerid][pForumName], reason);
 	SendClientMessageToAll(COLOR_RED, globalstring);
@@ -5966,17 +5952,18 @@ CMD:apm(playerid, params[])
 		format(str, sizeof(str), "[REPORT] %s je odgovorio na report ID od %s", GetName(playerid, false), GetName(giveplayerid, false));
  		SendAdminNotification(MESSAGE_TYPE_INFO, str);
 	}
-	new log[128],
-		playerip[MAX_PLAYER_IP];
+	#if defined MODULE_LOGS
+	new playerip[MAX_PLAYER_IP];
 	GetPlayerIp(playerid, playerip, sizeof(playerip));
-	
-	format(log, sizeof(log), "%s(%s) za %s: %s", 
+	Log_Write("/logfiles/a_pm.txt", "(%s) %s(%s) za %s: %s",
+		ReturnDate(),
 		GetName(playerid, false),
-		playerip, 
-		GetName(giveplayerid, false), 
+		playerip,
+		GetName(giveplayerid, false),
 		result
 	);
-	LogPM(log);
+	#endif
+	
 	return 1;
 }
 
@@ -6009,20 +5996,17 @@ CMD:givegun(playerid, params[])
 	SendFormatMessage(playerid, MESSAGE_TYPE_SUCCESS, "Dali ste %s %s sa %d metaka.", GetName(giveplayerid, false), GetWeaponNameEx(gun), ammo);
 	SendFormatMessage(giveplayerid, MESSAGE_TYPE_SUCCESS, "Game Admin %s vam je dao %s sa %d metaka.", GetName(playerid, false), GetWeaponNameEx(gun), ammo);
 	
-	if(gun != 36 && gun !=38)
-	{
-		new
-			tmpLog[ 128 ];
-		format( tmpLog, 128, "Admin %s je dao %s %s sa %d metaka.",
-			GetName(playerid, false),
-			GetName(giveplayerid, false),
-			GetWeaponNameEx(gun),
-			ammo
-		);
-		#if defined MODULE_LOGS
-		LogGiveGun(tmpLog);
-		#endif
-	}
+
+	#if defined MODULE_LOGS
+	Log_Write("/logfiles/a_givegun.txt", "(%s) Game Admin %s gave %s %s with %d bullets.",
+		ReturnDate(),
+		GetName(playerid, false),
+		GetName(giveplayerid, false),
+		GetWeaponNameEx(gun),
+		ammo
+	);
+	#endif
+
 	return 1;
 }
 
@@ -6054,19 +6038,14 @@ CMD:givebullet(playerid, params[])
 	SendFormatMessage(playerid, MESSAGE_TYPE_SUCCESS, "Dali ste %s %s sa jednim metkom.", GetName(giveplayerid, false), GetWeaponNameEx(gun));
 	SendFormatMessage(giveplayerid, MESSAGE_TYPE_SUCCESS, "Game Admin %s vam je dao %s sa jednim metkom.", GetName(playerid, false), GetWeaponNameEx(gun));
 	
-	if(gun != 36 && gun !=38)
-	{
-		new
-			tmpLog[ 128 ];
-		format( tmpLog, 128, "Admin %s je dao %s %s s 1 metkom municije (/givebullet).",
-			GetName(playerid, false),
-			GetName(giveplayerid, false),
-			GetWeaponNameEx(gun)
-		);
-		#if defined MODULE_LOGS
-		LogGiveGun(tmpLog);
-		#endif
-	}
+	#if defined MODULE_LOGS
+	Log_Write("/logfiles/a_givegun.txt", "(%s) Game Admin %s gave %s %s with 1 bullet.",
+		ReturnDate(),
+		GetName(playerid, false),
+		GetName(giveplayerid, false),
+		GetWeaponNameEx(gun)
+	);
+	#endif
 	return 1;
 }
 

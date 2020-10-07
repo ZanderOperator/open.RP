@@ -152,7 +152,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 				}
 				case 4: // Namjenski kredit za vozilo 
 				{
-					if(PlayerInfo[playerid][pLevel] < 5) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Morate biti level 4 da biste mogli podici ovaj tip kredita.");
+					if(PlayerInfo[playerid][pLevel] < 5) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Morate biti level 5 da biste mogli podici ovaj tip kredita.");
 					if(CreditInfo[playerid][cCreditType] >= 1) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Da bi ste podigli novi kredit, predhodni morate otplatiti.");
 					if(!IsPlayerCredible(playerid, 100000)) return 1;
 
@@ -168,7 +168,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 				}
 				case 5: // Namjenski kredit za kucu 
 				{
-					if(PlayerInfo[playerid][pLevel] < 5) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Morate biti level 4 da biste mogli podici ovaj tip kredita.");
+					if(PlayerInfo[playerid][pLevel] < 5) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Morate biti level 5 da biste mogli podici ovaj tip kredita.");
 					if(CreditInfo[playerid][cCreditType] >= 1) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Da bi ste podigli novi kredit, predhodni morate otplatiti.");
 					if(!IsPlayerCredible(playerid, 100000)) return 1;
 
@@ -184,7 +184,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 				}
 				case 6: // Namjenski kredit za biznis 
 				{
-					if(PlayerInfo[playerid][pLevel] < 10) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Morate biti level 4 da biste mogli podici ovaj tip kredita.");
+					if(PlayerInfo[playerid][pLevel] < 10) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Morate biti level 10 da biste mogli podici ovaj tip kredita.");
 					if(CreditInfo[playerid][cCreditType] >= 1) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Da bi ste podigli novi kredit, predhodni morate otplatiti.");
 					if(!IsPlayerCredible(playerid, 100000)) return 1;
 
@@ -327,6 +327,43 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 		}
 	}
 	return (true);
+}
+
+BankTransferMoney(playerid, giveplayerid, MoneyAmmount)
+{
+	new
+		btmpString[ 128 ],
+		bankTransferQuery[128];
+	PlayerInfo[ playerid ][ pBank ] -= MoneyAmmount;
+	PlayerInfo[ giveplayerid ][ pBank ] += MoneyAmmount;
+	va_SendInfoMessage(playerid, "Prebacili ste $%d na racun %s!", MoneyAmmount, GetName(giveplayerid,true));
+	va_SendInfoMessage(giveplayerid, "%s vam je prebacio $%d na bankovni racun.", GetName(playerid,true), MoneyAmmount);
+	format(bankTransferQuery, sizeof(bankTransferQuery), "UPDATE `accounts` SET `bankmoney` = '%d' WHERE sqlid = '%d'",
+			PlayerInfo[ playerid ][ pBank ],
+			PlayerInfo[ playerid ][ pSQLID]
+		);
+	mysql_tquery(g_SQL, bankTransferQuery, "");
+	format(bankTransferQuery, sizeof(bankTransferQuery), "UPDATE `accounts` SET `bankmoney` = '%d' WHERE sqlid = '%d'",
+			PlayerInfo[ giveplayerid ][ pBank ],
+			PlayerInfo[ giveplayerid ][ pSQLID]
+		);
+	mysql_tquery(g_SQL, bankTransferQuery, "");
+		
+	if(MoneyAmmount >= 1000) {
+		format(btmpString, sizeof(btmpString), "[A] Bank transfer: %s je prebacio $%d igracu %s", GetName(playerid, false), MoneyAmmount, GetName(giveplayerid, false));
+		ABroadCast(COLOR_YELLOW,btmpString,1);
+	}
+	#if defined MODULE_LOGS
+	Log_Write("/logfiles/bank.txt", "(%s) %s[SQLID: %d] transferred $%d to %s[SQLID: %d]",
+		ReturnDate(),
+		GetName(playerid, false),
+		PlayerInfo[playerid][pSQLID],
+		MoneyAmmount,
+		GetName(giveplayerid, false),
+		PlayerInfo[giveplayerid][pSQLID]
+	);
+	#endif
+	return 1;
 }
 
 CalculatePlayerBuyMoney(playerid, type)
@@ -585,11 +622,9 @@ CMD:bank(playerid, params[])
 		if( sscanf( params, "s[15]ui", pick, giveplayerid, moneys ) ) return SendClientMessage(playerid, COLOR_RED, "[ ? ]:  /bank transfer [Playerid/DioImena][iznos]");
 		if( PlayerInfo[ playerid ][ pLevel ] < 2 ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Morate biti level 2+!");
 		if( giveplayerid == INVALID_PLAYER_ID) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Taj igrac nije online.");
-		if( moneys > 0 && PlayerInfo[ playerid ][ pBank ] >= moneys ) {
-
+		if( moneys > 0 && PlayerInfo[ playerid ][ pBank ] >= moneys ) 
 			BankTransferMoney(playerid, giveplayerid, moneys);
 		
-		} 
 		else SendMessage(playerid, MESSAGE_TYPE_ERROR, "Krivi iznos transakcije!");
 	}
 	else if(!strcmp(pick, "credit", true))

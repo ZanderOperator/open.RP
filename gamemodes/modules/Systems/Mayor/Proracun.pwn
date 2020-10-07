@@ -508,13 +508,13 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 			new
 				putMoney = strval(inputtext);
 				
-			if( putMoney > 0 ) {
+			if( putMoney > 0 ) 
+			{
 				if( AC_GetPlayerMoney(playerid) < putMoney ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate toliko novca!");
 				PlayerToBusinessMoney (playerid, biznis, putMoney); // Novac od Mayora ide u biznis
-				new
-					log[ 128 ];
-					
-				format( log, 128, "%s Mayor %s je stavio %d$ u biznis %s (ID %d [MySQL ID: %d]).",
+				SendFormatMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uspjesno ste stavili %d$ u blagajnu biznisa %s!", putMoney, BizzInfo[biznis][bMessage]);
+				#if defined MODULE_LOGS
+				Log_Write("/logfiles/proracun.txt", "(%s) Mayor %s put %d$ in business %s [SQlID: %d].",
 					ReturnDate(),
 					GetName(playerid),
 					putMoney,
@@ -522,9 +522,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 					biznis,
 					BizzInfo[biznis][bSQLID]
 				);
-				LogBudget(log);
-			
-				SendFormatMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uspjesno ste stavili %d$ u blagajnu biznisa %s!", putMoney, BizzInfo[biznis][bMessage]);
+				#endif
 			} 
 			else {
 				ShowPlayerDialog(playerid, DIALOG_CITY_BIZDEPOSIT, DIALOG_STYLE_INPUT, "Stavljanje novca u blagajnu biznisa", "Molimo Vas unesite iznos koji zelite staviti u biznis:", "Unesi", "Izlaz");
@@ -550,10 +548,9 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 			if( takeMoney > 0 ) {
 				if( BizzInfo[biznis][bTill] < takeMoney ) return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "U blagajni biznisa nema toliko novca. Stanje blagajne: %d$", BizzInfo[biznis][bTill]);
 				BusinessToPlayerMoney (playerid, biznis, takeMoney); // Novac iz biznisa ide u ruke Mayora
-				new
-					log[ 128 ];
-					
-				format( log, 128, "%s Mayor %s je digao %d$ iz biznisa %s (ID %d [MySQL ID: %d]).",
+				SendFormatMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uspjesno ste digli %d$ iz blagajne biznisa %s!", takeMoney, BizzInfo[biznis][bMessage]);
+				#if defined MODULE_LOGS
+				Log_Write("/logfiles/proracun.txt", "(%s) Mayor %s took %d$ from business %s [SQlID: %d].",
 					ReturnDate(),
 					GetName(playerid),
 					takeMoney,
@@ -561,9 +558,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 					biznis,
 					BizzInfo[biznis][bSQLID]
 				);
-				LogBudget(log);
-			
-				SendFormatMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uspjesno ste digli %d$ iz blagajne biznisa %s!", takeMoney, BizzInfo[biznis][bMessage]);
+				#endif
 			} 
 			else {
 				ShowPlayerDialog(playerid, DIALOG_CITY_BIZWITHDRAW, DIALOG_STYLE_INPUT, "Uzimanje novca iz blagajne biznisa", "Molimo Vas unesite iznos koji zelite dignuti iz biznisa:", "Unesi", "Izlaz");
@@ -602,21 +597,22 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 			}
 			return 1;
 		}
-		case DIALOG_CITY_BUDGET_TAKE: {
+		case DIALOG_CITY_BUDGET_TAKE: 
+		{
 			if( !response ) return ShowPlayerDialog(playerid, DIALOG_CITY_BUDGET, DIALOG_STYLE_LIST, "GRADSKI PRORACUN", "Uzmi\nStavi\nStatus", "Odaberi", "Odustani");
 			new takeMoney = strval(inputtext);
 			if(0 <= takeMoney <= CityInfo[ cBudget ])
 			{
-				new log[ 128 ];
-				format( log, 128, "%s je uzeo %d$ iz proracuna (%d$).",
+				SendFormatMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uzeli ste %d $ iz proracuna!", takeMoney);
+				BudgetToPlayerMoney(playerid, takeMoney); // Novac od budgeta ide Mayoru
+				#if defined MODULE_LOGS
+				Log_Write("/logfiles/proracun.txt", "(%s) Mayor %s took %d$ from city budget.(Left: %d$).",
+					ReturnDate(),
 					GetName(playerid),
 					takeMoney,
 					CityInfo[ cBudget ]
 				);
-				LogBudget(log);
-				
-				SendFormatMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uzeli ste %d $ iz proracuna!", takeMoney);
-				BudgetToPlayerMoney(playerid, takeMoney); // Novac od budgeta ide Mayoru
+				#endif
 			}
 			else
 			{
@@ -630,29 +626,28 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 			}
 			return 1;
 		}
-		case DIALOG_CITY_BUDGET_PUT: {
+		case DIALOG_CITY_BUDGET_PUT: 
+		{
 			if( !response ) return ShowPlayerDialog(playerid, DIALOG_CITY_BUDGET, DIALOG_STYLE_LIST, "GRADSKI PRORACUN", "Uzmi\nStavi\nStatus", "Odaberi", "Odustani");
 			new
 				takeMoney = strval(inputtext);
 			if( takeMoney > 0 ) {
 				if( AC_GetPlayerMoney(playerid) < takeMoney ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate toliko novca!");
 				PlayerToBudgetMoney(playerid, takeMoney); // Novac od Mayora ide u budget
-				
-				new
-					log[ 128 ];
-				format( log, 128, "%s je stavio %d$ u proracun (%d$).",
+				SendFormatMessage(playerid, MESSAGE_TYPE_SUCCESS, "Stavili ste %d$ u proracun!", takeMoney);
+				#if defined MODULE_LOGS
+				Log_Write("/logfiles/proracun.txt", "(%s) Mayor %s put %d$ in city budget.(Current state: %d$).",
+					ReturnDate(),
 					GetName(playerid),
 					takeMoney,
 					CityInfo[ cBudget ]
 				);
-				LogBudget(log);
-			
-				SendFormatMessage(playerid, MESSAGE_TYPE_SUCCESS, "Stavili ste %d$ u proracuna!", takeMoney);
-
-				
-			} else {
+				#endif
+			} 
+			else 
+			{
 				new
-					tmpString[ 95 ];
+					tmpString[ 200 ];
 				format( tmpString, sizeof(tmpString), "Unesite iznos koji zelite staviti u proracun.\nTrenutno stanje proracuna: "COL_RED"%d$",
 					CityInfo[ cBudget ]
 				);
@@ -910,15 +905,14 @@ CMD:charity(playerid, params[])
 	format(string, sizeof(string), "**[GOV FINANCE/ IM] %s je izvrsio uplatu na GP u vrijednosti od %d $", GetName(playerid, true), pay);
 	SendRadioMessage(4, TEAM_BLUE_COLOR, string);
 	
-	//Logs
-	new
-		log[ 128 ];
-	format(log, sizeof(log), "%s(%s) je uplatio %d$ u proracun.", 
+	#if defined MODULE_LOGS
+	Log_Write("/logfiles/charity.txt" "(%s) %s(%s) donated %d$ to city budget.", 
+		ReturnDate(),
 		GetName( playerid, false ), 
 		GetPlayerIP(playerid),
 		pay
 	);
-	CharityLog(log);
+	#endif
 	SendFormatMessage(playerid, MESSAGE_TYPE_INFO, "Uspjesno ste donirali %d$ gradu!", pay);
 	return 1;
 }

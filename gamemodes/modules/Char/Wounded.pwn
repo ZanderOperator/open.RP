@@ -167,7 +167,8 @@ stock InflictPlayerDamage(playerid, issuerid, bodypart, Float:damage)
 				SendClientMessage(playerid, COLOR_DEATH, "Smrtno si ranjen. Pricekaj 60 sekundi do ponovnog spawna!");
 				RegisterPlayerDeath(playerid, issuerid);
 
-				ApplyAnimation(playerid,"WUZI","CS_DEAD_GUY", 4.0,0,1,1,1,0);
+				if(GetPlayerState(playerid) == PLAYER_STATE_ONFOOT)
+					ApplyAnimation(playerid,"WUZI","CS_DEAD_GUY", 4.0,0,1,1,1,0);
 
 				Bit8_Set(gr_DeathCountSeconds, playerid, 61);
 				Bit1_Set(gr_DeathCountStarted, playerid, true); //ako je ovo true onda ne smije koristiti /l, /c, /me, /do
@@ -290,7 +291,8 @@ stock DealDamage(playerid, issuerid, Float: health, Float: armour, Float: damage
 				SendMessage(playerid, MESSAGE_TYPE_INFO, "Smrtno si ranjen. Pricekaj 60 sekundi do ponovnog spawna!");
 				RegisterPlayerDeath(playerid, issuerid);
 
-				ApplyAnimation(playerid,"WUZI","CS_DEAD_GUY", 4.0,0,1,1,1,0);
+				if(GetPlayerState(playerid) == PLAYER_STATE_ONFOOT)
+					ApplyAnimation(playerid,"WUZI","CS_DEAD_GUY", 4.0,0,1,1,1,0);
 				
 				Bit8_Set(gr_DeathCountSeconds, playerid, 61);
 				Bit1_Set(gr_DeathCountStarted, playerid, true); //ako je ovo true onda ne smije koristiti /l, /c, /me, /do
