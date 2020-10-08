@@ -740,7 +740,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 
 				new buffer[128];
 				format(buffer, sizeof(buffer),"Molimo vas unesite koliko zelite da Fire(id: %d) ima health-a.",  GetFlameDialogID[playerid]);
-				ShowPlayerDialog(playerid, DIALOG_HEALTHFIRE2, DIALOG_STYLE_INPUT, "* Fire Health", buffer, "(change)", "(x)");
+				ShowPlayerDialog(playerid, DIALOG_HEALTHFIRE2, DIALOG_STYLE_INPUT, "* Fire Health", buffer, "(change)", "Close");
 			}
 		}
 		case DIALOG_HEALTHFIRE2: {
@@ -843,7 +843,7 @@ CMD:afire(playerid, params[]) {
 
 	if(strcmp(action,"spawnfire",true) == 0) {
   		format(dialogstring, sizeof(dialogstring),"Kako bi kreirali 'plamena', morate unesti koliko HP-a zelite da plamen ima.\n{C9FFAB}Defualt Fire Health -> %d{C9FFAB}			Max Fire Health -> %d", DEFAULT_FIRE_HEALTH, MAX_FIRE_HEALTH);
-  		ShowPlayerDialog(playerid, DIALOG_SPAWNFIRE, DIALOG_STYLE_INPUT, "* Spawn Fire", dialogstring, "Spawn", "(x)");
+  		ShowPlayerDialog(playerid, DIALOG_SPAWNFIRE, DIALOG_STYLE_INPUT, "* Spawn Fire", dialogstring, "Spawn", "Close");
 	}
 
 	if(strcmp(action,"destroyall",true) == 0) {
@@ -852,15 +852,15 @@ CMD:afire(playerid, params[]) {
 	}
 	
 	if(strcmp(action,"destroyfire",true) == 0) {
-  		ShowPlayerDialog(playerid, DIALOG_DESTROYFIRE, DIALOG_STYLE_INPUT, "* Destroy Fire", "Kako bi izbrisali 'plamena', morate unesti ID plamena koji se nalazi na labelu od plamena.", "Spawn", "(x)");
+  		ShowPlayerDialog(playerid, DIALOG_DESTROYFIRE, DIALOG_STYLE_INPUT, "* Destroy Fire", "Kako bi izbrisali 'plamena', morate unesti ID plamena koji se nalazi na labelu od plamena.", "Spawn", "Close");
 	}
 
 	if(strcmp(action,"movefire",true) == 0) {
-  		ShowPlayerDialog(playerid, DIALOG_MOVEFIRE, DIALOG_STYLE_INPUT, "* Move Fire", "Kako bi promijenili poziciju 'plamena', morate unesti ID plamena koji se nalazi na labelu od plamena.", "Spawn", "(x)");
+  		ShowPlayerDialog(playerid, DIALOG_MOVEFIRE, DIALOG_STYLE_INPUT, "* Move Fire", "Kako bi promijenili poziciju 'plamena', morate unesti ID plamena koji se nalazi na labelu od plamena.", "Spawn", "Close");
 	}
 
 	if(strcmp(action,"firehealth",true) == 0) {
-  		ShowPlayerDialog(playerid, DIALOG_HEALTHFIRE1, DIALOG_STYLE_INPUT, "* Fire Health", "Kako bi promijenili health(kolicina) 'plamena', morate unesti id plamena koji se nalazi na labelu od plamena.", "Spawn", "(x)");
+  		ShowPlayerDialog(playerid, DIALOG_HEALTHFIRE1, DIALOG_STYLE_INPUT, "* Fire Health", "Kako bi promijenili health(kolicina) 'plamena', morate unesti id plamena koji se nalazi na labelu od plamena.", "Spawn", "Close");
 	}
 
 	if(strcmp(action,"startfire",true) == 0) {
@@ -873,7 +873,7 @@ CMD:afire(playerid, params[]) {
 	}
 
 	if(strcmp(action,"fdannounce",true) == 0) {
-  		ShowPlayerDialog(playerid, DIALOG_FDANNOUNCE, DIALOG_STYLE_INPUT, "* FD Announce", "Upisite kakvu poruku zelite poslati online Fire Department clanovima.\n[Primjer]: Izbio je pozar na lokaciji 'location name' i o kakvom se pozaru radi.", "Spawn", "(x)");
+  		ShowPlayerDialog(playerid, DIALOG_FDANNOUNCE, DIALOG_STYLE_INPUT, "* FD Announce", "Upisite kakvu poruku zelite poslati online Fire Department clanovima.\n[Primjer]: Izbio je pozar na lokaciji 'location name' i o kakvom se pozaru radi.", "Spawn", "Close");
 	}
 	return (true);
 }

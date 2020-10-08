@@ -249,7 +249,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 				new free_id = -1, Float:X, Float:Y, Float:Z, gpsname[24];
 	        	
 	        	if(strlen(inputtext) < 3 || strlen(inputtext) > 24) 
-	        		return ShowPlayerDialog(playerid, DIALOG_CREATEGPS, DIALOG_STYLE_INPUT, "{3C95C2}* Create GPS.", "\nIspod morate unesti ime lokacije koja ce se nalazit na /gps.\n{3C95C2}[!]: Naziv mjesta ne smije biti duzi od 24 slova.","(create)", "(x)");
+	        		return ShowPlayerDialog(playerid, DIALOG_CREATEGPS, DIALOG_STYLE_INPUT, "{3C95C2}* Create GPS.", "\nIspod morate unesti ime lokacije koja ce se nalazit na /gps.\n{3C95C2}[!]: Naziv mjesta ne smije biti duzi od 24 slova.","Create", "Close");
 	        	GetPlayerPos(playerid, X, Y, Z);
 				strcat(gpsname, inputtext);
 				free_id = Create_GPS(gpsname, X, Y, Z);
@@ -300,7 +300,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 	    	if(response) {
 	        	new gpsid, mapicon;
 				if(sscanf( inputtext, "ii", gpsid, mapicon)) 
-					return ShowPlayerDialog(playerid, DIALOG_GPSMAPICON, DIALOG_STYLE_INPUT, "{3C95C2}* Mapicon GPS.", "\nIspod morate unesti ID lokacije(/gps) i zeljeni id mapicon-a.\n{3C95C2}[!] Primjer: 1(gps id) 56(mapicon) -1(U slucaju da ne zelite mapicon).", "(input)", "(x)");
+					return ShowPlayerDialog(playerid, DIALOG_GPSMAPICON, DIALOG_STYLE_INPUT, "{3C95C2}* Mapicon GPS.", "\nIspod morate unesti ID lokacije(/gps) i zeljeni id mapicon-a.\n{3C95C2}[!] Primjer: 1(gps id) 56(mapicon) -1(U slucaju da ne zelite mapicon).", "Input", "Close");
 			
 				if(!Iter_Contains(GPS_location, gpsid)) 
 					return SendClientMessage(playerid, 0xFF6347AA, "[ERROR]: Unijeli ste nepoznati ID lokacije sa GPS-a.");
@@ -368,7 +368,7 @@ CMD:gps(playerid, params[])
 			counter++;
 		}
 	}
-	ShowPlayerDialog(playerid, DIALOG_LOCATIONSGPS, DIALOG_STYLE_LIST, "{3C95C2}* GPS", buff, "Odabir", "Izlaz");
+	ShowPlayerDialog(playerid, DIALOG_LOCATIONSGPS, DIALOG_STYLE_LIST, "{3C95C2}* GPS", buff, "Pick", "Exit");
 	return (true);
 }
 
@@ -387,7 +387,7 @@ CMD:port(playerid, params[]) {
 		GPSToList[playerid][counter] = int;
 		counter++;
 	}
-	ShowPlayerDialog(playerid, DIALOG_ALOCATIONSGPS, DIALOG_STYLE_LIST, "{3C95C2}* PORT - LOCATIONS", buff, "(port)", "(x)");
+	ShowPlayerDialog(playerid, DIALOG_ALOCATIONSGPS, DIALOG_STYLE_LIST, "{3C95C2}* PORT - LOCATIONS", buff, "Port", "Close");
 	return (true);
 }
 
@@ -402,10 +402,10 @@ CMD:agps(playerid, params[]) {
 		return (true);
 	}
 	if(strcmp(action,"create", true) == 0)
-		ShowPlayerDialog(playerid, DIALOG_CREATEGPS, DIALOG_STYLE_INPUT, "{3C95C2}* Create GPS.", "\nIspod morate unesti ime lokacije koja ce se nalazit na /gps.\n{3C95C2}[!]: Naziv mjesta ne smije biti duzi od 24 slova.","(create)", "(x)");
+		ShowPlayerDialog(playerid, DIALOG_CREATEGPS, DIALOG_STYLE_INPUT, "{3C95C2}* Create GPS.", "\nIspod morate unesti ime lokacije koja ce se nalazit na /gps.\n{3C95C2}[!]: Naziv mjesta ne smije biti duzi od 24 slova.", "Create", "Close");
 
 	if(strcmp(action,"move", true) == 0)
-		ShowPlayerDialog(playerid, DIALOG_MOVEGPS, DIALOG_STYLE_INPUT, "{3C95C2}* Move GPS.", "\nIspod morate unesti id lokacije kojoj zelite promijeniti poziciju.\n{3C95C2}[!]: Listu lokacija mozete pronaci na /gps..","(move)", "(x)");
+		ShowPlayerDialog(playerid, DIALOG_MOVEGPS, DIALOG_STYLE_INPUT, "{3C95C2}* Move GPS.", "\nIspod morate unesti id lokacije kojoj zelite promijeniti poziciju.\n{3C95C2}[!]: Listu lokacija mozete pronaci na /gps.", "Move", "Close");
 
 	if(strcmp(action,"goto", true) == 0) {
 		new buff[MAX_GPS_LOCATIONS*32],
@@ -418,7 +418,7 @@ CMD:agps(playerid, params[]) {
 				format(motd, sizeof(motd), "\n{3C95C2}(%d) - %s.", int, GPS_data[int][gpsName]);
 			strcat(buff, motd);
 		}
-		ShowPlayerDialog(playerid, DIALOG_ALOCATIONSGPS, DIALOG_STYLE_LIST, "{3C95C2}* GPS", buff, "(select)", "(x)");
+		ShowPlayerDialog(playerid, DIALOG_ALOCATIONSGPS, DIALOG_STYLE_LIST, "{3C95C2}* GPS", buff, "Select", "Close");
 		return (true);
 	}
 	
@@ -445,10 +445,10 @@ CMD:agps(playerid, params[]) {
 	}
 	
 	if(strcmp(action,"mapicon", true) == 0)
-		ShowPlayerDialog(playerid, DIALOG_GPSMAPICON, DIALOG_STYLE_INPUT, "{3C95C2}* Mapicon GPS.", "\nIspod morate unesti ID lokacije(/agps goto) i zeljeni ID mapicon-a.\n{3C95C2}[!] Format: [GPS ID] [mapicon ID - (56 - zuta tacka)/(-1 ako ne zelite map icon)].", "(input)", "(x)");
+		ShowPlayerDialog(playerid, DIALOG_GPSMAPICON, DIALOG_STYLE_INPUT, "{3C95C2}* Mapicon GPS.", "\nIspod morate unesti ID lokacije(/agps goto) i zeljeni ID mapicon-a.\n{3C95C2}[!] Format: [GPS ID] [mapicon ID - (56 - zuta tacka)/(-1 ako ne zelite map icon)].", "Input", "Close");
 
 	if(strcmp(action,"delete", true) == 0)
-		ShowPlayerDialog(playerid, DIALOG_DELETEGPS, DIALOG_STYLE_INPUT, "{3C95C2}* Delete GPS.", "\nIspod morate unesti ID lokacije koja se nalazi na /gps.\n{3C95C2}[!]: Sve ID-ove lokacija mozete pronaci na /agps goto.","(delete)", "(x)");
+		ShowPlayerDialog(playerid, DIALOG_DELETEGPS, DIALOG_STYLE_INPUT, "{3C95C2}* Delete GPS.", "\nIspod morate unesti ID lokacije koja se nalazi na /gps.\n{3C95C2}[!]: Sve ID-ove lokacija mozete pronaci na /agps goto.", "Delete", "Close");
 
 	return (true);
 }

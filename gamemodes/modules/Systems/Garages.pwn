@@ -646,7 +646,7 @@ CMD:garage(playerid, params[])
 		GarageBuyer[ playerid ] 	= giveplayerid;
 		GaragePrice[ giveplayerid ] = price;
 		
-		va_ShowPlayerDialog(giveplayerid, DIALOG_GARAGE_SELL, DIALOG_STYLE_MSGBOX, "%s vam zeli prodati garazu", "Zelite li kupiti garazu od %s za %d$?", "Kupi", "Odustani",
+		va_ShowPlayerDialog(giveplayerid, DIALOG_GARAGE_SELL, DIALOG_STYLE_MSGBOX, "%s vam zeli prodati garazu", "Zelite li kupiti garazu od %s za %d$?", "Buy", "Abort",
 			GetName(playerid,true),
 			GetName(playerid, true),
 			price

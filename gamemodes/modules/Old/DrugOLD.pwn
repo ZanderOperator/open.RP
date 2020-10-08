@@ -1460,7 +1460,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 			DrugSlot[playerid] = dslot;
 			new dstring[64];
 			format(dstring, sizeof(dstring), "Upisite koliko %s(od %.2f g) zelis uzeti.", GetDrugNameByDrugID(dcode), total);
-			ShowPlayerDialog(playerid, DIALOG_VEH_DAMOUNT, DIALOG_STYLE_INPUT, "Kolicina droge", dstring, "Unos", "Izlaz");
+			ShowPlayerDialog(playerid, DIALOG_VEH_DAMOUNT, DIALOG_STYLE_INPUT, "Kolicina droge", dstring, "Input", "Exit");
 			return 1;
 		}
 		case DIALOG_VEH_DAMOUNT:
@@ -1711,7 +1711,7 @@ CMD:drug(playerid, params[])
 	}
 	else if(strcmp(item,"view",true) == 0)
     {
-  		ShowPlayerDialog(playerid, DIALOG_ALERT, DIALOG_STYLE_MSGBOX, "\tVase droge:", ListPlayerDrugs(playerid), "Zatvori","");
+  		ShowPlayerDialog(playerid, DIALOG_ALERT, DIALOG_STYLE_MSGBOX, "\tVase droge:", ListPlayerDrugs(playerid), "Close","");
 		return 1;
 	}
 	else if(strcmp(item,"use",true) == 0)
@@ -2016,7 +2016,7 @@ CMD:drug(playerid, params[])
         vehicleid = GetPlayerVehicleID(playerid);
         if(!IsPlayerInAnyVehicle(playerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ovu komandu mozete pisati samo dok ste u vozilu!");
 		if( !Iter_Contains(COVehicles, vehicleid) ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste u privatnome vozilu!");
-		ShowPlayerDialog(playerid, DIALOG_VEH_TAKEDRUG, DIALOG_STYLE_LIST, "Vozilo - uzimanje droge", ListPlayerVehicleDrugs(playerid, vehicleid), "Odaberi", "Odustani");
+		ShowPlayerDialog(playerid, DIALOG_VEH_TAKEDRUG, DIALOG_STYLE_LIST, "Vozilo - uzimanje droge", ListPlayerVehicleDrugs(playerid, vehicleid), "Choose", "Abort");
         return 1;
     }
     else if(strcmp(item,"produce",true) == 0)

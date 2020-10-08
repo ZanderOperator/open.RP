@@ -186,7 +186,7 @@ stock ShowGovMDC(playerid, targetid)
 		strcat(govDialog,motd, sizeof(govDialog));
 	}
 
-    ShowPlayerDialog(playerid, DIALOG_GOVMDC, DIALOG_STYLE_MSGBOX, "{98B5D3}PROFILE ASSIGNED", govDialog, "Transakcije", "Zatvori");
+    ShowPlayerDialog(playerid, DIALOG_GOVMDC, DIALOG_STYLE_MSGBOX, "{98B5D3}PROFILE ASSIGNED", govDialog, "Transakcije", "Close");
 	return 1;
 }
 // ######################### FACTION BANKE #########################
@@ -282,7 +282,7 @@ public OnPlayerTransactionFinish(playerid, const searchednick[])
 	}
 	format(gPersonChecked, sizeof(gPersonChecked), "%s", searchednick);
 	format(dtitle, sizeof(dtitle), "Imovinske transakcije: %s", searchednick);
-	ShowPlayerDialog(playerid, DIALOG_PLAYER_TRANSACTIONS, DIALOG_STYLE_MSGBOX, dtitle, dialogstring, "Zatvori", "");
+	ShowPlayerDialog(playerid, DIALOG_PLAYER_TRANSACTIONS, DIALOG_STYLE_MSGBOX, dtitle, dialogstring, "Close", "");
 	return 1;
 }
 
@@ -350,7 +350,7 @@ public OnTransListQueryFinish(playerid, logtype)
 		strcat(dialogstring, motd, sizeof(dialogstring));
 	}
 	format(dtitle, sizeof(dtitle), "Lista transakcija: %s", typestring);
-	ShowPlayerDialog(playerid, DIALOG_PLAYER_TRANSACTIONS, DIALOG_STYLE_MSGBOX, dtitle, dialogstring, "Zatvori", "");
+	ShowPlayerDialog(playerid, DIALOG_PLAYER_TRANSACTIONS, DIALOG_STYLE_MSGBOX, dtitle, dialogstring, "Close", "");
 	return 1;
 }
 
@@ -389,7 +389,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 			
 			switch( listitem ) {
 				case 0: { // Proracun
-					ShowPlayerDialog(playerid, DIALOG_CITY_BUDGET, DIALOG_STYLE_LIST, "GRADSKI PRORACUN", "Uzmi\nStavi\nStatus", "Odaberi", "Odustani");
+					ShowPlayerDialog(playerid, DIALOG_CITY_BUDGET, DIALOG_STYLE_LIST, "GRADSKI PRORACUN", "Uzmi\nStavi\nStatus", "Choose", "Abort");
 				}
 				case 1: { // Porez
 					new
@@ -397,7 +397,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 					format( tmpString, sizeof(tmpString), "Unesite novi porez za gradjane Los Santosa.\nTrenutni porez iznosi: %d"COL_GREEN"%", 
 						CityInfo[ cTax ] 
 					);
-					ShowPlayerDialog(playerid, DIALOG_CITY_TAX, DIALOG_STYLE_INPUT, "GRADSKI PRORACUN - POREZ", tmpString, "Unesi", "Odustani");
+					ShowPlayerDialog(playerid, DIALOG_CITY_TAX, DIALOG_STYLE_INPUT, "GRADSKI PRORACUN - POREZ", tmpString, "Input", "Abort");
 				}
 				case 2: { // Faction Bank
 					new buffer[512],
@@ -413,15 +413,15 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 							counter++;
 						}
 					}
-					ShowPlayerDialog(playerid, DIALOG_CITY_FACTIONBANK, DIALOG_STYLE_TABLIST_HEADERS, "PRORACUN ORGANIZACIJA", buffer, "Odaberi", "Odustani");
+					ShowPlayerDialog(playerid, DIALOG_CITY_FACTIONBANK, DIALOG_STYLE_TABLIST_HEADERS, "PRORACUN ORGANIZACIJA", buffer, "Choose", "Abort");
 				}
 				case 3: // Mayor Business Regulation ( Info && Deposit/Withdraw)
-					ShowPlayerDialog(playerid, DIALOG_CITY_BIZNIS, DIALOG_STYLE_LIST, "Odaberite opciju:", "Biznis Info\nStavi novac u blagajnu\nDigni novac iz blagajne", "Odaberi", "Izlaz");
+					ShowPlayerDialog(playerid, DIALOG_CITY_BIZNIS, DIALOG_STYLE_LIST, "Odaberite opciju:", "Biznis Info\nStavi novac u blagajnu\nDigni novac iz blagajne", "Choose", "Exit");
 			}
 			return 1;
 		}
 		case DIALOG_CITY_BIZNIS: {
-			if( !response ) return ShowPlayerDialog( playerid, DIALOG_CITY_MAIN, DIALOG_STYLE_LIST, "GRAD", "Proracun\nPorez\nFaction Bank\nBiznis Info", "Odaberi", "Odustani");
+			if( !response ) return ShowPlayerDialog( playerid, DIALOG_CITY_MAIN, DIALOG_STYLE_LIST, "GRAD", "Proracun\nPorez\nFaction Bank\nBiznis Info", "Choose", "Abort");
 			switch(listitem)
 			{
 				case 0: { // Bizz Info
@@ -474,7 +474,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 					}
 					if(biznis == INVALID_BIZNIS_ID) return SendClientMessage(playerid,COLOR_RED, "Ne nalazis se ispred ulaza biznisa.");
 					va_SendClientMessage(playerid, COLOR_RED, "[ ! ] Stanje u blagajni biznisa: %d$", BizzInfo[biznis][bTill]);
-					ShowPlayerDialog(playerid, DIALOG_CITY_BIZDEPOSIT, DIALOG_STYLE_INPUT, "Stavljanje novca u blagajnu biznisa", "Molimo Vas unesite iznos koji zelite staviti u biznis:", "Unesi", "Izlaz");
+					ShowPlayerDialog(playerid, DIALOG_CITY_BIZDEPOSIT, DIALOG_STYLE_INPUT, "Stavljanje novca u blagajnu biznisa", "Molimo Vas unesite iznos koji zelite staviti u biznis:", "Input", "Exit");
 				}
 				case 2: { // Dizanje novca iz biznis blagajne
 					new
@@ -488,13 +488,13 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 					}
 					if(biznis == INVALID_BIZNIS_ID) return SendClientMessage(playerid,COLOR_RED, "Ne nalazis se ispred ulaza biznisa.");
 					va_SendClientMessage(playerid, COLOR_RED, "[ ! ] Stanje u blagajni biznisa: %d$", BizzInfo[biznis][bTill]);
-					ShowPlayerDialog(playerid, DIALOG_CITY_BIZWITHDRAW, DIALOG_STYLE_INPUT, "Uzimanje novca iz blagajne biznisa", "Molimo Vas unesite iznos koji zelite dignuti iz biznisa:", "Unesi", "Izlaz");
+					ShowPlayerDialog(playerid, DIALOG_CITY_BIZWITHDRAW, DIALOG_STYLE_INPUT, "Uzimanje novca iz blagajne biznisa", "Molimo Vas unesite iznos koji zelite dignuti iz biznisa:", "Input", "Exit");
 				}
 			}
 			return 1;
 		}
 		case DIALOG_CITY_BIZDEPOSIT: { // Stavljanje novca na biznis blagajnu
-			if( !response ) return ShowPlayerDialog(playerid, DIALOG_CITY_BIZNIS, DIALOG_STYLE_LIST, "Odaberite opciju:", "Biznis Info\nStavi novac u blagajnu\nDigni novac iz blagajne", "Odaberi", "Izlaz");
+			if( !response ) return ShowPlayerDialog(playerid, DIALOG_CITY_BIZNIS, DIALOG_STYLE_LIST, "Odaberite opciju:", "Biznis Info\nStavi novac u blagajnu\nDigni novac iz blagajne", "Choose", "Exit");
 			new
 				biznis = INVALID_BIZNIS_ID;
 				
@@ -525,13 +525,13 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 				#endif
 			} 
 			else {
-				ShowPlayerDialog(playerid, DIALOG_CITY_BIZDEPOSIT, DIALOG_STYLE_INPUT, "Stavljanje novca u blagajnu biznisa", "Molimo Vas unesite iznos koji zelite staviti u biznis:", "Unesi", "Izlaz");
+				ShowPlayerDialog(playerid, DIALOG_CITY_BIZDEPOSIT, DIALOG_STYLE_INPUT, "Stavljanje novca u blagajnu biznisa", "Molimo Vas unesite iznos koji zelite staviti u biznis:", "Input", "Exit");
 				return 1;
 			}
 			return 1;
 		}
 		case DIALOG_CITY_BIZWITHDRAW: { // Dizanje novca iz biznis blagajne
-			if( !response ) return ShowPlayerDialog(playerid, DIALOG_CITY_BIZNIS, DIALOG_STYLE_LIST, "Odaberite opciju:", "Biznis Info\nStavi novac u blagajnu\nDigni novac iz blagajne", "Odaberi", "Izlaz");
+			if( !response ) return ShowPlayerDialog(playerid, DIALOG_CITY_BIZNIS, DIALOG_STYLE_LIST, "Odaberite opciju:", "Biznis Info\nStavi novac u blagajnu\nDigni novac iz blagajne", "Choose", "Exit");
 			new
 				biznis = INVALID_BIZNIS_ID;
 				
@@ -561,13 +561,13 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 				#endif
 			} 
 			else {
-				ShowPlayerDialog(playerid, DIALOG_CITY_BIZWITHDRAW, DIALOG_STYLE_INPUT, "Uzimanje novca iz blagajne biznisa", "Molimo Vas unesite iznos koji zelite dignuti iz biznisa:", "Unesi", "Izlaz");
+				ShowPlayerDialog(playerid, DIALOG_CITY_BIZWITHDRAW, DIALOG_STYLE_INPUT, "Uzimanje novca iz blagajne biznisa", "Molimo Vas unesite iznos koji zelite dignuti iz biznisa:", "Input", "Exit");
 				return 1;
 			}
 			return 1;
 		}
 		case DIALOG_CITY_BUDGET: {
-			if( !response ) return ShowPlayerDialog( playerid, DIALOG_CITY_MAIN, DIALOG_STYLE_LIST, "GRAD", "Proracun\nPorez\nFaction Bank\nBiznis Info", "Odaberi", "Odustani");
+			if( !response ) return ShowPlayerDialog( playerid, DIALOG_CITY_MAIN, DIALOG_STYLE_LIST, "GRAD", "Proracun\nPorez\nFaction Bank\nBiznis Info", "Choose", "Abort");
 			switch(listitem)
 			{
 				case 0: { // Uzmi
@@ -576,7 +576,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 					format( tmpString, sizeof(tmpString), "Unesite iznos koji zelite uzeti iz proracuna.\nTrenutno stanje proracuna: %d$",
 						CityInfo[ cBudget ]
 					);
-					ShowPlayerDialog(playerid, DIALOG_CITY_BUDGET_TAKE, DIALOG_STYLE_INPUT, "GRADSKI PRORACUN - UZIMANJE", tmpString, "Unesi", "Odustani");
+					ShowPlayerDialog(playerid, DIALOG_CITY_BUDGET_TAKE, DIALOG_STYLE_INPUT, "GRADSKI PRORACUN - UZIMANJE", tmpString, "Input", "Abort");
 				}
 				case 1: { // Stavi
 					new
@@ -584,7 +584,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 					format( tmpString, sizeof(tmpString), "Unesite iznos koji zelite staviti u proracun.\nTrenutno stanje proracuna: %d$",
 						CityInfo[ cBudget ]
 					);
-					ShowPlayerDialog(playerid, DIALOG_CITY_BUDGET_PUT, DIALOG_STYLE_INPUT, "GRADSKI PRORACUN - STAVLJANJE", tmpString, "Unesi", "Odustani");
+					ShowPlayerDialog(playerid, DIALOG_CITY_BUDGET_PUT, DIALOG_STYLE_INPUT, "GRADSKI PRORACUN - STAVLJANJE", tmpString, "Input", "Abort");
 				}
 				case 2: { // Status
 					new
@@ -592,14 +592,14 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 					format( tmpString, sizeof(tmpString), "Trenutno stanje proracuna: %d "COL_GREEN"$",
 						CityInfo[ cBudget ]
 					);
-					ShowPlayerDialog(playerid, DIALOG_CITY_BUDGET_STAT, DIALOG_STYLE_MSGBOX, "GRADSKI PRORACUN - STATUS", tmpString, "Unesi", "Odustani");
+					ShowPlayerDialog(playerid, DIALOG_CITY_BUDGET_STAT, DIALOG_STYLE_MSGBOX, "GRADSKI PRORACUN - STATUS", tmpString, "Input", "Abort");
 				}
 			}
 			return 1;
 		}
 		case DIALOG_CITY_BUDGET_TAKE: 
 		{
-			if( !response ) return ShowPlayerDialog(playerid, DIALOG_CITY_BUDGET, DIALOG_STYLE_LIST, "GRADSKI PRORACUN", "Uzmi\nStavi\nStatus", "Odaberi", "Odustani");
+			if( !response ) return ShowPlayerDialog(playerid, DIALOG_CITY_BUDGET, DIALOG_STYLE_LIST, "GRADSKI PRORACUN", "Uzmi\nStavi\nStatus", "Choose", "Abort");
 			new takeMoney = strval(inputtext);
 			if(0 <= takeMoney <= CityInfo[ cBudget ])
 			{
@@ -621,14 +621,14 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 				format( tmpString, sizeof(tmpString), "Unesite iznos koji zelite uzeti iz proracuna.\nTrenutno stanje proracuna: "COL_RED"%d$",
 					CityInfo[ cBudget ]
 				);
-				ShowPlayerDialog(playerid, DIALOG_CITY_BUDGET_TAKE, DIALOG_STYLE_INPUT, "GRADSKI PRORACUN - UZIMANJE", tmpString, "Unesi", "Odustani");
+				ShowPlayerDialog(playerid, DIALOG_CITY_BUDGET_TAKE, DIALOG_STYLE_INPUT, "GRADSKI PRORACUN - UZIMANJE", tmpString, "Input", "Abort");
 				return 1;
 			}
 			return 1;
 		}
 		case DIALOG_CITY_BUDGET_PUT: 
 		{
-			if( !response ) return ShowPlayerDialog(playerid, DIALOG_CITY_BUDGET, DIALOG_STYLE_LIST, "GRADSKI PRORACUN", "Uzmi\nStavi\nStatus", "Odaberi", "Odustani");
+			if( !response ) return ShowPlayerDialog(playerid, DIALOG_CITY_BUDGET, DIALOG_STYLE_LIST, "GRADSKI PRORACUN", "Uzmi\nStavi\nStatus", "Choose", "Abort");
 			new
 				takeMoney = strval(inputtext);
 			if( takeMoney > 0 ) {
@@ -651,13 +651,13 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 				format( tmpString, sizeof(tmpString), "Unesite iznos koji zelite staviti u proracun.\nTrenutno stanje proracuna: "COL_RED"%d$",
 					CityInfo[ cBudget ]
 				);
-				ShowPlayerDialog(playerid, DIALOG_CITY_BUDGET_PUT, DIALOG_STYLE_INPUT, "GRADSKI PRORACUN - STAVLJANJE", tmpString, "Unesi", "Odustani");
+				ShowPlayerDialog(playerid, DIALOG_CITY_BUDGET_PUT, DIALOG_STYLE_INPUT, "GRADSKI PRORACUN - STAVLJANJE", tmpString, "Input", "Abort");
 				return 1;
 			}
 			return 1;
 		}
 		case DIALOG_CITY_TAX: {
-			if( !response ) return ShowPlayerDialog( playerid, DIALOG_CITY_MAIN, DIALOG_STYLE_LIST, "GRAD", "Proracun\nPorez\nFaction Bank\nBiznis Info", "Odaberi", "Odustani");
+			if( !response ) return ShowPlayerDialog( playerid, DIALOG_CITY_MAIN, DIALOG_STYLE_LIST, "GRAD", "Proracun\nPorez\nFaction Bank\nBiznis Info", "Choose", "Abort");
 			
 			new
 				newTax = strval(inputtext);
@@ -679,7 +679,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 		}
 		case DIALOG_CITY_FACTIONBANK: {
 			if(!response) {
-				ShowPlayerDialog( playerid, DIALOG_CITY_MAIN, DIALOG_STYLE_LIST, "GRAD", "Proracun\nPorez\nFaction Bank\nBiznis Info", "Odaberi", "Odustani");
+				ShowPlayerDialog( playerid, DIALOG_CITY_MAIN, DIALOG_STYLE_LIST, "GRAD", "Proracun\nPorez\nFaction Bank\nBiznis Info", "Choose", "Abort");
 				ResetFactionListIDs(playerid);
 				return 1;
 			}
@@ -689,14 +689,14 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 				fid = FactionToList[playerid][listitem];
 				
 				format(dtitle, sizeof(dtitle), "%s Faction Bank | Odaberite opciju", FactionInfo[fid][fName]);
-				ShowPlayerDialog(playerid, DIALOG_FACTIONBANK_OPTIONS, DIALOG_STYLE_LIST, dtitle, "Stavi novac u Faction Bank\nPodigni novac iz Faction Banka", "Odaberi", "Izlaz");
+				ShowPlayerDialog(playerid, DIALOG_FACTIONBANK_OPTIONS, DIALOG_STYLE_LIST, dtitle, "Stavi novac u Faction Bank\nPodigni novac iz Faction Banka", "Choose", "Exit");
 				
 			}
 			return 1;
 		}
 		case DIALOG_FACTIONBANK_OPTIONS: {
 			if(!response) {
-				ShowPlayerDialog( playerid, DIALOG_CITY_MAIN, DIALOG_STYLE_LIST, "GRAD", "Proracun\nPorez\nFaction Bank\nBiznis Info", "Odaberi", "Odustani");
+				ShowPlayerDialog( playerid, DIALOG_CITY_MAIN, DIALOG_STYLE_LIST, "GRAD", "Proracun\nPorez\nFaction Bank\nBiznis Info", "Choose", "Abort");
 				ResetFactionListIDs(playerid);
 				return 1;
 			}
@@ -707,11 +707,11 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 				switch(listitem) {
 					case 0: {
 						format(dtitle, sizeof(dtitle), "%s Faction Bank Deposit", FactionInfo[fid][fName]);
-						ShowPlayerDialog(playerid, DIALOG_FACTIONBANK_DEPOSIT, DIALOG_STYLE_INPUT, dtitle, "Upisite svotu koju zelite staviti na Faction Banku", "Unesi", "Izlaz");
+						ShowPlayerDialog(playerid, DIALOG_FACTIONBANK_DEPOSIT, DIALOG_STYLE_INPUT, dtitle, "Upisite svotu koju zelite staviti na Faction Banku", "Input", "Exit");
 					}
 					case 1: {
 						format(dtitle, sizeof(dtitle), "%s Faction Bank Withdraw", FactionInfo[fid][fName]);
-						ShowPlayerDialog(playerid, DIALOG_FACTIONBANK_WITHDRAW, DIALOG_STYLE_INPUT, dtitle, "Upisite svotu koju zelite podici sa Faction Banka", "Podigni", "Izlaz");
+						ShowPlayerDialog(playerid, DIALOG_FACTIONBANK_WITHDRAW, DIALOG_STYLE_INPUT, dtitle, "Upisite svotu koju zelite podici sa Faction Banka", "Podigni", "Exit");
 					}
 				}
 			}
@@ -719,7 +719,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 		}
 		case DIALOG_FACTIONBANK_DEPOSIT: {
 			if(!response) {
-				ShowPlayerDialog( playerid, DIALOG_CITY_MAIN, DIALOG_STYLE_LIST, "GRAD", "Proracun\nPorez\nFaction Bank\nBiznis Info", "Odaberi", "Odustani");
+				ShowPlayerDialog( playerid, DIALOG_CITY_MAIN, DIALOG_STYLE_LIST, "GRAD", "Proracun\nPorez\nFaction Bank\nBiznis Info", "Choose", "Abort");
 				ResetFactionListIDs(playerid);
 				return 1;
 			}
@@ -747,7 +747,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 		}
 		case DIALOG_FACTIONBANK_WITHDRAW: {
 			if(!response) {
-				ShowPlayerDialog( playerid, DIALOG_CITY_MAIN, DIALOG_STYLE_LIST, "GRAD", "Proracun\nPorez\nFaction Bank\nBiznis Info", "Odaberi", "Odustani");
+				ShowPlayerDialog( playerid, DIALOG_CITY_MAIN, DIALOG_STYLE_LIST, "GRAD", "Proracun\nPorez\nFaction Bank\nBiznis Info", "Choose", "Abort");
 				ResetFactionListIDs(playerid);
 				return 1;
 			}
@@ -788,7 +788,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 			switch(listitem)
 			{
 				case 0:
-					ShowPlayerDialog(playerid, DIALOG_TRANSACTIONS_INPUT, DIALOG_STYLE_INPUT, "Unos imena", "Molimo Vas unesite zeljeno ime", "Unesi", "Zatvori");
+					ShowPlayerDialog(playerid, DIALOG_TRANSACTIONS_INPUT, DIALOG_STYLE_INPUT, "Unos imena", "Molimo Vas unesite zeljeno ime", "Input", "Close");
 				case 1:
 					ListServerTransactions(playerid, LOG_TYPE_HOUSESELL);
 				case 2:
@@ -888,7 +888,7 @@ CMD:city(playerid, params[])
 {
  	if (PlayerInfo[playerid][pAdmin] < 1338) return SendClientMessage(playerid, COLOR_RED, "Niste ovlasteni za koristenje ove komande!");
 	// if(!IsAtBank(playerid)) return SendClientMessage(playerid, COLOR_RED, "Morate biti u banci da bi ste mogli koristiti ovu komandu !");
-	ShowPlayerDialog( playerid, DIALOG_CITY_MAIN, DIALOG_STYLE_LIST, "GRAD", "Proracun\nPorez\nFaction Bank\nBiznis Info", "Odaberi", "Odustani");
+	ShowPlayerDialog( playerid, DIALOG_CITY_MAIN, DIALOG_STYLE_LIST, "GRAD", "Proracun\nPorez\nFaction Bank\nBiznis Info", "Choose", "Abort");
 	return 1;
 }
 
@@ -929,7 +929,7 @@ CMD:finance(playerid, params[])
 		return 1;
 	}
 	if( !strcmp(pick,"check",true) ) 
-		ShowPlayerDialog(playerid, DIALOG_LIST_TRANSACTIONS, DIALOG_STYLE_LIST, "Odaberite koje transakcije provjeravate", "Osoba\nKuce\nBiznisi\nVozila\nKompleksi\nGaraze", "Odaberi", "Izlaz");
+		ShowPlayerDialog(playerid, DIALOG_LIST_TRANSACTIONS, DIALOG_STYLE_LIST, "Odaberite koje transakcije provjeravate", "Osoba\nKuce\nBiznisi\nVozila\nKompleksi\nGaraze", "Choose", "Exit");
 	if( !strcmp(pick,"delete",true) )  {
 		new id;
 		if(sscanf(params, "s[10]i", pick, id)) {

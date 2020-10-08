@@ -432,13 +432,6 @@ public Combine(playerid)
 		UpgradePlayerSkill(playerid, 0);
 		BudgetToPlayerBankMoney(playerid, Profit);
 		PlayerInfo[playerid][pPayDayMoney] += Profit;
-		
-		Log_Write("logfiles/farmerabjuzv2.txt", "(%s) %s{%d} je zavrsio posao s combineom te zaradio $%d.", 
-			ReturnDate(), 
-			GetName(playerid),
-			PlayerInfo[playerid][pSQLID],
-			Profit
-		);
 		PlayerInfo[playerid][pFreeWorks] -= 5;
 	} else {
 		if( IsPlayerInAnyVehicle(playerid)) 
@@ -841,13 +834,6 @@ CMD:milk(playerid, params[])
 		SetPlayerSpecialAction(playerid, 0);
 		new moneys = (MilkInfo[playerid][mLiters] * 150) + (GetPlayerSkillLevel(playerid, 0) * 20);
 		BudgetToPlayerBankMoney (playerid, moneys); // sjeda na radnu knjizicu
-		
-		Log_Write("logfiles/farmerabjuzv2.txt", "(%s) %s{%d} je zavrsio s poslom te prodao kanistar mljeka za $%d.", 
-			ReturnDate(), 
-			GetName(playerid),
-			PlayerInfo[playerid][pSQLID],
-			moneys
-		);
 		PlayerInfo[playerid][pFreeWorks] -= 5;
 		
 		MilkInfo[playerid][mLiters] = 0;
@@ -870,14 +856,6 @@ CMD:milk(playerid, params[])
     	MilkInfo[playerid][mLiters] += minrand(2, 3);
     	SendMessage(playerid, MESSAGE_TYPE_INFO, "Uzeli ste kanister s mlijekom iz spremista!");
     	SendClientMessage(playerid, COLOR_RED, "[ ! ] Odite do svog kamiona, te kucajte /milk put kako bi stavili kanister na kamion.");
-		
-		Log_Write("logfiles/farmerabjuzv2.txt", "(%s) %s{%d} je uzeo kanister s mlijekom od %d litara", 
-			ReturnDate(), 
-			GetName(playerid),
-			PlayerInfo[playerid][pSQLID],
-			MilkInfo[playerid][mLiters]
-		);
-		
     	return SendClientMessage(playerid, -1, "Kanister mozete baciti sa /dropcanister.");
 	}
 	else if( !strcmp(param, "put", true) ) {
@@ -971,14 +949,6 @@ CMD:milk(playerid, params[])
 			MilkInfo[playerid][mFactoryCP] = 1;
 			SetPlayerCheckpoint(playerid, 2362.4734, -2099.7356, 13.5469, 5.0);
 		}
-		Log_Write("logfiles/farmerabjuzv2.txt", "(%s) %s{%d} je stavio kanister s mlijekom od %d litara u vozilo i ima %d litara u vozilu!", 
-			ReturnDate(), 
-			GetName(playerid),
-			PlayerInfo[playerid][pSQLID],
-			MilkInfo[playerid][mLiters],
-			TruckInfo[playerid][tLiters]
-		);
-		
 		MilkInfo[playerid][mStorageCanister] = 0;
 		MilkInfo[playerid][mLiters] = 0;
 		RemovePlayerAttachedObject(playerid, 9);
@@ -1036,12 +1006,6 @@ CMD:milk(playerid, params[])
 		MilkInfo[playerid][mTransporting] = 0;
 		va_SendClientMessage(playerid, COLOR_RED, "[ ! ] Zaradio si $%d, placa ti je sjela na racun.", moneys);
 		
-		Log_Write("logfiles/farmerabjuzv2.txt", "(%s) %s{%d} je zavrsio s milk poslom te zaradio $%d.", 
-			ReturnDate(), 
-			GetName(playerid),
-			PlayerInfo[playerid][pSQLID],
-			moneys
-		);
 		ResetFarmerVars(playerid);
 		UpgradePlayerSkill(playerid, 0);
 	}
@@ -1363,13 +1327,6 @@ CMD:crops(playerid, params[])
 			va_SendClientMessage(playerid, COLOR_RED, "[ ! ] Zaradio si $%d, placa ti je sjela na racun.", moneys);
 			ResetFarmerVars(playerid);
 			UpgradePlayerSkill(playerid, 0);
-			
-			Log_Write("logfiles/farmerabjuzv2.txt", "(%s) %s{%d} je storeao crops te zaradio $%d! /crops store", 
-				ReturnDate(), 
-				GetName(playerid),
-				PlayerInfo[playerid][pSQLID],
-				moneys
-			);
 		}
 
 		SendFormatMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uspjesno ste spremili vrecu sa usjevom u spremiste!");
@@ -1388,13 +1345,6 @@ CMD:crops(playerid, params[])
 		Bit1_Set( gr_IsWorkingJob, playerid, true );
 		SendMessage(playerid, MESSAGE_TYPE_INFO, "Uzeli ste vrecu sa usjevom iz spremista!");
 		SendClientMessage(playerid, COLOR_RED, "[ ! ] Odite do svog kamiona, te kucajte /crops put kako bi stavili vrecu na kamion.");
-		
-		Log_Write("logfiles/farmerabjuzv2.txt", "(%s) %s{%d} je uzeo vrecu sa usjevom iz spremista.", 
-			ReturnDate(), 
-			GetName(playerid),
-			PlayerInfo[playerid][pSQLID]
-		);
-		
 		return SendClientMessage(playerid, COLOR_RED, "[ ! ] Vrecu mozete baciti sa /crops drop.");
 	}
 	else if( !strcmp(param, "put", true) ) {
@@ -1496,12 +1446,6 @@ CMD:crops(playerid, params[])
 				TruckInfo[playerid][tCropNumber]++;
 			}
 		}
-		Log_Write("logfiles/farmerabjuzv2.txt", "(%s) %s{%d} je stavio usjeve u vozilo i sad ima %d u vozilu.", 
-			ReturnDate(), 
-			GetName(playerid),
-			PlayerInfo[playerid][pSQLID],
-			TruckInfo[playerid][tCropNumber]
-		);
 		if(SeedInfo[playerid][sFactoryCP] == 0)
 		{
 			DisablePlayerCheckpoint(playerid);
@@ -1570,14 +1514,6 @@ CMD:crops(playerid, params[])
     	va_SendClientMessage(playerid, COLOR_RED, "[ ! ] Zaradio si $%d, placa ti je sjela na racun.", moneys);
 		ResetFarmerVars(playerid);
 		UpgradePlayerSkill(playerid, 0);
-		
-		Log_Write("logfiles/farmerabjuzv2.txt", "(%s) %s{%d} je prodao crops i zaradio $%d! /crops sell", 
-			ReturnDate(), 
-			GetName(playerid),
-			PlayerInfo[playerid][pSQLID],
-			moneys
-		);
-		
 	}
 	return 1;
 }
@@ -1612,13 +1548,6 @@ CMD:dropcarton(playerid, params[])
 	EggInfo[playerid][eEggs] = 0;
 	EggInfo[playerid][eProcessed] = 0;
 	SetPlayerSpecialAction(playerid, 0);
-	
-	Log_Write("logfiles/farmerabjuzv2.txt", "(%s) %s{%d} je bacio karton jaja!", 
-		ReturnDate(), 
-		GetName(playerid),
-		PlayerInfo[playerid][pSQLID]
-	);
-	
 	return SendClientMessage(playerid, COLOR_RED, "Bacili ste kutiju na pod.");
 }
 
@@ -1703,13 +1632,6 @@ CMD:eggs(playerid, params[])
 		SendFormatMessage(playerid, MESSAGE_TYPE_INFO, "Uspjesno ste spremili kutiju s jajima, te ste zaradili %i$!", Profit);
 		ResetFarmerVars(playerid);
 		UpgradePlayerSkill(playerid, 0);
-		
-		Log_Write("logfiles/farmerabjuzv2.txt", "(%s) %s{%d} je storeao jaja te zaradio $%d! /eggs store", 
-			ReturnDate(), 
-			GetName(playerid),
-			PlayerInfo[playerid][pSQLID],
-			Profit
-		);
 	}
 	else if( !strcmp(param, "take", true) )
 	{
@@ -1727,13 +1649,6 @@ CMD:eggs(playerid, params[])
 		EggInfo[playerid][eEggs] += (random(10)+1); // JEL MOGUCE // dodat brisanje kad se ode stoptransport!!!! i naravno maknit JEBENI +=
 		SendMessage(playerid, MESSAGE_TYPE_INFO, "Uzeli ste kutiju s jajima iz spremista!");
 		SendClientMessage(playerid, COLOR_RED, "[ ! ] Odite do svog kamiona, te kucajte /eggs put kako bi stavili kutiju na kamion.");
-		
-		Log_Write("logfiles/farmerabjuzv2.txt", "(%s) %s{%d} je uzeo %d jaja iz spremista!", 
-			ReturnDate(), 
-			GetName(playerid),
-			PlayerInfo[playerid][pSQLID],
-			EggInfo[playerid][eEggs]
-		);
 		return SendClientMessage(playerid, COLOR_RED, "[ ! ] Kutiju mozete baciti sa /dropcarton.");
 	}
 	else if( !strcmp(param, "put", true) ) {
@@ -1842,15 +1757,6 @@ CMD:eggs(playerid, params[])
 				TruckInfo[playerid][tEggsNumber]+= EggInfo[playerid][eEggs];
 			}
 		}
-		
-		Log_Write("logfiles/farmerabjuzv2.txt", "(%s) %s{%d} je ubacio %d jaja u vozilo i sada ima %d jaja u vozilu!", 
-			ReturnDate(), 
-			GetName(playerid),
-			PlayerInfo[playerid][pSQLID],
-			EggInfo[playerid][eEggs],
-			TruckInfo[playerid][tEggsNumber]
-		);
-		
 		if(EggInfo[playerid][eFactoryCP] == 0)
 		{
 			DisablePlayerCheckpoint(playerid);
@@ -1969,12 +1875,6 @@ CMD:transport(playerid, params[])
 			Bit1_Set( gr_IsWorkingJob, playerid, true );
 			SendMessage(playerid, MESSAGE_TYPE_INFO, "Uspjesno ste zapoceli sa transportom jaja!");
 	        SendClientMessage(playerid, COLOR_RED, "[ ! ]  Odite do skladista za jaja, te upisite /eggs take kako bi uzeli kutiju s jajima iz skladista.");
-			
-			Log_Write("logfiles/farmerabjuzv2.txt", "(%s) %s{%d} je zapoceo trasnport jaja!", 
-				ReturnDate(), 
-				GetName(playerid),
-				PlayerInfo[playerid][pSQLID]
-			);
 		}
 	}
 
@@ -2005,13 +1905,6 @@ CMD:stoptransport(playerid, params[])
 		EggInfo[playerid][eFactoryCP] = 0;
 		DisablePlayerCheckpoint(playerid);
 		SendMessage(playerid, MESSAGE_TYPE_INFO, "Prestali ste sa transportiranjem jaja.");
-		
-		Log_Write("logfiles/farmerabjuzv2.txt", "(%s) %s{%d} je ugasio transport jaja. /sroptransport", 
-			ReturnDate(), 
-			GetName(playerid),
-			PlayerInfo[playerid][pSQLID]
-		);
-		
 	}
 	else if( MilkInfo[playerid][mTransporting]) 
 	{
@@ -2020,13 +1913,6 @@ CMD:stoptransport(playerid, params[])
 		MilkInfo[playerid][mFactoryCP] = 0;
 		DisablePlayerCheckpoint(playerid);
 		SendMessage(playerid, MESSAGE_TYPE_INFO, "Prestali ste sa transportiranjem mlijeka.");
-		
-		Log_Write("logfiles/farmerabjuzv2.txt", "(%s) %s{%d} je ugasio transport mlijeka. /sroptransport", 
-			ReturnDate(), 
-			GetName(playerid),
-			PlayerInfo[playerid][pSQLID]
-		);
-		
 	} 
 	else 
 	{
@@ -2035,13 +1921,6 @@ CMD:stoptransport(playerid, params[])
 		SeedInfo[playerid][sFactoryCP] = 0;
 		DisablePlayerCheckpoint(playerid);
 		SendMessage(playerid, MESSAGE_TYPE_INFO, "Prestali ste sa transportiranjem usjeva.");
-		
-		Log_Write("logfiles/farmerabjuzv2.txt", "(%s) %s{%d} je ugasio transport usjeva. /sroptransport", 
-			ReturnDate(), 
-			GetName(playerid),
-			PlayerInfo[playerid][pSQLID]
-		);
-		
 	}
 	return 1;
 }

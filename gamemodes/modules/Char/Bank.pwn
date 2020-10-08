@@ -227,15 +227,16 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 			// Message
 			SendFormatMessage(playerid, MESSAGE_TYPE_INFO, "Orocio si %d$ na %d h po kamatnoj stopi od %d%! Novac je prebacen sa bankovnog racuna na orocenje.", FormatNumber(PlayerInfo[playerid][pSavingsMoney]), PlayerInfo[playerid][pSavingsTime], PlayerInfo[playerid][pSavingsTime]);
 			
-			// Log
-			Log_Write("logfiles/bank_savings.txt", "(%s) Igrac %s[%d] je uzeo orocenje na %d h(Kamatna stopa: %d) i ulozio %d$.", 
+			#if defined MODULE_LOGS
+			Log_Write("logfiles/bank_savings.txt", "(%s) Igrac %s[%d] je uzeo orocenu stednju na %dh(Kamatna stopa: %d) i ulozio %d$.", 
 				ReturnDate(), 
 				GetName(playerid), 
 				PlayerInfo[playerid][pSQLID], 
 				PlayerInfo[playerid][pSavingsTime],
 				PlayerInfo[playerid][pSavingsTime],
 				PlayerInfo[playerid][pSavingsMoney]
-			);	
+			);
+			#endif
 		}
 		case DIALOG_VEH_PAYMENT:
 		{
@@ -248,7 +249,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 			if(strval(inputtext) < 1 || strval(inputtext) > CreditInfo[playerid][cAmount])
 			{
 				SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "Iznos kredita ne moze biti manji od 1$, ni veci od %d$!", CreditInfo[playerid][cAmount]);
-				return va_ShowPlayerDialog(playerid, DIALOG_VEH_PAYMENT, DIALOG_STYLE_INPUT, "Iznos namjenskog kredita", "Imate dostupan kredit od %d$. Unesite koliki iznos od cijene vozila(%d$) zelite da se naplati iz kredita:", "Unos", "Bez krede", CreditInfo[playerid][cAmount], paymentBuyPrice[playerid]);
+				return va_ShowPlayerDialog(playerid, DIALOG_VEH_PAYMENT, DIALOG_STYLE_INPUT, "Iznos namjenskog kredita", "Imate dostupan kredit od %d$. Unesite koliki iznos od cijene vozila(%d$) zelite da se naplati iz kredita:", "Input", "No credit", CreditInfo[playerid][cAmount], paymentBuyPrice[playerid]);
 			}
 			new creditamount = strval(inputtext);
 			if((AC_GetPlayerMoney(playerid) + creditamount) >= paymentBuyPrice[playerid])
@@ -263,7 +264,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 			else
 			{
 				SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "Kredit od %d$ sa %d$ iz ruku nije dostatan da se namiri vrijednost vozila(%d$)!", creditamount, AC_GetPlayerMoney(playerid), paymentBuyPrice[playerid]);
-				return va_ShowPlayerDialog(playerid, DIALOG_VEH_PAYMENT, DIALOG_STYLE_INPUT, "Iznos namjenskog kredita", "Imate dostupan kredit od %d$. Unesite koliki iznos od cijene vozila(%d$) zelite da se naplati iz kredita:", "Unos", "Bez krede", CreditInfo[playerid][cAmount], paymentBuyPrice[playerid]);
+				return va_ShowPlayerDialog(playerid, DIALOG_VEH_PAYMENT, DIALOG_STYLE_INPUT, "Iznos namjenskog kredita", "Imate dostupan kredit od %d$. Unesite koliki iznos od cijene vozila(%d$) zelite da se naplati iz kredita:", "Input", "No credit", CreditInfo[playerid][cAmount], paymentBuyPrice[playerid]);
 			}
 		}
 		case DIALOG_HOUSE_PAYMENT:
@@ -277,7 +278,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 			if(strval(inputtext) < 1 || strval(inputtext) > CreditInfo[playerid][cAmount])
 			{
 				SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "Iznos kredita ne moze biti manji od 1$, ni veci od %d$!", CreditInfo[playerid][cAmount]);
-				return va_ShowPlayerDialog(playerid, DIALOG_HOUSE_PAYMENT, DIALOG_STYLE_INPUT, "Iznos namjenskog kredita", "Imate dostupan kredit od %d$. Unesite koliki iznos od cijene kuce(%d$) zelite da se naplati iz kredita:", "Unos", "Bez krede", CreditInfo[playerid][cAmount], paymentBuyPrice[playerid]);
+				return va_ShowPlayerDialog(playerid, DIALOG_HOUSE_PAYMENT, DIALOG_STYLE_INPUT, "Iznos namjenskog kredita", "Imate dostupan kredit od %d$. Unesite koliki iznos od cijene kuce(%d$) zelite da se naplati iz kredita:", "Input", "No credit", CreditInfo[playerid][cAmount], paymentBuyPrice[playerid]);
 			}
 			new creditamount = strval(inputtext);
 			if((AC_GetPlayerMoney(playerid) + creditamount) >= paymentBuyPrice[playerid])
@@ -292,7 +293,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 			else
 			{
 				SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "Kredit od %d$ sa %d$ iz ruku nije dostatan da se namiri vrijednost kuce(%d$)!", creditamount, AC_GetPlayerMoney(playerid), paymentBuyPrice[playerid]);
-				return va_ShowPlayerDialog(playerid, DIALOG_HOUSE_PAYMENT, DIALOG_STYLE_INPUT, "Iznos namjenskog kredita", "Imate dostupan kredit od %d$. Unesite koliki iznos od cijene vozila(%d$) zelite da se naplati iz kredita:", "Unos", "Bez krede", CreditInfo[playerid][cAmount], paymentBuyPrice[playerid]);
+				return va_ShowPlayerDialog(playerid, DIALOG_HOUSE_PAYMENT, DIALOG_STYLE_INPUT, "Iznos namjenskog kredita", "Imate dostupan kredit od %d$. Unesite koliki iznos od cijene vozila(%d$) zelite da se naplati iz kredita:", "Input", "No credit", CreditInfo[playerid][cAmount], paymentBuyPrice[playerid]);
 			}
 		}
 		case DIALOG_BIZZ_PAYMENT:
@@ -306,7 +307,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 			if(strval(inputtext) < 1 || strval(inputtext) > CreditInfo[playerid][cAmount])
 			{
 				SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "Iznos kredita ne moze biti manji od 1$, ni veci od %d$!", CreditInfo[playerid][cAmount]);
-				return va_ShowPlayerDialog(playerid, DIALOG_BIZZ_PAYMENT, DIALOG_STYLE_INPUT, "Iznos namjenskog kredita", "Imate dostupan kredit od %d$. Unesite koliki iznos od cijene biznisa(%d$) zelite da se naplati iz kredita:", "Unos", "Bez krede", CreditInfo[playerid][cAmount], paymentBuyPrice[playerid]);
+				return va_ShowPlayerDialog(playerid, DIALOG_BIZZ_PAYMENT, DIALOG_STYLE_INPUT, "Iznos namjenskog kredita", "Imate dostupan kredit od %d$. Unesite koliki iznos od cijene biznisa(%d$) zelite da se naplati iz kredita:", "Input", "No credit", CreditInfo[playerid][cAmount], paymentBuyPrice[playerid]);
 			}
 			new creditamount = strval(inputtext);
 			if((AC_GetPlayerMoney(playerid) + creditamount) >= paymentBuyPrice[playerid])
@@ -322,7 +323,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 			else
 			{
 				SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "Kredit od %d$ sa %d$ iz ruku nije dostatan da se namiri vrijednost biznisa(%d$)!", creditamount, AC_GetPlayerMoney(playerid), paymentBuyPrice[playerid]);
-				return va_ShowPlayerDialog(playerid, DIALOG_BIZZ_PAYMENT, DIALOG_STYLE_INPUT, "Iznos namjenskog kredita", "Imate dostupan kredit od %d$. Unesite koliki iznos od cijene biznisa(%d$) zelite da se naplati iz kredita:", "Unos", "Bez krede", CreditInfo[playerid][cAmount], paymentBuyPrice[playerid]);
+				return va_ShowPlayerDialog(playerid, DIALOG_BIZZ_PAYMENT, DIALOG_STYLE_INPUT, "Iznos namjenskog kredita", "Imate dostupan kredit od %d$. Unesite koliki iznos od cijene biznisa(%d$) zelite da se naplati iz kredita:", "Input", "No credit", CreditInfo[playerid][cAmount], paymentBuyPrice[playerid]);
 			}
 		}
 	}
@@ -400,19 +401,19 @@ GetPlayerPaymentOption(playerid, type)
 		case BUY_TYPE_VEHICLE:
 		{
 			if(CreditInfo[playerid][cCreditType] == 5 && !CreditInfo[playerid][cUsed])
-				va_ShowPlayerDialog(playerid, DIALOG_VEH_PAYMENT, DIALOG_STYLE_INPUT, "Iznos namjenskog kredita", "Imate dostupan kredit od %d$. Unesite koliki iznos od cijene vozila(%d$) zelite da se naplati iz kredita:", "Unos", "Bez krede", CreditInfo[playerid][cAmount], paymentBuyPrice[playerid]);
+				va_ShowPlayerDialog(playerid, DIALOG_VEH_PAYMENT, DIALOG_STYLE_INPUT, "Iznos namjenskog kredita", "Imate dostupan kredit od %d$. Unesite koliki iznos od cijene vozila(%d$) zelite da se naplati iz kredita:", "Input", "No credit", CreditInfo[playerid][cAmount], paymentBuyPrice[playerid]);
 			else BuyVehicle(playerid);
 		}
 		case BUY_TYPE_HOUSE:
 		{
 			if(CreditInfo[playerid][cCreditType] == 6 && !CreditInfo[playerid][cUsed])
-				va_ShowPlayerDialog(playerid, DIALOG_HOUSE_PAYMENT, DIALOG_STYLE_INPUT, "Iznos namjenskog kredita", "Imate dostupan kredit od %d$. Unesite koliki iznos od cijene kuce(%d$) zelite da se naplati iz kredita:", "Unos", "Bez krede", CreditInfo[playerid][cAmount], paymentBuyPrice[playerid]);
+				va_ShowPlayerDialog(playerid, DIALOG_HOUSE_PAYMENT, DIALOG_STYLE_INPUT, "Iznos namjenskog kredita", "Imate dostupan kredit od %d$. Unesite koliki iznos od cijene kuce(%d$) zelite da se naplati iz kredita:", "Input", "No credit", CreditInfo[playerid][cAmount], paymentBuyPrice[playerid]);
 			else BuyHouse(playerid);
 		}
 		case BUY_TYPE_BIZZ:
 		{
 			if(CreditInfo[playerid][cCreditType] == 7 && !CreditInfo[playerid][cUsed])
-				va_ShowPlayerDialog(playerid, DIALOG_BIZZ_PAYMENT, DIALOG_STYLE_INPUT, "Iznos namjenskog kredita", "Imate dostupan kredit od %d$. Unesite koliki iznos od cijene biznisa(%d$) zelite da se naplati iz kredita:", "Unos", "Bez krede", CreditInfo[playerid][cAmount], paymentBuyPrice[playerid]);
+				va_ShowPlayerDialog(playerid, DIALOG_BIZZ_PAYMENT, DIALOG_STYLE_INPUT, "Iznos namjenskog kredita", "Imate dostupan kredit od %d$. Unesite koliki iznos od cijene biznisa(%d$) zelite da se naplati iz kredita:", "Input", "No credit", CreditInfo[playerid][cAmount], paymentBuyPrice[playerid]);
 			else BuyBiznis(playerid);
 		}
 	}
@@ -606,7 +607,8 @@ CMD:bank(playerid, params[])
 		PlayerToBankMoney(playerid, moneys);
 		
 		SendFormatMessage(playerid, MESSAGE_TYPE_SUCCESS, "[BANKA]: Uspjesno ste stavili %d$ na bankovni racun. Novi iznos: %d$", moneys, PlayerInfo[playerid][pBank]);
-		// Log
+		
+		#if defined MODULE_LOGS
 		Log_Write("logfiles/bank_deposit.txt", "(%s) Igrac %s[%d] je stavio %d$ na banku. [Stara bilanca]: %d$ | [Nova bilanca]: %d$ ", 
 			ReturnDate(), 
 			GetName(playerid), 
@@ -615,6 +617,7 @@ CMD:bank(playerid, params[])
 			curfunds,
 			PlayerInfo[playerid][pBank]
 		);
+		#endif
 	}
 	else if( !strcmp( pick, "transfer", true ) ) {
 		new
@@ -659,7 +662,7 @@ CMD:bank(playerid, params[])
 		if(time < 10 || time > 101) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Vrijeme stednje ne moze biti manje od 1h, ni vece od 100h!");
 		
 		format(buffer, 128, "\nJeste li sigurni da zelite staviti %s na vas stedni racun?", FormatNumber(money));
-		ShowPlayerDialog(playerid, DIALOG_ACCEPT_SAVINGS, DIALOG_STYLE_MSGBOX, "* Savings - Confirm", buffer, "(da)", "(x)");
+		ShowPlayerDialog(playerid, DIALOG_ACCEPT_SAVINGS, DIALOG_STYLE_MSGBOX, "* Savings - Confirm", buffer, "(da)", "Close");
 		
 		PlayerInfo[playerid][pSavingsTime] = time;
 		PlayerInfo[playerid][pSavingsMoney] = money;

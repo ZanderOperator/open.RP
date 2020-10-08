@@ -39,9 +39,9 @@ stock LoadUpdateList()
 stock ShowPlayerUpdateList(playerid)
 {
 	if(isnull(page2))	
-		ShowPlayerDialog(playerid, DIALOG_UPDATE_LIST, DIALOG_STYLE_MSGBOX, updateCaption, page1, "Izlaz", "");
+		ShowPlayerDialog(playerid, DIALOG_UPDATE_LIST, DIALOG_STYLE_MSGBOX, updateCaption, page1, "Exit", "");
 	else 
-		ShowPlayerDialog(playerid, DIALOG_UPDATE_LIST, DIALOG_STYLE_MSGBOX, updateCaption, page1, "Dalje", "Natrag");
+		ShowPlayerDialog(playerid, DIALOG_UPDATE_LIST, DIALOG_STYLE_MSGBOX, updateCaption, page1, "Next", "Back");
 	PlayerUpdatePage[playerid] = 1;
 	return 1;
 }
@@ -103,12 +103,12 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 						else if(isnull(page3))
 						{
 							PlayerUpdatePage[playerid] = 2;
-							ShowPlayerDialog(playerid, DIALOG_UPDATE_LIST, DIALOG_STYLE_MSGBOX, updateCaption, page2, "Izlaz", "");
+							ShowPlayerDialog(playerid, DIALOG_UPDATE_LIST, DIALOG_STYLE_MSGBOX, updateCaption, page2, "Exit", "");
 						}
 						else if(!isnull(page2) && !isnull(page3))
 						{
 							PlayerUpdatePage[playerid] = 2;
-							ShowPlayerDialog(playerid, DIALOG_UPDATE_LIST, DIALOG_STYLE_MSGBOX, updateCaption, page2, "Dalje", "Natrag");
+							ShowPlayerDialog(playerid, DIALOG_UPDATE_LIST, DIALOG_STYLE_MSGBOX, updateCaption, page2, "Next", "Back");
 						}
 					}
 				}
@@ -117,7 +117,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 					if(!response)
 					{	
 						PlayerUpdatePage[playerid] = 1;
-						ShowPlayerDialog(playerid, DIALOG_UPDATE_LIST, DIALOG_STYLE_MSGBOX, updateCaption, page1, "Dalje", "Natrag");
+						ShowPlayerDialog(playerid, DIALOG_UPDATE_LIST, DIALOG_STYLE_MSGBOX, updateCaption, page1, "Next", "Back");
 					}
 					else 
 					{
@@ -129,12 +129,12 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 						else if(isnull(page4))
 						{
 							PlayerUpdatePage[playerid] = 3;	
-							ShowPlayerDialog(playerid, DIALOG_UPDATE_LIST, DIALOG_STYLE_MSGBOX, updateCaption, page3, "Izlaz", "");
+							ShowPlayerDialog(playerid, DIALOG_UPDATE_LIST, DIALOG_STYLE_MSGBOX, updateCaption, page3, "Exit", "");
 						}
 						else if(!isnull(page3) && !isnull(page4))
 						{
 							PlayerUpdatePage[playerid] = 3;
-							ShowPlayerDialog(playerid, DIALOG_UPDATE_LIST, DIALOG_STYLE_MSGBOX, updateCaption, page3, "Dalje", "Natrag");
+							ShowPlayerDialog(playerid, DIALOG_UPDATE_LIST, DIALOG_STYLE_MSGBOX, updateCaption, page3, "Next", "Back");
 						}
 					}
 				}
@@ -143,7 +143,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 					if(!response)
 					{
 						PlayerUpdatePage[playerid] = 2;
-						ShowPlayerDialog(playerid, DIALOG_UPDATE_LIST, DIALOG_STYLE_MSGBOX, updateCaption, page2, "Dalje", "Natrag");
+						ShowPlayerDialog(playerid, DIALOG_UPDATE_LIST, DIALOG_STYLE_MSGBOX, updateCaption, page2, "Next", "Back");
 					}
 					else
 					{
@@ -155,7 +155,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 						else
 						{
 							PlayerUpdatePage[playerid] = 4;
-							ShowPlayerDialog(playerid, DIALOG_UPDATE_LIST, DIALOG_STYLE_MSGBOX, updateCaption, page4, "Izlaz", "Natrag");
+							ShowPlayerDialog(playerid, DIALOG_UPDATE_LIST, DIALOG_STYLE_MSGBOX, updateCaption, page4, "Exit", "Back");
 						}
 					}
 				}
@@ -164,7 +164,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 					if(!response)
 					{
 						PlayerUpdatePage[playerid] = 3;
-						ShowPlayerDialog(playerid, DIALOG_UPDATE_LIST, DIALOG_STYLE_MSGBOX, updateCaption, page3, "Dalje", "Natrag");
+						ShowPlayerDialog(playerid, DIALOG_UPDATE_LIST, DIALOG_STYLE_MSGBOX, updateCaption, page3, "Next", "Back");
 					}
 					else
 					{

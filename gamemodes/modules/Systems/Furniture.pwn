@@ -3516,7 +3516,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 				houseid = GetPlayerFurnitureHouse(playerid);
 			if( houseid == INVALID_HOUSE_ID ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne posjedujete kucu ili ju ne uredjujete!");
 			switch( listitem ) {
-				case 0: ShowPlayerDialog(playerid, DIALOG_FURNITURE_BUY, DIALOG_STYLE_LIST, "Furniture - Kategorije", "Dnevni Boravak\nKuhinja\nKupaonica\nSobe\nOstalo", "Odaberi", "Odustani");  // Kupi
+				case 0: ShowPlayerDialog(playerid, DIALOG_FURNITURE_BUY, DIALOG_STYLE_LIST, "Furniture - Kategorije", "Dnevni Boravak\nKuhinja\nKupaonica\nSobe\nOstalo", "Choose", "Abort");  // Kupi
 				case 1: { // Uredi
 					new
 						tmp_objects[MAX_FURNITURE_SLOTS], count = 0;
@@ -3550,27 +3550,27 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 		}
 		case DIALOG_FURNITURE_BUY:
 		{
-			if( !response ) return ShowPlayerDialog(playerid, DIALOG_FURNITURE_MENU, DIALOG_STYLE_LIST, "Furniture", "Kupi objekt\nUredi\nInventory", "Odaberi", "Odustani");
+			if( !response ) return ShowPlayerDialog(playerid, DIALOG_FURNITURE_MENU, DIALOG_STYLE_LIST, "Furniture", "Kupi objekt\nUredi\nInventory", "Choose", "Abort");
 
 			switch( listitem ) {
 				case 0: { // Dnevni
-					ShowPlayerDialog(playerid, DIALOG_FURNITURE_OBJCS, DIALOG_STYLE_LIST, "Market - Dnevni", "Kauci\nFotelje\nStolovi\nOrmarici\nTelevizori\nVidei\nHi-Fi\nZvucnici\nTepisi\nSvijetla\nVrata", "Odaberi", "Odustani");
+					ShowPlayerDialog(playerid, DIALOG_FURNITURE_OBJCS, DIALOG_STYLE_LIST, "Market - Dnevni", "Kauci\nFotelje\nStolovi\nOrmarici\nTelevizori\nVidei\nHi-Fi\nZvucnici\nTepisi\nSvijetla\nVrata", "Choose", "Abort");
 					FurnObjectsType[ playerid ] = 1;
 				}
 				case 1: { // Kuhinja
-					ShowPlayerDialog(playerid, DIALOG_FURNITURE_OBJCS, DIALOG_STYLE_LIST, "Market - Kuhinja", "Frizider\nKuhinjski ormarici\nSudoper\nStednjak\nMikrovalna\nKanta za smece\nSvijetla", "Odaberi", "Odustani");
+					ShowPlayerDialog(playerid, DIALOG_FURNITURE_OBJCS, DIALOG_STYLE_LIST, "Market - Kuhinja", "Frizider\nKuhinjski ormarici\nSudoper\nStednjak\nMikrovalna\nKanta za smece\nSvijetla", "Choose", "Abort");
 					FurnObjectsType[ playerid ] = 2;
 				}
 				case 2: { // Kupaonica
-					ShowPlayerDialog(playerid, DIALOG_FURNITURE_OBJCS, DIALOG_STYLE_LIST, "Market - Kupaonica", "WC skoljke\nKade\nOgledalo", "Odaberi", "Odustani");
+					ShowPlayerDialog(playerid, DIALOG_FURNITURE_OBJCS, DIALOG_STYLE_LIST, "Market - Kupaonica", "WC skoljke\nKade\nOgledalo", "Choose", "Abort");
 					FurnObjectsType[ playerid ] = 3;
 				}
 				case 3: { // Sobe
-					ShowPlayerDialog(playerid, DIALOG_FURNITURE_OBJCS, DIALOG_STYLE_LIST, "Market - Soba", "Kreveti\nNocni ormarici\nKovcezi\nOdjeca\nBiljke\nSlike\nSvjetla\nStolovi\nStolice\nRadijatori\nZastori\nStaklo", "Odaberi", "Odustani");
+					ShowPlayerDialog(playerid, DIALOG_FURNITURE_OBJCS, DIALOG_STYLE_LIST, "Market - Soba", "Kreveti\nNocni ormarici\nKovcezi\nOdjeca\nBiljke\nSlike\nSvjetla\nStolovi\nStolice\nRadijatori\nZastori\nStaklo", "Choose", "Abort");
 					FurnObjectsType[ playerid ] = 4;
 				}
 				case 4: { // Ostalo
-					ShowPlayerDialog(playerid, DIALOG_FURNITURE_OBJCS, DIALOG_STYLE_LIST, "Market - Ostalo", "Zabava\nPica\nSport\nOstalo\nZidovi\nZivotinje\nOffice\nFM Objects\nHrana", "Odaberi", "Odustani");
+					ShowPlayerDialog(playerid, DIALOG_FURNITURE_OBJCS, DIALOG_STYLE_LIST, "Market - Ostalo", "Zabava\nPica\nSport\nOstalo\nZidovi\nZivotinje\nOffice\nFM Objects\nHrana", "Choose", "Abort");
 					FurnObjectsType[ playerid ] = 5;
 				}
 			}
@@ -3578,7 +3578,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 		}
 		case DIALOG_FURNITURE_OBJCS:
 		{
-			if( !response ) return ShowPlayerDialog(playerid, DIALOG_FURNITURE_BUY, DIALOG_STYLE_LIST, "Furniture - Kategorije", "Dnevni Boravak\nKuhinja\nKupaonica\nSobe\nOstalo\n", "Odaberi", "Odustani");
+			if( !response ) return ShowPlayerDialog(playerid, DIALOG_FURNITURE_BUY, DIALOG_STYLE_LIST, "Furniture - Kategorije", "Dnevni Boravak\nKuhinja\nKupaonica\nSobe\nOstalo\n", "Choose", "Abort");
 			switch( FurnObjectsType[ playerid ] ) {
 				case 1: { // Dnevni
 					switch( listitem ) {
@@ -4035,7 +4035,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 						case 5:  {
 							if( !PlayerInfo[ playerid ][ pDonateRank ] ) {
 								SendClientMessage(playerid, COLOR_RED, "[ ! ] Samo VIP korisnici mogu ovo koristiti!");
-								ShowPlayerDialog(playerid, DIALOG_FURNITURE_BUY, DIALOG_STYLE_LIST, "Furniture - Kategorije", "Dnevni Boravak\nKuhinja\nKupaonica\nSobe\nOstalo\n", "Odaberi", "Odustani");
+								ShowPlayerDialog(playerid, DIALOG_FURNITURE_BUY, DIALOG_STYLE_LIST, "Furniture - Kategorije", "Dnevni Boravak\nKuhinja\nKupaonica\nSobe\nOstalo\n", "Choose", "Abort");
 								return 1;
 							}
 							new
@@ -4090,7 +4090,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 		case DIALOG_FURNITURE_EDIT_LIST:
 		{
 			if( !response )
-				return ShowPlayerDialog(playerid, DIALOG_FURNITURE_MENU, DIALOG_STYLE_LIST, "Furniture", "Kupi objekt\nUredi\nInventory", "Odaberi", "Odustani");
+				return ShowPlayerDialog(playerid, DIALOG_FURNITURE_MENU, DIALOG_STYLE_LIST, "Furniture", "Kupi objekt\nUredi\nInventory", "Choose", "Abort");
 
 			switch( listitem )
 			{
@@ -4113,7 +4113,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 						dialogPos++;
 					}
 					format(texture_buffer, 10256, "%sPotrazi teksturu\nDalje", texture_buffer );
-					ShowPlayerDialog(playerid, DIALOG_FURNITURE_TXTS, DIALOG_STYLE_TABLIST_HEADERS, "Furniture - Teksture", texture_buffer, "Odaberi", "Odustani");
+					ShowPlayerDialog(playerid, DIALOG_FURNITURE_TXTS, DIALOG_STYLE_TABLIST_HEADERS, "Furniture - Teksture", texture_buffer, "Choose", "Abort");
 				}
 				case 2: {	// Boje
 					new
@@ -4128,7 +4128,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 						);
 						strcat(buffer, motd, 4096);
 					}
-					ShowPlayerDialog(playerid, DIALOG_FURNITURE_COL_LIST, DIALOG_STYLE_LIST, "Furniture - Odabir boja", buffer, "Odaberi", "Odustani");
+					ShowPlayerDialog(playerid, DIALOG_FURNITURE_COL_LIST, DIALOG_STYLE_LIST, "Furniture - Odabir boja", buffer, "Choose", "Abort");
 				}
 				case 3: {	// Kopiraj
 					new
@@ -4140,16 +4140,16 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 
 				}
 				case 4: { 	// Obrisi
-					va_ShowPlayerDialog(playerid, DIALOG_FURNITURE_DELETE, DIALOG_STYLE_MSGBOX, "Furniture - Brisanje", "Zelite li obrisati objekt u slotu %d?", "Da", "Ne", PlayerEditIndex[ playerid ]);
+					va_ShowPlayerDialog(playerid, DIALOG_FURNITURE_DELETE, DIALOG_STYLE_MSGBOX, "Furniture - Brisanje", "Zelite li obrisati objekt u slotu %d?", "Yes", "No", PlayerEditIndex[ playerid ]);
 				}
 				case 5: { // Obrisi boju i teksturu
-					ShowPlayerDialog(playerid, DIALOG_FURNITURE_SLOT_DELETE, DIALOG_STYLE_INPUT, "Furniture - Brisanje tekstura i boja", "Unesite slot koji zelite ocistiti od boja i tekstura (0-4):", "Unesi", "Odustani");
+					ShowPlayerDialog(playerid, DIALOG_FURNITURE_SLOT_DELETE, DIALOG_STYLE_INPUT, "Furniture - Brisanje tekstura i boja", "Unesite slot koji zelite ocistiti od boja i tekstura (0-4):", "Input", "Abort");
 				}
 			}
 			return 1;
 		}
 		case DIALOG_FURNITURE_DELETE: {
-			if( !response ) return ShowPlayerDialog(playerid, DIALOG_FURNITURE_EDIT_LIST, DIALOG_STYLE_LIST, "Furniture - Uredjivanje", "Uredjivanje (UI)\nTeksture\nBoje\nKopiraj objekt\nObrisi objekt\nObrisi teksture i boje", "Odaberi", "Odustani");
+			if( !response ) return ShowPlayerDialog(playerid, DIALOG_FURNITURE_EDIT_LIST, DIALOG_STYLE_LIST, "Furniture - Uredjivanje", "Uredjivanje (UI)\nTeksture\nBoje\nKopiraj objekt\nObrisi objekt\nObrisi teksture i boje", "Choose", "Abort");
 			new houseid = GetPlayerFurnitureHouse(playerid);
 			if( houseid == INVALID_HOUSE_ID )
 				return SendErrorMessage(playerid, "Niste u svojoj kuci / nemate dozvolu za postavljanje namjestaja.");
@@ -4157,69 +4157,69 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 			return 1;
 		}
 		case DIALOG_FURNITURE_TXTS: {
-			if( !response ) return ShowPlayerDialog(playerid, DIALOG_FURNITURE_EDIT_LIST, DIALOG_STYLE_LIST, "Furniture - Uredjivanje", "Uredjivanje (UI)\nTeksture\nBoje\nKopiraj objekt\nObrisi objekt\nObrisi teksture i boje", "Odaberi", "Odustani");
-			if( listitem == 15 ) return ShowPlayerDialog(playerid, DIALOG_FURNITURE_TXTS_SRCH_1, DIALOG_STYLE_LIST, "Furniture - Pretrazivanje Tekstura", "Preko TXD Namea\nPreko TXD Modelida", "Odaberi", "Odustani");
+			if( !response ) return ShowPlayerDialog(playerid, DIALOG_FURNITURE_EDIT_LIST, DIALOG_STYLE_LIST, "Furniture - Uredjivanje", "Uredjivanje (UI)\nTeksture\nBoje\nKopiraj objekt\nObrisi objekt\nObrisi teksture i boje", "Choose", "Abort");
+			if( listitem == 15 ) return ShowPlayerDialog(playerid, DIALOG_FURNITURE_TXTS_SRCH_1, DIALOG_STYLE_LIST, "Furniture - Pretrazivanje Tekstura", "Preko TXD Namea\nPreko TXD Modelida", "Choose", "Abort");
 			if( listitem == 16 && LastTextureListIndex[ playerid ] < 40 ) {
 				LastTextureListIndex[ playerid ]++;
-				ShowPlayerDialog(playerid, DIALOG_FURNITURE_TXTS, DIALOG_STYLE_TABLIST_HEADERS, "Furniture - Teksture", ShowPlayerTextureList(playerid), "Odaberi", "Odustani");
+				ShowPlayerDialog(playerid, DIALOG_FURNITURE_TXTS, DIALOG_STYLE_TABLIST_HEADERS, "Furniture - Teksture", ShowPlayerTextureList(playerid), "Choose", "Abort");
 				return 1;
 			}
 			if( listitem == 17 && LastTextureListIndex[ playerid ] > 0 ) {
 				if( --LastTextureListIndex[ playerid ] <= 0 )
 					LastTextureListIndex[ playerid ] = 1;
-				ShowPlayerDialog(playerid, DIALOG_FURNITURE_TXTS, DIALOG_STYLE_TABLIST_HEADERS, "Furniture - Teksture", ShowPlayerTextureList(playerid), "Odaberi", "Odustani");
+				ShowPlayerDialog(playerid, DIALOG_FURNITURE_TXTS, DIALOG_STYLE_TABLIST_HEADERS, "Furniture - Teksture", ShowPlayerTextureList(playerid), "Choose", "Abort");
 				return 1;
 			}
 
 			PlayerEditTxtIndex[ playerid ] = GetPlayerTextureItem(playerid, listitem);
-			ShowPlayerDialog(playerid, DIALOG_FURNITURE_TXTS_SLOT, DIALOG_STYLE_INPUT, "Furniture - Texture Slots", "Unesite slot u koji zelite staviti teksturu (0-4)!", "Unesi", "Odustani");
+			ShowPlayerDialog(playerid, DIALOG_FURNITURE_TXTS_SLOT, DIALOG_STYLE_INPUT, "Furniture - Texture Slots", "Unesite slot u koji zelite staviti teksturu (0-4)!", "Input", "Abort");
 			return 1;
 		}
 		case DIALOG_FURNITURE_TXTS_SRCH_1:
 		{
-			if( !response ) return ShowPlayerDialog(playerid, DIALOG_FURNITURE_TXTS, DIALOG_STYLE_TABLIST_HEADERS, "Furniture - Teksture", ShowPlayerTextureList(playerid), "Odaberi", "Odustani");
+			if( !response ) return ShowPlayerDialog(playerid, DIALOG_FURNITURE_TXTS, DIALOG_STYLE_TABLIST_HEADERS, "Furniture - Teksture", ShowPlayerTextureList(playerid), "Choose", "Abort");
 			switch(listitem)
 			{
-				case 0: return ShowPlayerDialog(playerid, DIALOG_FURNITURE_TXTS_SRCH_2, DIALOG_STYLE_INPUT, "Furniture - Trazilica", "Unesite znak ili djelomican naziv teksture koju trazite (TXDName (MINIMUM 3 ZNAKA)):", "Unesi", "Odustani");
-				case 1: return ShowPlayerDialog(playerid, DIALOG_FURNITURE_TXTS_SRCH_3, DIALOG_STYLE_INPUT, "Furniture - Trazilica", "Unesite modelid teksture:", "Unesi", "Odustani");
+				case 0: return ShowPlayerDialog(playerid, DIALOG_FURNITURE_TXTS_SRCH_2, DIALOG_STYLE_INPUT, "Furniture - Trazilica", "Unesite znak ili djelomican naziv teksture koju trazite (TXDName (MINIMUM 3 ZNAKA)):", "Input", "Abort");
+				case 1: return ShowPlayerDialog(playerid, DIALOG_FURNITURE_TXTS_SRCH_3, DIALOG_STYLE_INPUT, "Furniture - Trazilica", "Unesite modelid teksture:", "Input", "Abort");
 			}
 			return 1;
 		}
 		case DIALOG_FURNITURE_TXTS_SRCH_2: {
-			if( !response ) return va_ShowPlayerDialog(playerid, DIALOG_FURNITURE_EDIT_LIST, DIALOG_STYLE_LIST, "Furniture - Uredjivanje", "Uredjivanje (UI)\nTeksture\nBoje\nKopiraj objekt\nObrisi objekt\nObrisi teksture i boje", "Odaberi", "Odustani");
+			if( !response ) return va_ShowPlayerDialog(playerid, DIALOG_FURNITURE_EDIT_LIST, DIALOG_STYLE_LIST, "Furniture - Uredjivanje", "Uredjivanje (UI)\nTeksture\nBoje\nKopiraj objekt\nObrisi objekt\nObrisi teksture i boje", "Choose", "Abort");
 			if( strlen(inputtext) < 3 ) {
 				SendMessage(playerid, MESSAGE_TYPE_ERROR, "Morate unijeti minimalno 3 znaka kao ime TXD-a!");
-				ShowPlayerDialog(playerid, DIALOG_FURNITURE_TXTS_SRCH_1, DIALOG_STYLE_INPUT, "Furniture - Trazilica", "Unesite znak ili djelomican naziv teksture koju trazite (ime ili ime TXD-a):", "Unesi", "Odustani");
+				ShowPlayerDialog(playerid, DIALOG_FURNITURE_TXTS_SRCH_1, DIALOG_STYLE_INPUT, "Furniture - Trazilica", "Unesite znak ili djelomican naziv teksture koju trazite (ime ili ime TXD-a):", "Input", "Abort");
 				return 1;
 			}
-			ShowPlayerDialog(playerid, DIALOG_FURNITURE_TXTS, DIALOG_STYLE_TABLIST_HEADERS, "Furniture - Pronadjene Teksture", ShowSearchedTextureList(playerid, inputtext), "Odaberi", "Odustani");
+			ShowPlayerDialog(playerid, DIALOG_FURNITURE_TXTS, DIALOG_STYLE_TABLIST_HEADERS, "Furniture - Pronadjene Teksture", ShowSearchedTextureList(playerid, inputtext), "Choose", "Abort");
 			return 1;
 		}
 		case DIALOG_FURNITURE_TXTS_SRCH_3: {
-			if( !response ) return va_ShowPlayerDialog(playerid, DIALOG_FURNITURE_EDIT_LIST, DIALOG_STYLE_LIST, "Furniture - Uredjivanje", "Uredjivanje (UI)\nTeksture\nBoje\nKopiraj objekt\nObrisi objekt\nObrisi teksture i boje", "Odaberi", "Odustani");
+			if( !response ) return va_ShowPlayerDialog(playerid, DIALOG_FURNITURE_EDIT_LIST, DIALOG_STYLE_LIST, "Furniture - Uredjivanje", "Uredjivanje (UI)\nTeksture\nBoje\nKopiraj objekt\nObrisi objekt\nObrisi teksture i boje", "Choose", "Abort");
 			if( strlen(inputtext) < 4 ) {
 				SendMessage(playerid, MESSAGE_TYPE_ERROR, "Morate unijeti minimalno 4 znaka kao modelid TXD-a!");
-				ShowPlayerDialog(playerid, DIALOG_FURNITURE_TXTS_SRCH_1, DIALOG_STYLE_LIST, "Furniture - Pretrazivanje Tekstura", "Preko TXD Namea\nPreko TXD Modelida", "Odaberi", "Odustani");
+				ShowPlayerDialog(playerid, DIALOG_FURNITURE_TXTS_SRCH_1, DIALOG_STYLE_LIST, "Furniture - Pretrazivanje Tekstura", "Preko TXD Namea\nPreko TXD Modelida", "Choose", "Abort");
 				return 1;
 			}
 			if(!IsNumeric(inputtext))
 			{
 				SendMessage(playerid, MESSAGE_TYPE_ERROR, "Unos mora biti numericki!");
-				ShowPlayerDialog(playerid, DIALOG_FURNITURE_TXTS_SRCH_1, DIALOG_STYLE_LIST, "Furniture - Pretrazivanje Tekstura", "Preko TXD Namea\nPreko TXD Modelida", "Odaberi", "Odustani");
+				ShowPlayerDialog(playerid, DIALOG_FURNITURE_TXTS_SRCH_1, DIALOG_STYLE_LIST, "Furniture - Pretrazivanje Tekstura", "Preko TXD Namea\nPreko TXD Modelida", "Choose", "Abort");
 				return 1;
 			}
-			ShowPlayerDialog(playerid, DIALOG_FURNITURE_TXTS, DIALOG_STYLE_TABLIST_HEADERS, "Furniture - Pronadjene Teksture", ShowModelSearchedTextureList(playerid, strval(inputtext)), "Odaberi", "Odustani");
+			ShowPlayerDialog(playerid, DIALOG_FURNITURE_TXTS, DIALOG_STYLE_TABLIST_HEADERS, "Furniture - Pronadjene Teksture", ShowModelSearchedTextureList(playerid, strval(inputtext)), "Choose", "Abort");
 			return 1;
 		}
 		case DIALOG_FURNITURE_TXTS_SLOT: {
-			if( !response ) return ShowPlayerDialog(playerid, DIALOG_FURNITURE_TXTS, DIALOG_STYLE_TABLIST_HEADERS, "Furniture - Teksture", ShowPlayerTextureList(playerid), "Odaberi", "Odustani");
+			if( !response ) return ShowPlayerDialog(playerid, DIALOG_FURNITURE_TXTS, DIALOG_STYLE_TABLIST_HEADERS, "Furniture - Teksture", ShowPlayerTextureList(playerid), "Choose", "Abort");
 			new houseid = GetPlayerFurnitureHouse(playerid);
 			if( houseid == INVALID_HOUSE_ID )
 				return SendErrorMessage(playerid, "Niste u svojoj kuci / nemate dozvolu za postavljanje namjestaja.");
 			new
 				slot = strval(inputtext);
 			if( 1 <= slot <= 5 ) {
-				va_ShowPlayerDialog(playerid, DIALOG_FURNITURE_TXTS_SURE, DIALOG_STYLE_MSGBOX, "Furniture - Teksture", "Zelite li staviti odabranu teksturu na objekt u slot %d?", "Da", "Ne", slot);
+				va_ShowPlayerDialog(playerid, DIALOG_FURNITURE_TXTS_SURE, DIALOG_STYLE_MSGBOX, "Furniture - Teksture", "Zelite li staviti odabranu teksturu na objekt u slot %d?", "Yes", "No", slot);
 				PlayerEditTxtSlot[ playerid ] = slot - 1;
 
 				new
@@ -4227,11 +4227,11 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 				SetDynamicObjectMaterial(HouseInfo[ houseid ][ hFurObjectid ][ PlayerEditIndex[ playerid ] ], slot, ObjectTextures[ index ][ tModel ], ObjectTextures[ index ][ tTXDName ], ObjectTextures[ index ][ tName ], 0);
 
 			} else
-				ShowPlayerDialog(playerid, DIALOG_FURNITURE_TXTS_SLOT, DIALOG_STYLE_INPUT, "Furniture - Texture Slots", "Unesite slot u koji zelite staviti teksturu "COL_RED"(1-5)", "Unesi", "Odustani");
+				ShowPlayerDialog(playerid, DIALOG_FURNITURE_TXTS_SLOT, DIALOG_STYLE_INPUT, "Furniture - Texture Slots", "Unesite slot u koji zelite staviti teksturu "COL_RED"(1-5)", "Input", "Abort");
 			return 1;
 		}
 		case DIALOG_FURNITURE_TXTS_SURE: {
-			if( !response ) return ShowPlayerDialog(playerid, DIALOG_FURNITURE_TXTS, DIALOG_STYLE_TABLIST_HEADERS, "Furniture - Teksture", ShowPlayerTextureList(playerid), "Odaberi", "Odustani");
+			if( !response ) return ShowPlayerDialog(playerid, DIALOG_FURNITURE_TXTS, DIALOG_STYLE_TABLIST_HEADERS, "Furniture - Teksture", ShowPlayerTextureList(playerid), "Choose", "Abort");
 			if( !SetFurnitureObjectTexture(playerid, PlayerEditTxtSlot[ playerid ], PlayerEditTxtIndex[ playerid ], PlayerEditIndex[ playerid ]) ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Doslo je do greske. Pokusajte ponovno!");
 			return 1;
 		}
@@ -4239,7 +4239,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 			if( !response ) return 1;
 
 			PlayerEditTxtIndex[ playerid ] = listitem;
-			ShowPlayerDialog(playerid, DIALOG_FURNITURE_COL_SLOT, DIALOG_STYLE_INPUT, "Furniture - Texture Slots", "Unesite slot u koji zelite staviti odabranu boju (0-4)!", "Unesi", "Odustani");
+			ShowPlayerDialog(playerid, DIALOG_FURNITURE_COL_SLOT, DIALOG_STYLE_INPUT, "Furniture - Texture Slots", "Unesite slot u koji zelite staviti odabranu boju (0-4)!", "Input", "Abort");
 			return 1;
 		}
 		case DIALOG_FURNITURE_COL_SLOT: {
@@ -4258,7 +4258,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 					strcat(buffer, motd, 4096);
 				}
 				
-				ShowPlayerDialog(playerid, DIALOG_FURNITURE_COL_LIST, DIALOG_STYLE_LIST, "Furniture - Odabir boja", buffer, "Odaberi", "Odustani");
+				ShowPlayerDialog(playerid, DIALOG_FURNITURE_COL_LIST, DIALOG_STYLE_LIST, "Furniture - Odabir boja", buffer, "Choose", "Abort");
 				return 1;
 			}
 			new houseid = GetPlayerFurnitureHouse(playerid);
@@ -4267,7 +4267,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 			new
 				slotid = strval(inputtext);
 			if( 1 <= slotid <= 5 ) {
-				va_ShowPlayerDialog(playerid, DIALOG_FURNITURE_COL_SURE, DIALOG_STYLE_MSGBOX, "Furniture - Boje", "Zelite li staviti odabranu boju u slot %d?", "Da", "Ne", slotid);
+				va_ShowPlayerDialog(playerid, DIALOG_FURNITURE_COL_SURE, DIALOG_STYLE_MSGBOX, "Furniture - Boje", "Zelite li staviti odabranu boju u slot %d?", "Yes", "No", slotid);
 				PlayerEditTxtSlot[ playerid ] = slotid - 1;
 
 				new
@@ -4277,30 +4277,30 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 				SetDynamicObjectMaterial(HouseInfo[ houseid ][ hFurObjectid ][ PlayerEditIndex[ playerid ] ], slotid, ObjectTextures[ HouseInfo[ houseid ][ hFurTxtId ][ index ][ slotid ] ][ tModel ], ObjectTextures[ HouseInfo[ houseid ][ hFurTxtId ][ index ][ slotid ] ][ tTXDName ], ObjectTextures[ HouseInfo[ houseid ][ hFurTxtId ][ index ][ slotid ] ][ tName ], colorid);
 
 			} else
-				ShowPlayerDialog(playerid, DIALOG_FURNITURE_COL_SLOT, DIALOG_STYLE_INPUT, "Furniture - Color Slots", "Unesite slot u koji zelite staviti odabranu boju (1-5)!", "Unesi", "Odustani");
+				ShowPlayerDialog(playerid, DIALOG_FURNITURE_COL_SLOT, DIALOG_STYLE_INPUT, "Furniture - Color Slots", "Unesite slot u koji zelite staviti odabranu boju (1-5)!", "Input", "Abort");
 			return 1;
 		}
 		case DIALOG_FURNITURE_COL_SURE: {
-			if( !response ) return ShowPlayerDialog(playerid, DIALOG_FURNITURE_COL_SLOT, DIALOG_STYLE_INPUT, "Furniture - Color Slots", "Unesite slot u koji zelite staviti odabranu boju (1-5)!", "Unesi", "Odustani");
+			if( !response ) return ShowPlayerDialog(playerid, DIALOG_FURNITURE_COL_SLOT, DIALOG_STYLE_INPUT, "Furniture - Color Slots", "Unesite slot u koji zelite staviti odabranu boju (1-5)!", "Input", "Abort");
 
 			if( !SetFurnitureObjectColor(playerid, PlayerEditTxtSlot[ playerid ], PlayerEditTxtIndex[ playerid ], PlayerEditIndex[ playerid ]) ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Doslo je do greske. Pokusajte ponovno!");
 			return 1;
 		}
 		case DIALOG_FURNITURE_SLOT_DELETE: {
-			if( !response ) return  ShowPlayerDialog(playerid, DIALOG_FURNITURE_EDIT_LIST, DIALOG_STYLE_LIST, "Furniture - Uredjivanje", "Uredjivanje (UI)\nTeksture\nBoje\nKopiraj objekt\nObrisi objekt\nObrisi teksture i boje", "Odaberi", "Odustani");
+			if( !response ) return  ShowPlayerDialog(playerid, DIALOG_FURNITURE_EDIT_LIST, DIALOG_STYLE_LIST, "Furniture - Uredjivanje", "Uredjivanje (UI)\nTeksture\nBoje\nKopiraj objekt\nObrisi objekt\nObrisi teksture i boje", "Choose", "Abort");
 
 			new
 				slot = strval(inputtext);
 			if( 1 <= slot <= 5 ) {
 				PlayerEditClsIndex[ playerid ] = slot - 1;
-				va_ShowPlayerDialog(playerid, DIALOG_FURNITURE_SLOT_SURE, DIALOG_STYLE_MSGBOX, "Furniture - Brisanje tekstura i boja", "Zelite li obrisati teksture i boje na slotu %d?", "Da", "Ne", slot);
+				va_ShowPlayerDialog(playerid, DIALOG_FURNITURE_SLOT_SURE, DIALOG_STYLE_MSGBOX, "Furniture - Brisanje tekstura i boja", "Zelite li obrisati teksture i boje na slotu %d?", "Yes", "No", slot);
 			}
 			else
-				ShowPlayerDialog(playerid, DIALOG_FURNITURE_SLOT_DELETE, DIALOG_STYLE_INPUT, "Furniture - Brisanje tekstura i boja", "Unesite slot koji zelite ocistiti od boja i tekstura "COL_YELLOW"(1-5)", "Unesi", "Odustani");
+				ShowPlayerDialog(playerid, DIALOG_FURNITURE_SLOT_DELETE, DIALOG_STYLE_INPUT, "Furniture - Brisanje tekstura i boja", "Unesite slot koji zelite ocistiti od boja i tekstura "COL_YELLOW"(1-5)", "Input", "Abort");
 			return 1;
 		}
 		case DIALOG_FURNITURE_SLOT_SURE: {
-			if( !response ) return ShowPlayerDialog(playerid, DIALOG_FURNITURE_SLOT_DELETE, DIALOG_STYLE_INPUT, "Furniture - Brisanje tekstura i boja", "Unesite slot koji zelite ocistiti od boja i tekstura "COL_YELLOW"(0-4)", "Unesi", "Odustani");
+			if( !response ) return ShowPlayerDialog(playerid, DIALOG_FURNITURE_SLOT_DELETE, DIALOG_STYLE_INPUT, "Furniture - Brisanje tekstura i boja", "Unesite slot koji zelite ocistiti od boja i tekstura "COL_YELLOW"(0-4)", "Input", "Abort");
 
 			new houseid = GetPlayerFurnitureHouse(playerid);
 			if( houseid == INVALID_HOUSE_ID )
@@ -4406,20 +4406,20 @@ hook OnModelSelResponse( playerid, extraid, index, modelid, response )
 			if( !response )
 			{
 				ResetFurnitureShuntVar(playerid);
-				return ShowPlayerDialog(playerid, DIALOG_FURNITURE_MENU, DIALOG_STYLE_LIST, "Furniture", "Kupi objekt\nUredi\nInventory", "Odaberi", "Odustani");
+				return ShowPlayerDialog(playerid, DIALOG_FURNITURE_MENU, DIALOG_STYLE_LIST, "Furniture", "Kupi objekt\nUredi\nInventory", "Choose", "Abort");
 			}
 			PlayerEditIndex[ playerid ] = ModelToEnumID[playerid][index];
-			va_ShowPlayerDialog(playerid, DIALOG_FURNITURE_EDIT_LIST, DIALOG_STYLE_LIST, "Furniture - Uredjivanje", "Uredjivanje (UI)\nTeksture\nBoje\nKopiraj objekt\nObrisi objekt\nObrisi teksture i boje", "Odaberi", "Odustani");
+			va_ShowPlayerDialog(playerid, DIALOG_FURNITURE_EDIT_LIST, DIALOG_STYLE_LIST, "Furniture - Uredjivanje", "Uredjivanje (UI)\nTeksture\nBoje\nKopiraj objekt\nObrisi objekt\nObrisi teksture i boje", "Choose", "Abort");
 			ResetFurnitureShuntVar(playerid);
 		}
 		case DIALOG_FURNITURE_OBJS_BUY: {
 			if( !response ) {
 				switch( FurnObjectsType[ playerid ] ) {
-					case 1: ShowPlayerDialog(playerid, DIALOG_FURNITURE_OBJCS, DIALOG_STYLE_LIST, "Market - Dnevni", "Kauci\nFotelje\nStolovi\nOrmarici\nTelevizori\nVidei\nHi-Fi\nZvucnici\nTepisi\nSvijetla\nVrata\n", "Odaberi", "Odustani"); // Dnevni
-					case 2: ShowPlayerDialog(playerid, DIALOG_FURNITURE_OBJCS, DIALOG_STYLE_LIST, "Market - Kuhinja", "Frizider\nKuhinjski ormarici\nSudoper\nStednjak\nMikrovalna\nKanta za smece\nSvijetla\nPosudje\n", "Odaberi", "Odustani"); // Kuhinja
-					case 3: ShowPlayerDialog(playerid, DIALOG_FURNITURE_OBJCS, DIALOG_STYLE_LIST, "Market - Kupaonica", "WC skoljke\nKade\nOgledalo\n", "Odaberi", "Odustani"); // Kupaonica
-					case 4: ShowPlayerDialog(playerid, DIALOG_FURNITURE_OBJCS, DIALOG_STYLE_LIST, "Market - Soba", "Kreveti\nNocni ormarici\nKovcezi\nOdjeca\nBiljke\nSlike\nSvjetla\nStolovi\nStolice\nRadijatori\nZastori\nStaklo", "Odaberi", "Odustani"); // Sobe
-					case 5: ShowPlayerDialog(playerid, DIALOG_FURNITURE_OBJCS, DIALOG_STYLE_LIST, "Market - Ostalo", "Zabava\nPica\nSport\nOstalo\nZidovi\nPremium\nOffice\nFM Objects\nHrana", "Odaberi", "Odustani"); // Ostalo
+					case 1: ShowPlayerDialog(playerid, DIALOG_FURNITURE_OBJCS, DIALOG_STYLE_LIST, "Market - Dnevni", "Kauci\nFotelje\nStolovi\nOrmarici\nTelevizori\nVidei\nHi-Fi\nZvucnici\nTepisi\nSvijetla\nVrata\n", "Choose", "Abort"); // Dnevni
+					case 2: ShowPlayerDialog(playerid, DIALOG_FURNITURE_OBJCS, DIALOG_STYLE_LIST, "Market - Kuhinja", "Frizider\nKuhinjski ormarici\nSudoper\nStednjak\nMikrovalna\nKanta za smece\nSvijetla\nPosudje\n", "Choose", "Abort"); // Kuhinja
+					case 3: ShowPlayerDialog(playerid, DIALOG_FURNITURE_OBJCS, DIALOG_STYLE_LIST, "Market - Kupaonica", "WC skoljke\nKade\nOgledalo\n", "Choose", "Abort"); // Kupaonica
+					case 4: ShowPlayerDialog(playerid, DIALOG_FURNITURE_OBJCS, DIALOG_STYLE_LIST, "Market - Soba", "Kreveti\nNocni ormarici\nKovcezi\nOdjeca\nBiljke\nSlike\nSvjetla\nStolovi\nStolice\nRadijatori\nZastori\nStaklo", "Choose", "Abort"); // Sobe
+					case 5: ShowPlayerDialog(playerid, DIALOG_FURNITURE_OBJCS, DIALOG_STYLE_LIST, "Market - Ostalo", "Zabava\nPica\nSport\nOstalo\nZidovi\nPremium\nOffice\nFM Objects\nHrana", "Choose", "Abort"); // Ostalo
 				}
 				return 1;
 			}
@@ -4427,11 +4427,11 @@ hook OnModelSelResponse( playerid, extraid, index, modelid, response )
 			if( AC_GetPlayerMoney(playerid) < GetFurnitureObjectPrice(playerid, index) ) {
 				SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate dovoljno novaca za kupovinu objekta (%d$)!", GetFurnitureObjectPrice(playerid, index));
 				switch( FurnObjectsType[ playerid ] ) {
-					case 1: ShowPlayerDialog(playerid, DIALOG_FURNITURE_OBJCS, DIALOG_STYLE_LIST, "Market - Dnevni", "Kauci\nFotelje\nStolovi\nOrmarici\nTelevizori\nVidei\nHi-Fi\nZvucnici\nTepisi\nSvijetla\nVrata\n", "Odaberi", "Odustani"); // Dnevni
-					case 2: ShowPlayerDialog(playerid, DIALOG_FURNITURE_OBJCS, DIALOG_STYLE_LIST, "Market - Kuhinja", "Frizider\nKuhinjski ormarici\nSudoper\nStednjak\nMikrovalna\nKanta za smece\nSvijetla\nPosudje\n", "Odaberi", "Odustani"); // Kuhinja
-					case 3: ShowPlayerDialog(playerid, DIALOG_FURNITURE_OBJCS, DIALOG_STYLE_LIST, "Market - Kupaonica", "WC skoljke\nKade\nOgledalo\n", "Odaberi", "Odustani"); // Kupaonica
-					case 4: ShowPlayerDialog(playerid, DIALOG_FURNITURE_OBJCS, DIALOG_STYLE_LIST, "Market - Soba", "Kreveti\nNocni ormarici\nKovcezi\nOdjeca\nBiljke\nSlike\nSvjetla\nStolovi\nStolice\nRadijatori\nZastori\nStaklo", "Odaberi", "Odustani"); // Sobe
-					case 5: ShowPlayerDialog(playerid, DIALOG_FURNITURE_OBJCS, DIALOG_STYLE_LIST, "Market - Ostalo", "Zabava\nPica\nSport\nOstalo\nZidovi\nPremium\nOffice\nFM Objects\nHrana", "Odaberi", "Odustani"); // Ostalo
+					case 1: ShowPlayerDialog(playerid, DIALOG_FURNITURE_OBJCS, DIALOG_STYLE_LIST, "Market - Dnevni", "Kauci\nFotelje\nStolovi\nOrmarici\nTelevizori\nVidei\nHi-Fi\nZvucnici\nTepisi\nSvijetla\nVrata\n", "Choose", "Abort"); // Dnevni
+					case 2: ShowPlayerDialog(playerid, DIALOG_FURNITURE_OBJCS, DIALOG_STYLE_LIST, "Market - Kuhinja", "Frizider\nKuhinjski ormarici\nSudoper\nStednjak\nMikrovalna\nKanta za smece\nSvijetla\nPosudje\n", "Choose", "Abort"); // Kuhinja
+					case 3: ShowPlayerDialog(playerid, DIALOG_FURNITURE_OBJCS, DIALOG_STYLE_LIST, "Market - Kupaonica", "WC skoljke\nKade\nOgledalo\n", "Choose", "Abort"); // Kupaonica
+					case 4: ShowPlayerDialog(playerid, DIALOG_FURNITURE_OBJCS, DIALOG_STYLE_LIST, "Market - Soba", "Kreveti\nNocni ormarici\nKovcezi\nOdjeca\nBiljke\nSlike\nSvjetla\nStolovi\nStolice\nRadijatori\nZastori\nStaklo", "Choose", "Abort"); // Sobe
+					case 5: ShowPlayerDialog(playerid, DIALOG_FURNITURE_OBJCS, DIALOG_STYLE_LIST, "Market - Ostalo", "Zabava\nPica\nSport\nOstalo\nZidovi\nPremium\nOffice\nFM Objects\nHrana", "Choose", "Abort"); // Ostalo
 				}
 				return 1;
 			}
@@ -4441,7 +4441,7 @@ hook OnModelSelResponse( playerid, extraid, index, modelid, response )
 		}
 		case MODEL_SELECTION_FCOLOR: {
 			PlayerEditTxtIndex[ playerid ] = index;
-			ShowPlayerDialog(playerid, DIALOG_FURNITURE_COL_SLOT, DIALOG_STYLE_INPUT, "Furniture - Change Color", "Unesite slot u koji zelite staviti odabranu boju (0-4)!", "Unesi", "Odustani");
+			ShowPlayerDialog(playerid, DIALOG_FURNITURE_COL_SLOT, DIALOG_STYLE_INPUT, "Furniture - Change Color", "Unesite slot u koji zelite staviti odabranu boju (0-4)!", "Input", "Abort");
 		}
 	}
 	return 1;
@@ -4486,14 +4486,14 @@ CMD:bint(playerid, params[])
 				BlankInts[ i ][ iPrice ]
 			);
 		}
-		ShowPlayerDialog(playerid, DIALOG_BLANK_INTS_LIST, DIALOG_STYLE_TABLIST_HEADERS, "Blank Interiors", buffer, "Odaberi", "Odustani");
+		ShowPlayerDialog(playerid, DIALOG_BLANK_INTS_LIST, DIALOG_STYLE_TABLIST_HEADERS, "Blank Interiors", buffer, "Choose", "Abort");
 	}
 	else if( !strcmp(param, "buy", true ) ) {
 		if( !Bit1_Get( r_PlayerPrwsBInt, playerid ) ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Morate prvo uci i pregledati prazan interijer!");
 		new
 			houseid = PlayerInfo[ playerid ][ pHouseKey ];
 		if( houseid == INVALID_HOUSE_ID ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Morate posjedovati kucu!");
-		ShowPlayerDialog(playerid, DIALOG_FURNITURE_BINT_SURE, DIALOG_STYLE_MSGBOX, "{3C95C2} [ INTERIOR - WARNING ]", "Zelite li kupiti prazan interijer?\n"COL_RED"[UPOZORENJE]: Police s oruzjem, droga i trenutni namjestaj u vasoj kuci ce biti obrisan\nNapominjemo Vam da prije nego sto se odlucite za promijenu interiora, izvadite oruzje i drogu.", "Da", "Ne");
+		ShowPlayerDialog(playerid, DIALOG_FURNITURE_BINT_SURE, DIALOG_STYLE_MSGBOX, "{3C95C2} [ INTERIOR - WARNING ]", "Zelite li kupiti prazan interijer?\n"COL_RED"[UPOZORENJE]: Police s oruzjem, droga i trenutni namjestaj u vasoj kuci ce biti obrisan\nNapominjemo Vam da prije nego sto se odlucite za promijenu interiora, izvadite oruzje i drogu.", "Yes", "No");
 	}
 	else if( !strcmp(param, "exit", true ) ) {
 		if( !Bit1_Get( r_PlayerPrwsBInt, playerid ) ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne gledate prazne interijere!");
@@ -4541,7 +4541,7 @@ CMD:furniture(playerid, params[])
 			houseid = GetPlayerFurnitureHouse(playerid);
 		if( houseid == INVALID_HOUSE_ID || (  556 < houseid < 575 ) ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Morate posjedovati kucu ili posjedujete apartman.");
 		if( !IsPlayerInRangeOfPoint(playerid, 150.0, HouseInfo[ houseid ][ hExitX ], HouseInfo[ houseid ][ hExitY ], HouseInfo[ houseid ][ hExitZ ]) ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Morate biti unutar kuce!");
-		ShowPlayerDialog(playerid, DIALOG_FURNITURE_MENU, DIALOG_STYLE_LIST, "Furniture", "Kupi objekt\nUredi\nInventory", "Odaberi", "Odustani");
+		ShowPlayerDialog(playerid, DIALOG_FURNITURE_MENU, DIALOG_STYLE_LIST, "Furniture", "Kupi objekt\nUredi\nInventory", "Choose", "Abort");
 	}
 	else if( !strcmp( "approve", param, true ) )
 	{

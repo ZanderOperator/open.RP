@@ -435,7 +435,7 @@ hook OnPlayerEnterCheckpoint(playerid) {
 				FormatNumber(get_PackagePrice[playerid]),
 				ReturnPlayerFactionName(playerid)
 			);
-		}	ShowPlayerDialog(playerid, DIALOG_TAKE_PACKAGE, DIALOG_STYLE_MSGBOX, "{FA5656}* PACKAGE - Confirmation", buffer, "(confirm)", "(x)");
+		}	ShowPlayerDialog(playerid, DIALOG_TAKE_PACKAGE, DIALOG_STYLE_MSGBOX, "{FA5656}* PACKAGE - Confirmation", buffer, "Confirm", "Close");
 	}
 	return (true);
 }
@@ -464,7 +464,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 			get_PackageWeapon[playerid] = listitem;
 			if(get_PackageWeapon[playerid] != 11) {
 				format(buffer, sizeof(buffer), "\nSada unesite koliko metaka zalite da dobijete u paketu.\n{3C95C2}[NAPOMENA]:Maximalno mozete naruciti %d metaka.", MAX_PACKAGE_AMOUNT);
-				ShowPlayerDialog(playerid, DIALOG_PACKAGE_AMOUNT, DIALOG_STYLE_INPUT, "{3C95C2}* Package - Ammo", buffer, "(order)", "(x)");
+				ShowPlayerDialog(playerid, DIALOG_PACKAGE_AMOUNT, DIALOG_STYLE_INPUT, "{3C95C2}* Package - Ammo", buffer, "Order", "Close");
 			}
 			return (true);
 		}
@@ -497,7 +497,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 				FormatNumber(package_price),
 				ReturnPlayerFactionName(playerid)
 			);
-			ShowPlayerDialog(playerid, DIALOG_PACKAGE_CONFIRM, DIALOG_STYLE_MSGBOX, "{3C95C2}* Package - Informations", buffer, "(order)", "(x)");
+			ShowPlayerDialog(playerid, DIALOG_PACKAGE_CONFIRM, DIALOG_STYLE_MSGBOX, "{3C95C2}* Package - Informations", buffer, "Order", "Close");
 			return true;
 		}
 		case DIALOG_PACKAGE_CONFIRM: {
@@ -913,7 +913,7 @@ CMD:package(playerid, params[]) {
 				FormatNumber(get_PackagePrice[playerid]),
 				ReturnPlayerFactionName(playerid)
 			);
-			ShowPlayerDialog(playerid, 0, DIALOG_STYLE_MSGBOX, "{3C95C2}* Package - Informations", buffer, "(x)", "");
+			ShowPlayerDialog(playerid, 0, DIALOG_STYLE_MSGBOX, "{3C95C2}* Package - Informations", buffer, "Close", "");
 		}
 	}
 

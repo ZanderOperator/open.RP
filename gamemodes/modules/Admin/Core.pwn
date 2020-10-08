@@ -861,7 +861,7 @@ stock CheckInactivePlayer(playerid, sql)
 		);
 		strcat(dialogstring, motd, sizeof(dialogstring));
 
-		ShowPlayerDialog(playerid, DIALOG_INACTIVITY_CHECK, DIALOG_STYLE_MSGBOX, "Provjera neaktivnosti igraca:", dialogstring, "Zatvori", "");
+		ShowPlayerDialog(playerid, DIALOG_INACTIVITY_CHECK, DIALOG_STYLE_MSGBOX, "Provjera neaktivnosti igraca:", dialogstring, "Close", "");
 		return 1;
 	}
 	mysql_tquery_inline(g_SQL, tmpQuery, using inline OnInactivePlayerLoad, "i", playerid);
@@ -916,7 +916,7 @@ stock ListInactivePlayers(playerid)
 				);
 				strcat(dialogstring, motd, sizeof(dialogstring));
 			}
-			ShowPlayerDialog(playerid, DIALOG_INACTIVITY_LIST, DIALOG_STYLE_MSGBOX, "Najnovije neaktivnosti:", dialogstring, "Zatvori", "");
+			ShowPlayerDialog(playerid, DIALOG_INACTIVITY_LIST, DIALOG_STYLE_MSGBOX, "Najnovije neaktivnosti:", dialogstring, "Close", "");
 			return 1;
 		}
 		else return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Trenutno nema prijavljenih neaktivnosti u bazi podataka!");
@@ -1660,7 +1660,7 @@ CMD:ahelp(playerid, params[])
 		format(f_dialog,sizeof(f_dialog), "\n{FA5555}[A 1338]: /blacklist, /unblacklist, /agivedrug, /checkplayerdrugs, /checkvehdrugs, /togreg, ");
 		strcat(p_dialog,f_dialog, sizeof(p_dialog));
 	}
-    ShowPlayerDialog(playerid, 0, DIALOG_STYLE_MSGBOX, "{FF9933}* Game Admin Commands", p_dialog, "Zatvori", "");
+    ShowPlayerDialog(playerid, 0, DIALOG_STYLE_MSGBOX, "{FF9933}* Game Admin Commands", p_dialog, "Close", "");
 	return 1;
 }
 
@@ -1687,7 +1687,7 @@ CMD:hhelp(playerid, params[])
 		format(f_dialog,sizeof(f_dialog), "\n[H 4]: /mark /gotomark /check.");
 		strcat(p_dialog,f_dialog, sizeof(p_dialog));
 	}
-    ShowPlayerDialog(playerid, 0, DIALOG_STYLE_MSGBOX, "{91FABB}* Helper - Commands", p_dialog, "Zatvori", "");
+    ShowPlayerDialog(playerid, 0, DIALOG_STYLE_MSGBOX, "{91FABB}* Helper - Commands", p_dialog, "Close", "");
 	return 1;
 }
 
@@ -1867,6 +1867,7 @@ CMD:inactivity(playerid, params[])
 		);
 		mysql_pquery(g_SQL, insertQuery, "", "");
 		
+		#if defined MODULE_LOGS
 		Log_Write("logfiles/a_inactive_players.txt", "(%s) %s[A%d] je odobrio %s[SQLID: %d] neaktivnost od %d dana. Razlog: %s",
 			ReturnDate(),
 			GetName(playerid,false),
@@ -1876,6 +1877,7 @@ CMD:inactivity(playerid, params[])
 			days,
 			reason
 		);
+		#endif
 		
 		if(online)
 		{
@@ -1916,6 +1918,7 @@ CMD:inactivity(playerid, params[])
 		mysql_format(g_SQL, deleteQuery, sizeof(deleteQuery), "DELETE FROM `inactive_accounts` WHERE `sqlid` = '%d'", sqlid);
 		mysql_tquery(g_SQL, deleteQuery, "", "");
 		
+		#if defined MODULE_LOGS
 		Log_Write("logfiles/a_inactive_players.txt", "(%s) %s[A%d] je obrisao %s[SQLID: %d] registriranu neaktivnost iz baze podataka",
 			ReturnDate(),
 			GetName(playerid,false),
@@ -1923,6 +1926,7 @@ CMD:inactivity(playerid, params[])
 			playername,
 			sqlid
 		);
+		#endif
 		
 		if(online)
 			va_SendClientMessage(giveplayerid, COLOR_LIGHTRED, "Game Admin %s vam je ponistio registriranu neaktivnost.", GetName(playerid, false));
@@ -2318,14 +2322,15 @@ CMD:givepremium(playerid, params[])
 		);
 		mysql_pquery(g_SQL, vipLog);
 
-		// a_givepremium.txt
+		#if defined MODULE_LOGS
 		Log_Write("logfiles/a_givepremium.txt", "(%s) Administrator %s je dao VIP Bronze %s[SQLID: %d].",
 			ReturnDate(),
 			GetName(playerid, false),
 			GetName(giveplayerid, false),
 			PlayerInfo[giveplayerid][pSQLID]
 		);
-
+		#endif
+		
 		va_SendClientMessage(giveplayerid, COLOR_RED, "[ ! ] Dobili ste Bronze VIP Account od admina %s.", GetName(playerid,false));
 		SendClientMessage(giveplayerid, COLOR_RED, "[ ! ] Vas VIP paket istice za mjesec dana, zahvaljujemo na vasoj donaciji!");
 		va_SendClientMessage(playerid, COLOR_RED, "[ ! ] Dali ste %s Bronze VIP Account sa svim mogucnostima.", GetName(giveplayerid,false));
@@ -2381,13 +2386,14 @@ CMD:givepremium(playerid, params[])
 		);
 		mysql_pquery(g_SQL, vipLog);
 
-		// a_givepremium.txt
+		#if defined MODULE_LOGS
 		Log_Write("logfiles/a_givepremium.txt", "(%s) Administrator %s je dao VIP Silver %s[SQLID: %d].",
 			ReturnDate(),
 			GetName(playerid, false),
 			GetName(giveplayerid, false),
 			PlayerInfo[giveplayerid][pSQLID]
 		);
+		#endif
 
 		va_SendClientMessage(giveplayerid, COLOR_RED, "[ ! ] Dobili ste Silver VIP Account od admina %s", GetName(playerid,false));
 		SendClientMessage(giveplayerid, COLOR_RED, "[ ! ] Vas VIP paket istice za mjesec dana, zahvaljujemo na vasoj donaciji!");
@@ -2452,14 +2458,15 @@ CMD:givepremium(playerid, params[])
 		);
 		mysql_pquery(g_SQL, vipLog);
 
-		// a_givepremium.txt
+		#if defined MODULE_LOGS
 		Log_Write("logfiles/a_givepremium.txt", "(%s) Administrator %s je dao VIP Gold %s[SQLID: %d].",
 			ReturnDate(),
 			GetName(playerid, false),
 			GetName(giveplayerid, false),
 			PlayerInfo[giveplayerid][pSQLID]
 		);
-
+		#endif
+		
 		va_SendClientMessage(giveplayerid, COLOR_RED, "[ ! ] Dobili ste Gold VIP Account od admina %s", GetName(playerid,false));
 		SendClientMessage(giveplayerid, COLOR_RED, "[ ! ] Vas VIP paket istice za mjesec dana, zahvaljujemo na vasoj donaciji!");
 		va_SendClientMessage(playerid, COLOR_RED, "[ ! ] Dali ste %s Gold VIP Account sa svim mogucnostima.", GetName(giveplayerid,false));
@@ -2523,14 +2530,15 @@ CMD:givepremium(playerid, params[])
 		);
 		mysql_pquery(g_SQL, vipLog);
 
-		// a_givepremium.txt
+		#if defined MODULE_LOGS
 		Log_Write("logfiles/a_givepremium.txt", "(%s) Administrator %s je dao VIP Platinum %s[SQLID: %d].",
 			ReturnDate(),
 			GetName(playerid, false),
 			GetName(giveplayerid, false),
 			PlayerInfo[giveplayerid][pSQLID]
 		);
-
+		#endif
+		
 		va_SendClientMessage(giveplayerid, COLOR_RED, "[ ! ] Dobili ste Platinum VIP Account od admina %s", GetName(playerid,false));
 		SendClientMessage(giveplayerid, COLOR_RED, "[ ! ] Vas VIP paket istice za 45 dana, zahvaljujemo na vasoj donaciji!");
 		va_SendClientMessage(playerid, COLOR_RED, "[ ! ] Dali ste %s Platinum VIP Account sa svim mogucnostima.", GetName(giveplayerid,false));
@@ -3258,7 +3266,8 @@ CMD:setstat(playerid, params[])
 		{
 		    PlayerInfo[giveplayerid][pChangeTimes] = amount;
 		    format(globalstring, sizeof(globalstring), "   Namjestio si da korisnik moze koristiti /changename %d puta.", amount);
-			// Log
+		
+			#if defined MODULE_LOGS
 			Log_Write("logfiles/approve_changename.txt", "(%s) %s[A%d] je dozvolio %d /changenameova %s[SQLID: %d].",
 				ReturnDate(),
 				GetName(playerid,false),
@@ -3267,6 +3276,7 @@ CMD:setstat(playerid, params[])
 				GetName(giveplayerid,false),
 				PlayerInfo[giveplayerid][pSQLID]
 			);
+			#endif
   		}
 		case 21:
 		{
@@ -5955,7 +5965,7 @@ CMD:apm(playerid, params[])
 	#if defined MODULE_LOGS
 	new playerip[MAX_PLAYER_IP];
 	GetPlayerIp(playerid, playerip, sizeof(playerip));
-	Log_Write("/logfiles/a_pm.txt", "(%s) %s(%s) za %s: %s",
+	Log_Write("/logfiles/a_pm.txt", "(%s) %s(%s) for %s: %s",
 		ReturnDate(),
 		GetName(playerid, false),
 		playerip,

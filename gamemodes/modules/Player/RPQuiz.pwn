@@ -67,7 +67,7 @@ stock GenerateQuestion(playerid)
 	new question = random(sizeof(QuestionInfo));
 	if(Iter_Contains(AnsweredQuestion[playerid], question))
 		goto question_start;
-	ShowPlayerDialog(playerid, DIALOG_TEST_QUESTION, DIALOG_STYLE_MSGBOX, "Pitanje:", QuestionInfo[question][rpQuestion], "Odgovori", "");
+	ShowPlayerDialog(playerid, DIALOG_TEST_QUESTION, DIALOG_STYLE_MSGBOX, "Pitanje:", QuestionInfo[question][rpQuestion], "Answer", "");
 	CurrentQuestion[playerid] = question;
 	return 1;
 }
@@ -127,7 +127,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 				strcat(astring, QuestionInfo[question][rpAnswer1], sizeof(astring));
 				strcat(astring, QuestionInfo[question][rpAnswer2], sizeof(astring));
 				strcat(astring, QuestionInfo[question][rpAnswer3], sizeof(astring));
-				ShowPlayerDialog(playerid, DIALOG_TEST_ANSWER, DIALOG_STYLE_LIST, "Ponudjeni odgovori:", astring, "Odaberi", "Pitanje");
+				ShowPlayerDialog(playerid, DIALOG_TEST_ANSWER, DIALOG_STYLE_LIST, "Ponudjeni odgovori:", astring, "Choose", "Question");
 			}
 		}
 		case DIALOG_TEST_ANSWER:
@@ -136,7 +136,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 				rest = 0,
 				wrest = 0;
 			if(!response)
-				ShowPlayerDialog(playerid, DIALOG_TEST_QUESTION, DIALOG_STYLE_MSGBOX, "Pitanje:", QuestionInfo[question][rpQuestion], "Dalje", "");
+				ShowPlayerDialog(playerid, DIALOG_TEST_QUESTION, DIALOG_STYLE_MSGBOX, "Pitanje:", QuestionInfo[question][rpQuestion], "Next", "");
 			else
 			{
 				if(listitem == QuestionInfo[question][rpCorrect])
@@ -161,7 +161,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 					{
 						va_SendClientMessage(playerid, COLOR_RED, "Netocan odgovor, imas pravo jos %d puta netocno odgovoriti na ovo pitanje.", wrest);
 						va_SendClientMessage(playerid, COLOR_RED, "Ukoliko %d puta netocno odgovoris, cijeli kviz krece isponova.", MAX_WRONG_ANSWERS);
-						ShowPlayerDialog(playerid, DIALOG_TEST_QUESTION, DIALOG_STYLE_MSGBOX, "Pitanje:", QuestionInfo[question][rpQuestion], "Dalje", "");
+						ShowPlayerDialog(playerid, DIALOG_TEST_QUESTION, DIALOG_STYLE_MSGBOX, "Pitanje:", QuestionInfo[question][rpQuestion], "Next", "");
 					}
 					else
 					{

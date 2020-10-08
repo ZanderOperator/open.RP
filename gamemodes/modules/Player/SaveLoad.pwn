@@ -190,7 +190,7 @@ public PasswordForQuery(playerid, const inputtext[])
 														"COL_WHITE"Provjerite velika i mala slova, te unesite valjanu sifru.\n\
 														Imate jos "COL_LIGHTBLUE"%d"COL_WHITE"pokusaja za unos valjane sifre!\n\n\n\
 														"COL_RED"Ukoliko ne unesete dobru sifru onda cete dobiti kick!", MAX_LOGIN_TRIES - Bit8_Get(gr_LoginInputs, playerid));
-				ShowPlayerDialog(playerid, DIALOG_LOGIN, DIALOG_STYLE_PASSWORD, ""COL_WHITE"PRIJAVA", dialogtext, "Prijava", "Odustani");
+				ShowPlayerDialog(playerid, DIALOG_LOGIN, DIALOG_STYLE_PASSWORD, ""COL_WHITE"PRIJAVA", dialogtext, "Sign In", "Abort");
 				AntiCheatData[playerid][acLoginDialog] = true;
 			}
 		}
@@ -212,7 +212,7 @@ public CheckPlayerInBase(playerid)
 			prijavite, ili cete biti odspojeni sa Servera.\n\n\
 			Hvala i uzivajte i dalje u igranju na City of Angels!",GetName(playerid),MAX_LOGIN_TIME
 		);					
-		ShowPlayerDialog(playerid, DIALOG_LOGIN, DIALOG_STYLE_PASSWORD, ""COL_WHITE"PRIJAVA", dialogtext, "Prijava", "Odustani");
+		ShowPlayerDialog(playerid, DIALOG_LOGIN, DIALOG_STYLE_PASSWORD, ""COL_WHITE"PRIJAVA", dialogtext, "Sign In", "Abort");
 		AntiCheatData[playerid][acLoginDialog] = true;
 		
 		Bit8_Set(gr_LoginInputs, playerid, 0);
@@ -240,7 +240,7 @@ public CheckPlayerInBase(playerid)
 													"COL_WHITE"Vas racun nije registriran, ukoliko\n\
 													se zelite registrirati kliknite na gumb \"Register\"\n\
 													U protivnome cete biti kickani sa servera!",GetName(playerid));
-				ShowPlayerDialog(playerid, DIALOG_REGISTER, DIALOG_STYLE_MSGBOX, ""COL_WHITE"REGISTRACIJA (1/6)", dialogtext, "Register", "Odustani");
+				ShowPlayerDialog(playerid, DIALOG_REGISTER, DIALOG_STYLE_MSGBOX, ""COL_WHITE"REGISTRACIJA (1/6)", dialogtext, "Register", "Abort");
 			#endif
 		}
 		else
@@ -559,7 +559,7 @@ public CheckPlayerLoginInput(playerid)
             if(strcmp(n_gpci, PlayerInfo[playerid][pSAMPid])) {
                 OnSecurityBreach[playerid] = true;
                 SendClientMessage(playerid, COLOR_RED, "[SERVER]  Izgleda da se logirate s novog racunala koji je nepoznat nasem serveru! Upisite sigurnosni odgovor kako bi nastavili.");
-                va_ShowPlayerDialog(playerid, DIALOG_SEC_SAMPID, DIALOG_STYLE_PASSWORD, ""#COL_RED"SECURITY BREACH", ""#COL_WHITE"Molimo odgovorite na sigurnosno pitanje kako bi nastavili:\n%s", "Odgovori", "Odustani", secQuestions[PlayerInfo[playerid][pSecQuestion]]);
+                va_ShowPlayerDialog(playerid, DIALOG_SEC_SAMPID, DIALOG_STYLE_PASSWORD, ""#COL_RED"SECURITY BREACH", ""#COL_WHITE"Molimo odgovorite na sigurnosno pitanje kako bi nastavili:\n%s", "Answer", "Abort", secQuestions[PlayerInfo[playerid][pSecQuestion]]);
                 return 1;
             }
         }
@@ -759,7 +759,7 @@ stock ShowAdminMessage(playerid)
 		string[2048];
 		
 	format(string, sizeof(string), "Obavijest od %s\n%s", PlayerInfo[playerid][pAdminMsgBy], PlayerInfo[playerid][pAdminMsg]);
-	ShowPlayerDialog(playerid, DIALOG_ADMIN_MSG, DIALOG_STYLE_MSGBOX, "Admin Message", string, "Razumijem", "");
+	ShowPlayerDialog(playerid, DIALOG_ADMIN_MSG, DIALOG_STYLE_MSGBOX, "Admin Message", string, "Ok", "");
 	return 1;
 }
 
@@ -1132,7 +1132,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 															"COL_WHITE"Provjerite velika i mala slova, te unesite valjanu sifru.\n\
 															Imate jos "COL_LIGHTBLUE"%d"COL_WHITE"pokusaja za unos valjane sifre!\n\n\n\
 															"COL_RED"Ukoliko ne unesete dobru sifru onda cete dobiti kick!", MAX_LOGIN_TRIES - Bit8_Get(gr_LoginInputs, playerid));
-				ShowPlayerDialog(playerid, DIALOG_LOGIN, DIALOG_STYLE_PASSWORD, ""COL_WHITE"PRIJAVA", dialogtext, "Prijava", "Odustani");
+				ShowPlayerDialog(playerid, DIALOG_LOGIN, DIALOG_STYLE_PASSWORD, ""COL_WHITE"PRIJAVA", dialogtext, "Sign In", "Abort");
 				Bit8_Set(gr_LoginInputs, playerid, Bit8_Get(gr_LoginInputs, playerid) + 1);
 				AntiCheatData[playerid][acLoginDialog] = true;
 				return 1;
@@ -1207,7 +1207,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 				else
 				{
 				    SendClientMessage(playerid, COLOR_RED, "Ukoliko se ne sjecate vaseg odgovora kontaktirajte developere na forumu kako bi Vam pomogli!");
-    				va_ShowPlayerDialog(playerid, DIALOG_SEC_SAMPID, DIALOG_STYLE_PASSWORD, ""#COL_RED"SECURITY BREACH", ""#COL_WHITE"Molimo odgovorite na sigurnosno pitanje kako bi nastavili\nPreostalo pokusaja: "#COL_RED"%d"#COL_WHITE"\n\n%s", "Odgovori", "Odustani", secquestattempt[playerid], secQuestions[PlayerInfo[playerid][pSecQuestion]]);
+    				va_ShowPlayerDialog(playerid, DIALOG_SEC_SAMPID, DIALOG_STYLE_PASSWORD, ""#COL_RED"SECURITY BREACH", ""#COL_WHITE"Molimo odgovorite na sigurnosno pitanje kako bi nastavili\nPreostalo pokusaja: "#COL_RED"%d"#COL_WHITE"\n\n%s", "Answer", "Abort", secquestattempt[playerid], secQuestions[PlayerInfo[playerid][pSecQuestion]]);
 				}
 			}
 			return 1;
@@ -1224,7 +1224,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 					bugove, vrijedati druge igrace, lazno se predstavljati,\n\
 					koristiti zlonamjerne programe ili na bilo koji drugi nacin\n\
 					onemogucavati drugim igracima ugodnu igru na svome serveru\n\n\
-					Ukoliko prihvacate kliknite \"Prihvacam\"!", "Prihvacam", "Odustajem");
+					Ukoliko prihvacate kliknite \"I agree\"!", "I agree", "Abort");
 				}
 				else if(!response) 
 					Kick(playerid);
@@ -1237,14 +1237,14 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 				format(dialogtext, sizeof(dialogtext), ""COL_WHITE"Upisite lozinku kojom ce biti dostupna samo vasa \n\
 														 i koja ce vam omoguciti sigurnost vaseg racuna te, lozinka mora\n\
 														 sadrzavati 6-12 znakova.");
-				ShowPlayerDialog(playerid, DIALOG_REG_PASS, DIALOG_STYLE_PASSWORD, ""COL_WHITE"REGISTRACIJA - PASSWORD(3/6)", dialogtext, "Unesi", "Odustani");
+				ShowPlayerDialog(playerid, DIALOG_REG_PASS, DIALOG_STYLE_PASSWORD, ""COL_WHITE"REGISTRACIJA - PASSWORD(3/6)", dialogtext, "Input", "Abort");
 			}
 			else if(!response) {
 				format(dialogtext, sizeof(dialogtext), ""COL_WHITE"Dobro dosli "COL_LIGHTBLUE"%s!\n\n\
 													"COL_WHITE"Vas racun nije registriran, ukoliko\n\
 													se zelite registrirati kliknite na gumb \"Register\"\n\
 													Uprotivnome cete biti kickani sa servera!",GetName(playerid));
-				ShowPlayerDialog(playerid, DIALOG_REGISTER, DIALOG_STYLE_MSGBOX, ""COL_WHITE"REGISTRACIJA (1/6)", dialogtext, "Register", "Odustani");
+				ShowPlayerDialog(playerid, DIALOG_REGISTER, DIALOG_STYLE_MSGBOX, ""COL_WHITE"REGISTRACIJA (1/6)", dialogtext, "Register", "Abort");
 			}
 			return 1;
 		}
@@ -1257,7 +1257,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 														 i koja ce vam omoguciti sigurnost vaseg racuna te, lozinka mora\n\
 														 sadrzavati "COL_LIGHTBLUE"6-12 znakova"COL_WHITE".\n\
 														 "COL_RED"Ostavili ste prazno polje za lozinku!");
-					ShowPlayerDialog(playerid, DIALOG_REG_PASS, DIALOG_STYLE_PASSWORD, ""COL_WHITE"REGISTRACIJA - PASSWORD(3/6)", dialogtext, "Unesi", "Odustani");
+					ShowPlayerDialog(playerid, DIALOG_REG_PASS, DIALOG_STYLE_PASSWORD, ""COL_WHITE"REGISTRACIJA - PASSWORD(3/6)", dialogtext, "Input", "Abort");
 					Bit8_Set(gr_RegisterInputs, playerid, Bit8_Get(gr_RegisterInputs, playerid) + 1);
 					return 1;
 				}
@@ -1267,13 +1267,13 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 														 i koja ce vam omoguciti sigurnost vaseg racuna te, lozinka mora\n\
 														 sadrzavati "COL_LIGHTBLUE"6-12 znakova"COL_WHITE".\n\
 														 "COL_RED"Ne smijete upisivati znakove: %+^|?*#!$>' u password!");
-					ShowPlayerDialog(playerid, DIALOG_REG_PASS, DIALOG_STYLE_PASSWORD, ""COL_WHITE"REGISTRACIJA - PASSWORD(3/6)", dialogtext, "Unesi", "Odustani");
+					ShowPlayerDialog(playerid, DIALOG_REG_PASS, DIALOG_STYLE_PASSWORD, ""COL_WHITE"REGISTRACIJA - PASSWORD(3/6)", dialogtext, "Input", "Abort");
 					Bit8_Set(gr_RegisterInputs, playerid, Bit8_Get(gr_RegisterInputs, playerid) + 1);
 					return 1;
 				}
 				if(6 <= strlen(inputtext) <= 12) {
 					format(dialogtext, sizeof(dialogtext), ""COL_WHITE"Unesite svoj vazeci e-mail radi dodatne sigurnosti\n\vaseg racuna:");
-					ShowPlayerDialog(playerid, DIALOG_REG_MAIL, DIALOG_STYLE_INPUT, ""COL_WHITE"REGISTRACIJA - E-MAIL(4/6)", dialogtext, "Unesi", "Odustani");
+					ShowPlayerDialog(playerid, DIALOG_REG_MAIL, DIALOG_STYLE_INPUT, ""COL_WHITE"REGISTRACIJA - E-MAIL(4/6)", dialogtext, "Input", "Abort");
 					format(PlayerInfo[playerid][pPassword], 129, inputtext);
 					Bit8_Set(gr_RegisterInputs, playerid, 0);
 					return 1;
@@ -1288,7 +1288,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 					format(dialogtext, sizeof(dialogtext), ""COL_WHITE"Upisite lozinku kojom ce biti dostupna samo vama \n\
 														 i koja ce vam omoguciti sigurnost vaseg racuna te, lozinka mora\n\
 														 sadrzavati "COL_LIGHTBLUE"6-12 znakova"COL_WHITE".");
-					ShowPlayerDialog(playerid, DIALOG_REG_PASS, DIALOG_STYLE_PASSWORD, ""COL_WHITE"REGISTRACIJA - PASSWORD(3/6)", dialogtext, "Unesi", "Odustani");
+					ShowPlayerDialog(playerid, DIALOG_REG_PASS, DIALOG_STYLE_PASSWORD, ""COL_WHITE"REGISTRACIJA - PASSWORD(3/6)", dialogtext, "Input", "Abort");
 					Bit8_Set(gr_RegisterInputs, playerid, Bit8_Get(gr_RegisterInputs, playerid) + 1);
 					return 1;
 				}
@@ -1299,7 +1299,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 																					bugove, vrijedati druge igrace, lazno se predstavljati,\n\
 																					koristiti zlonamjerne programe ili na bilo koji drugi nacin\n\
 																					onemogucavati drugim igracima ugodnu igru na svome serveru\n\n\
-																					Ukoliko prihvacate kliknite \"Prihvacam\"!", "Prihvacam", "Odustajem");
+																					Ukoliko prihvacate kliknite \"Accept\"!", "Accept", "Odustajem");
 			}
 			return 1;
 		}
@@ -1309,32 +1309,32 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 				if(isnull(inputtext))
 				{
 					format(dialogtext, sizeof(dialogtext), ""COL_WHITE"Unesite svoj vazeci e-mail radi dodatne sigurnosti vaseg racuna:"COL_RED"\nOstavili ste prazno polje pod E-Mailom!\n");
-					ShowPlayerDialog(playerid, DIALOG_REG_MAIL, DIALOG_STYLE_INPUT, ""COL_WHITE"REGISTRACIJA - E-MAIL(4/6)", dialogtext, "Unesi", "Odustani");
+					ShowPlayerDialog(playerid, DIALOG_REG_MAIL, DIALOG_STYLE_INPUT, ""COL_WHITE"REGISTRACIJA - E-MAIL(4/6)", dialogtext, "Input", "Abort");
 					Bit8_Set(gr_RegisterInputs, playerid, Bit8_Get(gr_RegisterInputs, playerid) + 1);
 					return 1;
 				}
 				if( strfind(inputtext, "%", true) != -1 || strfind(inputtext, "\n", true) != -1 || strfind(inputtext, "=", true) != -1 || strfind(inputtext, "+", true) != -1 || strfind(inputtext, "'", true) != -1 || strfind(inputtext, ">", true) != -1 || strfind(inputtext, "^", true) != -1 || strfind(inputtext, "|", true) != -1 || strfind(inputtext, "?", true) != -1 || strfind(inputtext, "*", true) != -1 || strfind(inputtext, "#", true) != -1 || strfind(inputtext, "!", true) != -1 || strfind(inputtext, "$", true) != -1 )
 				{	
 					format(dialogtext, sizeof(dialogtext), ""COL_WHITE"Unesite svoj vazeci e-mail radi dodatne sigurnosti vaseg racuna:"COL_RED"\nNe smijete upisivati znakove: %+^|?*#!$>' u e-mail!\n");
-					ShowPlayerDialog(playerid, DIALOG_REG_MAIL, DIALOG_STYLE_INPUT, ""COL_WHITE"REGISTRACIJA - E-MAIL(4/6)", dialogtext, "Unesi", "Odustani");
+					ShowPlayerDialog(playerid, DIALOG_REG_MAIL, DIALOG_STYLE_INPUT, ""COL_WHITE"REGISTRACIJA - E-MAIL(4/6)", dialogtext, "Input", "Abort");
 					Bit8_Set(gr_RegisterInputs, playerid, Bit8_Get(gr_RegisterInputs, playerid) + 1);
 					return 1;
 				}
 				if(!strlen(inputtext)) {
 					format(dialogtext, sizeof(dialogtext), ""COL_WHITE"Unesite svoj vazeci e-mail radi dodatne sigurnosti vaseg racuna:");
-					ShowPlayerDialog(playerid, DIALOG_REG_MAIL, DIALOG_STYLE_INPUT, ""COL_WHITE"REGISTRACIJA - E-MAIL(4/6)", dialogtext, "Unesi", "Odustani");
+					ShowPlayerDialog(playerid, DIALOG_REG_MAIL, DIALOG_STYLE_INPUT, ""COL_WHITE"REGISTRACIJA - E-MAIL(4/6)", dialogtext, "Input", "Abort");
 					Bit8_Set(gr_RegisterInputs, playerid, Bit8_Get(gr_RegisterInputs, playerid) + 1);
 					return 1;
 				}
 				if(!IsValidEMail(inputtext)) {
 					format(dialogtext, sizeof(dialogtext), ""COL_WHITE"Unesite svoj vazeci e-mail radi dodatne sigurnosti vaseg racuna.\n{fa5555}Niste unijeli vazecu e-mail adresu!");
-					ShowPlayerDialog(playerid, DIALOG_REG_MAIL, DIALOG_STYLE_INPUT, ""COL_WHITE"REGISTRACIJA - E-MAIL(4/6)", dialogtext, "Unesi", "Odustani");
+					ShowPlayerDialog(playerid, DIALOG_REG_MAIL, DIALOG_STYLE_INPUT, ""COL_WHITE"REGISTRACIJA - E-MAIL(4/6)", dialogtext, "Input", "Abort");
 					Bit8_Set(gr_RegisterInputs, playerid, Bit8_Get(gr_RegisterInputs, playerid) + 1);
 					return 1;
 				}
 				if(IsEMailInDB(inputtext)) {
 					format(dialogtext, sizeof(dialogtext), ""COL_WHITE"Unesite svoj vazeci e-mail radi dodatne sigurnosti vaseg racuna.\n{fa5555}Niste unijeli vazecu e-mail adresu!");
-					ShowPlayerDialog(playerid, DIALOG_REG_MAIL, DIALOG_STYLE_INPUT, ""COL_WHITE"REGISTRACIJA - E-MAIL(4/6)", dialogtext, "Unesi", "Odustani");
+					ShowPlayerDialog(playerid, DIALOG_REG_MAIL, DIALOG_STYLE_INPUT, ""COL_WHITE"REGISTRACIJA - E-MAIL(4/6)", dialogtext, "Input", "Abort");
 					Bit8_Set(gr_RegisterInputs, playerid, Bit8_Get(gr_RegisterInputs, playerid) + 1);
 					return 1;
 				}
@@ -1346,13 +1346,13 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 				}
 				format(PlayerInfo[playerid][pEmail], MAX_PLAYER_MAIL, "%s", inputtext);
 				Bit8_Set(gr_RegisterInputs, playerid, 0);
-				ShowPlayerDialog(playerid, DIALOG_REG_SEX, DIALOG_STYLE_LIST, ""COL_WHITE"REGISTRACIJA - Spol(5/6)", "Musko\nZensko", "Unesi", "Odustani");
+				ShowPlayerDialog(playerid, DIALOG_REG_SEX, DIALOG_STYLE_LIST, ""COL_WHITE"REGISTRACIJA - Spol(5/6)", "Musko\nZensko", "Input", "Abort");
 			}
 			else if(!response) {
 				format(dialogtext, sizeof(dialogtext), ""COL_WHITE"Upisite lozinku kojom ce biti dostupna samo vasa \n\
 														 i koja ce vam omoguciti sigurnost vaseg racuna te, lozinka mora\n\
 														 sadrzavati "COL_LIGHTBLUE"6-12 znakova"COL_WHITE".");
-				ShowPlayerDialog(playerid, DIALOG_REG_PASS, DIALOG_STYLE_PASSWORD, ""COL_WHITE"REGISTRACIJA - PASSWORD(3/6)", dialogtext, "Unesi", "Odustani");
+				ShowPlayerDialog(playerid, DIALOG_REG_PASS, DIALOG_STYLE_PASSWORD, ""COL_WHITE"REGISTRACIJA - PASSWORD(3/6)", dialogtext, "Input", "Abort");
 			}
 			return 1;
 		}
@@ -1365,11 +1365,11 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 					case 1: PlayerInfo[playerid][pSex] = 2; //zensko
 				}
 				format(dialogtext, sizeof(dialogtext), ""COL_WHITE"Koliko imate godina?\n\n "COL_RED"PAZNJA: Minimalno smijete imati 16, a najvise 80!");
-				ShowPlayerDialog(playerid, DIALOG_REG_AGE, DIALOG_STYLE_INPUT, ""COL_WHITE"REGISTRACIJA - Godine(6/6)", dialogtext, "Unesi", "Odustani");
+				ShowPlayerDialog(playerid, DIALOG_REG_AGE, DIALOG_STYLE_INPUT, ""COL_WHITE"REGISTRACIJA - Godine(6/6)", dialogtext, "Input", "Abort");
 			}
 			else if(!response) {
 				format(dialogtext, sizeof(dialogtext), ""COL_WHITE"Unesite svoj vazeci e-mail radi dodatne sigurnosti\nvaseg racuna:");
-				ShowPlayerDialog(playerid, DIALOG_REG_MAIL, DIALOG_STYLE_INPUT, ""COL_WHITE"REGISTRACIJA - E-MAIL(4/6)", dialogtext, "Unesi", "Odustani");
+				ShowPlayerDialog(playerid, DIALOG_REG_MAIL, DIALOG_STYLE_INPUT, ""COL_WHITE"REGISTRACIJA - E-MAIL(4/6)", dialogtext, "Input", "Abort");
 				return 1;
 			}
 			return 1;
@@ -1379,7 +1379,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 			if(response) {
 				if (!strlen(inputtext)) // Nothing typed in
 				{
-					ShowPlayerDialog(playerid, DIALOG_REG_AGE, DIALOG_STYLE_INPUT, ""COL_WHITE"REGISTRACIJA - Godine(6/6)", ""COL_WHITE"Koliko imate godina?\n\nPAZNJA: Minimalno smijete imati 16, a najvise 80!", "Unesi", "Odustani");
+					ShowPlayerDialog(playerid, DIALOG_REG_AGE, DIALOG_STYLE_INPUT, ""COL_WHITE"REGISTRACIJA - Godine(6/6)", ""COL_WHITE"Koliko imate godina?\n\nPAZNJA: Minimalno smijete imati 16, a najvise 80!", "Input", "Abort");
 					return 1;
 				}
 				if (strval(inputtext) >= 16 && strval(inputtext) <= 80)
@@ -1388,9 +1388,9 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 					
 					RegisterPlayer(playerid);
 				}
-				else ShowPlayerDialog(playerid, DIALOG_REG_AGE, DIALOG_STYLE_INPUT, ""COL_WHITE"REGISTRACIJA - Godine(6/6)", ""COL_WHITE"Koliko imate godina?\n\nPAZNJA: Minimalno smijete imati 16, a najvise 80!", "Unesi", "Odustani");
+				else ShowPlayerDialog(playerid, DIALOG_REG_AGE, DIALOG_STYLE_INPUT, ""COL_WHITE"REGISTRACIJA - Godine(6/6)", ""COL_WHITE"Koliko imate godina?\n\nPAZNJA: Minimalno smijete imati 16, a najvise 80!", "Input", "Abort");
 			}
-			else ShowPlayerDialog(playerid, DIALOG_REG_SEX, DIALOG_STYLE_LIST, ""COL_WHITE"REGISTRACIJA - Spol(5/6)", "Musko\nZensko", "Unesi", "Odustani");
+			else ShowPlayerDialog(playerid, DIALOG_REG_SEX, DIALOG_STYLE_LIST, ""COL_WHITE"REGISTRACIJA - Spol(5/6)", "Musko\nZensko", "Input", "Abort");
 			return 1;
 		}
 		case DIALOG_FIRST_TIME_TUT: {

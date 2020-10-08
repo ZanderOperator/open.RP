@@ -89,8 +89,9 @@ stock GetNearDroppedWeapon(playerid)
 		{
 			if (! CheckPlayerWeapons(playerid, DroppedWeapons[slotid][dWeaponID]) ) return 1;
 			AC_GivePlayerWeapon(playerid, DroppedWeapons[slotid][dWeaponID], DroppedWeapons[slotid][dWeaponAmmo]);
+			#if defined MODULE_LOGS
 			Log_Write("/logfiles/pickitems.txt", "(%s) %s je uzeo oruzje(id - %d, ammo - %d) sa poda.", ReturnDate(), GetName(playerid), DroppedWeapons[slotid][dWeaponID], DroppedWeapons[slotid][dWeaponAmmo]);
-		
+			#endif
 			DestroyDynamicObject(DroppedWeapons[slotid][dWeaponObject]);
 			DroppedWeapons[slotid][dWeaponID] = 0;
 			DroppedWeapons[slotid][dWeaponAmmo] = 0;
@@ -128,8 +129,9 @@ stock DropPlayerWeapon(playerid, weaponid, Float:x, Float:y)
 			DroppedWeapons[slot][dPos][0] = x;
 			DroppedWeapons[slot][dPos][1] = y;
 			DroppedWeapons[slot][dPos][2] = Z;
-
+			#if defined MODULE_LOGS
 			Log_Write("/logfiles/dropitems.txt", "(%s) %s dropped a weapon %s(Ammo:%d) on the floor.", ReturnDate(), GetName(playerid),  GetWeaponNameEx(DroppedWeapons[slot][dWeaponID]), DroppedWeapons[slot][dWeaponAmmo]);
+			#endif
 		}
 	}
 	AC_ResetPlayerWeapon(playerid, weaponid);
@@ -161,8 +163,9 @@ stock DropPlayerWeapons(playerid, Float:x, Float:y)
                 DroppedWeapons[slot][dPos][0] = x;
                 DroppedWeapons[slot][dPos][1] = y;
                 DroppedWeapons[slot][dPos][2] = Z;
-
+				#if defined MODULE_LOGS
 				Log_Write("/logfiles/dropitems.txt", "(%s) %s dropped a weapon %s(Ammo:%d) on the floor after death.", ReturnDate(), GetName(playerid),  GetWeaponNameEx(DroppedWeapons[slot][dWeaponID]), DroppedWeapons[slot][dWeaponAmmo]);
+				#endif
 			}
         }
 	}
@@ -586,6 +589,6 @@ CMD:alldamages(playerid, params[])
 	}
 	new dcaption[90];
 	format(dcaption, sizeof(dcaption), "Ozljede na %s:", GetName(gplayerid));
-	ShowPlayerDialog(playerid, PLAYER_DAMAGES_DIALOG, DIALOG_STYLE_MSGBOX, dcaption, motd, "Izlaz","");
+	ShowPlayerDialog(playerid, PLAYER_DAMAGES_DIALOG, DIALOG_STYLE_MSGBOX, dcaption, motd, "Exit","");
 	return 1;
 }

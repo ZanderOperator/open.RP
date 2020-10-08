@@ -2066,7 +2066,7 @@ stock PhoneMaskMenu(playerid)
 	{
 		format(phmaskstr, sizeof(phmaskstr), "%s{%06x}%s\n", phmaskstr, MaskColors[i][0] >>> 8, MaskColors[i][1]);
 	}
-	ShowPlayerDialog(playerid, DIALOG_MOBILE_MASKS, DIALOG_STYLE_LIST, "MOBITEL - POZADINA", phmaskstr, "Odaberi", "Izlaz");
+	ShowPlayerDialog(playerid, DIALOG_MOBILE_MASKS, DIALOG_STYLE_LIST, "MOBITEL - POZADINA", phmaskstr, "Choose", "Exit");
 	return 1;
 }
 
@@ -2112,7 +2112,7 @@ stock ShowGPS(playerid)
 			counter++;
 		}
 	}
-	ShowPlayerDialog(playerid, DIALOG_LOCATIONSGPS, DIALOG_STYLE_LIST, "{3C95C2}* GPS", buff, "Odabir", "Izlaz");
+	ShowPlayerDialog(playerid, DIALOG_LOCATIONSGPS, DIALOG_STYLE_LIST, "{3C95C2}* GPS", buff, "Pick", "Exit");
 	return (true);
 }
 
@@ -2783,7 +2783,7 @@ hook OnPlayerText(playerid, text[])
 					format(motd, sizeof(motd), "%s\t%s\n", show_WeaponList[i][wep_Name], FormatNumber(show_WeaponList[i][wep_Price]));
 					strcat(buffer, motd, sizeof(buffer));
 				}
-				ShowPlayerDialog(playerid, DIALOG_PACKAGE_ORDER, DIALOG_STYLE_TABLIST_HEADERS, "{3C95C2}* Package - List", buffer, "(select)", "(x)");
+				ShowPlayerDialog(playerid, DIALOG_PACKAGE_ORDER, DIALOG_STYLE_TABLIST_HEADERS, "{3C95C2}* Package - List", buffer, "Select", "Close");
                 SendClientMessage(playerid, COLOR_YELLOW, "Maska 64361 kaze (mobitel): Reci mi sta trebas od ponudjenog?");
                 SendClientMessage(playerid, COLOR_RED, "[ ! ] Potrebno je da kroz dialog odaberes sta zelis da sadrzi tvoja narudzba!");
 				CallingId[ playerid ] =  32715;
@@ -2807,7 +2807,7 @@ hook OnPlayerText(playerid, text[])
 					format(motd, sizeof(motd), "%s\t%s\n", drugs[i][dName], FormatNumber(drugs[i][dPricePG]));
 					strcat(buffer, motd, sizeof(buffer));
 				}
-				Dialog_Open(playerid, DRUG_ORDER_PACKAGE, DIALOG_STYLE_TABLIST_HEADERS, "{3C95C2}* Package - List", buffer, "(select)", "(x)");
+				Dialog_Open(playerid, DRUG_ORDER_PACKAGE, DIALOG_STYLE_TABLIST_HEADERS, "{3C95C2}* Package - List", buffer, "Select", "Close");
                 SendClientMessage(playerid, COLOR_YELLOW, "Maska 64361 kaze (mobitel): Reci mi sta trebas od ponudjenog?");
                 SendClientMessage(playerid, COLOR_RED, "[ ! ] Potrebno je da kroz dialog odaberes sta zelis da sadrzi tvoja narudzba!");
 				CallingId[ playerid ] =  32715;
@@ -3041,22 +3041,22 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 	switch(dialogid) {
 	    case DIALOG_MOBILE_SMS_CONTACT: {
 	        if(!response) return 1;
-	        if(strlen(inputtext) < 3 || strlen(inputtext) > 10) return va_ShowPlayerDialog( playerid, DIALOG_MOBILE_SMS_CONTACT, DIALOG_STYLE_INPUT, "MOBITEL - SMS", "** Nevazeci broj **\n\nUpisite broj:", "Dalje", "Odustani");
-	        if(!IsNumeric(inputtext)) return va_ShowPlayerDialog( playerid, DIALOG_MOBILE_SMS_CONTACT, DIALOG_STYLE_INPUT, "MOBITEL - SMS", "** Nevazeci broj **\n\nUpisite broj:", "Dalje", "Odustani");
+	        if(strlen(inputtext) < 3 || strlen(inputtext) > 10) return va_ShowPlayerDialog( playerid, DIALOG_MOBILE_SMS_CONTACT, DIALOG_STYLE_INPUT, "MOBITEL - SMS", "** Nevazeci broj **\n\nUpisite broj:", "Next", "Abort");
+	        if(!IsNumeric(inputtext)) return va_ShowPlayerDialog( playerid, DIALOG_MOBILE_SMS_CONTACT, DIALOG_STYLE_INPUT, "MOBITEL - SMS", "** Nevazeci broj **\n\nUpisite broj:", "Next", "Abort");
 	        format(DialogInputNumber[playerid], 11, inputtext);
-	        va_ShowPlayerDialog( playerid, DIALOG_MOBILE_SMS_TEXT, DIALOG_STYLE_INPUT, "MOBITEL - SMS", "Upisite poruku:", "Posalji", "Odustani");
+	        va_ShowPlayerDialog( playerid, DIALOG_MOBILE_SMS_TEXT, DIALOG_STYLE_INPUT, "MOBITEL - SMS", "Upisite poruku:", "Send", "Abort");
 	    }
 	    case DIALOG_MOBILE_SMS_TEXT: {
 	        if(!response) return 1;
-	        if(strlen(inputtext) < 2 || strlen(inputtext) > 63) return va_ShowPlayerDialog( playerid, DIALOG_MOBILE_SMS_TEXT, DIALOG_STYLE_INPUT, "MOBITEL - SMS", "** SMS text mora biti u rasponu od 2 do 63 slova! **\n\nUpisite poruku:", "Posalji", "Odustani");
+	        if(strlen(inputtext) < 2 || strlen(inputtext) > 63) return va_ShowPlayerDialog( playerid, DIALOG_MOBILE_SMS_TEXT, DIALOG_STYLE_INPUT, "MOBITEL - SMS", "** SMS text mora biti u rasponu od 2 do 63 slova! **\n\nUpisite poruku:", "Send", "Abort");
 			new pInputNumber = strval(DialogInputNumber[playerid]);
 			if( strlen(DialogInputNumber[playerid]) == 6 ) SendSMS(playerid, pInputNumber, inputtext);
 			else SendFormatMessage(playerid, MESSAGE_TYPE_ERROR,"Niste unijeli broj mobitela!");
 	    }
 	    case DIALOG_MOBILE_CALL_CONTACT: {
 	        if(!response) return 1;
-	        if(strlen(inputtext) < 3 || strlen(inputtext) > 10) return va_ShowPlayerDialog( playerid, DIALOG_MOBILE_SMS_CONTACT, DIALOG_STYLE_INPUT, "MOBITEL - SMS", "** Nevazeci broj **\n\nUpisite broj:", "Nazovi", "Odustani");
-	        if(!IsNumeric(inputtext)) return va_ShowPlayerDialog( playerid, DIALOG_MOBILE_SMS_CONTACT, DIALOG_STYLE_INPUT, "MOBITEL - SMS", "** Nevazeci broj **\n\nUpisite broj:", "Nazovi", "Odustani");
+	        if(strlen(inputtext) < 3 || strlen(inputtext) > 10) return va_ShowPlayerDialog( playerid, DIALOG_MOBILE_SMS_CONTACT, DIALOG_STYLE_INPUT, "MOBITEL - SMS", "** Nevazeci broj **\n\nUpisite broj:", "Send", "Abort");
+	        if(!IsNumeric(inputtext)) return va_ShowPlayerDialog( playerid, DIALOG_MOBILE_SMS_CONTACT, DIALOG_STYLE_INPUT, "MOBITEL - SMS", "** Nevazeci broj **\n\nUpisite broj:", "Send", "Abort");
 			new CallNo = strval(inputtext);
 			PhoneCall(playerid, CallNo);
 	    }
@@ -3073,7 +3073,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 					format( tmpString, 42, "Trenutni trosak vaseg racuna je: "COL_RED"%d$!",
 						PlayerInfo[ playerid ][ pMobileCost ]
 					);
-					ShowPlayerDialog( playerid, 0, DIALOG_STYLE_MSGBOX, "MOBITEL - STANJE RACUNA", tmpString, "Uredu", "");
+					ShowPlayerDialog( playerid, 0, DIALOG_STYLE_MSGBOX, "MOBITEL - STANJE RACUNA", tmpString, "Ok", "");
 				}
 				case 1:
 				{
@@ -3096,7 +3096,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 					{
 						format(bgstr, sizeof(bgstr), "%s{%06x}%s\n", bgstr, BackgroundColors[i][0] >>> 8, BackgroundColors[i][1]);
 					}
-					ShowPlayerDialog(playerid, DIALOG_MOBILE_BACKGROUND, DIALOG_STYLE_LIST, "MOBITEL - POZADINA", bgstr, "Postavi", "Nazad");
+					ShowPlayerDialog(playerid, DIALOG_MOBILE_BACKGROUND, DIALOG_STYLE_LIST, "MOBITEL - POZADINA", bgstr, "Adjust", "Back");
 				}
 			}
 			return 1;
@@ -3110,7 +3110,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 					format( tmpString, sizeof( tmpString ), "Stanje racuna\nZvucnik: "COL_GREEN"On\nPozadina");
 				else
 					format( tmpString, sizeof( tmpString ), "Stanje racuna\nZvucnik: "COL_RED"Off\nPozadina");
-				return ShowPlayerDialog( playerid, DIALOG_MOBILE_MAIN, DIALOG_STYLE_LIST, "MOBITEL - MENU", tmpString, "Odaberi", "Odustani");
+				return ShowPlayerDialog( playerid, DIALOG_MOBILE_MAIN, DIALOG_STYLE_LIST, "MOBITEL - MENU", tmpString, "Choose", "Abort");
 			}
 			if(listitem == 0) PlayerInfo[playerid][pPhoneBG] = -1263225696;
 			else PlayerInfo[playerid][pPhoneBG] = BackgroundColors[listitem][0];
@@ -3162,7 +3162,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 					PhoneTDAction[playerid] = PTD_ACTION_SMS;
 					PhoneAction(playerid, PHONE_SHOW);
 					format(DialogInputNumber[playerid], 11, "%d", PlayerContactNumber[playerid][slotid]);
-					va_ShowPlayerDialog( playerid, DIALOG_MOBILE_SMS_TEXT, DIALOG_STYLE_INPUT, "MOBITEL - SMS", "Upisite poruku:", "Posalji", "Odustani");
+					va_ShowPlayerDialog( playerid, DIALOG_MOBILE_SMS_TEXT, DIALOG_STYLE_INPUT, "MOBITEL - SMS", "Upisite poruku:", "Send", "Abort");
 				}
 				case 2: {
 				    new
@@ -3185,22 +3185,22 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 				    if( 0 <= ContactEditing[playerid] <= 9 ) {
 				        if(PlayerContactNumber[ playerid ][ slotid ] == 0) return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR,"Slot u imeniku je slobodan!");
 						Bit8_Set( gr_MobileContactSlot, playerid, ContactEditing[playerid] );
-						ShowPlayerDialog( playerid, DIALOG_MOBILE_EDITNAME, DIALOG_STYLE_INPUT, "MOBITEL - KONTAKTI UREDJIVANJE", "Unesite naziv slota:", "Unesi", "Odustani");
+						ShowPlayerDialog( playerid, DIALOG_MOBILE_EDITNAME, DIALOG_STYLE_INPUT, "MOBITEL - KONTAKTI UREDJIVANJE", "Unesite naziv slota:", "Input", "Abort");
 					}
 				}
 			}
 			return 1;
 		}
 		case DIALOG_MOBILE_ADDSLOT: {
-			if( !IsNumeric(inputtext) && response ) return ShowPlayerDialog( playerid, DIALOG_MOBILE_ADDSLOT, DIALOG_STYLE_INPUT, "MOBILE - KONTAKTI DODAVANJE", "Unesite slot u koji zelite dodati kontakt:\n"COL_RED"Unos mora biti u brojevima!", "Unesi", "Odustani");
+			if( !IsNumeric(inputtext) && response ) return ShowPlayerDialog( playerid, DIALOG_MOBILE_ADDSLOT, DIALOG_STYLE_INPUT, "MOBILE - KONTAKTI DODAVANJE", "Unesite slot u koji zelite dodati kontakt:\n"COL_RED"Unos mora biti u brojevima!", "Input", "Abort");
 			new
 				slotid = strval( inputtext );
 			if( 1 <= slotid <= 10 ) {
 				if( PlayerContactNumber[ playerid ][ (slotid-1) ] != 0 ) SendFormatMessage(playerid, MESSAGE_TYPE_ERROR,"Slot je popunjen, ako nastavite onda cete obrisati postojece podatke!");
 				Bit8_Set( gr_MobileContactSlot, playerid, slotid-1 );
-				ShowPlayerDialog( playerid, DIALOG_MOBILE_ADDNAME, DIALOG_STYLE_INPUT, "MOBILE - KONTAKTI DODAVANJE", "Unesite naziv kontakta:", "Unesi", "Odustani");
+				ShowPlayerDialog( playerid, DIALOG_MOBILE_ADDNAME, DIALOG_STYLE_INPUT, "MOBILE - KONTAKTI DODAVANJE", "Unesite naziv kontakta:", "Input", "Abort");
 			} else {
-				ShowPlayerDialog( playerid, DIALOG_MOBILE_ADDSLOT, DIALOG_STYLE_INPUT, "MOBILE - KONTAKTI DODAVANJE", "Unesite slot u koji zelite dodati kontakt:\n"COL_RED"Minimalan unos je 1, a maksimalan 10 znakova!", "Unesi", "Odustani");
+				ShowPlayerDialog( playerid, DIALOG_MOBILE_ADDSLOT, DIALOG_STYLE_INPUT, "MOBILE - KONTAKTI DODAVANJE", "Unesite slot u koji zelite dodati kontakt:\n"COL_RED"Minimalan unos je 1, a maksimalan 10 znakova!", "Input", "Abort");
 			}
 			return 1;
 		}
@@ -3208,11 +3208,11 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 			if( 1 <= strlen( inputtext ) <= 15 )
 			{
 				format( PlayerContactName[ playerid ][ Bit8_Get( gr_MobileContactSlot, playerid ) ], 11, inputtext );
-				ShowPlayerDialog( playerid, DIALOG_MOBILE_ADDNUM, DIALOG_STYLE_INPUT, "MOBILE - KONTAKTI DODAVANJE", "Unesite telefonski broj u slot:", "Unesi", "Odustani");
+				ShowPlayerDialog( playerid, DIALOG_MOBILE_ADDNUM, DIALOG_STYLE_INPUT, "MOBILE - KONTAKTI DODAVANJE", "Unesite telefonski broj u slot:", "Input", "Abort");
 			}
 			else
 			{
-				ShowPlayerDialog( playerid, DIALOG_MOBILE_ADDNAME, DIALOG_STYLE_INPUT, "MOBILE - KONTAKTI DODAVANJE", "Unesite naziv kontakta:\n"COL_RED"Minimalan unos je 1, a maksimalan 15!", "Unesi", "Odustani");
+				ShowPlayerDialog( playerid, DIALOG_MOBILE_ADDNAME, DIALOG_STYLE_INPUT, "MOBILE - KONTAKTI DODAVANJE", "Unesite naziv kontakta:\n"COL_RED"Minimalan unos je 1, a maksimalan 15!", "Input", "Abort");
 			}
 			return 1;
 		}
@@ -3220,7 +3220,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 		{
 
 			if( !response ) return 1;
-			if( isnull(inputtext) ) return ShowPlayerDialog( playerid, DIALOG_MOBILE_ADDNUM, DIALOG_STYLE_INPUT, "MOBILE - KONTAKTI UNOS", "Unesite telefonski broj u slot:", "Unesi", "Odustani");
+			if( isnull(inputtext) ) return ShowPlayerDialog( playerid, DIALOG_MOBILE_ADDNUM, DIALOG_STYLE_INPUT, "MOBILE - KONTAKTI UNOS", "Unesite telefonski broj u slot:", "Input", "Abort");
 
 			new
 				slotid = Bit8_Get( gr_MobileContactSlot, playerid );
@@ -3249,19 +3249,19 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 			new slotid = ContactEditing[playerid];
 			if( 0 <= slotid <= 9 ) {
 				Bit8_Set( gr_MobileContactSlot, playerid, slotid );
-				ShowPlayerDialog( playerid, DIALOG_MOBILE_EDITNAME, DIALOG_STYLE_INPUT, "MOBITEL - KONTAKTI UREDJIVANJE", "Unesite naziv slota:", "Unesi", "Odustani");
-			} else ShowPlayerDialog( playerid, DIALOG_MOBILE_EDITSLOT, DIALOG_STYLE_INPUT, "MOBILE - KONTAKTI UREDJIVANJE", "Unesite slot koji zelite urediti:", "Unesi", "Odustani");
+				ShowPlayerDialog( playerid, DIALOG_MOBILE_EDITNAME, DIALOG_STYLE_INPUT, "MOBITEL - KONTAKTI UREDJIVANJE", "Unesite naziv slota:", "Input", "Abort");
+			} else ShowPlayerDialog( playerid, DIALOG_MOBILE_EDITSLOT, DIALOG_STYLE_INPUT, "MOBILE - KONTAKTI UREDJIVANJE", "Unesite slot koji zelite urediti:", "Input", "Abort");
 			return 1;
 		}
 		case DIALOG_MOBILE_EDITNAME: {
-			if( isnull(inputtext) ) return ShowPlayerDialog( playerid, DIALOG_MOBILE_EDITNAME, DIALOG_STYLE_INPUT, "MOBITEL - KONTAKTI UREDJIVANJE", "Unesite naziv slota:", "Unesi", "Odustani");
+			if( isnull(inputtext) ) return ShowPlayerDialog( playerid, DIALOG_MOBILE_EDITNAME, DIALOG_STYLE_INPUT, "MOBITEL - KONTAKTI UREDJIVANJE", "Unesite naziv slota:", "Input", "Abort");
 
 			format( PlayerContactName[ playerid ][ Bit8_Get( gr_MobileContactSlot, playerid ) ], 11, inputtext );
-			ShowPlayerDialog( playerid, DIALOG_MOBILE_EDITNUM, DIALOG_STYLE_INPUT, "MOBITEL - KONTAKTI UREDJIVANJE", "Unesite telefonski broj:", "Unesi", "Odustani");
+			ShowPlayerDialog( playerid, DIALOG_MOBILE_EDITNUM, DIALOG_STYLE_INPUT, "MOBITEL - KONTAKTI UREDJIVANJE", "Unesite telefonski broj:", "Input", "Abort");
 			return 1;
 		}
 		case DIALOG_MOBILE_EDITNUM: {
-			if( isnull(inputtext) ) return ShowPlayerDialog( playerid, DIALOG_MOBILE_EDITNAME, DIALOG_STYLE_INPUT, "MOBITEL - KONTAKTI UREDJIVANJE", "Unesite naziv slota:", "Unesi", "Odustani");
+			if( isnull(inputtext) ) return ShowPlayerDialog( playerid, DIALOG_MOBILE_EDITNAME, DIALOG_STYLE_INPUT, "MOBITEL - KONTAKTI UREDJIVANJE", "Unesite naziv slota:", "Input", "Abort");
 
 			new
 				slotid = Bit8_Get( gr_MobileContactSlot, playerid );
@@ -3276,14 +3276,14 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 				PlayerContactName[ playerid ][ slotid ],
 				PlayerContactNumber[ playerid ][ slotid ]
 			);
-			ShowPlayerDialog( playerid, 0, DIALOG_STYLE_MSGBOX, "MOBITEL - KONTAKTI UREDJIVANJE", tmpString, "Uredu", "");
+			ShowPlayerDialog( playerid, 0, DIALOG_STYLE_MSGBOX, "MOBITEL - KONTAKTI UREDJIVANJE", tmpString, "Ok", "");
 			return 1;
 		}
 		case DIALOG_MOBILE_CONTACTS: {
 
 			if( !response ) return 1;
 			Bit8_Set( gr_MobileContactSlot, playerid, listitem );
-			ShowPlayerDialog( playerid, DIALOG_MOBILE_CONTACTS_CALL, DIALOG_STYLE_MSGBOX, "MOBILE - KONTAKTI", "Zelite li nazvati trazenog kontakta?", "Nazovi", "Odustani");
+			ShowPlayerDialog( playerid, DIALOG_MOBILE_CONTACTS_CALL, DIALOG_STYLE_MSGBOX, "MOBILE - KONTAKTI", "Zelite li nazvati trazenog kontakta?", "Call", "Abort");
 			return 1;
 		}
 		case DIALOG_MOBILE_CONTACTS_CALL: {
@@ -3354,7 +3354,7 @@ public OnPlayerClickPlayerTextDraw(playerid, PlayerText:playertextid)
 	if(playertextid == PhoneTD[playerid][26] && PlayerTextDrawCreated[playerid][26] == 1) //MENU
 	{
 		CancelSelectTextDraw(playerid);
-		va_ShowPlayerDialog( playerid, DIALOG_MOBILE_MAIN, DIALOG_STYLE_LIST, "MOBITEL - MENU", "Stanje racuna\nZvucnik: %s\nPozadina", "Odaberi", "Odustani",
+		va_ShowPlayerDialog( playerid, DIALOG_MOBILE_MAIN, DIALOG_STYLE_LIST, "MOBITEL - MENU", "Stanje racuna\nZvucnik: %s\nPozadina", "Choose", "Abort",
 		Bit1_Get( gr_MobileSpeaker, playerid ) ? (""COL_GREEN"On") : (""COL_RED"Off")
 		);
 	}
@@ -3366,7 +3366,7 @@ public OnPlayerClickPlayerTextDraw(playerid, PlayerText:playertextid)
 	else if(playertextid == PhoneTD[playerid][75] && PlayerTextDrawCreated[playerid][75] == 1) //New SMS
 	{
 		CancelSelectTextDraw(playerid);
-		va_ShowPlayerDialog( playerid, DIALOG_MOBILE_SMS_CONTACT, DIALOG_STYLE_INPUT, "MOBITEL - SMS", "Upisite broj:", "Dalje", "Odustani");
+		va_ShowPlayerDialog( playerid, DIALOG_MOBILE_SMS_CONTACT, DIALOG_STYLE_INPUT, "MOBITEL - SMS", "Upisite broj:", "Next", "Abort");
 	}
 	else if(playertextid == PhoneTD[playerid][24] && PlayerTextDrawCreated[playerid][24] == 1) //CALL
 	{
@@ -3385,7 +3385,7 @@ public OnPlayerClickPlayerTextDraw(playerid, PlayerText:playertextid)
 	{
 		CancelSelectTextDraw(playerid);
 		PhoneAction(playerid, PHONE_NEXT);
-		ShowPlayerDialog(playerid, DIALOG_ADS_MENU, DIALOG_STYLE_LIST, "LS OGLASNIK", "Predaj oglas\nPregledaj oglase", "Odaberi", "Zatvori");
+		ShowPlayerDialog(playerid, DIALOG_ADS_MENU, DIALOG_STYLE_LIST, "LS OGLASNIK", "Predaj oglas\nPregledaj oglase", "Choose", "Close");
 	}
 	else if(playertextid == PhoneTD[playerid][28] && PlayerTextDrawCreated[playerid][28] == 1) //Cam
 	{
@@ -3438,67 +3438,67 @@ public OnPlayerClickPlayerTextDraw(playerid, PlayerText:playertextid)
 	{
 		CancelSelectTextDraw(playerid);
 		PhoneAction(playerid, PHONE_NEXT);
-		ShowPlayerDialog( playerid, DIALOG_MOBILE_ADDSLOT, DIALOG_STYLE_INPUT, "MOBILE - KONTAKTI DODAVANJE", "Unesite slot u koji zelite dodati kontakt:", "Unesi", "Odustani");
+		ShowPlayerDialog( playerid, DIALOG_MOBILE_ADDSLOT, DIALOG_STYLE_INPUT, "MOBILE - KONTAKTI DODAVANJE", "Unesite slot u koji zelite dodati kontakt:", "Input", "Abort");
 	}
 	else if(playertextid == PhoneTD[playerid][77] && PlayerTextDrawCreated[playerid][77] == 1) //Contact 1
 	{
 	    if(PlayerContactNumber[playerid][0] == 0) return 1;
 	    ContactEditing[playerid] = 0;
-	    ShowPlayerDialog( playerid, DIALOG_MOBILE_CONTACTS_MAIN, DIALOG_STYLE_LIST, "MOBILE - KONTAKT", "Nazovi\nPosalji poruku\nObrisi kontakt\nUredi kontakt", "Odaberi", "Odustani");
+	    ShowPlayerDialog( playerid, DIALOG_MOBILE_CONTACTS_MAIN, DIALOG_STYLE_LIST, "MOBILE - KONTAKT", "Nazovi\nPosalji poruku\nObrisi kontakt\nUredi kontakt", "Choose", "Abort");
 	}
 	else if(playertextid == PhoneTD[playerid][78] && PlayerTextDrawCreated[playerid][78] == 1) //Contact 2
 	{
 	    if(PlayerContactNumber[playerid][1] == 0) return 1;
 	    ContactEditing[playerid] = 1;
-	    ShowPlayerDialog( playerid, DIALOG_MOBILE_CONTACTS_MAIN, DIALOG_STYLE_LIST, "MOBILE - KONTAKT", "Nazovi\nPosalji poruku\nObrisi kontakt\nUredi kontakt", "Odaberi", "Odustani");
+	    ShowPlayerDialog( playerid, DIALOG_MOBILE_CONTACTS_MAIN, DIALOG_STYLE_LIST, "MOBILE - KONTAKT", "Nazovi\nPosalji poruku\nObrisi kontakt\nUredi kontakt", "Choose", "Abort");
 	}
 	else if(playertextid == PhoneTD[playerid][79] && PlayerTextDrawCreated[playerid][79] == 1) //Contact 3
 	{
 	    if(PlayerContactNumber[playerid][2] == 0) return 1;
 	    ContactEditing[playerid] = 2;
-	    ShowPlayerDialog( playerid, DIALOG_MOBILE_CONTACTS_MAIN, DIALOG_STYLE_LIST, "MOBILE - KONTAKT", "Nazovi\nPosalji poruku\nObrisi kontakt\nUredi kontakt", "Odaberi", "Odustani");
+	    ShowPlayerDialog( playerid, DIALOG_MOBILE_CONTACTS_MAIN, DIALOG_STYLE_LIST, "MOBILE - KONTAKT", "Nazovi\nPosalji poruku\nObrisi kontakt\nUredi kontakt", "Choose", "Abort");
 	}
 	else if(playertextid == PhoneTD[playerid][80] && PlayerTextDrawCreated[playerid][80] == 1) //Contact 4
 	{
 	    if(PlayerContactNumber[playerid][3] == 0) return 1;
 	    ContactEditing[playerid] = 3;
-	    ShowPlayerDialog( playerid, DIALOG_MOBILE_CONTACTS_MAIN, DIALOG_STYLE_LIST, "MOBILE - KONTAKT", "Nazovi\nPosalji poruku\nObrisi kontakt\nUredi kontakt", "Odaberi", "Odustani");
+	    ShowPlayerDialog( playerid, DIALOG_MOBILE_CONTACTS_MAIN, DIALOG_STYLE_LIST, "MOBILE - KONTAKT", "Nazovi\nPosalji poruku\nObrisi kontakt\nUredi kontakt", "Choose", "Abort");
 	}
 	else if(playertextid == PhoneTD[playerid][81] && PlayerTextDrawCreated[playerid][81] == 1) //Contact 5
 	{
 	    if(PlayerContactNumber[playerid][4] == 0) return 1;
 	    ContactEditing[playerid] = 4;
-	    ShowPlayerDialog( playerid, DIALOG_MOBILE_CONTACTS_MAIN, DIALOG_STYLE_LIST, "MOBILE - KONTAKT", "Nazovi\nPosalji poruku\nObrisi kontakt\nUredi kontakt", "Odaberi", "Odustani");
+	    ShowPlayerDialog( playerid, DIALOG_MOBILE_CONTACTS_MAIN, DIALOG_STYLE_LIST, "MOBILE - KONTAKT", "Nazovi\nPosalji poruku\nObrisi kontakt\nUredi kontakt", "Choose", "Abort");
 	}
 	else if(playertextid == PhoneTD[playerid][82] && PlayerTextDrawCreated[playerid][82] == 1) //Contact 6
 	{
 	    if(PlayerContactNumber[playerid][5] == 0) return 1;
 	    ContactEditing[playerid] = 5;
-	    ShowPlayerDialog( playerid, DIALOG_MOBILE_CONTACTS_MAIN, DIALOG_STYLE_LIST, "MOBILE - KONTAKT", "Nazovi\nPosalji poruku\nObrisi kontakt\nUredi kontakt", "Odaberi", "Odustani");
+	    ShowPlayerDialog( playerid, DIALOG_MOBILE_CONTACTS_MAIN, DIALOG_STYLE_LIST, "MOBILE - KONTAKT", "Nazovi\nPosalji poruku\nObrisi kontakt\nUredi kontakt", "Choose", "Abort");
 	}
 	else if(playertextid == PhoneTD[playerid][83] && PlayerTextDrawCreated[playerid][83] == 1) //Contact 7
 	{
 	    if(PlayerContactNumber[playerid][6] == 0) return 1;
 	    ContactEditing[playerid] = 6;
-	    ShowPlayerDialog( playerid, DIALOG_MOBILE_CONTACTS_MAIN, DIALOG_STYLE_LIST, "MOBILE - KONTAKT", "Nazovi\nPosalji poruku\nObrisi kontakt\nUredi kontakt", "Odaberi", "Odustani");
+	    ShowPlayerDialog( playerid, DIALOG_MOBILE_CONTACTS_MAIN, DIALOG_STYLE_LIST, "MOBILE - KONTAKT", "Nazovi\nPosalji poruku\nObrisi kontakt\nUredi kontakt", "Choose", "Abort");
 	}
 	else if(playertextid == PhoneTD[playerid][84] && PlayerTextDrawCreated[playerid][84] == 1) //Contact 8
 	{
 	    if(PlayerContactNumber[playerid][7] == 0) return 1;
 	    ContactEditing[playerid] = 7;
-	    ShowPlayerDialog( playerid, DIALOG_MOBILE_CONTACTS_MAIN, DIALOG_STYLE_LIST, "MOBILE - KONTAKT", "Nazovi\nPosalji poruku\nObrisi kontakt\nUredi kontakt", "Odaberi", "Odustani");
+	    ShowPlayerDialog( playerid, DIALOG_MOBILE_CONTACTS_MAIN, DIALOG_STYLE_LIST, "MOBILE - KONTAKT", "Nazovi\nPosalji poruku\nObrisi kontakt\nUredi kontakt", "Choose", "Abort");
 	}
 	else if(playertextid == PhoneTD[playerid][85] && PlayerTextDrawCreated[playerid][85] == 1) //Contact 9
 	{
 	    if(PlayerContactNumber[playerid][8] == 0) return 1;
 	    ContactEditing[playerid] = 8;
-	    ShowPlayerDialog( playerid, DIALOG_MOBILE_CONTACTS_MAIN, DIALOG_STYLE_LIST, "MOBILE - KONTAKT", "Nazovi\nPosalji poruku\nObrisi kontakt\nUredi kontakt", "Odaberi", "Odustani");
+	    ShowPlayerDialog( playerid, DIALOG_MOBILE_CONTACTS_MAIN, DIALOG_STYLE_LIST, "MOBILE - KONTAKT", "Nazovi\nPosalji poruku\nObrisi kontakt\nUredi kontakt", "Choose", "Abort");
 	}
 	else if(playertextid == PhoneTD[playerid][86] && PlayerTextDrawCreated[playerid][86] == 1) //Contact 10
 	{
 	    if(PlayerContactNumber[playerid][9] == 0) return 1;
 	    ContactEditing[playerid] = 9;
-	    ShowPlayerDialog( playerid, DIALOG_MOBILE_CONTACTS_MAIN, DIALOG_STYLE_LIST, "MOBILE - KONTAKT", "Nazovi\nPosalji poruku\nObrisi kontakt\nUredi kontakt", "Odaberi", "Odustani");
+	    ShowPlayerDialog( playerid, DIALOG_MOBILE_CONTACTS_MAIN, DIALOG_STYLE_LIST, "MOBILE - KONTAKT", "Nazovi\nPosalji poruku\nObrisi kontakt\nUredi kontakt", "Choose", "Abort");
 	}
 	else if((playertextid == PhoneTD[playerid][38] && PlayerTextDrawCreated[playerid][38] == 1) || (playertextid == PhoneTD[playerid][68] && PlayerTextDrawCreated[playerid][68] == 1) || (playertextid == PhoneTD[playerid][99] && PlayerTextDrawCreated[playerid][99] == 1)) //DIAL - IZLAZ
 	{

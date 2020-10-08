@@ -488,7 +488,7 @@ GivePlayerPayCheck(playerid)
 	new title[64];
 	if(!IsPlayerInVehicle(playerid, GetPlayerVehicleID(playerid))) {
 		format(title, sizeof(title), "* Placa");
-		ShowPlayerDialog(playerid, 0, DIALOG_STYLE_MSGBOX, title, p_dialog, "Zatvori", "");
+		ShowPlayerDialog(playerid, 0, DIALOG_STYLE_MSGBOX, title, p_dialog, "Close", "");
 	}
 	else if(IsPlayerInVehicle(playerid, GetPlayerVehicleID(playerid))) {
 		SendMessage(playerid, MESSAGE_TYPE_INFO, "Stigao vam je PayDay (( /payday ))");

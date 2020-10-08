@@ -883,7 +883,7 @@ hook OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
 	if( PRESSED(KEY_YES) ) {
 		if( IsPlayerInRangeOfPoint(playerid, 100.0, 772.111999,-3.898649,1000.728820) ) {
 			if( IsPlayerInRangeOfPoint(playerid, 3.5, 769.4609, -3.2109, 1002.4531) ) {
-				ShowPlayerDialog(playerid, DIALOG_GYM_TRAIN, DIALOG_STYLE_LIST, "Gym Trening", "Box (1500$)\nKung Fu (500$)\nKnee Head (3500$)\nGrab Kick (5000$)\nElbow (2000$)", "Odaberi", "Odustani");
+				ShowPlayerDialog(playerid, DIALOG_GYM_TRAIN, DIALOG_STYLE_LIST, "Gym Trening", "Box (1500$)\nKung Fu (500$)\nKnee Head (3500$)\nGrab Kick (5000$)\nElbow (2000$)", "Choose", "Abort");
 				return 1;
 			}
 			

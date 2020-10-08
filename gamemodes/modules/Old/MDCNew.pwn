@@ -470,7 +470,7 @@ stock GetAPBList(playerid)
 			);
 			strcat(buffer, motd, 4096);
 		}
-		ShowPlayerDialog(playerid, 0, DIALOG_STYLE_MSGBOX, "[APB List]", buffer, "Zatvori", "");
+		ShowPlayerDialog(playerid, 0, DIALOG_STYLE_MSGBOX, "[APB List]", buffer, "Close", "");
 	}
 	mysql_tquery_inline(g_SQL, mysqlQuery, using inline OnAPBListLoad, "");
 	return 1;
@@ -523,7 +523,7 @@ stock GetSuspectAPB(playerid, const playername[])
 
 		new tmpString[ 12+MAX_PLAYER_NAME ];
 		format(tmpString, 64, "[APB - %s]", playername);
-		ShowPlayerDialog(playerid, 0, DIALOG_STYLE_MSGBOX, tmpString, buffer, "Zatvori", "");
+		ShowPlayerDialog(playerid, 0, DIALOG_STYLE_MSGBOX, tmpString, buffer, "Close", "");
 	}
 	mysql_tquery_inline(g_SQL, mysqlQuery, using inline OnAPBLoad, "");
 	return 1;
@@ -707,7 +707,7 @@ stock GetPlayerMDCRecord(playerid, const playername[])
 
 		new tmpString[ 64 ];
 		format(tmpString, 64, "%s-DOSJE", tmpJail[ jSuspectName ]);
-		ShowPlayerDialog(playerid, 0, DIALOG_STYLE_MSGBOX, tmpString, buffer, "Zatvori", "");
+		ShowPlayerDialog(playerid, 0, DIALOG_STYLE_MSGBOX, tmpString, buffer, "Close", "");
 	}
 	mysql_tquery_inline(g_SQL, mysqlQuery, using inline OnSuspectLoad, "");
 	return 1;
@@ -2233,7 +2233,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 		case DIALOG_MDC_PLAYER: {
 			if( !response ) return 1;
 
-			if( strfind(inputtext, "_", true) == -1 ) return ShowPlayerDialog(playerid, DIALOG_MDC_PLAYER, DIALOG_STYLE_INPUT, "Mobile Data Computer - PLAYER", "Unesite ime i prezime osobe\nNAPOMENA: Mora biti s znakom '_'!", "Unesi", "Odustani");
+			if( strfind(inputtext, "_", true) == -1 ) return ShowPlayerDialog(playerid, DIALOG_MDC_PLAYER, DIALOG_STYLE_INPUT, "Mobile Data Computer - PLAYER", "Unesite ime i prezime osobe\nNAPOMENA: Mora biti s znakom '_'!", "Input", "Abort");
 			format(TargetName[playerid], 24, "%s", inputtext);
 			OnPlayerKhawajaDataLoad(playerid, TargetName[playerid]);
 			DestroyKhawaja(playerid);
@@ -2243,9 +2243,9 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 			if( !response ) return 1;
 
 			if( 1 <= strval(inputtext) <= MAX_VEHICLES ) {
-				if( !Iter_Contains(COVehicles, strval(inputtext)) ) return ShowPlayerDialog(playerid, DIALOG_MDC_VEHICLE, DIALOG_STYLE_INPUT, "MDC - VEHICLE", "Unesite vehicleid od vozila\nNAPOMENA: Vozilo mora biti CO!", "Unesi", "Odustani");
+				if( !Iter_Contains(COVehicles, strval(inputtext)) ) return ShowPlayerDialog(playerid, DIALOG_MDC_VEHICLE, DIALOG_STYLE_INPUT, "MDC - VEHICLE", "Unesite vehicleid od vozila\nNAPOMENA: Vozilo mora biti CO!", "Input", "Abort");
 				GetVehicleMDCInfo(playerid, strval(inputtext));
-			} else ShowPlayerDialog(playerid, DIALOG_MDC_VEHICLE, DIALOG_STYLE_INPUT, "MDC - VEHICLE", "Unesite vehicleid od vozila\nNAPOMENA: Da biste dobili vehicleid koristite komandu /dl!", "Unesi", "Odustani");
+			} else ShowPlayerDialog(playerid, DIALOG_MDC_VEHICLE, DIALOG_STYLE_INPUT, "MDC - VEHICLE", "Unesite vehicleid od vozila\nNAPOMENA: Da biste dobili vehicleid koristite komandu /dl!", "Input", "Abort");
 			return 1;
 		}
 	}
@@ -2298,17 +2298,17 @@ hook OnPlayerClickPlayerTD(playerid, PlayerText:playertextid)
 			CreateKhawaja(playerid);
 		}
 		if( playertextid == MDCCitizenButton[playerid] ) {
-			ShowPlayerDialog(playerid, DIALOG_MDC_PLAYER, DIALOG_STYLE_INPUT, "Mobile Data Computer - PLAYER", "Unesite ime i prezime osobe\nNAPOMENA: Mora biti s znakom '_'!", "Unesi", "Odustani");
+			ShowPlayerDialog(playerid, DIALOG_MDC_PLAYER, DIALOG_STYLE_INPUT, "Mobile Data Computer - PLAYER", "Unesite ime i prezime osobe\nNAPOMENA: Mora biti s znakom '_'!", "Input", "Abort");
             DestroyKhawaja(playerid);
             CancelSelectTextDraw(playerid);
 		}
 		if( playertextid == MDCVehicleButton[playerid] ) {
-			ShowPlayerDialog(playerid, DIALOG_MDC_VEHICLE, DIALOG_STYLE_INPUT, "MDC - VEHICLE", "Unesite vehicleid od vozila\nNAPOMENA: Vozilo mora biti CO!", "Unesi", "Odustani");
+			ShowPlayerDialog(playerid, DIALOG_MDC_VEHICLE, DIALOG_STYLE_INPUT, "MDC - VEHICLE", "Unesite vehicleid od vozila\nNAPOMENA: Vozilo mora biti CO!", "Input", "Abort");
 			DestroyKhawaja(playerid);
 			CancelSelectTextDraw(playerid);
 		}
 		if( playertextid == MDCHouseLocator[playerid] ) { // Mora od upisanog imena izvuci SQLID jer spremanje nije po imenu
-			ShowPlayerDialog(playerid, DIALOG_MDC_HLOCATOR, DIALOG_STYLE_INPUT, "*MDC - HOUSE LOCATOR", "Unesite ID kuce", "Spawn", "(x)");
+			ShowPlayerDialog(playerid, DIALOG_MDC_HLOCATOR, DIALOG_STYLE_INPUT, "*MDC - HOUSE LOCATOR", "Unesite ID kuce", "Spawn", "Close");
 		}
 		if( playertextid == MDCCCTVsButton[playerid] ) {
 			DestroyKhawaja(playerid);
@@ -2503,7 +2503,7 @@ CMD:apb(playerid, params[])
 		}
 	}
 	else if( !strcmp(pick, "check", true) )
-		ShowPlayerDialog( playerid, DIALOG_APB_CHECK, DIALOG_STYLE_INPUT, "* APB - CHECK", "Ispod unesite ime osobe kojoj zelite provijeriti APB\n[WARNING]: Ime mora biti napisano Ime_Prezime.", "Unesi", "Odustani");
+		ShowPlayerDialog( playerid, DIALOG_APB_CHECK, DIALOG_STYLE_INPUT, "* APB - CHECK", "Ispod unesite ime osobe kojoj zelite provijeriti APB\n[WARNING]: Ime mora biti napisano Ime_Prezime.", "Input", "Abort");
 	else if( !strcmp(pick, "delete", true) ) {
 
 		new

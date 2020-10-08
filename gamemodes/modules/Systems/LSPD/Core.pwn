@@ -1172,7 +1172,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 						{3C95C2}[10-66] Felony Stop.\n\
 						{3C95C2}[10-70] Potrebno pojacanje.\n\
 						{3C95C2}[10-99] Situacija zavrsena.",
-						"(x)", ""
+						"Close", ""
 					);
 
 				}
@@ -1188,7 +1188,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 						{3C95C2}[Code 7] Na pauzi.\n\
 						{3C95C2}[Code 37]  Ukradeno vozilo.\n\
 						{3C95C2}[Code 77] Oprez na mogucu zasedu.",
-						"(x)", ""
+						"Close", ""
 					);
 				}
 				case 2: {
@@ -1197,7 +1197,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 						{3C95C2}[IC 3] Meksikanac/Latino.\n\
 						{3C95C2}[IC 4] Azijat/Asian.\n\
 						{3C95C2}[IC 5] Nepoznat/Unknown.",
-						"(x)", ""
+						"Close", ""
 					);
 				}
 				case 3: {
@@ -1212,7 +1212,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 						{3C95C2}[TTCF] Twin Towers Correctional Facility.\n\
 						{3C95C2}[BT] Bomb Threat.\n\
 						{3C95C2}[AC] Aircraft Crash.",
-						"(x)", ""
+						"Close", ""
 					);
 				}
 			}
@@ -1715,7 +1715,7 @@ CMD:codes(playerid, params[])
 {
 	if( !IsACop(playerid) && !IsASD(playerid) ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, " Niste policajac!");
 
-    ShowPlayerDialog(playerid,DIALOG_CODES,DIALOG_STYLE_LIST,"Police Scanner Codes","{3C95C2}[1] - 10 Codes\n{3C95C2}[2] - Response Codes\n{3C95C2}[3] - Identity Codes\n{3C95C2}[4] - Terminology","(odabir)","(x)");
+    ShowPlayerDialog(playerid,DIALOG_CODES,DIALOG_STYLE_LIST,"Police Scanner Codes","{3C95C2}[1] - 10 Codes\n{3C95C2}[2] - Response Codes\n{3C95C2}[3] - Identity Codes\n{3C95C2}[4] - Terminology","Choose","Close");
   	return 1;
 }
 
@@ -2016,7 +2016,7 @@ CMD:checktrunk(playerid, params[])
     if( VehicleInfo[vehicleid][vTrunk] == VEHICLE_PARAMS_OFF ) 	return SendClientMessage(playerid, COLOR_RED, "Prtljaznik je zatvoren.");
 	if( !Iter_Contains(COVehicles, vehicleid) ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Vozilo mora biti CO da bi ga pretresli!");
 
-	ShowPlayerDialog(playerid, DIALOG_VEH_CHECKTRUNK, DIALOG_STYLE_MSGBOX, "Oruzja u vozilu:", ListPlayerVehicleWeapons(playerid, vehicleid), "Izlaz", "");
+	ShowPlayerDialog(playerid, DIALOG_VEH_CHECKTRUNK, DIALOG_STYLE_MSGBOX, "Oruzja u vozilu:", ListPlayerVehicleWeapons(playerid, vehicleid), "Exit", "");
 
 	new
 		tmpString[ 49 ];

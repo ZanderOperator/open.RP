@@ -68,7 +68,7 @@ Function: StorageObjectEdit(playerid, objectid, response, Float:fX, Float:fY, Fl
 				HouseStorage[p_EditRack[playerid]][storagePos][1] = fY;
 				HouseStorage[p_EditRack[playerid]][storagePos][2] = fZ;
 				HouseStorage[p_EditRack[playerid]][storagePos][3] = fRotZ;
-				ShowPlayerDialog(playerid, DIALOG_HSTORAGE_EDIT, DIALOG_STYLE_MSGBOX, "{3C95C2}House Storage - Stalak", "\nJeste li sigurni da zelite ovdje postaviti Stalak?\n[!] - Nakon postavljanja, stalku vise ne mozete promijeniti poziciju.", "OK", "Zatvori");
+				ShowPlayerDialog(playerid, DIALOG_HSTORAGE_EDIT, DIALOG_STYLE_MSGBOX, "{3C95C2}House Storage - Stalak", "\nJeste li sigurni da zelite ovdje postaviti Stalak?\n[!] - Nakon postavljanja, stalku vise ne mozete promijeniti poziciju.", "OK", "Close");
 			}
 		}
 	}
@@ -82,7 +82,7 @@ Function: StorageObjectEdit(playerid, objectid, response, Float:fX, Float:fY, Fl
 				HouseStorage[p_EditRack[playerid]][storagePos][1] = fY;
 				HouseStorage[p_EditRack[playerid]][storagePos][2] = fZ;
 				HouseStorage[p_EditRack[playerid]][storagePos][3] = fRotZ;
-				ShowPlayerDialog(playerid, DIALOG_HSTORAGE_EDIT, DIALOG_STYLE_MSGBOX, "{3C95C2}House Storage - Stalak", "\nJeste li sigurni da zelite ovdje postaviti Stalak?\n[!] - Nakon postavljanja, stalku vise ne mozete promijeniti poziciju.", "OK", "Zatvori");
+				ShowPlayerDialog(playerid, DIALOG_HSTORAGE_EDIT, DIALOG_STYLE_MSGBOX, "{3C95C2}House Storage - Stalak", "\nJeste li sigurni da zelite ovdje postaviti Stalak?\n[!] - Nakon postavljanja, stalku vise ne mozete promijeniti poziciju.", "OK", "Close");
 			}
 		}
 	}
@@ -336,7 +336,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 	{
 		case DIALOG_HOUSE_PUT: {
 			if( !response )
-				return ShowPlayerDialog( playerid,DIALOG_HOUSE_STORAGE, DIALOG_STYLE_LIST,"{3C95C2}** House Storage","{3C95C2}[1] - Pohrani oruzje\n{3C95C2}[2] - Izvadi oruzje\n{3C95C2}[3] - Kupi Stalak\n{3C95C2}[4] - Statistika\n{3C95C2}[5] - Izbrisi stalak\n{3C95C2}[6] - Sef za novac.","Odabir","Izlaz");
+				return ShowPlayerDialog( playerid,DIALOG_HOUSE_STORAGE, DIALOG_STYLE_LIST,"{3C95C2}** House Storage","{3C95C2}[1] - Pohrani oruzje\n{3C95C2}[2] - Izvadi oruzje\n{3C95C2}[3] - Kupi Stalak\n{3C95C2}[4] - Statistika\n{3C95C2}[5] - Izbrisi stalak\n{3C95C2}[6] - Sef za novac.","Pick","Exit");
 			switch( listitem ) {
 				case 0:
 				{
@@ -356,7 +356,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 
 							else format(string, sizeof(string), "%s{3C95C2}[SLOT %d]:  %s  [ammo: %d/500]\n", string, i + 1,GetWeaponNameEx( HouseStorage[storageid][storageWeapons][i] ), HouseStorage[storageid][storageAmmo][i]);
 						}
-						ShowPlayerDialog(playerid, DIALOG_WSTORAGE_PUT, DIALOG_STYLE_LIST, "[HOUSE] - Stalak Ostavi", string, "Odabir", "Izlaz");
+						ShowPlayerDialog(playerid, DIALOG_WSTORAGE_PUT, DIALOG_STYLE_LIST, "[HOUSE] - Stalak Ostavi", string, "Pick", "Exit");
 					}
 				}
 			}
@@ -364,7 +364,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 		case DIALOG_HOUSE_TAKE:
 		{
 			if( !response )
-				return ShowPlayerDialog( playerid,DIALOG_HOUSE_STORAGE, DIALOG_STYLE_LIST,"{3C95C2}** House Storage","{3C95C2}[1] - Pohrani oruzje\n{3C95C2}[2] - Izvadi oruzje\n{3C95C2}[3] - Kupi Stalak\n{3C95C2}[4] - Statistika\n{3C95C2}[5] - Izbrisi stalak","Odabir","Izlaz");
+				return ShowPlayerDialog( playerid,DIALOG_HOUSE_STORAGE, DIALOG_STYLE_LIST,"{3C95C2}** House Storage","{3C95C2}[1] - Pohrani oruzje\n{3C95C2}[2] - Izvadi oruzje\n{3C95C2}[3] - Kupi Stalak\n{3C95C2}[4] - Statistika\n{3C95C2}[5] - Izbrisi stalak","Pick","Exit");
 			switch ( listitem )
 			{
 				case 0:
@@ -383,27 +383,27 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 
 							else format(string, sizeof(string), "%s{3C95C2}[SLOT %d]:  %s  [ammo: %d/500]\n", string, i + 1,GetWeaponNameEx( HouseStorage[storageid][storageWeapons][i] ), HouseStorage[storageid][storageAmmo][i]);
 						}
-						ShowPlayerDialog(playerid, DIALOG_WSTORAGE_TAKE, DIALOG_STYLE_LIST, "[HOUSE] - Stalak Uzmi", string, "Odabir", "Izlaz");
+						ShowPlayerDialog(playerid, DIALOG_WSTORAGE_TAKE, DIALOG_STYLE_LIST, "[HOUSE] - Stalak Uzmi", string, "Pick", "Exit");
 					}
 				}
 			}
 		}
 		case DIALOG_HOUSE_STORAGE: {
 			if( !response )
-				return ShowPlayerDialog(playerid,DIALOG_HOUSE_MAIN,DIALOG_STYLE_LIST,"MOJA KUCA","House Storage\nUpgrades\nOtvori/Zatvori\nNajam\nIzbaci podstanare\nOrmar\nKuhinja\nInfo\nProdaj kucu($10000)","Odabir","Izlaz");
+				return ShowPlayerDialog(playerid,DIALOG_HOUSE_MAIN,DIALOG_STYLE_LIST,"MOJA KUCA","House Storage\nUpgrades\nOtvori/Zatvori\nNajam\nIzbaci podstanare\nOrmar\nKuhinja\nInfo\nProdaj kucu($10000)","Pick","Exit");
 				
 			switch ( listitem ) {
 				case 0: // put
-					ShowPlayerDialog(playerid,  DIALOG_HOUSE_PUT, DIALOG_STYLE_LIST, "Odaberite sto zelite pohraniti:", "Oruzje", "Odabir", "Izlaz");
+					ShowPlayerDialog(playerid,  DIALOG_HOUSE_PUT, DIALOG_STYLE_LIST, "Odaberite sto zelite pohraniti:", "Oruzje", "Pick", "Exit");
 				
 				case 1: // take	
-					ShowPlayerDialog(playerid, DIALOG_HOUSE_TAKE, DIALOG_STYLE_LIST, "Odaberite sto zelite uzeti:", "Oruzje", "Odabir", "Izlaz");
+					ShowPlayerDialog(playerid, DIALOG_HOUSE_TAKE, DIALOG_STYLE_LIST, "Odaberite sto zelite uzeti:", "Oruzje", "Pick", "Exit");
 					
 		
 				case 2: { // buy rack
 					new buffer[210+10];
 					format(buffer,sizeof(buffer), "\nZelite li kupiti 'Stalak' za vasu kucu?\nKupovinom Stalka dobivate (+)4 slota za ostavu oruzija.\n\nCijena Stalka je {3C95C2}%d$, a vi mozete kupiti jos {3C95C2}%d. komad/a.", RACK_PRICE, GetRackLimit(playerid));
-					ShowPlayerDialog(playerid, DIALOG_HSTORAGE_BUYRACK, DIALOG_STYLE_MSGBOX, "{3C95C2}House Storage - Stalak", buffer, "Kupi", "Izlaz");
+					ShowPlayerDialog(playerid, DIALOG_HSTORAGE_BUYRACK, DIALOG_STYLE_MSGBOX, "{3C95C2}House Storage - Stalak", buffer, "Buy", "Exit");
 				}
 				case 3: { // info
 					new storageid = Storage_RackNear(playerid);
@@ -423,7 +423,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 				case 5: { // Sef za novac.
 					new house = PlayerInfo[playerid][pHouseKey];
 					if( !HouseInfo[house][hSafe] ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Kuca nema sef!");
-					ShowPlayerDialog( playerid, DIALOG_HOUSE_SEF, DIALOG_STYLE_LIST, "{3C95C2}[ Safe - Money ]","{3C95C2}[1] - Ostavi novac.\n{3C95C2}[2] - Uzmi novac.","Odabir","Izlaz");
+					ShowPlayerDialog( playerid, DIALOG_HOUSE_SEF, DIALOG_STYLE_LIST, "{3C95C2}[ Safe - Money ]","{3C95C2}[1] - Ostavi novac.\n{3C95C2}[2] - Uzmi novac.","Pick","Exit");
 				}
 			}
 			return (true);
@@ -445,7 +445,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 		}
 		case DIALOG_WSTORAGE_TAKE: {
 			if(!response) 
-				return ShowPlayerDialog( playerid,DIALOG_HOUSE_STORAGE, DIALOG_STYLE_LIST,"{3C95C2}** House Storage","{3C95C2}[1] - Pohrani oruzje\n{3C95C2}[2] - Izvadi oruzje\n{3C95C2}[3] - Kupi Stalak\n{3C95C2}[4] - Statistika\n{3C95C2}[5] - Izbrisi stalak","Odabir","Izlaz");
+				return ShowPlayerDialog( playerid,DIALOG_HOUSE_STORAGE, DIALOG_STYLE_LIST,"{3C95C2}** House Storage","{3C95C2}[1] - Pohrani oruzje\n{3C95C2}[2] - Izvadi oruzje\n{3C95C2}[3] - Kupi Stalak\n{3C95C2}[4] - Statistika\n{3C95C2}[5] - Izbrisi stalak","Pick","Exit");
 			if (response)
 			{
 				new id = Storage_RackNear(playerid),
@@ -484,7 +484,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 		}
 		case DIALOG_HSTORAGE_BUYRACK: {
 			if(!response) 
-				return ShowPlayerDialog( playerid,DIALOG_HOUSE_STORAGE, DIALOG_STYLE_LIST,"{3C95C2}** House Storage","{3C95C2}[1] - Pohrani oruzje\n{3C95C2}[2] - Izvadi oruzje\n{3C95C2}[3] - Kupi Stalak\n{3C95C2}[4] - Statistika\n{3C95C2}[5] - Izbrisi stalak","Odabir","Izlaz");
+				return ShowPlayerDialog( playerid,DIALOG_HOUSE_STORAGE, DIALOG_STYLE_LIST,"{3C95C2}** House Storage","{3C95C2}[1] - Pohrani oruzje\n{3C95C2}[2] - Izvadi oruzje\n{3C95C2}[3] - Kupi Stalak\n{3C95C2}[4] - Statistika\n{3C95C2}[5] - Izbrisi stalak","Pick","Exit");
 
 			if(response)
 		    {
@@ -504,7 +504,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 		}
 		case DIALOG_WSTORAGE_PUT: {
 			if(!response)
-				return ShowPlayerDialog( playerid,DIALOG_HOUSE_STORAGE, DIALOG_STYLE_LIST,"{3C95C2}** House Storage","{3C95C2}[1] - Pohrani oruzje\n{3C95C2}[2] - Izvadi oruzje\n{3C95C2}[3] - Kupi Stalak\n{3C95C2}[4] - Statistika\n{3C95C2}[5] - Izbrisi stalak","Odabir","Izlaz");
+				return ShowPlayerDialog( playerid,DIALOG_HOUSE_STORAGE, DIALOG_STYLE_LIST,"{3C95C2}** House Storage","{3C95C2}[1] - Pohrani oruzje\n{3C95C2}[2] - Izvadi oruzje\n{3C95C2}[3] - Kupi Stalak\n{3C95C2}[4] - Statistika\n{3C95C2}[5] - Izbrisi stalak","Pick","Exit");
 			if (response)
 			{
 				new id = Storage_RackNear(playerid),

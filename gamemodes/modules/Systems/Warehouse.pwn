@@ -162,6 +162,7 @@ stock PutWeaponInWarehouse(playerid, weaponid, ammo)
 	GetWeaponName(weaponid, wname, sizeof(wname));
 	SendFormatMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uspjesno ste pohranili %s(%d) u Warehouse %s.", wname, ammo, FactionInfo[fid][fName]);
 	
+	#if defined MODULE_LOGS
 	Log_Write("logfiles/warehouse_put.txt", "(%s) %s[SQL:%d] je stavio %s(%d) u Warehouse %s[SQL:%d].",
 		ReturnDate(),
 		GetName(playerid, false),
@@ -171,6 +172,8 @@ stock PutWeaponInWarehouse(playerid, weaponid, ammo)
 		FactionInfo[fid][fName],
 		FactionInfo[fid][fID]
 	);
+	#endif
+	
 	return 1;
 }
 
@@ -759,7 +762,7 @@ stock TransferWarehouseGoods(rwhid, vwhid)
 	
 	foreach(new i: Robbers)
 	{
-		ShowPlayerDialog(i, DIALOG_WAREHOUSE_INFO, DIALOG_STYLE_MSGBOX, "Plijen pljacke", rinfo, "Zatvori", "");
+		ShowPlayerDialog(i, DIALOG_WAREHOUSE_INFO, DIALOG_STYLE_MSGBOX, "Plijen pljacke", rinfo, "Close", "");
 		SendClientMessage(i, COLOR_RED, "[ ! ] Sva ukradena dobra su pohranjena u skladiste vase fakcije. Cestitke na uspjesnoj pljacki!");
 	}
 	StopWarehouseRobbery();
@@ -872,7 +875,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 					else PutWeaponInWarehouse(playerid, weaponid, ammo);
 				}
 				case 1:
-					ShowPlayerDialog(playerid, WAREHOUSE_MONEY_PUT, DIALOG_STYLE_INPUT, "Kolicina novca", "Unesite koliko novaca zelite pohraniti u warehouse.", "Unesi", "Izlaz");
+					ShowPlayerDialog(playerid, WAREHOUSE_MONEY_PUT, DIALOG_STYLE_INPUT, "Kolicina novca", "Unesite koliko novaca zelite pohraniti u warehouse.", "Input", "Exit");
 			}
 		}
 		case WAREHOUSE_MONEY_PUT:
@@ -889,6 +892,10 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 			UpdateWarehouseMoney(warehouseid);
 			SendFormatMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uspjesno ste pohranili %d$ u %s warehouse.", amount);
 			format( string, sizeof(string), "** %s pohranjuje %d$ u skladiste.", GetName(playerid, true), amount );
+			SetPlayerChatBubble(playerid, string, COLOR_PURPLE, 20, 8000);
+			ApplyAnimationEx(playerid,"BOMBER","BOM_Plant",4.1,0,0,0,0,0, 1, 0);
+			
+			#if defined MODULE_LOGS
 			Log_Write("logfiles/warehouse_put.txt", "(%s) %s[SQL:%d] je pohranio %d$ u Warehouse %s[SQL:%d].",
 				ReturnDate(),
 				GetName(playerid, false),
@@ -897,8 +904,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 				FactionInfo[fid][fName],
 				FactionInfo[fid][fID]
 			);
-			SetPlayerChatBubble(playerid, string, COLOR_PURPLE, 20, 8000);
-			ApplyAnimationEx(playerid,"BOMBER","BOM_Plant",4.1,0,0,0,0,0, 1, 0);
+			#endif
 		}
 		case WAREHOUSE_MONEY_TAKE:
 		{
@@ -915,6 +921,10 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 			UpdateWarehouseMoney(warehouseid);
 			SendFormatMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uspjesno ste uzeli %d$ iz %s warehousea.", amount);
 			format( string, sizeof(string), "** %s uzima %d$ iz skladista.", GetName(playerid, true), amount );
+			SetPlayerChatBubble(playerid, string, COLOR_PURPLE, 20, 8000);
+			ApplyAnimationEx(playerid,"BOMBER","BOM_Plant",4.1,0,0,0,0,0, 1, 0);
+			
+			#if defined MODULE_LOGS
 			Log_Write("logfiles/warehouse_take.txt", "(%s) %s[SQL:%d] je uzeo %d$ iz Warehousea %s[SQL:%d].",
 				ReturnDate(),
 				GetName(playerid, false),
@@ -923,8 +933,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 				FactionInfo[fid][fName],
 				FactionInfo[fid][fID]
 			);
-			SetPlayerChatBubble(playerid, string, COLOR_PURPLE, 20, 8000);
-			ApplyAnimationEx(playerid,"BOMBER","BOM_Plant",4.1,0,0,0,0,0, 1, 0);
+			#endif
 		}
 		case WAREHOUSE_TAKE_MENU:
 		{
@@ -938,7 +947,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 						whid = FetchWarehouseEnumFromFaction(FactionInfo[fid][fID]);
 					if(!Iter_Count(WhWeapons[whid]))
 						return SendClientMessage(playerid,  COLOR_RED, "Warehouse nema pohranjeno oruzje!");
-					ShowPlayerDialog(playerid, DIALOG_TAKE_WEAPON_LIST, DIALOG_STYLE_LIST, "Odaberite oruzje:", ListPlayerWarehouseWeapons(playerid, whid), "Odaberi", "Izlaz");
+					ShowPlayerDialog(playerid, DIALOG_TAKE_WEAPON_LIST, DIALOG_STYLE_LIST, "Odaberite oruzje:", ListPlayerWarehouseWeapons(playerid, whid), "Choose", "Exit");
 				}
 				case 1:
 				{
@@ -946,7 +955,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 						whid = FetchWarehouseEnumFromFaction(FactionInfo[fid][fID]),
 						moneyvalue[64];
 					format(moneyvalue, sizeof(moneyvalue), "Trenutno stanje: %d$", WarehouseInfo[whid][whMoney]);
-					ShowPlayerDialog(playerid, WAREHOUSE_MONEY_TAKE, DIALOG_STYLE_INPUT, moneyvalue, "Unesite koliko novaca zelite uzeti iz warehousea.", "Unesi", "Izlaz");
+					ShowPlayerDialog(playerid, WAREHOUSE_MONEY_TAKE, DIALOG_STYLE_INPUT, moneyvalue, "Unesite koliko novaca zelite uzeti iz warehousea.", "Input", "Exit");
 				}
 			}
 		}
@@ -968,6 +977,14 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 			AC_GivePlayerWeapon(playerid, weaponid, ammo);
 			GetWeaponName(weaponid, wname, 32);
 			SendFormatMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uspjesno ste uzeli %s(%d) iz warehousea.", wname, ammo);
+			format( string, sizeof(string), "** %s uzima %s iz skladista.", GetName(playerid, true), wname );
+			SetPlayerChatBubble(playerid, string, COLOR_PURPLE, 20, 8000);
+			new	puzavac = IsCrounching(playerid);
+			SetAnimationForWeapon(playerid, weaponid, puzavac);
+			RemoveWeaponFromWarehouse(whid, wslot);
+			ResetPlayerWeaponList(playerid);
+			
+			#if defined MODULE_LOGS
 			Log_Write("logfiles/warehouse_take.txt", "(%s) %s[SQL:%d] je uzeo %s(%d) iz Warehousea %s[SQL:%d].",
 				ReturnDate(),
 				GetName(playerid, false),
@@ -977,12 +994,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 				FactionInfo[fid][fName],
 				FactionInfo[fid][fID]
 			);
-			format( string, sizeof(string), "** %s uzima %s iz skladista.", GetName(playerid, true), wname );
-			SetPlayerChatBubble(playerid, string, COLOR_PURPLE, 20, 8000);
-			new	puzavac = IsCrounching(playerid);
-			SetAnimationForWeapon(playerid, weaponid, puzavac);
-			RemoveWeaponFromWarehouse(whid, wslot);
-			ResetPlayerWeaponList(playerid);
+			#endif
 			return 1;
 		}
 	}
@@ -1013,7 +1025,7 @@ CMD:warehouse(playerid, params[])
 			f = FetchFactionEnumFromWarehouse(wh);
 			
 		format(motd, sizeof(motd), "%s Warehouse\n        Financijsko stanje: %d$\n        %s\n        %s", FactionInfo[f][fName], WarehouseInfo[wh][whMoney], ListWarehouseWeapons(wh));
-		ShowPlayerDialog(playerid, DIALOG_WAREHOUSE_INFO, DIALOG_STYLE_MSGBOX, "Popis inventara", motd, "Zatvori", "");
+		ShowPlayerDialog(playerid, DIALOG_WAREHOUSE_INFO, DIALOG_STYLE_MSGBOX, "Popis inventara", motd, "Close", "");
 		return 1;
 	}
 	if(strcmp(option,"enter",true) == 0)
@@ -1045,7 +1057,7 @@ CMD:warehouse(playerid, params[])
 			format(motd, sizeof(motd), "%s\t%s\n", show_WeaponList[i][wep_Name], FormatNumber(show_WeaponList[i][wep_Price]));
 			strcat(buffer, motd, sizeof(buffer));
 		}
-		ShowPlayerDialog(playerid, DIALOG_PACKAGE_ORDER, DIALOG_STYLE_TABLIST_HEADERS, "{3C95C2}* Package - List", buffer, "(select)", "(x)");
+		ShowPlayerDialog(playerid, DIALOG_PACKAGE_ORDER, DIALOG_STYLE_TABLIST_HEADERS, "{3C95C2}* Package - List", buffer, "Select", "Close");
 	}*/
 	if(strcmp(option,"exit",true) == 0)
 	{
@@ -1067,7 +1079,7 @@ CMD:warehouse(playerid, params[])
 			return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ispred vaulta warehousea svoje organizacije!");
 		if(WarehouseInfo[wh][whLocked] == true)
 			return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Sef warehousea je zakljucan!");
-		ShowPlayerDialog(playerid, WAREHOUSE_PUT_MENU, DIALOG_STYLE_LIST, "Odaberite sto zelite pohraniti u warehouse:", "Oruzje u ruci\nDroga\nNovac", "Odaberi", "Izlaz");
+		ShowPlayerDialog(playerid, WAREHOUSE_PUT_MENU, DIALOG_STYLE_LIST, "Odaberite sto zelite pohraniti u warehouse:", "Oruzje u ruci\nDroga\nNovac", "Choose", "Exit");
 	}
 	if(strcmp(option,"take",true) == 0)
 	{
@@ -1078,7 +1090,7 @@ CMD:warehouse(playerid, params[])
 			return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ispred vaulta warehousea svoje organizacije!");
 		if(WarehouseInfo[wh][whLocked] == true)
 			return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Sef warehousea je zakljucan!");
-		ShowPlayerDialog(playerid, WAREHOUSE_TAKE_MENU, DIALOG_STYLE_LIST, "Odaberite sto zelite izvaditi iz warehousea:", "Oruzje\nDroga\nNovac", "Odaberi", "Izlaz");
+		ShowPlayerDialog(playerid, WAREHOUSE_TAKE_MENU, DIALOG_STYLE_LIST, "Odaberite sto zelite izvaditi iz warehousea:", "Oruzje\nDroga\nNovac", "Choose", "Exit");
 	}
 	if(strcmp(option,"lock",true) == 0)
 	{
@@ -1175,7 +1187,7 @@ CMD:awarehouse(playerid, params[])
 			format(motd, sizeof(motd), "Faction ID: %d | %s Warehouse\n        Financijsko stanje: %d$\n        %s\n        %s", FactionInfo[f][fID], FactionInfo[f][fName], WarehouseInfo[wh][whMoney], ListWarehouseWeapons(wh));
 			strcat(buffer, motd, sizeof(buffer));
 		}
-		ShowPlayerDialog(playerid, DIALOG_WAREHOUSE_INFO, DIALOG_STYLE_MSGBOX, "Popis warehouseova", buffer, "Zatvori", "");
+		ShowPlayerDialog(playerid, DIALOG_WAREHOUSE_INFO, DIALOG_STYLE_MSGBOX, "Popis warehouseova", buffer, "Close", "");
 		return 1;
 	}
 	if(strcmp(option,"add",true) == 0)

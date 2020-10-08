@@ -109,13 +109,13 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 					if(isnull(PlayerInfo[playerid][pSecQuestAnswer])) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate uneseno sigurnosno pitanje! Sigurnosno pitanje MORA biti uneseno ako zelite nesto mjenjati!");
 					
 					Bit2_Set(gr_QuestionType, playerid, 1);
-					ShowPlayerDialog(playerid, DIALOG_SEC_INPUTQ, DIALOG_STYLE_INPUT, "UNOS ODGOVORA NA SIGURNOSNO PITANJE", secQuestions[PlayerInfo[playerid][pSecQuestion]], "Unesi", "Odustani");
+					ShowPlayerDialog(playerid, DIALOG_SEC_INPUTQ, DIALOG_STYLE_INPUT, "UNOS ODGOVORA NA SIGURNOSNO PITANJE", secQuestions[PlayerInfo[playerid][pSecQuestion]], "Input", "Abort");
 				}
 				case 1: { //Password
 					if(isnull(PlayerInfo[playerid][pSecQuestAnswer])) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate uneseno sigurnosno pitanje! Sigurnosno pitanje MORA biti uneseno ako zelite nesto mjenjati!");
 					
 					Bit2_Set(gr_QuestionType, playerid, 2);
-					ShowPlayerDialog(playerid, DIALOG_SEC_INPUTQ, DIALOG_STYLE_INPUT, "UNOS ODGOVORA NA SIGURNOSNO PITANJE", secQuestions[PlayerInfo[playerid][pSecQuestion]], "Unesi", "Odustani");
+					ShowPlayerDialog(playerid, DIALOG_SEC_INPUTQ, DIALOG_STYLE_INPUT, "UNOS ODGOVORA NA SIGURNOSNO PITANJE", secQuestions[PlayerInfo[playerid][pSecQuestion]], "Input", "Abort");
 				}
 				case 2: { //Sigurnosno Pitanje
 					if(isnull(PlayerInfo[playerid][pSecQuestAnswer])) {
@@ -128,7 +128,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 							else format(motd, sizeof(motd), "%s", secQuestions[i]);
 							strcat(tmpstring, motd);
 						}
-						ShowPlayerDialog(playerid, DIALOG_SEC_SECQUEST, DIALOG_STYLE_LIST, "SIGURNOSNO PITANJE", tmpstring, "Odaberi", "Odustani");
+						ShowPlayerDialog(playerid, DIALOG_SEC_SECQUEST, DIALOG_STYLE_LIST, "SIGURNOSNO PITANJE", tmpstring, "Choose", "Abort");
 					}
 				}
 			}
@@ -140,7 +140,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 				if(PlayerInfo[playerid][pSecQuestion] == -1)
 					format(tmpString, sizeof(tmpString), "Izmjeni e-mail\nIzmjeni sifru\n"COL_RED"Unesi sigurnosno pitanje");
 				else format(tmpString, sizeof(tmpString), "Izmjeni e-mail\nIzmjeni sifru");
-				ShowPlayerDialog(playerid, DIALOG_SEC_MAIN, DIALOG_STYLE_LIST, "User Control Panel", tmpString, "Odaberi", "Odustani");
+				ShowPlayerDialog(playerid, DIALOG_SEC_MAIN, DIALOG_STYLE_LIST, "User Control Panel", tmpString, "Choose", "Abort");
 				return 1;
 			}
 			
@@ -148,7 +148,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 			new 
 				tmpString[165];
 			format(tmpString, 165, "Unesite odgovor na sigurnosno pitanje:\n%s\n\nNAPOMENA: Duzina odgovora MORA biti izmedju 3-30 znakova!", secQuestions[PlayerInfo[playerid][pSecQuestion]]);
-			ShowPlayerDialog(playerid, DIALOG_SEC_QUESTANSWER, DIALOG_STYLE_PASSWORD, "UNOS ODGOVORA NA PITANJE", tmpString, "Unesi", "Odustani");
+			ShowPlayerDialog(playerid, DIALOG_SEC_QUESTANSWER, DIALOG_STYLE_PASSWORD, "UNOS ODGOVORA NA PITANJE", tmpString, "Input", "Abort");
 			return 1;
 		}
 		case DIALOG_SEC_QUESTANSWER: {
@@ -157,7 +157,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 				if(PlayerInfo[playerid][pSecQuestion] == -1) 
 					format(tmpString, sizeof(tmpString), "Izmjeni e-mail\nIzmjeni sifru\n"COL_RED"Unesi sigurnosno pitanje");
 				else format(tmpString, sizeof(tmpString), "Izmjeni e-mail\nIzmjeni sifru");
-				ShowPlayerDialog(playerid, DIALOG_SEC_MAIN, DIALOG_STYLE_LIST, "User Control Panel", tmpString, "Odaberi", "Odustani");
+				ShowPlayerDialog(playerid, DIALOG_SEC_MAIN, DIALOG_STYLE_LIST, "User Control Panel", tmpString, "Choose", "Abort");
 				return 1;
 			}
 			if(isnull(inputtext))
@@ -165,7 +165,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 				new 
 					tmpString[175];
 				format(tmpString, 165, "Unesite odgovor na sigurnosno pitanje:\n%s\n\n"COL_RED"Ostavili ste prazno polje na mjestu odgovora!", secQuestions[PlayerInfo[playerid][pSecQuestion]]);
-				ShowPlayerDialog(playerid, DIALOG_SEC_QUESTANSWER, DIALOG_STYLE_PASSWORD, "UNOS ODGOVORA NA PITANJE", tmpString, "Unesi", "Odustani");
+				ShowPlayerDialog(playerid, DIALOG_SEC_QUESTANSWER, DIALOG_STYLE_PASSWORD, "UNOS ODGOVORA NA PITANJE", tmpString, "Input", "Abort");
 				return 1;
 			}
 			if( strfind(inputtext, "%", true) != -1 || strfind(inputtext, "\n", true) != -1 || strfind(inputtext, "=", true) != -1 || strfind(inputtext, "+", true) != -1 || strfind(inputtext, "'", true) != -1 || strfind(inputtext, ">", true) != -1 || strfind(inputtext, "^", true) != -1 || strfind(inputtext, "|", true) != -1 || strfind(inputtext, "?", true) != -1 || strfind(inputtext, "*", true) != -1 || strfind(inputtext, "#", true) != -1 || strfind(inputtext, "!", true) != -1 || strfind(inputtext, "$", true) != -1 )
@@ -173,14 +173,14 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 				new 
 					tmpString[175];
 				format(tmpString, 165, "Unesite odgovor na sigurnosno pitanje:\n%s\n\n"COL_RED"Nedozvoljeni znakovi u sigurnosnom odgovoru!", secQuestions[PlayerInfo[playerid][pSecQuestion]]);
-				ShowPlayerDialog(playerid, DIALOG_SEC_QUESTANSWER, DIALOG_STYLE_PASSWORD, "UNOS ODGOVORA NA PITANJE", tmpString, "Unesi", "Odustani");
+				ShowPlayerDialog(playerid, DIALOG_SEC_QUESTANSWER, DIALOG_STYLE_PASSWORD, "UNOS ODGOVORA NA PITANJE", tmpString, "Input", "Abort");
 				return 1;
 			}
 			if(strlen(inputtext) < 3 || strlen(inputtext) > 30) {
 				new 
 					tmpString[175];
 				format(tmpString, 165, "Unesite odgovor na sigurnosno pitanje:\n%s\n\n"COL_RED"NAPOMENA: Duzina odgovora MORA biti izmedju 3-30 znakova!", secQuestions[PlayerInfo[playerid][pSecQuestion]]);
-				ShowPlayerDialog(playerid, DIALOG_SEC_QUESTANSWER, DIALOG_STYLE_PASSWORD, "UNOS ODGOVORA NA PITANJE", tmpString, "Unesi", "Odustani");
+				ShowPlayerDialog(playerid, DIALOG_SEC_QUESTANSWER, DIALOG_STYLE_PASSWORD, "UNOS ODGOVORA NA PITANJE", tmpString, "Input", "Abort");
 				return 1;
 			}
 			if(isnull(inputtext)) {
@@ -188,7 +188,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 				if(PlayerInfo[playerid][pSecQuestion] == -1) 
 					format(tmpString, sizeof(tmpString), "Izmjeni e-mail\nIzmjeni sifru\n"COL_RED"Unesi sigurnosno pitanje");
 				else format(tmpString, sizeof(tmpString), "Izmjeni e-mail\nIzmjeni sifru");
-				ShowPlayerDialog(playerid, DIALOG_SEC_MAIN, DIALOG_STYLE_LIST, "User Control Panel", tmpString, "Odaberi", "Odustani");
+				ShowPlayerDialog(playerid, DIALOG_SEC_MAIN, DIALOG_STYLE_LIST, "User Control Panel", tmpString, "Choose", "Abort");
 				return 1;
 			}
 			
@@ -214,15 +214,15 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 				if(PlayerInfo[playerid][pSecQuestion] == -1) 
 					format(tmpString, sizeof(tmpString), "Izmjeni e-mail\nIzmjeni sifru\n"COL_RED"Unesi sigurnosno pitanje");
 				else format(tmpString, sizeof(tmpString), "Izmjeni e-mail\nIzmjeni sifru");
-				ShowPlayerDialog(playerid, DIALOG_SEC_MAIN, DIALOG_STYLE_LIST, "User Control Panel", tmpString, "Odaberi", "Odustani");
+				ShowPlayerDialog(playerid, DIALOG_SEC_MAIN, DIALOG_STYLE_LIST, "User Control Panel", tmpString, "Choose", "Abort");
 				return 1;
 			}
 			if(isnull(inputtext))
-				return ShowPlayerDialog(playerid, DIALOG_SEC_MAIL, DIALOG_STYLE_INPUT, "UNOS E-MAIL ADRESE", "Unesite novu e-mail adresu.\n"COL_RED"Ostavili ste prazno polje novog E-Maila!", "Unesi", "Odustani");
+				return ShowPlayerDialog(playerid, DIALOG_SEC_MAIL, DIALOG_STYLE_INPUT, "UNOS E-MAIL ADRESE", "Unesite novu e-mail adresu.\n"COL_RED"Ostavili ste prazno polje novog E-Maila!", "Input", "Abort");
 			if( strfind(inputtext, "%", true) != -1 || strfind(inputtext, "\n", true) != -1 || strfind(inputtext, "=", true) != -1 || strfind(inputtext, "+", true) != -1 || strfind(inputtext, "'", true) != -1 || strfind(inputtext, ">", true) != -1 || strfind(inputtext, "^", true) != -1 || strfind(inputtext, "|", true) != -1 || strfind(inputtext, "?", true) != -1 || strfind(inputtext, "*", true) != -1 || strfind(inputtext, "#", true) != -1 || strfind(inputtext, "!", true) != -1 || strfind(inputtext, "$", true) != -1 )
-				return ShowPlayerDialog(playerid, DIALOG_SEC_MAIL, DIALOG_STYLE_INPUT, "UNOS E-MAIL ADRESE", "Unesite novu e-mail adresu.\n"COL_RED"Nedozvoljeni znakovi u E-Mailu!", "Unesi", "Odustani");
-			if(strlen(inputtext) > MAX_PLAYER_MAIL-1) return ShowPlayerDialog(playerid, DIALOG_SEC_MAIL, DIALOG_STYLE_INPUT, "UNOS E-MAIL ADRESE", "Unesite novu e-mail adresu.\n"COL_RED"Prevelik unos e-mail adrese!", "Unesi", "Odustani");
-			if(!IsValidEMail(inputtext)) return ShowPlayerDialog(playerid, DIALOG_SEC_MAIL, DIALOG_STYLE_INPUT, "UNOS E-MAIL ADRESE", "Unesite novu e-mail adresu.\n"COL_RED"Tu adresu netko koristi ili nije po standardima (obrati se adminima)!", "Unesi", "Odustani");
+				return ShowPlayerDialog(playerid, DIALOG_SEC_MAIL, DIALOG_STYLE_INPUT, "UNOS E-MAIL ADRESE", "Unesite novu e-mail adresu.\n"COL_RED"Nedozvoljeni znakovi u E-Mailu!", "Input", "Abort");
+			if(strlen(inputtext) > MAX_PLAYER_MAIL-1) return ShowPlayerDialog(playerid, DIALOG_SEC_MAIL, DIALOG_STYLE_INPUT, "UNOS E-MAIL ADRESE", "Unesite novu e-mail adresu.\n"COL_RED"Prevelik unos e-mail adrese!", "Input", "Abort");
+			if(!IsValidEMail(inputtext)) return ShowPlayerDialog(playerid, DIALOG_SEC_MAIL, DIALOG_STYLE_INPUT, "UNOS E-MAIL ADRESE", "Unesite novu e-mail adresu.\n"COL_RED"Tu adresu netko koristi ili nije po standardima (obrati se adminima)!", "Input", "Abort");
 			format(PlayerInfo[playerid][pEmail], MAX_PLAYER_MAIL, inputtext);
 			
 			new
@@ -233,7 +233,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 			);
 			mysql_tquery(g_SQL, tmpQuery, "", "");
 			
-			ShowPlayerDialog(playerid, 0, DIALOG_STYLE_MSGBOX, "USPJESAN UNOS E-MAIL ADRESE", "Uspjesno ste unijeli e-mail adresu!\nZapisite ju negdje jer ce vam trebati!", "Uredu", "");
+			ShowPlayerDialog(playerid, 0, DIALOG_STYLE_MSGBOX, "USPJESAN UNOS E-MAIL ADRESE", "Uspjesno ste unijeli e-mail adresu!\nZapisite ju negdje jer ce vam trebati!", "Ok", "");
 			return 1;
 		}
 		case DIALOG_SEC_PASS: {
@@ -242,21 +242,21 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 				if(PlayerInfo[playerid][pSecQuestion] == -1) 
 					format(tmpString, sizeof(tmpString), "Izmjeni e-mail\nIzmjeni sifru\n"COL_RED"Unesi sigurnosno pitanje");
 				else format(tmpString, sizeof(tmpString), "Izmjeni e-mail\nIzmjeni sifru");
-				ShowPlayerDialog(playerid, DIALOG_SEC_MAIN, DIALOG_STYLE_LIST, "User Control Panel", tmpString, "Odaberi", "Odustani");
+				ShowPlayerDialog(playerid, DIALOG_SEC_MAIN, DIALOG_STYLE_LIST, "User Control Panel", tmpString, "Choose", "Abort");
 				return 1;
 			}
 			if(isnull(inputtext))
-				return ShowPlayerDialog(playerid, DIALOG_SEC_PASS, DIALOG_STYLE_PASSWORD, "UNOS NOVE SIFRE", "Unesite novu sifru:\n"COL_RED"Ostavili ste prazno polje!\n\n"COL_RED"NAPOMENA: Dobro spremite svoju sifru, ako ju izgubite obratite se administraciji!", "Unesi", "Odustani");
+				return ShowPlayerDialog(playerid, DIALOG_SEC_PASS, DIALOG_STYLE_PASSWORD, "UNOS NOVE SIFRE", "Unesite novu sifru:\n"COL_RED"Ostavili ste prazno polje!\n\n"COL_RED"NAPOMENA: Dobro spremite svoju sifru, ako ju izgubite obratite se administraciji!", "Input", "Abort");
 			
 			if( strfind(inputtext, "%", true) != -1 || strfind(inputtext, "\n", true) != -1 || strfind(inputtext, "=", true) != -1 || strfind(inputtext, "+", true) != -1 || strfind(inputtext, "'", true) != -1 || strfind(inputtext, ">", true) != -1 || strfind(inputtext, "^", true) != -1 || strfind(inputtext, "|", true) != -1 || strfind(inputtext, "?", true) != -1 || strfind(inputtext, "*", true) != -1 || strfind(inputtext, "#", true) != -1 || strfind(inputtext, "!", true) != -1 || strfind(inputtext, "$", true) != -1 )
-				return ShowPlayerDialog(playerid, DIALOG_SEC_PASS, DIALOG_STYLE_PASSWORD, "UNOS NOVE SIFRE", "Unesite novu sifru:\n"COL_RED"Nedozvoljeni znakovi u unesenoj sifri!\n\n"COL_RED"NAPOMENA: Dobro spremite svoju sifru, ako ju izgubite obratite se administraciji!", "Unesi", "Odustani");
+				return ShowPlayerDialog(playerid, DIALOG_SEC_PASS, DIALOG_STYLE_PASSWORD, "UNOS NOVE SIFRE", "Unesite novu sifru:\n"COL_RED"Nedozvoljeni znakovi u unesenoj sifri!\n\n"COL_RED"NAPOMENA: Dobro spremite svoju sifru, ako ju izgubite obratite se administraciji!", "Input", "Abort");
 			
 			if(strlen(inputtext) < 3) { //Mala Sifra
-				ShowPlayerDialog(playerid, DIALOG_SEC_PASS, DIALOG_STYLE_PASSWORD, "UNOS NOVE SIFRE", "Unesite novu sifru:\n"COL_RED"Premali unos sifre (manji od 3)\n\n"COL_RED"NAPOMENA: Dobro spremite svoju sifru, ako ju izgubite obratite se administraciji!", "Unesi", "Odustani");
+				ShowPlayerDialog(playerid, DIALOG_SEC_PASS, DIALOG_STYLE_PASSWORD, "UNOS NOVE SIFRE", "Unesite novu sifru:\n"COL_RED"Premali unos sifre (manji od 3)\n\n"COL_RED"NAPOMENA: Dobro spremite svoju sifru, ako ju izgubite obratite se administraciji!", "Input", "Abort");
 				return 1;
 			}
 			else if(strlen(inputtext) > 15) { //Prevelika
-				ShowPlayerDialog(playerid, DIALOG_SEC_PASS, DIALOG_STYLE_PASSWORD, "UNOS NOVE SIFRE", "Unesite novu sifru:\n"COL_RED"Prevelik unos sifre (veca od 10)\n\n"COL_RED"NAPOMENA: Dobro spremite svoju sifru, ako ju izgubite obratite se administraciji!", "Unesi", "Odustani");
+				ShowPlayerDialog(playerid, DIALOG_SEC_PASS, DIALOG_STYLE_PASSWORD, "UNOS NOVE SIFRE", "Unesite novu sifru:\n"COL_RED"Prevelik unos sifre (veca od 10)\n\n"COL_RED"NAPOMENA: Dobro spremite svoju sifru, ako ju izgubite obratite se administraciji!", "Input", "Abort");
 				return 1;
 			}
 			
@@ -282,7 +282,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 				if(PlayerInfo[playerid][pSecQuestion] == -1) 
 					format(tmpString, sizeof(tmpString), "Izmjeni e-mail\nIzmjeni sifru\n"COL_RED"Unesi sigurnosno pitanje");
 				else format(tmpString, sizeof(tmpString), "Izmjeni e-mail\nIzmjeni sifru");
-				ShowPlayerDialog(playerid, DIALOG_SEC_MAIN, DIALOG_STYLE_LIST, "User Control Panel", tmpString, "Odaberi", "Odustani");
+				ShowPlayerDialog(playerid, DIALOG_SEC_MAIN, DIALOG_STYLE_LIST, "User Control Panel", tmpString, "Choose", "Abort");
 				return 1;
 			}
 			return 1;
@@ -293,7 +293,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 				if(PlayerInfo[playerid][pSecQuestion] == -1) 
 					format(tmpString, sizeof(tmpString), "Izmjeni e-mail\nIzmjeni sifru\n"COL_RED"Unesi sigurnosno pitanje");
 				else format(tmpString, sizeof(tmpString), "Izmjeni e-mail\nIzmjeni sifru");
-				ShowPlayerDialog(playerid, DIALOG_SEC_MAIN, DIALOG_STYLE_LIST, "User Control Panel", tmpString, "Odaberi", "Odustani");
+				ShowPlayerDialog(playerid, DIALOG_SEC_MAIN, DIALOG_STYLE_LIST, "User Control Panel", tmpString, "Choose", "Abort");
 				return 1;
 			}
 
@@ -303,18 +303,18 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 				{
 					case 1: {
 						Bit2_Set(gr_QuestionType, playerid, 0);
-						ShowPlayerDialog(playerid, DIALOG_SEC_MAIL, DIALOG_STYLE_INPUT, "UNOS E-MAIL ADRESE", "Unesite novu e-mail adresu:", "Unesi", "Odustani");
+						ShowPlayerDialog(playerid, DIALOG_SEC_MAIL, DIALOG_STYLE_INPUT, "UNOS E-MAIL ADRESE", "Unesite novu e-mail adresu:", "Input", "Abort");
 					}
 					case 2: {
 						Bit2_Set(gr_QuestionType, playerid, 0);
-						ShowPlayerDialog(playerid, DIALOG_SEC_PASS, DIALOG_STYLE_PASSWORD, "UNOS NOVE SIFRE", "Unesite novu sifru:\n\n"COL_RED"NAPOMENA: Dobro spremite svoju sifru, ako ju izgubite obratite se administraciji!", "Unesi", "Odustani");
+						ShowPlayerDialog(playerid, DIALOG_SEC_PASS, DIALOG_STYLE_PASSWORD, "UNOS NOVE SIFRE", "Unesite novu sifru:\n\n"COL_RED"NAPOMENA: Dobro spremite svoju sifru, ako ju izgubite obratite se administraciji!", "Input", "Abort");
 					}
 				}
 			} else {
 				new
 					tmpString[ 128 ];
 				format( tmpString, sizeof(tmpString), "%s\n"COL_RED"Niste unijeli valjani odgovor na sigurnosno pitanje!", secQuestions[PlayerInfo[playerid][pSecQuestion]] );
-				ShowPlayerDialog(playerid, DIALOG_SEC_INPUTQ, DIALOG_STYLE_INPUT, "UNOS ODGOVORA NA SIGURNOSNO PITANJE", tmpString, "Unesi", "Odustani");
+				ShowPlayerDialog(playerid, DIALOG_SEC_INPUTQ, DIALOG_STYLE_INPUT, "UNOS ODGOVORA NA SIGURNOSNO PITANJE", tmpString, "Input", "Abort");
 			}
 			return 1;
 		}
@@ -341,7 +341,7 @@ CMD:account(playerid, params[])
 	else format(tmpString, sizeof(tmpString), "Izmjeni e-mail\nIzmjeni sifru");
 	
 	Bit2_Set(gr_QuestionType, playerid, 0);
-	ShowPlayerDialog(playerid, DIALOG_SEC_MAIN, DIALOG_STYLE_LIST, "User Control Panel", tmpString, "Odaberi", "Odustani");
+	ShowPlayerDialog(playerid, DIALOG_SEC_MAIN, DIALOG_STYLE_LIST, "User Control Panel", tmpString, "Choose", "Abort");
 	return 1;
 }
 

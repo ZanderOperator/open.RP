@@ -1146,9 +1146,9 @@ CMD:playbasket(playerid, params[])
 				if(BasketInfo[i][Players] >= MAX_BASKET_PLAYERS) 
 					return va_SendErrorMessage(playerid, "Maksimum igraca po igralistu je %d.", MAX_BASKET_PLAYERS);
 				if(BasketInfo[i][pTeam1][0] == EOS || BasketInfo[i][pTeam2][0] == EOS)
-					ShowPlayerDialog(playerid, DIALOG_BASKET_TEAM, DIALOG_STYLE_INPUT, "Naziv ekipe:", "Molimo Vas unesite naziv svoje ekipe\nMaksimalan unos naziva: 32 znaka.", "Unos", "Izlaz"); 
+					ShowPlayerDialog(playerid, DIALOG_BASKET_TEAM, DIALOG_STYLE_INPUT, "Naziv ekipe:", "Molimo Vas unesite naziv svoje ekipe\nMaksimalan unos naziva: 32 znaka.", "Input", "Exit"); 
 				else
-					ShowPlayerDialog(playerid, DIALOG_BASKET_CHOOSE, DIALOG_STYLE_LIST, "Odabir ekipe", ListBasketTeams(i), "Odabir", "Izlaz");
+					ShowPlayerDialog(playerid, DIALOG_BASKET_CHOOSE, DIALOG_STYLE_LIST, "Odabir ekipe", ListBasketTeams(i), "Pick", "Exit");
 				return 1;
 			}
 			else

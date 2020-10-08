@@ -867,57 +867,57 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 			
 			switch(listitem) {
 				case 0: // Player
-					ShowPlayerDialog(playerid, DIALOG_MDC_PLAYER, DIALOG_STYLE_INPUT, "MDC - PERSON", "Unesite ime i prezime osobe\nNAPOMENA: Mora biti s znakom '_'!", "Unesi", "Odustani");
+					ShowPlayerDialog(playerid, DIALOG_MDC_PLAYER, DIALOG_STYLE_INPUT, "MDC - PERSON", "Unesite ime i prezime osobe\nNAPOMENA: Mora biti s znakom '_'!", "Input", "Abort");
 				case 1: // Vehicle
-					ShowPlayerDialog(playerid, DIALOG_MDC_VEHICLE, DIALOG_STYLE_INPUT, "MDC - VEHICLE", "Unesite vehicleid od vozila\nNAPOMENA: Da biste dobili vehicleid koristite komandu /dl!", "Unesi", "Odustani");
+					ShowPlayerDialog(playerid, DIALOG_MDC_VEHICLE, DIALOG_STYLE_INPUT, "MDC - VEHICLE", "Unesite vehicleid od vozila\nNAPOMENA: Da biste dobili vehicleid koristite komandu /dl!", "Input", "Abort");
 				case 2: // Dosije
-					ShowPlayerDialog(playerid, DIALOG_MDC_RECORD, DIALOG_STYLE_LIST, "MDC - DOSJE", "Provjera dosjea\nObrisi dosje", "Odaberi", "Odustani");
+					ShowPlayerDialog(playerid, DIALOG_MDC_RECORD, DIALOG_STYLE_LIST, "MDC - DOSJE", "Provjera dosjea\nObrisi dosje", "Choose", "Abort");
 				case 3: // Kazne
-					ShowPlayerDialog(playerid, DIALOG_MDC_TICKET, DIALOG_STYLE_LIST, "MDC - TICKET", "Provjera kazni\nObrisi kaznu", "Odaberi", "Odustani");
+					ShowPlayerDialog(playerid, DIALOG_MDC_TICKET, DIALOG_STYLE_LIST, "MDC - TICKET", "Provjera kazni\nObrisi kaznu", "Choose", "Abort");
 			}
 			
 			return 1;
 		}
 		case DIALOG_MDC_PLAYER: {
-			if( !response ) return ShowPlayerDialog(playerid, DIALOG_MDC_MAIN, DIALOG_STYLE_LIST, "Mobile Data Computer - HOME", "Pretrazi osobu\nPretrazi vozilo\nProvjera dosjea\nProvjera kazni", "Odaberi", "Odustani");
+			if( !response ) return ShowPlayerDialog(playerid, DIALOG_MDC_MAIN, DIALOG_STYLE_LIST, "Mobile Data Computer - HOME", "Pretrazi osobu\nPretrazi vozilo\nProvjera dosjea\nProvjera kazni", "Choose", "Abort");
 			
-			if( strfind(inputtext, "_", true) == -1 ) return ShowPlayerDialog(playerid, DIALOG_MDC_PLAYER, DIALOG_STYLE_INPUT, "Mobile Data Computer - PLAYER", "Unesite ime i prezime osobe\nNAPOMENA: Mora biti s znakom '_'!", "Unesi", "Odustani");
+			if( strfind(inputtext, "_", true) == -1 ) return ShowPlayerDialog(playerid, DIALOG_MDC_PLAYER, DIALOG_STYLE_INPUT, "Mobile Data Computer - PLAYER", "Unesite ime i prezime osobe\nNAPOMENA: Mora biti s znakom '_'!", "Input", "Abort");
 			format(TargetName[playerid], 24, "%s", inputtext);
 			OnPlayerMDCDataLoad(playerid, TargetName[playerid]);			
 			return 1;
 		}
 		case DIALOG_MDC_VEHICLE: {
-			if( !response ) return ShowPlayerDialog(playerid, DIALOG_MDC_MAIN, DIALOG_STYLE_LIST, "Mobile Data Computer - HOME", "Pretrazi osobu\nPretrazi vozilo\nProvjera dosjea\nProvjera kazni", "Odaberi", "Odustani");
+			if( !response ) return ShowPlayerDialog(playerid, DIALOG_MDC_MAIN, DIALOG_STYLE_LIST, "Mobile Data Computer - HOME", "Pretrazi osobu\nPretrazi vozilo\nProvjera dosjea\nProvjera kazni", "Choose", "Abort");
 			
 			if( 1 <= strval(inputtext) <= MAX_VEHICLES ) {
-				if( !Iter_Contains(COVehicles, strval(inputtext)) ) return ShowPlayerDialog(playerid, DIALOG_MDC_VEHICLE, DIALOG_STYLE_INPUT, "MDC - VEHICLE", "Unesite vehicleid od vozila\nNAPOMENA: Vozilo mora biti CO!", "Unesi", "Odustani");
+				if( !Iter_Contains(COVehicles, strval(inputtext)) ) return ShowPlayerDialog(playerid, DIALOG_MDC_VEHICLE, DIALOG_STYLE_INPUT, "MDC - VEHICLE", "Unesite vehicleid od vozila\nNAPOMENA: Vozilo mora biti CO!", "Input", "Abort");
 				GetVehicleMDCInfo(playerid, strval(inputtext));
-			} else ShowPlayerDialog(playerid, DIALOG_MDC_VEHICLE, DIALOG_STYLE_INPUT, "MDC - VEHICLE", "Unesite vehicleid od vozila\nNAPOMENA: Da biste dobili vehicleid koristite komandu /dl!", "Unesi", "Odustani");
+			} else ShowPlayerDialog(playerid, DIALOG_MDC_VEHICLE, DIALOG_STYLE_INPUT, "MDC - VEHICLE", "Unesite vehicleid od vozila\nNAPOMENA: Da biste dobili vehicleid koristite komandu /dl!", "Input", "Abort");
 			return 1;
 		}
 		case DIALOG_MDC_RECORD: {
 			if( !response ) return 1;
 			switch(listitem) {
 				case 0: {	// Provjera
-					ShowPlayerDialog(playerid, DIALOG_MDC_CRECORD, DIALOG_STYLE_INPUT, "MDC - PLAYER", "Unesite ime i prezime osobe\nNAPOMENA: Mora biti s znakom '_'!", "Unesi", "Odustani");
+					ShowPlayerDialog(playerid, DIALOG_MDC_CRECORD, DIALOG_STYLE_INPUT, "MDC - PLAYER", "Unesite ime i prezime osobe\nNAPOMENA: Mora biti s znakom '_'!", "Input", "Abort");
 				}
 				case 1: { // Brisanje
 					if( PlayerInfo[ playerid ][ pRank ] < 4 ) return SendClientMessage(playerid, COLOR_RED, "[GRESKA]: Samo PD officeri rank 4+ mogu ovdje!");
-					ShowPlayerDialog(playerid, DIALOG_MDC_DRECORD_ID, DIALOG_STYLE_INPUT, "MDC - PLAYER", "Unesite ID dosjea kojeg zelite obrisati:", "Unesi", "Odustani");
+					ShowPlayerDialog(playerid, DIALOG_MDC_DRECORD_ID, DIALOG_STYLE_INPUT, "MDC - PLAYER", "Unesite ID dosjea kojeg zelite obrisati:", "Input", "Abort");
 				}
 			}
 			return 1;
 		}
 		case DIALOG_MDC_CRECORD: {
-			if( !response ) return ShowPlayerDialog(playerid, DIALOG_MDC_MAIN, DIALOG_STYLE_LIST, "Mobile Data Computer - HOME", "Pretrazi osobu\nPretrazi vozilo\nProvjera dosjea\nProvjera kazni", "Odaberi", "Odustani");
+			if( !response ) return ShowPlayerDialog(playerid, DIALOG_MDC_MAIN, DIALOG_STYLE_LIST, "Mobile Data Computer - HOME", "Pretrazi osobu\nPretrazi vozilo\nProvjera dosjea\nProvjera kazni", "Choose", "Abort");
 			if( 1 <= strlen( inputtext ) <= MAX_PLAYER_NAME ) {
-				if( strfind(inputtext, "_", true) == -1 ) return ShowPlayerDialog(playerid, DIALOG_MDC_RECORD, DIALOG_STYLE_INPUT, "Mobile Data Computer - PLAYER", "Unesite ime i prezime osobe\nNAPOMENA: Mora biti s znakom '_'!", "Unesi", "Odustani"); 
+				if( strfind(inputtext, "_", true) == -1 ) return ShowPlayerDialog(playerid, DIALOG_MDC_RECORD, DIALOG_STYLE_INPUT, "Mobile Data Computer - PLAYER", "Unesite ime i prezime osobe\nNAPOMENA: Mora biti s znakom '_'!", "Input", "Abort"); 
 				GetPlayerMDCRecord(playerid, inputtext);
-			} else ShowPlayerDialog(playerid, DIALOG_MDC_RECORD, DIALOG_STYLE_INPUT, "Mobile Data Computer - PLAYER", "Unesite ime i prezime osobe\nNAPOMENA: Mora biti s znakom '_'!", "Unesi", "Odustani"); 
+			} else ShowPlayerDialog(playerid, DIALOG_MDC_RECORD, DIALOG_STYLE_INPUT, "Mobile Data Computer - PLAYER", "Unesite ime i prezime osobe\nNAPOMENA: Mora biti s znakom '_'!", "Input", "Abort"); 
 			return 1;
 		}
 		case DIALOG_MDC_DRECORD_ID: {
-			if( !response ) return ShowPlayerDialog(playerid, DIALOG_MDC_RECORD, DIALOG_STYLE_LIST, "MDC - PLAYER", "Provjera dosjea\nObrisi dosje", "Odaberi", "Odustani");
+			if( !response ) return ShowPlayerDialog(playerid, DIALOG_MDC_RECORD, DIALOG_STYLE_LIST, "MDC - PLAYER", "Provjera dosjea\nObrisi dosje", "Choose", "Abort");
 			DeletingRecordID[ playerid ] = strval(inputtext);
 			va_ShowPlayerDialog(playerid, DIALOG_MDC_DRECORD, DIALOG_STYLE_MSGBOX, "MDC - PLAYER", "Zelite li obrisati dosje ID %d?", "Da", "Ne", DeletingRecordID[ playerid ]);
 			return 1;
@@ -932,25 +932,25 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 			if( !response ) return 1;
 			switch(listitem) {
 				case 0: {	// Provjera
-					ShowPlayerDialog(playerid, DIALOG_MDC_CTICKET, DIALOG_STYLE_INPUT, "MDC - TICKET", "Unesite ime i prezime osobe\nNAPOMENA: Mora biti s znakom '_'!", "Unesi", "Odustani");
+					ShowPlayerDialog(playerid, DIALOG_MDC_CTICKET, DIALOG_STYLE_INPUT, "MDC - TICKET", "Unesite ime i prezime osobe\nNAPOMENA: Mora biti s znakom '_'!", "Input", "Abort");
 				}
 				case 1: { // Brisanje
 					if( PlayerInfo[ playerid ][ pRank ] < 4 ) return SendClientMessage(playerid, COLOR_RED, "[GRESKA]: Samo PD officeri rank 4+ mogu ovdje!");
-					ShowPlayerDialog(playerid, DIALOG_MDC_DTICKET_ID, DIALOG_STYLE_INPUT, "MDC - TICKET", "Unesite ID dosjea kojeg zelite obrisati:", "Unesi", "Odustani");
+					ShowPlayerDialog(playerid, DIALOG_MDC_DTICKET_ID, DIALOG_STYLE_INPUT, "MDC - TICKET", "Unesite ID dosjea kojeg zelite obrisati:", "Input", "Abort");
 				}
 			}
 			return 1;
 		}
 		case DIALOG_MDC_CTICKET: {
-			if( !response ) return ShowPlayerDialog(playerid, DIALOG_MDC_MAIN, DIALOG_STYLE_LIST, "Mobile Data Computer - HOME", "Pretrazi osobu\nPretrazi vozilo\nProvjera dosjea\nProvjera kazni", "Odaberi", "Odustani");
+			if( !response ) return ShowPlayerDialog(playerid, DIALOG_MDC_MAIN, DIALOG_STYLE_LIST, "Mobile Data Computer - HOME", "Pretrazi osobu\nPretrazi vozilo\nProvjera dosjea\nProvjera kazni", "Choose", "Abort");
 			if( 1 <= strlen( inputtext ) <= MAX_PLAYER_NAME ) {
-				if( strfind(inputtext, "_", true) == -1 ) return ShowPlayerDialog(playerid, DIALOG_MDC_CTICKET, DIALOG_STYLE_INPUT, "MDC - TICKET", "Unesite ime i prezime osobe\nNAPOMENA: Mora biti s znakom '_'!", "Unesi", "Odustani"); 
+				if( strfind(inputtext, "_", true) == -1 ) return ShowPlayerDialog(playerid, DIALOG_MDC_CTICKET, DIALOG_STYLE_INPUT, "MDC - TICKET", "Unesite ime i prezime osobe\nNAPOMENA: Mora biti s znakom '_'!", "Input", "Abort"); 
 				LoadPlayerTicket(playerid, inputtext);
-			} else ShowPlayerDialog(playerid, DIALOG_MDC_CTICKET, DIALOG_STYLE_INPUT, "Mobile Data Computer - TICKET", "Unesite ime i prezime osobe\nNAPOMENA: Mora biti s znakom '_'!", "Unesi", "Odustani"); 
+			} else ShowPlayerDialog(playerid, DIALOG_MDC_CTICKET, DIALOG_STYLE_INPUT, "Mobile Data Computer - TICKET", "Unesite ime i prezime osobe\nNAPOMENA: Mora biti s znakom '_'!", "Input", "Abort"); 
 			return 1;
 		}
 		case DIALOG_MDC_DTICKET_ID: {
-			if( !response ) return ShowPlayerDialog(playerid, DIALOG_MDC_TICKET, DIALOG_STYLE_LIST, "MDC - TICKET", "Provjera kazni\nObrisi kaznu", "Odaberi", "Odustani");
+			if( !response ) return ShowPlayerDialog(playerid, DIALOG_MDC_TICKET, DIALOG_STYLE_LIST, "MDC - TICKET", "Provjera kazni\nObrisi kaznu", "Choose", "Abort");
 			DeletingTicketID[ playerid ] = strval(inputtext);
 			va_ShowPlayerDialog(playerid, DIALOG_MDC_DTICKET, DIALOG_STYLE_MSGBOX, "MDC - TICKET", "Zelite li obrisati ticket ID %d?", "Da", "Ne", DeletingTicketID[ playerid ]);
 			return 1;
@@ -979,7 +979,7 @@ CMD:mdc(playerid, params[])
 	if( !IsACop(playerid) && !IsASD(playerid) ) return SendClientMessage( playerid, COLOR_RED, "[GRESKA]: Niste policajac!");
 	new vehicleid = GetPlayerVehicleID(playerid);
 	if( vehicleid == INVALID_VEHICLE_ID ) return SendClientMessage(playerid, COLOR_RED, "[GRESKA]: Niste unutar sluzbenog vozila!");
-	ShowPlayerDialog(playerid, DIALOG_MDC_MAIN, DIALOG_STYLE_LIST, "Mobile Data Computer - HOME", "Pretrazi osobu\nPretrazi vozilo\nProvjera dosjea\nProvjera kazni", "Odaberi", "Odustani");
+	ShowPlayerDialog(playerid, DIALOG_MDC_MAIN, DIALOG_STYLE_LIST, "Mobile Data Computer - HOME", "Pretrazi osobu\nPretrazi vozilo\nProvjera dosjea\nProvjera kazni", "Choose", "Abort");
 	return 1;
 }
 

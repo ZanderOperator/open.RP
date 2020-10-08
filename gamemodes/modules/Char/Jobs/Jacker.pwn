@@ -567,7 +567,7 @@ stock DestroyJackerInfoPickTD(playerid)
 	PlayerTextDrawSetSelectable(playerid, JackerPickTake[playerid], true);
 	PlayerTextDrawShow(playerid, JackerPickTake[playerid]);
 
-	JackerPickLeave[playerid] = CreatePlayerTextDraw(playerid, 442.7, 316.5, "ODUSTANI");
+	JackerPickLeave[playerid] = CreatePlayerTextDraw(playerid, 442.7, 316.5, "Abort");
 	PlayerTextDrawLetterSize(playerid, JackerPickLeave[playerid], 0.3, 1.3);
 	PlayerTextDrawTextSize(playerid, JackerPickLeave[playerid], 48.8, 53.0);
 	PlayerTextDrawAlignment(playerid, JackerPickLeave[playerid], 2);
@@ -821,7 +821,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 			GetVehicleNameByModel(LandVehicles[ IlegalGarage[ garage ][ igVehicleIds ][ listitem ] ][ viModelid ], vehicleName, MAX_VEHICLE_NAME);
 			SendFormatMessage(playerid, MESSAGE_TYPE_SUCCESS, "Odabrali ste vozilo %s!", vehicleName);
             
-			va_ShowPlayerDialog(playerid, DIALOG_JACKER_SURE_1, DIALOG_STYLE_MSGBOX, "Odabir vozila", "Jeste li sigurni da Zelite zapoceti %s misiju?", "Da", "Ne", vehicleName);
+			va_ShowPlayerDialog(playerid, DIALOG_JACKER_SURE_1, DIALOG_STYLE_MSGBOX, "Odabir vozila", "Jeste li sigurni da Zelite zapoceti %s misiju?", "Yes", "No", vehicleName);
             PlayerJackingCar[playerid] = IlegalGarage[garage][igVehicleIds][listitem];
 			return 1;
 	    }
@@ -911,7 +911,7 @@ CMD:jacker(playerid, params[])
 		    vehicleName[4],
 		    vehicleName[5]
 		);
-		ShowPlayerDialog(playerid, DIALOG_JACKER_PICK, DIALOG_STYLE_LIST, "Odaberite vozilo", vehicles_str, "Odaberi", "Odustani");
+		ShowPlayerDialog(playerid, DIALOG_JACKER_PICK, DIALOG_STYLE_LIST, "Odaberite vozilo", vehicles_str, "Choose", "Abort");
 		SendClientMessage(playerid, COLOR_RED, "[ ! ] Odaberite vozilo koje zelite ukrasti!");
 	}
 	else if( !strcmp(param, "chop", true) ) {
@@ -969,7 +969,7 @@ CMD:jacker(playerid, params[])
 	}
 	else if( !strcmp(param, "stop", true) ) {
 		if( PlayerJackingCar[ playerid ] == -1) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate aktivnu misiju!");
-		ShowPlayerDialog(playerid, DIALOG_JACKER_SURE_2, DIALOG_STYLE_MSGBOX, "Jacker misija", "Zelite li odustati od misije?\n"COL_RED"NAPOMENA: Ukoliko odustanete cooldown od 45 minuta se primjenuje!", "Odustajem", "Natrag");
+		ShowPlayerDialog(playerid, DIALOG_JACKER_SURE_2, DIALOG_STYLE_MSGBOX, "Jacker misija", "Zelite li odustati od misije?\n"COL_RED"NAPOMENA: Ukoliko odustanete cooldown od 45 minuta se primjenuje!", "Quit", "Back");
 	}
 	return 1;
 }
@@ -1000,7 +1000,7 @@ CMD:igarage(playerid, params[])
 		new
 			garage = GetJackerIlegalGarage(playerid);
 		if( garage == -1 || IlegalGarage[ garage ][ igOwner ] != PlayerInfo[ playerid ][ pSQLID ] ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste blizu svoje car jacker garaze/Nemate garazu!");
-		va_ShowPlayerDialog(playerid, 0, DIALOG_STYLE_TABLIST, "Ilegal Garage - Info", "Ime:\t%s\nWanted level:\t%d\nAuta ukradeno:\t%d", "Uredu", "", IlegalGarage[ garage ][ igName ], IlegalGarage[ garage ][ igWantedLevel ], IlegalGarage[ garage ][ igCarsJacked ]);
+		va_ShowPlayerDialog(playerid, 0, DIALOG_STYLE_TABLIST, "Ilegal Garage - Info", "Ime:\t%s\nWanted level:\t%d\nAuta ukradeno:\t%d", "OK", "", IlegalGarage[ garage ][ igName ], IlegalGarage[ garage ][ igWantedLevel ], IlegalGarage[ garage ][ igCarsJacked ]);
 	}
 	else if( !strcmp(param, "bribe", true) ) {
 		if( PlayerInfo[ playerid ][ pIllegalGarageKey ] == -1 ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne posjedujete ilegalnu garazu!");
@@ -1011,7 +1011,7 @@ CMD:igarage(playerid, params[])
 		new
 			money = ( IlegalGarage[ garage ][ igWantedLevel ] * ( random(random(250)) + 1 ) ) + ( IlegalGarage[ garage ][ igCarsJacked ] * 1000 );
 		PlayerBribeMoney[ playerid ] = money;
-		va_ShowPlayerDialog(playerid, DIALOG_JACKER_BRIBE, DIALOG_STYLE_MSGBOX, "Ilegal Garage - Bribe", "Zelite li podmititi policiju da vam spuste wanted level na 0?\nOna ce kostati %d$!", "Podmiti", "Odustani", money);
+		va_ShowPlayerDialog(playerid, DIALOG_JACKER_BRIBE, DIALOG_STYLE_MSGBOX, "Ilegal Garage - Bribe", "Zelite li podmititi policiju da vam spuste wanted level na 0?\nOna ce kostati %d$!", "Bribe", "Abort", money);
 	}
 	/*else if( !strcmp(param, "money", true) ) {
 		new

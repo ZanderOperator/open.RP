@@ -306,7 +306,7 @@ stock ListBestTemporaryEXP(playerid)
 				);
 				strcat(dialogstring, motd, sizeof(dialogstring));
 			}
-			ShowPlayerDialog(playerid, DIALOG_MOST_TEMPEXP, DIALOG_STYLE_MSGBOX, "Igraci sa najvise trenutnog EXP-a:", dialogstring, "Zatvori", "");
+			ShowPlayerDialog(playerid, DIALOG_MOST_TEMPEXP, DIALOG_STYLE_MSGBOX, "Igraci sa najvise trenutnog EXP-a:", dialogstring, "Close", "");
 			return 1;
 		}
 	}
@@ -341,7 +341,7 @@ stock ListBestOverallEXP(playerid)
 				);
 				strcat(dialogstring, motd, sizeof(dialogstring));
 			}
-			ShowPlayerDialog(playerid, DIALOG_MOST_TEMPEXP, DIALOG_STYLE_MSGBOX, "Igraci sa najvise Overall EXP-a:", dialogstring, "Zatvori", "");
+			ShowPlayerDialog(playerid, DIALOG_MOST_TEMPEXP, DIALOG_STYLE_MSGBOX, "Igraci sa najvise Overall EXP-a:", dialogstring, "Close", "");
 			return 1;
 		}
 	}
@@ -575,7 +575,7 @@ CMD:experience(playerid, params[])
 			SendErrorMessage(playerid, "Niste Head Administrator!");
 			return 1;
 		}
-		ShowPlayerDialog(playerid, DIALOG_EXP_CHOOSE, DIALOG_STYLE_LIST, "Odaberite kriterij po kojem zelite vidjeti EXP:", "Trenutni EXP\nOverall EXP", "Odabir", "Izlaz");
+		ShowPlayerDialog(playerid, DIALOG_EXP_CHOOSE, DIALOG_STYLE_LIST, "Odaberite kriterij po kojem zelite vidjeti EXP:", "Trenutni EXP\nOverall EXP", "Pick", "Exit");
 		return 1;
 	}
 	if( !strcmp(choice, "reset", true) )
@@ -692,7 +692,7 @@ CMD:experience(playerid, params[])
 			PREMIUM_SILVER_EXP, 
 			PREMIUM_GOLD_EXP
 		);
-		ShowPlayerDialog(playerid, DIALOG_EXPERIENCE_BUY, DIALOG_STYLE_LIST, "Odaberite sto zelite kupiti EXP-om:", expbuyinfo, "Odabir", "(x)");
+		ShowPlayerDialog(playerid, DIALOG_EXPERIENCE_BUY, DIALOG_STYLE_LIST, "Odaberite sto zelite kupiti EXP-om:", expbuyinfo, "Pick", "Close");
 		return 1;
 	}
 	return 1;

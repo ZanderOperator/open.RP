@@ -200,7 +200,7 @@ stock InflictPlayerDamage(playerid, issuerid, bodypart, Float:damage)
 				);
 				DMERSBroadCast(COLOR_RED, wndString, 1);
 
-
+				#if defined MODULE_LOGS
 				Log_Write("logfiles/kills.txt", "[WOUNDED] (%s) %s{%d}(%s) je bacio u wounded mode igraca %s{%d}(%s) s %s(%d).",
 					ReturnDate(),
 					GetName(issuerid, false),
@@ -212,6 +212,7 @@ stock InflictPlayerDamage(playerid, issuerid, bodypart, Float:damage)
 					GetWeaponNameEx(AC_GetPlayerWeapon(issuerid)),
 					AC_GetPlayerWeapon(issuerid)
 				);
+				#endif
 				
 				new
 					Float:X, Float:Y, Float:Z;
@@ -324,7 +325,7 @@ stock DealDamage(playerid, issuerid, Float: health, Float: armour, Float: damage
 				);
 				DMERSBroadCast(COLOR_RED, wndString, 1);
 
-
+				#if defined MODULE_LOGS
 				Log_Write("logfiles/kills.txt", "[WOUNDED] (%s) %s{%d}(%s) je bacio u wounded mode igraca %s{%d}(%s) s %s(%d).",
 					ReturnDate(),
 					GetName(issuerid, false),
@@ -336,6 +337,8 @@ stock DealDamage(playerid, issuerid, Float: health, Float: armour, Float: damage
 					GetWeaponNameEx(AC_GetPlayerWeapon(issuerid)),
 					AC_GetPlayerWeapon(issuerid)
 				);
+				#endif
+				
 				new
 					Float:X, Float:Y, Float:Z;
 				GetPlayerPos(playerid, X, Y, Z);

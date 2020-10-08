@@ -338,7 +338,7 @@ hook OnModelSelResponse( playerid, extraid, index, modelid, response )
 					
 				GetPlayerName(chosenpID[playerid], name, 24);
 				chosenpObject[playerid] = index;
-				va_ShowPlayerDialog(playerid, 3556, DIALOG_STYLE_MSGBOX, "Brisanje objekta", "Jeste li sigurni da zelite izbrisati objekat igracu\n%s\nObjekt: %d u slotu: %d?", "Da", "Ne", name, modelid, index);
+				va_ShowPlayerDialog(playerid, 3556, DIALOG_STYLE_MSGBOX, "Brisanje objekta", "Jeste li sigurni da zelite izbrisati objekat igracu\n%s\nObjekt: %d u slotu: %d?", "Yes", "No", name, modelid, index);
 			}
 			else
 			{

@@ -626,11 +626,11 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 			}
 			else {
 				new id = strval(inputtext);
-				if(strval(inputtext) < 1 || strval(inputtext) >  20) return ShowPlayerDialog(playerid,DIALOG_AFACTIONC, DIALOG_STYLE_INPUT, "Unos ID-a", "NEDOZVOLJEN ID! \nUnesi ID na kojem ce organizacija da bude.\nDozvoljeni IDovi: 1-20", "Dalje", "Odustani");
-				if(!IsFreeSlot(id)) return ShowPlayerDialog(playerid,DIALOG_AFACTIONC, DIALOG_STYLE_INPUT, "Unos ID-a", "NEDOZVOLJEN ID - Vec zauzet! \nUnesi ID na kojem ce organizacija da bude.\nDozvoljeni IDovi: 1-20", "Dalje", "Odustani");
+				if(strval(inputtext) < 1 || strval(inputtext) >  20) return ShowPlayerDialog(playerid,DIALOG_AFACTIONC, DIALOG_STYLE_INPUT, "Unos ID-a", "NEDOZVOLJEN ID! \nUnesi ID na kojem ce organizacija da bude.\nDozvoljeni IDovi: 1-20", "Next", "Abort");
+				if(!IsFreeSlot(id)) return ShowPlayerDialog(playerid,DIALOG_AFACTIONC, DIALOG_STYLE_INPUT, "Unos ID-a", "NEDOZVOLJEN ID - Vec zauzet! \nUnesi ID na kojem ce organizacija da bude.\nDozvoljeni IDovi: 1-20", "Next", "Abort");
 				
 				creatingInfoId[playerid] = strval(inputtext);
-				ShowPlayerDialog(playerid,DIALOG_AFACTIONN, DIALOG_STYLE_INPUT, "Unos imena organizacije", "Unesi Zeljeno ime za organizaciju (promjenjivo)", "Dalje", "Odustani");
+				ShowPlayerDialog(playerid,DIALOG_AFACTIONN, DIALOG_STYLE_INPUT, "Unos imena organizacije", "Unesi Zeljeno ime za organizaciju (promjenjivo)", "Next", "Abort");
 				va_SendClientMessage(playerid,COLOR_RED, "[ ! ] Odabrao si ID %d!",strval(inputtext));
 			}
 			return 1;
@@ -699,15 +699,15 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 					return 1;
 				}
 				case 1: // deposit
-					ShowPlayerDialog(playerid, DIALOG_FACTION_DEPOSIT, DIALOG_STYLE_INPUT, "Faction Bank", "Molimo Vas unesite iznos koji zelite staviti u Faction Bank", "Unesi", "Izlaz");
+					ShowPlayerDialog(playerid, DIALOG_FACTION_DEPOSIT, DIALOG_STYLE_INPUT, "Faction Bank", "Molimo Vas unesite iznos koji zelite staviti u Faction Bank", "Input", "Exit");
 				case 2: // withdraw
-					ShowPlayerDialog(playerid, DIALOG_FACTION_WITHDRAW, DIALOG_STYLE_INPUT, "Faction Bank", "Molimo Vas unesite iznos koji zelite podici iz Faction Banka", "Unesi", "Izlaz");
+					ShowPlayerDialog(playerid, DIALOG_FACTION_WITHDRAW, DIALOG_STYLE_INPUT, "Faction Bank", "Molimo Vas unesite iznos koji zelite podici iz Faction Banka", "Input", "Exit");
 			}
 		}
 		case DIALOG_FACTION_DEPOSIT:
 		{
 			if(!response)
-				ShowPlayerDialog(playerid, DIALOG_FACTION_PICK, DIALOG_STYLE_LIST, "Faction Bank", "Info\nStavi novce u Faction Bank\nPodigni novce iz Faction Banka", "Odaberi", "Izlaz");
+				ShowPlayerDialog(playerid, DIALOG_FACTION_PICK, DIALOG_STYLE_LIST, "Faction Bank", "Info\nStavi novce u Faction Bank\nPodigni novce iz Faction Banka", "Choose", "Exit");
 			new money = strval(inputtext);
 			if(money < 1) return SendClientMessage(playerid,COLOR_RED, "Ne mozete staviti/povuci manje od 1$ iz faction banka!");
 			if(money > AC_GetPlayerMoney(playerid)) return SendClientMessage(playerid,COLOR_RED, "Nemate toliko novaca u ruci da bi ih mogli staviti u Faction Bank!");
@@ -716,14 +716,15 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 			
 			va_SendClientMessage(playerid, COLOR_RED, "[ ! ] Uspjesno ste stavili %d$ na %s Faction Bank.", money, FactionInfo[fid][fName]);
 			
-			// Log
+			#if defined MODULE_LOGS
 			Log_Write("logfiles/faction_bank.txt", "(%s) Leader %s[%s](SQLID:%d) je napravio depozit od %d$ na Faction Bank.", 
-					ReturnDate(), 
-					GetName(playerid), 
-					FactionInfo[fid][fName],
-					PlayerInfo[playerid][pSQLID], 
-					money
-						);
+				ReturnDate(), 
+				GetName(playerid), 
+				FactionInfo[fid][fName],
+				PlayerInfo[playerid][pSQLID], 
+				money
+			);
+			#endif
 		}
 		case DIALOG_FACTION_WITHDRAW:
 		{
@@ -733,14 +734,15 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 			OrgToPlayerMoney( playerid, FactionInfo[fid][fType], money ); // Podizanje novca iz org
 			va_SendClientMessage(playerid, COLOR_RED, "[ ! ] Uspjesno ste podigli %d$ sa %s Faction Banka.", money, FactionInfo[fid][fName]);
 			
-			// Log
+			#if defined MODULE_LOGS
 			Log_Write("logfiles/faction_bank.txt", "(%s) Leader %s[%s](SQLID:%d) je podigao %d$ s Faction Banka.", 
-					ReturnDate(), 
-					GetName(playerid), 
-					FactionInfo[fid][fName],
-					PlayerInfo[playerid][pSQLID], 
-					money
-				);
+				ReturnDate(), 
+				GetName(playerid), 
+				FactionInfo[fid][fName],
+				PlayerInfo[playerid][pSQLID], 
+				money
+			);
+			#endif
 		}
 	}
 	return 0;
@@ -769,7 +771,7 @@ CMD:afaction(playerid,params[])
     if(strcmp(option,"create",true) == 0)
     {
 		if(creatingFaction == 1) return SendClientMessage(playerid,COLOR_RED, "Vec netko pravi organizaciju!");
-  		ShowPlayerDialog(playerid,DIALOG_AFACTIONC, DIALOG_STYLE_INPUT, "Unos ID-a", "Unesi ID na kojem ce organizacija da bude.\nDozvoljeni IDovi: 1-20", "Dalje", "Odustani");
+  		ShowPlayerDialog(playerid,DIALOG_AFACTIONC, DIALOG_STYLE_INPUT, "Unos ID-a", "Unesi ID na kojem ce organizacija da bude.\nDozvoljeni IDovi: 1-20", "Next", "Abort");
 		creatingFaction = 1;
 	}
     if(strcmp(option,"delete",true) == 0)
@@ -777,7 +779,7 @@ CMD:afaction(playerid,params[])
 		new fid;
 		if (sscanf(params, "s[16]i",option,fid)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /afaction delete [ID]");
 		if(IsFreeSlot(fid)) return SendClientMessage(playerid,COLOR_RED, "Na tom slotu nije kreirana fakcija!");
-		va_ShowPlayerDialog(playerid, DIALOG_FDELETE, DIALOG_STYLE_MSGBOX,"Obrisi fakciju", "Jesi li siguran da ZeliS obrisati organizaciju iz slota ID "COL_WHITE"%d (%s)"COL_DEFAULT"?", "Da", "Ne", fid, FactionInfo[fid][fName]);
+		va_ShowPlayerDialog(playerid, DIALOG_FDELETE, DIALOG_STYLE_MSGBOX,"Obrisi fakciju", "Jesi li siguran da zelis obrisati organizaciju iz slota ID "COL_WHITE"%d (%s)"COL_DEFAULT"?", "Yes", "No", fid, FactionInfo[fid][fName]);
 		deletingFaction[playerid] = fid;
 	}
     if(strcmp(option,"checkonline",true) == 0)
@@ -817,7 +819,7 @@ CMD:afaction(playerid,params[])
 			if(FactionInfo[i][fUsed] != 0) format(otext,sizeof(otext),""COL_DEFAULT"ID: "COL_WHITE"%d"COL_DEFAULT"Ime: "COL_WHITE"%s"COL_DEFAULT"-- Tip: %s",FactionInfo[i][fID],FactionInfo[i][fName],tip);
 			else format(otext,sizeof(otext),"ID: %d Nije iskoristeno",i);
 			format(string,sizeof(string),"%s%s\n",string,otext);
-			ShowPlayerDialog(playerid, DIALOG_FLIST, DIALOG_STYLE_MSGBOX,"Fakcije",string, "Zatvori", "");
+			ShowPlayerDialog(playerid, DIALOG_FLIST, DIALOG_STYLE_MSGBOX,"Fakcije",string, "Close", "");
 			count++;
 		}
         if( !count ) SendClientMessage(playerid,COLOR_RED, "Nema kreiranih fakcija!");
@@ -1017,7 +1019,7 @@ CMD:afaction(playerid,params[])
 		rankname[12],
 		rankname[13],
 		rankname[14]);
-        ShowPlayerDialog(playerid, DIALOG_RLIST, DIALOG_STYLE_MSGBOX,"Rankovi",string, "Zatvori", "");
+        ShowPlayerDialog(playerid, DIALOG_RLIST, DIALOG_STYLE_MSGBOX,"Rankovi",string, "Close", "");
     }
 	return 1;
 }
@@ -1381,7 +1383,7 @@ CMD:faction(playerid,params[])
 		if( !PlayerInfo[playerid][pLeader] ) return SendClientMessage(playerid,COLOR_RED, "Da bi koristili ovu komandu morate biti lider!");
 		if(FactionInfo[fid][fType] != FACTION_TYPE_LAW && FactionInfo[fid][fType] != FACTION_TYPE_LAW2 && FactionInfo[fid][fType] != FACTION_TYPE_FD && FactionInfo[fid][fType] != FACTION_TYPE_NEWS) 	
 			return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Trebate biti Leader legalne fakcije da bi mogli upravljati faction bankom!");
-		ShowPlayerDialog(playerid, DIALOG_FACTION_PICK, DIALOG_STYLE_LIST, "Faction Bank", "Info\nStavi novce u Faction Bank\nPodigni novce iz Faction Banka", "Odaberi", "Izlaz");	
+		ShowPlayerDialog(playerid, DIALOG_FACTION_PICK, DIALOG_STYLE_LIST, "Faction Bank", "Info\nStavi novce u Faction Bank\nPodigni novce iz Faction Banka", "Choose", "Exit");	
 	}
 	else if(strcmp(option,"skin",true) == 0)
 	{
@@ -1473,11 +1475,13 @@ CMD:quitfaction(playerid, params[])
 		);
 		mysql_tquery(g_SQL, tmpQuery, "");
 		
+		#if defined MODULE_LOGS
 		Log_Write("logfiles/faction_quit.txt", "(%s) Igrac %s je izasao iz %s.",
 			ReturnDate(),
 			GetName(playerid, false),
 			FactionInfo[PlayerInfo[playerid][pMember]][fName]
 		);
+		#endif
 		
 		PlayerInfo[playerid][pTeam] 		= 3;
    		PlayerInfo[playerid][pLeader] 		= 0;

@@ -159,7 +159,7 @@ hook OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
 		{
 			if ( Bit1_Get( gr_IsPlayerMining, playerid )) return GameTextForPlayer(playerid, "~r~Vec ste podigli kramp i poceli s poslom", 3000, 3);
 			if ( MiningInfo[ playerid ][ MiningRepetition ] == 4 ) return GameTextForPlayer(playerid, "~g~Vec ste iskopali zlato. Koristite /loadgold", 3000, 3); 
-			//ShowPlayerDialog( playerid, DIALOG_MINER, DIALOG_STYLE_LIST, "Nacin rada", "Pritiskanje random TD-a\nRapid space press", "Kreni", "Odustani");
+			//ShowPlayerDialog( playerid, DIALOG_MINER, DIALOG_STYLE_LIST, "Nacin rada", "Pritiskanje random TD-a\nRapid space press", "Kreni", "Abort");
 			ApplyAnimationEx( playerid, "BASEBALL", "Bat_1", 4.1, 0, 0, 0, 0, 0, 1, 0 );
 			
 			if( IsValidDynamicObject(MiningInfo[ playerid ][ PickUpArrow ]) )

@@ -118,7 +118,7 @@ hook OnPlayerStateChange(playerid, newstate, oldstate)
 					RemovePlayerFromVehicle(playerid);
 				}
 				else {
-					ShowPlayerDialog( playerid, DIALOG_DRIVING_QUEST1, DIALOG_STYLE_LIST, "Sto trebate uciniti prije zaobilazenja vozila?", "Provjeriti retrovizore\nDati zmigavac i kreniti zaobilaziri\nSve gore navedeno", "Odaberi", "Odustani");
+					ShowPlayerDialog( playerid, DIALOG_DRIVING_QUEST1, DIALOG_STYLE_LIST, "Sto trebate uciniti prije zaobilazenja vozila?", "Provjeriti retrovizore\nDati zmigavac i kreniti zaobilaziri\nSve gore navedeno", "Choose", "Abort");
 					Bit1_Set( gr_DrivingStarted, playerid, true );
 				}
 			}
@@ -252,62 +252,62 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 			{	
 				case 0:	{ // Gleda
 					GameTextForPlayer( playerid, "~r~Netocan odgovor!", 1800, 1 );
-					ShowPlayerDialog( playerid, DIALOG_DRIVING_QUEST1, DIALOG_STYLE_LIST, "Sto trebate uciniti prije zaobilazenja vozila?", "Provjeriti retrovizore\nDati zmigavac i kreniti zaobilaziri\nSve gore navedeno", "Odaberi", "Odustani");
+					ShowPlayerDialog( playerid, DIALOG_DRIVING_QUEST1, DIALOG_STYLE_LIST, "Sto trebate uciniti prije zaobilazenja vozila?", "Provjeriti retrovizore\nDati zmigavac i kreniti zaobilaziri\nSve gore navedeno", "Choose", "Abort");
 				}
 				case 1: { // Zmigavac	
 					GameTextForPlayer( playerid, "~r~Netocan odgovor!", 1800, 1 );
-					ShowPlayerDialog( playerid, DIALOG_DRIVING_QUEST1, DIALOG_STYLE_LIST, "Sto trebate uciniti prije zaobilazenja vozila?", "Provjeriti retrovizore\nDati zmigavac i kreniti zaobilaziri\nSve gore navedeno", "Odaberi", "Odustani");
+					ShowPlayerDialog( playerid, DIALOG_DRIVING_QUEST1, DIALOG_STYLE_LIST, "Sto trebate uciniti prije zaobilazenja vozila?", "Provjeriti retrovizore\nDati zmigavac i kreniti zaobilaziri\nSve gore navedeno", "Choose", "Abort");
 				}
 				case 2: { // Sve
 					GameTextForPlayer( playerid, "~g~Tocan odgovor!", 1800, 1 );
-					ShowPlayerDialog(playerid, DIALOG_DRIVING_QUEST2, DIALOG_STYLE_LIST, "Kolika je dozvoljena brzina u naseljenom podrucju?", "100kmh\n50kmh\n80kmh", "Odaberi", "Odustani");
+					ShowPlayerDialog(playerid, DIALOG_DRIVING_QUEST2, DIALOG_STYLE_LIST, "Kolika je dozvoljena brzina u naseljenom podrucju?", "100kmh\n50kmh\n80kmh", "Choose", "Abort");
 				}
 			}
 			return 1;
 		}
 		case DIALOG_DRIVING_QUEST2: {
-			if( !response ) return ShowPlayerDialog( playerid, DIALOG_DRIVING_QUEST1, DIALOG_STYLE_LIST, "Sto trebate uciniti prije zaobilazenja vozila?", "Provjeriti retrovizore\nDati zmigavac i kreniti zaobilaziri\nSve gore navedeno", "Odaberi", "Odustani");
+			if( !response ) return ShowPlayerDialog( playerid, DIALOG_DRIVING_QUEST1, DIALOG_STYLE_LIST, "Sto trebate uciniti prije zaobilazenja vozila?", "Provjeriti retrovizore\nDati zmigavac i kreniti zaobilaziri\nSve gore navedeno", "Choose", "Abort");
 			
 			switch( listitem )
 			{
 				case 0: { // 100kmh
 					GameTextForPlayer( playerid, "~r~Netocan odgovor!", 1800, 1 );
-					ShowPlayerDialog(playerid, DIALOG_DRIVING_QUEST2, DIALOG_STYLE_LIST, "Kolika je dozvoljena brzina u naseljenom podrucju?", "100kmh\n50kmh\n80kmh", "Odaberi", "Odustani");
+					ShowPlayerDialog(playerid, DIALOG_DRIVING_QUEST2, DIALOG_STYLE_LIST, "Kolika je dozvoljena brzina u naseljenom podrucju?", "100kmh\n50kmh\n80kmh", "Choose", "Abort");
 				}
 				case 1: { // 50kmh
 					GameTextForPlayer( playerid, "~g~Tocan odgovor!", 1800, 1 );
-					ShowPlayerDialog(playerid, DIALOG_DRIVING_QUEST3, DIALOG_STYLE_LIST, "Ispred vas je parkiran skolski bus s upaljenim zmigavcima", "Zaobici ga s punim gasom\nStati\nZaobici ga s malom brzinom i paziti na djecu", "Odaberi", "Odustani");
+					ShowPlayerDialog(playerid, DIALOG_DRIVING_QUEST3, DIALOG_STYLE_LIST, "Ispred vas je parkiran skolski bus s upaljenim zmigavcima", "Zaobici ga s punim gasom\nStati\nZaobici ga s malom brzinom i paziti na djecu", "Choose", "Abort");
 				}
 				case 2: { // 80kmh
 					GameTextForPlayer( playerid, "~r~Netocan odgovor!", 1800, 1 );
-					ShowPlayerDialog(playerid, DIALOG_DRIVING_QUEST2, DIALOG_STYLE_LIST, "Kolika je dozvoljena brzina u naseljenom podrucju?", "100kmh\n50kmh\n80kmh", "Odaberi", "Odustani");
+					ShowPlayerDialog(playerid, DIALOG_DRIVING_QUEST2, DIALOG_STYLE_LIST, "Kolika je dozvoljena brzina u naseljenom podrucju?", "100kmh\n50kmh\n80kmh", "Choose", "Abort");
 				}
 			}
 			return 1;
 		}
 		case DIALOG_DRIVING_QUEST3:
 		{
-			if( !response ) return ShowPlayerDialog(playerid, DIALOG_DRIVING_QUEST2, DIALOG_STYLE_LIST, "Kolika je dozvoljena brzina u naseljenom podrucju?", "100kmh\n50kmh\n80kmh", "Odaberi", "Odustani");
+			if( !response ) return ShowPlayerDialog(playerid, DIALOG_DRIVING_QUEST2, DIALOG_STYLE_LIST, "Kolika je dozvoljena brzina u naseljenom podrucju?", "100kmh\n50kmh\n80kmh", "Choose", "Abort");
 			
 			switch( listitem )
 			{
 				case 0: { // Puni gas
 					GameTextForPlayer( playerid, "~r~Netocan odgovor!", 1800, 1 );
-					ShowPlayerDialog(playerid, DIALOG_DRIVING_QUEST3, DIALOG_STYLE_LIST, "Ispred vas je parkiran skolski bus s upaljenim zmigavcima", "Zaobici ga s punim gasom\nStati\nZaobici ga s malom brzinom i paziti na djecu", "Odaberi", "Odustani");						
+					ShowPlayerDialog(playerid, DIALOG_DRIVING_QUEST3, DIALOG_STYLE_LIST, "Ispred vas je parkiran skolski bus s upaljenim zmigavcima", "Zaobici ga s punim gasom\nStati\nZaobici ga s malom brzinom i paziti na djecu", "Choose", "Abort");						
 				}
 				case 1: { // Stati
 					GameTextForPlayer( playerid, "~r~Netocan odgovor!", 1800, 1 );
-					ShowPlayerDialog(playerid, DIALOG_DRIVING_QUEST3, DIALOG_STYLE_LIST, "Ispred vas je parkiran skolski bus s upaljenim zmigavcima", "Zaobici ga s punim gasom\nStati\nZaobici ga s malom brzinom i paziti na djecu", "Odaberi", "Odustani");						
+					ShowPlayerDialog(playerid, DIALOG_DRIVING_QUEST3, DIALOG_STYLE_LIST, "Ispred vas je parkiran skolski bus s upaljenim zmigavcima", "Zaobici ga s punim gasom\nStati\nZaobici ga s malom brzinom i paziti na djecu", "Choose", "Abort");						
 				}
 				case 2: { // Zaobici s oprezom
 					GameTextForPlayer( playerid, "~g~Tocan odgovor!", 1800, 1 );
-					ShowPlayerDialog(playerid, DIALOG_DRIVING_QUEST4, DIALOG_STYLE_LIST, "Kolika je dopustena brzina na autocesti?", "130kmh\n200kmh\nMa koliko ja hocu", "Odaberi", "Odustani");
+					ShowPlayerDialog(playerid, DIALOG_DRIVING_QUEST4, DIALOG_STYLE_LIST, "Kolika je dopustena brzina na autocesti?", "130kmh\n200kmh\nMa koliko ja hocu", "Choose", "Abort");
 				}
 			}
 			return 1;
 		}
 		case DIALOG_DRIVING_QUEST4: {
-			if( !response ) return ShowPlayerDialog(playerid, DIALOG_DRIVING_QUEST3, DIALOG_STYLE_LIST, "Ispred vas je parkiran skolski bus s upaljenim zmigavcima", "Zaobici ga s punim gasom\nStati\nZaobici ga s malom brzinom i paziti na djecu", "Odaberi", "Odustani");	
+			if( !response ) return ShowPlayerDialog(playerid, DIALOG_DRIVING_QUEST3, DIALOG_STYLE_LIST, "Ispred vas je parkiran skolski bus s upaljenim zmigavcima", "Zaobici ga s punim gasom\nStati\nZaobici ga s malom brzinom i paziti na djecu", "Choose", "Abort");	
 			
 			switch( listitem )
 			{
@@ -328,11 +328,11 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 				}
 				case 1: { // 200kmh
 					GameTextForPlayer( playerid, "~r~Netocan odgovor!", 1800, 1 );
-					ShowPlayerDialog(playerid, DIALOG_DRIVING_QUEST4, DIALOG_STYLE_LIST, "Kolika je dopustena brzina na autocesti?", "130kmh\n200kmh\nMa koliko ja hocu", "Odaberi", "Odustani");
+					ShowPlayerDialog(playerid, DIALOG_DRIVING_QUEST4, DIALOG_STYLE_LIST, "Kolika je dopustena brzina na autocesti?", "130kmh\n200kmh\nMa koliko ja hocu", "Choose", "Abort");
 				}
 				case 2: { // Koliko hocu
 					GameTextForPlayer( playerid, "~r~Netocan odgovor!", 1800, 1 );
-					ShowPlayerDialog(playerid, DIALOG_DRIVING_QUEST4, DIALOG_STYLE_LIST, "Kolika je dopustena brzina na autocesti?", "130kmh\n200kmh\nMa koliko ja hocu", "Odaberi", "Odustani");
+					ShowPlayerDialog(playerid, DIALOG_DRIVING_QUEST4, DIALOG_STYLE_LIST, "Kolika je dopustena brzina na autocesti?", "130kmh\n200kmh\nMa koliko ja hocu", "Choose", "Abort");
 				}
 			}
 			return 1;

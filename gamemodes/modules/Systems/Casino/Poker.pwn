@@ -2399,9 +2399,9 @@ ShowCasinoGamesMenu(playerid, dialogid)
 				if(!GetPokerTableLimit(playerid))
 					return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste u kuci/kasinu!");
 
-				return ShowPlayerDialog(playerid, DIALOG_CGAMESSETUPPOKER, DIALOG_STYLE_LIST, "{FFFFFF}Poker - (Setup Poker Minigame)", "{FFFFFF}Postavljanje stola...", "Odabir", "Natrag");
+				return ShowPlayerDialog(playerid, DIALOG_CGAMESSETUPPOKER, DIALOG_STYLE_LIST, "{FFFFFF}Poker - (Setup Poker Minigame)", "{FFFFFF}Postavljanje stola...", "Pick", "Back");
 			}
-			else return ShowPlayerDialog(playerid, DIALOG_CGAMESSETUPPOKER, DIALOG_STYLE_LIST, "{FFFFFF}Poker - (Setup Poker Minigame)", "{FFFFFF}Promjena polozaja stola...\nBrisanje stola...", "Odabir", "Natrag");
+			else return ShowPlayerDialog(playerid, DIALOG_CGAMESSETUPPOKER, DIALOG_STYLE_LIST, "{FFFFFF}Poker - (Setup Poker Minigame)", "{FFFFFF}Promjena polozaja stola...\nBrisanje stola...", "Pick", "Back");
 		}
 		case DIALOG_CGAMESSETUPPGAME:
 		{
@@ -2435,7 +2435,7 @@ ShowCasinoGamesMenu(playerid, dialogid)
 					PokerTable[tableid][pkrSetDelay]
 				);
 			}
-			return ShowPlayerDialog(playerid, DIALOG_CGAMESSETUPPGAME, DIALOG_STYLE_LIST, "{FFFFFF}Poker - (Postavljanje igre)", szString, "Odabir", "Izlaz");
+			return ShowPlayerDialog(playerid, DIALOG_CGAMESSETUPPGAME, DIALOG_STYLE_LIST, "{FFFFFF}Poker - (Postavljanje igre)", szString, "Pick", "Exit");
 		}
 		case DIALOG_CGAMESSETUPPGAME2:
 		{
@@ -2443,7 +2443,7 @@ ShowCasinoGamesMenu(playerid, dialogid)
 			if(tableid == -1)
 				return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste blizu poker stola!");
 
-			return ShowPlayerDialog(playerid, DIALOG_CGAMESSETUPPGAME2, DIALOG_STYLE_INPUT, "{FFFFFF}Poker - (Buy-In Max)", "{FFFFFF}Molimo Vas postavite Buy-In Max iznos:", "Promjeni", "Natrag");
+			return ShowPlayerDialog(playerid, DIALOG_CGAMESSETUPPGAME2, DIALOG_STYLE_INPUT, "{FFFFFF}Poker - (Buy-In Max)", "{FFFFFF}Molimo Vas postavite Buy-In Max iznos:", "Change", "Back");
 		}
 		case DIALOG_CGAMESSETUPPGAME3:
 		{
@@ -2451,7 +2451,7 @@ ShowCasinoGamesMenu(playerid, dialogid)
 			if(tableid == -1)
 				return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste blizu poker stola!");
 
-			return ShowPlayerDialog(playerid, DIALOG_CGAMESSETUPPGAME3, DIALOG_STYLE_INPUT, "{FFFFFF}Poker - (Buy-In Min)", "{FFFFFF}Molimo Vas postavite Buy-In Min iznos:", "Promjeni", "Natrag");
+			return ShowPlayerDialog(playerid, DIALOG_CGAMESSETUPPGAME3, DIALOG_STYLE_INPUT, "{FFFFFF}Poker - (Buy-In Min)", "{FFFFFF}Molimo Vas postavite Buy-In Min iznos:", "Change", "Back");
 		}
 		case DIALOG_CGAMESSETUPPGAME4:
 		{
@@ -2459,7 +2459,7 @@ ShowCasinoGamesMenu(playerid, dialogid)
 			if(tableid == -1)
 				return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste blizu poker stola!");
 
-			return ShowPlayerDialog(playerid, DIALOG_CGAMESSETUPPGAME4, DIALOG_STYLE_INPUT, "{FFFFFF}Poker - (Blindovi)", "{FFFFFF}Molimo Vas unesite Blindove:\n\nNote: Mali blindovi su automatski polovica velikog blinda.", "Promjeni", "Natrag");
+			return ShowPlayerDialog(playerid, DIALOG_CGAMESSETUPPGAME4, DIALOG_STYLE_INPUT, "{FFFFFF}Poker - (Blindovi)", "{FFFFFF}Molimo Vas unesite Blindove:\n\nNote: Mali blindovi su automatski polovica velikog blinda.", "Change", "Back");
 		}
 		case DIALOG_CGAMESSETUPPGAME5:
 		{
@@ -2467,7 +2467,7 @@ ShowCasinoGamesMenu(playerid, dialogid)
 			if(tableid == -1)
 				return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste blizu poker stola!");
 
-			return ShowPlayerDialog(playerid, DIALOG_CGAMESSETUPPGAME5, DIALOG_STYLE_INPUT, "{FFFFFF}Poker - (Limit igraca)", "{FFFFFF}Molimo Vas unesite limit broja igraca (2-6):", "Promjeni", "Natrag");
+			return ShowPlayerDialog(playerid, DIALOG_CGAMESSETUPPGAME5, DIALOG_STYLE_INPUT, "{FFFFFF}Poker - (Limit igraca)", "{FFFFFF}Molimo Vas unesite limit broja igraca (2-6):", "Change", "Back");
 		}
 		case DIALOG_CGAMESSETUPPGAME6:
 		{
@@ -2475,7 +2475,7 @@ ShowCasinoGamesMenu(playerid, dialogid)
 			if(tableid == -1)
 				return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste blizu poker stola!");
 
-			return ShowPlayerDialog(playerid, DIALOG_CGAMESSETUPPGAME6, DIALOG_STYLE_INPUT, "{FFFFFF}Poker - (Password)", "{FFFFFF}Molimo Vas unesite Password:\n[!]: Ostavite praznim ukoliko ne zelite lozinku za pridruzivanje!", "Promjeni", "Natrag");
+			return ShowPlayerDialog(playerid, DIALOG_CGAMESSETUPPGAME6, DIALOG_STYLE_INPUT, "{FFFFFF}Poker - (Password)", "{FFFFFF}Molimo Vas unesite Password:\n[!]: Ostavite praznim ukoliko ne zelite lozinku za pridruzivanje!", "Change", "Back");
 		}
 		case DIALOG_CGAMESSETUPPGAME7:
 		{
@@ -2483,7 +2483,7 @@ ShowCasinoGamesMenu(playerid, dialogid)
 			if(tableid == -1)
 				return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste blizu poker stola!");
 
-			return ShowPlayerDialog(playerid, DIALOG_CGAMESSETUPPGAME7, DIALOG_STYLE_INPUT, "{FFFFFF}Poker - (Round Delay)", "{FFFFFF}Molimo Vas unesite duljinu pauze izmedju dvije runde (15-120sec):", "Promjeni", "Natrag");
+			return ShowPlayerDialog(playerid, DIALOG_CGAMESSETUPPGAME7, DIALOG_STYLE_INPUT, "{FFFFFF}Poker - (Round Delay)", "{FFFFFF}Molimo Vas unesite duljinu pauze izmedju dvije runde (15-120sec):", "Change", "Back");
 		}
 	}
 	return 1;

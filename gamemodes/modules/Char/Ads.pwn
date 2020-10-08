@@ -270,12 +270,12 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 			{
 				case 0:  {
 				    if(PlayerGotAd(playerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Vec imate postavljen oglas.");
-					ShowPlayerDialog(playerid, DIALOG_ADS_CREATE_STYLE, DIALOG_STYLE_LIST, "LS OGLASNIK - Stil oglasa", "Prodaja\nKupovina\nReklama", "Odaberi", "Odustani");
+					ShowPlayerDialog(playerid, DIALOG_ADS_CREATE_STYLE, DIALOG_STYLE_LIST, "LS OGLASNIK - Stil oglasa", "Prodaja\nKupovina\nReklama", "Choose", "Abort");
 				}
 				case 1: 
 				{
 					LastAdsListIndex[ playerid ] = 0;
-					ShowPlayerDialog(playerid, DIALOG_ADS_WHOLE, DIALOG_STYLE_TABLIST_HEADERS, "LS OGLASNIK - Oglasi", ShowPlayerAdsList(), "Odaberi", "Odustani");
+					ShowPlayerDialog(playerid, DIALOG_ADS_WHOLE, DIALOG_STYLE_TABLIST_HEADERS, "LS OGLASNIK - Oglasi", ShowPlayerAdsList(), "Choose", "Abort");
 					
 					new
 						string[64];
@@ -286,22 +286,22 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 			return 1;
 		}
 		case DIALOG_ADS_CREATE_STYLE: {
-			if(!response) return ShowPlayerDialog(playerid, DIALOG_ADS_MENU, DIALOG_STYLE_LIST, "LS OGLASNIK", "Predaj oglas\nPregledaj oglase", "Odaberi", "Zatvori");
+			if(!response) return ShowPlayerDialog(playerid, DIALOG_ADS_MENU, DIALOG_STYLE_LIST, "LS OGLASNIK", "Predaj oglas\nPregledaj oglase", "Choose", "Close");
 			if( listitem == AD_STYLE_CMRC ) {
-				ShowPlayerDialog(playerid, DIALOG_ADS_CREATE_CMRC, DIALOG_STYLE_INPUT, "LS OGLASNIK - Tekst reklame", "Unesite tekst reklame:", "Predaj", "Odustani");
+				ShowPlayerDialog(playerid, DIALOG_ADS_CREATE_CMRC, DIALOG_STYLE_INPUT, "LS OGLASNIK - Tekst reklame", "Unesite tekst reklame:", "Commit", "Abort");
 			}
 			else if( listitem == AD_STYLE_BUY){
-			    ShowPlayerDialog(playerid, DIALOG_ADS_CREATE_BUY, DIALOG_STYLE_INPUT, "LS OGLASNIK - Tekst oglasa", "Unesite tekst oglasa za kupovinu:", "Predaj", "Odustani");
-				//ShowPlayerDialog(playerid, DIALOG_ADS_CREATE_BUY, DIALOG_STYLE_LIST, "LS OGLASNIK - Koliko cete puta prikazivati", "1\n2\n3\n4\n5", "Odaberi", "Odustani");
+			    ShowPlayerDialog(playerid, DIALOG_ADS_CREATE_BUY, DIALOG_STYLE_INPUT, "LS OGLASNIK - Tekst oglasa", "Unesite tekst oglasa za kupovinu:", "Commit", "Abort");
+				//ShowPlayerDialog(playerid, DIALOG_ADS_CREATE_BUY, DIALOG_STYLE_LIST, "LS OGLASNIK - Koliko cete puta prikazivati", "1\n2\n3\n4\n5", "Choose", "Abort");
 			}
 			else {
-				ShowPlayerDialog(playerid, DIALOG_ADS_CREATE_SELL, DIALOG_STYLE_INPUT, "LS OGLASNIK - Tekst oglasa", "Unesite tekst oglasa za prodaju:", "Predaj", "Odustani");
+				ShowPlayerDialog(playerid, DIALOG_ADS_CREATE_SELL, DIALOG_STYLE_INPUT, "LS OGLASNIK - Tekst oglasa", "Unesite tekst oglasa za prodaju:", "Commit", "Abort");
 			}
 			PlayerAdsInfo[playerid][padStyle] = listitem;
 			return 1;
 		}
 		case DIALOG_ADS_CREATE_BUY:{
-			if(!response) return ShowPlayerDialog(playerid, DIALOG_ADS_CREATE_STYLE, DIALOG_STYLE_LIST, "LS OGLASNIK - Stil oglasa", "Prodaja\nKupovina\nReklama", "Odaberi", "Odustani");
+			if(!response) return ShowPlayerDialog(playerid, DIALOG_ADS_CREATE_STYLE, DIALOG_STYLE_LIST, "LS OGLASNIK - Stil oglasa", "Prodaja\nKupovina\nReklama", "Choose", "Abort");
 			if(10 <= strlen(inputtext) <= (MAX_AD_TEXT - 1)) {
 				if(CheckStringForURL(inputtext) || CheckStringForIP(inputtext)) {
 					SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nedozvoljene rijeci/znakovi u oglasu!");
@@ -309,18 +309,18 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 						tmpString[ 128 ];
 					format(tmpString, sizeof(tmpString), "AdmWarn: Igrac %s ID:[%d] je poslao ilegalan oglas. Sadrzaj: %s", GetName(playerid, false), playerid, inputtext);
 					ABroadCast(COLOR_RED, tmpString, 1);
-					ShowPlayerDialog(playerid, DIALOG_ADS_CREATE_BUY, DIALOG_STYLE_INPUT, "LS OGLASNIK - Tekst oglasa", "Unesite tekst oglasa za kupovinu:", "Predaj", "Odustani");
+					ShowPlayerDialog(playerid, DIALOG_ADS_CREATE_BUY, DIALOG_STYLE_INPUT, "LS OGLASNIK - Tekst oglasa", "Unesite tekst oglasa za kupovinu:", "Commit", "Abort");
 					return 1;
 			 	}
  				format(PlayerAdsInfo[playerid][padText], MAX_AD_TEXT, inputtext);
-		 		ShowPlayerDialog(playerid, DIALOG_ADS_CREATE_TIMES, DIALOG_STYLE_LIST, "LS OGLASNIK - Koliko cete puta prikazivati", "1\n2\n3\n4\n5", "Odaberi", "Odustani");
+		 		ShowPlayerDialog(playerid, DIALOG_ADS_CREATE_TIMES, DIALOG_STYLE_LIST, "LS OGLASNIK - Koliko cete puta prikazivati", "1\n2\n3\n4\n5", "Choose", "Abort");
 			} else {
-				ShowPlayerDialog(playerid, DIALOG_ADS_CREATE_BUY, DIALOG_STYLE_INPUT, "LS OGLASNIK - Tekst oglasa", "Unesite tekst oglasa za kupovinu "COL_RED"(Min. 10, Max. 128 znak)"COL_WHITE":", "Predaj", "Odustani");
+				ShowPlayerDialog(playerid, DIALOG_ADS_CREATE_BUY, DIALOG_STYLE_INPUT, "LS OGLASNIK - Tekst oglasa", "Unesite tekst oglasa za kupovinu "COL_RED"(Min. 10, Max. 128 znak)"COL_WHITE":", "Commit", "Abort");
 				return 1;
 			}
 		}
 		case DIALOG_ADS_CREATE_SELL:{
-			if(!response) return ShowPlayerDialog(playerid, DIALOG_ADS_CREATE_STYLE, DIALOG_STYLE_LIST, "LS OGLASNIK - Stil oglasa", "Prodaja\nKupovina\nReklama", "Odaberi", "Odustani");
+			if(!response) return ShowPlayerDialog(playerid, DIALOG_ADS_CREATE_STYLE, DIALOG_STYLE_LIST, "LS OGLASNIK - Stil oglasa", "Prodaja\nKupovina\nReklama", "Choose", "Abort");
 			if(10 <= strlen(inputtext) <= (MAX_AD_TEXT - 1)) {
 				if(CheckStringForURL(inputtext) || CheckStringForIP(inputtext)) {
 					SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nedozvoljene rijeci/znakovi u oglasu!");
@@ -328,18 +328,18 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 						tmpString[ 128 ];
 					format(tmpString, sizeof(tmpString), "AdmWarn: Igrac %s ID:[%d] je poslao ilegalan oglas. Sadrzaj: %s", GetName(playerid, false), playerid, inputtext);
 					ABroadCast(COLOR_RED, tmpString, 1);
-					ShowPlayerDialog(playerid, DIALOG_ADS_CREATE_BUY, DIALOG_STYLE_INPUT, "LS OGLASNIK - Tekst oglasa", "Unesite tekst oglasa za prodaju:", "Predaj", "Odustani");
+					ShowPlayerDialog(playerid, DIALOG_ADS_CREATE_BUY, DIALOG_STYLE_INPUT, "LS OGLASNIK - Tekst oglasa", "Unesite tekst oglasa za prodaju:", "Commit", "Abort");
 					return 1;
 			 	}
  				format(PlayerAdsInfo[playerid][padText], MAX_AD_TEXT, inputtext);
-		 		ShowPlayerDialog(playerid, DIALOG_ADS_CREATE_TIMES, DIALOG_STYLE_LIST, "LS OGLASNIK - Koliko cete puta prikazivati", "1\n2\n3\n4\n5", "Odaberi", "Odustani");
+		 		ShowPlayerDialog(playerid, DIALOG_ADS_CREATE_TIMES, DIALOG_STYLE_LIST, "LS OGLASNIK - Koliko cete puta prikazivati", "1\n2\n3\n4\n5", "Choose", "Abort");
 			} else {
-				ShowPlayerDialog(playerid, DIALOG_ADS_CREATE_BUY, DIALOG_STYLE_INPUT, "LS OGLASNIK - Tekst oglasa", "Unesite tekst oglasa za prodaju "COL_RED"(Min. 10, Max. 128 znak)"COL_WHITE":", "Predaj", "Odustani");
+				ShowPlayerDialog(playerid, DIALOG_ADS_CREATE_BUY, DIALOG_STYLE_INPUT, "LS OGLASNIK - Tekst oglasa", "Unesite tekst oglasa za prodaju "COL_RED"(Min. 10, Max. 128 znak)"COL_WHITE":", "Commit", "Abort");
 				return 1;
 			}
 		}
 		case DIALOG_ADS_CREATE_CMRC: {
-			if(!response) return ShowPlayerDialog(playerid, DIALOG_ADS_CREATE_STYLE, DIALOG_STYLE_LIST, "LS OGLASNIK - Stil oglasa", "Prodaja\nKupovina\nReklama", "Odaberi", "Odustani");
+			if(!response) return ShowPlayerDialog(playerid, DIALOG_ADS_CREATE_STYLE, DIALOG_STYLE_LIST, "LS OGLASNIK - Stil oglasa", "Prodaja\nKupovina\nReklama", "Choose", "Abort");
 			if(10 <= strlen(inputtext) <= (MAX_AD_TEXT - 1)) {
 				if(CheckStringForURL(inputtext) || CheckStringForIP(inputtext)) {
 					SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nedozvoljene rijeci/znakovi u oglasu!");
@@ -348,48 +348,48 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 					format(tmpString, sizeof(tmpString), "AdmWarn: Igrac %s ID:[%d] je poslao ilegalan oglas. Sadrzaj: %s", GetName(playerid, false), playerid, inputtext);
 					ABroadCast(COLOR_RED, tmpString, 1);
 					
-					if(PlayerAdsInfo[playerid][padStyle] == AD_STYLE_CMRC) ShowPlayerDialog(playerid, DIALOG_ADS_CREATE_CMRC, DIALOG_STYLE_INPUT, "LS OGLASNIK - Tekst reklame", "Unesite tekst reklame "COL_RED"(Min. 10, Max. 128 znak)"COL_WHITE":", "Predaj", "Odustani");
-					else ShowPlayerDialog(playerid, DIALOG_ADS_CREATE_CMRC, DIALOG_STYLE_INPUT, "LS OGLASNIK - Tekst reklame", "Unesite dodatni tekst reklame (naziv predmeta ili adresu kuce/biznisa)"COL_RED"[Min. 10, Max. 128 znakova]"COL_WHITE":", "Predaj", "Odustani");
+					if(PlayerAdsInfo[playerid][padStyle] == AD_STYLE_CMRC) ShowPlayerDialog(playerid, DIALOG_ADS_CREATE_CMRC, DIALOG_STYLE_INPUT, "LS OGLASNIK - Tekst reklame", "Unesite tekst reklame "COL_RED"(Min. 10, Max. 128 znak)"COL_WHITE":", "Commit", "Abort");
+					else ShowPlayerDialog(playerid, DIALOG_ADS_CREATE_CMRC, DIALOG_STYLE_INPUT, "LS OGLASNIK - Tekst reklame", "Unesite dodatni tekst reklame (naziv predmeta ili adresu kuce/biznisa)"COL_RED"[Min. 10, Max. 128 znakova]"COL_WHITE":", "Commit", "Abort");
 					return 1;
 				}
 				
 				format(PlayerAdsInfo[playerid][padText], MAX_AD_TEXT, inputtext);
-		 		ShowPlayerDialog(playerid, DIALOG_ADS_CREATE_TIMES, DIALOG_STYLE_LIST, "LS OGLASNIK - Koliko cete puta prikazivati", "1\n2\n3\n4\n5", "Odaberi", "Odustani");
+		 		ShowPlayerDialog(playerid, DIALOG_ADS_CREATE_TIMES, DIALOG_STYLE_LIST, "LS OGLASNIK - Koliko cete puta prikazivati", "1\n2\n3\n4\n5", "Choose", "Abort");
 			} else {
-				if(PlayerAdsInfo[playerid][padStyle] == AD_STYLE_CMRC) ShowPlayerDialog(playerid, DIALOG_ADS_CREATE_CMRC, DIALOG_STYLE_INPUT, "LS OGLASNIK - Tekst reklame", "Unesite tekst reklame "COL_RED"(Min. 10, Max. 128 znak)"COL_WHITE":", "Predaj", "Odustani");
-				else ShowPlayerDialog(playerid, DIALOG_ADS_CREATE_CMRC, DIALOG_STYLE_INPUT, "LS OGLASNIK - Tekst reklame", "Unesite dodatni tekst reklame (naziv predmeta ili adresu kuce/biznisa)"COL_RED"[Min. 10, Max. 128 znakova]"COL_WHITE":", "Predaj", "Odustani");
+				if(PlayerAdsInfo[playerid][padStyle] == AD_STYLE_CMRC) ShowPlayerDialog(playerid, DIALOG_ADS_CREATE_CMRC, DIALOG_STYLE_INPUT, "LS OGLASNIK - Tekst reklame", "Unesite tekst reklame "COL_RED"(Min. 10, Max. 128 znak)"COL_WHITE":", "Commit", "Abort");
+				else ShowPlayerDialog(playerid, DIALOG_ADS_CREATE_CMRC, DIALOG_STYLE_INPUT, "LS OGLASNIK - Tekst reklame", "Unesite dodatni tekst reklame (naziv predmeta ili adresu kuce/biznisa)"COL_RED"[Min. 10, Max. 128 znakova]"COL_WHITE":", "Commit", "Abort");
 				return 1;
 			}
 			return 1;
 		}
 		case DIALOG_ADS_CREATE_TIMES: {
-			if(!response) return ShowPlayerDialog(playerid, DIALOG_ADS_CREATE_STYLE, DIALOG_STYLE_LIST, "LS OGLASNIK - Stil oglasa", "Prodaja\nKupovina\nReklama", "Odaberi", "Odustani");
+			if(!response) return ShowPlayerDialog(playerid, DIALOG_ADS_CREATE_STYLE, DIALOG_STYLE_LIST, "LS OGLASNIK - Stil oglasa", "Prodaja\nKupovina\nReklama", "Choose", "Abort");
    			PlayerAdsInfo[playerid][padTimes] = listitem + 1;
 			if(PlayerAdsInfo[playerid][padStyle] == AD_STYLE_BUY)
-				va_ShowPlayerDialog(playerid, DIALOG_ADS_FINISH, DIALOG_STYLE_MSGBOX, "LS OGLASNIK - Zavrsetak", ""COL_WHITE"Zelite li predati oglas?\n"COL_GREEN"%s\n"COL_WHITE"On ce se prikazivati "COL_ORANGE"%d "COL_WHITE"puta.", "Predaj", "Odustani", GetPlayerAdsInput(playerid), PlayerAdsInfo[playerid][padTimes]);
+				va_ShowPlayerDialog(playerid, DIALOG_ADS_FINISH, DIALOG_STYLE_MSGBOX, "LS OGLASNIK - Zavrsetak", ""COL_WHITE"Zelite li predati oglas?\n"COL_GREEN"%s\n"COL_WHITE"On ce se prikazivati "COL_ORANGE"%d "COL_WHITE"puta.", "Commit", "Abort", GetPlayerAdsInput(playerid), PlayerAdsInfo[playerid][padTimes]);
 			else if(PlayerAdsInfo[playerid][padStyle] == AD_STYLE_SELL)
-				ShowPlayerDialog(playerid, DIALOG_ADS_CREATE_PRICE, DIALOG_STYLE_INPUT, "LS OGLASNIK - Tekst oglasa", "Unesite cijenu za prodaju oglasa:", "Predaj", "Odustani");
+				ShowPlayerDialog(playerid, DIALOG_ADS_CREATE_PRICE, DIALOG_STYLE_INPUT, "LS OGLASNIK - Tekst oglasa", "Unesite cijenu za prodaju oglasa:", "Commit", "Abort");
 			else if (PlayerAdsInfo[playerid][padStyle] == AD_STYLE_CMRC)
-				va_ShowPlayerDialog(playerid, DIALOG_ADS_FINISH, DIALOG_STYLE_MSGBOX, "LS OGLASNIK - Zavrsetak", ""COL_WHITE"Zelite li predati oglas?\n"COL_GREEN"%s\n"COL_WHITE"On ce se prikazivati "COL_ORANGE"%d "COL_WHITE"puta.", "Predaj", "Odustani", GetPlayerAdsInput(playerid), PlayerAdsInfo[playerid][padTimes]);
+				va_ShowPlayerDialog(playerid, DIALOG_ADS_FINISH, DIALOG_STYLE_MSGBOX, "LS OGLASNIK - Zavrsetak", ""COL_WHITE"Zelite li predati oglas?\n"COL_GREEN"%s\n"COL_WHITE"On ce se prikazivati "COL_ORANGE"%d "COL_WHITE"puta.", "Commit", "Abort", GetPlayerAdsInput(playerid), PlayerAdsInfo[playerid][padTimes]);
 			return 1;
 		}
 		case DIALOG_ADS_CREATE_PRICE:{
-			if(!response) return ShowPlayerDialog(playerid, DIALOG_ADS_CREATE_STYLE, DIALOG_STYLE_LIST, "LS OGLASNIK - Stil oglasa", "Prodaja\nKupovina\nReklama", "Odaberi", "Odustani");
+			if(!response) return ShowPlayerDialog(playerid, DIALOG_ADS_CREATE_STYLE, DIALOG_STYLE_LIST, "LS OGLASNIK - Stil oglasa", "Prodaja\nKupovina\nReklama", "Choose", "Abort");
 			if(isnull(inputtext))
 			{
 			    if(PlayerAdsInfo[playerid][padStyle] == AD_STYLE_BUY)
-			        ShowPlayerDialog(playerid, DIALOG_ADS_CREATE_PRICE, DIALOG_STYLE_INPUT, "LS OGLASNIK - Tekst oglasa", "Unesite cijenu za kupovinu oglasa:", "Predaj", "Odustani");
+			        ShowPlayerDialog(playerid, DIALOG_ADS_CREATE_PRICE, DIALOG_STYLE_INPUT, "LS OGLASNIK - Tekst oglasa", "Unesite cijenu za kupovinu oglasa:", "Commit", "Abort");
 				else
-					ShowPlayerDialog(playerid, DIALOG_ADS_CREATE_PRICE, DIALOG_STYLE_INPUT, "LS OGLASNIK - Tekst oglasa", "Unesite cijenu za prodaju oglasa:", "Predaj", "Odustani");
+					ShowPlayerDialog(playerid, DIALOG_ADS_CREATE_PRICE, DIALOG_STYLE_INPUT, "LS OGLASNIK - Tekst oglasa", "Unesite cijenu za prodaju oglasa:", "Commit", "Abort");
 			}
 			PlayerAdsInfo[playerid][padPrice] = strval(inputtext);
-			va_ShowPlayerDialog(playerid, DIALOG_ADS_FINISH, DIALOG_STYLE_MSGBOX, "LS OGLASNIK - Zavrsetak", ""COL_WHITE"Zelite li predati oglas?\n"COL_GREEN"%s\n"COL_WHITE"On ce se prikazivati "COL_ORANGE"%d "COL_WHITE"puta.", "Predaj", "Odustani", GetPlayerAdsInput(playerid), PlayerAdsInfo[playerid][padTimes]);
+			va_ShowPlayerDialog(playerid, DIALOG_ADS_FINISH, DIALOG_STYLE_MSGBOX, "LS OGLASNIK - Zavrsetak", ""COL_WHITE"Zelite li predati oglas?\n"COL_GREEN"%s\n"COL_WHITE"On ce se prikazivati "COL_ORANGE"%d "COL_WHITE"puta.", "Commit", "Abort", GetPlayerAdsInput(playerid), PlayerAdsInfo[playerid][padTimes]);
 			return 1;
 		}
 		case DIALOG_ADS_FINISH: 
 		{
 			if(!response) 
-				return ShowPlayerDialog(playerid, DIALOG_ADS_CREATE_STYLE, DIALOG_STYLE_LIST, "LS OGLASNIK - Stil oglasa", "Prodaja\nKupovina\nReklama", "Odaberi", "Odustani");
+				return ShowPlayerDialog(playerid, DIALOG_ADS_CREATE_STYLE, DIALOG_STYLE_LIST, "LS OGLASNIK - Stil oglasa", "Prodaja\nKupovina\nReklama", "Choose", "Abort");
 
 			new price = strlen(PlayerAdsInfo[playerid][padText]) * PRICE_PER_CHAR * PlayerAdsInfo[playerid][padTimes];
 			if(PlayerInfo[playerid][pDonateRank] > 0)
@@ -401,7 +401,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 			return 1;
 		}
 		case DIALOG_ADS_WHOLE: {
-			if(!response) return ShowPlayerDialog(playerid, DIALOG_ADS_MENU, DIALOG_STYLE_LIST, "LS OGLASNIK", "Predaj oglas\nPregledaj oglase", "Odaberi", "Zatvori");
+			if(!response) return ShowPlayerDialog(playerid, DIALOG_ADS_MENU, DIALOG_STYLE_LIST, "LS OGLASNIK", "Predaj oglas\nPregledaj oglase", "Choose", "Close");
 			return 1;
 		}
 	}
@@ -419,7 +419,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 */
 CMD:ad(playerid, params[])
 {
-	ShowPlayerDialog(playerid, DIALOG_ADS_MENU, DIALOG_STYLE_LIST, "LS OGLASNIK", "Predaj oglas\nPregledaj oglase", "Odaberi", "Zatvori");
+	ShowPlayerDialog(playerid, DIALOG_ADS_MENU, DIALOG_STYLE_LIST, "LS OGLASNIK", "Predaj oglas\nPregledaj oglase", "Choose", "Close");
 	return 1;
 }
 

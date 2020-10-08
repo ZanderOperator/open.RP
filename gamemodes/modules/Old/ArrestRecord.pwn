@@ -100,10 +100,10 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 		case DIALOG_AR_NAME: {
 		    new slotid = Bit8_Get( gr_ARSlot, playerid );
 			if( !response ) return SlotInUse[slotid] = 0;
-			if( strlen(inputtext) > MAX_PLAYER_NAME || strlen(inputtext) < 6 ) return ShowPlayerDialog( playerid, DIALOG_AR_NAME, DIALOG_STYLE_INPUT, "UNOS OSUMLJICENOG", "** Minimalno 6, a maksimalno 24 slova **\n\nUnesite naziv u AR", "Unesi", "Odustani");
+			if( strlen(inputtext) > MAX_PLAYER_NAME || strlen(inputtext) < 6 ) return ShowPlayerDialog( playerid, DIALOG_AR_NAME, DIALOG_STYLE_INPUT, "UNOS OSUMLJICENOG", "** Minimalno 6, a maksimalno 24 slova **\n\nUnesite naziv u AR", "Input", "Abort");
 			format( ARInfo[ slotid ][ arSuspect ], MAX_PLAYER_NAME, inputtext );
 			format( ARInfo[ slotid ][ arCop ], MAX_PLAYER_NAME, GetName(playerid,false) );
-			ShowPlayerDialog( playerid, DIALOG_AR_OPIS, DIALOG_STYLE_INPUT, "UNESITE ARREST RECORD", "N/A", "Sacuvaj", "Dodaj jos");
+			ShowPlayerDialog( playerid, DIALOG_AR_OPIS, DIALOG_STYLE_INPUT, "UNESITE ARREST RECORD", "N/A", "Save", "Add more");
 			return 1;
 		}
 		case DIALOG_AR_OPIS: {
@@ -111,7 +111,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 			if( !response )
 		 	{
 		 		format(ARInfo[slotid][arDescription], 128, "%s\n%s", ARInfo[slotid][arDescription], inputtext);
-				ShowPlayerDialog( playerid, DIALOG_AR_OPIS, DIALOG_STYLE_INPUT, "UNESITE ARREST RECORD", ARInfo[slotid][arDescription], "Sacuvaj", "Dodaj jos");
+				ShowPlayerDialog( playerid, DIALOG_AR_OPIS, DIALOG_STYLE_INPUT, "UNESITE ARREST RECORD", ARInfo[slotid][arDescription], "Save", "Add more");
 				return 1;
 			}
 			new arHour, arMinute, arSecond, arDay, arMonth, arYear;
@@ -157,7 +157,7 @@ CMD:ar(playerid, params[])
 		}
 		if(arSlot < 0) return SendMessage(playerid, MESSAGE_TYPE_ERROR, " AR je pun, zamolite r5+ da obrise stare Arrest Recorde!");
         SlotInUse[arSlot] = 1;
-		ShowPlayerDialog( playerid, DIALOG_AR_NAME, DIALOG_STYLE_INPUT, "UNOS OSUMLJICENOG", "Unesite naziv u AR", "Unesi", "Odustani");
+		ShowPlayerDialog( playerid, DIALOG_AR_NAME, DIALOG_STYLE_INPUT, "UNOS OSUMLJICENOG", "Unesite naziv u AR", "Input", "Abort");
 	}
 	else if( !strcmp(pick, "view", true) ) {
 		new

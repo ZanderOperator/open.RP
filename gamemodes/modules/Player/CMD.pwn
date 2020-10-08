@@ -75,7 +75,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 				#if defined MODULE_LOGS
 				new playerip[MAX_PLAYER_IP];
 				GetPlayerIp(playerid, playerip, sizeof(playerip));
-				Log_Write("/logfiles/a_pm.txt", "(%s) %s(%s) za %s: %s",
+				Log_Write("/logfiles/a_pm.txt", "(%s) %s(%s) for %s: %s",
 					ReturnDate(),
 					GetName(playerid, false),
 					playerip,
@@ -660,7 +660,7 @@ CMD:taxcalculator(playerid, params[])
 }
 CMD:rphelp(playerid, params[])
 {
-    ShowPlayerDialog(playerid, DIALOG_RULES , DIALOG_STYLE_LIST, "ROLEPLAY POJMOVI", "MetaGaming(MG)\nPowerGaming (PG)\nRP2WIN\nRevenge Kill(RK)\nDeathmatch(DM)\n/me komanda\n/ame komanda\n/do komanda", "Odaberi", "Izidji");
+    ShowPlayerDialog(playerid, DIALOG_RULES , DIALOG_STYLE_LIST, "ROLEPLAY POJMOVI", "MetaGaming(MG)\nPowerGaming (PG)\nRP2WIN\nRevenge Kill(RK)\nDeathmatch(DM)\n/me komanda\n/ame komanda\n/do komanda", "Choose", "Exit");
     return 1;
 }
 CMD:toganimchat(playerid, params[])
@@ -922,7 +922,7 @@ CMD:payday(playerid, params[])
 {
 	new title[64];
 	format(title, sizeof(title), "* [%s] %s", PlayerInfo[playerid][pPayDayDate], GetName(playerid));
-	ShowPlayerDialog(playerid, 0, DIALOG_STYLE_MSGBOX, title, PlayerInfo[playerid][pPayDayDialog], "Zatvori", "");
+	ShowPlayerDialog(playerid, 0, DIALOG_STYLE_MSGBOX, title, PlayerInfo[playerid][pPayDayDialog], "Close", "");
 	return 1;
 }
 
@@ -1084,7 +1084,7 @@ CMD:pm(playerid, params[])
 		{
 			format(PlayerInfo[playerid][pPMText], 128, "%s", text);
 			PlayerInfo[playerid][pPMing] = giveplayerid;
-			return ShowPlayerDialog(playerid, DIALOG_ADMINPM, DIALOG_STYLE_MSGBOX, "{FA5656}WARNING", "Igac kojem zelite poslati private message je {FE9934}Game Admin.\n\nUkoliko imate bilo kakve nedoumice koristite komandu /report.\n\n{FA5656}NOTE:\n{FE9934}Game Admin nije mehanicar, snajder, niti ista tome slicno!", "Posalji", "Odustani");
+			return ShowPlayerDialog(playerid, DIALOG_ADMINPM, DIALOG_STYLE_MSGBOX, "{FA5656}WARNING", "Igac kojem zelite poslati private message je {FE9934}Game Admin.\n\nUkoliko imate bilo kakve nedoumice koristite komandu /report.\n\n{FA5656}NOTE:\n{FE9934}Game Admin nije mehanicar, snajder, niti ista tome slicno!", "Send", "Abort");
 		}
 	}
 
@@ -1112,7 +1112,7 @@ CMD:pm(playerid, params[])
 	#if defined MODULE_LOGS
 	new playerip[MAX_PLAYER_IP];
 	GetPlayerIp(playerid, playerip, sizeof(playerip));
-	Log_Write("/logfiles/a_pm.txt", "(%s) %s(%s) za %s: %s",
+	Log_Write("/logfiles/a_pm.txt", "(%s) %s(%s) for %s: %s",
 		ReturnDate(),
 		GetName(playerid, false),
 		playerip,
@@ -2169,6 +2169,7 @@ CMD:dump(playerid, params[])
 	        format(tmpString, sizeof(tmpString), "** %s baca oruzje na pod.", GetName(playerid, true));
             ProxDetector(15.0, playerid, tmpString, COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE);
             
+			#if defined MODULE_LOGS
             Log_Write("logfiles/dump_gun.txt", "(%s) Igrac %s{%d} je bacio %s(%d)[AMMO: %d] na pod!",
 				ReturnDate(),
 				GetName(playerid),
@@ -2177,6 +2178,7 @@ CMD:dump(playerid, params[])
 				weapon,
 				ammo
 			);
+			#endif
 			
 			new Float:dx, Float:dy, Float:unz;
 			GetPlayerPos(playerid, dx, dy, unz);
@@ -2388,6 +2390,7 @@ CMD:give(playerid, params[])
 					format(globalstring, sizeof(globalstring), "** %s daje oruzje %s.", GetName(playerid), GetName(giveplayerid));
 					ProxDetector(5.0, playerid, globalstring, COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE);
 					
+					#if defined MODULE_LOGS
 					Log_Write("logfiles/give_weapon.txt", "(%s) Igrac %s je dao %s %s sa %d metaka.",
 						ReturnDate(),
 						GetName(playerid, false),
@@ -2395,6 +2398,7 @@ CMD:give(playerid, params[])
 						WeapNames[weapon],
 						ammo
 					);
+					#endif
 				}
 				else SendClientMessage(playerid, COLOR_RED, "Taj igrac nije blizu vas !");
  			}

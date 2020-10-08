@@ -28,7 +28,7 @@ CMD:license(playerid, params[])
 	if(!IsPlayerInRangeOfPoint( playerid, 3.0, -2033.0352,-117.5965,1035.1719)) 
 		return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste u auto skoli.");
 		
-	Dialog_Open(playerid, eDIALOG_LICENSE, DIALOG_STYLE_LIST, "DMV", "Vozacka dozvola\nDozvola za oruzje\nDozvola za letenje\nDozvola za brodove\nDozvola za ribolov", "Odaberi", "Izlaz");
+	Dialog_Open(playerid, eDIALOG_LICENSE, DIALOG_STYLE_LIST, "DMV", "Vozacka dozvola\nDozvola za oruzje\nDozvola za letenje\nDozvola za brodove\nDozvola za ribolov", "Choose", "Exit");
 	return 1;
 }
 
@@ -43,7 +43,7 @@ Dialog:eDIALOG_LICENSE(playerid, response, listitem, inputtext[])
 				if(PlayerInfo[playerid][pCarLic] == 1)
 					return SendClientMessage(playerid, COLOR_RED, "Vec imas vozacku dozvolu!");
 				
-				Dialog_Open(playerid, eDIALOG_LICENSE_CONFIRM, DIALOG_STYLE_MSGBOX, "Vozacka Dozvola", "Jeste li sigurni da zelite zapoceti test?\nTest ce vas kostati 1000$, 100$ po pokusaju.", "Da", "Natrag");
+				Dialog_Open(playerid, eDIALOG_LICENSE_CONFIRM, DIALOG_STYLE_MSGBOX, "Vozacka Dozvola", "Jeste li sigurni da zelite zapoceti test?\nTest ce vas kostati 1000$, 100$ po pokusaju.", "Da", "Back");
 				PlayerAnswers[playerid] = 0;
 			}
 			case 1:
@@ -53,7 +53,7 @@ Dialog:eDIALOG_LICENSE(playerid, response, listitem, inputtext[])
 				if(PlayerInfo[playerid][pFlyLic] == 1)
 					return SendClientMessage(playerid, COLOR_RED, "Vec imas dozvolu za letenje!");
 				
-				Dialog_Open(playerid, eDIALOG_LICENSE_CONFIRM, DIALOG_STYLE_MSGBOX, "Dozvola za letenje", "Jeste li sigurni da zelite kupiti dozvolu za letenje?\nDozvola kosta 3000$.", "Da", "Natrag");
+				Dialog_Open(playerid, eDIALOG_LICENSE_CONFIRM, DIALOG_STYLE_MSGBOX, "Dozvola za letenje", "Jeste li sigurni da zelite kupiti dozvolu za letenje?\nDozvola kosta 3000$.", "Da", "Back");
 				PlayerAnswers[playerid] = -1;
 			}
 			case 3:
@@ -61,7 +61,7 @@ Dialog:eDIALOG_LICENSE(playerid, response, listitem, inputtext[])
 				if(PlayerInfo[playerid][pBoatLic] == 1)
 					return SendClientMessage(playerid, COLOR_RED, "Vec imas dozvolu za brod!");
 				
-				Dialog_Open(playerid, eDIALOG_LICENSE_CONFIRM, DIALOG_STYLE_MSGBOX, "Dozvola za brod", "Jeste li sigurni da zelite kupiti dozvolu za brod?\nDozvola kosta 3000$.", "Da", "Natrag");
+				Dialog_Open(playerid, eDIALOG_LICENSE_CONFIRM, DIALOG_STYLE_MSGBOX, "Dozvola za brod", "Jeste li sigurni da zelite kupiti dozvolu za brod?\nDozvola kosta 3000$.", "Da", "Back");
 				PlayerAnswers[playerid] = -2;
 			}
 			case 4:
@@ -69,7 +69,7 @@ Dialog:eDIALOG_LICENSE(playerid, response, listitem, inputtext[])
 				if(PlayerInfo[playerid][pFishLic] == 1)
 					return SendClientMessage(playerid, COLOR_RED, "Vec imas dozvolu za ribolov!");
 				
-				Dialog_Open(playerid, eDIALOG_LICENSE_CONFIRM, DIALOG_STYLE_MSGBOX, "Dozvola za ribolov", "Jeste li sigurni da zelite kupiti dozvolu za ribolov?\nDozvola kosta 800$.", "Da", "Natrag");
+				Dialog_Open(playerid, eDIALOG_LICENSE_CONFIRM, DIALOG_STYLE_MSGBOX, "Dozvola za ribolov", "Jeste li sigurni da zelite kupiti dozvolu za ribolov?\nDozvola kosta 800$.", "Da", "Back");
 				PlayerAnswers[playerid] = -3;
 			}
 		}
@@ -80,7 +80,7 @@ Dialog:eDIALOG_LICENSE(playerid, response, listitem, inputtext[])
 Dialog:eDIALOG_LICENSE_CONFIRM(playerid, response, listitem, inputtext[]) 
 {
 	if(!response)
-		return Dialog_Open(playerid, eDIALOG_LICENSE, DIALOG_STYLE_LIST, "DMV", "Vozacka dozvola\nDozvola za oruzje\nDozvola za letenje\nDozvola za brodove", "Odaberi", "Izlaz"), PlayerAnswers[playerid] = 0;
+		return Dialog_Open(playerid, eDIALOG_LICENSE, DIALOG_STYLE_LIST, "DMV", "Vozacka dozvola\nDozvola za oruzje\nDozvola za letenje\nDozvola za brodove", "Choose", "Exit"), PlayerAnswers[playerid] = 0;
 	
 	switch(PlayerAnswers[playerid])
 	{
@@ -93,7 +93,7 @@ Dialog:eDIALOG_LICENSE_CONFIRM(playerid, response, listitem, inputtext[])
 			{
 				PlayerToBudgetMoney(playerid, 100);
 				
-				Dialog_Open(playerid, eDIALOG_DRIVINGTEST, DIALOG_STYLE_LIST, DMVQuestions[0][dmvQuestion], DMVQuestions[0][dmvAnswers], "Dalje", "Izlaz");
+				Dialog_Open(playerid, eDIALOG_DRIVINGTEST, DIALOG_STYLE_LIST, DMVQuestions[0][dmvQuestion], DMVQuestions[0][dmvAnswers], "Next", "Exit");
 				PlayerQuestion[playerid] = 0;
 			}
 		}
@@ -102,7 +102,7 @@ Dialog:eDIALOG_LICENSE_CONFIRM(playerid, response, listitem, inputtext[])
 			if(GetPlayerMoney(playerid) < 3000) 
 				return SendClientMessage(playerid, COLOR_RED, "Nemas dovoljno novca (3000$).");
 			
-			Dialog_Open(playerid, empty, DIALOG_STYLE_MSGBOX, "Dozvola za letenje", "Kupio si dozvolu za letenje!\nZelimo vam siguran i ugodan let.", "Izlaz", "");
+			Dialog_Open(playerid, empty, DIALOG_STYLE_MSGBOX, "Dozvola za letenje", "Kupio si dozvolu za letenje!\nZelimo vam siguran i ugodan let.", "Exit", "");
 			PlayerInfo[playerid][pFlyLic] = 1;
 			
 			PlayerToBudgetMoney(playerid, 3000);
@@ -112,7 +112,7 @@ Dialog:eDIALOG_LICENSE_CONFIRM(playerid, response, listitem, inputtext[])
 			if(GetPlayerMoney(playerid) < 3000) 
 				return SendClientMessage(playerid, COLOR_RED, "Nemas dovoljno novca (3000$).");
 			
-			Dialog_Open(playerid, empty, DIALOG_STYLE_MSGBOX, "Dozvola za brod", "Kupio si dozvolu za brod!\nZelimo vam sigurnu i ugodnu voznju.", "Izlaz", "");
+			Dialog_Open(playerid, empty, DIALOG_STYLE_MSGBOX, "Dozvola za brod", "Kupio si dozvolu za brod!\nZelimo vam sigurnu i ugodnu voznju.", "Exit", "");
 			PlayerInfo[playerid][pBoatLic] = 1;
 			
 			PlayerToBudgetMoney(playerid, 3000);
@@ -122,7 +122,7 @@ Dialog:eDIALOG_LICENSE_CONFIRM(playerid, response, listitem, inputtext[])
 			if(GetPlayerMoney(playerid) < 800) 
 				return SendClientMessage(playerid, COLOR_RED, "Nemas dovoljno novca (800$).");
 			
-			Dialog_Open(playerid, empty, DIALOG_STYLE_MSGBOX, "Dozvola za letenje", "Kupio si dozvolu za ribolov!.", "Izlaz", "");
+			Dialog_Open(playerid, empty, DIALOG_STYLE_MSGBOX, "Dozvola za letenje", "Kupio si dozvolu za ribolov!.", "Exit", "");
 			PlayerInfo[playerid][pFishLic] = 1;
 			
 			PlayerToBudgetMoney(playerid, 800);
@@ -145,14 +145,14 @@ Dialog:eDIALOG_DRIVINGTEST(playerid, response, listitem, inputtext[])
 		{
 			if(PlayerAnswers[playerid] != 5)
 			{
-				Dialog_Open(playerid, eDIALOG_LICENSE_CONFIRM, DIALOG_STYLE_MSGBOX, "Vozacka dozvola", "Nazalost pali ste ispit iz voznje.\nImali ste %d od 5 tocnih odgovora\nZelite li pokusati ponovo?", "Da", "Natrag", PlayerAnswers[playerid]);
+				Dialog_Open(playerid, eDIALOG_LICENSE_CONFIRM, DIALOG_STYLE_MSGBOX, "Vozacka dozvola", "Nazalost pali ste ispit iz voznje.\nImali ste %d od 5 tocnih odgovora\nZelite li pokusati ponovo?", "Da", "Back", PlayerAnswers[playerid]);
 				
 				PlayerQuestion[playerid] = -1;
 				PlayerAnswers[playerid] = 0;
 			}
 			else
 			{
-				Dialog_Open(playerid, empty, DIALOG_STYLE_MSGBOX, "Vozacka dozvola", "Cestitamo, prosli ste ispit za vozacku dozvolu!\nZelimo vam sigurnu i ugodnu voznju.", "Izlaz", "");
+				Dialog_Open(playerid, empty, DIALOG_STYLE_MSGBOX, "Vozacka dozvola", "Cestitamo, prosli ste ispit za vozacku dozvolu!\nZelimo vam sigurnu i ugodnu voznju.", "Exit", "");
 				
 				PlayerInfo[playerid][pCarLic] = 1;
 				
@@ -163,12 +163,12 @@ Dialog:eDIALOG_DRIVINGTEST(playerid, response, listitem, inputtext[])
 			}
 		}
 		else
-			Dialog_Open(playerid, eDIALOG_DRIVINGTEST, DIALOG_STYLE_LIST, DMVQuestions[curquestion][dmvQuestion], DMVQuestions[curquestion][dmvAnswers], "Dalje", "Izlaz");
+			Dialog_Open(playerid, eDIALOG_DRIVINGTEST, DIALOG_STYLE_LIST, DMVQuestions[curquestion][dmvQuestion], DMVQuestions[curquestion][dmvAnswers], "Next", "Exit");
 	}	
 	else
 	{
 		va_SendClientMessage(playerid, COLOR_RED, "[ ! ] Prekinuli ste test! Imali ste %d tocnih odgovora te %d neodgovorenih.", PlayerAnswers[playerid], (5 - PlayerQuestion[playerid]));
-		Dialog_Open(playerid, eDIALOG_LICENSE, DIALOG_STYLE_LIST, "DMV", "Vozacka dozvola\nDozvola za oruzje\nDozvola za letenje\nDozvola za brodove", "Odaberi", "Izlaz");
+		Dialog_Open(playerid, eDIALOG_LICENSE, DIALOG_STYLE_LIST, "DMV", "Vozacka dozvola\nDozvola za oruzje\nDozvola za letenje\nDozvola za brodove", "Choose", "Exit");
 		
 		PlayerQuestion[playerid] = -1;
 		PlayerAnswers[playerid] = 0;
