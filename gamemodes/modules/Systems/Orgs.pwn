@@ -1575,10 +1575,10 @@ CMD:r(playerid,params[])
 
 	if (IsAGov(playerid)) // ako je gov onda prica u slusalicu
 	{
-		format(string, sizeof(string), "**  %s prica u slusalicu.", GetName(playerid, true));
+		format(string, sizeof(string), "*  %s prica u slusalicu.", GetName(playerid, true));
 		SetPlayerChatBubble(playerid, string, COLOR_PURPLE, 20, 2000);
 	} else { // ako je ostalo prica na radio
-		format(string, sizeof(string), "**  %s prica na radio.", GetName(playerid, true));
+		format(string, sizeof(string), "*  %s prica na radio.", GetName(playerid, true));
 		SetPlayerChatBubble(playerid, string, COLOR_PURPLE, 20, 2000);
 	}
 	if(!IsPlayerReconing(playerid)) {
@@ -1604,17 +1604,17 @@ CMD:d(playerid,params[])
 
     if (IsAGov(playerid)) // ako je gov onda prica u slusalicu
     {
-        format(string, sizeof(string), "** %s prica u slusalicu.", GetName(playerid, true));
+        format(string, sizeof(string), "* %s prica u slusalicu.", GetName(playerid, true));
         SetPlayerChatBubble(playerid, string, COLOR_PURPLE, 20, 2000);
     } else {
-        format(string, sizeof(string), "** %s prica na radio.", GetName(playerid, true));
+        format(string, sizeof(string), "* %s prica na radio.", GetName(playerid, true));
         SetPlayerChatBubble(playerid, string, COLOR_PURPLE, 20, 2000);
     }
     if(!IsPlayerReconing(playerid)) {
         format(string, 128, "** %s [radio]: %s", GetName(playerid, true), params);
         ProxDetector(4.0, playerid, string, COLOR_FADE1, COLOR_FADE2, COLOR_FADE3, COLOR_FADE4, COLOR_FADE5, true);
     }
-    else SendClientMessage(playerid,COLOR_RED, "Niste ovla?teni!");
+    else SendClientMessage(playerid,COLOR_RED, "Niste ovlasteni!");
     return 1;
 }
 
@@ -1804,7 +1804,7 @@ CMD:showbadge(playerid, params[])
 		va_SendClientMessage(giveplayerid, COLOR_WHITE, "- %s [ %s ]", GetName(playerid, true), ReturnPlayerRankName(playerid));
 	}	
 	new tmpString[128];
-	format(tmpString, sizeof(tmpString), "** %s vadi svoju znacku i pokazuje ju %s.", GetName(playerid), GetName(giveplayerid));
+	format(tmpString, sizeof(tmpString), "* %s vadi svoju znacku i pokazuje ju %s.", GetName(playerid), GetName(giveplayerid));
 	ProxDetector(7.0, playerid, tmpString, COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE);
 	return 1;
 }
@@ -1823,7 +1823,7 @@ CMD:showaccreditation(playerid, params[])
 	SendClientMessage(giveplayerid, 0xFF9E9EFF, "*____ LOS SANTOS NEWS ACCREDITATION _____*");
 	va_SendClientMessage(giveplayerid, COLOR_WHITE, "- %s [ %s ]", GetName(playerid, true), ReturnPlayerRankName(playerid));
 	new tmpString[128];
-	format(tmpString, sizeof(tmpString), "** %s vadi svoju akreditaciju i pokazuje ju %s.", GetName(playerid), GetName(giveplayerid));
+	format(tmpString, sizeof(tmpString), "* %s vadi svoju akreditaciju i pokazuje ju %s.", GetName(playerid), GetName(giveplayerid));
 	ProxDetector(7.0, playerid, tmpString, COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE);
 	}
 	else SendMessage(playerid, MESSAGE_TYPE_ERROR, "Moras biti clan LSN organizacije da bi koristio ovu komandu!");

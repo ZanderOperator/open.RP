@@ -274,8 +274,8 @@ CMD:callnews(playerid,params[])
 	if( !PlayerInfo[ playerid ][ pMobileNumber ] ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, " Nemate mobitel!");
 	if( PlayerInfo[ playerid ][ pMobileCost ] < 3 ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, " Nemate novca na mobitelnom racunu da biste pozvali taxi!");
 
-	new string[256], result[64];
-	if( sscanf( params, "s[64]",result ) ) return SendClientMessage(playerid,-1,"KORISTI: /callnews [opis stanja]");
+	new string[256], result[128];
+	if( sscanf( params, "s[128]",result ) ) return SendClientMessage(playerid,-1,"KORISTI: /callnews [opis stanja]");
 
 	format(string, sizeof(string), "** [REDAKCIJA - POZIV] Mobitel broj: %d - Stanje: %s",
 		PlayerInfo[playerid][pMobileNumber],
@@ -283,7 +283,7 @@ CMD:callnews(playerid,params[])
 	);
 	SendWalkieTalkieMessage(5, 0x42C8F5FF, string);
 
-	format(string, sizeof(string), "** %s vadi mobitel i stavlja ga na uho.", GetName(playerid));
+	format(string, sizeof(string), "* %s vadi mobitel i stavlja ga na uho.", GetName(playerid));
 	SetPlayerChatBubble(playerid, string, COLOR_PURPLE, 20, 5000);
 	SendClientMessage(playerid, COLOR_YELLOW, "* Poslao si poziv u LSN ured!");
 
@@ -296,26 +296,6 @@ CMD:callnews(playerid,params[])
 	);
 	mysql_tquery(g_SQL, moneyUpdate);
 	return 1;
-}
-
-CMD:wt(playerid,params[])
-{
-	/*
-	if(isnull(params))
-		return SendErrorMessage(playerid, "Ne mozete poslati prazan /wt!");
-	new member = PlayerInfo[playerid][pMember],string[256];
-    if (PlayerInfo[playerid][pMember] == 0) return SendClientMessage(playerid,COLOR_RED, "Moras biti clan organizacije da bi koristio ovu komandu!");
-    if(IsANews(playerid))
-	{
-		format(string, sizeof(string), "**[811 WT] %s: %s", GetName(playerid, true), params);
-		SendWalkieTalkieMessage(member, TEAM_YELLOW_COLOR, string);
-
-		format(string, sizeof(string), "**  %s prica na walkie-talkie.", GetName(playerid, true));
-		SetPlayerChatBubble(playerid, string, COLOR_PURPLE, 20, 2000);
-	}
-    else SendClientMessage(playerid,COLOR_RED, "Niste ovla�teni!");*/
-    SendClientMessage(playerid, COLOR_RED, "Komanda je izbacena");
-    return 1;
 }
 
 CMD:lsngarage(playerid, params[]) {

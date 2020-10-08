@@ -2276,7 +2276,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 					else PlayerInfo[playerid][pHunger] = 5.0;
 
 					PlayerToBusinessMoney(playerid, biznis, 5); // Novac ide u blagajnu ali se oporezuje
-					format(tmpString, sizeof(tmpString), "** %s jede topli sendvic.", GetName( playerid, true ) );
+					format(tmpString, sizeof(tmpString), "* %s jede topli sendvic.", GetName( playerid, true ) );
 					ProxDetector(8.0, playerid, tmpString,  COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE );
 
         		}
@@ -2287,7 +2287,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 					else PlayerInfo[playerid][pHunger] = 5.0;
 
 					PlayerToBusinessMoney(playerid, biznis, 4); // Novac ide u blagajnu ali se oporezuje
-					format(tmpString, sizeof(tmpString), "** %s jede cevape.", GetName( playerid, true ) );
+					format(tmpString, sizeof(tmpString), "* %s jede cevape.", GetName( playerid, true ) );
 					ProxDetector(8.0, playerid, tmpString,  COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE );
 				}
 				case 2: {
@@ -2297,7 +2297,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 					else PlayerInfo[playerid][pHunger] = 5.0;
 
 					PlayerToBusinessMoney(playerid, biznis, 4); // Novac ide u blagajnu ali se oporezuje
-					format(tmpString, sizeof(tmpString), "** %s jede filete.", GetName( playerid, true ) );
+					format(tmpString, sizeof(tmpString), "* %s jede filete.", GetName( playerid, true ) );
 					ProxDetector(8.0, playerid, tmpString,  COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE );
 				}
 				case 3: {
@@ -2307,7 +2307,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 					else PlayerInfo[playerid][pHunger] = 5.0;
 
 					PlayerToBusinessMoney(playerid, biznis, 2); // Novac ide u blagajnu ali se oporezuje
-					format(tmpString, sizeof(tmpString), "** %s jede vocnu salatu.", GetName( playerid, true ) );
+					format(tmpString, sizeof(tmpString), "* %s jede vocnu salatu.", GetName( playerid, true ) );
 					ProxDetector(8.0, playerid, tmpString,  COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE );
 				}
 				case 4: {
@@ -2317,7 +2317,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 					else PlayerInfo[playerid][pHunger] = 5.0;
 
 					PlayerToBusinessMoney(playerid, biznis, 4); // Novac ide u blagajnu ali se oporezuje
-					format(tmpString, sizeof(tmpString), "** %s jede kebab.", GetName( playerid, true ) );
+					format(tmpString, sizeof(tmpString), "* %s jede kebab.", GetName( playerid, true ) );
 					ProxDetector(8.0, playerid, tmpString,  COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE );
 
 				}
@@ -2328,7 +2328,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 					else PlayerInfo[playerid][pHunger] = 5.0;
 
 					PlayerToBusinessMoney(playerid, biznis, 3); // Novac ide u blagajnu ali se oporezuje
-					format(tmpString, sizeof(tmpString), "** %s pije sprite.", GetName( playerid, true ) );
+					format(tmpString, sizeof(tmpString), "* %s pije sprite.", GetName( playerid, true ) );
 					ProxDetector(8.0, playerid, tmpString,  COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE );
 
 				}
@@ -2339,7 +2339,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 					else PlayerInfo[playerid][pHunger] = 5.0;
 
 					PlayerToBusinessMoney(playerid, biznis, 1); // Novac ide u blagajnu ali se oporezuje
-					format(tmpString, sizeof(tmpString), "** %s pije vodu.", GetName( playerid, true ) );
+					format(tmpString, sizeof(tmpString), "* %s pije vodu.", GetName( playerid, true ) );
 					ProxDetector(8.0, playerid, tmpString,  COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE );
 				}
             }
@@ -2361,7 +2361,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 						PlayerInfo[playerid][pHunger] = 5.0;
 
 					PlayerToBusinessMoney(playerid, biznis, 3); // Novac ide u blagajnu ali se oporezuje
-					format(tmpString, sizeof(tmpString), "** %s jede pizzetu.", GetName( playerid, true ) );
+					format(tmpString, sizeof(tmpString), "* %s jede pizzetu.", GetName( playerid, true ) );
 					ProxDetector(8.0, playerid, tmpString, COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE );
         		}
                 case 1:
@@ -2373,7 +2373,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 						PlayerInfo[playerid][pHunger] = 5.0;
 
 					PlayerToBusinessMoney(playerid, biznis, 6); // Novac ide u blagajnu ali se oporezuje
-					format(tmpString, sizeof(tmpString), "** %s jede veliku pizzu.", GetName( playerid, true ) );
+					format(tmpString, sizeof(tmpString), "* %s jede veliku pizzu.", GetName( playerid, true ) );
 					ProxDetector(8.0, playerid, tmpString, COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE );
 				}
 				case 2:
@@ -2386,7 +2386,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 						PlayerInfo[playerid][pHunger] = 5.0;
 
 					PlayerToBusinessMoney(playerid, biznis, 5); // Novac ide u blagajnu ali se oporezuje
-					format(tmpString, sizeof(tmpString), "** %s jede topli sendvic.", GetName( playerid, true ) );
+					format(tmpString, sizeof(tmpString), "* %s jede topli sendvic.", GetName( playerid, true ) );
 					ProxDetector(8.0, playerid, tmpString, COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE );
 				}
 				case 3:
@@ -2398,7 +2398,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 						PlayerInfo[playerid][pHunger] = 5.0;
 
 					PlayerToBusinessMoney(playerid, biznis, 2); // Novac ide u blagajnu ali se oporezuje
-					format(tmpString, sizeof(tmpString), "** %s jede salatu.", GetName( playerid, true ) );
+					format(tmpString, sizeof(tmpString), "* %s jede salatu.", GetName( playerid, true ) );
 					ProxDetector(8.0, playerid, tmpString, COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE );
 				}
 				case 4:
@@ -2410,7 +2410,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 						PlayerInfo[playerid][pHunger] = 5.0;
 
 					PlayerToBusinessMoney(playerid, biznis, 10); // Novac ide u blagajnu ali se oporezuje
-					format(tmpString, sizeof(tmpString), "** %s jede Jumbo Pizzu.", GetName( playerid, true ) );
+					format(tmpString, sizeof(tmpString), "* %s jede Jumbo Pizzu.", GetName( playerid, true ) );
 					ProxDetector(8.0, playerid, tmpString, COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE );
 				}
 				case 5:
@@ -2422,7 +2422,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 						PlayerInfo[playerid][pHunger] = 5.0;
 
 					PlayerToBusinessMoney(playerid, biznis, 3); // Novac ide u blagajnu ali se oporezuje
-					format(tmpString, sizeof(tmpString), "** %s pije Sprite.", GetName( playerid, true ) );
+					format(tmpString, sizeof(tmpString), "* %s pije Sprite.", GetName( playerid, true ) );
 					ProxDetector(8.0, playerid, tmpString, COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE );
 
 				}
@@ -2435,7 +2435,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 						PlayerInfo[playerid][pHunger] = 5.0;
 
 					PlayerToBusinessMoney(playerid, biznis, 1); // Novac ide u blagajnu ali se oporezuje
-					format(tmpString, sizeof(tmpString), "** %s pije vodu.", GetName( playerid, true ) );
+					format(tmpString, sizeof(tmpString), "* %s pije vodu.", GetName( playerid, true ) );
 					ProxDetector(8.0, playerid, tmpString, COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE );
 				}
             }
@@ -2457,7 +2457,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 		            else
 						PlayerInfo[playerid][pHunger] = 5.0;
 
-					format(tmpString, sizeof(tmpString), "** %s jede Big Mac.", GetName( playerid, true ) );
+					format(tmpString, sizeof(tmpString), "* %s jede Big Mac.", GetName( playerid, true ) );
 					ProxDetector(8.0, playerid, tmpString, COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE );
 
 					if( biznis != INVALID_BIZNIS_ID )
@@ -2473,7 +2473,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 		            else
 						PlayerInfo[playerid][pHunger] = 5.0;
 
-					format(tmpString, sizeof(tmpString), "** %s jede Burger Menu.", GetName( playerid, true ) );
+					format(tmpString, sizeof(tmpString), "* %s jede Burger Menu.", GetName( playerid, true ) );
 					ProxDetector(8.0, playerid, tmpString, COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE );
 
 					if( biznis != INVALID_BIZNIS_ID )
@@ -2489,7 +2489,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 		            else
 						PlayerInfo[playerid][pHunger] = 5.0;
 
-					format(tmpString, sizeof(tmpString), "** %s jede tost.", GetName( playerid, true ) );
+					format(tmpString, sizeof(tmpString), "* %s jede tost.", GetName( playerid, true ) );
 					ProxDetector(8.0, playerid, tmpString, COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE );
 
 					if( biznis != INVALID_BIZNIS_ID )
@@ -2506,7 +2506,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 		            else
 						PlayerInfo[playerid][pHunger] = 5.0;
 
-					format(tmpString, sizeof(tmpString), "** %s jede francusku salatu.", GetName( playerid, true ) );
+					format(tmpString, sizeof(tmpString), "* %s jede francusku salatu.", GetName( playerid, true ) );
 					ProxDetector(8.0, playerid, tmpString, COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE );
 
 					if( biznis != INVALID_BIZNIS_ID )
@@ -2523,7 +2523,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 		            else
 						PlayerInfo[playerid][pHunger] = 5.0;
 
-					format(tmpString, sizeof(tmpString), "** %s jede sendvic sa sunkom.", GetName( playerid, true ) );
+					format(tmpString, sizeof(tmpString), "* %s jede sendvic sa sunkom.", GetName( playerid, true ) );
 					ProxDetector(8.0, playerid, tmpString, COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE );
 
 					if( biznis != INVALID_BIZNIS_ID )
@@ -2539,7 +2539,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 		            else
 		                PlayerInfo[playerid][pHunger] = 5.0;
 
-					format(tmpString, sizeof(tmpString), "** %s pije Sprite.", GetName( playerid, true ) );
+					format(tmpString, sizeof(tmpString), "* %s pije Sprite.", GetName( playerid, true ) );
 					ProxDetector(8.0, playerid, tmpString, COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE );
 
 					if( biznis != INVALID_BIZNIS_ID )
@@ -2555,7 +2555,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 		            else
 		                PlayerInfo[playerid][pHunger] = 5.0;
 
-					format(tmpString, sizeof(tmpString), "** %s pije vodu.", GetName( playerid, true ) );
+					format(tmpString, sizeof(tmpString), "* %s pije vodu.", GetName( playerid, true ) );
 					ProxDetector(8.0, playerid, tmpString, COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE );
 
 					if( biznis != INVALID_BIZNIS_ID )
@@ -2581,7 +2581,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 		            else
 		                PlayerInfo[playerid][pHunger] = 5.0;
 
-					format(tmpString, sizeof(tmpString), "** %s jede juhu.", GetName( playerid, true ) );
+					format(tmpString, sizeof(tmpString), "* %s jede juhu.", GetName( playerid, true ) );
 					ProxDetector(8.0, playerid, tmpString, COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE );
 
 					if( biznis != INVALID_BIZNIS_ID )
@@ -2598,7 +2598,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 		            else
 		                PlayerInfo[playerid][pHunger] = 5.0;
 
-					format(tmpString, sizeof(tmpString), "** %s jede Piletinu.", GetName( playerid, true ) );
+					format(tmpString, sizeof(tmpString), "* %s jede Piletinu.", GetName( playerid, true ) );
 					ProxDetector(8.0, playerid, tmpString, COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE );
 
 					if( biznis != INVALID_BIZNIS_ID )
@@ -2615,7 +2615,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 		            else
 		                PlayerInfo[playerid][pHunger] = 5.0;
 
-					format(tmpString, sizeof(tmpString), "** %s jede pecenog morskog psa na salatu.", GetName( playerid, true ) );
+					format(tmpString, sizeof(tmpString), "* %s jede pecenog morskog psa na salatu.", GetName( playerid, true ) );
 					ProxDetector(8.0, playerid, tmpString, COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE );
 
 					if( biznis != INVALID_BIZNIS_ID )
@@ -2631,7 +2631,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 		            else
 		                PlayerInfo[playerid][pHunger] = 5.0;
 
-					format(tmpString, sizeof(tmpString), "** %s jede Spagete.", GetName( playerid, true ) );
+					format(tmpString, sizeof(tmpString), "* %s jede Spagete.", GetName( playerid, true ) );
 					ProxDetector(8.0, playerid, tmpString, COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE );
 
 					if( biznis != INVALID_BIZNIS_ID )
@@ -2647,7 +2647,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 		            else
 		                PlayerInfo[playerid][pHunger] = 5.0;
 
-					format(tmpString, sizeof(tmpString), "** %s jede kolac.", GetName( playerid, true ) );
+					format(tmpString, sizeof(tmpString), "* %s jede kolac.", GetName( playerid, true ) );
 					ProxDetector(8.0, playerid, tmpString, COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE );
 
 					if( biznis != INVALID_BIZNIS_ID )
@@ -2663,7 +2663,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 		            else
 		                PlayerInfo[playerid][pHunger] = 5.0;
 
-					format(tmpString, sizeof(tmpString), "** %s pije Coca Colu.", GetName( playerid, true ) );
+					format(tmpString, sizeof(tmpString), "* %s pije Coca Colu.", GetName( playerid, true ) );
 					ProxDetector(8.0, playerid, tmpString, COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE );
 
 					if( biznis != INVALID_BIZNIS_ID )
@@ -2679,7 +2679,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 		            else
 		                PlayerInfo[playerid][pHunger] = 5.0;
 
-					format(tmpString, sizeof(tmpString), "** %s pije vodu.", GetName( playerid, true ) );
+					format(tmpString, sizeof(tmpString), "* %s pije vodu.", GetName( playerid, true ) );
 					ProxDetector(8.0, playerid, tmpString, COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE );
 
 					if( biznis != INVALID_BIZNIS_ID )
@@ -2704,7 +2704,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 		            else
 		                PlayerInfo[playerid][pHunger] = 5.0;
 
-					format(tmpString, sizeof(tmpString), "** %s jede krofnu s visnjom.", GetName( playerid, true ) );
+					format(tmpString, sizeof(tmpString), "* %s jede krofnu s visnjom.", GetName( playerid, true ) );
 					ProxDetector(8.0, playerid, tmpString, COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE );
 					PlayerToBusinessMoney(playerid, biznis, 2); // Novac ide u blagajnu ali se oporezuje
         		}
@@ -2716,7 +2716,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 		            else
 		                PlayerInfo[playerid][pHunger] = 5.0;
 
-					format(tmpString, sizeof(tmpString), "** %s jede punjenu krofnu.", GetName( playerid, true ) );
+					format(tmpString, sizeof(tmpString), "* %s jede punjenu krofnu.", GetName( playerid, true ) );
 					ProxDetector(8.0, playerid, tmpString, COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE );
 					PlayerToBusinessMoney(playerid, biznis, 4); // Novac ide u blagajnu ali se oporezuje
 
@@ -2729,7 +2729,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 		            else
 		                PlayerInfo[playerid][pHunger] = 5.0;
 
-					format(tmpString, sizeof(tmpString), "** %s jede krofnu s kokosom.", GetName( playerid, true ) );
+					format(tmpString, sizeof(tmpString), "* %s jede krofnu s kokosom.", GetName( playerid, true ) );
 					ProxDetector(8.0, playerid, tmpString, COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE );
 					PlayerToBusinessMoney(playerid, biznis, 4); // Novac ide u blagajnu ali se oporezuje
 				}
@@ -2742,7 +2742,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 		                PlayerInfo[playerid][pHunger] = 5.0;
 
 					PlayerToBusinessMoney(playerid, biznis, 3); // Novac ide u blagajnu ali se oporezuje
-					format(tmpString, sizeof(tmpString), "** %s jede cokoladnu krofnu.", GetName( playerid, true ) );
+					format(tmpString, sizeof(tmpString), "* %s jede cokoladnu krofnu.", GetName( playerid, true ) );
 					ProxDetector(8.0, playerid, tmpString, COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE );
 				}
 				case 4:
@@ -2753,7 +2753,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 		            else
 		                PlayerInfo[playerid][pHunger] = 5.0;
 
-					format(tmpString, sizeof(tmpString), "** %s pije Coca Colu.", GetName( playerid, true ) );
+					format(tmpString, sizeof(tmpString), "* %s pije Coca Colu.", GetName( playerid, true ) );
 					ProxDetector(8.0, playerid, tmpString, COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE );
 					PlayerToBusinessMoney(playerid, biznis, 3); // Novac ide u blagajnu ali se oporezuje
 				}
@@ -2765,7 +2765,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 		            else
 		                PlayerInfo[playerid][pHunger] = 5.0;
 
-					format(tmpString, sizeof(tmpString), "** %s pije vodu.", GetName( playerid, true ) );
+					format(tmpString, sizeof(tmpString), "* %s pije vodu.", GetName( playerid, true ) );
 					ProxDetector(8.0, playerid, tmpString, COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE );
 					PlayerToBusinessMoney(playerid, biznis, 1); // Novac ide u blagajnu ali se oporezuje
 				}
@@ -2784,7 +2784,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 		            else
 		                PlayerInfo[playerid][pHunger] = 5.0;
 
-					format(tmpString, sizeof(tmpString), "** %s uzima mahune.", GetName( playerid, true ) );
+					format(tmpString, sizeof(tmpString), "* %s uzima mahune.", GetName( playerid, true ) );
 					ProxDetector(8.0, playerid, tmpString, COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE );
 				}
 				case 1: {
@@ -2793,7 +2793,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 		            else
 		                PlayerInfo[playerid][pHunger] = 5.0;
 
-					format(tmpString, sizeof(tmpString), "** %s uzima grah.", GetName( playerid, true ) );
+					format(tmpString, sizeof(tmpString), "* %s uzima grah.", GetName( playerid, true ) );
 					ProxDetector(8.0, playerid, tmpString, COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE );
 				}
 				case 2: {
@@ -2802,7 +2802,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 		            else
 		                PlayerInfo[playerid][pHunger] = 5.0;
 
-					format(tmpString, sizeof(tmpString), "** %s uzima poriluk.", GetName( playerid, true ) );
+					format(tmpString, sizeof(tmpString), "* %s uzima poriluk.", GetName( playerid, true ) );
 					ProxDetector(8.0, playerid, tmpString, COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE );
 				}
 			}

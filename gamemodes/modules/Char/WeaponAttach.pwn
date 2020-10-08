@@ -342,7 +342,7 @@ CMD:weapon(playerid, params[])
 				HiddenWeapon[playerid][pwAmmo]
 			);
 			#endif
-			format( string, sizeof(string), "** %s vadi sakriveni %s ispod odjece.", GetName(playerid, true), weaponname );
+			format( string, sizeof(string), "* %s vadi sakriveni %s ispod odjece.", GetName(playerid, true), weaponname );
 			SetPlayerChatBubble(playerid, string, COLOR_PURPLE, 20, 8000);
 
 			new	puzavac = IsCrounching(playerid);
@@ -366,7 +366,7 @@ CMD:weapon(playerid, params[])
 
 			GetWeaponName(weaponid, weaponname, sizeof(weaponname));
 			SendFormatMessage(playerid, MESSAGE_TYPE_INFO, "Sakrili ste svoj %s.", weaponname);
-			format( string, sizeof(string), "** %s sakriva %s ispod odjece.", GetName(playerid, true), weaponname );
+			format( string, sizeof(string), "* %s sakriva %s ispod odjece.", GetName(playerid, true), weaponname );
 			SetPlayerChatBubble(playerid, string, COLOR_PURPLE, 20, 8000);
 
 			new slot = GetWeaponSlot(weaponid);

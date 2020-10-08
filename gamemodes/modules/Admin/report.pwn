@@ -85,19 +85,9 @@ public OnPlayerReport(playerid, response)
 		format(ReportData[id][reportReason], 128, "%s", PlayerReport[playerid]);
 		ReportData[id][reportTime] = gettime();
 
-  		if(strlen(PlayerReport[playerid]) > 67)
-		{
-			format(str, sizeof(str), "[REPORT: %d] %s(%d): %.75s", id, GetName(playerid, false), playerid, PlayerReport[playerid]);
-			SendAdminMessage(COLOR_SKYBLUE, str);
 
-			format(str, sizeof(str), "[REPORT: %d] %s(%d): ...%s", id, GetName(playerid, false), playerid, PlayerReport[playerid][75]);
-			SendAdminMessage(COLOR_SKYBLUE, str);
-		}
-		else
-		{
-			format(str, sizeof(str), "[REPORT: %d] %s(%d): %s", id, GetName(playerid, false), playerid, PlayerReport[playerid]);
-			SendAdminMessage(COLOR_SKYBLUE, str);
-		}
+		format(str, sizeof(str), "[REPORT: %d] %s(%d): %s", id, GetName(playerid, false), playerid, PlayerReport[playerid]);
+		SendAdminMessage(COLOR_SKYBLUE, str);
 
 		if(strfind(PlayerReport[playerid], "hack", true) != -1 || strfind(PlayerReport[playerid], "cheat", true) != -1 || strfind(PlayerReport[playerid], "hax", true) != -1 || strfind(PlayerReport[playerid], "cheater", true) != -1  || strfind(PlayerReport[playerid], "citer", true) != -1)
 		{
@@ -109,7 +99,7 @@ public OnPlayerReport(playerid, response)
 		}
 		//PlayerTick[playerid][ptReport] = gettimestamp() + 120;
         playeReport[playerid] = id;
-		SendClientMessage(playerid, COLOR_RED, "[ ! ] Vas upit je poslan svim administratorima.");
+		SendMessage(playerid, MESSAGE_TYPE_INFO, "[ ! ]: Your query has been sent to Game Admins.");
 	}
 	return 1;
 }
@@ -138,7 +128,7 @@ stock ConfirmDialog(playerid, caption[], info[], callback[], ...){
 	SetPVarString(playerid, "confDialCallback", callback);	// store the callback that needs to be called after response
 	SetPVarString(playerid, "confDialog_arg", szParamHash);	// store the additional arguments
 
-	ShowPlayerDialog(playerid, DIALOG_CONFIRM_SYS, DIALOG_STYLE_MSGBOX, caption, info, "Yes", "NO"); // display the dialog message itself
+	ShowPlayerDialog(playerid, DIALOG_CONFIRM_SYS, DIALOG_STYLE_MSGBOX, caption, info, "Yes", "No"); // display the dialog message itself
 
 	return;
 }

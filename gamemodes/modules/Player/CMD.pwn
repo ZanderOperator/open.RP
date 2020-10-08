@@ -551,7 +551,7 @@ CMD:time(playerid, params[])
 		}
 		
 		GameTextForPlayer(playerid, timeString, 5000, 1);
-		format(timeString, sizeof(timeString), "** %s gleda koliko je sati.", GetName(playerid,true));
+		format(timeString, sizeof(timeString), "* %s gleda koliko je sati.", GetName(playerid,true));
 		ProxDetector(30.0, playerid, timeString, COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE);
 		if(!IsPlayerInAnyVehicle(playerid))
 			ApplyAnimationEx(playerid,"COP_AMBIENT","Coplook_watch",4.1,0,0,0,0,0,1,0);
@@ -1420,7 +1420,7 @@ CMD:frisk(playerid, params[])
 	}
 	
 	new tmpString[88];
-	format(tmpString, sizeof(tmpString), "** %s je pretrazio %s za ilegalne predmete.", GetName( playerid, true), GetName( giveplayerid, true));
+	format(tmpString, sizeof(tmpString), "* %s je pretrazio %s za ilegalne predmete.", GetName( playerid, true), GetName( giveplayerid, true));
 	ProxDetector(20.0, playerid, tmpString, COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE);
     return 1;
 }
@@ -1491,7 +1491,7 @@ CMD:pay(playerid, params[])
 		PlayerPlaySound(giveplayerid, 1052, 0.0, 0.0, 0.0);
 		new
 			emoteTxt[ 128 ];
-		format(emoteTxt, sizeof(emoteTxt), "** %s daje novac %s (( Pay ))", GetName(playerid, true), GetName(giveplayerid, true));
+		format(emoteTxt, sizeof(emoteTxt), "* %s daje novac %s (( Pay ))", GetName(playerid, true), GetName(giveplayerid, true));
 		ProxDetector(20.0, playerid, emoteTxt, COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE);
 		
 		#if defined MODULE_LOGS
@@ -1992,7 +1992,7 @@ CMD:windows(playerid, params[])
 		
 		switch( status ) {
 			case 0: { // Zatvori
-				format(tmpString, sizeof(tmpString), "** %s podize prozor.", GetName(playerid, true));
+				format(tmpString, sizeof(tmpString), "* %s podize prozor.", GetName(playerid, true));
 				ProxDetector(20.0, playerid, tmpString, COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE);
 				GetVehicleParamsCarWindows(carid, driver, passenger, backleft, backright);
 				Bit1_Set(gr_VehicleWindows,carid,false);
@@ -2005,7 +2005,7 @@ CMD:windows(playerid, params[])
 				}
 			}
 			case 1: { // Otvori
-				format(tmpString, sizeof(tmpString), "** %s spusta prozor.", GetName(playerid, true));
+				format(tmpString, sizeof(tmpString), "* %s spusta prozor.", GetName(playerid, true));
 				ProxDetector(20.0, playerid, tmpString, COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE);
 				GetVehicleParamsCarWindows(carid, driver, passenger, backleft, backright);
 				Bit1_Set(gr_VehicleWindows,carid,true);
@@ -2036,7 +2036,7 @@ CMD:doors(playerid, params[])
   	
 		switch( status ) {
 			case 0: { // Zatvori
-				format(tmpString, sizeof(tmpString), "** %s zatvara vrata.", GetName(playerid, true));
+				format(tmpString, sizeof(tmpString), "* %s zatvara vrata.", GetName(playerid, true));
 				ProxDetector(20.0, playerid, tmpString, COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE);
 				GetVehicleParamsCarDoors(carid, driver, passenger, backleft, backright);
 				
@@ -2048,7 +2048,7 @@ CMD:doors(playerid, params[])
 				}
 			}
 			case 1: { // Otvori
-				format(tmpString, sizeof(tmpString), "** %s otvara vrata.", GetName(playerid, true));
+				format(tmpString, sizeof(tmpString), "* %s otvara vrata.", GetName(playerid, true));
 				ProxDetector(20.0, playerid, tmpString, COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE);
 				
 				switch( door ) {
@@ -2166,7 +2166,7 @@ CMD:dump(playerid, params[])
 				weapon = AC_GetPlayerWeapon(playerid),
 				ammo = AC_GetPlayerAmmo(playerid);
 
-	        format(tmpString, sizeof(tmpString), "** %s baca oruzje na pod.", GetName(playerid, true));
+	        format(tmpString, sizeof(tmpString), "* %s baca oruzje na pod.", GetName(playerid, true));
             ProxDetector(15.0, playerid, tmpString, COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE);
             
 			#if defined MODULE_LOGS
@@ -2210,7 +2210,7 @@ CMD:dump(playerid, params[])
 			mysql_tquery(g_SQL, mobileDelete);
 			
 			SendClientMessage(playerid, COLOR_LIGHTBLUE, "** Bacio si mobitel!");
-	        format(tmpString, sizeof(tmpString), "** %s baca mobitel u daljinu.", GetName(playerid, true));
+	        format(tmpString, sizeof(tmpString), "* %s baca mobitel u daljinu.", GetName(playerid, true));
             ProxDetector(15.0, playerid, tmpString, COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE);
 		}
 		else SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate mobitel!");
@@ -2222,7 +2222,7 @@ CMD:dump(playerid, params[])
 		    PlayerInfo[playerid][ pCryptoNumber ] = 0;
 			
 			SendClientMessage(playerid, COLOR_LIGHTBLUE, "** Bacio si cryto!");
-	        format(tmpString, sizeof(tmpString), "** %s baca crypto u daljinu.", GetName(playerid, true));
+	        format(tmpString, sizeof(tmpString), "* %s baca crypto u daljinu.", GetName(playerid, true));
             ProxDetector(15.0, playerid, tmpString, COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE);
 			// Brise iz baze
 			new	mobileDelete[128];
@@ -2387,7 +2387,7 @@ CMD:give(playerid, params[])
 					else return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nedopustena radnja!");
 					va_SendClientMessage(playerid,COLOR_RED, "[ ! ] Dali ste %s %s s %d municije.", GetName(giveplayerid), WeapNames[weapon], ammo);
 					va_SendClientMessage(giveplayerid, COLOR_RED, "[ ! ] %s vam je dao %s s %d metaka.", GetName(playerid), WeapNames[weapon], ammo);
-					format(globalstring, sizeof(globalstring), "** %s daje oruzje %s.", GetName(playerid), GetName(giveplayerid));
+					format(globalstring, sizeof(globalstring), "* %s daje oruzje %s.", GetName(playerid), GetName(giveplayerid));
 					ProxDetector(5.0, playerid, globalstring, COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE);
 					
 					#if defined MODULE_LOGS
@@ -2459,7 +2459,7 @@ CMD:give(playerid, params[])
 					else return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nedopustena radnja!");
 					SendFormatMessage(playerid, MESSAGE_TYPE_SUCCESS, "Dali ste %s %d sanzera %s(%d metaka).", GetName(giveplayerid), magamount, WeapNames[weapon], finalammo);
 					va_SendClientMessage(giveplayerid, COLOR_RED, "[ ! ] %s vam je dao %d sanzera %s(%d metaka).", GetName(playerid), magamount, WeapNames[weapon], finalammo);
-					format(globalstring, sizeof(globalstring), "** %s daje %d sanzera %s %s.", GetName(playerid), magamount, WeapNames[weapon], GetName(giveplayerid));
+					format(globalstring, sizeof(globalstring), "* %s daje %d sanzera %s %s.", GetName(playerid), magamount, WeapNames[weapon], GetName(giveplayerid));
 					ProxDetector(5.0, playerid, globalstring, COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE);
 					new	puzavac = IsCrounching(giveplayerid);
 					SetAnimationForWeapon(giveplayerid, weapon, puzavac);
@@ -2499,7 +2499,7 @@ CMD:give(playerid, params[])
 			       		SendClientMessage(playerid, COLOR_LIGHTBLUE, globalstring);
 			     		format(globalstring, sizeof(globalstring), "Primili ste %d cigareta od %s.", moneys, GetName(playerid));
 				     	SendClientMessage(giveplayerid, COLOR_LIGHTBLUE, globalstring);
-				    	format(globalstring, sizeof(globalstring), "** %s vadi kutiju cigareta i daje cigaretu %s.", GetName(playerid), GetName(giveplayerid));
+				    	format(globalstring, sizeof(globalstring), "* %s vadi kutiju cigareta i daje cigarete %s.", GetName(playerid), GetName(giveplayerid));
         				ProxDetector(3.0, playerid, globalstring, COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE);
 				    }
 					else SendClientMessage(playerid, COLOR_RED, "Nemate toliko cigareta kod sebe !");
@@ -2515,7 +2515,6 @@ CMD:give(playerid, params[])
 	    SendClientMessage(playerid, COLOR_RED, "[ ! ] Komanda je izbacena");
 	    return 1;
 	}
-    /*
    	else if(strcmp(x_nr,"weaponlicense",true) == 0)
 	{
 		new vrsta;
@@ -2539,7 +2538,7 @@ CMD:give(playerid, params[])
 					{
 	    			    PlayerInfo[giveplayerid][pGunLic] = vrsta;
 				        PlayerPlaySound(giveplayerid, 1052, 0.0, 0.0, 0.0);
-				    	format(globalstring, sizeof(globalstring), "** %s daje %s dozvolu za oruzje.", GetName(playerid), GetName(giveplayerid));
+				    	format(globalstring, sizeof(globalstring), "* %s daje %s dozvolu za oruzje.", GetName(playerid), GetName(giveplayerid));
         				ProxDetector(20.0, playerid, globalstring, COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE);
 				    }
 					else SendClientMessage(playerid, COLOR_RED, "Niste ovlasteni!");
@@ -2550,7 +2549,6 @@ CMD:give(playerid, params[])
 		else SendClientMessage(playerid, COLOR_RED, "Taj igrac nije online !");
 		return 1;
     }
-    */
     else if(strcmp(x_nr,"job",true) == 0)
 	{
     	if (sscanf(params, "s[32]us[32]", x_nr, giveplayerid, posao))
@@ -2595,7 +2593,7 @@ CMD:give(playerid, params[])
 		PlayerInfo[playerid][pLighter] = 0;
 		PlayerInfo[giveplayerid][pLighter] = 1;
 		PlayerPlaySound(giveplayerid, 1052, 0.0, 0.0, 0.0);
-		format(globalstring, sizeof(globalstring), "** %s vadi upaljac iz dzepa i daje ga %s.", GetName(playerid), GetName(giveplayerid));
+		format(globalstring, sizeof(globalstring), "* %s vadi upaljac iz dzepa i daje ga %s.", GetName(playerid), GetName(giveplayerid));
 		ProxDetector(5.0, playerid, globalstring, COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE);
 		return 1;
     }
@@ -2613,7 +2611,7 @@ CMD:give(playerid, params[])
 		PlayerInfo[giveplayerid][pClock] = 1;
 	    PlayerInfo[playerid][pClock] = 0;
 		PlayerPlaySound(giveplayerid, 1052, 0.0, 0.0, 0.0);
-		format(globalstring, sizeof(globalstring), "** %s skida sat s ruke i daje ga %s.", GetName(playerid), GetName(giveplayerid));
+		format(globalstring, sizeof(globalstring), "* %s skida sat s ruke i daje ga %s.", GetName(playerid), GetName(giveplayerid));
 		ProxDetector(5.0, playerid, globalstring, COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE);
 		return 1;
     }
@@ -2633,7 +2631,7 @@ CMD:give(playerid, params[])
 					Bit1_Set( gr_Dice, playerid, false );
 					Bit1_Set( gr_Dice, giveplayerid, true );
     				PlayerPlaySound(giveplayerid, 1052, 0.0, 0.0, 0.0);
-					format(globalstring, sizeof(globalstring), "** %s uzima kocku iz djepa i daje ga %s.", GetName(playerid), GetName(giveplayerid));
+					format(globalstring, sizeof(globalstring), "* %s uzima kocku iz djepa i daje ga %s.", GetName(playerid), GetName(giveplayerid));
 			        ProxDetector(5.0, playerid, globalstring, COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE);
 				}
 				else SendClientMessage(playerid, COLOR_RED, "Taj igrac nije blizu vas !");
@@ -2657,7 +2655,7 @@ CMD:give(playerid, params[])
 					Bit1_Set( gr_FakeGunLic, playerid, false );
 					Bit1_Set( gr_FakeGunLic, giveplayerid, true );
     				PlayerPlaySound(giveplayerid, 1052, 0.0, 0.0, 0.0);
-					format(globalstring, sizeof(globalstring), "** %s uzima dozvolu iz dzepa i daje je %s.", GetName(playerid), GetName(giveplayerid));
+					format(globalstring, sizeof(globalstring), "* %s uzima dozvolu iz dzepa i daje je %s.", GetName(playerid), GetName(giveplayerid));
 			        ProxDetector(5.0, playerid, globalstring, COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE);
 				}
 				else SendClientMessage(playerid, COLOR_RED, "Taj igrac nije blizu vas !");
@@ -2802,7 +2800,7 @@ CMD:showme(playerid, params[])
 	if( strlen(PlayerInfo[ playerid ][ pLook ]) >= 1 || strlen(PlayerInfo[ playerid ][ pLook ]) <= 120 )
 	{
 		new tmpString[ 200 ];
-		format(tmpString, 200, "** %s izgleda kao %s",
+		format(tmpString, 200, "* %s izgleda kao %s",
 			GetName(playerid, true),
 			PlayerInfo[ playerid ][ pLook ]
 		);
@@ -2824,7 +2822,7 @@ CMD:examine(playerid, params[])
 		new
 			tmpString[ 200 ],
 			string[ 200];
-		format(tmpString, 200, "** %s izgleda kao %s",
+		format(tmpString, 200, "* %s izgleda kao %s",
 			GetName(giveplayerid, true),
 			PlayerInfo[ giveplayerid ][ pLook ]
 		);
@@ -2832,7 +2830,7 @@ CMD:examine(playerid, params[])
 		format(string, sizeof(string), "%s", tmpString);
 		SendClientMessage(playerid, COLOR_SAMP_BLUE, string);
 		
-		format(tmpString, sizeof(tmpString), "** %s gleda u %s.",  GetName(playerid, true), GetName(giveplayerid, true));
+		format(tmpString, sizeof(tmpString), "* %s gleda u %s.",  GetName(playerid, true), GetName(giveplayerid, true));
 		ProxDetector(15.0, playerid, tmpString,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE);
 	} 
 	else SendMessage(playerid, MESSAGE_TYPE_ERROR, "Osoba nema namjesten izgled!");
@@ -3157,7 +3155,7 @@ CMD:card(playerid, params[])
 	else if(KartaBroj == 11) { format(KartaStr1, sizeof(KartaStr1), "A"); }
 	else if(KartaBroj == 1) { format(KartaStr1, sizeof(KartaStr1), "A"); }
 	else { format(KartaStr1, sizeof(KartaStr1), "%d", KartaBroj); }
-	format(TempString, sizeof(TempString), "** %s vadi kartu iz spila i okrece je - %s %s", GetName(playerid, true), KartaStr1, KartaStr2);
+	format(TempString, sizeof(TempString), "* %s vadi kartu iz spila i okrece je - %s %s", GetName(playerid, true), KartaStr1, KartaStr2);
 	ProxDetector(5.0, playerid, TempString, COLOR_GREEN,COLOR_GREEN,COLOR_GREEN,COLOR_GREEN,COLOR_GREEN);
 	return 1;
 }
@@ -3187,7 +3185,7 @@ CMD:usecigarette(playerid, params[])
 	
 	new
 		tmpString[ 50 ];
-	format(tmpString, sizeof(tmpString), "** %s pali cigaretu i pusi.", 
+	format(tmpString, sizeof(tmpString), "* %s pali cigaretu i pusi.", 
 		GetName(playerid, true)
 	);
 	ProxDetector(30.0, playerid, tmpString,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE);

@@ -891,7 +891,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 			AC_GivePlayerMoney(playerid, -amount);
 			UpdateWarehouseMoney(warehouseid);
 			SendFormatMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uspjesno ste pohranili %d$ u %s warehouse.", amount);
-			format( string, sizeof(string), "** %s pohranjuje %d$ u skladiste.", GetName(playerid, true), amount );
+			format( string, sizeof(string), "* %s pohranjuje %d$ u skladiste.", GetName(playerid, true), amount );
 			SetPlayerChatBubble(playerid, string, COLOR_PURPLE, 20, 8000);
 			ApplyAnimationEx(playerid,"BOMBER","BOM_Plant",4.1,0,0,0,0,0, 1, 0);
 			
@@ -920,7 +920,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 			AC_GivePlayerMoney(playerid, amount);
 			UpdateWarehouseMoney(warehouseid);
 			SendFormatMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uspjesno ste uzeli %d$ iz %s warehousea.", amount);
-			format( string, sizeof(string), "** %s uzima %d$ iz skladista.", GetName(playerid, true), amount );
+			format( string, sizeof(string), "* %s uzima %d$ iz skladista.", GetName(playerid, true), amount );
 			SetPlayerChatBubble(playerid, string, COLOR_PURPLE, 20, 8000);
 			ApplyAnimationEx(playerid,"BOMBER","BOM_Plant",4.1,0,0,0,0,0, 1, 0);
 			
@@ -977,7 +977,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 			AC_GivePlayerWeapon(playerid, weaponid, ammo);
 			GetWeaponName(weaponid, wname, 32);
 			SendFormatMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uspjesno ste uzeli %s(%d) iz warehousea.", wname, ammo);
-			format( string, sizeof(string), "** %s uzima %s iz skladista.", GetName(playerid, true), wname );
+			format( string, sizeof(string), "* %s uzima %s iz skladista.", GetName(playerid, true), wname );
 			SetPlayerChatBubble(playerid, string, COLOR_PURPLE, 20, 8000);
 			new	puzavac = IsCrounching(playerid);
 			SetAnimationForWeapon(playerid, weaponid, puzavac);
@@ -1107,7 +1107,7 @@ CMD:warehouse(playerid, params[])
 		{
 			WarehouseInfo[wh][whLocked] = true;
 			GameTextForPlayer( playerid, "~w~Sef ~r~zakljucan", 800, 4 );
-			format( string, sizeof(string), "** %s zakljucava sef skladista.", GetName(playerid, true) );
+			format( string, sizeof(string), "* %s zakljucava sef skladista.", GetName(playerid, true) );
 			ApplyAnimationEx(playerid,"BOMBER","BOM_Plant",4.1,0,0,0,0,0, 1, 0);
 			SetPlayerChatBubble(playerid, string, COLOR_PURPLE, 20, 8000);
 		}
@@ -1115,7 +1115,7 @@ CMD:warehouse(playerid, params[])
 		{
 			WarehouseInfo[wh][whLocked] = false;
 			GameTextForPlayer( playerid, "~w~Sef ~g~otkljucan", 800, 4 );
-			format( string, sizeof(string), "** %s otkljucava sef skladista.", GetName(playerid, true) );
+			format( string, sizeof(string), "* %s otkljucava sef skladista.", GetName(playerid, true) );
 			ApplyAnimationEx(playerid,"BOMBER","BOM_Plant",4.1,0,0,0,0,0, 1, 0);
 			SetPlayerChatBubble(playerid, string, COLOR_PURPLE, 20, 8000);
 		}

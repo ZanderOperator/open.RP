@@ -491,7 +491,7 @@ CMD:taxi(playerid, params[]) {
 			
 			// Msg
 			SendMessage(playerid, MESSAGE_TYPE_INFO,"Sada si na duznosti kao taxi vozac, postavite vasu cijenu na /taxi setfare!");
-			format(string, sizeof(string), "** Taxist %s je sada na duznosti. (( /jobduty ))", GetName(playerid, false));
+			format(string, sizeof(string), "* Taxist %s je sada na duznosti. (( /jobduty ))", GetName(playerid, false));
 			SendClientMessageToAll(COLOR_YELLOW, string);
 		}
 		else if(TaxiData[playerid][eTaxiDuty] == true) {		

@@ -955,7 +955,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 					Bit1_Set( gr_PlayerACSafe, playerid, true );
 					AC_GivePlayerWeapon(playerid, WEAPON_SNIPER, 50);
 					SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uzeli ste Sniper Rifle iz lockera.");
-					format(tmpString, sizeof(tmpString), "** %s je uzeo Sniper Rifle iz lockera.", GetName(playerid, true));
+					format(tmpString, sizeof(tmpString), "* %s je uzeo Sniper Rifle iz lockera.", GetName(playerid, true));
 					ProxDetector(20.0, playerid, tmpString, COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE);
 				}
 				case 5: {
@@ -964,7 +964,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 					Bit1_Set( gr_PlayerACSafe, playerid, true );
 					AC_GivePlayerWeapon(playerid, WEAPON_KNIFE, 1);
 					SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uzeli ste Knife iz lockera.");
-					format(tmpString, sizeof(tmpString), "** %s je uzeo Knife iz lockera.", GetName(playerid, true));
+					format(tmpString, sizeof(tmpString), "* %s je uzeo Knife iz lockera.", GetName(playerid, true));
 					ProxDetector(20.0, playerid, tmpString, COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE);
 				}
 				case 6: {
@@ -973,7 +973,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 					Bit1_Set( gr_PlayerACSafe, playerid, true );
 					AC_GivePlayerWeapon(playerid, WEAPON_TEARGAS, 10);
 					SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uzeli ste Teargas iz lockera.");
-					format(tmpString, sizeof(tmpString), "** %s je uzeo Teargas iz lockera.", GetName(playerid, true));
+					format(tmpString, sizeof(tmpString), "* %s je uzeo Teargas iz lockera.", GetName(playerid, true));
 					ProxDetector(20.0, playerid, tmpString, COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE);
 				}
 				case 7: {
@@ -982,7 +982,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 					Bit1_Set( gr_PlayerACSafe, playerid, true );
 					AC_GivePlayerWeapon(playerid, WEAPON_COLT45, 50);
 					SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uzeli ste Colt45 iz lockera..");
-					format(tmpString, sizeof(tmpString), "** %s je uzeo Colt45 iz lockera.", GetName(playerid, true));
+					format(tmpString, sizeof(tmpString), "* %s je uzeo Colt45 iz lockera.", GetName(playerid, true));
 					ProxDetector(20.0, playerid, tmpString, COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE);
 				}
 				case 8: {
@@ -991,7 +991,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 					Bit1_Set( gr_PlayerACSafe, playerid, true );
 					AC_GivePlayerWeapon(playerid, WEAPON_SILENCED, 50);
 					SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uzeli ste Silenced iz lockera.");
-					format(tmpString, sizeof(tmpString), "** %s je uzeo Silenced iz lockera.", GetName(playerid, true));
+					format(tmpString, sizeof(tmpString), "* %s je uzeo Silenced iz lockera.", GetName(playerid, true));
 					ProxDetector(20.0, playerid, tmpString, COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE);
 				}
 				case 9: {
@@ -1000,7 +1000,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 					Bit1_Set( gr_PlayerACSafe, playerid, true );
 					AC_GivePlayerWeapon(playerid, WEAPON_SPRAYCAN, 1000);
 					SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uzeli ste Spraycan iz lockera..");
-					format(tmpString, sizeof(tmpString), "** %s je uzeo Spraycan iz lockera.", GetName(playerid, true));
+					format(tmpString, sizeof(tmpString), "* %s je uzeo Spraycan iz lockera.", GetName(playerid, true));
 					ProxDetector(20.0, playerid, tmpString, COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE);
 				}
 				case 10: {
@@ -1009,15 +1009,15 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 					Bit1_Set( gr_PlayerACSafe, playerid, true );
 					AC_GivePlayerWeapon(playerid, WEAPON_NITESTICK, 1);
 					SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uzeli ste Nitestick iz lockera.");
-					format(tmpString, sizeof(tmpString), "** %s je uzeo Nitestick iz lockera.", GetName(playerid, true));
+					format(tmpString, sizeof(tmpString), "* %s je uzeo Nitestick iz lockera.", GetName(playerid, true));
 					ProxDetector(20.0, playerid, tmpString, COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE);
                 }
 				case 11: {
 					if (! CheckPlayerWeapons(playerid, 25) ) return 1;
 					Bit1_Set( gr_PlayerACSafe, playerid, true );
 					AC_GivePlayerWeapon(playerid, 25, 50);
-					SendClientMessage(playerid,COLOR_RED, "[ ! ] Uzeli ste Bean bag shotgun iz Armoury-a.");
-					format(tmpString, sizeof(tmpString), "** %s je uzeo Bean bag shotgun iz Armoury-a.", GetName(playerid, true));
+					SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uzeli ste Bean bag shotgun iz Armoury-a.");
+					format(tmpString, sizeof(tmpString), "* %s je uzeo Bean bag shotgun iz Armoury-a.", GetName(playerid, true));
 					ProxDetector(20.0, playerid, tmpString, COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE);
 					Bit1_Set(gr_BeanBagShotgun, playerid, true);
 				}
@@ -1027,7 +1027,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 					Bit1_Set( gr_PlayerACSafe, playerid, true );
 					AC_GivePlayerWeapon(playerid, WEAPON_RIFLE, 50);
 					SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uzeli ste Rifle iz lockera.");
-					format(tmpString, sizeof(tmpString), "** %s je uzeo Rifle iz lockera.", GetName(playerid, true));
+					format(tmpString, sizeof(tmpString), "* %s je uzeo Rifle iz lockera.", GetName(playerid, true));
 					ProxDetector(20.0, playerid, tmpString, COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE);
 				}
 
@@ -1349,7 +1349,7 @@ CMD:tazer(playerid, params[])
 
 			new
 				tazerString[ 51 ];
-            format(tazerString, sizeof(tazerString), "** %s uzima tazer sa pojasa.", GetName(playerid, true));
+            format(tazerString, sizeof(tazerString), "* %s uzima tazer sa pojasa.", GetName(playerid, true));
 	   		ProxDetector(15.0, playerid, tazerString, COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE);
             Bit1_Set(gr_Taser, playerid, true);
             AC_GivePlayerWeapon(playerid, 23, 5);
@@ -1487,7 +1487,7 @@ CMD:cuff(playerid, params[])
 
 			new
 				cuffString[83];
-			format(cuffString, sizeof(cuffString), "** %s stavlja lisice na %s, tako da mu nebi pobjegao.", GetName(playerid, true) ,GetName(giveplayerid, true));
+			format(cuffString, sizeof(cuffString), "* %s stavlja lisice na %s, tako da mu nebi pobjegao.", GetName(playerid, true) ,GetName(giveplayerid, true));
 			ProxDetector(30.0, playerid, cuffString, COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE);
 			GameTextForPlayer(giveplayerid, "~r~Uhapsen", 2500, 3);
 			SetPlayerSpecialAction(giveplayerid,SPECIAL_ACTION_CUFFED);
@@ -1794,7 +1794,7 @@ CMD:lawdoors(playerid, params[])
 	{
 		new
 			tmpString[ 62 ];
-		format( tmpString, sizeof(tmpString), "** %s otkljucava zadnja vrata u vozilu.",
+		format( tmpString, sizeof(tmpString), "* %s otkljucava zadnja vrata u vozilu.",
 			GetName(playerid)
 		);
 		ProxDetector(10.0, playerid, tmpString, COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE);
@@ -1805,7 +1805,7 @@ CMD:lawdoors(playerid, params[])
 	} else {	 // Otkljucana
 		new
 			tmpString[ 62 ];
-		format( tmpString, sizeof(tmpString), "** %s zakljucava zadnja vrata u vozilu.",
+		format( tmpString, sizeof(tmpString), "* %s zakljucava zadnja vrata u vozilu.",
 			GetName(playerid)
 		);
 		ProxDetector(10.0, playerid, tmpString, COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE);
@@ -2020,7 +2020,7 @@ CMD:checktrunk(playerid, params[])
 
 	new
 		tmpString[ 49 ];
-	format(tmpString, sizeof(tmpString), "** %s gleda u prtljaznik.", GetName(playerid));
+	format(tmpString, sizeof(tmpString), "* %s gleda u prtljaznik.", GetName(playerid));
 	ProxDetector(10.0, playerid, tmpString, COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE);
 	return 1;
 }
@@ -2337,7 +2337,7 @@ CMD:pdunlock(playerid, params[])
 	new
 		string[ 48 ];
 	GameTextForPlayer( playerid, "~w~Vozilo ~g~otkljucano", 800, 3 );
-	format( string, sizeof(string), "** %s otkljucava vozilo.", GetName(playerid, true) );
+	format( string, sizeof(string), "* %s otkljucava vozilo.", GetName(playerid, true) );
 	SetPlayerChatBubble(playerid, string, COLOR_PURPLE, 20, 20000);
     return 1;
 }
@@ -2361,7 +2361,7 @@ CMD:cleartrunk(playerid, params[])
 	if(vehicleid == INVALID_VEHICLE_ID) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste blizu vozila.");
 	new
 		string[ 48 ];
-	format( string, sizeof(string), "** %s uzima sav sadrzaj iz vozila.", GetName(playerid, true) );
+	format( string, sizeof(string), "* %s uzima sav sadrzaj iz vozila.", GetName(playerid, true) );
 	SetPlayerChatBubble(playerid, string, COLOR_PURPLE, 20, 20000);
 
 	new deleteWeaponQuery[80];
@@ -2424,7 +2424,7 @@ CMD:undercover(playerid, params[])
 
 			new
 				tmpString[ 65 ];
-			format(tmpString, sizeof(tmpString), "** %s skida svoju uniformu i presvlaci se.", GetName(playerid, true));
+			format(tmpString, sizeof(tmpString), "* %s skida svoju uniformu i presvlaci se.", GetName(playerid, true));
 			ProxDetector(10.0, playerid, tmpString, COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE);
 			SetPlayerSkin(playerid, item);
 			SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "Presvukli ste se i sada vas nitko nece moci prepoznati.");
@@ -2563,14 +2563,14 @@ CMD:mole(playerid, params[])
 		Bit1_Set( gr_PlayerHaveMole, playerid, true );
 		new
 			tmpString[80];
-		format(tmpString, sizeof(tmpString), "** %s uzima uredjaj s police.", GetName(playerid, true));
+		format(tmpString, sizeof(tmpString), "* %s uzima uredjaj s police.", GetName(playerid, true));
 		ProxDetector(10.0, playerid, tmpString, COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE);
 	}
 	else if( !strcmp(param, "place", true) ) {
 		if( !Bit1_Get( gr_PlayerHaveMole, playerid ) ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate uredaj za prisluskivanje!");
 		new
 			string[ 69 ];
-		format( string, sizeof(string), "** %s se saginje i nesto postavlja blizu sebe.", GetName(playerid, true) );
+		format( string, sizeof(string), "* %s se saginje i nesto postavlja blizu sebe.", GetName(playerid, true) );
 		SetPlayerChatBubble(playerid, string, COLOR_PURPLE, 20, 20000);
 		SendClientMessage(playerid, COLOR_PURPLE, string);
 
@@ -2587,7 +2587,7 @@ CMD:mole(playerid, params[])
 
 		new
 			string[ 69 ];
-		format( string, sizeof(string), "** %s se saginje i uzima nesto blizu sebe.", GetName(playerid, true) );
+		format( string, sizeof(string), "* %s se saginje i uzima nesto blizu sebe.", GetName(playerid, true) );
 		SetPlayerChatBubble(playerid, string, COLOR_PURPLE, 20, 20000);
 		SendClientMessage(playerid, COLOR_PURPLE, string);
 
@@ -2698,7 +2698,7 @@ CMD:housetake(playerid, params[])
 
 		new
 			tmpString[ 55 ];
-		format(tmpString, sizeof(tmpString), "** %s uzima svo oruzje sa police.",
+		format(tmpString, sizeof(tmpString), "* %s uzima svo oruzje sa police.",
 			GetName(playerid, true)
 		);
 		ProxDetector(10.0, playerid, tmpString, COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE);
@@ -2792,110 +2792,3 @@ CMD:callsign(playerid, params[])
 		SendRadioMessage(3, COLOR_COP, str);
 	return 1;
 }
-
-CMD:cargun(playerid, params[])
-{
-	/*
-	if( !IsACop(playerid) && !IsASD(playerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste pripadnik PDa/SDa!");
-
-	if(PlayerInfo[playerid][pRank] < FactionInfo[PlayerInfo[playerid][pMember]][rCarGun])
-		return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "Morate biti rank %d kako bi ste mogli koristiti ovu komandu!", FactionInfo[PlayerInfo[playerid][pMember]][rCarGun]);
-
-	new
-		Float:X, Float:Y, Float:Z, vehicleid = -1;
-	if(IsACop(playerid))
-	{
-		foreach(new i : Vehicles) {
-			GetVehiclePos(i, X, Y, Z);
-			if(VehicleInfo[i][vFaction] == 1 && IsPlayerInRangeOfPoint(playerid, 5.0, X, Y, Z)) {
-				vehicleid = i;
-				break;
-			}
-		}
-	}
-	else if(IsASD(playerid))
-	{
-		foreach(new i : Vehicles)
-		{
-			GetVehiclePos(i, X, Y, Z);
-			if(VehicleInfo[i][vFaction] == 3 && IsPlayerInRangeOfPoint(playerid, 5.0, X, Y, Z)) {
-				vehicleid = i;
-				break;
-			}
-		}
-	}
-	if(vehicleid == -1)
-		return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nisi blizu PD vozila!");
-    if(PlayerInfo[playerid][pLawDuty] == 0) return  SendClientMessage(playerid,COLOR_RED, "Morate biti na duznosti!");
-
-
-	new
-		param1[6],
-		param2,
-		tmpString[64];
-	if(sscanf(params, "s[6] ", param1)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /cargun [take/put]");
-	if( !strcmp(param1, "take", true) ) {
-		if(sscanf(params, "s[6]i", param1, param2)) {
-			SendClientMessage(playerid, COLOR_RED, "[ ? ]: /cargun take [opcija]");
-			SendClientMessage(playerid, COLOR_RED, "[ ! ] 1 - Desert Eagle | 2 - Shotgun, 3 - MP5, 4 - M4, 5 - Camera");
-			return 1;
-		}
-		switch(param2)
-		{
-			case 1: {
-				if (! CheckPlayerWeapons(playerid, WEAPON_DEAGLE) ) return 1;
-				AC_ResetPlayerWeapon(playerid, WEAPON_DEAGLE);
-				Bit1_Set( gr_PlayerACSafe, playerid, true );
-				AC_GivePlayerWeapon(playerid, WEAPON_DEAGLE, 50);
-				SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uzeli ste Desert Eagle iz vozila.");
-				format(tmpString, sizeof(tmpString), "** %s je uzeo Desert Eagle iz vozila.", GetName(playerid, true));
-				ProxDetector(20.0, playerid, tmpString, COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE);
-			}
-			case 2: {
-				if (! CheckPlayerWeapons(playerid, WEAPON_SHOTGUN) ) return 1;
-				AC_ResetPlayerWeapon(playerid, WEAPON_SHOTGUN);
-				Bit1_Set( gr_PlayerACSafe, playerid, true );
-				AC_GivePlayerWeapon(playerid, WEAPON_SHOTGUN, 50);
-				SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uzeli ste Shotgun iz vozila.");
-				format(tmpString, sizeof(tmpString), "** %s je uzeo Shotgun iz vozila.", GetName(playerid, true));
-				ProxDetector(20.0, playerid, tmpString, COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE);
-			}
-			case 3: {
-				if (! CheckPlayerWeapons(playerid, WEAPON_MP5) ) return 1;
-				AC_ResetPlayerWeapon(playerid, WEAPON_MP5);
-				Bit1_Set( gr_PlayerACSafe, playerid, true );
-				AC_GivePlayerWeapon(playerid, WEAPON_MP5, 100);
-				SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uzeli ste Mp5 iz vozila.");
-				format(tmpString, sizeof(tmpString), "** %s je uzeo Mp5 iz vozila.", GetName(playerid, true));
-				ProxDetector(20.0, playerid, tmpString, COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE);
-			}
-			case 4: {
-				if (! CheckPlayerWeapons(playerid, WEAPON_M4) ) return 1;
-				AC_ResetPlayerWeapon(playerid, WEAPON_M4);
-				Bit1_Set( gr_PlayerACSafe, playerid, true );
-				AC_GivePlayerWeapon(playerid, WEAPON_M4, 100);
-				SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uzeli ste M4 iz vozila.");
-				format(tmpString, sizeof(tmpString), "** %s je uzeo M4 iz vozila.", GetName(playerid, true));
-				ProxDetector(20.0, playerid, tmpString, COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE);
-			}
-			case 5: {
-				if (! CheckPlayerWeapons(playerid, WEAPON_CAMERA) ) return 1;
-				AC_ResetPlayerWeapon(playerid, WEAPON_CAMERA);
-				Bit1_Set( gr_PlayerACSafe, playerid, true );
-				AC_GivePlayerWeapon(playerid, WEAPON_CAMERA, 100);
-				SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uzeli ste kameru iz vozila.");
-				format(tmpString, sizeof(tmpString), "** %s je uzeo kameru iz vozila.", GetName(playerid, true));
-				ProxDetector(20.0, playerid, tmpString, COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE);
-			}
-		}
-	}
-	else if( !strcmp(param1, "put", true) )
-	{
-		AC_ResetPlayerWeapon(playerid, AC_GetPlayerWeapon(playerid));
-		format(tmpString, sizeof(tmpString), "** %s sprema oruzje u vozilo.", GetName(playerid, true));
-		ProxDetector(20.0, playerid, tmpString, COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE);
-	}*/
-	SendClientMessage(playerid, COLOR_RED, "Komanda je izbacena, koristite /gunrack");
-	return 1;
-}
-

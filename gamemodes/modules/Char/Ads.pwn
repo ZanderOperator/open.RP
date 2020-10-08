@@ -279,7 +279,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 					
 					new
 						string[64];
-					format(string, sizeof(string), "** %s vadi mobitel i gleda oglase.", GetName(playerid, true));
+					format(string, sizeof(string), "* %s vadi mobitel i gleda oglase.", GetName(playerid, true));
 					ProxDetector(30.0, playerid, string, COLOR_PURPLE, COLOR_PURPLE, COLOR_PURPLE, COLOR_PURPLE, COLOR_PURPLE);
 				}
 			}
