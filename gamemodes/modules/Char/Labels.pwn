@@ -111,7 +111,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                         {
                             format(liststr, sizeof(liststr), "%s%s\n", liststr, g_aLabels[i][RoadblockName]);
                         }
-                        ShowPlayerDialog(playerid, DIALOG_ROADBLOCK_LIST, DIALOG_STYLE_LIST, "Dostupne blokade:", liststr, "Odaberi", "<<");
+                        ShowPlayerDialog(playerid, DIALOG_ROADBLOCK_LIST, DIALOG_STYLE_LIST, "Dostupne blokade:", liststr, "Choose", "<<");
                     }
                     case 1:
                     {
@@ -127,8 +127,8 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                             format(liststr, sizeof(liststr), "%s%s {AFAFAF}[%s - %s]\n", liststr, GetRoadblockNameFromModel(Labels[i][LabelsModelID]), Labels[i][RoadblockPlacedBy], Labels[i][RoadblockLocation]);
                         }
 
-                        if(foundRoadblock) return ShowPlayerDialog(playerid, DIALOG_ACTIVE_Labels, DIALOG_STYLE_LIST, "Aktivne blokade:", liststr, "Odaberi", "<<");
-                        else return ShowPlayerDialog(playerid, DIALOG_Labels, DIALOG_STYLE_LIST, "Labels Menu", "Postavi blokadu\nLista blokada:", "Odaberi", "Odustani");
+                        if(foundRoadblock) return ShowPlayerDialog(playerid, DIALOG_ACTIVE_Labels, DIALOG_STYLE_LIST, "Aktivne blokade:", liststr, "Choose", "<<");
+                        else return ShowPlayerDialog(playerid, DIALOG_Labels, DIALOG_STYLE_LIST, "Labels Menu", "Postavi blokadu\nLista blokada:", "Choose", "Abort");
                     }
                 }
             }
@@ -155,7 +155,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                 if(!foundRoom)
                 {
                     SendClientMessage(playerid, COLOR_RED, "Dostigli ste limit roadblockova, ne mozete vise.");
-                    return ShowPlayerDialog(playerid, DIALOG_Labels, DIALOG_STYLE_LIST, "Labels Menu", "Postavi blokadu\nLista blokada:", "Odaberi", "Odustani");
+                    return ShowPlayerDialog(playerid, DIALOG_Labels, DIALOG_STYLE_LIST, "Labels Menu", "Postavi blokadu\nLista blokada:", "Choose", "Abort");
                 }
 
                 new
@@ -172,7 +172,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                 format(str, 128, "Spawnali ste {ADC3E7}%s blokadu.  Podesite lokaciju da je spawnujete.", GetRoadblockNameFromModel(g_aLabels[listitem][RoadblockModel]));
                 SendClientMessage(playerid, -1, str);
             }
-            else return ShowPlayerDialog(playerid, DIALOG_Labels, DIALOG_STYLE_LIST, "Labels Menu", "Postavi blokadu\nLista blokada:", "Odaberi", "Odustani");
+            else return ShowPlayerDialog(playerid, DIALOG_Labels, DIALOG_STYLE_LIST, "Labels Menu", "Postavi blokadu\nLista blokada:", "Choose", "Abort");
             return 1;
         }
         case DIALOG_ACTIVE_Labels:
@@ -197,7 +197,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                 ShowPlayerDialog(playerid, DIALOG_ACTIVE_Labels, DIALOG_STYLE_MSGBOX, "Roadblock", primary, "OnRoadblockDisband", listitem);
 */
 			}
-            else return ShowPlayerDialog(playerid, DIALOG_Labels, DIALOG_STYLE_LIST, "Labels Menu", "Postavi blokadu\nLista blokada:", "Odaberi", "Odustani");
+            else return ShowPlayerDialog(playerid, DIALOG_Labels, DIALOG_STYLE_LIST, "Labels Menu", "Postavi blokadu\nLista blokada:", "Choose", "Abort");
             return 1;
         }
 	}
@@ -250,7 +250,7 @@ CMD:roadblock(playerid, params[])
 	if(PlayerInfo[playerid][pAddingRoadblock])
 		return SendClientMessage(playerid, COLOR_RED, "Prvo prestanite postavljati prepreku...");
 
-	ShowPlayerDialog(playerid, DIALOG_Labels, DIALOG_STYLE_LIST, "Labels Menu", "Postavi Roadblock\nRoadblock List", "Odaberi", "Odustani");
+	ShowPlayerDialog(playerid, DIALOG_Labels, DIALOG_STYLE_LIST, "Labels Menu", "Postavi Roadblock\nRoadblock List", "Choose", "Abort");
 	return 1;
 }
 

@@ -333,6 +333,7 @@ CMD:weapon(playerid, params[])
 
 			GetWeaponName(HiddenWeapon[playerid][pwWeaponId], weaponname, sizeof(weaponname));
 			SendFormatMessage(playerid, MESSAGE_TYPE_INFO, "Izvadili ste svoj sakriveni %s.", weaponname);
+			#if defined MODULE_LOGS
 			Log_Write("logfiles/weapon_hide.txt", "(%s) %s[SQL:%d] vadi sakriveni %s(%d) sa /weapon hide.",
 				ReturnDate(),
 				GetName(playerid, false),
@@ -340,6 +341,7 @@ CMD:weapon(playerid, params[])
 				weaponname,
 				HiddenWeapon[playerid][pwAmmo]
 			);
+			#endif
 			format( string, sizeof(string), "** %s vadi sakriveni %s ispod odjece.", GetName(playerid, true), weaponname );
 			SetPlayerChatBubble(playerid, string, COLOR_PURPLE, 20, 8000);
 
@@ -372,6 +374,7 @@ CMD:weapon(playerid, params[])
 			HiddenWeapon[playerid][pwWeaponId] = PlayerWeapons[playerid][pwWeaponId][slot];
 			HiddenWeapon[playerid][pwAmmo] = PlayerWeapons[playerid][pwAmmo][slot];
 			PlayerWeapons[playerid][pwHidden][slot] = 1;
+			#if defined MODULE_LOGS
 			Log_Write("logfiles/weapon_hide.txt", "(%s) %s[SQL:%d] sakriva svoj %s(%d) sa /weapon hide.",
 				ReturnDate(),
 				GetName(playerid, false),
@@ -379,6 +382,7 @@ CMD:weapon(playerid, params[])
 				weaponname,
 				HiddenWeapon[playerid][pwAmmo]
 			);
+			#endif
 			AC_SavePlayerWeapon(playerid, slot);
 			AC_ResetPlayerWeapon(playerid, HiddenWeapon[playerid][pwWeaponId], false);
 		}

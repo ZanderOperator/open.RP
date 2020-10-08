@@ -321,7 +321,7 @@ CMD:prostitute(playerid, const params[]) {
 			SendClientMessage(playerid, COLOR_RED, "[ ? ]: /prostitute check [prostitute_id].");
 			return (true);
 		}
-		ShowPlayerDialog(playerid, 0, DIALOG_STYLE_MSGBOX, "{3C95C2}* Prostitute - Check", CheckProstitute(prostitute_id), "(x)", "");
+		ShowPlayerDialog(playerid, 0, DIALOG_STYLE_MSGBOX, "{3C95C2}* Prostitute - Check", CheckProstitute(prostitute_id), "Close", "");
 	}
 
 	if(strcmp(action,"earned", (true)) == 0) {

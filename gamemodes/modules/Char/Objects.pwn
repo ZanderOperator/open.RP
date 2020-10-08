@@ -575,7 +575,7 @@ stock HandlePlayerObjectSelection(playerid, item)
 				NCObjects[item][ncmodel],
 				NCObjects[item][ncprice]
 			);
-			ShowPlayerDialog( playerid, DIALOG_OBJECTS_BUY, DIALOG_STYLE_MSGBOX, "ZELITE LI KUPITI OBJEKT?", tmpString, "Kupi", "Odustani");
+			ShowPlayerDialog( playerid, DIALOG_OBJECTS_BUY, DIALOG_STYLE_MSGBOX, "ZELITE LI KUPITI OBJEKT?", tmpString, "Buy", "Abort");
 		}
 		case MALL_TOOLKIT_CLOTHING: {
 			ObjectModel[playerid] = TSObjects[item][tsmodel];
@@ -589,7 +589,7 @@ stock HandlePlayerObjectSelection(playerid, item)
 				TSObjects[item][tsmodel],
 				TSObjects[item][tsprice]
 			);
-			ShowPlayerDialog( playerid, DIALOG_OBJECTS_BUY, DIALOG_STYLE_MSGBOX, "ZELITE LI KUPITI OBJEKT?", tmpString, "Kupi", "Odustani");
+			ShowPlayerDialog( playerid, DIALOG_OBJECTS_BUY, DIALOG_STYLE_MSGBOX, "ZELITE LI KUPITI OBJEKT?", tmpString, "Buy", "Abort");
 		}
 		case MALL_TECHNO_CLOTHING: {
 			ObjectModel[playerid] = TechnoObjects[item][teattachmodel];
@@ -603,7 +603,7 @@ stock HandlePlayerObjectSelection(playerid, item)
 				TechnoObjects[item][teattachmodel],
 				TechnoObjects[item][teprice]
 			);
-			ShowPlayerDialog( playerid, DIALOG_OBJECTS_BUY, DIALOG_STYLE_MSGBOX, "ZELITE LI KUPITI OBJEKT?", tmpString, "Kupi", "Odustani");
+			ShowPlayerDialog( playerid, DIALOG_OBJECTS_BUY, DIALOG_STYLE_MSGBOX, "ZELITE LI KUPITI OBJEKT?", tmpString, "Buy", "Abort");
 		}
 		case MALL_SPORTS_CLOTHING: {
 			ObjectModel[playerid] = SportsObjects[item][sportsmodel];
@@ -617,7 +617,7 @@ stock HandlePlayerObjectSelection(playerid, item)
 				SportsObjects[item][sportsmodel],
 				SportsObjects[item][sportsprice]
 			);
-			ShowPlayerDialog( playerid, DIALOG_OBJECTS_BUY, DIALOG_STYLE_MSGBOX, "ZELITE LI KUPITI OBJEKT?", tmpString, "Kupi", "Odustani");
+			ShowPlayerDialog( playerid, DIALOG_OBJECTS_BUY, DIALOG_STYLE_MSGBOX, "ZELITE LI KUPITI OBJEKT?", tmpString, "Buy", "Abort");
 		}
 		case MALL_PD_CLOTHING: {
 			ObjectModel[playerid] = PDObjects[item][pdmodel];
@@ -631,7 +631,7 @@ stock HandlePlayerObjectSelection(playerid, item)
 				PDObjects[item][pdmodel],
 				PDObjects[item][pdprice]
 			);
-			ShowPlayerDialog( playerid, DIALOG_OBJECTS_BUY, DIALOG_STYLE_MSGBOX, "ZELITE LI KUPITI OBJEKT?", tmpString, "Kupi", "Odustani");
+			ShowPlayerDialog( playerid, DIALOG_OBJECTS_BUY, DIALOG_STYLE_MSGBOX, "ZELITE LI KUPITI OBJEKT?", tmpString, "Buy", "Abort");
 		}
 		case MALL_FD_CLOTHING: {
 			ObjectModel[playerid] = FDObjects[item][fdmodel];
@@ -645,7 +645,7 @@ stock HandlePlayerObjectSelection(playerid, item)
 				FDObjects[item][fdmodel],
 				FDObjects[item][fdprice]
 			);
-			ShowPlayerDialog( playerid, DIALOG_OBJECTS_BUY, DIALOG_STYLE_MSGBOX, "ZELITE LI KUPITI OBJEKT?", tmpString, "Kupi", "Odustani");
+			ShowPlayerDialog( playerid, DIALOG_OBJECTS_BUY, DIALOG_STYLE_MSGBOX, "ZELITE LI KUPITI OBJEKT?", tmpString, "Buy", "Abort");
 		}
 		case MALL_GOV_CLOTHING: {
 			ObjectModel[playerid] = GOVObjects[item][govmodel];
@@ -659,7 +659,7 @@ stock HandlePlayerObjectSelection(playerid, item)
 				GOVObjects[item][govmodel],
 				GOVObjects[item][govprice]
 			);
-			ShowPlayerDialog( playerid, DIALOG_OBJECTS_BUY, DIALOG_STYLE_MSGBOX, "ZELITE LI KUPITI OBJEKT?", tmpString, "Kupi", "Odustani");
+			ShowPlayerDialog( playerid, DIALOG_OBJECTS_BUY, DIALOG_STYLE_MSGBOX, "ZELITE LI KUPITI OBJEKT?", tmpString, "Buy", "Abort");
 		}
 		case MALL_PREM_CLOTHING: {
 			ObjectModel[playerid] = PremiumObjects[item][premmodel];
@@ -673,7 +673,7 @@ stock HandlePlayerObjectSelection(playerid, item)
 				PremiumObjects[item][premmodel],
 				PremiumObjects[item][premprice]
 			);
-			ShowPlayerDialog( playerid, DIALOG_OBJECTS_BUY, DIALOG_STYLE_MSGBOX, "ZELITE LI KUPITI OBJEKT?", tmpString, "Kupi", "Odustani");
+			ShowPlayerDialog( playerid, DIALOG_OBJECTS_BUY, DIALOG_STYLE_MSGBOX, "ZELITE LI KUPITI OBJEKT?", tmpString, "Buy", "Abort");
 		}
 		case MALL_HALL_CLOTHING: {
 			ObjectModel[playerid] = HLObjects[item][hlmodel];
@@ -687,7 +687,7 @@ stock HandlePlayerObjectSelection(playerid, item)
 				HLObjects[item][hlmodel],
 				HLObjects[item][hlprice]
 			);
-			ShowPlayerDialog( playerid, DIALOG_OBJECTS_BUY, DIALOG_STYLE_MSGBOX, "ZELITE LI KUPITI OBJEKT?", tmpString, "Kupi", "Odustani");
+			ShowPlayerDialog( playerid, DIALOG_OBJECTS_BUY, DIALOG_STYLE_MSGBOX, "ZELITE LI KUPITI OBJEKT?", tmpString, "Buy", "Abort");
 		}
 	}
 	return 1;
@@ -1026,7 +1026,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 							NCObjects[item][ncmodel],
 							NCObjects[item][ncprice]
 						);
-						ShowPlayerDialog( playerid, DIALOG_OBJECTS_BUY, DIALOG_STYLE_MSGBOX, "ZELITE LI KUPITI OBJEKT?", tmpString, "Kupi", "Odustani");
+						ShowPlayerDialog( playerid, DIALOG_OBJECTS_BUY, DIALOG_STYLE_MSGBOX, "ZELITE LI KUPITI OBJEKT?", tmpString, "Buy", "Abort");
 					}
 					case MALL_TOOLKIT_CLOTHING: {
 						new
@@ -1036,7 +1036,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 							TSObjects[item][tsmodel],
 							TSObjects[item][tsprice]
 						);
-						ShowPlayerDialog( playerid, DIALOG_OBJECTS_BUY, DIALOG_STYLE_MSGBOX, "ZELITE LI KUPITI OBJEKT?", tmpString, "Kupi", "Odustani");
+						ShowPlayerDialog( playerid, DIALOG_OBJECTS_BUY, DIALOG_STYLE_MSGBOX, "ZELITE LI KUPITI OBJEKT?", tmpString, "Buy", "Abort");
 					}
 					case MALL_TECHNO_CLOTHING: {
 						new
@@ -1046,7 +1046,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 							TechnoObjects[item][teattachmodel],
 							TechnoObjects[item][teprice]
 						);
-						ShowPlayerDialog( playerid, DIALOG_OBJECTS_BUY, DIALOG_STYLE_MSGBOX, "ZELITE LI KUPITI OBJEKT?", tmpString, "Kupi", "Odustani");
+						ShowPlayerDialog( playerid, DIALOG_OBJECTS_BUY, DIALOG_STYLE_MSGBOX, "ZELITE LI KUPITI OBJEKT?", tmpString, "Buy", "Abort");
 					}
 					case MALL_SPORTS_CLOTHING: {			
 						new
@@ -1056,7 +1056,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 							SportsObjects[item][sportsmodel],
 							SportsObjects[item][sportsprice]
 						);
-						ShowPlayerDialog( playerid, DIALOG_OBJECTS_BUY, DIALOG_STYLE_MSGBOX, "ZELITE LI KUPITI OBJEKT?", tmpString, "Kupi", "Odustani");
+						ShowPlayerDialog( playerid, DIALOG_OBJECTS_BUY, DIALOG_STYLE_MSGBOX, "ZELITE LI KUPITI OBJEKT?", tmpString, "Buy", "Abort");
 					}
 					case MALL_PD_CLOTHING: {
 						new
@@ -1066,7 +1066,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 							PDObjects[item][pdmodel],
 							PDObjects[item][pdprice]
 						);
-						ShowPlayerDialog( playerid, DIALOG_OBJECTS_BUY, DIALOG_STYLE_MSGBOX, "ZELITE LI KUPITI OBJEKT?", tmpString, "Kupi", "Odustani");
+						ShowPlayerDialog( playerid, DIALOG_OBJECTS_BUY, DIALOG_STYLE_MSGBOX, "ZELITE LI KUPITI OBJEKT?", tmpString, "Buy", "Abort");
 					}
 					case MALL_FD_CLOTHING: {
 						new
@@ -1076,7 +1076,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 							FDObjects[item][fdmodel],
 							FDObjects[item][fdprice]
 						);
-						ShowPlayerDialog( playerid, DIALOG_OBJECTS_BUY, DIALOG_STYLE_MSGBOX, "ZELITE LI KUPITI OBJEKT?", tmpString, "Kupi", "Odustani");
+						ShowPlayerDialog( playerid, DIALOG_OBJECTS_BUY, DIALOG_STYLE_MSGBOX, "ZELITE LI KUPITI OBJEKT?", tmpString, "Buy", "Abort");
 					}
 					case MALL_GOV_CLOTHING: {
 						new
@@ -1086,7 +1086,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 							GOVObjects[item][govmodel],
 							GOVObjects[item][govprice]
 						);
-						ShowPlayerDialog( playerid, DIALOG_OBJECTS_BUY, DIALOG_STYLE_MSGBOX, "ZELITE LI KUPITI OBJEKT?", tmpString, "Kupi", "Odustani");
+						ShowPlayerDialog( playerid, DIALOG_OBJECTS_BUY, DIALOG_STYLE_MSGBOX, "ZELITE LI KUPITI OBJEKT?", tmpString, "Buy", "Abort");
 					}
 					case MALL_PREM_CLOTHING: {
 						new
@@ -1096,7 +1096,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 							PremiumObjects[item][premmodel],
 							PremiumObjects[item][premprice]
 						);
-						ShowPlayerDialog( playerid, DIALOG_OBJECTS_BUY, DIALOG_STYLE_MSGBOX, "ZELITE LI KUPITI OBJEKT?", tmpString, "Kupi", "Odustani");
+						ShowPlayerDialog( playerid, DIALOG_OBJECTS_BUY, DIALOG_STYLE_MSGBOX, "ZELITE LI KUPITI OBJEKT?", tmpString, "Buy", "Abort");
 					}
 				}
 				return 1;

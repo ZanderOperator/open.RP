@@ -46,6 +46,6 @@ CMD:buymelee(playerid, params[]) // pawn shop
 	for(new i=0; i < sizeof(MeleeWeapons); i++) {
 		format(tmpDialog, 128, "%s%s\t%d$\n", tmpDialog, MeleeWeapons[i][mwName], MeleeWeapons[i][mwPrice]);
 	}
-	ShowPlayerDialog(playerid, DIALOG_WEAPONS_MELEE, DIALOG_STYLE_TABLIST_HEADERS, "Pawn Shop", tmpDialog, "Kupi", "Odustani");
+	ShowPlayerDialog(playerid, DIALOG_WEAPONS_MELEE, DIALOG_STYLE_TABLIST_HEADERS, "Pawn Shop", tmpDialog, "Buy", "Abort");
 	return 1;
 }

@@ -267,8 +267,8 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 	switch(dialogid) {
 		case DIALOG_CASINO_SLOTS: {
 			if( !response ) return Bit1_Set(r_PlayerPlaySlots, playerid, true), 1;
-			if( strval(inputtext) < 1 ) return ShowPlayerDialog(playerid, DIALOG_CASINO_SLOTS, DIALOG_STYLE_INPUT, "Aparati - Unos iznosa", "Unesite koliko novaca zelite uloziti u aparat:", "Unesi", "Odustani");
-			if( strval(inputtext) > AC_GetPlayerMoney(playerid) ) return ShowPlayerDialog(playerid, DIALOG_CASINO_SLOTS, DIALOG_STYLE_INPUT, "Aparati - Unos iznosa", "Unesite koliko novaca zelite uloziti u aparat:\n"COL_RED"Nemate toliko novaca!", "Unesi", "Odustani");
+			if( strval(inputtext) < 1 ) return ShowPlayerDialog(playerid, DIALOG_CASINO_SLOTS, DIALOG_STYLE_INPUT, "Aparati - Unos iznosa", "Unesite koliko novaca zelite uloziti u aparat:", "Input", "Abort");
+			if( strval(inputtext) > AC_GetPlayerMoney(playerid) ) return ShowPlayerDialog(playerid, DIALOG_CASINO_SLOTS, DIALOG_STYLE_INPUT, "Aparati - Unos iznosa", "Unesite koliko novaca zelite uloziti u aparat:\n"COL_RED"Nemate toliko novaca!", "Input", "Abort");
 			PlayerSlotsBet[playerid] = strval(inputtext);
 			new
 				tmpString[ 512 ];
@@ -283,11 +283,11 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 				floatround(SLOTS_69 * floatdiv( strval(inputtext), 100 ))
 			);
 			
-			ShowPlayerDialog(playerid, DIALOG_CASINO_SLOTS_ACC, DIALOG_STYLE_MSGBOX, "Aparati - Spremni zaigrati?", tmpString, "Uredu", "Nazad");
+			ShowPlayerDialog(playerid, DIALOG_CASINO_SLOTS_ACC, DIALOG_STYLE_MSGBOX, "Aparati - Spremni zaigrati?", tmpString, "Ok", "Nazad");
 			return 1;
 		}
 		case DIALOG_CASINO_SLOTS_ACC: {
-			if(!response) return ShowPlayerDialog(playerid, DIALOG_CASINO_SLOTS, DIALOG_STYLE_INPUT, "Aparati - Unos iznosa", "Unesite koliko novaca zelite uloziti u aparat:", "Unesi", "Odustani");
+			if(!response) return ShowPlayerDialog(playerid, DIALOG_CASINO_SLOTS, DIALOG_STYLE_INPUT, "Aparati - Unos iznosa", "Unesite koliko novaca zelite uloziti u aparat:", "Input", "Abort");
 			CreatePlayerSlotsTD(playerid, PlayerSlotsBet[playerid]);
 			SlotsTimer[playerid] = SetTimerEx("OnPlayerPlaysSlots", SLOTS_CHANGE_INTERVAL, true, "i", playerid);
 			SlotsTimestamp[playerid] = gettimestamp() + SLOTS_DURATION;
@@ -303,7 +303,7 @@ hook OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
 		if( !Bit1_Get(r_PlayerPlaySlots, playerid) ) {
 			if( IsPlayerInRangeOfSlots(playerid) ) {
 				if( AC_GetPlayerMoney(playerid) < 0 ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Morate imati novaca!");
-				ShowPlayerDialog(playerid, DIALOG_CASINO_SLOTS, DIALOG_STYLE_INPUT, "Aparati - Unos iznosa", "Unesite koliko novaca zelite uloziti u aparat:", "Unesi", "Odustani");
+				ShowPlayerDialog(playerid, DIALOG_CASINO_SLOTS, DIALOG_STYLE_INPUT, "Aparati - Unos iznosa", "Unesite koliko novaca zelite uloziti u aparat:", "Input", "Abort");
 				Bit1_Set(r_PlayerPlaySlots, playerid, true);
 			}
 		}

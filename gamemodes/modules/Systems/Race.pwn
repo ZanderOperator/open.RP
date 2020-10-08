@@ -144,7 +144,7 @@ stock static CallRaceContestant(playerid, giveplayerid)
 		index = GetContestantFromPool(playerid);
 	if( index == -1 ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne mozete vise zvati igrace na svoju utrku!");
 	RacingCallID[ giveplayerid ] = playerid;
-	va_ShowPlayerDialog(giveplayerid, DIALOG_RACE_CALL, DIALOG_STYLE_MSGBOX, "RACING SYSTEM", "%s te poziva da dodjes u njegovu utrku. Zelite li uci?", "Da", "Ne", GetName(playerid, false));
+	va_ShowPlayerDialog(giveplayerid, DIALOG_RACE_CALL, DIALOG_STYLE_MSGBOX, "RACING SYSTEM", "%s te poziva da dodjes u njegovu utrku. Zelite li uci?", "Yes", "No", GetName(playerid, false));
 	return 1;
 }
 stock static StartPlayerRace(playerid)
@@ -362,15 +362,15 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 						if( RacingInfo[ playerid ][ rdPosX ][ i ] != 0.0 )
 							format(buffer, 512, "%s#%d | %s (%.2f, %.2f, %.2f)\n", buffer,i+1,GetXYZZoneName(RacingInfo[ playerid ][ rdPosX ][ i ],RacingInfo[ playerid ][ rdPosY ][ i ],RacingInfo[ playerid ][ rdPosZ ][ i ]),RacingInfo[ playerid ][ rdPosX ][ i ],RacingInfo[ playerid ][ rdPosY ][ i ],RacingInfo[ playerid ][ rdPosZ ][ i ]);
 					}
-					ShowPlayerDialog(playerid, DIALOG_RACE_DCP, DIALOG_STYLE_LIST, "RACING SYSTEM", buffer, "Odaberi", "Odustani");
+					ShowPlayerDialog(playerid, DIALOG_RACE_DCP, DIALOG_STYLE_LIST, "RACING SYSTEM", buffer, "Choose", "Abort");
 				}
 			}
 			return 1;
 		}
 		case DIALOG_RACE_DCP: {
-			if( !response ) return ShowPlayerDialog(playerid, DIALOG_RACE_MAIN, DIALOG_STYLE_LIST, "RACING SYSTEM", "Dodaj checkpoint\nObrisi checkpoint", "Odaberi", "Odustani");
+			if( !response ) return ShowPlayerDialog(playerid, DIALOG_RACE_MAIN, DIALOG_STYLE_LIST, "RACING SYSTEM", "Dodaj checkpoint\nObrisi checkpoint", "Choose", "Abort");
 			RacingDialogID[ playerid ] = listitem;
-			va_ShowPlayerDialog(playerid, DIALOG_RACE_DCPS, DIALOG_STYLE_MSGBOX, "RACING SYSTEM - BRISANJE CPa", "Zelite li obrisati checkpoint u slotu %d?", "Da", "Ne");
+			va_ShowPlayerDialog(playerid, DIALOG_RACE_DCPS, DIALOG_STYLE_MSGBOX, "RACING SYSTEM - BRISANJE CPa", "Zelite li obrisati checkpoint u slotu %d?", "Yes", "No");
 			return 1;
 		}
 		case DIALOG_RACE_DCPS: {
@@ -381,7 +381,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 					if( RacingInfo[ playerid ][ rdPosX ][ i ] != 0.0 )
 						format(buffer, 512, "%s#%d | %s (%.2f, %.2f, %.2f)\n", buffer,i+1,GetXYZZoneName(RacingInfo[ playerid ][ rdPosX ][ i ],RacingInfo[ playerid ][ rdPosY ][ i ],RacingInfo[ playerid ][ rdPosZ ][ i ]),RacingInfo[ playerid ][ rdPosX ][ i ],RacingInfo[ playerid ][ rdPosY ][ i ],RacingInfo[ playerid ][ rdPosZ ][ i ]);
 				}
-				ShowPlayerDialog(playerid, DIALOG_RACE_DCP, DIALOG_STYLE_LIST, "RACING SYSTEM", buffer, "Odaberi", "Odustani");
+				ShowPlayerDialog(playerid, DIALOG_RACE_DCP, DIALOG_STYLE_LIST, "RACING SYSTEM", buffer, "Choose", "Abort");
 				return 1;
 			}
 			ResetPlayerRaceCP(playerid, RacingDialogID[ playerid ]);
@@ -428,7 +428,7 @@ CMD:race(playerid, params[])
 			param[ 8 ];
 		if( sscanf( params, "s[8] ", param ) ) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /race [menu/invite/start]");
 		if( !strcmp(param, "menu", true) ) {
-			ShowPlayerDialog(playerid, DIALOG_RACE_MAIN, DIALOG_STYLE_LIST, "RACING SYSTEM", "Dodaj checkpoint\nObrisi checkpoint", "Odaberi", "Odustani");
+			ShowPlayerDialog(playerid, DIALOG_RACE_MAIN, DIALOG_STYLE_LIST, "RACING SYSTEM", "Dodaj checkpoint\nObrisi checkpoint", "Choose", "Abort");
 		}
 		else if( !strcmp(param, "invite", true) ) {
 			new

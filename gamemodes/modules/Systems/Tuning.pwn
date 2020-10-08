@@ -5,7 +5,7 @@
 //==============================[ Definitions ]=================================
 #define D_TOP       	"Car Tuning"
 #define D_OK 			"Ok"
-#define D_CANCEL 		"Natrag"
+#define D_CANCEL 		"Back"
 #define D_TEXT			"Paintjobs\nAuspuh\nPrednji branik\nStraznji branik\nKrov\nSpoiler\nBocni branici\nFelge\nHidraulika\nNitro"
 
 #define DIALOG_TUNING 			5064
@@ -383,7 +383,7 @@ stock CreatePlayerTuningTextDraws( playerid ) {
 	PlayerTextDrawSetProportional(playerid, TuningBuy[ playerid ][ 8 ], 1);
 	PlayerTextDrawSetSelectable(playerid, TuningBuy[ playerid ][ 8 ], true);
 
-	TuningBuy[ playerid ][ 9 ] = CreatePlayerTextDraw(playerid, 320.000000, 381.499938, "Kupi");
+	TuningBuy[ playerid ][ 9 ] = CreatePlayerTextDraw(playerid, 320.000000, 381.499938, "Buy");
 	PlayerTextDrawTextSize(playerid, TuningBuy[ playerid ][ 9 ], 23.000000, 13.000000 );
 	PlayerTextDrawLetterSize(playerid, TuningBuy[ playerid ][ 9 ], 0.421249, 1.360832 );
 	PlayerTextDrawAlignment(playerid, TuningBuy[ playerid ][ 9 ], 2);

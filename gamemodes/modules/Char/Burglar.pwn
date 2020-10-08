@@ -273,7 +273,7 @@ stock static InitPlayerPocket(playerid, targetid)
 	format( caption, sizeof(caption), "DZEP OD %s", 
 		GetName(targetid, false)
 	);
-	ShowPlayerDialog(playerid, DIALOG_ROB_POCKET, DIALOG_STYLE_LIST, caption, buffer, "Odaberi", "Odustani");
+	ShowPlayerDialog(playerid, DIALOG_ROB_POCKET, DIALOG_STYLE_LIST, caption, buffer, "Choose", "Abort");
 	PickPocketPlayer[ playerid ] = targetid;
 	return 1;
 }
@@ -856,7 +856,7 @@ CMD:stolengoods(playerid, params[])
 {
 	if( PlayerInfo[ playerid ][ pJob ] != ROBBER_ID ) return SendClientMessage( playerid, COLOR_RED, "Niste lopov!");
 	if( RobbingInfo[ playerid ][ rbSlotsGoods ][ 0 ] == 0 && RobbingInfo[ playerid ][ rbSlotsGoods ][ 1 ] == 0 && RobbingInfo[ playerid ][ rbSlotsGoods ][ 2 ] == 0 && RobbingInfo[ playerid ][ rbSlotsGoods ][ 3 ] == 0 && RobbingInfo[ playerid ][ rbSlotsGoods ][ 4 ] == 0 ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Vas inventory je prazan!");
-	ShowPlayerDialog(playerid, 0, DIALOG_STYLE_MSGBOX, "POPIS UKRADENE ROBE", ListStolenGoods(playerid), "Uredu", "");
+	ShowPlayerDialog(playerid, 0, DIALOG_STYLE_MSGBOX, "POPIS UKRADENE ROBE", ListStolenGoods(playerid), "OK", "");
 	return 1;
 }
 
@@ -881,7 +881,7 @@ CMD:sellgoods(playerid, params[])
 	new
 		tmpString[ 55 ];
 	format(tmpString, sizeof(tmpString), ""COL_WHITE"Zelite li prodati robu za "COL_LIGHTBLUE"%d$"COL_WHITE"?", CalculateGoodsMoney(playerid) );
-	ShowPlayerDialog(playerid, DIALOG_ROB_SELL, DIALOG_STYLE_MSGBOX, "PRODAJA UKRADENE ROBE", tmpString, "Prodaj", "Odustani");
+	ShowPlayerDialog(playerid, DIALOG_ROB_SELL, DIALOG_STYLE_MSGBOX, "PRODAJA UKRADENE ROBE", tmpString, "Sell", "Abort");
 	return 1;
 }
 

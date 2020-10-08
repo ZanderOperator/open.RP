@@ -160,7 +160,7 @@ stock LoadPlayerTickets(playerid, const playername[])
 		}
 		new tmpString[64];
 		format(tmpString, 64, "[%s - KAZNE]", playername);
-		ShowPlayerDialog(playerid, 0, DIALOG_STYLE_MSGBOX, tmpString, buffer, "Zatvori", "");
+		ShowPlayerDialog(playerid, 0, DIALOG_STYLE_MSGBOX, tmpString, buffer, "Close", "");
 	}
 	mysql_tquery_inline(g_SQL, mysqlQuery, using inline OnTicketLoad, "");
 	return 1;
@@ -186,7 +186,7 @@ stock ShowVehicleTickets(playerid, vehicleid)
 		}
 	}
 	format(caption, sizeof(caption), "[%s - KAZNE]", LandVehicles[model][viName]);
-	ShowPlayerDialog(playerid, 0, DIALOG_STYLE_MSGBOX, caption, buffer, "Zatvori", "");
+	ShowPlayerDialog(playerid, 0, DIALOG_STYLE_MSGBOX, caption, buffer, "Close", "");
 	return 1;
 }
 

@@ -143,7 +143,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 		{
 			if( !response ) return 1;
 			PlayerWeapPick[ playerid ] = listitem;
-			ShowPlayerDialog(playerid, DIALOG_AMMUNATION_BUY, DIALOG_STYLE_INPUT, "MUNICIJA", "Koliko metaka?", "Kupi", "Cancel");
+			ShowPlayerDialog(playerid, DIALOG_AMMUNATION_BUY, DIALOG_STYLE_INPUT, "MUNICIJA", "Koliko metaka?", "Buy", "Cancel");
 
 			return 1;
 		}
@@ -215,7 +215,7 @@ CMD:buyweapon(playerid, params[])
 		foreach(new i : AMMU) {
 			format( tmpString, 256, "%s{EBD7A9}%s\t%d$\t%d\n", tmpString, AmmuInfo[ i ][ aiName ], AmmuInfo[ i ][ aiPrice ], AmmuInfo[ i ][ aiMaxBullets ] );
 		}
-		ShowPlayerDialog(playerid, DIALOG_AMMUNATION_MENU, DIALOG_STYLE_TABLIST_HEADERS, "AMMUNATION", tmpString, "Odaberi", "Odustani");
+		ShowPlayerDialog(playerid, DIALOG_AMMUNATION_MENU, DIALOG_STYLE_TABLIST_HEADERS, "AMMUNATION", tmpString, "Choose", "Abort");
 	}
 	else {
 		new datum = PlayerInfo[ playerid ][ pAmmuTime ],

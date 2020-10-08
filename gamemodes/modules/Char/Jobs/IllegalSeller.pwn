@@ -173,7 +173,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 		{
 			if( !response ) return SendClientMessage( playerid, COLOR_YELLOW, "**Nepoznat** (govornica): Nemoj mi trositi vrijeme! Kada se odlucis, javi se!");
 			PlayerToolPick[ playerid ] = listitem;
-			ShowPlayerDialog(playerid, DIALOG_WORDER_BULLETS, DIALOG_STYLE_INPUT, "Weapon order ammo", "Koliko metaka da posaljem?", "Naruci", "Cancel");
+			ShowPlayerDialog(playerid, DIALOG_WORDER_BULLETS, DIALOG_STYLE_INPUT, "Weapon order ammo", "Koliko metaka da posaljem?", "Order", "Cancel");
 			return 1;
 		}
 		case DIALOG_WORDER_BULLETS: //Igrac bira kolicinu metaka
@@ -202,7 +202,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 				location,
 				money
 			);
-			ShowPlayerDialog(playerid, DIALOG_WORDER_FINISH, DIALOG_STYLE_MSGBOX, "Weapon order package information", dialogString, "Da", "Ne");
+			ShowPlayerDialog(playerid, DIALOG_WORDER_FINISH, DIALOG_STYLE_MSGBOX, "Weapon order package information", dialogString, "Yes", "No");
 			return 1;
 		}
 		case DIALOG_WORDER_FINISH: //Igrac bira kolicinu metaka
@@ -278,7 +278,7 @@ CMD:weapons(playerid, params[])
 		for( new i = 0; i < 10; i++ ) {
 			format( tmpString, 256, "%s{f4bc42}%s\t%d$\t%d\n", tmpString, IllegalTools[i][wName], IllegalTools[i][wBulletPrice], IllegalTools[i][wWaitTime]);
 		}
-		ShowPlayerDialog(playerid, DIALOG_WORDER_WEAPONS, DIALOG_STYLE_TABLIST_HEADERS, "Weapon order packages", tmpString, "U redu", "Cancel");
+		ShowPlayerDialog(playerid, DIALOG_WORDER_WEAPONS, DIALOG_STYLE_TABLIST_HEADERS, "Weapon order packages", tmpString, "OK", "Cancel");
 	}
 	else if( !strcmp( pick, "view") )
 	{

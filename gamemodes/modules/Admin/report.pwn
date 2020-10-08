@@ -138,7 +138,7 @@ stock ConfirmDialog(playerid, caption[], info[], callback[], ...){
 	SetPVarString(playerid, "confDialCallback", callback);	// store the callback that needs to be called after response
 	SetPVarString(playerid, "confDialog_arg", szParamHash);	// store the additional arguments
 
-	ShowPlayerDialog(playerid, DIALOG_CONFIRM_SYS, DIALOG_STYLE_MSGBOX, caption, info, "Da", "Ne"); // display the dialog message itself
+	ShowPlayerDialog(playerid, DIALOG_CONFIRM_SYS, DIALOG_STYLE_MSGBOX, caption, info, "Yes", "NO"); // display the dialog message itself
 
 	return;
 }
@@ -269,7 +269,7 @@ CMD:reports(playerid, params[])
 		strcat(primary_str, sub_str);
 	}
 
-	ShowPlayerDialog(playerid, DIALOG_REPORTS, DIALOG_STYLE_LIST, "{5CD2FE}ACTIVE REPORTS:", primary_str, "Odaberi", "<<");
+	ShowPlayerDialog(playerid, DIALOG_REPORTS, DIALOG_STYLE_LIST, "{5CD2FE}ACTIVE REPORTS:", primary_str, "Choose", "<<");
 	return 1;
 }
 

@@ -142,7 +142,7 @@ CMD:gunrack(playerid, params[])
 		    format(gun2, sizeof(gun2), "Prazno");
 
 	    format(str, sizeof(str),"Weapon\tAmmo\n\%s\t%i\n%s\t%i",gun1, gunrackAmmo[0][vehicleid], gun2, gunrackAmmo[1][vehicleid]);
-	    ShowPlayerDialog(playerid, DIALOG_GUNRACK, DIALOG_STYLE_TABLIST_HEADERS, "Police Gunrack",str, "Odaberi", "Odustani");
+	    ShowPlayerDialog(playerid, DIALOG_GUNRACK, DIALOG_STYLE_TABLIST_HEADERS, "Police Gunrack",str, "Choose", "Abort");
 	}
 	else SendClientMessage(playerid,COLOR_RED, "Niste u vozilu LSPDa.");
 	return 1;

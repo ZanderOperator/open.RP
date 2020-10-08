@@ -1199,7 +1199,7 @@ CMD:buyskin(playerid, params[])
 		GetPlayerSkin(playerid),
 		Bit16_Get(gr_PlayerSkinPrice, playerid)
 	);
-	ShowPlayerDialog( playerid, DIALOG_SKINSURE, DIALOG_STYLE_MSGBOX, "Kupovina skina", dialogString, "Kupi", "Odustani");
+	ShowPlayerDialog( playerid, DIALOG_SKINSURE, DIALOG_STYLE_MSGBOX, "Kupovina skina", dialogString, "Buy", "Abort");
 	return 1;
 }
 
@@ -1323,7 +1323,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 			}
 			format( BizzInfo[ b ][ bMessage ], 16, inputtext );
 			va_SendClientMessage( playerid, COLOR_RED, "[ ! ]  Ime biznisa promjenjeno u %s.", inputtext );
-			ShowPlayerDialog(playerid, DIALOG_BIZNIS_TYPE, DIALOG_STYLE_LIST, "Odaberite tip novostvorenog biznisa:", GetBiznisTypeList(), "Odaberi", "Izlaz");
+			ShowPlayerDialog(playerid, DIALOG_BIZNIS_TYPE, DIALOG_STYLE_LIST, "Odaberite tip novostvorenog biznisa:", GetBiznisTypeList(), "Choose", "Exit");
 		}
 		case DIALOG_BIZNIS_TYPE:
 		{
@@ -1371,7 +1371,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 							if( GetEmptyProductSlot(bouse) == -1 ) return SendClientMessage( playerid, COLOR_RED, "Vasa polica je puna!" );
 							new tmpString[ 1744 ];
 							format(tmpString, 1744, GetArticleList( bouse ) );
-							ShowPlayerDialog( playerid, DIALOG_BIZNIS_ARTICLELIST, DIALOG_STYLE_LIST, "MOJ BIZNIS - LISTA ARTIKLA", tmpString, "Odaberi", "Odustani" );
+							ShowPlayerDialog( playerid, DIALOG_BIZNIS_ARTICLELIST, DIALOG_STYLE_LIST, "MOJ BIZNIS - LISTA ARTIKLA", tmpString, "Choose", "Abort" );
 						}
 						case 2: {	// Skini artikl
 							if( bouse >= 999 ) return 1;
@@ -1379,7 +1379,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 								string[ 870 ];
 							format( string, 870, GetStoreProducts( bouse ) );
 							if( isnull( string ) ) return SendClientMessage(playerid, COLOR_RED, "Nemate niti jedan artikl na policama!" );
-							ShowPlayerDialog( playerid, DIALOG_BIZNIS_ARTICLEREM, DIALOG_STYLE_LIST, "MOJ BIZNIS - BRISANJE ARTIKLA", string, "Odaberi", "Odustani" );
+							ShowPlayerDialog( playerid, DIALOG_BIZNIS_ARTICLEREM, DIALOG_STYLE_LIST, "MOJ BIZNIS - BRISANJE ARTIKLA", string, "Choose", "Abort" );
 						}
 						case 3: {	// Postavi cijenu
 							if( bouse >= 999 ) return 1;
@@ -1387,7 +1387,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 								string[ 870 ];
 							format( string, 870, GetStoreProducts( bouse ) );
 							if( isnull( string ) ) return SendClientMessage(playerid, COLOR_RED, "Nemate niti jedan artikl na policama!" );
-							ShowPlayerDialog( playerid, DIALOG_BIZNIS_ARTICLEINV, DIALOG_STYLE_LIST, "MOJ BIZNIS - ARTIKLI", string, "Odaberi", "Odustani" );
+							ShowPlayerDialog( playerid, DIALOG_BIZNIS_ARTICLEINV, DIALOG_STYLE_LIST, "MOJ BIZNIS - ARTIKLI", string, "Choose", "Abort" );
 						}
 						case 4: {	// Vrata
 							if( IsPlayerInRangeOfPoint( playerid, 3.0, BizzInfo[ bouse ][ bEntranceX ], BizzInfo[ bouse ][ bEntranceY ], BizzInfo[ bouse ][ bEntranceZ ] ) || IsPlayerInRangeOfPoint( playerid, 3.0, BizzInfo[ bouse ][ bExitX ], BizzInfo[ bouse ][ bExitY ], BizzInfo[ bouse ][ bExitZ ] ) ) {
@@ -1451,18 +1451,18 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 							}
 						}
 						case 6: 	// Cijena produkta
-							ShowPlayerDialog( playerid, DIALOG_BIZNIS_PRODUCTPRICE, DIALOG_STYLE_INPUT, "MOJ BIZNIS - CIJENA PRODUKTA", "Unesite cijenu produkta za vas biznis,\nOna mora biti izmedju 20 i 1000$!", "Unesi", "Odustani" );
+							ShowPlayerDialog( playerid, DIALOG_BIZNIS_PRODUCTPRICE, DIALOG_STYLE_INPUT, "MOJ BIZNIS - CIJENA PRODUKTA", "Unesite cijenu produkta za vas biznis,\nOna mora biti izmedju 20 i 1000$!", "Input", "Abort" );
 						case 7:		// Ime biznisa
-							ShowPlayerDialog(playerid, DIALOG_BIZNIS_NAME, DIALOG_STYLE_INPUT, "BIZNIS - IME BIZNISA", "Unesite novi naziv za vas biznis!", "Dalje", "Natrag");
+							ShowPlayerDialog(playerid, DIALOG_BIZNIS_NAME, DIALOG_STYLE_INPUT, "BIZNIS - IME BIZNISA", "Unesite novi naziv za vas biznis!", "Next", "Back");
 						case 8:
-				    		ShowPlayerDialog(playerid, DIALOG_SELL_BIZ, DIALOG_STYLE_INPUT, "PRODAJA VASEG BIZNISA IGRACU", "U prazni prostor ispod unesite ID igraca i cijenu biznisa", "Prodaj", "Ponisti");
+				    		ShowPlayerDialog(playerid, DIALOG_SELL_BIZ, DIALOG_STYLE_INPUT, "PRODAJA VASEG BIZNISA IGRACU", "U prazni prostor ispod unesite ID igraca i cijenu biznisa", "Sell", "Close");
 						case 9: {
 							if( bouse == -1 ) return 1;
 							new
 								string[ 870 ];
 							format( string, 870, GetStoreProducts( bouse ) );
 							if( isnull( string ) ) return SendClientMessage(playerid, COLOR_RED, "Nemate niti jedan artikl na policama!" );
-							ShowPlayerDialog( playerid, DIALOG_BIZNIS_ARTICLEREFF, DIALOG_STYLE_LIST, "MOJ BIZNIS - REFILL ARTIKLA", string, "Odaberi", "Odustani" );
+							ShowPlayerDialog( playerid, DIALOG_BIZNIS_ARTICLEREFF, DIALOG_STYLE_LIST, "MOJ BIZNIS - REFILL ARTIKLA", string, "Choose", "Abort" );
 						}
 					}
 				}
@@ -1473,12 +1473,12 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 						case 0: 	// Info
 							PrintBizInfo( playerid, bouse );
 						case 1: 	// Cijena ulaza
-							ShowPlayerDialog( playerid, DIALOG_BIZNIS_ENTRANCE, DIALOG_STYLE_INPUT, "BIZNIS - CIJENA ULAZA/USLUGE", "Unesite iznos nove cijene ulaza\nCijena mora biti izmedju 0 i 1.000$!", "Dalje", "Natrag" );
+							ShowPlayerDialog( playerid, DIALOG_BIZNIS_ENTRANCE, DIALOG_STYLE_INPUT, "BIZNIS - CIJENA ULAZA/USLUGE", "Unesite iznos nove cijene ulaza\nCijena mora biti izmedju 0 i 1.000$!", "Next", "Back" );
 						case 2:	{	// Postavi artikl
 							if( GetEmptyProductSlot(bouse) == -1 ) return SendClientMessage( playerid, COLOR_RED, "Vasa polica je puna!" );
 							new tmpString[ 1744 ];
 							format(tmpString, 1744, GetArticleList( bouse ) );
-							ShowPlayerDialog( playerid, DIALOG_BIZNIS_ARTICLELIST, DIALOG_STYLE_LIST, "MOJ BIZNIS - LISTA PICA", tmpString, "Odaberi", "Odustani" );
+							ShowPlayerDialog( playerid, DIALOG_BIZNIS_ARTICLELIST, DIALOG_STYLE_LIST, "MOJ BIZNIS - LISTA PICA", tmpString, "Choose", "Abort" );
 						}
 						case 3: {	// Skini artikl
 							if( bouse >= 999 ) return 1;
@@ -1486,7 +1486,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 								string[ 870 ];
 							format( string, 870, GetStoreProducts( bouse ) );
 							if( isnull( string ) ) return SendClientMessage(playerid, COLOR_RED, "Nemate niti jedan artikl na policama!" );
-							ShowPlayerDialog( playerid, DIALOG_BIZNIS_ARTICLEREM, DIALOG_STYLE_LIST, "MOJ BIZNIS - BRISANJE PICA S MENUA", string, "Odaberi", "Odustani" );
+							ShowPlayerDialog( playerid, DIALOG_BIZNIS_ARTICLEREM, DIALOG_STYLE_LIST, "MOJ BIZNIS - BRISANJE PICA S MENUA", string, "Choose", "Abort" );
 						}
 						case 4: {	// Postavi cijenu
 							if( bouse >= 999 ) return 1;
@@ -1494,7 +1494,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 								string[ 870 ];
 							format( string, 870, GetStoreProducts( bouse ) );
 							if( isnull( string ) ) return SendClientMessage(playerid, COLOR_RED, "Nemate niti jedan artikl na policama!" );
-							ShowPlayerDialog( playerid, DIALOG_BIZNIS_ARTICLEINV, DIALOG_STYLE_LIST, "MOJ BIZNIS - POSTAVI CIJENU PICA", string, "Odaberi", "Odustani" );
+							ShowPlayerDialog( playerid, DIALOG_BIZNIS_ARTICLEINV, DIALOG_STYLE_LIST, "MOJ BIZNIS - POSTAVI CIJENU PICA", string, "Choose", "Abort" );
 						}
 						case 5: {	// Vrata
 							if( IsPlayerInRangeOfPoint( playerid, 3.0, BizzInfo[ bouse ][ bEntranceX ], BizzInfo[ bouse ][ bEntranceY ], BizzInfo[ bouse ][ bEntranceZ ] ) || IsPlayerInRangeOfPoint( playerid, 3.0, BizzInfo[ bouse ][ bExitX ], BizzInfo[ bouse ][ bExitY ], BizzInfo[ bouse ][ bExitZ ] ) ) {
@@ -1548,18 +1548,18 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 							}
 						}
 						case 7: 	// Cijena produkta
-							ShowPlayerDialog( playerid, DIALOG_BIZNIS_PRODUCTPRICE, DIALOG_STYLE_INPUT, "MOJ BIZNIS - CIJENA PRODUKTA", "Unesite cijenu produkta za vas biznis,\nOna mora biti izmedju 20 i 1000$!", "Unesi", "Odustani" );
+							ShowPlayerDialog( playerid, DIALOG_BIZNIS_PRODUCTPRICE, DIALOG_STYLE_INPUT, "MOJ BIZNIS - CIJENA PRODUKTA", "Unesite cijenu produkta za vas biznis,\nOna mora biti izmedju 20 i 1000$!", "Input", "Abort" );
 						case 8:
-							ShowPlayerDialog(playerid, DIALOG_BIZNIS_NAME, DIALOG_STYLE_INPUT, "BIZNIS - IME BIZNISA", "Unesite novi naziv za vas biznis!", "Dalje", "Natrag");
+							ShowPlayerDialog(playerid, DIALOG_BIZNIS_NAME, DIALOG_STYLE_INPUT, "BIZNIS - IME BIZNISA", "Unesite novi naziv za vas biznis!", "Next", "Back");
 						case 9:
-				    		ShowPlayerDialog(playerid, DIALOG_SELL_BIZ, DIALOG_STYLE_INPUT, "PRODAJA VASEG BIZNISA IGRACU", "U prazni prostor ispod unesite ID igraca i cijenu biznisa", "Prodaj", "Ponisti");
+				    		ShowPlayerDialog(playerid, DIALOG_SELL_BIZ, DIALOG_STYLE_INPUT, "PRODAJA VASEG BIZNISA IGRACU", "U prazni prostor ispod unesite ID igraca i cijenu biznisa", "Sell", "Close");
 						case 10: {
 							if( bouse >= 999 ) return 1;
 							new
 								string[ 870 ];
 							format( string, 870, GetStoreProducts( bouse ) );
 							if( isnull( string ) ) return SendClientMessage(playerid, COLOR_RED, "Nemate niti jedan artikl na policama!" );
-							ShowPlayerDialog( playerid, DIALOG_BIZNIS_ARTICLEREFF, DIALOG_STYLE_LIST, "MOJ BIZNIS - REFILL ARTIKLA", string, "Odaberi", "Odustani" );
+							ShowPlayerDialog( playerid, DIALOG_BIZNIS_ARTICLEREFF, DIALOG_STYLE_LIST, "MOJ BIZNIS - REFILL ARTIKLA", string, "Choose", "Abort" );
 						}
 					}
 				}
@@ -1571,7 +1571,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 							if( GetEmptyProductSlot(bouse) == -1 ) return SendClientMessage( playerid, COLOR_RED, "Vasa polica je puna!" );
 							new tmpString[ 1744 ];
 							format(tmpString, 1744, GetArticleList( bouse ) );
-							ShowPlayerDialog( playerid, DIALOG_BIZNIS_ARTICLELIST, DIALOG_STYLE_LIST, "MOJ BIZNIS - LISTA ARTIKLA", tmpString, "Odaberi", "Odustani" );
+							ShowPlayerDialog( playerid, DIALOG_BIZNIS_ARTICLELIST, DIALOG_STYLE_LIST, "MOJ BIZNIS - LISTA ARTIKLA", tmpString, "Choose", "Abort" );
 						}
 						case 2: {	// Skini artikl
 							if( bouse >= 999 ) return 1;
@@ -1579,7 +1579,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 								string[ 870 ];
 							format( string, 870, GetStoreProducts( bouse ) );
 							if( isnull( string ) ) return SendClientMessage(playerid, COLOR_RED, "Nemate niti jedan artikl na policama!" );
-							ShowPlayerDialog( playerid, DIALOG_BIZNIS_ARTICLEREM, DIALOG_STYLE_LIST, "MOJ BIZNIS - BRISANJE ARTIKLA", string, "Odaberi", "Odustani" );
+							ShowPlayerDialog( playerid, DIALOG_BIZNIS_ARTICLEREM, DIALOG_STYLE_LIST, "MOJ BIZNIS - BRISANJE ARTIKLA", string, "Choose", "Abort" );
 						}
 						case 3: {	// Postavi cijenu
 							if( bouse >= 999 ) return 1;
@@ -1587,7 +1587,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 								string[ 870 ];
 							format( string, 870, GetStoreProducts( bouse ) );
 							if( isnull( string ) ) return SendClientMessage(playerid, COLOR_RED, "Nemate niti jedan artikl na policama!" );
-							ShowPlayerDialog( playerid, DIALOG_BIZNIS_ARTICLEINV, DIALOG_STYLE_LIST, "MOJ BIZNIS - ARTIKLI", string, "Odaberi", "Odustani" );
+							ShowPlayerDialog( playerid, DIALOG_BIZNIS_ARTICLEINV, DIALOG_STYLE_LIST, "MOJ BIZNIS - ARTIKLI", string, "Choose", "Abort" );
 						}
 						case 4: {	// Vrata
 							if( IsPlayerInRangeOfPoint( playerid, 3.0, BizzInfo[ bouse ][ bEntranceX ], BizzInfo[ bouse ][ bEntranceY ], BizzInfo[ bouse ][ bEntranceZ ] ) || IsPlayerInRangeOfPoint( playerid, 3.0, BizzInfo[ bouse ][ bExitX ], BizzInfo[ bouse ][ bExitY ], BizzInfo[ bouse ][ bExitZ ] ) ) {
@@ -1651,9 +1651,9 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 							}
 						}
 						case 6:		// Ime biznisa
-							ShowPlayerDialog(playerid, DIALOG_BIZNIS_NAME, DIALOG_STYLE_INPUT, "BIZNIS - IME BIZNISA", "Unesite novi naziv za vas biznis!", "Dalje", "Natrag");
+							ShowPlayerDialog(playerid, DIALOG_BIZNIS_NAME, DIALOG_STYLE_INPUT, "BIZNIS - IME BIZNISA", "Unesite novi naziv za vas biznis!", "Next", "Back");
 						case 7:
-				    		ShowPlayerDialog(playerid, DIALOG_SELL_BIZ, DIALOG_STYLE_INPUT, "PRODAJA VASEG BIZNISA IGRACU", "U prazni prostor ispod unesite ID igraca i cijenu biznisa", "Prodaj", "Ponisti");
+				    		ShowPlayerDialog(playerid, DIALOG_SELL_BIZ, DIALOG_STYLE_INPUT, "PRODAJA VASEG BIZNISA IGRACU", "U prazni prostor ispod unesite ID igraca i cijenu biznisa", "Sell", "Close");
 					}
 				}
 				default: {
@@ -1713,11 +1713,11 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 							}
 						}
 						case 3:		// Postavljanje cijene produkta
-							ShowPlayerDialog( playerid, DIALOG_BIZNIS_PRODUCTPRICE, DIALOG_STYLE_INPUT, "MOJ BIZNIS - CIJENA PRODUKTA", "Unesite cijenu produkta za vas biznis,\nOna mora biti izmedju 20 i 1000$!", "Unesi", "Odustani" );
+							ShowPlayerDialog( playerid, DIALOG_BIZNIS_PRODUCTPRICE, DIALOG_STYLE_INPUT, "MOJ BIZNIS - CIJENA PRODUKTA", "Unesite cijenu produkta za vas biznis,\nOna mora biti izmedju 20 i 1000$!", "Input", "Abort" );
 						case 4:		// Ime biznisa
-							ShowPlayerDialog(playerid, DIALOG_BIZNIS_NAME, DIALOG_STYLE_INPUT, "BIZNIS - IME BIZNISA", "Unesite novi naziv za vas biznis!", "Dalje", "Natrag");
+							ShowPlayerDialog(playerid, DIALOG_BIZNIS_NAME, DIALOG_STYLE_INPUT, "BIZNIS - IME BIZNISA", "Unesite novi naziv za vas biznis!", "Next", "Back");
 						case 5:
-				    		ShowPlayerDialog(playerid, DIALOG_SELL_BIZ, DIALOG_STYLE_INPUT, "PRODAJA VASEG BIZNISA IGRACU", "U prazni prostor ispod unesite ID igraca i cijenu biznisa", "Prodaj", "Ponisti");
+				    		ShowPlayerDialog(playerid, DIALOG_SELL_BIZ, DIALOG_STYLE_INPUT, "PRODAJA VASEG BIZNISA IGRACU", "U prazni prostor ispod unesite ID igraca i cijenu biznisa", "Sell", "Close");
 					}
 				}
 			}
@@ -1734,25 +1734,25 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 				if( !ProxDetectorS(5.0, playerid, gplayerid) ) return SendClientMessage(playerid, COLOR_RED, "Taj igrac nije blizu vas!");
 				if( PlayerInfo[ gplayerid ][ pBizzKey ] != 999 ) return SendClientMessage(playerid, COLOR_RED, "Taj igrac vec ima biznis!");
 				GlobalSellingPlayerID[playerid] = gplayerid;
-				ShowPlayerDialog(playerid, DIALOG_SELL_BIZ_PRICE, DIALOG_STYLE_INPUT, "PRODAJA VASEG BIZNISA IGRACU", "Unesite cijenu vaseg biznisa", "Unesi", "Ponisti");
+				ShowPlayerDialog(playerid, DIALOG_SELL_BIZ_PRICE, DIALOG_STYLE_INPUT, "PRODAJA VASEG BIZNISA IGRACU", "Unesite cijenu vaseg biznisa", "Input", "Close");
 			}
 			return 1;
 		}
 		case DIALOG_SELL_BIZ_PRICE: {
-			if( !response ) return ShowPlayerDialog(playerid, DIALOG_SELL_BIZ, DIALOG_STYLE_INPUT, "PRODAJA VASEG BIZNISA IGRACU", "U prazni prostor ispod unesite ID igraca i cijenu biznisa", "Prodaj", "Ponisti");
+			if( !response ) return ShowPlayerDialog(playerid, DIALOG_SELL_BIZ, DIALOG_STYLE_INPUT, "PRODAJA VASEG BIZNISA IGRACU", "U prazni prostor ispod unesite ID igraca i cijenu biznisa", "Sell", "Close");
 
 			new
 				biznisPrice = strval(inputtext),
 				pID = GlobalSellingPlayerID[playerid];
 
-			if( biznisPrice < 1 || biznisPrice > 9999999 ) return ShowPlayerDialog(playerid, DIALOG_SELL_BIZ_PRICE, DIALOG_STYLE_INPUT, "PRODAJA VASEG BIZNISA IGRACU", "Unesite cijenu vaseg biznisa>\nCijena biznisa ne moze biti manja od 1$, a veca od 9.999.999$", "Unesi", "Ponisti");
+			if( biznisPrice < 1 || biznisPrice > 9999999 ) return ShowPlayerDialog(playerid, DIALOG_SELL_BIZ_PRICE, DIALOG_STYLE_INPUT, "PRODAJA VASEG BIZNISA IGRACU", "Unesite cijenu vaseg biznisa>\nCijena biznisa ne moze biti manja od 1$, a veca od 9.999.999$", "Input", "Close");
 			if(AC_GetPlayerMoney(pID) < biznisPrice) return SendClientMessage(playerid,COLOR_RED,"Osoba nema toliko novaca kod sebe!");
 
 			GlobalSellingPrice[pID] 	= biznisPrice;
 			GlobalSellingPlayerID[pID] 	= playerid;
 			va_SendClientMessage(playerid, COLOR_YELLOW, "[ ! ]  Uspjesno ste ponudili vas biznis igracu %s za %d$", GetName(pID), biznisPrice);
 
-			va_ShowPlayerDialog(pID, DIALOG_SELL_BIZ_2, DIALOG_STYLE_MSGBOX, "PONUDA ZA KUPOVINU BIZNISA", "Igrac %s vam je ponudio da kupite biznis za %d", "Kupi", "Ponisti", GetName(playerid), biznisPrice);
+			va_ShowPlayerDialog(pID, DIALOG_SELL_BIZ_2, DIALOG_STYLE_MSGBOX, "PONUDA ZA KUPOVINU BIZNISA", "Igrac %s vam je ponudio da kupite biznis za %d", "Buy", "Close", GetName(playerid), biznisPrice);
 			return 1;
 		}
 		case DIALOG_SELL_BIZ_2:
@@ -1827,22 +1827,22 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 
 			switch( BizzInfo[ bouse ][ bType ] ) {
 				case BIZZ_TYPE_DUCAN:
-					if( !response ) return ShowPlayerDialog( playerid, DIALOG_BIZNIS_MAIN, DIALOG_STYLE_LIST, "MOJ BIZNIS", "Info\nPostavi artikl\nSkini artikl\nPostavi cijenu artikla\nVrata\nRekonstrukcija biznisa($20.000)\nPostavi cijenu produkata\nIme Biznisa\nProdaj biznis igracu", "Odaberi","Izlaz" );
+					if( !response ) return ShowPlayerDialog( playerid, DIALOG_BIZNIS_MAIN, DIALOG_STYLE_LIST, "MOJ BIZNIS", "Info\nPostavi artikl\nSkini artikl\nPostavi cijenu artikla\nVrata\nRekonstrukcija biznisa($20.000)\nPostavi cijenu produkata\nIme Biznisa\nProdaj biznis igracu", "Choose","Exit" );
 				case BIZZ_TYPE_BAR, BIZZ_TYPE_STRIP:
-					if( !response ) return ShowPlayerDialog( playerid, DIALOG_BIZNIS_MAIN, DIALOG_STYLE_LIST, "MOJ BIZNIS", "Info\nCijena ulaza\nPostavi artikl\nSkini artikl\nPostavi cijenu artikla\nVrata\nRekonstrukcija biznisa($20.000)\nPostavi cijenu produkata\nIme Biznisa\nProdaj biznis igracu", "Odaberi","Izlaz" );
+					if( !response ) return ShowPlayerDialog( playerid, DIALOG_BIZNIS_MAIN, DIALOG_STYLE_LIST, "MOJ BIZNIS", "Info\nCijena ulaza\nPostavi artikl\nSkini artikl\nPostavi cijenu artikla\nVrata\nRekonstrukcija biznisa($20.000)\nPostavi cijenu produkata\nIme Biznisa\nProdaj biznis igracu", "Choose","Exit" );
 			}
 
 			if( !IsValidArticle( bouse, (listitem+100) ) ) return SendClientMessage( playerid, COLOR_RED, "Taj je artikl vec na policama!" );
 
 			Bit16_Set( gr_ArticleIdInput, playerid, (listitem+100) );
 
-			ShowPlayerDialog( playerid, DIALOG_BIZNIS_ARTICLEPRICE, DIALOG_STYLE_INPUT, "MOJ BIZNIS - CIJENA ARTIKLA", "Unesite cijenu artikla\nOna mora biti izmedju 5 i 1000$!", "Unesi", "Odustani" );
+			ShowPlayerDialog( playerid, DIALOG_BIZNIS_ARTICLEPRICE, DIALOG_STYLE_INPUT, "MOJ BIZNIS - CIJENA ARTIKLA", "Unesite cijenu artikla\nOna mora biti izmedju 5 i 1000$!", "Input", "Abort" );
 			return 1;
 		}
 		case DIALOG_BIZNIS_ARTICLEPRICE: {
 			//new
 			//	biznis = PlayerInfo[ playerid ][ pBizzKey ];
-			if( !response ) return ShowPlayerDialog( playerid, DIALOG_BIZNIS_ARTICLELIST, DIALOG_STYLE_LIST, "MOJ BIZNIS - LISTA ARTIKLA", GetArticleList( bouse ), "Odaberi", "Odustani" );
+			if( !response ) return ShowPlayerDialog( playerid, DIALOG_BIZNIS_ARTICLELIST, DIALOG_STYLE_LIST, "MOJ BIZNIS - LISTA ARTIKLA", GetArticleList( bouse ), "Choose", "Abort" );
 			if( 5 <= strval(inputtext) <= 1000 )
 			{
 				if( AC_GetPlayerMoney( playerid ) < 500 ) return SendClientMessage( playerid, COLOR_RED, "Nemate 500$ u djepu!" );
@@ -1858,7 +1858,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 							GetStoreProductName( Bit16_Get( gr_ArticleIdInput, playerid ) )
 						);
 						SendClientMessage( playerid, COLOR_RED, prodString );
-						ShowPlayerDialog( playerid, DIALOG_BIZNIS_MAIN, DIALOG_STYLE_LIST, "MOJ BIZNIS", "Info\nPostavi artikl\nSkini artikl\nPostavi cijenu artikla\nVrata\nRekonstrukcija biznisa($20.000)\nPostavi cijenu produkata\nIme Biznisa\nProdaj biznis igracu", "Odaberi","Izlaz" );
+						ShowPlayerDialog( playerid, DIALOG_BIZNIS_MAIN, DIALOG_STYLE_LIST, "MOJ BIZNIS", "Info\nPostavi artikl\nSkini artikl\nPostavi cijenu artikla\nVrata\nRekonstrukcija biznisa($20.000)\nPostavi cijenu produkata\nIme Biznisa\nProdaj biznis igracu", "Choose","Exit" );
 					}
 					case BIZZ_TYPE_BAR, BIZZ_TYPE_STRIP: {
 						// Money & poruka
@@ -1868,29 +1868,29 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 						);
 						SendClientMessage( playerid, COLOR_RED, prodString );
 
-						ShowPlayerDialog( playerid, DIALOG_BIZNIS_MAIN, DIALOG_STYLE_LIST, "MOJ BIZNIS", "Info\nCijena ulaza\nPostavi artikl\nSkini artikl\nPostavi cijenu artikla\nVrata\nRekonstrukcija biznisa($20.000)\nPostavi cijenu produkata\nIme Biznisa\nProdaj biznis igracu", "Odaberi","Izlaz" );
+						ShowPlayerDialog( playerid, DIALOG_BIZNIS_MAIN, DIALOG_STYLE_LIST, "MOJ BIZNIS", "Info\nCijena ulaza\nPostavi artikl\nSkini artikl\nPostavi cijenu artikla\nVrata\nRekonstrukcija biznisa($20.000)\nPostavi cijenu produkata\nIme Biznisa\nProdaj biznis igracu", "Choose","Exit" );
 					}
 				}
 			}
-			else ShowPlayerDialog( playerid, DIALOG_BIZNIS_ARTICLEPRICE, DIALOG_STYLE_INPUT, "MOJ BIZNIS - CIJENA ARTIKLA", "Unesite cijenu artikla\n"COL_RED"Ona mora biti izmedju 5 i 1000$!", "Unesi", "Odustani" );
+			else ShowPlayerDialog( playerid, DIALOG_BIZNIS_ARTICLEPRICE, DIALOG_STYLE_INPUT, "MOJ BIZNIS - CIJENA ARTIKLA", "Unesite cijenu artikla\n"COL_RED"Ona mora biti izmedju 5 i 1000$!", "Input", "Abort" );
 			return 1;
 		}
 		case DIALOG_BIZNIS_ARTICLEINV: {
 			switch( BizzInfo[ bouse ][ bType ] ) {
 				case BIZZ_TYPE_DUCAN:
-					if( !response ) return ShowPlayerDialog( playerid, DIALOG_BIZNIS_MAIN, DIALOG_STYLE_LIST, "MOJ BIZNIS", "Info\nPostavi artikl\nSkini artikl\nPostavi cijenu artikla\nVrata\nRekonstrukcija biznisa($20.000)\nPostavi cijenu produkata\nIme Biznisa\nProdaj biznis igracu", "Odaberi","Izlaz" );
+					if( !response ) return ShowPlayerDialog( playerid, DIALOG_BIZNIS_MAIN, DIALOG_STYLE_LIST, "MOJ BIZNIS", "Info\nPostavi artikl\nSkini artikl\nPostavi cijenu artikla\nVrata\nRekonstrukcija biznisa($20.000)\nPostavi cijenu produkata\nIme Biznisa\nProdaj biznis igracu", "Choose","Exit" );
 				case BIZZ_TYPE_BAR, BIZZ_TYPE_STRIP:
-					if( !response ) return ShowPlayerDialog( playerid, DIALOG_BIZNIS_MAIN, DIALOG_STYLE_LIST, "MOJ BIZNIS", "Info\nCijena ulaza\nPostavi artikl\nSkini artikl\nPostavi cijenu artikla\nVrata\nRekonstrukcija biznisa($20.000)\nPostavi cijenu produkata\nIme Biznisa\nProdaj biznis igracu", "Odaberi","Izlaz" );
+					if( !response ) return ShowPlayerDialog( playerid, DIALOG_BIZNIS_MAIN, DIALOG_STYLE_LIST, "MOJ BIZNIS", "Info\nCijena ulaza\nPostavi artikl\nSkini artikl\nPostavi cijenu artikla\nVrata\nRekonstrukcija biznisa($20.000)\nPostavi cijenu produkata\nIme Biznisa\nProdaj biznis igracu", "Choose","Exit" );
 			}
 
 			Bit4_Set( gr_ArticleSlot, playerid, listitem );
-			ShowPlayerDialog( playerid, DIALOG_BIZNIS_ARTICLESETPRICE, DIALOG_STYLE_INPUT, "MOJ BIZNIS - CIJENA ARTIKLA", "Unesite cijenu artikla\nOna mora biti izmedju 5 i 1000$!", "Unesi", "Odustani" );
+			ShowPlayerDialog( playerid, DIALOG_BIZNIS_ARTICLESETPRICE, DIALOG_STYLE_INPUT, "MOJ BIZNIS - CIJENA ARTIKLA", "Unesite cijenu artikla\nOna mora biti izmedju 5 i 1000$!", "Input", "Abort" );
 			return 1;
 		}
 		case DIALOG_BIZNIS_ARTICLESETPRICE: {
 			//new
 				//biznis = PlayerInfo[ playerid ][ pBizzKey ];
-			if( !response ) return ShowPlayerDialog( playerid, DIALOG_BIZNIS_ARTICLEINV, DIALOG_STYLE_LIST, "MOJ BIZNIS - ARTIKLI", GetStoreProducts( bouse ), "Odaberi", "Odustani" );
+			if( !response ) return ShowPlayerDialog( playerid, DIALOG_BIZNIS_ARTICLEINV, DIALOG_STYLE_LIST, "MOJ BIZNIS - ARTIKLI", GetStoreProducts( bouse ), "Choose", "Abort" );
 
 			if( 5 <= strval(inputtext) <= 1000 ) {
 				new
@@ -1915,21 +1915,21 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 
 				switch( BizzInfo[ bouse ][ bType ] ) {
 					case BIZZ_TYPE_DUCAN:
-						ShowPlayerDialog( playerid, DIALOG_BIZNIS_MAIN, DIALOG_STYLE_LIST, "MOJ BIZNIS", "Info\nPostavi artikl\nSkini artikl\nPostavi cijenu artikla\nVrata\nRekonstrukcija biznisa($20.000)\nPostavi cijenu produkata\nIme Biznisa\nProdaj biznis igracu", "Odaberi","Izlaz" );
+						ShowPlayerDialog( playerid, DIALOG_BIZNIS_MAIN, DIALOG_STYLE_LIST, "MOJ BIZNIS", "Info\nPostavi artikl\nSkini artikl\nPostavi cijenu artikla\nVrata\nRekonstrukcija biznisa($20.000)\nPostavi cijenu produkata\nIme Biznisa\nProdaj biznis igracu", "Choose","Exit" );
 					case BIZZ_TYPE_BAR, BIZZ_TYPE_STRIP:
-						ShowPlayerDialog( playerid, DIALOG_BIZNIS_MAIN, DIALOG_STYLE_LIST, "MOJ BIZNIS", "Info\nCijena ulaza\nPostavi artikl\nSkini artikl\nPostavi cijenu artikla\nVrata\nRekonstrukcija biznisa($20.000)\nPostavi cijenu produkata\nIme Biznisa\nProdaj biznis igracu", "Odaberi","Izlaz" );
+						ShowPlayerDialog( playerid, DIALOG_BIZNIS_MAIN, DIALOG_STYLE_LIST, "MOJ BIZNIS", "Info\nCijena ulaza\nPostavi artikl\nSkini artikl\nPostavi cijenu artikla\nVrata\nRekonstrukcija biznisa($20.000)\nPostavi cijenu produkata\nIme Biznisa\nProdaj biznis igracu", "Choose","Exit" );
 				}
 			}
-			else ShowPlayerDialog( playerid, DIALOG_BIZNIS_ARTICLESETPRICE, DIALOG_STYLE_INPUT, "MOJ BIZNIS - CIJENA ARTIKLA", "Unesite cijenu artikla\nOna mora biti izmedju 5 i 1000$!", "Unesi", "Odustani" );
+			else ShowPlayerDialog( playerid, DIALOG_BIZNIS_ARTICLESETPRICE, DIALOG_STYLE_INPUT, "MOJ BIZNIS - CIJENA ARTIKLA", "Unesite cijenu artikla\nOna mora biti izmedju 5 i 1000$!", "Input", "Abort" );
 			return 1;
 		}
 		case DIALOG_BIZNIS_ARTICLEREM: {
 			if( !response ) {
 				switch( BizzInfo[ bouse ][ bType ] ) {
 					case BIZZ_TYPE_DUCAN:
-						ShowPlayerDialog( playerid, DIALOG_BIZNIS_MAIN, DIALOG_STYLE_LIST, "MOJ BIZNIS", "Info\nPostavi artikl\nSkini artikl\nPostavi cijenu artikla\nVrata\nRekonstrukcija biznisa($20.000)\nPostavi cijenu produkata\nIme Biznisa\nProdaj biznis igracu", "Odaberi","Izlaz" );
+						ShowPlayerDialog( playerid, DIALOG_BIZNIS_MAIN, DIALOG_STYLE_LIST, "MOJ BIZNIS", "Info\nPostavi artikl\nSkini artikl\nPostavi cijenu artikla\nVrata\nRekonstrukcija biznisa($20.000)\nPostavi cijenu produkata\nIme Biznisa\nProdaj biznis igracu", "Choose","Exit" );
 					case BIZZ_TYPE_BAR, BIZZ_TYPE_STRIP:
-						ShowPlayerDialog( playerid, DIALOG_BIZNIS_MAIN, DIALOG_STYLE_LIST, "MOJ BIZNIS", "Info\nCijena ulaza\nPostavi artikl\nSkini artikl\nPostavi cijenu artikla\nVrata\nRekonstrukcija biznisa($20.000)\nPostavi cijenu produkata\nIme Biznisa\nProdaj biznis igracu", "Odaberi","Izlaz" );
+						ShowPlayerDialog( playerid, DIALOG_BIZNIS_MAIN, DIALOG_STYLE_LIST, "MOJ BIZNIS", "Info\nCijena ulaza\nPostavi artikl\nSkini artikl\nPostavi cijenu artikla\nVrata\nRekonstrukcija biznisa($20.000)\nPostavi cijenu produkata\nIme Biznisa\nProdaj biznis igracu", "Choose","Exit" );
 				}
 				return 1;
 			}
@@ -1937,9 +1937,9 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 				if( !response ) {
 					switch( BizzInfo[ bouse ][ bType ] ) {
 						case BIZZ_TYPE_DUCAN:
-							 ShowPlayerDialog( playerid, DIALOG_BIZNIS_MAIN, DIALOG_STYLE_LIST, "MOJ BIZNIS", "Info\nPostavi artikl\nSkini artikl\nPostavi cijenu artikla\nVrata\nRekonstrukcija biznisa($20.000)\nPostavi cijenu produkata\nIme Biznisa\nProdaj biznis igracu", "Odaberi","Izlaz" );
+							 ShowPlayerDialog( playerid, DIALOG_BIZNIS_MAIN, DIALOG_STYLE_LIST, "MOJ BIZNIS", "Info\nPostavi artikl\nSkini artikl\nPostavi cijenu artikla\nVrata\nRekonstrukcija biznisa($20.000)\nPostavi cijenu produkata\nIme Biznisa\nProdaj biznis igracu", "Choose","Exit" );
 						case BIZZ_TYPE_BAR, BIZZ_TYPE_STRIP:
-							ShowPlayerDialog( playerid, DIALOG_BIZNIS_MAIN, DIALOG_STYLE_LIST, "MOJ BIZNIS", "Info\nCijena ulaza\nPostavi artikl\nSkini artikl\nPostavi cijenu artikla\nVrata\nRekonstrukcija biznisa($20.000)\nPostavi cijenu produkata\nIme Biznisa\nProdaj biznis igracu", "Odaberi","Izlaz" );
+							ShowPlayerDialog( playerid, DIALOG_BIZNIS_MAIN, DIALOG_STYLE_LIST, "MOJ BIZNIS", "Info\nCijena ulaza\nPostavi artikl\nSkini artikl\nPostavi cijenu artikla\nVrata\nRekonstrukcija biznisa($20.000)\nPostavi cijenu produkata\nIme Biznisa\nProdaj biznis igracu", "Choose","Exit" );
 					}
 					return 1;
 				}
@@ -1949,9 +1949,9 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 
 			switch( BizzInfo[ bouse ][ bType ] ) {
 				case BIZZ_TYPE_DUCAN:
-					ShowPlayerDialog( playerid, DIALOG_BIZNIS_MAIN, DIALOG_STYLE_LIST, "MOJ BIZNIS", "Info\nPostavi artikl\nSkini artikl\nPostavi cijenu artikla\nVrata\nRekonstrukcija biznisa($20.000)\nPostavi cijenu produkata\nIme Biznisa\nProdaj biznis igracu", "Odaberi","Izlaz" );
+					ShowPlayerDialog( playerid, DIALOG_BIZNIS_MAIN, DIALOG_STYLE_LIST, "MOJ BIZNIS", "Info\nPostavi artikl\nSkini artikl\nPostavi cijenu artikla\nVrata\nRekonstrukcija biznisa($20.000)\nPostavi cijenu produkata\nIme Biznisa\nProdaj biznis igracu", "Choose","Exit" );
 				case BIZZ_TYPE_BAR, BIZZ_TYPE_STRIP:
-					ShowPlayerDialog( playerid, DIALOG_BIZNIS_MAIN, DIALOG_STYLE_LIST, "MOJ BIZNIS", "Info\nCijena ulaza\nStavi pice na menu\nSkini pice s menua\nPostavi cijenu pica\nVrata\nRekonstrukcija biznisa($20.000)\nPostavi cijenu produkata\nIme Biznisa\nProdaj biznis igracu", "Odaberi","Izlaz" );
+					ShowPlayerDialog( playerid, DIALOG_BIZNIS_MAIN, DIALOG_STYLE_LIST, "MOJ BIZNIS", "Info\nCijena ulaza\nStavi pice na menu\nSkini pice s menua\nPostavi cijenu pica\nVrata\nRekonstrukcija biznisa($20.000)\nPostavi cijenu produkata\nIme Biznisa\nProdaj biznis igracu", "Choose","Exit" );
 			}
 			return 1;
 		}
@@ -1959,9 +1959,9 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 			if( !response ) {
 				switch( BizzInfo[bouse][ bType ] ) {
 					case BIZZ_TYPE_DUCAN:
-						ShowPlayerDialog( playerid, DIALOG_BIZNIS_MAIN, DIALOG_STYLE_LIST, "MOJ BIZNIS", "Info\nPostavi artikl\nSkini artikl\nPostavi cijenu artikla\nVrata\nRekonstrukcija biznisa($20.000)\nPostavi cijenu produkata\nIme Biznisa\nProdaj biznis igracu", "Odaberi","Izlaz" );
+						ShowPlayerDialog( playerid, DIALOG_BIZNIS_MAIN, DIALOG_STYLE_LIST, "MOJ BIZNIS", "Info\nPostavi artikl\nSkini artikl\nPostavi cijenu artikla\nVrata\nRekonstrukcija biznisa($20.000)\nPostavi cijenu produkata\nIme Biznisa\nProdaj biznis igracu", "Choose","Exit" );
 					case BIZZ_TYPE_BAR, BIZZ_TYPE_STRIP:
-						ShowPlayerDialog( playerid, DIALOG_BIZNIS_MAIN, DIALOG_STYLE_LIST, "MOJ BIZNIS", "Info\nCijena ulaza\nPostavi artikl\nSkini artikl\nPostavi cijenu artikla\nVrata\nRekonstrukcija biznisa($20.000)\nPostavi cijenu produkata\nIme Biznisa\nProdaj biznis igracu", "Odaberi","Izlaz" );
+						ShowPlayerDialog( playerid, DIALOG_BIZNIS_MAIN, DIALOG_STYLE_LIST, "MOJ BIZNIS", "Info\nCijena ulaza\nPostavi artikl\nSkini artikl\nPostavi cijenu artikla\nVrata\nRekonstrukcija biznisa($20.000)\nPostavi cijenu produkata\nIme Biznisa\nProdaj biznis igracu", "Choose","Exit" );
 				}
 				return 1;
 			}
@@ -1973,9 +1973,9 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 
 			switch( BizzInfo[ bouse ][ bType ] ) {
 				case BIZZ_TYPE_DUCAN:
-					ShowPlayerDialog( playerid, DIALOG_BIZNIS_MAIN, DIALOG_STYLE_LIST, "MOJ BIZNIS", "Info\nPostavi artikl\nSkini artikl\nPostavi cijenu artikla\nVrata\nRekonstrukcija biznisa($20.000)\nPostavi cijenu produkata\nIme Biznisa\nProdaj biznis igracu", "Odaberi","Izlaz" );
+					ShowPlayerDialog( playerid, DIALOG_BIZNIS_MAIN, DIALOG_STYLE_LIST, "MOJ BIZNIS", "Info\nPostavi artikl\nSkini artikl\nPostavi cijenu artikla\nVrata\nRekonstrukcija biznisa($20.000)\nPostavi cijenu produkata\nIme Biznisa\nProdaj biznis igracu", "Choose","Exit" );
 				case BIZZ_TYPE_BAR, BIZZ_TYPE_STRIP:
-					ShowPlayerDialog( playerid, DIALOG_BIZNIS_MAIN, DIALOG_STYLE_LIST, "MOJ BIZNIS", "Info\nCijena ulaza\nStavi pice na menu\nSkini pice s menua\nPostavi cijenu pica\nVrata\nRekonstrukcija biznisa($20.000)\nIme Biznisa\nProdaj biznis igracu\nRefill pica\nRefill pica", "Odaberi","Izlaz" );
+					ShowPlayerDialog( playerid, DIALOG_BIZNIS_MAIN, DIALOG_STYLE_LIST, "MOJ BIZNIS", "Info\nCijena ulaza\nStavi pice na menu\nSkini pice s menua\nPostavi cijenu pica\nVrata\nRekonstrukcija biznisa($20.000)\nIme Biznisa\nProdaj biznis igracu\nRefill pica\nRefill pica", "Choose","Exit" );
 			}
 
 			return 1;
@@ -1984,9 +1984,9 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 			if( !response ) {
 				switch( BizzInfo[ bouse ][ bType ] ) {
 					case BIZZ_TYPE_DUCAN:
-						ShowPlayerDialog( playerid, DIALOG_BIZNIS_MAIN, DIALOG_STYLE_LIST, "MOJ BIZNIS", "Info\nPostavi artikl\nSkini artikl\nPostavi cijenu artikla\nVrata\nRekonstrukcija biznisa($20.000)\nPostavi cijenu produkata\nIme Biznisa\nProdaj biznis igracu", "Odaberi","Izlaz" );
+						ShowPlayerDialog( playerid, DIALOG_BIZNIS_MAIN, DIALOG_STYLE_LIST, "MOJ BIZNIS", "Info\nPostavi artikl\nSkini artikl\nPostavi cijenu artikla\nVrata\nRekonstrukcija biznisa($20.000)\nPostavi cijenu produkata\nIme Biznisa\nProdaj biznis igracu", "Choose","Exit" );
 					case BIZZ_TYPE_BAR, BIZZ_TYPE_STRIP:
-						ShowPlayerDialog( playerid, DIALOG_BIZNIS_MAIN, DIALOG_STYLE_LIST, "MOJ BIZNIS", "Info\nCijena ulaza\nPostavi artikl\nSkini artikl\nPostavi cijenu artikla\nVrata\nRekonstrukcija biznisa($20.000)\nPostavi cijenu produkata\nIme Biznisa\nProdaj biznis igracu", "Odaberi","Izlaz" );
+						ShowPlayerDialog( playerid, DIALOG_BIZNIS_MAIN, DIALOG_STYLE_LIST, "MOJ BIZNIS", "Info\nCijena ulaza\nPostavi artikl\nSkini artikl\nPostavi cijenu artikla\nVrata\nRekonstrukcija biznisa($20.000)\nPostavi cijenu produkata\nIme Biznisa\nProdaj biznis igracu", "Choose","Exit" );
 				}
 				return 1;
 			}
@@ -2001,9 +2001,9 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 
 			switch( BizzInfo[ bouse ][ bType ] ) {
 				case BIZZ_TYPE_DUCAN:
-					ShowPlayerDialog( playerid, DIALOG_BIZNIS_MAIN, DIALOG_STYLE_LIST, "MOJ BIZNIS", "Info\nPostavi artikl\nSkini artikl\nPostavi cijenu artikla\nVrata\nRekonstrukcija biznisa($20.000)\nPostavi cijenu produkata\nIme Biznisa\nProdaj biznis igracu", "Odaberi","Izlaz" );
+					ShowPlayerDialog( playerid, DIALOG_BIZNIS_MAIN, DIALOG_STYLE_LIST, "MOJ BIZNIS", "Info\nPostavi artikl\nSkini artikl\nPostavi cijenu artikla\nVrata\nRekonstrukcija biznisa($20.000)\nPostavi cijenu produkata\nIme Biznisa\nProdaj biznis igracu", "Choose","Exit" );
 				case BIZZ_TYPE_BAR, BIZZ_TYPE_STRIP:
-					ShowPlayerDialog( playerid, DIALOG_BIZNIS_MAIN, DIALOG_STYLE_LIST, "MOJ BIZNIS", "Info\nCijena ulaza\nPostavi artikl\nSkini artikl\nPostavi cijenu artikla\nVrata\nRekonstrukcija biznisa($20.000)\nPostavi cijenu produkata\nIme Biznisa\nProdaj biznis igracu", "Odaberi","Izlaz" );
+					ShowPlayerDialog( playerid, DIALOG_BIZNIS_MAIN, DIALOG_STYLE_LIST, "MOJ BIZNIS", "Info\nCijena ulaza\nPostavi artikl\nSkini artikl\nPostavi cijenu artikla\nVrata\nRekonstrukcija biznisa($20.000)\nPostavi cijenu produkata\nIme Biznisa\nProdaj biznis igracu", "Choose","Exit" );
 			}
 			return 1;
 		}
@@ -2149,8 +2149,8 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 
 			switch(listitem)
 			{
-				case 0: ShowPlayerDialog(playerid,DIALOG_BIZNIS_MOBILEBUY,DIALOG_STYLE_LIST,"Odaberite mobitel", ListPhonesForSale(), "Kupi", "Izlaz");
-				case 1: ShowPlayerDialog(playerid, DIALOG_BIZNIS_CRYPTOBUY, DIALOG_STYLE_LIST, "Odaberite crypto...", "Motorola T-900 Crypto - 50$\nAppollo Gold T25 - 70$\nX3 Crypto - 100$", "Odaberi", "Odustani");
+				case 0: ShowPlayerDialog(playerid,DIALOG_BIZNIS_MOBILEBUY,DIALOG_STYLE_LIST,"Odaberite mobitel", ListPhonesForSale(), "Buy", "Exit");
+				case 1: ShowPlayerDialog(playerid, DIALOG_BIZNIS_CRYPTOBUY, DIALOG_STYLE_LIST, "Odaberite crypto...", "Motorola T-900 Crypto - 50$\nAppollo Gold T25 - 70$\nX3 Crypto - 100$", "Choose", "Abort");
 				case 2:
 				{
 					if( !PlayerInfo[playerid][pMobileNumber] ) return SendErrorMessage(playerid, "Nemate mobitel!");
@@ -2161,7 +2161,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 		case DIALOG_BIZNIS_MOBILEBUY:
 		{
 			if( !response )
-				return ShowPlayerDialog(playerid, DIALOG_BIZNIS_CRYPTOORMOBILE, DIALOG_STYLE_LIST, "Odaberite proizvod..", "Mobiteli\nCrypto i ostalo", "Odaberi", "Odustani");
+				return ShowPlayerDialog(playerid, DIALOG_BIZNIS_CRYPTOORMOBILE, DIALOG_STYLE_LIST, "Odaberite proizvod..", "Mobiteli\nCrypto i ostalo", "Choose", "Abort");
 
 			BuyPlayerPhone(playerid, listitem);
 			return 1;
@@ -2169,7 +2169,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 		case DIALOG_BIZNIS_CRYPTOBUY:
 		{
 		    if( !response )
-				return ShowPlayerDialog(playerid, DIALOG_BIZNIS_CRYPTOORMOBILE, DIALOG_STYLE_LIST, "Odaberite proizvod..", "Mobiteli\nCrypto i ostalo", "Odaberi", "Odustani");
+				return ShowPlayerDialog(playerid, DIALOG_BIZNIS_CRYPTOORMOBILE, DIALOG_STYLE_LIST, "Odaberite proizvod..", "Mobiteli\nCrypto i ostalo", "Choose", "Abort");
 			new
 				string[ 51 ];
 
@@ -2231,9 +2231,9 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 			if( !response ) {
 				switch( BizzInfo[ bouse ][ bType ] ) {
 					case BIZZ_TYPE_DUCAN:
-						ShowPlayerDialog( playerid, DIALOG_BIZNIS_MAIN, DIALOG_STYLE_LIST, "MOJ BIZNIS", "Info\nPostavi artikl\nSkini artikl\nPostavi cijenu artikla\nVrata\nRekonstrukcija biznisa($20.000)\nPostavi cijenu produkata\nIme Biznisa\nProdaj biznis igracu", "Odaberi","Izlaz" );
+						ShowPlayerDialog( playerid, DIALOG_BIZNIS_MAIN, DIALOG_STYLE_LIST, "MOJ BIZNIS", "Info\nPostavi artikl\nSkini artikl\nPostavi cijenu artikla\nVrata\nRekonstrukcija biznisa($20.000)\nPostavi cijenu produkata\nIme Biznisa\nProdaj biznis igracu", "Choose","Exit" );
 					case BIZZ_TYPE_BAR, BIZZ_TYPE_STRIP:
-						ShowPlayerDialog( playerid, DIALOG_BIZNIS_MAIN, DIALOG_STYLE_LIST, "MOJ BIZNIS", "Info\nCijena ulaza\nPostavi artikl\nSkini artikl\nPostavi cijenu artikla\nVrata\nRekonstrukcija biznisa($20.000)\nPostavi cijenu produkata\nIme Biznisa\nProdaj biznis igracu", "Odaberi","Izlaz" );
+						ShowPlayerDialog( playerid, DIALOG_BIZNIS_MAIN, DIALOG_STYLE_LIST, "MOJ BIZNIS", "Info\nCijena ulaza\nPostavi artikl\nSkini artikl\nPostavi cijenu artikla\nVrata\nRekonstrukcija biznisa($20.000)\nPostavi cijenu produkata\nIme Biznisa\nProdaj biznis igracu", "Choose","Exit" );
 				}
 				return 1;
 			}
@@ -2248,17 +2248,17 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 				mysql_tquery(g_SQL, bigquery);
 				switch( BizzInfo[ bouse ][ bType ] ) {
 					case BIZZ_TYPE_DUCAN:
-						ShowPlayerDialog( playerid, DIALOG_BIZNIS_MAIN, DIALOG_STYLE_LIST, "MOJ BIZNIS", "Info\nPostavi artikl\nSkini artikl\nPostavi cijenu artikla\nVrata\nRekonstrukcija biznisa($20.000)\nPostavi cijenu produkata\nIme Biznisa\nProdaj biznis igracu", "Odaberi","Izlaz" );
+						ShowPlayerDialog( playerid, DIALOG_BIZNIS_MAIN, DIALOG_STYLE_LIST, "MOJ BIZNIS", "Info\nPostavi artikl\nSkini artikl\nPostavi cijenu artikla\nVrata\nRekonstrukcija biznisa($20.000)\nPostavi cijenu produkata\nIme Biznisa\nProdaj biznis igracu", "Choose","Exit" );
 					case BIZZ_TYPE_BAR, BIZZ_TYPE_STRIP:
-						ShowPlayerDialog( playerid, DIALOG_BIZNIS_MAIN, DIALOG_STYLE_LIST, "MOJ BIZNIS", "Info\nCijena ulaza\nPostavi artikl\nSkini artikl\nPostavi cijenu artikla\nVrata\nRekonstrukcija biznisa($20.000)\nPostavi cijenu produkata\nIme Biznisa\nProdaj biznis igracu", "Odaberi","Izlaz" );
+						ShowPlayerDialog( playerid, DIALOG_BIZNIS_MAIN, DIALOG_STYLE_LIST, "MOJ BIZNIS", "Info\nCijena ulaza\nPostavi artikl\nSkini artikl\nPostavi cijenu artikla\nVrata\nRekonstrukcija biznisa($20.000)\nPostavi cijenu produkata\nIme Biznisa\nProdaj biznis igracu", "Choose","Exit" );
 				}
 
 			} else {
 				switch( BizzInfo[ bouse ][ bType ] ) {
 					case BIZZ_TYPE_DUCAN:
-						ShowPlayerDialog( playerid, DIALOG_BIZNIS_MAIN, DIALOG_STYLE_LIST, "MOJ BIZNIS", "Info\nPostavi artikl\nSkini artikl\nPostavi cijenu artikla\nVrata\nRekonstrukcija biznisa($20.000)\nPostavi cijenu produkata\nIme Biznisa\nProdaj biznis igracu", "Odaberi","Izlaz" );
+						ShowPlayerDialog( playerid, DIALOG_BIZNIS_MAIN, DIALOG_STYLE_LIST, "MOJ BIZNIS", "Info\nPostavi artikl\nSkini artikl\nPostavi cijenu artikla\nVrata\nRekonstrukcija biznisa($20.000)\nPostavi cijenu produkata\nIme Biznisa\nProdaj biznis igracu", "Choose","Exit" );
 					case BIZZ_TYPE_BAR, BIZZ_TYPE_STRIP:
-						ShowPlayerDialog( playerid, DIALOG_BIZNIS_MAIN, DIALOG_STYLE_LIST, "MOJ BIZNIS", "Info\nCijena ulaza\nPostavi artikl\nSkini artikl\nPostavi cijenu artikla\nVrata\nRekonstrukcija biznisa($20.000)\nPostavi cijenu produkata\nIme Biznisa\nProdaj biznis igracu", "Odaberi","Izlaz" );
+						ShowPlayerDialog( playerid, DIALOG_BIZNIS_MAIN, DIALOG_STYLE_LIST, "MOJ BIZNIS", "Info\nCijena ulaza\nPostavi artikl\nSkini artikl\nPostavi cijenu artikla\nVrata\nRekonstrukcija biznisa($20.000)\nPostavi cijenu produkata\nIme Biznisa\nProdaj biznis igracu", "Choose","Exit" );
 				}
 			}
 			return 1;
@@ -2878,7 +2878,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 					PlayerPlaySound(playerid, 1052, 0.0, 0.0, 0.0);
 				}
 				case 6: {
-					ShowPlayerDialog( playerid, DIALOG_MUSIC_BUY, DIALOG_STYLE_LIST, "KUPOVINA KAZETOFONA", "Red Fire (100$)\nSilver King (100$)", "Odaberi", "Odustani");
+					ShowPlayerDialog( playerid, DIALOG_MUSIC_BUY, DIALOG_STYLE_LIST, "KUPOVINA KAZETOFONA", "Red Fire (100$)\nSilver King (100$)", "Choose", "Abort");
 				}
 				case 7:
 				{
@@ -2982,12 +2982,12 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 				new bigquery[128];
 				format(bigquery, sizeof(bigquery), "UPDATE `bizzes` SET `priceprod` = '%d' WHERE `id` = '%d'", BizzInfo[bouse][bPriceProd], BizzInfo[bouse][bSQLID]);
 				mysql_tquery(g_SQL, bigquery);
-			} else return ShowPlayerDialog( playerid, DIALOG_BIZNIS_PRODUCTPRICE, DIALOG_STYLE_INPUT, "MOJ BIZNIS - CIJENA PRODUKTA", "Unesite cijenu produkta za vas biznis,\n"COL_RED"Ona mora biti izmedju 20 i 1000$!", "Unesi", "Odustani" );
+			} else return ShowPlayerDialog( playerid, DIALOG_BIZNIS_PRODUCTPRICE, DIALOG_STYLE_INPUT, "MOJ BIZNIS - CIJENA PRODUKTA", "Unesite cijenu produkta za vas biznis,\n"COL_RED"Ona mora biti izmedju 20 i 1000$!", "Input", "Abort" );
 			return 1;
 		}
 		case DIALOG_BIZNIS_MUSIC: {
 			if(!response) return 1;
-			if( isnull(inputtext) ) return ShowPlayerDialog(playerid, DIALOG_BIZNIS_MUSIC, DIALOG_STYLE_INPUT, "BIZNIS MUSIC", "Unesite live streaming link.\nNPR. shoutcast, listen2myradio, ...", "Unesi", "Odustani");
+			if( isnull(inputtext) ) return ShowPlayerDialog(playerid, DIALOG_BIZNIS_MUSIC, DIALOG_STYLE_INPUT, "BIZNIS MUSIC", "Unesite live streaming link.\nNPR. shoutcast, listen2myradio, ...", "Input", "Abort");
 
 			new biznis = Bit1_Get(gr_IsADJ, playerid) ? Bit16_Get( gr_DJBizKey, playerid ) : (bouse);
 			format( BizzInfo[ biznis ][ bMusicURL ], 96, inputtext );
@@ -3725,13 +3725,13 @@ CMD:biznis(playerid, params[])
 		return va_SendClientMessage(playerid, COLOR_RED, "Niste blizu svoga biznisa (%s)!", BizzInfo[biznis][bMessage]);
 
 	if( BizzInfo[ biznis ][ bType ] == BIZZ_TYPE_DUCAN )
-		ShowPlayerDialog( playerid, DIALOG_BIZNIS_MAIN, DIALOG_STYLE_LIST, "MOJ BIZNIS", "Info\nPostavi artikl\nSkini artikl\nPostavi cijenu artikla\nVrata\nRekonstrukcija biznisa($20.000)\nPostavi cijenu produkata\nIme Biznisa\nProdaj biznis igracu", "Odaberi","Izlaz" );
+		ShowPlayerDialog( playerid, DIALOG_BIZNIS_MAIN, DIALOG_STYLE_LIST, "MOJ BIZNIS", "Info\nPostavi artikl\nSkini artikl\nPostavi cijenu artikla\nVrata\nRekonstrukcija biznisa($20.000)\nPostavi cijenu produkata\nIme Biznisa\nProdaj biznis igracu", "Choose","Exit" );
 	else if( BizzInfo[ biznis ][ bType ] == BIZZ_TYPE_BAR || BizzInfo[ biznis ][ bType ] == BIZZ_TYPE_STRIP )
-		ShowPlayerDialog( playerid, DIALOG_BIZNIS_MAIN, DIALOG_STYLE_LIST, "MOJ BIZNIS", "Info\nCijena ulaza\nPostavi artikl\nSkini artikl\nPostavi cijenu artikla\nVrata\nRekonstrukcija biznisa($20.000)\nPostavi cijenu produkata\nIme Biznisa\nProdaj biznis igracu", "Odaberi","Izlaz" );
+		ShowPlayerDialog( playerid, DIALOG_BIZNIS_MAIN, DIALOG_STYLE_LIST, "MOJ BIZNIS", "Info\nCijena ulaza\nPostavi artikl\nSkini artikl\nPostavi cijenu artikla\nVrata\nRekonstrukcija biznisa($20.000)\nPostavi cijenu produkata\nIme Biznisa\nProdaj biznis igracu", "Choose","Exit" );
 	else if( BizzInfo[ biznis ][ bType ] == BIZZ_TYPE_GASSTATION )
-		ShowPlayerDialog( playerid, DIALOG_BIZNIS_MAIN, DIALOG_STYLE_LIST, "MOJ BIZNIS", "Info\nPostavi artikl\nSkini artikl\nPostavi cijenu artikla\nVrata\nRekonstrukcija biznisa($20.000)\nIme Biznisa\nProdaj biznis igracu", "Odaberi","Izlaz" );
+		ShowPlayerDialog( playerid, DIALOG_BIZNIS_MAIN, DIALOG_STYLE_LIST, "MOJ BIZNIS", "Info\nPostavi artikl\nSkini artikl\nPostavi cijenu artikla\nVrata\nRekonstrukcija biznisa($20.000)\nIme Biznisa\nProdaj biznis igracu", "Choose","Exit" );
 	else
-		ShowPlayerDialog( playerid, DIALOG_BIZNIS_MAIN, DIALOG_STYLE_LIST, "MOJ BIZNIS", "Info\nVrata\nRekonstrukcija biznisa($20.000)\nCijena produkta\nIme Biznisa\nProdaj biznis igracu", "Odaberi","Izlaz" );
+		ShowPlayerDialog( playerid, DIALOG_BIZNIS_MAIN, DIALOG_STYLE_LIST, "MOJ BIZNIS", "Info\nVrata\nRekonstrukcija biznisa($20.000)\nCijena produkta\nIme Biznisa\nProdaj biznis igracu", "Choose","Exit" );
 	return 1;
 }
 
@@ -3743,34 +3743,34 @@ CMD:menu(playerid, params[])
 		biznis = Bit16_Get( gr_PlayerInBiznis, playerid );
 	if(biznis != INVALID_BIZNIS_ID && BizzInfo[ biznis ][ bType ] == BIZZ_TYPE_BAR)
 	{
-		va_ShowPlayerDialog(playerid, DIALOG_BIZNIS_BUYING, DIALOG_STYLE_LIST, "PONUDA PICA", "%s", "Popij", "Odustani", GetStoreProducts( biznis ));
+		va_ShowPlayerDialog(playerid, DIALOG_BIZNIS_BUYING, DIALOG_STYLE_LIST, "PONUDA PICA", "%s", "Popij", "Abort", GetStoreProducts( biznis ));
 		AntiSpamInfo[ playerid ][ asBuying ] = gettime() + ANTI_SPAM_BUY_TIME;
 	}
 	else
 	{
 		if( IsPlayerInRangeOfPoint( playerid,30,368.9718,-6.6316,1001.8516 ) ) 							// Cluckin' Bell
-			ShowPlayerDialog( playerid,DIALOG_CHICKENMENU,DIALOG_STYLE_LIST,"PONUDA JELA","Topli sendvic 5$\nCevapi 4$\nFileti 4$\nVocna salata 2$\nKebab 4$\nSprite 3$\nVoda 1$","Kupi","Izlaz" );
+			ShowPlayerDialog( playerid,DIALOG_CHICKENMENU,DIALOG_STYLE_LIST,"PONUDA JELA","Topli sendvic 5$\nCevapi 4$\nFileti 4$\nVocna salata 2$\nKebab 4$\nSprite 3$\nVoda 1$","Buy","Exit" );
 
 		else if( IsPlayerInRangeOfPoint( playerid,30,1009.3359,172.7221,5101.7158 ) )
-			ShowPlayerDialog( playerid,DIALOG_CHICKENMENU, DIALOG_STYLE_LIST, "PONUDA JELA","Topli sendvic 5$\nCevapi 4$\nFileti 4$\nVocna salata 2$\nKebab 4$\nSprite 3$\nVoda 1$","Kupi","Izlaz" );
+			ShowPlayerDialog( playerid,DIALOG_CHICKENMENU, DIALOG_STYLE_LIST, "PONUDA JELA","Topli sendvic 5$\nCevapi 4$\nFileti 4$\nVocna salata 2$\nKebab 4$\nSprite 3$\nVoda 1$","Buy","Exit" );
 
 		else if(IsPlayerInRangeOfPoint(playerid,30,375.3066,-118.8028,1001.4995 ) ) 					// Well Stacked Pizza
-			ShowPlayerDialog(playerid,DIALOG_PIZZAMENU,DIALOG_STYLE_LIST,"PONUDA JELA","Pizzeta 3$\nVelika Pizza 6$\nTopli Sendvic 5$\nSalata 2$\nJumbo Pizza 10$\nSprite 3$\nVoda 1$","Kupi","Izlaz");
+			ShowPlayerDialog(playerid,DIALOG_PIZZAMENU,DIALOG_STYLE_LIST,"PONUDA JELA","Pizzeta 3$\nVelika Pizza 6$\nTopli Sendvic 5$\nSalata 2$\nJumbo Pizza 10$\nSprite 3$\nVoda 1$","Buy","Exit");
 
 		else if(IsPlayerInRangeOfPoint(playerid,30,376.5994,-67.4428,1001.5078) || IsPlayerInRangeOfPoint(playerid,5,1083.3365,-1455.3883,15.7981))					// Burgershot
-			ShowPlayerDialog(playerid,DIALOG_BURGERMENU,DIALOG_STYLE_LIST,"PONUDA JELA","Big Mac 6$\nBurger Menu 8$\nToast 4$\nFrancuska salata 2$\nSendvic-Sunka 4$\nSprite 3$\nVoda 1$","Kupi","Izlaz");
+			ShowPlayerDialog(playerid,DIALOG_BURGERMENU,DIALOG_STYLE_LIST,"PONUDA JELA","Big Mac 6$\nBurger Menu 8$\nToast 4$\nFrancuska salata 2$\nSendvic-Sunka 4$\nSprite 3$\nVoda 1$","Buy","Exit");
 
 		else if(IsPlayerInRangeOfPoint(playerid,30,445.0006,-87.1238,999.5547) || IsPlayerInRangeOfPoint(playerid,15.0,98.5248,226.6844,1197.0959))							// Restaurant 1
-			ShowPlayerDialog(playerid,DIALOG_RESTORANMENU,DIALOG_STYLE_LIST,"PONUDA JELA","Juha 3$\nPiletina 5$\nMorski pas 7$\nSpageti 4$\nKolac 2$\nCoca Cola 3$\nVoda 1$","Kupi","Izlaz");
+			ShowPlayerDialog(playerid,DIALOG_RESTORANMENU,DIALOG_STYLE_LIST,"PONUDA JELA","Juha 3$\nPiletina 5$\nMorski pas 7$\nSpageti 4$\nKolac 2$\nCoca Cola 3$\nVoda 1$","Buy","Exit");
 
 		else if(IsPlayerInRangeOfPoint(playerid,30,-786.0226,500.5655,1371.7422) || IsPlayerInRangeOfPoint(playerid,10.0,1086.3999, -1526.8717, 21.9457)) // Restaurant 2
-			ShowPlayerDialog(playerid,DIALOG_RESTORANMENU,DIALOG_STYLE_LIST,"PONUDA JELA","Juha 3$\nPiletina 5$\nMorski pas 7$\nSpageti 4$\nKolac 2$\nCoca Cola 3$\nVoda 1$","Kupi","Izlaz");
+			ShowPlayerDialog(playerid,DIALOG_RESTORANMENU,DIALOG_STYLE_LIST,"PONUDA JELA","Juha 3$\nPiletina 5$\nMorski pas 7$\nSpageti 4$\nKolac 2$\nCoca Cola 3$\nVoda 1$","Buy","Exit");
 
 		else if(IsPlayerInRangeOfPoint(playerid,30,376.7064,-186.0483,1000.6328) || IsPlayerInRangeOfPoint(playerid,5,1086.1937,-1526.4916,22.7417))																						// Donut Shop
-			ShowPlayerDialog(playerid,DIALOG_DONUTMENU,DIALOG_STYLE_LIST,"PONUDA JELA","Krofna s visnjom 2$\nPunjena krofna 4$\nKrofna s kokosom 4$\nCokoladna krofna 3$\nCoca Cola 3$\nVoda 1$","Kupi","Izlaz");
+			ShowPlayerDialog(playerid,DIALOG_DONUTMENU,DIALOG_STYLE_LIST,"PONUDA JELA","Krofna s visnjom 2$\nPunjena krofna 4$\nKrofna s kokosom 4$\nCokoladna krofna 3$\nCoca Cola 3$\nVoda 1$","Buy","Exit");
 
 		else if(IsPlayerInRangeOfPoint(playerid,30,1840.8169,-1563.9172,2001.2463))																						// Donut Shop
-			ShowPlayerDialog(playerid,DIALOG_JAILMENU,DIALOG_STYLE_LIST,"ZATVORSKA KUHINJA","Mahune\nGrah\nPoriluk","Uzmi","Izlaz");
+			ShowPlayerDialog(playerid,DIALOG_JAILMENU,DIALOG_STYLE_LIST,"ZATVORSKA KUHINJA","Mahune\nGrah\nPoriluk","Uzmi","Exit");
 		AntiSpamInfo[ playerid ][ asBuying ] = gettime() + ANTI_SPAM_BUY_TIME;
 	}
 	return 1;
@@ -3802,13 +3802,13 @@ CMD:buybiznis(playerid, params[])
 CMD:buy(playerid, params[])
 {
 	if( IsPlayerInRangeOfPoint( playerid, 10.0, 1094.0679, -1453.3447, 14.7900 ) )
-		ShowPlayerDialog(playerid, DIALOG_BIZNIS_CRYPTOORMOBILE, DIALOG_STYLE_LIST, "Odaberite proizvod..", "Mobiteli\nCrypto i ostalo\nMaskice za mobitel", "Odaberi", "Odustani");
+		ShowPlayerDialog(playerid, DIALOG_BIZNIS_CRYPTOORMOBILE, DIALOG_STYLE_LIST, "Odaberite proizvod..", "Mobiteli\nCrypto i ostalo\nMaskice za mobitel", "Choose", "Abort");
 	else if( IsPlayerInRangeOfPoint(playerid, 15.0, 1158.3975, -1444.1554, 14.7425) )
-		ShowPlayerDialog(playerid, DIALOG_MALL_BUY, DIALOG_STYLE_LIST, "VERONA MALL 24/7", "Kockica (1$)\nCoca Cola (5$)\nSat (10$)\nMaska (500$)\nCigarete (10$)\nUpaljac(5$)\nKazetofon\nKonop\nPalica (50$)\nFotoaparat (100$)\nSpray (50$)\nBon za mobitel (25$)\nRadio (1500$)\nToolkit (300$)", "Odaberi", "Odustani");
+		ShowPlayerDialog(playerid, DIALOG_MALL_BUY, DIALOG_STYLE_LIST, "VERONA MALL 24/7", "Kockica (1$)\nCoca Cola (5$)\nSat (10$)\nMaska (500$)\nCigarete (10$)\nUpaljac(5$)\nKazetofon\nKonop\nPalica (50$)\nFotoaparat (100$)\nSpray (50$)\nBon za mobitel (25$)\nRadio (1500$)\nToolkit (300$)", "Choose", "Abort");
 	else if( IsPlayerInRangeOfPoint(playerid, 15.0, 2294.9822, -2042.7246, 12.6173 ) ) // ne valja ovo!! stara mehanicarska je ovo 24/7
-		ShowPlayerDialog(playerid, DIALOG_MALL_BUY, DIALOG_STYLE_LIST, "MECHANIC 24/7", "Kockica (1$)\nCoca Cola (5$)\nSat (10$)\nMaska (500$)\nCigarete (10$)\nUpaljac(5$)\nKazetofon\nKonop\nPalica (50$)\nFotoaparat (100$)\nSpray (50$)\nBon za mobitel (25$)\nRadio (1500$)\nToolkit (300$)", "Odaberi", "Odustani");
+		ShowPlayerDialog(playerid, DIALOG_MALL_BUY, DIALOG_STYLE_LIST, "MECHANIC 24/7", "Kockica (1$)\nCoca Cola (5$)\nSat (10$)\nMaska (500$)\nCigarete (10$)\nUpaljac(5$)\nKazetofon\nKonop\nPalica (50$)\nFotoaparat (100$)\nSpray (50$)\nBon za mobitel (25$)\nRadio (1500$)\nToolkit (300$)", "Choose", "Abort");
 	else if(IsPlayerInRangeOfPoint(playerid, 15, 2521.7654, -1323.6298, 33.6071) )
-		ShowPlayerDialog(playerid, DIALOG_FAKE_BUY, DIALOG_STYLE_LIST, "Fake goods", "Fake weapon license\nFake ID", "Odaberi", "Odustani");
+		ShowPlayerDialog(playerid, DIALOG_FAKE_BUY, DIALOG_STYLE_LIST, "Fake goods", "Fake weapon license\nFake ID", "Choose", "Abort");
 	else if( IsPlayerInRangeOfPoint(playerid, 15.0, 1096.0909, -1440.6428, 14.7926 ) )
 	{
 		SetPlayerPos(playerid, 1093.4979, -1436.0308, 15.7300);
@@ -3833,7 +3833,7 @@ CMD:buy(playerid, params[])
 						string[ 870 ];
 					format( string, 870, GetStoreProducts( Bit16_Get( gr_PlayerInBiznis, playerid ) ) );
 					if( isnull( string ) ) return SendClientMessage( playerid, COLOR_RED, "[ ! ]  Prodavaonica nije napravila ponudu artikala!" );
-					ShowPlayerDialog(playerid, DIALOG_BIZNIS_BUYING, DIALOG_STYLE_LIST, "KUPOVINA", string, "Kupi", "Odustani");
+					ShowPlayerDialog(playerid, DIALOG_BIZNIS_BUYING, DIALOG_STYLE_LIST, "KUPOVINA", string, "Buy", "Abort");
 					AntiSpamInfo[ playerid ][ asBuying ] = gettime() + ANTI_SPAM_BUY_TIME;
 				}
 			}
@@ -3904,7 +3904,7 @@ CMD:bmusic(playerid, params[])
 		biznis = Bit1_Get(gr_IsADJ, playerid) ? Bit16_Get( gr_DJBizKey, playerid ) : (bouse);
 
 	if( isnull(BizzInfo[ biznis ][ bMusicURL ]) )
-		ShowPlayerDialog(playerid, DIALOG_BIZNIS_MUSIC, DIALOG_STYLE_INPUT, "BIZNIS MUSIC", "Unesite live streaming link.\nNPR. shoutcast, listen2myradio, ...", "Unesi", "Odustani");
+		ShowPlayerDialog(playerid, DIALOG_BIZNIS_MUSIC, DIALOG_STYLE_INPUT, "BIZNIS MUSIC", "Unesite live streaming link.\nNPR. shoutcast, listen2myradio, ...", "Input", "Abort");
 	else {
 		foreach(new i:Player) {
 			if(IsPlayerInRangeOfPoint( i, 80.0, BizzInfo[ biznis ][ bExitX ], BizzInfo[ biznis ][ bExitY ], BizzInfo[ biznis ][ bExitZ ] ) )
@@ -4147,7 +4147,7 @@ CMD:createbiz(playerid, params[])
 	BizzInfo[ freeslot ][ bGasPrice ] = 3;
 	BizzInfo[ freeslot ][ bEnterPICK ] = CreateDynamicPickup( 1272, 2, BizzInfo[ freeslot ][bEntranceX], BizzInfo[ freeslot ][bEntranceY], BizzInfo[ freeslot ][bEntranceZ], -1, -1, -1, 100.0 );
 
-	ShowPlayerDialog(playerid, DIALOG_NEWBIZNIS_NAME, DIALOG_STYLE_INPUT, "Unos imena biznisa:", "Molimo Vas unesite ime novog biznisa.", "Unesi", "Izlaz");
+	ShowPlayerDialog(playerid, DIALOG_NEWBIZNIS_NAME, DIALOG_STYLE_INPUT, "Unos imena biznisa:", "Molimo Vas unesite ime novog biznisa.", "Input", "Exit");
 	return 1;
 }
 CMD:deletebiz(playerid, params[])

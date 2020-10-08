@@ -933,7 +933,7 @@ stock InitTuningSlots(playerid, vehicleid)
 	}
 	if( IsVehiclePaintJobable( GetVehicleModel(vehicleid) ) )
 		format( buffer, 1000, "%sPaintjob: %d", buffer, TuningInfo[ vehicleid ][ tdPaintJob ]);
-	ShowPlayerDialog(playerid, DIALOG_TUNE_SLOTS, DIALOG_STYLE_LIST, "TUNING - SLOTS", buffer, "Odaberi", "Izadji iz garaze");
+	ShowPlayerDialog(playerid, DIALOG_TUNE_SLOTS, DIALOG_STYLE_LIST, "TUNING - SLOTS", buffer, "Choose", "Izadji iz garaze");
 	
 	/*DestroySlotsTextDraws(playerid);
 	CreateTuningSlotMainBcgTextDraw(playerid);
@@ -1265,7 +1265,7 @@ stock ShowTuningTDs(playerid)
 	PlayerTextDrawSetProportional(playerid, TuningPrice[playerid], 1);
 	PlayerTextDrawShow(playerid, TuningPrice[playerid]);
 
-	TuningBuy[playerid] = CreatePlayerTextDraw(playerid, 525.100402, 247.128189, "KUPI");
+	TuningBuy[playerid] = CreatePlayerTextDraw(playerid, 525.100402, 247.128189, "Buy");
 	PlayerTextDrawLetterSize(playerid, TuningBuy[playerid], 0.360098, 1.477918);
 	PlayerTextDrawTextSize(playerid, TuningBuy[playerid], 553.750183, 12.432000);
 	PlayerTextDrawAlignment(playerid, TuningBuy[playerid], 1);
@@ -1279,7 +1279,7 @@ stock ShowTuningTDs(playerid)
 	PlayerTextDrawSetSelectable(playerid, TuningBuy[playerid], true);
 	PlayerTextDrawShow(playerid, TuningBuy[playerid]);
 	
-	TuningQuit[playerid] = CreatePlayerTextDraw(playerid, 561.399108, 247.071975, "ODUSTANI");
+	TuningQuit[playerid] = CreatePlayerTextDraw(playerid, 561.399108, 247.071975, "Abort");
 	PlayerTextDrawLetterSize(playerid, TuningQuit[playerid], 0.360098, 1.477918);
 	PlayerTextDrawTextSize(playerid, TuningQuit[playerid], 624.749938, 11.872005);
 	PlayerTextDrawAlignment(playerid, TuningQuit[playerid], 1);
@@ -1913,7 +1913,7 @@ hook OnPlayerClickPlayerTD(playerid, PlayerText:playertextid)
 			if( Bit4_Get( gr_UsedTuningSlot, playerid ) == INVALID_TUNING_SLOT ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, " Morate odabrati slot za tuning!"), SelectTextDraw(playerid, -5963521);
 			
 			DestroyTuningTDs(playerid);
-			ShowPlayerDialog(playerid, DIALOG_TUNE_LIST, DIALOG_STYLE_LIST, "TUNING - ODABIR VRSTE", ListAllVehicleMods( playerid, GetVehicleModel( GetPlayerVehicleID(playerid) ) ), "Odaberi", "Odustani");
+			ShowPlayerDialog(playerid, DIALOG_TUNE_LIST, DIALOG_STYLE_LIST, "TUNING - ODABIR VRSTE", ListAllVehicleMods( playerid, GetVehicleModel( GetPlayerVehicleID(playerid) ) ), "Choose", "Abort");
 			CancelSelectTextDraw(playerid);
 			RemoveLastInstalledComponent(playerid);
 			return 1;
@@ -1969,8 +1969,8 @@ hook OnPlayerClickPlayerTD(playerid, PlayerText:playertextid)
 				DIALOG_STYLE_LIST, 
 				"TUNING - PAINTJOB", 
 				ListAvailablePaintJobs( playerid, GetVehicleModel( GetPlayerVehicleID(playerid) ) ), 
-				"Odaberi", 
-				"Odustani"
+				"Choose", 
+				"Abort"
 			);
 			return 1;
 		}
@@ -1984,7 +1984,7 @@ hook OnPlayerClickPlayerTD(playerid, PlayerText:playertextid)
 					break;
 				}
 				
-				ShowPlayerDialog(playerid, DIALOG_TUNE_LIST, DIALOG_STYLE_LIST, "TUNING - ODABIR VRSTE", ListAllVehicleMods( playerid, GetVehicleModel( GetPlayerVehicleID(playerid) ) ), "Odaberi", "Odustani");
+				ShowPlayerDialog(playerid, DIALOG_TUNE_LIST, DIALOG_STYLE_LIST, "TUNING - ODABIR VRSTE", ListAllVehicleMods( playerid, GetVehicleModel( GetPlayerVehicleID(playerid) ) ), "Choose", "Abort");
 				return 1;
 			}
 		}*/
@@ -2014,7 +2014,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 				PlayerUsingGarage = false;
 				return 1;
 			}
-			if( listitem == 6 ) return ShowPlayerDialog( playerid, DIALOG_TUNE_PAINT, DIALOG_STYLE_LIST, "TUNING - PAINTJOB", ListAvailablePaintJobs( playerid, GetVehicleModel( GetPlayerVehicleID(playerid) ) ), "Odaberi", "Odustani");
+			if( listitem == 6 ) return ShowPlayerDialog( playerid, DIALOG_TUNE_PAINT, DIALOG_STYLE_LIST, "TUNING - PAINTJOB", ListAvailablePaintJobs( playerid, GetVehicleModel( GetPlayerVehicleID(playerid) ) ), "Choose", "Abort");
 			
 			Bit4_Set( gr_UsedTuningSlot, playerid, listitem );
 			if( TuningInfo[ GetPlayerVehicleID(playerid) ][ tdComponent ][ listitem ] != 0 ) {
@@ -2022,7 +2022,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 				return 1;
 			}
 			
-			ShowPlayerDialog(playerid, DIALOG_TUNE_LIST, DIALOG_STYLE_LIST, "TUNING - ODABIR VRSTE", ListAllVehicleMods( playerid, GetVehicleModel( GetPlayerVehicleID(playerid) ) ), "Odaberi", "Odustani");
+			ShowPlayerDialog(playerid, DIALOG_TUNE_LIST, DIALOG_STYLE_LIST, "TUNING - ODABIR VRSTE", ListAllVehicleMods( playerid, GetVehicleModel( GetPlayerVehicleID(playerid) ) ), "Choose", "Abort");
 			return 1;
 		}
 		case DIALOG_TUNE_LIST: {
@@ -2041,12 +2041,12 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 			if( component == -1 ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, " Dogodila se greska pri odabiru tipa! Probajte opet izmjeniti tip komponente!");
 			
 			if( component == CARMODTYPE_NITRO ) {
-				va_ShowPlayerDialog(playerid, DIALOG_TUNE_NOS, DIALOG_STYLE_LIST, "TUNING - NOS", "2x (%d$)\n5x (%d$)\n10x (%d$)", "Odaberi", "Odustani", GetComponentPrice(1009), GetComponentPrice(1008), GetComponentPrice(1010));
+				va_ShowPlayerDialog(playerid, DIALOG_TUNE_NOS, DIALOG_STYLE_LIST, "TUNING - NOS", "2x (%d$)\n5x (%d$)\n10x (%d$)", "Choose", "Abort", GetComponentPrice(1009), GetComponentPrice(1008), GetComponentPrice(1010));
 				InitPlayerCamera(playerid, component);
 				return 1;
 			}
 			if( component == CARMODTYPE_WHEELS ) {
-				ShowPlayerDialog(playerid, DIALOG_TUNE_WHEELS, DIALOG_STYLE_LIST, "TUNING - FELGE", ListTuningWheels(playerid, GetVehicleModel( vehicleid ) ), "Odaberi", "Odustani");
+				ShowPlayerDialog(playerid, DIALOG_TUNE_WHEELS, DIALOG_STYLE_LIST, "TUNING - FELGE", ListTuningWheels(playerid, GetVehicleModel( vehicleid ) ), "Choose", "Abort");
 				InitPlayerCamera(playerid, component);
 				return 1;
 			}
@@ -2126,8 +2126,8 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 			if(!response) {
 				ShowPlayerDialog(playerid, DIALOG_TUNE_PAINT, DIALOG_STYLE_LIST, "TUNING - PAINTJOB", 
 					ListAvailablePaintJobs( playerid, GetVehicleModel( GetPlayerVehicleID(playerid) ) ), 
-					"Odaberi", 
-					"Odustani"
+					"Choose", 
+					"Abort"
 				);
 				ChangeVehiclePaintjob(vehicleid, TuningInfo[ vehicleid ][ tdPaintJob ]);
 				Bit1_Set( gr_PlayerPaintJobPreview, playerid, false );
@@ -2149,8 +2149,8 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 			if( !response ) {
 				ShowPlayerDialog(playerid, DIALOG_TUNE_WHEELS, DIALOG_STYLE_LIST, "TUNING - FELGE", 
 					ListTuningWheels(playerid, GetVehicleModel( vehicleid ) ), 
-					"Odaberi", 
-					"Odustani"
+					"Choose", 
+					"Abort"
 				);
 				RemoveVehicleComponent(vehicleid, TuningLastComponent[ playerid ]);
 				return 1;
@@ -2175,7 +2175,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 			
 			Bit1_Set( gr_TuningSlotReplace, playerid, true );
 			RemoveVehicleComponent( vehicleid, TuningInfo[ vehicleid ][ tdComponent ][ Bit4_Get( gr_UsedTuningSlot, playerid ) ] );
-			ShowPlayerDialog(playerid, DIALOG_TUNE_LIST, DIALOG_STYLE_LIST, "TUNING - ODABIR VRSTE", ListAllVehicleMods( playerid, GetVehicleModel( vehicleid ) ), "Odaberi", "Odustani");
+			ShowPlayerDialog(playerid, DIALOG_TUNE_LIST, DIALOG_STYLE_LIST, "TUNING - ODABIR VRSTE", ListAllVehicleMods( playerid, GetVehicleModel( vehicleid ) ), "Choose", "Abort");
 			return 1;
 		}
 		case DIALOG_TUNE_DELETE: {

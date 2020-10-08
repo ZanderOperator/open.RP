@@ -303,7 +303,7 @@ hook OnPlayerExitVehicle(playerid, vehicleid) {
 					FormatNumber(TaxiData[playerid][eTaxiPayment])
 				);
 				if(TaxiData[playerid][eTaxiTraveled] > 1)
-					ShowPlayerDialog(playerid, DIALOG_TAXI_RATING, DIALOG_STYLE_LIST, "{F3FF02}* Taxi - Rating", "1\n2\n3\n4\n5", "(ocjeni)", "(x)");
+					ShowPlayerDialog(playerid, DIALOG_TAXI_RATING, DIALOG_STYLE_LIST, "{F3FF02}* Taxi - Rating", "1\n2\n3\n4\n5", "Rate", "Exit");
 				
 				PlayerToPlayerMoney(playerid, taxist, TaxiData[playerid][eTaxiPayment]);
 					

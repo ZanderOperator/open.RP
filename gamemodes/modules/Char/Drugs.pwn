@@ -104,13 +104,14 @@ hook OnPlayerDisconnect(playerid, reason)
 		if(DrugPackage[playerid][orderfinished])
 		{
 			IllegalBudgetToPlayerMoney(playerid, DrugPackage[playerid][pPrice]);
-			
+			#if defined MODULE_LOGS
 			Log_Write("logfiles/drug_order.txt", "(%s) %s{%d} je izasao iz igre a nije skupio narucen paket te mu je automatski vracen novac, $%d!",
 				ReturnDate(), 
 				GetName(playerid),
 				PlayerInfo[playerid][pSQLID],
 				DrugPackage[playerid][pPrice]
 			);
+			#endif
 		}
 		ClearDrugOrder(playerid);
 	}
@@ -182,7 +183,8 @@ public LoadingPlayerDrugs(playerid)
 			//	PlayerDrugs[playerid][dEffect][i] -= 10.0
 			
 			if(PlayerDrugs[playerid][dEffect][i] < 1.0 || PlayerDrugs[playerid][dAmount][i] < 0.01)
-			{		
+			{
+				#if defined MODULE_LOGS
 				Log_Write("logfiles/drug_ruined.txt", "(%s) %s{%d} je izgubio drogu %s kolicine %.2f iz slota %d zbog kvalitete..  DEBUG: Kvaliteta: %f Kolicina: %f!", 
 					ReturnDate(), 
 					GetName(playerid),
@@ -193,7 +195,7 @@ public LoadingPlayerDrugs(playerid)
 					PlayerDrugs[playerid][dEffect][i],
 					PlayerDrugs[playerid][dAmount][i]
 				);
-				
+				#endif
 				DeletePlayerDrug(playerid, i);
 			}
 		}
@@ -250,7 +252,7 @@ ListPlayerDrugs(playerid, owner)
 		return SendClientMessage(playerid, COLOR_RED, "Igrac nema droge!");
 		
 	format(titled, 37, "Droga od %s", GetName(owner));
-	Dialog_Open(playerid, empty, DIALOG_STYLE_MSGBOX, titled, drugall, "Izlaz", "");
+	Dialog_Open(playerid, empty, DIALOG_STYLE_MSGBOX, titled, drugall, "Exit", "");
 	
 	return 1;
 }
@@ -286,7 +288,7 @@ ListVehicleDrugs(playerid, vehicleid)
 	GetVehicleNameByModel(GetVehicleModel(vehicleid), vName, MAX_VEHICLE_NAME);
 	
 	format(titled, 37, "Droga u %s[%d]{%d}", vName, vehicleid, VehicleInfo[vehicleid][vSQLID]);
-	Dialog_Open(playerid, empty, DIALOG_STYLE_MSGBOX, titled, drugall, "Izlaz", "");
+	Dialog_Open(playerid, empty, DIALOG_STYLE_MSGBOX, titled, drugall, "Exit", "");
 	return 1;
 }
 
@@ -408,7 +410,7 @@ CMD:drug(playerid, params[])
 		va_SendClientMessage(giveplayerid, COLOR_LIGHTBLUE, "Igrac %s vam je dao %.2f %s droge %s!", GetName(playerid, false), damnt, (drugs[dcode][dEffect] == DRUG_TYPE_TABLET) ? ("tableta") : ("grama"), drugs[dcode][dName]);
 			
 		ApplyAnimationEx(playerid, "DEALER", "DEALER_DEAL", 4.0, 0, 0, 0, 0, 0, 1, 0);
-		
+		#if defined MODULE_LOGS
 		Log_Write("logfiles/drug_give.txt", "(%s) %s{%d} je dao igracu %s{%d} drogu %s kolicine %.2f %s i kvalitete %s[%.3f] iz slota %d! Droga je kod igraca %s u slotu %d!", 
 			ReturnDate(), 
 			GetName(playerid),
@@ -424,7 +426,7 @@ CMD:drug(playerid, params[])
 			GetName(giveplayerid),
 			pslot+1
 		);
-		
+		#endif
 		return 1;
 	}
 	else if(!strcmp(item, "put", true))
@@ -481,7 +483,7 @@ CMD:drug(playerid, params[])
 			mysql_fquery(g_SQL, "UPDATE `player_drugs` SET `amount` = '%f' WHERE `id` = '%d'", PlayerDrugs[playerid][dAmount][slot], PlayerDrugs[playerid][dSQLID][slot]);
 			
 		va_SendClientMessage(playerid, COLOR_YELLOW, "Stavio si %.2f %s droge %s u slot %d u vozilo %s!", damnt, (drugs[dcode][dEffect] == DRUG_TYPE_TABLET) ? ("tableta") : ("grama"), drugs[dcode][dName], vdslot+1, ReturnVehicleName(GetVehicleModel(vehid)));
-			
+		#if defined MODULE_LOGS
 		Log_Write("logfiles/drug_put.txt", "(%s) %s{%d} je stavio u vozilo %s{%d} slot %d drogu %s kolicine %.2f %s i kvalitete %s[%.3f]!", 
 			ReturnDate(), 
 			GetName(playerid),
@@ -495,7 +497,7 @@ CMD:drug(playerid, params[])
 			ReturnDrugQuality(dq),
 			dq
 		);
-		
+		#endif
 		return 1;
 	}
 	else if(!strcmp(item, "take", true))
@@ -550,7 +552,7 @@ CMD:drug(playerid, params[])
 			mysql_fquery(g_SQL, "UPDATE `cocars_drugs` SET `amount` = '%f' WHERE `id` = '%d'", VehicleDrugs[vehid][vamount][slot], VehicleDrugs[vehid][vsqlid][slot]);
 			
 		va_SendClientMessage(playerid, COLOR_YELLOW, "Uzeo si %.2f %s droge %s iz slota %d iz vozila %s!", damnt, (drugs[dcode][dEffect] == DRUG_TYPE_TABLET) ? ("tableta") : ("grama"), drugs[dcode][dName], slot+1, ReturnVehicleName(GetVehicleModel(vehid)));
-			
+		#if defined MODULE_LOGS	
 		Log_Write("logfiles/drug_take.txt", "(%s) %s{%d} je uzeo iz vozila {%d} drogu %s iz slota %d kolicine %.2f %s i kvalitete %s[%.3f]!", 
 			ReturnDate(), 
 			GetName(playerid),
@@ -563,7 +565,7 @@ CMD:drug(playerid, params[])
 			ReturnDrugQuality(dq),
 			dq
 		);
-		
+		#endif
 		return 1;
 	}
 	else if(!strcmp(item, "taste", true))
@@ -730,7 +732,7 @@ CMD:drug(playerid, params[])
 		//PlayerInfo[playerid][pLastDrug] = dtyp;
 		
 		PlayerInfo[playerid][pPayDay] += time;
-		
+		#if defined MODULE_LOGS
 		Log_Write("logfiles/drug_use.txt", "(%s) %s{%d} je iskoristio %.2f %s droge %s iz slota %d i oduzeo %d payday vremena. Kvaliteta droge %.3f!", // kvalietata fali
 			ReturnDate(), 
 			GetName(playerid),
@@ -742,6 +744,7 @@ CMD:drug(playerid, params[])
 			time,
 			drugQ
 		);
+		#endif
 	}
 	else if(!strcmp(item, "vehinfo", true))
 	{
@@ -805,6 +808,7 @@ CMD:drug(playerid, params[])
 					
 				if(PlayerDrugs[playerid][dEffect][slot2] <= getnewq) // testiranje beta testera da in jeben majku kasnije
 				{
+					#if defined MODULE_LOGS
 					Log_Write("logfiles/drug_QLTYCombine.txt", "(%s) %s{%d} je combineao [DROGU 1][KOLICINE:%.2f][KVALITETE:%f] sa [DROGOM 2][KOLICINE:%.2f][KVALITETE:%f] i dobio %f kvalitetu na drogi 2 u slotu %d!", 
 						ReturnDate(), 
 						GetName(playerid),
@@ -816,6 +820,7 @@ CMD:drug(playerid, params[])
 						getnewq,
 						slot2+1
 					);
+					#endif
 				}
 				PlayerDrugs[playerid][dEffect][slot2] = getnewq;
 			}
@@ -841,6 +846,7 @@ CMD:drug(playerid, params[])
 			}
 			DeletePlayerDrug(playerid, slot2);
 			
+			#if defined MODULE_LOGS
 			Log_Write("logfiles/drug_combine.txt", "(%s) %s{%d} je combineao te upropastio %.2f %s droge %s te izgubio %.2f %s iz slota %d!", 
 				ReturnDate(), 
 				GetName(playerid),
@@ -852,6 +858,7 @@ CMD:drug(playerid, params[])
 				(drugs[dcode][dEffect] == DRUG_TYPE_TABLET) ? ("tableta") : ("grama"),
 				slot+1
 			);
+			#endif
 			return 1;
 		}
 		else
@@ -866,6 +873,7 @@ CMD:drug(playerid, params[])
 			slot2+1	
 		);
 		
+		#if defined MODULE_LOGS
 		Log_Write("logfiles/drug_combine.txt", "(%s) %s{%d} je kombinirao %.2f %s droge %s kvalitete %.3f iz slota %d sa drogom %s iz slota %d kvalitete %.3f i sada ima %.2f droge u slotu %d kvalitete %.3f!", 
 			ReturnDate(), 
 			GetName(playerid),
@@ -882,6 +890,7 @@ CMD:drug(playerid, params[])
 			slot2+1,
 			PlayerDrugs[playerid][dEffect][slot2]
 		);
+		#endif
 		
 		PlayerDrugs[playerid][dAmount][slot] -= damnt;
 		PlayerDrugs[playerid][dAmount][slot2] += damnt;
@@ -927,6 +936,7 @@ CMD:drug(playerid, params[])
 			slot+1	
 		);
 		
+		#if defined MODULE_LOGS
 		Log_Write("logfiles/drug_drop.txt", "(%s) %s{%d} je bacio %.2f %s droge %s i sad ima %.2f %s u slotu %d!",
 			ReturnDate(), 
 			GetName(playerid),
@@ -938,6 +948,7 @@ CMD:drug(playerid, params[])
 			(drugs[dcode][dEffect] < 4) ? ("grama") : ("tableta"),
 			slot+1
 		);
+		#endif
 		
 		if(PlayerDrugs[playerid][dAmount][slot] < 0.01)
 			DeletePlayerDrug(playerid, slot);
@@ -1239,8 +1250,9 @@ CMD:agivedrug(playerid, params[])
 		return SendClientMessage(playerid, COLOR_RED, "[GRESKA]: Igrac nema praznih drug slotova!");
 		
 	va_SendClientMessage(playerid, COLOR_YELLOW, "[!] Dao si %s[%d] %s kolicine %.2f i kvalitete %s[%.2f]!", GetName(giveplayerid), giveplayerid, drugs[drug][dName], amnt, ReturnDrugQuality(qlty), qlty);
+	#if defined MODULE_LOGS
 	Log_Write("logfiles/adm_givedrug.txt", "(%s) Admin %s je dao igracu %s drogu %s kolicine %.2f i kvalitete %s[%.3f]!", ReturnDate(), GetName(playerid), GetName(giveplayerid), drugs[drug][dName], amnt, ReturnDrugQuality(qlty), qlty);
-	
+	#endif
 	return 1;
 }
 
@@ -1263,7 +1275,7 @@ Dialog:DRUG_ORDER_PACKAGE(playerid, response, listitem, inputtext[])
 		if(listitem > sizeof(drugs) || listitem < 0)
 			return 0;
 
-		Dialog_Open(playerid, DRUG_ORDER_AMOUNT, DIALOG_STYLE_INPUT, "{3C95C2}* PACKAGE - AMOUNT", "Odabrali ste drogu %s! Upisite koliko grama zelite naruciti!\nCijena po gramu: %d$", "(select)", "(x)", drugs[listitem+1][dName], drugs[listitem+1][dPricePG]);
+		Dialog_Open(playerid, DRUG_ORDER_AMOUNT, DIALOG_STYLE_INPUT, "{3C95C2}* PACKAGE - AMOUNT", "Odabrali ste drogu %s! Upisite koliko grama zelite naruciti!\nCijena po gramu: %d$", "Select", "Close", drugs[listitem+1][dName], drugs[listitem+1][dPricePG]);
 		
 		//dPackage_OrderID[playerid] = x;
 		//dPackage_OrderAMNT[playerid] = x;
@@ -1291,7 +1303,7 @@ Dialog:DRUG_ORDER_AMOUNT(playerid, response, listitem, inputtext[])
 		if(val < 1 || val > 100)
 		{
 			SendClientMessage(playerid, COLOR_RED, "Nemozete kupiti manje od 1 ni vise od 100 grama!");
-			Dialog_Open(playerid, DRUG_ORDER_AMOUNT, DIALOG_STYLE_INPUT, "{3C95C2}* PACKAGE - AMOUNT", "Odabrali ste drogu %s! Upisite koliko grama zelite naruciti!\nCijena po gramu: %d$", "(select)", "(x)", drugs[tDrug][dName], drugs[tDrug][dPricePG]);
+			Dialog_Open(playerid, DRUG_ORDER_AMOUNT, DIALOG_STYLE_INPUT, "{3C95C2}* PACKAGE - AMOUNT", "Odabrali ste drogu %s! Upisite koliko grama zelite naruciti!\nCijena po gramu: %d$", "Select", "Close", drugs[tDrug][dName], drugs[tDrug][dPricePG]);
 			
 			return 1;
 		}
@@ -1299,7 +1311,7 @@ Dialog:DRUG_ORDER_AMOUNT(playerid, response, listitem, inputtext[])
 			
 		DrugPackage[playerid][pPrice] = drugs[tDrug][dPricePG] * val;
 		
-		Dialog_Open(playerid, DRUG_ORDER_CONFIRM, DIALOG_STYLE_MSGBOX, "{3C95C2}* PACKAGE - CONFIRM", "Odabrali ste paket od:\n%d %s droge %s za cijenu %d!\n\nJeste li sigurni da zelite naruciti paket?", "Naruci", "Odustani", val, (drugs[tDrug][dEffect] < 4) ? ("grama") : ("tableta"), drugs[tDrug][dName], DrugPackage[playerid][pPrice]);
+		Dialog_Open(playerid, DRUG_ORDER_CONFIRM, DIALOG_STYLE_MSGBOX, "{3C95C2}* PACKAGE - CONFIRM", "Odabrali ste paket od:\n%d %s droge %s za cijenu %d!\n\nJeste li sigurni da zelite naruciti paket?", "Naruci", "Abort", val, (drugs[tDrug][dEffect] < 4) ? ("grama") : ("tableta"), drugs[tDrug][dName], DrugPackage[playerid][pPrice]);
 	}
 	else
 	{
@@ -1350,17 +1362,16 @@ Dialog:DRUG_ORDER_CONFIRM(playerid, response, listitem, inputtext[])
 		new
 			ttDrug = DrugPackage[playerid][pcDrug];
 		
-		va_SendClientMessage(playerid, COLOR_YELLOW, "Narucili ste %d %s droge %s za $%d!",
+		new 
+			ran = random(sizeof(bag));
+			
+		va_SendClientMessage(playerid, COLOR_YELLOW, "Narucili ste %d %s droge %s za $%d! Lokacija paketa: %s.",
 			DrugPackage[playerid][pcAmnt],
 			(drugs[ttDrug][dEffect] < 4) ? ("grama") : ("tableta"), 
 			drugs[ttDrug][dName], 
-			DrugPackage[playerid][pPrice]
+			DrugPackage[playerid][pPrice], 
+			GetXYZZoneName(bag[ran][0], bag[ran][1], bag[ran][2])
 		);
-		
-		new 
-			ran = random(sizeof(bag));
-		
-		va_SendClientMessage(playerid, COLOR_YELLOW, "GPS Lokacija paketa: %.3f, %.3f, %.3f!", bag[ran][0], bag[ran][1], bag[ran][2]);
 		
 		H_SetPlayerCheckpoint(playerid, bag[ran][0], bag[ran][1], bag[ran][2] - 1, 6.0);
 		DrugPackage[playerid][pobjID] = CreateDynamicObject(2919, bag[ran][0], bag[ran][1], bag[ran][2], 0.0, 0.0, 0.0, -1, -1, playerid);
@@ -1369,8 +1380,9 @@ Dialog:DRUG_ORDER_CONFIRM(playerid, response, listitem, inputtext[])
 		DrugPackage[playerid][Yp] = bag[ran][1];
 		DrugPackage[playerid][Zp] = bag[ran][2];
 		
-		SendClientMessage(playerid, COLOR_YELLOW, "Maska 64361 kaze (mobitel): Paket cu izbaciti kroz par minuta te ce biti tu na toj lokaciji.");
+		SendClientMessage(playerid, COLOR_YELLOW, "Maska 64361 kaze (mobitel): Paket cu izbaciti kroz par minuta te ce biti na dogovorenoj lokaciji.");
 		
+		#if defined MODULE_LOGS
 		Log_Write("logfiles/drug_order.txt", "(%s) %s{%d} je narucio paket droge od %d %s droge %s za $%d!",
 			ReturnDate(), 
 			GetName(playerid),
@@ -1380,6 +1392,7 @@ Dialog:DRUG_ORDER_CONFIRM(playerid, response, listitem, inputtext[])
 			drugs[ttDrug][dName],
 			DrugPackage[playerid][pPrice]
 		);
+		#endif
 		
 		DrugPackage[playerid][orderfinished] = 1;
 		PlayerHangup(playerid);
@@ -1422,6 +1435,7 @@ hook OnPlayerEnterCheckpoint(playerid)
 					slot+1
 				);
 				
+				#if defined MODULE_LOGS
 				Log_Write("logfiles/drug_order.txt", "(%s) %s{%d} je skupio narucen paket droge od %d %s droge %s kvalitete %.2f(%s)",
 					ReturnDate(), 
 					GetName(playerid),
@@ -1432,6 +1446,7 @@ hook OnPlayerEnterCheckpoint(playerid)
 					qua,
 					ReturnDrugQuality(qua)
 				);
+				#endif
 				
 				PlayerInfo[playerid][pDrugOrder] = 120;
 				

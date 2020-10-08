@@ -74,7 +74,7 @@ hook OnPlayerEnterCheckpoint(playerid)
 	        {
 	            if(kurcinaTimer[playerid] == 1) return FailedToDeliver(playerid);
 	            TDone[playerid] = 0;
-		        ShowPlayerDialog(playerid, DIALOG_ADRIAPOSAO, DIALOG_STYLE_MSGBOX, "{FA5656}TRANSPORTER", "Zelis li ponovo da krenes da dostavljas proizvode?", "Da", "Ne");
+		        ShowPlayerDialog(playerid, DIALOG_ADRIAPOSAO, DIALOG_STYLE_MSGBOX, "{FA5656}TRANSPORTER", "Zelis li ponovo da krenes da dostavljas proizvode?", "Yes", "No");
 		        TWorking[playerid] = 0;
 		        TCarry[playerid] = 0;
 		        DisablePlayerCheckpoint(playerid);
@@ -91,18 +91,9 @@ hook OnPlayerEnterCheckpoint(playerid)
 					case 4: money = 900;
 					case 5: money = 1100;
 				}
-
-
 				BudgetToPlayerBankMoney(playerid, money);
 				PlayerInfo[playerid][pPayDayMoney] += money;
 				va_SendClientMessage(playerid, COLOR_GREEN, "[ ! ] Zaradio si $%d, placa ti je sjela na racun.", money);
-				
-				Log_Write("logfiles/transporterlogs.txt", "(%s) %s{%d} je zavrsio posao Transportera i zaradio %d$.",
-					ReturnDate(),
-					GetName(playerid),
-					PlayerInfo[playerid][pSQLID],
-					money
-				);
 	        }
 		}
 	}
@@ -263,7 +254,7 @@ CMD:transporter(playerid, params[])
 		if(PlayerInfo[playerid][pFreeWorks] < 1)
 			return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Odradio si dovoljno za ovaj payday! Pricekaj iduci.");
 
-		ShowPlayerDialog(playerid, DIALOG_ADRIAPOSAO, DIALOG_STYLE_MSGBOX, "{FA5656}Transporter", "Jeste li sigurni da �elite zapoceti dostavu?", "Da", "Ne");
+		ShowPlayerDialog(playerid, DIALOG_ADRIAPOSAO, DIALOG_STYLE_MSGBOX, "{FA5656}Transporter", "Jeste li sigurni da zelite zapoceti dostavu?", "Yes", "No");
 	}
 	else if( !strcmp(param, "stop", true) ) {
 		if( (PlayerInfo[playerid][pJob] != TRANSPORTER_ID)) return SendClientMessage( playerid, COLOR_RED, "Niste zaposleni kao kamiondzija.");

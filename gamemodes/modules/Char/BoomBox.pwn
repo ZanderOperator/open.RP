@@ -464,7 +464,7 @@ CMD:music(playerid, params[])
 		if( pick == 1 ) {
 			GetDynamicObjectPos(BoomBoxObject[playerid], ox, oy, oz);
 			if(!IsPlayerInRangeOfPoint(playerid, 2.0, ox, oy, oz)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste blizu postavljenog boom boxa!");
-			ShowPlayerDialog(playerid, DIALOG_MUSIC_MAIN, DIALOG_STYLE_LIST, "Odaberite kategoriju", "Hip Hop\nRap\nGangsta Rap\nBalkan Hip Hop\nTurbo Folk\nClassical Hits\nClassical Rock\nReggae\nTechno\n70s music\n EuroBeat\nMorisson\nCool Radio\nFree Brooklyn", "Odaberi", "Izlaz");
+			ShowPlayerDialog(playerid, DIALOG_MUSIC_MAIN, DIALOG_STYLE_LIST, "Odaberite kategoriju", "Hip Hop\nRap\nGangsta Rap\nBalkan Hip Hop\nTurbo Folk\nClassical Hits\nClassical Rock\nReggae\nTechno\n70s music\n EuroBeat\nMorisson\nCool Radio\nFree Brooklyn", "Choose", "Exit");
 			format(string, sizeof(string), "*%s pali radio, te trazi stanicu.", GetName(playerid, true));
 			SetPlayerChatBubble(playerid, string, COLOR_PURPLE, 30.0, 10000);
 			foreach(new i : Player)
@@ -481,7 +481,7 @@ CMD:music(playerid, params[])
 				vehicleid = GetPlayerVehicleID(playerid);
 			if( !VehicleInfo[ vehicleid ][ vAudio ] ) 	return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Vozilo nema stereo!");
 
-			ShowPlayerDialog(playerid, DIALOG_MUSIC_MAIN, DIALOG_STYLE_LIST, "Odaberite kategoriju", "Hip Hop\nRap\nGangsta Rap\nBalkan Hip Hop\nTurbo Folk\nClassical Hits\nClassical Rock\nReggae\nTechno\n70s music\nEuro Beat\nMorisson\nCool Radio\nFree Brooklyn", "Odaberi", "Izlaz");
+			ShowPlayerDialog(playerid, DIALOG_MUSIC_MAIN, DIALOG_STYLE_LIST, "Odaberite kategoriju", "Hip Hop\nRap\nGangsta Rap\nBalkan Hip Hop\nTurbo Folk\nClassical Hits\nClassical Rock\nReggae\nTechno\n70s music\nEuro Beat\nMorisson\nCool Radio\nFree Brooklyn", "Choose", "Exit");
 
 			format(string, sizeof(string), "*%s pali radio u automobilu, te trazi stanicu.", GetName(playerid, true));
 			SetPlayerChatBubble(playerid, string, COLOR_PURPLE, 30.0, 10000);
@@ -494,7 +494,7 @@ CMD:music(playerid, params[])
 			if( houseid == INVALID_HOUSE_ID ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste unutar kuce!");
 			if( !IsPlayerInRangeOfPoint(playerid, 25.0, HouseInfo[ houseid ][ hExitX ], HouseInfo[ houseid ][ hExitY ],HouseInfo[ houseid ][ hExitZ ]) && GetPlayerVirtualWorld( playerid ) != HouseInfo[ houseid ][ hVirtualWorld ] ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste unutar kuce!");
 			if( !HouseInfo[ houseid ][ hRadio ] ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Kuca ne posjeduje radio!");
-			ShowPlayerDialog(playerid, DIALOG_MUSIC_MAIN, DIALOG_STYLE_LIST, "Odaberite kategoriju", "Hip Hop\nRap\nGangsta Rap\nBalkan Hip Hop\nTurbo Folk\nClassical Hits\nClassical Rock\nReggae\nTechno\n70s musi\nEuro Beatc\nMorisson\nCool Radio\nFree Brooklyn", "Odaberi", "Izlaz");
+			ShowPlayerDialog(playerid, DIALOG_MUSIC_MAIN, DIALOG_STYLE_LIST, "Odaberite kategoriju", "Hip Hop\nRap\nGangsta Rap\nBalkan Hip Hop\nTurbo Folk\nClassical Hits\nClassical Rock\nReggae\nTechno\n70s musi\nEuro Beatc\nMorisson\nCool Radio\nFree Brooklyn", "Choose", "Exit");
 
 			format(string, sizeof(string), "*%s pali radio u kuci, te traZi stanicu.", GetName(playerid, true));
 			SetPlayerChatBubble(playerid, string, COLOR_PURPLE, 30.0, 10000);

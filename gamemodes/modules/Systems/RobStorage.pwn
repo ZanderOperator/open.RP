@@ -289,7 +289,7 @@ StorageRob(playerid, storage_id) {
 
 			else format(string, sizeof(string), "%s{3C95C2}[SLOT %d]:  %s  [ammo: %d/500]\n", string, i + 1,GetWeaponNameEx( HouseStorage[storage_id][storageWeapons][i] ), HouseStorage[storage_id][storageAmmo][i]);
 		}
-		ShowPlayerDialog(playerid, DIALOG_ROB_STORAGE, DIALOG_STYLE_LIST, "[STORAGE] - Weapons", string, "(uzmi)", "(x)");
+		ShowPlayerDialog(playerid, DIALOG_ROB_STORAGE, DIALOG_STYLE_LIST, "[STORAGE] - Weapons", string, "Take", "Close");
 	}
 	return (true);
 }

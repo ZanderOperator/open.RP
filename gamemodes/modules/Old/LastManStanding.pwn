@@ -1024,7 +1024,7 @@ hook OnPlayerKeyStateChange(playerid, newkeys, oldkeys) {
 					if (items_around == 1) {
 						PlayerLootItem(playerid, item_id, EVENT_ENUM[item_id][Item_Type], EVENT_ENUM[item_id][Item_Amount]);
 					}
-					else ShowPlayerDialog(playerid, DIALOG_PICKUP_ITEM, DIALOG_STYLE_LIST, "{3C95C2}* [ ITEMS - PICKUP]", string, "(uzmi)", "(x)");
+					else ShowPlayerDialog(playerid, DIALOG_PICKUP_ITEM, DIALOG_STYLE_LIST, "{3C95C2}* [ ITEMS - PICKUP]", string, "Take", "Close");
 				}
 			}
 		}

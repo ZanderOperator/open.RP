@@ -2103,7 +2103,8 @@ RegisterPlayerDeath(playerid, killerid) // funkcija
 		gettimestamp()
 	);
 	mysql_tquery(g_SQL, tmpQuery);
-
+	
+	#if defined MODULE_LOGS
 	Log_Write("logfiles/kills.txt", "(%s) %s{%d}(%s) has killed %s{%d}(%s) with %s(%d).",
 		ReturnDate(),
 		GetName(killerid, false),
@@ -2115,6 +2116,8 @@ RegisterPlayerDeath(playerid, killerid) // funkcija
 		GetWeaponNameEx(KilledReason[playerid]),
 		KilledReason[playerid]
 	);
+	#endif
+	
 	new
 		Float:X, Float:Y, Float:Z;
 	GetPlayerPos(playerid, X, Y, Z);
@@ -3185,6 +3188,7 @@ public e_COMMAND_ERRORS:OnPlayerCommandReceived(playerid, cmdtext[], e_COMMAND_E
 			}
 			PlayerAFK[playerid] = 0;
 
+			#if defined MODULE_LOGS
 			if(!IsPlayerAdmin(playerid))
 			{
 				Log_Write("logfiles/cmd_timestamp.txt", "(%s)Player %s[%d]{%d}(%s) used command '%s'.",
@@ -3196,12 +3200,15 @@ public e_COMMAND_ERRORS:OnPlayerCommandReceived(playerid, cmdtext[], e_COMMAND_E
 					cmdtext
 				);
 			}
+			#endif
+			
 			return COMMAND_OK;
 		}
 		case COMMAND_UNDEFINED:
 		{
 			SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "Command '%s' does not exist!", cmdtext);
-
+			
+			#if defined MODULE_LOGS
 			Log_Write("logfiles/cmd_unknown.txt", "(%s)Player %s[%d]{%d}(%s) used non-existing command '%s'.",
 				ReturnDate(),
 				GetName(playerid, false),
@@ -3210,16 +3217,19 @@ public e_COMMAND_ERRORS:OnPlayerCommandReceived(playerid, cmdtext[], e_COMMAND_E
 				GetPlayerIP(playerid),
 				cmdtext
 			);
-
+			#endif
+			
 			return COMMAND_ZERO_RET;
 		}
 		case COMMAND_NO_PLAYER:
 		{
+			#if defined MODULE_LOGS
 			Log_Write("logfiles/cmd_timestamp.txt", "(%s)Player %s unsucessfuly used command %s [Error: He shouldn't exist?].",
 				ReturnDate(),
 				GetName(playerid, false),
 				cmdtext
 			);
+			#endif
 			return COMMAND_ZERO_RET;
 		}
 		case COMMAND_BAD_PREFIX, COMMAND_INVALID_INPUT:
@@ -3230,11 +3240,13 @@ public e_COMMAND_ERRORS:OnPlayerCommandReceived(playerid, cmdtext[], e_COMMAND_E
 	}
 	if(!success)
 	{
+		#if defined MODULE_LOGS
 		Log_Write("logfiles/cmd_timestamp.txt", "(%s)Player %s used a command %s and it wasn't executed.",
 			ReturnDate(),
 			GetName(playerid, false),
 			cmdtext
 		);
+		#endif
 		return COMMAND_ZERO_RET;
 	}
 	return COMMAND_OK;

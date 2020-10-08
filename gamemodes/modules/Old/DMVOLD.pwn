@@ -307,7 +307,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 					if( AC_GetPlayerMoney(playerid) < CAR_LICENSE_PRICE ) 		
 						return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate 1.000$!");
 						
-					ShowPlayerDialog( playerid,DIALOG_DMV_Q1, DIALOG_STYLE_LIST,"{3C95C2}* DMV - Test(1/7).","{3C95C2}[!] Kojom stranom se vozi u Los Santosu?\n \n{3C95C2}[A] - Lijevom.\n{3C95C2}[B] - Desnom.","(select)","(x)");	
+					ShowPlayerDialog( playerid,DIALOG_DMV_Q1, DIALOG_STYLE_LIST,"{3C95C2}* DMV - Test(1/7).","{3C95C2}[!] Kojom stranom se vozi u Los Santosu?\n \n{3C95C2}[A] - Lijevom.\n{3C95C2}[B] - Desnom.","Select","Close");	
 					driving_score[playerid] = 0;
 					PlayerToBudgetMoney(playerid, CAR_LICENSE_PRICE); // u proracun novci idu
 				}
@@ -348,13 +348,13 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 		case DIALOG_DMV_Q1: {
 		switch( listitem ) {
 				case 0: 
-					ShowPlayerDialog( playerid,DIALOG_DMV_Q1, DIALOG_STYLE_LIST,"{3C95C2}* DMV - Test(1/7).","{3C95C2}[!] Kojom stranom se vozi u Los Santosu?\n \n{3C95C2}[A] - Lijevom.\n{3C95C2}[B] - Desnom.","(select)","(x)");	
+					ShowPlayerDialog( playerid,DIALOG_DMV_Q1, DIALOG_STYLE_LIST,"{3C95C2}* DMV - Test(1/7).","{3C95C2}[!] Kojom stranom se vozi u Los Santosu?\n \n{3C95C2}[A] - Lijevom.\n{3C95C2}[B] - Desnom.","Select","Close");	
 				case 1: 
-					ShowPlayerDialog( playerid,DIALOG_DMV_Q1, DIALOG_STYLE_LIST,"{3C95C2}* DMV - Test(1/7).","{3C95C2}[!] Kojom stranom se vozi u Los Santosu?\n \n{3C95C2}[A] - Lijevom.\n{3C95C2}[B] - Desnom.","(select)","(x)");	
+					ShowPlayerDialog( playerid,DIALOG_DMV_Q1, DIALOG_STYLE_LIST,"{3C95C2}* DMV - Test(1/7).","{3C95C2}[!] Kojom stranom se vozi u Los Santosu?\n \n{3C95C2}[A] - Lijevom.\n{3C95C2}[B] - Desnom.","Select","Close");	
 				case 2: 
-					ShowPlayerDialog( playerid,DIALOG_DMV_Q2, DIALOG_STYLE_LIST,"{3C95C2}* DMV - Test(2/7).","{3C95C2}[!] Kolika je dozvoljena brzina u 'naseljenim' mjestima?\n \n{3C95C2}[A] - 70km/h.\n{3C95C2}[B] - 100km/h.","(select)","(x)");	
+					ShowPlayerDialog( playerid,DIALOG_DMV_Q2, DIALOG_STYLE_LIST,"{3C95C2}* DMV - Test(2/7).","{3C95C2}[!] Kolika je dozvoljena brzina u 'naseljenim' mjestima?\n \n{3C95C2}[A] - 70km/h.\n{3C95C2}[B] - 100km/h.","Select","Close");	
 				case 3: {
-					ShowPlayerDialog( playerid,DIALOG_DMV_Q2, DIALOG_STYLE_LIST,"{3C95C2}* DMV - Test(2/7).","{3C95C2}[!] Kolika je dozvoljena brzina u 'naseljenim' mjestima?\n \n{3C95C2}[A] - 70km/h.\n{3C95C2}[B] - 100km/h.","(select)","(x)");	
+					ShowPlayerDialog( playerid,DIALOG_DMV_Q2, DIALOG_STYLE_LIST,"{3C95C2}* DMV - Test(2/7).","{3C95C2}[!] Kolika je dozvoljena brzina u 'naseljenim' mjestima?\n \n{3C95C2}[A] - 70km/h.\n{3C95C2}[B] - 100km/h.","Select","Close");	
 					driving_score[playerid]++;
 				}
 			}
@@ -362,41 +362,41 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 		case DIALOG_DMV_Q2: {
 		switch( listitem ) {
 				case 0: 
-					ShowPlayerDialog( playerid,DIALOG_DMV_Q2, DIALOG_STYLE_LIST,"{3C95C2}* DMV - Test(2/7).","{3C95C2}[!] Kolika je dozvoljena brzina u 'naseljenim' mjestima?\n \n{3C95C2}[A] - 70km/h.\n{3C95C2}[B] - 100km/h.","(select)","(x)");	
+					ShowPlayerDialog( playerid,DIALOG_DMV_Q2, DIALOG_STYLE_LIST,"{3C95C2}* DMV - Test(2/7).","{3C95C2}[!] Kolika je dozvoljena brzina u 'naseljenim' mjestima?\n \n{3C95C2}[A] - 70km/h.\n{3C95C2}[B] - 100km/h.","Select","Close");	
 				case 1: 
-					ShowPlayerDialog( playerid,DIALOG_DMV_Q2, DIALOG_STYLE_LIST,"{3C95C2}* DMV - Test(2/7).","{3C95C2}[!] Kolika je dozvoljena brzina u 'naseljenim' mjestima?\n \n{3C95C2}[A] - 70km/h.\n{3C95C2}[B] - 100km/h.","(select)","(x)");	
+					ShowPlayerDialog( playerid,DIALOG_DMV_Q2, DIALOG_STYLE_LIST,"{3C95C2}* DMV - Test(2/7).","{3C95C2}[!] Kolika je dozvoljena brzina u 'naseljenim' mjestima?\n \n{3C95C2}[A] - 70km/h.\n{3C95C2}[B] - 100km/h.","Select","Close");	
 				case 2: {
-					ShowPlayerDialog( playerid,DIALOG_DMV_Q3, DIALOG_STYLE_LIST,"{3C95C2}* DMV - Test(3/7).","{3C95C2}[!] Kolika je dozvoljena brzina u 'ne naseljenim' mjestima?\n \n{3C95C2}[A] - 130km/h.\n{3C95C2}[B] - 90km/h.","(select)","(x)");	
+					ShowPlayerDialog( playerid,DIALOG_DMV_Q3, DIALOG_STYLE_LIST,"{3C95C2}* DMV - Test(3/7).","{3C95C2}[!] Kolika je dozvoljena brzina u 'ne naseljenim' mjestima?\n \n{3C95C2}[A] - 130km/h.\n{3C95C2}[B] - 90km/h.","Select","Close");	
 					driving_score[playerid]++;
 				}
 				case 3: 
-					ShowPlayerDialog( playerid,DIALOG_DMV_Q3, DIALOG_STYLE_LIST,"{3C95C2}* DMV - Test(3/7).","{3C95C2}[!] Kolika je dozvoljena brzina u 'ne naseljenim' mjestima?\n \n{3C95C2}[A] - 130km/h.\n{3C95C2}[B] - 90km/h.","(select)","(x)");	
+					ShowPlayerDialog( playerid,DIALOG_DMV_Q3, DIALOG_STYLE_LIST,"{3C95C2}* DMV - Test(3/7).","{3C95C2}[!] Kolika je dozvoljena brzina u 'ne naseljenim' mjestima?\n \n{3C95C2}[A] - 130km/h.\n{3C95C2}[B] - 90km/h.","Select","Close");	
 			}
 		}
 		case DIALOG_DMV_Q3: {
 		switch( listitem ) {
 				case 0: 
-					ShowPlayerDialog( playerid,DIALOG_DMV_Q3, DIALOG_STYLE_LIST,"{3C95C2}* DMV - Test(3/7).","{3C95C2}[!] Kolika je dozvoljena brzina u 'ne naseljenim' mjestima?\n \n{3C95C2}[A] - 130km/h.\n{3C95C2}[B] - 90km/h.","(select)","(x)");	
+					ShowPlayerDialog( playerid,DIALOG_DMV_Q3, DIALOG_STYLE_LIST,"{3C95C2}* DMV - Test(3/7).","{3C95C2}[!] Kolika je dozvoljena brzina u 'ne naseljenim' mjestima?\n \n{3C95C2}[A] - 130km/h.\n{3C95C2}[B] - 90km/h.","Select","Close");	
 				case 1: 
-					ShowPlayerDialog( playerid,DIALOG_DMV_Q3, DIALOG_STYLE_LIST,"{3C95C2}* DMV - Test(3/7).","{3C95C2}[!] Kolika je dozvoljena brzina u 'ne naseljenim' mjestima?\n \n{3C95C2}[A] - 130km/h.\n{3C95C2}[B] - 90km/h.","(select)","(x)");
+					ShowPlayerDialog( playerid,DIALOG_DMV_Q3, DIALOG_STYLE_LIST,"{3C95C2}* DMV - Test(3/7).","{3C95C2}[!] Kolika je dozvoljena brzina u 'ne naseljenim' mjestima?\n \n{3C95C2}[A] - 130km/h.\n{3C95C2}[B] - 90km/h.","Select","Close");
 				case 2: {
-					ShowPlayerDialog( playerid,DIALOG_DMV_Q4, DIALOG_STYLE_LIST,"{3C95C2}* DMV - Test(4/7).","{3C95C2}[!] Sta znaci crveno svijetlo na semaforu?\n \n{3C95C2}[A] - Da mozete krenut.\n{3C95C2}[B] - Da morate stati i pricekati za zeleno.","(select)","(x)");	
+					ShowPlayerDialog( playerid,DIALOG_DMV_Q4, DIALOG_STYLE_LIST,"{3C95C2}* DMV - Test(4/7).","{3C95C2}[!] Sta znaci crveno svijetlo na semaforu?\n \n{3C95C2}[A] - Da mozete krenut.\n{3C95C2}[B] - Da morate stati i pricekati za zeleno.","Select","Close");	
 					driving_score[playerid]++;
 				}
 				case 3: 
-					ShowPlayerDialog( playerid,DIALOG_DMV_Q4, DIALOG_STYLE_LIST,"{3C95C2}* DMV - Test(4/7).","{3C95C2}[!] Sta znaci crveno svijetlo na semaforu?\n \n{3C95C2}[A] - Da mozete krenut.\n{3C95C2}[B] - Da morate stati i pricekati za zeleno.","(select)","(x)");		
+					ShowPlayerDialog( playerid,DIALOG_DMV_Q4, DIALOG_STYLE_LIST,"{3C95C2}* DMV - Test(4/7).","{3C95C2}[!] Sta znaci crveno svijetlo na semaforu?\n \n{3C95C2}[A] - Da mozete krenut.\n{3C95C2}[B] - Da morate stati i pricekati za zeleno.","Select","Close");		
 			}
 		}
 		case DIALOG_DMV_Q4: {
 		switch( listitem ) {
 				case 0: 
-					ShowPlayerDialog( playerid,DIALOG_DMV_Q4, DIALOG_STYLE_LIST,"{3C95C2}* DMV - Test(4/7).","{3C95C2}[!] Sta znaci crveno svijetlo na semaforu?\n \n{3C95C2}[A] - Da mozete krenut.\n{3C95C2}[B] - Da morate stati i pricekati za zeleno.","(select)","(x)");
+					ShowPlayerDialog( playerid,DIALOG_DMV_Q4, DIALOG_STYLE_LIST,"{3C95C2}* DMV - Test(4/7).","{3C95C2}[!] Sta znaci crveno svijetlo na semaforu?\n \n{3C95C2}[A] - Da mozete krenut.\n{3C95C2}[B] - Da morate stati i pricekati za zeleno.","Select","Close");
 				case 1: 
-					ShowPlayerDialog( playerid,DIALOG_DMV_Q4, DIALOG_STYLE_LIST,"{3C95C2}* DMV - Test(4/7).","{3C95C2}[!] Sta znaci crveno svijetlo na semaforu?\n \n{3C95C2}[A] - Da mozete krenut.\n{3C95C2}[B] - Da morate stati i pricekati za zeleno.","(select)","(x)");
+					ShowPlayerDialog( playerid,DIALOG_DMV_Q4, DIALOG_STYLE_LIST,"{3C95C2}* DMV - Test(4/7).","{3C95C2}[!] Sta znaci crveno svijetlo na semaforu?\n \n{3C95C2}[A] - Da mozete krenut.\n{3C95C2}[B] - Da morate stati i pricekati za zeleno.","Select","Close");
 				case 2: 
-					ShowPlayerDialog( playerid,DIALOG_DMV_Q5, DIALOG_STYLE_LIST,"{3C95C2}* DMV - Test(5/7).","{3C95C2}[!] Ukoliko napravite nesrecu, sta cete napraviti?\n \n{3C95C2}[A] - Pozvati policiju i bolnicare.\n{3C95C2}[B] - Pokusat pobijeci kako bi izbjegao kaznu.","(select)","(x)");			
+					ShowPlayerDialog( playerid,DIALOG_DMV_Q5, DIALOG_STYLE_LIST,"{3C95C2}* DMV - Test(5/7).","{3C95C2}[!] Ukoliko napravite nesrecu, sta cete napraviti?\n \n{3C95C2}[A] - Pozvati policiju i bolnicare.\n{3C95C2}[B] - Pokusat pobijeci kako bi izbjegao kaznu.","Select","Close");			
 				case 3: { 
-					ShowPlayerDialog( playerid,DIALOG_DMV_Q5, DIALOG_STYLE_LIST,"{3C95C2}* DMV - Test(5/7).","{3C95C2}[!] Ukoliko napravite nesrecu, sta cete napraviti?\n \n{3C95C2}[A] - Pozvati policiju i bolnicare.\n{3C95C2}[B] - Pokusat pobijeci kako bi izbjegao kaznu.","(select)","(x)");		
+					ShowPlayerDialog( playerid,DIALOG_DMV_Q5, DIALOG_STYLE_LIST,"{3C95C2}* DMV - Test(5/7).","{3C95C2}[!] Ukoliko napravite nesrecu, sta cete napraviti?\n \n{3C95C2}[A] - Pozvati policiju i bolnicare.\n{3C95C2}[B] - Pokusat pobijeci kako bi izbjegao kaznu.","Select","Close");		
 					driving_score[playerid]++;
 				}
 			}
@@ -404,29 +404,29 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 		case DIALOG_DMV_Q5: {
 		switch( listitem ) {
 				case 0: 
-					ShowPlayerDialog( playerid,DIALOG_DMV_Q5, DIALOG_STYLE_LIST,"{3C95C2}* DMV - Test(5/7).","{3C95C2}[!] Ukoliko napravite nesrecu, sta cete napraviti?\n \n{3C95C2}[A] - Pozvati policiju i bolnicare.\n{3C95C2}[B] - Pokusat pobijeci kako bi izbjegao kaznu.","(select)","(x)");	
+					ShowPlayerDialog( playerid,DIALOG_DMV_Q5, DIALOG_STYLE_LIST,"{3C95C2}* DMV - Test(5/7).","{3C95C2}[!] Ukoliko napravite nesrecu, sta cete napraviti?\n \n{3C95C2}[A] - Pozvati policiju i bolnicare.\n{3C95C2}[B] - Pokusat pobijeci kako bi izbjegao kaznu.","Select","Close");	
 				case 1: 
-					ShowPlayerDialog( playerid,DIALOG_DMV_Q5, DIALOG_STYLE_LIST,"{3C95C2}* DMV - Test(5/7).","{3C95C2}[!] Ukoliko napravite nesrecu, sta cete napraviti?\n \n{3C95C2}[A] - Pozvati policiju i bolnicare.\n{3C95C2}[B] - Pokusat pobijeci kako bi izbjegao kaznu.","(select)","(x)");	
+					ShowPlayerDialog( playerid,DIALOG_DMV_Q5, DIALOG_STYLE_LIST,"{3C95C2}* DMV - Test(5/7).","{3C95C2}[!] Ukoliko napravite nesrecu, sta cete napraviti?\n \n{3C95C2}[A] - Pozvati policiju i bolnicare.\n{3C95C2}[B] - Pokusat pobijeci kako bi izbjegao kaznu.","Select","Close");	
 				case 2: {
-					ShowPlayerDialog( playerid,DIALOG_DMV_Q6, DIALOG_STYLE_LIST,"{3C95C2}* DMV - Test(6/7).","{3C95C2}[!] Sto trebate uciniti prije zaobilazenja vozila?\n \n{3C95C2}[A] - Provjeriti retrovizore.\n{3C95C2}[B] - Dati zmigavac i kreniti zaobilaziti\n{3C95C2}[C] - Sve gore navedeno.","(select)","(x)");			
+					ShowPlayerDialog( playerid,DIALOG_DMV_Q6, DIALOG_STYLE_LIST,"{3C95C2}* DMV - Test(6/7).","{3C95C2}[!] Sto trebate uciniti prije zaobilazenja vozila?\n \n{3C95C2}[A] - Provjeriti retrovizore.\n{3C95C2}[B] - Dati zmigavac i kreniti zaobilaziti\n{3C95C2}[C] - Sve gore navedeno.","Select","Close");			
 					driving_score[playerid]++;
 				}
 				case 3: 
-					ShowPlayerDialog( playerid,DIALOG_DMV_Q6, DIALOG_STYLE_LIST,"{3C95C2}* DMV - Test(6/7).","{3C95C2}[!] Sto trebate uciniti prije zaobilazenja vozila?\n \n{3C95C2}[A] - Provjeriti retrovizore.\n{3C95C2}[B] - Dati zmigavac i kreniti zaobilaziti\n{3C95C2}[C] - Sve gore navedeno.","(select)","(x)");	
+					ShowPlayerDialog( playerid,DIALOG_DMV_Q6, DIALOG_STYLE_LIST,"{3C95C2}* DMV - Test(6/7).","{3C95C2}[!] Sto trebate uciniti prije zaobilazenja vozila?\n \n{3C95C2}[A] - Provjeriti retrovizore.\n{3C95C2}[B] - Dati zmigavac i kreniti zaobilaziti\n{3C95C2}[C] - Sve gore navedeno.","Select","Close");	
 			}
 		}
 		case DIALOG_DMV_Q6: {
 		switch( listitem ) {
 				case 0: 
-					ShowPlayerDialog( playerid,DIALOG_DMV_Q6, DIALOG_STYLE_LIST,"{3C95C2}* DMV - Test(6/7).","{3C95C2}[!] Sto trebate uciniti prije zaobilazenja vozila?\n \n{3C95C2}[A] - Provjeriti retrovizore.\n{3C95C2}[B] - Dati zmigavac i kreniti zaobilaziti\n{3C95C2}[C] - Sve gore navedeno.","(select)","(x)");	
+					ShowPlayerDialog( playerid,DIALOG_DMV_Q6, DIALOG_STYLE_LIST,"{3C95C2}* DMV - Test(6/7).","{3C95C2}[!] Sto trebate uciniti prije zaobilazenja vozila?\n \n{3C95C2}[A] - Provjeriti retrovizore.\n{3C95C2}[B] - Dati zmigavac i kreniti zaobilaziti\n{3C95C2}[C] - Sve gore navedeno.","Select","Close");	
 				case 1: 
-					ShowPlayerDialog( playerid,DIALOG_DMV_Q6, DIALOG_STYLE_LIST,"{3C95C2}* DMV - Test(6/7).","{3C95C2}[!] Sto trebate uciniti prije zaobilazenja vozila?\n \n{3C95C2}[A] - Provjeriti retrovizore.\n{3C95C2}[B] - Dati zmigavac i kreniti zaobilaziti\n{3C95C2}[C] - Sve gore navedeno.","(select)","(x)");	
+					ShowPlayerDialog( playerid,DIALOG_DMV_Q6, DIALOG_STYLE_LIST,"{3C95C2}* DMV - Test(6/7).","{3C95C2}[!] Sto trebate uciniti prije zaobilazenja vozila?\n \n{3C95C2}[A] - Provjeriti retrovizore.\n{3C95C2}[B] - Dati zmigavac i kreniti zaobilaziti\n{3C95C2}[C] - Sve gore navedeno.","Select","Close");	
 				case 2: // A
-					ShowPlayerDialog( playerid,DIALOG_DMV_Q7, DIALOG_STYLE_LIST,"{3C95C2}* DMV - Test(7/7).","{3C95C2}[!] Ispred vas je parkiran skolski bus s upaljenim zmigavcima?\n \n{3C95C2}[A] - Proletiti punim gasom pored bus-a.\n{3C95C2}[B] - Dati zmigavac i kreniti zaobilaziti.\n{3C95C2}[C] - Trubiti i psovati vozacu autobusa da se pomakne.","(select)","(x)");			
+					ShowPlayerDialog( playerid,DIALOG_DMV_Q7, DIALOG_STYLE_LIST,"{3C95C2}* DMV - Test(7/7).","{3C95C2}[!] Ispred vas je parkiran skolski bus s upaljenim zmigavcima?\n \n{3C95C2}[A] - Proletiti punim gasom pored bus-a.\n{3C95C2}[B] - Dati zmigavac i kreniti zaobilaziti.\n{3C95C2}[C] - Trubiti i psovati vozacu autobusa da se pomakne.","Select","Close");			
 				case 3: // B
-					ShowPlayerDialog( playerid,DIALOG_DMV_Q7, DIALOG_STYLE_LIST,"{3C95C2}* DMV - Test(7/7).","{3C95C2}[!] Ispred vas je parkiran skolski bus s upaljenim zmigavcima?\n \n{3C95C2}[A] - Proletiti punim gasom pored bus-a.\n{3C95C2}[B] - Dati zmigavac i kreniti zaobilaziti.\n{3C95C2}[C] - Trubiti i psovati vozacu autobusa da se pomakne.","(select)","(x)");	
+					ShowPlayerDialog( playerid,DIALOG_DMV_Q7, DIALOG_STYLE_LIST,"{3C95C2}* DMV - Test(7/7).","{3C95C2}[!] Ispred vas je parkiran skolski bus s upaljenim zmigavcima?\n \n{3C95C2}[A] - Proletiti punim gasom pored bus-a.\n{3C95C2}[B] - Dati zmigavac i kreniti zaobilaziti.\n{3C95C2}[C] - Trubiti i psovati vozacu autobusa da se pomakne.","Select","Close");	
 				case 4: { // C
-					ShowPlayerDialog( playerid,DIALOG_DMV_Q7, DIALOG_STYLE_LIST,"{3C95C2}* DMV - Test(7/7).","{3C95C2}[!] Ispred vas je parkiran skolski bus s upaljenim zmigavcima?\n \n{3C95C2}[A] - Proletiti punim gasom pored bus-a.\n{3C95C2}[B] - Dati zmigavac i kreniti zaobilaziti.\n{3C95C2}[C] - Trubiti i psovati vozacu autobusa da se pomakne.","(select)","(x)");	
+					ShowPlayerDialog( playerid,DIALOG_DMV_Q7, DIALOG_STYLE_LIST,"{3C95C2}* DMV - Test(7/7).","{3C95C2}[!] Ispred vas je parkiran skolski bus s upaljenim zmigavcima?\n \n{3C95C2}[A] - Proletiti punim gasom pored bus-a.\n{3C95C2}[B] - Dati zmigavac i kreniti zaobilaziti.\n{3C95C2}[C] - Trubiti i psovati vozacu autobusa da se pomakne.","Select","Close");	
 					driving_score[playerid]++;
 				}
 			}
@@ -434,9 +434,9 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 		case DIALOG_DMV_Q7: {
 		switch( listitem ) {
 				case 0: 
-					ShowPlayerDialog( playerid,DIALOG_DMV_Q7, DIALOG_STYLE_LIST,"{3C95C2}* DMV - Test(7/7).","{3C95C2}[!] Ispred vas je parkiran skolski bus s upaljenim zmigavcima?\n \n{3C95C2}[A] - Proletiti punim gasom pored bus-a.\n{3C95C2}[B] - Dati zmigavac i kreniti zaobilaziti.\n{3C95C2}[C] - Trubiti i psovati vozacu autobusa da se pomakne.","(select)","(x)");	
+					ShowPlayerDialog( playerid,DIALOG_DMV_Q7, DIALOG_STYLE_LIST,"{3C95C2}* DMV - Test(7/7).","{3C95C2}[!] Ispred vas je parkiran skolski bus s upaljenim zmigavcima?\n \n{3C95C2}[A] - Proletiti punim gasom pored bus-a.\n{3C95C2}[B] - Dati zmigavac i kreniti zaobilaziti.\n{3C95C2}[C] - Trubiti i psovati vozacu autobusa da se pomakne.","Select","Close");	
 				case 1: 
-					ShowPlayerDialog( playerid,DIALOG_DMV_Q7, DIALOG_STYLE_LIST,"{3C95C2}* DMV - Test(7/7).","{3C95C2}[!] Ispred vas je parkiran skolski bus s upaljenim zmigavcima?\n \n{3C95C2}[A] - Proletiti punim gasom pored bus-a.\n{3C95C2}[B] - Dati zmigavac i kreniti zaobilaziti.\n{3C95C2}[C] - Trubiti i psovati vozacu autobusa da se pomakne.","(select)","(x)");
+					ShowPlayerDialog( playerid,DIALOG_DMV_Q7, DIALOG_STYLE_LIST,"{3C95C2}* DMV - Test(7/7).","{3C95C2}[!] Ispred vas je parkiran skolski bus s upaljenim zmigavcima?\n \n{3C95C2}[A] - Proletiti punim gasom pored bus-a.\n{3C95C2}[B] - Dati zmigavac i kreniti zaobilaziti.\n{3C95C2}[C] - Trubiti i psovati vozacu autobusa da se pomakne.","Select","Close");
 				case 2: {
 					if(driving_score[playerid] > 5) {
 						SendFormatMessage(playerid, MESSAGE_TYPE_INFO, "Uspijesno ste prosli ispite(%d/7), sada otidjite na parking i...", driving_score[playerid]);
@@ -479,6 +479,6 @@ CMD:license(playerid, params[]) {
 	if( !IsPlayerInRangeOfPoint( playerid, 3.0, -2033.0352,-117.5965,1035.1719 ) ) 
 		return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste u auto skoli.");
 		
-	ShowPlayerDialog( playerid,DIALOG_DMV_LICENSE, DIALOG_STYLE_LIST,"{3C95C2}* DMV - Category","{3C95C2}[1] - Dozvola za automobil.\n{3C95C2}[2] - Dozvola za letenje.\n{3C95C2}[3] - Dozvola za ribolov.\n{3C95C2}[4] - Dozvola za plovljenje.","(select)","(x)");
+	ShowPlayerDialog( playerid,DIALOG_DMV_LICENSE, DIALOG_STYLE_LIST,"{3C95C2}* DMV - Category","{3C95C2}[1] - Dozvola za automobil.\n{3C95C2}[2] - Dozvola za letenje.\n{3C95C2}[3] - Dozvola za ribolov.\n{3C95C2}[4] - Dozvola za plovljenje.","Select","Close");
 	return (true);
 }

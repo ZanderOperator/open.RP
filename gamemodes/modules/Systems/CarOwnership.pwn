@@ -657,7 +657,7 @@ stock StoreWeaponInTrunk(playerid, vehicleid, slot)
 	);
 	mysql_tquery(g_SQL, weaponInsertQuery, "OnVehicleWeaponInsert", "ii", vehicleid, slot);
 
-		// Log			
+	#if defined MODULE_LOGS	
 	Log_Write("logfiles/weapon_trunkput.txt", "(%s) %s [Vehicle SQLID:%d] je stavio %s sa %d metaka u Slot %d.", 
 		ReturnDate(), 
 		GetName(playerid),
@@ -666,6 +666,8 @@ stock StoreWeaponInTrunk(playerid, vehicleid, slot)
 		ammo,
 		slot
 	);
+	#endif
+	
 	Iter_Add(COWeapons[vehicleid], slot);
 	return 1;
 }
@@ -687,9 +689,9 @@ stock TakePlayerWeaponFromTrunk(playerid, vehicleid, slot)
 	);
 	mysql_tquery(g_SQL, deleteWeaponQuery, "", "");
 	
-	// Log
 	GetWeaponName(VehicleInfo[vehicleid][vWeaponId][slot], gunname, sizeof(gunname));
 	
+	#if defined MODULE_LOGS
 	Log_Write("logfiles/weapon_trunktake.txt", "(%s) %s [Vehicle SQLID:%d] je uzeo %s sa %d metaka iz Slota %d.", 
 		ReturnDate(), 
 		GetName(playerid),
@@ -698,6 +700,8 @@ stock TakePlayerWeaponFromTrunk(playerid, vehicleid, slot)
 		VehicleInfo[vehicleid][vWeaponAmmo][slot],
 		slot
 	);
+	#endif
+	
 	strunpack(carname, Model_Name(VehicleInfo[vehicleid][vModel]));
 	SendFormatMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uspjesno ste uzeli %s(%d metaka) iz %s-a.", gunname, VehicleInfo[vehicleid][vWeaponAmmo][slot], carname);
 	DeleteWeaponObject(vehicleid, slot);
@@ -1452,7 +1456,7 @@ stock static CreateCarsTextDraws(playerid)
 	PlayerTextDrawSetProportional(playerid, CarInfoText[playerid], 1);
 	PlayerTextDrawShow(playerid,			CarInfoText[playerid]);
 
-	BuyButton[playerid] = CreatePlayerTextDraw(playerid, 560.750366, 357.217590, "KUPI");
+	BuyButton[playerid] = CreatePlayerTextDraw(playerid, 560.750366, 357.217590, "Buy");
 	PlayerTextDrawLetterSize(playerid, 		BuyButton[playerid], 0.584000, 2.603022);
 	PlayerTextDrawTextSize(playerid, 		BuyButton[playerid], 603.125000, 30.916664);
 	PlayerTextDrawAlignment(playerid, 		BuyButton[playerid], 1);
@@ -2152,14 +2156,16 @@ stock BuyVehicle(playerid, bool:credit_activated = false)
 		format(donatorVehPerms, 128, "UPDATE `accounts` SET `dvehperms` = '%d' WHERE `sqlid` = '%d'", PlayerInfo[playerid][pDonatorVehPerms], PlayerInfo[playerid][pSQLID]);
 		mysql_tquery(g_SQL, donatorVehPerms);
 	}
-	// Log
-	Log_Write("logfiles/car_carbuy.txt", "(%s) %s{%d} je kupio vozilo id %d za %d$.",
+	
+	#if defined MODULE_LOGS
+	Log_Write("logfiles/car_carbuy.txt", "(%s) %s{%d} je kupio %s za %d$.",
 		ReturnDate(),
 		GetName(playerid,false),
 		PlayerInfo[playerid][pSQLID],
-		modelid,
+		ReturnVehicleName(modelid),
 		price
 	);
+	#endif
 	
 	// Message
 	va_SendClientMessage(playerid, COLOR_GREEN, "[ ! ]: Uspjesno ste kupili %s.", ReturnVehicleName(modelid));
@@ -2806,12 +2812,15 @@ stock static CheckVehicleTrunkHealth(playerid, vehicleid)
 		panels = encode_panels(flp, frp, 1, 1, ws, fb, rb);
 		UpdateVehicleDamageStatus(vehicleid, panels, doors, lights, tires);
 		
-		Log_Write("logfiles/trunkbreak.txt", "(%s) %s{%d} je obio gepek vozila ID: %d!", 
+		#if defined MODULE_LOGS
+		Log_Write("logfiles/trunkbreak.txt", "(%s) %s{%d} broke into the trunk of %s[SQLID: %d]!", 
 			ReturnDate(), 
 			GetName(playerid),
 			PlayerInfo[playerid][pSQLID],
-			vehicleid
+			ReturnVehicleName(VehicleInfo[vehicleid][vModel]),
+			VehicleInfo[vehicleid][vSQLID]
 		);
+		#endif
 	}
 	if(1.0 <= VehicleInfo[vehicleid][vTrunkHealth] <= 100.0) StartVehicleAlarm(vehicleid);
 	return 1;
@@ -4207,19 +4216,19 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 					new
 						policytxt[25];
 					format(policytxt, 25, "Trenutna polica: Level %d", VehicleInfo[PlayerInfo[playerid][pSpawnedCar]][vInsurance]);
-					ShowPlayerDialog(playerid, DIALOG_VEH_INSURANCE, DIALOG_STYLE_LIST, policytxt, "Polica level 1\nPolica level 2\nPolica 3", "Odaberi", "Odustani");
+					ShowPlayerDialog(playerid, DIALOG_VEH_INSURANCE, DIALOG_STYLE_LIST, policytxt, "Polica level 1\nPolica level 2\nPolica 3", "Choose", "Abort");
 				}
 				case 1: // Akumulator
 				{
-					ShowPlayerDialog(playerid, DIALOG_VEH_BATTERY, DIALOG_STYLE_LIST, "ODABIR AKUMULATORA", "Cyclone (4.000$)\nVartio Original (7.000$)\nBoche (10.000$)", "Odaberi", "Odustani");
+					ShowPlayerDialog(playerid, DIALOG_VEH_BATTERY, DIALOG_STYLE_LIST, "ODABIR AKUMULATORA", "Cyclone (4.000$)\nVartio Original (7.000$)\nBoche (10.000$)", "Choose", "Abort");
 				}
 				case 2: // Brava
 				{
-					ShowPlayerDialog(playerid, DIALOG_VEH_LOCK, DIALOG_STYLE_LIST, "ODABIR LEVELA BRAVE", "Level 1 (2.000$)\nLevel 2 (5.000$)\nLevel 3 (8.000$)", "Odaberi", "Odustani");
+					ShowPlayerDialog(playerid, DIALOG_VEH_LOCK, DIALOG_STYLE_LIST, "ODABIR LEVELA BRAVE", "Level 1 (2.000$)\nLevel 2 (5.000$)\nLevel 3 (8.000$)", "Choose", "Abort");
 				}
 				case 3: // Immob
 				{
-					ShowPlayerDialog(playerid, DIALOG_VEH_IMMOB, DIALOG_STYLE_LIST, "ODABIR LEVELA IMMOBILIZATORA", "Level 1 (3.000$)\nLevel 2 (6.000$)\nLevel 3 (9.000$)\nLevel 4 (12.000$)\nLevel 5 (15.000$)", "Odaberi", "Odustani");
+					ShowPlayerDialog(playerid, DIALOG_VEH_IMMOB, DIALOG_STYLE_LIST, "ODABIR LEVELA IMMOBILIZATORA", "Level 1 (3.000$)\nLevel 2 (6.000$)\nLevel 3 (9.000$)\nLevel 4 (12.000$)\nLevel 5 (15.000$)", "Choose", "Abort");
 				}
 				case 4: // Audio
 				{
@@ -4240,7 +4249,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 					PlayerPlaySound(playerid, 1133, 0, 0, 0);
 				}
 				case 5: // Alarm
-					ShowPlayerDialog(playerid, DIALOG_VEH_ALARM, DIALOG_STYLE_LIST, "ODABIR ALARMA", "Keeper (1.000$)\nWatcher (3.000$)\nDefender (6.000$)\nCenturion(9.000$)", "Odaberi", "Odustani");
+					ShowPlayerDialog(playerid, DIALOG_VEH_ALARM, DIALOG_STYLE_LIST, "ODABIR ALARMA", "Keeper (1.000$)\nWatcher (3.000$)\nDefender (6.000$)\nCenturion(9.000$)", "Choose", "Abort");
 				case 6: // Brava
 				{
 					if(AC_GetPlayerMoney(playerid) < 2000) return SendMessage(playerid, MESSAGE_TYPE_ERROR, " Nemate 2.000$!");
@@ -4559,7 +4568,6 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 			new sellprice = PlayerSellingPrice[playerid];
 			PlayerToPlayerMoneyTAX (playerid, sellerid, sellprice, true, LOG_TYPE_VEHICLESELL);
 
-			// Log
 			#if defined MODULE_LOGS
 			Log_Write("logfiles/car_carsell.txt", "(%s) %s{%d} je prodao %s{%d} vozilo %d{%d} za %d$.",
 				ReturnDate(),
@@ -4622,7 +4630,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 			BudgetToPlayerMoney(playerid, moneys); // Igrac dobiva novac iz budgeta za vozilo
 			SendFormatMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uspjesno ste prodali svoje vozilo za %d$!", moneys);
 						
-			// Log
+			#if defined MODULE_LOGS
 			Log_Write("logfiles/car_junk_sell.txt", "(%s) %s[%d] je prodao vozilo id %d za %d$ na Junkyardu.",
 				ReturnDate(),
 				GetName(playerid, false),
@@ -4630,6 +4638,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 				GetVehicleModel(vehicleid),
 				moneys
 			);
+			#endif
 			
 			// Vehicle List Reset
 			ResetVehicleList(playerid);
@@ -4985,7 +4994,7 @@ CMD:car(playerid, params[])
 					}
 					count++;
 				}
-				ShowPlayerDialog(playerid, DIALOG_VEH_COLORS, DIALOG_STYLE_MSGBOX, "LISTA BOJA", buffer, "Uredu", "");
+				ShowPlayerDialog(playerid, DIALOG_VEH_COLORS, DIALOG_STYLE_MSGBOX, "LISTA BOJA", buffer, "Ok", "");
 			}
 			case 2: {
 				new
@@ -5075,7 +5084,7 @@ CMD:car(playerid, params[])
 		} else {
 			if(!IsPlayerInRangeOfPoint(playerid, 20.0, 2321.9822, -1355.6526, 23.3999)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste u garazi za upgrade automobila.");
 		}
-		ShowPlayerDialog(playerid, DIALOG_VEH_UPGRADE, DIALOG_STYLE_LIST, "UPGRADE PRIVATNIH VOZILA", "Osiguranje\nAkumulator\nBrava\nImmobilizator\nAudio (1.000$)\nAlarm\nPromjena brave", "Odaberi", "Odustani");
+		ShowPlayerDialog(playerid, DIALOG_VEH_UPGRADE, DIALOG_STYLE_LIST, "UPGRADE PRIVATNIH VOZILA", "Osiguranje\nAkumulator\nBrava\nImmobilizator\nAudio (1.000$)\nAlarm\nPromjena brave", "Choose", "Abort");
 	}
 	else if(!strcmp(pick, "tow", true))
 	{
@@ -5125,7 +5134,7 @@ CMD:car(playerid, params[])
 		if(vehicleid == -1) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste spawnali vozilo!");
 		if(!IsPlayerInVehicle(playerid, vehicleid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste u svome automobilu!");
 
-		ShowPlayerDialog(playerid, DIALOG_VEH_DELETE, DIALOG_STYLE_MSGBOX, "BRISANJE VOZILA", "Zelite li obrisati svoje vozilo?\nOno ce biti potpuno obrisano iz databaze!", "Da", "Ne");
+		ShowPlayerDialog(playerid, DIALOG_VEH_DELETE, DIALOG_STYLE_MSGBOX, "BRISANJE VOZILA", "Zelite li obrisati svoje vozilo?\nOno ce biti potpuno obrisano iz databaze!", "Yes", "No");
 	}
 	else if(!strcmp(pick, "refresh", true)) {
 		new vehicleid = PlayerInfo[playerid][pSpawnedCar];
@@ -5423,7 +5432,7 @@ CMD:car(playerid, params[])
 			GetName(playerid),
 			vehiclePrice
 		);
-		ShowPlayerDialog(giveplayerid, DIALOG_VEH_SELLING, DIALOG_STYLE_MSGBOX, "KUPOVINA VOZILA", tmpString, "Kupi", "Odustani");
+		ShowPlayerDialog(giveplayerid, DIALOG_VEH_SELLING, DIALOG_STYLE_MSGBOX, "KUPOVINA VOZILA", tmpString, "Buy", "Abort");
 	}
 	else if(!strcmp(pick, "junksell", true))
 	{
@@ -5508,7 +5517,7 @@ CMD:trunk(playerid, params[])
 		if(IsACop(playerid) || IsASD(playerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, " Ne smijete to koristiti!");
 		#endif
 		
-		ShowPlayerDialog(playerid, DIALOG_VEH_TAKEGUN, DIALOG_STYLE_LIST, "Prtljaznik - uzimanje oruzja", ListPlayerVehicleWeapons(playerid, vehicleid), "Odaberi", "Odustani");
+		ShowPlayerDialog(playerid, DIALOG_VEH_TAKEGUN, DIALOG_STYLE_LIST, "Prtljaznik - uzimanje oruzja", ListPlayerVehicleWeapons(playerid, vehicleid), "Choose", "Abort");
 		return 1;
 	}
 	else if(!strcmp(pick,"break", true))

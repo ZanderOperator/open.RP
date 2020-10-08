@@ -298,10 +298,8 @@ CMD:atm(playerid, params[])
 			return SendClientMessage(playerid, COLOR_RED, "[GRESKA]: Nemate toliko novaca!");
 			
 		if(amount < 1)
-		{
-		    Log_Write("logfiles/atm_withdraw.txt", "(%s) Igrac %s[%d]{%d} je pokusao podignuti %d$ sa bankomata (%d)!", ReturnDate(), ReturnName(playerid), playerid, PlayerInfo[playerid][pSQLID], amount, atm_n_id);
 		    return SendClientMessage(playerid, COLOR_RED, "[GRESKA]: Nepravilan unos!");
-		}
+			
 		PlayerPlaySound(playerid, 43000, 0.0, 0.0, 0.0);
 		
 		foreach(new i : Player)
@@ -312,7 +310,9 @@ CMD:atm(playerid, params[])
 		AC_GivePlayerMoney(playerid, amount);
 		PlayerInfo[playerid][pBank] -= amount;
 		
+		#if defined MODULE_LOGS
 		Log_Write("logfiles/atm_withdraw.txt", "(%s) Igrac %s[%d]{%d} je podignuo %d$ sa bankomata (%d)! Preostalo mu je %d$ na racunu.", ReturnDate(), ReturnName(playerid), playerid, PlayerInfo[playerid][pSQLID], amount, atm_n_id, PlayerInfo[playerid][pBank]);
+		#endif
 		
 		format(string, sizeof(string), "[ATM]: Uzeli ste %d$ s va�eg ra�una! Preostalo vam je %d$ na vasem ra�unu!", amount, PlayerInfo[playerid][pBank]);
 		SendClientMessage(playerid, COLOR_GREY, string);

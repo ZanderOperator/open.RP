@@ -6941,7 +6941,7 @@ hook OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
 	    	{
 	    	    if(PlayerInfo[playerid][pJailJob] != 0) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Imas zatvorski posao!");
 	    	    if(PlayerInfo[playerid][pJailed] != 1) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nije te PD uhapsiom, zato ne mozes raditi zatvorski posao!");
-				ShowPlayerDialog(playerid, D_JAILJOB, DIALOG_STYLE_MSGBOX, "{FBE204}Zatvorski posao", "Da li zelite da radite kao smecar u zatvoru?\nDobijate honorarnu platu, plus vam se smanjuje kazna.", "Da", "Ne");
+				ShowPlayerDialog(playerid, D_JAILJOB, DIALOG_STYLE_MSGBOX, "{FBE204}Zatvorski posao", "Da li zelite da radite kao smecar u zatvoru?\nDobijate honorarnu platu, plus vam se smanjuje kazna.", "Yes", "No");
 			}
 		}
 		else if( IsPlayerInRangeOfPoint(playerid, 5.0, 69.644668, -227.206695, 1.308123)) {

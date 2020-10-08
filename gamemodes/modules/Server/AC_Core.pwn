@@ -160,7 +160,7 @@ stock static ShowAdminACInterface(playerid)
 		Fox_Online 		? (""COL_GREEN"Online") : (""COL_RED"Offline"),
 		ABH_Online 		? (""COL_GREEN"Online") : (""COL_RED"Offline")
 	);
-	ShowPlayerDialog(playerid, DIALOG_ADMIN_AC, DIALOG_STYLE_LIST, "Anti-Cheat Interface", string, "Odaberi", "Odustani");
+	ShowPlayerDialog(playerid, DIALOG_ADMIN_AC, DIALOG_STYLE_LIST, "Anti-Cheat Interface", string, "Choose", "Abort");
 	return 1;
 }
 

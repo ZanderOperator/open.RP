@@ -1229,12 +1229,14 @@ stock ChangePlayerName(playerid, newname[], type, bool:admin_cn = false)
 	format( log, sizeof(log), "[ChangeName Report]: Stari nick: %s, novi nick: %s", oldname, newname);
 	SendAdminMessage(COLOR_RED, log);
 	
+	#if defined MODULE_LOGS
 	Log_Write("logfiles/namechange.txt", "(%s) {%d} Stari nick: %s, novi nick: %s",
 		ReturnDate(),
 		PlayerInfo[ playerid ][ pSQLID ],
 		oldname,
 		newname
 	);
+	#endif
 	
 	// MySQL
 	mysql_format(g_SQL, cnQuery, sizeof(cnQuery), "INSERT INTO `player_changenames`(`player_id`, `old_name`, `new_name`) VALUES ('%d','%e','%e')",
@@ -1974,7 +1976,7 @@ stock ShowPlayerStats(playerid, targetid)
 		);
 		strcat(pDialog,motd, sizeof(pDialog));
 	}
-    ShowPlayerDialog(playerid, DIALOG_STATS, DIALOG_STYLE_MSGBOX, ""COL_COABLUE"City of Angels Stats", pDialog, "U redu", "");
+    ShowPlayerDialog(playerid, DIALOG_STATS, DIALOG_STYLE_MSGBOX, ""COL_COABLUE"Your Stats", pDialog, "OK", "");
 	return 1;
 }
 
@@ -2119,7 +2121,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 					strcat(string,"\n 2.) Koristenje /pm komande kako bi se nasli negdje radi neke IC stvari,\n tipa prodaja oruzja, droge ili jednostavno radi neke price. U ovaj vid krsenja pravila se takodje ubraja i\n koristenje 3rd party programa kako bi se nasli negdje IC.", sizeof(string));
 					strcat(string,"\n 3.) Koristenje informacija koje ste saznali OOC za IC svrhe je takodje zabranjeno.\n Primjer, ako ste culi da dolazi policija da vas uhapsi OOC i iskoristite to IC kako bi pobjegli daleko od njih kako vas ne mogu naci.", sizeof(string));
 					strcat(string,"\n Sve ovo je kaznjivo i strogo zabranjeno na nasem serveru.", sizeof(string));
-					ShowPlayerDialog(playerid, 0, DIALOG_STYLE_MSGBOX, "Metagaming", string, "Zatvori", "");
+					ShowPlayerDialog(playerid, 0, DIALOG_STYLE_MSGBOX, "Metagaming", string, "Close", "");
 					return 1;
 				}
 				case 1: {
@@ -2127,28 +2129,28 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 					strcat(string, "Powergaming - Powergaming je, u najcescim slucajevima, roleplay radnje koja u tom trenutku nije moguca ili uopste nije moguca, za ljudsko tijelo ili slicno.\n Naravno, i powergaming kao metagaming moze biti na vise nacina uradjen. Takodje kaznjih. Najcesce radnje su:\n 1. Skakanje sa neke odredjene visine koja je dovoljna da vas povrijedi pri padu i udari o tlo a da se povreda na roleplaya nego igrac jednostavno ustane i nastavi dalje.", sizeof(string));
 					strcat(string, "\n 2. Zavezani ste lisicama a onda roleplayate da jednostavno lomite lisice. To u, barem toj situaciji, nije nikako moguce.", sizeof(string));
 					strcat(string, "\n 3. Drzi vas jedan lik sa ledja dok vas drugi udara sprijeda, vi se okrenete i prebacite jednoga preko ledja a drugoga kung-fu potezom udarite u glavu i pobjegnete.\n Velika je vjerovatnoca da ovo nikako ne mozete izvesti, tako da se i ovo smatra powergamingom. Svaki vid powergaminga je kaznjiv.", sizeof(string));
-					ShowPlayerDialog(playerid, 0, DIALOG_STYLE_MSGBOX, "Powergaming", string, "Zatvori", "");
+					ShowPlayerDialog(playerid, 0, DIALOG_STYLE_MSGBOX, "Powergaming", string, "Close", "");
 					return 1;
 				}
 				case 2: {
 					new string[720];
 					strcat(string, "RP2WIN - RP2WIN je roleplay sa nekom drugom osobom u kojem forsirate, bukvalno, da sve ide u vasu korist.\n Nesto sto moze da vam priblizi ovu radnju je sledeci me: / me sutira Ime_Prezime ta ga obara na pod izazivajuci mu nesvijest.\n Ovo je zabranjeno raditi jer u roleplayu treba svakome dati pravednu sansu da odradi svoju stranu RP-a.\n Pravilan me bi trebao glasiti: / me pokusava udariti Ime_Prezime kako bi ga oborio na pod.", sizeof(string));
 					strcat(string, "\n Tek kada vidite da li je igrac pao, odatle mozete nove situacije RPati. Naravno, RP2WIN moze da se izrazi i kada se branite.\n Ukoliko neko iskoristi nesto slicno drugom me-u, a vi samo napisete da vas je promasio ili da ste se izmakli takodje moze biti vid RP2WINa ali takodje i PGa.", sizeof(string));
-					ShowPlayerDialog(playerid, 0, DIALOG_STYLE_MSGBOX, "RP2WIN", string, "Zatvori", "");
+					ShowPlayerDialog(playerid, 0, DIALOG_STYLE_MSGBOX, "RP2WIN", string, "Close", "");
 					return 1;
 				}
 				case 3: {
 					new string[480];
 					strcat(string, "Revenge Kill - Revenge Kill kao sto samo ime kaze je ubojstvo iz osvete.\n Kada se dogodi ubojstvo, vi morate zaboraviti SVE u vezi tog dogadjaja. Mjesto ubojstva, pocinjitela, ucesnike.", sizeof(string));
 					strcat(string, "Sve.\n Jednostavno nastavljate RPati kao da se to nikada nije dogodilo ali ako ste prezivjeli, naravno,\n imate svako pravo da RPate da se to dogodilo i imate pravo juriti toga koji vas je pokusao ubiti, onda ne bi bio revenge kill\n vec pokusaj ubojstva koji nije uspio.", sizeof(string));
-					ShowPlayerDialog(playerid, 0, DIALOG_STYLE_MSGBOX, "Revenge Kill", string, "Zatvori", "");
+					ShowPlayerDialog(playerid, 0, DIALOG_STYLE_MSGBOX, "Revenge Kill", string, "Close", "");
 					return 1;
 				}
 				case 4: {
 					new string[320];
 					strcat(string, "Deathmatch - Vjerovatno znate o cemu se radi. DM je ubijanje ljudi bez ikakvog ili bez dovoljno dobrog IC razloga.\n Nedovoljno dobar razlog moze predstavljati to", sizeof(string));
 					strcat(string, "sto vas je igrac mrko pogledao a vi ste ispraznili citav sarzer u njega.\n Ovo je STROGO zabranjeno na nasem serveru i isto tako je kaznjivo.", sizeof(string));
-					ShowPlayerDialog(playerid, 0, DIALOG_STYLE_MSGBOX, "Deathmatch", string, "Zatvori", "");
+					ShowPlayerDialog(playerid, 0, DIALOG_STYLE_MSGBOX, "Deathmatch", string, "Close", "");
 					return 1;
 				}
 				case 5: {
@@ -2156,18 +2158,18 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 					strcat(string, "-/me koristite kako bi prikazali radnju koju vas karakter izvrsava u odredjenom trenutku.\n Nema pisanja predugackih /me emotesa sa 5 priloski odredbi za nacin koje zavrsavaju na -ci.\n To je bespotrebno i niste bolji rper ako napisete kilometarski /me.", sizeof(string));
 					strcat(string, "\n Ali i ako dodjete u situaciju da napisete sve u jedan /me probajte da tu ne budu\n vise od 3 radnje/glagola jer je onda to PG. Dakle,trudite se citljive i jednostavne\n emotese pisati da vas ljudi koji rpaju sa vama razumiju.", sizeof(string));
 					strcat(string, "\n Imenko_Prezimenko vadi kutiju cigareta i lijevog dzepa. \n Imenko_Prezimenko uzima jednu cigaretu te ju pali.\n Ovo su primjeri dobrog koristenja /me emotesa.", sizeof(string));
-					ShowPlayerDialog(playerid, 0, DIALOG_STYLE_MSGBOX, "/me komanda", string, "Zatvori", "");
+					ShowPlayerDialog(playerid, 0, DIALOG_STYLE_MSGBOX, "/me komanda", string, "Close", "");
 					return 1;
 				}
 				case 6: {
-					ShowPlayerDialog(playerid, 0, DIALOG_STYLE_MSGBOX, "/ame komanda", "-/ame je ustvari isto sto i /me samo ce se tekst koji upisete ispisati vama iznad glave.\nDakle ako upisete /ame gleda kako Johnny jede, ono sto ce iznad vase glave pisati je Imenko_Prezimenko gleda kako Johnny jede.\n/ame jos mozete koristiti za izrazavanje emocija vaseg lika, kao npr /ame se smije. Takodjer se moze koristiti da opisete svoj izgled tj. izgled svoga lika.", "Zatvori", "");
+					ShowPlayerDialog(playerid, 0, DIALOG_STYLE_MSGBOX, "/ame komanda", "-/ame je ustvari isto sto i /me samo ce se tekst koji upisete ispisati vama iznad glave.\nDakle ako upisete /ame gleda kako Johnny jede, ono sto ce iznad vase glave pisati je Imenko_Prezimenko gleda kako Johnny jede.\n/ame jos mozete koristiti za izrazavanje emocija vaseg lika, kao npr /ame se smije. Takodjer se moze koristiti da opisete svoj izgled tj. izgled svoga lika.", "Close", "");
 					return 1;
 				}
 				case 7: {
 					new string[660];
 					strcat(string, "/do koristite kako bi opisali ono sto se desava oko vas, tj okolinu u kojoj se vas karakter nalazi.\n /Do emotes ne KORISTITE da bi prikazali sta vas karakter radi jer je za to /me. Nema smisla pisati /do Rukujemo se, /do Izgledam kao da imam 15 godina.\n Znaci trudite se da ga ne koristite ni da opisete svog karaktera tako cesto, jer za to mozete koristiti i /ame.\n /ame izgleda kao da ima 15 godina, crne hlace i duks.", sizeof(string));
 					strcat(string, "Par primjera ispravnog koristenja /do komande:\n /do Iz pravca mehanicarske radnje bi dolazio miris ulja radi vozila koja sa tamo popravljaju.\n /Do Kafic bi bio sav u neredu, stolice su prevrnute kao i stolovi.", sizeof(string));
-					ShowPlayerDialog(playerid, 0, DIALOG_STYLE_MSGBOX, "/do komanda", string, "Zatvori", "");
+					ShowPlayerDialog(playerid, 0, DIALOG_STYLE_MSGBOX, "/do komanda", string, "Close", "");
 					return 1;
 				}
 			}

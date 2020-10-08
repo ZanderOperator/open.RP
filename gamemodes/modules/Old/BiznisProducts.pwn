@@ -260,7 +260,7 @@ public OnPlayerKeyStateChange(playerid, newkeys, oldkeys) {
 			BizzInfo[biznis][b_Vpos][2] = Z;
 			BizzInfo[biznis][b_Vpos][3] = A;
 					
-			ShowPlayerDialog(playerid, DIALOG_BIZNIS_SPAWNVEHICLE, DIALOG_STYLE_MSGBOX, "{3C95C2}* Biznis - Vehicle Spawn", "\nJeste li sigurni da zelite ovdije postaviti spawn mjesto za vozilo firme?\n{3C95C2}[!] - Jednom kada postavite vise necete moci mjenjati poziciju spawn vozila firme.", "(da)", "(x)");
+			ShowPlayerDialog(playerid, DIALOG_BIZNIS_SPAWNVEHICLE, DIALOG_STYLE_MSGBOX, "{3C95C2}* Biznis - Vehicle Spawn", "\nJeste li sigurni da zelite ovdije postaviti spawn mjesto za vozilo firme?\n{3C95C2}[!] - Jednom kada postavite vise necete moci mjenjati poziciju spawn vozila firme.", "(da)", "Close");
 		}
 		if(PlayerStats[playerid][pProducts] != 0) {	
 				
@@ -877,7 +877,7 @@ hook OnModelSelResponse( playerid, extraid, index, modelid, response ) {
 			BizzInfo[PlayerInfo[playerid][pBizzKey]][bMessage],
 			FormatNumber(BizVehicle[_BizVehicleIndex[playerid]][bizVPrice])
 		);
-		ShowPlayerDialog(playerid, DIALOG_BIZNIS_BUYVEHICLE, DIALOG_STYLE_MSGBOX, "{3C95C2}* Biznis - Vehicle", buffer, "(da)", "(x)");
+		ShowPlayerDialog(playerid, DIALOG_BIZNIS_BUYVEHICLE, DIALOG_STYLE_MSGBOX, "{3C95C2}* Biznis - Vehicle", buffer, "(da)", "Close");
 	}
 	return (true);
 }
@@ -913,7 +913,7 @@ CMD:products(playerid, params[]) {
 			
 		new buffer[256];
 		format(buffer, sizeof(buffer), "{3C95C2}[1] - %s.\n{3C95C2}[2] - %s.\n{3C95C2}[3] - %s.", Warehouses[0][whouseName], Warehouses[1][whouseName], Warehouses[2][whouseName]);
-		ShowPlayerDialog(playerid, DIALOG_PRODUCTS_LOCATION, DIALOG_STYLE_LIST, "{3C95C2}* Warehouses - Location", buffer, "(odaberi)", "(x)");
+		ShowPlayerDialog(playerid, DIALOG_PRODUCTS_LOCATION, DIALOG_STYLE_LIST, "{3C95C2}* Warehouses - Location", buffer, "(odaberi)", "Close");
 	}
 	
 	if(strcmp(action,"drop",(true)) == 0) {	

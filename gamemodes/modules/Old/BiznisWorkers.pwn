@@ -356,7 +356,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 					_WorkerWorkTime[playerid],
 					FormatNumber(_WorkerSalary[playerid])
 				);
-				ShowPlayerDialog(_WorkerID[playerid], DIALOG_WORK_JOBOFFER, DIALOG_STYLE_MSGBOX, "{3C95C2}* Job Offer", buffer, "(potvrdi)", "(x)");	
+				ShowPlayerDialog(_WorkerID[playerid], DIALOG_WORK_JOBOFFER, DIALOG_STYLE_MSGBOX, "{3C95C2}* Job Offer", buffer, "(potvrdi)", "Close");	
 				
 				_WorkerOwner[_WorkerID[playerid]] = playerid;
 			}
@@ -437,7 +437,7 @@ CMD:workers(playerid, params[]) {
 			return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ta osoba je level 1.");
 			
 		ShowPlayerDialog(playerid, DIALOG_WORKER_WORKTIME, DIALOG_STYLE_INPUT, "{3C95C2}* Workers - Time", "\nSada morate ispod unesti na koliko sati zelite zaposliti radnika.\n\
-			{3C95C2}[!] - Sati se odbrojavaju kada je igrac aktivan, i svaki njegov payday sati se spustaju.\n", "(confirm)", "(x)"
+			{3C95C2}[!] - Sati se odbrojavaju kada je igrac aktivan, i svaki njegov payday sati se spustaju.\n", "(confirm)", "Close"
 		);	
 		_WorkerID[playerid] = (workerid);
 		_WorkerSalary[playerid] = (salary);
@@ -483,14 +483,14 @@ CMD:workers(playerid, params[]) {
 		if( biznis == INVALID_BIZNIS_ID ) 
 			return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne posjedujete biznis!");	
 			
-		ShowPlayerDialog(playerid, 0, DIALOG_STYLE_TABLIST_HEADERS, "{3C95C2}* Biznis - Workers", WorkerCheck(biznis), "(x)", "");
+		ShowPlayerDialog(playerid, 0, DIALOG_STYLE_TABLIST_HEADERS, "{3C95C2}* Biznis - Workers", WorkerCheck(biznis), "Close", "");
 	}
 	
 	if(strcmp(action,"pay",true) == 0) {	
 		if( biznis == INVALID_BIZNIS_ID ) 
 			return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne posjedujete biznis!");	
 			
-		ShowPlayerDialog(playerid, DIALOG_WORKER_PAY, DIALOG_STYLE_TABLIST_HEADERS, "{3C95C2}* Biznis - Pay", WorkerList(biznis), "(pay)", "(x)");
+		ShowPlayerDialog(playerid, DIALOG_WORKER_PAY, DIALOG_STYLE_TABLIST_HEADERS, "{3C95C2}* Biznis - Pay", WorkerList(biznis), "(pay)", "Close");
 	}
 	
 	if(strcmp(action,"stats",true) == 0) {
@@ -507,7 +507,7 @@ CMD:workers(playerid, params[]) {
 			FormatNumber(BizzInfo[bizid][b_Wearned][slot]), 
 			BizzInfo[bizid][b_WTime][slot]
 		);
-		ShowPlayerDialog(playerid, 0, DIALOG_STYLE_MSGBOX, "{3C95C2}* Job - Stats", buffer, "(x)", "");
+		ShowPlayerDialog(playerid, 0, DIALOG_STYLE_MSGBOX, "{3C95C2}* Job - Stats", buffer, "Close", "");
 	}
 	
 	if(strcmp(action,"quit",true) == 0) {	

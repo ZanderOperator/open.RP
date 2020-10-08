@@ -918,174 +918,174 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 					GraffitInfo[grafid][gColor] =  1;
 					SendClientMessage(playerid, 0xFFE65AAA, "Odabrao si Crnu boju za grafit! Sada odaberi font.");
 					SendClientMessage(playerid, 0xC70000FF, "Upamti: Da bih vidio font na grafitu moras imati taj font u racunalu, preuzmi ga sa foruma!");
-					ShowPlayerDialog(playerid, DIALOG_GRAF_FONT, DIALOG_STYLE_LIST, "Odaberi font", "Arial\nDripping Marker\nSick Capital Vice\nEast Side Motel\nWhoa\nJuanalzada\nUrban Hook\nAmsterdam graffiti\nOld English\nStylin'\nPainterz\nFreight Train Gangsta", "Odaberi", "Odustani");
+					ShowPlayerDialog(playerid, DIALOG_GRAF_FONT, DIALOG_STYLE_LIST, "Odaberi font", "Arial\nDripping Marker\nSick Capital Vice\nEast Side Motel\nWhoa\nJuanalzada\nUrban Hook\nAmsterdam graffiti\nOld English\nStylin'\nPainterz\nFreight Train Gangsta", "Choose", "Abort");
 				}
 				case 1: { //bijela
 					GraffitInfo[grafid][gColor] =  2;
 					SendClientMessage(playerid, 0xFFE65AAA, "Odabrao si Bijelu boju za grafit! Sada odaberi font.");
 					SendClientMessage(playerid, 0xC70000FF, "Upamti: Da bih vidio font na grafitu moras imati taj font u racunalu, preuzmi ga sa foruma!");
-					ShowPlayerDialog(playerid, DIALOG_GRAF_FONT, DIALOG_STYLE_LIST, "Odaberi font", "Arial\nDripping Marker\nSick Capital Vice\nEast Side Motel\nWhoa\nJuanalzada\nUrban Hook\nAmsterdam graffiti\nOld English\nStylin'\nPainterz\nFreight Train Gangsta\nPainterz\nFreight Train Gangsta", "Odaberi", "Odustani"); 
+					ShowPlayerDialog(playerid, DIALOG_GRAF_FONT, DIALOG_STYLE_LIST, "Odaberi font", "Arial\nDripping Marker\nSick Capital Vice\nEast Side Motel\nWhoa\nJuanalzada\nUrban Hook\nAmsterdam graffiti\nOld English\nStylin'\nPainterz\nFreight Train Gangsta\nPainterz\nFreight Train Gangsta", "Choose", "Abort"); 
 				}
 				case 2: { //plava (tamna)
 					GraffitInfo[grafid][gColor] =  3;
 					SendClientMessage(playerid, 0xFFE65AAA, "Odabrao si Tamno Plavu boju za grafit! Sada odaberi font.");
 					SendClientMessage(playerid, 0xC70000FF, "Upamti: Da bih vidio font na grafitu moras imati taj font u racunalu, preuzmi ga sa foruma!");
-					ShowPlayerDialog(playerid, DIALOG_GRAF_FONT, DIALOG_STYLE_LIST, "Odaberi font", "Arial\nDripping Marker\nSick Capital Vice\nEast Side Motel\nWhoa\nJuanalzada\nUrban Hook\nAmsterdam graffiti\nOld English\nStylin'\nPainterz\nFreight Train Gangsta", "Odaberi", "Odustani");
+					ShowPlayerDialog(playerid, DIALOG_GRAF_FONT, DIALOG_STYLE_LIST, "Odaberi font", "Arial\nDripping Marker\nSick Capital Vice\nEast Side Motel\nWhoa\nJuanalzada\nUrban Hook\nAmsterdam graffiti\nOld English\nStylin'\nPainterz\nFreight Train Gangsta", "Choose", "Abort");
 				}
 				case 3: { //plava (svijetla)
 					GraffitInfo[grafid][gColor] =  4;
 					SendClientMessage(playerid, 0xFFE65AAA, "Odabrao si Svijetlo Plavu boju za grafit! Sada odaberi font.");
 					SendClientMessage(playerid, 0xC70000FF, "Upamti: Da bih vidio font na grafitu moras imati taj font u racunalu, preuzmi ga sa foruma!");
-					ShowPlayerDialog(playerid, DIALOG_GRAF_FONT, DIALOG_STYLE_LIST, "Odaberi font", "Arial\nDripping Marker\nSick Capital Vice\nEast Side Motel\nWhoa\nJuanalzada\nUrban Hook\nAmsterdam graffiti\nOld English\nStylin'\nPainterz\nFreight Train Gangsta", "Odaberi", "Odustani");
+					ShowPlayerDialog(playerid, DIALOG_GRAF_FONT, DIALOG_STYLE_LIST, "Odaberi font", "Arial\nDripping Marker\nSick Capital Vice\nEast Side Motel\nWhoa\nJuanalzada\nUrban Hook\nAmsterdam graffiti\nOld English\nStylin'\nPainterz\nFreight Train Gangsta", "Choose", "Abort");
 				}
 				case 4: { //zelena
 					GraffitInfo[grafid][gColor] =  5;
 					SendClientMessage(playerid, 0xFFE65AAA, "Odabrao si Zelenu boju za grafit! Sada odaberi font.");
 					SendClientMessage(playerid, 0xC70000FF, "Upamti: Da bih vidio font na grafitu moras imati taj font u racunalu, preuzmi ga sa foruma!");
-					ShowPlayerDialog(playerid, DIALOG_GRAF_FONT, DIALOG_STYLE_LIST, "Odaberi font", "Arial\nDripping Marker\nSick Capital Vice\nEast Side Motel\nWhoa\nJuanalzada\nUrban Hook\nAmsterdam graffiti\nOld English\nStylin'\nPainterz\nFreight Train Gangsta", "Odaberi", "Odustani");
+					ShowPlayerDialog(playerid, DIALOG_GRAF_FONT, DIALOG_STYLE_LIST, "Odaberi font", "Arial\nDripping Marker\nSick Capital Vice\nEast Side Motel\nWhoa\nJuanalzada\nUrban Hook\nAmsterdam graffiti\nOld English\nStylin'\nPainterz\nFreight Train Gangsta", "Choose", "Abort");
 				}
 				case 5: { //crvena
 					GraffitInfo[grafid][gColor] =  6;
 					SendClientMessage(playerid, 0xFFE65AAA, "Odabrao si Crvenu boju za grafit! Sada odaberi font.");
 					SendClientMessage(playerid, 0xC70000FF, "Upamti: Da bih vidio font na grafitu moras imati taj font u racunalu, preuzmi ga sa foruma!");
-					ShowPlayerDialog(playerid, DIALOG_GRAF_FONT, DIALOG_STYLE_LIST, "Odaberi font", "Arial\nDripping Marker\nSick Capital Vice\nEast Side Motel\nWhoa\nJuanalzada\nUrban Hook\nAmsterdam graffiti\nOld English\nStylin'\nPainterz\nFreight Train Gangsta", "Odaberi", "Odustani");
+					ShowPlayerDialog(playerid, DIALOG_GRAF_FONT, DIALOG_STYLE_LIST, "Odaberi font", "Arial\nDripping Marker\nSick Capital Vice\nEast Side Motel\nWhoa\nJuanalzada\nUrban Hook\nAmsterdam graffiti\nOld English\nStylin'\nPainterz\nFreight Train Gangsta", "Choose", "Abort");
 				}
 				case 6: { //smeda
 					GraffitInfo[grafid][gColor] =  7;
 					SendClientMessage(playerid, 0xFFE65AAA, "Odabrao si Smedu boju za grafit! Sada odaberi font.");
 					SendClientMessage(playerid, 0xC70000FF, "Upamti: Da bih vidio font na grafitu moras imati taj font u racunalu, preuzmi ga sa foruma!");
-					ShowPlayerDialog(playerid, DIALOG_GRAF_FONT, DIALOG_STYLE_LIST, "Odaberi font", "Arial\nDripping Marker\nSick Capital Vice\nEast Side Motel\nWhoa\nJuanalzada\nUrban Hook\nAmsterdam graffiti\nOld English\nStylin'\nPainterz\nFreight Train Gangsta", "Odaberi", "Odustani");
+					ShowPlayerDialog(playerid, DIALOG_GRAF_FONT, DIALOG_STYLE_LIST, "Odaberi font", "Arial\nDripping Marker\nSick Capital Vice\nEast Side Motel\nWhoa\nJuanalzada\nUrban Hook\nAmsterdam graffiti\nOld English\nStylin'\nPainterz\nFreight Train Gangsta", "Choose", "Abort");
 				}
 				case 7: { //narandasta
 					GraffitInfo[grafid][gColor] =  8;
 					SendClientMessage(playerid, 0xFFE65AAA, "Odabrao si Narandjastu boju za grafit! Sada odaberi font.");
 					SendClientMessage(playerid, 0xC70000FF, "Upamti: Da bih vidio font na grafitu moras imati taj font u racunalu, preuzmi ga sa foruma!");
-					ShowPlayerDialog(playerid, DIALOG_GRAF_FONT, DIALOG_STYLE_LIST, "Odaberi font", "Arial\nDripping Marker\nSick Capital Vice\nEast Side Motel\nWhoa\nJuanalzada\nUrban Hook\nAmsterdam graffiti\nOld English\nStylin'\nPainterz\nFreight Train Gangsta", "Odaberi", "Odustani");
+					ShowPlayerDialog(playerid, DIALOG_GRAF_FONT, DIALOG_STYLE_LIST, "Odaberi font", "Arial\nDripping Marker\nSick Capital Vice\nEast Side Motel\nWhoa\nJuanalzada\nUrban Hook\nAmsterdam graffiti\nOld English\nStylin'\nPainterz\nFreight Train Gangsta", "Choose", "Abort");
 				}
 				case 8: { //zlatna 
 					GraffitInfo[grafid][gColor] =  9;
 					SendClientMessage(playerid, 0xFFE65AAA, "Odabrao si Zlatnu boju za grafit! Sada odaberi font.");
 					SendClientMessage(playerid, 0xC70000FF, "Upamti: Da bih vidio font na grafitu moras imati taj font u racunalu, preuzmi ga sa foruma!");
-					ShowPlayerDialog(playerid, DIALOG_GRAF_FONT, DIALOG_STYLE_LIST, "Odaberi font", "Arial\nDripping Marker\nSick Capital Vice\nEast Side Motel\nWhoa\nJuanalzada\nUrban Hook\nAmsterdam graffiti\nOld English\nStylin'\nPainterz\nFreight Train Gangsta", "Odaberi", "Odustani");
+					ShowPlayerDialog(playerid, DIALOG_GRAF_FONT, DIALOG_STYLE_LIST, "Odaberi font", "Arial\nDripping Marker\nSick Capital Vice\nEast Side Motel\nWhoa\nJuanalzada\nUrban Hook\nAmsterdam graffiti\nOld English\nStylin'\nPainterz\nFreight Train Gangsta", "Choose", "Abort");
 				}
 				case 9: { //srebrna 
 					GraffitInfo[grafid][gColor] =  10;
 					SendClientMessage(playerid, 0xFFE65AAA, "Odabrao si Srebrnu boju za grafit! Sada odaberi font.");
 					SendClientMessage(playerid, 0xC70000FF, "Upamti: Da bih vidio font na grafitu moras imati taj font u racunalu, preuzmi ga sa foruma!");
-					ShowPlayerDialog(playerid, DIALOG_GRAF_FONT, DIALOG_STYLE_LIST, "Odaberi font", "Arial\nDripping Marker\nSick Capital Vice\nEast Side Motel\nWhoa\nJuanalzada\nUrban Hook\nAmsterdam graffiti\nOld English\nStylin'\nPainterz\nFreight Train Gangsta", "Odaberi", "Odustani");
+					ShowPlayerDialog(playerid, DIALOG_GRAF_FONT, DIALOG_STYLE_LIST, "Odaberi font", "Arial\nDripping Marker\nSick Capital Vice\nEast Side Motel\nWhoa\nJuanalzada\nUrban Hook\nAmsterdam graffiti\nOld English\nStylin'\nPainterz\nFreight Train Gangsta", "Choose", "Abort");
 				}
 			}
 			return 1;
 		}
 		case DIALOG_GRAF_FONT: {
-			if(!response) ShowPlayerDialog(playerid, DIALOG_GRAF_COLOR, DIALOG_STYLE_LIST, "Odaberi boju", "{141414}Crna\nBijela\n{0000A1}Tamno plava\n{3C82FF}Svijetlo plava\n{329D32}Zelena\n{BE0A0A}Crvena\n{502800}Smeda", "Odaberi", "Odustani");
+			if(!response) ShowPlayerDialog(playerid, DIALOG_GRAF_COLOR, DIALOG_STYLE_LIST, "Odaberi boju", "{141414}Crna\nBijela\n{0000A1}Tamno plava\n{3C82FF}Svijetlo plava\n{329D32}Zelena\n{BE0A0A}Crvena\n{502800}Smeda", "Choose", "Abort");
 			new grafid = PlayerInfo[playerid][pGrafID];
 			switch(listitem) {
 				case 0: { //Arial
 					GraffitInfo[grafid][gFont] =  1;
 					SendClientMessage(playerid, 0xFFE65AAA, "Odabrao si Arial font.");
-					ShowPlayerDialog(playerid, DIALOG_GRAF_SIZE, DIALOG_STYLE_LIST, "Velicina slova", "80\n90\n100\n110\n", "Odaberi", "Odustani");
+					ShowPlayerDialog(playerid, DIALOG_GRAF_SIZE, DIALOG_STYLE_LIST, "Velicina slova", "80\n90\n100\n110\n", "Choose", "Abort");
 				}
 				case 1: { //Dripping Marker
 					GraffitInfo[grafid][gFont] =  2;
 					SendClientMessage(playerid, 0xFFE65AAA, "Odabrao si Dripping Marker font.");
-					ShowPlayerDialog(playerid, DIALOG_GRAF_SIZE, DIALOG_STYLE_LIST, "Velicina slova", "80\n90\n100\n110\n", "Odaberi", "Odustani");
+					ShowPlayerDialog(playerid, DIALOG_GRAF_SIZE, DIALOG_STYLE_LIST, "Velicina slova", "80\n90\n100\n110\n", "Choose", "Abort");
 				}
 				case 2: { //Sick Capital Vice
 					GraffitInfo[grafid][gFont] =  3;
 					SendClientMessage(playerid, 0xFFE65AAA, "Odabrao si Sick Capital Vice font.");
-					ShowPlayerDialog(playerid, DIALOG_GRAF_SIZE, DIALOG_STYLE_LIST, "Velicina slova", "80\n90\n100\n110\n", "Odaberi", "Odustani");
+					ShowPlayerDialog(playerid, DIALOG_GRAF_SIZE, DIALOG_STYLE_LIST, "Velicina slova", "80\n90\n100\n110\n", "Choose", "Abort");
 				}
 				case 3: { //East Side Motel
 					GraffitInfo[grafid][gFont] =  4;
 					SendClientMessage(playerid, 0xFFE65AAA, "Odabrao si East Side Motel font.");
-					ShowPlayerDialog(playerid, DIALOG_GRAF_SIZE, DIALOG_STYLE_LIST, "Velicina slova", "80\n90\n100\n110\n", "Odaberi", "Odustani");
+					ShowPlayerDialog(playerid, DIALOG_GRAF_SIZE, DIALOG_STYLE_LIST, "Velicina slova", "80\n90\n100\n110\n", "Choose", "Abort");
 				}
 				case 4: { //Whoa
 					GraffitInfo[grafid][gFont] =  5;
 					SendClientMessage(playerid, 0xFFE65AAA, "Odabrao si Whoa font.");
-					ShowPlayerDialog(playerid, DIALOG_GRAF_SIZE, DIALOG_STYLE_LIST, "Velicina slova", "80\n90\n100\n110\n", "Odaberi", "Odustani");
+					ShowPlayerDialog(playerid, DIALOG_GRAF_SIZE, DIALOG_STYLE_LIST, "Velicina slova", "80\n90\n100\n110\n", "Choose", "Abort");
 				}
 				case 5: { //Juanalzada
 					GraffitInfo[grafid][gFont] =  6;
 					SendClientMessage(playerid, 0xFFE65AAA, "Odabrao si Juanalzada font.");
-					ShowPlayerDialog(playerid, DIALOG_GRAF_SIZE, DIALOG_STYLE_LIST, "Velicina slova", "80\n90\n100\n110\n", "Odaberi", "Odustani");
+					ShowPlayerDialog(playerid, DIALOG_GRAF_SIZE, DIALOG_STYLE_LIST, "Velicina slova", "80\n90\n100\n110\n", "Choose", "Abort");
 				}
 				case 6: { //URBAN HOOK-UPZ
 					GraffitInfo[grafid][gFont] =  7;
 					SendClientMessage(playerid, 0xFFE65AAA, "Odabrao si Urban Hook font.");
-					ShowPlayerDialog(playerid, DIALOG_GRAF_SIZE, DIALOG_STYLE_LIST, "Velicina slova", "80\n90\n100\n110\n", "Odaberi", "Odustani");
+					ShowPlayerDialog(playerid, DIALOG_GRAF_SIZE, DIALOG_STYLE_LIST, "Velicina slova", "80\n90\n100\n110\n", "Choose", "Abort");
 				}
 				case 7: {//Amsterdam graffiti
 					GraffitInfo[grafid][gFont] =  8;
 					SendClientMessage(playerid, 0xFFE65AAA, "Odabrao si Amsterdam graffiti font.");
-					ShowPlayerDialog(playerid, DIALOG_GRAF_SIZE, DIALOG_STYLE_LIST, "Velicina slova", "80\n90\n100\n110\n", "Odaberi", "Odustani");
+					ShowPlayerDialog(playerid, DIALOG_GRAF_SIZE, DIALOG_STYLE_LIST, "Velicina slova", "80\n90\n100\n110\n", "Choose", "Abort");
 				}
 				case 8: { //Old English
 					GraffitInfo[grafid][gFont] =  9;
 					SendClientMessage(playerid, 0xFFE65AAA, "Odabrao si Old English font.");
-					ShowPlayerDialog(playerid, DIALOG_GRAF_SIZE, DIALOG_STYLE_LIST, "Velicina slova", "60\n80\n90\n100\n110\n", "Odaberi", "Odustani");
+					ShowPlayerDialog(playerid, DIALOG_GRAF_SIZE, DIALOG_STYLE_LIST, "Velicina slova", "60\n80\n90\n100\n110\n", "Choose", "Abort");
 				}
 				case 9: { //Stylin' BRK
 					GraffitInfo[grafid][gFont] =  10;
 					SendClientMessage(playerid, 0xFFE65AAA, "Odabrao si Stylin' font.");
-					ShowPlayerDialog(playerid, DIALOG_GRAF_SIZE, DIALOG_STYLE_LIST, "Velicina slova", "60\n80\n90\n100\n110\n", "Odaberi", "Odustani");
+					ShowPlayerDialog(playerid, DIALOG_GRAF_SIZE, DIALOG_STYLE_LIST, "Velicina slova", "60\n80\n90\n100\n110\n", "Choose", "Abort");
 				}
 				case 10: { // Painterz
 					GraffitInfo[grafid][gFont] =  11;
 					SendClientMessage(playerid, 0xFFE65AAA, "Odabrao si Painterz font.");
-					ShowPlayerDialog(playerid, DIALOG_GRAF_SIZE, DIALOG_STYLE_LIST, "Velicina slova", "60\n80\n90\n100\n110\n", "Odaberi", "Odustani");
+					ShowPlayerDialog(playerid, DIALOG_GRAF_SIZE, DIALOG_STYLE_LIST, "Velicina slova", "60\n80\n90\n100\n110\n", "Choose", "Abort");
 				}
 				case 11: { // Freight Train Gangsta
 					GraffitInfo[grafid][gFont] =  12;
 					SendClientMessage(playerid, 0xFFE65AAA, "Odabrao si Painterz font.");
-					ShowPlayerDialog(playerid, DIALOG_GRAF_SIZE, DIALOG_STYLE_LIST, "Velicina slova", "60\n80\n90\n100\n110\n", "Odaberi", "Odustani");
+					ShowPlayerDialog(playerid, DIALOG_GRAF_SIZE, DIALOG_STYLE_LIST, "Velicina slova", "60\n80\n90\n100\n110\n", "Choose", "Abort");
 				}
 			}
 			return 1;
 		}
 		case DIALOG_GRAF_SIZE: {
-			if(!response) ShowPlayerDialog(playerid, DIALOG_GRAF_FONT, DIALOG_STYLE_LIST, "Odaberi font", "Arial\nDripping Marker\nSick Capital Vice\nEast Side Motel\nWhoa\nJuanalzada\nUrban Hook\nAmsterdam graffiti\nOld English\nStylin'\nPainterz\nFreight Train Gangsta", "Odaberi", "Odustani");
+			if(!response) ShowPlayerDialog(playerid, DIALOG_GRAF_FONT, DIALOG_STYLE_LIST, "Odaberi font", "Arial\nDripping Marker\nSick Capital Vice\nEast Side Motel\nWhoa\nJuanalzada\nUrban Hook\nAmsterdam graffiti\nOld English\nStylin'\nPainterz\nFreight Train Gangsta", "Choose", "Abort");
 			new grafid = PlayerInfo[playerid][pGrafID];
 			switch(listitem) {
 				case 0: { //60
 					GraffitInfo[grafid][gFontSize] =  60;
 					SendClientMessage(playerid, 0xFFE65AAA, "Odabrao si velicinu fonta: 60.");
-					ShowPlayerDialog(playerid, DIALOG_GRAF_TEXT, DIALOG_STYLE_INPUT, "Tekst", "Upisi tekst za grafit.", "Odaberi", "Odustani");
+					ShowPlayerDialog(playerid, DIALOG_GRAF_TEXT, DIALOG_STYLE_INPUT, "Tekst", "Upisi tekst za grafit.", "Choose", "Abort");
 				}
 				case 1: { //80
 					GraffitInfo[grafid][gFontSize] =  80;
 					SendClientMessage(playerid, 0xFFE65AAA, "Odabrao si velicinu fonta: 80.");
-					ShowPlayerDialog(playerid, DIALOG_GRAF_TEXT, DIALOG_STYLE_INPUT, "Tekst", "Upisi tekst za grafit.", "Odaberi", "Odustani");
+					ShowPlayerDialog(playerid, DIALOG_GRAF_TEXT, DIALOG_STYLE_INPUT, "Tekst", "Upisi tekst za grafit.", "Choose", "Abort");
 				}
 				case 2: { //90
 					GraffitInfo[grafid][gFontSize] =  90;
 					SendClientMessage(playerid, 0xFFE65AAA, "Odabrao si velicinu fonta: 90.");
-					ShowPlayerDialog(playerid, DIALOG_GRAF_TEXT, DIALOG_STYLE_INPUT, "Tekst", "Upisi tekst za grafit.", "Odaberi", "Odustani");
+					ShowPlayerDialog(playerid, DIALOG_GRAF_TEXT, DIALOG_STYLE_INPUT, "Tekst", "Upisi tekst za grafit.", "Choose", "Abort");
 				}
 				case 3: { //100
 					GraffitInfo[grafid][gFontSize] =  100;
 					SendClientMessage(playerid, 0xFFE65AAA, "Odabrao si velicinu fonta: 100.");
-					ShowPlayerDialog(playerid, DIALOG_GRAF_TEXT, DIALOG_STYLE_INPUT, "Tekst", "Upisi tekst za grafit.", "Odaberi", "Odustani");
+					ShowPlayerDialog(playerid, DIALOG_GRAF_TEXT, DIALOG_STYLE_INPUT, "Tekst", "Upisi tekst za grafit.", "Choose", "Abort");
 				}
 				case 4: { //110
 					GraffitInfo[grafid][gFontSize] =  110;
 					SendClientMessage(playerid, 0xFFE65AAA, "Odabrao si velicinu fonta: 110.");
-					ShowPlayerDialog(playerid, DIALOG_GRAF_TEXT, DIALOG_STYLE_INPUT, "Tekst", "Upisi tekst za grafit.", "Odaberi", "Odustani");
+					ShowPlayerDialog(playerid, DIALOG_GRAF_TEXT, DIALOG_STYLE_INPUT, "Tekst", "Upisi tekst za grafit.", "Choose", "Abort");
 				}
 			}
 			return 1;
 		}
 		case DIALOG_GRAF_TEXT: {
-			if(!response) ShowPlayerDialog(playerid, DIALOG_GRAF_FONT, DIALOG_STYLE_LIST, "Odaberi font", "Arial\nDripping Marker\nSick Capital Vice\nEast Side Motel\nWhoa\nJuanalzada\nUrban Hook\nAmsterdam graffiti\nOld English\nStylin'\nPainterz\nFreight Train Gangsta", "Odaberi", "Odustani");
+			if(!response) ShowPlayerDialog(playerid, DIALOG_GRAF_FONT, DIALOG_STYLE_LIST, "Odaberi font", "Arial\nDripping Marker\nSick Capital Vice\nEast Side Motel\nWhoa\nJuanalzada\nUrban Hook\nAmsterdam graffiti\nOld English\nStylin'\nPainterz\nFreight Train Gangsta", "Choose", "Abort");
 			if(strlen(inputtext) == 0) {
 				SendClientMessage(playerid, 0xfa5555AA, "Moras unijeti neki tekst!");
-				ShowPlayerDialog(playerid, DIALOG_GRAF_TEXT, DIALOG_STYLE_INPUT, "Tekst", "Upisi tekst za grafit.", "Odaberi", "Odustani");
+				ShowPlayerDialog(playerid, DIALOG_GRAF_TEXT, DIALOG_STYLE_INPUT, "Tekst", "Upisi tekst za grafit.", "Choose", "Abort");
 				return 1;
 			}
 			if(strlen(inputtext) > MAX_GRAFFIT_INPUT - 1) {
 				SendClientMessage(playerid, 0xfa5555AA, "Prevelik text (1-31 znamenki)!");
-				ShowPlayerDialog(playerid, DIALOG_GRAF_TEXT, DIALOG_STYLE_INPUT, "Tekst", "Upisi tekst za grafit.", "Odaberi", "Odustani");
+				ShowPlayerDialog(playerid, DIALOG_GRAF_TEXT, DIALOG_STYLE_INPUT, "Tekst", "Upisi tekst za grafit.", "Choose", "Abort");
 				return 1;
 			}
 			new grafid = PlayerInfo[playerid][pGrafID];
@@ -1225,7 +1225,7 @@ CMD:graffit(playerid, params[])
 		
 		PlayerInfo[playerid][pGrafID] = Iter_Free(Graffits);
 		Iter_Add(Graffits, PlayerInfo[playerid][pGrafID]);
-		ShowPlayerDialog(playerid, DIALOG_GRAF_COLOR, DIALOG_STYLE_LIST, "Odaberi boju", "{141414}Crna\nBijela\n{0000A1}Tamno plava\n{3C82FF}Svijetlo plava\n{329D32}Zelena\n{BE0A0A}Crvena\n{502800}Smeda\n{FF732D}Narandasta\n{FFD700}Zlatna\n{C0C0C0}Srebrna", "Odaberi", "Odustani");
+		ShowPlayerDialog(playerid, DIALOG_GRAF_COLOR, DIALOG_STYLE_LIST, "Odaberi boju", "{141414}Crna\nBijela\n{0000A1}Tamno plava\n{3C82FF}Svijetlo plava\n{329D32}Zelena\n{BE0A0A}Crvena\n{502800}Smeda\n{FF732D}Narandasta\n{FFD700}Zlatna\n{C0C0C0}Srebrna", "Choose", "Abort");
 	}
 	else if(!strcmp(pick, "edit", true)) {
 		if(Bit1_Get(r_GraffitEditStarted, playerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Vec uredjujete jedan grafit!");

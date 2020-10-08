@@ -29,7 +29,7 @@ CMD:animations(playerid,params[])
     format(anims1,sizeof(anims1), "/caranim [1-18], /casinoanim [1-24], /clothesanim [1-13], /dodge, /walk [1-15], /fwalk [1-7], /gym [1-29], /no [1-3]");
     strcat(anims,anims1, sizeof(anims));
 	
-	ShowPlayerDialog(playerid, 7331, DIALOG_STYLE_MSGBOX, "ANIMACIJE", anims, "Zatvori", "");
+	ShowPlayerDialog(playerid, 7331, DIALOG_STYLE_MSGBOX, "ANIMACIJE", anims, "Close", "");
 	return 1;
 
 
@@ -37,13 +37,13 @@ CMD:animations(playerid,params[])
 
 CMD:help(playerid,params[])
 {
-	ShowPlayerDialog(playerid,DIALOG_HELP,DIALOG_STYLE_LIST,"POMOC","1.Account \n2.Vozilo \n3.Organizacije \n4.Biznis \n5.Novac \n6.Muzika \n7.Objekti \n8.Death System \n9.Droga \n10.Hunger \n11.Hobi \n12.License \n13.Mobitel \n14.Skills \n15.Oruzje \n16.Chat \n17.Poslovi \n18.Garaze \n19.Complexi \n20.House&Furniture \n21.Roleplay\n22.Kasino \n23.Radio \n24.Ostalo","Zatvori","");
+	ShowPlayerDialog(playerid,DIALOG_HELP,DIALOG_STYLE_LIST,"POMOC","1.Account \n2.Vozilo \n3.Organizacije \n4.Biznis \n5.Novac \n6.Muzika \n7.Objekti \n8.Death System \n9.Droga \n10.Hunger \n11.Hobi \n12.License \n13.Mobitel \n14.Skills \n15.Oruzje \n16.Chat \n17.Poslovi \n18.Garaze \n19.Complexi \n20.House&Furniture \n21.Roleplay\n22.Kasino \n23.Radio \n24.Ostalo","Close","");
 	return 1;
 }
 
 CMD:jobhelp(playerid, params[]) 
 {
-	ShowPlayerDialog(playerid, DIALOG_JOBHELP, DIALOG_STYLE_LIST, "Poslovi", "Tvornicki radnik\nCistac ulice\nSmecar\nTransporter\nImpounder\nDrvosjeca\nMehanicar\nFarmer\nTaksista\nDrug dealer\nCar jacker\nLopov", "Odaberi","Natrag");
+	ShowPlayerDialog(playerid, DIALOG_JOBHELP, DIALOG_STYLE_LIST, "Poslovi", "Tvornicki radnik\nCistac ulice\nSmecar\nTransporter\nImpounder\nDrvosjeca\nMehanicar\nFarmer\nTaksista\nDrug dealer\nCar jacker\nLopov", "Choose","Back");
 	return (true);
 }
 
@@ -134,7 +134,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext [])
 			{
 				switch(listitem)
 				{
-					case 0: ShowPlayerDialog(playerid, DIALOG_HELPACC, DIALOG_STYLE_MSGBOX, "Account", "/stats\n/levelup\n/changename\n/setlook\n/showme\n/pay\n/setwalk\n/spawnchange\n/sid\n/account\n/id\n/kill", "Ok", "Saznaj vise");
+					case 0: ShowPlayerDialog(playerid, DIALOG_HELPACC, DIALOG_STYLE_MSGBOX, "Account", "/stats\n/levelup\n/changename\n/setlook\n/showme\n/pay\n/setwalk\n/spawnchange\n/sid\n/account\n/id\n/kill", "Ok", "More info");
 					case 1: ShowPlayerDialog(playerid, DIALOG_HELP, DIALOG_STYLE_MSGBOX, "Vozilo", "/gps\n/car\n/fill\n/get fuel\n/tow\n/oldcar\n/doors\n/windows\n/trunk\n/showcostats\n/duplicatekey\n/tuning\n/bonnet\n/eject", "Ok", "");
 					case 2: 
 					{
@@ -170,7 +170,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext [])
 					case 13: ShowPlayerDialog(playerid, DIALOG_HELP, DIALOG_STYLE_MSGBOX, "Skills", "/skills", "Ok", "");
 					case 14: ShowPlayerDialog(playerid, DIALOG_HELP, DIALOG_STYLE_MSGBOX, "Weapon", "/weapon\n/buygun", "Ok", "");
 					case 15: ShowPlayerDialog(playerid, DIALOG_HELP, DIALOG_STYLE_MSGBOX, "Chats", "/me\n/do\n/ame\n/c(lose)\n/s(hout)\n/carwhisper\n/w(hisper)\n/b\n/blockb\n/pm\n/accent\n/mic\n/clearmychat\n/attempt", "Ok", "");
-					case 16: ShowPlayerDialog(playerid, DIALOG_JOBHELP, DIALOG_STYLE_LIST, "Poslovi", "Tvornicki radnik\nCistac ulice\nSmecar\nTransporter\nImpounder\nDrvosjeca\nMehanicar\nFarmer\nTaksista\nDrug dealer\nCar jacker\nLopov", "Odaberi","Natrag");
+					case 16: ShowPlayerDialog(playerid, DIALOG_JOBHELP, DIALOG_STYLE_LIST, "Poslovi", "Tvornicki radnik\nCistac ulice\nSmecar\nTransporter\nImpounder\nDrvosjeca\nMehanicar\nFarmer\nTaksista\nDrug dealer\nCar jacker\nLopov", "Choose","Back");
 					case 17: ShowPlayerDialog(playerid, DIALOG_HELP, DIALOG_STYLE_MSGBOX, "Garage", "/garage\n/genter", "Ok", "");
 					case 18: ShowPlayerDialog(playerid, DIALOG_HELP, DIALOG_STYLE_MSGBOX, "Complex", "/buycomplex\n/complex\n/rentroom\n/unrentroom", "Ok", "");
 					case 19: ShowPlayerDialog(playerid, DIALOG_HELP, DIALOG_STYLE_MSGBOX, "House&Furniture", "/house\n/bint\n/buyhouse\n/ring\n/knock\n/doorshout\n/renthouse\n/unrenthouse\n/furniture", "Ok", "");
@@ -192,7 +192,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext [])
 						   /pm,/aon,/recon,/setviwo,/masked,/dmers,/clearchat,/slap\n\
 						   /learn,/freeze,/unfreeze,/akill,/count,/checkoffline,/lastdriver\n\
 						   /fly,/lt,/rt,/goto,/rtc,/togadminwarns,/houseo,/bizo,/complexo\n\
-						   /biznis_id,/house_id,/complex_id", "Zatvori", "");
+						   /biznis_id,/house_id,/complex_id", "Close", "");
 					case 1:
 					{
 						if(PlayerInfo[playerid][pAdmin] < 2)
@@ -201,7 +201,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext [])
 						   /jail,/unjail,/banex,/prisoned,/weatherall,/rtcinradius\n\
 						   /unbanip,/gotocar,/charge,/chargeex,/prison,/unprison,/ban,/cnn,/warnex\n\
 						   /prisonex,/drivers,/jobids,/getip,/rtcacar,/iptoname,/givebullet\n\
-						   /chargep,/chargepex,/removemusic,/dakarhelp,/quadhelp", "Zatvori", "");
+						   /chargep,/chargepex,/removemusic,/dakarhelp,/quadhelp", "Close", "");
 					}
 					case 2:
 					{
@@ -209,7 +209,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext [])
 							return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste Admin Level 3+!");
 						else ShowPlayerDialog(playerid, DIALOG_ADMHELP, DIALOG_STYLE_MSGBOX, "KOMANDE - Admin level 3","/mark,/gotomark,/entercar,/getcar,/fpm,/fpmed\n\
 						   /blockreport,/setph,/findobjectowner,/aremoveallplayerobjects,/checkplayerobjects,/approveobjects,/afurniture,/inactivity\n\
-						   /tod", "Zatvori", "");
+						   /tod", "Close", "");
 					}
 					case 3:
 					{
@@ -217,14 +217,14 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext [])
 							return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste Admin Level 4+!");
 						else ShowPlayerDialog(playerid, DIALOG_ADMHELP, DIALOG_STYLE_MSGBOX, "KOMANDE - Admin level 4","/mutearound,/atake,/aunlock,/bigears,/givegun,/fixveh,/setpharound\n\
 						   /setarmoraround,/freezearound,/unfreezearound,/undie\n\
-						   /veh,/setarmour,/rac,/skin,/worders,/bizinfo", "Zatvori", "");
+						   /veh,/setarmour,/rac,/skin,/worders,/bizinfo", "Close", "");
 				   }
 					case 4:
 					{
 						if(PlayerInfo[playerid][pAdmin] < 1337)
 							return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste Admin Level 1337+!");
 						else ShowPlayerDialog(playerid, DIALOG_ADMHELP, DIALOG_STYLE_MSGBOX, "KOMANDE - Admin level 1337","/fstyle,/skin,/setstat, /setcostats ,/weather,/healcar,/createvip,/fuelcars,/fuelcar,/edit\n\
-						   /asellhouse,/asellbiz,/asellcomplex,/givelicense,/asellcomplexroom,/address,/afaction", "Zatvori", "");
+						   /asellhouse,/asellbiz,/asellcomplex,/givelicense,/asellcomplexroom,/address,/afaction", "Close", "");
 					}
 					case 5:
 					{
@@ -233,7 +233,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext [])
 						else ShowPlayerDialog(playerid, DIALOG_ADMHELP, DIALOG_STYLE_MSGBOX, "KOMANDE - Admin level 1338",",/givemoney,/achangename,/makeadminex,/setvehplates,/makehelper\n\
 						   /givepremium,/removewarn,/houseint,/houseentrance,/bizentrance,/veh_plate,/approve_tax\n\
 						   /happyhours,/togpm,/crash,/deletebiz,/createbiz,/customhouseint,/custombizint\n\
-						   /createtower,/destroytower,/viewtowers,/agps", "Zatvori", "");
+						   /createtower,/destroytower,/viewtowers,/agps", "Close", "");
 					}
 				}
 			}
@@ -250,25 +250,25 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext [])
 				{
 					if(PlayerInfo[playerid][pHelper] < 1 && PlayerInfo[playerid][pAdmin] == 1338)
 						return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste Helper Level 1+!");
-					ShowPlayerDialog(playerid, DIALOG_HELP, DIALOG_STYLE_MSGBOX, "Helper Level 1", "/learn /apm /hon /hoff /hm /a /h /ach /forumname /kick /disconnect /slap /goto /checkoffline", "Izlaz", "");
+					ShowPlayerDialog(playerid, DIALOG_HELP, DIALOG_STYLE_MSGBOX, "Helper Level 1", "/learn /apm /hon /hoff /hm /a /h /ach /forumname /kick /disconnect /slap /goto /checkoffline", "Exit", "");
 				}
 				case 1:
 				{
 					if(PlayerInfo[playerid][pHelper] < 2 && PlayerInfo[playerid][pAdmin] == 1338)
 						return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste Helper Level 2+!");
-					ShowPlayerDialog(playerid, DIALOG_HELP, DIALOG_STYLE_MSGBOX, "Helper Level 2", "/port /recon /rtc /rtcinradius /setint /setviwo", "Izlaz", "");
+					ShowPlayerDialog(playerid, DIALOG_HELP, DIALOG_STYLE_MSGBOX, "Helper Level 2", "/port /recon /rtc /rtcinradius /setint /setviwo", "Exit", "");
 				}
 				case 2:
 				{
 					if(PlayerInfo[playerid][pHelper] < 3 && PlayerInfo[playerid][pAdmin] == 1338)
 						return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste Helper Level 3+!");
-					ShowPlayerDialog(playerid, DIALOG_HELP, DIALOG_STYLE_MSGBOX, "Helper Level 3", "/gethere /freeze /unfreeze", "Izlaz", "");
+					ShowPlayerDialog(playerid, DIALOG_HELP, DIALOG_STYLE_MSGBOX, "Helper Level 3", "/gethere /freeze /unfreeze", "Exit", "");
 				}
 				case 3:
 				{
 					if(PlayerInfo[playerid][pHelper] < 4 && PlayerInfo[playerid][pAdmin] == 1338)
 						return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste Helper Level 4!");
-					ShowPlayerDialog(playerid, DIALOG_HELP, DIALOG_STYLE_MSGBOX, "Helper Level 4", "/mark /gotomark /check", "Izlaz", "");
+					ShowPlayerDialog(playerid, DIALOG_HELP, DIALOG_STYLE_MSGBOX, "Helper Level 4", "/mark /gotomark /check", "Exit", "");
 				}
 			}
 			return 1;
@@ -277,7 +277,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext [])
 		{
 			if(!response)
 			{
-				ShowPlayerDialog(playerid,DIALOG_HELP,DIALOG_STYLE_LIST,"POMOC","1.Account \n2.Vozilo \n3.Organizacije \n4.Biznis \n5.Novac \n6.Muzika \n7.Objekti \n8.Death system \n9.Droga \n10.Hunger \n11.Hobi \n12.License \n13.Mobitel \n14.Skills \n15.Oruzje \n16.Chat \n17.Poslovi \n18.Garaze \n19.Complexi \n20.House&Furniture\n21.Biznis\n22.Kasino \n23.Ostalo","Zatvori","");
+				ShowPlayerDialog(playerid,DIALOG_HELP,DIALOG_STYLE_LIST,"POMOC","1.Account \n2.Vozilo \n3.Organizacije \n4.Biznis \n5.Novac \n6.Muzika \n7.Objekti \n8.Death system \n9.Droga \n10.Hunger \n11.Hobi \n12.License \n13.Mobitel \n14.Skills \n15.Oruzje \n16.Chat \n17.Poslovi \n18.Garaze \n19.Complexi \n20.House&Furniture\n21.Biznis\n22.Kasino \n23.Ostalo","Close","");
 				return 1;
 			}
 			else
@@ -296,7 +296,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext [])
 				strcat(accstring, acc, sizeof(accstring));
 				format(acc,sizeof(acc), "Dozvoljeno je posjedovati dva ili vise racuna samo ukoliko izmedju njih nema povezanosti.");
 				strcat(accstring, acc, sizeof(accstring));
-				ShowPlayerDialog(playerid,DIALOG_HELPACC, DIALOG_STYLE_MSGBOX, "Account", accstring , "Zatvori", "");
+				ShowPlayerDialog(playerid,DIALOG_HELPACC, DIALOG_STYLE_MSGBOX, "Account", accstring , "Close", "");
 			}
 			return 1;
 		}
@@ -304,7 +304,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext [])
 		{
 			if(!response)
 			{
-				ShowPlayerDialog(playerid,DIALOG_HELP,DIALOG_STYLE_LIST,"POMOC","1.Account \n2.Vozilo \n3.Organizacije \n4.Biznis \n5.Novac \n6.Muzika \n7.Objekti \n8.Death system \n9.Droga \n10.Hunger \n11.Hobi \n12.License \n13.Mobitel \n14.Skills \n15.Oruzje \n16.Chat \n17.Poslovi \n18.Garaze \n19.Complexi \n20.House&Furniture\n21.Biznis\n22.Kasino \n23.Ostalo","Zatvori","");
+				ShowPlayerDialog(playerid,DIALOG_HELP,DIALOG_STYLE_LIST,"POMOC","1.Account \n2.Vozilo \n3.Organizacije \n4.Biznis \n5.Novac \n6.Muzika \n7.Objekti \n8.Death system \n9.Droga \n10.Hunger \n11.Hobi \n12.License \n13.Mobitel \n14.Skills \n15.Oruzje \n16.Chat \n17.Poslovi \n18.Garaze \n19.Complexi \n20.House&Furniture\n21.Biznis\n22.Kasino \n23.Ostalo","Close","");
 				return 1;
 			}
 			else
@@ -320,7 +320,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext [])
 					Da biste zapoceli rulet u prostoriji kasina pored stola za rulet kucate komandu /rulet, nakon toga vam ne trebaju dodatne komande i nastavljate igru po zelji.", 
 					sizeof(casinostring)
 				);
-				ShowPlayerDialog(playerid,DIALOG_KASINO, DIALOG_STYLE_MSGBOX, "KASINO", casinostring , "Zatvori", "");
+				ShowPlayerDialog(playerid,DIALOG_KASINO, DIALOG_STYLE_MSGBOX, "KASINO", casinostring , "Close", "");
 			}
 			return 1;
 		}
@@ -328,7 +328,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext [])
 		{
 			if(!response)
 			{
-				ShowPlayerDialog(playerid,DIALOG_HELP,DIALOG_STYLE_LIST,"POMOC","1.Account \n2.Vozilo \n3.Organizacije \n4.Biznis \n5.Novac \n6.Muzika \n7.Objekti \n8.Death system \n9.Droga \n10.Hunger \n11.Hobi \n12.License \n13.Mobitel \n14.Skills \n15.Oruzje \n16.Chat \n17.Poslovi \n18.Garaze \n19.Complexi \n20.House&Furniture\n21.Biznis\n22.Kasino \n23.Ostalo","Zatvori","");
+				ShowPlayerDialog(playerid,DIALOG_HELP,DIALOG_STYLE_LIST,"POMOC","1.Account \n2.Vozilo \n3.Organizacije \n4.Biznis \n5.Novac \n6.Muzika \n7.Objekti \n8.Death system \n9.Droga \n10.Hunger \n11.Hobi \n12.License \n13.Mobitel \n14.Skills \n15.Oruzje \n16.Chat \n17.Poslovi \n18.Garaze \n19.Complexi \n20.House&Furniture\n21.Biznis\n22.Kasino \n23.Ostalo","Close","");
 				return 1;
 			}
 			else
@@ -351,7 +351,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext [])
 				format(fish,sizeof(fish), "Zatim, odlaskom u bilo koji 24/7 market komandom /sellmeat prodajete meso, te zaradjujete novac.");
 				strcat(hobistring, fish, sizeof(hobistring));
 
-				ShowPlayerDialog(playerid,DIALOG_HOBI, DIALOG_STYLE_MSGBOX, "RIBOLOVAC I LOVAC", hobistring , "Zatvori", "");
+				ShowPlayerDialog(playerid,DIALOG_HOBI, DIALOG_STYLE_MSGBOX, "RIBOLOVAC I LOVAC", hobistring , "Close", "");
 			}
 			return 1;
 		}

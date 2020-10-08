@@ -718,7 +718,7 @@ hook OnModelSelResponse( playerid, extraid, index, modelid, response ) {
         
 		format(dialog_title, sizeof(dialog_title), "[ITEM - %s ]", inventory_data[playerid][index][invItem]);
 		format(buffer, sizeof(buffer), "(1). - Koristi.\n(2). - Baci.\n(3). - Daj igracu.\n(!) Kolicina: %d.", inventory_data[playerid][index][invQuantity]);
-		ShowPlayerDialog(playerid, DIALOG_INVENTORY_MENU, DIALOG_STYLE_LIST, dialog_title, buffer, "(odaberi)", "(x)");
+		ShowPlayerDialog(playerid, DIALOG_INVENTORY_MENU, DIALOG_STYLE_LIST, dialog_title, buffer, "(odaberi)", "Close");
 	}
 	return (true);
 }
@@ -744,14 +744,14 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 							format(dialog_title, sizeof(dialog_title), "[DROP ITEM - %s ]", inventory_data[playerid][itemid][invItem]);
 							format(buffer, sizeof(buffer), "\nIspod unesite kolicinu '%s' kojeg zelite izbaciti iz vaseg inventorya.\nNapomena, nakon sto izbacite objekat stvoriti ce se na podu i mozete ga\nponovo pokupiti pritiskom na 'Y'.\n \nTrenutna kolicina: %d.", inventory_data[playerid][itemid][invItem], inventory_data[playerid][itemid][invQuantity]);
 							
-							ShowPlayerDialog(playerid, DIALOG_INVENTORY_DROP, DIALOG_STYLE_INPUT, dialog_title,  buffer, "(input)", "(x)");
+							ShowPlayerDialog(playerid, DIALOG_INVENTORY_DROP, DIALOG_STYLE_INPUT, dialog_title,  buffer, "(input)", "Close");
 						}
 					}
 					case 2: {
 						new dialog_title[50];
 						format(dialog_title, sizeof(dialog_title), "[GIVE ITEM - %s ]", inventory_data[playerid][itemid][invItem]);
 						
-						ShowPlayerDialog(playerid, DIALOG_INVENTORY_GIVE, DIALOG_STYLE_INPUT, dialog_title, "\nIspod unesite ID igraca i kolicinu item-a koju zelite dati igracu.\n[PRIMJER]: 1(id igraca) 20(kolicina).", "(input)", "(x)");
+						ShowPlayerDialog(playerid, DIALOG_INVENTORY_GIVE, DIALOG_STYLE_INPUT, dialog_title, "\nIspod unesite ID igraca i kolicinu item-a koju zelite dati igracu.\n[PRIMJER]: 1(id igraca) 20(kolicina).", "(input)", "Close");
 					}
 				}
 			}
@@ -764,10 +764,10 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 				format(buffer, sizeof(buffer), "\nIspod unesite kolicinu '%s' kojeg zelite izbaciti iz vaseg inventorya.\nNapomena, nakon sto izbacite objekat stvoriti ce se na podu i mozete ga\nponovo pokupiti pritiskom na 'Y'.\n \nTrenutna kolicina: %d.", inventory_data[playerid][itemid][invItem],inventory_data[playerid][itemid][invItem], inventory_data[playerid][itemid][invQuantity]);
 							
 				if (isnull(inputtext))
-					return ShowPlayerDialog(playerid, DIALOG_INVENTORY_DROP, DIALOG_STYLE_INPUT, dialog_title,  buffer, "(input)", "(x)");
+					return ShowPlayerDialog(playerid, DIALOG_INVENTORY_DROP, DIALOG_STYLE_INPUT, dialog_title,  buffer, "(input)", "Close");
 				
 				if (strval(inputtext) < 1 || strval(inputtext) > inventory_data[playerid][itemid][invQuantity])
-					return ShowPlayerDialog(playerid, DIALOG_INVENTORY_DROP, DIALOG_STYLE_INPUT, dialog_title,  buffer, "(input)", "(x)");
+					return ShowPlayerDialog(playerid, DIALOG_INVENTORY_DROP, DIALOG_STYLE_INPUT, dialog_title,  buffer, "(input)", "Close");
 
 				inventory_drop(playerid, itemid, strval(inputtext));
 			}
@@ -779,10 +779,10 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 				format(dialog_title, sizeof(dialog_title), "[GIVE ITEM - %s ]", inventory_data[playerid][itemid][invItem]);
 				
 				if (strval(inputtext) == INVALID_PLAYER_ID)
-					return ShowPlayerDialog(playerid, DIALOG_INVENTORY_GIVE, DIALOG_STYLE_INPUT, dialog_title, "\nIspod unesite ID igraca i kolicinu item-a koju zelite dati igracu.\n[PRIMJER]: 1(id igraca) 20(kolicina).", "(input)", "(x)");
+					return ShowPlayerDialog(playerid, DIALOG_INVENTORY_GIVE, DIALOG_STYLE_INPUT, dialog_title, "\nIspod unesite ID igraca i kolicinu item-a koju zelite dati igracu.\n[PRIMJER]: 1(id igraca) 20(kolicina).", "(input)", "Close");
 				
 				if (strval(inputtext) == playerid)
-					return ShowPlayerDialog(playerid, DIALOG_INVENTORY_GIVE, DIALOG_STYLE_INPUT, dialog_title, "\nIspod unesite ID igraca i kolicinu item-a koju zelite dati igracu.\n[PRIMJER]: 1(id igraca) 20(kolicina).", "(input)", "(x)");
+					return ShowPlayerDialog(playerid, DIALOG_INVENTORY_GIVE, DIALOG_STYLE_INPUT, dialog_title, "\nIspod unesite ID igraca i kolicinu item-a koju zelite dati igracu.\n[PRIMJER]: 1(id igraca) 20(kolicina).", "(input)", "Close");
 				
 				if (itemid == -1)
 					return (false);
@@ -812,7 +812,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 				}
 				else
 				{
-					ShowPlayerDialog(playerid, DIALOG_INVENTORY_GIVE_QUANTITY, DIALOG_STYLE_INPUT, dialog_title, "\nSada kada ste odabrali kome zelite dati item, morate unesti kolicinu\nkoju zelite dat igracu. Primjer ukoliko zelite nekome dat jednu cigaretu(primjer) ispod upisite 1.", "(give)", "(x)");
+					ShowPlayerDialog(playerid, DIALOG_INVENTORY_GIVE_QUANTITY, DIALOG_STYLE_INPUT, dialog_title, "\nSada kada ste odabrali kome zelite dati item, morate unesti kolicinu\nkoju zelite dat igracu. Primjer ukoliko zelite nekome dat jednu cigaretu(primjer) ispod upisite 1.", "(give)", "Close");
 					inventory_GetGiveID[playerid] = strval(inputtext);
 				}
 			}
@@ -825,9 +825,9 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 				strunpack(string, inventory_data[playerid][itemid][invItem]);
 				
 				if (isnull(inputtext))
-					return ShowPlayerDialog(playerid, DIALOG_INVENTORY_GIVE_QUANTITY, DIALOG_STYLE_INPUT, dialog_title, "\nSada kada ste odabrali kome zelite dati item, morate unesti kolicinu\nkoju zelite dat igracu. Primjer ukoliko zelite nekome dat jednu cigaretu(primjer) ispod upisite 1.", "(give)", "(x)");
+					return ShowPlayerDialog(playerid, DIALOG_INVENTORY_GIVE_QUANTITY, DIALOG_STYLE_INPUT, dialog_title, "\nSada kada ste odabrali kome zelite dati item, morate unesti kolicinu\nkoju zelite dat igracu. Primjer ukoliko zelite nekome dat jednu cigaretu(primjer) ispod upisite 1.", "(give)", "Close");
 				if (strval(inputtext) < 1 || strval(inputtext) > inventory_data[playerid][itemid][invQuantity])
-					return ShowPlayerDialog(playerid, DIALOG_INVENTORY_GIVE_QUANTITY, DIALOG_STYLE_INPUT, dialog_title, "\nSada kada ste odabrali kome zelite dati item, morate unesti kolicinu\nkoju zelite dat igracu. Primjer ukoliko zelite nekome dat jednu cigaretu(primjer) ispod upisite 1.", "(give)", "(x)");
+					return ShowPlayerDialog(playerid, DIALOG_INVENTORY_GIVE_QUANTITY, DIALOG_STYLE_INPUT, dialog_title, "\nSada kada ste odabrali kome zelite dati item, morate unesti kolicinu\nkoju zelite dat igracu. Primjer ukoliko zelite nekome dat jednu cigaretu(primjer) ispod upisite 1.", "(give)", "Close");
 
 				new add_to = inventory_add(targetid, string, inventory_data[playerid][itemid][invModel], inventory_data[playerid][itemid][invType], strval(inputtext));
 				if (add_to == -1)

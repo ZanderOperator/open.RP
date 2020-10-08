@@ -191,11 +191,11 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 			if(strlen(inputtext) < 2) return SendClientMessage(playerid, COLOR_WHITE, "Enter discription koje ste unijeli nije valjano! (Premalo znakova)");
 
 			format(PickupInfo[ NewPickupID[playerid] ][ epEnterDiscription ], 128, inputtext);
-			ShowPlayerDialog(playerid, DIALOG_DYN_PDISC, DIALOG_STYLE_INPUT, "PICKUP DESCRIPTION", "Unesi pickup description:", "Unesi", "Odustani");
+			ShowPlayerDialog(playerid, DIALOG_DYN_PDISC, DIALOG_STYLE_INPUT, "PICKUP DESCRIPTION", "Unesi pickup description:", "Input", "Abort");
 			return 1;
 		}
 		case DIALOG_DYN_PDISC: {
-			if(!response) ShowPlayerDialog(playerid, DIALOG_DYN_PEDISC, DIALOG_STYLE_INPUT, "Enter discription", "Unesi enter discription:", "Unesi", "Odustani");
+			if(!response) ShowPlayerDialog(playerid, DIALOG_DYN_PEDISC, DIALOG_STYLE_INPUT, "Enter discription", "Unesi enter discription:", "Input", "Abort");
 			if(strlen(inputtext) < 2)
 			{
 				SendClientMessage(playerid, COLOR_WHITE, "Enter discription koje ste unijeli nije valjano! (Premalo znakova)");
@@ -249,7 +249,7 @@ CMD:createpickup(playerid, params[])
 	PickupInfo[pickup][epInt] 				= interior;
  	GetPlayerPos(playerid,PickupInfo[pickup][epEntrancex],PickupInfo[pickup][epEntrancey],PickupInfo[pickup][epEntrancez]);
  	
-	ShowPlayerDialog(playerid, DIALOG_DYN_PEDISC, DIALOG_STYLE_INPUT, "Enter discription", "Unesi enter discription:", "Unesi", "Odustani");
+	ShowPlayerDialog(playerid, DIALOG_DYN_PEDISC, DIALOG_STYLE_INPUT, "Enter discription", "Unesi enter discription:", "Input", "Abort");
 	return 1;
 }
 CMD:deletepickup(playerid, params[])

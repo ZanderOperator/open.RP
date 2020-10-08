@@ -697,31 +697,31 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 				case 0:
 				{
 					format(InfoText, sizeof(InfoText), "Vosak (East LS CarWash)[2] | Vosak (Idlewood CarWash)[2]");
-					ShowPlayerDialog(playerid, DIALOG_TRUCKER_OILINFO, DIALOG_STYLE_MSGBOX, "OIL rute", InfoText, "Zatvori", "");
+					ShowPlayerDialog(playerid, DIALOG_TRUCKER_OILINFO, DIALOG_STYLE_MSGBOX, "OIL rute", InfoText, "Close", "");
 				}
 				case 1:
 				{
 					format(InfoText, sizeof(InfoText), "Alat (LS Mechanic Garage)[1] | Kreveti (LS Medical Department)[1]\nTegovi (Ganton Gym)[1] | Dijelovi (LS Mechanic Garage)[1]\n\
 														Posteljina (LS Medical Department)[1] | Sprave (Ganton Gym)[1]\nGume (LS Mechanic Garage)[2] | Blokovi (LS Construction Co.)[2]");
-					ShowPlayerDialog(playerid, DIALOG_TRUCKER_HEAVYINFO, DIALOG_STYLE_MSGBOX, "HEAVY rute", InfoText, "Zatvori", "");
+					ShowPlayerDialog(playerid, DIALOG_TRUCKER_HEAVYINFO, DIALOG_STYLE_MSGBOX, "HEAVY rute", InfoText, "Close", "");
 				}
 				case 2:
 				{
 					format(InfoText, sizeof(InfoText), "Deterdzent (East LS CarWash)[0] | Deterdzent (Idlewood CarWash)[0]\n\
 														Hrana (Verona Mall)[0] | Pice(Verona Mall)[0] | Ljekovi (LS Medical Department)[1]");
-					ShowPlayerDialog(playerid, DIALOG_TRUCKER_FREEZERINFO, DIALOG_STYLE_MSGBOX, "FREEZER rute", InfoText, "Zatvori", "");
+					ShowPlayerDialog(playerid, DIALOG_TRUCKER_FREEZERINFO, DIALOG_STYLE_MSGBOX, "FREEZER rute", InfoText, "Close", "");
 				}
 				case 3:
 				{
 					format(InfoText, sizeof(InfoText), "Pjesak (LS Construction Co.)[2] | Zemlja (LS Construction Co.)[2] | Kamen (LS Construction Co.)[2]");
-					ShowPlayerDialog(playerid, DIALOG_TRUCKER_CONSTINFO, DIALOG_STYLE_MSGBOX, "CONSTRUCTION rute", InfoText, "Zatvori", "");
+					ShowPlayerDialog(playerid, DIALOG_TRUCKER_CONSTINFO, DIALOG_STYLE_MSGBOX, "CONSTRUCTION rute", InfoText, "Close", "");
 				}
 				case 4:
 				{
 					format(InfoText, sizeof(InfoText), "Odjeca (Verona Mall)[0] | Odjeca (Ganton Binco)[1] | Odjeca (Vinewood ZIP)[1]\nObuca (Verona Mall)[0] | Obuca (Ganton Binco)[1]\n\
 														Pribor (LS Medical Department)[1] | Crnilo (East LS CarWash)[2] | Crnilo (Idlewood CarWash)[2]\nBoks oprema (Ganton Gym)[1]\n\
 														Podloge za ring (Ganton Gym)[1] | Pribor za jelo (Verona Mall)[0]\nPosudje (Verona Mall)[0] | Obuca (Vinewood ZIP)[1]");
-					ShowPlayerDialog(playerid, DIALOG_TRUCKER_FRAGILEINFO, DIALOG_STYLE_MSGBOX, "FRAGILE rute", InfoText, "Zatvori", "");
+					ShowPlayerDialog(playerid, DIALOG_TRUCKER_FRAGILEINFO, DIALOG_STYLE_MSGBOX, "FRAGILE rute", InfoText, "Close", "");
 				}
 			}
 		}
@@ -1261,6 +1261,6 @@ CMD:atrailers(playerid, params[])
 	if(PlayerInfo[playerid][pAdmin] < 1) return SendClientMessage(playerid, COLOR_RED, "Niste ovlasteni!");
 	new ptv[1024];
 	format(ptv,1024,"Trailer #1 - OIL - FLINT - id: 6\nTrailer #2 - HEAVY - FLINT - id: 7\nTrailer #3 - FREEZER - FLINT - id: 8\nTrailer #4 - CONSTRUCTION - FLINT - id: 9\nTrailer #5 - FRAGILE - FLINT - id: 10\nTrailer #6\nTrailer #7\nTrailer #8\nTrailer #9\nTrailer #10");
-	ShowPlayerDialog(playerid, DIALOG_ATRAILER, DIALOG_STYLE_LIST, "{FBE204}TRUCKER TRAILER", ptv, "Odaberi", "Izadji");
+	ShowPlayerDialog(playerid, DIALOG_ATRAILER, DIALOG_STYLE_LIST, "{FBE204}TRUCKER TRAILER", ptv, "Choose", "Izadji");
 	return 1;
 }

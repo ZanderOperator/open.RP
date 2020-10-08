@@ -516,7 +516,7 @@ CMD:dog(playerid, params[])
 		{
 			format( string, 128, "%s%s\t%d$\n", string, PetShop[i][psName], PetShop[i][psPrice]);
 		}
-		ShowPlayerDialog(playerid, DIALOG_DOG_BUY, DIALOG_STYLE_TABLIST_HEADERS, "PETSHOP - Kupovina pasa", string, "Odaberi", "Odustani");
+		ShowPlayerDialog(playerid, DIALOG_DOG_BUY, DIALOG_STYLE_TABLIST_HEADERS, "PETSHOP - Kupovina pasa", string, "Choose", "Abort");
     }
     else if(strcmp(option,"throwball",true) == 0)
     {

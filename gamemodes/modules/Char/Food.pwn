@@ -385,7 +385,7 @@ public OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
 		if( REST_TYPE_PIZZA <= Bit4_Get(r_PlayerRestoran, playerid) <= REST_TYPE_CLUCK ) {
 			new
 				mealIndex = Bit8_Get(r_MealIndex, playerid);
-			va_ShowPlayerDialog(playerid, DIALOG_MEAL_BUY, DIALOG_STYLE_MSGBOX, "Restoran", "Zelite li kupiti %s za %d$?", "Kupi", "Odustani", 
+			va_ShowPlayerDialog(playerid, DIALOG_MEAL_BUY, DIALOG_STYLE_MSGBOX, "Restoran", "Zelite li kupiti %s za %d$?", "Buy", "Abort", 
 				MealInfo[ mealIndex ][ mdName ],
 				MealInfo[ mealIndex ][ mdPrice ]
 			);

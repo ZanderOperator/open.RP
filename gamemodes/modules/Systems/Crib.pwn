@@ -196,7 +196,7 @@ Function: OnHouseInsertInDB(houseid, playerid)
 		HouseInfo[houseid][hVirtualWorld] = HouseInfo[houseid][hSQLID];
 		UpdateHouseVirtualWorld(houseid);
 	}
-	else ShowPlayerDialog(playerid, DIALOG_VIWO_PICK, DIALOG_STYLE_INPUT, "Odabir Virtual Worlda", "Molimo Vas unesite Virtual World(viwo) u kojem je kuca namappana:", "Unos", "Izlaz");
+	else ShowPlayerDialog(playerid, DIALOG_VIWO_PICK, DIALOG_STYLE_INPUT, "Odabir Virtual Worlda", "Molimo Vas unesite Virtual World(viwo) u kojem je kuca namappana:", "Input", "Exit");
 	return 1;
 }
 
@@ -1258,7 +1258,7 @@ public PickLockTimerFunction(playerid)
 
 timer ClosedPlayerTimer[2000](playerid)
 {
-	ShowPlayerDialog(playerid, DIALOG_HOUSE_SKINSURE, DIALOG_STYLE_MSGBOX, "ODABIR SKINA", "Zelite li obuci ovaj skin?", "Obuci", "Odustani");
+	ShowPlayerDialog(playerid, DIALOG_HOUSE_SKINSURE, DIALOG_STYLE_MSGBOX, "ODABIR SKINA", "Zelite li obuci ovaj skin?", "Pick", "Abort");
 	stop PlayerClosedTimer[playerid];
 }
 
@@ -1645,24 +1645,24 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 					if(HouseInfo[house][hOwnerID] != PlayerInfo[playerid][pSQLID]) 
 						return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Samo vlasnik kuce/najmoprimac moze uzimati/spremati oruzje!");
                     if(IsPlayerInRangeOfPoint(playerid, 40.0, HouseInfo[house][hExitX], HouseInfo[house][hExitY],HouseInfo[house][hExitZ]) && GetPlayerVirtualWorld(playerid) == HouseInfo[house][hVirtualWorld])
-                		ShowPlayerDialog(playerid,DIALOG_HOUSE_STORAGE, DIALOG_STYLE_LIST,"{3C95C2}** House Storage","{3C95C2}[1] - Pohrani oruzje\n{3C95C2}[2] - Izvadi oruzje\n{3C95C2}[3] - Kupi Stalak\n{3C95C2}[4] - Statistika\n{3C95C2}[5] - Izbrisi stalak\n{3C95C2}[6] - Sef za novac.","Odabir","Izlaz");
+                		ShowPlayerDialog(playerid,DIALOG_HOUSE_STORAGE, DIALOG_STYLE_LIST,"{3C95C2}** House Storage","{3C95C2}[1] - Pohrani oruzje\n{3C95C2}[2] - Izvadi oruzje\n{3C95C2}[3] - Kupi Stalak\n{3C95C2}[4] - Statistika\n{3C95C2}[5] - Izbrisi stalak\n{3C95C2}[6] - Sef za novac.","Pick","Exit");
 					else
                 	    SendClientMessage(playerid, COLOR_RED, "[GRRESKA]: Nisi u svojoj kuci!");
 				}
 				case 1: // ....
-                    ShowPlayerDialog(playerid,DIALOG_HOUSE_UPGRADES,DIALOG_STYLE_LIST,"{3C95C2}** House Upgrades","Sef(500$)\nOrmar(500$)\nAlarm(1000$)\nVrata(1000$)\nBrava(800$)\nTelefon(500$)\nRadio(800$)\nKasa za novce(1550$)\nTV(1000$)\nMikrovalna(300$)\nStorage Alarm","Odaberi","Natrag");
+                    ShowPlayerDialog(playerid,DIALOG_HOUSE_UPGRADES,DIALOG_STYLE_LIST,"{3C95C2}** House Upgrades","Sef(500$)\nOrmar(500$)\nAlarm(1000$)\nVrata(1000$)\nBrava(800$)\nTelefon(500$)\nRadio(800$)\nKasa za novce(1550$)\nTV(1000$)\nMikrovalna(300$)\nStorage Alarm","Choose","Back");
 				case 2:
-                	ShowPlayerDialog(playerid,DIALOG_HOUSE_DOORS,DIALOG_STYLE_LIST,"Otvori/zatvori","Otvori kucu\nZatvori kucu","Odaberi","Natrag");
+                	ShowPlayerDialog(playerid,DIALOG_HOUSE_DOORS,DIALOG_STYLE_LIST,"Otvori/zatvori","Otvori kucu\nZatvori kucu","Choose","Back");
 				case 3:
-                    ShowPlayerDialog(playerid,DIALOG_HOUSE_RENT,DIALOG_STYLE_LIST,"MOGUCNOST NAJMA","Kuca ima najam\nKuca nema najam\nCijena najma","Odaberi","Natrag");
+                    ShowPlayerDialog(playerid,DIALOG_HOUSE_RENT,DIALOG_STYLE_LIST,"MOGUCNOST NAJMA","Kuca ima najam\nKuca nema najam\nCijena najma","Choose","Back");
 				case 4:
-                    ShowPlayerDialog(playerid,DIALOG_HOUSE_RENTERS,DIALOG_STYLE_LIST,"IZBACI PODSTANARE","Izbaci jednog\nIzbaci sve","Odaberi","Natrag");
+                    ShowPlayerDialog(playerid,DIALOG_HOUSE_RENTERS,DIALOG_STYLE_LIST,"IZBACI PODSTANARE","Izbaci jednog\nIzbaci sve","Choose","Back");
 				case 5:
 				{
 				    if(IsPlayerInRangeOfPoint(playerid, 25.0, HouseInfo[house][hExitX], HouseInfo[house][hExitY],HouseInfo[house][hExitZ]) && GetPlayerVirtualWorld(playerid) == HouseInfo[house][hVirtualWorld])
 				    {
 				        if(HouseInfo[house][hOrmar])
-							ShowPlayerDialog(playerid,DIALOG_HOUSE_ORMAR,DIALOG_STYLE_LIST,"KUCA - ORMAR","Stavi trenutni skin u ormar\nUdji u ormar\nIzbaci skin iz ormara","Odaberi","Natrag");
+							ShowPlayerDialog(playerid,DIALOG_HOUSE_ORMAR,DIALOG_STYLE_LIST,"KUCA - ORMAR","Stavi trenutni skin u ormar\nUdji u ormar\nIzbaci skin iz ormara","Choose","Back");
 						else
 							SendClientMessage(playerid, COLOR_RED, "Nemas ormar u kuci!");
                     }
@@ -1670,13 +1670,13 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 						SendClientMessage(playerid, COLOR_RED, "Nisi u svojoj kuci!");
                 }
                 case 6:
-                    ShowPlayerDialog(playerid,DIALOG_HOUSE_STUFF,DIALOG_STYLE_LIST,"KUCA - KUHINJA","Spremi namirnice u kucu\nOtvori hladnjak i uzmi nesto za jesti","Odaberi","Natrag");
+                    ShowPlayerDialog(playerid,DIALOG_HOUSE_STUFF,DIALOG_STYLE_LIST,"KUCA - KUHINJA","Spremi namirnice u kucu\nOtvori hladnjak i uzmi nesto za jesti","Choose","Back");
                 case 7:
                     ShowHouseInfo(playerid, house);
 				case 8:
-				    va_ShowPlayerDialog(playerid,DIALOG_HOUSE_SELL,DIALOG_STYLE_LIST,"ZELITE LI STVARNO PRODATI KUCU ZA %d$?","Ne\nDa","Odaberi","Natrag", (HouseInfo[house][hValue] / 2));
+				    va_ShowPlayerDialog(playerid,DIALOG_HOUSE_SELL,DIALOG_STYLE_LIST,"ZELITE LI STVARNO PRODATI KUCU ZA %d$?","Ne\nDa","Choose","Back", (HouseInfo[house][hValue] / 2));
 				case 9:
-				    ShowPlayerDialog(playerid, DIALOG_SELL_HOUSE_PLAYER, DIALOG_STYLE_INPUT, "PRODAJA VASE KUCE IGRACU", "U prazni prostor ispod unesite ID igraca", "Prodaj", "Ponisti");
+				    ShowPlayerDialog(playerid, DIALOG_SELL_HOUSE_PLAYER, DIALOG_STYLE_INPUT, "PRODAJA VASE KUCE IGRACU", "U prazni prostor ispod unesite ID igraca", "Sell", "Close");
             }
 			return 1;
 		}
@@ -1695,7 +1695,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 				if(!ProxDetectorS(5.0, playerid, pID)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Taj igrac nije blizu vas!");
 				if(PlayerInfo[pID][pHouseKey] != INVALID_HOUSE_ID) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Taj igrac vec ima kucu!");
 				GlobalSellingPlayerID[playerid] 	= pID;
-				ShowPlayerDialog(playerid, DIALOG_SELL_HOUSE_PRICE, DIALOG_STYLE_INPUT, "PRODAJA VASE KUCE IGRACU", "Unesite cijenu vase kuce", "Unesi", "Ponisti");
+				ShowPlayerDialog(playerid, DIALOG_SELL_HOUSE_PRICE, DIALOG_STYLE_INPUT, "PRODAJA VASE KUCE IGRACU", "Unesite cijenu vase kuce", "Input", "Close");
 		    }
 			return 1;
 		}
@@ -1706,9 +1706,9 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 				housePrice = strval(inputtext),
 				pID = GlobalSellingPlayerID[playerid];
 
-			if(housePrice > 9999999 || housePrice < 1000) return ShowPlayerDialog(playerid, DIALOG_SELL_HOUSE_PRICE, DIALOG_STYLE_INPUT, "PRODAJA VASE KUCE IGRACU", "Unesite cijenu vase kuce\nCijena kuce ne moze biti manja od 10000$, a veca od 9999999$", "Unesi", "Ponisti");
+			if(housePrice > 9999999 || housePrice < 1000) return ShowPlayerDialog(playerid, DIALOG_SELL_HOUSE_PRICE, DIALOG_STYLE_INPUT, "PRODAJA VASE KUCE IGRACU", "Unesite cijenu vase kuce\nCijena kuce ne moze biti manja od 10000$, a veca od 9999999$", "Input", "Close");
 
-			if(AC_GetPlayerMoney(pID) < housePrice) return ShowPlayerDialog(playerid, DIALOG_SELL_HOUSE_PRICE, DIALOG_STYLE_INPUT, "PRODAJA VASE KUCE IGRACU", "Unesite cijenu vase kuce\nIgrac nema dovoljno novca za kupovinu vase kuce", "Unesi", "Ponisti");
+			if(AC_GetPlayerMoney(pID) < housePrice) return ShowPlayerDialog(playerid, DIALOG_SELL_HOUSE_PRICE, DIALOG_STYLE_INPUT, "PRODAJA VASE KUCE IGRACU", "Unesite cijenu vase kuce\nIgrac nema dovoljno novca za kupovinu vase kuce", "Input", "Close");
 
 			GlobalSellingPrice[pID] 	= housePrice;
 			GlobalSellingPlayerID[pID] 	= playerid;
@@ -1717,7 +1717,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 			new
 				string[85];
 			format(string, sizeof(string), "Igrac %s vam je ponudio da kupite njegovu kucu za %d", GetName(playerid), housePrice);
-			ShowPlayerDialog(pID, DIALOG_SELL_HOUSE_PLAYER_2, DIALOG_STYLE_MSGBOX, "PONUDA ZA KUPOVINU KUCE", string, "Kupi", "Ponisti");
+			ShowPlayerDialog(pID, DIALOG_SELL_HOUSE_PLAYER_2, DIALOG_STYLE_MSGBOX, "PONUDA ZA KUPOVINU KUCE", string, "Buy", "Close");
 			return 1;
 		}
 		case DIALOG_SELL_HOUSE_PLAYER_2:
@@ -1764,7 +1764,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 				
 				// Messages
 				va_SendClientMessage(playerid, COLOR_RED, "Uspjesno ste kupili kucu od %s za %d$", GetName(pID), housePrice);
-				va_SendClientMessage(pID, COLOR_YELLOW, "Igrac %s je kupio od vas kucu za %d", "Uredu", "", GetName(playerid), housePrice);
+				va_SendClientMessage(pID, COLOR_YELLOW, "Igrac %s je kupio od vas kucu za %d", "Ok", "", GetName(playerid), housePrice);
 
 				GlobalSellingPrice[playerid] 	= 0;
 				GlobalSellingPlayerID[pID] 		= INVALID_PLAYER_ID;
@@ -1787,12 +1787,12 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 		}
 		case DIALOG_HOUSE_SEF: {
 			if(!response)
-				return ShowPlayerDialog(playerid, DIALOG_HOUSE_MAIN, DIALOG_STYLE_LIST,"MOJA KUCA","House Storage\nUpgrades\nOtvori/Zatvori\nNajam\nIzbaci podstanare\nOrmar\nKuhinja\nInfo\nProdaj kucu(Polovina vrijednosti kupnje)\nProdaj igracu","Odaberi","Izlaz");
+				return ShowPlayerDialog(playerid, DIALOG_HOUSE_MAIN, DIALOG_STYLE_LIST,"MOJA KUCA","House Storage\nUpgrades\nOtvori/Zatvori\nNajam\nIzbaci podstanare\nOrmar\nKuhinja\nInfo\nProdaj kucu(Polovina vrijednosti kupnje)\nProdaj igracu","Choose","Exit");
 			switch (listitem) {
 				case 0:
-					ShowPlayerDialog(playerid, DIALOG_HOUSE_BANK, DIALOG_STYLE_INPUT, "{3C95C2}[Safe - Deposit Money]", "\nIspod unesite kolicinu novca koju zelite ostaviti u vasu kucu.{3C95C2}[WARNING]: Maximalno mozete ostaviti 25.000$", "(ostavi)", "(x)");
+					ShowPlayerDialog(playerid, DIALOG_HOUSE_BANK, DIALOG_STYLE_INPUT, "{3C95C2}[Safe - Deposit Money]", "\nIspod unesite kolicinu novca koju zelite ostaviti u vasu kucu.{3C95C2}[WARNING]: Maximalno mozete ostaviti 25.000$", "Deposit", "Close");
 				case 1:
-					ShowPlayerDialog(playerid, DIALOG_HOUSE_WITHDRAW, DIALOG_STYLE_INPUT, "{3C95C2}[Safe - Withdraw Money]", "\nIspod unesite kolicinu novca koju zelite uzeti iz vase kuce.", "(uzmi)", "(x)");
+					ShowPlayerDialog(playerid, DIALOG_HOUSE_WITHDRAW, DIALOG_STYLE_INPUT, "{3C95C2}[Safe - Withdraw Money]", "\nIspod unesite kolicinu novca koju zelite uzeti iz vase kuce.", "Take", "Close");
 			}
 			return 1;
 		}
@@ -1803,7 +1803,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 				length = strval(inputtext);
 
 			if(!response)
-				return ShowPlayerDialog(playerid, DIALOG_HOUSE_MAIN, DIALOG_STYLE_LIST,"MOJA KUCA","House Storage\nUpgrades\nOtvori/Zatvori\nNajam\nIzbaci podstanare\nOrmar\nKuhinja\nInfo\nProdaj kucu(Polovina vrijednosti kupnje)\nProdaj igracu","Odaberi","Izlaz");
+				return ShowPlayerDialog(playerid, DIALOG_HOUSE_MAIN, DIALOG_STYLE_LIST,"MOJA KUCA","House Storage\nUpgrades\nOtvori/Zatvori\nNajam\nIzbaci podstanare\nOrmar\nKuhinja\nInfo\nProdaj kucu(Polovina vrijednosti kupnje)\nProdaj igracu","Choose","Exit");
 			
 			if (length < 1 || length > AC_GetPlayerMoney(playerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate toliko novaca u ruci!");
 			if(length > 25000) return SendClientMessage(playerid,COLOR_RED,"Mozes staviti maksimalno 25.000$!");
@@ -1838,7 +1838,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 			new bouse = PlayerInfo[playerid][pHouseKey],
 				length = strval(inputtext);
 
-			if(!response) return ShowPlayerDialog(playerid,DIALOG_HOUSE_SEF,DIALOG_STYLE_LIST,"KUCNI SEF","Sakrij novac u kucu\nPodigni novac iz kuce","Odaberi","Natrag");
+			if(!response) return ShowPlayerDialog(playerid,DIALOG_HOUSE_SEF,DIALOG_STYLE_LIST,"KUCNI SEF","Sakrij novac u kucu\nPodigni novac iz kuce","Choose","Back");
 			if (length >  HouseInfo[bouse][hTakings] || length < 1) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate toliko novaca u kucnom fondu!");
 			if (!IsPlayerInRangeOfPoint(playerid,100,HouseInfo[bouse][hExitX],HouseInfo[bouse][hExitY],HouseInfo[bouse][hExitZ])) return SendClientMessage(playerid, COLOR_RED, "Predaleko ste od kuce !");
 			HouseToPlayerMoney(playerid, bouse, length); // Novac iz kuce ide igracu
@@ -1867,13 +1867,13 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 			new
 				house = PlayerInfo[playerid][pHouseKey];
 
-			if(!response) return ShowPlayerDialog(playerid,DIALOG_HOUSE_SEF,DIALOG_STYLE_LIST,"KUCNI SEF","Sakrij novac u kucu\nPodigni novac iz kuce","Odaberi","Natrag");
+			if(!response) return ShowPlayerDialog(playerid,DIALOG_HOUSE_SEF,DIALOG_STYLE_LIST,"KUCNI SEF","Sakrij novac u kucu\nPodigni novac iz kuce","Choose","Back");
 			if(!HouseInfo[house][hSafe]) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Kuca nema sef!");
 
             switch(listitem)
             {
                 case 0://Otkljucaj sef-izbacuje dialog da upises sifru
-                	ShowPlayerDialog(playerid, DIALOG_HOUSE_UNLOCK, DIALOG_STYLE_INPUT, "KUCNI SEF", "Upisi trenutnu sifru da otkljucas sef!", "Dalje", "Natrag");
+                	ShowPlayerDialog(playerid, DIALOG_HOUSE_UNLOCK, DIALOG_STYLE_INPUT, "KUCNI SEF", "Upisi trenutnu sifru da otkljucas sef!", "Next", "Back");
                 case 1://Zakljucaj sef-ne treba sifra
                 {
 			        ApplyAnimationEx(playerid,"BOMBER","BOM_Plant",4.1,0,0,0,0,0, 1, 0);
@@ -1888,7 +1888,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 					va_SendClientMessage(playerid, COLOR_WHITE, "U sefu je pohranjeno %s.", FormatNumber(HouseInfo[house][hMoneySafe]));
                 }
 				case 3://izbacuje dialog da upises novu sifru!
-                    ShowPlayerDialog(playerid, DIALOG_HOUSE_CHANGEPASS, DIALOG_STYLE_INPUT, "NOVA SIFRA SEFA", "Upisi novu sifru!", "Dalje", "Natrag");
+                    ShowPlayerDialog(playerid, DIALOG_HOUSE_CHANGEPASS, DIALOG_STYLE_INPUT, "NOVA SIFRA SEFA", "Upisi novu sifru!", "Next", "Back");
             }
 			return 1;
 		}
@@ -1897,7 +1897,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 				house = PlayerInfo[playerid][pHouseKey],
 				pass = strval(inputtext);
 
-			if(!response) return ShowPlayerDialog(playerid, DIALOG_HOUSE_GUNSEF,DIALOG_STYLE_LIST,"KUCNI SEF","Otkljucaj\nZakljucaj\nInfo\nPromjeni sifru","Odaberi","Natrag");
+			if(!response) return ShowPlayerDialog(playerid, DIALOG_HOUSE_GUNSEF,DIALOG_STYLE_LIST,"KUCNI SEF","Otkljucaj\nZakljucaj\nInfo\nPromjeni sifru","Choose","Back");
 
             if(house == INVALID_HOUSE_ID && HouseInfo[house][hOwnerID] != PlayerInfo[playerid][pSQLID]) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Samo vlasnik moze mijenjati sifru sefa!");
 
@@ -1932,7 +1932,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 				house = PlayerInfo[playerid][pHouseKey],
 				pass = strval(inputtext);
 
-			if(!response) return ShowPlayerDialog(playerid, DIALOG_HOUSE_GUNSEF,DIALOG_STYLE_LIST,"KUCNI SEF","Otkljucaj\nZakljucaj\nInfo\nPromjeni sifru","Odaberi","Natrag");
+			if(!response) return ShowPlayerDialog(playerid, DIALOG_HOUSE_GUNSEF,DIALOG_STYLE_LIST,"KUCNI SEF","Otkljucaj\nZakljucaj\nInfo\nPromjeni sifru","Choose","Back");
 			if (!IsPlayerInRangeOfPoint(playerid, 20.0, HouseInfo[house][hExitX], HouseInfo[house][hExitY], HouseInfo[house][hExitZ])) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Predaleko ste od kuce !");
 			if(!HouseInfo[house][hSafe]) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne posjedujete sef!");
 			if(HouseInfo[house][hSafeStatus]) return SendClientMessage(playerid, COLOR_RED, "[ ! ] Sef je vec otvoren!");
@@ -1945,7 +1945,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 		}
 		case DIALOG_HOUSE_UPGRADES: {
 			if(!response)
-				return ShowPlayerDialog(playerid, DIALOG_HOUSE_MAIN, DIALOG_STYLE_LIST,"MOJA KUCA","House Storage\nUpgrades\nOtvori/Zatvori\nNajam\nIzbaci podstanare\nOrmar\nKuhinja\nInfo\nProdaj kucu(Polovina vrijednosti kupnje)\nProdaj igracu","Odaberi","Izlaz");
+				return ShowPlayerDialog(playerid, DIALOG_HOUSE_MAIN, DIALOG_STYLE_LIST,"MOJA KUCA","House Storage\nUpgrades\nOtvori/Zatvori\nNajam\nIzbaci podstanare\nOrmar\nKuhinja\nInfo\nProdaj kucu(Polovina vrijednosti kupnje)\nProdaj igracu","Choose","Exit");
 			new
 				house = PlayerInfo[playerid][pHouseKey],
 				huQuery[128];
@@ -2074,7 +2074,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 		}
 		case DIALOG_HOUSE_DOORS: {
 			if(!response)
-				return ShowPlayerDialog(playerid, DIALOG_HOUSE_MAIN, DIALOG_STYLE_LIST,"MOJA KUCA","House Storage\nUpgrades\nOtvori/Zatvori\nNajam\nIzbaci podstanare\nOrmar\nKuhinja\nInfo\nProdaj kucu(Polovina vrijednosti kupnje)\nProdaj igracu","Odaberi","Izlaz");
+				return ShowPlayerDialog(playerid, DIALOG_HOUSE_MAIN, DIALOG_STYLE_LIST,"MOJA KUCA","House Storage\nUpgrades\nOtvori/Zatvori\nNajam\nIzbaci podstanare\nOrmar\nKuhinja\nInfo\nProdaj kucu(Polovina vrijednosti kupnje)\nProdaj igracu","Choose","Exit");
 			switch(listitem)
             {
                 case 0: { // Otkljucaj
@@ -2128,7 +2128,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 		}
 		case DIALOG_HOUSE_RENT: {
 			if(!response)
-				return ShowPlayerDialog(playerid, DIALOG_HOUSE_MAIN, DIALOG_STYLE_LIST,"MOJA KUCA","House Storage\nUpgrades\nOtvori/Zatvori\nNajam\nIzbaci podstanare\nOrmar\nKuhinja\nInfo\nProdaj kucu(Polovina vrijednosti kupnje)\nProdaj igracu","Odaberi","Izlaz");
+				return ShowPlayerDialog(playerid, DIALOG_HOUSE_MAIN, DIALOG_STYLE_LIST,"MOJA KUCA","House Storage\nUpgrades\nOtvori/Zatvori\nNajam\nIzbaci podstanare\nOrmar\nKuhinja\nInfo\nProdaj kucu(Polovina vrijednosti kupnje)\nProdaj igracu","Choose","Exit");
 				
 			new
 				house = PlayerInfo[playerid][pHouseKey];
@@ -2156,7 +2156,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 	                GameTextForPlayer(playerid, "~r~Kuca maknuta sa iznajmljivanja", 1000, 1);
                 }
                 case 2:
-                    ShowPlayerDialog(playerid, DIALOG_HOUSE_RENTPRICE, DIALOG_STYLE_INPUT, "NAJAM", "Upisi novu cijenu najma!", "Dalje", "Natrag");
+                    ShowPlayerDialog(playerid, DIALOG_HOUSE_RENTPRICE, DIALOG_STYLE_INPUT, "NAJAM", "Upisi novu cijenu najma!", "Next", "Back");
             }
 			return 1;
 		}
@@ -2169,8 +2169,8 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 						DIALOG_STYLE_LIST,
 						"MOGUCNOST NAJMA",
 						"Kuca ima najam\nKuca nema najam\nCijena najma",
-						"Odaberi",
-						"Natrag"
+						"Choose",
+						"Back"
 					);
 
 			new
@@ -2191,12 +2191,12 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 		}
 		case DIALOG_HOUSE_RENTERS: {
 			if(!response)
-				return ShowPlayerDialog(playerid, DIALOG_HOUSE_MAIN, DIALOG_STYLE_LIST,"MOJA KUCA","House Storage\nUpgrades\nOtvori/Zatvori\nNajam\nIzbaci podstanare\nOrmar\nKuhinja\nInfo\nProdaj kucu(Polovina vrijednosti kupnje)\nProdaj igracu","Odaberi","Izlaz");
+				return ShowPlayerDialog(playerid, DIALOG_HOUSE_MAIN, DIALOG_STYLE_LIST,"MOJA KUCA","House Storage\nUpgrades\nOtvori/Zatvori\nNajam\nIzbaci podstanare\nOrmar\nKuhinja\nInfo\nProdaj kucu(Polovina vrijednosti kupnje)\nProdaj igracu","Choose","Exit");
 
 			switch(listitem)
             {
                 case 0:
-					ShowPlayerDialog(playerid, DIALOG_HOUSE_EVICT, DIALOG_STYLE_INPUT, "KUCA - PODSTANARI", "Upisi ID podstanara kojeg zelis izbacit na ulicu!", "Dalje", "Natrag");
+					ShowPlayerDialog(playerid, DIALOG_HOUSE_EVICT, DIALOG_STYLE_INPUT, "KUCA - PODSTANARI", "Upisi ID podstanara kojeg zelis izbacit na ulicu!", "Next", "Back");
                 case 1:
                 {
                     foreach(new i : Player) {
@@ -2211,7 +2211,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 			return 1;
 		}
 		case DIALOG_HOUSE_EVICT: {
-			if(!response) return ShowPlayerDialog(playerid, DIALOG_HOUSE_RENTERS, DIALOG_STYLE_LIST, "IZBACI PODSTANARE", "Izbaci jednog\nIzbaci sve", "Odaberi", "Natrag");
+			if(!response) return ShowPlayerDialog(playerid, DIALOG_HOUSE_RENTERS, DIALOG_STYLE_LIST, "IZBACI PODSTANARE", "Izbaci jednog\nIzbaci sve", "Choose", "Back");
 			new
 				giveplayerid = strval(inputtext);
 
@@ -2227,7 +2227,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 		}
 		case DIALOG_HOUSE_STUFF: {
 			if(!response)
-				return ShowPlayerDialog(playerid, DIALOG_HOUSE_MAIN, DIALOG_STYLE_LIST,"MOJA KUCA","House Storage\nUpgrades\nOtvori/Zatvori\nNajam\nIzbaci podstanare\nOrmar\nKuhinja\nInfo\nProdaj kucu(Polovina vrijednosti kupnje)\nProdaj igracu","Odaberi","Izlaz");
+				return ShowPlayerDialog(playerid, DIALOG_HOUSE_MAIN, DIALOG_STYLE_LIST,"MOJA KUCA","House Storage\nUpgrades\nOtvori/Zatvori\nNajam\nIzbaci podstanare\nOrmar\nKuhinja\nInfo\nProdaj kucu(Polovina vrijednosti kupnje)\nProdaj igracu","Choose","Exit");
 
 			new
 				house 		= PlayerInfo[playerid][pHouseKey];
@@ -2243,7 +2243,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 					} else SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste kupili namirnice u 24/7!");
 				}
                 case 1: // Jelo
-                    ShowPlayerDialog(playerid, DIALOG_HOUSE_FRIDGE, DIALOG_STYLE_LIST, "Odaberi sto zelis uzeti iz frizidera!","Pivo\nSprunk\nVino\nCips","Odaberi","Natrag");
+                    ShowPlayerDialog(playerid, DIALOG_HOUSE_FRIDGE, DIALOG_STYLE_LIST, "Odaberi sto zelis uzeti iz frizidera!","Pivo\nSprunk\nVino\nCips","Choose","Back");
             }
 			return 1;
 		}
@@ -2256,8 +2256,8 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 						DIALOG_STYLE_LIST,
 						"KUCA - KUHINJA",
 						"Spremi namirnice u kucu\nOtvori hladnjak i uzmi nesto za jesti",
-						"Odaberi",
-						"Natrag"
+						"Choose",
+						"Back"
 					);
 
 			new
@@ -2355,7 +2355,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 			return 1;
 		}
 		case DIALOG_HOUSE_SELL: {
-			if(!response) return ShowPlayerDialog(playerid, DIALOG_HOUSE_MAIN, DIALOG_STYLE_LIST,"MOJA KUCA","House Storage\nUpgrades\nOtvori/Zatvori\nNajam\nIzbaci podstanare\nOrmar\nKuhinja\nInfo\nProdaj kucu(Polovina vrijednosti kupnje)\nProdaj igracu","Odaberi","Izlaz");
+			if(!response) return ShowPlayerDialog(playerid, DIALOG_HOUSE_MAIN, DIALOG_STYLE_LIST,"MOJA KUCA","House Storage\nUpgrades\nOtvori/Zatvori\nNajam\nIzbaci podstanare\nOrmar\nKuhinja\nInfo\nProdaj kucu(Polovina vrijednosti kupnje)\nProdaj igracu","Choose","Exit");
 
 			switch (listitem)
             {
@@ -2413,7 +2413,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 		}
 		case DIALOG_HOUSE_ORMAR: {
 			if(!response)
-				return ShowPlayerDialog(playerid, DIALOG_HOUSE_MAIN, DIALOG_STYLE_LIST,"MOJA KUCA","House Storage\nUpgrades\nOtvori/Zatvori\nNajam\nIzbaci podstanare\nOrmar\nKuhinja\nInfo\nProdaj kucu(Polovina vrijednosti kupnje)\nProdaj igracu","Odaberi","Izlaz");
+				return ShowPlayerDialog(playerid, DIALOG_HOUSE_MAIN, DIALOG_STYLE_LIST,"MOJA KUCA","House Storage\nUpgrades\nOtvori/Zatvori\nNajam\nIzbaci podstanare\nOrmar\nKuhinja\nInfo\nProdaj kucu(Polovina vrijednosti kupnje)\nProdaj igracu","Choose","Exit");
 
 			new	house = PlayerInfo[playerid][pHouseKey],
 				skinQuery[64];
@@ -2466,7 +2466,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 							tmpString,
 							HouseInfo[house][hSkin3]
 						);
-					ShowPlayerDialog(playerid, DIALOG_HOUSE_SKINCHOOSE, DIALOG_STYLE_LIST, "ORMAR - ODABIR", tmpString, "Odaberi", "Odustani");
+					ShowPlayerDialog(playerid, DIALOG_HOUSE_SKINCHOOSE, DIALOG_STYLE_LIST, "ORMAR - ODABIR", tmpString, "Choose", "Abort");
 				}
 				case 2: { // Izbaci
 					if(!HouseInfo[house][hSkin1] && !HouseInfo[house][hSkin2] && !HouseInfo[house][hSkin3]) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Vas ormar je prazan!");
@@ -2475,7 +2475,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 						DIALOG_HOUSE_REMOVESKIN,
 						DIALOG_STYLE_LIST,
 						"KUCA-IZBACIVANJE SKINA",
-						"Slot 1\nSlot 2\nSlot 3", "Odaberi", "Odustani");
+						"Slot 1\nSlot 2\nSlot 3", "Choose", "Abort");
 				}
 			}
 			return 1;
@@ -2488,8 +2488,8 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 						DIALOG_STYLE_LIST,
 						"KUCA - ORMAR",
 						"Stavi trenutni skin u ormar\nUdji u ormar\nIzbaci skin iz ormara",
-						"Odaberi",
-						"Natrag"
+						"Choose",
+						"Back"
 					);
 
 			new	house = PlayerInfo[playerid][pHouseKey],
@@ -2551,7 +2551,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 						tmpString,
 						HouseInfo[house][hSkin3]
 					);
-				ShowPlayerDialog(playerid, DIALOG_HOUSE_SKINCHOOSE, DIALOG_STYLE_LIST, "ORMAR - ODABIR", tmpString, "Odaberi", "Odustani");
+				ShowPlayerDialog(playerid, DIALOG_HOUSE_SKINCHOOSE, DIALOG_STYLE_LIST, "ORMAR - ODABIR", tmpString, "Choose", "Abort");
 				return 1;
 			}
 			// Player Sets
@@ -2624,7 +2624,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 		case DIALOG_VIWO_PICK:
 		{
 			if(!response)
-				return ShowPlayerDialog(playerid, DIALOG_VIWO_PICK, DIALOG_STYLE_INPUT, "Odabir Virtual Worlda", "Molimo Vas unesite Virtual World(viwo) u kojem je kuca namappana:", "Unos", "Izlaz");
+				return ShowPlayerDialog(playerid, DIALOG_VIWO_PICK, DIALOG_STYLE_INPUT, "Odabir Virtual Worlda", "Molimo Vas unesite Virtual World(viwo) u kojem je kuca namappana:", "Input", "Exit");
 
 			new viwo = strval(inputtext);
 			if(viwo < 0) return SendErrorMessage(playerid, "Virtual Wold kuce ne moze biti manji od 0!");
@@ -3595,7 +3595,7 @@ CMD:house(playerid, params[])
 	if(PlayerInfo[playerid][pLevel] == 1) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nisi level 2+ da mozes koristiti ovu komandu!");
 	
 	if(PlayerInfo[playerid][pHouseKey] != INVALID_HOUSE_ID && HouseInfo[PlayerInfo[playerid][pHouseKey]][hOwnerID] == PlayerInfo[playerid][pSQLID] ) {
-		ShowPlayerDialog(playerid, DIALOG_HOUSE_MAIN, DIALOG_STYLE_LIST,"MOJA KUCA","House Storage\nUpgrades\nOtvori/Zatvori\nNajam\nIzbaci podstanare\nOrmar\nKuhinja\nInfo\nProdaj kucu(Polovina vrijednosti kupnje)\nProdaj igracu","Odaberi","Izlaz");
+		ShowPlayerDialog(playerid, DIALOG_HOUSE_MAIN, DIALOG_STYLE_LIST,"MOJA KUCA","House Storage\nUpgrades\nOtvori/Zatvori\nNajam\nIzbaci podstanare\nOrmar\nKuhinja\nInfo\nProdaj kucu(Polovina vrijednosti kupnje)\nProdaj igracu","Choose","Exit");
 	}
 	else SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne posjedujes kucu!");
 	return 1;

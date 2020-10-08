@@ -309,7 +309,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 					ShowModelESelectionMenu(playerid, "GOV Skins", MODEL_SELECTION_GOVSKIN, govskins_gov, sizeof(govskins_gov), 0.0, 0.0, 0.0, 1.0, -1, true, govskins_gov);
 				}
 				case 1: { // Duty
-					ShowPlayerDialog(playerid, DIALOG_GOV_EQUIP_DUTY, DIALOG_STYLE_LIST, "Offduty ili onduty?", "Onduty\nOffduty", "Odaberi", "Odustani");
+					ShowPlayerDialog(playerid, DIALOG_GOV_EQUIP_DUTY, DIALOG_STYLE_LIST, "Offduty ili onduty?", "Onduty\nOffduty", "Choose", "Abort");
 				}
 				case 2: { // Heal
 					new
@@ -330,7 +330,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 			return 1;
 		}
 		case DIALOG_GOV_EQUIP_DUTY: {
-			if( !response ) return ShowPlayerDialog(playerid, DIALOG_GOV_EQUIP, DIALOG_STYLE_LIST, "GOV Equipment", "Skin\nDuty\nHeal\nWeapons", "Odaberi", "Odustani");
+			if( !response ) return ShowPlayerDialog(playerid, DIALOG_GOV_EQUIP, DIALOG_STYLE_LIST, "GOV Equipment", "Skin\nDuty\nHeal\nWeapons", "Choose", "Abort");
 
 			switch( listitem ) {
 				case 0: { 	// Onduty
@@ -373,7 +373,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 					ProxDetector(10.0, playerid, tmpString, COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE);
 				}
 			}
-			ShowPlayerDialog(playerid, DIALOG_GOV_EQUIP, DIALOG_STYLE_LIST, "GOV Equipment", "Skin\nDuty\nHeal", "Odaberi", "Odustani");
+			ShowPlayerDialog(playerid, DIALOG_GOV_EQUIP, DIALOG_STYLE_LIST, "GOV Equipment", "Skin\nDuty\nHeal", "Choose", "Abort");
 			return 1;
 		}
 		case DIALOG_FD_EQUIP: {
@@ -390,14 +390,14 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 			switch( listitem ) {
 			
                 case 0: { 	// Skins
-					ShowPlayerDialog(playerid, DIALOG_FD_EQUIP_DUTY, DIALOG_STYLE_LIST, "Offduty ili onduty?", "Onduty\nOffduty", "Odaberi", "Odustani");
+					ShowPlayerDialog(playerid, DIALOG_FD_EQUIP_DUTY, DIALOG_STYLE_LIST, "Offduty ili onduty?", "Onduty\nOffduty", "Choose", "Abort");
 				}
 				case 1: { 	// Skins
-					//ShowPlayerDialog(playerid, DIALOG_FD_EQUIP_SKIN, DIALOG_STYLE_LIST, "LSFD Equipment", "Bolnicar\nVatrogasac\nRadnik\nCivil", "Odaberi", "Izlaz");
+					//ShowPlayerDialog(playerid, DIALOG_FD_EQUIP_SKIN, DIALOG_STYLE_LIST, "LSFD Equipment", "Bolnicar\nVatrogasac\nRadnik\nCivil", "Choose", "Exit");
 					ShowModelESelectionMenu(playerid, "FD Skins", MODEL_SELECTION_FDSKIN, fdskins_selection, sizeof(fdskins_selection), 0.0, 0.0, 0.0, 1.0, -1, true, fdskins_selection);
 				}
 				case 2: {	// Dodaci
-					ShowPlayerDialog(playerid, DIALOG_FD_EQUIP_MISC, DIALOG_STYLE_LIST, "LSFD Equipment", "Vatrogasni aparat\nSjekira\nMotorna pila\nKisik", "Odaberi", "Odustani");
+					ShowPlayerDialog(playerid, DIALOG_FD_EQUIP_MISC, DIALOG_STYLE_LIST, "LSFD Equipment", "Vatrogasni aparat\nSjekira\nMotorna pila\nKisik", "Choose", "Abort");
 				}
 				case 3: {	// Heal
 					SetPlayerHealth(playerid, 99.9);
@@ -410,7 +410,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 			return 1;
 		}
 				case DIALOG_FD_EQUIP_DUTY: {
-			if( !response ) return ShowPlayerDialog(playerid, DIALOG_FD_EQUIP, DIALOG_STYLE_LIST, "LSFD Equipment", "Duty\nSkin\nDodaci\nHeal", "Odaberi", "Odustani");
+			if( !response ) return ShowPlayerDialog(playerid, DIALOG_FD_EQUIP, DIALOG_STYLE_LIST, "LSFD Equipment", "Duty\nSkin\nDodaci\nHeal", "Choose", "Abort");
 
 			switch( listitem ) {
 				case 0:
@@ -453,27 +453,27 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 					ProxDetector(10.0, playerid, tmpString, COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE);
 				}
 			}
-			ShowPlayerDialog(playerid, DIALOG_FD_EQUIP, DIALOG_STYLE_LIST, "LSFD Equipment", "Duty\nSkin\nDodaci\nHeal", "Odaberi", "Odustani");
+			ShowPlayerDialog(playerid, DIALOG_FD_EQUIP, DIALOG_STYLE_LIST, "LSFD Equipment", "Duty\nSkin\nDodaci\nHeal", "Choose", "Abort");
 			return 1;
 		}
 		case DIALOG_FD_EQUIP_SKIN: {
-			if( !response ) return ShowPlayerDialog(playerid, DIALOG_FD_EQUIP, DIALOG_STYLE_LIST, "LSFD Equipment", "Duty\nSkin\nDodaci\nHeal", "Odaberi", "Odustani");
+			if( !response ) return ShowPlayerDialog(playerid, DIALOG_FD_EQUIP, DIALOG_STYLE_LIST, "LSFD Equipment", "Duty\nSkin\nDodaci\nHeal", "Choose", "Abort");
 			switch( listitem ) {
 				case 0:
-					ShowPlayerDialog(playerid, DIALOG_FD_EQUIP_MD, DIALOG_STYLE_LIST, "LSFD Equipment", "Doktor\nCrnac\nLatino\nBijelac\nZenska", "Odaberi", "Izlaz");
-					//ShowPlayerDialog(playerid, DIALOG_FD_EQUIP_MD, DIALOG_STYLE_LIST, "LSFD Equipment", "Doktor\nCrnac\nLatino\nBijelac\nZenska\n20035\n20037\n20039\n20041", "Odaberi", "Izlaz");
+					ShowPlayerDialog(playerid, DIALOG_FD_EQUIP_MD, DIALOG_STYLE_LIST, "LSFD Equipment", "Doktor\nCrnac\nLatino\nBijelac\nZenska", "Choose", "Exit");
+					//ShowPlayerDialog(playerid, DIALOG_FD_EQUIP_MD, DIALOG_STYLE_LIST, "LSFD Equipment", "Doktor\nCrnac\nLatino\nBijelac\nZenska\n20035\n20037\n20039\n20041", "Choose", "Exit");
 				case 1:
-					ShowPlayerDialog(playerid, DIALOG_FD_EQUIP_FD, DIALOG_STYLE_LIST, "LSFD Equipment", "Crnac\nBijelac\nLatino", "Odaberi", "Izlaz");
-					//ShowPlayerDialog(playerid, DIALOG_FD_EQUIP_FD, DIALOG_STYLE_LIST, "LSFD Equipment", "Crnac\nBijelac\nLatino\n20036\n20038\n20040\n20042\n20043", "Odaberi", "Izlaz");
+					ShowPlayerDialog(playerid, DIALOG_FD_EQUIP_FD, DIALOG_STYLE_LIST, "LSFD Equipment", "Crnac\nBijelac\nLatino", "Choose", "Exit");
+					//ShowPlayerDialog(playerid, DIALOG_FD_EQUIP_FD, DIALOG_STYLE_LIST, "LSFD Equipment", "Crnac\nBijelac\nLatino\n20036\n20038\n20040\n20042\n20043", "Choose", "Exit");
 				case 2:
-				    ShowPlayerDialog(playerid, DIALOG_FD_EQUIP_RADNICI, DIALOG_STYLE_LIST, "LSFD Equipment", "Radnik 1\nRadnik 2", "Odaberi", "Izlaz");
+				    ShowPlayerDialog(playerid, DIALOG_FD_EQUIP_RADNICI, DIALOG_STYLE_LIST, "LSFD Equipment", "Radnik 1\nRadnik 2", "Choose", "Exit");
 				case 3:
 					SetPlayerSkin(playerid, PlayerInfo[ playerid ][ pChar ]);
 			}
 			return 1;
 		}
 		case DIALOG_FD_EQUIP_MD: {
-			if( !response ) return ShowPlayerDialog(playerid, DIALOG_FD_EQUIP_SKIN, DIALOG_STYLE_LIST, "LSFD Equipment", "Bolnicar\nVatrogasac\nCivil", "Odaberi", "Izlaz");
+			if( !response ) return ShowPlayerDialog(playerid, DIALOG_FD_EQUIP_SKIN, DIALOG_STYLE_LIST, "LSFD Equipment", "Bolnicar\nVatrogasac\nCivil", "Choose", "Exit");
 			switch(listitem) 
 			{
 				case 0:  PlayerInfo[playerid][pSkin] = 70;
@@ -484,11 +484,11 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 			}
 			SetPlayerSkin(playerid, PlayerInfo[playerid][pSkin]);
 			PlayerPlaySound(playerid, 1057, 0.0, 0.0, 0.0);
-			ShowPlayerDialog(playerid, DIALOG_FD_EQUIP, DIALOG_STYLE_LIST, "LSFD Equipment", "Duty\nSkin\nDodaci\nHeal", "Odaberi", "Odustani");
+			ShowPlayerDialog(playerid, DIALOG_FD_EQUIP, DIALOG_STYLE_LIST, "LSFD Equipment", "Duty\nSkin\nDodaci\nHeal", "Choose", "Abort");
 			return 1;
 		}
 		case DIALOG_FD_EQUIP_FD: {
-			if( !response ) return ShowPlayerDialog(playerid, DIALOG_FD_EQUIP_SKIN, DIALOG_STYLE_LIST, "LSFD Equipment", "Bolnicar\nVatrogasac\nCivil", "Odaberi", "Izlaz");
+			if( !response ) return ShowPlayerDialog(playerid, DIALOG_FD_EQUIP_SKIN, DIALOG_STYLE_LIST, "LSFD Equipment", "Bolnicar\nVatrogasac\nCivil", "Choose", "Exit");
 			switch(listitem) 
 			{
 				case 0:  PlayerInfo[playerid][pSkin] = 278;
@@ -497,12 +497,12 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 			}
 			SetPlayerSkin(playerid, PlayerInfo[playerid][pSkin]);
 			PlayerPlaySound(playerid, 1057, 0.0, 0.0, 0.0);
-			ShowPlayerDialog(playerid, DIALOG_FD_EQUIP, DIALOG_STYLE_LIST, "LSFD Equipment", "Duty\nSkin\nDodaci\nHeal", "Odaberi", "Odustani");
+			ShowPlayerDialog(playerid, DIALOG_FD_EQUIP, DIALOG_STYLE_LIST, "LSFD Equipment", "Duty\nSkin\nDodaci\nHeal", "Choose", "Abort");
 			return 1;
 		}
 		case DIALOG_FD_EQUIP_RADNICI:
 		{
-			if( !response ) return ShowPlayerDialog(playerid, DIALOG_FD_EQUIP_SKIN, DIALOG_STYLE_LIST, "LSFD Equipment", "Bolnicar\nVatrogasac\nCivil", "Odaberi", "Izlaz");
+			if( !response ) return ShowPlayerDialog(playerid, DIALOG_FD_EQUIP_SKIN, DIALOG_STYLE_LIST, "LSFD Equipment", "Bolnicar\nVatrogasac\nCivil", "Choose", "Exit");
  			switch(listitem)
 			{
 				case 0:
@@ -513,7 +513,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 			PlayerPlaySound(playerid, 1057, 0.0, 0.0, 0.0);
 		}
 		case DIALOG_FD_EQUIP_MISC: {
-			if( !response ) return ShowPlayerDialog(playerid, DIALOG_FD_EQUIP, DIALOG_STYLE_LIST, "LSFD Equipment", "Duty\nSkin\nDodaci\nHeal", "Odaberi", "Odustani");
+			if( !response ) return ShowPlayerDialog(playerid, DIALOG_FD_EQUIP, DIALOG_STYLE_LIST, "LSFD Equipment", "Duty\nSkin\nDodaci\nHeal", "Choose", "Abort");
 			new
 				tmpString[ 64 ];
 			switch( listitem ) {
@@ -545,7 +545,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 					ProxDetector(5.0, playerid, tmpString, COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE);
 				}
 			}
-			ShowPlayerDialog(playerid, DIALOG_FD_EQUIP, DIALOG_STYLE_LIST, "LSFD Equipment", "Duty\nSkin\nDodaci\nHeal", "Odaberi", "Odustani");
+			ShowPlayerDialog(playerid, DIALOG_FD_EQUIP, DIALOG_STYLE_LIST, "LSFD Equipment", "Duty\nSkin\nDodaci\nHeal", "Choose", "Abort");
 			PlayerPlaySound(playerid, 1057, 0.0, 0.0, 0.0);
 			return 1;
 		}
@@ -561,7 +561,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 			}
 			switch( listitem ) {
 				case 0: {	// Skins
-					//ShowPlayerDialog(playerid, DIALOG_PD_SKIN, DIALOG_STYLE_LIST, "ODABIR SKINA", "71\n93\n211\n217\n265\n267\n280\n281\n282\n283\n284\n288\nCivilni skin", "Odaberi", "Odustani");
+					//ShowPlayerDialog(playerid, DIALOG_PD_SKIN, DIALOG_STYLE_LIST, "ODABIR SKINA", "71\n93\n211\n217\n265\n267\n280\n281\n282\n283\n284\n288\nCivilni skin", "Choose", "Abort");
 					if(IsACop(playerid))
 					{
 						ShowModelESelectionMenu(playerid, "Police Skins", MODEL_SELECTION_LAWSKIN, lawskins_police, sizeof(lawskins_police), 0.0, 0.0, 0.0, 1.0, -1, true, lawskins_police);
@@ -573,7 +573,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 					return 1;
 				}
 				case 1: { // Duty
-					ShowPlayerDialog(playerid, DIALOG_PD_EQUIP_DUTY, DIALOG_STYLE_LIST, "Offduty ili onduty?", "Onduty\nOffduty", "Odaberi", "Odustani");
+					ShowPlayerDialog(playerid, DIALOG_PD_EQUIP_DUTY, DIALOG_STYLE_LIST, "Offduty ili onduty?", "Onduty\nOffduty", "Choose", "Abort");
 				}
 				case 2: { // Heal
 					new
@@ -591,15 +591,15 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 					ProxDetector(30.0, playerid, tmpString, COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE);
 				}
 				case 3: { // Buygun
-					if(PlayerInfo[playerid][pLevel] < 2) return SendMessage(playerid, MESSAGE_TYPE_ERROR, " Ne mozete koristiti ovu komandu dok ste level 1!"), ShowPlayerDialog(playerid, DIALOG_PD_EQUIP, DIALOG_STYLE_LIST, "LSPD Equipment", "Skin\nDuty\nHeal\nWeapons", "Odaberi", "Odustani");
-					if(IsACop(playerid) && PlayerInfo[playerid][pRank] < 2) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste rank 2!"), ShowPlayerDialog(playerid, DIALOG_PD_EQUIP, DIALOG_STYLE_LIST, "LSPD Equipment", "Skin\nDuty\nHeal\nWeapons", "Odaberi", "Odustani");
-					ShowPlayerDialog(playerid,DIALOG_PD_BUYGUN,DIALOG_STYLE_LIST,"POLICE ARMOURY","Desert Eagle - 50 metaka\nShotgun - 50 metaka\nMP5 - 150 metaka\nM4 - 200 metaka\nSniper Rifle - 50 metaka\nKnife\nTeargas - 10\nColt45 - 50\nSilenced - 50 metaka\nSpraycan\nNitestick\nBean Bag - 50 metaka\nRifle - 50 komanda","Odaberi","Izlaz");
+					if(PlayerInfo[playerid][pLevel] < 2) return SendMessage(playerid, MESSAGE_TYPE_ERROR, " Ne mozete koristiti ovu komandu dok ste level 1!"), ShowPlayerDialog(playerid, DIALOG_PD_EQUIP, DIALOG_STYLE_LIST, "LSPD Equipment", "Skin\nDuty\nHeal\nWeapons", "Choose", "Abort");
+					if(IsACop(playerid) && PlayerInfo[playerid][pRank] < 2) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste rank 2!"), ShowPlayerDialog(playerid, DIALOG_PD_EQUIP, DIALOG_STYLE_LIST, "LSPD Equipment", "Skin\nDuty\nHeal\nWeapons", "Choose", "Abort");
+					ShowPlayerDialog(playerid,DIALOG_PD_BUYGUN,DIALOG_STYLE_LIST,"POLICE ARMOURY","Desert Eagle - 50 metaka\nShotgun - 50 metaka\nMP5 - 150 metaka\nM4 - 200 metaka\nSniper Rifle - 50 metaka\nKnife\nTeargas - 10\nColt45 - 50\nSilenced - 50 metaka\nSpraycan\nNitestick\nBean Bag - 50 metaka\nRifle - 50 komanda","Choose","Exit");
 				}
 			}
 			return 1;
 		}
 		case DIALOG_PD_EQUIP_DUTY: {
-			if( !response ) return ShowPlayerDialog(playerid, DIALOG_PD_EQUIP, DIALOG_STYLE_LIST, "LSPD Equipment", "Skin\nDuty\nHeal\nWeapons", "Odaberi", "Odustani");
+			if( !response ) return ShowPlayerDialog(playerid, DIALOG_PD_EQUIP, DIALOG_STYLE_LIST, "LSPD Equipment", "Skin\nDuty\nHeal\nWeapons", "Choose", "Abort");
 			
 			switch( listitem ) {
 				case 0:
@@ -653,7 +653,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 					ProxDetector(10.0, playerid, tmpString, COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE);
 				}
 			}
-			ShowPlayerDialog(playerid, DIALOG_PD_EQUIP, DIALOG_STYLE_LIST, "LSPD Equipment", "Skin\nDuty\nHeal\nWeapons", "Odaberi", "Odustani");
+			ShowPlayerDialog(playerid, DIALOG_PD_EQUIP, DIALOG_STYLE_LIST, "LSPD Equipment", "Skin\nDuty\nHeal\nWeapons", "Choose", "Abort");
 			return 1;
 		}
 	}
@@ -698,7 +698,7 @@ CMD:equipment(playerid, params[])
     if( IsFDMember(playerid) )
 	{
 		if( IsPlayerInRangeOfPoint(playerid, 10.0, 1176.2422,-1344.8013,-53.6860) || IsPlayerInRangeOfPoint(playerid, 10.0, 1244.3059,-1253.0569,13.5403) || IsPlayerInRangeOfPoint(playerid, 10.0, 1068.8527,-1764.5013,-37.2122))
-			ShowPlayerDialog(playerid, DIALOG_FD_EQUIP, DIALOG_STYLE_LIST, "LSFD Equipment", "Duty\nSkin\nDodaci\nHeal", "Odaberi", "Odustani");
+			ShowPlayerDialog(playerid, DIALOG_FD_EQUIP, DIALOG_STYLE_LIST, "LSFD Equipment", "Duty\nSkin\nDodaci\nHeal", "Choose", "Abort");
 		else {
 			new
 				Float:X, Float:Y, Float:Z, vehicleid = -1;
@@ -710,20 +710,20 @@ CMD:equipment(playerid, params[])
 				}		
 			}
 			if(vehicleid == -1) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nisi blizu svlacionice/FD vozila!");
-			ShowPlayerDialog(playerid, DIALOG_FD_EQUIP, DIALOG_STYLE_LIST, "LSFD Equipment", "Duty\nSkin\nDodaci\nHeal\nCivil Skin", "Odaberi", "Odustani");
+			ShowPlayerDialog(playerid, DIALOG_FD_EQUIP, DIALOG_STYLE_LIST, "LSFD Equipment", "Duty\nSkin\nDodaci\nHeal\nCivil Skin", "Choose", "Abort");
 		}
 	}
 	else if( IsACop(playerid) || IsASD(playerid))
 	{
  		if( IsPlayerInRangeOfPoint(playerid,5.0,2040.6858,1260.2460,-11.1115) || IsPlayerInRangeOfPoint(playerid,5.0,1073.3243,1309.4116,-47.7425) || IsPlayerInRangeOfPoint(playerid, 10.0, -1167.5934, -1662.6095, 896.1174) || IsPlayerInRangeOfPoint(playerid, 10.0, 2097.3110,-2123.7720,-44.1565) || IsPlayerInRangeOfPoint(playerid, 10.0, 2878.4600,-844.5946,-21.6994))
-			ShowPlayerDialog(playerid, DIALOG_PD_EQUIP, DIALOG_STYLE_LIST, "LAW Equipment", "Skin\nDuty\nHeal\nWeapons", "Odaberi", "Odustani");
+			ShowPlayerDialog(playerid, DIALOG_PD_EQUIP, DIALOG_STYLE_LIST, "LAW Equipment", "Skin\nDuty\nHeal\nWeapons", "Choose", "Abort");
 		else
 			SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nisi blizu svlacionice!");
 	}
 	else if( IsAGov(playerid) )
 	{
  		if( IsPlayerInRangeOfPoint(playerid,5.0,1315.3967,758.2388,-93.1678))
-			ShowPlayerDialog(playerid, DIALOG_GOV_EQUIP, DIALOG_STYLE_LIST, "GOV Equipment", "Skin\nDuty\nHeal", "Odaberi", "Odustani");
+			ShowPlayerDialog(playerid, DIALOG_GOV_EQUIP, DIALOG_STYLE_LIST, "GOV Equipment", "Skin\nDuty\nHeal", "Choose", "Abort");
 		else
 			SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nisi blizu svlacionice!");
 	}
