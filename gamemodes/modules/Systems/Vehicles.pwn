@@ -1034,10 +1034,10 @@ CMD:engine(playerid, params[])
 		switch(random(99))
 		{
 			case 0 .. 15:
-				format(vstring, sizeof(vstring), "** %s okrece kljuc te pali unisteno vozilo.", GetName(playerid, true));
+				format(vstring, sizeof(vstring), "* %s okrece kljuc te pali unisteno vozilo.", GetName(playerid, true));
 			case 16 .. 99:
 			{
-				format(vstring, sizeof(vstring), "** %s pokusava upaliti unisteno vozilo ali ne uspijeva.", GetName(playerid, true));
+				format(vstring, sizeof(vstring), "* %s pokusava upaliti unisteno vozilo ali ne uspijeva.", GetName(playerid, true));
 				enginet[playerid] = gettime() + 2;
 				return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nisi uspio upaliti motor! Koristi /engine kako bi pokusao ponovno.");
 			}
@@ -1187,7 +1187,7 @@ CMD:lock(playerid, params[])
 				SetVehicleParamsEx( vehicleid, engine, lights, alarm, 1, bonnet, boot, objective );
 				VehicleInfo[ vehicleid ][ vLocked ] = true;
 
-				format( string, sizeof(string), "** %s zakljucava vozilo.", GetName(playerid, true) );
+				format( string, sizeof(string), "* %s zakljucava vozilo.", GetName(playerid, true) );
 				SetPlayerChatBubble(playerid, string, COLOR_PURPLE, 20, 20000);
 			
 			} else {
@@ -1195,7 +1195,7 @@ CMD:lock(playerid, params[])
 				SetVehicleParamsEx( vehicleid, engine, lights, alarm, 0, bonnet, boot, objective );
 				VehicleInfo[ vehicleid ][ vLocked ] = false;
 
-				format( string, sizeof(string), "** %s otkljucava vozilo.", GetName(playerid, true) );
+				format( string, sizeof(string), "* %s otkljucava vozilo.", GetName(playerid, true) );
 				SetPlayerChatBubble(playerid, string, COLOR_PURPLE, 20, 20000);
 			}
 		}
@@ -1206,14 +1206,14 @@ CMD:lock(playerid, params[])
 				SetVehicleParamsEx( vehicleid, engine, lights, alarm, 1, bonnet, boot, objective );
 				VehicleInfo[ vehicleid ][ vLocked ] = true;
 
-				format( string, sizeof(string), "** %s zakljucava vozilo.", GetName(playerid, true) );
+				format( string, sizeof(string), "* %s zakljucava vozilo.", GetName(playerid, true) );
 				SetPlayerChatBubble(playerid, string, COLOR_PURPLE, 20, 20000);
 			} else {
 				GameTextForPlayer( playerid, "~w~Vozilo ~g~otkljucano", 800, 4 );
 				SetVehicleParamsEx( vehicleid, engine, lights, alarm, 0, bonnet, boot, objective );
 				VehicleInfo[ vehicleid ][ vLocked ] = false;
 
-				format( string, sizeof(string), "** %s otkljucava vozilo.", GetName(playerid, true) );
+				format( string, sizeof(string), "* %s otkljucava vozilo.", GetName(playerid, true) );
 				SetPlayerChatBubble(playerid, string, COLOR_PURPLE, 20, 20000);
 			}
 		}
@@ -1224,14 +1224,14 @@ CMD:lock(playerid, params[])
 				SetVehicleParamsEx( vehicleid, engine, lights, alarm, 1, bonnet, boot, objective );
 				VehicleInfo[ vehicleid ][ vLocked ] = true;
 
-				format( string, sizeof(string), "** %s zakljucava vozilo.", GetName(playerid, true) );
+				format( string, sizeof(string), "* %s zakljucava vozilo.", GetName(playerid, true) );
 				SetPlayerChatBubble(playerid, string, COLOR_PURPLE, 20, 20000);
 			} else {
 				GameTextForPlayer( playerid, "~w~Vozilo ~g~otkljucano", 800, 4 );
 				SetVehicleParamsEx( vehicleid, engine, lights, alarm, 0, bonnet, boot, objective );
 				VehicleInfo[ vehicleid ][ vLocked ] = false;
 
-				format( string, sizeof(string), "** %s otkljucava vozilo.", GetName(playerid, true) );
+				format( string, sizeof(string), "* %s otkljucava vozilo.", GetName(playerid, true) );
 				SetPlayerChatBubble(playerid, string, COLOR_PURPLE, 20, 20000);
 			}
 		}
@@ -1242,14 +1242,14 @@ CMD:lock(playerid, params[])
 				SetVehicleParamsEx( vehicleid, engine, lights, alarm, 1, bonnet, boot, objective );
 				VehicleInfo[ vehicleid ][ vLocked ] = true;
 
-				format( string, sizeof(string), "** %s zakljucava vozilo.", GetName(playerid, true) );
+				format( string, sizeof(string), "* %s zakljucava vozilo.", GetName(playerid, true) );
 				SetPlayerChatBubble(playerid, string, COLOR_PURPLE, 20, 20000);
 			} else {
 				GameTextForPlayer( playerid, "~w~Vozilo ~g~otkljucano", 800, 4 );
 				SetVehicleParamsEx( vehicleid, engine, lights, alarm, 0, bonnet, boot, objective );
 				VehicleInfo[ vehicleid ][ vLocked ] = false;
 
-				format( string, sizeof(string), "** %s otkljucava vozilo.", GetName(playerid, true) );
+				format( string, sizeof(string), "* %s otkljucava vozilo.", GetName(playerid, true) );
 				SetPlayerChatBubble(playerid, string, COLOR_PURPLE, 20, 20000);
 			}
 		}

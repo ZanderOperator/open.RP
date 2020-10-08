@@ -328,6 +328,10 @@ public OnPlayerConnect(playerid) {
 
 stock RemovePlayerBuildings(playerid)
 {
+	// From Main.pwn
+	RemoveBuildingForPlayer(playerid, 6130, 1117.5859, -1490.0078, 32.7188, 0.25);
+	RemoveBuildingForPlayer(playerid, 6255, 1117.5859, -1490.0078, 32.7188, 0.25);
+	
 	/*//SD
     RemoveBuildingForPlayer(playerid, 13484, 738.3984, -553.9844, 21.9609, 0.25);
 	RemoveBuildingForPlayer(playerid, 13137, 646.1641, -527.8984, 28.0703, 0.25);*/

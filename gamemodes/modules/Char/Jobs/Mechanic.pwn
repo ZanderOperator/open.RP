@@ -779,7 +779,7 @@ CMD:mechanic(playerid, params[]) {
 			MechanicDuty[playerid] = true;
 			
 			SendMessage(playerid, MESSAGE_TYPE_INFO,"Sada si na duznosti kao Mehanicar!");
-			format(string, sizeof(string), "** Mehanicar %s je sada na duznosti. (( /jobduty ))", GetName(playerid, false));
+			format(string, sizeof(string), "* Mehanicar %s je sada na duznosti. (( /jobduty ))", GetName(playerid, false));
 			SendClientMessageToAll(COLOR_YELLOW, string);
 			
 			if(PlayerInfo[playerid][pSex] == 1) SetPlayerSkin(playerid, 50);

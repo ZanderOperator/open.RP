@@ -291,7 +291,7 @@ stock split(const strsrc[], strdest[][], delimiter)
 ShowAdminVehicles(playerid) {
 	for (new i = 0; i < MAX_ADMIN_VEHICLES; i ++) {
 		if(Admin_Vehicle[playerid][i] != -1) {
-			va_SendClientMessage(playerid, COLOR_RED, "[ ! ] [ADMIN-VEH (%d)]: %d id.", i, Admin_Vehicle[playerid][i]);
+			va_SendClientMessage(playerid, COLOR_RED, "[ ! ] [ADMIN-VEH (%d)]: ID %d.", i, Admin_Vehicle[playerid][i]);
 		}
 	}
 	return (true);
@@ -395,7 +395,7 @@ stock static CreateReconTextDraws(playerid)
 	PlayerTextDrawSetProportional(playerid, ReconTitle[playerid], 1);
 	PlayerTextDrawShow(playerid, ReconTitle[playerid]);
 
-	ReconText[playerid] = CreatePlayerTextDraw(playerid, 254.9, 339.1, "~y~Novac: 500~g~$~y~~n~Health: 60.0~n~Armour: 0.0~n~Package loss: 0.0%~n~Vehicleid: 550~n~FPS: 55~n~Ping: 55");
+	ReconText[playerid] = CreatePlayerTextDraw(playerid, 254.9, 339.1, "~y~Money: 500~g~$~y~~n~Health: 60.0~n~Armour: 0.0~n~Package loss: 0.0%~n~Vehicle ID: 550~n~FPS: 55~n~Ping: 55");
 	PlayerTextDrawLetterSize(playerid, ReconText[playerid], 0.293500, 0.871440);
 	PlayerTextDrawAlignment(playerid, ReconText[playerid], 1);
 	PlayerTextDrawColor(playerid, ReconText[playerid], -1);
@@ -426,7 +426,7 @@ stock static SetPlayerReconTarget(playerid, targetid)
 	strmid(packets, stats, strfind(stats, "Packetloss: ") + 11, strfind(stats, "Packetloss: ") + 14);
 	PacketLoss = floatstr(packets);
 
-	format(tmpString, sizeof(tmpString), "~y~Novac: %d~g~$~y~~n~Health: %.2f~n~Armour: %.2f~n~Package loss: %.2f%~n~Vehicleid: %d~n~FPS: %d~n~Ping: %d",
+	format(tmpString, sizeof(tmpString), "~y~Money: %d~g~$~y~~n~Health: %.2f~n~Armour: %.2f~n~Package loss: %.2f%~n~Vehicle ID: %d~n~FPS: %d~n~Ping: %d",
 		AC_GetPlayerMoney(targetid),
 		targetHealth,
 		targetArmour,
@@ -465,13 +465,13 @@ Function: LearnPlayer(playerid, learnid)
 			SendClientMessage(playerid, COLOR_GREY," ");
 			SendClientMessage(playerid, COLOR_GREY," ");
 			SendClientMessage(playerid, COLOR_GREY," ");
-			SendClientMessage(playerid, COLOR_RED, "[ ! ] â€˘ Sto je RolePlay ? â€˘");
+			SendClientMessage(playerid, COLOR_RED, "[ ! ] â€˘ What is RolePlay ? â€˘");
 		  	SendClientMessage(playerid, COLOR_WHITE, " ");
-		  	SendClientMessage(playerid, COLOR_WHITE, "Roleplay je simulacija stvarnoga zivota. ");
-		    SendClientMessage(playerid, COLOR_WHITE, "Pri takvoj igrici, vazno je dobro poznavati RolePlay pravila. ");
-		    SendClientMessage(playerid, COLOR_WHITE, "Pozeljno je da sto vise vremena provodite u RolePlayu.");
-		    SendClientMessage(playerid, COLOR_WHITE, "Kvalitetnim RolePlayom,povecava Vam se sansa za uspjeh na serveru. ");
-		    SendClientMessage(playerid, COLOR_WHITE, "Ukoliko ste novi igrac, Vi lako mozete nauciti RolePlay pravila.");
+		  	SendClientMessage(playerid, COLOR_WHITE, "RolePlay is simulation of real life. ");
+		    SendClientMessage(playerid, COLOR_WHITE, "In that kind of game, it's good to know the RolePlay rules. ");
+		    SendClientMessage(playerid, COLOR_WHITE, "It is desireable to spend as much time as possible RolePlaying.");
+		    SendClientMessage(playerid, COLOR_WHITE, "With quality RolePlay, your chances of suceeding in the game are very increased. ");
+		    SendClientMessage(playerid, COLOR_WHITE, "If you are new player, you can easily learn RolePlay rules.");
 			KillTimer(LearnTimer[playerid]);
 			LearnTimer[playerid] = SetTimerEx("LearnPlayer", 28000, 0, "ii", playerid, 2);
 		}
@@ -486,12 +486,12 @@ Function: LearnPlayer(playerid, learnid)
 			SendClientMessage(playerid, COLOR_GREY," ");
 			SendClientMessage(playerid, COLOR_GREY," ");
 			SendClientMessage(playerid, COLOR_GREY," ");
-		 	SendClientMessage(playerid, COLOR_RED, "[ ! ] â€˘ RolePlay terminologija â€˘");
+		 	SendClientMessage(playerid, COLOR_RED, "[ ! ] â€˘ RolePlay terminology â€˘");
 	   		SendClientMessage(playerid, COLOR_WHITE, " ");
-	        SendClientMessage(playerid, COLOR_WHITE, "Obzirom da je ovo Hardcore RolePlay server, postuju se i RolePlay pravila!");
-	        SendClientMessage(playerid, COLOR_WHITE, "Neki RolePlay termini su Vam vec poznati?");
-	        SendClientMessage(playerid, COLOR_WHITE, "Kroz ovaj kratak tutorial, dobit' cete uvid u osnovne termine RolePlaya.");
-	        SendClientMessage(playerid, COLOR_WHITE, "Krenimo polako !");
+	        SendClientMessage(playerid, COLOR_WHITE, "Since this is Hardcore RolePlay server, RolePlay rules are very important to follow!");
+	        SendClientMessage(playerid, COLOR_WHITE, "Are you familiar with some RolePlay terms?");
+	        SendClientMessage(playerid, COLOR_WHITE, "Through this tutorial, you'll get some insight on basic RolePlay rules.");
+	        SendClientMessage(playerid, COLOR_WHITE, "Let's begin!");
 		    KillTimer(LearnTimer[playerid]);
 			LearnTimer[playerid] = SetTimerEx("LearnPlayer", 25000, 0, "ii", playerid, 3);
 		}
@@ -506,17 +506,17 @@ Function: LearnPlayer(playerid, learnid)
 			SendClientMessage(playerid, COLOR_GREY," ");
 			SendClientMessage(playerid, COLOR_GREY," ");
 			SendClientMessage(playerid, COLOR_GREY," ");
-		 	SendClientMessage(playerid, COLOR_RED, "[ ! ] â€˘ In Character i Out of Character(OOC) Chat â€˘");
+		 	SendClientMessage(playerid, COLOR_RED, "[ ! ] â€˘ In Character and Out of Character(OOC) Chat â€˘");
 			SendClientMessage(playerid, COLOR_WHITE," ");
-	   		SendClientMessage(playerid, COLOR_WHITE, "Vrlo je vazno znati razliku izmedju ova dva chata.");
+	   		SendClientMessage(playerid, COLOR_WHITE, "It's very important to know the difference between these two chats.");
 			SendClientMessage(playerid, COLOR_WHITE," ");
-	        SendClientMessage(playerid, COLOR_WHITE, "In Character (IC) je vezan direktno za Vasega lika, kojega glumite u igri. ");
-	        SendClientMessage(playerid, COLOR_WHITE, "Unutar IC chata, ne smije postojati stvari iz Vasega privatnog zivota i ostale OOC stvari.");
-	        SendClientMessage(playerid, COLOR_WHITE, "Primjer IC chata: 'Dobar dan, zovem se Mike. Odakle dolazite gospodine?')");
-	       	SendClientMessage(playerid, COLOR_WHITE, "In Character tekstovi su /phone, /sms, /ct, /c, /w, /s.");
+	        SendClientMessage(playerid, COLOR_WHITE, "In Character (IC) is bound by your character, who you impersonate InGame. ");
+	        SendClientMessage(playerid, COLOR_WHITE, "Inside IC chat, you can't mix things from your private life and other OOC stuff.");
+	        SendClientMessage(playerid, COLOR_WHITE, "Example of IC chat: 'Good day sir, my name is Mike. Where do you come from?')");
+	       	SendClientMessage(playerid, COLOR_WHITE, "In Character chats are /call, /sms, /ct, /c, /w, /s.");
 			SendClientMessage(playerid, COLOR_WHITE," ");
-	       	SendClientMessage(playerid, COLOR_WHITE, "Out of Character(OOC) je vezan za stvari koje nisu direktno povezane s Vama u igrici.");
-	       	SendClientMessage(playerid, COLOR_WHITE, "Primjer OOC chata: '/b Jesi pogledao novu temu na forumu? Tko su admini na ovome serveru?'");
+	       	SendClientMessage(playerid, COLOR_WHITE, "Out of Character(OOC) is bound to things that aren't directly related with your character InGame.");
+	       	SendClientMessage(playerid, COLOR_WHITE, "Example of OOC chat: '/b Did you look at that topic on forum? Who are admins on this server?'");
 			KillTimer(LearnTimer[playerid]);
 			LearnTimer[playerid] = SetTimerEx("LearnPlayer", 30000, 0, "ii", playerid, 4);
 		}
@@ -531,13 +531,13 @@ Function: LearnPlayer(playerid, learnid)
 			SendClientMessage(playerid, COLOR_GREY," ");
 			SendClientMessage(playerid, COLOR_GREY," ");
 			SendClientMessage(playerid, COLOR_GREY," ");
-		 	SendClientMessage(playerid, COLOR_RED, "[ ! ] â€˘ Sto je to MetaGaming(MG)? â€˘");
+		 	SendClientMessage(playerid, COLOR_RED, "[ ! ] â€˘ What is MetaGaming(MG)? â€˘");
 	   		SendClientMessage(playerid, COLOR_WHITE, " ");
-	        SendClientMessage(playerid, COLOR_WHITE, "Metagaming je koristenje Out of Character (OOC) informacija u In Character (IC) svrhe.");
-	        SendClientMessage(playerid, COLOR_WHITE, "Primjer Metagaminga je koristenje necijega imena, bez da ste to na RolePlay nacin saznali.");
-	        SendClientMessage(playerid, COLOR_WHITE, "Kada ugledate ime igraca na serveru, iznad njegove glave, Vi njegovo ime ne znate, sve dok Vam ga on ne kaze.");
-	        SendClientMessage(playerid, COLOR_WHITE, "Takodjer, ukoliko vidite osobu u odjeci bande/mafie, nemate pravo toj osobi iznositi da je pripadnik ilegalne organizacije.");
-	        SendClientMessage(playerid, COLOR_WHITE, "Metagaming je strogo kaznjiv kao i svako ostalo krsenje RolePlay pravila.");
+	        SendClientMessage(playerid, COLOR_WHITE, "MetaGaming is using Out of Character (OOC) informations for In Character (IC) purposes.");
+	        SendClientMessage(playerid, COLOR_WHITE, "Example of MetaGaming is shouting person's name you saw first time InGame, just because you saw his nick.");
+	        SendClientMessage(playerid, COLOR_WHITE, "When you see a name of other player above his head, you don't know his name, until he tells it himself.");
+	        SendClientMessage(playerid, COLOR_WHITE, "Also, if you see someone wearing gang/mafia clothes, you have no right to call him a gangster/mobster.");
+	        SendClientMessage(playerid, COLOR_WHITE, "MetaGaming is strictly punishable(1h+ prison, etc.), as is any other form of abiding RolePlay rules.");
 			KillTimer(LearnTimer[playerid]);
 			LearnTimer[playerid] = SetTimerEx("LearnPlayer", 30000, 0, "ii", playerid, 5);
 		}

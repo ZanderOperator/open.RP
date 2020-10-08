@@ -43,6 +43,7 @@
 #define NEGATIVE_MODEL_ID 						-40000 // Negativna vrijednost radi Custom Object Modela koji su u minusu
 
 // Server Restart Configuration
+//#define AUTO_RESTART_SEQ							// Uncomment for automatic restarts if you have restart API on your VPS/server
 #define HTTP_RESTART_REQUEST 					"SERVER_RESTART_API_REQUEST_LINK"
 
 // Fixes.inc
@@ -132,11 +133,27 @@ native WP_Hash(buffer[], len, const str[]);
 #define SCRIPT_VERSION							"CoA RP v18.5.5."
 #define DEV_NAME   								"Woo-Logan"
 
-// Macros
+// -Macros
 #define Function:%0(%1) \				
 		forward%0(%1); \
 		public%0(%1)
 		
+// KickEx
+#define KickMessage(%0) \
+	SetTimerEx("KickPlayer",55,false,"d",%0)
+// BanEx
+#define BanMessage(%0) \
+	SetTimerEx("BanPlayer",55,false,"d",%0)
+
+// Key Status
+#define PRESSED(%0) \
+	(((newkeys & (%0)) == (%0)) && ((oldkeys & (%0)) != (%0)))
+#define HOLDING(%0) \
+	((newkeys & (%0)) == (%0))
+#define RELEASED(%0) \
+	(((newkeys & (%0)) != (%0)) && ((oldkeys & (%0)) == (%0)))
+
+// rBits
 #define IsPlayerLogged(%0) 						Bit1_Get(gr_PlayerLoggedIn,%0)
 #define IsPlayerLogging(%0) 					Bit1_Get(gr_PlayerLoggingIn,%0)
 #define IsPlayerAlive(%0) 						Bit1_Get(gr_PlayerAlive, %0)
@@ -2044,6 +2061,7 @@ new
 	   ##    ##     ##  ######  ##    ##  ######
 */
 
+#if defined AUTO_RESTART_SEQ
 StartGMX()
 {
 	for (new a = 1; a <= 20; a++)
@@ -2072,14 +2090,7 @@ StartGMX()
 	SaveAll();
 	return 1;
 }
-
-stock GetUserIP_Connector(playerid){
-	new
-		ip[39];
-
- 	GetPlayerIp(playerid, ip, sizeof(ip));
-	return ip;
-}
+#endif
 
 RegisterPlayerDeath(playerid, killerid) // funkcija
 {
@@ -2741,7 +2752,9 @@ Function: GlobalServerTimer()
 	{
 		GMX = 1;
 		CheckAccountsForInactivity(); // Skidanje posla i imovine neaktivnim igracima
+		#if defined AUTO_RESTART_SEQ
 		StartGMX();
+		#endif
 	}
 	return 1;
 }
@@ -2852,28 +2865,7 @@ public ServerRestartRequest(index, response_code, data[])
         printf("[ERROR]: Automatic Server Restart via API was unsucessful! Response Code: %d", response_code);
 }
 
-FormatNumber(number, prefix[] = "$")
-{
-	static
-		value[32],
-		length;
 
-	format(value, sizeof(value), "%d", (number < 0) ? (-number) : (number));
-
-	if ((length = strlen(value)) > 3)
-	{
-		for (new i = length, l = 0; --i >= 0; l ++) {
-		    if ((l > 0) && (l % 3 == 0)) strins(value, ",", i + 1);
-		}
-	}
-	if (prefix[0] != 0)
-	    strins(value, prefix, 0);
-
-	if (number < 0)
-		strins(value, "-", 0);
-
-	return value;
-}
 /*
 	######## ##     ## ##    ##  ######  ######## ####  #######  ##    ##  ######
 	##       ##     ## ###   ## ##    ##    ##     ##  ##     ## ###   ## ##    ##
@@ -3445,9 +3437,6 @@ public OnPlayerRequestClass(playerid, classid)
 		}
 		SafeSpawning[ playerid ] = true;
 
-		//Resets
-		RemoveBuildings(playerid);
-
 		//PlayerSets
 		SetPlayerColor(playerid, 	COLOR_PLAYER);
 		SetPlayerWeather(playerid, 	WeatherSys);
@@ -3789,7 +3778,7 @@ public OnPlayerTakeDamage(playerid, issuerid, Float:amount, weaponid, bodypart)
 			new
 				damageString[ 87 ];
 
-			format(damageString, sizeof(damageString), "** %s shoots %s with tazer and he falls down!",
+			format(damageString, sizeof(damageString), "* %s shoots %s with tazer and he falls down!",
 				GetName(issuerid, true),
 				GetName(playerid, true)
 			);
@@ -3814,7 +3803,7 @@ public OnPlayerTakeDamage(playerid, issuerid, Float:amount, weaponid, bodypart)
 			new
 				damageString[ 87 ];
 
-			format(damageString, sizeof(damageString), "** %s shoots %s with bean bag bullet and he falls!",
+			format(damageString, sizeof(damageString), "* %s shoots %s with bean bag bullet and he falls!",
 				GetName(issuerid, true),
 				GetName(playerid, true)
 			);
@@ -3965,7 +3954,7 @@ public OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
 
 			new
 				tmpString[ 50 ];
-		  	format(tmpString, sizeof(tmpString), "** %s puts out a cigarette.",
+		  	format(tmpString, sizeof(tmpString), "* %s puts out a cigarette.",
 				GetName(playerid, true)
 			);
 		  	ProxDetector(15.0, playerid, tmpString, COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE);
@@ -3977,7 +3966,7 @@ public OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
 
 			new
 				tmpString[ 50 ];
-		  	format(tmpString, sizeof(tmpString), "** %s puts his drink aside.",
+		  	format(tmpString, sizeof(tmpString), "* %s puts his drink aside.",
 				GetName(playerid, true)
 			);
 		  	ProxDetector(15.0, playerid, tmpString, COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE);

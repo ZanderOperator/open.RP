@@ -601,13 +601,13 @@ stock PlayHouseAlarm(houseid)
 	if(Bit1_Get(gr_HouseAlarm, houseid)) return 1;
 	switch(HouseInfo[houseid][hAlarm]) {
 		case 1: { // Salje samo poruku onima oko kuce
-			format(tmpString, sizeof(tmpString), "** [KUCA %s]: BEEP BEEP BEEP!", HouseInfo[houseid][hAdress]);
+			format(tmpString, sizeof(tmpString), "** [KUCA %s]: BEEP BEEP BEEP! **", HouseInfo[houseid][hAdress]);
 			HouseProxDetector(houseid, 60.0, tmpString, COLOR_PURPLE);
 			PlaySoundForPlayersInRange(AlarmEffect[0], 60.0, HouseInfo[houseid][hEnterX], HouseInfo[houseid][hEnterY], HouseInfo[houseid][hEnterZ]);
 		}
 		case 2:	{ // Salje samo poruku onima oko kuce & SMS-a ownera (ako je online)
 			/************ LEVEL 1 ************/
-			format(tmpString, sizeof(tmpString), "** [KUCA %s]: BEEP BEEP BEEP!", HouseInfo[houseid][hAdress]);
+			format(tmpString, sizeof(tmpString), "** [KUCA %s]: BEEP BEEP BEEP! **", HouseInfo[houseid][hAdress]);
 			HouseProxDetector(houseid, 60.0, tmpString, COLOR_PURPLE);
 			PlaySoundForPlayersInRange(AlarmEffect[1], 60.0, HouseInfo[houseid][hEnterX], HouseInfo[houseid][hEnterY], HouseInfo[houseid][hEnterZ]);
 
@@ -627,19 +627,16 @@ stock PlayHouseAlarm(houseid)
 		}
 		case 3: { // Salje poruku onima oko kuce & SMS vlasniku (ako je online) & kontaktira PD
 			/************ LEVEL 1 ************/
-			format(tmpString, sizeof(tmpString), "** [KUCA %s]: BEEP BEEP BEEP!", HouseInfo[houseid][hAdress]);
+			format(tmpString, sizeof(tmpString), "** [KUCA %s]: BEEP BEEP BEEP! **", HouseInfo[houseid][hAdress]);
 			HouseProxDetector(houseid, 60.0, tmpString, COLOR_PURPLE);
 			PlaySoundForPlayersInRange(AlarmEffect[2], 60.0, HouseInfo[houseid][hEnterX], HouseInfo[houseid][hEnterY], HouseInfo[houseid][hEnterZ]);
 
 			/************ LEVEL 3 ************/
 			SendPoliceMessage(COLOR_LIGHTBLUE, "*__________ EMERGENCY CALL (911) __________*");
 			SendPoliceMessage(COLOR_LIGHTBLUE, "* Pozivatelj: Osiguravajuca kompanija || Locirani broj: 555-6935");
-			format(tmpString, sizeof(tmpString), "Lokacija broja: %s",
-				GetXYZZoneName(
-					HouseInfo[houseid][hEnterX],
-					HouseInfo[houseid][hEnterY],
-					HouseInfo[houseid][hEnterZ]
-				)
+			format(tmpString, sizeof(tmpString), "Location: %s || Adress: %s",
+				GetXYZZoneName(HouseInfo[houseid][hEnterX], HouseInfo[houseid][hEnterY], HouseInfo[houseid][hEnterZ]),
+				HouseInfo[houseid][hAdress]
 			);
 			SendPoliceMessage(COLOR_LIGHTBLUE, tmpString);
 			SendPoliceMessage(COLOR_LIGHTBLUE, "* Incident: Provala u kucu!");
@@ -661,19 +658,16 @@ stock PlayHouseAlarm(houseid)
 		}
 		case 4: { // Salje poruku onima oko kuce & SMS vlasniku (ako je online) & kontaktira PD & kreira mapicon za PD i vlasnika
 			/************ LEVEL 1 ************/
-			format(tmpString, sizeof(tmpString), "** [KUCA %s]: BEEP BEEP BEEP!", HouseInfo[houseid][hAdress]);
+			format(tmpString, sizeof(tmpString), "** [KUCA %s]: BEEP BEEP BEEP! **", HouseInfo[houseid][hAdress]);
 			HouseProxDetector(houseid, 60.0, tmpString, COLOR_PURPLE);
 			PlaySoundForPlayersInRange(AlarmEffect[2], 60.0, HouseInfo[houseid][hEnterX], HouseInfo[houseid][hEnterY], HouseInfo[houseid][hEnterZ]);
 
 			/************ LEVEL 3 ************/
 			SendPoliceMessage(COLOR_LIGHTBLUE, "*__________ EMERGENCY CALL (911) __________*");
 			SendPoliceMessage(COLOR_LIGHTBLUE, "* Pozivatelj: Osiguravajuca kompanija || Locirani broj: 555-6935");
-			format(tmpString, sizeof(tmpString), "Lokacija broja: %s",
-				GetXYZZoneName(
-					HouseInfo[houseid][hEnterX],
-					HouseInfo[houseid][hEnterY],
-					HouseInfo[houseid][hEnterZ]
-				)
+			format(tmpString, sizeof(tmpString), "Location: %s || Adress: %s",
+				GetXYZZoneName(HouseInfo[houseid][hEnterX], HouseInfo[houseid][hEnterY], HouseInfo[houseid][hEnterZ]),
+				HouseInfo[houseid][hAdress]
 			);
 			SendPoliceMessage(COLOR_LIGHTBLUE, tmpString);
 			SendPoliceMessage(COLOR_LIGHTBLUE, "* Incident: Provala u kucu!");
@@ -707,19 +701,16 @@ stock PlayHouseAlarm(houseid)
 		}
 		case 5: { // Salje poruku onima oko kuce & SMS vlasniku (ako je online) & kontaktira PD & gang zone oko kuce & kreira mapicon za PD i vlasnika
 			/************ LEVEL 1 ************/
-			format(tmpString, sizeof(tmpString), "** [KUCA %s]: BEEP BEEP BEEP!", HouseInfo[houseid][hAdress]);
+			format(tmpString, sizeof(tmpString), "** [KUCA %s]: BEEP BEEP BEEP! **", HouseInfo[houseid][hAdress]);
 			HouseProxDetector(houseid, 60.0, tmpString, COLOR_PURPLE);
 			PlaySoundForPlayersInRange(AlarmEffect[2], 60.0, HouseInfo[houseid][hEnterX], HouseInfo[houseid][hEnterY], HouseInfo[houseid][hEnterZ]);
 
 			/************ LEVEL 3 ************/
 			SendPoliceMessage(COLOR_LIGHTBLUE, "*____________ EMERGENCY CALL (911) ____________*");
 			SendPoliceMessage(COLOR_LIGHTBLUE, "* Pozivatelj: Osiguravajuca kompanija || Locirani broj: 555-6935");
-			format(tmpString, sizeof(tmpString), "* Lokacija broja: %s",
-				GetXYZZoneName(
-					HouseInfo[houseid][hEnterX],
-					HouseInfo[houseid][hEnterY],
-					HouseInfo[houseid][hEnterZ]
-				)
+			format(tmpString, sizeof(tmpString), "Location: %s || Adress: %s",
+				GetXYZZoneName(HouseInfo[houseid][hEnterX], HouseInfo[houseid][hEnterY], HouseInfo[houseid][hEnterZ]),
+				HouseInfo[houseid][hAdress]
 			);
 			SendPoliceMessage(COLOR_LIGHTBLUE, tmpString);
 			SendPoliceMessage(COLOR_LIGHTBLUE, "* Incident: Provala u kucu!");
@@ -1605,14 +1596,14 @@ hook OnPlayerWeaponShot(playerid, weaponid, hittype, hitid, Float:fX, Float:fY, 
 		new 
 			tmpString[80],
 			doorbreachstring[100];
-		format(tmpString, sizeof(tmpString), "** Vrata su probijena sacmaricom. ((%s))", GetName(playerid, true));
-		ProxDetector(20.0, playerid, tmpString, COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE);
+		format(tmpString, sizeof(tmpString), "* Vrata su probijena sacmaricom. (( %s ))", GetName(playerid, true));
+		ProxDetector(50.0, playerid, tmpString, COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE);
 		HouseInfo[houseid][hLock] = false;
 		foreach(new i: Player)
 		{
 			if(Bit16_Get(gr_PlayerInHouse, i) == houseid)
 			{
-				format(doorbreachstring, sizeof(doorbreachstring), "** Cuje se intenzivni zvuk pucnja sacmarice iz smjera vrata. ((%s))", GetName(playerid, true));
+				format(doorbreachstring, sizeof(doorbreachstring), "* Cuje se intenzivni zvuk pucnja sacmarice kod vratiju. (( %s ))", GetName(playerid, true));
 				ProxDetector(50.0, i, doorbreachstring, COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE);
 				break;
 			}
@@ -2274,10 +2265,10 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 					if(HouseInfo[house][hGroceries] >= 1)
 					{
 						HouseInfo[house][hGroceries]--;
-						format(groString, sizeof(groString), "** %s uzima Twist Off iz hladnjaka i otvara ga.", GetName(playerid, true));
+						format(groString, sizeof(groString), "* %s uzima Twist Off iz hladnjaka i otvara ga.", GetName(playerid, true));
 						ProxDetector(8.0, playerid, groString, COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE);
 
-						format(groString, sizeof(groString), "** %s naginje flasu te pocinje piti.", GetName(playerid, true));
+						format(groString, sizeof(groString), "* %s naginje flasu te pocinje piti.", GetName(playerid, true));
 						ProxDetector(8.0, playerid, groString, COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE);
 
 						SetPlayerSpecialAction(playerid, SPECIAL_ACTION_DRINK_BEER);
@@ -2300,10 +2291,10 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 					{
 						HouseInfo[house][hGroceries]--;
 						SetPlayerSpecialAction(playerid, SPECIAL_ACTION_DRINK_SPRUNK);
-						format(groString, sizeof(groString), "** %s uzima Sprunk iz hladnjaka i otvara ga.", GetName(playerid, true));
+						format(groString, sizeof(groString), "* %s uzima Sprunk iz hladnjaka i otvara ga.", GetName(playerid, true));
 						ProxDetector(8.0, playerid, groString, COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE);
 
-						format(groString, sizeof(groString), "** %s naginje tetrapak te pocinje piti.", GetName(playerid, true));
+						format(groString, sizeof(groString), "* %s naginje tetrapak te pocinje piti.", GetName(playerid, true));
 						ProxDetector(8.0, playerid, groString, COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE);
 
 						if(PlayerInfo[playerid][pHunger] < 4.8)
@@ -2318,10 +2309,10 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 						HouseInfo[house][hGroceries]--;
 						SetPlayerSpecialAction(playerid, SPECIAL_ACTION_DRINK_WINE);
 
-						format(groString, sizeof(groString), "** %s uzima crno vino iz hladnjaka i otvara ga.", GetName(playerid, true));
+						format(groString, sizeof(groString), "* %s uzima crno vino iz hladnjaka i otvara ga.", GetName(playerid, true));
 						ProxDetector(8.0, playerid, groString, COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE);
 
-						format(groString, sizeof(groString), "** %s naginje flasu te pocinje piti.", GetName(playerid, true));
+						format(groString, sizeof(groString), "* %s naginje flasu te pocinje piti.", GetName(playerid, true));
 						ProxDetector(8.0, playerid, groString, COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE);
 
 						if(PlayerInfo[playerid][pHunger] < 4.8) {
@@ -2341,7 +2332,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 					if(HouseInfo[house][hGroceries] >= 1)
 					{
 						HouseInfo[house][hGroceries] -= 1;
-						format(groString, sizeof(groString), "** %s uzima cips te pocinje jesti.", GetName(playerid, true));
+						format(groString, sizeof(groString), "* %s uzima cips te pocinje jesti.", GetName(playerid, true));
 						ProxDetector(8.0, playerid, groString, COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE);
 						ApplyAnimationEx(playerid, "FOOD", "EAT_Burger", 3.0, 0, 0, 0, 0, 0, 1, 0);
 
@@ -2571,8 +2562,8 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 			ClearAnimations(playerid);
 
 			// Message
-			SendClientMessage(playerid, COLOR_RED, "[ ! ] Uspjesno ste obukli odjelo!");
-			format(skinString, sizeof(skinString), "** %s se presvlaci.", GetName(playerid, true));
+			SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uspjesno ste se presvukli!");
+			format(skinString, sizeof(skinString), "* %s se presvlaci.", GetName(playerid, true));
 			ProxDetector(5.0, playerid, skinString, COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE);
 			return 1;
 		}
@@ -3415,12 +3406,12 @@ CMD:knock(playerid, params[])
 		knockString[45];
 
 	if(IsPlayerInRangeOfPoint(playerid,2.0, HouseInfo[house][hEnterX], HouseInfo[house][hEnterY], HouseInfo[house][hEnterZ]) && HouseInfo[house][h3dViwo] == GetPlayerVirtualWorld(playerid)) {
-		format(knockString, sizeof(knockString), "** %s kuca po vratima.", GetName(playerid, true));
+		format(knockString, sizeof(knockString), "* %s kuca po vratima.", GetName(playerid, true));
 		ProxDetector(30.0, playerid, knockString, COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE);
 		foreach(new p : Player)
 		{
-			if(IsPlayerInRangeOfPoint(p, 15.0, HouseInfo[house][hExitX], HouseInfo[house][hExitY], HouseInfo[house][hExitZ]))
-			SendClientMessage(p, COLOR_PURPLE, "* Netko kuca po vratima.");
+			if(IsPlayerInRangeOfPoint(p, 30.0, HouseInfo[house][hExitX], HouseInfo[house][hExitY], HouseInfo[house][hExitZ]))
+			SendClientMessage(p, COLOR_PURPLE, "* Netko kuca na ulazna vrata.");
 		}
 	}
 	return 1;

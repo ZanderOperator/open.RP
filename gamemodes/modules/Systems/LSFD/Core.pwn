@@ -323,7 +323,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 
 					new
 						tmpString[60];
-					format(tmpString, sizeof(tmpString), "** %s oblaci pancirku.", GetName(playerid, true));
+					format(tmpString, sizeof(tmpString), "* %s oblaci pancirku.", GetName(playerid, true));
 					ProxDetector(30.0, playerid, tmpString, COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE);
 				}
 			}
@@ -348,7 +348,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 
 					new
 					tmpString[80];
-					format(tmpString, sizeof(tmpString), "** %s oblaci svoju radnu uniformu i priprema se za posao.", GetName(playerid, true));
+					format(tmpString, sizeof(tmpString), "* %s oblaci svoju radnu uniformu i priprema se za posao.", GetName(playerid, true));
 					ProxDetector(10.0, playerid, tmpString, COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE);
 				}
 				case 1: { 	// Offduty
@@ -369,7 +369,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 
 					new
 						tmpString[80];
-					format(tmpString, sizeof(tmpString), "** %s svlaci svoju radnu uniformu i oblaci civilnu.", GetName(playerid, true));
+					format(tmpString, sizeof(tmpString), "* %s svlaci svoju radnu uniformu i oblaci civilnu.", GetName(playerid, true));
 					ProxDetector(10.0, playerid, tmpString, COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE);
 				}
 			}
@@ -428,7 +428,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 
 					new
 					tmpString[80];
-					format(tmpString, sizeof(tmpString), "** %s oblaci svoju radnu uniformu i priprema se za posao.", GetName(playerid, true));
+					format(tmpString, sizeof(tmpString), "* %s oblaci svoju radnu uniformu i priprema se za posao.", GetName(playerid, true));
 					ProxDetector(10.0, playerid, tmpString, COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE);
 				}
 				case 1: { 	// Offduty
@@ -449,7 +449,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 
 					new
 						tmpString[80];
-					format(tmpString, sizeof(tmpString), "** %s svlaci svoju radnu uniformu i oblaci civilnu.", GetName(playerid, true));
+					format(tmpString, sizeof(tmpString), "* %s svlaci svoju radnu uniformu i oblaci civilnu.", GetName(playerid, true));
 					ProxDetector(10.0, playerid, tmpString, COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE);
 				}
 			}
@@ -587,7 +587,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 					
 					new 
 						tmpString[60];
-					format(tmpString, sizeof(tmpString), "** %s oblaci pancirku.", GetName(playerid, true));
+					format(tmpString, sizeof(tmpString), "* %s oblaci pancirku.", GetName(playerid, true));
 					ProxDetector(30.0, playerid, tmpString, COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE);
 				}
 				case 3: { // Buygun
@@ -626,7 +626,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 
 					new
 					tmpString[80];
-					format(tmpString, sizeof(tmpString), "** %s oblaci svoju radnu uniformu i priprema se za posao.", GetName(playerid, true));
+					format(tmpString, sizeof(tmpString), "* %s oblaci svoju radnu uniformu i priprema se za posao.", GetName(playerid, true));
 					ProxDetector(10.0, playerid, tmpString, COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE);
 				}
 				case 1: { 	// Offduty
@@ -649,7 +649,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 					
 					new 
 						tmpString[80];
-					format(tmpString, sizeof(tmpString), "** %s svlaci svoju radnu uniformu i oblaci civilnu.", GetName(playerid, true));
+					format(tmpString, sizeof(tmpString), "* %s svlaci svoju radnu uniformu i oblaci civilnu.", GetName(playerid, true));
 					ProxDetector(10.0, playerid, tmpString, COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE);
 				}
 			}

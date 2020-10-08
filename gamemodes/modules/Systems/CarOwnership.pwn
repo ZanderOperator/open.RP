@@ -1,10 +1,5 @@
 #include <YSI\y_hooks>
 
-#if defined MODULE_CO
-	#endinput
-#endif
-#define MODULE_CO
-
 /*
 	########  ######## ######## #### ##    ## ########  ######
 	##     ## ##       ##        ##  ###   ## ##       ##    ##
@@ -16,9 +11,9 @@
 */
 ///////////////////////////////////////////////////////////////////
 
-//Koliko sekundi smije voziti auto?
-#define CAR_TEST_SEC			(300) 		// 5 minuta = 300 sekundi!
-#define CAR_GIVEBACK_MIL 		(300000) 	// 5 minuta = 300.000 milisekundi
+// How much seconds can test car be driven
+#define CAR_TEST_SEC			(300) 		// 5 min = 300 sec!
+#define CAR_GIVEBACK_MIL 		(300000) 	// 5 min = 300.000 ms
 
 //Oduzimanja
 #define ENGINE_DEDUCATION		(1)
@@ -1989,7 +1984,7 @@ stock static CreateTestCar(playerid)
 	VehicleInfo[TestCar[playerid]][vEngineRunning] = 1;
 
 
-	//Kreiranje timera za automobil
+	// Timer for returning test car
 	Bit16_Set(gr_PlayerTestSeconds, playerid, CAR_TEST_SEC);
 	PlayerTestTimer[playerid] = SetTimerEx("VehicleTestTimer", 1000, true, "i", playerid);
 	return 1;
@@ -4853,7 +4848,7 @@ CMD:duplicatekey(playerid, params[])
 		if(VehicleInfo[vehicleid][vSpareKey1] < 0)
 		{
 		    VehicleInfo[vehicleid][vSpareKey1] = PlayerInfo[plid][pSQLID];
-			format(string, sizeof(string), "** %s daje rezervni kljuc %s.", GetName(playerid, true), GetName(plid, true));
+			format(string, sizeof(string), "* %s daje rezervni kljuc %s.", GetName(playerid, true), GetName(plid, true));
 			SetPlayerChatBubble(playerid, string, COLOR_PURPLE, 20, 20000);
 		    new
 			tmpString[128];
@@ -4869,7 +4864,7 @@ CMD:duplicatekey(playerid, params[])
 		if(VehicleInfo[vehicleid][vSpareKey2] < 0)
 		{
 		    VehicleInfo[vehicleid][vSpareKey2] = PlayerInfo[plid][pSQLID];
-			format(string, sizeof(string), "** %s daje rezervni kljuc %s.", GetName(playerid, true), GetName(plid, true));
+			format(string, sizeof(string), "* %s daje rezervni kljuc %s.", GetName(playerid, true), GetName(plid, true));
 			SetPlayerChatBubble(playerid, string, COLOR_PURPLE, 20, 20000);
 		    new
 			tmpString[77];

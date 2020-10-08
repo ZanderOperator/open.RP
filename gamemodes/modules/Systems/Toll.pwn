@@ -250,14 +250,14 @@ CMD:locktoll(playerid, params[])
 	    if(LockToll[0] == 0)
 	    {
 	        LockToll[0] = 1;
-	        format(LTStr, sizeof(LTStr), "** %s je zakljucao naplatnu kucicu LS-LV Highway.", GetName(playerid, false));
+	        format(LTStr, sizeof(LTStr), "* %s je zakljucao naplatnu kucicu LS-LV Highway.", GetName(playerid, false));
 			SendRadioMessage(1, TEAM_BLUE_COLOR, LTStr);
 			SendRadioMessage(3, TEAM_BLUE_COLOR, LTStr);
 	    }
 	    else
 	    {
 	        LockToll[0] = 0;
-	        format(LTStr, sizeof(LTStr), "** %s je otkljucao naplatnu kucicu LS-LV Highway.", GetName(playerid, false));
+	        format(LTStr, sizeof(LTStr), "* %s je otkljucao naplatnu kucicu LS-LV Highway.", GetName(playerid, false));
 			SendRadioMessage(1, TEAM_BLUE_COLOR, LTStr);
 			SendRadioMessage(3, TEAM_BLUE_COLOR, LTStr);
 	    }
@@ -267,14 +267,14 @@ CMD:locktoll(playerid, params[])
 	    if(LockToll[1] == 0)
 	    {
 	        LockToll[1] = 1;
-	        format(LTStr, sizeof(LTStr), "** %s je zakljucao naplatnu kucicu LS-SF Tunnel.", GetName(playerid, false));
+	        format(LTStr, sizeof(LTStr), "* %s je zakljucao naplatnu kucicu LS-SF Tunnel.", GetName(playerid, false));
 			SendRadioMessage(1, TEAM_BLUE_COLOR, LTStr);
 			SendRadioMessage(3, TEAM_BLUE_COLOR, LTStr);
 	    }
 	    else
 	    {
 	        LockToll[1] = 0;
-	        format(LTStr, sizeof(LTStr), "** %s je otkljucao naplatnu kucicu LS-SF Tunnel.", GetName(playerid, false));
+	        format(LTStr, sizeof(LTStr), "* %s je otkljucao naplatnu kucicu LS-SF Tunnel.", GetName(playerid, false));
 			SendRadioMessage(1, TEAM_BLUE_COLOR, LTStr);
 			SendRadioMessage(3, TEAM_BLUE_COLOR, LTStr);
 	    }
@@ -284,14 +284,14 @@ CMD:locktoll(playerid, params[])
 	    if(LockToll[2] == 0)
 	    {
 	        LockToll[2] = 1;
-	        format(LTStr, sizeof(LTStr), "** %s je zakljucao naplatnu kucicu LS-SF Airport.", GetName(playerid, false));
+	        format(LTStr, sizeof(LTStr), "* %s je zakljucao naplatnu kucicu LS-SF Airport.", GetName(playerid, false));
 			SendRadioMessage(1, TEAM_BLUE_COLOR, LTStr);
 			SendRadioMessage(3, TEAM_BLUE_COLOR, LTStr);
 	    }
 	    else
 	    {
 	        LockToll[2] = 0;
-	        format(LTStr, sizeof(LTStr), "** %s je otkljucao naplatnu kucicu LS-SF Airport.", GetName(playerid, false));
+	        format(LTStr, sizeof(LTStr), "* %s je otkljucao naplatnu kucicu LS-SF Airport.", GetName(playerid, false));
 			SendRadioMessage(1, TEAM_BLUE_COLOR, LTStr);
 			SendRadioMessage(3, TEAM_BLUE_COLOR, LTStr);
 	    }
@@ -301,14 +301,14 @@ CMD:locktoll(playerid, params[])
 	    if(LockToll[3] == 0)
 	    {
 	        LockToll[3] = 1;
-	        format(LTStr, sizeof(LTStr), "** %s je zakljucao naplatnu kucicu LS-LV Bridge.", GetName(playerid, false));
+	        format(LTStr, sizeof(LTStr), "* %s je zakljucao naplatnu kucicu LS-LV Bridge.", GetName(playerid, false));
 			SendRadioMessage(1, TEAM_BLUE_COLOR, LTStr);
 			SendRadioMessage(3, TEAM_BLUE_COLOR, LTStr);
 	    }
 	    else
 	    {
 	        LockToll[3] = 0;
-	        format(LTStr, sizeof(LTStr), "** %s je otkljucao naplatnu kucicu LS-LV Bridge.", GetName(playerid, false));
+	        format(LTStr, sizeof(LTStr), "* %s je otkljucao naplatnu kucicu LS-LV Bridge.", GetName(playerid, false));
 			SendRadioMessage(1, TEAM_BLUE_COLOR, LTStr);
 			SendRadioMessage(3, TEAM_BLUE_COLOR, LTStr);
 	    }
@@ -318,14 +318,14 @@ CMD:locktoll(playerid, params[])
 	    if(LockToll[4] == 0)
 	    {
 	        LockToll[4] = 1;
-	        format(LTStr, sizeof(LTStr), "** %s je zakljucao naplatnu kucicu LS-LV Optional pass.", GetName(playerid, false));
+	        format(LTStr, sizeof(LTStr), "* %s je zakljucao naplatnu kucicu LS-LV Optional pass.", GetName(playerid, false));
 			SendRadioMessage(1, TEAM_BLUE_COLOR, LTStr);
 			SendRadioMessage(3, TEAM_BLUE_COLOR, LTStr);
 	    }
 	    else
 	    {
 	        LockToll[4] = 0;
-	        format(LTStr, sizeof(LTStr), "** %s je otkljucao naplatnu kucicu LS-LV Optional pass.", GetName(playerid, false));
+	        format(LTStr, sizeof(LTStr), "* %s je otkljucao naplatnu kucicu LS-LV Optional pass.", GetName(playerid, false));
 			SendRadioMessage(1, TEAM_BLUE_COLOR, LTStr);
 			SendRadioMessage(5, TEAM_BLUE_COLOR, LTStr);
 	    }
@@ -335,14 +335,14 @@ CMD:locktoll(playerid, params[])
 	    if(LockToll[5] == 0)
 	    {
 	        LockToll[5] = 1;
-	        format(LTStr, sizeof(LTStr), "** %s je zakljucao naplatnu kucicu LS-SF Heavy pass.", GetName(playerid, false));
+	        format(LTStr, sizeof(LTStr), "* %s je zakljucao naplatnu kucicu LS-SF Heavy pass.", GetName(playerid, false));
 			SendRadioMessage(1, TEAM_BLUE_COLOR, LTStr);
 			SendRadioMessage(3, TEAM_BLUE_COLOR, LTStr);
 	    }
 	    else
 	    {
 	        LockToll[5] = 0;
-	        format(LTStr, sizeof(LTStr), "** %s je otkljucao naplatnu kucicu LS-SF Heavy pass.", GetName(playerid, false));
+	        format(LTStr, sizeof(LTStr), "* %s je otkljucao naplatnu kucicu LS-SF Heavy pass.", GetName(playerid, false));
 			SendRadioMessage(1, TEAM_BLUE_COLOR, LTStr);
 			SendRadioMessage(3, TEAM_BLUE_COLOR, LTStr);
 	    }
@@ -352,14 +352,14 @@ CMD:locktoll(playerid, params[])
 	    if(LockToll[6] == 0)
 	    {
 	        LockToll[6] = 1;
-	        format(LTStr, sizeof(LTStr), "** %s je zakljucao naplatnu kucicu LS-SF Highway.", GetName(playerid, false));
+	        format(LTStr, sizeof(LTStr), "* %s je zakljucao naplatnu kucicu LS-SF Highway.", GetName(playerid, false));
 			SendRadioMessage(1, TEAM_BLUE_COLOR, LTStr);
 			SendRadioMessage(3, TEAM_BLUE_COLOR, LTStr);
 	    }
 	    else
 	    {
 	        LockToll[6] = 0;
-	        format(LTStr, sizeof(LTStr), "** %s je otkljucao naplatnu kucicu LS-SF Highway.", GetName(playerid, false));
+	        format(LTStr, sizeof(LTStr), "* %s je otkljucao naplatnu kucicu LS-SF Highway.", GetName(playerid, false));
 			SendRadioMessage(1, TEAM_BLUE_COLOR, LTStr);
 			SendRadioMessage(3, TEAM_BLUE_COLOR, LTStr);
 	    }
@@ -370,7 +370,7 @@ CMD:locktoll(playerid, params[])
 		{
 			LockToll[i] = 1;
 		}
-        format(LTStr, sizeof(LTStr), "** %s je zakljucao sve naplatne kucice.", GetName(playerid, false));
+        format(LTStr, sizeof(LTStr), "* %s je zakljucao sve naplatne kucice.", GetName(playerid, false));
 		SendRadioMessage(1, TEAM_BLUE_COLOR, LTStr);
 		SendRadioMessage(3, TEAM_BLUE_COLOR, LTStr);
 	}
@@ -380,7 +380,7 @@ CMD:locktoll(playerid, params[])
 		{
 			LockToll[i] = 0;
 		}
-        format(LTStr, sizeof(LTStr), "** %s je otkljucao sve naplatne kucice.", GetName(playerid, false));
+        format(LTStr, sizeof(LTStr), "* %s je otkljucao sve naplatne kucice.", GetName(playerid, false));
 		SendRadioMessage(1, TEAM_BLUE_COLOR, LTStr);
 		SendRadioMessage(3, TEAM_BLUE_COLOR, LTStr);
 	}
