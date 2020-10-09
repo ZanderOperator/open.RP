@@ -1761,17 +1761,16 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 				GlobalSellingPlayerID[pID] 		= INVALID_PLAYER_ID;
 
 				#if defined MODULE_LOGS
-				new
-					log[256];
-				format(log, sizeof(log), "%s(%s) je kupio kucu %d od %s(%s) za %d$",
+				Log_Write("/logfiles/buy_house.txt", "(%s) %s(%s) bought a house on adress %s[SQLID:%d] from %s(%s) for %d$.",
+					ReturnDate(),
 					GetName(playerid, false),
 					GetPlayerIP(playerid),
-					PlayerInfo[playerid][pHouseKey],
+					HouseInfo[PlayerInfo[playerid][pHouseKey]][hAdress],
+					HouseInfo[PlayerInfo[playerid][pHouseKey]][hSQLID],
 					GetName(pID, false),
 					GetPlayerIP(pID),
 					housePrice
 				);
-				LogBuyHouse(log);
 				#endif
 		    }
 			return 1;

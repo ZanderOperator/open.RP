@@ -734,7 +734,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 				va_SendClientMessage(playerid, COLOR_RED, "[ ! ] Uspjesno ste stavili %d$ na %s Faction Bank.", money, FactionInfo[fid][fName]);
 				
 				// Log
-				Log_Write("logfiles/faction_bank.txt", "(%s) Mayor %s (SQLID:%d) je napravio depozit od %d$ na %s Faction Bank.", // Opet imas 6 varijabli a 5 ispisa
+				Log_Write("logfiles/faction_bank.txt", "(%s) Mayor %s (SQLID:%d) deposited %d$ in %s Faction Bank.", // Opet imas 6 varijabli a 5 ispisa
 					ReturnDate(), 
 					GetName(playerid), 
 					PlayerInfo[playerid][pSQLID], 
@@ -755,17 +755,13 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 				new fid = FactionToList[playerid][FactionListID[playerid]],
 					money = strval(inputtext);
 				if(money < 1) return SendClientMessage(playerid,COLOR_RED, "Svota novca ne moze biti manja od 1$");
-				/* foreach(new i: Factions) {
-					if( FactionListID[listitem][playerid] == FactionInfo[i][fID] ) 
-						fid = FactionInfo[i][fID];
-				} */
 				if(money > FactionInfo[fid][fFactionBank]) return SendClientMessage(playerid,COLOR_RED, "Ne postoji tolika svota novaca u tom Faction Banku!");
 
 				OrgToPlayerMoney( playerid, FactionInfo[fid][fType], money);
 				va_SendClientMessage(playerid, COLOR_RED, "[ ! ] Uspjesno ste digli %d$ sa %s Faction Bank.", money, FactionInfo[fid][fName]);
 				
 				// Log
-				Log_Write("logfiles/faction_bank.txt", "(%s) Mayor %s (SQLID:%d) je povukao %d$ iz %s Faction Banke.", // Opet imas 6 varijabli a 5 ispisa
+				Log_Write("logfiles/faction_bank.txt", "(%s) Mayor %s (SQLID:%d) withdrawed %d$ from %s Faction Bank.", 
 					ReturnDate(), 
 					GetName(playerid), 
 					PlayerInfo[playerid][pSQLID], 

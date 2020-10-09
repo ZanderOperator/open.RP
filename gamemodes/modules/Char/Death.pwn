@@ -90,7 +90,7 @@ stock GetNearDroppedWeapon(playerid)
 			if (! CheckPlayerWeapons(playerid, DroppedWeapons[slotid][dWeaponID]) ) return 1;
 			AC_GivePlayerWeapon(playerid, DroppedWeapons[slotid][dWeaponID], DroppedWeapons[slotid][dWeaponAmmo]);
 			#if defined MODULE_LOGS
-			Log_Write("/logfiles/pickitems.txt", "(%s) %s je uzeo oruzje(id - %d, ammo - %d) sa poda.", ReturnDate(), GetName(playerid), DroppedWeapons[slotid][dWeaponID], DroppedWeapons[slotid][dWeaponAmmo]);
+			Log_Write("/logfiles/pickitems.txt", "(%s) %s took %s(%d ammo) from floor.", ReturnDate(), GetName(playerid), GetWeaponNameEx(DroppedWeapons[slotid][dWeaponID]), DroppedWeapons[slotid][dWeaponAmmo]);
 			#endif
 			DestroyDynamicObject(DroppedWeapons[slotid][dWeaponObject]);
 			DroppedWeapons[slotid][dWeaponID] = 0;

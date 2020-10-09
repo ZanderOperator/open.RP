@@ -77,16 +77,18 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 				
 					// Premium Bronze
 					PlayerInfo[ playerid ][ pMaskID ] = 100000 + random(899999);
-					new log[128],
-						playerip[MAX_PLAYER_IP];
+					
+					#if defined MODULE_LOGS
+					new playerip[MAX_PLAYER_IP];
 					GetPlayerIp(playerid, playerip, sizeof(playerip));
-
-					format(log, sizeof(log), "%s(%s), maskid %d.",
+					Log_Write("/logfiles/masks.txt", "(%s) %s(%s), Mask ID: %d.",
+						ReturnDate(),
 						GetName(playerid, false),
 						playerip,
 						PlayerInfo[ playerid ][ pMaskID ]
 					);
-					LogMask(log);
+					#endif
+					
 					PlayerInfo[playerid][pFreeWorks] 	= 25;
 					PlayerInfo[playerid][pDonateRank] 	= 1;
 					PlayerInfo[playerid][pRespects] 	+= 10;
@@ -139,16 +141,17 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 					mysql_pquery(g_SQL, expQueryUpdate);
 					
 					PlayerInfo[ playerid ][ pMaskID ] = 100000 + random(899999);
-					new log[128],
-						playerip[MAX_PLAYER_IP];
+					
+					#if defined MODULE_LOGS
+					new playerip[MAX_PLAYER_IP];
 					GetPlayerIp(playerid, playerip, sizeof(playerip));
-
-					format(log, sizeof(log), "%s(%s), maskid %d.",
+					Log_Write("/logfiles/masks.txt", "(%s) %s(%s), Mask ID: %d.",
+						ReturnDate(),
 						GetName(playerid, false),
 						playerip,
 						PlayerInfo[ playerid ][ pMaskID ]
 					);
-					LogMask(log);
+					#endif
 					
 					PlayerInfo[playerid][pFreeWorks] 	= 25;
 					PlayerInfo[playerid][pDonateRank] 	= 2;
@@ -201,16 +204,17 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 					mysql_pquery(g_SQL, expQueryUpdate);
 					
 					PlayerInfo[ playerid ][ pMaskID ] = 100000 + random(899999);
-					new log[128],
-						playerip[MAX_PLAYER_IP];
+					
+					#if defined MODULE_LOGS
+					new playerip[MAX_PLAYER_IP];
 					GetPlayerIp(playerid, playerip, sizeof(playerip));
-
-					format(log, sizeof(log), "%s(%s), maskid %d.",
+					Log_Write("/logfiles/masks.txt", "(%s) %s(%s), Mask ID: %d.",
+						ReturnDate(),
 						GetName(playerid, false),
 						playerip,
 						PlayerInfo[ playerid ][ pMaskID ]
 					);
-					LogMask(log);
+					#endif
 					
 					PlayerInfo[playerid][pFreeWorks] 	= 30;
 					PlayerInfo[playerid][pDonateRank] 	= 3;

@@ -1923,7 +1923,6 @@ new
 
 // Admin
 #include "modules/Admin/Ban.pwn"
-#include "modules/Admin/Logs.pwn"
 #include "modules/Admin/Connections.pwn"
 #include "modules/Admin/BlockIp.pwn"
 #include "modules/Admin/Report.pwn"

@@ -163,7 +163,7 @@ stock PutWeaponInWarehouse(playerid, weaponid, ammo)
 	SendFormatMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uspjesno ste pohranili %s(%d) u Warehouse %s.", wname, ammo, FactionInfo[fid][fName]);
 	
 	#if defined MODULE_LOGS
-	Log_Write("logfiles/warehouse_put.txt", "(%s) %s[SQL:%d] je stavio %s(%d) u Warehouse %s[SQL:%d].",
+	Log_Write("logfiles/warehouse_put.txt", "(%s) %s[SQL:%d] stored %s(%d) in Warehouse %s[SQL:%d].",
 		ReturnDate(),
 		GetName(playerid, false),
 		PlayerInfo[playerid][pSQLID],
@@ -896,7 +896,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 			ApplyAnimationEx(playerid,"BOMBER","BOM_Plant",4.1,0,0,0,0,0, 1, 0);
 			
 			#if defined MODULE_LOGS
-			Log_Write("logfiles/warehouse_put.txt", "(%s) %s[SQL:%d] je pohranio %d$ u Warehouse %s[SQL:%d].",
+			Log_Write("logfiles/warehouse_put.txt", "(%s) %s[SQL:%d] stored %d$ in Warehouse %s[SQL:%d].",
 				ReturnDate(),
 				GetName(playerid, false),
 				PlayerInfo[playerid][pSQLID],
@@ -925,7 +925,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 			ApplyAnimationEx(playerid,"BOMBER","BOM_Plant",4.1,0,0,0,0,0, 1, 0);
 			
 			#if defined MODULE_LOGS
-			Log_Write("logfiles/warehouse_take.txt", "(%s) %s[SQL:%d] je uzeo %d$ iz Warehousea %s[SQL:%d].",
+			Log_Write("logfiles/warehouse_take.txt", "(%s) %s[SQL:%d] took %d$ from Warehouse %s[SQL:%d].",
 				ReturnDate(),
 				GetName(playerid, false),
 				PlayerInfo[playerid][pSQLID],
@@ -985,7 +985,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 			ResetPlayerWeaponList(playerid);
 			
 			#if defined MODULE_LOGS
-			Log_Write("logfiles/warehouse_take.txt", "(%s) %s[SQL:%d] je uzeo %s(%d) iz Warehousea %s[SQL:%d].",
+			Log_Write("logfiles/warehouse_take.txt", "(%s) %s[SQL:%d] took %s(%d) from Warehouse %s[SQL:%d].",
 				ReturnDate(),
 				GetName(playerid, false),
 				PlayerInfo[playerid][pSQLID],

@@ -97,7 +97,7 @@ Function: CheckAccountsForInactivity()
 		new rows;
 		cache_get_row_count(rows);
 		if( rows == 0 ) 
-			return Log_Write("logfiles/inactive_players.txt", "(%s) - Ne postoji account kojem je potrebno micati posao/nekretninu.", ReturnDate());
+			return Log_Write("logfiles/inactive_players.txt", "(%s) - Accounts for property/job removal due to inactivity currently don't exist.", ReturnDate());
 			
 		new 
 			sqlid, 
@@ -201,7 +201,7 @@ Function: CheckAccountsForInactivity()
 					 default: format(tmpString, 20, "Nezaposlen");
 				}
 				
-				Log_Write("logfiles/inactive_players.txt", "(%s) %s[SQLID: %d] je radi neaktivnosti izgubio posao %s[Job ID:%d] i %d sati ugovora.",
+				Log_Write("logfiles/inactive_players.txt", "(%s) %s[SQLID: %d] due to inactivity lost his %s[Job ID:%d] job i %d hours of job contract.",
 					ReturnDate(),
 					playername,
 					sqlid,
@@ -284,7 +284,7 @@ Function: CheckAccountsForInactivity()
 					mysql_format(g_SQL, updateQuery, sizeof(updateQuery), "UPDATE `houses` SET `ownerid` = '0', `takings` = '0' WHERE `id` = '%d'", HouseInfo[houseid][hSQLID]);
 					mysql_tquery(g_SQL, updateQuery, "", "");
 					
-					Log_Write("logfiles/inactive_players.txt", "(%s) %s[SQLID: %d] je radi neaktivnosti izgubio kucu na adresi %s[SQLID: %d] i dobio %d$ naknade u banku.",
+					Log_Write("logfiles/inactive_players.txt", "(%s) %s[SQLID: %d] due to inactivity lost his house %s[SQLID: %d] and got %d$ refunded.",
 						ReturnDate(),
 						playername,
 						sqlid,
@@ -319,7 +319,7 @@ Function: CheckAccountsForInactivity()
 					);
 					mysql_tquery(g_SQL, updateQuery, "", "");
 					
-					Log_Write("logfiles/inactive_players.txt", "(%s) %s[SQLID: %d] je radi neaktivnosti izgubio garazu %s[SQLID: %d] i dobio %d$ naknade u banku.",
+					Log_Write("logfiles/inactive_players.txt", "(%s) %s[SQLID: %d] due to inactivity lost his garage %s[SQLID: %d] and got %d$ refunded.",
 						ReturnDate(),
 						playername,
 						sqlid,
@@ -355,7 +355,7 @@ Function: CheckAccountsForInactivity()
 					mysql_format(g_SQL, updateQuery, sizeof(updateQuery), "UPDATE `bizzes` SET `ownerid` = '0' WHERE `id` = '%d'", BizzInfo[bizzid][bSQLID]);
 					mysql_tquery(g_SQL, updateQuery, "", "");
 					
-					Log_Write("logfiles/inactive_players.txt", "(%s) %s[SQLID: %d] je radi neaktivnosti izgubio Biznis %s[SQLID: %d] i dobio %d$ naknade u banku.",
+					Log_Write("logfiles/inactive_players.txt", "(%s) %s[SQLID: %d] due to inactivity lost Business %s[SQLID: %d] and got %d$ refunded.",
 						ReturnDate(),
 						playername,
 						sqlid,
@@ -388,7 +388,7 @@ Function: CheckAccountsForInactivity()
 					mysql_format(g_SQL, updateQuery, sizeof(updateQuery), "UPDATE `server_complex` SET `owner_id` = '0' WHERE `id` = '%d'", ComplexInfo[cid][cSQLID]);
 					mysql_tquery(g_SQL, updateQuery, "", "");
 					
-					Log_Write("logfiles/inactive_players.txt", "(%s) %s[SQLID: %d] je radi neaktivnosti izgubio Complex %s[SQLID: %d] i dobio %d$ naknade u banku.",
+					Log_Write("logfiles/inactive_players.txt", "(%s) %s[SQLID: %d] due to inactivity lost his Complex %s[SQLID: %d] and got %d$ refunded.",
 						ReturnDate(),
 						playername,
 						sqlid,
@@ -417,10 +417,11 @@ Function: CheckAccountsForInactivity()
 					mysql_format(g_SQL, updateQuery, sizeof(updateQuery), "UPDATE `server_complex_rooms` SET `ownerid` = '0' WHERE `id` = '%d'", ComplexRoomInfo[crid][cSQLID]);
 					mysql_tquery(g_SQL, updateQuery, "", "");
 					
-					Log_Write("logfiles/inactive_players.txt", "(%s) %s[SQLID: %d] je radi neaktivnosti izgubio Complex sobu[SQLID: %d].",
+					Log_Write("logfiles/inactive_players.txt", "(%s) %s[SQLID: %d] due to inactivity lost his Complex Room %s [SQLID: %d].",
 						ReturnDate(),
 						playername,
 						sqlid,
+						ComplexRoomInfo[crid][cAdress],
 						ComplexRoomInfo[crid][cSQLID]
 					);
 					
@@ -559,7 +560,7 @@ Function: CheckAccountsForInactivity()
 					mysql_format(g_SQL, updateQuery, sizeof(updateQuery), "UPDATE `houses` SET `ownerid` = '0', `takings` = '0' WHERE `id` = '%d'", HouseInfo[houseid][hSQLID]);
 					mysql_tquery(g_SQL, updateQuery, "", "");
 					
-					Log_Write("logfiles/inactive_players.txt", "(%s) %s[SQLID: %d] je radi neaktivnosti izgubio kucu na adresi %s[SQLID: %d] i dobio %d$ naknade u banku.",
+					Log_Write("logfiles/inactive_players.txt", "(%s) %s[SQLID: %d] due to inactivity lost his house on adress %s[SQLID: %d] and got %d$ refunded.",
 						ReturnDate(),
 						playername,
 						sqlid,
@@ -594,7 +595,7 @@ Function: CheckAccountsForInactivity()
 					);
 					mysql_tquery(g_SQL, updateQuery, "", "");
 					
-					Log_Write("logfiles/inactive_players.txt", "(%s) %s[SQLID: %d] je radi neaktivnosti izgubio garazu %s[SQLID: %d] i dobio %d$ naknade u banku.",
+					Log_Write("logfiles/inactive_players.txt", "(%s) %s[SQLID: %d] due to inactivity lost his garage %s[SQLID: %d] and got %d$ refunded.",
 						ReturnDate(),
 						playername,
 						sqlid,
@@ -630,7 +631,7 @@ Function: CheckAccountsForInactivity()
 					mysql_format(g_SQL, updateQuery, sizeof(updateQuery), "UPDATE `bizzes` SET `ownerid` = '0' WHERE `id` = '%d'", BizzInfo[bizzid][bSQLID]);
 					mysql_tquery(g_SQL, updateQuery, "", "");
 					
-					Log_Write("logfiles/inactive_players.txt", "(%s) %s[SQLID: %d] je radi neaktivnosti izgubio Biznis %s[SQLID: %d] i dobio %d$ naknade u banku.",
+					Log_Write("logfiles/inactive_players.txt", "(%s) %s[SQLID: %d] due to inactivity lost his Business %s[SQLID: %d] and got %d$ refunded.",
 						ReturnDate(),
 						playername,
 						sqlid,
@@ -663,7 +664,7 @@ Function: CheckAccountsForInactivity()
 					mysql_format(g_SQL, updateQuery, sizeof(updateQuery), "UPDATE `server_complex` SET `owner_id` = '0' WHERE `id` = '%d'", ComplexInfo[cid][cSQLID]);
 					mysql_tquery(g_SQL, updateQuery, "", "");
 					
-					Log_Write("logfiles/inactive_players.txt", "(%s) %s[SQLID: %d] je radi neaktivnosti izgubio Complex %s[SQLID: %d] i dobio %d$ naknade u banku.",
+					Log_Write("logfiles/inactive_players.txt", "(%s) %s[SQLID: %d] due to inactivity lost his Complex %s[SQLID: %d] and got %d$ refunded.",
 						ReturnDate(),
 						playername,
 						sqlid,
@@ -692,10 +693,11 @@ Function: CheckAccountsForInactivity()
 					mysql_format(g_SQL, updateQuery, sizeof(updateQuery), "UPDATE `server_complex_rooms` SET `ownerid` = '0' WHERE `id` = '%d'", ComplexRoomInfo[crid][cSQLID]);
 					mysql_tquery(g_SQL, updateQuery, "", "");
 					
-					Log_Write("logfiles/inactive_players.txt", "(%s) %s[SQLID: %d] je radi neaktivnosti izgubio Complex sobu[SQLID: %d].",
+					Log_Write("logfiles/inactive_players.txt", "(%s) %s[SQLID: %d] due to inactivity lost his Complex Room on adress %s[SQLID: %d].",
 						ReturnDate(),
 						playername,
 						sqlid,
+						ComplexRoomInfo[crid][cAdress],
 						ComplexRoomInfo[crid][cSQLID]
 					);
 					
@@ -746,17 +748,17 @@ Function: CheckAccountsForInactivity()
 					case 1: 
 					{
 						RewardPlayerForActivity(sql, PREMIUM_GOLD_EXP);
-						Log_Write("logfiles/rewarded_players.txt", "(%s) - %s je dobio %d EXP-a kao nagradu za najaktivnijeg igraca %d. mjeseca sa %d paydayova.", 
+						Log_Write("logfiles/rewarded_players.txt", "(%s) - %s got awarded with %d EXP as most active player of %d. month with %d paydays.", 
 							ReturnDate(),
 							ConvertSQLIDToName(sql),
 							PREMIUM_GOLD_EXP,
-							currentmonth,
+							(currentmonth - 1),
 							monthpaydays
 						);
-						format(logString, sizeof(logString), "[%s] - Dobili ste %d EXP-a kao najaktivniji igrac %d. mjeseca sa %d EXP-a.\nOvom nagradom mozete iskoristiti brojne pogodnosti koje Vam server nudi sa komandom /exp buy.\nVelike cestitke od City of Angels Teama!",
+						format(logString, sizeof(logString), "[%s] - Dobili ste %d EXP-a kao najaktivniji igrac %d. mjeseca sa %d paydayova.\nOvom nagradom mozete iskoristiti brojne pogodnosti koje Vam server nudi sa komandom /exp buy.\nVelike cestitke od City of Angels Teama!",
 							ReturnDate(),
 							PREMIUM_GOLD_EXP,
-							currentmonth,
+							(currentmonth - 1),
 							monthpaydays
 						);
 						SendServerMessage(sql, logString);
@@ -764,16 +766,16 @@ Function: CheckAccountsForInactivity()
 					case 2: 
 					{
 						RewardPlayerForActivity(sql, 100);
-						Log_Write("logfiles/rewarded_players.txt", "(%s) - %s je dobio 100 EXP-a kao nagradu za najaktivnijeg igraca %d. mjeseca sa %d EXP-a.", 
+						Log_Write("logfiles/rewarded_players.txt", "(%s) - %s got awarded 100 EXP as an award for second most active player of %d. month with %d paydays.", 
 							ReturnDate(),
 							ConvertSQLIDToName(sql),
-							currentmonth,
+							(currentmonth - 1),
 							monthpaydays
 						);
-						format(logString, sizeof(logString), "[%s] - Dobili ste %d EXP-a kao 2. najaktivniji igrac %d. mjeseca sa %d EXP-a.\nOvom nagradom mozete iskoristiti brojne pogodnosti koje Vam server nudi sa komandom /exp buy.\nVelike cestitke od City of Angels Teama!",
+						format(logString, sizeof(logString), "[%s] - Dobili ste %d EXP-a kao 2. najaktivniji igrac %d. mjeseca sa %d paydayova.\nOvom nagradom mozete iskoristiti brojne pogodnosti koje Vam server nudi sa komandom /exp buy.\nVelike cestitke od City of Angels Teama!",
 							ReturnDate(),
 							100,
-							currentmonth,
+							(currentmonth - 1),
 							monthpaydays
 						);
 						SendServerMessage(sql, logString);
@@ -781,16 +783,16 @@ Function: CheckAccountsForInactivity()
 					case 3: 
 					{
 						RewardPlayerForActivity(sql, 75);
-						Log_Write("logfiles/rewarded_players.txt", "(%s) - %s je dobio 75 EXP-a kao nagradu za najaktivnijeg igraca %d. mjeseca sa %d EXP-a.", 
+						Log_Write("logfiles/rewarded_players.txt", "(%s) - %s got awarded with 75 EXP as an award for third most active player of %d. month with %d paydays.", 
 							ReturnDate(),
 							ConvertSQLIDToName(sql),
-							currentmonth,
+							(currentmonth - 1),
 							monthpaydays
 						);
-						format(logString, sizeof(logString), "[%s] - Dobili ste %d EXP-a kao 3. najaktivniji igrac %d. mjeseca sa %d EXP-a.\nOvom nagradom mozete iskoristiti brojne pogodnosti koje Vam server nudi sa komandom /exp buy.\nVelike cestitke od City of Angels Teama!",
+						format(logString, sizeof(logString), "[%s] - Dobili ste %d EXP-a kao 3. najaktivniji igrac %d. mjeseca sa %d paydayova.\nOvom nagradom mozete iskoristiti brojne pogodnosti koje Vam server nudi sa komandom /exp buy.\nVelike cestitke od City of Angels Teama!",
 							ReturnDate(),
 							75,
-							currentmonth,
+							(currentmonth - 1),
 							monthpaydays
 						);
 						SendServerMessage(sql, logString);
@@ -798,16 +800,16 @@ Function: CheckAccountsForInactivity()
 					case 4: 
 					{
 						RewardPlayerForActivity(sql, 50);
-						Log_Write("logfiles/rewarded_players.txt", "(%s) - %s je dobio 50 EXP-a kao nagradu za najaktivnijeg igraca %d. mjeseca sa %d EXP-a.", 
+						Log_Write("logfiles/rewarded_players.txt", "(%s) - %s got awarded with 50 EXP as an award for fourth most active player of %d. month with %d paydays.", 
 							ReturnDate(),
 							ConvertSQLIDToName(sql),
-							currentmonth,
+							(currentmonth - 1),
 							monthpaydays
 						);
-						format(logString, sizeof(logString), "[%s] - Dobili ste %d EXP-a kao 4. najaktivniji igrac %d. mjeseca sa %d EXP-a.\nOvom nagradom mozete iskoristiti brojne pogodnosti koje Vam server nudi sa komandom /exp buy.\nVelike cestitke od City of Angels Teama!",
+						format(logString, sizeof(logString), "[%s] - Dobili ste %d EXP-a kao 4. najaktivniji igrac %d. mjeseca sa %d paydayova.\nOvom nagradom mozete iskoristiti brojne pogodnosti koje Vam server nudi sa komandom /exp buy.\nVelike cestitke od City of Angels Teama!",
 							ReturnDate(),
 							50,
-							currentmonth,
+							(currentmonth - 1),
 							monthpaydays
 						);
 						SendServerMessage(sql, logString);
@@ -815,16 +817,16 @@ Function: CheckAccountsForInactivity()
 					case 5: 
 					{
 						RewardPlayerForActivity(sql, 25);
-						Log_Write("logfiles/rewarded_players.txt", "(%s) - %s je dobio 25 EXP-a kao nagradu za najaktivnijeg igraca %d. mjeseca sa %d EXP-a.", 
+						Log_Write("logfiles/rewarded_players.txt", "(%s) - %s got awarded with 25 EXP as an award for fifth most active player of %d. month with %d paydays.", 
 							ReturnDate(),
 							ConvertSQLIDToName(sql),
-							currentmonth,
+							(currentmonth - 1),
 							monthpaydays
 						);
-						format(logString, sizeof(logString), "[%s] - Dobili ste %d EXP-a kao 5. najaktivniji igrac %d. mjeseca sa %d EXP-a.\nOvom nagradom mozete iskoristiti brojne pogodnosti koje Vam server nudi sa komandom /exp buy.\nVelike cestitke od City of Angels Teama!",
+						format(logString, sizeof(logString), "[%s] - Dobili ste %d EXP-a kao 5. najaktivniji igrac %d. mjeseca sa %d paydayova.\nOvom nagradom mozete iskoristiti brojne pogodnosti koje Vam server nudi sa komandom /exp buy.\nVelike cestitke od City of Angels Teama!",
 							ReturnDate(),
 							25,
-							currentmonth,
+							(currentmonth - 1),
 							monthpaydays
 						);
 						SendServerMessage(sql, logString);
@@ -1230,7 +1232,7 @@ stock ChangePlayerName(playerid, newname[], type, bool:admin_cn = false)
 	SendAdminMessage(COLOR_RED, log);
 	
 	#if defined MODULE_LOGS
-	Log_Write("logfiles/namechange.txt", "(%s) {%d} Stari nick: %s, novi nick: %s",
+	Log_Write("logfiles/namechange.txt", "(%s) {%d} Old nickname: %s | New nickname: %s",
 		ReturnDate(),
 		PlayerInfo[ playerid ][ pSQLID ],
 		oldname,

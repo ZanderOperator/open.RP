@@ -702,17 +702,16 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 				GlobalSellingPlayerID[pID] 		= INVALID_PLAYER_ID;
 
 				#if defined MODULE_LOGS
-				new
-					log[ 256 ];
-				format( log, sizeof(log), "%s(%s) je kupio kompleks %d od %s(%s) za %d$",
+				Log_Write("/logfiles/buy_complex.txt", "(%s) %s(%s) bought Complex %s[SQLID: %d] from %s(%s) for %d$.",
+					ReturnDate(),
 					GetName(playerid, false),
 					GetPlayerIP(playerid),
-					PlayerInfo[ playerid ][ pComplexKey ],
+					ComplexInfo[PlayerInfo[ playerid ][ pComplexKey ]][cName],
+					ComplexInfo[PlayerInfo[ playerid ][ pComplexKey ]][cSQLID],
 					GetName(pID, false),
 					GetPlayerIP(pID),
 					complexprice
 				);
-				LogBuyComplex(log);
 				#endif
 		    }
 			return 1;
@@ -755,15 +754,17 @@ CMD:buycomplex(playerid, params[])
 			PlayerToBudgetMoney(playerid, ComplexInfo[ complex ][ cPrice ]); // Novac od kupljenog complexa na buy ide u proracun
 			SendClientMessage( playerid, COLOR_RED, "[ ! ] Kupili ste kompleks, koristite /help za vise informacija!");
 
-			// Log
-			new log[128];
-			format(log, sizeof(log), "%s je kupio kompleks %d($%d) (%s).",
+			#if defined MODULE_LOGS
+			Log_Write("/logfiles/buy_complex.txt", "(%s) %s [SQLID: %d] bought Complex %s [SQLID: %d] for %d$.",
+				ReturnDate(),
 				GetName(playerid, false),
-				complex,
-				ComplexInfo[ complex ][cPrice],
-				GetPlayerIP(playerid)
+				PlayerInfo[playerid][pSQLID],
+				ComplexInfo[complex][cName],
+				ComplexInfo[complex][cSQLID],
+				ComplexInfo[complex][cPrice]
 			);
-			LogBuyComplex(log);
+			#endif
+			
 			break;
 		}
 	}
@@ -813,15 +814,16 @@ CMD:rentroom(playerid, params[])
 		SendClientMessage(playerid, COLOR_RED, "[ ! ] Spawn Vam je automatski prebacen na iznajmljenu sobu u kompleksu.");
 
 		//Log
-		new log[128];
-		format(log, sizeof(log), "%s je kupio kompleks sobu %d($%d), Complex ID(%d) (%s).",
+		#if defined MODULE_LOGS
+		Log_Write("/logfiles/buy_complex.txt", "(%s) %s rented Complex Room %s[SQLID: %d] for %d$ in Complex %s.",
+			ReturnDate(),
 			GetName(playerid, false),
-			complex,
-			ComplexRoomInfo[ complex ][cValue],
-			ComplexRoomInfo[ complex ][cComplexID],
-			GetPlayerIP(playerid)
+			ComplexRoomInfo[ complex ][ cAdress ],
+			ComplexRoomInfo[ complex ][ cSQLID ],
+			ComplexRoomInfo[ complex ][ cValue ],
+			ComplexInfo[ ComplexRoomInfo[ complex ][cComplexID] ][ cName ]
 		);
-		LogBuyComplex(log);
+		#endif
 	}
 	else SendMessage(playerid, MESSAGE_TYPE_ERROR, "Soba je zauzeta!");
 	return 1;

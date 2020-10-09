@@ -43,7 +43,60 @@
 		return EditDynamicObject(playerid, objectid);
 	}
 	#define EditDynamicObject EditDynamicObject_DEBUG
-#endif 
+#endif
+
+// Main Player/Commands/Action/Internal Security Logger
+stock Log_Write(const path[], const str[], {Float,_}:...)
+{
+		
+	static
+	    args,
+	    start,
+	    end,
+	    File:file,
+	    string[1024]
+	;
+	if ((start = strfind(path, "/")) != -1) {
+	    strmid(string, path, 0, start + 1);
+	}
+	#emit LOAD.S.pri 8
+	#emit STOR.pri args
+
+	file = fopen(path, io_append);
+
+	if (!file)
+	    return printf("[LOG ERROR]: File '%s' doesn't exist!", path);
+
+	if (args > 8)
+	{
+		#emit ADDR.pri str
+		#emit STOR.pri start
+
+	    for (end = start + (args - 8); end > start; end -= 4)
+		{
+	        #emit LREF.pri end
+	        #emit PUSH.pri
+		}
+		#emit PUSH.S str
+		#emit PUSH.C 1024
+		#emit PUSH.C string
+		#emit PUSH.C args
+		#emit SYSREQ.C format
+
+		fwrite(file, string);
+		fwrite(file, "\r\n");
+		fclose(file);
+
+		#emit LCTRL 5
+		#emit SCTRL 4
+		#emit RETN
+	}
+	fwrite(file, str);
+	fwrite(file, "\r\n");
+	fclose(file);
+
+	return 1;
+} 
 
 GetUserIP_Connector(playerid){
 	new

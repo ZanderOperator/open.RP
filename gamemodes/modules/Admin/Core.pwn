@@ -1713,19 +1713,13 @@ CMD:alogin(playerid, params[])
 		PlayerInfo[playerid][pHelper] 	= PlayerInfo[playerid][pTempRank][1];
 		
 		#if defined MODULE_LOGS
-		new	
-			log[256];
-		format(log, 256, "%s (%s) se uspjesno ulogirao u server team sustav!", GetName(playerid, false), GetPlayerIP(playerid));
-		LogPINEntry(log);
+		Log_Write("/logfiles/pinlogins.txt", "(%s) %s (%s) sucessfully logged into server team system!", ReturnDate(), GetName(playerid, false), GetPlayerIP(playerid));
 		#endif
 	} else {
 		SendClientMessage(playerid, COLOR_RED, "Krivi sigurnosni PIN! Pogreske ce rezultirati sa banovima!");
 		
 		#if defined MODULE_LOGS
-		new	
-			log[256];
-		format(log, 256, "%s (%s) se neuspjesno pokusao se ulogirati u server team sustav!", GetName(playerid, false), GetPlayerIP(playerid));
-		LogPINEntry(log);
+		Log_Write("/logfiles/pinlogins.txt", "(%s) %s (%s) unsucessfully tried to log into server team system!", ReturnDate(), GetName(playerid, false), GetPlayerIP(playerid));
 		#endif
 		
 		if( ++AdminLoginTry[playerid] && AdminLoginTry[playerid] >= 3 ) {
@@ -1778,9 +1772,7 @@ CMD:makehelper(playerid, params[])
 	}
 	
 	#if defined MODULE_LOGS
-	new log[128];
-	format(log, 128, "%s(%s) daje %s(%s) helper level %d", GetName(playerid,false), GetPlayerIP(playerid), GetName(giveplayerid,false), GetPlayerIP(giveplayerid), level);
-	LogMakeAdmin(log);
+	Log_Write("/logfiles/a_makeah.txt", "(%s) %s(%s) gives %s(%s) Helper Level %d", ReturnDate(), GetName(playerid,false), GetPlayerIP(playerid), GetName(giveplayerid,false), GetPlayerIP(giveplayerid), level);
 	#endif
 	
 	PlayerInfo[giveplayerid][pHelper] = PlayerInfo[giveplayerid][pTempRank][1] = level;
@@ -1868,7 +1860,7 @@ CMD:inactivity(playerid, params[])
 		mysql_pquery(g_SQL, insertQuery, "", "");
 		
 		#if defined MODULE_LOGS
-		Log_Write("logfiles/a_inactive_players.txt", "(%s) %s[A%d] je odobrio %s[SQLID: %d] neaktivnost od %d dana. Razlog: %s",
+		Log_Write("logfiles/a_inactive_players.txt", "(%s) %s[A%d] approved %s[SQLID: %d] %d days long inactivity. Reason: %s",
 			ReturnDate(),
 			GetName(playerid,false),
 			PlayerInfo[playerid][pAdmin],
@@ -1919,7 +1911,7 @@ CMD:inactivity(playerid, params[])
 		mysql_tquery(g_SQL, deleteQuery, "", "");
 		
 		#if defined MODULE_LOGS
-		Log_Write("logfiles/a_inactive_players.txt", "(%s) %s[A%d] je obrisao %s[SQLID: %d] registriranu neaktivnost iz baze podataka",
+		Log_Write("logfiles/a_inactive_players.txt", "(%s) %s[A%d] deleted %s[SQLID: %d] registered inactivity from database.",
 			ReturnDate(),
 			GetName(playerid,false),
 			PlayerInfo[playerid][pAdmin],
@@ -2106,9 +2098,7 @@ CMD:makeadmin(playerid, params[])
 	PlayerInfo[giveplayerid][pAdmin] = PlayerInfo[giveplayerid][pTempRank][0] = level;
 	
 	#if defined MODULE_LOGS
-	new log[128];
-	format(log, 128, "%s(%s) daje %s(%s) admin level %d", GetName(playerid,false), GetPlayerIP(playerid), GetName(giveplayerid,false), GetPlayerIP(giveplayerid), level);
-	LogMakeAdmin(log);
+	Log_Write("/logfiles/a_makeah.txt", "(%s) %s(%s) gives %s(%s) Game Admin Level %d", ReturnDate(), GetName(playerid,false), GetPlayerIP(playerid), GetName(giveplayerid,false), GetPlayerIP(giveplayerid), level);
 	#endif
 	
 	va_SendClientMessage(giveplayerid, COLOR_RED, "[ ! ] Postavljeni ste za Game Admina level %d od Administratora %s", level, GetName(playerid,false));
@@ -2278,16 +2268,18 @@ CMD:givepremium(playerid, params[])
 		SavePlayerExperience(giveplayerid);
 
 	    PlayerInfo[ giveplayerid ][ pMaskID ] = 100000 + random(899999);
-		new log[128],
-			playerip[MAX_PLAYER_IP];
+		
+		#if defined MODULE_LOGS
+		new playerip[MAX_PLAYER_IP];
 		GetPlayerIp(giveplayerid, playerip, sizeof(playerip));
-
-		format(log, sizeof(log), "%s(%s), maskid %d.",
-			GetName(playerid, false),
+		Log_Write("/logfiles/masks.txt", "(%s) %s(%s), Mask ID: %d.",
+			ReturnDate(),
+			GetName(giveplayerid, false),
 			playerip,
 			PlayerInfo[ giveplayerid ][ pMaskID ]
 		);
-		LogMask(log);
+		#endif
+		
 		PlayerInfo[giveplayerid][pFreeWorks] 	= 25;
  		PlayerInfo[giveplayerid][pDonateRank] 	= 1;
 		PlayerInfo[giveplayerid][pRespects] 	+= 10;
@@ -2323,7 +2315,7 @@ CMD:givepremium(playerid, params[])
 		mysql_pquery(g_SQL, vipLog);
 
 		#if defined MODULE_LOGS
-		Log_Write("logfiles/a_givepremium.txt", "(%s) Administrator %s je dao VIP Bronze %s[SQLID: %d].",
+		Log_Write("logfiles/a_givepremium.txt", "(%s) Administrator %s gave VIP Bronze %s[SQLID: %d].",
 			ReturnDate(),
 			GetName(playerid, false),
 			GetName(giveplayerid, false),
@@ -2342,16 +2334,17 @@ CMD:givepremium(playerid, params[])
 		SavePlayerExperience(giveplayerid);
 
 	    PlayerInfo[ giveplayerid ][ pMaskID ] = 100000 + random(899999);
-		new log[128],
-			playerip[MAX_PLAYER_IP];
+		
+		#if defined MODULE_LOGS
+		new playerip[MAX_PLAYER_IP];
 		GetPlayerIp(giveplayerid, playerip, sizeof(playerip));
-
-		format(log, sizeof(log), "%s(%s), maskid %d.",
+		Log_Write("/logfiles/masks.txt", "(%s) %s(%s), Mask ID: %d.",
+			ReturnDate(),
 			GetName(giveplayerid, false),
 			playerip,
 			PlayerInfo[ giveplayerid ][ pMaskID ]
 		);
-		LogMask(log);
+		#endif
 
 		PlayerInfo[giveplayerid][pFreeWorks] 	= 25;
  		PlayerInfo[giveplayerid][pDonateRank] 	= 2;
@@ -2387,7 +2380,7 @@ CMD:givepremium(playerid, params[])
 		mysql_pquery(g_SQL, vipLog);
 
 		#if defined MODULE_LOGS
-		Log_Write("logfiles/a_givepremium.txt", "(%s) Administrator %s je dao VIP Silver %s[SQLID: %d].",
+		Log_Write("logfiles/a_givepremium.txt", "(%s) Administrator %s gave VIP Silver %s[SQLID: %d].",
 			ReturnDate(),
 			GetName(playerid, false),
 			GetName(giveplayerid, false),
@@ -2406,16 +2399,17 @@ CMD:givepremium(playerid, params[])
 		SavePlayerExperience(giveplayerid);
 
 	    PlayerInfo[ giveplayerid ][ pMaskID ] = 100000 + random(899999);
-		new log[128],
-			playerip[MAX_PLAYER_IP];
+		
+		#if defined MODULE_LOGS
+		new playerip[MAX_PLAYER_IP];
 		GetPlayerIp(giveplayerid, playerip, sizeof(playerip));
-
-		format(log, sizeof(log), "%s(%s), maskid %d.",
+		Log_Write("/logfiles/masks.txt", "(%s) %s(%s), Mask ID: %d.",
+			ReturnDate(),
 			GetName(giveplayerid, false),
 			playerip,
 			PlayerInfo[ giveplayerid ][ pMaskID ]
 		);
-		LogMask(log);
+		#endif
 
 		PlayerInfo[giveplayerid][pFreeWorks] 	= 30;
 		PlayerInfo[giveplayerid][pDonateRank] 	= 3;
@@ -2459,7 +2453,7 @@ CMD:givepremium(playerid, params[])
 		mysql_pquery(g_SQL, vipLog);
 
 		#if defined MODULE_LOGS
-		Log_Write("logfiles/a_givepremium.txt", "(%s) Administrator %s je dao VIP Gold %s[SQLID: %d].",
+		Log_Write("logfiles/a_givepremium.txt", "(%s) Administrator %s gave VIP Gold %s[SQLID: %d].",
 			ReturnDate(),
 			GetName(playerid, false),
 			GetName(giveplayerid, false),
@@ -2479,16 +2473,17 @@ CMD:givepremium(playerid, params[])
 		SavePlayerExperience(giveplayerid);
 
 	    PlayerInfo[ giveplayerid ][ pMaskID ] = 100000 + random(899999);
-		new log[128],
-			playerip[MAX_PLAYER_IP];
+		
+		#if defined MODULE_LOGS
+		new playerip[MAX_PLAYER_IP];
 		GetPlayerIp(giveplayerid, playerip, sizeof(playerip));
-
-		format(log, sizeof(log), "%s(%s), maskid %d.",
+		Log_Write("/logfiles/masks.txt", "(%s) %s(%s), Mask ID: %d.",
+			ReturnDate(),
 			GetName(giveplayerid, false),
 			playerip,
 			PlayerInfo[ giveplayerid ][ pMaskID ]
 		);
-		LogMask(log);
+		#endif
 
 		PlayerInfo[giveplayerid][pFreeWorks] 		= 50;
 		PlayerInfo[giveplayerid][pDonateRank] 		= 4;
@@ -2531,7 +2526,7 @@ CMD:givepremium(playerid, params[])
 		mysql_pquery(g_SQL, vipLog);
 
 		#if defined MODULE_LOGS
-		Log_Write("logfiles/a_givepremium.txt", "(%s) Administrator %s je dao VIP Platinum %s[SQLID: %d].",
+		Log_Write("logfiles/a_givepremium.txt", "(%s) Administrator %s gave VIP Platinum %s[SQLID: %d].",
 			ReturnDate(),
 			GetName(playerid, false),
 			GetName(giveplayerid, false),
@@ -3268,7 +3263,7 @@ CMD:setstat(playerid, params[])
 		    format(globalstring, sizeof(globalstring), "   Namjestio si da korisnik moze koristiti /changename %d puta.", amount);
 		
 			#if defined MODULE_LOGS
-			Log_Write("logfiles/approve_changename.txt", "(%s) %s[A%d] je dozvolio %d /changenameova %s[SQLID: %d].",
+			Log_Write("logfiles/approve_changename.txt", "(%s) %s[A%d] allowed %d /changename's to %s[SQLID: %d].",
 				ReturnDate(),
 				GetName(playerid,false),
 				PlayerInfo[playerid][pAdmin],

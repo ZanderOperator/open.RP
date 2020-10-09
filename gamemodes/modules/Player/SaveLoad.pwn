@@ -678,15 +678,16 @@ SafeSpawnPlayer(playerid)
 	// AFK timer
 	SetPlayerAFKLimit(playerid);
 
-	new
-		llog[128];
-	format(llog, sizeof(llog), "%s(%s) se uspjesno konektirao na server.",
+	#if defined MODULE_LOGS
+	Log_Write("/logfiles/connects.txt", "(%s) %s(%s) sucessfully connected on the server.",
+		ReturnDate(),
 		GetName(playerid, false),
 		GetPlayerIP(playerid)
 	);
+	#endif
+	
 	PlayerInfo[playerid][pOnline] = true;
 	OnSecurityBreach[playerid] = false;
-	LogConnects(llog);
 	
 	SafeSpawning[playerid] = true;
 	new connectQuery[105];
@@ -697,8 +698,10 @@ SafeSpawnPlayer(playerid)
 	);
 	mysql_pquery(g_SQL, connectQuery, "");
 	
-	format(llog, 128, "UPDATE `accounts` SET `online` = '1' WHERE `sqlid` = '%d'", PlayerInfo[ playerid ][ pSQLID ]);
-	mysql_tquery(g_SQL, llog, "");
+	new loginQuery[128];
+	
+	format(loginQuery, 128, "UPDATE `accounts` SET `online` = '1' WHERE `sqlid` = '%d'", PlayerInfo[ playerid ][ pSQLID ]);
+	mysql_tquery(g_SQL, loginQuery, "");
 	
 	if( ( 10 <= PlayerInfo[ playerid ][ pJob ] <= 12 ) && ( !PlayerInfo[playerid][pMember] && !PlayerInfo[playerid][pLeader])  )
 		PlayerInfo[ playerid ][ pJob ] = 0;
@@ -716,8 +719,8 @@ SafeSpawnPlayer(playerid)
 		if(PlayerInfo[playerid][pHouseKey] != INVALID_HOUSE_ID)
 			UpdatePremiumHouseFurSlots(playerid, -1, PlayerInfo[ playerid ][ pHouseKey ]);
 			
-		format(llog, 128, "UPDATE `accounts` SET `vipRank` = '0', `vipTime` = '0' WHERE `sqlid` = '%d'", PlayerInfo[ playerid ][ pSQLID ]); //Svaki put kad bi nekon isteka donator skripta bi sve ovo iznad radila iako je isteka jer prikazuje bivsim donatorima ovaj tekst (neko nije stavia da se sejva donatorrank i time) mislin da je nepotrebno stavljat u save query kad igrac izlazi jer je napravljeno kad se daje donator da odmah sprema
-		mysql_tquery(g_SQL, llog, "");
+		format(loginQuery, 128, "UPDATE `accounts` SET `vipRank` = '0', `vipTime` = '0' WHERE `sqlid` = '%d'", PlayerInfo[ playerid ][ pSQLID ]); //Svaki put kad bi nekon isteka donator skripta bi sve ovo iznad radila iako je isteka jer prikazuje bivsim donatorima ovaj tekst (neko nije stavia da se sejva donatorrank i time) mislin da je nepotrebno stavljat u save query kad igrac izlazi jer je napravljeno kad se daje donator da odmah sprema
+		mysql_tquery(g_SQL, loginQuery, "");
 	}
 	if( isnull(PlayerInfo[playerid][pSecQuestAnswer]) && isnull(PlayerInfo[playerid][pEmail]) )
 	{
@@ -1168,7 +1171,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 				OnSecurityBreach[playerid] = false;
 
 				#if defined MODULE_LOGS
-                Log_Write("logfiles/GPCI.txt", "(%s) Igrac %s[%d]{%d}<%s> se ulogirao na racun s nepoznatim kompjuterom.", ReturnDate(), GetName(playerid), playerid, PlayerInfo[playerid][pSQLID], ReturnPlayerIP(playerid));
+                Log_Write("logfiles/GPCI.txt", "(%s) Player %s[%d]{%d}<%s> logged in with unknown GPCI for his account.", ReturnDate(), GetName(playerid), playerid, PlayerInfo[playerid][pSQLID], ReturnPlayerIP(playerid));
 				#endif
 				
 				new log_gpci[128];

@@ -696,7 +696,7 @@ stock PacketLossCheck(playerid)
 	GetPlayerPacketloss(playerid, packetLoss);
 	if(packetLoss >= 40.0)
 	{
-		Log_Write("logfiles/packageloss_kick.txt", "(%s) %s(IP: %s) je kickan radi Package Loss-a(%.2f posto).",
+		Log_Write("logfiles/packageloss_kick.txt", "(%s) %s(IP: %s) is automatically kicked by server. Reason: Package Loss(%.2f percent).",
 			ReturnDate(),
 			GetName(playerid, false),
 			GetPlayerIP(playerid),
@@ -1592,28 +1592,8 @@ public OnUnoccupiedVehicleUpdate(vehicleid, playerid, passenger_seat, Float:new_
         {
             if(GetPlayerVehicleID(playerid) == vehicleid)
             {
-                new
-                    Float:v_x,
-                    Float:v_y,
-                    Float:v_z;
-
-                GetVehiclePos(vehicleid, v_x, v_y, v_z);
-
                 HOOK_Ban(playerid, INVALID_PLAYER_ID, "Player Crasher", -1,  true);
                 SendClientMessage(playerid, COLOR_RED, "Dobio si ban, razlog: Player Crasher");
-
-                Log_Write("logfiles/ac_playercrasher.txt", "(%s) Igrac %s{%d}(%s) je pokusao premjestiti vozilo sa lokacije x: %f y: %f z: %f na lokaciju x: %f y: %f z: %f te dobio ban!",
-                    ReturnDate(),
-                    GetName(playerid, false),
-                    PlayerInfo[playerid][pSQLID],
-                    GetPlayerIP(playerid),
-                    v_x,
-                    v_y,
-                    v_z,
-                    new_x,
-                    new_y,
-                    new_z
-                );
                 BanMessage(playerid);
             }
             return 0;

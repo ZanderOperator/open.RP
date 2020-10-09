@@ -105,7 +105,7 @@ hook OnPlayerDisconnect(playerid, reason)
 		{
 			IllegalBudgetToPlayerMoney(playerid, DrugPackage[playerid][pPrice]);
 			#if defined MODULE_LOGS
-			Log_Write("logfiles/drug_order.txt", "(%s) %s{%d} je izasao iz igre a nije skupio narucen paket te mu je automatski vracen novac, $%d!",
+			Log_Write("logfiles/drug_order.txt", "(%s) %s{%d} exited the game and didn't pick up ordered drugs, and he got refunded %d$!",
 				ReturnDate(), 
 				GetName(playerid),
 				PlayerInfo[playerid][pSQLID],
@@ -183,21 +183,7 @@ public LoadingPlayerDrugs(playerid)
 			//	PlayerDrugs[playerid][dEffect][i] -= 10.0
 			
 			if(PlayerDrugs[playerid][dEffect][i] < 1.0 || PlayerDrugs[playerid][dAmount][i] < 0.01)
-			{
-				#if defined MODULE_LOGS
-				Log_Write("logfiles/drug_ruined.txt", "(%s) %s{%d} je izgubio drogu %s kolicine %.2f iz slota %d zbog kvalitete..  DEBUG: Kvaliteta: %f Kolicina: %f!", 
-					ReturnDate(), 
-					GetName(playerid),
-					PlayerInfo[playerid][pSQLID],
-					drugs[PlayerDrugs[playerid][dCode][i]][dName],
-					PlayerDrugs[playerid][dAmount][i],
-					i+1,
-					PlayerDrugs[playerid][dEffect][i],
-					PlayerDrugs[playerid][dAmount][i]
-				);
-				#endif
 				DeletePlayerDrug(playerid, i);
-			}
 		}
 	}
 	return 1;
@@ -392,11 +378,8 @@ CMD:drug(playerid, params[])
 		
 		dcode = PlayerDrugs[playerid][dCode][slot],
 		dq = PlayerDrugs[playerid][dEffect][slot];
-		
-		new
-			pslot = -1;
-		
-		if((pslot = GivePlayerDrug(giveplayerid, dcode, damnt, dq)) == -1)
+			
+		if(GivePlayerDrug(giveplayerid, dcode, damnt, dq) == -1)
 			return SendClientMessage(playerid, COLOR_RED, "[GRESKA]: Igrac nema praznih drug slotova!");
 		
 		PlayerDrugs[playerid][dAmount][slot] -= damnt;
@@ -410,8 +393,9 @@ CMD:drug(playerid, params[])
 		va_SendClientMessage(giveplayerid, COLOR_LIGHTBLUE, "Igrac %s vam je dao %.2f %s droge %s!", GetName(playerid, false), damnt, (drugs[dcode][dEffect] == DRUG_TYPE_TABLET) ? ("tableta") : ("grama"), drugs[dcode][dName]);
 			
 		ApplyAnimationEx(playerid, "DEALER", "DEALER_DEAL", 4.0, 0, 0, 0, 0, 0, 1, 0);
+		
 		#if defined MODULE_LOGS
-		Log_Write("logfiles/drug_give.txt", "(%s) %s{%d} je dao igracu %s{%d} drogu %s kolicine %.2f %s i kvalitete %s[%.3f] iz slota %d! Droga je kod igraca %s u slotu %d!", 
+		Log_Write("logfiles/drug_give.txt", "(%s) %s{%d} gave %s{%d} drug %s(amount: %.2f %s) quality %s[%.3f] from slot %d!", 
 			ReturnDate(), 
 			GetName(playerid),
 			PlayerInfo[playerid][pSQLID],
@@ -422,9 +406,7 @@ CMD:drug(playerid, params[])
 			(drugs[dcode][dEffect] == DRUG_TYPE_TABLET) ? ("tableta") : ("grama"), 
 			ReturnDrugQuality(dq),
 			dq,
-			slot+1,
-			GetName(giveplayerid),
-			pslot+1
+			slot+1
 		);
 		#endif
 		return 1;
@@ -484,18 +466,15 @@ CMD:drug(playerid, params[])
 			
 		va_SendClientMessage(playerid, COLOR_YELLOW, "Stavio si %.2f %s droge %s u slot %d u vozilo %s!", damnt, (drugs[dcode][dEffect] == DRUG_TYPE_TABLET) ? ("tableta") : ("grama"), drugs[dcode][dName], vdslot+1, ReturnVehicleName(GetVehicleModel(vehid)));
 		#if defined MODULE_LOGS
-		Log_Write("logfiles/drug_put.txt", "(%s) %s{%d} je stavio u vozilo %s{%d} slot %d drogu %s kolicine %.2f %s i kvalitete %s[%.3f]!", 
-			ReturnDate(), 
-			GetName(playerid),
-			PlayerInfo[playerid][pSQLID],
-			ReturnVehicleName(GetVehicleModel(vehid)),
-			VehicleInfo[vehid][vSQLID],
-			vdslot+1,
-			drugs[dcode][dName],
-			damnt,
+		Log_Write("logfiles/drug_put.txt", "(%s) Player put %.2f %s of %s in slot %d of %s[SQLID: %d]!", 
+			ReturnDate(),
+			GetName(playerid, false),
+			damnt, 
 			(drugs[dcode][dEffect] == DRUG_TYPE_TABLET) ? ("tableta") : ("grama"), 
-			ReturnDrugQuality(dq),
-			dq
+			drugs[dcode][dName], 
+			vdslot+1, 
+			ReturnVehicleName(GetVehicleModel(vehid)),
+			VehicleInfo[vehid][vSQLID]
 		);
 		#endif
 		return 1;
@@ -552,18 +531,16 @@ CMD:drug(playerid, params[])
 			mysql_fquery(g_SQL, "UPDATE `cocars_drugs` SET `amount` = '%f' WHERE `id` = '%d'", VehicleDrugs[vehid][vamount][slot], VehicleDrugs[vehid][vsqlid][slot]);
 			
 		va_SendClientMessage(playerid, COLOR_YELLOW, "Uzeo si %.2f %s droge %s iz slota %d iz vozila %s!", damnt, (drugs[dcode][dEffect] == DRUG_TYPE_TABLET) ? ("tableta") : ("grama"), drugs[dcode][dName], slot+1, ReturnVehicleName(GetVehicleModel(vehid)));
-		#if defined MODULE_LOGS	
-		Log_Write("logfiles/drug_take.txt", "(%s) %s{%d} je uzeo iz vozila {%d} drogu %s iz slota %d kolicine %.2f %s i kvalitete %s[%.3f]!", 
-			ReturnDate(), 
-			GetName(playerid),
-			PlayerInfo[playerid][pSQLID],
-			VehicleInfo[vehid][vSQLID],
-			drugs[dcode][dName],
-			slot+1,
-			damnt,
+		#if defined MODULE_LOGS
+		Log_Write("logfiles/drug_take.txt", "(%s) Player took %.2f %s of %s from slot %d of %s[SQLID: %d]!", 
+			ReturnDate(),
+			GetName(playerid, false),
+			damnt, 
 			(drugs[dcode][dEffect] == DRUG_TYPE_TABLET) ? ("tableta") : ("grama"), 
-			ReturnDrugQuality(dq),
-			dq
+			drugs[dcode][dName], 
+			slot+1, 
+			ReturnVehicleName(GetVehicleModel(vehid)),
+			VehicleInfo[vehid][vSQLID]
 		);
 		#endif
 		return 1;
@@ -733,7 +710,7 @@ CMD:drug(playerid, params[])
 		
 		PlayerInfo[playerid][pPayDay] += time;
 		#if defined MODULE_LOGS
-		Log_Write("logfiles/drug_use.txt", "(%s) %s{%d} je iskoristio %.2f %s droge %s iz slota %d i oduzeo %d payday vremena. Kvaliteta droge %.3f!", // kvalietata fali
+		Log_Write("logfiles/drug_use.txt", "(%s) %s{%d} used %.2f %s of %s from slot %d and shortened his payday by %d min. Quality: %.3f.", 
 			ReturnDate(), 
 			GetName(playerid),
 			PlayerInfo[playerid][pSQLID],
@@ -805,23 +782,7 @@ CMD:drug(playerid, params[])
 			{
 				new
 					Float:getnewq = CombineDrugQuality(damnt, PlayerDrugs[playerid][dAmount][slot2], PlayerDrugs[playerid][dEffect][slot], PlayerDrugs[playerid][dEffect][slot2]);
-					
-				if(PlayerDrugs[playerid][dEffect][slot2] <= getnewq) // testiranje beta testera da in jeben majku kasnije
-				{
-					#if defined MODULE_LOGS
-					Log_Write("logfiles/drug_QLTYCombine.txt", "(%s) %s{%d} je combineao [DROGU 1][KOLICINE:%.2f][KVALITETE:%f] sa [DROGOM 2][KOLICINE:%.2f][KVALITETE:%f] i dobio %f kvalitetu na drogi 2 u slotu %d!", 
-						ReturnDate(), 
-						GetName(playerid),
-						PlayerInfo[playerid][pSQLID],
-						damnt,
-						PlayerDrugs[playerid][dEffect][slot],
-						PlayerDrugs[playerid][dAmount][slot2],
-						PlayerDrugs[playerid][dEffect][slot2],
-						getnewq,
-						slot2+1
-					);
-					#endif
-				}
+			
 				PlayerDrugs[playerid][dEffect][slot2] = getnewq;
 			}
 			else
@@ -845,20 +806,6 @@ CMD:drug(playerid, params[])
 				mysql_fquery(g_SQL, "UPDATE `player_drugs` SET `amount` = '%f' WHERE `id` = '%d'", PlayerDrugs[playerid][dAmount][slot], PlayerDrugs[playerid][dSQLID][slot]);
 			}
 			DeletePlayerDrug(playerid, slot2);
-			
-			#if defined MODULE_LOGS
-			Log_Write("logfiles/drug_combine.txt", "(%s) %s{%d} je combineao te upropastio %.2f %s droge %s te izgubio %.2f %s iz slota %d!", 
-				ReturnDate(), 
-				GetName(playerid),
-				PlayerInfo[playerid][pSQLID],
-				damnt,
-				(drugs[dcode][dEffect] == DRUG_TYPE_TABLET) ? ("tableta") : ("grama"), 
-				drugs[dcode][dName],
-				damnt,
-				(drugs[dcode][dEffect] == DRUG_TYPE_TABLET) ? ("tableta") : ("grama"),
-				slot+1
-			);
-			#endif
 			return 1;
 		}
 		else
@@ -874,7 +821,7 @@ CMD:drug(playerid, params[])
 		);
 		
 		#if defined MODULE_LOGS
-		Log_Write("logfiles/drug_combine.txt", "(%s) %s{%d} je kombinirao %.2f %s droge %s kvalitete %.3f iz slota %d sa drogom %s iz slota %d kvalitete %.3f i sada ima %.2f droge u slotu %d kvalitete %.3f!", 
+		Log_Write("logfiles/drug_combine.txt", "(%s) %s{%d} combined %.2f %s of %s(quality: %.3f) from slot %d with %s from slot %d(quality: %.3f) and now has %.2f drugs in slot %d(quality: %.3f)!", 
 			ReturnDate(), 
 			GetName(playerid),
 			PlayerInfo[playerid][pSQLID],
@@ -937,7 +884,7 @@ CMD:drug(playerid, params[])
 		);
 		
 		#if defined MODULE_LOGS
-		Log_Write("logfiles/drug_drop.txt", "(%s) %s{%d} je bacio %.2f %s droge %s i sad ima %.2f %s u slotu %d!",
+		Log_Write("logfiles/drug_drop.txt", "(%s) %s{%d} threw away %.2f %s of %s and now has %.2f %s in slot %d!",
 			ReturnDate(), 
 			GetName(playerid),
 			PlayerInfo[playerid][pSQLID],
@@ -1251,7 +1198,7 @@ CMD:agivedrug(playerid, params[])
 		
 	va_SendClientMessage(playerid, COLOR_YELLOW, "[!] Dao si %s[%d] %s kolicine %.2f i kvalitete %s[%.2f]!", GetName(giveplayerid), giveplayerid, drugs[drug][dName], amnt, ReturnDrugQuality(qlty), qlty);
 	#if defined MODULE_LOGS
-	Log_Write("logfiles/adm_givedrug.txt", "(%s) Admin %s je dao igracu %s drogu %s kolicine %.2f i kvalitete %s[%.3f]!", ReturnDate(), GetName(playerid), GetName(giveplayerid), drugs[drug][dName], amnt, ReturnDrugQuality(qlty), qlty);
+	Log_Write("logfiles/adm_givedrug.txt", "(%s) Game Admin %s gave %s %.2f %s of %s quality[%.3f]!", ReturnDate(), GetName(playerid), GetName(giveplayerid), amnt, drugs[drug][dName], ReturnDrugQuality(qlty), qlty);
 	#endif
 	return 1;
 }
@@ -1383,7 +1330,7 @@ Dialog:DRUG_ORDER_CONFIRM(playerid, response, listitem, inputtext[])
 		SendClientMessage(playerid, COLOR_YELLOW, "Maska 64361 kaze (mobitel): Paket cu izbaciti kroz par minuta te ce biti na dogovorenoj lokaciji.");
 		
 		#if defined MODULE_LOGS
-		Log_Write("logfiles/drug_order.txt", "(%s) %s{%d} je narucio paket droge od %d %s droge %s za $%d!",
+		Log_Write("logfiles/drug_order.txt", "(%s) %s{%d} ordered %d %s of %s for $%d!",
 			ReturnDate(), 
 			GetName(playerid),
 			PlayerInfo[playerid][pSQLID],
@@ -1436,7 +1383,7 @@ hook OnPlayerEnterCheckpoint(playerid)
 				);
 				
 				#if defined MODULE_LOGS
-				Log_Write("logfiles/drug_order.txt", "(%s) %s{%d} je skupio narucen paket droge od %d %s droge %s kvalitete %.2f(%s)",
+				Log_Write("logfiles/drug_order.txt", "(%s) %s{%d} picked up ordered drug package(%d %s of %s). Quality:[%.2f(%s)]",
 					ReturnDate(), 
 					GetName(playerid),
 					PlayerInfo[playerid][pSQLID],

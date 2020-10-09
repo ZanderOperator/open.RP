@@ -201,7 +201,7 @@ stock InflictPlayerDamage(playerid, issuerid, bodypart, Float:damage)
 				DMERSBroadCast(COLOR_RED, wndString, 1);
 
 				#if defined MODULE_LOGS
-				Log_Write("logfiles/kills.txt", "[WOUNDED] (%s) %s{%d}(%s) je bacio u wounded mode igraca %s{%d}(%s) s %s(%d).",
+				Log_Write("logfiles/kills.txt", "[WOUNDED] (%s) %s{%d}(%s) brutally wounded %s{%d}(%s) with %s(%d).",
 					ReturnDate(),
 					GetName(issuerid, false),
 					PlayerInfo[issuerid][pSQLID],
@@ -326,7 +326,7 @@ stock DealDamage(playerid, issuerid, Float: health, Float: armour, Float: damage
 				DMERSBroadCast(COLOR_RED, wndString, 1);
 
 				#if defined MODULE_LOGS
-				Log_Write("logfiles/kills.txt", "[WOUNDED] (%s) %s{%d}(%s) je bacio u wounded mode igraca %s{%d}(%s) s %s(%d).",
+				Log_Write("logfiles/kills.txt", "[WOUNDED] (%s) %s{%d}(%s) brutally wounded %s{%d}(%s) with %s(%d).",
 					ReturnDate(),
 					GetName(issuerid, false),
 					PlayerInfo[issuerid][pSQLID],
