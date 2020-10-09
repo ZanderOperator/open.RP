@@ -228,7 +228,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 			SendFormatMessage(playerid, MESSAGE_TYPE_INFO, "Orocio si %d$ na %d h po kamatnoj stopi od %d%! Novac je prebacen sa bankovnog racuna na orocenje.", FormatNumber(PlayerInfo[playerid][pSavingsMoney]), PlayerInfo[playerid][pSavingsTime], PlayerInfo[playerid][pSavingsTime]);
 			
 			#if defined MODULE_LOGS
-			Log_Write("logfiles/bank_savings.txt", "(%s) Igrac %s[%d] je uzeo orocenu stednju na %dh(Kamatna stopa: %d) i ulozio %d$.", 
+			Log_Write("logfiles/bank_savings.txt", "(%s) Player %s[%d] started savings in bank for %dh(Interest rate at the end of savings: %d%) and invested %d$.", 
 				ReturnDate(), 
 				GetName(playerid), 
 				PlayerInfo[playerid][pSQLID], 
@@ -609,7 +609,7 @@ CMD:bank(playerid, params[])
 		SendFormatMessage(playerid, MESSAGE_TYPE_SUCCESS, "[BANKA]: Uspjesno ste stavili %d$ na bankovni racun. Novi iznos: %d$", moneys, PlayerInfo[playerid][pBank]);
 		
 		#if defined MODULE_LOGS
-		Log_Write("logfiles/bank_deposit.txt", "(%s) Igrac %s[%d] je stavio %d$ na banku. [Stara bilanca]: %d$ | [Nova bilanca]: %d$ ", 
+		Log_Write("logfiles/bank_deposit.txt", "(%s) Player %s[%d] deposited %d$ in his bank account. [Old state]: %d$ | [New state]: %d$ ", 
 			ReturnDate(), 
 			GetName(playerid), 
 			PlayerInfo[playerid][pSQLID], 
@@ -800,9 +800,9 @@ CMD:bank(playerid, params[])
 		
 		SavePlayerCredit(playerid);
 		
-		new log[86];
-		format( log, 86, "%s je platio %d rata kredita za $%d", GetName(playerid, false), cashdeposit, money);
-		LogCreditPay(log);
+		#if defined MODULE_LOGS
+		Log_Write("/logfiles/credit_pay.txt", "(%s) %s paid %d credit rates for $%s",  ReturnDate(), GetName(playerid, false), cashdeposit, money);
+		#endif
 		
 		AntiSpamInfo[ playerid ][ asCreditPay ] = gettimestamp() + ANTI_SPAM_BANK_CREDITPAY;
 		return 1;

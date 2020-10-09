@@ -578,18 +578,21 @@ CMD:mask(playerid, params[])
 		SetPlayerChatBubble(playerid, buffer, COLOR_PURPLE, 20, 10000);
 		
 		GameTextForPlayer(playerid, "~b~STAVILI STE MASKU", 5000, 4);
-			
-		if(PlayerInfo[ playerid ][ pMaskID ] == 0) {
-			new log[64], playerip[MAX_PLAYER_IP]; 
+		
+		#if defined MODULE_LOGS
+		if(PlayerInfo[ playerid ][ pMaskID ] == 0) 
+		{
+			new playerip[MAX_PLAYER_IP];
 			GetPlayerIp(playerid, playerip, sizeof(playerip));
-			PlayerInfo[ playerid ][ pMaskID ] = 100000 + random(899999);
-			format(log, sizeof(log), "%s(%s), maskid %d.", 
+			Log_Write("/logfiles/masks.txt", "(%s) %s(%s), Mask ID: %d.",
+				ReturnDate(),
 				GetName(playerid, false),
-				playerip, 
+				playerip,
 				PlayerInfo[ playerid ][ pMaskID ]
 			);
-			LogMask(log);				
 		}
+		#endif
+		
 		new
 			maskName[24];
 		format(maskName, sizeof(maskName), "Maska_%d", PlayerInfo[playerid][pMaskID]);
@@ -2170,7 +2173,7 @@ CMD:dump(playerid, params[])
             ProxDetector(15.0, playerid, tmpString, COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE);
             
 			#if defined MODULE_LOGS
-            Log_Write("logfiles/dump_gun.txt", "(%s) Igrac %s{%d} je bacio %s(%d)[AMMO: %d] na pod!",
+            Log_Write("logfiles/dump_gun.txt", "(%s) Player %s{%d} dropped %s(%d)[AMMO: %d] on the floor!",
 				ReturnDate(),
 				GetName(playerid),
 				PlayerInfo[playerid][pSQLID],
@@ -2391,7 +2394,7 @@ CMD:give(playerid, params[])
 					ProxDetector(5.0, playerid, globalstring, COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE);
 					
 					#if defined MODULE_LOGS
-					Log_Write("logfiles/give_weapon.txt", "(%s) Igrac %s je dao %s %s sa %d metaka.",
+					Log_Write("logfiles/give_weapon.txt", "(%s) Player %s gave %s %s with %d bullets.",
 						ReturnDate(),
 						GetName(playerid, false),
 						GetName(giveplayerid, false),

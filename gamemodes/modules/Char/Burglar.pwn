@@ -1055,14 +1055,21 @@ CMD:stealmoney(playerid, params[])
 			HouseToPlayerMoney(playerid, house, stolen_money);
 			PlayerInfo[playerid][pFreeWorks] 	-= 7;
 			UpgradePlayerSkill(playerid, 5, 5);
-		
-			new
-				log[128];
-			format(log, 128, "Igrac %s(%s) je ukrao %d$ iz sefa iz kuce id %d", GetName(playerid, false), GetPlayerIP(playerid), stolen_money, house);
-			LogBurglar(log);
+			#if defined MODULE_LOGS
+			Log_Write("/logfiles/job_burglar.txt", "(%s) Player %s(%s) stole %d$ from house safe. (Adress: %s | SQLID: %d)", 
+				ReturnDate(), 
+				GetName(playerid, false), 
+				GetPlayerIP(playerid), 
+				stolen_money, 
+				HouseInfo[house][hAdress], 
+				HouseInfo[house][hSQLID]
+			);
+			#endif
 		}
 		else SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste uspjeli uzeti novce iz sefa!");
-	} else {
+	} 
+	else 
+	{
 		rand = random(20) + 1;
 		if( rand == 5 || rand == 18 || rand == 12 )
 		{
@@ -1072,10 +1079,16 @@ CMD:stealmoney(playerid, params[])
 			PlayerInfo[playerid][pFreeWorks] 	-= 7;
 			UpgradePlayerSkill(playerid, 5, 5);
 			AntiSpamInfo[playerid][stHouseMoney] = gettimestamp() + ANTI_SPAM_STEAL_MONEY;
-			new
-				log[128];
-			format(log, 128, "Igrac %s(%s) je ukrao %d$ iz sefa iz kuce id %d", GetName(playerid, false), GetPlayerIP(playerid), stolen_money, house);
-			LogBurglar(log);
+			#if defined MODULE_LOGS
+			Log_Write("/logfiles/job_burglar.txt", "(%s) Player %s(%s) stole %d$ from house safe. (Adress: %s | SQLID: %d)", 
+				ReturnDate(), 
+				GetName(playerid, false), 
+				GetPlayerIP(playerid), 
+				stolen_money, 
+				HouseInfo[house][hAdress], 
+				HouseInfo[house][hSQLID]
+			);
+			#endif
 		}
 		else SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste uspjeli uzeti novce iz sefa!");
 	}

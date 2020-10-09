@@ -1825,14 +1825,6 @@ CMD:eggs(playerid, params[])
 	
 		ResetFarmerVars(playerid);
 		UpgradePlayerSkill(playerid, 0);
-		
-		Log_Write("logfiles/eggssell.txt", "(%s) {%d} %s je prodao jaja za %d$",
-			ReturnDate(),
-			PlayerInfo[ playerid ][ pSQLID ],
-			GetName(playerid, false),
-			Profit
-		);
-		
 	}
 	return 1;
 }

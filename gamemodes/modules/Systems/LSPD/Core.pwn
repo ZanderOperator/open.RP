@@ -2384,15 +2384,16 @@ CMD:cleartrunk(playerid, params[])
 		}
 	}
 	strunpack( carname, Model_Name(VehicleInfo[vehicleid][vModel]) );
-	new
-		log[ 128 ];
-	format( log, sizeof(log), "%s(%s) je ispraznio prtljaznik na vozilu %s[SQLID: %d]",
+	#if defined MODULE_LOGS
+	Log_Write("/logfiles/pd_taketrunk.txt", "(%s) %s(%s) emptied the trunk of %s. [Owner: %s | Owner SQLID: %d]",
+		
 		GetName(playerid, false),
 		GetPlayerIP(playerid),
 		carname,
+		ConvertSQLIDToName(VehicleInfo[ vehicleid ][ vOwner ]),
 		VehicleInfo[ vehicleid ][ vOwner ]
 	);
-	LogPDTrunk(log);
+	#endif
 	SendMessage(playerid, MESSAGE_TYPE_INFO, "Uspjesno ste uzeli oruzje iz gepeka.");
 	return 1;
 }
@@ -2671,7 +2672,6 @@ CMD:housetake(playerid, params[])
 {
 	if( !IsACop(playerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste pripadnik PDa!");
 	new
-		takeQuery[ 200 ],
 		param[8],
 		house = Bit16_Get( gr_PlayerInHouse, playerid );
 
@@ -2692,9 +2692,10 @@ CMD:housetake(playerid, params[])
 		}
 		Storage_RackRefresh(id);
 		HouseStorage_Save(id);
-
-		format(takeQuery, sizeof(takeQuery), "%s je ispraznio sva oruzja sa police[SQLID:%d] kuce[SQLID: %d]", GetName(playerid, false), HouseStorage[id][storageID], HouseInfo[house][hSQLID]);
-		LogPDTakes(takeQuery);
+		
+		#if defined MODULE_LOGS
+		Log_Write("/logfiles/pd_housetakes.txt", "(%s) %s emptied out all weapons from storage[SQLID:%d] of house[Adress: %s | SQLID: %d]", ReturnDate(), GetName(playerid, false), HouseStorage[id][storageID], HouseInfo[house][hAdress], HouseInfo[house][hSQLID]);
+		#endif
 
 		new
 			tmpString[ 55 ];

@@ -653,12 +653,13 @@ stock StoreWeaponInTrunk(playerid, vehicleid, slot)
 	mysql_tquery(g_SQL, weaponInsertQuery, "OnVehicleWeaponInsert", "ii", vehicleid, slot);
 
 	#if defined MODULE_LOGS	
-	Log_Write("logfiles/weapon_trunkput.txt", "(%s) %s [Vehicle SQLID:%d] je stavio %s sa %d metaka u Slot %d.", 
+	Log_Write("logfiles/weapon_trunkput.txt", "(%s) %s [Vehicle SQLID:%d] stored %s with %d bullets in %s(Slot %d).", 
 		ReturnDate(), 
 		GetName(playerid),
 		VehicleInfo[vehicleid][vSQLID],
 		gunname,
 		ammo,
+		ReturnVehicleName(GetVehicleModel(vehicleid)),
 		slot
 	);
 	#endif
@@ -687,12 +688,13 @@ stock TakePlayerWeaponFromTrunk(playerid, vehicleid, slot)
 	GetWeaponName(VehicleInfo[vehicleid][vWeaponId][slot], gunname, sizeof(gunname));
 	
 	#if defined MODULE_LOGS
-	Log_Write("logfiles/weapon_trunktake.txt", "(%s) %s [Vehicle SQLID:%d] je uzeo %s sa %d metaka iz Slota %d.", 
+	Log_Write("logfiles/weapon_trunktake.txt", "(%s) %s [Vehicle SQLID:%d] took %s with %d bullets from %s(Slot %d).", 
 		ReturnDate(), 
 		GetName(playerid),
 		VehicleInfo[vehicleid][vSQLID],
 		gunname,
 		VehicleInfo[vehicleid][vWeaponAmmo][slot],
+		ReturnVehicleName(GetVehicleModel(vehicleid)),
 		slot
 	);
 	#endif
@@ -2153,11 +2155,12 @@ stock BuyVehicle(playerid, bool:credit_activated = false)
 	}
 	
 	#if defined MODULE_LOGS
-	Log_Write("logfiles/car_carbuy.txt", "(%s) %s{%d} je kupio %s za %d$.",
+	Log_Write("logfiles/car_carbuy.txt", "(%s) %s{%d} bought %s[SQLID: %d] for %d$.",
 		ReturnDate(),
 		GetName(playerid,false),
 		PlayerInfo[playerid][pSQLID],
 		ReturnVehicleName(modelid),
+		VehicleInfo[cCar][vSQLID],
 		price
 	);
 	#endif
@@ -4500,15 +4503,11 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 			DeleteVehicleFromBase(VehicleInfo[PlayerInfo[playerid][pSpawnedCar]][vSQLID]);
 
 			#if defined MODULE_LOGS
-			new
-				tmpLog[128];
-			format(tmpLog, sizeof(tmpLog), "%s je obrisao vozilo iz baze (MODEL: %d | VEHID: %d | SQLID: %d)",
+			Log_Write("/logfiles/car_delete.txt", "(%s) %s deleted his %s from database.",
+				ReturnDate(),
 				GetName(playerid,false),
-				GetVehicleModel(PlayerInfo[playerid][pSpawnedCar]),
-				PlayerInfo[playerid][pSpawnedCar],
-				VehicleInfo[PlayerInfo[playerid][pSpawnedCar]][vSQLID]
+				ReturnVehicleName(GetVehicleModel(PlayerInfo[playerid][pSpawnedCar]))
 			);
-			LogCarDelete(tmpLog);
 			#endif
 
 			// Brisanje vozila
@@ -4564,13 +4563,13 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 			PlayerToPlayerMoneyTAX (playerid, sellerid, sellprice, true, LOG_TYPE_VEHICLESELL);
 
 			#if defined MODULE_LOGS
-			Log_Write("logfiles/car_carsell.txt", "(%s) %s{%d} je prodao %s{%d} vozilo %d{%d} za %d$.",
+			Log_Write("logfiles/car_carsell.txt", "(%s) %s{%d} sold %s{%d} %s[SQLID: %d] for %d$.",
 				ReturnDate(),
 				GetName(sellerid, false),
 				PlayerInfo[sellerid][pSQLID],
 				GetName(playerid, false),
 				PlayerInfo[playerid][pSQLID],
-				GetVehicleModel(sellVehid),
+				ReturnVehicleName(GetVehicleModel(sellVehid)),
 				VehicleInfo[sellVehid][vSQLID],
 				PlayerSellingPrice[playerid]
 			);
@@ -4626,11 +4625,11 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 			SendFormatMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uspjesno ste prodali svoje vozilo za %d$!", moneys);
 						
 			#if defined MODULE_LOGS
-			Log_Write("logfiles/car_junk_sell.txt", "(%s) %s[%d] je prodao vozilo id %d za %d$ na Junkyardu.",
+			Log_Write("logfiles/car_junk_sell.txt", "(%s) %s[%d] sold %s for %d$ on Junkyard.",
 				ReturnDate(),
 				GetName(playerid, false),
 				PlayerInfo[playerid][pSQLID],
-				GetVehicleModel(vehicleid),
+				ReturnVehicleName(GetVehicleModel(vehicleid)),
 				moneys
 			);
 			#endif

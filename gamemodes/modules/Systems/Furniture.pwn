@@ -2811,11 +2811,15 @@ stock static CreateFurnitureObject(playerid, modelid, Float:x, Float:y, Float:z,
 		PlayerToBudgetMoney(playerid, price); // novac ide u proracun
 		Bit4_Set( r_PlayerEditState, playerid, 0 );
 
-		new
-			log[ 128 ];
-		format(log, 128, "%s je kupio objekt s modelid %d i spremio ga u slot %d.", GetName(playerid,false), modelid, index);
-		LogFurnitureBuy(log);
-
+		#if defined MODULE_LOGS
+		Log_Write("/logfiles/furniture_buy.txt", "(%s) Player %s bought an object(modelid: %d) for %d$ in House Furniture and placed it into slot %d.",
+			ReturnDate(),
+			GetName(playerid, false),
+			modelid,
+			price,
+			index
+		);
+		#endif
 		PlayerPrwsObject[ playerid ]	= INVALID_OBJECT_ID;
 		PlayerPrwsIndex[ playerid ]		= -1;
 		PlayerPrwsModel[ playerid ]		= -1;

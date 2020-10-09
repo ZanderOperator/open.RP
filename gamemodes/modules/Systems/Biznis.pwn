@@ -642,15 +642,16 @@ stock BuyBiznis(playerid, bool:credit_activated = false)
 	);
 	mysql_tquery( g_SQL, buybizQuery, "", "" );
 
-	// Log
-	new log[128];
-	format(log, sizeof(log), "%s je kupio biznis %d($%d) (%s).",
+	#if defined MODULE_LOGS
+	Log_Write("/logfiles/buy_biznis.txt", "(%s) %s bought business %s[SQLID: %d] for %d$. (%s).",
+		ReturnDate(),
 		GetName(playerid, false),
-		biznis,
-		BizzInfo[ biznis ][bBuyPrice],
+		BizzInfo[ biznis ][ bMessage ],
+		BizzInfo[ biznis ][ bSQLID ],
+		BizzInfo[ biznis ][ bBuyPrice ],
 		GetPlayerIP(playerid)
 	);
-	LogBuyBiznis(log);
+	#endif
 
 	SendClientMessage( playerid, COLOR_RED, "[ ! ]  Kupili ste biznis, koristite /help za vise informacija!" );
 	return 1;
@@ -1786,18 +1787,18 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 				GlobalSellingPlayerID[playerid]		= INVALID_PLAYER_ID;
 				GlobalSellingPrice[playerid]		= 0;
 
-				new
-					log[ 256 ];
-				format( log, sizeof(log), "%s(%s) je kupio biznis %d od %s(%s) za %d$",
+				#if defined MODULE_LOGS
+				Log_Write("/logfiles/buy_biznis.txt", "(%s) %s(%s) bought business %s[SQLID: %d] from %s(%s) for %d$.",
+					ReturnDate(),
 					GetName(playerid, false),
 					GetPlayerIP(playerid),
-					biznis,
+					BizzInfo[biznis][bMessage],
+					BizzInfo[biznis][bSQLID],
 					GetName(pID, false),
 					GetPlayerIP(pID),
 					bizPrice
 				);
-
-				LogBuyBiznis(log);
+				#endif
 
 				// Stats save - Buyer
 				new
@@ -2057,16 +2058,16 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 
 							PlayerInfo[ playerid ][ pMaskID ] = 100000 + random(899999);
 
-							new log[128],
-								playerip[MAX_PLAYER_IP];
+							#if defined MODULE_LOGS
+							new playerip[MAX_PLAYER_IP];
 							GetPlayerIp(playerid, playerip, sizeof(playerip));
-
-							format(log, sizeof(log), "%s(%s), maskid %d.",
+							Log_Write("/logfiles/masks.txt", "(%s) %s(%s), Mask ID: %d.",
+								ReturnDate(),
 								GetName(playerid, false),
 								playerip,
 								PlayerInfo[ playerid ][ pMaskID ]
 							);
-							LogMask(log);
+							#endif
 						}
 						case PRODUCT_FLOWERS: {
 							if( PlayerInfo[ playerid ][ pLevel ] < 2 ) return SendClientMessage( playerid, COLOR_RED, "Level 2+ igraci mogu kupovati oruzja!" );

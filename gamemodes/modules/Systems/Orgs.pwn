@@ -717,7 +717,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 			va_SendClientMessage(playerid, COLOR_RED, "[ ! ] Uspjesno ste stavili %d$ na %s Faction Bank.", money, FactionInfo[fid][fName]);
 			
 			#if defined MODULE_LOGS
-			Log_Write("logfiles/faction_bank.txt", "(%s) Leader %s[%s](SQLID:%d) je napravio depozit od %d$ na Faction Bank.", 
+			Log_Write("logfiles/faction_bank.txt", "(%s) Leader %s[%s](SQLID:%d) deposited %d$ in Faction Bank.", 
 				ReturnDate(), 
 				GetName(playerid), 
 				FactionInfo[fid][fName],
@@ -735,7 +735,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 			va_SendClientMessage(playerid, COLOR_RED, "[ ! ] Uspjesno ste podigli %d$ sa %s Faction Banka.", money, FactionInfo[fid][fName]);
 			
 			#if defined MODULE_LOGS
-			Log_Write("logfiles/faction_bank.txt", "(%s) Leader %s[%s](SQLID:%d) je podigao %d$ s Faction Banka.", 
+			Log_Write("logfiles/faction_bank.txt", "(%s) Leader %s[%s](SQLID:%d) withdrawed %d$ from Faction Bank.", 
 				ReturnDate(), 
 				GetName(playerid), 
 				FactionInfo[fid][fName],
@@ -890,17 +890,18 @@ CMD:afaction(playerid,params[])
 		PlayerInfo[targetid][pMember] 	= fid;
 		PlayerInfo[targetid][pRank] 	= FactionInfo[fid][fRanks];
 		
-		new
-			tmpQuery[ 256 ];
-		format(tmpQuery, 256, "%s(%s) je stavio lidera %s(%s) organizacije ID %d", 
+		#if defined MODULE_LOGS
+		Log_Write("/logfiles/orgs_leader.txt", "(%s) %s(%s) made %s(%s) the leader of faction %s.", 
+			ReturnDate(),
 			GetName(playerid, false), 
 			GetPlayerIP(playerid), 
 			GetName(targetid, false), 
 			GetPlayerIP(targetid),
-			fid
+			FactionInfo[fid][fName]
 		);
-		LogLeaders(tmpQuery);
-			
+		#endif
+		
+		new tmpQuery[256];
 		format(tmpQuery, 256, "UPDATE `accounts` SET `facLeadId` = '%d', `facMemId` = '%d', `facRank` = '%d' WHERE `sqlid` = '%d'",
 			PlayerInfo[targetid][pLeader],
 			PlayerInfo[targetid][pMember],
@@ -933,14 +934,14 @@ CMD:afaction(playerid,params[])
 		mysql_tquery(g_SQL, tmpQuery, "");
 		
 		#if defined MODULE_LOGS
-		format(tmpQuery, 256, "%s(%s) je skinio lidera %s(%s) u organizaciji ID %d", 
+		Log_Write("/logfiles/orgs_leader.txt", "(%s) %s(%s) removed %s(%s) the leader of faction %s status.", 
+			ReturnDate(),
 			GetName(playerid, false), 
 			GetPlayerIP(playerid), 
 			GetName(targetid, false), 
 			GetPlayerIP(targetid),
-			PlayerInfo[targetid][pMember]
+			FactionInfo[PlayerInfo[targetid][pMember]][fName]
 		);
-		LogLeaders(tmpQuery);
 		#endif
 		
 		PlayerInfo[targetid][pLeader] 	= 0;
@@ -1068,8 +1069,7 @@ CMD:faction(playerid,params[])
 		mysql_tquery(g_SQL, tmpQuery, "");	
 
 		#if defined MODULE_LOGS
-		format(logText, 190, "%s(%s) je pozvao %s(%s) u organizaciju ID %d", GetName(playerid,false), GetPlayerIP(playerid), GetName(targetid,false), GetPlayerIP(targetid), PlayerInfo[playerid][pMember]);
-		LogInvite(logText);
+		Log_Write("/logfiles/orgs_invite.txt", "(%s) %s(%s) invited %s(%s) to join %s.", GetName(playerid,false), GetPlayerIP(playerid), GetName(targetid,false), GetPlayerIP(targetid), FactionInfo[PlayerInfo[playerid][pMember]][fName]);
 		#endif
 		
 		va_SendClientMessage(targetid,COLOR_LIGHTBLUE, "Dodan si u organizaciju %s od strane lidera %s.",
@@ -1230,8 +1230,7 @@ CMD:faction(playerid,params[])
 		mysql_tquery(g_SQL, channelKicked);
 		
 		#if defined MODULE_LOGS
-		format(logText, 195, "%s(%s) je izbacio %s(%s) iz organizacije ID %d", GetName(playerid,false), GetPlayerIP(playerid), GetName(targetid,false), GetPlayerIP(targetid), PlayerInfo[playerid][pMember]);
-		LogInvite(logText);
+		Log_Write("/logfiles/orgs_invite.txt", "(%s) %s(%s) kicked out %s(%s) from %s.", GetName(playerid,false), GetPlayerIP(playerid), GetName(targetid,false), GetPlayerIP(targetid), FactionInfo[PlayerInfo[playerid][pMember]][fName]);
 		#endif
 		
 		new fid = PlayerInfo[playerid][pLeader];
@@ -1254,8 +1253,7 @@ CMD:faction(playerid,params[])
 			tmpQuery[ 512 ];
 			
 		#if defined MODULE_LOGS
-		format(tmpQuery, 195, "%s(%s) je stavio rank %d igracu %s(%s) u organizaciji ID %d", GetName(playerid,false), GetPlayerIP(playerid), rank, GetName(targetid,false), GetPlayerIP(targetid), PlayerInfo[playerid][pMember]);
-		LogInvite(tmpQuery);
+		Log_Write("/logfiles/orgs_invite.txt", "(%s) %s(%s) gave %s(%s) Rank %d in faction %s.", GetName(playerid,false), GetPlayerIP(playerid), GetName(targetid,false), GetPlayerIP(targetid), rank, FactionInfo[PlayerInfo[playerid][pMember]][fName]);
 		#endif
 			
 		format(tmpQuery, 512, "UPDATE `accounts` SET `facRank` = '%d' WHERE `sqlid` = '%d'",
@@ -1476,7 +1474,7 @@ CMD:quitfaction(playerid, params[])
 		mysql_tquery(g_SQL, tmpQuery, "");
 		
 		#if defined MODULE_LOGS
-		Log_Write("logfiles/faction_quit.txt", "(%s) Igrac %s je izasao iz %s.",
+		Log_Write("logfiles/faction_quit.txt", "(%s) Player %s quitted faction %s.",
 			ReturnDate(),
 			GetName(playerid, false),
 			FactionInfo[PlayerInfo[playerid][pMember]][fName]

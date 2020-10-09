@@ -204,8 +204,11 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 			);
 			mysql_pquery(g_SQL, tmpQuery, "", "");
 			
-			format(tmpQuery, 512, "%s(%s) je promjenio svoje sigurnosno pitanje u %s.", GetName(playerid,false), GetPlayerIP(playerid), secQuestions[PlayerInfo[playerid][pSecQuestion]]);
-			LogSecurity(tmpQuery);
+			Log_Write("/logfiles/a_security.txt", "(%s) %s(%s) changed his security question into '%s'.", 
+				GetName(playerid,false), 
+				GetPlayerIP(playerid), 
+				secQuestions[PlayerInfo[playerid][pSecQuestion]]
+			);
 			return 1;
 		}
 		case DIALOG_SEC_MAIL: {
