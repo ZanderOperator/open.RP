@@ -916,7 +916,6 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                 case 0: {
 	     			if (! CheckPlayerWeapons(playerid, WEAPON_DEAGLE) ) return 1;
 					AC_ResetPlayerWeapon(playerid, WEAPON_DEAGLE);
-					Bit1_Set( gr_PlayerACSafe, playerid, true );
 					AC_GivePlayerWeapon(playerid, WEAPON_DEAGLE, 50);
 					SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uzeli ste Desert Eagle iz lockera.");
 					format(tmpString, sizeof(tmpString), "** %s je uzeo Desert Eagle iz lockera.", GetName(playerid, true));
@@ -925,7 +924,6 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 				case 1: {
 					if (! CheckPlayerWeapons(playerid, WEAPON_SHOTGUN) ) return 1;
 					AC_ResetPlayerWeapon(playerid, WEAPON_SHOTGUN);
-					Bit1_Set( gr_PlayerACSafe, playerid, true );
 					AC_GivePlayerWeapon(playerid, WEAPON_SHOTGUN, 50);
 					SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uzeli ste Shotgun iz lockera.");
 					format(tmpString, sizeof(tmpString), "** %s je uzeo Shotgun iz lockera.", GetName(playerid, true));
@@ -934,7 +932,6 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                 case 2: {
 					if (! CheckPlayerWeapons(playerid, WEAPON_MP5) ) return 1;
 					AC_ResetPlayerWeapon(playerid, WEAPON_MP5);
-					Bit1_Set( gr_PlayerACSafe, playerid, true );
 					AC_GivePlayerWeapon(playerid, WEAPON_MP5, 150);
 					SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uzeli ste MP5 iz lockera.");
 					format(tmpString, sizeof(tmpString), "** %s je uzeo MP5 iz lockera.", GetName(playerid, true));
@@ -943,7 +940,6 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 				case 3: {
 					if (! CheckPlayerWeapons(playerid, WEAPON_M4) ) return 1;
 					AC_ResetPlayerWeapon(playerid, WEAPON_M4);
-					Bit1_Set( gr_PlayerACSafe, playerid, true );
 					AC_GivePlayerWeapon(playerid, WEAPON_M4, 200);
 					SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uzeli ste M4 iz lockera.");
 					format(tmpString, sizeof(tmpString), "** %s je uzeo M4 iz lockera.", GetName(playerid, true));
@@ -952,7 +948,6 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 				case 4: {
 					if (! CheckPlayerWeapons(playerid, WEAPON_SNIPER) ) return 1;
 					AC_ResetPlayerWeapon(playerid, WEAPON_SNIPER);
-					Bit1_Set( gr_PlayerACSafe, playerid, true );
 					AC_GivePlayerWeapon(playerid, WEAPON_SNIPER, 50);
 					SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uzeli ste Sniper Rifle iz lockera.");
 					format(tmpString, sizeof(tmpString), "* %s je uzeo Sniper Rifle iz lockera.", GetName(playerid, true));
@@ -961,7 +956,6 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 				case 5: {
 					if (! CheckPlayerWeapons(playerid, WEAPON_KNIFE) ) return 1;
 					AC_ResetPlayerWeapon(playerid, WEAPON_KNIFE);
-					Bit1_Set( gr_PlayerACSafe, playerid, true );
 					AC_GivePlayerWeapon(playerid, WEAPON_KNIFE, 1);
 					SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uzeli ste Knife iz lockera.");
 					format(tmpString, sizeof(tmpString), "* %s je uzeo Knife iz lockera.", GetName(playerid, true));
@@ -970,7 +964,6 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 				case 6: {
 					if (! CheckPlayerWeapons(playerid, WEAPON_TEARGAS) ) return 1;
 					AC_ResetPlayerWeapon(playerid, WEAPON_TEARGAS);
-					Bit1_Set( gr_PlayerACSafe, playerid, true );
 					AC_GivePlayerWeapon(playerid, WEAPON_TEARGAS, 10);
 					SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uzeli ste Teargas iz lockera.");
 					format(tmpString, sizeof(tmpString), "* %s je uzeo Teargas iz lockera.", GetName(playerid, true));
@@ -979,7 +972,6 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 				case 7: {
 				    if (! CheckPlayerWeapons(playerid, WEAPON_COLT45) ) return 1;
 					AC_ResetPlayerWeapon(playerid, WEAPON_COLT45);
-					Bit1_Set( gr_PlayerACSafe, playerid, true );
 					AC_GivePlayerWeapon(playerid, WEAPON_COLT45, 50);
 					SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uzeli ste Colt45 iz lockera..");
 					format(tmpString, sizeof(tmpString), "* %s je uzeo Colt45 iz lockera.", GetName(playerid, true));
@@ -988,7 +980,6 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 				case 8: {
 					if (! CheckPlayerWeapons(playerid, WEAPON_SILENCED) ) return 1;
 					AC_ResetPlayerWeapon(playerid, WEAPON_SILENCED);
-					Bit1_Set( gr_PlayerACSafe, playerid, true );
 					AC_GivePlayerWeapon(playerid, WEAPON_SILENCED, 50);
 					SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uzeli ste Silenced iz lockera.");
 					format(tmpString, sizeof(tmpString), "* %s je uzeo Silenced iz lockera.", GetName(playerid, true));
@@ -997,7 +988,6 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 				case 9: {
 					if (! CheckPlayerWeapons(playerid, WEAPON_SPRAYCAN) ) return 1;
 					AC_ResetPlayerWeapon(playerid, WEAPON_SPRAYCAN);
-					Bit1_Set( gr_PlayerACSafe, playerid, true );
 					AC_GivePlayerWeapon(playerid, WEAPON_SPRAYCAN, 1000);
 					SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uzeli ste Spraycan iz lockera..");
 					format(tmpString, sizeof(tmpString), "* %s je uzeo Spraycan iz lockera.", GetName(playerid, true));
@@ -1006,7 +996,6 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 				case 10: {
 					if (! CheckPlayerWeapons(playerid, WEAPON_NITESTICK) ) return 1;
 					AC_ResetPlayerWeapon(playerid, WEAPON_NITESTICK);
-					Bit1_Set( gr_PlayerACSafe, playerid, true );
 					AC_GivePlayerWeapon(playerid, WEAPON_NITESTICK, 1);
 					SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uzeli ste Nitestick iz lockera.");
 					format(tmpString, sizeof(tmpString), "* %s je uzeo Nitestick iz lockera.", GetName(playerid, true));
@@ -1014,7 +1003,6 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                 }
 				case 11: {
 					if (! CheckPlayerWeapons(playerid, 25) ) return 1;
-					Bit1_Set( gr_PlayerACSafe, playerid, true );
 					AC_GivePlayerWeapon(playerid, 25, 50);
 					SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uzeli ste Bean bag shotgun iz Armoury-a.");
 					format(tmpString, sizeof(tmpString), "* %s je uzeo Bean bag shotgun iz Armoury-a.", GetName(playerid, true));
@@ -1024,7 +1012,6 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 				case 12: {
 					if (! CheckPlayerWeapons(playerid, WEAPON_RIFLE) ) return 1;
 					AC_ResetPlayerWeapon(playerid, WEAPON_RIFLE);
-					Bit1_Set( gr_PlayerACSafe, playerid, true );
 					AC_GivePlayerWeapon(playerid, WEAPON_RIFLE, 50);
 					SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uzeli ste Rifle iz lockera.");
 					format(tmpString, sizeof(tmpString), "* %s je uzeo Rifle iz lockera.", GetName(playerid, true));

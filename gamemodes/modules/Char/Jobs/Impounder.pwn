@@ -80,7 +80,7 @@ CMD:jobimpound(playerid, params[])
 			{
 				for(new i = 0; i <= 4; ++i)
 				{
-					if(VehicleInfo[v][vTickets][i] != 0 && VehicleInfo[v][vTicketStamp][i] < (gettime() - DAYS_NEEDED) && acVehicleDriver[v] == INVALID_PLAYER_ID)
+					if(VehicleInfo[v][vTickets][i] != 0 && VehicleInfo[v][vTicketStamp][i] < (gettime() - DAYS_NEEDED) && !IsVehicleOccupied(v))
 					{
 						++c;
 						

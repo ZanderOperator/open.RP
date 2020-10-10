@@ -47,8 +47,6 @@ hook OnPlayerKeyStateChange(playerid, newkeys, oldkeys) {
 				
 					if(PlayerInfo[playerid][pAdmin] >= 4)
 						return (true);
-					if(ABH_Online == 0)
-						return true;
 						
 					new buff[90];
 					bh_counter[ playerid ] ++;

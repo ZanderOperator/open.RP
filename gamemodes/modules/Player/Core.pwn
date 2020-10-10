@@ -1122,18 +1122,6 @@ timer PlayerGlobalTask[1000](playerid)
 	new tmphour,tmpmins,tmpsecs;
 	GetServerTime(tmphour,tmpmins,tmpsecs);
 	SetPlayerTime(playerid,tmphour,tmpmins);
-	// Anti-Cheat
-	if(PlayerTick[playerid][ptWeapon] < gettimestamp())
-	{
-		if( !IsPlayerAdmin(playerid) && !IsACop(playerid) && !PlayerInfo[playerid][pAdmin] && !PlayerInfo[playerid][pHelper] && !Bit1_Get( gr_PlayerACSafe, playerid ) )
-		{
-			AC_JetpackDetect(playerid);
-			PlayerTick[playerid][ptWeapon] = gettimestamp();
-			return 1;
-		}
-		if( Bit1_Get( gr_PlayerACSafe, playerid ) )
-			Bit1_Set( gr_PlayerACSafe, playerid, false );
-	}
 	
 	static
 		pcar = INVALID_VEHICLE_ID;

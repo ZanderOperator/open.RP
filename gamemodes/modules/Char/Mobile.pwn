@@ -2807,7 +2807,7 @@ hook OnPlayerText(playerid, text[])
 					format(motd, sizeof(motd), "%s\t%s\n", drugs[i][dName], FormatNumber(drugs[i][dPricePG]));
 					strcat(buffer, motd, sizeof(buffer));
 				}
-				Dialog_Open(playerid, DRUG_ORDER_PACKAGE, DIALOG_STYLE_TABLIST_HEADERS, "{3C95C2}* Package - List", buffer, "Select", "Close");
+				ShowPlayerDialog(playerid, DRUG_ORDER_PACKAGE, DIALOG_STYLE_TABLIST, "{3C95C2}* Package - List", buffer, "Select", "Close");
                 SendClientMessage(playerid, COLOR_YELLOW, "Maska 64361 kaze (mobitel): Reci mi sta trebas od ponudjenog?");
                 SendClientMessage(playerid, COLOR_RED, "[ ! ] Potrebno je da kroz dialog odaberes sta zelis da sadrzi tvoja narudzba!");
 				CallingId[ playerid ] =  32715;

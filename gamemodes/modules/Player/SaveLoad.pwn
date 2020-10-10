@@ -191,7 +191,6 @@ public PasswordForQuery(playerid, const inputtext[])
 														Imate jos "COL_LIGHTBLUE"%d"COL_WHITE"pokusaja za unos valjane sifre!\n\n\n\
 														"COL_RED"Ukoliko ne unesete dobru sifru onda cete dobiti kick!", MAX_LOGIN_TRIES - Bit8_Get(gr_LoginInputs, playerid));
 				ShowPlayerDialog(playerid, DIALOG_LOGIN, DIALOG_STYLE_PASSWORD, ""COL_WHITE"PRIJAVA", dialogtext, "Sign In", "Abort");
-				AntiCheatData[playerid][acLoginDialog] = true;
 			}
 		}
 	}
@@ -213,7 +212,6 @@ public CheckPlayerInBase(playerid)
 			Hvala i uzivajte i dalje u igranju na City of Angels!",GetName(playerid),MAX_LOGIN_TIME
 		);					
 		ShowPlayerDialog(playerid, DIALOG_LOGIN, DIALOG_STYLE_PASSWORD, ""COL_WHITE"PRIJAVA", dialogtext, "Sign In", "Abort");
-		AntiCheatData[playerid][acLoginDialog] = true;
 		
 		Bit8_Set(gr_LoginInputs, playerid, 0);
 		Bit1_Set(gr_LoginChecksOn, playerid, true);
@@ -751,7 +749,6 @@ SafeSpawnPlayer(playerid)
 	TogglePlayerControllable(playerid, false);
 	StopAudioStreamForPlayer(playerid);
 	va_SendClientMessage(playerid, COLOR_LIGHTBLUE, "[City of Angels]: "COL_WHITE"Dobrodosao natrag, "COL_LIGHTBLUE"%s"COL_WHITE"!", GetName(playerid));
-	AntiCheatData[playerid][acLoginDialog] = false;
 	CallLocalFunction("OnPlayerSpawn", "i", playerid);
 	return 1;
 }
@@ -1137,7 +1134,6 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 															"COL_RED"Ukoliko ne unesete dobru sifru onda cete dobiti kick!", MAX_LOGIN_TRIES - Bit8_Get(gr_LoginInputs, playerid));
 				ShowPlayerDialog(playerid, DIALOG_LOGIN, DIALOG_STYLE_PASSWORD, ""COL_WHITE"PRIJAVA", dialogtext, "Sign In", "Abort");
 				Bit8_Set(gr_LoginInputs, playerid, Bit8_Get(gr_LoginInputs, playerid) + 1);
-				AntiCheatData[playerid][acLoginDialog] = true;
 				return 1;
 			}
 			if( !( MAX_LOGIN_TRIES - Bit8_Get(gr_LoginInputs, playerid) ) )
