@@ -71,6 +71,9 @@
 // Fixes
 #include <fixes>
 
+// SafeDialog shunt - Anti F6 abuse
+#include <SafeDialogs>
+
 // Pawn RakNet by urShadow
 #include <Pawn.RakNet>
 
@@ -80,9 +83,6 @@
 // Streamer
 #include <streamer>
 #define OBJECT_STREAM_LIMIT		(700)
-
-// AntiCheat by RogueDrifter
-#include <Anti_cheat_pack>
 
 // New SA-MP callbacks by Emmet
 #include <callbacks>
@@ -226,10 +226,6 @@ native WP_Hash(buffer[], len, const str[]);
 // Trunk - Slot Limits
 #define MAX_WEAPON_SLOTS						(10)
 #define MAX_PACKAGE_VEHICLE						(15) 
-
-// OnPlayerTakeDamage - Anti Cheat
-#define DAMAGE_DRIVEBY_HELI						(2)
-#define DAMAGE_EXPLOSION						(3)
 
 // Invalids
 #define INVALID_BIZNIS_ID     					(999)
@@ -1240,7 +1236,6 @@ enum
 	DIALOG_PACKAGE_AMOUNT,
 	DIALOG_PACKAGE_ARMOR,
 	DIALOG_PACKAGE_ORDER,
-	DIALOG_DRUG_ORDER,
 	DIALOG_PACKAGE_CONFIRM,
 	DIALOG_TAKE_PACKAGE,
 
@@ -1400,7 +1395,7 @@ enum
 
 	// Prison
 	DIALOG_CELLS,
-	DIALOG_OPENCELL,
+	ShowPlayerDialogCELL,
 	DIALOG_CLOSECELL,
 	DIALOG_PRISONGATE,
 
@@ -1553,6 +1548,17 @@ enum
 	DIALOG_WAREHOUSE_INFO,
 	WAREHOUSE_MONEY_PUT,
 	WAREHOUSE_MONEY_TAKE,
+	
+	// Drug.pwn
+	DIALOG_DRUG_ORDER,
+	DRUG_ORDER_PACKAGE,
+	DRUG_ORDER_AMOUNT,
+	DRUG_ORDER_CONFIRM,
+	
+	// Licenses
+	DIALOG_LICENSE,
+	DIALOG_LICENSE_CONFIRM,
+	DIALOG_DRIVINGTEST,
 
 	//Help.pwn
 	DIALOG_HELP,
@@ -1634,10 +1640,7 @@ new
 	WeatherTimer 			= 0,
 	VehicleTimer			= 0,
 	GlobalVehicleStamp		= 0,
-	WeatherSys 			= 10,
-	GoC_Online 				= 0,
-	Troll_Online 			= 0,
-	Fox_Online				= 0,
+	WeatherSys 				= 10,
 	HappyHours				= 0,
 	HappyHoursLVL			= 0,
 	PlayerText:GlobalForumLink[MAX_PLAYERS] = { PlayerText:INVALID_TEXT_DRAW, ... },
@@ -1732,7 +1735,6 @@ new
 	Bit1:	gr_BeanBagShotgun		<MAX_PLAYERS>  = Bit1: false,
 	Bit1:	gr_PlayerExiting		<MAX_PLAYERS>  = Bit1: false,
 	Bit1:	gr_PlayerEntering		<MAX_PLAYERS>  = Bit1: false,
-	Bit1:	gr_SafeRemoting			<MAX_PLAYERS>  = Bit1: false,
 	Bit1:	gr_ApprovedUndercover	<MAX_PLAYERS>  = Bit1: false,
 	Bit1:	gr_FristSpawn			<MAX_PLAYERS>  = Bit1: false,
 	Bit1: 	gr_SafeBreaking			<MAX_PLAYERS>  = Bit1: false,
@@ -1764,7 +1766,6 @@ new
 	Bit1:	gr_PlayerSendKill		<MAX_PLAYERS>  = Bit1: false,
 	Bit1:	gr_PlayerTazed			<MAX_PLAYERS>  = Bit1: false,
 	Bit1:	gr_AcceptSwat			<MAX_PLAYERS>  = Bit1: false,
-	Bit1:	gr_PlayerACSafe			<MAX_PLAYERS>  = Bit1: false,
 	Bit1:	gr_DoorsLocked			<MAX_PLAYERS>  = Bit1: false,
 	Bit1:	gr_FactionChatTog		<MAX_PLAYERS>  = Bit1: true,
 	Bit1:	gr_PlayerRadio			<MAX_PLAYERS>  = Bit1: true,
@@ -1836,7 +1837,6 @@ new
 	EditingWeapon[MAX_PLAYERS] = 0,
 	EnteringVehicle[MAX_PLAYERS] = -1,
 	FreeBizzID[MAX_PLAYERS] = INVALID_BIZNIS_ID,
-	DamageStatusCountings[MAX_PLAYERS] = 0,
 	ServicePrice[MAX_PLAYERS] = 0,
 	Flash[MAX_VEHICLES] = 0,
 	regenabled = false;
@@ -1935,7 +1935,6 @@ new
 #include "modules/Char/Animations.pwn"
 #include "modules/Server/RaknetAC.pwn"
 #include "modules/Server/AC_Core.pwn"
-#include "modules/Server/AntiCheat.pwn"
 #include "modules/Server/AntiBunnyHop.pwn"
 #include "modules/Char/Bombs.pwn"
 #include "modules/Systems/GPS.pwn"
@@ -2234,7 +2233,6 @@ ResetPlayerVariables(playerid)
 	Bit1_Set( gr_BeanBagShotgun			, playerid, false );
 	Bit1_Set( gr_PlayerExiting			, playerid, false );
 	Bit1_Set( gr_PlayerEntering			, playerid, false );
-	Bit1_Set( gr_SafeRemoting			, playerid, false );
 	Bit1_Set( gr_ApprovedUndercover		, playerid, false );
 	Bit1_Set( gr_PlayerHouseAlarmOff	, playerid, false );
 	Bit1_Set( gr_FristSpawn				, playerid, false );
@@ -2263,7 +2261,6 @@ ResetPlayerVariables(playerid)
 	Bit1_Set( gr_PlayerSendKill			, playerid, false );
 	Bit1_Set( gr_PlayerTazed			, playerid, false );
 	Bit1_Set( gr_AcceptSwat				, playerid, false );
-	Bit1_Set( gr_PlayerACSafe			, playerid, false );
 	Bit1_Set( gr_DoorsLocked			, playerid, false );
 	Bit1_Set( gr_animchat               , playerid, false );
 	Bit1_Set( gr_FactionChatTog			, playerid, true );
@@ -2352,10 +2349,6 @@ ResetPlayerVariables(playerid)
 	Bit1_Set(gr_SaveArmour, 	playerid, false);
 	Bit1_Set(gr_MaskUse, 		playerid, false);
 
-	// Anti-Cheat
-	ResetAntiCheatCountings(playerid);
-	acPlayerState[ playerid ] = PLAYER_STATE_NONE;
-
 	// Administrator
 	Bit1_Set(a_AdminChat, 		playerid, true);
 	Bit1_Set(a_PlayerReconed,	playerid, false);
@@ -2422,7 +2415,6 @@ ResetPlayerVariables(playerid)
 	locatedRentedVeh[playerid] 	= false;
 	EnteringVehicle[playerid] = -1;
 	FreeBizzID[playerid] = INVALID_BIZNIS_ID,
-	DamageStatusCountings[playerid] = 0;
 
 	// Ticks
 	PlayerTick[playerid][ptReport]			= gettimestamp();
@@ -2909,9 +2901,6 @@ public OnGameModeInit()
 
 	// Global config
 	WeatherSys 	= 10;
-	GoC_Online 		= 1;
-	Troll_Online 	= 1;
-	Fox_Online		= 0;
 	cseconds        = 0;
 	regenabled		= 1;
 
@@ -3036,8 +3025,6 @@ timer SafeResetPlayerVariables[3000](playerid)
 
 public OnGameModeExit()
 {
-	GoC_Online 		= 0;
-	Troll_Online 	= 0;
 
 	// Actors
 	//DestroyRuletWorkers();
@@ -3476,7 +3463,6 @@ public OnPlayerRequestDownload(playerid, type, crc)
 	if(!Bit1_Get(gr_PlayerDownloading, playerid))
 	{
 		Bit1_Set(gr_PlayerLoggedIn, playerid, false);
-		Bit1_Set(gr_PlayerACSafe, playerid, true);
 		Bit1_Set(gr_PlayerDownloading, playerid, true);
 		SafeSpawning[playerid] = true;
 	}
@@ -4048,36 +4034,19 @@ public OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
 
 public OnPlayerUpdate(playerid)
 {
-	CheckPlayerRemoteJacking(playerid);
 	if( Bit1_Get(gr_PlayerExiting, playerid) && GetPlayerInterior(playerid) == 0)
 		defer SafeExitCheck(playerid);
 
 	if( IsPlayerAlive(playerid) )
 	{
-		if(PlayerTick[playerid][ptMoney] < gettimestamp()) {
-			DamageStatusTick[ playerid ] = 0;
-			DamageStatusCountings[ playerid ] = 0;
+		if(PlayerTick[playerid][ptMoney] < gettimestamp()) 
+		{
 			PlayerTick[playerid][ptMoney] = gettimestamp();
 			AC_MoneyDetect(playerid);
 			if( !PlayerSyncs[ playerid ] ) {
 				PlayerSyncs[ playerid ] = true;
 			}
 			return 1;
-		}
-		if( GetPlayerState(playerid) == PLAYER_STATE_DRIVER ) {
-			if( !( IsAPlane(GetVehicleModel(GetPlayerVehicleID(playerid))) || IsAHelio(GetVehicleModel(GetPlayerVehicleID(playerid))) ) && GetPlayerSpeed(playerid, true) > 330 ) {
-
-				new
-					tmpString[ 128 ];
-				format(tmpString, sizeof(tmpString), "Anti-Cheat: %s[%d] is possible cheater. Reason: Speed Hack.",
-					GetName(playerid,false),
-					playerid
-				);
-				ABroadCast(COLOR_RED,tmpString,2);
-				TogglePlayerControllable(playerid, false);
-				SetTimerEx("UnfreezePlayer", 2500, false, "i", playerid);
-				return 1;
-			}
 		}
 	}
 	// Int & ViWo Sync Check

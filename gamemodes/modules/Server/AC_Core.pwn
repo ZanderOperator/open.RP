@@ -21,11 +21,7 @@
 	##       ##   ### ##     ## ##     ##
 	######## ##    ##  #######  ##     ##
 */
-
-// Anti Vehicle Teleport
-new Float: SAMP_AC_VEHICLE_POSITION[MAX_VEHICLES];
-
-enum E_PLAYER_CHEAT_WEAPONS
+enum E_PLAYER_WEAPONS
 {
 	pwSQLID[13],
 	pwWeaponId[13],
@@ -33,54 +29,9 @@ enum E_PLAYER_CHEAT_WEAPONS
 	pwHidden[13]
 }
 new
-	PlayerWeapons[MAX_PLAYERS][E_PLAYER_CHEAT_WEAPONS];
+	PlayerWeapons[MAX_PLAYERS][E_PLAYER_WEAPONS];
 
-enum E_PLAYER_ANTI_CHEAT_DATA 
-{
-	Float:acLastFootPos[ 3 ],
-	acLastVehicle,
-	bool:acKicked,
-	bool:acLoginDialog
-}
-new
-	AntiCheatData[ MAX_PLAYERS ][ E_PLAYER_ANTI_CHEAT_DATA ];
 
-enum E_PLAYER_CHEAT_COUNTS
-{
-	ccAmmo,
-	ccWeapon,
-	ccAirBreak,
-	ccGoC,
-	ccRemoteJacking,
-	ccFoxHeaven,
-	ccFloodCar,
-	ccSafeLogin
-}
-new
-	PlayerCountings[ MAX_PLAYERS ][ E_PLAYER_CHEAT_COUNTS ];
-
-enum {
-	ANTI_CHEAT_TYPE_REMOTE = 1,
-	ANTI_CHEAT_TYPE_CAR_CONTROL,
-	ANTI_CHEAT_TYPE_FOX
-};
-
-new AimWarns[MAX_PLAYERS] = 0,
-	AimWarnStamp[MAX_PLAYERS] = 0; //Needs to be reset on OnPlayerConnect
-
-/*
-	########  ######## ######## #### ##    ## ########  ######
-	##     ## ##       ##        ##  ###   ## ##       ##    ##
-	##     ## ##       ##        ##  ####  ## ##       ##
-	##     ## ######   ######    ##  ## ## ## ######    ######
-	##     ## ##       ##        ##  ##  #### ##             ##
-	##     ## ##       ##        ##  ##   ### ##       ##    ##
-	########  ######## ##       #### ##    ## ########  ######
-*/
-
-#define MAX_AUTOBULLET_INFRACTIONS          (3)
-#define AUTOBULLET_RESET_DELAY              (30)
-#define POTENTIAL_SPEED_DROP 				(5.0)
 
 
 /*
@@ -93,34 +44,9 @@ new AimWarns[MAX_PLAYERS] = 0,
 	   ###    ##     ## ##     ##  ######
 */
 
-// Vehicles
-static stock
-	vehicleTick[MAX_VEHICLES],
-	Float:VehicleHealth[MAX_VEHICLES],
-	Float:VehicleSpeed[MAX_VEHICLES],
-	g_DamageStatus[MAX_VEHICLES][3 char];
-
-new
-	VehicleColor1[MAX_VEHICLES],
-	VehicleColor2[MAX_VEHICLES],
-	DamageStatusTick[MAX_PLAYERS];
-
-//CLEO
-static stock
-	AutoBulletInfractions[MAX_PLAYERS char],
-	LastInfractionTime[MAX_PLAYERS char];
-
-// Controling
-new
-	acVehicleDriver[MAX_VEHICLES] = { INVALID_PLAYER_ID, ... },
-	acPlayerVehicle[MAX_PLAYERS]  = { 0, ... };
-
-new
-	bool:SafeGiveWeapon[MAX_PLAYERS],
-	godEntry[MAX_PLAYERS],
-	acPlayerState[ MAX_PLAYERS ],
-	LastPullingVehicle[MAX_VEHICLES],
-	ABH_Online = 0;
+// BustAim
+new AimWarns[MAX_PLAYERS] = 0,
+	AimWarnStamp[MAX_PLAYERS] = 0; //Needs to be reset on OnPlayerConnect
 
 /*
 	 ######  ########  #######   ######  ##    ##  ######
@@ -141,85 +67,6 @@ timer ResetVehicleSafeTeleport[60](vehicleid)
 timer ResetVehicleSafeDelete[100](vehicleid)
 {
 	VehicleInfo[vehicleid][vDeleted] = false;
-	return 1;
-}
-
-timer SafeWeaponFunc[250](playerid)
-{
-	SafeGiveWeapon[playerid] = false;
-	return 1;
-}
-
-stock static ShowAdminACInterface(playerid)
-{
-	new
-		string[ 168 ];
-	format(string, 128, "God of Cars:\t %s\n"COL_WHITE"Ultimate Troll:\t %s\n"COL_WHITE"Foxheaven:\t %s\n"COL_WHITE"Anti BH:\t %s",
-		GoC_Online 		? (""COL_GREEN"Online") : (""COL_RED"Offline"),
-		Troll_Online 	? (""COL_GREEN"Online") : (""COL_RED"Offline"),
-		Fox_Online 		? (""COL_GREEN"Online") : (""COL_RED"Offline"),
-		ABH_Online 		? (""COL_GREEN"Online") : (""COL_RED"Offline")
-	);
-	ShowPlayerDialog(playerid, DIALOG_ADMIN_AC, DIALOG_STYLE_LIST, "Anti-Cheat Interface", string, "Choose", "Abort");
-	return 1;
-}
-
-stock ResetAntiCheatCountings(playerid)
-{
-	PlayerCountings[ playerid ][ ccAmmo ]			= 0;
-	PlayerCountings[ playerid ][ ccWeapon ]         = 0;
-	PlayerCountings[ playerid ][ ccAirBreak ]  		= 0;
-	PlayerCountings[ playerid ][ ccGoC ]  			= 0;
-	PlayerCountings[ playerid ][ ccRemoteJacking ]  = 0;
-	PlayerCountings[ playerid ][ ccFoxHeaven ]  	= 0;
-	PlayerCountings[ playerid ][ ccFloodCar ]  		= 0;
-	PlayerCountings[ playerid ][ ccSafeLogin ]		= 0;
-
-	// Vars
-	AntiCheatData[ playerid ][ acLastFootPos ][ 0 ] = 0.0;
-	AntiCheatData[ playerid ][ acLastFootPos ][ 1 ] = 0.0;
-	AntiCheatData[ playerid ][ acLastFootPos ][ 2 ] = 0.0;
-	AntiCheatData[ playerid ][ acLastVehicle ] 		= 0;
-	AntiCheatData[ playerid ][ acLoginDialog ] 		= false;
-
-	PlayerWeapons[playerid][pwWeaponId][0]	= 0;
-	PlayerWeapons[playerid][pwAmmo][0]		= 0;
-
-	PlayerWeapons[playerid][pwWeaponId][1]	= 0;
-	PlayerWeapons[playerid][pwAmmo][1]		= 0;
-
-	PlayerWeapons[playerid][pwWeaponId][2]	= 0;
-	PlayerWeapons[playerid][pwAmmo][2]		= 0;
-
-	PlayerWeapons[playerid][pwWeaponId][3]	= 0;
-	PlayerWeapons[playerid][pwAmmo][3]		= 0;
-
-	PlayerWeapons[playerid][pwWeaponId][4]	= 0;
-	PlayerWeapons[playerid][pwAmmo][4]		= 0;
-
-	PlayerWeapons[playerid][pwWeaponId][5]	= 0;
-	PlayerWeapons[playerid][pwAmmo][5]		= 0;
-
-	PlayerWeapons[playerid][pwWeaponId][6]	= 0;
-	PlayerWeapons[playerid][pwAmmo][6]		= 0;
-
-	PlayerWeapons[playerid][pwWeaponId][7]	= 0;
-	PlayerWeapons[playerid][pwAmmo][7]		= 0;
-
-	PlayerWeapons[playerid][pwWeaponId][8]	= 0;
-	PlayerWeapons[playerid][pwAmmo][8]		= 0;
-
-	PlayerWeapons[playerid][pwWeaponId][9]	= 0;
-	PlayerWeapons[playerid][pwAmmo][9]		= 0;
-
-	PlayerWeapons[playerid][pwWeaponId][10]	= 0;
-	PlayerWeapons[playerid][pwAmmo][10]		= 0;
-
-	PlayerWeapons[playerid][pwWeaponId][11]	= 0;
-	PlayerWeapons[playerid][pwAmmo][11]		= 0;
-
-	PlayerWeapons[playerid][pwWeaponId][12]	= 0;
-	PlayerWeapons[playerid][pwAmmo][12]		= 0;
 	return 1;
 }
 
@@ -317,8 +164,8 @@ stock AC_MoneyDetect(playerid)
 	##  ##  ## ##       ##     ## ##        ##     ## ##   ### ##    ##
 	 ###  ###  ######## ##     ## ##         #######  ##    ##  ######
  */
-forward LoadPlayerWeapons(playerid);
-public LoadPlayerWeapons(playerid)
+ 
+Function: LoadPlayerWeapons(playerid)
 {
 	if(cache_num_rows())
 	{
@@ -352,8 +199,7 @@ public LoadPlayerWeapons(playerid)
 	return 1;
 }
 
-forward OnWeaponInsertQuery(playerid, slotid);
-public OnWeaponInsertQuery(playerid, slotid)
+Function: OnWeaponInsertQuery(playerid, slotid)
 {
 	PlayerWeapons[playerid][pwSQLID][slotid] = cache_insert_id();
 	return 1;
@@ -407,6 +253,7 @@ stock AC_SavePlayerWeapon(playerid, slotid)
 	}
 	return 1;
 }
+
 stock AC_SavePlayerWeapons(playerid)
 {
 	AC_SavePlayerWeapon(playerid, 0);
@@ -424,6 +271,7 @@ stock AC_SavePlayerWeapons(playerid)
 	AC_SavePlayerWeapon(playerid, 12);
 
 }
+
 stock AC_DecreasePlayerWeaponAmmo(playerid, weaponid, amount)
 {
 	new
@@ -453,7 +301,6 @@ stock AC_GivePlayerWeapon(playerid, weaponid, ammo, bool:base_update=true, bool:
 
 	
 	//Real Give Func
-	SafeGiveWeapon[playerid] = true;
 	if(SafeSpawned[playerid])
 		GivePlayerWeapon(playerid, weaponid, ammo);
 
@@ -461,7 +308,6 @@ stock AC_GivePlayerWeapon(playerid, weaponid, ammo, bool:base_update=true, bool:
 		AC_SavePlayerWeapon(playerid, slot);
 
 	//Tick 3sec
-	defer SafeWeaponFunc(playerid);
 	PlayerTick[playerid][ptWeapon] = gettimestamp() + 2;
 	return 1;
 }
@@ -493,31 +339,6 @@ stock ResetWeaponSlots(playerid)
 {
 	PlayerInfo[playerid][pPrimaryWeapon] = 0;
 	PlayerInfo[playerid][pSecondaryWeapon] = 0;
-	return 1;
-}
-
-stock WeaponHackCheck(playerid)
-{
-	if(GetPlayerWeapon(playerid) != 0 && GetPlayerAmmo(playerid) != 0)
-	{
-		new banreason[18];
-		if(PlayerWeapons[playerid][pwSQLID][GetWeaponSlot(GetPlayerWeapon(playerid))] <= 0 && !SafeGiveWeapon[playerid])
-		{
-			format(banreason, 18, "Weapon Hack"); 
-			HOOK_Ban(playerid, INVALID_PLAYER_ID, banreason, -1,  true);
-			va_SendClientMessage(playerid, COLOR_RED, "Anti-Cheat: Dobio si ban, razlog: %s!", banreason);
-			BanMessage(playerid);
-			return 0;
-		}
-		if((PlayerWeapons[playerid][pwAmmo][GetWeaponSlot(GetPlayerWeapon(playerid))] + 5) <= GetPlayerAmmo(playerid))
-		{
-			format(banreason, 18, "Ammo Hack"); 
-			HOOK_Ban(playerid, INVALID_PLAYER_ID, banreason, -1,  true);
-			va_SendClientMessage(playerid, COLOR_RED, "Anti-Cheat: Dobio si ban, razlog: %s!", banreason);
-			BanMessage(playerid);
-			return 0;
-		}
-	}
 	return 1;
 }
 
@@ -716,47 +537,6 @@ stock PacketLossCheck(playerid)
 	return 1;
 }
 
-stock AC_JetpackDetect(playerid)
-{
-	if(GetPlayerSpecialAction(playerid) == SPECIAL_ACTION_USEJETPACK)
-	{
-		SetPlayerSpecialAction(playerid, SPECIAL_ACTION_NONE);
-		SendClientMessage(playerid, COLOR_RED, "Anti-Cheat: Dobio si ban, razlog: Jetpack Cheat!");
-
-		#if defined MODULE_BANS
-		HOOK_Ban(playerid, INVALID_PLAYER_ID, "Jetpack Cheat", -1,  true);
-		BanMessage(playerid);
-		#endif
-		return 1;
-	}
-	return 1;
-}
-
-/*
-	   ###    ##     ## ########  #######  ########  ##     ## ##       ##       ######## ########
-	  ## ##   ##     ##    ##    ##     ## ##     ## ##     ## ##       ##       ##          ##
-	 ##   ##  ##     ##    ##    ##     ## ##     ## ##     ## ##       ##       ##          ##
-	##     ## ##     ##    ##    ##     ## ########  ##     ## ##       ##       ######      ##
-	######### ##     ##    ##    ##     ## ##     ## ##     ## ##       ##       ##          ##
-	##     ## ##     ##    ##    ##     ## ##     ## ##     ## ##       ##       ##          ##
-	##     ##  #######     ##     #######  ########   #######  ######## ######## ########    ##
-*/
-
-static CheckSpeed(playerid)
-{
-    new Keys,ud,lr;
-    GetPlayerKeys(playerid,Keys,ud,lr);
-
-    if(ud == KEY_UP && lr != KEY_LEFT && lr != KEY_RIGHT)
-    {
-        new Float:Velocity[3];
-        GetPlayerVelocity(playerid, Velocity[0], Velocity[1], Velocity[2]);
-        Velocity[0] = floatsqroot( (Velocity[0]*Velocity[0])+(Velocity[1]*Velocity[1])+(Velocity[2]*Velocity[2]));
-        if(Velocity[0] >= 0.11 && Velocity[0] <= 0.13) return 1;
-    }
-    return 0;
-}
-
 /*
 	##     ## ######## ##     ##    ##     ## ########    ###    ##       ######## ##     ##
 	##     ## ##       ##     ##    ##     ## ##         ## ##   ##          ##    ##     ##
@@ -766,29 +546,6 @@ static CheckSpeed(playerid)
 	  ## ##   ##       ##     ##    ##     ## ##       ##     ## ##          ##    ##     ##
 	   ###    ######## ##     ##    ##     ## ######## ##     ## ########    ##    ##     ##
 */
-stock GetVehicleDriver(vehicleid)
-{
-	new
-		playerid = INVALID_PLAYER_ID;
-
-	foreach(new i : Player) {
-		if( IsPlayerInVehicle(i, vehicleid) && GetPlayerState(playerid) == PLAYER_STATE_DRIVER ) {
-			playerid = i;
-			break;
-		}
-	}
-	return playerid;
-}
-
-stock DoesVehicleHavePlayers(vehicleid)
-{
-	foreach(new i:  Player)
-	{
-		if(IsPlayerInVehicle(i, vehicleid))
-			return 1;
-	}
-	return 0;
-}
 
 stock AC_CreateVehicle(vehicletype, Float:x, Float:y, Float:z, Float:rotation, color1, color2, respawn_delay = -1, sirenon = 0)
 {
@@ -802,9 +559,7 @@ stock AC_CreateVehicle(vehicletype, Float:x, Float:y, Float:z, Float:rotation, c
 	VehicleInfo[id][vRespawn] = respawn_delay;
 	VehicleInfo[id][vServerTeleport] = false;
 	VehicleInfo[id][vViwo] = GetVehicleVirtualWorld(id);
-	VehicleHealth[id] = 1000.0;
-	VehicleColor1[id] = color1;
-	VehicleColor2[id] = color2;
+
 
 	VehiclePrevInfo[id][vPosX] = x;
 	VehiclePrevInfo[id][vPosY] = y;
@@ -842,53 +597,11 @@ stock AC_DestroyVehicle(vehicleid)
 	VehiclePrevInfo[vehicleid][vTires]					= 0;
 	VehiclePrevInfo[vehicleid][vLights]					= 0;
 
-	VehicleHealth[ vehicleid ]		= 0.0;
-	VehicleSpeed[ vehicleid ]		= 0;
-	g_DamageStatus[ vehicleid ]{0}	= 0;
-	g_DamageStatus[ vehicleid ]{1}	= 0;
-	g_DamageStatus[ vehicleid ]{2}	= 0;
-	VehicleColor1[ vehicleid ]		= -1;
-	VehicleColor2[ vehicleid ]		= -1;
 	VehicleInfo[vehicleid][vEngineRunning] = 0;
 	Bit1_Set(gr_VehicleAlarmStarted, vehicleid, false);
 	DestroyVehicle(vehicleid);
 	Iter_Remove(Vehicles, vehicleid);
 	defer ResetVehicleSafeDelete(vehicleid);
-	return 1;
-}
-
-/*
-	########  ######## ##     ##  #######  ######## ########               ##    ###     ######  ##    ## #### ##    ##  ######
-	##     ## ##       ###   ### ##     ##    ##    ##                     ##   ## ##   ##    ## ##   ##   ##  ###   ## ##    ##
-	##     ## ##       #### #### ##     ##    ##    ##                     ##  ##   ##  ##       ##  ##    ##  ####  ## ##
-	########  ######   ## ### ## ##     ##    ##    ######   #######       ## ##     ## ##       #####     ##  ## ## ## ##   ####
-	##   ##   ##       ##     ## ##     ##    ##    ##               ##    ## ######### ##       ##  ##    ##  ##  #### ##    ##
-	##    ##  ##       ##     ## ##     ##    ##    ##               ##    ## ##     ## ##    ## ##   ##   ##  ##   ### ##    ##
-	##     ## ######## ##     ##  #######     ##    ########          ######  ##     ##  ######  ##    ## #### ##    ##  ######
-*/
-stock CheckPlayerRemoteJacking( playerid )
-{
-    new iVehicle = GetPlayerVehicleID( playerid );
-
-    if( !IsPlayerInAnyVehicle( playerid ) || Bit1_Get( gr_SafeRemoting, playerid ) )
-        GetPlayerPos( playerid, AntiCheatData[ playerid ] [ acLastFootPos ][ 0 ], AntiCheatData[ playerid ] [ acLastFootPos ][ 1 ], AntiCheatData[ playerid ] [ acLastFootPos ][ 2 ] );
-
-	if( PlayerInfo[ playerid ][ pAdmin ] || PlayerInfo[ playerid ][ pHelper ] )
-		return 1;
-
-    if( ( iVehicle != AntiCheatData[ playerid ] [ acLastVehicle ] ) && ( iVehicle != 0 ) && ( GetPlayerState( playerid ) == PLAYER_STATE_DRIVER ) ) {
-        new
-            Float: fDistance = GetVehicleDistanceFromPoint( iVehicle, AntiCheatData[ playerid ] [ acLastFootPos ][ 0 ], AntiCheatData[ playerid ] [ acLastFootPos ][ 1 ], AntiCheatData[ playerid ] [ acLastFootPos ][ 2 ] ),
-            Float: fOffset = 15.0;
-
-        if( ( GetVehicleModel( iVehicle ) == 577 ) || ( GetVehicleModel( iVehicle ) == 592 )) fOffset = 25.0; // Andromanda | AT-400
-
-        if( fDistance > fOffset )
-			CallLocalFunction("OnPlayerCheat", "iii", playerid, 0, ANTI_CHEAT_TYPE_REMOTE);
-
-        GetPlayerPos( playerid, AntiCheatData[ playerid ] [ acLastFootPos ][ 0 ], AntiCheatData[ playerid ] [ acLastFootPos ][ 1 ], AntiCheatData[ playerid ] [ acLastFootPos ][ 2 ] );
-        AntiCheatData[ playerid ] [ acLastVehicle ] = iVehicle;
-    }
 	return 1;
 }
 
@@ -1007,21 +720,6 @@ stock AC_SetPlayerArmour(playerid, Float:armour, bool:admin_duty = false)
 #endif
 #define SetPlayerArmour AC_SetPlayerArmour
 
-stock AC_RemovePlayerFromVehicle(playerid)
-{
-	GetPlayerPos( playerid, AntiCheatData[ playerid ] [ acLastFootPos ][ 0 ], AntiCheatData[ playerid ] [ acLastFootPos ][ 1 ], AntiCheatData[ playerid ] [ acLastFootPos ][ 2 ] );
-	AntiCheatData[ playerid ] [ acLastVehicle ] = 0;
-	Bit1_Set( gr_SafeRemoting, playerid, true );
-	RemovePlayerFromVehicle(playerid);
-	return 1;
-}
-#if defined _ALS_RemovePlayerFromVehicle
-    #undef RemovePlayerFromVehicle
-#else
-    #define _ALS_RemovePlayerFromVehicle
-#endif
-#define RemovePlayerFromVehicle AC_RemovePlayerFromVehicle
-
 stock AC_SetVehicleToRespawn(vehicleid, bool:oldpos = false)
 {
 	new
@@ -1091,21 +789,6 @@ stock AC_TogglePlayerSpectating(playerid, yon)
 #endif
 #define TogglePlayerSpectating AC_TogglePlayerSpectating
 
-stock AC_PutPlayerInVehicle(playerid, vehicleid, seatid)
-{
-	GetPlayerPos( playerid, AntiCheatData[ playerid ] [ acLastFootPos ][ 0 ], AntiCheatData[ playerid ] [ acLastFootPos ][ 1 ], AntiCheatData[ playerid ] [ acLastFootPos ][ 2 ] );
-	AntiCheatData[ playerid ] [ acLastVehicle ] = vehicleid;
-	Bit1_Set( gr_SafeRemoting, playerid, true );
-	PutPlayerInVehicle(playerid, vehicleid, seatid);
-	return 1;
-}
-#if defined _ALS_PutPlayerInVehicle
-    #undef PutPlayerInVehicle
-#else
-    #define _ALS_PutPlayerInVehicle
-#endif
-#define PutPlayerInVehicle AC_PutPlayerInVehicle
-
 stock AC_AddVehicleComponent(vehicleid, componentid)
 {
 	if(!IsComponentidCompatible(GetVehicleModel(vehicleid), componentid))
@@ -1139,17 +822,6 @@ stock GetPlayerPacketloss(playerid, &Float:packetloss)
 	strmid(nstats_loss, nstats, start+12, end, sizeof(nstats_loss));
 	packetloss = floatstr(nstats_loss);
 	return 1;
-}
-
-stock DriveByOrExplosion(weaponid)
-{
-	new value = 0;
-	switch(weaponid)
-	{
-		case 50: value = DAMAGE_DRIVEBY_HELI; // Rezanje na snicle helikopterom
-		case 51: value = DAMAGE_EXPLOSION;
-	}
-	return value;
 }
 
 stock OnTaserShoot(playerid)
@@ -1188,47 +860,8 @@ public OnPlayerWeaponShot(playerid, weaponid, hittype, hitid, Float:fX, Float:fY
 		ApplyAnimation(playerid, "COLT45", "colt45_reload", 4.1, 0, 0, 0, 0, 0);
 		SetTimerEx("OnTaserShoot", 1100, false, "i", playerid);
 	}
-
-	
-	if(weaponid == PlayerWeapons[playerid][pwWeaponId][GetWeaponSlot(weaponid)] && (PlayerWeapons[playerid][pwAmmo][GetWeaponSlot(weaponid)] + 5) <= GetPlayerAmmo(playerid) && !PlayerInfo[playerid][pKilled]) // + 5 bullets in case of lagg
-	{
-		AC_ResetPlayerWeapons(playerid);
-		SendClientMessage(playerid, COLOR_RED, "Anti-Cheat: Dobio si ban, razlog: Ammo Hack!");
-
-		HOOK_Ban(playerid, INVALID_PLAYER_ID, "Ammo Hack", -1,  true);
-		BanMessage(playerid);
-		return 1;
-	}
 	AC_DecreasePlayerWeaponAmmo(playerid, weaponid, 1);
 	
-	if( !IsPlayerInAnyVehicle(playerid) )  
-	{
-        switch(weaponid) 
-		{
-            case 27, 23, 25, 29, 30, 31, 33, 24, 38:  
-			{
-                if(CheckSpeed(playerid)) 
-				{
-                    if(gettimestamp() - LastInfractionTime{playerid} >= AUTOBULLET_RESET_DELAY) AutoBulletInfractions{playerid} = 1;
-                    else AutoBulletInfractions{playerid}++;
-                    LastInfractionTime{playerid} = gettimestamp();
-
-                    if(AutoBulletInfractions{playerid} == MAX_AUTOBULLET_INFRACTIONS)  
-					{
-                        AutoBulletInfractions{playerid} = 0;
-
-						new
-							tmpString[86];
-                        format(tmpString, sizeof(tmpString), "Anti-Cheat: %s[%d] je moguci cheater, razlog: Autobullet Hack.",
-							GetName(playerid,false),
-							playerid);
-						ABroadCast(COLOR_RED,tmpString,2);
-                        return 1;
-                    }
-                }
-            }
-        }
-    }
     #if defined CHEAT_OnPlayerWeaponShot
         CHEAT_OnPlayerWeaponShot(playerid, weaponid, hittype, hitid, Float:fX, Float:fY, Float:fZ);
     #endif
@@ -1246,17 +879,8 @@ public OnPlayerWeaponShot(playerid, weaponid, hittype, hitid, Float:fX, Float:fY
 
 hook OnPlayerConnect(playerid)
 {
-	SafeGiveWeapon[playerid] = false;
-	AntiCheatData[playerid][acKicked] = false;
 	AimWarns[playerid] = 0;
 	AimWarnStamp[playerid] = 0;
-	LastInfractionTime{playerid} = 0;
-	return 1;
-}
-
-CMD:clearacveh(playerid, params[]) // test
-{
-	acVehicleDriver[ strval(params) ] = INVALID_PLAYER_ID;
 	return 1;
 }
 
@@ -1267,279 +891,12 @@ hook OnPlayerDisconnect(playerid, reason)
 		new vehicleid = GetPlayerVehicleID(playerid);
 		GetVehiclePreviousInfo(vehicleid);
 	}
-	if(acPlayerVehicle[playerid])
-	{
-		acVehicleDriver[ acPlayerVehicle[ playerid ] ] = INVALID_PLAYER_ID;
-		acPlayerVehicle[ playerid ] = 0;
-	}
-	DamageStatusCountings[ playerid ] = 0;
-	AntiCheatData[playerid][acKicked ] = false;
-	return 1;
-}
-
-hook OnPlayerTakeDamage(playerid, issuerid, Float:amount, weaponid)
-{
-	if(issuerid != INVALID_PLAYER_ID && PlayerInfo[issuerid][pBanned] == 0)
-	{
-		if(DriveByOrExplosion(weaponid) > 0)
-		{
-			new reason = DriveByOrExplosion(weaponid),
-				Float:oldhealth,
-				Float:oldarmour;
-
-			GetPlayerHealth(playerid, oldhealth);
-			if((reason == DAMAGE_DRIVEBY_HELI && oldhealth > 15.0) || GetPlayerState(issuerid) != PLAYER_STATE_DRIVER)
-				return 0;
-
-			GetPlayerArmour(playerid, oldarmour);
-			SetPlayerHealth(playerid, oldhealth + 10.0);
-			SetPlayerArmour(playerid, oldarmour);
-
-			new banreason[18];
-			switch(reason)
-			{
-				case DAMAGE_DRIVEBY_HELI:
-				{
-					format(banreason, 18, "DriveBy");
-					HOOK_Ban(issuerid, INVALID_PLAYER_ID, banreason, -1,  true);
-					va_SendClientMessage(issuerid, COLOR_RED, "Anti-Cheat: Dobio si ban, razlog: %s!", banreason);
-					BanMessage(issuerid);
-					return 1;
-				}
-				case DAMAGE_EXPLOSION:
-				{
-					if(ForbiddenWeapons(weaponid))
-					{
-						format(banreason, 18, "Weapon Cheat");
-						HOOK_Ban(issuerid, INVALID_PLAYER_ID, banreason, -1,  true);
-						va_SendClientMessage(issuerid, COLOR_RED, "Anti-Cheat: Dobio si ban, razlog: %s!", banreason);
-						BanMessage(issuerid);
-						return 1;
-					}
-				}
-			}
-		}
-		else if(IsWeaponWearable(weaponid) && !PlayerInfo[issuerid][pKilled]) // Fake Ban in Wounded State protection
-		{
-			if(PlayerWeapons[issuerid][pwSQLID][GetWeaponSlot(weaponid)] == -1)
-			{
-				if(Bit1_Get(gr_BeanBagShotgun, issuerid) || Bit1_Get(gr_Taser, issuerid))
-					return 1;
-				if(Bit1_Get( gr_OnEvent, playerid)) return (true);
-				new Float:oldhealth,
-					Float:oldarmour;
-
-				GetPlayerHealth(playerid, oldhealth);
-				GetPlayerArmour(playerid, oldarmour);
-				SetPlayerHealth(playerid, oldhealth);
-				SetPlayerArmour(playerid, oldarmour);
-				HOOK_Ban(issuerid, INVALID_PLAYER_ID, "Weapon Cheat", -1,  true);
-				SendClientMessage(issuerid, COLOR_RED, "Anti-Cheat: Dobio si ban, razlog: Weapon Cheat!");
-				BanMessage(issuerid);
-				return 1;
-			}
-		}
-	}
-	return 0;
-}
-
-stock IsWithTeamStaff(playerid)
-{
-	new Float:x, Float:y, Float:z,
-		bool:value = false;
-	foreach(new i: Player)
-	{
-		if(PlayerInfo[i][pAdmin] < 1 || PlayerInfo[i][pHelper] < 1)
-			continue;
-		GetPlayerPos(i, x, y, z);
-		if(IsPlayerInRangeOfPoint(playerid, 20.0, x, y, z))
-		{
-			value = true;
-			break;
-		}
-	}
-	return value;
-}
-
-hook OnPlayerEnterVehicle(playerid, vehicleid, ispassenger)
-{
-	godEntry[playerid] = GetTickCount();
-	EnteringVehicle[playerid] = vehicleid;
 	return 1;
 }
 
 hook OnPlayerExitVehicle(playerid, vehicleid)
 {
 	GetVehiclePreviousInfo(vehicleid);
-	return 1;
-}
-
-hook OnPlayerStateChange(playerid, newstate, oldstate)
-{
-	if( (acPlayerState[ playerid ] == PLAYER_STATE_PASSENGER && newstate == PLAYER_STATE_DRIVER) ||  (acPlayerState[ playerid ] == PLAYER_STATE_DRIVER && newstate == PLAYER_STATE_PASSENGER)) { // 99.9% citer
-		CallLocalFunction("OnPlayerCheat", "iii", playerid, 0, ANTI_CHEAT_TYPE_CAR_CONTROL);
-		return 1;
-	}
-	acPlayerState[ playerid ] = newstate;
-	
-	if( oldstate == PLAYER_STATE_DRIVER || oldstate == PLAYER_STATE_PASSENGER )
-		PlayerTick[playerid][ptVehiclePort] = GetTickCount() + 1650;
-
-	if( newstate == PLAYER_STATE_DRIVER )
-	{
-		new
-			vehicleid = GetPlayerVehicleID(playerid);
-		if( acVehicleDriver[ vehicleid ] != INVALID_PLAYER_ID ) { // 99.9% citer
-			CallLocalFunction("OnPlayerCheat", "iii", playerid, 0, ANTI_CHEAT_TYPE_CAR_CONTROL);
-			return 1;
-		}
-
-		if( vehicleid && acVehicleDriver[ vehicleid ] == INVALID_PLAYER_ID )
-			acVehicleDriver[ vehicleid ] 	= playerid;
-		acPlayerVehicle[ playerid ] 	= vehicleid;
-
-		if( !GoC_Online ) return 1;
-		if( ( GetTickCount() - godEntry[ playerid ] ) < 5 )
-		{
-			static
-				dest[22],
-				tmpString[115];
-
-			NetStats_GetIpPort(playerid, dest, sizeof(dest));
-			format(tmpString, sizeof(tmpString), "Anti-Cheat: %s[%d] je moguci cheater, razlog: God of Cars CLEO [IP: %s].",
-					GetName(playerid,false),
-					playerid,
-					dest
-			);
-			ABroadCast(COLOR_RED,tmpString,2);
-			if( ++PlayerCountings[ playerid ][ ccGoC ] >= 3 )
-			{
-			    new
-			        banreason[30],
-			        Float:packetLoss;
-
-          		GetPlayerPacketloss(playerid, packetLoss);
-
-				SendClientMessage(playerid, COLOR_RED, "Anti-Cheat: Dobio si ban, razlog: GoC CLEO!");
-				format(banreason, sizeof(banreason), "GoC CLEO, Packet Loss: %f%", packetLoss);
-
-				#if defined MODULE_BANS
-				HOOK_Ban(playerid, INVALID_PLAYER_ID, banreason, -1,  true);
-				BanMessage(playerid);
-				#endif
-				return 1;
-			}
-		}
-		//SetPlayerArmedWeapon(playerid, 0); - Ako vrati� ovo razjebat ae� Gunrack skriptu.
-		/*if(GetPlayerWeapon(playerid) == WEAPON_DEAGLE || GetPlayerWeapon(playerid) == WEAPON_SNIPER ||
-		GetPlayerWeapon(playerid) == WEAPON_TEC9 ||  GetPlayerWeapon(playerid) == WEAPON_UZI)
-			SetPlayerArmedWeapon(playerid, 0);*/
-	}
-	if( oldstate == PLAYER_STATE_DRIVER || oldstate == PLAYER_STATE_PASSENGER ) {
-		if( oldstate == PLAYER_STATE_DRIVER )
-			acVehicleDriver[ acPlayerVehicle[ playerid ] ] 	= INVALID_PLAYER_ID;
-		acPlayerVehicle[ playerid ] 	= 0;
-	}
-	if(newstate==PLAYER_STATE_PASSENGER || newstate==PLAYER_STATE_DRIVER) // deag/sniper
-    {
-        if(/*GetPlayerWeapon(playerid) == WEAPON_DEAGLE || */GetPlayerWeapon(playerid) == WEAPON_SNIPER )
-			SetPlayerArmedWeapon(playerid, 0);
-    }
-	if( newstate == PLAYER_STATE_PASSENGER ) {
-		acPlayerVehicle[ playerid ] 	= GetPlayerVehicleID(playerid);
-	}
-	if( newstate == PLAYER_STATE_DRIVER && oldstate == PLAYER_STATE_ONFOOT )
-		PlayerTick[playerid][ptWeapon] = gettimestamp() + 3;
-	if( newstate == PLAYER_STATE_ONFOOT && oldstate == PLAYER_STATE_DRIVER )
-	{
-		PlayerTick[playerid][ptWeapon] = gettimestamp() + 2;
-	}
-
-	return 1;
-}
-
-hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
-{
-	switch(dialogid) {
-		case DIALOG_ADMIN_AC: {
-			if(!response) return 1;
-			switch(listitem) {
-				case 0: {
-					SendClientMessage(playerid, COLOR_WHITE, GoC_Online ? (""COL_GREEN"[GoC]: Online") : (""COL_RED"[GoC]: Offline"));
-					GoC_Online = GoC_Online ? 0 : 1;
-				}
-				case 1: {
-					SendClientMessage(playerid, COLOR_WHITE, Troll_Online ? (""COL_GREEN"[uTroll]: Online") : (""COL_RED"[uTroll]: Offline"));
-					Troll_Online = Troll_Online ? 0 : 1;
-				}
-				case 2: {
-					SendClientMessage(playerid, COLOR_WHITE, Fox_Online ? (""COL_GREEN"[Foxheaven]: Online") : (""COL_RED"[Foxheaven]: Offline"));
-					Fox_Online = Fox_Online ? 0 : 1;
-				}
-				case 3: {
-					SendClientMessage(playerid, COLOR_WHITE, ABH_Online ? (""COL_GREEN"[Bunny Hop]: Online") : (""COL_RED"[Bunny Hop]: Offline"));
-					ABH_Online = ABH_Online ? 0 : 1;
-				}
-			}
-			return 1;
-		}
-	}
-	return 0;
-}
-
-hook OnPlayerUpdate(playerid)
-{
-	if(GetPlayerCameraMode(playerid) == 53)
-    {
-        new Float:kLibPos[3];
-        GetPlayerCameraPos(playerid, kLibPos[0], kLibPos[1], kLibPos[2]);
-        if ( kLibPos[2] < -50000.0 || kLibPos[2] > 50000.0 )
-        {
-			HOOK_Ban(playerid, INVALID_PLAYER_ID, "Weapon Crasher Hack", -1,  true);
-			SendClientMessage(playerid, COLOR_RED, "Anti-Cheat: Dobio si ban, razlog: Weapon Crasher Hack!");
-			BanMessage(playerid);
-            return 0;
-        }
-    }
-	if(AntiCheatData[playerid][acKicked])
-		return 0;
-
-	if( Fox_Online ) {
-		if( IsPlayerNPC(playerid) ) 	return 1;
-		if( !IsPlayerAlive(playerid) ) 	return 1;
-
-		new
-			vehicleid = GetPlayerVehicleID(playerid);
-		if( vehicleid && acPlayerVehicle[ playerid ] != vehicleid ) { // 99.9 cheater
-			RemovePlayerFromVehicle(playerid);
-			SetVehicleVelocity(vehicleid, 0.0, 0.0, 0.0);
-			CallLocalFunction("OnPlayerCheat", "iii", playerid, GetPlayerWeapon(playerid), ANTI_CHEAT_TYPE_FOX);
-			return 1;
-		}
-	}
-
-	if( IsPlayerAlive(playerid) &&
-		( GetPlayerAnimationIndex(playerid) == 1538 ||
-		GetPlayerAnimationIndex(playerid) == 1539 ||
-		GetPlayerAnimationIndex(playerid) == 1543 ))
-	{
-	    new Float:x, Float:y, Float:z;
-		GetPlayerPos(playerid, x, y, z);
-		if(PlayerTick[ playerid ][ ptFlyHack ] < gettimestamp()) {
-
-			if((z >= 10) && (!IsPlayerInRangeOfPoint(playerid, 29, 2313.3032, -1416.9933, 27.5538) && !IsPlayerInRangeOfPoint(playerid, 45, 1964.5123,-1201.0264,20.9248)))
-			{
-				if(IsPlayerSwimming(playerid))
-					return 0;
-				new str[84];
-				format(str, sizeof(str), "Anti-Cheat: %s je dobio kick sa servera, razlog: Fly hack.", GetName(playerid, true));
-				SendClientMessageToAll(COLOR_RED, str);
-				SendClientMessage(playerid, COLOR_RED, "Anti-Cheat: Dobili ste kick sa servera zbog koristenja Fly hack-a.");
-				KickMessage(playerid);
-			}
-		}
-		PlayerTick[ playerid ][ ptFlyHack] = gettimestamp();
-	}
 	return 1;
 }
 
@@ -1584,97 +941,6 @@ public OnPlayerSuspectedForAimbot(playerid,hitid,weaponid,warnings)
 	return 0;
 }
 
-public OnUnoccupiedVehicleUpdate(vehicleid, playerid, passenger_seat, Float:new_x, Float:new_y, Float:new_z, Float:vel_x, Float:vel_y, Float:vel_z)
-{
-    if(passenger_seat == 1 && PlayerInfo[playerid][pBanned] == 0) // made by runner Discord: Runner#2944
-    {
-        if(floatround(new_x) == 0 && floatround(new_y) == 3 && floatround(new_z) == 0)
-        {
-            if(GetPlayerVehicleID(playerid) == vehicleid)
-            {
-                HOOK_Ban(playerid, INVALID_PLAYER_ID, "Player Crasher", -1,  true);
-                SendClientMessage(playerid, COLOR_RED, "Dobio si ban, razlog: Player Crasher");
-                BanMessage(playerid);
-            }
-            return 0;
-        }
-    }
-	new Float:ac_x, Float:ac_y, Float:ac_z, Float:ac_dist;
-	GetVehiclePos(vehicleid, ac_x, ac_y, ac_z);	
-	ac_dist = GetPlayerDistanceFromPoint(playerid, new_x, new_y, new_z);
-	if(ac_dist >= 120.0)
-	{
-		new string[144];
-		format(string, sizeof(string), "[Anti-Cheat]: %s se pokusao teleportirati do vozila te je kickan.", GetName(playerid, false));
-		ABroadCast(COLOR_LIGHTRED, string, 1);
-		KickMessage(playerid);
-		GetVehicleZAngle(vehicleid, VehiclePrevInfo[vehicleid][vRotZ]);
-		SetVehicleFakeZAngleForPlayer(playerid, vehicleid, VehiclePrevInfo[vehicleid][vRotZ]);
-		SetVehicleFakePosForPlayer(playerid, vehicleid, ac_x, ac_y, ac_z);
-		return 0;
-	}
-	if(passenger_seat > 0)
-	{
-		new Float:ac_zDiff = ac_z - VehiclePrevInfo[vehicleid][vPosZ];
-		if(ac_zDiff >= -5.0 &&
-		(floatabs(ac_x - VehiclePrevInfo[vehicleid][vPosX]) >= 8.0 || floatabs(ac_y - VehiclePrevInfo[vehicleid][vPosY]) >= 8.0))
-		{
-			new string[144];
-			format(string, sizeof(string), "[Anti-Cheat]: %s je pokusao koristiti CarShot Hack u vozilu te je kickan.", GetName(playerid, false));
-			ABroadCast(COLOR_LIGHTRED, string, 1);
-			KickMessage(playerid);
-		}
-	}
-	if(passenger_seat == 0)
-	{
-		new
-			Float: SAMP_AC_POS_VX, Float: SAMP_AC_POS_VZ,
-			Float: SAMP_AC_POS_VY, Float: SAMP_AC_POS_VR;
-
-		new Float: SAMP_AC_DISTANCE = GetVehicleDistanceFromPoint(vehicleid, new_x, new_y, new_z);
-
-		GetVehiclePos(vehicleid, SAMP_AC_POS_VX, SAMP_AC_POS_VY, SAMP_AC_POS_VZ);
-		GetVehicleZAngle(vehicleid, SAMP_AC_POS_VR);
-
-		if(SAMP_AC_DISTANCE > 15.0 && SAMP_AC_POS_VZ > -70.0 && SAMP_AC_DISTANCE > SAMP_AC_VEHICLE_POSITION[vehicleid] + ((SAMP_AC_DISTANCE / 3) * 1.6))
-		{
-			SetVehiclePos(vehicleid, SAMP_AC_POS_VX, SAMP_AC_POS_VY, SAMP_AC_POS_VZ);
-			SetVehicleZAngle(vehicleid, SAMP_AC_POS_VR);
-			return false;
-		}
-		SAMP_AC_VEHICLE_POSITION[vehicleid] = SAMP_AC_DISTANCE;
-	}
-	VehiclePrevInfo[vehicleid][vPosX] = ac_x;
-	VehiclePrevInfo[vehicleid][vPosY] = ac_y;
-	VehiclePrevInfo[vehicleid][vPosZ] = ac_z;
-	GetVehicleZAngle(vehicleid, VehiclePrevInfo[vehicleid][vRotZ]);
-	VehiclePrevInfo[vehicleid][vPosDiff] = ac_dist;
-	return 1;
-}
-
-
-// Functions
-
-static SetVehicleFakePosForPlayer(playerid, vehicleid, Float:x, Float:y, Float:z)
-{
-	if(!IsPlayerConnected(playerid) || GetVehicleModel(vehicleid) <= 0) return 0;
-	new BitStream:bs = BS_New();
-	BS_WriteValue(bs, PR_UINT16, vehicleid, PR_FLOAT, x, PR_FLOAT, y, PR_FLOAT, z);
-	PR_SendRPC(bs, playerid, 159);
-	BS_Delete(bs);
-	return 1;
-}
-
-static SetVehicleFakeZAngleForPlayer(playerid, vehicleid, Float:z_angle)
-{
-	if(!IsPlayerConnected(playerid) || GetVehicleModel(vehicleid) <= 0) return 0;
-	new BitStream:bs = BS_New();
-	BS_WriteValue(bs, PR_UINT16, vehicleid, PR_FLOAT, z_angle);
-	PR_SendRPC(bs, playerid, 160);
-	BS_Delete(bs);
-	return 1;
-}
-
 stock AC_SetVehicleHealth(vehicleid, Float:health)
 {
 	VehicleInfo[vehicleid][vHealth] = health;
@@ -1705,18 +971,6 @@ stock AC_RepairVehicle(vehicleid)
     #define _ALS_RepairVehicle
 #endif
 #define RepairVehicle AC_RepairVehicle
-
-stock AC_AttachTrailerToVehicle(trailerid,vehicleid)
-{
-	LastPullingVehicle[trailerid] = vehicleid;
-	return AttachTrailerToVehicle(trailerid, vehicleid);
-}
-#if defined _ALS_AttachTrailerToVehicle
-	#undef AttachTrailerToVehicle
-#else
-	#define _ALS_AttachTrailerToVehicle
-#endif
-#define AttachTrailerToVehicle AC_AttachTrailerToVehicle
 
 stock AC_SetVehiclePos(vehicleid,Float:x,Float:y,Float:z)
 {
@@ -1749,179 +1003,4 @@ stock AC_SetVehicleVelocity(vehicleid, Float:X, Float:Y, Float:Z)
 	#define _ALS_SetVehicleVelocity
 #endif
 #define SetVehicleVelocity AC_SetVehicleVelocity
-
-stock AC_Kick(playerid)
-{
-    AntiCheatData[playerid][acKicked] = true;
-    Kick(playerid);
-	return 1;
-}
-#if defined _ALS_Kick
-    #undef Kick
-#else
-    #define _ALS_Kick
-#endif
-#define Kick AC_Kick
-
-stock AC_Ban(playerid)
-{
-	AntiCheatData[playerid][acKicked] = true;
-	Ban(playerid);
-	return 1;
-}
-#if defined _ALS_Ban
-    #undef Ban
-#else
-    #define _ALS_Ban
-#endif
-#define Ban AC_Ban
-
-
-/*
-	 ######  ##     ##  ######  ########  #######  ##     ##
-	##    ## ##     ## ##    ##    ##    ##     ## ###   ###
-	##       ##     ## ##          ##    ##     ## #### ####
-	##       ##     ##  ######     ##    ##     ## ## ### ##
-	##       ##     ##       ##    ##    ##     ## ##     ##
-	##    ## ##     ## ##    ##    ##    ##     ## ##     ##
-	 ######   #######   ######     ##     #######  ##     ##
-*/
-
-Function: AC_CheckPlayerWeaponHack(playerid, slotid, weaponid, ammo)
-{
-	if(IsWeaponWearable(weaponid) && !PlayerInfo[playerid][pKilled]) // Fake Ban in Wounded State protection
-	{
-		if(PlayerWeapons[playerid][pwSQLID][slotid] == -1)
-		{
-			if(Bit1_Get(gr_BeanBagShotgun, playerid) || Bit1_Get(gr_Taser, playerid)) return 1;
-			if(Bit1_Get( gr_OnEvent, playerid)) return (true);
-
-			HOOK_Ban(playerid, INVALID_PLAYER_ID, "Weapon Cheat", -1,  true);
-			SendClientMessage(playerid, COLOR_RED, "Anti-Cheat: Dobio si ban, razlog: Weapon Cheat!");
-			BanMessage(playerid);
-			return 1;
-		}
-	}
-	if(ForbiddenWeapons(weaponid))
-	{
-		AC_ResetPlayerWeapons(playerid);
-		HOOK_Ban(playerid, INVALID_PLAYER_ID, "Weapon Cheat", -1,  true);
-		SendClientMessage(playerid, COLOR_RED, "Anti-Cheat: Dobio si ban, razlog: Weapon Cheat!");
-		BanMessage(playerid);
-		return 1;
-	}
-	return 1;
-}
-
-forward SAMP_AC_SEND_WARNING_FOR_MODE(CALLERID, const SAMP_AC_NAME[], SAMP_AC_CODE, SAMP_AC_DOOM);
-public SAMP_AC_SEND_WARNING_FOR_MODE(CALLERID, const SAMP_AC_NAME[], SAMP_AC_CODE, SAMP_AC_DOOM)
-{
-	/*CALLERID == Player suspected of using cheats.
-	SAMP_AC_NAME == The name of the anti-cheat that suspects the player of cheating.
-	SAMP_AC_CODE == Anti-cheat code that suspects a player of cheating.
-	SAMP_AC_DOOM == Punishment by anti-cheat settings. (0 - Kick | 1 - Warning)*/
-
-	printf("Igrac %s[%d] koristi %s cheat! AC_CODE:%d, AC_DOOM:%d (IP: %s)", GetName(CALLERID), CALLERID, SAMP_AC_NAME, SAMP_AC_CODE, SAMP_AC_DOOM, GetPlayerIP(CALLERID));
-	va_ABroadCast(COLOR_RED, "(%s) Igrac %s[%d] koristi %s cheat! AC_CODE:%d, AC_DOOM:%d (IP: %s)", 1, ReturnDate(), GetName(CALLERID), CALLERID, SAMP_AC_NAME, SAMP_AC_CODE, SAMP_AC_DOOM, GetPlayerIP(CALLERID));
-    return true;
-}
-
-forward SAMP_AC_PLAYER_DEATH (playerid, killerid, reason);
-public SAMP_AC_PLAYER_DEATH (playerid, killerid, reason)
-{
-	va_ABroadCast(COLOR_RED, "AC_DEATH: Igrac %s[%d] je ubio igraca %s[%d] razlog %d.", 1, GetName(playerid, false), playerid, GetName(killerid, false), killerid, reason);
-	return true;
-}
-
-forward OnPlayerCheat(playerid, extraid, type);
-public OnPlayerCheat(playerid, extraid, type)
-{
-	if( playerid == INVALID_PLAYER_ID ) return 1;
-
-	#if defined MODULE_FACTIONS
-	if( IsACop(playerid) || IsFDMember(playerid) ) return 1;
-	#endif
-
-	if( AntiCheatData[playerid][acKicked] ) {			// NOP Kick(playerid);
-		BlockIpAddress(GetPlayerIP(playerid), (AC_MIN_TIME_RECONNECT * 1000) - GetConsoleVarAsInt("playertimeout"));
-		return 0;
-	}
-
-	new
-		tmpString[130],
-		banreason[30],
-		Float:packetLoss,
-		dest[22];
-
-	NetStats_GetIpPort(playerid, dest, sizeof(dest));
-    GetPlayerPacketloss(playerid, packetLoss);
-
-	switch( type )
-	{
-		case ANTI_CHEAT_TYPE_REMOTE: {
-			format(tmpString, sizeof(tmpString), "Anti-Cheat [IP: %s]: %s[%d] je moguci cheater, razlog: Remote Jack.",
-				dest,
-				GetName(playerid,false),
-				playerid
-			);
-			ABroadCast(COLOR_RED,tmpString,2);
-
-			if( ++PlayerCountings[ playerid ][ ccRemoteJacking ] >= 6 ) {
-
-				SendClientMessage(playerid, COLOR_RED, "Anti-Cheat: Dobio si ban, razlog: Remote Jack!");
-				format(banreason, sizeof(banreason), "Remote Jack, Packet Loss: %f%", packetLoss);
-
-				#if defined MODULE_BANS
-				HOOK_Ban(playerid, INVALID_PLAYER_ID, banreason, -1,  true);
-				BanMessage(playerid);
-				#endif
-				return 1;
-			}
-		}
-		case ANTI_CHEAT_TYPE_CAR_CONTROL: {
-			RemovePlayerFromVehicle(playerid);
-			va_SendClientMessage(playerid, COLOR_RED, "Anti-Cheat: Izbaceni ste radi moguceg koristenja Car Control CLEOa!");
-
-			format(tmpString, sizeof(tmpString), "Anti-Cheat: %s[%d] je moguci cheater, razlog: Car control CLEO [IP: %s].",
-				GetName(playerid,false),
-				playerid,
-				dest
-			);
-			ABroadCast(COLOR_RED,tmpString,1);
-			acPlayerState[ playerid ] = PLAYER_STATE_ONFOOT;
-		}
-		case ANTI_CHEAT_TYPE_FOX: {
-			if( ++PlayerCountings[ playerid ][ ccFoxHeaven ] >= 2 ) {
-				SendClientMessage(playerid, COLOR_RED, "Anti-Cheat: Dobio si kick sa servera, razlog: Foxheaven CLEO!");
-				KickMessage(playerid);
-			}
-			format(tmpString, sizeof(tmpString), "Anti-Cheat [IP: %s]: %s[%d] je moguci cheater, razlog: Foxheaven CLEO.",
-				dest,
-				GetName(playerid,false),
-				playerid
-			);
-			ABroadCast(COLOR_RED,tmpString,1);
-			return 1;
-		}
-	}
-	return 1;
-}
-
-/*
-	 ######  ##     ## ########
-	##    ## ###   ### ##     ##
-	##       #### #### ##     ##
-	##       ## ### ## ##     ##
-	##       ##     ## ##     ##
-	##    ## ##     ## ##     ##
-	 ######  ##     ## ########
-*/
-CMD:anticheat(playerid, params[])
-{
-	if( PlayerInfo[ playerid ][ pAdmin ] < 1338 ) return SendClientMessage(playerid, COLOR_RED, "Niste ovlasteni za koristenje ove komande!");
-	ShowAdminACInterface(playerid);
-	return 1;
-}
-
-
 

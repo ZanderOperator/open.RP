@@ -518,9 +518,6 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 				{
 					if(weapon == 0 || ammo == 0)
 						return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate nikakvo oruzje u ruci/oruzje nema municije.");
-						
-					if(!WeaponHackCheck(playerid))
-						return 1;
 
 					if(ammo > 500)
 						return SendErrorMessage(playerid, "Ne mozete ostaviti vise od 500 metaka na stalak.");

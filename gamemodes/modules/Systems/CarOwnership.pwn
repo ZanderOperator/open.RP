@@ -2948,7 +2948,7 @@ stock static SendAlarmMessageToPolice(vehicleid, bool:streaming)
 			GetVehicleNameById(vehicleid, vehicleName, MAX_VEHICLE_NAME);
 			SendClientMessage(playerid, COLOR_LIGHTBLUE, "*________________________ [GTA IN PROGRESS] ________________________*");
 			va_SendClientMessage(playerid, -1, "\tModel vozila: %s | Registracija: %s", vehicleName, VehicleInfo[vehicleid][vNumberPlate]);
-			va_SendClientMessage(playerid, -1, "\tBoja vozila: %d %d", VehicleColor1[vehicleid], VehicleColor2[vehicleid]);
+			va_SendClientMessage(playerid, -1, "\tBoja vozila: %d %d", VehicleInfo[vehicleid][vColor1], VehicleInfo[vehicleid][vColor2]);
 			va_SendClientMessage(playerid, -1, "\tLokacija vozila: %s", GetVehicleZone(vehicleid));
 			SendClientMessage(playerid, COLOR_LIGHTBLUE, "*____________________________________________________________________*");
 			if(streaming) CopStreamVeh[playerid] = vehicleid;
@@ -3711,7 +3711,6 @@ Function: ParkPlayerVehicle(playerid, vehicleid)
 
 hook OnVehicleDeath(vehicleid, killerid)
 {
-	Bit1_Set(gr_SafeRemoting, killerid, true);
 	RemovePlayerFromVehicle(killerid);
 	
 	new driverid = LastVehicleDriver[vehicleid];
@@ -5496,8 +5495,6 @@ CMD:trunk(playerid, params[])
 		if(weaponid == 0 || ammo == 0)
 			return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate nikakvo oruzje u ruci/oruzje nema municije.");
 			
-		if(!WeaponHackCheck(playerid))
-			return 1;
 		else PutPlayerWeaponInTrunk(playerid, vehicleid, weaponid);
 		return 1;
 	}

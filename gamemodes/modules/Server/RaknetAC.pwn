@@ -11,7 +11,6 @@
 new VehicleDestroyed = 136;
 const VEHICLE_SYNC = 200;
 const AIM_SYNC = 203;
-const WEAPONS_UPDATE_SYNC = 204;
 const PLAYER_SYNC = 207;
 const UNOCCUPIED_SYNC = 209;
 const PASSENGER_SYNC = 211;
@@ -108,48 +107,6 @@ public OnIncomingPacket(playerid, packetid, BitStream:bs)
 			}
 			BS_ResetReadPointer(bs);
 		}
-	}
-    return 1;
-}
-
-
-enum IP_WeaponsUpdate
-{
-    IP_slotWeaponId[13],
-    IP_slotWeaponAmmo[13],
-};
-
-IPacket:WEAPONS_UPDATE_SYNC(playerid, BitStream:bs)
-{
-    new weaponsUpdate[IP_WeaponsUpdate];
-    
-    BS_IgnoreBits(bs, 8); // ignore packetid (byte)
-    
-	new numberOfBytes, numberOfSlots;
-	BS_GetNumberOfBytesUsed(bs, numberOfBytes);
-
-	if (numberOfBytes > 5) {
-		numberOfSlots = (numberOfBytes - 5) / 4;
-	}
-	while (numberOfSlots--) 
-	{
-		new slotId, weaponId, ammo;
-
-		BS_ReadValue(
-			bs,
-			PR_UINT8, slotId,
-			PR_UINT8, weaponId,
-			PR_UINT16, ammo
-		);
-
-		if (slotId < 13) 
-		{
-			weaponsUpdate[IP_slotWeaponId][slotId] = weaponId;
-			weaponsUpdate[IP_slotWeaponAmmo][slotId] = ammo;
-			if(weaponsUpdate[IP_slotWeaponId][slotId] > 0 ||  weaponsUpdate[IP_slotWeaponAmmo][slotId] > 0)
-				AC_CheckPlayerWeaponHack(playerid, slotId, weaponsUpdate[IP_slotWeaponId][slotId] , weaponsUpdate[IP_slotWeaponAmmo][slotId]);
-		}
-		
 	}
     return 1;
 }

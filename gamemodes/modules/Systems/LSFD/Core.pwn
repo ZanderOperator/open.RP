@@ -136,7 +136,6 @@ hook OnPlayerDisconnect(playerid, reason)
 	Bit1_Set( gr_HaveOxygen, 		playerid, false );
 	Bit1_Set( gr_UsingStretcher, 	playerid, false );
 	Bit1_Set( gr_StretcherSpawned, 	playerid, false );
-	Bit1_Set( gr_PlayerACSafe, 		playerid, false );
 	Bit1_Set( gr_WeaponAllowed, 	playerid, false );
 	
 	return 1;
@@ -518,19 +517,16 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 				tmpString[ 64 ];
 			switch( listitem ) {
 				case 0: { 	// Aparat
-					Bit1_Set( gr_PlayerACSafe, playerid, true );
 					AC_GivePlayerWeapon(playerid, 42, 999999999);
 					format(tmpString, sizeof(tmpString), "* %s uzima vatrogasni aparat.", GetName(playerid, true));
 					ProxDetector(5.0, playerid, tmpString, COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE);
 				}
 				case 1: { 	// Sjekira
-					Bit1_Set( gr_PlayerACSafe, playerid, true );
 					AC_GivePlayerWeapon(playerid, 8, 1);
 					format(tmpString, sizeof(tmpString), "* %s uzima sjekiru.", GetName(playerid, true));
 					ProxDetector(5.0, playerid, tmpString, COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE);
 				}
 				case 2: { 	// Pila
-					Bit1_Set( gr_PlayerACSafe, playerid, true );
 					AC_GivePlayerWeapon(playerid, 9, 1);
 					format(tmpString, sizeof(tmpString), "* %s uzima motornu pilu.", GetName(playerid, true));
 					ProxDetector(5.0, playerid, tmpString, COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE);
@@ -613,7 +609,6 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 		        	AC_GivePlayerWeapon(playerid, 3, 1);
 				    AC_GivePlayerWeapon(playerid, 24, 50);
 				    AC_GivePlayerWeapon(playerid, 41, 1000);
-					Bit1_Set( gr_PlayerACSafe, playerid, true );
 					AC_GivePlayerWeapon(playerid, WEAPON_SPRAYCAN, 500);
 					PlayerPlaySound(playerid, 1057, 0.0, 0.0, 0.0);
 					PlayerInfo[playerid][pLawDuty] = 1;

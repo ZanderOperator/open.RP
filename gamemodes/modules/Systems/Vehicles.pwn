@@ -859,13 +859,6 @@ hook OnPlayerStateChange(playerid, newstate, oldstate)
 		new
 			vehicleid = GetPlayerVehicleID(playerid);
 
-		/*if( ( IsABike(GetVehicleModel(vehicleid)) || IsAMotorBike(GetVehicleModel(vehicleid)) ) && PlayerInfo[ playerid ][ pLevel ] < 2 ) {
-			SendClientMessage( playerid, COLOR_RED, "[ANTI-CHEAT]: Level 1 igraci ne smiju voziti bicikle i motocikle!");
-			RemovePlayerFromVehicle(playerid);
-			return 1;
-		}*/
-		GetPlayerPos( playerid, AntiCheatData[ playerid ] [ acLastFootPos ][ 0 ], AntiCheatData[ playerid ] [ acLastFootPos ][ 1 ], AntiCheatData[ playerid ] [ acLastFootPos ][ 2 ] );
-		AntiCheatData[ playerid ] [ acLastVehicle ] = vehicleid;
 		if( VehicleInfo[ vehicleid ][ vType ] == VEHICLE_TYPE_BOAT && !PlayerInfo[ playerid ][ pBoatLic ] ) {
 			SendMessage(playerid, MESSAGE_TYPE_ERROR, " Ne znate upravljati brodom pa ste izasli!");
 			RemovePlayerFromVehicle(playerid);
@@ -908,9 +901,8 @@ hook OnPlayerStateChange(playerid, newstate, oldstate)
 		}*/
 		LastVehicleDriver[ vehicleid ] = playerid;
 	}
-	if( oldstate == PLAYER_STATE_PASSENGER && newstate == PLAYER_STATE_ONFOOT ) {
-		GetPlayerPos( playerid, AntiCheatData[ playerid ] [ acLastFootPos ][ 0 ], AntiCheatData[ playerid ] [ acLastFootPos ][ 1 ], AntiCheatData[ playerid ] [ acLastFootPos ][ 2 ] );
-		AntiCheatData[ playerid ] [ acLastVehicle ] = 0;
+	if( oldstate == PLAYER_STATE_PASSENGER && newstate == PLAYER_STATE_ONFOOT ) 
+	{
 		if( Bit1_Get( gr_DoorsLocked, playerid ) && Bit16_Get( gr_PDLockedVeh, playerid ) != INVALID_VEHICLE_ID )
 			PutPlayerInVehicle(playerid, Bit16_Get( gr_PDLockedVeh, playerid ), Bit4_Get( gr_PDLockedSeat, playerid ) );
 		new vehicleid = GetPlayerVehicleID(playerid);

@@ -129,6 +129,30 @@ FormatNumber(number, prefix[] = "$")
 	return value;
 }
 
+GetVehicleDriver(vehicleid)
+{
+	new
+		playerid = INVALID_PLAYER_ID;
+
+	foreach(new i : Player) {
+		if( IsPlayerInVehicle(i, vehicleid) && GetPlayerState(playerid) == PLAYER_STATE_DRIVER ) {
+			playerid = i;
+			break;
+		}
+	}
+	return playerid;
+}
+
+DoesVehicleHavePlayers(vehicleid)
+{
+	foreach(new i:  Player)
+	{
+		if(IsPlayerInVehicle(i, vehicleid))
+			return 1;
+	}
+	return 0;
+}
+
 stock IsPlayerFalling(playerid)
 {
 	if(GetPlayerAnimationIndex(playerid) == 1195 || GetPlayerAnimationIndex(playerid) == 1197 || GetPlayerAnimationIndex(playerid) == 1133 || GetPlayerAnimationIndex(playerid) == 1130)

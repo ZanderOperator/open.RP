@@ -53,6 +53,16 @@ new const
 	{"MDMA",		DRUG_TYPE_TABLET, 15, 75, 175}
 };
 
+static const
+	Float:bag[][3] =
+{
+	{257.16684, 2883.21582, 12.73737},
+	{-426.03671, 2192.42554, 41.79201},
+	{-1303.73523, 2506.78735, 86.58372},
+	{-485.01361, 130.93065, 12.44418},
+	{-363.89691, -1482.43652, 25.22663}
+};
+
 enum e_V_DRUGS
 {
 	vsqlid[MAX_VEHICLE_DRUGS],
@@ -238,7 +248,7 @@ ListPlayerDrugs(playerid, owner)
 		return SendClientMessage(playerid, COLOR_RED, "Igrac nema droge!");
 		
 	format(titled, 37, "Droga od %s", GetName(owner));
-	Dialog_Open(playerid, empty, DIALOG_STYLE_MSGBOX, titled, drugall, "Exit", "");
+	ShowPlayerDialog(playerid, -1, DIALOG_STYLE_MSGBOX, titled, drugall, "Exit", "");
 	
 	return 1;
 }
@@ -274,7 +284,7 @@ ListVehicleDrugs(playerid, vehicleid)
 	GetVehicleNameByModel(GetVehicleModel(vehicleid), vName, MAX_VEHICLE_NAME);
 	
 	format(titled, 37, "Droga u %s[%d]{%d}", vName, vehicleid, VehicleInfo[vehicleid][vSQLID]);
-	Dialog_Open(playerid, empty, DIALOG_STYLE_MSGBOX, titled, drugall, "Exit", "");
+	ShowPlayerDialog(playerid, -1, DIALOG_STYLE_MSGBOX, titled, drugall, "Exit", "");
 	return 1;
 }
 
@@ -1204,154 +1214,144 @@ CMD:agivedrug(playerid, params[])
 }
 
 
-//***************** Drug Ordering Scheme ********************
-
-Dialog:DRUG_ORDER_PACKAGE(playerid, response, listitem, inputtext[]) 
+hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 {
-	if(response)
+	switch(dialogid)
 	{
-		if(DrugPackage[playerid][orderfinished] == 1)
+		case DRUG_ORDER_CONFIRM:
 		{
-			SendClientMessage(playerid, COLOR_YELLOW, "Maska 64361 kaze (mobitel): Evo zasto ne pricam s glupim ljudima.. Narucio si vec jebeni paket, isuse boze pomozi.");
-			PlayerHangup(playerid);
-			//ClearDrugOrder(playerid);
-			
-			return 0;
+			if(response)
+			{
+				if(AC_GetPlayerMoney(playerid) < DrugPackage[playerid][pPrice])
+				{
+					SendClientMessage(playerid, COLOR_YELLOW, "Maska 64361 kaze (mobitel): Nemas ni para, a u neke bi vece sheme, hah.");
+					PlayerHangup(playerid);
+					ClearDrugOrder(playerid);
+					
+					return 0;
+				}
+				
+				if(DrugPackage[playerid][orderfinished] == 1)
+				{
+					SendClientMessage(playerid, COLOR_YELLOW, "Maska 64361 kaze (mobitel): Evo zasto ne pricam s glupim ljudima.. Narucio si vec jebeni paket, isuse boze pomozi.");
+					PlayerHangup(playerid);
+					ClearDrugOrder(playerid);
+					
+					return 0;
+				}
+				
+				PlayerToIllegalBudgetMoney(playerid, DrugPackage[playerid][pPrice]);
+				
+				new
+					ttDrug = DrugPackage[playerid][pcDrug];
+				
+				new 
+					ran = random(sizeof(bag));
+					
+				va_SendClientMessage(playerid, COLOR_YELLOW, "Narucili ste %d %s droge %s za $%d! Lokacija paketa: %s.",
+					DrugPackage[playerid][pcAmnt],
+					(drugs[ttDrug][dEffect] < 4) ? ("grama") : ("tableta"), 
+					drugs[ttDrug][dName], 
+					DrugPackage[playerid][pPrice], 
+					GetXYZZoneName(bag[ran][0], bag[ran][1], bag[ran][2])
+				);
+				
+				H_SetPlayerCheckpoint(playerid, bag[ran][0], bag[ran][1], bag[ran][2] - 1, 6.0);
+				DrugPackage[playerid][pobjID] = CreateDynamicObject(2919, bag[ran][0], bag[ran][1], bag[ran][2], 0.0, 0.0, 0.0, -1, -1, playerid);
+				
+				DrugPackage[playerid][Xp] = bag[ran][0];
+				DrugPackage[playerid][Yp] = bag[ran][1];
+				DrugPackage[playerid][Zp] = bag[ran][2];
+				
+				SendClientMessage(playerid, COLOR_YELLOW, "Maska 64361 kaze (mobitel): Paket cu izbaciti kroz par minuta te ce biti na dogovorenoj lokaciji.");
+				
+				#if defined MODULE_LOGS
+				Log_Write("logfiles/drug_order.txt", "(%s) %s{%d} ordered %d %s of %s for $%d!",
+					ReturnDate(), 
+					GetName(playerid),
+					PlayerInfo[playerid][pSQLID],
+					DrugPackage[playerid][pcAmnt],
+					(drugs[ttDrug][dEffect] < 4) ? ("grama") : ("tableta"), 
+					drugs[ttDrug][dName],
+					DrugPackage[playerid][pPrice]
+				);
+				#endif
+				
+				DrugPackage[playerid][orderfinished] = 1;
+				PlayerHangup(playerid);
+			}
+			else
+			{
+				SendClientMessage(playerid, COLOR_YELLOW, "Maska 64361 kaze (mobitel): Sta me drkas koju picku materinu, daj odjebi!");
+				PlayerHangup(playerid);
+				
+				ClearDrugOrder(playerid);
+				
+				return 0;
+			}
 		}
-	
-		if(listitem > sizeof(drugs) || listitem < 0)
-			return 0;
-
-		Dialog_Open(playerid, DRUG_ORDER_AMOUNT, DIALOG_STYLE_INPUT, "{3C95C2}* PACKAGE - AMOUNT", "Odabrali ste drogu %s! Upisite koliko grama zelite naruciti!\nCijena po gramu: %d$", "Select", "Close", drugs[listitem+1][dName], drugs[listitem+1][dPricePG]);
-		
-		//dPackage_OrderID[playerid] = x;
-		//dPackage_OrderAMNT[playerid] = x;
-		
-		DrugPackage[playerid][pcDrug] = listitem + 1;
-	}
-	else
-	{
-		SendClientMessage(playerid, COLOR_YELLOW, "Maska 64361 kaze (mobitel): Sta me drkas koju picku materinu, daj odjebi!");
-		PlayerHangup(playerid);
-		
-		return 0;
-	}
-	return 1;
-}
-
-Dialog:DRUG_ORDER_AMOUNT(playerid, response, listitem, inputtext[]) 
-{
-	if(response)
-	{
-		new
-			val = strval(inputtext),
-			tDrug = DrugPackage[playerid][pcDrug];
-		
-		if(val < 1 || val > 100)
+		case DRUG_ORDER_PACKAGE:
 		{
-			SendClientMessage(playerid, COLOR_RED, "Nemozete kupiti manje od 1 ni vise od 100 grama!");
-			Dialog_Open(playerid, DRUG_ORDER_AMOUNT, DIALOG_STYLE_INPUT, "{3C95C2}* PACKAGE - AMOUNT", "Odabrali ste drogu %s! Upisite koliko grama zelite naruciti!\nCijena po gramu: %d$", "Select", "Close", drugs[tDrug][dName], drugs[tDrug][dPricePG]);
+			if(response)
+			{
+				if(DrugPackage[playerid][orderfinished] == 1)
+				{
+					SendClientMessage(playerid, COLOR_YELLOW, "Maska 64361 kaze (mobitel): Evo zasto ne pricam s glupim ljudima.. Narucio si vec jebeni paket, isuse boze pomozi.");
+					PlayerHangup(playerid);
+					//ClearDrugOrder(playerid);
+					
+					return 0;
+				}
 			
-			return 1;
-		}
-		DrugPackage[playerid][pcAmnt] = val;
-			
-		DrugPackage[playerid][pPrice] = drugs[tDrug][dPricePG] * val;
-		
-		Dialog_Open(playerid, DRUG_ORDER_CONFIRM, DIALOG_STYLE_MSGBOX, "{3C95C2}* PACKAGE - CONFIRM", "Odabrali ste paket od:\n%d %s droge %s za cijenu %d!\n\nJeste li sigurni da zelite naruciti paket?", "Naruci", "Abort", val, (drugs[tDrug][dEffect] < 4) ? ("grama") : ("tableta"), drugs[tDrug][dName], DrugPackage[playerid][pPrice]);
-	}
-	else
-	{
-		SendClientMessage(playerid, COLOR_YELLOW, "Maska 64361 kaze (mobitel): Sta me drkas koju picku materinu, daj odjebi!");
-		PlayerHangup(playerid);
-		
-		ClearDrugOrder(playerid);
-		
-		return 0;
-	}
-	return 1;
-}
+				if(listitem > sizeof(drugs) || listitem < 0)
+					return 0;
 
-static const
-	Float:bag[][3] =
-{
-	{257.16684, 2883.21582, 12.73737},
-	{-426.03671, 2192.42554, 41.79201},
-	{-1303.73523, 2506.78735, 86.58372},
-	{-485.01361, 130.93065, 12.44418},
-	{-363.89691, -1482.43652, 25.22663}
-};
-
-Dialog:DRUG_ORDER_CONFIRM(playerid, response, listitem, inputtext[]) 
-{
-	if(response)
-	{
-		if(AC_GetPlayerMoney(playerid) < DrugPackage[playerid][pPrice])
-		{
-			SendClientMessage(playerid, COLOR_YELLOW, "Maska 64361 kaze (mobitel): Nemas ni para, a u neke bi vece sheme, hah.");
-			PlayerHangup(playerid);
-			ClearDrugOrder(playerid);
-			
-			return 0;
+				ShowPlayerDialog(playerid, DRUG_ORDER_AMOUNT, DIALOG_STYLE_INPUT, "{3C95C2}* PACKAGE - AMOUNT", "Odabrali ste drogu %s! Upisite koliko grama zelite naruciti!\nCijena po gramu: %d$", "Select", "Close", drugs[listitem+1][dName], drugs[listitem+1][dPricePG]);
+				
+				//dPackage_OrderID[playerid] = x;
+				//dPackage_OrderAMNT[playerid] = x;
+				
+				DrugPackage[playerid][pcDrug] = listitem + 1;
+			}
+			else
+			{
+				SendClientMessage(playerid, COLOR_YELLOW, "Maska 64361 kaze (mobitel): Sta me drkas koju picku materinu, daj odjebi!");
+				PlayerHangup(playerid);
+				
+				return 0;
+			}
 		}
-		
-		if(DrugPackage[playerid][orderfinished] == 1)
+		case DRUG_ORDER_AMOUNT:
 		{
-			SendClientMessage(playerid, COLOR_YELLOW, "Maska 64361 kaze (mobitel): Evo zasto ne pricam s glupim ljudima.. Narucio si vec jebeni paket, isuse boze pomozi.");
-			PlayerHangup(playerid);
-			ClearDrugOrder(playerid);
-			
-			return 0;
+			if(response)
+			{
+				new
+					val = strval(inputtext),
+					tDrug = DrugPackage[playerid][pcDrug];
+				
+				if(val < 1 || val > 100)
+				{
+					SendClientMessage(playerid, COLOR_RED, "Nemozete kupiti manje od 1 ni vise od 100 grama!");
+					ShowPlayerDialog(playerid, DRUG_ORDER_AMOUNT, DIALOG_STYLE_INPUT, "{3C95C2}* PACKAGE - AMOUNT", "Odabrali ste drogu %s! Upisite koliko grama zelite naruciti!\nCijena po gramu: %d$", "Select", "Close", drugs[tDrug][dName], drugs[tDrug][dPricePG]);
+					
+					return 1;
+				}
+				DrugPackage[playerid][pcAmnt] = val;
+					
+				DrugPackage[playerid][pPrice] = drugs[tDrug][dPricePG] * val;
+				
+				ShowPlayerDialog(playerid, DRUG_ORDER_CONFIRM, DIALOG_STYLE_MSGBOX, "{3C95C2}* PACKAGE - CONFIRM", "Odabrali ste paket od:\n%d %s droge %s za cijenu %d!\n\nJeste li sigurni da zelite naruciti paket?", "Naruci", "Abort", val, (drugs[tDrug][dEffect] < 4) ? ("grama") : ("tableta"), drugs[tDrug][dName], DrugPackage[playerid][pPrice]);
+			}
+			else
+			{
+				SendClientMessage(playerid, COLOR_YELLOW, "Maska 64361 kaze (mobitel): Sta me drkas koju picku materinu, daj odjebi!");
+				PlayerHangup(playerid);
+				
+				ClearDrugOrder(playerid);
+				
+				return 0;
+			}
 		}
-		
-		PlayerToIllegalBudgetMoney(playerid, DrugPackage[playerid][pPrice]);
-		
-		new
-			ttDrug = DrugPackage[playerid][pcDrug];
-		
-		new 
-			ran = random(sizeof(bag));
-			
-		va_SendClientMessage(playerid, COLOR_YELLOW, "Narucili ste %d %s droge %s za $%d! Lokacija paketa: %s.",
-			DrugPackage[playerid][pcAmnt],
-			(drugs[ttDrug][dEffect] < 4) ? ("grama") : ("tableta"), 
-			drugs[ttDrug][dName], 
-			DrugPackage[playerid][pPrice], 
-			GetXYZZoneName(bag[ran][0], bag[ran][1], bag[ran][2])
-		);
-		
-		H_SetPlayerCheckpoint(playerid, bag[ran][0], bag[ran][1], bag[ran][2] - 1, 6.0);
-		DrugPackage[playerid][pobjID] = CreateDynamicObject(2919, bag[ran][0], bag[ran][1], bag[ran][2], 0.0, 0.0, 0.0, -1, -1, playerid);
-		
-		DrugPackage[playerid][Xp] = bag[ran][0];
-		DrugPackage[playerid][Yp] = bag[ran][1];
-		DrugPackage[playerid][Zp] = bag[ran][2];
-		
-		SendClientMessage(playerid, COLOR_YELLOW, "Maska 64361 kaze (mobitel): Paket cu izbaciti kroz par minuta te ce biti na dogovorenoj lokaciji.");
-		
-		#if defined MODULE_LOGS
-		Log_Write("logfiles/drug_order.txt", "(%s) %s{%d} ordered %d %s of %s for $%d!",
-			ReturnDate(), 
-			GetName(playerid),
-			PlayerInfo[playerid][pSQLID],
-			DrugPackage[playerid][pcAmnt],
-			(drugs[ttDrug][dEffect] < 4) ? ("grama") : ("tableta"), 
-			drugs[ttDrug][dName],
-			DrugPackage[playerid][pPrice]
-		);
-		#endif
-		
-		DrugPackage[playerid][orderfinished] = 1;
-		PlayerHangup(playerid);
-	}
-	else
-	{
-		SendClientMessage(playerid, COLOR_YELLOW, "Maska 64361 kaze (mobitel): Sta me drkas koju picku materinu, daj odjebi!");
-		PlayerHangup(playerid);
-		
-		ClearDrugOrder(playerid);
-		
-		return 0;
 	}
 	return 1;
 }

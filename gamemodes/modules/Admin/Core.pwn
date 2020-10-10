@@ -5185,7 +5185,6 @@ CMD:rtc(playerid, params[])
     if (PlayerInfo[playerid][pAdmin] < 1 && PlayerInfo[ playerid ][ pHelper ] < 2) return SendClientMessage(playerid, COLOR_RED, "Niste ovlasteni za koristenje ove komande!");
     new car = GetPlayerVehicleID(playerid);
     if( !IsPlayerInAnyVehicle(playerid) ) return SendClientMessage(playerid, COLOR_RED, "Niste unutar vozila!");
-	Bit1_Set( gr_SafeRemoting, playerid, true );	
 	RemovePlayerFromVehicle(playerid);
 	SetVehicleToRespawn(car);
 	format(globalstring, sizeof(globalstring), "AdmWARN: %s je respawnao vozilo ID %d (/rtc).", GetName(playerid,false), car);
