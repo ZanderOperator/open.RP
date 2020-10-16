@@ -1,5 +1,4 @@
 #include <YSI\y_hooks>
-#include "modules/Server/Color.pwn"
 
 /*
 	########  ######## ######## #### ##    ## ########  ######  

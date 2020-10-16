@@ -89,8 +89,6 @@ new TaxiData[MAX_PLAYERS][E_DATA_TAXI];
 	##        #######  ##    ##  ######     ##    ####  #######  ##    ##  ######  
 */
 
-
-
 ResetMonthPaydays()
 {
 	new resetString[128];
@@ -1167,7 +1165,7 @@ timer PlayerGlobalTask[1000](playerid)
 	CheckWoundedPlayer(playerid);
 	
 	if(PlayerCarTow[playerid])
-		CallRemoteFunction("VehicleTowTimer" "ii", PlayerInfo[playerid][pSpawnedCar], playerid);
+		VehicleTowTimer(PlayerInfo[playerid][pSpawnedCar], playerid);
 	
 	SprayingBarChecker(playerid);
 	SprayingTaggTimer(playerid);

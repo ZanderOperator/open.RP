@@ -244,7 +244,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 			{
 				if(AC_GetPlayerMoney(playerid) < paymentBuyPrice[playerid])
 					return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "Nemas dovoljno novca u rukama za kupovinu ovog vozila(%d$)!", paymentBuyPrice[playerid]);
-				else return CallRemoteFunction("BuyVehicle", "i", playerid);
+				else return BuyVehicle(playerid);
 			}
 			if(strval(inputtext) < 1 || strval(inputtext) > CreditInfo[playerid][cAmount])
 			{
@@ -257,7 +257,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 				CreditInfo[playerid][cAmount] = creditamount;
 				CreditInfo[playerid][cUsed] = true;
 				SendFormatMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uspjesno ste iskoristili %d$ namjenskog kredita te ste ga aktivirali. Ostatak od %d$ ce Vam se naplatiti iz ruku!", creditamount, (paymentBuyPrice[playerid] - creditamount));
-			 	CallRemoteFunction("BuyVehicle", "i", playerid);
+			 	BuyVehicle(playerid, true);
 				paymentBuyPrice[playerid] = 0;
 				SavePlayerCredit(playerid);
 			}
@@ -273,7 +273,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 			{
 				if(AC_GetPlayerMoney(playerid) < paymentBuyPrice[playerid])
 					return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "Nemas dovoljno novca u rukama za kupovinu ove kuce(%d$)!", paymentBuyPrice[playerid]);
-				else return CallRemoteFunction("BuyHouse", "i", playerid);
+				else return BuyHouse(playerid);
 			}
 			if(strval(inputtext) < 1 || strval(inputtext) > CreditInfo[playerid][cAmount])
 			{
@@ -286,7 +286,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 				CreditInfo[playerid][cAmount] = creditamount;
 				CreditInfo[playerid][cUsed] = true;
 				SendFormatMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uspjesno ste iskoristili %d$ namjenskog kredita te ste ga aktivirali. Ostatak od %d$ ce Vam se naplatiti iz ruku!", creditamount, (paymentBuyPrice[playerid] - creditamount));
-				CallRemoteFunction("BuyHouse", "ii", playerid, true);
+				BuyHouse(playerid, true);
 				paymentBuyPrice[playerid] = 0;
 				SavePlayerCredit(playerid);
 			}
@@ -302,7 +302,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 			{
 				if(AC_GetPlayerMoney(playerid) < paymentBuyPrice[playerid])
 					return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "Nemas dovoljno novca u rukama za kupovinu ovog biznisa(%d$)!", paymentBuyPrice[playerid]);
-				else return CallRemoteFunction("BuyBiznis", "i", playerid);
+				else return BuyBiznis(playerid);
 			}
 			if(strval(inputtext) < 1 || strval(inputtext) > CreditInfo[playerid][cAmount])
 			{
@@ -315,7 +315,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 				CreditInfo[playerid][cAmount] = creditamount;
 				CreditInfo[playerid][cUsed] = true;
 				SendFormatMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uspjesno ste iskoristili %d$ namjenskog kredita te ste ga aktivirali. Ostatak od %d$ ce Vam se naplatiti iz ruku!", creditamount, (paymentBuyPrice[playerid] - creditamount));
-				CallRemoteFunction("BuyBiznis", "ii", playerid, true);
+				BuyBiznis(playerid, true);
 				paymentBuyPrice[playerid] = 0;
 				buyBizID[playerid] = -1;
 				SavePlayerCredit(playerid);
@@ -402,19 +402,19 @@ GetPlayerPaymentOption(playerid, type)
 		{
 			if(CreditInfo[playerid][cCreditType] == 5 && !CreditInfo[playerid][cUsed])
 				va_ShowPlayerDialog(playerid, DIALOG_VEH_PAYMENT, DIALOG_STYLE_INPUT, "Iznos namjenskog kredita", "Imate dostupan kredit od %d$. Unesite koliki iznos od cijene vozila(%d$) zelite da se naplati iz kredita:", "Input", "No credit", CreditInfo[playerid][cAmount], paymentBuyPrice[playerid]);
-			else return CallRemoteFunction("BuyVehicle", "i", playerid);
+			else return BuyVehicle(playerid);
 		}
 		case BUY_TYPE_HOUSE:
 		{
 			if(CreditInfo[playerid][cCreditType] == 6 && !CreditInfo[playerid][cUsed])
 				va_ShowPlayerDialog(playerid, DIALOG_HOUSE_PAYMENT, DIALOG_STYLE_INPUT, "Iznos namjenskog kredita", "Imate dostupan kredit od %d$. Unesite koliki iznos od cijene kuce(%d$) zelite da se naplati iz kredita:", "Input", "No credit", CreditInfo[playerid][cAmount], paymentBuyPrice[playerid]);
-			else CallRemoteFunction("BuyHouse", "i", playerid);
+			else BuyHouse(playerid);
 		}
 		case BUY_TYPE_BIZZ:
 		{
 			if(CreditInfo[playerid][cCreditType] == 7 && !CreditInfo[playerid][cUsed])
 				va_ShowPlayerDialog(playerid, DIALOG_BIZZ_PAYMENT, DIALOG_STYLE_INPUT, "Iznos namjenskog kredita", "Imate dostupan kredit od %d$. Unesite koliki iznos od cijene biznisa(%d$) zelite da se naplati iz kredita:", "Input", "No credit", CreditInfo[playerid][cAmount], paymentBuyPrice[playerid]);
-			else CallRemoteFunction("BuyBiznis", "i", playerid);
+			else BuyBiznis(playerid);
 		}
 	}
 	return 1;

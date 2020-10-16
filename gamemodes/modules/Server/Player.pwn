@@ -1,3 +1,5 @@
+#include <YSI\y_hooks>
+
 stock GetPlayerPacketloss(playerid, &Float:packetloss)
 {
 	if(!IsPlayerConnected(playerid))

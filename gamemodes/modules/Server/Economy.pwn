@@ -1,3 +1,5 @@
+#include <YSI\y_hooks>
+
 #define MINIMAL_LEGAL_BUDGET		(1000000)
 #define MINIMAL_ILLEGAL_BUDGET		(100000)
 
@@ -88,7 +90,6 @@ OrgToBudgetMoney ( ftype, money ) // ORGANIZACIJA - PRORACUN	(NEOPOREZIVA)
 IllegalToLegalBudgetMoney (money) // Ilegalni proracun u legalni
 
 */
-#include <YSI\y_hooks>
 
 // LOG funkcije
 stock LogTransaction ( playerid, giveplayerid, money, logtype )

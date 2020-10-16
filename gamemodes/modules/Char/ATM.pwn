@@ -1,3 +1,5 @@
+#include <YSI\y_hooks>
+
 stock IsAtATM(playerid)
 {
     if(IsPlayerConnected(playerid))

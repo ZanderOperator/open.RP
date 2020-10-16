@@ -1,3 +1,5 @@
+#include <YSI\y_hooks>
+
 #define COLOR_HELPER 						0x41FC8CFF
 #define COLOR_GREY                          0xAFAFAFAA
 #define COLOR_DARKGRAY 						0x3A3636FF		

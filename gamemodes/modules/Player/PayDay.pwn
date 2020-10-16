@@ -4,6 +4,7 @@
 	#endinput
 #endif
 #define MODULE_PAY_DAY
+
 #define SOCIAL_HELP 		(1000) // Taggano sa SOCIAL_HELP
 #define PD_SD_SALARY 		(700) // Glavnica za PD/SD placu
 #define FD_LSN_SALARY 		(800) // Glavnica za FD/LSN placu

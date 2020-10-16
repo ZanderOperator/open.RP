@@ -153,8 +153,10 @@ LoadHstorage()
 
 Storage_RackRefresh(storageid)
 {
-	if (storageid != -1 && HouseStorage[storageid][storageExists]) {
-		if (IsValidDynamicObject(HouseStorage[storageid][storageObjects][4])) {
+	if (storageid != -1 && HouseStorage[storageid][storageExists]) 
+	{
+		if (IsValidDynamicObject(HouseStorage[storageid][storageObjects][4]))
+		{
 		    DestroyDynamicObject(HouseStorage[storageid][storageObjects][4]);
 		}
 		Storage_Refresh(storageid);
@@ -282,10 +284,10 @@ Storage_RackDelete(storageid)
 Storage_HouseRack(playerid)
 {
 	new count = 0;
-	foreach(new i: HStorage_Iter) {
-		if (HouseStorage[i][storageExists] && HouseStorage[i][storageHouse] == PlayerInfo[playerid][pHouseKey]) {
+	foreach(new i: HStorage_Iter) 
+	{
+		if (HouseStorage[i][storageExists] && HouseStorage[i][storageHouse] == PlayerInfo[playerid][pHouseKey])
 			count++;
-		}
 	}
 	return count;
 }
@@ -545,10 +547,11 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 			}
 		}
 	}
-	return (true);
+	return 0;
 }
 //=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~ (commands)
-CMD:check_gunrack(playerid, params[]) {
+CMD:check_gunrack(playerid, params[]) 
+{
 	new storageid = Storage_RackNear(playerid);
 	if (PlayerInfo[playerid][pAdmin] < 3) 
 		return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ovlasteni za koristenje ove komande!");

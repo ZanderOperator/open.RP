@@ -1,3 +1,5 @@
+#include <YSI\y_hooks>
+
 #if defined MODULE_ADMIN_CONNECTIONS
 	#endinput
 #endif

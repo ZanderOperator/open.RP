@@ -164,6 +164,7 @@ stock CheckVehicleInsurance(vehicleid)
     	VOSDelay(vehicleid);
 	}
 	#endif
+	return 1;
 }
 
 stock ResetVehicleAlarm(vehicleid)

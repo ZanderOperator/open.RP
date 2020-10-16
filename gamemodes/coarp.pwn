@@ -103,7 +103,6 @@
 #include <progress2>
 #include <mapandreas>
 #include <color_menu>
-#include <mSelection>
 #include <eSelection>
 
 #include <vSync> // mici sve osim seats ids
@@ -1093,8 +1092,6 @@ enum E_CITY_DATA
 new
 	CityInfo[ E_CITY_DATA ];
 
-stock MODEL_LIST_SKINS = mS_INVALID_LISTID;
-
 enum 
 {
 	DIALOG_LOGIN			= 10001,
@@ -2008,8 +2005,8 @@ new
 */
 
 //#include "modules/Server/Core.pwn"
-#include "modules/Server/Checkpoints.pwn"
 #include "modules/Server/Color.pwn"
+#include "modules/Server/Checkpoints.pwn"
 #include "modules/Server/Artconfig.pwn"
 #include "modules/Server/PopupMessage.pwn"
 #include "modules/Server/Updates.pwn"
@@ -2033,13 +2030,32 @@ new
 #include "modules/Server/Vehicles/Speedo.pwn"
 #include "modules/Server/Vehicles/Functions.pwn"
 
-//#include "modules/Systems/Core.pwn"
+
 // Factions
 #include "modules/Systems/Factions/Core.pwn"
+
+#include "modules/Systems/Factions/LSPD/ANPR.pwn"
+#include "modules/Systems/Factions/LSPD/Roadblocks.pwn"
+#include "modules/Systems/Factions/LSPD/MDC.pwn"
+#include "modules/Systems/Factions/LSPD/Flashbang.pwn"
+#include "modules/Systems/Factions/LSPD/Tickets.pwn"
+#include "modules/Systems/Factions/LSPD/Spikes.pwn"
+#include "modules/Systems/Factions/LSPD/Gunrack.pwn"
+#include "modules/Systems/Factions/LSPD/MobileCommand.pwn"
+#include "modules/Systems/Factions/LSPD/Siren.pwn"
 #include "modules/Systems/Factions/LSPD/Core.pwn"
+
+#include "modules/Systems/Factions/LSFD/Ambulance.pwn"
+#include "modules/Systems/Factions/LSFD/Anamneza.pwn"
+#include "modules/Systems/Factions/LSFD/Rope.pwn"
 #include "modules/Systems/Factions/LSFD/Core.pwn"
+
+#include "modules/Systems/Factions/Mayor/Elections.pwn"
+#include "modules/Systems/Factions/Mayor/Budget.pwn"
 #include "modules/Systems/Factions/Mayor/Core.pwn"
+
 #include "modules/Systems/Factions/LSN.pwn"
+
 #include "modules/Systems/Factions/Race.pwn"
 
 #include "modules/Systems/Factions/Warehouse.pwn"
@@ -2071,6 +2087,7 @@ new
 #include "modules/Systems/Graffiti.pwn"
 #include "modules/Systems/PawnShop.pwn"
 #include "modules/Systems/GPS.pwn"
+
 
 #include "modules/Admin/Core.pwn"
 #include "modules/Admin/Ban.pwn"
@@ -2104,7 +2121,8 @@ new
 //#include "modules/Char/Core.pwn"
 
 // Hobbies Core
-#include "modules/Char/Hobby/Core.pwn"
+#include "modules/Char/Hobby/Fisher.pwn"
+#include "modules/Char/Hobby/Hunter.pwn"
 
 // Misc
 #include "modules/Char/ActorSystem.pwn"
@@ -3006,7 +3024,6 @@ public OnGameModeInit()
         if(IsValidSkin(i))
             AddPlayerClass(i,0.0,0.0,0.0,0.0,-1,-1,-1,-1,-1,-1);
     }
-	MODEL_LIST_SKINS = LoadModelSelectionMenu( "skins.txt");
 
 	// Global Loads
 	

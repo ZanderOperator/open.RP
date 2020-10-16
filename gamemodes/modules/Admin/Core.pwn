@@ -1413,7 +1413,6 @@ public OnPlayerClickPlayer(playerid, clickedplayerid, source)
 			PlayerInfo[clickedplayerid][pJailed],
 			PlayerInfo[clickedplayerid][pJailTime]
 		);
-		#if defined MODULE_BIZNIS
 		if(PlayerInfo[clickedplayerid][pBizzKey] > 0)
 		{
 			new biznis;
@@ -1423,8 +1422,7 @@ public OnPlayerClickPlayer(playerid, clickedplayerid, source)
 					biznis = i;
 			}
 			va_SendClientMessage(playerid, 0xCED490FF, "BIZNIS: ID: [%d] - Naziv: [%s] ", biznis, BizzInfo[biznis][bMessage]);
-		}
-		#endif		
+		}	
 	}
 
 }
@@ -2109,42 +2107,6 @@ CMD:makeadmin(playerid, params[])
 	
 	va_SendClientMessage(giveplayerid, COLOR_RED, "[ ! ] Postavljeni ste za Game Admina level %d od Administratora %s", level, GetName(playerid,false));
 	va_SendClientMessage(playerid, COLOR_RED, "[ ! ] Postavili ste %s za Game Admina.", GetName(giveplayerid,false));
-	return 1;
-}
-
-CMD:saveall(playerid, params[])
-{
-	if( !IsPlayerAdmin(playerid) ) return SendClientMessage(playerid, COLOR_RED, "Niste ovlasteni za koristenje ove komande.");
-    new 
-		tmp[64];
-	if( sscanf(params, "s[64]", tmp) ) {
-		SendClientMessage(playerid, COLOR_RED, "[ ? ]: /save [opcija]");
-		SendClientMessage(playerid, COLOR_RED, "[ ! ] Accounts, Bizzes, Houses");
-		return 1;
-	}
-	if( !strcmp(tmp, "accounts", true) ) {
-		new start_tick = GetTickCount();
-		new count = 0;
-		foreach (new i : Player) {
-			if (Bit1_Get(gr_PlayerLoggedIn, i) != 0) {
-				SavePlayerData(i);
-				count++;
-			}
-		}
-		va_SendClientMessage(playerid, COLOR_RED, "[ ! ] Updating %d players took: %d ms", count, GetTickCount() - start_tick);
-	}
-	else if( !strcmp(tmp, "bizzes", true) ) {
-		#if defined MODULE_BIZNIS
-		new start_tick = GetTickCount();
-		SaveBizz();
-		va_SendClientMessage(playerid, COLOR_RED, "[ ! ] Updating bizzes took %dms.", GetTickCount() - start_tick);
-		#endif
-	}
-	else if( !strcmp(tmp,"houses", true) ) {
-		new start_tick = GetTickCount();
-		SaveHouses();
-		va_SendClientMessage(playerid, COLOR_RED, "[ ! ] Updating houses took %dms.", GetTickCount() - start_tick);
-	}
 	return 1;
 }
 
