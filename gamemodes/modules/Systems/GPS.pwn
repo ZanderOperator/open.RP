@@ -168,6 +168,11 @@ DisableGPS(playerid) {
 	- functions
 */
 
+GPS_Active_Check(playerid)
+{
+	return Bit1_Get(gps_Activated, playerid);
+}
+
 SetString(obj[], string[]) // credits samp
 {
     strmid(obj, string, 0, strlen(string), 255);

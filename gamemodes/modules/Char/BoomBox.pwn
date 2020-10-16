@@ -73,6 +73,17 @@ new
 	##    ##    ##    ##     ## ##    ## ##   ##
 	 ######     ##     #######   ######  ##    ##
 */
+
+stock ReturnHouseMusicURL(houseid)
+{
+	return HouseMusicURL[houseid];
+}
+
+stock IsHousePlayingMusic(houseid)
+{
+	return HousePlayingMusic[ houseid ];
+}
+
 stock ClearBoomBoxListItems(playerid)
 {
 	BoomBoxDialogPos[ playerid ][ 0 ]	= -1;

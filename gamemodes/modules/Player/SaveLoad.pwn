@@ -8,7 +8,8 @@
 	  ###    ##     ##  ##     ##  ######  
 */
 static stock 
-			dialogtext[MAX_DIALOG_TEXT];
+			dialogtext[MAX_DIALOG_TEXT],
+			LoginCheckTimer[MAX_PLAYERS];
 
 /*
 	######## ##     ## ##    ##  ######  ######## ####  #######  ##    ##  ######  
@@ -435,16 +436,11 @@ public CheckPlayerLoginInput(playerid)
 			PlayerInfo[ playerid ][ pBanReason ][ 0 ] 	= EOS;
 		} else 
 		{
-			new date[6];
-			stamp2datetime(PlayerInfo[ playerid ][ pUnbanTime ], date[0], date[1] ,date[2], date[3], date[4], date[5]); // formatiranje vremena iz unixa u normalno
-			va_SendClientMessage(playerid, COLOR_LIGHTRED, "[CoA-RP Server]: Vasa zabrana igranja zavrsava "COL_SERVER"%02d/%02d/%02d %02d:%02d:%02d.",
-				date[2],
-				date[1],
-				date[0],
-				date[3],
-				date[4],
-				date[5]
-			);
+			new date[12], time[12];
+			TimeFormat(PlayerInfo[ playerid ][ pUnbanTime ], HUMAN_DATE, date);
+			TimeFormat(PlayerInfo[ playerid ][ pUnbanTime ], ISO6801_TIME, time);
+	
+			va_SendClientMessage(playerid, COLOR_LIGHTRED, "[CoA-RP Server]: Vasa zabrana igranja zavrsava "COL_SERVER"%s %s.", date, time);
 			va_SendClientMessage(playerid, COLOR_LIGHTRED, "Razlog bana: %s", PlayerInfo[ playerid ][ pBanReason ]);
 
 			KickMessage(playerid);
@@ -661,8 +657,8 @@ SafeSpawnPlayer(playerid)
 		return 1;
 	}
 	new currentday, day;
-	stamp2datetime(gettimestamp(), _, _, currentday, _, _, _);
-
+	TimeFormat(gettimestamp(), DAY_OF_MONTH, "%d", currentday);
+	TimeFormat(ExpInfo[playerid][eLastPayDayStamp], DAY_OF_MONTH, "%d", day);
 	if(currentday != day)
 	{
 		ExpInfo[playerid][eGivenEXP] = false;
@@ -673,7 +669,7 @@ SafeSpawnPlayer(playerid)
 	DestroyLoginTextdraws(playerid);
 	// Forum URL Textdraw
 	CreateLogoTD(playerid);
-	// AFK timer
+	// AFK Timer
 	SetPlayerAFKLimit(playerid);
 
 	#if defined MODULE_LOGS
@@ -1118,6 +1114,14 @@ public LoadingPlayerCrashes(playerid)
 	##     ## ##     ## ##     ## ##   ##  ##    ## 
 	##     ##  #######   #######  ##    ##  ######  
 */
+
+hook OnPlayerDisconnect(playerid, reason)
+{
+	if( Bit1_Get(gr_LoginChecksOn, playerid ) )
+		KillTimer(LoginCheckTimer[playerid]);
+
+	return 1;
+}
 
 hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 {

@@ -433,13 +433,13 @@ stock GetMobileName(modelid)
 	return mobilename;
 }
 
-stock BuyPlayerPhone(playerid, id)
+stock BuyPlayerPhone(playerid, listid)
 {
-	if(AC_GetPlayerMoney(playerid) < PhoneModels[id][phModelPrice]) 
+	if(AC_GetPlayerMoney(playerid) < PhoneModels[listid][phModelPrice]) 
 		return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "Nemas dovoljno novca da kupis %s(%d$)!", PhoneModels[id][phModelName], PhoneModels[id][phModelPrice]);
 
-	PlayerToBudgetMoney(playerid, PhoneModels[id][phModelPrice]); // Novac ide u proracun jer je Verona Mall
-	PlayerInfo[playerid][pMobileModel] = PhoneModels[id][phModelID];
+	PlayerToBudgetMoney(playerid, PhoneModels[listid][phModelPrice]); // Novac ide u proracun jer je Verona Mall
+	PlayerInfo[playerid][pMobileModel] = PhoneModels[listid][phModelID];
 	PlayerInfo[playerid][pMobileNumber] = 100000 + random(899999);
 	va_SendClientMessage(playerid, COLOR_RED,  "[ ! ]  Vas novi broj mobilnog telefona je %d.", PlayerInfo[playerid][pMobileNumber]);
 	va_SendClientMessage(playerid, COLOR_RED, "[ ! ]  Uspjesno ste kupili %s!", PhoneModels[id][phModelName]);
@@ -2435,10 +2435,8 @@ stock PhoneCall(playerid, callnumber)
 		Bit1_Set( gr_CanHangup, playerid, true );
 		return 1;
 	}
-	if( callnumber == 32715 ) { // Weapon Order
-	    new fid = PlayerInfo[playerid][pLeader];
-     	if(!DoesWarehouseExist(FactionInfo[fid][fID]))
-			return SendClientMessage(playerid, COLOR_RED, "[ ! ] Nemas pristup ovome.");
+	if( callnumber == 32715 ) // Weapon Package Order
+	{ 
 		if( IsACop(playerid) || IsASD(playerid) || IsFDMember(playerid) )
 			return SendClientMessage(playerid, COLOR_RED, "[ ! ] Ne smijete to koristiti!");
 
@@ -3389,7 +3387,7 @@ public OnPlayerClickPlayerTextDraw(playerid, PlayerText:playertextid)
 	}
 	else if(playertextid == PhoneTD[playerid][28] && PlayerTextDrawCreated[playerid][28] == 1) //Cam
 	{
-		if( Bit1_Get( gr_DeathCountStarted, playerid ) ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne smijete ici selfie dok ste u death stanju!");
+		if( DeathCountStarted_Get(playerid) ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne smijete ici selfie dok ste u death stanju!");
 		CancelSelectTextDraw(playerid);
 		PhoneAction(playerid, PHONE_NEXT);
 

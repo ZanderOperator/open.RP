@@ -771,7 +771,7 @@ CMD:close(playerid, params[])
 CMD:shout(playerid, params[])
 {
 	if(PlayerInfo[playerid][pMuted]) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne mozes pricati!");
-	if( Bit1_Get( gr_DeathCountStarted, playerid ) ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne mozete pricati, u post death stanju ste!");
+	if( DeathCountStarted_Get(playerid) ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne mozete pricati, u post death stanju ste!");
 	if(isnull(params)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /(s)hout [poruka]");
 	params[0] = toupper(params[0]);
 	new string[128];
@@ -858,11 +858,14 @@ CMD:tognametag(playerid, params[])
 
 CMD:blockb(playerid, params[])
 {
-	if( Bit1_Get( gr_BlockedOOC, playerid ) ) {
-		Bit1_Set( gr_BlockedOOC, playerid, false );
+	if( Bit1_Get(gr_BlockedOOC, playerid) ) 
+	{
+		Bit1_Set(gr_BlockedOOC, playerid, false);
 		SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "Ukljucio si OOC chat!");
-	} else {
-		Bit1_Set( gr_BlockedOOC, playerid, true );
+	} 
+	else 
+	{
+		Bit1_Set(gr_BlockedOOC, playerid, true);
 		SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "Iskljucio si OOC chat!");
 	}
 	return 1;
@@ -882,7 +885,7 @@ CMD:b(playerid, params[])
 	);
 	if( Bit1_Get( a_AdminOnDuty, playerid ) && PlayerInfo[playerid][pAdmin] >= 1 )
 		OOCProxDetector(10.0, playerid, tmpString, COLOR_ORANGE,COLOR_ORANGE,COLOR_ORANGE,COLOR_ORANGE,COLOR_ORANGE);
-	else if( Bit1_Get( h_HelperOnDuty, playerid ) && PlayerInfo[playerid][pHelper] >= 1 )
+	else if( IsOnHelperDuty(playerid) && PlayerInfo[playerid][pHelper] >= 1 )
 		OOCProxDetector(10.0, playerid, tmpString, COLOR_HELPER,COLOR_HELPER,COLOR_HELPER,COLOR_HELPER,COLOR_HELPER);
 	else
 		OOCProxDetector(10.0, playerid, tmpString, COLOR_FADEB1,COLOR_FADEB2,COLOR_FADEB3,COLOR_FADEB4,COLOR_FADEB5);
@@ -2201,8 +2204,8 @@ CMD:dump(playerid, params[])
 		    PlayerInfo[playerid][ pMobileModel ] = 0;
 			PlayerInfo[playerid][ pMobileNumber ] = 0;
 			PlayerInfo[playerid][ pMobileCost ] = 0;
-			PhoneAction(playerid, PHONE_HIDE);
-			PhoneStatus[playerid] = PHONE_HIDE;
+			PhoneAction(playerid, 0); // PHONE_HIDE
+			PhoneStatus[playerid] = 0;
 			CancelSelectTextDraw(playerid);
 			DeletePlayerContacts(playerid);
 			// brise iz baze
@@ -2238,96 +2241,6 @@ CMD:dump(playerid, params[])
 	}
 	else SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nepoznato ime stvari za bacanje !");
     return 1;
-}
-
-CMD:fillcar(playerid, params[])
-{
-	if( !PlayerInfo[ playerid ][ pCanisterLiters ] || PlayerInfo[ playerid ][ pCanisterType ] == -1 ) return SendClientMessage( playerid, COLOR_RED, "[GRESKA]: Niste usipali nista u svoj kanister!");
-	new
-		vehicleid = GetPlayerVehicleID(playerid);
-	if( ( vehicleid == 0 || vehicleid == INVALID_VEHICLE_ID ) || IsABike( GetVehicleModel( vehicleid ) ) ) return SendClientMessage( playerid, COLOR_RED, "[GRESKA]: Nepravilno vozilo!" );
-	if( VehicleInfo[ vehicleid ][ vFuel ] >= 75 ) return SendClientMessage( playerid, COLOR_RED, "[GRESKA]: Vase vozilo moze voziti!");
-	
-	if( PlayerInfo[ playerid ][ pCanisterType ] == ENGINE_TYPE_PETROL ) {
-		if( VehicleInfo[ vehicleid ][ vEngineType ] == ENGINE_TYPE_DIESEL )
-			VehicleInfo[ vehicleid ][ vEngineLife ] -= 25.0;
-	}
-	else if( PlayerInfo[ playerid ][ pCanisterType ] == ENGINE_TYPE_DIESEL ) {
-		if( VehicleInfo[ vehicleid ][ vEngineType ] == ENGINE_TYPE_PETROL )
-			VehicleInfo[ vehicleid ][ vEngineLife ] -= 25.0;
-	}
-	VehicleInfo[ vehicleid ][ vFuel ] += PlayerInfo[ playerid ][ pCanisterLiters ];
-	PlayerInfo[ playerid ][ pCanisterLiters ] 	= 0;
-	PlayerInfo[ playerid ][ pCanisterType ] 	= -1;
-	return 1;
-}
-
-CMD:get(playerid, params[])
-{
-	new
-		param[6];
-	if( sscanf( params, "s[6] ", param ) ) {
-		SendClientMessage(playerid, COLOR_RED, "[ ? ]: /get [opcija]");
-		SendClientMessage(playerid, COLOR_RED, "[ ! ] fuel");
-	}
-	if( !strcmp( param, "fuel", true ) )
-	{
-		new
-			type, fuel, total;
-			
-		if( sscanf( params, "s[6]ii", param, type, fuel ) ) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /get fuel [0 - Benzin, 1 - Dizel][kolicina]");
-		if( !IsPlayerNearGasStation( playerid ) ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste blizu benzinske stanice!");
-		total = PlayerInfo[ playerid ][ pCanisterLiters ] + fuel;
-		if (total > 25 ) return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "Maksimalno 25 litara, treutno imate %d", PlayerInfo[ playerid ][ pCanisterLiters ]);
-		if( type > 1 || type < 0 ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Tip mora biti izmedju 0 i 1!");
-		if( 1 <= fuel <= 25 ) {
-			new
-				moneys;
-			switch( type ) {
-				case 0:  { // Benzin
-					moneys = (fuel * 4);
-					switch( PlayerInfo[playerid][pDonateRank] ) {
-						case 1:
-							moneys /= 4;
-						case 2:
-							moneys /= 2;
-						case 3,4:
-							moneys = 0;
-					}
-				}
-				case 1:  {// Dizel
-					moneys = (fuel * 3);
-					switch( PlayerInfo[playerid][pDonateRank] ) {
-						case 1:
-							moneys /= 4;
-						case 2:
-							moneys /= 2;
-						case 3,4:
-							moneys = 0;
-					}
-				}
-			}
-			moneys = floatround(moneys);
-			if( AC_GetPlayerMoney( playerid ) <  moneys) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate toliko novca!");
-			new bizid = GetNearestGasBiznis(playerid);
-			if( bizid == INVALID_BIZNIS_ID ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste u blizini benzinske postaje!");
-			
-			PlayerToBusinessMoneyTAX(playerid, bizid, moneys);
-			new
-				gasTillQuery[ 100 ];
-				
-			format( gasTillQuery, sizeof(gasTillQuery), "UPDATE `bizzes` SET  `till` = '%d' WHERE `id` = '%d'", 
-				BizzInfo[ bizid ][ bTill ],
-				BizzInfo[ bizid ][bSQLID]
-			);
-			mysql_tquery( g_SQL, gasTillQuery, "", "");
-			
-			PlayerInfo[ playerid ][ pCanisterLiters ] 	+= fuel;
-			PlayerInfo[ playerid ][ pCanisterType ] 	= type;
-			va_SendClientMessage( playerid, COLOR_RED, "[ ! ] Uspjesno ste napunili kanister s %d litara. Mozete koristiti /fillcar unutar zeljena vozila!", fuel);
-		} else SendMessage(playerid, MESSAGE_TYPE_ERROR, "Unos mora biti izmedju 1 i 25 litara!");
-	}
-	return 1;
 }
 
 CMD:give(playerid, params[])
@@ -3118,8 +3031,8 @@ CMD:acceptdeath(playerid, params[])
 	//RegisterPlayerDeath(playerid, WoundedBy[playerid]);
 	ApplyAnimation(playerid,"WUZI","CS_DEAD_GUY", 4.0,0,1,1,1,0);
 
-	Bit8_Set(gr_DeathCountSeconds, playerid, 61);
-	Bit1_Set(gr_DeathCountStarted, playerid, true); //ako je ovo true onda ne smije koristiti /l, /c, /me, /do
+	DeathCountStarted_Set(playerid, true);
+	DeathCountSeconds_Set(playerid, 61);
 
 	CreateDeathTD(playerid);
 	CreateDeathInfos(playerid, 1);

@@ -1,10 +1,9 @@
 #include <YSI\y_hooks>
-
 /*
 	##     ##    ###     ######  ########   #######   ######  
 	###   ###   ## ##   ##    ## ##     ## ##     ## ##    ## 
 	#### ####  ##   ##  ##       ##     ## ##     ## ##       
-	## ### ## ##     ## ##       ########  ##     ##  ######  
+	## ### ## ##     ## ##       ########  ##     ##  ######   
 	##     ## ######### ##       ##   ##   ##     ##       ## 
 	##     ## ##     ## ##    ## ##    ##  ##     ## ##    ## 
 	##     ## ##     ##  ######  ##     ##  #######   ######  
@@ -24,6 +23,9 @@
 
 #define CP_JOB_GPS		(150)
 
+// Player Module Includes at the bottom
+
+
 /*
 	######## #### ##     ## ######## ########   ######     ##     ##    ###    ########   ######  
 	   ##     ##  ###   ### ##       ##     ## ##    ##    ##     ##   ## ##   ##     ## ##    ## 
@@ -34,8 +36,7 @@
 	   ##    #### ##     ## ######## ##     ##  ######        ###    ##     ## ##     ##  ######  
 */
 
-new LoginCheckTimer[MAX_PLAYERS],
-	ADOText[MAX_PLAYERS],
+new ADOText[MAX_PLAYERS],
 	PlayerText:BlindTD[MAX_PLAYERS] = { PlayerText:INVALID_TEXT_DRAW, ... };
 
 /*
@@ -60,10 +61,23 @@ new
 	Bit1:	gr_BlockedOOC			<MAX_PLAYERS>;
 	
 new
-	PlayerGPS[MAX_PLAYERS],
 	PlayerDrunkLevel[MAX_PLAYERS],
     PlayerFPS[MAX_PLAYERS],
 	PlayerFPSUnix[MAX_PLAYERS];
+
+enum E_DATA_TAXI 
+{
+	bool: eTaxiDuty,
+	bool: eTaxiActive,
+	eTaxiDriver,
+	eTaxiPassanger,
+	eTaxiMetersFare,
+	eTaxiTraveled,
+	eTaxiFare,
+	eTaxiPayment,
+	Float: eTaxiStartPos[3],
+}
+new TaxiData[MAX_PLAYERS][E_DATA_TAXI];
 	
 /*
 	######## ##     ## ##    ##  ######  ######## ####  #######  ##    ##  ######  
@@ -919,11 +933,6 @@ forward BanPlayer(playerid);
 public BanPlayer(playerid)
 	return Ban(playerid);
 
-stock ResetGPSVars(playerid)
-{
-	DisablePlayerCheckpoint(playerid);
-	PlayerGPS[playerid] = 0;
-}
 stock GetAdoFreeLabelSlot() {
 	for(new i = 0; i < MAX_ADO_LABELS; i++)
 	{
@@ -1158,12 +1167,12 @@ timer PlayerGlobalTask[1000](playerid)
 	CheckWoundedPlayer(playerid);
 	
 	if(PlayerCarTow[playerid])
-		VehicleTowTimer(PlayerInfo[playerid][pSpawnedCar], playerid);
+		CallRemoteFunction("VehicleTowTimer" "ii", PlayerInfo[playerid][pSpawnedCar], playerid);
 	
 	SprayingBarChecker(playerid);
 	SprayingTaggTimer(playerid);
 	
-	PacketLossCheck(playerid);
+	PackageLossCheck(playerid);
 	return 1;
 }
 
@@ -1309,40 +1318,6 @@ stock static HungerCheck(playerid)
 	else if(PlayerInfo[playerid][pHunger] < 0.0)
 		SetPlayerHealth(playerid, health + PlayerInfo[playerid][pHunger]);
 	return 1;
-}
-/**
-    <summary>
-		Dobavlja igracevo ime te po potrebi mice "_"iz njega.
-    </summary>
-	
-	<param name="playerid">
-        Samo objaSnjivo.
-    </param>
-	
-	<param name="replace">
-        Bool vrijednost koja pita dali cemo micati '_' ili ne.
-    </param>
-
-    <returns>
-        Igracev nick bez '_'
-    </returns>
-
-    <remarks>
-        -
-    </remarks>
-*/
-stock GetName(playerid, bool:replace=true)
-{
-	new name[MAX_PLAYER_NAME];
-	GetPlayerName(playerid, name, sizeof(name));
-	
-	if( replace ) {
-		if( Bit1_Get( gr_MaskUse, playerid ) )
-			format(name, 24, "Maska_%d", PlayerInfo[ playerid ][ pMaskID ] );
-		else 
-			strreplace(name, '_', ' ');
-	}
-	return name;
 }
 
 /**
@@ -1606,24 +1581,6 @@ stock IsValidInactivity(sqlid)
 	}
 	cache_delete(result);
 	return value;
-}
-
-stock GetPlayerNameFromSQL(sqlid)
-{
-    new
-		dest[MAX_PLAYER_NAME];
-	if( sqlid > 0 ) {
-	    new	Cache:result,
-			playerQuery[ 128 ];
-
-		format(playerQuery, sizeof(playerQuery), "SELECT `name` FROM `accounts` WHERE `sqlid` = '%d'", sqlid);
-		result = mysql_query(g_SQL, playerQuery);
-		cache_get_value_index(0, 0, dest);
-		cache_delete(result);
-	} else {
-		format(dest, MAX_PLAYER_NAME, "None");
-	}
-	return dest;
 }
 
 /**
@@ -2041,7 +1998,6 @@ hook OnPlayerDisconnect(playerid, reason)
 	
 	RemovePlayerScreenFade(playerid);
 	DisablePlayerCheckpoint(playerid);
-	PlayerGPS[playerid] 		= 0;
     PlayerDrunkLevel[playerid]	= 0;
     PlayerFPS[playerid]       	= 0;
 	PlayerFPSUnix[playerid]		= 0;
@@ -2102,10 +2058,13 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 {
 	switch(dialogid)
 	{
-		case DIALOG_RULES: {
+		case DIALOG_RULES: 
+		{
 			if( !response ) return 1;
-			switch(listitem) {
-				case 0: {
+			switch(listitem) 
+			{
+				case 0: 
+				{
 					new string[835];
 					strcat(string,"Metagaming - Metagaming najcesce predstavlja mijesanje Out Of Characted (OOC) i In Character (IC) stvari. Naravno,\n takav vid krsenja pravila se moze ispoljiti na vise nacina ali najcesci su:\n 1.) Citanje nametaga iznad igraca te dozivanje istoga IC iako ga ne poznajete ili nikada niste ni culi njegovo ime", sizeof(string));
 					strcat(string,"\n 2.) Koristenje /pm komande kako bi se nasli negdje radi neke IC stvari,\n tipa prodaja oruzja, droge ili jednostavno radi neke price. U ovaj vid krsenja pravila se takodje ubraja i\n koristenje 3rd party programa kako bi se nasli negdje IC.", sizeof(string));
@@ -2114,7 +2073,8 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 					ShowPlayerDialog(playerid, 0, DIALOG_STYLE_MSGBOX, "Metagaming", string, "Close", "");
 					return 1;
 				}
-				case 1: {
+				case 1: 
+				{
 					new string[860];
 					strcat(string, "Powergaming - Powergaming je, u najcescim slucajevima, roleplay radnje koja u tom trenutku nije moguca ili uopste nije moguca, za ljudsko tijelo ili slicno.\n Naravno, i powergaming kao metagaming moze biti na vise nacina uradjen. Takodje kaznjih. Najcesce radnje su:\n 1. Skakanje sa neke odredjene visine koja je dovoljna da vas povrijedi pri padu i udari o tlo a da se povreda na roleplaya nego igrac jednostavno ustane i nastavi dalje.", sizeof(string));
 					strcat(string, "\n 2. Zavezani ste lisicama a onda roleplayate da jednostavno lomite lisice. To u, barem toj situaciji, nije nikako moguce.", sizeof(string));
@@ -2122,28 +2082,32 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 					ShowPlayerDialog(playerid, 0, DIALOG_STYLE_MSGBOX, "Powergaming", string, "Close", "");
 					return 1;
 				}
-				case 2: {
+				case 2: 
+				{
 					new string[720];
 					strcat(string, "RP2WIN - RP2WIN je roleplay sa nekom drugom osobom u kojem forsirate, bukvalno, da sve ide u vasu korist.\n Nesto sto moze da vam priblizi ovu radnju je sledeci me: / me sutira Ime_Prezime ta ga obara na pod izazivajuci mu nesvijest.\n Ovo je zabranjeno raditi jer u roleplayu treba svakome dati pravednu sansu da odradi svoju stranu RP-a.\n Pravilan me bi trebao glasiti: / me pokusava udariti Ime_Prezime kako bi ga oborio na pod.", sizeof(string));
 					strcat(string, "\n Tek kada vidite da li je igrac pao, odatle mozete nove situacije RPati. Naravno, RP2WIN moze da se izrazi i kada se branite.\n Ukoliko neko iskoristi nesto slicno drugom me-u, a vi samo napisete da vas je promasio ili da ste se izmakli takodje moze biti vid RP2WINa ali takodje i PGa.", sizeof(string));
 					ShowPlayerDialog(playerid, 0, DIALOG_STYLE_MSGBOX, "RP2WIN", string, "Close", "");
 					return 1;
 				}
-				case 3: {
+				case 3: 
+				{
 					new string[480];
 					strcat(string, "Revenge Kill - Revenge Kill kao sto samo ime kaze je ubojstvo iz osvete.\n Kada se dogodi ubojstvo, vi morate zaboraviti SVE u vezi tog dogadjaja. Mjesto ubojstva, pocinjitela, ucesnike.", sizeof(string));
 					strcat(string, "Sve.\n Jednostavno nastavljate RPati kao da se to nikada nije dogodilo ali ako ste prezivjeli, naravno,\n imate svako pravo da RPate da se to dogodilo i imate pravo juriti toga koji vas je pokusao ubiti, onda ne bi bio revenge kill\n vec pokusaj ubojstva koji nije uspio.", sizeof(string));
 					ShowPlayerDialog(playerid, 0, DIALOG_STYLE_MSGBOX, "Revenge Kill", string, "Close", "");
 					return 1;
 				}
-				case 4: {
+				case 4: 
+				{
 					new string[320];
 					strcat(string, "Deathmatch - Vjerovatno znate o cemu se radi. DM je ubijanje ljudi bez ikakvog ili bez dovoljno dobrog IC razloga.\n Nedovoljno dobar razlog moze predstavljati to", sizeof(string));
 					strcat(string, "sto vas je igrac mrko pogledao a vi ste ispraznili citav sarzer u njega.\n Ovo je STROGO zabranjeno na nasem serveru i isto tako je kaznjivo.", sizeof(string));
 					ShowPlayerDialog(playerid, 0, DIALOG_STYLE_MSGBOX, "Deathmatch", string, "Close", "");
 					return 1;
 				}
-				case 5: {
+				case 5: 
+				{
 					new string[640];
 					strcat(string, "-/me koristite kako bi prikazali radnju koju vas karakter izvrsava u odredjenom trenutku.\n Nema pisanja predugackih /me emotesa sa 5 priloski odredbi za nacin koje zavrsavaju na -ci.\n To je bespotrebno i niste bolji rper ako napisete kilometarski /me.", sizeof(string));
 					strcat(string, "\n Ali i ako dodjete u situaciju da napisete sve u jedan /me probajte da tu ne budu\n vise od 3 radnje/glagola jer je onda to PG. Dakle,trudite se citljive i jednostavne\n emotese pisati da vas ljudi koji rpaju sa vama razumiju.", sizeof(string));
@@ -2151,11 +2115,13 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 					ShowPlayerDialog(playerid, 0, DIALOG_STYLE_MSGBOX, "/me komanda", string, "Close", "");
 					return 1;
 				}
-				case 6: {
+				case 6: 
+				{
 					ShowPlayerDialog(playerid, 0, DIALOG_STYLE_MSGBOX, "/ame komanda", "-/ame je ustvari isto sto i /me samo ce se tekst koji upisete ispisati vama iznad glave.\nDakle ako upisete /ame gleda kako Johnny jede, ono sto ce iznad vase glave pisati je Imenko_Prezimenko gleda kako Johnny jede.\n/ame jos mozete koristiti za izrazavanje emocija vaseg lika, kao npr /ame se smije. Takodjer se moze koristiti da opisete svoj izgled tj. izgled svoga lika.", "Close", "");
 					return 1;
 				}
-				case 7: {
+				case 7: 
+				{
 					new string[660];
 					strcat(string, "/do koristite kako bi opisali ono sto se desava oko vas, tj okolinu u kojoj se vas karakter nalazi.\n /Do emotes ne KORISTITE da bi prikazali sta vas karakter radi jer je za to /me. Nema smisla pisati /do Rukujemo se, /do Izgledam kao da imam 15 godina.\n Znaci trudite se da ga ne koristite ni da opisete svog karaktera tako cesto, jer za to mozete koristiti i /ame.\n /ame izgleda kao da ima 15 godina, crne hlace i duks.", sizeof(string));
 					strcat(string, "Par primjera ispravnog koristenja /do komande:\n /do Iz pravca mehanicarske radnje bi dolazio miris ulja radi vozila koja sa tamo popravljaju.\n /Do Kafic bi bio sav u neredu, stolice su prevrnute kao i stolovi.", sizeof(string));
@@ -2177,6 +2143,3 @@ stock GetChannelSlot(playerid, channel)
 
 	return false;
 }
-
-
-

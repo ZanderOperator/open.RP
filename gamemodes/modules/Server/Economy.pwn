@@ -89,6 +89,7 @@ IllegalToLegalBudgetMoney (money) // Ilegalni proracun u legalni
 
 */
 #include <YSI\y_hooks>
+
 // LOG funkcije
 stock LogTransaction ( playerid, giveplayerid, money, logtype )
 {
@@ -101,7 +102,7 @@ stock LogTransaction ( playerid, giveplayerid, money, logtype )
 		}
 		case LOG_TYPE_HOUSESELL: {
 			new house = PlayerInfo[ playerid ][ pHouseKey ];
-			format(desc, sizeof(desc), "Adresa: %s", HouseInfo[house][hAdress]);
+			format(desc, sizeof(desc), "Adresa kuce: %s", HouseInfo[house][hAdress]);
 		}
 		case LOG_TYPE_VEHICLESELL: {
 			new vehid 	= PlayerInfo[ playerid ][ pSpawnedCar ], vehicleName[MAX_VEHICLE_NAME];

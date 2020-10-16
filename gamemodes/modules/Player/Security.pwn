@@ -1,3 +1,5 @@
+#include <YSI\y_hooks>
+
 #define MAX_SECURITY_QUESTIONS	(8)
 
 /*
@@ -96,7 +98,9 @@ stock UpdateRegisteredPassword(playerid)
 	##     ## ##     ## ##     ## ##  ##         ## 
 	##     ## ##     ## ##     ## ##   ##  ##    ## 
 	##     ##  #######   #######  ##    ##  ######  
+*
 */
+
 hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 {
 	switch(dialogid)
@@ -324,6 +328,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 	}
 	return 0;
 }
+
 /*
 	 ######  ##     ## ########  
 	##    ## ###   ### ##     ## 

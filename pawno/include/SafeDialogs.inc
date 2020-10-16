@@ -8,6 +8,7 @@
 	Updated by Southclaws 2017-10-13 to add include guard.
 */
 #include <a_samp>
+#include <YSI\y_hooks>
 
 #if defined _easyDialog_included
 	#endinput

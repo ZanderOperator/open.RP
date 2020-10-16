@@ -20,39 +20,6 @@ Weathers:
 
 */
 
-
-#define MAX_PLAYER_DRUGS	(5)
-#define MAX_VEHICLE_DRUGS 	(10)
-#define MAX_DRUG_AMOUNT 	(1000)
-#define DRUG_DAYS_QUALITY	(86400)
-
-#define DRUG_TYPE_NONE 		(0)
-#define DRUG_TYPE_SMOKE 	(1)
-#define DRUG_TYPE_SNORT 	(2)
-#define DRUG_TYPE_INJECT 	(3)
-#define DRUG_TYPE_TABLET	(4)
-
-enum E_DRUG_INFO
-{
-	dName[10],
-	dEffect,
-	dPayDayT,
-	dUseTime,
-	dPricePG
-}
-
-new const 
-	drugs[][E_DRUG_INFO] = 
-{
-	{"Prazno", 		DRUG_TYPE_NONE,   0, 0, 0},
-	{"Marihuana", 	DRUG_TYPE_SMOKE,  8, 25, 70},
-	{"Kokain", 		DRUG_TYPE_SNORT,  12, 30, 110},
-	{"Heroin", 		DRUG_TYPE_INJECT, 15, 35, 90},
-	{"Xanax",		DRUG_TYPE_TABLET, 15, 40, 145},
-	{"LSD", 		DRUG_TYPE_TABLET, 15, 50, 160},
-	{"MDMA",		DRUG_TYPE_TABLET, 15, 75, 175}
-};
-
 static const
 	Float:bag[][3] =
 {
@@ -74,17 +41,6 @@ enum e_V_DRUGS
 
 new
 	VehicleDrugs[MAX_VEHICLES][e_V_DRUGS];
-	
-enum E_DRUG_DATA
-{
-	dSQLID[5],
-	dCode[5],
-	Float:dAmount[5],
-	Float:dEffect[5],
-	dTimeStamp[5]
-}
-new
-	PlayerDrugs[MAX_PLAYERS][E_DRUG_DATA];
 	
 	
 enum pckg_Drugs

@@ -61,21 +61,6 @@ stock LoadAmmuData() // Loadanje cijele baze
 	return 1;
 }
 
-stock LogAmmu(string[]) // Log
-{
-	new
-	    entry[256],
-		month,
-		day,
-		year;
-	getdate(year, month, day);
-	format(entry, sizeof(entry), "\n[%02d/%02d/%d] %s", day, month, year, string);
-	new File:hFile;
-	hFile = fopen("/logfiles/ammunation_buy.txt", io_append);
-	fwrite(hFile, entry);
-	fclose(hFile);
-}
-
 stock static UpdateAmmuWeapon(slotid) // Updateanje ourzja u listi
 {
 	new
@@ -117,20 +102,18 @@ stock static InsertAmmuWeapon(slotid) // Dodavanje novog oruzja
 
 stock static PlayerAmmunationBuyTime(playerid, days)
 {
-	new	ammutime, date[ 6 ];
+	new	ammutime, date[ 12 ], time[ 12 ];
 	ammutime = days * 86400; 
-	ammutime += gettimestamp(); // dodaje se trenutno vrijeme
-	PlayerInfo[ playerid ][ pAmmuTime] = ammutime; // igracu se u varijablu dodaje vrijeme
-	stamp2datetime(ammutime, date[0], date[1] ,date[2], date[3], date[4], date[5]); // formatiranje vremena iz unixa u normalno
+	ammutime += gettimestamp();
+	PlayerInfo[ playerid ][ pAmmuTime] = ammutime;
 	
-	va_SendClientMessage(playerid, COLOR_RED, "[AMMUNATION INFO]: Sljedeci put mozete kupovati nakon %d dana (%02d/%02d/%02d %02d:%02d:%02d)",
+	TimeFormat(ammutime, HUMAN_DATE, date);
+	TimeFormat(ammutime, ISO6801_TIME, time);
+	
+	va_SendClientMessage(playerid, COLOR_YELLOW, "Next time you can buy a weapon in ammunation is after %d days. "COL_RED"(After %s %s)",
 		days,
-		date[2],
-		date[1],
-		date[0],
-		date[3],
-		date[4],
-		date[5]
+		date,
+		time
 	);
 }
 
@@ -172,16 +155,14 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 				case 3,4: PlayerAmmunationBuyTime(playerid, 1); // Postavljanje igracu zabranu na 1 dan kupovanja
 			}
 				
-			// ---------- spremanje u ammunation log ----------
-			new log[ 128 ]; // -----
-			format( log, 128, "%s je kupio %s sa %d metaka za %d$.",
+			#if defined MODULE_LOGS
+			Log_Write("/logfiles/ammunation_buy.txt", "%s bought %s with %d bullets for %d$.",
 				GetName(playerid),
 				AmmuInfo[ index ][ aiName ],
 				safe_bullets,
 				money
 			);
-			LogAmmu(log); 
-			// -------------------------------------
+			#endif
 		
 			SendFormatMessage(playerid, MESSAGE_TYPE_SUCCESS, "Kupili ste %s sa %d metaka za %d$!", 
 				AmmuInfo[ index ][ aiName ],
@@ -204,7 +185,6 @@ hook OnPlayerDisconnect(playerid, reason)
 
 CMD:buyweapon(playerid, params[])
 {
-	//if( !BiznisProducts[ Bit16_Get( gr_PlayerInBiznis, playerid ) ][ bpAmount ][ 0 ] ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne mozete ovdje kupovati jer biznis nema produkta!");
 	if ( !IsPlayerInRangeOfPoint(playerid, 4.0, 295.0016,-38.3526,1001.5156)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, " Ne nalazite se na mjestu za kupovinu oruzja.");
 	
 	// --- Provjera je li igracu isteklo vrijeme za kupnju  ------------
@@ -218,15 +198,16 @@ CMD:buyweapon(playerid, params[])
 		ShowPlayerDialog(playerid, DIALOG_AMMUNATION_MENU, DIALOG_STYLE_TABLIST_HEADERS, "AMMUNATION", tmpString, "Choose", "Abort");
 	}
 	else {
-		new datum = PlayerInfo[ playerid ][ pAmmuTime ],
-			date[ 6 ];
-		stamp2datetime(datum, date[0], date[1] ,date[2], date[3], date[4], date[5]);
-		va_SendClientMessage( playerid, COLOR_RED, "[ ! ] Nije vam dozvoljena kupnja do %d.%d.%d. - %d:%d",
-			date[2],
-			date[1],
-			date[0],
-			date[3],
-			date[4]
+		new timestamp = PlayerInfo[ playerid ][ pAmmuTime ],
+			date[ 12 ],
+			time[ 12 ];
+
+		TimeFormat(timestamp, HUMAN_DATE, date);
+		TimeFormat(timestamp, ISO6801_TIME, time);
+
+		va_SendClientMessage( playerid, COLOR_RED, "[ ! ] Your purchase isn't authorised untill %s %s",
+			date,
+			time
 		);
 	}
 	return 1;
