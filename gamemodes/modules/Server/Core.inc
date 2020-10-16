@@ -1,0 +1,27 @@
+#include <YSI\y_hooks>
+
+#include "modules/Server/Color.pwn"
+#include "modules/Server/Checkpoints.pwn"
+#include "modules/Server/Artconfig.pwn"
+#include "modules/Server/PopupMessage.pwn"
+#include "modules/Server/Updates.pwn"
+#include "modules/Server/Animations.pwn"
+#include "modules/Server/Streets.pwn"
+#include "modules/Server/Zones.pwn"
+#include "modules/Server/Utils.pwn"
+#include "modules/Server/Pickups.pwn"
+#include "modules/Server/Logo.pwn"
+#include "modules/Server/KeyInput.pwn"
+#include "modules/Server/Player.pwn"
+#include "modules/Server/Weapons.pwn"
+#include "modules/Server/Money.pwn"
+#include "modules/Server/AntiBunnyHop.pwn"
+#include "modules/Server/Economy.pwn"
+
+// Vehicles
+#include "modules/Server/VehFuncs.pwn"
+#include "modules/Server/Tuning.pwn"
+#include "modules/Server/NOS.pwn"
+#include "modules/Server/Speedo.pwn"
+#include "modules/Server/Vehicles.pwn"
+#include "modules/Server/CO.pwn"
