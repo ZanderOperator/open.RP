@@ -71,6 +71,21 @@ new
 	 ######     ##     #######   ######  ##    ##  ######  
 */
 
+stock DeathCountStarted_Get(playerid)
+{
+	return Bit1_Get(gr_DeathCountStarted, playerid);
+}
+
+stock DeathCountStarted_Set(playerid, bool:status)
+{
+	return Bit1_Set(gr_DeathCountStarted, playerid, status);
+}
+
+stock DeathCountSeconds_Set(playerid, secs)
+{
+	return Bit8_Set(gr_DeathCountSeconds, playerid, secs);
+}
+
 stock GetDroppedWeaponFreeID()
 {
 	for(new i = 0; i < MAX_DROPPED_ITEMS; i++)
@@ -122,7 +137,7 @@ stock DropPlayerWeapon(playerid, weaponid, Float:x, Float:y)
 				Float:rndy = (10 / randomEx(40, 100)) + randomEx(1,3),
 				Float:rndrot = randomEx(0, 180);
 
-			DroppedWeapons[slot][dWeaponObject] = CreateDynamicObject(GetGunObjectID(PlayerWeapons[playerid][pwWeaponId][i]), x+rndx, y+rndy, Z, 90, rndrot, 0.0, GetPlayerVirtualWorld(playerid), GetPlayerInterior(playerid), -1);
+			DroppedWeapons[slot][dWeaponObject] = CreateDynamicObject(WeaponModels(weaponid), x+rndx, y+rndy, Z, 90, rndrot, 0.0, GetPlayerVirtualWorld(playerid), GetPlayerInterior(playerid), -1);
 			DroppedWeapons[slot][dWeaponID] = PlayerWeapons[playerid][pwWeaponId][i];
 			DroppedWeapons[slot][dWeaponAmmo] = PlayerWeapons[playerid][pwAmmo][i];
 
@@ -153,7 +168,7 @@ stock DropPlayerWeapons(playerid, Float:x, Float:y)
 					Float:rndy = (10 / randomEx(40, 100)) + randomEx(1,3),
 					Float:rndrot = randomEx(0, 180);
 
-                DroppedWeapons[slot][dWeaponObject] = CreateDynamicObject(GetGunObjectID(PlayerWeapons[playerid][pwWeaponId][i]), x+rndx, y+rndy, Z+0.1, 90, rndrot, 0.0, GetPlayerVirtualWorld(playerid), GetPlayerInterior(playerid), -1);
+                DroppedWeapons[slot][dWeaponObject] = CreateDynamicObject(WeaponModels(PlayerWeapons[playerid][pwWeaponId][i]), x+rndx, y+rndy, Z+0.1, 90, rndrot, 0.0, GetPlayerVirtualWorld(playerid), GetPlayerInterior(playerid), -1);
                 DroppedWeapons[slot][dWeaponID] = PlayerWeapons[playerid][pwWeaponId][i];
 				if(PlayerWeapons[playerid][pwAmmo][i] < 500)
 					DroppedWeapons[slot][dWeaponAmmo] = PlayerWeapons[playerid][pwAmmo][i];
@@ -327,6 +342,18 @@ public LoadingPlayerDeaths(playerid)
 	##     ## ##     ## ##     ## ##   ##  
 	##     ##  #######   #######  ##    ## 
 */
+
+hook OnPlayerDisconnect(playerid, reason)
+{
+	if( Bit1_Get( gr_DeathCountStarted, playerid ) ) {
+		DestroyDeathInfo(playerid);
+		KillTimer(DeathTimer[playerid]);
+		Bit1_Set( gr_DeathCountStarted, playerid, false );
+		Bit8_Set( gr_DeathCountSeconds, playerid, 0 );
+	}
+	ResetDeathVars(playerid);
+	return 1;
+}
 
 hook OnPlayerTakeDamage(playerid, issuerid, Float: amount, weaponid, bodypart)
 {

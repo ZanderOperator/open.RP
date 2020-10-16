@@ -319,7 +319,7 @@ public PokerExit(playerid)
 	CancelSelectTextDraw(playerid);
 }
 
-Function: PokerPulse()
+task PokerPulse[1000]()
 {
 	foreach(new tableid: PokerTables)
 	{

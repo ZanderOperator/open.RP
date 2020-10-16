@@ -537,20 +537,20 @@ CMD:aremoveallplayerobjects(playerid, params[])
 	if(isnull(params))
 	    return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /aremoveallplayerobjects [playerid]");
 	    
-	new
-	    id = strval(params);
+	new giveplayerid = strval(params);
 	    
-	if(!IsPlayerConnected(id))
+	if(!IsPlayerConnected(giveplayerid))
 	    return SendClientMessage(playerid,COLOR_RED, "Taj igrac nije online!");
 	    
-    if(AreAllPObjectSlotsEmpty(id))
+    if(AreAllPObjectSlotsEmpty(giveplayerid))
    		return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Taj igrac nema spawnane objekte!");
 
 	for(new p_o = 0; p_o != MAX_PLAYER_OBJECTS; ++p_o) 
-		if(PlayerObjectsInfo[id][p_o][poPlaced]) 
-			DeletePlayerObjectsObject(id, p_o);
+		if(PlayerObjectsInfo[giveplayerid][p_o][poPlaced]) 
+			DeletePlayerObjectsObject(giveplayerid, p_o);
 	
 	SendClientMessage(playerid, COLOR_RED, "[ ! ] Uspjesno ste izbrisali sve spawnane objekte odabranom igracu!");
+	va_SendClientMessage(giveplayerid, COLOR_RED, "[ ! ]: Game Admin %s deleted all your created objects.", GetName(playerid, false));
 	return 1;
 }
 

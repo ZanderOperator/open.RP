@@ -245,7 +245,8 @@ stock ChangePlayerInputKey(playerid)
 	##     ## ##     ## ##     ## ##   ##  ##    ## 
 	##     ##  #######   #######  ##    ##  ######  
 */
-hook OnPlayerDisconnect(playerid, reason)
+
+public OnPlayerDisconnect(playerid, reason)
 {
 	if( Bit1_Get(PlayerUsingKeyInput, playerid) )
 		DisablePlayerKeyInput(playerid);	

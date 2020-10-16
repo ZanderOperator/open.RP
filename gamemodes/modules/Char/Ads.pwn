@@ -200,7 +200,7 @@ stock static CreateAdForPlayer(playerid)
 	return 1;
 }
 
-Function: SendAutomaticAdMessage()
+task SendAutomaticAdMessage[1000]()
 {
 	new delad = -1;
 	foreach(new i: Ads)

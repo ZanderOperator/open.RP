@@ -129,6 +129,38 @@ FormatNumber(number, prefix[] = "$")
 	return value;
 }
 
+stock GetName(playerid, bool:replace=true)
+{
+	new name[MAX_PLAYER_NAME];
+	GetPlayerName(playerid, name, sizeof(name));
+	
+	if( replace ) {
+		if( Bit1_Get( gr_MaskUse, playerid ) )
+			format(name, 24, "Maska_%d", PlayerInfo[ playerid ][ pMaskID ] );
+		else 
+			strreplace(name, '_', ' ');
+	}
+	return name;
+}
+
+stock GetPlayerNameFromSQL(sqlid)
+{
+    new
+		dest[MAX_PLAYER_NAME];
+	if( sqlid > 0 ) {
+	    new	Cache:result,
+			playerQuery[ 128 ];
+
+		format(playerQuery, sizeof(playerQuery), "SELECT `name` FROM `accounts` WHERE `sqlid` = '%d'", sqlid);
+		result = mysql_query(g_SQL, playerQuery);
+		cache_get_value_index(0, 0, dest);
+		cache_delete(result);
+	} else {
+		format(dest, MAX_PLAYER_NAME, "None");
+	}
+	return dest;
+}
+
 GetVehicleDriver(vehicleid)
 {
 	new
@@ -1650,37 +1682,6 @@ public VpnHttpResponse(index, response_code, data[])
 	}
 }
 
-// REST
-stock DB_Escape(text[])
-{
-    new
-        ret[80 * 2],
-        ch,
-        i,
-        j;
-    while ((ch = text[i++]) && j < sizeof (ret))
-    {
-        if (ch == '\')
-        {
-            if (j < sizeof (ret) - 2)
-            {
-                ret[j++] = '\'';
-                ret[j++] = '\'';
-            }
-        }
-        else if (j < sizeof (ret))
-        {
-            ret[j++] = ch;
-        }
-        else
-        {
-            j++;
-        }
-    }
-    ret[sizeof (ret) - 1] = '\0';
-    return ret;
-}
-
 stock SetPlayerLookAt(playerid, Float:X, Float:Y)
 {
     new
@@ -1760,8 +1761,8 @@ stock ReturnDate()
 	return ip;
 }*/
 
-mysql_fquery(MySQL:connectionHandle, const query[], va_args<>)
-	return mysql_tquery(connectionHandle, va_return(query, va_start<2>));
+mysql_fquery(MySQL:connectionHandle, const fquery[], va_args<>)
+	return mysql_tquery(connectionHandle, va_return(fquery, va_start<2>));
 
 ReturnName(playerid)
 {

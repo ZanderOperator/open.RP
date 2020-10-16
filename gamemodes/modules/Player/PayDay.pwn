@@ -327,8 +327,8 @@ GivePlayerPayCheck(playerid)
 			strcat(p_dialog,f_dialog, sizeof(p_dialog));
 		}
 	}
-	if(PlayerInfo[playerid][pJob] == PLAYER_JOB_TAXI || PlayerInfo[playerid][pJob] == MECHANIC_ID) { // IC POSLOVI
-		if(PlayerInfo[playerid][pJob] == PLAYER_JOB_TAXI) {
+	if(PlayerInfo[playerid][pJob] == 6 || PlayerInfo[playerid][pJob] == 3) { // IC POSLOVI
+		if(PlayerInfo[playerid][pJob] == 6) {
 			new taxi_job = PlayerInfo[playerid][pContractTime] * 8, calculate = 0;
 			if(taxi_job > 700)
 				taxi_job = 700;
@@ -340,7 +340,7 @@ GivePlayerPayCheck(playerid)
 			strcat(p_dialog,f_dialog, sizeof(p_dialog));
 			PlayerInfo[playerid][pPayDayMoney] = 0;
 		}
-		else if(PlayerInfo[playerid][pJob] == MECHANIC_ID) {
+		else if(PlayerInfo[playerid][pJob] == 3) {
 			new workingbonus = PlayerInfo[playerid][pContractTime] * 8;
 			if(workingbonus > 700)
 				workingbonus = 700;
@@ -353,7 +353,7 @@ GivePlayerPayCheck(playerid)
 	}
 	if(PlayerInfo[playerid][pJob] > 0 && PlayerInfo[playerid][pContractTime] >= 1) // OOC poslovi
 	{
-		if(PlayerInfo[playerid][pJob] != 9 && PlayerInfo[playerid][pJob] != 10 && PlayerInfo[playerid][pJob] != 12 && PlayerInfo[playerid][pJob] != 13 && PlayerInfo[playerid][pJob] != PLAYER_JOB_TAXI && PlayerInfo[playerid][pJob] != MECHANIC_ID)
+		if(PlayerInfo[playerid][pJob] != 9 && PlayerInfo[playerid][pJob] != 10 && PlayerInfo[playerid][pJob] != 12 && PlayerInfo[playerid][pJob] != 13 && PlayerInfo[playerid][pJob] != 6 && PlayerInfo[playerid][pJob] != 3)
 		{
 			if(PlayerInfo[playerid][pBusinessJob] == -1) {
 				new workingbonus;
@@ -451,9 +451,10 @@ GivePlayerPayCheck(playerid)
 	ResetBH_Script(playerid);
 	PlayerInfo[playerid][JackerCoolDown] = 0;
 	// Experience
+	
 	new currentday, day;
-	stamp2datetime(gettimestamp(), _, _, currentday, _, _, _);
-	stamp2datetime(ExpInfo[playerid][eLastPayDayStamp], _, _, day, _, _, _);
+	TimeFormat(gettimestamp(), DAY_OF_MONTH, "%d", currentday);
+	TimeFormat(ExpInfo[playerid][eLastPayDayStamp], DAY_OF_MONTH, "%d", day);
 	ExpInfo[playerid][eLastPayDayStamp] = gettimestamp();
 	ExpInfo[playerid][eMonthPayDays]++;
 	if((ExpInfo[playerid][eMonthPayDays] % 2) == 0)

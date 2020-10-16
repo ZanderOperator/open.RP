@@ -1402,7 +1402,7 @@ CMD:lts(playerid, params[]) {
 		}
 		
 		if(type == 1)
-			Createlts_items(trunk_WeaponModels(i_wid), i_name, i_amount, E_ITEM_TYPE_WEAPON, i_wid,	X, Y ,Z, 80.0, 0.0, 0.0);
+			Createlts_items(WeaponModels(i_wid), i_name, i_amount, E_ITEM_TYPE_WEAPON, i_wid,	X, Y ,Z, 80.0, 0.0, 0.0);
 		if(type == 2) 
 			Createlts_items(2043, i_name, i_amount, E_ITEM_TYPE_AMMO, (-1), X, Y ,Z, 80.0, 0.0, 0.0);
 		if(type == 3) 

@@ -21,7 +21,7 @@
 // Server Players, NPC's and Vehicle Config
 #define MAX_NPCS 								(1)
 #undef MAX_PLAYERS
-#define MAX_PLAYERS 							(300)
+#define MAX_PLAYERS 							(500)
 #undef MAX_VEHICLES
 #define MAX_VEHICLES                      		(1000)
 
@@ -53,7 +53,7 @@
 #define FIX_OnDialogResponse		0
 #define FIX_GetPlayerDialog			0
 #define	MAX_IP_CONNECTS 			3
-#define FIX_file_inc 0
+#define FIX_file_inc 				0
 
 // Script Mode settings
 //#define COA_TEST
@@ -74,8 +74,8 @@
 // SafeDialog shunt - Anti F6 abuse
 #include <SafeDialogs>
 
-// Pawn RakNet by urShadow
-#include <Pawn.RakNet>
+// Modern Pawn library for working with dates and times - TimeFormat
+#include <chrono> 
 
 // Aim Anti-Cheat by Yashas
 #include <BustAim>
@@ -103,8 +103,9 @@
 #include <progress2>
 #include <mapandreas>
 #include <color_menu>
+#include <mSelection>
 #include <eSelection>
-#include <timestamp>
+
 #include <vSync> // mici sve osim seats ids
 #include <fly>
 
@@ -173,22 +174,22 @@ native WP_Hash(buffer[], len, const str[]);
 #define MAX_PLAYER_CIDR							(32)
 #define MAX_SKILLS								(9)
 #define MAX_WARNS								(3)
-#define MAX_PICKUP								(150)
-#define MAX_HOUSES                      		(800)
+#define MAX_PICKUP								(500)
+#define MAX_HOUSES                      		(1500)
 #define	MAX_COMPLEX_ROOMS                       (50)
 #define MAX_COMPLEX                             (10)
-#define MAX_BIZZS         						(200)
+#define MAX_BIZZS         						(500)
 #define MAX_SALE_PRODUCTS						(10)
 #define MAX_PLANTS								(200)
 #define MAX_CUSTOMIZED_OBJECTS          		(7)
 #define MAX_SERVER_FLAMES						(200)
 #define MAX_STARTED_FLAMES						(30)
 #define MAX_FACTIONS							(21)
-#define MAX_APARTMENTS							(100)
+#define MAX_APARTMENTS							(500)
 #define MAX_VEHICLE_TICKETS						(5)
-#define MAX_GARAGES                 			(300)
+#define MAX_GARAGES                 			(1500)
 #define MAX_SERVER_SKINS						(600)
-#define MAX_ILEGAL_GARAGES						(3)
+#define MAX_ILEGAL_GARAGES						(10)
 
 // Max Inactivity Time & Minimum Month PayDays before Job/Property Removal
 #define MAX_JOB_INACTIVITY_TIME					(864000) // 10 days
@@ -226,6 +227,31 @@ native WP_Hash(buffer[], len, const str[]);
 // Trunk - Slot Limits
 #define MAX_WEAPON_SLOTS						(10)
 #define MAX_PACKAGE_VEHICLE						(15) 
+
+// Weapon Packages
+#define MAX_PLAYER_PACKAGES 					(10)
+#define MAX_LISTED_WEAPONS						(11)	// maximalno oruzja za kupnju - /warehouse getgun.
+#define MAX_PACKAGE_AMOUNT						(200)	// maximalno municije u jednom paketu.
+#define MAX_PACKAGES							(10)	// maximalno narucenih paketa.
+#define PACKAGE_COOLDOWN						(120)	// Svakih '?' koliko ce se moci narucit paket.
+#define MINUTES_TILL_PACKAGE_ARRIVE			 	(10) // Koliko minuta treba da paket dodje u warehouse.
+#define INVALID_PACKAGE_ID						(-1)	// Invalid ID
+#define PACKAGE_PANCIR							(6969)	// Pancir Package (random id)
+
+// Drugs
+#define MAX_PLAYER_DRUGS						(5)
+#define MAX_VEHICLE_DRUGS 						(10)
+#define MAX_DRUG_AMOUNT 						(1000)
+#define DRUG_DAYS_QUALITY						(86400)
+
+#define DRUG_TYPE_NONE 							(0)
+#define DRUG_TYPE_SMOKE 						(1)
+#define DRUG_TYPE_SNORT 						(2)
+#define DRUG_TYPE_INJECT 						(3)
+#define DRUG_TYPE_TABLET						(4)
+
+// Private Vehicles - CarOwnership.pwn
+#define MAX_PLAYER_CARS							(10)
 
 // Invalids
 #define INVALID_BIZNIS_ID     					(999)
@@ -298,7 +324,9 @@ new Iterator:COVehicles<MAX_VEHICLES>,
 	Iterator:ComplexRooms<MAX_COMPLEX_ROOMS>,
 	Iterator:Garages<MAX_GARAGES>,
 	Iterator:IllegalGarages<MAX_ILEGAL_GARAGES>,
-	Iterator:COWObjects	[MAX_VEHICLES]<MAX_WEAPON_SLOTS>;
+	Iterator:COWObjects	[MAX_VEHICLES]<MAX_WEAPON_SLOTS>,
+	Iterator:P_PACKAGES[MAX_PLAYERS]<MAX_PLAYER_PACKAGES>,
+	Iterator:V_PACKAGES[MAX_VEHICLES]<MAX_PACKAGE_VEHICLE>;
 
 new texture_buffer[10256];
 new PlayerUpdatePage[MAX_PLAYERS] = 0;
@@ -555,20 +583,6 @@ enum E_OLDPOS_INFO
 }
 new PlayerPrevInfo[MAX_PLAYERS][E_OLDPOS_INFO];
 
-enum E_ROBBERY_INFO
-{
-	bool:whActive,
-	whDuration,
-	bool:whSuceeded,
-	whExtractionArea,
-	whMainRobberSQL,
-	whRobberFaction,
-	whRobberWarehouse,
-	whVictimFaction,
-	whVictimWarehouse,
-}
-new RobberyInfo[E_ROBBERY_INFO];
-
 enum E_HIDDEN_WEAPON
 {
 	pwSQLID,
@@ -576,6 +590,28 @@ enum E_HIDDEN_WEAPON
 	pwAmmo
 }
 new HiddenWeapon[MAX_PLAYERS][E_HIDDEN_WEAPON];
+
+// Weapon Package Order List
+enum E_WEAPON_PACKAGE {
+	wep_ID,
+	wep_Name[16],
+	wep_Price
+}
+
+new
+	show_WeaponList[MAX_LISTED_WEAPONS][E_WEAPON_PACKAGE] = {
+	{24, 			"DEAGLE", 			70},
+	{22,		    "COLT",		        45},
+	{29,		    "MP5",		        85},
+	{23,		    "SILENCED",		    60},
+	{25,		    "SHOTGUN",		    90},
+	{32,    		"TEC9",		        60},
+	{28,		    "UZI",		        60},
+	{30,		    "AK47",		        110},
+	{31,		    "M4",		      	125},
+	{34,	    	"SNIPER",         	900},
+	{33,		    "RIFLE",		    130}
+};
 
 new PhoneStatus[ MAX_PLAYERS ];
 
@@ -764,15 +800,6 @@ new BizzInfo[MAX_BIZZS][E_BIZNIS_INFO];
 #define bFurTxtId][%1][%2] bFurTxtId][((%1)*5)+(%2)]
 #define bFurColId][%1][%2] bFurColId][((%1)*5)+(%2)]
 
-enum E_BIZNIS_PRODUCTS_DATA
-{
-	bpSQLID,
-	bpType,
-	bpPrice,
-	bpAmount
-}
-new BiznisProducts[MAX_BIZZS][E_BIZNIS_PRODUCTS_DATA][MAX_SALE_PRODUCTS];
-
 enum E_PLAYER_TICKS {
 	ptReport,
 	ptVehicleCrash,
@@ -796,6 +823,14 @@ enum E_VICTIM_DATA
 }
 new PlayerInjured[MAX_PLAYERS][E_VICTIM_DATA];
 
+#define MAX_PHONE_LINES								10
+enum E_PHONE_NEWS_DATA 
+{
+	npPlayerID,
+	npNumber
+}
+new NewsPhone[ MAX_PHONE_LINES ][ E_PHONE_NEWS_DATA ];
+
 enum E_CRIME_DATA
 {
 	pBplayer[32],
@@ -805,6 +840,55 @@ enum E_CRIME_DATA
 	pLocation[32]
 };
 new PlayerCrime[MAX_PLAYERS][E_CRIME_DATA];
+
+enum E_SAFE_EXIT {
+	Float:giX,
+	Float:giY,
+	Float:giZ,
+	Float:giRZ
+}
+
+new PlayerSafeExit[ MAX_PLAYERS ][E_SAFE_EXIT];
+
+enum E_PLAYER_PACKAGES 
+{
+	p_SQLID,
+	packExists,
+	p_weapon,
+	p_amount
+}
+new PlayerPackage[MAX_PLAYERS][E_PLAYER_PACKAGES][MAX_PLAYER_PACKAGES];
+
+enum E_DRUG_INFO
+{
+	dName[10],
+	dEffect,
+	dPayDayT,
+	dUseTime,
+	dPricePG
+}
+
+new const 
+	drugs[][E_DRUG_INFO] = 
+{
+	{"Prazno", 		DRUG_TYPE_NONE,   0, 0, 0},
+	{"Marihuana", 	DRUG_TYPE_SMOKE,  8, 25, 70},
+	{"Kokain", 		DRUG_TYPE_SNORT,  12, 30, 110},
+	{"Heroin", 		DRUG_TYPE_INJECT, 15, 35, 90},
+	{"Xanax",		DRUG_TYPE_TABLET, 15, 40, 145},
+	{"LSD", 		DRUG_TYPE_TABLET, 15, 50, 160},
+	{"MDMA",		DRUG_TYPE_TABLET, 15, 75, 175}
+};
+
+enum E_DRUG_DATA
+{
+	dSQLID[5],
+	dCode[5],
+	Float:dAmount[5],
+	Float:dEffect[5],
+	dTimeStamp[5]
+}
+new PlayerDrugs[MAX_PLAYERS][E_DRUG_DATA];
 
 enum PLAYER_OBJECT_DATA
 {
@@ -1009,6 +1093,8 @@ enum E_CITY_DATA
 new
 	CityInfo[ E_CITY_DATA ];
 
+stock MODEL_LIST_SKINS = mS_INVALID_LISTID;
+
 enum 
 {
 	DIALOG_LOGIN			= 10001,
@@ -1152,17 +1238,6 @@ enum
 	
 	// Taxi
 	DIALOG_TAXI_RATING,
-
-	// BizWorkers
-	DIALOG_WORKER_WORKTIME,
-	DIALOG_WORK_JOBOFFER,
-	DIALOG_WORKER_PAY,
-
-	// BizProducts.pwn
-	DIALOG_BIZNIS_VEHICLE,
-	DIALOG_BIZNIS_BUYVEHICLE,
-	DIALOG_BIZNIS_SPAWNVEHICLE,
-	DIALOG_PRODUCTS_LOCATION,
 
 	// Biznis Furniture
 	DIALOG_BIZZ_BLANK_INTS_LIST,
@@ -1395,7 +1470,7 @@ enum
 
 	// Prison
 	DIALOG_CELLS,
-	ShowPlayerDialogCELL,
+	DIALOG_CELL,
 	DIALOG_CLOSECELL,
 	DIALOG_PRISONGATE,
 
@@ -1617,6 +1692,50 @@ enum
 	DIALOG_UPDATE_LIST
 };
 
+enum {
+	BIZZ_TYPE_OTHER   	= 0,
+	BIZZ_TYPE_BAR,
+	BIZZ_TYPE_STRIP,
+	BIZZ_TYPE_RESTORAN,
+	BIZZ_TYPE_BURGER,
+	BIZZ_TYPE_PIZZA,
+	BIZZ_TYPE_CLUCKIN,
+	BIZZ_TYPE_DONUT,
+	BIZZ_TYPE_DUCAN,
+	BIZZ_TYPE_SEXSHOP,
+	BIZZ_TYPE_BINCO,
+	BIZZ_TYPE_ZIP,
+	BIZZ_TYPE_PROLAPS,
+	BIZZ_TYPE_SUBURBAN,
+	BIZZ_TYPE_BYCITY,
+	BIZZ_TYPE_RENTVEH,
+	BIZZ_TYPE_CASINO,
+	BIZZ_TYPE_DRUGSTORE,
+	BIZZ_TYPE_GASSTATION
+}
+#define MAX_BIZZ_TYPES					(19)
+
+enum {
+	VEHICLE_USAGE_NORMAL 	= 1,
+	VEHICLE_USAGE_PRIVATE	= 2,
+	VEHICLE_USAGE_FACTION	= 3,
+	VEHICLE_USAGE_JOB		= 4,
+	VEHICLE_USAGE_RENT		= 5,
+	VEHICLE_USAGE_PREMIUM	= 6,
+	VEHICLE_USAGE_LICENSE	= 7,
+	VEHICLE_USAGE_NEWBIES	= 8,
+	VEHICLE_USAGE_EVENT		= 9
+}
+
+enum {
+	VEHICLE_TYPE_CAR		= 10,
+	VEHICLE_TYPE_MOTOR		= 11,
+	VEHICLE_TYPE_BIKE		= 12,
+	VEHICLE_TYPE_BOAT		= 13,
+	VEHICLE_TYPE_PLANE		= 14,
+	VEHICLE_TYPE_TRAIN		= 15
+}
+
 /*
 	##     ##    ###    ########   ######
 	##     ##   ## ##   ##     ## ##    ##
@@ -1638,12 +1757,11 @@ new
 	ghour 					= 0,
 	GMX 					= 0,
 	WeatherTimer 			= 0,
-	VehicleTimer			= 0,
-	GlobalVehicleStamp		= 0,
 	WeatherSys 				= 10,
 	HappyHours				= 0,
 	HappyHoursLVL			= 0,
 	PlayerText:GlobalForumLink[MAX_PLAYERS] = { PlayerText:INVALID_TEXT_DRAW, ... },
+	PlayerText:MechanicTD[MAX_PLAYERS] = { PlayerText:INVALID_TEXT_DRAW, ... },
 	bool:PlayerCarTow	[MAX_PLAYERS];
 
 new ModelToEnumID[MAX_PLAYERS][MAX_FURNITURE_SLOTS];
@@ -1685,8 +1803,6 @@ new
 	bool:crash_checker[MAX_PLAYERS] = false,
 	bool:rob_started[MAX_PLAYERS] = false,
 	bool:blockedNews[MAX_PLAYERS] = false,
-	BreakLockVehicleID[MAX_PLAYERS],
-	BreakTrunkVehicleID[MAX_PLAYERS],
 	PlayerSprayID[MAX_PLAYERS],
 	PlayerSprayTimer[MAX_PLAYERS],
 	PlayerSprayPrice[MAX_PLAYERS],
@@ -1704,12 +1820,6 @@ new
 	PlayerTuningVehicle[ MAX_PLAYERS ] = INVALID_VEHICLE_ID;
 	//bool:aprilfools[MAX_PLAYERS] = true;
 
-new GunObjectIDs[200] ={
-
-   1575,  331, 333, 334, 335, 336, 337, 338, 339, 341, 321, 322, 323, 324, 325, 326, 342, 343, 344, -1,  -1 , -1 ,
-   346, 347, 348, 349, 350, 351, 352, 353, 355, 356, 372, 357, 358, 359, 360, 361, 362, 363, 364, 365, 366, 367,
-   368, 369, 1575
-};
 //fisher
 new GotRod[MAX_PLAYERS];
 
@@ -1728,7 +1838,6 @@ new
 new
 	Bit1:	gr_LoginChecksOn		<MAX_PLAYERS>  = Bit1: false,
 	Bit1: 	gr_SaveArmour 			<MAX_PLAYERS>,
-	Bit1:	gr_PlayerLocateVeh		<MAX_PLAYERS>,
 	Bit1:	gr_CreateObject			<MAX_PLAYERS>  = Bit1: false,
 	Bit1:	gr_OnEvent				<MAX_PLAYERS>  = Bit1: false,
 	Bit1:	gr_PlayerDownloading	<MAX_PLAYERS>  = Bit1: false,
@@ -1744,13 +1853,10 @@ new
 	Bit1: 	gr_PlayerLoggingIn 		<MAX_PLAYERS>  = Bit1: false,
 	Bit1: 	gr_NewUser				<MAX_PLAYERS>  = Bit1: false,
 	Bit1: 	gr_VehicleWindows 		<MAX_VEHICLES> = Bit1: false,
-	Bit1:	gr_VehicleAlarmStarted	<MAX_VEHICLES> = Bit1: false,
 	Bit1:	gr_VehicleAttachedBomb	<MAX_VEHICLES> = Bit1: false,
-	Bit1: 	gr_VehicleLights		<MAX_VEHICLES> = Bit1: false,
 	Bit1: 	gr_PlayerTimeOut		<MAX_PLAYERS>  = Bit1: false,
 	Bit1:	gr_ForbiddenPM			<MAX_PLAYERS>  = Bit1: false,
 	Bit1:	gr_BlockedPM			<MAX_PLAYERS>  = Bit1: false,
-	Bit1:	gr_Paspam				<MAX_PLAYERS>  = Bit1: false,
 	Bit1:	gr_PlayerAlive			<MAX_PLAYERS>  = Bit1: false,
 	Bit1:	gr_PDOnDuty				<MAX_PLAYERS>  = Bit1: false,
 	Bit1:	gr_Dice					<MAX_PLAYERS>  = Bit1: false,
@@ -1788,7 +1894,6 @@ new
 	Bit1:	gr_MallPreviewActive	<MAX_PLAYERS>  = Bit1: false,
 	Bit1:	r_ColorSelect			<MAX_PLAYERS>  = Bit1: false,
 	Bit1:	gr_PlayerInTuningMode	<MAX_PLAYERS>  = Bit1: false,
-	Bit1:	Blinking				<MAX_PLAYERS>  = Bit1: false,
 	Bit1:	PlayingBBall			<MAX_PLAYERS>  = Bit1: false,
 	//Bit1: 	gr_DrivingStarted		<MAX_PLAYERS>  = Bit1: false,
 	Bit2:	gr_BikeBunnyHop			<MAX_PLAYERS>  = Bit2: 0,
@@ -1826,7 +1931,6 @@ new
     Bit16: 	gr_PlayerInRoom			<MAX_PLAYERS>  = Bit16: 999,
 	Bit16:	gr_PDLockedVeh			<MAX_PLAYERS>  = Bit16: INVALID_VEHICLE_ID,
 	Bit16:	gr_PlayerAmbulanceId	<MAX_PLAYERS>  = Bit16: INVALID_VEHICLE_ID,
-	Bit16:	gr_PlayerMobileComId	<MAX_PLAYERS>  = Bit16: INVALID_VEHICLE_ID,
 	Bit16:	gr_PlayerInBiznis		<MAX_PLAYERS>  = Bit16: INVALID_BIZNIS_ID,
 	Bit16:	gr_PlayerInComplex		<MAX_PLAYERS>  = Bit16: INVALID_COMPLEX_ID,
 	Bit16:	gr_PlayerInPickup		<MAX_PLAYERS>  = Bit16: -1,
@@ -1838,7 +1942,6 @@ new
 	EnteringVehicle[MAX_PLAYERS] = -1,
 	FreeBizzID[MAX_PLAYERS] = INVALID_BIZNIS_ID,
 	ServicePrice[MAX_PLAYERS] = 0,
-	Flash[MAX_VEHICLES] = 0,
 	regenabled = false;
 
 
@@ -1904,98 +2007,112 @@ new
 	##     ##  #######  ########   #######  ######## ########  ######
 */
 
-// Colors
+//#include "modules/Server/Core.pwn"
 #include "modules/Server/Checkpoints.pwn"
 #include "modules/Server/Color.pwn"
-
-// Server
 #include "modules/Server/Artconfig.pwn"
 #include "modules/Server/PopupMessage.pwn"
 #include "modules/Server/Updates.pwn"
+#include "modules/Server/Animations.pwn"
 #include "modules/Server/Streets.pwn"
 #include "modules/Server/Zones.pwn"
 #include "modules/Server/Utils.pwn"
 #include "modules/Server/Pickups.pwn"
-#include "modules/Systems/Garages.pwn"
-#include "modules/Systems/Experience.pwn"
-#include "modules/Systems/NOS.pwn"
 #include "modules/Server/Logo.pwn"
+#include "modules/Server/KeyInput.pwn"
+#include "modules/Server/Player.pwn"
+#include "modules/Server/Weapons.pwn"
+#include "modules/Server/Money.pwn"
+#include "modules/Server/AntiBunnyHop.pwn"
+#include "modules/Server/Economy.pwn"
 
-// Admin
+#include "modules/Server/Vehicles/Core.pwn"
+#include "modules/Server/Vehicles/CarOwnership.pwn"
+#include "modules/Server/Vehicles/Tuning.pwn"
+#include "modules/Server/Vehicles/NOS.pwn"
+#include "modules/Server/Vehicles/Speedo.pwn"
+#include "modules/Server/Vehicles/Functions.pwn"
+
+//#include "modules/Systems/Core.pwn"
+// Factions
+#include "modules/Systems/Factions/Core.pwn"
+#include "modules/Systems/Factions/LSPD/Core.pwn"
+#include "modules/Systems/Factions/LSFD/Core.pwn"
+#include "modules/Systems/Factions/Mayor/Core.pwn"
+#include "modules/Systems/Factions/LSN.pwn"
+#include "modules/Systems/Factions/Race.pwn"
+
+#include "modules/Systems/Factions/Warehouse.pwn"
+
+// House
+#include "modules/Systems/House/Crib.pwn"
+#include "modules/Systems/House/Furniture.pwn"
+#include "modules/Systems/House/ExteriorFurniture.pwn"
+#include "modules/Systems/House/Garages.pwn"
+#include "modules/Systems/House/HouseStorage.pwn"
+#include "modules/Systems/House/RobStorage.pwn"
+
+// Bizz
+#include "modules/Systems/Bizz/BiznisFurniture.pwn"
+#include "modules/Systems/Bizz/Biznis.pwn"
+
+// Casino
+#include "modules/Systems/Casino/Rulet.pwn"
+#include "modules/Systems/Casino/BlackJack.pwn"
+#include "modules/Systems/Casino/Poker.pwn"
+
+// Events
+#include "modules/Systems/Events/Dakar.pwn"
+#include "modules/Systems/Events/Quad.pwn"
+
+// Misc
+#include "modules/Systems/Ammunation.pwn"
+#include "modules/Systems/Complex.pwn"
+#include "modules/Systems/Graffiti.pwn"
+#include "modules/Systems/PawnShop.pwn"
+#include "modules/Systems/GPS.pwn"
+
+#include "modules/Admin/Core.pwn"
 #include "modules/Admin/Ban.pwn"
 #include "modules/Admin/Connections.pwn"
 #include "modules/Admin/BlockIp.pwn"
 #include "modules/Admin/Report.pwn"
 
-// Misc
-#include "modules/Char/Jobs/Core.pwn"
-#include "modules/Char/ActorSystem.pwn"
-#include "modules/Char/Hotel.pwn"
-#include "modules/Server/KeyInput.pwn"
-#include "modules/Char/Animations.pwn"
-#include "modules/Server/RaknetAC.pwn"
-#include "modules/Server/AC_Core.pwn"
-#include "modules/Server/AntiBunnyHop.pwn"
-#include "modules/Char/Bombs.pwn"
-#include "modules/Systems/GPS.pwn"
-#include "modules/Systems/Speedo.pwn"
-#include "modules/Systems/Vehicles.pwn"
-#include "modules/Systems/Orgs.pwn"
-#include "modules/Systems/WepPackage.pwn"
-#include "modules/Systems/Warehouse.pwn"
-#include "modules/Systems/Events/Dakar.pwn"
-#include "modules/Systems/Events/Quad.pwn"
-#include "modules/Char/BoomBox.pwn"
-#include "modules/Char/Death.pwn"
-#include "modules/Admin/Core.pwn"
-#include "modules/Char/Jobs/Taxi.pwn"
+#include "modules/Player/Security.pwn"
 #include "modules/Player/Core.pwn"
+
+#include "modules/Player/Jobs/Garbage.pwn"
+#include "modules/Player/Jobs/Sweeper.pwn"
+#include "modules/Player/Jobs/Mechanic.pwn"
+#include "modules/Player/Jobs/Crafter.pwn"
+#include "modules/Player/Jobs/Farmer.pwn"
+#include "modules/Player/Jobs/Jacker.pwn"
+#include "modules/Player/Jobs/Logger.pwn"
+#include "modules/Player/Jobs/Impounder.pwn"
+#include "modules/Player/Jobs/Transporter.pwn"
+#include "modules/Player/Jobs/Taxi.pwn"
+#include "modules/Player/Jobs/Core.pwn"
+
+#include "modules/Player/AFKTimer.pwn"
+#include "modules/Player/SaveLoad.pwn"
+#include "modules/Player/Tutorial.pwn"
+#include "modules/Player/RPQuiz.pwn"
+#include "modules/Player/PayDay.pwn"
+#include "modules/Player/CMD.pwn"
 #include "modules/Player/Help.pwn"
 
-// Mayor
-#include "modules/Systems/Mayor/Core.pwn"
-#include "modules/Systems/Mayor/Proracun.pwn"
-#include "modules/Systems/Mayor/Elections.pwn"
+//#include "modules/Char/Core.pwn"
 
-// Systems
-#include "modules/Systems/Ammunation.pwn"
-#include "modules/Systems/Biznis.pwn"
-#include "modules/Systems/Tuning.pwn"
-#include "modules/Systems/CarOwnership.pwn"
-#include "modules/Systems/Crib.pwn"
-#include "modules/Systems/HouseStorage.pwn"
-#include "modules/Systems/Complex.pwn"
-#include "modules/Systems/Rentveh.pwn"
-#include "modules/Systems/LSN.pwn"
-#include "modules/Systems/Furniture.pwn"
-#include "modules/Systems/ExteriorFurniture.pwn"
-#include "modules/Systems/BiznisFurniture.pwn"
-#include "modules/Systems/Graffiti.pwn"
-#include "modules/Systems/Race.pwn"
-#include "modules/Systems/PawnShop.pwn"
-#include "modules/Systems/Toll.pwn"
-#include "modules/Systems/BasketballNew.pwn"// Update
+// Hobbies Core
+#include "modules/Char/Hobby/Core.pwn"
+
+// Misc
+#include "modules/Char/ActorSystem.pwn"
+#include "modules/Char/Hotel.pwn"
+#include "modules/Char/Bombs.pwn"
+#include "modules/Char/BoomBox.pwn"
+#include "modules/Char/Death.pwn"
 #include "modules/Char/Drugs.pwn"
-
-// LSPD
-#include "modules/Systems/LSPD/Core.pwn"
-#include "modules/Systems/LSPD/ANPR.pwn"
-#include "modules/Systems/LSPD/Roadblocks.pwn"
-#include "modules/Systems/LSPD/MDC.pwn"
-#include "modules/Systems/LSPD/flashbang.pwn"
-#include "modules/Systems/LSPD/Tickets.pwn"
-#include "modules/Systems/LSPD/Spikes.pwn"
-#include "modules/Systems/LSPD/Gunrack.pwn"
-#include "modules/Systems/LSPD/MobileCommand.pwn"
-#include "modules/Systems/LSPD/Siren.pwn"
-
-// LSFD
-#include "modules/Systems/LSFD/Core.pwn"
-#include "modules/Systems/LSFD/Ambulance.pwn"
-#include "modules/Systems/LSFD/Anamneza.pwn"
-#include "modules/Systems/LSFD/Rope.pwn"
-
-// Char
 #include "modules/Char/Bank.pwn"
 #include "modules/Char/Mobile.pwn"
 #include "modules/Char/Jail.pwn"
@@ -2012,42 +2129,12 @@ new
 #include "modules/Char/CreateObjects.pwn"
 #include "modules/Char/Travel.pwn"
 #include "modules/Char/WeaponAttach.pwn"
-
-// Casino
-#include "modules/Systems/Casino/Rulet.pwn"
-#include "modules/Systems/Casino/BlackJack.pwn"
-#include "modules/Systems/Casino/Poker.pwn"
-
-// Char
 #include "modules/Char/Gym.pwn"
-
-// Jobs
-#include "modules/Char/Jobs/Garbage.pwn"
-#include "modules/Char/Jobs/Sweeper.pwn"
-#include "modules/Char/Jobs/Mechanic.pwn"
-#include "modules/Char/Jobs/Crafter.pwn"
-#include "modules/Char/Jobs/Farmer.pwn"
-#include "modules/Char/Jobs/Jacker.pwn"
-#include "modules/Char/Jobs/Logger.pwn"
-#include "modules/Systems/RobStorage.pwn"
-#include "modules/Char/Jobs/Impounder.pwn"
-#include "modules/Char/Jobs/Transporter.pwn"
-
-// Hobiji
-#include "modules/Char/Hobby/Fisher.pwn"
-#include "modules/Char/Jobs/Hunter.pwn"
-
-// Player
-#include "modules/Player/Security.pwn"
-#include "modules/Player/AFKTimer.pwn"
-#include "modules/Player/SaveLoad.pwn"
-#include "modules/Player/Tutorial.pwn"
-#include "modules/Player/RPQuiz.pwn"
-#include "modules/Player/PayDay.pwn"
-#include "modules/Player/CMD.pwn"
-
-// Ekonomija
-#include "modules/Server/Economy.pwn"
+#include "modules/Char/Experience.pwn"
+#include "modules/Char/Toll.pwn"
+#include "modules/Char/Rentveh.pwn"
+#include "modules/Char/WepPackage.pwn"
+#include "modules/Char/BasketballNew.pwn"
 
 /*
 	########    ###     ######  ##    ##  ######
@@ -2217,7 +2304,6 @@ ResetPlayerVariables(playerid)
     onexit[playerid] = 0;
    	TWorking[playerid] = 0;
 	ResetPlayerExperience(playerid);
-	ResetCarOwnershipVariables(playerid);
 	ResetPlayerWounded(playerid);
 	adminfly[playerid] = 0;
 	playeReport[playerid] = -1;
@@ -2307,6 +2393,12 @@ ResetPlayerVariables(playerid)
 	// Mobile
 	ResetMobileVariables(playerid);
 
+	// Exiting Vars
+	PlayerSafeExit[playerid][giX] = 0;
+	PlayerSafeExit[playerid][giY] = 0;
+	PlayerSafeExit[playerid][giZ] = 0;
+	PlayerSafeExit[playerid][giRZ] = 0;
+
 	//furniture
 	ResetFurnitureShuntVar(playerid);
 
@@ -2335,11 +2427,6 @@ ResetPlayerVariables(playerid)
 	PlayerContactNumber[playerid][8]   		= 0;
 	PlayerContactNumber[playerid][9]   		= 0;
 
-	PlayerSafeExit[playerid][giX] = 0;
-	PlayerSafeExit[playerid][giY] = 0;
-	PlayerSafeExit[playerid][giZ] = 0;
-	PlayerSafeExit[playerid][giRZ] = 0;
-
 	Bit1_Set( gr_PlayerUsingGov			, playerid, false );
 	Bit1_Set( gr_PlayerTakingSelfie		, playerid, false );
 	Bit8_Set( gr_PhoneLine				, playerid, 15 );
@@ -2355,20 +2442,12 @@ ResetPlayerVariables(playerid)
 	Bit1_Set(a_PMears, 			playerid, false);
 	Bit1_Set(a_AdNot, 			playerid, true);
 	Bit1_Set(a_DMCheck, 		playerid, true);
-	Bit1_Set(h_HelperOnDuty, 	playerid, false);
+	
 	Bit1_Set(a_AdminOnDuty, 	playerid, false);
 	Bit1_Set(a_BlockedHChat, 	playerid, false);
 	Bit1_Set(a_NeedHelp,		playerid, false);
 	Bit1_Set(a_TogReports, 		playerid, false );
-
-	// LSPD Core
-	Bit1_Set( gr_PlayerHaveMole		, playerid, false );
-	Bit1_Set( gr_PlayerPlacedMole	, playerid, false );
-	Bit1_Set( gr_PlayerIsSWAT		, playerid, false );
-	Bit2_Set( gr_PlayerListenMole	, playerid, 0 );
-	MolePosition[ playerid ][ 0 ] = 0.0;
-	MolePosition[ playerid ][ 1 ] = 0.0;
-	MolePosition[ playerid ][ 2 ] = 0.0;
+	
 
 	// Anti Spam
 	AntiSpamInfo[ playerid ][ asPrivateMsg ] 	= 0;
@@ -2378,16 +2457,6 @@ ResetPlayerVariables(playerid)
 	AntiSpamInfo[ playerid ][ asBuying ] 		= 0;
 	AntiSpamInfo[ playerid ][ asDoorShout ] 	= 0;
 
-	// Death
-	if( Bit1_Get( gr_DeathCountStarted, playerid ) ) {
-		DestroyDeathInfo(playerid);
-		KillTimer(DeathTimer[playerid]);
-		Bit1_Set( gr_DeathCountStarted, playerid, false );
-		Bit8_Set( gr_DeathCountSeconds, playerid, 0 );
-		DestroyDeathTDs(playerid);
-	}
-    DeathData[playerid][ddOverall]	= 0;
-	ResetDeathVars(playerid);
 
 	PlayerInfo[playerid][pPhoneBG] = -1263225696;
 	PlayerInfo[playerid][pPhoneMask] = 0;
@@ -2693,8 +2762,7 @@ ResetPlayerVariables(playerid)
 	//ResetPlayerDrivingVars(playerid);
 	//ResetPlayerFishingVars(playerid);
 	DisablePlayerKeyInput(playerid);
-	ResetPlayerRace(playerid, false);
-	ResetPlayerRacing(playerid);
+
 	ResetPlayerSkills(playerid);
 
 	ResetRuletArrays(playerid);
@@ -2715,20 +2783,13 @@ Function: SaveAll()
 	{
 		foreach (new i : Player) {
 			if (Bit1_Get(gr_PlayerLoggedIn, i) != 0)
-				CallLocalFunction("OnPlayerDisconnect", "ii", i, 2);
+				Kick(i);
 		}
 	}
 }
 
 Function: GlobalServerTimer()
 {
-	if( NewsLineNumber > 0 )
-	{
-		if( ++NoNews >= 60 ) {
-			ClearNews();
-			NoNews = 0;
-	    }
-	}
 	new
 		tmphour, tmpmins, tmpsecs;
 	GetServerTime(tmphour, tmpmins, tmpsecs);
@@ -2953,7 +3014,6 @@ public OnGameModeInit()
 	cseconds = 120; // 2 min
 	LoadGPS();
 	LoadHstorage(); // House Storage Load
-	LoadCityStuff();
 	LoadHouses();
 	LoadComplex();
 	LoadComplexRooms();
@@ -2966,11 +3026,9 @@ public OnGameModeInit()
 	LoadTags();
 	LoadGarages();
     LoadServerGarages();
-	LoadBizz();
 	InitPokerTables();
 	CreateBaskets(); // Update - BasketballNew.pwn
 	PhoneTDVars();
-	CreateNewsTextDraws();
 	LoadServerJobs();
 	LoadUpdateList();
 	
@@ -2994,14 +3052,9 @@ public OnGameModeInit()
 
 task GlobalServerTask[1000]() // izvodi se svakih sekundu
 {
-	BallOutTimer(); 
 	GMXTimer();
 	GlobalServerTimer();
-	CheckWarehouseRobberyProgress();
-	VehicleGlobalTimer();
-	SendAutomaticAdMessage();
 	DynamicWeather();
-	PokerPulse();
 	return 1;
 }
 
@@ -3230,14 +3283,13 @@ public e_COMMAND_ERRORS:OnPlayerCommandReceived(playerid, cmdtext[], e_COMMAND_E
 	return COMMAND_OK;
 }
 
-
 public OnPlayerConnect(playerid)
 {
 	SetPlayerColor(playerid, COLOR_PLAYER);
 	return 1;
 }
 
-public OnPlayerDisconnect(playerid, reason)
+hook ppb_OnPlayerDisconnect(playerid, reason)
 {	
 	WalkStyle[playerid] = 0;
 	entering[playerid] = 0;
@@ -3333,9 +3385,6 @@ public OnPlayerDisconnect(playerid, reason)
 	}
 
 	// Timers
-	if( Bit1_Get(gr_LoginChecksOn, playerid ) )
-		KillTimer(LoginCheckTimer[playerid]);
-
 	if( Bit8_Get( gr_RingingTime, playerid ) != 0 ) {
 		KillTimer(PlayerMobileRingTimer[playerid]);
 		Bit8_Set( gr_RingingTime, playerid, 0 );
@@ -3349,13 +3398,6 @@ public OnPlayerDisconnect(playerid, reason)
 		DestroyReconTextDraws(playerid);
 		KillTimer(ReconTimer[playerid]);
 		Bit4_Set(gr_SpecateId, playerid, 0);
-	}
-
-	// CarOwnership
-	if( Bit2_Get(gr_PlayerLockBreaking, playerid) == 2 ) {
-		BreakLockVehicleID[playerid] 	= INVALID_VEHICLE_ID;
-		BreakLockKickTick[playerid]		= gettimestamp();
-		Bit2_Set(gr_PlayerLockBreaking, playerid, 0);
 	}
 	// Offline query
 	new
@@ -3375,7 +3417,6 @@ public OnPlayerDisconnect(playerid, reason)
 	SavePlayerData(playerid);
 	
 	// Player Sets
-	ResetGPSVars(playerid);
 	secquestattempt[playerid] = 3;
 	if(GMX == 1) {
 		SendClientMessage(playerid, COLOR_RED, "[OBAVIJEST] Spremljeni su Vasi podaci. Server Vas je automatski kickao.");
@@ -3553,12 +3594,6 @@ public OnPlayerSpawn(playerid)
 	{
         TogglePlayerSpectating(playerid, 0);
         Bit1_Set(gr_PlayerAlive, playerid, true);
-
-		TextDrawShowForPlayer( playerid, NewsLineTextDraw[ 0 ] );
-        TextDrawShowForPlayer( playerid, NewsLineTextDraw[ 1 ] );
-        TextDrawShowForPlayer( playerid, NewsLineTextDraw[ 2 ] );
-        TextDrawShowForPlayer( playerid, NewsLineTextDraw[ 3 ] );
-        TextDrawShowForPlayer( playerid, NewsLineTextDraw[ 4 ] );
 
 		if(PlayerInfo[playerid][pKilled] == 1)
 		{
@@ -3841,7 +3876,7 @@ public OnPlayerText(playerid, text[])
 	if(strlen(text) > 128)
 		return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Chatbox input can't be longer than 128 chars!");
 
-	if(Bit1_Get(gr_DeathCountStarted, playerid))
+	if(DeathCountStarted_Get(playerid))
 	{
 		SendMessage(playerid, MESSAGE_TYPE_ERROR, "You can't talk, you are dead!");
 		return 0;
@@ -3898,20 +3933,6 @@ public OnPlayerText(playerid, text[])
 			else if(strlen(text) >= 121 && strlen(text) < 131) ApplyAnimationEx(playerid,"PED","IDLE_CHAT",4.0,1,0,0,0,6500,1,0);
 			else if(strlen(text) >= 131 && strlen(text) < 141) ApplyAnimationEx(playerid,"PED","IDLE_CHAT",4.0,1,0,0,0,7000,1,0);
 			else if(strlen(text) >= 141 && strlen(text) < 151) ApplyAnimationEx(playerid,"PED","IDLE_CHAT",4.0,1,0,0,0,7500,1,0);
-		}
-	}
-
-	foreach(new i : Player) {
-		if( Bit1_Get( gr_PlayerPlacedMole, i ) )
-		{
-			if( IsPlayerInRangeOfPoint(playerid, 10.0, MolePosition[ i ][ 0 ], MolePosition[ i ][ 1 ], MolePosition[ i ][ 2 ] ) )
-			{
-				format(tmpString, sizeof(tmpString), "[DEVICE] %s: %s", GetName(playerid), text);
-				if( Bit2_Get( gr_PlayerListenMole, i ) == 1 )
-					SendClientMessage(i, COLOR_YELLOW, tmpString);
-				else if( Bit2_Get( gr_PlayerListenMole, i ) == 2 )
-					RealProxDetector(8.0, i, tmpString, COLOR_YELLOW, COLOR_YELLOW, COLOR_YELLOW, COLOR_YELLOW, COLOR_YELLOW);
-			}
 		}
 	}
 	return 0;
@@ -4085,34 +4106,5 @@ public OnPlayerStreamIn(playerid, forplayerid)
 	}
 	else
 	    ShowPlayerNameTagForPlayer(playerid, forplayerid, true);
-	return 1;
-}
-
-public OnPlayerClickTextDraw(playerid, Text:clickedid)
-{
-	if(  Bit2_Get(gr_PlayerLockBreaking, playerid ) != 0 &&
-		!Bit1_Get( gr_PlayerHotWiring, playerid ) &&
-		!Bit1_Get(gr_PreviewCar, playerid)  &&
-		!Bit1_Get( gr_PlayerInTuningMode, playerid ) &&
-		!Bit1_Get( gr_PlayerPickingJack, playerid ) &&
-		!Bit1_Get( gr_PlayerJackSure, playerid ) )
-	return 0;
-
-	if(clickedid == Text:INVALID_TEXT_DRAW)
-	{
-		if( Bit1_Get( gr_PlayerHotWiring, playerid ) ) {
-			ResetHotWireVars(playerid);
-			PlayerPlaySound(playerid, 1085, 0.0, 0.0, 0.0);
-		}
-		else if( Bit1_Get( gr_PreviewCar, playerid ) ) {
-			DestroyPreviewScene(playerid);
-			PlayerPlaySound(playerid, 1085, 0.0, 0.0, 0.0);
-		}
-		else if( MDCBg1[ playerid ] != PlayerText:INVALID_TEXT_DRAW ) 
-		{
-			DestroyMDCTextDraws(playerid);
-		}	
-        return 1;
-	}
 	return 1;
 }

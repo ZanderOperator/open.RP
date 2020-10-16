@@ -1,5 +1,7 @@
 #include <YSI\y_hooks>
 
+// Admin Modules included at the bottom
+
 #define PLAYER_SPECATE_VEH		(1)
 #define PLAYER_SPECATE_PLAYER	(2)
 
@@ -73,6 +75,16 @@ static stock
 	##    ##    ##    ##     ## ##    ## ##   ##  ##    ## 
 	 ######     ##     #######   ######  ##    ##  ######  
 */
+
+stock IsOnAdminDuty(playerid)
+{
+	return Bit1_Get(a_AdminOnDuty, playerid);
+}
+
+stock IsOnHelperDuty(playerid)
+{
+	return Bit1_Get(h_HelperOnDuty, playerid);
+}
 
 ShowPlayerCars(playerid, playersqlid, player_name[])
 {
@@ -308,7 +320,7 @@ CreateAdminVehicles(admin, carid) {
 	return (true);
 }
 
-DestroyAdminVehicle(admin, carid) {
+Function: DestroyAdminVehicle(admin, carid) {
 	for (new i = 0; i < MAX_ADMIN_VEHICLES; i ++) {
 		if(Admin_Vehicle[admin][i] == carid) {
 			Admin_Vehicle[admin][i] = -1;
@@ -829,8 +841,10 @@ stock CheckInactivePlayer(playerid, sql)
 			sqlid,
 			startstamp,
 			endstamp,
-			startdate[6],
-			enddate[6],
+			startdate[12],
+			starttime[12],
+			enddate[12],
+			endtime[12],
 			reason[64],
 			motd[150];
 			
@@ -839,24 +853,19 @@ stock CheckInactivePlayer(playerid, sql)
 		cache_get_value_name_int(0, "endstamp"			, endstamp);
 		cache_get_value_name(0, 	"reason"			, reason, 64);
 
-		stamp2datetime(startstamp, startdate[0], startdate[1] ,startdate[2], startdate[3], startdate[4], startdate[5]);
-		stamp2datetime(endstamp, enddate[0], enddate[1] ,enddate[2], enddate[3], enddate[4], enddate[5]);
+		TimeFormat(startstamp, HUMAN_DATE, startdate);
+		TimeFormat(startstamp, ISO6801_TIME, starttime);
+
+		TimeFormat(endstamp, HUMAN_DATE, enddate);
+		TimeFormat(endstamp, ISO6801_TIME, endtime);
 		
-		format(motd, sizeof(motd), "%s - [SQLID: %d] | Pocetak: %02d/%02d/%02d %02d:%02d:%02d | Traje do: %02d/%02d/%02d %02d:%02d:%02d | Razlog: %s\n",
+		format(motd, sizeof(motd), "%s - [SQLID: %d] | Pocetak: %s %s | Traje do: %s %s | Razlog: %s\n",
 			GetPlayerNameFromSQL(sqlid),
 			sqlid,
-			startdate[2],
-			startdate[1],
-			startdate[0],
-			startdate[3],
-			startdate[4],
-			startdate[5],
-			enddate[2],
-			enddate[1],
-			enddate[0],
-			enddate[3],
-			enddate[4],
-			enddate[5],
+			startdate,
+			starttime,
+			enddate,
+			endtime,
 			reason
 		);
 		strcat(dialogstring, motd, sizeof(dialogstring));
@@ -882,8 +891,10 @@ stock ListInactivePlayers(playerid)
 				sqlid,
 				startstamp,
 				endstamp,
-				startdate[6],
-				enddate[6],
+				startdate[12],
+				starttime[12],
+				enddate[12],
+				endtime[12],
 				reason[64],
 				motd[150];
 				
@@ -894,24 +905,19 @@ stock ListInactivePlayers(playerid)
 				cache_get_value_name_int(i, "endstamp"			, endstamp);
 				cache_get_value_name(i, 	"reason"			, reason, 64);
 
-				stamp2datetime(startstamp, startdate[0], startdate[1] ,startdate[2], startdate[3], startdate[4], startdate[5]);
-				stamp2datetime(endstamp, enddate[0], enddate[1] ,enddate[2], enddate[3], enddate[4], enddate[5]);
+				TimeFormat(startstamp, HUMAN_DATE, startdate);
+				TimeFormat(startstamp, ISO6801_TIME, starttime);
+
+				TimeFormat(endstamp, HUMAN_DATE, enddate);
+				TimeFormat(endstamp, ISO6801_TIME, endtime);
 				
-				format(motd, sizeof(motd), "%s - [SQLID: %d] | Pocetak: %02d/%02d/%02d %02d:%02d:%02d | Traje do: %02d/%02d/%02d %02d:%02d:%02d | Razlog: %s\n",
+				format(motd, sizeof(motd), "%s - [SQLID: %d] | Pocetak: %s %s | Traje do: %s %s | Razlog: %s\n",
 					GetPlayerNameFromSQL(sqlid),
 					sqlid,
-					startdate[2],
-					startdate[1],
-					startdate[0],
-					startdate[3],
-					startdate[4],
-					startdate[5],
-					enddate[2],
-					enddate[1],
-					enddate[0],
-					enddate[3],
-					enddate[4],
-					enddate[5],
+					startdate,
+					starttime,
+					enddate,
+					endtime,
 					reason
 				);
 				strcat(dialogstring, motd, sizeof(dialogstring));
@@ -1269,21 +1275,19 @@ public CheckLastLogin(playerid, const name[])
 {
 	if(!cache_num_rows()) return SendClientMessage(playerid, COLOR_RED, "Korisnik se nikada nije logirao!");
 	
-	new lastip[MAX_PLAYER_IP], lastdate, date[6];
+	new lastip[MAX_PLAYER_IP], lastdate, date[12], time[12];
 	cache_get_value_name_int(0, 	"time"	, lastdate);
 	cache_get_value_name(0,			"aip"	, lastip, MAX_PLAYER_IP);
-	stamp2datetime(lastdate, date[0], date[1] ,date[2], date[3], date[4], date[5]); // formatiranje vremena iz unixa u normalno
+
+	TimeFormat(lastdate, HUMAN_DATE, date);
+	TimeFormat(lastdate, ISO6801_TIME, time);
 	
 	if(PlayerInfo[playerid][pAdmin])
 	{
-		va_SendClientMessage(playerid, COLOR_RED, "[ ! ] Igrac %s je zadnji puta bio online: %d.%d.%d - %d:%d:%d, sa IP: %s.", 
+		va_SendClientMessage(playerid, COLOR_RED, "[ ! ] Igrac %s je zadnji puta bio online: %s u %s, sa IP: %s.", 
 			name,
-			date[2],
-			date[1],
-			date[0],
-			date[3],
-			date[4],
-			date[5],
+			date,
+			time,
 			lastip
 		);
 	}
@@ -1343,6 +1347,7 @@ public OnPlayerReconing(playerid, targetid)
 	##     ## ##     ## ##     ## ##   ##  
 	##     ##  #######   #######  ##    ## 
 */
+
 hook OnPlayerDisconnect(playerid, reason)
 {
 	// 32bit
@@ -1365,6 +1370,7 @@ hook OnPlayerDisconnect(playerid, reason)
 	Bit1_Set(a_BHears, playerid, false);
     Bit1_Set(a_DMCheck, playerid, false);
     Bit1_Set(a_AdminOnDuty, playerid, false);
+	Bit1_Set(h_HelperOnDuty, playerid, false);
 	Bit1_Set(a_BlockedHChat, playerid, false);
 	Bit1_Set(a_NeedHelp, playerid, false);
 	Bit1_Set(a_TogReports, playerid, false);
@@ -3636,8 +3642,8 @@ CMD:undie(playerid, params[])
 	DestroyDeathTDs(giveplayerid);
 	KillTimer(DeathTimer[giveplayerid]);
 
-	Bit8_Set(gr_DeathCountSeconds, giveplayerid, 0);
-	Bit1_Set(gr_DeathCountStarted, giveplayerid, false);
+	DeathCountStarted_Set(giveplayerid, false);
+	DeathCountSeconds_Set(giveplayerid, 0);
 	
     DeathData[ giveplayerid ][ ddOverall ] = 0;
 
@@ -5818,8 +5824,6 @@ CMD:checkcostats(playerid, params[])
 		SendClientMessage(playerid, COLOR_WHITE, globalstring);
 	}
 	else SendClientMessage(playerid, COLOR_WHITE, "Alarm: Nema");
-	
-	va_SendClientMessage(playerid, COLOR_WHITE, "Akumulator: %s", GetBatteryTypeString(VehicleInfo[PlayerInfo[giveplayerid][pSpawnedCar]][vBatteryType]));
 	
 	if(VehicleInfo[PlayerInfo[giveplayerid][pSpawnedCar]][vInsurance] == 0)
 		SendClientMessage(playerid, COLOR_WHITE, "Osiguranje: Neosigurano");

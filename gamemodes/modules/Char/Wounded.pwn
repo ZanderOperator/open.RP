@@ -170,8 +170,8 @@ stock InflictPlayerDamage(playerid, issuerid, bodypart, Float:damage)
 				if(GetPlayerState(playerid) == PLAYER_STATE_ONFOOT)
 					ApplyAnimation(playerid,"WUZI","CS_DEAD_GUY", 4.0,0,1,1,1,0);
 
-				Bit8_Set(gr_DeathCountSeconds, playerid, 61);
-				Bit1_Set(gr_DeathCountStarted, playerid, true); //ako je ovo true onda ne smije koristiti /l, /c, /me, /do
+				DeathCountStarted_Set(playerid, true);
+				DeathCountSeconds_Set(playerid, 61);
 
 				CreateDeathTD(playerid);
 				CreateDeathInfos(playerid, 1);
@@ -295,8 +295,8 @@ stock DealDamage(playerid, issuerid, Float: health, Float: armour, Float: damage
 				if(GetPlayerState(playerid) == PLAYER_STATE_ONFOOT)
 					ApplyAnimation(playerid,"WUZI","CS_DEAD_GUY", 4.0,0,1,1,1,0);
 				
-				Bit8_Set(gr_DeathCountSeconds, playerid, 61);
-				Bit1_Set(gr_DeathCountStarted, playerid, true); //ako je ovo true onda ne smije koristiti /l, /c, /me, /do
+				DeathCountStarted_Set(playerid, true);
+				DeathCountSeconds_Set(playerid, 61);
 
 				CreateDeathTD(playerid);
 				CreateDeathInfos(playerid, 1);

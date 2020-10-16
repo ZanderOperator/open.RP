@@ -51,20 +51,17 @@ enum _labels
 new
 	aLabels[MAX_LABELS][_labels];
 
-stock ClearLabel(labelid)
+stock ClearLabel(e_label_id)
 {
-	if(labelid == INVALID_3DTEXT_ID)
-		return 0;
+	Delete3DTextLabel(aLabels[e_label_id][label_ID]);
 
-	Delete3DTextLabel(aLabels[labelid][label_ID]);
+	aLabels[e_label_id][label_ID] = Text3D: INVALID_3DTEXT_ID;
 
-	aLabels[labelid][label_ID] = Text3D: INVALID_3DTEXT_ID;
+	aLabels[e_label_id][label_pos][0] = 0.0;
+	aLabels[e_label_id][label_pos][1] = 0.0;
+	aLabels[e_label_id][label_pos][2] = 0.0;
 
-	aLabels[labelid][label_pos][0] = 0.0;
-	aLabels[labelid][label_pos][1] = 0.0;
-	aLabels[labelid][label_pos][2] = 0.0;
-
-	aLabels[labelid][label_text][0] = EOS;
+	aLabels[e_label_id][label_text][0] = EOS;
 	return 1;
 }
 
