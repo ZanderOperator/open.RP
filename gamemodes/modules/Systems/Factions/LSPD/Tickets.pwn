@@ -1,5 +1,6 @@
 // Woo ticket system
 // enums
+#include <YSI\y_hooks>
 
 enum E_TICKET_DATA
 {

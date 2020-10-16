@@ -837,6 +837,12 @@ Faction: LoadWarehouses() // Pod OnGameModeInit()
 	return 1;
 }
 
+hook OnGameModeInit()
+{
+	LoadWarehouses();
+	return 1;
+}
+
 hook OnPlayerPickUpDynPickup(playerid, pickupid)
 {
 	foreach(new wh: Warehouses)

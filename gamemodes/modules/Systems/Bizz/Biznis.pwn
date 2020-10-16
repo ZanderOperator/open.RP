@@ -1,10 +1,6 @@
 #include <mSelection>
 #include <YSI\y_hooks>
 
-#if defined MODULE_BIZNIS
-	#endinput
-#endif
-#define MODULE_BIZNIS
 #define CP_TYPE_BIZZ_VIP_ENTRANCE	(3)
 
 /*
@@ -103,6 +99,15 @@ enum {
 	DRINKS_VIAGRA,
 	DRINKS_BLOOD_MARY
 }
+
+enum E_BIZNIS_PRODUCTS_DATA
+{
+	bpSQLID,
+	bpType,
+	bpPrice,
+	bpAmount
+}
+new BiznisProducts[MAX_BIZZS][E_BIZNIS_PRODUCTS_DATA][MAX_SALE_PRODUCTS];
 
 
 /*
@@ -1219,6 +1224,7 @@ public OnPlayerModelSelection(playerid, response, listid, modelid, price)
 #if defined BIZ_OnPlayerModelSelection
     forward BIZ_OnPlayerModelSelection(playerid, response, listid, modelid);
 #endif
+
 
 hook OnGameModeInit()
 {
@@ -4033,7 +4039,7 @@ CMD:bizwithdraw(playerid, params[])
 	if( !IsPlayerInRangeOfPoint(playerid, 100.0, BizzInfo[bouse][bExitX], BizzInfo[bouse][bExitY], BizzInfo[bouse][bExitZ]) && BizzInfo[bouse][bCanEnter] == 1) return SendClientMessage(playerid, COLOR_RED, "Previse si udaljen od biznisa");
 	if( !IsPlayerInRangeOfPoint(playerid,3,BizzInfo[bouse][bEntranceX], BizzInfo[bouse][bEntranceY],BizzInfo[bouse][bEntranceZ]) && BizzInfo[bouse][bCanEnter] == 0) return SendClientMessage(playerid, COLOR_RED, "Previse si udaljen od biznisa");
 
-	BusinessToPlayerMoney(playerid, bouse, cashdeposit); //Novac iz biznisa ide igra�u
+	BusinessToPlayerMoney(playerid, bouse, cashdeposit); //Novac iz biznisa ide igraï¿½u
 
 	format(string, sizeof(string), "[ ! ]  Podigli ste $%d sa vaseg biznisa. Ukupno: $%d.",
 		cashdeposit,
@@ -4075,7 +4081,7 @@ CMD:bizbank(playerid, params[])
     }
 	if( cashdeposit > AC_GetPlayerMoney(playerid) || cashdeposit < 1 ) return SendClientMessage(playerid, COLOR_RED, "Nemas toliko novaca");
 
-	PlayerToBusinessMoney(playerid, bouse, cashdeposit); // Novac od igra�a ide u biznis
+	PlayerToBusinessMoney(playerid, bouse, cashdeposit); // Novac od igraï¿½a ide u biznis
 
 	format(string, sizeof(string), "[ ! ]  Stavio si $%d u tvoj biznis. Ukupno: $%d.",
 		cashdeposit,

@@ -1,5 +1,4 @@
 #include <YSI\y_hooks>
-#include "modules/Server/KeyInput.pwn"
 
 #define ZONE_WIDTH			150.0
 #define ZONE_HEIGHT			195.0
@@ -2729,7 +2728,7 @@ CMD:enter(playerid, params[])
 			Bit1_Set(gr_PlayerEntering, playerid, true);
 			SetPlayerPosEx(playerid, BizzInfo[biznis][bExitX], BizzInfo[biznis][bExitY], BizzInfo[biznis][bExitZ], BizzInfo[biznis][bVirtualWorld], BizzInfo[biznis][bInterior], true);
 			Bit16_Set(gr_PlayerInBiznis, playerid, biznis);
-			CallRemoteFunction("DestroyBizzInfoTD", "i", playerid);
+			DestroyBizzInfoTD(playerid);
 			
 			entering[playerid] = 1;
             TogglePlayerControllable(playerid, false);
@@ -2886,7 +2885,7 @@ CMD:exit(playerid, params[])
 				if(biztype == BIZZ_TYPE_SUBURBAN || biztype == BIZZ_TYPE_PROLAPS || biztype == BIZZ_TYPE_ZIP || biztype == BIZZ_TYPE_BINCO)
 				{
 					SendClientMessage(playerid, COLOR_RED, "[ ! ] Izasli ste iz biznisa te ste odustali od kupnje skina!");
-					CallRemoteFunction("ResetBuySkin", "i", playerid);
+					ResetBuySkin(playerid);
 				}
 			}
 			/*if(aprilfools[playerid])

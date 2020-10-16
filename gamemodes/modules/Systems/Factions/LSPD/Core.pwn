@@ -1,15 +1,5 @@
 #include <YSI\y_hooks>
 
-#include "modules/Systems/Factions/LSPD/ANPR.pwn"
-#include "modules/Systems/Factions/LSPD/Roadblocks.pwn"
-#include "modules/Systems/Factions/LSPD/MDC.pwn"
-#include "modules/Systems/Factions/LSPD/Flashbang.pwn"
-#include "modules/Systems/Factions/LSPD/Tickets.pwn"
-#include "modules/Systems/Factions/LSPD/Spikes.pwn"
-#include "modules/Systems/Factions/LSPD/Gunrack.pwn"
-#include "modules/Systems/Factions/LSPD/MobileCommand.pwn"
-#include "modules/Systems/Factions/LSPD/Siren.pwn"
-
 /*
 	##     ##    ###    ########   ######
 	##     ##   ## ##   ##     ## ##    ##

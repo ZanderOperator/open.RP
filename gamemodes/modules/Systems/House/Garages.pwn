@@ -1,13 +1,6 @@
 // Viwo:SQLID, Int:5
 #include <YSI\y_hooks>
 
-#if defined MODULE_GARAGES
-	#endinput
-#endif
-#define MODULE_GARAGES
-
-#define GARAGES
-
 /*
 	######## ##    ## ##     ## ##     ##  ######
 	##       ###   ## ##     ## ###   ### ##    ##

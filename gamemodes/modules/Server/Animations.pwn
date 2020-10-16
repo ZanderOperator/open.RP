@@ -1,5 +1,4 @@
 #include <YSI\y_hooks>
-#include <a_samp>
 
 static const AnimLibs[][] =
 {

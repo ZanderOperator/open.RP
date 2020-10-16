@@ -1,8 +1,5 @@
 #include <YSI\y_hooks>
 
-#include "modules/Systems/Factions/Mayor/Elections.pwn"
-#include "modules/Systems/Factions/Mayor/Budget.pwn"
-
 new
 	gov_doors[11],
 	gov_status[11];

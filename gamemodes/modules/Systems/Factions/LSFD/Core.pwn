@@ -1,9 +1,5 @@
 #include <YSI\y_hooks>
 
-#include "modules/Systems/Factions/LSFD/Ambulance.pwn"
-#include "modules/Systems/Factions/LSFD/Anamneza.pwn"
-#include "modules/Systems/Factions/LSFD/Rope.pwn"
-
 /*
 	##     ##    ###    ########   ######  
 	##     ##   ## ##   ##     ## ##    ## 

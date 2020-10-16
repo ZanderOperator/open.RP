@@ -497,7 +497,6 @@ new
 
 stock BuyVehicle(playerid, bool:credit_activated = false)
 {
-	BUY_VEHICLE_TAG:
 	//Car
 	AC_DestroyVehicle(PreviewCar[playerid]);
 	PreviewCar[playerid] = INVALID_VEHICLE_ID;
@@ -5377,7 +5376,6 @@ CMD:trunk(playerid, params[])
 	return 1;
 }
 
-#if defined MODULE_BIZNIS
 CMD:fill(playerid, params[])
 {
 	new
@@ -5405,7 +5403,6 @@ CMD:fill(playerid, params[])
 	} else SendMessage(playerid, MESSAGE_TYPE_ERROR, " Unos mora biti izmedju 1 i 100!");
 	return 1;
 }
-#endif
 
 CMD:showcostats(playerid, params[])
 {
@@ -5905,7 +5902,7 @@ CMD:deletevehicle(playerid, params[])
 			DestroyFarmerObjects(playerid);
 			AC_DestroyVehicle(vehicleid);
 			ResetVehicleInfo(vehicleid);
-			CallRemoteFunction("DestroyAdminVehicle", "ii", playerid, vehicleid);
+			DestroyAdminVehicle(playerid, vehicleid);
 			SendFormatMessage(playerid, MESSAGE_TYPE_INFO, "Uspjesno ste izbrisali vozilo %d iz baze/igre!", vehicleid);
 		}
 		case 2: {
@@ -5976,6 +5973,101 @@ CMD:bonnet(playerid, params[])
 		VehicleInfo[vehicle][vBonnets] = 0;
 		GetVehicleParamsEx(vehicle,engine,lights,alarm,doors,bonnet,boot,objective);
 		SetVehicleParamsEx(vehicle,engine,lights,alarm,doors,VEHICLE_PARAMS_OFF,boot,objective);
+	}
+	return 1;
+}
+
+CMD:fillcar(playerid, params[])
+{
+	if( !PlayerInfo[ playerid ][ pCanisterLiters ] || PlayerInfo[ playerid ][ pCanisterType ] == -1 ) return SendClientMessage( playerid, COLOR_RED, "[GRESKA]: Niste usipali nista u svoj kanister!");
+	new
+		vehicleid = GetPlayerVehicleID(playerid);
+	if( ( vehicleid == 0 || vehicleid == INVALID_VEHICLE_ID ) || IsABike( GetVehicleModel( vehicleid ) ) ) return SendClientMessage( playerid, COLOR_RED, "[GRESKA]: Nepravilno vozilo!" );
+	if( VehicleInfo[ vehicleid ][ vFuel ] >= 75 ) return SendClientMessage( playerid, COLOR_RED, "[GRESKA]: Vase vozilo moze voziti!");
+	
+	if( PlayerInfo[ playerid ][ pCanisterType ] == ENGINE_TYPE_PETROL ) 
+	{
+		if( VehicleInfo[ vehicleid ][ vEngineType ] == ENGINE_TYPE_DIESEL )
+			VehicleInfo[ vehicleid ][ vEngineLife ] -= 25.0;
+	}
+	else if( PlayerInfo[ playerid ][ pCanisterType ] == ENGINE_TYPE_DIESEL ) 
+	{
+		if( VehicleInfo[ vehicleid ][ vEngineType ] == ENGINE_TYPE_PETROL )
+			VehicleInfo[ vehicleid ][ vEngineLife ] -= 25.0;
+	}
+	VehicleInfo[ vehicleid ][ vFuel ] += PlayerInfo[ playerid ][ pCanisterLiters ];
+	PlayerInfo[ playerid ][ pCanisterLiters ] 	= 0;
+	PlayerInfo[ playerid ][ pCanisterType ] 	= -1;
+	return 1;
+}
+
+CMD:get(playerid, params[])
+{
+	new
+		param[6];
+	if( sscanf( params, "s[6] ", param ) ) {
+		SendClientMessage(playerid, COLOR_RED, "[ ? ]: /get [opcija]");
+		SendClientMessage(playerid, COLOR_RED, "[ ! ] fuel");
+	}
+	if( !strcmp( param, "fuel", true ) )
+	{
+		new
+			type, fuel, total;
+			
+		if( sscanf( params, "s[6]ii", param, type, fuel ) ) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /get fuel [0 - Benzin, 1 - Dizel][kolicina]");
+		if( !IsPlayerNearGasStation( playerid ) ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste blizu benzinske stanice!");
+		total = PlayerInfo[ playerid ][ pCanisterLiters ] + fuel;
+		if (total > 25 ) return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "Maksimalno 25 litara, treutno imate %d", PlayerInfo[ playerid ][ pCanisterLiters ]);
+		if( type > 1 || type < 0 ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Tip mora biti izmedju 0 i 1!");
+		if( 1 <= fuel <= 25 ) 
+		{
+			new
+				moneys;
+			switch( type ) 
+			{
+				case 0:  { // Benzin
+					moneys = (fuel * 4);
+					switch( PlayerInfo[playerid][pDonateRank] ) {
+						case 1:
+							moneys /= 4;
+						case 2:
+							moneys /= 2;
+						case 3,4:
+							moneys = 0;
+					}
+				}
+				case 1:  {// Dizel
+					moneys = (fuel * 3);
+					switch( PlayerInfo[playerid][pDonateRank] ) {
+						case 1:
+							moneys /= 4;
+						case 2:
+							moneys /= 2;
+						case 3,4:
+							moneys = 0;
+					}
+				}
+			}
+			moneys = floatround(moneys);
+			if( AC_GetPlayerMoney( playerid ) <  moneys) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate toliko novca!");
+			new bizid = GetNearestGasBiznis(playerid);
+			if( bizid == INVALID_BIZNIS_ID ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste u blizini benzinske postaje!");
+			
+			PlayerToBusinessMoneyTAX(playerid, bizid, moneys);
+			new
+				gasTillQuery[ 100 ];
+				
+			format( gasTillQuery, sizeof(gasTillQuery), "UPDATE `bizzes` SET  `till` = '%d' WHERE `id` = '%d'", 
+				BizzInfo[ bizid ][ bTill ],
+				BizzInfo[ bizid ][bSQLID]
+			);
+			mysql_tquery( g_SQL, gasTillQuery, "", "");
+			
+			PlayerInfo[ playerid ][ pCanisterLiters ] 	+= fuel;
+			PlayerInfo[ playerid ][ pCanisterType ] 	= type;
+			va_SendClientMessage( playerid, COLOR_RED, "[ ! ] Uspjesno ste napunili kanister s %d litara. Mozete koristiti /fillcar unutar zeljena vozila!", fuel);
+		} 
+		else return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Unos mora biti izmedju 1 i 25 litara!");
 	}
 	return 1;
 }

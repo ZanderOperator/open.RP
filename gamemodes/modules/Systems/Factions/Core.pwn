@@ -146,7 +146,6 @@ public OnFactionLoaded()
 		LoadFactionPermissions(tmpId);
 		Iter_Add(Factions, tmpId);
 	}
-	CallRemoteFunction("LoadWarehouses", "");
 	printf("MySQL Report: Factions loaded (%d)!", Iter_Count(Factions) );
 	return 1;
 }

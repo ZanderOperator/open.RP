@@ -649,6 +649,7 @@ public OnBizzFurnitureObjectCreate(biznisid, index)
 		);
 	#endif
 	BizzInfo[ biznisid ][ bFurSQL ][ index ] = cache_insert_id();
+	return 1;
 }
 
 // Stocks
@@ -685,6 +686,7 @@ stock static GetPlayerFurnitureBiznis(playerid)
 	}
 	return INVALID_BIZNIS_ID;
 }
+
 stock static GetFurnitureObjectName(playerid, index)
 {
 	new
@@ -756,6 +758,7 @@ stock static GetFurnitureObjectName(playerid, index)
 	}
 	return name;
 }
+
 stock GetFurnitureObjectPrice(playerid, index)
 {
 	new
@@ -827,6 +830,7 @@ stock GetFurnitureObjectPrice(playerid, index)
 	}
 	return price;
 }
+
 stock static GetFurnitureObjectModel(playerid, index)
 {
 	new
@@ -898,6 +902,7 @@ stock static GetFurnitureObjectModel(playerid, index)
 	}
 	return modelid;
 }
+
 stock static GetPlayerFurnitureSlots(playerid)
 {
 	switch(PlayerInfo[playerid][pDonateRank])
@@ -2749,6 +2754,7 @@ hook OnPlayerEditObject(playerid, playerobject, objectid, response, Float:fX, Fl
 			}
 		}
 	}
+	return 1;
 }
 
 hook OnModelSelResponse( playerid, extraid, index, modelid, response )
