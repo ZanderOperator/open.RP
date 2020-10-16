@@ -3,7 +3,6 @@
 #if defined MODULE_OBJECTS
 	#endinput
 #endif
-
 #define MODULE_OBJECTS 
 
 
