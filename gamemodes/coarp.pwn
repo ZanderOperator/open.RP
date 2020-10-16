@@ -137,7 +137,10 @@ native WP_Hash(buffer[], len, const str[]);
 #define Function:%0(%1) \				
 		forward%0(%1); \
 		public%0(%1)
-		
+
+#define IsANewUser(%0) \
+	Bit1_Get(gr_NewUser,%0)
+
 // KickEx
 #define KickMessage(%0) \
 	SetTimerEx("KickPlayer",55,false,"d",%0)
@@ -298,6 +301,12 @@ native WP_Hash(buffer[], len, const str[]);
 #define LOG_TYPE_VEHICLESELL					3
 #define LOG_TYPE_COMPLEXSELL    				4
 #define LOG_TYPE_GARAGESELL     				5
+
+// Warehouse
+#define MAX_WAREHOUSE_WEAPONS					(100)
+#define ROBBERY_DURATION						(1500) // SEKUNDE
+#define MIN_ROBBERS								(5) // Minimalni broj pljackasa(clanova suparnicke fakcije) koja je potrebna da se pokrene pljacka
+#define MIN_DEFENDERS							(5) // Minimalni broj clanova fakcije koji trebaju biti online da bi se pokrenula pljacka
 
 /*
 	######## ##    ## ##     ## ##     ##  ######
@@ -1814,7 +1823,9 @@ new
 	//PlayerCallPlayer[ MAX_PLAYERS ] = {	INVALID_PLAYER_ID, ... },
 	PlayerAFK[MAX_PLAYERS],
 	LastVehicle[MAX_PLAYERS] = INVALID_VEHICLE_ID,
-	PlayerTuningVehicle[ MAX_PLAYERS ] = INVALID_VEHICLE_ID;
+	PlayerTuningVehicle[ MAX_PLAYERS ] = INVALID_VEHICLE_ID,
+	Text3D:DoorHealth3DText[MAX_VEHICLES],
+	Text3D:TrunkHealth3DText[MAX_VEHICLES];
 	//bool:aprilfools[MAX_PLAYERS] = true;
 
 //fisher
@@ -1835,7 +1846,10 @@ new
 new
 	Bit1:	gr_LoginChecksOn		<MAX_PLAYERS>  = Bit1: false,
 	Bit1: 	gr_SaveArmour 			<MAX_PLAYERS>,
-	Bit1:	gr_CreateObject			<MAX_PLAYERS>  = Bit1: false,
+	Bit1: 	gr_PlayerPickingJack 	<MAX_PLAYERS> =  Bit1: false,
+	Bit1:	gr_PlayerJackSure 		<MAX_PLAYERS> =  Bit1: false,
+	Bit1: 	gr_PlayerIsSWAT			<MAX_PLAYERS> =  Bit1: false,
+	Bit1:	gr_CreateObject			<MAX_PLAYERS> =	 Bit1: false,
 	Bit1:	gr_OnEvent				<MAX_PLAYERS>  = Bit1: false,
 	Bit1:	gr_PlayerDownloading	<MAX_PLAYERS>  = Bit1: false,
 	Bit1:	gr_BeanBagShotgun		<MAX_PLAYERS>  = Bit1: false,
@@ -1939,6 +1953,8 @@ new
 	EnteringVehicle[MAX_PLAYERS] = -1,
 	FreeBizzID[MAX_PLAYERS] = INVALID_BIZNIS_ID,
 	ServicePrice[MAX_PLAYERS] = 0,
+	WeaponListID[MAX_PLAYERS],
+	WeaponToList[MAX_PLAYERS][MAX_WAREHOUSE_WEAPONS],
 	regenabled = false;
 
 
@@ -2004,7 +2020,6 @@ new
 	##     ##  #######  ########   #######  ######## ########  ######
 */
 
-//#include "modules/Server/Core.pwn"
 #include "modules/Server/Color.pwn"
 #include "modules/Server/Checkpoints.pwn"
 #include "modules/Server/Artconfig.pwn"
@@ -2023,54 +2038,25 @@ new
 #include "modules/Server/AntiBunnyHop.pwn"
 #include "modules/Server/Economy.pwn"
 
-#include "modules/Server/Vehicles/Core.pwn"
-#include "modules/Server/Vehicles/CarOwnership.pwn"
-#include "modules/Server/Vehicles/Tuning.pwn"
-#include "modules/Server/Vehicles/NOS.pwn"
-#include "modules/Server/Vehicles/Speedo.pwn"
-#include "modules/Server/Vehicles/Functions.pwn"
-
-
-// Factions
-#include "modules/Systems/Factions/Core.pwn"
-
-#include "modules/Systems/Factions/LSPD/ANPR.pwn"
-#include "modules/Systems/Factions/LSPD/Roadblocks.pwn"
-#include "modules/Systems/Factions/LSPD/MDC.pwn"
-#include "modules/Systems/Factions/LSPD/Flashbang.pwn"
-#include "modules/Systems/Factions/LSPD/Tickets.pwn"
-#include "modules/Systems/Factions/LSPD/Spikes.pwn"
-#include "modules/Systems/Factions/LSPD/Gunrack.pwn"
-#include "modules/Systems/Factions/LSPD/MobileCommand.pwn"
-#include "modules/Systems/Factions/LSPD/Siren.pwn"
-#include "modules/Systems/Factions/LSPD/Core.pwn"
-
-#include "modules/Systems/Factions/LSFD/Ambulance.pwn"
-#include "modules/Systems/Factions/LSFD/Anamneza.pwn"
-#include "modules/Systems/Factions/LSFD/Rope.pwn"
-#include "modules/Systems/Factions/LSFD/Core.pwn"
-
-#include "modules/Systems/Factions/Mayor/Elections.pwn"
-#include "modules/Systems/Factions/Mayor/Budget.pwn"
-#include "modules/Systems/Factions/Mayor/Core.pwn"
-
-#include "modules/Systems/Factions/LSN.pwn"
-
-#include "modules/Systems/Factions/Race.pwn"
-
-#include "modules/Systems/Factions/Warehouse.pwn"
+// Vehicles
+#include "modules/Server/VehFuncs.pwn"
+#include "modules/Server/Tuning.pwn"
+#include "modules/Server/NOS.pwn"
+#include "modules/Server/Speedo.pwn"
+#include "modules/Server/Vehicles.pwn"
+#include "modules/Server/CO.pwn"
 
 // House
-#include "modules/Systems/House/Crib.pwn"
-#include "modules/Systems/House/Furniture.pwn"
-#include "modules/Systems/House/ExteriorFurniture.pwn"
-#include "modules/Systems/House/Garages.pwn"
-#include "modules/Systems/House/HouseStorage.pwn"
-#include "modules/Systems/House/RobStorage.pwn"
+#include "modules/Systems/Crib.pwn"
+#include "modules/Systems/Furniture.pwn"
+#include "modules/Systems/ExteriorFurniture.pwn"
+#include "modules/Systems/Garages.pwn"
+#include "modules/Systems/HouseStorage.pwn"
+#include "modules/Systems/RobStorage.pwn"
 
 // Bizz
-#include "modules/Systems/Bizz/BiznisFurniture.pwn"
-#include "modules/Systems/Bizz/Biznis.pwn"
+#include "modules/Systems/BiznisFurniture.pwn"
+#include "modules/Systems/Bizz.pwn"
 
 // Casino
 #include "modules/Systems/Casino/Rulet.pwn"
@@ -2088,27 +2074,59 @@ new
 #include "modules/Systems/PawnShop.pwn"
 #include "modules/Systems/GPS.pwn"
 
-
+// Admin  Modules
 #include "modules/Admin/Core.pwn"
 #include "modules/Admin/Ban.pwn"
 #include "modules/Admin/Connections.pwn"
 #include "modules/Admin/BlockIp.pwn"
 #include "modules/Admin/Report.pwn"
 
+// Factions
+#include "modules/Systems/Factions.pwn"
+
+// LSPD
+#include "modules/Systems/LSPD/ANPR.pwn"
+#include "modules/Systems/LSPD/Roadblocks.pwn"
+#include "modules/Systems/LSPD/MDC.pwn"
+#include "modules/Systems/LSPD/Flashbang.pwn"
+#include "modules/Systems/LSPD/Tickets.pwn"
+#include "modules/Systems/LSPD/Spikes.pwn"
+#include "modules/Systems/LSPD/Gunrack.pwn"
+#include "modules/Systems/LSPD/MobileCommand.pwn"
+#include "modules/Systems/LSPD/Siren.pwn"
+#include "modules/Systems/LSPD/Core.pwn"
+
+// LSFD
+#include "modules/Systems/LSFD/Ambulance.pwn"
+#include "modules/Systems/LSFD/Anamneza.pwn"
+#include "modules/Systems/LSFD/Rope.pwn"
+#include "modules/Systems/LSFD/Core.pwn"
+
+// Government
+#include "modules/Systems/Mayor/Elections.pwn"
+#include "modules/Systems/Mayor/Budget.pwn"
+#include "modules/Systems/Mayor/Core.pwn"
+
+// News, Racers & Illegal Warehouses
+#include "modules/Systems/LSN.pwn"
+#include "modules/Systems/Race.pwn"
+#include "modules/Systems/Warehouse.pwn"
+
 #include "modules/Player/Security.pwn"
 #include "modules/Player/Core.pwn"
 
-#include "modules/Player/Jobs/Garbage.pwn"
-#include "modules/Player/Jobs/Sweeper.pwn"
-#include "modules/Player/Jobs/Mechanic.pwn"
-#include "modules/Player/Jobs/Crafter.pwn"
-#include "modules/Player/Jobs/Farmer.pwn"
-#include "modules/Player/Jobs/Jacker.pwn"
-#include "modules/Player/Jobs/Logger.pwn"
-#include "modules/Player/Jobs/Impounder.pwn"
-#include "modules/Player/Jobs/Transporter.pwn"
-#include "modules/Player/Jobs/Taxi.pwn"
-#include "modules/Player/Jobs/Core.pwn"
+// Jobs
+#include "modules/Char/Jobs/Garbage.pwn"
+#include "modules/Char/Jobs/Sweeper.pwn"
+#include "modules/Char/Jobs/Mechanic.pwn"
+#include "modules/Char/Jobs/Crafter.pwn"
+#include "modules/Char/Jobs/Farmer.pwn"
+#include "modules/Char/Jobs/Jacker.pwn"
+#include "modules/Char/Jobs/Logger.pwn"
+#include "modules/Char/Jobs/Impounder.pwn"
+#include "modules/Char/Jobs/Transporter.pwn"
+#include "modules/Char/Jobs/Taxi.pwn"
+#include "modules/Char/Jobs/Core.pwn"
 
 #include "modules/Player/AFKTimer.pwn"
 #include "modules/Player/SaveLoad.pwn"
@@ -2117,8 +2135,6 @@ new
 #include "modules/Player/PayDay.pwn"
 #include "modules/Player/CMD.pwn"
 #include "modules/Player/Help.pwn"
-
-//#include "modules/Char/Core.pwn"
 
 // Hobbies Core
 #include "modules/Char/Hobby/Fisher.pwn"
@@ -3032,6 +3048,7 @@ public OnGameModeInit()
 	LoadGPS();
 	LoadHstorage(); // House Storage Load
 	LoadHouses();
+	LoadBizz();
 	LoadComplex();
 	LoadComplexRooms();
 	LoadServerVehicles();

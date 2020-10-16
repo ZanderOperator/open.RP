@@ -225,6 +225,25 @@ stock ResetDeathVars(playerid)
 	return 1;
 }
 
+stock StopPlayerDeath(playerid)
+{
+	DestroyDeathInfo(playerid);
+	DestroyDeathTDs(playerid);
+	KillTimer(DeathTimer[playerid]);
+
+	DeathCountStarted_Set(playerid, false);
+	DeathCountSeconds_Set(playerid, 0);
+
+	PlayerInfo[ playerid ][ pDeath ][ 0 ] 	= 0.0;
+	PlayerInfo[ playerid ][ pDeath ][ 1 ] 	= 0.0;
+	PlayerInfo[ playerid ][ pDeath ][ 2 ] 	= 0.0;
+	PlayerInfo[ playerid ][ pDeathInt ] 	= 0;
+	PlayerInfo[ playerid ][ pDeathVW ] 		= 0;
+	PlayerInfo[ playerid ][ pKilled ] 	 	= 0;
+
+	return 1;
+}
+
 stock CreateDeathTD(playerid)
 {
 	DestroyDeathTDs(playerid);

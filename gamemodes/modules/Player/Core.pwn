@@ -14,10 +14,6 @@
 #define PlayerNewUser_Set(%0,%1) \
 		Bit1_Set(gr_NewUser,%0,%1)
 
-//Provjera dali je igrac novi na serveru
-#define IsANewUser(%0) \
-	Bit1_Get(gr_NewUser,%0)
-
 #define COLOR_RADIO		(0xFFEC8BFF)
 #define COLOR_RADIOEX	(0xB5AF8FFF)
 
