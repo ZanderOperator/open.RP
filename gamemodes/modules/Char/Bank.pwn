@@ -474,8 +474,7 @@ GetValuablePropertyType(playerid)
 	}
 	if(housevalue > bizvalue)
 		return PROPERTY_TYPE_HOUSE;	
-		
-	return PROPERTY_TYPE_BIZZ;
+	else return PROPERTY_TYPE_BIZZ;
 }
 
 TakePlayerProperty(playerid)
@@ -488,6 +487,42 @@ TakePlayerProperty(playerid)
 		
 	switch(type)
 	{
+		case 0: // No House/Business
+		{
+			if(PlayerInfo[playerid][pSpawnedCar] != -1) // The proud owner of private vehicle which bank will instantly seize
+			{
+				va_SendClientMessage(playerid, COLOR_RED, "[ ! ]: The Bank seized your %s as payment of credit costs.", ReturnVehicleName(VehicleInfo[PlayerInfo[playerid][pSpawnedCar]][vModel]));
+				// Vehicle List Reset
+				ResetVehicleList(playerid);
+
+				DeleteVehicleTuning(PlayerInfo[playerid][pSpawnedCar]);
+				ResetTuning(PlayerInfo[playerid][pSpawnedCar]);
+				DeleteVehicleDrug(PlayerInfo[playerid][pSpawnedCar], -1);
+				
+				// SQL
+				DeleteVehicleFromBase(VehicleInfo[PlayerInfo[playerid][pSpawnedCar]][vSQLID]);
+
+				#if defined MODULE_LOGS
+				Log_Write("/logfiles/car_delete.txt", "(%s) %s lost his %s because of credit loan debt.",
+					ReturnDate(),
+					GetName(playerid,false),
+					ReturnVehicleName(GetVehicleModel(PlayerInfo[playerid][pSpawnedCar]))
+				);
+				#endif
+
+				// Brisanje vozila
+				DestroyFarmerObjects(playerid);
+				AC_DestroyVehicle(PlayerInfo[playerid][pSpawnedCar]);
+				ResetVehicleInfo(PlayerInfo[playerid][pSpawnedCar]);
+
+				PlayerInfo[playerid][pSpawnedCar] = -1;
+
+				// List
+				GetPlayerVehicleList(playerid);
+				
+			}
+			else return 1;
+		}
 		case PROPERTY_TYPE_HOUSE:
 		{
 			new house = PlayerInfo[playerid][pHouseKey];

@@ -1,4 +1,3 @@
-#include <mSelection>
 #include <YSI\y_hooks>
 
 #define CP_TYPE_BIZZ_VIP_ENTRANCE	(3)
@@ -121,7 +120,6 @@ new BiznisProducts[MAX_BIZZS][E_BIZNIS_PRODUCTS_DATA][MAX_SALE_PRODUCTS];
 */
 ///////////////////////////////////////////////////////////////////
 
-new MODEL_LIST_SKINS = mS_INVALID_LISTID;
 // TextDraws
 static stock
 		PlayerText:BiznisBcg1[ MAX_PLAYERS ]		= { PlayerText:INVALID_TEXT_DRAW, ...},
@@ -1186,49 +1184,36 @@ CMD:buyskin(playerid, params[])
 	return 1;
 }
 
-
-public OnPlayerModelSelection(playerid, response, listid, modelid, price)
+hook OnModelSelResponse(playerid, extraid, index, modelid, response)
 {
-	if( listid == MODEL_LIST_SKINS)
+	if( extraid == MODEL_LIST_SKINS)
 	{
 		if(!response)
 			return SetPlayerPosFinish(playerid);
 
-		if(AC_GetPlayerMoney(playerid) < price)
+		new skinid = ModelToEnumID[playerid][index];
+		if(AC_GetPlayerMoney(playerid) < ServerSkins[sPrice][skinid])
 		{
-			va_SendClientMessage(playerid,COLOR_RED, "Nemas dovoljno novca za kupnju skina %d ($%d)!", modelid, price);
+			va_SendClientMessage(playerid,COLOR_RED, "Nemas dovoljno novca za kupnju skina %d ($%d)!", ServerSkins[sSkinID][skinid], ServerSkins[sPrice][skinid]);
 			SetPlayerPosFinish(playerid);
 
 			return 1;
 		}
-		Bit16_Set(gr_PlayerSkinId, playerid, GetPlayerSkin(playerid));
-		Bit16_Set(gr_PlayerSkinPrice, playerid, price);
+		Bit16_Set(gr_PlayerSkinId, playerid, ServerSkins[sSkinID][skinid]);
+		Bit16_Set(gr_PlayerSkinPrice, playerid, ServerSkins[sPrice][skinid]);
 
-		SetPlayerSkin(playerid, modelid);
+		SetPlayerSkin(playerid, ServerSkins[sSkinID][skinid]);
 
-		va_SendClientMessage(playerid, COLOR_RED, "[ ! ] Izabrao si skin ID %d ($%d)! Koristi /buyskin za kupovinu!", modelid, price);
+		va_SendClientMessage(playerid, COLOR_RED, "[ ! ] Izabrao si skin ID %d ($%d)! Koristi /buyskin za kupovinu!", ServerSkins[sSkinID][skinid], ServerSkins[sPrice][skinid]);
 
 		SetPlayerPosFinish(playerid);
 	}
-	#if defined BIZ_OnPlayerModelSelection
-        BIZ_OnPlayerModelSelection(playerid, response, listid, modelid, price);
-    #endif
     return 1;
 }
 
-#if defined _H_OnPlayerModelSelection
-    #undef OnPlayerModelSelection
-#else
-    #define _H_OnPlayerModelSelection
-#endif
-#define OnPlayerModelSelection BIZ_OnPlayerModelSelection
-#if defined BIZ_OnPlayerModelSelection
-    forward BIZ_OnPlayerModelSelection(playerid, response, listid, modelid);
-#endif
-
-
 hook OnGameModeInit()
 {
+	LoadSkinSelectionMenu("skins.txt");
 	VeronaSkinRectangle = CreateDynamicRectangle(1092.39172, -1431.54944, 1101.95300, -1449.16431);
 	return 1;
 }
@@ -3802,7 +3787,7 @@ CMD:buy(playerid, params[])
 		TogglePlayerControllable(playerid, 0);
 		SetPlayerVirtualWorld(playerid, playerid);
 		Bit8_Set( gr_PlayerSkinStore, playerid, 5 );
-		ShowModelSelectionMenu(playerid, MODEL_LIST_SKINS, "Kupovina odjece", 0x0d0c0cBB, 0x2a2a2a99, 0x3d3d3dAA);
+		ShowSkinModelDialog(playerid);
 	}
 	else {
 		if( Bit16_Get( gr_PlayerInBiznis, playerid ) == INVALID_BIZNIS_ID || Bit16_Get( gr_PlayerInBiznis, playerid ) > MAX_BIZZS) return SendClientMessage( playerid, COLOR_RED, "Niste u biznisu!" );
@@ -3830,7 +3815,7 @@ CMD:buy(playerid, params[])
 					TogglePlayerControllable(playerid, 0);
 					SetPlayerVirtualWorld(playerid, playerid);
 					Bit8_Set( gr_PlayerSkinStore, playerid, 1 );
-					ShowModelSelectionMenu(playerid, MODEL_LIST_SKINS, "Kupovina odjece", 0x0d0c0cBB, 0x2a2a2a99, 0x3d3d3dAA);
+					ShowSkinModelDialog(playerid);
 				}
 				else if(IsPlayerInRangeOfPoint(playerid, 3.0, 207.5430,-101.4424,1005.2578)) {	// Binco
 					SetPlayerPos(playerid, 203.3475,-102.3842,1005.2578);
@@ -3841,7 +3826,7 @@ CMD:buy(playerid, params[])
 					TogglePlayerControllable(playerid, 0);
 					SetPlayerVirtualWorld(playerid, playerid);
 					Bit8_Set( gr_PlayerSkinStore, playerid, 2 );
-					ShowModelSelectionMenu(playerid, MODEL_LIST_SKINS, "Kupovina odjece", 0x0d0c0cBB, 0x2a2a2a99, 0x3d3d3dAA);
+					ShowSkinModelDialog(playerid);
 				}
 				else if(IsPlayerInRangeOfPoint(playerid, 3.0, 207.0127,-129.8306,1003.5078)) {	// ProLaps
 					SetPlayerPos(playerid, 214.9582,-128.5536,1003.5078);
@@ -3852,7 +3837,7 @@ CMD:buy(playerid, params[])
 					TogglePlayerControllable(playerid, 0);
 					SetPlayerVirtualWorld(playerid, playerid);
 					Bit8_Set( gr_PlayerSkinStore, playerid, 3 );
-					ShowModelSelectionMenu(playerid, MODEL_LIST_SKINS, "Kupovina odjece", 0x0d0c0cBB, 0x2a2a2a99, 0x3d3d3dAA);
+					ShowSkinModelDialog(playerid);
 				}
 				else if(IsPlayerInRangeOfPoint(playerid, 3.0, 203.8190,-43.9678,1001.8047)) {	// Suburban
 					SetPlayerPos(playerid, 209.0007,-43.0058,1001.8047);
@@ -3863,7 +3848,7 @@ CMD:buy(playerid, params[])
 					TogglePlayerControllable(playerid, 0);
 					SetPlayerVirtualWorld(playerid, playerid);
 					Bit8_Set( gr_PlayerSkinStore, playerid, 4 );
-					ShowModelSelectionMenu(playerid, MODEL_LIST_SKINS, "Kupovina odjece", 0x0d0c0cBB, 0x2a2a2a99, 0x3d3d3dAA);
+					ShowSkinModelDialog(playerid);
 				}
 				else SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste u clothing shopu!");
 			}

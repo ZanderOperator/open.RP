@@ -2043,14 +2043,6 @@ forward OnFurnitureObjectCreates(houseid, index);
 	Y888888P VP   V8P    YP    Y88888P 88   YD Y888888P  `Y88P'  88   YD
 */
 
-stock ResetFurnitureShuntVar(playerid)
-{
-	for(new i = 0; i < MAX_FURNITURE_SLOTS; i++)
-		ModelToEnumID[playerid][i] = -1;
-
-	return 1;
-}
-
 stock static DestroyFurnitureBlankIntTDs(playerid)
 {
 	if( IntBcg1[playerid] != PlayerText:INVALID_TEXT_DRAW ) {
@@ -4409,12 +4401,12 @@ hook OnModelSelResponse( playerid, extraid, index, modelid, response )
 		{
 			if( !response )
 			{
-				ResetFurnitureShuntVar(playerid);
+				ResetModelShuntVar(playerid);
 				return ShowPlayerDialog(playerid, DIALOG_FURNITURE_MENU, DIALOG_STYLE_LIST, "Furniture", "Kupi objekt\nUredi\nInventory", "Choose", "Abort");
 			}
 			PlayerEditIndex[ playerid ] = ModelToEnumID[playerid][index];
 			va_ShowPlayerDialog(playerid, DIALOG_FURNITURE_EDIT_LIST, DIALOG_STYLE_LIST, "Furniture - Uredjivanje", "Uredjivanje (UI)\nTeksture\nBoje\nKopiraj objekt\nObrisi objekt\nObrisi teksture i boje", "Choose", "Abort");
-			ResetFurnitureShuntVar(playerid);
+			ResetModelShuntVar(playerid);
 		}
 		case DIALOG_FURNITURE_OBJS_BUY: {
 			if( !response ) {
