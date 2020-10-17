@@ -103,7 +103,7 @@
 #include <progress2>
 #include <mapandreas>
 #include <color_menu>
-#include <eSelection>
+//#include <eSelection>
 
 #include <vSync> // mici sve osim seats ids
 #include <fly>
@@ -190,7 +190,7 @@ native WP_Hash(buffer[], len, const str[]);
 #define MAX_APARTMENTS							(500)
 #define MAX_VEHICLE_TICKETS						(5)
 #define MAX_GARAGES                 			(1500)
-#define MAX_SERVER_SKINS						(600)
+#define MAX_SERVER_SKINS						(800)
 #define MAX_ILEGAL_GARAGES						(10)
 
 // Max Inactivity Time & Minimum Month PayDays before Job/Property Removal
@@ -808,6 +808,13 @@ new BizzInfo[MAX_BIZZS][E_BIZNIS_INFO];
 #define bFurTxtId][%1][%2] bFurTxtId][((%1)*5)+(%2)]
 #define bFurColId][%1][%2] bFurColId][((%1)*5)+(%2)]
 
+enum E_SERVER_SKINS
+{
+	sSkinID,
+	sPrice
+}
+new ServerSkins[E_SERVER_SKINS][MAX_SERVER_SKINS];
+
 enum E_PLAYER_TICKS {
 	ptReport,
 	ptVehicleCrash,
@@ -1219,6 +1226,9 @@ enum
 	// Ammunation
 	DIALOG_AMMUNATION_MENU,
 	DIALOG_AMMUNATION_BUY,
+
+	// Skins Model Dialog
+	MODEL_LIST_SKINS,
 
 	// Furniture
 	DIALOG_BLANK_INTS_LIST,
@@ -1770,7 +1780,6 @@ new
 	PlayerText:MechanicTD[MAX_PLAYERS] = { PlayerText:INVALID_TEXT_DRAW, ... },
 	bool:PlayerCarTow	[MAX_PLAYERS];
 
-new ModelToEnumID[MAX_PLAYERS][MAX_FURNITURE_SLOTS];
 //FLY
 new Float:ACPosX[MAX_PLAYERS], Float:ACPosY[MAX_PLAYERS], Float:ACPosZ[MAX_PLAYERS];
 
@@ -2288,9 +2297,6 @@ ResetPlayerVariables(playerid)
 	PlayerSafeExit[playerid][giY] = 0;
 	PlayerSafeExit[playerid][giZ] = 0;
 	PlayerSafeExit[playerid][giRZ] = 0;
-
-	//furniture
-	ResetFurnitureShuntVar(playerid);
 
 	// Weapons
 	AC_ResetPlayerWeapons(playerid, false);

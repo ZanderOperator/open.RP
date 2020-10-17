@@ -182,7 +182,11 @@ GivePlayerPayCheck(playerid)
 		{
 			CreditInfo[playerid][cUnpaid]++;
 			if(CreditInfo[playerid][cUnpaid] > 3) // Ukoliko ima 3 neplacene rate kredita, 4. payday mu automatski naplacuje potrazivanje iz imovine
+			{	
 				TakePlayerProperty(playerid);
+				ResetCreditVars(playerid);
+				SavePlayerCredit(playerid);
+			}
 			else
 			{
 				format(f_dialog,sizeof(f_dialog), "\n\tNemate dovoljno novaca na racunu da bi se naplatilo %d$ za ratu kredita. Ovo vam je %d. neplacena rata.\nUkoliko imate vise od 3 neplacene rate kredita, banka naplacuje potrazivanja "COL_RED"oduzimanjem imovine.",

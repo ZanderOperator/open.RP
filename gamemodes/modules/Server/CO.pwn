@@ -1116,9 +1116,19 @@ stock LoadVehicleWeapons(vehicleid)
 	return 1;
 }
 
+stock LoadVehicleWeaponPos(vehicleid)
+{
+	new
+		tmpQuery[128];
+	format(tmpQuery, 128, "SELECT * FROM `cocars_wobjects` WHERE `vehicle_id` = '%d'",
+		VehicleInfo[vehicleid][vSQLID]
+	);
+	mysql_pquery(g_SQL, tmpQuery, "LoadingVehicleWeaponPos", "i", vehicleid);
+	return 1;
+}
+
 Function: LoadingPlayerVehicle(playerid)
 {
-
 	#if defined MOD_DEBUG
 		printf("DEBUG CARS: count(%d)", cache_num_rows());
 	#endif
@@ -1135,19 +1145,7 @@ Function: LoadingPlayerVehicle(playerid)
 	return 1;
 }
 
-stock LoadVehicleWeaponPos(vehicleid)
-{
-	new
-		tmpQuery[128];
-	format(tmpQuery, 128, "SELECT * FROM `cocars_wobjects` WHERE `vehicle_id` = '%d'",
-		VehicleInfo[vehicleid][vSQLID]
-	);
-	mysql_pquery(g_SQL, tmpQuery, "LoadingVehicleWeaponPos", "i", vehicleid);
-	return 1;
-}
-
-forward LoadingVehicleWeapons(vehicleid);
-public LoadingVehicleWeapons(vehicleid)
+Function: LoadingVehicleWeapons(vehicleid)
 {
 	if(cache_num_rows()) 
 	{

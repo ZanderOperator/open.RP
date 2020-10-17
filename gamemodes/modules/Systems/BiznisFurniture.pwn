@@ -2765,12 +2765,12 @@ hook OnModelSelResponse( playerid, extraid, index, modelid, response )
 		{
 			if( !response )
 			{
-				ResetFurnitureShuntVar(playerid);
+				ResetModelShuntVar(playerid);
 				return ShowPlayerDialog(playerid, DIALOG_BIZZ_FURN_MENU, DIALOG_STYLE_LIST, "Furniture", "Kupi objekt\nUredi\nInventory", "Choose", "Abort");
 			}
 			BizzPlayerEditIndex[ playerid ] = ModelToEnumID[playerid][index];
 			va_ShowPlayerDialog(playerid, DIALOG_BIZZ_FURN_EDIT_LIST, DIALOG_STYLE_LIST, "Furniture - Uredjivanje", "Uredjivanje (UI)\nTeksture\nBoje\nKopiraj objekt\nObrisi objekt\nObrisi teksture i boje", "Choose", "Abort");
-			ResetFurnitureShuntVar(playerid);
+			ResetModelShuntVar(playerid);
 		}
 		case DIALOG_BIZZ_FURN_OBJS_BUY: {
 			if( !response ) {
