@@ -1185,7 +1185,7 @@ public OnPlayerClickTextDraw(playerid, Text:clickedid)
 
 hook OnPlayerClickPlayerTD(playerid, PlayerText:playertextid)
 {
-	if(_:playertextid != INVALID_TEXT_DRAW) {
+	if(playertextid != PlayerText:INVALID_TEXT_DRAW) {
 		if( playertextid == MDCCloseButton[playerid] ) {
 			DestroyMDCTextDraws(playerid);
 			CancelSelectTextDraw(playerid);

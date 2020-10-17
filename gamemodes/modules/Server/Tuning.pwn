@@ -1409,7 +1409,7 @@ hook OnDialogResponse( playerid, dialogid, response, listitem, inputtext[] ) {
 //==============================================================================
 hook OnPlayerClickPlayerTD(playerid, PlayerText:playertextid)
 {
-    if( _:playertextid != INVALID_TEXT_DRAW ) {
+    if( playertextid != PlayerText:INVALID_TEXT_DRAW ) {
         if( playertextid == TuningBuy[ playerid ][ 7 ] ) { // desno
             if( !IsPlayerInAnyVehicle( playerid ) ) return SendErrorMessage( playerid, "Morate biti u vozilu.");
 	        if( GetPlayerState( playerid ) != PLAYER_STATE_DRIVER ) return SendErrorMessage( playerid, "Morate biti na mjestu vozaca!");

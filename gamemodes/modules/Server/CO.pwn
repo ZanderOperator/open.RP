@@ -3774,7 +3774,7 @@ hook OnVehicleStreamOut(vehicleid, forplayerid)
 
 hook OnPlayerClickPlayerTD(playerid, PlayerText:playertextid)
 {
-	if(_:playertextid != INVALID_TEXT_DRAW)
+	if(playertextid != PlayerText:INVALID_TEXT_DRAW)
 	{
 		if(playertextid == DenyButton[playerid]) {
 			DestroyPreviewScene(playerid);
