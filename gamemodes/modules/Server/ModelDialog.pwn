@@ -93,7 +93,7 @@ stock LoadSkinSelectionMenu(f_name[])
 			break;
 		}
 		if(!line[0]) continue;
-        sscanf(line, "p<,>ii", ServerSkins[sSkinID][idx], ServerSkins[sPrice][idx]);
+        //sscanf(line, "p<,>ii", ServerSkins[sSkinID][idx], ServerSkins[sPrice][idx]);
         idx++;
     }
     return 1;
