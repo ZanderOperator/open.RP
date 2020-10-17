@@ -21,7 +21,7 @@
 // Server Players, NPC's and Vehicle Config
 #define MAX_NPCS 								(1)
 #undef MAX_PLAYERS
-#define MAX_PLAYERS 							(500)
+#define MAX_PLAYERS 							(100)
 #undef MAX_VEHICLES
 #define MAX_VEHICLES                      		(1000)
 
@@ -54,6 +54,9 @@
 #define FIX_GetPlayerDialog			0
 #define	MAX_IP_CONNECTS 			3
 #define FIX_file_inc 				0
+#define FIX_OnRconCommand			0
+#define FIX_OnClientCheckResponse   0
+
 
 // Script Mode settings
 //#define COA_TEST
@@ -3325,7 +3328,7 @@ hook ppb_OnPlayerDisconnect(playerid, reason)
 	);
 	mysql_tquery(g_SQL, query, "", "");
 
-	defer SafeResetPlayerVariables(playerid); 
+	defer SafeResetPlayerVariables(playerid);
 	return 1;
 }
 
