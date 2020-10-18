@@ -3188,8 +3188,9 @@ public OnPlayerConnect(playerid)
 	return 1;
 }
 
-hook ppb_OnPlayerDisconnect(playerid, reason)
-{	
+#include <YSI\y_hooks>
+hook OnPlayerDisconnect(playerid, reason)
+{
 	WalkStyle[playerid] = 0;
 	entering[playerid] = 0;
 	onexit[playerid] = 0;
