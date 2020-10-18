@@ -1,0 +1,58 @@
+#
+# Package only files
+#
+
+# Compiled Bytecode, precompiled output and assembly
+*.amx
+*.lst
+*.asm
+
+# Vendor directory for dependencies
+dependencies/
+
+# Dependency versions lockfile
+pawn.lock
+
+
+#
+# Server/gamemode related files
+#
+
+# compiled settings file
+# keep `pawn.json` file on version control
+# but make sure the `rcon_password` field is set externally
+# you can use the environment variable `SAMP_RCON_PASSWORD` to do this.
+#server.cfg
+
+# Plugins directory
+plugins/
+
+# Binaries
+*.exe
+*.dll
+*.so
+announce
+samp03svr
+samp-npc
+
+# Logs
+logs/
+server_log.txt
+crashinfo.txt
+
+# Ban list
+samp.ban
+
+#
+# Private resources
+#
+# N/A
+
+# Windows shortcuts
+*.lnk
+
+# Python stuff
+__pycache__/
+*.py[cod]
+*$py.class
+*.pyc
