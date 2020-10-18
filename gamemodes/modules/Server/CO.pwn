@@ -1,6 +1,4 @@
-#include <YSI\y_hooks>
-
-
+#include <YSI_Coding\y_hooks>
 
 /*
 	########  ######## ######## #### ##    ## ########  ######
@@ -1127,7 +1125,7 @@ stock LoadVehicleWeaponPos(vehicleid)
 	return 1;
 }
 
-Function: LoadingPlayerVehicle(playerid)
+Public:LoadingPlayerVehicle(playerid)
 {
 	#if defined MOD_DEBUG
 		printf("DEBUG CARS: count(%d)", cache_num_rows());
@@ -1145,7 +1143,7 @@ Function: LoadingPlayerVehicle(playerid)
 	return 1;
 }
 
-Function: LoadingVehicleWeapons(vehicleid)
+Public:LoadingVehicleWeapons(vehicleid)
 {
 	if(cache_num_rows()) 
 	{
@@ -2479,7 +2477,7 @@ stock SpawnVehicleInfo(playerid, pick)
 			PlayerInfo[playerid][pSpawnedCar] = vehicleid;
 		} else return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne posjedujete vozilo na tome slotu!");
 	}
-	mysql_tquery_inline(g_SQL, tmpQuery, using inline SpawningPlayerVehicle, "i", playerid);
+	mysql_tquery_inline_new(g_SQL, tmpQuery, using inline SpawningPlayerVehicle, "i", playerid);
 	return PlayerInfo[playerid][pSpawnedCar];
 }
 
@@ -3459,7 +3457,7 @@ task VehicleGlobalTask[1000]()
 	return 1;
 }
 
-Function: VehicleTestBackTimer(playerid)
+Public:VehicleTestBackTimer(playerid)
 {
 	if(PlayerGiveBackCP[playerid] == 1) {
 		AC_DestroyVehicle(TestCar[playerid]);
@@ -3474,7 +3472,7 @@ Function: VehicleTestBackTimer(playerid)
 	return 1;
 }
 
-Function: ParkPlayerVehicle(playerid, vehicleid)
+Public:ParkPlayerVehicle(playerid, vehicleid)
 {
 	ParkVehicleInfo(vehicleid);
 	DestroyFarmerObjects(playerid);

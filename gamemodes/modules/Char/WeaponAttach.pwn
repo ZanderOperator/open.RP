@@ -1,5 +1,5 @@
  // Weapon Edit FilterScript by Logan
-#include <YSI\y_hooks>
+#include <YSI_Coding\y_hooks>
 
 #define MAX_WEAPON_OBJECT_SLOTS		(2) // Po igracu
 #define PRIMARY_WEAPON_SLOT 		(8)
@@ -152,7 +152,7 @@ stock SavePlayerWeaponSettings(playerid, weaponid)
 	return 1;
 }
 
-Function: OnWeaponSettingsInsert(playerid, weaponid)
+Public:OnWeaponSettingsInsert(playerid, weaponid)
 {
 	new index = GetWeaponObjectEnum(weaponid);
 	WeaponSettings[playerid][index][wsSQLID] = cache_insert_id();
@@ -168,7 +168,7 @@ stock LoadPlayerWeaponSettings(playerid)
 	return 1;
 }
 
-Function: OnWeaponsLoaded(playerid)
+Public:OnWeaponsLoaded(playerid)
 {
     new rows, weaponid, index;
     cache_get_row_count(rows);
@@ -193,7 +193,7 @@ Function: OnWeaponsLoaded(playerid)
 }
 
 
-Function: OPEAW(playerid, response, index, modelid, boneid, Float:foX, Float:foY, Float:foZ, Float:frX, Float:frY, Float:frZ, Float:fsX, Float:fsY, Float:fsZ)
+Public:OPEAW(playerid, response, index, modelid, boneid, Float:foX, Float:foY, Float:foZ, Float:frX, Float:frY, Float:frZ, Float:fsX, Float:fsY, Float:fsZ)
 {
 	new weaponid = EditingWeapon[playerid];
     if (weaponid)

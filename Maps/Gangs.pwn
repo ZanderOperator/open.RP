@@ -1,6 +1,6 @@
 /*	www.cityofangels-roleplay || Gangs Maps  */
 
-#include <YSI\y_hooks>
+#include <YSI_Coding\y_hooks>
 
 new	gangs_maps;
 

@@ -1,4 +1,4 @@
-#include <YSI\y_hooks>
+#include <YSI_Coding\y_hooks>
 
 #define ZONE_WIDTH			150.0
 #define ZONE_HEIGHT			195.0
@@ -176,7 +176,7 @@ _LoadingObjects(playerid, bool:status) {
 	return (true);
 }
 
-Function: LoadingObjects(playerid, bool: status) {
+Public:LoadingObjects(playerid, bool: status) {
 	if(status == false) 
 		_LoadingObjects(playerid, false);
 	if(status == true) {	
@@ -187,7 +187,7 @@ Function: LoadingObjects(playerid, bool: status) {
 	return (true);
 }
 
-Function: OnHouseInsertInDB(houseid, playerid)
+Public:OnHouseInsertInDB(houseid, playerid)
 {
 	HouseInfo[houseid][hSQLID] = cache_insert_id();
 	if(HouseInfo[houseid][hInt] > 0)
@@ -796,7 +796,7 @@ stock ResetHouseInfo(houseid)
 	KillTimer(GlobalMapIconT[houseid]);
 }
 
-Function: ResetHouseEnumerator()
+Public:ResetHouseEnumerator()
 {
 	for(new i=0; i<MAX_HOUSES; i++)
 		ResetHouseInfo(i);

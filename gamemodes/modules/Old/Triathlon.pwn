@@ -1,4 +1,4 @@
-#include <YSI\y_hooks>
+#include <YSI_Coding\y_hooks>
 
 #define MAX_OBJS  		100
 #define MAX_TOBJS   	29
@@ -617,7 +617,7 @@ public StopCycleRaceForPlayer(playerid)
 	TextDrawHideForPlayer(playerid, Tbg);
 	TextDrawHideForPlayer(playerid, TT[playerid]);
 	TextDrawHideForPlayer(playerid, NO[playerid]);
-	SendClientMessage(playerid, COLOR_RED, "[ ! ] Odlièno, sada kreni sa pucanjem!");
+	SendClientMessage(playerid, COLOR_RED, "[ ! ] Odliï¿½no, sada kreni sa pucanjem!");
 	return 1;
 }
 //===================================//
@@ -770,7 +770,7 @@ public StopSwimmingForPlayer(playerid)
 	TextDrawHideForPlayer(playerid, Tbg);
 	TextDrawHideForPlayer(playerid, TT[playerid]);
 	TextDrawHideForPlayer(playerid, NO[playerid]);
-	SendClientMessage(playerid, COLOR_RED, "[ ! ] Uspjesno ste okonèali Triatlon. Pricekaj rezultate!");
+	SendClientMessage(playerid, COLOR_RED, "[ ! ] Uspjesno ste okonï¿½ali Triatlon. Pricekaj rezultate!");
 	return 1;
 }
 //===================================//

@@ -6,7 +6,7 @@
 *	     	   (c) 2019
 */
 
-#include <YSI\y_hooks>
+#include <YSI_Coding\y_hooks>
 
 //=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~ (enumerator)
 
@@ -47,7 +47,7 @@ new
 	return (true);
 }
 
-Function: Load_InvDrop() {
+Public:Load_InvDrop() {
 	new 
 		rows = cache_num_rows(), counter = 0, buffer[64];
 	if(rows == 0) return (true);
@@ -86,7 +86,7 @@ LoadPlayerInventory(playerid, sql_id) {
 	return (true);
 }
 
-Function: Load_PlayerInventory(playerid)
+Public:Load_PlayerInventory(playerid)
 {
 	new rows = cache_num_rows();
 	if(rows == 0) return (true);
@@ -106,7 +106,7 @@ Function: Load_PlayerInventory(playerid)
 	return (true);
 }
 //=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~ (inventory functions)
-Function: StorePitemInDB(playerid, itemid) {
+Public:StorePitemInDB(playerid, itemid) {
 	inventory_data[playerid][itemid][invID] = cache_insert_id();
 	return (true);
 }
@@ -550,7 +550,7 @@ inventory_drop(playerid, itemid, quantity = 1) {
 	return (true);
 }
 
-Function: inventory_attached(playerid, slot)
+Public:inventory_attached(playerid, slot)
 {
 	if (IsPlayerAttachedObjectSlotUsed(playerid, slot)) {
 	    RemovePlayerAttachedObject(playerid, slot);
@@ -559,7 +559,7 @@ Function: inventory_attached(playerid, slot)
 }
 
 //=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~ (item functions)
-/*Function: StoreItemInDB(itemid) {
+/*Public:StoreItemInDB(itemid) {
    if (itemid == -1 || !inventory_items[itemid][invdrop_Model])
 	    return (false);
 
@@ -635,7 +635,7 @@ item_droprefresh(itemid) {
 	return (true);
 }
 
-Function: Reprocess_PlayerInv(playerid)
+Public:Reprocess_PlayerInv(playerid)
 {
 	if(PlayerInfo[playerid][pBoomBox]) {
 		inventory_remove(playerid, "Boombox", -1);

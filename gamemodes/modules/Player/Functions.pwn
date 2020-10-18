@@ -1,4 +1,5 @@
-#include <YSI\y_hooks>
+#include <YSI_Coding\y_hooks>
+
 /*
 	##     ##    ###     ######  ########   #######   ######  
 	###   ###   ## ##   ##    ## ##     ## ##     ## ##    ## 
@@ -93,7 +94,7 @@ ResetMonthPaydays()
 	return 1;
 }
 
-Function: CheckAccountsForInactivity()
+Public:CheckAccountsForInactivity()
 {	
 	new currentday, currentmonth, loadString[ 128 ], logString[2048];
 			
@@ -454,7 +455,7 @@ Function: CheckAccountsForInactivity()
 		cache_delete(Data);
 		return 1;
 	}
-	mysql_tquery_inline(g_SQL, loadString, using inline OnInactiveAccsLoad, "");
+	mysql_tquery_inline_new(g_SQL, loadString, using inline OnInactiveAccsLoad, "");
 	
 	getdate(_, currentmonth, currentday);
 	if(currentday == 1) 
@@ -729,7 +730,7 @@ Function: CheckAccountsForInactivity()
 			cache_delete(QueryData);
 			return 1;
 		}
-		mysql_tquery_inline(g_SQL, loadString, using inline OnMinPayDayAccsLoad, "");
+		mysql_tquery_inline_new(g_SQL, loadString, using inline OnMinPayDayAccsLoad, "");
 
 		mysql_format(g_SQL, loadString, sizeof(loadString), "SELECT * FROM  `experience` ORDER BY `experience`.`monthpaydays` DESC LIMIT 0 , 30");
 		inline OnRewardActivePlayers()
@@ -845,7 +846,7 @@ Function: CheckAccountsForInactivity()
 			ResetMonthPaydays();
 			return 1;
 		}	
-		mysql_tquery_inline(g_SQL, loadString, using inline OnRewardActivePlayers, "");
+		mysql_tquery_inline_new(g_SQL, loadString, using inline OnRewardActivePlayers, "");
 		return 1;
 	}
 	return 1;
@@ -1020,7 +1021,7 @@ stock LevelUp(playerid)
 	   ##    #### ##     ## ######## ##     ##  ######  
 */
 
-Function: LoginCheck(playerid)
+Public:LoginCheck(playerid)
 {
 	if( !IsPlayerLogged(playerid) && IsPlayerConnected(playerid) )
 	{
@@ -1030,7 +1031,7 @@ Function: LoginCheck(playerid)
 	return 1;
 }
 
-Function: PlayerMinuteTask(playerid)
+Public:PlayerMinuteTask(playerid)
 {
 	PlayerTaskTStamp[playerid] = gettimestamp() + 60;
 	
@@ -1921,7 +1922,7 @@ stock ShowPlayerStats(playerid, targetid)
 	return 1;
 }
 
-Function: SayHelloToPlayer(playerid)
+Public:SayHelloToPlayer(playerid)
 {
 	//Hello Message
 	new 

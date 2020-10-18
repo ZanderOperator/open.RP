@@ -14,12 +14,12 @@ ISKOMENTRATI U COARP MODUL arrestrecords.pwn
 APB suspect i pdname prebaciti u VARCHAR 24
 - last update: 12.11.2019 - by Logan 
  */
-#include <YSI\y_hooks>
-
 #if defined MODULE_MDC
 	#endinput
 #endif
 #define MODULE_MDC
+
+#include <YSI_Coding\y_hooks>
 
 /*
 	##     ##    ###    ########   ######  
@@ -186,7 +186,7 @@ stock static OnPlayerMDCDataLoad(playerid, const playername[])
 		PlayerTextDrawSetString(playerid, MDCHeader[playerid], tmpString);
 		SelectTextDraw(playerid, 0x427AF4FF);
 	}
-	mysql_tquery_inline(g_SQL, mysqlQuery, using inline OnPlayerMDCLoad, "");
+	mysql_tquery_inline_new(g_SQL, mysqlQuery, using inline OnPlayerMDCLoad, "");
 	return 1;
 }
 
@@ -239,7 +239,7 @@ stock static OnPlayerArrestDataLoad(playerid, const playername[])
 		PlayerTextDrawSetString(playerid, MDCOtherText[playerid], buffer);
 		SelectTextDraw(playerid, 0x427AF4FF);
 	}
-	mysql_tquery_inline(g_SQL, mysqlQuery, using inline OnArrestLoad, "");
+	mysql_tquery_inline_new(g_SQL, mysqlQuery, using inline OnArrestLoad, "");
 	return 1;
 }
 
@@ -300,7 +300,7 @@ stock static OnPlayerTicketsLoad(playerid, const playername[])
 		PlayerTextDrawSetString(playerid, MDCOtherText[playerid], buffer);
 		SelectTextDraw(playerid, 0x427AF4FF);
 	}
-	mysql_tquery_inline(g_SQL, mysqlQuery, using inline OnTicketsLoad, "");
+	mysql_tquery_inline_new(g_SQL, mysqlQuery, using inline OnTicketsLoad, "");
 	return 1;
 }
 
@@ -360,7 +360,7 @@ stock static OnPlayerCoVehsLoad(playerid, playersqlid)
 		PlayerTextDrawSetString(playerid, MDCOtherText[playerid], buffer);
 		SelectTextDraw(playerid, 0x427AF4FF);
 	}
-	mysql_tquery_inline(g_SQL, mysqlQuery, using inline OnCoVehicleLoad, "");
+	mysql_tquery_inline_new(g_SQL, mysqlQuery, using inline OnCoVehicleLoad, "");
 	return 1;
 }
 // Player APB load
@@ -417,7 +417,7 @@ stock static OnPlayerAPBLoad(playerid, const playername[])
 		PlayerTextDrawSetString(playerid, MDCOtherText[playerid], buffer);
 		SelectTextDraw(playerid, 0x427AF4FF);
 	}
-	mysql_tquery_inline(g_SQL, mysqlQuery, using inline OnAPBLoad, "");
+	mysql_tquery_inline_new(g_SQL, mysqlQuery, using inline OnAPBLoad, "");
 	return 1;
 }
 
@@ -471,7 +471,7 @@ stock GetAPBList(playerid)
 		}	
 		ShowPlayerDialog(playerid, 0, DIALOG_STYLE_MSGBOX, "[APB List]", buffer, "Close", "");
 	}
-	mysql_tquery_inline(g_SQL, mysqlQuery, using inline OnAPBListLoad, "");
+	mysql_tquery_inline_new(g_SQL, mysqlQuery, using inline OnAPBListLoad, "");
 	return 1;
 }
 
@@ -524,7 +524,7 @@ stock GetSuspectAPB(playerid, const playername[])
 		format(tmpString, 64, "[APB - %s]", playername);
 		ShowPlayerDialog(playerid, 0, DIALOG_STYLE_MSGBOX, tmpString, buffer, "Close", "");
 	}
-	mysql_tquery_inline(g_SQL, mysqlQuery, using inline OnAPBLoad, "");
+	mysql_tquery_inline_new(g_SQL, mysqlQuery, using inline OnAPBLoad, "");
 	return 1;
 }
 
@@ -716,7 +716,7 @@ stock GetPlayerMDCRecord(playerid, const playername[])
 		format(tmpString, 64, "%s-DOSJE", tmpJail[ jSuspectName ]);
 		ShowPlayerDialog(playerid, 0, DIALOG_STYLE_MSGBOX, tmpString, buffer, "Close", "");
 	}
-	mysql_tquery_inline(g_SQL, mysqlQuery, using inline OnSuspectLoad, "");
+	mysql_tquery_inline_new(g_SQL, mysqlQuery, using inline OnSuspectLoad, "");
 	return 1;
 }
 
@@ -1269,7 +1269,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 				format(motd, sizeof(motd), "\t\tLS Telefonica - %s\nBroj mobitela: %d\nModel mobitela: %s\nVlasnik mobitela: %s", ReturnDate(), mobilenumber, GetMobileName(modelid), GetPlayerNameFromSQL(playersql));
 				ShowPlayerDialog(playerid, DIALOG_MDC_PHONE_INFO, DIALOG_STYLE_MSGBOX, "MDC - MOBILE", motd, "Close", "");
 			}
-			mysql_tquery_inline(g_SQL, mysqlQuery, using inline OnMobileNumberCheck, "");
+			mysql_tquery_inline_new(g_SQL, mysqlQuery, using inline OnMobileNumberCheck, "");
 			return 1;	
 		}
 		case DIALOG_MDC_PLAYER: {

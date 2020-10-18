@@ -1,4 +1,4 @@
-#include <YSI\y_hooks>
+#include <YSI_Coding\y_hooks>
 
 #define MAX_Labels                ( 200 )
 
@@ -53,7 +53,7 @@ hook OnPlayerEditDynObject(playerid, objectid, response, Float:x, Float:y, Float
 
 			if(id == -1)
 			{
-				SendClientMessage(playerid, COLOR_RED, "Ne možete više spawnati ovdje.");
+				SendClientMessage(playerid, COLOR_RED, "Ne moï¿½ete viï¿½e spawnati ovdje.");
 
 				DestroyDynamicObject(PlayerInfo[playerid][pRoadblockObject]);
 				PlayerInfo[playerid][pAddingRoadblock] = 0;
@@ -267,7 +267,7 @@ CMD:rrb(playerid, params[])
       	format(str, sizeof(str), "** HQ: %s %s unistava roadblock '%s' sa lokacije %s! **", ReturnPlayerRankName(playerid), GetName(playerid, true),
 			GetRoadblockNameFromModel(Labels[id][LabelsModelID]), Labels[id][RoadblockLocation]);
 		SendRadioMessage(1, COLOR_COP, str);
-		SendClientMessage(playerid, COLOR_RED, "Uspješno ste obrisali roadblock");
+		SendClientMessage(playerid, COLOR_RED, "Uspjeï¿½no ste obrisali roadblock");
 		DestroyDynamicObject(Labels[id][RoadblockObject]);
 		Labels[id][RoadblockExists] = false;
 		for(new i = 0; i < 3; i++) Labels[id][RoadblockPos][i] = 0.0;
@@ -293,6 +293,6 @@ CMD:removeall(playerid, params[])
 
 	SendRadioMessage(1, COLOR_COP, str);
 	SendRadioMessage(3, COLOR_COP, str);
-	SendClientMessage(playerid, COLOR_RED, "Uspješno ste obrisali roadblockove");
+	SendClientMessage(playerid, COLOR_RED, "Uspjeï¿½no ste obrisali roadblockove");
 	return 1;
 }

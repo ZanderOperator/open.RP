@@ -1,7 +1,7 @@
 // 10/06/2019 - L3o
 
 
-#include <YSI\y_hooks>
+#include <YSI_Coding\y_hooks>
 
 //=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~ (defines)
 #define MAX_PLAYERS_ON_DEVENT (21)

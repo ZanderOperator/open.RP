@@ -5,7 +5,7 @@
 #include <a_samp>
 //#include <zcmd>
 #include <streamer>
-#include <YSI\y_timers>
+#include <YSI_Coding\y_timers>
 #define PRESSED(%0) \
 	(((newkeys & (%0)) == (%0)) && ((oldkeys & (%0)) != (%0)))
 

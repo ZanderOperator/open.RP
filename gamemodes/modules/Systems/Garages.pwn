@@ -1,5 +1,5 @@
 // Viwo:SQLID, Int:5
-#include <YSI\y_hooks>
+#include <YSI_Coding\y_hooks>
 
 /*
 	######## ##    ## ##     ## ##     ##  ######
@@ -49,7 +49,7 @@ static stock
 	##    ##    ##    ##     ## ##    ## ##   ##  ##    ##
 	 ######     ##     #######   ######  ##    ##  ######
 */
-Function: OnGarageCreates(garageid)
+Public:OnGarageCreates(garageid)
 {
     GarageInfo[ garageid ][ gSQLID ] = cache_insert_id();
 	return 1;

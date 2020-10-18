@@ -2,7 +2,7 @@
 // ##################################################
 // koristi pAmmuTime, MySQL bazu "ammunation_weapons"
 
-#include <YSI\y_hooks>
+#include <YSI_Coding\y_hooks>
 
 #define MAX_AMMU_SLOTS				(44)
 
@@ -24,7 +24,7 @@ new PlayerWeapPick[ MAX_PLAYERS ];
 
 // ------------ FORWARDS -------------------
 
-Function: OnAmmuWeaponInsert(slot)
+Public:OnAmmuWeaponInsert(slot)
 {
 	AmmuInfo[ slot ][ aiSQLID ] = cache_insert_id();
 	return 1;

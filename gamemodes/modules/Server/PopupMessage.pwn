@@ -1,4 +1,4 @@
-#include <YSI\y_hooks>
+#include <YSI_Coding\y_hooks>
 
 /*
 	- Defines & Enums
@@ -138,7 +138,7 @@ SendMessage(playerid, MESSAGE_TYPE = MESSAGE_TYPE_NONE, message[])  {
 	return SendTextDrawMessage(playerid, MESSAGE_TYPE, message);
 }
 
-Function: RemoveMessage(playerid) {
+Public:RemoveMessage(playerid) {
 	if(_PopUpActivated[playerid] == true)
 		PlayerTextDrawHide(playerid, MessageTextdraw[playerid]);
 		

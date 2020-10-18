@@ -1,4 +1,4 @@
-#include <YSI\y_hooks>
+#include <YSI_Coding\y_hooks>
 // Help module by broox. & wizzcyco for City of Angels
 
 CMD:animations(playerid,params[])

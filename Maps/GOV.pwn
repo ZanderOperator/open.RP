@@ -1,6 +1,6 @@
 /*	www.cityofangels-roleplay || GoV Maps  */
 
-#include <YSI\y_hooks>
+#include <YSI_Coding\y_hooks>
 
 new	gov_maps;
 

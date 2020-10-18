@@ -6,7 +6,7 @@
 *	     	   (c) 2019
 */
 
-#include <YSI\y_hooks>
+#include <YSI_Coding\y_hooks>
 
 /*
 	- Defines & Enumerators
@@ -207,7 +207,7 @@ gps_DistanceTD(playerid, bool:status)
 	return (true);
 }
 
-Function: gps_GetDistance(playerid, gpsid, Float:X, Float:Y, Float:Z) {
+Public:gps_GetDistance(playerid, gpsid, Float:X, Float:Y, Float:Z) {
 	if(Bit1_Get(gps_Activated, playerid)) {
 		new Float:gpsLocation, buffer[64];
 		gpsLocation = GetPlayerDistanceFromPoint(playerid, X, Y, Z);

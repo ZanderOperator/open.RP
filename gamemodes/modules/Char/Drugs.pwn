@@ -1,4 +1,4 @@
-#include <YSI\y_hooks>
+#include <YSI_Coding\y_hooks>
 
 /*
 	############################
@@ -84,7 +84,7 @@ hook OnPlayerDisconnect(playerid, reason)
 	return 1;
 }
 	
-Function: LoadVehicleDrugs(vehicleid)
+Public:LoadVehicleDrugs(vehicleid)
 {	
 	new
 		tmpQuery[128];
@@ -115,7 +115,7 @@ public LoadingVehicleDrugs(vehicleid)
 	return 1;
 }
 
-Function: LoadPlayerDrugs(playerid)
+Public:LoadPlayerDrugs(playerid)
 {
 	new
 		tmpQuery[128];

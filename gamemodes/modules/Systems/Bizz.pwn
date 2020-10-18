@@ -1,4 +1,4 @@
-#include <YSI\y_hooks>
+#include <YSI_Coding\y_hooks>
 
 #define CP_TYPE_BIZZ_VIP_ENTRANCE	(3)
 
@@ -580,7 +580,7 @@ stock static CreateBizzInfoTD(playerid)
 	return 1;
 }
 
-Function: DestroyBizzInfoTD(playerid)
+Public:DestroyBizzInfoTD(playerid)
 {
 	stop PlayerTDTimer[ playerid ];
 	PlayerTextDrawDestroy( playerid, 	BiznisBcg1[playerid] );
@@ -837,7 +837,7 @@ stock static UpdateBiznisProducts(biznis, product, productid)
 	return 1;
 }
 
-Function: OnBiznisProductInsert(biznis, id)
+Public:OnBiznisProductInsert(biznis, id)
 {
 	BiznisProducts[biznis][bpSQLID][id] = cache_insert_id();
 	return 1;
@@ -1027,7 +1027,7 @@ stock InsertNewBizz(playerid, biz)
 	return 1;
 }
 
-Function: OnBizzInsertQuery(playerid, bizid)
+Public:OnBizzInsertQuery(playerid, bizid)
 {
 	BizzInfo[bizid][bSQLID] = cache_insert_id();
 	va_SendClientMessage(playerid, COLOR_RED, "[ ! ]  Uspjesno ste stvorili biznis tipa %s pod nazivom %s[ID: %d | SQLID: %d].",
@@ -3021,7 +3021,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 	return 0;
 }
 
-Function: ResetBuySkin(playerid)
+Public:ResetBuySkin(playerid)
 {
 	SetPlayerSkin(playerid, PlayerInfo[playerid][pChar]);
 

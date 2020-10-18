@@ -1,4 +1,4 @@
-#include <YSI\y_hooks>
+#include <YSI_Coding\y_hooks>
 
 #define WEED_SPEED_MUL   0.3
 #define COKE_SPEED_MUL   1.0
@@ -234,7 +234,7 @@ public OnPlayerCookMeth(playerid)
 	 ######     ##     #######   ######  ##    ##
 */
 
-Function: LoadPlayerDrugs(playerid)
+Public:LoadPlayerDrugs(playerid)
 {
 	new
 		tmpQuery[128];
@@ -267,7 +267,7 @@ public LoadingPlayerDrugs(playerid)
 	return 1;
 }
 
-Function: OnVehicleDrugInsert(vehicleid, slot)
+Public:OnVehicleDrugInsert(vehicleid, slot)
 {
 	VehicleInfo[vehicleid][vDrugSQLID][slot] = cache_insert_id();
 	return 1;
@@ -1000,7 +1000,7 @@ stock LoadWeed()
 	return 1;
 }
 
-Function: OnDrugInsertQuery(playerid, slotid)
+Public:OnDrugInsertQuery(playerid, slotid)
 {
 	PlayerDrugs[playerid][dSQLID][slotid] = cache_insert_id();
 	return 1;
@@ -1036,7 +1036,7 @@ public OnWeedLoaded()
 	return 1;
 }
 
-Function: OnWeedCreated(weedid)
+Public:OnWeedCreated(weedid)
 {
 	WeedInfo[weedid][wdSQLID] = cache_insert_id();
 	return 1;
@@ -1307,7 +1307,7 @@ CheckDrugQualities()
 	return 1;
 }
 
-Function: HouseDrugTask()
+Public:HouseDrugTask()
 {
 	foreach(new h: Houses)
 		CheckHouseDrugTimeStamps(h);
@@ -1315,7 +1315,7 @@ Function: HouseDrugTask()
 	return 1;
 }
 
-Function: VehicleDrugTask()
+Public:VehicleDrugTask()
 {
 	foreach(new vehicleid : COVehicles)
 	{
@@ -1337,7 +1337,7 @@ CheckVehicleDrugsInBase()
 	return 1;
 }
 
-Function: OnVehicleDrugsCheck()
+Public:OnVehicleDrugsCheck()
 {
 	if( !cache_num_rows() ) return 1;
 	new sqlid, dcode, timestamp, updateQuery[128];
@@ -1363,7 +1363,7 @@ Function: OnVehicleDrugsCheck()
 	return 1;
 }
 
-Function: CheckVehicleDrugTimeStamp(vehicleid, slotid)
+Public:CheckVehicleDrugTimeStamp(vehicleid, slotid)
 {
 	if(gettimestamp() >= VehicleInfo[vehicleid][vDrugTimeStamp][slotid])
 	{
@@ -1378,7 +1378,7 @@ Function: CheckVehicleDrugTimeStamp(vehicleid, slotid)
 	return 1;
 }
 
-Function: CheckPlayerDrugTimeStamp(playerid, slotid) // ODEDEGENU
+Public:CheckPlayerDrugTimeStamp(playerid, slotid) // ODEDEGENU
 {
 	if(PlayerDrugs[playerid][dCode][slotid] != 0)
 	{		

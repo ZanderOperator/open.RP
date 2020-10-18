@@ -1,5 +1,5 @@
 
-#include <YSI\y_hooks>
+#include <YSI_Coding\y_hooks>
 
 #if !defined IsNaN
     #define IsNaN(%0) ((%0) != (%0))

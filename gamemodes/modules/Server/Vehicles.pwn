@@ -1,4 +1,4 @@
-#include <YSI\y_hooks>
+#include <YSI_Coding\y_hooks>
 
 /*
 	##     ##    ###    ########   ######
@@ -39,7 +39,7 @@ timer ResetVehicleSafeDelete[100](vehicleid)
 	   ###    ######## ##     ##    ##     ## ######## ##     ## ########    ##    ##     ##
 */
 
-Function: OnServerVehicleLoad()
+Public:OnServerVehicleLoad()
 {
 	if( !cache_num_rows() ) return printf("MySQL Report: No cars exist to load.");
 	new
@@ -284,7 +284,7 @@ Function: OnServerVehicleLoad()
 	return 1;
 }
 
-Function: OnServerVehicleCreate(vehicleid)
+Public:OnServerVehicleCreate(vehicleid)
 {
 	VehicleInfo[vehicleid][ vSQLID ] = cache_insert_id();
 	SaveVehicle(vehicleid);
@@ -754,7 +754,7 @@ stock VehicleObjectCheck(vehicleid)
 	return 1;
 }
 
-Function: ResetVehicleEnumerator()
+Public:ResetVehicleEnumerator()
 {
 	for(new i=0; i<MAX_VEHICLES; i++)
 		ResetVehicleInfo(i);

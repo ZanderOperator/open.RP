@@ -2,7 +2,7 @@
 // ## BETA ## BETA ## BETA ## BETA ## BETA ## BETA ## BETA 
 // ######################################
 
-#include <YSI\y_hooks>
+#include <YSI_Coding\y_hooks>
 
 #define MAX_PLAYER_WORDERS		(6)
 #define MAX_WORDER_CRATES		(30) // 4 igraca po tri kutije u minimalnom slucaju igraca 
@@ -257,7 +257,7 @@ stock static UpdateWOCrate(slotid) // Updateanje package crate
 	return 1;
 }
 
-Function: OnWOCrateInsert(slot)
+Public:OnWOCrateInsert(slot)
 {
 	WOCrateInfo[ slot ][ cSQLID ] = cache_insert_id();
 	return 1;

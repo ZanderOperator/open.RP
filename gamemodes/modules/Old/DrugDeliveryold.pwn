@@ -1,4 +1,4 @@
-#include <YSI\y_hooks>
+#include <YSI_Coding\y_hooks>
 
 #define NEXT_DELIVERY_TIMESTAMP		(604800) // Tjedan dana u sekundama. 7 dana * 24h * 60 min * 60 sec
 #define DELIVERY_TYPE_COKE			(0)
@@ -30,7 +30,7 @@ stock LoadDrugDelivery()
 	return 1;
 }
 
-Function: LoadingDrugDelivery()
+Public:LoadingDrugDelivery()
 {
 	if(!cache_num_rows()) return 0;
 	cache_get_value_name_int(0,		"coke"			, Cocaine);
@@ -54,7 +54,7 @@ stock UpdateDrugDelivery()
 	return 1;
 }
 
-Function: SetDrugLimitPerFaction()
+Public:SetDrugLimitPerFaction()
 {
 	if( gettimestamp() >= DrugDistributionStamp )
 	{

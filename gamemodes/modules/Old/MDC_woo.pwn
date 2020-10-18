@@ -13,7 +13,7 @@ TRUNCATE U PHPMYADMIN APB TABLICU
 ISKOMENTRATI U COARP MODUL arrestrecords.pwn
 APB suspect i pdname prebaciti u VARCHAR 24
  */
-#include <YSI\y_hooks>
+#include <YSI_Coding\y_hooks>
 
 #if defined MODULE_MDC
 	#endinput

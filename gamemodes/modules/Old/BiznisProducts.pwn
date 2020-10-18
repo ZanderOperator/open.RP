@@ -6,7 +6,7 @@
 *	     	   (c) 2019
 */
 
-#include <YSI\y_hooks>
+#include <YSI_Coding\y_hooks>
 
 /*
 	- Defines & Enums
@@ -77,7 +77,7 @@ new
 	- MySQL
 */
 
-Function: StoreBVehicleInDB(biznis) {
+Public:StoreBVehicleInDB(biznis) {
 	BizzInfo[biznis][b_VSQLID] = cache_insert_id();
 	return (true);
 }

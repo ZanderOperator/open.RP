@@ -1,4 +1,4 @@
-#include <YSI\y_hooks>
+#include <YSI_Coding\y_hooks>
 
 /*
 	##     ##    ###    ########   ######
@@ -88,7 +88,7 @@ public PASpamTimer(playerid)
 	return 1;
 }
 
-Function: OnPlayerSlowUpdate(playerid)
+Public:OnPlayerSlowUpdate(playerid)
 {
 	vBlinker(playerid);
 	return 1;

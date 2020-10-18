@@ -11,7 +11,7 @@
 		Modul: CMD (CMD: /give)
 		
 */
-#include <YSI\y_hooks>
+#include <YSI_Coding\y_hooks>
 
 //=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~ (defines)
 #define LSM_MATCH_COUNTER 	(20) 	// Koliko sekundi se ceka da zapocne match.
@@ -892,7 +892,7 @@ PlayerLootItem(playerid, item_id, item_type = E_ITEM_TYPE_NONE, item_amount) {
 	return (true);
 }
 //=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~ (timers)
-Function: PlayerDiedEvent(playerid) {
+Public:PlayerDiedEvent(playerid) {
 	// playerid.
 	SetPlayerVirtualWorld(playerid, JoinSettings[playerid][0]);
 	SetPlayerInterior(playerid, JoinSettings[playerid][1]);
@@ -916,7 +916,7 @@ Function: PlayerDiedEvent(playerid) {
 	return (true);
 }
 
-Function: SendEventTimer_LTS(playerid) { 
+Public:SendEventTimer_LTS(playerid) { 
 	new buffer[28];
 	lsm_roundtimer[playerid][0]++;
 	
@@ -930,7 +930,7 @@ Function: SendEventTimer_LTS(playerid) {
 	return (true);
 }
 
-Function: CounterToStart_LSM(playerid) {
+Public:CounterToStart_LSM(playerid) {
 	PlayerPlaySound(playerid, 1056, 0.0, 0.0, 0.0);
 	va_GameTextForPlayer(playerid, "~g~LAST TEAM STANDING~n~~w~EVENT STARTS IN: ~g~%d s.", 1000, 4, lsm_counter[playerid]);
 		
@@ -954,7 +954,7 @@ Function: CounterToStart_LSM(playerid) {
 	return (true);
 }
 
-Function: EventSettings() {
+Public:EventSettings() {
 	new pick_random = random(sizeof(lsm_eventTips));
 	foreach(new i : Player) {
 		if(lts_Joined[i] == true) {

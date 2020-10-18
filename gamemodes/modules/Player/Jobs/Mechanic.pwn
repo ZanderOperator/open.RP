@@ -1,4 +1,4 @@
-#include <YSI\y_hooks>
+#include <YSI_Coding\y_hooks>
 
 
 
@@ -73,7 +73,7 @@ stock CreateMechanicTextDraw(playerid)
 	##     ## ##     ## ##     ## ##   ##  ##    ##
 	##     ##  #######   #######  ##    ##  ######
 */
-Function: MechCountForPlayer(playerid, giveplayerid, usluga)
+Public:MechCountForPlayer(playerid, giveplayerid, usluga)
 {
 	new Float:X, Float:Y, Float:Z;
 	GetVehiclePos( PlayerMechanicVehicle[ giveplayerid ] , X, Y, Z);

@@ -1,4 +1,4 @@
-#include <YSI\y_hooks>
+#include <YSI_Coding\y_hooks>
 
 #define MINIMAL_LEGAL_BUDGET		(1000000)
 #define MINIMAL_ILLEGAL_BUDGET		(100000)

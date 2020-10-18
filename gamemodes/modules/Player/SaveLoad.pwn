@@ -1,4 +1,4 @@
-#include <YSI\y_hooks>
+#include <YSI_Coding\y_hooks>
 
 /*
 	##     ##    ###    ########   ######  
@@ -151,7 +151,7 @@ CheckPlayerInactivity(playerid)
 		
 		return 1;
 	}
-	mysql_tquery_inline(g_SQL, tmpQuery, using inline OnPlayerInactivityCheck, "i", playerid);
+	mysql_tquery_inline_new(g_SQL, tmpQuery, using inline OnPlayerInactivityCheck, "i", playerid);
 	return 1;
 }
 

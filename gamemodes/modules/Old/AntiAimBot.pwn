@@ -6,7 +6,7 @@
 *	     	   (c) 2020
 */
 
-#include <YSI\y_hooks>
+#include <YSI_Coding\y_hooks>
 
 new AimbotWarnings[MAX_PLAYERS];
 

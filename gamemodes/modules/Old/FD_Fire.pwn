@@ -7,7 +7,7 @@
 */
 
 
-#include <YSI\y_hooks>
+#include <YSI_Coding\y_hooks>
 
 /*
 	- defines & enumerator
@@ -607,7 +607,7 @@ RandomFireSituation() {
 }
 
 //=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~ (timers)
-Function: UpdateLocationDistance(faction) 
+Public:UpdateLocationDistance(faction) 
 {
 	if(!FDArrived[faction])
 	{
@@ -630,7 +630,7 @@ Function: UpdateLocationDistance(faction)
 	return (true);
 }	
 
-Function: CheckFireSituation() 
+Public:CheckFireSituation() 
 {
 	new
 		count_members = 0;
@@ -651,7 +651,7 @@ Function: CheckFireSituation()
 	return (true);
 }
 
-Function: CreateServerFire() 
+Public:CreateServerFire() 
 {
 	if(gettimestamp() >= CreateFireTimer)
 	{

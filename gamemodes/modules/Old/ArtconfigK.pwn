@@ -1,6 +1,6 @@
-#include <YSI\y_hooks>
+#include <YSI_Coding\y_hooks>
 
-Function: LoadCustomModels()
+Public:LoadCustomModels()
 {
 	//Female skins
     AddCharModel(308, 20001, "skins/Female/coa_girl1.dff", "skins/Female/coa_girl1.txd");

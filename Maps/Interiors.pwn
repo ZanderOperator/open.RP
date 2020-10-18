@@ -1,6 +1,6 @@
 /*	www.cityofangels-roleplay || Interiors Maps  */
 
-#include <YSI\y_hooks>
+#include <YSI_Coding\y_hooks>
 
 new	interiors_maps;
 

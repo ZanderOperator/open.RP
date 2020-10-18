@@ -1,4 +1,4 @@
-#include <YSI\y_hooks>
+#include <YSI_Coding\y_hooks>
 
 /* ----- */
 
@@ -77,7 +77,7 @@ stock CreateRemains(name, type, model, time, Float:pos_x, Float:pos_y, Float:pos
 	// 3d label for the remains.
 	new
 		tmpString[ 85 ];
-	format(tmpString, sizeof(tmpString), "** Leš pripada %s **", name);
+	format(tmpString, sizeof(tmpString), "** Leï¿½ pripada %s **", name);
 	RemainsData[r_id][Information] = CreateDynamic3DTextLabel(tmpString, COLOR_DEATH, pos_x, pos_y, pos_z, 10.0, INVALID_PLAYER_ID, INVALID_VEHICLE_ID, 1, world, interior, INVALID_SCRIPT_ID, 10.0);
 
 
