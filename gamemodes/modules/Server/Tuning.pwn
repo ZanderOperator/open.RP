@@ -1,5 +1,5 @@
 //==============================[ Includes ]====================================
-#include <YSI\y_hooks>
+#include <YSI_Coding\y_hooks>
 
 // CarOwnership -> 2779 (load)
 //==============================[ Definitions ]=================================
@@ -483,7 +483,7 @@ stock SaveVehicleTuning(vehicleid)
 	return 1;
 }
 
-Function: OnVehicleTuningLoad(vehicleid, save)
+Public:OnVehicleTuningLoad(vehicleid, save)
 {
 	new tmpQuery[ 380 ],
 		smallQuery[80];

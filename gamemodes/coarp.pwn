@@ -8,6 +8,10 @@
 =============================================================================================
 */
 
+// Disable const correctness warnings on the community compiler
+#pragma warning disable 239
+#pragma warning disable 214
+//
 #include <crashdetect>
 #include <a_samp>
 #include <a_http>
@@ -70,9 +74,11 @@
 	 ##  ##   ### ##    ## ##       ##     ## ##     ## ##       ##    ##
 	#### ##    ##  ######	########  #######  ########  ########  ######
 */
-
 // Fixes
 #include <fixes>
+
+// New SA-MP callbacks by Emmet
+#include <callbacks>
 
 // SafeDialog shunt - Anti F6 abuse
 #include <SafeDialogs>
@@ -87,16 +93,21 @@
 #include <streamer>
 #define OBJECT_STREAM_LIMIT		(700)
 
-// New SA-MP callbacks by Emmet
-#include <callbacks>
-
 // YSI by Y_Less
-#include <YSI\y_hooks>
-#include <YSI\y_timers>
-#include <YSI\y_iterate>
-#include <YSI\y_commands>
-#include <YSI\y_vehicledata>
-#include <YSI\y_flooding>
+#define YSI_NO_HEAP_MALLOC
+//#include <YSI_Coding\y_hooks>
+#include <YSI_Coding\y_timers>
+#include <YSI_Data\y_iterate>
+#include <YSI_Visual\y_commands>
+#include <YSI_Game\y_vehicledata>
+#include <YSI_Server\y_flooding>
+#include <YSI_Coding\y_va>
+// Not anymore a part of y_va, define it manually:
+// TODO: Virtual1ty, clean this up
+stock va_ShowPlayerDialog(playerid, dialogid, style, caption[], fmat[], button1[], button2[], va_args<>)
+{
+	return ShowPlayerDialog(playerid, dialogid, style, caption, va_return(fmat, va_start<7>), button1, button2);
+}
 
 // Other pre-includes
 #include <OnPlayerSlowUpdate>
@@ -116,7 +127,8 @@ native WP_Hash(buffer[], len, const str[]);
 
 // MySQL
 #include <a_mysql>
-#include <a_mysql_yinline>
+#include <YSI_Coding\y_inline>
+#define mysql_tquery_inline_new(%0,%1,%2,%3) MySQL_TQueryInline(%0,%2,%1,%3)
 
 /*
 	########  ######## ######## #### ##    ## ########  ######
@@ -137,9 +149,9 @@ native WP_Hash(buffer[], len, const str[]);
 #define DEV_NAME   								"Woo-Logan"
 
 // -Macros
-#define Function:%0(%1) \				
-		forward%0(%1); \
-		public%0(%1)
+#define Public:%0(%1) \
+		forward %0(%1); \
+		public %0(%1)
 
 #define IsANewUser(%0) \
 	Bit1_Get(gr_NewUser,%0)
@@ -2183,7 +2195,7 @@ stock ResetPlayerEnumerator()
 	return 1;
 }
 
-Function: ResetIterators()
+Public:ResetIterators()
 {
 	Iter_Clear(COVehicles);
 	Iter_Clear(Vehicles);
@@ -2675,7 +2687,7 @@ ResetPlayerVariables(playerid)
 	return 1;
 }
 
-Function: SaveAll()
+Public:SaveAll()
 {
 	printf("[SERVER]: Automatic scheduled restart initiated. Storing data into MySQL database.");
 	if(Iter_Count(Player) > 0)
@@ -2687,7 +2699,7 @@ Function: SaveAll()
 	}
 }
 
-Function: GlobalServerTimer()
+Public:GlobalServerTimer()
 {
 	new
 		tmphour, tmpmins, tmpsecs;
@@ -2710,7 +2722,7 @@ Function: GlobalServerTimer()
 	return 1;
 }
 
-Function: DynamicWeather()
+Public:DynamicWeather()
 {
 	if( gettimestamp() >= WeatherTimer )
 	{
@@ -2773,7 +2785,7 @@ Function: DynamicWeather()
 	return 1;
 }
 
-Function: GMXTimer()
+Public:GMXTimer()
 {
 	if(GMX == 1)
 	{
@@ -3188,7 +3200,7 @@ public OnPlayerConnect(playerid)
 	return 1;
 }
 
-#include <YSI\y_hooks>
+#include <YSI_Coding\y_hooks>
 hook OnPlayerDisconnect(playerid, reason)
 {
 	WalkStyle[playerid] = 0;

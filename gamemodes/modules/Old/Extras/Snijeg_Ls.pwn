@@ -1,4 +1,4 @@
-#include <YSI\y_hooks>
+#include <YSI_Coding\y_hooks>
 
 stock AddSnowObject(modelid, Float:x, Float:y, Float:z, Float:rx, Float:ry, Float:rz, Float:d_stream = 200.0)
 {

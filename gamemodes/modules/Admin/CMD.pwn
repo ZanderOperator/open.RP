@@ -1,4 +1,4 @@
-#include <YSI\y_hooks>
+#include <YSI_Coding\y_hooks>
 
 // Admin Modules included at the bottom
 
@@ -108,7 +108,7 @@ ShowPlayerCars(playerid, playersqlid, player_name[])
 		if(!cache_num_rows()) 
 			SendClientMessage(playerid, COLOR_WHITE,"- Ovaj igrac ne posjeduje vozila.");
 	}
-	mysql_tquery_inline(g_SQL, mysqlQuery, using inline OnLoadPlayerVehicles, "");
+	mysql_tquery_inline_new(g_SQL, mysqlQuery, using inline OnLoadPlayerVehicles, "");
 	return 1;
 }
 
@@ -320,7 +320,7 @@ CreateAdminVehicles(admin, carid) {
 	return (true);
 }
 
-Function: DestroyAdminVehicle(admin, carid) {
+Public:DestroyAdminVehicle(admin, carid) {
 	for (new i = 0; i < MAX_ADMIN_VEHICLES; i ++) {
 		if(Admin_Vehicle[admin][i] == carid) {
 			Admin_Vehicle[admin][i] = -1;
@@ -458,7 +458,7 @@ stock static SetPlayerReconTarget(playerid, targetid)
 	return 1;
 }
 
-Function: LearnPlayer(playerid, learnid)
+Public:LearnPlayer(playerid, learnid)
 {
     if(IsPlayerConnected(playerid))
 	{
@@ -732,7 +732,7 @@ stock static UpdateTargetReconData(playerid, targetid)
 */
 
 /*
-Function: OnCreatedBusinessFinish(playerid, bizzid, level, price, canenter, exitX, exitY, exitZ, interior, viwo, bname[])
+Public:OnCreatedBusinessFinish(playerid, bizzid, level, price, canenter, exitX, exitY, exitZ, interior, viwo, bname[])
 {
 	BizzInfo[bizzid][bSQLID] = cache_insert_id();
 	BizzInfo[bizzid][bOwnerID] = 0;
@@ -806,7 +806,7 @@ public AddAdminMessage(playerid, user_name[], reason[])
 	return 1;
 }
 
-Function: SendServerMessage(sqlid, reason[])
+Public:SendServerMessage(sqlid, reason[])
 {
 	new query[4096];
 	mysql_format( g_SQL, query, sizeof(query), "UPDATE `accounts` SET `AdminMessage` = '%e', `AdminMessageBy` = 'Server', `AdmMessageConfirm` = '0' WHERE `sqlid` = '%d'",
@@ -873,7 +873,7 @@ stock CheckInactivePlayer(playerid, sql)
 		ShowPlayerDialog(playerid, DIALOG_INACTIVITY_CHECK, DIALOG_STYLE_MSGBOX, "Provjera neaktivnosti igraca:", dialogstring, "Close", "");
 		return 1;
 	}
-	mysql_tquery_inline(g_SQL, tmpQuery, using inline OnInactivePlayerLoad, "i", playerid);
+	mysql_tquery_inline_new(g_SQL, tmpQuery, using inline OnInactivePlayerLoad, "i", playerid);
 	return 1;
 }
 
@@ -927,12 +927,12 @@ stock ListInactivePlayers(playerid)
 		}
 		else return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Trenutno nema prijavljenih neaktivnosti u bazi podataka!");
 	}
-	mysql_tquery_inline(g_SQL, tmpQuery, using inline OnInactiveAccountsList, "i", playerid);
+	mysql_tquery_inline_new(g_SQL, tmpQuery, using inline OnInactiveAccountsList, "i", playerid);
 	return 1;
 }
 
 /*
-Function: ChargePlayer(playerid, const targetname[], money)
+Public:ChargePlayer(playerid, const targetname[], money)
 {
 	new rows;
     cache_get_row_count(rows);

@@ -8,7 +8,7 @@
 *	     	   (c) 2019
 */
 
-#include <YSI\y_hooks>
+#include <YSI_Coding\y_hooks>
 
 enum E_PACKAGE_DATA {
 	faction_ID,
@@ -91,12 +91,12 @@ LoadPlayerPackage(playerid) {
 	return (true);
 }
 
-Function: StorePackageInDB(vehicleid, slot) {
+Public:StorePackageInDB(vehicleid, slot) {
 	VehicleInfo[vehicleid][packSQLID][slot] = cache_insert_id();
 	return (true);
 }
 
-Function: StorePPackageInDB(playerid, slot) {
+Public:StorePPackageInDB(playerid, slot) {
 	PlayerPackage[playerid][p_SQLID][slot] = cache_insert_id();
 	return (true);
 }
@@ -299,7 +299,7 @@ GivePlayerPackage(playerid, targetid, package_id, wep, amount) {
 	- timers
 */
 
-Function: UnpackPackage(playerid, package_id) {
+Public:UnpackPackage(playerid, package_id) {
 	new crouch = IsCrounching(playerid), Float: get_armor;
 	GetPlayerArmour(playerid, get_armor);
 
@@ -330,7 +330,7 @@ Function: UnpackPackage(playerid, package_id) {
 	return (true);
 }
 
-Function: CreatePackage(playerid, factionID, packageID, int, vw) {
+Public:CreatePackage(playerid, factionID, packageID, int, vw) {
 
 	PlayerPlaySound(playerid, 1057, 0.0, 0.0, 0.0);
 

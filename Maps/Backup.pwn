@@ -1,7 +1,7 @@
 /*	www.cityofangels-roleplay || Backup Maps  
 	- Sve mape koje ce mozda biti potrebne u buducnosti	*/
 
-#include <YSI\y_hooks>
+#include <YSI_Coding\y_hooks>
 
 new	tmpobjid;
 

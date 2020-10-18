@@ -1,6 +1,6 @@
 // www.cityofangels-roleplay.com - House Storage 'Rob' system - by L3o 
 
-#include <YSI\y_hooks>
+#include <YSI_Coding\y_hooks>
 
 //=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~ (defines)
 #define MAX_COMBINATIONS 		(3) 	// maximalno kombinacija za sef(gunrack/storage).
@@ -369,7 +369,7 @@ PlayStorageAlarm(playerid, bool: activated)
 }
 
 //=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~ (timers)
-Function: PlayerRobTimer(playerid, house_id) 
+Public:PlayerRobTimer(playerid, house_id) 
 {
 	if(rob_started[playerid] == true) 
 	{

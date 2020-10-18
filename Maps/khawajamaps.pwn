@@ -1,4 +1,4 @@
-#include <YSI\y_hooks>
+#include <YSI_Coding\y_hooks>
 
 new	khawaja_maps;
 
@@ -104,7 +104,7 @@ hook OnFilterScriptInit() {
 	khawaja_maps = CreateObject(700,1796.774,-1978.869,11.645,356.858,0.000,-2.879,300.000);
 	khawaja_maps = CreateObject(1290,1785.915,-2000.616,18.498,3.141,0.000,1.559,300.000);
 
-	//Kvidachu nešto neam pojma, rekao darwin da ubacim, lol
+	//Kvidachu neï¿½to neam pojma, rekao darwin da ubacim, lol
 	khawaja_maps = CreateDynamicObject(19362,1263.350,2682.557,5561.020,0.000,0.000,0.000,-1,11,-1,300.000,300.000);
 	SetDynamicObjectMaterial(khawaja_maps, 0, 10444, "hotelbackpool_sfs", "ws_hotel7", 0x00000000);
 	khawaja_maps = CreateDynamicObject(19362,1266.946,2679.528,-8.255,0.000,90.000,0.000,-1,11,-1,300.000,300.000);
@@ -6774,7 +6774,7 @@ hook OnFilterScriptInit() {
 	CreateDynamicObject(18654,2129.989,-1716.577,1051.602,0.000,0.000,-127.000);
 	CreateDynamicObject(18654,2129.915,-1695.621,1051.602,0.000,0.000,-236.000);
 	
-	//Garaža
+	//Garaï¿½a
 	khawaja_maps = CreateDynamicObject(14776, 1109.273315, 2070.729980, 1217.417480, 0.000000, 0.000000, 0.000000, -1, -1, -1, 600.00, 600.00);
 	SetDynamicObjectMaterial(khawaja_maps, 0, 19480, "signsurf", "sign", 0x00000000);
 	khawaja_maps = CreateDynamicObject(19379, 1101.351928, 2065.023437, 1210.725708, 0.000000, 90.000000, 0.000000, -1, -1, -1, 600.00, 600.00);

@@ -1,4 +1,4 @@
-#include <YSI\y_hooks>
+#include <YSI_Coding\y_hooks>
 
 /*
 	##     ##    ###     ######  ########   #######   ######  
@@ -673,6 +673,7 @@ strtok(const string[], &index)
 	return result;
 }
 
+/*
 stock SendSplitMessage(playerid, color, const final[])
 {
     new len = strlen(final);
@@ -779,6 +780,7 @@ stock AC_SendClientMessage(playerid, color, const message[])
 #endif
 #define SendClientMessage AC_SendClientMessage
 
+
 stock va_SendClientMessage(playerid, colour, const fmat[], va_args<>)
 {
 	return SendClientMessage(playerid, colour, va_return(fmat, va_start<3>));
@@ -788,6 +790,7 @@ stock va_SendClientMessageToAll(colour, const fmat[], va_args<>)
 {
 	return SendClientMessageToAll(colour, va_return(fmat, va_start<2>));
 }
+*/
 
 stock SetPlayerPosEx(playerid, Float:x, Float:y, Float:z, viwo=0, interior=0, bool:update=true)
 {

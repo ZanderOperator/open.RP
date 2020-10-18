@@ -1,4 +1,4 @@
-#include <YSI\y_hooks>
+#include <YSI_Coding\y_hooks>
 
 #define FACTION_TYPE_NONE				(0)
 #define FACTION_TYPE_LAW				(1)

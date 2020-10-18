@@ -1,7 +1,7 @@
 // Weapons ordering illegal v0.1 by Woo
 // ######################################
 
-#include <YSI\y_hooks>
+#include <YSI_Coding\y_hooks>
 
 #define MAX_ILLEGAL_TOOLS		(12) 
 #define MAX_PLAYER_TOOLS		(3) 
@@ -120,7 +120,7 @@ stock static UpdateWOCrate(slotid) // Updateanje package crate
 	return 1;
 }
 
-Function: OnWOCrateInsert(slot)
+Public:OnWOCrateInsert(slot)
 {
 	PlayerITInfo[ slot ][ cSQLID ] = cache_insert_id();
 	return 1;

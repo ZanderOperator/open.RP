@@ -1,6 +1,6 @@
 // www.cityofangels-roleplay.com - DMV system - by L3o | credits: Woo
 
-#include <YSI\y_hooks>
+#include <YSI_Coding\y_hooks>
 
 
 #define DMV_VEHICLE_ID (589)
@@ -105,7 +105,7 @@ ResetPlayerDrivingVars(playerid)
 	return (true);
 }
 
-Function: OnPlayerDrivingLesson(playerid)
+Public:OnPlayerDrivingLesson(playerid)
 {
 	if(!Bit1_Get(gr_DrivingStarted, playerid))
 		return ResetPlayerDrivingVars(playerid);

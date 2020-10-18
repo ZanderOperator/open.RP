@@ -1,4 +1,4 @@
-#include <YSI\y_hooks>
+#include <YSI_Coding\y_hooks>
 
 #define PROPERTY_TYPE_HOUSE			(1)
 #define PROPERTY_TYPE_BIZZ			(2)
@@ -54,7 +54,7 @@ LoadPlayerCredit(playerid)
 		cache_get_value_name_int(0, "timestamp"	, CreditInfo[playerid][cTimestamp]);
 		return 1;
 	}
-	mysql_tquery_inline(g_SQL, tmpQuery, using inline OnPlayerCreditLoad, "i", playerid);
+	mysql_tquery_inline_new(g_SQL, tmpQuery, using inline OnPlayerCreditLoad, "i", playerid);
 	return 1;
 }
 

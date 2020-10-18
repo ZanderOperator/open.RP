@@ -1,4 +1,4 @@
-#include <YSI\y_hooks>
+#include <YSI_Coding\y_hooks>
 
 /*
 CIVIL SKINS		20000 - 20499
@@ -9,7 +9,7 @@ LSN				20800 - 20899
 SHERIFF'S 		20900 - 20999
 */
 
-Function: LoadCustomModels()
+Public:LoadCustomModels()
 {
 	//Female skins
     AddCharModel(308, 20001, "skins/Female/coa_girl1.dff", "skins/Female/coa_girl1.txd");

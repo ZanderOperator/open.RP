@@ -9,7 +9,7 @@
 	 #  #    ## #     # #       #     # #     # #       #     #
 	### #     #  #####  #######  #####  ######  #######  #####
 */
-#include <YSI\y_hooks>
+#include <YSI_Coding\y_hooks>
 
 /*
 	########  ######## ######## #### ##    ## ########  ######
@@ -271,7 +271,7 @@ stock FireSistem(playerid)
 	return (true);
 }
 
-Function: PlayerNearFlame(playerid)
+Public:PlayerNearFlame(playerid)
 {
 	foreach(new i: FlameID_Iter)
 	{
@@ -365,7 +365,7 @@ stock MoveServerFlame(getFlameID, playerid)
  	return (true);
 }
 
-Function: DestroyAllServerFlames()
+Public:DestroyAllServerFlames()
 {
 	if(Iter_Count(FlameID_Iter) == 0) return 1;
 	
@@ -411,7 +411,7 @@ stock IsPlayerNearFlame(playerid, Float:x, Float:y, Float:z, Float:radius)
 
 //============================ Functions ============================//
 
-Function: RandomFireSituation()
+Public:RandomFireSituation()
 {
 	RandomFireTimer = gettimestamp() + 6600;
 	/* Destroy All Activated Server Flames*/

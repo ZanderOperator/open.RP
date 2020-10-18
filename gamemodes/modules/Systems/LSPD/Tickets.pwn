@@ -1,6 +1,6 @@
 // Woo ticket system
 // enums
-#include <YSI\y_hooks>
+#include <YSI_Coding\y_hooks>
 
 enum E_TICKET_DATA
 {
@@ -61,7 +61,7 @@ stock InsertPlayerTicket(playerid, giveplayerid, money, const reason[])
 	mysql_tquery(g_SQL, "COMMIT");
 }
 
-Function: OnVehicleTicketInsert(vehicleid, slot)
+Public:OnVehicleTicketInsert(vehicleid, slot)
 {
 	VehicleInfo[vehicleid][vTicketsSQLID][slot] = cache_insert_id();
 	return 1;
@@ -89,7 +89,7 @@ stock LoadVehicleTickets(vehicleid)
 	return 1;
 }
 
-Function: LoadingVehicleTickets(vehicleid)
+Public:LoadingVehicleTickets(vehicleid)
 {
 	#if defined MOD_DEBUG
 		printf("DEBUG CAR WEAPONS: count(%d)", cache_num_rows());
@@ -163,7 +163,7 @@ stock LoadPlayerTickets(playerid, const playername[])
 		format(tmpString, 64, "[%s - KAZNE]", playername);
 		ShowPlayerDialog(playerid, 0, DIALOG_STYLE_MSGBOX, tmpString, buffer, "Close", "");
 	}
-	mysql_tquery_inline(g_SQL, mysqlQuery, using inline OnTicketLoad, "");
+	mysql_tquery_inline_new(g_SQL, mysqlQuery, using inline OnTicketLoad, "");
 	return 1;
 }
 

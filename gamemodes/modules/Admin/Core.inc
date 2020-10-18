@@ -1,5 +1,5 @@
 
-#include <YSI\y_hooks>
+#include <YSI_Coding\y_hooks>
 
 #include "modules/Admin/CMD.pwn"
 #include "modules/Admin/Ban.pwn"

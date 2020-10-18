@@ -1,4 +1,4 @@
-#include <YSI\y_hooks>
+#include <YSI_Coding\y_hooks>
 
 #if defined MODULE_TUNING
 	#endinput
@@ -535,7 +535,7 @@ stock CheckVehicleTuning(sql, vehicleid)
 	return 1;
 }
 
-Function: OnVehicleTuningCheck(vehicleid, modelid, sql)
+Public:OnVehicleTuningCheck(vehicleid, modelid, sql)
 {
 	if( !cache_num_rows() ) return 1;
 	new carname[36];
@@ -592,7 +592,7 @@ stock SaveVehicleTuning(vehicleid)
 	return 1;
 }
 
-Function: OnVehicleTuningLoad(vehicleid, save, playerid)
+Public:OnVehicleTuningLoad(vehicleid, save, playerid)
 {
 	new
 		tmpQuery[ 256 ];

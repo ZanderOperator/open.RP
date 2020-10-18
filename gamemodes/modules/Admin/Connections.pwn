@@ -1,4 +1,4 @@
-#include <YSI\y_hooks>
+#include <YSI_Coding\y_hooks>
 
 #if defined MODULE_ADMIN_CONNECTIONS
 	#endinput
@@ -65,7 +65,7 @@ stock static GetAdminConnectionTimeEx(playerid, sqlid)
 }
 
 //////
-Function: OnAdminConnectionTimeLoaded(playerid)
+Public:OnAdminConnectionTimeLoaded(playerid)
 {
 	if( !cache_num_rows() ) 
 		PlayerInfo[ playerid ][ pAdminHours ] = 0;
@@ -74,7 +74,7 @@ Function: OnAdminConnectionTimeLoaded(playerid)
 	return 1;
 }
 
-Function: OnAdminConnectionTimeExLoad(playerid)
+Public:OnAdminConnectionTimeExLoad(playerid)
 {
 	if( cache_num_rows() )
 	{

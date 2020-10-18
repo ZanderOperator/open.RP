@@ -1,7 +1,7 @@
 // eSelection.inc - Rewritten version of mSelection.inc
 // last edited by L3o - www.cityofangels-roleplay.com
 // Created for Interactive Roleplay - 17/03/2013 @ 10:20 PM.
-#include <YSI\y_hooks>
+#include <YSI_Coding\y_hooks>
 
 #if !defined MAX_MENU_ITEMS
 	#define MAX_MENU_ITEMS (800)

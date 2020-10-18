@@ -6,7 +6,7 @@
 *	     	   (c) 2020
 */
 
-#include <YSI\y_hooks>
+#include <YSI_Coding\y_hooks>
 
 #define                     posArr{%0}                  %0[0], %0[1], %0[2]
 #define                     posArrEx{%0}                %0[0], %0[1], %0[2], %0[3]
@@ -37,7 +37,7 @@ hook OnPlayerWeaponShot(playerid, weaponid, hittype, hitid, Float:fX, Float:fY, 
 					SetTimerEx("toggleFlashEffect", 2000, 0, "i", i);
                     SetTimerEx("toggleOtherFlashEffect", 5000, 0, "i", i);
 
-                    SendClientMessage(i, COLOR_RED, "[ ! ] U tvojoj blizi je bacen flashbang. Probaj ga što vjerodstojnije odRPati.");
+                    SendClientMessage(i, COLOR_RED, "[ ! ] U tvojoj blizi je bacen flashbang. Probaj ga ï¿½to vjerodstojnije odRPati.");
                 }
             }
         }

@@ -6,7 +6,7 @@
 *	     	   (c) 2019
 */
 
-#include <YSI\y_hooks>
+#include <YSI_Coding\y_hooks>
 
 /*
 	- Defines & Enums
@@ -30,7 +30,7 @@ new Iterator: BIZ_WORKERS[MAX_BIZZS] <MAX_WORKERS>,
 /*
 	- mySQL
 */
-Function: StoreWorkerInDB(playerid, biznis, slot) {
+Public:StoreWorkerInDB(playerid, biznis, slot) {
 	BizzInfo[biznis][b_WorkerSQL][slot] = cache_insert_id();
 	SaveBiznisWorkers(biznis, BizzInfo[biznis][b_WorkerSQL][slot], slot);
 	return (true);

@@ -1,7 +1,7 @@
 // www.cityofangels-roleplay.com - House Storage system - by L3o & Logan
 // last edited 28.04.2019 - by L3o
 
-#include <YSI\y_hooks>
+#include <YSI_Coding\y_hooks>
 //=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~ (define)
 #define	MAX_HOUSE_STORAGE				(500)    // Maximalno posjedovanja polica(storage) za igrace (no donator rank).
 #define RACK_PRICE						(500)    // Cijena kupovine stalka za oruzja
@@ -56,7 +56,7 @@ HouseStorage_SaveWep(storage_id, wepid)
 	return (true);
 }
 
-Function: StorageObjectEdit(playerid, objectid, response, Float:fX, Float:fY, Float:fZ, Float:fRotX, Float:fRotY, Float:fRotZ)
+Public:StorageObjectEdit(playerid, objectid, response, Float:fX, Float:fY, Float:fZ, Float:fRotX, Float:fRotY, Float:fRotZ)
 {
 	if(response == EDIT_RESPONSE_FINAL)
 	{

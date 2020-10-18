@@ -1,4 +1,4 @@
-#include <YSI\y_hooks>
+#include <YSI_Coding\y_hooks>
 
 new DCC_Channel:g_Discord_Chat;
 hook OnGameModetInit()

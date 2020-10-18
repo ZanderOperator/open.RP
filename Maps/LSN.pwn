@@ -1,6 +1,6 @@
 /*	www.cityofangels-roleplay || LSN Maps  */
 
-#include <YSI\y_hooks>
+#include <YSI_Coding\y_hooks>
 
 new	lsn_maps;
 

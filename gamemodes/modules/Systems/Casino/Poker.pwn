@@ -51,7 +51,7 @@ Changelog:
 
 native calculate_hand_worth(const hands[], count = sizeof(hands));
 
-#include <YSI\y_hooks>
+#include <YSI_Coding\y_hooks>
 
 // Objects
 #define OBJ_POKER_TABLE 					19474
@@ -1250,7 +1250,7 @@ PokerRotateActivePlayer(tableid)
 	return 1;
 }
 
-Function: InitPokerTables()
+Public:InitPokerTables()
 {
 	for(new i = 0; i < MAX_POKERTABLES; i++) {
 		PokerTable[i][pkrSQL] = -1;
@@ -1304,7 +1304,7 @@ stock LoadPokerTables()
 	return 1;
 }
 
-Function: OnPokerTablesLoaded()
+Public:OnPokerTablesLoaded()
 {
 	new rows = cache_num_rows();
 	if(!rows) return 1;
@@ -1362,7 +1362,7 @@ SavePokerTable(idx)
 	return 1;
 }
 
-Function: OnPokerTableInsert(tableid)
+Public:OnPokerTableInsert(tableid)
 {
 	PokerTable[tableid][pkrSQL] = cache_insert_id();
 	return 1;
@@ -2539,7 +2539,7 @@ hook OnPlayerDisconnect(playerid)
 	return 1;
 }
 
-Function: PokerTableEdit(playerid, objectid, response, Float:fX, Float:fY, Float:fZ, Float:fRotX, Float:fRotY, Float:fRotZ)
+Public:PokerTableEdit(playerid, objectid, response, Float:fX, Float:fY, Float:fZ, Float:fRotX, Float:fRotY, Float:fRotZ)
 {
 	if(GetPVarFloat(playerid, "tmpPkrX") != 0.0)
 	{
@@ -2597,7 +2597,7 @@ hook OnPlayerClickTextDraw(playerid, Text:clickedid)
 	return 1;
 }
 
-Function: PokerTextDrawCheck(playerid, PlayerText:playertextid)
+Public:PokerTextDrawCheck(playerid, PlayerText:playertextid)
 {
 	new tableid = PlayingTableID[playerid];
 

@@ -1,4 +1,4 @@
-#include <YSI\y_hooks>
+#include <YSI_Coding\y_hooks>
 
 new PlayerText:ConnectTextDraw[MAX_PLAYERS] = { PlayerText:INVALID_TEXT_DRAW, ... },
     PlayerText:CopyrightTextDraw[MAX_PLAYERS] = { PlayerText:INVALID_TEXT_DRAW, ... },

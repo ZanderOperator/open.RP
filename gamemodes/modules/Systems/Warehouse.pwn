@@ -1,6 +1,6 @@
 // Dynamic Warehouse System by Logan
 
-#include <YSI\y_hooks>
+#include <YSI_Coding\y_hooks>
 
 new Iterator: Warehouses<MAX_FACTIONS>,
 	Iterator: WhWeapons[MAX_FACTIONS]<MAX_WAREHOUSE_WEAPONS>,
@@ -86,7 +86,7 @@ stock LoadFactionWarehouse(factionid)
 	mysql_tquery(g_SQL, loadFactionWh, "OnWarehouseLoaded", "i", factionid);
 }
 
-Function: OnWarehouseLoaded(factionid)
+Public:OnWarehouseLoaded(factionid)
 {
 	if( !cache_num_rows() ) return 0;
 	new freeslot = Iter_Free(Warehouses);
@@ -123,7 +123,7 @@ stock LoadWarehouseWeapons(factid)
 	mysql_tquery(g_SQL, loadWhWeapons, "OnWarehouseWeaponsLoaded", "i", whid);
 }
 
-Function: OnWarehouseWeaponsLoaded(whid)
+Public:OnWarehouseWeaponsLoaded(whid)
 {
 	if( !cache_num_rows() ) return 0;
 	for( new i = 0; i < cache_num_rows(); i++ ) 
@@ -175,7 +175,7 @@ stock PutWeaponInWarehouse(playerid, weaponid, ammo)
 	return 1;
 }
 
-Function: OnWarehouseWeaponInsert(warehouseid, wslot)
+Public:OnWarehouseWeaponInsert(warehouseid, wslot)
 {
 	WarehouseWeapons[warehouseid][wslot][whWeaponSQL] = cache_insert_id();
 	return 1;

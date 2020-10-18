@@ -1,4 +1,4 @@
-#include <YSI\y_hooks>
+#include <YSI_Coding\y_hooks>
 
 /*
 	########  ######## ######## #### ##    ## ########  ######  
@@ -828,7 +828,7 @@ stock UpdateSprayTagProgress(playerid, tagid)
 	   ##    #### ##     ## ######## ##     ##  ######  
 */
 
-Function: SprayingBarChecker(playerid)
+Public:SprayingBarChecker(playerid)
 {
 	if(Bit1_Get(r_GrafCreateStarted, playerid)) {
 		if(!IsPlayerInRangeOfPoint(playerid, 2.5, GraffitCPInfo[playerid][gCPX], GraffitCPInfo[playerid][gCPY], GraffitCPInfo[playerid][gCPZ]))
@@ -842,7 +842,7 @@ Function: SprayingBarChecker(playerid)
 	return 1;
 }
 
-Function: SprayingTaggTimer(playerid)
+Public:SprayingTaggTimer(playerid)
 {
 	new newkeys,ud,lf;
 	GetPlayerKeys(playerid, newkeys, ud, lf);

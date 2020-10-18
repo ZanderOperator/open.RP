@@ -1,4 +1,4 @@
-#include <YSI\y_hooks>
+#include <YSI_Coding\y_hooks>
 
 /*
 	########  ######## ######## #### ##    ## ########  ######  
@@ -136,7 +136,7 @@ stock SetServerWeather()
         CurrentlyServerTemperature = temp;
 		
     }
-	format(wstring, sizeof(wstring), "[811 NEWS]: Trenutno je %02d:%02d sati, a temperatura iznosi %d°C.", hours+1,minute,temp);
+	format(wstring, sizeof(wstring), "[811 NEWS]: Trenutno je %02d:%02d sati, a temperatura iznosi %dï¿½C.", hours+1,minute,temp);
     SendClientMessageToAll(COLOR_ORANGE, wstring);
 	DynamicWeather();
     return 1;

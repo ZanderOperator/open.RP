@@ -6,7 +6,7 @@
 *	     	   (c) 2019
 */
 
-#include <YSI\y_hooks>
+#include <YSI_Coding\y_hooks>
 
 /*
 	- Defines & Enums
@@ -188,7 +188,7 @@ ResetTaxiVariables(playerid)
 	return (true);
 }
 
-Function: _TaximeterCount(playerid) {
+Public:_TaximeterCount(playerid) {
 	new 
 		Float: Distance = GetPlayerDistanceFromPoint(playerid,TaxiData[playerid][eTaxiStartPos][ 0 ], TaxiData[playerid][eTaxiStartPos][ 1 ], TaxiData[playerid][eTaxiStartPos][ 2 ] / TaxiData[playerid][eTaxiMetersFare]),
 		next_payment = TaxiData[playerid][eTaxiMetersFare],

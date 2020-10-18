@@ -1,4 +1,4 @@
-#include <YSI\y_hooks>
+#include <YSI_Coding\y_hooks>
 
 new FirstPerson[MAX_PLAYERS];
 new FirstPersonObject[MAX_PLAYERS];

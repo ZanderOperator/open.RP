@@ -5,7 +5,7 @@
 		Purpose: Igrac unosi Y ili N tipku putem tipkovnice i odraduje odredenu radnju.
 */
 
-#include <YSI\y_hooks>
+#include <YSI_Coding\y_hooks>
 
 
 #define	INPUT_TYPE_BURGLAR			(1)

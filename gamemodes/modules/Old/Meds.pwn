@@ -1,4 +1,4 @@
-#include <YSI\y_hooks>
+#include <YSI_Coding\y_hooks>
 
 #define MAX_MEDS_SLOTS (5)
 #define MAX_MEDS_AMOUNT (100)
@@ -18,7 +18,7 @@ static const
 	{"ANaltrexone", DRUG_TYPE_TABLET, 15, 50}
 };
 
-Function: LoadPlayerMeds(playerid)
+Public:LoadPlayerMeds(playerid)
 {
 	new
 		tmpQuery[128];

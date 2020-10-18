@@ -1,4 +1,4 @@
-#include <YSI\y_hooks>
+#include <YSI_Coding\y_hooks>
 
 new hotel_maps;
 
@@ -1081,7 +1081,7 @@ hook OnGameModeInit()
 	hotel_maps = CreateDynamicObject(18728, 1084.472656, 1570.461059, 1729.046875, 0.000000, 0.000000, 0.000000, -1, -1, -1, 400.00, 400.00);
 	hotel_maps = CreateDynamicObject(18728, 1088.319580, 1570.501464, 1728.760498, 0.000000, 0.000000, 0.000000, -1, -1, -1, 400.00, 400.00);
 	
-	//Hotel Pool da se darwin kreten moze brèkat
+	//Hotel Pool da se darwin kreten moze brï¿½kat
     hotel_maps = CreateDynamicObject(19376,4802.595,1233.803,0.919,0.000,90.000,0.000,4,-1,-1,300.000,300.000);
     SetDynamicObjectMaterial(hotel_maps, 0, 10871, "blacksky_sfse", "ws_slatetiles", 0);
     hotel_maps = CreateDynamicObject(19376,4792.097,1233.802,0.919,0.000,90.000,0.000,4,-1,-1,300.000,300.000);

@@ -1,4 +1,4 @@
-#include <YSI\y_hooks>
+#include <YSI_Coding\y_hooks>
 
 /*
 	##     ##    ###    ########   ######  
@@ -195,7 +195,7 @@ CMD:anpr(playerid, params[])
 		Bit1_Set( gr_ANPRActiveted, playerid, true );
 		new
 			tmpString[80];
-		format(tmpString, sizeof(tmpString), "* %s pokreæe ANPR system.", GetName(playerid, true));
+		format(tmpString, sizeof(tmpString), "* %s pokreï¿½e ANPR system.", GetName(playerid, true));
 		ProxDetector(10.0, playerid, tmpString, COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE);
 	}
 	else if( Bit1_Get( gr_ANPRActiveted, playerid ) ) {
@@ -205,7 +205,7 @@ CMD:anpr(playerid, params[])
 		Bit1_Set( gr_ANPRActiveted, playerid, false );
 		new
 			tmpString[80];
-		format(tmpString, sizeof(tmpString), "* %s iskljuèuje ANPR system.", GetName(playerid, true));
+		format(tmpString, sizeof(tmpString), "* %s iskljuï¿½uje ANPR system.", GetName(playerid, true));
 		ProxDetector(10.0, playerid, tmpString, COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE);
 	}
 	return 1;

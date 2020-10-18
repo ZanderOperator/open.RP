@@ -1,4 +1,4 @@
-#include <YSI\y_hooks>
+#include <YSI_Coding\y_hooks>
 
 /*
 	######## ##    ## ##     ## ##     ##
@@ -45,7 +45,7 @@ new AimWarns[MAX_PLAYERS] = 0,
 	 ###  ###  ######## ##     ## ##         #######  ##    ##  ######
  */
  
-Function: LoadPlayerWeapons(playerid)
+Public:LoadPlayerWeapons(playerid)
 {
 	if(cache_num_rows())
 	{
@@ -75,7 +75,7 @@ Function: LoadPlayerWeapons(playerid)
 	return 1;
 }
 
-Function: OnWeaponInsertQuery(playerid, slotid)
+Public:OnWeaponInsertQuery(playerid, slotid)
 {
 	PlayerWeapons[playerid][pwSQLID][slotid] = cache_insert_id();
 	return 1;

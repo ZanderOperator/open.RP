@@ -1,4 +1,4 @@
-#include <YSI\y_hooks>
+#include <YSI_Coding\y_hooks>
 
 // RolePlay EXP system by Logan - 24.7.2019.
 
@@ -314,7 +314,7 @@ stock ListBestTemporaryEXP(playerid)
 			return 1;
 		}
 	}
-	mysql_tquery_inline(g_SQL, tempExpQuery, using inline OnPlayerLoadTempBestEXP, "i", playerid);
+	mysql_tquery_inline_new(g_SQL, tempExpQuery, using inline OnPlayerLoadTempBestEXP, "i", playerid);
 	return 1;
 }
 
@@ -349,7 +349,7 @@ stock ListBestOverallEXP(playerid)
 			return 1;
 		}
 	}
-	mysql_tquery_inline(g_SQL, tempExpQuery, using inline OnListOverallBestEXP, "i", playerid);
+	mysql_tquery_inline_new(g_SQL, tempExpQuery, using inline OnListOverallBestEXP, "i", playerid);
 	return 1;
 }
 
@@ -361,7 +361,7 @@ stock LoadPlayerExperience(playerid)
 	return 1;
 }
 
-Function: OnPlayerLoadExperience(playerid)
+Public:OnPlayerLoadExperience(playerid)
 {
 	new rows;
     cache_get_row_count(rows);

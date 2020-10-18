@@ -1,6 +1,6 @@
 /*	www.cityofangels-roleplay || Fire & Medic Maps  */
 
-#include <YSI\y_hooks>
+#include <YSI_Coding\y_hooks>
 
 new hospital_maps,
 	lsfd_door[58],
