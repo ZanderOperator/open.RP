@@ -458,8 +458,8 @@ GivePlayerPayCheck(playerid)
 	// Experience
 	
 	new currentday, day;
-	TimeFormat(gettimestamp(), DAY_OF_MONTH, "%d", currentday);
-	TimeFormat(ExpInfo[playerid][eLastPayDayStamp], DAY_OF_MONTH, "%d", day);
+	TimeFormat(Timestamp:gettimestamp(), DAY_OF_MONTH, "%d", currentday);
+	TimeFormat(Timestamp:ExpInfo[playerid][eLastPayDayStamp], DAY_OF_MONTH, "%d", day);
 	ExpInfo[playerid][eLastPayDayStamp] = gettimestamp();
 	ExpInfo[playerid][eMonthPayDays]++;
 	if((ExpInfo[playerid][eMonthPayDays] % 2) == 0)

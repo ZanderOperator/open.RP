@@ -418,6 +418,27 @@ stock bool:isempty(const string[]) {
 	##     ##    ##     ##  ##       ##    ## 
 	 #######     ##    #### ########  ######  
 */
+
+stock gettimestamp()
+{
+	new timestamp = gettime() + GMT_ZONE_DIFFERENCE;
+	return timestamp;
+}
+
+stock ReturnDate()
+{
+	static
+	    datestring[26],
+		date[12],
+		time[3];
+
+	TimeFormat(Now(), HUMAN_DATE, date);
+	GetServerTime(time[0], date[1], date[2]);
+
+	format(datestring, sizeof(datestring), "%s %02d:%02d:%02d", date, time[0], time[1], time[2]);
+	return datestring;
+}
+
 stock IsPlayerUsingVPN(playerid)
 {
 	new 
@@ -1690,24 +1711,6 @@ stock GetXYInFrontOfObject(objectid, &Float:x, &Float:y, Float:distance, bool:ro
 
 stock randomEx(min, max)
     return random(max - min) + min;
-
-stock gettimestamp()
-{
-	new timestamp = gettime() + 7200;
-	return timestamp;
-}
-
-stock ReturnDate()
-{
-	static
-	    date[36];
-
-	getdate(date[2], date[1], date[0]);
-	GetServerTime(date[3], date[4], date[5]);
-
-	format(date, sizeof(date), "%02d/%02d/%d, %02d:%02d:%02d", date[0], date[1], date[2], date[3], date[4], date[5]);
-	return date;
-}
 
 /*ReturnPlayerIP(playerid)
 {

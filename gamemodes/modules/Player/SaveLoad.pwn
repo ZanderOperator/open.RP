@@ -439,8 +439,8 @@ public CheckPlayerLoginInput(playerid)
 		} else 
 		{
 			new date[12], time[12];
-			TimeFormat(PlayerInfo[ playerid ][ pUnbanTime ], HUMAN_DATE, date);
-			TimeFormat(PlayerInfo[ playerid ][ pUnbanTime ], ISO6801_TIME, time);
+			TimeFormat(Timestamp:PlayerInfo[ playerid ][ pUnbanTime ], HUMAN_DATE, date);
+			TimeFormat(Timestamp:PlayerInfo[ playerid ][ pUnbanTime ], ISO6801_TIME, time);
 	
 			va_SendClientMessage(playerid, COLOR_LIGHTRED, "[CoA-RP Server]: Vasa zabrana igranja zavrsava "COL_SERVER"%s %s.", date, time);
 			va_SendClientMessage(playerid, COLOR_LIGHTRED, "Razlog bana: %s", PlayerInfo[ playerid ][ pBanReason ]);
@@ -659,8 +659,8 @@ SafeSpawnPlayer(playerid)
 		return 1;
 	}
 	new currentday, day;
-	TimeFormat(gettimestamp(), DAY_OF_MONTH, "%d", currentday);
-	TimeFormat(ExpInfo[playerid][eLastPayDayStamp], DAY_OF_MONTH, "%d", day);
+	TimeFormat(Timestamp:gettimestamp(), DAY_OF_MONTH, "%d", currentday);
+	TimeFormat(Timestamp:ExpInfo[playerid][eLastPayDayStamp], DAY_OF_MONTH, "%d", day);
 	if(currentday != day)
 	{
 		ExpInfo[playerid][eGivenEXP] = false;

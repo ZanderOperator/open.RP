@@ -107,8 +107,8 @@ stock static PlayerAmmunationBuyTime(playerid, days)
 	ammutime += gettimestamp();
 	PlayerInfo[ playerid ][ pAmmuTime] = ammutime;
 	
-	TimeFormat(ammutime, HUMAN_DATE, date);
-	TimeFormat(ammutime, ISO6801_TIME, time);
+	TimeFormat(Timestamp:ammutime, HUMAN_DATE, date);
+	TimeFormat(Timestamp:ammutime, ISO6801_TIME, time);
 	
 	va_SendClientMessage(playerid, COLOR_YELLOW, "Next time you can buy a weapon in ammunation is after %d days. "COL_RED"(After %s %s)",
 		days,
@@ -202,8 +202,8 @@ CMD:buyweapon(playerid, params[])
 			date[ 12 ],
 			time[ 12 ];
 
-		TimeFormat(timestamp, HUMAN_DATE, date);
-		TimeFormat(timestamp, ISO6801_TIME, time);
+		TimeFormat(Timestamp:timestamp, HUMAN_DATE, date);
+		TimeFormat(Timestamp:timestamp, ISO6801_TIME, time);
 
 		va_SendClientMessage( playerid, COLOR_RED, "[ ! ] Your purchase isn't authorised untill %s %s",
 			date,

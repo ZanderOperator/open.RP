@@ -853,11 +853,11 @@ stock CheckInactivePlayer(playerid, sql)
 		cache_get_value_name_int(0, "endstamp"			, endstamp);
 		cache_get_value_name(0, 	"reason"			, reason, 64);
 
-		TimeFormat(startstamp, HUMAN_DATE, startdate);
-		TimeFormat(startstamp, ISO6801_TIME, starttime);
+		TimeFormat(Timestamp:startstamp, HUMAN_DATE, startdate);
+		TimeFormat(Timestamp:startstamp, ISO6801_TIME, starttime);
 
-		TimeFormat(endstamp, HUMAN_DATE, enddate);
-		TimeFormat(endstamp, ISO6801_TIME, endtime);
+		TimeFormat(Timestamp:endstamp, HUMAN_DATE, enddate);
+		TimeFormat(Timestamp:endstamp, ISO6801_TIME, endtime);
 		
 		format(motd, sizeof(motd), "%s - [SQLID: %d] | Pocetak: %s %s | Traje do: %s %s | Razlog: %s\n",
 			GetPlayerNameFromSQL(sqlid),
@@ -905,11 +905,11 @@ stock ListInactivePlayers(playerid)
 				cache_get_value_name_int(i, "endstamp"			, endstamp);
 				cache_get_value_name(i, 	"reason"			, reason, 64);
 
-				TimeFormat(startstamp, HUMAN_DATE, startdate);
-				TimeFormat(startstamp, ISO6801_TIME, starttime);
+				TimeFormat(Timestamp:startstamp, HUMAN_DATE, startdate);
+				TimeFormat(Timestamp:startstamp, ISO6801_TIME, starttime);
 
-				TimeFormat(endstamp, HUMAN_DATE, enddate);
-				TimeFormat(endstamp, ISO6801_TIME, endtime);
+				TimeFormat(Timestamp:endstamp, HUMAN_DATE, enddate);
+				TimeFormat(Timestamp:endstamp, ISO6801_TIME, endtime);
 				
 				format(motd, sizeof(motd), "%s - [SQLID: %d] | Pocetak: %s %s | Traje do: %s %s | Razlog: %s\n",
 					GetPlayerNameFromSQL(sqlid),
@@ -1279,8 +1279,8 @@ public CheckLastLogin(playerid, const name[])
 	cache_get_value_name_int(0, 	"time"	, lastdate);
 	cache_get_value_name(0,			"aip"	, lastip, MAX_PLAYER_IP);
 
-	TimeFormat(lastdate, HUMAN_DATE, date);
-	TimeFormat(lastdate, ISO6801_TIME, time);
+	TimeFormat(Timestamp:lastdate, HUMAN_DATE, date);
+	TimeFormat(Timestamp:lastdate, ISO6801_TIME, time);
 	
 	if(PlayerInfo[playerid][pAdmin])
 	{
