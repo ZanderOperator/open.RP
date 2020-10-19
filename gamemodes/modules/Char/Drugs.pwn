@@ -1212,7 +1212,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 					GetXYZZoneName(bag[ran][0], bag[ran][1], bag[ran][2])
 				);
 				
-				H_SetPlayerCheckpoint(playerid, bag[ran][0], bag[ran][1], bag[ran][2] - 1, 6.0);
+				SetPlayerCheckpoint(playerid, bag[ran][0], bag[ran][1], bag[ran][2] - 1, 6.0);
 				DrugPackage[playerid][pobjID] = CreateDynamicObject(2919, bag[ran][0], bag[ran][1], bag[ran][2], 0.0, 0.0, 0.0, -1, -1, playerid);
 				
 				DrugPackage[playerid][Xp] = bag[ran][0];
@@ -1380,7 +1380,7 @@ CMD:cdorder(playerid, params[])
 ClearDrugOrder(playerid)
 {
 	DestroyDynamicObject(DrugPackage[playerid][pobjID]);
-	H_DisablePlayerCheckpoint(playerid);
+	DisablePlayerCheckpoint(playerid);
 	
 	static
 		e_DP[pckg_Drugs];

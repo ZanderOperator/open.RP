@@ -405,7 +405,7 @@ stock OnTaserShoot(playerid)
 	##     ##  #######   #######  ##    ##  ######
 */
 
-public OnPlayerWeaponShot(playerid, weaponid, hittype, hitid, Float:fX, Float:fY, Float:fZ)
+hook OnPlayerWeaponShot(playerid, weaponid, hittype, hitid, Float:fX, Float:fY, Float:fZ)
 {
 	if(playerid == INVALID_PLAYER_ID)
 		return Kick(playerid), 0;
@@ -427,20 +427,8 @@ public OnPlayerWeaponShot(playerid, weaponid, hittype, hitid, Float:fX, Float:fY
 	}
 	AC_DecreasePlayerWeaponAmmo(playerid, weaponid, 1);
 	
-    #if defined CHEAT_OnPlayerWeaponShot
-        CHEAT_OnPlayerWeaponShot(playerid, weaponid, hittype, hitid, Float:fX, Float:fY, Float:fZ);
-    #endif
-    return 1;
+    return continue(playerid, weaponid, hittype, hitid, Float:fX, Float:fY, Float:fZ);
 }
-#if defined _ALS_OnPlayerWeaponShot
-    #undef OnPlayerWeaponShot
-#else
-    #define _ALS_OnPlayerWeaponShot
-#endif
-#define OnPlayerWeaponShot CHEAT_OnPlayerWeaponShot
-#if defined CHEAT_OnPlayerWeaponShot
-    forward CHEAT_OnPlayerWeaponShot(playerid, weaponid, hittype, hitid, Float:fX, Float:fY, Float:fZ);
-#endif
 
 hook OnPlayerConnect(playerid)
 {

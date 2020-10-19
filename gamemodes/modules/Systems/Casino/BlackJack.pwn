@@ -833,7 +833,7 @@ hook OnPlayerPickUpDynPickup(playerid, pickupid)
 	return 1;
 }
 
-public OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
+hook OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
 {
 	// KEY_SECONDARY_ATTACK		- Gasi cijeli blackjack
 	// KEY_JUMP 				- Povisuje ulog
@@ -969,21 +969,9 @@ public OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
 			Exposer[ playerid ] = SetTimerEx( "OnBlackJackCardExpose", 1500, false, "i", playerid );
 		}
 	}
-	
-    #if defined Black_OnPlayerKeyStateChange
-        Black_OnPlayerKeyStateChange(playerid, newkeys, oldkeys);
-    #endif
-    return 1;
+	return continue(playerid, newkeys, oldkeys);
 }
-#if defined _ALS_OnPlayerKeyStateChange
-    #undef OnPlayerKeyStateChange
-#else
-    #define _ALS_OnPlayerKeyStateChange
-#endif
-#define OnPlayerKeyStateChange Black_OnPlayerKeyStateChange
-#if defined Black_OnPlayerKeyStateChange
-    forward Black_OnPlayerKeyStateChange(playerid, newkeys, oldkeys);
-#endif
+
 /*
 	 ######  ##     ## ########  
 	##    ## ###   ### ##     ## 
