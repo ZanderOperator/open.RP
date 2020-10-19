@@ -186,7 +186,7 @@ hook OnPlayerStateChange(playerid, newstate, oldstate)
 	return 1;
 }
 
-public OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
+hook OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
 {
 	if( (newkeys & KEY_SECONDARY_ATTACK) && !(oldkeys & KEY_SECONDARY_ATTACK) )
 	{
@@ -199,21 +199,5 @@ public OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
 			Bit16_Set( gr_PlayerMobileComId, playerid, INVALID_VEHICLE_ID );
 		}
 	}
-	#if defined MC_OnPlayerKeyStateChange
-        MC_OnPlayerKeyStateChange(playerid, newkeys, oldkeys);
-    #endif
-    return 1;
+	return continue(playerid, newkeys, oldkeys);
 }
-
-//Skladi�te deleteano
-
-#if defined _ALS_OnPlayerKeyStateChange
-    #undef OnPlayerKeyStateChange
-#else
-    #define _ALS_OnPlayerKeyStateChange
-#endif
-#define OnPlayerKeyStateChange MC_OnPlayerKeyStateChange
-#if defined MC_OnPlayerKeyStateChange
-    forward MC_OnPlayerKeyStateChange(playerid, newkeys, oldkeys);
-#endif
-

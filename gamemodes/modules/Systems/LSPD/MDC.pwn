@@ -1158,7 +1158,7 @@ stock static CreateVehMDCTextDraws(playerid, model, color1, color2, bool:type=fa
 	##     ##  #######   #######  ##    ## 
 */
 
-public OnPlayerClickTextDraw(playerid, Text:clickedid)
+hook OnPlayerClickTextDraw(playerid, Text:clickedid)
 {
 	if(clickedid == Text:INVALID_TEXT_DRAW)
 	{
@@ -1168,20 +1168,8 @@ public OnPlayerClickTextDraw(playerid, Text:clickedid)
 			CancelSelectTextDraw(playerid);
 		}
 	}
-	#if defined MDC_OnPlayerClickTextDraw
-        MDC_OnPlayerClickTextDraw(playerid, Text:clickedid);
-    #endif
-	return 1;
+	return continue(playerid, Text:clickedid);
 }
-#if defined _ALS_OnPlayerClickTextDraw
-    #undef OnPlayerClickTextDraw
-#else
-    #define _ALS_OnPlayerClickTextDraw
-#endif
-#define OnPlayerClickTextDraw MDC_OnPlayerClickTextDraw
-#if defined MDC_OnPlayerClickTextDraw
-    forward MDC_OnPlayerClickTextDraw(playerid, Text:clickedid);
-#endif
 
 hook OnPlayerClickPlayerTD(playerid, PlayerText:playertextid)
 {

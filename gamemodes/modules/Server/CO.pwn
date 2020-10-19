@@ -4548,7 +4548,7 @@ hook OnVehicleSpawn(vehicleid)
 	return 1;
 }
 
-public OnPlayerClickTextDraw(playerid, Text:clickedid)
+hook OnPlayerClickTextDraw(playerid, Text:clickedid)
 {
 	if(  Bit2_Get(gr_PlayerLockBreaking, playerid ) != 0 &&
 		!Bit1_Get( gr_PlayerHotWiring, playerid ) &&
@@ -4569,20 +4569,8 @@ public OnPlayerClickTextDraw(playerid, Text:clickedid)
 			PlayerPlaySound(playerid, 1085, 0.0, 0.0, 0.0);
 		}
 	}
-	#if defined CO_OnPlayerClickTextDraw
-        CO_OnPlayerClickTextDraw(playerid, Text:clickedid);
-    #endif
-	return 1;
+	return continue(playerid, Text:clickedid);
 }
-#if defined _ALS_OnPlayerClickTextDraw
-    #undef OnPlayerClickTextDraw
-#else
-    #define _ALS_OnPlayerClickTextDraw
-#endif
-#define OnPlayerClickTextDraw CO_OnPlayerClickTextDraw
-#if defined CO_OnPlayerClickTextDraw
-    forward CO_OnPlayerClickTextDraw(playerid, Text:clickedid);
-#endif
 
 public OnPlayerCrashVehicle(playerid, vehicleid, Float:damage)
 {

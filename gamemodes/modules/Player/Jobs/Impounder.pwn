@@ -46,7 +46,7 @@ ResetImpoundVars(playerid)
 	if(ImpounderJob[playerid][cc] != 0)
 		AC_DestroyVehicle(ImpounderJob[playerid][cc]);
 		
-	H_DisablePlayerCheckpoint(playerid);
+	DisablePlayerCheckpoint(playerid);
 	
 	static
 		e_Impound[e_ipound_info];
@@ -96,7 +96,7 @@ CMD:jobimpound(playerid, params[])
 							Float:tZ;
 						
 						GetVehiclePos(v, tX, tY, tZ);
-						H_SetPlayerCheckpoint(playerid, tX, tY, tZ, 10.0);
+						SetPlayerCheckpoint(playerid, tX, tY, tZ, 10.0);
 						
 						return 1;
 					}
@@ -153,7 +153,7 @@ CMD:jobimpound(playerid, params[])
 		va_SendClientMessage(playerid, COLOR_GREEN, "[IMPOUNDER DISPATCH]: Vozilo s neplacenim kaznama marke %s pronadjeno!", ReturnVehicleName(vmodel));
 		va_SendClientMessage(playerid, COLOR_GREEN, "[IMPOUNDER DISPATCH]: Otidji do vozila i impoundaj ga! Vozilo se nalazi na %s!", GetVehicleStreet(vehicle));
 		
-		H_SetPlayerCheckpoint(playerid, ranVehPos[rpos][0], ranVehPos[rpos][1], ranVehPos[rpos][2], 10.0);
+		SetPlayerCheckpoint(playerid, ranVehPos[rpos][0], ranVehPos[rpos][1], ranVehPos[rpos][2], 10.0);
 	}
 	return 1;
 }
@@ -164,7 +164,7 @@ CMD:stopimpound(playerid, params[])
 		return SendClientMessage(playerid, COLOR_RED, "[GRESKA]: Nemas posao impoundera!");
 
 	ResetImpoundVars(playerid);
-	H_DisablePlayerCheckpoint(playerid);
+	DisablePlayerCheckpoint(playerid);
 	
 	SendClientMessage(playerid, COLOR_GREEN, "[INFO]: Prekinuo si impound posao!");
 	return 1;
@@ -180,14 +180,14 @@ OPTowIV(playerid, veh)
 		SendClientMessage(playerid, COLOR_RED, "[GRESKA]: Ovo vozilo nije na tvojoj impound listi!");
 		DetachTrailerFromVehicle(GetPlayerVehicleID(playerid));
 		
-		H_DisablePlayerCheckpoint(playerid);
+		DisablePlayerCheckpoint(playerid);
 	}
 	else
 	{
-		H_DisablePlayerCheckpoint(playerid);
+		DisablePlayerCheckpoint(playerid);
 		
 		SendClientMessage(playerid, COLOR_GREEN, "[IMPOUND DISPATCH]: Towao si vozilo, odvezi ga na impound lot! (( Na ulazu u Los Santos Airport ))");
-		H_SetPlayerCheckpoint(playerid, 1962.2467, -2193.0901, 12.5427, 10.0);
+		SetPlayerCheckpoint(playerid, 1962.2467, -2193.0901, 12.5427, 10.0);
 	}
 	return 1;
 }
@@ -198,7 +198,7 @@ hook OnPlayerEnterCheckpoint(playerid)
 	{
 		if(GetVehicleTrailer(GetPlayerVehicleID(playerid)) == ImpounderJob[playerid][ivID])
 		{
-			H_DisablePlayerCheckpoint(playerid);
+			DisablePlayerCheckpoint(playerid);
 			SendClientMessage(playerid, COLOR_GREEN, "[IMPOUND DISPATCH]: Stigao si na Impound Lot! Uparkiraj vozilo lijevo od ulaza te ukucaj /tow kad budes gotov!");
 		}
 		else

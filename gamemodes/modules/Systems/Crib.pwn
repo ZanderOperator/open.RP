@@ -1262,7 +1262,7 @@ timer ClosedPlayerTimer[2000](playerid)
 	##     ##  #######   #######  ##    ##  ######
 */
 ///////////////////////////////////////////////////////////////////
-public OnPlayerEnterDynamicCP(playerid, checkpointid)
+hook OnPlayerEnterDynamicCP(playerid, checkpointid)
 {
 	new
 		house = (checkpointid - 1);
@@ -1305,22 +1305,10 @@ public OnPlayerEnterDynamicCP(playerid, checkpointid)
 		PlayerHouseCP[playerid] 		= checkpointid;
 		Bit16_Set(gr_PlayerInfrontHouse, playerid, house);
 	}
-	#if defined CRIB_OnPlayerEnterDynamicCP
-        CRIB_OnPlayerEnterDynamicCP(playerid, checkpointid);
-    #endif
-    return 0;
+	return continue(playerid, checkpointid);
 }
-#if defined _ALS_OnPlayerEnterDynamicCP
-    #undef OnPlayerEnterDynamicCP
-#else
-    #define _ALS_OnPlayerEnterDynamicCP
-#endif
-#define OnPlayerEnterDynamicCP CRIB_OnPlayerEnterDynamicCP
-#if defined CRIB_OnPlayerEnterDynamicCP
-    forward CRIB_OnPlayerEnterDynamicCP(playerid, checkpointid);
-#endif
 
-public OnPlayerLeaveDynamicCP(playerid, checkpointid)
+hook OnPlayerLeaveDynamicCP(playerid, checkpointid)
 {
 	new
 		house = (checkpointid - 1);
@@ -1330,21 +1318,8 @@ public OnPlayerLeaveDynamicCP(playerid, checkpointid)
 		PlayerHouseCP[playerid] 		= -1;
 		Bit16_Set(gr_PlayerInfrontHouse, playerid, INVALID_HOUSE_ID);
 	}
-    #if defined HS_OnPlayerLeaveDynamicCP
-        HS_OnPlayerLeaveDynamicCP(playerid, checkpointid);
-    #endif
-    return 1;
+    return continue(playerid, checkpointid);
 }
-
-#if defined _ALS_OnPlayerLeaveDynamicCP
-    #undef OnPlayerLeaveDynamicCP
-#else
-    #define _ALS_OnPlayerLeaveDynamicCP
-#endif
-#define OnPlayerLeaveDynamicCP HS_OnPlayerLeaveDynamicCP
-#if defined HS_OnPlayerLeaveDynamicCP
-    forward HS_OnPlayerLeaveDynamicCP(playerid, checkpointid);
-#endif
 
 public OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
 {
@@ -1544,22 +1519,8 @@ public OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
 			Bit4_Set(gr_PlayerPickSlot, playerid, slot);
 		}
 	}
-
-	#if defined HS_OnPlayerKeyStateChange
-        HS_OnPlayerKeyStateChange(playerid, newkeys, oldkeys);
-    #endif
-    return 1;
+	return continue(playerid, newkeys, oldkeys);
 }
-
-#if defined _ALS_OnPlayerKeyStateChange
-    #undef OnPlayerKeyStateChange
-#else
-    #define _ALS_OnPlayerKeyStateChange
-#endif
-#define OnPlayerKeyStateChange HS_OnPlayerKeyStateChange
-#if defined HS_OnPlayerKeyStateChange
-    forward	HS_OnPlayerKeyStateChange(playerid, newkeys, oldkeys);
-#endif
 
 hook OnPlayerKeyInputEnds(playerid, type, succeeded)
 {

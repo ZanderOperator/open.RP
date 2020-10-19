@@ -3859,7 +3859,7 @@ public OnPlayerActionChange(playerid, oldaction, newaction) // Callbacks.inc by 
 	return 1;
 }
 
-public OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
+hook OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
 {
 	if( PRESSED(KEY_SECONDARY_ATTACK) ) {
         if( Bit1_Get( gr_SmokingCiggy, playerid ) )
@@ -3959,7 +3959,7 @@ public OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
 			//ClearAnimations(playerid);
 		}
 	}
-	return 1;
+	return continue(playerid, newkeys, oldkeys);
 }
 
 public OnPlayerUpdate(playerid)

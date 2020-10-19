@@ -201,7 +201,7 @@ hook OnDynamicObjectMoved(objectid)
 	return 1;
 }
 
-public OnPlayerEnterDynamicCP(playerid, checkpointid)
+hook OnPlayerEnterDynamicCP(playerid, checkpointid)
 {
 	if(CuttingTree[playerid] != -1)
 	{
@@ -228,21 +228,8 @@ public OnPlayerEnterDynamicCP(playerid, checkpointid)
 			return 1;
 		}
 	}
-	#if defined LOGGER_OnPlayerEnterDynamicCP
-        LOGGER_OnPlayerEnterDynamicCP(playerid, checkpointid);
-    #endif
-	return 1;
+	return continue(playerid, checkpointid);
 }
-
-#if defined _ALS_OnPlayerEnterDynamicCP
-    #undef OnPlayerEnterDynamicCP
-#else
-    #define _ALS_OnPlayerEnterDynamicCP
-#endif
-#define OnPlayerEnterDynamicCP LOGGER_OnPlayerEnterDynamicCP
-#if defined LOGGER_OnPlayerEnterDynamicCP
-    forward LOGGER_OnPlayerEnterDynamicCP(playerid, checkpointid);
-#endif
 
 hook OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
 {

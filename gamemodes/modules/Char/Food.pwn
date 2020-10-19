@@ -365,7 +365,7 @@ hook OnPlayerEditObject(playerid, playerobject, objectid, response, Float:fX, Fl
 	return 1;
 }
 
-public OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
+hook OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
 {
 	if ((newkeys & KEY_JUMP) && !(oldkeys & KEY_JUMP)) { // Odustaje
 		if( REST_TYPE_PIZZA <= Bit4_Get(r_PlayerRestoran, playerid) <= REST_TYPE_CLUCK ) {
@@ -411,20 +411,8 @@ public OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
 			ChangePlayerMealPreview(playerid);
 		}
 	}
-	#if defined FOOD_OnPlayerKeyStateChange
-        FOOD_OnPlayerKeyStateChange(playerid, newkeys, oldkeys);
-    #endif
-    return 1;
+	return continue(playerid, newkeys, oldkeys);
 }
-#if defined _ALS_OnPlayerKeyStateChange
-    #undef OnPlayerKeyStateChange
-#else
-    #define _ALS_OnPlayerKeyStateChange
-#endif
-#define OnPlayerKeyStateChange FOOD_OnPlayerKeyStateChange
-#if defined FOOD_OnPlayerKeyStateChange
-    forward FOOD_OnPlayerKeyStateChange(playerid, newkeys, oldkeys);
-#endif
 
 hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 {

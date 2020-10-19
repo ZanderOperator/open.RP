@@ -408,43 +408,7 @@ stock bool:isempty(const string[]) {
 	else
 		return string[0] == '\0';
 }
-	
-/*
-	##     ##  #######   #######  ##    ##  ######  
-	##     ## ##     ## ##     ## ##   ##  ##    ## 
-	##     ## ##     ## ##     ## ##  ##   ##       
-	######### ##     ## ##     ## #####     ######  
-	##     ## ##     ## ##     ## ##  ##         ## 
-	##     ## ##     ## ##     ## ##   ##  ##    ## 
-	##     ##  #######   #######  ##    ##  ######  
-*/
-stock DEB_KillTimer(timerid)
-{
-	if( !timerid ) return 0;
-	KillTimer(timerid);
-    return 1;
-}
-#if defined _ALS_KillTimer
-    #undef KillTimer
-#else
-    #define _ALS_KillTimer
-#endif
-#define KillTimer DEB_KillTimer
 
-stock FIX_DestroyDynamicCP(checkpointid)
-{
-	if( !IsValidDynamicCP(checkpointid) || !checkpointid ) return 0;
-
-	DestroyDynamicCP(checkpointid);
-    return 1;
-}
-#if defined _ALS_DestroyDynamicCP
-    #undef DestroyDynamicCP
-#else
-    #define _ALS_DestroyDynamicCP
-#endif
-#define DestroyDynamicCP FIX_DestroyDynamicCP
-	
 /*
 	##     ## ######## #### ##        ######  
 	##     ##    ##     ##  ##       ##    ## 

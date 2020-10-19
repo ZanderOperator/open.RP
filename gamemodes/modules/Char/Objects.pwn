@@ -1367,7 +1367,7 @@ public OnPlayerSelectColor(playerid, column, row)
 	return 1;
 }
 
-public OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
+hook OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
 {
 	if( Bit1_Get(r_ColorSelect, playerid) ) {
 		if ((newkeys & KEY_ANALOG_LEFT) && !(oldkeys & KEY_ANALOG_LEFT))
@@ -1398,21 +1398,9 @@ public OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
 			TogglePlayerControllable(playerid, true);
 		}
 	}
-		
-	#if defined OBJ_OnPlayerKeyStateChange
-        OBJ_OnPlayerKeyStateChange(playerid, newkeys, oldkeys);
-    #endif
-    return 1;
+	return continue(playerid, newkeys, oldkeys);
 }
-#if defined _ALS_OnPlayerKeyStateChange
-    #undef OnPlayerKeyStateChange
-#else
-    #define _ALS_OnPlayerKeyStateChange
-#endif
-#define OnPlayerKeyStateChange OBJ_OnPlayerKeyStateChange
-#if defined OBJ_OnPlayerKeyStateChange
-    forward OBJ_OnPlayerKeyStateChange(playerid, newkeys, oldkeys);
-#endif
+
 
 /*
 	 ######  ##     ## ########  

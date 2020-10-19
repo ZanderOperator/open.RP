@@ -733,7 +733,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 	return 1;
 }
 
-public OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
+hook OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
 {			
 	if(Bit1_Get(PlayingBBall, playerid))
 	{		
@@ -1119,20 +1119,8 @@ public OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
 			}
 		}
 	}
-	#if defined BASKET_OnPlayerKeyStateChange
-        BASKET_OnPlayerKeyStateChange(playerid, newkeys, oldkeys);
-    #endif
-    return 1;
+	return continue(playerid, newkeys, oldkeys);
 }
-#if defined _ALS_OnPlayerKeyStateChange
-    #undef OnPlayerKeyStateChange
-#else
-    #define _ALS_OnPlayerKeyStateChange
-#endif
-#define OnPlayerKeyStateChange BASKET_OnPlayerKeyStateChange
-#if defined BASKET_OnPlayerKeyStateChange
-    forward BASKET_OnPlayerKeyStateChange(playerid, newkeys, oldkeys);
-#endif
 
 CMD:playbasket(playerid, params[])
 {
