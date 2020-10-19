@@ -5,6 +5,7 @@
 	"output": "gamemodes/coarp.amx",
 	"dependencies": [
 		"sampctl/samp-stdlib",
+		"Zeex/samp-plugin-crashdetect",
 		"Y-Less/sscanf",
 		"samp-incognito/samp-streamer-plugin:v2.9.4",
 		"Southclaws/progress2",
@@ -14,8 +15,7 @@
 		"RIDE-2DAY/vSync"
 	],
 	"dev_dependencies": [
-		"pawn-lang/YSI-Includes@5.x",
-		"Zeex/samp-plugin-crashdetect"
+		"pawn-lang/YSI-Includes@5.x"
 	],
 	"local": true,
 	"runtime": {
