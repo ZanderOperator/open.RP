@@ -2169,8 +2169,7 @@ CMD:dump(playerid, params[])
 				return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne mozes dumpati BeanBag Shotgun!");
 				
 			new
-				weapon = AC_GetPlayerWeapon(playerid),
-				ammo = AC_GetPlayerAmmo(playerid);
+				weapon = AC_GetPlayerWeapon(playerid);
 
 	        format(tmpString, sizeof(tmpString), "* %s baca oruzje na pod.", GetName(playerid, true));
             ProxDetector(15.0, playerid, tmpString, COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE);
@@ -2182,7 +2181,7 @@ CMD:dump(playerid, params[])
 				PlayerInfo[playerid][pSQLID],
 				GetWeaponNameEx(weapon),
 				weapon,
-				ammo
+				AC_GetPlayerAmmo(playerid)
 			);
 			#endif
 			

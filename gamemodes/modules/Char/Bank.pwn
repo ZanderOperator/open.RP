@@ -633,8 +633,7 @@ CMD:bank(playerid, params[])
 	}
 	else if( !strcmp( pick, "deposit", true ) ) {
 		new
-			moneys, 
-			curfunds = PlayerInfo[ playerid ][ pBank ];
+			moneys;
 			
 		if( sscanf( params, "s[15]i", pick, moneys ) ) return SendClientMessage(playerid, COLOR_RED, "[ ? ]:  /bank deposit [kolicina novca]");
 		if( moneys > AC_GetPlayerMoney(playerid) || moneys < 1 ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate toliko novaca");
@@ -649,7 +648,7 @@ CMD:bank(playerid, params[])
 			GetName(playerid), 
 			PlayerInfo[playerid][pSQLID], 
 			moneys,
-			curfunds,
+			(PlayerInfo[playerid][pBank] - moneys),
 			PlayerInfo[playerid][pBank]
 		);
 		#endif

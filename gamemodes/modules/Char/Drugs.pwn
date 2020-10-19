@@ -737,10 +737,6 @@ CMD:drug(playerid, params[])
 
 		if((PlayerDrugs[playerid][dAmount][slot2] + damnt) > MAX_DRUG_AMOUNT)
 			return va_SendClientMessage(playerid, COLOR_RED, "[GRESKA]: Ne mozes imati toliko droge u jednom slotu! Mozes imat maksimalno %d u jednom slotu!", MAX_DRUG_AMOUNT);
-		
-		
-		new
-			Float:oldq = PlayerDrugs[playerid][dEffect][slot2];
 
 		if(PlayerDrugs[playerid][dEffect][slot] != PlayerDrugs[playerid][dEffect][slot2])
 		{
