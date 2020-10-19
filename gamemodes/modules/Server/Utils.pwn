@@ -673,10 +673,9 @@ strtok(const string[], &index)
 	return result;
 }
 
-/*
-stock SendSplitMessage(playerid, color, const final[])
+stock SendSplitMessage(playerid, color, const msgstring[])
 {
-    new len = strlen(final);
+    new len = strlen(msgstring);
     if(len >= EX_SPLITLENGTH)
     {
 		new buffer[EX_SPLITLENGTH+10],
@@ -685,39 +684,39 @@ stock SendSplitMessage(playerid, color, const final[])
 
 		for(new j = 60; j < len; j++)
 		{
-			if(final[j] == '{')
+			if(msgstring[j] == '{')
 				colorstart = j;
-
-			if(final[j] == '}')
+				
+			if(msgstring[j] == '}')
 				colorend = j + 1;
 
-			if(final[j] == ' ')
+			if(msgstring[j] == ' ')
 				spacepos = j;
 
 			if(j >= EX_SPLITLENGTH && spacepos >= 60 && (colorstart == 0 || (colorstart != 0 && colorend > colorstart)))
 			{
 				broken = true;
 				if(colorstart != 0 && colorend != 0)
-					strmid(colorstring, final, colorstart, colorend, sizeof(colorstring));
-				strmid(buffer, final, 0, spacepos);
+					strmid(colorstring, msgstring, colorstart, colorend, sizeof(colorstring));
+				strmid(buffer, msgstring, 0, spacepos);
 				format(buffer, sizeof(buffer), "%s...", buffer);
 				SendClientMessage(playerid, color, buffer);
-				strmid(buffer2, final, spacepos+1, len);
+				strmid(buffer2, msgstring, spacepos+1, len);
 				format(buffer2, sizeof(buffer2), "%s...%s", colorstring, buffer2);
 				SendClientMessage(playerid, color, buffer2);
 				return 1;
 			}
 		}
 		if(!broken)
-			SendClientMessage(playerid, color, final);
+			SendClientMessage(playerid, color, msgstring);
 	}
-    else return SendClientMessage(playerid, color, final);
+    else return SendClientMessage(playerid, color, msgstring);
 	return 1;
 }
 
-stock SendSplitMessageToAll(color, const final[])
+stock SendSplitMessageToAll(color, const msgstring[])
 {
-    new len = strlen(final);
+    new len = strlen(msgstring);
     if(len >= EX_SPLITLENGTH)
     {
 		new buffer[EX_SPLITLENGTH+10],
@@ -726,61 +725,47 @@ stock SendSplitMessageToAll(color, const final[])
 
 		for(new j = 60; j < len; j++)
 		{
-			if(final[j] == ' ')
+			if(msgstring[j] == ' ')
 				spacepos = j;
 			
-			if(final[j] == '{')
+			if(msgstring[j] == '{')
 				colorstart = j;
 				
-			if(final[j] == '}')
+			if(msgstring[j] == '}')
 				colorend = j + 1;
 
 			if(j >= EX_SPLITLENGTH && spacepos >= 60 && (colorstart == 0 || (colorstart != 0 && colorend > colorstart)))
 			{
 				broken = true;
 				if(colorstart != 0 && colorend != 0)
-					strmid(colorstring, final, colorstart, colorend, sizeof(colorstring));
-				strmid(buffer, final, 0, spacepos);
+					strmid(colorstring, msgstring, colorstart, colorend, sizeof(colorstring));
+				strmid(buffer, msgstring, 0, spacepos);
 				format(buffer, sizeof(buffer), "%s...", buffer);
 				SendClientMessageToAll(color, buffer);
-				strmid(buffer2, final, spacepos+1, len);
+				strmid(buffer2, msgstring, spacepos+1, len);
 				format(buffer2, sizeof(buffer2), "%s...%s", colorstring, buffer2);
 				SendClientMessageToAll(color, buffer2);
 				return 1;
 			}
 		}
 		if(!broken)
-			SendClientMessageToAll(color, final);
+			SendClientMessageToAll(color, msgstring);
 	}
-    else return SendClientMessageToAll(color, final);
+    else return SendClientMessageToAll(color, msgstring);
 	return 1;
 }
 
-stock AC_SendClientMessageToAll(color, const message[])
+hook native SendClientMessage(playerid, color, const message[])
 {
-	SendSplitMessageToAll(color, message);
-	return 1;
+	return SendSplitMessage(playerid, color, message);
 }
-#if defined _ALS_SendClientMessageToAll
-    #undef SendClientMessageToAll
-#else
-    #define _ALS_SendClientMessageToAll
-#endif
-#define SendClientMessageToAll AC_SendClientMessageToAll
 
-stock AC_SendClientMessage(playerid, color, const message[])
+hook native SendClientMessageToAll(color, const message[])
 {
-	SendSplitMessage(playerid, color, message);
-	return 1;
+	return SendSplitMessageToAll(color, message);
 }
-#if defined _ALS_SendClientMessage
-    #undef SendClientMessage
-#else
-    #define _ALS_SendClientMessage
-#endif
-#define SendClientMessage AC_SendClientMessage
 
-
+/*
 stock va_SendClientMessage(playerid, colour, const fmat[], va_args<>)
 {
 	return SendClientMessage(playerid, colour, va_return(fmat, va_start<3>));
@@ -789,8 +774,12 @@ stock va_SendClientMessage(playerid, colour, const fmat[], va_args<>)
 stock va_SendClientMessageToAll(colour, const fmat[], va_args<>)
 {
 	return SendClientMessageToAll(colour, va_return(fmat, va_start<2>));
+}*/
+
+stock va_ShowPlayerDialog(playerid, dialogid, style, caption[], fmat[], button1[], button2[], va_args<>)
+{
+	return ShowPlayerDialog(playerid, dialogid, style, caption, va_return(fmat, va_start<7>), button1, button2);
 }
-*/
 
 stock SetPlayerPosEx(playerid, Float:x, Float:y, Float:z, viwo=0, interior=0, bool:update=true)
 {

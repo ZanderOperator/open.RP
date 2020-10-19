@@ -5,7 +5,7 @@
 	"output": "gamemodes/coarp.amx",
 	"dependencies": [
 		"sampctl/samp-stdlib",
-		"maddinat0r/sscanf:v2.8.3",
+		"Y-Less/sscanf",
 		"samp-incognito/samp-streamer-plugin:v2.9.4",
 		"Southclaws/progress2"
 	],
