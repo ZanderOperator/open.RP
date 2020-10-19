@@ -29,10 +29,10 @@
 #undef MAX_VEHICLES
 #define MAX_VEHICLES                      		(1000)
 
-#define 	MODULE_LOGS																			// Player/Game Admin Command/Actions logging feature 
-//#define		WC_DEBUG								false
-//#define 		_DEBUG									0 											// YSI
-//#define 		MOD_DEBUG								true  										// Gamemode Debug
+//#define 	MODULE_LOGS											// Player/Game Admin Command/Actions logging feature 
+//#define	WC_DEBUG								false
+//#define 	_DEBUG									0 			// YSI
+//#define 	MOD_DEBUG								true  		// Gamemode Debug
 
 // MySQL inline query functions
 #define MYSQL_USE_YINLINE						true
@@ -41,7 +41,7 @@
 #define FIXES_ServerVarMsg 0
 
 // GMT Zone
-#define GMT_ZONE_DIFFERENCE						(2)		// GMT + 2
+#define GMT_ZONE_DIFFERENCE						(7200)		// GMT + 2
 
 // 0.3DL
 #define NEGATIVE_MODEL_ID 						-40000 // Negativna vrijednost radi Custom Object Modela koji su u minusu
@@ -2780,6 +2780,7 @@ Public:DynamicWeather()
 
 Public:GMXTimer()
 {
+	#if defined AUTO_RESTART_SEQ
 	if(GMX == 1)
 	{
 		cseconds--;
@@ -2800,7 +2801,8 @@ Public:GMXTimer()
 			return 1;
 		}
 	}
-	else if(GMX == 2)
+	#endif
+	if(GMX == 2)
 	{
 		cseconds--;
 		if(cseconds < 1)

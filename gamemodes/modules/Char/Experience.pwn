@@ -438,8 +438,8 @@ stock CanPlayerTakeExp(playerid, giveplayerid)
 		return 0;
 	}
 	new currentday, day;
-	TimeFormat(gettimestamp(), DAY_OF_MONTH, "%d" ,currentday);
-	TimeFormat(ExpInfo[playerid][eLastPayDayStamp], DAY_OF_MONTH, "%d", day);
+	TimeFormat(Timestamp:gettimestamp(), DAY_OF_MONTH, "%d" ,currentday);
+	TimeFormat(Timestamp:ExpInfo[playerid][eLastPayDayStamp], DAY_OF_MONTH, "%d", day);
 	
 	if(currentday != day)
 	{
@@ -482,8 +482,8 @@ stock CanPlayerTakeExpEx(playerid, playername[])
 	cache_get_value_name_int(0, "daypaydays"	, daypaydays);
 	cache_delete(result2);
 	
-	TimeFormat(gettimestamp(), DAY_OF_MONTH, "%d", currentday);
-	TimeFormat(lastpayday, DAY_OF_MONTH, "%d", day);
+	TimeFormat(Timestamp:gettimestamp(), DAY_OF_MONTH, "%d", currentday);
+	TimeFormat(Timestamp:lastpayday, DAY_OF_MONTH, "%d", day);
 	
 	if(currentday != day)
 	{

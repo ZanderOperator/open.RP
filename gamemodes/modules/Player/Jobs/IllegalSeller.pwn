@@ -328,8 +328,8 @@ CMD:worders(playerid, params[])
 		SendClientMessage( playerid, COLOR_GREEN, "---------------Popis narucenih paketa oruzja ---------------");
 		foreach (new i : ITools) 
 		{
-			TimeFormat(PlayerITInfo[i][itdTime], HUMAN_DATE, date);
-			TimeFormat(PlayerITInfo[i][itdTime], ISO6801_TIME, time);
+			TimeFormat(Timestamp:PlayerITInfo[i][itdTime], HUMAN_DATE, date);
+			TimeFormat(Timestamp:PlayerITInfo[i][itdTime], ISO6801_TIME, time);
 
 			va_SendClientMessage(playerid, COLOR_WHITE, "ID[%d] SQLID igraca: %d / Oruzje: %s ( %d ) / ETA: %s %s",
 				i,
