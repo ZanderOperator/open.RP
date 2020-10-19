@@ -78,10 +78,7 @@
 #include <fixes>
 
 // New SA-MP callbacks by Emmet
-#include <callbacks>
-
-// SafeDialog shunt - Anti F6 abuse
-#include <SafeDialogs>
+#include <callbacks> // legacy
 
 // Modern Pawn library for working with dates and times - TimeFormat
 #include <chrono> 
@@ -108,16 +105,15 @@
 
 // Other pre-includes
 #include <OnPlayerSlowUpdate>
-#include <animsfix>
-#include <rBits>
+#include <animsfix> // legacy
+#include <rBits> // legacy
 #include <sscanf2>
 #include <progress2>
 #include <mapandreas>
-#include <color_menu>
-//#include <eSelection>
+#include <color_menu> // legacy
 
-#include <vSync> // mici sve osim seats ids
-#include <fly>
+#include <vSync>
+#include <fly> // legacy
 
 // Whirlpool Hasher
 native WP_Hash(buffer[], len, const str[]);
@@ -3110,11 +3106,6 @@ public e_COMMAND_ERRORS:OnPlayerCommandReceived(playerid, cmdtext[], e_COMMAND_E
 			if(!IsPlayerConnected(playerid))
 				return COMMAND_ZERO_RET;
 
-			if(Dialog_Opened(playerid))
-			{
-				SendMessage(playerid, MESSAGE_TYPE_ERROR, "You can't use commands while having a Dialog opened!");
-				return COMMAND_ZERO_RET;
-			}
 			if(!SafeSpawned[playerid] || OnSecurityBreach[playerid])
 			{
 				SendMessage(playerid, MESSAGE_TYPE_ERROR,"You're not safely spawned, you can't use commands!");
@@ -3796,12 +3787,6 @@ public OnPlayerText(playerid, text[])
 	}
 	if(!IsPlayerLogged(playerid) || !IsPlayerConnected(playerid) )
 		return 0;
-
-	if(Dialog_Opened(playerid))
-	{
-		SendMessage(playerid, MESSAGE_TYPE_ERROR, "You can't talk while having a Dialog opened!");
-		return 0;
-	}
 
 	if(!SafeSpawned[playerid] || OnSecurityBreach[playerid])
 	{

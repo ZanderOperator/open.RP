@@ -1262,7 +1262,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 				if(listitem > sizeof(drugs) || listitem < 0)
 					return 0;
 
-				ShowPlayerDialog(playerid, DRUG_ORDER_AMOUNT, DIALOG_STYLE_INPUT, "{3C95C2}* PACKAGE - AMOUNT", "Odabrali ste drogu %s! Upisite koliko grama zelite naruciti!\nCijena po gramu: %d$", "Select", "Close", drugs[listitem+1][dName], drugs[listitem+1][dPricePG]);
+				va_ShowPlayerDialog(playerid, DRUG_ORDER_AMOUNT, DIALOG_STYLE_INPUT, "{3C95C2}* PACKAGE - AMOUNT", "Odabrali ste drogu %s! Upisite koliko grama zelite naruciti!\nCijena po gramu: %d$", "Select", "Close", drugs[listitem+1][dName], drugs[listitem+1][dPricePG]);
 				
 				//dPackage_OrderID[playerid] = x;
 				//dPackage_OrderAMNT[playerid] = x;
@@ -1288,15 +1288,14 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 				if(val < 1 || val > 100)
 				{
 					SendClientMessage(playerid, COLOR_RED, "Nemozete kupiti manje od 1 ni vise od 100 grama!");
-					ShowPlayerDialog(playerid, DRUG_ORDER_AMOUNT, DIALOG_STYLE_INPUT, "{3C95C2}* PACKAGE - AMOUNT", "Odabrali ste drogu %s! Upisite koliko grama zelite naruciti!\nCijena po gramu: %d$", "Select", "Close", drugs[tDrug][dName], drugs[tDrug][dPricePG]);
-					
+					va_ShowPlayerDialog(playerid, DRUG_ORDER_AMOUNT, DIALOG_STYLE_INPUT, "{3C95C2}* PACKAGE - AMOUNT", "Odabrali ste drogu %s! Upisite koliko grama zelite naruciti!\nCijena po gramu: %d$", "Select", "Close", drugs[tDrug][dName], drugs[tDrug][dPricePG]);
 					return 1;
 				}
 				DrugPackage[playerid][pcAmnt] = val;
 					
 				DrugPackage[playerid][pPrice] = drugs[tDrug][dPricePG] * val;
 				
-				ShowPlayerDialog(playerid, DRUG_ORDER_CONFIRM, DIALOG_STYLE_MSGBOX, "{3C95C2}* PACKAGE - CONFIRM", "Odabrali ste paket od:\n%d %s droge %s za cijenu %d!\n\nJeste li sigurni da zelite naruciti paket?", "Naruci", "Abort", val, (drugs[tDrug][dEffect] < 4) ? ("grama") : ("tableta"), drugs[tDrug][dName], DrugPackage[playerid][pPrice]);
+				va_ShowPlayerDialog(playerid, DRUG_ORDER_CONFIRM, DIALOG_STYLE_MSGBOX, "{3C95C2}* PACKAGE - CONFIRM", "Odabrali ste paket od:\n%d %s droge %s za cijenu %d!\n\nJeste li sigurni da zelite naruciti paket?", "Naruci", "Abort", val, (drugs[tDrug][dEffect] < 4) ? ("grama") : ("tableta"), drugs[tDrug][dName], DrugPackage[playerid][pPrice]);
 			}
 			else
 			{
