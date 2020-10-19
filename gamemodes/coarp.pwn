@@ -95,6 +95,9 @@
 
 // YSI by Y_Less
 #define YSI_NO_HEAP_MALLOC
+
+// During sampctl p ensure check: CGEN_MEMORY(needs to be 90000) and MAX_COMMANDS(needs to be 1024) 
+
 //#include <YSI_Coding\y_hooks>
 #include <YSI_Coding\y_timers>
 #include <YSI_Data\y_iterate>
@@ -102,12 +105,6 @@
 #include <YSI_Game\y_vehicledata>
 #include <YSI_Server\y_flooding>
 #include <YSI_Coding\y_va>
-// Not anymore a part of y_va, define it manually:
-// TODO: Virtual1ty, clean this up
-stock va_ShowPlayerDialog(playerid, dialogid, style, caption[], fmat[], button1[], button2[], va_args<>)
-{
-	return ShowPlayerDialog(playerid, dialogid, style, caption, va_return(fmat, va_start<7>), button1, button2);
-}
 
 // Other pre-includes
 #include <OnPlayerSlowUpdate>

@@ -84,7 +84,7 @@ stock LoadSkinSelectionMenu(f_name[])
 		printf("WARNING: Failed to load Model List: \"%s\"", f_name);
 		return 1;
 	}
-    new line[128], idx;
+    new line[128], idx = 0, idxx = 0;
 	while(fread(f,line,sizeof(line),false))
 	{
 		if(idx >= MAX_MENU_ITEMS)
@@ -93,9 +93,12 @@ stock LoadSkinSelectionMenu(f_name[])
 			break;
 		}
 		if(!line[0]) continue;
-        //sscanf(line, "p<,>ii", ServerSkins[sSkinID][idx], ServerSkins[sPrice][idx]);
+		idxx = 0;
+		ServerSkins[sSkinID][idx] = strval(strtok(line,idxx));
+		ServerSkins[sPrice][idx] = strval(strtok(line,idxx));
         idx++;
     }
+	printf("[scriptfiles/skins.txt]: Sucessfully Loaded Server Skins. (%d / %d)", idx, MAX_SERVER_SKINS);
     return 1;
 }
 
