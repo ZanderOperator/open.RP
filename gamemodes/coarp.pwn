@@ -94,6 +94,8 @@
 #define YSI_NO_HEAP_MALLOC
 
 // During sampctl p ensure check: CGEN_MEMORY(needs to be 90000) and MAX_COMMANDS(needs to be 1024) 
+#define CGEN_MEMORY				(90000)		// Internal Define - code parser/generator memory
+#define MAX_COMMANDS			(1024)		// Internal Define - y_commands
 
 //#include <YSI_Coding\y_hooks>
 #include <YSI_Coding\y_timers>
