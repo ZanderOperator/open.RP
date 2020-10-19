@@ -50,6 +50,9 @@
 //#define AUTO_RESTART_SEQ							// Uncomment for automatic restarts if you have restart API on your VPS/server
 #define HTTP_RESTART_REQUEST 					"SERVER_RESTART_API_REQUEST_LINK"
 
+// Server Afterload Unlock
+#define SERVER_UNLOCK_TIME						(150)
+
 // Fixes.inc
 #define FIX_OnPlayerEnterVehicle 	0
 #define FIX_OnPlayerEnterVehicle_2 	0
@@ -2192,6 +2195,7 @@ stock ResetPlayerEnumerator()
 
 Public:ResetIterators()
 {
+	Iter_Clear(Player);
 	Iter_Clear(COVehicles);
 	Iter_Clear(Vehicles);
 	Iter_Clear(Pickups);
@@ -2842,9 +2846,12 @@ main()
 
 public OnGameModeInit()
 {
+	SendRconCommand("password 6325234hbbzfg12312313gz313"); // Server Lock while everything loads
+
 	ResetIterators();
 	ResetVehicleEnumerator();
 	ResetHouseEnumerator();
+	ResetBizzEnumerator();
 	ResetPlayerEnumerator();
 
 	 // Loading of custom models derives from artconfig.pwn module(artconfig.txt alternative)
@@ -2894,7 +2901,6 @@ public OnGameModeInit()
 	Command_AddAltNamed("tazer"			, 	"ta");
 	Command_AddAltNamed("acceptreport"	, 	"ar");
 	Command_AddAltNamed("disregardreport", 	"dr");
-	
 	Command_AddAltNamed("unblacklist"	, 	"unbl");
 	Command_AddAltNamed("blacklist"		, 	"bl");
 
@@ -2915,13 +2921,14 @@ public OnGameModeInit()
             AddPlayerClass(i,0.0,0.0,0.0,0.0,-1,-1,-1,-1,-1,-1);
     }
 
-	// Global Loads
-	
+	// Auto Unlock Settings
 	GMX = 2;
-	cseconds = 120; // 2 min
+	cseconds = SERVER_UNLOCK_TIME; 
+
+	// Global Loads
 	LoadGPS();
-	LoadHstorage(); // House Storage Load
 	LoadHouses();
+	LoadHouseStorages();
 	LoadBizz();
 	LoadComplex();
 	LoadComplexRooms();

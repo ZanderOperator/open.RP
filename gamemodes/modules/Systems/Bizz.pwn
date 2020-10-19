@@ -981,7 +981,7 @@ stock GetPlayerNearestBiznis(playerid)
 	return value;
 }
 
-stock ResetBizzInfo(biz)
+stock ResetBizzInfo(biz, bool:server_startup = false)
 {
 	BizzInfo[ biz ][ bOwnerID ] = 0;
 	BizzInfo[ biz ][ bMessage ][0] = EOS;
@@ -996,8 +996,11 @@ stock ResetBizzInfo(biz)
 	BizzInfo[biz][bInterior] = 0;
 	BizzInfo[biz][bVirtualWorld] = 0;
 	BizzInfo[ biz ][ bBuyPrice ] = 0;
-	if(BizzInfo[ biz ][ bTill ] > 0)
-		BusinessToBudgetMoney(biz, BizzInfo[biz][bTill]);
+	if(server_startup)
+	{
+		if(BizzInfo[ biz ][ bTill ] > 0)
+			BusinessToBudgetMoney(biz, BizzInfo[biz][bTill]);
+	}
 	BizzInfo[ biz ][ bTill ] = 0;
 	BizzInfo[ biz ][ bLocked ] = 0;
 	BizzInfo[ biz ][ bEntranceCost ] = 0;
@@ -1008,6 +1011,16 @@ stock ResetBizzInfo(biz)
 		DestroyDynamicPickup(BizzInfo[ biz ][ bEnterPICK ]);
 	return 1;
 }
+
+Public:ResetBizzEnumerator()
+{
+	for(new i = 0; i < MAX_BIZZS; i++)
+	{
+		ResetBizzInfo(i, true);
+	}
+	return 1;
+}
+
 stock InsertNewBizz(playerid, biz)
 {
 	new bizInsertQuery[256];
