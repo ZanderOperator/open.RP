@@ -796,7 +796,7 @@ stock ResetHouseInfo(houseid)
 	KillTimer(GlobalMapIconT[houseid]);
 }
 
-Public:ResetHouseEnumerator()
+Public: ResetHouseEnumerator()
 {
 	for(new i=0; i<MAX_HOUSES; i++)
 		ResetHouseInfo(i);

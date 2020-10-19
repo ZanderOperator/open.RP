@@ -145,7 +145,7 @@ GetRackLimit(playerid)
 	return (true);
 }
 
-LoadHstorage()
+LoadHouseStorages()
 {
 	mysql_tquery(g_SQL, "SELECT * FROM `house_storage`", "HouseStorage_Load", "");
 	return (true);
