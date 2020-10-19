@@ -145,7 +145,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 				{
 					if(PlayerAnswers[playerid] != 5)
 					{
-						ShowPlayerDialog(playerid, DIALOG_LICENSE_CONFIRM, DIALOG_STYLE_MSGBOX, "Vozacka dozvola", "Nazalost pali ste ispit iz voznje.\nImali ste %d od 5 tocnih odgovora\nZelite li pokusati ponovo?", "Da", "Back", PlayerAnswers[playerid]);
+						va_ShowPlayerDialog(playerid, DIALOG_LICENSE_CONFIRM, DIALOG_STYLE_MSGBOX, "Vozacka dozvola", "Nazalost pali ste ispit iz voznje.\nImali ste %d od 5 tocnih odgovora\nZelite li pokusati ponovo?", "Da", "Back", PlayerAnswers[playerid]);
 						
 						PlayerQuestion[playerid] = -1;
 						PlayerAnswers[playerid] = 0;

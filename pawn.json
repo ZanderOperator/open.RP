@@ -7,7 +7,11 @@
 		"sampctl/samp-stdlib",
 		"Y-Less/sscanf",
 		"samp-incognito/samp-streamer-plugin:v2.9.4",
-		"Southclaws/progress2"
+		"Southclaws/progress2",
+		"pawn-lang/sa-mp-fixes",
+		"Southclaws/OnPlayerSlowUpdate",
+		"AGraber/samp-plugin-mapandreas",
+		"RIDE-2DAY/vSync"
 	],
 	"dev_dependencies": [
 		"pawn-lang/YSI-Includes@5.x",
