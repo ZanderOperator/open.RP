@@ -59,34 +59,53 @@ stock const
 
 //rBits
 static 
-	Bit2: gr_QuestionType	<MAX_PLAYERS>,
-	_VarGetPass[MAX_PLAYERS][MAX_PLAYER_PASSWORD];
+	Bit2: gr_QuestionType	<MAX_PLAYERS>;
 
 /*
 	 ######  ########  #######   ######  ##    ##  ######  
 	##    ##    ##    ##     ## ##    ## ##   ##  ##    ## 
 	##          ##    ##     ## ##       ##  ##   ##       
-	 ######     ##    ##     ## ##       #####     ######  
+	 ######     ##    ##     ## ##       #####     ######    & funcs
 		  ##    ##    ##     ## ##       ##  ##         ## 
 	##    ##    ##    ##     ## ##    ## ##   ##  ##    ## 
 	 ######     ##     #######   ######  ##    ##  ######  
 */
 
-stock UpdateRegisteredPassword(playerid)
+Public: OnPasswordUpdateEx(sqlid)
 {
-	new pass[32], password[129];
-	StringReverse(PlayerInfo[playerid][pPassword], pass);
-	PlayerInfo[playerid][pPassword][0]		= EOS;
-	format(password, sizeof(password), "COA%s%d", pass, PlayerInfo[playerid][pSQLID]);
-	WP_Hash(PlayerInfo[playerid][pPassword], 129, password);
+	new password[BCRYPT_HASH_LENGTH];
+	bcrypt_get_hash(password);
 	
 	new
 		updatePasswordQuery[256];
 	mysql_format(g_SQL, updatePasswordQuery, sizeof(updatePasswordQuery), "UPDATE `accounts` SET `password` = '%e' WHERE `sqlid` = '%d' LIMIT 1",
-		PlayerInfo[playerid][pPassword],
+		password,
+		sqlid
+	);
+	mysql_tquery(g_SQL, updatePasswordQuery, "", "");
+	return 1;
+}
+
+Public: OnPasswordUpdate(playerid)
+{
+	new password[BCRYPT_HASH_LENGTH];
+	bcrypt_get_hash(password);
+	
+	PlayerInfo[playerid][pPassword][0] = EOS;
+	strcat(PlayerInfo[playerid][pPassword], password, BCRYPT_HASH_LENGTH);
+	
+	new
+		updatePasswordQuery[256];
+	mysql_format(g_SQL, updatePasswordQuery, sizeof(updatePasswordQuery), "UPDATE `accounts` SET `password` = '%e' WHERE `sqlid` = '%d' LIMIT 1",
+		password,
 		PlayerInfo[playerid][pSQLID]
 	);
 	mysql_tquery(g_SQL, updatePasswordQuery, "", "");
+	return 1;
+}
+stock UpdateRegisteredPassword(playerid)
+{
+	bcrypt_hash(PlayerInfo[playerid][pPassword], BCRYPT_COST, "OnPasswordUpdate", "d", playerid);
 	return 1;
 }
 
@@ -266,21 +285,9 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 				ShowPlayerDialog(playerid, DIALOG_SEC_PASS, DIALOG_STYLE_PASSWORD, "UNOS NOVE SIFRE", "Unesite novu sifru:\n"COL_RED"Prevelik unos sifre (veca od 10)\n\n"COL_RED"NAPOMENA: Dobro spremite svoju sifru, ako ju izgubite obratite se administraciji!", "Input", "Abort");
 				return 1;
 			}
-			
-			new pass[32], password[128];
-			StringReverse(inputtext, pass);
-			format(password, sizeof(password), "COA%s%d", pass, PlayerInfo[playerid][pSQLID]);
-			WP_Hash(PlayerInfo[playerid][pPassword], 129, password);
-			
-			new
-				updatePasswordQuery[256];
-			mysql_format(g_SQL, updatePasswordQuery, sizeof(updatePasswordQuery), "UPDATE `accounts` SET `password` = '%e' WHERE `sqlid` = '%d' LIMIT 1",
-				PlayerInfo[playerid][pPassword],
-				PlayerInfo[playerid][pSQLID]
-			);
-			mysql_tquery(g_SQL, updatePasswordQuery, "", "");
-
-			SendClientMessage( playerid, COLOR_RED, "[ ! ] Uspjesno ste promjenili svoj password.");
+			strcat(PlayerInfo[playerid][pPassword], inputtext, BCRYPT_COST);
+			UpdateRegisteredPassword(playerid);
+			SendClientMessage( playerid, COLOR_RED, "[ ! ]: Uspjesno ste promjenili svoj password.");
 			return 1;
 		}
 		case DIALOG_SEC_NEWS: {
@@ -356,8 +363,7 @@ CMD:account(playerid, params[])
 
 CMD:changepass(playerid, params[]) {
 
-	new Cache: mysql_search, usersql, mysql_buffer[128], usernick[MAX_PLAYER_NAME],
-		reversepass[32], finalpassword[128], updquery[256], passnew[32];
+	new Cache: mysql_search, usersql, mysql_buffer[128], usernick[MAX_PLAYER_NAME], passnew[32];
 	
 	if( !IsPlayerAdmin(playerid) && PlayerInfo[playerid][pAdmin] < 1338 ) return SendClientMessage(playerid, COLOR_RED, "Niste ovlasteni za koristenje ove komande!");
 	if(sscanf(params, "s[24]s[32]", usernick, passnew)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /changepass [Ime_Prezime] [password].");
@@ -370,19 +376,7 @@ CMD:changepass(playerid, params[]) {
 	cache_get_value_name_int(0, "sqlid"	, usersql);
 	cache_delete(mysql_search);
 	
-	// hash password
-	SetString(_VarGetPass[playerid], "");
-	StringReverse(passnew, reversepass);
-	format(finalpassword, sizeof(finalpassword), "COA%s%d", reversepass, usersql);
-	WP_Hash(_VarGetPass[playerid], 129, finalpassword);
-
-	// save
-	mysql_format(g_SQL, updquery, sizeof(updquery), "UPDATE `accounts` SET `password` = '%e' WHERE `sqlid` = '%d' LIMIT 1",
-		_VarGetPass[playerid],
-		usersql
-	);
-	mysql_tquery(g_SQL, updquery, "", "");
-	
+	bcrypt_hash(passnew, BCRYPT_COST, "OnPasswordUpdateEx", "d", usersql);
 	va_SendClientMessage(playerid, COLOR_RED, "[ ! ] Uspjesno ste igracu %s postavili novu lozinku: %s", usernick, passnew);
-	return (true);
+	return 1;
 }

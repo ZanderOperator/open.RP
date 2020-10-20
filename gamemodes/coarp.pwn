@@ -108,6 +108,10 @@
 #include <YSI_Server\y_flooding>
 #include <YSI_Coding\y_va>
 
+// Bcrypt by lassir
+#include <bcrypt>
+#define BCRYPT_COST 12
+
 // Other pre-includes
 #include <OnPlayerSlowUpdate>
 #include <animsfix> // legacy
@@ -118,9 +122,6 @@
 #include <color_menu> // legacy
 
 #include <vSync>
-
-// Whirlpool Hasher
-native WP_Hash(buffer[], len, const str[]);
 
 // MySQL
 #include <a_mysql>
@@ -184,7 +185,7 @@ native WP_Hash(buffer[], len, const str[]);
 #define MAX_PLAYER_IP							(24)
 #define MAX_ZONE_NAME                   		(28)
 #define MAX_LOGIN_TIME							(60)
-#define MAX_PLAYER_PASSWORD             		(129)
+#define MAX_PLAYER_PASSWORD             		(BCRYPT_HASH_LENGTH)
 #define MAX_PLAYER_CIDR							(32)
 #define MAX_SKILLS								(9)
 #define MAX_WARNS								(3)
@@ -356,10 +357,10 @@ enum E_PLAYER_DATA
 	pSQLID,
 	bool:pOnline,
 	pRegistered,
-	pTeamPIN[129],
+	pTeamPIN[BCRYPT_HASH_LENGTH],
 	pForumName[24],
 	pEmail[MAX_PLAYER_MAIL],
-	pPassword[MAX_PLAYER_PASSWORD],
+	pPassword[BCRYPT_HASH_LENGTH],
 	pSAMPid[128],
 	pSecQuestion,
 	pSecQuestAnswer[31],
