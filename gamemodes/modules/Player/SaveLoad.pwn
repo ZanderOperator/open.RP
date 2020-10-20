@@ -128,7 +128,7 @@ timer SetPlayerCrash[6000](playerid)
 //Forwards
 forward CheckPlayerInBase(playerid);
 forward PasswordForQuery(playerid, const inputtext[]);
-forward CheckPlayerLoginInput(playerid);
+forward LoadPlayerData(playerid);
 forward RegisterPlayer(playerid);
 forward OnAccountFinish(playerid);
 
@@ -155,47 +155,51 @@ CheckPlayerInactivity(playerid)
 	return 1;
 }
 
+Public: OnPasswordChecked(playerid)
+{
+	new bool:match = bcrypt_is_equal();
+	if(match)
+	{
+		new
+			loginCheck[256];
+		mysql_format(g_SQL, loginCheck, sizeof(loginCheck),"SELECT * FROM `accounts` WHERE `name` = '%e' LIMIT 0,1", GetName(playerid, false));
+		mysql_tquery(g_SQL, loginCheck, "LoadPlayerData", "i", playerid);
+	}
+	else
+	{
+		Bit8_Set(gr_LoginInputs, playerid, Bit8_Get(gr_LoginInputs, playerid) + 1);
+		if( !( MAX_LOGIN_TRIES - Bit8_Get(gr_LoginInputs, playerid) ) )
+		{
+			//Kick
+			SendClientMessage(playerid, COLOR_RED, "[SERVER]  Dobili ste IP ban radi pogresnih pokusaja ulaska u racun!");
+			BanMessage(playerid);
+			return 1;
+		}
+		if(Bit8_Get(gr_LoginInputs, playerid) < 3) 
+		{
+			format(dialogtext, sizeof(dialogtext), ""COL_RED"Krivo ste unijeli podatke za login!\n\
+													"COL_WHITE"Provjerite velika i mala slova, te unesite valjanu sifru.\n\
+													Imate jos "COL_LIGHTBLUE"%d"COL_WHITE"pokusaja za unos valjane sifre!\n\n\n\
+													"COL_RED"Ukoliko ne unesete dobru sifru onda cete dobiti kick!", MAX_LOGIN_TRIES - Bit8_Get(gr_LoginInputs, playerid));
+			ShowPlayerDialog(playerid, DIALOG_LOGIN, DIALOG_STYLE_PASSWORD, ""COL_WHITE"PRIJAVA", dialogtext, "Sign In", "Abort");
+		}
+	}
+	return 1;
+}
+
 public PasswordForQuery(playerid, const inputtext[])
 {
 	new rows;
     cache_get_row_count(rows);
     if(rows)
 	{
-		new sqlid, sql_password[129];
+		new sqlid, input_password[12], sql_password[BCRYPT_HASH_LENGTH];
+		strcat(input_password, inputtext, 12);
+
 		cache_get_value_name_int(0, "sqlid", sqlid);
-        cache_get_value_name(0, "password", sql_password, 129);
-        
-		new pass[32], password[128], hash[129];
-		StringReverse(inputtext, pass);
-		format(password, sizeof(password), "COA%s%d", pass, sqlid);
-		WP_Hash(hash, sizeof(hash), password);
+        cache_get_value_name(0, "password", sql_password, BCRYPT_HASH_LENGTH);
 		
-		if(!strcmp(hash, sql_password, true))
-		{
-			new
-				loginCheck[256];
-			mysql_format(g_SQL, loginCheck, sizeof(loginCheck),"SELECT * FROM `accounts` WHERE `name` = '%e' LIMIT 0,1", GetName(playerid, false));
-			mysql_tquery(g_SQL, loginCheck, "CheckPlayerLoginInput", "i", playerid);
-		}
-		else
-		{
-			Bit8_Set(gr_LoginInputs, playerid, Bit8_Get(gr_LoginInputs, playerid) + 1);
-			if( !( MAX_LOGIN_TRIES - Bit8_Get(gr_LoginInputs, playerid) ) )
-			{
-				//Kick
-				SendClientMessage(playerid, COLOR_RED, "[SERVER]  Dobili ste IP ban radi pogresnih pokusaja ulaska u racun!");
-				BanMessage(playerid);
-				return 1;
-			}
-			if(Bit8_Get(gr_LoginInputs, playerid) < 3) 
-			{
-				format(dialogtext, sizeof(dialogtext), ""COL_RED"Krivo ste unijeli podatke za login!\n\
-														"COL_WHITE"Provjerite velika i mala slova, te unesite valjanu sifru.\n\
-														Imate jos "COL_LIGHTBLUE"%d"COL_WHITE"pokusaja za unos valjane sifre!\n\n\n\
-														"COL_RED"Ukoliko ne unesete dobru sifru onda cete dobiti kick!", MAX_LOGIN_TRIES - Bit8_Get(gr_LoginInputs, playerid));
-				ShowPlayerDialog(playerid, DIALOG_LOGIN, DIALOG_STYLE_PASSWORD, ""COL_WHITE"PRIJAVA", dialogtext, "Sign In", "Abort");
-			}
-		}
+		bcrypt_check(input_password, sql_password,  "OnPasswordChecked", "d", playerid);
 	}
 	return 1;
 }
@@ -254,12 +258,15 @@ public CheckPlayerInBase(playerid)
 	return 1;
 }
 
-public CheckPlayerLoginInput(playerid)
+public LoadPlayerData(playerid)
 {
 	new rows;
     cache_get_row_count(rows);
     if(rows)
 	{
+		KillTimer(LoginCheckTimer[playerid]);
+		Bit1_Set(gr_LoginChecksOn, playerid, false);
+
 	    new string[20];
 		cache_get_value_name_int(0, "sqlid"			, PlayerInfo[playerid][pSQLID]);
 		cache_get_value_name_int(0, "levels"		, PlayerInfo[playerid][pLevel]);
@@ -273,9 +280,6 @@ public CheckPlayerLoginInput(playerid)
 		cache_get_value_name(0, 	"lastlogin"		, PlayerInfo[playerid][pLastLogin]		, 24);
 		cache_get_value_name_int(0, "lastloginstamp", PlayerInfo[playerid][pLastLoginTimestamp]);
 		cache_get_value_name(0, 	"lastip"		, PlayerInfo[playerid][pLastIP]			, 24);
-		
-    	KillTimer(LoginCheckTimer[playerid]);
-		Bit1_Set(gr_LoginChecksOn, playerid, false);
 		
 		cache_get_value_name(0, 	"password"		, PlayerInfo[playerid][pPassword]		, 129);
 		cache_get_value_name_int(0, "spawnchange"	, PlayerInfo[playerid][pSpawnChange]);
