@@ -118,7 +118,6 @@
 #include <color_menu> // legacy
 
 #include <vSync>
-#include <fly> // legacy
 
 // Whirlpool Hasher
 native WP_Hash(buffer[], len, const str[]);
@@ -3451,7 +3450,6 @@ public OnPlayerSpawn(playerid)
     ResetPlayerMoney(playerid);
     SetCameraBehindPlayer(playerid);
     SetPlayerFightingStyle(playerid, PlayerInfo[playerid][pFightStyle]);
-    InitFly(playerid);
 	
     // Player Skill
     SetPlayerSkillLevel(playerid, WEAPONSKILL_AK47,             999);
