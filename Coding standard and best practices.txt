@@ -1,0 +1,71 @@
+TODO
+
+BitBucket workflow:
+Što bi bilo fora, pošto to Atlassian nudi, je da koristimo Jiru za lagano
+praćenje bugova/taskova i da smo syncani tako. To recimo osobno koristim na
+poslu i ludnica je. Mogu se ostavit na "issue" i komentari, logirati sati itd :D
+
+strippati sav trailing whitespace u cijelom projektu - VSCode regex search all&replace
+zamijeni: \s+$
+sa ničim
+
+općenito code style - provrtiti kroz vscodeov prettier ili sličnu ekstenziju
+ja želim da PAWN bude čisti Allman, znači nema nigdje K&R:
+if () { // NE
+
+if ()
+{
+    // DA
+}
+
+također bih želio sve tab znakove zamijeniti sa 4 space znaka (lakše se da 
+formatirati kod, razlamati / poravnavati linije itd)
+
+zadnje, ovo su stvarno sad ukusi (o njima se ne raspravlja :P), i svatko ima svoje mišljenje, ali da...
+želio bih imati unificirani code-style kroz cijeli code base i to tako da nema nepotrebnih donjih crta
+za odvajanje imena varijabli (npr. globalne varijable) jedino ako se tako dogovorimo...
+npr ovoga nema: g_MySQL ; postaje gMySqlHandle. Svaka globalna varijabla prefiksira se sa malim slovom g.
+Vidjeti koje su druge najbolje prakse ali također bih želio izbjeći sljedeće: if() akcija; u istom redu bez
+vitičastih zagrada koje okružuju taj uvjet. razlozi su što je veća mogućnost za pojavom buga i teže je čitati
+takav kod (barem meni osobno). prije sam jako zagovarao i sam koristio sljedeće primjere:
+
+if (uvjet) break;
+
+if (uvjet)
+    return;
+
+i slične, sada kad znam bolje, po mom mišljenju, samo škode čitljivosti koda i veća je mogućnost da se unese neki bug,
+drugo, ako se želi ubaciti dodatan statement/naredba, treba ići dodavati vitičaste što se moglo napraviti i u početku:
+
+if (uvjet)
+{
+    // još naredbi
+    return;
+}
+
+
+CODE IMPROVEMENT:
+naišao sam na korištenje switch-a pa se zatim ili strcat-aju ili formatiraju stringovi
+NE NE I NE
+postoji puno bolje, elegantnije i brže rješenje (generira se manje koda, kraća kompilacija itd;
+iako ovo zadnje nije problem na modernim računalima ali ja sam recimo bio toliko zagrižen za optimizaciju
+jer mi se realno brže kompiliralo kada sam sve sizeof(str) zamijenio konstantama, brojevima za size stringa)...
+uglavnom, to rješenje je napraviti const array stringova i napraviti neki getter koji će primiti index u taj array
+te će vratiti direktno string (PAWN ima problema s ovime pa vidjeti kako najbolje to rješiti - možda kao reference argument)
+tako npr funkcija ShowGovMDC(playerid, targetid) u Proracun.pwn se može jako pojednostavniti i ubrzati vrijeme izvođenja
+
+maksimalno moguće izbjeći bilo kakvu obfuskaciju koda (ha-ha ja sam jako pametan ajmo napisat kod da ga nitko ne razumije -
+npr. pokušati skratiti naziv neke funkcije npr. SendClientMessage nekim glupavim define-om: #define SCM; i druge gadorije)
+i komentirati ga na mjestima kad nije sasvim jasno što se tu događa ili ako bi bilo dobro da se stavi opis nekog postupka
+
+maksimalno moguće izbjeći kompliciran/dugački kod - funkcija koja je dugačka ili nije dobro promišljena
+ili je napravljena na brzinu bez općenitog smisla kako neki sustav funkcionira - podijeliti na više manjih funkcija
+koje obavljaju točno jednu zadaću te koje se mogu po mogućnosti iskoristiti i drugdje (multi-purpose/general functions
+a.k.a helperi)
+
+maksimalno moguće smanjiti broj nivoa identacije, npr if() pa neki redundantni else gdje ne treba, isto tako, provjere
+da nešto ne valja (uvjeti) staviti sa break ili return na početku, tako da funkcija obavlja normalan case, a ne da se
+edge-caseovi propliću kroz logiku = SPAGHETTI CODE
+http://www.ptidej.net/research/designsmells/materials/TextualDescriptionOfSpaghettiCode.pdf
+
+zasigurno ima i hrpetina drugih stvari koje nisam naveo, ali samo se držati nekih najboljih praksi programerske struke...
