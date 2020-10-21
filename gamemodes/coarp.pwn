@@ -38,7 +38,6 @@
 #define MYSQL_USE_YINLINE						true
 
 // #define COA_UCP
-#define FIXES_ServerVarMsg 0
 
 // GMT Zone
 #define GMT_ZONE_DIFFERENCE						(7200)		// GMT + 2
@@ -54,6 +53,7 @@
 #define SERVER_UNLOCK_TIME						(150)
 
 // Fixes.inc
+#define FIXES_ServerVarMsg 0
 #define FIX_OnPlayerEnterVehicle 	0
 #define FIX_OnPlayerEnterVehicle_2 	0
 #define FIX_OnPlayerEnterVehicle_3 	0
