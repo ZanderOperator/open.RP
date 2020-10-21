@@ -1,0 +1,18 @@
+Test Server Info
+
+IP: 178.63.13.186:16505
+
+Control Panel - https://evolution-host.com/controlPanel/login.php
+
+username: siladinikola
+pass: novasifrasenikadneceprobit788448
+
+MySQL - https://rampant.evolution-host.com/phpmyadmin
+username :siladinikola
+pass: kajsitilud
+
+FTP 
+Host: 178.63.13.186:21
+Username: gpxsiladinikola
+pass: novasifrasenikadneceprobit788448
+
