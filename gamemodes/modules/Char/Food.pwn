@@ -411,7 +411,7 @@ hook OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
 			ChangePlayerMealPreview(playerid);
 		}
 	}
-	return continue(playerid, newkeys, oldkeys);
+	return 1;
 }
 
 hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])

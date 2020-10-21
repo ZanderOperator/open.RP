@@ -1305,7 +1305,7 @@ hook OnPlayerEnterDynamicCP(playerid, checkpointid)
 		PlayerHouseCP[playerid] 		= checkpointid;
 		Bit16_Set(gr_PlayerInfrontHouse, playerid, house);
 	}
-	return continue(playerid, checkpointid);
+	return 1;
 }
 
 hook OnPlayerLeaveDynamicCP(playerid, checkpointid)
@@ -1318,7 +1318,7 @@ hook OnPlayerLeaveDynamicCP(playerid, checkpointid)
 		PlayerHouseCP[playerid] 		= -1;
 		Bit16_Set(gr_PlayerInfrontHouse, playerid, INVALID_HOUSE_ID);
 	}
-    return continue(playerid, checkpointid);
+    return 1;
 }
 
 public OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
@@ -1519,7 +1519,7 @@ public OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
 			Bit4_Set(gr_PlayerPickSlot, playerid, slot);
 		}
 	}
-	return continue(playerid, newkeys, oldkeys);
+	return 1;
 }
 
 hook OnPlayerKeyInputEnds(playerid, type, succeeded)

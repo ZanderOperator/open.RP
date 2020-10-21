@@ -1119,7 +1119,7 @@ hook OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
 			}
 		}
 	}
-	return continue(playerid, newkeys, oldkeys);
+	return 1;
 }
 
 CMD:playbasket(playerid, params[])

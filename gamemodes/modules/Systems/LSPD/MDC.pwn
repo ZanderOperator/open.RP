@@ -1168,7 +1168,7 @@ hook OnPlayerClickTextDraw(playerid, Text:clickedid)
 			CancelSelectTextDraw(playerid);
 		}
 	}
-	return continue(playerid, Text:clickedid);
+	return 1;
 }
 
 hook OnPlayerClickPlayerTD(playerid, PlayerText:playertextid)

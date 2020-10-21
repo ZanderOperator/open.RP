@@ -3345,9 +3345,8 @@ hook OnPlayerClickTextDraw(playerid, Text:clickedid)
 	return 1;
 }
 
-public OnPlayerClickPlayerTextDraw(playerid, PlayerText:playertextid)
+hook OnPlayerClickPlayerTD(playerid, PlayerText:playertextid)
 {
-    PokerTextDrawCheck(playerid, playertextid);
 	new OPCDial[32];
 	if(playertextid == PhoneTD[playerid][26] && PlayerTextDrawCreated[playerid][26] == 1) //MENU
 	{
