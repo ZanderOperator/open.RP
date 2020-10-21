@@ -427,7 +427,7 @@ hook OnPlayerWeaponShot(playerid, weaponid, hittype, hitid, Float:fX, Float:fY, 
 	}
 	AC_DecreasePlayerWeaponAmmo(playerid, weaponid, 1);
 	
-    return continue(playerid, weaponid, hittype, hitid, Float:fX, Float:fY, Float:fZ);
+    return 1;
 }
 
 hook OnPlayerConnect(playerid)

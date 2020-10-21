@@ -2597,7 +2597,7 @@ hook OnPlayerClickTextDraw(playerid, Text:clickedid)
 	return 1;
 }
 
-Public:PokerTextDrawCheck(playerid, PlayerText:playertextid)
+hook OnPlayerClickPlayerTD(playerid, PlayerText:playertextid)
 {
 	new tableid = PlayingTableID[playerid];
 

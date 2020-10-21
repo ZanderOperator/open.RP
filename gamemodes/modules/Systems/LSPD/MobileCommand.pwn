@@ -199,5 +199,5 @@ hook OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
 			Bit16_Set( gr_PlayerMobileComId, playerid, INVALID_VEHICLE_ID );
 		}
 	}
-	return continue(playerid, newkeys, oldkeys);
+	return 1;
 }

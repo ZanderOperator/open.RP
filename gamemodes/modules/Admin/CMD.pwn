@@ -1,10 +1,6 @@
 #include <YSI_Coding\y_hooks>
 
 // Admin Modules included at the bottom
-
-#define PIN_HASH_SET			(1)
-#define PIN_HASH_MATCH			(2)
-
 #define PLAYER_SPECATE_VEH		(1)
 #define PLAYER_SPECATE_PLAYER	(2)
 

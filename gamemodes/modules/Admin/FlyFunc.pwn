@@ -32,7 +32,7 @@ forward bool:StopFly(playerid);						// stop flying
 hook OnPlayerConnect(playerid)
 {
 	InitFly(playerid);
-	return continue(playerid);
+	return 1;
 }
 
 InitFly(playerid)

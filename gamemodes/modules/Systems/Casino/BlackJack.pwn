@@ -969,7 +969,7 @@ hook OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
 			Exposer[ playerid ] = SetTimerEx( "OnBlackJackCardExpose", 1500, false, "i", playerid );
 		}
 	}
-	return continue(playerid, newkeys, oldkeys);
+	return 1;
 }
 
 /*

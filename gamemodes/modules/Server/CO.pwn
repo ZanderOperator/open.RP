@@ -4569,7 +4569,7 @@ hook OnPlayerClickTextDraw(playerid, Text:clickedid)
 			PlayerPlaySound(playerid, 1085, 0.0, 0.0, 0.0);
 		}
 	}
-	return continue(playerid, Text:clickedid);
+	return 1;
 }
 
 public OnPlayerCrashVehicle(playerid, vehicleid, Float:damage)

@@ -1398,7 +1398,7 @@ hook OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
 			TogglePlayerControllable(playerid, true);
 		}
 	}
-	return continue(playerid, newkeys, oldkeys);
+	return 1;
 }
 
 

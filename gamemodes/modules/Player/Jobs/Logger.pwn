@@ -228,7 +228,7 @@ hook OnPlayerEnterDynamicCP(playerid, checkpointid)
 			return 1;
 		}
 	}
-	return continue(playerid, checkpointid);
+	return 1;
 }
 
 hook OnPlayerKeyStateChange(playerid, newkeys, oldkeys)

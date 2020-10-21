@@ -11,7 +11,7 @@
 // Disable const correctness warnings on the community compiler
 #pragma warning disable 239
 #pragma warning disable 214
-//
+
 #include <crashdetect>
 #include <a_samp>
 #include <a_http>
@@ -61,9 +61,6 @@
 #define FIX_GetPlayerDialog			0
 #define	MAX_IP_CONNECTS 			3
 #define FIX_file_inc 				0
-#define FIX_OnRconCommand			0
-#define FIX_OnClientCheckResponse   0
-
 
 // Script Mode settings
 //#define COA_TEST
@@ -3954,10 +3951,10 @@ hook OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
 			//ClearAnimations(playerid);
 		}
 	}
-	return continue(playerid, newkeys, oldkeys);
+	return 1;
 }
 
-public OnPlayerUpdate(playerid)
+hook OnPlayerUpdate(playerid)
 {
 	if( Bit1_Get(gr_PlayerExiting, playerid) && GetPlayerInterior(playerid) == 0)
 		defer SafeExitCheck(playerid);
