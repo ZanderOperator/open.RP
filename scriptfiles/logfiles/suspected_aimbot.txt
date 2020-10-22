@@ -1,0 +1,4 @@
+ 02/08/2020, 16:07:59 - [1. warn]Adrian_Campbell(83) potencijalno koristi Trigger Bot.
+02/08/2020, 21:18:07 - [1. warn]Anna_Suarez(68) potencijalno koristi Trigger Bot.
+10/08/2020, 22:31:28 - [1. warn]George_Nyll(1) je ispucao metak izvan dometa oruzja Shotgun. (Normal Range:40.000000)
+26/08/2020, 00:43:02 - [1. warn]Ronnie_Huff(9) je ispucao metak izvan dometa oruzja Rifle. (Normal Range:100.000000)

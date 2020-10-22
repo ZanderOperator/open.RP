@@ -1,0 +1,62 @@
+(20/03/2020, 19:55:18) Leader John Harding[811 Urban News](SQLID:2606) je napravio depozit od 10000$ na Faction Bank.
+(20/03/2020, 23:43:39) Mayor Jordan Maccagno (SQLID:45) je napravio depozit od 50000$ na LSPD Faction Bank.
+(22/03/2020, 02:04:31) Mayor Jordan Maccagno (SQLID:45) je napravio depozit od 30000$ na 811 Urban News Faction Bank.
+(24/03/2020, 20:39:21) Leader John Harding[811 Urban News](SQLID:2606) je napravio depozit od 15000$ na Faction Bank.
+(29/03/2020, 21:32:51) Leader Thomas McDowell[811 Urban News](SQLID:307) je napravio depozit od 30000$ na Faction Bank.
+(04/04/2020, 21:13:45) Mayor Julian Holland (SQLID:238) je napravio depozit od 25000$ na Los Santos News Faction Bank.
+(14/04/2020, 21:08:43) Leader Thomas McDowell[Los Santos News](SQLID:307) je napravio depozit od 20000$ na Faction Bank.
+(18/04/2020, 01:40:31) Mayor Travis Palmer (SQLID:45) je napravio depozit od 50000$ na LSCSD Faction Bank.
+(18/04/2020, 15:17:31) Mayor Maska_735548 (SQLID:45) je napravio depozit od 50000$ na Sheriffs Faction Bank.
+(18/04/2020, 21:41:09) Leader Thomas McDowell[Los Santos News](SQLID:307) je napravio depozit od 50000$ na Faction Bank.
+(19/04/2020, 15:05:25) Mayor Travis Palmer (SQLID:45) je napravio depozit od 50000$ na SHERIFF Faction Bank.
+(19/04/2020, 18:25:54) Leader Thomas McDowell[Los Santos News](SQLID:307) je napravio depozit od 50000$ na Faction Bank.
+(23/04/2020, 20:43:25) Mayor Travis Palmer (SQLID:45) je napravio depozit od 50000$ na SHERIFF Faction Bank.
+(30/04/2020, 00:04:32) Mayor Travis Palmer (SQLID:45) je napravio depozit od 65000$ na SHERIFF Faction Bank.
+(02/05/2020, 15:36:42) Mayor Travis Palmer (SQLID:45) je napravio depozit od 20000$ na POLICE Faction Bank.
+(02/05/2020, 15:36:49) Mayor Travis Palmer (SQLID:45) je napravio depozit od 20000$ na SHERIFF Faction Bank.
+(03/05/2020, 19:19:51) Mayor Travis Palmer (SQLID:45) je napravio depozit od 40000$ na SHERIFF Faction Bank.
+(04/05/2020, 16:58:41) Mayor Travis Palmer (SQLID:45) je napravio depozit od 15000$ na SHERIFF Faction Bank.
+(05/05/2020, 18:32:06) Mayor Travis Palmer (SQLID:45) je napravio depozit od 20000$ na SHERIFF Faction Bank.
+(07/05/2020, 00:50:04) Mayor Travis Palmer (SQLID:45) je napravio depozit od 49900$ na SHERIFF Faction Bank.
+(08/05/2020, 21:41:08) Mayor Travis Palmer (SQLID:45) je napravio depozit od 30000$ na SHERIFF Faction Bank.
+(10/05/2020, 15:22:23) Mayor Travis Palmer (SQLID:45) je napravio depozit od 50000$ na SHERIFF Faction Bank.
+(17/05/2020, 22:13:54) Leader Sebastian Carrasco[LSFD](SQLID:581) je napravio depozit od 25000$ na Faction Bank.
+(21/05/2020, 19:54:36) Mayor Jose Ayala (SQLID:4379) je napravio depozit od 70000$ na SHERIFF Faction Bank.
+(03/06/2020, 00:10:51) Leader Jonathan Brown[SHERIFF](SQLID:1194) je napravio depozit od 100000$ na Faction Bank.
+(05/06/2020, 00:36:06) Mayor Thomas Day (SQLID:238) je napravio depozit od 49000$ na SHERIFF Faction Bank.
+(10/06/2020, 01:55:51) Leader Jonathan Brown[SHERIFF](SQLID:1194) je napravio depozit od 100000$ na Faction Bank.
+(17/06/2020, 19:37:45) Leader Carmen Attardi[LSFD](SQLID:2209) je napravio depozit od 40000$ na Faction Bank.
+(21/06/2020, 15:56:08) Leader Jonathan Brown[SHERIFF](SQLID:1194) je napravio depozit od 100000$ na Faction Bank.
+(03/07/2020, 01:19:03) Leader Maska_817708[POLICE](SQLID:1194) je napravio depozit od 100000$ na Faction Bank.
+(03/07/2020, 01:32:25) Leader Lav Korovski[LSFD](SQLID:486) je napravio depozit od 20000$ na Faction Bank.
+(16/07/2020, 04:25:38) Leader Robert Doherty[Los Santos News](SQLID:2606) je napravio depozit od 20000$ na Faction Bank.
+(18/07/2020, 23:12:08) Leader Zyrell Haynes[LSFD](SQLID:581) je napravio depozit od 7000$ na Faction Bank.
+(20/07/2020, 15:37:15) Leader Carmen Attardi[LSFD](SQLID:2209) je napravio depozit od 100000$ na Faction Bank.
+(02/08/2020, 01:11:56) Leader Robert Doherty[Los Santos News](SQLID:2606) je napravio depozit od 55000$ na Faction Bank.
+(05/08/2020, 18:54:20) Leader Evelyn Casey[POLICE](SQLID:1194) je napravio depozit od 100000$ na Faction Bank.
+(05/08/2020, 21:23:48) Leader Zyrell Haynes[POLICE](SQLID:581) je napravio depozit od 164000$ na Faction Bank.
+(06/08/2020, 17:37:40) Leader Evelyn Casey[POLICE](SQLID:1194) je napravio depozit od 50000$ na Faction Bank.
+(08/08/2020, 02:00:47) Mayor Evelyn Casey (SQLID:1194) je povukao 90900$ iz SHERIFF Faction Banke.
+(08/08/2020, 02:01:04) Leader Evelyn Casey[POLICE](SQLID:1194) je napravio depozit od 45000$ na Faction Bank.
+(08/08/2020, 02:01:22) Mayor Evelyn Casey (SQLID:1194) je napravio depozit od 45000$ na LSFD Faction Bank.
+(15/08/2020, 15:16:01) Leader Anna Suarez[POLICE](SQLID:5701) je napravio depozit od 100000$ na Faction Bank.
+(15/08/2020, 18:41:58) Leader Denzel Chandler[LSFD](SQLID:7288) je podigao 3107$ s Faction Banka.
+(15/08/2020, 22:16:39) Leader Denzel Chandler[LSFD](SQLID:7288) je podigao 30000$ s Faction Banka.
+(16/08/2020, 00:57:25) Leader Denzel Chandler[LSFD](SQLID:7288) je napravio depozit od 50000$ na Faction Bank.
+(18/08/2020, 18:14:00) Leader Anna Suarez[POLICE](SQLID:5701) je napravio depozit od 50000$ na Faction Bank.
+(24/08/2020, 00:34:53) Leader Dwight Arrington[LSFD](SQLID:7288) je napravio depozit od 5000$ na Faction Bank.
+(25/08/2020, 20:25:13) Leader Robert Doherty[Los Santos News](SQLID:2606) je napravio depozit od 20000$ na Faction Bank.
+(29/08/2020, 16:34:22) Leader Dwight Arrington[LSFD](SQLID:7288) je napravio depozit od 10000$ na Faction Bank.
+(30/08/2020, 15:42:38) Leader Dwight Arrington[LSFD](SQLID:7288) je podigao 2747$ s Faction Banka.
+(01/09/2020, 00:38:27) Leader Anna Suarez[POLICE](SQLID:5701) je napravio depozit od 243694$ na Faction Bank.
+(02/09/2020, 23:00:19) Leader Anna Suarez[POLICE](SQLID:5701) je napravio depozit od 50000$ na Faction Bank.
+(07/09/2020, 00:05:14) Leader Anna Suarez[POLICE](SQLID:5701) je napravio depozit od 170000$ na Faction Bank.
+(22/09/2020, 12:07:59) Leader Maria Hernandez[POLICE](SQLID:5701) je napravio depozit od 100000$ na Faction Bank.
+(24/09/2020, 16:25:12) Leader Vladimir Abramovich[Los Santos News](SQLID:4515) je podigao 5000$ s Faction Banka.
+(30/09/2020, 16:58:44) Leader Frank Brennan[LSFD](SQLID:581) je napravio depozit od 50000$ na Faction Bank.
+(30/09/2020, 21:19:15) Leader Vladimir Abramovich[Los Santos News](SQLID:4515) je napravio depozit od 40000$ na Faction Bank.
+(01/10/2020, 02:35:58) Leader Vladimir Abramovich[Los Santos News](SQLID:4515) je podigao 5000$ s Faction Banka.
+(02/10/2020, 05:22:48) Leader Vladimir Abramovich[Los Santos News](SQLID:4515) je podigao 5000$ s Faction Banka.
+(02/10/2020, 22:49:16) Leader Vladimir Abramovich[Los Santos News](SQLID:4515) je podigao 5000$ s Faction Banka.
+(13/10/2020, 22:36:37) Leader Samuel Bones[Los Santos News](SQLID:5650) je napravio depozit od 10$ na Faction Bank.
+(17/10/2020, 15:46:12) Leader Noah Williams[POLICE](SQLID:521) je napravio depozit od 50000$ na Faction Bank.

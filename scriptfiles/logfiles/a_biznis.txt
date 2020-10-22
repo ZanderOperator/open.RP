@@ -1,0 +1,1852 @@
+
+[19/03/2020] Vlasnik Lucas_Ruiz(185.38.145.208) je uzeo 313000$ iz biznisa 96.
+[19/03/2020] Vlasnik Kavion_Owens(109.93.32.193) je uzeo 10000$ iz biznisa 21.
+[19/03/2020] Vlasnik Kavion_Owens(109.93.32.193) je uzeo 135$ iz biznisa 21.
+[19/03/2020] Vlasnik Kavion_Owens(109.93.32.193) je uzeo 1223$ iz biznisa 21.
+[20/03/2020] Vlasnik Tatiyanna_Jennings(37.19.109.73) je uzeo 17800$ iz biznisa 16.
+[20/03/2020] Vlasnik Kavion_Owens(109.93.32.193) je uzeo 1$ iz biznisa 21.
+[20/03/2020] Vlasnik Kavion_Owens(109.93.32.193) je uzeo 337$ iz biznisa 21.
+[21/03/2020] Vlasnik Rakeem_Bell(109.206.115.39) je uzeo 5848$ iz biznisa 11.
+[21/03/2020] Vlasnik Andrew_Parker(178.149.208.37) je uzeo 7000$ iz biznisa 2.
+[21/03/2020] Vlasnik Kevin_Brent(109.175.96.106) je uzeo 50000$ iz biznisa 33.
+[21/03/2020] Vlasnik Brian_Nixon(79.101.243.100) je uzeo 7821$ iz biznisa 92.
+[21/03/2020] Vlasnik Logan_Watson(95.156.140.55) je uzeo 600000$ iz biznisa 96.
+[22/03/2020] Vlasnik John_Daley(188.70.55.202) je uzeo 4179$ iz biznisa 85.
+[22/03/2020] Vlasnik Avram_Leontyev(77.77.216.76) je uzeo 5000$ iz biznisa 49.
+[22/03/2020] Vlasnik Jackson_Scofield(78.0.24.160) je uzeo 25000$ iz biznisa 62.
+[22/03/2020] Vlasnik Ashton_Hawk(93.143.198.187) je uzeo 4400$ iz biznisa 55.
+[22/03/2020] Vlasnik Logan_Watson(95.156.154.227) je uzeo 240000$ iz biznisa 96.
+[22/03/2020] Vlasnik Tom_Hepner(109.92.185.91) je uzeo 1696$ iz biznisa 103.
+[22/03/2020] Vlasnik Kavion_Owens(109.93.32.193) je uzeo 11$ iz biznisa 21.
+[22/03/2020] Vlasnik Kavion_Owens(109.93.32.193) je uzeo 304$ iz biznisa 21.
+[23/03/2020] Vlasnik Jacody_Cotton(87.116.178.91) je uzeo 12000$ iz biznisa 105.
+[23/03/2020] Vlasnik Vondel_Joyner(109.122.123.120) je uzeo 771$ iz biznisa 116.
+[23/03/2020] Vlasnik Logan_Watson(95.156.138.184) je uzeo 600000$ iz biznisa 96.
+[23/03/2020] Vlasnik Tatiyanna_Jennings(77.243.24.22) je uzeo 800$ iz biznisa 16.
+[23/03/2020] Vlasnik Avram_Leontyev(77.77.217.137) je uzeo 1900$ iz biznisa 49.
+[23/03/2020] Vlasnik David_Elizalde(77.77.219.52) je uzeo 15000$ iz biznisa 125.
+[23/03/2020] Vlasnik David_Elizalde(77.77.219.52) je uzeo 338$ iz biznisa 125.
+[23/03/2020] Vlasnik David_Elizalde(77.77.219.52) je stavio 7000$ na biznis 63.
+[23/03/2020] Vlasnik David_Elizalde(77.77.219.52) je stavio 200$ na biznis 63.
+[23/03/2020] Vlasnik David_Elizalde(77.77.219.52) je stavio 512$ na biznis 63.
+[24/03/2020] Vlasnik Tom_Hepner(109.92.185.91) je uzeo 2470$ iz biznisa 103.
+[24/03/2020] Vlasnik Ewan_Blackwell(178.221.108.188) je stavio 20$ na biznis 112.
+[24/03/2020] Vlasnik Ewan_Blackwell(178.221.108.188) je stavio 10$ na biznis 112.
+[24/03/2020] Vlasnik Ewan_Blackwell(178.221.108.188) je stavio 20$ na biznis 112.
+[24/03/2020] Vlasnik Tom_Hepner(109.92.185.91) je stavio 200$ na biznis 103.
+[24/03/2020] Vlasnik Logan_Watson(185.38.147.116) je uzeo 1000000$ iz biznisa 96.
+[24/03/2020] Vlasnik Jacody_Cotton(87.116.177.205) je uzeo 3000$ iz biznisa 105.
+[24/03/2020] Vlasnik George_Sherman(109.93.191.120) je uzeo 24000$ iz biznisa 29.
+[24/03/2020] Vlasnik Ernesto_Ramirez(46.5.230.132) je uzeo 7000$ iz biznisa 32.
+[25/03/2020] Vlasnik Lucas_Ruiz(185.38.147.228) je uzeo 1500000$ iz biznisa 96.
+[25/03/2020] Vlasnik Vukota_Stojkovic(109.92.186.59) je uzeo 2000$ iz biznisa 66.
+[25/03/2020] Vlasnik Rakeem_Bell(109.206.115.39) je uzeo 5000$ iz biznisa 11.
+[25/03/2020] Vlasnik Rakeem_Bell(109.206.115.39) je uzeo 2086$ iz biznisa 11.
+[25/03/2020] Vlasnik Tom_Hepner(109.92.185.91) je stavio 498449$ na biznis 103.
+[25/03/2020] Vlasnik Tom_Hepner(109.92.185.91) je stavio 50$ na biznis 103.
+[25/03/2020] Vlasnik Deontay_Price(109.93.195.28) je uzeo 6000$ iz biznisa 16.
+[25/03/2020] Vlasnik Carl_Sanders(78.1.8.232) je uzeo 1$ iz biznisa 53.
+[25/03/2020] Vlasnik Carl_Sanders(78.1.8.232) je uzeo 5500$ iz biznisa 53.
+[25/03/2020] Vlasnik Thomas_McDowell(109.175.97.57) je uzeo 39000$ iz biznisa 33.
+[25/03/2020] Vlasnik Tom_Hepner(109.92.185.91) je uzeo 497000$ iz biznisa 103.
+[25/03/2020] Vlasnik Tom_Hepner(109.92.185.91) je uzeo 2000$ iz biznisa 103.
+[25/03/2020] Vlasnik Lina_Tambini(188.124.220.158) je uzeo 6000$ iz biznisa 54.
+[25/03/2020] Vlasnik Jordan_Maccagno(188.70.0.220) je uzeo 500$ iz biznisa 85.
+[25/03/2020] Vlasnik Daryl_Trager(31.47.18.201) je uzeo 1$ iz biznisa 64.
+[25/03/2020] Vlasnik Daryl_Trager(31.47.18.201) je uzeo 1862$ iz biznisa 64.
+[26/03/2020] Suvlasnik Igor_Kostic(79.101.154.123) je uzeo 350$ iz biznisa 66.
+[26/03/2020] Suvlasnik Igor_Kostic(79.101.154.123) je uzeo 154$ iz biznisa 66.
+[26/03/2020] Vlasnik Jordan_Maccagno(188.70.0.220) je uzeo 1935$ iz biznisa 85.
+[26/03/2020] Vlasnik David_Elizalde(77.77.219.52) je stavio 300$ na biznis 63.
+[26/03/2020] Vlasnik Ralph_Masotti(5.43.73.254) je uzeo 4500$ iz biznisa 123.
+[26/03/2020] Vlasnik Quinn_Hudson(178.220.121.16) je uzeo 700$ iz biznisa 101.
+[27/03/2020] Vlasnik Pablo_Galvez(193.217.223.149) je uzeo 1076$ iz biznisa 24.
+[27/03/2020] Suvlasnik Igor_Kostic(79.101.154.123) je uzeo 145$ iz biznisa 66.
+[27/03/2020] Suvlasnik Igor_Kostic(79.101.154.123) je uzeo 386$ iz biznisa 66.
+[27/03/2020] Vlasnik Thomas_McDowell(109.175.96.160) je uzeo 55000$ iz biznisa 33.
+[28/03/2020] Vlasnik Jacody_Cotton(87.116.179.173) je uzeo 4900$ iz biznisa 105.
+[28/03/2020] Vlasnik Blake_Bullock(178.220.121.16) je uzeo 2300$ iz biznisa 101.
+[28/03/2020] Vlasnik Aaron_Arkwood(109.206.115.39) je uzeo 5636$ iz biznisa 11.
+[28/03/2020] Vlasnik Vukota_Stojkovic(178.220.60.151) je uzeo 1500$ iz biznisa 66.
+[28/03/2020] Vlasnik David_Elizalde(77.77.219.52) je uzeo 923$ iz biznisa 63.
+[28/03/2020] Vlasnik Pablo_Galvez(193.217.223.149) je uzeo 8000$ iz biznisa 23.
+[29/03/2020] Vlasnik Pernell_Octave(109.93.191.98) je uzeo 4000$ iz biznisa 16.
+[29/03/2020] Vlasnik Carl_Sanders(93.143.66.147) je uzeo 1$ iz biznisa 53.
+[29/03/2020] Vlasnik Carl_Sanders(93.143.66.147) je uzeo 3341$ iz biznisa 53.
+[29/03/2020] Suvlasnik Igor_Kostic(79.101.154.123) je uzeo 7228$ iz biznisa 66.
+[29/03/2020] Vlasnik Blake_Bullock(178.220.121.16) je uzeo 3000$ iz biznisa 101.
+[30/03/2020] Vlasnik Donald_Nixon(109.92.185.91) je uzeo 1500$ iz biznisa 103.
+[30/03/2020] Vlasnik Jordan_Maccagno(188.71.228.177) je stavio 3220$ na biznis 85.
+[30/03/2020] Vlasnik Jordan_Maccagno(188.71.228.177) je uzeo 3589$ iz biznisa 85.
+[30/03/2020] Vlasnik Thomas_McDowell(109.175.96.61) je uzeo 22000$ iz biznisa 33.
+[30/03/2020] Vlasnik Thomas_McDowell(109.175.96.61) je uzeo 27000$ iz biznisa 33.
+[30/03/2020] Vlasnik Avram_Leontyev(77.77.217.170) je uzeo 7000$ iz biznisa 49.
+[31/03/2020] Vlasnik Blake_Bullock(178.220.121.16) je uzeo 2000$ iz biznisa 101.
+[31/03/2020] Vlasnik Pablo_Galvez(193.217.223.149) je uzeo 2000$ iz biznisa 23.
+[31/03/2020] Vlasnik Pablo_Galvez(193.217.223.149) je uzeo 200$ iz biznisa 23.
+[31/03/2020] Vlasnik Alicia_Macious(193.14.247.108) je stavio 540$ na biznis 23.
+[31/03/2020] Vlasnik Alicia_Macious(193.14.247.108) je stavio 540$ na biznis 23.
+[31/03/2020] Vlasnik Alicia_Macious(193.14.247.108) je uzeo 1600$ iz biznisa 23.
+[31/03/2020] Vlasnik Donald_Nixon(109.92.185.91) je uzeo 1000$ iz biznisa 103.
+[31/03/2020] Vlasnik Ernesto_Ramirez(46.5.230.255) je uzeo 5000$ iz biznisa 32.
+[31/03/2020] Vlasnik Andrew_Parker(178.149.208.37) je uzeo 10000$ iz biznisa 2.
+[31/03/2020] Vlasnik Andrew_Parker(178.149.208.37) je uzeo 824$ iz biznisa 2.
+[31/03/2020] Vlasnik Andrew_Parker(178.149.208.37) je uzeo 115$ iz biznisa 2.
+[31/03/2020] Vlasnik Jordan_Maccagno(188.70.0.56) je stavio 30000$ na biznis 129.
+[31/03/2020] Vlasnik William_Sherman(62.4.55.64) je uzeo 2500$ iz biznisa 115.
+[31/03/2020] Vlasnik William_Sherman(62.4.55.64) je uzeo 134$ iz biznisa 115.
+[31/03/2020] Vlasnik Andrew_Parker(178.149.208.37) je stavio 300$ na biznis 2.
+[31/03/2020] Vlasnik Andrew_Parker(178.149.208.37) je uzeo 800$ iz biznisa 2.
+[31/03/2020] Vlasnik Andrew_Parker(178.149.208.37) je uzeo 13$ iz biznisa 2.
+[31/03/2020] Vlasnik Andrew_Parker(178.149.208.37) je stavio 16$ na biznis 2.
+[31/03/2020] Vlasnik Giuseppe_Manna(178.223.225.175) je uzeo 500$ iz biznisa 108.
+[31/03/2020] Vlasnik Giuseppe_Manna(178.223.225.175) je uzeo 300$ iz biznisa 108.
+[31/03/2020] Vlasnik Alicia_Macious(193.14.247.108) je uzeo 800$ iz biznisa 23.
+[31/03/2020] Vlasnik Blake_Bullock(178.220.121.16) je uzeo 1000$ iz biznisa 101.
+[01/04/2020] Vlasnik Thomas_McDowell(109.175.98.122) je uzeo 34000$ iz biznisa 33.
+[01/04/2020] Vlasnik Alberico_Cappello(109.92.236.69) je uzeo 14798$ iz biznisa 14.
+[01/04/2020] Vlasnik Fawziyya_Khawaja(95.156.136.182) je uzeo 1600000$ iz biznisa 96.
+[01/04/2020] Vlasnik Andrew_Parker(178.149.208.37) je uzeo 1200$ iz biznisa 125.
+[01/04/2020] Vlasnik Jimmy_Pagnotto(92.36.172.24) je uzeo 900$ iz biznisa 17.
+[01/04/2020] Vlasnik Jimmy_Pagnotto(92.36.172.24) je uzeo 8106$ iz biznisa 17.
+[02/04/2020] Vlasnik Roman_Alekperov(109.93.132.181) je uzeo 3000$ iz biznisa 85.
+[02/04/2020] Vlasnik Jordan_Maccagno(188.70.18.11) je uzeo 7500$ iz biznisa 129.
+[02/04/2020] Vlasnik Andrew_Parker(178.149.208.37) je uzeo 316$ iz biznisa 125.
+[02/04/2020] Vlasnik Pernell_Octave(109.93.195.241) je uzeo 4000$ iz biznisa 16.
+[02/04/2020] Vlasnik Jordan_Maccagno(188.70.18.11) je uzeo 10000$ iz biznisa 129.
+[02/04/2020] Vlasnik Jordan_Maccagno(188.70.18.11) je uzeo 7052$ iz biznisa 129.
+[02/04/2020] Vlasnik Aaron_Arkwood(109.206.115.39) je uzeo 5307$ iz biznisa 11.
+[02/04/2020] Vlasnik Napoleon_Vernier(178.149.208.37) je uzeo 400$ iz biznisa 125.
+[02/04/2020] Vlasnik George_Sherman(109.93.191.122) je uzeo 48500$ iz biznisa 29.
+[02/04/2020] Vlasnik Alicia_Macious(193.217.222.74) je stavio 900$ na biznis 23.
+[02/04/2020] Vlasnik Alicia_Macious(193.217.222.74) je uzeo 1800$ iz biznisa 23.
+[03/04/2020] Vlasnik Thomas_McDowell(109.175.98.202) je uzeo 43000$ iz biznisa 33.
+[03/04/2020] Vlasnik Napoleon_Vernier(178.149.208.37) je uzeo 200$ iz biznisa 125.
+[03/04/2020] Vlasnik Donald_Nixon(109.92.185.91) je uzeo 800$ iz biznisa 103.
+[03/04/2020] Vlasnik Napoleon_Vernier(178.149.208.37) je uzeo 400$ iz biznisa 125.
+[03/04/2020] Vlasnik Napoleon_Vernier(178.149.208.37) je uzeo 34$ iz biznisa 125.
+[03/04/2020] Vlasnik Napoleon_Vernier(178.149.208.37) je uzeo 100$ iz biznisa 125.
+[03/04/2020] Vlasnik Napoleon_Vernier(178.149.208.37) je uzeo 200$ iz biznisa 125.
+[03/04/2020] Vlasnik Vincent_Coleman(94.253.168.78) je uzeo 357$ iz biznisa 91.
+[03/04/2020] Vlasnik Giuseppe_Manna(178.223.225.175) je uzeo 1608$ iz biznisa 108.
+[04/04/2020] Vlasnik Thomas_McDowell(109.175.98.202) je uzeo 14000$ iz biznisa 33.
+[04/04/2020] Vlasnik Blake_Bullock(178.220.121.16) je uzeo 3000$ iz biznisa 101.
+[04/04/2020] Vlasnik Pernell_Octave(109.93.191.48) je uzeo 1650$ iz biznisa 16.
+[04/04/2020] Vlasnik Avram_Leontyev(77.77.217.170) je uzeo 10000$ iz biznisa 49.
+[04/04/2020] Vlasnik Giuseppe_Manna(212.200.33.74) je uzeo 1027$ iz biznisa 108.
+[05/04/2020] Vlasnik Donald_Nixon(109.92.185.91) je uzeo 500$ iz biznisa 103.
+[05/04/2020] Vlasnik Viktor_Stern(109.175.97.120) je stavio 100$ na biznis 56.
+[05/04/2020] Vlasnik Viktor_Stern(109.175.97.120) je stavio 50$ na biznis 56.
+[05/04/2020] Vlasnik Viktor_Stern(109.175.97.120) je uzeo 15028$ iz biznisa 56.
+[05/04/2020] Vlasnik Daniel_Williamson(109.92.236.69) je stavio 2$ na biznis 14.
+[05/04/2020] Vlasnik Daniel_Williamson(109.92.236.69) je uzeo 2000$ iz biznisa 14.
+[05/04/2020] Vlasnik Daniel_Williamson(109.92.236.69) je uzeo 123$ iz biznisa 14.
+[05/04/2020] Vlasnik George_Sherman(109.93.191.3) je uzeo 21300$ iz biznisa 29.
+[05/04/2020] Vlasnik Pernell_Octave(109.93.191.47) je uzeo 670$ iz biznisa 16.
+[05/04/2020] Vlasnik Pernell_Octave(109.93.191.47) je uzeo 70$ iz biznisa 16.
+[05/04/2020] Vlasnik Christopher_DeRossi(85.94.140.199) je uzeo 364$ iz biznisa 42.
+[05/04/2020] Vlasnik Christopher_DeRossi(85.94.140.199) je uzeo 300$ iz biznisa 42.
+[05/04/2020] Vlasnik Christopher_DeRossi(85.94.140.199) je uzeo 331$ iz biznisa 42.
+[05/04/2020] Vlasnik Zach_Tarantino(109.237.35.62) je uzeo 2566$ iz biznisa 95.
+[05/04/2020] Vlasnik Daniel_Williamson(109.92.236.69) je uzeo 500$ iz biznisa 14.
+[06/04/2020] Vlasnik Kiarra_Leean(178.209.5.71) je uzeo 40000$ iz biznisa 30.
+[06/04/2020] Vlasnik Presnel_Barksdale(178.221.12.35) je uzeo 700$ iz biznisa 16.
+[06/04/2020] Vlasnik Thomas_McDowell(109.175.96.124) je uzeo 57000$ iz biznisa 33.
+[06/04/2020] Vlasnik Hank_Joeng(95.168.117.166) je uzeo 6509$ iz biznisa 19.
+[06/04/2020] Vlasnik Christopher_DeRossi(85.94.140.199) je uzeo 7000$ iz biznisa 42.
+[06/04/2020] Vlasnik Christopher_DeRossi(85.94.140.199) je uzeo 886$ iz biznisa 42.
+[06/04/2020] Vlasnik Daniel_Williamson(109.93.138.1) je uzeo 2000$ iz biznisa 14.
+[06/04/2020] Vlasnik Napoleon_Vernier(178.149.208.37) je uzeo 500$ iz biznisa 125.
+[06/04/2020] Vlasnik Napoleon_Vernier(178.149.208.37) je uzeo 237$ iz biznisa 125.
+[06/04/2020] Vlasnik Napoleon_Vernier(178.149.208.37) je uzeo 340$ iz biznisa 125.
+[06/04/2020] Vlasnik Napoleon_Vernier(178.149.208.37) je uzeo 200$ iz biznisa 125.
+[06/04/2020] Vlasnik Napoleon_Vernier(178.149.208.37) je stavio 200$ na biznis 125.
+[06/04/2020] Vlasnik Viktor_Stern(109.175.96.6) je uzeo 1000$ iz biznisa 56.
+[06/04/2020] Vlasnik Napoleon_Vernier(178.149.208.37) je stavio 1000$ na biznis 125.
+[06/04/2020] Vlasnik Napoleon_Vernier(178.149.208.37) je uzeo 500$ iz biznisa 125.
+[06/04/2020] Vlasnik Donald_Nixon(109.92.185.91) je uzeo 600$ iz biznisa 103.
+[07/04/2020] Vlasnik Anna_McAdams(109.94.97.184) je uzeo 400$ iz biznisa 130.
+[07/04/2020] Vlasnik Anna_McAdams(109.94.97.184) je uzeo 400$ iz biznisa 130.
+[07/04/2020] Vlasnik Daniel_Williamson(79.101.153.167) je uzeo 2000$ iz biznisa 14.
+[07/04/2020] Vlasnik Ashton_Hawk(78.2.56.156) je uzeo 52100$ iz biznisa 55.
+[07/04/2020] Vlasnik Pavel_Ivanov(62.4.55.105) je uzeo 10000$ iz biznisa 31.
+[07/04/2020] Vlasnik Napoleon_Vernier(178.149.208.37) je uzeo 200$ iz biznisa 125.
+[07/04/2020] Vlasnik Napoleon_Vernier(178.149.208.37) je uzeo 200$ iz biznisa 125.
+[07/04/2020] Vlasnik Napoleon_Vernier(178.149.208.37) je uzeo 200$ iz biznisa 125.
+[07/04/2020] Vlasnik Daryl_Trager(31.47.18.201) je uzeo 1$ iz biznisa 64.
+[07/04/2020] Vlasnik Daryl_Trager(31.47.18.201) je uzeo 853$ iz biznisa 64.
+[07/04/2020] Vlasnik Napoleon_Vernier(178.149.208.37) je uzeo 200$ iz biznisa 125.
+[07/04/2020] Vlasnik Napoleon_Vernier(178.149.208.37) je uzeo 200$ iz biznisa 125.
+[08/04/2020] Vlasnik Viktor_Stern(109.175.96.121) je uzeo 1000$ iz biznisa 56.
+[08/04/2020] Vlasnik Igor_Kostic(178.221.130.57) je uzeo 1124$ iz biznisa 57.
+[08/04/2020] Vlasnik Joshua_Donovan(95.168.120.39) je uzeo 5508$ iz biznisa 10.
+[08/04/2020] Vlasnik Avram_Leontyev(77.77.216.189) je uzeo 300000$ iz biznisa 49.
+[08/04/2020] Vlasnik Pavel_Ivanov(62.4.55.105) je uzeo 1000$ iz biznisa 31.
+[08/04/2020] Vlasnik Jimmy_Cheng(89.146.158.192) je uzeo 250$ iz biznisa 20.
+[08/04/2020] Vlasnik Igor_Kostic(178.221.130.57) je uzeo 31$ iz biznisa 57.
+[08/04/2020] Vlasnik Vincent_Coleman(88.207.57.34) je uzeo 247$ iz biznisa 91.
+[08/04/2020] Vlasnik Pablo_Vasquez(37.203.84.109) je uzeo 454$ iz biznisa 113.
+[08/04/2020] Vlasnik Daryl_Trager(31.47.18.201) je uzeo 1$ iz biznisa 64.
+[08/04/2020] Vlasnik Daryl_Trager(31.47.18.201) je uzeo 228$ iz biznisa 64.
+[08/04/2020] Vlasnik Thomas_McDowell(109.175.99.111) je uzeo 50000$ iz biznisa 33.
+[08/04/2020] Vlasnik Alan_Huang(89.111.209.88) je stavio 1$ na biznis 83.
+[08/04/2020] Vlasnik Alan_Huang(89.111.209.88) je uzeo 17000$ iz biznisa 83.
+[08/04/2020] Vlasnik Jeff_Sheng(109.175.103.254) je stavio 1$ na biznis 93.
+[08/04/2020] Vlasnik Jeff_Sheng(109.175.103.254) je stavio 1$ na biznis 93.
+[08/04/2020] Vlasnik Jeff_Sheng(109.175.103.254) je stavio 100$ na biznis 93.
+[08/04/2020] Vlasnik Jeff_Sheng(109.175.103.254) je uzeo 9363$ iz biznisa 93.
+[09/04/2020] Vlasnik Jeff_Sheng(109.175.103.254) je uzeo 5909$ iz biznisa 93.
+[09/04/2020] Vlasnik Jeff_Sheng(109.175.103.254) je uzeo 3000$ iz biznisa 93.
+[09/04/2020] Vlasnik Jeff_Sheng(109.175.103.254) je uzeo 1348$ iz biznisa 93.
+[09/04/2020] Vlasnik Avram_Leontyev(77.77.216.189) je uzeo 6000$ iz biznisa 49.
+[09/04/2020] Vlasnik Avram_Leontyev(77.77.216.189) je stavio 100000$ na biznis 49.
+[09/04/2020] Vlasnik Avram_Leontyev(77.77.216.189) je stavio 400000$ na biznis 49.
+[09/04/2020] Vlasnik Napoleon_Vernier(178.149.208.37) je uzeo 5500$ iz biznisa 125.
+[09/04/2020] Vlasnik Napoleon_Vernier(178.149.208.37) je uzeo 19000$ iz biznisa 125.
+[09/04/2020] Vlasnik Ernesto_Ramirez(46.5.230.46) je uzeo 5000$ iz biznisa 32.
+[09/04/2020] Vlasnik Dejan_Stojmenovic(178.220.6.207) je uzeo 200$ iz biznisa 66.
+[09/04/2020] Vlasnik Dejan_Stojmenovic(178.220.6.207) je uzeo 200$ iz biznisa 66.
+[09/04/2020] Vlasnik Dejan_Stojmenovic(178.220.6.207) je uzeo 5800$ iz biznisa 66.
+[10/04/2020] Vlasnik Avram_Leontyev(77.77.216.189) je stavio 500000$ na biznis 49.
+[10/04/2020] Vlasnik Ralph_Masotti(5.43.73.254) je uzeo 2500$ iz biznisa 123.
+[10/04/2020] Vlasnik Jimmy_Cheng(89.146.144.248) je uzeo 1888$ iz biznisa 20.
+[10/04/2020] Vlasnik Dejan_Stojmenovic(178.220.6.207) je uzeo 20$ iz biznisa 66.
+[10/04/2020] Vlasnik Dejan_Stojmenovic(178.220.6.207) je uzeo 100$ iz biznisa 66.
+[10/04/2020] Vlasnik Daniel_Williamson(178.222.168.46) je uzeo 500$ iz biznisa 14.
+[10/04/2020] Vlasnik Daniel_Williamson(178.222.168.46) je uzeo 3200$ iz biznisa 14.
+[10/04/2020] Vlasnik Igor_Kostic(178.223.87.236) je uzeo 1000$ iz biznisa 57.
+[10/04/2020] Vlasnik Donald_Nixon(109.92.185.91) je uzeo 1500$ iz biznisa 103.
+[10/04/2020] Vlasnik Alan_Huang(89.111.209.88) je uzeo 280$ iz biznisa 83.
+[11/04/2020] Vlasnik Avram_Leontyev(77.77.216.189) je uzeo 25000$ iz biznisa 49.
+[11/04/2020] Vlasnik William_Sherman(62.4.55.64) je uzeo 3139$ iz biznisa 115.
+[11/04/2020] Vlasnik Daniel_Williamson(178.222.168.46) je uzeo 3000$ iz biznisa 14.
+[11/04/2020] Vlasnik Igor_Kostic(109.92.165.55) je uzeo 400$ iz biznisa 57.
+[11/04/2020] Vlasnik Daryl_Trager(31.47.18.201) je uzeo 1$ iz biznisa 64.
+[11/04/2020] Vlasnik Daryl_Trager(31.47.18.201) je uzeo 397$ iz biznisa 64.
+[11/04/2020] Vlasnik Davor_Simovic(95.156.185.161) je uzeo 1800000$ iz biznisa 96.
+[11/04/2020] Vlasnik Daniel_Williamson(178.222.168.46) je uzeo 1000$ iz biznisa 14.
+[11/04/2020] Vlasnik Thomas_Harper(46.161.111.74) je uzeo 4000$ iz biznisa 133.
+[11/04/2020] Vlasnik Jimmy_Pagnotto(92.36.171.148) je uzeo 5131$ iz biznisa 17.
+[11/04/2020] Vlasnik Dejan_Stojmenovic(178.220.6.207) je uzeo 200$ iz biznisa 66.
+[11/04/2020] Vlasnik Jeff_Sheng(109.175.103.215) je stavio 3000$ na biznis 93.
+[11/04/2020] Vlasnik Jeff_Sheng(109.175.103.215) je uzeo 7000$ iz biznisa 93.
+[11/04/2020] Vlasnik Dejan_Stojmenovic(178.220.6.207) je uzeo 166$ iz biznisa 66.
+[11/04/2020] Vlasnik Dejan_Stojmenovic(178.220.6.207) je uzeo 200$ iz biznisa 66.
+[11/04/2020] Vlasnik Jeff_Sheng(109.175.103.215) je uzeo 5801$ iz biznisa 93.
+[11/04/2020] Vlasnik Dejan_Stojmenovic(178.220.6.207) je uzeo 7500$ iz biznisa 66.
+[11/04/2020] Vlasnik Dejan_Stojmenovic(178.220.6.207) je uzeo 950$ iz biznisa 66.
+[12/04/2020] Vlasnik Roy_Helms(94.189.227.59) je uzeo 6838$ iz biznisa 84.
+[12/04/2020] Vlasnik Brooks_Connor(109.93.89.145) je uzeo 16850$ iz biznisa 126.
+[12/04/2020] Vlasnik Vincent_Coleman(94.253.168.78) je uzeo 550$ iz biznisa 91.
+[12/04/2020] Vlasnik Dragan_Jovanovic(109.92.189.157) je uzeo 2084$ iz biznisa 111.
+[12/04/2020] Vlasnik Jimmy_Cheng(89.146.128.18) je uzeo 200$ iz biznisa 20.
+[12/04/2020] Vlasnik Jimmy_Cheng(89.146.128.18) je uzeo 200$ iz biznisa 20.
+[12/04/2020] Vlasnik Donald_Nixon(109.92.185.91) je uzeo 800$ iz biznisa 103.
+[12/04/2020] Vlasnik Michael_Blake(109.92.148.172) je uzeo 1$ iz biznisa 92.
+[12/04/2020] Vlasnik Thomas_Harper(46.161.111.74) je uzeo 50$ iz biznisa 133.
+[12/04/2020] Vlasnik Thomas_Harper(46.161.111.74) je uzeo 825$ iz biznisa 133.
+[13/04/2020] Vlasnik Dejan_Stojmenovic(178.220.6.207) je uzeo 200$ iz biznisa 66.
+[13/04/2020] Vlasnik Jeff_Sheng(109.175.101.78) je uzeo 10000$ iz biznisa 93.
+[13/04/2020] Vlasnik Thomas_McDowell(109.175.96.69) je uzeo 61000$ iz biznisa 33.
+[13/04/2020] Vlasnik Boris_Noukhayev(37.203.88.131) je uzeo 2596$ iz biznisa 113.
+[13/04/2020] Vlasnik Pablo_Galvez(193.217.220.22) je uzeo 854$ iz biznisa 60.
+[13/04/2020] Vlasnik Roy_Helms(94.189.227.59) je stavio 1275$ na biznis 84.
+[13/04/2020] Vlasnik Roy_Helms(94.189.227.59) je uzeo 2550$ iz biznisa 84.
+[13/04/2020] Vlasnik Pablo_Galvez(193.217.220.22) je stavio 8000$ na biznis 60.
+[13/04/2020] Vlasnik Pablo_Galvez(193.217.220.22) je uzeo 8000$ iz biznisa 60.
+[13/04/2020] Vlasnik Pablo_Galvez(193.217.220.22) je stavio 5000$ na biznis 60.
+[13/04/2020] Vlasnik Pablo_Galvez(193.217.220.22) je stavio 500$ na biznis 60.
+[13/04/2020] Vlasnik Anna_McAdams(109.94.97.184) je uzeo 6000$ iz biznisa 130.
+[13/04/2020] Vlasnik Vincent_Coleman(94.253.171.210) je uzeo 346$ iz biznisa 91.
+[13/04/2020] Vlasnik Daniel_Williamson(178.223.81.98) je uzeo 1000$ iz biznisa 14.
+[13/04/2020] Vlasnik Vincent_Coleman(94.253.171.210) je uzeo 224$ iz biznisa 91.
+[13/04/2020] Vlasnik Daniel_Williamson(178.223.81.98) je uzeo 500$ iz biznisa 14.
+[13/04/2020] Vlasnik Daniel_Williamson(178.223.81.98) je uzeo 3500$ iz biznisa 14.
+[14/04/2020] Vlasnik Avram_Leontyev(77.77.217.28) je uzeo 20000$ iz biznisa 49.
+[14/04/2020] Vlasnik Ashton_Hawk(93.139.52.208) je uzeo 21700$ iz biznisa 55.
+[14/04/2020] Vlasnik Jeff_Sheng(109.175.102.143) je uzeo 6145$ iz biznisa 93.
+[14/04/2020] Vlasnik Leonard_Burkhart(176.61.159.63) je uzeo 23463$ iz biznisa 99.
+[14/04/2020] Vlasnik Joshua_Donovan(95.168.116.44) je uzeo 3385$ iz biznisa 10.
+[14/04/2020] Vlasnik Pablo_Galvez(193.217.220.22) je uzeo 5500$ iz biznisa 60.
+[14/04/2020] Vlasnik Pablo_Galvez(193.217.220.22) je stavio 5500$ na biznis 60.
+[14/04/2020] Vlasnik Christopher_DeRossi(85.94.129.5) je uzeo 4000$ iz biznisa 42.
+[14/04/2020] Vlasnik Igor_Kostic(109.92.93.104) je uzeo 818$ iz biznisa 57.
+[14/04/2020] Vlasnik Igor_Kostic(109.92.93.104) je uzeo 1000$ iz biznisa 57.
+[14/04/2020] Vlasnik Boris_Noukhayev(31.176.226.9) je uzeo 1$ iz biznisa 113.
+[14/04/2020] Vlasnik Boris_Noukhayev(31.176.226.9) je uzeo 514$ iz biznisa 113.
+[14/04/2020] Vlasnik Milika_Savic(31.47.18.201) je uzeo 1$ iz biznisa 64.
+[14/04/2020] Vlasnik Milika_Savic(31.47.18.201) je uzeo 2255$ iz biznisa 64.
+[14/04/2020] Vlasnik Boris_Noukhayev(31.176.226.9) je uzeo 287$ iz biznisa 113.
+[14/04/2020] Vlasnik Daniel_Williamson(77.46.196.176) je uzeo 1000$ iz biznisa 14.
+[14/04/2020] Vlasnik Boris_Noukhayev(31.176.226.9) je uzeo 125$ iz biznisa 113.
+[14/04/2020] Vlasnik Boris_Noukhayev(31.176.226.9) je uzeo 60$ iz biznisa 113.
+[14/04/2020] Vlasnik Boris_Noukhayev(31.176.226.9) je uzeo 10$ iz biznisa 113.
+[14/04/2020] Vlasnik Boris_Noukhayev(31.176.226.9) je uzeo 3100$ iz biznisa 113.
+[14/04/2020] Vlasnik Boris_Noukhayev(31.176.226.9) je uzeo 64$ iz biznisa 113.
+[14/04/2020] Vlasnik Milika_Savic(31.47.18.201) je uzeo 1$ iz biznisa 64.
+[14/04/2020] Vlasnik Milika_Savic(31.47.18.201) je uzeo 1$ iz biznisa 64.
+[14/04/2020] Vlasnik Milika_Savic(31.47.18.201) je uzeo 1074$ iz biznisa 64.
+[14/04/2020] Vlasnik Milika_Savic(31.47.18.201) je uzeo 1$ iz biznisa 64.
+[14/04/2020] Vlasnik Milika_Savic(31.47.18.201) je uzeo 1$ iz biznisa 64.
+[14/04/2020] Vlasnik Milika_Savic(31.47.18.201) je uzeo 1$ iz biznisa 64.
+[14/04/2020] Vlasnik Milika_Savic(31.47.18.201) je uzeo 1$ iz biznisa 64.
+[14/04/2020] Vlasnik Milika_Savic(31.47.18.201) je uzeo 1$ iz biznisa 64.
+[14/04/2020] Vlasnik Milika_Savic(31.47.18.201) je uzeo 1$ iz biznisa 64.
+[14/04/2020] Vlasnik Milika_Savic(31.47.18.201) je uzeo 1$ iz biznisa 64.
+[14/04/2020] Vlasnik Milika_Savic(31.47.18.201) je uzeo 1$ iz biznisa 64.
+[14/04/2020] Vlasnik Milika_Savic(31.47.18.201) je uzeo 1$ iz biznisa 64.
+[14/04/2020] Vlasnik Milika_Savic(31.47.18.201) je uzeo 1$ iz biznisa 64.
+[14/04/2020] Vlasnik Milika_Savic(31.47.18.201) je uzeo 1$ iz biznisa 64.
+[14/04/2020] Vlasnik Milika_Savic(31.47.18.201) je uzeo 1$ iz biznisa 64.
+[14/04/2020] Vlasnik Milika_Savic(31.47.18.201) je uzeo 500$ iz biznisa 64.
+[14/04/2020] Vlasnik Milika_Savic(31.47.18.201) je uzeo 150$ iz biznisa 64.
+[14/04/2020] Vlasnik Milika_Savic(31.47.18.201) je uzeo 1$ iz biznisa 64.
+[14/04/2020] Vlasnik Milika_Savic(31.47.18.201) je uzeo 1$ iz biznisa 64.
+[14/04/2020] Vlasnik Milika_Savic(31.47.18.201) je uzeo 9000$ iz biznisa 64.
+[14/04/2020] Vlasnik Milika_Savic(31.47.18.201) je uzeo 1$ iz biznisa 64.
+[14/04/2020] Vlasnik Milika_Savic(31.47.18.201) je uzeo 3437$ iz biznisa 64.
+[15/04/2020] Vlasnik Thomas_Harper(46.161.111.74) je uzeo 500$ iz biznisa 133.
+[15/04/2020] Vlasnik Milika_Savic(31.47.18.201) je uzeo 1$ iz biznisa 64.
+[15/04/2020] Vlasnik Milika_Savic(31.47.18.201) je uzeo 186$ iz biznisa 64.
+[15/04/2020] Vlasnik Pablo_Galvez(193.217.220.22) je uzeo 7000$ iz biznisa 60.
+[15/04/2020] Vlasnik Richard_Kennedy(109.94.97.184) je uzeo 1500$ iz biznisa 130.
+[15/04/2020] Vlasnik Richard_Kennedy(109.94.97.184) je uzeo 3000$ iz biznisa 130.
+[15/04/2020] Vlasnik Richard_Kennedy(109.94.97.184) je uzeo 1000$ iz biznisa 130.
+[15/04/2020] Vlasnik Presnel_Barksdale(109.93.195.250) je uzeo 15600$ iz biznisa 15.
+[15/04/2020] Vlasnik Daniel_Williamson(212.200.206.212) je uzeo 1000$ iz biznisa 14.
+[15/04/2020] Vlasnik Aaron_Schaffner(109.175.99.141) je uzeo 1000000$ iz biznisa 96.
+[15/04/2020] Vlasnik Milika_Savic(31.47.18.201) je uzeo 1$ iz biznisa 64.
+[15/04/2020] Vlasnik Milika_Savic(31.47.18.201) je uzeo 507$ iz biznisa 64.
+[15/04/2020] Vlasnik Thomas_Harper(46.161.111.74) je uzeo 500$ iz biznisa 133.
+[15/04/2020] Vlasnik Thomas_Harper(46.161.111.74) je uzeo 1136$ iz biznisa 133.
+[15/04/2020] Vlasnik David_Hughes(62.240.28.3) je uzeo 8428$ iz biznisa 116.
+[15/04/2020] Vlasnik Milika_Savic(31.47.18.201) je uzeo 1$ iz biznisa 64.
+[15/04/2020] Vlasnik Milika_Savic(31.47.18.201) je uzeo 1$ iz biznisa 64.
+[15/04/2020] Vlasnik Milika_Savic(31.47.18.201) je uzeo 1$ iz biznisa 64.
+[15/04/2020] Vlasnik Milika_Savic(31.47.18.201) je uzeo 1$ iz biznisa 64.
+[15/04/2020] Vlasnik Milika_Savic(31.47.18.201) je uzeo 1$ iz biznisa 64.
+[15/04/2020] Vlasnik Milika_Savic(31.47.18.201) je uzeo 1$ iz biznisa 64.
+[15/04/2020] Vlasnik Milika_Savic(31.47.18.201) je uzeo 300$ iz biznisa 64.
+[15/04/2020] Vlasnik Milika_Savic(31.47.18.201) je uzeo 3000$ iz biznisa 64.
+[15/04/2020] Vlasnik Milika_Savic(31.47.18.201) je uzeo 1000$ iz biznisa 64.
+[15/04/2020] Vlasnik Milika_Savic(31.47.18.201) je uzeo 9513$ iz biznisa 64.
+[15/04/2020] Vlasnik Thomas_Gerbel(212.227.175.39) je uzeo 10203$ iz biznisa 63.
+[15/04/2020] Vlasnik Thomas_Gerbel(212.227.175.39) je uzeo 5000$ iz biznisa 63.
+[16/04/2020] Vlasnik Milika_Savic(31.47.18.201) je uzeo 1$ iz biznisa 64.
+[16/04/2020] Vlasnik Milika_Savic(31.47.18.201) je uzeo 304$ iz biznisa 64.
+[16/04/2020] Vlasnik Michael_Rogers(109.93.191.119) je uzeo 100000$ iz biznisa 29.
+[16/04/2020] Vlasnik Christopher_DeRossi(46.35.133.219) je uzeo 2000$ iz biznisa 42.
+[17/04/2020] Vlasnik David_Chapman(92.241.152.56) je uzeo 30000$ iz biznisa 94.
+[17/04/2020] Vlasnik Thomas_McDowell(109.175.96.70) je uzeo 71000$ iz biznisa 33.
+[17/04/2020] Vlasnik Thomas_Gerbel(158.255.212.136) je uzeo 607$ iz biznisa 63.
+[17/04/2020] Vlasnik Donald_Nixon(178.223.140.171) je uzeo 2500$ iz biznisa 103.
+[17/04/2020] Vlasnik Rashed_Elmurzaev(79.101.70.208) je stavio 1075$ na biznis 21.
+[17/04/2020] Vlasnik Rashed_Elmurzaev(79.101.70.208) je uzeo 2150$ iz biznisa 21.
+[17/04/2020] Vlasnik Presnel_Barksdale(109.93.191.92) je uzeo 500$ iz biznisa 15.
+[17/04/2020] Vlasnik Presnel_Barksdale(109.93.191.92) je uzeo 300$ iz biznisa 15.
+[17/04/2020] Vlasnik Presnel_Barksdale(109.93.191.92) je uzeo 500$ iz biznisa 15.
+[17/04/2020] Vlasnik Boris_Noukhayev(37.203.87.97) je uzeo 5592$ iz biznisa 113.
+[17/04/2020] Vlasnik Presnel_Barksdale(109.93.191.92) je uzeo 500$ iz biznisa 15.
+[17/04/2020] Vlasnik Presnel_Barksdale(109.93.191.92) je uzeo 300$ iz biznisa 15.
+[17/04/2020] Vlasnik Presnel_Barksdale(109.93.191.92) je uzeo 1000$ iz biznisa 15.
+[17/04/2020] Vlasnik David_Chapman(92.241.152.56) je uzeo 10000$ iz biznisa 94.
+[17/04/2020] Vlasnik Joe_Cresswell(46.5.231.7) je uzeo 8000$ iz biznisa 32.
+[17/04/2020] Vlasnik Milika_Savic(31.47.18.201) je uzeo 1$ iz biznisa 64.
+[17/04/2020] Vlasnik Milika_Savic(31.47.18.201) je uzeo 574$ iz biznisa 64.
+[17/04/2020] Vlasnik Boris_Noukhayev(37.203.87.97) je stavio 5000$ na biznis 113.
+[17/04/2020] Vlasnik Donald_Nixon(178.223.140.171) je uzeo 1000$ iz biznisa 103.
+[17/04/2020] Vlasnik Milutin_Kalezic(62.4.55.207) je uzeo 169$ iz biznisa 103.
+[18/04/2020] Vlasnik Raul_Flores(178.149.208.37) je uzeo 500$ iz biznisa 125.
+[18/04/2020] Vlasnik Aaron_Schaffner(109.175.99.56) je uzeo 15000$ iz biznisa 96.
+[18/04/2020] Vlasnik Alan_Huang(89.111.209.88) je uzeo 200$ iz biznisa 83.
+[18/04/2020] Vlasnik Alan_Huang(89.111.209.88) je uzeo 1800$ iz biznisa 83.
+[18/04/2020] Vlasnik Milutin_Kalezic(62.4.55.207) je uzeo 500$ iz biznisa 103.
+[18/04/2020] Vlasnik Thomas_Harper(46.161.111.74) je uzeo 500$ iz biznisa 133.
+[18/04/2020] Vlasnik Joshua_Donovan(95.168.122.248) je uzeo 1000$ iz biznisa 10.
+[18/04/2020] Vlasnik Igor_Kostic(109.92.173.128) je uzeo 2979$ iz biznisa 57.
+[18/04/2020] Vlasnik Milika_Savic(31.47.18.201) je uzeo 1$ iz biznisa 64.
+[18/04/2020] Vlasnik Milika_Savic(31.47.18.201) je uzeo 517$ iz biznisa 64.
+[18/04/2020] Vlasnik Milutin_Kalezic(62.4.55.207) je uzeo 13000$ iz biznisa 103.
+[19/04/2020] Vlasnik Thomas_McDowell(109.175.98.0) je uzeo 43500$ iz biznisa 33.
+[19/04/2020] Vlasnik Daniel_Williamson(178.221.172.109) je uzeo 1500$ iz biznisa 14.
+[19/04/2020] Vlasnik Aaron_Schaffner(109.175.97.156) je uzeo 2000$ iz biznisa 96.
+[19/04/2020] Vlasnik Aaron_Schaffner(109.175.97.156) je uzeo 20000$ iz biznisa 96.
+[19/04/2020] Vlasnik Aaron_Schaffner(109.175.97.156) je uzeo 20000$ iz biznisa 96.
+[19/04/2020] Vlasnik Daniel_Williamson(178.221.172.109) je uzeo 1000$ iz biznisa 14.
+[19/04/2020] Vlasnik Aaron_Schaffner(109.175.97.156) je stavio 20000$ na biznis 96.
+[19/04/2020] Vlasnik Alan_Huang(89.111.209.88) je stavio 5000$ na biznis 83.
+[19/04/2020] Vlasnik Frankie_Moltisanti(109.207.46.65) je uzeo 6000$ iz biznisa 119.
+[19/04/2020] Vlasnik Aaron_Schaffner(109.175.97.156) je uzeo 1000000$ iz biznisa 96.
+[19/04/2020] Vlasnik Jimmy_Cheng(37.203.115.27) je uzeo 400$ iz biznisa 20.
+[19/04/2020] Vlasnik Jimmy_Cheng(37.203.115.27) je uzeo 200$ iz biznisa 20.
+[19/04/2020] Vlasnik Jimmy_Cheng(37.203.115.27) je uzeo 230$ iz biznisa 20.
+[19/04/2020] Vlasnik Boris_Noukhayev(37.203.84.176) je uzeo 5988$ iz biznisa 113.
+[19/04/2020] Vlasnik Jimmy_Pagnotto(92.36.150.253) je stavio 500$ na biznis 17.
+[19/04/2020] Vlasnik Jimmy_Pagnotto(92.36.150.253) je uzeo 500$ iz biznisa 17.
+[19/04/2020] Vlasnik Jimmy_Pagnotto(92.36.150.253) je uzeo 500$ iz biznisa 17.
+[20/04/2020] Vlasnik Jeff_Sheng(109.175.100.99) je uzeo 3609$ iz biznisa 93.
+[20/04/2020] Vlasnik Jeff_Sheng(109.175.100.99) je uzeo 2702$ iz biznisa 93.
+[20/04/2020] Vlasnik Viktor_Stern(109.175.99.61) je uzeo 1000$ iz biznisa 56.
+[20/04/2020] Vlasnik Alan_Huang(89.111.209.88) je stavio 4000$ na biznis 83.
+[20/04/2020] Vlasnik Thomas_Harper(46.161.111.74) je uzeo 1965$ iz biznisa 133.
+[20/04/2020] Vlasnik Jimmy_Cheng(31.176.202.185) je uzeo 300$ iz biznisa 20.
+[20/04/2020] Vlasnik Jimmy_Cheng(31.176.202.185) je uzeo 300$ iz biznisa 20.
+[20/04/2020] Vlasnik Jimmy_Cheng(31.176.202.185) je uzeo 350$ iz biznisa 20.
+[20/04/2020] Vlasnik Alan_Huang() je uzeo 5500$ iz biznisa 83.
+[20/04/2020] Vlasnik Alan_Huang() je stavio 3000$ na biznis 83.
+[20/04/2020] Vlasnik Milutin_Kalezic(62.4.55.207) je uzeo 500$ iz biznisa 103.
+[20/04/2020] Vlasnik Milutin_Kalezic(62.4.55.207) je uzeo 300$ iz biznisa 103.
+[20/04/2020] Vlasnik Milutin_Kalezic(62.4.55.207) je uzeo 12000$ iz biznisa 103.
+[20/04/2020] Vlasnik Jimmy_Pagnotto(92.36.191.165) je uzeo 700$ iz biznisa 17.
+[20/04/2020] Vlasnik Vladan_Vukasinovic(109.93.191.92) je uzeo 7200$ iz biznisa 15.
+[21/04/2020] Vlasnik Alan_Huang(89.111.209.88) je stavio 2000$ na biznis 83.
+[21/04/2020] Vlasnik Aaron_Schaffner(109.175.96.181) je uzeo 50000$ iz biznisa 96.
+[21/04/2020] Vlasnik Frankie_Moltisanti(109.207.46.65) je uzeo 2000$ iz biznisa 119.
+[21/04/2020] Vlasnik Blake_Bullock(178.220.121.16) je uzeo 2100$ iz biznisa 101.
+[21/04/2020] Vlasnik Ralph_Masotti(5.43.73.254) je uzeo 2400$ iz biznisa 123.
+[21/04/2020] Vlasnik Aaron_Schaffner(109.175.96.181) je stavio 9000$ na biznis 96.
+[21/04/2020] Vlasnik Avram_Leontyev(77.77.217.176) je uzeo 56000$ iz biznisa 49.
+[21/04/2020] Vlasnik Viktor_Stern(109.175.97.63) je uzeo 500$ iz biznisa 56.
+[21/04/2020] Vlasnik Alan_Huang(89.111.209.88) je uzeo 14000$ iz biznisa 83.
+[22/04/2020] Vlasnik Jasser_Ehad(109.175.96.98) je uzeo 1000000$ iz biznisa 96.
+[22/04/2020] Vlasnik Roy_Helms(94.189.227.59) je uzeo 3975$ iz biznisa 82.
+[22/04/2020] Vlasnik Vladan_Vukasinovic(109.93.191.92) je uzeo 700$ iz biznisa 14.
+[22/04/2020] Vlasnik Boris_Noukhayev(37.203.86.178) je uzeo 2009$ iz biznisa 110.
+[22/04/2020] Vlasnik David_Chapman(92.241.152.56) je uzeo 5300$ iz biznisa 92.
+[22/04/2020] Vlasnik Jimmy_Pagnotto(92.36.175.129) je uzeo 7596$ iz biznisa 16.
+[23/04/2020] Vlasnik Viktor_Stern(109.175.98.58) je uzeo 600$ iz biznisa 54.
+[23/04/2020] Vlasnik Avram_Leontyev(77.77.217.176) je uzeo 100000$ iz biznisa 47.
+[23/04/2020] Vlasnik Avram_Leontyev(77.77.217.176) je stavio 200000$ na biznis 47.
+[23/04/2020] Vlasnik Daniel_Williamson(178.221.148.13) je uzeo 4000$ iz biznisa 13.
+[23/04/2020] Vlasnik Boris_Noukhayev(31.176.231.164) je uzeo 500$ iz biznisa 110.
+[23/04/2020] Vlasnik Boris_Noukhayev(31.176.231.164) je uzeo 325$ iz biznisa 110.
+[23/04/2020] Vlasnik Christopher_DeRossi(46.35.151.192) je uzeo 5000$ iz biznisa 40.
+[23/04/2020] Vlasnik Umberto_Morelli(109.175.106.236) je uzeo 1013$ iz biznisa 121.
+[23/04/2020] Vlasnik Steven_Morrison(93.143.52.245) je uzeo 21617$ iz biznisa 51.
+[23/04/2020] Vlasnik Thomas_McDowell(109.175.97.192) je uzeo 79000$ iz biznisa 32.
+[23/04/2020] Vlasnik Michael_Rogers(109.93.191.112) je uzeo 100000$ iz biznisa 28.
+[23/04/2020] Vlasnik Hans_Schwammberger(178.221.185.177) je uzeo 300$ iz biznisa 26.
+[23/04/2020] Vlasnik Hans_Schwammberger(178.221.185.177) je uzeo 23$ iz biznisa 26.
+[23/04/2020] Vlasnik Leonard_Burkhart(176.61.159.63) je uzeo 7000$ iz biznisa 97.
+[23/04/2020] Vlasnik Christopher_DeRossi(46.35.151.192) je uzeo 600$ iz biznisa 40.
+[23/04/2020] Vlasnik Boris_Noukhayev(31.176.231.164) je uzeo 1226$ iz biznisa 110.
+[23/04/2020] Vlasnik Christopher_DeRossi(46.35.151.192) je uzeo 100$ iz biznisa 97.
+[23/04/2020] Vlasnik Boris_Noukhayev(31.176.231.164) je uzeo 7727$ iz biznisa 110.
+[23/04/2020] Vlasnik Boris_Noukhayev(31.176.231.164) je uzeo 124$ iz biznisa 110.
+[23/04/2020] Vlasnik Boris_Noukhayev(31.176.231.164) je uzeo 5908$ iz biznisa 110.
+[24/04/2020] Vlasnik Richard_Kennedy(109.94.97.184) je uzeo 400$ iz biznisa 127.
+[24/04/2020] Vlasnik Richard_Kennedy(109.94.97.184) je uzeo 400$ iz biznisa 127.
+[24/04/2020] Vlasnik Hans_Schwammberger(178.221.185.151) je uzeo 300$ iz biznisa 26.
+[24/04/2020] Vlasnik Hans_Schwammberger(178.221.185.151) je uzeo 59$ iz biznisa 26.
+[24/04/2020] Vlasnik Hans_Schwammberger(178.221.185.151) je uzeo 1$ iz biznisa 26.
+[24/04/2020] Vlasnik Hans_Schwammberger(178.221.185.151) je uzeo 456$ iz biznisa 26.
+[24/04/2020] Vlasnik Hans_Schwammberger(178.221.185.151) je stavio 238$ na biznis 26.
+[24/04/2020] Vlasnik Hans_Schwammberger(178.221.185.151) je stavio 10000$ na biznis 26.
+[24/04/2020] Vlasnik Hans_Schwammberger(178.221.185.151) je uzeo 10385$ iz biznisa 26.
+[24/04/2020] Vlasnik Hans_Schwammberger(178.221.185.151) je uzeo 250$ iz biznisa 26.
+[24/04/2020] Vlasnik Hans_Schwammberger(178.221.185.151) je uzeo 37$ iz biznisa 26.
+[24/04/2020] Vlasnik Avram_Leontyev(77.77.217.176) je uzeo 10000$ iz biznisa 47.
+[24/04/2020] Vlasnik Daniel_Williamson(109.93.141.95) je uzeo 1000$ iz biznisa 13.
+[24/04/2020] Vlasnik Klara_Sandberg(109.93.74.80) je uzeo 16952$ iz biznisa 83.
+[24/04/2020] Vlasnik Vladan_Vukasinovic(109.93.195.124) je uzeo 1200$ iz biznisa 14.
+[24/04/2020] Vlasnik Frankie_Moltisanti(109.207.46.65) je uzeo 2000$ iz biznisa 116.
+[24/04/2020] Vlasnik Frankie_Moltisanti(109.207.46.65) je stavio 100$ na biznis 116.
+[24/04/2020] Vlasnik Jimmy_Pagnotto(92.36.129.220) je uzeo 1031$ iz biznisa 16.
+[24/04/2020] Vlasnik Daniel_Williamson(109.93.141.95) je stavio 1000$ na biznis 13.
+[24/04/2020] Vlasnik Daniel_Williamson(109.93.141.95) je stavio 51$ na biznis 13.
+[24/04/2020] Vlasnik Jacob_Rodgers(109.93.77.96) je uzeo 1500$ iz biznisa 108.
+[24/04/2020] Vlasnik Viktor_Stern(109.175.96.197) je uzeo 800$ iz biznisa 54.
+[24/04/2020] Vlasnik Viktor_Stern(109.175.96.197) je uzeo 600$ iz biznisa 54.
+[24/04/2020] Vlasnik Nikolas_Baratos(31.47.18.201) je uzeo 1$ iz biznisa 62.
+[24/04/2020] Vlasnik Nikolas_Baratos(31.47.18.201) je uzeo 2922$ iz biznisa 62.
+[25/04/2020] Vlasnik Milutin_Kalezic(62.4.55.207) je uzeo 14000$ iz biznisa 101.
+[25/04/2020] Vlasnik Jeff_Sheng(109.175.101.239) je uzeo 3527$ iz biznisa 91.
+[25/04/2020] Vlasnik Hans_Schwammberger(178.220.212.64) je uzeo 1109$ iz biznisa 26.
+[25/04/2020] Vlasnik Ashton_Hawk(78.2.38.14) je uzeo 70000$ iz biznisa 53.
+[25/04/2020] Vlasnik Hans_Schwammberger(178.220.212.64) je uzeo 683$ iz biznisa 26.
+[25/04/2020] Vlasnik Hans_Schwammberger(178.220.212.64) je uzeo 254$ iz biznisa 26.
+[25/04/2020] Vlasnik Hans_Schwammberger(178.220.212.64) je uzeo 150$ iz biznisa 26.
+[25/04/2020] Vlasnik Hans_Schwammberger(178.220.212.64) je uzeo 2$ iz biznisa 26.
+[25/04/2020] Vlasnik Viktor_Stern(109.175.96.18) je uzeo 3000$ iz biznisa 54.
+[25/04/2020] Vlasnik Viktor_Stern(109.175.96.18) je uzeo 500$ iz biznisa 54.
+[25/04/2020] Vlasnik Viktor_Stern(109.175.96.18) je uzeo 500$ iz biznisa 54.
+[25/04/2020] Vlasnik Boris_Noukhayev(31.176.229.29) je uzeo 2474$ iz biznisa 110.
+[25/04/2020] Vlasnik Alan_Huang() je stavio 1020$ na biznis 81.
+[25/04/2020] Vlasnik Alan_Huang() je stavio 50$ na biznis 81.
+[25/04/2020] Vlasnik Alan_Huang() je stavio 8000$ na biznis 81.
+[25/04/2020] Vlasnik Viktor_Stern(109.175.96.18) je uzeo 600$ iz biznisa 54.
+[25/04/2020] Vlasnik Alan_Huang() je uzeo 8800$ iz biznisa 81.
+[25/04/2020] Vlasnik Alan_Huang() je stavio 9600$ na biznis 81.
+[25/04/2020] Vlasnik Alan_Huang() je uzeo 8800$ iz biznisa 81.
+[25/04/2020] Vlasnik Alan_Huang() je stavio 8000$ na biznis 81.
+[25/04/2020] Vlasnik Jimmy_Pagnotto(92.36.181.149) je uzeo 638$ iz biznisa 16.
+[25/04/2020] Vlasnik Boris_Noukhayev(31.176.229.29) je uzeo 810$ iz biznisa 110.
+[25/04/2020] Vlasnik Boris_Noukhayev(31.176.229.29) je uzeo 2004$ iz biznisa 110.
+[25/04/2020] Vlasnik Boris_Noukhayev(31.176.221.83) je uzeo 396$ iz biznisa 110.
+[26/04/2020] Vlasnik Joshua_Donovan(95.168.121.60) je uzeo 1400$ iz biznisa 9.
+[26/04/2020] Vlasnik Thomas_McDowell(109.175.96.191) je uzeo 51000$ iz biznisa 32.
+[26/04/2020] Vlasnik Viktor_Stern(109.175.96.18) je uzeo 1500$ iz biznisa 54.
+[26/04/2020] Vlasnik Viktor_Stern(109.175.96.18) je uzeo 500$ iz biznisa 54.
+[26/04/2020] Vlasnik Hans_Schwammberger(178.221.185.75) je uzeo 553$ iz biznisa 26.
+[26/04/2020] Vlasnik Hans_Schwammberger(178.221.185.75) je uzeo 100$ iz biznisa 26.
+[26/04/2020] Vlasnik Hans_Schwammberger(178.221.185.75) je uzeo 11$ iz biznisa 26.
+[26/04/2020] Vlasnik Vladimir_Molotov(5.133.153.253) je uzeo 200$ iz biznisa 40.
+[26/04/2020] Vlasnik Vladan_Vukasinovic(109.93.195.209) je uzeo 1900$ iz biznisa 14.
+[26/04/2020] Vlasnik Hans_Schwammberger(178.221.185.75) je uzeo 188$ iz biznisa 26.
+[26/04/2020] Vlasnik Hans_Schwammberger(178.221.185.75) je uzeo 5$ iz biznisa 26.
+[26/04/2020] Vlasnik Hans_Schwammberger(178.221.185.75) je uzeo 5$ iz biznisa 26.
+[26/04/2020] Vlasnik Boris_Noukhayev(31.176.224.100) je stavio 1$ na biznis 104.
+[26/04/2020] Vlasnik Nikolas_Baratos(31.47.18.201) je uzeo 1$ iz biznisa 61.
+[26/04/2020] Vlasnik Avram_Leontyev(77.77.217.176) je uzeo 1000000$ iz biznisa 47.
+[26/04/2020] Vlasnik Aaron_Schaffner(109.175.99.237) je uzeo 2000000$ iz biznisa 89.
+[27/04/2020] Vlasnik Viktor_Stern(109.175.97.116) je uzeo 1000$ iz biznisa 54.
+[27/04/2020] Vlasnik Hans_Schwammberger(178.221.185.75) je uzeo 358$ iz biznisa 26.
+[27/04/2020] Vlasnik Hans_Schwammberger(178.221.185.75) je uzeo 1$ iz biznisa 26.
+[27/04/2020] Vlasnik William_Sherman(62.4.55.64) je uzeo 7940$ iz biznisa 106.
+[27/04/2020] Vlasnik Hans_Schwammberger(178.221.185.12) je uzeo 549$ iz biznisa 26.
+[27/04/2020] Vlasnik Steven_Morrison(93.143.11.59) je uzeo 1$ iz biznisa 51.
+[27/04/2020] Vlasnik Steven_Morrison(93.143.11.59) je uzeo 3775$ iz biznisa 51.
+[27/04/2020] Vlasnik Umberto_Morelli(109.175.107.223) je uzeo 1968$ iz biznisa 113.
+[27/04/2020] Vlasnik Viktor_Noukhayev(5.133.134.142) je uzeo 4548$ iz biznisa 81.
+[27/04/2020] Vlasnik Hans_Schwammberger(178.221.185.12) je uzeo 203$ iz biznisa 26.
+[28/04/2020] Vlasnik Hans_Schwammberger(178.221.185.12) je uzeo 401$ iz biznisa 26.
+[28/04/2020] Vlasnik Vladimir_Molotov(5.133.130.197) je uzeo 3500$ iz biznisa 40.
+[28/04/2020] Vlasnik Vladan_Vukasinovic(109.93.191.5) je uzeo 1800$ iz biznisa 14.
+[28/04/2020] Vlasnik Milos_Bogdanovic(92.36.138.170) je uzeo 36949$ iz biznisa 88.
+[28/04/2020] Vlasnik Milos_Bogdanovic(92.36.138.170) je stavio 36949$ na biznis 88.
+[28/04/2020] Vlasnik Alan_Huang(89.111.215.48) je uzeo 4400$ iz biznisa 78.
+[28/04/2020] Vlasnik Jimmy_Cheng(89.146.143.97) je uzeo 1000$ iz biznisa 19.
+[28/04/2020] Vlasnik Hans_Schwammberger(178.220.212.146) je uzeo 171$ iz biznisa 26.
+[28/04/2020] Vlasnik Alan_Huang(89.111.215.48) je stavio 5000$ na biznis 78.
+[28/04/2020] Vlasnik Jimmy_Cheng(89.146.143.97) je uzeo 2000$ iz biznisa 19.
+[28/04/2020] Vlasnik Jimmy_Cheng(89.146.143.97) je uzeo 20$ iz biznisa 19.
+[28/04/2020] Vlasnik Jimmy_Cheng(89.146.143.97) je uzeo 20$ iz biznisa 19.
+[28/04/2020] Vlasnik Jimmy_Cheng(89.146.143.97) je uzeo 40$ iz biznisa 19.
+[28/04/2020] Vlasnik Jimmy_Cheng(89.146.143.97) je uzeo 345$ iz biznisa 19.
+[28/04/2020] Vlasnik Raymond_Schulz(91.191.56.86) je uzeo 3000$ iz biznisa 87.
+[28/04/2020] Vlasnik Nikolas_Baratos(31.47.18.201) je uzeo 1$ iz biznisa 61.
+[29/04/2020] Vlasnik Nikolas_Baratos(31.47.18.201) je uzeo 1$ iz biznisa 61.
+[29/04/2020] Vlasnik Nikolas_Baratos(31.47.18.201) je uzeo 58$ iz biznisa 61.
+[29/04/2020] Vlasnik Nikolas_Baratos(31.47.18.201) je uzeo 51$ iz biznisa 61.
+[29/04/2020] Vlasnik Nikolas_Baratos(31.47.18.201) je uzeo 50$ iz biznisa 61.
+[29/04/2020] Vlasnik Hans_Schwammberger(178.220.212.81) je uzeo 336$ iz biznisa 26.
+[29/04/2020] Vlasnik Hans_Schwammberger(178.220.212.81) je uzeo 267$ iz biznisa 26.
+[29/04/2020] Vlasnik Alan_Huang(89.111.215.48) je uzeo 6000$ iz biznisa 78.
+[29/04/2020] Vlasnik Jeff_Sheng(109.175.100.140) je stavio 1$ na biznis 86.
+[29/04/2020] Vlasnik Jeff_Sheng(109.175.100.140) je stavio 3000$ na biznis 86.
+[29/04/2020] Vlasnik Alan_Huang(89.111.215.48) je uzeo 6000$ iz biznisa 78.
+[29/04/2020] Vlasnik Alan_Huang(89.111.215.48) je uzeo 661$ iz biznisa 78.
+[29/04/2020] Vlasnik Daniel_Williamson(178.221.164.110) je uzeo 3000$ iz biznisa 13.
+[29/04/2020] Vlasnik Vladan_Vukasinovic(109.93.196.3) je uzeo 1900$ iz biznisa 14.
+[29/04/2020] Vlasnik Vladan_Vukasinovic(109.93.196.3) je uzeo 176$ iz biznisa 14.
+[29/04/2020] Vlasnik Vladan_Vukasinovic(109.93.196.3) je uzeo 149$ iz biznisa 14.
+[29/04/2020] Vlasnik Vladimir_Molotov(46.35.156.128) je uzeo 1906$ iz biznisa 40.
+[29/04/2020] Vlasnik Blazo_Ivanovic(79.140.150.15) je uzeo 6974$ iz biznisa 15.
+[29/04/2020] Vlasnik Velichko_Mitevski(109.93.191.53) je uzeo 3000$ iz biznisa 11.
+[29/04/2020] Vlasnik Velichko_Mitevski(109.93.191.53) je uzeo 1$ iz biznisa 11.
+[29/04/2020] Vlasnik Vukasin_Milovanovic(31.47.18.201) je uzeo 1$ iz biznisa 61.
+[29/04/2020] Vlasnik Viktor_Noukhayev(5.133.141.97) je uzeo 44$ iz biznisa 81.
+[29/04/2020] Vlasnik Vukasin_Milovanovic(31.47.18.201) je uzeo 1$ iz biznisa 61.
+[29/04/2020] Vlasnik Blazo_Ivanovic(79.140.150.15) je uzeo 542$ iz biznisa 15.
+[29/04/2020] Vlasnik Blazo_Ivanovic(79.140.150.15) je uzeo 186$ iz biznisa 15.
+[30/04/2020] Vlasnik Vukasin_Milovanovic(31.47.18.201) je uzeo 1$ iz biznisa 61.
+[30/04/2020] Vlasnik Vukasin_Milovanovic(31.47.18.201) je uzeo 16252$ iz biznisa 61.
+[30/04/2020] Vlasnik Roy_Helms(94.189.227.59) je uzeo 3680$ iz biznisa 79.
+[30/04/2020] Vlasnik Velichko_Mitevski(109.93.191.53) je uzeo 1$ iz biznisa 11.
+[30/04/2020] Vlasnik Velichko_Mitevski(109.93.191.53) je uzeo 2000$ iz biznisa 11.
+[30/04/2020] Vlasnik Velichko_Mitevski(109.93.191.53) je uzeo 3000$ iz biznisa 11.
+[30/04/2020] Vlasnik Thomas_McDowell(109.175.99.98) je uzeo 40000$ iz biznisa 32.
+[30/04/2020] Vlasnik Hans_Schwammberger(178.221.185.180) je uzeo 809$ iz biznisa 14.
+[30/04/2020] Vlasnik Hans_Schwammberger(178.221.185.180) je uzeo 236$ iz biznisa 14.
+[30/04/2020] Vlasnik Hans_Schwammberger(178.221.185.180) je uzeo 225$ iz biznisa 14.
+[30/04/2020] Vlasnik Jeff_Sheng(109.175.101.60) je uzeo 4000$ iz biznisa 86.
+[30/04/2020] Vlasnik Velichko_Mitevski(109.93.191.53) je uzeo 20$ iz biznisa 11.
+[30/04/2020] Vlasnik Joe_Cresswell(46.5.231.33) je uzeo 7000$ iz biznisa 31.
+[30/04/2020] Vlasnik Donald_Nixon(178.223.140.171) je uzeo 500$ iz biznisa 124.
+[30/04/2020] Vlasnik Jacob_Rodgers(178.221.226.78) je uzeo 1000$ iz biznisa 102.
+[30/04/2020] Vlasnik Velichko_Mitevski(109.93.191.53) je uzeo 2000$ iz biznisa 11.
+[30/04/2020] Vlasnik Blazo_Ivanovic(79.140.150.18) je uzeo 848$ iz biznisa 15.
+[30/04/2020] Vlasnik Velichko_Mitevski(109.93.191.53) je uzeo 100$ iz biznisa 11.
+[30/04/2020] Vlasnik Velichko_Mitevski(109.93.191.53) je uzeo 500$ iz biznisa 11.
+[30/04/2020] Vlasnik Karen_Moore(92.55.122.136) je stavio 355$ na biznis 15.
+[30/04/2020] Vlasnik Blazo_Ivanovic(79.140.150.18) je uzeo 1926$ iz biznisa 84.
+[30/04/2020] Vlasnik Joe_Cresswell(46.5.231.33) je uzeo 920$ iz biznisa 31.
+[01/05/2020] Vlasnik Allan_Houston(46.234.93.168) je uzeo 15000$ iz biznisa 85.
+[01/05/2020] Vlasnik Velichko_Mitevski(109.93.191.53) je uzeo 3000$ iz biznisa 11.
+[01/05/2020] Vlasnik Vukasin_Milovanovic(31.47.18.201) je uzeo 1$ iz biznisa 61.
+[01/05/2020] Vlasnik Vukasin_Milovanovic(31.47.18.201) je uzeo 2042$ iz biznisa 61.
+[01/05/2020] Vlasnik Hans_Schwammberger(178.221.185.152) je uzeo 16$ iz biznisa 14.
+[01/05/2020] Vlasnik Hans_Schwammberger(178.221.185.152) je uzeo 326$ iz biznisa 14.
+[01/05/2020] Vlasnik Hans_Schwammberger(178.221.185.152) je uzeo 202$ iz biznisa 14.
+[01/05/2020] Vlasnik Hans_Schwammberger(178.221.185.152) je uzeo 493$ iz biznisa 14.
+[01/05/2020] Vlasnik Hans_Schwammberger(178.221.185.152) je uzeo 100$ iz biznisa 14.
+[01/05/2020] Vlasnik Hans_Schwammberger(178.221.185.152) je uzeo 100$ iz biznisa 14.
+[01/05/2020] Vlasnik Hans_Schwammberger(178.221.185.152) je uzeo 100$ iz biznisa 14.
+[01/05/2020] Vlasnik Hans_Schwammberger(178.221.185.152) je uzeo 100$ iz biznisa 14.
+[01/05/2020] Vlasnik Hans_Schwammberger(178.221.185.152) je uzeo 200$ iz biznisa 14.
+[01/05/2020] Vlasnik Hans_Schwammberger(178.221.185.152) je uzeo 200$ iz biznisa 14.
+[01/05/2020] Vlasnik Hans_Schwammberger(178.221.185.152) je uzeo 200$ iz biznisa 14.
+[01/05/2020] Vlasnik Hans_Schwammberger(178.221.185.152) je uzeo 200$ iz biznisa 14.
+[01/05/2020] Vlasnik Hans_Schwammberger(178.221.185.152) je uzeo 2493$ iz biznisa 14.
+[01/05/2020] Vlasnik Jacob_Rodgers(178.221.226.78) je uzeo 2000$ iz biznisa 102.
+[01/05/2020] Vlasnik Blazo_Ivanovic(79.140.150.20) je uzeo 547$ iz biznisa 84.
+[01/05/2020] Vlasnik Karen_Moore(92.55.122.25) je stavio 6000$ na biznis 15.
+[01/05/2020] Vlasnik Karen_Moore(92.55.122.25) je uzeo 223$ iz biznisa 15.
+[01/05/2020] Vlasnik Karen_Moore(92.55.122.25) je uzeo 500$ iz biznisa 15.
+[01/05/2020] Vlasnik Karen_Moore(92.55.122.25) je uzeo 500$ iz biznisa 15.
+[01/05/2020] Vlasnik Karen_Moore(92.55.122.25) je uzeo 500$ iz biznisa 15.
+[01/05/2020] Vlasnik Karen_Moore(92.55.122.25) je uzeo 500$ iz biznisa 15.
+[01/05/2020] Vlasnik Karen_Moore(92.55.122.25) je uzeo 500$ iz biznisa 15.
+[01/05/2020] Vlasnik Michael_Rogers(109.93.191.81) je uzeo 100000$ iz biznisa 28.
+[01/05/2020] Vlasnik Karen_Moore(92.55.122.25) je uzeo 5000$ iz biznisa 15.
+[01/05/2020] Vlasnik Karen_Moore(92.55.122.25) je stavio 4500$ na biznis 15.
+[01/05/2020] Vlasnik Muhammad_Isaev(109.93.74.80) je uzeo 5000$ iz biznisa 118.
+[01/05/2020] Vlasnik Muhammad_Isaev(109.93.74.80) je uzeo 9800$ iz biznisa 118.
+[01/05/2020] Vlasnik Karen_Moore(92.55.122.25) je uzeo 3000$ iz biznisa 15.
+[01/05/2020] Vlasnik Karen_Moore(92.55.122.25) je uzeo 6000$ iz biznisa 15.
+[02/05/2020] Vlasnik Jeff_Sheng(109.175.103.83) je stavio 1$ na biznis 86.
+[02/05/2020] Vlasnik Jeff_Sheng(109.175.103.83) je stavio 19000$ na biznis 86.
+[02/05/2020] Vlasnik Donald_Nixon(178.223.140.171) je uzeo 1000$ iz biznisa 124.
+[02/05/2020] Suvlasnik John_Mangano(178.79.1.250) je stavio 4000$ na biznis 85.
+[02/05/2020] Vlasnik William_Alessandrini(90.134.212.148) je stavio 96000$ na biznis 52.
+[02/05/2020] Vlasnik Donald_Andretta(93.142.135.3) je uzeo 2700$ iz biznisa 100.
+[02/05/2020] Vlasnik William_Alessandrini(90.134.212.148) je stavio 42000$ na biznis 52.
+[02/05/2020] Vlasnik Hans_Schwammberger(178.220.212.183) je uzeo 253$ iz biznisa 14.
+[02/05/2020] Vlasnik Karen_Moore(92.55.122.182) je uzeo 17535$ iz biznisa 15.
+[02/05/2020] Vlasnik Declan_Adolfo(93.141.3.140) je uzeo 1$ iz biznisa 126.
+[02/05/2020] Vlasnik Declan_Adolfo(93.141.3.140) je uzeo 1$ iz biznisa 126.
+[02/05/2020] Vlasnik Declan_Adolfo(93.141.3.140) je uzeo 1$ iz biznisa 126.
+[02/05/2020] Vlasnik Declan_Adolfo(93.141.3.140) je uzeo 212$ iz biznisa 126.
+[02/05/2020] Vlasnik Hans_Schwammberger(178.220.212.183) je uzeo 486$ iz biznisa 14.
+[02/05/2020] Vlasnik Declan_Adolfo(93.141.3.140) je uzeo 1$ iz biznisa 126.
+[02/05/2020] Vlasnik Declan_Adolfo(93.141.3.140) je uzeo 13$ iz biznisa 126.
+[02/05/2020] Vlasnik Donald_Nixon(178.223.140.171) je uzeo 1400$ iz biznisa 124.
+[02/05/2020] Vlasnik Hans_Schwammberger(178.220.212.183) je uzeo 653$ iz biznisa 14.
+[02/05/2020] Vlasnik Daniel_Williamson(109.92.163.67) je uzeo 3000$ iz biznisa 13.
+[02/05/2020] Vlasnik Lorenzo_Bonelli(109.93.191.75) je uzeo 37000$ iz biznisa 34.
+[02/05/2020] Vlasnik Lorenzo_Bonelli(109.93.191.75) je uzeo 930$ iz biznisa 34.
+[02/05/2020] Vlasnik Blazo_Ivanovic(79.140.150.11) je uzeo 499$ iz biznisa 84.
+[02/05/2020] Vlasnik Alan_Huang(89.111.215.48) je uzeo 700$ iz biznisa 78.
+[02/05/2020] Vlasnik Alan_Huang(89.111.215.48) je uzeo 700$ iz biznisa 78.
+[02/05/2020] Vlasnik Alan_Huang(89.111.215.48) je stavio 400$ na biznis 78.
+[02/05/2020] Vlasnik Luis_Bacamo(95.155.4.37) je uzeo 2000$ iz biznisa 99.
+[02/05/2020] Vlasnik Luis_Bacamo(95.155.4.37) je uzeo 56$ iz biznisa 99.
+[02/05/2020] Vlasnik Luis_Bacamo(95.155.4.37) je uzeo 512$ iz biznisa 99.
+[02/05/2020] Vlasnik Milos_Damjanovic(77.78.229.144) je stavio 213000$ na biznis 31.
+[02/05/2020] Vlasnik Joe_Cresswell(46.5.231.241) je uzeo 3548$ iz biznisa 74.
+[02/05/2020] Vlasnik Joseph_Galante(93.141.3.140) je uzeo 1$ iz biznisa 126.
+[02/05/2020] Vlasnik Joseph_Galante(93.141.3.140) je uzeo 39$ iz biznisa 126.
+[02/05/2020] Vlasnik Jeff_Sheng(109.175.101.121) je uzeo 2000$ iz biznisa 86.
+[02/05/2020] Vlasnik Luis_Bacamo(95.155.4.37) je uzeo 167$ iz biznisa 99.
+[02/05/2020] Vlasnik Avram_Leontyev(77.77.216.217) je uzeo 16000$ iz biznisa 47.
+[03/05/2020] Vlasnik Velichko_Mitevski(109.93.191.53) je uzeo 1$ iz biznisa 11.
+[03/05/2020] Vlasnik Velichko_Mitevski(109.93.191.53) je uzeo 1$ iz biznisa 11.
+[03/05/2020] Vlasnik Velichko_Mitevski(109.93.191.53) je uzeo 1$ iz biznisa 11.
+[03/05/2020] Vlasnik Velichko_Mitevski(109.93.191.53) je uzeo 1$ iz biznisa 11.
+[03/05/2020] Vlasnik Velichko_Mitevski(109.93.191.53) je uzeo 1$ iz biznisa 11.
+[03/05/2020] Vlasnik Velichko_Mitevski(109.93.191.53) je uzeo 1$ iz biznisa 11.
+[03/05/2020] Vlasnik Velichko_Mitevski(109.93.191.53) je uzeo 6500$ iz biznisa 11.
+[03/05/2020] Vlasnik Velichko_Mitevski(109.93.191.53) je uzeo 1$ iz biznisa 11.
+[03/05/2020] Vlasnik Charlie_Nazarov(77.243.24.206) je uzeo 25000$ iz biznisa 116.
+[03/05/2020] Vlasnik William_Alessandrini(90.134.212.148) je stavio 30000$ na biznis 52.
+[03/05/2020] Vlasnik Milos_Bogdanovic(92.36.138.245) je uzeo 99773$ iz biznisa 88.
+[03/05/2020] Vlasnik Velichko_Mitevski(109.93.191.53) je uzeo 1$ iz biznisa 11.
+[03/05/2020] Vlasnik Velichko_Mitevski(109.93.191.53) je uzeo 1$ iz biznisa 11.
+[03/05/2020] Vlasnik Velichko_Mitevski(109.93.191.53) je uzeo 3000$ iz biznisa 11.
+[03/05/2020] Vlasnik Hans_Schwammberger(178.220.212.11) je uzeo 1703$ iz biznisa 14.
+[03/05/2020] Vlasnik Hans_Schwammberger(178.220.212.11) je uzeo 19$ iz biznisa 14.
+[03/05/2020] Vlasnik Hans_Schwammberger(178.220.212.11) je uzeo 133$ iz biznisa 14.
+[03/05/2020] Vlasnik Vitaly_Mikhailov(95.155.49.197) je stavio 1$ na biznis 90.
+[03/05/2020] Vlasnik Vitaly_Mikhailov(95.155.49.197) je uzeo 16813$ iz biznisa 90.
+[03/05/2020] Vlasnik Thomas_Gerbel(212.227.200.48) je uzeo 1445$ iz biznisa 60.
+[03/05/2020] Vlasnik Dusan_Lakic(94.253.149.146) je stavio 19922$ na biznis 123.
+[03/05/2020] Vlasnik Dusan_Lakic(94.253.149.146) je uzeo 21997$ iz biznisa 123.
+[03/05/2020] Vlasnik Viktor_Noukhayev(85.94.135.205) je uzeo 3413$ iz biznisa 81.
+[03/05/2020] Vlasnik Hans_Schwammberger(178.220.212.11) je uzeo 287$ iz biznisa 14.
+[03/05/2020] Vlasnik Viktor_Stern(109.175.99.88) je uzeo 4000$ iz biznisa 54.
+[03/05/2020] Vlasnik Hans_Schwammberger(178.220.212.11) je uzeo 249$ iz biznisa 14.
+[03/05/2020] Vlasnik Richard_Kennedy(109.94.97.184) je uzeo 20000$ iz biznisa 117.
+[03/05/2020] Vlasnik Raymond_Lazzeri(5.43.70.3) je uzeo 13400$ iz biznisa 98.
+[03/05/2020] Vlasnik Jimmy_Cheng(89.146.140.45) je uzeo 300$ iz biznisa 19.
+[03/05/2020] Vlasnik Vukasin_Milovanovic(31.47.18.201) je uzeo 1$ iz biznisa 61.
+[03/05/2020] Vlasnik Vukasin_Milovanovic(31.47.18.201) je uzeo 2779$ iz biznisa 61.
+[03/05/2020] Vlasnik John_Mangano(178.79.1.250) je uzeo 15000$ iz biznisa 85.
+[03/05/2020] Vlasnik Hans_Schwammberger(178.220.212.11) je uzeo 200$ iz biznisa 14.
+[03/05/2020] Vlasnik Hans_Schwammberger(178.220.212.11) je uzeo 200$ iz biznisa 14.
+[03/05/2020] Vlasnik Alan_Huang(89.111.215.48) je uzeo 850$ iz biznisa 78.
+[03/05/2020] Vlasnik Hans_Schwammberger(178.220.212.11) je uzeo 250$ iz biznisa 14.
+[03/05/2020] Vlasnik Hans_Schwammberger(178.220.212.11) je uzeo 250$ iz biznisa 14.
+[03/05/2020] Vlasnik Hans_Schwammberger(178.220.212.11) je uzeo 250$ iz biznisa 14.
+[03/05/2020] Vlasnik Hans_Schwammberger(178.220.212.11) je uzeo 250$ iz biznisa 14.
+[03/05/2020] Vlasnik Hans_Schwammberger(178.220.212.11) je uzeo 250$ iz biznisa 14.
+[03/05/2020] Vlasnik Hans_Schwammberger(178.220.212.11) je uzeo 20$ iz biznisa 14.
+[03/05/2020] Vlasnik Hans_Schwammberger(178.220.212.11) je uzeo 250$ iz biznisa 14.
+[03/05/2020] Vlasnik Hans_Schwammberger(178.220.212.11) je uzeo 200$ iz biznisa 14.
+[03/05/2020] Vlasnik Hans_Schwammberger(178.220.212.11) je uzeo 10$ iz biznisa 14.
+[03/05/2020] Vlasnik Hans_Schwammberger(178.220.212.11) je uzeo 10$ iz biznisa 14.
+[03/05/2020] Vlasnik Hans_Schwammberger(178.220.212.11) je uzeo 10$ iz biznisa 14.
+[03/05/2020] Vlasnik Hans_Schwammberger(178.220.212.11) je uzeo 10$ iz biznisa 14.
+[03/05/2020] Vlasnik Hans_Schwammberger(178.220.212.11) je uzeo 260$ iz biznisa 14.
+[03/05/2020] Vlasnik Alan_Huang(89.111.215.48) je uzeo 788$ iz biznisa 78.
+[03/05/2020] Vlasnik Hans_Schwammberger(178.220.212.11) je uzeo 300$ iz biznisa 14.
+[03/05/2020] Vlasnik Hans_Schwammberger(178.220.212.11) je uzeo 250$ iz biznisa 14.
+[03/05/2020] Vlasnik Hans_Schwammberger(178.220.212.11) je uzeo 250$ iz biznisa 14.
+[03/05/2020] Vlasnik Hans_Schwammberger(178.220.212.11) je uzeo 200$ iz biznisa 14.
+[03/05/2020] Vlasnik Hans_Schwammberger(178.220.212.11) je uzeo 200$ iz biznisa 14.
+[03/05/2020] Vlasnik Hans_Schwammberger(178.220.212.11) je uzeo 200$ iz biznisa 14.
+[03/05/2020] Vlasnik Hans_Schwammberger(178.220.212.11) je uzeo 250$ iz biznisa 14.
+[03/05/2020] Vlasnik Raymond_Schulz(91.191.56.86) je uzeo 2000$ iz biznisa 87.
+[03/05/2020] Vlasnik Clyde_Loyd(77.78.234.122) je uzeo 638$ iz biznisa 100.
+[03/05/2020] Vlasnik Viktor_Stern(109.175.99.88) je uzeo 2500$ iz biznisa 54.
+[03/05/2020] Vlasnik Viktor_Stern(109.175.99.88) je uzeo 500$ iz biznisa 54.
+[03/05/2020] Vlasnik Hans_Schwammberger(178.220.212.11) je uzeo 52$ iz biznisa 14.
+[03/05/2020] Vlasnik Vladimir_Molotov(5.133.146.58) je uzeo 700$ iz biznisa 40.
+[03/05/2020] Vlasnik Vladimir_Molotov(5.133.146.58) je uzeo 22$ iz biznisa 40.
+[03/05/2020] Vlasnik Milos_Damjanovic(77.78.229.144) je uzeo 18487$ iz biznisa 31.
+[03/05/2020] Vlasnik Raymond_Schulz(91.191.56.86) je uzeo 1000$ iz biznisa 87.
+[03/05/2020] Vlasnik Raymond_Schulz(91.191.56.86) je uzeo 1000$ iz biznisa 87.
+[03/05/2020] Vlasnik Raymond_Schulz(91.191.56.86) je uzeo 15000$ iz biznisa 87.
+[03/05/2020] Vlasnik Raymond_Schulz(91.191.56.86) je uzeo 2500$ iz biznisa 87.
+[03/05/2020] Vlasnik Raymond_Schulz(91.191.56.86) je stavio 6000$ na biznis 87.
+[04/05/2020] Vlasnik Milos_Damjanovic(77.78.229.144) je stavio 9500$ na biznis 31.
+[04/05/2020] Vlasnik Raymond_Schulz(91.191.56.86) je stavio 50000$ na biznis 87.
+[04/05/2020] Vlasnik Raymond_Schulz(91.191.56.86) je uzeo 50000$ iz biznisa 87.
+[04/05/2020] Vlasnik Vitaly_Mikhailov(95.155.49.197) je uzeo 1$ iz biznisa 90.
+[04/05/2020] Vlasnik Marko_Savic(95.155.4.37) je uzeo 1187$ iz biznisa 99.
+[04/05/2020] Vlasnik Jeff_Sheng(109.175.102.111) je uzeo 7000$ iz biznisa 86.
+[04/05/2020] Vlasnik Jeff_Sheng(109.175.102.111) je uzeo 26246$ iz biznisa 86.
+[04/05/2020] Vlasnik Craig_Swanson(62.4.55.64) je uzeo 5000$ iz biznisa 106.
+[04/05/2020] Vlasnik Marko_Savic(95.155.4.37) je uzeo 230$ iz biznisa 99.
+[04/05/2020] Vlasnik Anthony_Vendetti(31.47.26.40) je stavio 1$ na biznis 105.
+[04/05/2020] Vlasnik Hans_Schwammberger(178.220.212.11) je uzeo 5705$ iz biznisa 14.
+[04/05/2020] Vlasnik Clyde_Loyd(77.78.234.122) je uzeo 714$ iz biznisa 100.
+[04/05/2020] Vlasnik Clyde_Loyd(77.78.234.122) je uzeo 451$ iz biznisa 100.
+[04/05/2020] Vlasnik Thomas_McDowell(109.175.97.110) je uzeo 53000$ iz biznisa 32.
+[04/05/2020] Vlasnik Aleksander_Zaitsev(5.133.138.38) je uzeo 26501$ iz biznisa 92.
+[04/05/2020] Vlasnik William_Jones(95.155.4.37) je uzeo 13$ iz biznisa 92.
+[04/05/2020] Vlasnik Aleksander_Zaitsev(5.133.138.38) je uzeo 6049$ iz biznisa 107.
+[04/05/2020] Vlasnik Clyde_Loyd(77.78.234.122) je uzeo 4934$ iz biznisa 100.
+[04/05/2020] Vlasnik William_Jones(95.155.4.37) je uzeo 923$ iz biznisa 92.
+[04/05/2020] Vlasnik Lester_McCormick(188.127.97.40) je uzeo 24756$ iz biznisa 27.
+[04/05/2020] Vlasnik Hans_Schwammberger(178.220.212.11) je uzeo 200$ iz biznisa 14.
+[04/05/2020] Vlasnik Hans_Schwammberger(178.220.212.11) je uzeo 200$ iz biznisa 14.
+[04/05/2020] Vlasnik Hans_Schwammberger(178.220.212.11) je uzeo 200$ iz biznisa 14.
+[04/05/2020] Vlasnik Hans_Schwammberger(178.220.212.11) je uzeo 200$ iz biznisa 14.
+[04/05/2020] Vlasnik Hans_Schwammberger(178.220.212.11) je uzeo 200$ iz biznisa 14.
+[04/05/2020] Vlasnik Hans_Schwammberger(178.220.212.11) je uzeo 2000$ iz biznisa 14.
+[04/05/2020] Vlasnik Hans_Schwammberger(178.220.212.11) je uzeo 200$ iz biznisa 14.
+[04/05/2020] Vlasnik Hans_Schwammberger(178.220.212.11) je uzeo 250$ iz biznisa 14.
+[05/05/2020] Vlasnik Hans_Schwammberger(178.220.212.11) je uzeo 250$ iz biznisa 14.
+[05/05/2020] Vlasnik Hans_Schwammberger(178.220.212.11) je uzeo 250$ iz biznisa 14.
+[05/05/2020] Vlasnik Goran_Milojevic(176.104.111.86) je uzeo 12000$ iz biznisa 121.
+[05/05/2020] Vlasnik Hans_Schwammberger(178.220.212.11) je uzeo 250$ iz biznisa 14.
+[05/05/2020] Vlasnik Hans_Schwammberger(178.220.212.11) je uzeo 1983$ iz biznisa 14.
+[05/05/2020] Vlasnik Hans_Schwammberger(178.220.212.11) je uzeo 200$ iz biznisa 14.
+[05/05/2020] Vlasnik Michael_Rogers(109.93.191.99) je uzeo 20000$ iz biznisa 28.
+[05/05/2020] Vlasnik Jacob_Rodgers(178.221.226.234) je uzeo 2000$ iz biznisa 102.
+[05/05/2020] Vlasnik Michael_Rogers(109.93.191.99) je stavio 5000$ na biznis 28.
+[05/05/2020] Vlasnik Michael_Rogers(109.93.191.99) je uzeo 1500$ iz biznisa 28.
+[05/05/2020] Vlasnik Hans_Schwammberger(178.220.212.11) je uzeo 300$ iz biznisa 14.
+[05/05/2020] Vlasnik Hans_Schwammberger(178.220.212.11) je uzeo 533$ iz biznisa 14.
+[05/05/2020] Vlasnik Ashton_Hawk(78.3.22.50) je uzeo 25400$ iz biznisa 53.
+[05/05/2020] Vlasnik Vladimir_Molotov(46.35.150.194) je uzeo 746$ iz biznisa 40.
+[05/05/2020] Vlasnik Clyde_Loyd(77.78.234.122) je uzeo 476$ iz biznisa 100.
+[05/05/2020] Vlasnik Vukasin_Milovanovic(31.47.18.201) je uzeo 1$ iz biznisa 61.
+[05/05/2020] Vlasnik Hans_Schwammberger(178.221.185.57) je uzeo 327$ iz biznisa 14.
+[05/05/2020] Vlasnik Keith_Sanders(93.143.246.144) je stavio 200$ na biznis 127.
+[05/05/2020] Vlasnik Richard_Kennedy(109.94.97.184) je uzeo 200$ iz biznisa 117.
+[05/05/2020] Vlasnik Craig_Swanson(62.4.55.64) je uzeo 1840$ iz biznisa 106.
+[05/05/2020] Vlasnik Keith_Sanders(93.143.246.144) je stavio 75$ na biznis 127.
+[05/05/2020] Vlasnik Aaron_Schaffner(109.175.97.225) je uzeo 28000$ iz biznisa 89.
+[05/05/2020] Vlasnik Hans_Schwammberger(178.220.212.93) je uzeo 431$ iz biznisa 14.
+[05/05/2020] Vlasnik Hans_Schwammberger(178.220.212.93) je uzeo 186$ iz biznisa 14.
+[05/05/2020] Vlasnik Aaron_Schaffner(109.175.97.225) je uzeo 25000$ iz biznisa 89.
+[05/05/2020] Vlasnik Hans_Schwammberger(178.220.212.93) je uzeo 186$ iz biznisa 14.
+[05/05/2020] Vlasnik Hans_Schwammberger(178.220.212.93) je uzeo 186$ iz biznisa 14.
+[05/05/2020] Vlasnik Hans_Schwammberger(178.220.212.93) je uzeo 44$ iz biznisa 14.
+[05/05/2020] Vlasnik Hans_Schwammberger(178.220.212.93) je uzeo 186$ iz biznisa 14.
+[05/05/2020] Vlasnik Hans_Schwammberger(178.220.212.93) je uzeo 200$ iz biznisa 14.
+[05/05/2020] Vlasnik Hans_Schwammberger(178.220.212.93) je uzeo 200$ iz biznisa 14.
+[05/05/2020] Vlasnik Hans_Schwammberger(178.220.212.93) je uzeo 200$ iz biznisa 14.
+[05/05/2020] Vlasnik Hans_Schwammberger(178.220.212.93) je uzeo 200$ iz biznisa 14.
+[05/05/2020] Vlasnik Hans_Schwammberger(178.220.212.93) je uzeo 200$ iz biznisa 14.
+[05/05/2020] Vlasnik Hans_Schwammberger(178.220.212.93) je uzeo 200$ iz biznisa 14.
+[05/05/2020] Vlasnik Hans_Schwammberger(178.220.212.93) je uzeo 200$ iz biznisa 14.
+[05/05/2020] Vlasnik Hans_Schwammberger(178.220.212.93) je uzeo 200$ iz biznisa 14.
+[05/05/2020] Vlasnik Hans_Schwammberger(178.220.212.93) je uzeo 200$ iz biznisa 14.
+[05/05/2020] Vlasnik Hans_Schwammberger(178.220.212.93) je uzeo 210$ iz biznisa 14.
+[06/05/2020] Vlasnik Donald_Nixon(178.223.140.171) je uzeo 2000$ iz biznisa 124.
+[06/05/2020] Vlasnik Hans_Schwammberger(178.220.212.93) je uzeo 1000$ iz biznisa 14.
+[06/05/2020] Vlasnik Hans_Schwammberger(178.220.212.93) je uzeo 100$ iz biznisa 14.
+[06/05/2020] Vlasnik Hans_Schwammberger(178.220.212.93) je uzeo 14557$ iz biznisa 14.
+[06/05/2020] Vlasnik Hans_Schwammberger(178.220.212.93) je uzeo 186$ iz biznisa 14.
+[06/05/2020] Vlasnik Hans_Schwammberger(178.220.212.93) je uzeo 186$ iz biznisa 14.
+[06/05/2020] Vlasnik Hans_Schwammberger(178.220.212.93) je uzeo 848$ iz biznisa 14.
+[06/05/2020] Vlasnik Hans_Schwammberger(178.220.212.93) je uzeo 100$ iz biznisa 14.
+[06/05/2020] Vlasnik Hans_Schwammberger(178.220.212.93) je uzeo 1$ iz biznisa 14.
+[06/05/2020] Vlasnik Hans_Schwammberger(178.220.212.93) je uzeo 60$ iz biznisa 14.
+[06/05/2020] Vlasnik Hans_Schwammberger(178.220.212.93) je uzeo 20$ iz biznisa 14.
+[06/05/2020] Vlasnik Hans_Schwammberger(178.220.212.93) je uzeo 20$ iz biznisa 14.
+[06/05/2020] Vlasnik Hans_Schwammberger(178.220.212.93) je uzeo 988$ iz biznisa 14.
+[06/05/2020] Vlasnik Hans_Schwammberger(178.220.212.93) je uzeo 372$ iz biznisa 14.
+[06/05/2020] Vlasnik Viktor_Stern(109.175.96.138) je uzeo 1000$ iz biznisa 54.
+[06/05/2020] Vlasnik Keith_Sanders(83.131.230.217) je stavio 4500$ na biznis 125.
+[06/05/2020] Vlasnik Viktor_Stern(109.175.96.83) je stavio 20000$ na biznis 54.
+[06/05/2020] Vlasnik Hans_Schwammberger(178.221.185.128) je uzeo 997$ iz biznisa 14.
+[06/05/2020] Vlasnik Clyde_Loyd(77.78.234.122) je uzeo 428$ iz biznisa 100.
+[06/05/2020] Vlasnik Milos_Damjanovic(77.78.229.144) je uzeo 215749$ iz biznisa 31.
+[06/05/2020] Vlasnik Andrei_Abakumov(78.3.22.50) je uzeo 3700$ iz biznisa 53.
+[06/05/2020] Vlasnik Goran_Milojevic(176.104.111.86) je uzeo 1103$ iz biznisa 120.
+[06/05/2020] Vlasnik Daniel_Williamson(109.92.87.231) je uzeo 2000$ iz biznisa 13.
+[06/05/2020] Vlasnik Viktor_Noukhayev(85.94.135.205) je uzeo 992$ iz biznisa 81.
+[06/05/2020] Vlasnik Craig_Swanson(62.4.55.64) je uzeo 696$ iz biznisa 106.
+[06/05/2020] Vlasnik Craig_Swanson(62.4.55.64) je uzeo 139$ iz biznisa 106.
+[06/05/2020] Vlasnik Craig_Swanson(62.4.55.64) je uzeo 139$ iz biznisa 106.
+[06/05/2020] Vlasnik Craig_Swanson(62.4.55.64) je uzeo 139$ iz biznisa 106.
+[06/05/2020] Vlasnik Craig_Swanson(62.4.55.64) je uzeo 139$ iz biznisa 106.
+[06/05/2020] Vlasnik Craig_Swanson(62.4.55.64) je uzeo 139$ iz biznisa 106.
+[06/05/2020] Vlasnik Michael_Rogers(109.93.195.201) je uzeo 5000$ iz biznisa 28.
+[06/05/2020] Vlasnik Michael_Rogers(109.93.195.201) je uzeo 5000$ iz biznisa 28.
+[07/05/2020] Vlasnik Milos_Bogdanovic(92.36.133.151) je stavio 21700$ na biznis 88.
+[07/05/2020] Vlasnik Viktor_Stern(109.175.96.83) je uzeo 2500$ iz biznisa 54.
+[07/05/2020] Vlasnik Milos_Bogdanovic(92.36.133.151) je stavio 18500$ na biznis 88.
+[07/05/2020] Vlasnik Clyde_Loyd(77.78.234.122) je uzeo 1120$ iz biznisa 100.
+[07/05/2020] Vlasnik Lester_McCormick(188.127.97.40) je uzeo 4500$ iz biznisa 27.
+[07/05/2020] Vlasnik Milos_Bogdanovic(92.36.133.151) je uzeo 43402$ iz biznisa 88.
+[07/05/2020] Vlasnik John_Mangano(178.79.1.250) je uzeo 41000$ iz biznisa 85.
+[07/05/2020] Vlasnik Hans_Schwammberger(178.220.212.133) je uzeo 284$ iz biznisa 14.
+[07/05/2020] Vlasnik Andrei_Abakumov(78.2.50.64) je uzeo 2800$ iz biznisa 53.
+[07/05/2020] Clyde_Loyd(77.78.234.122) je uzeo 847$ iz biznisa 100.
+[07/05/2020] Viktor_Stern(109.175.98.196) je uzeo 800$ iz biznisa 54.
+[07/05/2020] Viktor_Stern(109.175.98.196) je uzeo 20000$ iz biznisa 54.
+[08/05/2020] Richard_Kennedy(109.94.97.184) je uzeo 14502$ iz biznisa 117.
+[08/05/2020] Hans_Schwammberger(178.220.212.149) je uzeo 1536$ iz biznisa 14.
+[08/05/2020] Clyde_Loyd(77.78.234.122) je uzeo 413$ iz biznisa 100.
+[08/05/2020] Clyde_Loyd(77.78.234.122) je uzeo 186$ iz biznisa 100.
+[08/05/2020] Shane_Thompson(93.141.71.71) je uzeo 600$ iz biznisa 40.
+[08/05/2020] Hans_Schwammberger(178.220.212.149) je uzeo 503$ iz biznisa 14.
+[08/05/2020] Clyde_Loyd(77.78.234.122) je uzeo 550$ iz biznisa 100.
+[08/05/2020] Viktor_Noukhayev(5.133.148.53) je uzeo 379$ iz biznisa 81.
+[08/05/2020] Butch_Caldwell(95.223.72.125) je uzeo 154$ iz biznisa 81.
+[08/05/2020] Viktor_Stern(109.175.99.179) je uzeo 1000$ iz biznisa 54.
+[08/05/2020] Paul_Fisher(91.191.56.86) je uzeo 300$ iz biznisa 87.
+[08/05/2020] Viktor_Stern(109.175.99.179) je uzeo 500$ iz biznisa 54.
+[08/05/2020] Paul_Fisher(91.191.56.86) je uzeo 1000$ iz biznisa 87.
+[08/05/2020] Blazo_Ivanovic(79.140.150.59) je uzeo 240$ iz biznisa 117.
+[08/05/2020] Clyde_Loyd(77.78.234.122) je uzeo 350$ iz biznisa 100.
+[08/05/2020] Paul_Fisher(91.191.56.86) je uzeo 1000$ iz biznisa 87.
+[08/05/2020] Paul_Fisher(91.191.56.86) je uzeo 14000$ iz biznisa 87.
+[08/05/2020] Velichko_Mitevski(109.93.191.53) je uzeo 1$ iz biznisa 11.
+[08/05/2020] Michael_Rogers(109.93.195.201) je uzeo 5000$ iz biznisa 28.
+[09/05/2020] Lester_McCormick(188.127.97.40) je uzeo 500$ iz biznisa 27.
+[09/05/2020] Michael_Rogers(109.93.195.201) je uzeo 2000$ iz biznisa 28.
+[09/05/2020] Michael_Rogers(109.93.195.201) je uzeo 2000$ iz biznisa 28.
+[09/05/2020] Michael_Rogers(109.93.195.201) je uzeo 1000$ iz biznisa 28.
+[09/05/2020] Alan_Huang(89.111.215.48) je uzeo 1$ iz biznisa 78.
+[09/05/2020] Alan_Huang(89.111.215.48) je uzeo 1755$ iz biznisa 78.
+[09/05/2020] William_Alessandrini(91.128.68.81) je stavio 60000$ na biznis 52.
+[09/05/2020] Hans_Schwammberger(178.220.212.80) je uzeo 118$ iz biznisa 14.
+[09/05/2020] Shane_Thompson(93.141.71.71) je uzeo 3000$ iz biznisa 40.
+[09/05/2020] Joseph_Galante(93.141.3.140) je uzeo 5326$ iz biznisa 124.
+[09/05/2020] John_Mangano(178.79.1.250) je uzeo 10000$ iz biznisa 85.
+[09/05/2020] Clyde_Loyd(77.78.234.122) je uzeo 473$ iz biznisa 100.
+[09/05/2020] Clyde_Loyd(77.78.234.122) je uzeo 538$ iz biznisa 100.
+[09/05/2020] Alan_Huang(89.111.215.48) je uzeo 6000$ iz biznisa 82.
+[09/05/2020] Alan_Huang(89.111.215.48) je uzeo 800$ iz biznisa 82.
+[09/05/2020] Anthony_Vendetti(31.47.26.40) je stavio 1$ na biznis 105.
+[09/05/2020] Anthony_Vendetti(31.47.26.40) je uzeo 4382$ iz biznisa 105.
+[09/05/2020] Vitaly_Mikhailov(95.155.49.197) je uzeo 1843$ iz biznisa 90.
+[09/05/2020] Viktor_Stern(109.175.96.186) je uzeo 1000$ iz biznisa 54.
+[10/05/2020] Viktor_Stern(109.175.96.186) je uzeo 6000$ iz biznisa 54.
+[10/05/2020] John_Mangano(178.79.1.250) je uzeo 8000$ iz biznisa 85.
+[10/05/2020] Hans_Schwammberger(178.221.185.152) je uzeo 145$ iz biznisa 14.
+[10/05/2020] Hans_Schwammberger(178.221.185.152) je uzeo 270$ iz biznisa 14.
+[10/05/2020] Hans_Schwammberger(178.221.185.152) je uzeo 6$ iz biznisa 14.
+[10/05/2020] Steven_Morrison(93.143.3.5) je uzeo 11000$ iz biznisa 51.
+[10/05/2020] Hans_Schwammberger(178.221.185.152) je uzeo 163$ iz biznisa 14.
+[10/05/2020] Donald_Nixon(178.223.140.171) je uzeo 2500$ iz biznisa 122.
+[10/05/2020] Hans_Schwammberger(178.221.185.152) je uzeo 649$ iz biznisa 14.
+[10/05/2020] Hans_Schwammberger(178.221.185.152) je uzeo 601$ iz biznisa 14.
+[10/05/2020] Hans_Schwammberger(178.221.185.152) je uzeo 558$ iz biznisa 14.
+[10/05/2020] Hans_Schwammberger(178.221.185.152) je uzeo 200$ iz biznisa 14.
+[10/05/2020] Hans_Schwammberger(178.221.185.152) je uzeo 200$ iz biznisa 14.
+[10/05/2020] Hans_Schwammberger(178.221.185.152) je uzeo 100$ iz biznisa 14.
+[10/05/2020] Hans_Schwammberger(178.221.185.152) je uzeo 100$ iz biznisa 14.
+[10/05/2020] Hans_Schwammberger(178.221.185.152) je uzeo 100$ iz biznisa 14.
+[10/05/2020] Butch_Caldwell(95.223.72.125) je uzeo 1208$ iz biznisa 81.
+[10/05/2020] Velichko_Mitevski(109.93.191.53) je uzeo 1$ iz biznisa 11.
+[10/05/2020] Velichko_Mitevski(109.93.191.53) je uzeo 8000$ iz biznisa 11.
+[10/05/2020] Hans_Schwammberger(178.221.185.152) je uzeo 3737$ iz biznisa 14.
+[11/05/2020] Valko_Spasov(109.93.191.53) je uzeo 1$ iz biznisa 104.
+[11/05/2020] Viktor_Stern(109.175.97.37) je uzeo 1300$ iz biznisa 54.
+[11/05/2020] John_Mangano(178.79.1.250) je uzeo 22000$ iz biznisa 85.
+[11/05/2020] Taichi_Yamazaki(87.116.179.108) je uzeo 678$ iz biznisa 11.
+[11/05/2020] John_Mangano(178.79.1.250) je uzeo 2259$ iz biznisa 85.
+[11/05/2020] Taichi_Yamazaki(87.116.179.108) je uzeo 100$ iz biznisa 11.
+[11/05/2020] Taichi_Yamazaki(87.116.179.108) je uzeo 30$ iz biznisa 11.
+[11/05/2020] Taichi_Yamazaki(87.116.179.108) je uzeo 900$ iz biznisa 11.
+[11/05/2020] Taichi_Yamazaki(87.116.179.108) je uzeo 270$ iz biznisa 11.
+[11/05/2020] Taichi_Yamazaki(87.116.179.108) je uzeo 400$ iz biznisa 11.
+[11/05/2020] Taichi_Yamazaki(87.116.179.108) je uzeo 28$ iz biznisa 11.
+[11/05/2020] Taichi_Yamazaki(87.116.179.108) je uzeo 200$ iz biznisa 11.
+[11/05/2020] Taichi_Yamazaki(87.116.179.108) je uzeo 172$ iz biznisa 11.
+[11/05/2020] Vukasin_Milovanovic(31.47.18.201) je uzeo 1$ iz biznisa 61.
+[11/05/2020] Vukasin_Milovanovic(31.47.18.201) je uzeo 5000$ iz biznisa 61.
+[11/05/2020] Aylin_Curtis(37.19.109.103) je uzeo 6000$ iz biznisa 115.
+[11/05/2020] Taichi_Yamazaki(87.116.178.72) je uzeo 1$ iz biznisa 11.
+[11/05/2020] Taichi_Yamazaki(87.116.178.72) je uzeo 185$ iz biznisa 11.
+[11/05/2020] Vukasin_Milovanovic(31.47.18.201) je uzeo 1$ iz biznisa 61.
+[11/05/2020] Vukasin_Milovanovic(31.47.18.201) je uzeo 1443$ iz biznisa 61.
+[11/05/2020] Clyde_Loyd(77.78.234.122) je uzeo 1280$ iz biznisa 99.
+[11/05/2020] Alan_Huang(89.111.215.48) je uzeo 200$ iz biznisa 81.
+[11/05/2020] Alan_Huang(89.111.215.48) je uzeo 1000$ iz biznisa 81.
+[11/05/2020] Thomas_McDowell(109.175.97.117) je uzeo 90000$ iz biznisa 32.
+[11/05/2020] Alan_Huang(89.111.215.48) je uzeo 100$ iz biznisa 81.
+[11/05/2020] Alan_Huang(89.111.215.48) je uzeo 1067$ iz biznisa 81.
+[11/05/2020] Alan_Huang(89.111.215.48) je stavio 500$ na biznis 81.
+[11/05/2020] Alan_Huang(89.111.215.48) je uzeo 300$ iz biznisa 81.
+[11/05/2020] Alan_Huang(89.111.215.48) je uzeo 2000$ iz biznisa 81.
+[11/05/2020] Alan_Huang(89.111.215.48) je uzeo 2000$ iz biznisa 81.
+[11/05/2020] Alan_Huang(89.111.215.48) je stavio 2000$ na biznis 81.
+[11/05/2020] Alan_Huang(89.111.215.48) je uzeo 100$ iz biznisa 81.
+[11/05/2020] Hristo_Nikolov(85.94.109.42) je uzeo 9550$ iz biznisa 62.
+[12/05/2020] Viktor_Stern(109.175.96.87) je uzeo 1000$ iz biznisa 54.
+[12/05/2020] Jeff_Sheng(109.175.103.243) je uzeo 2540$ iz biznisa 85.
+[12/05/2020] Hans_Schwammberger(178.220.212.66) je uzeo 930$ iz biznisa 14.
+[12/05/2020] Boris_Noukhayev(31.176.220.116) je uzeo 1863$ iz biznisa 43.
+[12/05/2020] Hans_Schwammberger(178.220.212.66) je uzeo 109$ iz biznisa 14.
+[12/05/2020] Hans_Schwammberger(178.220.212.66) je uzeo 109$ iz biznisa 14.
+[12/05/2020] Hans_Schwammberger(178.220.212.66) je uzeo 2$ iz biznisa 14.
+[12/05/2020] Taichi_Yamazaki(87.116.178.72) je stavio 1$ na biznis 11.
+[12/05/2020] Taichi_Yamazaki(87.116.178.72) je uzeo 3703$ iz biznisa 11.
+[12/05/2020] Craig_Moore(93.141.71.71) je uzeo 6912$ iz biznisa 40.
+[12/05/2020] Aleksa_Todorovic(89.246.122.50) je uzeo 1000$ iz biznisa 16.
+[12/05/2020] Aleksa_Todorovic(89.246.122.50) je uzeo 16671$ iz biznisa 16.
+[12/05/2020] Michael_Rogers(109.93.191.122) je uzeo 100000$ iz biznisa 28.
+[12/05/2020] Alan_Huang(89.111.215.48) je uzeo 300$ iz biznisa 81.
+[12/05/2020] Taichi_Yamazaki(87.116.178.72) je uzeo 485$ iz biznisa 11.
+[12/05/2020] Taichi_Yamazaki(87.116.178.72) je uzeo 534$ iz biznisa 11.
+[12/05/2020] Taichi_Yamazaki(87.116.178.72) je uzeo 1246$ iz biznisa 11.
+[12/05/2020] Hans_Schwammberger(178.220.212.66) je uzeo 250$ iz biznisa 14.
+[12/05/2020] Hans_Schwammberger(178.220.212.66) je uzeo 100$ iz biznisa 14.
+[12/05/2020] Aleksander_Zaitsev(85.94.133.71) je uzeo 2500$ iz biznisa 106.
+[12/05/2020] Taichi_Yamazaki(87.116.178.72) je uzeo 269$ iz biznisa 11.
+[12/05/2020] Taichi_Yamazaki(87.116.178.72) je uzeo 178$ iz biznisa 11.
+[12/05/2020] Aleksander_Zaitsev(85.94.133.71) je uzeo 1000$ iz biznisa 106.
+[12/05/2020] Butch_Caldwell(95.223.72.125) je uzeo 679$ iz biznisa 124.
+[12/05/2020] Hans_Schwammberger(178.220.212.66) je uzeo 300$ iz biznisa 14.
+[12/05/2020] Hans_Schwammberger(178.220.212.66) je uzeo 728$ iz biznisa 14.
+[12/05/2020] Viktor_Stern(109.175.99.142) je uzeo 1500$ iz biznisa 54.
+[12/05/2020] Hans_Schwammberger(178.220.212.66) je uzeo 300$ iz biznisa 14.
+[12/05/2020] Avram_Leontyev(77.77.217.1) je uzeo 14000$ iz biznisa 47.
+[12/05/2020] Craig_Moore(93.141.71.71) je uzeo 11000$ iz biznisa 40.
+[12/05/2020] Cordell_Watkins(95.155.49.197) je uzeo 1374$ iz biznisa 89.
+[13/05/2020] Lester_McCormick(188.127.97.40) je uzeo 3700$ iz biznisa 27.
+[13/05/2020] Lester_McCormick(188.127.97.40) je stavio 7400$ na biznis 27.
+[13/05/2020] Lester_McCormick(188.127.97.40) je uzeo 3700$ iz biznisa 27.
+[13/05/2020] Terry_Williams(178.221.240.68) je stavio 228$ na biznis 74.
+[13/05/2020] Terry_Williams(178.221.240.68) je uzeo 456$ iz biznisa 74.
+[13/05/2020] Kiarra_Leean(178.209.5.71) je uzeo 49000$ iz biznisa 29.
+[13/05/2020] Alan_Huang(89.111.215.48) je uzeo 200$ iz biznisa 81.
+[13/05/2020] Alan_Huang(89.111.215.48) je uzeo 283$ iz biznisa 81.
+[13/05/2020] Craig_Moore(93.141.71.71) je uzeo 27000$ iz biznisa 40.
+[13/05/2020] Terry_Williams(178.221.240.68) je uzeo 3548$ iz biznisa 75.
+[13/05/2020] Terry_Williams(178.221.240.68) je stavio 12883$ na biznis 75.
+[13/05/2020] Aleksander_Zaitsev(5.133.134.209) je uzeo 2000$ iz biznisa 40.
+[13/05/2020] Vladimir_Molotov(85.94.153.213) je uzeo 16693$ iz biznisa 95.
+[13/05/2020] Aleksander_Zaitsev(5.133.134.209) je uzeo 4000$ iz biznisa 113.
+[13/05/2020] Aleksander_Zaitsev(5.133.134.209) je uzeo 100$ iz biznisa 113.
+[13/05/2020] Winchester_Tillman(45.131.119.2) je uzeo 347$ iz biznisa 26.
+[13/05/2020] Winchester_Tillman(45.131.119.2) je stavio 834$ na biznis 26.
+[13/05/2020] Winchester_Tillman(45.131.119.2) je uzeo 857$ iz biznisa 26.
+[13/05/2020] Lester_McCormick(188.127.97.40) je uzeo 20071$ iz biznisa 27.
+[13/05/2020] Lester_McCormick(188.127.97.40) je uzeo 3$ iz biznisa 27.
+[13/05/2020] Blazo_Ivanovic(79.140.150.122) je uzeo 1$ iz biznisa 127.
+[14/05/2020] Raymond_Washington(62.240.24.192) je uzeo 8923$ iz biznisa 110.
+[14/05/2020] Vladimir_Molotov(85.94.153.213) je uzeo 4000$ iz biznisa 95.
+[14/05/2020] Alonzo_Ward(109.93.191.183) je uzeo 800$ iz biznisa 14.
+[14/05/2020] Terry_Williams(178.221.240.68) je uzeo 250$ iz biznisa 75.
+[14/05/2020] Terry_Williams(178.221.240.68) je uzeo 13012$ iz biznisa 75.
+[15/05/2020] Evgeniy_Ivanov(45.131.119.2) je uzeo 2095$ iz biznisa 26.
+[15/05/2020] Raymond_Washington(62.240.24.188) je uzeo 9792$ iz biznisa 110.
+[15/05/2020] Jimmy_Cheng(89.146.158.237) je uzeo 1739$ iz biznisa 19.
+[15/05/2020] Alan_Huang(89.111.215.48) je stavio 15000$ na biznis 87.
+[15/05/2020] Lester_McCormick(188.127.97.40) je stavio 270$ na biznis 27.
+[16/05/2020] Earl_Lawson(62.4.55.64) je uzeo 7263$ iz biznisa 112.
+[16/05/2020] Steven_Morrison(78.1.31.29) je uzeo 20000$ iz biznisa 51.
+[16/05/2020] Steven_Morrison(78.1.31.29) je uzeo 16$ iz biznisa 51.
+[16/05/2020] Steven_Morrison(78.1.31.29) je uzeo 16$ iz biznisa 51.
+[16/05/2020] Steven_Morrison(78.1.31.29) je uzeo 16$ iz biznisa 51.
+[16/05/2020] Steven_Morrison(78.1.31.29) je uzeo 13$ iz biznisa 51.
+[16/05/2020] Steven_Morrison(78.1.31.29) je uzeo 19$ iz biznisa 51.
+[16/05/2020] Steven_Morrison(78.1.31.29) je uzeo 700$ iz biznisa 51.
+[16/05/2020] Steven_Morrison(78.1.31.29) je uzeo 6$ iz biznisa 51.
+[16/05/2020] Steven_Morrison(78.1.31.29) je uzeo 30$ iz biznisa 51.
+[16/05/2020] Craig_Moore(93.141.71.71) je uzeo 15600$ iz biznisa 40.
+[16/05/2020] Alan_Huang(89.111.215.48) je uzeo 4092$ iz biznisa 87.
+[17/05/2020] Alan_Huang(89.111.215.48) je uzeo 1525$ iz biznisa 87.
+[17/05/2020] Jonathan_Brown(89.246.122.141) je uzeo 10500$ iz biznisa 16.
+[17/05/2020] Thomas_McDowell(109.175.97.111) je uzeo 107000$ iz biznisa 32.
+[17/05/2020] Vladimir_Molotov(46.35.159.27) je uzeo 2000$ iz biznisa 95.
+[17/05/2020] Vladimir_Molotov(46.35.159.27) je uzeo 2500$ iz biznisa 95.
+[18/05/2020] Boris_Noukhayev(31.176.222.4) je uzeo 5870$ iz biznisa 30.
+[18/05/2020] Jeff_Sheng(109.175.103.251) je uzeo 2879$ iz biznisa 91.
+[19/05/2020] Viktor_Stern(109.175.98.88) je uzeo 1000$ iz biznisa 54.
+[20/05/2020] Evgeniy_Ivanov(45.131.119.2) je uzeo 3477$ iz biznisa 26.
+[20/05/2020] Jacob_Anderson(77.77.217.193) je stavio 230$ na biznis 123.
+[20/05/2020] Boris_Noukhayev(31.176.220.149) je uzeo 2299$ iz biznisa 30.
+[20/05/2020] Aleksander_Zaitsev(46.35.136.5) je uzeo 7000$ iz biznisa 113.
+[20/05/2020] Daniel_Williamson(109.92.75.200) je uzeo 6000$ iz biznisa 13.
+[20/05/2020] Blazo_Ivanovic(79.140.150.88) je uzeo 2301$ iz biznisa 125.
+[20/05/2020] Thomas_McDowell(109.175.96.251) je uzeo 37000$ iz biznisa 32.
+[21/05/2020] Lester_McCormick(188.127.107.44) je uzeo 1980$ iz biznisa 27.
+[21/05/2020] Rene_Strauss(31.45.225.163) je stavio 20000$ na biznis 128.
+[21/05/2020] Maksim_Malovic(45.131.119.2) je uzeo 5258$ iz biznisa 26.
+[22/05/2020] Maksim_Malovic(45.131.119.2) je stavio 5500$ na biznis 11.
+[22/05/2020] Rion_Knight(178.223.102.255) je stavio 15$ na biznis 20.
+[22/05/2020] Rion_Knight(178.223.102.255) je uzeo 1540$ iz biznisa 20.
+[22/05/2020] Boris_Noukhayev(31.176.225.234) je uzeo 1838$ iz biznisa 30.
+[22/05/2020] Boris_Noukhayev(31.176.225.234) je uzeo 5$ iz biznisa 30.
+[22/05/2020] Boris_Noukhayev(31.176.225.234) je uzeo 84$ iz biznisa 30.
+[23/05/2020] Anthony_Vendetti(31.47.26.40) je uzeo 2667$ iz biznisa 111.
+[23/05/2020] Alan_Huang(89.111.215.48) je uzeo 35000$ iz biznisa 87.
+[23/05/2020] Maksim_Malovic(45.131.119.2) je uzeo 16422$ iz biznisa 11.
+[23/05/2020] Alan_Huang(89.111.215.48) je stavio 12000$ na biznis 87.
+[23/05/2020] Maksim_Malovic(45.131.119.2) je uzeo 1489$ iz biznisa 11.
+[23/05/2020] Craig_Moore(93.141.55.107) je uzeo 16000$ iz biznisa 40.
+[23/05/2020] Maksim_Malovic(45.131.119.2) je uzeo 631$ iz biznisa 11.
+[23/05/2020] Karen_Moore(92.55.122.237) je uzeo 11049$ iz biznisa 15.
+[23/05/2020] Hector_Hoken(109.175.97.131) je uzeo 500000$ iz biznisa 94.
+[24/05/2020] Avram_Leontyev(77.77.216.243) je uzeo 7000$ iz biznisa 47.
+[24/05/2020] Vladimir_Molotov(85.94.134.226) je uzeo 10057$ iz biznisa 95.
+[25/05/2020] Jimmy_Cheng(89.146.152.157) je uzeo 6800$ iz biznisa 19.
+[25/05/2020] Viktor_Noukhayev(46.35.144.123) je uzeo 10000$ iz biznisa 60.
+[25/05/2020] Viktor_Noukhayev(46.35.144.123) je uzeo 84$ iz biznisa 60.
+[25/05/2020] Viktor_Noukhayev(46.35.144.123) je uzeo 756$ iz biznisa 60.
+[25/05/2020] Aleksander_Zaitsev(5.133.138.175) je uzeo 8900$ iz biznisa 113.
+[25/05/2020] Aleksander_Zaitsev(5.133.138.175) je uzeo 73$ iz biznisa 113.
+[25/05/2020] Aaron_Schaffner(109.175.96.169) je uzeo 15000$ iz biznisa 94.
+[25/05/2020] Aaron_Schaffner(109.175.96.169) je stavio 25000$ na biznis 94.
+[26/05/2020] Lester_McCormick(188.127.107.44) je uzeo 1100$ iz biznisa 43.
+[26/05/2020] Bojko_Dadic(87.116.191.254) je uzeo 3$ iz biznisa 27.
+[26/05/2020] Stephen_Frye(93.141.11.36) je uzeo 1$ iz biznisa 129.
+[26/05/2020] Viktor_Noukhayev(46.35.144.123) je uzeo 1353$ iz biznisa 60.
+[26/05/2020] Boris_Noukhayev(31.176.224.234) je uzeo 2314$ iz biznisa 30.
+[27/05/2020] Viktor_Stern(109.175.97.13) je uzeo 4500$ iz biznisa 54.
+[27/05/2020] Mauricio_Manzano(178.79.52.1) je uzeo 2073$ iz biznisa 130.
+[27/05/2020] Jacob_Anderson(77.77.216.115) je uzeo 11972$ iz biznisa 123.
+[27/05/2020] Jacob_Anderson(77.77.216.115) je stavio 15000$ na biznis 123.
+[27/05/2020] Stephen_Frye(93.141.11.36) je uzeo 1$ iz biznisa 127.
+[27/05/2020] Stephen_Frye(93.141.11.36) je uzeo 2727$ iz biznisa 127.
+[27/05/2020] William_Nithercott(185.37.27.152) je uzeo 4147$ iz biznisa 131.
+[27/05/2020] Viktor_Noukhayev(46.35.144.123) je uzeo 739$ iz biznisa 58.
+[27/05/2020] Maksim_Malovic(45.131.119.2) je uzeo 2591$ iz biznisa 11.
+[27/05/2020] Aleksander_Zaitsev(5.133.159.21) je uzeo 4400$ iz biznisa 111.
+[27/05/2020] Aleksander_Zaitsev(5.133.159.21) je uzeo 70$ iz biznisa 111.
+[27/05/2020] Mauricio_Manzano(178.79.52.1) je stavio 69$ na biznis 128.
+[28/05/2020] Demetrius_Innes(87.116.191.254) je uzeo 4762$ iz biznisa 27.
+[28/05/2020] William_Nithercott(185.37.25.131) je uzeo 3971$ iz biznisa 131.
+[28/05/2020] Viktor_Noukhayev(46.35.144.123) je uzeo 2135$ iz biznisa 58.
+[28/05/2020] Daniel_Volkov(31.223.139.251) je stavio 1$ na biznis 130.
+[28/05/2020] Daniel_Volkov(31.223.139.251) je stavio 1$ na biznis 130.
+[28/05/2020] Daniel_Volkov(31.223.139.251) je stavio 1$ na biznis 130.
+[28/05/2020] Daniel_Volkov(31.223.139.251) je stavio 1$ na biznis 130.
+[28/05/2020] Daniel_Volkov(31.223.139.251) je stavio 1$ na biznis 130.
+[28/05/2020] Daniel_Volkov(31.223.139.251) je stavio 1$ na biznis 130.
+[28/05/2020] Stephen_Frye(93.141.11.36) je uzeo 1$ iz biznisa 127.
+[28/05/2020] Stephen_Frye(93.141.11.36) je uzeo 1118$ iz biznisa 127.
+[28/05/2020] Vladimir_Molotov(46.35.137.137) je uzeo 4622$ iz biznisa 93.
+[28/05/2020] Daniel_Volkov(31.223.139.133) je uzeo 1016$ iz biznisa 130.
+[28/05/2020] Daniel_Volkov(31.223.139.133) je uzeo 438$ iz biznisa 130.
+[28/05/2020] Boris_Noukhayev(37.203.85.121) je uzeo 2153$ iz biznisa 30.
+[28/05/2020] Daniel_Volkov(31.223.139.133) je uzeo 387$ iz biznisa 130.
+[28/05/2020] Viktor_Stern(109.175.97.153) je uzeo 500$ iz biznisa 54.
+[28/05/2020] Igor_Kostic(178.221.153.32) je uzeo 3500$ iz biznisa 62.
+[28/05/2020] Viktor_Stern(109.175.97.153) je uzeo 100$ iz biznisa 54.
+[28/05/2020] Viktor_Stern(109.175.97.153) je uzeo 1000$ iz biznisa 54.
+[29/05/2020] Jacob_Anderson(77.77.216.115) je uzeo 20000$ iz biznisa 121.
+[29/05/2020] William_Nithercott(77.243.28.29) je uzeo 3911$ iz biznisa 131.
+[29/05/2020] Thomas_McDowell(109.175.96.37) je uzeo 73685$ iz biznisa 32.
+[30/05/2020] William_Nithercott(37.19.110.106) je uzeo 2951$ iz biznisa 131.
+[30/05/2020] Mauricio_Manzano(178.79.52.1) je uzeo 66$ iz biznisa 128.
+[31/05/2020] Aaron_Schaffner(109.175.98.84) je uzeo 1500000$ iz biznisa 92.
+[31/05/2020] Michael_Rogers(178.222.216.47) je uzeo 200000$ iz biznisa 28.
+[31/05/2020] Michael_Rogers(178.222.216.47) je uzeo 11000$ iz biznisa 28.
+[31/05/2020] Viktor_Noukhayev(85.94.159.92) je uzeo 4017$ iz biznisa 58.
+[31/05/2020] Noah_Williams(77.219.91.226) je uzeo 7000$ iz biznisa 87.
+[31/05/2020] Vince_Corona(79.140.150.86) je uzeo 1966$ iz biznisa 123.
+[31/05/2020] Stephen_Frye(78.2.0.189) je uzeo 10$ iz biznisa 127.
+[31/05/2020] Stephen_Frye(78.2.0.189) je uzeo 3033$ iz biznisa 127.
+[01/06/2020] Carmen_Attardi(178.209.5.71) je stavio 1$ na biznis 29.
+[01/06/2020] Carmen_Attardi(178.209.5.71) je uzeo 43000$ iz biznisa 29.
+[01/06/2020] Charlie_Sullivan(77.77.217.24) je stavio 20000$ na biznis 107.
+[01/06/2020] Alan_Huang(89.111.215.48) je uzeo 35000$ iz biznisa 85.
+[01/06/2020] Daniel_Volkov(31.223.139.104) je uzeo 1138$ iz biznisa 130.
+[01/06/2020] Alan_Huang(89.111.215.48) je uzeo 200$ iz biznisa 85.
+[02/06/2020] Aleksander_Zaitsev(5.133.157.30) je uzeo 1$ iz biznisa 111.
+[02/06/2020] Aleksander_Zaitsev(5.133.157.30) je uzeo 9993$ iz biznisa 111.
+[02/06/2020] Viktor_Noukhayev(85.94.159.92) je uzeo 2030$ iz biznisa 58.
+[03/06/2020] Deveron_Hodges(92.55.122.231) je uzeo 7186$ iz biznisa 15.
+[03/06/2020] Deveron_Hodges(92.55.122.231) je stavio 178$ na biznis 15.
+[03/06/2020] Deveron_Hodges(92.55.122.231) je uzeo 356$ iz biznisa 15.
+[03/06/2020] Bob_Winchester(87.116.176.245) je uzeo 8000$ iz biznisa 17.
+[03/06/2020] Tyrie_Gramont(87.116.177.82) je uzeo 22000$ iz biznisa 100.
+[03/06/2020] William_Nithercott(37.19.107.170) je uzeo 1504$ iz biznisa 133.
+[03/06/2020] Tyrie_Gramont(87.116.177.82) je uzeo 8900$ iz biznisa 100.
+[03/06/2020] Deveron_Hodges(92.55.122.115) je uzeo 1202$ iz biznisa 15.
+[03/06/2020] Jonathan_Brown(88.130.59.146) je uzeo 21000$ iz biznisa 16.
+[03/06/2020] Bob_Winchester(87.116.177.158) je uzeo 2100$ iz biznisa 17.
+[03/06/2020] Alan_Huang(89.111.215.48) je uzeo 2000$ iz biznisa 85.
+[03/06/2020] Alan_Huang(89.111.215.48) je stavio 1500$ na biznis 85.
+[03/06/2020] Alan_Huang(89.111.215.48) je uzeo 600$ iz biznisa 85.
+[04/06/2020] William_Nithercott(77.243.31.246) je uzeo 3259$ iz biznisa 132.
+[04/06/2020] Vladimir_Molotov(46.35.159.47) je uzeo 4900$ iz biznisa 93.
+[04/06/2020] Vladimir_Molotov(46.35.159.47) je uzeo 91$ iz biznisa 93.
+[05/06/2020] Bob_Winchester(87.116.179.13) je uzeo 5000$ iz biznisa 17.
+[05/06/2020] Viktor_Noukhayev(46.35.146.21) je uzeo 3147$ iz biznisa 58.
+[06/06/2020] Earl_Lawson(62.4.55.64) je uzeo 26189$ iz biznisa 109.
+[06/06/2020] Ivan_Tigrov(93.141.34.89) je uzeo 2333$ iz biznisa 134.
+[07/06/2020] Alan_Huang(89.111.215.48) je uzeo 2000$ iz biznisa 85.
+[07/06/2020] Alan_Huang(89.111.215.48) je uzeo 2000$ iz biznisa 85.
+[07/06/2020] Alan_Huang(89.111.215.48) je stavio 200$ na biznis 85.
+[07/06/2020] Alan_Huang(89.111.215.48) je stavio 1800$ na biznis 85.
+[07/06/2020] Anthony_Vendetti(31.47.26.40) je uzeo 600$ iz biznisa 108.
+[08/06/2020] Liam_Hao(31.47.31.184) je stavio 1$ na biznis 130.
+[08/06/2020] Liam_Hao(31.47.31.184) je uzeo 2900$ iz biznisa 130.
+[08/06/2020] Ivan_Tigrov(93.141.34.89) je uzeo 1$ iz biznisa 134.
+[08/06/2020] Ivan_Tigrov(93.141.34.89) je uzeo 2794$ iz biznisa 134.
+[09/06/2020] Ivan_Tigrov(93.141.34.89) je uzeo 1$ iz biznisa 134.
+[09/06/2020] Ivan_Tigrov(93.141.34.89) je uzeo 2952$ iz biznisa 134.
+[09/06/2020] Alonzo_Ward(109.93.195.167) je uzeo 6500$ iz biznisa 89.
+[09/06/2020] Viktor_Noukhayev(46.35.145.30) je uzeo 2282$ iz biznisa 58.
+[09/06/2020] Ivan_Tigrov(93.141.34.89) je uzeo 1$ iz biznisa 134.
+[09/06/2020] Ivan_Tigrov(93.141.34.89) je uzeo 515$ iz biznisa 134.
+[09/06/2020] Larry_Dickens(87.116.190.35) je uzeo 10$ iz biznisa 27.
+[10/06/2020] Liam_Hao(31.47.31.184) je uzeo 1$ iz biznisa 130.
+[10/06/2020] Liam_Hao(31.47.31.184) je uzeo 3000$ iz biznisa 130.
+[10/06/2020] Liam_Hao(31.47.31.184) je stavio 50000$ na biznis 130.
+[10/06/2020] Liam_Hao(31.47.31.184) je uzeo 20000$ iz biznisa 130.
+[10/06/2020] Aleksander_Zaitsev(85.94.132.198) je uzeo 10$ iz biznisa 110.
+[10/06/2020] Aleksander_Zaitsev(85.94.132.198) je uzeo 8415$ iz biznisa 110.
+[10/06/2020] Liam_Hao(31.47.31.184) je uzeo 1$ iz biznisa 130.
+[10/06/2020] Liam_Hao(31.47.31.184) je uzeo 20000$ iz biznisa 130.
+[11/06/2020] Liam_Hao(31.47.31.184) je uzeo 1$ iz biznisa 130.
+[11/06/2020] Liam_Hao(31.47.31.184) je uzeo 11000$ iz biznisa 130.
+[11/06/2020] Liam_Hao(31.47.31.184) je uzeo 1$ iz biznisa 130.
+[11/06/2020] Deveron_Hodges(92.55.122.129) je uzeo 1216$ iz biznisa 15.
+[11/06/2020] Alonzo_Ward(109.93.195.89) je uzeo 1500$ iz biznisa 89.
+[11/06/2020] Jimmy_Cheng(92.36.201.73) je uzeo 3438$ iz biznisa 19.
+[11/06/2020] Alan_Huang(89.111.215.48) je uzeo 1000$ iz biznisa 85.
+[11/06/2020] Paul_Hawakins(188.127.104.86) je uzeo 2940$ iz biznisa 43.
+[11/06/2020] Vladimir_Molotov(5.133.156.16) je uzeo 1800$ iz biznisa 93.
+[11/06/2020] Vladimir_Molotov(5.133.156.16) je uzeo 500$ iz biznisa 93.
+[11/06/2020] Vince_Corona(79.140.150.30) je uzeo 400$ iz biznisa 121.
+[12/06/2020] Stephen_Frye(93.141.93.205) je uzeo 1$ iz biznisa 125.
+[12/06/2020] Stephen_Frye(93.141.93.205) je uzeo 1$ iz biznisa 125.
+[12/06/2020] Stephen_Frye(93.141.93.205) je uzeo 1$ iz biznisa 125.
+[12/06/2020] Stephen_Frye(93.141.93.205) je uzeo 2027$ iz biznisa 125.
+[12/06/2020] Liam_Hao(31.47.31.184) je uzeo 1$ iz biznisa 130.
+[12/06/2020] Keith_Sherman(31.47.18.201) je uzeo 1$ iz biznisa 60.
+[13/06/2020] Christina_Anderson(89.216.224.16) je stavio 1$ na biznis 127.
+[13/06/2020] Avram_Leontyev(109.175.96.222) je uzeo 306969$ iz biznisa 47.
+[14/06/2020] Jonathan_Brown(77.78.229.86) je uzeo 12700$ iz biznisa 16.
+[14/06/2020] Liam_Hao(31.47.31.184) je uzeo 1$ iz biznisa 130.
+[14/06/2020] Alan_Huang(89.111.215.48) je stavio 4000$ na biznis 85.
+[14/06/2020] Alan_Huang(89.111.215.48) je uzeo 15000$ iz biznisa 85.
+[14/06/2020] Christina_Anderson(89.216.224.16) je uzeo 17000$ iz biznisa 127.
+[14/06/2020] Paul_Hawakins(188.127.104.86) je uzeo 300$ iz biznisa 43.
+[15/06/2020] Liam_Hao(31.47.31.184) je uzeo 1$ iz biznisa 130.
+[16/06/2020] Stephen_Frye(93.141.93.205) je uzeo 1$ iz biznisa 125.
+[16/06/2020] Stephen_Frye(93.141.93.205) je uzeo 1$ iz biznisa 125.
+[16/06/2020] Stephen_Frye(93.141.93.205) je uzeo 1057$ iz biznisa 125.
+[17/06/2020] Elena_Stoneberg(89.111.246.90) je uzeo 109$ iz biznisa 133.
+[17/06/2020] Aleksander_Zaitsev(5.133.141.205) je uzeo 1882$ iz biznisa 110.
+[18/06/2020] Thomas_Day(93.141.35.212) je uzeo 500$ iz biznisa 97.
+[18/06/2020] Thomas_Day(93.141.35.212) je uzeo 500$ iz biznisa 97.
+[18/06/2020] Thomas_Day(93.141.35.212) je uzeo 500$ iz biznisa 97.
+[18/06/2020] Thomas_Day(93.141.35.212) je uzeo 500$ iz biznisa 97.
+[18/06/2020] Liam_Hao(31.47.31.184) je uzeo 1$ iz biznisa 128.
+[18/06/2020] Liam_Hao(31.47.31.184) je uzeo 8000$ iz biznisa 128.
+[18/06/2020] Ellsworth_Richards(188.120.119.239) je uzeo 8245$ iz biznisa 129.
+[18/06/2020] Jonathan_Brown(188.127.112.64) je uzeo 4600$ iz biznisa 16.
+[20/06/2020] Liam_Hao(31.47.31.184) je uzeo 1$ iz biznisa 128.
+[20/06/2020] Alan_Huang(89.111.215.48) je uzeo 10000$ iz biznisa 85.
+[20/06/2020] Liam_Hao(31.47.31.184) je uzeo 2100$ iz biznisa 128.
+[21/06/2020] Jimmy_Cheng(31.176.202.51) je uzeo 3030$ iz biznisa 19.
+[21/06/2020] Sado_Sahovic(85.94.141.208) je uzeo 899$ iz biznisa 58.
+[21/06/2020] Michael_Rogers(109.93.191.44) je uzeo 39900$ iz biznisa 28.
+[22/06/2020] Jonathan_Brown(188.127.112.64) je uzeo 7700$ iz biznisa 16.
+[23/06/2020] Terry_Williams(93.86.103.219) je uzeo 2786$ iz biznisa 73.
+[23/06/2020] Hans_Schwammberger(178.220.212.79) je uzeo 1326$ iz biznisa 14.
+[23/06/2020] David_Rodgers(89.111.246.90) je uzeo 3500$ iz biznisa 131.
+[23/06/2020] Liam_Hao(31.47.31.184) je uzeo 1$ iz biznisa 128.
+[23/06/2020] Liam_Hao(31.47.31.184) je uzeo 5000$ iz biznisa 128.
+[23/06/2020] Liam_Hao(31.47.31.184) je uzeo 1$ iz biznisa 128.
+[23/06/2020] Liam_Hao(31.47.31.184) je uzeo 1000$ iz biznisa 128.
+[24/06/2020] Deveron_Hodges(92.55.122.161) je uzeo 3761$ iz biznisa 15.
+[24/06/2020] Michael_Burrows(31.223.132.2) je uzeo 1000$ iz biznisa 12.
+[24/06/2020] Michael_Burrows(31.223.132.2) je uzeo 1$ iz biznisa 12.
+[25/06/2020] Alan_Huang(94.250.84.123) je uzeo 8000$ iz biznisa 85.
+[25/06/2020] Alan_Huang(94.250.84.123) je uzeo 239$ iz biznisa 85.
+[25/06/2020] Sado_Sahovic(5.133.148.217) je uzeo 483$ iz biznisa 115.
+[26/06/2020] David_Rodgers(89.111.246.90) je uzeo 1500$ iz biznisa 131.
+[26/06/2020] David_Rodgers(89.111.246.90) je uzeo 14000$ iz biznisa 131.
+[26/06/2020] Aleksander_Zaitsev(5.133.136.162) je uzeo 759$ iz biznisa 110.
+[26/06/2020] Tyrie_Gramont(87.116.179.202) je uzeo 1600$ iz biznisa 100.
+[26/06/2020] Tyrie_Gramont(87.116.179.202) je uzeo 14000$ iz biznisa 100.
+[26/06/2020] Thomas_McDowell(109.175.99.118) je uzeo 57000$ iz biznisa 32.
+[26/06/2020] Conor_Lyons(178.149.208.137) je uzeo 1000$ iz biznisa 103.
+[26/06/2020] Conor_Lyons(178.149.208.137) je uzeo 1000$ iz biznisa 103.
+[26/06/2020] Harry_Gemas(178.220.196.69) je uzeo 2000$ iz biznisa 62.
+[27/06/2020] Sado_Sahovic(5.133.148.217) je uzeo 44$ iz biznisa 115.
+[27/06/2020] Logan_Davis(89.216.162.139) je uzeo 24910$ iz biznisa 126.
+[27/06/2020] Ibrahimi_Kastrati(178.221.88.134) je uzeo 8000$ iz biznisa 77.
+[28/06/2020] Ibrahimi_Kastrati(178.223.161.4) je uzeo 1000$ iz biznisa 77.
+[28/06/2020] Sado_Sahovic(5.133.140.75) je uzeo 733$ iz biznisa 115.
+[28/06/2020] Sado_Sahovic(5.133.140.75) je uzeo 4555$ iz biznisa 82.
+[29/06/2020] William_Nithercott(185.37.27.187) je uzeo 5654$ iz biznisa 129.
+[29/06/2020] Mehmed_Sahovic(31.176.227.103) je uzeo 10331$ iz biznisa 30.
+[29/06/2020] Mehmed_Sahovic(31.176.227.103) je uzeo 44$ iz biznisa 30.
+[29/06/2020] Logan_Davis(89.216.162.139) je stavio 10000$ na biznis 126.
+[29/06/2020] Conor_Lyons(178.149.208.137) je uzeo 15500$ iz biznisa 103.
+[29/06/2020] Logan_Davis(89.216.162.139) je uzeo 2000$ iz biznisa 126.
+[29/06/2020] Liam_Hao(31.47.31.184) je uzeo 1$ iz biznisa 128.
+[29/06/2020] Liam_Hao(31.47.31.184) je uzeo 12000$ iz biznisa 128.
+[30/06/2020] Bonifacie_Gambiroza(178.209.5.71) je uzeo 50000$ iz biznisa 29.
+[30/06/2020] Boris_Ivanov(93.140.60.169) je uzeo 23780$ iz biznisa 79.
+[30/06/2020] Klara_Sandberg(79.101.77.73) je uzeo 16786$ iz biznisa 81.
+[01/07/2020] Alonzo_Ward(109.93.195.224) je uzeo 23000$ iz biznisa 89.
+[01/07/2020] David_Palmer(31.223.132.157) je uzeo 5$ iz biznisa 12.
+[01/07/2020] David_Palmer(31.223.132.157) je uzeo 500$ iz biznisa 12.
+[01/07/2020] Aaron_Schaffner(109.175.99.2) je uzeo 4500000$ iz biznisa 92.
+[01/07/2020] Aaron_Schaffner(109.175.99.2) je stavio 450000$ na biznis 92.
+[01/07/2020] Aaron_Schaffner(109.175.99.2) je stavio 4000000$ na biznis 92.
+[01/07/2020] Aaron_Schaffner(109.175.99.2) je stavio 50000$ na biznis 92.
+[01/07/2020] Liam_Hao(31.47.31.184) je uzeo 1$ iz biznisa 128.
+[01/07/2020] Terry_Williams(109.92.46.116) je uzeo 1270$ iz biznisa 73.
+[01/07/2020] Terry_Williams(109.92.46.116) je uzeo 742$ iz biznisa 73.
+[02/07/2020] Alan_Huang(94.250.84.123) je uzeo 13000$ iz biznisa 85.
+[02/07/2020] Conor_Lyons(178.149.208.137) je uzeo 5506$ iz biznisa 103.
+[02/07/2020] Conor_Lyons(178.149.208.137) je uzeo 50$ iz biznisa 53.
+[02/07/2020] Conor_Lyons(178.149.208.137) je uzeo 105000$ iz biznisa 53.
+[02/07/2020] Conor_Lyons(178.149.208.137) je uzeo 230$ iz biznisa 53.
+[03/07/2020] Tommy_Telford(31.47.18.201) je uzeo 1$ iz biznisa 60.
+[03/07/2020] Tommy_Telford(31.47.18.201) je uzeo 9727$ iz biznisa 60.
+[03/07/2020] Lauren_Brunetti(89.146.184.178) je uzeo 6266$ iz biznisa 133.
+[03/07/2020] Gabriel_Morris(89.111.246.90) je uzeo 8823$ iz biznisa 131.
+[03/07/2020] Earl_Lawson(62.4.55.64) je uzeo 4500$ iz biznisa 109.
+[03/07/2020] Lauren_Brunetti(89.146.189.226) je uzeo 800$ iz biznisa 133.
+[03/07/2020] Conor_Lyons(178.149.208.137) je stavio 67$ na biznis 53.
+[03/07/2020] Conor_Lyons(178.149.208.137) je uzeo 100$ iz biznisa 53.
+[03/07/2020] Conor_Lyons(178.149.208.137) je uzeo 300$ iz biznisa 53.
+[03/07/2020] William_Nithercott(185.37.25.84) je uzeo 5169$ iz biznisa 129.
+[03/07/2020] Adrian_Campbell(87.123.203.198) je uzeo 10000$ iz biznisa 16.
+[04/07/2020] David_Palmer(31.223.132.227) je uzeo 6$ iz biznisa 12.
+[04/07/2020] David_Palmer(31.223.132.227) je uzeo 20$ iz biznisa 12.
+[05/07/2020] Andrej_Baltocky(93.140.179.209) je uzeo 20238$ iz biznisa 110.
+[05/07/2020] David_Palmer(31.223.132.227) je uzeo 200$ iz biznisa 12.
+[05/07/2020] David_Palmer(31.223.132.227) je uzeo 5$ iz biznisa 12.
+[05/07/2020] David_Palmer(31.223.132.227) je uzeo 500$ iz biznisa 12.
+[05/07/2020] David_Palmer(31.223.132.227) je uzeo 500$ iz biznisa 12.
+[05/07/2020] David_Palmer(31.223.132.227) je uzeo 1000$ iz biznisa 12.
+[05/07/2020] David_Palmer(31.223.132.227) je uzeo 8$ iz biznisa 12.
+[05/07/2020] David_Palmer(31.223.132.227) je uzeo 1000$ iz biznisa 12.
+[05/07/2020] David_Palmer(31.223.132.227) je uzeo 483$ iz biznisa 12.
+[05/07/2020] Lorenzo_Bonelli(109.93.191.183) je uzeo 39000$ iz biznisa 34.
+[05/07/2020] Mathias_Lachlan(93.143.86.39) je uzeo 1000$ iz biznisa 51.
+[05/07/2020] Mathias_Lachlan(93.143.86.39) je uzeo 500$ iz biznisa 51.
+[05/07/2020] Josif_Arsov(79.101.77.73) je uzeo 500$ iz biznisa 122.
+[08/07/2020] Tommy_Telford(31.47.18.201) je uzeo 1$ iz biznisa 60.
+[08/07/2020] Tommy_Telford(31.47.18.201) je uzeo 1617$ iz biznisa 60.
+[08/07/2020] Thomas_McDowell(109.175.96.137) je uzeo 41000$ iz biznisa 32.
+[08/07/2020] Conor_Lyons(178.149.208.137) je stavio 45$ na biznis 53.
+[08/07/2020] Conor_Lyons(178.149.208.137) je stavio 300$ na biznis 53.
+[08/07/2020] Hans_Schwammberger(178.221.185.158) je uzeo 13219$ iz biznisa 14.
+[08/07/2020] Nikolaj_Zajcev(89.201.233.152) je stavio 10$ na biznis 132.
+[08/07/2020] Conor_Lyons(178.149.208.137) je uzeo 150$ iz biznisa 53.
+[09/07/2020] Mehmed_Sahovic(31.176.229.80) je uzeo 1265$ iz biznisa 30.
+[09/07/2020] Liam_Hao(31.47.31.184) je uzeo 1$ iz biznisa 128.
+[09/07/2020] Nikolaj_Zajcev(89.201.154.14) je uzeo 3758$ iz biznisa 132.
+[09/07/2020] Nikolaj_Zajcev(89.201.154.14) je uzeo 178$ iz biznisa 132.
+[10/07/2020] David_Palmer(31.223.132.205) je uzeo 3000$ iz biznisa 12.
+[10/07/2020] David_Palmer(31.223.132.205) je uzeo 1$ iz biznisa 12.
+[11/07/2020] Alicia_Macious(193.217.223.254) je uzeo 4411$ iz biznisa 22.
+[11/07/2020] Yuri_Semionevich(93.140.73.138) je uzeo 3800$ iz biznisa 93.
+[11/07/2020] David_Palmer(31.223.132.82) je uzeo 1$ iz biznisa 12.
+[11/07/2020] David_Palmer(31.223.132.82) je uzeo 3407$ iz biznisa 12.
+[11/07/2020] Liam_Hao(31.47.31.184) je uzeo 1$ iz biznisa 128.
+[11/07/2020] Liam_Hao(31.47.31.184) je uzeo 10000$ iz biznisa 128.
+[11/07/2020] Giuseppe_Manna(212.200.33.95) je stavio 2$ na biznis 102.
+[11/07/2020] Giuseppe_Manna(212.200.33.95) je stavio 3$ na biznis 102.
+[11/07/2020] Giuseppe_Manna(212.200.33.95) je stavio 3$ na biznis 102.
+[11/07/2020] Giuseppe_Manna(212.200.33.95) je stavio 3$ na biznis 102.
+[11/07/2020] Giuseppe_Manna(212.200.33.95) je stavio 3$ na biznis 102.
+[11/07/2020] Giuseppe_Manna(212.200.33.95) je stavio 3$ na biznis 102.
+[11/07/2020] Giuseppe_Manna(212.200.33.95) je stavio 50$ na biznis 102.
+[11/07/2020] Giuseppe_Manna(212.200.33.95) je stavio 50$ na biznis 102.
+[11/07/2020] Giuseppe_Manna(212.200.33.95) je stavio 50$ na biznis 102.
+[11/07/2020] Giuseppe_Manna(212.200.33.95) je uzeo 500$ iz biznisa 102.
+[11/07/2020] Giuseppe_Manna(212.200.33.95) je uzeo 100$ iz biznisa 102.
+[11/07/2020] Giuseppe_Manna(212.200.33.95) je uzeo 6$ iz biznisa 102.
+[11/07/2020] Giuseppe_Manna(212.200.33.95) je uzeo 100$ iz biznisa 102.
+[11/07/2020] Giuseppe_Manna(212.200.33.95) je uzeo 200$ iz biznisa 102.
+[11/07/2020] Giuseppe_Manna(212.200.33.95) je uzeo 100$ iz biznisa 102.
+[11/07/2020] Giuseppe_Manna(212.200.33.95) je uzeo 2000$ iz biznisa 102.
+[11/07/2020] Giuseppe_Manna(212.200.33.95) je uzeo 1$ iz biznisa 102.
+[11/07/2020] Giuseppe_Manna(212.200.33.95) je uzeo 1$ iz biznisa 102.
+[11/07/2020] Giuseppe_Manna(212.200.33.95) je stavio 1000$ na biznis 102.
+[11/07/2020] Giuseppe_Manna(212.200.33.95) je uzeo 5000$ iz biznisa 102.
+[11/07/2020] Giuseppe_Manna(212.200.33.95) je uzeo 2900$ iz biznisa 102.
+[12/07/2020] Lav_Korovski(185.10.142.29) je uzeo 26000$ iz biznisa 130.
+[12/07/2020] Liam_Hao(31.47.31.184) je uzeo 1$ iz biznisa 128.
+[13/07/2020] Vladimir_Abramovich(178.221.55.74) je uzeo 43000$ iz biznisa 122.
+[13/07/2020] Alan_Huang(94.250.84.123) je uzeo 9000$ iz biznisa 85.
+[13/07/2020] Alan_Huang(94.250.84.123) je uzeo 35$ iz biznisa 85.
+[13/07/2020] David_Palmer(31.223.132.82) je uzeo 1$ iz biznisa 12.
+[13/07/2020] David_Palmer(31.223.132.82) je uzeo 2$ iz biznisa 12.
+[13/07/2020] David_Palmer(31.223.132.82) je uzeo 2000$ iz biznisa 12.
+[15/07/2020] Nikolaj_Zajcev(89.201.182.200) je uzeo 1855$ iz biznisa 132.
+[15/07/2020] Yuri_Semionevich(93.140.62.157) je uzeo 6000$ iz biznisa 93.
+[16/07/2020] Robert_Doherty(109.92.144.169) je uzeo 46996$ iz biznisa 32.
+[16/07/2020] Nikolaj_Zajcev(5.43.160.122) je uzeo 881$ iz biznisa 132.
+[16/07/2020] Hans_Schwammberger(178.221.185.156) je uzeo 1000$ iz biznisa 14.
+[17/07/2020] Hans_Schwammberger(178.221.185.156) je uzeo 8000$ iz biznisa 14.
+[17/07/2020] Liam_Hao(31.47.31.184) je uzeo 1$ iz biznisa 128.
+[17/07/2020] Nikolaj_Zajcev(185.18.61.168) je uzeo 2143$ iz biznisa 132.
+[17/07/2020] Nikolaj_Zajcev(185.18.61.168) je stavio 3000$ na biznis 132.
+[17/07/2020] Nikolaj_Zajcev(185.18.61.168) je stavio 400$ na biznis 132.
+[17/07/2020] Nikolaj_Zajcev(185.18.61.168) je stavio 300$ na biznis 132.
+[17/07/2020] Yuri_Semionevich(93.140.71.13) je stavio 5000000$ na biznis 93.
+[18/07/2020] Liam_Hao(31.47.31.184) je uzeo 1$ iz biznisa 128.
+[18/07/2020] Pablo_Galvez(193.217.223.249) je stavio 16000$ na biznis 56.
+[18/07/2020] Rafael_Alva(31.47.18.201) je uzeo 1$ iz biznisa 60.
+[19/07/2020] Lorenzzo_Navarra(109.175.101.70) je stavio 1$ na biznis 103.
+[19/07/2020] Lorenzzo_Navarra(109.175.101.203) je stavio 2799$ na biznis 103.
+[19/07/2020] Alan_Huang(94.250.84.123) je uzeo 1000$ iz biznisa 85.
+[19/07/2020] Lorenzzo_Navarra(109.175.101.203) je uzeo 1000$ iz biznisa 103.
+[19/07/2020] Lorenzzo_Navarra(109.175.101.203) je uzeo 500$ iz biznisa 103.
+[19/07/2020] Lorenzzo_Navarra(109.175.101.203) je uzeo 500$ iz biznisa 103.
+[20/07/2020] Liam_Hao(31.47.31.184) je uzeo 1$ iz biznisa 128.
+[20/07/2020] Liam_Hao(31.47.31.184) je uzeo 1$ iz biznisa 128.
+[20/07/2020] Lorenzzo_Navarra(109.175.100.208) je uzeo 6435$ iz biznisa 103.
+[20/07/2020] Alan_Huang(94.250.84.123) je stavio 34000$ na biznis 85.
+[20/07/2020] Alan_Huang(94.250.84.123) je uzeo 40000$ iz biznisa 85.
+[20/07/2020] David_Palmer(31.223.132.242) je uzeo 1$ iz biznisa 12.
+[20/07/2020] David_Palmer(31.223.132.242) je uzeo 1$ iz biznisa 12.
+[20/07/2020] David_Palmer(31.223.132.242) je uzeo 3716$ iz biznisa 12.
+[21/07/2020] Lorenzzo_Navarra(109.175.100.208) je uzeo 2776$ iz biznisa 103.
+[21/07/2020] Michael_Rogers(109.93.195.123) je uzeo 50000$ iz biznisa 28.
+[21/07/2020] Liam_Hao(31.47.31.184) je uzeo 1$ iz biznisa 128.
+[21/07/2020] Vladimir_Abramovich(178.221.245.80) je uzeo 17000$ iz biznisa 122.
+[21/07/2020] Thomas_Gerbel(95.180.169.213) je uzeo 1291$ iz biznisa 59.
+[22/07/2020] Lorenzzo_Navarra(109.175.101.122) je uzeo 2000$ iz biznisa 103.
+[22/07/2020] Liam_Hao(31.47.31.184) je uzeo 1$ iz biznisa 128.
+[22/07/2020] Lorenzzo_Navarra(109.175.103.254) je uzeo 628$ iz biznisa 103.
+[22/07/2020] Robert_Doherty(109.92.144.169) je uzeo 28000$ iz biznisa 32.
+[22/07/2020] Liam_Hao(31.47.31.184) je uzeo 2$ iz biznisa 128.
+[22/07/2020] Liam_Hao(31.47.31.184) je uzeo 1$ iz biznisa 128.
+[23/07/2020] Lorenzzo_Navarra(109.175.101.181) je uzeo 3521$ iz biznisa 103.
+[23/07/2020] Liam_Hao(31.47.31.184) je uzeo 10000$ iz biznisa 128.
+[23/07/2020] Adrian_Campbell(88.130.59.153) je uzeo 27000$ iz biznisa 16.
+[23/07/2020] Pablo_Buarda(178.222.206.97) je uzeo 4000$ iz biznisa 77.
+[23/07/2020] Jimmy_Cheng(89.146.139.122) je uzeo 4419$ iz biznisa 19.
+[23/07/2020] Javier_Toro(109.93.191.3) je uzeo 12000$ iz biznisa 89.
+[24/07/2020] Lorenzzo_Navarra(109.175.101.181) je uzeo 2516$ iz biznisa 103.
+[24/07/2020] Lorenzzo_Navarra(109.175.101.181) je uzeo 1780$ iz biznisa 103.
+[24/07/2020] David_Palmer(31.223.132.244) je uzeo 3$ iz biznisa 12.
+[24/07/2020] David_Palmer(31.223.132.244) je uzeo 800$ iz biznisa 12.
+[26/07/2020] Adrian_Campbell(88.130.59.76) je uzeo 21000$ iz biznisa 88.
+[26/07/2020] Adrian_Campbell(88.130.59.76) je uzeo 500$ iz biznisa 88.
+[26/07/2020] Conor_Lyons(178.149.208.137) je uzeo 500$ iz biznisa 53.
+[26/07/2020] Conor_Lyons(178.149.208.137) je uzeo 6121$ iz biznisa 53.
+[26/07/2020] Luca_Donovan(87.116.166.166) je uzeo 8653$ iz biznisa 101.
+[26/07/2020] Carlos_Martinez(62.4.55.105) je uzeo 4000$ iz biznisa 8.
+[26/07/2020] Carlos_Martinez(62.4.55.105) je stavio 4000$ na biznis 8.
+[26/07/2020] Alan_Huang(89.111.218.126) je uzeo 5000$ iz biznisa 85.
+[26/07/2020] Pablo_Galvez(91.131.251.105) je uzeo 17000$ iz biznisa 56.
+[27/07/2020] Rafael_Alva(31.47.18.201) je uzeo 1$ iz biznisa 60.
+[27/07/2020] Rafael_Alva(31.47.18.201) je uzeo 113$ iz biznisa 60.
+[27/07/2020] Rafael_Alva(31.47.18.201) je uzeo 1$ iz biznisa 60.
+[27/07/2020] Allison_Clark(89.111.246.90) je uzeo 6037$ iz biznisa 131.
+[28/07/2020] Michael_Rogers(109.93.191.127) je uzeo 5000$ iz biznisa 28.
+[28/07/2020] Yuri_Semionevich(93.140.75.155) je uzeo 300000$ iz biznisa 93.
+[28/07/2020] Michael_Rogers(109.93.191.127) je uzeo 8588$ iz biznisa 28.
+[28/07/2020] Pablo_Vasquez(31.176.221.53) je uzeo 96$ iz biznisa 30.
+[28/07/2020] Pablo_Vasquez(31.176.221.53) je uzeo 22$ iz biznisa 30.
+[30/07/2020] Javier_Toro(109.93.191.3) je uzeo 3000$ iz biznisa 89.
+[01/08/2020] James_Kyle(37.208.35.17) je uzeo 4113$ iz biznisa 99.
+[01/08/2020] Adrian_Campbell(89.246.122.82) je uzeo 7600$ iz biznisa 88.
+[03/08/2020] John_Liang(31.223.132.65) je uzeo 1$ iz biznisa 12.
+[03/08/2020] John_Liang(31.223.132.65) je uzeo 1400$ iz biznisa 12.
+[03/08/2020] Artur_Mirnov(109.175.100.108) je uzeo 6694$ iz biznisa 103.
+[03/08/2020] Artur_Mirnov(109.175.100.108) je uzeo 437$ iz biznisa 103.
+[03/08/2020] Miguel_Moyano(109.245.175.224) je stavio 21$ na biznis 134.
+[04/08/2020] Artur_Mirnov(109.175.100.243) je uzeo 1167$ iz biznisa 103.
+[04/08/2020] Nathan_Wong(31.47.31.184) je uzeo 1$ iz biznisa 127.
+[05/08/2020] Nathan_Wong(31.47.31.184) je uzeo 1$ iz biznisa 127.
+[05/08/2020] Nathan_Wong(31.47.31.184) je uzeo 6000$ iz biznisa 127.
+[05/08/2020] Liam_Hao(31.47.31.184) je uzeo 1$ iz biznisa 127.
+[05/08/2020] Liam_Hao(31.47.31.184) je uzeo 1300$ iz biznisa 127.
+[05/08/2020] Jack_Apps(89.216.162.139) je uzeo 51000$ iz biznisa 125.
+[06/08/2020] Anna_Suarez(77.77.216.118) je uzeo 34000$ iz biznisa 63.
+[06/08/2020] Liam_Hao(31.47.31.184) je uzeo 1$ iz biznisa 127.
+[06/08/2020] Liam_Hao(31.47.31.184) je uzeo 194$ iz biznisa 127.
+[06/08/2020] Emmanuel_Belyea(185.10.142.62) je uzeo 17000$ iz biznisa 129.
+[06/08/2020] Vladimir_Abramovich(109.92.41.72) je uzeo 1500$ iz biznisa 121.
+[07/08/2020] Lance_Dixon(31.47.18.201) je uzeo 1$ iz biznisa 60.
+[07/08/2020] Lance_Dixon(31.47.18.201) je uzeo 9390$ iz biznisa 60.
+[07/08/2020] Jessica_Cooper(109.245.143.161) je uzeo 20000$ iz biznisa 16.
+[07/08/2020] Jessica_Cooper(109.245.143.161) je uzeo 1300$ iz biznisa 16.
+[08/08/2020] Jessica_Cooper() je stavio 1000$ na biznis 16.
+[08/08/2020] Jessica_Cooper() je stavio 90$ na biznis 16.
+[08/08/2020] Anna_Suarez(77.77.216.118) je uzeo 10000$ iz biznisa 63.
+[08/08/2020] Demetrius_Innes(87.116.190.6) je uzeo 18000$ iz biznisa 27.
+[10/08/2020] Vladimir_Abramovich(178.221.59.163) je uzeo 10000$ iz biznisa 121.
+[12/08/2020] Yuri_Semionevich(93.140.70.241) je uzeo 250000$ iz biznisa 93.
+[12/08/2020] Vladimir_Abramovich(93.87.143.45) je uzeo 3000$ iz biznisa 121.
+[13/08/2020] Vladimir_Abramovich(93.87.143.45) je uzeo 10232$ iz biznisa 100.
+[14/08/2020] Wiolant_Campbell(31.223.140.192) je uzeo 2000$ iz biznisa 91.
+[14/08/2020] Lance_Dixon(31.47.18.201) je uzeo 1$ iz biznisa 60.
+[14/08/2020] Lance_Dixon(31.47.18.201) je uzeo 372$ iz biznisa 60.
+[15/08/2020] Robert_Doherty(109.92.148.185) je uzeo 63000$ iz biznisa 32.
+[18/08/2020] Liam_Hao(31.47.31.184) je uzeo 1$ iz biznisa 127.
+[18/08/2020] Liam_Hao(31.47.31.184) je uzeo 4500$ iz biznisa 127.
+[19/08/2020] Jennifer_Mitchell(31.223.132.42) je uzeo 1$ iz biznisa 12.
+[19/08/2020] Jennifer_Mitchell(31.223.132.42) je uzeo 4$ iz biznisa 12.
+[19/08/2020] Conor_Lyons(178.149.86.44) je uzeo 910$ iz biznisa 53.
+[19/08/2020] Conor_Lyons(178.149.86.44) je uzeo 15000$ iz biznisa 53.
+[20/08/2020] Velichko_Mitevski(109.93.195.178) je uzeo 8417$ iz biznisa 124.
+[22/08/2020] Ignacio_Valverde(31.223.132.67) je uzeo 7000$ iz biznisa 12.
+[23/08/2020] Jessica_Cooper(109.245.111.197) je uzeo 26434$ iz biznisa 16.
+[23/08/2020] Zyrell_Haynes(82.118.11.22) je stavio 5000$ na biznis 16.
+[23/08/2020] Liam_Hao(31.47.31.184) je uzeo 1$ iz biznisa 127.
+[23/08/2020] Liam_Hao(31.47.31.184) je uzeo 1$ iz biznisa 127.
+[24/08/2020] Xavier_Ombando(77.77.216.63) je uzeo 64000$ iz biznisa 47.
+[24/08/2020] Vladimir_Abramovich(93.86.109.145) je uzeo 1000$ iz biznisa 100.
+[25/08/2020] Deveron_Hodges(92.55.122.133) je uzeo 7333$ iz biznisa 15.
+[25/08/2020] Liam_Hao(31.47.31.184) je uzeo 1000$ iz biznisa 127.
+[25/08/2020] Liam_Hao(31.47.31.184) je uzeo 3900$ iz biznisa 127.
+[25/08/2020] Thomas_McDowell(109.175.96.106) je uzeo 50000$ iz biznisa 92.
+[25/08/2020] Daniel_Williamson(109.92.67.209) je uzeo 2000$ iz biznisa 87.
+[26/08/2020] Martin_Kassaev(109.175.96.122) je stavio 1$ na biznis 20.
+[26/08/2020] Martin_Kassaev(109.175.96.122) je stavio 1000$ na biznis 20.
+[26/08/2020] Martin_Kassaev(109.175.96.122) je stavio 1000$ na biznis 20.
+[26/08/2020] Martin_Kassaev(109.175.96.122) je stavio 1000$ na biznis 20.
+[26/08/2020] Martin_Kassaev(109.175.96.122) je stavio 1000$ na biznis 20.
+[26/08/2020] Martin_Kassaev(109.175.96.122) je stavio 500$ na biznis 20.
+[26/08/2020] Martin_Kassaev(109.175.96.122) je stavio 100$ na biznis 20.
+[26/08/2020] Martin_Kassaev(109.175.96.122) je stavio 1$ na biznis 20.
+[26/08/2020] Martin_Kassaev(109.175.96.122) je stavio 1$ na biznis 20.
+[26/08/2020] Martin_Kassaev(109.175.96.122) je stavio 1$ na biznis 20.
+[26/08/2020] Martin_Kassaev(109.175.96.122) je stavio 1$ na biznis 20.
+[26/08/2020] Martin_Kassaev(109.175.96.122) je stavio 1$ na biznis 20.
+[26/08/2020] Martin_Kassaev(109.175.96.122) je stavio 1$ na biznis 20.
+[26/08/2020] Martin_Kassaev(109.175.96.122) je stavio 1$ na biznis 20.
+[26/08/2020] Martin_Kassaev(109.175.96.122) je stavio 1$ na biznis 20.
+[26/08/2020] Martin_Kassaev(109.175.96.122) je stavio 1$ na biznis 20.
+[26/08/2020] Martin_Kassaev(109.175.96.122) je stavio 1$ na biznis 20.
+[26/08/2020] Martin_Kassaev(109.175.96.122) je stavio 1$ na biznis 20.
+[26/08/2020] Martin_Kassaev(109.175.96.122) je stavio 1$ na biznis 20.
+[26/08/2020] Martin_Kassaev(109.175.96.122) je stavio 1$ na biznis 20.
+[26/08/2020] Martin_Kassaev(109.175.96.122) je stavio 1$ na biznis 20.
+[26/08/2020] Martin_Kassaev(109.175.96.122) je stavio 1$ na biznis 20.
+[26/08/2020] Martin_Kassaev(109.175.96.122) je stavio 1$ na biznis 20.
+[26/08/2020] Martin_Kassaev(109.175.96.122) je uzeo 16385$ iz biznisa 20.
+[26/08/2020] Richard_Hoyle(94.189.238.62) je uzeo 7000$ iz biznisa 12.
+[27/08/2020] Michael_Valenza(95.178.184.166) je uzeo 3586$ iz biznisa 115.
+[27/08/2020] Angelo_Lawrenson(109.92.75.217) je uzeo 9000$ iz biznisa 87.
+[27/08/2020] Angelo_Lawrenson(109.92.75.217) je stavio 2$ na biznis 87.
+[27/08/2020] Alan_Huang(185.26.179.84) je uzeo 10000$ iz biznisa 85.
+[27/08/2020] Mickey_Yanlin(89.146.142.193) je uzeo 2500$ iz biznisa 132.
+[27/08/2020] Liam_Hao(31.47.31.184) je uzeo 10$ iz biznisa 127.
+[27/08/2020] Liam_Hao(31.47.31.184) je uzeo 1000$ iz biznisa 127.
+[27/08/2020] Lance_Dixon(31.47.18.201) je uzeo 1$ iz biznisa 60.
+[27/08/2020] Lance_Dixon(31.47.18.201) je uzeo 396$ iz biznisa 60.
+[27/08/2020] Ashley_Davis(109.245.143.226) je uzeo 1$ iz biznisa 125.
+[27/08/2020] Noah_Williams(77.216.210.46) je uzeo 20000$ iz biznisa 89.
+[27/08/2020] Tom_Barnaby(91.191.51.242) je uzeo 4942$ iz biznisa 11.
+[27/08/2020] Martin_Kassaev(109.175.97.124) je uzeo 1413$ iz biznisa 20.
+[28/08/2020] Deveron_Hodges(92.55.122.250) je uzeo 2461$ iz biznisa 15.
+[28/08/2020] Michael_Valenza(185.18.60.233) je uzeo 5337$ iz biznisa 115.
+[28/08/2020] Zyrell_Haynes(82.118.11.22) je uzeo 10000$ iz biznisa 16.
+[28/08/2020] Zyrell_Haynes(82.118.11.22) je uzeo 1619$ iz biznisa 16.
+[28/08/2020] Tom_Barnaby(91.191.51.242) je uzeo 1000$ iz biznisa 11.
+[28/08/2020] Velichko_Mitevski(109.93.191.111) je uzeo 1102$ iz biznisa 124.
+[28/08/2020] Pablo_Vasquez(37.203.87.6) je uzeo 34233$ iz biznisa 28.
+[28/08/2020] Sado_Sahovic(46.35.149.147) je uzeo 22682$ iz biznisa 88.
+[29/08/2020] Velichko_Mitevski(109.93.191.111) je uzeo 2600$ iz biznisa 124.
+[29/08/2020] Michael_Valenza(185.18.60.233) je uzeo 5262$ iz biznisa 20.
+[29/08/2020] Michael_Valenza(185.18.60.233) je stavio 100$ na biznis 20.
+[29/08/2020] Michael_Valenza(185.18.60.233) je stavio 400$ na biznis 20.
+[29/08/2020] Michael_Valenza(185.18.60.233) je stavio 289$ na biznis 20.
+[29/08/2020] Antonino_Accardo(46.35.149.147) je uzeo 378$ iz biznisa 88.
+[29/08/2020] Antonino_Accardo(46.35.149.147) je uzeo 246$ iz biznisa 88.
+[29/08/2020] Pablo_Galvez() je uzeo 1000$ iz biznisa 56.
+[29/08/2020] Noah_Williams(77.216.210.46) je uzeo 3000$ iz biznisa 89.
+[29/08/2020] Xavier_Ombando(146.255.138.254) je uzeo 12000$ iz biznisa 47.
+[29/08/2020] Angelo_Lawrenson(109.92.173.189) je uzeo 9000$ iz biznisa 87.
+[29/08/2020] Michael_Valenza(185.18.60.33) je uzeo 2898$ iz biznisa 20.
+[29/08/2020] Michael_Valenza(185.18.60.33) je uzeo 650$ iz biznisa 20.
+[29/08/2020] Vladimir_Abramovich(178.221.62.196) je uzeo 16100$ iz biznisa 100.
+[29/08/2020] Michael_Valenza(83.179.233.25) je uzeo 3663$ iz biznisa 14.
+[30/08/2020] Michael_Valenza(83.179.233.25) je uzeo 1162$ iz biznisa 14.
+[30/08/2020] Paul_Smith(178.222.183.153) je uzeo 5910$ iz biznisa 126.
+[30/08/2020] Michael_Valenza(83.179.233.25) je uzeo 434$ iz biznisa 14.
+[30/08/2020] Antonino_Accardo(5.133.133.31) je uzeo 1562$ iz biznisa 88.
+[30/08/2020] Tom_Barnaby(91.191.51.242) je uzeo 3001$ iz biznisa 11.
+[30/08/2020] Conor_Lyons(178.149.86.44) je uzeo 88$ iz biznisa 53.
+[30/08/2020] Michael_Valenza(89.201.243.58) je uzeo 1852$ iz biznisa 14.
+[30/08/2020] Tom_Barnaby(91.191.51.242) je uzeo 2154$ iz biznisa 11.
+[30/08/2020] Michael_Valenza(89.201.243.58) je uzeo 2695$ iz biznisa 14.
+[30/08/2020] Ramon_Cano(31.47.18.201) je uzeo 1$ iz biznisa 60.
+[30/08/2020] Ramon_Cano(31.47.18.201) je uzeo 6770$ iz biznisa 60.
+[30/08/2020] Tom_Barnaby(91.191.51.242) je uzeo 178$ iz biznisa 11.
+[30/08/2020] Michael_Valenza(89.201.243.58) je uzeo 176$ iz biznisa 14.
+[30/08/2020] Michael_Valenza(89.201.243.58) je uzeo 675$ iz biznisa 14.
+[31/08/2020] Angelo_Lawrenson(178.222.142.130) je uzeo 9000$ iz biznisa 87.
+[31/08/2020] Ramon_Cano(31.47.18.201) je uzeo 1$ iz biznisa 11.
+[31/08/2020] Ramon_Cano(31.47.18.201) je uzeo 1538$ iz biznisa 11.
+[31/08/2020] Martin_Kassaev(109.175.96.237) je uzeo 3452$ iz biznisa 115.
+[31/08/2020] Tom_Barnaby(91.191.51.242) je uzeo 2266$ iz biznisa 22.
+[31/08/2020] Pablo_Vasquez(31.176.238.83) je uzeo 11232$ iz biznisa 28.
+[31/08/2020] Pablo_Vasquez(31.176.238.83) je uzeo 739$ iz biznisa 28.
+[31/08/2020] Ashley_Davis(109.245.33.68) je stavio 1$ na biznis 125.
+[31/08/2020] Ashley_Davis(109.245.33.68) je stavio 1$ na biznis 125.
+[31/08/2020] Ashley_Davis(109.245.33.68) je stavio 200$ na biznis 125.
+[31/08/2020] Ashley_Davis(109.245.33.68) je uzeo 150$ iz biznisa 125.
+[31/08/2020] Ramon_Cano(31.47.18.201) je uzeo 1$ iz biznisa 11.
+[31/08/2020] Ramon_Cano(31.47.18.201) je uzeo 1570$ iz biznisa 11.
+[31/08/2020] Michael_Valenza(151.252.254.151) je uzeo 3837$ iz biznisa 14.
+[31/08/2020] Michael_Valenza(151.252.254.151) je uzeo 760$ iz biznisa 14.
+[01/09/2020] Emmanuel_Belyea(185.10.142.99) je uzeo 42000$ iz biznisa 129.
+[01/09/2020] Velichko_Mitevski(109.93.191.111) je uzeo 2000$ iz biznisa 124.
+[01/09/2020] Armando_Villa(5.43.83.243) je stavio 1299$ na biznis 22.
+[01/09/2020] Armando_Villa(5.43.83.243) je uzeo 2598$ iz biznisa 22.
+[01/09/2020] Michael_Valenza(95.178.208.208) je uzeo 2503$ iz biznisa 14.
+[01/09/2020] Ashley_Davis(109.245.175.106) je uzeo 30000$ iz biznisa 125.
+[01/09/2020] Pablo_Vasquez(37.203.95.102) je uzeo 1285$ iz biznisa 28.
+[01/09/2020] Michael_Valenza(95.178.208.208) je uzeo 14234$ iz biznisa 119.
+[01/09/2020] Michael_Valenza(95.178.208.208) je uzeo 11784$ iz biznisa 119.
+[01/09/2020] Antonino_Accardo(5.133.133.31) je uzeo 817$ iz biznisa 88.
+[01/09/2020] Joe_Cresswell(46.5.231.91) je uzeo 14000$ iz biznisa 90.
+[02/09/2020] Antonino_Accardo(5.133.133.31) je uzeo 1601$ iz biznisa 120.
+[02/09/2020] Antonino_Accardo(5.133.133.31) je uzeo 887$ iz biznisa 120.
+[02/09/2020] Antonino_Accardo(5.133.133.31) je uzeo 15354$ iz biznisa 80.
+[02/09/2020] Ben_Dalton(91.191.51.242) je uzeo 89$ iz biznisa 120.
+[02/09/2020] Valerija_Bulgakov(5.133.133.31) je uzeo 741$ iz biznisa 88.
+[02/09/2020] Pablo_Vasquez(31.176.235.225) je uzeo 1878$ iz biznisa 28.
+[02/09/2020] Antonino_Accardo(5.133.133.31) je uzeo 1413$ iz biznisa 80.
+[02/09/2020] Antonino_Accardo(5.133.133.31) je uzeo 3907$ iz biznisa 52.
+[02/09/2020] Joe_Cresswell(46.5.230.221) je uzeo 20000$ iz biznisa 51.
+[02/09/2020] Velichko_Mitevski(109.93.191.111) je uzeo 536$ iz biznisa 124.
+[03/09/2020] Conor_Lyons(178.149.86.44) je uzeo 6671$ iz biznisa 53.
+[03/09/2020] Michael_Valenza(95.178.131.178) je uzeo 6615$ iz biznisa 119.
+[03/09/2020] Ramon_Cano(31.47.18.201) je uzeo 1$ iz biznisa 11.
+[03/09/2020] Ramon_Cano(31.47.18.201) je uzeo 5138$ iz biznisa 11.
+[03/09/2020] Ramon_Cano(31.47.18.201) je uzeo 1$ iz biznisa 11.
+[03/09/2020] Antonino_Accardo(5.133.133.31) je uzeo 808$ iz biznisa 135.
+[03/09/2020] Armando_Villa(5.43.83.243) je uzeo 1838$ iz biznisa 22.
+[03/09/2020] Jimmy_Cheng(89.146.131.83) je uzeo 8000$ iz biznisa 19.
+[03/09/2020] Mickey_Yanlin(89.146.131.83) je uzeo 2000$ iz biznisa 132.
+[03/09/2020] Conor_Lyons(178.149.86.44) je uzeo 1853$ iz biznisa 53.
+[03/09/2020] Conor_Lyons(178.149.86.44) je uzeo 2000$ iz biznisa 53.
+[03/09/2020] Ramon_Cano(31.47.18.201) je uzeo 1$ iz biznisa 11.
+[03/09/2020] Ramon_Cano(31.47.18.201) je uzeo 1294$ iz biznisa 11.
+[04/09/2020] Conor_Lyons(178.149.86.44) je uzeo 587$ iz biznisa 53.
+[04/09/2020] Naser_Kelmendi(37.203.87.217) je uzeo 6003$ iz biznisa 28.
+[04/09/2020] Naser_Kelmendi(37.203.87.217) je uzeo 301$ iz biznisa 28.
+[05/09/2020] Armando_Villa(5.43.83.243) je uzeo 818$ iz biznisa 22.
+[05/09/2020] Miguel_Moyano(109.245.38.59) je uzeo 20500$ iz biznisa 134.
+[06/09/2020] Eric_Stafford(109.175.98.128) je uzeo 1$ iz biznisa 115.
+[06/09/2020] Eric_Stafford(109.175.98.128) je uzeo 3580$ iz biznisa 115.
+[06/09/2020] Angelo_Lawrenson(212.200.206.101) je uzeo 4000$ iz biznisa 87.
+[07/09/2020] Anna_Suarez(77.77.217.233) je uzeo 50000$ iz biznisa 63.
+[07/09/2020] Naser_Krasniqi(31.176.226.225) je uzeo 6819$ iz biznisa 28.
+[07/09/2020] Francesca_Pascale(85.94.149.212) je uzeo 395$ iz biznisa 88.
+[07/09/2020] Behram_Krasniqi(85.94.149.212) je uzeo 3912$ iz biznisa 135.
+[07/09/2020] Francesca_Pascale(85.94.149.212) je uzeo 722$ iz biznisa 88.
+[07/09/2020] Noah_Williams(83.179.207.36) je uzeo 5000$ iz biznisa 89.
+[07/09/2020] Xavier_Ombando(92.36.151.99) je uzeo 300$ iz biznisa 47.
+[07/09/2020] Naser_Krasniqi(31.176.226.225) je uzeo 1799$ iz biznisa 28.
+[07/09/2020] Velichko_Mitevski(109.93.191.111) je uzeo 500$ iz biznisa 124.
+[07/09/2020] Velichko_Mitevski(109.93.191.111) je uzeo 500$ iz biznisa 124.
+[07/09/2020] Joe_Cresswell(93.139.22.144) je uzeo 1601$ iz biznisa 51.
+[08/09/2020] Conor_Lyons(178.149.86.44) je uzeo 406$ iz biznisa 53.
+[08/09/2020] Conor_Lyons(178.149.86.44) je uzeo 3000$ iz biznisa 53.
+[08/09/2020] Naser_Krasniqi(31.176.229.15) je uzeo 2737$ iz biznisa 28.
+[08/09/2020] Behram_Krasniqi(85.94.149.212) je uzeo 425$ iz biznisa 135.
+[08/09/2020] Behram_Krasniqi(85.94.149.212) je uzeo 714$ iz biznisa 135.
+[08/09/2020] Behram_Krasniqi(85.94.149.212) je uzeo 267$ iz biznisa 135.
+[08/09/2020] Behram_Krasniqi(85.94.149.212) je uzeo 356$ iz biznisa 135.
+[08/09/2020] Jonathan_Brown(87.123.203.43) je uzeo 100$ iz biznisa 29.
+[08/09/2020] Jonathan_Brown(87.123.203.43) je uzeo 400$ iz biznisa 29.
+[09/09/2020] Francesca_Pascale(85.94.149.212) je uzeo 407$ iz biznisa 88.
+[09/09/2020] Velichko_Mitevski(109.93.191.111) je uzeo 318$ iz biznisa 124.
+[09/09/2020] Ramon_Cano(31.47.18.201) je uzeo 1$ iz biznisa 11.
+[09/09/2020] Ramon_Cano(31.47.18.201) je uzeo 729$ iz biznisa 11.
+[10/09/2020] Naser_Krasniqi(31.176.238.80) je uzeo 8965$ iz biznisa 28.
+[10/09/2020] Naser_Krasniqi(31.176.238.80) je uzeo 160$ iz biznisa 28.
+[10/09/2020] Behram_Krasniqi(85.94.149.212) je uzeo 1851$ iz biznisa 135.
+[10/09/2020] Francesca_Pascale(85.94.149.212) je uzeo 653$ iz biznisa 88.
+[10/09/2020] Michael_Blake(109.92.148.159) je uzeo 90000$ iz biznisa 32.
+[11/09/2020] Larry_Lee(109.245.39.126) je uzeo 14471$ iz biznisa 134.
+[11/09/2020] Behram_Krasniqi(85.94.149.212) je uzeo 867$ iz biznisa 135.
+[11/09/2020] Behram_Krasniqi(85.94.149.212) je uzeo 266$ iz biznisa 135.
+[11/09/2020] Behram_Krasniqi(85.94.149.212) je uzeo 200$ iz biznisa 135.
+[11/09/2020] Behram_Krasniqi(85.94.149.212) je uzeo 700$ iz biznisa 135.
+[11/09/2020] Ramon_Cano(185.191.206.9) je uzeo 1$ iz biznisa 11.
+[11/09/2020] Ramon_Cano(185.191.206.9) je uzeo 1$ iz biznisa 11.
+[11/09/2020] Ramon_Cano(185.191.206.9) je uzeo 345$ iz biznisa 11.
+[11/09/2020] Behram_Krasniqi(85.94.149.212) je uzeo 4234$ iz biznisa 135.
+[12/09/2020] Leo_Avanzo(89.201.241.100) je uzeo 2114$ iz biznisa 119.
+[13/09/2020] Armando_Villa(5.43.83.243) je uzeo 799$ iz biznisa 22.
+[13/09/2020] Conor_Lyons(178.149.86.44) je uzeo 10000$ iz biznisa 53.
+[13/09/2020] Alan_Huang(94.250.84.85) je uzeo 6563$ iz biznisa 85.
+[13/09/2020] Behram_Krasniqi(5.133.139.133) je uzeo 717$ iz biznisa 135.
+[13/09/2020] Sato_Kiyoshi(89.201.184.45) je uzeo 1594$ iz biznisa 119.
+[13/09/2020] Paul_Lombardo(89.146.145.251) je uzeo 4598$ iz biznisa 19.
+[13/09/2020] Sato_Kiyoshi(89.201.184.45) je uzeo 1242$ iz biznisa 119.
+[13/09/2020] Sato_Kiyoshi(89.201.184.45) je uzeo 1897$ iz biznisa 99.
+[13/09/2020] Behram_Krasniqi(5.133.139.133) je uzeo 1759$ iz biznisa 135.
+[14/09/2020] Sato_Kiyoshi(185.18.60.27) je uzeo 7378$ iz biznisa 118.
+[14/09/2020] Sato_Kiyoshi(185.18.60.27) je stavio 7000$ na biznis 118.
+[14/09/2020] Sato_Kiyoshi(185.18.60.27) je uzeo 1000$ iz biznisa 118.
+[14/09/2020] Sato_Kiyoshi(185.18.60.27) je uzeo 1$ iz biznisa 118.
+[14/09/2020] Conor_Lyons(178.149.86.44) je uzeo 3918$ iz biznisa 53.
+[14/09/2020] Sato_Kiyoshi(185.18.60.27) je uzeo 1052$ iz biznisa 118.
+[14/09/2020] Sato_Kiyoshi(185.18.60.27) je uzeo 5000$ iz biznisa 118.
+[14/09/2020] Sato_Kiyoshi(185.18.60.27) je uzeo 1931$ iz biznisa 118.
+[14/09/2020] Dustin_Hayes(31.47.31.184) je uzeo 1$ iz biznisa 127.
+[14/09/2020] Dustin_Hayes(31.47.31.184) je uzeo 6300$ iz biznisa 127.
+[14/09/2020] Behram_Krasniqi(5.133.139.133) je uzeo 389$ iz biznisa 135.
+[14/09/2020] Vincent_Capano(83.179.207.36) je uzeo 3000$ iz biznisa 20.
+[14/09/2020] Alfredo_Espinar(31.223.132.194) je uzeo 1$ iz biznisa 12.
+[14/09/2020] Alfredo_Espinar(31.223.132.194) je uzeo 4$ iz biznisa 12.
+[15/09/2020] Naser_Krasniqi(37.203.92.122) je uzeo 16904$ iz biznisa 28.
+[16/09/2020] Ronald_Baker(178.149.240.92) je uzeo 15000$ iz biznisa 117.
+[16/09/2020] Ramon_Cano(31.47.18.201) je uzeo 1$ iz biznisa 11.
+[16/09/2020] Ethan_Clark(212.200.33.74) je uzeo 1$ iz biznisa 14.
+[16/09/2020] Ethan_Clark(212.200.33.74) je uzeo 2996$ iz biznisa 14.
+[16/09/2020] Alfredo_Espinar(31.223.132.26) je uzeo 2$ iz biznisa 12.
+[16/09/2020] Alfredo_Espinar(31.223.132.26) je uzeo 7942$ iz biznisa 12.
+[16/09/2020] Francesca_Pascale(5.133.139.133) je uzeo 1123$ iz biznisa 88.
+[16/09/2020] Behram_Krasniqi(5.133.139.133) je uzeo 1749$ iz biznisa 135.
+[16/09/2020] Ethan_Clark(212.200.33.74) je uzeo 1$ iz biznisa 14.
+[16/09/2020] Ethan_Clark(212.200.33.74) je uzeo 500$ iz biznisa 14.
+[16/09/2020] Ethan_Clark(212.200.33.74) je uzeo 1$ iz biznisa 14.
+[16/09/2020] Ethan_Clark(212.200.33.74) je uzeo 1$ iz biznisa 14.
+[16/09/2020] Ethan_Clark(212.200.33.74) je uzeo 1$ iz biznisa 14.
+[17/09/2020] Ethan_Clark(212.200.33.74) je uzeo 1$ iz biznisa 14.
+[17/09/2020] Ethan_Clark(212.200.33.74) je uzeo 3000$ iz biznisa 14.
+[17/09/2020] Sato_Kiyoshi(95.178.188.59) je uzeo 5483$ iz biznisa 61.
+[17/09/2020] Ethan_Clark(212.200.33.74) je uzeo 1$ iz biznisa 14.
+[17/09/2020] Ethan_Clark(212.200.33.74) je uzeo 507$ iz biznisa 14.
+[17/09/2020] Sato_Kiyoshi(95.178.215.199) je uzeo 2846$ iz biznisa 61.
+[17/09/2020] Sato_Kiyoshi(95.178.215.199) je uzeo 1060$ iz biznisa 61.
+[17/09/2020] Ethan_Clark(212.200.33.74) je stavio 1$ na biznis 14.
+[17/09/2020] Vincent_Capano(83.179.207.36) je uzeo 1300$ iz biznisa 20.
+[17/09/2020] Ethan_Clark(212.200.33.74) je uzeo 5000$ iz biznisa 14.
+[18/09/2020] Sato_Kiyoshi(5.43.183.237) je uzeo 5239$ iz biznisa 61.
+[18/09/2020] Douglas_Collins(178.220.29.67) je uzeo 26000$ iz biznisa 102.
+[18/09/2020] Douglas_Collins(178.220.29.67) je uzeo 606$ iz biznisa 102.
+[18/09/2020] Ethan_Clark(212.200.33.74) je stavio 7000$ na biznis 14.
+[18/09/2020] Sato_Kiyoshi(5.43.183.237) je uzeo 2183$ iz biznisa 61.
+[18/09/2020] Sato_Kiyoshi(5.43.183.237) je uzeo 3058$ iz biznisa 2.
+[18/09/2020] Ramon_Cano(31.47.18.201) je uzeo 1$ iz biznisa 11.
+[18/09/2020] Ramon_Cano(31.47.18.201) je uzeo 3804$ iz biznisa 11.
+[18/09/2020] Sato_Kiyoshi(5.43.183.237) je uzeo 1300$ iz biznisa 2.
+[19/09/2020] Elliot_Richards(178.220.103.103) je uzeo 39000$ iz biznisa 13.
+[19/09/2020] Ethan_Clark(212.200.33.74) je uzeo 12000$ iz biznisa 14.
+[19/09/2020] Sato_Kiyoshi(5.43.183.237) je uzeo 1000$ iz biznisa 2.
+[19/09/2020] Naser_Krasniqi(37.203.81.101) je uzeo 11888$ iz biznisa 28.
+[19/09/2020] Alyssa_Vergata(31.223.140.98) je uzeo 5000$ iz biznisa 115.
+[19/09/2020] Alyssa_Vergata(31.223.140.98) je uzeo 23$ iz biznisa 115.
+[19/09/2020] Tohaku_Kugo(176.108.62.162) je uzeo 2782$ iz biznisa 61.
+[19/09/2020] Ethan_Clark(212.200.33.74) je uzeo 5000$ iz biznisa 14.
+[20/09/2020] Austin_Bennett(212.200.33.95) je uzeo 7000$ iz biznisa 99.
+[20/09/2020] Tohaku_Kugo(176.108.62.162) je uzeo 1439$ iz biznisa 61.
+[20/09/2020] Veronica_Chavarez(93.141.0.2) je uzeo 21714$ iz biznisa 107.
+[20/09/2020] Sato_Kiyoshi(95.178.223.238) je uzeo 9000$ iz biznisa 2.
+[20/09/2020] Sato_Kiyoshi(95.178.223.238) je uzeo 981$ iz biznisa 2.
+[20/09/2020] Behram_Krasniqi(46.35.143.17) je uzeo 924$ iz biznisa 135.
+[20/09/2020] Tohaku_Kugo(176.108.62.162) je uzeo 1502$ iz biznisa 61.
+[20/09/2020] Daniel_Butcher(89.111.246.90) je uzeo 15620$ iz biznisa 130.
+[20/09/2020] Tohaku_Kugo(176.108.62.162) je stavio 1$ na biznis 61.
+[20/09/2020] Russell_Pendergrass(176.108.62.162) je uzeo 440$ iz biznisa 61.
+[20/09/2020] Sato_Kiyoshi(95.178.223.238) je uzeo 4380$ iz biznisa 2.
+[21/09/2020] Veronica_Chavarez(93.141.0.2) je uzeo 20852$ iz biznisa 107.
+[21/09/2020] Sato_Kiyoshi(95.178.140.242) je uzeo 1902$ iz biznisa 2.
+[21/09/2020] Maria_Hernandez(77.77.217.7) je uzeo 20000$ iz biznisa 63.
+[21/09/2020] Leonid_Guzenko(178.149.86.44) je uzeo 500$ iz biznisa 53.
+[21/09/2020] Leonid_Guzenko(178.149.86.44) je uzeo 230$ iz biznisa 53.
+[21/09/2020] Sato_Kiyoshi(95.178.140.242) je uzeo 705$ iz biznisa 2.
+[21/09/2020] Wiolant_Campbell(31.223.140.168) je uzeo 1000$ iz biznisa 91.
+[21/09/2020] Wiolant_Campbell(31.223.140.168) je uzeo 2000$ iz biznisa 91.
+[21/09/2020] Kanjiro_Kawamura(95.178.140.242) je uzeo 6150$ iz biznisa 18.
+[21/09/2020] Behram_Krasniqi(5.133.136.29) je uzeo 1511$ iz biznisa 135.
+[21/09/2020] Sato_Kiyoshi(95.178.140.242) je uzeo 977$ iz biznisa 2.
+[21/09/2020] Sato_Kiyoshi(95.178.140.242) je uzeo 285$ iz biznisa 2.
+[21/09/2020] Sato_Kiyoshi(95.178.140.242) je uzeo 1263$ iz biznisa 2.
+[21/09/2020] Luis_Cohen(178.222.100.97) je uzeo 8000$ iz biznisa 105.
+[21/09/2020] Ethan_Clark(212.200.33.74) je uzeo 11000$ iz biznisa 14.
+[21/09/2020] Sato_Kiyoshi(95.178.140.242) je uzeo 1086$ iz biznisa 2.
+[21/09/2020] Jason_Hughes(109.245.37.76) je uzeo 24652$ iz biznisa 125.
+[22/09/2020] Naser_Krasniqi(37.203.85.64) je uzeo 11016$ iz biznisa 28.
+[22/09/2020] Naser_Krasniqi(37.203.85.64) je uzeo 22322$ iz biznisa 31.
+[22/09/2020] Sato_Kiyoshi(89.201.171.81) je uzeo 1792$ iz biznisa 2.
+[22/09/2020] Sato_Kiyoshi(89.201.171.81) je uzeo 601$ iz biznisa 2.
+[22/09/2020] Sato_Kiyoshi(89.201.171.81) je uzeo 1206$ iz biznisa 2.
+[22/09/2020] Sato_Kiyoshi(89.201.171.81) je uzeo 267$ iz biznisa 2.
+[22/09/2020] Ethan_Clark(212.200.33.74) je uzeo 5000$ iz biznisa 14.
+[22/09/2020] Sato_Kiyoshi(89.201.171.81) je uzeo 636$ iz biznisa 2.
+[22/09/2020] David_McCreight(212.200.33.95) je uzeo 3000$ iz biznisa 99.
+[23/09/2020] Ethan_Clark(212.200.33.74) je uzeo 1500$ iz biznisa 14.
+[23/09/2020] Sato_Kiyoshi(95.178.149.4) je uzeo 4000$ iz biznisa 2.
+[24/09/2020] Besart_Hasani(62.4.55.64) je uzeo 1500$ iz biznisa 34.
+[24/09/2020] Xavier_Ombando(146.255.138.254) je uzeo 35000$ iz biznisa 47.
+[24/09/2020] Vladimir_Abramovich(93.86.211.42) je uzeo 10000$ iz biznisa 100.
+[24/09/2020] Afrim_Izairi(93.139.22.144) je uzeo 2616$ iz biznisa 51.
+[25/09/2020] Afrim_Izairi(93.139.22.144) je uzeo 4602$ iz biznisa 10.
+[25/09/2020] Sato_Kiyoshi(89.201.184.16) je uzeo 5138$ iz biznisa 2.
+[25/09/2020] Behram_Krasniqi(5.133.136.29) je uzeo 1209$ iz biznisa 135.
+[25/09/2020] Francesca_Pascale(5.133.136.29) je uzeo 69$ iz biznisa 88.
+[25/09/2020] Francesca_Pascale(5.133.136.29) je uzeo 2254$ iz biznisa 118.
+[25/09/2020] Michael_Rogers(109.93.195.251) je uzeo 1200$ iz biznisa 40.
+[25/09/2020] Veronica_Chavarez(93.141.0.2) je uzeo 15001$ iz biznisa 107.
+[26/09/2020] Mia_Jones(94.250.60.100) je uzeo 100$ iz biznisa 108.
+[26/09/2020] Mia_Jones(94.250.60.100) je uzeo 10224$ iz biznisa 108.
+[26/09/2020] Mia_Jones(94.250.60.100) je uzeo 178$ iz biznisa 108.
+[26/09/2020] Naser_Krasniqi(31.176.235.242) je uzeo 685$ iz biznisa 31.
+[26/09/2020] Daniel_Butcher(89.111.246.90) je uzeo 4604$ iz biznisa 130.
+[26/09/2020] Ethan_Clark(212.200.33.74) je uzeo 4600$ iz biznisa 14.
+[26/09/2020] Veronica_Chavarez(93.141.99.204) je stavio 455$ na biznis 107.
+[26/09/2020] Veronica_Chavarez(93.141.99.204) je stavio 20$ na biznis 107.
+[26/09/2020] Veronica_Chavarez(93.141.99.204) je stavio 5709$ na biznis 107.
+[26/09/2020] Veronica_Chavarez(93.141.99.204) je uzeo 5709$ iz biznisa 107.
+[26/09/2020] Veronica_Chavarez(93.141.99.204) je uzeo 5709$ iz biznisa 107.
+[27/09/2020] David_McCreight(212.200.33.95) je uzeo 4000$ iz biznisa 99.
+[27/09/2020] Abaz_Mikati(85.94.137.27) je uzeo 3558$ iz biznisa 135.
+[27/09/2020] Mia_Jones(94.250.60.100) je uzeo 100$ iz biznisa 108.
+[27/09/2020] Mia_Jones(94.250.60.100) je uzeo 388$ iz biznisa 108.
+[27/09/2020] David_McCreight(212.200.33.95) je uzeo 1900$ iz biznisa 99.
+[27/09/2020] Wiolant_Campbell(31.223.140.146) je uzeo 1000$ iz biznisa 91.
+[27/09/2020] Mia_Jones(94.250.60.100) je uzeo 2081$ iz biznisa 108.
+[28/09/2020] Frankie_Moltisanti(109.207.42.83) je uzeo 3500$ iz biznisa 102.
+[28/09/2020] Ethan_Clark(212.200.33.74) je uzeo 6000$ iz biznisa 14.
+[28/09/2020] Frankie_Moltisanti(109.207.42.83) je uzeo 2000$ iz biznisa 102.
+[28/09/2020] Frankie_Moltisanti(109.207.42.83) je uzeo 1000$ iz biznisa 102.
+[28/09/2020] Frankie_Moltisanti(109.207.42.83) je uzeo 500$ iz biznisa 102.
+[28/09/2020] Pavle_Sekulic(31.47.18.201) je uzeo 1$ iz biznisa 97.
+[28/09/2020] Pavle_Sekulic(31.47.18.201) je uzeo 2031$ iz biznisa 97.
+[28/09/2020] Cristopher_Belluci(31.223.132.118) je uzeo 1$ iz biznisa 12.
+[28/09/2020] Cristopher_Belluci(31.223.132.118) je uzeo 1150$ iz biznisa 12.
+[28/09/2020] Cristopher_Belluci(31.223.132.118) je uzeo 828$ iz biznisa 12.
+[29/09/2020] Cristopher_Belluci(31.223.132.118) je uzeo 2000$ iz biznisa 12.
+[29/09/2020] Cristopher_Belluci(31.223.132.118) je uzeo 1000$ iz biznisa 12.
+[29/09/2020] Cristopher_Belluci(31.223.132.118) je uzeo 1600$ iz biznisa 12.
+[29/09/2020] Frankie_Moltisanti(109.207.42.83) je uzeo 8000$ iz biznisa 102.
+[29/09/2020] Cristopher_Belluci(31.223.132.240) je uzeo 7$ iz biznisa 12.
+[29/09/2020] Cristopher_Belluci(31.223.132.240) je uzeo 1000$ iz biznisa 12.
+[29/09/2020] Cristopher_Belluci(31.223.132.240) je uzeo 250$ iz biznisa 12.
+[29/09/2020] Donald_Nixon(178.223.153.170) je uzeo 1000$ iz biznisa 126.
+[29/09/2020] Jafar_Azeem(109.92.148.212) je uzeo 96235$ iz biznisa 32.
+[29/09/2020] Cristopher_Belluci(31.223.132.16) je uzeo 50$ iz biznisa 12.
+[29/09/2020] Cristopher_Belluci(31.223.132.16) je uzeo 250$ iz biznisa 12.
+[29/09/2020] Abaz_Mikati(85.94.148.229) je uzeo 1058$ iz biznisa 135.
+[29/09/2020] Valeria_Cortez(109.245.37.76) je uzeo 1000$ iz biznisa 125.
+[30/09/2020] Homero_Estevez(93.87.220.14) je stavio 16$ na biznis 8.
+[30/09/2020] Abaz_Mikati(5.133.147.98) je uzeo 1469$ iz biznisa 135.
+[30/09/2020] Aleksandar_Simic(93.180.147.129) je uzeo 25840$ iz biznisa 114.
+[30/09/2020] Donald_Nixon(178.220.55.14) je uzeo 1000$ iz biznisa 126.
+[30/09/2020] Frankie_Moltisanti(109.207.42.83) je uzeo 2000$ iz biznisa 102.
+[30/09/2020] Homero_Estevez(93.87.234.86) je uzeo 5974$ iz biznisa 8.
+[30/09/2020] Abaz_Mikati(5.133.147.98) je uzeo 651$ iz biznisa 135.
+[01/10/2020] Martin_Voight(109.92.103.126) je uzeo 10000$ iz biznisa 13.
+[01/10/2020] Vladimir_Abramovich(79.101.76.90) je uzeo 500$ iz biznisa 100.
+[01/10/2020] Fareed_Nawwaf(109.175.97.19) je uzeo 42000$ iz biznisa 28.
+[01/10/2020] Ramon_Cano(31.47.18.201) je uzeo 1$ iz biznisa 11.
+[01/10/2020] Ramon_Cano(31.47.18.201) je uzeo 2896$ iz biznisa 11.
+[01/10/2020] Vlady_Ukov(178.220.55.14) je uzeo 1000$ iz biznisa 126.
+[01/10/2020] Zvezdan_Raonic(37.203.102.147) je uzeo 4220$ iz biznisa 97.
+[02/10/2020] Vladimir_Abramovich(79.101.76.90) je uzeo 9000$ iz biznisa 100.
+[02/10/2020] Abaz_Mikati(5.133.147.98) je uzeo 458$ iz biznisa 135.
+[02/10/2020] Abaz_Mikati(5.133.147.98) je uzeo 482$ iz biznisa 135.
+[02/10/2020] Veronica_Chavarez(93.141.109.69) je uzeo 11617$ iz biznisa 107.
+[03/10/2020] Veronica_Chavarez(93.141.109.69) je stavio 20$ na biznis 107.
+[03/10/2020] Pavle_Simovic(109.245.37.76) je uzeo 9000$ iz biznisa 125.
+[03/10/2020] Abaz_Mikati(5.133.147.98) je uzeo 304$ iz biznisa 135.
+[03/10/2020] Pavle_Simovic(109.245.37.76) je uzeo 2270$ iz biznisa 90.
+[03/10/2020] Abaz_Mikati(5.133.147.98) je uzeo 455$ iz biznisa 135.
+[03/10/2020] Paul_Hawakins(188.127.119.145) je stavio 80$ na biznis 40.
+[04/10/2020] Cristopher_Belluci(31.223.132.131) je uzeo 1$ iz biznisa 12.
+[04/10/2020] Cristopher_Belluci(31.223.132.131) je uzeo 5962$ iz biznisa 12.
+[04/10/2020] Owen_Blackburn(212.200.33.74) je uzeo 5000$ iz biznisa 14.
+[04/10/2020] Owen_Blackburn(212.200.33.74) je uzeo 500$ iz biznisa 14.
+[05/10/2020] Emilio_Galvez(193.14.244.218) je uzeo 1000$ iz biznisa 56.
+[05/10/2020] Fareed_Nawwaf(109.175.98.154) je uzeo 20000$ iz biznisa 28.
+[05/10/2020] Juan_Elizalde(31.223.132.59) je uzeo 1$ iz biznisa 12.
+[05/10/2020] Juan_Elizalde(31.223.132.59) je uzeo 4$ iz biznisa 12.
+[05/10/2020] Paul_Hawakins(188.127.119.145) je uzeo 1100$ iz biznisa 27.
+[05/10/2020] Abaz_Mikati(46.35.156.144) je uzeo 488$ iz biznisa 135.
+[05/10/2020] Abaz_Mikati(46.35.156.144) je uzeo 430$ iz biznisa 135.
+[05/10/2020] Emilio_Galvez(193.14.244.218) je uzeo 1000$ iz biznisa 56.
+[05/10/2020] Emilio_Galvez(193.14.244.218) je uzeo 4000$ iz biznisa 56.
+[05/10/2020] Emilio_Galvez(193.14.244.218) je uzeo 1000$ iz biznisa 56.
+[05/10/2020] Juan_Elizalde(31.223.132.59) je uzeo 1$ iz biznisa 12.
+[05/10/2020] Juan_Elizalde(31.223.132.59) je uzeo 4$ iz biznisa 12.
+[05/10/2020] Juan_Elizalde(31.223.132.59) je uzeo 1$ iz biznisa 12.
+[05/10/2020] Juan_Elizalde(31.223.132.59) je uzeo 1000$ iz biznisa 12.
+[05/10/2020] Juan_Elizalde(31.223.132.59) je uzeo 1$ iz biznisa 12.
+[05/10/2020] Vladimir_Abramovich(79.101.76.90) je uzeo 600$ iz biznisa 100.
+[06/10/2020] Frankie_Moltisanti(109.207.42.83) je uzeo 1000$ iz biznisa 102.
+[06/10/2020] Abaz_Mikati(46.35.156.144) je uzeo 2344$ iz biznisa 135.
+[06/10/2020] Juan_Elizalde(31.223.132.109) je uzeo 4$ iz biznisa 12.
+[06/10/2020] Larry_Lee(109.245.39.184) je uzeo 11218$ iz biznisa 134.
+[06/10/2020] Vlady_Ukov(178.220.6.5) je uzeo 2000$ iz biznisa 126.
+[06/10/2020] Abaz_Mikati(46.35.156.144) je uzeo 263$ iz biznisa 135.
+[06/10/2020] Abaz_Mikati(46.35.156.144) je uzeo 605$ iz biznisa 135.
+[07/10/2020] Vladimir_Abramovich(79.101.76.90) je uzeo 7000$ iz biznisa 100.
+[07/10/2020] Kayden_Hodge(89.111.246.90) je uzeo 1479$ iz biznisa 130.
+[07/10/2020] Vlady_Ukov(178.220.62.206) je uzeo 1000$ iz biznisa 126.
+[07/10/2020] Sato_Kiyoshi(95.178.139.146) je uzeo 4108$ iz biznisa 2.
+[07/10/2020] Owen_Blackburn(212.200.33.74) je uzeo 5000$ iz biznisa 14.
+[07/10/2020] Sato_Kiyoshi(95.178.139.146) je uzeo 567$ iz biznisa 2.
+[07/10/2020] Fareed_Nawwaf(109.175.99.116) je uzeo 12000$ iz biznisa 28.
+[07/10/2020] Sato_Kiyoshi(95.178.139.146) je uzeo 852$ iz biznisa 2.
+[08/10/2020] Vlady_Ukov(178.220.62.206) je uzeo 1500$ iz biznisa 126.
+[08/10/2020] Reuel_Gomez(62.4.55.105) je uzeo 19000$ iz biznisa 95.
+[08/10/2020] Vlady_Ukov(178.223.139.182) je uzeo 1000$ iz biznisa 126.
+[08/10/2020] Sato_Kiyoshi(95.178.206.203) je uzeo 3072$ iz biznisa 2.
+[08/10/2020] Abaz_Mikati(85.94.157.255) je uzeo 685$ iz biznisa 135.
+[08/10/2020] Juan_Elizalde(31.223.132.253) je uzeo 10$ iz biznisa 12.
+[09/10/2020] Xavier_Ombando(146.255.138.254) je uzeo 30000$ iz biznisa 47.
+[09/10/2020] Sato_Kiyoshi(95.178.200.176) je uzeo 2873$ iz biznisa 2.
+[10/10/2020] Victor_Azzari(78.3.235.167) je uzeo 4829$ iz biznisa 105.
+[10/10/2020] Sato_Kiyoshi(185.18.60.183) je uzeo 2203$ iz biznisa 2.
+[10/10/2020] Mia_Jones(94.250.60.100) je uzeo 4179$ iz biznisa 108.
+[10/10/2020] Paul_Hawakins(188.127.119.145) je uzeo 500$ iz biznisa 27.
+[10/10/2020] Paul_Hawakins(188.127.119.145) je uzeo 100$ iz biznisa 27.
+[10/10/2020] Veronica_Chavarez(193.198.8.212) je stavio 10$ na biznis 107.
+[10/10/2020] Veronica_Chavarez(193.198.8.212) je stavio 1000$ na biznis 107.
+[10/10/2020] Naser_Krasniqi(31.176.232.134) je uzeo 2101$ iz biznisa 31.
+[11/10/2020] Daniel_Thobe(62.4.55.139) je uzeo 4682$ iz biznisa 8.
+[11/10/2020] Sato_Kiyoshi(185.18.60.183) je uzeo 6010$ iz biznisa 2.
+[11/10/2020] Paul_Hawakins(188.127.119.145) je uzeo 500$ iz biznisa 27.
+[12/10/2020] Victor_Azzari(78.3.235.167) je uzeo 1$ iz biznisa 105.
+[12/10/2020] Sato_Kiyoshi(151.252.230.78) je uzeo 1660$ iz biznisa 2.
+[12/10/2020] Sato_Kiyoshi(151.252.230.78) je uzeo 2387$ iz biznisa 2.
+[13/10/2020] Vlady_Ukov(178.220.156.185) je uzeo 1500$ iz biznisa 126.
+[13/10/2020] Xavier_Ombando(146.255.138.254) je uzeo 49000$ iz biznisa 47.
+[13/10/2020] Paul_Hawakins(188.127.119.145) je uzeo 600$ iz biznisa 27.
+[13/10/2020] Frankie_Moltisanti(109.207.42.83) je uzeo 13862$ iz biznisa 102.
+[14/10/2020] Sato_Kiyoshi(89.201.184.51) je uzeo 1229$ iz biznisa 2.
+[14/10/2020] Sato_Kiyoshi(89.201.184.51) je uzeo 494$ iz biznisa 2.
+[15/10/2020] Fareed_Nawwaf(109.175.99.9) je uzeo 10000$ iz biznisa 28.
+[15/10/2020] Fareed_Nawwaf(109.175.99.9) je uzeo 400$ iz biznisa 28.
+[15/10/2020] Fareed_Nawwaf(109.175.99.9) je uzeo 300$ iz biznisa 28.
+[15/10/2020] Paul_Hawakins(188.127.119.145) je uzeo 560$ iz biznisa 27.
+[16/10/2020] Sato_Kiyoshi(95.178.218.81) je uzeo 1812$ iz biznisa 2.
+[16/10/2020] Vlady_Ukov(178.220.156.185) je uzeo 2500$ iz biznisa 126.
+[16/10/2020] Sato_Kiyoshi(95.178.218.81) je uzeo 1868$ iz biznisa 2.
+[17/10/2020] Carlo_Fiorentini(92.36.140.105) je uzeo 2336$ iz biznisa 102.
+[17/10/2020] Allison_Williams(89.111.246.90) je uzeo 3000$ iz biznisa 130.

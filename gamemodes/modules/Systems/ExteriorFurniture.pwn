@@ -206,6 +206,7 @@ static stock
 	##    ##    ##    ##     ## ##    ## ##   ##  ##    ## 
 	 ######     ##     #######   ######  ##    ##  ######  
 */
+
 stock LoadHouseExterior(houseid)
 {
 	new
@@ -526,8 +527,8 @@ stock static FindExteriorObjectHouse(playerid, Float:radius)
 	##    ## ##     ## ##       ##       ##     ## ##     ## ##    ## ##   ##  ##    ## 
 	 ######  ##     ## ######## ######## ########  ##     ##  ######  ##    ##  ######  
 */
-forward OnHouseExteriorLoad(houseid);
-public OnHouseExteriorLoad(houseid)
+
+Public: OnHouseExteriorLoad(houseid)
 {
 	if(!cache_num_rows())
 		return 0;
@@ -546,8 +547,9 @@ public OnHouseExteriorLoad(houseid)
 		cache_get_value_name_float(i	, "rot_z"			, ExteriorInfo[houseid][heRotZ][i]);
 	}
 	for( i = 0; i < rows; i++ )
+	{
 		ExteriorInfo[houseid][heObjectId][i] = CreateDynamicObject(ExteriorInfo[houseid][heModelId][i], ExteriorInfo[houseid][hePosX][i], ExteriorInfo[houseid][hePosY][i], ExteriorInfo[houseid][hePosZ][i], ExteriorInfo[houseid][heRotX][i], ExteriorInfo[houseid][heRotY][i], ExteriorInfo[houseid][heRotZ][i], 0, 0, -1, EXTERIOR_DRAW_DISTANCE, EXTERIOR_DRAW_DISTANCE);
-	
+	}
 	return 1;
 }
 

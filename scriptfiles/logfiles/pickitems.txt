@@ -1,0 +1,250 @@
+
+[19/03/2020] Leonard Burkhart je uzeo oruzje(id - 42, ammo - 999999999) sa poda.
+[19/03/2020] Quinn Hudson je uzeo drogu(vrsta - Cocaine, kolicina -0.04 g) sa poda.
+[19/03/2020] Vondel Joyner je uzeo drogu(vrsta - Cocaine, kolicina -0.00 g) sa poda.
+[20/03/2020] Quinn Hudson je uzeo drogu(vrsta - Marijuana, kolicina -3.08 g) sa poda.
+[20/03/2020] Vondel Joyner je uzeo oruzje(id - 5, ammo - 2) sa poda.
+[20/03/2020] Vondel Joyner je uzeo oruzje(id - 25, ammo - 49) sa poda.
+[20/03/2020] Brian Nixon je uzeo oruzje(id - 24, ammo - 46) sa poda.
+[20/03/2020] Tommy Johnsonn je uzeo drogu(vrsta - Cocaine, kolicina -0.02 g) sa poda.
+[21/03/2020] Tavarious Clemmons je uzeo drogu(vrsta - Cocaine, kolicina -0.89 g) sa poda.
+[21/03/2020] Steve Hughes je uzeo oruzje(id - 5, ammo - 2) sa poda.
+[21/03/2020] Jack McKenzie je uzeo drogu(vrsta - Cocaine, kolicina -0.04 g) sa poda.
+[21/03/2020] Jack McKenzie je uzeo drogu(vrsta - Marijuana, kolicina -1.00 g) sa poda.
+[21/03/2020] Jack McKenzie je uzeo drogu(vrsta - Cocaine, kolicina -2.65 g) sa poda.
+[21/03/2020] Quinn Hudson je uzeo drogu(vrsta - Cocaine, kolicina -0.39 g) sa poda.
+[21/03/2020] Kimberly Parker je uzeo drogu(vrsta - Cocaine, kolicina -1.49 g) sa poda.
+[22/03/2020] Igor Kostic je uzeo drogu(vrsta - Cocaine, kolicina -0.19 g) sa poda.
+[22/03/2020] Wayne Middleton je uzeo drogu(vrsta - Cocaine, kolicina -0.07 g) sa poda.
+[22/03/2020] Rakeem Bell je uzeo drogu(vrsta - Marijuana, kolicina -10.00 g) sa poda.
+[22/03/2020] Quinn Hudson je uzeo drogu(vrsta - Marijuana, kolicina -0.59 g) sa poda.
+[23/03/2020] Anna McAdams je uzeo drogu(vrsta - Cocaine, kolicina -0.23 g) sa poda.
+[24/03/2020] Karen Moore je uzeo drogu(vrsta - Marijuana, kolicina -1.00 g) sa poda.
+[25/03/2020] Vondel Joyner je uzeo drogu(vrsta - Crack, kolicina -1.10 g) sa poda.
+[25/03/2020] Shannon Yard je uzeo drogu(vrsta - Cocaine, kolicina -0.20 g) sa poda.
+[25/03/2020] Quinn Hudson je uzeo oruzje(id - 24, ammo - 22) sa poda.
+[25/03/2020] Steven Lewis je uzeo drogu(vrsta - Marijuana, kolicina -30.50 g)[Dobiva samo 20g - Server Rules] sa poda.
+[25/03/2020] Jacody Cotton je uzeo oruzje(id - 25, ammo - 20) sa poda.
+[25/03/2020] Nathan Williams je uzeo drogu(vrsta - Marijuana, kolicina -3.00 g) sa poda.
+[25/03/2020] Deshawn Cage je uzeo drogu(vrsta - Marijuana, kolicina -0.50 g) sa poda.
+[26/03/2020] Anna McAdams je uzeo drogu(vrsta - Cocaine, kolicina -0.10 g) sa poda.
+[26/03/2020] Igor Lavrov je uzeo drogu(vrsta - Cocaine, kolicina -0.10 g) sa poda.
+[26/03/2020] Maska_429004 je uzeo oruzje(id - 24, ammo - 50) sa poda.
+[27/03/2020] Vondel Joyner je uzeo drogu(vrsta - Marijuana, kolicina -50.00 g)[Dobiva samo 20g - Server Rules] sa poda.
+[27/03/2020] Tom Mangano je uzeo drogu(vrsta - Cocaine, kolicina -0.58 g) sa poda.
+[27/03/2020] Maska_799030 je uzeo drogu(vrsta - Heroin, kolicina -0.56 g) sa poda.
+[27/03/2020] Maska_799030 je uzeo drogu(vrsta - Heroin, kolicina -0.56 g) sa poda.
+[28/03/2020] Maska_153350 je uzeo drogu(vrsta - Cocaine, kolicina -0.68 g) sa poda.
+[28/03/2020] Anna McAdams je uzeo drogu(vrsta - Methamphetamine, kolicina -0.40 g) sa poda.
+[28/03/2020] Igor Kostic je uzeo oruzje(id - 31, ammo - 100) sa poda.
+[28/03/2020] Igor Kostic je uzeo oruzje(id - 25, ammo - 50) sa poda.
+[28/03/2020] Igor Kostic je uzeo oruzje(id - 25, ammo - 51) sa poda.
+[28/03/2020] Maska_877910 je uzeo drogu(vrsta - Cocaine, kolicina -0.49 g) sa poda.
+[29/03/2020] Demetrius Petterson je uzeo drogu(vrsta - Cocaine, kolicina -0.89 g) sa poda.
+[30/03/2020] Jordan Maccagno je uzeo drogu(vrsta - Cocaine, kolicina -2.00 g) sa poda.
+[30/03/2020] Jordan Maccagno je uzeo oruzje(id - 24, ammo - 101) sa poda.
+[30/03/2020] Jadon Shelton je uzeo drogu(vrsta - Marijuana, kolicina -1.00 g) sa poda.
+[30/03/2020] Jadon Shelton je uzeo drogu(vrsta - Marijuana, kolicina -9.00 g) sa poda.
+[30/03/2020] Vuk Koprivica je uzeo drogu(vrsta - Cocaine, kolicina -6.39 g) sa poda.
+[30/03/2020] Vuk Koprivica je uzeo drogu(vrsta - Cocaine, kolicina -20.00 g)[Dobiva samo 20g - Server Rules] sa poda.
+[30/03/2020] Vuk Koprivica je uzeo drogu(vrsta - Cocaine, kolicina -6.39 g) sa poda.
+[31/03/2020] Karen Moore je uzeo drogu(vrsta - Cocaine, kolicina -1.00 g) sa poda.
+[31/03/2020] Nicholas Lanzetta je uzeo drogu(vrsta - Cocaine, kolicina -10.00 g) sa poda.
+[31/03/2020] Nicholas Lanzetta je uzeo drogu(vrsta - Cocaine, kolicina -9.69 g) sa poda.
+[31/03/2020] Igor Kostic je uzeo oruzje(id - 24, ammo - 50) sa poda.
+[31/03/2020] Igor Kostic je uzeo oruzje(id - 25, ammo - 50) sa poda.
+[31/03/2020] Aaron Arkwood je uzeo drogu(vrsta - Cocaine, kolicina -0.40 g) sa poda.
+[31/03/2020] Waldemar Dobrovsky je uzeo drogu(vrsta - Cocaine, kolicina -0.50 g) sa poda.
+[31/03/2020] Igor Kostic je uzeo oruzje(id - 24, ammo - 50) sa poda.
+[01/04/2020] Johnny Octt je uzeo drogu(vrsta - Methamphetamine, kolicina -1.00 g) sa poda.
+[01/04/2020] Peter Grant je uzeo drogu(vrsta - Crack, kolicina -1.00 g) sa poda.
+[01/04/2020] Peter Grant je uzeo drogu(vrsta - Cocaine, kolicina -7.00 g) sa poda.
+[01/04/2020] Maska_429004 je uzeo drogu(vrsta - Cocaine, kolicina -3.88 g) sa poda.
+[01/04/2020] Igor Kostic je uzeo oruzje(id - 24, ammo - 50) sa poda.
+[01/04/2020] Jordan Maccagno je uzeo oruzje(id - 31, ammo - 90) sa poda.
+[01/04/2020] Ryan Rivera je uzeo drogu(vrsta - Cocaine, kolicina -3.88 g) sa poda.
+[01/04/2020] Maska_-1 je uzeo oruzje(id - 25, ammo - 50) sa poda.
+[01/04/2020] Igor Kostic je uzeo oruzje(id - 24, ammo - 50) sa poda.
+[01/04/2020] Igor Kostic je uzeo oruzje(id - 24, ammo - 50) sa poda.
+[02/04/2020] Fawziyya Khawaja je uzeo drogu(vrsta - Ecstasy, kolicina -87.50 tableta)[Dobiva samo 20g - Server Rules] sa poda.
+[02/04/2020] Fawziyya Khawaja je uzeo drogu(vrsta - Prazno, kolicina -1.00 g) sa poda.
+[02/04/2020] Sid West je uzeo drogu(vrsta - Cocaine, kolicina -0.30 g) sa poda.
+[02/04/2020] Igor Kostic je uzeo oruzje(id - 24, ammo - 50) sa poda.
+[03/04/2020] Anna McAdams je uzeo drogu(vrsta - Marijuana, kolicina -1.00 g) sa poda.
+[03/04/2020] Giuseppe Manna je uzeo oruzje(id - 24, ammo - 17) sa poda.
+[03/04/2020] Vasilij Ivanov je uzeo oruzje(id - 25, ammo - 14) sa poda.
+[03/04/2020] Aaron Arkwood je uzeo drogu(vrsta - Cocaine, kolicina -8.57 g) sa poda.
+[03/04/2020] Odell Gramont je uzeo drogu(vrsta - Cocaine, kolicina -5.69 g) sa poda.
+[04/04/2020] Rizah Meehan je uzeo oruzje(id - 24, ammo - 1) sa poda.
+[04/04/2020] Rizah Meehan je uzeo oruzje(id - 24, ammo - 50) sa poda.
+[04/04/2020] Rene Strauss je uzeo oruzje(id - 24, ammo - 60) sa poda.
+[04/04/2020] Napoleon Vernier je uzeo drogu(vrsta - Cocaine, kolicina -5.05 g) sa poda.
+[05/04/2020] Viktor Stern je uzeo drogu(vrsta - Marijuana, kolicina -3.50 g) sa poda.
+[05/04/2020] Ralph Sullivan je uzeo oruzje(id - 24, ammo - 50) sa poda.
+[06/04/2020] Deontay Berry je uzeo drogu(vrsta - Cocaine, kolicina -8.50 g) sa poda.
+[06/04/2020] Peter Grant je uzeo drogu(vrsta - Marijuana, kolicina -16.00 g) sa poda.
+[06/04/2020] Dante Rossi je uzeo oruzje(id - 24, ammo - 13) sa poda.
+[06/04/2020] Darryl Buchanan je uzeo drogu(vrsta - Cocaine, kolicina -8.39 g) sa poda.
+[06/04/2020] Stojan Antonic je uzeo drogu(vrsta - Cocaine, kolicina -0.30 g) sa poda.
+[07/04/2020] Grady Moss je uzeo oruzje(id - 25, ammo - 15) sa poda.
+[07/04/2020] Ralph Sullivan je uzeo oruzje(id - 24, ammo - 50) sa poda.
+[07/04/2020] Stojan Antonic je uzeo oruzje(id - 24, ammo - 42) sa poda.
+[08/04/2020] Maska_872008 je uzeo drogu(vrsta - Cocaine, kolicina -2.49 g) sa poda.
+[08/04/2020] Maska_-1 je uzeo oruzje(id - 25, ammo - 49) sa poda.
+[08/04/2020] Allison Cottrell je uzeo drogu(vrsta - Marijuana, kolicina -1.00 g) sa poda.
+[08/04/2020] Anna McAdams je uzeo drogu(vrsta - Marijuana, kolicina -1.00 g) sa poda.
+[08/04/2020] Anna McAdams je uzeo drogu(vrsta - Cocaine, kolicina -0.49 g) sa poda.
+[08/04/2020] Milutin Kalezic je uzeo oruzje(id - 24, ammo - 31) sa poda.
+[08/04/2020] Patrick Smith je uzeo drogu(vrsta - Cocaine, kolicina -0.18 g) sa poda.
+[08/04/2020] Cleon Xenos je uzeo drogu(vrsta - Cocaine, kolicina -0.18 g) sa poda.
+[08/04/2020] Maska_226811 je uzeo drogu(vrsta - Crack, kolicina -1.00 g) sa poda.
+[09/04/2020] Rade Gavrilovic je uzeo drogu(vrsta - Marijuana, kolicina -0.50 g) sa poda.
+[09/04/2020] Rade Gavrilovic je uzeo drogu(vrsta - Cocaine, kolicina -0.39 g) sa poda.
+[09/04/2020] Michaell Oconnor je uzeo drogu(vrsta - Cocaine, kolicina -4.90 g) sa poda.
+[09/04/2020] Vukota Saranovic je uzeo drogu(vrsta - Cocaine, kolicina -0.20 g) sa poda.
+[09/04/2020] Vukota Saranovic je uzeo drogu(vrsta - Methamphetamine, kolicina -0.69 g) sa poda.
+[09/04/2020] Niksa Tadic je uzeo drogu(vrsta - Methamphetamine, kolicina -0.69 g) sa poda.
+[09/04/2020] Niksa Tadic je uzeo drogu(vrsta - Methamphetamine, kolicina -4.59 g) sa poda.
+[09/04/2020] Niksa Tadic je uzeo drogu(vrsta - Methamphetamine, kolicina -0.80 g) sa poda.
+[10/04/2020] Heraclius Xenos je uzeo drogu(vrsta - Methamphetamine, kolicina -0.80 g) sa poda.
+[10/04/2020] Nemanja Dordjevic je uzeo drogu(vrsta - Cocaine, kolicina -5.00 g) sa poda.
+[10/04/2020] Nemanja Dordjevic je uzeo drogu(vrsta - Methamphetamine, kolicina -0.80 g) sa poda.
+[10/04/2020] Maska_264034 je uzeo drogu(vrsta - Cocaine, kolicina -0.19 g) sa poda.
+[10/04/2020] Maska_264034 je uzeo drogu(vrsta - Prazno, kolicina -4.18 g) sa poda.
+[10/04/2020] Novak Savic je uzeo drogu(vrsta - Cocaine, kolicina -4.60 g) sa poda.
+[10/04/2020] Novak Savic je uzeo drogu(vrsta - Methamphetamine, kolicina -0.80 g) sa poda.
+[11/04/2020] Abram Bensaid je uzeo oruzje(id - 24, ammo - 25) sa poda.
+[11/04/2020] Milos Damjanovic je uzeo drogu(vrsta - Crack, kolicina -3.00 g) sa poda.
+[11/04/2020] Maska_-1 je uzeo drogu(vrsta - Cocaine, kolicina -0.18 g) sa poda.
+[12/04/2020] Deshawn Quinton je uzeo drogu(vrsta - Cocaine, kolicina -0.17 g) sa poda.
+[12/04/2020] Brandon Pollard je uzeo oruzje(id - 24, ammo - 12) sa poda.
+[12/04/2020] Maska_691358 je uzeo oruzje(id - 22, ammo - 10) sa poda.
+[12/04/2020] Novak Savic je uzeo drogu(vrsta - Marijuana, kolicina -0.50 g) sa poda.
+[12/04/2020] Vladimir Krcmarik je uzeo drogu(vrsta - Cocaine, kolicina -2.98 g) sa poda.
+[13/04/2020] Harley Toretto je uzeo drogu(vrsta - Marijuana, kolicina -0.50 g) sa poda.
+[13/04/2020] Heraclius Xenos je uzeo oruzje(id - 24, ammo - 12) sa poda.
+[13/04/2020] Michael Rogers je uzeo drogu(vrsta - Cocaine, kolicina -0.50 g) sa poda.
+[13/04/2020] Ben Carington je uzeo drogu(vrsta - Cocaine, kolicina -0.50 g) sa poda.
+[13/04/2020] Nikolay Grigorievich je uzeo drogu(vrsta - Marijuana, kolicina -0.18 g) sa poda.
+[14/04/2020] Daeshawn Crawford je uzeo drogu(vrsta - Cocaine, kolicina -0.10 g) sa poda.
+[14/04/2020] Nikko Jenkins je uzeo drogu(vrsta - Marijuana, kolicina -1.00 g) sa poda.
+[14/04/2020] Maska_645602 je uzeo drogu(vrsta - Cocaine, kolicina -0.68 g) sa poda.
+[14/04/2020] Terrance Hayes je uzeo drogu(vrsta - Methamphetamine, kolicina -4.90 g) sa poda.
+[15/04/2020] Ralph Hills je uzeo drogu(vrsta - Marijuana, kolicina -5.00 g) sa poda.
+[15/04/2020] Timur Timofeyevich je uzeo oruzje(id - 24, ammo - 49) sa poda.
+[15/04/2020] Nikko Jenkins je uzeo drogu(vrsta - Marijuana, kolicina -1.00 g) sa poda.
+[15/04/2020] Ralph Hills je uzeo drogu(vrsta - Cocaine, kolicina -10.00 g) sa poda.
+[15/04/2020] Ralph Hills je uzeo drogu(vrsta - Marijuana, kolicina -5.00 g) sa poda.
+[15/04/2020] Nemanja Djordjevic je uzeo drogu(vrsta - Cocaine, kolicina -9.00 g) sa poda.
+[15/04/2020] Nemanja Djordjevic je uzeo drogu(vrsta - Cocaine, kolicina -6.00 g) sa poda.
+[15/04/2020] Rade Gavrilovic je uzeo drogu(vrsta - Crack, kolicina -45.00 g)[Dobiva samo 20g - Server Rules] sa poda.
+[15/04/2020] David Chapman je uzeo drogu(vrsta - Cocaine, kolicina -0.20 g) sa poda.
+[16/04/2020] Miljan Causevic je uzeo drogu(vrsta - Cocaine, kolicina -6.39 g) sa poda.
+[16/04/2020] Miljan Causevic je uzeo drogu(vrsta - Cocaine, kolicina -11.09 g) sa poda.
+[16/04/2020] Miljan Causevic je uzeo drogu(vrsta - Cocaine, kolicina -10.00 g) sa poda.
+[16/04/2020] Dusan Mihajlovic je uzeo oruzje(id - 24, ammo - 17) sa poda.
+[16/04/2020] Milos Damjanovic je uzeo drogu(vrsta - Prazno, kolicina -1.87 g) sa poda.
+[16/04/2020] Milos Damjanovic je uzeo drogu(vrsta - Prazno, kolicina -0.87 g) sa poda.
+[16/04/2020] Ethan Hines je uzeo drogu(vrsta - Crack, kolicina -3.00 g) sa poda.
+[17/04/2020] Nikolay Grigorievich je uzeo drogu(vrsta - Cocaine, kolicina -7.17 g) sa poda.
+[17/04/2020] Nikolay Grigorievich je uzeo drogu(vrsta - Marijuana, kolicina -50.00 g)[Dobiva samo 20g - Server Rules] sa poda.
+[17/04/2020] Nikolay Grigorievich je uzeo drogu(vrsta - Cocaine, kolicina -20.00 g)[Dobiva samo 20g - Server Rules] sa poda.
+[17/04/2020] David Hughes je uzeo drogu(vrsta - Cocaine, kolicina -0.89 g) sa poda.
+[17/04/2020] Zlatko Gagic je uzeo drogu(vrsta - Crack, kolicina -0.10 g) sa poda.
+[17/04/2020] Richard Myers je uzeo drogu(vrsta - Crack, kolicina -0.46 g) sa poda.
+[17/04/2020] Gerardo Zetas je uzeo drogu(vrsta - Cocaine, kolicina -58.00 g)[Dobiva samo 20g - Server Rules] sa poda.
+[17/04/2020] William Sherman je uzeo drogu(vrsta - Cocaine, kolicina -4.69 g) sa poda.
+[17/04/2020] Darryl Buchanan je uzeo drogu(vrsta - Cocaine, kolicina -0.10 g) sa poda.
+[18/04/2020] Nikolay Grigorievich je uzeo drogu(vrsta - Cocaine, kolicina -14.30 g) sa poda.
+[18/04/2020] Nikolay Grigorievich je uzeo drogu(vrsta - Marijuana, kolicina -40.00 g)[Dobiva samo 20g - Server Rules] sa poda.
+[18/04/2020] William Sherman je uzeo drogu(vrsta - Crack, kolicina -0.50 g) sa poda.
+[18/04/2020] Abram Bensaid je uzeo oruzje(id - 24, ammo - 31) sa poda.
+[18/04/2020] Paul Meadows je uzeo drogu(vrsta - Cocaine, kolicina -4.59 g) sa poda.
+[18/04/2020] Paul Meadows je uzeo drogu(vrsta - Cocaine, kolicina -0.60 g) sa poda.
+[18/04/2020] William Sherman je uzeo drogu(vrsta - Marijuana, kolicina -1.00 g) sa poda.
+[18/04/2020] William Sherman je uzeo drogu(vrsta - Marijuana, kolicina -1.00 g) sa poda.
+[18/04/2020] James Barrone je uzeo drogu(vrsta - Cocaine, kolicina -2.50 g) sa poda.
+[18/04/2020] William Sherman je uzeo drogu(vrsta - Crack, kolicina -3.00 g) sa poda.
+[18/04/2020] Paul Meadows je uzeo drogu(vrsta - Cocaine, kolicina -1.59 g) sa poda.
+[18/04/2020] Paul Meadows je uzeo drogu(vrsta - Cocaine, kolicina -0.60 g) sa poda.
+[18/04/2020] Igor Kostic je uzeo drogu(vrsta - Cocaine, kolicina -0.28 g) sa poda.
+[19/04/2020] Cody Buck je uzeo drogu(vrsta - Crack, kolicina -1.00 g) sa poda.
+[19/04/2020] Cody Buck je uzeo drogu(vrsta - Crack, kolicina -22.50 g)[Dobiva samo 20g - Server Rules] sa poda.
+[19/04/2020] William Sherman je uzeo drogu(vrsta - Crack, kolicina -1.00 g) sa poda.
+[19/04/2020] William Sherman je uzeo drogu(vrsta - Crack, kolicina -68.00 g)[Dobiva samo 20g - Server Rules] sa poda.
+[19/04/2020] William Sherman je uzeo drogu(vrsta - Cocaine, kolicina -40.50 g)[Dobiva samo 20g - Server Rules] sa poda.
+[19/04/2020] William Sherman je uzeo drogu(vrsta - Cocaine, kolicina -68.00 g)[Dobiva samo 20g - Server Rules] sa poda.
+[19/04/2020] William Sherman je uzeo drogu(vrsta - Crack, kolicina -30.09 g)[Dobiva samo 20g - Server Rules] sa poda.
+[19/04/2020] William Sherman je uzeo drogu(vrsta - Cocaine, kolicina -5.00 g) sa poda.
+[19/04/2020] William Sherman je uzeo drogu(vrsta - Cocaine, kolicina -7.50 g) sa poda.
+[19/04/2020] William Sherman je uzeo drogu(vrsta - Cocaine, kolicina -0.50 g) sa poda.
+[19/04/2020] Hans Schwammberger je uzeo drogu(vrsta - Prazno, kolicina -0.00 g) sa poda.
+[19/04/2020] Hans Schwammberger je uzeo drogu(vrsta - Prazno, kolicina -0.00 g) sa poda.
+[19/04/2020] Hans Schwammberger je uzeo drogu(vrsta - Prazno, kolicina -0.00 g) sa poda.
+[19/04/2020] Hans Schwammberger je uzeo drogu(vrsta - Prazno, kolicina -0.00 g) sa poda.
+[19/04/2020] Wayne Chow je uzeo drogu(vrsta - Cocaine, kolicina -2.59 g) sa poda.
+[20/04/2020] Richard Morris je uzeo drogu(vrsta - Cocaine, kolicina -0.50 g) sa poda.
+[20/04/2020] Richard Morris je uzeo drogu(vrsta - Cocaine, kolicina -1.30 g) sa poda.
+[20/04/2020] Richard Morris je uzeo drogu(vrsta - Cocaine, kolicina -0.30 g) sa poda.
+[20/04/2020] Richard Morris je uzeo drogu(vrsta - Cocaine, kolicina -7.00 g) sa poda.
+[20/04/2020] Richard Morris je uzeo drogu(vrsta - Crack, kolicina -1.00 g) sa poda.
+[20/04/2020] Richard Morris je uzeo drogu(vrsta - Cocaine, kolicina -0.50 g) sa poda.
+[20/04/2020] William Sherman je uzeo drogu(vrsta - Crack, kolicina -1.00 g) sa poda.
+[20/04/2020] William Sherman je uzeo drogu(vrsta - Cocaine, kolicina -4.50 g) sa poda.
+[20/04/2020] Richard Morris je uzeo drogu(vrsta - Cocaine, kolicina -128.50 g)[Dobiva samo 20g - Server Rules] sa poda.
+[20/04/2020] William Sherman je uzeo drogu(vrsta - Cocaine, kolicina -20.00 g)[Dobiva samo 20g - Server Rules] sa poda.
+[20/04/2020] William Sherman je uzeo drogu(vrsta - Crack, kolicina -0.50 g) sa poda.
+[20/04/2020] William Sherman je uzeo drogu(vrsta - Cocaine, kolicina -0.50 g) sa poda.
+[20/04/2020] William Sherman je uzeo drogu(vrsta - Cocaine, kolicina -2.79 g) sa poda.
+[20/04/2020] William Sherman je uzeo drogu(vrsta - Cocaine, kolicina -3.29 g) sa poda.
+[20/04/2020] William Sherman je uzeo drogu(vrsta - Crack, kolicina -0.29 g) sa poda.
+[20/04/2020] William Sherman je uzeo drogu(vrsta - Methamphetamine, kolicina -0.50 g) sa poda.
+[20/04/2020] William Sherman je uzeo drogu(vrsta - Cocaine, kolicina -0.10 g) sa poda.
+[20/04/2020] William Sherman je uzeo drogu(vrsta - Crack, kolicina -0.29 g) sa poda.
+[21/04/2020] William Sherman je uzeo drogu(vrsta - Crack, kolicina -0.28 g) sa poda.
+[21/04/2020] Nicholas Lanzetta je uzeo drogu(vrsta - Cocaine, kolicina -0.20 g) sa poda.
+[21/04/2020] Julian Holland je uzeo oruzje(id - 24, ammo - 50) sa poda.
+[22/04/2020] Abram Bensaid je uzeo oruzje(id - 24, ammo - 14) sa poda.
+[23/04/2020] Julian Holland je uzeo oruzje(id - 24, ammo - 1) sa poda.
+[30/04/2020] Fritz Weldermeyer je uzeo oruzje(id - 24, ammo - 21) sa poda.
+[09/05/2020] Abram Bensaid je uzeo oruzje(id - 24, ammo - 21) sa poda.
+[12/05/2020] Abram Bensaid je uzeo oruzje(id - 24, ammo - 17) sa poda.
+[12/05/2020] Harrison Howard je uzeo oruzje(id - 24, ammo - 17) sa poda.
+[17/05/2020] Rene Strauss je uzeo oruzje(id - 24, ammo - 100) sa poda.
+[17/05/2020] Vukota Saranovic je uzeo oruzje(id - 28, ammo - 19) sa poda.
+[17/05/2020] Mauricio Manzano je uzeo oruzje(id - 28, ammo - 19) sa poda.
+[04/06/2020] Raymond Griffins je uzeo oruzje(id - 31, ammo - 500) sa poda.
+[10/06/2020] Eleanor Flores je uzeo oruzje(id - 31, ammo - 11) sa poda.
+[11/06/2020] Alonzo Ward je uzeo oruzje(id - 24, ammo - 50) sa poda.
+[11/06/2020] Alan Huang je uzeo oruzje(id - 24, ammo - 38) sa poda.
+[11/06/2020] Alonzo Ward je uzeo oruzje(id - 24, ammo - 38) sa poda.
+[14/06/2020] Tyrie Gramont je uzeo oruzje(id - 24, ammo - 46) sa poda.
+[23/06/2020] Deondre Yates je uzeo oruzje(id - 24, ammo - 50) sa poda.
+[23/06/2020] Damien Coleman je uzeo oruzje(id - 24, ammo - 90) sa poda.
+[24/06/2020] Raymond Griffins je uzeo oruzje(id - 24, ammo - 50) sa poda.
+[24/06/2020] Deveron Hodges je uzeo oruzje(id - 24, ammo - 50) sa poda.
+[24/06/2020] Gabriel Hopwood je uzeo oruzje(id - 31, ammo - 138) sa poda.
+[25/06/2020] Deondre Yates je uzeo oruzje(id - 25, ammo - 50) sa poda.
+[25/06/2020] Deondre Yates je uzeo oruzje(id - 24, ammo - 100) sa poda.
+[26/06/2020] Deondre Yates je uzeo oruzje(id - 24, ammo - 50) sa poda.
+[03/07/2020] Gabriel Hopwood je uzeo oruzje(id - 24, ammo - 50) sa poda.
+[04/07/2020] Landolfo Solano je uzeo oruzje(id - 25, ammo - 50) sa poda.
+[05/07/2020] Julian Covarrubias je uzeo oruzje(id - 25, ammo - 50) sa poda.
+[17/07/2020] Michelle Stewart je uzeo oruzje(id - 31, ammo - 195) sa poda.
+[18/07/2020] Maska_198474 je uzeo oruzje(id - 31, ammo - 200) sa poda.
+[18/07/2020] Raylon Murphy je uzeo oruzje(id - 31, ammo - 200) sa poda.
+[18/07/2020] Simon Dave je uzeo oruzje(id - 31, ammo - 200) sa poda.
+[22/07/2020] Adrian Campbell je uzeo oruzje(id - 25, ammo - 1) sa poda.
+[22/07/2020] Adrian Campbell je uzeo oruzje(id - 30, ammo - 1) sa poda.
+[17/08/2020] Zyrell Haynes je uzeo oruzje(id - 29, ammo - 106) sa poda.
+[17/08/2020] Zyrell Haynes je uzeo oruzje(id - 29, ammo - 46) sa poda.
+[17/08/2020] Zyrell Haynes je uzeo oruzje(id - 29, ammo - 150) sa poda.
+[17/08/2020] Zyrell Haynes je uzeo oruzje(id - 29, ammo - 90) sa poda.
+[17/08/2020] Zyrell Haynes je uzeo oruzje(id - 29, ammo - 11) sa poda.
+[17/08/2020] Zyrell Haynes je uzeo oruzje(id - 29, ammo - 2) sa poda.
+[17/08/2020] Urban Paskov je uzeo oruzje(id - 29, ammo - 20) sa poda.
+[19/08/2020] Henry Walker je uzeo oruzje(id - 25, ammo - 11) sa poda.
+[25/08/2020] Zyrell Haynes je uzeo oruzje(id - 25, ammo - 39) sa poda.
+[08/09/2020] Frank Brennan je uzeo oruzje(id - 24, ammo - 49) sa poda.
+[09/09/2020] Aaron Schaffner je uzeo oruzje(id - 24, ammo - 50) sa poda.
+[05/10/2020] Fareed Nawwaf je uzeo oruzje(id - 31, ammo - 57) sa poda.

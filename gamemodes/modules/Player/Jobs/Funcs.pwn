@@ -30,7 +30,6 @@ enum E_JOBS_DATA {
 	TAXI, 	    /* [id:6] */
 	FARMER,     /* [id:7] */
 	LOGGER,     /* [id:14] */
-	TRUCKER,    /* [id:15] */
 	GARBAGE,    /* [id:16] */
 	IMPOUNDER,  /* [id:17] */
 	TRANSPORTER /* [id:18] */
@@ -73,7 +72,6 @@ public OnServerJobsLoaded() {
 	cache_get_value_name_int(0, "Taxi", JobData[TAXI]);
 	cache_get_value_name_int(0, "Farmer", JobData[FARMER]);
 	cache_get_value_name_int(0, "Logger", JobData[LOGGER]);
-	cache_get_value_name_int(0, "Trucker", JobData[TRUCKER]);
 	cache_get_value_name_int(0, "Garbage", JobData[GARBAGE]);
 	cache_get_value_name_int(0, "Impounder", JobData[IMPOUNDER]);
 	cache_get_value_name_int(0, "Transporter", JobData[TRANSPORTER]);
@@ -92,7 +90,6 @@ SetPlayerJob(playerid, job_id) {
 		case 6: JobData[TAXI] ++;
 		case 7: JobData[FARMER] ++;
 		case 14: JobData[LOGGER] ++;
-		case 15: JobData[TRUCKER] ++;
 		case 16: JobData[GARBAGE] ++;
 		case 17: JobData[IMPOUNDER] ++;
 		case 18: JobData[TRANSPORTER] ++;
@@ -130,7 +127,6 @@ RemoveOfflineJob(jobid)
 		case 6: JobData[TAXI] --;
 		case 7: JobData[FARMER] --;
 		case 14: JobData[LOGGER] --;
-		case 15: JobData[TRUCKER] --;
 		case 16: JobData[GARBAGE] --;
 		case 17: JobData[IMPOUNDER] --;
 		case 18: JobData[TRANSPORTER] --;

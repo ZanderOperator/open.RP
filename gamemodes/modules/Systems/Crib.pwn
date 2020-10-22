@@ -392,15 +392,15 @@ stock DestroyHouseInfoTD(playerid)
 
 stock LoadHouses()
 {
-	mysql_pquery(g_SQL, "SELECT * FROM houses", "OnServerHousesLoad");
+	mysql_tquery(g_SQL, "SELECT * FROM `houses` WHERE 1", "OnServerHousesLoad", "");
 	return 1;
 }
 
-forward OnServerHousesLoad();
-public OnServerHousesLoad()
+Public: OnServerHousesLoad()
 {
 	if(!cache_num_rows()) return printf("MySQL Report: No houses exist to load.");
- 	for(new row = 0; row < cache_num_rows(); row++) {
+ 	for(new row = 0; row < cache_num_rows(); row++) 
+	{
 		cache_get_value_name_int(row, 		"id"		, 	HouseInfo[row][hSQLID]);
 		cache_get_value_name_float(row, 	"enterX"	, 	HouseInfo[row][hEnterX]);
 		cache_get_value_name_float(row, 	"enterY"	, 	HouseInfo[row][hEnterY]);
@@ -437,20 +437,19 @@ public OnServerHousesLoad()
 		cache_get_value_name_int(row, 		"storage_alarm", HouseInfo[row][hStorageAlarm]);
 		cache_get_value_name_int(row, 		"bank"		 	, HouseInfo[row][hTakings]);
 		cache_get_value_name_int(row, 		"fur_slots"	, HouseInfo[row][hFurSlots]);
-
 		HouseInfo[row][hFurLoaded] = false;
-		CreateHouseEnter(row);
 		LoadHouseExterior(row);
+		CreateHouseEnter(row);
 		Iter_Add(Houses, row);
 	}
-	printf("MySQL Report: Houses Loaded (%d)!", Iter_Count(Houses));
+	printf("MySQL Report: Houses Loaded (%d / %d)!", Iter_Count(Houses), MAX_HOUSES);
 	return 1;
 }
 
 stock static InsertHouseInDB(houseid, playerid) // Dodavanje nove kuce
 {
 	new insertQuery[512];
-	mysql_format(g_SQL, insertQuery, sizeof(insertQuery), "INSERT INTO houses (`level`, `value`, `adress`, `enterX`, `enterY`, `enterZ`, `exitX`, `exitY`, `exitZ`, `ownerid`, `owned`, `int`) VALUES ('%d', '%d', '%e', '%f', '%f', '%f', '%f', '%f', '%f', '0', '0', '%d')",
+	mysql_format(g_SQL, insertQuery, sizeof(insertQuery), "INSERT INTO houses (`level`, `value`, `adress`, `enterX`, `enterY`, `enterZ`, `exitX`, `exitY`, `exitZ`, `ownerid`, `int`) VALUES ('%d', '%d', '%e', '%f', '%f', '%f', '%f', '%f', '%f', '0', '0', '%d')",
 		HouseInfo[houseid][hLevel],
 		HouseInfo[houseid][hValue],
 		HouseInfo[houseid][hAdress],
@@ -514,14 +513,16 @@ stock SaveHouses()
 	return 1;
 }
 
-stock static CreateHouseEnter(houseid)
+stock CreateHouseEnter(houseid)
 {
-	if(houseid == INVALID_HOUSE_ID) return 0;
+	if(IsValidDynamicCP(HouseInfo[houseid][hEnterCP]))
+		DestroyDynamicCP(HouseInfo[houseid][hEnterCP]);
 
 	if(HouseInfo[houseid][h3dViwo] > 0)
 		HouseInfo[houseid][hEnterCP] = CreateDynamicCP(HouseInfo[houseid][hEnterX], HouseInfo[houseid][hEnterY], HouseInfo[houseid][hEnterZ]-1.0, 2.0, HouseInfo[houseid][h3dViwo], 5, -1, 5.0);
 	else
 		HouseInfo[houseid][hEnterCP] = CreateDynamicCP(HouseInfo[houseid][hEnterX], HouseInfo[houseid][hEnterY], HouseInfo[houseid][hEnterZ]-1.0, 2.0, -1, -1, -1, 5.0);
+	
 	return 1;
 }
 

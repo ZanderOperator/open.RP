@@ -93,7 +93,7 @@ stock static ResetPlayerCheckpoints(playerid)
 	##     ## ##     ## ##     ## ##   ##  ##    ## 
 	##     ##  #######   #######  ##    ##  ######  
 */
-hook native SetPlayerCheckpoint(playerid, Float:x, Float:y, Float:z, Float:size)
+stock H_SetPlayerCheckpoint(playerid, Float:x, Float:y, Float:z, Float:size)
 {
 	ResetPlayerCheckpoints(playerid);
 	if(playerid == INVALID_PLAYER_ID) return 0;
@@ -118,10 +118,17 @@ hook native SetPlayerCheckpoint(playerid, Float:x, Float:y, Float:z, Float:size)
 	LastCPInfo[playerid][lcpAreaId] 	= -1;
 	LastCPInfo[playerid][lcpPriority] 	= -1;
 	
-	return SetPlayerCheckpoint(playerid, x, y, z, size);
+	SetPlayerCheckpoint(playerid, x, y, z, size);
+	return 1;
 }
+#if defined _ALS_SetPlayerCheckpoint
+	#undef SetPlayerCheckpoint
+#else
+#define _ALS_SetPlayerCheckpoint
+#endif
+#define SetPlayerCheckpoint H_SetPlayerCheckpoint
 
-hook native DisablePlayerCheckpoint(playerid)
+stock H_DisablePlayerCheckpoint(playerid)
 {
 	if(playerid == INVALID_PLAYER_ID) 			return 0;
 	if(LastCPInfo[playerid][lcpLastCP] == 0) 	return 0;
@@ -142,10 +149,17 @@ hook native DisablePlayerCheckpoint(playerid)
 	LastCPInfo[playerid][lcpAreaId] 	= -1;
 	LastCPInfo[playerid][lcpPriority] 	= -1;
 	
-	return DisablePlayerCheckpoint(playerid);
+	DisablePlayerCheckpoint(playerid);
+	return 1;
 }
+#if defined _ALS_DisablePlayerCheckpoint
+	#undef DisablePlayerCheckpoint
+#else
+#define _ALS_DisablePlayerCheckpoint
+#endif
+#define DisablePlayerCheckpoint H_DisablePlayerCheckpoint
 
-hook native CreateDynamicCP(Float:x, Float:y, Float:z, Float:size, worldid = -1, interiorid = -1, playerid = -1, Float:streamdistance = STREAMER_CP_SD, areaid = -1, priority = 0)
+stock H_CreateDynamicCP(Float:x, Float:y, Float:z, Float:size, worldid = -1, interiorid = -1, playerid = -1, Float:streamdistance = STREAMER_CP_SD, areaid = -1, priority = 0)
 {
 	if(playerid != -1)
 		ResetPlayerCheckpoints(playerid);
@@ -176,8 +190,14 @@ hook native CreateDynamicCP(Float:x, Float:y, Float:z, Float:size, worldid = -1,
 	Streamer_Update(playerid);
 	return LastCPInfo[playerid][lcpLastCP];
 }
+#if defined _ALS_CreateDynamicCP
+	#undef CreateDynamicCP
+#else
+#define _ALS_CreateDynamicCP
+#endif
+#define CreateDynamicCP H_CreateDynamicCP
 
-hook native DestroyDynamicCP(checkpointid)
+stock H_DestroyDynamicCP(checkpointid)
 {
 	if(!IsValidDynamicCP(checkpointid)) return 0;
 	new playerid = GetPlayerFromCP(checkpointid);
@@ -199,6 +219,12 @@ hook native DestroyDynamicCP(checkpointid)
 	Streamer_Update(playerid);
 	return 1;
 }
+#if defined _ALS_DestroyDynamicCP
+	#undef DestroyDynamicCP
+#else
+#define _ALS_DestroyDynamicCP
+#endif
+#define DestroyDynamicCP H_DestroyDynamicCP
 
 hook OnPlayerConnect(playerid)
 {

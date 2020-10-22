@@ -1,0 +1,1118 @@
+(22/04/2020, 03:56:28) Igor Kostic{561} je stavio u vozilo Burrito{4401} slot 1 drogu Marihuana kolicine 100.00 grama i kvalitete Vrlo Dobra[35.000]!
+(22/04/2020, 13:42:20) Igor Kostic{561} je stavio u vozilo ZR-350{3080} slot 1 drogu Marihuana kolicine 100.00 grama i kvalitete Vrlo Dobra[35.000]!
+(22/04/2020, 16:13:42) Maska_975037{785} je stavio u vozilo Perennial{4521} slot 1 drogu Marihuana kolicine 100.00 grama i kvalitete Vrlo Dobra[35.000]!
+(23/04/2020, 00:53:53) Roy Helms{1013} je stavio u vozilo Patriot{4155} slot 1 drogu Kokain kolicine 50.00 grama i kvalitete Vrlo Dobra[38.000]!
+(23/04/2020, 01:16:34) Ronnie Fleck{293} je stavio u vozilo Freeway{3643} slot 1 drogu Kokain kolicine 50.00 grama i kvalitete Vrlo Dobra[38.000]!
+(23/04/2020, 16:27:27) Danny Rochefort{1061} je stavio u vozilo Bobcat{4488} slot 1 drogu Kokain kolicine 10.00 grama i kvalitete Vrlo Dobra[38.000]!
+(23/04/2020, 18:51:00) Miljan Causevic{1318} je stavio u vozilo Admiral{4249} slot 1 drogu Marihuana kolicine 16.00 grama i kvalitete Vrlo Dobra[35.000]!
+(23/04/2020, 19:52:11) Stewart McWalker{6193} je stavio u vozilo Freeway{4229} slot 1 drogu Kokain kolicine 5.00 grama i kvalitete Vrlo Dobra[38.000]!
+(23/04/2020, 20:05:35) Danny Rochefort{1061} je stavio u vozilo Bobcat{4488} slot 2 drogu Kokain kolicine 9.30 grama i kvalitete Vrlo Dobra[38.000]!
+(23/04/2020, 20:05:38) Danny Rochefort{1061} je stavio u vozilo Bobcat{4488} slot 3 drogu Kokain kolicine 3.00 grama i kvalitete Vrlo Dobra[38.000]!
+(23/04/2020, 20:06:36) Dakari Mercer{6199} je stavio u vozilo Tahoma{4142} slot 1 drogu Kokain kolicine 5.00 grama i kvalitete Vrlo Dobra[38.000]!
+(23/04/2020, 20:33:22) Dakari Mercer{6199} je stavio u vozilo Tahoma{4142} slot 2 drogu Kokain kolicine 4.00 grama i kvalitete Vrlo Dobra[38.000]!
+(23/04/2020, 20:57:00) Thomas McDowell{307} je stavio u vozilo Infernus{4045} slot 1 drogu Kokain kolicine 0.10 grama i kvalitete Vrlo Dobra[38.000]!
+(23/04/2020, 21:59:06) Aleceah Spencer{6627} je stavio u vozilo Blista Compact{4280} slot 1 drogu Kokain kolicine 5.00 grama i kvalitete Vrlo Dobra[38.000]!
+(23/04/2020, 22:54:49) Mihail Demyankov{6700} je stavio u vozilo Bobcat{4536} slot 1 drogu Kokain kolicine 1.00 grama i kvalitete Vrlo Dobra[38.000]!
+(23/04/2020, 23:43:01) Igor Kostic{561} je stavio u vozilo Cheetah{3006} slot 1 drogu LSD kolicine 50.00 tableta i kvalitete Odlicna[47.000]!
+(24/04/2020, 00:05:21) Aleksandar Vukovic{760} je stavio u vozilo Huntley{493} slot 1 drogu Marihuana kolicine 4.00 grama i kvalitete Vrlo Dobra[35.000]!
+(24/04/2020, 00:58:55) Viktor Pajovic{1033} je stavio u vozilo PCJ-600{3033} slot 1 drogu Kokain kolicine 5.00 grama i kvalitete Vrlo Dobra[38.000]!
+(24/04/2020, 01:21:56) Blazo Ivanovic{1074} je stavio u vozilo Patriot{2303} slot 1 drogu Kokain kolicine 0.88 grama i kvalitete Vrlo Dobra[38.000]!
+(24/04/2020, 01:40:09) Laurence Avery{6061} je stavio u vozilo Admiral{4474} slot 1 drogu Marihuana kolicine 15.00 grama i kvalitete Vrlo Dobra[35.000]!
+(24/04/2020, 01:40:27) Michael Rogers{74} je stavio u vozilo Patriot{898} slot 1 drogu Kokain kolicine 13.00 grama i kvalitete Vrlo Dobra[38.000]!
+(24/04/2020, 13:41:33) Shane Thompson{6337} je stavio u vozilo BMX{4310} slot 1 drogu Kokain kolicine 3.70 grama i kvalitete Vrlo Dobra[38.000]!
+(24/04/2020, 15:30:45) Igor Kostic{561} je stavio u vozilo Burrito{4401} slot 1 drogu LSD kolicine 40.00 tableta i kvalitete Odlicna[47.000]!
+(24/04/2020, 18:57:48) Vukota Saranovic{5953} je stavio u vozilo Merit{4346} slot 1 drogu MDMA kolicine 80.00 tableta i kvalitete Vrlo Dobra[38.000]!
+(24/04/2020, 19:18:18) Dakari Mercer{6199} je stavio u vozilo Cheetah{4190} slot 1 drogu MDMA kolicine 20.00 tableta i kvalitete Vrlo Dobra[38.000]!
+(24/04/2020, 19:46:33) Stewart McWalker{6193} je stavio u vozilo Freeway{4229} slot 1 drogu Kokain kolicine 5.00 grama i kvalitete Vrlo Dobra[38.000]!
+(24/04/2020, 19:53:02) Carmen Webb{6456} je stavio u vozilo Mesa{4455} slot 1 drogu MDMA kolicine 4.00 tableta i kvalitete Vrlo Dobra[38.000]!
+(24/04/2020, 19:57:31) Carmen Webb{6456} je stavio u vozilo Bobcat{4425} slot 1 drogu MDMA kolicine 1.00 tableta i kvalitete Vrlo Dobra[38.000]!
+(24/04/2020, 19:57:39) Carmen Webb{6456} je stavio u vozilo Bobcat{4425} slot 2 drogu MDMA kolicine 3.00 tableta i kvalitete Vrlo Dobra[38.000]!
+(24/04/2020, 19:58:12) Igor Kostic{561} je stavio u vozilo Stafford{468} slot 1 drogu LSD kolicine 10.00 tableta i kvalitete Odlicna[47.000]!
+(24/04/2020, 19:58:17) Darius Thompson{6379} je stavio u vozilo Faggio{4350} slot 1 drogu Marihuana kolicine 4.00 grama i kvalitete Vrlo Dobra[35.000]!
+(24/04/2020, 19:58:20) Darius Thompson{6379} je stavio u vozilo Faggio{4350} slot 2 drogu MDMA kolicine 10.00 tableta i kvalitete Vrlo Dobra[38.000]!
+(24/04/2020, 19:58:38) Veshone Nichols{6409} je stavio u vozilo BMX{4441} slot 1 drogu MDMA kolicine 5.00 tableta i kvalitete Vrlo Dobra[38.000]!
+(24/04/2020, 20:13:24) Ronnie Fleck{293} je stavio u vozilo Burrito{4404} slot 1 drogu Kokain kolicine 19.00 grama i kvalitete Vrlo Dobra[38.000]!
+(24/04/2020, 20:13:56) Dakari Mercer{6199} je stavio u vozilo Tahoma{4142} slot 1 drogu Kokain kolicine 5.00 grama i kvalitete Vrlo Dobra[38.000]!
+(24/04/2020, 21:23:54) Veshone Nichols{6409} je stavio u vozilo BMX{4441} slot 1 drogu MDMA kolicine 5.00 tableta i kvalitete Vrlo Dobra[38.000]!
+(24/04/2020, 21:59:41) Demetrius Innes{231} je stavio u vozilo Walton{3807} slot 1 drogu Marihuana kolicine 11.00 grama i kvalitete Vrlo Dobra[35.000]!
+(24/04/2020, 22:23:39) Blazo Ivanovic{1074} je stavio u vozilo Patriot{2303} slot 2 drogu Kokain kolicine 1.70 grama i kvalitete Vrlo Dobra[38.000]!
+(24/04/2020, 22:32:53) Shane Thompson{6337} je stavio u vozilo Greenwood{3121} slot 1 drogu Kokain kolicine 5.00 grama i kvalitete Vrlo Dobra[38.000]!
+(25/04/2020, 01:45:08) Vukota Saranovic{5953} je stavio u vozilo Intruder{4066} slot 1 drogu MDMA kolicine 30.00 tableta i kvalitete Vrlo Dobra[38.000]!
+(25/04/2020, 01:48:07) Danny Rochefort{1061} je stavio u vozilo Bobcat{4488} slot 1 drogu MDMA kolicine 50.00 tableta i kvalitete Vrlo Dobra[38.000]!
+(25/04/2020, 10:56:21) Ralph Masotti{658} je stavio u vozilo Bullet{1396} slot 1 drogu Xanax kolicine 99.00 tableta i kvalitete Vrlo Dobra[36.000]!
+(25/04/2020, 15:18:50) Roy Helms{1013} je stavio u vozilo Patriot{4155} slot 1 drogu MDMA kolicine 40.00 tableta i kvalitete Vrlo Dobra[38.000]!
+(25/04/2020, 15:40:15) Danny Rochefort{1061} je stavio u vozilo Perennial{4552} slot 1 drogu MDMA kolicine 8.00 tableta i kvalitete Vrlo Dobra[38.000]!
+(25/04/2020, 16:43:48) Velichko Mitevski{837} je stavio u vozilo Huntley{395} slot 1 drogu Kokain kolicine 9.00 grama i kvalitete Vrlo Dobra[38.000]!
+(25/04/2020, 17:50:11) Carmen Webb{6456} je stavio u vozilo Bobcat{4425} slot 1 drogu MDMA kolicine 9.00 tableta i kvalitete Vrlo Dobra[38.000]!
+(25/04/2020, 18:22:56) Carmen Webb{6456} je stavio u vozilo Bobcat{4425} slot 2 drogu Kokain kolicine 5.00 grama i kvalitete Odlicna[50.000]!
+(25/04/2020, 20:22:27) Ronnie Inman{199} je stavio u vozilo Rumpo{779} slot 1 drogu Kokain kolicine 6.00 grama i kvalitete Vrlo Dobra[38.000]!
+(25/04/2020, 21:25:54) Velichko Mitevski{837} je stavio u vozilo Huntley{395} slot 2 drogu MDMA kolicine 4.00 tableta i kvalitete Vrlo Dobra[38.000]!
+(26/04/2020, 00:14:41) Danny Rochefort{1061} je stavio u vozilo Bobcat{4488} slot 1 drogu MDMA kolicine 3.00 tableta i kvalitete Vrlo Dobra[38.000]!
+(26/04/2020, 01:01:39) Carmen Webb{6456} je stavio u vozilo Bobcat{4425} slot 3 drogu MDMA kolicine 1.00 tableta i kvalitete Vrlo Dobra[38.000]!
+(26/04/2020, 01:14:00) Roy Helms{1013} je stavio u vozilo Patriot{4155} slot 2 drogu Xanax kolicine 50.00 tableta i kvalitete Vrlo Dobra[36.000]!
+(26/04/2020, 02:52:32) Nicholas Lanzetta{124} je stavio u vozilo Perennial{34} slot 1 drogu Heroin kolicine 100.00 grama i kvalitete Vrlo Dobra[39.000]!
+(26/04/2020, 02:54:43) Ralph Masotti{658} je stavio u vozilo Admiral{2359} slot 1 drogu Xanax kolicine 30.00 tableta i kvalitete Vrlo Dobra[36.000]!
+(26/04/2020, 02:56:15) Mickey Fariello{3577} je stavio u vozilo Patriot{3123} slot 1 drogu Xanax kolicine 30.00 tableta i kvalitete Vrlo Dobra[36.000]!
+(26/04/2020, 12:37:45) Dylan Baird{3838} je stavio u vozilo Rumpo{4390} slot 1 drogu MDMA kolicine 10.00 tableta i kvalitete Vrlo Dobra[38.000]!
+(26/04/2020, 20:54:36) Dakari Mercer{6199} je stavio u vozilo Cheetah{4190} slot 1 drogu Heroin kolicine 50.00 grama i kvalitete Vrlo Dobra[39.000]!
+(26/04/2020, 20:54:40) Dakari Mercer{6199} je stavio u vozilo Cheetah{4190} slot 2 drogu Xanax kolicine 30.00 tableta i kvalitete Vrlo Dobra[36.000]!
+(26/04/2020, 20:55:03) Danny Rochefort{1061} je stavio u vozilo Bobcat{4488} slot 1 drogu Xanax kolicine 5.00 tableta i kvalitete Vrlo Dobra[36.000]!
+(26/04/2020, 21:18:12) Danny Rochefort{1061} je stavio u vozilo Bobcat{4488} slot 2 drogu Heroin kolicine 50.00 grama i kvalitete Vrlo Dobra[39.000]!
+(26/04/2020, 21:32:52) Ronnie Fleck{293} je stavio u vozilo Burrito{4404} slot 2 drogu Xanax kolicine 17.00 tableta i kvalitete Vrlo Dobra[36.000]!
+(26/04/2020, 21:59:54) Ronnie Inman{199} je stavio u vozilo Rumpo{779} slot 2 drogu Xanax kolicine 5.00 tableta i kvalitete Vrlo Dobra[36.000]!
+(26/04/2020, 22:10:31) Gerardo Zetas{5027} je stavio u vozilo Perennial{4068} slot 1 drogu MDMA kolicine 5.00 tableta i kvalitete Vrlo Dobra[38.000]!
+(26/04/2020, 23:22:51) Shane Thompson{6337} je stavio u vozilo BMX{4310} slot 2 drogu Marihuana kolicine 4.00 grama i kvalitete Vrlo Dobra[35.000]!
+(27/04/2020, 00:02:54) Demetrius Innes{231} je stavio u vozilo BMX{736} slot 1 drogu Marihuana kolicine 13.89 grama i kvalitete Vrlo Dobra[35.000]!
+(27/04/2020, 00:34:54) Velichko Mitevski{837} je stavio u vozilo Admiral{190} slot 1 drogu Heroin kolicine 10.00 grama i kvalitete Vrlo Dobra[39.000]!
+(27/04/2020, 00:34:58) Velichko Mitevski{837} je stavio u vozilo Admiral{190} slot 2 drogu Heroin kolicine 10.00 grama i kvalitete Vrlo Dobra[39.000]!
+(27/04/2020, 00:35:00) Velichko Mitevski{837} je stavio u vozilo Admiral{190} slot 3 drogu Heroin kolicine 10.00 grama i kvalitete Vrlo Dobra[39.000]!
+(27/04/2020, 17:21:08) Maska_230288{1163} je stavio u vozilo Blista Compact{1835} slot 1 drogu Heroin kolicine 10.00 grama i kvalitete Vrlo Dobra[39.000]!
+(27/04/2020, 17:21:17) Maska_230288{1163} je stavio u vozilo Blista Compact{1835} slot 2 drogu Kokain kolicine 1.00 grama i kvalitete Vrlo Dobra[38.000]!
+(27/04/2020, 18:56:25) Roy Helms{1013} je stavio u vozilo Regina{4159} slot 1 drogu Xanax kolicine 3.00 tableta i kvalitete Vrlo Dobra[36.000]!
+(27/04/2020, 18:58:25) Dylan Baird{3838} je stavio u vozilo Greenwood{4160} slot 1 drogu Heroin kolicine 5.00 grama i kvalitete Vrlo Dobra[39.000]!
+(27/04/2020, 19:45:30) Darius Thompson{6379} je stavio u vozilo Faggio{4350} slot 1 drogu Xanax kolicine 15.00 tableta i kvalitete Vrlo Dobra[36.000]!
+(27/04/2020, 19:46:45) Darius Thompson{6379} je stavio u vozilo Faggio{4350} slot 2 drogu Xanax kolicine 15.00 tableta i kvalitete Vrlo Dobra[36.000]!
+(27/04/2020, 20:19:07) Demetrius Innes{231} je stavio u vozilo Walton{3807} slot 2 drogu Marihuana kolicine 13.89 grama i kvalitete Vrlo Dobra[35.000]!
+(27/04/2020, 20:21:08) Ronnie Inman{199} je stavio u vozilo Blista Compact{2603} slot 1 drogu Xanax kolicine 5.00 tableta i kvalitete Vrlo Dobra[36.000]!
+(27/04/2020, 20:21:10) Ronnie Inman{199} je stavio u vozilo Blista Compact{2603} slot 2 drogu Xanax kolicine 5.00 tableta i kvalitete Vrlo Dobra[36.000]!
+(27/04/2020, 21:03:16) Farrelle Qualls{6667} je stavio u vozilo BMX{4587} slot 1 drogu Xanax kolicine 15.00 tableta i kvalitete Vrlo Dobra[36.000]!
+(27/04/2020, 21:09:00) Craig Swanson{679} je stavio u vozilo Picador{330} slot 1 drogu Xanax kolicine 2.00 tableta i kvalitete Vrlo Dobra[36.000]!
+(27/04/2020, 21:37:30) Ronnie Inman{199} je stavio u vozilo Blista Compact{2603} slot 1 drogu Xanax kolicine 5.00 tableta i kvalitete Vrlo Dobra[36.000]!
+(27/04/2020, 21:37:33) Ronnie Inman{199} je stavio u vozilo Blista Compact{2603} slot 2 drogu Xanax kolicine 5.00 tableta i kvalitete Vrlo Dobra[36.000]!
+(27/04/2020, 21:37:36) Ronnie Inman{199} je stavio u vozilo Blista Compact{2603} slot 3 drogu Heroin kolicine 10.00 grama i kvalitete Vrlo Dobra[39.000]!
+(27/04/2020, 21:43:30) Shane Thompson{6337} je stavio u vozilo Greenwood{3121} slot 1 drogu Heroin kolicine 10.00 grama i kvalitete Vrlo Dobra[39.000]!
+(27/04/2020, 22:00:25) Danny Rochefort{1061} je stavio u vozilo Blista Compact{4569} slot 1 drogu Heroin kolicine 5.00 grama i kvalitete Vrlo Dobra[39.000]!
+(27/04/2020, 22:00:29) Danny Rochefort{1061} je stavio u vozilo Blista Compact{4569} slot 2 drogu Xanax kolicine 2.00 tableta i kvalitete Vrlo Dobra[36.000]!
+(28/04/2020, 00:48:20) Danny Rochefort{1061} je stavio u vozilo Blista Compact{4569} slot 1 drogu Xanax kolicine 3.00 tableta i kvalitete Vrlo Dobra[36.000]!
+(28/04/2020, 00:48:23) Danny Rochefort{1061} je stavio u vozilo Blista Compact{4569} slot 2 drogu Heroin kolicine 10.00 grama i kvalitete Vrlo Dobra[39.000]!
+(28/04/2020, 02:20:32) Igor Kostic{561} je stavio u vozilo ZR-350{3080} slot 1 drogu Marihuana kolicine 100.00 grama i kvalitete Vrlo Dobra[36.000]!
+(28/04/2020, 02:27:01) Velichko Mitevski{837} je stavio u vozilo Huntley{395} slot 1 drogu Xanax kolicine 1.00 tableta i kvalitete Vrlo Dobra[36.000]!
+(28/04/2020, 02:27:04) Velichko Mitevski{837} je stavio u vozilo Huntley{395} slot 2 drogu Heroin kolicine 20.00 grama i kvalitete Vrlo Dobra[39.000]!
+(28/04/2020, 11:16:29) Shane Thompson{6337} je stavio u vozilo Sanchez{4416} slot 1 drogu Heroin kolicine 10.00 grama i kvalitete Vrlo Dobra[39.000]!
+(28/04/2020, 13:47:57) Igor Kostic{561} je stavio u vozilo Burrito{4401} slot 1 drogu Marihuana kolicine 100.00 grama i kvalitete Vrlo Dobra[36.000]!
+(28/04/2020, 14:29:54) Milos Damjanovic{83} je stavio u vozilo Huntley{2561} slot 1 drogu LSD kolicine 4.00 tableta i kvalitete Odlicna[47.000]!
+(28/04/2020, 17:47:21) Dakari Mercer{6199} je stavio u vozilo Tahoma{4142} slot 1 drogu Heroin kolicine 38.00 grama i kvalitete Vrlo Dobra[39.000]!
+(28/04/2020, 17:47:33) Dakari Mercer{6199} je stavio u vozilo Tahoma{4142} slot 2 drogu Heroin kolicine 0.94 grama i kvalitete Vrlo Dobra[39.000]!
+(28/04/2020, 17:51:41) Vladan Vukasinovic{5649} je stavio u vozilo Tahoma{4142} slot 1 drogu Heroin kolicine 38.93 grama i kvalitete Vrlo Dobra[39.000]!
+(28/04/2020, 18:11:06) Alan Huang{302} je stavio u vozilo Premier{2059} slot 1 drogu Marihuana kolicine 14.00 grama i kvalitete Vrlo Dobra[35.000]!
+(28/04/2020, 18:11:12) Alan Huang{302} je stavio u vozilo Premier{2059} slot 2 drogu Marihuana kolicine 2.00 grama i kvalitete Vrlo Dobra[35.000]!
+(28/04/2020, 18:11:16) Alan Huang{302} je stavio u vozilo Premier{2059} slot 3 drogu Marihuana kolicine 4.00 grama i kvalitete Vrlo Dobra[35.000]!
+(28/04/2020, 18:36:03) Cesar Sanchez{6324} je stavio u vozilo Oceanic{4254} slot 1 drogu Xanax kolicine 5.00 tableta i kvalitete Vrlo Dobra[36.000]!
+(28/04/2020, 19:41:17) Demetrius Innes{231} je stavio u vozilo BMX{736} slot 1 drogu Xanax kolicine 13.00 tableta i kvalitete Vrlo Dobra[36.000]!
+(28/04/2020, 20:25:24) Igor Kostic{561} je stavio u vozilo Stafford{468} slot 1 drogu LSD kolicine 20.00 tableta i kvalitete Odlicna[46.000]!
+(28/04/2020, 20:25:26) Igor Kostic{561} je stavio u vozilo Stafford{468} slot 2 drogu Marihuana kolicine 20.00 grama i kvalitete Vrlo Dobra[36.000]!
+(28/04/2020, 21:25:28) Dakari Mercer{6199} je stavio u vozilo Cheetah{4190} slot 1 drogu Heroin kolicine 38.00 grama i kvalitete Vrlo Dobra[39.000]!
+(28/04/2020, 21:48:27) Farrelle Qualls{6667} je stavio u vozilo BMX{4587} slot 2 drogu Xanax kolicine 1.00 tableta i kvalitete Vrlo Dobra[36.000]!
+(28/04/2020, 21:48:30) Farrelle Qualls{6667} je stavio u vozilo BMX{4587} slot 3 drogu Xanax kolicine 1.00 tableta i kvalitete Vrlo Dobra[36.000]!
+(28/04/2020, 23:07:08) Goran Milojevic{6049} je stavio u vozilo Huntley{3867} slot 1 drogu LSD kolicine 16.00 tableta i kvalitete Odlicna[47.000]!
+(28/04/2020, 23:07:13) Goran Milojevic{6049} je stavio u vozilo Huntley{3867} slot 2 drogu Marihuana kolicine 14.00 grama i kvalitete Vrlo Dobra[35.000]!
+(28/04/2020, 23:07:20) Goran Milojevic{6049} je stavio u vozilo Huntley{3867} slot 3 drogu Marihuana kolicine 2.00 grama i kvalitete Vrlo Dobra[35.000]!
+(28/04/2020, 23:07:23) Goran Milojevic{6049} je stavio u vozilo Huntley{3867} slot 4 drogu Marihuana kolicine 4.00 grama i kvalitete Vrlo Dobra[35.000]!
+(29/04/2020, 00:34:58) Igor Kostic{561} je stavio u vozilo Stafford{468} slot 1 drogu LSD kolicine 20.00 tableta i kvalitete Odlicna[46.000]!
+(29/04/2020, 00:35:01) Igor Kostic{561} je stavio u vozilo Stafford{468} slot 2 drogu Marihuana kolicine 20.00 grama i kvalitete Vrlo Dobra[36.000]!
+(29/04/2020, 00:51:25) Ronnie Inman{199} je stavio u vozilo Majestic{2731} slot 1 drogu Heroin kolicine 10.00 grama i kvalitete Vrlo Dobra[39.000]!
+(29/04/2020, 00:51:29) Ronnie Inman{199} je stavio u vozilo Majestic{2731} slot 2 drogu Xanax kolicine 1.00 tableta i kvalitete Vrlo Dobra[36.000]!
+(29/04/2020, 13:11:40) Igor Kostic{561} je stavio u vozilo Burrito{4401} slot 2 drogu LSD kolicine 20.00 tableta i kvalitete Vrlo Dobra[36.000]!
+(29/04/2020, 13:32:12) Jimmy Cheng{165} je stavio u vozilo Hotdog{1570} slot 1 drogu LSD kolicine 19.00 tableta i kvalitete Odlicna[46.000]!
+(29/04/2020, 13:32:16) Jimmy Cheng{165} je stavio u vozilo Hotdog{1570} slot 2 drogu Marihuana kolicine 20.00 grama i kvalitete Vrlo Dobra[36.000]!
+(29/04/2020, 14:33:52) Decovon Pitts{2085} je stavio u vozilo Sunrise{4509} slot 1 drogu Marihuana kolicine 20.00 grama i kvalitete Vrlo Dobra[36.000]!
+(29/04/2020, 14:41:04) Alan Huang{302} je stavio u vozilo Regina{810} slot 1 drogu LSD kolicine 19.00 tableta i kvalitete Odlicna[46.000]!
+(29/04/2020, 14:41:10) Alan Huang{302} je stavio u vozilo Regina{810} slot 2 drogu Marihuana kolicine 20.00 grama i kvalitete Vrlo Dobra[36.000]!
+(29/04/2020, 15:40:20) Danny Rochefort{1061} je stavio u vozilo Blista Compact{4569} slot 1 drogu Heroin kolicine 10.00 grama i kvalitete Vrlo Dobra[39.000]!
+(29/04/2020, 16:25:07) Goran Milojevic{6049} je stavio u vozilo Bobcat{3109} slot 1 drogu LSD kolicine 16.00 tableta i kvalitete Odlicna[47.000]!
+(29/04/2020, 16:25:10) Goran Milojevic{6049} je stavio u vozilo Bobcat{3109} slot 2 drogu Marihuana kolicine 14.00 grama i kvalitete Vrlo Dobra[35.000]!
+(29/04/2020, 16:25:12) Goran Milojevic{6049} je stavio u vozilo Bobcat{3109} slot 3 drogu Marihuana kolicine 2.00 grama i kvalitete Vrlo Dobra[35.000]!
+(29/04/2020, 16:25:15) Goran Milojevic{6049} je stavio u vozilo Bobcat{3109} slot 4 drogu Marihuana kolicine 4.00 grama i kvalitete Vrlo Dobra[35.000]!
+(29/04/2020, 20:37:36) Craig Swanson{679} je stavio u vozilo Picador{330} slot 1 drogu Heroin kolicine 10.00 grama i kvalitete Vrlo Dobra[39.000]!
+(29/04/2020, 20:41:41) Michael Rogers{74} je stavio u vozilo Patriot{898} slot 2 drogu MDMA kolicine 29.00 tableta i kvalitete Vrlo Dobra[38.000]!
+(29/04/2020, 21:37:19) Dakari Mercer{6199} je stavio u vozilo Vincent{4611} slot 1 drogu Heroin kolicine 10.00 grama i kvalitete Vrlo Dobra[39.000]!
+(29/04/2020, 23:35:36) Kostadin Ivanov{6759} je stavio u vozilo Intruder{4617} slot 1 drogu Kokain kolicine 3.00 grama i kvalitete Vrlo Dobra[38.000]!
+(29/04/2020, 23:35:47) Kostadin Ivanov{6759} je stavio u vozilo Intruder{4617} slot 2 drogu Kokain kolicine 6.00 grama i kvalitete Vrlo Dobra[38.000]!
+(30/04/2020, 00:17:38) Alan Huang{302} je stavio u vozilo Regina{810} slot 3 drogu LSD kolicine 1.00 tableta i kvalitete Odlicna[46.000]!
+(30/04/2020, 00:25:07) Miljan Causevic{1318} je stavio u vozilo Admiral{4249} slot 1 drogu Marihuana kolicine 20.00 grama i kvalitete Vrlo Dobra[36.000]!
+(30/04/2020, 00:42:48) Danny Rochefort{1061} je stavio u vozilo Blista Compact{4569} slot 1 drogu Heroin kolicine 1.00 grama i kvalitete Vrlo Dobra[39.000]!
+(30/04/2020, 00:43:52) Danny Rochefort{1061} je stavio u vozilo Blista Compact{4569} slot 1 drogu Heroin kolicine 10.00 grama i kvalitete Vrlo Dobra[39.000]!
+(30/04/2020, 01:20:14) Demetrius Innes{231} je stavio u vozilo BMX{736} slot 2 drogu LSD kolicine 3.00 tableta i kvalitete Vrlo Dobra[36.000]!
+(30/04/2020, 16:08:46) Darius Thompson{6379} je stavio u vozilo Faggio{4350} slot 1 drogu Heroin kolicine 5.00 grama i kvalitete Vrlo Dobra[39.000]!
+(30/04/2020, 16:09:57) Shane Thompson{6337} je stavio u vozilo Sanchez{4416} slot 2 drogu Heroin kolicine 5.00 grama i kvalitete Vrlo Dobra[39.000]!
+(30/04/2020, 20:11:16) Milos Bogdanovic{4622} je stavio u vozilo Patriot{3100} slot 1 drogu LSD kolicine 10.00 tableta i kvalitete Vrlo Dobra[36.000]!
+(30/04/2020, 20:11:20) Milos Bogdanovic{4622} je stavio u vozilo Patriot{3100} slot 2 drogu Heroin kolicine 8.80 grama i kvalitete Vrlo Dobra[39.000]!
+(30/04/2020, 21:12:05) Alan Huang{302} je stavio u vozilo Regina{810} slot 4 drogu Marihuana kolicine 0.69 grama i kvalitete Vrlo Dobra[36.000]!
+(30/04/2020, 21:48:17) Craig Swanson{679} je stavio u vozilo Picador{330} slot 1 drogu Heroin kolicine 10.00 grama i kvalitete Vrlo Dobra[39.000]!
+(30/04/2020, 22:27:44) Dylan Baird{3838} je stavio u vozilo Greenwood{4160} slot 1 drogu Xanax kolicine 10.00 tableta i kvalitete Vrlo Dobra[36.000]!
+(30/04/2020, 22:30:29) Vasilije Sakovic{6241} je stavio u vozilo Cadrona{4522} slot 1 drogu Marihuana kolicine 4.00 grama i kvalitete Vrlo Dobra[36.000]!
+(30/04/2020, 23:16:57) Goran Milojevic{6049} je stavio u vozilo Regina{4424} slot 1 drogu LSD kolicine 16.00 tableta i kvalitete Odlicna[47.000]!
+(30/04/2020, 23:17:08) Goran Milojevic{6049} je stavio u vozilo Regina{4424} slot 2 drogu Marihuana kolicine 4.00 grama i kvalitete Vrlo Dobra[35.000]!
+(30/04/2020, 23:17:10) Goran Milojevic{6049} je stavio u vozilo Regina{4424} slot 3 drogu Marihuana kolicine 2.00 grama i kvalitete Vrlo Dobra[35.000]!
+(30/04/2020, 23:17:13) Goran Milojevic{6049} je stavio u vozilo Regina{4424} slot 4 drogu Marihuana kolicine 4.00 grama i kvalitete Vrlo Dobra[35.000]!
+(30/04/2020, 23:17:17) Goran Milojevic{6049} je stavio u vozilo Regina{4424} slot 5 drogu Marihuana kolicine 10.00 grama i kvalitete Vrlo Dobra[35.000]!
+(01/05/2020, 00:02:10) Zarko Novakovic{1751} je stavio u vozilo Bobcat{4454} slot 1 drogu LSD kolicine 16.00 tableta i kvalitete Odlicna[47.000]!
+(01/05/2020, 00:02:19) Zarko Novakovic{1751} je stavio u vozilo Bobcat{4454} slot 2 drogu Marihuana kolicine 4.00 grama i kvalitete Vrlo Dobra[35.000]!
+(01/05/2020, 00:02:26) Zarko Novakovic{1751} je stavio u vozilo Bobcat{4454} slot 3 drogu Marihuana kolicine 5.00 grama i kvalitete Vrlo Dobra[35.000]!
+(01/05/2020, 00:02:34) Zarko Novakovic{1751} je stavio u vozilo Bobcat{4454} slot 4 drogu Marihuana kolicine 2.00 grama i kvalitete Vrlo Dobra[35.000]!
+(01/05/2020, 00:07:26) Zarko Novakovic{1751} je stavio u vozilo Bobcat{4454} slot 2 drogu Marihuana kolicine 9.00 grama i kvalitete Vrlo Dobra[35.000]!
+(01/05/2020, 00:07:36) Zarko Novakovic{1751} je stavio u vozilo Bobcat{4454} slot 3 drogu Marihuana kolicine 9.00 grama i kvalitete Vrlo Dobra[35.000]!
+(01/05/2020, 00:26:42) Cory Zimmermann{6765} je stavio u vozilo Tahoma{1087} slot 1 drogu Kokain kolicine 5.00 grama i kvalitete Vrlo Dobra[38.000]!
+(01/05/2020, 17:54:22) Milos Bogdanovic{4622} je stavio u vozilo Patriot{3100} slot 1 drogu Marihuana kolicine 40.00 grama i kvalitete Vrlo Dobra[36.000]!
+(01/05/2020, 18:01:09) Vasilije Radivojevic{6458} je stavio u vozilo Regina{4426} slot 1 drogu LSD kolicine 10.00 tableta i kvalitete Vrlo Dobra[36.000]!
+(01/05/2020, 19:55:58) Michael Rogers{74} je stavio u vozilo Patriot{898} slot 3 drogu Xanax kolicine 5.00 tableta i kvalitete Vrlo Dobra[36.000]!
+(01/05/2020, 19:56:17) Michael Rogers{74} je stavio u vozilo Patriot{898} slot 3 drogu Xanax kolicine 5.00 tableta i kvalitete Vrlo Dobra[36.000]!
+(01/05/2020, 20:17:28) Vukota Saranovic{5953} je stavio u vozilo Intruder{4066} slot 1 drogu Kokain kolicine 100.00 grama i kvalitete Vrlo Dobra[35.000]!
+(01/05/2020, 20:18:00) Vasilije Sakovic{6241} je stavio u vozilo Cadrona{4522} slot 1 drogu Marihuana kolicine 2.00 grama i kvalitete Vrlo Dobra[36.000]!
+(01/05/2020, 20:32:38) Milos Radovic{42} je stavio u vozilo Elegy{4084} slot 1 drogu LSD kolicine 8.00 tableta i kvalitete Odlicna[47.000]!
+(01/05/2020, 22:03:14) Liam Hao{6345} je stavio u vozilo Bobcat{4476} slot 1 drogu LSD kolicine 5.00 tableta i kvalitete Odlicna[46.000]!
+(01/05/2020, 22:03:49) Lazar Radovic{185} je stavio u vozilo Blista Compact{4301} slot 1 drogu LSD kolicine 4.00 tableta i kvalitete Odlicna[47.000]!
+(01/05/2020, 22:35:40) Danny Rochefort{1061} je stavio u vozilo Blista Compact{4569} slot 1 drogu Kokain kolicine 50.00 grama i kvalitete Vrlo Dobra[35.000]!
+(01/05/2020, 22:44:27) Vukasin Milovanovic{34} je stavio u vozilo Buffalo{4453} slot 1 drogu Heroin kolicine 7.59 grama i kvalitete Vrlo Dobra[39.000]!
+(01/05/2020, 22:44:40) Vukasin Milovanovic{34} je stavio u vozilo Buffalo{4453} slot 2 drogu Kokain kolicine 0.40 grama i kvalitete Vrlo Dobra[38.000]!
+(01/05/2020, 22:52:02) Ralph Masotti{658} je stavio u vozilo Elegant{2604} slot 1 drogu Kokain kolicine 100.00 grama i kvalitete Vrlo Dobra[38.000]!
+(02/05/2020, 04:18:49) Vukota Saranovic{5953} je stavio u vozilo Intruder{4066} slot 2 drogu Kokain kolicine 50.00 grama i kvalitete Odlicna[42.000]!
+(02/05/2020, 16:53:12) Liam Hao{6345} je stavio u vozilo Bobcat{4476} slot 2 drogu LSD kolicine 3.00 tableta i kvalitete Odlicna[46.000]!
+(02/05/2020, 17:35:41) Dylan Baird{3838} je stavio u vozilo Vincent{4567} slot 1 drogu Xanax kolicine 2.00 tableta i kvalitete Vrlo Dobra[36.000]!
+(02/05/2020, 19:50:31) Mile Raonic{285} je stavio u vozilo Patriot{4650} slot 1 drogu Marihuana kolicine 30.00 grama i kvalitete Odlicna[49.000]!
+(02/05/2020, 20:25:08) Craig Swanson{679} je stavio u vozilo Picador{330} slot 2 drogu Kokain kolicine 10.00 grama i kvalitete Vrlo Dobra[35.000]!
+(02/05/2020, 22:20:00) Alan Huang{302} je stavio u vozilo Premier{2059} slot 1 drogu LSD kolicine 3.00 tableta i kvalitete Odlicna[46.000]!
+(02/05/2020, 22:34:32) Ralph Masotti{658} je stavio u vozilo Elegant{2604} slot 2 drogu Marihuana kolicine 50.00 grama i kvalitete Vrlo Dobra[39.000]!
+(02/05/2020, 23:13:59) Dakari Mercer{6199} je stavio u vozilo Vincent{4611} slot 1 drogu Marihuana kolicine 40.00 grama i kvalitete Vrlo Dobra[39.000]!
+(02/05/2020, 23:14:01) Dakari Mercer{6199} je stavio u vozilo Vincent{4611} slot 2 drogu Kokain kolicine 40.00 grama i kvalitete Vrlo Dobra[38.000]!
+(02/05/2020, 23:15:52) Shane Thompson{6337} je stavio u vozilo Picador{4635} slot 1 drogu Kokain kolicine 10.00 grama i kvalitete Vrlo Dobra[38.000]!
+(02/05/2020, 23:15:54) Shane Thompson{6337} je stavio u vozilo Picador{4635} slot 2 drogu Marihuana kolicine 10.00 grama i kvalitete Vrlo Dobra[39.000]!
+(03/05/2020, 00:12:44) Anthony Asmus{6461} je stavio u vozilo Freeway{4400} slot 1 drogu Kokain kolicine 50.00 grama i kvalitete Odlicna[42.000]!
+(03/05/2020, 00:12:56) Anthony Asmus{6461} je stavio u vozilo Freeway{4400} slot 2 drogu Marihuana kolicine 4.00 grama i kvalitete Vrlo Dobra[36.000]!
+(03/05/2020, 00:45:22) Damyan Krasimirov{1163} je stavio u vozilo Perennial{4638} slot 1 drogu Kokain kolicine 1.00 grama i kvalitete Vrlo Dobra[38.000]!
+(03/05/2020, 00:45:26) Damyan Krasimirov{1163} je stavio u vozilo Perennial{4638} slot 2 drogu Kokain kolicine 5.00 grama i kvalitete Vrlo Dobra[38.000]!
+(03/05/2020, 00:59:13) Roy Helms{1013} je stavio u vozilo Patriot{4155} slot 3 drogu LSD kolicine 20.00 tableta i kvalitete Odlicna[41.000]!
+(03/05/2020, 01:16:03) Aleksandar Vukovic{760} je stavio u vozilo Sunrise{633} slot 1 drogu Marihuana kolicine 4.00 grama i kvalitete Vrlo Dobra[35.000]!
+(03/05/2020, 01:28:03) Danny Rochefort{1061} je stavio u vozilo Blista Compact{4569} slot 2 drogu LSD kolicine 30.00 tableta i kvalitete Odlicna[41.000]!
+(03/05/2020, 04:26:30) Vukota Saranovic{5953} je stavio u vozilo Intruder{4066} slot 2 drogu Marihuana kolicine 100.00 grama i kvalitete Vrlo Dobra[39.000]!
+(03/05/2020, 04:39:22) Craig Swanson{679} je stavio u vozilo Yosemite{1348} slot 1 drogu LSD kolicine 10.00 tableta i kvalitete Vrlo Dobra[36.000]!
+(03/05/2020, 04:58:12) Craig Swanson{679} je stavio u vozilo Perennial{4552} slot 1 drogu Heroin kolicine 4.00 grama i kvalitete Vrlo Dobra[39.000]!
+(03/05/2020, 04:58:15) Craig Swanson{679} je stavio u vozilo Perennial{4552} slot 2 drogu Kokain kolicine 10.00 grama i kvalitete Vrlo Dobra[35.000]!
+(03/05/2020, 12:46:20) Igor Kostic{561} je stavio u vozilo Burrito{4401} slot 1 drogu Kokain kolicine 75.00 grama i kvalitete Odlicna[41.000]!
+(03/05/2020, 14:35:33) Vladan Vukasinovic{5649} je stavio u vozilo Topfun Van (Berkley's RC){3999} slot 1 drogu Xanax kolicine 2.00 tableta i kvalitete Vrlo Dobra[36.000]!
+(03/05/2020, 14:35:37) Vladan Vukasinovic{5649} je stavio u vozilo Topfun Van (Berkley's RC){3999} slot 2 drogu Marihuana kolicine 11.00 grama i kvalitete Vrlo Dobra[35.000]!
+(03/05/2020, 15:42:01) Darius Thompson{6379} je stavio u vozilo Faggio{4350} slot 2 drogu Marihuana kolicine 10.00 grama i kvalitete Vrlo Dobra[39.000]!
+(03/05/2020, 15:42:02) Darius Thompson{6379} je stavio u vozilo Faggio{4350} slot 3 drogu Kokain kolicine 10.00 grama i kvalitete Vrlo Dobra[38.000]!
+(03/05/2020, 15:54:22) Farrelle Qualls{6667} je stavio u vozilo BMX{4587} slot 1 drogu Marihuana kolicine 10.00 grama i kvalitete Vrlo Dobra[39.000]!
+(03/05/2020, 15:54:25) Farrelle Qualls{6667} je stavio u vozilo BMX{4587} slot 2 drogu Kokain kolicine 10.00 grama i kvalitete Vrlo Dobra[38.000]!
+(03/05/2020, 16:02:55) Maska_755872{561} je stavio u vozilo Burrito{4401} slot 2 drogu Marihuana kolicine 31.00 grama i kvalitete Vrlo Dobra[36.000]!
+(03/05/2020, 16:42:09) Igor Kostic{561} je stavio u vozilo Burrito{4401} slot 3 drogu Marihuana kolicine 29.00 grama i kvalitete Odlicna[49.000]!
+(03/05/2020, 16:44:50) Igor Kostic{561} je stavio u vozilo Burrito{4401} slot 3 drogu Marihuana kolicine 60.00 grama i kvalitete Vrlo Dobra[39.715]!
+(03/05/2020, 19:23:25) Igor Kostic{561} je stavio u vozilo Burrito{4401} slot 4 drogu LSD kolicine 50.00 tableta i kvalitete Odlicna[49.000]!
+(03/05/2020, 19:28:51) Maska_659251{1163} je stavio u vozilo Perennial{4638} slot 1 drogu Kokain kolicine 1.00 grama i kvalitete Vrlo Dobra[38.000]!
+(03/05/2020, 19:44:13) Norman Spear{6935} je stavio u vozilo Bike{4670} slot 1 drogu Kokain kolicine 10.00 grama i kvalitete Vrlo Dobra[35.000]!
+(03/05/2020, 19:58:42) Vukota Saranovic{5953} je stavio u vozilo Intruder{4066} slot 3 drogu Marihuana kolicine 50.00 grama i kvalitete Odlicna[42.000]!
+(03/05/2020, 21:52:31) Veshone Nichols{6409} je stavio u vozilo BMX{4441} slot 1 drogu Marihuana kolicine 10.00 grama i kvalitete Vrlo Dobra[39.000]!
+(03/05/2020, 21:52:33) Veshone Nichols{6409} je stavio u vozilo BMX{4441} slot 2 drogu Kokain kolicine 10.00 grama i kvalitete Vrlo Dobra[38.000]!
+(03/05/2020, 23:46:24) Igor Kostic{561} je stavio u vozilo Burrito{4401} slot 4 drogu Marihuana kolicine 29.00 grama i kvalitete Vrlo Dobra[39.720]!
+(04/05/2020, 00:40:45) Boris Noukhayev{98} je stavio u vozilo Tampa{4560} slot 1 drogu Marihuana kolicine 21.00 grama i kvalitete Vrlo Dobra[39.720]!
+(04/05/2020, 00:40:50) Boris Noukhayev{98} je stavio u vozilo Tampa{4560} slot 2 drogu LSD kolicine 30.00 tableta i kvalitete Odlicna[49.000]!
+(04/05/2020, 00:45:13) Mickey Fariello{3577} je stavio u vozilo Comet{973} slot 1 drogu Kokain kolicine 50.00 grama i kvalitete Vrlo Dobra[38.000]!
+(04/05/2020, 00:48:19) Michael Blake{2606} je stavio u vozilo Burrito{1756} slot 1 drogu Kokain kolicine 45.00 grama i kvalitete Vrlo Dobra[38.000]!
+(04/05/2020, 01:01:05) Malik Morgan{6063} je stavio u vozilo Perennial{4410} slot 1 drogu Marihuana kolicine 2.00 grama i kvalitete Vrlo Dobra[39.000]!
+(04/05/2020, 01:01:47) Malik Morgan{6063} je stavio u vozilo Perennial{4410} slot 2 drogu Marihuana kolicine 2.00 grama i kvalitete Vrlo Dobra[36.000]!
+(04/05/2020, 01:38:42) Damyan Krasimirov{1163} je stavio u vozilo Blista Compact{1835} slot 1 drogu Kokain kolicine 5.00 grama i kvalitete Vrlo Dobra[38.000]!
+(04/05/2020, 01:38:46) Damyan Krasimirov{1163} je stavio u vozilo Blista Compact{1835} slot 2 drogu Kokain kolicine 0.68 grama i kvalitete Vrlo Dobra[38.000]!
+(04/05/2020, 01:47:04) Malik Morgan{6063} je stavio u vozilo Perennial{4410} slot 1 drogu Marihuana kolicine 1.88 grama i kvalitete Vrlo Dobra[39.000]!
+(04/05/2020, 03:04:48) Milos Damjanovic{83} je stavio u vozilo Huntley{2561} slot 1 drogu Kokain kolicine 10.00 grama i kvalitete Vrlo Dobra[35.000]!
+(04/05/2020, 03:05:28) Milos Damjanovic{83} je stavio u vozilo Huntley{2561} slot 2 drogu Kokain kolicine 8.59 grama i kvalitete Vrlo Dobra[35.000]!
+(04/05/2020, 03:42:22) Jacob Mossey{6942} je stavio u vozilo Sanchez{4675} slot 1 drogu Marihuana kolicine 6.00 grama i kvalitete Vrlo Dobra[36.000]!
+(04/05/2020, 10:45:05) Igor Kostic{561} je stavio u vozilo Burrito{4401} slot 2 drogu Heroin kolicine 50.00 grama i kvalitete Vrlo Dobra[38.000]!
+(04/05/2020, 19:15:06) Vladan Vukasinovic{5649} je stavio u vozilo Topfun Van (Berkley's RC){3999} slot 3 drogu Kokain kolicine 48.00 grama i kvalitete Vrlo Dobra[35.000]!
+(04/05/2020, 19:40:36) Danny Rochefort{1061} je stavio u vozilo Blista Compact{4569} slot 2 drogu Kokain kolicine 40.00 grama i kvalitete Odlicna[42.000]!
+(04/05/2020, 19:55:43) Anthony Asmus{6461} je stavio u vozilo Bike{4665} slot 1 drogu Xanax kolicine 10.00 tableta i kvalitete Vrlo Dobra[36.000]!
+(04/05/2020, 20:55:27) Farrelle Qualls{6667} je stavio u vozilo BMX{4587} slot 3 drogu Kokain kolicine 4.80 grama i kvalitete Vrlo Dobra[38.000]!
+(04/05/2020, 21:26:35) Milos Damjanovic{83} je stavio u vozilo Huntley{2561} slot 2 drogu Kokain kolicine 20.00 grama i kvalitete Odlicna[42.000]!
+(04/05/2020, 21:44:28) Milos Bogdanovic{4622} je stavio u vozilo Patriot{3100} slot 2 drogu Marihuana kolicine 0.60 grama i kvalitete Vrlo Dobra[39.720]!
+(04/05/2020, 21:44:36) Milos Bogdanovic{4622} je stavio u vozilo Patriot{3100} slot 3 drogu Kokain kolicine 8.68 grama i kvalitete Vrlo Dobra[35.000]!
+(04/05/2020, 21:45:12) Milos Bogdanovic{4622} je stavio u vozilo Patriot{3100} slot 3 drogu Kokain kolicine 8.68 grama i kvalitete Vrlo Dobra[35.000]!
+(04/05/2020, 21:45:21) Milos Bogdanovic{4622} je stavio u vozilo Patriot{3100} slot 4 drogu Kokain kolicine 5.00 grama i kvalitete Vrlo Dobra[35.000]!
+(04/05/2020, 21:45:25) Milos Bogdanovic{4622} je stavio u vozilo Patriot{3100} slot 5 drogu Kokain kolicine 20.00 grama i kvalitete Odlicna[42.000]!
+(04/05/2020, 22:29:16) Goran Milojevic{6049} je stavio u vozilo Bobcat{3109} slot 1 drogu Marihuana kolicine 50.00 grama i kvalitete Odlicna[43.000]!
+(04/05/2020, 22:53:34) Liam Hao{6345} je stavio u vozilo Bobcat{4476} slot 1 drogu LSD kolicine 3.00 tableta i kvalitete Odlicna[46.000]!
+(04/05/2020, 22:53:36) Liam Hao{6345} je stavio u vozilo Bobcat{4476} slot 2 drogu Marihuana kolicine 7.00 grama i kvalitete Vrlo Dobra[36.000]!
+(04/05/2020, 23:52:48) Vukasin Milovanovic{34} je stavio u vozilo Huntley{2561} slot 1 drogu Kokain kolicine 10.00 grama i kvalitete Vrlo Dobra[35.000]!
+(04/05/2020, 23:56:18) Vukasin Milovanovic{34} je stavio u vozilo Cheetah{470} slot 1 drogu Kokain kolicine 20.00 grama i kvalitete Odlicna[42.000]!
+(04/05/2020, 23:56:22) Vukasin Milovanovic{34} je stavio u vozilo Cheetah{470} slot 2 drogu Kokain kolicine 5.00 grama i kvalitete Vrlo Dobra[35.000]!
+(05/05/2020, 00:18:08) Panayotis Xiphias{5493} je stavio u vozilo Intruder{4660} slot 1 drogu Marihuana kolicine 49.00 grama i kvalitete Odlicna[43.000]!
+(05/05/2020, 00:37:40) Vukasin Milovanovic{34} je stavio u vozilo Cheetah{470} slot 2 drogu Kokain kolicine 5.00 grama i kvalitete Odlicna[41.000]!
+(05/05/2020, 00:37:42) Vukasin Milovanovic{34} je stavio u vozilo Cheetah{470} slot 3 drogu Kokain kolicine 5.00 grama i kvalitete Vrlo Dobra[35.000]!
+(05/05/2020, 00:37:44) Vukasin Milovanovic{34} je stavio u vozilo Cheetah{470} slot 4 drogu Kokain kolicine 10.00 grama i kvalitete Odlicna[41.000]!
+(05/05/2020, 01:44:22) Maska_473286{1318} je stavio u vozilo Admiral{4249} slot 1 drogu Heroin kolicine 50.00 grama i kvalitete Vrlo Dobra[38.000]!
+(05/05/2020, 01:48:49) Milos Bogdanovic{4622} je stavio u vozilo Patriot{3100} slot 6 drogu Kokain kolicine 35.00 grama i kvalitete Odlicna[41.000]!
+(05/05/2020, 03:15:56) Maska_481863{6765} je stavio u vozilo Tahoma{1087} slot 2 drogu LSD kolicine 10.00 tableta i kvalitete Vrlo Dobra[36.000]!
+(05/05/2020, 04:53:58) Cory Zimmermann{6765} je stavio u vozilo Tahoma{1087} slot 3 drogu Marihuana kolicine 5.00 grama i kvalitete Vrlo Dobra[39.000]!
+(05/05/2020, 13:07:47) Jacob Mossey{6942} je stavio u vozilo Sanchez{4675} slot 2 drogu Kokain kolicine 3.00 grama i kvalitete Vrlo Dobra[35.000]!
+(05/05/2020, 19:19:17) Brian Decker{1013} je stavio u vozilo Patriot{4155} slot 4 drogu Marihuana kolicine 50.00 grama i kvalitete Odlicna[44.000]!
+(05/05/2020, 19:53:48) Daniel Kennedy{6927} je stavio u vozilo Clover{4681} slot 1 drogu Heroin kolicine 0.10 grama i kvalitete Vrlo Dobra[38.000]!
+(05/05/2020, 21:23:51) Maxwell Diaz{3922} je stavio u vozilo BMX{2898} slot 1 drogu Marihuana kolicine 15.00 grama i kvalitete Vrlo Dobra[39.720]!
+(05/05/2020, 21:47:47) Farrelle Qualls{6667} je stavio u vozilo BMX{4587} slot 1 drogu Marihuana kolicine 10.00 grama i kvalitete Vrlo Dobra[39.000]!
+(05/05/2020, 21:48:12) Farrelle Qualls{6667} je stavio u vozilo BMX{4587} slot 2 drogu Kokain kolicine 9.60 grama i kvalitete Vrlo Dobra[38.000]!
+(05/05/2020, 22:26:17) Benjamin Brown{5404} je stavio u vozilo BMX{4689} slot 1 drogu Marihuana kolicine 5.00 grama i kvalitete Vrlo Dobra[39.000]!
+(05/05/2020, 22:44:01) Mickey Yanlin{2189} je stavio u vozilo Mountain Bike{2592} slot 1 drogu Marihuana kolicine 5.00 grama i kvalitete Vrlo Dobra[36.000]!
+(05/05/2020, 23:37:48) Ivan Djukanovic{6486} je stavio u vozilo Trashmaster{4706} slot 1 drogu Marihuana kolicine 2.00 grama i kvalitete Vrlo Dobra[36.000]!
+(05/05/2020, 23:37:53) Ivan Djukanovic{6486} je stavio u vozilo Trashmaster{4706} slot 2 drogu Kokain kolicine 5.00 grama i kvalitete Odlicna[41.000]!
+(05/05/2020, 23:37:59) Ivan Djukanovic{6486} je stavio u vozilo Trashmaster{4706} slot 3 drogu Marihuana kolicine 1.00 grama i kvalitete Vrlo Dobra[39.720]!
+(05/05/2020, 23:38:04) Ivan Djukanovic{6486} je stavio u vozilo Trashmaster{4706} slot 4 drogu Heroin kolicine 20.00 grama i kvalitete Vrlo Dobra[38.000]!
+(06/05/2020, 00:45:37) Vukota Saranovic{5953} je stavio u vozilo Huntley{4431} slot 1 drogu Xanax kolicine 50.00 tableta i kvalitete Odlicna[49.000]!
+(06/05/2020, 00:52:59) Zion Linzell{5764} je stavio u vozilo Huntley{4589} slot 1 drogu Xanax kolicine 29.00 tableta i kvalitete Odlicna[49.000]!
+(06/05/2020, 00:54:39) Vukota Saranovic{5953} je stavio u vozilo Intruder{4066} slot 3 drogu Xanax kolicine 20.00 tableta i kvalitete Odlicna[49.000]!
+(06/05/2020, 01:12:30) Craig Swanson{679} je stavio u vozilo Perennial{4552} slot 2 drogu Marihuana kolicine 25.00 grama i kvalitete Odlicna[44.000]!
+(06/05/2020, 01:12:30) Dylan Baird{3838} je stavio u vozilo Rumpo{4390} slot 1 drogu LSD kolicine 20.00 tableta i kvalitete Odlicna[41.000]!
+(06/05/2020, 01:12:36) Craig Swanson{679} je stavio u vozilo Perennial{4552} slot 3 drogu Kokain kolicine 10.00 grama i kvalitete Vrlo Dobra[38.000]!
+(06/05/2020, 01:30:39) Damyan Krasimirov{1163} je stavio u vozilo Blista Compact{1835} slot 2 drogu LSD kolicine 10.00 tableta i kvalitete Odlicna[49.000]!
+(06/05/2020, 01:30:52) Damyan Krasimirov{1163} je stavio u vozilo Blista Compact{1835} slot 3 drogu Heroin kolicine 10.00 grama i kvalitete Vrlo Dobra[39.000]!
+(06/05/2020, 04:11:45) Ivan Djukanovic{6486} je stavio u vozilo Trashmaster{4706} slot 5 drogu Xanax kolicine 10.00 tableta i kvalitete Odlicna[49.000]!
+(06/05/2020, 04:11:49) Ivan Djukanovic{6486} je stavio u vozilo Trashmaster{4706} slot 6 drogu Xanax kolicine 9.00 tableta i kvalitete Odlicna[49.000]!
+(06/05/2020, 04:54:13) Vukota Saranovic{5953} je stavio u vozilo Intruder{4066} slot 4 drogu MDMA kolicine 50.00 tableta i kvalitete Vrlo Dobra[38.000]!
+(06/05/2020, 04:56:57) Vukota Saranovic{5953} je stavio u vozilo Intruder{4066} slot 1 drogu Marihuana kolicine 100.00 grama i kvalitete Vrlo Dobra[39.000]!
+(06/05/2020, 04:57:00) Vukota Saranovic{5953} je stavio u vozilo Intruder{4066} slot 2 drogu Marihuana kolicine 50.00 grama i kvalitete Odlicna[42.000]!
+(06/05/2020, 15:50:11) Zyrell Young{998} je stavio u vozilo BMX{1178} slot 1 drogu Xanax kolicine 2.00 tableta i kvalitete Odlicna[49.000]!
+(06/05/2020, 15:50:18) Zyrell Young{998} je stavio u vozilo BMX{1178} slot 2 drogu Marihuana kolicine 1.00 grama i kvalitete Vrlo Dobra[36.000]!
+(06/05/2020, 18:15:37) Steve Moreno{6078} je stavio u vozilo Nebula{4571} slot 1 drogu Kokain kolicine 9.00 grama i kvalitete Vrlo Dobra[38.000]!
+(06/05/2020, 18:16:34) Steve Moreno{6078} je stavio u vozilo Nebula{4571} slot 1 drogu Kokain kolicine 8.00 grama i kvalitete Vrlo Dobra[38.000]!
+(06/05/2020, 18:18:06) Steve Moreno{6078} je stavio u vozilo Nebula{4571} slot 1 drogu Kokain kolicine 1.00 grama i kvalitete Vrlo Dobra[38.000]!
+(06/05/2020, 18:18:13) Steve Moreno{6078} je stavio u vozilo Nebula{4571} slot 2 drogu Kokain kolicine 8.00 grama i kvalitete Vrlo Dobra[38.000]!
+(06/05/2020, 19:29:18) Damyan Krasimirov{1163} je stavio u vozilo Blista Compact{1835} slot 2 drogu Heroin kolicine 10.00 grama i kvalitete Vrlo Dobra[39.000]!
+(06/05/2020, 20:32:51) Vukasin Milovanovic{34} je stavio u vozilo Cheetah{470} slot 3 drogu Kokain kolicine 5.00 grama i kvalitete Vrlo Dobra[35.000]!
+(06/05/2020, 20:32:54) Vukasin Milovanovic{34} je stavio u vozilo Cheetah{470} slot 4 drogu Kokain kolicine 5.00 grama i kvalitete Odlicna[41.000]!
+(06/05/2020, 20:58:18) Maxwell Diaz{3922} je stavio u vozilo BMX{2898} slot 2 drogu Kokain kolicine 2.00 grama i kvalitete Vrlo Dobra[35.000]!
+(06/05/2020, 21:02:20) Maxwell Diaz{3922} je stavio u vozilo BMX{2898} slot 2 drogu Kokain kolicine 2.00 grama i kvalitete Vrlo Dobra[35.000]!
+(06/05/2020, 21:58:36) Norman Spear{6935} je stavio u vozilo Bike{4670} slot 1 drogu Kokain kolicine 5.00 grama i kvalitete Vrlo Dobra[35.000]!
+(06/05/2020, 22:15:52) Vicenzo Ricci{6915} je stavio u vozilo Vincent{4645} slot 1 drogu Heroin kolicine 9.00 grama i kvalitete Vrlo Dobra[39.000]!
+(06/05/2020, 22:16:06) Vicenzo Ricci{6915} je stavio u vozilo Vincent{4645} slot 2 drogu Heroin kolicine 1.00 grama i kvalitete Vrlo Dobra[39.000]!
+(07/05/2020, 00:18:40) Steve Moreno{6078} je stavio u vozilo Nebula{4571} slot 1 drogu Kokain kolicine 1.07 grama i kvalitete Vrlo Dobra[38.000]!
+(07/05/2020, 01:49:36) Demetrius Innes{231} je stavio u vozilo BMX{736} slot 2 drogu Kokain kolicine 3.00 grama i kvalitete Vrlo Dobra[35.000]!
+(07/05/2020, 01:49:39) Demetrius Innes{231} je stavio u vozilo BMX{736} slot 3 drogu Marihuana kolicine 6.00 grama i kvalitete Vrlo Dobra[36.000]!
+(07/05/2020, 03:00:47) Frank Xing{4299} je stavio u vozilo NRG-500{3655} slot 1 drogu LSD kolicine 2.00 tableta i kvalitete Odlicna[46.000]!
+(07/05/2020, 03:18:19) Ivan Djukanovic{6486} je stavio u vozilo Merit{4685} slot 1 drogu Kokain kolicine 0.47 grama i kvalitete Vrlo Dobra[38.000]!
+(07/05/2020, 09:33:54) Hristo Nikolov{6765} je stavio u vozilo Tahoma{1087} slot 1 drogu LSD kolicine 20.00 tableta i kvalitete Odlicna[41.000]!
+(07/05/2020, 14:43:49) Liam Hao{6345} je stavio u vozilo Sanchez{4674} slot 1 drogu Marihuana kolicine 3.00 grama i kvalitete Vrlo Dobra[36.000]!
+(07/05/2020, 15:16:18) Maska_599137{484} je stavio u vozilo Emperor{4428} slot 1 drogu Kokain kolicine 10.00 grama i kvalitete Vrlo Dobra[38.000]!
+(07/05/2020, 17:24:35) Shane Duncan{1751} je stavio u vozilo Moonbeam{4356} slot 1 drogu LSD kolicine 14.00 tableta i kvalitete Odlicna[47.000]!
+(07/05/2020, 17:24:36) Aiden Mitchell{6401} je stavio u vozilo Moonbeam{4356} slot 2 drogu Marihuana kolicine 9.00 grama i kvalitete Vrlo Dobra[35.000]!
+(07/05/2020, 17:26:22) Shane Duncan{1751} je stavio u vozilo Moonbeam{4356} slot 2 drogu Marihuana kolicine 15.00 grama i kvalitete Vrlo Dobra[35.000]!
+(07/05/2020, 22:07:17) Valko Spasov{6917} je stavio u vozilo Pony{4731} slot 1 drogu Heroin kolicine 26.00 grama i kvalitete Vrlo Dobra[38.000]!
+(07/05/2020, 22:07:24) Valko Spasov{6917} je stavio u vozilo Pony{4731} slot 2 drogu Marihuana kolicine 4.00 grama i kvalitete Vrlo Dobra[36.000]!
+(07/05/2020, 23:12:09) Owen Buier{584} je stavio u vozilo Freeway{2876} slot 1 drogu Marihuana kolicine 1.00 grama i kvalitete Vrlo Dobra[35.000]!
+(07/05/2020, 23:13:58) Owen Buier{584} je stavio u vozilo Tampa{2442} slot 1 drogu Marihuana kolicine 1.00 grama i kvalitete Vrlo Dobra[35.000]!
+(07/05/2020, 23:25:09) Vuk Koprivica{5746} je stavio u vozilo Elegant{3955} slot 1 drogu Kokain kolicine 3.00 grama i kvalitete Vrlo Dobra[35.000]!
+(08/05/2020, 03:26:16) Joseph Galante{484} je stavio u vozilo Emperor{4428} slot 2 drogu MDMA kolicine 50.00 tableta i kvalitete Vrlo Dobra[38.000]!
+(08/05/2020, 15:53:45) Igor Kostic{561} je stavio u vozilo Burrito{4401} slot 2 drogu Xanax kolicine 50.00 tableta i kvalitete Odlicna[43.000]!
+(08/05/2020, 18:09:36) Dakari Mercer{6199} je stavio u vozilo Vincent{4611} slot 1 drogu Marihuana kolicine 10.00 grama i kvalitete Vrlo Dobra[39.000]!
+(08/05/2020, 18:09:46) Shane Thompson{6337} je stavio u vozilo BMX{4310} slot 1 drogu Kokain kolicine 10.00 grama i kvalitete Vrlo Dobra[38.000]!
+(08/05/2020, 21:59:19) Frank Xing{4299} je stavio u vozilo NRG-500{3655} slot 2 drogu Marihuana kolicine 1.88 grama i kvalitete Vrlo Dobra[39.720]!
+(09/05/2020, 00:12:20) Vukasin Milovanovic{34} je stavio u vozilo Cheetah{470} slot 3 drogu Kokain kolicine 5.00 grama i kvalitete Odlicna[41.000]!
+(09/05/2020, 01:13:17) Valko Spasov{6917} je stavio u vozilo Pony{4731} slot 3 drogu Kokain kolicine 10.00 grama i kvalitete Vrlo Dobra[38.000]!
+(09/05/2020, 02:17:55) Igor Kostic{561} je stavio u vozilo Burrito{4401} slot 3 drogu Kokain kolicine 50.00 grama i kvalitete Odlicna[46.000]!
+(09/05/2020, 02:54:10) Vicenzo Ricci{6915} je stavio u vozilo Vincent{4645} slot 1 drogu Heroin kolicine 1.00 grama i kvalitete Vrlo Dobra[39.000]!
+(09/05/2020, 02:54:14) Vicenzo Ricci{6915} je stavio u vozilo Vincent{4645} slot 2 drogu Heroin kolicine 7.00 grama i kvalitete Vrlo Dobra[39.000]!
+(09/05/2020, 14:02:01) Maska_261171{6700} je stavio u vozilo Bobcat{4536} slot 2 drogu MDMA kolicine 2.00 tableta i kvalitete Vrlo Dobra[38.000]!
+(09/05/2020, 15:23:06) Maska_599137{484} je stavio u vozilo Emperor{4428} slot 3 drogu Kokain kolicine 10.00 grama i kvalitete Vrlo Dobra[38.000]!
+(09/05/2020, 15:23:44) Maska_599137{484} je stavio u vozilo Emperor{4428} slot 1 drogu Kokain kolicine 20.00 grama i kvalitete Vrlo Dobra[38.000]!
+(09/05/2020, 15:24:30) Maska_599137{484} je stavio u vozilo Emperor{4428} slot 2 drogu MDMA kolicine 49.00 tableta i kvalitete Vrlo Dobra[38.000]!
+(09/05/2020, 16:00:05) Khuldjan Sabbag{1488} je stavio u vozilo Huntley{749} slot 1 drogu MDMA kolicine 47.00 tableta i kvalitete Vrlo Dobra[38.000]!
+(09/05/2020, 16:50:07) Ronnie Inman{199} je stavio u vozilo Rumpo{779} slot 1 drogu Heroin kolicine 1.70 grama i kvalitete Vrlo Dobra[39.000]!
+(09/05/2020, 16:50:10) Ronnie Inman{199} je stavio u vozilo Rumpo{779} slot 2 drogu Xanax kolicine 1.00 tableta i kvalitete Vrlo Dobra[36.000]!
+(09/05/2020, 16:58:33) William Nithercott{5492} je stavio u vozilo Rancher (Lure){4727} slot 1 drogu Kokain kolicine 5.00 grama i kvalitete Vrlo Dobra[38.000]!
+(09/05/2020, 16:58:46) William Nithercott{5492} je stavio u vozilo Rancher (Lure){4727} slot 2 drogu LSD kolicine 3.00 tableta i kvalitete Vrlo Dobra[36.000]!
+(09/05/2020, 16:59:01) William Nithercott{5492} je stavio u vozilo Rancher (Lure){4727} slot 3 drogu Marihuana kolicine 5.00 grama i kvalitete Vrlo Dobra[39.000]!
+(09/05/2020, 17:02:20) Craig Swanson{679} je stavio u vozilo Buffalo{1895} slot 1 drogu Marihuana kolicine 4.00 grama i kvalitete Vrlo Dobra[39.000]!
+(09/05/2020, 18:40:15) Danny Rochefort{1061} je stavio u vozilo Stafford{565} slot 1 drogu Kokain kolicine 4.69 grama i kvalitete Vrlo Dobra[35.000]!
+(09/05/2020, 20:06:58) Alan Huang{302} je stavio u vozilo Regina{810} slot 2 drogu Kokain kolicine 50.00 grama i kvalitete Odlicna[46.000]!
+(10/05/2020, 00:54:37) Liam Hao{6345} je stavio u vozilo Bobcat{4476} slot 2 drogu Kokain kolicine 10.00 grama i kvalitete Odlicna[46.000]!
+(10/05/2020, 00:58:20) Mickey Yanlin{2189} je stavio u vozilo Mountain Bike{2592} slot 1 drogu Kokain kolicine 10.00 grama i kvalitete Odlicna[46.000]!
+(10/05/2020, 01:49:53) Kiante Wright{6991} je stavio u vozilo Perennial{4745} slot 1 drogu Marihuana kolicine 1.60 grama i kvalitete Vrlo Dobra[39.000]!
+(10/05/2020, 01:50:00) Kiante Wright{6991} je stavio u vozilo Perennial{4745} slot 2 drogu MDMA kolicine 1.00 tableta i kvalitete Vrlo Dobra[38.000]!
+(10/05/2020, 11:26:49) Igor Kostic{561} je stavio u vozilo NRG-500{3202} slot 1 drogu Marihuana kolicine 50.00 grama i kvalitete Odlicna[43.000]!
+(10/05/2020, 19:26:40) Wayne Chow{5482} je stavio u vozilo Regina{3967} slot 1 drogu Kokain kolicine 10.00 grama i kvalitete Odlicna[46.000]!
+(10/05/2020, 23:20:07) Vukota Saranovic{5953} je stavio u vozilo Huntley{4431} slot 1 drogu Xanax kolicine 20.00 tableta i kvalitete Odlicna[49.000]!
+(10/05/2020, 23:20:10) Vukota Saranovic{5953} je stavio u vozilo Huntley{4431} slot 2 drogu Marihuana kolicine 30.00 grama i kvalitete Odlicna[42.000]!
+(10/05/2020, 23:42:55) Joseph Galante{484} je stavio u vozilo Rancher{4586} slot 1 drogu Heroin kolicine 9.00 grama i kvalitete Vrlo Dobra[38.000]!
+(11/05/2020, 14:26:39) Liam Hao{6345} je stavio u vozilo Sanchez{4674} slot 1 drogu Marihuana kolicine 4.00 grama i kvalitete Vrlo Dobra[36.000]!
+(11/05/2020, 14:26:41) Liam Hao{6345} je stavio u vozilo Sanchez{4674} slot 2 drogu Kokain kolicine 10.00 grama i kvalitete Odlicna[46.000]!
+(11/05/2020, 14:59:16) Michael Torres{7049} je stavio u vozilo Bobcat{4780} slot 1 drogu MDMA kolicine 15.00 tableta i kvalitete Vrlo Dobra[38.000]!
+(11/05/2020, 16:05:24) William Nithercott{5492} je stavio u vozilo Regina{4781} slot 1 drogu Kokain kolicine 5.00 grama i kvalitete Vrlo Dobra[38.000]!
+(11/05/2020, 16:05:32) William Nithercott{5492} je stavio u vozilo Regina{4781} slot 2 drogu LSD kolicine 3.00 tableta i kvalitete Vrlo Dobra[36.000]!
+(11/05/2020, 16:05:37) William Nithercott{5492} je stavio u vozilo Regina{4781} slot 3 drogu Marihuana kolicine 5.00 grama i kvalitete Vrlo Dobra[39.000]!
+(11/05/2020, 20:15:49) Nicholas Lanzetta{124} je stavio u vozilo Perennial{34} slot 1 drogu Marihuana kolicine 50.00 grama i kvalitete Vrlo Dobra[39.000]!
+(11/05/2020, 20:19:37) Shane Duncan{1751} je stavio u vozilo Moonbeam{4356} slot 3 drogu Xanax kolicine 10.00 tableta i kvalitete Odlicna[49.000]!
+(11/05/2020, 20:24:46) Igor Kostic{561} je stavio u vozilo NRG-500{3202} slot 2 drogu Marihuana kolicine 25.00 grama i kvalitete Odlicna[40.000]!
+(11/05/2020, 21:09:12) Shane Duncan{1751} je stavio u vozilo Moonbeam{4356} slot 4 drogu Marihuana kolicine 20.00 grama i kvalitete Odlicna[40.000]!
+(11/05/2020, 21:51:06) Jacob Leontyev{2226} je stavio u vozilo Huntley{3553} slot 1 drogu Kokain kolicine 0.89 grama i kvalitete Vrlo Dobra[38.000]!
+(11/05/2020, 22:00:11) Vuk Koprivica{5746} je stavio u vozilo Nebula{4446} slot 1 drogu Kokain kolicine 3.00 grama i kvalitete Vrlo Dobra[35.000]!
+(11/05/2020, 22:34:12) Vukota Saranovic{5953} je stavio u vozilo Huntley{4431} slot 1 drogu Xanax kolicine 10.00 tableta i kvalitete Odlicna[49.000]!
+(11/05/2020, 22:34:18) Vukota Saranovic{5953} je stavio u vozilo Huntley{4431} slot 2 drogu Marihuana kolicine 28.00 grama i kvalitete Odlicna[42.000]!
+(11/05/2020, 23:40:16) Charles Scalafani{2184} je stavio u vozilo Huntley{4492} slot 1 drogu Marihuana kolicine 50.00 grama i kvalitete Vrlo Dobra[39.000]!
+(11/05/2020, 23:59:21) Vukasin Milovanovic{34} je stavio u vozilo Cheetah{470} slot 3 drogu Kokain kolicine 5.00 grama i kvalitete Odlicna[41.000]!
+(12/05/2020, 00:24:02) Michael Torres{7049} je stavio u vozilo Bobcat{4780} slot 1 drogu MDMA kolicine 15.00 tableta i kvalitete Vrlo Dobra[38.000]!
+(12/05/2020, 00:38:44) Michael Torres{7049} je stavio u vozilo Bobcat{4780} slot 2 drogu Kokain kolicine 10.00 grama i kvalitete Odlicna[46.000]!
+(12/05/2020, 00:38:59) Shane Duncan{1751} je stavio u vozilo Moonbeam{4356} slot 5 drogu Kokain kolicine 10.00 grama i kvalitete Vrlo Dobra[35.000]!
+(12/05/2020, 13:46:03) Vladimir Molotov{3850} je stavio u vozilo Bullet{4369} slot 1 drogu Marihuana kolicine 21.00 grama i kvalitete Vrlo Dobra[39.720]!
+(12/05/2020, 13:46:09) Vladimir Molotov{3850} je stavio u vozilo Bullet{4369} slot 2 drogu LSD kolicine 30.00 tableta i kvalitete Odlicna[49.000]!
+(12/05/2020, 15:38:28) Dwane Hudson{6940} je stavio u vozilo Nebula{4749} slot 1 drogu MDMA kolicine 3.00 tableta i kvalitete Vrlo Dobra[38.000]!
+(12/05/2020, 16:57:55) Kiante Wright{6991} je stavio u vozilo Taxi{4794} slot 1 drogu Marihuana kolicine 0.10 grama i kvalitete Vrlo Dobra[39.000]!
+(12/05/2020, 19:33:03) Shane Duncan{1751} je stavio u vozilo Moonbeam{4356} slot 6 drogu Marihuana kolicine 6.80 grama i kvalitete Vrlo Dobra[35.000]!
+(12/05/2020, 20:29:31) Michael Torres{7049} je stavio u vozilo Bobcat{4780} slot 2 drogu Kokain kolicine 10.00 grama i kvalitete Odlicna[46.000]!
+(12/05/2020, 20:44:08) Liam Hao{6345} je stavio u vozilo Sanchez{4674} slot 2 drogu Kokain kolicine 10.00 grama i kvalitete Odlicna[46.000]!
+(12/05/2020, 20:49:55) Mickey Yanlin{2189} je stavio u vozilo Bobcat{4476} slot 1 drogu Kokain kolicine 20.00 grama i kvalitete Odlicna[46.000]!
+(12/05/2020, 20:50:00) Mickey Yanlin{2189} je stavio u vozilo Bobcat{4476} slot 2 drogu Kokain kolicine 5.90 grama i kvalitete Odlicna[46.000]!
+(12/05/2020, 20:50:07) Mickey Yanlin{2189} je stavio u vozilo Bobcat{4476} slot 3 drogu Marihuana kolicine 0.20 grama i kvalitete Vrlo Dobra[36.000]!
+(12/05/2020, 21:15:48) Michael Torres{7049} je stavio u vozilo Bobcat{4780} slot 3 drogu Kokain kolicine 20.00 grama i kvalitete Odlicna[46.000]!
+(12/05/2020, 22:40:53) Radivoje Trtic{6648} je stavio u vozilo Huntley{4519} slot 1 drogu Kokain kolicine 0.80 grama i kvalitete Vrlo Dobra[38.000]!
+(12/05/2020, 22:42:42) Maska_674314{6648} je stavio u vozilo NRG-500{4461} slot 1 drogu Kokain kolicine 0.80 grama i kvalitete Vrlo Dobra[38.000]!
+(12/05/2020, 22:43:39) Maska_674314{6648} je stavio u vozilo NRG-500{4461} slot 2 drogu Kokain kolicine 1.00 grama i kvalitete Odlicna[41.000]!
+(12/05/2020, 22:57:04) Maska_944432{3850} je stavio u vozilo Bullet{4369} slot 1 drogu LSD kolicine 10.00 tableta i kvalitete Odlicna[49.000]!
+(12/05/2020, 23:06:16) Vladimir Molotov{3850} je stavio u vozilo Bullet{4369} slot 3 drogu Marihuana kolicine 10.00 grama i kvalitete Vrlo Dobra[39.720]!
+(12/05/2020, 23:06:50) Vladimir Molotov{3850} je stavio u vozilo Bullet{4369} slot 4 drogu Marihuana kolicine 10.00 grama i kvalitete Vrlo Dobra[39.720]!
+(12/05/2020, 23:16:00) Maska_638450{1074} je stavio u vozilo Patriot{2303} slot 2 drogu Marihuana kolicine 27.39 grama i kvalitete Odlicna[42.000]!
+(12/05/2020, 23:37:21) Kiante Wright{6991} je stavio u vozilo BMX{4796} slot 1 drogu Kokain kolicine 0.15 grama i kvalitete Vrlo Dobra[38.000]!
+(12/05/2020, 23:37:24) Kiante Wright{6991} je stavio u vozilo BMX{4796} slot 2 drogu Kokain kolicine 0.15 grama i kvalitete Vrlo Dobra[35.000]!
+(12/05/2020, 23:42:41) Khuldjan Sabbag{1488} je stavio u vozilo Sadler{1654} slot 1 drogu MDMA kolicine 21.00 tableta i kvalitete Vrlo Dobra[38.000]!
+(13/05/2020, 00:01:45) Winchester Tillman{5761} je stavio u vozilo Admiral{4682} slot 1 drogu Kokain kolicine 1.39 grama i kvalitete Odlicna[46.000]!
+(13/05/2020, 00:26:24) Zhiqiang Uchiyama{1488} je stavio u vozilo Sadler{1654} slot 2 drogu MDMA kolicine 1.00 tableta i kvalitete Vrlo Dobra[38.000]!
+(13/05/2020, 00:26:40) Zhiqiang Uchiyama{1488} je stavio u vozilo Sadler{1654} slot 3 drogu MDMA kolicine 9.00 tableta i kvalitete Vrlo Dobra[38.000]!
+(13/05/2020, 00:28:16) Vuk Koprivica{5746} je stavio u vozilo Elegant{3955} slot 1 drogu Kokain kolicine 3.00 grama i kvalitete Vrlo Dobra[35.000]!
+(13/05/2020, 02:15:35) Michael Rogers{74} je stavio u vozilo Patriot{898} slot 4 drogu Kokain kolicine 5.00 grama i kvalitete Vrlo Dobra[38.000]!
+(13/05/2020, 02:15:40) Michael Rogers{74} je stavio u vozilo Patriot{898} slot 5 drogu Marihuana kolicine 5.00 grama i kvalitete Vrlo Dobra[39.000]!
+(13/05/2020, 02:15:43) Michael Rogers{74} je stavio u vozilo Patriot{898} slot 6 drogu LSD kolicine 3.00 tableta i kvalitete Vrlo Dobra[36.000]!
+(13/05/2020, 02:16:47) Michael Rogers{74} je stavio u vozilo Patriot{898} slot 1 drogu Kokain kolicine 11.00 grama i kvalitete Vrlo Dobra[38.000]!
+(13/05/2020, 15:03:43) Joseph Galante{484} je stavio u vozilo Emperor{4428} slot 1 drogu Heroin kolicine 5.09 grama i kvalitete Vrlo Dobra[38.000]!
+(13/05/2020, 15:37:56) Michael Torres{7049} je stavio u vozilo Bobcat{4780} slot 2 drogu Kokain kolicine 5.00 grama i kvalitete Odlicna[46.000]!
+(13/05/2020, 16:25:41) Kiante Wright{6991} je stavio u vozilo BMX{4796} slot 3 drogu Kokain kolicine 9.00 grama i kvalitete Vrlo Dobra[35.000]!
+(13/05/2020, 16:25:55) Kiante Wright{6991} je stavio u vozilo BMX{4796} slot 4 drogu Kokain kolicine 0.85 grama i kvalitete Vrlo Dobra[35.000]!
+(13/05/2020, 20:05:33) Alan Huang{302} je stavio u vozilo Regina{810} slot 1 drogu Marihuana kolicine 2.00 grama i kvalitete Odlicna[43.000]!
+(13/05/2020, 20:05:39) Alan Huang{302} je stavio u vozilo Regina{810} slot 2 drogu Marihuana kolicine 48.00 grama i kvalitete Odlicna[43.000]!
+(13/05/2020, 21:29:25) Reggie Crawford{5027} je stavio u vozilo Bobcat{4813} slot 1 drogu Xanax kolicine 5.00 tableta i kvalitete Vrlo Dobra[36.000]!
+(13/05/2020, 21:29:30) Reggie Crawford{5027} je stavio u vozilo Bobcat{4813} slot 2 drogu Xanax kolicine 3.00 tableta i kvalitete Vrlo Dobra[36.000]!
+(13/05/2020, 21:29:38) Reggie Crawford{5027} je stavio u vozilo Bobcat{4813} slot 3 drogu Kokain kolicine 5.00 grama i kvalitete Odlicna[46.000]!
+(13/05/2020, 21:29:45) Reggie Crawford{5027} je stavio u vozilo Bobcat{4813} slot 4 drogu Kokain kolicine 4.90 grama i kvalitete Odlicna[46.000]!
+(13/05/2020, 21:29:56) Reggie Crawford{5027} je stavio u vozilo Bobcat{4813} slot 5 drogu Marihuana kolicine 4.00 grama i kvalitete Vrlo Dobra[35.000]!
+(13/05/2020, 21:34:00) Reggie Crawford{5027} je stavio u vozilo Bobcat{4813} slot 1 drogu Kokain kolicine 3.70 grama i kvalitete Vrlo Dobra[38.000]!
+(13/05/2020, 21:34:06) Reggie Crawford{5027} je stavio u vozilo Bobcat{4813} slot 6 drogu Marihuana kolicine 1.00 grama i kvalitete Vrlo Dobra[39.720]!
+(13/05/2020, 21:34:13) Reggie Crawford{5027} je stavio u vozilo Bobcat{4813} slot 7 drogu Xanax kolicine 5.00 tableta i kvalitete Vrlo Dobra[36.000]!
+(13/05/2020, 21:34:31) Reggie Crawford{5027} je stavio u vozilo Bobcat{4813} slot 8 drogu Marihuana kolicine 10.00 grama i kvalitete Vrlo Dobra[39.720]!
+(13/05/2020, 21:34:33) Reggie Crawford{5027} je stavio u vozilo Bobcat{4813} slot 9 drogu Marihuana kolicine 10.00 grama i kvalitete Vrlo Dobra[39.720]!
+(13/05/2020, 22:24:58) Wayne Chow{5482} je stavio u vozilo Regina{3967} slot 1 drogu Marihuana kolicine 10.00 grama i kvalitete Odlicna[43.000]!
+(14/05/2020, 00:12:31) Hristo Nikolov{6765} je stavio u vozilo Perennial{1480} slot 1 drogu Kokain kolicine 10.00 grama i kvalitete Vrlo Dobra[35.000]!
+(14/05/2020, 01:03:46) Tony Griffin{6972} je stavio u vozilo Freeway{4785} slot 1 drogu Marihuana kolicine 0.10 grama i kvalitete Vrlo Dobra[35.000]!
+(14/05/2020, 01:04:05) Tony Griffin{6972} je stavio u vozilo Freeway{4785} slot 2 drogu Marihuana kolicine 0.20 grama i kvalitete Vrlo Dobra[35.000]!
+(14/05/2020, 01:08:48) Tony Griffin{6972} je stavio u vozilo Freeway{4785} slot 2 drogu Marihuana kolicine 0.20 grama i kvalitete Vrlo Dobra[35.000]!
+(14/05/2020, 01:10:06) Tony Griffin{6972} je stavio u vozilo Freeway{4785} slot 2 drogu Marihuana kolicine 0.20 grama i kvalitete Vrlo Dobra[35.000]!
+(14/05/2020, 02:24:21) Ethan Greenfield{6419} je stavio u vozilo Bobcat{4780} slot 1 drogu MDMA kolicine 15.00 tableta i kvalitete Vrlo Dobra[38.000]!
+(14/05/2020, 02:24:23) Ethan Greenfield{6419} je stavio u vozilo Bobcat{4780} slot 2 drogu Kokain kolicine 10.00 grama i kvalitete Odlicna[46.000]!
+(14/05/2020, 13:01:16) Luka Petrovski{6477} je stavio u vozilo Intruder{4709} slot 1 drogu Kokain kolicine 0.10 grama i kvalitete Odlicna[41.000]!
+(14/05/2020, 13:01:23) Luka Petrovski{6477} je stavio u vozilo Intruder{4709} slot 2 drogu Kokain kolicine 0.10 grama i kvalitete Odlicna[41.000]!
+(14/05/2020, 16:14:58) John Kingston{7062} je stavio u vozilo Club{4811} slot 1 drogu Heroin kolicine 2.00 grama i kvalitete Vrlo Dobra[38.000]!
+(14/05/2020, 16:21:16) Winchester Tillman{5761} je stavio u vozilo Buffalo{3684} slot 1 drogu Kokain kolicine 1.70 grama i kvalitete Odlicna[46.000]!
+(14/05/2020, 18:24:12) Alonzo Ward{5649} je stavio u vozilo Landstalker{4170} slot 1 drogu Marihuana kolicine 25.00 grama i kvalitete Odlicna[44.000]!
+(14/05/2020, 18:24:39) Alonzo Ward{5649} je stavio u vozilo Landstalker{4170} slot 2 drogu MDMA kolicine 15.00 tableta i kvalitete Vrlo Dobra[38.000]!
+(14/05/2020, 18:24:45) Alonzo Ward{5649} je stavio u vozilo Landstalker{4170} slot 3 drogu Xanax kolicine 10.00 tableta i kvalitete Vrlo Dobra[36.000]!
+(14/05/2020, 18:24:49) Alonzo Ward{5649} je stavio u vozilo Landstalker{4170} slot 4 drogu Marihuana kolicine 10.00 grama i kvalitete Vrlo Dobra[35.000]!
+(14/05/2020, 18:24:51) Alonzo Ward{5649} je stavio u vozilo Landstalker{4170} slot 5 drogu Kokain kolicine 10.00 grama i kvalitete Vrlo Dobra[35.000]!
+(14/05/2020, 19:02:15) John Gunner{6974} je stavio u vozilo Wayfarer{4772} slot 1 drogu Marihuana kolicine 0.20 grama i kvalitete Vrlo Dobra[35.000]!
+(14/05/2020, 19:02:18) John Gunner{6974} je stavio u vozilo Wayfarer{4772} slot 2 drogu Heroin kolicine 0.20 grama i kvalitete Vrlo Dobra[38.000]!
+(14/05/2020, 19:02:25) John Gunner{6974} je stavio u vozilo Wayfarer{4772} slot 3 drogu Heroin kolicine 0.20 grama i kvalitete Vrlo Dobra[38.000]!
+(14/05/2020, 19:02:31) John Gunner{6974} je stavio u vozilo Wayfarer{4772} slot 4 drogu Marihuana kolicine 0.20 grama i kvalitete Vrlo Dobra[35.000]!
+(14/05/2020, 19:04:03) John Gunner{6974} je stavio u vozilo Wayfarer{4772} slot 5 drogu Heroin kolicine 0.50 grama i kvalitete Vrlo Dobra[38.000]!
+(14/05/2020, 19:27:10) Evgeniy Ivanov{5761} je stavio u vozilo Buffalo{3684} slot 2 drogu MDMA kolicine 5.00 tableta i kvalitete Vrlo Dobra[38.000]!
+(14/05/2020, 22:50:49) Maska_587513{4299} je stavio u vozilo NRG-500{3655} slot 1 drogu LSD kolicine 2.00 tableta i kvalitete Odlicna[46.000]!
+(14/05/2020, 22:50:58) Maska_587513{4299} je stavio u vozilo NRG-500{3655} slot 3 drogu Marihuana kolicine 1.86 grama i kvalitete Vrlo Dobra[39.720]!
+(15/05/2020, 00:36:03) Calvin Alvery{7083} je stavio u vozilo Tornado{4819} slot 1 drogu Kokain kolicine 1.45 grama i kvalitete Odlicna[46.000]!
+(15/05/2020, 00:52:38) Alan Huang{302} je stavio u vozilo Regina{810} slot 2 drogu Marihuana kolicine 27.00 grama i kvalitete Odlicna[42.000]!
+(15/05/2020, 01:05:10) Calvin Alvery{7083} je stavio u vozilo Tornado{4819} slot 2 drogu Kokain kolicine 3.90 grama i kvalitete Odlicna[46.000]!
+(15/05/2020, 01:05:50) Calvin Alvery{7083} je stavio u vozilo Tornado{4819} slot 3 drogu Kokain kolicine 0.38 grama i kvalitete Odlicna[46.000]!
+(15/05/2020, 01:06:19) Calvin Alvery{7083} je stavio u vozilo Tornado{4819} slot 4 drogu Marihuana kolicine 3.90 grama i kvalitete Odlicna[43.000]!
+(15/05/2020, 01:07:01) Calvin Alvery{7083} je stavio u vozilo Tornado{4819} slot 5 drogu Marihuana kolicine 3.00 grama i kvalitete Odlicna[43.000]!
+(15/05/2020, 01:38:36) Alonzo Ward{5649} je stavio u vozilo Premier{3865} slot 1 drogu Marihuana kolicine 0.87 grama i kvalitete Vrlo Dobra[39.000]!
+(15/05/2020, 01:38:44) Alonzo Ward{5649} je stavio u vozilo Premier{3865} slot 2 drogu Heroin kolicine 4.38 grama i kvalitete Vrlo Dobra[39.000]!
+(15/05/2020, 01:38:51) Alonzo Ward{5649} je stavio u vozilo Premier{3865} slot 3 drogu Marihuana kolicine 7.00 grama i kvalitete Vrlo Dobra[39.000]!
+(15/05/2020, 01:38:54) Alonzo Ward{5649} je stavio u vozilo Premier{3865} slot 4 drogu Marihuana kolicine 2.00 grama i kvalitete Vrlo Dobra[35.000]!
+(15/05/2020, 01:42:01) Otis Bryson{3838} je stavio u vozilo Vincent{4567} slot 1 drogu Marihuana kolicine 3.00 grama i kvalitete Vrlo Dobra[35.000]!
+(15/05/2020, 01:43:41) Kiante Wright{6991} je stavio u vozilo BMX{4796} slot 1 drogu Marihuana kolicine 0.68 grama i kvalitete Odlicna[42.000]!
+(15/05/2020, 01:43:51) Kiante Wright{6991} je stavio u vozilo BMX{4796} slot 2 drogu Kokain kolicine 3.24 grama i kvalitete Vrlo Dobra[35.000]!
+(15/05/2020, 01:43:56) Kiante Wright{6991} je stavio u vozilo BMX{4796} slot 3 drogu Kokain kolicine 0.15 grama i kvalitete Vrlo Dobra[38.000]!
+(15/05/2020, 01:43:59) Kiante Wright{6991} je stavio u vozilo BMX{4796} slot 4 drogu Kokain kolicine 0.15 grama i kvalitete Vrlo Dobra[35.000]!
+(15/05/2020, 01:44:02) Kiante Wright{6991} je stavio u vozilo BMX{4796} slot 5 drogu Kokain kolicine 0.15 grama i kvalitete Vrlo Dobra[35.000]!
+(15/05/2020, 13:05:10) Corey Watts{6740} je stavio u vozilo Bike{4806} slot 1 drogu Marihuana kolicine 49.90 grama i kvalitete Vrlo Dobra[39.000]!
+(15/05/2020, 16:34:54) John Kingston{7062} je stavio u vozilo Club{4811} slot 2 drogu Heroin kolicine 0.25 grama i kvalitete Vrlo Dobra[38.000]!
+(15/05/2020, 16:35:29) Lorenzo Brown{7080} je stavio u vozilo Blista Compact{4830} slot 1 drogu Heroin kolicine 0.25 grama i kvalitete Vrlo Dobra[38.000]!
+(15/05/2020, 17:29:56) Calvin Alvery{7083} je stavio u vozilo BMX{4827} slot 1 drogu Kokain kolicine 1.45 grama i kvalitete Odlicna[46.000]!
+(15/05/2020, 17:30:03) Calvin Alvery{7083} je stavio u vozilo BMX{4827} slot 2 drogu Kokain kolicine 3.90 grama i kvalitete Odlicna[46.000]!
+(15/05/2020, 17:30:09) Calvin Alvery{7083} je stavio u vozilo BMX{4827} slot 3 drogu Marihuana kolicine 3.90 grama i kvalitete Odlicna[43.000]!
+(15/05/2020, 17:30:14) Calvin Alvery{7083} je stavio u vozilo BMX{4827} slot 4 drogu Marihuana kolicine 3.00 grama i kvalitete Odlicna[43.000]!
+(15/05/2020, 21:31:23) Boris Noukhayev{98} je stavio u vozilo Tampa{4560} slot 1 drogu Heroin kolicine 50.00 grama i kvalitete Odlicna[45.000]!
+(16/05/2020, 00:30:30) Otis Bryson{3838} je stavio u vozilo Vincent{4567} slot 1 drogu Marihuana kolicine 0.50 grama i kvalitete Vrlo Dobra[35.000]!
+(16/05/2020, 07:21:40) Alonzo Ward{5649} je stavio u vozilo Landstalker{4170} slot 1 drogu Marihuana kolicine 25.75 grama i kvalitete Odlicna[41.954]!
+(16/05/2020, 07:22:22) Alonzo Ward{5649} je stavio u vozilo Landstalker{4170} slot 2 drogu MDMA kolicine 14.00 tableta i kvalitete Vrlo Dobra[38.000]!
+(16/05/2020, 07:22:46) Alonzo Ward{5649} je stavio u vozilo Landstalker{4170} slot 3 drogu Xanax kolicine 10.00 tableta i kvalitete Vrlo Dobra[36.000]!
+(16/05/2020, 07:23:20) Alonzo Ward{5649} je stavio u vozilo Landstalker{4170} slot 4 drogu Kokain kolicine 11.00 grama i kvalitete Vrlo Dobra[35.000]!
+(16/05/2020, 07:24:35) Alonzo Ward{5649} je stavio u vozilo Landstalker{4170} slot 5 drogu Heroin kolicine 4.38 grama i kvalitete Vrlo Dobra[39.000]!
+(16/05/2020, 16:05:03) Otis Bryson{3838} je stavio u vozilo Vincent{4567} slot 2 drogu Marihuana kolicine 1.00 grama i kvalitete Vrlo Dobra[35.000]!
+(16/05/2020, 16:05:06) Otis Bryson{3838} je stavio u vozilo Vincent{4567} slot 3 drogu MDMA kolicine 14.00 tableta i kvalitete Vrlo Dobra[38.000]!
+(16/05/2020, 16:33:12) Vuk Koprivica{5746} je stavio u vozilo Comet{889} slot 1 drogu Kokain kolicine 3.00 grama i kvalitete Vrlo Dobra[35.000]!
+(16/05/2020, 16:33:14) Vuk Koprivica{5746} je stavio u vozilo Comet{889} slot 2 drogu Xanax kolicine 4.00 tableta i kvalitete Odlicna[49.000]!
+(16/05/2020, 16:49:17) Lorenzo Brown{7080} je stavio u vozilo Blista Compact{4830} slot 1 drogu Heroin kolicine 0.25 grama i kvalitete Vrlo Dobra[38.000]!
+(16/05/2020, 20:59:13) Maska_753771{154} je stavio u vozilo Burrito{4646} slot 1 drogu Kokain kolicine 48.00 grama i kvalitete Odlicna[49.000]!
+(16/05/2020, 21:02:23) Vladimir Molotov{3850} je stavio u vozilo Bullet{4369} slot 3 drogu Heroin kolicine 50.00 grama i kvalitete Odlicna[45.000]!
+(16/05/2020, 21:07:22) Vuk Koprivica{5746} je stavio u vozilo Elegant{3955} slot 1 drogu Kokain kolicine 3.00 grama i kvalitete Vrlo Dobra[35.000]!
+(16/05/2020, 21:18:29) Maska_753771{154} je stavio u vozilo Burrito{4646} slot 2 drogu Kokain kolicine 5.00 grama i kvalitete Odlicna[49.000]!
+(16/05/2020, 22:36:42) Vuk Koprivica{5746} je stavio u vozilo Elegant{3955} slot 1 drogu Kokain kolicine 3.00 grama i kvalitete Vrlo Dobra[35.000]!
+(16/05/2020, 23:58:46) Otis Bryson{3838} je stavio u vozilo Vincent{4567} slot 3 drogu MDMA kolicine 4.00 tableta i kvalitete Vrlo Dobra[38.000]!
+(17/05/2020, 12:50:16) Aleksander Zaitsev{140} je stavio u vozilo Picador{4588} slot 1 drogu Heroin kolicine 2.00 grama i kvalitete Odlicna[45.000]!
+(17/05/2020, 12:50:25) Aleksander Zaitsev{140} je stavio u vozilo Picador{4588} slot 2 drogu LSD kolicine 9.00 tableta i kvalitete Odlicna[49.000]!
+(17/05/2020, 14:27:34) William Nithercott{5492} je stavio u vozilo Regina{4781} slot 1 drogu Kokain kolicine 15.89 grama i kvalitete Vrlo Dobra[38.000]!
+(17/05/2020, 14:28:10) William Nithercott{5492} je stavio u vozilo Regina{4781} slot 2 drogu Kokain kolicine 1.37 grama i kvalitete Odlicna[46.000]!
+(17/05/2020, 14:28:22) William Nithercott{5492} je stavio u vozilo Regina{4781} slot 3 drogu MDMA kolicine 5.00 tableta i kvalitete Vrlo Dobra[38.000]!
+(17/05/2020, 19:40:52) Tristan Fulcher{6413} je stavio u vozilo Picador{4342} slot 1 drogu LSD kolicine 14.00 tableta i kvalitete Odlicna[47.000]!
+(17/05/2020, 19:40:59) Tristan Fulcher{6413} je stavio u vozilo Picador{4342} slot 2 drogu Xanax kolicine 10.00 tableta i kvalitete Odlicna[49.000]!
+(17/05/2020, 19:41:16) Tristan Fulcher{6413} je stavio u vozilo Picador{4342} slot 3 drogu Marihuana kolicine 20.00 grama i kvalitete Odlicna[40.000]!
+(17/05/2020, 19:41:21) Tristan Fulcher{6413} je stavio u vozilo Picador{4342} slot 4 drogu Kokain kolicine 10.00 grama i kvalitete Vrlo Dobra[35.000]!
+(17/05/2020, 19:52:58) Jacob Mossey{6942} je stavio u vozilo Perennial{4128} slot 1 drogu Marihuana kolicine 100.00 grama i kvalitete Vrlo Dobra[39.000]!
+(17/05/2020, 19:53:00) Jacob Mossey{6942} je stavio u vozilo Perennial{4128} slot 2 drogu Marihuana kolicine 19.00 grama i kvalitete Odlicna[42.000]!
+(17/05/2020, 20:02:04) Tristan Fulcher{6413} je stavio u vozilo Picador{4342} slot 5 drogu MDMA kolicine 10.00 tableta i kvalitete Vrlo Dobra[38.000]!
+(17/05/2020, 20:02:11) Tristan Fulcher{6413} je stavio u vozilo Picador{4342} slot 6 drogu Kokain kolicine 8.00 grama i kvalitete Odlicna[46.000]!
+(17/05/2020, 20:03:24) Tristan Fulcher{6413} je stavio u vozilo Picador{4342} slot 7 drogu Kokain kolicine 1.00 grama i kvalitete Odlicna[46.000]!
+(17/05/2020, 20:03:27) Tristan Fulcher{6413} je stavio u vozilo Picador{4342} slot 8 drogu Heroin kolicine 1.00 grama i kvalitete Vrlo Dobra[38.000]!
+(17/05/2020, 20:12:06) Alonzo Ward{5649} je stavio u vozilo Premier{3865} slot 1 drogu Kokain kolicine 2.70 grama i kvalitete Vrlo Dobra[35.000]!
+(17/05/2020, 21:32:39) Otis Bryson{3838} je stavio u vozilo Vincent{4567} slot 4 drogu MDMA kolicine 4.00 tableta i kvalitete Vrlo Dobra[38.000]!
+(17/05/2020, 21:32:48) Otis Bryson{3838} je stavio u vozilo Vincent{4567} slot 5 drogu MDMA kolicine 2.00 tableta i kvalitete Vrlo Dobra[38.000]!
+(17/05/2020, 21:32:52) Otis Bryson{3838} je stavio u vozilo Vincent{4567} slot 6 drogu MDMA kolicine 1.00 tableta i kvalitete Vrlo Dobra[38.000]!
+(17/05/2020, 22:54:53) Maska_587513{4299} je stavio u vozilo Perennial{4232} slot 1 drogu MDMA kolicine 11.00 tableta i kvalitete Vrlo Dobra[38.000]!
+(17/05/2020, 22:54:56) Maska_587513{4299} je stavio u vozilo Perennial{4232} slot 2 drogu MDMA kolicine 9.00 tableta i kvalitete Vrlo Dobra[38.000]!
+(18/05/2020, 15:25:43) Frank Bates{374} je stavio u vozilo Burrito{4812} slot 1 drogu LSD kolicine 5.00 tableta i kvalitete Odlicna[49.000]!
+(18/05/2020, 18:00:47) Jacob Mossey{6942} je stavio u vozilo Sanchez{4675} slot 1 drogu Xanax kolicine 4.00 tableta i kvalitete Odlicna[49.000]!
+(18/05/2020, 18:47:46) Kiante Wright{6991} je stavio u vozilo BMX{4796} slot 3 drogu LSD kolicine 20.00 tableta i kvalitete Odlicna[49.000]!
+(18/05/2020, 18:47:54) Kiante Wright{6991} je stavio u vozilo BMX{4796} slot 4 drogu Marihuana kolicine 0.37 grama i kvalitete Odlicna[42.000]!
+(18/05/2020, 19:25:27) Kiante Wright{6991} je stavio u vozilo BMX{4796} slot 5 drogu Marihuana kolicine 9.00 grama i kvalitete Odlicna[42.000]!
+(18/05/2020, 22:29:07) Donald Memphis{4299} je stavio u vozilo Infernus{3642} slot 1 drogu MDMA kolicine 9.00 tableta i kvalitete Vrlo Dobra[38.000]!
+(18/05/2020, 22:29:46) Donald Memphis{4299} je stavio u vozilo Infernus{3642} slot 1 drogu MDMA kolicine 2.00 tableta i kvalitete Vrlo Dobra[38.000]!
+(18/05/2020, 22:29:59) Donald Memphis{4299} je stavio u vozilo Infernus{3642} slot 2 drogu MDMA kolicine 9.00 tableta i kvalitete Vrlo Dobra[38.000]!
+(18/05/2020, 22:30:01) Donald Memphis{4299} je stavio u vozilo Infernus{3642} slot 3 drogu MDMA kolicine 9.00 tableta i kvalitete Vrlo Dobra[38.000]!
+(18/05/2020, 22:30:16) Donald Memphis{4299} je stavio u vozilo Infernus{3642} slot 4 drogu Marihuana kolicine 1.00 grama i kvalitete Vrlo Dobra[36.000]!
+(18/05/2020, 22:42:05) Shane Duncan{1751} je stavio u vozilo Moonbeam{4356} slot 3 drogu Kokain kolicine 20.00 grama i kvalitete Odlicna[46.000]!
+(18/05/2020, 23:17:54) Boris Noukhayev{98} je stavio u vozilo Tampa{4560} slot 1 drogu Heroin kolicine 30.00 grama i kvalitete Odlicna[45.000]!
+(18/05/2020, 23:17:59) Boris Noukhayev{98} je stavio u vozilo Tampa{4560} slot 2 drogu Heroin kolicine 50.00 grama i kvalitete Odlicna[42.000]!
+(18/05/2020, 23:22:15) Igor Kostic{561} je stavio u vozilo Huntley{4519} slot 1 drogu Kokain kolicine 2.00 grama i kvalitete Odlicna[46.000]!
+(18/05/2020, 23:22:25) Igor Kostic{561} je stavio u vozilo Huntley{4519} slot 2 drogu Kokain kolicine 2.49 grama i kvalitete Odlicna[46.000]!
+(19/05/2020, 00:18:34) Reggie Crawford{5027} je stavio u vozilo Bobcat{4813} slot 9 drogu Marihuana kolicine 10.00 grama i kvalitete Vrlo Dobra[39.720]!
+(19/05/2020, 00:18:39) Reggie Crawford{5027} je stavio u vozilo Bobcat{4813} slot 10 drogu Kokain kolicine 2.00 grama i kvalitete Odlicna[46.000]!
+(19/05/2020, 02:09:35) Tyreek Kingston{1340} je stavio u vozilo Club{4741} slot 1 drogu Marihuana kolicine 0.80 grama i kvalitete Odlicna[41.950]!
+(19/05/2020, 17:25:38) Ishiwata Yusuke{177} je stavio u vozilo Fortune{4723} slot 1 drogu Marihuana kolicine 2.70 grama i kvalitete Odlicna[41.950]!
+(19/05/2020, 17:43:02) Donald Memphis{4299} je stavio u vozilo Infernus{3642} slot 4 drogu MDMA kolicine 1.00 tableta i kvalitete Vrlo Dobra[38.000]!
+(19/05/2020, 17:43:04) Donald Memphis{4299} je stavio u vozilo Infernus{3642} slot 5 drogu MDMA kolicine 1.00 tableta i kvalitete Vrlo Dobra[38.000]!
+(19/05/2020, 17:43:06) Donald Memphis{4299} je stavio u vozilo Infernus{3642} slot 6 drogu MDMA kolicine 1.00 tableta i kvalitete Vrlo Dobra[38.000]!
+(19/05/2020, 17:45:34) Donald Memphis{4299} je stavio u vozilo Infernus{3642} slot 3 drogu MDMA kolicine 6.00 tableta i kvalitete Vrlo Dobra[38.000]!
+(19/05/2020, 17:45:39) Donald Memphis{4299} je stavio u vozilo Infernus{3642} slot 4 drogu MDMA kolicine 9.00 tableta i kvalitete Vrlo Dobra[38.000]!
+(19/05/2020, 17:45:45) Donald Memphis{4299} je stavio u vozilo Infernus{3642} slot 5 drogu Marihuana kolicine 1.00 grama i kvalitete Vrlo Dobra[36.000]!
+(19/05/2020, 22:53:00) Hunter Kang{96} je stavio u vozilo ZR-350{548} slot 1 drogu Xanax kolicine 5.00 tableta i kvalitete Vrlo Dobra[36.000]!
+(19/05/2020, 22:53:05) Hunter Kang{96} je stavio u vozilo ZR-350{548} slot 2 drogu Xanax kolicine 1.00 tableta i kvalitete Vrlo Dobra[36.000]!
+(19/05/2020, 22:53:09) Hunter Kang{96} je stavio u vozilo ZR-350{548} slot 3 drogu Kokain kolicine 3.00 grama i kvalitete Odlicna[46.000]!
+(19/05/2020, 22:53:15) Hunter Kang{96} je stavio u vozilo ZR-350{548} slot 4 drogu Kokain kolicine 3.00 grama i kvalitete Odlicna[46.000]!
+(19/05/2020, 22:53:17) Hunter Kang{96} je stavio u vozilo ZR-350{548} slot 5 drogu Kokain kolicine 2.00 grama i kvalitete Odlicna[46.000]!
+(19/05/2020, 23:04:55) Boris Noukhayev{98} je stavio u vozilo Tampa{4560} slot 3 drogu Heroin kolicine 20.00 grama i kvalitete Odlicna[45.000]!
+(19/05/2020, 23:57:47) Liam Hao{6345} je stavio u vozilo Sanchez{4674} slot 3 drogu Marihuana kolicine 7.00 grama i kvalitete Odlicna[43.000]!
+(20/05/2020, 00:09:12) Otis Bryson{3838} je stavio u vozilo Vincent{4567} slot 4 drogu Marihuana kolicine 7.00 grama i kvalitete Odlicna[41.950]!
+(20/05/2020, 01:10:21) Maska_501472{98} je stavio u vozilo Tampa{4560} slot 3 drogu Heroin kolicine 9.00 grama i kvalitete Odlicna[45.000]!
+(20/05/2020, 14:42:58) Tyron Williams{7111} je stavio u vozilo Perennial{4891} slot 1 drogu LSD kolicine 4.00 tableta i kvalitete Odlicna[49.000]!
+(20/05/2020, 14:56:30) Maska_189050{6325} je stavio u vozilo Admiral{4862} slot 1 drogu Marihuana kolicine 0.75 grama i kvalitete Odlicna[43.000]!
+(20/05/2020, 17:46:38) Liao Song{1001} je stavio u vozilo Merit{4245} slot 1 drogu LSD kolicine 15.00 tableta i kvalitete Odlicna[49.000]!
+(20/05/2020, 17:46:42) Liao Song{1001} je stavio u vozilo Merit{4245} slot 2 drogu Marihuana kolicine 0.97 grama i kvalitete Odlicna[42.000]!
+(20/05/2020, 17:47:15) Liao Song{1001} je stavio u vozilo Merit{4245} slot 3 drogu Marihuana kolicine 8.02 grama i kvalitete Odlicna[42.000]!
+(20/05/2020, 17:47:27) Liao Song{1001} je stavio u vozilo Merit{4245} slot 4 drogu Marihuana kolicine 0.37 grama i kvalitete Odlicna[42.000]!
+(20/05/2020, 17:47:32) Liao Song{1001} je stavio u vozilo Merit{4245} slot 5 drogu Kokain kolicine 0.15 grama i kvalitete Vrlo Dobra[35.000]!
+(20/05/2020, 19:25:34) Tyron Williams{7111} je stavio u vozilo Perennial{4891} slot 1 drogu LSD kolicine 4.00 tableta i kvalitete Odlicna[49.000]!
+(20/05/2020, 21:30:47) Alonzo Ward{5649} je stavio u vozilo Landstalker{4170} slot 3 drogu Kokain kolicine 61.00 grama i kvalitete Vrlo Dobra[35.000]!
+(20/05/2020, 21:30:54) Alonzo Ward{5649} je stavio u vozilo Landstalker{4170} slot 5 drogu MDMA kolicine 6.00 tableta i kvalitete Vrlo Dobra[38.000]!
+(20/05/2020, 23:03:40) Alonzo Ward{5649} je stavio u vozilo Landstalker{4170} slot 4 drogu Kokain kolicine 31.00 grama i kvalitete Vrlo Dobra[35.000]!
+(20/05/2020, 23:15:17) Maska_753771{154} je stavio u vozilo Burrito{4646} slot 3 drogu Kokain kolicine 1.00 grama i kvalitete Odlicna[49.000]!
+(20/05/2020, 23:15:32) Maska_753771{154} je stavio u vozilo Burrito{4646} slot 4 drogu Kokain kolicine 0.50 grama i kvalitete Odlicna[49.000]!
+(20/05/2020, 23:38:45) Reggie Crawford{5027} je stavio u vozilo Club{4787} slot 1 drogu Marihuana kolicine 5.00 grama i kvalitete Odlicna[41.950]!
+(20/05/2020, 23:42:20) Reggie Crawford{5027} je stavio u vozilo Club{4787} slot 2 drogu Marihuana kolicine 10.00 grama i kvalitete Vrlo Dobra[39.720]!
+(20/05/2020, 23:42:22) Reggie Crawford{5027} je stavio u vozilo Club{4787} slot 3 drogu Marihuana kolicine 10.00 grama i kvalitete Vrlo Dobra[39.720]!
+(20/05/2020, 23:42:29) Reggie Crawford{5027} je stavio u vozilo Club{4787} slot 4 drogu Marihuana kolicine 4.00 grama i kvalitete Vrlo Dobra[35.000]!
+(20/05/2020, 23:42:31) Reggie Crawford{5027} je stavio u vozilo Club{4787} slot 5 drogu Marihuana kolicine 1.00 grama i kvalitete Vrlo Dobra[39.720]!
+(20/05/2020, 23:42:36) Reggie Crawford{5027} je stavio u vozilo Club{4787} slot 6 drogu Kokain kolicine 3.00 grama i kvalitete Vrlo Dobra[38.000]!
+(20/05/2020, 23:52:29) Reggie Crawford{5027} je stavio u vozilo Club{4787} slot 7 drogu Marihuana kolicine 2.00 grama i kvalitete Odlicna[41.950]!
+(20/05/2020, 23:52:35) Reggie Crawford{5027} je stavio u vozilo Club{4787} slot 8 drogu Marihuana kolicine 2.00 grama i kvalitete Odlicna[41.950]!
+(20/05/2020, 23:52:37) Reggie Crawford{5027} je stavio u vozilo Club{4787} slot 9 drogu Marihuana kolicine 1.00 grama i kvalitete Vrlo Dobra[35.000]!
+(20/05/2020, 23:53:13) Reggie Crawford{5027} je stavio u vozilo Club{4787} slot 6 drogu Marihuana kolicine 0.50 grama i kvalitete Vrlo Dobra[35.000]!
+(20/05/2020, 23:53:24) Reggie Crawford{5027} je stavio u vozilo Club{4787} slot 10 drogu Marihuana kolicine 0.50 grama i kvalitete Odlicna[41.950]!
+(21/05/2020, 00:45:37) Otis Bryson{3838} je stavio u vozilo Vincent{4567} slot 2 drogu Kokain kolicine 5.00 grama i kvalitete Vrlo Dobra[35.000]!
+(21/05/2020, 01:03:30) Reggie Crawford{5027} je stavio u vozilo Club{4787} slot 9 drogu Marihuana kolicine 50.00 grama i kvalitete Vrlo Dobra[39.000]!
+(21/05/2020, 01:03:53) Reggie Crawford{5027} je stavio u vozilo Club{4787} slot 10 drogu Marihuana kolicine 3.00 grama i kvalitete Odlicna[43.000]!
+(21/05/2020, 01:04:19) Reggie Crawford{5027} je stavio u vozilo Club{4787} slot 5 drogu Marihuana kolicine 2.00 grama i kvalitete Odlicna[43.000]!
+(21/05/2020, 01:49:56) Ben Cooper{6613} je stavio u vozilo Tahoma{4788} slot 1 drogu MDMA kolicine 2.00 tableta i kvalitete Vrlo Dobra[38.000]!
+(21/05/2020, 01:50:09) Ben Cooper{6613} je stavio u vozilo Tahoma{4788} slot 2 drogu Marihuana kolicine 1.10 grama i kvalitete Odlicna[43.000]!
+(21/05/2020, 02:07:16) Ben Cooper{6613} je stavio u vozilo Tahoma{4788} slot 3 drogu Marihuana kolicine 0.20 grama i kvalitete Odlicna[43.000]!
+(21/05/2020, 02:16:05) Vuk Koprivica{5746} je stavio u vozilo Elegant{3955} slot 1 drogu Kokain kolicine 2.50 grama i kvalitete Vrlo Dobra[35.000]!
+(21/05/2020, 13:31:58) Calvin Alvery{7083} je stavio u vozilo BMX{4827} slot 3 drogu Marihuana kolicine 1.88 grama i kvalitete Odlicna[43.000]!
+(21/05/2020, 13:33:28) Calvin Alvery{7083} je stavio u vozilo BMX{4827} slot 4 drogu Kokain kolicine 4.88 grama i kvalitete Odlicna[46.000]!
+(21/05/2020, 13:43:51) Calvin Alvery{7083} je stavio u vozilo BMX{4827} slot 1 drogu Kokain kolicine 8.01 grama i kvalitete Odlicna[41.496]!
+(21/05/2020, 14:34:31) Raheem Burton{6827} je stavio u vozilo Sanchez{4884} slot 1 drogu MDMA kolicine 6.00 tableta i kvalitete Vrlo Dobra[38.000]!
+(21/05/2020, 19:52:46) Reggie Crawford{5027} je stavio u vozilo Tahoma{4769} slot 1 drogu Marihuana kolicine 50.00 grama i kvalitete Vrlo Dobra[39.000]!
+(21/05/2020, 19:52:51) Reggie Crawford{5027} je stavio u vozilo Tahoma{4769} slot 2 drogu Marihuana kolicine 9.00 grama i kvalitete Odlicna[42.000]!
+(21/05/2020, 19:54:06) Reggie Crawford{5027} je stavio u vozilo Tahoma{4769} slot 3 drogu Marihuana kolicine 50.00 grama i kvalitete Vrlo Dobra[39.000]!
+(21/05/2020, 19:54:11) Reggie Crawford{5027} je stavio u vozilo Tahoma{4769} slot 4 drogu Marihuana kolicine 10.00 grama i kvalitete Vrlo Dobra[39.720]!
+(21/05/2020, 19:56:34) Reggie Crawford{5027} je stavio u vozilo Tahoma{4769} slot 5 drogu Marihuana kolicine 10.00 grama i kvalitete Vrlo Dobra[39.720]!
+(21/05/2020, 19:56:41) Reggie Crawford{5027} je stavio u vozilo Tahoma{4769} slot 6 drogu Marihuana kolicine 5.00 grama i kvalitete Odlicna[41.950]!
+(21/05/2020, 19:56:56) Reggie Crawford{5027} je stavio u vozilo Tahoma{4769} slot 7 drogu Marihuana kolicine 1.00 grama i kvalitete Vrlo Dobra[39.720]!
+(21/05/2020, 19:59:21) Reggie Crawford{5027} je stavio u vozilo Tahoma{4769} slot 8 drogu Marihuana kolicine 4.00 grama i kvalitete Vrlo Dobra[35.000]!
+(21/05/2020, 19:59:25) Reggie Crawford{5027} je stavio u vozilo Tahoma{4769} slot 9 drogu Marihuana kolicine 3.00 grama i kvalitete Odlicna[43.000]!
+(21/05/2020, 19:59:28) Reggie Crawford{5027} je stavio u vozilo Tahoma{4769} slot 10 drogu Marihuana kolicine 2.00 grama i kvalitete Odlicna[41.950]!
+(21/05/2020, 23:33:15) Kazymyr Galkin{5027} je stavio u vozilo Tahoma{4769} slot 1 drogu Marihuana kolicine 50.00 grama i kvalitete Vrlo Dobra[39.000]!
+(22/05/2020, 00:52:24) Dominik Medvedev{6801} je stavio u vozilo Patriot{4370} slot 1 drogu Heroin kolicine 0.10 grama i kvalitete Odlicna[45.000]!
+(22/05/2020, 00:55:51) Calvin Alvery{7083} je stavio u vozilo Mountain Bike{4915} slot 1 drogu Marihuana kolicine 1.88 grama i kvalitete Odlicna[43.000]!
+(22/05/2020, 00:56:00) Calvin Alvery{7083} je stavio u vozilo Mountain Bike{4915} slot 2 drogu Kokain kolicine 8.01 grama i kvalitete Odlicna[41.500]!
+(22/05/2020, 22:03:43) Alan Huang{302} je stavio u vozilo Sanchez{1720} slot 1 drogu Kokain kolicine 22.00 grama i kvalitete Odlicna[40.000]!
+(22/05/2020, 23:35:59) Tristan Fulcher{6413} je stavio u vozilo Freeway{4691} slot 1 drogu Heroin kolicine 0.69 grama i kvalitete Vrlo Dobra[38.000]!
+(23/05/2020, 00:10:28) Gabriel Hopwood{581} je stavio u vozilo BMX{4885} slot 1 drogu LSD kolicine 4.00 tableta i kvalitete Odlicna[49.000]!
+(23/05/2020, 00:12:03) Stewart Cole{6940} je stavio u vozilo Bobcat{4815} slot 1 drogu LSD kolicine 4.00 tableta i kvalitete Odlicna[49.000]!
+(23/05/2020, 00:33:55) Mark Nieder{1013} je stavio u vozilo Intruder{4905} slot 1 drogu Kokain kolicine 28.00 grama i kvalitete Odlicna[40.000]!
+(23/05/2020, 01:19:00) Tristan Fulcher{6413} je stavio u vozilo Freeway{4691} slot 2 drogu Kokain kolicine 7.50 grama i kvalitete Odlicna[41.500]!
+(23/05/2020, 13:56:41) Gabriel Hopwood{581} je stavio u vozilo Sadler{1707} slot 1 drogu LSD kolicine 4.00 tableta i kvalitete Odlicna[49.000]!
+(23/05/2020, 15:05:27) Alan Huang{302} je stavio u vozilo Regina{810} slot 3 drogu Kokain kolicine 10.00 grama i kvalitete Odlicna[40.000]!
+(23/05/2020, 15:21:03) Maska_189050{6325} je stavio u vozilo Admiral{4862} slot 2 drogu Marihuana kolicine 0.25 grama i kvalitete Odlicna[43.000]!
+(23/05/2020, 16:11:13) Mark Nieder{1013} je stavio u vozilo Intruder{4905} slot 2 drogu Kokain kolicine 4.00 grama i kvalitete Odlicna[40.000]!
+(23/05/2020, 16:11:28) Mark Nieder{1013} je stavio u vozilo Intruder{4905} slot 3 drogu Kokain kolicine 2.00 grama i kvalitete Odlicna[40.000]!
+(23/05/2020, 23:04:18) Alonzo Ward{5649} je stavio u vozilo Topfun Van (Berkley's RC){3999} slot 3 drogu Kokain kolicine 30.70 grama i kvalitete Vrlo Dobra[35.000]!
+(23/05/2020, 23:04:26) Alonzo Ward{5649} je stavio u vozilo Topfun Van (Berkley's RC){3999} slot 4 drogu Marihuana kolicine 5.75 grama i kvalitete Odlicna[41.950]!
+(23/05/2020, 23:04:35) Alonzo Ward{5649} je stavio u vozilo Topfun Van (Berkley's RC){3999} slot 5 drogu Xanax kolicine 4.00 tableta i kvalitete Vrlo Dobra[36.000]!
+(23/05/2020, 23:04:47) Alonzo Ward{5649} je stavio u vozilo Topfun Van (Berkley's RC){3999} slot 6 drogu Heroin kolicine 4.07 grama i kvalitete Vrlo Dobra[39.000]!
+(24/05/2020, 01:54:07) Alan Huang{302} je stavio u vozilo Bobcat{4476} slot 1 drogu MDMA kolicine 50.00 tableta i kvalitete Odlicna[42.000]!
+(24/05/2020, 02:40:25) James McCharty{511} je stavio u vozilo Remington{269} slot 1 drogu Kokain kolicine 7.50 grama i kvalitete Odlicna[41.500]!
+(24/05/2020, 02:40:32) James McCharty{511} je stavio u vozilo Remington{269} slot 2 drogu Heroin kolicine 0.68 grama i kvalitete Vrlo Dobra[38.000]!
+(24/05/2020, 14:31:19) Wayne Chow{5482} je stavio u vozilo Sanchez{4822} slot 1 drogu Marihuana kolicine 8.00 grama i kvalitete Odlicna[42.000]!
+(24/05/2020, 16:43:46) William Nithercott{5492} je stavio u vozilo Regina{4781} slot 1 drogu Kokain kolicine 15.89 grama i kvalitete Vrlo Dobra[38.000]!
+(24/05/2020, 16:43:58) William Nithercott{5492} je stavio u vozilo Regina{4781} slot 2 drogu Kokain kolicine 1.37 grama i kvalitete Odlicna[46.000]!
+(24/05/2020, 16:44:09) William Nithercott{5492} je stavio u vozilo Regina{4781} slot 3 drogu MDMA kolicine 5.00 tableta i kvalitete Vrlo Dobra[38.000]!
+(24/05/2020, 20:43:36) Edsel Eang{6896} je stavio u vozilo Mountain Bike{4725} slot 1 drogu MDMA kolicine 8.00 tableta i kvalitete Odlicna[42.000]!
+(24/05/2020, 23:01:13) Mark Nieder{1013} je stavio u vozilo Intruder{4905} slot 2 drogu Kokain kolicine 4.00 grama i kvalitete Odlicna[40.000]!
+(25/05/2020, 01:33:34) Alan Huang{302} je stavio u vozilo Regina{810} slot 4 drogu Marihuana kolicine 4.00 grama i kvalitete Odlicna[42.000]!
+(25/05/2020, 03:38:04) Milos Popovic{7049} je stavio u vozilo Bobcat{4931} slot 1 drogu Kokain kolicine 10.00 grama i kvalitete Vrlo Dobra[38.000]!
+(25/05/2020, 20:10:54) Wayne Chow{5482} je stavio u vozilo Sanchez{4822} slot 2 drogu Kokain kolicine 7.00 grama i kvalitete Odlicna[41.500]!
+(26/05/2020, 00:42:20) Gabriel Hopwood{581} je stavio u vozilo Sadler{1707} slot 2 drogu Kokain kolicine 3.00 grama i kvalitete Vrlo Dobra[35.000]!
+(26/05/2020, 01:05:17) James McCharty{511} je stavio u vozilo Sabre{4791} slot 1 drogu Marihuana kolicine 0.20 grama i kvalitete Vrlo Dobra[35.000]!
+(26/05/2020, 03:39:23) James McCharty{511} je stavio u vozilo Remington{269} slot 2 drogu Kokain kolicine 8.00 grama i kvalitete Vrlo Dobra[38.000]!
+(26/05/2020, 03:39:40) James McCharty{511} je stavio u vozilo Remington{269} slot 3 drogu Kokain kolicine 1.07 grama i kvalitete Vrlo Dobra[38.000]!
+(26/05/2020, 10:59:00) Alonzo Ward{5649} je stavio u vozilo Intruder{4881} slot 1 drogu Kokain kolicine 25.00 grama i kvalitete Vrlo Dobra[35.000]!
+(26/05/2020, 10:59:06) Alonzo Ward{5649} je stavio u vozilo Intruder{4881} slot 2 drogu Marihuana kolicine 5.00 grama i kvalitete Odlicna[41.950]!
+(26/05/2020, 10:59:11) Alonzo Ward{5649} je stavio u vozilo Intruder{4881} slot 3 drogu Xanax kolicine 5.00 tableta i kvalitete Vrlo Dobra[36.000]!
+(26/05/2020, 13:22:33) Tony Griffin{6972} je stavio u vozilo Freeway{4785} slot 2 drogu Marihuana kolicine 0.68 grama i kvalitete Odlicna[43.000]!
+(26/05/2020, 19:03:56) James McCharty{511} je stavio u vozilo Remington{269} slot 4 drogu Marihuana kolicine 0.20 grama i kvalitete Vrlo Dobra[35.000]!
+(26/05/2020, 21:56:00) Viktor Noukhayev{27} je stavio u vozilo Sadler{3829} slot 1 drogu Heroin kolicine 50.00 grama i kvalitete Odlicna[42.000]!
+(26/05/2020, 21:56:10) Viktor Noukhayev{27} je stavio u vozilo Sadler{3829} slot 2 drogu Heroin kolicine 20.00 grama i kvalitete Odlicna[45.000]!
+(26/05/2020, 22:59:10) William Nithercott{5492} je stavio u vozilo Regina{4781} slot 1 drogu Kokain kolicine 15.89 grama i kvalitete Vrlo Dobra[38.000]!
+(26/05/2020, 22:59:19) William Nithercott{5492} je stavio u vozilo Regina{4781} slot 2 drogu Kokain kolicine 1.37 grama i kvalitete Odlicna[46.000]!
+(26/05/2020, 22:59:22) William Nithercott{5492} je stavio u vozilo Regina{4781} slot 3 drogu MDMA kolicine 5.00 tableta i kvalitete Vrlo Dobra[38.000]!
+(27/05/2020, 14:23:31) Zion Linzell{5764} je stavio u vozilo Huntley{4589} slot 1 drogu Kokain kolicine 22.00 grama i kvalitete Vrlo Dobra[35.000]!
+(27/05/2020, 14:23:35) Zion Linzell{5764} je stavio u vozilo Huntley{4589} slot 2 drogu Kokain kolicine 25.00 grama i kvalitete Vrlo Dobra[35.000]!
+(27/05/2020, 14:23:39) Zion Linzell{5764} je stavio u vozilo Huntley{4589} slot 3 drogu Marihuana kolicine 5.00 grama i kvalitete Odlicna[41.950]!
+(27/05/2020, 14:23:43) Zion Linzell{5764} je stavio u vozilo Huntley{4589} slot 4 drogu Xanax kolicine 5.00 tableta i kvalitete Vrlo Dobra[36.000]!
+(27/05/2020, 17:24:54) Gerald Broderick{125} je stavio u vozilo Sadler{2412} slot 1 drogu Marihuana kolicine 36.00 grama i kvalitete Vrlo Dobra[39.000]!
+(27/05/2020, 19:57:48) Jacob Anderson{6174} je stavio u vozilo Bobcat{4524} slot 1 drogu Kokain kolicine 65.00 grama i kvalitete Odlicna[48.000]!
+(27/05/2020, 19:59:02) Kenneth Nelson{6700} je stavio u vozilo Bobcat{4536} slot 1 drogu Kokain kolicine 8.00 grama i kvalitete Odlicna[48.000]!
+(27/05/2020, 19:59:28) Kenneth Nelson{6700} je stavio u vozilo Bobcat{4536} slot 2 drogu LSD kolicine 1.00 tableta i kvalitete Odlicna[49.000]!
+(27/05/2020, 21:12:59) James Hare{7241} je stavio u vozilo Sadler{4951} slot 1 drogu Marihuana kolicine 3.50 grama i kvalitete Vrlo Dobra[39.000]!
+(27/05/2020, 21:33:24) Jacob Anderson{6174} je stavio u vozilo Bobcat{4524} slot 2 drogu Kokain kolicine 0.89 grama i kvalitete Odlicna[48.000]!
+(27/05/2020, 21:41:32) James McCharty{511} je stavio u vozilo Sabre{4791} slot 1 drogu Kokain kolicine 8.00 grama i kvalitete Vrlo Dobra[38.000]!
+(27/05/2020, 21:41:36) James McCharty{511} je stavio u vozilo Sabre{4791} slot 2 drogu Heroin kolicine 0.68 grama i kvalitete Vrlo Dobra[38.000]!
+(27/05/2020, 21:41:41) Alan Huang{302} je stavio u vozilo Bobcat{4476} slot 2 drogu Heroin kolicine 48.00 grama i kvalitete Vrlo Dobra[35.000]!
+(27/05/2020, 21:41:47) James McCharty{511} je stavio u vozilo Sabre{4791} slot 3 drogu Kokain kolicine 1.07 grama i kvalitete Vrlo Dobra[38.000]!
+(27/05/2020, 21:41:58) James McCharty{511} je stavio u vozilo Sabre{4791} slot 4 drogu Marihuana kolicine 0.20 grama i kvalitete Vrlo Dobra[35.000]!
+(27/05/2020, 21:52:32) Vukota Saranovic{5953} je stavio u vozilo Intruder{4066} slot 1 drogu Marihuana kolicine 75.00 grama i kvalitete Odlicna[40.000]!
+(27/05/2020, 22:31:15) Gabriel Hopwood{581} je stavio u vozilo Sadler{1707} slot 1 drogu Kokain kolicine 10.00 grama i kvalitete Vrlo Dobra[35.000]!
+(27/05/2020, 22:34:49) Dantrell Brooks{6991} je stavio u vozilo BMX{4796} slot 2 drogu Heroin kolicine 0.10 grama i kvalitete Vrlo Dobra[35.000]!
+(27/05/2020, 22:34:52) Dantrell Brooks{6991} je stavio u vozilo BMX{4796} slot 3 drogu MDMA kolicine 20.00 tableta i kvalitete Odlicna[42.000]!
+(27/05/2020, 23:21:06) Dantrell Brooks{6991} je stavio u vozilo BMX{4796} slot 3 drogu MDMA kolicine 20.00 tableta i kvalitete Odlicna[42.000]!
+(27/05/2020, 23:28:20) Gabriel Hopwood{581} je stavio u vozilo Sadler{1707} slot 1 drogu Kokain kolicine 10.00 grama i kvalitete Vrlo Dobra[35.000]!
+(27/05/2020, 23:37:32) James McCharty{511} je stavio u vozilo Remington{269} slot 1 drogu Kokain kolicine 8.00 grama i kvalitete Odlicna[48.000]!
+(27/05/2020, 23:37:37) James McCharty{511} je stavio u vozilo Remington{269} slot 2 drogu Kokain kolicine 8.00 grama i kvalitete Vrlo Dobra[38.000]!
+(27/05/2020, 23:37:45) James McCharty{511} je stavio u vozilo Remington{269} slot 3 drogu LSD kolicine 1.00 tableta i kvalitete Odlicna[49.000]!
+(27/05/2020, 23:37:52) James McCharty{511} je stavio u vozilo Remington{269} slot 4 drogu Heroin kolicine 0.68 grama i kvalitete Vrlo Dobra[38.000]!
+(27/05/2020, 23:37:58) James McCharty{511} je stavio u vozilo Remington{269} slot 5 drogu Kokain kolicine 1.07 grama i kvalitete Vrlo Dobra[38.000]!
+(27/05/2020, 23:54:22) Otis Bryson{3838} je stavio u vozilo Vincent{4567} slot 2 drogu Kokain kolicine 5.00 grama i kvalitete Vrlo Dobra[35.000]!
+(28/05/2020, 01:15:07) Liam Hao{6345} je stavio u vozilo Sanchez{4674} slot 3 drogu Kokain kolicine 0.20 grama i kvalitete Odlicna[46.000]!
+(28/05/2020, 01:15:22) Liam Hao{6345} je stavio u vozilo Sanchez{4674} slot 4 drogu Kokain kolicine 1.09 grama i kvalitete Odlicna[40.000]!
+(28/05/2020, 02:42:50) Milos Popovic{7049} je stavio u vozilo Merit{4948} slot 1 drogu Kokain kolicine 2.00 grama i kvalitete Vrlo Dobra[38.000]!
+(28/05/2020, 02:43:41) Milos Popovic{7049} je stavio u vozilo PCJ-600{4925} slot 1 drogu Kokain kolicine 2.00 grama i kvalitete Vrlo Dobra[38.000]!
+(28/05/2020, 03:01:54) Demetrius Innes{231} je stavio u vozilo Walton{3807} slot 2 drogu MDMA kolicine 20.00 tableta i kvalitete Odlicna[42.000]!
+(28/05/2020, 10:06:15) Aleksander Zaitsev{140} je stavio u vozilo Picador{4588} slot 1 drogu Marihuana kolicine 50.00 grama i kvalitete Vrlo Dobra[39.000]!
+(28/05/2020, 10:06:19) Aleksander Zaitsev{140} je stavio u vozilo Picador{4588} slot 2 drogu Heroin kolicine 50.00 grama i kvalitete Odlicna[43.000]!
+(28/05/2020, 15:45:27) Carter Dunn{7204} je stavio u vozilo Regina{4159} slot 1 drogu Kokain kolicine 4.00 grama i kvalitete Odlicna[40.000]!
+(28/05/2020, 15:45:30) Carter Dunn{7204} je stavio u vozilo Regina{4159} slot 2 drogu Kokain kolicine 2.00 grama i kvalitete Odlicna[40.000]!
+(28/05/2020, 16:24:15) Carter Dunn{7204} je stavio u vozilo Regina{4159} slot 1 drogu Kokain kolicine 1.00 grama i kvalitete Odlicna[40.000]!
+(28/05/2020, 16:25:45) Stephen Frye{6999} je stavio u vozilo Sanchez{4882} slot 1 drogu Heroin kolicine 4.01 grama i kvalitete Vrlo Dobra[38.000]!
+(28/05/2020, 16:25:55) Stephen Frye{6999} je stavio u vozilo Sanchez{4882} slot 2 drogu Kokain kolicine 9.00 grama i kvalitete Odlicna[40.000]!
+(28/05/2020, 17:40:18) Stephen Frye{6999} je stavio u vozilo Sanchez{4882} slot 2 drogu Kokain kolicine 9.00 grama i kvalitete Odlicna[40.000]!
+(28/05/2020, 18:57:46) Aleksander Zaitsev{140} je stavio u vozilo Picador{4588} slot 1 drogu Marihuana kolicine 45.00 grama i kvalitete Vrlo Dobra[39.000]!
+(28/05/2020, 18:57:51) Aleksander Zaitsev{140} je stavio u vozilo Picador{4588} slot 2 drogu Heroin kolicine 43.00 grama i kvalitete Odlicna[43.000]!
+(28/05/2020, 20:58:27) Kenneth Nelson{6700} je stavio u vozilo Bobcat{4536} slot 1 drogu Kokain kolicine 4.69 grama i kvalitete Odlicna[48.000]!
+(28/05/2020, 22:07:21) Boris Noukhayev{98} je stavio u vozilo Tampa{4560} slot 1 drogu Marihuana kolicine 45.00 grama i kvalitete Vrlo Dobra[39.000]!
+(28/05/2020, 22:07:27) Boris Noukhayev{98} je stavio u vozilo Tampa{4560} slot 2 drogu Heroin kolicine 43.00 grama i kvalitete Odlicna[43.000]!
+(28/05/2020, 23:01:26) Alan Huang{302} je stavio u vozilo Bobcat{4258} slot 1 drogu MDMA kolicine 19.00 tableta i kvalitete Odlicna[42.000]!
+(28/05/2020, 23:01:31) Alan Huang{302} je stavio u vozilo Bobcat{4258} slot 2 drogu Heroin kolicine 48.00 grama i kvalitete Vrlo Dobra[35.000]!
+(29/05/2020, 00:02:41) Igor Kostic{561} je stavio u vozilo Infernus{3027} slot 1 drogu Marihuana kolicine 15.00 grama i kvalitete Vrlo Dobra[39.000]!
+(29/05/2020, 00:28:44) Otis Bryson{3838} je stavio u vozilo Vincent{4567} slot 3 drogu Kokain kolicine 10.00 grama i kvalitete Vrlo Dobra[35.000]!
+(29/05/2020, 03:00:55) Vukota Saranovic{5953} je stavio u vozilo Intruder{4066} slot 1 drogu MDMA kolicine 50.00 tableta i kvalitete Vrlo Dobra[36.000]!
+(29/05/2020, 03:00:59) Vukota Saranovic{5953} je stavio u vozilo Intruder{4066} slot 2 drogu Marihuana kolicine 23.00 grama i kvalitete Odlicna[40.000]!
+(29/05/2020, 18:30:19) Vukota Saranovic{5953} je stavio u vozilo Comet{889} slot 1 drogu Marihuana kolicine 3.00 grama i kvalitete Odlicna[40.000]!
+(29/05/2020, 21:56:29) Igor Kostic{561} je stavio u vozilo Infernus{3027} slot 2 drogu Kokain kolicine 50.00 grama i kvalitete Odlicna[48.000]!
+(29/05/2020, 22:35:22) Demetrius Innes{231} je stavio u vozilo Walton{3807} slot 3 drogu Xanax kolicine 7.00 tableta i kvalitete Vrlo Dobra[36.000]!
+(29/05/2020, 22:35:34) Demetrius Innes{231} je stavio u vozilo Walton{3807} slot 4 drogu Marihuana kolicine 6.00 grama i kvalitete Vrlo Dobra[36.000]!
+(29/05/2020, 22:35:40) Demetrius Innes{231} je stavio u vozilo Walton{3807} slot 5 drogu Kokain kolicine 2.00 grama i kvalitete Vrlo Dobra[35.000]!
+(30/05/2020, 21:46:07) Lamarcus Davis{243} je stavio u vozilo Burrito{2490} slot 1 drogu Marihuana kolicine 0.80 grama i kvalitete Odlicna[42.000]!
+(30/05/2020, 21:46:31) Lamarcus Davis{243} je stavio u vozilo Burrito{2490} slot 2 drogu Marihuana kolicine 0.17 grama i kvalitete Odlicna[42.000]!
+(30/05/2020, 21:46:53) Lamarcus Davis{243} je stavio u vozilo Burrito{2490} slot 3 drogu Marihuana kolicine 8.02 grama i kvalitete Odlicna[42.000]!
+(30/05/2020, 21:46:58) Lamarcus Davis{243} je stavio u vozilo Burrito{2490} slot 4 drogu Marihuana kolicine 0.37 grama i kvalitete Odlicna[42.000]!
+(31/05/2020, 16:20:45) Maska_167713{6345} je stavio u vozilo PCJ-600{4925} slot 1 drogu MDMA kolicine 9.00 tableta i kvalitete Odlicna[42.000]!
+(31/05/2020, 16:54:53) Carter Dunn{7204} je stavio u vozilo Regina{4159} slot 1 drogu Kokain kolicine 1.00 grama i kvalitete Odlicna[40.000]!
+(31/05/2020, 17:39:26) Stephen Frye{6999} je stavio u vozilo Sanchez{4882} slot 3 drogu Heroin kolicine 0.18 grama i kvalitete Vrlo Dobra[38.000]!
+(31/05/2020, 17:39:41) Stephen Frye{6999} je stavio u vozilo Sanchez{4882} slot 4 drogu Heroin kolicine 0.20 grama i kvalitete Vrlo Dobra[38.000]!
+(31/05/2020, 17:50:13) Stephen Frye{6999} je stavio u vozilo Sanchez{4882} slot 1 drogu Heroin kolicine 3.79 grama i kvalitete Vrlo Dobra[38.000]!
+(31/05/2020, 18:11:37) Keyvon Crawford{2263} je stavio u vozilo Buccaneer{4981} slot 1 drogu Kokain kolicine 9.00 grama i kvalitete Odlicna[40.000]!
+(31/05/2020, 18:11:49) Keyvon Crawford{2263} je stavio u vozilo Buccaneer{4981} slot 2 drogu Heroin kolicine 2.50 grama i kvalitete Vrlo Dobra[38.000]!
+(31/05/2020, 19:27:33) Stephen Frye{6999} je stavio u vozilo Sanchez{4882} slot 1 drogu Heroin kolicine 1.00 grama i kvalitete Vrlo Dobra[38.000]!
+(31/05/2020, 22:12:30) Ronnie Inman{199} je stavio u vozilo Vincent{4667} slot 1 drogu Kokain kolicine 2.90 grama i kvalitete Vrlo Dobra[38.000]!
+(31/05/2020, 23:21:54) Vukota Saranovic{5953} je stavio u vozilo Intruder{4066} slot 3 drogu LSD kolicine 50.00 tableta i kvalitete Odlicna[49.000]!
+(01/06/2020, 18:19:45) Cletus Hutchinson{6700} je stavio u vozilo Bobcat{4536} slot 1 drogu Kokain kolicine 50.00 grama i kvalitete Odlicna[48.000]!
+(01/06/2020, 18:50:07) Edsel Eang{6896} je stavio u vozilo PCJ-600{4616} slot 1 drogu MDMA kolicine 8.00 tableta i kvalitete Odlicna[42.000]!
+(02/06/2020, 21:05:07) Mark Nieder{1013} je stavio u vozilo Intruder{4905} slot 2 drogu Heroin kolicine 15.00 grama i kvalitete Odlicna[45.000]!
+(02/06/2020, 21:05:14) Mark Nieder{1013} je stavio u vozilo Intruder{4905} slot 3 drogu Heroin kolicine 20.00 grama i kvalitete Odlicna[42.000]!
+(02/06/2020, 21:05:22) Mark Nieder{1013} je stavio u vozilo Intruder{4905} slot 4 drogu Heroin kolicine 5.00 grama i kvalitete Odlicna[45.000]!
+(02/06/2020, 22:32:45) James McCharty{511} je stavio u vozilo Sabre{4791} slot 1 drogu Kokain kolicine 8.00 grama i kvalitete Odlicna[48.000]!
+(02/06/2020, 22:32:46) James McCharty{511} je stavio u vozilo Sabre{4791} slot 2 drogu Kokain kolicine 8.00 grama i kvalitete Vrlo Dobra[38.000]!
+(02/06/2020, 22:32:47) James McCharty{511} je stavio u vozilo Sabre{4791} slot 3 drogu LSD kolicine 1.00 tableta i kvalitete Odlicna[49.000]!
+(02/06/2020, 22:32:51) James McCharty{511} je stavio u vozilo Sabre{4791} slot 4 drogu Heroin kolicine 0.68 grama i kvalitete Vrlo Dobra[38.000]!
+(02/06/2020, 22:32:58) James McCharty{511} je stavio u vozilo Sabre{4791} slot 5 drogu Kokain kolicine 1.05 grama i kvalitete Vrlo Dobra[38.000]!
+(03/06/2020, 00:13:38) James McCharty{511} je stavio u vozilo Remington{269} slot 1 drogu Kokain kolicine 8.00 grama i kvalitete Odlicna[48.000]!
+(03/06/2020, 00:13:39) James McCharty{511} je stavio u vozilo Remington{269} slot 2 drogu Kokain kolicine 8.00 grama i kvalitete Vrlo Dobra[38.000]!
+(03/06/2020, 00:13:46) James McCharty{511} je stavio u vozilo Remington{269} slot 3 drogu LSD kolicine 1.00 tableta i kvalitete Odlicna[49.000]!
+(03/06/2020, 00:13:50) James McCharty{511} je stavio u vozilo Remington{269} slot 4 drogu Heroin kolicine 0.68 grama i kvalitete Vrlo Dobra[38.000]!
+(03/06/2020, 00:13:57) James McCharty{511} je stavio u vozilo Remington{269} slot 5 drogu Kokain kolicine 1.03 grama i kvalitete Vrlo Dobra[38.000]!
+(03/06/2020, 00:41:49) Vukota Saranovic{5953} je stavio u vozilo Intruder{4066} slot 4 drogu Xanax kolicine 50.00 tableta i kvalitete Odlicna[49.000]!
+(03/06/2020, 03:39:15) Kazymyr Galkin{5027} je stavio u vozilo Elegant{4995} slot 1 drogu Marihuana kolicine 20.00 grama i kvalitete Vrlo Dobra[39.000]!
+(03/06/2020, 03:39:20) Kazymyr Galkin{5027} je stavio u vozilo Elegant{4995} slot 2 drogu Marihuana kolicine 1.00 grama i kvalitete Odlicna[43.000]!
+(03/06/2020, 03:40:00) Kazymyr Galkin{5027} je stavio u vozilo Elegant{4995} slot 3 drogu Kokain kolicine 4.00 grama i kvalitete Vrlo Dobra[35.000]!
+(03/06/2020, 03:40:06) Kazymyr Galkin{5027} je stavio u vozilo Elegant{4995} slot 4 drogu Kokain kolicine 1.20 grama i kvalitete Vrlo Dobra[38.000]!
+(03/06/2020, 03:40:13) Kazymyr Galkin{5027} je stavio u vozilo Elegant{4995} slot 5 drogu Marihuana kolicine 0.68 grama i kvalitete Vrlo Dobra[35.000]!
+(03/06/2020, 16:50:40) Kazymyr Galkin{5027} je stavio u vozilo Elegant{4995} slot 6 drogu Kokain kolicine 4.00 grama i kvalitete Vrlo Dobra[35.000]!
+(03/06/2020, 16:53:19) Andrei Galkin{6094} je stavio u vozilo Bobcat{4998} slot 1 drogu Marihuana kolicine 1.00 grama i kvalitete Odlicna[41.950]!
+(03/06/2020, 16:59:14) Kazymyr Galkin{5027} je stavio u vozilo Tahoma{4769} slot 6 drogu Marihuana kolicine 20.00 grama i kvalitete Vrlo Dobra[39.000]!
+(05/06/2020, 08:59:21) Igor Kostic{561} je stavio u vozilo Burrito{4401} slot 3 drogu Kokain kolicine 75.00 grama i kvalitete Vrlo Dobra[39.000]!
+(05/06/2020, 16:35:33) Aleksander Zaitsev{140} je stavio u vozilo Picador{4588} slot 1 drogu MDMA kolicine 6.00 tableta i kvalitete Odlicna[42.000]!
+(06/06/2020, 16:04:04) Liam Hao{6345} je stavio u vozilo PCJ-600{4925} slot 1 drogu Kokain kolicine 8.00 grama i kvalitete Vrlo Dobra[35.000]!
+(06/06/2020, 16:04:06) Liam Hao{6345} je stavio u vozilo PCJ-600{4925} slot 2 drogu Marihuana kolicine 8.00 grama i kvalitete Odlicna[42.000]!
+(06/06/2020, 16:04:07) Liam Hao{6345} je stavio u vozilo PCJ-600{4925} slot 3 drogu Heroin kolicine 8.00 grama i kvalitete Vrlo Dobra[35.000]!
+(07/06/2020, 23:47:07) Michael Blake{2606} je stavio u vozilo Super GT{4790} slot 1 drogu Kokain kolicine 3.20 grama i kvalitete Vrlo Dobra[38.000]!
+(08/06/2020, 12:08:13) James Hare{7241} je stavio u vozilo Sanchez{4949} slot 1 drogu Marihuana kolicine 2.58 grama i kvalitete Vrlo Dobra[39.000]!
+(08/06/2020, 20:31:20) Otis Bryson{3838} je stavio u vozilo Vincent{4567} slot 2 drogu Marihuana kolicine 2.00 grama i kvalitete Odlicna[41.950]!
+(09/06/2020, 15:18:11) Alonzo Ward{5649} je stavio u vozilo Mule{4979} slot 1 drogu Marihuana kolicine 100.00 grama i kvalitete Odlicna[50.000]!
+(09/06/2020, 15:18:14) Alonzo Ward{5649} je stavio u vozilo Mule{4979} slot 2 drogu Kokain kolicine 100.00 grama i kvalitete Odlicna[50.000]!
+(09/06/2020, 15:18:19) Alonzo Ward{5649} je stavio u vozilo Mule{4979} slot 3 drogu Heroin kolicine 100.00 grama i kvalitete Odlicna[50.000]!
+(09/06/2020, 20:34:55) Larry Dickens{231} je stavio u vozilo Walton{3807} slot 5 drogu Kokain kolicine 3.40 grama i kvalitete Odlicna[40.000]!
+(09/06/2020, 23:23:59) Maska_245229{6345} je stavio u vozilo FCR-900{3569} slot 1 drogu Heroin kolicine 0.50 grama i kvalitete Vrlo Dobra[35.000]!
+(09/06/2020, 23:24:09) Maska_245229{6345} je stavio u vozilo FCR-900{3569} slot 2 drogu Kokain kolicine 0.20 grama i kvalitete Vrlo Dobra[35.000]!
+(09/06/2020, 23:24:14) Maska_245229{6345} je stavio u vozilo FCR-900{3569} slot 3 drogu Marihuana kolicine 0.10 grama i kvalitete Odlicna[42.000]!
+(11/06/2020, 17:03:00) Zion Linzell{5764} je stavio u vozilo Huntley{4589} slot 4 drogu Marihuana kolicine 99.00 grama i kvalitete Odlicna[50.000]!
+(11/06/2020, 17:03:02) Zion Linzell{5764} je stavio u vozilo Huntley{4589} slot 5 drogu Kokain kolicine 100.00 grama i kvalitete Odlicna[50.000]!
+(11/06/2020, 17:03:11) Zion Linzell{5764} je stavio u vozilo Huntley{4589} slot 6 drogu Heroin kolicine 70.00 grama i kvalitete Odlicna[50.000]!
+(12/06/2020, 17:57:17) Alonzo Ward{5649} je stavio u vozilo Mule{4979} slot 1 drogu Kokain kolicine 1.10 grama i kvalitete Odlicna[40.000]!
+(12/06/2020, 17:57:21) Alonzo Ward{5649} je stavio u vozilo Mule{4979} slot 2 drogu Heroin kolicine 0.10 grama i kvalitete Vrlo Dobra[38.000]!
+(12/06/2020, 17:57:25) Alonzo Ward{5649} je stavio u vozilo Mule{4979} slot 3 drogu Marihuana kolicine 0.10 grama i kvalitete Odlicna[50.000]!
+(12/06/2020, 17:57:43) Alonzo Ward{5649} je stavio u vozilo Mule{4979} slot 4 drogu Heroin kolicine 14.10 grama i kvalitete Odlicna[50.000]!
+(12/06/2020, 17:57:51) Alonzo Ward{5649} je stavio u vozilo Mule{4979} slot 5 drogu Heroin kolicine 0.60 grama i kvalitete Odlicna[50.000]!
+(13/06/2020, 00:51:01) Edsel Eang{6896} je stavio u vozilo PCJ-600{4616} slot 2 drogu MDMA kolicine 2.00 tableta i kvalitete Odlicna[42.000]!
+(14/06/2020, 00:41:36) Otis Bryson{3838} je stavio u vozilo Vincent{4567} slot 3 drogu Marihuana kolicine 3.00 grama i kvalitete Odlicna[50.000]!
+(14/06/2020, 00:41:53) Otis Bryson{3838} je stavio u vozilo Vincent{4567} slot 4 drogu Marihuana kolicine 2.28 grama i kvalitete Odlicna[41.950]!
+(14/06/2020, 23:34:50) Natasha Bagrova{7241} je stavio u vozilo Sanchez{4949} slot 2 drogu MDMA kolicine 2.00 tableta i kvalitete Odlicna[42.000]!
+(16/06/2020, 15:37:04) Liam Hao{6345} je stavio u vozilo Boxville{5042} slot 1 drogu Heroin kolicine 8.00 grama i kvalitete Vrlo Dobra[35.000]!
+(16/06/2020, 15:37:13) Liam Hao{6345} je stavio u vozilo Boxville{5042} slot 2 drogu Kokain kolicine 40.00 grama i kvalitete Odlicna[49.000]!
+(16/06/2020, 15:37:25) Liam Hao{6345} je stavio u vozilo Boxville{5042} slot 3 drogu Marihuana kolicine 8.00 grama i kvalitete Odlicna[42.000]!
+(16/06/2020, 18:46:55) Otis Bryson{3838} je stavio u vozilo Vincent{4567} slot 2 drogu Marihuana kolicine 2.00 grama i kvalitete Odlicna[41.950]!
+(16/06/2020, 18:46:58) Otis Bryson{3838} je stavio u vozilo Vincent{4567} slot 5 drogu Marihuana kolicine 2.00 grama i kvalitete Odlicna[50.000]!
+(16/06/2020, 18:56:04) Alonzo Ward{5649} je stavio u vozilo Greenwood{5044} slot 1 drogu Marihuana kolicine 7.26 grama i kvalitete Odlicna[46.494]!
+(17/06/2020, 00:19:15) Elena Stoneberg{1001} je stavio u vozilo Merit{4245} slot 1 drogu LSD kolicine 15.00 tableta i kvalitete Odlicna[49.000]!
+(17/06/2020, 00:19:25) Elena Stoneberg{1001} je stavio u vozilo Merit{4245} slot 2 drogu Kokain kolicine 0.15 grama i kvalitete Vrlo Dobra[35.000]!
+(17/06/2020, 10:49:56) Jimmy Cheng{165} je stavio u vozilo Majestic{1566} slot 1 drogu LSD kolicine 29.00 tableta i kvalitete Vrlo Dobra[39.000]!
+(17/06/2020, 18:38:48) William Walker{7258} je stavio u vozilo Yankee{5047} slot 1 drogu Marihuana kolicine 2.00 grama i kvalitete Odlicna[50.000]!
+(17/06/2020, 18:38:51) William Walker{7258} je stavio u vozilo Yankee{5047} slot 2 drogu Kokain kolicine 2.00 grama i kvalitete Vrlo Dobra[35.000]!
+(17/06/2020, 19:28:22) Alonzo Ward{5649} je stavio u vozilo Euros{5043} slot 1 drogu Marihuana kolicine 20.00 grama i kvalitete Odlicna[40.000]!
+(17/06/2020, 19:28:25) Alonzo Ward{5649} je stavio u vozilo Euros{5043} slot 2 drogu LSD kolicine 50.00 tableta i kvalitete Odlicna[49.000]!
+(17/06/2020, 19:28:29) Alonzo Ward{5649} je stavio u vozilo Euros{5043} slot 3 drogu Xanax kolicine 49.00 tableta i kvalitete Odlicna[49.000]!
+(17/06/2020, 19:47:45) Alonzo Ward{5649} je stavio u vozilo Mule{4979} slot 6 drogu Marihuana kolicine 20.00 grama i kvalitete Odlicna[40.000]!
+(17/06/2020, 19:47:48) Alonzo Ward{5649} je stavio u vozilo Mule{4979} slot 7 drogu LSD kolicine 50.00 tableta i kvalitete Odlicna[49.000]!
+(17/06/2020, 19:47:52) Alonzo Ward{5649} je stavio u vozilo Mule{4979} slot 8 drogu Xanax kolicine 49.00 tableta i kvalitete Odlicna[49.000]!
+(17/06/2020, 23:48:28) Elena Stoneberg{1001} je stavio u vozilo Infernus{4971} slot 1 drogu LSD kolicine 5.00 tableta i kvalitete Odlicna[49.000]!
+(17/06/2020, 23:48:33) Elena Stoneberg{1001} je stavio u vozilo Infernus{4971} slot 2 drogu LSD kolicine 10.00 tableta i kvalitete Odlicna[49.000]!
+(17/06/2020, 23:48:39) Elena Stoneberg{1001} je stavio u vozilo Infernus{4971} slot 3 drogu Kokain kolicine 0.15 grama i kvalitete Vrlo Dobra[35.000]!
+(18/06/2020, 01:27:24) Natasha Bagrova{7241} je stavio u vozilo Sanchez{4949} slot 3 drogu Kokain kolicine 30.00 grama i kvalitete Odlicna[49.000]!
+(18/06/2020, 02:16:31) Maska_739643{7241} je stavio u vozilo Perennial{5054} slot 1 drogu Marihuana kolicine 2.57 grama i kvalitete Vrlo Dobra[39.000]!
+(18/06/2020, 02:16:36) Maska_739643{7241} je stavio u vozilo Perennial{5054} slot 2 drogu MDMA kolicine 2.00 tableta i kvalitete Odlicna[42.000]!
+(18/06/2020, 02:16:39) Maska_739643{7241} je stavio u vozilo Perennial{5054} slot 3 drogu Kokain kolicine 30.00 grama i kvalitete Odlicna[49.000]!
+(18/06/2020, 15:20:29) William Walker{7258} je stavio u vozilo Yankee{5047} slot 1 drogu Marihuana kolicine 2.00 grama i kvalitete Odlicna[50.000]!
+(18/06/2020, 15:20:32) William Walker{7258} je stavio u vozilo Yankee{5047} slot 2 drogu Kokain kolicine 2.00 grama i kvalitete Vrlo Dobra[35.000]!
+(18/06/2020, 20:58:45) Frank Montana{5398} je stavio u vozilo Huntley{4802} slot 1 drogu Kokain kolicine 70.00 grama i kvalitete Odlicna[50.000]!
+(18/06/2020, 23:38:49) Alonzo Ward{5649} je stavio u vozilo Tampa{5050} slot 1 drogu LSD kolicine 50.00 tableta i kvalitete Odlicna[49.000]!
+(18/06/2020, 23:38:52) Alonzo Ward{5649} je stavio u vozilo Tampa{5050} slot 2 drogu Xanax kolicine 49.00 tableta i kvalitete Odlicna[49.000]!
+(18/06/2020, 23:45:25) Gabriel Hopwood{581} je stavio u vozilo Bullet{3667} slot 1 drogu LSD kolicine 50.00 tableta i kvalitete Odlicna[49.000]!
+(18/06/2020, 23:45:28) Gabriel Hopwood{581} je stavio u vozilo Bullet{3667} slot 2 drogu Xanax kolicine 49.00 tableta i kvalitete Odlicna[49.000]!
+(19/06/2020, 00:14:01) William Walker{7258} je stavio u vozilo Yankee{5047} slot 3 drogu Kokain kolicine 40.00 grama i kvalitete Odlicna[50.000]!
+(19/06/2020, 00:14:07) William Walker{7258} je stavio u vozilo Yankee{5047} slot 4 drogu Marihuana kolicine 0.80 grama i kvalitete Odlicna[50.000]!
+(19/06/2020, 14:56:12) William Walker{7258} je stavio u vozilo Yankee{5047} slot 2 drogu Kokain kolicine 42.00 grama i kvalitete Odlicna[49.210]!
+(19/06/2020, 16:35:53) Vukota Saranovic{5953} je stavio u vozilo Huntley{4431} slot 2 drogu MDMA kolicine 2.00 tableta i kvalitete Vrlo Dobra[36.000]!
+(19/06/2020, 16:36:06) Vukota Saranovic{5953} je stavio u vozilo Huntley{4431} slot 3 drogu Marihuana kolicine 0.10 grama i kvalitete Odlicna[40.000]!
+(19/06/2020, 19:02:12) Frank Montana{5398} je stavio u vozilo Huntley{4802} slot 1 drogu Kokain kolicine 0.30 grama i kvalitete Vrlo Dobra[35.000]!
+(19/06/2020, 19:02:20) Frank Montana{5398} je stavio u vozilo Huntley{4802} slot 2 drogu Kokain kolicine 20.00 grama i kvalitete Odlicna[50.000]!
+(19/06/2020, 19:02:23) Frank Montana{5398} je stavio u vozilo Huntley{4802} slot 3 drogu Kokain kolicine 10.00 grama i kvalitete Odlicna[50.000]!
+(19/06/2020, 19:06:45) Frank Montana{5398} je stavio u vozilo Rancher (Lure){4980} slot 1 drogu Kokain kolicine 30.29 grama i kvalitete Odlicna[49.829]!
+(19/06/2020, 19:07:24) Frank Montana{5398} je stavio u vozilo Rancher (Lure){4980} slot 1 drogu Kokain kolicine 30.29 grama i kvalitete Odlicna[49.829]!
+(19/06/2020, 19:34:39) Carrie Brockman{249} je stavio u vozilo Buffalo{3347} slot 1 drogu LSD kolicine 49.00 tableta i kvalitete Odlicna[49.000]!
+(20/06/2020, 00:43:12) Midhat Spaho{285} je stavio u vozilo Comet{5049} slot 1 drogu Kokain kolicine 29.00 grama i kvalitete Vrlo Dobra[37.000]!
+(20/06/2020, 01:42:51) Natasha Bagrova{7241} je stavio u vozilo PCJ-600{4925} slot 1 drogu Kokain kolicine 15.00 grama i kvalitete Odlicna[49.830]!
+(20/06/2020, 02:06:23) Maska_739643{7241} je stavio u vozilo Perennial{5054} slot 4 drogu Kokain kolicine 15.00 grama i kvalitete Odlicna[49.830]!
+(20/06/2020, 23:48:09) Frank Montana{5398} je stavio u vozilo Rancher (Lure){4980} slot 2 drogu Kokain kolicine 8.68 grama i kvalitete Odlicna[49.830]!
+(20/06/2020, 23:57:38) Natasha Bagrova{7241} je stavio u vozilo Rancher (Lure){4980} slot 3 drogu Kokain kolicine 0.69 grama i kvalitete Odlicna[49.830]!
+(21/06/2020, 22:41:39) Gabriel Hopwood{581} je stavio u vozilo Bullet{3667} slot 1 drogu Kokain kolicine 2.00 grama i kvalitete Vrlo Dobra[35.000]!
+(21/06/2020, 22:41:42) Gabriel Hopwood{581} je stavio u vozilo Bullet{3667} slot 2 drogu Marihuana kolicine 15.00 grama i kvalitete Odlicna[40.000]!
+(21/06/2020, 22:41:43) Gabriel Hopwood{581} je stavio u vozilo Bullet{3667} slot 3 drogu Heroin kolicine 14.00 grama i kvalitete Odlicna[50.000]!
+(22/06/2020, 14:22:21) William Walker{7258} je stavio u vozilo Sweeper{5062} slot 1 drogu Kokain kolicine 2.00 grama i kvalitete Odlicna[49.209]!
+(22/06/2020, 15:26:50) Midhat Spaho{285} je stavio u vozilo Landstalker{4850} slot 1 drogu Heroin kolicine 30.00 grama i kvalitete Odlicna[42.000]!
+(22/06/2020, 15:27:00) Midhat Spaho{285} je stavio u vozilo Landstalker{4850} slot 2 drogu Kokain kolicine 24.00 grama i kvalitete Vrlo Dobra[37.000]!
+(22/06/2020, 22:19:57) Zion Linzell{5764} je stavio u vozilo Moonbeam{4883} slot 1 drogu Marihuana kolicine 84.00 grama i kvalitete Odlicna[50.000]!
+(22/06/2020, 22:20:08) Zion Linzell{5764} je stavio u vozilo Moonbeam{4883} slot 2 drogu Marihuana kolicine 10.00 grama i kvalitete Odlicna[50.000]!
+(22/06/2020, 22:20:13) Zion Linzell{5764} je stavio u vozilo Moonbeam{4883} slot 3 drogu Heroin kolicine 70.00 grama i kvalitete Odlicna[50.000]!
+(22/06/2020, 22:20:19) Zion Linzell{5764} je stavio u vozilo Moonbeam{4883} slot 4 drogu Kokain kolicine 30.00 grama i kvalitete Odlicna[50.000]!
+(22/06/2020, 22:20:37) Zion Linzell{5764} je stavio u vozilo Moonbeam{4883} slot 5 drogu Xanax kolicine 5.00 tableta i kvalitete Vrlo Dobra[36.000]!
+(23/06/2020, 00:49:03) Stefan Babic{1118} je stavio u vozilo Vincent{3790} slot 1 drogu Kokain kolicine 5.00 grama i kvalitete Vrlo Dobra[37.000]!
+(23/06/2020, 03:37:08) David Rodgers{1001} je stavio u vozilo Infernus{4971} slot 1 drogu LSD kolicine 5.00 tableta i kvalitete Odlicna[49.000]!
+(23/06/2020, 03:37:12) David Rodgers{1001} je stavio u vozilo Infernus{4971} slot 2 drogu LSD kolicine 10.00 tableta i kvalitete Odlicna[49.000]!
+(23/06/2020, 14:22:30) Raheem Burton{6827} je stavio u vozilo Sanchez{4884} slot 1 drogu Marihuana kolicine 5.00 grama i kvalitete Odlicna[42.000]!
+(23/06/2020, 17:31:54) William Walker{7258} je stavio u vozilo Sweeper{5062} slot 1 drogu Kokain kolicine 2.00 grama i kvalitete Odlicna[49.209]!
+(23/06/2020, 21:00:33) Raul Flores{1238} je stavio u vozilo Greenwood{3966} slot 1 drogu LSD kolicine 5.00 tableta i kvalitete Odlicna[49.000]!
+(23/06/2020, 21:00:35) Raul Flores{1238} je stavio u vozilo Greenwood{3966} slot 2 drogu LSD kolicine 10.00 tableta i kvalitete Odlicna[49.000]!
+(25/06/2020, 16:46:48) Alan Huang{302} je stavio u vozilo Bobcat{4258} slot 3 drogu Heroin kolicine 0.69 grama i kvalitete Vrlo Dobra[35.000]!
+(25/06/2020, 17:53:56) Gabriel Hopwood{581} je stavio u vozilo Bullet{3667} slot 2 drogu Heroin kolicine 84.00 grama i kvalitete Odlicna[50.000]!
+(25/06/2020, 17:54:01) Gabriel Hopwood{581} je stavio u vozilo Bullet{3667} slot 3 drogu Marihuana kolicine 95.00 grama i kvalitete Odlicna[48.125]!
+(25/06/2020, 17:55:34) Gabriel Hopwood{581} je stavio u vozilo Bullet{3667} slot 4 drogu Marihuana kolicine 1.00 grama i kvalitete Odlicna[48.130]!
+(25/06/2020, 18:00:40) Gabriel Hopwood{581} je stavio u vozilo Bullet{3667} slot 3 drogu Marihuana kolicine 95.00 grama i kvalitete Odlicna[48.130]!
+(25/06/2020, 23:06:52) Otis Bryson{3838} je stavio u vozilo Greenwood{4160} slot 1 drogu Heroin kolicine 20.00 grama i kvalitete Odlicna[50.000]!
+(26/06/2020, 21:02:22) Otis Bryson{3838} je stavio u vozilo Sanchez{4899} slot 1 drogu Marihuana kolicine 5.00 grama i kvalitete Odlicna[42.000]!
+(26/06/2020, 23:40:38) Bishamon Yamaguchi{7240} je stavio u vozilo BMX{5086} slot 1 drogu MDMA kolicine 3.00 tableta i kvalitete Odlicna[42.000]!
+(26/06/2020, 23:40:44) Bishamon Yamaguchi{7240} je stavio u vozilo BMX{5086} slot 2 drogu Heroin kolicine 5.00 grama i kvalitete Vrlo Dobra[35.000]!
+(26/06/2020, 23:40:47) Bishamon Yamaguchi{7240} je stavio u vozilo BMX{5086} slot 3 drogu Marihuana kolicine 5.00 grama i kvalitete Odlicna[42.000]!
+(26/06/2020, 23:40:50) Bishamon Yamaguchi{7240} je stavio u vozilo BMX{5086} slot 4 drogu Kokain kolicine 5.00 grama i kvalitete Odlicna[40.000]!
+(26/06/2020, 23:41:03) Bishamon Yamaguchi{7240} je stavio u vozilo BMX{5086} slot 5 drogu Heroin kolicine 0.30 grama i kvalitete Vrlo Dobra[35.000]!
+(27/06/2020, 16:37:03) Hugh Moore{7348} je stavio u vozilo Greenwood{5080} slot 1 drogu Heroin kolicine 3.50 grama i kvalitete Odlicna[50.000]!
+(27/06/2020, 16:37:27) Hugh Moore{7348} je stavio u vozilo Greenwood{5080} slot 2 drogu Marihuana kolicine 1.50 grama i kvalitete Odlicna[48.130]!
+(27/06/2020, 20:54:13) James McCharty{511} je stavio u vozilo Sabre{4791} slot 1 drogu Kokain kolicine 8.00 grama i kvalitete Odlicna[48.000]!
+(27/06/2020, 20:54:14) James McCharty{511} je stavio u vozilo Sabre{4791} slot 2 drogu Kokain kolicine 8.00 grama i kvalitete Vrlo Dobra[38.000]!
+(27/06/2020, 20:54:16) James McCharty{511} je stavio u vozilo Sabre{4791} slot 3 drogu LSD kolicine 1.00 tableta i kvalitete Odlicna[49.000]!
+(27/06/2020, 20:54:21) James McCharty{511} je stavio u vozilo Sabre{4791} slot 4 drogu Heroin kolicine 0.68 grama i kvalitete Vrlo Dobra[38.000]!
+(27/06/2020, 20:54:30) James McCharty{511} je stavio u vozilo Sabre{4791} slot 5 drogu Kokain kolicine 1.01 grama i kvalitete Vrlo Dobra[38.000]!
+(27/06/2020, 22:01:11) Edsel Eang{6896} je stavio u vozilo Bobcat{4624} slot 1 drogu Kokain kolicine 1.00 grama i kvalitete Vrlo Dobra[35.000]!
+(28/06/2020, 16:04:58) Giuseppe Agostini{5398} je stavio u vozilo Sunrise{5033} slot 1 drogu Kokain kolicine 4.69 grama i kvalitete Odlicna[49.830]!
+(28/06/2020, 16:05:52) Giuseppe Agostini{5398} je stavio u vozilo Sunrise{5033} slot 2 drogu Kokain kolicine 8.68 grama i kvalitete Odlicna[49.830]!
+(28/06/2020, 16:06:10) Giuseppe Agostini{5398} je stavio u vozilo Sunrise{5033} slot 3 drogu Kokain kolicine 0.68 grama i kvalitete Odlicna[49.830]!
+(28/06/2020, 17:15:33) Giuseppe Agostini{5398} je stavio u vozilo Merit{5090} slot 1 drogu Kokain kolicine 30.00 grama i kvalitete Odlicna[50.000]!
+(28/06/2020, 17:15:36) Giuseppe Agostini{5398} je stavio u vozilo Merit{5090} slot 2 drogu Marihuana kolicine 10.00 grama i kvalitete Odlicna[50.000]!
+(28/06/2020, 17:25:33) Giuseppe Agostini{5398} je stavio u vozilo Sunrise{5033} slot 4 drogu Kokain kolicine 30.00 grama i kvalitete Odlicna[50.000]!
+(28/06/2020, 17:25:38) Giuseppe Agostini{5398} je stavio u vozilo Sunrise{5033} slot 5 drogu Marihuana kolicine 10.00 grama i kvalitete Odlicna[50.000]!
+(28/06/2020, 20:43:14) Andrea Bell{1537} je stavio u vozilo Feltzer{1095} slot 1 drogu Marihuana kolicine 50.00 grama i kvalitete Odlicna[40.000]!
+(28/06/2020, 20:44:24) Alan Huang{302} je stavio u vozilo BF-400{872} slot 1 drogu Kokain kolicine 0.50 grama i kvalitete Vrlo Dobra[38.000]!
+(28/06/2020, 20:57:46) James McCharty{511} je stavio u vozilo Remington{269} slot 1 drogu Kokain kolicine 8.00 grama i kvalitete Odlicna[48.000]!
+(28/06/2020, 20:57:48) James McCharty{511} je stavio u vozilo Remington{269} slot 2 drogu Kokain kolicine 8.00 grama i kvalitete Vrlo Dobra[38.000]!
+(28/06/2020, 20:57:49) James McCharty{511} je stavio u vozilo Remington{269} slot 3 drogu LSD kolicine 1.00 tableta i kvalitete Odlicna[49.000]!
+(28/06/2020, 20:57:53) James McCharty{511} je stavio u vozilo Remington{269} slot 4 drogu Heroin kolicine 0.68 grama i kvalitete Vrlo Dobra[38.000]!
+(28/06/2020, 20:57:55) James McCharty{511} je stavio u vozilo Remington{269} slot 5 drogu Kokain kolicine 1.00 grama i kvalitete Vrlo Dobra[38.000]!
+(28/06/2020, 23:44:02) Alonzo Ward{5649} je stavio u vozilo Sanchez{5072} slot 1 drogu MDMA kolicine 50.00 tableta i kvalitete Odlicna[47.000]!
+(29/06/2020, 00:54:04) Caleb Gongsun{6560} je stavio u vozilo Forklift{5060} slot 1 drogu Kokain kolicine 50.00 grama i kvalitete Odlicna[45.000]!
+(29/06/2020, 15:03:25) Zion Linzell{5764} je stavio u vozilo Moonbeam{4883} slot 3 drogu Marihuana kolicine 100.00 grama i kvalitete Vrlo Dobra[38.000]!
+(29/06/2020, 19:55:13) Conor Lyons{1238} je stavio u vozilo Primo{4282} slot 1 drogu Marihuana kolicine 1.78 grama i kvalitete Odlicna[42.000]!
+(29/06/2020, 23:13:41) Conor Lyons{1238} je stavio u vozilo Primo{4282} slot 2 drogu Marihuana kolicine 0.88 grama i kvalitete Odlicna[42.000]!
+(29/06/2020, 23:16:35) Alonzo Ward{5649} je stavio u vozilo Sanchez{5072} slot 2 drogu Xanax kolicine 50.00 tableta i kvalitete Vrlo Dobra[37.000]!
+(30/06/2020, 00:22:20) Alan Huang{302} je stavio u vozilo BF-400{872} slot 1 drogu Marihuana kolicine 50.00 grama i kvalitete Odlicna[44.000]!
+(01/07/2020, 01:01:46) Alonzo Ward{5649} je stavio u vozilo Sanchez{5072} slot 3 drogu Xanax kolicine 49.00 tableta i kvalitete Odlicna[48.000]!
+(02/07/2020, 13:13:26) Victor Azzari{484} je stavio u vozilo Mountain Bike{5030} slot 1 drogu Marihuana kolicine 45.00 grama i kvalitete Vrlo Dobra[39.000]!
+(02/07/2020, 17:01:24) Victor Azzari{484} je stavio u vozilo Boxville (burglary){5031} slot 1 drogu Marihuana kolicine 40.00 grama i kvalitete Vrlo Dobra[39.000]!
+(02/07/2020, 20:53:08) Luke Tay{3199} je stavio u vozilo Picador{4275} slot 1 drogu Marihuana kolicine 1.50 grama i kvalitete Odlicna[48.130]!
+(02/07/2020, 21:22:29) Valentino Lombardi{5398} je stavio u vozilo Sunrise{5033} slot 1 drogu Kokain kolicine 44.04 grama i kvalitete Odlicna[49.920]!
+(02/07/2020, 21:22:34) Valentino Lombardi{5398} je stavio u vozilo Sunrise{5033} slot 2 drogu Marihuana kolicine 10.00 grama i kvalitete Odlicna[50.000]!
+(02/07/2020, 21:23:15) Valentino Lombardi{5398} je stavio u vozilo Perennial{5107} slot 1 drogu Kokain kolicine 44.04 grama i kvalitete Odlicna[49.920]!
+(02/07/2020, 21:23:17) Valentino Lombardi{5398} je stavio u vozilo Perennial{5107} slot 2 drogu Marihuana kolicine 10.00 grama i kvalitete Odlicna[50.000]!
+(03/07/2020, 18:10:11) Liam Hao{6345} je stavio u vozilo Elegy{3952} slot 1 drogu Kokain kolicine 3.70 grama i kvalitete Odlicna[49.000]!
+(03/07/2020, 18:11:02) Liam Hao{6345} je stavio u vozilo Elegy{3952} slot 2 drogu Marihuana kolicine 3.08 grama i kvalitete Odlicna[42.000]!
+(03/07/2020, 19:04:45) Pablo Buarda{3734} je stavio u vozilo Savanna{2967} slot 1 drogu Marihuana kolicine 0.18 grama i kvalitete Odlicna[48.130]!
+(03/07/2020, 19:07:30) William Nithercott{5492} je stavio u vozilo Tractor{4844} slot 1 drogu Marihuana kolicine 50.00 grama i kvalitete Odlicna[44.000]!
+(03/07/2020, 19:07:45) William Nithercott{5492} je stavio u vozilo Tractor{4844} slot 2 drogu MDMA kolicine 5.00 tableta i kvalitete Vrlo Dobra[38.000]!
+(03/07/2020, 19:07:53) William Nithercott{5492} je stavio u vozilo Tractor{4844} slot 3 drogu Kokain kolicine 15.89 grama i kvalitete Vrlo Dobra[38.000]!
+(03/07/2020, 19:08:02) William Nithercott{5492} je stavio u vozilo Tractor{4844} slot 4 drogu Kokain kolicine 1.37 grama i kvalitete Odlicna[46.000]!
+(03/07/2020, 20:36:32) Miguel Moyano{6896} je stavio u vozilo Bobcat{4624} slot 2 drogu Heroin kolicine 16.00 grama i kvalitete Odlicna[50.000]!
+(03/07/2020, 20:36:35) Miguel Moyano{6896} je stavio u vozilo Bobcat{4624} slot 3 drogu Marihuana kolicine 0.30 grama i kvalitete Odlicna[48.130]!
+(03/07/2020, 20:40:03) Dylan Torres{7356} je stavio u vozilo Freeway{5097} slot 1 drogu Marihuana kolicine 3.00 grama i kvalitete Vrlo Dobra[39.000]!
+(03/07/2020, 20:40:12) Dylan Torres{7356} je stavio u vozilo Freeway{5097} slot 2 drogu Heroin kolicine 1.77 grama i kvalitete Vrlo Dobra[39.000]!
+(03/07/2020, 21:19:20) Dylan Torres{7356} je stavio u vozilo Perennial{5112} slot 1 drogu Marihuana kolicine 1.76 grama i kvalitete Vrlo Dobra[39.000]!
+(03/07/2020, 21:19:42) Dylan Torres{7356} je stavio u vozilo Perennial{5112} slot 2 drogu Marihuana kolicine 1.20 grama i kvalitete Vrlo Dobra[39.000]!
+(03/07/2020, 21:19:50) Dylan Torres{7356} je stavio u vozilo Perennial{5112} slot 3 drogu Heroin kolicine 1.76 grama i kvalitete Vrlo Dobra[39.000]!
+(03/07/2020, 23:45:11) Hector Romero{5398} je stavio u vozilo Merit{5090} slot 1 drogu Marihuana kolicine 5.00 grama i kvalitete Odlicna[50.000]!
+(04/07/2020, 20:48:06) Liam Hao{6345} je stavio u vozilo Boxville{5042} slot 4 drogu Kokain kolicine 10.00 grama i kvalitete Odlicna[45.000]!
+(04/07/2020, 20:48:38) Liam Hao{6345} je stavio u vozilo Boxville{5042} slot 5 drogu Kokain kolicine 3.00 grama i kvalitete Odlicna[49.000]!
+(04/07/2020, 20:49:05) Liam Hao{6345} je stavio u vozilo Boxville{5042} slot 6 drogu Heroin kolicine 3.00 grama i kvalitete Vrlo Dobra[35.000]!
+(04/07/2020, 21:07:11) Miguel Moyano{6896} je stavio u vozilo Mountain Bike{4725} slot 1 drogu Heroin kolicine 14.00 grama i kvalitete Odlicna[50.000]!
+(05/07/2020, 02:01:58) Miguel Moyano{6896} je stavio u vozilo Mountain Bike{4725} slot 2 drogu Marihuana kolicine 2.00 grama i kvalitete Odlicna[43.000]!
+(05/07/2020, 02:02:11) Miguel Moyano{6896} je stavio u vozilo Mountain Bike{4725} slot 3 drogu Marihuana kolicine 3.00 grama i kvalitete Odlicna[43.000]!
+(05/07/2020, 02:02:14) Miguel Moyano{6896} je stavio u vozilo Mountain Bike{4725} slot 4 drogu Marihuana kolicine 2.00 grama i kvalitete Odlicna[43.000]!
+(05/07/2020, 17:07:48) Julian Covarrubias{6381} je stavio u vozilo Vincent{4285} slot 1 drogu Heroin kolicine 12.00 grama i kvalitete Odlicna[42.000]!
+(05/07/2020, 17:08:04) Julian Covarrubias{6381} je stavio u vozilo Vincent{4285} slot 2 drogu Marihuana kolicine 3.00 grama i kvalitete Odlicna[48.130]!
+(05/07/2020, 17:08:15) Julian Covarrubias{6381} je stavio u vozilo Vincent{4285} slot 3 drogu Heroin kolicine 2.90 grama i kvalitete Odlicna[50.000]!
+(09/07/2020, 17:13:26) Alonzo Fonseca{7397} je stavio u vozilo Hermes{5137} slot 1 drogu Marihuana kolicine 50.00 grama i kvalitete Odlicna[48.130]!
+(09/07/2020, 18:01:47) Maska_668122{6896} je stavio u vozilo Mountain Bike{4725} slot 1 drogu Marihuana kolicine 50.00 grama i kvalitete Odlicna[48.130]!
+(09/07/2020, 20:30:20) Gabriel Hopwood{581} je stavio u vozilo Bullet{3667} slot 3 drogu Marihuana kolicine 38.00 grama i kvalitete Odlicna[48.130]!
+(09/07/2020, 22:43:55) Alan Huang{302} je stavio u vozilo BF-400{872} slot 1 drogu Kokain kolicine 50.00 grama i kvalitete Odlicna[47.000]!
+(09/07/2020, 23:10:19) Robert Doherty{2606} je stavio u vozilo Burrito{1756} slot 2 drogu Kokain kolicine 50.00 grama i kvalitete Odlicna[47.000]!
+(09/07/2020, 23:47:35) Pablo Buarda{3734} je stavio u vozilo Sadler{2674} slot 1 drogu Kokain kolicine 2.70 grama i kvalitete Vrlo Dobra[35.000]!
+(10/07/2020, 16:42:16) Alonzo Ward{5649} je stavio u vozilo Benson{5141} slot 1 drogu Marihuana kolicine 100.00 grama i kvalitete Vrlo Dobra[38.000]!
+(10/07/2020, 18:59:57) Alonzo Fonseca{7397} je stavio u vozilo Mountain Bike{5159} slot 1 drogu Marihuana kolicine 44.00 grama i kvalitete Odlicna[48.130]!
+(12/07/2020, 18:12:20) Lev Anasenko{7380} je stavio u vozilo Perennial{5163} slot 1 drogu MDMA kolicine 3.00 tableta i kvalitete Odlicna[42.000]!
+(12/07/2020, 18:25:22) Miguel Moyano{6896} je stavio u vozilo Picador{4588} slot 1 drogu MDMA kolicine 3.00 tableta i kvalitete Odlicna[42.000]!
+(12/07/2020, 23:56:57) Lev Anasenko{7380} je stavio u vozilo Perennial{5163} slot 1 drogu MDMA kolicine 1.00 tableta i kvalitete Odlicna[42.000]!
+(14/07/2020, 00:20:27) Alan Huang{302} je stavio u vozilo BF-400{872} slot 1 drogu Kokain kolicine 10.00 grama i kvalitete Odlicna[46.000]!
+(14/07/2020, 17:28:26) Alonzo Ward{5649} je stavio u vozilo Benson{5141} slot 2 drogu Marihuana kolicine 38.00 grama i kvalitete Odlicna[48.130]!
+(14/07/2020, 17:28:31) Alonzo Ward{5649} je stavio u vozilo Benson{5141} slot 3 drogu Heroin kolicine 15.00 grama i kvalitete Odlicna[50.000]!
+(14/07/2020, 17:28:34) Alonzo Ward{5649} je stavio u vozilo Benson{5141} slot 4 drogu Kokain kolicine 2.00 grama i kvalitete Vrlo Dobra[35.000]!
+(19/07/2020, 16:11:30) Angel Arboleda{5482} je stavio u vozilo Freeway{5170} slot 1 drogu Marihuana kolicine 6.00 grama i kvalitete Odlicna[42.500]!
+(20/07/2020, 02:21:19) Liam Hao{6345} je stavio u vozilo Boxville{5042} slot 1 drogu Heroin kolicine 5.00 grama i kvalitete Vrlo Dobra[35.000]!
+(20/07/2020, 02:21:21) Liam Hao{6345} je stavio u vozilo Boxville{5042} slot 2 drogu Kokain kolicine 10.00 grama i kvalitete Odlicna[49.000]!
+(21/07/2020, 13:14:16) Byron Rice{5500} je stavio u vozilo Perennial{3658} slot 1 drogu Marihuana kolicine 50.00 grama i kvalitete Vrlo Dobra[38.000]!
+(21/07/2020, 22:44:15) Maska_840737{5677} je stavio u vozilo Bike{3863} slot 1 drogu Heroin kolicine 1.09 grama i kvalitete Odlicna[50.000]!
+(23/07/2020, 01:00:23) Jason Pruitt{3421} je stavio u vozilo Intruder{4641} slot 1 drogu Kokain kolicine 10.00 grama i kvalitete Vrlo Dobra[35.000]!
+(23/07/2020, 01:00:31) Jason Pruitt{3421} je stavio u vozilo Intruder{4641} slot 2 drogu LSD kolicine 10.00 tableta i kvalitete Odlicna[41.000]!
+(23/07/2020, 20:24:20) Pablo Buarda{7241} je stavio u vozilo Sanchez{4949} slot 1 drogu Heroin kolicine 0.38 grama i kvalitete Odlicna[42.000]!
+(24/07/2020, 00:25:49) Miguel Moyano{6896} je stavio u vozilo Mountain Bike{4725} slot 1 drogu Heroin kolicine 20.00 grama i kvalitete Odlicna[43.000]!
+(28/07/2020, 22:31:09) Michael Rogers{74} je stavio u vozilo Cheetah{4199} slot 1 drogu Kokain kolicine 0.10 grama i kvalitete Vrlo Dobra[38.000]!
+(30/07/2020, 16:57:42) Kaynard Wilcox{1110} je stavio u vozilo Greenwood{5044} slot 2 drogu Kokain kolicine 2.00 grama i kvalitete Vrlo Dobra[35.000]!
+(30/07/2020, 19:00:00) Jason Franklin{6456} je stavio u vozilo NRG-500{5220} slot 1 drogu Kokain kolicine 9.00 grama i kvalitete Vrlo Dobra[35.000]!
+(01/08/2020, 15:58:20) Rocaine Lawford{5764} je stavio u vozilo Merit{5063} slot 1 drogu Kokain kolicine 25.00 grama i kvalitete Odlicna[50.000]!
+(03/08/2020, 02:24:00) Landolfo Solano{7348} je stavio u vozilo Greenwood{5080} slot 2 drogu Heroin kolicine 3.00 grama i kvalitete Odlicna[43.000]!
+(04/08/2020, 00:21:27) Artur Mirnov{7391} je stavio u vozilo Club{5168} slot 1 drogu Heroin kolicine 0.30 grama i kvalitete Odlicna[43.000]!
+(05/08/2020, 18:13:18) Nathan Wong{6345} je stavio u vozilo Boxville{5042} slot 2 drogu Kokain kolicine 9.60 grama i kvalitete Odlicna[49.000]!
+(05/08/2020, 22:10:48) Maska_721639{3961} je stavio u vozilo Sabre{3869} slot 1 drogu Heroin kolicine 2.00 grama i kvalitete Odlicna[43.000]!
+(06/08/2020, 12:09:43) William Nithercott{5492} je stavio u vozilo Regina{4781} slot 4 drogu Marihuana kolicine 100.00 grama i kvalitete Odlicna[41.000]!
+(06/08/2020, 20:20:25) Artur Mirnov{7391} je stavio u vozilo Stratum{5241} slot 1 drogu Heroin kolicine 1.70 grama i kvalitete Odlicna[43.000]!
+(06/08/2020, 22:40:28) Maska_812710{7241} je stavio u vozilo Sanchez{4949} slot 1 drogu Heroin kolicine 0.31 grama i kvalitete Odlicna[42.000]!
+(06/08/2020, 22:46:35) Vladimir Abramovich{4515} je stavio u vozilo Camper{3372} slot 1 drogu Kokain kolicine 3.40 grama i kvalitete Vrlo Dobra[38.000]!
+(06/08/2020, 22:56:47) Liam Hao{6345} je stavio u vozilo Merit{5172} slot 1 drogu Heroin kolicine 1.50 grama i kvalitete Vrlo Dobra[35.000]!
+(06/08/2020, 22:56:59) Liam Hao{6345} je stavio u vozilo Merit{5172} slot 2 drogu Heroin kolicine 0.10 grama i kvalitete Vrlo Dobra[35.000]!
+(07/08/2020, 00:02:48) Robert Doherty{2606} je stavio u vozilo Comet{973} slot 1 drogu Kokain kolicine 3.00 grama i kvalitete Odlicna[47.000]!
+(07/08/2020, 19:03:12) Liam Hao{6345} je stavio u vozilo FCR-900{3569} slot 2 drogu Kokain kolicine 0.68 grama i kvalitete Odlicna[49.000]!
+(07/08/2020, 19:32:27) Robert Doherty{2606} je stavio u vozilo Huntley{5246} slot 1 drogu Kokain kolicine 4.40 grama i kvalitete Odlicna[47.000]!
+(07/08/2020, 23:18:45) Robert Doherty{2606} je stavio u vozilo Huntley{5246} slot 2 drogu Kokain kolicine 0.88 grama i kvalitete Odlicna[47.000]!
+(08/08/2020, 00:09:17) Robert Doherty{2606} je stavio u vozilo Sultan{2550} slot 1 drogu Kokain kolicine 0.56 grama i kvalitete Odlicna[47.000]!
+(13/08/2020, 01:30:04) Robert Doherty{2606} je stavio u vozilo Burrito{1756} slot 1 drogu Kokain kolicine 45.00 grama i kvalitete Odlicna[50.000]!
+(17/08/2020, 19:52:10) Mickey Yanlin{7168} je stavio u vozilo Euros{5214} slot 1 drogu Kokain kolicine 1.20 grama i kvalitete Odlicna[40.000]!
+(17/08/2020, 20:46:14) Juan Ortega{7380} je stavio u vozilo Mountain Bike{5269} slot 1 drogu Marihuana kolicine 2.82 grama i kvalitete Odlicna[42.117]!
+(17/08/2020, 21:23:36) Alan Huang{302} je stavio u vozilo Regina{810} slot 1 drogu Kokain kolicine 50.00 grama i kvalitete Odlicna[47.000]!
+(18/08/2020, 17:08:39) Alan Huang{302} je stavio u vozilo Elegy{3952} slot 1 drogu Marihuana kolicine 50.00 grama i kvalitete Odlicna[44.000]!
+(18/08/2020, 17:15:59) Donald Tang{5482} je stavio u vozilo Blista Compact{5192} slot 1 drogu Marihuana kolicine 50.00 grama i kvalitete Odlicna[44.000]!
+(18/08/2020, 17:56:39) Alan Huang{302} je stavio u vozilo Boxville{5042} slot 2 drogu Kokain kolicine 50.00 grama i kvalitete Odlicna[47.000]!
+(18/08/2020, 18:47:20) Liam Hao{6345} je stavio u vozilo Boxville{5042} slot 1 drogu Kokain kolicine 6.00 grama i kvalitete Odlicna[49.000]!
+(18/08/2020, 20:03:56) Mickey Yanlin{7168} je stavio u vozilo Bobcat{4476} slot 1 drogu Kokain kolicine 45.00 grama i kvalitete Odlicna[47.000]!
+(18/08/2020, 20:10:31) Artur Mirnov{7391} je stavio u vozilo Stratum{5241} slot 1 drogu Heroin kolicine 1.38 grama i kvalitete Odlicna[43.000]!
+(19/08/2020, 14:52:11) Donald Tang{5482} je stavio u vozilo Blista Compact{5192} slot 2 drogu Kokain kolicine 5.00 grama i kvalitete Odlicna[47.000]!
+(20/08/2020, 18:05:03) Murat Burakgazi{4826} je stavio u vozilo Buffalo{3483} slot 1 drogu Kokain kolicine 0.79 grama i kvalitete Odlicna[50.000]!
+(20/08/2020, 18:05:08) Murat Burakgazi{4826} je stavio u vozilo Buffalo{3483} slot 2 drogu Kokain kolicine 1.00 grama i kvalitete Odlicna[50.000]!
+(20/08/2020, 19:56:29) Robert Doherty{2606} je stavio u vozilo Sultan{2550} slot 1 drogu Kokain kolicine 4.00 grama i kvalitete Odlicna[50.000]!
+(21/08/2020, 21:29:37) Joel Foreman{3838} je stavio u vozilo Vincent{4567} slot 1 drogu Kokain kolicine 1.00 grama i kvalitete Odlicna[50.000]!
+(21/08/2020, 21:29:47) Joel Foreman{3838} je stavio u vozilo Vincent{4567} slot 2 drogu Kokain kolicine 4.00 grama i kvalitete Odlicna[50.000]!
+(21/08/2020, 21:29:56) Joel Foreman{3838} je stavio u vozilo Vincent{4567} slot 3 drogu Marihuana kolicine 5.00 grama i kvalitete Odlicna[42.000]!
+(21/08/2020, 21:30:03) Joel Foreman{3838} je stavio u vozilo Vincent{4567} slot 4 drogu Heroin kolicine 20.00 grama i kvalitete Odlicna[50.000]!
+(21/08/2020, 21:30:10) Joel Foreman{3838} je stavio u vozilo Vincent{4567} slot 5 drogu Kokain kolicine 1.00 grama i kvalitete Vrlo Dobra[35.000]!
+(23/08/2020, 00:12:06) Joel Foreman{3838} je stavio u vozilo Vincent{4567} slot 6 drogu Marihuana kolicine 49.00 grama i kvalitete Odlicna[44.000]!
+(25/08/2020, 22:28:20) Juan Flores{5493} je stavio u vozilo Intruder{4660} slot 2 drogu Marihuana kolicine 5.00 grama i kvalitete Odlicna[43.000]!
+(25/08/2020, 23:36:42) Lorenzo Bonelli{315} je stavio u vozilo Patriot{3835} slot 1 drogu Heroin kolicine 9.00 grama i kvalitete Odlicna[43.000]!
+(26/08/2020, 00:49:17) Ronnie Huff{1118} je stavio u vozilo Huntley{1346} slot 1 drogu Heroin kolicine 0.40 grama i kvalitete Odlicna[42.000]!
+(26/08/2020, 00:49:30) Ronnie Huff{1118} je stavio u vozilo Huntley{1346} slot 2 drogu Kokain kolicine 0.89 grama i kvalitete Vrlo Dobra[37.000]!
+(26/08/2020, 00:49:39) Ronnie Huff{1118} je stavio u vozilo Huntley{1346} slot 3 drogu Kokain kolicine 4.00 grama i kvalitete Vrlo Dobra[37.000]!
+(26/08/2020, 20:24:29) Darko Milic{7381} je stavio u vozilo Sultan{2550} slot 1 drogu Kokain kolicine 3.70 grama i kvalitete Odlicna[50.000]!
+(26/08/2020, 20:26:30) Vinny Jenkins{7638} je stavio u vozilo Primo{5296} slot 1 drogu Kokain kolicine 1.00 grama i kvalitete Odlicna[50.000]!
+(26/08/2020, 20:54:46) Juan Flores{5493} je stavio u vozilo Intruder{4660} slot 3 drogu Heroin kolicine 0.10 grama i kvalitete Odlicna[42.000]!
+(27/08/2020, 21:04:37) Alan Huang{302} je stavio u vozilo Regina{810} slot 1 drogu LSD kolicine 50.00 tableta i kvalitete Odlicna[41.000]!
+(27/08/2020, 22:28:47) Vadim Tarasov{7645} je stavio u vozilo Vincent{4104} slot 1 drogu Kokain kolicine 1.00 grama i kvalitete Odlicna[50.000]!
+(29/08/2020, 22:02:33) Mickey Yanlin{7168} je stavio u vozilo Euros{5214} slot 2 drogu Heroin kolicine 40.00 grama i kvalitete Odlicna[40.000]!
+(29/08/2020, 22:02:37) Mickey Yanlin{7168} je stavio u vozilo Euros{5214} slot 3 drogu LSD kolicine 50.00 tableta i kvalitete Odlicna[41.000]!
+(30/08/2020, 14:20:45) Joel Foreman{3838} je stavio u vozilo Vincent{4567} slot 6 drogu Heroin kolicine 20.00 grama i kvalitete Odlicna[40.000]!
+(30/08/2020, 14:20:50) Joel Foreman{3838} je stavio u vozilo Vincent{4567} slot 7 drogu Heroin kolicine 20.00 grama i kvalitete Odlicna[40.000]!
+(30/08/2020, 22:35:54) Ramon Cano{34} je stavio u vozilo Freeway{5140} slot 1 drogu Marihuana kolicine 3.20 grama i kvalitete Odlicna[42.500]!
+(30/08/2020, 23:53:56) Ramon Cano{34} je stavio u vozilo Turismo{551} slot 1 drogu Kokain kolicine 20.00 grama i kvalitete Odlicna[42.000]!
+(30/08/2020, 23:54:00) Ramon Cano{34} je stavio u vozilo Turismo{551} slot 2 drogu Kokain kolicine 10.00 grama i kvalitete Odlicna[41.000]!
+(30/08/2020, 23:54:04) Ramon Cano{34} je stavio u vozilo Turismo{551} slot 3 drogu Kokain kolicine 5.00 grama i kvalitete Odlicna[41.000]!
+(31/08/2020, 15:28:07) Spiro Sotelo{6171} je stavio u vozilo Perennial{4200} slot 1 drogu Marihuana kolicine 4.00 grama i kvalitete Vrlo Dobra[36.000]!
+(31/08/2020, 15:28:12) Spiro Sotelo{6171} je stavio u vozilo Perennial{4200} slot 2 drogu Xanax kolicine 10.00 tableta i kvalitete Vrlo Dobra[36.000]!
+(31/08/2020, 15:28:16) Spiro Sotelo{6171} je stavio u vozilo Perennial{4200} slot 3 drogu Kokain kolicine 4.50 grama i kvalitete Odlicna[42.000]!
+(31/08/2020, 15:28:20) Spiro Sotelo{6171} je stavio u vozilo Perennial{4200} slot 4 drogu LSD kolicine 3.00 tableta i kvalitete Odlicna[46.000]!
+(01/09/2020, 21:31:50) Jimmy Cheng{165} je stavio u vozilo Hotdog{1570} slot 1 drogu Marihuana kolicine 40.00 grama i kvalitete Odlicna[43.000]!
+(02/09/2020, 13:56:04) Jimmy Cheng{165} je stavio u vozilo Sultan{4601} slot 1 drogu Marihuana kolicine 60.00 grama i kvalitete Odlicna[48.000]!
+(02/09/2020, 17:07:44) Mickey Yanlin{7168} je stavio u vozilo Euros{5214} slot 3 drogu Marihuana kolicine 60.00 grama i kvalitete Odlicna[48.000]!
+(03/09/2020, 21:19:12) Oday Perkins{6940} je stavio u vozilo BMX{4824} slot 1 drogu Marihuana kolicine 60.00 grama i kvalitete Odlicna[48.000]!
+(03/09/2020, 21:58:34) Jimmy Cheng{165} je stavio u vozilo Freeway{2071} slot 1 drogu Kokain kolicine 49.00 grama i kvalitete Odlicna[44.000]!
+(05/09/2020, 14:10:10) Oday Perkins{6940} je stavio u vozilo Perennial{5341} slot 1 drogu Marihuana kolicine 0.40 grama i kvalitete Odlicna[48.000]!
+(05/09/2020, 14:23:28) Oday Perkins{6940} je stavio u vozilo Perennial{5341} slot 2 drogu Kokain kolicine 25.60 grama i kvalitete Odlicna[44.000]!
+(05/09/2020, 14:35:22) Jimmy Cheng{165} je stavio u vozilo Freeway{2071} slot 2 drogu Heroin kolicine 17.00 grama i kvalitete Vrlo Dobra[36.000]!
+(05/09/2020, 14:35:54) Jimmy Cheng{165} je stavio u vozilo Hotdog{1570} slot 2 drogu Heroin kolicine 53.00 grama i kvalitete Vrlo Dobra[36.000]!
+(05/09/2020, 14:49:45) Oday Perkins{6940} je stavio u vozilo Perennial{5341} slot 3 drogu Marihuana kolicine 55.00 grama i kvalitete Odlicna[48.000]!
+(05/09/2020, 15:23:15) Oday Perkins{6940} je stavio u vozilo Perennial{5341} slot 2 drogu Marihuana kolicine 15.00 grama i kvalitete Odlicna[48.000]!
+(05/09/2020, 15:23:17) Oday Perkins{6940} je stavio u vozilo Perennial{5341} slot 3 drogu Marihuana kolicine 40.00 grama i kvalitete Odlicna[48.000]!
+(05/09/2020, 19:57:04) Maximiliano Lacasa{5398} je stavio u vozilo Merit{5134} slot 1 drogu Kokain kolicine 4.00 grama i kvalitete Odlicna[44.000]!
+(05/09/2020, 19:57:05) Maximiliano Lacasa{5398} je stavio u vozilo Merit{5134} slot 2 drogu Kokain kolicine 1.00 grama i kvalitete Odlicna[44.000]!
+(05/09/2020, 19:58:03) Maximiliano Lacasa{5398} je stavio u vozilo Merit{5134} slot 1 drogu Kokain kolicine 5.00 grama i kvalitete Odlicna[44.000]!
+(05/09/2020, 20:00:21) Maximiliano Lacasa{5398} je stavio u vozilo BMX{5336} slot 1 drogu Kokain kolicine 5.00 grama i kvalitete Odlicna[44.000]!
+(06/09/2020, 18:24:20) Oday Perkins{6940} je stavio u vozilo BMX{4824} slot 1 drogu Marihuana kolicine 1.00 grama i kvalitete Odlicna[43.000]!
+(06/09/2020, 19:25:02) Maynard Davis{7419} je stavio u vozilo BMX{5347} slot 1 drogu Marihuana kolicine 5.00 grama i kvalitete Odlicna[48.000]!
+(06/09/2020, 20:17:12) Miguel Moyano{6896} je stavio u vozilo Mountain Bike{4725} slot 1 drogu Marihuana kolicine 2.00 grama i kvalitete Odlicna[50.000]!
+(06/09/2020, 20:17:14) Miguel Moyano{6896} je stavio u vozilo Mountain Bike{4725} slot 2 drogu Marihuana kolicine 5.00 grama i kvalitete Odlicna[48.000]!
+(06/09/2020, 20:30:52) Maynard Davis{7419} je stavio u vozilo BMX{5347} slot 1 drogu Marihuana kolicine 10.00 grama i kvalitete Odlicna[48.000]!
+(06/09/2020, 20:46:53) Miguel Moyano{6896} je stavio u vozilo Mountain Bike{4725} slot 3 drogu Marihuana kolicine 10.00 grama i kvalitete Odlicna[48.000]!
+(06/09/2020, 23:10:22) Maynard Davis{7419} je stavio u vozilo BMX{5347} slot 1 drogu Kokain kolicine 30.00 grama i kvalitete Odlicna[48.000]!
+(06/09/2020, 23:19:29) Larry Lee{6896} je stavio u vozilo Mountain Bike{4725} slot 4 drogu Kokain kolicine 30.00 grama i kvalitete Odlicna[48.000]!
+(06/09/2020, 23:31:06) Maynard Davis{7419} je stavio u vozilo BMX{5347} slot 1 drogu Marihuana kolicine 5.00 grama i kvalitete Odlicna[48.000]!
+(06/09/2020, 23:33:58) Maynard Davis{7419} je stavio u vozilo BMX{5347} slot 1 drogu Marihuana kolicine 15.00 grama i kvalitete Odlicna[48.000]!
+(07/09/2020, 00:58:09) Larry Lee{6896} je stavio u vozilo Mountain Bike{4725} slot 5 drogu Marihuana kolicine 15.00 grama i kvalitete Odlicna[48.000]!
+(07/09/2020, 11:17:25) Theodor Weiss{702} je stavio u vozilo Benson{5141} slot 5 drogu Marihuana kolicine 15.00 grama i kvalitete Odlicna[48.130]!
+(07/09/2020, 11:17:33) Theodor Weiss{702} je stavio u vozilo Benson{5141} slot 6 drogu MDMA kolicine 10.00 tableta i kvalitete Vrlo Dobra[36.000]!
+(07/09/2020, 15:40:15) Maynard Davis{7419} je stavio u vozilo BMX{5347} slot 1 drogu Marihuana kolicine 2.00 grama i kvalitete Odlicna[50.000]!
+(07/09/2020, 18:12:56) Chester Grant{7734} je stavio u vozilo Faggio{5349} slot 1 drogu Marihuana kolicine 4.00 grama i kvalitete Odlicna[47.000]!
+(07/09/2020, 19:06:11) Kyle Palmer{5482} je stavio u vozilo BMX{3947} slot 1 drogu Marihuana kolicine 2.50 grama i kvalitete Odlicna[50.000]!
+(07/09/2020, 20:41:01) Larry Lee{6896} je stavio u vozilo Mountain Bike{4725} slot 5 drogu Marihuana kolicine 10.00 grama i kvalitete Vrlo Dobra[38.000]!
+(07/09/2020, 20:41:04) Larry Lee{6896} je stavio u vozilo Mountain Bike{4725} slot 6 drogu MDMA kolicine 5.00 tableta i kvalitete Vrlo Dobra[36.000]!
+(07/09/2020, 22:02:39) Larry Lee{6896} je stavio u vozilo Mountain Bike{4725} slot 5 drogu Marihuana kolicine 10.00 grama i kvalitete Vrlo Dobra[38.000]!
+(07/09/2020, 22:02:42) Larry Lee{6896} je stavio u vozilo Mountain Bike{4725} slot 6 drogu MDMA kolicine 5.00 tableta i kvalitete Vrlo Dobra[36.000]!
+(08/09/2020, 15:42:24) Chloe McDouglas{3482} je stavio u vozilo Burrito{5357} slot 1 drogu Marihuana kolicine 100.00 grama i kvalitete Odlicna[50.000]!
+(08/09/2020, 16:21:52) Dario Tucker{5953} je stavio u vozilo Elegant{5243} slot 1 drogu Marihuana kolicine 10.00 grama i kvalitete Vrlo Dobra[38.000]!
+(08/09/2020, 16:21:55) Dario Tucker{5953} je stavio u vozilo Elegant{5243} slot 2 drogu MDMA kolicine 5.00 tableta i kvalitete Vrlo Dobra[36.000]!
+(08/09/2020, 19:02:24) Larry Lee{6896} je stavio u vozilo Mountain Bike{4725} slot 6 drogu MDMA kolicine 4.00 tableta i kvalitete Vrlo Dobra[36.000]!
+(08/09/2020, 20:26:20) Chloe McDouglas{3482} je stavio u vozilo Burrito{5357} slot 2 drogu Marihuana kolicine 2.50 grama i kvalitete Odlicna[50.000]!
+(08/09/2020, 21:28:32) Oday Perkins{6940} je stavio u vozilo Perennial{5341} slot 2 drogu Kokain kolicine 20.00 grama i kvalitete Vrlo Dobra[36.000]!
+(08/09/2020, 21:32:37) Maynard Davis{7419} je stavio u vozilo Tahoma{5355} slot 1 drogu Kokain kolicine 20.00 grama i kvalitete Vrlo Dobra[36.000]!
+(08/09/2020, 21:48:01) Theodor Weiss{702} je stavio u vozilo Benson{5141} slot 6 drogu Marihuana kolicine 30.00 grama i kvalitete Odlicna[43.000]!
+(09/09/2020, 20:39:51) Maynard Davis{7419} je stavio u vozilo Tahoma{5355} slot 1 drogu Kokain kolicine 10.00 grama i kvalitete Vrlo Dobra[36.000]!
+(09/09/2020, 21:17:20) Demarcus King{243} je stavio u vozilo Huntley{5268} slot 1 drogu Marihuana kolicine 0.40 grama i kvalitete Odlicna[48.000]!
+(09/09/2020, 21:17:26) Demarcus King{243} je stavio u vozilo Huntley{5268} slot 2 drogu Marihuana kolicine 2.00 grama i kvalitete Odlicna[50.000]!
+(09/09/2020, 21:20:23) Chloe McDouglas{3482} je stavio u vozilo Huntley{5268} slot 3 drogu Marihuana kolicine 1.00 grama i kvalitete Odlicna[50.000]!
+(09/09/2020, 21:37:58) Demarcus King{243} je stavio u vozilo Huntley{5268} slot 1 drogu Marihuana kolicine 0.40 grama i kvalitete Odlicna[48.000]!
+(09/09/2020, 21:38:04) Demarcus King{243} je stavio u vozilo Huntley{5268} slot 2 drogu Marihuana kolicine 1.00 grama i kvalitete Odlicna[50.000]!
+(09/09/2020, 21:38:05) Demarcus King{243} je stavio u vozilo Huntley{5268} slot 3 drogu Marihuana kolicine 1.00 grama i kvalitete Odlicna[50.000]!
+(09/09/2020, 21:38:41) Demarcus King{243} je stavio u vozilo Huntley{5268} slot 2 drogu Marihuana kolicine 1.00 grama i kvalitete Odlicna[50.000]!
+(09/09/2020, 21:38:43) Demarcus King{243} je stavio u vozilo Huntley{5268} slot 3 drogu Marihuana kolicine 1.00 grama i kvalitete Odlicna[50.000]!
+(09/09/2020, 21:39:00) Demarcus King{243} je stavio u vozilo Huntley{5268} slot 4 drogu Marihuana kolicine 1.00 grama i kvalitete Odlicna[50.000]!
+(10/09/2020, 11:39:31) Behram Krasniqi{27} je stavio u vozilo Sadler{3829} slot 1 drogu Kokain kolicine 10.00 grama i kvalitete Vrlo Dobra[36.000]!
+(11/09/2020, 03:00:10) Theodor Weiss{702} je stavio u vozilo Premier{3865} slot 1 drogu Marihuana kolicine 30.00 grama i kvalitete Odlicna[43.000]!
+(11/09/2020, 03:17:46) Theodor Weiss{702} je stavio u vozilo Premier{3865} slot 2 drogu MDMA kolicine 15.00 tableta i kvalitete Vrlo Dobra[36.000]!
+(11/09/2020, 03:46:25) Dario Tucker{5953} je stavio u vozilo Elegant{5243} slot 1 drogu Marihuana kolicine 15.00 grama i kvalitete Odlicna[43.000]!
+(11/09/2020, 03:46:27) Dario Tucker{5953} je stavio u vozilo Elegant{5243} slot 2 drogu Marihuana kolicine 15.00 grama i kvalitete Odlicna[43.000]!
+(11/09/2020, 03:46:31) Dario Tucker{5953} je stavio u vozilo Elegant{5243} slot 3 drogu MDMA kolicine 15.00 tableta i kvalitete Vrlo Dobra[36.000]!
+(11/09/2020, 18:07:24) Edie Fields{7743} je stavio u vozilo Bike{5360} slot 1 drogu Marihuana kolicine 10.00 grama i kvalitete Odlicna[43.000]!
+(11/09/2020, 18:07:28) Edie Fields{7743} je stavio u vozilo Bike{5360} slot 2 drogu MDMA kolicine 5.00 tableta i kvalitete Vrlo Dobra[36.000]!
+(11/09/2020, 19:02:58) Chester Grant{7734} je stavio u vozilo Faggio{5349} slot 1 drogu Marihuana kolicine 2.00 grama i kvalitete Odlicna[47.000]!
+(12/09/2020, 20:24:31) Chloe McDouglas{3482} je stavio u vozilo Burrito{5357} slot 3 drogu Marihuana kolicine 1.00 grama i kvalitete Odlicna[50.000]!
+(12/09/2020, 20:24:40) Demarcus King{243} je stavio u vozilo Burrito{5374} slot 1 drogu Marihuana kolicine 50.00 grama i kvalitete Odlicna[50.000]!
+(13/09/2020, 14:24:45) Edie Fields{7743} je stavio u vozilo Bike{5360} slot 3 drogu Marihuana kolicine 0.10 grama i kvalitete Odlicna[48.000]!
+(13/09/2020, 14:24:57) Edie Fields{7743} je stavio u vozilo Bike{5360} slot 4 drogu Marihuana kolicine 5.00 grama i kvalitete Odlicna[43.000]!
+(13/09/2020, 14:25:09) Edie Fields{7743} je stavio u vozilo Bike{5360} slot 5 drogu Marihuana kolicine 10.00 grama i kvalitete Odlicna[43.000]!
+(13/09/2020, 14:25:23) Edie Fields{7743} je stavio u vozilo Bike{5360} slot 6 drogu MDMA kolicine 2.00 tableta i kvalitete Vrlo Dobra[36.000]!
+(13/09/2020, 22:03:03) Dario Tucker{5953} je stavio u vozilo Huntley{5014} slot 1 drogu Kokain kolicine 1.00 grama i kvalitete Vrlo Dobra[35.000]!
+(13/09/2020, 22:03:13) Dario Tucker{5953} je stavio u vozilo Huntley{5014} slot 2 drogu Marihuana kolicine 5.00 grama i kvalitete Odlicna[43.000]!
+(13/09/2020, 22:03:15) Dario Tucker{5953} je stavio u vozilo Huntley{5014} slot 3 drogu Marihuana kolicine 5.00 grama i kvalitete Odlicna[43.000]!
+(13/09/2020, 22:03:51) Dario Tucker{5953} je stavio u vozilo Huntley{5014} slot 4 drogu MDMA kolicine 8.00 tableta i kvalitete Vrlo Dobra[36.000]!
+(13/09/2020, 22:56:03) Conor Lyons{1238} je stavio u vozilo Greenwood{3966} slot 3 drogu Kokain kolicine 0.88 grama i kvalitete Odlicna[48.000]!
+(13/09/2020, 22:56:08) Conor Lyons{1238} je stavio u vozilo Greenwood{3966} slot 4 drogu Kokain kolicine 5.00 grama i kvalitete Odlicna[48.000]!
+(13/09/2020, 23:04:06) Chloe McDouglas{3482} je stavio u vozilo Burrito{5357} slot 3 drogu Kokain kolicine 24.00 grama i kvalitete Odlicna[50.000]!
+(14/09/2020, 22:58:44) Maximiliano Lacasa{5398} je stavio u vozilo Faggio{5337} slot 1 drogu Kokain kolicine 0.30 grama i kvalitete Odlicna[44.000]!
+(15/09/2020, 16:06:10) Frankie Moltisanti{6116} je stavio u vozilo Moonbeam{4451} slot 1 drogu Kokain kolicine 2.00 grama i kvalitete Odlicna[40.000]!
+(15/09/2020, 16:06:39) Frankie Moltisanti{6116} je stavio u vozilo Moonbeam{4451} slot 2 drogu Kokain kolicine 5.00 grama i kvalitete Odlicna[44.000]!
+(15/09/2020, 16:06:51) Frankie Moltisanti{6116} je stavio u vozilo Moonbeam{4451} slot 3 drogu Kokain kolicine 10.00 grama i kvalitete Odlicna[44.000]!
+(15/09/2020, 16:07:02) Frankie Moltisanti{6116} je stavio u vozilo Moonbeam{4451} slot 4 drogu Kokain kolicine 3.00 grama i kvalitete Odlicna[44.000]!
+(15/09/2020, 19:42:57) Chester Grant{7734} je stavio u vozilo Topfun Van (Berkley's RC){5379} slot 1 drogu Marihuana kolicine 2.00 grama i kvalitete Odlicna[47.000]!
+(15/09/2020, 21:41:17) Sato Kiyoshi{7625} je stavio u vozilo Stafford{5327} slot 1 drogu Kokain kolicine 0.30 grama i kvalitete Odlicna[48.000]!
+(15/09/2020, 21:41:18) Sato Kiyoshi{7625} je stavio u vozilo Stafford{5327} slot 2 drogu Kokain kolicine 0.30 grama i kvalitete Odlicna[48.000]!
+(15/09/2020, 21:41:20) Sato Kiyoshi{7625} je stavio u vozilo Stafford{5327} slot 3 drogu Kokain kolicine 0.30 grama i kvalitete Odlicna[48.000]!
+(15/09/2020, 21:41:21) Sato Kiyoshi{7625} je stavio u vozilo Stafford{5327} slot 4 drogu Kokain kolicine 0.30 grama i kvalitete Odlicna[48.000]!
+(15/09/2020, 21:41:21) Sato Kiyoshi{7625} je stavio u vozilo Stafford{5327} slot 5 drogu Kokain kolicine 0.30 grama i kvalitete Odlicna[48.000]!
+(15/09/2020, 21:41:22) Sato Kiyoshi{7625} je stavio u vozilo Stafford{5327} slot 6 drogu Kokain kolicine 0.30 grama i kvalitete Odlicna[48.000]!
+(15/09/2020, 21:41:23) Sato Kiyoshi{7625} je stavio u vozilo Stafford{5327} slot 7 drogu Kokain kolicine 0.30 grama i kvalitete Odlicna[48.000]!
+(15/09/2020, 21:41:23) Sato Kiyoshi{7625} je stavio u vozilo Stafford{5327} slot 8 drogu Kokain kolicine 0.30 grama i kvalitete Odlicna[48.000]!
+(15/09/2020, 21:41:24) Sato Kiyoshi{7625} je stavio u vozilo Stafford{5327} slot 9 drogu Kokain kolicine 0.30 grama i kvalitete Odlicna[48.000]!
+(15/09/2020, 21:41:31) Sato Kiyoshi{7625} je stavio u vozilo Stafford{5327} slot 10 drogu Kokain kolicine 0.30 grama i kvalitete Odlicna[44.000]!
+(15/09/2020, 22:18:23) Sato Kiyoshi{7625} je stavio u vozilo Stafford{5327} slot 1 drogu Kokain kolicine 5.00 grama i kvalitete Odlicna[44.000]!
+(15/09/2020, 22:19:53) Tohaku Kugo{7701} je stavio u vozilo Sanchez{5367} slot 1 drogu Kokain kolicine 0.30 grama i kvalitete Odlicna[48.000]!
+(15/09/2020, 22:19:59) Tohaku Kugo{7701} je stavio u vozilo Sanchez{5367} slot 2 drogu Kokain kolicine 0.30 grama i kvalitete Odlicna[40.000]!
+(15/09/2020, 22:20:02) Tohaku Kugo{7701} je stavio u vozilo Sanchez{5367} slot 3 drogu Kokain kolicine 0.30 grama i kvalitete Odlicna[40.000]!
+(15/09/2020, 22:20:08) Tohaku Kugo{7701} je stavio u vozilo Sanchez{5367} slot 4 drogu Kokain kolicine 0.60 grama i kvalitete Odlicna[44.000]!
+(15/09/2020, 22:21:08) Tohaku Kugo{7701} je stavio u vozilo Sanchez{5367} slot 1 drogu Kokain kolicine 0.60 grama i kvalitete Odlicna[40.000]!
+(15/09/2020, 22:21:10) Tohaku Kugo{7701} je stavio u vozilo Sanchez{5367} slot 2 drogu Kokain kolicine 0.60 grama i kvalitete Odlicna[40.000]!
+(15/09/2020, 22:21:13) Tohaku Kugo{7701} je stavio u vozilo Sanchez{5367} slot 5 drogu Kokain kolicine 0.60 grama i kvalitete Odlicna[40.000]!
+(15/09/2020, 22:21:15) Tohaku Kugo{7701} je stavio u vozilo Sanchez{5367} slot 6 drogu Kokain kolicine 0.60 grama i kvalitete Odlicna[44.000]!
+(16/09/2020, 18:32:36) Sato Kiyoshi{7625} je stavio u vozilo Stafford{5327} slot 2 drogu Kokain kolicine 15.89 grama i kvalitete Odlicna[43.330]!
+(16/09/2020, 19:30:42) Sato Kiyoshi{7625} je stavio u vozilo Stafford{5327} slot 3 drogu Marihuana kolicine 21.70 grama i kvalitete Odlicna[50.000]!
+(16/09/2020, 21:45:06) Dominick Camuso{5005} je stavio u vozilo Sabre{3411} slot 1 drogu Marihuana kolicine 10.00 grama i kvalitete Odlicna[43.000]!
+(16/09/2020, 22:06:58) Dustin Hayes{6345} je stavio u vozilo BMX{4277} slot 1 drogu MDMA kolicine 3.00 tableta i kvalitete Vrlo Dobra[36.000]!
+(16/09/2020, 22:07:04) Dustin Hayes{6345} je stavio u vozilo BMX{4277} slot 2 drogu Marihuana kolicine 3.00 grama i kvalitete Odlicna[50.000]!
+(16/09/2020, 22:07:15) Dustin Hayes{6345} je stavio u vozilo BMX{4277} slot 3 drogu MDMA kolicine 1.00 tableta i kvalitete Vrlo Dobra[36.000]!
+(16/09/2020, 22:07:43) Vukasin Milovanovic{374} je stavio u vozilo Freeway{2267} slot 1 drogu Kokain kolicine 5.00 grama i kvalitete Odlicna[44.000]!
+(16/09/2020, 22:07:47) Vukasin Milovanovic{374} je stavio u vozilo Freeway{2267} slot 2 drogu Kokain kolicine 15.89 grama i kvalitete Odlicna[43.330]!
+(16/09/2020, 22:07:56) Vukasin Milovanovic{374} je stavio u vozilo Freeway{2267} slot 3 drogu Marihuana kolicine 20.70 grama i kvalitete Odlicna[50.000]!
+(16/09/2020, 22:13:58) Chester Grant{7734} je stavio u vozilo Topfun Van (Berkley's RC){5379} slot 1 drogu Marihuana kolicine 2.00 grama i kvalitete Odlicna[47.000]!
+(16/09/2020, 22:14:02) Chester Grant{7734} je stavio u vozilo Topfun Van (Berkley's RC){5379} slot 2 drogu Marihuana kolicine 5.00 grama i kvalitete Odlicna[50.000]!
+(16/09/2020, 22:47:05) Demarcus King{243} je stavio u vozilo Burrito{5374} slot 1 drogu Kokain kolicine 0.79 grama i kvalitete Odlicna[50.000]!
+(16/09/2020, 22:47:10) Demarcus King{243} je stavio u vozilo Burrito{5374} slot 2 drogu Marihuana kolicine 30.00 grama i kvalitete Odlicna[50.000]!
+(16/09/2020, 22:47:16) Demarcus King{243} je stavio u vozilo Burrito{5374} slot 3 drogu Marihuana kolicine 13.00 grama i kvalitete Odlicna[50.000]!
+(16/09/2020, 22:47:24) Demarcus King{243} je stavio u vozilo Burrito{5374} slot 4 drogu Marihuana kolicine 22.50 grama i kvalitete Odlicna[50.000]!
+(16/09/2020, 22:59:03) Demarcus King{243} je stavio u vozilo Burrito{5374} slot 2 drogu Marihuana kolicine 30.00 grama i kvalitete Odlicna[50.000]!
+(16/09/2020, 22:59:04) Demarcus King{243} je stavio u vozilo Burrito{5374} slot 5 drogu Marihuana kolicine 22.00 grama i kvalitete Odlicna[50.000]!
+(16/09/2020, 23:02:01) Sato Kiyoshi{7625} je stavio u vozilo Stafford{5327} slot 1 drogu Marihuana kolicine 50.00 grama i kvalitete Odlicna[50.000]!
+(17/09/2020, 00:07:57) Sato Kiyoshi{7625} je stavio u vozilo Boxville (burglary){5403} slot 1 drogu Marihuana kolicine 50.00 grama i kvalitete Odlicna[50.000]!
+(17/09/2020, 18:40:10) Maska_811091{7745} je stavio u vozilo Admiral{5352} slot 1 drogu Marihuana kolicine 0.80 grama i kvalitete Odlicna[42.000]!
+(17/09/2020, 18:40:15) Maska_811091{7745} je stavio u vozilo Admiral{5352} slot 2 drogu Marihuana kolicine 10.00 grama i kvalitete Odlicna[43.000]!
+(17/09/2020, 21:25:20) Sato Kiyoshi{7625} je stavio u vozilo Sanchez{2229} slot 1 drogu Kokain kolicine 0.50 grama i kvalitete Odlicna[42.000]!
+(17/09/2020, 21:27:32) Maska_668122{6896} je stavio u vozilo PCJ-600{4616} slot 1 drogu Marihuana kolicine 1.50 grama i kvalitete Odlicna[50.000]!
+(17/09/2020, 22:35:55) Frankie Moltisanti{6116} je stavio u vozilo Moonbeam{4451} slot 1 drogu Heroin kolicine 35.00 grama i kvalitete Vrlo Dobra[36.000]!
+(18/09/2020, 13:49:15) Louis Buscemi{7511} je stavio u vozilo Perennial{5406} slot 1 drogu Heroin kolicine 10.00 grama i kvalitete Vrlo Dobra[36.000]!
+(18/09/2020, 13:49:31) Louis Buscemi{7511} je stavio u vozilo Perennial{5406} slot 2 drogu Heroin kolicine 10.00 grama i kvalitete Vrlo Dobra[36.000]!
+(18/09/2020, 18:36:14) Harry Gemas{561} je stavio u vozilo Infernus{3027} slot 3 drogu Marihuana kolicine 3.00 grama i kvalitete Odlicna[40.000]!
+(19/09/2020, 12:53:35) Sato Kiyoshi{7625} je stavio u vozilo Boxville (burglary){5403} slot 2 drogu Heroin kolicine 20.00 grama i kvalitete Vrlo Dobra[36.000]!
+(20/09/2020, 20:46:13) Frankie Moltisanti{6116} je stavio u vozilo Moonbeam{4451} slot 2 drogu Heroin kolicine 17.00 grama i kvalitete Vrlo Dobra[36.000]!
+(20/09/2020, 22:22:27) Leonid Guzenko{3295} je stavio u vozilo Regina{2411} slot 1 drogu Marihuana kolicine 15.00 grama i kvalitete Odlicna[50.000]!
+(20/09/2020, 23:44:35) Leonid Guzenko{3295} je stavio u vozilo Regina{2411} slot 2 drogu Heroin kolicine 5.00 grama i kvalitete Vrlo Dobra[36.000]!
+(20/09/2020, 23:45:04) Roman Zelinsky{4995} je stavio u vozilo Picador{3438} slot 1 drogu Marihuana kolicine 15.00 grama i kvalitete Odlicna[50.000]!
+(20/09/2020, 23:45:05) Roman Zelinsky{4995} je stavio u vozilo Picador{3438} slot 2 drogu Heroin kolicine 5.00 grama i kvalitete Vrlo Dobra[36.000]!
+(21/09/2020, 10:53:21) Sato Kiyoshi{7625} je stavio u vozilo Stafford{5327} slot 1 drogu Heroin kolicine 15.00 grama i kvalitete Vrlo Dobra[36.000]!
+(21/09/2020, 10:53:25) Sato Kiyoshi{7625} je stavio u vozilo Stafford{5327} slot 2 drogu Heroin kolicine 8.00 grama i kvalitete Vrlo Dobra[36.000]!
+(21/09/2020, 12:58:08) Sato Kiyoshi{7625} je stavio u vozilo Boxville (burglary){5403} slot 3 drogu Heroin kolicine 23.00 grama i kvalitete Vrlo Dobra[36.000]!
+(21/09/2020, 21:41:34) Behram Krasniqi{27} je stavio u vozilo Sadler{3829} slot 2 drogu Kokain kolicine 100.00 grama i kvalitete Odlicna[50.000]!
+(21/09/2020, 21:50:27) Maska_245680{3295} je stavio u vozilo Regina{2411} slot 1 drogu Marihuana kolicine 15.00 grama i kvalitete Odlicna[50.000]!
+(21/09/2020, 21:50:29) Maska_245680{3295} je stavio u vozilo Regina{2411} slot 2 drogu Heroin kolicine 5.00 grama i kvalitete Vrlo Dobra[36.000]!
+(21/09/2020, 21:50:42) Maska_559303{4995} je stavio u vozilo Picador{3438} slot 1 drogu Marihuana kolicine 15.00 grama i kvalitete Odlicna[50.000]!
+(21/09/2020, 21:50:44) Maska_559303{4995} je stavio u vozilo Picador{3438} slot 2 drogu Heroin kolicine 5.00 grama i kvalitete Vrlo Dobra[36.000]!
+(24/09/2020, 14:35:28) Sato Kiyoshi{7625} je stavio u vozilo Boxville (burglary){5403} slot 4 drogu Marihuana kolicine 0.30 grama i kvalitete Odlicna[50.000]!
+(27/09/2020, 22:19:00) Thomas Brown{5326} je stavio u vozilo Buffalo{5478} slot 1 drogu Marihuana kolicine 1.70 grama i kvalitete Odlicna[50.000]!
+(27/09/2020, 23:45:31) Cristopher Belluci{7646} je stavio u vozilo Freeway{5429} slot 1 drogu Heroin kolicine 17.00 grama i kvalitete Vrlo Dobra[36.000]!
+(28/09/2020, 00:27:48) Richard Rivera{374} je stavio u vozilo Greenwood{5483} slot 1 drogu Heroin kolicine 8.18 grama i kvalitete Odlicna[50.000]!
+(28/09/2020, 00:27:54) Richard Rivera{374} je stavio u vozilo Greenwood{5483} slot 2 drogu Marihuana kolicine 1.00 grama i kvalitete Odlicna[50.000]!
+(28/09/2020, 12:32:06) Thomas Brown{5326} je stavio u vozilo Buffalo{5478} slot 2 drogu Marihuana kolicine 0.89 grama i kvalitete Odlicna[50.000]!
+(28/09/2020, 14:27:46) Thomas Brown{5326} je stavio u vozilo Buffalo{5478} slot 3 drogu Marihuana kolicine 0.50 grama i kvalitete Odlicna[50.000]!
+(30/09/2020, 15:08:21) Frankie Moltisanti{6116} je stavio u vozilo Moonbeam{4451} slot 1 drogu Heroin kolicine 17.00 grama i kvalitete Vrlo Dobra[36.000]!
+(30/09/2020, 21:55:15) Georgiy Kashkanov{4826} je stavio u vozilo Buffalo{3483} slot 1 drogu Kokain kolicine 0.28 grama i kvalitete Odlicna[50.000]!
+(30/09/2020, 21:55:22) Georgiy Kashkanov{4826} je stavio u vozilo Buffalo{3483} slot 3 drogu Kokain kolicine 0.28 grama i kvalitete Odlicna[50.000]!
+(30/09/2020, 21:55:33) Georgiy Kashkanov{4826} je stavio u vozilo Buffalo{3483} slot 4 drogu Kokain kolicine 0.50 grama i kvalitete Odlicna[50.000]!
+(01/10/2020, 18:12:28) Zvezdan Raonic{374} je stavio u vozilo PCJ-600{4921} slot 1 drogu Kokain kolicine 15.89 grama i kvalitete Odlicna[43.330]!
+(01/10/2020, 18:12:37) Zvezdan Raonic{374} je stavio u vozilo PCJ-600{4921} slot 2 drogu Kokain kolicine 5.00 grama i kvalitete Odlicna[44.000]!
+(01/10/2020, 18:12:47) Zvezdan Raonic{374} je stavio u vozilo PCJ-600{4921} slot 3 drogu Marihuana kolicine 20.00 grama i kvalitete Odlicna[50.000]!
+(01/10/2020, 18:12:59) Zvezdan Raonic{374} je stavio u vozilo PCJ-600{4921} slot 4 drogu Heroin kolicine 7.00 grama i kvalitete Odlicna[50.000]!
+(01/10/2020, 18:20:56) Ramon Cano{34} je stavio u vozilo Buffalo{4453} slot 1 drogu Kokain kolicine 15.89 grama i kvalitete Odlicna[43.330]!
+(01/10/2020, 18:21:10) Ramon Cano{34} je stavio u vozilo Buffalo{4453} slot 2 drogu Kokain kolicine 5.00 grama i kvalitete Odlicna[44.000]!
+(01/10/2020, 18:21:25) Ramon Cano{34} je stavio u vozilo Buffalo{4453} slot 3 drogu Marihuana kolicine 20.00 grama i kvalitete Odlicna[50.000]!
+(01/10/2020, 18:21:48) Ramon Cano{34} je stavio u vozilo Buffalo{4453} slot 4 drogu Heroin kolicine 7.00 grama i kvalitete Odlicna[50.000]!
+(04/10/2020, 19:49:17) Chester Grant{7734} je stavio u vozilo Merit{5462} slot 1 drogu Marihuana kolicine 0.40 grama i kvalitete Odlicna[50.000]!
+(04/10/2020, 23:14:41) Jim McCormick{744} je stavio u vozilo Cheetah{5412} slot 1 drogu Marihuana kolicine 0.68 grama i kvalitete Odlicna[50.000]!
+(04/10/2020, 23:14:51) Jim McCormick{744} je stavio u vozilo Cheetah{5412} slot 2 drogu Marihuana kolicine 0.88 grama i kvalitete Odlicna[50.000]!
+(04/10/2020, 23:14:56) Jim McCormick{744} je stavio u vozilo Cheetah{5412} slot 3 drogu Kokain kolicine 1.00 grama i kvalitete Odlicna[50.000]!
+(05/10/2020, 21:32:23) Pavle Simovic{3482} je stavio u vozilo Burrito{5357} slot 2 drogu Kokain kolicine 1.00 grama i kvalitete Odlicna[50.000]!

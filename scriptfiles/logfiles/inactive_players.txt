@@ -1,0 +1,1615 @@
+(20/03/2020, 05:05:00) Luana_Romero[SQLID: 2602] je radi neaktivnosti izgubio posao ID 1 i 2 sati ugovora.
+(21/03/2020, 05:05:00) Jim_Milton[SQLID: 2382] je radi neaktivnosti izgubio posao ID 1 i 14 sati ugovora.
+(21/03/2020, 05:05:00) Joe_Ferrari[SQLID: 5744] je radi neaktivnosti izgubio posao ID 7 i 3 sati ugovora.
+(22/03/2020, 05:05:00) Deshawn_Johnson[SQLID: 1224] je radi neaktivnosti izgubio posao ID 7 i 0 sati ugovora.
+(22/03/2020, 05:05:00) Will_Colluci[SQLID: 5854] je radi neaktivnosti izgubio posao ID 14 i 0 sati ugovora.
+(24/03/2020, 05:05:00) James_McLaren[SQLID: 5005] je radi neaktivnosti izgubio posao ID 15 i 15 sati ugovora.
+(25/03/2020, 05:05:00) Thomas_Bradshaw[SQLID: 5787] je radi neaktivnosti izgubio posao ID 7 i 17 sati ugovora.
+(26/03/2020, 05:05:00) Gustavo_Javier[SQLID: 1001] je radi neaktivnosti izgubio posao ID 7 i 13 sati ugovora.
+(26/03/2020, 05:05:00) Joseph_Accardo[SQLID: 5873] je radi neaktivnosti izgubio posao ID 2 i 3 sati ugovora.
+(26/03/2020, 05:05:00) Juan_Sacchetti[SQLID: 5874] je radi neaktivnosti izgubio posao ID 2 i 1 sati ugovora.
+(26/03/2020, 05:05:00) Naeem_White[SQLID: 5877] je radi neaktivnosti izgubio posao ID 15 i 0 sati ugovora.
+(26/03/2020, 05:05:00) Demarcus_White[SQLID: 5878] je radi neaktivnosti izgubio posao ID 15 i 0 sati ugovora.
+(27/03/2020, 05:05:00) Hank_Joeng[SQLID: 353] je radi neaktivnosti izgubio posao ID 6 i 1 sati ugovora.
+(27/03/2020, 05:05:00) Alex_Reed[SQLID: 5807] je radi neaktivnosti izgubio posao ID 7 i 3 sati ugovora.
+(27/03/2020, 05:05:00) Patrick_Evans[SQLID: 5887] je radi neaktivnosti izgubio posao ID 1 i 0 sati ugovora.
+(28/03/2020, 05:05:00) Juan_Ayala[SQLID: 159] je radi neaktivnosti izgubio posao ID 15 i 1 sati ugovora.
+(28/03/2020, 05:05:00) Mark_Houston[SQLID: 799] je radi neaktivnosti izgubio posao ID 7 i 2 sati ugovora.
+(28/03/2020, 05:05:00) Ontrel_Byrd[SQLID: 3014] je radi neaktivnosti izgubio posao ID 9 i 37 sati ugovora.
+(28/03/2020, 05:05:00) David_Clark[SQLID: 3064] je radi neaktivnosti izgubio posao ID 15 i 3 sati ugovora.
+(28/03/2020, 05:05:00) Craig_Johnson[SQLID: 3961] je radi neaktivnosti izgubio posao ID 9 i 1 sati ugovora.
+(28/03/2020, 05:05:00) Jamaad_Miller[SQLID: 5832] je radi neaktivnosti izgubio posao ID 1 i 4 sati ugovora.
+(29/03/2020, 05:05:01) Darko_Grozdanov[SQLID: 5905] je radi neaktivnosti izgubio posao ID 1 i 3 sati ugovora.
+(30/03/2020, 05:05:00) Edward_Hawkins[SQLID: 1823] je radi neaktivnosti izgubio posao ID 7 i 0 sati ugovora.
+(30/03/2020, 05:05:00) Deshawn_Outlaw[SQLID: 4147] je radi neaktivnosti izgubio posao ID 5 i 4 sati ugovora.
+(30/03/2020, 05:05:00) Demarco_Rogers[SQLID: 4443] je radi neaktivnosti izgubio posao ID 7 i 8 sati ugovora.
+(30/03/2020, 05:05:00) Tom_Johnsonn[SQLID: 5886] je radi neaktivnosti izgubio posao ID 16 i 1 sati ugovora.
+(30/03/2020, 05:05:00) Marcus_Jackson[SQLID: 5910] je radi neaktivnosti izgubio posao ID 7 i 1 sati ugovora.
+(30/03/2020, 05:05:00) Ryder_Montana[SQLID: 5918] je radi neaktivnosti izgubio posao ID 4 i 1 sati ugovora.
+(31/03/2020, 05:05:00) Ryan_Stinson[SQLID: 844] je radi neaktivnosti izgubio posao ID 7 i 2 sati ugovora.
+(31/03/2020, 05:05:00) Armando_Alvarado[SQLID: 5327] je radi neaktivnosti izgubio posao ID 9 i 31 sati ugovora.
+(31/03/2020, 05:05:00) Keandra_Gray[SQLID: 5571] je radi neaktivnosti izgubio posao ID 9 i 103 sati ugovora.
+(31/03/2020, 05:05:00) Anthony_Touge[SQLID: 5926] je radi neaktivnosti izgubio posao ID 8 i 3 sati ugovora.
+(31/03/2020, 05:05:00) Jacob_Shaffer[SQLID: 5932] je radi neaktivnosti izgubio posao ID 7 i 0 sati ugovora.
+(31/03/2020, 05:05:00) Lincoln_Burrows[SQLID: 5933] je radi neaktivnosti izgubio posao ID 1 i 2 sati ugovora.
+(31/03/2020, 05:05:00) Anthony_Collins[SQLID: 5935] je radi neaktivnosti izgubio posao ID 2 i 0 sati ugovora.
+(31/03/2020, 05:05:00) Anthony_Edwards[SQLID: 5936] je radi neaktivnosti izgubio posao ID 1 i 0 sati ugovora.
+(01/04/2020, 05:05:00) John_Marreli[SQLID: 280] je radi neaktivnosti izgubio posao ID 15 i 50 sati ugovora.
+(01/04/2020, 05:05:00) Ethan_Hartwell[SQLID: 361] je radi neaktivnosti izgubio posao ID 3 i 60 sati ugovora.
+(01/04/2020, 05:05:00) Frederick_Vargas[SQLID: 2420] je radi neaktivnosti izgubio posao ID 6 i 24 sati ugovora.
+(01/04/2020, 05:05:00) Liam_McLaren[SQLID: 5133] je radi neaktivnosti izgubio posao ID 7 i 1 sati ugovora.
+(01/04/2020, 05:05:00) Lloyd_Morganfield[SQLID: 5514] je radi neaktivnosti izgubio posao ID 1 i 40 sati ugovora.
+(01/04/2020, 05:05:00) Urick_Cole[SQLID: 5863] je radi neaktivnosti izgubio posao ID 7 i 21 sati ugovora.
+(01/04/2020, 05:05:00) Javarius_Kirk[SQLID: 5931] je radi neaktivnosti izgubio posao ID 4 i 1 sati ugovora.
+(01/04/2020, 05:05:00) Lore_Smurf[SQLID: 5942] je radi neaktivnosti izgubio posao ID 1 i 0 sati ugovora.
+(01/04/2020, 05:05:00) Tyrone_Banks[SQLID: 5946] je radi neaktivnosti izgubio posao ID 1 i 1 sati ugovora.
+(02/04/2020, 05:05:00) Martin_Arington[SQLID: 58] je radi neaktivnosti izgubio posao ID 5 i 44 sati ugovora.
+(02/04/2020, 05:05:00) Raymond_DeWinter[SQLID: 284] je radi neaktivnosti izgubio posao ID 7 i 0 sati ugovora.
+(02/04/2020, 05:05:00) Hector_Gaona[SQLID: 611] je radi neaktivnosti izgubio posao ID 7 i 0 sati ugovora.
+(02/04/2020, 05:05:00) Peter_Grosso[SQLID: 721] je radi neaktivnosti izgubio posao ID 9 i 161 sati ugovora.
+(02/04/2020, 05:05:00) William_Santos[SQLID: 5969] je radi neaktivnosti izgubio posao ID 7 i 1 sati ugovora.
+(03/04/2020, 05:05:00) Michael_Loyd[SQLID: 384] je radi neaktivnosti izgubio posao ID 9 i 1 sati ugovora.
+(04/04/2020, 05:05:00) Dexter_Edwards[SQLID: 1418] je radi neaktivnosti izgubio posao ID 7 i 4 sati ugovora.
+(04/04/2020, 05:05:00) Samuel_Bones[SQLID: 5650] je radi neaktivnosti izgubio posao ID 7 i 14 sati ugovora.
+(04/04/2020, 05:05:00) Calvin_Gaffney[SQLID: 5724] je radi neaktivnosti izgubio posao ID 15 i 61 sati ugovora.
+(04/04/2020, 05:05:00) Dejan_Stojanov[SQLID: 5875] je radi neaktivnosti izgubio posao ID 7 i 5 sati ugovora.
+(04/04/2020, 05:05:00) Tom_Philipp[SQLID: 5948] je radi neaktivnosti izgubio posao ID 15 i 1 sati ugovora.
+(04/04/2020, 05:05:00) Ralph_Philipp[SQLID: 5980] je radi neaktivnosti izgubio posao ID 5 i 2 sati ugovora.
+(04/04/2020, 05:05:00) Clayton_Wardell[SQLID: 5998] je radi neaktivnosti izgubio posao ID 1 i 1 sati ugovora.
+(04/04/2020, 05:05:00) Paul_Kallerman[SQLID: 6001] je radi neaktivnosti izgubio posao ID 1 i 0 sati ugovora.
+(04/04/2020, 05:05:00) Adam_Ramirez[SQLID: 6004] je radi neaktivnosti izgubio posao ID 7 i 1 sati ugovora.
+(04/04/2020, 05:05:00) Keandra_Grays[SQLID: 6013] je radi neaktivnosti izgubio posao ID 2 i 0 sati ugovora.
+(05/04/2020, 05:05:00) Arthur_Williams[SQLID: 1443] je radi neaktivnosti izgubio posao ID 7 i 88 sati ugovora.
+(05/04/2020, 05:05:00) Ted_Manson[SQLID: 4759] je radi neaktivnosti izgubio posao ID 7 i 22 sati ugovora.
+(05/04/2020, 05:05:00) Roger_Carroll[SQLID: 5865] je radi neaktivnosti izgubio posao ID 1 i 0 sati ugovora.
+(05/04/2020, 05:05:00) Mike_Conti[SQLID: 5943] je radi neaktivnosti izgubio posao ID 7 i 0 sati ugovora.
+(05/04/2020, 05:05:00) Reggie_Williams[SQLID: 5967] je radi neaktivnosti izgubio posao ID 1 i 3 sati ugovora.
+(05/04/2020, 05:05:00) Romero_Garcia[SQLID: 6008] je radi neaktivnosti izgubio posao ID 15 i 2 sati ugovora.
+(06/04/2020, 05:05:00) Kavion_Owens[SQLID: 366] je radi neaktivnosti izgubio posao ID 17 i 303 sati ugovora.
+(06/04/2020, 05:05:00) Kofi_Dupree[SQLID: 1221] je radi neaktivnosti izgubio posao ID 5 i 12 sati ugovora.
+(06/04/2020, 05:05:00) Paul_Robbins[SQLID: 5900] je radi neaktivnosti izgubio posao ID 15 i 3 sati ugovora.
+(06/04/2020, 05:05:00) Tommy_Johnsonn[SQLID: 5917] je radi neaktivnosti izgubio posao ID 4 i 3 sati ugovora.
+(06/04/2020, 05:05:00) Don_Vito[SQLID: 5994] je radi neaktivnosti izgubio posao ID 1 i 0 sati ugovora.
+(06/04/2020, 05:05:00) Vito_Scalleta[SQLID: 6040] je radi neaktivnosti izgubio posao ID 15 i 1 sati ugovora.
+(07/04/2020, 05:05:00) Michael_Brick[SQLID: 542] je radi neaktivnosti izgubio posao ID 7 i 14 sati ugovora.
+(07/04/2020, 05:05:00) Anthony_McGregor[SQLID: 965] je radi neaktivnosti izgubio posao ID 7 i 0 sati ugovora.
+(07/04/2020, 05:05:00) Jevonte_Manning[SQLID: 1848] je radi neaktivnosti izgubio posao ID 1 i 3 sati ugovora.
+(07/04/2020, 05:05:00) Kyoto_Hamasaki[SQLID: 4619] je radi neaktivnosti izgubio posao ID 7 i 43 sati ugovora.
+(07/04/2020, 05:05:00) David_Chambers[SQLID: 5407] je radi neaktivnosti izgubio posao ID 7 i 51 sati ugovora.
+(07/04/2020, 05:05:00) Shewann_Sellvio[SQLID: 5844] je radi neaktivnosti izgubio posao ID 15 i 2 sati ugovora.
+(07/04/2020, 05:05:00) Raul_Garrido[SQLID: 5940] je radi neaktivnosti izgubio posao ID 7 i 15 sati ugovora.
+(07/04/2020, 05:05:00) Devin_Hack[SQLID: 5965] je radi neaktivnosti izgubio posao ID 5 i 3 sati ugovora.
+(07/04/2020, 05:05:00) Latrell_Harris[SQLID: 6019] je radi neaktivnosti izgubio posao ID 7 i 2 sati ugovora.
+(07/04/2020, 05:05:00) Terry_Donovan[SQLID: 6039] je radi neaktivnosti izgubio posao ID 5 i 1 sati ugovora.
+(07/04/2020, 05:05:00) Muhamad_Johanson[SQLID: 6052] je radi neaktivnosti izgubio posao ID 7 i 1 sati ugovora.
+(07/04/2020, 05:05:00) Kane_Mendez[SQLID: 6056] je radi neaktivnosti izgubio posao ID 7 i 0 sati ugovora.
+(07/04/2020, 05:05:00) Vasilije_Mosurovic[SQLID: 6062] je radi neaktivnosti izgubio posao ID 8 i 0 sati ugovora.
+(08/04/2020, 05:05:00) Curtis_Miller[SQLID: 904] je radi neaktivnosti izgubio posao ID 3 i 1 sati ugovora.
+(08/04/2020, 05:05:00) Louis_Richardson[SQLID: 5630] je radi neaktivnosti izgubio posao ID 7 i 10 sati ugovora.
+(08/04/2020, 05:05:00) Treshawn_Campbell[SQLID: 6055] je radi neaktivnosti izgubio posao ID 7 i 4 sati ugovora.
+(08/04/2020, 05:05:00) Andrew_Sanders[SQLID: 6080] je radi neaktivnosti izgubio posao ID 7 i 1 sati ugovora.
+(08/04/2020, 05:05:00) Joe_Aiello[SQLID: 6090] je radi neaktivnosti izgubio posao ID 4 i 0 sati ugovora.
+(09/04/2020, 05:05:01) Kosta_Savic[SQLID: 490] je radi neaktivnosti izgubio posao ID 9 i 10 sati ugovora.
+(09/04/2020, 05:05:01) Sreten_Knezevic[SQLID: 1537] je radi neaktivnosti izgubio posao ID 13 i 1 sati ugovora.
+(09/04/2020, 05:05:01) James_Matthows[SQLID: 6059] je radi neaktivnosti izgubio posao ID 5 i 3 sati ugovora.
+(10/04/2020, 05:05:00) Pancho_Hernandez[SQLID: 5801] je radi neaktivnosti izgubio posao ID 9 i 1 sati ugovora.
+(10/04/2020, 05:05:00) Raka_Erdeljanovic[SQLID: 6130] je radi neaktivnosti izgubio posao ID 15 i 1 sati ugovora.
+(10/04/2020, 05:05:00) Ratko_Lazic[SQLID: 6137] je radi neaktivnosti izgubio posao ID 2 i 1 sati ugovora.
+(11/04/2020, 05:05:00) Tyreice_Blair[SQLID: 4299] je radi neaktivnosti izgubio posao ID 9 i 3 sati ugovora.
+(11/04/2020, 05:05:00) Acacio_Perretti[SQLID: 5939] je radi neaktivnosti izgubio posao ID 5 i 3 sati ugovora.
+(11/04/2020, 05:05:00) Rudy_Loza[SQLID: 6065] je radi neaktivnosti izgubio posao ID 7 i 2 sati ugovora.
+(11/04/2020, 05:05:00) Caitlyn_Brooks[SQLID: 6076] je radi neaktivnosti izgubio posao ID 7 i 1 sati ugovora.
+(11/04/2020, 05:05:00) Randy_Undertaker[SQLID: 6159] je radi neaktivnosti izgubio posao ID 5 i 0 sati ugovora.
+(11/04/2020, 05:05:00) Marty_Deeks[SQLID: 6165] je radi neaktivnosti izgubio posao ID 2 i 0 sati ugovora.
+(11/04/2020, 05:05:00) Bradshaw_Houston[SQLID: 6166] je radi neaktivnosti izgubio posao ID 15 i 1 sati ugovora.
+(11/04/2020, 05:05:00) Timothy_Svyatoslavov[SQLID: 6169] je radi neaktivnosti izgubio posao ID 9 i 37 sati ugovora.
+(11/04/2020, 05:05:00) Ethan_Irving[SQLID: 6173] je radi neaktivnosti izgubio posao ID 1 i 1 sati ugovora.
+(12/04/2020, 05:05:00) Tom_Mangano[SQLID: 66] je radi neaktivnosti izgubio posao ID 5 i 4 sati ugovora.
+(12/04/2020, 05:05:00) Kenneth_Murray[SQLID: 636] je radi neaktivnosti izgubio posao ID 7 i 1 sati ugovora.
+(12/04/2020, 05:05:00) Stefan_Gavrilovic[SQLID: 1968] je radi neaktivnosti izgubio posao ID 9 i 35 sati ugovora.
+(12/04/2020, 05:05:00) Dieuson_Octave[SQLID: 5912] je radi neaktivnosti izgubio posao ID 9 i 43 sati ugovora.
+(12/04/2020, 05:05:00) Pierre_Delince[SQLID: 5930] je radi neaktivnosti izgubio posao ID 9 i 26 sati ugovora.
+(12/04/2020, 05:05:00) Johnny_Garrido[SQLID: 5941] je radi neaktivnosti izgubio posao ID 3 i 0 sati ugovora.
+(12/04/2020, 05:05:00) Anthony_Strollo[SQLID: 6089] je radi neaktivnosti izgubio posao ID 4 i 1 sati ugovora.
+(12/04/2020, 05:05:00) Alex_White[SQLID: 6121] je radi neaktivnosti izgubio posao ID 15 i 13 sati ugovora.
+(12/04/2020, 05:05:00) Emilio_Gaviria[SQLID: 6188] je radi neaktivnosti izgubio posao ID 1 i 1 sati ugovora.
+(12/04/2020, 05:05:00) Jackson_West[SQLID: 6202] je radi neaktivnosti izgubio posao ID 1 i 2 sati ugovora.
+(12/04/2020, 05:05:00) Jameson_Blackburn[SQLID: 6203] je radi neaktivnosti izgubio posao ID 15 i 0 sati ugovora.
+(13/04/2020, 05:05:00) Jackson_Scofield[SQLID: 543] je radi neaktivnosti izgubio posao ID 7 i 98 sati ugovora.
+(13/04/2020, 05:05:00) Lucas_Garrido[SQLID: 5937] je radi neaktivnosti izgubio posao ID 5 i 3 sati ugovora.
+(13/04/2020, 05:05:00) Sarah_Westwood[SQLID: 6012] je radi neaktivnosti izgubio posao ID 7 i 12 sati ugovora.
+(13/04/2020, 05:05:00) Manuccio_Sercilliano[SQLID: 6210] je radi neaktivnosti izgubio posao ID 1 i 1 sati ugovora.
+(13/04/2020, 05:05:00) Michael_Smith[SQLID: 6211] je radi neaktivnosti izgubio posao ID 7 i 0 sati ugovora.
+(13/04/2020, 05:05:00) Miljan_Kemi[SQLID: 6214] je radi neaktivnosti izgubio posao ID 7 i 0 sati ugovora.
+(14/04/2020, 05:05:00) Darrell_Chapman[SQLID: 998] je radi neaktivnosti izgubio posao ID 9 i 12 sati ugovora.
+(14/04/2020, 05:05:00) Tyrese_Payne[SQLID: 1215] je radi neaktivnosti izgubio posao ID 5 i 1 sati ugovora.
+(14/04/2020, 05:05:00) Nathan_Williams[SQLID: 1608] je radi neaktivnosti izgubio posao ID 1 i 3 sati ugovora.
+(14/04/2020, 05:05:00) Yoel_Gruman[SQLID: 2471] je radi neaktivnosti izgubio posao ID 5 i 4 sati ugovora.
+(14/04/2020, 05:05:00) Richard_Boiardo[SQLID: 6088] je radi neaktivnosti izgubio posao ID 4 i 4 sati ugovora.
+(14/04/2020, 05:05:00) Paco_Valdez[SQLID: 6092] je radi neaktivnosti izgubio posao ID 4 i 22 sati ugovora.
+(14/04/2020, 05:05:00) Hugo_Vernier[SQLID: 6094] je radi neaktivnosti izgubio posao ID 9 i 20 sati ugovora.
+(14/04/2020, 05:05:00) Terrell_Thompson[SQLID: 6111] je radi neaktivnosti izgubio posao ID 7 i 2 sati ugovora.
+(14/04/2020, 05:05:00) Spiro_Sotelo[SQLID: 6171] je radi neaktivnosti izgubio posao ID 7 i 4 sati ugovora.
+(14/04/2020, 05:05:00) Milan_Karadzic[SQLID: 6212] je radi neaktivnosti izgubio posao ID 2 i 1 sati ugovora.
+(14/04/2020, 05:05:00) Nemanja_Abrlic[SQLID: 6237] je radi neaktivnosti izgubio posao ID 2 i 1 sati ugovora.
+(14/04/2020, 05:05:00) Matteo_Capone[SQLID: 6246] je radi neaktivnosti izgubio posao ID 1 i 0 sati ugovora.
+(15/04/2020, 05:05:01) David_Mazur[SQLID: 1163] je radi neaktivnosti izgubio posao ID 3 i 3 sati ugovora.
+(15/04/2020, 05:05:01) Carmelo_DiAntonio[SQLID: 1218] je radi neaktivnosti izgubio posao ID 2 i 7 sati ugovora.
+(15/04/2020, 05:05:01) Blake_Bullock[SQLID: 5702] je radi neaktivnosti izgubio posao ID 7 i 243 sati ugovora.
+(15/04/2020, 05:05:01) Jovan_Lazarov[SQLID: 5898] je radi neaktivnosti izgubio posao ID 7 i 3 sati ugovora.
+(15/04/2020, 05:05:01) Darnell_Wattson[SQLID: 6138] je radi neaktivnosti izgubio posao ID 14 i 5 sati ugovora.
+(15/04/2020, 05:05:01) Tim_Bredford[SQLID: 6201] je radi neaktivnosti izgubio posao ID 1 i 6 sati ugovora.
+(15/04/2020, 05:05:01) James_Westwood[SQLID: 6238] je radi neaktivnosti izgubio posao ID 7 i 4 sati ugovora.
+(15/04/2020, 05:05:01) Ryan_Shock[SQLID: 6244] je radi neaktivnosti izgubio posao ID 6 i 2 sati ugovora.
+(15/04/2020, 05:05:01) Michael_Grotti[SQLID: 6250] je radi neaktivnosti izgubio posao ID 16 i 2 sati ugovora.
+(15/04/2020, 05:05:01) Vukasin_Sijan[SQLID: 6258] je radi neaktivnosti izgubio posao ID 15 i 1 sati ugovora.
+(15/04/2020, 05:05:01) Logan_Gotti[SQLID: 6263] je radi neaktivnosti izgubio posao ID 7 i 0 sati ugovora.
+(15/04/2020, 05:05:01) Wizzi_Tommy[SQLID: 6264] je radi neaktivnosti izgubio posao ID 1 i 0 sati ugovora.
+(16/04/2020, 05:05:00) Demetrius_Innes[SQLID: 231] je radi neaktivnosti izgubio posao ID 9 i 9 sati ugovora.
+(16/04/2020, 05:05:00) Matteo_Cangialosi[SQLID: 1824] je radi neaktivnosti izgubio posao ID 9 i 9 sati ugovora.
+(16/04/2020, 05:05:00) Fernando_Delgado[SQLID: 4427] je radi neaktivnosti izgubio posao ID 3 i 2 sati ugovora.
+(16/04/2020, 05:05:00) Lillie_Copeland[SQLID: 4603] je radi neaktivnosti izgubio posao ID 3 i 3 sati ugovora.
+(16/04/2020, 05:05:00) Alicia_Macious[SQLID: 5988] je radi neaktivnosti izgubio posao ID 15 i 44 sati ugovora.
+(16/04/2020, 05:05:00) Anton_Ivanov[SQLID: 6161] je radi neaktivnosti izgubio posao ID 7 i 5 sati ugovora.
+(16/04/2020, 05:05:00) Jameson_Blackbourn[SQLID: 6206] je radi neaktivnosti izgubio posao ID 4 i 1 sati ugovora.
+(16/04/2020, 05:05:00) Xavier_Matheson[SQLID: 6265] je radi neaktivnosti izgubio posao ID 2 i 1 sati ugovora.
+(17/04/2020, 05:05:00) Roddy_Michaels[SQLID: 3530] je radi neaktivnosti izgubio posao ID 7 i 2 sati ugovora.
+(17/04/2020, 05:05:00) Monty_Hill[SQLID: 6031] je radi neaktivnosti izgubio posao ID 4 i 2 sati ugovora.
+(17/04/2020, 05:05:00) Stewart_Hoodsworth[SQLID: 6193] je radi neaktivnosti izgubio posao ID 1 i 6 sati ugovora.
+(17/04/2020, 05:05:00) Zee_Smith[SQLID: 6261] je radi neaktivnosti izgubio posao ID 1 i 18 sati ugovora.
+(17/04/2020, 05:05:00) Phil_Black[SQLID: 6308] je radi neaktivnosti izgubio posao ID 7 i 1 sati ugovora.
+(17/04/2020, 05:05:00) James_Miller[SQLID: 6311] je radi neaktivnosti izgubio posao ID 7 i 2 sati ugovora.
+(18/04/2020, 05:05:00) Ethan_Queen[SQLID: 1267] je radi neaktivnosti izgubio posao ID 15 i 7 sati ugovora.
+(18/04/2020, 05:05:00) Brendan_Civella[SQLID: 4425] je radi neaktivnosti izgubio posao ID 7 i 3 sati ugovora.
+(18/04/2020, 05:05:00) Johnny_Coleman[SQLID: 6081] je radi neaktivnosti izgubio posao ID 7 i 1 sati ugovora.
+(18/04/2020, 05:05:00) Kieran_Burke[SQLID: 6231] je radi neaktivnosti izgubio posao ID 4 i 1 sati ugovora.
+(18/04/2020, 05:05:00) Helmut_Roth[SQLID: 6233] je radi neaktivnosti izgubio posao ID 1 i 0 sati ugovora.
+(18/04/2020, 05:05:00) Ben_Nelson[SQLID: 6240] je radi neaktivnosti izgubio posao ID 5 i 3 sati ugovora.
+(18/04/2020, 05:05:00) Tom_Jefferson[SQLID: 6254] je radi neaktivnosti izgubio posao ID 1 i 3 sati ugovora.
+(18/04/2020, 05:05:00) Giuseppe_Lucchesi[SQLID: 6260] je radi neaktivnosti izgubio posao ID 5 i 0 sati ugovora.
+(18/04/2020, 05:05:00) Michael_Nelson[SQLID: 6286] je radi neaktivnosti izgubio posao ID 16 i 2 sati ugovora.
+(18/04/2020, 05:05:00) Terryl_Atkins[SQLID: 6288] je radi neaktivnosti izgubio posao ID 7 i 7 sati ugovora.
+(18/04/2020, 05:05:00) Nick_Jane[SQLID: 6307] je radi neaktivnosti izgubio posao ID 7 i 4 sati ugovora.
+(18/04/2020, 05:05:00) Tanner_Farrell[SQLID: 6312] je radi neaktivnosti izgubio posao ID 1 i 2 sati ugovora.
+(18/04/2020, 05:05:00) Franklin_Marcus[SQLID: 6328] je radi neaktivnosti izgubio posao ID 2 i 0 sati ugovora.
+(18/04/2020, 05:05:00) Victor_Fedorov[SQLID: 6332] je radi neaktivnosti izgubio posao ID 14 i 3 sati ugovora.
+(18/04/2020, 05:05:00) Igor_Djokic[SQLID: 6335] je radi neaktivnosti izgubio posao ID 7 i 0 sati ugovora.
+(19/04/2020, 05:05:00) Scott_Farrell[SQLID: 6200] je radi neaktivnosti izgubio posao ID 15 i 13 sati ugovora.
+(19/04/2020, 05:05:00) John_Matthews[SQLID: 6271] je radi neaktivnosti izgubio posao ID 14 i 0 sati ugovora.
+(19/04/2020, 05:05:00) Deshawn_Arkwood[SQLID: 6329] je radi neaktivnosti izgubio posao ID 15 i 0 sati ugovora.
+(19/04/2020, 05:05:00) Michael_Davis[SQLID: 6336] je radi neaktivnosti izgubio posao ID 7 i 0 sati ugovora.
+(19/04/2020, 05:05:00) Ben_Blackwood[SQLID: 6338] je radi neaktivnosti izgubio posao ID 7 i 3 sati ugovora.
+(19/04/2020, 05:05:00) Ryan_Vafles[SQLID: 6352] je radi neaktivnosti izgubio posao ID 1 i 2 sati ugovora.
+(19/04/2020, 05:05:00) John_Gonzales[SQLID: 6356] je radi neaktivnosti izgubio posao ID 7 i 0 sati ugovora.
+(19/04/2020, 05:05:00) Kseniya_Malakhov[SQLID: 6358] je radi neaktivnosti izgubio posao ID 15 i 0 sati ugovora.
+(20/04/2020, 05:05:00) Matthew_Eastwood[SQLID: 1611] je radi neaktivnosti izgubio posao ID 1 i 4 sati ugovora.
+(20/04/2020, 05:05:00) Alexey_Yarmolenko[SQLID: 1767] je radi neaktivnosti izgubio posao ID 2 i 4 sati ugovora.
+(20/04/2020, 05:05:00) Johnny_Anderson[SQLID: 3739] je radi neaktivnosti izgubio posao ID 5 i 1 sati ugovora.
+(20/04/2020, 05:05:00) Marcus_Jackson[SQLID: 5910] je radi neaktivnosti izgubio posao ID 7 i 6 sati ugovora.
+(20/04/2020, 05:05:00) Lazar_Stojadinovic[SQLID: 5997] je radi neaktivnosti izgubio posao ID 7 i 2 sati ugovora.
+(20/04/2020, 05:05:00) Alex_Notorious[SQLID: 6225] je radi neaktivnosti izgubio posao ID 7 i 4 sati ugovora.
+(20/04/2020, 05:05:00) Roy_Anderson[SQLID: 6239] je radi neaktivnosti izgubio posao ID 9 i 0 sati ugovora.
+(20/04/2020, 05:05:00) Walt_Kowalski[SQLID: 6242] je radi neaktivnosti izgubio posao ID 15 i 4 sati ugovora.
+(20/04/2020, 05:05:00) Miguel_Bello[SQLID: 6325] je radi neaktivnosti izgubio posao ID 1 i 23 sati ugovora.
+(20/04/2020, 05:05:00) David_Weis[SQLID: 6333] je radi neaktivnosti izgubio posao ID 7 i 4 sati ugovora.
+(20/04/2020, 05:05:00) Jack_Hillton[SQLID: 6346] je radi neaktivnosti izgubio posao ID 15 i 8 sati ugovora.
+(20/04/2020, 05:05:00) Thomas_Jefferson[SQLID: 6360] je radi neaktivnosti izgubio posao ID 14 i 0 sati ugovora.
+(20/04/2020, 05:05:00) Dantrell_Bolden[SQLID: 6375] je radi neaktivnosti izgubio posao ID 2 i 0 sati ugovora.
+(20/04/2020, 05:05:00) Amaru_Shakur[SQLID: 6376] je radi neaktivnosti izgubio posao ID 2 i 0 sati ugovora.
+(20/04/2020, 05:05:00) Johny_Jefferson[SQLID: 6388] je radi neaktivnosti izgubio posao ID 2 i 0 sati ugovora.
+(21/04/2020, 05:05:00) Dwayne_Garth[SQLID: 2002] je radi neaktivnosti izgubio posao ID 6 i 0 sati ugovora.
+(21/04/2020, 05:05:00) Damian_Moretti[SQLID: 2444] je radi neaktivnosti izgubio posao ID 6 i 1 sati ugovora.
+(21/04/2020, 05:05:00) Wesley_Gardner[SQLID: 2825] je radi neaktivnosti izgubio posao ID 1 i 17 sati ugovora.
+(21/04/2020, 05:05:00) Isaiah_Mills[SQLID: 4928] je radi neaktivnosti izgubio posao ID 1 i 3 sati ugovora.
+(21/04/2020, 05:05:00) Baykal_Aga[SQLID: 4979] je radi neaktivnosti izgubio posao ID 9 i 5 sati ugovora.
+(21/04/2020, 05:05:00) Hachiro_Yamazaki[SQLID: 6053] je radi neaktivnosti izgubio posao ID 9 i 6 sati ugovora.
+(21/04/2020, 05:05:00) Feedy_Corleone[SQLID: 6097] je radi neaktivnosti izgubio posao ID 7 i 5 sati ugovora.
+(21/04/2020, 05:05:00) Cesar_Sanchez[SQLID: 6324] je radi neaktivnosti izgubio posao ID 1 i 20 sati ugovora.
+(21/04/2020, 05:05:00) Michael_Korman[SQLID: 6392] je radi neaktivnosti izgubio posao ID 7 i 2 sati ugovora.
+(21/04/2020, 05:05:00) Lamar_Jones[SQLID: 6396] je radi neaktivnosti izgubio posao ID 2 i 1 sati ugovora.
+(21/04/2020, 05:05:00) Marko_Bojovic[SQLID: 6406] je radi neaktivnosti izgubio posao ID 2 i 0 sati ugovora.
+(21/04/2020, 05:05:00) Nikolay_Yegorovich[SQLID: 6420] je radi neaktivnosti izgubio posao ID 7 i 0 sati ugovora.
+(21/04/2020, 05:05:00) Alexei_Yegorovich[SQLID: 6421] je radi neaktivnosti izgubio posao ID 7 i 0 sati ugovora.
+(22/04/2020, 05:05:00) John_Halusek[SQLID: 2193] je radi neaktivnosti izgubio posao ID 9 i 1 sati ugovora.
+(22/04/2020, 05:05:00) Afanasiy_Krasnov[SQLID: 5466] je radi neaktivnosti izgubio posao ID 9 i 36 sati ugovora.
+(22/04/2020, 05:05:00) Vladimir_Simendic[SQLID: 6382] je radi neaktivnosti izgubio posao ID 2 i 0 sati ugovora.
+(22/04/2020, 05:05:00) Kejti_Holms[SQLID: 6415] je radi neaktivnosti izgubio posao ID 7 i 0 sati ugovora.
+(22/04/2020, 05:05:00) Christian_Dixon[SQLID: 6443] je radi neaktivnosti izgubio posao ID 14 i 0 sati ugovora.
+(23/04/2020, 05:05:00) Lorenzo_Bonelli[SQLID: 315] je radi neaktivnosti izgubio posao ID 9 i 5 sati ugovora.
+(23/04/2020, 05:05:00) Deshawn_Quinton[SQLID: 6355] je radi neaktivnosti izgubio posao ID 7 i 3 sati ugovora.
+(23/04/2020, 05:05:00) Warren_Howlett[SQLID: 6391] je radi neaktivnosti izgubio posao ID 15 i 7 sati ugovora.
+(23/04/2020, 05:05:00) Steve_Rascall[SQLID: 6449] je radi neaktivnosti izgubio posao ID 7 i 0 sati ugovora.
+(23/04/2020, 05:05:00) Radomir_Colovic[SQLID: 6459] je radi neaktivnosti izgubio posao ID 7 i 0 sati ugovora.
+(23/04/2020, 05:05:00) Rico_Vargas[SQLID: 6460] je radi neaktivnosti izgubio posao ID 5 i 1 sati ugovora.
+(24/04/2020, 05:05:00) Igor_Bakrac[SQLID: 6395] je radi neaktivnosti izgubio posao ID 1 i 8 sati ugovora.
+(24/04/2020, 05:05:00) Vosa_Escobar[SQLID: 6457] je radi neaktivnosti izgubio posao ID 7 i 0 sati ugovora.
+(24/04/2020, 05:05:00) Panteley_Romanovich[SQLID: 6481] je radi neaktivnosti izgubio posao ID 15 i 0 sati ugovora.
+(24/04/2020, 05:05:00) Logan_Sherron[SQLID: 6482] je radi neaktivnosti izgubio posao ID 7 i 1 sati ugovora.
+(25/04/2020, 05:05:00) Daniel_Hernandez[SQLID: 3444] je radi neaktivnosti izgubio posao ID 5 i 6 sati ugovora.
+(25/04/2020, 05:05:00) Keyair_Lovell[SQLID: 3672] je radi neaktivnosti izgubio posao ID 9 i 21 sati ugovora.
+(25/04/2020, 05:05:00) Vladimir_Krcmarik[SQLID: 4305] je radi neaktivnosti izgubio posao ID 7 i 11 sati ugovora.
+(25/04/2020, 05:05:00) Muhamed_Hasanov[SQLID: 5991] je radi neaktivnosti izgubio posao ID 7 i 18 sati ugovora.
+(25/04/2020, 05:05:00) Jessica_Sherman[SQLID: 6048] je radi neaktivnosti izgubio posao ID 5 i 2 sati ugovora.
+(25/04/2020, 05:05:00) Darius_Palmer[SQLID: 6125] je radi neaktivnosti izgubio posao ID 7 i 45 sati ugovora.
+(25/04/2020, 05:05:00) John_Suarez[SQLID: 6152] je radi neaktivnosti izgubio posao ID 2 i 4 sati ugovora.
+(25/04/2020, 05:05:00) Frank_Johnson[SQLID: 6192] je radi neaktivnosti izgubio posao ID 15 i 9 sati ugovora.
+(25/04/2020, 05:05:00) Milan_Jurisic[SQLID: 6381] je radi neaktivnosti izgubio posao ID 9 i 16 sati ugovora.
+(25/04/2020, 05:05:00) Alexandar_Volkov[SQLID: 6479] je radi neaktivnosti izgubio posao ID 14 i 0 sati ugovora.
+(25/04/2020, 05:05:00) Delvonte_Lawrance[SQLID: 6485] je radi neaktivnosti izgubio posao ID 1 i 0 sati ugovora.
+(25/04/2020, 05:05:00) Darnell_Marvin[SQLID: 6486] je radi neaktivnosti izgubio posao ID 15 i 4 sati ugovora.
+(25/04/2020, 05:05:00) Anthony_Cozart[SQLID: 6487] je radi neaktivnosti izgubio posao ID 1 i 0 sati ugovora.
+(25/04/2020, 05:05:00) Kenya_Shadrick[SQLID: 6489] je radi neaktivnosti izgubio posao ID 1 i 2 sati ugovora.
+(25/04/2020, 05:05:00) Joseph_Romero[SQLID: 6500] je radi neaktivnosti izgubio posao ID 7 i 1 sati ugovora.
+(25/04/2020, 05:05:00) Kelvonte_Moss[SQLID: 6505] je radi neaktivnosti izgubio posao ID 2 i 0 sati ugovora.
+(26/04/2020, 05:05:00) Butch_Caldwell[SQLID: 81] je radi neaktivnosti izgubio posao ID 9 i 3 sati ugovora.
+(26/04/2020, 05:05:00) Blake_Caldwell[SQLID: 127] je radi neaktivnosti izgubio posao ID 3 i 11 sati ugovora.
+(26/04/2020, 05:05:00) Brian_Adams[SQLID: 158] je radi neaktivnosti izgubio posao ID 13 i 28 sati ugovora.
+(26/04/2020, 05:05:00) Marko_Zarkovic[SQLID: 740] je radi neaktivnosti izgubio posao ID 17 i 0 sati ugovora.
+(26/04/2020, 05:05:00) Joseph_Gargotta[SQLID: 840] je radi neaktivnosti izgubio posao ID 1 i 9 sati ugovora.
+(26/04/2020, 05:05:00) Jax_Darlinson[SQLID: 3772] je radi neaktivnosti izgubio posao ID 3 i 2 sati ugovora.
+(26/04/2020, 05:05:00) Carlos_Alvarez[SQLID: 6075] je radi neaktivnosti izgubio posao ID 5 i 5 sati ugovora.
+(26/04/2020, 05:05:00) Jimmy_Ranger[SQLID: 6397] je radi neaktivnosti izgubio posao ID 7 i 2 sati ugovora.
+(26/04/2020, 05:05:00) Bogdan_Milikic[SQLID: 6480] je radi neaktivnosti izgubio posao ID 7 i 7 sati ugovora.
+(26/04/2020, 05:05:00) Kevin_Patterson[SQLID: 6491] je radi neaktivnosti izgubio posao ID 7 i 8 sati ugovora.
+(26/04/2020, 05:05:00) Milan_Savic[SQLID: 6492] je radi neaktivnosti izgubio posao ID 4 i 0 sati ugovora.
+(26/04/2020, 05:05:00) Delvonte_Lawrence[SQLID: 6498] je radi neaktivnosti izgubio posao ID 2 i 0 sati ugovora.
+(26/04/2020, 05:05:00) Giuseppe_Hansen[SQLID: 6527] je radi neaktivnosti izgubio posao ID 2 i 1 sati ugovora.
+(26/04/2020, 05:05:00) John_Rose[SQLID: 6530] je radi neaktivnosti izgubio posao ID 14 i 0 sati ugovora.
+(26/04/2020, 05:05:00) Jessica_Brian[SQLID: 6535] je radi neaktivnosti izgubio posao ID 2 i 0 sati ugovora.
+(26/04/2020, 05:05:00) Enzo_Martinez[SQLID: 6537] je radi neaktivnosti izgubio posao ID 7 i 0 sati ugovora.
+(27/04/2020, 05:05:00) Anthony_Parker[SQLID: 340] je radi neaktivnosti izgubio posao ID 9 i 13 sati ugovora.
+(27/04/2020, 05:05:01) Dimitri_Ivanov[SQLID: 646] je radi neaktivnosti izgubio posao ID 3 i 1 sati ugovora.
+(27/04/2020, 05:05:01) Mark_Rogers[SQLID: 676] je radi neaktivnosti izgubio posao ID 15 i 1 sati ugovora.
+(27/04/2020, 05:05:01) Diego_Agramonte[SQLID: 1685] je radi neaktivnosti izgubio posao ID 3 i 5 sati ugovora.
+(27/04/2020, 05:05:01) Pavel_Ivanov[SQLID: 3734] je radi neaktivnosti izgubio posao ID 9 i 34 sati ugovora.
+(27/04/2020, 05:05:01) Nathan_Dunne[SQLID: 3919] je radi neaktivnosti izgubio posao ID 7 i 0 sati ugovora.
+(27/04/2020, 05:05:01) Deshawn_Hudson[SQLID: 4551] je radi neaktivnosti izgubio posao ID 3 i 10 sati ugovora.
+(27/04/2020, 05:05:01) Malik_Morgan[SQLID: 6063] je radi neaktivnosti izgubio posao ID 7 i 5 sati ugovora.
+(27/04/2020, 05:05:01) Orlando_Ricketts[SQLID: 6517] je radi neaktivnosti izgubio posao ID 5 i 0 sati ugovora.
+(27/04/2020, 05:05:01) Jimmy_Hogans[SQLID: 6523] je radi neaktivnosti izgubio posao ID 1 i 3 sati ugovora.
+(27/04/2020, 05:05:01) Fedor_Volkov[SQLID: 6526] je radi neaktivnosti izgubio posao ID 4 i 2 sati ugovora.
+(27/04/2020, 05:05:01) Desharious_Bailey[SQLID: 6539] je radi neaktivnosti izgubio posao ID 16 i 2 sati ugovora.
+(27/04/2020, 05:05:01) Alen_Havic[SQLID: 6551] je radi neaktivnosti izgubio posao ID 4 i 0 sati ugovora.
+(27/04/2020, 05:05:01) Lamar_Hudson[SQLID: 6556] je radi neaktivnosti izgubio posao ID 2 i 0 sati ugovora.
+(27/04/2020, 05:05:01) Ryan_Jefferson[SQLID: 6557] je radi neaktivnosti izgubio posao ID 7 i 0 sati ugovora.
+(27/04/2020, 05:05:01) Gestapo_Martinez[SQLID: 6563] je radi neaktivnosti izgubio posao ID 7 i 0 sati ugovora.
+(27/04/2020, 05:05:01) Jovica_Dudic[SQLID: 6715] je radi neaktivnosti izgubio posao ID 9 i 11 sati ugovora.
+(28/04/2020, 05:05:00) Darryl_Harford[SQLID: 1227] je radi neaktivnosti izgubio posao ID 3 i 3 sati ugovora.
+(28/04/2020, 05:05:00) Gerald_Miller[SQLID: 1577] je radi neaktivnosti izgubio posao ID 4 i 1 sati ugovora.
+(28/04/2020, 05:05:00) Paul_Carter[SQLID: 2080] je radi neaktivnosti izgubio posao ID 5 i 4 sati ugovora.
+(28/04/2020, 05:05:00) George_Turner[SQLID: 2336] je radi neaktivnosti izgubio posao ID 15 i 14 sati ugovora.
+(28/04/2020, 05:05:00) Luke_Tay[SQLID: 3199] je radi neaktivnosti izgubio posao ID 9 i 13 sati ugovora.
+(28/04/2020, 05:05:00) Dennis_Lewis[SQLID: 4995] je radi neaktivnosti izgubio posao ID 3 i 2 sati ugovora.
+(28/04/2020, 05:05:00) Jozo_Miller[SQLID: 5625] je radi neaktivnosti izgubio posao ID 14 i 0 sati ugovora.
+(28/04/2020, 05:05:00) Enrico_Martinez[SQLID: 5635] je radi neaktivnosti izgubio posao ID 9 i 5 sati ugovora.
+(28/04/2020, 05:05:00) Westley_Korrow[SQLID: 6162] je radi neaktivnosti izgubio posao ID 7 i 6 sati ugovora.
+(28/04/2020, 05:05:00) Rick_Dawson[SQLID: 6317] je radi neaktivnosti izgubio posao ID 3 i 3 sati ugovora.
+(28/04/2020, 05:05:00) Mauro_Rossetti[SQLID: 6431] je radi neaktivnosti izgubio posao ID 7 i 8 sati ugovora.
+(28/04/2020, 05:05:00) Michael_Humble[SQLID: 6561] je radi neaktivnosti izgubio posao ID 1 i 5 sati ugovora.
+(28/04/2020, 05:05:00) Marko_Petrovic[SQLID: 6569] je radi neaktivnosti izgubio posao ID 7 i 3 sati ugovora.
+(28/04/2020, 05:05:00) John_Tucker[SQLID: 6582] je radi neaktivnosti izgubio posao ID 5 i 5 sati ugovora.
+(28/04/2020, 05:05:00) Leo_Bro[SQLID: 6593] je radi neaktivnosti izgubio posao ID 4 i 0 sati ugovora.
+(28/04/2020, 05:05:00) Giovanni_Boccaco[SQLID: 6595] je radi neaktivnosti izgubio posao ID 7 i 2 sati ugovora.
+(28/04/2020, 05:05:00) Nino_Miller[SQLID: 6598] je radi neaktivnosti izgubio posao ID 4 i 3 sati ugovora.
+(28/04/2020, 05:05:00) Filip_Pajovic[SQLID: 6600] je radi neaktivnosti izgubio posao ID 7 i 2 sati ugovora.
+(28/04/2020, 05:05:00) Milorad_Antara[SQLID: 6607] je radi neaktivnosti izgubio posao ID 5 i 0 sati ugovora.
+(29/04/2020, 05:05:00) Pablo_Galvez[SQLID: 1295] je radi neaktivnosti izgubio posao ID 3 i 26 sati ugovora.
+(29/04/2020, 05:05:00) Jacob_Rogers[SQLID: 6060] je radi neaktivnosti izgubio posao ID 14 i 3 sati ugovora.
+(29/04/2020, 05:05:00) Shorty_Matthew[SQLID: 6331] je radi neaktivnosti izgubio posao ID 9 i 30 sati ugovora.
+(29/04/2020, 05:05:00) Jamal_Matthew[SQLID: 6464] je radi neaktivnosti izgubio posao ID 7 i 4 sati ugovora.
+(29/04/2020, 05:05:00) Damien_Scott[SQLID: 6465] je radi neaktivnosti izgubio posao ID 1 i 0 sati ugovora.
+(29/04/2020, 05:05:00) Pablo_Mendez[SQLID: 6639] je radi neaktivnosti izgubio posao ID 1 i 4 sati ugovora.
+(29/04/2020, 05:05:00) Mathias_Drechsler[SQLID: 6643] je radi neaktivnosti izgubio posao ID 4 i 0 sati ugovora.
+(29/04/2020, 05:05:00) Dale_BeII[SQLID: 6644] je radi neaktivnosti izgubio posao ID 7 i 0 sati ugovora.
+(29/04/2020, 05:05:00) Stefan_Petrovic[SQLID: 6646] je radi neaktivnosti izgubio posao ID 7 i 0 sati ugovora.
+(29/04/2020, 05:05:00) Vladimir_Kostov[SQLID: 6664] je radi neaktivnosti izgubio posao ID 2 i 0 sati ugovora.
+(30/04/2020, 05:05:00) Hank_Joeng[SQLID: 353] je radi neaktivnosti izgubio posao ID 6 i 32 sati ugovora.
+(30/04/2020, 05:05:00) Raylon_Murphy[SQLID: 2660] je radi neaktivnosti izgubio posao ID 7 i 1 sati ugovora.
+(30/04/2020, 05:05:00) William_Lopez[SQLID: 3433] je radi neaktivnosti izgubio posao ID 7 i 2 sati ugovora.
+(30/04/2020, 05:05:00) Todd_Cowger[SQLID: 4553] je radi neaktivnosti izgubio posao ID 9 i 16 sati ugovora.
+(30/04/2020, 05:05:00) Kaleb_Copeland[SQLID: 5831] je radi neaktivnosti izgubio posao ID 15 i 80 sati ugovora.
+(30/04/2020, 05:05:00) Kristoffer_Klauss[SQLID: 6501] je radi neaktivnosti izgubio posao ID 4 i 9 sati ugovora.
+(30/04/2020, 05:05:00) Haris_Shox[SQLID: 6546] je radi neaktivnosti izgubio posao ID 5 i 2 sati ugovora.
+(30/04/2020, 05:05:00) Edi_Huka[SQLID: 6642] je radi neaktivnosti izgubio posao ID 5 i 1 sati ugovora.
+(30/04/2020, 05:05:00) Darko_Lazarevic[SQLID: 6672] je radi neaktivnosti izgubio posao ID 16 i 1 sati ugovora.
+(30/04/2020, 05:05:00) James_Courtney[SQLID: 6703] je radi neaktivnosti izgubio posao ID 2 i 0 sati ugovora.
+(01/05/2020, 05:05:00) Samuel_Robinson[SQLID: 3812] je radi neaktivnosti izgubio posao ID 17 i 1 sati ugovora.
+(01/05/2020, 05:05:00) Salvatore_Konte[SQLID: 6047] je radi neaktivnosti izgubio posao ID 2 i 1 sati ugovora.
+(01/05/2020, 05:05:00) Myron_Nelson[SQLID: 6157] je radi neaktivnosti izgubio posao ID 8 i 12 sati ugovora.
+(01/05/2020, 05:05:00) Clifton_Cowger[SQLID: 6572] je radi neaktivnosti izgubio posao ID 17 i 15 sati ugovora.
+(01/05/2020, 05:05:00) Ben_Cooper[SQLID: 6613] je radi neaktivnosti izgubio posao ID 8 i 13 sati ugovora.
+(01/05/2020, 05:05:00) Jackob_Snell[SQLID: 6662] je radi neaktivnosti izgubio posao ID 15 i 4 sati ugovora.
+(01/05/2020, 05:05:00) Jack_Scoggins[SQLID: 6663] je radi neaktivnosti izgubio posao ID 15 i 3 sati ugovora.
+(01/05/2020, 05:05:00) Anthony_Morrow[SQLID: 6679] je radi neaktivnosti izgubio posao ID 5 i 4 sati ugovora.
+(01/05/2020, 05:05:00) Stefan_Markocevic[SQLID: 6705] je radi neaktivnosti izgubio posao ID 7 i 2 sati ugovora.
+(01/05/2020, 05:05:00) Edgar_Williams[SQLID: 6716] je radi neaktivnosti izgubio posao ID 7 i 1 sati ugovora.
+(01/05/2020, 05:05:00) Moe_Lester[SQLID: 6718] je radi neaktivnosti izgubio posao ID 15 i 0 sati ugovora.
+(01/05/2020, 05:05:00) Elena_Salvatore[SQLID: 6728] je radi neaktivnosti izgubio posao ID 7 i 0 sati ugovora.
+(01/05/2020, 05:05:00) Lily_Miller[SQLID: 6734] je radi neaktivnosti izgubio posao ID 7 i 1 sati ugovora.
+(02/05/2020, 05:05:00) Erick_Jarek[SQLID: 1459] je radi neaktivnosti izgubio posao ID 16 i 1 sati ugovora.
+(02/05/2020, 05:05:00) Valentin_Nawrocki[SQLID: 1538] je radi neaktivnosti izgubio posao ID 7 i 43 sati ugovora.
+(02/05/2020, 05:05:00) Chris_Wallace[SQLID: 6471] je radi neaktivnosti izgubio posao ID 4 i 7 sati ugovora.
+(02/05/2020, 05:05:00) Johny_Hobbs[SQLID: 6545] je radi neaktivnosti izgubio posao ID 7 i 2 sati ugovora.
+(02/05/2020, 05:05:00) Cornelius_Hodge[SQLID: 6725] je radi neaktivnosti izgubio posao ID 8 i 0 sati ugovora.
+(02/05/2020, 05:05:00) William_Smith[SQLID: 6737] je radi neaktivnosti izgubio posao ID 1 i 1 sati ugovora.
+(02/05/2020, 05:05:00) Michael_Moore[SQLID: 6751] je radi neaktivnosti izgubio posao ID 7 i 0 sati ugovora.
+(02/05/2020, 05:05:00) Brandon_White[SQLID: 6755] je radi neaktivnosti izgubio posao ID 2 i 0 sati ugovora.
+(02/05/2020, 05:05:00) Phillip_Caperton[SQLID: 6756] je radi neaktivnosti izgubio posao ID 2 i 0 sati ugovora.
+(02/05/2020, 05:05:00) Andrew_McMartin[SQLID: 6757] je radi neaktivnosti izgubio posao ID 4 i 0 sati ugovora.
+(03/05/2020, 05:05:00) Kevin_Crawford[SQLID: 28] je radi neaktivnosti izgubio posao ID 17 i 56 sati ugovora.
+(03/05/2020, 05:05:00) Muller_Nielsen[SQLID: 117] je radi neaktivnosti izgubio posao ID 15 i 14 sati ugovora.
+(03/05/2020, 05:05:00) Cleon_Xenos[SQLID: 6127] je radi neaktivnosti izgubio posao ID 3 i 4 sati ugovora.
+(03/05/2020, 05:05:00) Arkell_Dixon[SQLID: 6189] je radi neaktivnosti izgubio posao ID 3 i 45 sati ugovora.
+(03/05/2020, 05:05:00) Esteban_Jimenez[SQLID: 6378] je radi neaktivnosti izgubio posao ID 15 i 21 sati ugovora.
+(03/05/2020, 05:05:00) Nikolas_McGee[SQLID: 6515] je radi neaktivnosti izgubio posao ID 3 i 27 sati ugovora.
+(03/05/2020, 05:05:00) Kurt_McNash[SQLID: 6744] je radi neaktivnosti izgubio posao ID 5 i 1 sati ugovora.
+(03/05/2020, 05:05:00) Dave_Coentrao[SQLID: 6774] je radi neaktivnosti izgubio posao ID 7 i 1 sati ugovora.
+(04/05/2020, 05:05:00) Juliette_Clarkson[SQLID: 2011] je radi neaktivnosti izgubio posao ID 3 i 1 sati ugovora.
+(04/05/2020, 05:05:00) Joe_Owens[SQLID: 3312] je radi neaktivnosti izgubio posao ID 7 i 4 sati ugovora.
+(04/05/2020, 05:05:00) Fernando_Delgado[SQLID: 4427] je radi neaktivnosti izgubio posao ID 9 i 2 sati ugovora.
+(04/05/2020, 05:05:00) Michael_Robinson[SQLID: 6675] je radi neaktivnosti izgubio posao ID 8 i 1 sati ugovora.
+(04/05/2020, 05:05:00) Nikola_Kavezic[SQLID: 6720] je radi neaktivnosti izgubio posao ID 2 i 4 sati ugovora.
+(04/05/2020, 05:05:00) Luca_Andolini[SQLID: 6726] je radi neaktivnosti izgubio posao ID 7 i 6 sati ugovora.
+(05/05/2020, 05:05:00) Bogdan_Popovic[SQLID: 79] je radi neaktivnosti izgubio posao ID 9 i 26 sati ugovora.
+(05/05/2020, 05:05:00) Hayley_Hughes[SQLID: 90] je radi neaktivnosti izgubio posao ID 7 i 113 sati ugovora.
+(05/05/2020, 05:05:00) Kodrak_Unarrh[SQLID: 1921] je radi neaktivnosti izgubio posao ID 9 i 9 sati ugovora.
+(05/05/2020, 05:05:00) Jacob_Leontyev[SQLID: 2226] je radi neaktivnosti izgubio posao ID 9 i 310 sati ugovora.
+(05/05/2020, 05:05:00) Antonella_Martelli[SQLID: 5398] je radi neaktivnosti izgubio posao ID 3 i 57 sati ugovora.
+(05/05/2020, 05:05:00) Igor_Metveyev[SQLID: 6163] je radi neaktivnosti izgubio posao ID 3 i 13 sati ugovora.
+(05/05/2020, 05:05:00) Richard_Mcadams[SQLID: 6568] je radi neaktivnosti izgubio posao ID 3 i 19 sati ugovora.
+(05/05/2020, 05:05:00) Eddie_Finch[SQLID: 6580] je radi neaktivnosti izgubio posao ID 1 i 1 sati ugovora.
+(05/05/2020, 05:05:00) Aleksander_Wick[SQLID: 6634] je radi neaktivnosti izgubio posao ID 5 i 8 sati ugovora.
+(05/05/2020, 05:05:00) Edi_McRae[SQLID: 6686] je radi neaktivnosti izgubio posao ID 5 i 4 sati ugovora.
+(05/05/2020, 05:05:00) Alex_Caruso[SQLID: 6741] je radi neaktivnosti izgubio posao ID 4 i 2 sati ugovora.
+(05/05/2020, 05:05:00) Noah_Reynoalds[SQLID: 6769] je radi neaktivnosti izgubio posao ID 7 i 0 sati ugovora.
+(06/05/2020, 05:05:00) Hayden_Lane[SQLID: 177] je radi neaktivnosti izgubio posao ID 17 i 5 sati ugovora.
+(06/05/2020, 05:05:00) Mia_Wright[SQLID: 286] je radi neaktivnosti izgubio posao ID 15 i 12 sati ugovora.
+(06/05/2020, 05:05:00) Tione_Bartlett[SQLID: 608] je radi neaktivnosti izgubio posao ID 2 i 11 sati ugovora.
+(06/05/2020, 05:05:00) Michael_Ferreti[SQLID: 1087] je radi neaktivnosti izgubio posao ID 15 i 10 sati ugovora.
+(06/05/2020, 05:05:00) James_McMinn[SQLID: 3126] je radi neaktivnosti izgubio posao ID 7 i 11 sati ugovora.
+(06/05/2020, 05:05:00) Carlos_Verledez[SQLID: 4876] je radi neaktivnosti izgubio posao ID 3 i 5 sati ugovora.
+(06/05/2020, 05:05:00) Budo_Stojanovic[SQLID: 6033] je radi neaktivnosti izgubio posao ID 17 i 28 sati ugovora.
+(06/05/2020, 05:05:00) John_Rosee[SQLID: 6554] je radi neaktivnosti izgubio posao ID 9 i 3 sati ugovora.
+(06/05/2020, 05:05:00) Eric_Mcadams[SQLID: 6567] je radi neaktivnosti izgubio posao ID 3 i 15 sati ugovora.
+(06/05/2020, 05:05:00) Richard_Parker[SQLID: 6671] je radi neaktivnosti izgubio posao ID 3 i 4 sati ugovora.
+(06/05/2020, 05:05:00) John_Flither[SQLID: 6733] je radi neaktivnosti izgubio posao ID 7 i 19 sati ugovora.
+(06/05/2020, 05:05:00) Jamal_McCormick[SQLID: 6747] je radi neaktivnosti izgubio posao ID 1 i 8 sati ugovora.
+(06/05/2020, 05:05:00) Lewis_Johnson[SQLID: 6773] je radi neaktivnosti izgubio posao ID 16 i 1 sati ugovora.
+(06/05/2020, 05:05:00) Richard_North[SQLID: 6799] je radi neaktivnosti izgubio posao ID 1 i 1 sati ugovora.
+(06/05/2020, 05:05:00) Dominik_Medvedev[SQLID: 6801] je radi neaktivnosti izgubio posao ID 15 i 11 sati ugovora.
+(06/05/2020, 05:05:00) Kyle_Donovan[SQLID: 6807] je radi neaktivnosti izgubio posao ID 3 i 4 sati ugovora.
+(06/05/2020, 05:05:00) Marko_Popivoda[SQLID: 6812] je radi neaktivnosti izgubio posao ID 1 i 1 sati ugovora.
+(06/05/2020, 05:05:00) John_Ashley[SQLID: 6821] je radi neaktivnosti izgubio posao ID 14 i 0 sati ugovora.
+(07/05/2020, 05:05:00) Thomas_Harper[SQLID: 22] je radi neaktivnosti izgubio posao ID 3 i 112 sati ugovora.
+(07/05/2020, 05:05:00) Tyrae_Sims[SQLID: 109] je radi neaktivnosti izgubio posao ID 6 i 5 sati ugovora.
+(07/05/2020, 05:05:00) Donald_Wodyzanski[SQLID: 3449] je radi neaktivnosti izgubio posao ID 7 i 1 sati ugovora.
+(07/05/2020, 05:05:00) Cesar_Martinez[SQLID: 3556] je radi neaktivnosti izgubio posao ID 9 i 13 sati ugovora.
+(07/05/2020, 05:05:00) Carlos_Martinez[SQLID: 3961] je radi neaktivnosti izgubio posao ID 9 i 37 sati ugovora.
+(07/05/2020, 05:05:00) James_Barrone[SQLID: 6424] je radi neaktivnosti izgubio posao ID 9 i 22 sati ugovora.
+(07/05/2020, 05:05:00) Ronnie_Yune[SQLID: 6467] je radi neaktivnosti izgubio posao ID 7 i 17 sati ugovora.
+(07/05/2020, 05:05:00) Steph_Burks[SQLID: 6730] je radi neaktivnosti izgubio posao ID 1 i 3 sati ugovora.
+(07/05/2020, 05:05:00) Jose_Nores[SQLID: 6739] je radi neaktivnosti izgubio posao ID 7 i 14 sati ugovora.
+(07/05/2020, 05:05:00) Dante_Aparicio[SQLID: 6794] je radi neaktivnosti izgubio posao ID 15 i 10 sati ugovora.
+(07/05/2020, 05:05:00) David_Woodcock[SQLID: 6835] je radi neaktivnosti izgubio posao ID 3 i 6 sati ugovora.
+(07/05/2020, 05:05:00) Damon_Salvatore[SQLID: 6838] je radi neaktivnosti izgubio posao ID 14 i 0 sati ugovora.
+(07/05/2020, 05:05:00) Julie_Davis[SQLID: 6841] je radi neaktivnosti izgubio posao ID 3 i 7 sati ugovora.
+(07/05/2020, 05:05:00) James_Rothstein[SQLID: 6843] je radi neaktivnosti izgubio posao ID 3 i 6 sati ugovora.
+(07/05/2020, 05:05:00) Oscar_Fluette[SQLID: 6844] je radi neaktivnosti izgubio posao ID 3 i 6 sati ugovora.
+(07/05/2020, 05:05:00) Mark_Winston[SQLID: 6846] je radi neaktivnosti izgubio posao ID 3 i 8 sati ugovora.
+(07/05/2020, 05:05:00) Mike_Parting[SQLID: 6847] je radi neaktivnosti izgubio posao ID 3 i 7 sati ugovora.
+(08/05/2020, 05:05:00) Brian_Carter[SQLID: 354] je radi neaktivnosti izgubio posao ID 16 i 1 sati ugovora.
+(08/05/2020, 05:05:00) Marcus_Jackson[SQLID: 5910] je radi neaktivnosti izgubio posao ID 7 i 0 sati ugovora.
+(08/05/2020, 05:05:00) Vasiliy_Alekseyevich[SQLID: 6023] je radi neaktivnosti izgubio posao ID 3 i 25 sati ugovora.
+(08/05/2020, 05:05:00) Ricardo_Smith[SQLID: 6470] je radi neaktivnosti izgubio posao ID 7 i 1 sati ugovora.
+(08/05/2020, 05:05:00) Jaylen_Nithercott[SQLID: 6787] je radi neaktivnosti izgubio posao ID 9 i 0 sati ugovora.
+(08/05/2020, 05:05:00) Gerardo_Hill[SQLID: 6842] je radi neaktivnosti izgubio posao ID 3 i 6 sati ugovora.
+(08/05/2020, 05:05:00) Estevan_Juarez[SQLID: 6845] je radi neaktivnosti izgubio posao ID 3 i 7 sati ugovora.
+(08/05/2020, 05:05:00) Hylos_Hemingway[SQLID: 6851] je radi neaktivnosti izgubio posao ID 16 i 0 sati ugovora.
+(08/05/2020, 05:05:00) Yuferev_Georgiy[SQLID: 6860] je radi neaktivnosti izgubio posao ID 1 i 0 sati ugovora.
+(08/05/2020, 05:05:00) Stiv_Leotardo[SQLID: 6871] je radi neaktivnosti izgubio posao ID 2 i 0 sati ugovora.
+(09/05/2020, 05:05:00) Andrew_Murphy[SQLID: 35] je radi neaktivnosti izgubio posao ID 7 i 38 sati ugovora.
+(09/05/2020, 05:05:00) Homero_Estevez[SQLID: 429] je radi neaktivnosti izgubio posao ID 7 i 25 sati ugovora.
+(09/05/2020, 05:05:00) Kabarann_Mishtak[SQLID: 605] je radi neaktivnosti izgubio posao ID 17 i 3 sati ugovora.
+(09/05/2020, 05:05:00) Randolph_Sanders[SQLID: 1261] je radi neaktivnosti izgubio posao ID 9 i 3 sati ugovora.
+(09/05/2020, 05:05:00) Vincent_Cefalu[SQLID: 1959] je radi neaktivnosti izgubio posao ID 5 i 1 sati ugovora.
+(09/05/2020, 05:05:00) Borivoje_Kalezic[SQLID: 2613] je radi neaktivnosti izgubio posao ID 13 i 20 sati ugovora.
+(09/05/2020, 05:05:00) Ovidio_Ackman[SQLID: 3401] je radi neaktivnosti izgubio posao ID 16 i 0 sati ugovora.
+(09/05/2020, 05:05:00) Umberto_Morelli[SQLID: 5412] je radi neaktivnosti izgubio posao ID 16 i 0 sati ugovora.
+(09/05/2020, 05:05:00) Nikolay_Grigorievich[SQLID: 6141] je radi neaktivnosti izgubio posao ID 9 i 4 sati ugovora.
+(09/05/2020, 05:05:00) Jack_Hillton[SQLID: 6346] je radi neaktivnosti izgubio posao ID 5 i 0 sati ugovora.
+(09/05/2020, 05:05:00) Hector_Delgado[SQLID: 6670] je radi neaktivnosti izgubio posao ID 17 i 7 sati ugovora.
+(09/05/2020, 05:05:00) Antonio_Morelli[SQLID: 6789] je radi neaktivnosti izgubio posao ID 16 i 0 sati ugovora.
+(09/05/2020, 05:05:00) Jeremy_Hoffman[SQLID: 6850] je radi neaktivnosti izgubio posao ID 7 i 3 sati ugovora.
+(09/05/2020, 05:05:00) Tony_Johnson[SQLID: 6857] je radi neaktivnosti izgubio posao ID 7 i 2 sati ugovora.
+(09/05/2020, 05:05:00) Raymond_Bellomo[SQLID: 6875] je radi neaktivnosti izgubio posao ID 2 i 1 sati ugovora.
+(09/05/2020, 05:05:00) Benjamin_Carwood[SQLID: 6878] je radi neaktivnosti izgubio posao ID 5 i 1 sati ugovora.
+(10/05/2020, 05:05:01) Zach_Tarantino[SQLID: 2354] je radi neaktivnosti izgubio posao ID 9 i 3 sati ugovora.
+(10/05/2020, 05:05:01) Marquise_Mercer[SQLID: 5720] je radi neaktivnosti izgubio posao ID 15 i 10 sati ugovora.
+(10/05/2020, 05:05:01) Patrick_Schmidt[SQLID: 6666] je radi neaktivnosti izgubio posao ID 5 i 2 sati ugovora.
+(10/05/2020, 05:05:01) Dawit_Brown[SQLID: 6710] je radi neaktivnosti izgubio posao ID 3 i 2 sati ugovora.
+(10/05/2020, 05:05:01) Dick_Rokvel[SQLID: 6897] je radi neaktivnosti izgubio posao ID 7 i 1 sati ugovora.
+(10/05/2020, 05:05:01) Dzimi_Leotardo[SQLID: 6898] je radi neaktivnosti izgubio posao ID 1 i 0 sati ugovora.
+(10/05/2020, 05:05:01) Djordje_Anicic[SQLID: 6902] je radi neaktivnosti izgubio posao ID 1 i 0 sati ugovora.
+(11/05/2020, 05:05:00) Tommy_Peninno[SQLID: 6913] je radi neaktivnosti izgubio posao ID 2 i 0 sati ugovora.
+(11/05/2020, 05:05:00) Francesco_Sucre[SQLID: 5085] je radi neaktivnosti izgubio posao ID 7 i 31 sati ugovora.
+(12/05/2020, 05:05:00) Jose_Alvarez[SQLID: 6924] je radi neaktivnosti izgubio posao ID 1 i 3 sati ugovora.
+(12/05/2020, 05:05:00) Alison_Vicente[SQLID: 6146] je radi neaktivnosti izgubio posao ID 2 i 3 sati ugovora.
+(12/05/2020, 05:05:00) Mason_Maguire[SQLID: 5419] je radi neaktivnosti izgubio posao ID 3 i 6 sati ugovora.
+(12/05/2020, 05:05:00) Alessio_Moretti[SQLID: 6330] je radi neaktivnosti izgubio posao ID 5 i 6 sati ugovora.
+(12/05/2020, 05:05:00) Philipp_Brown[SQLID: 6870] je radi neaktivnosti izgubio posao ID 5 i 12 sati ugovora.
+(12/05/2020, 05:05:00) James_Matthows[SQLID: 6059] je radi neaktivnosti izgubio posao ID 7 i 5 sati ugovora.
+(12/05/2020, 05:05:00) Louis_Scalise[SQLID: 202] je radi neaktivnosti izgubio posao ID 9 i 33 sati ugovora.
+(12/05/2020, 05:05:00) Paul_Meadows[SQLID: 1493] je radi neaktivnosti izgubio posao ID 9 i 33 sati ugovora.
+(12/05/2020, 05:05:00) Danio_Squilace[SQLID: 5981] je radi neaktivnosti izgubio posao ID 9 i 26 sati ugovora.
+(12/05/2020, 05:05:00) Aladino_Petrizzi[SQLID: 193] je radi neaktivnosti izgubio posao ID 15 i 2 sati ugovora.
+(12/05/2020, 05:05:00) Nikko_Jenkins[SQLID: 969] je radi neaktivnosti izgubio posao ID 15 i 35 sati ugovora.
+(12/05/2020, 05:05:00) Susan_Bray[SQLID: 3319] je radi neaktivnosti izgubio posao ID 16 i 6 sati ugovora.
+(13/05/2020, 05:05:00) Frank_Carter[SQLID: 6351] je radi neaktivnosti izgubio posao ID 1 i 2 sati ugovora.
+(13/05/2020, 05:05:00) Theodosis_Georgiadis[SQLID: 6839] je radi neaktivnosti izgubio posao ID 1 i 1 sati ugovora.
+(13/05/2020, 05:05:01) Kevin_Hall[SQLID: 6914] je radi neaktivnosti izgubio posao ID 2 i 3 sati ugovora.
+(13/05/2020, 05:05:01) Lorenzo_Bonelli[SQLID: 315] je radi neaktivnosti izgubio posao ID 3 i 1 sati ugovora.
+(13/05/2020, 05:05:01) Paul_Smith[SQLID: 750] je radi neaktivnosti izgubio posao ID 3 i 2 sati ugovora.
+(13/05/2020, 05:05:01) Lavrently_Henderson[SQLID: 4399] je radi neaktivnosti izgubio posao ID 7 i 3 sati ugovora.
+(13/05/2020, 05:05:01) Sergej_Mihailovic[SQLID: 6193] je radi neaktivnosti izgubio posao ID 7 i 2 sati ugovora.
+(13/05/2020, 05:05:01) Maxim_Zahariev[SQLID: 6235] je radi neaktivnosti izgubio posao ID 7 i 0 sati ugovora.
+(13/05/2020, 05:05:01) Derrick_Hillson[SQLID: 6503] je radi neaktivnosti izgubio posao ID 7 i 17 sati ugovora.
+(13/05/2020, 05:05:01) Kryistan_Kaczka[SQLID: 6928] je radi neaktivnosti izgubio posao ID 7 i 1 sati ugovora.
+(13/05/2020, 05:05:01) Maras_Ramirez[SQLID: 6931] je radi neaktivnosti izgubio posao ID 7 i 4 sati ugovora.
+(13/05/2020, 05:05:01) Jaydon_Lockwood[SQLID: 6934] je radi neaktivnosti izgubio posao ID 7 i 1 sati ugovora.
+(13/05/2020, 05:05:01) Riolis_Gepas[SQLID: 1024] je radi neaktivnosti izgubio posao ID 9 i 25 sati ugovora.
+(13/05/2020, 05:05:01) Isaiah_Mills[SQLID: 4928] je radi neaktivnosti izgubio posao ID 9 i 2 sati ugovora.
+(14/05/2020, 05:05:00) Leonard_Wass[SQLID: 653] je radi neaktivnosti izgubio posao ID 3 i 1 sati ugovora.
+(14/05/2020, 05:05:00) Jimmy_Pagnotto[SQLID: 5377] je radi neaktivnosti izgubio posao ID 5 i 49 sati ugovora.
+(14/05/2020, 05:05:00) Kiyan_Pierce[SQLID: 6784] je radi neaktivnosti izgubio posao ID 5 i 4 sati ugovora.
+(14/05/2020, 05:05:00) Klara_Sandberg[SQLID: 5040] je radi neaktivnosti izgubio posao ID 6 i 18 sati ugovora.
+(14/05/2020, 05:05:00) Alberto_Sucre[SQLID: 3447] je radi neaktivnosti izgubio posao ID 7 i 59 sati ugovora.
+(14/05/2020, 05:05:00) Velizar_Gundulic[SQLID: 6818] je radi neaktivnosti izgubio posao ID 7 i 3 sati ugovora.
+(14/05/2020, 05:05:00) Leonid_Ignatenko[SQLID: 6895] je radi neaktivnosti izgubio posao ID 7 i 5 sati ugovora.
+(14/05/2020, 05:05:00) Deshawn_Brown[SQLID: 6945] je radi neaktivnosti izgubio posao ID 7 i 1 sati ugovora.
+(14/05/2020, 05:05:00) Raymond_Lazzeri[SQLID: 3110] je radi neaktivnosti izgubio posao ID 9 i 1 sati ugovora.
+(14/05/2020, 05:05:00) Vasilis_Galatas[SQLID: 3794] je radi neaktivnosti izgubio posao ID 9 i 7 sati ugovora.
+(14/05/2020, 05:05:00) Luigi_Ferrero[SQLID: 489] je radi neaktivnosti izgubio posao ID 14 i 7 sati ugovora.
+(14/05/2020, 05:05:00) Archie_Donnovan[SQLID: 6632] je radi neaktivnosti izgubio posao ID 15 i 2 sati ugovora.
+(14/05/2020, 05:05:00) Wilco_Hughes[SQLID: 6770] je radi neaktivnosti izgubio posao ID 15 i 4 sati ugovora.
+(14/05/2020, 05:05:00) Rashon_Patterson[SQLID: 6640] je radi neaktivnosti izgubio posao ID 17 i 6 sati ugovora.
+(15/05/2020, 05:05:00) Eric_Roberts[SQLID: 6197] je radi neaktivnosti izgubio posao ID 3 i 4 sati ugovora.
+(15/05/2020, 05:05:00) Edgar_Torosyan[SQLID: 6932] je radi neaktivnosti izgubio posao ID 5 i 2 sati ugovora.
+(15/05/2020, 05:05:00) Michel_Johnson[SQLID: 6946] je radi neaktivnosti izgubio posao ID 5 i 3 sati ugovora.
+(15/05/2020, 05:05:00) Tyrone_Brooks[SQLID: 1041] je radi neaktivnosti izgubio posao ID 6 i 2 sati ugovora.
+(15/05/2020, 05:05:00) Jason_Pruitt[SQLID: 3421] je radi neaktivnosti izgubio posao ID 7 i 11 sati ugovora.
+(15/05/2020, 05:05:00) Adam_Ramirez[SQLID: 6004] je radi neaktivnosti izgubio posao ID 7 i 2 sati ugovora.
+(15/05/2020, 05:05:00) Ethan_Irving[SQLID: 6173] je radi neaktivnosti izgubio posao ID 7 i 1 sati ugovora.
+(15/05/2020, 05:05:00) Johny_Falcone[SQLID: 6814] je radi neaktivnosti izgubio posao ID 7 i 1 sati ugovora.
+(15/05/2020, 05:05:00) Denzel_Lawton[SQLID: 6919] je radi neaktivnosti izgubio posao ID 7 i 1 sati ugovora.
+(15/05/2020, 05:05:00) Richard_Myers[SQLID: 1226] je radi neaktivnosti izgubio posao ID 17 i 75 sati ugovora.
+(16/05/2020, 05:05:00) Rudolph_Corozzo[SQLID: 859] je radi neaktivnosti izgubio posao ID 1 i 11 sati ugovora.
+(16/05/2020, 05:05:00) Michael_Smith[SQLID: 6211] je radi neaktivnosti izgubio posao ID 1 i 2 sati ugovora.
+(16/05/2020, 05:05:00) Jack_Kuper[SQLID: 6951] je radi neaktivnosti izgubio posao ID 1 i 3 sati ugovora.
+(16/05/2020, 05:05:00) Lincoln_Wade[SQLID: 6922] je radi neaktivnosti izgubio posao ID 2 i 0 sati ugovora.
+(16/05/2020, 05:05:00) Joe_Cresswell[SQLID: 388] je radi neaktivnosti izgubio posao ID 4 i 2 sati ugovora.
+(16/05/2020, 05:05:00) Alexander_Johnson[SQLID: 6797] je radi neaktivnosti izgubio posao ID 5 i 27 sati ugovora.
+(16/05/2020, 05:05:00) Jamal_Wilson[SQLID: 6894] je radi neaktivnosti izgubio posao ID 5 i 4 sati ugovora.
+(16/05/2020, 05:05:00) Darkeem_Moss[SQLID: 737] je radi neaktivnosti izgubio posao ID 7 i 76 sati ugovora.
+(16/05/2020, 05:05:00) Petar_Stankovic[SQLID: 5716] je radi neaktivnosti izgubio posao ID 7 i 27 sati ugovora.
+(16/05/2020, 05:05:00) Malik_Morgan[SQLID: 6063] je radi neaktivnosti izgubio posao ID 7 i 3 sati ugovora.
+(16/05/2020, 05:05:00) Kevin_McCarthy[SQLID: 6892] je radi neaktivnosti izgubio posao ID 7 i 1 sati ugovora.
+(16/05/2020, 05:05:00) Tom_Riddle[SQLID: 6926] je radi neaktivnosti izgubio posao ID 7 i 16 sati ugovora.
+(16/05/2020, 05:05:00) Luciano_Bonatti[SQLID: 6937] je radi neaktivnosti izgubio posao ID 7 i 4 sati ugovora.
+(16/05/2020, 05:05:00) Jamal_Wright[SQLID: 6955] je radi neaktivnosti izgubio posao ID 7 i 3 sati ugovora.
+(16/05/2020, 05:05:00) Evan_Hobbs[SQLID: 886] je radi neaktivnosti izgubio posao ID 9 i 4 sati ugovora.
+(16/05/2020, 05:05:00) Aleksandar_Vukovic[SQLID: 760] je radi neaktivnosti izgubio posao ID 15 i 23 sati ugovora.
+(17/05/2020, 05:05:00) Marcus_Santa[SQLID: 6936] je radi neaktivnosti izgubio posao ID 1 i 1 sati ugovora.
+(17/05/2020, 05:05:00) Matthew_Harold[SQLID: 6985] je radi neaktivnosti izgubio posao ID 1 i 1 sati ugovora.
+(17/05/2020, 05:05:00) Zyrell_Young[SQLID: 998] je radi neaktivnosti izgubio posao ID 3 i 11 sati ugovora.
+(17/05/2020, 05:05:00) Tatyana_Baturina[SQLID: 6232] je radi neaktivnosti izgubio posao ID 3 i 40 sati ugovora.
+(17/05/2020, 05:05:00) Ryan_Shock[SQLID: 6244] je radi neaktivnosti izgubio posao ID 3 i 1 sati ugovora.
+(17/05/2020, 05:05:00) Alex_Smith[SQLID: 6752] je radi neaktivnosti izgubio posao ID 3 i 19 sati ugovora.
+(17/05/2020, 05:05:00) Charles_Manson[SQLID: 6994] je radi neaktivnosti izgubio posao ID 4 i 4 sati ugovora.
+(17/05/2020, 05:05:00) John_Green[SQLID: 6874] je radi neaktivnosti izgubio posao ID 5 i 5 sati ugovora.
+(17/05/2020, 05:05:00) Zebadiah_Blackwood[SQLID: 593] je radi neaktivnosti izgubio posao ID 7 i 7 sati ugovora.
+(17/05/2020, 05:05:00) Ljubomir_Milovanovic[SQLID: 785] je radi neaktivnosti izgubio posao ID 7 i 132 sati ugovora.
+(17/05/2020, 05:05:00) Kayla_Malone[SQLID: 2103] je radi neaktivnosti izgubio posao ID 7 i 17 sati ugovora.
+(17/05/2020, 05:05:00) Anthony_Asmus[SQLID: 6461] je radi neaktivnosti izgubio posao ID 7 i 19 sati ugovora.
+(17/05/2020, 05:05:00) Erian_Profaci[SQLID: 6929] je radi neaktivnosti izgubio posao ID 7 i 4 sati ugovora.
+(17/05/2020, 05:05:00) Bera_Herrera[SQLID: 6957] je radi neaktivnosti izgubio posao ID 7 i 3 sati ugovora.
+(17/05/2020, 05:05:00) Mason_Palmer[SQLID: 5425] je radi neaktivnosti izgubio posao ID 9 i 6 sati ugovora.
+(17/05/2020, 05:05:00) Frankie_Moltisanti[SQLID: 6116] je radi neaktivnosti izgubio posao ID 9 i 48 sati ugovora.
+(17/05/2020, 05:05:00) Farrelle_Qualls[SQLID: 6667] je radi neaktivnosti izgubio posao ID 9 i 37 sati ugovora.
+(17/05/2020, 05:05:00) Maxwell_Diaz[SQLID: 3922] je radi neaktivnosti izgubio posao ID 14 i 2 sati ugovora.
+(17/05/2020, 05:05:00) Chad_Johnson[SQLID: 7003] je radi neaktivnosti izgubio posao ID 14 i 1 sati ugovora.
+(17/05/2020, 05:05:00) Thomas_Gerbel[SQLID: 120] je radi neaktivnosti izgubio posao ID 15 i 10 sati ugovora.
+(17/05/2020, 05:05:00) Lazar_Radovic[SQLID: 185] je radi neaktivnosti izgubio posao ID 15 i 82 sati ugovora.
+(18/05/2020, 05:05:00) Bogdan_Miskovic[SQLID: 258] je radi neaktivnosti izgubio posao ID 1 i 3 sati ugovora.
+(18/05/2020, 05:05:00) Roberto_Moombran[SQLID: 6949] je radi neaktivnosti izgubio posao ID 1 i 4 sati ugovora.
+(18/05/2020, 05:05:00) Vasili_Hubcev[SQLID: 6903] je radi neaktivnosti izgubio posao ID 7 i 14 sati ugovora.
+(18/05/2020, 05:05:00) Ema_Lemark[SQLID: 6992] je radi neaktivnosti izgubio posao ID 7 i 2 sati ugovora.
+(18/05/2020, 05:05:00) Marass_Ramirez[SQLID: 7000] je radi neaktivnosti izgubio posao ID 7 i 5 sati ugovora.
+(18/05/2020, 05:05:00) Matt_Downs[SQLID: 6000] je radi neaktivnosti izgubio posao ID 15 i 13 sati ugovora.
+(18/05/2020, 05:05:00) Michell_Gauthier[SQLID: 7012] je radi neaktivnosti izgubio posao ID 16 i 0 sati ugovora.
+(19/05/2020, 05:05:00) Michael_Redbook[SQLID: 7022] je radi neaktivnosti izgubio posao ID 1 i 0 sati ugovora.
+(19/05/2020, 05:05:00) Alexei_Akinfeev[SQLID: 6988] je radi neaktivnosti izgubio posao ID 2 i 3 sati ugovora.
+(19/05/2020, 05:05:00) Giuseppe_Manna[SQLID: 5017] je radi neaktivnosti izgubio posao ID 3 i 24 sati ugovora.
+(19/05/2020, 05:05:00) Maxwell_Fernandez[SQLID: 6798] je radi neaktivnosti izgubio posao ID 3 i 25 sati ugovora.
+(19/05/2020, 05:05:00) Richard_Costanelli[SQLID: 5326] je radi neaktivnosti izgubio posao ID 5 i 4 sati ugovora.
+(19/05/2020, 05:05:00) Jacob_Rodgers[SQLID: 2024] je radi neaktivnosti izgubio posao ID 7 i 58 sati ugovora.
+(19/05/2020, 05:05:00) Derrick_Dawson[SQLID: 6290] je radi neaktivnosti izgubio posao ID 7 i 15 sati ugovora.
+(19/05/2020, 05:05:00) Chazz_Lewis[SQLID: 7021] je radi neaktivnosti izgubio posao ID 7 i 0 sati ugovora.
+(19/05/2020, 05:05:00) Chezz_Lewis[SQLID: 7031] je radi neaktivnosti izgubio posao ID 7 i 0 sati ugovora.
+(20/05/2020, 05:05:00) Ray_Steven[SQLID: 6980] je radi neaktivnosti izgubio posao ID 1 i 4 sati ugovora.
+(20/05/2020, 05:05:00) Mike_Toretto[SQLID: 7030] je radi neaktivnosti izgubio posao ID 1 i 0 sati ugovora.
+(20/05/2020, 05:05:00) John_Mark[SQLID: 7038] je radi neaktivnosti izgubio posao ID 1 i 0 sati ugovora.
+(20/05/2020, 05:05:00) Johnny_Pappalardo[SQLID: 6943] je radi neaktivnosti izgubio posao ID 5 i 19 sati ugovora.
+(20/05/2020, 05:05:00) Michael_Wade[SQLID: 978] je radi neaktivnosti izgubio posao ID 7 i 34 sati ugovora.
+(20/05/2020, 05:05:00) Dominic_Smith[SQLID: 1164] je radi neaktivnosti izgubio posao ID 7 i 60 sati ugovora.
+(20/05/2020, 05:05:00) Kevin_Burrell[SQLID: 6044] je radi neaktivnosti izgubio posao ID 7 i 45 sati ugovora.
+(20/05/2020, 05:05:00) Jeremiah_Houston[SQLID: 6386] je radi neaktivnosti izgubio posao ID 7 i 6 sati ugovora.
+(20/05/2020, 05:05:00) Luciano_Scaletta[SQLID: 1537] je radi neaktivnosti izgubio posao ID 9 i 24 sati ugovora.
+(20/05/2020, 05:05:00) Bozo_Djukanovic[SQLID: 6487] je radi neaktivnosti izgubio posao ID 9 i 8 sati ugovora.
+(20/05/2020, 05:05:00) Ivan_Djukanovic[SQLID: 6486] je radi neaktivnosti izgubio posao ID 13 i 5 sati ugovora.
+(21/05/2020, 05:05:00) Mikel_Bryant[SQLID: 1056] je radi neaktivnosti izgubio posao ID 3 i 9 sati ugovora.
+(21/05/2020, 05:05:00) Nikola_Stojkovic[SQLID: 6265] je radi neaktivnosti izgubio posao ID 3 i 1 sati ugovora.
+(21/05/2020, 05:05:00) Frank_Smith[SQLID: 6983] je radi neaktivnosti izgubio posao ID 3 i 1 sati ugovora.
+(21/05/2020, 05:05:00) Kaitlyn_Brooks[SQLID: 277] je radi neaktivnosti izgubio posao ID 5 i 1 sati ugovora.
+(21/05/2020, 05:05:00) Thomas_Solotov[SQLID: 7053] je radi neaktivnosti izgubio posao ID 5 i 0 sati ugovora.
+(21/05/2020, 05:05:00) Lanan_Stirling[SQLID: 2691] je radi neaktivnosti izgubio posao ID 7 i 8 sati ugovora.
+(21/05/2020, 05:05:00) Hugo_Diaz[SQLID: 6953] je radi neaktivnosti izgubio posao ID 7 i 20 sati ugovora.
+(21/05/2020, 05:05:00) George_Wizzard[SQLID: 6987] je radi neaktivnosti izgubio posao ID 7 i 18 sati ugovora.
+(21/05/2020, 05:05:00) Anna_Costello[SQLID: 6989] je radi neaktivnosti izgubio posao ID 7 i 8 sati ugovora.
+(21/05/2020, 05:05:00) Terrence_Shaw[SQLID: 7008] je radi neaktivnosti izgubio posao ID 7 i 15 sati ugovora.
+(21/05/2020, 05:05:00) John_Kennedy[SQLID: 7028] je radi neaktivnosti izgubio posao ID 7 i 0 sati ugovora.
+(21/05/2020, 05:05:00) Dusan_Lakic[SQLID: 69] je radi neaktivnosti izgubio posao ID 13 i 24 sati ugovora.
+(22/05/2020, 05:05:00) Armando_Alvarado[SQLID: 5327] je radi neaktivnosti izgubio posao ID 1 i 3 sati ugovora.
+(22/05/2020, 05:05:00) Jayson_Padilla[SQLID: 7059] je radi neaktivnosti izgubio posao ID 1 i 0 sati ugovora.
+(22/05/2020, 05:05:00) Drexl_Hill[SQLID: 977] je radi neaktivnosti izgubio posao ID 3 i 1 sati ugovora.
+(22/05/2020, 05:05:00) Jacob_Leontyev[SQLID: 2226] je radi neaktivnosti izgubio posao ID 3 i 6 sati ugovora.
+(22/05/2020, 05:05:00) John_Brayant[SQLID: 6984] je radi neaktivnosti izgubio posao ID 5 i 3 sati ugovora.
+(22/05/2020, 05:05:00) Thomas_Hawkins[SQLID: 4095] je radi neaktivnosti izgubio posao ID 7 i 3 sati ugovora.
+(22/05/2020, 05:05:00) Marty_Cooper[SQLID: 6165] je radi neaktivnosti izgubio posao ID 7 i 20 sati ugovora.
+(22/05/2020, 05:05:00) Bradshaw_Houston[SQLID: 6166] je radi neaktivnosti izgubio posao ID 7 i 7 sati ugovora.
+(22/05/2020, 05:05:00) Daniel_Kennedy[SQLID: 6927] je radi neaktivnosti izgubio posao ID 7 i 21 sati ugovora.
+(22/05/2020, 05:05:00) Max_Moreno[SQLID: 293] je radi neaktivnosti izgubio posao ID 9 i 91 sati ugovora.
+(22/05/2020, 05:05:00) Molly_Fish[SQLID: 1061] je radi neaktivnosti izgubio posao ID 9 i 36 sati ugovora.
+(23/05/2020, 05:05:00) Leeshawn_Chandler[SQLID: 7067] je radi neaktivnosti izgubio posao ID 1 i 3 sati ugovora.
+(23/05/2020, 05:05:00) Hugo_Ketterer[SQLID: 7064] je radi neaktivnosti izgubio posao ID 2 i 0 sati ugovora.
+(23/05/2020, 05:05:00) Julia_Nelson[SQLID: 814] je radi neaktivnosti izgubio posao ID 3 i 3 sati ugovora.
+(23/05/2020, 05:05:00) Pablo_Moretti[SQLID: 6473] je radi neaktivnosti izgubio posao ID 3 i 20 sati ugovora.
+(23/05/2020, 05:05:00) Adriano_Sanchez[SQLID: 6811] je radi neaktivnosti izgubio posao ID 5 i 40 sati ugovora.
+(23/05/2020, 05:05:00) Bruce_Conway[SQLID: 7072] je radi neaktivnosti izgubio posao ID 5 i 0 sati ugovora.
+(23/05/2020, 05:05:00) Samuel_Robinson[SQLID: 3812] je radi neaktivnosti izgubio posao ID 7 i 0 sati ugovora.
+(23/05/2020, 05:05:00) Jack_Ianuzzo[SQLID: 5466] je radi neaktivnosti izgubio posao ID 7 i 16 sati ugovora.
+(23/05/2020, 05:05:00) Molly_Cortez[SQLID: 6145] je radi neaktivnosti izgubio posao ID 7 i 142 sati ugovora.
+(23/05/2020, 05:05:00) Matteo_Capone[SQLID: 6246] je radi neaktivnosti izgubio posao ID 7 i 1 sati ugovora.
+(23/05/2020, 05:05:00) Ernesto_Manzano[SQLID: 6959] je radi neaktivnosti izgubio posao ID 7 i 16 sati ugovora.
+(23/05/2020, 05:05:00) John_Toretto[SQLID: 7029] je radi neaktivnosti izgubio posao ID 7 i 3 sati ugovora.
+(23/05/2020, 05:05:00) Joey_Burt[SQLID: 7061] je radi neaktivnosti izgubio posao ID 7 i 2 sati ugovora.
+(23/05/2020, 05:05:00) Tylissa_Clark[SQLID: 7071] je radi neaktivnosti izgubio posao ID 7 i 1 sati ugovora.
+(23/05/2020, 05:05:00) Peter_Stone[SQLID: 7073] je radi neaktivnosti izgubio posao ID 7 i 3 sati ugovora.
+(23/05/2020, 05:05:00) Vaso_Lagotis[SQLID: 1915] je radi neaktivnosti izgubio posao ID 9 i 5 sati ugovora.
+(23/05/2020, 05:05:00) Ralph_Evans[SQLID: 6596] je radi neaktivnosti izgubio posao ID 9 i 6 sati ugovora.
+(23/05/2020, 05:05:00) Stuart_Shepherd[SQLID: 7002] je radi neaktivnosti izgubio posao ID 14 i 1 sati ugovora.
+(24/05/2020, 05:05:00) Roman_Goldberger[SQLID: 7078] je radi neaktivnosti izgubio posao ID 2 i 0 sati ugovora.
+(24/05/2020, 05:05:00) Damyan_Krasimirov[SQLID: 1163] je radi neaktivnosti izgubio posao ID 3 i 8 sati ugovora.
+(24/05/2020, 05:05:00) Tommy_Ianuzzo[SQLID: 471] je radi neaktivnosti izgubio posao ID 7 i 24 sati ugovora.
+(24/05/2020, 05:05:00) Ethan_Moore[SQLID: 6962] je radi neaktivnosti izgubio posao ID 7 i 14 sati ugovora.
+(24/05/2020, 05:05:00) Hugo_Crack[SQLID: 7068] je radi neaktivnosti izgubio posao ID 7 i 9 sati ugovora.
+(24/05/2020, 05:05:00) Josip_Boss[SQLID: 7086] je radi neaktivnosti izgubio posao ID 7 i 0 sati ugovora.
+(24/05/2020, 05:05:00) Brooks_Connor[SQLID: 29] je radi neaktivnosti izgubio posao ID 9 i 89 sati ugovora.
+(24/05/2020, 05:05:00) John_Travis[SQLID: 5319] je radi neaktivnosti izgubio posao ID 9 i 1 sati ugovora.
+(24/05/2020, 05:05:00) Andew_Howard[SQLID: 2464] je radi neaktivnosti izgubio posao ID 14 i 2 sati ugovora.
+(25/05/2020, 05:05:00) Michael_Sallieri[SQLID: 7097] je radi neaktivnosti izgubio posao ID 1 i 0 sati ugovora.
+(25/05/2020, 05:05:00) Kendrick_Jones[SQLID: 1230] je radi neaktivnosti izgubio posao ID 2 i 2 sati ugovora.
+(25/05/2020, 05:05:00) Ronnie_Inman[SQLID: 199] je radi neaktivnosti izgubio posao ID 3 i 9 sati ugovora.
+(25/05/2020, 05:05:00) Kevin_Richardson[SQLID: 6148] je radi neaktivnosti izgubio posao ID 3 i 21 sati ugovora.
+(25/05/2020, 05:05:00) Darnell_Banks[SQLID: 7081] je radi neaktivnosti izgubio posao ID 4 i 3 sati ugovora.
+(25/05/2020, 05:05:00) Mike_Infinity[SQLID: 7100] je radi neaktivnosti izgubio posao ID 4 i 0 sati ugovora.
+(25/05/2020, 05:05:00) Danny_Roxford[SQLID: 6876] je radi neaktivnosti izgubio posao ID 5 i 15 sati ugovora.
+(25/05/2020, 05:05:00) Nazhud_Desheriyev[SQLID: 6901] je radi neaktivnosti izgubio posao ID 5 i 4 sati ugovora.
+(25/05/2020, 05:05:00) Nathan_Dunne[SQLID: 3919] je radi neaktivnosti izgubio posao ID 7 i 2 sati ugovora.
+(25/05/2020, 05:05:00) Michael_McGrady[SQLID: 6048] je radi neaktivnosti izgubio posao ID 7 i 3 sati ugovora.
+(25/05/2020, 05:05:00) Anya_Lopez[SQLID: 6458] je radi neaktivnosti izgubio posao ID 7 i 16 sati ugovora.
+(25/05/2020, 05:05:00) Jayson_Hillson[SQLID: 6948] je radi neaktivnosti izgubio posao ID 7 i 8 sati ugovora.
+(25/05/2020, 05:05:00) Zarko_Jevremovic[SQLID: 6966] je radi neaktivnosti izgubio posao ID 7 i 23 sati ugovora.
+(25/05/2020, 05:05:00) Lamarcus_Cooper[SQLID: 6993] je radi neaktivnosti izgubio posao ID 7 i 12 sati ugovora.
+(25/05/2020, 05:05:00) Ethan_Greenfield[SQLID: 6419] je radi neaktivnosti izgubio posao ID 9 i 6 sati ugovora.
+(26/05/2020, 05:05:00) Mike_Albandos[SQLID: 7101] je radi neaktivnosti izgubio posao ID 2 i 8 sati ugovora.
+(26/05/2020, 05:05:00) Miodrag_Jajalo[SQLID: 7109] je radi neaktivnosti izgubio posao ID 2 i 0 sati ugovora.
+(26/05/2020, 05:05:00) Adrian_Constanza[SQLID: 7112] je radi neaktivnosti izgubio posao ID 2 i 1 sati ugovora.
+(26/05/2020, 05:05:00) Zoran_Spek[SQLID: 7115] je radi neaktivnosti izgubio posao ID 2 i 0 sati ugovora.
+(26/05/2020, 05:05:00) Benjamin_Brown[SQLID: 5404] je radi neaktivnosti izgubio posao ID 3 i 21 sati ugovora.
+(26/05/2020, 05:05:00) Mickey_Fariello[SQLID: 3577] je radi neaktivnosti izgubio posao ID 5 i 83 sati ugovora.
+(26/05/2020, 05:05:00) Champaign_Pinnock[SQLID: 3401] je radi neaktivnosti izgubio posao ID 6 i 0 sati ugovora.
+(26/05/2020, 05:05:00) Valerija_Bulgakov[SQLID: 6986] je radi neaktivnosti izgubio posao ID 7 i 7 sati ugovora.
+(26/05/2020, 05:05:00) Mark_Peterson[SQLID: 7129] je radi neaktivnosti izgubio posao ID 7 i 0 sati ugovora.
+(26/05/2020, 05:05:00) Patrick_Schmidt[SQLID: 6666] je radi neaktivnosti izgubio posao ID 16 i 4 sati ugovora.
+(26/05/2020, 05:05:00) Kian_Albandos[SQLID: 7108] je radi neaktivnosti izgubio posao ID 16 i 1 sati ugovora.
+(27/05/2020, 05:05:00) Miodrag_Andjelkovic[SQLID: 6446] je radi neaktivnosti izgubio posao ID 1 i 5 sati ugovora.
+(27/05/2020, 05:05:00) Guillermo_Ochoa[SQLID: 7140] je radi neaktivnosti izgubio posao ID 1 i 1 sati ugovora.
+(27/05/2020, 05:05:00) Raymond_Washington[SQLID: 930] je radi neaktivnosti izgubio posao ID 2 i 132 sati ugovora.
+(27/05/2020, 05:05:00) Vicenzo_Ricci[SQLID: 6915] je radi neaktivnosti izgubio posao ID 3 i 11 sati ugovora.
+(27/05/2020, 05:05:00) Almex_Ibra[SQLID: 7085] je radi neaktivnosti izgubio posao ID 7 i 0 sati ugovora.
+(27/05/2020, 05:05:00) Hristo_Nikolov[SQLID: 6765] je radi neaktivnosti izgubio posao ID 9 i 107 sati ugovora.
+(28/05/2020, 05:05:00) Dani_Willson[SQLID: 6394] je radi neaktivnosti izgubio posao ID 6 i 8 sati ugovora.
+(28/05/2020, 05:05:00) Ezequiel_Morales[SQLID: 2676] je radi neaktivnosti izgubio posao ID 7 i 35 sati ugovora.
+(28/05/2020, 05:05:00) Radivoje_Trtic[SQLID: 6648] je radi neaktivnosti izgubio posao ID 7 i 12 sati ugovora.
+(28/05/2020, 05:05:00) Mikel_Lowell[SQLID: 6735] je radi neaktivnosti izgubio posao ID 7 i 12 sati ugovora.
+(28/05/2020, 05:05:00) Esteban_Walker[SQLID: 7151] je radi neaktivnosti izgubio posao ID 7 i 2 sati ugovora.
+(29/05/2020, 05:05:00) Kaniel_Wallace[SQLID: 6199] je radi neaktivnosti izgubio posao ID 3 i 6 sati ugovora.
+(29/05/2020, 05:05:00) John_Johnson[SQLID: 1862] je radi neaktivnosti izgubio posao ID 7 i 6 sati ugovora.
+(29/05/2020, 05:05:00) Alexandria_Knight[SQLID: 6162] je radi neaktivnosti izgubio posao ID 7 i 52 sati ugovora.
+(29/05/2020, 05:05:00) Jack_Hillton[SQLID: 6346] je radi neaktivnosti izgubio posao ID 7 i 0 sati ugovora.
+(29/05/2020, 05:05:00) Dwayne_Weathersby[SQLID: 7032] je radi neaktivnosti izgubio posao ID 7 i 19 sati ugovora.
+(29/05/2020, 05:05:00) Hose_Cancello[SQLID: 7166] je radi neaktivnosti izgubio posao ID 7 i 0 sati ugovora.
+(29/05/2020, 05:05:00) John_Hardy[SQLID: 7167] je radi neaktivnosti izgubio posao ID 7 i 0 sati ugovora.
+(30/05/2020, 05:05:00) Andrei_Abakumov[SQLID: 176] je radi neaktivnosti izgubio posao ID 3 i 90 sati ugovora.
+(30/05/2020, 05:05:00) Benjamin_Salvatore[SQLID: 7178] je radi neaktivnosti izgubio posao ID 4 i 0 sati ugovora.
+(30/05/2020, 05:05:00) Donald_Memphis[SQLID: 4299] je radi neaktivnosti izgubio posao ID 5 i 10 sati ugovora.
+(30/05/2020, 05:05:00) Michael_Rogers[SQLID: 74] je radi neaktivnosti izgubio posao ID 7 i 11 sati ugovora.
+(30/05/2020, 05:05:00) Dimitri_Smirnov[SQLID: 1969] je radi neaktivnosti izgubio posao ID 7 i 3 sati ugovora.
+(30/05/2020, 05:05:00) Letty_Syun[SQLID: 6327] je radi neaktivnosti izgubio posao ID 7 i 35 sati ugovora.
+(30/05/2020, 05:05:00) Marcus_Bonateli[SQLID: 6918] je radi neaktivnosti izgubio posao ID 7 i 89 sati ugovora.
+(30/05/2020, 05:05:00) Charles_Reed[SQLID: 7180] je radi neaktivnosti izgubio posao ID 7 i 1 sati ugovora.
+(30/05/2020, 05:05:00) Bob_Burton[SQLID: 7189] je radi neaktivnosti izgubio posao ID 7 i 1 sati ugovora.
+(30/05/2020, 05:05:00) Raul_Flores[SQLID: 1238] je radi neaktivnosti izgubio posao ID 9 i 34 sati ugovora.
+(31/05/2020, 05:05:00) Alexei_Akinfeev[SQLID: 6988] je radi neaktivnosti izgubio posao ID 1 i 0 sati ugovora.
+(31/05/2020, 05:05:00) David_Brown[SQLID: 7045] je radi neaktivnosti izgubio posao ID 2 i 4 sati ugovora.
+(31/05/2020, 05:05:00) Billy_Brooks[SQLID: 7113] je radi neaktivnosti izgubio posao ID 2 i 13 sati ugovora.
+(31/05/2020, 05:05:00) Valko_Spasov[SQLID: 6917] je radi neaktivnosti izgubio posao ID 3 i 7 sati ugovora.
+(31/05/2020, 05:05:00) Tony_Wade[SQLID: 981] je radi neaktivnosti izgubio posao ID 7 i 21 sati ugovora.
+(01/06/2020, 05:05:00) Andrej_Ivanovich[SQLID: 2444] je radi neaktivnosti izgubio posao ID 3 i 7 sati ugovora.
+(01/06/2020, 05:05:00) Daniel_Omensson[SQLID: 6122] je radi neaktivnosti izgubio posao ID 3 i 0 sati ugovora.
+(01/06/2020, 05:05:00) Luka_Petrovski[SQLID: 6477] je radi neaktivnosti izgubio posao ID 7 i 33 sati ugovora.
+(01/06/2020, 05:05:00) Dimitar_Mitevski[SQLID: 6585] je radi neaktivnosti izgubio posao ID 7 i 1 sati ugovora.
+(01/06/2020, 05:05:00) Ben_Cooper[SQLID: 6613] je radi neaktivnosti izgubio posao ID 7 i 9 sati ugovora.
+(01/06/2020, 05:05:00) John_Gunner[SQLID: 6974] je radi neaktivnosti izgubio posao ID 7 i 3 sati ugovora.
+(01/06/2020, 05:05:00) Chris_Torres[SQLID: 7212] je radi neaktivnosti izgubio posao ID 7 i 0 sati ugovora.
+(01/06/2020, 05:05:00) Decker_Digory[SQLID: 7213] je radi neaktivnosti izgubio posao ID 7 i 0 sati ugovora.
+(01/06/2020, 05:05:00) Billy_Brown[SQLID: 7080] je radi neaktivnosti izgubio posao ID 9 i 0 sati ugovora.
+(02/06/2020, 05:05:00) Zack_Hicks[SQLID: 7208] je radi neaktivnosti izgubio posao ID 1 i 0 sati ugovora.
+(02/06/2020, 05:05:00) Abram_Bensaid[SQLID: 834] je radi neaktivnosti izgubio posao ID 7 i 121 sati ugovora.
+(02/06/2020, 05:05:00) Layla_Fox[SQLID: 4492] je radi neaktivnosti izgubio posao ID 7 i 16 sati ugovora.
+(02/06/2020, 05:05:00) Sergey_Petrov[SQLID: 6272] je radi neaktivnosti izgubio posao ID 7 i 4 sati ugovora.
+(02/06/2020, 05:05:00) Predrag_Mijatovic[SQLID: 7216] je radi neaktivnosti izgubio posao ID 7 i 0 sati ugovora.
+(03/06/2020, 05:05:00) Frank_Cappone[SQLID: 7224] je radi neaktivnosti izgubio posao ID 1 i 0 sati ugovora.
+(03/06/2020, 05:05:00) Christian_Mendoza[SQLID: 1033] je radi neaktivnosti izgubio posao ID 3 i 4 sati ugovora.
+(03/06/2020, 05:05:00) Wayne_Shou[SQLID: 6344] je radi neaktivnosti izgubio posao ID 3 i 2 sati ugovora.
+(03/06/2020, 05:05:00) Davante_Burgess[SQLID: 7221] je radi neaktivnosti izgubio posao ID 7 i 0 sati ugovora.
+(04/06/2020, 05:05:00) Velichko_Mitevski[SQLID: 837] je radi neaktivnosti izgubio posao ID 3 i 1 sati ugovora.
+(04/06/2020, 05:05:00) Muhammad_Yusuf[SQLID: 6971] je radi neaktivnosti izgubio posao ID 5 i 2 sati ugovora.
+(04/06/2020, 05:05:00) Shane_Duncan[SQLID: 1751] je radi neaktivnosti izgubio posao ID 7 i 38 sati ugovora.
+(04/06/2020, 05:05:00) Tyrone_Lewis[SQLID: 7110] je radi neaktivnosti izgubio posao ID 7 i 7 sati ugovora.
+(04/06/2020, 05:05:00) Jarell_Brooks[SQLID: 7215] je radi neaktivnosti izgubio posao ID 7 i 4 sati ugovora.
+(04/06/2020, 05:05:00) Laslo_Arapad[SQLID: 7236] je radi neaktivnosti izgubio posao ID 7 i 1 sati ugovora.
+(04/06/2020, 05:05:00) Joe_Cresswell[SQLID: 388] je radi neaktivnosti izgubio posao ID 17 i 0 sati ugovora.
+(05/06/2020, 05:05:00) Zhiqiang_Uchiyama[SQLID: 1488] je radi neaktivnosti izgubio posao ID 3 i 25 sati ugovora.
+(05/06/2020, 05:05:00) Antonio_Garcia[SQLID: 6684] je radi neaktivnosti izgubio posao ID 3 i 9 sati ugovora.
+(05/06/2020, 05:05:00) Aiden_Mitchell[SQLID: 6401] je radi neaktivnosti izgubio posao ID 7 i 8 sati ugovora.
+(05/06/2020, 05:05:00) Ethan_Gray[SQLID: 7214] je radi neaktivnosti izgubio posao ID 7 i 4 sati ugovora.
+(05/06/2020, 05:05:00) Grisha_Belevich[SQLID: 67] je radi neaktivnosti izgubio posao ID 9 i 22 sati ugovora.
+(05/06/2020, 05:05:00) Jimmy_Harrelson[SQLID: 5007] je radi neaktivnosti izgubio posao ID 17 i 5 sati ugovora.
+(06/06/2020, 05:05:00) Polo_Ralph[SQLID: 7247] je radi neaktivnosti izgubio posao ID 1 i 0 sati ugovora.
+(06/06/2020, 05:05:00) Rashad_Brooks[SQLID: 7228] je radi neaktivnosti izgubio posao ID 2 i 1 sati ugovora.
+(06/06/2020, 05:05:00) Anthony_Vendetti[SQLID: 1886] je radi neaktivnosti izgubio posao ID 3 i 101 sati ugovora.
+(06/06/2020, 05:05:00) John_Henderson[SQLID: 2150] je radi neaktivnosti izgubio posao ID 5 i 1 sati ugovora.
+(06/06/2020, 05:05:00) John_Kingston[SQLID: 7062] je radi neaktivnosti izgubio posao ID 7 i 38 sati ugovora.
+(06/06/2020, 05:05:00) Elise_Boisen[SQLID: 655] je radi neaktivnosti izgubio posao ID 9 i 47 sati ugovora.
+(07/06/2020, 05:05:01) Jameson_Smith[SQLID: 6201] je radi neaktivnosti izgubio posao ID 2 i 3 sati ugovora.
+(07/06/2020, 05:05:01) Dragoljub_Boskovic[SQLID: 641] je radi neaktivnosti izgubio posao ID 3 i 7 sati ugovora.
+(07/06/2020, 05:05:01) Emily_Griffin[SQLID: 7009] je radi neaktivnosti izgubio posao ID 4 i 6 sati ugovora.
+(07/06/2020, 05:05:01) Clyde_Loyd[SQLID: 335] je radi neaktivnosti izgubio posao ID 7 i 63 sati ugovora.
+(07/06/2020, 05:05:01) Owen_Buier[SQLID: 584] je radi neaktivnosti izgubio posao ID 7 i 28 sati ugovora.
+(07/06/2020, 05:05:01) Luke_Bennett[SQLID: 3844] je radi neaktivnosti izgubio posao ID 7 i 40 sati ugovora.
+(07/06/2020, 05:05:01) Cody_Knapp[SQLID: 6960] je radi neaktivnosti izgubio posao ID 7 i 57 sati ugovora.
+(07/06/2020, 05:05:01) Arsen_Ivanenko[SQLID: 7230] je radi neaktivnosti izgubio posao ID 7 i 0 sati ugovora.
+(07/06/2020, 05:05:01) John_Rogers[SQLID: 7231] je radi neaktivnosti izgubio posao ID 7 i 1 sati ugovora.
+(07/06/2020, 05:05:01) Budimir_Vucetic[SQLID: 5318] je radi neaktivnosti izgubio posao ID 13 i 1 sati ugovora.
+(07/06/2020, 05:05:01) Daniel_Williamson[SQLID: 48] je radi neaktivnosti izgubio posao ID 17 i 1 sati ugovora.
+(08/06/2020, 05:05:00) Tyrese_Payne[SQLID: 1215] je radi neaktivnosti izgubio posao ID 1 i 12 sati ugovora.
+(08/06/2020, 05:05:00) Jim_Milton[SQLID: 2382] je radi neaktivnosti izgubio posao ID 1 i 6 sati ugovora.
+(08/06/2020, 05:05:00) Wesley_Gardner[SQLID: 2825] je radi neaktivnosti izgubio posao ID 1 i 0 sati ugovora.
+(08/06/2020, 05:05:00) Corey_Watts[SQLID: 6740] je radi neaktivnosti izgubio posao ID 1 i 15 sati ugovora.
+(08/06/2020, 05:05:00) Vincent_Colbeck[SQLID: 2279] je radi neaktivnosti izgubio posao ID 3 i 1 sati ugovora.
+(08/06/2020, 05:05:00) Kevin_Richardson[SQLID: 6148] je radi neaktivnosti izgubio posao ID 3 i 1 sati ugovora.
+(08/06/2020, 05:05:00) Roman_Helin[SQLID: 1608] je radi neaktivnosti izgubio posao ID 5 i 6 sati ugovora.
+(08/06/2020, 05:05:00) Jevonte_Manning[SQLID: 1848] je radi neaktivnosti izgubio posao ID 5 i 11 sati ugovora.
+(08/06/2020, 05:05:00) Vincent_Cefalu[SQLID: 1959] je radi neaktivnosti izgubio posao ID 5 i 2 sati ugovora.
+(08/06/2020, 05:05:00) Yoel_Gruman[SQLID: 2471] je radi neaktivnosti izgubio posao ID 5 i 1 sati ugovora.
+(08/06/2020, 05:05:00) Jesus_Aguilar[SQLID: 2602] je radi neaktivnosti izgubio posao ID 6 i 12 sati ugovora.
+(08/06/2020, 05:05:00) Matthew_Stanfa[SQLID: 1236] je radi neaktivnosti izgubio posao ID 7 i 12 sati ugovora.
+(08/06/2020, 05:05:00) Brianna_Nickerson[SQLID: 1460] je radi neaktivnosti izgubio posao ID 7 i 13 sati ugovora.
+(08/06/2020, 05:05:00) George_Taccetta[SQLID: 4425] je radi neaktivnosti izgubio posao ID 7 i 33 sati ugovora.
+(08/06/2020, 05:05:00) Alexis_Darrian[SQLID: 5784] je radi neaktivnosti izgubio posao ID 7 i 7 sati ugovora.
+(08/06/2020, 05:05:00) Julia_Richmond[SQLID: 6048] je radi neaktivnosti izgubio posao ID 7 i 1 sati ugovora.
+(08/06/2020, 05:05:00) James_Parker[SQLID: 7237] je radi neaktivnosti izgubio posao ID 7 i 5 sati ugovora.
+(08/06/2020, 05:05:00) Avram_Gavric[SQLID: 6759] je radi neaktivnosti izgubio posao ID 13 i 8 sati ugovora.
+(08/06/2020, 05:05:00) Elliott_Loyd[SQLID: 83] je radi neaktivnosti izgubio posao ID 18 i 7 sati ugovora.
+(08/06/2020, 05:05:00) Otis_Stone[SQLID: 3379] je radi neaktivnosti izgubio posao ID 18 i 2 sati ugovora.
+(08/06/2020, 05:05:00) Matt_Loyd[SQLID: 4622] je radi neaktivnosti izgubio posao ID 18 i 3 sati ugovora.
+(09/06/2020, 05:05:01) Rade_Djukic[SQLID: 7249] je radi neaktivnosti izgubio posao ID 5 i 8 sati ugovora.
+(09/06/2020, 05:05:01) Laza_Milivojevic[SQLID: 7269] je radi neaktivnosti izgubio posao ID 7 i 0 sati ugovora.
+(09/06/2020, 05:05:01) Vuk_Koprivica[SQLID: 5746] je radi neaktivnosti izgubio posao ID 12 i 149 sati ugovora.
+(11/06/2020, 05:05:01) Lamar_Rodrigeuz[SQLID: 5677] je radi neaktivnosti izgubio posao ID 1 i 17 sati ugovora.
+(11/06/2020, 05:05:01) Patrick_Schmidt[SQLID: 6666] je radi neaktivnosti izgubio posao ID 1 i 3 sati ugovora.
+(11/06/2020, 05:05:01) Homer_Arnold[SQLID: 7273] je radi neaktivnosti izgubio posao ID 1 i 1 sati ugovora.
+(11/06/2020, 05:05:01) Arthur_Keller[SQLID: 3530] je radi neaktivnosti izgubio posao ID 7 i 106 sati ugovora.
+(11/06/2020, 05:05:01) Daniel_Black[SQLID: 7192] je radi neaktivnosti izgubio posao ID 7 i 8 sati ugovora.
+(11/06/2020, 05:05:01) Nuwa_Lin[SQLID: 6430] je radi neaktivnosti izgubio posao ID 17 i 0 sati ugovora.
+(11/06/2020, 05:05:01) Sam_Bowers[SQLID: 32] je radi neaktivnosti izgubio posao ID 18 i 19 sati ugovora.
+(12/06/2020, 05:05:00) Olin_Stone[SQLID: 7083] je radi neaktivnosti izgubio posao ID 7 i 43 sati ugovora.
+(12/06/2020, 05:05:00) Joseph_Balster[SQLID: 7267] je radi neaktivnosti izgubio posao ID 7 i 3 sati ugovora.
+(13/06/2020, 05:05:00) James_Suarez[SQLID: 7280] je radi neaktivnosti izgubio posao ID 2 i 0 sati ugovora.
+(13/06/2020, 05:05:00) Bobby_Gainer[SQLID: 7079] je radi neaktivnosti izgubio posao ID 3 i 28 sati ugovora.
+(13/06/2020, 05:05:00) James_McCarthy[SQLID: 3810] je radi neaktivnosti izgubio posao ID 7 i 1 sati ugovora.
+(13/06/2020, 05:05:00) Alexander_Galkin[SQLID: 7180] je radi neaktivnosti izgubio posao ID 7 i 3 sati ugovora.
+(13/06/2020, 05:05:00) Vukota_Saranovic[SQLID: 5953] je radi neaktivnosti izgubio posao ID 10 i 243 sati ugovora.
+(14/06/2020, 05:05:00) Keyvon_Crawford[SQLID: 2263] je radi neaktivnosti izgubio posao ID 7 i 25 sati ugovora.
+(14/06/2020, 05:05:00) Kazymyr_Galkin[SQLID: 5027] je radi neaktivnosti izgubio posao ID 7 i 28 sati ugovora.
+(14/06/2020, 05:05:00) Ivan_Galkin[SQLID: 6053] je radi neaktivnosti izgubio posao ID 7 i 3 sati ugovora.
+(14/06/2020, 05:05:00) Andrei_Galkin[SQLID: 6094] je radi neaktivnosti izgubio posao ID 7 i 8 sati ugovora.
+(14/06/2020, 05:05:00) Sasha_Trevino[SQLID: 6627] je radi neaktivnosti izgubio posao ID 7 i 50 sati ugovora.
+(14/06/2020, 05:05:00) Jurij_Romanov[SQLID: 7116] je radi neaktivnosti izgubio posao ID 7 i 10 sati ugovora.
+(14/06/2020, 05:05:00) Luka_Sijan[SQLID: 7188] je radi neaktivnosti izgubio posao ID 7 i 29 sati ugovora.
+(14/06/2020, 05:05:00) George_Kennedy[SQLID: 7285] je radi neaktivnosti izgubio posao ID 7 i 0 sati ugovora.
+(14/06/2020, 05:05:00) Cleavon_Pitfield[SQLID: 6241] je radi neaktivnosti izgubio posao ID 17 i 0 sati ugovora.
+(15/06/2020, 05:05:00) Josif_Arsov[SQLID: 4515] je radi neaktivnosti izgubio posao ID 3 i 83 sati ugovora.
+(16/06/2020, 05:05:00) Jason_Kruger[SQLID: 7283] je radi neaktivnosti izgubio posao ID 1 i 4 sati ugovora.
+(16/06/2020, 05:05:00) Alejandro_Martinez[SQLID: 207] je radi neaktivnosti izgubio posao ID 3 i 1 sati ugovora.
+(16/06/2020, 05:05:00) Stephanie_Glagovski[SQLID: 7069] je radi neaktivnosti izgubio posao ID 3 i 5 sati ugovora.
+(16/06/2020, 05:05:00) Jovan_Petrovicccc[SQLID: 7293] je radi neaktivnosti izgubio posao ID 4 i 0 sati ugovora.
+(16/06/2020, 05:05:00) Jovan_Sindjeliccc[SQLID: 7294] je radi neaktivnosti izgubio posao ID 4 i 0 sati ugovora.
+(16/06/2020, 05:05:00) Andrija_Petrovich[SQLID: 7296] je radi neaktivnosti izgubio posao ID 4 i 0 sati ugovora.
+(16/06/2020, 05:05:00) Raymond_Cole[SQLID: 568] je radi neaktivnosti izgubio posao ID 5 i 0 sati ugovora.
+(16/06/2020, 05:05:00) Earl_Lawson[SQLID: 679] je radi neaktivnosti izgubio posao ID 7 i 40 sati ugovora.
+(16/06/2020, 05:05:00) Johnny_Foster[SQLID: 7259] je radi neaktivnosti izgubio posao ID 7 i 22 sati ugovora.
+(16/06/2020, 05:05:00) Vita_Gavrilovic[SQLID: 5244] je radi neaktivnosti izgubio posao ID 9 i 23 sati ugovora.
+(16/06/2020, 05:05:00) Aaron_Schaffner[SQLID: 1435] je radi neaktivnosti izgubio posao ID 16 i 69 sati ugovora.
+(16/06/2020, 05:05:00) Ishiwata_Yusuke[SQLID: 177] je radi neaktivnosti izgubio posao ID 17 i 10 sati ugovora.
+(17/06/2020, 05:05:00) Michael_Bryant[SQLID: 6147] je radi neaktivnosti izgubio posao ID 5 i 52 sati ugovora.
+(17/06/2020, 05:05:00) Andrija_Sindjelic[SQLID: 7290] je radi neaktivnosti izgubio posao ID 5 i 1 sati ugovora.
+(17/06/2020, 05:05:00) Gerald_Broderick[SQLID: 125] je radi neaktivnosti izgubio posao ID 7 i 28 sati ugovora.
+(17/06/2020, 05:05:00) Daniel_Volkov[SQLID: 6158] je radi neaktivnosti izgubio posao ID 7 i 111 sati ugovora.
+(17/06/2020, 05:05:00) Jeffrey_Vaughn[SQLID: 6326] je radi neaktivnosti izgubio posao ID 7 i 77 sati ugovora.
+(17/06/2020, 05:05:00) Valentina_Godunov[SQLID: 7244] je radi neaktivnosti izgubio posao ID 7 i 7 sati ugovora.
+(17/06/2020, 05:05:00) Carlos_Martinez[SQLID: 3961] je radi neaktivnosti izgubio posao ID 9 i 1 sati ugovora.
+(18/06/2020, 05:05:00) John_Lester[SQLID: 7300] je radi neaktivnosti izgubio posao ID 1 i 4 sati ugovora.
+(18/06/2020, 05:05:00) Roy_Crown[SQLID: 7308] je radi neaktivnosti izgubio posao ID 1 i 0 sati ugovora.
+(18/06/2020, 05:05:00) Michael_Crown[SQLID: 7297] je radi neaktivnosti izgubio posao ID 2 i 3 sati ugovora.
+(18/06/2020, 05:05:00) Jacob_Williams[SQLID: 7303] je radi neaktivnosti izgubio posao ID 2 i 3 sati ugovora.
+(18/06/2020, 05:05:00) Maxim_Lavrov[SQLID: 7298] je radi neaktivnosti izgubio posao ID 4 i 4 sati ugovora.
+(18/06/2020, 05:05:00) Uros_Radovic[SQLID: 154] je radi neaktivnosti izgubio posao ID 7 i 76 sati ugovora.
+(18/06/2020, 05:05:00) John_Kingston[SQLID: 7062] je radi neaktivnosti izgubio posao ID 7 i 0 sati ugovora.
+(18/06/2020, 05:05:00) Rick_Colorado[SQLID: 7185] je radi neaktivnosti izgubio posao ID 7 i 8 sati ugovora.
+(18/06/2020, 05:05:00) Billy_Winchester[SQLID: 6325] je radi neaktivnosti izgubio posao ID 18 i 75 sati ugovora.
+(20/06/2020, 05:05:00) Kivon_Anderson[SQLID: 7111] je radi neaktivnosti izgubio posao ID 1 i 5 sati ugovora.
+(20/06/2020, 05:05:00) Andre_Jefferson[SQLID: 7141] je radi neaktivnosti izgubio posao ID 1 i 5 sati ugovora.
+(20/06/2020, 05:05:00) Leon_Escobar[SQLID: 7310] je radi neaktivnosti izgubio posao ID 1 i 0 sati ugovora.
+(20/06/2020, 05:05:00) Yardley_Flowerss[SQLID: 7266] je radi neaktivnosti izgubio posao ID 5 i 1 sati ugovora.
+(20/06/2020, 05:05:00) Hunter_Kang[SQLID: 96] je radi neaktivnosti izgubio posao ID 7 i 100 sati ugovora.
+(20/06/2020, 05:05:00) Kevin_Lindell[SQLID: 6801] je radi neaktivnosti izgubio posao ID 7 i 50 sati ugovora.
+(20/06/2020, 05:05:00) Boris_Ivanov[SQLID: 6963] je radi neaktivnosti izgubio posao ID 7 i 101 sati ugovora.
+(20/06/2020, 05:05:00) Jeff_Sheng[SQLID: 1317] je radi neaktivnosti izgubio posao ID 13 i 3 sati ugovora.
+(20/06/2020, 05:05:00) Simon_Dave[SQLID: 3287] je radi neaktivnosti izgubio posao ID 15 i 180 sati ugovora.
+(21/06/2020, 05:05:00) Michael_Blake[SQLID: 2606] je radi neaktivnosti izgubio posao ID 7 i 57 sati ugovora.
+(21/06/2020, 05:05:00) Nikolaj_Zajcev[SQLID: 7048] je radi neaktivnosti izgubio posao ID 7 i 62 sati ugovora.
+(21/06/2020, 05:05:00) James_McCharty[SQLID: 511] je radi neaktivnosti izgubio posao ID 13 i 53 sati ugovora.
+(21/06/2020, 05:05:00) Johnny_Suarez[SQLID: 5425] je radi neaktivnosti izgubio posao ID 17 i 2 sati ugovora.
+(21/06/2020, 05:05:00) Bingham_Ainsworth[SQLID: 6935] je radi neaktivnosti izgubio posao ID 18 i 13 sati ugovora.
+(22/06/2020, 05:05:00) Dale_Loyd[SQLID: 7286] je radi neaktivnosti izgubio posao ID 1 i 1 sati ugovora.
+(23/06/2020, 05:05:00) Tony_Wong[SQLID: 6962] je radi neaktivnosti izgubio posao ID 7 i 7 sati ugovora.
+(25/06/2020, 05:05:00) Paul_Hawakins[SQLID: 95] je radi neaktivnosti izgubio posao ID 3 i 26 sati ugovora.
+(25/06/2020, 05:05:00) Patrick_Schmidt[SQLID: 6666] je radi neaktivnosti izgubio posao ID 7 i 4 sati ugovora.
+(26/06/2020, 05:05:00) Billy_Brown[SQLID: 7080] je radi neaktivnosti izgubio posao ID 3 i 0 sati ugovora.
+(26/06/2020, 05:05:00) Carlos_Richard[SQLID: 7325] je radi neaktivnosti izgubio posao ID 4 i 1 sati ugovora.
+(26/06/2020, 05:05:00) Aylin_Curtis[SQLID: 510] je radi neaktivnosti izgubio posao ID 7 i 144 sati ugovora.
+(27/06/2020, 05:05:01) Josh_Peterson[SQLID: 7328] je radi neaktivnosti izgubio posao ID 4 i 0 sati ugovora.
+(27/06/2020, 05:05:01) Donald_Nixon[SQLID: 21] je radi neaktivnosti izgubio posao ID 7 i 171 sati ugovora.
+(27/06/2020, 05:05:01) Joe_Cresswell[SQLID: 388] je radi neaktivnosti izgubio posao ID 7 i 1 sati ugovora.
+(28/06/2020, 05:05:00) Mauricio_Manzano[SQLID: 6958] je radi neaktivnosti izgubio posao ID 7 i 101 sati ugovora.
+(29/06/2020, 05:05:00) Rauf_Hernandez[SQLID: 7334] je radi neaktivnosti izgubio posao ID 1 i 1 sati ugovora.
+(30/06/2020, 05:05:00) Owen_Buier[SQLID: 584] je radi neaktivnosti izgubio posao ID 3 i 5 sati ugovora.
+(03/07/2020, 05:05:00) Pablo_Moretti[SQLID: 6473] je radi neaktivnosti izgubio posao ID 3 i 1 sati ugovora.
+(03/07/2020, 05:05:00) Kenneth_Nelson[SQLID: 6700] je radi neaktivnosti izgubio posao ID 7 i 113 sati ugovora.
+(04/07/2020, 05:05:00) Mia_Jones[SQLID: 5761] je radi neaktivnosti izgubio posao ID 7 i 71 sati ugovora.
+(04/07/2020, 05:05:00) Jacob_Anderson[SQLID: 6174] je radi neaktivnosti izgubio posao ID 7 i 202 sati ugovora.
+(04/07/2020, 05:05:00) Ognjen_Kruz[SQLID: 7353] je radi neaktivnosti izgubio posao ID 7 i 0 sati ugovora.
+(04/07/2020, 05:05:00) Charlie_Sullivan[SQLID: 7191] je radi neaktivnosti izgubio posao ID 14 i 28 sati ugovora.
+(05/07/2020, 05:05:00) Zoe_Cruz[SQLID: 3295] je radi neaktivnosti izgubio posao ID 9 i 2 sati ugovora.
+(05/07/2020, 05:05:00) Milos_Radovic[SQLID: 42] je radi neaktivnosti izgubio posao ID 17 i 16 sati ugovora.
+(08/07/2020, 05:05:00) David_Rizzuto[SQLID: 4825] je radi neaktivnosti izgubio posao ID 1 i 0 sati ugovora.
+(08/07/2020, 05:05:00) Lukas_Gestapov[SQLID: 7363] je radi neaktivnosti izgubio posao ID 1 i 0 sati ugovora.
+(08/07/2020, 05:05:00) Wayne_Chow[SQLID: 5482] je radi neaktivnosti izgubio posao ID 7 i 13 sati ugovora.
+(08/07/2020, 05:05:00) Raheem_Burton[SQLID: 6827] je radi neaktivnosti izgubio posao ID 7 i 68 sati ugovora.
+(08/07/2020, 05:05:00) Tony_Griffin[SQLID: 6972] je radi neaktivnosti izgubio posao ID 7 i 51 sati ugovora.
+(08/07/2020, 05:05:00) Fahey_Poole[SQLID: 7262] je radi neaktivnosti izgubio posao ID 7 i 0 sati ugovora.
+(08/07/2020, 05:05:00) James_Hobart[SQLID: 7368] je radi neaktivnosti izgubio posao ID 7 i 3 sati ugovora.
+(08/07/2020, 05:05:00) Ben_Thompson[SQLID: 4868] je radi neaktivnosti izgubio posao ID 15 i 222 sati ugovora.
+(08/07/2020, 05:05:00) Bob_Winchester[SQLID: 6324] je radi neaktivnosti izgubio posao ID 18 i 128 sati ugovora.
+(09/07/2020, 05:05:00) Bishamon_Yamaguchi[SQLID: 7240] je radi neaktivnosti izgubio posao ID 5 i 13 sati ugovora.
+(09/07/2020, 05:05:00) John_Matthews[SQLID: 6271] je radi neaktivnosti izgubio posao ID 7 i 23 sati ugovora.
+(10/07/2020, 05:05:00) Imran_Grgic[SQLID: 6049] je radi neaktivnosti izgubio posao ID 7 i 14 sati ugovora.
+(10/07/2020, 05:05:00) Dennis_Lewis[SQLID: 4995] je radi neaktivnosti izgubio posao ID 14 i 1 sati ugovora.
+(10/07/2020, 05:05:00) William_Walker[SQLID: 7258] je radi neaktivnosti izgubio posao ID 14 i 5 sati ugovora.
+(11/07/2020, 05:05:00) Sado_Sahovic[SQLID: 27] je radi neaktivnosti izgubio posao ID 7 i 94 sati ugovora.
+(11/07/2020, 05:05:00) Emily_Moretti[SQLID: 5614] je radi neaktivnosti izgubio posao ID 7 i 23 sati ugovora.
+(11/07/2020, 05:05:00) Maksym_Doroshenko[SQLID: 7377] je radi neaktivnosti izgubio posao ID 7 i 0 sati ugovora.
+(12/07/2020, 05:05:00) Austin_Nithercott[SQLID: 6294] je radi neaktivnosti izgubio posao ID 18 i 50 sati ugovora.
+(13/07/2020, 05:05:00) Chris_Lawson[SQLID: 7383] je radi neaktivnosti izgubio posao ID 1 i 0 sati ugovora.
+(13/07/2020, 05:05:00) Dylan_Moretti[SQLID: 7382] je radi neaktivnosti izgubio posao ID 4 i 0 sati ugovora.
+(13/07/2020, 05:05:00) Ibrahimi_Kastrati[SQLID: 7241] je radi neaktivnosti izgubio posao ID 7 i 92 sati ugovora.
+(14/07/2020, 05:05:01) Jake_Blake[SQLID: 7388] je radi neaktivnosti izgubio posao ID 1 i 0 sati ugovora.
+(14/07/2020, 05:05:01) Victor_Azzari[SQLID: 484] je radi neaktivnosti izgubio posao ID 2 i 6 sati ugovora.
+(14/07/2020, 05:05:01) Villie_Dviar[SQLID: 7268] je radi neaktivnosti izgubio posao ID 2 i 0 sati ugovora.
+(14/07/2020, 05:05:01) Carlos_Richard[SQLID: 7325] je radi neaktivnosti izgubio posao ID 4 i 4 sati ugovora.
+(14/07/2020, 05:05:01) Jack_Bravano[SQLID: 366] je radi neaktivnosti izgubio posao ID 7 i 37 sati ugovora.
+(14/07/2020, 05:05:01) Sonny_Gordo[SQLID: 7037] je radi neaktivnosti izgubio posao ID 7 i 36 sati ugovora.
+(14/07/2020, 05:05:01) Ethan_Gray[SQLID: 7214] je radi neaktivnosti izgubio posao ID 7 i 15 sati ugovora.
+(14/07/2020, 05:05:01) Kenvante_Shaw[SQLID: 7362] je radi neaktivnosti izgubio posao ID 7 i 5 sati ugovora.
+(14/07/2020, 05:05:01) Ismael_Romero[SQLID: 3199] je radi neaktivnosti izgubio posao ID 18 i 3 sati ugovora.
+(15/07/2020, 05:05:00) Louis_Schiro[SQLID: 4355] je radi neaktivnosti izgubio posao ID 2 i 12 sati ugovora.
+(15/07/2020, 05:05:00) Javier_Rodriguez[SQLID: 6940] je radi neaktivnosti izgubio posao ID 18 i 5 sati ugovora.
+(16/07/2020, 05:05:00) Yuri_Kozlov[SQLID: 7398] je radi neaktivnosti izgubio posao ID 1 i 0 sati ugovora.
+(16/07/2020, 05:05:00) Arwa_Abdelrahman[SQLID: 6232] je radi neaktivnosti izgubio posao ID 3 i 5 sati ugovora.
+(16/07/2020, 05:05:00) Dantrell_Brooks[SQLID: 6991] je radi neaktivnosti izgubio posao ID 7 i 66 sati ugovora.
+(16/07/2020, 05:05:00) Jimmy_Santoli[SQLID: 7408] je radi neaktivnosti izgubio posao ID 7 i 0 sati ugovora.
+(16/07/2020, 05:05:00) Vincent_Carda[SQLID: 5953] je radi neaktivnosti izgubio posao ID 13 i 45 sati ugovora.
+(17/07/2020, 05:05:00) Steve_Evans[SQLID: 845] je radi neaktivnosti izgubio posao ID 7 i 3 sati ugovora.
+(17/07/2020, 05:05:00) Connor_Lewis[SQLID: 7400] je radi neaktivnosti izgubio posao ID 7 i 5 sati ugovora.
+(17/07/2020, 05:05:00) James_Williams[SQLID: 7411] je radi neaktivnosti izgubio posao ID 7 i 0 sati ugovora.
+(17/07/2020, 05:05:00) William_Nithercott[SQLID: 5492] je radi neaktivnosti izgubio posao ID 18 i 141 sati ugovora.
+(18/07/2020, 05:05:00) Julian_Covarrubias[SQLID: 6381] je radi neaktivnosti izgubio posao ID 3 i 33 sati ugovora.
+(18/07/2020, 05:05:00) Ramo_Hadzic[SQLID: 1915] je radi neaktivnosti izgubio posao ID 18 i 6 sati ugovora.
+(19/07/2020, 05:05:00) Otis_Bryson[SQLID: 3838] je radi neaktivnosti izgubio posao ID 7 i 89 sati ugovora.
+(19/07/2020, 05:05:00) Diego_Sombralez[SQLID: 5327] je radi neaktivnosti izgubio posao ID 18 i 8 sati ugovora.
+(20/07/2020, 05:05:00) Jorde_McLass[SQLID: 7427] je radi neaktivnosti izgubio posao ID 2 i 0 sati ugovora.
+(20/07/2020, 05:05:00) Pablo_Vasquez[SQLID: 98] je radi neaktivnosti izgubio posao ID 3 i 63 sati ugovora.
+(20/07/2020, 05:05:00) Abraham_Yasharal[SQLID: 7426] je radi neaktivnosti izgubio posao ID 5 i 0 sati ugovora.
+(21/07/2020, 05:05:00) Fidelio_Jimenez[SQLID: 5964] je radi neaktivnosti izgubio posao ID 1 i 1 sati ugovora.
+(21/07/2020, 05:05:00) Jeffrey_Vaughn[SQLID: 6326] je radi neaktivnosti izgubio posao ID 1 i 10 sati ugovora.
+(21/07/2020, 05:05:00) Fabian_Cervantez[SQLID: 5962] je radi neaktivnosti izgubio posao ID 2 i 0 sati ugovora.
+(21/07/2020, 05:05:00) Jason_Logan[SQLID: 208] je radi neaktivnosti izgubio posao ID 3 i 5 sati ugovora.
+(21/07/2020, 05:05:00) Zean_Cole[SQLID: 7430] je radi neaktivnosti izgubio posao ID 7 i 0 sati ugovora.
+(21/07/2020, 05:05:00) Demetrius_Innes[SQLID: 231] je radi neaktivnosti izgubio posao ID 9 i 73 sati ugovora.
+(21/07/2020, 05:05:00) Craig_Molony[SQLID: 5027] je radi neaktivnosti izgubio posao ID 17 i 3 sati ugovora.
+(21/07/2020, 05:05:00) Jason_Butler[SQLID: 1188] je radi neaktivnosti izgubio posao ID 18 i 0 sati ugovora.
+(22/07/2020, 05:05:00) Alicia_Macious[SQLID: 5988] je radi neaktivnosti izgubio posao ID 2 i 0 sati ugovora.
+(22/07/2020, 05:05:00) Diego_Allifa[SQLID: 7373] je radi neaktivnosti izgubio posao ID 7 i 34 sati ugovora.
+(23/07/2020, 05:05:00) Sergej_Ramirez[SQLID: 7443] je radi neaktivnosti izgubio posao ID 1 i 0 sati ugovora.
+(24/07/2020, 05:05:00) David_Elizalde[SQLID: 7420] je radi neaktivnosti izgubio posao ID 1 i 20 sati ugovora.
+(24/07/2020, 05:05:00) Cesar_Martinez[SQLID: 3556] je radi neaktivnosti izgubio posao ID 3 i 3 sati ugovora.
+(24/07/2020, 05:05:00) Jameson_Rook[SQLID: 7441] je radi neaktivnosti izgubio posao ID 7 i 2 sati ugovora.
+(25/07/2020, 05:05:00) Thomas_Harper[SQLID: 22] je radi neaktivnosti izgubio kucu na adresi Marina[SQLID: 504] i dobio 20207$ naknade u banku.
+(25/07/2020, 05:05:00) Thomas_Harper[SQLID: 22] je radi neaktivnosti izgubio garazu Marina[SQLID: 120] i dobio 20000$ naknade u banku.
+(25/07/2020, 05:05:00) Brooks_Connor[SQLID: 29] je radi neaktivnosti izgubio kucu na adresi Blueberry_20[SQLID: 591] i dobio 20000$ naknade u banku.
+(25/07/2020, 05:05:00) Andrew_Murphy[SQLID: 35] je radi neaktivnosti izgubio kucu na adresi Downtown_LS_5[SQLID: 286] i dobio 60000$ naknade u banku.
+(25/07/2020, 05:05:00) Daniel_Williamson[SQLID: 48] je radi neaktivnosti izgubio kucu na adresi Idlewood 69[SQLID: 69] i dobio 20000$ naknade u banku.
+(25/07/2020, 05:05:00) Gerald_Norton[SQLID: 50] je radi neaktivnosti izgubio kucu na adresi East_Los_Santos_18[SQLID: 589] i dobio 70000$ naknade u banku.
+(25/07/2020, 05:05:00) Vincent_Coleman[SQLID: 60] je radi neaktivnosti izgubio kucu na adresi Richman 8[SQLID: 392] i dobio 50000$ naknade u banku.
+(25/07/2020, 05:05:00) Tom_Mangano[SQLID: 66] je radi neaktivnosti izgubio kucu na adresi Montgomery 17[SQLID: 460] i dobio 20000$ naknade u banku.
+(25/07/2020, 05:05:00) Dusan_Lakic[SQLID: 69] je radi neaktivnosti izgubio garazu Marina[SQLID: 115] i dobio 10000$ naknade u banku.
+(25/07/2020, 05:05:00) Elliott_Loyd[SQLID: 83] je radi neaktivnosti izgubio Biznis 24Seven[SQLID: 39] i dobio 51554$ naknade u banku.
+(25/07/2020, 05:05:00) Paul_Hawakins[SQLID: 95] je radi neaktivnosti izgubio Biznis Snack Shop[SQLID: 53] i dobio 35099$ naknade u banku.
+(25/07/2020, 05:05:00) Marcus_Gibbs[SQLID: 118] je radi neaktivnosti izgubio kucu na adresi East_Los_Santos_17[SQLID: 302] i dobio 50000$ naknade u banku.
+(25/07/2020, 05:05:00) Blake_Caldwell[SQLID: 127] je radi neaktivnosti izgubio kucu na adresi Blueberry 5[SQLID: 423] i dobio 25002$ naknade u banku.
+(25/07/2020, 05:05:00) Blake_Caldwell[SQLID: 127] je radi neaktivnosti izgubio Biznis Eagle's Claw[SQLID: 29] i dobio 43530$ naknade u banku.
+(25/07/2020, 05:05:01) Brian_Adams[SQLID: 158] je radi neaktivnosti izgubio Complex sobu[SQLID: 41].
+(25/07/2020, 05:05:01) Cordell_Watkins[SQLID: 170] je radi neaktivnosti izgubio kucu na adresi Marina_14[SQLID: 191] i dobio 60000$ naknade u banku.
+(25/07/2020, 05:05:01) Cordell_Watkins[SQLID: 170] je radi neaktivnosti izgubio garazu Marina 14G[SQLID: 99] i dobio 25000$ naknade u banku.
+(25/07/2020, 05:05:01) Louis_Scalise[SQLID: 202] je radi neaktivnosti izgubio kucu na adresi Idlewood_54[SQLID: 121] i dobio 60000$ naknade u banku.
+(25/07/2020, 05:05:01) Liam_Corgain[SQLID: 248] je radi neaktivnosti izgubio posao Farmer[Job ID:7] i 5 sati ugovora.
+(25/07/2020, 05:05:01) Sarah_Bagwell[SQLID: 249] je radi neaktivnosti izgubio kucu na adresi Homeless[SQLID: 0] i dobio 15000$ naknade u banku.
+(25/07/2020, 05:05:01) Max_Moreno[SQLID: 293] je radi neaktivnosti izgubio kucu na adresi East_Los_Santos_55[SQLID: 629] i dobio 45000$ naknade u banku.
+(25/07/2020, 05:05:01) Demarcus_Brown[SQLID: 329] je radi neaktivnosti izgubio kucu na adresi Marina_25[SQLID: 507] i dobio 50000$ naknade u banku.
+(25/07/2020, 05:05:01) Larry_Scott[SQLID: 419] je radi neaktivnosti izgubio kucu na adresi Verona_Beach_68[SQLID: 92] i dobio 50000$ naknade u banku.
+(25/07/2020, 05:05:01) Homero_Estevez[SQLID: 429] je radi neaktivnosti izgubio kucu na adresi Idlewood 70[SQLID: 70] i dobio 35075$ naknade u banku.
+(25/07/2020, 05:05:01) Bradley_Morison[SQLID: 435] je radi neaktivnosti izgubio kucu na adresi Mulholland 1[SQLID: 355] i dobio 100000$ naknade u banku.
+(25/07/2020, 05:05:01) Jimmy_Ironhelm[SQLID: 441] je radi neaktivnosti izgubio kucu na adresi Vinewood[SQLID: 625] i dobio 50000$ naknade u banku.
+(25/07/2020, 05:05:01) Noah_Williams[SQLID: 521] je radi neaktivnosti izgubio kucu na adresi Mulholland 25[SQLID: 415] i dobio 250018$ naknade u banku.
+(25/07/2020, 05:05:01) Noah_Williams[SQLID: 521] je radi neaktivnosti izgubio garazu Vinewood[SQLID: 94] i dobio 15000$ naknade u banku.
+(25/07/2020, 05:05:01) Rizah_Meehan[SQLID: 540] je radi neaktivnosti izgubio kucu na adresi Mulholland_21[SQLID: 411] i dobio 120000$ naknade u banku.
+(25/07/2020, 05:05:01) Jackson_Scofield[SQLID: 543] je radi neaktivnosti izgubio Complex Korovski Complex[SQLID: 8] i dobio 250000$ naknade u banku.
+(25/07/2020, 05:05:01) Zebadiah_Blackwood[SQLID: 593] je radi neaktivnosti izgubio kucu na adresi Glen Park 1[SQLID: 230] i dobio 15001$ naknade u banku.
+(25/07/2020, 05:05:01) Reshay_Copeland[SQLID: 637] je radi neaktivnosti izgubio kucu na adresi Ganton 18[SQLID: 128] i dobio 50000$ naknade u banku.
+(25/07/2020, 05:05:01) Leonard_Wass[SQLID: 653] je radi neaktivnosti izgubio kucu na adresi Marina 76[SQLID: 503] i dobio 50247$ naknade u banku.
+(25/07/2020, 05:05:01) Richard_Morris[SQLID: 682] je radi neaktivnosti izgubio kucu na adresi Blueberry 9[SQLID: 427] i dobio 15000$ naknade u banku.
+(25/07/2020, 05:05:01) Darkeem_Moss[SQLID: 737] je radi neaktivnosti izgubio kucu na adresi Jefferson 39[SQLID: 215] i dobio 50046$ naknade u banku.
+(25/07/2020, 05:05:01) Samuel_Lewis[SQLID: 744] je radi neaktivnosti izgubio kucu na adresi Idlewood 13[SQLID: 506] i dobio 15185$ naknade u banku.
+(25/07/2020, 05:05:01) Samuel_Lewis[SQLID: 744] je radi neaktivnosti izgubio Biznis Idlewood Bar[SQLID: 171] i dobio 23052$ naknade u banku.
+(25/07/2020, 05:05:01) Tymon_Barowski[SQLID: 801] je radi neaktivnosti izgubio Complex sobu[SQLID: 26].
+(25/07/2020, 05:05:01) Julia_Nelson[SQLID: 814] je radi neaktivnosti izgubio Biznis Redneck's place[SQLID: 138] i dobio -2851533$ naknade u banku.
+(25/07/2020, 05:05:01) Velichko_Mitevski[SQLID: 837] je radi neaktivnosti izgubio kucu na adresi Temple 7[SQLID: 334] i dobio 50000$ naknade u banku.
+(25/07/2020, 05:05:01) Paola_Harra[SQLID: 838] je radi neaktivnosti izgubio kucu na adresi Hampton_Barns_4[SQLID: 442] i dobio 30000$ naknade u banku.
+(25/07/2020, 05:05:01) Chris_Vaughn[SQLID: 902] je radi neaktivnosti izgubio kucu na adresi Jefferson 13[SQLID: 189] i dobio 30000$ naknade u banku.
+(25/07/2020, 05:05:02) Raymond_Washington[SQLID: 930] je radi neaktivnosti izgubio kucu na adresi Marina_Apartments_6[SQLID: 595] i dobio 40000$ naknade u banku.
+(25/07/2020, 05:05:02) Raymond_Washington[SQLID: 930] je radi neaktivnosti izgubio Biznis ODYSEA NC[SQLID: 142] i dobio 34188$ naknade u banku.
+(25/07/2020, 05:05:02) Drexl_Hill[SQLID: 977] je radi neaktivnosti izgubio kucu na adresi Jefferson 1[SQLID: 177] i dobio 50000$ naknade u banku.
+(25/07/2020, 05:05:02) Drexl_Hill[SQLID: 977] je radi neaktivnosti izgubio garazu Flint County 2[SQLID: 121] i dobio 10000$ naknade u banku.
+(25/07/2020, 05:05:02) Michael_Wade[SQLID: 978] je radi neaktivnosti izgubio Complex sobu[SQLID: 14].
+(25/07/2020, 05:05:02) Tom_Koch[SQLID: 982] je radi neaktivnosti izgubio Complex sobu[SQLID: 46].
+(25/07/2020, 05:05:02) Riolis_Gepas[SQLID: 1024] je radi neaktivnosti izgubio kucu na adresi Idlewood 9[SQLID: 9] i dobio 15000$ naknade u banku.
+(25/07/2020, 05:05:02) Christian_Mendoza[SQLID: 1033] je radi neaktivnosti izgubio kucu na adresi Los_Flores_154[SQLID: 635] i dobio 20000$ naknade u banku.
+(25/07/2020, 05:05:02) Christian_Mendoza[SQLID: 1033] je radi neaktivnosti izgubio garazu Los Flores 154G[SQLID: 131] i dobio 10000$ naknade u banku.
+(25/07/2020, 05:05:02) Mikel_Bryant[SQLID: 1056] je radi neaktivnosti izgubio kucu na adresi Idlewood_16[SQLID: 502] i dobio 15010$ naknade u banku.
+(25/07/2020, 05:05:02) Michael_Ferreti[SQLID: 1087] je radi neaktivnosti izgubio kucu na adresi Glen Park 1[SQLID: 233] i dobio 10083$ naknade u banku.
+(25/07/2020, 05:05:02) Dominic_Smith[SQLID: 1164] je radi neaktivnosti izgubio kucu na adresi Los Flores 1[SQLID: 255] i dobio 20049$ naknade u banku.
+(25/07/2020, 05:05:02) Tommy_Farro[SQLID: 1204] je radi neaktivnosti izgubio kucu na adresi Idlewood 12[SQLID: 12] i dobio 15000$ naknade u banku.
+(25/07/2020, 05:05:02) Kendrick_Jones[SQLID: 1230] je radi neaktivnosti izgubio kucu na adresi East Los Santos 28[SQLID: 533] i dobio 15000$ naknade u banku.
+(25/07/2020, 05:05:02) Viktor_Stern[SQLID: 1248] je radi neaktivnosti izgubio kucu na adresi Jefferson 25[SQLID: 201] i dobio 50698$ naknade u banku.
+(25/07/2020, 05:05:02) Viktor_Stern[SQLID: 1248] je radi neaktivnosti izgubio Biznis SuB - URBAN[SQLID: 64] i dobio 53318$ naknade u banku.
+(25/07/2020, 05:05:02) Ethan_Queen[SQLID: 1267] je radi neaktivnosti izgubio Biznis Queen[SQLID: 5] i dobio 17079$ naknade u banku.
+(25/07/2020, 05:05:02) Arthur_Williams[SQLID: 1443] je radi neaktivnosti izgubio Complex sobu[SQLID: 9].
+(25/07/2020, 05:05:02) Gerald_Miller[SQLID: 1577] je radi neaktivnosti izgubio kucu na adresi Hampton_Barns_2[SQLID: 546] i dobio 20164$ naknade u banku.
+(25/07/2020, 05:05:02) Gerald_Miller[SQLID: 1577] je radi neaktivnosti izgubio Complex sobu[SQLID: 42].
+(25/07/2020, 05:05:02) Allen_Halstead[SQLID: 1631] je radi neaktivnosti izgubio Biznis Federal Oil Co.[SQLID: 69] i dobio 8189$ naknade u banku.
+(25/07/2020, 05:05:02) Shane_Duncan[SQLID: 1751] je radi neaktivnosti izgubio kucu na adresi Los_Flores_77[SQLID: 634] i dobio 20000$ naknade u banku.
+(25/07/2020, 05:05:02) Matteo_Cangialosi[SQLID: 1824] je radi neaktivnosti izgubio kucu na adresi Vinewood_19[SQLID: 518] i dobio 20000$ naknade u banku.
+(25/07/2020, 05:05:03) Jacob_Rodgers[SQLID: 2024] je radi neaktivnosti izgubio Biznis Fastfood nation[SQLID: 139] i dobio 31557$ naknade u banku.
+(25/07/2020, 05:05:03) Alex_Bellick[SQLID: 2211] je radi neaktivnosti izgubio kucu na adresi Willowfield 6[SQLID: 149] i dobio 30002$ naknade u banku.
+(25/07/2020, 05:05:03) Ezequiel_Morales[SQLID: 2676] je radi neaktivnosti izgubio kucu na adresi Temple 21[SQLID: 348] i dobio 20000$ naknade u banku.
+(25/07/2020, 05:05:03) Lanan_Stirling[SQLID: 2691] je radi neaktivnosti izgubio kucu na adresi Temple 20[SQLID: 347] i dobio 20000$ naknade u banku.
+(25/07/2020, 05:05:04) Libarid_Petrosian[SQLID: 2822] je radi neaktivnosti izgubio Complex sobu[SQLID: 45].
+(25/07/2020, 05:05:04) Ontrel_Byrd[SQLID: 3014] je radi neaktivnosti izgubio garazu Willowfield 7[SQLID: 82] i dobio 10000$ naknade u banku.
+(25/07/2020, 05:05:04) Mateo_Moretti[SQLID: 3018] je radi neaktivnosti izgubio kucu na adresi Marina29[SQLID: 623] i dobio 1$ naknade u banku.
+(25/07/2020, 05:05:04) Deontay_Banks[SQLID: 3043] je radi neaktivnosti izgubio kucu na adresi Santa Maria Beach 4[SQLID: 325] i dobio 50000$ naknade u banku.
+(25/07/2020, 05:05:04) Raymond_Lazzeri[SQLID: 3110] je radi neaktivnosti izgubio kucu na adresi Idlewood 40[SQLID: 40] i dobio 20001$ naknade u banku.
+(25/07/2020, 05:05:04) Wade_Clarkson[SQLID: 3391] je radi neaktivnosti izgubio kucu na adresi Jefferson 22[SQLID: 198] i dobio 50004$ naknade u banku.
+(25/07/2020, 05:05:04) William_Lopez[SQLID: 3433] je radi neaktivnosti izgubio kucu na adresi Verona Beach 12[SQLID: 556] i dobio 50003$ naknade u banku.
+(25/07/2020, 05:05:05) Jose_Morales[SQLID: 3780] je radi neaktivnosti izgubio Complex sobu[SQLID: 32].
+(25/07/2020, 05:05:05) James_McCarthy[SQLID: 3810] je radi neaktivnosti izgubio posao Farmer[Job ID:7] i 8 sati ugovora.
+(25/07/2020, 05:05:05) Steve_Caballero[SQLID: 3915] je radi neaktivnosti izgubio Complex sobu[SQLID: 29].
+(25/07/2020, 05:05:05) Herbert_Dewie[SQLID: 4012] je radi neaktivnosti izgubio kucu na adresi Idlewood_56[SQLID: 440] i dobio 20000$ naknade u banku.
+(25/07/2020, 05:05:05) Demetrius_Crown[SQLID: 4107] je radi neaktivnosti izgubio Complex sobu[SQLID: 43].
+(25/07/2020, 05:05:05) Patrik_Aleksandrov[SQLID: 4124] je radi neaktivnosti izgubio kucu na adresi Rogue Music Studio[SQLID: 543] i dobio 200000$ naknade u banku.
+(25/07/2020, 05:05:05) Enrico_Giambattista[SQLID: 4327] je radi neaktivnosti izgubio kucu na adresi Idlewood_31[SQLID: 454] i dobio 15000$ naknade u banku.
+(25/07/2020, 05:05:06) Garen_Philps[SQLID: 4465] je radi neaktivnosti izgubio garazu Idlewood 56[SQLID: 83] i dobio 10000$ naknade u banku.
+(25/07/2020, 05:05:06) Justin_Hacket[SQLID: 4540] je radi neaktivnosti izgubio kucu na adresi Glen_Park_10[SQLID: 222] i dobio 50000$ naknade u banku.
+(25/07/2020, 05:05:06) Aubrey_Bartsow[SQLID: 4595] je radi neaktivnosti izgubio kucu na adresi Richman_Peco[SQLID: 311] i dobio 150000$ naknade u banku.
+(25/07/2020, 05:05:06) Kyoto_Hamasaki[SQLID: 4619] je radi neaktivnosti izgubio Biznis Runolist[SQLID: 55] i dobio 38118$ naknade u banku.
+(25/07/2020, 05:05:06) Kyoto_Hamasaki[SQLID: 4619] je radi neaktivnosti izgubio Complex sobu[SQLID: 40].
+(25/07/2020, 05:05:06) Matt_Loyd[SQLID: 4622] je radi neaktivnosti izgubio Biznis Mystic NC[SQLID: 114] i dobio 205356$ naknade u banku.
+(25/07/2020, 05:05:06) Ted_Manson[SQLID: 4759] je radi neaktivnosti izgubio kucu na adresi Montgomery 1[SQLID: 444] i dobio 30000$ naknade u banku.
+(25/07/2020, 05:05:06) Ted_Manson[SQLID: 4759] je radi neaktivnosti izgubio Complex sobu[SQLID: 11].
+(25/07/2020, 05:05:06) Ewan_Blackwell[SQLID: 4893] je radi neaktivnosti izgubio kucu na adresi Idlewood 78[SQLID: 494] i dobio 20836$ naknade u banku.
+(25/07/2020, 05:05:07) Noah_Willson[SQLID: 5017] je radi neaktivnosti izgubio posao Mehanicar[Job ID:3] i 12 sati ugovora.
+(25/07/2020, 05:05:07) Mike_Baker[SQLID: 5370] je radi neaktivnosti izgubio Complex sobu[SQLID: 3].
+(25/07/2020, 05:05:07) David_Chambers[SQLID: 5407] je radi neaktivnosti izgubio kucu na adresi Dillimore 1[SQLID: 412] i dobio 50000$ naknade u banku.
+(25/07/2020, 05:05:07) Mason_Maguire[SQLID: 5419] je radi neaktivnosti izgubio kucu na adresi Dillmore_3[SQLID: 549] i dobio 50000$ naknade u banku.
+(25/07/2020, 05:05:07) Stepan_Denikin[SQLID: 5472] je radi neaktivnosti izgubio kucu na adresi Gleen Park 8[SQLID: 569] i dobio 250000$ naknade u banku.
+(25/07/2020, 05:05:07) Theo_LaPietra[SQLID: 5601] je radi neaktivnosti izgubio kucu na adresi Temple 23[SQLID: 350] i dobio 20000$ naknade u banku.
+(25/07/2020, 05:05:07) Theo_LaPietra[SQLID: 5601] je radi neaktivnosti izgubio garazu Mullholland[SQLID: 68] i dobio 10000$ naknade u banku.
+(25/07/2020, 05:05:08) Archie_Kilgannon[SQLID: 5683] je radi neaktivnosti izgubio kucu na adresi Blueberry 10[SQLID: 428] i dobio 15000$ naknade u banku.
+(25/07/2020, 05:05:08) Brandon_Barker[SQLID: 5691] je radi neaktivnosti izgubio kucu na adresi Marina 5[SQLID: 310] i dobio 70000$ naknade u banku.
+(25/07/2020, 05:05:08) Kaleb_Copeland[SQLID: 5831] je radi neaktivnosti izgubio Complex sobu[SQLID: 13].
+(25/07/2020, 05:05:08) Shewann_Sellvio[SQLID: 5844] je radi neaktivnosti izgubio Complex sobu[SQLID: 31].
+(25/07/2020, 05:05:08) Jamaad_Hall[SQLID: 5863] je radi neaktivnosti izgubio kucu na adresi Idlewood 6[SQLID: 6] i dobio 15000$ naknade u banku.
+(25/07/2020, 05:05:08) Dieuson_Octave[SQLID: 5912] je radi neaktivnosti izgubio kucu na adresi Idlewood 17[SQLID: 17] i dobio 15000$ naknade u banku.
+(25/07/2020, 05:05:08) Tommy_Johnsonn[SQLID: 5917] je radi neaktivnosti izgubio Complex sobu[SQLID: 25].
+(25/07/2020, 05:05:08) Pierre_Delince[SQLID: 5930] je radi neaktivnosti izgubio kucu na adresi Idlewood 18[SQLID: 18] i dobio 15000$ naknade u banku.
+(25/07/2020, 05:05:08) Reggie_Willson[SQLID: 5968] je radi neaktivnosti izgubio Complex sobu[SQLID: 30].
+(25/07/2020, 05:05:08) Jovan_Lazarevski[SQLID: 5972] je radi neaktivnosti izgubio Complex sobu[SQLID: 4].
+(25/07/2020, 05:05:08) Lazar_Stojadinovic[SQLID: 5997] je radi neaktivnosti izgubio Complex sobu[SQLID: 34].
+(25/07/2020, 05:05:08) Domenico_Navarra[SQLID: 6004] je radi neaktivnosti izgubio posao Farmer[Job ID:7] i 28 sati ugovora.
+(25/07/2020, 05:05:08) Frankie_Moltisanti[SQLID: 6116] je radi neaktivnosti izgubio kucu na adresi Civic Center 2[SQLID: 510] i dobio 20000$ naknade u banku.
+(25/07/2020, 05:05:08) Frankie_Moltisanti[SQLID: 6116] je radi neaktivnosti izgubio garazu Los[SQLID: 125] i dobio 5000$ naknade u banku.
+(25/07/2020, 05:05:08) Frankie_Moltisanti[SQLID: 6116] je radi neaktivnosti izgubio Biznis Vesuvio[SQLID: 154] i dobio 51448$ naknade u banku.
+(25/07/2020, 05:05:08) Lyottah_Mweaks[SQLID: 6134] je radi neaktivnosti izgubio kucu na adresi Jefferson 10[SQLID: 186] i dobio 50000$ naknade u banku.
+(25/07/2020, 05:05:08) Jacob_Anderson[SQLID: 6174] je radi neaktivnosti izgubio kucu na adresi Richman 25[SQLID: 409] i dobio 250000$ naknade u banku.
+(25/07/2020, 05:05:08) Jacob_Anderson[SQLID: 6174] je radi neaktivnosti izgubio Biznis City Lounge[SQLID: 177] i dobio 27268$ naknade u banku.
+(25/07/2020, 05:05:08) Vladimiros_Galatas[SQLID: 6175] je radi neaktivnosti izgubio kucu na adresi Idlewood_33[SQLID: 606] i dobio 15000$ naknade u banku.
+(25/07/2020, 05:05:08) Eric_Roberts[SQLID: 6197] je radi neaktivnosti izgubio kucu na adresi Mulholland 19[SQLID: 373] i dobio 80002$ naknade u banku.
+(25/07/2020, 05:05:08) Eric_Roberts[SQLID: 6197] je radi neaktivnosti izgubio garazu Mullholand[SQLID: 29] i dobio 20000$ naknade u banku.
+(25/07/2020, 05:05:08) Nikola_Stojkovic[SQLID: 6265] je radi neaktivnosti izgubio Complex sobu[SQLID: 15].
+(25/07/2020, 05:05:09) Craig_Moore[SQLID: 6337] je radi neaktivnosti izgubio Biznis Market[SQLID: 50] i dobio 30914$ naknade u banku.
+(25/07/2020, 05:05:09) Aiden_Mitchell[SQLID: 6401] je radi neaktivnosti izgubio kucu na adresi El Corona 20[SQLID: 93] i dobio 50000$ naknade u banku.
+(25/07/2020, 05:05:09) Nuwa_Lin[SQLID: 6430] je radi neaktivnosti izgubio kucu na adresi Temple 17[SQLID: 344] i dobio 20000$ naknade u banku.
+(25/07/2020, 05:05:09) John_Mangano[SQLID: 6638] je radi neaktivnosti izgubio kucu na adresi TheBrothersSyndicate[SQLID: 523] i dobio 200000$ naknade u banku.
+(25/07/2020, 05:05:09) John_Mangano[SQLID: 6638] je radi neaktivnosti izgubio Biznis TABOO disco[SQLID: 110] i dobio 21416$ naknade u banku.
+(25/07/2020, 05:05:09) Farrelle_Qualls[SQLID: 6667] je radi neaktivnosti izgubio kucu na adresi Jefferson 7[SQLID: 183] i dobio 50000$ naknade u banku.
+(25/07/2020, 05:05:09) Kenneth_Nelson[SQLID: 6700] je radi neaktivnosti izgubio kucu na adresi Idlewood 69[SQLID: 552] i dobio 20000$ naknade u banku.
+(25/07/2020, 05:05:09) Kenneth_Nelson[SQLID: 6700] je radi neaktivnosti izgubio Biznis Crystal Club[SQLID: 28] i dobio 56768$ naknade u banku.
+(25/07/2020, 05:05:09) Hristo_Nikolov[SQLID: 6765] je radi neaktivnosti izgubio kucu na adresi Long_Beach_7[SQLID: 277] i dobio 50000$ naknade u banku.
+(25/07/2020, 05:05:09) Hristo_Nikolov[SQLID: 6765] je radi neaktivnosti izgubio Biznis BlacK PearL[SQLID: 73] i dobio 50247$ naknade u banku.
+(25/07/2020, 05:05:10) Marcus_Bonateli[SQLID: 6918] je radi neaktivnosti izgubio Complex sobu[SQLID: 20].
+(25/07/2020, 05:05:10) Bingham_Ainsworth[SQLID: 6935] je radi neaktivnosti izgubio kucu na adresi Marina 16[SQLID: 321] i dobio 25000$ naknade u banku.
+(25/07/2020, 05:05:10) Mauricio_Manzano[SQLID: 6958] je radi neaktivnosti izgubio kucu na adresi Verona Beach 6[SQLID: 551] i dobio 20398$ naknade u banku.
+(25/07/2020, 05:05:10) Mauricio_Manzano[SQLID: 6958] je radi neaktivnosti izgubio Biznis MM Cars[SQLID: 200] i dobio 38417$ naknade u banku.
+(25/07/2020, 05:05:10) Lamarcus_Cooper[SQLID: 6993] je radi neaktivnosti izgubio Complex sobu[SQLID: 38].
+(25/07/2020, 05:05:10) Stephen_Frye[SQLID: 6999] je radi neaktivnosti izgubio posao Farmer[Job ID:7] i 58 sati ugovora.
+(25/07/2020, 05:05:10) Dwayne_Weathersby[SQLID: 7032] je radi neaktivnosti izgubio Complex sobu[SQLID: 33].
+(25/07/2020, 05:05:10) Nikolaj_Zajcev[SQLID: 7048] je radi neaktivnosti izgubio posao Mehanicar[Job ID:3] i 28 sati ugovora.
+(25/07/2020, 05:05:10) Charlie_Sullivan[SQLID: 7191] je radi neaktivnosti izgubio Biznis Welder PUB[SQLID: 140] i dobio 60159$ naknade u banku.
+(25/07/2020, 05:05:10) Tatiana_Bagrova[SQLID: 7305] je radi neaktivnosti izgubio Complex sobu[SQLID: 22].
+(25/07/2020, 05:05:11) Vladimir_Boyka[SQLID: 7415] je radi neaktivnosti izgubio posao Farmer[Job ID:7] i 0 sati ugovora.
+(25/07/2020, 05:05:11) Louisville_Slugger[SQLID: 7432] je radi neaktivnosti izgubio posao Cistac ulica[Job ID:1] i 1 sati ugovora.
+(25/07/2020, 05:05:11) John_Costanelli[SQLID: 7433] je radi neaktivnosti izgubio posao Farmer[Job ID:7] i 2 sati ugovora.
+(25/07/2020, 05:05:11) Ezio_Morelli[SQLID: 7460] je radi neaktivnosti izgubio posao Cistac ulica[Job ID:1] i 1 sati ugovora.
+(25/07/2020, 05:05:11) Marino_Morelli[SQLID: 7461] je radi neaktivnosti izgubio posao Farmer[Job ID:7] i 0 sati ugovora.
+(25/07/2020, 05:05:11) Maks_Hossain[SQLID: 7462] je radi neaktivnosti izgubio posao Farmer[Job ID:7] i 0 sati ugovora.
+(25/07/2020, 05:05:11) Marco_Morelli[SQLID: 7463] je radi neaktivnosti izgubio posao Farmer[Job ID:7] i 1 sati ugovora.
+(25/07/2020, 05:05:11) Cripsy_Cappone[SQLID: 7466] je radi neaktivnosti izgubio posao Smetlar[Job ID:16] i 0 sati ugovora.
+(26/07/2020, 05:05:00) Uros_Radovic[SQLID: 154] je radi neaktivnosti izgubio kucu na adresi Los Flores 6[SQLID: 279] i dobio 25000$ naknade u banku.
+(26/07/2020, 05:05:00) Uros_Radovic[SQLID: 154] je radi neaktivnosti izgubio Complex sobu[SQLID: 19].
+(26/07/2020, 05:05:01) Richard_Myers[SQLID: 1226] je radi neaktivnosti izgubio kucu na adresi Montgomery_32[SQLID: 257] i dobio 20092$ naknade u banku.
+(26/07/2020, 05:05:01) Richard_Myers[SQLID: 1226] je radi neaktivnosti izgubio garazu Montgomery 32G[SQLID: 134] i dobio 10000$ naknade u banku.
+(26/07/2020, 05:05:01) Joseph_Scaletta[SQLID: 1305] je radi neaktivnosti izgubio posao Cistac ulica[Job ID:1] i 0 sati ugovora.
+(26/07/2020, 05:05:01) Miljan_Causevic[SQLID: 1318] je radi neaktivnosti izgubio kucu na adresi Palomino[SQLID: 616] i dobio 10000$ naknade u banku.
+(26/07/2020, 05:05:06) Buck_Finn[SQLID: 6191] je radi neaktivnosti izgubio kucu na adresi Palomino Creek 22[SQLID: 482] i dobio 35176$ naknade u banku.
+(26/07/2020, 05:05:06) Buck_Finn[SQLID: 6191] je radi neaktivnosti izgubio Biznis Palomino 24/7[SQLID: 60] i dobio 36658$ naknade u banku.
+(26/07/2020, 05:05:07) Franko_Belluci[SQLID: 7472] je radi neaktivnosti izgubio posao Kosac trave[Job ID:4] i 1 sati ugovora.
+(27/07/2020, 05:05:01) Andrej_Baltocky[SQLID: 140] je radi neaktivnosti izgubio posao Mehanicar[Job ID:3] i 161 sati ugovora.
+(27/07/2020, 05:05:01) Ethan_Bryant[SQLID: 337] je radi neaktivnosti izgubio posao Mehanicar[Job ID:3] i 4 sati ugovora.
+(27/07/2020, 05:05:02) Ladarrel_Boyd[SQLID: 1018] je radi neaktivnosti izgubio kucu na adresi Montgomery 16[SQLID: 459] i dobio 35000$ naknade u banku.
+(27/07/2020, 05:05:02) Raphael_Vercetti[SQLID: 1074] je radi neaktivnosti izgubio posao Car Jacker[Job ID:13] i 5 sati ugovora.
+(27/07/2020, 05:05:02) Stefan_Babic[SQLID: 1118] je radi neaktivnosti izgubio posao Farmer[Job ID:7] i 52 sati ugovora.
+(27/07/2020, 05:05:05) Ben_Thompson[SQLID: 4868] je radi neaktivnosti izgubio kucu na adresi Mulholland 12[SQLID: 366] i dobio 250000$ naknade u banku.
+(27/07/2020, 05:05:05) Ben_Thompson[SQLID: 4868] je radi neaktivnosti izgubio garazu Mull[SQLID: 117] i dobio 1$ naknade u banku.
+(27/07/2020, 05:05:06) Pedro_Alonso[SQLID: 5398] je radi neaktivnosti izgubio posao Mehanicar[Job ID:3] i 240 sati ugovora.
+(27/07/2020, 05:05:07) Jayson_Quinn[SQLID: 6078] je radi neaktivnosti izgubio posao Taksist[Job ID:6] i 8 sati ugovora.
+(27/07/2020, 05:05:07) Bob_Winchester[SQLID: 6324] je radi neaktivnosti izgubio Biznis County Pizza[SQLID: 24] i dobio 32809$ naknade u banku.
+(27/07/2020, 05:05:08) Vedran_Vukovic[SQLID: 6764] je radi neaktivnosti izgubio kucu na adresi Vinewood[SQLID: 613] i dobio 50000$ naknade u banku.
+(27/07/2020, 05:05:08) John_Costanelli[SQLID: 7433] je radi neaktivnosti izgubio posao Transporter[Job ID:18] i 1 sati ugovora.
+(27/07/2020, 05:05:08) Aiyden_Lewis[SQLID: 7486] je radi neaktivnosti izgubio posao Tvornicki radnik[Job ID:5] i 0 sati ugovora.
+(27/07/2020, 05:05:08) Kieran_Carson[SQLID: 7491] je radi neaktivnosti izgubio posao Cistac ulica[Job ID:1] i 1 sati ugovora.
+(27/07/2020, 05:05:08) Lance_Carson[SQLID: 7492] je radi neaktivnosti izgubio posao Cistac ulica[Job ID:1] i 1 sati ugovora.
+(27/07/2020, 05:05:08) James_Tucker[SQLID: 7494] je radi neaktivnosti izgubio posao Tvornicki radnik[Job ID:5] i 0 sati ugovora.
+(27/07/2020, 05:05:08) Donald_Wang[SQLID: 7540] je radi neaktivnosti izgubio posao Cistac ulica[Job ID:1] i 1 sati ugovora.
+(28/07/2020, 05:05:01) Matthew_Stanfa[SQLID: 1236] je radi neaktivnosti izgubio posao Transporter[Job ID:18] i 0 sati ugovora.
+(28/07/2020, 05:05:02) Pablo_Galvez[SQLID: 1295] je radi neaktivnosti izgubio posao Transporter[Job ID:18] i 0 sati ugovora.
+(28/07/2020, 05:05:02) Jeff_Sheng[SQLID: 1317] je radi neaktivnosti izgubio posao Mehanicar[Job ID:3] i 1 sati ugovora.
+(28/07/2020, 05:05:06) James_Kyle[SQLID: 6191] je radi neaktivnosti izgubio kucu na adresi Marina[SQLID: 504] i dobio 20207$ naknade u banku.
+(28/07/2020, 05:05:07) Dimitri_Ivanovich[SQLID: 7464] je radi neaktivnosti izgubio posao Farmer[Job ID:7] i 4 sati ugovora.
+(28/07/2020, 05:05:07) Jamal_Johnson[SQLID: 7508] je radi neaktivnosti izgubio posao Pizza Boy[Job ID:2] i 0 sati ugovora.
+(28/07/2020, 05:05:07) Rade_Vuckovvic[SQLID: 7544] je radi neaktivnosti izgubio posao Drvosjeca[Job ID:14] i 0 sati ugovora.
+(28/07/2020, 05:05:07) Kyree_Cox[SQLID: 7546] je radi neaktivnosti izgubio posao Cistac ulica[Job ID:1] i 0 sati ugovora.
+(29/07/2020, 05:05:04) Joe_Cresswell[SQLID: 388] je radi neaktivnosti izgubio posao Farmer[Job ID:7] i 0 sati ugovora.
+(29/07/2020, 05:05:05) Ronald_Davison[SQLID: 1000] je radi neaktivnosti izgubio posao Taksist[Job ID:6] i 3 sati ugovora.
+(29/07/2020, 05:05:05) Matthew_Stanfa[SQLID: 1236] je radi neaktivnosti izgubio posao Transporter[Job ID:18] i 0 sati ugovora.
+(29/07/2020, 05:05:06) Anthony_Vendetti[SQLID: 1886] je radi neaktivnosti izgubio posao Mehanicar[Job ID:3] i 1 sati ugovora.
+(29/07/2020, 05:05:09) Anatolij_Novikov[SQLID: 5412] je radi neaktivnosti izgubio posao Farmer[Job ID:7] i 4 sati ugovora.
+(29/07/2020, 05:05:09) Monaldo_Fazzari[SQLID: 5720] je radi neaktivnosti izgubio kucu na adresi Marina_55[SQLID: 605] i dobio 20000$ naknade u banku.
+(29/07/2020, 05:05:09) Monaldo_Fazzari[SQLID: 5720] je radi neaktivnosti izgubio Complex sobu[SQLID: 23].
+(29/07/2020, 05:05:10) John_Matthews[SQLID: 6271] je radi neaktivnosti izgubio kucu na adresi Las_Colinas_7[SQLID: 497] i dobio 10000$ naknade u banku.
+(29/07/2020, 05:05:10) Pablo_Moretti[SQLID: 6473] je radi neaktivnosti izgubio posao Transporter[Job ID:18] i 1 sati ugovora.
+(29/07/2020, 05:05:10) Cletus_Hutchinson[SQLID: 6700] je radi neaktivnosti izgubio kucu na adresi Idlewood 69[SQLID: 552] i dobio 20000$ naknade u banku.
+(29/07/2020, 05:05:10) Valerija_Bulgakov[SQLID: 6986] je radi neaktivnosti izgubio Complex sobu[SQLID: 24].
+(29/07/2020, 05:05:10) Valentina_Godunov[SQLID: 7244] je radi neaktivnosti izgubio Complex sobu[SQLID: 21].
+(29/07/2020, 05:05:11) Eugene_Bondarchuk[SQLID: 7449] je radi neaktivnosti izgubio posao Kosac trave[Job ID:4] i 0 sati ugovora.
+(29/07/2020, 05:05:11) Zakhar_Ivanov[SQLID: 7457] je radi neaktivnosti izgubio posao Farmer[Job ID:7] i 2 sati ugovora.
+(29/07/2020, 05:05:11) Vladimir_Moglievich[SQLID: 7480] je radi neaktivnosti izgubio posao Cistac ulica[Job ID:1] i 9 sati ugovora.
+(29/07/2020, 05:05:11) Vasilij_Makarov[SQLID: 7482] je radi neaktivnosti izgubio posao Cistac ulica[Job ID:1] i 6 sati ugovora.
+(29/07/2020, 05:05:11) Konstantin_Raspopov[SQLID: 7498] je radi neaktivnosti izgubio posao Kosac trave[Job ID:4] i 1 sati ugovora.
+(29/07/2020, 05:05:11) Nino_Davis[SQLID: 7510] je radi neaktivnosti izgubio posao Farmer[Job ID:7] i 0 sati ugovora.
+(29/07/2020, 05:05:11) Michael_ElCross[SQLID: 7512] je radi neaktivnosti izgubio posao Farmer[Job ID:7] i 2 sati ugovora.
+(29/07/2020, 05:05:11) Dardan_Moore[SQLID: 7516] je radi neaktivnosti izgubio posao Cistac ulica[Job ID:1] i 0 sati ugovora.
+(29/07/2020, 05:05:11) James_ElCross[SQLID: 7522] je radi neaktivnosti izgubio posao Farmer[Job ID:7] i 0 sati ugovora.
+(29/07/2020, 05:05:11) Kyree_Cox[SQLID: 7546] je radi neaktivnosti izgubio posao Cistac ulica[Job ID:1] i 1 sati ugovora.
+(29/07/2020, 05:05:11) Samantha_Brooks[SQLID: 7547] je radi neaktivnosti izgubio posao Tvornicki radnik[Job ID:5] i 1 sati ugovora.
+(30/07/2020, 05:05:06) Conor_Lyons[SQLID: 1238] je radi neaktivnosti izgubio posao Drvosjeca[Job ID:14] i 30 sati ugovora.
+(30/07/2020, 05:05:07) Jaiceon_Intyre[SQLID: 2085] je radi neaktivnosti izgubio kucu na adresi Ganton 20[SQLID: 130] i dobio 65000$ naknade u banku.
+(30/07/2020, 05:05:07) Jaiceon_Intyre[SQLID: 2085] je radi neaktivnosti izgubio garazu Ocean Docks 2[SQLID: 112] i dobio 15000$ naknade u banku.
+(30/07/2020, 05:05:07) Jaiceon_Intyre[SQLID: 2085] je radi neaktivnosti izgubio Biznis EL Dritch[SQLID: 125] i dobio 54113$ naknade u banku.
+(30/07/2020, 05:05:10) Dennis_Lewis[SQLID: 4995] je radi neaktivnosti izgubio kucu na adresi Playa del Seville 1[SQLID: 173] i dobio 30012$ naknade u banku.
+(30/07/2020, 05:05:10) Harris_Carter[SQLID: 5467] je radi neaktivnosti izgubio posao Tvornicki radnik[Job ID:5] i 2 sati ugovora.
+(30/07/2020, 05:05:10) Santiago_Hernandez[SQLID: 5677] je radi neaktivnosti izgubio posao Mehanicar[Job ID:3] i 0 sati ugovora.
+(30/07/2020, 05:05:11) Arwa_Abdelrahman[SQLID: 6232] je radi neaktivnosti izgubio posao Mehanicar[Job ID:3] i 2 sati ugovora.
+(30/07/2020, 05:05:11) Billy_Winchester[SQLID: 6325] je radi neaktivnosti izgubio kucu na adresi Angel_Pine_7[SQLID: 509] i dobio 25000$ naknade u banku.
+(30/07/2020, 05:05:12) Deondre_Goodwin[SQLID: 7381] je radi neaktivnosti izgubio posao Farmer[Job ID:7] i 1 sati ugovora.
+(30/07/2020, 05:05:12) Derrick_Wattson[SQLID: 7429] je radi neaktivnosti izgubio posao Farmer[Job ID:7] i 4 sati ugovora.
+(30/07/2020, 05:05:12) Michelle_Stewart[SQLID: 7436] je radi neaktivnosti izgubio posao Farmer[Job ID:7] i 57 sati ugovora.
+(30/07/2020, 05:05:12) Tommy_Woods[SQLID: 7489] je radi neaktivnosti izgubio posao Pizza Boy[Job ID:2] i 3 sati ugovora.
+(30/07/2020, 05:05:12) Kaydee_Mclntyre[SQLID: 7503] je radi neaktivnosti izgubio posao Cistac ulica[Job ID:1] i 4 sati ugovora.
+(30/07/2020, 05:05:12) Steve_Vercetti[SQLID: 7505] je radi neaktivnosti izgubio posao Tvornicki radnik[Job ID:5] i 2 sati ugovora.
+(31/07/2020, 05:05:05) Sado_Sahovic[SQLID: 27] je radi neaktivnosti izgubio kucu na adresi East_Los_Santos_98[SQLID: 453] i dobio 20000$ naknade u banku.
+(31/07/2020, 05:05:05) Sado_Sahovic[SQLID: 27] je radi neaktivnosti izgubio Biznis Golden[SQLID: 103] i dobio 30292$ naknade u banku.
+(31/07/2020, 05:05:06) David_Palmer[SQLID: 80] je radi neaktivnosti izgubio posao Cistac ulica[Job ID:1] i 18 sati ugovora.
+(31/07/2020, 05:05:06) Jimmy_Cheng[SQLID: 165] je radi neaktivnosti izgubio posao Farmer[Job ID:7] i 147 sati ugovora.
+(31/07/2020, 05:05:06) Jason_Logan[SQLID: 208] je radi neaktivnosti izgubio kucu na adresi Jefferson 35[SQLID: 211] i dobio 50000$ naknade u banku.
+(31/07/2020, 05:05:06) Jason_Logan[SQLID: 208] je radi neaktivnosti izgubio garazu Jefferson 35[SQLID: 75] i dobio 10000$ naknade u banku.
+(31/07/2020, 05:05:06) Vasilije_Zurovac[SQLID: 835] je radi neaktivnosti izgubio kucu na adresi Temple_96[SQLID: 488] i dobio 20044$ naknade u banku.
+(31/07/2020, 05:05:06) Matthew_Stanfa[SQLID: 1236] je radi neaktivnosti izgubio posao Transporter[Job ID:18] i 1 sati ugovora.
+(31/07/2020, 05:05:09) Ibrahimi_Kastrati[SQLID: 3734] je radi neaktivnosti izgubio posao Farmer[Job ID:7] i 11 sati ugovora.
+(31/07/2020, 05:05:10) Klara_Sandberg[SQLID: 5040] je radi neaktivnosti izgubio kucu na adresi Fern Ridge 1[SQLID: 443] i dobio 25000$ naknade u banku.
+(31/07/2020, 05:05:11) Johnny_Suarez[SQLID: 5425] je radi neaktivnosti izgubio posao Farmer[Job ID:7] i 1 sati ugovora.
+(31/07/2020, 05:05:11) Danio_Squilace[SQLID: 5981] je radi neaktivnosti izgubio posao Mehanicar[Job ID:3] i 24 sati ugovora.
+(31/07/2020, 05:05:13) Chris_Lawson[SQLID: 7383] je radi neaktivnosti izgubio posao Cistac ulica[Job ID:1] i 1 sati ugovora.
+(31/07/2020, 05:05:13) Andrew_Moore[SQLID: 7437] je radi neaktivnosti izgubio posao Farmer[Job ID:7] i 13 sati ugovora.
+(31/07/2020, 05:05:13) Marco_Morelli[SQLID: 7463] je radi neaktivnosti izgubio posao Cistac ulica[Job ID:1] i 0 sati ugovora.
+(31/07/2020, 05:05:13) Jonh_McFiles[SQLID: 7529] je radi neaktivnosti izgubio posao Farmer[Job ID:7] i 0 sati ugovora.
+(01/08/2020, 05:05:02) Charles_Scalafani[SQLID: 2184] je radi neaktivnosti izgubio kucu na adresi Marina 18[SQLID: 312] i dobio 20046$ naknade u banku.
+(01/08/2020, 05:05:04) Pedro_Alonso[SQLID: 5398] je radi neaktivnosti izgubio posao Transporter[Job ID:18] i 1 sati ugovora.
+(01/08/2020, 05:05:05) Blake_Bullock[SQLID: 5702] je radi neaktivnosti izgubio kucu na adresi Gleen Park 2[SQLID: 575] i dobio 350147$ naknade u banku.
+(02/08/2020, 05:05:01) Jason_Logan[SQLID: 208] je radi neaktivnosti izgubio kucu na adresi Jefferson 35[SQLID: 211] i dobio 50000$ naknade u banku.
+(02/08/2020, 05:05:28) Nicholas_Redford[SQLID: 7553] je radi neaktivnosti izgubio posao Transporter[Job ID:18] i 0 sati ugovora.
+(02/08/2020, 05:05:28) Michael_Gotti[SQLID: 7556] je radi neaktivnosti izgubio posao Cistac ulica[Job ID:1] i 0 sati ugovora.
+(03/08/2020, 05:05:04) Rene_Strauss[SQLID: 411] je radi neaktivnosti izgubio kucu na adresi Rodeo[SQLID: 636] i dobio 450092$ naknade u banku.
+(03/08/2020, 05:05:04) Rene_Strauss[SQLID: 411] je radi neaktivnosti izgubio Biznis DR-LS[SQLID: 198] i dobio 125329$ naknade u banku.
+(03/08/2020, 05:05:05) Victor_Azzari[SQLID: 484] je radi neaktivnosti izgubio kucu na adresi Civic Center 3[SQLID: 511] i dobio 20001$ naknade u banku.
+(03/08/2020, 05:05:05) Victor_Azzari[SQLID: 484] je radi neaktivnosti izgubio garazu LongBeach[SQLID: 127] i dobio 10000$ naknade u banku.
+(03/08/2020, 05:05:12) Ismael_Romero[SQLID: 3199] je radi neaktivnosti izgubio kucu na adresi Idlewood 14[SQLID: 14] i dobio 15000$ naknade u banku.
+(03/08/2020, 05:05:28) Randhy_Putra[SQLID: 7404] je radi neaktivnosti izgubio posao Transporter[Job ID:18] i 0 sati ugovora.
+(03/08/2020, 05:05:28) Vitalij_Sidorov[SQLID: 7556] je radi neaktivnosti izgubio posao Farmer[Job ID:7] i 1 sati ugovora.
+(04/08/2020, 05:05:06) Lauren_Brunetti[SQLID: 285] je radi neaktivnosti izgubio garazu Los Flores[SQLID: 111] i dobio 10000$ naknade u banku.
+(04/08/2020, 05:05:06) Hank_Joeng[SQLID: 353] je radi neaktivnosti izgubio kucu na adresi Downtown_5[SQLID: 413] i dobio 20000$ naknade u banku.
+(04/08/2020, 05:05:06) Hank_Joeng[SQLID: 353] je radi neaktivnosti izgubio Biznis LSN Production[SQLID: 25] i dobio 27476$ naknade u banku.
+(04/08/2020, 05:05:13) Jacob_Leontyev[SQLID: 2226] je radi neaktivnosti izgubio kucu na adresi Mulholland 9[SQLID: 363] i dobio 200000$ naknade u banku.
+(04/08/2020, 05:05:13) Jacob_Leontyev[SQLID: 2226] je radi neaktivnosti izgubio garazu Khawaja[SQLID: 92] i dobio 1$ naknade u banku.
+(04/08/2020, 05:05:13) Jacob_Leontyev[SQLID: 2226] je radi neaktivnosti izgubio Biznis Federal #12[SQLID: 15] i dobio 83178$ naknade u banku.
+(04/08/2020, 05:05:21) Darko_Vikic[SQLID: 4379] je radi neaktivnosti izgubio garazu Glen[SQLID: 119] i dobio 1$ naknade u banku.
+(04/08/2020, 05:05:22) Miguel_Scott[SQLID: 4826] je radi neaktivnosti izgubio kucu na adresi Verona Beach 8[SQLID: 553] i dobio 20000$ naknade u banku.
+(04/08/2020, 05:05:29) Aaron_Bell[SQLID: 6309] je radi neaktivnosti izgubio kucu na adresi Idlewood 21[SQLID: 21] i dobio 20000$ naknade u banku.
+(04/08/2020, 05:05:32) Javier_Rodriguez[SQLID: 6940] je radi neaktivnosti izgubio posao Vehicle Impounder[Job ID:17] i 0 sati ugovora.
+(04/08/2020, 05:05:34) Raymond_Mei[SQLID: 7496] je radi neaktivnosti izgubio posao Cistac ulica[Job ID:1] i 4 sati ugovora.
+(04/08/2020, 05:05:34) Thomas_Johnson[SQLID: 7506] je radi neaktivnosti izgubio posao Tvornicki radnik[Job ID:5] i 3 sati ugovora.
+(04/08/2020, 05:05:35) Eliott_Smith[SQLID: 7525] je radi neaktivnosti izgubio posao Farmer[Job ID:7] i 3 sati ugovora.
+(04/08/2020, 05:05:35) Igo_Malaz[SQLID: 7560] je radi neaktivnosti izgubio posao Drvosjeca[Job ID:14] i 0 sati ugovora.
+(04/08/2020, 05:05:35) Richard_Hills[SQLID: 7561] je radi neaktivnosti izgubio posao Transporter[Job ID:18] i 0 sati ugovora.
+(04/08/2020, 05:05:35) Andrey_Lermontov[SQLID: 7563] je radi neaktivnosti izgubio posao Transporter[Job ID:18] i 0 sati ugovora.
+(05/08/2020, 05:05:00) Daniel_Hardman[SQLID: 24] je radi neaktivnosti izgubio kucu na adresi Temple 18[SQLID: 345] i dobio 20000$ naknade u banku.
+(05/08/2020, 05:05:00) Travis_Palmer[SQLID: 45] je radi neaktivnosti izgubio kucu na adresi Long_Beach_1[SQLID: 383] i dobio 50000$ naknade u banku.
+(05/08/2020, 05:05:00) Travis_Palmer[SQLID: 45] je radi neaktivnosti izgubio garazu Long Beach 1G[SQLID: 114] i dobio 25000$ naknade u banku.
+(05/08/2020, 05:05:00) Travis_Palmer[SQLID: 45] je radi neaktivnosti izgubio Biznis Skybar[SQLID: 181] i dobio 57486$ naknade u banku.
+(05/08/2020, 05:05:01) Lorenzo_Bonelli[SQLID: 315] je radi neaktivnosti izgubio kucu na adresi Richman_2[SQLID: 432] i dobio 250000$ naknade u banku.
+(05/08/2020, 05:05:01) Lorenzo_Bonelli[SQLID: 315] je radi neaktivnosti izgubio Biznis Mosi Mosi 24/7[SQLID: 43] i dobio 20675$ naknade u banku.
+(05/08/2020, 05:05:23) Terry_Williams[SQLID: 6361] je radi neaktivnosti izgubio kucu na adresi Mulholland 5[SQLID: 359] i dobio 123029$ naknade u banku.
+(05/08/2020, 05:05:23) Terry_Williams[SQLID: 6361] je radi neaktivnosti izgubio Biznis Rest. ProbleM[SQLID: 89] i dobio 50667$ naknade u banku.
+(06/08/2020, 05:05:00) Donald_Nixon[SQLID: 21] je radi neaktivnosti izgubio kucu na adresi Richman 22[SQLID: 406] i dobio 250000$ naknade u banku.
+(06/08/2020, 05:05:00) Donald_Nixon[SQLID: 21] je radi neaktivnosti izgubio Biznis Federal Company[SQLID: 204] i dobio 35910$ naknade u banku.
+(06/08/2020, 05:05:05) Stefan_Vladimirov[SQLID: 1488] je radi neaktivnosti izgubio posao Mehanicar[Job ID:3] i 11 sati ugovora.
+(06/08/2020, 05:05:19) William_Nithercott[SQLID: 5492] je radi neaktivnosti izgubio kucu na adresi Flint[SQLID: 615] i dobio 30000$ naknade u banku.
+(06/08/2020, 05:05:19) William_Nithercott[SQLID: 5492] je radi neaktivnosti izgubio garazu County[SQLID: 89] i dobio 15000$ naknade u banku.
+(06/08/2020, 05:05:19) William_Nithercott[SQLID: 5492] je radi neaktivnosti izgubio Biznis County Bar[SQLID: 206] i dobio 28769$ naknade u banku.
+(06/08/2020, 05:05:20) Raymond_Griffins[SQLID: 5694] je radi neaktivnosti izgubio kucu na adresi Mulholland 4[SQLID: 358] i dobio 50000$ naknade u banku.
+(06/08/2020, 05:05:28) Joe_Esperanto[SQLID: 7356] je radi neaktivnosti izgubio posao Farmer[Job ID:7] i 111 sati ugovora.
+(06/08/2020, 05:05:29) Thomas_Johnson[SQLID: 7506] je radi neaktivnosti izgubio posao Farmer[Job ID:7] i 1 sati ugovora.
+(06/08/2020, 05:05:29) Hank_Griffin[SQLID: 7541] je radi neaktivnosti izgubio posao Transporter[Job ID:18] i 3 sati ugovora.
+(07/08/2020, 05:05:07) Lorenzo_Bonelli[SQLID: 315] je radi neaktivnosti izgubio Biznis Mosi Mosi 24/7[SQLID: 43] i dobio 20675$ naknade u banku.
+(07/08/2020, 05:05:10) Damyan_Krasimirov[SQLID: 1163] je radi neaktivnosti izgubio kucu na adresi Temple 24[SQLID: 351] i dobio 15002$ naknade u banku.
+(07/08/2020, 05:05:12) Ramo_Hadzic[SQLID: 1915] je radi neaktivnosti izgubio kucu na adresi Idlewood 56[SQLID: 56] i dobio 50000$ naknade u banku.
+(07/08/2020, 05:05:26) Johnny_Suarez[SQLID: 5425] je radi neaktivnosti izgubio posao Mehanicar[Job ID:3] i 1 sati ugovora.
+(07/08/2020, 05:05:30) Julian_Covarrubias[SQLID: 6381] je radi neaktivnosti izgubio kucu na adresi Temple 8[SQLID: 335] i dobio 10000$ naknade u banku.
+(07/08/2020, 05:05:33) Marcus_Santa[SQLID: 6936] je radi neaktivnosti izgubio posao Transporter[Job ID:18] i 1 sati ugovora.
+(07/08/2020, 05:05:36) Maynard_Davis[SQLID: 7419] je radi neaktivnosti izgubio posao Drvosjeca[Job ID:14] i 1 sati ugovora.
+(07/08/2020, 05:05:36) Donald_Wang[SQLID: 7540] je radi neaktivnosti izgubio posao Cistac ulica[Job ID:1] i 1 sati ugovora.
+(08/08/2020, 05:05:01) Michael_Rogers[SQLID: 74] je radi neaktivnosti izgubio posao Transporter[Job ID:18] i 1 sati ugovora.
+(08/08/2020, 05:05:01) Pablo_Vasquez[SQLID: 98] je radi neaktivnosti izgubio posao Mehanicar[Job ID:3] i 1 sati ugovora.
+(08/08/2020, 05:05:20) Diego_Sombralez[SQLID: 5327] je radi neaktivnosti izgubio kucu na adresi El Corona 4[SQLID: 77] i dobio 50445$ naknade u banku.
+(08/08/2020, 05:05:25) Owen_Harvey[SQLID: 6490] je radi neaktivnosti izgubio posao Mehanicar[Job ID:3] i 0 sati ugovora.
+(08/08/2020, 05:05:26) Radivoje_Trtic[SQLID: 6648] je radi neaktivnosti izgubio kucu na adresi Santa_Maria_606[SQLID: 609] i dobio 150000$ naknade u banku.
+(08/08/2020, 05:05:28) Ivan_Hrushev[SQLID: 7046] je radi neaktivnosti izgubio posao Taksist[Job ID:6] i 16 sati ugovora.
+(09/08/2020, 05:05:02) Earl_Lawson[SQLID: 679] je radi neaktivnosti izgubio kucu na adresi Palomino_Creek_61[SQLID: 519] i dobio 20000$ naknade u banku.
+(09/08/2020, 05:05:02) Earl_Lawson[SQLID: 679] je radi neaktivnosti izgubio Biznis Apps's shop[SQLID: 146] i dobio 34105$ naknade u banku.
+(09/08/2020, 05:05:03) Anthony_Parro[SQLID: 956] je radi neaktivnosti izgubio kucu na adresi Long_Beach_54[SQLID: 491] i dobio 500000$ naknade u banku.
+(09/08/2020, 05:05:03) Anthony_Parro[SQLID: 956] je radi neaktivnosti izgubio Biznis Federal Oil #3[SQLID: 133] i dobio 45227$ naknade u banku.
+(09/08/2020, 05:05:05) Paul_Meadows[SQLID: 1493] je radi neaktivnosti izgubio kucu na adresi Dillimore_17[SQLID: 617] i dobio 20000$ naknade u banku.
+(09/08/2020, 05:05:27) Raheem_Burton[SQLID: 6827] je radi neaktivnosti izgubio posao Mehanicar[Job ID:3] i 2 sati ugovora.
+(09/08/2020, 05:05:28) Marcus_Bonateli[SQLID: 6918] je radi neaktivnosti izgubio posao Mehanicar[Job ID:3] i 1 sati ugovora.
+(10/08/2020, 05:05:00) Martin_Arington[SQLID: 58] je radi neaktivnosti izgubio kucu na adresi Idlewood 53[SQLID: 53] i dobio 50000$ naknade u banku.
+(10/08/2020, 05:05:00) Demetrius_Innes[SQLID: 231] je radi neaktivnosti izgubio kucu na adresi Kale_bb[SQLID: 639] i dobio 250000$ naknade u banku.
+(10/08/2020, 05:05:00) Demetrius_Innes[SQLID: 231] je radi neaktivnosti izgubio garazu Kale bb[SQLID: 141] i dobio 10000$ naknade u banku.
+(10/08/2020, 05:05:00) Demetrius_Innes[SQLID: 231] je radi neaktivnosti izgubio Biznis McCormick 24/7[SQLID: 35] i dobio 45105$ naknade u banku.
+(10/08/2020, 05:05:04) Gregory_Lapan[SQLID: 1160] je radi neaktivnosti izgubio kucu na adresi Las_Colinas_8[SQLID: 489] i dobio 10000$ naknade u banku.
+(10/08/2020, 05:05:05) Valentin_Nawrocki[SQLID: 1538] je radi neaktivnosti izgubio kucu na adresi El Corona 32[SQLID: 105] i dobio 20000$ naknade u banku.
+(10/08/2020, 05:05:19) Craig_Molony[SQLID: 5027] je radi neaktivnosti izgubio kucu na adresi Idlewood_21[SQLID: 378] i dobio 20000$ naknade u banku.
+(10/08/2020, 05:05:29) Samuel_Peterson[SQLID: 7380] je radi neaktivnosti izgubio posao Farmer[Job ID:7] i 96 sati ugovora.
+(10/08/2020, 05:05:30) Jake_Rowen[SQLID: 7577] je radi neaktivnosti izgubio posao Cistac ulica[Job ID:1] i 0 sati ugovora.
+(11/08/2020, 05:05:20) Lavinie_Bello[SQLID: 5406] je radi neaktivnosti izgubio kucu na adresi Dillimore_17[SQLID: 622] i dobio 50000$ naknade u banku.
+(11/08/2020, 05:05:23) Deveron_Hodges[SQLID: 5893] je radi neaktivnosti izgubio kucu na adresi Mulholland 14[SQLID: 368] i dobio 50001$ naknade u banku.
+(11/08/2020, 05:05:23) Deveron_Hodges[SQLID: 5893] je radi neaktivnosti izgubio Biznis Back2Revange[SQLID: 21] i dobio 81131$ naknade u banku.
+(11/08/2020, 05:05:23) Alicia_Macious[SQLID: 5988] je radi neaktivnosti izgubio kucu na adresi Idlewood 16[SQLID: 16] i dobio 15000$ naknade u banku.
+(11/08/2020, 05:05:23) Alicia_Macious[SQLID: 5988] je radi neaktivnosti izgubio Biznis F&F Alicia[SQLID: 30] i dobio 31479$ naknade u banku.
+(11/08/2020, 05:05:30) Landolfo_Solano[SQLID: 7348] je radi neaktivnosti izgubio posao Tvornicki radnik[Job ID:5] i 32 sati ugovora.
+(11/08/2020, 05:05:31) Sem_McFlies[SQLID: 7554] je radi neaktivnosti izgubio posao Farmer[Job ID:7] i 1 sati ugovora.
+(12/08/2020, 05:05:02) Gustavo_Castro[SQLID: 498] je radi neaktivnosti izgubio kucu na adresi Mulholland 13[SQLID: 367] i dobio 300007$ naknade u banku.
+(12/08/2020, 05:05:02) Gustavo_Castro[SQLID: 498] je radi neaktivnosti izgubio Complex Idlewood Complex[SQLID: 7] i dobio 250000$ naknade u banku.
+(12/08/2020, 05:05:02) Gustavo_Castro[SQLID: 498] je radi neaktivnosti izgubio Complex sobu[SQLID: 27].
+(12/08/2020, 05:05:12) Spencer_Waller[SQLID: 3530] je radi neaktivnosti izgubio posao Cistac ulica[Job ID:1] i 5 sati ugovora.
+(12/08/2020, 05:05:22) Mia_Jones[SQLID: 5761] je radi neaktivnosti izgubio kucu na adresi Mulholland_2[SQLID: 337] i dobio 80000$ naknade u banku.
+(12/08/2020, 05:05:22) Mia_Jones[SQLID: 5761] je radi neaktivnosti izgubio Biznis Caffe Bar[SQLID: 16] i dobio 54266$ naknade u banku.
+(13/08/2020, 05:05:01) Luca_Donovan[SQLID: 1] je radi neaktivnosti izgubio kucu na adresi Vinewood_Boulevard_1[SQLID: 557] i dobio 250082$ naknade u banku.
+(13/08/2020, 05:05:01) Luca_Donovan[SQLID: 1] je radi neaktivnosti izgubio garazu Vinewood[SQLID: 57] i dobio 15000$ naknade u banku.
+(13/08/2020, 05:05:01) Luca_Donovan[SQLID: 1] je radi neaktivnosti izgubio Biznis 24-SEVEN[SQLID: 134] i dobio 50372$ naknade u banku.
+(13/08/2020, 05:05:06) Andrea_Bell[SQLID: 1537] je radi neaktivnosti izgubio garazu Mullholand 25[SQLID: 97] i dobio 25000$ naknade u banku.
+(13/08/2020, 05:05:20) Alejandro_Irene[SQLID: 5380] je radi neaktivnosti izgubio kucu na adresi Los Flores 1[SQLID: 271] i dobio 30060$ naknade u banku.
+(13/08/2020, 05:05:20) Pedro_Alonso[SQLID: 5398] je radi neaktivnosti izgubio posao Transporter[Job ID:18] i 1 sati ugovora.
+(13/08/2020, 05:05:30) David_Elizalde[SQLID: 7420] je radi neaktivnosti izgubio kucu na adresi Palomino_Creek_21[SQLID: 522] i dobio 20000$ naknade u banku.
+(13/08/2020, 05:05:30) David_Elizalde[SQLID: 7420] je radi neaktivnosti izgubio garazu Los[SQLID: 145] i dobio 10000$ naknade u banku.
+(14/08/2020, 05:05:02) Ralph_Masotti[SQLID: 658] je radi neaktivnosti izgubio kucu na adresi Richman 14[SQLID: 398] i dobio 500001$ naknade u banku.
+(14/08/2020, 05:05:09) Borivoje_Kalezic[SQLID: 2613] je radi neaktivnosti izgubio kucu na adresi Santa_Maria[SQLID: 10] i dobio 80798$ naknade u banku.
+(14/08/2020, 05:05:09) Borivoje_Kalezic[SQLID: 2613] je radi neaktivnosti izgubio Complex sobu[SQLID: 44].
+(14/08/2020, 05:05:27) Stephen_Frye[SQLID: 6999] je radi neaktivnosti izgubio kucu na adresi Las_Colinas_9[SQLID: 485] i dobio 10000$ naknade u banku.
+(14/08/2020, 05:05:27) Stephen_Frye[SQLID: 6999] je radi neaktivnosti izgubio garazu Los Flores 5[SQLID: 139] i dobio 10000$ naknade u banku.
+(14/08/2020, 05:05:30) Brian_Hunter[SQLID: 7588] je radi neaktivnosti izgubio posao Cistac ulica[Job ID:1] i 0 sati ugovora.
+(14/08/2020, 05:05:30) David_Hunter[SQLID: 7589] je radi neaktivnosti izgubio posao Tvornicki radnik[Job ID:5] i 0 sati ugovora.
+(15/08/2020, 05:05:02) Derek_Watkins[SQLID: 641] je radi neaktivnosti izgubio kucu na adresi Gleen Park 18[SQLID: 568] i dobio 200000$ naknade u banku.
+(15/08/2020, 05:05:02) Derek_Watkins[SQLID: 641] je radi neaktivnosti izgubio Complex sobu[SQLID: 17].
+(15/08/2020, 05:05:03) Daniel_Angeles[SQLID: 693] je radi neaktivnosti izgubio kucu na adresi Globex_Capital[SQLID: 587] i dobio 35000$ naknade u banku.
+(15/08/2020, 05:05:13) Mickey_Fariello[SQLID: 3577] je radi neaktivnosti izgubio kucu na adresi Richman 9[SQLID: 393] i dobio 80000$ naknade u banku.
+(15/08/2020, 05:05:13) Mickey_Fariello[SQLID: 3577] je radi neaktivnosti izgubio garazu Richman 9G[SQLID: 123] i dobio 25000$ naknade u banku.
+(15/08/2020, 05:05:20) Donald_Andretta[SQLID: 5343] je radi neaktivnosti izgubio kucu na adresi China_Town_2[SQLID: 604] i dobio 70000$ naknade u banku.
+(15/08/2020, 05:05:20) Donald_Andretta[SQLID: 5343] je radi neaktivnosti izgubio garazu China Town 5[SQLID: 137] i dobio 10000$ naknade u banku.
+(15/08/2020, 05:05:31) Alex_Drew[SQLID: 7578] je radi neaktivnosti izgubio kucu na adresi Vinewood_47[SQLID: 541] i dobio 1$ naknade u banku.
+(15/08/2020, 05:05:31) David_Hunter[SQLID: 7589] je radi neaktivnosti izgubio posao Transporter[Job ID:18] i 1 sati ugovora.
+(15/08/2020, 05:05:31) Jordyn_Pearce[SQLID: 7590] je radi neaktivnosti izgubio posao Cistac ulica[Job ID:1] i 2 sati ugovora.
+(16/08/2020, 05:05:22) Noah_Willson[SQLID: 5017] je radi neaktivnosti izgubio kucu na adresi Temple 13[SQLID: 340] i dobio 20044$ naknade u banku.
+(16/08/2020, 05:05:22) Noah_Willson[SQLID: 5017] je radi neaktivnosti izgubio Biznis Sport Cafe ROMA[SQLID: 136] i dobio 23857$ naknade u banku.
+(16/08/2020, 05:05:34) Steve_Vercetti[SQLID: 7505] je radi neaktivnosti izgubio posao Farmer[Job ID:7] i 1 sati ugovora.
+(16/08/2020, 05:05:35) Jamaal_Pope[SQLID: 7557] je radi neaktivnosti izgubio posao Farmer[Job ID:7] i 0 sati ugovora.
+(16/08/2020, 05:05:35) Anthony_Scaletta[SQLID: 7595] je radi neaktivnosti izgubio posao Smetlar[Job ID:16] i 0 sati ugovora.
+(17/08/2020, 05:05:04) Ralph_Masotti[SQLID: 658] je radi neaktivnosti izgubio kucu na adresi Richman 14[SQLID: 398] i dobio 500001$ naknade u banku.
+(17/08/2020, 05:05:04) Bianca_Richester[SQLID: 702] je radi neaktivnosti izgubio Biznis Green Door 174[SQLID: 176] i dobio 28190$ naknade u banku.
+(17/08/2020, 05:05:04) Bianca_Richester[SQLID: 702] je radi neaktivnosti izgubio Complex sobu[SQLID: 28].
+(17/08/2020, 05:05:05) Mark_Nieder[SQLID: 1013] je radi neaktivnosti izgubio kucu na adresi East Los Santos 30[SQLID: 535] i dobio 35044$ naknade u banku.
+(17/08/2020, 05:05:05) Mark_Nieder[SQLID: 1013] je radi neaktivnosti izgubio Biznis Punk Bar[SQLID: 101] i dobio 40354$ naknade u banku.
+(17/08/2020, 05:05:05) Victor_Merlowitz[SQLID: 1028] je radi neaktivnosti izgubio kucu na adresi Mulholland 22[SQLID: 376] i dobio 2500001$ naknade u banku.
+(17/08/2020, 05:05:05) Victor_Merlowitz[SQLID: 1028] je radi neaktivnosti izgubio Biznis Baldwin's PUB[SQLID: 163] i dobio 57893$ naknade u banku.
+(17/08/2020, 05:05:07) Kevyon_Matthews[SQLID: 1614] je radi neaktivnosti izgubio kucu na adresi Jefferson 5[SQLID: 181] i dobio 50000$ naknade u banku.
+(17/08/2020, 05:05:17) Marco_Alfonse[SQLID: 4340] je radi neaktivnosti izgubio Complex sobu[SQLID: 10].
+(17/08/2020, 05:05:23) Javier_Toro[SQLID: 5649] je radi neaktivnosti izgubio posao Car Jacker[Job ID:13] i 44 sati ugovora.
+(17/08/2020, 05:05:29) Nikolaj_Zajcev[SQLID: 7048] je radi neaktivnosti izgubio kucu na adresi Los Flores 1[SQLID: 241] i dobio 20000$ naknade u banku.
+(17/08/2020, 05:05:29) Nikolaj_Zajcev[SQLID: 7048] je radi neaktivnosti izgubio Biznis Little Russia[SQLID: 209] i dobio 55543$ naknade u banku.
+(17/08/2020, 05:05:31) Leroy_Williams[SQLID: 7465] je radi neaktivnosti izgubio Complex sobu[SQLID: 2].
+(17/08/2020, 05:05:31) Erik_East[SQLID: 7469] je radi neaktivnosti izgubio Complex sobu[SQLID: 1].
+(18/08/2020, 05:05:03) Timothy_Grayson[SQLID: 61] je radi neaktivnosti izgubio Biznis Federal Oil #8[SQLID: 61] i dobio 70308$ naknade u banku.
+(18/08/2020, 05:05:20) Brian_Jackson[SQLID: 4615] je radi neaktivnosti izgubio kucu na adresi Ganton[SQLID: 620] i dobio 30000$ naknade u banku.
+(18/08/2020, 05:05:26) Deveron_Hodges[SQLID: 5893] je radi neaktivnosti izgubio kucu na adresi Mulholland 14[SQLID: 368] i dobio 50001$ naknade u banku.
+(18/08/2020, 05:05:26) Deveron_Hodges[SQLID: 5893] je radi neaktivnosti izgubio Biznis Back2Revange[SQLID: 21] i dobio 81131$ naknade u banku.
+(18/08/2020, 05:05:27) Steve_Wozariah[SQLID: 6046] je radi neaktivnosti izgubio kucu na adresi Los Flores 1[SQLID: 270] i dobio 45000$ naknade u banku.
+(18/08/2020, 05:05:35) Raymond_Mei[SQLID: 7496] je radi neaktivnosti izgubio posao Cistac ulica[Job ID:1] i 0 sati ugovora.
+(18/08/2020, 05:05:35) Dwayne_Williams[SQLID: 7599] je radi neaktivnosti izgubio posao Transporter[Job ID:18] i 0 sati ugovora.
+(19/08/2020, 05:05:12) Raphael_Vercetti[SQLID: 1074] je radi neaktivnosti izgubio kucu na adresi Willowfield 10[SQLID: 153] i dobio 25000$ naknade u banku.
+(19/08/2020, 05:05:12) Raphael_Vercetti[SQLID: 1074] je radi neaktivnosti izgubio garazu SMB 3[SQLID: 136] i dobio 15000$ naknade u banku.
+(19/08/2020, 05:05:12) Raphael_Vercetti[SQLID: 1074] je radi neaktivnosti izgubio Biznis SAVOIA[SQLID: 182] i dobio 31512$ naknade u banku.
+(19/08/2020, 05:05:12) Stefan_Babic[SQLID: 1118] je radi neaktivnosti izgubio kucu na adresi Marina_17[SQLID: 280] i dobio 32044$ naknade u banku.
+(19/08/2020, 05:05:13) Brian_Callahan[SQLID: 1340] je radi neaktivnosti izgubio kucu na adresi Willowfield 1[SQLID: 144] i dobio 30000$ naknade u banku.
+(19/08/2020, 05:05:30) Monaldo_Fazzari[SQLID: 5720] je radi neaktivnosti izgubio kucu na adresi Marina_55[SQLID: 605] i dobio 20000$ naknade u banku.
+(19/08/2020, 05:05:39) Raymond_Mei[SQLID: 7496] je radi neaktivnosti izgubio posao Transporter[Job ID:18] i 0 sati ugovora.
+(19/08/2020, 05:05:39) Robert_Caufman[SQLID: 7610] je radi neaktivnosti izgubio posao Cistac ulica[Job ID:1] i 0 sati ugovora.
+(20/08/2020, 05:05:02) Vukasin_Milovanovic[SQLID: 374] je radi neaktivnosti izgubio kucu na adresi Temple_47[SQLID: 356] i dobio 82695$ naknade u banku.
+(20/08/2020, 05:05:03) Paul_Smith[SQLID: 750] je radi neaktivnosti izgubio kucu na adresi Richman 20[SQLID: 403] i dobio 120000$ naknade u banku.
+(20/08/2020, 05:05:03) Paul_Smith[SQLID: 750] je radi neaktivnosti izgubio garazu Richman 20[SQLID: 81] i dobio 20000$ naknade u banku.
+(20/08/2020, 05:05:11) Andrew_Williams[SQLID: 3107] je radi neaktivnosti izgubio kucu na adresi Dillimore_61[SQLID: 602] i dobio 35000$ naknade u banku.
+(20/08/2020, 05:05:11) Andrew_Williams[SQLID: 3107] je radi neaktivnosti izgubio garazu Mullholand[SQLID: 40] i dobio 10000$ naknade u banku.
+(20/08/2020, 05:05:28) Tony_Griffin[SQLID: 6972] je radi neaktivnosti izgubio kucu na adresi Idlewood 15[SQLID: 15] i dobio 15004$ naknade u banku.
+(21/08/2020, 05:05:00) Jason_Raley[SQLID: 102] je radi neaktivnosti izgubio kucu na adresi Jefferson_81[SQLID: 472] i dobio 50000$ naknade u banku.
+(21/08/2020, 05:05:00) Andre_Steinke[SQLID: 111] je radi neaktivnosti izgubio kucu na adresi Jefferson 26[SQLID: 202] i dobio 50000$ naknade u banku.
+(21/08/2020, 05:05:00) Andre_Steinke[SQLID: 111] je radi neaktivnosti izgubio garazu Jefferson[SQLID: 85] i dobio 10000$ naknade u banku.
+(21/08/2020, 05:05:00) Thomas_Gerbel[SQLID: 120] je radi neaktivnosti izgubio kucu na adresi Los Flores 1[SQLID: 272] i dobio 30304$ naknade u banku.
+(21/08/2020, 05:05:00) Thomas_Gerbel[SQLID: 120] je radi neaktivnosti izgubio Biznis PECKERWOOD[SQLID: 71] i dobio 35000$ naknade u banku.
+(21/08/2020, 05:05:03) Ronald_Davison[SQLID: 1000] je radi neaktivnosti izgubio kucu na adresi Red_County_25[SQLID: 246] i dobio 29000$ naknade u banku.
+(21/08/2020, 05:05:05) Thomas_Feung[SQLID: 1615] je radi neaktivnosti izgubio Biznis Federal Oil #10[SQLID: 14] i dobio 3779$ naknade u banku.
+(21/08/2020, 05:05:05) Thomas_Feung[SQLID: 1615] je radi neaktivnosti izgubio Complex Federal Oil[SQLID: 3] i dobio 250000$ naknade u banku.
+(21/08/2020, 05:05:06) Anthony_Vendetti[SQLID: 1886] je radi neaktivnosti izgubio Biznis La Piacere Bar[SQLID: 145] i dobio 50874$ naknade u banku.
+(21/08/2020, 05:05:20) Anatolij_Novikov[SQLID: 5412] je radi neaktivnosti izgubio kucu na adresi Ganton 29[SQLID: 140] i dobio 30049$ naknade u banku.
+(21/08/2020, 05:05:21) Vuk_Koprivica[SQLID: 5746] je radi neaktivnosti izgubio kucu na adresi Marina_15B[SQLID: 346] i dobio 20000$ naknade u banku.
+(21/08/2020, 05:05:22) Deveron_Hodges[SQLID: 5893] je radi neaktivnosti izgubio kucu na adresi Mulholland 14[SQLID: 368] i dobio 50001$ naknade u banku.
+(21/08/2020, 05:05:22) Deveron_Hodges[SQLID: 5893] je radi neaktivnosti izgubio Biznis Back2Revange[SQLID: 21] i dobio 81712$ naknade u banku.
+(21/08/2020, 05:05:26) Jameson_Whistler[SQLID: 6840] je radi neaktivnosti izgubio posao Mehanicar[Job ID:3] i 0 sati ugovora.
+(21/08/2020, 05:05:27) Dantrell_Brooks[SQLID: 6991] je radi neaktivnosti izgubio Complex sobu[SQLID: 37].
+(21/08/2020, 05:05:29) Oscar_Willson[SQLID: 7444] je radi neaktivnosti izgubio kucu na adresi Idlewood_50[SQLID: 577] i dobio 35000$ naknade u banku.
+(22/08/2020, 05:05:04) Ronnie_Inman[SQLID: 199] je radi neaktivnosti izgubio Complex sobu[SQLID: 18].
+(22/08/2020, 05:05:08) Conor_Lyons[SQLID: 1238] je radi neaktivnosti izgubio kucu na adresi Mulholland 11[SQLID: 365] i dobio 250033$ naknade u banku.
+(22/08/2020, 05:05:08) Conor_Lyons[SQLID: 1238] je radi neaktivnosti izgubio Biznis Balanced Shop[SQLID: 63] i dobio 50800$ naknade u banku.
+(22/08/2020, 05:05:26) Deveron_Hodges[SQLID: 5893] je radi neaktivnosti izgubio kucu na adresi Mulholland 14[SQLID: 368] i dobio 50001$ naknade u banku.
+(22/08/2020, 05:05:26) Deveron_Hodges[SQLID: 5893] je radi neaktivnosti izgubio Biznis Back2Revange[SQLID: 21] i dobio 81712$ naknade u banku.
+(22/08/2020, 05:05:35) Richard_Nelson[SQLID: 7633] je radi neaktivnosti izgubio posao Cistac ulica[Job ID:1] i 0 sati ugovora.
+(23/08/2020, 05:05:03) Harry_Gemas[SQLID: 561] je radi neaktivnosti izgubio kucu na adresi Downtown_74[SQLID: 43] i dobio 50000$ naknade u banku.
+(23/08/2020, 05:05:03) Harry_Gemas[SQLID: 561] je radi neaktivnosti izgubio garazu Ocean Docks 4[SQLID: 98] i dobio 10000$ naknade u banku.
+(23/08/2020, 05:05:03) Harry_Gemas[SQLID: 561] je radi neaktivnosti izgubio Biznis Cuba Libre[SQLID: 74] i dobio 21225$ naknade u banku.
+(23/08/2020, 05:05:03) Paul_Smith[SQLID: 750] je radi neaktivnosti izgubio kucu na adresi Richman 20[SQLID: 403] i dobio 120000$ naknade u banku.
+(23/08/2020, 05:05:03) Paul_Smith[SQLID: 750] je radi neaktivnosti izgubio garazu Richman 20[SQLID: 81] i dobio 20000$ naknade u banku.
+(23/08/2020, 05:05:18) Dwayne_Hightower[SQLID: 4532] je radi neaktivnosti izgubio kucu na adresi Richman 6[SQLID: 390] i dobio 50000$ naknade u banku.
+(23/08/2020, 05:05:18) Dwayne_Hightower[SQLID: 4532] je radi neaktivnosti izgubio Biznis Federal #14[SQLID: 119] i dobio 68318$ naknade u banku.
+(23/08/2020, 05:05:23) Hans_Schwammberger[SQLID: 5628] je radi neaktivnosti izgubio kucu na adresi Mulholland 7[SQLID: 361] i dobio 1$ naknade u banku.
+(23/08/2020, 05:05:23) Hans_Schwammberger[SQLID: 5628] je radi neaktivnosti izgubio Biznis London[SQLID: 20] i dobio 31969$ naknade u banku.
+(23/08/2020, 05:05:31) Rick_Colorado[SQLID: 7185] je radi neaktivnosti izgubio garazu Mulholland 1[SQLID: 140] i dobio 10000$ naknade u banku.
+(24/08/2020, 05:05:08) Anna_Weets[SQLID: 2048] je radi neaktivnosti izgubio kucu na adresi Idlewood 6[SQLID: 6] i dobio 15000$ naknade u banku.
+(24/08/2020, 05:05:31) James_Cox[SQLID: 7586] je radi neaktivnosti izgubio posao Farmer[Job ID:7] i 3 sati ugovora.
+(25/08/2020, 05:05:01) Conan_Flenory[SQLID: 31] je radi neaktivnosti izgubio kucu na adresi Mulholland 1[SQLID: 355] i dobio 100000$ naknade u banku.
+(25/08/2020, 05:05:30) Landolfo_Solano[SQLID: 7348] je radi neaktivnosti izgubio posao Mehanicar[Job ID:3] i 1 sati ugovora.
+(25/08/2020, 05:05:30) Joe_Esperanto[SQLID: 7356] je radi neaktivnosti izgubio posao Transporter[Job ID:18] i 0 sati ugovora.
+(25/08/2020, 05:05:32) East_McWilliams[SQLID: 7644] je radi neaktivnosti izgubio posao Transporter[Job ID:18] i 0 sati ugovora.
+(25/08/2020, 05:05:32) Smith_Johnson[SQLID: 7648] je radi neaktivnosti izgubio posao Cistac ulica[Job ID:1] i 1 sati ugovora.
+(25/08/2020, 05:05:32) Matthew_Wright[SQLID: 7649] je radi neaktivnosti izgubio posao Transporter[Job ID:18] i 0 sati ugovora.
+(25/08/2020, 05:05:32) Mark_Hillson[SQLID: 7653] je radi neaktivnosti izgubio posao Cistac ulica[Job ID:1] i 1 sati ugovora.
+(26/08/2020, 05:05:05) Daniel_Williamson[SQLID: 48] je radi neaktivnosti izgubio posao Transporter[Job ID:18] i 1 sati ugovora.
+(26/08/2020, 05:05:05) Daniel_Williamson[SQLID: 48] je radi neaktivnosti izgubio Biznis GALVANIZE 69[SQLID: 109] i dobio 90172$ naknade u banku.
+(26/08/2020, 05:05:32) Jameson_Whistler[SQLID: 6840] je radi neaktivnosti izgubio posao Mehanicar[Job ID:3] i 1 sati ugovora.
+(27/08/2020, 05:05:02) Raymond_Belante[SQLID: 366] je radi neaktivnosti izgubio kucu na adresi Idlewood 58[SQLID: 58] i dobio 50000$ naknade u banku.
+(27/08/2020, 05:05:16) Andrew_Martinez[SQLID: 4067] je radi neaktivnosti izgubio kucu na adresi Jefferson 38[SQLID: 214] i dobio 50000$ naknade u banku.
+(27/08/2020, 05:05:32) Jake_Sanders[SQLID: 7664] je radi neaktivnosti izgubio posao Transporter[Job ID:18] i 0 sati ugovora.
+(28/08/2020, 05:05:04) Michael_Rogers[SQLID: 74] je radi neaktivnosti izgubio Biznis Rogers GS[SQLID: 36] i dobio 113335$ naknade u banku.
+(28/08/2020, 05:05:04) Pablo_Vasquez[SQLID: 98] je radi neaktivnosti izgubio kucu na adresi Richman 7[SQLID: 391] i dobio 80000$ naknade u banku.
+(28/08/2020, 05:05:04) Pablo_Vasquez[SQLID: 98] je radi neaktivnosti izgubio garazu Richman 7[SQLID: 45] i dobio 10000$ naknade u banku.
+(28/08/2020, 05:05:04) Pablo_Vasquez[SQLID: 98] je radi neaktivnosti izgubio Biznis Commerce 24/7[SQLID: 38] i dobio 31595$ naknade u banku.
+(28/08/2020, 05:05:34) Leroy_Williams[SQLID: 7465] je radi neaktivnosti izgubio Complex sobu[SQLID: 1].
+(28/08/2020, 05:05:35) Voldoya_Sebarashin[SQLID: 7676] je radi neaktivnosti izgubio posao Tvornicki radnik[Job ID:5] i 0 sati ugovora.
+(28/08/2020, 05:05:35) Lamar_Harrison[SQLID: 7678] je radi neaktivnosti izgubio posao Smetlar[Job ID:16] i 0 sati ugovora.
+(28/08/2020, 05:05:35) Tom_Caprini[SQLID: 7679] je radi neaktivnosti izgubio posao Transporter[Job ID:18] i 0 sati ugovora.
+(29/08/2020, 05:05:00) Antonino_Accardo[SQLID: 27] je radi neaktivnosti izgubio Biznis TABOO disco[SQLID: 110] i dobio 50378$ naknade u banku.
+(29/08/2020, 05:05:02) Paul_Smith[SQLID: 750] je radi neaktivnosti izgubio kucu na adresi Richman 20[SQLID: 403] i dobio 120000$ naknade u banku.
+(29/08/2020, 05:05:02) Paul_Smith[SQLID: 750] je radi neaktivnosti izgubio garazu Richman 20[SQLID: 81] i dobio 20000$ naknade u banku.
+(29/08/2020, 05:05:31) Eliyahu_Yahusheba[SQLID: 7608] je radi neaktivnosti izgubio posao Cistac ulica[Job ID:1] i 3 sati ugovora.
+(30/08/2020, 05:05:22) Lamont_Powell[SQLID: 5764] je radi neaktivnosti izgubio Biznis Night Club[SQLID: 216] i dobio 35000$ naknade u banku.
+(30/08/2020, 05:05:30) Jacob_Perry[SQLID: 7390] je radi neaktivnosti izgubio posao Cistac ulica[Job ID:1] i 0 sati ugovora.
+(30/08/2020, 05:05:31) Cyrus_Jacobson[SQLID: 7696] je radi neaktivnosti izgubio posao Transporter[Job ID:18] i 0 sati ugovora.
+(01/09/2020, 05:05:31) Edward_Burgess[SQLID: 657] je radi neaktivnosti izgubio kucu na adresi Richman 23[SQLID: 407] i dobio 250002$ naknade u banku.
+(01/09/2020, 05:05:31) Edward_Burgess[SQLID: 657] je radi neaktivnosti izgubio Biznis N O X Nightclub[SQLID: 112] i dobio 14217$ naknade u banku.
+(01/09/2020, 05:05:31) Owen_Culkin[SQLID: 199] je radi neaktivnosti izgubio kucu na adresi Willowfield 10[SQLID: 153] i dobio 25000$ naknade u banku.
+(01/09/2020, 05:05:31) Joe_Cresswell[SQLID: 388] je radi neaktivnosti izgubio kucu na adresi Hilltop_1[SQLID: 486] i dobio 150000$ naknade u banku.
+(01/09/2020, 05:05:32) Homero_Estevez[SQLID: 429] je radi neaktivnosti izgubio kucu na adresi Idlewood 70[SQLID: 70] i dobio 35073$ naknade u banku.
+(01/09/2020, 05:05:32) Aaron_Schaffner[SQLID: 1435] je radi neaktivnosti izgubio kucu na adresi Mulholland 345[SQLID: 342] i dobio 250000$ naknade u banku.
+(01/09/2020, 05:05:32) Gabriel_Hammond[SQLID: 1142] je radi neaktivnosti izgubio kucu na adresi Mulholland 16[SQLID: 370] i dobio 80001$ naknade u banku.
+(01/09/2020, 05:05:32) Gabriel_Hammond[SQLID: 1142] je radi neaktivnosti izgubio garazu Mullholand[SQLID: 67] i dobio 10000$ naknade u banku.
+(01/09/2020, 05:05:32) Gabriel_Hammond[SQLID: 1142] je radi neaktivnosti izgubio Biznis Casablanca[SQLID: 18] i dobio 46655$ naknade u banku.
+(01/09/2020, 05:05:33) Michael_Langford[SQLID: 895] je radi neaktivnosti izgubio kucu na adresi Blueberry_20[SQLID: 591] i dobio 20000$ naknade u banku.
+(01/09/2020, 05:05:36) Travis_Bennet[SQLID: 42] je radi neaktivnosti izgubio kucu na adresi East Beach 1[SQLID: 492] i dobio 80148$ naknade u banku.
+(01/09/2020, 05:05:36) Travis_Bennet[SQLID: 42] je radi neaktivnosti izgubio garazu Long Beach 8[SQLID: 128] i dobio 20000$ naknade u banku.
+(01/09/2020, 05:05:36) Dennis_Lewis[SQLID: 4995] je radi neaktivnosti izgubio kucu na adresi San_Fierro_1[SQLID: 628] i dobio 20000$ naknade u banku.
+(01/09/2020, 05:05:36) Brandon_Vercetti[SQLID: 193] je radi neaktivnosti izgubio Biznis Vezuvio[SQLID: 139] i dobio 31735$ naknade u banku.
+(01/09/2020, 05:05:37) Christian_Manco[SQLID: 5318] je radi neaktivnosti izgubio Complex sobu[SQLID: 15].
+(01/09/2020, 05:05:38) Antonino_Accardo[SQLID: 27] je radi neaktivnosti izgubio kucu na adresi Temple 8[SQLID: 335] i dobio 10000$ naknade u banku.
+(01/09/2020, 05:05:38) Antonino_Accardo[SQLID: 27] je radi neaktivnosti izgubio Biznis TABOO disco[SQLID: 110] i dobio 50003$ naknade u banku.
+(01/09/2020, 05:05:38) Mitchell_Bacot[SQLID: 5500] je radi neaktivnosti izgubio kucu na adresi El Corona 26[SQLID: 99] i dobio 50000$ naknade u banku.
+(01/09/2020, 05:05:38) Mitchell_Bacot[SQLID: 5500] je radi neaktivnosti izgubio garazu ElCorona26[SQLID: 149] i dobio 10000$ naknade u banku.
+(01/09/2020, 05:05:38) Issach_Briggs[SQLID: 5649] je radi neaktivnosti izgubio kucu na adresi Downtown_LS_7[SQLID: 80] i dobio 25053$ naknade u banku.
+(01/09/2020, 05:05:39) Carson_Oneil[SQLID: 5720] je radi neaktivnosti izgubio kucu na adresi Marina_15B[SQLID: 346] i dobio 20000$ naknade u banku.
+(01/09/2020, 05:05:39) Lada_Zakhaev[SQLID: 5914] je radi neaktivnosti izgubio kucu na adresi SAGOP[SQLID: 448] i dobio 35000$ naknade u banku.
+(01/09/2020, 05:05:40) Nicholas_Hall[SQLID: 6191] je radi neaktivnosti izgubio kucu na adresi Marina[SQLID: 504] i dobio 20207$ naknade u banku.
+(01/09/2020, 05:05:40) Nicholas_Hall[SQLID: 6191] je radi neaktivnosti izgubio Biznis Molly's Bar[SQLID: 125] i dobio 51897$ naknade u banku.
+(01/09/2020, 05:05:41) Jeffrey_Vaughn[SQLID: 6326] je radi neaktivnosti izgubio kucu na adresi Los Flores 1[SQLID: 244] i dobio 20000$ naknade u banku.
+(01/09/2020, 05:05:44) Pablo_Buarda[SQLID: 7241] je radi neaktivnosti izgubio kucu na adresi El Corona 9[SQLID: 82] i dobio 30000$ naknade u banku.
+(01/09/2020, 05:05:44) Pablo_Buarda[SQLID: 7241] je radi neaktivnosti izgubio Biznis Slaughterhouse[SQLID: 98] i dobio 33538$ naknade u banku.
+(01/09/2020, 05:05:45) Dado_Radulovic[SQLID: 7697] je radi neaktivnosti izgubio Complex sobu[SQLID: 32].
+(02/09/2020, 05:05:02) Michael_Langford[SQLID: 895] je radi neaktivnosti izgubio posao Mehanicar[Job ID:3] i 12 sati ugovora.
+(02/09/2020, 05:05:03) Quantell_Mills[SQLID: 998] je radi neaktivnosti izgubio posao Vehicle Impounder[Job ID:17] i 7 sati ugovora.
+(02/09/2020, 05:05:12) Jason_Pruitt[SQLID: 3421] je radi neaktivnosti izgubio posao Transporter[Job ID:18] i 32 sati ugovora.
+(02/09/2020, 05:05:20) Leroy_Hampton[SQLID: 5467] je radi neaktivnosti izgubio posao Farmer[Job ID:7] i 8 sati ugovora.
+(02/09/2020, 05:05:30) Artur_Mirnov[SQLID: 7391] je radi neaktivnosti izgubio posao Mehanicar[Job ID:3] i 10 sati ugovora.
+(02/09/2020, 05:05:30) Oleg_Levitsky[SQLID: 7392] je radi neaktivnosti izgubio posao Taksist[Job ID:6] i 2 sati ugovora.
+(02/09/2020, 05:05:30) Stanislav_Moglievich[SQLID: 7421] je radi neaktivnosti izgubio posao Transporter[Job ID:18] i 12 sati ugovora.
+(02/09/2020, 05:05:30) Maximillian_Schnider[SQLID: 7497] je radi neaktivnosti izgubio posao Transporter[Job ID:18] i 15 sati ugovora.
+(02/09/2020, 05:05:30) Steve_Vercetti[SQLID: 7505] je radi neaktivnosti izgubio posao Farmer[Job ID:7] i 3 sati ugovora.
+(02/09/2020, 05:05:30) Thomas_Johnson[SQLID: 7506] je radi neaktivnosti izgubio posao Farmer[Job ID:7] i 4 sati ugovora.
+(02/09/2020, 05:05:31) Felton_Shelby[SQLID: 7572] je radi neaktivnosti izgubio posao Transporter[Job ID:18] i 5 sati ugovora.
+(02/09/2020, 05:05:31) Teyo_Munoz[SQLID: 7574] je radi neaktivnosti izgubio posao Transporter[Job ID:18] i 3 sati ugovora.
+(02/09/2020, 05:05:31) Jordyn_Pearce[SQLID: 7590] je radi neaktivnosti izgubio posao Cistac ulica[Job ID:1] i 2 sati ugovora.
+(02/09/2020, 05:05:31) Nicholas_Manchini[SQLID: 7611] je radi neaktivnosti izgubio posao Cistac ulica[Job ID:1] i 3 sati ugovora.
+(02/09/2020, 05:05:31) Richard_Nelson[SQLID: 7633] je radi neaktivnosti izgubio posao Farmer[Job ID:7] i 1 sati ugovora.
+(03/09/2020, 05:05:15) Diego_Molinero[SQLID: 3850] je radi neaktivnosti izgubio posao Mehanicar[Job ID:3] i 202 sati ugovora.
+(03/09/2020, 05:05:22) Juan_Esteban[SQLID: 5414] je radi neaktivnosti izgubio Biznis Punk Bar[SQLID: 101] i dobio 25089$ naknade u banku.
+(03/09/2020, 05:05:33) Alphonse_Capone[SQLID: 7717] je radi neaktivnosti izgubio posao Cistac ulica[Job ID:1] i 0 sati ugovora.
+(04/09/2020, 05:05:36) Richard_Hoffman[SQLID: 7719] je radi neaktivnosti izgubio posao Farmer[Job ID:7] i 1 sati ugovora.
+(05/09/2020, 05:05:00) Hunter_Kang[SQLID: 96] je radi neaktivnosti izgubio posao Nepoznato[Job ID:9] i 40 sati ugovora.
+(05/09/2020, 05:05:20) Johnny_Suarez[SQLID: 5425] je radi neaktivnosti izgubio posao Mehanicar[Job ID:3] i 0 sati ugovora.
+(05/09/2020, 05:05:23) Frankie_Moltisanti[SQLID: 6116] je radi neaktivnosti izgubio posao Cistac ulica[Job ID:1] i 0 sati ugovora.
+(05/09/2020, 05:05:25) Pablo_Moretti[SQLID: 6473] je radi neaktivnosti izgubio posao Transporter[Job ID:18] i 11 sati ugovora.
+(05/09/2020, 05:05:31) John_Costaneli[SQLID: 7647] je radi neaktivnosti izgubio posao Transporter[Job ID:18] i 4 sati ugovora.
+(05/09/2020, 05:05:31) Mark_Hillson[SQLID: 7653] je radi neaktivnosti izgubio posao Cistac ulica[Job ID:1] i 2 sati ugovora.
+(05/09/2020, 05:05:31) Uros_Lukic[SQLID: 7655] je radi neaktivnosti izgubio posao Cistac ulica[Job ID:1] i 2 sati ugovora.
+(05/09/2020, 05:05:31) Chester_Grant[SQLID: 7734] je radi neaktivnosti izgubio posao Farmer[Job ID:7] i 1 sati ugovora.
+(06/09/2020, 05:05:16) Ron_Fairburn[SQLID: 4435] je radi neaktivnosti izgubio posao Nepoznato[Job ID:9] i 1 sati ugovora.
+(06/09/2020, 05:05:24) Tobey_Wilcox[SQLID: 6155] je radi neaktivnosti izgubio posao Transporter[Job ID:18] i 0 sati ugovora.
+(06/09/2020, 05:05:26) Thomas_McFlies[SQLID: 6666] je radi neaktivnosti izgubio posao Mehanicar[Job ID:3] i 0 sati ugovora.
+(06/09/2020, 05:05:29) George_Kissinger[SQLID: 7380] je radi neaktivnosti izgubio posao Tvornicki radnik[Job ID:5] i 8 sati ugovora.
+(06/09/2020, 05:05:31) Tray_Shakur[SQLID: 7728] je radi neaktivnosti izgubio Complex sobu[SQLID: 6].
+(06/09/2020, 05:05:31) Arthur_Vanhook[SQLID: 7737] je radi neaktivnosti izgubio posao Transporter[Job ID:18] i 1 sati ugovora.
+(07/09/2020, 05:05:07) Theodor_Weiss[SQLID: 702] je radi neaktivnosti izgubio kucu na adresi Downtown_LS_7[SQLID: 80] i dobio 25053$ naknade u banku.
+(07/09/2020, 05:05:20) Carlos_Martinez[SQLID: 3961] je radi neaktivnosti izgubio posao Mehanicar[Job ID:3] i 6 sati ugovora.
+(07/09/2020, 05:05:37) Vadim_Tarasov[SQLID: 7645] je radi neaktivnosti izgubio posao Mehanicar[Job ID:3] i 3 sati ugovora.
+(08/09/2020, 05:05:16) Vladimir_Abramovich[SQLID: 4515] je radi neaktivnosti izgubio posao Transporter[Job ID:18] i 74 sati ugovora.
+(08/09/2020, 05:05:32) Jack_Mandez[SQLID: 7746] je radi neaktivnosti izgubio posao Cistac ulica[Job ID:1] i 0 sati ugovora.
+(09/09/2020, 05:05:06) Thomas_Feung[SQLID: 1615] je radi neaktivnosti izgubio kucu na adresi Mulholland 10[SQLID: 364] i dobio 250031$ naknade u banku.
+(09/09/2020, 05:05:20) Arthur_Norman[SQLID: 5589] je radi neaktivnosti izgubio posao Vehicle Impounder[Job ID:17] i 7 sati ugovora.
+(09/09/2020, 05:05:27) Pablo_Buarda[SQLID: 7241] je radi neaktivnosti izgubio posao Farmer[Job ID:7] i 22 sati ugovora.
+(09/09/2020, 05:05:29) Vladimir_Tyloscenko[SQLID: 7617] je radi neaktivnosti izgubio posao Farmer[Job ID:7] i 2 sati ugovora.
+(09/09/2020, 05:05:30) Dado_Radulovic[SQLID: 7697] je radi neaktivnosti izgubio posao Tvornicki radnik[Job ID:5] i 4 sati ugovora.
+(10/09/2020, 05:05:05) Emilio_Galvez[SQLID: 1295] je radi neaktivnosti izgubio posao Mehanicar[Job ID:3] i 0 sati ugovora.
+(10/09/2020, 05:05:12) Finch_Newberry[SQLID: 3401] je radi neaktivnosti izgubio kucu na adresi Los_Flores_77[SQLID: 634] i dobio 20000$ naknade u banku.
+(10/09/2020, 05:05:16) Donald_Memphis[SQLID: 4299] je radi neaktivnosti izgubio posao Transporter[Job ID:18] i 0 sati ugovora.
+(10/09/2020, 05:05:27) Wilco_Hughes[SQLID: 6770] je radi neaktivnosti izgubio posao Transporter[Job ID:18] i 0 sati ugovora.
+(10/09/2020, 05:05:32) Tomek_Broczykovski[SQLID: 7687] je radi neaktivnosti izgubio posao Transporter[Job ID:18] i 23 sati ugovora.
+(10/09/2020, 05:05:32) Matthew_Willson[SQLID: 7752] je radi neaktivnosti izgubio posao Transporter[Job ID:18] i 0 sati ugovora.
+(10/09/2020, 05:05:32) Gianni_Bufalino[SQLID: 7756] je radi neaktivnosti izgubio posao Transporter[Job ID:18] i 1 sati ugovora.
+(10/09/2020, 05:05:32) Berisha_Beqaj[SQLID: 7761] je radi neaktivnosti izgubio posao Cistac ulica[Job ID:1] i 0 sati ugovora.
+(11/09/2020, 05:05:31) Vinny_Jenkins[SQLID: 7638] je radi neaktivnosti izgubio posao Transporter[Job ID:18] i 28 sati ugovora.
+(11/09/2020, 05:05:31) Gianni_Bufalino[SQLID: 7756] je radi neaktivnosti izgubio posao Transporter[Job ID:18] i 0 sati ugovora.
+(11/09/2020, 05:05:31) Berisha_Beqaj[SQLID: 7761] je radi neaktivnosti izgubio posao Cistac ulica[Job ID:1] i 0 sati ugovora.
+(12/09/2020, 05:05:29) Raymond_Mei[SQLID: 7496] je radi neaktivnosti izgubio posao Cistac ulica[Job ID:1] i 1 sati ugovora.
+(13/09/2020, 05:05:24) Adam_Vento[SQLID: 7769] je radi neaktivnosti izgubio posao Transporter[Job ID:18] i 0 sati ugovora.
+(14/09/2020, 05:05:15) Andrew_Martinez[SQLID: 4067] je radi neaktivnosti izgubio kucu na adresi Jefferson 38[SQLID: 214] i dobio 50000$ naknade u banku.
+(14/09/2020, 05:05:31) Zee_Pequeno[SQLID: 7775] je radi neaktivnosti izgubio posao Cistac ulica[Job ID:1] i 1 sati ugovora.
+(15/09/2020, 05:05:01) Homero_Estevez[SQLID: 429] je radi neaktivnosti izgubio posao Farmer[Job ID:7] i 0 sati ugovora.
+(15/09/2020, 05:05:21) Oscar_Willson[SQLID: 7444] je radi neaktivnosti izgubio kucu na adresi Idlewood_50[SQLID: 577] i dobio 35000$ naknade u banku.
+(16/09/2020, 05:05:26) Ricardo_Smith[SQLID: 6470] je radi neaktivnosti izgubio posao Farmer[Job ID:7] i 2 sati ugovora.
+(17/09/2020, 05:05:02) Vukasin_Milovanovic[SQLID: 374] je radi neaktivnosti izgubio kucu na adresi F.Intersection[SQLID: 619] i dobio 20000$ naknade u banku.
+(17/09/2020, 05:05:04) John_Carter[SQLID: 985] je radi neaktivnosti izgubio posao Farmer[Job ID:7] i 0 sati ugovora.
+(17/09/2020, 05:05:04) Victor_Merlowitz[SQLID: 1028] je radi neaktivnosti izgubio kucu na adresi Mulholland 22[SQLID: 376] i dobio 250000001$ naknade u banku.
+(17/09/2020, 05:05:24) James_Matthows[SQLID: 6059] je radi neaktivnosti izgubio posao Smetlar[Job ID:16] i 1 sati ugovora.
+(17/09/2020, 05:05:29) Oscar_Willson[SQLID: 7444] je radi neaktivnosti izgubio kucu na adresi Idlewood_50[SQLID: 577] i dobio 35000$ naknade u banku.
+(17/09/2020, 05:05:30) Frank_Veston[SQLID: 7788] je radi neaktivnosti izgubio posao Smetlar[Job ID:16] i 0 sati ugovora.
+(18/09/2020, 05:05:12) Spencer_Waller[SQLID: 3530] je radi neaktivnosti izgubio posao Farmer[Job ID:7] i 0 sati ugovora.
+(18/09/2020, 05:05:12) Cesar_Martinez[SQLID: 3556] je radi neaktivnosti izgubio posao Mehanicar[Job ID:3] i 1 sati ugovora.
+(18/09/2020, 05:05:14) Jae_Crowder[SQLID: 4056] je radi neaktivnosti izgubio posao Tvornicki radnik[Job ID:5] i 0 sati ugovora.
+(18/09/2020, 05:05:30) Artur_Mirnov[SQLID: 7391] je radi neaktivnosti izgubio kucu na adresi Ganton 8[SQLID: 118] i dobio 55000$ naknade u banku.
+(18/09/2020, 05:05:30) Artur_Mirnov[SQLID: 7391] je radi neaktivnosti izgubio garazu Ganton 8[SQLID: 88] i dobio 5000$ naknade u banku.
+(18/09/2020, 05:05:30) Alyssa_Vergata[SQLID: 7444] je radi neaktivnosti izgubio kucu na adresi Idlewood_50[SQLID: 577] i dobio 35000$ naknade u banku.
+(18/09/2020, 05:05:32) Jack_Oconell[SQLID: 7787] je radi neaktivnosti izgubio posao Transporter[Job ID:18] i 1 sati ugovora.
+(18/09/2020, 05:05:32) Marco_McPaape[SQLID: 7792] je radi neaktivnosti izgubio posao Cistac ulica[Job ID:1] i 1 sati ugovora.
+(19/09/2020, 05:05:15) Kyle_Brennan[SQLID: 4056] je radi neaktivnosti izgubio posao Smetlar[Job ID:16] i 0 sati ugovora.
+(19/09/2020, 05:05:25) Aiden_Mitchell[SQLID: 6401] je radi neaktivnosti izgubio posao Transporter[Job ID:18] i 1 sati ugovora.
+(19/09/2020, 05:05:31) John_Costaneli[SQLID: 7647] je radi neaktivnosti izgubio posao Transporter[Job ID:18] i 0 sati ugovora.
+(19/09/2020, 05:05:31) Jack_Oconell[SQLID: 7787] je radi neaktivnosti izgubio posao Transporter[Job ID:18] i 0 sati ugovora.
+(20/09/2020, 05:05:04) Richard_Hoyle[SQLID: 1013] je radi neaktivnosti izgubio posao Drvosjeca[Job ID:14] i 20 sati ugovora.
+(20/09/2020, 05:05:32) Vinny_Jenkins[SQLID: 7638] je radi neaktivnosti izgubio posao Transporter[Job ID:18] i 1 sati ugovora.
+(21/09/2020, 05:05:15) Andrew_Martinez[SQLID: 4067] je radi neaktivnosti izgubio kucu na adresi Jefferson 38[SQLID: 214] i dobio 50000$ naknade u banku.
+(21/09/2020, 05:05:33) Viktor_Grigoryev[SQLID: 7803] je radi neaktivnosti izgubio Complex sobu[SQLID: 6].
+(22/09/2020, 05:05:32) Jack_Depablo[SQLID: 7805] je radi neaktivnosti izgubio posao Transporter[Job ID:18] i 0 sati ugovora.
+(22/09/2020, 05:05:32) Kanjiro_Kawamura[SQLID: 7808] je radi neaktivnosti izgubio Biznis LSN Production[SQLID: 25] i dobio 25000$ naknade u banku.
+(22/09/2020, 05:05:32) Liam_Hughes[SQLID: 7809] je radi neaktivnosti izgubio posao Transporter[Job ID:18] i 0 sati ugovora.
+(23/09/2020, 05:05:12) Diego_Molinero[SQLID: 3850] je radi neaktivnosti izgubio kucu na adresi Richman 26[SQLID: 410] i dobio 50000$ naknade u banku.
+(23/09/2020, 05:05:12) Diego_Molinero[SQLID: 3850] je radi neaktivnosti izgubio garazu Richman 26G[SQLID: 138] i dobio 25000$ naknade u banku.
+(23/09/2020, 05:05:22) Richard_Donoval[SQLID: 6963] je radi neaktivnosti izgubio kucu na adresi Los Flores 1[SQLID: 242] i dobio 20000$ naknade u banku.
+(23/09/2020, 05:05:22) Richard_Donoval[SQLID: 6963] je radi neaktivnosti izgubio Biznis Russkiy GYM[SQLID: 100] i dobio 58573$ naknade u banku.
+(23/09/2020, 05:05:25) Lucas_Perellila[SQLID: 7773] je radi neaktivnosti izgubio posao Transporter[Job ID:18] i 0 sati ugovora.
+(23/09/2020, 05:05:25) Dimitar_Galkin[SQLID: 7815] je radi neaktivnosti izgubio posao Smetlar[Job ID:16] i 1 sati ugovora.
+(24/09/2020, 05:05:03) Eugen_Barbarino[SQLID: 910] je radi neaktivnosti izgubio kucu na adresi East_LS_14[SQLID: 172] i dobio 30003$ naknade u banku.
+(24/09/2020, 05:05:03) Eugen_Barbarino[SQLID: 910] je radi neaktivnosti izgubio Biznis Golden Bar.[SQLID: 170] i dobio 25717$ naknade u banku.
+(24/09/2020, 05:05:03) Eugen_Barbarino[SQLID: 910] je radi neaktivnosti izgubio Complex sobu[SQLID: 43].
+(24/09/2020, 05:05:34) Ferdinand_Porsche[SQLID: 7774] je radi neaktivnosti izgubio posao Cistac ulica[Job ID:1] i 1 sati ugovora.
+(25/09/2020, 05:05:23) Tyler_Davies[SQLID: 7823] je radi neaktivnosti izgubio posao Cistac ulica[Job ID:1] i 0 sati ugovora.
+(25/09/2020, 05:05:23) Marco_Bonetti[SQLID: 7824] je radi neaktivnosti izgubio posao Cistac ulica[Job ID:1] i 0 sati ugovora.
+(26/09/2020, 05:05:01) Michael_Rogers[SQLID: 74] je radi neaktivnosti izgubio Biznis Jefferson 24/7[SQLID: 50] i dobio 29925$ naknade u banku.
+(26/09/2020, 05:05:10) Spencer_Waller[SQLID: 3530] je radi neaktivnosti izgubio kucu na adresi Idlewood 79[SQLID: 495] i dobio 15000$ naknade u banku.
+(26/09/2020, 05:05:24) Joe_McKennedy[SQLID: 7825] je radi neaktivnosti izgubio kucu na adresi Los_Flores_77[SQLID: 634] i dobio 20000$ naknade u banku.
+(27/09/2020, 05:05:01) Michael_Rogers[SQLID: 74] je radi neaktivnosti izgubio Biznis Jefferson 24/7[SQLID: 50] i dobio 29925$ naknade u banku.
+(27/09/2020, 05:05:15) Carlos_Martinez[SQLID: 3961] je radi neaktivnosti izgubio Biznis Butch' GYM[SQLID: 13] i dobio 39393$ naknade u banku.
+(27/09/2020, 05:05:32) Luther_Swann[SQLID: 7833] je radi neaktivnosti izgubio posao Drvosjeca[Job ID:14] i 0 sati ugovora.
+(28/09/2020, 05:05:30) Madalyn_Phillips[SQLID: 7438] je radi neaktivnosti izgubio kucu na adresi Vinewood[SQLID: 452] i dobio 35000$ naknade u banku.
+(28/09/2020, 05:05:32) Aleksandar_Simic[SQLID: 7832] je radi neaktivnosti izgubio posao Transporter[Job ID:18] i 0 sati ugovora.
+(29/09/2020, 05:05:02) Rene_Strauss[SQLID: 411] je radi neaktivnosti izgubio kucu na adresi Rodeo[SQLID: 636] i dobio 450092$ naknade u banku.
+(29/09/2020, 05:05:03) Paul_Smith[SQLID: 750] je radi neaktivnosti izgubio kucu na adresi Richman 20[SQLID: 403] i dobio 120000$ naknade u banku.
+(29/09/2020, 05:05:03) Paul_Smith[SQLID: 750] je radi neaktivnosti izgubio garazu Richman 20[SQLID: 81] i dobio 20000$ naknade u banku.
+(29/09/2020, 05:05:03) Paul_Smith[SQLID: 750] je radi neaktivnosti izgubio Biznis Tocite kod nas![SQLID: 204] i dobio 31007$ naknade u banku.
+(29/09/2020, 05:05:33) Deontay_Hays[SQLID: 7835] je radi neaktivnosti izgubio posao Transporter[Job ID:18] i 0 sati ugovora.
+(30/09/2020, 05:05:02) Richard_Hoyle[SQLID: 1013] je radi neaktivnosti izgubio kucu na adresi Los Flores 1[SQLID: 271] i dobio 30192$ naknade u banku.
+(30/09/2020, 05:05:03) Emily_Garrett[SQLID: 1190] je radi neaktivnosti izgubio kucu na adresi Mulholland 3[SQLID: 357] i dobio 30000$ naknade u banku.
+(30/09/2020, 05:05:03) Emily_Garrett[SQLID: 1190] je radi neaktivnosti izgubio garazu Mullholland[SQLID: 68] i dobio 10000$ naknade u banku.
+(30/09/2020, 05:05:17) Deveron_Hodges[SQLID: 5893] je radi neaktivnosti izgubio kucu na adresi Mulholland 14[SQLID: 368] i dobio 50001$ naknade u banku.
+(30/09/2020, 05:05:17) Deveron_Hodges[SQLID: 5893] je radi neaktivnosti izgubio Biznis Back2Revange[SQLID: 21] i dobio 80934$ naknade u banku.
+(30/09/2020, 05:05:23) Srdjan_Djukic[SQLID: 7840] je radi neaktivnosti izgubio posao Transporter[Job ID:18] i 1 sati ugovora.
+(01/10/2020, 05:05:31) Rodshay_Jones[SQLID: 7842] je radi neaktivnosti izgubio posao Smetlar[Job ID:16] i 0 sati ugovora.
+(01/10/2020, 05:05:31) Justin_Landale[SQLID: 657] je radi neaktivnosti izgubio kucu na adresi Richman 23[SQLID: 407] i dobio 250002$ naknade u banku.
+(01/10/2020, 05:05:31) Justin_Landale[SQLID: 657] je radi neaktivnosti izgubio Biznis N O X Nightclub[SQLID: 112] i dobio 77182$ naknade u banku.
+(01/10/2020, 05:05:31) Angelo_Lawrenson[SQLID: 48] je radi neaktivnosti izgubio kucu na adresi Idlewood 16[SQLID: 16] i dobio 15000$ naknade u banku.
+(01/10/2020, 05:05:31) Angelo_Lawrenson[SQLID: 48] je radi neaktivnosti izgubio Biznis GALVANIZE 69[SQLID: 109] i dobio 93132$ naknade u banku.
+(01/10/2020, 05:05:31) Homero_Estevez[SQLID: 429] je radi neaktivnosti izgubio Biznis GYM GRECA 7[SQLID: 13] i dobio 34435$ naknade u banku.
+(01/10/2020, 05:05:32) Winodolf_Regrott[SQLID: 1289] je radi neaktivnosti izgubio kucu na adresi Vinewood_19[SQLID: 518] i dobio 20001$ naknade u banku.
+(01/10/2020, 05:05:32) Winodolf_Regrott[SQLID: 1289] je radi neaktivnosti izgubio garazu Temple Drive[SQLID: 157] i dobio 10000$ naknade u banku.
+(01/10/2020, 05:05:32) Jaddan_Pulasky[SQLID: 4379] je radi neaktivnosti izgubio kucu na adresi Richman 2[SQLID: 386] i dobio 250000$ naknade u banku.
+(01/10/2020, 05:05:33) Donald_Nixon[SQLID: 21] je radi neaktivnosti izgubio kucu na adresi Mulholland 9[SQLID: 363] i dobio 150000$ naknade u banku.
+(01/10/2020, 05:05:33) Donald_Nixon[SQLID: 21] je radi neaktivnosti izgubio Biznis Tocite kod nas![SQLID: 204] i dobio 30763$ naknade u banku.
+(01/10/2020, 05:05:33) Emilio_Galvez[SQLID: 1295] je radi neaktivnosti izgubio kucu na adresi Glen_Park_6[SQLID: 224] i dobio 50000$ naknade u banku.
+(01/10/2020, 05:05:33) Emilio_Galvez[SQLID: 1295] je radi neaktivnosti izgubio Biznis Galvez Office[SQLID: 68] i dobio 35142$ naknade u banku.
+(01/10/2020, 05:05:33) Emilio_Galvez[SQLID: 1295] je radi neaktivnosti izgubio Complex Alpha Future[SQLID: 6] i dobio 250000$ naknade u banku.
+(01/10/2020, 05:05:33) Sarah_Bagwell[SQLID: 249] je radi neaktivnosti izgubio kucu na adresi Civic Center 3[SQLID: 511] i dobio 20001$ naknade u banku.
+(01/10/2020, 05:05:34) Alan_Huang[SQLID: 302] je radi neaktivnosti izgubio Biznis Pinky Mott[SQLID: 107] i dobio 81103$ naknade u banku.
+(01/10/2020, 05:05:34) Travis_Palmer[SQLID: 45] je radi neaktivnosti izgubio kucu na adresi Fern Ridge 1[SQLID: 443] i dobio 25000$ naknade u banku.
+(01/10/2020, 05:05:35) Travis_Bennet[SQLID: 42] je radi neaktivnosti izgubio kucu na adresi East Beach 1[SQLID: 492] i dobio 80148$ naknade u banku.
+(01/10/2020, 05:05:38) Eden_Mendez[SQLID: 5407] je radi neaktivnosti izgubio kucu na adresi Willowfield 10[SQLID: 153] i dobio 25000$ naknade u banku.
+(01/10/2020, 05:05:38) Antonio_Percy[SQLID: 5500] je radi neaktivnosti izgubio kucu na adresi El Corona 33[SQLID: 106] i dobio 20018$ naknade u banku.
+(01/10/2020, 05:05:38) Armando_Villa[SQLID: 1018] je radi neaktivnosti izgubio Complex sobu[SQLID: 1].
+(01/10/2020, 05:05:38) George_Cephas[SQLID: 5720] je radi neaktivnosti izgubio kucu na adresi Marina_15B[SQLID: 346] i dobio 20000$ naknade u banku.
+(01/10/2020, 05:05:40) Molly_Cortez[SQLID: 6145] je radi neaktivnosti izgubio kucu na adresi Blueberry_20[SQLID: 592] i dobio 20000$ naknade u banku.
+(01/10/2020, 05:05:40) Tony_Hawkins[SQLID: 6191] je radi neaktivnosti izgubio kucu na adresi Richman 26[SQLID: 410] i dobio 50000$ naknade u banku.
+(01/10/2020, 05:05:40) Tony_Hawkins[SQLID: 6191] je radi neaktivnosti izgubio garazu Richman 26G[SQLID: 138] i dobio 25000$ naknade u banku.
+(01/10/2020, 05:05:41) John_Mangano[SQLID: 6638] je radi neaktivnosti izgubio kucu na adresi TheBrothersSyndicate[SQLID: 523] i dobio 200000$ naknade u banku.
+(01/10/2020, 05:05:43) Mickey_Yanlin[SQLID: 7168] je radi neaktivnosti izgubio Biznis Little China[SQLID: 212] i dobio 26027$ naknade u banku.
+(01/10/2020, 05:05:44) Alyssa_Vergata[SQLID: 7444] je radi neaktivnosti izgubio kucu na adresi Idlewood_50[SQLID: 577] i dobio 35000$ naknade u banku.
+(01/10/2020, 05:05:44) Alyssa_Vergata[SQLID: 7444] je radi neaktivnosti izgubio Biznis Idlewood Bar[SQLID: 171] i dobio 22591$ naknade u banku.
+(01/10/2020, 05:05:45) Viktor_Lavrovsky[SQLID: 7603] je radi neaktivnosti izgubio Complex sobu[SQLID: 46].
+(01/10/2020, 05:05:45) Vinny_Jenkins[SQLID: 7638] je radi neaktivnosti izgubio kucu na adresi Las_Colinas_8[SQLID: 489] i dobio 10000$ naknade u banku.
+(01/10/2020, 05:05:45) Joe_McKennedy[SQLID: 7825] je radi neaktivnosti izgubio Complex sobu[SQLID: 19].
+(01/10/2020, 05:05:45) Aleksandar_Simic[SQLID: 7832] je radi neaktivnosti izgubio Biznis Golden Bar.[SQLID: 170] i dobio -7$ naknade u banku.
+(02/10/2020, 05:05:00) Angelo_Lawrenson[SQLID: 48] je radi neaktivnosti izgubio posao Transporter[Job ID:18] i 20 sati ugovora.
+(02/10/2020, 05:05:01) Demetrius_Innes[SQLID: 231] je radi neaktivnosti izgubio posao Nepoznato[Job ID:9] i 3 sati ugovora.
+(02/10/2020, 05:05:02) Luca_Butler[SQLID: 510] je radi neaktivnosti izgubio posao Gun Dealer[Job ID:12] i 24 sati ugovora.
+(02/10/2020, 05:05:03) Velichko_Mitevski[SQLID: 837] je radi neaktivnosti izgubio posao Mehanicar[Job ID:3] i 32 sati ugovora.
+(02/10/2020, 05:05:03) Anthony_McGregor[SQLID: 965] je radi neaktivnosti izgubio posao Farmer[Job ID:7] i 3 sati ugovora.
+(02/10/2020, 05:05:03) Armando_Villa[SQLID: 1018] je radi neaktivnosti izgubio posao Mehanicar[Job ID:3] i 3 sati ugovora.
+(02/10/2020, 05:05:04) Owen_McGrath[SQLID: 1238] je radi neaktivnosti izgubio posao Mehanicar[Job ID:3] i 66 sati ugovora.
+(02/10/2020, 05:05:06) John_Johnson[SQLID: 1862] je radi neaktivnosti izgubio posao Transporter[Job ID:18] i 17 sati ugovora.
+(02/10/2020, 05:05:12) Alberto_Sucre[SQLID: 3447] je radi neaktivnosti izgubio posao Farmer[Job ID:7] i 13 sati ugovora.
+(02/10/2020, 05:05:19) Dominick_Camuso[SQLID: 5005] je radi neaktivnosti izgubio posao Transporter[Job ID:18] i 28 sati ugovora.
+(02/10/2020, 05:05:21) Ryan_Dowell[SQLID: 5482] je radi neaktivnosti izgubio posao Mehanicar[Job ID:3] i 36 sati ugovora.
+(02/10/2020, 05:05:23) Peter_Raines[SQLID: 5904] je radi neaktivnosti izgubio posao Farmer[Job ID:7] i 4 sati ugovora.
+(02/10/2020, 05:05:23) Rudy_Cardenas[SQLID: 5962] je radi neaktivnosti izgubio posao Transporter[Job ID:18] i 18 sati ugovora.
+(02/10/2020, 05:05:23) Danio_Squilace[SQLID: 5981] je radi neaktivnosti izgubio posao Mehanicar[Job ID:3] i 7 sati ugovora.
+(02/10/2020, 05:05:24) Jose_Venegas[SQLID: 6158] je radi neaktivnosti izgubio posao Transporter[Job ID:18] i 2 sati ugovora.
+(02/10/2020, 05:05:25) Dustin_Hayes[SQLID: 6345] je radi neaktivnosti izgubio posao Car Jacker[Job ID:13] i 276 sati ugovora.
+(02/10/2020, 05:05:27) Dominic_Wattson[SQLID: 6827] je radi neaktivnosti izgubio posao Mehanicar[Job ID:3] i 5 sati ugovora.
+(02/10/2020, 05:05:28) Larry_Lee[SQLID: 6896] je radi neaktivnosti izgubio posao Farmer[Job ID:7] i 192 sati ugovora.
+(02/10/2020, 05:05:29) Mickey_Yanlin[SQLID: 7168] je radi neaktivnosti izgubio posao Mehanicar[Job ID:3] i 16 sati ugovora.
+(02/10/2020, 05:05:30) Patrizio_Allegretto[SQLID: 7356] je radi neaktivnosti izgubio posao Farmer[Job ID:7] i 34 sati ugovora.
+(02/10/2020, 05:05:30) Maynard_Davis[SQLID: 7419] je radi neaktivnosti izgubio posao Farmer[Job ID:7] i 23 sati ugovora.
+(02/10/2020, 05:05:31) Thomas_Johnson[SQLID: 7506] je radi neaktivnosti izgubio posao Transporter[Job ID:18] i 0 sati ugovora.
+(02/10/2020, 05:05:31) Louis_Buscemi[SQLID: 7511] je radi neaktivnosti izgubio posao Transporter[Job ID:18] i 33 sati ugovora.
+(02/10/2020, 05:05:31) Viktor_Lavrovsky[SQLID: 7603] je radi neaktivnosti izgubio posao Transporter[Job ID:18] i 27 sati ugovora.
+(02/10/2020, 05:05:32) Domy_Thralldo[SQLID: 7720] je radi neaktivnosti izgubio posao Smetlar[Job ID:16] i 5 sati ugovora.
+(02/10/2020, 05:05:32) Roman_Hernandez[SQLID: 7730] je radi neaktivnosti izgubio posao Transporter[Job ID:18] i 18 sati ugovora.
+(02/10/2020, 05:05:32) Charlie_Barrett[SQLID: 7735] je radi neaktivnosti izgubio posao Transporter[Job ID:18] i 5 sati ugovora.
+(02/10/2020, 05:05:32) Arthur_Vanhook[SQLID: 7737] je radi neaktivnosti izgubio posao Transporter[Job ID:18] i 5 sati ugovora.
+(02/10/2020, 05:05:32) Jada_Arkwood[SQLID: 7748] je radi neaktivnosti izgubio posao Cistac ulica[Job ID:1] i 5 sati ugovora.
+(02/10/2020, 05:05:32) Tarik_Raboshta[SQLID: 7749] je radi neaktivnosti izgubio posao Cistac ulica[Job ID:1] i 4 sati ugovora.
+(02/10/2020, 05:05:32) Emily_Garcia[SQLID: 7763] je radi neaktivnosti izgubio posao Transporter[Job ID:18] i 18 sati ugovora.
+(02/10/2020, 05:05:32) Zee_Pequeno[SQLID: 7775] je radi neaktivnosti izgubio posao Transporter[Job ID:18] i 3 sati ugovora.
+(03/10/2020, 05:05:01) Paul_Hawakins[SQLID: 95] je radi neaktivnosti izgubio posao Cistac ulica[Job ID:1] i 1 sati ugovora.
+(03/10/2020, 05:05:03) Joseph_Gargotta[SQLID: 840] je radi neaktivnosti izgubio posao Cistac ulica[Job ID:1] i 2 sati ugovora.
+(03/10/2020, 05:05:21) Ryan_Dowell[SQLID: 5482] je radi neaktivnosti izgubio posao Mehanicar[Job ID:3] i 1 sati ugovora.
+(03/10/2020, 05:05:22) Kenneth_Russell[SQLID: 5694] je radi neaktivnosti izgubio posao Nepoznato[Job ID:9] i 6 sati ugovora.
+(03/10/2020, 05:05:31) Alejandro_Gonzales[SQLID: 7550] je radi neaktivnosti izgubio posao Tvornicki radnik[Job ID:5] i 14 sati ugovora.
+(03/10/2020, 05:05:32) Deondre_Goodwin[SQLID: 7726] je radi neaktivnosti izgubio posao Transporter[Job ID:18] i 4 sati ugovora.
+(04/10/2020, 05:05:00) Paul_Hawakins[SQLID: 95] je radi neaktivnosti izgubio kucu na adresi Jefferson 26[SQLID: 202] i dobio 50000$ naknade u banku.
+(04/10/2020, 05:05:00) Paul_Hawakins[SQLID: 95] je radi neaktivnosti izgubio garazu Jefferson[SQLID: 85] i dobio 10000$ naknade u banku.
+(04/10/2020, 05:05:00) Paul_Hawakins[SQLID: 95] je radi neaktivnosti izgubio Biznis Jefferson 24/7[SQLID: 50] i dobio 30005$ naknade u banku.
+(04/10/2020, 05:05:32) Darnell_Foose[SQLID: 7783] je radi neaktivnosti izgubio posao Smetlar[Job ID:16] i 3 sati ugovora.
+(04/10/2020, 05:05:32) Amina_Selimovic[SQLID: 7849] je radi neaktivnosti izgubio posao Tvornicki radnik[Job ID:5] i 1 sati ugovora.
+(04/10/2020, 05:05:32) Sejo_Spahic[SQLID: 7851] je radi neaktivnosti izgubio posao Tvornicki radnik[Job ID:5] i 0 sati ugovora.
+(05/10/2020, 05:05:12) Leonid_Guzenko[SQLID: 3295] je radi neaktivnosti izgubio posao Smetlar[Job ID:16] i 9 sati ugovora.
+(05/10/2020, 05:05:32) Jack_Oconell[SQLID: 7787] je radi neaktivnosti izgubio posao Transporter[Job ID:18] i 4 sati ugovora.
+(05/10/2020, 05:05:32) Ajax_Johanson[SQLID: 7856] je radi neaktivnosti izgubio posao Drvosjeca[Job ID:14] i 0 sati ugovora.
+(06/10/2020, 05:05:02) Afrim_Izairi[SQLID: 388] je radi neaktivnosti izgubio posao Vehicle Impounder[Job ID:17] i 4 sati ugovora.
+(06/10/2020, 05:05:02) Rene_Strauss[SQLID: 411] je radi neaktivnosti izgubio kucu na adresi Rodeo[SQLID: 636] i dobio 450092$ naknade u banku.
+(06/10/2020, 05:05:02) Paul_Smith[SQLID: 750] je radi neaktivnosti izgubio kucu na adresi Richman 20[SQLID: 403] i dobio 120000$ naknade u banku.
+(06/10/2020, 05:05:02) Paul_Smith[SQLID: 750] je radi neaktivnosti izgubio garazu Richman 20[SQLID: 81] i dobio 20000$ naknade u banku.
+(06/10/2020, 05:05:08) Antonio_Freeman[SQLID: 2590] je radi neaktivnosti izgubio posao Farmer[Job ID:7] i 1 sati ugovora.
+(06/10/2020, 05:05:20) Maximiliano_Lacasa[SQLID: 5398] je radi neaktivnosti izgubio posao Mehanicar[Job ID:3] i 17 sati ugovora.
+(06/10/2020, 05:05:32) Edie_Fields[SQLID: 7743] je radi neaktivnosti izgubio posao Transporter[Job ID:18] i 8 sati ugovora.
+(06/10/2020, 05:05:32) Gianni_Bufalino[SQLID: 7756] je radi neaktivnosti izgubio posao Transporter[Job ID:18] i 0 sati ugovora.
+(06/10/2020, 05:05:32) Mark_Toretto[SQLID: 7820] je radi neaktivnosti izgubio posao Drvosjeca[Job ID:14] i 6 sati ugovora.
+(07/10/2020, 05:05:04) Naser_Krasniqi[SQLID: 98] je radi neaktivnosti izgubio posao Mehanicar[Job ID:3] i 48 sati ugovora.
+(07/10/2020, 05:05:05) Bradley_Morison[SQLID: 435] je radi neaktivnosti izgubio kucu na adresi Mulholland_2[SQLID: 337] i dobio 80000$ naknade u banku.
+(07/10/2020, 05:05:07) Daniel_Butcher[SQLID: 1001] je radi neaktivnosti izgubio posao Car Jacker[Job ID:13] i 10 sati ugovora.
+(07/10/2020, 05:05:20) Ben_Dalton[SQLID: 4417] je radi neaktivnosti izgubio kucu na adresi Mulholland_21[SQLID: 411] i dobio 120000$ naknade u banku.
+(07/10/2020, 05:05:20) Ben_Dalton[SQLID: 4417] je radi neaktivnosti izgubio Biznis La Barro[SQLID: 182] i dobio 36307$ naknade u banku.
+(07/10/2020, 05:05:35) Sato_Kiyoshi[SQLID: 7625] je radi neaktivnosti izgubio posao Transporter[Job ID:18] i 157 sati ugovora.
+(07/10/2020, 05:05:35) Vinny_Jenkins[SQLID: 7638] je radi neaktivnosti izgubio posao Transporter[Job ID:18] i 1 sati ugovora.
+(07/10/2020, 05:05:36) Shinsaku_Takagaki[SQLID: 7736] je radi neaktivnosti izgubio posao Mehanicar[Job ID:3] i 2 sati ugovora.
+(07/10/2020, 05:05:36) Raymond_Santos[SQLID: 7817] je radi neaktivnosti izgubio posao Drvosjeca[Job ID:14] i 3 sati ugovora.
+(08/10/2020, 05:05:00) Ethan_Hartwel[SQLID: 28] je radi neaktivnosti izgubio posao Mehanicar[Job ID:3] i 8 sati ugovora.
+(08/10/2020, 05:05:19) David_McCreight[SQLID: 5017] je radi neaktivnosti izgubio posao Cistac ulica[Job ID:1] i 3 sati ugovora.
+(08/10/2020, 05:05:20) Marchello_Andollini[SQLID: 5126] je radi neaktivnosti izgubio posao Smetlar[Job ID:16] i 0 sati ugovora.
+(08/10/2020, 05:05:24) Charles_Falco[SQLID: 6002] je radi neaktivnosti izgubio posao Cistac ulica[Job ID:1] i 2 sati ugovora.
+(08/10/2020, 05:05:24) James_Matthows[SQLID: 6059] je radi neaktivnosti izgubio posao Transporter[Job ID:18] i 9 sati ugovora.
+(08/10/2020, 05:05:30) Donald_Gustavo[SQLID: 7367] je radi neaktivnosti izgubio posao Drvosjeca[Job ID:14] i 4 sati ugovora.
+(08/10/2020, 05:05:32) Steven_Brown[SQLID: 7647] je radi neaktivnosti izgubio posao Drvosjeca[Job ID:14] i 1 sati ugovora.
+(08/10/2020, 05:05:32) Logan_Nelson[SQLID: 7741] je radi neaktivnosti izgubio posao Farmer[Job ID:7] i 11 sati ugovora.
+(08/10/2020, 05:05:32) Jake_Chester[SQLID: 7793] je radi neaktivnosti izgubio posao Cistac ulica[Job ID:1] i 35 sati ugovora.
+(08/10/2020, 05:05:33) Ajax_Cranford[SQLID: 7865] je radi neaktivnosti izgubio posao Cistac ulica[Job ID:1] i 0 sati ugovora.
+(09/10/2020, 05:05:06) Victor_Azzari[SQLID: 484] je radi neaktivnosti izgubio posao Vehicle Impounder[Job ID:17] i 1 sati ugovora.
+(09/10/2020, 05:05:25) Thomas_Brown[SQLID: 5326] je radi neaktivnosti izgubio posao Tvornicki radnik[Job ID:5] i 23 sati ugovora.
+(09/10/2020, 05:05:30) Michael_Smith[SQLID: 6211] je radi neaktivnosti izgubio posao Drvosjeca[Job ID:14] i 2 sati ugovora.
+(09/10/2020, 05:05:33) Marco_Sanz[SQLID: 6940] je radi neaktivnosti izgubio posao Cistac ulica[Job ID:1] i 0 sati ugovora.
+(10/10/2020, 05:05:01) Zvezdan_Raonic[SQLID: 374] je radi neaktivnosti izgubio posao Mehanicar[Job ID:3] i 19 sati ugovora.
+(10/10/2020, 05:05:33) Caravagio_Rossi[SQLID: 7874] je radi neaktivnosti izgubio posao Cistac ulica[Job ID:1] i 0 sati ugovora.
+(11/10/2020, 05:05:18) Vasilis_Galatas[SQLID: 3794] je radi neaktivnosti izgubio posao Transporter[Job ID:18] i 0 sati ugovora.
+(11/10/2020, 05:05:23) Miguel_Scott[SQLID: 5040] je radi neaktivnosti izgubio posao Mehanicar[Job ID:3] i 15 sati ugovora.
+(11/10/2020, 05:05:27) Mia_Jones[SQLID: 5761] je radi neaktivnosti izgubio posao Transporter[Job ID:18] i 8 sati ugovora.
+(11/10/2020, 05:05:37) Manu_Navarre[SQLID: 7880] je radi neaktivnosti izgubio posao Tvornicki radnik[Job ID:5] i 0 sati ugovora.
+(12/10/2020, 05:05:00) Benjamin_Wynn[SQLID: 31] je radi neaktivnosti izgubio kucu na adresi Mulholland 1[SQLID: 355] i dobio 100000$ naknade u banku.
+(12/10/2020, 05:05:01) Carolina_Chavez[SQLID: 159] je radi neaktivnosti izgubio kucu na adresi Idlewood 15[SQLID: 15] i dobio 17312$ naknade u banku.
+(12/10/2020, 05:05:02) Luca_Butler[SQLID: 510] je radi neaktivnosti izgubio kucu na adresi East_Los_Santos_17[SQLID: 302] i dobio 50000$ naknade u banku.
+(12/10/2020, 05:05:02) Luca_Butler[SQLID: 510] je radi neaktivnosti izgubio garazu Richman[SQLID: 34] i dobio 20000$ naknade u banku.
+(12/10/2020, 05:05:02) Luca_Butler[SQLID: 510] je radi neaktivnosti izgubio Biznis Alomos[SQLID: 184] i dobio 42578$ naknade u banku.
+(12/10/2020, 05:05:33) Gianni_Bufalino[SQLID: 7756] je radi neaktivnosti izgubio posao Farmer[Job ID:7] i 0 sati ugovora.
+(12/10/2020, 05:05:34) Antonio_Casanova[SQLID: 7882] je radi neaktivnosti izgubio posao Tvornicki radnik[Job ID:5] i 1 sati ugovora.
+(12/10/2020, 05:05:34) Adriano_Casanova[SQLID: 7883] je radi neaktivnosti izgubio posao Tvornicki radnik[Job ID:5] i 1 sati ugovora.
+(13/10/2020, 05:05:30) John_Gunner[SQLID: 6974] je radi neaktivnosti izgubio posao Farmer[Job ID:7] i 1 sati ugovora.
+(13/10/2020, 05:05:35) Johny_Devillson[SQLID: 7830] je radi neaktivnosti izgubio posao Farmer[Job ID:7] i 3 sati ugovora.
+(13/10/2020, 05:05:35) Adriano_Casanova[SQLID: 7883] je radi neaktivnosti izgubio posao Tvornicki radnik[Job ID:5] i 0 sati ugovora.
+(13/10/2020, 05:05:35) Dante_Nerri[SQLID: 7884] je radi neaktivnosti izgubio posao Cistac ulica[Job ID:1] i 0 sati ugovora.
+(13/10/2020, 05:05:35) Randy_Nithercott[SQLID: 7885] je radi neaktivnosti izgubio posao Farmer[Job ID:7] i 1 sati ugovora.
+(13/10/2020, 05:05:35) Dante_Gallo[SQLID: 7887] je radi neaktivnosti izgubio posao Drvosjeca[Job ID:14] i 0 sati ugovora.
+(14/10/2020, 05:05:35) Gianni_Bufalino[SQLID: 7756] je radi neaktivnosti izgubio posao Farmer[Job ID:7] i 1 sati ugovora.
+(15/10/2020, 05:05:05) Tekashi_Oba[SQLID: 1426] je radi neaktivnosti izgubio Complex sobu[SQLID: 27].
+(15/10/2020, 05:05:33) Crawford_Lowe[SQLID: 7892] je radi neaktivnosti izgubio posao Transporter[Job ID:18] i 0 sati ugovora.
+(17/10/2020, 05:05:22) Johnny_Suarez[SQLID: 5425] je radi neaktivnosti izgubio posao Mehanicar[Job ID:3] i 0 sati ugovora.
+(17/10/2020, 05:05:30) Francesca_Pascale[SQLID: 6986] je radi neaktivnosti izgubio kucu na adresi Temple 8[SQLID: 335] i dobio 10088$ naknade u banku.
+(17/10/2020, 05:05:30) Francesca_Pascale[SQLID: 6986] je radi neaktivnosti izgubio Biznis City Lounge[SQLID: 177] i dobio 20937$ naknade u banku.

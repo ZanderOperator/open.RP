@@ -1,0 +1,209 @@
+(12/04/2020, 20:09:24) Vukota_Saranovic[SQL:5953] je pohranio 1$ u Warehouse Skaljarski klan[SQL:7].
+(12/04/2020, 20:09:33) Jovica_Dudic[SQL:4553] je pohranio 50$ u Warehouse Skaljarski klan[SQL:7].
+(12/04/2020, 20:09:41) Vuk_Koprivica[SQL:5746] je pohranio 30$ u Warehouse Skaljarski klan[SQL:7].
+(12/04/2020, 20:09:47) Vukota_Saranovic[SQL:5953] je pohranio 30$ u Warehouse Skaljarski klan[SQL:7].
+(15/04/2020, 16:24:16) Vuk_Koprivica[SQL:5746] je stavio M4(80) u Warehouse Skaljarski klan[SQL:7].
+(15/04/2020, 16:24:22) Vuk_Koprivica[SQL:5746] je stavio M4(80) u Warehouse Skaljarski klan[SQL:7].
+(15/04/2020, 16:24:27) Vuk_Koprivica[SQL:5746] je stavio M4(80) u Warehouse Skaljarski klan[SQL:7].
+(15/04/2020, 16:24:40) Vuk_Koprivica[SQL:5746] je stavio M4(80) u Warehouse Skaljarski klan[SQL:7].
+(15/04/2020, 16:24:45) Vuk_Koprivica[SQL:5746] je stavio M4(80) u Warehouse Skaljarski klan[SQL:7].
+(15/04/2020, 16:24:50) Vuk_Koprivica[SQL:5746] je stavio M4(80) u Warehouse Skaljarski klan[SQL:7].
+(15/04/2020, 16:24:53) Vuk_Koprivica[SQL:5746] je stavio M4(80) u Warehouse Skaljarski klan[SQL:7].
+(15/04/2020, 16:29:46) Vuk_Koprivica[SQL:5746] je stavio TEC9(80) u Warehouse Skaljarski klan[SQL:7].
+(15/04/2020, 16:29:50) Vuk_Koprivica[SQL:5746] je stavio TEC9(80) u Warehouse Skaljarski klan[SQL:7].
+(15/04/2020, 16:29:53) Vuk_Koprivica[SQL:5746] je stavio TEC9(80) u Warehouse Skaljarski klan[SQL:7].
+(15/04/2020, 16:29:57) Vuk_Koprivica[SQL:5746] je stavio TEC9(80) u Warehouse Skaljarski klan[SQL:7].
+(15/04/2020, 16:30:00) Vuk_Koprivica[SQL:5746] je stavio TEC9(80) u Warehouse Skaljarski klan[SQL:7].
+(15/04/2020, 16:30:02) Vuk_Koprivica[SQL:5746] je stavio TEC9(80) u Warehouse Skaljarski klan[SQL:7].
+(15/04/2020, 16:30:10) Vuk_Koprivica[SQL:5746] je stavio TEC9(80) u Warehouse Skaljarski klan[SQL:7].
+(15/04/2020, 16:30:13) Vuk_Koprivica[SQL:5746] je stavio TEC9(80) u Warehouse Skaljarski klan[SQL:7].
+(15/04/2020, 16:33:35) Vuk_Koprivica[SQL:5746] je stavio Shotgun(30) u Warehouse Skaljarski klan[SQL:7].
+(15/04/2020, 16:33:39) Vuk_Koprivica[SQL:5746] je stavio Shotgun(30) u Warehouse Skaljarski klan[SQL:7].
+(15/04/2020, 16:33:42) Vuk_Koprivica[SQL:5746] je stavio Shotgun(30) u Warehouse Skaljarski klan[SQL:7].
+(15/04/2020, 16:33:44) Vuk_Koprivica[SQL:5746] je stavio Shotgun(30) u Warehouse Skaljarski klan[SQL:7].
+(15/04/2020, 16:33:46) Vuk_Koprivica[SQL:5746] je stavio Shotgun(30) u Warehouse Skaljarski klan[SQL:7].
+(15/04/2020, 16:33:49) Vuk_Koprivica[SQL:5746] je stavio Shotgun(30) u Warehouse Skaljarski klan[SQL:7].
+(15/04/2020, 16:33:51) Vuk_Koprivica[SQL:5746] je stavio Shotgun(30) u Warehouse Skaljarski klan[SQL:7].
+(15/04/2020, 16:33:54) Vuk_Koprivica[SQL:5746] je stavio Shotgun(30) u Warehouse Skaljarski klan[SQL:7].
+(15/04/2020, 16:33:56) Vuk_Koprivica[SQL:5746] je stavio Shotgun(30) u Warehouse Skaljarski klan[SQL:7].
+(15/04/2020, 16:33:59) Vuk_Koprivica[SQL:5746] je stavio Shotgun(30) u Warehouse Skaljarski klan[SQL:7].
+(15/04/2020, 16:34:03) Vuk_Koprivica[SQL:5746] je stavio Shotgun(30) u Warehouse Skaljarski klan[SQL:7].
+(15/04/2020, 16:34:07) Vuk_Koprivica[SQL:5746] je stavio Shotgun(30) u Warehouse Skaljarski klan[SQL:7].
+(15/04/2020, 16:34:09) Vuk_Koprivica[SQL:5746] je stavio Shotgun(30) u Warehouse Skaljarski klan[SQL:7].
+(15/04/2020, 16:37:17) Vuk_Koprivica[SQL:5746] je stavio Desert Eagle(30) u Warehouse Skaljarski klan[SQL:7].
+(15/04/2020, 16:37:28) Vuk_Koprivica[SQL:5746] je stavio Desert Eagle(30) u Warehouse Skaljarski klan[SQL:7].
+(15/04/2020, 16:37:31) Vuk_Koprivica[SQL:5746] je stavio Desert Eagle(30) u Warehouse Skaljarski klan[SQL:7].
+(15/04/2020, 16:37:34) Vuk_Koprivica[SQL:5746] je stavio Desert Eagle(30) u Warehouse Skaljarski klan[SQL:7].
+(15/04/2020, 16:37:37) Vuk_Koprivica[SQL:5746] je stavio Desert Eagle(30) u Warehouse Skaljarski klan[SQL:7].
+(15/04/2020, 16:37:40) Vuk_Koprivica[SQL:5746] je stavio Desert Eagle(30) u Warehouse Skaljarski klan[SQL:7].
+(15/04/2020, 16:37:43) Vuk_Koprivica[SQL:5746] je stavio Desert Eagle(30) u Warehouse Skaljarski klan[SQL:7].
+(15/04/2020, 16:37:46) Vuk_Koprivica[SQL:5746] je stavio Desert Eagle(30) u Warehouse Skaljarski klan[SQL:7].
+(15/04/2020, 16:37:49) Vuk_Koprivica[SQL:5746] je stavio Desert Eagle(30) u Warehouse Skaljarski klan[SQL:7].
+(15/04/2020, 16:37:52) Vuk_Koprivica[SQL:5746] je stavio Desert Eagle(30) u Warehouse Skaljarski klan[SQL:7].
+(15/04/2020, 23:41:11) Davor_Simovic[SQL:4379] je stavio Shotgun(15) u Warehouse Skaljarski klan[SQL:7].
+(15/04/2020, 23:52:24) Vesko_Laketa[SQL:5831] je stavio Desert Eagle(36) u Warehouse Skaljarski klan[SQL:7].
+(16/04/2020, 00:06:30) Jovica_Dudic[SQL:4553] je stavio M4(80) u Warehouse Skaljarski klan[SQL:7].
+(16/04/2020, 00:06:31) Davor_Simovic[SQL:4379] je stavio M4(130) u Warehouse Skaljarski klan[SQL:7].
+(16/04/2020, 13:22:58) Vuk_Koprivica[SQL:5746] je stavio TEC9(80) u Warehouse Skaljarski klan[SQL:7].
+(18/04/2020, 00:03:43) Vuk_Koprivica[SQL:5746] je stavio M4(50) u Warehouse Skaljarski klan[SQL:7].
+(18/04/2020, 16:54:47) Vuk_Koprivica[SQL:5746] je stavio TEC9(80) u Warehouse Skaljarski klan[SQL:7].
+(18/04/2020, 18:59:55) Budo_Stojanovic[SQL:6033] je stavio TEC9(80) u Warehouse Skaljarski klan[SQL:7].
+(18/04/2020, 19:00:56) Budo_Stojanovic[SQL:6033] je pohranio 2$ u Warehouse Skaljarski klan[SQL:7].
+(18/04/2020, 19:01:03) Vuk_Koprivica[SQL:5746] je pohranio 68$ u Warehouse Skaljarski klan[SQL:7].
+(18/04/2020, 19:01:15) Vuk_Koprivica[SQL:5746] je pohranio 68$ u Warehouse Skaljarski klan[SQL:7].
+(20/04/2020, 00:55:06) Vuk_Koprivica[SQL:5746] je stavio Desert Eagle(30) u Warehouse Skaljarski klan[SQL:7].
+(20/04/2020, 00:55:10) Vuk_Koprivica[SQL:5746] je stavio Desert Eagle(30) u Warehouse Skaljarski klan[SQL:7].
+(20/04/2020, 00:55:12) Vuk_Koprivica[SQL:5746] je stavio Desert Eagle(30) u Warehouse Skaljarski klan[SQL:7].
+(20/04/2020, 00:55:15) Vuk_Koprivica[SQL:5746] je stavio Desert Eagle(30) u Warehouse Skaljarski klan[SQL:7].
+(20/04/2020, 00:55:16) Vuk_Koprivica[SQL:5746] je stavio Desert Eagle(30) u Warehouse Skaljarski klan[SQL:7].
+(20/04/2020, 00:55:18) Vuk_Koprivica[SQL:5746] je stavio Desert Eagle(30) u Warehouse Skaljarski klan[SQL:7].
+(20/04/2020, 00:55:20) Vuk_Koprivica[SQL:5746] je stavio Desert Eagle(30) u Warehouse Skaljarski klan[SQL:7].
+(20/04/2020, 00:55:46) Vuk_Koprivica[SQL:5746] je stavio Shotgun(30) u Warehouse Skaljarski klan[SQL:7].
+(20/04/2020, 00:55:48) Vuk_Koprivica[SQL:5746] je stavio Shotgun(30) u Warehouse Skaljarski klan[SQL:7].
+(20/04/2020, 00:55:53) Vuk_Koprivica[SQL:5746] je stavio Shotgun(30) u Warehouse Skaljarski klan[SQL:7].
+(20/04/2020, 00:55:55) Vuk_Koprivica[SQL:5746] je stavio Shotgun(30) u Warehouse Skaljarski klan[SQL:7].
+(20/04/2020, 00:55:57) Vuk_Koprivica[SQL:5746] je stavio Shotgun(30) u Warehouse Skaljarski klan[SQL:7].
+(20/04/2020, 00:55:59) Vuk_Koprivica[SQL:5746] je stavio Shotgun(30) u Warehouse Skaljarski klan[SQL:7].
+(20/04/2020, 00:56:00) Vuk_Koprivica[SQL:5746] je stavio Shotgun(30) u Warehouse Skaljarski klan[SQL:7].
+(20/04/2020, 01:01:57) Vuk_Koprivica[SQL:5746] je stavio M4(80) u Warehouse Skaljarski klan[SQL:7].
+(22/04/2020, 02:44:56) Mile_Raonic[SQL:285] je stavio Desert Eagle(30) u Warehouse Klan Amerika[SQL:9].
+(22/04/2020, 03:03:34) Igor_Kostic[SQL:561] je pohranio 24$ u Warehouse Klan Amerika[SQL:9].
+(22/04/2020, 03:03:59) Igor_Kostic[SQL:561] je stavio TEC9(30) u Warehouse Klan Amerika[SQL:9].
+(22/04/2020, 03:04:20) Igor_Kostic[SQL:561] je stavio TEC9(30) u Warehouse Klan Amerika[SQL:9].
+(22/04/2020, 03:31:34) Igor_Kostic[SQL:561] je stavio AK47(30) u Warehouse Klan Amerika[SQL:9].
+(22/04/2020, 03:32:39) Igor_Kostic[SQL:561] je stavio AK47(30) u Warehouse Klan Amerika[SQL:9].
+(22/04/2020, 03:39:37) Igor_Kostic[SQL:561] je stavio AK47(30) u Warehouse Klan Amerika[SQL:9].
+(22/04/2020, 03:40:37) Igor_Kostic[SQL:561] je stavio Shotgun(20) u Warehouse Klan Amerika[SQL:9].
+(22/04/2020, 03:41:31) Igor_Kostic[SQL:561] je stavio Shotgun(20) u Warehouse Klan Amerika[SQL:9].
+(22/04/2020, 03:42:03) Igor_Kostic[SQL:561] je stavio Shotgun(20) u Warehouse Klan Amerika[SQL:9].
+(22/04/2020, 03:42:35) Igor_Kostic[SQL:561] je stavio TEC9(30) u Warehouse Klan Amerika[SQL:9].
+(22/04/2020, 03:53:29) Igor_Kostic[SQL:561] je pohranio 100$ u Warehouse Klan Amerika[SQL:9].
+(22/04/2020, 03:54:35) Igor_Kostic[SQL:561] je pohranio 100$ u Warehouse Klan Amerika[SQL:9].
+(22/04/2020, 03:54:57) Igor_Kostic[SQL:561] je pohranio 100$ u Warehouse Klan Amerika[SQL:9].
+(22/04/2020, 03:55:43) Igor_Kostic[SQL:561] je pohranio 100$ u Warehouse Klan Amerika[SQL:9].
+(22/04/2020, 03:58:25) Igor_Kostic[SQL:561] je pohranio 2500$ u Warehouse Klan Amerika[SQL:9].
+(22/04/2020, 03:59:13) Igor_Kostic[SQL:561] je pohranio 1$ u Warehouse Klan Amerika[SQL:9].
+(22/04/2020, 13:16:55) Mile_Raonic[SQL:285] je stavio Desert Eagle(50) u Warehouse Klan Amerika[SQL:9].
+(22/04/2020, 13:17:31) Mile_Raonic[SQL:285] je stavio M4(50) u Warehouse Klan Amerika[SQL:9].
+(22/04/2020, 13:18:50) Mile_Raonic[SQL:285] je stavio Desert Eagle(50) u Warehouse Klan Amerika[SQL:9].
+(22/04/2020, 15:03:00) Mile_Raonic[SQL:285] je stavio M4(50) u Warehouse Klan Amerika[SQL:9].
+(22/04/2020, 16:55:47) Mile_Raonic[SQL:285] je stavio Shotgun(30) u Warehouse Klan Amerika[SQL:9].
+(22/04/2020, 22:15:57) Mile_Raonic[SQL:285] je stavio AK47(19) u Warehouse Klan Amerika[SQL:9].
+(23/04/2020, 21:37:11) Igor_Kostic[SQL:561] je pohranio 500$ u Warehouse Klan Amerika[SQL:9].
+(23/04/2020, 22:30:46) Igor_Kostic[SQL:561] je stavio AK47(19) u Warehouse Klan Amerika[SQL:9].
+(24/04/2020, 17:53:06) Vukota_Saranovic[SQL:5953] je stavio M4(50) u Warehouse Skaljarski klan[SQL:7].
+(25/04/2020, 01:19:57) Vuk_Koprivica[SQL:5746] je stavio Desert Eagle(30) u Warehouse Skaljarski klan[SQL:7].
+(28/04/2020, 13:39:41) Igor_Kostic[SQL:561] je stavio Desert Eagle(50) u Warehouse Klan Amerika[SQL:9].
+(28/04/2020, 13:39:56) Igor_Kostic[SQL:561] je stavio Desert Eagle(20) u Warehouse Klan Amerika[SQL:9].
+(28/04/2020, 14:02:59) Igor_Kostic[SQL:561] je stavio Desert Eagle(20) u Warehouse Klan Amerika[SQL:9].
+(28/04/2020, 14:23:30) Igor_Kostic[SQL:561] je pohranio 3000$ u Warehouse Klan Amerika[SQL:9].
+(28/04/2020, 14:23:33) Igor_Kostic[SQL:561] je stavio Desert Eagle(20) u Warehouse Klan Amerika[SQL:9].
+(28/04/2020, 14:23:39) Igor_Kostic[SQL:561] je stavio Shotgun(20) u Warehouse Klan Amerika[SQL:9].
+(28/04/2020, 14:24:48) Igor_Kostic[SQL:561] je stavio Rifle(42) u Warehouse Klan Amerika[SQL:9].
+(28/04/2020, 14:24:49) Igor_Kostic[SQL:561] je stavio Desert Eagle(20) u Warehouse Klan Amerika[SQL:9].
+(29/04/2020, 13:12:15) Igor_Kostic[SQL:561] je stavio Desert Eagle(49) u Warehouse Klan Amerika[SQL:9].
+(29/04/2020, 13:12:27) Igor_Kostic[SQL:561] je stavio Desert Eagle(20) u Warehouse Klan Amerika[SQL:9].
+(29/04/2020, 15:20:58) Mile_Raonic[SQL:285] je stavio AK47(20) u Warehouse Klan Amerika[SQL:9].
+(29/04/2020, 15:21:00) Igor_Kostic[SQL:561] je stavio Desert Eagle(42) u Warehouse Klan Amerika[SQL:9].
+(29/04/2020, 15:21:19) Igor_Kostic[SQL:561] je stavio Desert Eagle(20) u Warehouse Klan Amerika[SQL:9].
+(29/04/2020, 18:26:48) Mile_Raonic[SQL:285] je stavio AK47(75) u Warehouse Klan Amerika[SQL:9].
+(29/04/2020, 18:28:00) Mile_Raonic[SQL:285] je stavio AK47(50) u Warehouse Klan Amerika[SQL:9].
+(29/04/2020, 18:28:36) Mile_Raonic[SQL:285] je stavio M4(70) u Warehouse Klan Amerika[SQL:9].
+(29/04/2020, 18:29:12) Mile_Raonic[SQL:285] je stavio M4(80) u Warehouse Klan Amerika[SQL:9].
+(29/04/2020, 19:09:10) Mile_Raonic[SQL:285] je stavio M4(70) u Warehouse Klan Amerika[SQL:9].
+(29/04/2020, 19:45:36) Mile_Raonic[SQL:285] je stavio M4(77) u Warehouse Klan Amerika[SQL:9].
+(29/04/2020, 19:45:51) Mile_Raonic[SQL:285] je stavio M4(80) u Warehouse Klan Amerika[SQL:9].
+(29/04/2020, 20:25:41) Igor_Kostic[SQL:561] je stavio Desert Eagle(41) u Warehouse Klan Amerika[SQL:9].
+(29/04/2020, 20:25:56) Igor_Kostic[SQL:561] je stavio Desert Eagle(20) u Warehouse Klan Amerika[SQL:9].
+(29/04/2020, 20:26:05) Igor_Kostic[SQL:561] je stavio Shotgun(20) u Warehouse Klan Amerika[SQL:9].
+(29/04/2020, 20:26:14) Igor_Kostic[SQL:561] je stavio Shotgun(20) u Warehouse Klan Amerika[SQL:9].
+(30/04/2020, 17:28:06) Igor_Kostic[SQL:561] je stavio Molotov Cocktail(2) u Warehouse Klan Amerika[SQL:9].
+(30/04/2020, 20:19:25) Mile_Raonic[SQL:285] je stavio AK47(75) u Warehouse Klan Amerika[SQL:9].
+(01/05/2020, 13:26:47) Igor_Kostic[SQL:561] je stavio Desert Eagle(20) u Warehouse Klan Amerika[SQL:9].
+(01/05/2020, 13:27:18) Igor_Kostic[SQL:561] je stavio Silenced Pistol(20) u Warehouse Klan Amerika[SQL:9].
+(01/05/2020, 13:27:20) Igor_Kostic[SQL:561] je stavio TEC9(50) u Warehouse Klan Amerika[SQL:9].
+(01/05/2020, 17:06:54) Ljubomir_Milovanovic[SQL:785] je stavio M4(80) u Warehouse Klan Amerika[SQL:9].
+(01/05/2020, 22:48:11) Igor_Kostic[SQL:561] je stavio Shotgun(20) u Warehouse Klan Amerika[SQL:9].
+(03/05/2020, 12:53:34) Igor_Kostic[SQL:561] je stavio Desert Eagle(37) u Warehouse Klan Amerika[SQL:9].
+(03/05/2020, 12:53:52) Igor_Kostic[SQL:561] je stavio MP5(60) u Warehouse Klan Amerika[SQL:9].
+(03/05/2020, 17:10:27) Raymond_Lazzeri[SQL:3110] je stavio Desert Eagle(44) u Warehouse Masotti's Crew[SQL:10].
+(03/05/2020, 21:32:33) Mile_Raonic[SQL:285] je stavio Desert Eagle(86) u Warehouse Klan Amerika[SQL:9].
+(03/05/2020, 21:32:51) Igor_Kostic[SQL:561] je stavio AK47(75) u Warehouse Klan Amerika[SQL:9].
+(03/05/2020, 21:46:43) Igor_Kostic[SQL:561] je stavio Colt 45(15) u Warehouse Klan Amerika[SQL:9].
+(04/05/2020, 11:33:46) Igor_Kostic[SQL:561] je stavio Desert Eagle(61) u Warehouse Klan Amerika[SQL:9].
+(04/05/2020, 11:34:01) Igor_Kostic[SQL:561] je stavio Desert Eagle(25) u Warehouse Klan Amerika[SQL:9].
+(04/05/2020, 11:34:08) Igor_Kostic[SQL:561] je stavio Desert Eagle(25) u Warehouse Klan Amerika[SQL:9].
+(04/05/2020, 13:42:38) Igor_Kostic[SQL:561] je stavio Desert Eagle(38) u Warehouse Klan Amerika[SQL:9].
+(04/05/2020, 13:42:53) Igor_Kostic[SQL:561] je stavio UZI(60) u Warehouse Klan Amerika[SQL:9].
+(04/05/2020, 15:31:22) Igor_Kostic[SQL:561] je stavio Silenced Pistol(58) u Warehouse Klan Amerika[SQL:9].
+(04/05/2020, 15:31:43) Igor_Kostic[SQL:561] je stavio Shotgun(20) u Warehouse Klan Amerika[SQL:9].
+(04/05/2020, 21:03:28) Igor_Kostic[SQL:561] je stavio Desert Eagle(38) u Warehouse Klan Amerika[SQL:9].
+(04/05/2020, 21:03:39) Igor_Kostic[SQL:561] je stavio Desert Eagle(20) u Warehouse Klan Amerika[SQL:9].
+(04/05/2020, 21:03:47) Igor_Kostic[SQL:561] je stavio Desert Eagle(20) u Warehouse Klan Amerika[SQL:9].
+(05/05/2020, 00:06:31) Igor_Kostic[SQL:561] je stavio Desert Eagle(30) u Warehouse Klan Amerika[SQL:9].
+(05/05/2020, 00:07:17) Ljubomir_Milovanovic[SQL:785] je stavio Desert Eagle(30) u Warehouse Klan Amerika[SQL:9].
+(05/05/2020, 16:21:05) Igor_Kostic[SQL:561] je stavio Desert Eagle(25) u Warehouse Klan Amerika[SQL:9].
+(05/05/2020, 16:21:19) Igor_Kostic[SQL:561] je stavio M4(50) u Warehouse Klan Amerika[SQL:9].
+(05/05/2020, 16:21:29) Igor_Kostic[SQL:561] je stavio Shotgun(25) u Warehouse Klan Amerika[SQL:9].
+(05/05/2020, 16:21:43) Igor_Kostic[SQL:561] je stavio AK47(30) u Warehouse Klan Amerika[SQL:9].
+(05/05/2020, 16:21:54) Igor_Kostic[SQL:561] je stavio M4(30) u Warehouse Klan Amerika[SQL:9].
+(05/05/2020, 16:25:46) Igor_Kostic[SQL:561] je stavio M4(60) u Warehouse Klan Amerika[SQL:9].
+(05/05/2020, 17:42:04) Igor_Kostic[SQL:561] je stavio MP5(60) u Warehouse Klan Amerika[SQL:9].
+(06/05/2020, 02:14:19) Igor_Kostic[SQL:561] je stavio Desert Eagle(75) u Warehouse Klan Amerika[SQL:9].
+(06/05/2020, 02:14:27) Igor_Kostic[SQL:561] je stavio Desert Eagle(20) u Warehouse Klan Amerika[SQL:9].
+(06/05/2020, 02:14:34) Igor_Kostic[SQL:561] je stavio Desert Eagle(20) u Warehouse Klan Amerika[SQL:9].
+(06/05/2020, 02:14:43) Igor_Kostic[SQL:561] je stavio Desert Eagle(25) u Warehouse Klan Amerika[SQL:9].
+(06/05/2020, 02:14:53) Igor_Kostic[SQL:561] je stavio Desert Eagle(25) u Warehouse Klan Amerika[SQL:9].
+(06/05/2020, 12:33:32) Ljubomir_Milovanovic[SQL:785] je stavio Silenced Pistol(58) u Warehouse Klan Amerika[SQL:9].
+(06/05/2020, 15:00:02) Igor_Kostic[SQL:561] je stavio Colt 45(13) u Warehouse Klan Amerika[SQL:9].
+(06/05/2020, 15:00:39) Igor_Kostic[SQL:561] je stavio Desert Eagle(20) u Warehouse Klan Amerika[SQL:9].
+(06/05/2020, 15:01:21) Igor_Kostic[SQL:561] je stavio Desert Eagle(20) u Warehouse Klan Amerika[SQL:9].
+(07/05/2020, 00:17:35) Igor_Kostic[SQL:561] je stavio M4(100) u Warehouse Klan Amerika[SQL:9].
+(07/05/2020, 10:53:06) Igor_Kostic[SQL:561] je stavio Desert Eagle(47) u Warehouse Klan Amerika[SQL:9].
+(07/05/2020, 10:53:22) Igor_Kostic[SQL:561] je stavio AK47(60) u Warehouse Klan Amerika[SQL:9].
+(07/05/2020, 10:53:32) Igor_Kostic[SQL:561] je stavio Shotgun(25) u Warehouse Klan Amerika[SQL:9].
+(09/05/2020, 02:24:48) Igor_Kostic[SQL:561] je stavio UZI(60) u Warehouse Klan Amerika[SQL:9].
+(09/05/2020, 02:25:19) Igor_Kostic[SQL:561] je stavio Colt 45(15) u Warehouse Klan Amerika[SQL:9].
+(10/05/2020, 11:11:41) Igor_Kostic[SQL:561] je stavio Shotgun(25) u Warehouse Klan Amerika[SQL:9].
+(10/05/2020, 11:11:54) Igor_Kostic[SQL:561] je stavio Desert Eagle(20) u Warehouse Klan Amerika[SQL:9].
+(10/05/2020, 22:08:10) Igor_Kostic[SQL:561] je stavio Desert Eagle(40) u Warehouse Klan Amerika[SQL:9].
+(17/05/2020, 17:28:42) Igor_Kostic[SQL:561] je stavio M4(100) u Warehouse Klan Amerika[SQL:9].
+(17/05/2020, 17:28:46) Igor_Kostic[SQL:561] je pohranio 23000$ u Warehouse Klan Amerika[SQL:9].
+(17/05/2020, 17:28:56) Igor_Kostic[SQL:561] je stavio Desert Eagle(50) u Warehouse Klan Amerika[SQL:9].
+(17/05/2020, 17:29:02) Igor_Kostic[SQL:561] je stavio Desert Eagle(50) u Warehouse Klan Amerika[SQL:9].
+(17/05/2020, 17:29:08) Igor_Kostic[SQL:561] je stavio Desert Eagle(50) u Warehouse Klan Amerika[SQL:9].
+(17/05/2020, 17:29:18) Igor_Kostic[SQL:561] je stavio Shotgun(50) u Warehouse Klan Amerika[SQL:9].
+(17/05/2020, 17:29:26) Igor_Kostic[SQL:561] je stavio Shotgun(50) u Warehouse Klan Amerika[SQL:9].
+(17/05/2020, 17:29:35) Igor_Kostic[SQL:561] je stavio UZI(50) u Warehouse Klan Amerika[SQL:9].
+(17/05/2020, 17:29:44) Igor_Kostic[SQL:561] je stavio TEC9(50) u Warehouse Klan Amerika[SQL:9].
+(17/05/2020, 17:29:57) Igor_Kostic[SQL:561] je stavio AK47(10) u Warehouse Klan Amerika[SQL:9].
+(18/05/2020, 17:11:50) Igor_Kostic[SQL:561] je stavio TEC9(50) u Warehouse Klan Amerika[SQL:9].
+(18/05/2020, 17:12:20) Igor_Kostic[SQL:561] je stavio Shotgun(25) u Warehouse Klan Amerika[SQL:9].
+(18/05/2020, 17:12:28) Igor_Kostic[SQL:561] je stavio Desert Eagle(20) u Warehouse Klan Amerika[SQL:9].
+(20/05/2020, 14:56:23) Igor_Kostic[SQL:561] je stavio Desert Eagle(20) u Warehouse Klan Amerika[SQL:9].
+(20/05/2020, 14:56:32) Igor_Kostic[SQL:561] je stavio Desert Eagle(20) u Warehouse Klan Amerika[SQL:9].
+(20/05/2020, 14:56:40) Igor_Kostic[SQL:561] je stavio Desert Eagle(20) u Warehouse Klan Amerika[SQL:9].
+(20/05/2020, 14:56:47) Igor_Kostic[SQL:561] je stavio Desert Eagle(20) u Warehouse Klan Amerika[SQL:9].
+(20/05/2020, 23:38:34) Igor_Kostic[SQL:561] je stavio Colt 45(20) u Warehouse Klan Amerika[SQL:9].
+(20/05/2020, 23:38:47) Uros_Radovic[SQL:154] je stavio Silenced Pistol(58) u Warehouse Klan Amerika[SQL:9].
+(21/05/2020, 22:35:11) Igor_Kostic[SQL:561] je stavio Colt 45(17) u Warehouse Klan Amerika[SQL:9].
+(22/05/2020, 01:16:01) Uros_Radovic[SQL:154] je stavio Colt 45(17) u Warehouse Klan Amerika[SQL:9].
+(22/05/2020, 01:19:20) Uros_Radovic[SQL:154] je stavio TEC9(50) u Warehouse Klan Amerika[SQL:9].
+(22/05/2020, 02:13:04) Hunter_Kang[SQL:96] je stavio Desert Eagle(4) u Warehouse On Leong Tong - GSS[SQL:6].
+(22/05/2020, 02:13:23) Liam_Hao[SQL:6345] je pohranio 1$ u Warehouse On Leong Tong - GSS[SQL:6].
+(22/05/2020, 02:13:46) Liam_Hao[SQL:6345] je pohranio 42$ u Warehouse On Leong Tong - GSS[SQL:6].
+(23/05/2020, 15:38:30) Igor_Kostic[SQL:561] je stavio Desert Eagle(20) u Warehouse Klan Amerika[SQL:9].
+(23/05/2020, 15:38:40) Igor_Kostic[SQL:561] je stavio Desert Eagle(20) u Warehouse Klan Amerika[SQL:9].
+(23/05/2020, 15:38:47) Igor_Kostic[SQL:561] je stavio Desert Eagle(20) u Warehouse Klan Amerika[SQL:9].
+(23/05/2020, 23:42:05) Uros_Radovic[SQL:154] je stavio Desert Eagle(20) u Warehouse Klan Amerika[SQL:9].
+(23/05/2020, 23:46:13) Igor_Kostic[SQL:561] je stavio MP5(60) u Warehouse Klan Amerika[SQL:9].
+(28/05/2020, 18:52:34) Vuk_Koprivica[SQL:5746] je stavio TEC9(75) u Warehouse Skaljarski klan[SQL:7].
+(28/05/2020, 18:52:43) Vuk_Koprivica[SQL:5746] je stavio TEC9(75) u Warehouse Skaljarski klan[SQL:7].
+(28/05/2020, 18:52:52) Vuk_Koprivica[SQL:5746] je stavio TEC9(75) u Warehouse Skaljarski klan[SQL:7].
+(31/05/2020, 13:10:28) Igor_Kostic[SQL:561] je stavio TEC9(50) u Warehouse Klan Amerika[SQL:9].
+(31/05/2020, 13:10:39) Igor_Kostic[SQL:561] je stavio UZI(50) u Warehouse Klan Amerika[SQL:9].
+(01/06/2020, 15:13:21) Igor_Kostic[SQL:561] je pohranio 60$ u Warehouse Klan Amerika[SQL:9].
+(01/06/2020, 15:13:24) Igor_Kostic[SQL:561] je stavio M4(100) u Warehouse Klan Amerika[SQL:9].
+(18/08/2020, 16:49:38) Thomas_McDowell[SQL:307] je pohranio 11000$ u Warehouse Borivoj[SQL:7].
+(19/08/2020, 13:12:01) Luca_Butler[SQL:510] je stavio TEC9(200) u Warehouse Borivoj[SQL:7].
+(19/08/2020, 13:14:20) Luca_Butler[SQL:510] je stavio TEC9(200) u Warehouse Borivoj[SQL:7].

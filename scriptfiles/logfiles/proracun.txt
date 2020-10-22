@@ -1,0 +1,53 @@
+
+
+[20/03/2020] Jordan Maccagno je uzeo 50000$ iz proracuna (1865803237$).
+[22/03/2020] Jordan Maccagno je uzeo 30000$ iz proracuna (1866703908$).
+[22/03/2020] Jordan Maccagno je uzeo 60000$ iz proracuna (1866554676$).
+[22/03/2020] Scott Prince je uzeo 260000$ iz proracuna (1866754701$).
+[29/03/2020] Sean Sutherland je uzeo 30000$ iz proracuna (1866082201$).
+[01/04/2020] Rene Strauss je uzeo 2$ iz proracuna (500000000$).
+[02/04/2020] 02/04/2020, 03:06:44 Mayor Jordan Maccagno je digao 307347$ iz biznisa Skyline Casino (ID 96 [MySQL ID: 116]).
+[04/04/2020] Julian Holland je uzeo 50000$ iz proracuna (497814055$).
+[04/04/2020] Julian Holland je uzeo 25000$ iz proracuna (497739884$).
+[07/04/2020] 07/04/2020, 20:54:38 Mayor Fawziyya Khawaja je digao 2300000$ iz biznisa Skyline Casino (ID 96 [MySQL ID: 116]).
+[09/04/2020] Jacob Banks je uzeo 140000$ iz proracuna (500214675$).
+[12/04/2020] Scott Prince je uzeo 140000$ iz proracuna (500766031$).
+[17/04/2020] 17/04/2020, 14:26:35 Mayor Davor Simovic je digao 465598$ iz biznisa Licenses Busine (ID 76 [MySQL ID: 88]).
+[18/04/2020] Travis Palmer je uzeo 50000$ iz proracuna (501083324$).
+[18/04/2020] Maska_735548 je uzeo 50000$ iz proracuna (500933012$).
+[19/04/2020] Travis Palmer je uzeo 50000$ iz proracuna (500589412$).
+[23/04/2020] Travis Palmer je uzeo 50000$ iz proracuna (499800915$).
+[23/04/2020] 23/04/2020, 22:01:44 Mayor Edgar Hicks je digao 140000$ iz biznisa Licenses Busine (ID 74 [MySQL ID: 88]).
+[23/04/2020] 23/04/2020, 22:02:34 Mayor Edgar Hicks je digao 1200000$ iz biznisa Skyline Casino (ID 94 [MySQL ID: 116]).
+[23/04/2020] 23/04/2020, 22:03:38 Mayor Edgar Hicks je stavio 500000$ u biznis Skyline Casino (ID 94 [MySQL ID: 116]).
+[27/04/2020] John McDowell je uzeo 190000$ iz proracuna (500480466$).
+[28/04/2020] Rene Strauss je uzeo 1$ iz proracuna (500369095$).
+[30/04/2020] Travis Palmer je uzeo 65000$ iz proracuna (499761163$).
+[30/04/2020] Travis Palmer je stavio 50000$ u proracun (499634253$).
+[30/04/2020] 30/04/2020, 22:13:27 Mayor Edwin Fitzgerald je digao 1$ iz biznisa Skyline Casino (ID 89 [MySQL ID: 116]).
+[30/04/2020] 30/04/2020, 22:13:38 Mayor Edwin Fitzgerald je digao 1000000$ iz biznisa Skyline Casino (ID 89 [MySQL ID: 116]).
+[02/05/2020] Travis Palmer je uzeo 125500$ iz proracuna (498937821$).
+[02/05/2020] 02/05/2020, 13:08:04 Mayor Travis Palmer je digao 178450$ iz biznisa Skyline Casino (ID 89 [MySQL ID: 116]).
+[02/05/2020] Travis Palmer je stavio 178450$ u proracun (498990771$).
+[02/05/2020] Travis Palmer je uzeo 40000$ iz proracuna (498840423$).
+[03/05/2020] Travis Palmer je stavio 100000$ u proracun (498592396$).
+[05/05/2020] 05/05/2020, 20:59:01 Mayor David Quetzalcoatl je digao 1140000$ iz biznisa Skyline Casino (ID 89 [MySQL ID: 116]).
+[06/05/2020] [06/05/2020, 06:39:54] [SERVER] Radi manjka novca u ilegalnom proracunu [499080548$], ilegalni proracun je automatski podesen n
+[07/05/2020] Travis Palmer je uzeo 50000$ iz proracuna (499016284$).
+[08/05/2020] Travis Palmer je uzeo 30000$ iz proracuna (498223722$).
+[10/05/2020] Travis Palmer je uzeo 50000$ iz proracuna (497720107$).
+[11/05/2020] 11/05/2020, 22:34:01 Mayor Travis Palmer je digao 500000$ iz biznisa Skyline Casino (ID 88 [MySQL ID: 116]).
+[11/05/2020] 11/05/2020, 22:34:21 Mayor Travis Palmer je digao 291292$ iz biznisa Skyline Casino (ID 88 [MySQL ID: 116]).
+[11/05/2020] Travis Palmer je stavio 782277$ u proracun (498498581$).
+[11/05/2020] Travis Palmer je stavio 20000$ u proracun (498490736$).
+[15/05/2020] 15/05/2020, 16:51:40 Mayor Jose Ayala je digao 314000$ iz biznisa Federal Oil 2 (ID 47 [MySQL ID: 57]).
+[15/05/2020] 15/05/2020, 16:52:34 Mayor Jose Ayala je digao 300000$ iz biznisa Federal Oil 2 (ID 47 [MySQL ID: 57]).
+[21/05/2020] 21/05/2020, 16:06:17 Mayor Jose Ayala je digao 1$ iz biznisa Skyline Casino (ID 94 [MySQL ID: 116]).
+[21/05/2020] 21/05/2020, 16:06:25 Mayor Jose Ayala je digao 1690000$ iz biznisa Skyline Casino (ID 94 [MySQL ID: 116]).
+[21/05/2020] 21/05/2020, 16:06:40 Mayor Jose Ayala je stavio 500000$ u biznis Skyline Casino (ID 94 [MySQL ID: 116]).
+[21/05/2020] Jose Ayala je uzeo 70000$ iz proracuna (497267652$).
+[28/05/2020] 28/05/2020, 19:29:19 Mayor Jose Ayala je digao 800000$ iz biznisa Skyline Casino (ID 92 [MySQL ID: 116]).
+[20/06/2020] Thomas Day je uzeo 200000$ iz proracuna (498936147$).
+[28/07/2020] Thomas McDowell je uzeo 150000$ iz proracuna (2035891206$).
+[30/09/2020] Fareed Nawwaf je uzeo 25000$ iz proracuna (2060198631$).
+[15/10/2020] Fareed Nawwaf je uzeo 200000$ iz proracuna (2060904849$).

@@ -1,0 +1,406 @@
+
+[19/03/2020] Dorian Acevedo je kupio Desert Eagle sa 35 metaka za 3150$.
+[19/03/2020] Jacody Cotton je kupio Desert Eagle sa 50 metaka za 4500$.
+[20/03/2020] Ed Philipp je kupio Desert Eagle sa 50 metaka za 4500$.
+[20/03/2020] Jacody Cotton je kupio Desert Eagle sa 50 metaka za 4500$.
+[21/03/2020] Ed Philipp je kupio Desert Eagle sa 50 metaka za 4500$.
+[21/03/2020] Leonard Burkhart je kupio Rifle sa 1 metaka za 110$.
+[22/03/2020] David Elizalde je kupio Desert Eagle sa 30 metaka za 2700$.
+[22/03/2020] Ed Philipp je kupio Desert Eagle sa 50 metaka za 4500$.
+[22/03/2020] Kevin Brent je kupio Desert Eagle sa 50 metaka za 4500$.
+[22/03/2020] Kiarra Leean je kupio Desert Eagle sa 50 metaka za 4500$.
+[22/03/2020] Raymond Rogers je kupio Desert Eagle sa 50 metaka za 4500$.
+[23/03/2020] Jackson Scofield je kupio Desert Eagle sa 50 metaka za 4500$.
+[23/03/2020] Arthur Williams je kupio Desert Eagle sa 50 metaka za 4500$.
+[23/03/2020] Ed Philipp je kupio Desert Eagle sa 50 metaka za 4500$.
+[23/03/2020] Dorian Acevedo je kupio Shotgun sa 30 metaka za 3000$.
+[23/03/2020] Austin Burkhart je kupio Desert Eagle sa 50 metaka za 4500$.
+[23/03/2020] Jacody Cotton je kupio Desert Eagle sa 50 metaka za 4500$.
+[23/03/2020] David Elizalde je kupio Desert Eagle sa 16 metaka za 1440$.
+[23/03/2020] Vincent Connor je kupio Desert Eagle sa 50 metaka za 4500$.
+[23/03/2020] Maska_825948 je kupio Shotgun sa 50 metaka za 5000$.
+[24/03/2020] Ed Philipp je kupio Desert Eagle sa 50 metaka za 4500$.
+[24/03/2020] Carl Sanders je kupio Shotgun sa 50 metaka za 5000$.
+[24/03/2020] Bruno Costigliola je kupio Desert Eagle sa 50 metaka za 4500$.
+[24/03/2020] David Elizalde je kupio Shotgun sa 25 metaka za 2500$.
+[25/03/2020] Travis Bennet je kupio Desert Eagle sa 50 metaka za 4500$.
+[25/03/2020] Thomas McDowell je kupio Desert Eagle sa 25 metaka za 2250$.
+[25/03/2020] Jacody Cotton je kupio Desert Eagle sa 50 metaka za 4500$.
+[25/03/2020] Butch Caldwell je kupio Shotgun sa 15 metaka za 1500$.
+[25/03/2020] Maska_963726 je kupio Shotgun sa 50 metaka za 5000$.
+[25/03/2020] Kiarra Leean je kupio Desert Eagle sa 50 metaka za 4500$.
+[26/03/2020] Travis Bennet je kupio Desert Eagle sa 50 metaka za 4500$.
+[26/03/2020] Bradley Morison je kupio Desert Eagle sa 50 metaka za 4500$.
+[26/03/2020] Michael Roberts je kupio Colt 45 sa 10 metaka za 700$.
+[26/03/2020] Khuldjan Sabbag je kupio Shotgun sa 50 metaka za 5000$.
+[26/03/2020] Thomas McDowell je kupio Shotgun sa 50 metaka za 5000$.
+[26/03/2020] David Elizalde je kupio Desert Eagle sa 30 metaka za 2700$.
+[26/03/2020] Jorge Sanz je kupio Desert Eagle sa 25 metaka za 2250$.
+[26/03/2020] Tom Maguire je kupio Desert Eagle sa 50 metaka za 4500$.
+[26/03/2020] Stephen Vicious je kupio Desert Eagle sa 50 metaka za 4500$.
+[26/03/2020] Carl Sanders je kupio Desert Eagle sa 50 metaka za 4500$.
+[27/03/2020] Travis Bennet je kupio Desert Eagle sa 50 metaka za 4500$.
+[27/03/2020] Sebastian Carrasco je kupio Desert Eagle sa 50 metaka za 4500$.
+[27/03/2020] Dorian Acevedo je kupio Desert Eagle sa 50 metaka za 4500$.
+[27/03/2020] Maska_220116 je kupio Shotgun sa 50 metaka za 5000$.
+[27/03/2020] Carl Sanders je kupio Shotgun sa 50 metaka za 5000$.
+[28/03/2020] Travis Bennet je kupio Shotgun sa 50 metaka za 5000$.
+[28/03/2020] Odell Gramont je kupio Desert Eagle sa 50 metaka za 4500$.
+[28/03/2020] Thomas McDowell je kupio Desert Eagle sa 50 metaka za 4500$.
+[28/03/2020] Jorge Sanz je kupio Desert Eagle sa 50 metaka za 4500$.
+[28/03/2020] Maska_220116 je kupio Desert Eagle sa 50 metaka za 4500$.
+[28/03/2020] Carl Sanders je kupio Desert Eagle sa 50 metaka za 4500$.
+[29/03/2020] Maska_266917 je kupio Shotgun sa 50 metaka za 5000$.
+[29/03/2020] Travis Bennet je kupio Desert Eagle sa 50 metaka za 4500$.
+[29/03/2020] Kiarra Leean je kupio Desert Eagle sa 50 metaka za 4500$.
+[29/03/2020] Milos Bogdanovic je kupio Desert Eagle sa 50 metaka za 4500$.
+[30/03/2020] Sebastian Carrasco je kupio Shotgun sa 50 metaka za 5000$.
+[30/03/2020] Travis Bennet je kupio Shotgun sa 50 metaka za 5000$.
+[30/03/2020] Carl Sanders je kupio Shotgun sa 50 metaka za 5000$.
+[30/03/2020] Jorge Sanz je kupio Desert Eagle sa 33 metaka za 2970$.
+[30/03/2020] Richard Myers je kupio Desert Eagle sa 50 metaka za 4500$.
+[30/03/2020] Kiarra Leean je kupio Desert Eagle sa 50 metaka za 4500$.
+[30/03/2020] Thomas McDowell je kupio Desert Eagle sa 30 metaka za 2700$.
+[30/03/2020] Milos Bogdanovic je kupio Desert Eagle sa 50 metaka za 4500$.
+[30/03/2020] David Elizalde je kupio Desert Eagle sa 50 metaka za 4500$.
+[30/03/2020] Simon Dave je kupio Desert Eagle sa 15 metaka za 1350$.
+[30/03/2020] Jordan Maccagno je kupio Desert Eagle sa 50 metaka za 4500$.
+[31/03/2020] Viktor Stern je kupio Desert Eagle sa 50 metaka za 4500$.
+[31/03/2020] Travis Bennet je kupio Desert Eagle sa 50 metaka za 4500$.
+[31/03/2020] Jose Ortega je kupio Desert Eagle sa 25 metaka za 2250$.
+[31/03/2020] Milos Bogdanovic je kupio Desert Eagle sa 50 metaka za 4500$.
+[31/03/2020] Carl Sanders je kupio Desert Eagle sa 50 metaka za 4500$.
+[31/03/2020] David Elizalde je kupio Desert Eagle sa 30 metaka za 2700$.
+[31/03/2020] Kiarra Leean je kupio Desert Eagle sa 50 metaka za 4500$.
+[01/04/2020] Thomas McDowell je kupio Desert Eagle sa 50 metaka za 4500$.
+[01/04/2020] Travis Bennet je kupio Shotgun sa 50 metaka za 5000$.
+[01/04/2020] Jovica Dudic je kupio Desert Eagle sa 50 metaka za 4500$.
+[01/04/2020] Blake Bullock je kupio Shotgun sa 50 metaka za 5000$.
+[01/04/2020] Austin White je kupio Desert Eagle sa 5 metaka za 450$.
+[01/04/2020] Maska_963726 je kupio Desert Eagle sa 50 metaka za 4500$.
+[01/04/2020] Kiarra Leean je kupio Desert Eagle sa 50 metaka za 4500$.
+[01/04/2020] Milos Bogdanovic je kupio Desert Eagle sa 50 metaka za 4500$.
+[01/04/2020] Dobrislav Lipovina je kupio Desert Eagle sa 50 metaka za 4500$.
+[02/04/2020] Travis Bennet je kupio Desert Eagle sa 50 metaka za 4500$.
+[02/04/2020] Maska_726914 je kupio Desert Eagle sa 50 metaka za 4500$.
+[02/04/2020] Dakari Mercer je kupio Desert Eagle sa 50 metaka za 4500$.
+[02/04/2020] David Elizalde je kupio Desert Eagle sa 15 metaka za 1350$.
+[02/04/2020] Eric Roberts je kupio Desert Eagle sa 5 metaka za 450$.
+[02/04/2020] Blake Bullock je kupio Shotgun sa 50 metaka za 5000$.
+[03/04/2020] Travis Bennet je kupio Desert Eagle sa 50 metaka za 4500$.
+[03/04/2020] Aaron Schaffner je kupio Desert Eagle sa 50 metaka za 4500$.
+[03/04/2020] Maska_963726 je kupio Desert Eagle sa 50 metaka za 4500$.
+[03/04/2020] Kiarra Leean je kupio Desert Eagle sa 50 metaka za 4500$.
+[03/04/2020] Dobrislav Lipovina je kupio Desert Eagle sa 50 metaka za 4500$.
+[03/04/2020] Molly Cortez je kupio Desert Eagle sa 50 metaka za 4500$.
+[03/04/2020] Leonard Burkhart je kupio Desert Eagle sa 30 metaka za 2700$.
+[03/04/2020] Milos Bogdanovic je kupio Desert Eagle sa 50 metaka za 4500$.
+[03/04/2020] David Elizalde je kupio Shotgun sa 50 metaka za 5000$.
+[04/04/2020] Austin Burkhart je kupio Desert Eagle sa 50 metaka za 4500$.
+[04/04/2020] Blake Bullock je kupio Shotgun sa 50 metaka za 5000$.
+[04/04/2020] Travis Bennet je kupio Shotgun sa 50 metaka za 5000$.
+[04/04/2020] Stephen Vicious je kupio Desert Eagle sa 50 metaka za 4500$.
+[04/04/2020] Freddie Pangallo je kupio Desert Eagle sa 20 metaka za 1800$.
+[04/04/2020] Thomas McDowell je kupio Desert Eagle sa 50 metaka za 4500$.
+[04/04/2020] Dobrislav Lipovina je kupio Shotgun sa 40 metaka za 4000$.
+[04/04/2020] Molly Cortez je kupio Desert Eagle sa 50 metaka za 4500$.
+[04/04/2020] Milos Bogdanovic je kupio Desert Eagle sa 50 metaka za 4500$.
+[05/04/2020] Kiarra Leean je kupio Desert Eagle sa 50 metaka za 4500$.
+[05/04/2020] Travis Bennet je kupio Desert Eagle sa 50 metaka za 4500$.
+[05/04/2020] Krsto Dakic je kupio Shotgun sa 50 metaka za 5000$.
+[05/04/2020] Anna McAdams je kupio Desert Eagle sa 50 metaka za 4500$.
+[05/04/2020] Molly Cortez je kupio Desert Eagle sa 50 metaka za 4500$.
+[05/04/2020] Dobrislav Lipovina je kupio Desert Eagle sa 50 metaka za 4500$.
+[05/04/2020] Milos Bogdanovic je kupio Desert Eagle sa 50 metaka za 4500$.
+[06/04/2020] Thomas McDowell je kupio Rifle sa 50 metaka za 5500$.
+[06/04/2020] Travis Bennet je kupio Desert Eagle sa 50 metaka za 4500$.
+[06/04/2020] Daryl Trager je kupio Shotgun sa 50 metaka za 5000$.
+[06/04/2020] Kiarra Leean je kupio Desert Eagle sa 50 metaka za 4500$.
+[06/04/2020] Maska_-1 je kupio Desert Eagle sa 25 metaka za 2250$.
+[06/04/2020] Jovica Dudic je kupio Shotgun sa 50 metaka za 5000$.
+[06/04/2020] Maska_-1 je kupio Desert Eagle sa 50 metaka za 4500$.
+[06/04/2020] Milos Bogdanovic je kupio Desert Eagle sa 50 metaka za 4500$.
+[06/04/2020] Jordan Maccagno je kupio Desert Eagle sa 50 metaka za 4500$.
+[06/04/2020] Viktor Stern je kupio Desert Eagle sa 50 metaka za 4500$.
+[07/04/2020] Molly Cortez je kupio Desert Eagle sa 50 metaka za 4500$.
+[07/04/2020] Richard Myers je kupio Desert Eagle sa 50 metaka za 4500$.
+[07/04/2020] Simon Dave je kupio Desert Eagle sa 20 metaka za 1800$.
+[07/04/2020] Travis Bennet je kupio Desert Eagle sa 50 metaka za 4500$.
+[07/04/2020] Milos Bogdanovic je kupio Desert Eagle sa 50 metaka za 4500$.
+[08/04/2020] Alen Charles je kupio Desert Eagle sa 5 metaka za 450$.
+[08/04/2020] Molly Cortez je kupio Desert Eagle sa 50 metaka za 4500$.
+[08/04/2020] Thomas McDowell je kupio Desert Eagle sa 50 metaka za 4500$.
+[08/04/2020] Travis Bennet je kupio Shotgun sa 50 metaka za 5000$.
+[08/04/2020] Maska_226811 je kupio Desert Eagle sa 50 metaka za 4500$.
+[08/04/2020] Milos Bogdanovic je kupio Desert Eagle sa 50 metaka za 4500$.
+[09/04/2020] Travis Bennet je kupio Shotgun sa 50 metaka za 5000$.
+[09/04/2020] Milos Bogdanovic je kupio Desert Eagle sa 50 metaka za 4500$.
+[09/04/2020] Molly Cortez je kupio Desert Eagle sa 50 metaka za 4500$.
+[10/04/2020] Maska_226811 je kupio Desert Eagle sa 50 metaka za 4500$.
+[10/04/2020] Maska_-1 je kupio Desert Eagle sa 11 metaka za 990$.
+[10/04/2020] Maska_825948 je kupio Desert Eagle sa 50 metaka za 4500$.
+[10/04/2020] Maska_-1 je kupio Desert Eagle sa 50 metaka za 4500$.
+[10/04/2020] Molly Cortez je kupio Desert Eagle sa 50 metaka za 4500$.
+[10/04/2020] Anna McAdams je kupio Shotgun sa 50 metaka za 5000$.
+[10/04/2020] Milos Bogdanovic je kupio Desert Eagle sa 50 metaka za 4500$.
+[11/04/2020] Krsto Dakic je kupio Shotgun sa 50 metaka za 5000$.
+[11/04/2020] Stephen Vicious je kupio Desert Eagle sa 50 metaka za 4500$.
+[11/04/2020] Aaron Schaffner je kupio Shotgun sa 50 metaka za 5000$.
+[11/04/2020] Eric Roberts je kupio Colt 45 sa 10 metaka za 700$.
+[11/04/2020] Milos Bogdanovic je kupio Desert Eagle sa 50 metaka za 4500$.
+[11/04/2020] Molly Cortez je kupio Desert Eagle sa 50 metaka za 4500$.
+[12/04/2020] Travis Bennet je kupio Desert Eagle sa 50 metaka za 4500$.
+[12/04/2020] Lorenzo Bonelli je kupio Desert Eagle sa 50 metaka za 4500$.
+[12/04/2020] Milos Bogdanovic je kupio Desert Eagle sa 50 metaka za 4500$.
+[12/04/2020] Molly Cortez je kupio Desert Eagle sa 50 metaka za 4500$.
+[13/04/2020] Krsto Dakic je kupio Desert Eagle sa 50 metaka za 4500$.
+[13/04/2020] Leonard Burkhart je kupio Desert Eagle sa 35 metaka za 3150$.
+[13/04/2020] Travis Bennet je kupio Desert Eagle sa 50 metaka za 4500$.
+[13/04/2020] Richard Myers je kupio Desert Eagle sa 50 metaka za 4500$.
+[13/04/2020] Milos Bogdanovic je kupio Desert Eagle sa 50 metaka za 4500$.
+[13/04/2020] Maska_812760 je kupio Desert Eagle sa 50 metaka za 4500$.
+[13/04/2020] Sergey Andreyev je kupio Shotgun sa 50 metaka za 5000$.
+[14/04/2020] Daryl Trager je kupio Shotgun sa 50 metaka za 5000$.
+[14/04/2020] Maska_-1 je kupio Desert Eagle sa 50 metaka za 4500$.
+[14/04/2020] Krsto Dakic je kupio Rifle sa 50 metaka za 5500$.
+[14/04/2020] Jovica Dudic je kupio Desert Eagle sa 50 metaka za 4500$.
+[14/04/2020] Molly Cortez je kupio Desert Eagle sa 50 metaka za 4500$.
+[14/04/2020] Milos Bogdanovic je kupio Desert Eagle sa 50 metaka za 4500$.
+[15/04/2020] Krsto Dakic je kupio Shotgun sa 50 metaka za 5000$.
+[15/04/2020] Molly Cortez je kupio Desert Eagle sa 50 metaka za 4500$.
+[15/04/2020] Butch Caldwell je kupio Desert Eagle sa 50 metaka za 4500$.
+[15/04/2020] Milos Bogdanovic je kupio Desert Eagle sa 50 metaka za 4500$.
+[15/04/2020] Maska_735548 je kupio Rifle sa 10 metaka za 1100$.
+[16/04/2020] Krsto Dakic je kupio Shotgun sa 50 metaka za 5000$.
+[16/04/2020] Ralph Masotti je kupio Shotgun sa 50 metaka za 5000$.
+[16/04/2020] Maska_735548 je kupio Desert Eagle sa 28 metaka za 2520$.
+[16/04/2020] Molly Cortez je kupio Desert Eagle sa 50 metaka za 4500$.
+[17/04/2020] Milos Bogdanovic je kupio Desert Eagle sa 50 metaka za 4500$.
+[17/04/2020] Thomas McDowell je kupio Desert Eagle sa 50 metaka za 4500$.
+[17/04/2020] Krsto Dakic je kupio Desert Eagle sa 50 metaka za 4500$.
+[17/04/2020] Milos Bogdanovic je kupio Desert Eagle sa 50 metaka za 4500$.
+[18/04/2020] Molly Cortez je kupio Desert Eagle sa 50 metaka za 4500$.
+[18/04/2020] Aaron Schaffner je kupio Desert Eagle sa 50 metaka za 4500$.
+[18/04/2020] Milos Bogdanovic je kupio Shotgun sa 50 metaka za 5000$.
+[18/04/2020] Molly Cortez je kupio Desert Eagle sa 50 metaka za 4500$.
+[19/04/2020] Stephen Vicious je kupio Shotgun sa 50 metaka za 5000$.
+[19/04/2020] Thomas McDowell je kupio Desert Eagle sa 50 metaka za 4500$.
+[19/04/2020] Milos Bogdanovic je kupio Shotgun sa 50 metaka za 5000$.
+[19/04/2020] Brooks Connor je kupio Desert Eagle sa 50 metaka za 4500$.
+[19/04/2020] Molly Cortez je kupio Desert Eagle sa 50 metaka za 4500$.
+[20/04/2020] Viktor Stern je kupio Desert Eagle sa 50 metaka za 4500$.
+[20/04/2020] Maska_948358 je kupio Colt 45 sa 5 metaka za 350$.
+[20/04/2020] Milos Bogdanovic je kupio Shotgun sa 50 metaka za 5000$.
+[20/04/2020] Molly Cortez je kupio Desert Eagle sa 50 metaka za 4500$.
+[21/04/2020] Richard Myers je kupio Colt 45 sa 50 metaka za 3500$.
+[21/04/2020] Milos Bogdanovic je kupio Desert Eagle sa 50 metaka za 4500$.
+[21/04/2020] Molly Cortez je kupio Desert Eagle sa 50 metaka za 4500$.
+[22/04/2020] Thomas McDowell je kupio Desert Eagle sa 40 metaka za 3600$.
+[22/04/2020] Leonard Burkhart je kupio Desert Eagle sa 14 metaka za 1260$.
+[22/04/2020] Molly Cortez je kupio Desert Eagle sa 50 metaka za 4500$.
+[22/04/2020] Milos Bogdanovic je kupio Desert Eagle sa 50 metaka za 4500$.
+[23/04/2020] Molly Cortez je kupio Desert Eagle sa 50 metaka za 4500$.
+[24/04/2020] Milos Bogdanovic je kupio Desert Eagle sa 50 metaka za 4500$.
+[24/04/2020] Rene Strauss je kupio Desert Eagle sa 10 metaka za 900$.
+[24/04/2020] Blake Bullock je kupio Desert Eagle sa 50 metaka za 4500$.
+[24/04/2020] Molly Cortez je kupio Desert Eagle sa 50 metaka za 4500$.
+[24/04/2020] Viktor Stern je kupio Desert Eagle sa 50 metaka za 4500$.
+[25/04/2020] William Jones je kupio Desert Eagle sa 10 metaka za 900$.
+[25/04/2020] Milos Bogdanovic je kupio Desert Eagle sa 20 metaka za 1800$.
+[25/04/2020] Kiarra Leean je kupio M4  sa 100 metaka za 20000$.
+[25/04/2020] Molly Cortez je kupio Desert Eagle sa 50 metaka za 4500$.
+[25/04/2020] Christopher DeRossi je kupio Desert Eagle sa 50 metaka za 4500$.
+[26/04/2020] Milos Bogdanovic je kupio Desert Eagle sa 50 metaka za 4500$.
+[26/04/2020] Thomas McDowell je kupio M4 sa 75 metaka za 15000$.
+[26/04/2020] Ralph Masotti je kupio Desert Eagle sa 50 metaka za 4500$.
+[26/04/2020] Molly Cortez je kupio Desert Eagle sa 50 metaka za 4500$.
+[27/04/2020] Milos Bogdanovic je kupio Desert Eagle sa 50 metaka za 4500$.
+[27/04/2020] Molly Cortez je kupio Desert Eagle sa 50 metaka za 4500$.
+[27/04/2020] Brooks Connor je kupio M4 sa 1 metaka za 200$.
+[28/04/2020] Maska_670537 je kupio Desert Eagle sa 50 metaka za 4500$.
+[28/04/2020] Milos Bogdanovic je kupio Desert Eagle sa 50 metaka za 4500$.
+[28/04/2020] Stephen Vicious je kupio Desert Eagle sa 50 metaka za 4500$.
+[28/04/2020] Maska_422201 je kupio Desert Eagle sa 22 metaka za 1980$.
+[28/04/2020] Molly Cortez je kupio Desert Eagle sa 50 metaka za 4500$.
+[29/04/2020] Avram Leontyev je kupio Desert Eagle sa 50 metaka za 4500$.
+[29/04/2020] Richard Myers je kupio Shotgun sa 50 metaka za 5000$.
+[29/04/2020] Milos Bogdanovic je kupio Desert Eagle sa 50 metaka za 4500$.
+[29/04/2020] Shaquille Rodgers je kupio Shotgun sa 50 metaka za 5000$.
+[29/04/2020] Terry Williams je kupio Desert Eagle sa 50 metaka za 4500$.
+[29/04/2020] Leonard Burkhart je kupio Desert Eagle sa 21 metaka za 1890$.
+[29/04/2020] Aaron Schaffner je kupio M4 sa 100 metaka za 20000$.
+[29/04/2020] Molly Cortez je kupio Desert Eagle sa 50 metaka za 4500$.
+[30/04/2020] Viktor Stern je kupio Desert Eagle sa 50 metaka za 4500$.
+[30/04/2020] Molly Cortez je kupio Desert Eagle sa 50 metaka za 4500$.
+[01/05/2020] Molly Cortez je kupio Desert Eagle sa 50 metaka za 4500$.
+[02/05/2020] Thomas McDowell je kupio Desert Eagle sa 50 metaka za 4500$.
+[02/05/2020] Jimmy Cheng je kupio Desert Eagle sa 50 metaka za 4500$.
+[02/05/2020] Brooks Connor je kupio Desert Eagle sa 50 metaka za 4500$.
+[02/05/2020] Molly Cortez je kupio Desert Eagle sa 50 metaka za 4500$.
+[02/05/2020] Lorenzo Bonelli je kupio Desert Eagle sa 50 metaka za 4500$.
+[03/05/2020] Molly Cortez je kupio Desert Eagle sa 50 metaka za 4500$.
+[05/05/2020] Khuldjan Sabbag je kupio Desert Eagle sa 50 metaka za 4500$.
+[05/05/2020] Stephen Vicious je kupio Desert Eagle sa 50 metaka za 4500$.
+[06/05/2020] Viktor Stern je kupio Desert Eagle sa 50 metaka za 4500$.
+[09/05/2020] Jimmy Cheng je kupio Desert Eagle sa 50 metaka za 4500$.
+[09/05/2020] Leonard Burkhart je kupio Desert Eagle sa 21 metaka za 1890$.
+[09/05/2020] Thomas McDowell je kupio Desert Eagle sa 50 metaka za 4500$.
+[10/05/2020] Terry Williams je kupio Desert Eagle sa 50 metaka za 4500$.
+[10/05/2020] Simon Dave je kupio Desert Eagle sa 50 metaka za 4500$.
+[11/05/2020] Butch Caldwell je kupio Desert Eagle sa 50 metaka za 4500$.
+[12/05/2020] Terry Williams je kupio Desert Eagle sa 50 metaka za 4500$.
+[12/05/2020] Rene Strauss je kupio Desert Eagle sa 30 metaka za 2700$.
+[12/05/2020] Molly Cortez je kupio M4 sa 100 metaka za 20000$.
+[13/05/2020] Zhiqiang Uchiyama je kupio Desert Eagle sa 50 metaka za 4500$.
+[13/05/2020] Maska_115721 je kupio Desert Eagle sa 50 metaka za 4500$.
+[14/05/2020] Terry Williams je kupio Desert Eagle sa 50 metaka za 4500$.
+[14/05/2020] Rene Strauss je kupio Desert Eagle sa 50 metaka za 4500$.
+[16/05/2020] Terry Williams je kupio Desert Eagle sa 50 metaka za 4500$.
+[17/05/2020] Thomas Day je kupio M4 sa 5 metaka za 1000$.
+[18/05/2020] William Nithercott je kupio M4 sa 100 metaka za 20000$.
+[18/05/2020] Terry Williams je kupio Desert Eagle sa 50 metaka za 4500$.
+[19/05/2020] Viktor Stern je kupio Desert Eagle sa 50 metaka za 4500$.
+[19/05/2020] Leonard Burkhart je kupio Desert Eagle sa 21 metaka za 1890$.
+[20/05/2020] Thomas Day je kupio M4 sa 1 metaka za 200$.
+[20/05/2020] Thomas Day je kupio Colt 45 sa 1 metaka za 70$.
+[20/05/2020] Jackson Scofield je kupio Desert Eagle sa 50 metaka za 4500$.
+[20/05/2020] Maska_374847 je kupio Desert Eagle sa 50 metaka za 4500$.
+[21/05/2020] Richard Myers je kupio Desert Eagle sa 50 metaka za 4500$.
+[22/05/2020] Stephen Frye je kupio Rifle sa 50 metaka za 5500$.
+[23/05/2020] Stephen Frye je kupio Shotgun sa 50 metaka za 5000$.
+[24/05/2020] Molly Cortez je kupio Desert Eagle sa 50 metaka za 4500$.
+[24/05/2020] Stephen Frye je kupio Rifle sa 50 metaka za 5500$.
+[25/05/2020] Stephen Frye je kupio Desert Eagle sa 50 metaka za 4500$.
+[26/05/2020] William Nithercott je kupio Desert Eagle sa 50 metaka za 4500$.
+[26/05/2020] Stephen Frye je kupio Rifle sa 50 metaka za 5500$.
+[27/05/2020] Viktor Stern je kupio Desert Eagle sa 50 metaka za 4500$.
+[27/05/2020] Stephen Frye je kupio Rifle sa 50 metaka za 5500$.
+[28/05/2020] Stephen Frye je kupio Rifle sa 50 metaka za 5500$.
+[29/05/2020] Demetrius Innes je kupio Rifle sa 50 metaka za 5500$.
+[29/05/2020] Stephen Frye je kupio Rifle sa 50 metaka za 5500$.
+[30/05/2020] Demetrius Innes je kupio Shotgun sa 50 metaka za 5000$.
+[30/05/2020] Stephen Frye je kupio Rifle sa 50 metaka za 5500$.
+[31/05/2020] Stephen Frye je kupio Desert Eagle sa 50 metaka za 4500$.
+[01/06/2020] Rene Strauss je kupio Desert Eagle sa 50 metaka za 4500$.
+[01/06/2020] Larry Dickens je kupio Shotgun sa 50 metaka za 5000$.
+[01/06/2020] Stephen Frye je kupio Desert Eagle sa 50 metaka za 4500$.
+[01/06/2020] Maska_374847 je kupio Desert Eagle sa 50 metaka za 4500$.
+[02/06/2020] Stephen Frye je kupio Shotgun sa 50 metaka za 5000$.
+[02/06/2020] Larry Dickens je kupio Desert Eagle sa 50 metaka za 4500$.
+[02/06/2020] Viktor Stern je kupio Desert Eagle sa 50 metaka za 4500$.
+[03/06/2020] Stephen Frye je kupio Shotgun sa 50 metaka za 5000$.
+[04/06/2020] Stephen Frye je kupio Shotgun sa 50 metaka za 5000$.
+[04/06/2020] Larry Dickens je kupio Shotgun sa 50 metaka za 5000$.
+[05/06/2020] Maska_220913 je kupio Desert Eagle sa 50 metaka za 4500$.
+[05/06/2020] William Nithercott je kupio Shotgun sa 50 metaka za 5000$.
+[05/06/2020] Larry Dickens je kupio Desert Eagle sa 50 metaka za 4500$.
+[06/06/2020] Stephen Frye je kupio Rifle sa 50 metaka za 5500$.
+[06/06/2020] Molly Cortez je kupio Desert Eagle sa 50 metaka za 4500$.
+[07/06/2020] Stephen Frye je kupio Rifle sa 50 metaka za 5500$.
+[08/06/2020] Stephen Frye je kupio Rifle sa 50 metaka za 5500$.
+[09/06/2020] Stephen Frye je kupio Rifle sa 50 metaka za 5500$.
+[10/06/2020] Demetrius Innes je kupio Shotgun sa 50 metaka za 5000$.
+[10/06/2020] Stephen Frye je kupio Desert Eagle sa 50 metaka za 4500$.
+[12/06/2020] Stephen Frye je kupio Colt 45 sa 50 metaka za 3500$.
+[13/06/2020] Gabriel Hopwood je kupio Shotgun sa 50 metaka za 5000$.
+[14/06/2020] Demetrius Innes je kupio Desert Eagle sa 50 metaka za 4500$.
+[15/06/2020] Stephen Frye je kupio Desert Eagle sa 50 metaka za 4500$.
+[16/06/2020] Stephen Frye je kupio Colt 45 sa 50 metaka za 3500$.
+[16/06/2020] Maska_184999 je kupio Shotgun sa 12 metaka za 1200$.
+[16/06/2020] Zhiqiang Uchiyama je kupio Rifle sa 50 metaka za 5500$.
+[17/06/2020] Stephen Frye je kupio Shotgun sa 50 metaka za 5000$.
+[18/06/2020] Stephen Frye je kupio Desert Eagle sa 50 metaka za 4500$.
+[19/06/2020] Terry Williams je kupio Desert Eagle sa 50 metaka za 4500$.
+[19/06/2020] Stephen Frye je kupio Shotgun sa 50 metaka za 5000$.
+[19/06/2020] Richard Myers je kupio Colt 45 sa 50 metaka za 3500$.
+[20/06/2020] Stephen Frye je kupio Shotgun sa 50 metaka za 5000$.
+[21/06/2020] Bradley Morison je kupio Desert Eagle sa 50 metaka za 4500$.
+[21/06/2020] Sergey Andreyev je kupio Shotgun sa 1 metaka za 100$.
+[21/06/2020] Gabriel Hopwood je kupio Desert Eagle sa 50 metaka za 4500$.
+[22/06/2020] Stephen Frye je kupio Rifle sa 50 metaka za 5500$.
+[23/06/2020] Deveron Hodges je kupio Desert Eagle sa 50 metaka za 4500$.
+[25/06/2020] Alfonso Day je kupio Desert Eagle sa 25 metaka za 2250$.
+[25/06/2020] Terry Williams je kupio Shotgun sa 50 metaka za 5000$.
+[27/06/2020] Simon Dave je kupio Shotgun sa 50 metaka za 5000$.
+[29/06/2020] Stephen Frye je kupio Rifle sa 50 metaka za 5500$.
+[29/06/2020] Sergey Andreyev je kupio Desert Eagle sa 20 metaka za 1800$.
+[02/07/2020] Maska_810648 je kupio Shotgun sa 50 metaka za 5000$.
+[05/07/2020] Terry Williams je kupio Shotgun sa 50 metaka za 5000$.
+[05/07/2020] Zhiqiang Uchiyama je kupio Desert Eagle sa 50 metaka za 4500$.
+[08/07/2020] Thomas McDowell je kupio Desert Eagle sa 50 metaka za 4500$.
+[08/07/2020] Stephen Frye je kupio Rifle sa 50 metaka za 5500$.
+[10/07/2020] Simon Dave je kupio Shotgun sa 50 metaka za 5000$.
+[10/07/2020] Maska_810648 je kupio Desert Eagle sa 50 metaka za 4500$.
+[14/07/2020] Alonzo Ward je kupio Shotgun sa 50 metaka za 5000$.
+[23/07/2020] Alonzo Ward je kupio Desert Eagle sa 50 metaka za 4500$.
+[26/07/2020] Richard Myers je kupio Desert Eagle sa 50 metaka za 4500$.
+[27/07/2020] Maska_220913 je kupio Rifle sa 50 metaka za 5500$.
+[28/07/2020] Maska_810648 je kupio Desert Eagle sa 50 metaka za 4500$.
+[05/08/2020] Ethan Bryant je kupio Desert Eagle sa 50 metaka za 4500$.
+[14/08/2020] Demetrius Innes je kupio Desert Eagle sa 50 metaka za 4500$.
+[24/08/2020] Avram Leontyev je kupio Desert Eagle sa 50 metaka za 4500$.
+[24/08/2020] Richard Myers je kupio Colt 45 sa 50 metaka za 3500$.
+[25/08/2020] Travis Palmer je kupio Rifle sa 50 metaka za 5500$.
+[25/08/2020] Deveron Hodges je kupio Desert Eagle sa 50 metaka za 4500$.
+[25/08/2020] Lorenzo Bonelli je kupio Desert Eagle sa 50 metaka za 4500$.
+[29/08/2020] Hector Valle je kupio Desert Eagle sa 50 metaka za 4500$.
+[31/08/2020] Maska_355131 je kupio Desert Eagle sa 30 metaka za 2700$.
+[01/09/2020] Xavier Ombando je kupio Desert Eagle sa 50 metaka za 4500$.
+[01/09/2020] Sheldon Cobain je kupio Desert Eagle sa 50 metaka za 4500$.
+[02/09/2020] Travis Palmer je kupio Shotgun sa 48 metaka za 4800$.
+[09/09/2020] Xavier Ombando je kupio Rifle sa 50 metaka za 5500$.
+[09/09/2020] Hector Valle je kupio Desert Eagle sa 50 metaka za 4500$.
+[13/09/2020] Sheldon Cobain je kupio Desert Eagle sa 50 metaka za 4500$.
+[14/09/2020] Maska_220913 je kupio Rifle sa 50 metaka za 5500$.
+[16/09/2020] Daniel Calabresi je kupio Desert Eagle sa 50 metaka za 4500$.
+[16/09/2020] Chloe McDouglas je kupio Desert Eagle sa 50 metaka za 4500$.
+[17/09/2020] Xavier Ombando je kupio Desert Eagle sa 50 metaka za 4500$.
+[17/09/2020] Demarcus King je kupio Desert Eagle sa 50 metaka za 4500$.
+[17/09/2020] Daniel Calabresi je kupio Desert Eagle sa 50 metaka za 4500$.
+[18/09/2020] Chloe McDouglas je kupio Desert Eagle sa 50 metaka za 4500$.
+[19/09/2020] Besart Hasani je kupio Desert Eagle sa 50 metaka za 4500$.
+[19/09/2020] Travis Palmer je kupio Desert Eagle sa 50 metaka za 4500$.
+[20/09/2020] Jack Vargo je kupio Desert Eagle sa 20 metaka za 1800$.
+[20/09/2020] Besart Hasani je kupio Desert Eagle sa 50 metaka za 4500$.
+[20/09/2020] Maska_825140 je kupio Desert Eagle sa 50 metaka za 4500$.
+[21/09/2020] Sheldon Cobain je kupio Desert Eagle sa 50 metaka za 4500$.
+[21/09/2020] Sato Kiyoshi je kupio Desert Eagle sa 50 metaka za 4500$.
+[21/09/2020] Maska_825140 je kupio Desert Eagle sa 50 metaka za 4500$.
+[21/09/2020] Besart Hasani je kupio Shotgun sa 50 metaka za 5000$.
+[22/09/2020] Maska_825140 je kupio Desert Eagle sa 50 metaka za 4500$.
+[23/09/2020] Lorenzo Bonelli je kupio Shotgun sa 50 metaka za 5000$.
+[23/09/2020] Besart Hasani je kupio Desert Eagle sa 50 metaka za 4500$.
+[24/09/2020] Besart Hasani je kupio Desert Eagle sa 50 metaka za 4500$.
+[24/09/2020] Stephen Frye je kupio Desert Eagle sa 50 metaka za 4500$.
+[24/09/2020] Maska_825140 je kupio Desert Eagle sa 50 metaka za 4500$.
+[25/09/2020] Besart Hasani je kupio Desert Eagle sa 50 metaka za 4500$.
+[25/09/2020] Daniel Calabresi je kupio Desert Eagle sa 50 metaka za 4500$.
+[25/09/2020] Xavier Ombando je kupio Shotgun sa 50 metaka za 5000$.
+[26/09/2020] Jim McCormick je kupio Desert Eagle sa 50 metaka za 4500$.
+[26/09/2020] Daniel Calabresi je kupio Desert Eagle sa 50 metaka za 4500$.
+[27/09/2020] Jim McCormick je kupio Desert Eagle sa 50 metaka za 4500$.
+[27/09/2020] Maska_825140 je kupio Desert Eagle sa 50 metaka za 4500$.
+[28/09/2020] Jim McCormick je kupio Desert Eagle sa 50 metaka za 4500$.
+[29/09/2020] Jim McCormick je kupio Desert Eagle sa 50 metaka za 4500$.
+[30/09/2020] Daniel Calabresi je kupio Desert Eagle sa 50 metaka za 4500$.
+[01/10/2020] Jim McCormick je kupio Desert Eagle sa 50 metaka za 4500$.
+[01/10/2020] Stephen Frye je kupio Rifle sa 50 metaka za 5500$.
+[01/10/2020] Sheldon Cobain je kupio Rifle sa 40 metaka za 4400$.
+[01/10/2020] Daniel Calabresi je kupio Rifle sa 50 metaka za 5500$.
+[03/10/2020] Jim McCormick je kupio Desert Eagle sa 50 metaka za 4500$.
+[04/10/2020] Jim McCormick je kupio Desert Eagle sa 50 metaka za 4500$.
+[04/10/2020] Daniel Calabresi je kupio Desert Eagle sa 50 metaka za 4500$.
+[04/10/2020] Frank Brennan je kupio Desert Eagle sa 50 metaka za 4500$.
+[05/10/2020] Jim McCormick je kupio Desert Eagle sa 50 metaka za 4500$.
+[05/10/2020] Daniel Calabresi je kupio Desert Eagle sa 50 metaka za 4500$.
+[06/10/2020] Jim McCormick je kupio Desert Eagle sa 50 metaka za 4500$.
+[06/10/2020] Maska_421919 je kupio Desert Eagle sa 50 metaka za 4500$.
+[06/10/2020] Daniel Calabresi je kupio Desert Eagle sa 50 metaka za 4500$.
+[08/10/2020] Jim McCormick je kupio Desert Eagle sa 50 metaka za 4500$.
+[08/10/2020] Maska_220913 je kupio Desert Eagle sa 50 metaka za 4500$.
+[08/10/2020] Sato Kiyoshi je kupio Desert Eagle sa 50 metaka za 4500$.
+[11/10/2020] Daniel Calabresi je kupio Desert Eagle sa 50 metaka za 4500$.
+[11/10/2020] Jim McCormick je kupio Desert Eagle sa 50 metaka za 4500$.
+[13/10/2020] Daniel Calabresi je kupio Desert Eagle sa 50 metaka za 4500$.
+[15/10/2020] Xavier Ombando je kupio Desert Eagle sa 50 metaka za 4500$.
+[16/10/2020] Jim McCormick je kupio Desert Eagle sa 50 metaka za 4500$.
