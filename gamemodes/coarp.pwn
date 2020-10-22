@@ -1959,7 +1959,6 @@ new
     Bit16: 	gr_PlayerInGarage		<MAX_PLAYERS>  = Bit16: 9999,
     Bit16: 	gr_PlayerInRoom			<MAX_PLAYERS>  = Bit16: 999,
 	Bit16:	gr_PDLockedVeh			<MAX_PLAYERS>  = Bit16: INVALID_VEHICLE_ID,
-	Bit16:	gr_PlayerAmbulanceId	<MAX_PLAYERS>  = Bit16: INVALID_VEHICLE_ID,
 	Bit16:	gr_PlayerInBiznis		<MAX_PLAYERS>  = Bit16: INVALID_BIZNIS_ID,
 	Bit16:	gr_PlayerInComplex		<MAX_PLAYERS>  = Bit16: INVALID_COMPLEX_ID,
 	Bit16:	gr_PlayerInPickup		<MAX_PLAYERS>  = Bit16: -1,
@@ -2296,7 +2295,7 @@ ResetPlayerVariables(playerid)
 	Bit16_Set( gr_PlayerInHouse			, playerid, INVALID_HOUSE_ID );
 	Bit16_Set( gr_PlayerInGarage		, playerid, INVALID_HOUSE_ID );
 	Bit16_Set( gr_PlayerInfrontHouse	, playerid, INVALID_HOUSE_ID );
-	Bit16_Set( gr_PlayerAmbulanceId		, playerid, INVALID_VEHICLE_ID );
+	Player_SetAmbulanceId(playerid, INVALID_VEHICLE_ID);
 	Bit16_Set( gr_PlayerTracing			, playerid, 9999 );
 	blockedNews[playerid] = false;
 	// Mobile
