@@ -50,7 +50,7 @@
 #define HTTP_RESTART_REQUEST 					"SERVER_RESTART_API_REQUEST_LINK"
 
 // Server Afterload Unlock
-#define SERVER_UNLOCK_TIME						(150)
+#define SERVER_UNLOCK_TIME						(60)
 
 // Fixes.inc
 #define FIXES_ServerVarMsg 0
@@ -97,7 +97,7 @@
 #define CGEN_MEMORY				(90000)		// Internal Define - code parser/generator memory
 #define MAX_COMMANDS			(1024)		// Internal Define - y_commands
 
-//#include <YSI_Coding\y_hooks>
+#include <YSI_Coding\y_hooks>
 #include <YSI_Coding\y_timers>
 #include <YSI_Data\y_iterate>
 #include <YSI_Visual\y_commands>
@@ -1127,7 +1127,6 @@ enum
 	DIALOG_REG_MAIL,
 	DIALOG_REG_SEX,
 	DIALOG_REG_AGE,
-	DIALOG_FIRST_TIME_TUT,
 	DIALOG_STATS,
 	DIALOG_CARUPGRADE,
 	DIALOG_SEC_MAIN,
@@ -2841,7 +2840,7 @@ main()
 	AntiDeAMX();
 }
 
-public OnGameModeInit()
+hook OnGameModeInit()
 {
 	SendRconCommand("password 6325234hbbzfg12312313gz313"); // Server Lock while everything loads
 
@@ -2850,9 +2849,11 @@ public OnGameModeInit()
 	ResetHouseEnumerator();
 	ResetBizzEnumerator();
 	ResetPlayerEnumerator();
+	print("Report: Iterators And Enumerators Cleared.");
 
 	 // Loading of custom models derives from artconfig.pwn module(artconfig.txt alternative)
 	LoadCustomModels();
+	print("Report: Custom Models Loaded.");
 
 	// SQL stuff
 	g_SQL = mysql_connect_file();
@@ -2865,12 +2866,15 @@ public OnGameModeInit()
 	format(gstring, sizeof(gstring), "hostname %s", HOSTNAME);
 	SendRconCommand(gstring);
 	mysql_log(ERROR | WARNING);
+	print("Report: MySQL Connection & Log Mode Established.");
 	MapAndreas_Init(MAP_ANDREAS_MODE_MINIMAL, "scriptfiles/SAmin.hmap");
+	print("Report: MapAndreas Initialised.");
 
 	// Streamer config
 	Streamer_SetVisibleItems(STREAMER_TYPE_OBJECT, OBJECT_STREAM_LIMIT, -1);
 	Streamer_SetVisibleItems(STREAMER_TYPE_PICKUP, 3900, -1);
 	Streamer_SetVisibleItems(STREAMER_TYPE_3D_TEXT_LABEL, 1000, -1);
+	print("Report: Streamer Configuration Complete.");
 
 	// Global config
 	WeatherSys 	= 10;
@@ -2900,6 +2904,7 @@ public OnGameModeInit()
 	Command_AddAltNamed("disregardreport", 	"dr");
 	Command_AddAltNamed("unblacklist"	, 	"unbl");
 	Command_AddAltNamed("blacklist"		, 	"bl");
+	print("Report: Alternative Commands Added.");
 
 	// SA-MP gamemode settings
 	ShowNameTags(1);
@@ -2910,6 +2915,8 @@ public OnGameModeInit()
 	ShowPlayerMarkers(1);
 	ManualVehicleEngineAndLights();
 	SetMaxConnections(3, e_FLOOD_ACTION_GHOST);
+	print("Report: GameMode Settings Loaded.");
+
 
 	// Server Informations
  	SetGameModeText(SCRIPT_VERSION);
@@ -2921,11 +2928,12 @@ public OnGameModeInit()
 	// Auto Unlock Settings
 	GMX = 2;
 	cseconds = SERVER_UNLOCK_TIME; 
+	print("Report: MySQL Loading Stage Initialized.");
 
 	// Global Loads
 	LoadGPS();
+	LoadHStorage();
 	LoadHouses();
-	LoadHouseStorages();
 	LoadBizz();
 	LoadComplex();
 	LoadComplexRooms();
@@ -2959,6 +2967,7 @@ public OnGameModeInit()
 	new tmphour, tmpmins, tmpsecs;
 	GetServerTime(tmphour, tmpmins, tmpsecs);
 	SetWorldTime(tmphour);
+
 	return 1;
 }
 
@@ -2988,7 +2997,7 @@ timer SafeResetPlayerVariables[3000](playerid)
 	return 1;
 }
 
-public OnGameModeExit()
+hook OnGameModeExit()
 {
 
 	// Actors
@@ -3022,7 +3031,7 @@ public OnIncomingConnection(playerid, ip_address[], port)
     return true;
 }
 
-public OnModelSelectionResponse(playerid, extraid, index, modelid, response)
+hook OnModelSelResponse(playerid, extraid, index, modelid, response)
 {
 	if ((response) && (extraid == MODEL_SELECTION_COLOR))
 	{
@@ -3047,7 +3056,7 @@ public OnPlayerEditDynamicObject(playerid, objectid, response, Float:x, Float:y,
 	return (true);
 }
 
-public OnPlayerEnterVehicle(playerid, vehicleid, ispassenger)
+hook OnPlayerEnterVehicle(playerid, vehicleid, ispassenger)
 {
     if(Bit1_Get(gr_Tied, playerid))
 		TogglePlayerControllable(playerid, 1), SetPlayerSpecialAction(playerid, SPECIAL_ACTION_CUFFED);
@@ -3080,7 +3089,7 @@ public OnPlayerEnterVehicle(playerid, vehicleid, ispassenger)
 }
 
 
-public OnPlayerStateChange(playerid, newstate, oldstate)
+hook OnPlayerStateChange(playerid, newstate, oldstate)
 {
     if(oldstate == PLAYER_STATE_PASSENGER && newstate == PLAYER_STATE_ONFOOT)
     {
@@ -3190,7 +3199,7 @@ public e_COMMAND_ERRORS:OnPlayerCommandReceived(playerid, cmdtext[], e_COMMAND_E
 	return COMMAND_OK;
 }
 
-public OnPlayerConnect(playerid)
+hook OnPlayerConnect(playerid)
 {
 	SetPlayerColor(playerid, COLOR_PLAYER);
 	return 1;
@@ -3441,7 +3450,7 @@ public OnPlayerFinishedDownloading(playerid, virtualworld)
 	return 1;
 }
 
-public OnPlayerSpawn(playerid)
+hook OnPlayerSpawn(playerid)
 {	
 	// Player Sets
     StopAudioStreamForPlayer(playerid);
@@ -3667,7 +3676,7 @@ public OnPlayerSpawn(playerid)
     return 1;
 }
 
-public OnPlayerExitVehicle(playerid, vehicleid)
+hook OnPlayerExitVehicle(playerid, vehicleid)
 {
 	if(VehicleInfo[vehicleid][vLocked] && GetPlayerState(playerid) == PLAYER_STATE_PASSENGER && Bit1_Get(gr_PlayerCuffed,playerid))
 	{
@@ -3678,7 +3687,7 @@ public OnPlayerExitVehicle(playerid, vehicleid)
 	return 1;
 }
 
-public OnPlayerTakeDamage(playerid, issuerid, Float:amount, weaponid, bodypart)
+hook OnPlayerTakeDamage(playerid, issuerid, Float:amount, weaponid, bodypart)
 {
 	if( weaponid == WEAPON_FIREEXTINGUISHER )
 	{
@@ -3761,7 +3770,7 @@ public OnPlayerTargetPlayer(playerid, targetid, weaponid)
 	return 1;
 }
 
-public OnPlayerDeath(playerid, killerid, reason)
+hook OnPlayerDeath(playerid, killerid, reason)
 {
 	if(KilledBy[playerid] == INVALID_PLAYER_ID && killerid == INVALID_PLAYER_ID || playerid == INVALID_PLAYER_ID || !SafeSpawned[playerid])
 		return 1;
@@ -3775,7 +3784,7 @@ public OnPlayerDeath(playerid, killerid, reason)
 	return 1;
 }
 
-public OnPlayerText(playerid, text[])
+hook OnPlayerText(playerid, text[])
 {
 	if(!text[0])
 		return Kick(playerid);

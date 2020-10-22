@@ -89,8 +89,7 @@ Public:StorageObjectEdit(playerid, objectid, response, Float:fX, Float:fY, Float
 	return 1;
 }
 
-forward HouseStorage_Load();
-public HouseStorage_Load()
+Public: HouseStorage_Load()
 {
 	new 
 		rows = cache_num_rows();
@@ -123,7 +122,7 @@ public HouseStorage_Load()
 		Iter_Add(HStorage_Iter, i);
 	}
 	printf("MySQL Report: House Storage Racks Loaded (%d/%d).", Iter_Count(HStorage_Iter), MAX_HOUSE_STORAGE);
-	return (true);
+	return 1;
 }
 
 //=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~ (functions)	
@@ -145,10 +144,10 @@ GetRackLimit(playerid)
 	return (true);
 }
 
-LoadHouseStorages()
+stock LoadHStorage()
 {
 	mysql_tquery(g_SQL, "SELECT * FROM `house_storage`", "HouseStorage_Load", "");
-	return (true);
+	return 1;
 }
 
 Storage_RackRefresh(storageid)

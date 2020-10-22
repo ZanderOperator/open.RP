@@ -1402,12 +1402,6 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 			else ShowPlayerDialog(playerid, DIALOG_REG_SEX, DIALOG_STYLE_LIST, ""COL_WHITE"REGISTRACIJA - Spol(5/6)", "Musko\nZensko", "Input", "Abort");
 			return 1;
 		}
-		case DIALOG_FIRST_TIME_TUT: {
-			if( !response ) return PlayerInfo[playerid][pRegistered] 	= 1;
-			PlayerInfo[ playerid ][ pRegistered ]	= 2;
-			SendMessage(playerid, MESSAGE_TYPE_INFO, "Dobit cete naputke od servera kada udjete u neku zgradu ili dodjete u odredjeno mjesto!");
-			return 1;
-		}
 	}
 	return 0;
 }

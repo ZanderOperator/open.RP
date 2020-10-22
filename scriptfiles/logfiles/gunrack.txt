@@ -1,0 +1,850 @@
+
+[22/03/2020] Igor_Kostic je ostavio oruzje (name: Nepoznat || ammo: 1) u gunrack id 1.
+[23/03/2020] Igor_Kostic je uzeo oruzje (name: Melee oruzje || ammo: 1) iz gunrack id 1.
+[23/03/2020] Igor_Kostic je ostavio oruzje (name: Melee oruzje || ammo: 1) u gunrack id 1.
+[25/03/2020] Alicia_Macious je ostavio oruzje (name: Desert Eagle || ammo: 91) u gunrack id 3.
+[25/03/2020] Alicia_Macious je uzeo oruzje (name: Desert Eagle || ammo: 91) iz gunrack id 3.
+[25/03/2020] Alicia_Macious je ostavio oruzje (name: Desert Eagle || ammo: 91) u gunrack id 3.
+[25/03/2020] Alicia_Macious je uzeo oruzje (name: Desert Eagle || ammo: 91) iz gunrack id 3.
+[25/03/2020] Alicia_Macious je ostavio oruzje (name: Desert Eagle || ammo: 91) u gunrack id 3.
+[25/03/2020] Alicia_Macious je ostavio oruzje (name: Melee oruzje || ammo: 1) u gunrack id 3.
+[25/03/2020] Alicia_Macious je ostavio oruzje (name: Spray Can || ammo: 100) u gunrack id 3.
+[25/03/2020] Alicia_Macious je ostavio oruzje (name: Melee oruzje || ammo: 1) u gunrack id 3.
+[25/03/2020] Alicia_Macious je uzeo oruzje (name: Desert Eagle || ammo: 91) iz gunrack id 3.
+[25/03/2020] Alicia_Macious je ostavio oruzje (name: Desert Eagle || ammo: 86) u gunrack id 3.
+[25/03/2020] Alicia_Macious je uzeo oruzje (name: Desert Eagle || ammo: 86) iz gunrack id 3.
+[26/03/2020] Michael_Roberts je ostavio oruzje (name: Colt 45 || ammo: 10) u gunrack id 6.
+[26/03/2020] Michael_Roberts je uzeo oruzje (name: Colt 45 || ammo: 10) iz gunrack id 6.
+[26/03/2020] Michael_Roberts je ostavio oruzje (name: Colt 45 || ammo: 10) u gunrack id 6.
+[26/03/2020] Michael_Roberts je uzeo oruzje (name: Colt 45 || ammo: 10) iz gunrack id 6.
+[26/03/2020] Michael_Roberts je ostavio oruzje (name: Colt 45 || ammo: 10) u gunrack id 6.
+[26/03/2020] Igor_Kostic je uzeo oruzje (name: Melee oruzje || ammo: 1) iz gunrack id 1.
+[27/03/2020] Igor_Kostic je ostavio oruzje (name: Melee oruzje || ammo: 1) u gunrack id 1.
+[27/03/2020] Michael_Jefferson je ostavio oruzje (name: Melee oruzje || ammo: 1) u gunrack id 7.
+[27/03/2020] Michael_Jefferson je ostavio oruzje (name: Spray Can || ammo: 100) u gunrack id 7.
+[27/03/2020] Michael_Jefferson je ostavio oruzje (name: Melee oruzje || ammo: 1) u gunrack id 7.
+[27/03/2020] Michael_Jefferson je uzeo oruzje (name: Melee oruzje || ammo: 1) iz gunrack id 7.
+[27/03/2020] Michael_Jefferson je uzeo oruzje (name: Melee oruzje || ammo: 1) iz gunrack id 7.
+[27/03/2020] Demir_Bakkal je uzeo oruzje (name: Colt 45 || ammo: 10) iz gunrack id 6.
+[27/03/2020] Stefan_Gavrilovic je ostavio oruzje (name: Melee oruzje || ammo: 1) u gunrack id 7.
+[27/03/2020] Stefan_Gavrilovic je uzeo oruzje (name: Melee oruzje || ammo: 1) iz gunrack id 7.
+[27/03/2020] David_Elizalde je ostavio oruzje (name: UZI || ammo: 7) u gunrack id 8.
+[27/03/2020] David_Elizalde je ostavio oruzje (name: Desert Eagle || ammo: 21) u gunrack id 8.
+[27/03/2020] David_Elizalde je ostavio oruzje (name: Desert Eagle || ammo: 17) u gunrack id 8.
+[28/03/2020] David_Elizalde je uzeo oruzje (name: Desert Eagle || ammo: 21) iz gunrack id 8.
+[28/03/2020] David_Elizalde je uzeo oruzje (name: Desert Eagle || ammo: 17) iz gunrack id 8.
+[28/03/2020] David_Elizalde je ostavio oruzje (name: Desert Eagle || ammo: 15) u gunrack id 8.
+[28/03/2020] David_Elizalde je uzeo oruzje (name: Desert Eagle || ammo: 15) iz gunrack id 8.
+[28/03/2020] Stefan_Gavrilovic je ostavio oruzje (name: Desert Eagle || ammo: 29) u gunrack id 7.
+[29/03/2020] Stefan_Gavrilovic je uzeo oruzje (name: Desert Eagle || ammo: 29) iz gunrack id 7.
+[29/03/2020] Stefan_Gavrilovic je ostavio oruzje (name: Desert Eagle || ammo: 29) u gunrack id 7.
+[30/03/2020] Igor_Kostic je ostavio oruzje (name: Desert Eagle || ammo: 45) u gunrack id 1.
+[30/03/2020] Igor_Kostic je uzeo oruzje (name: Desert Eagle || ammo: 45) iz gunrack id 1.
+[30/03/2020] David_Elizalde je uzeo oruzje (name: UZI || ammo: 7) iz gunrack id 8.
+[30/03/2020] David_Elizalde je ostavio oruzje (name: UZI || ammo: 7) u gunrack id 8.
+[30/03/2020] Thomas_Harper je ostavio oruzje (name: Sniper Rifle || ammo: 498) u gunrack id 4.
+[30/03/2020] David_Elizalde je ostavio oruzje (name: Kamera || ammo: 20) u gunrack id 8.
+[31/03/2020] Jose_Ortega je ostavio oruzje (name: Desert Eagle || ammo: 25) u gunrack id 11.
+[01/04/2020] Roy_Helms je uzeo oruzje (name: Desert Eagle || ammo: 25) iz gunrack id 11.
+[01/04/2020] Roy_Helms je ostavio oruzje (name: Desert Eagle || ammo: 25) u gunrack id 11.
+[01/04/2020] William_Cannone je ostavio oruzje (name: Desert Eagle || ammo: 49) u gunrack id 12.
+[01/04/2020] William_Cannone je uzeo oruzje (name: Desert Eagle || ammo: 49) iz gunrack id 12.
+[01/04/2020] Alicia_Macious je ostavio oruzje (name: Desert Eagle || ammo: 189) u gunrack id 3.
+[01/04/2020] Alicia_Macious je ostavio oruzje (name: Rifle || ammo: 44) u gunrack id 3.
+[01/04/2020] Alicia_Macious je uzeo oruzje (name: Desert Eagle || ammo: 189) iz gunrack id 3.
+[01/04/2020] Alicia_Macious je ostavio oruzje (name: Desert Eagle || ammo: 185) u gunrack id 3.
+[01/04/2020] Matteo_Cangialosi je ostavio oruzje (name: Rifle || ammo: 18) u gunrack id 13.
+[01/04/2020] Alicia_Macious je uzeo oruzje (name: Desert Eagle || ammo: 185) iz gunrack id 3.
+[01/04/2020] Alicia_Macious je ostavio oruzje (name: Desert Eagle || ammo: 178) u gunrack id 3.
+[01/04/2020] Alicia_Macious je uzeo oruzje (name: Rifle || ammo: 44) iz gunrack id 3.
+[01/04/2020] Alicia_Macious je ostavio oruzje (name: Rifle || ammo: 44) u gunrack id 3.
+[02/04/2020] William_Cannone je ostavio oruzje (name: Desert Eagle || ammo: 49) u gunrack id 12.
+[03/04/2020] Vito_Moltisanti je ostavio oruzje (name: Melee oruzje || ammo: 1) u gunrack id 14.
+[03/04/2020] Roy_Helms je uzeo oruzje (name: Desert Eagle || ammo: 25) iz gunrack id 11.
+[03/04/2020] Roy_Helms je ostavio oruzje (name: Desert Eagle || ammo: 25) u gunrack id 11.
+[03/04/2020] Matteo_Cangialosi je uzeo oruzje (name: Rifle || ammo: 18) iz gunrack id 13.
+[04/04/2020] Vito_Moltisanti je ostavio oruzje (name: Desert Eagle || ammo: 15) u gunrack id 14.
+[04/04/2020] Vito_Moltisanti je uzeo oruzje (name: Melee oruzje || ammo: 1) iz gunrack id 14.
+[04/04/2020] Vito_Moltisanti je ostavio oruzje (name: Melee oruzje || ammo: 1) u gunrack id 14.
+[04/04/2020] Vito_Moltisanti je uzeo oruzje (name: Desert Eagle || ammo: 15) iz gunrack id 14.
+[04/04/2020] Vito_Moltisanti je uzeo oruzje (name: Melee oruzje || ammo: 1) iz gunrack id 14.
+[05/04/2020] Jeffrey_Clark je ostavio oruzje (name: Shotgun || ammo: 46) u gunrack id 9.
+[07/04/2020] Frankie_Moltisanti je ostavio oruzje (name: Desert Eagle || ammo: 15) u gunrack id 14.
+[07/04/2020] Frankie_Moltisanti je ostavio oruzje (name: Melee oruzje || ammo: 1) u gunrack id 14.
+[07/04/2020] Frankie_Moltisanti je uzeo oruzje (name: Desert Eagle || ammo: 15) iz gunrack id 14.
+[07/04/2020] Frankie_Moltisanti je ostavio oruzje (name: Desert Eagle || ammo: 21) u gunrack id 14.
+[07/04/2020] William_Cannone je uzeo oruzje (name: Desert Eagle || ammo: 49) iz gunrack id 12.
+[07/04/2020] William_Cannone je ostavio oruzje (name: Desert Eagle || ammo: 49) u gunrack id 12.
+[08/04/2020] William_Cannone je uzeo oruzje (name: Desert Eagle || ammo: 49) iz gunrack id 12.
+[08/04/2020] Austin_White je ostavio oruzje (name: Rifle || ammo: 4) u gunrack id 17.
+[08/04/2020] Austin_White je ostavio oruzje (name: Desert Eagle || ammo: 5) u gunrack id 17.
+[09/04/2020] Donald_Nixon je ostavio oruzje (name: Desert Eagle || ammo: 99) u gunrack id 18.
+[09/04/2020] Pablo_Galvez je ostavio oruzje (name: Desert Eagle || ammo: 50) u gunrack id 19.
+[09/04/2020] Luis_Bacamo je ostavio oruzje (name: Desert Eagle || ammo: 31) u gunrack id 20.
+[09/04/2020] Luis_Bacamo je uzeo oruzje (name: Desert Eagle || ammo: 31) iz gunrack id 20.
+[10/04/2020] Frederick_Vargas je ostavio oruzje (name: Rifle || ammo: 45) u gunrack id 21.
+[10/04/2020] Frederick_Vargas je uzeo oruzje (name: Rifle || ammo: 45) iz gunrack id 21.
+[10/04/2020] Frederick_Vargas je ostavio oruzje (name: Rifle || ammo: 45) u gunrack id 21.
+[10/04/2020] Molly_Cortez je ostavio oruzje (name: Melee oruzje || ammo: 1) u gunrack id 22.
+[10/04/2020] Pablo_Galvez je uzeo oruzje (name: Desert Eagle || ammo: 50) iz gunrack id 19.
+[10/04/2020] Dejan_Stojmenovic je ostavio oruzje (name: Shotgun || ammo: 50) u gunrack id 15.
+[11/04/2020] Jeffrey_Clark je uzeo oruzje (name: Shotgun || ammo: 46) iz gunrack id 9.
+[11/04/2020] Dejan_Stojmenovic je uzeo oruzje (name: Shotgun || ammo: 50) iz gunrack id 15.
+[11/04/2020] Pablo_Galvez je ostavio oruzje (name: Desert Eagle || ammo: 50) u gunrack id 19.
+[12/04/2020] Frankie_Moltisanti je uzeo oruzje (name: Desert Eagle || ammo: 21) iz gunrack id 14.
+[12/04/2020] Jeffrey_Clark je ostavio oruzje (name: Shotgun || ammo: 46) u gunrack id 9.
+[12/04/2020] Frankie_Moltisanti je ostavio oruzje (name: Desert Eagle || ammo: 20) u gunrack id 14.
+[12/04/2020] Frankie_Moltisanti je uzeo oruzje (name: Desert Eagle || ammo: 20) iz gunrack id 14.
+[13/04/2020] Pablo_Galvez je uzeo oruzje (name: Desert Eagle || ammo: 50) iz gunrack id 19.
+[13/04/2020] Pablo_Galvez je ostavio oruzje (name: Desert Eagle || ammo: 50) u gunrack id 19.
+[14/04/2020] Tomislav_Podunavac je ostavio oruzje (name: Desert Eagle || ammo: 38) u gunrack id 15.
+[14/04/2020] Tomislav_Podunavac je uzeo oruzje (name: Desert Eagle || ammo: 38) iz gunrack id 15.
+[14/04/2020] Donald_Nixon je uzeo oruzje (name: Desert Eagle || ammo: 99) iz gunrack id 18.
+[14/04/2020] Pablo_Galvez je uzeo oruzje (name: Desert Eagle || ammo: 50) iz gunrack id 19.
+[14/04/2020] Pablo_Galvez je ostavio oruzje (name: Desert Eagle || ammo: 50) u gunrack id 19.
+[15/04/2020] Frankie_Moltisanti je uzeo oruzje (name: Melee oruzje || ammo: 1) iz gunrack id 14.
+[15/04/2020] Frankie_Moltisanti je ostavio oruzje (name: Melee oruzje || ammo: 1) u gunrack id 24.
+[15/04/2020] Frankie_Moltisanti je uzeo oruzje (name: Melee oruzje || ammo: 1) iz gunrack id 24.
+[15/04/2020] Aaron_Schaffner je ostavio oruzje (name: Desert Eagle || ammo: 41) u gunrack id 25.
+[15/04/2020] Aaron_Schaffner je uzeo oruzje (name: Desert Eagle || ammo: 41) iz gunrack id 25.
+[17/04/2020] Shane_Thompson je ostavio oruzje (name: Desert Eagle || ammo: 43) u gunrack id 28.
+[17/04/2020] Shane_Thompson je uzeo oruzje (name: Desert Eagle || ammo: 43) iz gunrack id 28.
+[17/04/2020] Shane_Thompson je ostavio oruzje (name: Desert Eagle || ammo: 43) u gunrack id 28.
+[17/04/2020] Shane_Thompson je uzeo oruzje (name: Desert Eagle || ammo: 43) iz gunrack id 28.
+[17/04/2020] Shane_Thompson je ostavio oruzje (name: Desert Eagle || ammo: 43) u gunrack id 28.
+[17/04/2020] Richard_Myers je ostavio oruzje (name: Desert Eagle || ammo: 46) u gunrack id 29.
+[17/04/2020] Joe_Cresswell je ostavio oruzje (name: Desert Eagle || ammo: 20) u gunrack id 14.
+[17/04/2020] Joe_Cresswell je ostavio oruzje (name: Melee oruzje || ammo: 1) u gunrack id 14.
+[17/04/2020] Richard_Myers je ostavio oruzje (name: Melee oruzje || ammo: 1) u gunrack id 29.
+[18/04/2020] Joe_Cresswell je uzeo oruzje (name: Desert Eagle || ammo: 20) iz gunrack id 14.
+[18/04/2020] Joe_Cresswell je ostavio oruzje (name: Desert Eagle || ammo: 20) u gunrack id 14.
+[18/04/2020] Richard_Myers je ostavio oruzje (name: Shotgun || ammo: 15) u gunrack id 29.
+[18/04/2020] Richard_Myers je uzeo oruzje (name: Desert Eagle || ammo: 46) iz gunrack id 29.
+[18/04/2020] Richard_Myers je ostavio oruzje (name: Desert Eagle || ammo: 46) u gunrack id 29.
+[18/04/2020] Mile_Raonic je ostavio oruzje (name: M4 || ammo: 50) u gunrack id 30.
+[18/04/2020] Mile_Raonic je uzeo oruzje (name: M4 || ammo: 50) iz gunrack id 30.
+[18/04/2020] Mile_Raonic je ostavio oruzje (name: M4 || ammo: 50) u gunrack id 30.
+[18/04/2020] Mile_Raonic je uzeo oruzje (name: M4 || ammo: 50) iz gunrack id 30.
+[18/04/2020] Richard_Myers je uzeo oruzje (name: Desert Eagle || ammo: 46) iz gunrack id 29.
+[18/04/2020] Richard_Myers je ostavio oruzje (name: Desert Eagle || ammo: 46) u gunrack id 29.
+[18/04/2020] Richard_Myers je uzeo oruzje (name: Desert Eagle || ammo: 46) iz gunrack id 29.
+[18/04/2020] Richard_Myers je ostavio oruzje (name: Desert Eagle || ammo: 46) u gunrack id 29.
+[18/04/2020] Shane_Thompson je uzeo oruzje (name: Desert Eagle || ammo: 43) iz gunrack id 28.
+[19/04/2020] Shane_Thompson je ostavio oruzje (name: Desert Eagle || ammo: 42) u gunrack id 28.
+[19/04/2020] Shane_Thompson je uzeo oruzje (name: Desert Eagle || ammo: 42) iz gunrack id 28.
+[19/04/2020] Shane_Thompson je ostavio oruzje (name: Desert Eagle || ammo: 29) u gunrack id 28.
+[19/04/2020] Richard_Myers je uzeo oruzje (name: Desert Eagle || ammo: 46) iz gunrack id 29.
+[19/04/2020] Joe_Cresswell je uzeo oruzje (name: Desert Eagle || ammo: 20) iz gunrack id 14.
+[19/04/2020] Richard_Myers je ostavio oruzje (name: Desert Eagle || ammo: 44) u gunrack id 29.
+[19/04/2020] Kymani_Campbell je ostavio oruzje (name: Melee oruzje || ammo: 1) u gunrack id 26.
+[19/04/2020] Joe_Cresswell je ostavio oruzje (name: Desert Eagle || ammo: 20) u gunrack id 14.
+[19/04/2020] Richard_Myers je uzeo oruzje (name: Desert Eagle || ammo: 44) iz gunrack id 29.
+[19/04/2020] Hector_Delgado je ostavio oruzje (name: Desert Eagle || ammo: 41) u gunrack id 31.
+[19/04/2020] Andrew_Murphy je ostavio oruzje (name: Shotgun || ammo: 26) u gunrack id 32.
+[19/04/2020] Joe_Cresswell je uzeo oruzje (name: Desert Eagle || ammo: 20) iz gunrack id 14.
+[19/04/2020] Joe_Cresswell je ostavio oruzje (name: Desert Eagle || ammo: 20) u gunrack id 14.
+[19/04/2020] Hector_Delgado je uzeo oruzje (name: Desert Eagle || ammo: 41) iz gunrack id 31.
+[19/04/2020] Hector_Delgado je ostavio oruzje (name: Desert Eagle || ammo: 41) u gunrack id 31.
+[20/04/2020] Hector_Delgado je uzeo oruzje (name: Desert Eagle || ammo: 41) iz gunrack id 31.
+[20/04/2020] Hector_Delgado je ostavio oruzje (name: Desert Eagle || ammo: 41) u gunrack id 31.
+[20/04/2020] Andrew_Murphy je uzeo oruzje (name: Shotgun || ammo: 26) iz gunrack id 32.
+[20/04/2020] Andrew_Murphy je ostavio oruzje (name: Shotgun || ammo: 26) u gunrack id 32.
+[20/04/2020] Frankie_Moltisanti je ostavio oruzje (name: Melee oruzje || ammo: 1) u gunrack id 24.
+[20/04/2020] Molly_Cortez je ostavio oruzje (name: Melee oruzje || ammo: 1) u gunrack id 22.
+[20/04/2020] Mile_Raonic je ostavio oruzje (name: M4 || ammo: 50) u gunrack id 30.
+[21/04/2020] Mile_Raonic je uzeo oruzje (name: M4 || ammo: 50) iz gunrack id 30.
+[21/04/2020] Mile_Raonic je ostavio oruzje (name: M4 || ammo: 50) u gunrack id 30.
+[21/04/2020] Mile_Raonic je ostavio oruzje (name: AK47 || ammo: 30) u gunrack id 30.
+[21/04/2020] Mile_Raonic je uzeo oruzje (name: M4 || ammo: 50) iz gunrack id 30.
+[21/04/2020] Mile_Raonic je uzeo oruzje (name: AK47 || ammo: 30) iz gunrack id 30.
+[21/04/2020] Shane_Thompson je uzeo oruzje (name: Desert Eagle || ammo: 29) iz gunrack id 28.
+[21/04/2020] Shane_Thompson je ostavio oruzje (name: Desert Eagle || ammo: 29) u gunrack id 28.
+[21/04/2020] Richard_Myers je uzeo oruzje (name: Shotgun || ammo: 15) iz gunrack id 29.
+[22/04/2020] Shane_Thompson je ostavio oruzje (name: Desert Eagle || ammo: 65) u gunrack id 28.
+[22/04/2020] Joe_Hawkins je ostavio oruzje (name: Desert Eagle || ammo: 50) u gunrack id 35.
+[22/04/2020] Joe_Hawkins je uzeo oruzje (name: Desert Eagle || ammo: 50) iz gunrack id 35.
+[22/04/2020] Andrew_Murphy je uzeo oruzje (name: Shotgun || ammo: 26) iz gunrack id 32.
+[22/04/2020] Andrew_Murphy je ostavio oruzje (name: Shotgun || ammo: 26) u gunrack id 32.
+[22/04/2020] Shane_Thompson je uzeo oruzje (name: Desert Eagle || ammo: 29) iz gunrack id 28.
+[22/04/2020] Shane_Thompson je ostavio oruzje (name: Desert Eagle || ammo: 29) u gunrack id 28.
+[23/04/2020] Joe_Hawkins je ostavio oruzje (name: Desert Eagle || ammo: 50) u gunrack id 35.
+[23/04/2020] Joe_Hawkins je uzeo oruzje (name: Desert Eagle || ammo: 50) iz gunrack id 35.
+[23/04/2020] Danny_Rochefort je ostavio oruzje (name: Desert Eagle || ammo: 30) u gunrack id 38.
+[23/04/2020] Danny_Rochefort je ostavio oruzje (name: Desert Eagle || ammo: 30) u gunrack id 38.
+[23/04/2020] Danny_Rochefort je ostavio oruzje (name: Desert Eagle || ammo: 30) u gunrack id 38.
+[23/04/2020] Danny_Rochefort je ostavio oruzje (name: TEC9 || ammo: 80) u gunrack id 38.
+[24/04/2020] Danny_Rochefort je uzeo oruzje (name: Desert Eagle || ammo: 30) iz gunrack id 38.
+[24/04/2020] Joe_Hawkins je ostavio oruzje (name: Desert Eagle || ammo: 49) u gunrack id 35.
+[24/04/2020] Danny_Rochefort je uzeo oruzje (name: Desert Eagle || ammo: 30) iz gunrack id 38.
+[24/04/2020] Danny_Rochefort je ostavio oruzje (name: Desert Eagle || ammo: 29) u gunrack id 38.
+[24/04/2020] Danny_Rochefort je uzeo oruzje (name: Desert Eagle || ammo: 29) iz gunrack id 38.
+[24/04/2020] Joe_Hawkins je uzeo oruzje (name: Desert Eagle || ammo: 49) iz gunrack id 35.
+[24/04/2020] Joe_Hawkins je ostavio oruzje (name: Desert Eagle || ammo: 49) u gunrack id 35.
+[25/04/2020] Jacob_Rodgers je ostavio oruzje (name: Melee oruzje || ammo: 1) u gunrack id 39.
+[25/04/2020] Joe_Hawkins je uzeo oruzje (name: Desert Eagle || ammo: 49) iz gunrack id 35.
+[26/04/2020] Danny_Rochefort je ostavio oruzje (name: Melee oruzje || ammo: 1) u gunrack id 38.
+[26/04/2020] Danny_Rochefort je uzeo oruzje (name: Melee oruzje || ammo: 1) iz gunrack id 38.
+[26/04/2020] Danny_Rochefort je ostavio oruzje (name: Melee oruzje || ammo: 1) u gunrack id 38.
+[26/04/2020] Danny_Rochefort je uzeo oruzje (name: Melee oruzje || ammo: 1) iz gunrack id 38.
+[27/04/2020] Lyottah_Mweaks je ostavio oruzje (name: Desert Eagle || ammo: 51) u gunrack id 40.
+[27/04/2020] Lyottah_Mweaks je uzeo oruzje (name: Desert Eagle || ammo: 51) iz gunrack id 40.
+[27/04/2020] Lyottah_Mweaks je ostavio oruzje (name: Desert Eagle || ammo: 51) u gunrack id 40.
+[27/04/2020] Demetrius_Innes je ostavio oruzje (name: Melee oruzje || ammo: 1) u gunrack id 41.
+[27/04/2020] Demetrius_Innes je ostavio oruzje (name: Desert Eagle || ammo: 51) u gunrack id 41.
+[28/04/2020] Demetrius_Innes je ostavio oruzje (name: Melee oruzje || ammo: 1) u gunrack id 41.
+[28/04/2020] Demetrius_Innes je uzeo oruzje (name: Desert Eagle || ammo: 51) iz gunrack id 41.
+[28/04/2020] Andrew_Murphy je uzeo oruzje (name: Shotgun || ammo: 26) iz gunrack id 31.
+[28/04/2020] Andrew_Murphy je ostavio oruzje (name: Shotgun || ammo: 20) u gunrack id 31.
+[28/04/2020] Demetrius_Innes je ostavio oruzje (name: Desert Eagle || ammo: 51) u gunrack id 41.
+[28/04/2020] Demetrius_Innes je ostavio oruzje (name: Melee oruzje || ammo: 1) u gunrack id 41.
+[28/04/2020] Demetrius_Innes je uzeo oruzje (name: Desert Eagle || ammo: 51) iz gunrack id 41.
+[28/04/2020] Lyottah_Mweaks je ostavio oruzje (name: Desert Eagle || ammo: 50) u gunrack id 40.
+[28/04/2020] Lyottah_Mweaks je uzeo oruzje (name: Desert Eagle || ammo: 50) iz gunrack id 40.
+[29/04/2020] Demetrius_Innes je uzeo oruzje (name: Melee oruzje || ammo: 1) iz gunrack id 41.
+[29/04/2020] Demetrius_Innes je ostavio oruzje (name: Desert Eagle || ammo: 91) u gunrack id 41.
+[29/04/2020] Demetrius_Innes je uzeo oruzje (name: Desert Eagle || ammo: 91) iz gunrack id 41.
+[29/04/2020] Richard_Myers je ostavio oruzje (name: Shotgun || ammo: 15) u gunrack id 42.
+[29/04/2020] Demetrius_Innes je ostavio oruzje (name: Desert Eagle || ammo: 84) u gunrack id 40.
+[29/04/2020] Richard_Myers je ostavio oruzje (name: Sniper Rifle || ammo: 1) u gunrack id 42.
+[29/04/2020] Viktor_Pajovic je ostavio oruzje (name: Desert Eagle || ammo: 66) u gunrack id 24.
+[30/04/2020] Vitaly_Mikhailov je ostavio oruzje (name: Desert Eagle || ammo: 12) u gunrack id 0.
+[30/04/2020] Viktor_Pajovic je uzeo oruzje (name: Desert Eagle || ammo: 66) iz gunrack id 24.
+[30/04/2020] Viktor_Pajovic je ostavio oruzje (name: Desert Eagle || ammo: 66) u gunrack id 24.
+[30/04/2020] Viktor_Pajovic je uzeo oruzje (name: Desert Eagle || ammo: 66) iz gunrack id 24.
+[30/04/2020] Viktor_Pajovic je ostavio oruzje (name: Desert Eagle || ammo: 66) u gunrack id 24.
+[30/04/2020] Damyan_Krasimirov je ostavio oruzje (name: Desert Eagle || ammo: 30) u gunrack id 20.
+[30/04/2020] Damyan_Krasimirov je uzeo oruzje (name: Desert Eagle || ammo: 30) iz gunrack id 20.
+[30/04/2020] Vitaly_Mikhailov je uzeo oruzje (name: Desert Eagle || ammo: 12) iz gunrack id 0.
+[30/04/2020] Fritz_Weldermeyer je ostavio oruzje (name: Shotgun || ammo: 50) u gunrack id 43.
+[30/04/2020] Fritz_Weldermeyer je ostavio oruzje (name: Desert Eagle || ammo: 21) u gunrack id 43.
+[30/04/2020] Dusan_Lakic je uzeo oruzje (name: Melee oruzje || ammo: 1) iz gunrack id 22.
+[30/04/2020] Dusan_Lakic je uzeo oruzje (name: Melee oruzje || ammo: 1) iz gunrack id 22.
+[30/04/2020] Demetrius_Innes je uzeo oruzje (name: Desert Eagle || ammo: 84) iz gunrack id 39.
+[01/05/2020] Demetrius_Innes je ostavio oruzje (name: Desert Eagle || ammo: 66) u gunrack id 39.
+[01/05/2020] Viktor_Pajovic je uzeo oruzje (name: Desert Eagle || ammo: 66) iz gunrack id 42.
+[01/05/2020] Viktor_Pajovic je ostavio oruzje (name: Desert Eagle || ammo: 66) u gunrack id 42.
+[01/05/2020] Viktor_Pajovic je uzeo oruzje (name: Desert Eagle || ammo: 66) iz gunrack id 42.
+[01/05/2020] Viktor_Pajovic je ostavio oruzje (name: Desert Eagle || ammo: 66) u gunrack id 42.
+[01/05/2020] Viktor_Pajovic je uzeo oruzje (name: Desert Eagle || ammo: 66) iz gunrack id 42.
+[01/05/2020] Viktor_Pajovic je ostavio oruzje (name: Desert Eagle || ammo: 66) u gunrack id 42.
+[01/05/2020] Harley_Toretto je ostavio oruzje (name: Desert Eagle || ammo: 29) u gunrack id 45.
+[01/05/2020] Viktor_Pajovic je uzeo oruzje (name: Desert Eagle || ammo: 66) iz gunrack id 42.
+[02/05/2020] Harley_Toretto je uzeo oruzje (name: Desert Eagle || ammo: 29) iz gunrack id 45.
+[02/05/2020] Vitaly_Mikhailov je ostavio oruzje (name: AK47 || ammo: 50) u gunrack id 0.
+[02/05/2020] Vitaly_Mikhailov je uzeo oruzje (name: AK47 || ammo: 50) iz gunrack id 0.
+[02/05/2020] Vitaly_Mikhailov je ostavio oruzje (name: AK47 || ammo: 50) u gunrack id 0.
+[02/05/2020] Vitaly_Mikhailov je uzeo oruzje (name: AK47 || ammo: 50) iz gunrack id 0.
+[04/05/2020] Demetrius_Innes je ostavio oruzje (name: Desert Eagle || ammo: 7) u gunrack id 39.
+[04/05/2020] Demetrius_Innes je uzeo oruzje (name: Desert Eagle || ammo: 66) iz gunrack id 39.
+[04/05/2020] Demetrius_Innes je ostavio oruzje (name: Desert Eagle || ammo: 64) u gunrack id 39.
+[04/05/2020] Demetrius_Innes je uzeo oruzje (name: Desert Eagle || ammo: 7) iz gunrack id 39.
+[04/05/2020] Demetrius_Innes je ostavio oruzje (name: Desert Eagle || ammo: 7) u gunrack id 39.
+[04/05/2020] Demetrius_Innes je uzeo oruzje (name: Desert Eagle || ammo: 64) iz gunrack id 39.
+[04/05/2020] Demetrius_Innes je ostavio oruzje (name: Desert Eagle || ammo: 64) u gunrack id 39.
+[04/05/2020] Demetrius_Innes je uzeo oruzje (name: Desert Eagle || ammo: 7) iz gunrack id 39.
+[04/05/2020] Harley_Toretto je ostavio oruzje (name: AK47 || ammo: 36) u gunrack id 45.
+[05/05/2020] Harley_Toretto je uzeo oruzje (name: AK47 || ammo: 36) iz gunrack id 45.
+[05/05/2020] Shane_Thompson je ostavio oruzje (name: Shotgun || ammo: 20) u gunrack id 25.
+[05/05/2020] Shane_Thompson je ostavio oruzje (name: Desert Eagle || ammo: 18) u gunrack id 25.
+[05/05/2020] Shane_Thompson je uzeo oruzje (name: Desert Eagle || ammo: 18) iz gunrack id 25.
+[05/05/2020] Shane_Thompson je ostavio oruzje (name: Desert Eagle || ammo: 18) u gunrack id 25.
+[05/05/2020] Vitaly_Mikhailov je ostavio oruzje (name: M4 || ammo: 75) u gunrack id 0.
+[06/05/2020] Anabella_Parker je ostavio oruzje (name: Melee oruzje || ammo: 1) u gunrack id 50.
+[06/05/2020] Anabella_Parker je uzeo oruzje (name: Melee oruzje || ammo: 1) iz gunrack id 50.
+[06/05/2020] Anabella_Parker je ostavio oruzje (name: Melee oruzje || ammo: 1) u gunrack id 50.
+[06/05/2020] Shane_Thompson je uzeo oruzje (name: Desert Eagle || ammo: 18) iz gunrack id 25.
+[06/05/2020] Demetrius_Innes je ostavio oruzje (name: Desert Eagle || ammo: 21) u gunrack id 38.
+[06/05/2020] Shane_Thompson je ostavio oruzje (name: Desert Eagle || ammo: 5) u gunrack id 25.
+[06/05/2020] Demetrius_Innes je uzeo oruzje (name: Desert Eagle || ammo: 21) iz gunrack id 38.
+[07/05/2020] Raymond_Washington je ostavio oruzje (name: Desert Eagle || ammo: 19) u gunrack id 51.
+[07/05/2020] Damyan_Krasimirov je ostavio oruzje (name: Shotgun || ammo: 20) u gunrack id 19.
+[07/05/2020] Damyan_Krasimirov je ostavio oruzje (name: Desert Eagle || ammo: 5) u gunrack id 19.
+[07/05/2020] Damyan_Krasimirov je uzeo oruzje (name: Shotgun || ammo: 20) iz gunrack id 19.
+[07/05/2020] Damyan_Krasimirov je uzeo oruzje (name: Desert Eagle || ammo: 5) iz gunrack id 19.
+[07/05/2020] Damyan_Krasimirov je ostavio oruzje (name: Desert Eagle || ammo: 5) u gunrack id 19.
+[07/05/2020] Damyan_Krasimirov je ostavio oruzje (name: Shotgun || ammo: 20) u gunrack id 19.
+[07/05/2020] Damyan_Krasimirov je uzeo oruzje (name: Desert Eagle || ammo: 5) iz gunrack id 19.
+[07/05/2020] Damyan_Krasimirov je uzeo oruzje (name: Shotgun || ammo: 20) iz gunrack id 19.
+[07/05/2020] Raymond_Washington je uzeo oruzje (name: Desert Eagle || ammo: 19) iz gunrack id 51.
+[07/05/2020] Raymond_Washington je ostavio oruzje (name: Desert Eagle || ammo: 19) u gunrack id 51.
+[07/05/2020] Raymond_Washington je uzeo oruzje (name: Desert Eagle || ammo: 19) iz gunrack id 51.
+[07/05/2020] Raymond_Washington je ostavio oruzje (name: Desert Eagle || ammo: 19) u gunrack id 51.
+[08/05/2020] Raymond_Washington je uzeo oruzje (name: Desert Eagle || ammo: 19) iz gunrack id 51.
+[08/05/2020] Raymond_Washington je ostavio oruzje (name: Desert Eagle || ammo: 19) u gunrack id 51.
+[08/05/2020] Raymond_Washington je uzeo oruzje (name: Desert Eagle || ammo: 19) iz gunrack id 51.
+[08/05/2020] Raymond_Washington je ostavio oruzje (name: Desert Eagle || ammo: 19) u gunrack id 51.
+[08/05/2020] Raymond_Washington je uzeo oruzje (name: Desert Eagle || ammo: 19) iz gunrack id 51.
+[08/05/2020] Raymond_Washington je ostavio oruzje (name: Desert Eagle || ammo: 19) u gunrack id 51.
+[09/05/2020] Raymond_Washington je uzeo oruzje (name: Desert Eagle || ammo: 19) iz gunrack id 51.
+[09/05/2020] Raymond_Washington je ostavio oruzje (name: Desert Eagle || ammo: 19) u gunrack id 51.
+[09/05/2020] Raymond_Washington je uzeo oruzje (name: Desert Eagle || ammo: 19) iz gunrack id 51.
+[09/05/2020] William_Nithercott je ostavio oruzje (name: Melee oruzje || ammo: 1) u gunrack id 54.
+[09/05/2020] William_Nithercott je uzeo oruzje (name: Melee oruzje || ammo: 1) iz gunrack id 54.
+[09/05/2020] William_Nithercott je ostavio oruzje (name: MP5 || ammo: 49) u gunrack id 54.
+[09/05/2020] William_Nithercott je ostavio oruzje (name: M4 || ammo: 50) u gunrack id 54.
+[09/05/2020] William_Nithercott je ostavio oruzje (name: Melee oruzje || ammo: 1) u gunrack id 54.
+[10/05/2020] William_Nithercott je uzeo oruzje (name: MP5 || ammo: 49) iz gunrack id 54.
+[10/05/2020] William_Nithercott je uzeo oruzje (name: M4 || ammo: 50) iz gunrack id 54.
+[11/05/2020] William_Nithercott je ostavio oruzje (name: Melee oruzje || ammo: 1) u gunrack id 54.
+[11/05/2020] Anabella_Parker je ostavio oruzje (name: Melee oruzje || ammo: 1) u gunrack id 50.
+[11/05/2020] William_Nithercott je ostavio oruzje (name: Melee oruzje || ammo: 1) u gunrack id 54.
+[11/05/2020] William_Nithercott je ostavio oruzje (name: Shotgun || ammo: 49) u gunrack id 54.
+[11/05/2020] William_Nithercott je uzeo oruzje (name: Melee oruzje || ammo: 1) iz gunrack id 54.
+[11/05/2020] William_Nithercott je ostavio oruzje (name: Shotgun || ammo: 25) u gunrack id 54.
+[12/05/2020] Demetrius_Innes je ostavio oruzje (name: Desert Eagle || ammo: 12) u gunrack id 38.
+[12/05/2020] Demetrius_Innes je uzeo oruzje (name: Desert Eagle || ammo: 12) iz gunrack id 38.
+[12/05/2020] Terry_Williams je ostavio oruzje (name: Desert Eagle || ammo: 48) u gunrack id 57.
+[12/05/2020] Terry_Williams je ostavio oruzje (name: Desert Eagle || ammo: 50) u gunrack id 57.
+[12/05/2020] Aleksander_Zaitsev je ostavio oruzje (name: Melee oruzje || ammo: 1) u gunrack id 46.
+[12/05/2020] Aleksander_Zaitsev je uzeo oruzje (name: Melee oruzje || ammo: 1) iz gunrack id 46.
+[12/05/2020] Aleksander_Zaitsev je ostavio oruzje (name: Melee oruzje || ammo: 1) u gunrack id 47.
+[12/05/2020] Aleksander_Zaitsev je uzeo oruzje (name: Melee oruzje || ammo: 1) iz gunrack id 47.
+[12/05/2020] Terry_Williams je uzeo oruzje (name: Desert Eagle || ammo: 50) iz gunrack id 57.
+[12/05/2020] Terry_Williams je uzeo oruzje (name: Desert Eagle || ammo: 48) iz gunrack id 57.
+[12/05/2020] Demetrius_Innes je ostavio oruzje (name: AK47 || ammo: 31) u gunrack id 38.
+[12/05/2020] Demetrius_Innes je uzeo oruzje (name: Desert Eagle || ammo: 64) iz gunrack id 38.
+[12/05/2020] Demetrius_Innes je ostavio oruzje (name: Desert Eagle || ammo: 50) u gunrack id 38.
+[12/05/2020] Demetrius_Innes je uzeo oruzje (name: AK47 || ammo: 31) iz gunrack id 38.
+[12/05/2020] Demetrius_Innes je ostavio oruzje (name: Desert Eagle || ammo: 15) u gunrack id 38.
+[12/05/2020] Demetrius_Innes je uzeo oruzje (name: Desert Eagle || ammo: 15) iz gunrack id 38.
+[12/05/2020] Demetrius_Innes je ostavio oruzje (name: AK47 || ammo: 14) u gunrack id 38.
+[12/05/2020] William_Nithercott je uzeo oruzje (name: Shotgun || ammo: 25) iz gunrack id 54.
+[12/05/2020] William_Nithercott je uzeo oruzje (name: Shotgun || ammo: 49) iz gunrack id 54.
+[12/05/2020] William_Nithercott je ostavio oruzje (name: Shotgun || ammo: 43) u gunrack id 54.
+[12/05/2020] William_Nithercott je ostavio oruzje (name: Shotgun || ammo: 25) u gunrack id 54.
+[13/05/2020] Demetrius_Innes je uzeo oruzje (name: Melee oruzje || ammo: 1) iz gunrack id 38.
+[13/05/2020] Demetrius_Innes je ostavio oruzje (name: Desert Eagle || ammo: 15) u gunrack id 38.
+[13/05/2020] Anabella_Parker je uzeo oruzje (name: Melee oruzje || ammo: 1) iz gunrack id 50.
+[13/05/2020] Anabella_Parker je ostavio oruzje (name: Melee oruzje || ammo: 1) u gunrack id 50.
+[13/05/2020] Anabella_Parker je uzeo oruzje (name: Melee oruzje || ammo: 1) iz gunrack id 50.
+[14/05/2020] William_Nithercott je uzeo oruzje (name: Melee oruzje || ammo: 1) iz gunrack id 53.
+[14/05/2020] William_Nithercott je uzeo oruzje (name: Melee oruzje || ammo: 1) iz gunrack id 53.
+[14/05/2020] Winchester_Tillman je ostavio oruzje (name: Shotgun || ammo: 36) u gunrack id 55.
+[14/05/2020] Winchester_Tillman je uzeo oruzje (name: Shotgun || ammo: 36) iz gunrack id 55.
+[14/05/2020] Winchester_Tillman je ostavio oruzje (name: Shotgun || ammo: 36) u gunrack id 55.
+[14/05/2020] Tony_Griffin je ostavio oruzje (name: Melee oruzje || ammo: 1) u gunrack id 6.
+[14/05/2020] Tony_Griffin je ostavio oruzje (name: Melee oruzje || ammo: 1) u gunrack id 6.
+[14/05/2020] Tony_Griffin je uzeo oruzje (name: Melee oruzje || ammo: 1) iz gunrack id 6.
+[14/05/2020] Tony_Griffin je ostavio oruzje (name: Melee oruzje || ammo: 1) u gunrack id 6.
+[14/05/2020] Tony_Griffin je uzeo oruzje (name: Melee oruzje || ammo: 1) iz gunrack id 6.
+[15/05/2020] Raymond_Washington je ostavio oruzje (name: Desert Eagle || ammo: 34) u gunrack id 58.
+[15/05/2020] Raymond_Washington je ostavio oruzje (name: Desert Eagle || ammo: 5) u gunrack id 58.
+[15/05/2020] Raymond_Washington je ostavio oruzje (name: Desert Eagle || ammo: 5) u gunrack id 58.
+[15/05/2020] Raymond_Washington je ostavio oruzje (name: Desert Eagle || ammo: 5) u gunrack id 58.
+[15/05/2020] Raymond_Washington je uzeo oruzje (name: Desert Eagle || ammo: 5) iz gunrack id 58.
+[15/05/2020] Raymond_Washington je ostavio oruzje (name: Desert Eagle || ammo: 5) u gunrack id 58.
+[15/05/2020] Evgeniy_Ivanov je uzeo oruzje (name: Shotgun || ammo: 36) iz gunrack id 54.
+[15/05/2020] Evgeniy_Ivanov je ostavio oruzje (name: Shotgun || ammo: 36) u gunrack id 54.
+[15/05/2020] Tony_Griffin je uzeo oruzje (name: Melee oruzje || ammo: 1) iz gunrack id 6.
+[15/05/2020] Tony_Griffin je ostavio oruzje (name: Melee oruzje || ammo: 1) u gunrack id 6.
+[16/05/2020] Terry_Williams je ostavio oruzje (name: Desert Eagle || ammo: 90) u gunrack id 55.
+[16/05/2020] Terry_Williams je ostavio oruzje (name: Desert Eagle || ammo: 50) u gunrack id 55.
+[16/05/2020] Evgeniy_Ivanov je ostavio oruzje (name: Desert Eagle || ammo: 14) u gunrack id 54.
+[16/05/2020] Evgeniy_Ivanov je ostavio oruzje (name: Desert Eagle || ammo: 22) u gunrack id 54.
+[16/05/2020] Goran_Milojevic je ostavio oruzje (name: Desert Eagle || ammo: 20) u gunrack id 37.
+[16/05/2020] Goran_Milojevic je uzeo oruzje (name: Desert Eagle || ammo: 20) iz gunrack id 37.
+[16/05/2020] Goran_Milojevic je ostavio oruzje (name: Desert Eagle || ammo: 20) u gunrack id 37.
+[17/05/2020] Bojko_Dadic je uzeo oruzje (name: Desert Eagle || ammo: 15) iz gunrack id 38.
+[18/05/2020] Tony_Griffin je ostavio oruzje (name: Desert Eagle || ammo: 11) u gunrack id 6.
+[18/05/2020] Boris_Ivanov je ostavio oruzje (name: M4 || ammo: 49) u gunrack id 63.
+[18/05/2020] Terry_Williams je ostavio oruzje (name: Desert Eagle || ammo: 50) u gunrack id 55.
+[19/05/2020] Bojko_Dadic je uzeo oruzje (name: Desert Eagle || ammo: 50) iz gunrack id 38.
+[19/05/2020] Tony_Griffin je ostavio oruzje (name: Melee oruzje || ammo: 1) u gunrack id 6.
+[19/05/2020] Tony_Griffin je uzeo oruzje (name: Melee oruzje || ammo: 1) iz gunrack id 6.
+[19/05/2020] Alonzo_Ward je ostavio oruzje (name: Shotgun || ammo: 20) u gunrack id 10.
+[19/05/2020] Alonzo_Ward je ostavio oruzje (name: Desert Eagle || ammo: 50) u gunrack id 10.
+[19/05/2020] Alonzo_Ward je uzeo oruzje (name: Shotgun || ammo: 20) iz gunrack id 10.
+[19/05/2020] Alonzo_Ward je uzeo oruzje (name: Desert Eagle || ammo: 50) iz gunrack id 10.
+[19/05/2020] Boris_Ivanov je uzeo oruzje (name: M4 || ammo: 49) iz gunrack id 63.
+[19/05/2020] Boris_Ivanov je ostavio oruzje (name: M4 || ammo: 49) u gunrack id 63.
+[21/05/2020] Nikolaj_Zajcev je ostavio oruzje (name: Shotgun || ammo: 35) u gunrack id 65.
+[21/05/2020] Thomas_Pitfield je ostavio oruzje (name: Rifle || ammo: 20) u gunrack id 56.
+[21/05/2020] Thomas_Pitfield je ostavio oruzje (name: Rifle || ammo: 20) u gunrack id 56.
+[21/05/2020] Thomas_Pitfield je ostavio oruzje (name: Rifle || ammo: 20) u gunrack id 56.
+[22/05/2020] Thomas_Pitfield je ostavio oruzje (name: Shotgun || ammo: 25) u gunrack id 56.
+[23/05/2020] Stephen_Frye je ostavio oruzje (name: Rifle || ammo: 50) u gunrack id 66.
+[23/05/2020] Stephen_Frye je ostavio oruzje (name: Shotgun || ammo: 50) u gunrack id 66.
+[23/05/2020] Stephen_Frye je uzeo oruzje (name: Shotgun || ammo: 50) iz gunrack id 66.
+[23/05/2020] Stephen_Frye je uzeo oruzje (name: Rifle || ammo: 50) iz gunrack id 66.
+[23/05/2020] Stephen_Frye je ostavio oruzje (name: Rifle || ammo: 47) u gunrack id 66.
+[23/05/2020] Mile_Raonic je ostavio oruzje (name: M4 || ammo: 70) u gunrack id 67.
+[23/05/2020] Mile_Raonic je uzeo oruzje (name: M4 || ammo: 70) iz gunrack id 67.
+[23/05/2020] Boris_Noukhayev je ostavio oruzje (name: Desert Eagle || ammo: 20) u gunrack id 68.
+[24/05/2020] Boris_Ivanov je ostavio oruzje (name: Desert Eagle || ammo: 19) u gunrack id 63.
+[24/05/2020] Boris_Ivanov je ostavio oruzje (name: Melee oruzje || ammo: 1) u gunrack id 63.
+[24/05/2020] Boris_Ivanov je uzeo oruzje (name: M4 || ammo: 49) iz gunrack id 63.
+[24/05/2020] Stephen_Frye je ostavio oruzje (name: Rifle || ammo: 50) u gunrack id 66.
+[24/05/2020] Stephen_Frye je uzeo oruzje (name: Rifle || ammo: 50) iz gunrack id 66.
+[24/05/2020] Stephen_Frye je uzeo oruzje (name: Rifle || ammo: 47) iz gunrack id 66.
+[24/05/2020] Stephen_Frye je ostavio oruzje (name: Desert Eagle || ammo: 28) u gunrack id 66.
+[25/05/2020] Stephen_Frye je uzeo oruzje (name: Desert Eagle || ammo: 28) iz gunrack id 66.
+[25/05/2020] Stephen_Frye je ostavio oruzje (name: Desert Eagle || ammo: 50) u gunrack id 66.
+[25/05/2020] Bojko_Dadic je uzeo oruzje (name: AK47 || ammo: 14) iz gunrack id 38.
+[25/05/2020] Bojko_Dadic je uzeo oruzje (name: Melee oruzje || ammo: 1) iz gunrack id 38.
+[25/05/2020] Bojko_Dadic je ostavio oruzje (name: Melee oruzje || ammo: 1) u gunrack id 69.
+[25/05/2020] Bojko_Dadic je ostavio oruzje (name: AK47 || ammo: 14) u gunrack id 69.
+[26/05/2020] Stephen_Frye je ostavio oruzje (name: Rifle || ammo: 50) u gunrack id 66.
+[26/05/2020] Boris_Noukhayev je uzeo oruzje (name: Desert Eagle || ammo: 20) iz gunrack id 68.
+[26/05/2020] Boris_Noukhayev je ostavio oruzje (name: Desert Eagle || ammo: 40) u gunrack id 68.
+[26/05/2020] Boris_Noukhayev je uzeo oruzje (name: Desert Eagle || ammo: 40) iz gunrack id 68.
+[27/05/2020] Boris_Ivanov je ostavio oruzje (name: Desert Eagle || ammo: 26) u gunrack id 62.
+[27/05/2020] Boris_Ivanov je uzeo oruzje (name: Melee oruzje || ammo: 1) iz gunrack id 62.
+[27/05/2020] Boris_Ivanov je ostavio oruzje (name: Melee oruzje || ammo: 1) u gunrack id 62.
+[27/05/2020] Stephen_Frye je ostavio oruzje (name: Rifle || ammo: 50) u gunrack id 68.
+[27/05/2020] Stephen_Frye je ostavio oruzje (name: Desert Eagle || ammo: 50) u gunrack id 68.
+[27/05/2020] Stephen_Frye je ostavio oruzje (name: Rifle || ammo: 50) u gunrack id 68.
+[27/05/2020] Boris_Ivanov je uzeo oruzje (name: Desert Eagle || ammo: 19) iz gunrack id 62.
+[27/05/2020] Nikolaj_Zajcev je ostavio oruzje (name: Desert Eagle || ammo: 39) u gunrack id 64.
+[27/05/2020] Nikolaj_Zajcev je uzeo oruzje (name: Desert Eagle || ammo: 39) iz gunrack id 64.
+[27/05/2020] Nikolaj_Zajcev je ostavio oruzje (name: Desert Eagle || ammo: 39) u gunrack id 64.
+[27/05/2020] Nikolaj_Zajcev je uzeo oruzje (name: Desert Eagle || ammo: 39) iz gunrack id 64.
+[27/05/2020] Nikolaj_Zajcev je ostavio oruzje (name: Desert Eagle || ammo: 39) u gunrack id 64.
+[27/05/2020] Bojko_Dadic je uzeo oruzje (name: AK47 || ammo: 14) iz gunrack id 67.
+[27/05/2020] Bojko_Dadic je uzeo oruzje (name: Melee oruzje || ammo: 1) iz gunrack id 67.
+[27/05/2020] Tony_Griffin je uzeo oruzje (name: Desert Eagle || ammo: 11) iz gunrack id 6.
+[27/05/2020] Thomas_Pitfield je uzeo oruzje (name: Rifle || ammo: 20) iz gunrack id 55.
+[27/05/2020] Thomas_Pitfield je ostavio oruzje (name: Desert Eagle || ammo: 17) u gunrack id 55.
+[27/05/2020] Thomas_Pitfield je uzeo oruzje (name: Desert Eagle || ammo: 17) iz gunrack id 55.
+[27/05/2020] Thomas_Pitfield je uzeo oruzje (name: Shotgun || ammo: 25) iz gunrack id 55.
+[27/05/2020] Thomas_Pitfield je ostavio oruzje (name: Rifle || ammo: 16) u gunrack id 55.
+[27/05/2020] Tony_Griffin je ostavio oruzje (name: Desert Eagle || ammo: 9) u gunrack id 6.
+[28/05/2020] Denzel_Monguia je ostavio oruzje (name: Desert Eagle || ammo: 1) u gunrack id 10.
+[28/05/2020] Rick_Colorado je uzeo oruzje (name: Melee oruzje || ammo: 1) iz gunrack id 48.
+[28/05/2020] Thomas_Pitfield je uzeo oruzje (name: Rifle || ammo: 16) iz gunrack id 55.
+[28/05/2020] Thomas_Pitfield je ostavio oruzje (name: Rifle || ammo: 16) u gunrack id 55.
+[28/05/2020] Thomas_Pitfield je uzeo oruzje (name: Rifle || ammo: 16) iz gunrack id 55.
+[28/05/2020] Thomas_Pitfield je uzeo oruzje (name: Rifle || ammo: 20) iz gunrack id 55.
+[28/05/2020] Thomas_Pitfield je ostavio oruzje (name: Rifle || ammo: 20) u gunrack id 55.
+[28/05/2020] Thomas_Pitfield je ostavio oruzje (name: Rifle || ammo: 16) u gunrack id 55.
+[28/05/2020] Boris_Noukhayev je ostavio oruzje (name: Desert Eagle || ammo: 40) u gunrack id 66.
+[28/05/2020] Boris_Noukhayev je ostavio oruzje (name: AK47 || ammo: 30) u gunrack id 66.
+[28/05/2020] Boris_Noukhayev je ostavio oruzje (name: AK47 || ammo: 30) u gunrack id 66.
+[28/05/2020] Boris_Noukhayev je ostavio oruzje (name: AK47 || ammo: 30) u gunrack id 66.
+[28/05/2020] Boris_Noukhayev je uzeo oruzje (name: Desert Eagle || ammo: 40) iz gunrack id 66.
+[28/05/2020] Boris_Noukhayev je ostavio oruzje (name: Shotgun || ammo: 20) u gunrack id 66.
+[28/05/2020] Boris_Noukhayev je uzeo oruzje (name: AK47 || ammo: 30) iz gunrack id 66.
+[28/05/2020] Boris_Noukhayev je uzeo oruzje (name: AK47 || ammo: 30) iz gunrack id 66.
+[28/05/2020] Boris_Noukhayev je uzeo oruzje (name: AK47 || ammo: 30) iz gunrack id 66.
+[28/05/2020] Boris_Noukhayev je uzeo oruzje (name: Shotgun || ammo: 20) iz gunrack id 66.
+[28/05/2020] Boris_Noukhayev je ostavio oruzje (name: Shotgun || ammo: 20) u gunrack id 66.
+[28/05/2020] Thomas_Pitfield je uzeo oruzje (name: Rifle || ammo: 16) iz gunrack id 55.
+[28/05/2020] Thomas_Pitfield je ostavio oruzje (name: Shotgun || ammo: 25) u gunrack id 55.
+[28/05/2020] Thomas_Pitfield je ostavio oruzje (name: Rifle || ammo: 16) u gunrack id 55.
+[29/05/2020] Rick_Colorado je ostavio oruzje (name: Desert Eagle || ammo: 29) u gunrack id 48.
+[29/05/2020] Rick_Colorado je uzeo oruzje (name: Desert Eagle || ammo: 29) iz gunrack id 48.
+[29/05/2020] Rick_Colorado je ostavio oruzje (name: Desert Eagle || ammo: 29) u gunrack id 48.
+[30/05/2020] Rick_Colorado je uzeo oruzje (name: Desert Eagle || ammo: 29) iz gunrack id 48.
+[30/05/2020] Rick_Colorado je ostavio oruzje (name: Desert Eagle || ammo: 29) u gunrack id 48.
+[30/05/2020] Rick_Colorado je uzeo oruzje (name: Desert Eagle || ammo: 29) iz gunrack id 48.
+[30/05/2020] Rick_Colorado je ostavio oruzje (name: Desert Eagle || ammo: 29) u gunrack id 48.
+[31/05/2020] Demetrius_Innes je ostavio oruzje (name: AK47 || ammo: 50) u gunrack id 72.
+[31/05/2020] Stephen_Frye je ostavio oruzje (name: Rifle || ammo: 50) u gunrack id 68.
+[31/05/2020] Boris_Ivanov je uzeo oruzje (name: Desert Eagle || ammo: 26) iz gunrack id 62.
+[31/05/2020] Boris_Ivanov je ostavio oruzje (name: Desert Eagle || ammo: 56) u gunrack id 62.
+[31/05/2020] Stephen_Frye je uzeo oruzje (name: Rifle || ammo: 50) iz gunrack id 68.
+[31/05/2020] Boris_Ivanov je uzeo oruzje (name: Desert Eagle || ammo: 56) iz gunrack id 62.
+[31/05/2020] Nikolaj_Zajcev je ostavio oruzje (name: Desert Eagle || ammo: 56) u gunrack id 64.
+[31/05/2020] Nikolaj_Zajcev je uzeo oruzje (name: Desert Eagle || ammo: 56) iz gunrack id 64.
+[31/05/2020] Nikolaj_Zajcev je ostavio oruzje (name: Desert Eagle || ammo: 56) u gunrack id 64.
+[31/05/2020] Nikolaj_Zajcev je ostavio oruzje (name: Desert Eagle || ammo: 9) u gunrack id 64.
+[31/05/2020] Nikolaj_Zajcev je uzeo oruzje (name: Desert Eagle || ammo: 56) iz gunrack id 64.
+[31/05/2020] Nikolaj_Zajcev je uzeo oruzje (name: Desert Eagle || ammo: 9) iz gunrack id 64.
+[31/05/2020] Nikolaj_Zajcev je ostavio oruzje (name: Desert Eagle || ammo: 65) u gunrack id 64.
+[01/06/2020] Rick_Colorado je uzeo oruzje (name: Desert Eagle || ammo: 29) iz gunrack id 48.
+[01/06/2020] Rick_Colorado je ostavio oruzje (name: Desert Eagle || ammo: 29) u gunrack id 48.
+[01/06/2020] Larry_Dickens je uzeo oruzje (name: AK47 || ammo: 50) iz gunrack id 72.
+[01/06/2020] Nikolaj_Zajcev je uzeo oruzje (name: Desert Eagle || ammo: 65) iz gunrack id 64.
+[01/06/2020] Nikolaj_Zajcev je ostavio oruzje (name: Desert Eagle || ammo: 85) u gunrack id 64.
+[01/06/2020] Larry_Dickens je ostavio oruzje (name: AK47 || ammo: 44) u gunrack id 72.
+[02/06/2020] Rick_Colorado je uzeo oruzje (name: Desert Eagle || ammo: 29) iz gunrack id 47.
+[02/06/2020] Larry_Dickens je ostavio oruzje (name: M4 || ammo: 50) u gunrack id 71.
+[04/06/2020] Larry_Dickens je uzeo oruzje (name: M4 || ammo: 50) iz gunrack id 71.
+[09/06/2020] Boris_Noukhayev je uzeo oruzje (name: Shotgun || ammo: 20) iz gunrack id 65.
+[09/06/2020] Henry_Walsh je uzeo oruzje (name: Rifle || ammo: 20) iz gunrack id 54.
+[09/06/2020] Henry_Walsh je uzeo oruzje (name: Shotgun || ammo: 25) iz gunrack id 54.
+[09/06/2020] Henry_Walsh je uzeo oruzje (name: Rifle || ammo: 20) iz gunrack id 54.
+[09/06/2020] Henry_Walsh je uzeo oruzje (name: Rifle || ammo: 16) iz gunrack id 54.
+[11/06/2020] Boris_Noukhayev je ostavio oruzje (name: Desert Eagle || ammo: 36) u gunrack id 65.
+[14/06/2020] Demetrius_Innes je ostavio oruzje (name: Shotgun || ammo: 46) u gunrack id 71.
+[14/06/2020] Demetrius_Innes je ostavio oruzje (name: Desert Eagle || ammo: 50) u gunrack id 71.
+[17/06/2020] Demetrius_Innes je uzeo oruzje (name: AK47 || ammo: 44) iz gunrack id 71.
+[17/06/2020] Demetrius_Innes je ostavio oruzje (name: AK47 || ammo: 44) u gunrack id 71.
+[18/06/2020] Frank_Montana je ostavio oruzje (name: Desert Eagle || ammo: 47) u gunrack id 62.
+[18/06/2020] Frank_Montana je ostavio oruzje (name: Melee oruzje || ammo: 1) u gunrack id 62.
+[20/06/2020] Frank_Montana je uzeo oruzje (name: Desert Eagle || ammo: 47) iz gunrack id 62.
+[20/06/2020] Frank_Montana je ostavio oruzje (name: Desert Eagle || ammo: 47) u gunrack id 62.
+[20/06/2020] Mehmed_Sahovic je uzeo oruzje (name: Desert Eagle || ammo: 36) iz gunrack id 65.
+[21/06/2020] Frank_Montana je uzeo oruzje (name: Desert Eagle || ammo: 47) iz gunrack id 62.
+[21/06/2020] Frank_Montana je ostavio oruzje (name: Desert Eagle || ammo: 47) u gunrack id 62.
+[21/06/2020] Frank_Montana je uzeo oruzje (name: Desert Eagle || ammo: 47) iz gunrack id 62.
+[22/06/2020] Ibrahimi_Kastrati je ostavio oruzje (name: Melee oruzje || ammo: 1) u gunrack id 73.
+[23/06/2020] Giuseppe_Agostini je ostavio oruzje (name: Desert Eagle || ammo: 27) u gunrack id 62.
+[23/06/2020] Giuseppe_Agostini je ostavio oruzje (name: Desert Eagle || ammo: 51) u gunrack id 62.
+[23/06/2020] Terry_Williams je uzeo oruzje (name: Desert Eagle || ammo: 50) iz gunrack id 53.
+[23/06/2020] Terry_Williams je uzeo oruzje (name: Desert Eagle || ammo: 50) iz gunrack id 53.
+[23/06/2020] Terry_Williams je ostavio oruzje (name: Desert Eagle || ammo: 100) u gunrack id 53.
+[23/06/2020] Terry_Williams je uzeo oruzje (name: Desert Eagle || ammo: 90) iz gunrack id 53.
+[24/06/2020] Giuseppe_Agostini je uzeo oruzje (name: Desert Eagle || ammo: 51) iz gunrack id 62.
+[25/06/2020] Giuseppe_Agostini je uzeo oruzje (name: Melee oruzje || ammo: 1) iz gunrack id 62.
+[25/06/2020] Giuseppe_Agostini je uzeo oruzje (name: Desert Eagle || ammo: 27) iz gunrack id 62.
+[25/06/2020] Buck_Finn je ostavio oruzje (name: Melee oruzje || ammo: 1) u gunrack id 75.
+[25/06/2020] Buck_Finn je ostavio oruzje (name: Melee oruzje || ammo: 1) u gunrack id 75.
+[25/06/2020] Giuseppe_Agostini je ostavio oruzje (name: Desert Eagle || ammo: 27) u gunrack id 62.
+[25/06/2020] Giuseppe_Agostini je ostavio oruzje (name: Melee oruzje || ammo: 1) u gunrack id 62.
+[25/06/2020] Terry_Williams je uzeo oruzje (name: Desert Eagle || ammo: 100) iz gunrack id 53.
+[28/06/2020] Giuseppe_Agostini je uzeo oruzje (name: Desert Eagle || ammo: 27) iz gunrack id 62.
+[28/06/2020] Giuseppe_Agostini je uzeo oruzje (name: Melee oruzje || ammo: 1) iz gunrack id 62.
+[30/06/2020] Nikolaj_Zajcev je uzeo oruzje (name: Desert Eagle || ammo: 85) iz gunrack id 63.
+[30/06/2020] Nikolaj_Zajcev je ostavio oruzje (name: Desert Eagle || ammo: 85) u gunrack id 63.
+[01/07/2020] Nikolaj_Zajcev je uzeo oruzje (name: Desert Eagle || ammo: 85) iz gunrack id 63.
+[01/07/2020] Nikolaj_Zajcev je ostavio Desert Eagle (ammo: 85) u House Storageu [SQLID: 305].
+[02/07/2020] Nikolaj_Zajcev je ostavio Shotgun (ammo: 30) u House Storageu [SQLID: 305].
+[02/07/2020] Nikolaj_Zajcev je ostavio AK47 (ammo: 90) u House Storageu [SQLID: 305].
+[02/07/2020] Nikolaj_Zajcev je uzeo oruzje (name: Desert Eagle || ammo: 85) iz gunrack id 63.
+[02/07/2020] Nikolaj_Zajcev je ostavio Desert Eagle (ammo: 132) u House Storageu [SQLID: 305].
+[02/07/2020] Nikolaj_Zajcev je ostavio M4 (ammo: 50) u House Storageu [SQLID: 305].
+[03/07/2020] Nikolaj_Zajcev je uzeo oruzje (name: Shotgun || ammo: 30) iz gunrack id 63.
+[03/07/2020] Nikolaj_Zajcev je ostavio Shotgun (ammo: 45) u House Storageu [SQLID: 305].
+[03/07/2020] Nikolaj_Zajcev je uzeo oruzje (name: Desert Eagle || ammo: 132) iz gunrack id 63.
+[03/07/2020] Nikolaj_Zajcev je ostavio Desert Eagle (ammo: 131) u House Storageu [SQLID: 305].
+[05/07/2020] Hector_Romero je ostavio Melee oruzje (ammo: 1) u House Storageu [SQLID: 245].
+[12/07/2020] Sebastian_Garcia je uzeo oruzje (name: Melee oruzje || ammo: 1) iz gunrack id 20.
+[12/07/2020] Sebastian_Garcia je ostavio Melee oruzje (ammo: 2) u House Storageu [SQLID: 245].
+[12/07/2020] Sebastian_Garcia je ostavio Melee oruzje (ammo: 3) u House Storageu [SQLID: 245].
+[13/07/2020] Harley_Moore je ostavio Shotgun (ammo: 30) u House Storageu [SQLID: 320].
+[13/07/2020] Harley_Moore je uzeo oruzje (name: Shotgun || ammo: 30) iz gunrack id 75.
+[13/07/2020] Harley_Moore je ostavio Shotgun (ammo: 30) u House Storageu [SQLID: 320].
+[13/07/2020] Harley_Moore je uzeo oruzje (name: Shotgun || ammo: 30) iz gunrack id 75.
+[13/07/2020] Harley_Moore je ostavio Shotgun (ammo: 30) u House Storageu [SQLID: 320].
+[13/07/2020] Harley_Moore je uzeo oruzje (name: Shotgun || ammo: 30) iz gunrack id 75.
+[13/07/2020] Harley_Moore je ostavio Shotgun (ammo: 30) u House Storageu [SQLID: 320].
+[14/07/2020] Harley_Moore je uzeo oruzje (name: Shotgun || ammo: 30) iz gunrack id 75.
+[14/07/2020] Harley_Moore je ostavio Shotgun (ammo: 30) u House Storageu [SQLID: 320].
+[14/07/2020] Harley_Moore je uzeo oruzje (name: Shotgun || ammo: 30) iz gunrack id 75.
+[14/07/2020] Harley_Moore je ostavio Shotgun (ammo: 30) u House Storageu [SQLID: 320].
+[14/07/2020] Nikolaj_Zajcev je uzeo oruzje (name: AK47 || ammo: 90) iz gunrack id 63.
+[14/07/2020] Harley_Moore je uzeo oruzje (name: Shotgun || ammo: 30) iz gunrack id 75.
+[14/07/2020] Nikolaj_Zajcev je ostavio AK47 (ammo: 90) u House Storageu [SQLID: 305].
+[14/07/2020] Harley_Moore je ostavio Shotgun (ammo: 30) u House Storageu [SQLID: 320].
+[14/07/2020] Harley_Moore je uzeo oruzje (name: Shotgun || ammo: 30) iz gunrack id 75.
+[14/07/2020] Nikolaj_Zajcev je uzeo oruzje (name: Desert Eagle || ammo: 131) iz gunrack id 63.
+[14/07/2020] Nikolaj_Zajcev je ostavio Desert Eagle (ammo: 131) u House Storageu [SQLID: 305].
+[15/07/2020] Harley_Moore je ostavio Shotgun (ammo: 30) u House Storageu [SQLID: 320].
+[16/07/2020] Harley_Moore je uzeo oruzje (name: Shotgun || ammo: 30) iz gunrack id 75.
+[16/07/2020] Harley_Moore je ostavio Shotgun (ammo: 30) u House Storageu [SQLID: 320].
+[16/07/2020] Harley_Moore je uzeo oruzje (name: Shotgun || ammo: 30) iz gunrack id 75.
+[16/07/2020] Harley_Moore je ostavio Shotgun (ammo: 30) u House Storageu [SQLID: 320].
+[16/07/2020] Harley_Moore je uzeo oruzje (name: Shotgun || ammo: 30) iz gunrack id 75.
+[16/07/2020] Harley_Moore je ostavio Shotgun (ammo: 30) u House Storageu [SQLID: 320].
+[16/07/2020] Harley_Moore je uzeo oruzje (name: Shotgun || ammo: 30) iz gunrack id 75.
+[16/07/2020] Harley_Moore je ostavio Shotgun (ammo: 25) u House Storageu [SQLID: 320].
+[16/07/2020] Harley_Moore je uzeo oruzje (name: Shotgun || ammo: 25) iz gunrack id 75.
+[16/07/2020] Harley_Moore je ostavio Shotgun (ammo: 25) u House Storageu [SQLID: 320].
+[16/07/2020] Harley_Moore je uzeo oruzje (name: Shotgun || ammo: 25) iz gunrack id 75.
+[17/07/2020] Michelle_Stewart je ostavio M4 (ammo: 195) u House Storageu [SQLID: 320].
+[17/07/2020] Michelle_Stewart je uzeo oruzje (name: M4 || ammo: 195) iz gunrack id 75.
+[17/07/2020] Michelle_Stewart je ostavio M4 (ammo: 195) u House Storageu [SQLID: 320].
+[17/07/2020] Michelle_Stewart je uzeo oruzje (name: M4 || ammo: 195) iz gunrack id 75.
+[17/07/2020] Michelle_Stewart je ostavio M4 (ammo: 195) u House Storageu [SQLID: 320].
+[17/07/2020] Michelle_Stewart je uzeo oruzje (name: M4 || ammo: 195) iz gunrack id 75.
+[17/07/2020] Michelle_Stewart je ostavio M4 (ammo: 195) u House Storageu [SQLID: 320].
+[17/07/2020] Michelle_Stewart je uzeo oruzje (name: M4 || ammo: 195) iz gunrack id 75.
+[17/07/2020] Michelle_Stewart je ostavio M4 (ammo: 195) u House Storageu [SQLID: 320].
+[17/07/2020] Michelle_Stewart je uzeo oruzje (name: M4 || ammo: 195) iz gunrack id 75.
+[18/07/2020] Stefan_Babic je ostavio Rifle (ammo: 20) u House Storageu [SQLID: 296].
+[18/07/2020] Michelle_Stewart je ostavio M4 (ammo: 239) u House Storageu [SQLID: 320].
+[31/07/2020] Trevor_Thompson je uzeo oruzje (name: Melee oruzje || ammo: 1) iz gunrack id 22.
+[31/07/2020] Trevor_Thompson je ostavio Melee oruzje (ammo: 1) u House Storageu [SQLID: 249].
+[06/08/2020] Artur_Mirnov je ostavio Melee oruzje (ammo: 2) u House Storageu [SQLID: 322].
+[06/08/2020] Artur_Mirnov je uzeo oruzje (name: Melee oruzje || ammo: 2) iz gunrack id 77.
+[09/08/2020] Boris_Ivanov je uzeo oruzje (name: Melee oruzje || ammo: 1) iz gunrack id 61.
+[11/08/2020] Nikolaj_Zajcev je uzeo oruzje (name: Desert Eagle || ammo: 131) iz gunrack id 63.
+[11/08/2020] Nikolaj_Zajcev je uzeo oruzje (name: AK47 || ammo: 90) iz gunrack id 63.
+[11/08/2020] Nikolaj_Zajcev je uzeo oruzje (name: M4 || ammo: 50) iz gunrack id 63.
+[11/08/2020] Nikolaj_Zajcev je ostavio M4 (ammo: 50) u House Storageu [SQLID: 305].
+[11/08/2020] Boris_Ivanov je ostavio AK47 (ammo: 90) u House Storageu [SQLID: 303].
+[11/08/2020] Boris_Ivanov je ostavio Desert Eagle (ammo: 131) u House Storageu [SQLID: 303].
+[11/08/2020] Nikolaj_Zajcev je uzeo oruzje (name: M4 || ammo: 50) iz gunrack id 63.
+[11/08/2020] Nikolaj_Zajcev je uzeo oruzje (name: Shotgun || ammo: 45) iz gunrack id 63.
+[11/08/2020] Boris_Ivanov je ostavio M4 (ammo: 50) u House Storageu [SQLID: 303].
+[11/08/2020] Boris_Ivanov je ostavio Shotgun (ammo: 45) u House Storageu [SQLID: 303].
+[11/08/2020] Boris_Ivanov je uzeo oruzje (name: AK47 || ammo: 90) iz gunrack id 61.
+[11/08/2020] Boris_Ivanov je uzeo oruzje (name: Desert Eagle || ammo: 131) iz gunrack id 61.
+[11/08/2020] Boris_Ivanov je uzeo oruzje (name: M4 || ammo: 50) iz gunrack id 61.
+[11/08/2020] Boris_Ivanov je uzeo oruzje (name: Shotgun || ammo: 45) iz gunrack id 61.
+[13/08/2020] Aaron_Schaffner je ostavio Shotgun (ammo: 84) u House Storageu [SQLID: 323].
+[21/08/2020] Jayden_Arkwood je ostavio Desert Eagle (ammo: 22) u House Storageu [SQLID: 325].
+[21/08/2020] Jayden_Arkwood je ostavio Shotgun (ammo: 71) u House Storageu [SQLID: 325].
+[21/08/2020] Jayden_Arkwood je uzeo oruzje (name: Desert Eagle || ammo: 22) iz gunrack id 80.
+[21/08/2020] Jayden_Arkwood je uzeo oruzje (name: Shotgun || ammo: 71) iz gunrack id 80.
+[21/08/2020] Jayden_Arkwood je ostavio Desert Eagle (ammo: 22) u House Storageu [SQLID: 326].
+[21/08/2020] Jayden_Arkwood je ostavio Shotgun (ammo: 71) u House Storageu [SQLID: 326].
+[29/08/2020] Miguel_Moyano je ostavio M4 (ammo: 42) u House Storageu [SQLID: 327].
+[29/08/2020] Miguel_Moyano je uzeo oruzje (name: M4 || ammo: 42) iz gunrack id 81.
+[30/08/2020] Aaron_Schaffner je uzeo oruzje (name: Shotgun || ammo: 84) iz gunrack id 78.
+[03/09/2020] Richard_Costanelli je ostavio Shotgun (ammo: 20) u House Storageu [SQLID: 328].
+[03/09/2020] Richard_Costanelli je uzeo oruzje (name: Shotgun || ammo: 20) iz gunrack id 82.
+[03/09/2020] Richard_Costanelli je ostavio Shotgun (ammo: 20) u House Storageu [SQLID: 328].
+[03/09/2020] Angelo_Lawrenson je ostavio Shotgun (ammo: 30) u House Storageu [SQLID: 329].
+[03/09/2020] Angelo_Lawrenson je ostavio Shotgun (ammo: 30) u House Storageu [SQLID: 329].
+[03/09/2020] Angelo_Lawrenson je ostavio Shotgun (ammo: 30) u House Storageu [SQLID: 329].
+[03/09/2020] Angelo_Lawrenson je uzeo oruzje (name: Shotgun || ammo: 30) iz gunrack id 3.
+[03/09/2020] Angelo_Lawrenson je ostavio Shotgun (ammo: 30) u House Storageu [SQLID: 329].
+[04/09/2020] Richard_Costanelli je uzeo oruzje (name: Shotgun || ammo: 20) iz gunrack id 81.
+[04/09/2020] Richard_Costanelli je ostavio Shotgun (ammo: 20) u House Storageu [SQLID: 328].
+[04/09/2020] Richard_Costanelli je uzeo oruzje (name: Shotgun || ammo: 20) iz gunrack id 81.
+[04/09/2020] Richard_Costanelli je ostavio Shotgun (ammo: 20) u House Storageu [SQLID: 328].
+[04/09/2020] Demarcus_King je ostavio Desert Eagle (ammo: 42) u House Storageu [SQLID: 219].
+[04/09/2020] Demarcus_King je uzeo oruzje (name: Desert Eagle || ammo: 42) iz gunrack id 1.
+[05/09/2020] Demarcus_King je ostavio Desert Eagle (ammo: 42) u House Storageu [SQLID: 219].
+[05/09/2020] Richard_Costanelli je ostavio Desert Eagle (ammo: 26) u House Storageu [SQLID: 328].
+[05/09/2020] Richard_Costanelli je uzeo oruzje (name: Desert Eagle || ammo: 26) iz gunrack id 81.
+[05/09/2020] Carolina_Chavez je ostavio Shotgun (ammo: 3) u House Storageu [SQLID: 315].
+[06/09/2020] Demarcus_King je uzeo oruzje (name: Desert Eagle || ammo: 42) iz gunrack id 1.
+[06/09/2020] Demarcus_King je ostavio Desert Eagle (ammo: 42) u House Storageu [SQLID: 219].
+[06/09/2020] Demarcus_King je uzeo oruzje (name: Desert Eagle || ammo: 42) iz gunrack id 1.
+[06/09/2020] Demarcus_King je ostavio Desert Eagle (ammo: 42) u House Storageu [SQLID: 219].
+[06/09/2020] James_Moore je uzeo oruzje (name: Desert Eagle || ammo: 22) iz gunrack id 79.
+[06/09/2020] James_Moore je ostavio Desert Eagle (ammo: 22) u House Storageu [SQLID: 326].
+[06/09/2020] James_Moore je uzeo oruzje (name: Desert Eagle || ammo: 22) iz gunrack id 79.
+[06/09/2020] Demarcus_King je uzeo oruzje (name: Desert Eagle || ammo: 42) iz gunrack id 1.
+[06/09/2020] Demarcus_King je ostavio Desert Eagle (ammo: 37) u House Storageu [SQLID: 219].
+[06/09/2020] James_Moore je ostavio Desert Eagle (ammo: 9) u House Storageu [SQLID: 326].
+[06/09/2020] Richard_Costanelli je uzeo oruzje (name: Shotgun || ammo: 20) iz gunrack id 81.
+[06/09/2020] Demarcus_King je uzeo oruzje (name: Desert Eagle || ammo: 37) iz gunrack id 1.
+[06/09/2020] Demarcus_King je ostavio Desert Eagle (ammo: 37) u House Storageu [SQLID: 219].
+[06/09/2020] Demarcus_King je uzeo oruzje (name: Desert Eagle || ammo: 37) iz gunrack id 1.
+[06/09/2020] Angelo_Lawrenson je uzeo oruzje (name: Shotgun || ammo: 30) iz gunrack id 82.
+[06/09/2020] Angelo_Lawrenson je ostavio Shotgun (ammo: 30) u House Storageu [SQLID: 329].
+[07/09/2020] Demarcus_King je ostavio Desert Eagle (ammo: 37) u House Storageu [SQLID: 219].
+[07/09/2020] Demarcus_King je uzeo oruzje (name: Desert Eagle || ammo: 37) iz gunrack id 1.
+[07/09/2020] Demarcus_King je ostavio Desert Eagle (ammo: 26) u House Storageu [SQLID: 219].
+[07/09/2020] Krentrell_Cawston je ostavio Shotgun (ammo: 37) u House Storageu [SQLID: 320].
+[07/09/2020] Krentrell_Cawston je uzeo oruzje (name: Shotgun || ammo: 37) iz gunrack id 74.
+[07/09/2020] Krentrell_Cawston je ostavio Shotgun (ammo: 37) u House Storageu [SQLID: 320].
+[07/09/2020] Demarcus_King je uzeo oruzje (name: Desert Eagle || ammo: 26) iz gunrack id 1.
+[07/09/2020] Demarcus_King je ostavio Desert Eagle (ammo: 19) u House Storageu [SQLID: 219].
+[07/09/2020] Demarcus_King je uzeo oruzje (name: Desert Eagle || ammo: 19) iz gunrack id 1.
+[07/09/2020] Demarcus_King je ostavio Melee oruzje (ammo: 1) u House Storageu [SQLID: 219].
+[07/09/2020] Demarcus_King je uzeo oruzje (name: Melee oruzje || ammo: 1) iz gunrack id 1.
+[07/09/2020] Demarcus_King je ostavio Melee oruzje (ammo: 1) u House Storageu [SQLID: 219].
+[07/09/2020] Demarcus_King je ostavio Desert Eagle (ammo: 19) u House Storageu [SQLID: 219].
+[07/09/2020] Angelo_Lawrenson je uzeo oruzje (name: Shotgun || ammo: 30) iz gunrack id 82.
+[07/09/2020] Angelo_Lawrenson je uzeo oruzje (name: Shotgun || ammo: 30) iz gunrack id 82.
+[07/09/2020] Angelo_Lawrenson je uzeo oruzje (name: Shotgun || ammo: 30) iz gunrack id 82.
+[07/09/2020] Angelo_Lawrenson je ostavio Shotgun (ammo: 30) u House Storageu [SQLID: 329].
+[07/09/2020] Angelo_Lawrenson je ostavio Shotgun (ammo: 60) u House Storageu [SQLID: 329].
+[07/09/2020] Angelo_Lawrenson je uzeo oruzje (name: Shotgun || ammo: 60) iz gunrack id 82.
+[07/09/2020] Angelo_Lawrenson je ostavio Shotgun (ammo: 30) u House Storageu [SQLID: 329].
+[07/09/2020] Angelo_Lawrenson je ostavio Shotgun (ammo: 30) u House Storageu [SQLID: 329].
+[08/09/2020] Jimmy_Cheng je ostavio Shotgun (ammo: 20) u House Storageu [SQLID: 330].
+[08/09/2020] Jimmy_Cheng je uzeo oruzje (name: Shotgun || ammo: 20) iz gunrack id 83.
+[08/09/2020] Angelo_Lawrenson je uzeo oruzje (name: Shotgun || ammo: 30) iz gunrack id 82.
+[08/09/2020] Demarcus_King je uzeo oruzje (name: Melee oruzje || ammo: 1) iz gunrack id 1.
+[08/09/2020] Demarcus_King je ostavio Melee oruzje (ammo: 1) u House Storageu [SQLID: 219].
+[08/09/2020] Demarcus_King je uzeo oruzje (name: Desert Eagle || ammo: 19) iz gunrack id 1.
+[08/09/2020] Demarcus_King je ostavio Desert Eagle (ammo: 19) u House Storageu [SQLID: 219].
+[08/09/2020] Krentrell_Cawston je uzeo oruzje (name: Shotgun || ammo: 37) iz gunrack id 74.
+[08/09/2020] Krentrell_Cawston je ostavio Shotgun (ammo: 37) u House Storageu [SQLID: 320].
+[08/09/2020] Krentrell_Cawston je uzeo oruzje (name: Shotgun || ammo: 37) iz gunrack id 74.
+[08/09/2020] Krentrell_Cawston je ostavio Shotgun (ammo: 37) u House Storageu [SQLID: 320].
+[08/09/2020] Krentrell_Cawston je uzeo oruzje (name: Shotgun || ammo: 37) iz gunrack id 74.
+[08/09/2020] Gary_Cox je ostavio Shotgun (ammo: 47) u House Storageu [SQLID: 331].
+[08/09/2020] Demarcus_King je ostavio AK47 (ammo: 50) u House Storageu [SQLID: 219].
+[08/09/2020] Gary_Cox je uzeo oruzje (name: Shotgun || ammo: 47) iz gunrack id 84.
+[08/09/2020] Gary_Cox je ostavio Shotgun (ammo: 47) u House Storageu [SQLID: 331].
+[08/09/2020] Gary_Cox je uzeo oruzje (name: Shotgun || ammo: 47) iz gunrack id 84.
+[09/09/2020] Krentrell_Cawston je ostavio Shotgun (ammo: 20) u House Storageu [SQLID: 320].
+[09/09/2020] Krentrell_Cawston je ostavio Shotgun (ammo: 30) u House Storageu [SQLID: 320].
+[10/09/2020] Demarcus_King je uzeo oruzje (name: AK47 || ammo: 50) iz gunrack id 1.
+[10/09/2020] Demarcus_King je uzeo oruzje (name: Desert Eagle || ammo: 19) iz gunrack id 1.
+[10/09/2020] Demarcus_King je ostavio AK47 (ammo: 50) u House Storageu [SQLID: 219].
+[10/09/2020] Demarcus_King je ostavio Desert Eagle (ammo: 19) u House Storageu [SQLID: 219].
+[10/09/2020] Krentrell_Cawston je uzeo oruzje (name: Shotgun || ammo: 20) iz gunrack id 74.
+[10/09/2020] Krentrell_Cawston je uzeo oruzje (name: Shotgun || ammo: 30) iz gunrack id 74.
+[10/09/2020] Krentrell_Cawston je ostavio Shotgun (ammo: 30) u House Storageu [SQLID: 320].
+[10/09/2020] Krentrell_Cawston je ostavio Shotgun (ammo: 20) u House Storageu [SQLID: 320].
+[10/09/2020] Demarcus_King je uzeo oruzje (name: Melee oruzje || ammo: 1) iz gunrack id 1.
+[11/09/2020] Demarcus_King je uzeo oruzje (name: Desert Eagle || ammo: 19) iz gunrack id 1.
+[11/09/2020] Demarcus_King je ostavio Desert Eagle (ammo: 19) u House Storageu [SQLID: 219].
+[11/09/2020] Krentrell_Cawston je uzeo oruzje (name: Shotgun || ammo: 30) iz gunrack id 74.
+[11/09/2020] Krentrell_Cawston je ostavio Shotgun (ammo: 30) u House Storageu [SQLID: 320].
+[11/09/2020] Krentrell_Cawston je ostavio Melee oruzje (ammo: 1) u House Storageu [SQLID: 320].
+[11/09/2020] Krentrell_Cawston je uzeo oruzje (name: Melee oruzje || ammo: 1) iz gunrack id 74.
+[11/09/2020] Demarcus_King je uzeo oruzje (name: Desert Eagle || ammo: 19) iz gunrack id 1.
+[11/09/2020] Demarcus_King je ostavio Desert Eagle (ammo: 19) u House Storageu [SQLID: 219].
+[11/09/2020] James_Moore je uzeo oruzje (name: Desert Eagle || ammo: 9) iz gunrack id 79.
+[11/09/2020] James_Moore je ostavio Desert Eagle (ammo: 9) u House Storageu [SQLID: 326].
+[11/09/2020] Demarcus_King je ostavio AK47 (ammo: 99) u House Storageu [SQLID: 219].
+[11/09/2020] James_Moore je uzeo oruzje (name: Desert Eagle || ammo: 9) iz gunrack id 79.
+[11/09/2020] James_Moore je uzeo oruzje (name: Shotgun || ammo: 71) iz gunrack id 79.
+[12/09/2020] Demarcus_King je uzeo oruzje (name: AK47 || ammo: 50) iz gunrack id 1.
+[12/09/2020] Demarcus_King je uzeo oruzje (name: AK47 || ammo: 99) iz gunrack id 1.
+[12/09/2020] Demarcus_King je uzeo oruzje (name: Desert Eagle || ammo: 19) iz gunrack id 1.
+[12/09/2020] James_Moore je ostavio Desert Eagle (ammo: 9) u House Storageu [SQLID: 333].
+[12/09/2020] James_Moore je ostavio Shotgun (ammo: 71) u House Storageu [SQLID: 333].
+[12/09/2020] Demarcus_King je ostavio Desert Eagle (ammo: 15) u House Storageu [SQLID: 219].
+[12/09/2020] Demarcus_King je uzeo oruzje (name: Desert Eagle || ammo: 15) iz gunrack id 1.
+[13/09/2020] Krentrell_Cawston je ostavio Desert Eagle (ammo: 32) u House Storageu [SQLID: 320].
+[13/09/2020] Krentrell_Cawston je ostavio Melee oruzje (ammo: 1) u House Storageu [SQLID: 320].
+[13/09/2020] Krentrell_Cawston je uzeo oruzje (name: Desert Eagle || ammo: 32) iz gunrack id 74.
+[13/09/2020] Krentrell_Cawston je uzeo oruzje (name: Melee oruzje || ammo: 1) iz gunrack id 74.
+[13/09/2020] James_Moore je uzeo oruzje (name: Desert Eagle || ammo: 9) iz gunrack id 84.
+[15/09/2020] Frankie_Moltisanti je ostavio Desert Eagle (ammo: 25) u House Storageu [SQLID: 335].
+[15/09/2020] Sheldon_Cobain je ostavio Desert Eagle (ammo: 3) u House Storageu [SQLID: 334].
+[15/09/2020] Douglas_Collins je uzeo oruzje (name: Shotgun || ammo: 20) iz gunrack id 74.
+[16/09/2020] Sheldon_Cobain je ostavio Melee oruzje (ammo: 2) u House Storageu [SQLID: 334].
+[16/09/2020] Sheldon_Cobain je ostavio Kamera (ammo: 200) u House Storageu [SQLID: 334].
+[16/09/2020] Frankie_Moltisanti je uzeo oruzje (name: Desert Eagle || ammo: 25) iz gunrack id 85.
+[16/09/2020] Owen_McGrath je ostavio Melee oruzje (ammo: 1) u House Storageu [SQLID: 336].
+[16/09/2020] Owen_McGrath je uzeo oruzje (name: Melee oruzje || ammo: 1) iz gunrack id 86.
+[16/09/2020] Demarcus_King je ostavio AK47 (ammo: 99) u House Storageu [SQLID: 337].
+[17/09/2020] Frankie_Moltisanti je ostavio Desert Eagle (ammo: 24) u House Storageu [SQLID: 335].
+[17/09/2020] Demarcus_King je uzeo oruzje (name: AK47 || ammo: 99) iz gunrack id 87.
+[17/09/2020] Frankie_Moltisanti je uzeo oruzje (name: Desert Eagle || ammo: 24) iz gunrack id 85.
+[18/09/2020] Douglas_Collins je uzeo oruzje (name: Shotgun || ammo: 30) iz gunrack id 74.
+[18/09/2020] Douglas_Collins je ostavio Desert Eagle (ammo: 40) u House Storageu [SQLID: 320].
+[18/09/2020] Maximiliano_Lacasa je ostavio Shotgun (ammo: 99) u House Storageu [SQLID: 245].
+[18/09/2020] Maximiliano_Lacasa je uzeo oruzje (name: Shotgun || ammo: 99) iz gunrack id 19.
+[18/09/2020] Maximiliano_Lacasa je ostavio Shotgun (ammo: 98) u House Storageu [SQLID: 245].
+[19/09/2020] Sheldon_Cobain je uzeo oruzje (name: Kamera || ammo: 200) iz gunrack id 84.
+[19/09/2020] Sheldon_Cobain je ostavio Kamera (ammo: 200) u House Storageu [SQLID: 334].
+[20/09/2020] Sheldon_Cobain je uzeo oruzje (name: Melee oruzje || ammo: 2) iz gunrack id 84.
+[20/09/2020] Sheldon_Cobain je ostavio Melee oruzje (ammo: 2) u House Storageu [SQLID: 334].
+[20/09/2020] Douglas_Collins je uzeo oruzje (name: Desert Eagle || ammo: 40) iz gunrack id 74.
+[20/09/2020] Sheldon_Cobain je uzeo oruzje (name: Desert Eagle || ammo: 3) iz gunrack id 84.
+[20/09/2020] Sheldon_Cobain je uzeo oruzje (name: Kamera || ammo: 200) iz gunrack id 84.
+[20/09/2020] Sheldon_Cobain je ostavio Kamera (ammo: 200) u House Storageu [SQLID: 334].
+[21/09/2020] Sato_Kiyoshi je ostavio Desert Eagle (ammo: 50) u House Storageu [SQLID: 339].
+[21/09/2020] Sato_Kiyoshi je ostavio Shotgun (ammo: 40) u House Storageu [SQLID: 339].
+[21/09/2020] Sato_Kiyoshi je uzeo oruzje (name: Desert Eagle || ammo: 50) iz gunrack id 88.
+[21/09/2020] Harley_Moore je ostavio Desert Eagle (ammo: 40) u House Storageu [SQLID: 320].
+[21/09/2020] Maximiliano_Lacasa je uzeo oruzje (name: Shotgun || ammo: 98) iz gunrack id 19.
+[21/09/2020] Harley_Moore je ostavio Desert Eagle (ammo: 40) u House Storageu [SQLID: 320].
+[21/09/2020] Harley_Moore je ostavio Shotgun (ammo: 20) u House Storageu [SQLID: 320].
+[22/09/2020] Sato_Kiyoshi je uzeo oruzje (name: Shotgun || ammo: 40) iz gunrack id 88.
+[22/09/2020] Sheldon_Cobain je uzeo oruzje (name: Kamera || ammo: 200) iz gunrack id 84.
+[22/09/2020] Sato_Kiyoshi je ostavio Desert Eagle (ammo: 35) u House Storageu [SQLID: 339].
+[22/09/2020] Sato_Kiyoshi je ostavio Shotgun (ammo: 40) u House Storageu [SQLID: 339].
+[22/09/2020] Sheldon_Cobain je ostavio Kamera (ammo: 200) u House Storageu [SQLID: 334].
+[22/09/2020] Sheldon_Cobain je ostavio Melee oruzje (ammo: 2) u House Storageu [SQLID: 334].
+[22/09/2020] Patrizio_Allegretto je uzeo oruzje (name: Shotgun || ammo: 20) iz gunrack id 74.
+[22/09/2020] Patrizio_Allegretto je ostavio Shotgun (ammo: 20) u House Storageu [SQLID: 320].
+[22/09/2020] Patrizio_Allegretto je uzeo oruzje (name: Desert Eagle || ammo: 40) iz gunrack id 74.
+[22/09/2020] Patrizio_Allegretto je ostavio Shotgun (ammo: 30) u House Storageu [SQLID: 320].
+[22/09/2020] Maximiliano_Lacasa je ostavio Shotgun (ammo: 96) u House Storageu [SQLID: 245].
+[22/09/2020] Patrizio_Allegretto je uzeo oruzje (name: Shotgun || ammo: 30) iz gunrack id 74.
+[22/09/2020] Sato_Kiyoshi je uzeo oruzje (name: Desert Eagle || ammo: 35) iz gunrack id 88.
+[22/09/2020] Sato_Kiyoshi je uzeo oruzje (name: Shotgun || ammo: 40) iz gunrack id 88.
+[22/09/2020] Daniel_Calabresi je ostavio Desert Eagle (ammo: 50) u House Storageu [SQLID: 293].
+[23/09/2020] Sato_Kiyoshi je ostavio Shotgun (ammo: 31) u House Storageu [SQLID: 339].
+[23/09/2020] Sato_Kiyoshi je ostavio Desert Eagle (ammo: 23) u House Storageu [SQLID: 339].
+[23/09/2020] Sato_Kiyoshi je uzeo oruzje (name: Desert Eagle || ammo: 23) iz gunrack id 88.
+[23/09/2020] Sato_Kiyoshi je ostavio Desert Eagle (ammo: 23) u House Storageu [SQLID: 339].
+[24/09/2020] Maximiliano_Lacasa je uzeo oruzje (name: Melee oruzje || ammo: 2) iz gunrack id 19.
+[24/09/2020] Daniel_Calabresi je ostavio Desert Eagle (ammo: 50) u House Storageu [SQLID: 293].
+[24/09/2020] Sato_Kiyoshi je uzeo oruzje (name: Desert Eagle || ammo: 23) iz gunrack id 88.
+[24/09/2020] Sato_Kiyoshi je ostavio Desert Eagle (ammo: 23) u House Storageu [SQLID: 339].
+[24/09/2020] Daniel_Calabresi je uzeo oruzje (name: Desert Eagle || ammo: 50) iz gunrack id 52.
+[24/09/2020] Daniel_Calabresi je uzeo oruzje (name: Desert Eagle || ammo: 50) iz gunrack id 52.
+[24/09/2020] Sato_Kiyoshi je uzeo oruzje (name: Shotgun || ammo: 31) iz gunrack id 88.
+[24/09/2020] Sato_Kiyoshi je ostavio Shotgun (ammo: 31) u House Storageu [SQLID: 339].
+[24/09/2020] Sato_Kiyoshi je uzeo oruzje (name: Desert Eagle || ammo: 23) iz gunrack id 88.
+[24/09/2020] Sato_Kiyoshi je uzeo oruzje (name: Shotgun || ammo: 31) iz gunrack id 88.
+[24/09/2020] Sato_Kiyoshi je ostavio Desert Eagle (ammo: 23) u House Storageu [SQLID: 339].
+[24/09/2020] Sato_Kiyoshi je ostavio Shotgun (ammo: 18) u House Storageu [SQLID: 339].
+[25/09/2020] Daniel_Calabresi je ostavio Desert Eagle (ammo: 50) u House Storageu [SQLID: 293].
+[25/09/2020] Sato_Kiyoshi je uzeo oruzje (name: Desert Eagle || ammo: 23) iz gunrack id 88.
+[25/09/2020] Sato_Kiyoshi je uzeo oruzje (name: Shotgun || ammo: 18) iz gunrack id 88.
+[25/09/2020] Maximiliano_Lacasa je uzeo oruzje (name: Shotgun || ammo: 96) iz gunrack id 19.
+[27/09/2020] Daniel_Calabresi je ostavio Desert Eagle (ammo: 50) u House Storageu [SQLID: 293].
+[27/09/2020] Thomas_Brown je ostavio Shotgun (ammo: 100) u House Storageu [SQLID: 342].
+[28/09/2020] Thomas_Brown je ostavio Shotgun (ammo: 50) u House Storageu [SQLID: 342].
+[28/09/2020] Thomas_Brown je ostavio Shotgun (ammo: 50) u House Storageu [SQLID: 342].
+[28/09/2020] Thomas_Brown je uzeo oruzje (name: Shotgun || ammo: 50) iz gunrack id 91.
+[28/09/2020] Thomas_Brown je ostavio Desert Eagle (ammo: 50) u House Storageu [SQLID: 342].
+[28/09/2020] Thomas_Brown je uzeo oruzje (name: Desert Eagle || ammo: 50) iz gunrack id 91.
+[28/09/2020] Thomas_Brown je uzeo oruzje (name: Shotgun || ammo: 50) iz gunrack id 91.
+[28/09/2020] Thomas_Brown je ostavio Shotgun (ammo: 35) u House Storageu [SQLID: 342].
+[30/09/2020] Randy_Mitchell je ostavio Shotgun (ammo: 50) u House Storageu [SQLID: 345].
+[30/09/2020] Randy_Mitchell je ostavio Shotgun (ammo: 100) u House Storageu [SQLID: 345].
+[30/09/2020] Randy_Mitchell je ostavio Desert Eagle (ammo: 32) u House Storageu [SQLID: 345].
+[30/09/2020] Randy_Mitchell je ostavio Desert Eagle (ammo: 50) u House Storageu [SQLID: 345].
+[30/09/2020] Randy_Mitchell je uzeo oruzje (name: Desert Eagle || ammo: 32) iz gunrack id 94.
+[30/09/2020] Randy_Mitchell je ostavio Rifle (ammo: 11) u House Storageu [SQLID: 345].
+[30/09/2020] Randy_Mitchell je uzeo oruzje (name: Rifle || ammo: 11) iz gunrack id 94.
+[30/09/2020] Randy_Mitchell je ostavio Rifle (ammo: 11) u House Storageu [SQLID: 345].
+[30/09/2020] Randy_Mitchell je uzeo oruzje (name: Shotgun || ammo: 50) iz gunrack id 94.
+[30/09/2020] Randy_Mitchell je ostavio Shotgun (ammo: 50) u House Storageu [SQLID: 345].
+[30/09/2020] Randy_Mitchell je uzeo oruzje (name: Desert Eagle || ammo: 50) iz gunrack id 94.
+[30/09/2020] Sheldon_Cobain je uzeo oruzje (name: Melee oruzje || ammo: 2) iz gunrack id 84.
+[01/10/2020] Daniel_Calabresi je ostavio Desert Eagle (ammo: 50) u House Storageu [SQLID: 293].
+[01/10/2020] Daniel_Calabresi je ostavio Rifle (ammo: 50) u House Storageu [SQLID: 293].
+[02/10/2020] Laura_Prince je uzeo oruzje (name: Shotgun || ammo: 71) iz gunrack id 83.
+[02/10/2020] Chester_Grant je ostavio Desert Eagle (ammo: 49) u House Storageu [SQLID: 346].
+[02/10/2020] Chester_Grant je uzeo oruzje (name: Desert Eagle || ammo: 49) iz gunrack id 95.
+[02/10/2020] Chester_Grant je ostavio Desert Eagle (ammo: 49) u House Storageu [SQLID: 346].
+[02/10/2020] Chester_Grant je uzeo oruzje (name: Desert Eagle || ammo: 49) iz gunrack id 95.
+[02/10/2020] Chester_Grant je ostavio Desert Eagle (ammo: 49) u House Storageu [SQLID: 346].
+[03/10/2020] Patrizio_Allegretto je uzeo oruzje (name: Desert Eagle || ammo: 40) iz gunrack id 74.
+[03/10/2020] Patrizio_Allegretto je uzeo oruzje (name: Shotgun || ammo: 20) iz gunrack id 74.
+[03/10/2020] Chester_Grant je uzeo oruzje (name: Desert Eagle || ammo: 49) iz gunrack id 95.
+[04/10/2020] Chester_Grant je ostavio M4 (ammo: 50) u House Storageu [SQLID: 346].
+[06/10/2020] Chester_Grant je uzeo oruzje (name: M4 || ammo: 50) iz gunrack id 95.
+[06/10/2020] Chester_Grant je ostavio M4 (ammo: 49) u House Storageu [SQLID: 346].
+[06/10/2020] Sheldon_Cobain je ostavio Melee oruzje (ammo: 1) u House Storageu [SQLID: 334].
+[07/10/2020] Chester_Grant je uzeo oruzje (name: M4 || ammo: 49) iz gunrack id 95.
+[07/10/2020] Chester_Grant je ostavio M4 (ammo: 49) u House Storageu [SQLID: 346].
+[07/10/2020] Stephen_Frye je ostavio Colt 45 (ammo: 25) u House Storageu [SQLID: 310].
+[07/10/2020] Daniel_Calabresi je ostavio Desert Eagle (ammo: 50) u House Storageu [SQLID: 293].
+[07/10/2020] Daniel_Calabresi je ostavio Desert Eagle (ammo: 50) u House Storageu [SQLID: 293].
+[07/10/2020] Daniel_Calabresi je ostavio Desert Eagle (ammo: 42) u House Storageu [SQLID: 293].
+[07/10/2020] Daniel_Calabresi je ostavio M4 (ammo: 14) u House Storageu [SQLID: 293].
+[07/10/2020] Stephen_Frye je ostavio Desert Eagle (ammo: 50) u House Storageu [SQLID: 310].
+[07/10/2020] Stephen_Frye je ostavio Desert Eagle (ammo: 50) u House Storageu [SQLID: 310].
+[07/10/2020] Stephen_Frye je uzeo oruzje (name: Desert Eagle || ammo: 50) iz gunrack id 66.
+[07/10/2020] Stephen_Frye je uzeo oruzje (name: Desert Eagle || ammo: 50) iz gunrack id 66.
+[08/10/2020] Frankie_Moltisanti je ostavio Melee oruzje (ammo: 2) u House Storageu [SQLID: 335].
+[10/10/2020] Thomas_Calabresi je ostavio Desert Eagle (ammo: 47) u House Storageu [SQLID: 348].
+[10/10/2020] Victor_Azzari je ostavio Rifle (ammo: 39) u House Storageu [SQLID: 349].
+[10/10/2020] Chester_Grant je uzeo oruzje (name: M4 || ammo: 49) iz gunrack id 95.
+[10/10/2020] Chester_Grant je ostavio M4 (ammo: 49) u House Storageu [SQLID: 346].
+[10/10/2020] Chester_Grant je uzeo oruzje (name: M4 || ammo: 49) iz gunrack id 95.
+[10/10/2020] Chester_Grant je ostavio M4 (ammo: 49) u House Storageu [SQLID: 346].
+[10/10/2020] Chester_Grant je uzeo oruzje (name: M4 || ammo: 49) iz gunrack id 95.
+[10/10/2020] Chester_Grant je ostavio M4 (ammo: 49) u House Storageu [SQLID: 346].
+[10/10/2020] Chester_Grant je uzeo oruzje (name: M4 || ammo: 49) iz gunrack id 95.
+[10/10/2020] Chester_Grant je ostavio M4 (ammo: 29) u House Storageu [SQLID: 346].
+[10/10/2020] Chester_Grant je ostavio Shotgun (ammo: 59) u House Storageu [SQLID: 346].
+[10/10/2020] Chester_Grant je ostavio Desert Eagle (ammo: 2) u House Storageu [SQLID: 346].
+[10/10/2020] Chester_Grant je uzeo oruzje (name: M4 || ammo: 29) iz gunrack id 95.
+[11/10/2020] Chester_Grant je uzeo oruzje (name: Shotgun || ammo: 59) iz gunrack id 95.
+[11/10/2020] Chester_Grant je ostavio Shotgun (ammo: 59) u House Storageu [SQLID: 346].
+[11/10/2020] Victor_Azzari je uzeo oruzje (name: Rifle || ammo: 39) iz gunrack id 98.
+[11/10/2020] Victor_Azzari je ostavio Rifle (ammo: 100) u House Storageu [SQLID: 349].
+[11/10/2020] Victor_Azzari je ostavio Shotgun (ammo: 107) u House Storageu [SQLID: 349].
+[11/10/2020] Victor_Azzari je ostavio Shotgun (ammo: 71) u House Storageu [SQLID: 349].
+[11/10/2020] Victor_Azzari je ostavio UZI (ammo: 75) u House Storageu [SQLID: 349].
+[11/10/2020] Victor_Azzari je uzeo oruzje (name: UZI || ammo: 75) iz gunrack id 98.
+[11/10/2020] Victor_Azzari je ostavio Rifle (ammo: 89) u House Storageu [SQLID: 349].
+[11/10/2020] Thomas_Calabresi je uzeo oruzje (name: Desert Eagle || ammo: 47) iz gunrack id 97.
+[11/10/2020] Thomas_Calabresi je ostavio Desert Eagle (ammo: 47) u House Storageu [SQLID: 348].
+[11/10/2020] Thomas_Calabresi je uzeo oruzje (name: Desert Eagle || ammo: 47) iz gunrack id 97.
+[12/10/2020] Abaz_Mikati je ostavio Melee oruzje (ammo: 6) u House Storageu [SQLID: 338].
+[12/10/2020] Abaz_Mikati je ostavio Melee oruzje (ammo: 1) u House Storageu [SQLID: 338].
+[12/10/2020] Stephen_Frye je uzeo oruzje (name: Colt 45 || ammo: 25) iz gunrack id 66.
+[14/10/2020] Chester_Grant je uzeo oruzje (name: Shotgun || ammo: 59) iz gunrack id 95.
+[14/10/2020] Chester_Grant je ostavio Shotgun (ammo: 43) u House Storageu [SQLID: 346].
+[14/10/2020] Thomas_Calabresi je ostavio Desert Eagle (ammo: 50) u House Storageu [SQLID: 348].
+[15/10/2020] Chester_Grant je uzeo oruzje (name: Desert Eagle || ammo: 2) iz gunrack id 95.
+[15/10/2020] Chester_Grant je ostavio Desert Eagle (ammo: 2) u House Storageu [SQLID: 346].
+[15/10/2020] Chester_Grant je uzeo oruzje (name: Shotgun || ammo: 43) iz gunrack id 95.
+[15/10/2020] Chester_Grant je ostavio Shotgun (ammo: 43) u House Storageu [SQLID: 346].
+[15/10/2020] Chester_Grant je uzeo oruzje (name: Shotgun || ammo: 43) iz gunrack id 95.
+[15/10/2020] Chester_Grant je ostavio Shotgun (ammo: 43) u House Storageu [SQLID: 346].
+[16/10/2020] Vlady_Ukov je ostavio Melee oruzje (ammo: 1) u House Storageu [SQLID: 323].
+[16/10/2020] Vlady_Ukov je uzeo oruzje (name: Melee oruzje || ammo: 1) iz gunrack id 77.
+[16/10/2020] Chester_Grant je uzeo oruzje (name: Desert Eagle || ammo: 2) iz gunrack id 95.
+[16/10/2020] Chester_Grant je uzeo oruzje (name: Shotgun || ammo: 43) iz gunrack id 95.
+[16/10/2020] Chester_Grant je ostavio Shotgun (ammo: 43) u House Storageu [SQLID: 346].
+[16/10/2020] Chester_Grant je ostavio Desert Eagle (ammo: 2) u House Storageu [SQLID: 346].

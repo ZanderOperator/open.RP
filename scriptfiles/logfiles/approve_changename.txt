@@ -1,0 +1,3 @@
+(24/07/2020, 18:08:46) Thomas_McDowell[A1338] je dozvolio 59 /changenameova Thomas_McDowell[SQLID: 307].
+(24/07/2020, 18:08:56) Thomas_McDowell[A1338] je dozvolio 1 /changenameova Thomas_McDowell[SQLID: 307].
+(30/09/2020, 21:33:49) Sebastian_Carrasco[A1337] je dozvolio 1 /changenameova Cecilio_Fausto[SQLID: 2209].

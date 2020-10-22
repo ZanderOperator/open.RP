@@ -1,0 +1,293 @@
+(21/03/2020, 12:45:41) Igrac Avram_Leontyev je izasao iz GOV.
+(21/03/2020, 12:48:00) Igrac Avram_Leontyev je izasao iz LSFD.
+(22/03/2020, 15:34:19) Igrac Mark_Pollard je izasao iz LSPD.
+(22/03/2020, 21:33:17) Igrac John_Harding je izasao iz GOV.
+(24/03/2020, 20:47:53) Igrac Samuel_Bones je izasao iz 811 Urban News.
+(24/03/2020, 21:37:17) Igrac Sean_Sutherland je izasao iz LSPD.
+(25/03/2020, 00:33:13) Igrac Sean_Sutherland je izasao iz LSFD.
+(25/03/2020, 19:28:38) Igrac Logan_Watson je izasao iz LSPD.
+(25/03/2020, 20:52:51) Igrac Sean_Sutherland je izasao iz Love Enterprise.
+(26/03/2020, 20:13:01) Igrac John_Harding je izasao iz 811 Urban News.
+(27/03/2020, 20:29:06) Igrac Milan_Stojanovic je izasao iz Love Enterprise.
+(28/03/2020, 20:16:45) Igrac Barbara_Williams je izasao iz 811 Urban News.
+(28/03/2020, 23:25:13) Igrac Andrija_Dabezic je izasao iz GOV.
+(29/03/2020, 22:06:49) Igrac Sean_Sutherland je izasao iz LSPD.
+(30/03/2020, 15:37:43) Igrac Sean_Sutherland je izasao iz LSPD.
+(30/03/2020, 19:45:16) Igrac Austin_Carter je izasao iz LSFD.
+(30/03/2020, 20:33:43) Igrac Andrew_Parker je izasao iz GOV.
+(31/03/2020, 00:22:10) Igrac Tom_Maguire je izasao iz GOV.
+(31/03/2020, 21:39:54) Igrac Austin_White je izasao iz GOV.
+(31/03/2020, 22:11:09) Igrac Donald_Nixon je izasao iz GOV.
+(31/03/2020, 22:51:31) Igrac Tomek_Sokolov je izasao iz 811 Urban News.
+(31/03/2020, 23:55:49) Igrac Rene_Strauss je izasao iz GOV.
+(03/04/2020, 17:52:48) Igrac Louis_Bennett je izasao iz LSFD.
+(04/04/2020, 19:57:43) Igrac Julian_Holland je izasao iz Khawaja.
+(05/04/2020, 02:09:49) Igrac Harley_Toretto je izasao iz LSFD.
+(05/04/2020, 19:13:42) Igrac Kiarra_Leean je izasao iz Los Santos News.
+(05/04/2020, 23:01:55) Igrac Aaron_Schaffner je izasao iz Los Santos News.
+(05/04/2020, 23:10:42) Igrac Aaron_Schaffner je izasao iz GOV.
+(06/04/2020, 12:27:16) Igrac Mark_Houston je izasao iz Los Santos News.
+(06/04/2020, 13:36:24) Igrac Julian_Holland je izasao iz LSFD.
+(06/04/2020, 22:41:58) Igrac Doris_Dixon je izasao iz LSFD.
+(07/04/2020, 01:15:31) Igrac Michael_Nelson je izasao iz LSFD.
+(07/04/2020, 21:53:21) Igrac Aaron_Schaffner je izasao iz Los Santos News.
+(09/04/2020, 17:59:39) Igrac Jonathan_Reynolds je izasao iz GOV.
+(09/04/2020, 20:05:06) Igrac Travis_Bennet je izasao iz GOV.
+(10/04/2020, 16:59:04) Igrac Julian_Holland je izasao iz GOV.
+(11/04/2020, 17:43:38) Igrac Rene_Strauss je izasao iz GOV.
+(12/04/2020, 19:14:26) Igrac Doris_Dixon je izasao iz LSPD.
+(14/04/2020, 09:48:15) Igrac Javier_Benavides je izasao iz LSPD.
+(14/04/2020, 11:39:43) Igrac Mateo_Cazalla je izasao iz Skaljarski klan.
+(14/04/2020, 16:03:10) Igrac Jacob_Clark je izasao iz GOV.
+(14/04/2020, 17:49:02) Igrac Ryan_Rivera je izasao iz LSPD.
+(14/04/2020, 20:29:36) Igrac Nathan_Lawrence je izasao iz LSPD.
+(14/04/2020, 20:53:49) Igrac Anthony_Shirley je izasao iz LSPD.
+(14/04/2020, 20:57:06) Igrac Matthew_McNulty je izasao iz LSPD.
+(14/04/2020, 21:17:02) Igrac Hayley_Hughes je izasao iz LSPD.
+(14/04/2020, 23:10:45) Igrac Michaell_Oconnor je izasao iz GOV.
+(14/04/2020, 23:20:31) Igrac Anna_McAdams je izasao iz LSFD.
+(15/04/2020, 18:04:33) Igrac Brandon_Pollard je izasao iz GOV.
+(15/04/2020, 21:00:23) Igrac Aniyah_Norwood je izasao iz GOV.
+(15/04/2020, 21:31:52) Igrac Westley_Korrow je izasao iz LSFD.
+(16/04/2020, 20:18:04) Igrac Nellie_Rhodes je izasao iz LSPD.
+(17/04/2020, 19:32:30) Igrac Andrey_Medvedev je izasao iz LSFD.
+(17/04/2020, 22:18:23) Igrac Nathan_Lawrence je izasao iz LSCSD.
+(18/04/2020, 01:24:16) Igrac Davisa_Pittman je izasao iz Los Santos News.
+(18/04/2020, 21:40:18) Igrac Vesko_Laketa je izasao iz Skaljarski klan.
+(19/04/2020, 19:20:21) Igrac Sara_Keel je izasao iz LSFD.
+(19/04/2020, 19:28:47) Igrac Julian_Holland je izasao iz SHERIFF.
+(19/04/2020, 22:55:34) Igrac Vladan_Vukasinovic je izasao iz LSFD.
+(20/04/2020, 15:58:36) Igrac Connor_Hewitt je izasao iz Los Santos News.
+(20/04/2020, 20:26:51) Igrac Julian_Holland je izasao iz LSPD.
+(20/04/2020, 23:28:56) Igrac Julian_Holland je izasao iz LSFD.
+(21/04/2020, 01:43:40) Igrac Julian_Holland je izasao iz LSFD.
+(21/04/2020, 17:49:36) Igrac Thomas_McLennan je izasao iz GOV.
+(21/04/2020, 18:21:28) Igrac Mick_Fallon je izasao iz GOV.
+(21/04/2020, 20:34:28) Igrac Julian_Holland je izasao iz Klan Amerika.
+(21/04/2020, 21:26:02) Igrac Julian_Holland je izasao iz LSFD.
+(21/04/2020, 21:54:09) Igrac Julian_Holland je izasao iz LSFD.
+(21/04/2020, 21:56:59) Igrac Milan_Stojanovic je izasao iz Skaljarski klan.
+(21/04/2020, 22:23:18) Igrac Julian_Holland je izasao iz Klan Amerika.
+(22/04/2020, 15:06:38) Igrac Allison_Cottrell je izasao iz LSFD.
+(22/04/2020, 16:34:32) Igrac Demetrius_Hompkins je izasao iz LSFD.
+(22/04/2020, 18:03:30) Igrac Noah_Hawley je izasao iz LSFD.
+(22/04/2020, 22:29:32) Igrac Julian_Holland je izasao iz Masotti's Crew.
+(22/04/2020, 23:30:28) Igrac Danijel_Karasicevic je izasao iz LSFD.
+(23/04/2020, 01:31:44) Igrac Richard_Morris je izasao iz LSPD.
+(23/04/2020, 17:15:02) Igrac Henry_Scott je izasao iz LSPD.
+(23/04/2020, 20:50:33) Igrac Julian_Holland je izasao iz Klan Amerika.
+(24/04/2020, 15:12:11) Igrac Julian_Holland je izasao iz Klan Amerika.
+(25/04/2020, 01:29:51) Igrac Kemarrin_Hinori je izasao iz GOV.
+(25/04/2020, 23:18:33) Igrac Vladimir_Abramovich je izasao iz Los Santos News.
+(27/04/2020, 15:55:32) Igrac Stephanie_Glagovski je izasao iz LSPD.
+(27/04/2020, 22:29:32) Igrac Zarko_Savic je izasao iz Skaljarski klan.
+(28/04/2020, 01:06:26) Igrac Uros_Radovic je izasao iz Klan Amerika.
+(28/04/2020, 19:43:16) Igrac William_Jones je izasao iz POLICE.
+(28/04/2020, 20:34:51) Igrac Shaquille_Rodgers je izasao iz GOV.
+(28/04/2020, 21:55:01) Igrac Marquise_Mercer je izasao iz Skaljarski klan.
+(28/04/2020, 23:14:02) Igrac Decovon_Moss je izasao iz Klan Amerika.
+(29/04/2020, 13:45:55) Igrac Harley_Toretto je izasao iz LSFD.
+(29/04/2020, 14:27:11) Igrac Andew_Howard je izasao iz LSFD.
+(01/05/2020, 19:16:42) Igrac John_Hardy je izasao iz LSFD.
+(01/05/2020, 19:34:23) Igrac Julian_Holland je izasao iz COORS Family Skins.
+(01/05/2020, 19:50:30) Igrac Mikel_Bryant je izasao iz LSFD.
+(02/05/2020, 20:10:21) Igrac Julian_Holland je izasao iz POLICE.
+(02/05/2020, 20:24:13) Igrac Julian_Holland je izasao iz LSFD.
+(02/05/2020, 20:32:40) Igrac Julian_Holland je izasao iz LSFD.
+(02/05/2020, 20:56:47) Igrac Luigi_Ferrero je izasao iz Los Santos News.
+(02/05/2020, 23:16:44) Igrac Declan_Adolfo je izasao iz Masotti's Crew.
+(03/05/2020, 15:30:00) Igrac Julian_Holland je izasao iz COORS Family Skins.
+(04/05/2020, 03:22:44) Igrac Eymen_Yilmaz je izasao iz POLICE.
+(04/05/2020, 07:11:59) Igrac Diego_Martinez je izasao iz .
+(04/05/2020, 10:46:02) Igrac Tatyana_Baturina je izasao iz Los Santos News.
+(04/05/2020, 15:54:21) Igrac Loukas_Solon je izasao iz Klan Amerika.
+(04/05/2020, 16:54:52) Igrac Bradley_Weathersby je izasao iz GOV.
+(05/05/2020, 14:59:51) Igrac Bradley_Weathersby je izasao iz SHERIFF.
+(05/05/2020, 21:42:20) Igrac Ryuzaki_Kansuke je izasao iz LSFD.
+(06/05/2020, 00:05:18) Igrac Julian_Holland je izasao iz SHERIFF.
+(06/05/2020, 00:56:40) Igrac Michael_Blake je izasao iz Los Santos News.
+(06/05/2020, 02:11:04) Igrac Evelyn_Crowley je izasao iz Los Santos News.
+(06/05/2020, 20:37:09) Igrac Raymond_Washington je izasao iz Los Santos News.
+(06/05/2020, 22:49:33) Igrac Nikola_Kostic je izasao iz Klan Amerika.
+(06/05/2020, 23:50:41) Igrac Zarija_Strugar je izasao iz Klan Amerika.
+(07/05/2020, 14:35:55) Igrac Vaso_Lagotis je izasao iz Klan Amerika.
+(08/05/2020, 00:48:17) Igrac Jorge_Gonzales je izasao iz Los Santos News.
+(08/05/2020, 14:27:51) Igrac Aaron_Schaffner je izasao iz Masotti's Crew.
+(08/05/2020, 22:59:59) Igrac Milos_Damjanovic je izasao iz Klan Amerika.
+(08/05/2020, 23:01:17) Igrac Allan_Houston je izasao iz GOV.
+(09/05/2020, 17:28:50) Igrac Ashlyn_Calchas je izasao iz GOV.
+(10/05/2020, 16:29:29) Igrac Marcus_Knight je izasao iz SHERIFF.
+(10/05/2020, 23:16:32) Igrac Ioannis_Valiakos je izasao iz Klan Amerika.
+(10/05/2020, 23:55:28) Igrac Natalia_Cortez je izasao iz SHERIFF.
+(11/05/2020, 01:22:49) Igrac Brian_Decker je izasao iz COORS Family Skins.
+(12/05/2020, 15:14:57) Igrac Yorgos_Artinakis je izasao iz Klan Amerika.
+(13/05/2020, 20:04:24) Igrac Jorge_Gonzales je izasao iz SHERIFF.
+(14/05/2020, 01:36:04) Igrac Billy_Stacks je izasao iz Skaljarski klan.
+(14/05/2020, 21:02:39) Igrac Alonzo_Ward je izasao iz Skaljarski klan.
+(14/05/2020, 22:54:27) Igrac Aleksa_Todorovic je izasao iz Skaljarski klan.
+(16/05/2020, 23:58:35) Igrac Thomas_Day je izasao iz SHERIFF.
+(17/05/2020, 00:08:46) Igrac Thomas_Day je izasao iz SHERIFF.
+(17/05/2020, 22:18:07) Igrac Sebastian_Carrasco je izasao iz LSFD.
+(18/05/2020, 21:37:06) Igrac Hannah_Lewis je izasao iz Klan Amerika.
+(18/05/2020, 21:47:48) Igrac Fritz_Weldermeyer je izasao iz LSFD.
+(19/05/2020, 17:36:49) Igrac Travis_Bennet je izasao iz Klan Amerika.
+(19/05/2020, 23:10:55) Igrac Matt_Loyd je izasao iz Klan Amerika.
+(20/05/2020, 00:02:39) Igrac Kareem_Lewis je izasao iz SHERIFF.
+(20/05/2020, 22:04:21) Igrac Daniel_Williamson je izasao iz POLICE.
+(23/05/2020, 17:49:23) Igrac Jeff_Sheng je izasao iz On Leong Tong - GSS.
+(23/05/2020, 17:50:25) Igrac Jeff_Sheng je izasao iz On Leong Tong - GSS.
+(23/05/2020, 17:51:26) Igrac Jeff_Sheng je izasao iz On Leong Tong - GSS.
+(23/05/2020, 17:51:36) Igrac Jeff_Sheng je izasao iz On Leong Tong - GSS.
+(23/05/2020, 23:50:03) Igrac Kathlynne_Lawliet je izasao iz POLICE.
+(24/05/2020, 01:33:06) Igrac Vukasin_Milovanovic je izasao iz Klan Amerika.
+(26/05/2020, 20:34:12) Igrac Renato_Priola je izasao iz Skaljarski klan.
+(28/05/2020, 21:19:19) Igrac James_McCarthy je izasao iz GOV.
+(29/05/2020, 00:26:45) Igrac Carla_Parker je izasao iz GOV.
+(29/05/2020, 21:59:58) Igrac Rick_Colorado je izasao iz Los Santos News.
+(31/05/2020, 10:50:00) Igrac Kenneth_Nelson je izasao iz GOV.
+(31/05/2020, 16:02:31) Igrac Lamar_Rodrigeuz je izasao iz GOV.
+(31/05/2020, 22:07:05) Igrac Vince_Corona je izasao iz Skaljarski klan.
+(01/06/2020, 23:57:59) Igrac Hank_Voight je izasao iz Klan Amerika.
+(02/06/2020, 21:26:33) Igrac Henery_Fisher je izasao iz Skaljarski klan.
+(05/06/2020, 17:05:13) Igrac Gabriel_Hopwood je izasao iz Klan Amerika.
+(11/06/2020, 00:10:53) Igrac Antonio_Halstead je izasao iz LSFD.
+(11/06/2020, 00:14:26) Igrac Antonio_Halstead je izasao iz SHERIFF.
+(14/06/2020, 15:30:48) Igrac Fawziyya_Khawaja je izasao iz POLICE.
+(16/06/2020, 19:08:31) Igrac Gabriel_Hopwood je izasao iz LSFD.
+(17/06/2020, 19:45:10) Igrac Christina_Anderson je izasao iz LSFD.
+(18/06/2020, 23:00:11) Igrac Thomas_Day je izasao iz SHERIFF.
+(18/06/2020, 23:00:16) Igrac Steven_Morrison je izasao iz GOV.
+(18/06/2020, 23:04:06) Igrac Jimmy_Harrelson je izasao iz GOV.
+(19/06/2020, 00:23:57) Igrac Dave_Richardson je izasao iz GOV.
+(19/06/2020, 18:33:03) Igrac Roman_Glassman je izasao iz LSFD.
+(20/06/2020, 14:23:57) Igrac Readale_Gibbs je izasao iz Los Santos News.
+(21/06/2020, 20:14:22) Igrac William_Nithercott je izasao iz GOV.
+(21/06/2020, 22:50:27) Igrac Roman_Glassman je izasao iz LSFD.
+(22/06/2020, 14:24:56) Igrac Isaac_Kingsley je izasao iz SHERIFF.
+(22/06/2020, 14:49:39) Igrac Thomas_Hawkins je izasao iz SHERIFF.
+(22/06/2020, 14:50:13) Igrac Barbara_Hartman je izasao iz POLICE.
+(22/06/2020, 15:29:55) Igrac Ryan_McGarett je izasao iz SHERIFF.
+(22/06/2020, 17:10:44) Igrac Tony_Hawkins je izasao iz POLICE.
+(22/06/2020, 21:01:06) Igrac Dustin_Cole je izasao iz SHERIFF.
+(22/06/2020, 21:01:54) Igrac Andrew_Martinez je izasao iz SHERIFF.
+(22/06/2020, 21:03:02) Igrac Robert_McFiles je izasao iz SHERIFF.
+(22/06/2020, 21:04:11) Igrac Ryan_Simmons je izasao iz SHERIFF.
+(22/06/2020, 21:11:08) Igrac David_Quinn je izasao iz POLICE.
+(22/06/2020, 21:19:27) Igrac Elena_Stoneberg je izasao iz SHERIFF.
+(22/06/2020, 21:28:48) Igrac Hunter_Flaim je izasao iz Denver Lane Devils.
+(22/06/2020, 22:19:40) Igrac Jimmy_Harrelson je izasao iz SHERIFF.
+(22/06/2020, 22:39:17) Igrac Randy_Line je izasao iz SHERIFF.
+(22/06/2020, 23:14:12) Igrac Natalia_Cortez je izasao iz SHERIFF.
+(22/06/2020, 23:30:05) Igrac Dazzline_Burton je izasao iz SHERIFF.
+(23/06/2020, 00:28:40) Igrac Lance_Corrigan je izasao iz LSFD.
+(23/06/2020, 01:55:45) Igrac Sophie_Wallace je izasao iz LSFD.
+(23/06/2020, 16:00:46) Igrac Nicholas_Anderson je izasao iz POLICE.
+(23/06/2020, 22:23:01) Igrac Thomas_Day je izasao iz POLICE.
+(23/06/2020, 22:34:50) Igrac Thomas_Day je izasao iz POLICE.
+(23/06/2020, 22:35:33) Igrac Thomas_Day je izasao iz POLICE.
+(23/06/2020, 23:49:19) Igrac Kevin_Rodgers je izasao iz Los Santos News.
+(24/06/2020, 00:13:31) Igrac Thomas_Day je izasao iz LSFD.
+(24/06/2020, 02:44:26) Igrac Logan_Cummings je izasao iz Denver Lane Devils.
+(24/06/2020, 16:16:42) Igrac Christina_Anderson je izasao iz Los Santos News.
+(24/06/2020, 20:20:01) Igrac Thomas_Day je izasao iz POLICE.
+(26/06/2020, 19:31:36) Igrac Antonio_Halstead je izasao iz LSFD.
+(26/06/2020, 19:34:54) Igrac Andrea_Murphy je izasao iz LSFD.
+(26/06/2020, 22:04:52) Igrac Vule_Klimenta je izasao iz Los Santos News.
+(26/06/2020, 22:22:21) Igrac William_Nithercott je izasao iz GOV.
+(26/06/2020, 23:00:34) Igrac Marcus_Andrews je izasao iz GOV.
+(27/06/2020, 15:59:19) Igrac Kareem_Lewis je izasao iz Denver Lane Devils.
+(28/06/2020, 02:06:07) Igrac David_Rodgers je izasao iz POLICE.
+(29/06/2020, 16:40:52) Igrac Vincent_Carda je izasao iz On Leong Tong - GSS.
+(03/07/2020, 00:13:12) Igrac Shimamoto_Kyoshi je izasao iz POLICE.
+(03/07/2020, 16:43:40) Igrac Elliot_Richards je izasao iz GOV.
+(03/07/2020, 17:08:16) Igrac Allison_Clark je izasao iz Los Santos News.
+(04/07/2020, 19:21:28) Igrac Harold_Sutherland je izasao iz SHERIFF.
+(05/07/2020, 15:36:01) Igrac Allison_Clark je izasao iz LSFD.
+(07/07/2020, 21:12:09) Igrac Harold_Sutherland je izasao iz POLICE.
+(07/07/2020, 23:28:06) Igrac Sergey_Andreyev je izasao iz LSFD.
+(10/07/2020, 01:01:59) Igrac Wayne_Chow je izasao iz On Leong Tong - GSS.
+(12/07/2020, 00:07:47) Igrac Deborah_Estaughffe je izasao iz LSFD.
+(12/07/2020, 18:20:19) Igrac Andre_Wiggins je izasao iz POLICE.
+(12/07/2020, 20:38:16) Igrac Harold_Sutherland je izasao iz GOV.
+(12/07/2020, 21:12:05) Igrac Elliot_Richards je izasao iz POLICE.
+(12/07/2020, 21:17:23) Igrac Harold_Sutherland je izasao iz POLICE.
+(12/07/2020, 21:26:24) Igrac Alonzo_Ward je izasao iz Denver Lane Devils.
+(12/07/2020, 21:26:50) Igrac Harold_Sutherland je izasao iz Denver Lane Devils.
+(13/07/2020, 00:32:31) Igrac Gabriel_Hopwood je izasao iz POLICE.
+(13/07/2020, 17:57:55) Igrac Dale_Loyd je izasao iz Los Santos News.
+(14/07/2020, 03:42:26) Igrac Vladimir_Abramovich je izasao iz Los Santos News.
+(16/07/2020, 22:57:12) Igrac Zac_Ramsay je izasao iz POLICE.
+(16/07/2020, 23:18:57) Igrac Marcel_Hovland je izasao iz LSFD.
+(17/07/2020, 19:02:19) Igrac Charles_Khan je izasao iz POLICE.
+(17/07/2020, 20:59:19) Igrac Vincent_Washington je izasao iz GOV.
+(19/07/2020, 19:33:27) Igrac Keith_Sanders je izasao iz GOV.
+(22/07/2020, 20:11:39) Igrac Zach_Ramsay je izasao iz LSFD.
+(24/07/2020, 17:19:38) Igrac Orville_Galloway je izasao iz GOV.
+(24/07/2020, 18:02:55) Igrac Orville_Galloway je izasao iz POLICE.
+(24/07/2020, 18:49:27) Igrac Jason_Franklin je izasao iz POLICE.
+(24/07/2020, 18:49:46) Igrac Thomas_McDowell je izasao iz Los Santos News.
+(25/07/2020, 17:03:43) Igrac Jason_Franklin je izasao iz GOV.
+(26/07/2020, 01:07:52) Igrac Jason_Franklin je izasao iz GOV.
+(26/07/2020, 01:14:44) Igrac Orville_Galloway je izasao iz LSFD.
+(26/07/2020, 01:15:36) Igrac Jason_Franklin je izasao iz LSFD.
+(26/07/2020, 01:16:12) Igrac Orville_Galloway je izasao iz GOV.
+(26/07/2020, 16:57:23) Igrac Orville_Galloway je izasao iz GOV.
+(26/07/2020, 17:19:57) Igrac Orville_Galloway je izasao iz LSFD.
+(26/07/2020, 18:19:40) Igrac Bella_Gambiroza je izasao iz LSFD.
+(27/07/2020, 20:03:12) Igrac Donald_Tang je izasao iz LSFD.
+(29/07/2020, 00:15:41) Igrac Trevor_Thompson je izasao iz Los Santos News.
+(30/07/2020, 21:02:26) Igrac Madalyn_Phillips je izasao iz LSFD.
+(31/07/2020, 22:50:46) Igrac Ben_Thompson je izasao iz POLICE.
+(02/08/2020, 16:24:14) Igrac Olaf_Finnbogason je izasao iz LSFD.
+(03/08/2020, 16:58:14) Igrac Jason_Franklin je izasao iz GOV.
+(04/08/2020, 19:09:45) Igrac Leonard_Burkhart je izasao iz LSFD.
+(05/08/2020, 19:55:33) Igrac Shaquille_Holloway je izasao iz LSFD.
+(05/08/2020, 23:12:51) Igrac Orville_Galloway je izasao iz LSFD.
+(07/08/2020, 01:30:09) Igrac Jack_Apps je izasao iz GOV.
+(07/08/2020, 14:50:31) Igrac Arthur_Norman je izasao iz POLICE.
+(07/08/2020, 19:53:08) Igrac Donald_Lafera je izasao iz GOV.
+(13/08/2020, 20:41:31) Igrac Jennifer_Mitchell je izasao iz On Leong Tong - GSS.
+(15/08/2020, 16:16:21) Igrac Dwayne_Hightower je izasao iz Los Santos News.
+(15/08/2020, 18:51:28) Igrac Enrique_Ortiz je izasao iz GOV.
+(15/08/2020, 20:46:46) Igrac Samuel_Peterson je izasao iz GOV.
+(18/08/2020, 15:37:29) Igrac Leroy_Bolton je izasao iz POLICE.
+(19/08/2020, 16:56:47) Igrac Jack_Peterson je izasao iz LSFD.
+(20/08/2020, 00:00:07) Igrac Henry_Walker je izasao iz POLICE.
+(21/08/2020, 00:43:10) Igrac Donald_Tang je izasao iz On Leong Tong - GSS.
+(24/08/2020, 17:17:03) Igrac Hector_Valle je izasao iz Los Santos News.
+(24/08/2020, 19:00:30) Igrac Michael_Valenza je izasao iz LSFD.
+(26/08/2020, 01:22:23) Igrac Matt_Lloyd je izasao iz POLICE.
+(26/08/2020, 19:28:48) Igrac Baggy_Britches je izasao iz Los Santos News.
+(26/08/2020, 21:44:26) Igrac Richard_Costanelli je izasao iz GOV.
+(28/08/2020, 18:12:21) Igrac Michael_Valenza je izasao iz LSFD.
+(28/08/2020, 21:52:32) Igrac Hector_Valle je izasao iz GOV.
+(28/08/2020, 22:07:18) Igrac Hector_Valle je izasao iz LSFD.
+(29/08/2020, 18:11:18) Igrac Robert_Zhong je izasao iz On Leong Tong - GSS.
+(30/08/2020, 01:16:04) Igrac Ashley_Davis je izasao iz POLICE.
+(30/08/2020, 19:56:46) Igrac Kenji_Masato je izasao iz On Leong Tong - GSS.
+(01/09/2020, 11:41:27) Igrac Catalina_Nelson je izasao iz LSFD.
+(01/09/2020, 20:02:57) Igrac Hugo_Dubois je izasao iz GOV.
+(02/09/2020, 22:16:52) Igrac Marcel_Hovland je izasao iz GOV.
+(05/09/2020, 20:39:09) Igrac Eric_Stafford je izasao iz GOV.
+(06/09/2020, 23:32:05) Igrac Aaron_Schaffner je izasao iz Los Santos News.
+(07/09/2020, 20:38:58) Igrac Sebastian_Waller je izasao iz POLICE.
+(09/09/2020, 22:42:44) Igrac Chloe_McDouglas je izasao iz Borivoj.
+(11/09/2020, 17:57:15) Igrac Dexter_Chapman je izasao iz LSFD.
+(11/09/2020, 18:32:41) Igrac Dexter_Frensby je izasao iz LSFD.
+(13/09/2020, 00:06:15) Igrac Richard_McCall je izasao iz LSFD.
+(13/09/2020, 15:13:09) Igrac James_Langley je izasao iz POLICE.
+(15/09/2020, 21:24:10) Igrac Georgiy_Kashkanov je izasao iz Los Santos News.
+(16/09/2020, 00:35:40) Igrac Paul_Reddington je izasao iz LSFD.
+(19/09/2020, 20:59:00) Igrac Daniel_Butcher je izasao iz GOV.
+(21/09/2020, 21:23:24) Igrac Issach_Briggs je izasao iz POLICE.
+(21/09/2020, 22:30:38) Igrac Alonzo_Mendosa je izasao iz GOV.
+(23/09/2020, 21:36:11) Igrac Anthony_Stewart je izasao iz LSFD.
+(24/09/2020, 01:01:00) Igrac Ethan_Clark je izasao iz Los Santos News.
+(27/09/2020, 14:09:22) Igrac Veronica_Chavarez je izasao iz LSFD.
+(27/09/2020, 20:39:49) Igrac Mitchelle_McFlies je izasao iz Los Santos News.
+(27/09/2020, 22:21:14) Igrac Ethan_Clark je izasao iz Los Santos News.
+(01/10/2020, 17:34:58) Igrac Mason_Votschild je izasao iz GOV.
+(02/10/2020, 21:20:39) Igrac Valeria_Cortez je izasao iz LSFD.
+(04/10/2020, 16:54:32) Igrac Bill_Flores je izasao iz POLICE.
+(04/10/2020, 22:26:19) Igrac Jim_McCormick je izasao iz GOV.
+(04/10/2020, 23:05:46) Igrac Daniel_Thobe je izasao iz GOV.

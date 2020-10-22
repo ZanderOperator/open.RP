@@ -5,9 +5,10 @@
 	"output": "gamemodes/coarp.amx",
 	"dependencies": [
 		"sampctl/samp-stdlib",
-		"Zeex/samp-plugin-crashdetect",
+		"Zeex/samp-plugin-crashdetect:v4.19.4",
+		"pBlueG/SA-MP-MySQL",
 		"Y-Less/sscanf",
-		"samp-incognito/samp-streamer-plugin:v2.9.4",
+		"samp-incognito/samp-streamer-plugin",
 		"lassir/bcrypt-samp",
 		"Southclaws/pawn-chrono",
 		"Southclaws/progress2",
@@ -84,7 +85,8 @@
 				"-;+",
 				"-(+",
 				"-Z+",
-				"-S32768"
+				"-S32768",
+				"-d3"
 			],
 			"includes": [
 				"legacy/"
@@ -98,7 +100,8 @@
 				"-(+",
 				"-Z+",
 				"-O2",
-				"-S8192"
+				"-S8192",
+				"-d3"
 			],
 			"includes": [
 				"legacy/"
@@ -115,7 +118,8 @@
 				"-(+",
 				"-Z+",
 				"-S8192",
-				"-l"
+				"-l",
+				"-d3"
 			],
 			"includes": [
 				"legacy/"
