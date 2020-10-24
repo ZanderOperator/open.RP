@@ -125,6 +125,9 @@
 #include <YSI_Coding\y_inline>
 #define mysql_tquery_inline_new(%0,%1,%2,%3) MySQL_TQueryInline(%0,%2,%1,%3)
 
+// SHA-1 of latest commit - GIT_REV define
+#include "revision.inc"
+
 /*
 	########  ######## ######## #### ##    ## ########  ######
 	##     ## ##       ##        ##  ###   ## ##       ##    ##
@@ -140,7 +143,7 @@
 #define SERVER_NAME								"City of Angels"
 #define COPYRIGHT                           	"Copyright (c) 2020 City of Angels Roleplay"
 #define WEB_URL									"forum.cityofangels-roleplay.com"
-#define SCRIPT_VERSION							"CoA RP v18.5.5."
+#define SCRIPT_VERSION							"CoA RP v18.5.5.-"#GIT_REV
 #define DEV_NAME   								"Woo-Logan"
 
 // -Macros
