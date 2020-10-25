@@ -32,6 +32,10 @@
 #include "modules/Systems/Factions.pwn"
 
 // LSPD
+#include "modules/Systems/LSPD/EVLS.pwn"
+#include "modules/Systems/LSPD/Flare.pwn"
+#include "modules/Systems/LSPD/Wiretap.pwn"
+#include "modules/Systems/LSPD/SWAT.pwn"
 #include "modules/Systems/LSPD/ANPR.pwn"
 #include "modules/Systems/LSPD/Roadblocks.pwn"
 #include "modules/Systems/LSPD/MDC.pwn"

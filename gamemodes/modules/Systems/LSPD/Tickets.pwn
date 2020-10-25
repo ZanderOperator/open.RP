@@ -36,7 +36,8 @@ enum E_TICKET_DATA
     tkRazlog[100],
     tkDatum[30]
 }
-new
+
+static
     TicketInfo[MAX_PLAYERS][E_TICKET_DATA];
 
 
@@ -100,7 +101,6 @@ stock InsertPlayerTicket(playerid, giveplayerid, money, const reason[])
 
 Public:OnVehicleTicketInsert(vehicleid, slot)
 {
-    // TODO: what is the purpos of this public? Restructure code.
     VehicleInfo[vehicleid][vTicketsSQLID][slot] = cache_insert_id();
     return 1;
 }

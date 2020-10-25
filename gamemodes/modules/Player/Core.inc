@@ -1,5 +1,6 @@
 #include <YSI_Coding\y_hooks>
 
+#include "modules/Player/Tracking.pwn"
 #include "modules/Player/Security.pwn"
 #include "modules/Player/Functions.pwn"
 // Jobs
@@ -22,3 +23,4 @@
 #include "modules/Player/PayDay.pwn"
 #include "modules/Player/CMD.pwn"
 #include "modules/Player/Help.pwn"
+#include "modules/Player/Rope.pwn"

@@ -3694,7 +3694,6 @@ hook OnPlayerStateChange(playerid, newstate, oldstate)
 	}
 	if (oldstate == PLAYER_STATE_ONFOOT && newstate == PLAYER_STATE_DRIVER) 
 	{
-		Bit16_Set(gr_LastVehicle, playerid, GetPlayerVehicleID(playerid));
 		new vehicleid = GetPlayerVehicleID(playerid);
 		if(vehicleid == PlayerInfo[playerid][pSpawnedCar])
 		{

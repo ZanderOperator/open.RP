@@ -48,7 +48,7 @@ enum E_ROADBLOCK_DATA
     sObject
 }
 
-new
+static
     Iterator:Roadblocks<MAX_ROADBLOCKS>,
     Roadblocks[MAX_ROADBLOCKS][E_ROADBLOCK_DATA];
 

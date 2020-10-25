@@ -1,4 +1,5 @@
 #include <YSI_Coding\y_hooks>
+#include "modules/Systems/LSPD/LSPD_h.pwn"
 
 /*
 	######## ##    ## ##     ## ##     ##
@@ -248,7 +249,7 @@ stock CheckPlayerWeapons(playerid, weaponid, bool:hidden_fetch=false)
 		}
 		case 2:
 		{
-			if( !Bit1_Get(gr_Taser, playerid) )
+			if (!Player_HasTaserGun(playerid))
 			{
 				if(PlayerInfo[playerid][pSecondaryWeapon] != 0 && PlayerInfo[playerid][pSecondaryWeapon] != weaponid)
 				{
@@ -387,14 +388,6 @@ stock AC_ResetPlayerWeapon(playerid, weaponid, bool:base_update=true)
 }
 
 
-
-
-stock OnTaserShoot(playerid)
-{
-	SetPlayerArmedWeapon(playerid, WEAPON_SILENCED);
-	return ClearAnimations(playerid);
-}
-
 /*
 	##     ##  #######   #######  ##    ##  ######
 	##     ## ##     ## ##     ## ##   ##  ##    ##
@@ -407,26 +400,26 @@ stock OnTaserShoot(playerid)
 
 hook OnPlayerWeaponShot(playerid, weaponid, hittype, hitid, Float:fX, Float:fY, Float:fZ)
 {
-	if(playerid == INVALID_PLAYER_ID)
-		return Kick(playerid), 0;
+    if (playerid == INVALID_PLAYER_ID)
+    {
+        Kick(playerid);
+        return 0;
+    }
+    if (!IsPlayerLogged(playerid) || !IsPlayerConnected(playerid))
+    {
+        return 0;
+    }
+    if (weaponid <= 0 || weaponid > 46)
+    {
+        Kick(playerid);
+        return 0;
+    }
+    if (weaponid < 22 || weaponid > 38)
+    {
+        return 0;
+    }
 
-	if( weaponid <= 0 || weaponid > 46 )
-		return Kick(playerid), 0;
-
-	if (weaponid < 22 || weaponid > 38)
-		return 0;
-
-	if ( !IsPlayerLogged(playerid) || !IsPlayerConnected(playerid) )
-		return 0;
-
-	if (weaponid == WEAPON_SILENCED && Bit1_Get(gr_Taser, playerid) && ( IsACop(playerid) || IsASD(playerid) ) ) {
-		//if( gettimestamp() < _QuickTimer[playerid]) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Morate sacekati 3 sekundi kako bi ponovo koristili tazer.");
-		//QuickTimer[playerid] = gettimestamp() + 3;
-		ApplyAnimation(playerid, "COLT45", "colt45_reload", 4.1, 0, 0, 0, 0, 0);
-		SetTimerEx("OnTaserShoot", 1100, false, "i", playerid);
-	}
-	AC_DecreasePlayerWeaponAmmo(playerid, weaponid, 1);
-	
+    AC_DecreasePlayerWeaponAmmo(playerid, weaponid, 1);
     return 1;
 }
 

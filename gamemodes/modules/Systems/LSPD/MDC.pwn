@@ -56,20 +56,20 @@ static
     JailInfo[MAX_PLAYERS][E_JAIL_DATA];
 
 static
-    PlayerText:MDCBg1          [MAX_PLAYERS] = { PlayerText:INVALID_TEXT_DRAW, ... },
-    PlayerText:MDCBg2          [MAX_PLAYERS] = { PlayerText:INVALID_TEXT_DRAW, ... },
-    PlayerText:MDCHeader       [MAX_PLAYERS] = { PlayerText:INVALID_TEXT_DRAW, ... },
-    PlayerText:MDCSkin         [MAX_PLAYERS] = { PlayerText:INVALID_TEXT_DRAW, ... },
-    PlayerText:MDCText1        [MAX_PLAYERS] = { PlayerText:INVALID_TEXT_DRAW, ... },
-    PlayerText:MDCProfileText  [MAX_PLAYERS] = { PlayerText:INVALID_TEXT_DRAW, ... },
-    PlayerText:MDCText2        [MAX_PLAYERS] = { PlayerText:INVALID_TEXT_DRAW, ... },
-    PlayerText:MDCOtherText    [MAX_PLAYERS] = { PlayerText:INVALID_TEXT_DRAW, ... },
-    PlayerText:MDCRecordButton [MAX_PLAYERS] = { PlayerText:INVALID_TEXT_DRAW, ... },
-    PlayerText:MDCVehButton    [MAX_PLAYERS] = { PlayerText:INVALID_TEXT_DRAW, ... },
-    PlayerText:MDCTicketsButton[MAX_PLAYERS] = { PlayerText:INVALID_TEXT_DRAW, ... },
-    PlayerText:MDCGeneralButton[MAX_PLAYERS] = { PlayerText:INVALID_TEXT_DRAW, ... },
-    PlayerText:MDCAPBButton    [MAX_PLAYERS] = { PlayerText:INVALID_TEXT_DRAW, ... },
-    PlayerText:MDCCloseButton  [MAX_PLAYERS] = { PlayerText:INVALID_TEXT_DRAW, ... };
+    PlayerText:MDCBg1          [MAX_PLAYERS] = {PlayerText:INVALID_TEXT_DRAW, ...},
+    PlayerText:MDCBg2          [MAX_PLAYERS] = {PlayerText:INVALID_TEXT_DRAW, ...},
+    PlayerText:MDCHeader       [MAX_PLAYERS] = {PlayerText:INVALID_TEXT_DRAW, ...},
+    PlayerText:MDCSkin         [MAX_PLAYERS] = {PlayerText:INVALID_TEXT_DRAW, ...},
+    PlayerText:MDCText1        [MAX_PLAYERS] = {PlayerText:INVALID_TEXT_DRAW, ...},
+    PlayerText:MDCProfileText  [MAX_PLAYERS] = {PlayerText:INVALID_TEXT_DRAW, ...},
+    PlayerText:MDCText2        [MAX_PLAYERS] = {PlayerText:INVALID_TEXT_DRAW, ...},
+    PlayerText:MDCOtherText    [MAX_PLAYERS] = {PlayerText:INVALID_TEXT_DRAW, ...},
+    PlayerText:MDCRecordButton [MAX_PLAYERS] = {PlayerText:INVALID_TEXT_DRAW, ...},
+    PlayerText:MDCVehButton    [MAX_PLAYERS] = {PlayerText:INVALID_TEXT_DRAW, ...},
+    PlayerText:MDCTicketsButton[MAX_PLAYERS] = {PlayerText:INVALID_TEXT_DRAW, ...},
+    PlayerText:MDCGeneralButton[MAX_PLAYERS] = {PlayerText:INVALID_TEXT_DRAW, ...},
+    PlayerText:MDCAPBButton    [MAX_PLAYERS] = {PlayerText:INVALID_TEXT_DRAW, ...},
+    PlayerText:MDCCloseButton  [MAX_PLAYERS] = {PlayerText:INVALID_TEXT_DRAW, ...};
 
 static
     TargetName      [MAX_PLAYERS][MAX_PLAYER_NAME],
@@ -1416,6 +1416,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
         {
             if (strfind(inputtext, "_", true) == -1) return ShowPlayerDialog(playerid, DIALOG_APB_CHECK, DIALOG_STYLE_INPUT, "* APB - CHECK", "Ispod unesite ime osobe kojoj zelite provjeriti APB\n[WARNING]: Ime mora biti napisano Ime_Prezime.", "Input", "Abort");
 
+            // TODO: use strcpy for copying strings
             format(TargetName[playerid], MAX_PLAYER_NAME, "%s", inputtext);
             GetSuspectAPB(playerid, TargetName[playerid]);
         }

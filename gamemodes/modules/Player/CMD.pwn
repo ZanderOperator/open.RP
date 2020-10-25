@@ -1,4 +1,5 @@
 #include <YSI_Coding\y_hooks>
+#include "modules/Systems/LSPD/LSPD_h.pwn"
 
 new
 	Text3D:NameText[MAX_PLAYERS];
@@ -1235,53 +1236,6 @@ CMD:screenfade(playerid, params[])
 	return 1;
 }
 
-CMD:tie(playerid, params[])
-{
-	new
-		giveplayerid;
-	if(sscanf(params, "u", giveplayerid))
-		 return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /tie [Playerid/DioImena]");
-
-	if(!ProxDetectorS(3.0, playerid, giveplayerid))
-		return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Igrac nije dovoljno blizu vas!");
-
-	if(giveplayerid == playerid)
-	    return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne mozete zavezati samog sebe!");
-
-	if(giveplayerid == INVALID_PLAYER_ID)
-		return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Igrac nije online!");
-
-	if(GetPlayerState(giveplayerid) == PLAYER_STATE_DRIVER)
-	    return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne mozete zavezati igraca koji vozi!");
-
-	if(!PlayerInfo[playerid][hRope])
-        return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate konop!");
-
-	if(giveplayerid != playerid)
-	{
-		if(!Bit1_Get(gr_Tied, giveplayerid))
-		{
-		    va_SendClientMessage(giveplayerid, COLOR_LIGHTBLUE, "%s vas je zavezao!", GetName(playerid));
-	        va_SendClientMessage(playerid, COLOR_LIGHTBLUE, "Zavezao si %s!", GetName(giveplayerid));
-
-			if(!IsPlayerInAnyVehicle(giveplayerid))
-	            SetPlayerSpecialAction(giveplayerid, SPECIAL_ACTION_CUFFED);
-
-			Bit1_Set(gr_Tied, giveplayerid, true);
-		}
-		else
-		{
-		    va_SendClientMessage(giveplayerid, COLOR_LIGHTBLUE, "%s vas je odvezao!", GetName(playerid));
-		    va_SendClientMessage(playerid, COLOR_LIGHTBLUE, "Odvezao si %s!", GetName(giveplayerid));
-		    Bit1_Set(gr_Tied, giveplayerid, false);
-
-			if(!IsPlayerInAnyVehicle(giveplayerid))
-				SetPlayerSpecialAction(giveplayerid, SPECIAL_ACTION_NONE);
-		}
-	}
-	return 1;
-}
-
 CMD:licenses(playerid, params[])
 {
 	new tmpString[ 40 ];
@@ -1588,7 +1542,7 @@ CMD:accept(playerid, params[])
 
 		va_SendClientMessage(playerid, COLOR_RED, "[ ! ] Dopustili ste %s da moze koristit /undercover komandu.", GetName(giveplayerid,true));
 		va_SendClientMessage(giveplayerid, COLOR_RED, "[ ! ] %s vam je dopustio da mozete koristit /undercover komandu.", GetName(playerid,true));
-		Bit1_Set( gr_ApprovedUndercover, giveplayerid, true );
+		Player_SetApprovedUndercover(giveplayerid, true);
 		SendClientMessage(giveplayerid, COLOR_RED, "[ ! ] Mozete koristiti /undercover.");
 	}
 	if( !strcmp( pick, "swat", true ) ) {
@@ -1599,7 +1553,7 @@ CMD:accept(playerid, params[])
 		if( ( IsACop(playerid) && PlayerInfo[playerid][pRank] >= FactionInfo[PlayerInfo[playerid][pMember]][rABuyGun] ) || ( IsASD(playerid) && PlayerInfo[playerid][pRank] >= FactionInfo[PlayerInfo[playerid][pMember]][rABuyGun]) ) {
 			SendFormatMessage(playerid, MESSAGE_TYPE_INFO, "Dopustili ste %s da moze koristit /swat komandu.", GetName(giveplayerid,true));
 			va_SendClientMessage(giveplayerid, COLOR_RED, "[ ! ] %s vam je dopustio da mozete koristit /swat komandu.", GetName(playerid,true));
-			Bit1_Set( gr_AcceptSwat, giveplayerid, true );
+			Player_SetIsSWAT(giveplayerid, true);
 			SendClientMessage(giveplayerid, COLOR_RED, "[ ! ] Mozes koristiti /swat.");
 		}
 		else SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ovlasteni za koristenje ove komande!");
@@ -1890,12 +1844,7 @@ CMD:accept(playerid, params[])
 }
 CMD:oldcar(playerid, params[])
 {
-	new
-		tmpString[ 55 ];
-    format(tmpString, sizeof(tmpString), "[ ! ] ID tvog prethodnog auta je: %d!",
-		Bit16_Get(gr_LastVehicle, playerid)
-	);
-    SendClientMessage(playerid, COLOR_RED, tmpString);
+    va_SendClientMessage(playerid, COLOR_RED, "[ ! ] ID tvog prethodnog auta je: %d!", Player_GetLastVehicle(playerid));
     return 1;
 }
 
@@ -2162,10 +2111,10 @@ CMD:dump(playerid, params[])
 	{
 		if(AC_GetPlayerWeapon(playerid) > 0)
 		{
-		    if(GetPlayerWeapon(playerid) == 23 && Bit1_Get(gr_Taser, playerid) == 1)
+		    if (GetPlayerWeapon(playerid) == 23 && Player_HasTaserGun(playerid))
 				return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne mozes dumpati Tazer!");
 			
-			if(GetPlayerWeapon(playerid) == WEAPON_SHOTGUN && Bit1_Get(gr_BeanBagShotgun, playerid) == 1)
+			if(GetPlayerWeapon(playerid) == WEAPON_SHOTGUN && Player_BeanbagBulletsActive(playerid))
 				return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne mozes dumpati BeanBag Shotgun!");
 				
 			new

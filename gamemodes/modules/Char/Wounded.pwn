@@ -1,4 +1,5 @@
 #include <YSI_Coding\y_hooks>
+#include "modules/Systems/LSPD/LSPD_h.pwn"
 
 #if defined MODULE_WOUNDED
 	#endinput
@@ -591,7 +592,7 @@ hook OnPlayerTakeDamage(playerid, issuerid, Float: amount, weaponid, bodypart)
 	        }
 	        case 22, 23: //Colt, silencer
 	        {
-	            if( Bit1_Get(gr_Taser, issuerid) == 0)
+	            if (!Player_HasTaserGun(issuerid))
 	            {
 	            	rnd = 25/(fDistance+4)*9.0;
 	            	DealDamage(playerid, issuerid, health, armour, rnd, bodypart);
@@ -606,7 +607,7 @@ hook OnPlayerTakeDamage(playerid, issuerid, Float: amount, weaponid, bodypart)
 			}
 			case 25,27: //Shootgun
 			{
-			    if(Bit1_Get(gr_BeanBagShotgun, issuerid) == 0)
+			    if (!Player_BeanbagBulletsActive(issuerid))
 			    {
    					rnd = 25/(fDistance)*8.8;
 			    	DealDamage(playerid, issuerid, health, armour, rnd, bodypart);
@@ -655,7 +656,7 @@ hook OnPlayerTakeDamage(playerid, issuerid, Float: amount, weaponid, bodypart)
 	        }
 	        case 22, 23: //Colt, silencer
 	        {
-	            if( Bit1_Get(gr_Taser, issuerid) == 0)
+	            if (!Player_HasTaserGun(issuerid))
 	            {
 	            	rnd = 25/(fDistance+4)*9.0;
 	            	DealDamage(playerid, issuerid, health, armour, rnd, bodypart);
@@ -670,7 +671,7 @@ hook OnPlayerTakeDamage(playerid, issuerid, Float: amount, weaponid, bodypart)
 			}
 			case 25,27: //Shootgun
 			{
-			    if(Bit1_Get(gr_BeanBagShotgun, issuerid) == 0)
+			    if (!Player_BeanbagBulletsActive(issuerid))
 			    {
    					rnd = 25/(fDistance)*8.8;
 			    	DealDamage(playerid, issuerid, health, armour, rnd, bodypart);
@@ -717,7 +718,7 @@ hook OnPlayerTakeDamage(playerid, issuerid, Float: amount, weaponid, bodypart)
 			}
 			case 22, 23: //Colt, silencer
 			{
-				if( Bit1_Get(gr_Taser, issuerid) == 0)
+				if (!Player_HasTaserGun(issuerid))
 				{
 					rnd = 25/(fDistance+4)*9.0;
 					DealDamage(playerid, issuerid, health, armour, rnd, bodypart);
@@ -732,7 +733,7 @@ hook OnPlayerTakeDamage(playerid, issuerid, Float: amount, weaponid, bodypart)
 			}
 			case 25,27: //Shootgun
 			{
-				if(Bit1_Get(gr_BeanBagShotgun, issuerid) == 0)
+				if (!Player_BeanbagBulletsActive(issuerid))
 				{
 					rnd = 25/(fDistance)*8.8;
 					DealDamage(playerid, issuerid, health, armour, rnd, bodypart);
@@ -822,7 +823,7 @@ hook OnPlayerTakeDamage(playerid, issuerid, Float: amount, weaponid, bodypart)
 				DealDamage(playerid, issuerid, health, armour, damage, bodypart);
 	        }
 	        case 22, 23: {
-	            if( Bit1_Get(gr_Taser, issuerid) == 0) {
+	            if (!Player_HasTaserGun(issuerid)) {
 	            	damage = 35;
 	            	DealDamage(playerid, issuerid, health, armour, damage, bodypart);
 				}
@@ -834,7 +835,7 @@ hook OnPlayerTakeDamage(playerid, issuerid, Float: amount, weaponid, bodypart)
 			    DealDamage(playerid, issuerid, health, armour, damage, bodypart);
 			}
 			case 25,27: {
-			    if(Bit1_Get(gr_BeanBagShotgun, issuerid) == 0) {
+			    if (!Player_BeanbagBulletsActive(issuerid)) {
    					if(ProxDetectorS(5.0, issuerid, playerid) )
 						damage = 80;
 					if(!ProxDetectorS(5.0, issuerid, playerid) )
@@ -899,7 +900,7 @@ hook OnPlayerTakeDamage(playerid, issuerid, Float: amount, weaponid, bodypart)
 				DealDamage(playerid, issuerid, health, armour, damage, bodypart);
 	        }
 	        case 22, 23: {
-	            if( Bit1_Get(gr_Taser, issuerid) == 0) {
+	            if (!Player_HasTaserGun(issuerid)) {
 	            	damage = 25;
 	            	DealDamage(playerid, issuerid, health, armour, damage, bodypart);
 				}
@@ -911,7 +912,7 @@ hook OnPlayerTakeDamage(playerid, issuerid, Float: amount, weaponid, bodypart)
 			    DealDamage(playerid, issuerid, health, armour, damage, bodypart);
 			}
 			case 25,27: {
-			    if(Bit1_Get(gr_BeanBagShotgun, issuerid) == 0) {
+			    if (!Player_BeanbagBulletsActive(issuerid)) {
    					if(ProxDetectorS(5.0, issuerid, playerid) )
 						damage = 80;
 					if(!ProxDetectorS(5.0, issuerid, playerid) )
@@ -976,7 +977,7 @@ hook OnPlayerTakeDamage(playerid, issuerid, Float: amount, weaponid, bodypart)
 				DealDamage(playerid, issuerid, health, armour, damage, bodypart);
 	        }
 	        case 22, 23: {
-	            if( Bit1_Get(gr_Taser, issuerid) == 0) {
+	            if (!Player_HasTaserGun(issuerid)) {
 	            	damage = 15;
 	            	DealDamage(playerid, issuerid, health, armour, damage, bodypart);
 				}
@@ -988,7 +989,7 @@ hook OnPlayerTakeDamage(playerid, issuerid, Float: amount, weaponid, bodypart)
 			    DealDamage(playerid, issuerid, health, armour, damage, bodypart);
 			}
 			case 25,27: {
-			    if(Bit1_Get(gr_BeanBagShotgun, issuerid) == 0) {
+			    if (!Player_BeanbagBulletsActive(issuerid)) {
    					if(ProxDetectorS(5.0, issuerid, playerid) )
 						damage = 80;
 					if(!ProxDetectorS(5.0, issuerid, playerid) )

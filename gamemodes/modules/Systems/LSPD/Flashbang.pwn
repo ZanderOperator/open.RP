@@ -5,10 +5,10 @@
 *         All rights reserved.
 *              (c) 2020
 */
-#if defined MODULE_FLASHBAND
+#if defined MODULE_FLASHBANG
     #endinput
 #endif
-#define MODULE_FLASHBAND
+#define MODULE_FLASHBANG
 
 /*
     #### ##    ##  ######  ##       ##     ## ########  ######## 
@@ -21,7 +21,8 @@
 */
 
 #include <YSI_Coding\y_hooks>
-
+#include "modules/systems/LSPD/LSPD_h.pwn"
+// TODO: add LSPD_h.pwn to include path
 
 /*
     ##     ##    ###    ########   ######  
@@ -34,8 +35,8 @@
 */
 
 static
-    PlayerText:_flashbangEffect[MAX_PLAYERS] = {PlayerText:INVALID_TEXT_DRAW, ...},
-    _flashShells               [MAX_PLAYERS];
+    PlayerText:FlashbangEffectTd[MAX_PLAYERS] = {PlayerText:INVALID_TEXT_DRAW, ...},
+    bool:FlashbangShellsActive  [MAX_PLAYERS] = {false, ...};
 
 
 /*
@@ -50,7 +51,7 @@ static
 
 hook OnPlayerWeaponShot(playerid, weaponid, hittype, hitid, Float:fX, Float:fY, Float:fZ)
 {
-    if (!_flashShells[playerid]) return 1;
+    if (!FlashbangShellsActive[playerid]) return 1;
 
     if (weaponid != 25) return 1;
 
@@ -67,8 +68,8 @@ hook OnPlayerWeaponShot(playerid, weaponid, hittype, hitid, Float:fX, Float:fY, 
             SetPlayerDrunkLevel(i, 6000);
             GameTextForPlayer(i, "~b~FLASHBANGED", 5000, 4);
 
-            SetTimerEx("toggleFlashEffect", 2000, 0, "i", i);
-            SetTimerEx("toggleOtherFlashEffect", 5000, 0, "i", i);
+            SetTimerEx("ClearFlashEffect", 2000, 0, "i", i);
+            SetTimerEx("ResetPlayerDrunkLevel", 5000, 0, "i", i);
 
             SendClientMessage(i, COLOR_RED, "[ ! ] U tvojoj blizi je bacen flashbang. Probaj ga �to vjerodostojnije odRPati.");
         }
@@ -88,15 +89,15 @@ hook OnPlayerWeaponShot(playerid, weaponid, hittype, hitid, Float:fX, Float:fY, 
     ##        #######  ##    ##  ######   ######  
 */
 
-forward toggleFlashEffect(playerid);
-public toggleFlashEffect(playerid)
+forward ClearFlashEffect(playerid);
+public ClearFlashEffect(playerid)
 {
     DestroyFlashTD(playerid);
     return 1;
 }
 
-forward toggleOtherFlashEffect(playerid);
-public toggleOtherFlashEffect(playerid)
+forward ResetPlayerDrunkLevel(playerid);
+public ResetPlayerDrunkLevel(playerid)
 {
     SetPlayerDrunkLevel(playerid, 0);
     return 1;
@@ -104,27 +105,27 @@ public toggleOtherFlashEffect(playerid)
 
 stock DestroyFlashTD(playerid)
 {
-    PlayerTextDrawDestroy(playerid, _flashbangEffect[playerid]);
-    _flashbangEffect[playerid] = PlayerText:INVALID_TEXT_DRAW;
+    PlayerTextDrawDestroy(playerid, FlashbangEffectTd[playerid]);
+    FlashbangEffectTd[playerid] = PlayerText:INVALID_TEXT_DRAW;
 }
 
 static stock CreateFlashTD(playerid)
 {
     DestroyFlashTD(playerid);
 
-    _flashbangEffect[playerid] = CreatePlayerTextDraw(playerid, -20.000000, 2.000000, "box");
-    PlayerTextDrawUseBox(playerid, _flashbangEffect[playerid], 1);
-    PlayerTextDrawBoxColor(playerid, _flashbangEffect[playerid], 0xffffffFF);
-    PlayerTextDrawTextSize(playerid, _flashbangEffect[playerid], 660.000000, 22.000000);
-    PlayerTextDrawLetterSize(playerid, _flashbangEffect[playerid], 1.000000, 52.200000);
-    PlayerTextDrawAlignment(playerid, _flashbangEffect[playerid], 0);
-    PlayerTextDrawBackgroundColor(playerid, _flashbangEffect[playerid], 0xffffffFF);
-    PlayerTextDrawFont(playerid, _flashbangEffect[playerid], 3);
-    PlayerTextDrawColor(playerid, _flashbangEffect[playerid], 0xffffffFF);
-    PlayerTextDrawSetOutline(playerid, _flashbangEffect[playerid], 1);
-    PlayerTextDrawSetProportional(playerid, _flashbangEffect[playerid], 1);
-    PlayerTextDrawSetShadow(playerid, _flashbangEffect[playerid], 1);
-    PlayerTextDrawShow(playerid, _flashbangEffect[playerid]);
+    FlashbangEffectTd[playerid] = CreatePlayerTextDraw(playerid, -20.000000, 2.000000, "box");
+    PlayerTextDrawUseBox(playerid, FlashbangEffectTd[playerid], 1);
+    PlayerTextDrawBoxColor(playerid, FlashbangEffectTd[playerid], 0xffffffFF);
+    PlayerTextDrawTextSize(playerid, FlashbangEffectTd[playerid], 660.000000, 22.000000);
+    PlayerTextDrawLetterSize(playerid, FlashbangEffectTd[playerid], 1.000000, 52.200000);
+    PlayerTextDrawAlignment(playerid, FlashbangEffectTd[playerid], 0);
+    PlayerTextDrawBackgroundColor(playerid, FlashbangEffectTd[playerid], 0xffffffFF);
+    PlayerTextDrawFont(playerid, FlashbangEffectTd[playerid], 3);
+    PlayerTextDrawColor(playerid, FlashbangEffectTd[playerid], 0xffffffFF);
+    PlayerTextDrawSetOutline(playerid, FlashbangEffectTd[playerid], 1);
+    PlayerTextDrawSetProportional(playerid, FlashbangEffectTd[playerid], 1);
+    PlayerTextDrawSetShadow(playerid, FlashbangEffectTd[playerid], 1);
+    PlayerTextDrawShow(playerid, FlashbangEffectTd[playerid]);
 }
 
 
@@ -142,15 +143,14 @@ CMD:flashbangwep(playerid, params[])
 {
     if (!IsACop(playerid) && !IsASD(playerid)) return SendClientMessage(playerid, COLOR_RED, "[ ! ] Niste LSPD.");
 
-    if (!Bit1_Get(gr_PlayerIsSWAT, playerid))
+    if (!Player_IsSWAT(playerid))
         return SendClientMessage(playerid, COLOR_RED, "[ ! ] Nisi SWAT!");
 
     if (AC_GetPlayerWeapon(playerid) != 25)
         return SendClientMessage(playerid, COLOR_RED, "[ERROR]: Kako bi uzeli gumene metke morate imati shotgun.");
 
-    _flashShells[playerid] ^= 1;
-
-    if (_flashShells[playerid])
+    FlashbangShellsActive[playerid] = !FlashbangShellsActive[playerid]; // toggle
+    if (FlashbangShellsActive[playerid])
         SendClientMessage(playerid, COLOR_RED, "[ ! ] Ukljucili ste flashbang metke.");
     else
         SendClientMessage(playerid, COLOR_RED, "[ ! ] Iskljucili ste flashbang metke.");
