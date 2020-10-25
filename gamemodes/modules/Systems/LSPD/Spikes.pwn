@@ -182,64 +182,63 @@ hook OnPlayerUpdate(playerid) // maknit stavit onplayerenterdynamicrectangle
 
 CMD:putspike(playerid, params[])
 {
-    // TODO: reduce level of nesting
     new type;
     if (sscanf(params,"i", type)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /putspike [type] (1 | 2).");
     if (type < 1 || type > 2) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Pogresan tip spikea!");
 
-    if (IsACop(playerid) || IsASD(playerid))
+    if (!IsACop(playerid) || !IsASD(playerid))
     {
-        new Float:pos[3], Float:rot;
-        GetPlayerPos(playerid, pos[0], pos[1], pos[2]);
-        GetPlayerFacingAngle(playerid, rot);
+        SendClientMessage(playerid, COLOR_RED, "GRESKA: Niste u organizaciji LSPD/SASD.");
+        return 1;
+    }
 
-        // TODO: from all of this code below, make a helper function PlaceSpikestrip(Float:x,Float:y,Float:z,Float:rot)
-        new id = GetFreeSpikeID();
-        if (id == -1) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne smije biti postavljeno vise od 10 spajkova.");
+    new Float:pos[3], Float:rot;
+    GetPlayerPos(playerid, pos[0], pos[1], pos[2]);
+    GetPlayerFacingAngle(playerid, rot);
 
-        switch (type)
+    // TODO: from all of this code below, make a helper function PlaceSpikestrip(Float:x,Float:y,Float:z,Float:rot)
+    new id = GetFreeSpikeID();
+    if (id == -1) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne smije biti postavljeno vise od 10 spajkova.");
+
+    switch (type)
+    {
+        case 1:
         {
-            case 1:
-            {
-                Spikes[id][spiObject] = CreateDynamicObject(2899, pos[0], pos[1], pos[2]-0.9, 0.00000000, 0.00000000, rot);
-                Spikes[id][spiType] = 1;
-                Spikes[id][spiPosX] = pos[0];
-                Spikes[id][spiPosY] = pos[1];
-                Spikes[id][spiPosZ] = pos[2];
-                SendClientMessage(playerid, COLOR_RED, "[ ! ] Uspjesno ste postavile spike.");
-                return 1;
-            }
-            case 2:
-            {
-                Spikes[id][spiObject] = CreateDynamicObject(2892, pos[0], pos[1], pos[2]-0.9, 0.00000000, 0.00000000, rot);
-                Spikes[id][spiType] = 2;
-                Spikes[id][spiPosX] = pos[0];
-                Spikes[id][spiPosY] = pos[1];
-                Spikes[id][spiPosZ] = pos[2];
-                SendClientMessage(playerid, COLOR_RED, "[ ! ] Uspjesno ste postavile spike.");
-                return 1;
-            }
+            Spikes[id][spiObject] = CreateDynamicObject(2899, pos[0], pos[1], pos[2]-0.9, 0.00000000, 0.00000000, rot);
+            Spikes[id][spiType] = 1;
+            Spikes[id][spiPosX] = pos[0];
+            Spikes[id][spiPosY] = pos[1];
+            Spikes[id][spiPosZ] = pos[2];
+            SendClientMessage(playerid, COLOR_RED, "[ ! ] Uspjesno ste postavile spike.");
+        }
+        case 2:
+        {
+            Spikes[id][spiObject] = CreateDynamicObject(2892, pos[0], pos[1], pos[2]-0.9, 0.00000000, 0.00000000, rot);
+            Spikes[id][spiType] = 2;
+            Spikes[id][spiPosX] = pos[0];
+            Spikes[id][spiPosY] = pos[1];
+            Spikes[id][spiPosZ] = pos[2];
+            SendClientMessage(playerid, COLOR_RED, "[ ! ] Uspjesno ste postavile spike.");
         }
     }
-    else
-        SendClientMessage(playerid, COLOR_RED, "GRESKA: Niste u organizaciji LSPD/SASD.");
     return 1;
 }
 
 CMD:removespike(playerid, params[])
 {
-    if (IsACop(playerid) || IsASD(playerid))
+    if (!IsACop(playerid) || !IsASD(playerid))
     {
-        new id = GetPlayerNearestSpike(playerid); 
-        if (id == -1) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste u blizini postavljenog spike-a");
-
-        // TODO: helper function RemoveSpikestrip(spike_id)
-        DestroyDynamicObject(Spikes[id][spiObject]);
-        ResetSpikeData(id);
-        //
-        SendClientMessage(playerid, COLOR_RED, "[ ! ] Uspjesno ste maknuli spike.");
-    }
-    else
         SendClientMessage(playerid, COLOR_RED, "GRESKA: Niste u organizaciji LSPD/SASD.");
+        return 1;
+    }
+
+    new id = GetPlayerNearestSpike(playerid); 
+    if (id == -1) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste u blizini postavljenih siljaka!");
+
+    // TODO: helper function RemoveSpikestrip(spike_id)
+    DestroyDynamicObject(Spikes[id][spiObject]);
+    ResetSpikeData(id);
+    //
+    SendClientMessage(playerid, COLOR_RED, "[ ! ] Uspjesno ste maknuli siljke.");
     return 1;
 }

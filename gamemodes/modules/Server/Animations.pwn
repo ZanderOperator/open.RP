@@ -1,4 +1,5 @@
 #include <YSI_Coding\y_hooks>
+#include "modules/Systems/LSPD/LSPD_h.pwn"
 
 static const AnimLibs[][] =
 {
@@ -65,8 +66,8 @@ stock ApplyAnimationEx(playerid, animlib[], animname[], Float:fDelta, loop, lock
 	forcesync = 1;
 	if( PlayerWounded[playerid] || PlayerInfo[ playerid ][ pKilled ] > 0 )
 	   return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne mozete koristiti animacije dok ste u Wounded/Death stanju!");
-	if(GetPlayerSpecialAction(playerid) == SPECIAL_ACTION_CUFFED || Bit1_Get(gr_PlayerCuffed, playerid))
-	    return SendMessage(playerid, MESSAGE_TYPE_ERROR, "NE mozete koristiti animacije dok ste cuffani!");
+	if(GetPlayerSpecialAction(playerid) == SPECIAL_ACTION_CUFFED || Player_IsCuffed(playerid))
+	    return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne mozete koristiti animacije dok ste cuffani!");
 	    
 	if(!PlayerAnim[playerid] && toggleable == 1)
 		PlayerAnim[playerid] = true;
@@ -81,8 +82,8 @@ stock SetPlayerSpecialActionEx(playerid, actionid) // ReWrap
 {
 	if( PlayerWounded[playerid] || PlayerInfo[ playerid ][ pKilled ] > 0 )
 	   return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne mozete koristiti animacije dok ste u Wounded/Death stanju!");
-	if(GetPlayerSpecialAction(playerid) == SPECIAL_ACTION_CUFFED || Bit1_Get(gr_PlayerCuffed, playerid))
-	    return SendMessage(playerid, MESSAGE_TYPE_ERROR, "NE mozete koristiti animacije dok ste cuffani!");
+	if(GetPlayerSpecialAction(playerid) == SPECIAL_ACTION_CUFFED || Player_IsCuffed(playerid))
+	    return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne mozete koristiti animacije dok ste cuffani!");
 	    
 	SetPlayerSpecialAction(playerid, actionid);
 

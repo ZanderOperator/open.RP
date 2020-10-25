@@ -1,4 +1,5 @@
 #include <YSI_Coding\y_hooks>
+#include "modules/Systems/LSPD/LSPD_h.pwn"
 
 #if defined MODULE_BURGLAR
 	#endinput
@@ -360,7 +361,7 @@ stock static PickPocketTargetPlayer(playerid, type)
 					PlayerInfo[targetid][pSQLID]
 				);
 				mysql_tquery(g_SQL, deleteMobile);
-				Bit16_Set( gr_PlayerTracing, playerid, 	9999 );
+				Player_SetTappedBy(playerid, INVALID_PLAYER_ID);
 				
 				new
 					tmpString[ 110 ];
@@ -369,7 +370,7 @@ stock static PickPocketTargetPlayer(playerid, type)
 					GetName(targetid) 
 				);
 				SetPlayerChatBubble(playerid, tmpString, COLOR_PURPLE, 20, 20000);
-				SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uspjesno ste ukrali Mobitel iz djepa. Prodajte ju u East Los Santosu s /sellgoods!");
+				SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uspjesno ste ukrali Mobitel iz djepa. Prodajte ga u East Los Santosu s /sellgoods!");
 				UpgradePlayerSkill(playerid, 5, 5);
 				SetStolenGoodInInventory(playerid, DIALOG_TYPE_MOBILE);
 			}

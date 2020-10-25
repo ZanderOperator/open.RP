@@ -1,4 +1,5 @@
 #include <YSI_Coding\y_hooks>
+#include "modules/Systems/LSPD/LSPD_h.pwn"
 
 /*
 	##     ##    ###    ########   ######
@@ -11,7 +12,7 @@
 */
 
 // rBits
-stock
+static
 	Bit1:	gr_JackedPlayer		<MAX_PLAYERS>,
 	Bit16:	gr_JackedVehicle	<MAX_PLAYERS>,
 	Bit16:	gr_LastDriver		<MAX_VEHICLES>;
@@ -1013,8 +1014,6 @@ hook OnPlayerStateChange(playerid, newstate, oldstate)
 	}
 	if( oldstate == PLAYER_STATE_PASSENGER && newstate == PLAYER_STATE_ONFOOT ) 
 	{
-		if( Bit1_Get( gr_DoorsLocked, playerid ) && Bit16_Get( gr_PDLockedVeh, playerid ) != INVALID_VEHICLE_ID )
-			PutPlayerInVehicle(playerid, Bit16_Get( gr_PDLockedVeh, playerid ), Bit4_Get( gr_PDLockedSeat, playerid ) );
 		new vehicleid = GetPlayerVehicleID(playerid);
 		GetVehiclePreviousInfo(vehicleid);
 		return 1;

@@ -1800,10 +1800,8 @@ new
 	//_QuickTimer[MAX_PLAYERS] = 0,
 	GlobalMapIcon[MAX_PLAYERS],
 	PlayerTaskTStamp[MAX_PLAYERS],
-	TaserAnimTimer[MAX_PLAYERS],
 	bool:OnSecurityBreach[MAX_PLAYERS] = false,
 	bool:FDArrived[MAX_PLAYERS],
-	TaserTimer[MAX_PLAYERS],
 	Float:PlayerTrunkPos[MAX_PLAYERS][3],
 	GlobalSellingPlayerID[ MAX_PLAYERS ] = { 0, ... },
 	GlobalSellingPrice[ MAX_PLAYERS ] = { 0, ... },
@@ -1869,14 +1867,12 @@ new
 	Bit1: 	gr_SaveArmour 			<MAX_PLAYERS>,
 	Bit1: 	gr_PlayerPickingJack 	<MAX_PLAYERS> =  Bit1: false,
 	Bit1:	gr_PlayerJackSure 		<MAX_PLAYERS> =  Bit1: false,
-	Bit1: 	gr_PlayerIsSWAT			<MAX_PLAYERS> =  Bit1: false,
 	Bit1:	gr_CreateObject			<MAX_PLAYERS> =	 Bit1: false,
 	Bit1:	gr_OnEvent				<MAX_PLAYERS>  = Bit1: false,
 	Bit1:	gr_PlayerDownloading	<MAX_PLAYERS>  = Bit1: false,
-	Bit1:	gr_BeanBagShotgun		<MAX_PLAYERS>  = Bit1: false,
 	Bit1:	gr_PlayerExiting		<MAX_PLAYERS>  = Bit1: false,
 	Bit1:	gr_PlayerEntering		<MAX_PLAYERS>  = Bit1: false,
-	Bit1:	gr_ApprovedUndercover	<MAX_PLAYERS>  = Bit1: false,
+	// TODO: misspelled, FirstSpawn
 	Bit1:	gr_FristSpawn			<MAX_PLAYERS>  = Bit1: false,
 	Bit1: 	gr_SafeBreaking			<MAX_PLAYERS>  = Bit1: false,
 	Bit1:	gr_PlayerHouseAlarmOff	<MAX_PLAYERS>  = Bit1: false,
@@ -1890,31 +1886,23 @@ new
 	Bit1:	gr_ForbiddenPM			<MAX_PLAYERS>  = Bit1: false,
 	Bit1:	gr_BlockedPM			<MAX_PLAYERS>  = Bit1: false,
 	Bit1:	gr_PlayerAlive			<MAX_PLAYERS>  = Bit1: false,
-	Bit1:	gr_PDOnDuty				<MAX_PLAYERS>  = Bit1: false,
 	Bit1:	gr_Dice					<MAX_PLAYERS>  = Bit1: false,
 	Bit1:	gr_FakeGunLic			<MAX_PLAYERS>  = Bit1: false,
 	Bit1:	gr_MaskUse				<MAX_PLAYERS>  = Bit1: false,
 	Bit1:	gr_MobileSpeaker		<MAX_PLAYERS>  = Bit1: false,
-	Bit1:	gr_Taser				<MAX_PLAYERS>  = Bit1: false,
-	Bit1: 	gr_PlayerCuffed 		<MAX_PLAYERS>  = Bit1: false,
 	Bit1:	gr_SmokingCiggy			<MAX_PLAYERS>  = Bit1: false,
 	Bit1:	gr_GovRepair			<MAX_PLAYERS>  = Bit1: false,
 	Bit1:	gr_WeaponAllowed		<MAX_PLAYERS>  = Bit1: false,
 	Bit1:	gr_HasRubber			<MAX_PLAYERS>  = Bit1: false,
 	Bit1:	gr_PlayerSendKill		<MAX_PLAYERS>  = Bit1: false,
-	Bit1:	gr_PlayerTazed			<MAX_PLAYERS>  = Bit1: false,
-	Bit1:	gr_AcceptSwat			<MAX_PLAYERS>  = Bit1: false,
-	Bit1:	gr_DoorsLocked			<MAX_PLAYERS>  = Bit1: false,
 	Bit1:	gr_FactionChatTog		<MAX_PLAYERS>  = Bit1: true,
 	Bit1:	gr_PlayerRadio			<MAX_PLAYERS>  = Bit1: true,
 	Bit1:	gr_TrunkOffer			<MAX_PLAYERS>  = Bit1: false,
 	Bit1:	gr_PlayerInTrunk		<MAX_PLAYERS>  = Bit1: false,
-	Bit1:	gr_PlayerTraceSomeone	<MAX_PLAYERS>  = Bit1: false,
-	Bit1:	gr_PlayerTraceSMS		<MAX_PLAYERS>  = Bit1: false,
 	Bit1:	gr_PlayerOnTutorial		<MAX_PLAYERS>  = Bit1: false,
 	Bit1:   gr_animchat             <MAX_PLAYERS>  = Bit1: false,
 	Bit1:	gr_Blockedreport		<MAX_PLAYERS>  = Bit1: false,
-	Bit1:   gr_Tied                 <MAX_PLAYERS>  = Bit1: false,
+    // TODO: should be part of Player/Char module
 	Bit1:   gr_Blind                <MAX_PLAYERS>  = Bit1: false,
 	Bit1:   gr_BlindFold            <MAX_PLAYERS>  = Bit1: false,
 	Bit1:	gr_PlayerTrunkEdit		<MAX_PLAYERS>  = Bit1: false,
@@ -1937,8 +1925,8 @@ new
 	Bit4:	r_ColorSlotId			<MAX_PLAYERS>  = Bit4: 0,
 	Bit4:	gr_AttachmentIndexSel	<MAX_PLAYERS>  = Bit4: 0,
 	Bit4:	gr_TipUsluge			<MAX_PLAYERS>  = Bit4: 0,
+    // TODO: misspelled, SpectateId
 	Bit4: 	gr_SpecateId 			<MAX_PLAYERS>  = Bit4: 0,
-	Bit4:	gr_PDLockedSeat			<MAX_PLAYERS>  = Bit4: 0,
 	Bit8:	gr_MechanicSecs			<MAX_PLAYERS>  = Bit8: 0,
 	Bit8:	gr_HandleItem			<MAX_PLAYERS>  = Bit8: 0,
 	Bit8: 	gr_ObjectPrice			<MAX_PLAYERS>  = Bit8: 0,
@@ -1951,21 +1939,16 @@ new
 	Bit8: 	gr_Food					<MAX_PLAYERS>  = Bit8: 0,
 	Bit8: 	gr_Drink				<MAX_PLAYERS>  = Bit8: 0,
 	Bit8:	gr_ShakeStyle			<MAX_PLAYERS>  = Bit8: 0,
-	Bit8: 	gr_PoliceWeapon 		<MAX_PLAYERS>  = Bit8: 0,
 	Bit16:	gr_IdMehanicara			<MAX_PLAYERS>  = Bit16: INVALID_PLAYER_ID,
-	Bit16: 	gr_PoliceAmmo			<MAX_PLAYERS>  = Bit16: 0,
 	Bit16: 	gr_PlayerInfrontHouse	<MAX_PLAYERS>  = Bit16: INVALID_HOUSE_ID,
 	Bit16:	gr_ShakeOffer			<MAX_PLAYERS>  = Bit16: 0,
-	Bit16:	gr_LastVehicle			<MAX_PLAYERS>  = Bit16: 0,
 	Bit16: 	gr_LastPMId				<MAX_PLAYERS>  = Bit16: 0,
 	Bit16: 	gr_PlayerInHouse		<MAX_PLAYERS>  = Bit16: 9999,
     Bit16: 	gr_PlayerInGarage		<MAX_PLAYERS>  = Bit16: 9999,
     Bit16: 	gr_PlayerInRoom			<MAX_PLAYERS>  = Bit16: 999,
-	Bit16:	gr_PDLockedVeh			<MAX_PLAYERS>  = Bit16: INVALID_VEHICLE_ID,
 	Bit16:	gr_PlayerInBiznis		<MAX_PLAYERS>  = Bit16: INVALID_BIZNIS_ID,
 	Bit16:	gr_PlayerInComplex		<MAX_PLAYERS>  = Bit16: INVALID_COMPLEX_ID,
-	Bit16:	gr_PlayerInPickup		<MAX_PLAYERS>  = Bit16: -1,
-	Bit16:	gr_PlayerTracing		<MAX_PLAYERS>  = Bit16: 9999;
+	Bit16:	gr_PlayerInPickup		<MAX_PLAYERS>  = Bit16: -1;
 
 new
     secquestattempt[MAX_PLAYERS] = 3,
@@ -2207,6 +2190,7 @@ Public:ResetIterators()
 	return 1;
 }
 
+// TODO: should be a part of Player module
 ResetPlayerVariables(playerid)
 {	
 	//aprilfools[playerid] = false;
@@ -2227,10 +2211,8 @@ ResetPlayerVariables(playerid)
 	format(PlayerInfo[playerid][pCallsign], 60, "");
 	//rBits
 	Bit1_Set( gr_PlayerDownloading		, playerid, false );
-	Bit1_Set( gr_BeanBagShotgun			, playerid, false );
 	Bit1_Set( gr_PlayerExiting			, playerid, false );
 	Bit1_Set( gr_PlayerEntering			, playerid, false );
-	Bit1_Set( gr_ApprovedUndercover		, playerid, false );
 	Bit1_Set( gr_PlayerHouseAlarmOff	, playerid, false );
 	Bit1_Set( gr_FristSpawn				, playerid, false );
 	Bit1_Set( gr_OnLive					, playerid, false );
@@ -2244,35 +2226,27 @@ ResetPlayerVariables(playerid)
 	Bit1_Set( gr_CreateObject			, playerid, false );
 	Bit1_Set( gr_Blockedreport			, playerid, false );
 	Bit1_Set( gr_PlayerAlive			, playerid, true  );
-	Bit1_Set( gr_PDOnDuty				, playerid, false );
 	Bit1_Set( gr_FakeGunLic				, playerid, false );
 	Bit1_Set( gr_Dice					, playerid, false );
 	Bit1_Set( gr_MaskUse				, playerid, false );
 	Bit1_Set( gr_MobileSpeaker			, playerid, false );
-	Bit1_Set( gr_Taser					, playerid, false );
-	Bit1_Set( gr_PlayerCuffed 			, playerid, false );
 	Bit1_Set( gr_SmokingCiggy			, playerid, false );
 	Bit1_Set( gr_GovRepair				, playerid, false );
 	Bit1_Set( gr_WeaponAllowed			, playerid, false );
 	Bit1_Set( gr_HasRubber				, playerid, false );
 	Bit1_Set( gr_PlayerSendKill			, playerid, false );
-	Bit1_Set( gr_PlayerTazed			, playerid, false );
-	Bit1_Set( gr_AcceptSwat				, playerid, false );
-	Bit1_Set( gr_DoorsLocked			, playerid, false );
 	Bit1_Set( gr_animchat               , playerid, false );
 	Bit1_Set( gr_FactionChatTog			, playerid, true );
 	Bit1_Set( gr_PlayerRadio			, playerid, true );
 	Bit1_Set( gr_TrunkOffer				, playerid, false );
 	Bit1_Set( gr_PlayerTrunkEdit        , playerid, false );
 	Bit1_Set( gr_PlayerInTrunk			, playerid, false );
-	Bit1_Set( gr_PlayerTraceSomeone		, playerid, false );
-	Bit1_Set( gr_PlayerTraceSMS			, playerid, false );
+	// TODO: Player/Char module
 	Bit1_Set( gr_Blind					, playerid, false );
 	Bit1_Set( gr_BlindFold				, playerid, false );
-	Bit1_Set( gr_Tied					, playerid, false );
+	Player_SetIsTied(playerid, false);
 	Bit1_Set( gr_ImpoundApproval		, playerid, false );
 	Bit1_Set( gr_IsWorkingJob			, playerid, false );
-	
 	Bit2_Set( gr_BikeBunnyHop			, playerid, 0 );
 	Bit2_Set( gr_PlayerJumps			, playerid, 0 );
 	Bit4_Set( gr_WeaponTrunkEditSlot	, playerid, 0 );
@@ -2286,10 +2260,8 @@ ResetPlayerVariables(playerid)
 	Bit8_Set( gr_Food					, playerid, 0 );
 	Bit8_Set( gr_Drink					, playerid, 0 );
 	Bit8_Set( gr_ShakeStyle				, playerid, 0 );
-	Bit8_Set( gr_PoliceWeapon 			, playerid, 0 );
-	Bit16_Set( gr_PoliceAmmo			, playerid, 0 );
 	Bit16_Set( gr_ShakeOffer			, playerid, 999 );
-	Bit16_Set( gr_LastVehicle			, playerid, 0 );
+	Player_SetLastVehicle(playerid, INVALID_VEHICLE_ID);
 	Bit16_Set( gr_LastPMId				, playerid, 999 );
 	Bit16_Set( gr_PlayerInBiznis		, playerid, 999 );
 	Bit16_Set( gr_PlayerInRoom          , playerid, 999 );
@@ -2299,7 +2271,6 @@ ResetPlayerVariables(playerid)
 	Bit16_Set( gr_PlayerInGarage		, playerid, INVALID_HOUSE_ID );
 	Bit16_Set( gr_PlayerInfrontHouse	, playerid, INVALID_HOUSE_ID );
 	Player_SetAmbulanceId(playerid, INVALID_VEHICLE_ID);
-	Bit16_Set( gr_PlayerTracing			, playerid, 9999 );
 	blockedNews[playerid] = false;
 	// Mobile
 	ResetMobileVariables(playerid);
@@ -2335,7 +2306,7 @@ ResetPlayerVariables(playerid)
 	PlayerContactNumber[playerid][8]   		= 0;
 	PlayerContactNumber[playerid][9]   		= 0;
 
-	Bit1_Set( gr_PlayerUsingGov			, playerid, false );
+	Bit1_Set( gr_PlayerUsingPhonebooth			, playerid, false );
 	Bit1_Set( gr_PlayerTakingSelfie		, playerid, false );
 	Bit8_Set( gr_PhoneLine				, playerid, 15 );
 	Bit8_Set( gr_RingingTime			, playerid, 0 );
@@ -3001,109 +2972,105 @@ timer SafeResetPlayerVariables[3000](playerid)
 
 hook OnGameModeExit()
 {
+    // Actors
+    //DestroyRuletWorkers();
 
-	// Actors
-	//DestroyRuletWorkers();
+    // SQL stuff
+    mysql_close();
 
-	// SQL stuff
-	mysql_close();
+    for (new i; i < MAX_OBJECTS; i++)
+    {
+        if (IsValidDynamicObject(i))
+            DestroyDynamicObject(i);
 
-	for(new i; i<MAX_OBJECTS; i++)
-	{
-		if(IsValidDynamicObject(i))
-			DestroyDynamicObject(i);
-     	if(IsValidObject(i))
-			DestroyObject(i);
-	}
+        if (IsValidObject(i))
+            DestroyObject(i);
+    }
 
-	return 1;
+    return 1;
 }
 
 public OnIncomingConnection(playerid, ip_address[], port)
 {
-	new	count = 1;
-    for(new i = 0, j = GetPlayerPoolSize(); i <= j; i++){
-		if(IsPlayerConnected(i) && !strcmp(GetUserIP_Connector(i), ip_address, true)){
-			count++;
-	    }
-	}
-	if(count > MAX_IP_CONNECTS){
-		Kick(playerid);
+    new	count = 1;
+    for (new i = 0, j = GetPlayerPoolSize(); i <= j; i++)
+    {
+        // TODO: convert IP string to integer and compare integers, it's much faster
+        if (IsPlayerConnected(i) && !strcmp(GetUserIP_Connector(i), ip_address, true))
+        {
+            count++;
+        }
     }
-    return true;
+
+    if (count > MAX_IP_CONNECTS)
+    {
+        Kick(playerid);
+    }
+    return 1;
 }
 
 hook OnModelSelResponse(playerid, extraid, index, modelid, response)
 {
-	if ((response) && (extraid == MODEL_SELECTION_COLOR))
-	{
-		va_SendClientMessage(playerid, COLOR_YELLOW, "[COLOR]: ID %d.", modelid);
-	}
-	return (true);
+    if ((response) && (extraid == MODEL_SELECTION_COLOR))
+    {
+        va_SendClientMessage(playerid, COLOR_YELLOW, "[COLOR]: ID %d.", modelid);
+    }
+    return 1;
 }
 
 public OnQueryError(errorid, const error[], const callback[], const query[], MySQL:handle)
 {
-	new backtrace[2048];
-	GetAmxBacktrace(backtrace, 2048);
-	Log_Write("logfiles/AMX_Query_Log.txt", "\n[%s] - MySQL Error ID: %d\nError %s: Callback %s\nQuery: %s\n%s", ReturnDate(), errorid, error, callback, query, backtrace);
-	printf("[%s] - MySQL Error ID: %d\nError %s: Callback %s\nQuery: %s\n%s", ReturnDate(), errorid, error, callback, query, backtrace);
-	return 1;
+    new backtrace[2048];
+    GetAmxBacktrace(backtrace, sizeof(backtrace));
+    Log_Write("logfiles/AMX_Query_Log.txt", "\n[%s] - MySQL Error ID: %d\nError %s: Callback %s\nQuery: %s\n%s", ReturnDate(), errorid, error, callback, query, backtrace);
+    printf("[%s] - MySQL Error ID: %d\nError %s: Callback %s\nQuery: %s\n%s", ReturnDate(), errorid, error, callback, query, backtrace);
+    return 1;
 }
 
+// TODO: should be a part of Poker module, hooked
 public OnPlayerEditDynamicObject(playerid, objectid, response, Float:x, Float:y, Float:z, Float:rx, Float:ry, Float:rz)
 {
     PokerTableEdit(playerid, objectid, response, x, y, z, rx, ry, rz);
-	StorageObjectEdit(playerid, objectid, response, x, y, z, rx, ry, rz);
-	return (true);
+    StorageObjectEdit(playerid, objectid, response, x, y, z, rx, ry, rz);
+    return 1;
 }
 
 hook OnPlayerEnterVehicle(playerid, vehicleid, ispassenger)
 {
-    if(Bit1_Get(gr_Tied, playerid))
-		TogglePlayerControllable(playerid, 1), SetPlayerSpecialAction(playerid, SPECIAL_ACTION_CUFFED);
-  	if(ispassenger)
-   	{
-    	if(VehicleInfo[vehicleid][vLocked])
-	 	{
-			RemovePlayerFromVehicle(playerid);
-			if(GetPlayerAnimationIndex(playerid))
-			{
-			    new
-					animlib[32],
-		        	animname[32];
-
-		        GetAnimationName(GetPlayerAnimationIndex(playerid), animlib, 32, animname, 32);
-
-		        if(strfind(animname, "fall", true) != -1)
-					return 1;
-			}
-			new
-			    Float:ep_x,
-			    Float:ep_y,
-			    Float:ep_z;
-
-			GetPlayerPos(playerid, ep_x, ep_y, ep_z);
-			SetPlayerPos(playerid, ep_x, ep_y, ep_z);
-		}
-	}
- 	return 1;
-}
-
-
-hook OnPlayerStateChange(playerid, newstate, oldstate)
-{
-    if(oldstate == PLAYER_STATE_PASSENGER && newstate == PLAYER_STATE_ONFOOT)
+    if (ispassenger)
     {
-	   	if(Bit1_Get(gr_Tied, playerid))
-		    SetPlayerSpecialAction(playerid, SPECIAL_ACTION_CUFFED);
+        if (VehicleInfo[vehicleid][vLocked])
+        {
+            RemovePlayerFromVehicle(playerid);
+
+            if (GetPlayerAnimationIndex(playerid))
+            {
+                new
+                    animlib[32],
+                    animname[32];
+
+                GetAnimationName(GetPlayerAnimationIndex(playerid), animlib,
+                                 sizeof(animlib), animname, sizeof(animname));
+
+                if (strfind(animname, "fall", true) != -1)
+                    return 1;
+            }
+
+            new
+                Float:x,
+                Float:y,
+                Float:z;
+
+            GetPlayerPos(playerid, x, y, z);
+            SetPlayerPos(playerid, x, y, z);
+        }
     }
     return 1;
 }
 
 public OnPlayerCommandText(playerid, cmdtext[])
 {
-    if(!cmdtext[0])
+    if (!cmdtext[0])
     {
         Kick(playerid); // because it's impossible to send valid NULL command
         return 0;
@@ -3308,11 +3275,6 @@ hook OnPlayerDisconnect(playerid, reason)
 		KillTimer(PlayerMobileRingTimer[playerid]);
 		Bit8_Set( gr_RingingTime, playerid, 0 );
 	}
-	if( Bit1_Get( gr_PlayerTazed, playerid ) ) {
-		KillTimer(TaserAnimTimer[playerid]);
-		KillTimer(TaserTimer[playerid]);
-		Bit1_Set( gr_PlayerTazed, playerid, false );
-	}
 	if( IsPlayerReconing(playerid) ) {
 		DestroyReconTextDraws(playerid);
 		KillTimer(ReconTimer[playerid]);
@@ -3327,10 +3289,6 @@ hook OnPlayerDisconnect(playerid, reason)
 	// Tuning
 	if( Bit1_Get( gr_PlayerInTuningMode	, playerid ) )
 		SetVehicleToRespawn(PlayerTuningVehicle[playerid]);
-
-	//Tracing
-	if( Bit16_Get( gr_PlayerTracing, playerid ) )
-		SendClientMessage(Bit16_Get( gr_PlayerTracing, playerid ), COLOR_RED, "[ ! ]: Line is busy (( Player is offline ))!");
 
 	// Main Player Account Save Func.
 	SavePlayerData(playerid);
@@ -3415,6 +3373,7 @@ public OnPlayerRequestSpawn(playerid)
 	return 0;
 }
 
+// TODO: should be a part of 0.3DL Download module
 public OnPlayerRequestDownload(playerid, type, crc)
 {
 	if(!IsPlayerConnected(playerid))
@@ -3678,98 +3637,21 @@ hook OnPlayerSpawn(playerid)
     return 1;
 }
 
-hook OnPlayerExitVehicle(playerid, vehicleid)
+public OnPlayerTakeDamage(playerid, issuerid, Float:amount, weaponid, bodypart)
 {
-	if(VehicleInfo[vehicleid][vLocked] && GetPlayerState(playerid) == PLAYER_STATE_PASSENGER && Bit1_Get(gr_PlayerCuffed,playerid))
-	{
-		new iSeat = GetPlayerVehicleSeat(playerid);
-		PutPlayerInVehicle(playerid, vehicleid, iSeat);
-		GameTextForPlayer( playerid, "~w~Vehicle ~r~locked~", 3000, 4 );
-	}
-	return 1;
+    if (weaponid == WEAPON_FIREEXTINGUISHER)
+    {
+        new Float: oldHealth;
+        GetPlayerHealth(playerid, oldHealth);
+        SetPlayerHealth(playerid, oldHealth);
+        return 0;
+    }
+    return 0;
 }
 
-hook OnPlayerTakeDamage(playerid, issuerid, Float:amount, weaponid, bodypart)
+public OnPlayerGiveDamage(playerid, damagedid, Float:amount, weaponid, bodypart)
 {
-	if( weaponid == WEAPON_FIREEXTINGUISHER )
-	{
-		new Float: oldHealth;
-		GetPlayerHealth(playerid, oldHealth);
-		SetPlayerHealth(playerid, oldHealth);
-		return 0;
-	}
-	if( issuerid != INVALID_PLAYER_ID && Bit1_Get(gr_Taser, issuerid) && ( IsACop(issuerid) || IsASD(issuerid) ) && weaponid == WEAPON_SILENCED && IsPlayerLogged(playerid))
-	{
-		if( Bit1_Get( gr_PlayerTazed, playerid ) ) return 0;
-
-		new
-			Float:taz_x,
-			Float:taz_y,
-			Float:taz_z,
-			Float:taz_h;
-
-		GetPlayerPos(playerid, taz_x, taz_y, taz_z);
-		GetPlayerHealth(playerid, taz_h);
-  		SetPlayerHealth(playerid, taz_h + 1);
-		if(ProxDetectorS(10, playerid, issuerid))
-		{
-			new
-				damageString[ 87 ];
-
-			format(damageString, sizeof(damageString), "* %s shoots %s with tazer and he falls down!",
-				GetName(issuerid, true),
-				GetName(playerid, true)
-			);
-		   	ProxDetector(15.0, playerid, damageString, COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE);
-			TogglePlayerControllable(playerid, 0);
-			ApplyAnimationEx(playerid,"PED","KO_skid_front", 4.1, 0, 1, 1, 0, 0, 1, 0);
-			SetPlayerDrunkLevel(playerid, 10000);
-
-			TaserAnimTimer[playerid] 	= SetTimerEx("OnPlayerTaserAnim", 	100, 	0, "i",playerid);
-			TaserTimer[playerid]		= SetTimerEx("OnPlayerTaser", 		10000, 	0, "i",playerid);
-			Bit1_Set( gr_PlayerTazed, playerid, true );
-		}
-	}
-	else if( issuerid != INVALID_PLAYER_ID && Bit1_Get(gr_BeanBagShotgun, issuerid) && ( IsACop(issuerid) || IsASD(issuerid) ) && weaponid == WEAPON_SHOTGUN && IsPlayerLogged(playerid) )
-	{
-		if( Bit1_Get( gr_PlayerTazed, playerid ) ) return 0;
-		new Float:bb_h;
-		GetPlayerHealth(playerid, bb_h);
-		SetPlayerHealth(playerid, bb_h + 1);
-		if(ProxDetectorS(15, playerid, issuerid))
-		{
-			new
-				damageString[ 87 ];
-
-			format(damageString, sizeof(damageString), "* %s shoots %s with bean bag bullet and he falls!",
-				GetName(issuerid, true),
-				GetName(playerid, true)
-			);
-			ProxDetector(15.0, playerid, damageString, COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE);
-			TogglePlayerControllable(playerid, 0);
-
-			ApplyAnimationEx(playerid,"PED","KO_skid_front",4.1,0,1,1,1,1,1,0);
-			SetPlayerDrunkLevel(playerid, 10000);
-
-			TaserAnimTimer[playerid] 	= SetTimerEx("OnPlayerTaserAnim", 	100, 	0, "i",playerid);
-			TaserTimer[playerid]		= SetTimerEx("OnPlayerTaser", 		10000, 	0, "i",playerid);
-			Bit1_Set( gr_PlayerTazed, playerid, true );
-		}
-	}
-	return 0;
-}
-
-public OnPlayerGiveDamage(playerid, damagedid, Float:amount, weaponid, bodypart) {
-	return 0;
-}
-
-public OnPlayerTargetPlayer(playerid, targetid, weaponid)
-{
-	if( targetid != INVALID_PLAYER_ID ) return 0;
-	if( !IsPlayerLogged(playerid) || !IsPlayerConnected(playerid) ) return 0;
-	if( weaponid == WEAPON_SILENCED && Bit1_Get(gr_Taser, playerid) && ( IsACop(playerid) || IsASD(playerid) ) && !ProxDetectorS(6.0, playerid, targetid) )
-		ApplyAnimationEx(playerid, "CARRY", "crry_prtial", 4.0, 0, 0, 0, 0, 0, 0);
-	return 1;
+    return 0;
 }
 
 hook OnPlayerDeath(playerid, killerid, reason)

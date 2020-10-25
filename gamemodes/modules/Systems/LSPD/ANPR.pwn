@@ -3,6 +3,8 @@
 #endif
 #define MODULE_ANPR
 
+// Automatic number plate recognition system - cops only
+
 /*
     #### ##    ##  ######  ##       ##     ## ########  ######## 
      ##  ###   ## ##    ## ##       ##     ## ##     ## ##       
@@ -27,11 +29,11 @@
 */
 
 static
-    Bit1: gr_ANPRActiveted<MAX_PLAYERS> = { Bit1:false, ... },
-    PlayerANPRTimer     [MAX_PLAYERS],
-    PlayerText:AnprBcg  [MAX_PLAYERS] = { PlayerText:INVALID_TEXT_DRAW, ... },
-    PlayerText:AnprTitle[MAX_PLAYERS] = { PlayerText:INVALID_TEXT_DRAW, ... },
-    PlayerText:AnprInfo [MAX_PLAYERS] = { PlayerText:INVALID_TEXT_DRAW, ... };
+    bool:ANPRActivated       [MAX_PLAYERS] = {false, ...},
+    PlayerANPRTimer          [MAX_PLAYERS],
+    PlayerText:AnprBackground[MAX_PLAYERS] = {PlayerText:INVALID_TEXT_DRAW, ...},
+    PlayerText:AnprTitle     [MAX_PLAYERS] = {PlayerText:INVALID_TEXT_DRAW, ...},
+    PlayerText:AnprInfo      [MAX_PLAYERS] = {PlayerText:INVALID_TEXT_DRAW, ...};
 
 
 /*
@@ -44,10 +46,19 @@ static
     ##        #######  ##    ##  ######   ######  
 */
 
+stock bool:Player_HasANPRActivated(playerid)
+{
+    return ANPRActivated[playerid];
+}
+
+stock Player_SetANPRActivated(playerid, bool:v)
+{
+    ANPRActivated[playerid] = v;
+}
+
 forward ANPRTimer(playerid);
 public ANPRTimer(playerid)
 {
-    // TODO: reduce level of nesting
     // TODO: check if these variables need to be static. It's perfectly fine for them to be 'new'.
     static
         Float:vX, Float:vY, Float:vZ,
@@ -96,15 +107,25 @@ public ANPRTimer(playerid)
 
                         PlayerTextDrawSetString(playerid,AnprInfo[playerid], string);
                     }
+                    // TODO: all of these else statements can be removed and text draw formatting done
+                    // at the end, with variable assignments for strings based on player distance
+                    // which will reduce code duplication and deep nesting
                     else
-                        PlayerTextDrawSetString(playerid,AnprInfo[playerid], "~y~Registracija: ~w~None~n~~y~Owner: ~w~None~n~~y~Kazne: ~w~0");
+                    {
+                        PlayerTextDrawSetString(playerid, AnprInfo[playerid], "~y~Registracija: ~w~None~n~~y~Owner: ~w~None~n~~y~Kazne: ~w~0");
+                    }
+
                     break;
                 }
                 else
-                    PlayerTextDrawSetString(playerid,AnprInfo[playerid], "~y~Registracija: ~w~None~n~~y~Owner: ~w~None~n~~y~Kazne: ~w~0");
+                {
+                    PlayerTextDrawSetString(playerid, AnprInfo[playerid], "~y~Registracija: ~w~None~n~~y~Owner: ~w~None~n~~y~Kazne: ~w~0");
+                }
             }
             else
+            {
                 PlayerTextDrawSetString(playerid, AnprInfo[playerid], "~y~Registracija: ~w~None~n~~y~Owner: ~w~None~n~~y~Kazne: ~w~0");
+            }
         }
     }
 }
@@ -113,17 +134,17 @@ static CreateANPRTextDraw(playerid)
 {
     DestroyANPRTextDraw(playerid);
 
-    AnprBcg[playerid] = CreatePlayerTextDraw(playerid, 495.679992, 110.774696, "usebox");
-    PlayerTextDrawLetterSize(playerid, AnprBcg[playerid], 0.000000, 7.082777);
-    PlayerTextDrawTextSize(playerid, AnprBcg[playerid], 612.329895, 0.000000);
-    PlayerTextDrawAlignment(playerid, AnprBcg[playerid], 1);
-    PlayerTextDrawColor(playerid, AnprBcg[playerid], 0);
-    PlayerTextDrawUseBox(playerid, AnprBcg[playerid], true);
-    PlayerTextDrawBoxColor(playerid, AnprBcg[playerid], 102);
-    PlayerTextDrawSetShadow(playerid, AnprBcg[playerid], 0);
-    PlayerTextDrawSetOutline(playerid, AnprBcg[playerid], 0);
-    PlayerTextDrawFont(playerid, AnprBcg[playerid], 0);
-    PlayerTextDrawShow(playerid, AnprBcg[playerid]);
+    AnprBackground[playerid] = CreatePlayerTextDraw(playerid, 495.679992, 110.774696, "usebox");
+    PlayerTextDrawLetterSize(playerid, AnprBackground[playerid], 0.000000, 7.082777);
+    PlayerTextDrawTextSize(playerid, AnprBackground[playerid], 612.329895, 0.000000);
+    PlayerTextDrawAlignment(playerid, AnprBackground[playerid], 1);
+    PlayerTextDrawColor(playerid, AnprBackground[playerid], 0);
+    PlayerTextDrawUseBox(playerid, AnprBackground[playerid], true);
+    PlayerTextDrawBoxColor(playerid, AnprBackground[playerid], 102);
+    PlayerTextDrawSetShadow(playerid, AnprBackground[playerid], 0);
+    PlayerTextDrawSetOutline(playerid, AnprBackground[playerid], 0);
+    PlayerTextDrawFont(playerid, AnprBackground[playerid], 0);
+    PlayerTextDrawShow(playerid, AnprBackground[playerid]);
 
     AnprTitle[playerid] = CreatePlayerTextDraw(playerid, 555.439636, 109.834625, "~y~ANPR");
     PlayerTextDrawLetterSize(playerid, AnprTitle[playerid], 0.440879, 1.709013);
@@ -151,10 +172,10 @@ static CreateANPRTextDraw(playerid)
 
 static DestroyANPRTextDraw(playerid)
 {
-    if (AnprBcg[playerid] != PlayerText:INVALID_TEXT_DRAW)
+    if (AnprBackground[playerid] != PlayerText:INVALID_TEXT_DRAW)
     {
-        PlayerTextDrawDestroy(playerid, AnprBcg[playerid]);
-        AnprBcg[playerid] = PlayerText:INVALID_TEXT_DRAW;
+        PlayerTextDrawDestroy(playerid, AnprBackground[playerid]);
+        AnprBackground[playerid] = PlayerText:INVALID_TEXT_DRAW;
     }
 
     if (AnprTitle[playerid] != PlayerText:INVALID_TEXT_DRAW)
@@ -171,6 +192,19 @@ static DestroyANPRTextDraw(playerid)
     return 1;
 }
 
+stock DisableANPRForPlayer(playerid)
+{
+    DestroyANPRTextDraw(playerid);
+    KillTimer(PlayerANPRTimer[playerid]);
+    Player_SetANPRActivated(playerid, false);
+}
+
+stock EnableANPRForPlayer(playerid)
+{
+    CreateANPRTextDraw(playerid);
+    PlayerANPRTimer[playerid] = SetTimerEx("ANPRTimer", 2000, true, "i", playerid);
+    Player_SetANPRActivated(playerid, true);
+}
 
 /*
     ##     ##  #######   #######  ##    ## 
@@ -184,11 +218,9 @@ static DestroyANPRTextDraw(playerid)
 
 hook OnPlayerDisconnect(playerid, reason)
 {
-    if (Bit1_Get(gr_ANPRActiveted, playerid))
+    if (Player_HasANPRActivated(playerid))
     {
-        DestroyANPRTextDraw(playerid);
-        KillTimer(PlayerANPRTimer[playerid]);
-        Bit1_Set(gr_ANPRActiveted, playerid, false);
+        DisableANPRForPlayer(playerid);
     }
     return 1;
 }
@@ -197,11 +229,9 @@ hook OnPlayerStateChange(playerid, newstate, oldstate)
 {
     if (newstate == PLAYER_STATE_ONFOOT && oldstate == PLAYER_STATE_DRIVER)
     {
-        if (Bit1_Get(gr_ANPRActiveted, playerid))
+        if (Player_HasANPRActivated(playerid))
         {
-            DestroyANPRTextDraw(playerid);
-            KillTimer(PlayerANPRTimer[playerid]);
-            Bit1_Set(gr_ANPRActiveted, playerid, false);
+            DisableANPRForPlayer(playerid);
         }
     }
     return 1;
@@ -224,25 +254,20 @@ CMD:anpr(playerid, params[])
     if (!IsInStateVehicle(playerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste unutar sluzbenog vozila!");
 
     new string[80];
-    // TODO: make a simple toggle var and if else case
-    if (!Bit1_Get( gr_ANPRActiveted, playerid))
+    if (!Player_HasANPRActivated(playerid))
     {
-        CreateANPRTextDraw(playerid);
-        PlayerANPRTimer[playerid] = SetTimerEx("ANPRTimer", 2000, true, "i", playerid);
-        GameTextForPlayer(playerid, "~g~ANPR Active", 1500, 1);
-        Bit1_Set( gr_ANPRActiveted, playerid, true );
+        EnableANPRForPlayer(playerid);
 
-        format(string, sizeof(string), "* %s pokre�e ANPR system.", GetName(playerid, true));
+        GameTextForPlayer(playerid, "~g~ANPR Active", 1500, 1);
+        format(string, sizeof(string), "* %s pokreće ANPR system.", GetName(playerid, true));
         ProxDetector(10.0, playerid, string, COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE);
     }
-    else if (Bit1_Get( gr_ANPRActiveted, playerid))
+    else
     {
-        DestroyANPRTextDraw(playerid);
-        KillTimer(PlayerANPRTimer[playerid]);
-        GameTextForPlayer(playerid, "~r~ANPR deactivated", 1500, 1);
-        Bit1_Set( gr_ANPRActiveted, playerid, false );
+        DisableANPRForPlayer(playerid);
 
-        format(string, sizeof(string), "* %s isklju�uje ANPR system.", GetName(playerid, true));
+        GameTextForPlayer(playerid, "~r~ANPR deactivated", 1500, 1);
+        format(string, sizeof(string), "* %s isključuje ANPR system.", GetName(playerid, true));
         ProxDetector(10.0, playerid, string, COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE);
     }
     return 1;

@@ -13,6 +13,7 @@
     #### ##    ##  ######  ########  #######  ########  ######## 
 */
 #include <YSI_Coding\y_hooks>
+#include "modules/Systems/LSPD/LSPD_h.pwn"
 
 /*
     ########  ######## ######## #### ##    ## ######## 
@@ -801,8 +802,8 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 
                     AC_ResetPlayerWeapons(playerid); // da se ne skuplja po 1000+ metaka digla
 
-                    Bit1_Set(gr_Taser, playerid, false);
-                    Bit1_Set(gr_PDOnDuty, playerid, true);
+                    Player_SetHasTaserGun(playerid, false);
+                    Player_SetOnPoliceDuty(playerid, true);
                     AC_GivePlayerWeapon(playerid, 3, 1);
                     AC_GivePlayerWeapon(playerid, 24, 50);
                     AC_GivePlayerWeapon(playerid, 41, 1000);
@@ -827,7 +828,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                     }
 
                     AC_ResetPlayerWeapons(playerid);
-                    Bit1_Set(gr_PDOnDuty, playerid, false);
+                    Player_SetOnPoliceDuty(playerid, false);
                     PlayerPlaySound(playerid, 1057, 0.0, 0.0, 0.0);
                     SetPlayerArmour(playerid, 0.0);
                     SetPlayerHealth(playerid, 99.9);

@@ -1,4 +1,5 @@
 #include <YSI_Coding\y_hooks>
+#include "modules/Systems/LSPD/LSPD_h.pwn"
 
 #if defined MODULE_MOBILE
 	#endinput
@@ -139,23 +140,21 @@ new	PhoneModels[10][ E_PHONE_MODEL_INFO ] = {
 	{18873, "Nokia 3210"					, 89}
 };
 
+static
+    bool:MobileOn[MAX_PLAYERS] = {true, ...};
 
 // rBits
 new
-	Bit1:	gr_MobileOn				<MAX_PLAYERS>  	= { Bit1: true, ...},
 	Bit1:	gr_LoadedContacts		<MAX_PLAYERS>  	= { Bit1: false, ...},
 	Bit1:	gr_CanHangup			<MAX_PLAYERS>  	= { Bit1: true, ...},
 	Bit1: 	gr_PlayerTakingSelfie 	<MAX_PLAYERS>	= { Bit1: false, ... },
-	Bit1:	gr_PlayerUsingGov		<MAX_PLAYERS>	= { Bit1: false, ... },
-	Bit1: 	gr_PlayerTracingNumber  <MAX_PLAYERS>	= { Bit1: false, ... },
+	Bit1:	gr_PlayerUsingPhonebooth		<MAX_PLAYERS>	= { Bit1: false, ... },
 	Bit8: 	gr_RingingTime			<MAX_PLAYERS>	= { Bit8: 0, ... },
 	Bit8:	gr_MobileContactSlot 	<MAX_PLAYERS> 	= { Bit8: 0, ... };
 
 new
 	Float:SelfieAngle[ MAX_PLAYERS ],
 	Float:SelfieHeight[ MAX_PLAYERS ],
-	TracingNumberZone[ MAX_PLAYERS ],
-	TracingTimer[ MAX_PLAYERS ],
 	PlayerMobileRingTimer[MAX_PLAYERS],
 	StartCallTimestamp[ MAX_PLAYERS ] = { 0, ... },
 	PlayerContactName[ MAX_PLAYERS ][ 11 ][ 11 ],
@@ -186,6 +185,16 @@ stock static PlayerText:PhoneTD[MAX_PLAYERS][PHONE_TEXTDRAWS];
 	##    ##    ##    ##     ## ##    ## ##   ##  ##    ##
 	 ######     ##     #######   ######  ##    ##  ######
 */
+
+stock bool:Player_MobileOn(playerid)
+{
+    return MobileOn[playerid];
+}
+
+stock Player_SetMobileOn(playerid, bool:v)
+{
+    MobileOn[playerid] = v;
+}
 
 stock LoadTowerData()
 {
@@ -736,7 +745,7 @@ public PhoneAction(playerid, phaction)
     		PlayerTextDrawCreated[playerid][i] = 1;
     	}
 
-	    if( Bit1_Get( gr_MobileOn, playerid ) )
+	    if (Player_MobileOn(playerid))
 	    {
 			PhoneTD[playerid][7] = CreatePlayerTextDraw(playerid, 460.000000, 318.625000, "LD_BUM:blkdot"); //Osvjetljeni LCD zaslon #1
 			PlayerTextDrawLetterSize(playerid, PhoneTD[playerid][7], 0.000000, 0.000000);
@@ -2164,19 +2173,12 @@ stock ResetMobileVariables(playerid)
 
 	ReloadSMS(playerid);
 
-	Bit1_Set( gr_MobileOn			, playerid, true );
+    Player_SetMobileOn(playerid, true);
 	Bit1_Set( gr_LoadedContacts		, playerid, false );
 	Bit1_Set( gr_PlayerTakingSelfie , playerid, false );
-	Bit1_Set( gr_PlayerUsingGov		, playerid, false );
+	Bit1_Set( gr_PlayerUsingPhonebooth		, playerid, false );
 	Bit8_Set( gr_RingingTime		, playerid, 0 );
 	Bit8_Set( gr_MobileContactSlot 	, playerid, 0 );
-
-	if( Bit1_Get( gr_PlayerTracingNumber, playerid ) )
-	{
-		KillTimer(TracingTimer[ playerid ]);
-		Bit1_Set( gr_PlayerTracingNumber, playerid, false );
-		GangZoneDestroy(TracingNumberZone[ playerid ]);
-	}
 	return 1;
 }
 
@@ -2407,7 +2409,7 @@ stock PhoneCall(playerid, callnumber)
     new PTDTextString[12],
 		callstr[8];
 
-	if (!Bit1_Get( gr_PlayerUsingGov, playerid ))
+	if (!Bit1_Get( gr_PlayerUsingPhonebooth, playerid ))
 	{
 		if( !PlayerInfo[ playerid ][ pMobileNumber ] ) return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR,"Nemate mobitel!");
 		if(GetPlayerSignal(playerid) < 1 && callnumber != 911) return SendMessage( playerid, MESSAGE_TYPE_ERROR, "** No signal **");
@@ -2476,7 +2478,7 @@ stock PhoneCall(playerid, callnumber)
 				gplayerid = i;
 
 				if( PlayerInfo[ gplayerid ][ pJailed ] != 0 ) return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR,"Osoba se ne moze javiti.");
-				if( GetPlayerSignal(gplayerid) < 1 || IsPlayerReconing(gplayerid) || GetPlayerTalkingOnPhone(gplayerid) != -1 || !Bit1_Get( gr_MobileOn, gplayerid ))
+				if( GetPlayerSignal(gplayerid) < 1 || IsPlayerReconing(gplayerid) || GetPlayerTalkingOnPhone(gplayerid) != -1 || !Player_MobileOn(gplayerid))
 				{
 					format(PTDTextString, sizeof(PTDTextString), "~r~ZAUZETO");
 					PlayerTextDrawSetString(playerid, PhoneTD[playerid][37], PTDTextString);
@@ -2494,7 +2496,7 @@ stock PhoneCall(playerid, callnumber)
 				PlayerMobileRingTimer[gplayerid] = SetTimerEx("MobileRinging", 15000, true, "i", gplayerid);
 				new tmpString[ 70 ];
 
-				if (Bit1_Get( gr_PlayerUsingGov, playerid ))
+				if (Bit1_Get( gr_PlayerUsingPhonebooth, playerid ))
 				{
 					format(tmpString, 70, "* %s uzima slusalicu sa govornice i stavlja na uho.", GetName( playerid, true ));
 					ProxDetector(30.0, playerid, tmpString, COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE);
@@ -2599,7 +2601,7 @@ stock PlayerHangup(playerid)
 	CancelPlayerPhone(playerid);
 	SendClientMessage( playerid, COLOR_YELLOW, "** Poziv zavrsen **");
 	PlayerCallPlayer[ playerid ] = INVALID_PLAYER_ID;
-	Bit1_Set( gr_PlayerUsingGov		, playerid, false );
+	Bit1_Set( gr_PlayerUsingPhonebooth		, playerid, false );
 
 	// osoba koju je nazvao
 	if(giveplayerid == INVALID_PLAYER_ID) return 1;
@@ -2613,7 +2615,7 @@ stock PlayerHangup(playerid)
 	CancelPlayerPhone(giveplayerid);
 	SendClientMessage( giveplayerid, COLOR_YELLOW, "** Poziv zavrsen **");
 	PlayerCallPlayer[ giveplayerid ] = INVALID_PLAYER_ID;
-	Bit1_Set( gr_PlayerUsingGov	, giveplayerid, false );
+	Bit1_Set( gr_PlayerUsingPhonebooth	, giveplayerid, false );
 	return 1;
 }
 
@@ -2858,7 +2860,7 @@ hook OnPlayerText(playerid, text[])
 			gplayerid = CallingId[ playerid ],
 			mobileText[ 144 ];
 
-		if( Bit1_Get( gr_PlayerUsingGov, playerid ) )
+		if( Bit1_Get( gr_PlayerUsingPhonebooth, playerid ) )
 			format( mobileText, 144, "%s %s(govornica): %s",
 				GetName( playerid, true ),
 				PrintAccent( playerid ),
@@ -2873,7 +2875,7 @@ hook OnPlayerText(playerid, text[])
 
 		RealProxDetector(5.0, playerid, mobileText,COLOR_FADE1,COLOR_FADE2,COLOR_FADE3,COLOR_FADE4,COLOR_FADE5);
 
-		if( Bit1_Get( gr_PlayerUsingGov, playerid ) )
+		if( Bit1_Get( gr_PlayerUsingPhonebooth, playerid ) )
 		{
 			format( mobileText, 144, "%s(govornica): %s",
 				PrintAccent( playerid ),
@@ -2888,12 +2890,15 @@ hook OnPlayerText(playerid, text[])
 				text
 			);
 		}
-			
-		if( Bit16_Get( gr_PlayerTracing, playerid ) != INVALID_PLAYER_ID )
-			SendClientMessage( Bit16_Get( gr_PlayerTracing, playerid ), COLOR_YELLOW, mobileText);
-		else if( Bit16_Get( gr_PlayerTracing, gplayerid ) != INVALID_PLAYER_ID )
-			SendClientMessage( Bit16_Get( gr_PlayerTracing, gplayerid ), COLOR_YELLOW, mobileText);
 
+        if (Player_TappedBy(playerid) != INVALID_PLAYER_ID)
+        {
+            SendClientMessage(Player_TappedBy(playerid), COLOR_YELLOW, mobileText);
+        }
+        else if (Player_TappedBy(gplayerid) != INVALID_PLAYER_ID)
+        {
+            SendClientMessage(Player_TappedBy(gplayerid), COLOR_YELLOW, mobileText);
+        }
 		format( mobileText, 144, "[%s] %s(mobitel): %s",
 			GetContactNumberNameEx(gplayerid, PlayerInfo[playerid][pMobileNumber]),
 			PrintAccent( playerid ),
@@ -3063,7 +3068,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 			switch( listitem ) {
 				case 0:
 				{
-				    if(!Bit1_Get(gr_MobileOn, playerid))
+				    if(!Player_MobileOn(playerid))
 				        return SendMessage(playerid, MESSAGE_TYPE_ERROR, "VaS mobitel je trenutno iskljucen!");
 
 					new
@@ -3075,7 +3080,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 				}
 				case 1:
 				{
-				    if(!Bit1_Get(gr_MobileOn, playerid))
+				    if(!Player_MobileOn(playerid))
       					return SendMessage(playerid, MESSAGE_TYPE_ERROR, "VaS mobitel je trenutno iskljucen!");
 
 
@@ -3304,9 +3309,9 @@ hook OnPlayerUpdate(playerid)
 			SetTDTime(playerid);
 			SetTDSignal(playerid);
 
-			if(IsPlayerInWater(playerid) && Bit1_Get( gr_MobileOn, playerid ))
+			if(IsPlayerInWater(playerid) && Player_MobileOn(playerid))
 			{
-				Bit1_Set( gr_MobileOn, playerid, false);
+                Player_SetMobileOn(playerid, false);
 				PhoneAction(playerid, PHONE_OFF);
 			}
 
@@ -3668,63 +3673,6 @@ public OnPlayerContactsLoad(playerid)
 	return 1;
 }
 
-forward OnPlayerTracingNumber(playerid, targetid, type);
-public OnPlayerTracingNumber(playerid, targetid, type)
-{
-	if( !Bit1_Get( gr_MobileOn, targetid ) ) {
-		KillTimer(TracingTimer[ playerid ]);
-		Bit1_Set( gr_PlayerTracingNumber, playerid, false );
-		GangZoneDestroy(TracingNumberZone[ playerid ]);
-		SendMessage( playerid, MESSAGE_TYPE_ERROR, "Mobitel je ugasen!");
-		return 1;
-	}
-	switch(type) {
-		case 1: {
-			va_SendClientMessage(playerid, COLOR_RED, "[UREDJAJ]: Trazeni broj se nalazi na lokaciji %s. Zapocinjem detaljniji pregled koji ce zahtjevati vise vremena!", GetPlayerStreet(targetid));
-			SendMessage(playerid, MESSAGE_TYPE_INFO, "Za prekid kucajte /tracenumber.");
-			TracingTimer[ playerid ] = SetTimerEx("OnPlayerTracingNumber", ( 30000 + random(1000) ), false, "iii", playerid, targetid, 2);
-		}
-		case 2: {
-			new
-				Float:X, Float:Y, Float:Z;
-			GetPlayerPos(targetid, X, Y, Z);
-			TracingNumberZone[ playerid ] = CreateGangZoneAroundPoint(X, Y, 250.0, 250.0);
-			GangZoneShowForPlayer(playerid, TracingNumberZone[ playerid ], COLOR_YELLOW);
-
-			SendClientMessage(playerid, COLOR_RED, "[UREDJAJ] Lokacija broja je prikazana na GPSu. Zapocinjem detaljniji pregled koji ce zahtjevati vise vremena!");
-			SendMessage(playerid, MESSAGE_TYPE_INFO, "Za prekid kucajte /tracenumber.");
-			TracingTimer[ playerid ] = SetTimerEx("OnPlayerTracingNumber", 60000 + random(1000), false, "iii", playerid, targetid, 3);
-		}
-		case 3: {
-			new
-				Float:X, Float:Y, Float:Z;
-			GetPlayerPos(targetid, X, Y, Z);
-
-			GangZoneDestroy(TracingNumberZone[ playerid ]);
-			TracingNumberZone[ playerid ] = CreateGangZoneAroundPoint(X, Y, 200.0, 200.0);
-			GangZoneShowForPlayer(playerid, TracingNumberZone[ playerid ], COLOR_YELLOW);
-
-			SendClientMessage(playerid, COLOR_RED, "[UREDJAJ] Lokacija broja je prikazana na GPSu. Zapocinjem detaljniji pregled koji ce zahtjevati vise vremena!");
-			SendMessage(playerid, MESSAGE_TYPE_INFO, "Za prekid kucajte /tracenumber.");
-			TracingTimer[ playerid ] = SetTimerEx("OnPlayerTracingNumber", 1000000 + random(1000), false, "iii", playerid, targetid, 4);
-		}
-		case 4: {
-			new
-				Float:X, Float:Y, Float:Z;
-			GetPlayerPos(targetid, X, Y, Z);
-
-			GangZoneDestroy(TracingNumberZone[ playerid ]);
-			TracingNumberZone[ playerid ] = CreateGangZoneAroundPoint(X, Y, 150.0, 150.0);
-			GangZoneShowForPlayer(playerid, TracingNumberZone[ playerid ], COLOR_YELLOW);
-
-			SendClientMessage(playerid, COLOR_RED, "[UREDJAJ] Lokacija broja je prikazana na GPSu. Zapocinjem detaljniji pregled koji ce zahtjevati vise vremena!");
-			SendMessage(playerid, MESSAGE_TYPE_INFO, "Za prekid kucajte /tracenumber.");
-			TracingTimer[ playerid ] = SetTimerEx("OnPlayerTracingNumber", 1200000 + random(1000), false, "iii", playerid, targetid, 4);
-		}
-	}
-	return 1;
-}
-
 forward MobileRinging(playerid);
 public MobileRinging(playerid)
 {
@@ -3847,22 +3795,22 @@ CMD:viewtowers(playerid, params[])
 
 CMD:togphone(playerid, params[])
 {
-	if( PlayerInfo[playerid][pKilled] ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne mozes koristiti ovu komandu dok si u DeathModeu!");
-	if( !PlayerInfo[ playerid ][ pMobileNumber ] ) return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR,"Nemate mobitel!");
-    if(IsPlayerInWater(playerid)) return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR,"Nemozete upaliti mobitel u vodi!");
-	if(!Bit1_Get(gr_MobileOn, playerid))
-	{
-	    PhoneTDAction[playerid] = PTD_ACTION_HOME;
-		Bit1_Set( gr_MobileOn, playerid, true);
-		PhoneAction(playerid, PHONE_ON);
-	}
-	else
-	{
-	    PhoneTDAction[playerid] = PTD_ACTION_HOME;
-		Bit1_Set( gr_MobileOn, playerid, false);
-		PhoneAction(playerid, PHONE_OFF);
-	}
-	return 1;
+    if (PlayerInfo[playerid][pKilled]) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne mozes koristiti ovu komandu dok si u DeathModeu!");
+    if (!PlayerInfo[playerid][pMobileNumber]) return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR,"Nemate mobitel!");
+    if (IsPlayerInWater(playerid)) return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR,"Nemozete upaliti mobitel u vodi!");
+
+    if (!Player_MobileOn(playerid))
+    {
+        PhoneTDAction[playerid] = PTD_ACTION_HOME;
+        PhoneAction(playerid, PHONE_ON);
+    }
+    else
+    {
+        PhoneTDAction[playerid] = PTD_ACTION_HOME;
+        PhoneAction(playerid, PHONE_OFF);
+    }
+    Player_SetMobileOn(playerid, !Player_MobileOn(playerid));
+    return 1;
 }
 
 CMD:ph(playerid, params[])
@@ -3909,7 +3857,7 @@ CMD:pcall(playerid, params[])
 		SendClientMessage(playerid, COLOR_GREY, "HITNI POZIVI: 555 (mehanicari), 911 (LSPD/LSFD), 444 (taxi)");
 		return 1;
 	}
-	Bit1_Set( gr_PlayerUsingGov	, playerid, true );
+	Bit1_Set( gr_PlayerUsingPhonebooth	, playerid, true );
 	PhoneCall(playerid, number);
 	PlayerToBudgetMoney(playerid, 10);
 	return 1;
@@ -3917,20 +3865,21 @@ CMD:pcall(playerid, params[])
 
 CMD:call(playerid, params[])
 {
-	new number;
-    if(!Bit1_Get(gr_MobileOn, playerid))
-    	return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Vas mobitel je trenutno iskljueen!");
+    new number;
+    if(!Player_MobileOn(playerid))
+        return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Vas mobitel je trenutno iskljucen!");
 
-	if( PlayerInfo[playerid][pKilled] )
-		return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne mozes koristiti ovu komandu dok si u DeathModeu!");
+    if (PlayerInfo[playerid][pKilled])
+        return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne mozes koristiti ovu komandu dok si u DeathModeu!");
 
-	if( sscanf( params, "i", number ) ) {
-		SendClientMessage( playerid, -1, "[COMMAND]: /call [number].");
-		SendClientMessage(playerid, COLOR_GREY, "(emergency): 444 (taxi), 555 (mehanicari), 911 (LSPD/LSFD).");
-		return (true);
-	}
-	PhoneCall(playerid, number);
-	return (true);
+    if (sscanf(params, "i", number))
+    {
+        SendClientMessage(playerid, -1, "[COMMAND]: /call [number].");
+        SendClientMessage(playerid, COLOR_GREY, "(emergency): 444 (taxi), 555 (mehanicari), 911 (LSPD/LSFD).");
+        return 1;
+    }
+    PhoneCall(playerid, number);
+    return 1;
 }
 
 CMD:pickup(playerid, params[])
@@ -3987,9 +3936,9 @@ CMD:sms(playerid, params[])
 		SendSMS(playerid, number, smsText);
 		va_SendClientMessage(playerid, COLOR_YELLOW, "SMS poslan! [%s]: %s", GetContactNumberNameEx(playerid, number), smsText);
 		// SMS trace by PD
-		foreach (new follower : Player)
+		foreach(new follower : Player)
 		{
-			if (Bit1_Get(gr_PlayerTraceSMS, follower))
+			if (Player_TappingSMS(follower))
 			{
 				va_SendClientMessage(follower, COLOR_YELLOW, "**[!]SMS TRACE ** %d >> %d: %s",  PlayerInfo[playerid][pMobileNumber], number, smsText);
 			}
@@ -4109,36 +4058,5 @@ CMD:cryptonumber(playerid, params[]) {
 	mysql_tquery(g_SQL, sqlstring);
 
 	va_SendClientMessage(playerid, COLOR_RED, "Promijenili ste svoj broj cryptoa! Novi broj: %d", _crypt);
-	return 1;
-}
-
-CMD:tracenumber(playerid, params[])
-{
-	if( !IsACop(playerid) && !IsASD(playerid) ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ovlasteni.");
-
-	if( Bit1_Get( gr_PlayerTracingNumber, playerid ) ) {
-		KillTimer(TracingTimer[ playerid ]);
-		Bit1_Set( gr_PlayerTracingNumber, playerid, false );
-		GangZoneDestroy(TracingNumberZone[ playerid ]);
-		SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "Prekinuli ste potragu za brojem!");
-		return 1;
-	}
-	if( !GetPlayerVehicleID(playerid) && ( GetVehicleModel( GetPlayerVehicleID(playerid) ) != 596 && GetVehicleModel( GetPlayerVehicleID(playerid) ) != 597 && GetVehicleModel( GetPlayerVehicleID(playerid) ) != 598 && GetVehicleModel( GetPlayerVehicleID(playerid) ) != 599 && GetVehicleModel( GetPlayerVehicleID(playerid) ) != 490 && GetVehicleModel( GetPlayerVehicleID(playerid) ) != 497 && GetVehicleModel( GetPlayerVehicleID(playerid) ) != 426 && GetVehicleModel( GetPlayerVehicleID(playerid) ) != 560  ) ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Morate biti unutar sluzbenog vozila vozila!");
-	new
-		number,
-		string[8];
-	if( sscanf( params, "i", number ) ) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /tracenumber [broj mobitela]");
-	valstr(string, number);
-	if( strlen(string) != 6 ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Unesite broj mobitela!");
-	foreach(new gplayerid : Player)
-	{
-		if( PlayerInfo[ gplayerid ][ pMobileNumber ] == number )
-		{
-			SendFormatMessage(playerid, MESSAGE_TYPE_SUCCESS, "Poceli ste s trazenjem lokacije broja %d.", number);
-			TracingTimer[ playerid ] = SetTimerEx("OnPlayerTracingNumber", 8000 + random(900), false, "iii", playerid, gplayerid, 1);
-			Bit1_Set( gr_PlayerTracingNumber, playerid, true );
-			return 1;
-		}
-	}
 	return 1;
 }

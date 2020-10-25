@@ -26,7 +26,7 @@
        ###    ##     ## ##     ##  ######
 */
 
-static Bit16: gr_PlayerMobileComId<MAX_PLAYERS> = Bit16: INVALID_VEHICLE_ID;
+static MobileCommandVehicle[MAX_PLAYERS] = {INVALID_VEHICLE_ID, ...};
 
 
 /*
@@ -198,15 +198,17 @@ hook OnGameModeInit()
 
 hook OnPlayerStateChange(playerid, newstate, oldstate)
 {
-    if (newstate == PLAYER_STATE_PASSENGER && GetVehicleModel(GetPlayerVehicleID(playerid)) == 427)
+    static vehicleid;
+    vehicleid = GetPlayerVehicleID(playerid);
+
+    if (newstate == PLAYER_STATE_PASSENGER && GetVehicleModel(vehicleid) == 427 &&
+       (2 <= GetPlayerVehicleSeat(playerid) <= 4))
     {
-        if (2 <= GetPlayerVehicleSeat(playerid) <= 4)
-        {
-            SetPlayerVirtualWorld(playerid, 12);
-            SetPlayerPosEx(playerid, -876.5789, 288.9277, 535.3419, GetPlayerVehicleID(playerid), 1, true);
-            SetCameraBehindPlayer(playerid);
-            Bit16_Set(gr_PlayerMobileComId, playerid, GetPlayerVehicleID(playerid));
-        }
+        SetPlayerVirtualWorld(playerid, 12);
+        SetPlayerPosEx(playerid, -876.5789, 288.9277, 535.3419, vehicleid, 1, true);
+        SetCameraBehindPlayer(playerid);
+
+        MobileCommandVehicle[playerid] = vehicleid;
     }
     return 1;
 }
@@ -215,15 +217,14 @@ hook OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
 {
     if ((newkeys & KEY_SECONDARY_ATTACK) && !(oldkeys & KEY_SECONDARY_ATTACK))
     {
-        if (Bit16_Get(gr_PlayerMobileComId, playerid) > 0 &&
-            Bit16_Get(gr_PlayerMobileComId, playerid) != INVALID_VEHICLE_ID)
+        if (MobileCommandVehicle[playerid] != INVALID_VEHICLE_ID)
         {
             new
                 Float:X, Float:Y, Float:Z;
-            GetVehiclePos(Bit16_Get(gr_PlayerMobileComId, playerid ), X, Y, Z);
+            GetVehiclePos(MobileCommandVehicle[playerid], X, Y, Z);
             SetPlayerPosEx(playerid, X + (-0.1012), Y + (-4.2191), Z, 0, 0, false);
 
-            Bit16_Set(gr_PlayerMobileComId, playerid, INVALID_VEHICLE_ID);
+            MobileCommandVehicle[playerid] = INVALID_VEHICLE_ID;
         }
     }
     return 1;
