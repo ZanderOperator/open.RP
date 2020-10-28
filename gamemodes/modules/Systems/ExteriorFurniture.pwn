@@ -36,6 +36,8 @@
 	   ###    ##     ## ##     ##  ######  
 */
 
+new Iterator: HouseFurExt[MAX_HOUSES]<EXTERIOR_OBJS_VIP_GOLD>;
+
 // rBits
 static stock
 	Bit4: r_ExteriorEditType	<MAX_PLAYERS>,
@@ -217,7 +219,7 @@ stock LoadHouseExterior(houseid)
  
 stock ReloadHouseExterior(houseid)
 {
-	for( new index=0; index < EXTERIOR_OBJS_VIP_GOLD; index++ ) 
+	foreach(new index: HouseFurExt[houseid])
 	{
 		if(ExteriorInfo[houseid][heSQLID][index] != -1) 
 		{
@@ -265,16 +267,9 @@ stock static GetPlayerExteriorSlots(playerid)
 	return EXTERIOR_OBJS_VIP_NONE;
 }
 
-stock static FindFreeSlot(playerid, houseid)
+stock static FindFreeSlot(houseid)
 {
-	for(new i = 0; i < GetPlayerExteriorSlots(playerid); i++)
-	{
-		if(ExteriorInfo[houseid][heModelId][i] == 0)
-		{
-			return i;
-		}
-	}
-	return -1;
+	return Iter_Free(HouseFurExt[houseid]);
 }
 
 stock static CreateExteriorObject(playerid)
@@ -284,7 +279,7 @@ stock static CreateExteriorObject(playerid)
 	// Create Object
 	new 
 		houseid = PlayerInfo[playerid][pHouseKey],
-		index = FindFreeSlot(playerid, houseid);
+		index = FindFreeSlot(houseid);
 	if(index == -1) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate slobodnih slotova, razmislite da uplatite VIP za vise slotova!");
 
 	ExteriorInfo[houseid][heObjectId][index]	= CreateDynamicObject(
@@ -428,7 +423,7 @@ stock static ResetExteriorObject(playerid, index)
 	return 1;
 }
 
-stock static DeleteExteriorObject(houseid, index)
+stock static DeleteExteriorObject(houseid, index, bool:iter_clear = false)
 {
 	if(houseid == INVALID_HOUSE_ID) return 0;
 	
@@ -454,6 +449,9 @@ stock static DeleteExteriorObject(houseid, index)
 	ExteriorInfo[houseid][heRotX][index]		= 0.0;
 	ExteriorInfo[houseid][heRotY][index]		= 0.0;
 	ExteriorInfo[houseid][heRotZ][index]		= 0.0;
+
+	if(!iter_clear)
+		Iter_Remove(HouseFurExt[houseid], index);
 	return 1;
 }
 
@@ -488,7 +486,7 @@ stock static FindExteriorObjectId(playerid, Float:radius)
 	{
 		if(IsPlayerInRangeOfPoint(playerid, 40.0, HouseInfo[ h ][ hEnterX ], HouseInfo[ h ][ hEnterY ], HouseInfo[ h ][ hEnterZ ]))
 		{
-			for(new i = 0; i < EXTERIOR_OBJS_VIP_GOLD; i++)
+			foreach(new i: HouseFurExt[h])
 			{
 				if(IsPlayerInRangeOfPoint(playerid, radius, ExteriorInfo[h][hePosX][i], ExteriorInfo[h][hePosY][i], ExteriorInfo[h][hePosZ][i]))
 				{
@@ -506,7 +504,7 @@ stock static FindExteriorObjectHouse(playerid, Float:radius)
 	{
 		if(IsPlayerInRangeOfPoint(playerid, 40.0, HouseInfo[ h ][ hEnterX ], HouseInfo[ h ][ hEnterY ], HouseInfo[ h ][ hEnterZ ]))
 		{
-			for(new i = 0; i < EXTERIOR_OBJS_VIP_GOLD; i++)
+			foreach(new i: HouseFurExt[h])
 			{
 				if(IsPlayerInRangeOfPoint(playerid, radius, ExteriorInfo[h][hePosX][i], ExteriorInfo[h][hePosY][i], ExteriorInfo[h][hePosZ][i]))
 				{
@@ -545,6 +543,7 @@ Public: OnHouseExteriorLoad(houseid)
 		cache_get_value_name_float(i	, "rot_x"			, ExteriorInfo[houseid][heRotX][i]);
 		cache_get_value_name_float(i	, "rot_y"			, ExteriorInfo[houseid][heRotY][i]);
 		cache_get_value_name_float(i	, "rot_z"			, ExteriorInfo[houseid][heRotZ][i]);
+		Iter_Add(HouseFurExt[houseid], i);
 	}
 	for( i = 0; i < rows; i++ )
 	{
@@ -557,6 +556,7 @@ forward OnExteriorObjectsInsert(playerid, index);
 public OnExteriorObjectsInsert(playerid, index)
 {
 	ExteriorInfo[PlayerInfo[playerid][pHouseKey]][heSQLID][index] = cache_insert_id();
+	Iter_Add(HouseFurExt[PlayerInfo[playerid][pHouseKey]], index);
 	return 1;
 }
 
@@ -725,7 +725,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 				{
 					if( PlayerInfo[playerid][pHouseKey] == INVALID_HOUSE_ID)
 						return SendErrorMessage(playerid, "Niste vlasnik kuce!");
-					if(FindFreeSlot(playerid, PlayerInfo[playerid][pHouseKey]) == -1) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate slobodnih slotova, razmislite da uplatite VIP za vise slotova!");
+					if(FindFreeSlot(PlayerInfo[playerid][pHouseKey]) == -1) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate slobodnih slotova, razmislite da uplatite VIP za vise slotova!");
 					ShowPlayerDialog(playerid, DIALOG_EXTERIOR_BUY_TYPE, DIALOG_STYLE_LIST, "Exteriors - Kupovina objekta (Tip)", "Biljke\nNamjestaj\nOstalo", "Choose", "Abort");
 				}
 				case 1:		// Uredivanje
@@ -733,13 +733,10 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 					if(PlayerInfo[playerid][pHouseKey] == INVALID_HOUSE_ID)
 						return SendErrorMessage(playerid, "Niste vlasnik kuce!");
 
-					for(new i = 0; i < GetPlayerExteriorSlots(playerid); i++)
+					foreach(new i: HouseFurExt[houseid])
 					{
-						if(ExteriorInfo[houseid][heModelId][i] != 0)
-						{
-							Player_ModelToIndexSet(playerid, i, ExteriorInfo[houseid][heModelId][i]);
-							fselection_add_item(playerid, ExteriorInfo[houseid][heModelId][i]);
-						}
+						Player_ModelToIndexSet(playerid, i, ExteriorInfo[houseid][heModelId][i]);
+						fselection_add_item(playerid, ExteriorInfo[houseid][heModelId][i]);
 					}	
 					fselection_show(playerid, DIALOG_EXTERIOR_EDIT, "Exterior Edit");
 				}
@@ -748,13 +745,10 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 					if(PlayerInfo[playerid][pHouseKey] == INVALID_HOUSE_ID)
 						return SendErrorMessage(playerid, "Niste vlasnik kuce!");
 
-					for(new i = 0; i < GetPlayerExteriorSlots(playerid); i++)
+					foreach(new i: HouseFurExt[houseid])
 					{
-						if(ExteriorInfo[houseid][heModelId][i] != 0)
-						{
-							Player_ModelToIndexSet(playerid, i, ExteriorInfo[houseid][heModelId][i]);
-							fselection_add_item(playerid, ExteriorInfo[houseid][heModelId][i]);
-						}
+						Player_ModelToIndexSet(playerid, i, ExteriorInfo[houseid][heModelId][i]);
+						fselection_add_item(playerid, ExteriorInfo[houseid][heModelId][i]);
 					}	
 					fselection_show(playerid, DIALOG_EXTERIOR_DELETE, "Exterior Delete");
 				}
@@ -762,11 +756,12 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 				{
 					if(PlayerInfo[playerid][pHouseKey] == INVALID_HOUSE_ID)
 						return SendErrorMessage(playerid, "Niste vlasnik kuce!");
-					for (new i = 0; i < EXTERIOR_OBJS_VIP_GOLD; i++) // sizeof(ExteriorInfo)
+					foreach(new i: HouseFurExt[houseid])
 					{
 						if(ExteriorInfo[houseid][heModelId][i] != 0)
-							DeleteExteriorObject(PlayerInfo[playerid][pHouseKey], i);
+							DeleteExteriorObject(PlayerInfo[playerid][pHouseKey], i, true);
 					}
+					Iter_Clear(HouseFurExt[houseid]);
 					SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uspjesno ste obrisali sve objekte u svome eksterijeru!");
 				}
 			}

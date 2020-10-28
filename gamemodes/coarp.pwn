@@ -284,6 +284,10 @@
 // Economy
 #define INFLATION_INDEX							(3)
 
+// fSelection index Handler
+#define MAX_MENU_ITEMS 							(2000)
+
+
 // Bank - Credits
 #define BUY_TYPE_VEHICLE						(1)
 #define BUY_TYPE_HOUSE							(2)
@@ -338,9 +342,12 @@ new MySQL:g_SQL;
 // Iterators
 new Iterator:COVehicles<MAX_VEHICLES>,
 	Iterator:Vehicles<MAX_VEHICLES>,
+	Iterator:Skins<MAX_MENU_ITEMS>,
 	Iterator:Pickups<MAX_PICKUP>,
 	Iterator:Factions<MAX_FACTIONS>,
 	Iterator:Houses<MAX_HOUSES>,
+	Iterator:HouseFurInt[MAX_HOUSES]<MAX_FURNITURE_SLOTS>,
+	Iterator:BizzFurniture[MAX_BIZZS]<MAX_BIZNIS_FURNITURE_SLOTS>,
 	Iterator:Bizzes<MAX_BIZZS>,
 	Iterator:Complex<MAX_COMPLEX>,
 	Iterator:ComplexRooms<MAX_COMPLEX_ROOMS>,

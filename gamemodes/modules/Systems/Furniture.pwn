@@ -31,6 +31,7 @@ new
 	   ###    ##     ## ##     ##  ######
 */
 /////////////////////////////////////////////////////////////
+
 enum E_BLANK_INTERIORS
 {
 	iName[ 23 ],
@@ -2183,14 +2184,10 @@ stock static ExitBlankInteriorPreview(playerid)
 }
 //=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~ (L3O - NEW FUNCTIONS)
 
-GetHouseFurnitureSlot(playerid, houseid) {
-	for(new i = 0; i < MAX_FURNITURE_SLOTS; i ++) {
-		if(HouseInfo[houseid][hExists][i] == 0) {
-			FreeFurniture_Slot[playerid] = i;
-			break;
-		}
-	}
-	return (true);
+GetHouseFurnitureSlot(playerid, houseid) 
+{
+	FreeFurniture_Slot[playerid] = Iter_Free(HouseFurInt[houseid]);
+	return FreeFurniture_Slot[playerid];
 }
 
 GetFurnitureSlots(playerid, donator_level) {
@@ -2280,6 +2277,7 @@ public OnFurnitureObjectsLoad(houseid)
 		cache_get_value_name_int(i, 	"color_3"		, HouseInfo[ houseid ][ hFurColId ][ i ][ 2 ]);
 		cache_get_value_name_int(i, 	"color_4"		, HouseInfo[ houseid ][ hFurColId ][ i ][ 3 ]);
 		cache_get_value_name_int(i, 	"color_5"		, HouseInfo[ houseid ][ hFurColId ][ i ][ 4 ]);
+		Iter_Add(HouseFurInt[houseid], i);
 	}
 	
 	for( i = 0; i < objectCount; i++)
@@ -2312,6 +2310,7 @@ public OnFurnitureObjectCreates(houseid, index)
 		);
 	#endif
 	HouseInfo[ houseid ][ hFurSQL ][ index ] = cache_insert_id();
+	Iter_Add(HouseFurInt[houseid], index);
 }
 
 
@@ -2329,7 +2328,7 @@ stock LoadHouseFurnitureObjects(houseid)
 
 stock ResetHouseFurnitureEnum(houseid)
 {
-	for( new index = 0; index < MAX_FURNITURE_SLOTS; index++ )
+	foreach(new index: HouseFurInt[houseid])
 	{
 		if( IsValidDynamicObject(HouseInfo[ houseid ][ hFurObjectid ][ index ]) )
 		{
@@ -2720,9 +2719,8 @@ stock static CreateFurnitureObject(playerid, modelid, Float:x, Float:y, Float:z,
 	new houseid = GetPlayerFurnitureHouse(playerid);
 	if( houseid == INVALID_HOUSE_ID )
 		return SendErrorMessage(playerid, "Niste u svojoj kuci / nemate dozvolu za postavljanje namjestaja.");
-	GetHouseFurnitureSlot(playerid, houseid);
 
-	new index = FreeFurniture_Slot[playerid];
+	new index = GetHouseFurnitureSlot(playerid, houseid);
 	if(HouseInfo[houseid][hFurCounter] == GetFurnitureSlots(playerid, PlayerInfo[playerid][pDonateRank]))
 		return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate dovoljno mjesta za objekte!");
 
@@ -2862,9 +2860,8 @@ stock static CopyFurnitureObject(playerid, copyid)
 	new houseid = GetPlayerFurnitureHouse(playerid);
 	if( houseid == INVALID_HOUSE_ID )
 		return SendErrorMessage(playerid, "Niste u svojoj kuci / nemate dozvolu za postavljanje namjestaja.");
-	GetHouseFurnitureSlot(playerid, houseid);
 
-	new index = FreeFurniture_Slot[playerid];
+	new index = Iter_Free(HouseFurInt[houseid]);
 	if(HouseInfo[houseid][hFurCounter] == GetFurnitureSlots(playerid, PlayerInfo[playerid][pDonateRank]))
 		return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate dovoljno mjesta za objekte!");
 
@@ -3109,11 +3106,13 @@ stock static DeleteFurnitureObject(houseid, playerid, index)
 	
 	HouseInfo[houseid][hFurCounter]--;
 	HouseInfo[houseid][hExists][index] = 0;
+
+	Iter_Remove(HouseFurInt[houseid], index);
 	return 1;
 }
 stock static DestroyAllFurnitureObjects(playerid, houseid)
 {
-	for( new index=0; index < HouseInfo[ houseid ][ hFurSlots ]; index++ )
+	foreach(new index: HouseFurInt[houseid])
 	{
 		if( HouseInfo[ houseid ][ hFurSQL ][ index ] )
 		{
@@ -3147,6 +3146,8 @@ stock static DestroyAllFurnitureObjects(playerid, houseid)
 	}
 	HouseInfo[ houseid ][ hFurSlots ] = GetFurnitureSlots(playerid, PlayerInfo[playerid][pDonateRank]);
 	HouseInfo[houseid][hFurLoaded] = false;
+
+	Iter_Clear(HouseFurInt[houseid]);
 
 	mysql_tquery(g_SQL, "BEGIN");
 	new
@@ -3510,13 +3511,10 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 				case 0: ShowPlayerDialog(playerid, DIALOG_FURNITURE_BUY, DIALOG_STYLE_LIST, "Furniture - Kategorije", "Dnevni Boravak\nKuhinja\nKupaonica\nSobe\nOstalo", "Choose", "Abort");  // Kupi
 				case 1: 
 				{ // Uredi
-					for(new i = 0; i < MAX_FURNITURE_SLOTS; i++) // TODO: ITERATOR
+					foreach(new i: HouseFurInt[houseid])
 					{
-						if(HouseInfo[ houseid ][ hFurModelid ][ i ] != -1)
-						{
-							Player_ModelToIndexSet(playerid, i, HouseInfo[ houseid ][ hFurModelid ][ i ]);
-							fselection_add_item(playerid, HouseInfo[ houseid ][ hFurModelid ][ i ]);
-						}
+						Player_ModelToIndexSet(playerid, i, HouseInfo[ houseid ][ hFurModelid ][ i ]);
+						fselection_add_item(playerid, HouseInfo[ houseid ][ hFurModelid ][ i ]);
 					}
 					fselection_show(playerid, DIALOG_FURNITURE_EDIT, "Furniture Edit");
 				}
@@ -4501,11 +4499,10 @@ CMD:furniture(playerid, params[])
 		furhouse = GetPlayerFurnitureHouse(playerid);
 
 	if( furhouse == INVALID_HOUSE_ID || (  556 < furhouse < 575 ) ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Morate posjedovati kucu/imati dozvolu za namjestanje interijera-");
-	GetHouseFurnitureSlot(playerid, furhouse);
 	if(sscanf(params, "s[8] ", param))
 	{
 		SendClientMessage(playerid, COLOR_RED, "[ ? ]: /furniture [approve/menu]");
-		va_SendClientMessage(playerid, COLOR_RED, "[ ! ] Trenutno imate %d/%d popunjenih slotova u vasoj kuci.", FreeFurniture_Slot[playerid], GetFurnitureSlots(playerid, PlayerInfo[playerid][pDonateRank]));
+		va_SendClientMessage(playerid, COLOR_RED, "[ ! ] Trenutno imate %d/%d popunjenih slotova u vasoj kuci.", Iter_Count(HouseFurInt[furhouse]), GetFurnitureSlots(playerid, PlayerInfo[playerid][pDonateRank]));
 		return (true);
 	}
 
@@ -4558,11 +4555,12 @@ CMD:door(playerid, params[])
 		biznisid = Bit16_Get( gr_PlayerInBiznis, playerid );
 	if( houseid != INVALID_HOUSE_ID )
 	{
-		for( new i = 0; i < HouseInfo[ houseid ][ hFurSlots ]; i++ )
+		foreach(new i: HouseFurInt[houseid])
 		{
 			if( HouseInfo[ houseid ][ hFurDoor ][ i ] )
 			{
-				if( IsPlayerInRangeOfPoint(playerid, 3.0, HouseInfo[ houseid ][ hFurPosX ][ i ], HouseInfo[ houseid ][ hFurPosY ][ i ], HouseInfo[ houseid ][ hFurPosZ ][ i ] ) ) {
+				if( IsPlayerInRangeOfPoint(playerid, 3.0, HouseInfo[ houseid ][ hFurPosX ][ i ], HouseInfo[ houseid ][ hFurPosY ][ i ], HouseInfo[ houseid ][ hFurPosZ ][ i ] ) ) 
+				{
 					SetFurnitureDoorRotation(houseid, i);
 					break;
 				}
@@ -4571,11 +4569,12 @@ CMD:door(playerid, params[])
 	}
 	else if( biznisid != INVALID_BIZNIS_ID )
 	{
-		for( new i = 0; i < BizzInfo[ biznisid ][ bFurSlots ]; i++ )
+		foreach(new i: BizzFurniture[biznisid])
 		{
 			if( BizzInfo[ biznisid ][ bFurDoor ][ i ] )
 			{
-				if( IsPlayerInRangeOfPoint(playerid, 3.0, BizzInfo[ biznisid ][ bFurPosX ][ i ], BizzInfo[ biznisid ][ bFurPosY ][ i ], BizzInfo[ biznisid ][ bFurPosZ ][ i ] ) ) {
+				if( IsPlayerInRangeOfPoint(playerid, 3.0, BizzInfo[ biznisid ][ bFurPosX ][ i ], BizzInfo[ biznisid ][ bFurPosY ][ i ], BizzInfo[ biznisid ][ bFurPosZ ][ i ] ) ) 
+				{
 					SetFurnitureDoorRotation(biznisid, i);
 					break;
 				}
