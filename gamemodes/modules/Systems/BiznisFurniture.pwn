@@ -632,6 +632,7 @@ public OnBizzFurnitureObjectsLoad(biznisid)
 			else
 				SetDynamicObjectMaterial(BizzInfo[ biznisid ][ bFurObjectid ][ i ], slot, ObjectTextures[ BizzInfo[ biznisid ][ bFurTxtId ][ i ][ slot ] ][ tModel ], ObjectTextures[ BizzInfo[ biznisid ][ bFurTxtId ][ i ][ slot ] ][ tTXDName ], ObjectTextures[ BizzInfo[ biznisid ][ bFurTxtId ][ i ][ slot ] ][ tName ], 0);
 		}
+		Iter_Add(BizzFurniture[biznisid], i);
 	}
 	return 1;
 }
@@ -645,6 +646,7 @@ public OnBizzFurnitureObjectCreate(biznisid, index)
 		);
 	#endif
 	BizzInfo[ biznisid ][ bFurSQL ][ index ] = cache_insert_id();
+	Iter_Add(BizzFurniture[biznisid], index);
 	return 1;
 }
 
@@ -1398,12 +1400,13 @@ stock static DeleteFurnitureObject(biznisid, index, playerid)
 		BizzInfo[ biznisid ][ bFurColId ][ index ][ i ]	= -1;
 	}
 	BizzInfo[ biznisid ][ bFurSlots ]--;
+	Iter_Remove(BizzFurniture[biznisid], index);
 	va_SendClientMessage(playerid, COLOR_RED, "[ ! ] Uspjesno ste obrisali objekt[Model ID: %d - Slot Index: %d].", BizzInfo[ biznisid ][ bFurObjectid ][ index ], index);
 	return 1;
 }
 stock static DestroyAllFurnitureObjects(playerid, biznisid)
 {
-	for( new index=0; index < BizzInfo[ biznisid ][ bFurSlots ]; index++ )
+	foreach(new index: BizzFurniture[biznisid])
 	{
 		if( BizzInfo[ biznisid ][ bFurSQL ][ index ] )
 		{
@@ -1441,6 +1444,8 @@ stock static DestroyAllFurnitureObjects(playerid, biznisid)
 		updateSlotsQuery[128];
 	format(updateSlotsQuery, 128, "UPDATE `bizzes` SET `fur_slots` = '%d' WHERE `id` = '%d'", BizzInfo[ biznisid ][ bFurSlots ], BizzInfo[biznisid][bSQLID]);
 	mysql_tquery(g_SQL, updateSlotsQuery);
+
+	Iter_Clear(BizzFurniture[biznisid]);
 	return 1;
 }
 stock static CanDoorOpen(modelid)
@@ -1498,7 +1503,7 @@ stock UpdatePremiumBizFurSlots(playerid)
 
 stock ReloadBizzFurniture(biznisid)
 {
-	for( new index=0; index < BizzInfo[ biznisid ][ bFurSlots ]; index++ )
+	foreach(new index: BizzFurniture[biznisid])
 	{
 		if( BizzInfo[ biznisid ][ bFurSQL ][ index ] )
 		{
@@ -1930,13 +1935,10 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 				case 0: ShowPlayerDialog(playerid, DIALOG_BIZZ_FURN_BUY, DIALOG_STYLE_LIST, "Furniture - Kategorije", "Nocni klub/bar\n24/7\nRestoran\nClothing Shop\nOstalo\n", "Choose", "Abort");  // Kupi
 				case 1: 
 				{ // Uredi
-					for(new i = 0; i < BIZZ_FURNITURE_VIP_GOLD_OBJCTS; i++)
+					foreach(new i: BizzFurniture[biznisid])
 					{
-						if(BizzInfo[ biznisid ][ bFurModelid ][ i ] != 0)
-						{
-							Player_ModelToIndexSet(playerid, i, BizzInfo[ biznisid ][ bFurModelid ]);
-							fselection_add_item(playerid, BizzInfo[ biznisid ][ bFurModelid ]);
-						}
+						Player_ModelToIndexSet(playerid, i, BizzInfo[ biznisid ][ bFurModelid ][ i ]);
+						fselection_add_item(playerid, BizzInfo[ biznisid ][ bFurModelid ][ i ]);
 					}
 					fselection_show(playerid, DIALOG_BIZZ_FURN_EDIT, "Furniture Edit");
 				}

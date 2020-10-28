@@ -2,10 +2,6 @@
 
 #include <YSI_Coding\y_hooks>
 
-#if !defined MAX_MENU_ITEMS
-	#define MAX_MENU_ITEMS (2000)
-#endif
-
 // fSelection index fetcher
 static 
 	ModelToID[MAX_PLAYERS][MAX_MENU_ITEMS],
@@ -23,15 +19,10 @@ stock ResetModelShuntVar(playerid)
 
 stock ShowSkinModelDialog(playerid)
 {
-    new count = 0;
-    for(new i = 0; i < MAX_SERVER_SKINS; i++)
-    {
-        if(ServerSkins[sSkinID][i] != 0)
-        {
-			fselection_add_item(playerid, ServerSkins[sSkinID][i]);
-			Player_ModelToIndexSet(playerid, count, ServerSkins[sSkinID][i]);
-            count++;
-        }
+    foreach(new i: Skins)
+	{
+		fselection_add_item(playerid, ServerSkins[sSkinID][i]);
+		Player_ModelToIndexSet(playerid, i, ServerSkins[sSkinID][i]);
     }
 	fselection_show(playerid, MODEL_LIST_SKINS, "Clothes");
     return 1;
@@ -81,6 +72,8 @@ LoadServerSkins(f_name[])
 		idxx = 0;
 		ServerSkins[sSkinID][idx] = strval(strtok(line,idxx));
 		ServerSkins[sPrice][idx] = strval(strtok(line,idxx));
+
+		Iter_Add(Skins, idx);
         idx++;
     }
 	printf("[scriptfiles/skins.txt]: Sucessfully Loaded Server Skins. (%d / %d)", idx, MAX_SERVER_SKINS);
