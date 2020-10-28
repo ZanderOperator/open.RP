@@ -131,6 +131,7 @@ FormatNumber(number, prefix[] = "$")
 	return value;
 }
 
+
 stock GetName(playerid, bool:replace=true)
 {
 	new name[MAX_PLAYER_NAME];

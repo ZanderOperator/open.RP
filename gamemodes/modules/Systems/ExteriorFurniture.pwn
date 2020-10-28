@@ -660,16 +660,18 @@ hook OnPlayerEditObject(playerid, playerobject, objectid, response, Float:fX, Fl
 	}
 }
 
-hook OnModelSelResponse( playerid, extraid, index, modelid, response )
+hook OnFSelectionResponse(playerid, fselectid, modelid, response)
 {
-	switch(extraid)
+	switch(fselectid)
 	{
 		case DIALOG_EXTERIOR_BUY:
 		{
 			if(!response) return ShowPlayerDialog(playerid, DIALOG_EXTERIOR_BUY_TYPE, DIALOG_STYLE_LIST, "Exteriors - Kupovina objekta (Tip)", "Biljke\nNamjestaj\nOstalo", "Choose", "Abort");
+			new index = Player_ModelToIndex(playerid, modelid);
 			switch(Bit16_Get(r_ExteriorBuyType, playerid))
 			{
-				case 0: {	// Biljke
+				case 0: 
+				{	// Biljke
 					va_ShowPlayerDialog(playerid, DIALOG_EXTERIOR_SURE, DIALOG_STYLE_MSGBOX, "Exteriors - Sigurni?", ""COL_WHITE"Zelite li kupiti ovaj objekt?\n"COL_CYAN"Ime: "COL_WHITE"%s\n"COL_CYAN"Cijena: "COL_WHITE"%d"COL_GREEN"$", "Buy", "Abort",
 						ExteriorPlants[index][epName], 
 						ExteriorPlants[index][epPrice]
@@ -695,11 +697,13 @@ hook OnModelSelResponse( playerid, extraid, index, modelid, response )
 		case DIALOG_EXTERIOR_EDIT:
 		{
 			if(!response) return ShowPlayerDialog(playerid, DIALOG_EXTERIOR_MENU, DIALOG_STYLE_LIST, "Exteriors", "Kupi objekt\nUredi object\nObrisati objekt\nObrisati SVE objekte", "Choose", "Abort");
+			new index = Player_ModelToIndex(playerid, modelid);
 			EditExteriorObject(playerid, index);
 		}
 		case DIALOG_EXTERIOR_DELETE:
 		{
 			if(!response) return ShowPlayerDialog(playerid, DIALOG_EXTERIOR_MENU, DIALOG_STYLE_LIST, "Exteriors", "Kupi objekt\nUredi object\nObrisati objekt\nObrisati SVE objekte", "Choose", "Abort");
+			new index = Player_ModelToIndex(playerid, modelid);
 			DeleteExteriorObject(PlayerInfo[playerid][pHouseKey], index);
 			SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uspjesno ste obrisali objekt!");
 		}
@@ -714,6 +718,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 		case DIALOG_EXTERIOR_MENU:
 		{
 			if(!response) return 1;
+			new houseid = PlayerInfo[playerid][pHouseKey];
 			switch(listitem)
 			{
 				case 0:  	// Kupovina
@@ -727,39 +732,36 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 				{
 					if(PlayerInfo[playerid][pHouseKey] == INVALID_HOUSE_ID)
 						return SendErrorMessage(playerid, "Niste vlasnik kuce!");
-					new	
-						tmp_objects[EXTERIOR_OBJS_VIP_GOLD], houseid = PlayerInfo[playerid][pHouseKey], count = 0;
+
 					for(new i = 0; i < GetPlayerExteriorSlots(playerid); i++)
 					{
 						if(ExteriorInfo[houseid][heModelId][i] != 0)
 						{
-							tmp_objects[i] = ExteriorInfo[houseid][heModelId][i];
-							count++;
+							Player_ModelToIndexSet(playerid, i, ExteriorInfo[houseid][heModelId][i]);
+							fselection_add_item(playerid, ExteriorInfo[houseid][heModelId][i]);
 						}
 					}	
-					ShowModelESelectionMenu(playerid, "Exteriors - Uredjivanje", DIALOG_EXTERIOR_EDIT, tmp_objects, count, 0.0, 0.0, 0.0, 1.0, -1, true, tmp_objects);
+					fselection_show(playerid, DIALOG_EXTERIOR_EDIT, "Exterior Edit");
 				}
 				case 2:		// Brisanje objekta
 				{
 					if(PlayerInfo[playerid][pHouseKey] == INVALID_HOUSE_ID)
 						return SendErrorMessage(playerid, "Niste vlasnik kuce!");
-					new	
-						tmp_objects[EXTERIOR_OBJS_VIP_GOLD], houseid = PlayerInfo[playerid][pHouseKey], count = 0;
+
 					for(new i = 0; i < GetPlayerExteriorSlots(playerid); i++)
 					{
 						if(ExteriorInfo[houseid][heModelId][i] != 0)
 						{
-							tmp_objects[i] = ExteriorInfo[houseid][heModelId][i];
-							count++;
+							Player_ModelToIndexSet(playerid, i, ExteriorInfo[houseid][heModelId][i]);
+							fselection_add_item(playerid, ExteriorInfo[houseid][heModelId][i]);
 						}
 					}	
-					ShowModelESelectionMenu(playerid, "Exteriors - Brisanje", DIALOG_EXTERIOR_DELETE, tmp_objects, count, 0.0, 0.0, 0.0, 1.0, -1, true, tmp_objects);
+					fselection_show(playerid, DIALOG_EXTERIOR_DELETE, "Exterior Delete");
 				}
 				case 3:		// Brisanje svih objekata
 				{
 					if(PlayerInfo[playerid][pHouseKey] == INVALID_HOUSE_ID)
 						return SendErrorMessage(playerid, "Niste vlasnik kuce!");
-					new houseid = PlayerInfo[playerid][pHouseKey];
 					for (new i = 0; i < EXTERIOR_OBJS_VIP_GOLD; i++) // sizeof(ExteriorInfo)
 					{
 						if(ExteriorInfo[houseid][heModelId][i] != 0)
@@ -778,38 +780,39 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 			{
 				case 0:	// Biljke
 				{
-					new	
-						tmp_objects[sizeof(ExteriorPlants)];
 					for(new i = 0; i < sizeof(ExteriorPlants); i++)
 					{
 						if(ExteriorPlants[i][epModelid] != 0)
-							tmp_objects[i] = ExteriorPlants[i][epModelid];
+						{
+							Player_ModelToIndexSet(playerid, i, ExteriorPlants[i][epModelid]);
+							fselection_add_item(playerid, ExteriorPlants[i][epModelid]);
+						}
 					}
-					ShowModelESelectionMenu(playerid, "Exteriors - Kupovina", DIALOG_EXTERIOR_BUY, tmp_objects, sizeof(tmp_objects), 0.0, 0.0, 0.0, 1.0, -1, true, tmp_objects);
 				}
 				case 1:	// Furniture
 				{
-					new	
-						tmp_objects[sizeof(ExteriorFurniture)];
 					for(new i = 0; i < sizeof(ExteriorFurniture); i++)
 					{
 						if(ExteriorFurniture[i][efModelid] != 0)
-							tmp_objects[i] = ExteriorFurniture[i][efModelid];
+						{
+							Player_ModelToIndexSet(playerid, i, ExteriorFurniture[i][efModelid]);
+							fselection_add_item(playerid, ExteriorFurniture[i][efModelid]);
+						}
 					}
-					ShowModelESelectionMenu(playerid, "Exteriors - Kupovina", DIALOG_EXTERIOR_BUY, tmp_objects, sizeof(tmp_objects), 0.0, 0.0, 0.0, 1.0, -1, true, tmp_objects);
 				}
 				case 2:	// Misc
 				{
-					new	
-						tmp_objects[sizeof(ExteriorMisc)];
 					for(new i = 0; i < sizeof(ExteriorMisc); i++)
 					{
 						if(ExteriorMisc[i][emModelid] != 0)
-							tmp_objects[i] = ExteriorMisc[i][emModelid];
+						{
+							Player_ModelToIndexSet(playerid, i, ExteriorMisc[i][emModelid]);
+							fselection_add_item(playerid, ExteriorMisc[i][emModelid]);
+						}
 					}
-					ShowModelESelectionMenu(playerid, "Exteriors - Kupovina", DIALOG_EXTERIOR_BUY, tmp_objects, sizeof(tmp_objects), 0.0, 0.0, 0.0, 1.0, -1, true, tmp_objects);
 				}
 			}
+			fselection_show(playerid, DIALOG_EXTERIOR_BUY, "Exterior Buy");
 			Bit16_Set(r_ExteriorBuyType, playerid, listitem);
 			return 1;
 		}

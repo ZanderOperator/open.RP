@@ -6,8 +6,6 @@ new
 	
 new CanPMAdmin[MAX_PLAYERS][MAX_PLAYERS];
 
-#define MODEL_SELECTION_COLOR (663)
-
 forward DeleteKillTimer(playerid);
 public DeleteKillTimer(playerid)
 {
@@ -1051,16 +1049,6 @@ CMD:report(playerid, params[])
 
 CMD:stats(playerid,params[]) {
 	return ShowPlayerStats(playerid, playerid);
-}
-
-CMD:colors(playerid, params[]) {
-	new all_colors[256];
-
-	for (new i = 0; i < sizeof(all_colors); i ++) {
-		all_colors[i] = i;
-	}
-	ShowColorSelectionMenu(playerid, MODEL_SELECTION_COLOR, all_colors);
-	return (true);
 }
 
 CMD:pm(playerid, params[])

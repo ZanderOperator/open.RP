@@ -28,6 +28,8 @@ static stock
 	PlayerPrwsPOIndex[MAX_PLAYERS],
 	PlayerPrwsPOModel[MAX_PLAYERS],
 	PlayerEditPOIndex[MAX_PLAYERS];
+
+new Iterator:PlayerCreateObjects[MAX_PLAYERS]<MAX_PLAYER_OBJECTS>;
 	
 static objects[] =
 {
@@ -103,8 +105,9 @@ stock static CreatePlayerObjectsObject(playerid, modelid, Float:x, Float:y, Floa
 	PlayerObjectsInfo[playerid][index][poInterior] 	= GetPlayerInterior(playerid);
 
 	PlayerObjectsInfo[playerid][index][poObjectid] 	= CreateDynamicObject(modelid, x, y, z, rx, ry, rz, PlayerObjectsInfo[playerid][index][poViwo], PlayerObjectsInfo[playerid][index][poInterior], -1, 150.0, PO_DRAW_DIST);
+	Iter_Add(PlayerCreateObjects[playerid], index);
+
 	SendFormatMessage(playerid, MESSAGE_TYPE_SUCCESS, "Odabrali ste objekat ID: %d. Ukoliko Zelite promjeniti poziciju koristite /editobject.", modelid);
-	
 	#if defined MOD_DEBUG
 		printf("[DEBUG] CREATE_OBJECTS CREATE: player(%s) | index(%d) | modelid(%d) | pos(%.2f, %.2f, %.2f)", 
 			GetName(playerid,false),
@@ -178,7 +181,7 @@ stock IsAPlayerSpawnedObject(modelid, Float:x, Float:y, Float:z)
 {
 	foreach(new i : Player)
 	{
-	    for(new po = 0; po != MAX_PLAYER_OBJECTS; ++po)
+	    foreach(new po: PlayerCreateObjects[i])
 	    {
 	        if(x == PlayerObjectsInfo[i][po][poPos][0] && y == PlayerObjectsInfo[i][po][poPos][1] && z == PlayerObjectsInfo[i][po][poPos][2] && modelid == PlayerObjectsInfo[i][po][poModelid])
        		{
@@ -189,7 +192,7 @@ stock IsAPlayerSpawnedObject(modelid, Float:x, Float:y, Float:z)
 	return -1;
 }
 
-stock DeletePlayerObjectsObject( playerid, slot_id )
+stock DeletePlayerObjectsObject( playerid, slot_id, bool:iterdel = true )
 {
 	PlayerObjectsInfo[ playerid ][ slot_id ][ poPlaced ] = false;
 	
@@ -206,13 +209,17 @@ stock DeletePlayerObjectsObject( playerid, slot_id )
 		DestroyDynamicObject( PlayerObjectsInfo[ playerid ][ slot_id ][ poObjectid ] );
 	}
 	PlayerObjectsInfo[ playerid ][ slot_id ][ poModelid ] = -1;
+	if(iterdel)
+		Iter_Remove(PlayerCreateObjects[playerid], slot_id);
+
+	return 1;
 }
 
 stock GetPlayerObjectsOwner(playerid, &modelid, &ownerid, &slotid)
 {
 	foreach(new i : Player)
 	{
-	    for(new po = 0; po != MAX_PLAYER_OBJECTS; ++po)
+	  	foreach(new po: PlayerCreateObjects[i])
 	    {
 	        if(IsPlayerInRangeOfPoint(playerid, 2.5, PlayerObjectsInfo[i][po][poPos][0], PlayerObjectsInfo[i][po][poPos][1], PlayerObjectsInfo[i][po][poPos][2]))
        		{
@@ -272,14 +279,10 @@ stock GetFreeObjectSlot( playerid )
 
 hook OnPlayerDisconnect(playerid, reason)
 {
-	new i = 0;
-	while(i < MAX_PLAYER_OBJECTS) 
+	foreach(new cobjid: PlayerCreateObjects[playerid])
 	{
-		if(IsValidDynamicObject( PlayerObjectsInfo[ playerid ][ i ][ poObjectid ] ) && PlayerObjectsInfo[ playerid ][ i ][ poPlaced ]) 
-		{
-			DeletePlayerObjectsObject(playerid, i);
-		}
-		i++;
+		if(IsValidDynamicObject( PlayerObjectsInfo[ playerid ][ cobjid ][ poObjectid ] ) && PlayerObjectsInfo[ playerid ][ cobjid ][ poPlaced ]) 
+			DeletePlayerObjectsObject(playerid, cobjid, false);
 	}
 	
 	Bit4_Set(r_PlayerObjectEditState, playerid, 0);
@@ -291,6 +294,8 @@ hook OnPlayerDisconnect(playerid, reason)
 	PlayerPrwsPOIndex[playerid] 	= 0;
 	PlayerPrwsPOModel[playerid] 	= 0;
 	PlayerEditPOIndex[playerid] 	= 0;
+
+	Iter_Clear(PlayerCreateObjects[playerid]);
     return 1;
 }
 
@@ -309,9 +314,9 @@ hook OnPlayerSelectDynObject(playerid, objectid, modelid, Float:x, Float:y, Floa
 	return 1;
 }
 
-hook OnModelSelResponse( playerid, extraid, index, modelid, response )
+hook OnFSelectionResponse(playerid, fselectid, modelid, response)
 {
-	switch(extraid)
+	switch(fselectid)
 	{
 		case DIALOG_CREATE_COBJECT:
 		{
@@ -334,14 +339,16 @@ hook OnModelSelResponse( playerid, extraid, index, modelid, response )
 					return SendMessage(playerid, MESSAGE_TYPE_ERROR, "igrac je otisao offline!"), chosenpID[playerid] = -1;
 					
 				new
-					name[24];
+					name[24],
+					index = Player_ModelToIndex(playerid, modelid);
 					
 				GetPlayerName(chosenpID[playerid], name, 24);
-				chosenpObject[playerid] = index;
+				chosenpObject[playerid] = index; 
 				va_ShowPlayerDialog(playerid, 3556, DIALOG_STYLE_MSGBOX, "Brisanje objekta", "Jeste li sigurni da zelite izbrisati objekat igracu\n%s\nObjekt: %d u slotu: %d?", "Yes", "No", name, modelid, index);
 			}
 			else
 			{
+				ResetModelShuntVar(playerid);
 				chosenpID[playerid] = -1;
 			}
 		}
@@ -349,16 +356,15 @@ hook OnModelSelResponse( playerid, extraid, index, modelid, response )
 		{
 			if(!response)
 				return 1;
-				
-			DeletePlayerObjectsObject(playerid, index);
+			
+			DeletePlayerObjectsObject(playerid, Player_ModelToIndex(playerid, modelid));
 			SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "Obrisali ste izabrani objekat.");
 		}
 		case DIALOG_EDIT_COBJECT:
 		{	  
+			new index = Player_ModelToIndex(playerid, modelid);
 			if(IsValidDynamicObject(PlayerObjectsInfo[playerid][index][poObjectid]) && response)
-			{
 				EditPOObject(playerid, index);
-			}
 		}
 	}
 	return 1;
@@ -491,16 +497,14 @@ CMD:editobject(playerid, params[])
 	if(AreAllPObjectSlotsEmpty(playerid))
 	    return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Svi slotovi su prazni!");
 		
-	static
-		po_objects[MAX_PLAYER_OBJECTS];
-
-	for(new po = 0; po != MAX_PLAYER_OBJECTS; ++po)
+	foreach(new i: PlayerCreateObjects[playerid])
 	{
-	    po_objects[po] = PlayerObjectsInfo[playerid][po][poModelid];
+		if( !PlayerObjectsInfo[playerid][i][poPlaced] ) continue;
+		fselection_add_item(playerid, PlayerObjectsInfo[playerid][i][poModelid]);
+		Player_ModelToIndexSet(playerid, i, PlayerObjectsInfo[playerid][i][poModelid]);
 	}
-
+	fselection_show(playerid, DIALOG_EDIT_COBJECT, "Edit object:");
 	SendMessage(playerid, MESSAGE_TYPE_INFO, "Odaberi objekat koji zelis editati!");
-    ShowModelESelectionMenu(playerid, "Izmjeni objekt:", DIALOG_EDIT_COBJECT, po_objects, sizeof(po_objects), 0.0, 0.0, 0.0, 1.0, -1, true, po_objects);
 	return 1;
 }
 
@@ -511,9 +515,15 @@ CMD:createobject(playerid, params[])
 				
 	if(!Bit1_Get( gr_CreateObject, playerid)) 
 		return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate dozvolu od admina za /createobject komandu.");
-	
+
 	if(isnull(params))
-		return ShowModelESelectionMenu(playerid, "Odaberi objekat", DIALOG_CREATE_COBJECT, objects, sizeof(objects), 0.0, 0.0, 0.0, 1.0, -1, true, objects);
+	{
+		for(new i = 0; i < sizeof(objects); i++)
+		{
+			fselection_add_item(playerid, objects[i]);
+		}
+		fselection_show(playerid, DIALOG_CREATE_COBJECT, "Create object:");
+	}
 	else
 	{
 	    if(!PlayerInfo[playerid][pAdmin]) return 1;
@@ -545,10 +555,13 @@ CMD:aremoveallplayerobjects(playerid, params[])
     if(AreAllPObjectSlotsEmpty(giveplayerid))
    		return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Taj igrac nema spawnane objekte!");
 
-	for(new p_o = 0; p_o != MAX_PLAYER_OBJECTS; ++p_o) 
-		if(PlayerObjectsInfo[giveplayerid][p_o][poPlaced]) 
-			DeletePlayerObjectsObject(giveplayerid, p_o);
-	
+	foreach(new i: PlayerCreateObjects[giveplayerid])
+	{
+		if(PlayerObjectsInfo[giveplayerid][i][poPlaced]) 
+			DeletePlayerObjectsObject(giveplayerid, i, false);
+	}
+	Iter_Clear(PlayerCreateObjects[giveplayerid]);
+
 	SendClientMessage(playerid, COLOR_RED, "[ ! ] Uspjesno ste izbrisali sve spawnane objekte odabranom igracu!");
 	va_SendClientMessage(giveplayerid, COLOR_RED, "[ ! ]: Game Admin %s deleted all your created objects.", GetName(playerid, false));
 	return 1;
@@ -573,21 +586,19 @@ CMD:checkplayerobjects(playerid, params[]) {
  	if(AreAllPObjectSlotsEmpty(giveplayerid))
 	    return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Taj igrac nema spawnanih objekata!");
 
-	static
-		pobjects[MAX_PLAYER_OBJECTS];
-
-	for(new i = 0; i < MAX_PLAYER_OBJECTS; i++)
-	{
-		pobjects[i] = PlayerObjectsInfo[giveplayerid][i][poModelid];
-	}
 	GetPlayerName(giveplayerid, po_name, 24);
 	
 	chosenpID[playerid] = giveplayerid;
 	format(string, sizeof(string), "Trenutno gledate spawnane objekte od igraca: %s[%d]!", po_name, giveplayerid);
 	SendClientMessage(playerid, COLOR_WHITE, string);
 
-	ShowModelESelectionMenu(playerid, po_name, DIALOG_ADMIN_DEL_COBJECT, pobjects, sizeof(pobjects), 0.0, 0.0, 0.0, 1.0, -1, true, pobjects);
-	
+	foreach(new i: PlayerCreateObjects[giveplayerid])
+	{
+		if( !PlayerObjectsInfo[giveplayerid][i][poPlaced] ) continue;
+		fselection_add_item(playerid, PlayerObjectsInfo[giveplayerid][i][poModelid]);
+		Player_ModelToIndexSet(playerid, i, PlayerObjectsInfo[playerid][i][poModelid]);
+	}
+	fselection_show(playerid, DIALOG_ADMIN_DEL_COBJECT, "Delete object:");
 	return 1;
 }
 
@@ -596,15 +607,12 @@ CMD:deleteobject( playerid, params[] )
 	if(AreAllPObjectSlotsEmpty(playerid))
 	    return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Svi slotovi su prazni!");
 
-	static
-		po_objects[MAX_PLAYER_OBJECTS];
-
-	for(new po = 0; po != MAX_PLAYER_OBJECTS; ++po)
+	foreach(new i: PlayerCreateObjects[playerid])
 	{
-	    po_objects[po] = PlayerObjectsInfo[playerid][po][poModelid];
+		if(!PlayerObjectsInfo[playerid][i][poPlaced]) continue;
+		fselection_add_item(playerid, PlayerObjectsInfo[playerid][i][poModelid]);
+		Player_ModelToIndexSet(playerid, i, PlayerObjectsInfo[playerid][i][poModelid]);
 	}
-
-	SendClientMessage(playerid, -1, "Odaberi objekat koji zelis obrisati!");
-    ShowModelESelectionMenu(playerid, "Kreirani objekti:", DIALOG_DELETE_COBJECT, po_objects, sizeof(po_objects), 0.0, 0.0, 0.0, 1.0, -1, true, po_objects);
+	fselection_show(playerid, DIALOG_DELETE_COBJECT, "Delete object:");
 	return 1;
 }

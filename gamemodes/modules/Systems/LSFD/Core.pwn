@@ -51,10 +51,6 @@ static
     bool:bUsingStretcher  [MAX_PLAYERS] = {false, ...},
     bool:bStretcherSpawned[MAX_PLAYERS] = {false, ...};
 
-
-// TODO: all these variables must be const! modify modules/Server/ModelDialog.pwn
-// to accept const params! function ShowModelESelectionMenu
-
 // PD skins
 static lawskins_police[] =
 {
@@ -372,14 +368,14 @@ hook OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
     return 1;
 }
 
-hook OnModelSelResponse(playerid, extraid, index, modelid, response)
+hook OnFSelectionResponse(playerid, fselectid, modelid, response)
 {
     if (!response)
     {
         return 1;
     }
-
-    switch (extraid)
+    new index = Player_ModelToIndex(playerid, modelid);
+    switch (fselectid)
     {
         case MODEL_SELECTION_FDSKIN:
         {
@@ -402,7 +398,6 @@ hook OnModelSelResponse(playerid, extraid, index, modelid, response)
             va_SendClientMessage(playerid, COLOR_RED, "[ ! ]  Uzeli ste skin ID %d.", lawskins_sheriff[index]);
         }
     }
-
     return 1;
 }
 
@@ -429,7 +424,15 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
             {
                 case 0:
                 { // Skins
-                    ShowModelESelectionMenu(playerid, "GOV Skins", MODEL_SELECTION_GOVSKIN, govskins_gov, sizeof(govskins_gov), 0.0, 0.0, 0.0, 1.0, -1, true, govskins_gov);
+                    for(new i = 0; i < sizeof(govskins_gov); i++)
+                    {
+                        if(govskins_gov[i] != 0)
+                        {
+                            fselection_add_item(playerid, govskins_gov[i]);
+                            Player_ModelToIndexSet(playerid, i, govskins_gov[i]);
+                        }
+                    }
+                    fselection_show(playerid, MODEL_SELECTION_GOVSKIN, "Government Clothes");                
                 }
                 case 1:
                 { // Duty
@@ -531,7 +534,16 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                 case 1:
                 { // Skins
                     //ShowPlayerDialog(playerid, DIALOG_FD_EQUIP_SKIN, DIALOG_STYLE_LIST, "LSFD Equipment", "Bolnicar\nVatrogasac\nRadnik\nCivil", "Choose", "Exit");
-                    ShowModelESelectionMenu(playerid, "FD Skins", MODEL_SELECTION_FDSKIN, fdskins_selection, sizeof(fdskins_selection), 0.0, 0.0, 0.0, 1.0, -1, true, fdskins_selection);
+                    
+                    for(new i = 0; i < sizeof(fdskins_selection); i++)
+                    {
+                        if(fdskins_selection[i] != 0)
+                        {
+                            fselection_add_item(playerid, fdskins_selection[i]);
+                            Player_ModelToIndexSet(playerid, i, fdskins_selection[i]);
+                        }
+                    }
+                    fselection_show(playerid, MODEL_SELECTION_FDSKIN, "FD Clothes");                 
                 }
                 case 2:
                 { // Dodaci
@@ -746,11 +758,27 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                     //ShowPlayerDialog(playerid, DIALOG_PD_SKIN, DIALOG_STYLE_LIST, "ODABIR SKINA", "71\n93\n211\n217\n265\n267\n280\n281\n282\n283\n284\n288\nCivilni skin", "Choose", "Abort");
                     if (IsACop(playerid))
                     {
-                        ShowModelESelectionMenu(playerid, "Police Skins", MODEL_SELECTION_LAWSKIN, lawskins_police, sizeof(lawskins_police), 0.0, 0.0, 0.0, 1.0, -1, true, lawskins_police);
+                        for(new i = 0; i < sizeof(lawskins_police); i++)
+                        {
+                            if(lawskins_police[i] != 0)
+                            {
+                                fselection_add_item(playerid, lawskins_police[i]);
+                                Player_ModelToIndexSet(playerid, i, lawskins_police[i]);
+                            }
+                        }
+                        fselection_show(playerid, MODEL_SELECTION_LAWSKIN, "Police Clothes"); 
                     }
                     else if (IsASD(playerid))
                     {
-                        ShowModelESelectionMenu(playerid, "Sheriff Skins", MODEL_SELECTION_SDSKIN, lawskins_sheriff, sizeof(lawskins_sheriff), 0.0, 0.0, 0.0, 1.0, -1, true, lawskins_sheriff);
+                        for(new i = 0; i < sizeof(lawskins_sheriff); i++)
+                        {
+                            if(lawskins_sheriff[i] != 0)
+                            {
+                                fselection_add_item(playerid, lawskins_sheriff[i]);
+                                Player_ModelToIndexSet(playerid, i, lawskins_sheriff[i]);
+                            }
+                        }
+                        fselection_show(playerid, MODEL_SELECTION_SDSKIN, "Sheriff Clothes"); 
                     }
                 }
                 case 1:

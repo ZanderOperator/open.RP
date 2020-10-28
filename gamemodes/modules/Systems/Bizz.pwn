@@ -1197,14 +1197,14 @@ CMD:buyskin(playerid, params[])
 	return 1;
 }
 
-hook OnModelSelResponse(playerid, extraid, index, modelid, response)
+hook OnFSelectionResponse(playerid, fselectid, modelid, response)
 {
-	if( extraid == MODEL_LIST_SKINS)
+	if( fselectid == MODEL_LIST_SKINS)
 	{
 		if(!response)
 			return SetPlayerPosFinish(playerid);
 
-		new skinid = ModelToEnumID[playerid][index];
+		new skinid = Player_ModelToIndex(playerid, modelid);
 		if(AC_GetPlayerMoney(playerid) < ServerSkins[sPrice][skinid])
 		{
 			va_SendClientMessage(playerid,COLOR_RED, "Nemas dovoljno novca za kupnju skina %d ($%d)!", ServerSkins[sSkinID][skinid], ServerSkins[sPrice][skinid]);
@@ -1226,7 +1226,7 @@ hook OnModelSelResponse(playerid, extraid, index, modelid, response)
 
 hook OnGameModeInit()
 {
-	LoadSkinSelectionMenu("skins.txt");
+	LoadServerSkins("skins.txt");
 	VeronaSkinRectangle = CreateDynamicRectangle(1092.39172, -1431.54944, 1101.95300, -1449.16431);
 	return 1;
 }

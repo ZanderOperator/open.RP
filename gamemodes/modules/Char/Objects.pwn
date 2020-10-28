@@ -976,13 +976,14 @@ hook OnPlayerDisconnect(playerid, reason)
 	return 1;
 }
 
-hook OnModelSelResponse( playerid, extraid, index, modelid, response )
+hook OnFSelectionResponse(playerid, fselectid, modelid, response)
 {
-	switch(extraid)
+	switch(fselectid)
 	{
-		case DIALOG_CLOTHING_BUY: {
+		case DIALOG_CLOTHING_BUY: 
+		{
 			if(!response) return 1;
-			HandlePlayerObjectSelection(playerid, index);
+			HandlePlayerObjectSelection(playerid, Player_ModelToIndex(playerid, modelid));
 		}
 		
 	}
@@ -1123,126 +1124,107 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 				{
 					case MALL_REGULAR_CLOTHING: 
 					{
-						new	
-							tmp_objects[sizeof(NCObjects)], count = 0;
 						for(new i = 0; i < sizeof(NCObjects); i++)
 						{
 							if(NCObjects[i][ncmodel] != 0)
-								tmp_objects[i] = NCObjects[i][ncmodel];
-							else break;
-							count++;
+							{
+								Player_ModelToIndexSet(playerid, i, NCObjects[i][ncmodel]);
+								fselection_add_item(playerid, NCObjects[i][ncmodel]);
+							}
 						}
-						ShowModelESelectionMenu(playerid, "Clothing", DIALOG_CLOTHING_BUY, tmp_objects, count, 0.0, 0.0, 0.0, 1.0, -1, true, tmp_objects);
 					}
 					case MALL_TOOLKIT_CLOTHING: 
 					{
-						new	
-							tmp_objects[sizeof(TSObjects)], count = 0;
 						for(new i = 0; i < sizeof(TSObjects); i++)
 						{
 							if(TSObjects[i][tsmodel] != 0)
-								tmp_objects[i] = TSObjects[i][tsmodel];
-							else break;
-							count++;
+							{
+								Player_ModelToIndexSet(playerid, i, TSObjects[i][tsmodel]);
+								fselection_add_item(playerid, TSObjects[i][tsmodel]);
+							}
 						}
-						ShowModelESelectionMenu(playerid, "Clothing", DIALOG_CLOTHING_BUY, tmp_objects, count, 0.0, 0.0, 0.0, 1.0, -1, true, tmp_objects);
 					}
 					case MALL_TECHNO_CLOTHING: 
 					{
-						new	
-							tmp_objects[sizeof(TechnoObjects)], count = 0;
 						for(new i = 0; i < sizeof(TechnoObjects); i++)
 						{
 							if(TechnoObjects[i][teattachmodel] != 0)
-								tmp_objects[i] = TechnoObjects[i][teattachmodel];
-							else break;
-							count++;
+							{
+								Player_ModelToIndexSet(playerid, i, TechnoObjects[i][teattachmodel]);
+								fselection_add_item(playerid, TechnoObjects[i][teattachmodel]);
+							}
 						}
-						ShowModelESelectionMenu(playerid, "Clothing", DIALOG_CLOTHING_BUY, tmp_objects, count, 0.0, 0.0, 0.0, 1.0, -1, true, tmp_objects);
 					}
 					case MALL_SPORTS_CLOTHING: 
 					{
-						new	
-							tmp_objects[sizeof(SportsObjects)], count = 0;
 						for(new i = 0; i < sizeof(SportsObjects); i++)
 						{
 							if(SportsObjects[i][sportsmodel] != 0)
-								tmp_objects[i] = SportsObjects[i][sportsmodel];
-							else break;
-							count++;
+							{
+								Player_ModelToIndexSet(playerid, i, SportsObjects[i][sportsmodel]);
+								fselection_add_item(playerid, SportsObjects[i][sportsmodel]);
+							}
 						}
-						ShowModelESelectionMenu(playerid, "Clothing", DIALOG_CLOTHING_BUY, tmp_objects, count, 0.0, 0.0, 0.0, 1.0, -1, true, tmp_objects);
 					}
 					case MALL_PD_CLOTHING: 
 					{
-						new	
-							tmp_objects[sizeof(PDObjects)], count = 0;
 						for(new i = 0; i < sizeof(PDObjects); i++)
 						{
 							if(PDObjects[i][pdmodel] != 0)
-								tmp_objects[i] = PDObjects[i][pdmodel];
-							else break;
-							count++;
+							{
+								Player_ModelToIndexSet(playerid, i, PDObjects[i][pdmodel]);
+								fselection_add_item(playerid, PDObjects[i][pdmodel]);
+							}
 						}
-						ShowModelESelectionMenu(playerid, "Clothing", DIALOG_CLOTHING_BUY, tmp_objects, count, 0.0, 0.0, 0.0, 1.0, -1, true, tmp_objects);
 					}
 					case MALL_FD_CLOTHING: 
 					{
-						new	
-							tmp_objects[sizeof(FDObjects)], count = 0;
 						for(new i = 0; i < sizeof(FDObjects); i++)
 						{
 							if(FDObjects[i][fdmodel] != 0)
-								tmp_objects[i] = FDObjects[i][fdmodel];
-							else break;
-							count++;
+							{
+								Player_ModelToIndexSet(playerid, i, FDObjects[i][fdmodel]);
+								fselection_add_item(playerid, FDObjects[i][fdmodel]);
+							}
 						}
-						ShowModelESelectionMenu(playerid, "Clothing", DIALOG_CLOTHING_BUY, tmp_objects,count, 0.0, 0.0, 0.0, 1.0, -1, true, tmp_objects);
 					}
 					case MALL_GOV_CLOTHING: 
 					{
-						new	
-							tmp_objects[sizeof(GOVObjects)], count = 0;
 						for(new i = 0; i < sizeof(GOVObjects); i++)
 						{
 							if(GOVObjects[i][govmodel] != 0)
-								tmp_objects[i] = GOVObjects[i][govmodel];
-							else break;
-							count++;
+							{
+								Player_ModelToIndexSet(playerid, i, GOVObjects[i][govmodel]);
+								fselection_add_item(playerid, GOVObjects[i][govmodel]);
+							}
 						}
-						ShowModelESelectionMenu(playerid, "Clothing", DIALOG_CLOTHING_BUY, tmp_objects,count, 0.0, 0.0, 0.0, 1.0, -1, true, tmp_objects);
 					}
 					case MALL_PREM_CLOTHING: 
 					{
-						new	
-							tmp_objects[sizeof(PremiumObjects)], count = 0;
 						for(new i = 0; i < sizeof(PremiumObjects); i++)
 						{
 							if(PremiumObjects[i][premmodel] != 0)
-								tmp_objects[i] = PremiumObjects[i][premmodel];
-							else break;
-							count++;
+							{
+								Player_ModelToIndexSet(playerid, i, PremiumObjects[i][premmodel]);
+								fselection_add_item(playerid, PremiumObjects[i][premmodel]);
+							}
 						}
-						ShowModelESelectionMenu(playerid, "Clothing", DIALOG_CLOTHING_BUY, tmp_objects, count, 0.0, 0.0, 0.0, 1.0, -1, true, tmp_objects);
 					}
 					case MALL_HALL_CLOTHING: 
 					{
-						new	
-							tmp_objects[sizeof(HLObjects)], count = 0;
 						for(new i = 0; i < sizeof(HLObjects); i++)
 						{
 							if(HLObjects[i][hlmodel] != 0)
-								tmp_objects[i] = HLObjects[i][hlmodel];
-							else break;
-							count++;
+							{
+								Player_ModelToIndexSet(playerid, i, HLObjects[i][hlmodel]);
+								fselection_add_item(playerid, HLObjects[i][hlmodel]);
+							}
 						}
-						ShowModelESelectionMenu(playerid, "Clothing", DIALOG_CLOTHING_BUY, tmp_objects, count, 0.0, 0.0, 0.0, 1.0, -1, true, tmp_objects);
 					}
 				}
-				
 				Bit1_Set( gr_MallPreviewActive, playerid, true );
-				SelectTextDraw(playerid, 0xACCBF1FF);
 			}
+			fselection_show(playerid, DIALOG_CLOTHING_BUY, "Clothing");
 			return 1;
 		}
 		case DIALOG_DELETECLOTHING: {

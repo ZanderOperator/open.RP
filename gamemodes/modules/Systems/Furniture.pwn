@@ -12,11 +12,6 @@
 /////////////////////////////////////////////////////////////
 #define FURNITURE_OBJECT_DRAW_DISTANCE		(120.0)
 
-// Maxes
-#define MAX_FURNITURE_TEXTURES				(610)
-#define MAX_FURNITURE_COLORS				(139)
-#define MODEL_SELECTION_FCOLOR				(783) // random nbr.
-
 // States
 #define EDIT_STATE_PREVIEW					(1)
 #define EDIT_STATE_EDIT						(2)
@@ -3513,40 +3508,24 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 			if( houseid == INVALID_HOUSE_ID ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne posjedujete kucu ili ju ne uredjujete!");
 			switch( listitem ) {
 				case 0: ShowPlayerDialog(playerid, DIALOG_FURNITURE_BUY, DIALOG_STYLE_LIST, "Furniture - Kategorije", "Dnevni Boravak\nKuhinja\nKupaonica\nSobe\nOstalo", "Choose", "Abort");  // Kupi
-				case 1: { // Uredi
-					new
-						tmp_objects[MAX_FURNITURE_SLOTS], count = 0;
-					for(new i = 0; i < MAX_FURNITURE_SLOTS; i++)
+				case 1: 
+				{ // Uredi
+					for(new i = 0; i < MAX_FURNITURE_SLOTS; i++) // TODO: ITERATOR
 					{
 						if(HouseInfo[ houseid ][ hFurModelid ][ i ] != -1)
 						{
-							tmp_objects[count] = HouseInfo[ houseid ][ hFurModelid ][ i ];
-							ModelToEnumID[playerid][count] = i;
-							count++;
+							Player_ModelToIndexSet(playerid, i, HouseInfo[ houseid ][ hFurModelid ][ i ]);
+							fselection_add_item(playerid, HouseInfo[ houseid ][ hFurModelid ][ i ]);
 						}
 					}
-					ShowModelESelectionMenu(playerid, "Furniture - Uredjivanje", DIALOG_FURNITURE_EDIT, tmp_objects, count, 0.0, 270.0, 0.0, 1.0, -1, true, tmp_objects);
-				}
-				case 2: { // Inventory
-					new
-						tmp_objects[MAX_FURNITURE_SLOTS], count = 0;
-					for(new i = 0; i < MAX_FURNITURE_SLOTS; i++)
-					{
-						if(HouseInfo[ houseid ][ hFurModelid ][ i ] != -1)
-						{
-							tmp_objects[count] = HouseInfo[ houseid ][ hFurModelid ][ i ];
-							ModelToEnumID[playerid][count] = i;
-							count++;
-						}
-					}
-					ShowModelESelectionMenu(playerid, "Furniture - Inventory", 0, tmp_objects, count, 0.0, 270.0, 0.0, 1.0, -1, true, tmp_objects);
+					fselection_show(playerid, DIALOG_FURNITURE_EDIT, "Furniture Edit");
 				}
 			}
 			return 1;
 		}
 		case DIALOG_FURNITURE_BUY:
 		{
-			if( !response ) return ShowPlayerDialog(playerid, DIALOG_FURNITURE_MENU, DIALOG_STYLE_LIST, "Furniture", "Kupi objekt\nUredi\nInventory", "Choose", "Abort");
+			if( !response ) return ShowPlayerDialog(playerid, DIALOG_FURNITURE_MENU, DIALOG_STYLE_LIST, "Furniture", "Kupi objekt\nUredi", "Choose", "Abort");
 
 			switch( listitem ) {
 				case 0: { // Dnevni
@@ -3575,518 +3554,529 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 		case DIALOG_FURNITURE_OBJCS:
 		{
 			if( !response ) return ShowPlayerDialog(playerid, DIALOG_FURNITURE_BUY, DIALOG_STYLE_LIST, "Furniture - Kategorije", "Dnevni Boravak\nKuhinja\nKupaonica\nSobe\nOstalo\n", "Choose", "Abort");
-			switch( FurnObjectsType[ playerid ] ) {
-				case 1: { // Dnevni
-					switch( listitem ) {
-						case 0: { // Kauci
-							new
-								tmp_objects[sizeof(ObjectsCouch)], count = 0;
+			switch( FurnObjectsType[ playerid ] ) 
+			{
+				case 1: 
+				{ // Dnevni
+					switch( listitem ) 
+					{
+						case 0: 
+						{ // Kauci
 							for(new i = 0; i < sizeof(ObjectsCouch); i++ )
 							{
 								if(ObjectsCouch[i][ceId] != 0)
-									tmp_objects[i] = ObjectsCouch[i][ceId];
-								count++;
+								{
+									fselection_add_item(playerid, ObjectsCouch[i][ceId]);
+									Player_ModelToIndexSet(playerid, i, ObjectsCouch[i][ceId]);
+								}
 							}
-							ShowModelESelectionMenu(playerid, "Furniture - Kupovina", DIALOG_FURNITURE_OBJS_BUY, tmp_objects, count, 0.0, 270.0, 0.0, 1.0, -1, true, tmp_objects);
 						}
-						case 1: { // Fotelje
-							new
-								tmp_objects[sizeof(ObjectsArmChair)], count = 0;
+						case 1: 
+						{ // Fotelje
 							for(new i = 0; i < sizeof(ObjectsArmChair); i++ )
 							{
 								if(ObjectsArmChair[i][armId] != 0)
-									tmp_objects[i] = ObjectsArmChair[i][armId];
-								count++;
+								{
+									fselection_add_item(playerid, ObjectsArmChair[i][armId]);
+									Player_ModelToIndexSet(playerid, i, ObjectsArmChair[i][armId]);
+								}
 							}
-							ShowModelESelectionMenu(playerid, "Furniture - Kupovina", DIALOG_FURNITURE_OBJS_BUY, tmp_objects, count, 0.0, 270.0, 0.0, 1.0, -1, true, tmp_objects);
-
 						}
-						case 2:  { // Stolovi
-							new
-								tmp_objects[sizeof(ObjectsTables)], count = 0;
+						case 2: 
+						{ // Stolovi
 							for(new i = 0; i < sizeof(ObjectsTables); i++)
 							{
 								if(ObjectsTables[i][tablId] != 0)
-									tmp_objects[i] = ObjectsTables[i][tablId];
-								count++;
+								{
+									fselection_add_item(playerid, ObjectsTables[i][tablId]);
+									Player_ModelToIndexSet(playerid, i, ObjectsTables[i][tablId]);
+								}
 							}
-							ShowModelESelectionMenu(playerid, "Furniture - Kupovina", DIALOG_FURNITURE_OBJS_BUY, tmp_objects, count, 0.0, 270.0, 0.0, 1.0, -1, true, tmp_objects);
 						}
-						case 3: { // Ormarici
-							new
-								tmp_objects[sizeof(ObjectsCabinets)], count = 0;
+						case 3: 
+						{ // Ormarici
 							for(new i = 0; i < sizeof(ObjectsCabinets); i++ )
 							{
 								if(ObjectsCabinets[i][cabId] != 0)
-									tmp_objects[i] = ObjectsCabinets[i][cabId];
-								count++;
+								{
+									fselection_add_item(playerid, ObjectsCabinets[i][cabId]);
+									Player_ModelToIndexSet(playerid, i, ObjectsCabinets[i][cabId]);
+								}
 							}
-							ShowModelESelectionMenu(playerid, "Furniture - Kupovina", DIALOG_FURNITURE_OBJS_BUY, tmp_objects, count, 0.0, 270.0, 0.0, 1.0, -1, true, tmp_objects);
 						}
-						case 4: { // Televizori
-							new
-								tmp_objects[sizeof(ObjectsTelevision)], count = 0;
+						case 4: 
+						{ // Televizori
 							for(new i = 0; i < sizeof(ObjectsTelevision); i++ )
 							{
 								if(ObjectsTelevision[i][tvId] != 0)
-									tmp_objects[i] = ObjectsTelevision[i][tvId];
-								count++;
+								{
+									fselection_add_item(playerid, ObjectsTelevision[i][tvId]);
+									Player_ModelToIndexSet(playerid, i, ObjectsTelevision[i][tvId]);
+								}
 							}
-							ShowModelESelectionMenu(playerid, "Furniture - Kupovina", DIALOG_FURNITURE_OBJS_BUY, tmp_objects, count, 0.0, 270.0, 0.0, 1.0, -1, true, tmp_objects);
 						}
-						case 5: { // Video
-							new
-								tmp_objects[sizeof(ObjectsVideo)], count = 0;
+						case 5: 
+						{ // Video
 							for(new i = 0; i < sizeof(ObjectsVideo); i++)
 							{
 								if(ObjectsVideo[i][vidId] != 0)
-									tmp_objects[i] = ObjectsVideo[i][vidId];
-								count++;
+								{
+									fselection_add_item(playerid, ObjectsVideo[i][vidId]);
+									Player_ModelToIndexSet(playerid, i, ObjectsVideo[i][vidId]);
+								}
 							}
-							ShowModelESelectionMenu(playerid, "Furniture - Kupovina", DIALOG_FURNITURE_OBJS_BUY, tmp_objects, count, 0.0, 270.0, 0.0, 1.0, -1, true, tmp_objects);
 						}
-						case 6: { // Hi-Fi
-							new
-								tmp_objects[sizeof(ObjectsHiFi)], count = 0;
+						case 6: 
+						{ // Hi-Fi
 							for(new i = 0; i < sizeof(ObjectsHiFi); i++)
 							{
 								if(ObjectsHiFi[i][hfId] != 0)
-									tmp_objects[i] = ObjectsHiFi[i][hfId];
-								count++;
+								{
+									fselection_add_item(playerid, ObjectsHiFi[i][hfId]);
+									Player_ModelToIndexSet(playerid, i, ObjectsHiFi[i][hfId]);
+								}
 							}
-							ShowModelESelectionMenu(playerid, "Furniture - Kupovina", DIALOG_FURNITURE_OBJS_BUY, tmp_objects, count, 0.0, 270.0, 0.0, 1.0, -1, true, tmp_objects);
 						}
-						case 7: { // Zvucnici
-							new
-								tmp_objects[sizeof(ObjectsStereo)], count = 0;
+						case 7: 
+						{ // Zvucnici
 							for(new i = 0; i < sizeof(ObjectsStereo); i++)
 							{
 								if(ObjectsStereo[i][stId] != 0)
-									tmp_objects[i] = ObjectsStereo[i][stId];
-								count++;
+								{
+									fselection_add_item(playerid, ObjectsStereo[i][stId]);
+									Player_ModelToIndexSet(playerid, i, ObjectsStereo[i][stId]);
+								}
 							}
-							ShowModelESelectionMenu(playerid, "Furniture - Kupovina", DIALOG_FURNITURE_OBJS_BUY, tmp_objects, count, 0.0, 270.0, 0.0, 1.0, -1, true, tmp_objects);
 						}
-						case 8: { // Tepisi
-							new
-								tmp_objects[sizeof(ObjectsRugs)], count = 0;
+						case 8: 
+						{ // Tepisi
 							for(new i = 0; i < sizeof(ObjectsRugs); i++)
 							{
 								if(ObjectsRugs[i][rId] != 0)
-									tmp_objects[i] = ObjectsRugs[i][rId];
-								count++;
+								{
+									fselection_add_item(playerid, ObjectsRugs[i][rId]);
+									Player_ModelToIndexSet(playerid, i, ObjectsRugs[i][rId]);
+								}
 							}
-							ShowModelESelectionMenu(playerid, "Furniture - Kupovina", DIALOG_FURNITURE_OBJS_BUY, tmp_objects, count, 0.0, 270.0, 0.0, 1.0, -1, true, tmp_objects);
 						}
-						case 9: { // Svijetla
-							new
-								tmp_objects[sizeof(ObjectsLights)], count = 0;
+						case 9: 
+						{ // Svijetla
 							for(new i = 0; i < sizeof(ObjectsLights); i++)
 							{
 								if(ObjectsLights[i][lgtId] != 0)
-									tmp_objects[i] = ObjectsLights[i][lgtId];
-								count++;
+								{
+									fselection_add_item(playerid, ObjectsLights[i][lgtId]);
+									Player_ModelToIndexSet(playerid, i, ObjectsLights[i][lgtId]);
+								}
 							}
-							ShowModelESelectionMenu(playerid, "Furniture - Kupovina", DIALOG_FURNITURE_OBJS_BUY, tmp_objects, count, 0.0, 270.0, 0.0, 1.0, -1, true, tmp_objects);
 						}
-						case 10: { // Vrata
-							new
-								tmp_objects[sizeof(ObjectsDoor)], count = 0;
+						case 10: 
+						{ // Vrata
 							for(new i = 0; i < sizeof(ObjectsDoor); i++)
 							{
 								if(ObjectsDoor[i][doorId] != 0)
-									tmp_objects[i] = ObjectsDoor[i][doorId];
-								count++;
+								{
+									fselection_add_item(playerid, ObjectsDoor[i][doorId]);
+									Player_ModelToIndexSet(playerid, i, ObjectsDoor[i][doorId]);
+								}
 							}
-							ShowModelESelectionMenu(playerid, "Furniture - Kupovina", DIALOG_FURNITURE_OBJS_BUY, tmp_objects, count, 0.0, 270.0, 0.0, 1.0, -1, true, tmp_objects);
 						}
 					}
 					FurObjectSection[ playerid ] = listitem;
 				}
-				case 2: { // Kuhinja
-					switch( listitem ) {
-						case 0: { // Frizider
-							new
-								tmp_objects[sizeof(ObjectsFridge)], count = 0;
+				case 2: 
+				{ // Kuhinja
+					switch( listitem ) 
+					{
+						case 0: 
+						{ // Frizider
 							for(new i = 0; i < sizeof(ObjectsFridge); i++)
 							{
 								if(ObjectsFridge[i][frId] != 0)
-									tmp_objects[i] = ObjectsFridge[i][frId];
-								count++;
+								{
+									fselection_add_item(playerid, ObjectsFridge[i][frId]);
+									Player_ModelToIndexSet(playerid, i, ObjectsFridge[i][frId]);
+								}
 							}
-							ShowModelESelectionMenu(playerid, "Furniture - Kupovina", DIALOG_FURNITURE_OBJS_BUY, tmp_objects, count, 0.0, 270.0, 0.0, 1.0, -1, true, tmp_objects);
 						}
-						case 1: { // Ormarici
-							new
-								tmp_objects[sizeof(ObjectsKitchenCabinets)], count = 0;
+						case 1: 
+						{ // Ormarici
 							for(new i = 0; i < sizeof(ObjectsKitchenCabinets); i++)
 							{
 								if(ObjectsKitchenCabinets[i][kcId] != 0)
-									tmp_objects[i] = ObjectsKitchenCabinets[i][kcId];
-								count++;
+								{
+									fselection_add_item(playerid, ObjectsKitchenCabinets[i][kcId]);
+									Player_ModelToIndexSet(playerid, i, ObjectsKitchenCabinets[i][kcId]);
+								}
 							}
-							ShowModelESelectionMenu(playerid, "Furniture - Kupovina", DIALOG_FURNITURE_OBJS_BUY, tmp_objects, count, 0.0, 270.0, 0.0, 1.0, -1, true, tmp_objects);
 						}
-						case 2: { // Sudoperi
-							new
-								tmp_objects[sizeof(ObjectsSink)], count = 0;
+						case 2: 
+						{ // Sudoperi
 							for(new i = 0; i < sizeof(ObjectsSink); i++)
 							{
 								if(ObjectsSink[i][snkId] != 0)
-									tmp_objects[i] = ObjectsSink[i][snkId];
-								count++;
+								{
+									fselection_add_item(playerid, ObjectsSink[i][snkId]);
+									Player_ModelToIndexSet(playerid, i, ObjectsSink[i][snkId]);
+								}
 							}
-							ShowModelESelectionMenu(playerid, "Furniture - Kupovina", DIALOG_FURNITURE_OBJS_BUY, tmp_objects, count, 0.0, 270.0, 0.0, 1.0, -1, true, tmp_objects);
 						}
-						case 3: { // Stednjak
-							new
-								tmp_objects[sizeof(ObjectsStove)], count = 0;
+						case 3: 
+						{ // Stednjak
 							for(new i = 0; i < sizeof(ObjectsStove); i++)
 							{
 								if(ObjectsStove[i][stId] != 0)
-									tmp_objects[i] = ObjectsStove[i][stId];
-								count++;
+								{
+									fselection_add_item(playerid, ObjectsStove[i][stId]);
+									Player_ModelToIndexSet(playerid, i, ObjectsStove[i][stId]);
+								}
 							}
-							ShowModelESelectionMenu(playerid, "Furniture - Kupovina", DIALOG_FURNITURE_OBJS_BUY, tmp_objects, count, 0.0, 270.0, 0.0, 1.0, -1, true, tmp_objects);
 						}
-						case 4: { // Mikrovalna
-							new
-								tmp_objects[sizeof(ObjectsMicroWave)], count = 0;
+						case 4: 
+						{ // Mikrovalna
 							for(new i = 0; i < sizeof(ObjectsMicroWave); i++)
 							{
 								if(ObjectsMicroWave[i][mwId] != 0)
-									tmp_objects[i] = ObjectsMicroWave[i][mwId];
-								count++;
+								{
+									fselection_add_item(playerid, ObjectsMicroWave[i][mwId]);
+									Player_ModelToIndexSet(playerid, i, ObjectsMicroWave[i][mwId]);
+								}
 							}
-							ShowModelESelectionMenu(playerid, "Furniture - Kupovina", DIALOG_FURNITURE_OBJS_BUY, tmp_objects, count, 0.0, 270.0, 0.0, 1.0, -1, true, tmp_objects);
 						}
-						case 5: { // Kante
-							new
-								tmp_objects[sizeof(ObjectsTrashCan)], count = 0;
+						case 5: 
+						{ // Kante
 							for(new i = 0; i < sizeof(ObjectsTrashCan); i++)
 							{
 								if(ObjectsTrashCan[i][tcId] != 0)
-									tmp_objects[i] = ObjectsTrashCan[i][tcId];
-								count++;
+								{
+									fselection_add_item(playerid, ObjectsTrashCan[i][tcId]);
+									Player_ModelToIndexSet(playerid, i, ObjectsTrashCan[i][tcId]);
+								}
 							}
-							ShowModelESelectionMenu(playerid, "Furniture - Kupovina", DIALOG_FURNITURE_OBJS_BUY, tmp_objects, count, 0.0, 270.0, 0.0, 1.0, -1, true, tmp_objects);
 						}
-						case 6: { // Svijetla
-							new
-								tmp_objects[sizeof(ObjectsLights)], count = 0;
+						case 6: 
+						{ // Svijetla
 							for(new i = 0; i < sizeof(ObjectsLights); i++)
 							{
 								if(ObjectsLights[i][lgtId] != 0)
-									tmp_objects[i] = ObjectsLights[i][lgtId];
-								count++;
+								{
+									fselection_add_item(playerid, ObjectsLights[i][lgtId]);
+									Player_ModelToIndexSet(playerid, i, ObjectsLights[i][lgtId]);
+								}
 							}
-							ShowModelESelectionMenu(playerid, "Furniture - Kupovina", DIALOG_FURNITURE_OBJS_BUY, tmp_objects, count, 0.0, 270.0, 0.0, 1.0, -1, true, tmp_objects);
 						}
-						case 7: { // Posudje
-							new
-								tmp_objects[sizeof(ObjectsKitchenDishes)], count = 0;
+						case 7: 
+						{ // Posudje
 							for(new i = 0; i < sizeof(ObjectsKitchenDishes); i++)
 							{
 								if(ObjectsKitchenDishes[i][dishId] != 0)
-									tmp_objects[i] = ObjectsKitchenDishes[i][dishId];
-								count++;
+								{
+									fselection_add_item(playerid, ObjectsKitchenDishes[i][dishId]);
+									Player_ModelToIndexSet(playerid, i, ObjectsKitchenDishes[i][dishId]);
+								}
 							}
-							ShowModelESelectionMenu(playerid, "Furniture - Kupovina", DIALOG_FURNITURE_OBJS_BUY, tmp_objects, count, 0.0, 270.0, 0.0, 1.0, -1, true, tmp_objects);
 						}
 					}
 					FurObjectSection[ playerid ] = listitem;
 				}
-				case 3: { // Kupaona
-					switch( listitem ) {
-						case 0: { // WC
-							new
-								tmp_objects[sizeof(ObjectsToilet)], count = 0;
+				case 3: 
+				{ // Kupaona
+					switch( listitem ) 
+					{
+						case 0: 
+						{ // WC
 							for(new i = 0; i < sizeof(ObjectsToilet); i++)
 							{
 								if(ObjectsToilet[i][toId] != 0)
-									tmp_objects[i] = ObjectsToilet[i][toId];
-								count++;
+								{
+									fselection_add_item(playerid, ObjectsToilet[i][toId]);
+									Player_ModelToIndexSet(playerid, i, ObjectsToilet[i][toId]);
+								}
 							}
-							ShowModelESelectionMenu(playerid, "Furniture - Kupovina", DIALOG_FURNITURE_OBJS_BUY, tmp_objects, count, 0.0, 270.0, 0.0, 1.0, -1, true, tmp_objects);
 						}
-						case 1: { // Kade
-							new
-								tmp_objects[sizeof(ObjectsBath)], count = 0;
+						case 1: 
+						{ // Kade
 							for(new i = 0; i < sizeof(ObjectsBath); i++)
 							{
 								if(ObjectsBath[i][baId] != 0)
-									tmp_objects[i] = ObjectsBath[i][baId];
-								count++;
+								{
+									fselection_add_item(playerid, ObjectsBath[i][baId]);
+									Player_ModelToIndexSet(playerid, i, ObjectsBath[i][baId]);
+								}
 							}
-							ShowModelESelectionMenu(playerid, "Furniture - Kupovina", DIALOG_FURNITURE_OBJS_BUY, tmp_objects, count, 0.0, 270.0, 0.0, 1.0, -1, true, tmp_objects);
 						}
-						case 2: { // Ogledalo
-							new
-								tmp_objects[sizeof(ObjectsMirror)], count = 0;
+						case 2: 
+						{ // Ogledalo
 							for(new i = 0; i < sizeof(ObjectsMirror); i++)
 							{
 								if(ObjectsMirror[i][miId] != 0)
-									tmp_objects[i] = ObjectsMirror[i][miId];
-								count++;
+								{
+									fselection_add_item(playerid, ObjectsMirror[i][miId]);
+									Player_ModelToIndexSet(playerid, i, ObjectsMirror[i][miId]);
+								}
 							}
-							ShowModelESelectionMenu(playerid, "Furniture - Kupovina", DIALOG_FURNITURE_OBJS_BUY, tmp_objects, count, 0.0, 270.0, 0.0, 1.0, -1, true, tmp_objects);
 						}
 					}
 					FurObjectSection[ playerid ] = listitem;
 				}
-				case 4: { // Soba
-					switch( listitem ) {
-						case 0:  {
-							new
-								tmp_objects[sizeof(ObjectsBed)], count = 0;
+				case 4: 
+				{ // Soba
+					switch( listitem ) 
+					{
+						case 0:  
+						{
 							for(new i = 0; i < sizeof(ObjectsBed); i++)
 							{
 								if(ObjectsBed[i][bdId] != 0)
-									tmp_objects[i] = ObjectsBed[i][bdId];
-								count++;
+								{
+									fselection_add_item(playerid, ObjectsBed[i][bdId]);
+									Player_ModelToIndexSet(playerid, i, ObjectsBed[i][bdId]);
+								}
 							}
-							ShowModelESelectionMenu(playerid, "Furniture - Kupovina", DIALOG_FURNITURE_OBJS_BUY, tmp_objects, count, 0.0, 270.0, 0.0, 1.0, -1, true, tmp_objects);
 						}
-						case 1:  {
-							new
-								tmp_objects[sizeof(ObjectsNightStand)], count = 0;
+						case 1:  
+						{
 							for(new i = 0; i < sizeof(ObjectsNightStand); i++)
 							{
 								if(ObjectsNightStand[i][nsId] != 0)
-									tmp_objects[i] = ObjectsNightStand[i][nsId];
-								count++;
+								{
+									fselection_add_item(playerid, ObjectsNightStand[i][nsId]);
+									Player_ModelToIndexSet(playerid, i, ObjectsNightStand[i][nsId]);
+								}
 							}
-							ShowModelESelectionMenu(playerid, "Furniture - Kupovina", DIALOG_FURNITURE_OBJS_BUY, tmp_objects, count, 0.0, 270.0, 0.0, 1.0, -1, true, tmp_objects);
 						}
-						case 2:  {
-							new
-								tmp_objects[sizeof(ObjectsChest)], count = 0;
+						case 2:  
+						{
 							for(new i = 0; i < sizeof(ObjectsChest); i++)
 							{
 								if(ObjectsChest[i][cId] != 0)
-									tmp_objects[i] = ObjectsChest[i][cId];
-								count++;
+								{
+									fselection_add_item(playerid, ObjectsChest[i][cId]);
+									Player_ModelToIndexSet(playerid, i, ObjectsChest[i][cId]);
+								}
 							}
-							ShowModelESelectionMenu(playerid, "Furniture - Kupovina", DIALOG_FURNITURE_OBJS_BUY, tmp_objects, count, 0.0, 270.0, 0.0, 1.0, -1, true, tmp_objects);
 						}
-						case 3:  {
-							new
-								tmp_objects[sizeof(ObjectsClothes)], count = 0;
+						case 3:  
+						{
 							for(new i = 0; i < sizeof(ObjectsClothes); i++)
 							{
 								if(ObjectsClothes[i][cloId] != 0)
-									tmp_objects[i] = ObjectsClothes[i][cloId];
-								count++;
+								{
+									fselection_add_item(playerid, ObjectsClothes[i][cloId]);
+									Player_ModelToIndexSet(playerid, i, ObjectsClothes[i][cloId]);
+								}
 							}
-							ShowModelESelectionMenu(playerid, "Furniture - Kupovina", DIALOG_FURNITURE_OBJS_BUY, tmp_objects, count, 0.0, 270.0, 0.0, 1.0, -1, true, tmp_objects);
 						}
-						case 4:  {
-							new
-								tmp_objects[sizeof(ObjectsPlants)], count = 0;
+						case 4: 
+						{
 							for(new i = 0; i < sizeof(ObjectsPlants); i++)
 							{
 								if(ObjectsPlants[i][plntId] != 0)
-									tmp_objects[i] = ObjectsPlants[i][plntId];
-								count++;
+								{
+									fselection_add_item(playerid, ObjectsPlants[i][plntId]);
+									Player_ModelToIndexSet(playerid, i, ObjectsPlants[i][plntId]);
+								}
 							}
-							ShowModelESelectionMenu(playerid, "Furniture - Kupovina", DIALOG_FURNITURE_OBJS_BUY, tmp_objects, count, 0.0, 270.0, 0.0, 1.0, -1, true, tmp_objects);
 						}
-						case 5:  {
-							new
-								tmp_objects[sizeof(ObjectsPaint)], count = 0;
+						case 5:  
+						{
 							for(new i = 0; i < sizeof(ObjectsPaint); i++)
 							{
 								if(ObjectsPaint[i][pntId] != 0)
-									tmp_objects[i] = ObjectsPaint[i][pntId];
-								count++;
+								{
+									fselection_add_item(playerid, ObjectsPaint[i][pntId]);
+									Player_ModelToIndexSet(playerid, i, ObjectsPaint[i][pntId]);
+								}
 							}
-							ShowModelESelectionMenu(playerid, "Furniture - Kupovina", DIALOG_FURNITURE_OBJS_BUY, tmp_objects, count, 0.0, 270.0, 0.0, 1.0, -1, true, tmp_objects);
 						}
-						case 6:  {
-							new
-								tmp_objects[sizeof(ObjectsLights)], count = 0;
+						case 6:  
+						{
 							for(new i = 0; i < sizeof(ObjectsLights); i++)
 							{
 								if(ObjectsLights[i][lgtId] != 0)
-									tmp_objects[i] = ObjectsLights[i][lgtId];
-								count++;
+								{
+									fselection_add_item(playerid, ObjectsLights[i][lgtId]);
+									Player_ModelToIndexSet(playerid, i, ObjectsLights[i][lgtId]);
+								}
 							}
-							ShowModelESelectionMenu(playerid, "Furniture - Kupovina", DIALOG_FURNITURE_OBJS_BUY, tmp_objects, count, 0.0, 270.0, 0.0, 1.0, -1, true, tmp_objects);
 						}
-						case 7:  {
-							new
-								tmp_objects[sizeof(ObjectsTables)], count = 0;
+						case 7:  
+						{
 							for(new i = 0; i < sizeof(ObjectsTables); i++)
 							{
 								if(ObjectsTables[i][tablId] != 0)
-									tmp_objects[i] = ObjectsTables[i][tablId];
-								count++;
+								{
+									fselection_add_item(playerid, ObjectsTables[i][tablId]);
+									Player_ModelToIndexSet(playerid, i, ObjectsTables[i][tablId]);
+								}
 							}
-							ShowModelESelectionMenu(playerid, "Furniture - Kupovina", DIALOG_FURNITURE_OBJS_BUY, tmp_objects, count, 0.0, 270.0, 0.0, 1.0, -1, true, tmp_objects);
 						}
-						case 8:  {
-							new
-								tmp_objects[sizeof(ObjectsChair)], count = 0;
+						case 8:  
+						{
 							for(new i = 0; i < sizeof(ObjectsChair); i++)
 							{
 								if(ObjectsChair[i][chId] != 0)
-									tmp_objects[i] = ObjectsChair[i][chId];
-								count++;
+								{
+									fselection_add_item(playerid, ObjectsChair[i][chId]);
+									Player_ModelToIndexSet(playerid, i, ObjectsChair[i][chId]);
+								}
 							}
-							ShowModelESelectionMenu(playerid, "Furniture - Kupovina", DIALOG_FURNITURE_OBJS_BUY, tmp_objects, count, 0.0, 270.0, 0.0, 1.0, -1, true, tmp_objects);
 						}
-						case 9:  {
-							new
-								tmp_objects[sizeof(ObjectsHeater)], count = 0;
+						case 9:  
+						{
 							for(new i = 0; i < sizeof(ObjectsHeater); i++)
 							{
 								if(ObjectsHeater[i][htrId] != 0)
-									tmp_objects[i] = ObjectsHeater[i][htrId];
-								count++;
+								{
+									fselection_add_item(playerid, ObjectsHeater[i][htrId]);
+									Player_ModelToIndexSet(playerid, i, ObjectsHeater[i][htrId]);
+								}
 							}
-							ShowModelESelectionMenu(playerid, "Furniture - Kupovina", DIALOG_FURNITURE_OBJS_BUY, tmp_objects, count, 0.0, 270.0, 0.0, 1.0, -1, true, tmp_objects);
 						}
-						case 10: {
-							new
-								tmp_objects[sizeof(ObjectsCurtains)], count = 0;
+						case 10: 
+						{
 							for(new i = 0; i < sizeof(ObjectsCurtains); i++)
 							{
 								if(ObjectsCurtains[i][crtId] != 0)
-									tmp_objects[i] = ObjectsCurtains[i][crtId];
-								count++;
+								{
+									fselection_add_item(playerid, ObjectsCurtains[i][crtId]);
+									Player_ModelToIndexSet(playerid, i, ObjectsCurtains[i][crtId]);
+								}
 							}
-							ShowModelESelectionMenu(playerid, "Furniture - Kupovina", DIALOG_FURNITURE_OBJS_BUY, tmp_objects, count, 0.0, 270.0, 0.0, 1.0, -1, true, tmp_objects);
 						}
-						case 11: {
-							new
-								tmp_objects[sizeof(ObjectsWindows)], count = 0;
+						case 11: 
+						{
 							for(new i = 0; i < sizeof(ObjectsWindows); i++)
 							{
 								if(ObjectsWindows[i][wnId] != 0)
-									tmp_objects[i] = ObjectsWindows[i][wnId];
-								count++;
+								{
+									fselection_add_item(playerid, ObjectsWindows[i][wnId]);
+									Player_ModelToIndexSet(playerid, i, ObjectsWindows[i][wnId]);
+								}
 							}
-							ShowModelESelectionMenu(playerid, "Furniture - Kupovina", DIALOG_FURNITURE_OBJS_BUY, tmp_objects, count, 0.0, 270.0, 0.0, 1.0, -1, true, tmp_objects);
 						}
 					}
 					FurObjectSection[ playerid ] = listitem;
 				}
-				case 5: { // Ostalo
-					switch( listitem ) {
-						case 0:  {
-							new
-								tmp_objects[sizeof(ObjectsFun)], count = 0;
+				case 5: 
+				{ // Ostalo
+					switch( listitem ) 
+					{
+						case 0:  
+						{
 							for(new i = 0; i < sizeof(ObjectsFun); i++)
 							{
 								if(ObjectsFun[i][fnId] != 0)
-									tmp_objects[i] = ObjectsFun[i][fnId];
-								count++;
+								{
+									fselection_add_item(playerid, ObjectsFun[i][fnId]);
+									Player_ModelToIndexSet(playerid, i, ObjectsFun[i][fnId]);
+								}
 							}
-							ShowModelESelectionMenu(playerid, "Furniture - Kupovina", DIALOG_FURNITURE_OBJS_BUY, tmp_objects, count, 0.0, 270.0, 0.0, 1.0, -1, true, tmp_objects);
 						}
-						case 1:  {
-							new
-								tmp_objects[sizeof(ObjectsDrinks)], count = 0;
+						case 1:  
+						{
 							for(new i = 0; i < sizeof(ObjectsDrinks); i++)
 							{
 								if(ObjectsDrinks[i][drnksId] != 0)
-									tmp_objects[i] = ObjectsDrinks[i][drnksId];
-								count++;
+								{
+									fselection_add_item(playerid, ObjectsDrinks[i][drnksId]);
+									Player_ModelToIndexSet(playerid, i, ObjectsDrinks[i][drnksId]);
+								}
 							}
-							ShowModelESelectionMenu(playerid, "Furniture - Kupovina", DIALOG_FURNITURE_OBJS_BUY, tmp_objects, count, 0.0, 270.0, 0.0, 1.0, -1, true, tmp_objects);
 						}
-						case 2:  {
-							new
-								tmp_objects[sizeof(ObjectsSports)], count = 0;
+						case 2: 
+						{
 							for(new i = 0; i < sizeof(ObjectsSports); i++)
 							{
 								if(ObjectsSports[i][gmId] != 0)
-									tmp_objects[i] = ObjectsSports[i][gmId];
-								count++;
+								{
+									fselection_add_item(playerid, ObjectsSports[i][gmId]);
+									Player_ModelToIndexSet(playerid, i, ObjectsSports[i][gmId]);
+								}
 							}
-							ShowModelESelectionMenu(playerid, "Furniture - Kupovina", DIALOG_FURNITURE_OBJS_BUY, tmp_objects, count, 0.0, 270.0, 0.0, 1.0, -1, true, tmp_objects);
 						}
-						case 3:  {
-							new
-								tmp_objects[sizeof(ObjectsRest)], count = 0;
+						case 3:  
+						{
 							for(new i = 0; i < sizeof(ObjectsRest); i++)
 							{
 								if(ObjectsRest[i][etcId] != 0)
-									tmp_objects[i] = ObjectsRest[i][etcId];
-								count++;
+								{
+									fselection_add_item(playerid, ObjectsRest[i][etcId]);
+									Player_ModelToIndexSet(playerid, i, ObjectsRest[i][etcId]);
+								}
 							}
-							ShowModelESelectionMenu(playerid, "Furniture - Kupovina", DIALOG_FURNITURE_OBJS_BUY, tmp_objects, count, 0.0, 270.0, 0.0, 1.0, -1, true, tmp_objects);
 						}
-						case 4:  {
-							new
-								tmp_objects[sizeof(ObjectsWalls)], count = 0;
+						case 4: 
+						{
 							for(new i = 0; i < sizeof(ObjectsWalls); i++)
 							{
 								if(ObjectsWalls[i][wlId] != 0)
-									tmp_objects[i] = ObjectsWalls[i][wlId];
-								count++;
+								{
+									fselection_add_item(playerid, ObjectsWalls[i][wlId]);
+									Player_ModelToIndexSet(playerid, i, ObjectsWalls[i][wlId]);
+								}
 							}
-							ShowModelESelectionMenu(playerid, "Furniture - Kupovina", DIALOG_FURNITURE_OBJS_BUY, tmp_objects, count, 0.0, 270.0, 0.0, 1.0, -1, true, tmp_objects);
 						}
-						case 5:  {
+						case 5:  
+						{
 							if( !PlayerInfo[ playerid ][ pDonateRank ] ) {
 								SendClientMessage(playerid, COLOR_RED, "[ ! ] Samo VIP korisnici mogu ovo koristiti!");
 								ShowPlayerDialog(playerid, DIALOG_FURNITURE_BUY, DIALOG_STYLE_LIST, "Furniture - Kategorije", "Dnevni Boravak\nKuhinja\nKupaonica\nSobe\nOstalo\n", "Choose", "Abort");
 								return 1;
 							}
-							new
-								tmp_objects[sizeof(ObjectsAnimals)], count = 0;
 							for(new i = 0; i < sizeof(ObjectsAnimals); i++)
 							{
 								if(ObjectsAnimals[i][amId] != 0)
-									tmp_objects[i] = ObjectsAnimals[i][amId];
-								count++;
+								{
+									fselection_add_item(playerid, ObjectsAnimals[i][amId]);
+									Player_ModelToIndexSet(playerid, i, ObjectsAnimals[i][amId]);
+								}
 							}
-							ShowModelESelectionMenu(playerid, "Furniture - Kupovina", DIALOG_FURNITURE_OBJS_BUY, tmp_objects, count, 0.0, 270.0, 0.0, 1.0, -1, true, tmp_objects);
 						}
-						case 6:  {
-							new
-								tmp_objects[sizeof(ObjectsOffice)], count = 0;
+						case 6:  
+						{
 							for(new i = 0; i < sizeof(ObjectsOffice); i++)
 							{
 								if(ObjectsOffice[i][ofId] != 0)
-									tmp_objects[i] = ObjectsOffice[i][ofId];
-								count++;
+								{
+									fselection_add_item(playerid, ObjectsOffice[i][ofId]);
+									Player_ModelToIndexSet(playerid, i, ObjectsOffice[i][ofId]);
+								}
 							}
-							ShowModelESelectionMenu(playerid, "Furniture - Kupovina", DIALOG_FURNITURE_OBJS_BUY, tmp_objects, count, 0.0, 270.0, 0.0, 1.0, -1, true, tmp_objects);
 						}
-						case 7:  {
-							new
-								tmp_objects[sizeof(FurnitureM)], count = 0;
+						case 7: 
+						{
 							for(new i = 0; i < sizeof(FurnitureM); i++)
 							{
 								if(FurnitureM[i][fmId] != 0)
-									tmp_objects[i] = FurnitureM[i][fmId];
-								count++;
+								{
+									fselection_add_item(playerid, FurnitureM[i][fmId]);
+									Player_ModelToIndexSet(playerid, i, FurnitureM[i][fmId]);
+								}
 							}
-							ShowModelESelectionMenu(playerid, "Furniture - Kupovina", DIALOG_FURNITURE_OBJS_BUY, tmp_objects, count, 0.0, 270.0, 0.0, 1.0, -1, true, tmp_objects);
 						}
-						case 8:  {
-							new
-								tmp_objects[sizeof(ObjectsFood)], count = 0;
+						case 8:  
+						{
 							for(new i = 0; i < sizeof(ObjectsFood); i++)
 							{
 								if(ObjectsFood[i][foodId] != 0)
-									tmp_objects[i] = ObjectsFood[i][foodId];
-								count++;
+								{
+									fselection_add_item(playerid, ObjectsFood[i][foodId]);
+									Player_ModelToIndexSet(playerid, i, ObjectsFood[i][foodId]);
+								}
 							}
-							ShowModelESelectionMenu(playerid, "Furniture - Kupovina", DIALOG_FURNITURE_OBJS_BUY, tmp_objects, count, 0.0, 270.0, 0.0, 1.0, -1, true, tmp_objects);
 						}
 					}
 					FurObjectSection[ playerid ] = listitem;
 				}
 			}
+			fselection_show(playerid, DIALOG_FURNITURE_OBJS_BUY, "Furniture Buy");
 			return 1;
 		}
 		case DIALOG_FURNITURE_EDIT_LIST:
 		{
 			if( !response )
-				return ShowPlayerDialog(playerid, DIALOG_FURNITURE_MENU, DIALOG_STYLE_LIST, "Furniture", "Kupi objekt\nUredi\nInventory", "Choose", "Abort");
+				return ShowPlayerDialog(playerid, DIALOG_FURNITURE_MENU, DIALOG_STYLE_LIST, "Furniture", "Kupi objekt\nUredi", "Choose", "Abort");
 
 			switch( listitem )
 			{
@@ -4393,24 +4383,24 @@ hook OnPlayerEditObject(playerid, playerobject, objectid, response, Float:fX, Fl
 	}
 }
 
-hook OnModelSelResponse( playerid, extraid, index, modelid, response )
+hook OnFSelectionResponse(playerid, fselectid, modelid, response)
 {
-	switch(extraid)
+	switch(fselectid)
 	{
 		case DIALOG_FURNITURE_EDIT:
 		{
 			if( !response )
-			{
-				ResetModelShuntVar(playerid);
-				return ShowPlayerDialog(playerid, DIALOG_FURNITURE_MENU, DIALOG_STYLE_LIST, "Furniture", "Kupi objekt\nUredi\nInventory", "Choose", "Abort");
-			}
-			PlayerEditIndex[ playerid ] = ModelToEnumID[playerid][index];
+				return ShowPlayerDialog(playerid, DIALOG_FURNITURE_MENU, DIALOG_STYLE_LIST, "Furniture", "Kupi objekt\nUredi", "Choose", "Abort");
+
+			PlayerEditIndex[ playerid ] = Player_ModelToIndex(playerid, modelid);
 			va_ShowPlayerDialog(playerid, DIALOG_FURNITURE_EDIT_LIST, DIALOG_STYLE_LIST, "Furniture - Uredjivanje", "Uredjivanje (UI)\nTeksture\nBoje\nKopiraj objekt\nObrisi objekt\nObrisi teksture i boje", "Choose", "Abort");
 			ResetModelShuntVar(playerid);
 		}
-		case DIALOG_FURNITURE_OBJS_BUY: {
+		case DIALOG_FURNITURE_OBJS_BUY: 
+		{
 			if( !response ) {
-				switch( FurnObjectsType[ playerid ] ) {
+				switch( FurnObjectsType[ playerid ] ) 
+				{
 					case 1: ShowPlayerDialog(playerid, DIALOG_FURNITURE_OBJCS, DIALOG_STYLE_LIST, "Market - Dnevni", "Kauci\nFotelje\nStolovi\nOrmarici\nTelevizori\nVidei\nHi-Fi\nZvucnici\nTepisi\nSvijetla\nVrata\n", "Choose", "Abort"); // Dnevni
 					case 2: ShowPlayerDialog(playerid, DIALOG_FURNITURE_OBJCS, DIALOG_STYLE_LIST, "Market - Kuhinja", "Frizider\nKuhinjski ormarici\nSudoper\nStednjak\nMikrovalna\nKanta za smece\nSvijetla\nPosudje\n", "Choose", "Abort"); // Kuhinja
 					case 3: ShowPlayerDialog(playerid, DIALOG_FURNITURE_OBJCS, DIALOG_STYLE_LIST, "Market - Kupaonica", "WC skoljke\nKade\nOgledalo\n", "Choose", "Abort"); // Kupaonica
@@ -4419,8 +4409,9 @@ hook OnModelSelResponse( playerid, extraid, index, modelid, response )
 				}
 				return 1;
 			}
-
-			if( AC_GetPlayerMoney(playerid) < GetFurnitureObjectPrice(playerid, index) ) {
+			new index = Player_ModelToIndex(playerid, modelid);
+			if( AC_GetPlayerMoney(playerid) < GetFurnitureObjectPrice(playerid, index) ) 
+			{
 				SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate dovoljno novaca za kupovinu objekta (%d$)!", GetFurnitureObjectPrice(playerid, index));
 				switch( FurnObjectsType[ playerid ] ) {
 					case 1: ShowPlayerDialog(playerid, DIALOG_FURNITURE_OBJCS, DIALOG_STYLE_LIST, "Market - Dnevni", "Kauci\nFotelje\nStolovi\nOrmarici\nTelevizori\nVidei\nHi-Fi\nZvucnici\nTepisi\nSvijetla\nVrata\n", "Choose", "Abort"); // Dnevni
@@ -4431,13 +4422,8 @@ hook OnModelSelResponse( playerid, extraid, index, modelid, response )
 				}
 				return 1;
 			}
-
 			CreateFurniturePreviewObject(playerid, GetFurnitureObjectModel(playerid, index), index);
 			return 1;
-		}
-		case MODEL_SELECTION_FCOLOR: {
-			PlayerEditTxtIndex[ playerid ] = index;
-			ShowPlayerDialog(playerid, DIALOG_FURNITURE_COL_SLOT, DIALOG_STYLE_INPUT, "Furniture - Change Color", "Unesite slot u koji zelite staviti odabranu boju (0-4)!", "Input", "Abort");
 		}
 	}
 	return 1;
@@ -4537,7 +4523,7 @@ CMD:furniture(playerid, params[])
 			houseid = GetPlayerFurnitureHouse(playerid);
 		if( houseid == INVALID_HOUSE_ID || (  556 < houseid < 575 ) ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Morate posjedovati kucu ili posjedujete apartman.");
 		if( !IsPlayerInRangeOfPoint(playerid, 150.0, HouseInfo[ houseid ][ hExitX ], HouseInfo[ houseid ][ hExitY ], HouseInfo[ houseid ][ hExitZ ]) ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Morate biti unutar kuce!");
-		ShowPlayerDialog(playerid, DIALOG_FURNITURE_MENU, DIALOG_STYLE_LIST, "Furniture", "Kupi objekt\nUredi\nInventory", "Choose", "Abort");
+		ShowPlayerDialog(playerid, DIALOG_FURNITURE_MENU, DIALOG_STYLE_LIST, "Furniture", "Kupi objekt\nUredi", "Choose", "Abort");
 	}
 	else if( !strcmp( "approve", param, true ) )
 	{

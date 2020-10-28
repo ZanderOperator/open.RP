@@ -153,10 +153,15 @@ hook OnPlayerDisconnect(playerid, reason)
 	return 1;
 }
 
-hook OnModelSelResponse( playerid, extraid, index, modelid, response ) {
-	if ((extraid == MODEL_SELECTION_RENTCARS && response)) {
-		new price = RentVehInfo[index][rvPrice],
+hook OnFSelectionResponse(playerid, fselectid, modelid, response)
+{
+	if ((fselectid == MODEL_SELECTION_RENTCARS && response)) 
+	{
+		new 
+			index = Player_ModelToIndex(playerid, modelid),
+			price = RentVehInfo[index][rvPrice],
 			multiple = _RentPrice[playerid];
+
 		price *= _RentPrice[playerid];
 		if(PlayerInfo[playerid][pDonateRank] == 0)
 			price = RentVehInfo[index][rvPrice] * multiple;
@@ -180,6 +185,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 	    case DIALOG_RENT_V:
 		{
 		    if(!response) return SendMessage(playerid, MESSAGE_TYPE_INFO, "Ponistili ste rent vozila!");
+
 			new price = RentVehInfo[listitem][rvPrice],
 				multiple = _RentPrice[playerid];
 			price *= _RentPrice[playerid];
@@ -203,8 +209,10 @@ hook OnVehicleDeath(vehicleid, killerid)
 {
 	foreach (new playerid : Player)
 	{
-		if( rentedVehicle[playerid] ) {
-			if( vehicleid == rentedVehID[playerid] ) {
+		if( rentedVehicle[playerid] ) 
+		{
+			if( vehicleid == rentedVehID[playerid] ) 
+			{
 				SendMessage(playerid, MESSAGE_TYPE_ERROR, "Unistili ste rentano vozilo i kaznjeni ste s 250$ kazne!");
 				PlayerToBusinessMoneyTAX(playerid, 76, 250);// Novac ide u biznis 76
 				
@@ -239,9 +247,8 @@ CMD:rentveh(playerid, params[])
 		SendClientMessage(playerid, COLOR_GREY, "[ODABIR]: take, locate, giveback, trunk");
 		return 1;
 	}
-	if (!strcmp(param, "take", true)) {
-		new rented_vehicles[MAX_RENT_LIST], rented_vehprice[MAX_RENT_LIST];//, get_price;
-		
+	if (!strcmp(param, "take", true)) 
+	{
 		if( !IsPlayerInRangeOfPoint(playerid, 7.5, RENT_POS)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste na mjestu za rentanje vozila!");
 		if( rentedVehicle[playerid] ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Vec ste iznajmili vozilo kucajte /rentveh locate");
 		
@@ -254,11 +261,12 @@ CMD:rentveh(playerid, params[])
 		}*/
 		_RentPrice[playerid] = 1;
 		
-		for(new i = 0; i < sizeof(RentVehInfo); i++) {
-			rented_vehicles[i] = RentVehInfo[i][rvModel];
-			rented_vehprice[i] = RentVehInfo[i][rvPrice];//*get_price;
+		for(new i = 0; i < sizeof(RentVehInfo); i++) 
+		{
+			fselection_add_item(playerid, RentVehInfo[i][rvModel]);
+			Player_ModelToIndexSet(playerid, i, RentVehInfo[i][rvModel]);
 		}
-		ShowModelESelectionMenu(playerid, "Rent Vehicle", MODEL_SELECTION_RENTCARS, rented_vehicles, MAX_RENT_LIST, -16.0, 0.0, -55.0, 0.9, 1, true, rented_vehprice);	
+		fselection_show(playerid, MODEL_SELECTION_RENTCARS, "Rent Vehicle");
 	}
 	else if(!strcmp(param, "locate", true))
 	{
