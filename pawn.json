@@ -15,7 +15,8 @@
 		"pawn-lang/sa-mp-fixes",
 		"Southclaws/OnPlayerSlowUpdate",
 		"AGraber/samp-plugin-mapandreas",
-		"RIDE-2DAY/vSync"
+		"RIDE-2DAY/vSync",
+		"roesanne26/fSelection"
 	],
 	"dev_dependencies": [
 		"pawn-lang/YSI-Includes@5.x"

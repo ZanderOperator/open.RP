@@ -1912,22 +1912,6 @@ Police: %d; Sheriffs: %d; Fire Department: %d; Government: %d;", pd_counter, sd_
     return 1;
 }
 
-/*CMD:lawskin(playerid, params[]) {
-    if (!IsACop(playerid) && !IsASD(playerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, " Niste LSPD/SASD!");
-    if (!IsPlayerInRangeOfPoint(playerid,5.0,1292.9618,1097.7413,-18.9368) && !IsPlayerInRangeOfPoint(playerid,5.0,2032.1844,2206.1392,-31.4410) && !IsPlayerInRangeOfPoint(playerid, 10.0, -1167.5934, -1662.6095, 896.1174)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Morate biti unutar LSPD/SASD armorya da bi ste mogli koristiti ovu komandu.");
-
-    ShowModelESelectionMenu(playerid, "Police Skins", MODEL_SELECTION_LAWSKIN, lawskins_police, sizeof(lawskins_police), 0.0, 0.0, 0.0, 1.0, -1, true, lawskins_police);
-    return 1;
-}*/
-/*
-CMD:govskin(playerid, params[]) {
-    if (!IsAGov(playerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste clan Los Santos Govermenta!");
-    if (!IsPlayerInRangeOfPoint(playerid,5.0,1315.3967,758.2388,-93.1678)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste kod mjesta za presvlacenje.");
-
-    ShowModelESelectionMenu(playerid, "Police Skins", MODEL_SELECTION_GOVSKIN, govskins_gov, sizeof(govskins_gov), 0.0, 0.0, 0.0, 1.0, -1, true, govskins_gov);
-    return 1;
-}*/
-
 CMD:govrepair(playerid, params[])
 {
     new vehicleid = GetPlayerVehicleID(playerid);

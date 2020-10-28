@@ -116,6 +116,7 @@
 #include <sscanf2>
 #include <progress2>
 #include <mapandreas>
+#include <fSelection>
 #include <color_menu> // legacy
 
 #include <vSync>
@@ -3005,15 +3006,6 @@ public OnIncomingConnection(playerid, ip_address[], port)
     if (count > MAX_IP_CONNECTS)
     {
         Kick(playerid);
-    }
-    return 1;
-}
-
-hook OnModelSelResponse(playerid, extraid, index, modelid, response)
-{
-    if ((response) && (extraid == MODEL_SELECTION_COLOR))
-    {
-        va_SendClientMessage(playerid, COLOR_YELLOW, "[COLOR]: ID %d.", modelid);
     }
     return 1;
 }
