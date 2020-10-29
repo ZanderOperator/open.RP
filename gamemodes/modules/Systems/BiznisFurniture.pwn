@@ -623,7 +623,7 @@ public OnBizzFurnitureObjectsLoad(biznisid)
 		BizzInfo[ biznisid ][ bFurObjectid ][ i ]	= CreateDynamicObject(BizzInfo[ biznisid ][ bFurModelid ][ i ], BizzInfo[ biznisid ][ bFurPosX ][ i ], BizzInfo[ biznisid ][ bFurPosY ][ i ], BizzInfo[ biznisid ][ bFurPosZ ][ i ], BizzInfo[ biznisid ][ bFurRotX ][ i ], BizzInfo[ biznisid ][ bFurRotY ][ i ], BizzInfo[ biznisid ][ bFurRotZ ][ i ], BizzInfo[ biznisid ][ bVirtualWorld ], BizzInfo[ biznisid ][ bInterior ], -1, FURNITURE_OBJECT_DRAW_DISTANCE, FURNITURE_OBJECT_DRAW_DISTANCE);
 
 		new colorid;
-		for(new slot = 0; slot < MAX_TEXTURE_SLOTS; slot++)
+		for(new slot = 0; slot < MAX_COLOR_TEXT_SLOTS; slot++)
 		{	
 			if( BizzInfo[ biznisid ][ bFurColId ][ i ][ slot ] > -1 ) {
 				sscanf(ColorList[ BizzInfo[ biznisid ][ bFurColId ][ i ][ slot ] ][ clRGB ], "h", colorid);
@@ -1025,17 +1025,7 @@ stock static CreateFurniturePreviewObject(playerid, modelid, index)
 }
 stock static GetBiznisFurnitureSlot(biznisid)
 {
-	new
-		index = -1;
-	for( new i = 0; i < BizzInfo[ biznisid ][ bFurSlots ]; i++ )
-	{
-		if( BizzInfo[ biznisid ][ bFurModelid ][ i ] == 0 )
-		{
-			index = i;
-			break;
-		}
-	}
-	return index;
+	return Iter_Free(BizzFurniture[biznisid]);
 }
 stock static CreateBiznisFurnitureObject(playerid, modelid, Float:x, Float:y, Float:z, Float:rx, Float:ry, Float:rz, bool:doors)
 {
@@ -1062,7 +1052,7 @@ stock static CreateBiznisFurnitureObject(playerid, modelid, Float:x, Float:y, Fl
 	BizzInfo[ biznisid ][ bFurRotY ][ index ]		= ry;
 	BizzInfo[ biznisid ][ bFurRotZ ][ index ]		= rz;
 	
-	for(new i = 0; i < MAX_TEXTURE_SLOTS; i++)
+	for(new i = 0; i < MAX_COLOR_TEXT_SLOTS; i++)
 	{
 		BizzInfo[ biznisid ][ bFurTxtId ][ index ][ i ]	= 0;
 		BizzInfo[ biznisid ][ bFurColId ][ index ][ i ]	= -1;
@@ -1160,7 +1150,7 @@ stock static CreateBiznisFurnitureObject(playerid, modelid, Float:x, Float:y, Fl
 		BizzInfo[ biznisid ][ bFurRotY ][ index ]		= 0.0;
 		BizzInfo[ biznisid ][ bFurRotZ ][ index ]		= 0.0;
 
-		for(new i = 0; i < MAX_TEXTURE_SLOTS; i++)
+		for(new i = 0; i < MAX_COLOR_TEXT_SLOTS; i++)
 		{
 			BizzInfo[ biznisid ][ bFurTxtId ][ index ][ i ]	= 0;
 			BizzInfo[ biznisid ][ bFurColId ][ index ][ i ]	= -1;
@@ -1189,7 +1179,7 @@ stock static CopyFurnitureObject(playerid, copyid)
 	BizzInfo[ biznisid ][ bFurRotY ][ index ]			= BizzInfo[ biznisid ][ bFurRotY ][ copyid ];
 	BizzInfo[ biznisid ][ bFurRotZ ][ index ]			= BizzInfo[ biznisid ][ bFurRotZ ][ copyid ];
 	
-	for(new i = 0; i < MAX_TEXTURE_SLOTS; i++)
+	for(new i = 0; i < MAX_COLOR_TEXT_SLOTS; i++)
 	{
 		BizzInfo[ biznisid ][ bFurTxtId ][ index ][ i ]		= BizzInfo[ biznisid ][ bFurTxtId ][ copyid ][ i ];
 		BizzInfo[ biznisid ][ bFurColId ][ index ][ i ]		= BizzInfo[ biznisid ][ bFurColId ][ copyid ][ i ];
@@ -1198,7 +1188,7 @@ stock static CopyFurnitureObject(playerid, copyid)
 	BizzInfo[ biznisid ][ bFurObjectid ][ index ]	= CreateDynamicObject(BizzInfo[ biznisid ][ bFurModelid ][ index ], BizzInfo[ biznisid ][ bFurPosX ][ index ], BizzInfo[ biznisid ][ bFurPosY ][ index ], BizzInfo[ biznisid ][ bFurPosZ ][ index ], BizzInfo[ biznisid ][ bFurRotX ][ index ], BizzInfo[ biznisid ][ bFurRotY ][ index ], BizzInfo[ biznisid ][ bFurRotZ ][ index ], GetPlayerVirtualWorld(playerid), GetPlayerInterior(playerid), -1, FURNITURE_OBJECT_DRAW_DISTANCE, FURNITURE_OBJECT_DRAW_DISTANCE);
 
 	new colorid;
-	for(new slot = 0; slot < MAX_TEXTURE_SLOTS; slot++)
+	for(new slot = 0; slot < MAX_COLOR_TEXT_SLOTS; slot++)
 	{	
 		if( BizzInfo[ biznisid ][ bFurColId ][ index ][ slot ] > -1 ) {
 			sscanf(ColorList[ BizzInfo[ biznisid ][ bFurColId ][ index ][ slot ] ][ clRGB ], "h", colorid);
@@ -1297,7 +1287,7 @@ stock static SetFurnitureObjectPos(playerid, Float:x, Float:y, Float:z, Float:rx
 	mysql_tquery(g_SQL, editObject, "");
 
 	new colorid;
-	for(new slot = 0; slot < MAX_TEXTURE_SLOTS; slot++)
+	for(new slot = 0; slot < MAX_COLOR_TEXT_SLOTS; slot++)
 	{	
 		if( BizzInfo[ biznisid ][ bFurColId ][ index ][ slot ] > -1 ) {
 			sscanf(ColorList[ BizzInfo[ biznisid ][ bFurColId ][ index ][ slot ] ][ clRGB ], "h", colorid);
@@ -1394,7 +1384,7 @@ stock static DeleteFurnitureObject(biznisid, index, playerid)
 	BizzInfo[ biznisid ][ bFurRotX ][ index ]		= 0.0;
 	BizzInfo[ biznisid ][ bFurRotY ][ index ]		= 0.0;
 	BizzInfo[ biznisid ][ bFurRotZ ][ index ]		= 0.0;
-	for(new i = 0; i < MAX_TEXTURE_SLOTS; i++)
+	for(new i = 0; i < MAX_COLOR_TEXT_SLOTS; i++)
 	{
 		BizzInfo[ biznisid ][ bFurTxtId ][ index ][ i ]	= 0;
 		BizzInfo[ biznisid ][ bFurColId ][ index ][ i ]	= -1;
@@ -1424,7 +1414,7 @@ stock static DestroyAllFurnitureObjects(playerid, biznisid)
 			BizzInfo[ biznisid ][ bFurRotX ][ index ]		= 0.0;
 			BizzInfo[ biznisid ][ bFurRotY ][ index ]		= 0.0;
 			BizzInfo[ biznisid ][ bFurRotZ ][ index ]		= 0.0;
-			for(new i = 0; i < MAX_TEXTURE_SLOTS; i++)
+			for(new i = 0; i < MAX_COLOR_TEXT_SLOTS; i++)
 			{
 				BizzInfo[ biznisid ][ bFurTxtId ][ index ][ i ]	= 0;
 				BizzInfo[ biznisid ][ bFurColId ][ index ][ i ]	= -1;
@@ -1520,7 +1510,7 @@ stock ReloadBizzFurniture(biznisid)
 			BizzInfo[ biznisid ][ bFurRotX ][ index ]		= 0.0;
 			BizzInfo[ biznisid ][ bFurRotY ][ index ]		= 0.0;
 			BizzInfo[ biznisid ][ bFurRotZ ][ index ]		= 0.0;
-			for(new i = 0; i < MAX_TEXTURE_SLOTS; i++)
+			for(new i = 0; i < MAX_COLOR_TEXT_SLOTS; i++)
 			{
 				BizzInfo[ biznisid ][ bFurTxtId ][ index ][ i ]	= 0;
 				BizzInfo[ biznisid ][ bFurColId ][ index ][ i ]	= -1;
@@ -2614,7 +2604,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 
 			new
 				slotid = strval(inputtext);
-			if( 1 <= slotid <= MAX_TEXTURE_SLOTS ) {
+			if( 1 <= slotid <= MAX_COLOR_TEXT_SLOTS ) {
 				va_ShowPlayerDialog(playerid, DIALOG_BIZZ_FURN_COL_SURE, DIALOG_STYLE_MSGBOX, "Furniture - Boje", "Zelite li staviti odabranu boju u slot %d?", "Yes", "No", slotid);
 				BizzPlayerEditTxtSlot[ playerid ] = slotid - 1;
 
@@ -2640,7 +2630,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 
 			new
 				slot = strval(inputtext);
-			if( 1 <= slot <= MAX_TEXTURE_SLOTS ) {
+			if( 1 <= slot <= MAX_COLOR_TEXT_SLOTS ) {
 				BizzPlayerEditClsIndex[ playerid ] = slot - 1;
 				va_ShowPlayerDialog(playerid, DIALOG_BIZZ_FURN_SLOT_SURE, DIALOG_STYLE_MSGBOX, "Furniture - Brisanje tekstura i boja", "Zelite li obrisati teksture i boje na slotu %d?", "Yes", "No", slot);
 			}

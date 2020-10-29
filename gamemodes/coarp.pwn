@@ -221,8 +221,8 @@
 #define PREMIUM_SILVER_EXP						(200) 
 #define PREMIUM_GOLD_EXP						(250)
 
-// Furniture Texture Enum Slots 
-#define MAX_TEXTURE_SLOTS						(5) //  1 Furniture Object - 5 Textures
+// Furniture Texture & Color Slots 
+#define MAX_COLOR_TEXT_SLOTS					(5) //  1 Furniture Object - 5 Colors & 5 Textures
 
 // House Interior Furniture
 #define FURNITURE_PREMIUM_OBJECTS				(700) // => CMD: /afurniture setpremium [player_id] [house_id]
@@ -231,7 +231,7 @@
 #define FURNITURE_VIP_BRONZE_OBJCTS				(300)
 #define FURNITURE_VIP_NONE						(200)
 #define MAX_FURNITURE_SLOTS						(700)
-#define MAX_FURNITURE_SLOT_FIELDS				(FURNITURE_PREMIUM_OBJECTS * MAX_TEXTURE_SLOTS)
+#define MAX_FURNITURE_SLOT_FIELDS				(FURNITURE_PREMIUM_OBJECTS * MAX_COLOR_TEXT_SLOTS)
 
 // House Exterior Furniture
 #define EXTERIOR_OBJS_VIP_GOLD					(25)
@@ -244,8 +244,7 @@
 #define BIZZ_FURNITURE_VIP_SILVER_OBJCTS		(400)
 #define BIZZ_FURNITURE_VIP_BRONZE_OBJCTS		(300)
 #define BIZZ_FURNITURE_VIP_NONE					(200)
-#define MAX_BIZNIS_FURNITURE_SLOTS  			(BIZZ_FURNITURE_VIP_GOLD_OBJCTS * MAX_TEXTURE_SLOTS)
-
+#define MAX_BIZNIS_FURNITURE_SLOTS  			(BIZZ_FURNITURE_VIP_GOLD_OBJCTS * MAX_COLOR_TEXT_SLOTS)
 
 // Trunk - Slot Limits
 #define MAX_WEAPON_SLOTS						(10)
@@ -712,8 +711,8 @@ enum E_HOUSES_INFO {
 new
 	HouseInfo[MAX_HOUSES][E_HOUSES_INFO];
 
-#define hFurTxtId][%1][%2] hFurTxtId][((%1)*MAX_TEXTURE_SLOTS)+(%2)] // Hacking the compiler to have HouseInfo[ houseid ][ hFurTxtId ][ 0 ][ 0 ]
-#define hFurColId][%1][%2] hFurColId][((%1)*MAX_TEXTURE_SLOTS)+(%2)] // // Hacking the compiler to have HouseInfo[ houseid ][ hFurColId ][ 0 ][ 0 ]
+#define hFurTxtId][%1][%2] hFurTxtId][((%1)*MAX_COLOR_TEXT_SLOTS)+(%2)] // Hacking the compiler to have HouseInfo[ houseid ][ hFurTxtId ][ 0 ][ 0 ]
+#define hFurColId][%1][%2] hFurColId][((%1)*MAX_COLOR_TEXT_SLOTS)+(%2)] // // Hacking the compiler to have HouseInfo[ houseid ][ hFurColId ][ 0 ][ 0 ]
 
 enum E_COMPLEX_INFO {
 	cSQLID,

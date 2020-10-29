@@ -65,7 +65,8 @@ public OnPickupsLoad()
 		count;	
 	cache_get_row_count(count);
 	if( !count ) return printf("MySQL Report: No pickups exist to load.");
- 	for(new b = 0; b < count; b++) {
+ 	for(new b = 0; b < count; b++) 
+	 {
 		cache_get_value_name_int(b, 	"id"			, PickupInfo[b][epSQLID]);
 		cache_get_value_name_int(b, 	"pickupmodel"	, PickupInfo[b][epPickupModel]);
 		cache_get_value_name_int(b, 	"pickuptype"	, PickupInfo[b][epPickupType]);
@@ -162,16 +163,7 @@ stock static CreateNewPickup(playerid, pickup)
 
 stock static GetPickupID()
 {
-	new
-	    index = -1;
-	for(new i=1; i<MAX_PICKUP;i++)
-	{
-	    if( !PickupInfo[i][epSQLID] ) {
-		    index = i;
-		    break;
-		}
-	}
-	return index;
+	return Iter_Free(Pickups);
 }
 
 /*
