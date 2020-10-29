@@ -2955,7 +2955,7 @@ CMD:asellcomplex(playerid, params[])
 			mysql_tquery(g_SQL, TmpQuery, "", "");
 		}
 				
-		ComplexInfo[complex][cOwnerID]		= 0;
+		ComplexInfo[complex][cOwnerID]		= -1;
 		
 		PlayerPlaySound(playerid, 1052, 0.0, 0.0, 0.0);
 		va_SendClientMessage(playerid, COLOR_RED, "[ ! ]: You sold Complex %s with admin command, the owner got the buy price of Complex in return!", ComplexInfo[complex][cName]);
@@ -2990,7 +2990,7 @@ CMD:asellcomplexroom(playerid, params[])
 		//Enum
 		PlayerInfo[playerid][pComplexRoomKey] = INVALID_COMPLEX_ID;
 		PlayerInfo[ playerid ][ pSpawnChange ] = 3;
-		ComplexRoomInfo[complex][cOwnerID] = 0;
+		ComplexRoomInfo[complex][cOwnerID] = -1;
 		
 		//SQL
 		new

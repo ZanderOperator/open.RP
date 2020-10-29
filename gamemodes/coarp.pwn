@@ -195,7 +195,6 @@
 #define	MAX_COMPLEX_ROOMS                       (50)
 #define MAX_COMPLEX                             (10)
 #define MAX_BIZZS         						(500)
-#define MAX_SALE_PRODUCTS						(10)
 #define MAX_PLANTS								(200)
 #define MAX_CUSTOMIZED_OBJECTS          		(7)
 #define MAX_SERVER_FLAMES						(200)
@@ -282,6 +281,7 @@
 // Invalids
 #define INVALID_BIZNIS_ID     					(999)
 #define INVALID_HOUSE_ID						(9999)
+// TODO: when rBits removed, change value to -1
 #define INVALID_COMPLEX_ID                      (999)
 
 // Streaming
@@ -819,7 +819,7 @@ enum E_BIZNIS_INFO
 	bMusicURL[96],
 	bMusic,
 	bActiveParty,
-	bEnterPICK,
+	bEnterPickup,
 	bFurSlots,
 	bFurSQL[ BIZZ_FURNITURE_VIP_GOLD_OBJCTS ],
 	bFurModelid[ BIZZ_FURNITURE_VIP_GOLD_OBJCTS ],
@@ -1731,7 +1731,8 @@ enum
 	DIALOG_UPDATE_LIST
 };
 
-enum {
+enum
+{
 	BIZZ_TYPE_OTHER   	= 0,
 	BIZZ_TYPE_BAR,
 	BIZZ_TYPE_STRIP,
@@ -1750,9 +1751,10 @@ enum {
 	BIZZ_TYPE_RENTVEH,
 	BIZZ_TYPE_CASINO,
 	BIZZ_TYPE_DRUGSTORE,
-	BIZZ_TYPE_GASSTATION
+	BIZZ_TYPE_GASSTATION,
+	BIZZ_TYPE_MAX
 }
-#define MAX_BIZZ_TYPES					(19)
+#define MAX_BIZZ_TYPES					(BIZZ_TYPE_MAX)
 
 enum {
 	VEHICLE_USAGE_NORMAL 	= 1,
@@ -3293,7 +3295,7 @@ hook OnPlayerDisconnect(playerid, reason)
 	format( query, sizeof(query), "UPDATE `accounts` SET `AdminMessage` = '', `AdminMessageBy` = '', `AdmMessageConfirm` = '0' WHERE `sqlid` = '%d'", // koji je ovo kurac
     	PlayerInfo[playerid][pSQLID]
 	);
-	mysql_tquery(g_SQL, query, "", "");
+	mysql_tquery(g_SQL, query);
 
 	defer SafeResetPlayerVariables(playerid);
 	return 1;
