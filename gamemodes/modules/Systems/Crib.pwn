@@ -800,7 +800,11 @@ stock ResetHouseInfo(houseid)
 Public: ResetHouseEnumerator()
 {
 	for(new i=0; i<MAX_HOUSES; i++)
+	{
 		ResetHouseInfo(i);
+		Iter_Clear(HouseFurInt[i]);
+		Iter_Clear(HouseFurExt[i]);
+	}
 	return 1;
 }
 

@@ -1017,6 +1017,7 @@ Public:ResetBizzEnumerator()
 	for(new i = 0; i < MAX_BIZZS; i++)
 	{
 		ResetBizzInfo(i, true);
+		Iter_Clear(BizzFurniture[i]);
 	}
 	return 1;
 }
