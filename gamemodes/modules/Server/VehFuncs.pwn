@@ -1,7 +1,5 @@
 #include <YSI_Coding\y_hooks>
 
-// Module includes at the bottom
-
 new Iterator:COWeapons[MAX_VEHICLES]<MAX_WEAPON_SLOTS>,
 	VehicleAlarmTimer[MAX_VEHICLES],
 	VehicleLightsTimer[MAX_VEHICLES],

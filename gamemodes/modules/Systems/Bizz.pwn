@@ -14,6 +14,7 @@
 ///////////////////////////////////////////////////////////////////
 
 // Ints
+#define MAX_BIZZ_ARTICLES					(10)
 #define MAX_BIZNIS_PRODS					(100)
 #define INVALID_PRODUCT_ID					(0)
 
@@ -755,7 +756,7 @@ stock static GetArticleList(biznis)
 
 stock static IsValidArticle(biznis, article)
 {
-	for( new i=0; i <= 9; i++ ) {
+	for( new i=0; i < MAX_BIZZ_ARTICLES; i++ ) {
 		if( BiznisProducts[biznis][bpType][ i ] == article )
 			return 0;
 	}
@@ -851,7 +852,7 @@ stock static GetStoreProducts(biznis)
 	{
 		case BIZZ_TYPE_DUCAN:
 		{
-			for( new i=0; i <= 9; ++i)
+			for( new i=0; i < MAX_BIZZ_ARTICLES; ++i)
 			{
 				if( BiznisProducts[biznis][bpType][ i ] > INVALID_PRODUCT_ID)
 				{
@@ -873,7 +874,7 @@ stock static GetStoreProducts(biznis)
 		}
 		case BIZZ_TYPE_BAR, BIZZ_TYPE_STRIP:
 		{
-			for( new i=0; i <= 9; i++ )
+			for( new i=0; i < MAX_BIZZ_ARTICLES; i++ )
 			{
 				if( BiznisProducts[biznis][bpType][ i ] > INVALID_PRODUCT_ID)
 				{

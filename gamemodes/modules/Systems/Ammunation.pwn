@@ -36,8 +36,10 @@ public OnAmmuWeaponsLoaded()
 	new
 		rows = cache_num_rows(),
 		tmp[ 64 ];
-	if(rows) {
-	    for(new slotid = 0; slotid < rows; slotid++) {
+	if(rows) 
+	{
+	    for(new slotid = 0; slotid < rows; slotid++) 
+		{
 			cache_get_value_name_int(slotid, "id", AmmuInfo[ slotid ][ aiSQLID ]);
 			cache_get_value_name(slotid, "name", tmp);
 			format(AmmuInfo[ slotid ][ aiName ], 64, tmp);
@@ -49,7 +51,8 @@ public OnAmmuWeaponsLoaded()
 			
 		}
 		printf("MySQL Report: Ammunation weapons loaded (%d)!", rows);
-	} else print("MySQL Report: No Ammunation weapons data exist to load.");
+	} 
+	else print("MySQL Report: No Ammunation weapons data exist to load.");
 	return 1;
 }
 

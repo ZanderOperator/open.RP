@@ -835,7 +835,8 @@ CameraRadiusSetPos(playerid, Float:x, Float:y, Float:z, Float:degree = 0.0, Floa
 
 GlobalPlaySound(soundid, Float:x, Float:y, Float:z)
 {
-	for(new i = 0; i < GetMaxPlayers(); i++) {
+	foreach(new i: Player)
+	{
 		if(IsPlayerInRangeOfPoint(i, 25.0, x, y, z)) {
 			PlayerPlaySound(i, soundid, x, y, z);
 		}

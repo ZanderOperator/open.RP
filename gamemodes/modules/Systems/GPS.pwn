@@ -179,7 +179,8 @@ SetString(obj[], string[]) // credits samp
     return (true);
 }
 
-ResetPlayerGPSList(playerid) {
+ResetPlayerGPSList(playerid) 
+{
 	for(new i=0; i < MAX_GPS_LOCATIONS; i++)
 		GPSToList[playerid][i] = -1;
 	return (true);

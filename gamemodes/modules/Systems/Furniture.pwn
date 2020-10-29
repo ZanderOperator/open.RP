@@ -2287,7 +2287,7 @@ public OnFurnitureObjectsLoad(houseid)
 		new
 			colorid;
 
-		for(new colslot = 0; colslot < 5; colslot++)
+		for(new colslot = 0; colslot < MAX_COLOR_TEXT_SLOTS; colslot++)
 		{
 			if( HouseInfo[ houseid ][ hFurColId ][ i ][ colslot ] > -1 ) {
 				sscanf(ColorList[ HouseInfo[ houseid ][ hFurColId ][ i ][ colslot ] ][ clRGB ], "h", colorid);
@@ -2888,7 +2888,7 @@ stock static CopyFurnitureObject(playerid, copyid)
 	HouseInfo[ houseid ][ hFurObjectid ][ index ]	= CreateDynamicObject(HouseInfo[ houseid ][ hFurModelid ][ index ], HouseInfo[ houseid ][ hFurPosX ][ index ], HouseInfo[ houseid ][ hFurPosY ][ index ], HouseInfo[ houseid ][ hFurPosZ ][ index ], HouseInfo[ houseid ][ hFurRotX ][ index ], HouseInfo[ houseid ][ hFurRotY ][ index ], HouseInfo[ houseid ][ hFurRotZ ][ index ], HouseInfo[ houseid ][ hVirtualWorld ], HouseInfo[ houseid ][ hInt ], -1, FURNITURE_OBJECT_DRAW_DISTANCE, FURNITURE_OBJECT_DRAW_DISTANCE);
 
 	new colorid;
-	for(new colslot = 0; colslot < 5; colslot++)
+	for(new colslot = 0; colslot < MAX_COLOR_TEXT_SLOTS; colslot++)
 	{
 		if( HouseInfo[ houseid ][ hFurColId ][ index ][ colslot ] > -1 ) {
 			sscanf(ColorList[ HouseInfo[ houseid ][ hFurColId ][ index ][ colslot ] ][ clRGB ], "h", colorid);
@@ -2987,7 +2987,7 @@ stock static SetFurnitureObjectPos(playerid, Float:x, Float:y, Float:z, Float:rx
 	mysql_tquery(g_SQL, editObject, "");
 
 	new colorid;
-	for(new colslot = 0; colslot < 5; colslot++)
+	for(new colslot = 0; colslot < MAX_COLOR_TEXT_SLOTS; colslot++)
 	{
 		if( HouseInfo[ houseid ][ hFurColId ][ index ][ colslot ] > -1 ) {
 			sscanf(ColorList[ HouseInfo[ houseid ][ hFurColId ][ index ][ colslot ] ][ clRGB ], "h", colorid);
