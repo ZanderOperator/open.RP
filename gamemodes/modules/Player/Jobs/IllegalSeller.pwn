@@ -44,14 +44,15 @@ public OnIllegalWeaponsLoaded()
 {
 	new
 		rows = cache_num_rows();
-	if(rows) {
-	    for(new slotid = 0; slotid < rows; slotid++) {
+	if(rows) 
+	{
+	    for(new slotid = 0; slotid < rows; slotid++) 
+		{
 			cache_get_value_name_int(slotid, "id", PlayerITInfo[ slotid ][ itdSQLID ]);
 			cache_get_value_name_int(slotid, "playerid", PlayerITInfo[ slotid ][ itdPlayerSQLID ]);
 			cache_get_value_name_int(slotid, "time", PlayerITInfo[ slotid ][ itdTime ]);
 			cache_get_value_name_int(slotid, "weaponid", PlayerITInfo[ slotid ][ itdWeaponId ]);
 			Iter_Add(ITools, slotid);
-			
 		}
 		printf("MySQL Report: Ilegal tools loaded (%d)!", rows);
 	} else print("MySQL Report: No Ilegal tools data exist to load.");

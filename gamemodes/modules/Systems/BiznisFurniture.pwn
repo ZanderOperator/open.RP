@@ -1358,7 +1358,7 @@ stock static SetFurnitureObjectColor(playerid, slot, index, slotid)
 }
 stock static LoadFurnitureObjectTextures(biznisid, objectid, index)
 {
-	for( new i = 0; i < 5; i++ ) {
+	for( new i = 0; i < MAX_COLOR_TEXT_SLOTS; i++ ) {
 		new
 			slot = BizzInfo[ biznisid ][ bFurTxtId ][ index ][ i ];
 		SetDynamicObjectMaterial(objectid, i, ObjectTextures[ slot ][ tModel ], ObjectTextures[ slot ][ tTXDName ], ObjectTextures[ slot ][ tName ], 0);

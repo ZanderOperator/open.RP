@@ -120,7 +120,8 @@ forward OnOrderedWeaponsLoaded();
 public OnOrderedWeaponsLoaded()
 {
 	new rows = cache_num_rows();
-	if(rows) {
+	if(rows) 
+	{
 	    for(new slotid = 0; slotid < rows; slotid++) {
 			cache_get_value_name_int(slotid, "id", WOCrateInfo[ slotid ][ cSQLID ]);
 			cache_get_value_name_int(slotid, "playerid", WOCrateInfo[ slotid ][ cPlayerSQLID ]);
