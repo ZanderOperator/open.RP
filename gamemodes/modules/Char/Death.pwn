@@ -39,6 +39,8 @@ enum DROPPED_WEAPON_DATA
 	Float:dPos[3]
 }
 new DroppedWeapons[ MAX_DROPPED_ITEMS ] [ DROPPED_WEAPON_DATA ];
+
+new Iterator:WeaponsDropped<MAX_DROPPED_ITEMS>;
 /*
 
 	##     ##    ###    ########   ######  
@@ -88,17 +90,12 @@ stock DeathCountSeconds_Set(playerid, secs)
 
 stock GetDroppedWeaponFreeID()
 {
-	for(new i = 0; i < MAX_DROPPED_ITEMS; i++)
-	{
-	    if(DroppedWeapons[i][dWeaponID] == 0)
-	        return i;
-	}
-	return -1;
+	return Iter_Free(WeaponsDropped);
 }
 
 stock GetNearDroppedWeapon(playerid)
 {
-	for(new slotid = 0; slotid < MAX_DROPPED_ITEMS; slotid++)
+	foreach(new slotid: WeaponsDropped)
 	{
 	    if(IsPlayerInRangeOfPoint(playerid, 4.0, DroppedWeapons[slotid][dPos][0], DroppedWeapons[slotid][dPos][1], DroppedWeapons[slotid][dPos][2]))
 		{
@@ -116,6 +113,8 @@ stock GetNearDroppedWeapon(playerid)
 			new string[80];
 			format(string, sizeof(string), "%s uzima nesto sa poda.", GetName(playerid));
 			ProxDetector(30.0, playerid, string, COLOR_PURPLE, COLOR_PURPLE, COLOR_PURPLE, COLOR_PURPLE, COLOR_PURPLE);
+			new next;
+			Iter_SafeRemove(WeaponsDropped, slotid, next);
 			return 1;
 		}
 	}
@@ -178,6 +177,8 @@ stock DropPlayerWeapons(playerid, Float:x, Float:y)
                 DroppedWeapons[slot][dPos][0] = x;
                 DroppedWeapons[slot][dPos][1] = y;
                 DroppedWeapons[slot][dPos][2] = Z;
+
+				Iter_Add(WeaponsDropped, slot);
 				#if defined MODULE_LOGS
 				Log_Write("/logfiles/dropitems.txt", "(%s) %s dropped a weapon %s(Ammo:%d) on the floor after death.", ReturnDate(), GetName(playerid),  GetWeaponNameEx(DroppedWeapons[slot][dWeaponID]), DroppedWeapons[slot][dWeaponAmmo]);
 				#endif

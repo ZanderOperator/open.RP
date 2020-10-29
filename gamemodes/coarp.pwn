@@ -224,7 +224,7 @@
 // Furniture Texture Enum Slots 
 #define MAX_TEXTURE_SLOTS						(5) //  1 Furniture Object - 5 Textures
 
-// Furniture
+// House Interior Furniture
 #define FURNITURE_PREMIUM_OBJECTS				(700) // => CMD: /afurniture setpremium [player_id] [house_id]
 #define FURNITURE_VIP_GOLD_OBJCTS				(500)
 #define FURNITURE_VIP_SILVER_OBJCTS				(400)
@@ -233,12 +233,19 @@
 #define MAX_FURNITURE_SLOTS						(700)
 #define MAX_FURNITURE_SLOT_FIELDS				(FURNITURE_PREMIUM_OBJECTS * MAX_TEXTURE_SLOTS)
 
+// House Exterior Furniture
+#define EXTERIOR_OBJS_VIP_GOLD					(25)
+#define EXTERIOR_OBJS_VIP_SILVER				(20)
+#define EXTERIOR_OBJS_VIP_BRONZE				(15)
+#define EXTERIOR_OBJS_VIP_NONE					(10)
+
 // Bizz Furniture
 #define BIZZ_FURNITURE_VIP_GOLD_OBJCTS			(500)
 #define BIZZ_FURNITURE_VIP_SILVER_OBJCTS		(400)
 #define BIZZ_FURNITURE_VIP_BRONZE_OBJCTS		(300)
 #define BIZZ_FURNITURE_VIP_NONE					(200)
 #define MAX_BIZNIS_FURNITURE_SLOTS  			(BIZZ_FURNITURE_VIP_GOLD_OBJCTS * MAX_TEXTURE_SLOTS)
+
 
 // Trunk - Slot Limits
 #define MAX_WEAPON_SLOTS						(10)
@@ -347,6 +354,7 @@ new Iterator:COVehicles<MAX_VEHICLES>,
 	Iterator:Factions<MAX_FACTIONS>,
 	Iterator:Houses<MAX_HOUSES>,
 	Iterator:HouseFurInt[MAX_HOUSES]<MAX_FURNITURE_SLOTS>,
+	Iterator:HouseFurExt[MAX_HOUSES]<EXTERIOR_OBJS_VIP_GOLD>,
 	Iterator:BizzFurniture[MAX_BIZZS]<MAX_BIZNIS_FURNITURE_SLOTS>,
 	Iterator:Bizzes<MAX_BIZZS>,
 	Iterator:Complex<MAX_COMPLEX>,

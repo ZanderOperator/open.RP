@@ -1170,8 +1170,7 @@ public CheckOffline(playerid, const name[])
 			break;
 		}
 	}
-	
-	for(new garage=0; garage < MAX_GARAGES; garage++) 
+	foreach(new garage: Garages)
 	{
 		if(GarageInfo[ garage ][ gOwnerID ] == sqlid) 
 		{
@@ -6214,10 +6213,13 @@ CMD:adminmsg(playerid, params[])
 CMD:kickall(playerid, params[])
 {
 	if(!IsPlayerAdmin(playerid)) return SendClientMessage(playerid, COLOR_RED, "Niste ovlasteni za koristenje ove komande!");
-    for(new i = 0; i < MAX_PLAYERS; i++) if(IsPlayerConnected(i) && !IsPlayerAdmin(i))
+    foreach(new i: Player) 
     {
-        Kick(i);
-        printf("SERVER: Developer je kickovao sve igrace sa servera");
+		if(IsPlayerConnected(i) && !IsPlayerAdmin(i))
+		{
+			Kick(i);
+			printf("SERVER: Developer je kickovao sve igrace sa servera");
+		}
     }
     format(globalstring, sizeof(globalstring), "AdmCMD: %s je kickovao sve igrace sa servera.", PlayerInfo[playerid][pForumName]);
 	SendClientMessageToAll(COLOR_RED, globalstring);

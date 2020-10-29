@@ -245,7 +245,7 @@ stock IsAValidPlObject(objectid)
 
 stock AreAllPObjectSlotsEmpty( playerid )
 {
-    for( new i = 0; i < MAX_PLAYER_OBJECTS; i++)
+    foreach(new i: PlayerCreateObjects[playerid])
 	{
         if(PlayerObjectsInfo[playerid][i][poPlaced])
 			return 0;
@@ -255,7 +255,7 @@ stock AreAllPObjectSlotsEmpty( playerid )
 
 stock GetFreeObjectSlot( playerid ) 
 {
-    for( new i = 0; i < MAX_PLAYER_OBJECTS; i++) 
+    foreach(new i: PlayerCreateObjects[playerid])
 	{
 
         if( !PlayerObjectsInfo[ playerid ][ i ][ poPlaced ] ) 

@@ -9,12 +9,6 @@
 	##     ## ##       ##        ##  ##   ### ##       ##    ## 
 	########  ######## ##       #### ##    ## ########  ######  
 */
-#define EXTERIOR_OBJS_VIP_GOLD				(25)
-#define EXTERIOR_OBJS_VIP_SILVER			(20)
-#define EXTERIOR_OBJS_VIP_BRONZE			(15)
-#define EXTERIOR_OBJS_VIP_NONE				(10)
-
-#define MAX_EXTERIOR_OBJECTS				(60)
 
 #define EXTERIOR_DRAW_DISTANCE				(50.0)
 #define EXTERIOR_HOUSE_DISTANCE				(30.0)
@@ -35,8 +29,6 @@
 	  ## ##   ##     ## ##    ##  ##    ## 
 	   ###    ##     ## ##     ##  ######  
 */
-
-new Iterator: HouseFurExt[MAX_HOUSES]<EXTERIOR_OBJS_VIP_GOLD>;
 
 // rBits
 static stock
