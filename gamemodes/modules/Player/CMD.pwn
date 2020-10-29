@@ -1340,7 +1340,7 @@ CMD:frisk(playerid, params[])
 	va_SendClientMessage(playerid, COLOR_WHITE, "	Sat: %s", PlayerInfo[giveplayerid][pClock] ? ("Da") : ("Ne"));
 	va_SendClientMessage(playerid, COLOR_WHITE, "	Mobitel: %s", GetMobileName(PlayerInfo[giveplayerid][pMobileModel]));
 	SendClientMessage(playerid, COLOR_LIGHTBLUE, "*_________________________ ORUZJA _________________________*");
-	for(new slot = 0; slot < 13; slot++)
+	foreach(new slot: P_Weapons[giveplayerid])
 	{
 		GetPlayerWeaponData(giveplayerid, slot, weapon[slot], bullets[slot]);
 		if(weapon[slot] > 0 && bullets[slot] > 0)

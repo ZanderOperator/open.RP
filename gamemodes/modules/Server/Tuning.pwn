@@ -71,7 +71,10 @@ enum ComponentsInfo {
 	cPrice,
 	cType
 };
-#define MAX_COMPONENTS	194
+
+#define MAX_COMPONENTS				(194)
+#define MAX_COMPONENT_SLOTS			(14)
+
 static const
 	cInfo[ MAX_COMPONENTS ][ ComponentsInfo ] = {
 	{ 1000, "Pro Spoiler", 5000, CARMODTYPE_SPOILER },
@@ -442,7 +445,7 @@ stock CreatePlayerTuningTextDraws( playerid ) {
 
 stock DeletePlayerTuningTD(playerid)
 {
-	for( new i = 0; i < 14; i ++ ) 
+	for( new i = 0; i < MAX_COMPONENT_SLOTS; i ++ ) 
 	{
 		PlayerTextDrawHide( playerid, TuningBuy[ playerid ][ i ]);
 		PlayerTextDrawDestroy( playerid, TuningBuy[ playerid ][ i ]);
@@ -920,13 +923,13 @@ stock GetVehicleCameraPos( vehicleid, &Float:x, &Float:y, &Float:z, Float:xoff=0
 //==============================================================================
 stock TuningTDControl( playerid, bool:show ) {
 	if( show == true ) {
-        for( new i = 0; i < 14; i ++ ) 
+        for( new i = 0; i < MAX_COMPONENT_SLOTS; i ++ ) 
 			PlayerTextDrawShow( playerid, TuningBuy[ playerid ][ i ] );
 		ClickedTuningTD[playerid] = true;
 		
 	}
 	else if( show == false ) {
-		for( new i = 0; i < 14; i ++ ) 
+		for( new i = 0; i < MAX_COMPONENT_SLOTS; i ++ ) 
 			PlayerTextDrawHide( playerid, TuningBuy[ playerid ][ i ]);
 		ClickedTuningTD[playerid] = false;
 	}
@@ -962,7 +965,7 @@ stock ResetTuning( vehid )
 	}
 	new componentid;
 	ChangeVehiclePaintjob( vehid, 3 );
-	for( new i; i < 14; i++ ) 
+	for( new i; i < MAX_COMPONENT_SLOTS; i++ ) 
 	{
 		componentid = GetVehicleComponentInSlot( vehid, i );
 		if( componentid != 0 )

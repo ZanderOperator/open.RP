@@ -1087,15 +1087,17 @@ CMD:seeds(playerid, params[])
 		);
 	}
 	else if( !strcmp(param, "put", true) ) {
+
 		new
 			Float:X, Float:Y, Float:Z;
 		if( PlayerInfo[playerid][pFreeWorks] < 5) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne mozete vise raditi! Pricekajte payday.");
-    
-		for(new i=0;i<MAX_VEHICLES;i++)
+		foreach(new i: Vehicles)
 		{
 			GetVehiclePos(i, X, Y, Z);
-			if( GetVehicleModel(i) == 610 ) {
-				if( IsPlayerInRangeOfPoint(playerid, 2.0, X, Y, Z) ) {
+			if( GetVehicleModel(i) == 610 ) 
+			{
+				if( IsPlayerInRangeOfPoint(playerid, 2.0, X, Y, Z) ) 
+				{
 					if( !SeedInfo[playerid][sSeeds] ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate sjemenke kod sebe!");
 					SeedInfo[playerid][sSeeds] 			= 0;
 					SeedInfo[playerid][sTrailerSeeds] 	+= 10;
@@ -1122,9 +1124,11 @@ CMD:tow2(playerid, params[]) { // brooks
 	if( IsPlayerInAnyVehicle(playerid))  {
 		if( IsTrailerAttachedToVehicle(GetPlayerVehicleID(playerid))) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Traktor vec ima prikolicu!");
 
-		for(new i=0;i<MAX_VEHICLES;i++) {
+		foreach(new i: Vehicles)
+		{
 			GetVehiclePos(i, X, Y, Z);
-			if( GetVehicleDistanceFromPoint(GetPlayerVehicleID(playerid), X, Y, Z) <= 5.0) {
+			if( GetVehicleDistanceFromPoint(GetPlayerVehicleID(playerid), X, Y, Z) <= 5.0) 
+			{
 				AttachTrailerToVehicle(i, GetPlayerVehicleID(playerid));
 				SendMessage(playerid, MESSAGE_TYPE_INFO, "Da detach-ate prikolicu, kucajte ponovo /tow2.");
 				break;
@@ -1147,10 +1151,11 @@ CMD:attach_trailer(playerid, params[])
 		if( GetVehicleModel(GetPlayerVehicleID(playerid)) != 531) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste u traktoru!");
 		if( IsTrailerAttachedToVehicle(GetPlayerVehicleID(playerid))) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Traktor vec ima prikolicu!");
 
-		for(new i=0;i<MAX_VEHICLES;i++)
+		foreach(new i: Vehicles)
 		{
 			GetVehiclePos(i, X, Y, Z);
-			if( GetVehicleDistanceFromPoint(GetPlayerVehicleID(playerid), X, Y, Z) <= 3.0) {
+			if( GetVehicleDistanceFromPoint(GetPlayerVehicleID(playerid), X, Y, Z) <= 3.0) 
+			{
 				if( GetVehicleModel(i) == 610) 
 				{
 					AttachTrailerToVehicle(i, GetPlayerVehicleID(playerid));

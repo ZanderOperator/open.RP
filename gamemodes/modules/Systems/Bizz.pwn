@@ -1007,9 +1007,11 @@ stock ResetBizzInfo(biz, bool:server_startup = false)
 	BizzInfo[ biz ][ bEntranceCost ] = 0;
 	BizzInfo[ biz ][ bDestroyed ] = 0;
 	BizzInfo[ biz ][ bFurSlots ] = 0;
-	BizzInfo[ biz][ bGasPrice ] = 0;
+	BizzInfo[ biz ][ bGasPrice ] = 0;
 	if(IsValidDynamicPickup(BizzInfo[ biz ][ bEnterPICK ]))
 		DestroyDynamicPickup(BizzInfo[ biz ][ bEnterPICK ]);
+	
+	Iter_Clear(BizzFurniture[biz]);
 	return 1;
 }
 
@@ -1018,7 +1020,6 @@ Public:ResetBizzEnumerator()
 	for(new i = 0; i < MAX_BIZZS; i++)
 	{
 		ResetBizzInfo(i, true);
-		Iter_Clear(BizzFurniture[i]);
 	}
 	return 1;
 }

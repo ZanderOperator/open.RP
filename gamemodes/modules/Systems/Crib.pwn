@@ -795,6 +795,10 @@ stock ResetHouseInfo(houseid)
 		Bit1_Set(gr_HouseAlarm, houseid, false);
 	}
 	KillTimer(GlobalMapIconT[houseid]);
+
+	Iter_Clear(HouseFurInt[houseid]);
+	Iter_Clear(HouseFurExt[houseid]);
+	return 1;
 }
 
 Public: ResetHouseEnumerator()
@@ -802,8 +806,6 @@ Public: ResetHouseEnumerator()
 	for(new i=0; i<MAX_HOUSES; i++)
 	{
 		ResetHouseInfo(i);
-		Iter_Clear(HouseFurInt[i]);
-		Iter_Clear(HouseFurExt[i]);
 	}
 	return 1;
 }

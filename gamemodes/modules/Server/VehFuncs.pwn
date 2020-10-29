@@ -383,7 +383,7 @@ setTire(vehid, tireid, stat)
 	}
 	return 1;
 }
-
+/*
 hook OnGameModeInit()
 {
 	for(new i = 0; i < MAX_VEHICLES; i++)
@@ -392,4 +392,4 @@ hook OnGameModeInit()
 		Iter_Clear(COWObjects[i]);
 	}
 	return 1;
-}
+}*/

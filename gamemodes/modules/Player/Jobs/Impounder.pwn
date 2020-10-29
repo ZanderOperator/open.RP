@@ -78,7 +78,7 @@ CMD:jobimpound(playerid, params[])
 		{
 			if(VehicleInfo[v][vTickets][0] != 0 || VehicleInfo[v][vTickets][1] != 0 || VehicleInfo[v][vTickets][2] != 0 || VehicleInfo[v][vTickets][3] != 0 || VehicleInfo[v][vTickets][4] != 0)
 			{
-				for(new i = 0; i <= 4; ++i)
+				for(new i = 0; i < MAX_VEHICLE_TICKETS; i++)
 				{
 					if(VehicleInfo[v][vTickets][i] != 0 && VehicleInfo[v][vTicketStamp][i] < (gettime() - DAYS_NEEDED) && !IsVehicleOccupied(v))
 					{

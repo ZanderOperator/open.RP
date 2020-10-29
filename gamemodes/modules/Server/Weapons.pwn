@@ -79,6 +79,7 @@ Public:LoadPlayerWeapons(playerid)
 Public:OnWeaponInsertQuery(playerid, slotid)
 {
 	PlayerWeapons[playerid][pwSQLID][slotid] = cache_insert_id();
+	Iter_Add(P_Weapons[playerid], slotid);
 	return 1;
 }
 
@@ -133,20 +134,11 @@ stock AC_SavePlayerWeapon(playerid, slotid)
 
 stock AC_SavePlayerWeapons(playerid)
 {
-	AC_SavePlayerWeapon(playerid, 0);
-	AC_SavePlayerWeapon(playerid, 1);
-	AC_SavePlayerWeapon(playerid, 2);
-	AC_SavePlayerWeapon(playerid, 3);
-	AC_SavePlayerWeapon(playerid, 4);
-	AC_SavePlayerWeapon(playerid, 5);
-	AC_SavePlayerWeapon(playerid, 6);
-	AC_SavePlayerWeapon(playerid, 7);
-	AC_SavePlayerWeapon(playerid, 8);
-	AC_SavePlayerWeapon(playerid, 9);
-	AC_SavePlayerWeapon(playerid, 10);
-	AC_SavePlayerWeapon(playerid, 11);
-	AC_SavePlayerWeapon(playerid, 12);
-
+	foreach(new wslot: P_Weapons[playerid])
+	{
+		AC_SavePlayerWeapon(playerid, wslot);
+	}
+	return 1;
 }
 
 stock AC_DecreasePlayerWeaponAmmo(playerid, weaponid, amount)
@@ -292,8 +284,7 @@ stock AC_SetPlayerWeapons(playerid)
 	ResetPlayerWeapons(playerid);
 	for (new i = 0; i <= 12; i++) 
 	{
-		if(PlayerWeapons[playerid][pwAmmo][i] <= 0)
-			continue;
+		if(PlayerWeapons[playerid][pwAmmo][i] <= 0) continue;
 		GivePlayerWeapon(playerid, PlayerWeapons[playerid][pwWeaponId][i], PlayerWeapons[playerid][pwAmmo][i]);
 	}
 	SetPlayerArmedWeapon(playerid, 0);
@@ -332,6 +323,7 @@ stock AC_ResetPlayerWeapons(playerid, bool:base_reset=true)
 
 	if(base_reset)
 	{
+		Iter_Clear(P_Weapons[playerid]);
 		// MySQL Query
 		new
 			weapDeleteQuery[128];
@@ -345,7 +337,7 @@ stock AC_ResetPlayerWeapon(playerid, weaponid, bool:base_update=true)
 {
 	//Uzimamo vrijednosti oruzja
 	new Weapon[13][2];
-	for (new i = 0; i <= 12; i++)
+	foreach(new i: P_Weapons[playerid])
 	{
 		if(PlayerWeapons[playerid][pwAmmo][i] <= 0)
 			continue;
@@ -356,8 +348,11 @@ stock AC_ResetPlayerWeapon(playerid, weaponid, bool:base_update=true)
 				
 			PlayerWeapons[playerid][pwWeaponId][i] 	= 0;
 			PlayerWeapons[playerid][pwAmmo][i] 		= 0;
+			new next;
+			Iter_SafeRemove(P_Weapons[playerid], i, next);
 		}
-		else {
+		else 
+		{
 			Weapon[i][0] = PlayerWeapons[playerid][pwWeaponId][i];
 			Weapon[i][1] = PlayerWeapons[playerid][pwAmmo][i];
 		}
@@ -365,8 +360,8 @@ stock AC_ResetPlayerWeapon(playerid, weaponid, bool:base_update=true)
 	ResetWeaponSlots(playerid);
 	AC_ResetPlayerWeapons(playerid, false);
 
-	for (new i = 0; i <= 12; i++) {
-
+	foreach(new i: P_Weapons[playerid])
+	{
 		if(Weapon[i][1] <= 0)
 			continue;
 		if(!CheckPlayerWeapons(playerid, Weapon[i][0]))
@@ -427,10 +422,9 @@ hook OnPlayerConnect(playerid)
 {
 	AimWarns[playerid] = 0;
 	AimWarnStamp[playerid] = 0;
+	Iter_Clear(P_Weapons[playerid]);
 	return 1;
 }
-
-
 
 public OnPlayerSuspectedForAimbot(playerid,hitid,weaponid,warnings)
 {

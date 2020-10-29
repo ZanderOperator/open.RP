@@ -246,9 +246,12 @@
 #define BIZZ_FURNITURE_VIP_NONE					(200)
 #define MAX_BIZNIS_FURNITURE_SLOTS  			(BIZZ_FURNITURE_VIP_GOLD_OBJCTS * MAX_COLOR_TEXT_SLOTS)
 
-// Trunk - Slot Limits
+// Trunk - Weapon Slot Limits
 #define MAX_WEAPON_SLOTS						(10)
 #define MAX_PACKAGE_VEHICLE						(15) 
+
+// Player - Weapon Slot Limits
+#define MAX_PLAYER_WEAPON_SLOTS					(13)
 
 // Weapon Packages
 #define MAX_PLAYER_PACKAGES 					(10)
@@ -345,7 +348,7 @@
 // Main Database Connection Handler
 new MySQL:g_SQL;
 
-// Iterators
+// Server Iterators
 new Iterator:COVehicles<MAX_VEHICLES>,
 	Iterator:Vehicles<MAX_VEHICLES>,
 	Iterator:Skins<MAX_MENU_ITEMS>,
@@ -361,8 +364,12 @@ new Iterator:COVehicles<MAX_VEHICLES>,
 	Iterator:Garages<MAX_GARAGES>,
 	Iterator:IllegalGarages<MAX_ILEGAL_GARAGES>,
 	Iterator:COWObjects	[MAX_VEHICLES]<MAX_WEAPON_SLOTS>,
-	Iterator:P_PACKAGES[MAX_PLAYERS]<MAX_PLAYER_PACKAGES>,
 	Iterator:V_PACKAGES[MAX_VEHICLES]<MAX_PACKAGE_VEHICLE>;
+
+// Player Iterators
+new 
+	Iterator:P_PACKAGES[MAX_PLAYERS]<MAX_PLAYER_PACKAGES>,
+	Iterator:P_Weapons[MAX_PLAYERS]<MAX_PLAYER_WEAPON_SLOTS>;
 
 new texture_buffer[10256];
 new PlayerUpdatePage[MAX_PLAYERS] = 0;
@@ -2597,7 +2604,7 @@ ResetPlayerVariables(playerid)
 		RemovePlayerAttachedObject( playerid, 9 );
 
 	// Weapon Enum reset
-	for(new wslot = 0; wslot < 13; wslot++)
+	for(new wslot = 0; wslot < MAX_PLAYER_WEAPON_SLOTS; wslot++)
 	{
 		PlayerWeapons[playerid][pwSQLID][wslot] = -1;
 		PlayerWeapons[playerid][pwWeaponId][wslot] = 0;

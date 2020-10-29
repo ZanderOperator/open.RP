@@ -103,7 +103,7 @@ stock GetNearestContainer(pID)
 {
 	new Float:objPos[3];
 
-	for(new i = 0; i < 88; i++) {
+	for(new i = 0; i < MAX_GARBAGE_CONTAINERS; i++) {
 		GetDynamicObjectPos(garbageContainers[i], objPos[0], objPos[1], objPos[2]);
 		if (IsPlayerInRangeOfPoint(pID, 2.0, objPos[0], objPos[1], objPos[2])) {
 			return i;
