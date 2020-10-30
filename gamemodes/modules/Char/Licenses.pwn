@@ -20,7 +20,7 @@ new
 	DrivingCP[MAX_PLAYERS] = { -1, ... },
 	DrivingCPPos[MAX_PLAYERS] = { 0, ... },
 	DrivingBoatCP[MAX_PLAYERS] = { -1, ... },
-	DrivingTimer[MAX_PLAYERS];
+	Timer:DrivingTimer[MAX_PLAYERS];
 
 /*
 	 ######  ########  #######   ######  ##    ##  ######  
@@ -58,7 +58,7 @@ stock ResetPlayerDrivingVars(playerid)
 	Bit1_Set( gr_DrivingStarted, 	playerid, false );
 	Bit1_Set( gr_TookDriving, 		playerid, false );
 	
-	KillTimer(DrivingTimer[playerid]);
+	stop DrivingTimer[playerid];
 	
 	DrivingCP[playerid] 	= -1;
 	DrivingCPPos[playerid] 	= -1;
@@ -75,14 +75,14 @@ stock ResetPlayerDrivingVars(playerid)
 	   ##     ##  ##     ## ##       ##    ##  ##    ## 
 	   ##    #### ##     ## ######## ##     ##  ######  
 */
-forward OnPlayerDrivingLesson(playerid);
-public OnPlayerDrivingLesson(playerid)
+timer OnPlayerDrivingLesson[1000](playerid)
 {
-	if( GetPlayerSpeed(playerid,true) >= 110.0 ) {
-		SendClientMessage( playerid, COLOR_RED, "[GRSKA]: Vozili ste preko 110kmh!");
+	if( GetPlayerSpeed(playerid,true) >= 110.0 ) 
+	{
+		SendClientMessage( playerid, COLOR_RED, "[GRESKA]: Vozili ste preko 110kmh!");
 		
 		DisablePlayerCheckpoint(playerid);
-		KillTimer(DrivingTimer[playerid]);
+		stop DrivingTimer[playerid];
 		
 		SetVehicleToRespawn(GetPlayerVehicleID(playerid));
 		RemovePlayerFromVehicle(playerid);
@@ -175,7 +175,7 @@ hook OnPlayerEnterCheckpoint(playerid)
 				mysql_pquery(g_SQL, boatLicUpdate);
 				
 				Bit1_Set( gr_DrivingStarted, playerid, false );
-				KillTimer(DrivingTimer[playerid]);
+				stop DrivingTimer[playerid];
 				
 				TogglePlayerAllDynamicCPs(playerid, true);
 			}
@@ -210,7 +210,7 @@ hook OnPlayerEnterCheckpoint(playerid)
 				mysql_pquery(g_SQL, carLicUpdate);
 				
 				Bit1_Set( gr_DrivingStarted, playerid, false );
-				KillTimer(DrivingTimer[playerid]);
+				stop DrivingTimer[playerid];
 				
 				TogglePlayerAllDynamicCPs(playerid, true);
 			}
@@ -222,9 +222,10 @@ hook OnPlayerEnterCheckpoint(playerid)
 
 hook OnPlayerExitVehicle(playerid, vehicleid)
 {
-	if( Bit1_Get( gr_DrivingStarted, playerid ) ) {
+	if( Bit1_Get( gr_DrivingStarted, playerid ) ) 
+	{
 		DisablePlayerCheckpoint(playerid);
-		KillTimer(DrivingTimer[playerid]);
+		stop DrivingTimer[playerid];
 		
 		SetVehicleToRespawn(vehicleid);
 		RemovePlayerFromVehicle(playerid);
@@ -323,8 +324,8 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 					DrivingCPPos[playerid] = 1;
 					Bit1_Set( gr_DrivingStarted, playerid, true );
 					
-					KillTimer( DrivingTimer[playerid] );
-					DrivingTimer[playerid] = SetTimerEx("OnPlayerDrivingLesson", 1000, true, "i", playerid);
+					stop DrivingTimer[playerid];
+					DrivingTimer[playerid] = repeat OnPlayerDrivingLesson(playerid);
 				}
 				case 1: { // 200kmh
 					GameTextForPlayer( playerid, "~r~Netocan odgovor!", 1800, 1 );

@@ -37,7 +37,7 @@ static
     bool:TappingCall  [MAX_PLAYERS] = {false, ...},
     bool:TappingSMS   [MAX_PLAYERS] = {false, ...},
     bool:TracingNumber[MAX_PLAYERS] = {false, ...},
-    TracingNumberTimer[MAX_PLAYERS] = {-1, ...},
+    Timer:TracingNumberTimer[MAX_PLAYERS],
     TracingNumberZone [MAX_PLAYERS] = {-1, ...};
 
 
@@ -121,12 +121,11 @@ stock Player_SetTracingNumber(playerid, bool:v)
     TracingNumber[playerid] = v;
 }
 
-forward OnPlayerTracingNumber(playerid, targetid, type);
-public OnPlayerTracingNumber(playerid, targetid, type)
+timer OnPlayerTracingNumber[5000](playerid, targetid, type)
 {
     if (!Player_MobileOn(targetid))
     {
-        KillTimer(TracingNumberTimer[playerid]);
+        stop TracingNumberTimer[playerid];
         GangZoneDestroy(TracingNumberZone[playerid]);
         Player_SetTracingNumber(playerid, false);
 
@@ -140,7 +139,7 @@ public OnPlayerTracingNumber(playerid, targetid, type)
         {
             va_SendClientMessage(playerid, COLOR_RED, "[UREDJAJ]: Trazeni broj se nalazi na lokaciji %s. Zapocinjem detaljniji pregled koji ce zahtjevati vise vremena!", GetPlayerStreet(targetid));
             SendMessage(playerid, MESSAGE_TYPE_INFO, "Za prekid kucajte /tracenumber.");
-            TracingNumberTimer[playerid] = SetTimerEx("OnPlayerTracingNumber", 30000 + random(1000), false, "iii", playerid, targetid, 2);
+            TracingNumberTimer[playerid] = defer OnPlayerTracingNumber[30000 + random(1000)](playerid, targetid, 2);
         }
         case 2:
         {
@@ -152,7 +151,7 @@ public OnPlayerTracingNumber(playerid, targetid, type)
 
             SendClientMessage(playerid, COLOR_RED, "[UREDJAJ] Lokacija broja je prikazana na GPSu. Zapocinjem detaljniji pregled koji ce zahtjevati vise vremena!");
             SendMessage(playerid, MESSAGE_TYPE_INFO, "Za prekid kucajte /tracenumber.");
-            TracingNumberTimer[playerid] = SetTimerEx("OnPlayerTracingNumber", 60000 + random(1000), false, "iii", playerid, targetid, 3);
+            TracingNumberTimer[playerid] = defer OnPlayerTracingNumber[60000 + random(1000)](playerid, targetid, 3);
         }
         case 3:
         {
@@ -161,12 +160,12 @@ public OnPlayerTracingNumber(playerid, targetid, type)
             GetPlayerPos(targetid, X, Y, Z);
 
             GangZoneDestroy(TracingNumberZone[playerid]);
-            TracingNumberZone[playerid] = CreateGangZoneAroundPoint(X, Y, 200.0, 200.0);
+            TracingNumberZone[playerid] = CreateGangZoneAroundPoint(X, Y, 125.0, 125.0);
             GangZoneShowForPlayer(playerid, TracingNumberZone[ playerid ], COLOR_YELLOW);
 
             SendClientMessage(playerid, COLOR_RED, "[UREDJAJ] Lokacija broja je prikazana na GPSu. Zapocinjem detaljniji pregled koji ce zahtjevati vise vremena!");
             SendMessage(playerid, MESSAGE_TYPE_INFO, "Za prekid kucajte /tracenumber.");
-            TracingNumberTimer[playerid] = SetTimerEx("OnPlayerTracingNumber", 1000000 + random(1000), false, "iii", playerid, targetid, 4);
+            TracingNumberTimer[playerid] = defer OnPlayerTracingNumber[100000 + random(1000)](playerid, targetid, 4);
         }
         case 4:
         {
@@ -175,12 +174,12 @@ public OnPlayerTracingNumber(playerid, targetid, type)
             GetPlayerPos(targetid, X, Y, Z);
 
             GangZoneDestroy(TracingNumberZone[playerid]);
-            TracingNumberZone[playerid] = CreateGangZoneAroundPoint(X, Y, 150.0, 150.0);
+            TracingNumberZone[playerid] = CreateGangZoneAroundPoint(X, Y, 60.0, 60.0);
             GangZoneShowForPlayer(playerid, TracingNumberZone[ playerid ], COLOR_YELLOW);
 
             SendClientMessage(playerid, COLOR_RED, "[UREDJAJ] Lokacija broja je prikazana na GPSu. Zapocinjem detaljniji pregled koji ce zahtjevati vise vremena!");
             SendMessage(playerid, MESSAGE_TYPE_INFO, "Za prekid kucajte /tracenumber.");
-            TracingNumberTimer[playerid] = SetTimerEx("OnPlayerTracingNumber", 1200000 + random(1000), false, "iii", playerid, targetid, 4);
+            TracingNumberTimer[playerid] = defer OnPlayerTracingNumber[120000 + random(1000)](playerid, targetid, 2);
         }
     }
     return 1;
@@ -366,7 +365,7 @@ CMD:tracenumber(playerid, params[])
 
     if (Player_TracingNumber(playerid))
     {
-        KillTimer(TracingNumberTimer[playerid]);
+        stop TracingNumberTimer[playerid];
         GangZoneDestroy(TracingNumberZone[playerid]);
         Player_SetTracingNumber(playerid, false);
 
@@ -403,7 +402,7 @@ CMD:tracenumber(playerid, params[])
         {
             SendFormatMessage(playerid, MESSAGE_TYPE_SUCCESS, "Poceli ste s trazenjem lokacije broja %d.", number);
 
-            TracingNumberTimer[playerid] = SetTimerEx("OnPlayerTracingNumber", 8000 + random(900), false, "iii", playerid, gplayerid, 1);
+            TracingNumberTimer[playerid] = defer OnPlayerTracingNumber[8000 + random(900)](playerid, gplayerid, 1);
             Player_SetTracingNumber(playerid, true);
             return 1;
         }
@@ -446,11 +445,9 @@ hook ResetPlayerVariables(playerid)
     // Cellphone GPS tracking
     if (Player_TracingNumber(playerid))
     {
-        KillTimer(TracingNumberTimer[playerid]);
+        stop TracingNumberTimer[playerid];
         GangZoneDestroy(TracingNumberZone[playerid]);
         Player_SetTracingNumber(playerid, false);
-
-        TracingNumberTimer[playerid] = -1;
         TracingNumberZone [playerid] = -1;
     }
     return 1;

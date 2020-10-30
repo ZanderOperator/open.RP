@@ -105,8 +105,7 @@ static stock
 	PlayerBJCard[ MAX_PLAYERS ][ 6 ],
 	DealerBJCard[ MAX_PLAYERS ][ 6 ],
 	PlayerBJTDCard[ MAX_PLAYERS ][ 6 ][ 33 ],
-	DealerBJTDCard[ MAX_PLAYERS ][ 6 ][ 33 ],
-	Exposer[ MAX_PLAYERS ];
+	DealerBJTDCard[ MAX_PLAYERS ][ 6 ][ 33 ];
 
 // Variables (rBits)
 static stock
@@ -786,12 +785,11 @@ stock static IsPlayerNearBlackJackTable(playerid)
 }
 
 // Timers
-forward OnBlackJackCardExpose(playerid);
-public OnBlackJackCardExpose(playerid)
+timer OnBlackJackCardExpose[1500](playerid)
 {
-	KillTimer(Exposer[ playerid ]);
 	CheckPlayerBlackJackWinner(playerid);
 	ResetBlackJack(playerid);
+	return 1;
 }
 
 /*
@@ -826,7 +824,7 @@ hook OnPlayerPickUpDynPickup(playerid, pickupid)
 			PlayerTextDrawSetString(playerid, RuletWages[playerid], tmpString);
 			PlayerTextDrawSetString( playerid, RuletNote[playerid], "Kucajte /blackjack za igru");
 			
-			SetTimerEx( "FadeRuletWagesTD", 5000, false, "i", playerid );
+			defer FadeRuletWagesTD(playerid);
 			break;
 		}
 	}
@@ -847,13 +845,9 @@ hook OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
 		if( !Bit1_Get( gr_PlayerPlayBlackJack, playerid ) ) return 1;
 		if( Bit4_Get( gr_PlayerInBlackJack, playerid ) == 1 ) {
 		
-			if( AC_GetPlayerMoney(playerid) < BlackJackWager[ playerid ] ) {
-				// Titlovi
-				CreateJohnsTextDraw(playerid);
-				PlayerTextDrawShow(playerid, JohnsText[playerid]);
-				PlayerTextDrawSetString(playerid, JohnsText[playerid], "         Nemate toliko novca!");
-				JohnsFader[playerid] = SetTimerEx("JohnTextDrawFade", 1500, false, "i", playerid);
-				
+			if( AC_GetPlayerMoney(playerid) < BlackJackWager[ playerid ] ) 
+			{
+				SendMessage(playerid, MESSAGE_TYPE_ERROR, "You don't have enough money!");
 				switch( random(2) ) {
 					case 0: PlayerPlaySound( playerid, 5823, 0.0, 0.0, 0.0 );
 					case 1: PlayerPlaySound( playerid, 5824, 0.0, 0.0, 0.0 );
@@ -966,7 +960,7 @@ hook OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
 				tmpString[ 6 ];
 			format( tmpString, 6, "%d", GetDealerBlackJackScore(playerid) );
 			PlayerTextDrawSetString( playerid, BlackWageDealers[playerid], tmpString );
-			Exposer[ playerid ] = SetTimerEx( "OnBlackJackCardExpose", 1500, false, "i", playerid );
+			defer OnBlackJackCardExpose(playerid);
 		}
 	}
 	return 1;

@@ -8,27 +8,6 @@ new LockToll[8];
 new Toll[19];
 //-------------
 
-//---------TIMERI---------
-forward Toll1Zatvori();
-forward Toll2Zatvori();
-forward Toll3Zatvori();
-forward Toll4Zatvori();
-forward Toll5Zatvori();
-forward Toll6Zatvori();
-forward Toll7Zatvori();
-forward Toll8Zatvori();
-forward Toll9Zatvori();
-forward Toll10Zatvori();
-forward Toll11Zatvori();
-forward Toll12Zatvori();
-forward Toll13Zatvori();
-forward Toll14Zatvori();
-forward Toll15Zatvori();
-forward Toll16Zatvori();
-forward Toll17Zatvori();
-forward Toll18Zatvori();
-//------------------------
-
 //---------------------------------------FUNKCIJE---------------------------------------
 
 //--------------------------------------------------------------------------------------
@@ -126,113 +105,32 @@ hook OnGameModeInit() //Prebaciti u funkciju koja ucitava objekte
 	return 1;
 }
 
-public Toll1Zatvori()
+timer TollRampClose[7000](tollid)
 {
-    SetDynamicObjectRot(Toll[1],359.99865723,90.09484863,342.51824951);
-    return 1;
+	switch(tollid)
+	{
+		case 1: SetDynamicObjectRot(Toll[1],359.99865723,90.09484863,342.51824951);
+		case 2: SetDynamicObjectRot(Toll[2],359.99450684,90.09338379,342.51525879);
+		case 3: SetDynamicObjectRot(Toll[3],359.99450684,90.09338379,160.31793213);
+		case 4: SetDynamicObjectRot(Toll[4],359.98901367,90.09338379,160.31250000);
+		case 5: SetDynamicObjectRot(Toll[5],0.00000000,269.24929810,303.62915039);
+		case 6: SetDynamicObjectRot(Toll[6],0.00000000,270.05493164,125.26062012);
+		case 7: SetDynamicObjectRot(Toll[7],0.00000000,269.24743652,303.62365723);
+		case 8: SetDynamicObjectRot(Toll[8],0.00000000,270.05493164,125.25512695);
+		case 9: SetDynamicObjectRot(Toll[9],0.00000000,89.81762695,351.16613770);
+		case 10: SetDynamicObjectRot(Toll[10],0.00000000,89.81323242,164.85620117);
+		case 11: SetDynamicObjectRot(Toll[11],0.00000000,89.90936279,33.35720825);
+		case 12: SetDynamicObjectRot(Toll[12],0.00000000,89.90722656,217.39634705);
+		case 13: SetDynamicObjectRot(Toll[13],0.00000000,90.09484863,348.04675293);
+		case 14: SetDynamicObjectRot(Toll[14],0.00000000,90.09338379,165.65856934);
+		case 15: SetDynamicObjectRot(Toll[15],0.00000000,89.19689941,331.46118164);
+		case 16: SetDynamicObjectRot(Toll[16],0.00000000,89.19250488,153.08990479);
+		case 17: SetDynamicObjectRot(Toll[17],0.00000000,89.94403076,264.83972168);
+		case 18: SetDynamicObjectRot(Toll[18],0.00000000,89.13433838,82.54653931);
+	}
+	return 1;	
 }
 
-public Toll2Zatvori()
-{
-    SetDynamicObjectRot(Toll[2],359.99450684,90.09338379,342.51525879);
-    return 1;
-}
-
-public Toll3Zatvori()
-{
-    SetDynamicObjectRot(Toll[3],359.99450684,90.09338379,160.31793213);
-    return 1;
-}
-
-public Toll4Zatvori()
-{
-    SetDynamicObjectRot(Toll[4],359.98901367,90.09338379,160.31250000);
-    return 1;
-}
-
-public Toll5Zatvori()
-{
-    SetDynamicObjectRot(Toll[5],0.00000000,269.24929810,303.62915039);
-    return 1;
-}
-
-public Toll6Zatvori()
-{
-    SetDynamicObjectRot(Toll[6],0.00000000,270.05493164,125.26062012);
-    return 1;
-}
-
-public Toll7Zatvori()
-{
-    SetDynamicObjectRot(Toll[7],0.00000000,269.24743652,303.62365723);
-    return 1;
-}
-
-public Toll8Zatvori()
-{
-    SetDynamicObjectRot(Toll[8],0.00000000,270.05493164,125.25512695);
-    return 1;
-}
-
-public Toll9Zatvori()
-{
-    SetDynamicObjectRot(Toll[9],0.00000000,89.81762695,351.16613770);
-    return 1;
-}
-
-public Toll10Zatvori()
-{
-    SetDynamicObjectRot(Toll[10],0.00000000,89.81323242,164.85620117);
-    return 1;
-}
-
-public Toll11Zatvori()
-{
-    SetDynamicObjectRot(Toll[11],0.00000000,89.90936279,33.35720825);
-    return 1;
-}
-
-public Toll12Zatvori()
-{
-    SetDynamicObjectRot(Toll[12],0.00000000,89.90722656,217.39634705);
-    return 1;
-}
-
-public Toll13Zatvori()
-{
-    SetDynamicObjectRot(Toll[13],0.00000000,90.09484863,348.04675293);
-    return 1;
-}
-
-public Toll14Zatvori()
-{
-    SetDynamicObjectRot(Toll[14],0.00000000,90.09338379,165.65856934);
-    return 1;
-}
-
-public Toll15Zatvori()
-{
-    SetDynamicObjectRot(Toll[15],0.00000000,89.19689941,331.46118164);
-    return 1;
-}
-
-public Toll16Zatvori()
-{
-    SetDynamicObjectRot(Toll[16],0.00000000,89.19250488,153.08990479);
-    return 1;
-}
-
-public Toll17Zatvori()
-{
-    SetDynamicObjectRot(Toll[17],0.00000000,89.94403076,264.83972168);
-    return 1;
-}
-
-public Toll18Zatvori()
-{
-    SetDynamicObjectRot(Toll[18],0.00000000,89.13433838,82.54653931);
-    return 1;
-}
 CMD:locktoll(playerid, params[])
 {
 	new tollid;
@@ -425,113 +323,125 @@ CMD:opentoll(playerid, params[])
 {
     if(AC_GetPlayerMoney(playerid) < 5) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate dovoljno novca!");
 	new CmdString[128];
-	if (IsPlayerInRangeOfPoint(playerid,8.0,1686.7776,416.7574,30.6589)) { //LS-LV AUTOCESTA
+	if (IsPlayerInRangeOfPoint(playerid,8.0,1686.7776,416.7574,30.6589)) 
+	{ //LS-LV AUTOCESTA
 	    if(LockToll[0] == 1) return SendClientMessage(playerid, COLOR_RED, "Toll Guard kaze: Ova naplatna kucica je zakljucana.");
 		format(CmdString, 128, "* %s vadi novac i daje Toll Guardu.", GetName(playerid, true));
 		ProxDetector(10.0, playerid, CmdString, 0xC2A2DAAA, 0xC2A2DAAA, 0xC2A2DAAA, 0xC2A2DAAA, 0xC2A2DAAA);
        	SendClientMessage(playerid, COLOR_RED, "Toll Guard kaze: Sretan put.");
        	SetDynamicObjectRot(Toll[1],0.00000,0.00000,90.00000);
 		PlayerToBudgetMoney(playerid, 5);
-       	SetTimer("Toll1Zatvori", 5000, 0);
+       	defer TollRampClose(1);
     }
-    else if(IsPlayerInRangeOfPoint(playerid,8.0,1695.4078,413.8618,30.6586)) { //LS-LV AUTOCESTA
+    else if(IsPlayerInRangeOfPoint(playerid,8.0,1695.4078,413.8618,30.6586)) 
+	{ //LS-LV AUTOCESTA
 	    if(LockToll[0] == 1) return SendClientMessage(playerid, COLOR_RED, "Toll Guard kaze: Ova naplatna kucica je zakljucana.");
         format(CmdString, 128, "* %s vadi novac i daje Toll Guardu.", GetName(playerid, true));
 		ProxDetector(10.0, playerid, CmdString, 0xC2A2DAAA, 0xC2A2DAAA, 0xC2A2DAAA, 0xC2A2DAAA, 0xC2A2DAAA);
        	SendClientMessage(playerid, COLOR_RED, "Toll Guard kaze: Sretan put.");
        	SetDynamicObjectRot(Toll[2],0.00000,0.00000,90.00000);
        	PlayerToBudgetMoney(playerid, 5);
-       	SetTimer("Toll2Zatvori", 5000, 0);
+       	defer TollRampClose(2);
 	}
-	else if(IsPlayerInRangeOfPoint(playerid,8.0,1704.0769,410.8775,30.6571)) { //LS-LV AUTOCESTA
+	else if(IsPlayerInRangeOfPoint(playerid,8.0,1704.0769,410.8775,30.6571)) 
+	{ //LS-LV AUTOCESTA
 	    if(LockToll[0] == 1) return SendClientMessage(playerid, COLOR_RED, "Toll Guard kaze: Ova naplatna kucica je zakljucana.");
 	    format(CmdString, 128, "* %s vadi novac i daje Toll Guardu.", GetName(playerid, true));
 		ProxDetector(10.0, playerid, CmdString, 0xC2A2DAAA, 0xC2A2DAAA, 0xC2A2DAAA, 0xC2A2DAAA, 0xC2A2DAAA);
        	SendClientMessage(playerid, COLOR_RED, "Toll Guard kaze: Sretan put.");
        	SetDynamicObjectRot(Toll[3],0.00000,0.00000,90.00000);
        	PlayerToBudgetMoney(playerid, 5);
-       	SetTimer("Toll3Zatvori", 5000, 0);
+       	defer TollRampClose(3);
     }
-    else if (IsPlayerInRangeOfPoint(playerid,8.0,1712.8297,408.0382,30.6583)) { //LS-LV AUTOCESTA
+    else if (IsPlayerInRangeOfPoint(playerid,8.0,1712.8297,408.0382,30.6583)) 
+	{ //LS-LV AUTOCESTA
 	    if(LockToll[0] == 1) return SendClientMessage(playerid, COLOR_RED, "Toll Guard kaze: Ova naplatna kucica je zakljucana.");
    		format(CmdString, 128, "* %s vadi novac i daje Toll Guardu.", GetName(playerid, true));
 		ProxDetector(10.0, playerid, CmdString, 0xC2A2DAAA, 0xC2A2DAAA, 0xC2A2DAAA, 0xC2A2DAAA, 0xC2A2DAAA);
        	SendClientMessage(playerid, COLOR_RED, "Toll Guard kaze: Sretan put.");
        	SetDynamicObjectRot(Toll[4],0.00000,0.00000,90.00000);
 		PlayerToBudgetMoney(playerid, 5);
-       	SetTimer("Toll4Zatvori", 5000, 0);
+        defer TollRampClose(4);
 	}
-	else if (IsPlayerInRangeOfPoint(playerid,8.0,110.3566,-1276.0198,14.7506)) { //LS-SF TUNEL
+	else if (IsPlayerInRangeOfPoint(playerid,8.0,110.3566,-1276.0198,14.7506)) 
+	{ //LS-SF TUNEL
 	    if(LockToll[1] == 1) return SendClientMessage(playerid, COLOR_RED, "Toll Guard kaze: Ova naplatna kucica je zakljucana.");
 		format(CmdString, 128, "* %s vadi novac i daje Toll Guardu.", GetName(playerid, true));
 		ProxDetector(10.0, playerid, CmdString, 0xC2A2DAAA, 0xC2A2DAAA, 0xC2A2DAAA, 0xC2A2DAAA, 0xC2A2DAAA);
        	SendClientMessage(playerid, COLOR_RED, "Toll Guard kaze: Sretan put.");
        	SetDynamicObjectRot(Toll[5],0.00000,0.00000,90.00000);
        	PlayerToBudgetMoney(playerid, 5);
-       	SetTimer("Toll5Zatvori", 5000, 0);
+       	defer TollRampClose(5);
    	}
-   	else if (IsPlayerInRangeOfPoint(playerid,8.0,106.1063,-1270.3074,14.7200)) { //LS-SF TUNEL
+   	else if (IsPlayerInRangeOfPoint(playerid,8.0,106.1063,-1270.3074,14.7200)) 
+	{ //LS-SF TUNEL
 	    if(LockToll[1] == 1) return SendClientMessage(playerid, COLOR_RED, "Toll Guard kaze: Ova naplatna kucica je zakljucana.");
    		format(CmdString, 128, "* %s vadi novac i daje Toll Guardu.", GetName(playerid, true));
 		ProxDetector(10.0, playerid, CmdString, 0xC2A2DAAA, 0xC2A2DAAA, 0xC2A2DAAA, 0xC2A2DAAA, 0xC2A2DAAA);
        	SendClientMessage(playerid, COLOR_RED, "Toll Guard kaze: Sretan put.");
        	SetDynamicObjectRot(Toll[6],0.00000,0.00000,90.00000);
        	PlayerToBudgetMoney(playerid, 5);
-       	SetTimer("Toll6Zatvori", 5000, 0);
+       	defer TollRampClose(6);
    	}
-   	else if (IsPlayerInRangeOfPoint(playerid,8.0,94.2225,-1257.2662,14.5936)) { //LS-SF TUNEL
+   	else if (IsPlayerInRangeOfPoint(playerid,8.0,94.2225,-1257.2662,14.5936)) 
+	{ //LS-SF TUNEL
 	    if(LockToll[1] == 1) return SendClientMessage(playerid, COLOR_RED, "Toll Guard kaze: Ova naplatna kucica je zakljucana.");
    		format(CmdString, 128, "* %s vadi novac i daje Toll Guardu.", GetName(playerid, true));
 		ProxDetector(10.0, playerid, CmdString, 0xC2A2DAAA, 0xC2A2DAAA, 0xC2A2DAAA, 0xC2A2DAAA, 0xC2A2DAAA);
        	SendClientMessage(playerid, COLOR_RED, "Toll Guard kaze: Sretan put.");
        	SetDynamicObjectRot(Toll[7],0.00000,0.00000,90.00000);
        	PlayerToBudgetMoney(playerid, 5);
-       	SetTimer("Toll7Zatvori", 5000, 0);
+       	defer TollRampClose(7);
    	}
-   	else if (IsPlayerInRangeOfPoint(playerid,8.0,89.3355,-1249.4337,14.5565)) { //LS-SF TUNEL
+   	else if (IsPlayerInRangeOfPoint(playerid,8.0,89.3355,-1249.4337,14.5565)) 
+	{ //LS-SF TUNEL
 	    if(LockToll[1] == 1) return SendClientMessage(playerid, COLOR_RED, "Toll Guard kaze: Ova naplatna kucica je zakljucana.");
    		format(CmdString, 128, "* %s vadi novac i daje Toll Guardu.", GetName(playerid, true));
 		ProxDetector(10.0, playerid, CmdString, 0xC2A2DAAA, 0xC2A2DAAA, 0xC2A2DAAA, 0xC2A2DAAA, 0xC2A2DAAA);
        	SendClientMessage(playerid, COLOR_RED, "Toll Guard kaze: Sretan put.");
        	SetDynamicObjectRot(Toll[8],0.00000,0.00000,90.00000);
        	PlayerToBudgetMoney(playerid, 5);
-       	SetTimer("Toll8Zatvori", 5000, 0);
+      	defer TollRampClose(8);
    	}
-   	else if (IsPlayerInRangeOfPoint(playerid,8.0,-970.5789,-333.8476,36.4137)) { //LS-SF POKRAJ SF AIRPORTA
+   	else if (IsPlayerInRangeOfPoint(playerid,8.0,-970.5789,-333.8476,36.4137)) 
+	{ //LS-SF POKRAJ SF AIRPORTA
 	    if(LockToll[2] == 1) return SendClientMessage(playerid, COLOR_RED, "Toll Guard kaze: Ova naplatna kucica je zakljucana.");
 	   	format(CmdString, 128, "* %s vadi novac i daje Toll Guardu.", GetName(playerid, true));
 		ProxDetector(10.0, playerid, CmdString, 0xC2A2DAAA, 0xC2A2DAAA, 0xC2A2DAAA, 0xC2A2DAAA, 0xC2A2DAAA);
        	SendClientMessage(playerid, COLOR_RED, "Toll Guard kaze: Sretan put.");
        	SetDynamicObjectRot(Toll[9],0.00000,0.00000,90.00000);
        	PlayerToBudgetMoney(playerid, 5);
-       	SetTimer("Toll9Zatvori", 5000, 0);
+       	defer TollRampClose(9);
    	}
-   	else if (IsPlayerInRangeOfPoint(playerid,8.0,-960.5711,-331.6124,36.1348)) { //LS-SF POKRAJ SF AIRPORTA
+   	else if (IsPlayerInRangeOfPoint(playerid,8.0,-960.5711,-331.6124,36.1348)) 
+	{ //LS-SF POKRAJ SF AIRPORTA
 	    if(LockToll[2] == 1) return SendClientMessage(playerid, COLOR_RED, "Toll Guard kaze: Ova naplatna kucica je zakljucana.");
 	   	format(CmdString, 128, "* %s vadi novac i daje Toll Guardu.", GetName(playerid, true));
 		ProxDetector(10.0, playerid, CmdString, 0xC2A2DAAA, 0xC2A2DAAA, 0xC2A2DAAA, 0xC2A2DAAA, 0xC2A2DAAA);
        	SendClientMessage(playerid, COLOR_RED, "Toll Guard kaze: Sretan put.");
        	SetDynamicObjectRot(Toll[10],0.00000,0.00000,90.00000);
        	PlayerToBudgetMoney(playerid, 5);
-       	SetTimer("Toll10Zatvori", 5000, 0);
+       	defer TollRampClose(10);
  	}
- 	else if (IsPlayerInRangeOfPoint(playerid,8.0,517.2881,469.6673,18.9297)) { //LS-LV POKRAJ MOSTA
+ 	else if (IsPlayerInRangeOfPoint(playerid,8.0,517.2881,469.6673,18.9297)) 
+	{ //LS-LV POKRAJ MOSTA
 	    if(LockToll[3] == 1) return SendClientMessage(playerid, COLOR_RED, "Toll Guard kaze: Ova naplatna kucica je zakljucana.");
 	   	format(CmdString, 128, "* %s vadi novac i daje Toll Guardu.", GetName(playerid, true));
 		ProxDetector(10.0, playerid, CmdString, 0xC2A2DAAA, 0xC2A2DAAA, 0xC2A2DAAA, 0xC2A2DAAA, 0xC2A2DAAA);
        	SendClientMessage(playerid, COLOR_RED, "Toll Guard kaze: Sretan put.");
        	SetDynamicObjectRot(Toll[11],0.00000,0.00000,90.00000);
        	PlayerToBudgetMoney(playerid, 5);
-       	SetTimer("Toll11Zatvori", 5000, 0);
+       	defer TollRampClose(11);
  	}
- 	else if (IsPlayerInRangeOfPoint(playerid,8.0,523.5944,475.9694,18.9297)) { //LS-LV POKRAJ MOSTA
+ 	else if (IsPlayerInRangeOfPoint(playerid,8.0,523.5944,475.9694,18.9297)) 
+	{ //LS-LV POKRAJ MOSTA
 	    if(LockToll[3] == 1) return SendClientMessage(playerid, COLOR_RED, "Toll Guard kaze: Ova naplatna kucica je zakljucana.");
 	   	format(CmdString, 128, "* %s vadi novac i daje Toll Guardu.", GetName(playerid, true));
 		ProxDetector(10.0, playerid, CmdString, 0xC2A2DAAA, 0xC2A2DAAA, 0xC2A2DAAA, 0xC2A2DAAA, 0xC2A2DAAA);
        	SendClientMessage(playerid, COLOR_RED, "Toll Guard kaze: Sretan put.");
        	SetDynamicObjectRot(Toll[12],0.00000,0.00000,90.00000);
        	PlayerToBudgetMoney(playerid, 5);
-       	SetTimer("Toll12Zatvori", 5000, 0);
+       	defer TollRampClose(12);
  	}
  	else if (IsPlayerInRangeOfPoint(playerid,8.0,-183.2823,327.6223,12.0781)) { //LS-LV IZMEDJU OVIH PRIJASNJIH Toll
 	    if(LockToll[4] == 1) return SendClientMessage(playerid, COLOR_RED, "Toll Guard kaze: Ova naplatna kucica je zakljucana.");
@@ -540,52 +450,57 @@ CMD:opentoll(playerid, params[])
        	SendClientMessage(playerid, COLOR_RED, "Toll Guard kaze: Sretan put.");
        	SetDynamicObjectRot(Toll[13],0.00000,0.00000,90.00000);
        	PlayerToBudgetMoney(playerid, 5);
-       	SetTimer("Toll13Zatvori", 5000, 0);
+       	defer TollRampClose(13);
  	}
- 	else if (IsPlayerInRangeOfPoint(playerid,8.0,-174.1768,327.4136,12.0781)) { //LS-LV IZMEDJU OVIH PRIJASNJIH Toll
+ 	else if (IsPlayerInRangeOfPoint(playerid,8.0,-174.1768,327.4136,12.0781)) 
+	{ //LS-LV IZMEDJU OVIH PRIJASNJIH Toll
 	    if(LockToll[4] == 1) return SendClientMessage(playerid, COLOR_RED, "Toll Guard kaze: Ova naplatna kucica je zakljucana.");
 	   	format(CmdString, 128, "* %s vadi novac i daje Toll Guardu.", GetName(playerid, true));
 		ProxDetector(10.0, playerid, CmdString, 0xC2A2DAAA, 0xC2A2DAAA, 0xC2A2DAAA, 0xC2A2DAAA, 0xC2A2DAAA);
        	SendClientMessage(playerid, COLOR_RED, "Toll Guard kaze: Sretan put.");
        	SetDynamicObjectRot(Toll[14],0.00000,0.00000,90.00000);
        	PlayerToBudgetMoney(playerid, 5);
-       	SetTimer("Toll14Zatvori", 5000, 0);
+       	defer TollRampClose(14);
  	}
- 	else if (IsPlayerInRangeOfPoint(playerid,8.0,-101.02379608,-928.78637695,19.78243637)) { //LS-SF/prolaz za kombajn
+ 	else if (IsPlayerInRangeOfPoint(playerid,8.0,-101.02379608,-928.78637695,19.78243637)) 
+	{ //LS-SF/prolaz za kombajn
 	    if(LockToll[5] == 1) return SendClientMessage(playerid, COLOR_RED, "Toll Guard kaze: Ova naplatna kucica je zakljucana.");
 	   	format(CmdString, 128, "* %s vadi novac i daje Toll Guardu.", GetName(playerid, true));
 		ProxDetector(10.0, playerid, CmdString, 0xC2A2DAAA, 0xC2A2DAAA, 0xC2A2DAAA, 0xC2A2DAAA, 0xC2A2DAAA);
        	SendClientMessage(playerid, COLOR_RED, "Toll Guard kaze: Sretan put.");
        	SetDynamicObjectRot(Toll[15],0.00000,0.00000,90.00000);
        	PlayerToBudgetMoney(playerid, 5);
-       	SetTimer("Toll15Zatvori", 5000, 0);
+       	defer TollRampClose(15);
  	}
- 	else if (IsPlayerInRangeOfPoint(playerid,8.0,-88.61416626,-935.47473145,19.78243637)) { //LS-SF/prolaz za kombajn
+ 	else if (IsPlayerInRangeOfPoint(playerid,8.0,-88.61416626,-935.47473145,19.78243637)) 
+	{ //LS-SF/prolaz za kombajn
 	    if(LockToll[5] == 1) return SendClientMessage(playerid, COLOR_RED, "Toll Guard kaze: Ova naplatna kucica je zakljucana.");
 	   	format(CmdString, 128, "* %s vadi novac i daje Toll Guardu.", GetName(playerid, true));
 		ProxDetector(10.0, playerid, CmdString, 0xC2A2DAAA, 0xC2A2DAAA, 0xC2A2DAAA, 0xC2A2DAAA, 0xC2A2DAAA);
        	SendClientMessage(playerid, COLOR_RED, "Toll Guard kaze: Sretan put.");
        	SetDynamicObjectRot(Toll[16],0.00000,0.00000,90.00000);
        	PlayerToBudgetMoney(playerid, 5);
-       	SetTimer("Toll16Zatvori", 5000, 0);
+       	defer TollRampClose(16);
  	}
- 	else if (IsPlayerInRangeOfPoint(playerid,8.0,59.0846,-1540.9741,5.0938)) { //LS-SF AUTOCESTA
+ 	else if (IsPlayerInRangeOfPoint(playerid,8.0,59.0846,-1540.9741,5.0938)) 
+	{ //LS-SF AUTOCESTA
 	    if(LockToll[6] == 1) return SendClientMessage(playerid, COLOR_RED, "Toll Guard kaze: Ova naplatna kucica je zakljucana.");
 	   	format(CmdString, 128, "* %s vadi novac i daje Toll Guardu.", GetName(playerid, true));
 		ProxDetector(10.0, playerid, CmdString, 0xC2A2DAAA, 0xC2A2DAAA, 0xC2A2DAAA, 0xC2A2DAAA, 0xC2A2DAAA);
        	SendClientMessage(playerid, COLOR_RED, "Toll Guard kaze: Sretan put.");
        	SetDynamicObjectRot(Toll[17],0.00000,0.00000,90.00000);
        	PlayerToBudgetMoney(playerid, 5);
-       	SetTimer("Toll17Zatvori", 5000, 0);
+       	defer TollRampClose(17);
  	}
- 	else if (IsPlayerInRangeOfPoint(playerid,8.0,55.8233,-1523.6588,5.0027)) { //LS-SF AUTOCESTA
+ 	else if (IsPlayerInRangeOfPoint(playerid,8.0,55.8233,-1523.6588,5.0027)) 
+	{ //LS-SF AUTOCESTA
 	    if(LockToll[6] == 1) return SendClientMessage(playerid, COLOR_RED, "Toll Guard kaze: Ova naplatna kucica je zakljucana.");
 	   	format(CmdString, 128, "* %s vadi novac i daje Toll Guardu.", GetName(playerid, true));
 		ProxDetector(10.0, playerid, CmdString, 0xC2A2DAAA, 0xC2A2DAAA, 0xC2A2DAAA, 0xC2A2DAAA, 0xC2A2DAAA);
        	SendClientMessage(playerid, COLOR_RED, "Toll Guard kaze: Sretan put.");
        	SetDynamicObjectRot(Toll[18],0.00000,0.00000,90.00000);
        	PlayerToBudgetMoney(playerid, 5);
-       	SetTimer("Toll18Zatvori", 5000, 0);
+       	defer TollRampClose(18);
  	}
  	else SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste blizu naplatne rampe.");
     return 1;

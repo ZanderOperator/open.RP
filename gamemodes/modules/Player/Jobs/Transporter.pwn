@@ -5,8 +5,7 @@
 new TWorking[MAX_PLAYERS];
 new TCarry[MAX_PLAYERS];
 new TDone[MAX_PLAYERS];
-new kurcinaTimer[MAX_PLAYERS];
-new unfreezeTimer[MAX_PLAYERS];
+new EarlyDeliveryTimer[MAX_PLAYERS];
 new carjob[MAX_PLAYERS];
 
 enum E_TRANSPORTER_DATA
@@ -38,8 +37,6 @@ hook OnPlayerDisconnect(playerid){
 	TDone[playerid] = 0;
 	TWorking[playerid] = 0;
 	carjob[playerid]= 0;
-	KillTimer(kurcinaTimer[playerid]);
-	KillTimer(unfreezeTimer[playerid]);
 	return 1;
 }
 
@@ -48,8 +45,6 @@ hook OnPlayerDeath(playerid){
     TCarry[playerid] = 0;
     TDone[playerid] = 0;
 	TWorking[playerid] = 0;
-	KillTimer(kurcinaTimer[playerid]);
-	KillTimer(unfreezeTimer[playerid]);
 	carjob[playerid] = 0;
 	return 1;
 }
@@ -65,14 +60,14 @@ hook OnPlayerEnterCheckpoint(playerid)
 
 		    if(TWorking[playerid] == 1)
 	        {
-				if(kurcinaTimer[playerid] == 1) return FailedToDeliver(playerid);
+				if(EarlyDeliveryTimer[playerid] == 1) return FailedToDeliver(playerid);
 				TogglePlayerControllable(playerid,0);
-				SetTimerEx("unfreezeAD", 12000, false, "i", playerid);
+				defer ProductDelivered(playerid);
 				SendClientMessage(playerid, COLOR_RED, "[ ! ] Stigli ste na lokaciju, pricekajte istovar.");
 	        }
 	        else if(TWorking[playerid] == 2)
 	        {
-	            if(kurcinaTimer[playerid] == 1) return FailedToDeliver(playerid);
+	            if(EarlyDeliveryTimer[playerid] == 1) return FailedToDeliver(playerid);
 	            TDone[playerid] = 0;
 		        ShowPlayerDialog(playerid, DIALOG_ADRIAPOSAO, DIALOG_STYLE_MSGBOX, "{FA5656}TRANSPORTER", "Zelis li ponovo da krenes da dostavljas proizvode?", "Yes", "No");
 		        TWorking[playerid] = 0;
@@ -162,8 +157,8 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 	        	carjob[playerid] = GetPlayerVehicleID(playerid);
 	        	TogglePlayerControllable(playerid, 1);
 	         	TDone[playerid] = 1;
-	         	SetTimerEx("JobFinish", 60000, false, "i", playerid);
-	         	kurcinaTimer[playerid] = 1;
+	         	EarlyDeliveryTimer[playerid] = 1;
+				defer JobFinish(playerid);
 	        }
 	        else
 	        {
@@ -178,15 +173,13 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 	return 0;
 }
 
-forward JobFinish(playerid);
-public JobFinish(playerid)
+timer JobFinish[60000](playerid)
 {
-	kurcinaTimer[playerid] = 0;
+	EarlyDeliveryTimer[playerid] = 0;
 	return 1;
 }
 
-forward unfreezeAD(playerid);
-public unfreezeAD(playerid)
+timer ProductDelivered[15000](playerid)
 {
 	SetPlayerCheckpoint(playerid,1366.2841,258.5566,19.5630, 2);
     TogglePlayerControllable(playerid,1);
@@ -201,7 +194,7 @@ FailedToDeliver(playerid)
 {
     TogglePlayerControllable(playerid, 1);
    	TDone[playerid] = 0;
-	kurcinaTimer[playerid] = 0;
+	EarlyDeliveryTimer[playerid] = 0;
    	GameTextForPlayer(playerid, "~r~Stigli ste na distanaciju prije mogu�moguceg vremena.~n~Niste dobili platu!", 10000, 3);
     new str[256];
     format(str,256,"{FA5656}[ADMIN] %s je zavrsio posao prije moguceg vremena. Provjerite ga!",GetName(playerid));
@@ -256,7 +249,8 @@ CMD:transporter(playerid, params[])
 
 		ShowPlayerDialog(playerid, DIALOG_ADRIAPOSAO, DIALOG_STYLE_MSGBOX, "{FA5656}Transporter", "Jeste li sigurni da zelite zapoceti dostavu?", "Yes", "No");
 	}
-	else if( !strcmp(param, "stop", true) ) {
+	else if( !strcmp(param, "stop", true) ) 
+	{
 		if( (PlayerInfo[playerid][pJob] != TRANSPORTER_ID)) return SendClientMessage( playerid, COLOR_RED, "Niste zaposleni kao kamiondzija.");
 		if(TWorking[playerid] == 0) return SendClientMessage( playerid, COLOR_RED, "Nemate pokrenutu voznju!");
 		if(TWorking[playerid] > 0)
@@ -269,11 +263,10 @@ CMD:transporter(playerid, params[])
 		TWorking[playerid] = 0;
 		TCarry[playerid] = 0;
 		carjob[playerid] = 0;
-		kurcinaTimer[playerid] = 0;
+		EarlyDeliveryTimer[playerid] = 0;
 		if(GetPlayerState(playerid) == 2)
-		{
 		   	RemovePlayerFromVehicle(playerid);
-		}
+	
 		SendClientMessage(playerid, -1, "{FA5656}[ ! ] Uspesno ste zaustavili posao.");
 		SendClientMessage(playerid, -1, "Ako ste na duznosti, ne zaboravite da odete sa nje. Takodje, ako ste uzeli opremu, nemojte zaboraviti da je ostavite.");
 	}

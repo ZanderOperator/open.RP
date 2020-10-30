@@ -198,7 +198,7 @@ static stock
 	DestroyedCar[ MAX_PLAYERS ],
 	JackerMoney[ MAX_PLAYERS ],
 	JackerIlegalGarage[ MAX_PLAYERS ],
-	DestroyingCarTimer[ MAX_PLAYERS ],
+	Timer:DestroyingCarTimer[ MAX_PLAYERS ],
 	PlayerBribeMoney[ MAX_PLAYERS ];
 
 // TextDraws
@@ -504,11 +504,7 @@ stock static ResetCarJackerVariables(playerid)
 	PlayerJackingCar[ playerid ]		= -1;
 	JackerIlegalGarage[ playerid ]		= -1;
 	JackerMoney[ playerid ]				= 0;
-	
-	if( DestroyingCarTimer[ playerid ] ) {
-		KillTimer(DestroyingCarTimer[ playerid ]);
-		DestroyingCarTimer[ playerid ]		= -1;
-	}
+	stop DestroyingCarTimer[ playerid ];
 	// TextDraws
 //	DestroyJackerInfoPickTD(playerid);
 //	DestroyJackerInterfaceTD(playerid);
@@ -787,13 +783,12 @@ stock static IsVehicleOnJackingList(garage, playercar)
 	return index;
 }
 	
-forward DestroyingCar(playerid, vehicleid);
-public DestroyingCar(playerid, vehicleid)
+timer DestroyingCar[1000](playerid, vehicleid)
 {
 	if(JackerIlegalGarage[playerid] == -1)
 	{
 		DestroyMechanicTextDraw(playerid);
-		KillTimer(DestroyingCarTimer[playerid]);
+		stop DestroyingCarTimer[playerid];
 		SendMessage(playerid, MESSAGE_TYPE_ERROR, "Radnja je prekinuta zbog greske!");
 		return 0;
 	}
@@ -805,9 +800,10 @@ public DestroyingCar(playerid, vehicleid)
 	
 	GetVehiclePos(vehicleid, X, Y, Z);
 	
-	if( !IsPlayerInRangeOfPoint(playerid, 18.0, X, Y, Z) ) {
+	if( !IsPlayerInRangeOfPoint(playerid, 18.0, X, Y, Z) ) 
+	{
 		DestroyMechanicTextDraw(playerid);
-		KillTimer(DestroyingCarTimer[playerid]);
+		stop DestroyingCarTimer[playerid];
 		SendMessage(playerid, MESSAGE_TYPE_ERROR, "Radnja je prekinuta jer niste blizu vozila!");
 		return 1;			
 	}
@@ -857,7 +853,7 @@ public DestroyingCar(playerid, vehicleid)
 		DestroyedCar[playerid] = GetVehicleModel(vehicleid);
 		Bit1_Set(r_CarDestroyed, playerid, true);
 		DestroyMechanicTextDraw(playerid);
-		KillTimer(DestroyingCarTimer[playerid]);
+		stop DestroyingCarTimer[playerid];
 		
 		SendClientMessage(playerid,COLOR_RED, "Uspjesno ste rastavili vozilo. Sakrijte ga da biste dobili svoj novac! (/jacker leave)");
 	}
@@ -1110,7 +1106,7 @@ CMD:jacker(playerid, params[])
 		Bit8_Set(r_DestroyingCarSecs, playerid, 30);
 		CreateMechanicTextDraw(playerid);
 		PlayerTextDrawSetString(playerid, MechanicTD[playerid], "~w~Rastavljanje vozila u tijeku~r~... ~n~~w~Preostalo sekundi: ~r~30");
-		DestroyingCarTimer[playerid] = SetTimerEx("DestroyingCar", 1000, true, "ii", playerid, vehicleid);
+		DestroyingCarTimer[playerid] = repeat DestroyingCar(playerid, vehicleid);
 	}
 	else if( !strcmp(param, "leave", true) ) {
 		if( !IsPlayerInAnyVehicle(playerid) ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste unutar vozila!");

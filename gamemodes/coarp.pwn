@@ -157,10 +157,10 @@
 
 // KickEx
 #define KickMessage(%0) \
-	SetTimerEx("KickPlayer",55,false,"d",%0)
+	KickPlayer(%0)
 // BanEx
 #define BanMessage(%0) \
-	SetTimerEx("BanPlayer",55,false,"d",%0)
+	BanPlayer(%0)
 
 // Key Status
 #define PRESSED(%0) \
@@ -2787,7 +2787,7 @@ Public:GMXTimer()
 		if(cseconds < 1)
 		{
 			GMX = 0;
-			KillTimer(CountingTimer);
+			stop CountingTimer;
 			foreach(new i : Player) {
 				if(PlayerInfo[i][pAdmin] >= 1338) {
 					SendClientMessage(i, COLOR_RED, "[INFO]: Storing the data in server is done. Restarting Server...");
@@ -3281,17 +3281,6 @@ hook OnPlayerDisconnect(playerid, reason)
 				ABroadCast(COLOR_LIGHTRED,tmpString,1);
 			}
 		}
-	}
-
-	// Timers
-	if( Bit8_Get( gr_RingingTime, playerid ) != 0 ) {
-		KillTimer(PlayerMobileRingTimer[playerid]);
-		Bit8_Set( gr_RingingTime, playerid, 0 );
-	}
-	if( IsPlayerReconing(playerid) ) {
-		DestroyReconTextDraws(playerid);
-		KillTimer(ReconTimer[playerid]);
-		Bit4_Set(gr_SpecateId, playerid, 0);
 	}
 	// Offline query
 	new

@@ -34,13 +34,13 @@ static stock
     cstring[40];
 
 new
-	CountingTimer,
+	Timer:CountingTimer,
 	cseconds,
-	LearnTimer[MAX_PLAYERS] = -1,
+	Timer:LearnTimer[MAX_PLAYERS],
 	LastDriver[MAX_VEHICLES][MAX_PLAYER_NAME],
 	ReconingVehicle[MAX_PLAYERS],
 	ReconingPlayer[MAX_PLAYERS],
-	ReconTimer[MAX_PLAYERS],
+	Timer:ReconTimer[MAX_PLAYERS],
 	AdminLoginTry[MAX_PLAYERS],
     oldskin[MAX_PLAYERS],
 	PortedPlayer[MAX_PLAYERS],
@@ -505,12 +505,11 @@ stock static SetPlayerReconTarget(playerid, targetid)
 	format(tmpString, sizeof(tmpString), "%s(%d)", GetName(targetid, false), targetid);
 	PlayerTextDrawSetString(playerid, ReconTitle[playerid], tmpString);
 	Bit1_Set( a_PlayerReconed, playerid, true );
-	
-	ReconTimer[playerid] = SetTimerEx("OnPlayerReconing", 1000, true, "ii", playerid, targetid);
+	ReconTimer[playerid] = repeat OnPlayerReconing(playerid, targetid);
 	return 1;
 }
 
-Public:LearnPlayer(playerid, learnid)
+timer LearnPlayer[1000](playerid, learnid)
 {
     if(IsPlayerConnected(playerid))
 	{
@@ -536,8 +535,8 @@ Public:LearnPlayer(playerid, learnid)
 		    SendClientMessage(playerid, COLOR_WHITE, "It is desireable to spend as much time as possible RolePlaying.");
 		    SendClientMessage(playerid, COLOR_WHITE, "With quality RolePlay, your chances of suceeding in the game are very increased. ");
 		    SendClientMessage(playerid, COLOR_WHITE, "If you are new player, you can easily learn RolePlay rules.");
-			KillTimer(LearnTimer[playerid]);
-			LearnTimer[playerid] = SetTimerEx("LearnPlayer", 28000, 0, "ii", playerid, 2);
+			stop LearnTimer[playerid];
+			LearnTimer[playerid] = defer LearnPlayer[28000](playerid, 2);
 		}
 		else if(learnid == 2)
 		{
@@ -556,8 +555,8 @@ Public:LearnPlayer(playerid, learnid)
 	        SendClientMessage(playerid, COLOR_WHITE, "Are you familiar with some RolePlay terms?");
 	        SendClientMessage(playerid, COLOR_WHITE, "Through this tutorial, you'll get some insight on basic RolePlay rules.");
 	        SendClientMessage(playerid, COLOR_WHITE, "Let's begin!");
-		    KillTimer(LearnTimer[playerid]);
-			LearnTimer[playerid] = SetTimerEx("LearnPlayer", 25000, 0, "ii", playerid, 3);
+		    stop LearnTimer[playerid];
+			LearnTimer[playerid] = defer LearnPlayer[28000](playerid, 3);
 		}
 		else if(learnid == 3)
 		{
@@ -581,8 +580,8 @@ Public:LearnPlayer(playerid, learnid)
 			SendClientMessage(playerid, COLOR_WHITE," ");
 	       	SendClientMessage(playerid, COLOR_WHITE, "Out of Character(OOC) is bound to things that aren't directly related with your character InGame.");
 	       	SendClientMessage(playerid, COLOR_WHITE, "Example of OOC chat: '/b Did you look at that topic on forum? Who are admins on this server?'");
-			KillTimer(LearnTimer[playerid]);
-			LearnTimer[playerid] = SetTimerEx("LearnPlayer", 30000, 0, "ii", playerid, 4);
+			stop LearnTimer[playerid];
+			LearnTimer[playerid] = defer LearnPlayer[28000](playerid, 4);
 		}
 		else if(learnid == 4)
 		{
@@ -602,8 +601,8 @@ Public:LearnPlayer(playerid, learnid)
 	        SendClientMessage(playerid, COLOR_WHITE, "When you see a name of other player above his head, you don't know his name, until he tells it himself.");
 	        SendClientMessage(playerid, COLOR_WHITE, "Also, if you see someone wearing gang/mafia clothes, you have no right to call him a gangster/mobster.");
 	        SendClientMessage(playerid, COLOR_WHITE, "MetaGaming is strictly punishable(1h+ prison, etc.), as is any other form of abiding RolePlay rules.");
-			KillTimer(LearnTimer[playerid]);
-			LearnTimer[playerid] = SetTimerEx("LearnPlayer", 30000, 0, "ii", playerid, 5);
+			stop LearnTimer[playerid];
+			LearnTimer[playerid] = defer LearnPlayer[28000](playerid, 5);
 		}
 		else if(learnid == 5)
 		{
@@ -623,8 +622,8 @@ Public:LearnPlayer(playerid, learnid)
 	        SendClientMessage(playerid, COLOR_WHITE, "Najbolji opis Powergaminga se moze vidjeti ukoliko Vas netko zeli opljackati, prijeti oruzjem - Vi skocite iz auta i krente bjezati.");
 	        SendClientMessage(playerid, COLOR_WHITE, "Takodjer, ukoliko padnete sa odredjene visine i nastavite se normalno kretati.");
 	        SendClientMessage(playerid, COLOR_WHITE, "PowerGaming je strogo kaznjiv kao i svako ostalo krsenje RolePlay pravila.");
-		    KillTimer(LearnTimer[playerid]);
-			LearnTimer[playerid] = SetTimerEx("LearnPlayer", 30000, 0, "ii", playerid, 6);
+		  	stop LearnTimer[playerid];
+			LearnTimer[playerid] = defer LearnPlayer[28000](playerid, 6);
 		}
 		else if(learnid == 6)
 		{
@@ -642,8 +641,8 @@ Public:LearnPlayer(playerid, learnid)
 	        SendClientMessage(playerid, COLOR_WHITE, "Bunnyhop je ucestalo skakanje prilikom Vasega kretanja.");
 			SendClientMessage(playerid, COLOR_WHITE, "Bunnyhop se koristi kako bi se ubrzali, sto nikako nije RolePlay.");
 			SendClientMessage(playerid, COLOR_WHITE, "Bunnyhop je strogo kaznjiv kao i svako ostalo krsenje RolePlay pravila.");
-			KillTimer(LearnTimer[playerid]);
-			LearnTimer[playerid] = SetTimerEx("LearnPlayer", 17000, 0, "ii", playerid, 7);
+			stop LearnTimer[playerid];
+			LearnTimer[playerid] = defer LearnPlayer[28000](playerid, 7);
 		}
 		else if(learnid == 7)
 		{
@@ -662,8 +661,8 @@ Public:LearnPlayer(playerid, learnid)
 	        SendClientMessage(playerid, COLOR_WHITE, "Primjer Revenge Killa je kada Vas netko ubije, Vi se usredotocite na to da nabavite oruzje i ubijete natrag tu osobu.");
 	        SendClientMessage(playerid, COLOR_WHITE, "Kada se dogodi PK, Vi zaboravljate situaciju u kojoj ste se nasli, te ljude koji su Vas ubili!");
 			SendClientMessage(playerid, COLOR_WHITE, "Revenge Kill je strogo kaznjiv kao i svako ostalo krsenje RolePlay pravila.");
-		    KillTimer(LearnTimer[playerid]);
-			LearnTimer[playerid] = SetTimerEx("LearnPlayer", 22000, 0, "ii", playerid, 8);
+		    stop LearnTimer[playerid];
+			LearnTimer[playerid] = defer LearnPlayer[28000](playerid, 8);
 		}
 		else if(learnid == 8)
 		{
@@ -686,8 +685,8 @@ Public:LearnPlayer(playerid, learnid)
 			SendClientMessage(playerid, COLOR_RED, "[ ! ] /do - komanda kojom se opisuje trenutna IC situacija.");
 			SendClientMessage(playerid, COLOR_WHITE, " /do se pise u trecem licu odnosno u pogledu posmatraca, moze opisivati i okolinu.");
 			SendClientMessage(playerid, COLOR_WHITE, "Primjer: Sta bi se nalazilo ispred Johnnya na stolu? (( Patricia Vargas ))");
-		    KillTimer(LearnTimer[playerid]);
-			LearnTimer[playerid] = SetTimerEx("LearnPlayer", 23000, 0, "ii", playerid, 9);
+		    stop LearnTimer[playerid];
+			LearnTimer[playerid] = defer LearnPlayer[28000](playerid, 9);
 		}
 		else if(learnid == 9)
 		{
@@ -705,13 +704,12 @@ Public:LearnPlayer(playerid, learnid)
 	        SendClientMessage(playerid, COLOR_WHITE, "Drive By je pucanje oruzjem s mjesta vozaca iz bilo kojeg mjesta u vozilu na civile, motore ili bicikle.");
 	        SendClientMessage(playerid, COLOR_WHITE, "Takodjer je zabranjeno ubijanje propelerom helikoptera i gazenje igraca vozilom.");
 	        SendClientMessage(playerid, COLOR_WHITE, "Drive By je strogo kaznjiv kao i svako ostalo krsenje RolePlay pravila.");
-		    KillTimer(LearnTimer[playerid]);
-			LearnTimer[playerid] = LearnTimer[playerid] = SetTimerEx("LearnPlayer", 23000, 0, "ii", playerid, 10);
+		    stop LearnTimer[playerid];
+			LearnTimer[playerid] = defer LearnPlayer[28000](playerid, 10);
 		}
 		else if(learnid == 10)
 		{
-			KillTimer(LearnTimer[playerid]);
-			LearnTimer[playerid] = -1;
+			stop LearnTimer[playerid];
 			SendClientMessage(playerid, COLOR_GREY," ");
 			SendClientMessage(playerid, COLOR_GREY," ");
 			SendClientMessage(playerid, COLOR_GREY," ");
@@ -728,7 +726,6 @@ Public:LearnPlayer(playerid, learnid)
 	        SendClientMessage(playerid, COLOR_WHITE, "Uskoro slijedi kviz od deset pitanja.");
 	        SendClientMessage(playerid, COLOR_WHITE, "Mozete maksimalno dati krivi odgovor dva puta na jedno pitanje.");
 			StartKnowledgeQuiz(playerid);
-
 		}
 	}
 	return 1;
@@ -1030,8 +1027,7 @@ public ChargepPlayer(playerid, const tagername[], Float:percent, const reason[])
 	return 1;
 }*/
 
-forward OnAdminCountDown();
-public OnAdminCountDown()
+timer OnAdminCountDown[1000]()
 {
 	va_GameTextForAll("~w~%d", 1000, 4, cseconds - 1);
 	
@@ -1045,7 +1041,7 @@ public OnAdminCountDown()
 		foreach(new playerid : Player) {
 			PlayerPlaySound(playerid, 1057, 0.0, 0.0, 0.0);
 		}
-		KillTimer(CountingTimer);
+		stop CountingTimer;
 		return 1;
 	}
 	return 1;
@@ -1367,8 +1363,7 @@ public CheckLastLogin(playerid, const name[])
 	   ##    #### ##     ## ######## ##     ##  ######  
 */
 
-forward OnPlayerReconing(playerid, targetid);
-public OnPlayerReconing(playerid, targetid)
+timer OnPlayerReconing[1000](playerid, targetid)
 {
 	if( Bit4_Get(gr_SpecateId, playerid) == PLAYER_SPECATE_VEH ) {
 		if( !IsPlayerInAnyVehicle(targetid) ) {
@@ -1402,12 +1397,10 @@ public OnPlayerReconing(playerid, targetid)
 hook OnPlayerDisconnect(playerid, reason)
 {
 	// 32bit
-	if(LearnTimer[playerid] != -1)
-		KillTimer(LearnTimer[playerid]);
-	LearnTimer[playerid]		= -1;
+	stop LearnTimer[playerid];
 	ReconingVehicle[playerid]	= INVALID_VEHICLE_ID;
 	ReconingPlayer[playerid]	= INVALID_PLAYER_ID;
-	KillTimer(ReconTimer[playerid]);
+	stop ReconTimer[playerid];
 	AdminLoginTry[playerid] = 0;
 	PortedPlayer[playerid] = -1;
 	
@@ -1425,6 +1418,13 @@ hook OnPlayerDisconnect(playerid, reason)
 	Bit1_Set(a_BlockedHChat, playerid, false);
 	Bit1_Set(a_NeedHelp, playerid, false);
 	Bit1_Set(a_TogReports, playerid, false);
+
+	if( IsPlayerReconing(playerid) ) 
+	{
+		stop ReconTimer[playerid];
+		DestroyReconTextDraws(playerid);
+		Bit4_Set(gr_SpecateId, playerid, 0);
+	}
 	return 1;
 }
 
@@ -3418,18 +3418,18 @@ CMD:timeout(playerid, params[])
 	format(str, 35, "banip %s", ReturnPlayerIP(user));
 	SendRconCommand(str);
 	
-	SetTimerEx("TimeoutPlayer", 2000, false, "d", user);
+	defer TimeoutPlayer(user);
 	//BlockIpAdress(
 	
 	return 1;
 }
-forward TimeoutPlayer(playerid);
-public TimeoutPlayer(playerid)
+
+timer TimeoutPlayer[2000](playerid)
 {
 	new
 		string[44];
 
-	format(string, sizeof(string), "unbanip %s", player_pip);
+	format(string, sizeof(string), "unbanip %s", ReturnPlayerIP(playerid));
  	SendRconCommand(string);
 	
 	SendRconCommand("reloadbans");
@@ -3605,7 +3605,7 @@ CMD:undie(playerid, params[])
 	
 	DestroyDeathInfo(giveplayerid);
 	DestroyDeathTDs(giveplayerid);
-	KillTimer(DeathTimer[giveplayerid]);
+	stop DeathTimer[giveplayerid];
 
 	DeathCountStarted_Set(giveplayerid, false);
 	DeathCountSeconds_Set(giveplayerid, 0);
@@ -5347,7 +5347,7 @@ CMD:count(playerid, params[])
   		SendClientMessage(playerid, COLOR_SKYBLUE, string);
 		count_started = true;
    		cseconds = seconds + 1;
-		CountingTimer = SetTimer("OnAdminCountDown", 1000, true);
+		CountingTimer = repeat OnAdminCountDown();
      	format(string, sizeof(string), "AdmWarn: %s koristi komandu /count.", GetName(playerid,false));
       	SendAdminMessage(COLOR_RED, string);
    	}
@@ -5438,7 +5438,7 @@ CMD:learn(playerid, params[])
      			PlayerInfo[giveplayerid][pMustRead] = true;
      			PlayerInfo[giveplayerid][pMuted] = true;
      			TogglePlayerControllable(giveplayerid, 0);
-        		LearnTimer[playerid] = SetTimerEx("LearnPlayer", 1000, 0, "ii", giveplayerid, 1);
+        		LearnTimer[playerid] = defer LearnPlayer[1000](giveplayerid, 1);
 				SendClientMessage(giveplayerid,COLOR_LIGHTRED, "Niste naucili pravila Roleplaya. Primorani ste ih ponovo procitati.");
 				SendClientMessage(giveplayerid, COLOR_LIGHTRED, "Poslije pravila, slijedi kviz od 10 pitanja, tako da bolje pratite!");
 				format(globalstring, 128, "AdmCMD: %s je poslao %s da procita tutorial o Roleplayu.", GetName(playerid, false), GetName(giveplayerid, false));
@@ -5566,8 +5566,9 @@ CMD:recon(playerid, params[])
 
 	oldskin[ playerid ] = GetPlayerSkin(playerid);
 
-	if( IsPlayerReconing(playerid) ) {
-		KillTimer(ReconTimer[playerid]);
+	if( IsPlayerReconing(playerid) ) 
+	{
+		stop ReconTimer[playerid];
 		DestroyReconTextDraws(playerid);
 		Bit4_Set(gr_SpecateId, playerid, 0);
 	}
@@ -5594,7 +5595,7 @@ CMD:reconoff(playerid, params[])
 {
 	if( !IsPlayerReconing(playerid) ) return SendClientMessage(playerid, COLOR_RED, "Ne reconate nikoga!");	
 	
-	KillTimer(ReconTimer[playerid]);
+	stop ReconTimer[playerid];
 	DestroyReconTextDraws(playerid);
 	Bit4_Set(gr_SpecateId, playerid, 0);
 	TogglePlayerSpectating(playerid, 0);

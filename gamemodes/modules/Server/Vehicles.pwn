@@ -822,10 +822,10 @@ stock CheckVehicleObjects(vehicleid)
 	##   	##  #######   #######  ##    ##  ######
 */
 
-forward JackerUnfreeze(playerid);
-public JackerUnfreeze(playerid)
+timer JackerUnfreeze[3000](playerid)
 {
 	TogglePlayerControllable(playerid, true);
+	return 1;
 }
 
 hook OnVehicleDeath(vehicleid, killerid)
@@ -1043,7 +1043,7 @@ hook OnPlayerEnterVehicle(playerid, vehicleid, ispassenger)
 				new
 					Float:slx,Float:sly,Float:slz;
 				TogglePlayerControllable(playerid, 0);
-				SetTimerEx("JackerUnfreeze", 	3000, 	false, "i", playerid);
+				defer JackerUnfreeze(playerid);
 				GetPlayerPos(playerid, 			slx, 	sly, slz);
 				SetPlayerPos(playerid, 			slx, 	sly, slz+5);
 				PlayerPlaySound(playerid, 		1130, 	slx, sly, slz+5);
@@ -1058,7 +1058,7 @@ hook OnPlayerEnterVehicle(playerid, vehicleid, ispassenger)
 				TogglePlayerControllable(playerid, 0);
 				SendClientMessage(playerid,COLOR_RED,"(( Freezean si 3 sekunde zbog pokusaja ninja jackanja. ))");
 
-				SetTimerEx("JackerUnfreeze", 	3000, 	false, "i", playerid);
+				defer JackerUnfreeze(playerid);
 				GetPlayerPos(playerid, 			slx, 	sly, slz);
 				SetPlayerPos(playerid, 			slx, 	sly, slz+5);
 				PlayerPlaySound(playerid, 		1130, 	slx, sly, slz+5);

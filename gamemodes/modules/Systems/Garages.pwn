@@ -34,7 +34,7 @@ static stock
 		PlayerText:GarageCMDTD[ MAX_PLAYERS ]			= { PlayerText:INVALID_TEXT_DRAW, ...};
 
 static stock
-    HideGarageTD[MAX_PLAYERS],
+    Timer:HideGarageTD[MAX_PLAYERS],
 	Bit1:r_HDTimer<MAX_PLAYERS>  = {Bit1:false, ...},
 	GarageSeller[ MAX_PLAYERS ],
 	GarageBuyer[ MAX_PLAYERS ],
@@ -177,11 +177,9 @@ public OnServerGaragesLoad()
 	return 1;
 }
 
-forward HideGaragesTDs(playerid);
-public HideGaragesTDs(playerid)
+timer HideGaragesTDs[3000](playerid)
 {
 	Bit1_Set(r_HDTimer, playerid, false);
-	KillTimer(HideGarageTD[playerid]);
     DestroyGarageInfoTD(playerid);
     return 1;
 }
@@ -417,8 +415,9 @@ hook OnGameModeInit()
 
 hook OnPlayerDisconnect(playerid, reason)
 {
-	if( Bit1_Get(r_HDTimer, playerid) ) {
-   		KillTimer(HideGarageTD[playerid]);
+	if( Bit1_Get(r_HDTimer, playerid) ) 
+	{
+   		stop HideGarageTD[playerid];
    		Bit1_Set(r_HDTimer, playerid, false);
     }
     if( GarageBuyer[ playerid ] != INVALID_PLAYER_ID ) {
@@ -498,7 +497,7 @@ hook OnPlayerPickUpDynPickup(playerid, pickupid)
 
 			PlayerTextDrawSetString( playerid, GarageInfoTD[ playerid ], textString );
 			Bit1_Set(r_HDTimer, playerid, true);
-			HideGarageTD[playerid] = SetTimerEx("HideGaragesTDs", 3000, false, "i", playerid);
+			HideGarageTD[playerid] = defer HideGaragesTDs(playerid);
 			break;
 		}
 	}

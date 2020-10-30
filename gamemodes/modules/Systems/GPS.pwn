@@ -49,7 +49,6 @@ new
 	GPSInfo[MAX_PLAYERS][PLAYER_GPS_DATA],
 	GPSToList[MAX_PLAYERS][MAX_GPS_LOCATIONS],
 	
-	gps_distance[MAX_PLAYERS] = {0, ...},
 	PlayerText:gps_Meters[MAX_PLAYERS] = { PlayerText:INVALID_TEXT_DRAW, ... },
 	
 	Iterator: GPS_location <MAX_GPS_LOCATIONS>,
@@ -217,7 +216,6 @@ Public:gps_GetDistance(playerid, gpsid, Float:X, Float:Y, Float:Z) {
 	    PlayerTextDrawSetString(playerid, gps_Meters[playerid], buffer);
 	}
 	else if(!Bit1_Get(gps_Activated, playerid)) {
-		KillTimer(gps_distance[playerid]);
 		gps_DistanceTD(playerid, false);
 	}
 	return (true);
@@ -242,7 +240,6 @@ hook OnPlayerEnterCheckpoint(playerid) {
 		Bit1_Set(gps_Activated, playerid, false);
 		DisablePlayerCheckpoint(playerid);
 		GameTextForPlayer(playerid, "~g~Stigli ste na odrediste!", 1500, 1);
-		KillTimer(gps_distance[playerid]);
 		gps_DistanceTD(playerid, false);
 	}
 	return (true);

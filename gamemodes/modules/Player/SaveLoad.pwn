@@ -11,7 +11,7 @@
 */
 static stock 
 			dialogtext[MAX_DIALOG_TEXT],
-			LoginCheckTimer[MAX_PLAYERS];
+			Timer:LoginCheckTimer[MAX_PLAYERS];
 
 /*
 	######## ##     ## ##    ##  ######  ######## ####  #######  ##    ##  ######  
@@ -214,7 +214,7 @@ public CheckPlayerInBase(playerid)
 		format(dialogtext, sizeof(dialogtext), ""COL_WHITE"Srdacan pozdrav "COL_LIGHTBLUE"%s!\n\n\
 			"COL_WHITE"Lijepo vas je vidjeti na nasem serveru opet.\n\
 			Molimo da unesete lozinku vaseg korisnickog\n\
-			racuna i da se prijavite. Imate "COL_LIGHTBLUE"%d "COL_WHITE"sekundi da se\n\
+			racuna i da se prijavite. Imate "COL_LIGHTBLUE"%d"COL_WHITE"sekundi da se\n\
 			prijavite, ili cete biti odspojeni sa Servera.\n\n\
 			Hvala i uzivajte i dalje u igranju na City of Angels!",GetName(playerid),MAX_LOGIN_TIME
 		);					
@@ -222,7 +222,7 @@ public CheckPlayerInBase(playerid)
 		
 		Bit8_Set(gr_LoginInputs, playerid, 0);
 		Bit1_Set(gr_LoginChecksOn, playerid, true);
-		LoginCheckTimer[playerid] = SetTimerEx("LoginCheck", 80000, false, "i", playerid);
+		LoginCheckTimer[playerid] = defer LoginCheck(playerid);
 	} 
 	else 
 	{ //Nije Registriran
@@ -264,7 +264,7 @@ public LoadPlayerData(playerid)
     cache_get_row_count(rows);
     if(rows)
 	{
-		KillTimer(LoginCheckTimer[playerid]);
+		stop LoginCheckTimer[playerid];
 		Bit1_Set(gr_LoginChecksOn, playerid, false);
 
 	    new string[20];
@@ -1124,7 +1124,7 @@ public LoadingPlayerCrashes(playerid)
 hook OnPlayerDisconnect(playerid, reason)
 {
 	if( Bit1_Get(gr_LoginChecksOn, playerid ) )
-		KillTimer(LoginCheckTimer[playerid]);
+		stop LoginCheckTimer[playerid];
 
 	return 1;
 }

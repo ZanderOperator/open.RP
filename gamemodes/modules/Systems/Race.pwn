@@ -32,7 +32,7 @@ enum E_RACING_DATA {
 	rdCounter,
 	bool:rdStarted,
 	rdEndCP,
-	rdTimer,
+	Timer:rdTimer,
 	rdFnsdRacers
 }
 static stock
@@ -162,7 +162,7 @@ stock static StartPlayerRace(playerid)
 			TogglePlayerAllDynamicCPs(RacingInfo[ playerid ][ rdContesters ][ i ], false);
 		}
 	}
-	RacingInfo[ playerid ][ rdTimer ] = SetTimerEx("RacingCounter", 1000, true, "i", playerid);
+	RacingInfo[ playerid ][ rdTimer ] = repeat RacingCounter(playerid);
 	return 1;
 }
 stock static ResetPlayerRaceCP(playerid, index)
@@ -203,26 +203,32 @@ stock ResetPlayerRacing(playerid)
 	RacingCallID[ playerid ]	= -1;
 	RacerSlot[ playerid ]		= -1;
 	CurrentRaceCP[ playerid ]	= -1;
-	
 	Bit1_Set(gr_PlayerInRace, playerid, false);
 	return 1;
 }
-// Callbacks
-forward StopRacingSound(playerid);
-public StopRacingSound(playerid) 
+
+// Timers
+
+timer StopRacingSound[8000](playerid) 
+{
 	PlayerPlaySound(playerid, 1098, 0.0, 0.0, 0.0);
- 
-forward RacingCounter(playerid);
-public RacingCounter(playerid) {
-	for( new i=0; i < MAX_RACING_CONTESTERS; i++) {
-		if( RacingInfo[ playerid ][ rdContesters ][ i ] != -1 ) {
+	return 1;
+}
+
+timer RacingCounter[1000](playerid) 
+{
+	for( new i=0; i < MAX_RACING_CONTESTERS; i++) 
+	{
+		if( RacingInfo[ playerid ][ rdContesters ][ i ] != -1 ) 
+		{
 			va_GameTextForPlayer(RacingInfo[ playerid ][ rdContesters ][ i ], "~y~%d", 1000, 4, RacingInfo[ playerid ][ rdCounter ]-1);
 			PlayerPlaySound(RacingInfo[ playerid ][ rdContesters ][ i ], 1056, 0.0, 0.0, 0.0);
 		}
 	}
 	
 	RacingInfo[ playerid ][ rdCounter ]--;
-	if( !RacingInfo[ playerid ][ rdCounter ] ) {
+	if( !RacingInfo[ playerid ][ rdCounter ] ) 
+	{
 		RacingInfo[ playerid ][ rdFinished ][ 0 ] 	= -1;
 		RacingInfo[ playerid ][ rdFinished ][ 1 ] 	= -1;
 		RacingInfo[ playerid ][ rdFinished ][ 2 ] 	= -1;
@@ -236,8 +242,9 @@ public RacingCounter(playerid) {
 				SetPlayerRaceCheckpoint(RacingInfo[ playerid ][ rdContesters ][ i ], 0, RacingInfo[ playerid ][ rdPosX ][ 0 ], RacingInfo[ playerid ][ rdPosY ][ 0 ], RacingInfo[ playerid ][ rdPosZ ][ 0 ], RacingInfo[ playerid ][ rdPosX ][ 1 ], RacingInfo[ playerid ][ rdPosY ][ 1 ], RacingInfo[ playerid ][ rdPosZ ][ 1 ], RACING_CP_SIZE);
 			}
 		}
-		KillTimer(RacingInfo[ playerid ][ rdTimer ]);
+		stop RacingInfo[ playerid ][ rdTimer ];
 	}
+	return 1;
 }
 
 /*
@@ -322,7 +329,7 @@ hook OnPlayerEnterRaceCP(playerid)
 			Bit1_Set(gr_PlayerInRace, playerid, false);	
 			TogglePlayerAllDynamicCPs(playerid, true);
 			PlayerPlaySound(playerid, 1097, 0.0, 0.0, 0.0);
-			SetTimerEx("StopRacingSound", 8000, false, "i", playerid);
+			defer StopRacingSound(playerid);
 			DisablePlayerRaceCheckpoint(playerid);
 		}
 	}

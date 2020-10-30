@@ -12,9 +12,11 @@
 #define ropelength 50
 
 #define offsetz 12
-#define dur 250
+#define ROPE_ANIM_DUR 250
 
-new r0pes[MAX_PLAYERS][ropelength],Float:pl_pos[MAX_PLAYERS][5]; //cause pvar + array = sux
+new r0pes[MAX_PLAYERS][ropelength],
+	Float:pl_pos[MAX_PLAYERS][5],
+	Timer:RopeTimer[MAX_PLAYERS]; 
 
 hook OnGameModeInit()
 {
@@ -76,11 +78,13 @@ hook OnVehicleDeath(vehicleid, killerid)
 	return 1;
 }
 
-forward syncanim(playerid);
-public syncanim(playerid)
+timer RopeSyncAnim[ROPE_ANIM_DUR](playerid)
 {
-	if(GetPVarInt(playerid,"roped") == 0) return 0;
-	SetTimerEx("syncanim",dur,0,"i",playerid);
+	if(GetPVarInt(playerid,"roped") == 0) 
+	{
+		stop RopeTimer[playerid];
+		return 1;
+	}
 	ApplyAnimation(playerid,"ped","abseil",4.0,0,0,0,1,0);
 	return 1;
 }
@@ -133,7 +137,7 @@ CMD:rope(playerid, params[])
 		{
 		    r0pes[playerid][cre] = CreateObject(3004,pl_pos[playerid][0],pl_pos[playerid][1],floatadd(pl_pos[playerid][3],cre),87.640026855469,342.13500976563, 350.07507324219);
 		}
-		SetTimerEx("syncanim",dur,0,"i",playerid);
+		RopeTimer[playerid] = repeat RopeSyncAnim(playerid);
 	}
 	return 1;
 }

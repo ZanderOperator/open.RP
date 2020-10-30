@@ -52,7 +52,7 @@ new
 	
 // 32bit
 static stock
-	PlayerBleedTimer[ MAX_PLAYERS ];
+	Timer:PlayerBleedTimer[ MAX_PLAYERS ];
 /*
 	 ######  ########  #######   ######  ##    ##  ######  
 	##    ##    ##    ##     ## ##    ## ##   ##  ##    ## 
@@ -70,9 +70,11 @@ static stock
 	  TT   EEEE X   X   TT   DDD  R  RR A  A   W W   SSSS
 */
 
-forward HidePlayerWoundedTDs(playerid);
-public HidePlayerWoundedTDs(playerid)
+timer HidePlayerWoundedTDs[10000](playerid)
+{
 	DestroyPlayerWoundedTDs(playerid);
+	return 1;
+}
 
 stock ApplyWoundedAnimation(playerid, bodypart)
 {
@@ -127,7 +129,7 @@ stock ApplyWoundedAnimation(playerid, bodypart)
 stock ResetPlayerWounded(playerid)
 {
 	if( Bit8_Get( r_PlayerWounded, playerid ) != 0 ) 
-		KillTimer(PlayerBleedTimer[ playerid ]);
+		stop PlayerBleedTimer[ playerid ];
 	
 	DestroyPlayerWoundedTDs(playerid);
 	Bit8_Set(r_PlayerWounded, playerid, 0);
@@ -177,7 +179,7 @@ stock InflictPlayerDamage(playerid, issuerid, bodypart, Float:damage)
 				CreateDeathTD(playerid);
 				CreateDeathInfos(playerid, 1);
 
-				DeathTimer[playerid] = SetTimerEx("StartDeathCount", 1000, true, "i", playerid);
+				DeathTimer[playerid] = repeat StartDeathCount(playerid);
 				return (true);
 			}
 			else
@@ -187,7 +189,6 @@ stock InflictPlayerDamage(playerid, issuerid, bodypart, Float:damage)
 				SendClientMessage(playerid, COLOR_DEATH, "* Tek nakon 30 sec mozete ulaziti u kola kao vozac/suvozac.");
 				GameTextForPlayer(playerid, "~b~TESKO RANJEN", 5000, 3);
 				SetPlayerHealth(playerid, 25.0);
-				SetTimerEx("SafeResetWeapons", 2000, false, "i", playerid); /// ODE
 				AC_ResetPlayerWeapons(playerid);
 				
 				new
@@ -253,13 +254,6 @@ stock InflictPlayerDamage(playerid, issuerid, bodypart, Float:damage)
 	return 1;
 }
 
-forward SafeResetWeapons(playerid);
-public SafeResetWeapons(playerid)
-{
-	AC_ResetPlayerWeapons(playerid);
-	return 1;
-}
-
 stock DealDamage(playerid, issuerid, Float: health, Float: armour, Float: damage, bodypart = BODY_PART_GROIN)
 {		
 	if(PlayerInfo[playerid][pKilled] != 2 && KilledBy[playerid] == INVALID_PLAYER_ID)
@@ -302,7 +296,7 @@ stock DealDamage(playerid, issuerid, Float: health, Float: armour, Float: damage
 				CreateDeathTD(playerid);
 				CreateDeathInfos(playerid, 1);
 
-				DeathTimer[playerid] = SetTimerEx("StartDeathCount", 1000, true, "i", playerid);
+				DeathTimer[playerid] = repeat StartDeathCount(playerid);
 				return (true);
 			}
 			else
@@ -417,7 +411,7 @@ stock static CreatePlayerWoundedTDs(playerid)
 	PlayerTextDrawSetProportional(playerid, WndedText[playerid], 1);
 	PlayerTextDrawShow(playerid, WndedText[playerid]);
 	
-	SetTimerEx("HidePlayerWoundedTDs", 10000, false, "i", playerid);
+	defer HidePlayerWoundedTDs(playerid);
 }
 /*
 	 SSS  Y   Y  SSS  
@@ -438,15 +432,15 @@ stock static SetPlayerBleeding(playerid, type)
 		}
 		case PLAYER_WOUNDED_ARMS: {
 			SetPlayerHealth(playerid, health - WOUND_ARMS_AMOUNT );
-			PlayerBleedTimer[ playerid ] = SetTimerEx("OnPlayerBleed", 3500, true, "i", playerid);
+			PlayerBleedTimer[ playerid ] = repeat OnPlayerBleed[3500](playerid);
 		}
 		case PLAYER_WOUNDED_TORSO, PLAYER_WOUNDED_GROIN: {
 			SetPlayerHealth(playerid, health - WOUND_BODY_AMOUNT );
-			PlayerBleedTimer[ playerid ] = SetTimerEx("OnPlayerBleed", 2200, true, "i", playerid);
+			PlayerBleedTimer[ playerid ] = repeat OnPlayerBleed[2200](playerid);
 		}
 		 case PLAYER_WOUNDED_HEAD: {
 			SetPlayerHealth(playerid, health - WOUND_HEAD_AMOUNT );
-			PlayerBleedTimer[ playerid ] = SetTimerEx("OnPlayerBleed", 1500, true, "i", playerid);
+			PlayerBleedTimer[ playerid ] = repeat OnPlayerBleed[1500](playerid);
 		}
 	}
 	return 1;
@@ -485,17 +479,19 @@ stock CheckWoundedPlayer(playerid)
 	return 1;
 }
 
-forward OnPlayerBleed(playerid);
-public OnPlayerBleed(playerid)
+timer OnPlayerBleed[500](playerid)
 {
 	new
 		Float:health;
 	GetPlayerHealth(playerid, health);
 	
-	switch(Bit8_Get(r_PlayerWounded, playerid)) {
-		case PLAYER_WOUNDED_ARMS: {
-			if( ( health - WOUND_ARMS_AMOUNT ) <= 10.0 ) {
-				KillTimer(PlayerBleedTimer[ playerid ]);
+	switch(Bit8_Get(r_PlayerWounded, playerid)) 
+	{
+		case PLAYER_WOUNDED_ARMS: 
+		{
+			if( ( health - WOUND_ARMS_AMOUNT ) <= 10.0 ) 
+			{
+				stop PlayerBleedTimer[ playerid ];
 				Bit8_Set(r_PlayerWounded, playerid, 0);
 				
 				SetPlayerSkillLevel(playerid, WEAPONSKILL_AK47,				999);
@@ -507,17 +503,21 @@ public OnPlayerBleed(playerid)
 			}
 			SetPlayerHealth(playerid, health - WOUND_ARMS_AMOUNT);
 		}
-		case PLAYER_WOUNDED_TORSO, PLAYER_WOUNDED_GROIN: {			
-			if( ( health - WOUND_BODY_AMOUNT ) <= 10.0 ) {
-				KillTimer(PlayerBleedTimer[ playerid ]);
+		case PLAYER_WOUNDED_TORSO, PLAYER_WOUNDED_GROIN: 
+		{			
+			if( ( health - WOUND_BODY_AMOUNT ) <= 10.0 ) 
+			{
+				stop PlayerBleedTimer[ playerid ];
 				Bit8_Set(r_PlayerWounded, playerid, 0);
 				return 1;
 			}
 			SetPlayerHealth(playerid, health - WOUND_BODY_AMOUNT );
 		}
-		case PLAYER_WOUNDED_HEAD: {
-			if( ( health - WOUND_HEAD_AMOUNT ) <= 10.0 ) {
-				KillTimer(PlayerBleedTimer[ playerid ]);
+		case PLAYER_WOUNDED_HEAD: 
+		{
+			if( ( health - WOUND_HEAD_AMOUNT ) <= 10.0 ) 
+			{
+				stop PlayerBleedTimer[ playerid ];
 				Bit8_Set(r_PlayerWounded, playerid, 0);
 				return 1;
 			}

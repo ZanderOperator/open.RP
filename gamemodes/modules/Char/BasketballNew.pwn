@@ -21,9 +21,6 @@
 #define MAX_BASKET_TEAM_NAME				(32)
 #define MAX_BASKET_PLAYERS					(8)
 
-forward ApplyBallAnimation(playerid);
-forward BasketBallDnkEnd(playerid);
-forward BasketBallPickup(playerid);
 forward GetBall(kosid);
 forward ObjectToPoint(Float:radi, Float:radiz, objectid, Float:x, Float:y, Float:z);
 
@@ -57,19 +54,20 @@ new BasketInfo[MAX_BASKET][Baskets];
 
 new Text3D:PlayerBasketTeam[MAX_PLAYERS] = Text3D:INVALID_3DTEXT_ID;
 
-public ApplyBallAnimation(playerid)
+timer ApplyBallAnimation[650](playerid)
 {
 	ApplyAnimation(playerid,"BSKTBALL","BBALL_idleloop",4.1,1,1,1,1,1);
 	return 1;
 }
 
-public BasketBallDnkEnd(playerid)
+timer BasketBallDnkEnd[1450](playerid)
 {
 	if(IsPlayerConnected(playerid))
 	{
 	    ApplyAnimation(playerid,"BSKTBALL","BBALL_Dnk_Lnd",4.1,0,1,1,0,0,1);
 	    SetCameraBehindPlayer(playerid);
 	}
+	return 1;
 }
 
 public GetBall(kosid)
@@ -95,7 +93,7 @@ public ObjectToPoint(Float:radi, Float:radiz, objectid, Float:x, Float:y, Float:
 	return 0;
 }
 
-public BasketBallPickup(playerid)
+timer BasketBallPickup[650](playerid)
 {
 	if(IsPlayerConnected(playerid))
 	{
@@ -111,6 +109,7 @@ public BasketBallPickup(playerid)
 		Bit1_Set(PlayingBBall, playerid, true);
 		BasketInfo[GetPVarInt(playerid, "WhatBasket")][LoptaState] = LOPTAGORE;
 	}
+	return 1;
 }
 
 task BallOutTask[1000]()
@@ -797,7 +796,7 @@ hook OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
 							MoveObject(BasketInfo[basketid][lopta], pX, pY, Z+BasketInfo[basketid][LoptaHigh], BasketInfo[basketid][BallSpeed]);
 							
 							ApplyAnimation(playerid,"GRENADE","WEAPON_start_throw",4.1,0,0,0,0,0,1);
-							SetTimerEx("ApplyBallAnimation", 650, 0, "i", i);
+							defer ApplyBallAnimation(i);
 						}
 					}
 				}
@@ -825,7 +824,7 @@ hook OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
 							MoveObject(BasketInfo[basketid][lopta], pX, pY, Z+BasketInfo[basketid][LoptaHigh], BasketInfo[basketid][BallSpeed]);
 							
 							ApplyAnimation(playerid,"GRENADE","WEAPON_start_throw",4.1,0,0,0,0,0,1);
-							SetTimerEx("ApplyBallAnimation", 650, 0, "i", i);
+							defer ApplyBallAnimation(i);
 						}
 					}
 				}
@@ -858,7 +857,7 @@ hook OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
 						}
 						SetPlayerPos(playerid, 2316.8376,-1514.6727,25.3438);
 						ApplyAnimation(playerid,"BSKTBALL","BBALL_Dnk",4.0,0,0,0,0,0,1);
-						SetTimerEx("BasketBallDnkEnd", 1450, 0, "i", playerid);
+						defer BasketBallDnkEnd(playerid);
 						BasketInfo[GetPVarInt(playerid, "WhatBasket")][hasball] = NONE;
 						BasketInfo[GetPVarInt(playerid, "WhatBasket")][LoptaState] = LOPTATOKOS;
 						new Float:distance = GetPlayerDistanceFromPoint(playerid, 2316.9099,-1514.1183,25.3438);
@@ -904,7 +903,7 @@ hook OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
 						}
 						SetPlayerPos(playerid, 2316.9814, -1541.4727, 25.2309);
 						ApplyAnimation(playerid,"BSKTBALL","BBALL_Dnk",4.0,0,0,0,0,0,1);
-						SetTimerEx("BasketBallDnkEnd", 1450, 0, "i", playerid);
+						defer BasketBallDnkEnd(playerid);
 						BasketInfo[GetPVarInt(playerid, "WhatBasket")][hasball] = NONE;
 						BasketInfo[GetPVarInt(playerid, "WhatBasket")][LoptaState] = LOPTATOKOS;
 						new Float:distance = GetPlayerDistanceFromPoint(playerid, 2316.9814, -1541.4727, 25.2309);
@@ -949,7 +948,7 @@ hook OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
 						}
 					    SetPlayerPos(playerid,2533.4053,-1667.5361,15.1650);
 		                ApplyAnimation(playerid,"BSKTBALL","BBALL_Dnk",4.0,0,0,0,0,0,1);
-		                SetTimerEx("BasketBallDnkEnd", 1450, 0, "i", playerid);
+		                defer BasketBallDnkEnd(playerid);
 		                BasketInfo[GetPVarInt(playerid, "WhatBasket")][hasball] = NONE;
 		                BasketInfo[GetPVarInt(playerid, "WhatBasket")][LoptaState] = LOPTATOKOS;
 				    }
@@ -993,7 +992,7 @@ hook OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
 						}
 					    SetPlayerPos(playerid, 2768.6841,-2019.6881,13.5547	);
 		                ApplyAnimation(playerid,"BSKTBALL","BBALL_Dnk",4.0,0,0,0,0,0,1);
-		                SetTimerEx("BasketBallDnkEnd", 1450, 0, "i", playerid);
+		                defer BasketBallDnkEnd(playerid);
 		                BasketInfo[GetPVarInt(playerid, "WhatBasket")][hasball] = NONE;
 		                BasketInfo[GetPVarInt(playerid, "WhatBasket")][LoptaState] = LOPTATOKOS;
 						new Float:distance = GetPlayerDistanceFromPoint(playerid, 2768.0012,-2019.6448,13.5547);
@@ -1039,7 +1038,7 @@ hook OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
 						}
 					    SetPlayerPos(playerid, 2795.0542,-2019.5787,13.5547);
 		                ApplyAnimation(playerid,"BSKTBALL","BBALL_Dnk",4.0,0,0,0,0,0,1);
-		                SetTimerEx("BasketBallDnkEnd", 1450, 0, "i", playerid);
+		                defer BasketBallDnkEnd(playerid);
 		                BasketInfo[GetPVarInt(playerid, "WhatBasket")][hasball] = NONE;
 		                BasketInfo[GetPVarInt(playerid, "WhatBasket")][LoptaState] = LOPTATOKOS;
 						new Float:distance = GetPlayerDistanceFromPoint(playerid, 2795.0542,-2019.5787,13.5547);
@@ -1089,7 +1088,7 @@ hook OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
 						new Float:RotX, Float:RotY, Float:RotZ;
 						GetObjectRot(BasketInfo[GetPVarInt(playerid, "WhatBasket")][lopta], RotX, RotY, RotZ);
 						SetPlayerFacingAngle(playerid, RotZ);
-						SetTimerEx("BasketBallPickup", 625, false, "i", playerid);
+						defer BasketBallPickup(playerid);
 					}
 				}
 				else

@@ -21,7 +21,7 @@ new
 	vgatestatus[4],
 	vrampa[5],
 	vrampastatus[3],
-	MechanicTimer[MAX_PLAYERS],
+	Timer:MechanicTimer[MAX_PLAYERS],
 	PlayerRepairVehicle[ MAX_PLAYERS ],
 	PlayerMechanicVehicle[ MAX_PLAYERS ];
 
@@ -73,7 +73,8 @@ stock CreateMechanicTextDraw(playerid)
 	##     ## ##     ## ##     ## ##   ##  ##    ##
 	##     ##  #######   #######  ##    ##  ######
 */
-Public:MechCountForPlayer(playerid, giveplayerid, usluga)
+
+timer MechCountForPlayer[1000](playerid, giveplayerid, service)
 {
 	new Float:X, Float:Y, Float:Z;
 	GetVehiclePos( PlayerMechanicVehicle[ giveplayerid ] , X, Y, Z);
@@ -81,7 +82,7 @@ Public:MechCountForPlayer(playerid, giveplayerid, usluga)
 	if( !IsPlayerInVehicle(playerid, PlayerMechanicVehicle[ playerid ])) {
 		DestroyMechanicTextDraw(playerid);
 		DestroyMechanicTextDraw(giveplayerid);
-		KillTimer(MechanicTimer[playerid]);
+		stop MechanicTimer[playerid];
 
 		Bit1_Set( gr_UsingMechanic, playerid, 		false );
 		Bit1_Set( gr_UsingMechanic, giveplayerid, 	false );
@@ -106,7 +107,7 @@ Public:MechCountForPlayer(playerid, giveplayerid, usluga)
 	{
 		DestroyMechanicTextDraw(playerid);
 		DestroyMechanicTextDraw(giveplayerid);
-		KillTimer(MechanicTimer[playerid]);
+		stop MechanicTimer[playerid];
 
 		Bit1_Set( gr_UsingMechanic, playerid, false );
 		Bit1_Set( gr_UsingMechanic, giveplayerid, false );
@@ -118,8 +119,10 @@ Public:MechCountForPlayer(playerid, giveplayerid, usluga)
 
 		GetVehicleParamsEx(vehicleid, engine, lights, alarm, doors, bonnet, boot, objective);
 
-		switch(usluga) {
-			case 1: {
+		switch(service) 
+		{
+			case 1: 
+			{
 			    if(PlayerInfo[ giveplayerid ][ pParts ] < 3) 
 				{
 					SendErrorMessage(playerid, "Mehanicar nema dovoljno djelova!");
@@ -153,7 +156,8 @@ Public:MechCountForPlayer(playerid, giveplayerid, usluga)
 
 				PlayerInfo[ giveplayerid ][ pParts ] -= 3;
 			}
-			case 2: {
+			case 2: 
+			{
 			    if(PlayerInfo[ giveplayerid ][ pParts ] < 3)
 				{
 					SendErrorMessage(playerid, "Mehanicar nema dovoljno djelova!");
@@ -175,7 +179,8 @@ Public:MechCountForPlayer(playerid, giveplayerid, usluga)
 
 				PlayerInfo[ giveplayerid ][ pParts ] -= 3;
 			}
-			case 3: {
+			case 3: 
+			{
 			    if(PlayerInfo[ giveplayerid ][ pParts ] < 5)
 				{
 					SendErrorMessage(playerid, "Mehanicar nema dovoljno djelova!");
@@ -203,7 +208,8 @@ Public:MechCountForPlayer(playerid, giveplayerid, usluga)
 				);
 				mysql_tquery(g_SQL, bigquery, "");
 			}
-			case 4: {
+			case 4:
+			{
 			    if(PlayerInfo[ giveplayerid ][ pParts ] < 2)
 				{
 					SendErrorMessage(playerid, "Mehanicar nema dovoljno djelova!");
@@ -230,7 +236,8 @@ Public:MechCountForPlayer(playerid, giveplayerid, usluga)
 				);
 				mysql_tquery(g_SQL, bigquery, "");
 			}
-			case 6: {
+			case 6: 
+			{
 			    if(PlayerInfo[ giveplayerid ][ pParts ] < 4000)
 				{
 					SendErrorMessage(playerid, "Mehanicar nema dovoljno djelova!");
@@ -265,7 +272,8 @@ Public:MechCountForPlayer(playerid, giveplayerid, usluga)
 				);
 				mysql_tquery(g_SQL, bigquery, "");
 			}
-			case 7: {
+			case 7: 
+			{
 			    if(PlayerInfo[ giveplayerid ][ pParts ] < 7000)
 				{
 					SendErrorMessage(playerid, "Mehanicar nema dovoljno djelova!");
@@ -294,7 +302,8 @@ Public:MechCountForPlayer(playerid, giveplayerid, usluga)
 				);
 				mysql_tquery(g_SQL, bigquery, "");
 			}
-			case 8: {
+			case 8: 
+			{
 			    if(PlayerInfo[ giveplayerid ][ pParts ] < 5)
 				{
 					SendErrorMessage(playerid, "Mehanicar nema dovoljno djelova!");

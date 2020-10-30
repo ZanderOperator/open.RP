@@ -30,7 +30,7 @@
 
 static
     bool:ANPRActivated       [MAX_PLAYERS] = {false, ...},
-    PlayerANPRTimer          [MAX_PLAYERS],
+    Timer:PlayerANPRTimer    [MAX_PLAYERS],
     PlayerText:AnprBackground[MAX_PLAYERS] = {PlayerText:INVALID_TEXT_DRAW, ...},
     PlayerText:AnprTitle     [MAX_PLAYERS] = {PlayerText:INVALID_TEXT_DRAW, ...},
     PlayerText:AnprInfo      [MAX_PLAYERS] = {PlayerText:INVALID_TEXT_DRAW, ...};
@@ -56,8 +56,7 @@ stock Player_SetANPRActivated(playerid, bool:v)
     ANPRActivated[playerid] = v;
 }
 
-forward ANPRTimer(playerid);
-public ANPRTimer(playerid)
+timer ANPRTimer[2000](playerid)
 {
     // TODO: check if these variables need to be static. It's perfectly fine for them to be 'new'.
     static
@@ -195,14 +194,14 @@ static DestroyANPRTextDraw(playerid)
 stock DisableANPRForPlayer(playerid)
 {
     DestroyANPRTextDraw(playerid);
-    KillTimer(PlayerANPRTimer[playerid]);
+    stop PlayerANPRTimer[playerid];
     Player_SetANPRActivated(playerid, false);
 }
 
 stock EnableANPRForPlayer(playerid)
 {
     CreateANPRTextDraw(playerid);
-    PlayerANPRTimer[playerid] = SetTimerEx("ANPRTimer", 2000, true, "i", playerid);
+    PlayerANPRTimer[playerid] = repeat ANPRTimer(playerid);
     Player_SetANPRActivated(playerid, true);
 }
 

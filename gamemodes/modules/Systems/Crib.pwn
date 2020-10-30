@@ -83,8 +83,8 @@ new
 // Vars
 static stock
 		HouseAlarmZone[MAX_HOUSES],
-		GlobalZoneT[MAX_HOUSES],
-		GlobalMapIconT[MAX_HOUSES],
+		Timer:GlobalZoneT[MAX_HOUSES],
+		Timer:GlobalMapIconT[MAX_HOUSES],
 		Float:PickLockMaxValue[MAX_PLAYERS][3],
 		PlayerBar:PickLockBars[MAX_PLAYERS][3],
 		PlayerBar:FootKickingBar[MAX_PLAYERS],
@@ -94,8 +94,8 @@ static stock
 		tmpViwo[MAX_PLAYERS],
 		CreatingHouseID[MAX_PLAYERS],
 		PickLockTimeC[MAX_PLAYERS],
-		PickLockTimer[MAX_PLAYERS],
-		PlayerPickLockTimer[MAX_PLAYERS],
+		Timer:PickLockTimer[MAX_PLAYERS],
+		Timer:PlayerPickLockTimer[MAX_PLAYERS],
 		Timer:PlayerClosedTimer[MAX_PLAYERS],
 		AlarmEffect[3] = { 41800, 3401, 42801 };
 new
@@ -132,7 +132,6 @@ new
 		PlayerText:PickLockTime[MAX_PLAYERS]		= { PlayerText:INVALID_TEXT_DRAW, ... },
 		PlayerText:FootKickingBcg1[MAX_PLAYERS] 	= { PlayerText:INVALID_TEXT_DRAW, ... },
 		PlayerText:FootKickingBcg2[MAX_PLAYERS] 	= { PlayerText:INVALID_TEXT_DRAW, ... },
-		PlayerText:LoadingObjectsTXD[MAX_PLAYERS]	= { PlayerText:INVALID_TEXT_DRAW, ... },
 		PlayerText:FootKickingText[MAX_PLAYERS] 	= { PlayerText:INVALID_TEXT_DRAW, ... };
 
 hook OnGameModeInit()
@@ -155,37 +154,6 @@ hook OnGameModeInit()
 	 ######     ##     #######   ######  ##    ##
 */
 ///////////////////////////////////////////////////////////////////
-_LoadingObjects(playerid, bool:status) {
-	if(status == false) 
-		PlayerTextDrawHide(playerid, LoadingObjectsTXD[playerid]), LoadingObjectsTXD[playerid] = PlayerText:INVALID_TEXT_DRAW;
-	else if(status == true) {
-		PlayerTextDrawHide(playerid, LoadingObjectsTXD[playerid]);
-		
-		LoadingObjectsTXD[playerid] = CreatePlayerTextDraw(playerid, 296.333343, 418.148223, "[!] Loading_Objects...");
-		PlayerTextDrawLetterSize(playerid, LoadingObjectsTXD[playerid], 0.195000, 1.151999);
-		PlayerTextDrawAlignment(playerid, LoadingObjectsTXD[playerid], 1);
-		PlayerTextDrawColor(playerid, LoadingObjectsTXD[playerid], -2147483393);
-		PlayerTextDrawSetShadow(playerid, LoadingObjectsTXD[playerid], 0);
-		PlayerTextDrawSetOutline(playerid, LoadingObjectsTXD[playerid], 1);
-		PlayerTextDrawBackgroundColor(playerid, LoadingObjectsTXD[playerid], 255);
-		PlayerTextDrawFont(playerid, LoadingObjectsTXD[playerid], 1);
-		PlayerTextDrawSetProportional(playerid, LoadingObjectsTXD[playerid], 1);
-		PlayerTextDrawSetShadow(playerid, LoadingObjectsTXD[playerid], 0);
-		PlayerTextDrawShow(playerid, LoadingObjectsTXD[playerid]);
-	}
-	return (true);
-}
-
-Public:LoadingObjects(playerid, bool: status) {
-	if(status == false) 
-		_LoadingObjects(playerid, false);
-	if(status == true) {	
-		SetTimerEx("LoadingObjects", 6000, (false), "ib", playerid, false);
-		TogglePlayerControllable(playerid, true);
-		PlayerTextDrawSetString(playerid, LoadingObjectsTXD[playerid], "[!] Objects Loaded!");
-	}
-	return (true);
-}
 
 Public:OnHouseInsertInDB(houseid, playerid)
 {
@@ -227,46 +195,6 @@ stock CheckHouseInfoTextDraws(playerid)
 		Bit16_Set(gr_PlayerInfrontHouse, playerid, INVALID_HOUSE_ID);
 	}
     return 1;
-}
-
-// Timers
-forward PicklockTime(playerid, houseid);
-public PicklockTime(playerid, houseid)
-{
-	new
-		tmpString[10];
-	valstr(tmpString, PickLockTimeC[playerid] - 1, false);
-	PlayerTextDrawSetString(playerid, PickLockTime[playerid], tmpString);
-	if(--PickLockTimeC[playerid] == 0) {
-		ResetLockPickVars(playerid);
-		if(!Bit1_Get(gr_PlayerHouseAlarmOff, playerid))
-			PlayHouseAlarm(houseid);
-	}
-}
-
-forward DestroyGlobalZone(houseid);
-public DestroyGlobalZone(houseid)
-{
-	foreach(new i : Player) {
-		if(PlayerInfo[i][pHouseKey] == houseid || IsACop(i) ) {
-			GangZoneDestroy(HouseAlarmZone[houseid]);
-			HouseAlarmZone[houseid] = -1;
-			break;
-		}
-	}
-	KillTimer(GlobalZoneT[houseid]);
-	return 1;
-}
-
-forward DestroyGlobalMapIcon(houseid);
-public DestroyGlobalMapIcon(houseid)
-{
-	foreach(new i : Player) {
-		if(IsValidDynamicMapIcon(GlobalMapIcon[i]))
-			DestroyDynamicMapIcon(GlobalMapIcon[i]);
-	}
-	KillTimer(GlobalMapIconT[houseid]);
-	return 1;
 }
 
 // STOCKS
@@ -580,9 +508,10 @@ stock static CreatePlayerClosedScene(playerid)
 
 stock static StopHouseAlarm(houseid)
 {
-	if(IsValidGangZone(HouseAlarmZone[houseid])) {
+	if(IsValidGangZone(HouseAlarmZone[houseid])) 
+	{
 		GangZoneDestroy(HouseAlarmZone[houseid]);
-		KillTimer(GlobalZoneT);
+		stop GlobalZoneT[houseid];
 	}
 	foreach(new i : Player) {
 		if(IsACop(i) && IsASD(i)) {
@@ -683,7 +612,7 @@ stock PlayHouseAlarm(houseid)
 				}
 			}
 			HouseAlarmZone[houseid] = gang_zone;
-			GlobalZoneT[houseid] = SetTimerEx("DestroyGlobalZone", 480000, false, "i", houseid);
+			GlobalZoneT[houseid] = defer DestroyGlobalZone(houseid);
 
 			/************ LEVEL 2 ************/
 			new
@@ -726,7 +655,7 @@ stock PlayHouseAlarm(houseid)
 				}
 			}
 			HouseAlarmZone[houseid] = gang_zone;
-			GlobalZoneT[houseid] = SetTimerEx("DestroyGlobalZone", 480000, false, "i", houseid);
+			GlobalZoneT[houseid] = defer DestroyGlobalZone(houseid);
 
 			/************ LEVEL 5 ************/
 			foreach(new i : Player) {
@@ -734,7 +663,7 @@ stock PlayHouseAlarm(houseid)
 					GlobalMapIcon[i] = CreateDynamicMapIcon(HouseInfo[houseid][hEnterX], HouseInfo[houseid][hEnterY], HouseInfo[houseid][hEnterZ], 16, -1, -1, -1, i, 9000.0, MAPICON_GLOBAL);
 				}
 			}
-			GlobalMapIconT[houseid] = SetTimerEx("DestroyGlobalMapIcon", 480000, false, "i", houseid);
+			GlobalMapIconT[houseid] = defer DestroyGlobalMapIcon();
 
 			/************ LEVEL 2 ************/
 			new
@@ -789,12 +718,13 @@ stock ResetHouseInfo(houseid)
 	HouseInfo[houseid][hAlarm]				= 0;
 	HouseInfo[houseid][hLockLevel] 			= 0;
 
-	if(Bit1_Get(gr_HouseAlarm, houseid)) {
+	if(Bit1_Get(gr_HouseAlarm, houseid)) 
+	{
 		GangZoneDestroy(HouseAlarmZone[houseid]);
-		KillTimer(GlobalZoneT[houseid]);
+		stop GlobalZoneT[houseid];
 		Bit1_Set(gr_HouseAlarm, houseid, false);
 	}
-	KillTimer(GlobalMapIconT[houseid]);
+	stop GlobalMapIconT[houseid];
 
 	Iter_Clear(HouseFurInt[houseid]);
 	Iter_Clear(HouseFurExt[houseid]);
@@ -904,8 +834,8 @@ stock static ResetLockPickVars(playerid)
 	PickLockTimeC[playerid] = 0;
 
 	// Rest
-	KillTimer(PickLockTimer[playerid]);
-	KillTimer(PlayerPickLockTimer[playerid]);
+	stop PickLockTimer[playerid];
+	stop PlayerPickLockTimer[playerid];
 	DestroyPickLockTDs(playerid);
 
 	Bit1_Set(gr_PlayerPickLocking, 	playerid, false);
@@ -1069,7 +999,7 @@ stock static SetPlayerPickLock(playerid)
 	PickLockMaxValue[playerid][2] = float(random(value)) + 1.5;
 
 	PickLockTimeC[playerid] = time;
-	PickLockTimer[playerid] = SetTimerEx("PicklockTime", 1000, true, "ii", playerid, house);
+	PickLockTimer[playerid] = repeat PicklockTime(playerid , house);
 
 	new
 		tmpString[10];
@@ -1091,7 +1021,7 @@ stock static SetPlayerPickLock(playerid)
 	UpdatePickLockTD(playerid, 1, floatround(PickLockMaxValue[playerid][1]));
 	UpdatePickLockTD(playerid, 2, floatround(PickLockMaxValue[playerid][2]));
 
-	PlayerPickLockTimer[playerid] = SetTimerEx("PickLockTimerFunction", 800, true, "i", playerid);
+	PlayerPickLockTimer[playerid] = repeat PickLockTimerFunction(playerid);
 	return 1;
 }
 
@@ -1232,12 +1162,11 @@ stock SetPlayerCrowbarBreaking(playerid)
 	   ##     ##  ##     ## ##       ##    ##  ##    ##
 	   ##    #### ##     ## ######## ##     ##  ######
 */
-///////////////////////////////////////////////////////////////////
-forward PickLockTimerFunction(playerid);
-public PickLockTimerFunction(playerid)
+
+timer PickLockTimerFunction[800](playerid)
 {
 	if(!Bit1_Get(gr_PlayerPickLocking, playerid))
-		KillTimer(PlayerPickLockTimer[playerid]);
+		stop PlayerPickLockTimer[playerid];
 
 	new
 		slot = Bit2_Get(gr_PlayerPickSlot, playerid);
@@ -1256,7 +1185,44 @@ public PickLockTimerFunction(playerid)
 timer ClosedPlayerTimer[2000](playerid)
 {
 	ShowPlayerDialog(playerid, DIALOG_HOUSE_SKINSURE, DIALOG_STYLE_MSGBOX, "ODABIR SKINA", "Zelite li obuci ovaj skin?", "Pick", "Abort");
-	stop PlayerClosedTimer[playerid];
+	return 1;
+}
+
+timer PicklockTime[1000](playerid, houseid)
+{
+	new
+		tmpString[10];
+	valstr(tmpString, PickLockTimeC[playerid] - 1, false);
+	PlayerTextDrawSetString(playerid, PickLockTime[playerid], tmpString);
+	if(--PickLockTimeC[playerid] == 0) {
+		ResetLockPickVars(playerid);
+		if(!Bit1_Get(gr_PlayerHouseAlarmOff, playerid))
+			PlayHouseAlarm(houseid);
+	}
+}
+
+timer DestroyGlobalZone[480000](houseid)
+{
+	foreach(new i : Player) 
+	{
+		if(PlayerInfo[i][pHouseKey] == houseid || IsACop(i) ) 
+		{
+			GangZoneDestroy(HouseAlarmZone[houseid]);
+			HouseAlarmZone[houseid] = -1;
+			break;
+		}
+	}
+	return 1;
+}
+
+timer DestroyGlobalMapIcon[480000]()
+{
+	foreach(new i : Player) 
+	{
+		if(IsValidDynamicMapIcon(GlobalMapIcon[i]))
+			DestroyDynamicMapIcon(GlobalMapIcon[i]);
+	}
+	return 1;
 }
 
 /*
@@ -1268,7 +1234,7 @@ timer ClosedPlayerTimer[2000](playerid)
 	##     ## ##     ## ##     ## ##   ##  ##    ##
 	##     ##  #######   #######  ##    ##  ######
 */
-///////////////////////////////////////////////////////////////////
+
 hook OnPlayerEnterDynamicCP(playerid, checkpointid)
 {
 	new
@@ -2653,10 +2619,6 @@ CMD:enter(playerid, params[])
 		{
 			if(PlayerInfo[playerid][pMember] == PickupInfo[pickup][epOrganizations] || PlayerInfo[playerid][pLeader] == PickupInfo[pickup][epOrganizations] || PlayerInfo[playerid][pJob] == PickupInfo[pickup][epJob] || PickupInfo[pickup][epOrganizations] == 255 || PickupInfo[pickup][epJob] == 255)
 			{
-				/*_LoadingObjects(playerid, true); // textdraw.
-				SetTimerEx("LoadingObjects", 3000, (false), "ib", playerid, (true));
-				TogglePlayerControllable(playerid, (false));*/
-
 				Bit1_Set(gr_PlayerEntering, playerid, true);
 				SetPlayerPosEx(playerid,PickupInfo[pickup][epExitx],PickupInfo[pickup][epExity],PickupInfo[pickup][epExitz],PickupInfo[pickup][epViwo],PickupInfo[pickup][epInt],true);
 				GameTextForPlayer(playerid, PickupInfo[pickup][epDiscription], 500, 1);
@@ -2687,12 +2649,6 @@ CMD:enter(playerid, params[])
 				PlayAudioStreamForPlayer(playerid, BizzInfo[biznis][bMusicURL]);
 			}
 			if(BizzInfo[biznis][bFurLoaded] == false) ReloadBizzFurniture(biznis);
-			
-			/*
-			_LoadingObjects(playerid, true); // textdraw.
-			SetTimerEx("LoadingObjects", 3000, (false), "ib", playerid, (true));
-			TogglePlayerControllable(playerid, (false));*/
-
 			Bit1_Set(gr_PlayerEntering, playerid, true);
 			SetPlayerPosEx(playerid, BizzInfo[biznis][bExitX], BizzInfo[biznis][bExitY], BizzInfo[biznis][bExitZ], BizzInfo[biznis][bVirtualWorld], BizzInfo[biznis][bInterior], true);
 			Bit16_Set(gr_PlayerInBiznis, playerid, biznis);
@@ -2720,11 +2676,6 @@ CMD:enter(playerid, params[])
 	}
 	else if(complex != INVALID_COMPLEX_ID) 
 	{
-	/*
-		_LoadingObjects(playerid, true); // textdraw.
-		SetTimerEx("LoadingObjects", 3000, (false), "ib", playerid, (true));
-		TogglePlayerControllable(playerid, (false));*/
-		
 		Bit1_Set(gr_PlayerEntering, playerid, true);
         SetPlayerPosEx(playerid, ComplexInfo[complex][cExitX], ComplexInfo[complex][cExitY], ComplexInfo[complex][cExitZ], ComplexInfo[complex][cViwo], ComplexInfo[complex][cInt], true);
 		Bit16_Set(gr_PlayerInComplex, playerid, complex);
@@ -2736,7 +2687,8 @@ CMD:enter(playerid, params[])
 		SendMessage(playerid, MESSAGE_TYPE_INFO,"Pritisnite tipku 'N' ukoliko vam se mapa loadala");
 		return 1;
 	}
-	else if(rob_started[playerid] == true) {
+	else if(rob_started[playerid] == true) 
+	{
 		PlayStorageAlarm(playerid, false);
 	}
 	else if(IsPlayerInDynamicCP(playerid, PlayerHouseCP[playerid])) 
@@ -2756,11 +2708,6 @@ CMD:enter(playerid, params[])
 
 				Bit16_Set(gr_PlayerInHouse, playerid, house);
 				DestroyHouseInfoTD(playerid);
-				
-				/*
-				_LoadingObjects(playerid, true); // textdraw.
-				SetTimerEx("LoadingObjects", 3000, (false), "ib", playerid, (true));
-				TogglePlayerControllable(playerid, (false));*/
                 
 				if(IsHousePlayingMusic(house)) 
 				{

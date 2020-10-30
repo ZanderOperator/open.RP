@@ -155,7 +155,7 @@ new
 new
 	Float:SelfieAngle[ MAX_PLAYERS ],
 	Float:SelfieHeight[ MAX_PLAYERS ],
-	PlayerMobileRingTimer[MAX_PLAYERS],
+	Timer:PlayerMobileRingTimer[MAX_PLAYERS],
 	StartCallTimestamp[ MAX_PLAYERS ] = { 0, ... },
 	PlayerContactName[ MAX_PLAYERS ][ 11 ][ 11 ],
 	PlayerContactNumber[ MAX_PLAYERS ][ 11 ],
@@ -2157,7 +2157,7 @@ stock SetContactVars(playerid)
 
 stock ResetMobileVariables(playerid)
 {
-	KillTimer(PlayerMobileRingTimer[playerid]);
+	stop PlayerMobileRingTimer[playerid];
 
 	SelfieAngle[ playerid ]		= 0.0;
 	SelfieHeight[ playerid ]	= 0.0;
@@ -2493,7 +2493,7 @@ stock PhoneCall(playerid, callnumber)
 				PlayerCallPlayer[ gplayerid ] = playerid;
 				Bit8_Set( gr_RingingTime, gplayerid, 15 );
 				Bit1_Set( gr_CanHangup, playerid, true );
-				PlayerMobileRingTimer[gplayerid] = SetTimerEx("MobileRinging", 15000, true, "i", gplayerid);
+				PlayerMobileRingTimer[gplayerid] = repeat MobileRinging(gplayerid);
 				new tmpString[ 70 ];
 
 				if (Bit1_Get( gr_PlayerUsingPhonebooth, playerid ))
@@ -2594,7 +2594,7 @@ stock PlayerHangup(playerid)
 	// pozvatelj
 	Bit8_Set( gr_RingingTime, playerid, 0 );
 	Bit1_Set( gr_CanHangup, playerid, false );
-	KillTimer(PlayerMobileRingTimer[playerid]);
+	stop PlayerMobileRingTimer[playerid];
 	CallingId[ playerid ] 	=  999;
 	StartCallTimestamp[playerid] = 0;
 	SpeakerPhone[ playerid ] = false;
@@ -2608,7 +2608,7 @@ stock PlayerHangup(playerid)
 	if(!IsPlayerConnected(giveplayerid)) return 1;
 	Bit8_Set( gr_RingingTime, giveplayerid, 0 );
 	Bit1_Set( gr_CanHangup, giveplayerid, false );
-	KillTimer(PlayerMobileRingTimer[giveplayerid]);
+	stop PlayerMobileRingTimer[giveplayerid];
 	CallingId[ giveplayerid ] 	=  999;
 	StartCallTimestamp[giveplayerid] = 0;
 	SpeakerPhone[giveplayerid] = false;
@@ -3673,12 +3673,11 @@ public OnPlayerContactsLoad(playerid)
 	return 1;
 }
 
-forward MobileRinging(playerid);
-public MobileRinging(playerid)
+timer MobileRinging[15000](playerid)
 {
 	if( CallingId[ playerid ] == 999 ) {
 		Bit8_Set( gr_RingingTime, playerid, 0);
-		KillTimer(PlayerMobileRingTimer[playerid]);
+		stop PlayerMobileRingTimer[playerid];
 		return;
 	}
 	Bit8_Set( gr_RingingTime, playerid, Bit8_Get( gr_RingingTime, playerid ) - 1 );
@@ -3696,8 +3695,8 @@ public MobileRinging(playerid)
 		Bit8_Set( gr_RingingTime, playerid, 0);
 		new
 			gplayerid = CallingId[ playerid ];
-		KillTimer(PlayerMobileRingTimer[playerid]);
-		KillTimer(PlayerMobileRingTimer[gplayerid]);
+		stop PlayerMobileRingTimer[playerid];
+		stop PlayerMobileRingTimer[gplayerid];
 
 		SendClientMessage( gplayerid, COLOR_RED, "** (mobitel) Ne javlja se.**");
 		SetPlayerSpecialAction( gplayerid, SPECIAL_ACTION_STOPUSECELLPHONE );
@@ -3894,8 +3893,8 @@ CMD:pickup(playerid, params[])
 			if( PlayerCallPlayer[ i ] == playerid )
 			{
 				Bit8_Set( gr_RingingTime, playerid, 0);
-				KillTimer(PlayerMobileRingTimer[playerid]);
-				KillTimer(PlayerMobileRingTimer[i]);
+				stop PlayerMobileRingTimer[playerid];
+				stop PlayerMobileRingTimer[i];
 				Bit1_Set( gr_CanHangup, playerid, true );
 
 				CallingId[ i ] 			= playerid;
@@ -3904,7 +3903,7 @@ CMD:pickup(playerid, params[])
 
 				SetPlayerAttachedObject(playerid, MOBILE_OBJECT_SLOT, PlayerInfo[playerid][pMobileModel], 6, 0.101469, 0.000639, -0.008395, 73.051651, 171.894165, 0.000000, 1.000000, 1.000000, 1.000000);
 				SetPlayerSpecialAction(playerid, SPECIAL_ACTION_USECELLPHONE);
-				KillTimer(PlayerMobileRingTimer[playerid]);
+				stop PlayerMobileRingTimer[playerid];
 				SendClientMessage( i, COLOR_RED, "[ ! ] Javio se!");
 				SendClientMessage( playerid, COLOR_YELLOW, "[HINT]: Pricate pritiskom na tipku T i unosom teksta - prekid poziva /hangup - postavljanje poziva na zvucnik /speakerphone!");
 				break;

@@ -51,8 +51,8 @@ static stock
 	CraftingPick[ MAX_PLAYERS ],
 	CraftingCP[ MAX_PLAYERS ],
 	PlayerCraftingObject[ MAX_PLAYERS ],
-	CrafingObjectMoveTimer[ MAX_PLAYERS ],
-	CraftingTimer[ MAX_PLAYERS ];
+	Timer:CrafingObjectMoveTimer[ MAX_PLAYERS ],
+	Timer:CraftingTimer[ MAX_PLAYERS ];
 
 static stock
 	Float:FactoryAttach[ ][ 6 ] = {
@@ -94,8 +94,7 @@ static stock
 	   ##     ##  ##     ## ##       ##    ##  
 	   ##    #### ##     ## ######## ##     ## 
 */
-forward OnPlayerCrafting(playerid, type);
-public OnPlayerCrafting(playerid, type)
+timer OnPlayerCrafting[1000](playerid, type)
 {
 	Bit1_Set( gr_CraftingTimer, playerid, false );
 	switch( type ) 
@@ -149,7 +148,7 @@ public OnPlayerCrafting(playerid, type)
 			TogglePlayerControllable(playerid, true);
 			
 			if( Bit4_Get( gr_CraftingGeneratorId, playerid ) == 0 ) {
-				CraftingTimer[ playerid ] = SetTimerEx("OnPlayerCrafting", 900, false, "ii", playerid, CRAFTING_TYPE_TAKEBOX);
+				CraftingTimer[ playerid ] = defer OnPlayerCrafting(playerid, CRAFTING_TYPE_TAKEBOX);
 				Bit1_Set( gr_CraftingTimer, playerid, true );
 			}
 			return 1;
@@ -178,13 +177,12 @@ public OnPlayerCrafting(playerid, type)
 	return 1;
 }
 
-forward OnCraftingObjectMove(playerid, type);
-public OnCraftingObjectMove(playerid, type)
+timer OnCraftingObjectMove[100](playerid, type)
 {
 	if(!Bit1_Get(gr_ObjectMoveTimer, playerid)) return 0;
 	if( !IsPlayerObjectMoving( playerid, PlayerCraftingObject[ playerid ] ) ) 
 	{
-		KillTimer( CrafingObjectMoveTimer[ playerid ] );
+		stop CrafingObjectMoveTimer[ playerid ];
 		Bit1_Set( gr_ObjectMoveTimer, playerid, false );
 		
 		if( type == 1 ) {
@@ -202,7 +200,7 @@ public OnCraftingObjectMove(playerid, type)
 			MovePlayerObject( playerid, PlayerCraftingObject[ playerid ], CraftInfo[ craftid ][ ciEndX ], CraftInfo[ craftid ][ ciEndY ], CraftInfo[ craftid ][ ciEndZ ], CRAFT_OBJECT_MOVE );
 			Streamer_Update(playerid);
 			
-			CrafingObjectMoveTimer[ playerid ] = SetTimerEx("OnCraftingObjectMove", 100, true, "ii", playerid, 3);
+			CrafingObjectMoveTimer[ playerid ] = repeat OnCraftingObjectMove(playerid, 3);
 			Bit1_Set( gr_ObjectMoveTimer, playerid, true );
 		}
 		else if( type == 3 ) {
@@ -229,12 +227,12 @@ stock ResetFactoryVariables(playerid)
 	PlayerCraftId[ playerid ]			= -1;
 	
 	if( Bit1_Get( gr_ObjectMoveTimer, playerid ) ) {
-		KillTimer( CrafingObjectMoveTimer[ playerid ] );
+		stop CrafingObjectMoveTimer[ playerid ];
 		Bit1_Set( gr_ObjectMoveTimer, playerid, false );
 	}
 	
 	if( Bit1_Get( gr_CraftingTimer, playerid ) ) {
-		KillTimer( CraftingTimer[ playerid ] );
+		stop CraftingTimer[ playerid ];
 		Bit1_Set( gr_CraftingTimer, playerid, false );
 	}
 	
@@ -417,7 +415,7 @@ public OnPlayerEnterCheckpoint(playerid)
 		
 		TogglePlayerControllable(playerid, false);
 		ApplyAnimationEx(playerid,"BOMBER","BOM_Plant_Loop", 4.1,1,0,0,0,0,1,0);
-		CraftingTimer[ playerid ] = SetTimerEx("OnPlayerCrafting", 2500, false, "ii", playerid, CRAFTING_TYPE_GENERATOR);
+		CraftingTimer[ playerid ] = defer OnPlayerCrafting[2500](playerid, CRAFTING_TYPE_GENERATOR);
 		Bit1_Set( gr_CraftingTimer, playerid, true );
 		
 		SetPlayerCheckpoint(playerid, 2554.2424, -1348.2162, 1043.1500, CRAFTING_CP_SIZE);
@@ -429,7 +427,7 @@ public OnPlayerEnterCheckpoint(playerid)
 		
 		TogglePlayerControllable(playerid, false);
 		ApplyAnimationEx(playerid,"BOMBER","BOM_Plant_Loop", 4.1,1,0,0,0,0,1,0);
-		CraftingTimer[ playerid ] = SetTimerEx("OnPlayerCrafting", 2500, false, "ii", playerid, CRAFTING_TYPE_GENERATOR);
+		CraftingTimer[ playerid ] = defer OnPlayerCrafting[2500](playerid, CRAFTING_TYPE_GENERATOR);
 		Bit1_Set( gr_CraftingTimer, playerid, true );
 		
 		SetPlayerCheckpoint(playerid, 2548.1968, -1348.2162, 1043.1500, CRAFTING_CP_SIZE);
@@ -442,7 +440,7 @@ public OnPlayerEnterCheckpoint(playerid)
 		TogglePlayerControllable(playerid, false);
 		ApplyAnimationEx(playerid,"BOMBER","BOM_Plant_Loop", 4.1,1,0,0,0,0,1,0);
 		Bit4_Set( gr_CraftingGeneratorId, playerid, 0 );
-		CraftingTimer[ playerid ] = SetTimerEx("OnPlayerCrafting", 2500, false, "ii", playerid, CRAFTING_TYPE_GENERATOR);
+		CraftingTimer[ playerid ] = defer OnPlayerCrafting[2500](playerid, CRAFTING_TYPE_GENERATOR);
 		Bit1_Set( gr_CraftingTimer, playerid, true );
 	}
 	if( Bit4_Get( gr_CraftingCPId, playerid ) == 1 ) {
@@ -460,7 +458,7 @@ public OnPlayerEnterCheckpoint(playerid)
 		
 		InterpolateCameraPos(playerid, 2578.6558, -1351.8114, 1044.4200, 2578.6558, -1351.8114, 1044.4200, 10000000);
 		InterpolateCameraLookAt(playerid, 2575.9241, -1352.0225, 1044.4000, 2575.9241, -1352.0225, 1044.4000, 10000000);
-		CraftingTimer[ playerid ] = SetTimerEx("OnPlayerCrafting", CRAFTING_TIME, false, "ii", playerid, CRAFTING_TYPE_UNPACK);
+		CraftingTimer[ playerid ] = defer OnPlayerCrafting[CRAFTING_TIME](playerid, CRAFTING_TYPE_UNPACK);
 		Bit1_Set( gr_CraftingTimer, playerid, true );
 	}
 	else if( Bit4_Get( gr_CraftingCPId, playerid ) == 2 ) {
@@ -471,7 +469,7 @@ public OnPlayerEnterCheckpoint(playerid)
 
 		TogglePlayerControllable(playerid, false);
 		ApplyAnimationEx(playerid,"BOMBER","BOM_Plant_Loop", 4.1,1,0,0,0,0,1,0);
-		CraftingTimer[ playerid ] = SetTimerEx("OnPlayerCrafting", CRAFTING_TIME, false, "ii", playerid, CRAFTING_TYPE_BOXING);
+		CraftingTimer[ playerid ] = defer OnPlayerCrafting[CRAFTING_TIME](playerid, CRAFTING_TYPE_BOXING);
 		Bit1_Set( gr_CraftingTimer, playerid, true );
 	}
 	else if( Bit4_Get( gr_CraftingCPId, playerid ) == 3 ) {
@@ -483,7 +481,7 @@ public OnPlayerEnterCheckpoint(playerid)
 		
 		PlayerCraftingObject[ playerid ] = CreatePlayerObject(playerid, 1271, 2569.0049, -1352.6240, 1044.0699, 0.0, 0.0, 0.0 );
 		MovePlayerObject( playerid, PlayerCraftingObject[ playerid ], 2551.3921, -1352.9078, 1044.0699, 1.0 );
-		CrafingObjectMoveTimer[ playerid ] = SetTimerEx("OnCraftingObjectMove", 500, true, "ii", playerid, 1);
+		CrafingObjectMoveTimer[ playerid ] = repeat OnCraftingObjectMove[500](playerid, 1);
 		Bit1_Set( gr_ObjectMoveTimer, playerid, true );
 	}
 	else if( Bit4_Get( gr_CraftingCPId, playerid ) == 4 ) {
@@ -510,7 +508,7 @@ public OnPlayerEnterCheckpoint(playerid)
 		
 		PlayerCraftingObject[ playerid ] = CreatePlayerObject(playerid, 1271, 2568.6814, -1360.4534, 1044.6899, 0.0, 0.0, 0.0 );
 		MovePlayerObject( playerid, PlayerCraftingObject[ playerid ], 2564.9280, -1360.4746, 1044.4200, CRAFT_OBJECT_MOVE );
-		CrafingObjectMoveTimer[ playerid ] = SetTimerEx("OnCraftingObjectMove", 100, true, "ii", playerid, 2);
+		CrafingObjectMoveTimer[ playerid ] = repeat OnCraftingObjectMove(playerid, 2);
 		Bit1_Set( gr_ObjectMoveTimer, playerid, true );
 		GameTextForPlayer( playerid, "~g~Resursi se preradjuju", 3000, 1 );
 	}
@@ -548,7 +546,7 @@ public OnPlayerEnterCheckpoint(playerid)
 		InterpolateCameraPos(playerid, 		2584.9199, -1358.6466, 1045.2000,  2584.9199, -1358.6466, 1045.2000,  10000000);
 		InterpolateCameraLookAt(playerid, 	2584.2083, -1355.1130, 1044.5500,  2584.2083, -1355.1130, 1044.5500,  10000000);
 		
-		CraftingTimer[ playerid ] = SetTimerEx("OnPlayerCrafting", 1000, false, "ii", playerid, CRAFTING_TYPE_PAYCHECK);
+		CraftingTimer[ playerid ] = defer OnPlayerCrafting[1000](playerid, CRAFTING_TYPE_PAYCHECK);
 		Bit1_Set( gr_CraftingTimer, playerid, true );
 	}
 	return 1;

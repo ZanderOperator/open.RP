@@ -27,6 +27,9 @@ pawn.lock
 # Plugins directory
 plugins/
 
+# Old Modules directory
+gamemodes/modules/Old
+
 # Binaries
 *.exe
 *.dll
