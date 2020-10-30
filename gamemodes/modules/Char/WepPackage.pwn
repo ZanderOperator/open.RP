@@ -59,8 +59,8 @@ new
 	get_PackageWeapon[MAX_PLAYERS] = 0,
 	get_PackageAmount[MAX_PLAYERS] = 0,
 	get_PackagePrice[MAX_PLAYERS] = 0,
-	timer_Package[MAX_PLAYERS] = 0,
-	timer_unpacking[MAX_PLAYERS] = 0,
+	Timer:timer_Package[MAX_PLAYERS],
+	Timer:timer_unpacking[MAX_PLAYERS],
 	get_PackageID[MAX_PLAYERS] = INVALID_PACKAGE_ID,
 
 	bool: PlayerUnpacking[MAX_PLAYERS] = false,
@@ -260,7 +260,7 @@ DeletePlayerPackage(playerid, package_id) {
 ResetPackageSettings(playerid) {
 
 	DisablePlayerCheckpoint(playerid);
-	KillTimer(timer_Package[playerid]);
+	stop timer_Package[playerid];
 	PackageOrdered[playerid] = (false);
 
 	get_PackageWeapon[playerid] = 0;
@@ -299,7 +299,8 @@ GivePlayerPackage(playerid, targetid, package_id, wep, amount) {
 	- timers
 */
 
-Public:UnpackPackage(playerid, package_id) {
+timer UnpackPackage[1000](playerid, package_id) 
+{
 	new crouch = IsCrounching(playerid), Float: get_armor;
 	GetPlayerArmour(playerid, get_armor);
 
@@ -330,8 +331,8 @@ Public:UnpackPackage(playerid, package_id) {
 	return (true);
 }
 
-Public:CreatePackage(playerid, factionID, packageID, int, vw) {
-
+timer CreatePackage[1000](playerid) 
+{
 	PlayerPlaySound(playerid, 1057, 0.0, 0.0, 0.0);
 
     new
@@ -348,8 +349,7 @@ Public:CreatePackage(playerid, factionID, packageID, int, vw) {
     WarehouseActor[playerid] = CreateActor(119, PossibleDropSpots[randid][LocationX]-4.0, PossibleDropSpots[randid][LocationY], PossibleDropSpots[randid][LocationZ], -90.0);
 
 	SetPlayerCheckpoint(playerid, PossibleDropSpots[randid][LocationX], PossibleDropSpots[randid][LocationY], PossibleDropSpots[randid][LocationZ], 2.0);
-	KillTimer(timer_Package[playerid]);
-	return (true);
+	return 1;
 }
 
 /*
@@ -487,14 +487,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 			va_SendClientMessage(playerid, COLOR_RED, "[ ! ] Uspjesno ste narucili paket %s sa %d metaka, cijena: %s.", weapon_name, package_amount, FormatNumber(package_price));
 			SendClientMessage(playerid, COLOR_RED, "[ ! ] Kroz par minuta cete dobiti poziv sa informacijama u vezi vase posiljke.");
 
-			timer_Package[playerid] = SetTimerEx("CreatePackage", 30000*MINUTES_TILL_PACKAGE_ARRIVE, (false), "iiiii",
-				playerid,
-				PackageData[free_id][faction_ID],
-				free_id,
-				GetPlayerInterior(playerid),
-				GetPlayerVirtualWorld(playerid)
-			);
-
+			timer_Package[playerid] = defer CreatePackage[30000*MINUTES_TILL_PACKAGE_ARRIVE](playerid);
 
 			// Logs
 			new tmpLog[128];
@@ -555,17 +548,20 @@ hook OnPlayerUpdate(playerid) {
         new Float:x,Float:y,Float:z;
         GetPlayerPos(playerid,x,y,z);
 
-        if(get_PlayerPos[playerid][0] != x && get_PlayerPos[playerid][1] != y && get_PlayerPos[playerid][2] != z) {
+        if(get_PlayerPos[playerid][0] != x && get_PlayerPos[playerid][1] != y && get_PlayerPos[playerid][2] != z) 
+		{
             SendClientMessage(playerid, COLOR_LIGHTRED,"[ ! ] - Pomjerili ste se tokom obavljanja funkcije, ista je automatski prekinuta.");
 			PlayerUnpacking[playerid] = false;
-			KillTimer(timer_unpacking[playerid]);
+			stop timer_unpacking[playerid];
 		}
 	}
 	return (true);
 }
 
-hook OnPlayerDisconnect(playerid, reason) {
-	if(PackageOrdered[playerid] == (true)) {
+hook OnPlayerDisconnect(playerid, reason) 
+{
+	if(PackageOrdered[playerid] == (true)) 
+	{
 		Iter_Remove(PACKAGES, get_PackageID[playerid]);
 		ResetPackageSettings(playerid);
 	}
@@ -835,7 +831,7 @@ CMD:package(playerid, params[]) {
 
 		// unpack_package
   		ApplyAnimationEx(playerid, "BOMBER", "BOM_Plant", 4.0, 0, 0, 0, 0, 0);
-		timer_unpacking[playerid] = SetTimerEx("UnpackPackage", seconds*1000, (false), "ii", playerid, package_id);
+		timer_unpacking[playerid] = defer UnpackPackage[seconds*1000](playerid, package_id);
 	}
 
 	if(strcmp(action, "checkorder", true) == 0) {

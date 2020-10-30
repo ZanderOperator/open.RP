@@ -57,7 +57,7 @@ bool:StartFly(playerid)
 	return true;
 }
 
-public Fly(playerid)
+timer Fly[100](playerid)
 {
 	if(!IsPlayerConnected(playerid))
 		return 1;
@@ -104,7 +104,7 @@ public Fly(playerid)
 			ApplyAnimation(playerid,"PARACHUTE","FALL_SkyDive_Accel",6.1,1,1,1,1,0,1);
 	}
 	if(OnFly[playerid])
-		SetTimerEx("Fly",100,false,"i",playerid);
+		defer Fly(playerid);
 	return 1;
 }
 
@@ -118,18 +118,3 @@ bool:StopFly(playerid)
 	OnFly[playerid] = false;
 	return true;
 }
-/*
-static SetPlayerLookAt(playerid,Float:x,Float:y)
-{
-	new Float:Px, Float:Py, Float: Pa;
-	GetPlayerPos(playerid, Px, Py, Pa);
-	Pa = floatabs(atan((y-Py)/(x-Px)));
-	if (x <= Px && y >= Py) 		Pa = floatsub(180.0, Pa);
-	else if (x < Px && y < Py) 		Pa = floatadd(Pa, 180.0);
-	else if (x >= Px && y <= Py)	Pa = floatsub(360.0, Pa);
-	Pa = floatsub(Pa, 90.0);
-	if (Pa >= 360.0) 
-		Pa = floatsub(Pa, 360.0);
-	SetPlayerFacingAngle(playerid, Pa);
-	return;
-}*/

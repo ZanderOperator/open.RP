@@ -6,8 +6,7 @@ new
 	
 new CanPMAdmin[MAX_PLAYERS][MAX_PLAYERS];
 
-forward DeleteKillTimer(playerid);
-public DeleteKillTimer(playerid)
+timer DeleteKillTimer[5000](playerid)
 {
 	PlayerTick[ playerid ][ ptKill ] = 0;
 	return 1;
@@ -1642,7 +1641,7 @@ CMD:accept(playerid, params[])
 				SendClientMessage(repairman, COLOR_ORANGE, "(( Izadjite iz vozila i krenite rp-ati popravljanje, nemojte se previse udaljavati od vozila ))");
 				
 				Bit8_Set( gr_MechanicSecs, playerid, 15 );
-				MechanicTimer[playerid] = SetTimerEx("MechCountForPlayer", 1000, true, "iii", playerid, repairman, 1);
+				MechanicTimer[playerid] = repeat MechCountForPlayer(playerid, repairman, 1);
 				PlayerRepairVehicle[ playerid ] = givevehicleid;
 				PlayerMechanicVehicle[ playerid ] = GetPlayerVehicleID(playerid);
 				Bit1_Set( gr_UsingMechanic, 	repairman, 	true );
@@ -1663,7 +1662,7 @@ CMD:accept(playerid, params[])
 				SendClientMessage(repairman, COLOR_ORANGE, "(( Izadjite iz vozila i krenite rp-ati popravljanje, nemojte se previse udaljavati od vozila ))");
 				
 				Bit8_Set( gr_MechanicSecs, playerid, 15 );
-				MechanicTimer[playerid] = SetTimerEx("MechCountForPlayer", 1000, true, "iii", playerid, repairman, 2);
+				MechanicTimer[playerid] = repeat MechCountForPlayer(playerid, repairman, 2);
 				PlayerRepairVehicle[ playerid ] = givevehicleid;
 				PlayerMechanicVehicle[ playerid ] = GetPlayerVehicleID(playerid);
 				Bit1_Set( gr_UsingMechanic, 	repairman, 	true );
@@ -1684,7 +1683,7 @@ CMD:accept(playerid, params[])
 				SendClientMessage(repairman, COLOR_ORANGE, "(( Izadjite iz vozila i krenite rp-ati popravljanje, nemojte se previse udaljavati od vozila ))");
 				
 				Bit8_Set( gr_MechanicSecs, playerid, 15 );
-				MechanicTimer[playerid] = SetTimerEx("MechCountForPlayer", 1000, true, "iii", playerid, repairman, 3);
+				MechanicTimer[playerid] = repeat MechCountForPlayer(playerid, repairman, 3);
 				PlayerRepairVehicle[ playerid ] = givevehicleid;
 				PlayerMechanicVehicle[ playerid ] = GetPlayerVehicleID(playerid);
 				Bit1_Set( gr_UsingMechanic, 	repairman, 	true );
@@ -1705,7 +1704,7 @@ CMD:accept(playerid, params[])
 				SendClientMessage(repairman, COLOR_ORANGE, "(( Izadjite iz vozila i krenite rp-ati popravljanje, nemojte se previse udaljavati od vozila ))");
 				
 				Bit8_Set( gr_MechanicSecs, playerid, 15 );
-				MechanicTimer[playerid] = SetTimerEx("MechCountForPlayer", 1000, true, "iii", playerid, repairman, 4);
+				MechanicTimer[playerid] = repeat MechCountForPlayer(playerid, repairman, 4);
 				PlayerRepairVehicle[ playerid ] = givevehicleid;
 				PlayerMechanicVehicle[ playerid ] = GetPlayerVehicleID(playerid);
 				Bit1_Set( gr_UsingMechanic, 	repairman, 	true );
@@ -1725,7 +1724,7 @@ CMD:accept(playerid, params[])
 				SendClientMessage(repairman, COLOR_ORANGE, "(( Izadjite iz vozila i krenite rp-ati popravljanje, nemojte se previse udaljavati od vozila ))");
 
 				Bit8_Set( gr_MechanicSecs, playerid, 300 );
-				MechanicTimer[playerid] = SetTimerEx("MechCountForPlayer", 1000, true, "iii", playerid, repairman, 6);
+				MechanicTimer[playerid] = repeat MechCountForPlayer(playerid, repairman, 6);
 				PlayerRepairVehicle[ playerid ] = givevehicleid;
 				PlayerMechanicVehicle[ playerid ] = GetPlayerVehicleID(playerid);
 				Bit1_Set( gr_UsingMechanic, 	repairman, 	true );
@@ -1745,7 +1744,7 @@ CMD:accept(playerid, params[])
 				SendClientMessage(repairman, COLOR_ORANGE, "(( Izadjite iz vozila i krenite rp-ati popravljanje, nemojte se previse udaljavati od vozila ))");
 
 				Bit8_Set( gr_MechanicSecs, playerid, 500 );
-				MechanicTimer[playerid] = SetTimerEx("MechCountForPlayer", 1000, true, "iii", playerid, repairman, 7);
+				MechanicTimer[playerid] = repeat MechCountForPlayer(playerid, repairman, 7);
 				PlayerRepairVehicle[ playerid ] = givevehicleid;
 				PlayerMechanicVehicle[ playerid ] = GetPlayerVehicleID(playerid);
 				Bit1_Set( gr_UsingMechanic, 	repairman, 	true );
@@ -1766,7 +1765,7 @@ CMD:accept(playerid, params[])
 				SendClientMessage(repairman, COLOR_ORANGE, "(( Izadjite iz vozila i krenite rp-ati popravljanje, nemojte se previse udaljavati od vozila ))");
 
 				Bit8_Set( gr_MechanicSecs, playerid, 300 );
-				MechanicTimer[playerid] = SetTimerEx("MechCountForPlayer", 1000, true, "iii", playerid, repairman, 8);
+				MechanicTimer[playerid] = repeat MechCountForPlayer(playerid, repairman, 8);
 				PlayerRepairVehicle[ playerid ] = givevehicleid;
 				PlayerMechanicVehicle[ playerid ] = GetPlayerVehicleID(playerid);
 				Bit1_Set( gr_UsingMechanic, 	repairman, 	true );
@@ -2077,7 +2076,7 @@ CMD:kill(playerid, params[])
 	SendMessage(playerid, MESSAGE_TYPE_INFO, "Vas zahtjev za kill (samoubojstvo) je poslan adminima.");
 	Bit1_Set( gr_PlayerSendKill, playerid, true );
 	PlayerTick[ playerid ][ ptKill ] = 1;
-	SetTimerEx("DeleteKillTimer", 4900, false, "i", playerid);
+	defer DeleteKillTimer(playerid);
    	return 1;
 }
 
@@ -2973,7 +2972,7 @@ CMD:acceptdeath(playerid, params[])
 	CreateDeathTD(playerid);
 	CreateDeathInfos(playerid, 1);
 
-	DeathTimer[playerid] = SetTimerEx("StartDeathCount", 1000, true, "i", playerid);
+	DeathTimer[playerid] = repeat StartDeathCount(playerid);
 	return 1;
 }
 #endif

@@ -57,7 +57,7 @@ new
 	Bit8:	gr_DeathCountSeconds	<MAX_PLAYERS>;
 
 new
-	DeathTimer[MAX_PLAYERS],
+	Timer:DeathTimer[MAX_PLAYERS],
 	PlayerText:DeathPlayerTextDraw[MAX_PLAYERS] = { PlayerText:INVALID_TEXT_DRAW, ... };
 	
 new
@@ -230,7 +230,7 @@ stock StopPlayerDeath(playerid)
 {
 	DestroyDeathInfo(playerid);
 	DestroyDeathTDs(playerid);
-	KillTimer(DeathTimer[playerid]);
+	stop DeathTimer[playerid];
 
 	DeathCountStarted_Set(playerid, false);
 	DeathCountSeconds_Set(playerid, 0);
@@ -365,9 +365,10 @@ public LoadingPlayerDeaths(playerid)
 
 hook OnPlayerDisconnect(playerid, reason)
 {
-	if( Bit1_Get( gr_DeathCountStarted, playerid ) ) {
+	if( Bit1_Get( gr_DeathCountStarted, playerid ) ) 
+	{
 		DestroyDeathInfo(playerid);
-		KillTimer(DeathTimer[playerid]);
+		stop DeathTimer[playerid];
 		Bit1_Set( gr_DeathCountStarted, playerid, false );
 		Bit8_Set( gr_DeathCountSeconds, playerid, 0 );
 	}
@@ -402,8 +403,7 @@ hook OnPlayerTakeDamage(playerid, issuerid, Float: amount, weaponid, bodypart)
 	   ##    #### ##     ## ######## ##     ##  ######  
 */
 
-forward StartDeathCount(playerid);
-public StartDeathCount(playerid)
+timer StartDeathCount[1000](playerid)
 {
 	if(Bit8_Get(gr_DeathCountSeconds, playerid) > 0)
 	{
@@ -417,7 +417,7 @@ public StartDeathCount(playerid)
 		if( !Bit8_Get(gr_DeathCountSeconds, playerid) ) {
 			GameTextForPlayer( playerid, "~g~Nekoliko sati kasnije...", 1000, 1 );
 			
-			KillTimer( DeathTimer[playerid] );
+			stop DeathTimer[playerid];
 			DeathTime[playerid] = 0;
 			
 			Bit8_Set(gr_DeathCountSeconds, playerid, 0);

@@ -34,9 +34,9 @@ static stock
 
 // Player (32 bit)
 static stock
-	PlayerMowingAreaTimer[ MAX_PLAYERS ],
+	Timer:PlayerMowingAreaTimer[ MAX_PLAYERS ],
 	PlayerMowingMeters[ MAX_PLAYERS ],
-	PlayerMowingTask[ MAX_PLAYERS ],
+	Timer:PlayerMowingTask[ MAX_PLAYERS ],
 	PlayerMowingIcon[ MAX_PLAYERS ];
 	
 // Player (rBits)
@@ -136,7 +136,7 @@ stock InitMowerJob(playerid)
 	Bit1_Set( gr_FirstEnter, playerid, false );
 	
 	SendClientMessage( playerid, COLOR_RED, "[ ! ] Udjite u prostor Glen Parka za pocetak!");
-	PlayerMowingAreaTimer[ playerid ] = SetTimerEx( "IsPlayerInMowingArea", 600, false, "i", playerid );
+	PlayerMowingAreaTimer[ playerid ] = defer IsPlayerInMowingArea(playerid);
 	return 1;
 }
 
@@ -149,8 +149,8 @@ stock DestroyMowerVars(playerid)
 	Bit1_Set( gr_FirstEnter, playerid, false );
 	PlayerMowingMeters[ playerid ] = 0;
 	
-	KillTimer( PlayerMowingAreaTimer[ playerid ] );
-	KillTimer( PlayerMowingTask[ playerid ] );
+	stop PlayerMowingAreaTimer[ playerid ];
+	stop PlayerMowingTask[ playerid ];
 	return 1;
 }
 
@@ -164,16 +164,18 @@ stock DestroyMowerVars(playerid)
 	   ##    #### ##     ## ######## ##     ##  ######  
 */
 
-forward IsPlayerInMowingArea(playerid);
-public IsPlayerInMowingArea(playerid)
+timer IsPlayerInMowingArea[600](playerid)
 {
-	if( !IsPlayerInRangeOfPoint(playerid, 100.0, 1974.7498, -1199.3864, 17.9950) ) {
-		KillTimer( PlayerMowingAreaTimer[ playerid ] );
+	if( !IsPlayerInRangeOfPoint(playerid, 100.0, 1974.7498, -1199.3864, 17.9950) ) 
+	{
+		stop PlayerMowingAreaTimer[ playerid ] );
 		PlayerMowingIcon[ playerid ] = CreateDynamicMapIcon(1969.8916, -1197.4928, 24.6977, 11, COLOR_WHITE, -1, -1, playerid);
 		Streamer_Update(playerid);
 		SendClientMessage(playerid, COLOR_RED, "[ ! ] Imate 30 sekundi da udjete u prostor Glen Parka!");
-		SetTimerEx("OnPlayerIsntInMowingArea", 29000, false, "i", playerid);
-	} else {
+		defer OnPlayerIsntInMowingArea(playerid);
+	} 
+	else 
+	{
 		if( !Bit1_Get( gr_FirstEnter, playerid ) ) {
 			if( GetVehicleModel( GetPlayerVehicleID(playerid) ) != 572 ) return SendClientMessage( playerid, COLOR_RED, "Morate biti unutar Mowera!");
 			DestroyDynamicMapIcon(PlayerMowingIcon[ playerid ]);
@@ -187,19 +189,18 @@ public IsPlayerInMowingArea(playerid)
 			PlayerTextDrawSetString( playerid, MowingText[playerid], tmpString );
 			
 			GameTextForPlayer(playerid, "~y~Krenite s kosnjom", 2500, 1);
-			KillTimer( PlayerMowingAreaTimer[ playerid ] );
-			PlayerMowingTask[ playerid ] = SetTimerEx("OnPlayerMowing", 2000, true, "i", playerid);
+			stop PlayerMowingAreaTimer[ playerid ];
+			PlayerMowingTask[ playerid ] = repeat OnPlayerMowing(playerid);
 			Bit1_Set( gr_FirstEnter, playerid, true );
 		}
 	}
 	return 1;
 }
 
-forward OnPlayerIsntInMowingArea(playerid);
-public OnPlayerIsntInMowingArea(playerid)
+timer OnPlayerIsntInMowingArea[30000](playerid)
 {
-	if( !IsPlayerInRangeOfPoint(playerid, 100.0, 1974.7498, -1199.3864, 17.9950) ) {
-		printf("DEBUG: OnPlayerIsntInMowingArea");
+	if( !IsPlayerInRangeOfPoint(playerid, 100.0, 1974.7498, -1199.3864, 17.9950) ) 
+	{
 		Bit1_Set( gr_PlayerWorkingMower, playerid, false );
 		
 		SendClientMessage(playerid, COLOR_RED, "[ ! ] Niste usli u predvidjen prostor za kosnju unutar 30 sekundi i prestali ste raditi posao!");
@@ -207,12 +208,11 @@ public OnPlayerIsntInMowingArea(playerid)
 		
 		DestroyMowingTDs(playerid);
 		PlayerInfo[playerid][pFreeWorks] -= 5;
-	} else 
-		PlayerMowingAreaTimer[ playerid ] = SetTimerEx( "IsPlayerInMowingArea", 600, false, "i", playerid );
+	} 
+	else PlayerMowingAreaTimer[ playerid ] = defer IsPlayerInMowingArea(playerid);
 }
 
-forward OnPlayerMowing(playerid);
-public OnPlayerMowing(playerid)
+timer OnPlayerMowing[2000](playerid)
 {
 	/*if( IsPlayerPaused(playerid) || GetPlayerPausedTime(playerid) < 0 )
 		return 1;
@@ -313,8 +313,8 @@ CMD:mow(playerid, params[])
 		
 		// Podaci
 		PlayerMowingMeters[ playerid ] = 0;
-		KillTimer( PlayerMowingAreaTimer[ playerid ] );
-		KillTimer( PlayerMowingTask[ playerid ] );
+		stop PlayerMowingAreaTimer[ playerid ];
+		stop PlayerMowingTask[ playerid ];
 		SetVehicleToRespawn( GetPlayerVehicleID(playerid) );
 	}
 	return 1;

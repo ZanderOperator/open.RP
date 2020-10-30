@@ -40,10 +40,6 @@ stock
 		{ 794.8000, 434.9000, 1070.9000, 5, 0, 100, 1000,	-1 },
 		{ 789.9000, 435.2000, 1070.9000, 5, 0, 100, 1000,	-1 }
 	};
-
-stock
-	JohnsFader[MAX_PLAYERS],
-	PlayerText:JohnsText[MAX_PLAYERS] = { PlayerText:INVALID_TEXT_DRAW, ... };
 	
 enum E_RULET_CHIP_DATA
 {
@@ -118,8 +114,8 @@ static stock
 	RouletteStupac[ MAX_PLAYERS ][ 47 ],	// Koji je stupac odabrao
 	RouletteParNepar[ MAX_PLAYERS ][ 47 ],	// Koju je par/nepar odabrao
 	RouletteType[ MAX_PLAYERS ][ 47 ],		// Tip oklade
-	GlobalRoulette[ MAX_PLAYERS ],			// Timer za glavni dio ruleta (biranje broja)
-	WaitingRoulette[ MAX_PLAYERS ];			// Timer koji ceka da igrac odabere okladu
+	Timer:GlobalRoulette[ MAX_PLAYERS ],	// Timer za glavni dio ruleta (biranje broja)
+	Timer:WaitingRoulette[ MAX_PLAYERS ];	// Timer koji ceka da igrac odabere okladu
 	
 // PlayerVars (rBits)
 static stock
@@ -162,27 +158,6 @@ new
 */
 ////////////////////////////////////////////////////////
 
-stock CreateJohnsTextDraw(playerid)
-{
-	JohnsText[playerid] = CreatePlayerTextDraw(playerid, 168.700012, 379.623931, "~g~John:~w~ Trebamo Muriatic Acid... Oh cekaj!~n~Trebamo Caustic Soda.. Da nju trebamo.");
-	PlayerTextDrawLetterSize(playerid, 		JohnsText[playerid], 0.425799, 1.364800);
-	PlayerTextDrawAlignment(playerid, 		JohnsText[playerid], 1);
-	PlayerTextDrawColor(playerid,			JohnsText[playerid], -1);
-	PlayerTextDrawSetShadow(playerid, 		JohnsText[playerid], 0);
-	PlayerTextDrawSetOutline(playerid, 		JohnsText[playerid], 1);
-	PlayerTextDrawBackgroundColor(playerid, JohnsText[playerid], 51);
-	PlayerTextDrawFont(playerid, 			JohnsText[playerid], 1);
-	PlayerTextDrawSetProportional(playerid, JohnsText[playerid], 1);
-	return 1;
-}
-
-stock DestroyJohnsTextDraw(playerid)
-{
-	PlayerTextDrawDestroy(playerid, JohnsText[playerid]);
-	JohnsText[playerid] = PlayerText:INVALID_TEXT_DRAW;
-	return 1;
-}
-
 stock GetPlayerCasinoID(playerid)
 {
 	new bizid = INVALID_BIZNIS_ID;
@@ -224,7 +199,6 @@ stock ResetRuletArrays(playerid, bool:autodestruct = false)
 		DestroyRouletteTDs(playerid);
 	DestroyRuletPickupTDs(playerid);
 	DestroyRuletPotTDs(playerid);
-	DestroyJohnsTextDraw(playerid);
 
 	for(new i = 0; i < 47; i++)
 	{
@@ -248,8 +222,8 @@ stock ResetRuletArrays(playerid, bool:autodestruct = false)
 	Bit8_Set( gr_RuletWaiting,	  playerid, 	0 );
 	Bit8_Set( gr_RouletteCount,   playerid, 	0 );
 
-	KillTimer( GlobalRoulette[ playerid ]  );
-	KillTimer( WaitingRoulette[ playerid ] );
+	stop GlobalRoulette[ playerid ];
+	stop WaitingRoulette[ playerid ];
 	return 1;
 }
 
@@ -944,12 +918,13 @@ stock static ShowRuletPotTDs(playerid)
 */
 /////////////////////////////////////////////////////////////
 
-forward FadeRouletteTD(playerid);
-public FadeRouletteTD(playerid)
-	return DestroyRouletteTDs(playerid);
+timer FadeRouletteTD[2000](playerid)
+{
+	DestroyRouletteTDs(playerid);
+	return 1;
+}
 
-forward RuletWaintingTimer(playerid);
-public RuletWaintingTimer(playerid)
+timer RuletWaitingTimer[1000](playerid)
 {
 	Bit8_Set( gr_RuletWaiting, playerid, Bit8_Get( gr_RuletWaiting, playerid ) - 1 );
 	
@@ -961,25 +936,23 @@ public RuletWaintingTimer(playerid)
 	GameTextForPlayer( playerid, tmpText, 1000, 4 );
 	PlayerPlaySound( playerid, 1056, 0.0, 0.0, 0.0 );
 	
-	if( Bit8_Get( gr_RuletWaiting, playerid ) == 2 ) {
-		CreateJohnsTextDraw(playerid);
-		PlayerTextDrawShow(playerid, JohnsText[playerid]);
-		PlayerTextDrawSetString(playerid, JohnsText[playerid], "~w~           Cekamo druge igrace.");
-		JohnsFader[playerid] = SetTimerEx("JohnTextDrawFade", 1500, false, "i", playerid);
+	if( Bit8_Get( gr_RuletWaiting, playerid ) == 2 ) 
+	{
+		SendMessage(playerid, MESSAGE_TYPE_INFO, "Waiting for other players...");
 		PlayerPlaySound( playerid, 5408, 0.0, 0.0, 0.0 );
 	}
 	else if( Bit8_Get( gr_RuletWaiting, playerid ) == 0 )
 	{
 		GameTextForPlayer( playerid, "", 100, 4 );
 		Bit8_Set( gr_RuletWaiting, playerid, 20 );
-		KillTimer( WaitingRoulette[playerid] );
+		stop WaitingRoulette[playerid];
 		Bit1_Set( gr_RuletWaintingOn, playerid, false );
 		CreateRouletteTDs(playerid);
 		
 		PlayerPlaySound(playerid,1063,0.0,0.0,0.0); 
 		PlayerPlaySound( playerid, 33400,0.0,0.0,0.0); 
 		
-		GlobalRoulette[playerid] = SetTimerEx("RouletteTimer", 500, true, "i", playerid);
+		GlobalRoulette[playerid] = repeat RouletteTimer(playerid);
 	}
 }
 
@@ -1026,8 +999,7 @@ stock static PlayRouletteNumberSound(playerid, number)
 	}
 }
 
-forward RouletteTimer(playerid);
-public RouletteTimer(playerid)
+timer RouletteTimer[500](playerid)
 {
 	new
 		number = minrand(0, 36);
@@ -1043,8 +1015,8 @@ public RouletteTimer(playerid)
 	if( Bit8_Get( gr_RouletteCount, playerid ) == 25 )
 	{
 		DestroyRuletPotTDs(playerid);
-		KillTimer(GlobalRoulette[playerid]);
-		SetTimerEx("FadeRouletteTD", 2000, false, "i", playerid);
+		stop GlobalRoulette[playerid];
+		defer FadeRouletteTD(playerid);
 		
 		PlayRouletteNumberSound(playerid, number);
 		if( !IsPlayerWinner(playerid, number) ) {			
@@ -1066,9 +1038,11 @@ public RouletteTimer(playerid)
 	return 1;
 }
 
-forward FadeRuletWagesTD(playerid);
-public FadeRuletWagesTD(playerid)
-	return DestroyRuletPickupTDs(playerid);
+timer FadeRuletWagesTD[5000](playerid)
+{
+	DestroyRuletPickupTDs(playerid);
+	return 1;
+}
 
 /*
 	##     ##  #######   #######  ##    ## 
@@ -1107,7 +1081,7 @@ hook OnPlayerPickUpDynPickup(playerid, pickupid)
 			);
 			PlayerTextDrawSetString(playerid, RuletWages[playerid], tmpString);
 			
-			SetTimerEx( "FadeRuletWagesTD", 5000, false, "i", playerid );
+			defer FadeRuletWagesTD(playerid);
 			break;
 		}
 	}
@@ -1295,7 +1269,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 					// Timer
 					Bit8_Set( gr_RuletWaiting, playerid, 15 );
 					GameTextForPlayer( playerid, "~w~15", 1000, 4 );
-					WaitingRoulette[playerid] = SetTimerEx("RuletWaintingTimer", 1000, true, "i", playerid);
+					WaitingRoulette[playerid] = repeat RuletWaitingTimer(playerid);
 					Bit1_Set( gr_RuletWaintingOn, playerid, true );
 				}
 				RoulettSlot[ playerid ]++;
@@ -1339,11 +1313,9 @@ CMD:rulet(playerid, params[])
 	if( tableid == -1 ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, " Niste blizu stolova za rulet!");
 	if( !IsPlayerInRangeOfPoint( playerid, 2.5, RTable[ tableid ][ rtPosX ], RTable[ tableid ][ rtPosY ], RTable[ tableid ][ rtPosZ ] ) ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, " Niste blizu svoga stola za rulet!");
 	RouletteTable[ playerid ] = tableid;
-	if( AC_GetPlayerMoney(playerid) < RTable[ RouletteTable[ playerid ] ][ rtMinWage ] ) {
-		CreateJohnsTextDraw(playerid);
-		PlayerTextDrawShow(playerid, JohnsText[playerid]);
-		PlayerTextDrawSetString(playerid, JohnsText[playerid], "         Nemate toliko novca!");
-		JohnsFader[playerid] = SetTimerEx("JohnTextDrawFade", 1500, false, "i", playerid);
+	if( AC_GetPlayerMoney(playerid) < RTable[ RouletteTable[ playerid ] ][ rtMinWage ] ) 
+	{
+		SendMessage(playerid, MESSAGE_TYPE_ERROR, "You don't have enough money!");
 		PlayerPlaySound( playerid, 5406, 0.0, 0.0, 0.0 );
 		return 1;
 	}

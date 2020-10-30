@@ -10,7 +10,7 @@
 new DakarPlayer[MAX_PLAYERS],
 	DakarPlayerCP[MAX_PLAYERS],
 	bool: dakar_created = false,
-	CountTimer,
+	Timer:CountTimer,
 	dakarograda1,
 	dakarograda2,
 	dakar_counter = 0,
@@ -266,7 +266,7 @@ public OnPlayerEnterRaceCheckpoint(playerid) {
 		{
 			new string[128];
 			PlayerPlaySound(playerid, 1185, 0.0, 0.0, 0.0);
-			SetTimerEx("StopFinishSound", 7000, 0, "i", playerid);
+			defer StopFinishSound(playerid);
 			DisablePlayerRaceCheckpoint(playerid);
 			GameTextForPlayer(playerid, "~w~Uspjesno ste zavrsili dakar utrku~n~~r~Cestitamo!", 5000, 3);
 			
@@ -361,12 +361,13 @@ hook OnVehicleDeath(vehicleid, killerid)
 }
 
 //=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~ (timers)
-forward OnCountDown();
-public OnCountDown()
+timer OnDakarCountDown[1000]()
 {
 	count--;
-	foreach(new i:Player) {
-		if(DakarPlayer[i] == 1) {
+	foreach(new i:Player) 
+	{
+		if(DakarPlayer[i] == 1) 
+		{
 			va_GameTextForPlayer(i, "~g~DAKAR - START~n~~w~%d", 1000, 4, count - 1);
 			PlayerPlaySound(i, 1056, 0.0, 0.0, 0.0);
 		}
@@ -388,18 +389,19 @@ public OnCountDown()
 			ThirdDakarWinner = 999;
 		}
 		GameTextForAll("~g~GO GO GO", 2500, 4);
-		foreach(new playerid : Player) {
+		foreach(new playerid : Player) 
+		{
 			PlayerPlaySound(playerid, 1057, 0.0, 0.0, 0.0);
 		}
-		KillTimer(CountTimer);
+		stop CountTimer;
 	}
-	return (true);
+	return 1;
 }
 
-forward StopFinishSound(playerid);
-public StopFinishSound(playerid) {
+timer StopFinishSound[7000](playerid) 
+{
     PlayerPlaySound(playerid, 1186, 0.0, 0.0, 0.0);
-	return (true);
+	return 1;
 }
 
 //=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~ (commands)
@@ -469,7 +471,7 @@ CMD:dakar(playerid, params[])
 
 		DakarStarted = 1;
 		count = 11;
-		CountTimer = SetTimer("OnCountDown", 1000, true);
+		CountTimer = repeat OnDakarCountDown();
 	}
 	
 	if(strcmp(action,"stoprace", true) == 0) {

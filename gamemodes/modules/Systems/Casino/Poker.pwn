@@ -310,8 +310,7 @@ stock BubbleSort(a[], size)
 	} while(swapped);
 }
 
-forward PokerExit(playerid);
-public PokerExit(playerid)
+timer PokerExit[250](playerid)
 {
 	SetCameraBehindPlayer(playerid);
 	TogglePlayerControllable(playerid, 1);
@@ -2329,8 +2328,7 @@ LeavePokerTable(playerid)
 	DestroyPokerGUI(playerid);
 
 	// Delay Exit Call
-	SetTimerEx("PokerExit", 250, false, "d", playerid);
-
+	defer PokerExit(playerid);
 	return 1;
 }
 

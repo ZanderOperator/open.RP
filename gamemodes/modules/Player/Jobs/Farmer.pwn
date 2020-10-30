@@ -17,7 +17,7 @@ enum E_PLAYER_COMBINE_INFO
  	cWork,
  	cPlant[90],
  	cPlantNumber,
- 	cTimer,
+ 	Timer:cTimer,
  	cHarvested,
  	cZone,
  	cCP
@@ -98,11 +98,6 @@ new EggInfo[MAX_PLAYERS][E_PLAYER_EGGS_INFO];
 	##       ##     ## ##    ##  ##  ##  ## ##     ## ##    ##  ##     ## ##    ##
 	##        #######  ##     ##  ###  ###  ##     ## ##     ## ########   ######
 */
-
-forward Combine(playerid);
-forward Harvesting(playerid);
-forward Transfering(playerid);
-forward Processing(playerid);
 
 //*****SA-MP CALLBACKS*****
 
@@ -185,7 +180,7 @@ hook OnPlayerDisconnect(playerid, reason)
 			DestroyDynamicObject(CombineInfo[playerid][cPlant][i]);
 	}
 	if(CombineInfo[playerid][cWork])
-		KillTimer(CombineInfo[playerid][cTimer]);
+		stop CombineInfo[playerid][cTimer];
 		
 	if( IsValidDynamicArea(CombineInfo[playerid][cZone]))
 		DestroyDynamicArea(CombineInfo[playerid][cZone]);
@@ -297,11 +292,15 @@ hook OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
 
 hook OnPlayerEnterDynArea(playerid, areaid)
 {
-	if( areaid == CombineInfo[playerid][cZone]) {
-		if( CombineInfo[playerid][cWork]) {
-		    if( IsPlayerInAnyVehicle(playerid)) {
-				if( GetVehicleModel(GetPlayerVehicleID(playerid)) != 532) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste u kombajnu!");
-				CombineInfo[playerid][cTimer] = SetTimerEx("Combine", 200, 1, "i", playerid);
+	if( areaid == CombineInfo[playerid][cZone]) 
+	{
+		if( CombineInfo[playerid][cWork]) 
+		{
+		    if( IsPlayerInAnyVehicle(playerid)) 
+			{
+				if( GetVehicleModel(GetPlayerVehicleID(playerid)) != 532) 
+					return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste u kombajnu!");
+				CombineInfo[playerid][cTimer] = repeat CombineCheck(playerid);
 			}
 		}
 	}
@@ -315,7 +314,7 @@ hook OnPlayerLeaveDynArea(playerid, areaid)
 	{
 		if( CombineInfo[playerid][cWork] && CombineInfo[playerid][cPlantNumber] > 0) 
 		{
-			KillTimer(CombineInfo[playerid][cTimer]);
+			stop CombineInfo[playerid][cTimer];
 			if( IsValidDynamicArea(CombineInfo[playerid][cZone]))
 			    DestroyDynamicArea(CombineInfo[playerid][cZone]);
 				
@@ -397,27 +396,30 @@ hook OnPlayerKeyInputEnds(playerid, type, succeeded)
 
 //*****CUSTOM CALLBACKS*****
 
-public Combine(playerid)
+timer CombineCheck[200](playerid)
 {
 	new 
 		Float:X, Float:Y, Float:Z,
 		Float:vx, Float:vy, Float:vz,
 		string[50];
 	
-	if( !IsPlayerInAnyVehicle(playerid) )  {
-	    KillTimer(CombineInfo[playerid][cTimer]);
+	if( !IsPlayerInAnyVehicle(playerid) ) 
+	 {
+	    stop CombineInfo[playerid][cTimer];
 	    if( IsValidDynamicArea(CombineInfo[playerid][cZone]))
 	        DestroyDynamicArea(CombineInfo[playerid][cZone]);
 	    
 	    CombineInfo[playerid][cWork] = 0;
-	    for(new i=0;i<90;i++) {
+	    for(new i=0;i<90;i++) 
+		{
 			if( IsValidDynamicObject(CombineInfo[playerid][cPlant][i]))
 	        	DestroyDynamicObject(CombineInfo[playerid][cPlant][i]);
 		}
 		return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Izasli ste iz vozila te ste automatski prestali raditi posao.");
 	}
-	if( CombineInfo[playerid][cPlantNumber] == 0) {
-		KillTimer(CombineInfo[playerid][cTimer]);
+	if( CombineInfo[playerid][cPlantNumber] == 0) 
+	{
+		stop CombineInfo[playerid][cTimer];
 		if( IsValidDynamicArea(CombineInfo[playerid][cZone]))
 			DestroyDynamicArea(CombineInfo[playerid][cZone]);
 		
@@ -463,7 +465,7 @@ public Combine(playerid)
 	}
 	return 1;
 }
-public Harvesting(playerid)
+timer HarvestingSeed[30000](playerid)
 {
 	new
 	    Float:X, Float:Y, Float:Z;
@@ -483,7 +485,7 @@ public Harvesting(playerid)
 	return SendClientMessage(playerid, COLOR_RED, "[ ! ] Idite do skladista za usjeve, te upisite /crops store kako bi spremili usjeve u skladiste.");
 }
 
-public Transfering(playerid)
+timer TransferingMilk[30000](playerid)
 {
     RemovePlayerAttachedObject(playerid, 9);
     TogglePlayerControllable(playerid, 1);
@@ -499,7 +501,7 @@ public Transfering(playerid)
 	return SendClientMessage(playerid, COLOR_RED, "[ ! ] Idite do skladista za mlijeko, te upisite /milk store kako bi spremili mlijeko u skladiste.");
 }
 
-public Processing(playerid)
+timer ProcessingEggs[30000](playerid)
 {
 	new
 		EggNumber, GoodEggs, BadEggs,
@@ -532,8 +534,7 @@ stock ResetFarmerVars(playerid)
 {
 	CombineInfo[playerid][cWork] = 0;
 	CombineInfo[playerid][cPlantNumber] = 0;
-	CombineInfo[playerid][cTimer] = 0;
-	KillTimer(CombineInfo[playerid][cTimer]);
+	stop CombineInfo[playerid][cTimer];
 	CombineInfo[playerid][cHarvested] = 0;
 	CombineInfo[playerid][cZone] = 0;
 	CombineInfo[playerid][cCP] = 0;
@@ -811,7 +812,7 @@ CMD:milk(playerid, params[])
 		MilkInfo[playerid][mTransfering] = 1;
 		TogglePlayerControllable(playerid, 0);
 		ApplyAnimation(playerid, "BOMBER", "BOM_Plant_Loop", 4.1, 1, 0, 0, 0, 30000, 0);
-		SetTimerEx("Transfering", 30000, 0, "i", playerid);
+		defer TransferingMilk(playerid);
 		Bit1_Set( gr_IsWorkingJob, playerid, true );
 		SendMessage(playerid, MESSAGE_TYPE_INFO, "Zapoceli ste prijenos mlijeka iz kante u kanister! Pricekajte dok se ne zavrsi proces.");
 		return SendClientMessage(playerid, COLOR_RED, "[ ! ] Ako zelite prestati sa prelijevanjem, upisite /milk transfer da bi prestali prijenos mlijeka u kanister.");
@@ -1287,7 +1288,7 @@ CMD:harvest(playerid, params[])
 			TogglePlayerControllable(playerid, 0);
 			ApplyAnimation(playerid, "BOMBER", "BOM_Plant", 4.1, 1, 0, 0, 0, 30000, 0);
 			SeedInfo[playerid][sHarvestPlant] = i;
-			SetTimerEx("Harvesting", 30000, 0, "i", playerid);
+			defer HarvestingSeed(playerid);
 			SendMessage(playerid, MESSAGE_TYPE_INFO, "Zapoceli ste zetvu usjeva! Pricekajte dok ne zavrsite sa zetvom.");
 			SendClientMessage(playerid, COLOR_RED, "[ ! ] Ako zelite prestati sa zetvom, ponovno ukucajte /harvest kako bi prestali sa zetvom usjeva.");
 			return 1;
@@ -1612,7 +1613,7 @@ CMD:eggs(playerid, params[])
 		EggInfo[playerid][eProcessing] = 1;
 		TogglePlayerControllable(playerid, 0);
 		ApplyAnimation(playerid, "BOMBER", "BOM_Plant", 4.1, 1, 0, 0, 0, 1, 0);
-		SetTimerEx("Processing", 30000, 0, "i", playerid);
+		defer ProcessingEggs(playerid);
 		SendMessage(playerid, MESSAGE_TYPE_INFO, "Uspjesno ste zapoceli procesiranje jaja! Pricekajte dok se proces ne zavrsi!");
 		SendClientMessage(playerid, COLOR_RED, "[ ! ] Ako zelite prestati sa procesom, upisite /eggs process da bi prestali sa procesiranjem jaja.");
 	}

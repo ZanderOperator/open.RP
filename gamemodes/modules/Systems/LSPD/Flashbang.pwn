@@ -68,10 +68,10 @@ hook OnPlayerWeaponShot(playerid, weaponid, hittype, hitid, Float:fX, Float:fY, 
             SetPlayerDrunkLevel(i, 6000);
             GameTextForPlayer(i, "~b~FLASHBANGED", 5000, 4);
 
-            SetTimerEx("ClearFlashEffect", 2000, 0, "i", i);
-            SetTimerEx("ResetPlayerDrunkLevel", 5000, 0, "i", i);
+            defer ClearFlashEffect(i);
+            defer ResetPlayerDrunkLevel(i);
 
-            SendClientMessage(i, COLOR_RED, "[ ! ] U tvojoj blizi je bacen flashbang. Probaj ga �to vjerodostojnije odRPati.");
+            SendClientMessage(i, COLOR_RED, "[ ! ] U tvojoj blizi je bacen flashbang. Probaj ga sto vjerodostojnije odRPati.");
         }
     }
 
@@ -89,15 +89,13 @@ hook OnPlayerWeaponShot(playerid, weaponid, hittype, hitid, Float:fX, Float:fY, 
     ##        #######  ##    ##  ######   ######  
 */
 
-forward ClearFlashEffect(playerid);
-public ClearFlashEffect(playerid)
+timer ClearFlashEffect[2000](playerid)
 {
     DestroyFlashTD(playerid);
     return 1;
 }
 
-forward ResetPlayerDrunkLevel(playerid);
-public ResetPlayerDrunkLevel(playerid)
+timer ResetPlayerDrunkLevel[7500](playerid)
 {
     SetPlayerDrunkLevel(playerid, 0);
     return 1;

@@ -19,7 +19,7 @@ enum {
 
 new
 	bool: _PopUpActivated[MAX_PLAYERS] = { false, ... },
-	_PopUpTimer[MAX_PLAYERS],
+	Timer: PopUpTimer[MAX_PLAYERS],
 	PlayerText:MessageTextdraw[MAX_PLAYERS] = { PlayerText:INVALID_TEXT_DRAW, ... };
 
 /*
@@ -111,9 +111,9 @@ SendTextDrawMessage(playerid, MESSAGE_TYPE, const message[])
 		format(format_message, sizeof(format_message), "%s\n", message);
 		format(final_msg, sizeof(final_msg), "%s: ~w~%s", GetMessagePrefix(MESSAGE_TYPE), message);
 	}
-	KillTimer(_PopUpTimer[playerid]);
+	stop PopUpTimer[playerid];
 	new messagetime = DetermineMessageDuration(message);
-	_PopUpTimer[playerid] = SetTimerEx("RemoveMessage", messagetime, (false), "i", playerid);
+	PopUpTimer[playerid] = defer RemoveMessage[messagetime](playerid);
 	return PlayerTextDrawSetString(playerid, MessageTextdraw[playerid], final_msg);
 }
 
@@ -138,22 +138,24 @@ SendMessage(playerid, MESSAGE_TYPE = MESSAGE_TYPE_NONE, message[])  {
 	return SendTextDrawMessage(playerid, MESSAGE_TYPE, message);
 }
 
-Public:RemoveMessage(playerid) {
+timer RemoveMessage[1000](playerid) 
+{
 	if(_PopUpActivated[playerid] == true)
 		PlayerTextDrawHide(playerid, MessageTextdraw[playerid]);
 		
 	_PopUpActivated[playerid] = false;
 	CreateMessage(playerid, false);
-	KillTimer(_PopUpTimer[playerid]);
+	stop PopUpTimer[playerid];
 	return (true);
 }
 
 /*
 	- Hooks
 */
-hook OnPlayerDisconnect(playerid, reason) {
+hook OnPlayerDisconnect(playerid, reason) 
+{
 	_PopUpActivated[playerid] = (false);
 	CreateMessage(playerid, (false));
-	KillTimer(_PopUpTimer[playerid]);
+	stop PopUpTimer[playerid];
 	return (true);
 }

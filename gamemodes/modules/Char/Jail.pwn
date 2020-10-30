@@ -53,7 +53,6 @@ static stock
 	smalldoors,
 	smalldoors1,
 	prisonramp,
-    PrisonBTimer,
 	prisonrampstatus,
 	biggates,
 	LSPrisonGatesObject[ 5 ],
@@ -8401,7 +8400,6 @@ CMD:grabtrash(playerid,params[])
 	SetPlayerAttachedObject( playerid, 9, 1265, 6, 0.281522, -0.151917, -0.094952, 213.986679, 255.047500, 265.017791, 1.000000, 1.000000, 1.000000 );
 	JailSmece[playerid] = 1;
 	ApplyAnimation(playerid,"CAMERA","camcrch_idleloop",4.1,1,1,1,1,1,1);
-	SetTimerEx("Smecence5", 800, false, "i", playerid);
 	return true;
 }
 
@@ -8564,14 +8562,12 @@ CMD:runaway(playerid, params[]){
  	SendMessage(playerid, COLOR_RED,"Uspjesno ste pobjegli iz zatvora!");
  	
  	if(PlayerInfo[playerid][pJailed] == 1)
-	{
-		PrisonBTimer = SetTimer("RunAwayTimer", 120000, false);
-	}
+		defer RunAwayTimer();
+
 	return 1;
 }
 
-forward RunAwayTimer();
-public RunAwayTimer()
+timer RunAwayTimer[120000]()
 {
 	foreach(new playerid : Player)
 	{
@@ -8586,6 +8582,5 @@ public RunAwayTimer()
 			SendRadioMessage(1, COLOR_LIGHTBLUE, "*_______________________________________________________________________________*");
 		}
 	}
-	KillTimer(PrisonBTimer);
 	return 1;
 }

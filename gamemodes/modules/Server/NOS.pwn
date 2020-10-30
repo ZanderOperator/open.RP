@@ -1,7 +1,7 @@
 #include <YSI_Coding\y_hooks>
 
-new 
-	NosTimer[MAX_PLAYERS] = { -1, ...},
+static 
+	Timer:NosTimer[MAX_PLAYERS],
 	NOSCooldown[MAX_PLAYERS];
 	
 new
@@ -13,7 +13,7 @@ new
 			
 hook OnPlayerDisconnect(playerid, reason)
 {
-	NosTimer[playerid] = -1;
+	stop NosTimer[playerid];
 	NOSCooldown[playerid] = -1;
 	
 	nospos[playerid][0] = 0.0;
@@ -35,11 +35,11 @@ hook OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
 		
 		if(VehicleInfo[vehicleid][vNitro] != -1 && VehicleInfo[vehicleid][vNOSCap] > 0)
 		{
-			if((HOLDING(KEY_FIRE) || HOLDING(KEY_ACTION)) && NosTimer[playerid] == -1)
+			if((HOLDING(KEY_FIRE) || HOLDING(KEY_ACTION)))
 			{
 				GetPlayerPos(playerid, nospos[playerid][0], nospos[playerid][1], nospos[playerid][2]); //Getanje pozicije radi afk da se ne trosi nitro
 				
-				NosTimer[playerid] = SetTimerEx("CalcNitroCap", 800, true, "id", playerid, vehicleid);
+				NosTimer[playerid] = repeat CalcNitroCap(playerid, vehicleid);
 				
 				AddVehicleComponent(vehicleid, 1010);
 				NOSCooldown[playerid] = GetTickCount();
@@ -53,8 +53,7 @@ hook OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
 					
 					ShowNosCap(playerid);
 				}
-				KillTimer(NosTimer[playerid]);
-				NosTimer[playerid] = -1;
+				stop NosTimer[playerid];
 				RemoveVehicleComponent(vehicleid, 1010);
 			}
 		}
@@ -81,23 +80,17 @@ hook OnPlayerStateChange(playerid, newstate, oldstate)
 	}
 	if(newstate == PLAYER_STATE_ONFOOT && nosbars[playerid] != PlayerText:INVALID_TEXT_DRAW)
 	{
-		if(NosTimer[playerid] != -1)
-		{
-			KillTimer(NosTimer[playerid]);
-			NosTimer[playerid] = -1;
-		}
+		stop NosTimer[playerid];
 		DestroyNOSTD(playerid);
 	}
 	return 1;
 }
 
-forward CalcNitroCap(playerid, vehicleid);
-public CalcNitroCap(playerid, vehicleid)
+timer CalcNitroCap[800](playerid, vehicleid)
 {
 	if(IsPlayerInRangeOfPoint(playerid, 2.0, nospos[playerid][0], nospos[playerid][1], nospos[playerid][2])) // AFK CHECK da se ne trosi kad se alt taba
 	{
-		KillTimer(NosTimer[playerid]);
-		NosTimer[playerid] = -1;
+		stop NosTimer[playerid];
 		RemoveVehicleComponent(vehicleid, 1010);
 		return 0;
 	}
@@ -108,8 +101,7 @@ public CalcNitroCap(playerid, vehicleid)
 	
 	if(GetPlayerState(playerid) != PLAYER_STATE_DRIVER)
 	{
-		KillTimer(NosTimer[playerid]);
-		NosTimer[playerid] = -1;
+		stop NosTimer[playerid];
 		return 0;
 	}
 	if(VehicleInfo[vehicleid][vNOSCap] > 0)
@@ -123,8 +115,7 @@ public CalcNitroCap(playerid, vehicleid)
 	}
 	else
 	{
-		KillTimer(NosTimer[playerid]);
-		NosTimer[playerid] = -1;
+		stop NosTimer[playerid];
 		RemoveVehicleComponent(vehicleid, 1010);
 		VehicleInfo[vehicleid][vNOSCap] = 0;
 		ShowNosCap(playerid);

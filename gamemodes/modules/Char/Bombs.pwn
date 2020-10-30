@@ -23,7 +23,7 @@ enum E_PLAYER_BOMB_DATA {
 	bTime,				// Vrijeme nakon kojeg ce bomba eksplodirati
 	bObject,			// Objekt bombe
 	Float:bPos[ 3 ],	// XYZ pozicija bombe
-	bTimer				// Timer id
+	Timer:bTimer		// Timer id
 }
 new
 	BombInfo[ MAX_PLAYERS ][ E_PLAYER_BOMB_DATA ];
@@ -44,7 +44,7 @@ new
 stock ResetBombArrays(playerid)
 {
 	if(BombInfo[ playerid ][ bPlanted ])
-		KillTimer(BombInfo[ playerid ][ bTimer ]);
+		stop BombInfo[ playerid ][ bTimer ];
 	BombInfo[ playerid ][ bType ]		= -1;
 	BombInfo[ playerid ][ bPlanted ]	= false;
 	BombInfo[ playerid ][ bTime	]		= 0;
@@ -65,7 +65,7 @@ stock CreateBomb(playerid, bomb_type = BOMB_TYPE_C4_TIME, bomb_time = MIN_BOMB_T
 {
 	BombInfo[ playerid ][ bType ]		= bomb_type;
 	if( bomb_type == BOMB_TYPE_C4_TIME )
-		BombInfo[ playerid ][ bTimer ] = SetTimerEx("OnTimerBombTicks", 1000, true, "i", playerid);
+		BombInfo[ playerid ][ bTimer ] = repeat OnTimerBombTicks(playerid);
 	BombInfo[ playerid ][ bPlanted ]	= true;
 	BombInfo[ playerid ][ bTime	]		= bomb_time;
 	BombInfo[ playerid ][ bVehicleid ]	= bomb_veh;
@@ -107,12 +107,11 @@ stock DetonateBomb(playerid)
 	return 1;
 }
 
-forward OnTimerBombTicks(playerid);
-public OnTimerBombTicks(playerid)
+timer OnTimerBombTicks[1000](playerid)
 {
 	if( --BombInfo[ playerid ][ bTime ] <= 0 ) {
 		DetonateBomb(playerid);
-		KillTimer(BombInfo[ playerid ][ bTimer ]);
+		stop BombInfo[ playerid ][ bTimer ];
 	}
 }
 

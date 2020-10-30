@@ -1,8 +1,8 @@
 #include <YSI_Coding\y_hooks>
 
 new Iterator:COWeapons[MAX_VEHICLES]<MAX_WEAPON_SLOTS>,
-	VehicleAlarmTimer[MAX_VEHICLES],
-	VehicleLightsTimer[MAX_VEHICLES],
+	Timer:VehicleAlarmTimer[MAX_VEHICLES],
+	Timer:VehicleLightsTimer[MAX_VEHICLES],
 	VehicleLightsBlinker[MAX_VEHICLES],
 	bool:VehicleBlinking[MAX_VEHICLES],
 	bool:VehicleAlarmStarted[MAX_VEHICLES];
@@ -167,13 +167,13 @@ stock CheckVehicleInsurance(vehicleid)
 
 stock ResetVehicleAlarm(vehicleid)
 {
-	KillTimer(VehicleAlarmTimer[vehicleid]);
-	KillTimer(VehicleLightsTimer[vehicleid]);
+	stop VehicleAlarmTimer[vehicleid];
+	stop VehicleLightsTimer[vehicleid];
 	VehicleLightsBlinker[vehicleid] = 0;
 	VehicleBlinking[vehicleid] = false;
 	VehicleAlarmStarted[vehicleid] = false;
-
 	SetVehicleParamsEx(vehicleid, VEHICLE_PARAMS_OFF, VEHICLE_PARAMS_OFF, VEHICLE_PARAMS_OFF, VEHICLE_PARAMS_OFF, VEHICLE_PARAMS_OFF, VEHICLE_PARAMS_OFF, VEHICLE_PARAMS_OFF);
+	return 1;
 }
 
 

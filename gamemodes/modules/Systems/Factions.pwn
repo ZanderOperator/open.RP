@@ -22,7 +22,7 @@
 // PlayerVars
 static stock
 	deletingFaction[MAX_PLAYERS],
-	BackupTimer[MAX_PLAYERS],
+	Timer:BackupTimer[MAX_PLAYERS],
 	creatingInfoId[MAX_PLAYERS];
 
 	
@@ -502,8 +502,7 @@ stock IsPlayerAimingAt(playerid, Float:x, Float:y, Float:z, Float:radius)
 	return (radius >= DistanceCameraTargetToLocation(cx, cy, cz, x, y, z, fx, fy, fz));
 }
 
-forward OnPlayerBackup(playerid);
-public OnPlayerBackup(playerid)
+timer OnPlayerBackup[1000](playerid)
 {
 	if(Bit4_Get(gr_Backup, playerid) != 0)
 	{
@@ -1633,7 +1632,7 @@ CMD:bk(playerid,params[])
 			Bit4_Set(gr_Backup,playerid, 1);
 			SendClientMessage(playerid, COLOR_RED, "Pozvali ste pojacanje na svojoj lokaciji, dispatcher ce obavijestiti aktivne jedinice.");
 			SendClientMessage(playerid, COLOR_RED, "[ ! ] Ukucajte /bkc da bi ste izbrisali pojacanje.");
-			BackupTimer[playerid] = SetTimerEx("OnPlayerBackup", 5000, true, "i", playerid);
+			BackupTimer[playerid] = repeat OnPlayerBackup(playerid);
 		}
 		else SendClientMessage(playerid, COLOR_RED, "Vec imate aktivan zahtjev za pojacanje!");
 	}
@@ -1655,7 +1654,7 @@ CMD:bk(playerid,params[])
 			Bit4_Set(gr_Backup,playerid, 5);
 			SendMessage(playerid, MESSAGE_TYPE_INFO, "Pozvali ste pojacanje na svojoj lokaciji, dispatcher ce obavijestiti aktivne jedinice.");
 			SendClientMessage(playerid, COLOR_RED, "[ ! ] Ukucajte /bkc da bi ste izbrisali pojacanje.");
-			BackupTimer[playerid] = SetTimerEx("OnPlayerBackup", 5000, true, "i", playerid);
+			BackupTimer[playerid] = repeat OnPlayerBackup(playerid);
 		}
 		else SendClientMessage(playerid, COLOR_RED, "Vec imate aktivan zahtjev za pojacanje!");
 	}
@@ -1676,7 +1675,7 @@ CMD:bk(playerid,params[])
 			Bit4_Set(gr_Backup,playerid, 2);
 			SendClientMessage(playerid, COLOR_RED, "Pozvali ste pojacanje na svojoj lokaciji, dispatcher ce obavijestiti aktivne jedinice.");
 			SendClientMessage(playerid, COLOR_RED, "[ ! ] Ukucajte /bkc da bi ste izbrisali pojacanje.");
-			BackupTimer[playerid] = SetTimerEx("OnPlayerBackup", 5000, true, "i", playerid);
+			BackupTimer[playerid] = repeat OnPlayerBackup(playerid);
 		}
 		else SendClientMessage(playerid, COLOR_RED, "Vec imate aktivan zahtjev za pojacanje!");
 	}
@@ -1686,17 +1685,18 @@ CMD:bk(playerid,params[])
 
 CMD:bkc(playerid, params[])
 {
-	if(IsACop(playerid) || IsASD(playerid) || IsFDMember(playerid)) {
-		if(Bit4_Get(gr_Backup, playerid) != 0) {
+	if(IsACop(playerid) || IsASD(playerid) || IsFDMember(playerid)) 
+	{
+		if(Bit4_Get(gr_Backup, playerid) != 0) 
+		{
 			foreach(new i : Player)
 				SetPlayerMarkerForPlayer(i, playerid, TEAM_HIT_COLOR);
 
 			SendMessage(playerid, MESSAGE_TYPE_INFO, "Ugasili ste aktivni GPS backup. Vase kolege ne vide vasu lokaciju!");
 			Bit4_Set(gr_Backup,playerid, 0);
-			KillTimer(BackupTimer[playerid]);
+		 	stop BackupTimer[playerid];
 		}
-		else
-			SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate aktivan zahtjev za pojacanje!");
+		else SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate aktivan zahtjev za pojacanje!");
 	}
 	return 1;
 }
@@ -1717,7 +1717,7 @@ CMD:bkall(playerid, params[])
 		    SendClientMessage(playerid, COLOR_RED, "Pozvali ste pojacanje na svojoj lokaciji, dispatcher ce obavijestiti sve sluzbe!");
 		    SendClientMessage(playerid, COLOR_WHITE, "Ukucajte /bkall da bi ste ugasili GPS.");
 			Bit4_Set(gr_Backup,playerid, 2);
-			BackupTimer[playerid] = SetTimerEx("OnPlayerBackup", 4000, true, "i", playerid);
+			BackupTimer[playerid] = repeat OnPlayerBackup(playerid);
 		}
 		else if(Bit4_Get(gr_Backup, playerid) == 2)
 		{
@@ -1727,7 +1727,7 @@ CMD:bkall(playerid, params[])
 		    }
 		    SendMessage(playerid, MESSAGE_TYPE_INFO, "Opozvao si GPS, kolege vise nece vidjeti tvoju lokaciju!");
 			Bit4_Set(gr_Backup,playerid, 0);
-			KillTimer(BackupTimer[playerid]);
+			stop BackupTimer[playerid];
 		}
 	}
 	else return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nisi LSPD/LSFD/SASD!");
@@ -1750,7 +1750,7 @@ CMD:emsbk(playerid, params[])
 		    SendClientMessage(playerid, COLOR_RED, "Pozvali ste pojacanje na svojoj lokaciji, dispatcher ce obavijestiti sve sluzbe!");
 		    SendClientMessage(playerid, COLOR_WHITE, "Ukucajte /bkall da bi ste ugasili GPS.");
 			Bit4_Set(gr_Backup,playerid, 2);
-			BackupTimer[playerid] = SetTimerEx("OnPlayerBackup", 4000, true, "i", playerid);
+			BackupTimer[playerid] = repeat OnPlayerBackup(playerid);
 		}
 		else if(Bit4_Get(gr_Backup, playerid) == 2)
 		{
@@ -1760,7 +1760,7 @@ CMD:emsbk(playerid, params[])
 		    }
 		    SendMessage(playerid, MESSAGE_TYPE_INFO, "Opozvao si GPS, kolege vise nece vidjeti tvoju lokaciju!");
 			Bit4_Set(gr_Backup,playerid, 0);
-			KillTimer(BackupTimer[playerid]);
+			stop BackupTimer[playerid];
 		}
 	}
 	else return SendClientMessage(playerid, COLOR_RED, "Nisi LSPD / SASD!");

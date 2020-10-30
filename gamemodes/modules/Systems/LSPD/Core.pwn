@@ -71,8 +71,9 @@ static
     bool:bPlayerTased        [MAX_PLAYERS] = {false, ...},
     bool:bHasTaser           [MAX_PLAYERS] = {false, ...},
     bool:bBeanbagBullets     [MAX_PLAYERS] = {false, ...},
-    TaserTimer               [MAX_PLAYERS],
-    TaserAnimTimer           [MAX_PLAYERS],
+    
+    Timer:TaserTimer               [MAX_PLAYERS],
+    Timer:TaserAnimTimer     [MAX_PLAYERS],
     //
     bool:PDApprovedUndercover[MAX_PLAYERS] = {false, ...},
     bool:PDDuty              [MAX_PLAYERS],
@@ -173,39 +174,35 @@ public GateClose()
 }
 
 // TODO: move to Taser module
-forward OnTaserShoot(playerid);
-public OnTaserShoot(playerid)
+timer OnTaserShoot[1100](playerid)
 {
     SetPlayerArmedWeapon(playerid, WEAPON_SILENCED);
     ClearAnimations(playerid);
     return 1;
 }
 
-forward ClearTaserEffect(playerid, bool:clearanims);
-public ClearTaserEffect(playerid, bool:clearanims)
+timer ClearTaserEffect[10000](playerid, bool:clearanims)
 {
     if (clearanims)
     {
         TogglePlayerControllable(playerid, true);
         ClearAnimations(playerid, 1);
     }
-    KillTimer(TaserAnimTimer[playerid]);
-    KillTimer(TaserTimer[playerid]);
+    stop TaserAnimTimer[playerid];
+    stop TaserTimer[playerid];
 
     Player_SetIsTased(playerid, false);
     return 1;
 }
 
-forward ApplyTaserAnim(playerid);
-public ApplyTaserAnim(playerid)
+timer ApplyTaserAnim[100](playerid)
 {
     ApplyAnimationEx(playerid, "PED", "KO_skid_front", 4.1, 0, 1, 1, 1, 1, 1, 0);
     return 1;
 }
 
 // PA - Panic Alarm
-forward PASpamTimer(playerid);
-public PASpamTimer(playerid)
+timer PASpamTimer[60000](playerid)
 {
     PanicAlarmSpamFlag[playerid] = false;
     return 1;
@@ -350,8 +347,6 @@ hook OnPlayerDisconnect(playerid, reason)
 
 hook OnPlayerConnect(playerid)
 {
-    TaserTimer[playerid] = -1;
-    TaserAnimTimer[playerid] = -1;
     PanicAlarmSpamFlag[playerid] = false;
     //RemoveBuildingForPlayer(playerid, 3744, 1992.304, -2146.421, 15.132, 0.250);
    // RemoveBuildingForPlayer(playerid, 3574, 1992.296, -2146.414, 15.070, 0.250);
@@ -1357,7 +1352,7 @@ hook OnPlayerWeaponShot(playerid, weaponid, hittype, hitid, Float:fX, Float:fY, 
     if (weaponid == WEAPON_SILENCED && Player_HasTaserGun(playerid) && (IsACop(playerid) || IsASD(playerid)))
     {
         ApplyAnimation(playerid, "COLT45", "colt45_reload", 4.1, 0, 0, 0, 0, 0);
-        SetTimerEx("OnTaserShoot", 1100, false, "i", playerid);
+        defer OnTaserShoot(playerid);
     }
     return 1;
 }
@@ -1404,8 +1399,8 @@ hook OnPlayerTakeDamage(playerid, issuerid, Float:amount, weaponid, bodypart)
             ApplyAnimationEx(playerid, "PED", "KO_skid_front", 4.1, 0, 1, 1, 0, 0, 1, 0);
             SetPlayerDrunkLevel(playerid, 10000);
 
-            TaserAnimTimer[playerid] = SetTimerEx("ApplyTaserAnim",   100,   0, "i",  playerid);
-            TaserTimer    [playerid] = SetTimerEx("ClearTaserEffect", 10000, 0, "ii", playerid, true);
+            TaserAnimTimer[playerid] = defer ApplyTaserAnim(playerid);
+            TaserTimer[playerid] = defer ClearTaserEffect(playerid, true);
             Player_SetIsTased(playerid, true);
         }
     }
@@ -1430,8 +1425,8 @@ hook OnPlayerTakeDamage(playerid, issuerid, Float:amount, weaponid, bodypart)
             ApplyAnimationEx(playerid, "PED", "KO_skid_front", 4.1, 0, 1, 1, 1, 1, 1, 0);
             SetPlayerDrunkLevel(playerid, 10000);
 
-            TaserAnimTimer[playerid] = SetTimerEx("ApplyTaserAnim",   100,   0, "i", playerid);
-            TaserTimer    [playerid] = SetTimerEx("ClearTaserEffect", 10000, 0, "ii",playerid, true);
+            TaserAnimTimer[playerid] = defer ApplyTaserAnim(playerid);
+            TaserTimer[playerid] = defer ClearTaserEffect(playerid, true);
             Player_SetIsTased(playerid, true);
         }
     }
@@ -2814,7 +2809,7 @@ CMD:pa(playerid, params[])
     SendRadioMessage(PlayerInfo[playerid][pMember], COLOR_SKYBLUE, tmpString);
 
     PanicAlarmSpamFlag[playerid] = true;
-    SetTimerEx("PASpamTimer", 60000, false, "i", playerid);
+    defer PASpamTimer(playerid);
     return 1;
 }
 

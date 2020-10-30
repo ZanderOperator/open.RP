@@ -7,7 +7,7 @@
 //=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~ (vars)
 new QuadPlayer[MAX_PLAYERS],
 	QuadPlayerCP[MAX_PLAYERS],
-	QuadCountTimer,
+	Timer:QuadCountTimer,
 	quad_counter = 0,
 	bool: quad_created = false,
 	quadograda,
@@ -416,7 +416,7 @@ hook OnPlayerEnterRaceCP(playerid)
 		case 45:
 		{
 			PlayerPlaySound(playerid, 1185, 0.0, 0.0, 0.0);
-			SetTimerEx("StopFinishSound", 7000, 0, "i", playerid);
+			defer StopFinishSound(playerid);
 			DisablePlayerRaceCheckpoint(playerid);
 			GameTextForPlayer(playerid, "~w~Uspjesno ste zavrsili Quad utrku~n~~r~Cestitamo!", 5000, 3);
 			new name[MAX_PLAYER_NAME], string[128];
@@ -463,8 +463,7 @@ hook OnPlayerEnterRaceCP(playerid)
 }
 
 //=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~ (timers)
-forward OnQuadCountDown();
-public OnQuadCountDown()
+timer OnQuadCountDown[1000]()
 {
 	va_GameTextForAll("~w~%d", 1000, 4, count - 1);
 
@@ -474,10 +473,14 @@ public OnQuadCountDown()
 	}
 	count--;
 
-	if(!count) {
-	    if(QuadStarted == 1) {
-     		foreach(new i:Player) {
-				if(QuadPlayer[i] != 0) {
+	if(!count) 
+	{
+	    if(QuadStarted == 1) 
+		{
+     		foreach(new i:Player) 
+			 {
+				if(QuadPlayer[i] != 0) 
+				{
 					QuadPlayerCP[i] = 2;
 					SetPlayerRaceCheckpoint(i, 0, -307.1650,1512.8640,74.8412, -300.8459,1446.3538,72.9948, 30.0);
 				}
@@ -488,10 +491,11 @@ public OnQuadCountDown()
 			ThirdQuadWinner = 999;
 		}
 		GameTextForAll("~g~GO GO GO!", 2500, 4);
-		foreach(new playerid : Player) {
+		foreach(new playerid : Player) 
+		{
 			PlayerPlaySound(playerid, 1057, 0.0, 0.0, 0.0);
 		}
-		KillTimer(QuadCountTimer);
+		stop QuadCountTimer;
 	}
 	return 1;
 }
@@ -567,7 +571,7 @@ CMD:quad(playerid, params[])  {
 
 		QuadStarted = 1;
 		count = 11;
-		QuadCountTimer = SetTimer("OnQuadCountDown", 1000, true);
+		QuadCountTimer = repeat OnQuadCountDown();
 		SendClientMessage(playerid, COLOR_WHITE, "[QUAD EVENT]: Zapoceli ste Quad utrku.");
 	}
 	

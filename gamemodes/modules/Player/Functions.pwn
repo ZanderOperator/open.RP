@@ -919,14 +919,31 @@ stock CheckPlayerInteriors(playerid)
 	return 1;
 }
 		
+timer KickTimer[50](playerid)
+{
+	Kick(playerid);
+	return 1;
+}
+
+timer BanTimer[50](playerid)
+{
+	Kick(playerid);
+	return 1;
+}
 
 forward KickPlayer(playerid);
 public KickPlayer(playerid)
-	return Kick(playerid);
+{
+	defer KickTimer(playerid);
+	return 1;
+}
 	
 forward BanPlayer(playerid);
 public BanPlayer(playerid)
-	return Ban(playerid);
+{
+	defer BanTimer(playerid);
+	return 1;
+}
 
 stock GetAdoFreeLabelSlot() {
 	for(new i = 0; i < MAX_ADO_LABELS; i++)
@@ -1021,7 +1038,7 @@ stock LevelUp(playerid)
 	   ##    #### ##     ## ######## ##     ##  ######  
 */
 
-Public:LoginCheck(playerid)
+timer LoginCheck[60000](playerid)
 {
 	if( !IsPlayerLogged(playerid) && IsPlayerConnected(playerid) )
 	{

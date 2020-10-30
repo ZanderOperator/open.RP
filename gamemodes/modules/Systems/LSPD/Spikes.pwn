@@ -51,7 +51,7 @@ enum PD_SPIKES
 static
     Spikes             [MAX_SPIKES][PD_SPIKES],
     VehicleOnSpikeDelay[MAX_VEHICLES],
-    VOSTimer           [MAX_VEHICLES];
+    Timer:VOSTimer     [MAX_VEHICLES];
 
 
 /*
@@ -97,8 +97,7 @@ static ResetSpikeData(spike)
     Spikes[spike][spiType]   = 0;
 }
 
-forward VOSDelay(vehicleid);
-public VOSDelay(vehicleid)
+timer VOSDelay[2000](vehicleid)
 {
     VehicleOnSpikeDelay[vehicleid] = 0;
     return 1;
@@ -149,7 +148,7 @@ hook OnPlayerUpdate(playerid) // maknit stavit onplayerenterdynamicrectangle
                                 }
                             }
                             VehicleOnSpikeDelay[GetPlayerVehicleID(playerid)] = 1;
-                            VOSTimer[GetPlayerVehicleID(playerid)] = SetTimerEx("VOSDelay", 2000, false, "i", GetPlayerVehicleID(playerid));
+                            VOSTimer[GetPlayerVehicleID(playerid)] = defer VOSDelay(GetPlayerVehicleID(playerid));
                         }
                         break;
                     }

@@ -12,7 +12,7 @@ new
 	rob_remaining[MAX_PLAYERS] = 0,
 	rob_combinations[MAX_PLAYERS][MAX_COMBINATIONS],
 	rob_counter[MAX_PLAYERS][MAX_COMBINATIONS],
-	robs_timer[MAX_PLAYERS];
+	Timer:robs_timer[MAX_PLAYERS];
 
 
 //=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~ (functions)
@@ -315,7 +315,7 @@ PlayerStopRob(playerid)
 	
 	// vars + timer
 	rob_started[playerid] = false;
-	KillTimer(robs_timer[playerid]);
+	stop robs_timer[playerid];
 	rob_remaining[playerid] = INVALID_PLAYER_ID;
 	
 	// textdraws
@@ -356,7 +356,7 @@ PlayerStartRob(playerid, storage_id, rob_timer = MAX_ROB_TIME, house_id)
 	PlayerTextDrawHide(playerid, srobTD[playerid][7]);
 	
 	// timer
-	robs_timer[playerid] = SetTimerEx("PlayerRobTimer", 1000, true, "ii", playerid, house_id);
+	robs_timer[playerid] = repeat PlayerRobTimer(playerid, house_id);
 	return 1;
 }	
 
@@ -369,7 +369,8 @@ PlayStorageAlarm(playerid, bool: activated)
 }
 
 //=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~ (timers)
-Public:PlayerRobTimer(playerid, house_id) 
+
+timer PlayerRobTimer[1000](playerid, house_id) 
 {
 	if(rob_started[playerid] == true) 
 	{

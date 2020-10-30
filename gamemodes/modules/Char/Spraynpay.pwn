@@ -59,7 +59,7 @@ CMD:enterspray( playerid, params[] ) {
 		PlayerToBudgetMoney(playerid, price);
 	    SetVehiclePos( vehicleid, 2062.1294, -1831.5498, 13.5469 );
 		SetVehicleZAngle( vehicleid, 90 );
-		SetTimerEx( "SprayDone", 5000, false, "iii", playerid, 0, price );
+		defer SprayDone(playerid, 0, price);
 		AC_SetVehicleHealth(vehicleid, 1000.0);
 	}
 	else if( IsPlayerInRangeOfPoint( playerid, 3.0, 1024.9756, -1030.7930, 32.0257 ) ) {
@@ -67,7 +67,7 @@ CMD:enterspray( playerid, params[] ) {
 	    PlayerToBudgetMoney(playerid, price);
 	    SetVehiclePos( vehicleid, 1024.9763, -1021.8850, 32.1016 );
 		SetVehicleZAngle( vehicleid, 0 );
-		SetTimerEx( "SprayDone", 5000, false, "iii", playerid, 1, price );
+		defer SprayDone(playerid, 1, price);
 		AC_SetVehicleHealth(vehicleid, 1000.0);
 	}
 	else if( IsPlayerInRangeOfPoint( playerid, 3.0, 488.3819, -1733.0563, 11.1752 ) ) {
@@ -75,7 +75,7 @@ CMD:enterspray( playerid, params[] ) {
 	    PlayerToBudgetMoney(playerid, price);
 	    SetVehiclePos( vehicleid, 487.4099, -1741.4585, 11.1330 );
 		SetVehicleZAngle( vehicleid, 180 );
-		SetTimerEx( "SprayDone", 5000, false, "iii", playerid, 2, price );
+		defer SprayDone(playerid, 2, price);
 		AC_SetVehicleHealth(vehicleid, 1000.0);
 	}
 	else if( IsPlayerInRangeOfPoint( playerid, 3.0, 719.8940, -464.8272, 16.3359 ) ) {
@@ -83,7 +83,7 @@ CMD:enterspray( playerid, params[] ) {
 	    PlayerToBudgetMoney(playerid, price);
 	    SetVehiclePos( vehicleid, 720.3924, -456.0286, 16.3359 );
 		SetVehicleZAngle( vehicleid, 0 );
-		SetTimerEx( "SprayDone", 5000, false, "iii", playerid, 3, price );
+		defer SprayDone(playerid, 3, price);
 		AC_SetVehicleHealth(vehicleid, 1000.0);
 	}
 	else if( IsPlayerInRangeOfPoint( playerid, 3.0, 2073.3811,-1831.4323,13.5469 ) ) {
@@ -91,19 +91,19 @@ CMD:enterspray( playerid, params[] ) {
 	    PlayerToBudgetMoney(playerid, price);
 	    SetVehiclePos( vehicleid, 2065.9812,-1831.3459,13.5469 );
 		SetVehicleZAngle( vehicleid, 85 );
-		SetTimerEx( "SprayDone", 5000, false, "iii", playerid, 4, price );
+		defer SprayDone(playerid, 4, price);
 		AC_SetVehicleHealth(vehicleid, 1000.0);
 	}
 	else return SendMessage( playerid, MESSAGE_TYPE_ERROR, "Morate biti pored ulaza u payspray garazu." );
 	return (true);
 }
 
-forward SprayDone( playerid, broj, price );
-public SprayDone( playerid, broj, price ) {
-
+timer SprayDone[5000]( playerid, sprayid, price ) 
+{
     new vehicleid = GetPlayerVehicleID( playerid );
     if( GetPlayerState( playerid ) == PLAYER_STATE_DRIVER ) {
-		switch( broj ) {
+		switch( sprayid ) 
+		{
 		    case 0: {
 		        SetVehiclePos( vehicleid, 2076.5461, -1832.5647, 13.5545 );
 		    }

@@ -405,7 +405,7 @@ static stock
 		CopStreamVeh		[MAX_PLAYERS],
 		PlayerInputHotWire	[MAX_PLAYERS][3],
 		PlayerHotWire		[MAX_PLAYERS][5],
-		HotWiringTimer		[MAX_PLAYERS],
+		Timer:HotWiringTimer[MAX_PLAYERS],
 		HotWiringSeconds	[MAX_PLAYERS],
 		PlayerHotWiringVeh	[MAX_PLAYERS],
 		PlayerHotWireType	[MAX_PLAYERS],
@@ -475,11 +475,8 @@ new const VehicleColoursTableRGB[256][] = {
 
 //Timers
 static stock
-	PlayerTestTimer[MAX_PLAYERS];
-
-// Global timer
-new
-	PlayerTestBackTimer[MAX_PLAYERS],
+	Timer:PlayerTestTimer[MAX_PLAYERS],
+	Timer:PlayerTestBackTimer[MAX_PLAYERS],
 	EditingTrunkWeaponModel[MAX_PLAYERS],
 	EditingTrunkWeaponObject[MAX_PLAYERS];
 	//TrailRespawnTimer = 0;
@@ -711,8 +708,8 @@ stock ResetCarBuyVars(playerid)
 	PlayerModel[playerid] 		= 0;
 	PlayerEngine[playerid] 		= 0;
 
-	KillTimer(PlayerTestTimer[playerid]);
-	KillTimer(PlayerTestBackTimer[playerid]);
+	stop PlayerTestTimer[playerid];
+	stop PlayerTestBackTimer[playerid];
 }
 
 stock CheckVehicleList(playerid)
@@ -1016,7 +1013,7 @@ stock ResetCarOwnershipVariables(playerid)
 	ResetVehicleList(playerid);
 
 	// Timers
-	KillTimer(HotWiringTimer[playerid]);
+	stop HotWiringTimer[playerid];
 
 	// TextDraws
 	DestroyCarsTextDraws(playerid);
@@ -1685,8 +1682,8 @@ stock static CreatePreviewScene(playerid, dealer)
 	CameraPos[playerid]		= 0;
 	PlayerDealer[playerid]	= dealer;
 
-	KillTimer(PlayerTestTimer[playerid]);
-	KillTimer(PlayerTestBackTimer[playerid]);
+	stop PlayerTestTimer[playerid];
+	stop PlayerTestBackTimer[playerid];
 
 	//Koristi li dealera?
 	Bit8_Set(gr_UsingDealer, 	dealer, 	playerid);
@@ -1777,8 +1774,8 @@ stock DestroyPreviewScene(playerid)
 	CameraPos[playerid] 	= 0;
 	PlayerDealer[playerid]	= 0;
 
-	KillTimer(PlayerTestTimer[playerid]);
-	KillTimer(PlayerTestBackTimer[playerid]);
+	stop PlayerTestTimer[playerid];
+	stop PlayerTestBackTimer[playerid];
 	return 1;
 }
 
@@ -2044,7 +2041,7 @@ stock static CreateTestCar(playerid)
 
 	// Timer for returning test car
 	Bit16_Set(gr_PlayerTestSeconds, playerid, CAR_TEST_SEC);
-	PlayerTestTimer[playerid] = SetTimerEx("VehicleTestTimer", 1000, true, "i", playerid);
+	PlayerTestTimer[playerid] = repeat VehicleTestTimer(playerid);
 	return 1;
 }
 
@@ -2625,28 +2622,30 @@ stock StartVehicleAlarm(vehicleid)
 	if(!VehicleInfo[vehicleid][vGPS]) return 1;	// Vehicle hotwired and disabled GPS/Alarm by Car Jacker
 	switch(VehicleInfo[vehicleid][vAlarm])
 	{
-		case 1: {
+		case 1: 
+		{
 			// Alarm timer;
-			VehicleAlarmTimer[vehicleid] = SetTimerEx("DisableVehicleAlarm", 20000, false, "d", vehicleid);
+			VehicleAlarmTimer[vehicleid] = defer DisableVehicleAlarm(vehicleid);
 
 			// Lights
 			VehicleLightsBlinker[vehicleid] = 41;
 			VehicleBlinking[vehicleid] = false;
-			VehicleLightsTimer[vehicleid] = SetTimerEx("VehicleLightsBlink", 500, true, "d", vehicleid);
+			VehicleLightsTimer[vehicleid] = repeat VehicleLightsBlink(vehicleid);
 
 			new engine, lights, alarm, doors, bonnet, boot, objective;
 			GetVehicleParamsEx(vehicleid, engine, lights, alarm, doors, bonnet, boot, objective);
 			SetVehicleParamsEx(vehicleid, engine, VEHICLE_PARAMS_ON, VEHICLE_PARAMS_ON, doors, bonnet, boot, objective);
 		}
-		case 2: {
+		case 2: 
+		{
 			/****************** LEVEL 1 ******************/
 			// Alarm timer
-			VehicleAlarmTimer[vehicleid] = SetTimerEx("DisableVehicleAlarm", 20000, false, "d", vehicleid);
+			VehicleAlarmTimer[vehicleid] = defer DisableVehicleAlarm(vehicleid);
 
 			// Lights
 			VehicleLightsBlinker[vehicleid] = 41;
 			VehicleBlinking[vehicleid] = false;
-			VehicleLightsTimer[vehicleid] = SetTimerEx("VehicleLightsBlink", 500, true, "d", vehicleid);
+			VehicleLightsTimer[vehicleid] = repeat VehicleLightsBlink(vehicleid);
 
 			new engine, lights, alarm, doors, bonnet, boot, objective;
 			GetVehicleParamsEx(vehicleid, engine, lights, alarm, doors, bonnet, boot, objective);
@@ -2655,15 +2654,16 @@ stock StartVehicleAlarm(vehicleid)
 			/****************** LEVEL 2 ******************/
 			SendAlarmMessageToPolice(vehicleid, false);
 		}
-		case 3: {
+		case 3: 
+		{
 			/****************** LEVEL 1 ******************/
 			// Alarm timer
-			VehicleAlarmTimer[vehicleid] = SetTimerEx("DisableVehicleAlarm", 20000, false, "d", vehicleid);
+			VehicleAlarmTimer[vehicleid] = defer DisableVehicleAlarm(vehicleid);
 
 			// Lights
 			VehicleLightsBlinker[vehicleid] = 41;
 			VehicleBlinking[vehicleid] = false;
-			VehicleLightsTimer[vehicleid] = SetTimerEx("VehicleLightsBlink", 500, true, "d", vehicleid);
+			VehicleLightsTimer[vehicleid] = repeat VehicleLightsBlink(vehicleid);
 
 			new engine, lights, alarm, doors, bonnet, boot, objective;
 			GetVehicleParamsEx(vehicleid, engine, lights, alarm, doors, bonnet, boot, objective);
@@ -2677,15 +2677,16 @@ stock StartVehicleAlarm(vehicleid)
 			CreateGangZoneAroundPoint(vPos[0], vPos[1], 100.0, 100.0);
 			SendPlayerGTAMessage(GetVehicleInfoOwner(vehicleid));
 		}
-		case 4: {
+		case 4: 
+		{
 			/****************** LEVEL 1 ******************/
 			// Alarm timer
-			VehicleAlarmTimer[vehicleid] = SetTimerEx("DisableVehicleAlarm", 20000, false, "d", vehicleid);
+			VehicleAlarmTimer[vehicleid] = defer DisableVehicleAlarm(vehicleid);
 
 			// Lights
 			VehicleLightsBlinker[vehicleid] = 41;
 			VehicleBlinking[vehicleid] = false;
-			VehicleLightsTimer[vehicleid] = SetTimerEx("VehicleLightsBlink", 500, true, "d", vehicleid);
+			VehicleLightsTimer[vehicleid] = repeat VehicleLightsBlink(vehicleid);
 
 			new engine, lights, alarm, doors, bonnet, boot, objective;
 			GetVehicleParamsEx(vehicleid, engine, lights, alarm, doors, bonnet, boot, objective);
@@ -2743,7 +2744,7 @@ stock static SendAlarmMessageToPolice(vehicleid, bool:streaming)
 stock ResetHotWireVars(playerid)
 {
 	// Timer & TDs
-	KillTimer(HotWiringTimer[playerid]);
+	stop HotWiringTimer[playerid];
 	DestroyHotWiringTD(playerid);
 
 	// Var sets
@@ -2965,9 +2966,9 @@ stock StartHotWiring(playerid, vehicleid)
 		case 5: imobTime = 20;
 	}
 
-	KillTimer(HotWiringTimer[playerid]);
-	HotWiringSeconds[playerid] 	= imobTime;
-	HotWiringTimer[playerid] 		= SetTimerEx("PlayerHotWiring", 1000, true, "ii", playerid, vehicleid);
+	stop HotWiringTimer[playerid];
+	HotWiringSeconds[playerid] = imobTime;
+	HotWiringTimer[playerid] = repeat PlayerHotWiring(playerid);
 	SelectTextDraw(playerid, 0x00FF00FF);
 	return 1;
 }
@@ -3024,10 +3025,10 @@ stock static SetPlayerHotWireInput(playerid, type, slot)
 
 stock static CheckHotWireInput(playerid, bool:endtick = false)
 {
-	if((PlayerInputHotWire[playerid][0] == 0 && PlayerInputHotWire[playerid][1] == 0) && endtick) {
-
+	if((PlayerInputHotWire[playerid][0] == 0 && PlayerInputHotWire[playerid][1] == 0) && endtick) 
+	{
 		// Timer & TDs
-		KillTimer(HotWiringTimer[playerid]);
+		stop HotWiringTimer[playerid];
 		DestroyHotWiringTD(playerid);
 
 		// Var sets
@@ -3065,7 +3066,8 @@ stock static CheckHotWireInput(playerid, bool:endtick = false)
 					engine = VEHICLE_PARAMS_OFF;
 					VehicleInfo[vehicleid][vEngineRunning] = 0;
 				}
-				case 26 .. 50: { // HoÄ‡e
+				case 26 .. 50: 
+				{ // HoÄ‡e
 					if(PlayerInfo[playerid][pJob] == 13)
 					{
 						GameTextForPlayer(playerid, "~g~Motor ukljucen, GPS lokator i alarm iskljuceni", 5000, 4);
@@ -3179,7 +3181,7 @@ stock static CheckHotWireInput(playerid, bool:endtick = false)
 	}
 
 	// Timer & TDs
-	KillTimer(HotWiringTimer[playerid]);
+	stop HotWiringTimer[playerid];
 	DestroyHotWiringTD(playerid);
 
 	// Var sets
@@ -3244,8 +3246,7 @@ stock VehicleTowTimer(vehicleid, playerid)
 	return 1;
 }
 
-forward DisableVehicleAlarm(vehicleid);
-public DisableVehicleAlarm(vehicleid)
+timer DisableVehicleAlarm[20000](vehicleid)
 {
 	new engine, lights, alarm, doors, bonnet, boot, objective;
 	GetVehicleParamsEx(vehicleid, engine, lights, alarm, doors, bonnet, boot, objective);
@@ -3253,25 +3254,28 @@ public DisableVehicleAlarm(vehicleid)
 
 	foreach(new playerid : Player)
 	{
-		if(CopStreamVeh[playerid] != INVALID_VEHICLE_ID) {
+		if(CopStreamVeh[playerid] != INVALID_VEHICLE_ID) 
+		{
 			CopStreamVeh[playerid] = INVALID_VEHICLE_ID;
 			SetVehicleParamsForPlayer(vehicleid, playerid, VEHICLE_PARAMS_OFF, doors);
 		}
 	}
 }
 
-forward VehicleLightsBlink(vehicleid);
-public VehicleLightsBlink(vehicleid)
+timer VehicleLightsBlink[500](vehicleid)
 {
 	VehicleLightsBlinker[vehicleid]--;
 	new param[4];
-	if(!VehicleLightsBlinker[vehicleid]) {
+	if(!VehicleLightsBlinker[vehicleid]) 
+	{
 		GetVehicleDamageStatus(vehicleid, param[0], param[1], param[2], param[3]);
 		param[2] = encode_lights(0, 0, 0, 0);
 		UpdateVehicleDamageStatus(vehicleid, param[0], param[1], param[2], param[3]);
 		VehicleLightsBlinker[vehicleid] = 0;
-		KillTimer(VehicleLightsTimer[vehicleid]);
-	} else {
+		stop VehicleLightsTimer[vehicleid];
+	} 
+	else 
+	{
 		GetVehicleDamageStatus(vehicleid, param[0], param[1], param[2], param[3]);
 		if(!VehicleBlinking[vehicleid])
 		{
@@ -3287,8 +3291,7 @@ public VehicleLightsBlink(vehicleid)
 	}
 }
 
-forward PlayerHotWiring(playerid, vehicleid);
-public PlayerHotWiring(playerid, vehicleid)
+timer PlayerHotWiring[1000](playerid)
 {
 	HotWiringSeconds[playerid]--;
 
@@ -3305,24 +3308,20 @@ public PlayerHotWiring(playerid, vehicleid)
 	return 1;
 }
 
-// Y_TIMERS
-forward VehicleTestTimer(playerid);
-public VehicleTestTimer(playerid)
+timer VehicleTestTimer[1000](playerid)
 {
 	Bit16_Set(gr_PlayerTestSeconds, playerid, Bit16_Get(gr_PlayerTestSeconds, playerid) - 1);
-	if(!Bit16_Get(gr_PlayerTestSeconds, playerid)) {
-
+	if(!Bit16_Get(gr_PlayerTestSeconds, playerid)) 
+	{
 		SendMessage(playerid, MESSAGE_TYPE_INFO, "Vase testiranje autmobila je zavrsilo, molimo vratite vozilo inace cete platiti punu cijenu vozila. Imate 5 minuta za vracanje vozila!");
-
 		PlayerGiveBackCP[playerid] = 1;
 		SetPlayerCheckpoint(playerid, GiveBackPos[PlayerDealer[playerid]][0],GiveBackPos[PlayerDealer[playerid]][1],GiveBackPos[PlayerDealer[playerid]][2], 10.0);
-		//ÄŒiÅ¡Ä‡enje varijable i zaustavljanje timera
 		Bit16_Set(gr_PlayerTestSeconds, playerid, 0);
-		KillTimer(PlayerTestTimer[playerid]);
-
-		PlayerTestBackTimer[playerid] = SetTimerEx("VehicleTestBackTimer",  CAR_GIVEBACK_MIL, false, "i", playerid);
+		stop PlayerTestTimer[playerid];
+		PlayerTestBackTimer[playerid] = defer VehicleTestBackTimer(playerid);
 	}
 }
+
 task VehicleGlobalTask[1000]()
 {
 	if(gettimestamp() >= VehicleTimer && gettimestamp() >= GlobalVehicleStamp)
@@ -3457,7 +3456,7 @@ task VehicleGlobalTask[1000]()
 	return 1;
 }
 
-Public:VehicleTestBackTimer(playerid)
+timer VehicleTestBackTimer[CAR_GIVEBACK_MIL](playerid)
 {
 	if(PlayerGiveBackCP[playerid] == 1) {
 		AC_DestroyVehicle(TestCar[playerid]);
@@ -3472,7 +3471,7 @@ Public:VehicleTestBackTimer(playerid)
 	return 1;
 }
 
-Public:ParkPlayerVehicle(playerid, vehicleid)
+timer ParkPlayerVehicle[5000](playerid, vehicleid)
 {
 	ParkVehicleInfo(vehicleid);
 	DestroyFarmerObjects(playerid);
@@ -3551,7 +3550,7 @@ hook OnVehicleDeath(vehicleid, killerid)
 	if(TestCar[driverid] != INVALID_VEHICLE_ID && TestCar[driverid] == vehicleid)
 	{
 		//Timer & CP
-		KillTimer(PlayerTestBackTimer[driverid]);
+		stop PlayerTestBackTimer[driverid];
 		PlayerGiveBackCP[driverid] = 0;
 		DisablePlayerCheckpoint(driverid);
 
@@ -3603,7 +3602,7 @@ hook OnPlayerEnterCheckpoint(playerid)
 	if(PlayerGiveBackCP[playerid] == 1)
 	{
 		//Timer & CP
-		KillTimer(PlayerTestBackTimer[playerid]);
+		stop PlayerTestBackTimer[playerid];
 		PlayerGiveBackCP[playerid] = 0;
 		DisablePlayerCheckpoint(playerid);
 
@@ -3643,10 +3642,9 @@ hook OnPlayerStateChange(playerid, newstate, oldstate)
 	if(oldstate == PLAYER_STATE_DRIVER && newstate == PLAYER_STATE_ONFOOT) 
 	{
 		if(Bit1_Get(gr_PlayerTestingCar, playerid)) 
-		{ // Izasao iz vozila dok je test!
-			//Timer & CP
-			KillTimer(PlayerTestTimer[playerid]);
-			KillTimer(PlayerTestBackTimer[playerid]);
+		{
+			stop PlayerTestTimer[playerid];
+			stop PlayerTestBackTimer[playerid];
 			PlayerGiveBackCP[playerid] = 0;
 			DisablePlayerCheckpoint(playerid);
 
@@ -3673,7 +3671,7 @@ hook OnPlayerStateChange(playerid, newstate, oldstate)
 		{
 			if(PlayerHotWiringVeh[playerid] != INVALID_VEHICLE_ID && !IsPlayerInVehicle(playerid, PlayerHotWiringVeh[playerid])) {
 				// Timer & TDs
-				KillTimer(HotWiringTimer[playerid]);
+				stop HotWiringTimer[playerid];
 				DestroyHotWiringTD(playerid);
 
 				// Var sets
@@ -4446,9 +4444,9 @@ hook OnPlayerDisconnect(playerid, reason)
 	EditingTrunkWeaponObject[playerid] = 0;
 	EditingTrunkWeaponModel[playerid] = 0;
 	
-	VehicleTestBackTimer(playerid);
 	PlayerParkLocation[playerid] = 0;
 	DisablePlayerCheckpoint(playerid);
+	ResetCarBuyVars(playerid);
 	return 1;
 }
 
@@ -4948,8 +4946,8 @@ CMD:car(playerid, params[])
 		TogglePlayerControllable(playerid, 0);
 		RemovePlayersFromVehicle(vehicleid);
 		SendMessage(playerid, MESSAGE_TYPE_INFO, "U toku je proces sigurnog parkiranja. Uklonjeni ste iz vozila i zamrznuti na 5 sekundi.");
-	
-		SetTimerEx("ParkPlayerVehicle", 5000, false, "ii", playerid, vehicleid);
+        // Timer	
+		defer ParkPlayerVehicle(playerid, vehicleid);
 	}
 	else if(!strcmp(pick, "buypark", true))
 	{
