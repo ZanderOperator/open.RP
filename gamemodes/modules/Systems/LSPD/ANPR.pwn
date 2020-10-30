@@ -58,8 +58,7 @@ stock Player_SetANPRActivated(playerid, bool:v)
 
 timer ANPRTimer[2000](playerid)
 {
-    // TODO: check if these variables need to be static. It's perfectly fine for them to be 'new'.
-    static
+    new
         Float:vX, Float:vY, Float:vZ,
         string[86];
 

@@ -286,7 +286,6 @@ CMD:rentveh(playerid, params[])
 			if(rentedVehicle[playerid] == false) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Vi niste iznajmili vozilo!");
 		    locatedRentedVeh[playerid] = false;
 		    DisablePlayerCheckpoint(playerid);
-		    SendClientMessage(playerid, COLOR_RED, "Ugasili ste gps");
 		    GameTextForPlayer(playerid, "~r~gps offline", 2000, 1);
 	    }
 	}
@@ -305,12 +304,10 @@ CMD:rentveh(playerid, params[])
 	else if(!strcmp(param, "trunk", true))
 	{
 		new
-			Float:X, Float:Y, Float:Z,
 			rent_vID = rentedVehID[playerid],
 			engine, lights, alarm, doors, bonnet, boot, objective;
-		GetVehiclePos(rent_vID, X, Y, Z);
 
-		if( !IsPlayerInRangeOfPoint(playerid, 5.0, X, Y, Z) ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, " Niste blizu svoga vozila!");
+		if( !IsPlayerInRangeOfVehicle(playerid, rent_vID, 5.0) ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, " Niste blizu svoga vozila!");
 		if(IsANoTrunkVehicle(GetVehicleModel(rent_vID))) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ovo vozilo nema prtljaznik!");
 		if(GetPlayerState(playerid) != PLAYER_STATE_ONFOOT) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Morate biti na nogama da biste zatvorili/otvorili prtljaznik.");
 		GetVehicleParamsEx(rent_vID, engine, lights, alarm, doors, bonnet, boot, objective);

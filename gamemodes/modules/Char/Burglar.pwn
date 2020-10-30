@@ -973,18 +973,12 @@ CMD:dropitem(playerid, params[])
 	if( !RobbingInfo[ playerid ][ rbSlotsGoods ][ slot ] ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate nista u tome slotu, koristite /stolengoods za vise infomracija!");
 	
 	new
-		vehicleid = INVALID_VEHICLE_ID,	
-		Float:X, Float:Y, Float:Z;
-	foreach(new i:Vehicles) {
-		GetVehiclePos(i, X, Y, Z);
-		if( IsPlayerInRangeOfPoint( playerid, 5.0, X, Y, Z ) ) {
-			vehicleid = i;
-			break;
-		}
-	}
-	if( vehicleid == INVALID_VEHICLE_ID ) { // Baci na pod
+		vehicleid = getPlayerNearestVehicle(playerid);
+	if( vehicleid == INVALID_VEHICLE_ID ) {
+		 // Baci na pod
 		DumpStolenGood(playerid, slot);
-	} else { // Stavljaj u vozilo
+	} 
+	else { // Stavljaj u vozilo
 		if( VehicleItems[ vehicleid ][ 0 ] && VehicleItems[ vehicleid ][ 1 ] && VehicleItems[ vehicleid ][ 2 ] && VehicleItems[ vehicleid ][ 3 ] ) return SendClientMessage( playerid, COLOR_RED, "Svi su slotovi puni!");
 		
 		if( !VehicleItems[ vehicleid ][ 0 ] ) {
@@ -1014,20 +1008,16 @@ CMD:dropitem(playerid, params[])
 CMD:takeitem(playerid, params[])
 {
 	if( RobbingInfo[ playerid ][ rbSlotsGoods ][ 0 ] != 0 && RobbingInfo[ playerid ][ rbSlotsGoods ][ 1 ] != 0 && RobbingInfo[ playerid ][ rbSlotsGoods ][ 2 ] != 0 && RobbingInfo[ playerid ][ rbSlotsGoods ][ 3 ] != 0 && RobbingInfo[ playerid ][ rbSlotsGoods ][ 4 ] != 0 ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Vas inventory je pun!");
-	new
-		vehicleid = INVALID_VEHICLE_ID,	
-		Float:X, Float:Y, Float:Z;
-	foreach(new i:Vehicles) {
-		GetVehiclePos(i, X, Y, Z);
-		if( IsPlayerInRangeOfPoint( playerid, 5.0, X, Y, Z ) ) {
-			vehicleid = i;
-			break;
-		}
-	}
-	if( vehicleid == INVALID_VEHICLE_ID ) { // Uzmi s poda
-		if( !PickUpStolenGood(playerid) ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste blizu ukradene stvari!");
-	} else { // Uzmi iz auta
-		if( !VehicleItems[ vehicleid ][ 0 ] && !VehicleItems[ vehicleid ][ 1 ] && !VehicleItems[ vehicleid ][ 2 ] && !VehicleItems[ vehicleid ][ 3 ] ) return SendClientMessage( playerid, COLOR_RED, "Svi su slotovi prazni!");
+	new vehicleid = getPlayerNearestVehicle(playerid);
+	if( vehicleid == INVALID_VEHICLE_ID ) 
+	{ // Uzmi s poda
+		if( !PickUpStolenGood(playerid) ) 
+			return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste blizu ukradene stvari!");
+	} 
+	else 
+	{ // Uzmi iz auta
+		if( !VehicleItems[ vehicleid ][ 0 ] && !VehicleItems[ vehicleid ][ 1 ] && !VehicleItems[ vehicleid ][ 2 ] && !VehicleItems[ vehicleid ][ 3 ] ) 
+			return SendClientMessage( playerid, COLOR_RED, "Svi su slotovi prazni!");
 		PickUpVehicleStolenGood(playerid, vehicleid);
 	}	
 	return 1;

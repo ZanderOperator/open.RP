@@ -117,9 +117,7 @@ hook OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
 					}
 					else if(TCarry[playerid] == 1)
 					{
-					    new Float:X, Float:Y, Float:Z;
-					    GetVehiclePos(carjob[playerid], X, Y, Z);
-					    if(IsPlayerInRangeOfPoint(playerid, 5, X, Y, Z))
+					    if(IsPlayerInRangeOfVehicle(playerid, carjob[playerid], 5.0))
 					    {
 					        ClearAnimations(playerid);
 					        RemovePlayerAttachedObject(playerid, 9);

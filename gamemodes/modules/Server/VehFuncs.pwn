@@ -7,7 +7,53 @@ new Iterator:COWeapons[MAX_VEHICLES]<MAX_WEAPON_SLOTS>,
 	bool:VehicleBlinking[MAX_VEHICLES],
 	bool:VehicleAlarmStarted[MAX_VEHICLES];
 
-WeaponModels(weaponid) {
+
+stock getPlayerNearestVehicle(playerid)
+{
+	new
+		vehicleid = INVALID_VEHICLE_ID,
+		Float:PosX, Float:PosY, Float:PosZ;
+	
+	foreach(new i : Vehicles)
+	{
+		GetVehiclePos( i, PosX, PosY, PosZ );
+		if( IsPlayerInRangeOfPoint( playerid, 7.0, PosX, PosY, PosZ ) )
+		{
+			vehicleid = i;
+			break;
+		}
+	}	
+	return vehicleid;
+}
+
+stock bool:IsPlayerInRangeOfVehicle(playerid, vehicleid, Float:range)
+{
+	new Float:vX, Float:vY, Float: vZ;
+	GetVehiclePos(vehicleid, vX, vY, vZ);
+	if(IsPlayerInRangeOfPoint(playerid, range, vX, vY, vZ)) return true;
+	return false;
+}
+
+stock GetPlayerNearestPrivateVehicle(playerid)
+{
+	new
+		vehicleid = INVALID_VEHICLE_ID,
+		Float:PosX, Float:PosY, Float:PosZ;
+	
+	foreach(new i : COVehicles)
+	{
+		GetVehiclePos( i, PosX, PosY, PosZ );
+		if( IsPlayerInRangeOfPoint( playerid, 7.0, PosX, PosY, PosZ ) )
+		{
+			vehicleid = i;
+			break;
+		}
+	}	
+	return vehicleid;
+}
+
+WeaponModels(weaponid) 
+{
     new const g_aWeaponModels[] = {
 		0, 331, 333, 334, 335, 336, 337, 338, 339, 341, 321, 322, 323, 324,
 		325, 326, 342, 343, 344, 0, 0, 0, 346, 347, 348, 349, 350, 351, 352,

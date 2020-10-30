@@ -4566,15 +4566,14 @@ CMD:rtcinradius(playerid, params[])
 	if( sscanf( params, "f", radius)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /rtcinradius [radius]");
 	if(radius < 1.0 || radius > 300.0) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Minimalni radius je 1.0, a maksimalni 300.0!");
 	new
-		Float:X, Float:Y, Float:Z,
 		engine, lights, alarm, doors, bonnet, boot, objective;
 	
 	foreach(new c: Vehicles)
 	{
-		GetVehiclePos(c, X, Y, Z);
-        if( IsPlayerInRangeOfPoint(playerid, radius, X, Y, Z) ) {
-            if( !IsPlayerInVehicle(playerid, c) ) {
-			
+		if(IsPlayerInRangeOfVehicle(playerid, c, radius))
+		{
+            if( !IsPlayerInVehicle(playerid, c) ) 
+			{
 				if( VehicleInfo[ c ][ vUsage ] == VEHICLE_USAGE_EVENT ) {
 					VehicleObjectCheck(c);
 					GetVehicleParamsEx(c, engine, lights, alarm, doors, bonnet, boot, objective);

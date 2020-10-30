@@ -3939,7 +3939,7 @@ CMD:sms(playerid, params[])
 		{
 			if (Player_TappingSMS(follower))
 			{
-				va_SendClientMessage(follower, COLOR_YELLOW, "**[!]SMS TRACE ** %d >> %d: %s",  PlayerInfo[playerid][pMobileNumber], number, smsText);
+				va_SendClientMessage(follower, COLOR_YELLOW, "** SMS TRACE ** %d >> %d: %s",  PlayerInfo[playerid][pMobileNumber], number, smsText);
 			}
 		}
 		// kraj SMS tracea

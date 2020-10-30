@@ -195,17 +195,17 @@ timer OnPlayerTracingNumber[5000](playerid, targetid, type)
      ######  ##     ## ########
 */
 
-// TODO: /wiretap?
-CMD:mole(playerid, params[])
+CMD:tap(playerid, params[])
 {
-    if (!IsACop(playerid) && PlayerInfo[playerid][pRank] < 2) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste policajac rank 2+.");
+    if (!IsACop(playerid) && PlayerInfo[playerid][pRank] < 2) 
+        return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste policajac rank 2+.");
 
     new
         string[80],
         param[7];
     if (sscanf( params, "s[7] ", param))
     {
-        SendClientMessage(playerid, COLOR_RED, "[ ? ]: /mole [odabir]");
+        SendClientMessage(playerid, COLOR_RED, "[ ? ]: /tap [odabir]");
         SendClientMessage(playerid, COLOR_RED, "[ ! ] buy - take - place - listen");
         return 1;
     }
@@ -248,8 +248,8 @@ CMD:mole(playerid, params[])
     else if (!strcmp(param, "listen", true))
     {
         new type;
-        if (sscanf(params, "s[7]i", param, type)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /mole listen [1 - samostalno/2 - zvucnik]");
-        if (1 <= type <= 2) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /mole listen [1 - samostalno/2 - zvucnik]");
+        if (sscanf(params, "s[7]i", param, type)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /tap listen [1 - samostalno/2 - zvucnik]");
+        if (1 <= type <= 2) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /tap listen [1 - samostalno/2 - zvucnik]");
 
         SendMessage(playerid, MESSAGE_TYPE_INFO, "Sada cete cuti sve razgovore koji se vode oko vaseg uredaja!");
         Player_SetListeningDeviceMode(playerid, type);
@@ -257,10 +257,8 @@ CMD:mole(playerid, params[])
     return 1;
 }
 
-// TODO: /wiretap?
-CMD:listennumber(playerid, params[])
+CMD:wiretap(playerid, params[])
 {
-    // TODO: reduce level of nesting
     new faction = PlayerInfo[playerid][pMember];
     if (faction == -1) return 1;
     if (!IsACop(playerid) && PlayerInfo[playerid][pRank] < FactionInfo[faction][rLstnNumber])
@@ -291,8 +289,6 @@ CMD:listennumber(playerid, params[])
         SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste u policijskoj stanici!");
         return 1;
     }
-    // TODO: do reverse logic, take a string, use strval, if strval returns unexpected value,
-    // that means that input was not correct
     new
         number,
         string[8];
@@ -313,49 +309,12 @@ CMD:listennumber(playerid, params[])
             }
             Player_SetTappedBy(gplayerid, playerid);
             Player_SetTappingCall(playerid, true);
+            Player_SetTappingSMS(playerid, true);
             SendFormatMessage(playerid, MESSAGE_TYPE_SUCCESS, "Poceli ste prisluskivati %d.", number);
             return 1;
         }
     }
     SendMessage(playerid, MESSAGE_TYPE_ERROR, "Broj nije u bazi podataka!");
-    return 1;
-}
-
-CMD:listensms(playerid, params[])
-{
-    new faction = PlayerInfo[playerid][pMember];
-    if (faction == -1) return 1;
-    if (!IsACop(playerid) && PlayerInfo[playerid][pRank] < FactionInfo[faction][rLstnSMS])
-    {
-        SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "Niste policajac r%d+!", FactionInfo[faction][rLstnSMS]);
-        return 1;
-    }
-    if (!IsPlayerInRangeOfPoint(playerid, 5.0, 1907.0248,627.1588,-14.942) &&
-        !IsPlayerInRangeOfPoint(playerid, 5.0, -1194.4789,-1649.6088,900.7064) &&
-        !IsPlayerInRangeOfPoint(playerid, 5.0, 2845.8594,-846.8279,-21.6994))
-    {
-        SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste u policijskoj stanici!");
-        return 1;
-    }
-
-    if (Player_TappingSMS(playerid))
-    {
-        Player_SetTappingSMS(playerid, false);
-        SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "Prestali ste pratiti SMSove!");
-        return 1;
-    }
-
-    foreach(new gplayerid : Player)
-    {
-        if (Player_TappingSMS(gplayerid))
-        {
-            SendMessage(playerid, MESSAGE_TYPE_ERROR, "Netko vec prisluskuje SMSove!");
-            return 1;
-        }
-    }
-
-    Player_SetTappingSMS(playerid, true);
-    SendClientMessage(playerid, COLOR_GREEN, "** Poceli ste pratiti SMSove!");
     return 1;
 }
 

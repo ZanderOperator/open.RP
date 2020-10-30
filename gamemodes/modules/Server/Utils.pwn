@@ -1298,42 +1298,6 @@ stock UnixTimestampToTime(timestamp, compare = -1)
     return returnstr;
 }
 
-stock getPlayerNearestVehicle(playerid)
-{
-	new
-		vehicleid = INVALID_VEHICLE_ID,
-		Float:PosX, Float:PosY, Float:PosZ;
-	
-	foreach(new i : Vehicles)
-	{
-		GetVehiclePos( i, PosX, PosY, PosZ );
-		if( IsPlayerInRangeOfPoint( playerid, 7.0, PosX, PosY, PosZ ) )
-		{
-			vehicleid = i;
-			break;
-		}
-	}	
-	return vehicleid;
-}
-
-stock GetPlayerNearestPrivateVehicle(playerid)
-{
-	new
-		vehicleid = INVALID_VEHICLE_ID,
-		Float:PosX, Float:PosY, Float:PosZ;
-	
-	foreach(new i : COVehicles)
-	{
-		GetVehiclePos( i, PosX, PosY, PosZ );
-		if( IsPlayerInRangeOfPoint( playerid, 7.0, PosX, PosY, PosZ ) )
-		{
-			vehicleid = i;
-			break;
-		}
-	}	
-	return vehicleid;
-}
-
 stock intdiffabs(tick1, tick2)
 {
 	if(tick1 > tick2)

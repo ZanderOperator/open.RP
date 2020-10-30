@@ -375,15 +375,7 @@ CMD:giveticket(playerid, params[])
         if (vehicleid == INVALID_VEHICLE_ID) return SendMessage(playerid, MESSAGE_TYPE_ERROR, " Vozilo nije spawnano! (( ID vozila na /DL! ))");
         if (VehicleInfo[vehicleid][vUsage] != VEHICLE_USAGE_PRIVATE) return SendMessage(playerid, MESSAGE_TYPE_ERROR, " Mozete kazniti samo privatna vozila!");
 
-        // TODO: helper function PlayerInRangeOfVehicle(playerid, vehicleid, Float:range)
-        new
-            Float:vx,
-            Float:vy,
-            Float:vz;
-
-        GetVehiclePos(vehicleid, vx, vy, vz);
-
-        if (!IsPlayerInRangeOfPoint(playerid, 5.0, vx, vy, vz))
+        if(!IsPlayerInRangeOfVehicle(playerid, vehicleid, 5.0))
             SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nisi blizu vozila!");
 
         if (1 <= strlen(reason) <= 63)

@@ -792,15 +792,7 @@ timer DestroyingCar[1000](playerid, vehicleid)
 		SendMessage(playerid, MESSAGE_TYPE_ERROR, "Radnja je prekinuta zbog greske!");
 		return 0;
 	}
-
-	new 
-		Float:X, 
-		Float:Y, 
-		Float:Z;
-	
-	GetVehiclePos(vehicleid, X, Y, Z);
-	
-	if( !IsPlayerInRangeOfPoint(playerid, 18.0, X, Y, Z) ) 
+	if( !IsPlayerInRangeOfVehicle(playerid, vehicleid, 18.0) ) 
 	{
 		DestroyMechanicTextDraw(playerid);
 		stop DestroyingCarTimer[playerid];

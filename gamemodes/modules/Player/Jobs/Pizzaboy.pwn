@@ -215,16 +215,18 @@ CMD:pizza(playerid, params[])
 	if( !strcmp( pick, "take", true ) ) {
 		
 		new 
-			Float:X, Float:Y, Float:Z,
 			vehicleid = INVALID_VEHICLE_ID;
 		if( IsPlayerInAnyVehicle(playerid) ) 				return SendClientMessage( playerid, COLOR_RED, "Ne smijete biti u vozilu!");
 		if( !Bit8_Get( gr_PlayerPizzas, playerid ) ) 		return SendClientMessage( playerid, COLOR_RED, "Niste uzeli pizzu iz Well Stacked Pizze!");
 
-		foreach(new i : Vehicles) {
-			if( VehicleInfo[ i ][ vJob ] == 2 ) {
-				if( GetVehicleModel( i ) == 448 ) {
-					GetVehiclePos( i, X, Y, Z );
-					if( IsPlayerInRangeOfPoint( playerid, 5.0, X, Y, Z ) ) {
+		foreach(new i : Vehicles) 
+		{
+			if( VehicleInfo[ i ][ vJob ] == 2 ) 
+			{
+				if( GetVehicleModel( i ) == 448 ) 
+				{
+					if( IsPlayerInRangeOfVehicle( playerid, i, 5.0 ) ) 
+					{
 						vehicleid = i;
 						break;
 					}
