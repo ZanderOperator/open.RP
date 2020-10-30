@@ -2708,20 +2708,14 @@ CMD:tow(playerid, params[])
 	if( GetPlayerState(playerid) != PLAYER_STATE_DRIVER ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste vozac!");
 	
 	new 
-		Float:vX,
-		Float:vY,
-		Float:vZ,
-		Found 	= 0;
-
-	new
+		bool:found = false,
 		pvid = GetPlayerVehicleID(playerid);	
 		
 	foreach(new vid : Vehicles)
 	{
-		GetVehiclePos( vid, vX, vY, vZ );
-		if(IsPlayerInRangeOfPoint(playerid, 7.0, vX, vY, vZ ) && (vid != pvid))
+		if(IsPlayerInRangeOfVehicle(playerid, vid, 7.0) && (vid != pvid))
 		{
-			Found = 1;
+			found = true;
 			if(IsTrailerAttachedToVehicle(pvid))
 			{
 				if(ImpounderJob[playerid][ivID] != 0)
@@ -2748,29 +2742,28 @@ CMD:tow(playerid, params[])
 			break;
 		}
 	}
-	if(!Found) SendClientMessage(playerid,COLOR_RED, "Nema automobila okolo.");
+	if(!found) SendClientMessage(playerid,COLOR_RED, "Nema automobila okolo.");
 	return 1;
 }
 CMD:putintrunk(playerid, params[])
 {
-	new 
-		vehicleid = INVALID_VEHICLE_ID, giveplayerid,
-		Float:X, Float:Y, Float:Z;
-		
-    foreach(new i : Vehicles) {
-        GetVehiclePos(i, X, Y, Z);
-        if(IsPlayerInRangeOfPoint(playerid, 5.0, X, Y, Z)) {
-            vehicleid = i;
-            break;
-        }
-    }
-    if( vehicleid == INVALID_VEHICLE_ID ) 				return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste blizu vozila.");
-    if( IsANoTrunkVehicle(GetVehicleModel(vehicleid)) ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ovo vozilo nema prtljaznik!");
-    if( VehicleInfo[vehicleid][vTrunk] == VEHICLE_PARAMS_OFF ) 				return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Prtljaznik tog auta je zatvoren.");
+	new
+		vehicleid = getPlayerNearestVehicle(playerid), 
+		giveplayerid;
+	
+    if( vehicleid == INVALID_VEHICLE_ID ) 				
+		return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste blizu vozila.");
+    if( IsANoTrunkVehicle(GetVehicleModel(vehicleid)) ) 
+		return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ovo vozilo nema prtljaznik!");
+    if( VehicleInfo[vehicleid][vTrunk] == VEHICLE_PARAMS_OFF ) 
+		return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Prtljaznik tog auta je zatvoren.");
     
-	if( sscanf(params, "u", giveplayerid) ) 			return SendClientMessage(playerid, -1, "KORISTI: /putintrunk [ID/Dio imena]");
-	if( giveplayerid == playerid ) 						return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne mozets ubaciti samog sebe u prtljaznik.");
-	if( !ProxDetectorS(5.0, playerid, giveplayerid) ) 	return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nisi blizu tog igraca.");
+	if( sscanf(params, "u", giveplayerid) ) 			
+		return SendClientMessage(playerid, -1, "KORISTI: /putintrunk [ID/Dio imena]");
+	if( giveplayerid == playerid ) 						
+		return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne mozets ubaciti samog sebe u prtljaznik.");
+	if( !ProxDetectorS(5.0, playerid, giveplayerid) ) 
+		return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nisi blizu tog igraca.");
 
 	Bit1_Set( gr_TrunkOffer, giveplayerid, true );
 	VehicleTrunk[ giveplayerid ] = vehicleid;
@@ -2782,16 +2775,17 @@ CMD:putintrunk(playerid, params[])
 
 CMD:entertrunk(playerid, params[])
 {
-	if( !Bit1_Get( gr_TrunkOffer, playerid ) ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nitko ti nije ponudio ulaz u gepek!");
+	if( !Bit1_Get( gr_TrunkOffer, playerid ) ) 
+		return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nitko ti nije ponudio ulaz u gepek!");
 	new 
-		Float:X, Float:Y, Float:Z,
 		vehicleid = VehicleTrunk[ playerid ];
-    GetVehiclePos(vehicleid, X, Y, Z);
     
-	if( !IsPlayerInRangeOfPoint(playerid, 5.0, X, Y, Z) ) 		return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nisi blizu vozila.");
-    if( VehicleInfo[vehicleid][vTrunk] == VEHICLE_PARAMS_OFF ) 	return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Prtljaznik tog auta je zatvoren.");
+	if( !IsPlayerInRangeOfVehicle(playerid, vehicleid, 5.0) ) 		
+		return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nisi blizu vozila.");
+    if( VehicleInfo[vehicleid][vTrunk] == VEHICLE_PARAMS_OFF ) 	
+		return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Prtljaznik tog auta je zatvoren.");
 
-	SendClientMessage( playerid,COLOR_RED, "[ ! ] Usao si u prtljaznik, mozes izaci sa /exittrunk ukoliko je otvoren.");
+	SendClientMessage( playerid,COLOR_RED, "[ ! ]: Usao si u prtljaznik, mozes izaci sa /exittrunk ukoliko je otvoren.");
 	SendClientMessage( playerid,COLOR_ORANGE, "[NAPOMENA]: Ukoliko se zbugas sa spectateom, re-konektuj se na server.");
 	
 	Bit1_Set( gr_TrunkOffer, 	playerid, false );

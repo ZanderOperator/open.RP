@@ -1824,23 +1824,9 @@ CMD:pdtrunk(playerid, params[])
 {
     if (!IsACop(playerid) && !IsASD(playerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, " Niste policajac!");
 
-    new vehicleid = INVALID_VEHICLE_ID,
-        Float:PosX, Float:PosY, Float:PosZ;
-
-    // TODO: write a helper function: GetNearestVehicle(playerid) returning the nearest vehicleid
-    foreach(new i : Vehicles)
-    {
-        GetVehiclePos(i, PosX, PosY, PosZ);
-        if (IsPlayerInRangeOfPoint(playerid, 5.0, PosX, PosY, PosZ))
-        {
-            vehicleid = i;
-            break;
-        }
-    }
+    new vehicleid = getPlayerNearestVehicle(playerid);
     if (vehicleid == INVALID_VEHICLE_ID)
         return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste blizu vozila!");
-
-    // Helper function GetNearestVehicleWithATrunk(playerid)
     if (IsVehicleWithoutTrunk(GetVehicleModel(vehicleid))) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ovo vozilo nema prtljaznik!");
 
     // Helper function, Toggle/OpenVehicleTrunk(vehicleid), which based on the value of the variable
@@ -2230,17 +2216,7 @@ CMD:take(playerid, params[])
 CMD:checktrunk(playerid, params[])
 {
     // TODO: helper function GetNearestVehicle(playerid)
-    new vehicleid = INVALID_VEHICLE_ID;
-    foreach(new i : Vehicles)
-    {
-        new Float:X, Float:Y, Float:Z;
-        GetVehiclePos(i, X, Y, Z);
-        if (IsPlayerInRangeOfPoint(playerid, 5.0, X, Y, Z))
-        {
-            vehicleid = i;
-            break;
-        }
-    }
+    new vehicleid = getPlayerNearestVehicle(playerid);
     if (vehicleid == INVALID_VEHICLE_ID) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste blizu vozila.");
     if (IsANoTrunkVehicle(GetVehicleModel(vehicleid))) return SendClientMessage(playerid, COLOR_RED, "Ovo vozilo nema prtljaznik!");
     // TODO^^: helper function GetNearestVehicleWithATrunk(playerid)
@@ -2579,18 +2555,7 @@ CMD:pdunlock(playerid, params[])
         return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste na mjestu za koristenje /pdunlock komande!");
 
     // TODO: helper function GetNearestCOVehicle(playerid)
-    new vehicleid = INVALID_VEHICLE_ID;
-    foreach(new i : COVehicles)
-    {
-        if (!VehicleInfo[i][vLock]) continue;
-        new Float:X, Float:Y, Float:Z;
-        GetVehiclePos(i, X, Y, Z);
-        if (IsPlayerInRangeOfPoint(playerid, 10.0, X, Y, Z))
-        {
-            vehicleid = i;
-            break;
-        }
-    }
+    new vehicleid = GetPlayerNearestPrivateVehicle(playerid);
     if (vehicleid == INVALID_VEHICLE_ID) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste blizu vozila.");
 
     // TODO: helper function ToggleVehicleLock(vehicleid)/UnlockVehicle(vehicleid)
@@ -2615,19 +2580,8 @@ CMD:cleartrunk(playerid, params[])
     if (PlayerInfo[playerid][pRank] < FactionInfo[PlayerInfo[playerid][pMember]][rClrTrunk])
          return va_SendClientMessage(playerid,COLOR_RED, "Niste policajac R%d+!", FactionInfo[PlayerInfo[playerid][pMember]][rClrTrunk]);
 
-    // TODO: helper function GetNearestCOVehicle(playerid)
-    new vehicleid = INVALID_VEHICLE_ID;
-    foreach(new i : COVehicles)
-    {
-        new Float:X, Float:Y, Float:Z;
-        GetVehiclePos(i, X, Y, Z);
-        if (IsPlayerInRangeOfPoint(playerid, 5.0, X, Y, Z)) {
-            vehicleid = i;
-            break;
-        }
-    }
+    new vehicleid = GetPlayerNearestPrivateVehicle(playerid);
     if (vehicleid == INVALID_VEHICLE_ID) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste blizu vozila.");
-
 
     new
         string[48];
@@ -2905,15 +2859,14 @@ CMD:returnduty(playerid, params[])
     if (!IsACop(playerid) && !IsFDMember(playerid) && !IsASD(playerid) && !IsAGov(playerid)) return SendClientMessage(playerid,COLOR_RED, "Niste ovlasteni!");
     if (PlayerInfo[playerid][pLawDuty] == 1) return SendClientMessage(playerid,COLOR_RED, "Vec ste na duznosti!");
 
-    // TODO: refactor - make helper functions, GetNearestFactionVehicle(playerid) -- based on player faction
-    new
-        Float:X, Float:Y, Float:Z, vehicleid = -1;
+    new vehicleid = INVALID_VEHICLE_ID;
 
     if (IsACop(playerid))
     {
-        foreach(new i : Vehicles) {
-            GetVehiclePos(i, X, Y, Z);
-            if (VehicleInfo[i][vFaction] == 1 && IsPlayerInRangeOfPoint(playerid, 5.0, X, Y, Z)) {
+        foreach(new i : Vehicles) 
+        {
+            if (VehicleInfo[i][vFaction] == 1 && IsPlayerInRangeOfVehicle(playerid, i, 5.0)) 
+            {
                 vehicleid = i;
                 break;
             }
@@ -2923,8 +2876,8 @@ CMD:returnduty(playerid, params[])
     {
         foreach(new i : Vehicles)
         {
-            GetVehiclePos(i, X, Y, Z);
-            if (VehicleInfo[i][vFaction] == 2 && IsPlayerInRangeOfPoint(playerid, 5.0, X, Y, Z)) {
+            if (VehicleInfo[i][vFaction] == 2 && IsPlayerInRangeOfVehicle(playerid, i, 5.0)) 
+            {
                 vehicleid = i;
                 break;
             }
@@ -2934,8 +2887,8 @@ CMD:returnduty(playerid, params[])
     {
         foreach(new i : Vehicles)
         {
-            GetVehiclePos(i, X, Y, Z);
-            if (VehicleInfo[i][vFaction] == 3 && IsPlayerInRangeOfPoint(playerid, 5.0, X, Y, Z)) {
+            if (VehicleInfo[i][vFaction] == 3 && IsPlayerInRangeOfVehicle(playerid, i, 5.0)) 
+            {
                 vehicleid = i;
                 break;
             }
@@ -2945,17 +2898,15 @@ CMD:returnduty(playerid, params[])
     {
         foreach(new i : Vehicles)
         {
-            GetVehiclePos(i, X, Y, Z);
-            if (VehicleInfo[i][vFaction] == 4 && IsPlayerInRangeOfPoint(playerid, 5.0, X, Y, Z)) {
+            if (VehicleInfo[i][vFaction] == 4 && IsPlayerInRangeOfVehicle(playerid, i, 5.0)) 
+            {
                 vehicleid = i;
                 break;
             }
         }
     }
-    if (vehicleid == -1)
+    if (vehicleid == INVALID_VEHICLE_ID)
         return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nisi blizu fakcijskog vozila!");
-
-    // TODO: end refactor
 
     // TODO: Player_SetLawDuty(playerid, value)
     PlayerInfo[playerid][pLawDuty] = 1;

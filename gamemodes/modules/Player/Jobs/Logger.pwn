@@ -492,23 +492,6 @@ RemoveWoodFromVehicle(vehid)
 	return 0;
 }
 
-IsPlayerNearAVehicle(playerid)
-{
-	new
-	    Float:v_fX,
-	    Float:v_fY,
-	    Float:v_fZ;
-
-	foreach(new i : Vehicles)
-	{
-		GetVehiclePos(i, v_fX, v_fY, v_fZ);
-
-		if(IsPlayerInRangeOfPoint(playerid, 5.0, v_fX, v_fY, v_fZ))
-  			return i;
-	}
-	return -1;
-}
-
 CreateLeaves(lid)
 {
 	if(IsValidObject(lobj))
@@ -764,7 +747,7 @@ CMD:putwood(playerid, params[])
 	new
 	    vid;
 
-	if((vid = IsPlayerNearAVehicle(playerid)) != -1)
+	if((vid = getPlayerNearestVehicle(playerid)) != INVALID_VEHICLE_ID)
 	{
 		new
 			vm = GetVehicleModel(vid);
@@ -801,33 +784,29 @@ CMD:checkvehwood(playerid, params[])
 	if(IsPlayerInAnyVehicle(playerid))
 	    return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne moZeS to raditi dok si u vozilu!");
 
+	new vid = getPlayerNearestVehicle(playerid);
+	if(vid == INVALID_VEHICLE_ID)
+		return SendClientMessage(playerid,COLOR_RED, "Niste blizu vozila!");
+	
 	new
-	    vid;
+		vm = GetVehicleModel(vid);
 
-	if((vid = IsPlayerNearAVehicle(playerid)) != -1)
+	if(VehicleInfo[vid][vTrunk] == VEHICLE_PARAMS_OFF)
+		return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Gepek vozila je zatvoren!");
+		
+	if(!IsALoggerVehicle(vm))
+		return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ovo vozilo nema drva!");
+
+	static
+		vstr[21];
+
+	SendClientMessage(playerid, COLOR_LIGHTBLUE, "Trenutna koli�ina drva u vozilu u svim slotovima:");
+	for(new i = 0; i != 5; ++i)
 	{
-	    
-	    new
-	        vm = GetVehicleModel(vid);
-
-		if(VehicleInfo[vid][vTrunk] == VEHICLE_PARAMS_OFF)
-			return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Gepek vozila je zatvoren!");
-			
-        if(!IsALoggerVehicle(vm))
-            return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ovo vozilo nema drva!");
-
-		static
-	    	vstr[21];
-
-		SendClientMessage(playerid, COLOR_LIGHTBLUE, "Trenutna koli�ina drva u vozilu u svim slotovima:");
-		for(new i = 0; i != 5; ++i)
-		{
-			format(vstr, sizeof(vstr), "Slot %d: %s[%d]", i + 1, GetWoodName(CarWoodInfo[vid][wType][i]), CarWoodInfo[vid][wood][i]);
-			SendClientMessage(playerid, COLOR_WHITE, vstr);
-		}
-		//cmd_me(playerid, "baca pogled unutar gepeka.");
+		format(vstr, sizeof(vstr), "Slot %d: %s[%d]", i + 1, GetWoodName(CarWoodInfo[vid][wType][i]), CarWoodInfo[vid][wood][i]);
+		SendClientMessage(playerid, COLOR_WHITE, vstr);
 	}
-	else return SendClientMessage(playerid,COLOR_RED, "Niste blizu vozila!");
+	//cmd_me(playerid, "baca pogled unutar gepeka.");
 	return 1;
 }
 
@@ -882,60 +861,53 @@ CMD:takewood(playerid, params[])
 	if(IsPlayerInAnyVehicle(playerid))
 	    return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne moZeS to raditi dok si u vozilu!");
 
-	new
-    	vid;
+	new vid = getPlayerNearestVehicle(playerid);
+	if(vid == INVALID_VEHICLE_ID)
+		return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste blizu vozila!");
+	if(VehicleInfo[vid][vTrunk] == VEHICLE_PARAMS_OFF)
+		return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Gepek vozila je zatvoren!");
+	
+	new slot;
+	if(sscanf(params, "d", slot))
+		return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /takewood [slot]");
+	if(slot <= 0 || slot >= 6)
+		return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Slot vozila ne moZe biti manji od 1 ni veci od 5!");
+		
+	slot -= 1;
+		
+	if(CarWoodInfo[vid][wood][slot] == 0)
+		return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Taj slot je prazan!");
 
-	if((vid = IsPlayerNearAVehicle(playerid)) != -1)
+	pWood[playerid] = CarWoodInfo[vid][wood][slot];
+	pWoodT[playerid] = CarWoodInfo[vid][wType][slot];
+	
+	CarWoodInfo[vid][wood][slot] = 0;
+	CarWoodInfo[vid][wType][slot] = 0;
+
+	if(IsPlayerAttachedObjectSlotUsed(playerid, 9))
+		RemovePlayerAttachedObject(playerid, 9);
+
+	SetPlayerAttachedObject(playerid, 9, 1463, 6, 0.093999, 0.148000, -0.175000, -106.200126, -3.499998, 81.799995, 0.528000, 0.406000, 0.534999);
+	ApplyAnimationEx(playerid, "CARRY", "crry_prtial", 4.1, 0, 1, 1, 1, 1, 1, 0);
+	SetPlayerSpecialAction(playerid, SPECIAL_ACTION_CARRY);
+	
+	static
+		takestr[47];
+		
+	format(takestr, sizeof(takestr), "[ ! ] Uzeli ste %s[%d] drva iz vozila!", GetWoodName(pWoodT[playerid]), pWood[playerid]);
+	SendClientMessage(playerid, COLOR_GREEN, takestr);
+	
+	//cmd_me(playerid, "grabi drva iz gepeka te ih nosi.");
+	
+	for(new i = 0; i != 5; ++i)
 	{
-		if(VehicleInfo[vid][vTrunk] == VEHICLE_PARAMS_OFF)
-			return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Gepek vozila je zatvoren!");
-
-		new
-		    slot;
-
-		if(sscanf(params, "d", slot))
-		    return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /takewood [slot]");
-		    
-		if(slot <= 0 || slot >= 6)
-		    return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Slot vozila ne moZe biti manji od 1 ni ve�i od 5!");
-		    
-        slot -= 1;
-		    
-		if(CarWoodInfo[vid][wood][slot] != 0)
-		{
-		    pWood[playerid] = CarWoodInfo[vid][wood][slot];
-			pWoodT[playerid] = CarWoodInfo[vid][wType][slot];
-			
-			CarWoodInfo[vid][wood][slot] = 0;
-			CarWoodInfo[vid][wType][slot] = 0;
-
-			if(IsPlayerAttachedObjectSlotUsed(playerid, 9))
-				RemovePlayerAttachedObject(playerid, 9);
-
-			SetPlayerAttachedObject(playerid, 9, 1463, 6, 0.093999, 0.148000, -0.175000, -106.200126, -3.499998, 81.799995, 0.528000, 0.406000, 0.534999);
-			ApplyAnimationEx(playerid, "CARRY", "crry_prtial", 4.1, 0, 1, 1, 1, 1, 1, 0);
-			SetPlayerSpecialAction(playerid, SPECIAL_ACTION_CARRY);
-			
-			static
-			    takestr[47];
-			    
-			format(takestr, sizeof(takestr), "[ ! ] Uzeli ste %s[%d] drva iz vozila!", GetWoodName(pWoodT[playerid]), pWood[playerid]);
-			SendClientMessage(playerid, COLOR_GREEN, takestr);
-			
-			//cmd_me(playerid, "grabi drva iz gepeka te ih nosi.");
-			
-			for(new i = 0; i != 5; ++i)
-			{
-				if(CarWoodInfo[vid][wood][i])
-				    return 1;
-			}
-
-			if(IsValidObject(CarWoodInfo[vid][wobjid]))
-				return DestroyObject(CarWoodInfo[vid][wobjid]);
-		}
-		else SendMessage(playerid, MESSAGE_TYPE_ERROR, "Taj slot je prazan!");
+		if(CarWoodInfo[vid][wood][i])
+			return 1;
 	}
-	else SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste blizu vozila!");
+
+	if(IsValidObject(CarWoodInfo[vid][wobjid]))
+		return DestroyObject(CarWoodInfo[vid][wobjid]);
+		
 	return 1;
 }
 

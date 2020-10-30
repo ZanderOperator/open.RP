@@ -705,12 +705,10 @@ CMD:equipment(playerid, params[])
             ShowPlayerDialog(playerid, DIALOG_FD_EQUIP, DIALOG_STYLE_LIST, "LSFD Equipment", "Duty\nSkin\nDodaci\nHeal", "Choose", "Abort");
         else
         {
-            new
-                Float:X, Float:Y, Float:Z, vehicleid = -1;
+            new vehicleid = -1;
             foreach(new i : Vehicles)
             {
-                GetVehiclePos(i, X, Y, Z);
-                if (VehicleInfo[i][vFaction] == 2 && IsPlayerInRangeOfPoint(playerid, 10.0, X, Y, Z))
+                if (VehicleInfo[i][vFaction] == 2 && IsPlayerInRangeOfVehicle(playerid, i, 10.0))
                 {
                     vehicleid = i;
                     break;

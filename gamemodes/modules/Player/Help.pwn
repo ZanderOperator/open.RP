@@ -145,7 +145,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext [])
 							if(IsACop(playerid))
 								ShowPlayerDialog(playerid, DIALOG_HELP, DIALOG_STYLE_MSGBOX, "PD", "/tazer/arrest/cuff/uncuff/pdtrunk/pdramp/onduty/lawskin\n\
 									 /m/siren/pdlif/flares/dflares/impound/checktrunk\n\
-									 /cleartrunk\n/gunrack\n/udercover\n/listennumber/checkhouse/housetake/cargun/mdc/apb/erb/rb/rrb/removeall\n\
+									 /cleartrunk\n/gunrack\n/udercover\n/tap/wiretap/checkhouse/housetake/cargun/mdc/apb/erb/rb/rrb/removeall\n\
 									 /putspike/removespike/ticket/giveticket/siren/afaction/faction/quitfaction/showbadge/r\n\
 									 /rlow/f/togf/carsign/bk/bkc/bkall", "Ok", "");
 							else if(IsFDMember(playerid))

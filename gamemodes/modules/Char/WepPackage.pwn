@@ -674,10 +674,9 @@ CMD:package(playerid, params[]) {
 		SendClientMessage(playerid, COLOR_RED, "[ DEV ] Komanda je izbacena!");
 	}
 
-	if(strcmp(action, "vehtake", true) == 0) {
-		new package_id, vehicleid = GetPlayerNearestPrivateVehicle(playerid),
-			Float:X, Float:Y, Float:Z;
-		GetVehiclePos(vehicleid, X, Y, Z);
+	if(strcmp(action, "vehtake", true) == 0) 
+	{
+		new package_id, vehicleid = GetPlayerNearestPrivateVehicle(playerid);
 
 		if(sscanf(params, "s[25]i", action, package_id)) {
 			SendClientMessage(playerid, COLOR_RED, "[ ? ]: /package vehtake [package_id].");
@@ -686,8 +685,8 @@ CMD:package(playerid, params[]) {
 		}
 		if( vehicleid == INVALID_VEHICLE_ID )
 			return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste blizu privatnog vozila!");
-		if( !IsPlayerInRangeOfPoint(playerid, 10.0, X, Y, Z) )
-			return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste blizu svoga vozila!");
+		if( !IsPlayerInRangeOfVehicle(playerid, vehicleid, 5.0) )
+			return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste blizu vozila!");
 		if( VehicleInfo[vehicleid][vTrunk] == VEHICLE_PARAMS_OFF )
 			return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Prtljaznik nije otvoren!");
 		if(!IsPlayerNearTrunk(playerid, vehicleid))
@@ -709,10 +708,9 @@ CMD:package(playerid, params[]) {
 		TakePackageVehicle(playerid, vehicleid, package_id, i);
 	}
 
-	if(strcmp(action, "vehput", true) == 0) {
-		new package_id, vehicleid = GetPlayerNearestPrivateVehicle(playerid),
-			Float:X, Float:Y, Float:Z;
-		GetVehiclePos(vehicleid, X, Y, Z);
+	if(strcmp(action, "vehput", true) == 0) 
+	{
+		new package_id, vehicleid = GetPlayerNearestPrivateVehicle(playerid);
 
 		if(sscanf(params, "s[25]i", action, package_id)) {
 			SendClientMessage(playerid, COLOR_RED, "[ ? ]: /package vehput [package_id].");
@@ -721,7 +719,7 @@ CMD:package(playerid, params[]) {
 		}
 		if( vehicleid == INVALID_VEHICLE_ID )
 			return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste blizu privatnog vozila!");
-		if( !IsPlayerInRangeOfPoint(playerid, 10.0, X, Y, Z) )
+		if( !IsPlayerInRangeOfVehicle(playerid, vehicleid, 5.0) )
 			return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste blizu vozila!");
 		if( VehicleInfo[vehicleid][vTrunk] == VEHICLE_PARAMS_OFF )
 			return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Prtljaznik nije otvoren!");

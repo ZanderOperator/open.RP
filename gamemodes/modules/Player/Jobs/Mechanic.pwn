@@ -38,6 +38,7 @@ new
 stock ResetMechanicVariables(playerid)
 {
 	Repairing[playerid] = (false);
+	MechanicDuty[playerid] = (false);
 	DestroyMechanicTextDraw(playerid);
 	Bit8_Set( gr_MechanicSecs, 		playerid, 0 );
 	Bit16_Set( gr_IdMehanicara, playerid, INVALID_PLAYER_ID );
@@ -327,10 +328,9 @@ timer MechCountForPlayer[1000](playerid, giveplayerid, service)
 	return 1;
 }
 
-hook OnPlayerDisconnect(playerid, reason)
+hook ResetPlayerVariables(playerid)
 {
 	ResetMechanicVariables(playerid);
-	ResetTaxiVariables(playerid);
 	MechanicDuty[playerid] = (false);
 	return 1;
 }

@@ -1179,11 +1179,10 @@ public LoadingVehicleWeaponPos(vehicleid)
 {
 	if(cache_num_rows()) 
 	{
-		new Float: Pos[3], tmpSQL;
+		new tmpSQL;
 	    for(new i = 0; i < cache_num_rows(); i++) 
 		{	
 			cache_get_value_name_int(i,    "weaponsql"	, tmpSQL);
-			GetVehiclePos(vehicleid, Pos[0], Pos[1], Pos[2]);
 			foreach(new wslot: COWeapons[vehicleid])
 			{
 				if(VehicleInfo[vehicleid][vWeaponSQLID][wslot] == tmpSQL)
@@ -1198,7 +1197,7 @@ public LoadingVehicleWeaponPos(vehicleid)
 					if(VehicleInfo[vehicleid][vOffsetx][wslot] == 0 && VehicleInfo[vehicleid][vOffsety][wslot] == 0 && VehicleInfo[vehicleid][vOffsetz][wslot] == 0)
 						continue;
 				
-					VehicleInfo[vehicleid][vWeaponObjectID][wslot] = CreateObject(WeaponModels(VehicleInfo[vehicleid][vWeaponId][wslot]), Pos[0], Pos[1], Pos[2], 0, 0, 0, 0);	
+					VehicleInfo[vehicleid][vWeaponObjectID][wslot] = CreateObject(WeaponModels(VehicleInfo[vehicleid][vWeaponId][wslot]), 0.0, 0.0, 0.0, 0, 0, 0, 0);	
 					AttachObjectToVehicle(VehicleInfo[vehicleid][vWeaponObjectID][wslot], vehicleid, VehicleInfo[vehicleid][vOffsetx][wslot], VehicleInfo[vehicleid][vOffsety][wslot], VehicleInfo[vehicleid][vOffsetz][wslot], VehicleInfo[vehicleid][vOffsetxR][wslot], VehicleInfo[vehicleid][vOffsetyR][wslot], VehicleInfo[vehicleid][vOffsetzR][wslot]);
 					Iter_Add(COWObjects[vehicleid], wslot);
 				}
@@ -2553,10 +2552,8 @@ stock static CheckVehicleTrunkHealth(playerid, vehicleid)
 {
 	if(VehicleInfo[vehicleid][vTrunkHealth] <= 0.0)
 	{
-		new Float:vX, Float:vY, Float:vZ;
-		GetVehiclePos(vehicleid, vX, vY, vZ);
-		if(!IsPlayerInRangeOfPoint(playerid, 5.0, vX, vY, vZ)) {
-
+		if(!IsPlayerInRangeOfVehicle(playerid, vehicleid, 5.0)) 
+		{
 			SendMessage(playerid, MESSAGE_TYPE_ERROR, " Vozilo je otislo!");
 			// Destroy
 			// Player vars sets

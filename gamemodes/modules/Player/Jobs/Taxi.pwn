@@ -236,6 +236,12 @@ SaveTaxiPoints(playerid, taxi_p, taxi_v) {
 	- hooks
 */
 
+hook ResetPlayerVariables(playerid)
+{
+	ResetTaxiVariables(playerid);
+	return 1;
+}
+
 hook OnPlayerStateChange(playerid, newstate, oldstate)
 {
 	if(oldstate == PLAYER_STATE_ONFOOT && newstate == PLAYER_STATE_DRIVER) {
