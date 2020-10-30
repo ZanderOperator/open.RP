@@ -9,12 +9,30 @@
 #define PRESSED(%0) \
 	(((newkeys & (%0)) == (%0)) && ((oldkeys & (%0)) != (%0)))
 
+#define GetPlayerFaction(%0) \
+	CallRemoteFunction("FetchPlayerFaction", "i", %0)
+
+#define GetPlayerFactionType(%0) \
+	CallRemoteFunction("FetchPlayerFactionType", "i", %0)
+
+// Faction Types
+#define FACTION_TYPE_NONE				(0)
+#define FACTION_TYPE_LAW				(1)
+#define FACTION_TYPE_FD					(2)
+#define FACTION_TYPE_LEGAL				(3)
+#define FACTION_TYPE_MAFIA				(4)
+#define FACTION_TYPE_GANG				(5)
+#define FACTION_TYPE_RACERS				(6)
+#define FACTION_TYPE_NEWS				(7)
+#define FACTION_TYPE_LAW2				(8)
+
 //UPDATE
 // Include Maps
 
 /* FACTIONS	*/
 #include "../Maps/Police.pwn" // Sve mape za Police Department.
-#include "../Maps/Hospital.pwn" // Sve mape za Mfedic & Fire Department.
+#include "../Maps/Hospital.pwn" // Sve mape za Medic
+#include "../Maps/FireDepartment.pwn" // Sve mape/kapije za FD
 #include "../Maps/LSN.pwn" // Sve mape za Los Santos News.
 #include "../Maps/GOV.pwn" // Sve mape za GoV.
 #include "../Maps/Gangs.pwn" // Sve mape za Ilegaflne organizacije  (+ hoods).

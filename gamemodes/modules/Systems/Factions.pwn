@@ -39,6 +39,17 @@ static stock
 	##    ##    ##    ##     ## ##    ## ##   ##  ##    ## 
 	 ######     ##     #######   ######  ##    ##  ######  
 */
+
+Public:FetchPlayerFaction(playerid)
+	return PlayerInfo[playerid][pMember];
+
+Public:FetchPlayerFactionType(playerid)
+{
+	if(!Iter_Contains(Factions, PlayerInfo[playerid][pMember]))
+		return 0;
+	return FactionInfo[PlayerInfo[playerid][pMember]][fType];
+}
+
 stock IsFreeSlot(orgid)
 {
 	if(FactionInfo[orgid][fUsed] != 0) return 0;
