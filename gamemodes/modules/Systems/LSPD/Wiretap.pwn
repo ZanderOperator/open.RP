@@ -332,17 +332,16 @@ CMD:tracenumber(playerid, params[])
         return 1;
     }
 
-    // TODO: helper function GovernmentVehicle(vehid), make a const array of vehicle models and loop through them
-    new vehid = GetPlayerVehicleID(playerid);
-    if (vehid == INVALID_VEHICLE_ID ||
-        GetVehicleModel(vehid) != 596 ||
-        GetVehicleModel(vehid) != 597 ||
-        GetVehicleModel(vehid) != 598 ||
-        GetVehicleModel(vehid) != 599 ||
-        GetVehicleModel(vehid) != 490 ||
-        GetVehicleModel(vehid) != 497 ||
-        GetVehicleModel(vehid) != 426 ||
-        GetVehicleModel(vehid) != 560)
+    new vehmodelid = GetVehicleModel(GetPlayerVehicleID(playerid));
+    if (GetPlayerVehicleID(playerid) == INVALID_VEHICLE_ID ||
+        vehmodelid != 596 ||
+        vehmodelid != 597 ||
+        vehmodelid != 598 ||
+        vehmodelid != 599 ||
+        vehmodelid != 490 ||
+        vehmodelid != 497 ||
+        vehmodelid != 426 ||
+        vehmodelid != 560)
     {
         SendMessage(playerid, MESSAGE_TYPE_ERROR, "Morate biti unutar sluzbenog vozila!");
         return 1;

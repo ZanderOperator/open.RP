@@ -1,5 +1,8 @@
 #include <YSI_Coding\y_hooks>
 
+// Header - Functions forward
+#include "modules/Systems/LSPD/LSPD_h.pwn"
+
 /*
 	########  ######## ######## #### ##    ## ########  ######
 	##     ## ##       ##        ##  ###   ## ##       ##    ##
@@ -3691,44 +3694,7 @@ hook OnPlayerStateChange(playerid, newstate, oldstate)
 	{
 		new vehicleid = GetPlayerVehicleID(playerid);
 		if(vehicleid == PlayerInfo[playerid][pSpawnedCar])
-		{
-			if(!VehicleInfo[vehicleid][vTicketShown][0] && VehicleInfo[vehicleid][vTickets][0]) {
-				va_SendClientMessage(playerid, COLOR_ORANGE, "* Dobili ste kaznu s razlogom: %s, morate platiti %d$!",
-					GetVehicleTicketReason(VehicleInfo[vehicleid][vTicketsSQLID][0]),
-					VehicleInfo[vehicleid][vTickets][0]
-				);
-				VehicleInfo[vehicleid][vTicketShown][0] = 1;
-			}
-			if(!VehicleInfo[vehicleid][vTicketShown][1] && VehicleInfo[vehicleid][vTickets][1]) {
-				va_SendClientMessage(playerid, COLOR_ORANGE, "* Dobili ste kaznu s razlogom: %s, morate platiti %d$!",
-					GetVehicleTicketReason(VehicleInfo[vehicleid][vTicketsSQLID][1]),
-					VehicleInfo[vehicleid][vTickets][1]
-				);
-				VehicleInfo[vehicleid][vTicketShown][1] = 1;
-			}
-			if(!VehicleInfo[vehicleid][vTicketShown][2] && VehicleInfo[vehicleid][vTickets][2]) {
-				va_SendClientMessage(playerid, COLOR_ORANGE, "* Dobili ste kaznu s razlogom: %s, morate platiti %d$!",
-					GetVehicleTicketReason(VehicleInfo[vehicleid][vTicketsSQLID][2]),
-					VehicleInfo[vehicleid][vTickets][2]
-				);
-				VehicleInfo[vehicleid][vTicketShown][2] = 1;
-			}
-			if(!VehicleInfo[vehicleid][vTicketShown][3] && VehicleInfo[vehicleid][vTickets][3]) {
-				va_SendClientMessage(playerid, COLOR_ORANGE, "* Dobili ste kaznu s razlogom: %s, morate platiti %d$!",
-					GetVehicleTicketReason(VehicleInfo[vehicleid][vTicketsSQLID][3]),
-					VehicleInfo[vehicleid][vTickets][3]
-				);
-				VehicleInfo[vehicleid][vTicketShown][3] = 1;
-			}
-			if(!VehicleInfo[vehicleid][vTicketShown][4] && VehicleInfo[vehicleid][vTickets][4]) {
-				va_SendClientMessage(playerid, COLOR_ORANGE, "* Dobili ste kaznu s razlogom: %s, morate platiti %d$!",
-					GetVehicleTicketReason(VehicleInfo[vehicleid][vTicketsSQLID][4]),
-					VehicleInfo[vehicleid][vTickets][4]
-				);
-				VehicleInfo[vehicleid][vTicketShown][4] = 1;
-			}
-		}
-
+			CheckVehicleTickets(playerid, vehicleid);
 		if(VehicleInfo[GetPlayerVehicleID(playerid)][vUsage] == VEHICLE_USAGE_PRIVATE && VehicleInfo[GetPlayerVehicleID(playerid)][vImpounded])
 			SendClientMessage(playerid, COLOR_RED, "[ ! ] Vozilo je impoundano, morate platiti 1.000$ da biste mogli voziti ovo vozilo! Koristite /payimpound.");
 	}

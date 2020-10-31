@@ -1,8 +1,10 @@
-// Woo ticket system
 #if defined MODULE_TICKETS
     #endinput
 #endif
 #define MODULE_TICKETS
+
+#define MAX_TICKET_REASON_LEN           (100)
+#define MAX_TICKET_MONEY_VAL            (10000)
 
 /*
     #### ##    ##  ######  ##       ##     ## ########  ######## 
@@ -30,11 +32,11 @@
 enum E_TICKET_DATA
 {
     tkID,
-    tkPrimatelj[MAX_PLAYER_NAME],
+    tkReciever[MAX_PLAYER_NAME],
     tkOfficer[MAX_PLAYER_NAME],
-    tkNovac,
-    tkRazlog[100],
-    tkDatum[30]
+    tkMoney,
+    tkReason[MAX_TICKET_REASON_LEN],
+    tkDate[32]
 }
 
 static
@@ -54,13 +56,42 @@ static
 // TODO: make all non-API/helper functions static and make API forward declarations
 // in LSPD_h.pwn header file
 
+stock SaveVehicleTicketStatus(vehicleid, ticket_slot)
+{
+    new updateQuery[ 100 ];
+    
+    format(updateQuery, sizeof(updateQuery), "UPDATE `cocars_tickets` SET `isShown` = '%d' WHERE `id` = '%d'", 
+        VehicleInfo[vehicleid][vTicketShown][ticket_slot],
+        VehicleInfo[vehicleid][vTicketsSQLID][ticket_slot]
+    );
+    mysql_tquery(g_SQL, updateQuery, "", "");
+    return 1;
+}
+
+stock CheckVehicleTickets(playerid, vehicleid)
+{
+    for(new i = 0; i < MAX_VEHICLE_TICKETS; i++)
+    {
+        if(!VehicleInfo[vehicleid][vTicketShown][i] && VehicleInfo[vehicleid][vTickets][i]) 
+        {
+            va_SendClientMessage(playerid, COLOR_ORANGE, "* Dobili ste kaznu s razlogom: %s, morate platiti %d$!",
+                GetVehicleTicketReason(VehicleInfo[vehicleid][vTicketsSQLID][i]),
+                VehicleInfo[vehicleid][vTickets][i]
+            );
+            VehicleInfo[vehicleid][vTicketShown][i] = true;
+            SaveVehicleTicketStatus(vehicleid, i);
+        }
+    }
+    return 1;
+}
+
 stock GetVehicleTicketReason(ticketsql)
 {
     new
         reason[64],
         Cache:result,
         ticketQuery[128];
-    // TODO: convert to threaded query?
+
     format(ticketQuery, sizeof(ticketQuery), "SELECT `reason` FROM `cocars_tickets` WHERE `id` = '%d'", ticketsql);
     result = mysql_query(g_SQL, ticketQuery);
     if (result == MYSQL_INVALID_CACHE)
@@ -71,32 +102,29 @@ stock GetVehicleTicketReason(ticketsql)
     return reason;
 }
 
-stock InsertPlayerTicket(playerid, giveplayerid, money, const reason[])
+static stock InsertPlayerTicket(playerid, giveplayerid, money, const reason[])
 {
-    // TODO: use strcpy for copying strings
-    format(TicketInfo[giveplayerid][tkPrimatelj], MAX_PLAYER_NAME, GetName(giveplayerid, false));
-    format(TicketInfo[giveplayerid][tkOfficer] , MAX_PLAYER_NAME, GetName(playerid, false));
-    TicketInfo[giveplayerid][tkNovac] = money;
-    format(TicketInfo[giveplayerid][tkRazlog], 100, reason);
-
-    new Day, Month, Year;
-    getdate(Year, Month, Day);
-
-    format(TicketInfo[giveplayerid][tkDatum], 32, "%02d.%02d.%d.", Day, Month, Year);
+    TicketInfo[giveplayerid][tkMoney] = money;
+    strcat(TicketInfo[giveplayerid][tkReciever], GetName(giveplayerid, false), MAX_PLAYER_NAME);
+    strcat(TicketInfo[giveplayerid][tkOfficer], GetName(playerid, false), MAX_PLAYER_NAME);
+    strcat(TicketInfo[giveplayerid][tkReason], reason, MAX_TICKET_REASON_LEN);
+    strcat(TicketInfo[giveplayerid][tkDate], ReturnDate(), 32);
 
     new query[512];
     mysql_tquery(g_SQL, "BEGIN");
 
-    mysql_format(g_SQL, query, sizeof(query), "INSERT INTO tickets (`primatelj`, `officer`, `novac`, `razlog`, `datum`) VALUES ('%e', '%e', '%d', '%e', '%e')",
-        TicketInfo[giveplayerid][tkPrimatelj],
+    mysql_format(g_SQL, query, sizeof(query), "INSERT INTO tickets (`reciever`, `officer`, `money`, `reason`, `date`) VALUES ('%e', '%e', '%d', '%e', '%e')",
+        TicketInfo[giveplayerid][tkReciever],
         TicketInfo[giveplayerid][tkOfficer],
-        TicketInfo[giveplayerid][tkNovac],
-        TicketInfo[giveplayerid][tkRazlog],
-        TicketInfo[giveplayerid][tkDatum]
+        TicketInfo[giveplayerid][tkMoney],
+        TicketInfo[giveplayerid][tkReason],
+        TicketInfo[giveplayerid][tkDate]
     );
-    SendFormatMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uspjesno si dao kaznu %s! ", TicketInfo[giveplayerid][tkPrimatelj]);
     mysql_tquery(g_SQL, query, "");
     mysql_tquery(g_SQL, "COMMIT");
+
+    SendFormatMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uspjesno si dao kaznu %s! ", TicketInfo[giveplayerid][tkReciever]);
+    return 1;
 }
 
 Public:OnVehicleTicketInsert(vehicleid, slot)
@@ -105,14 +133,14 @@ Public:OnVehicleTicketInsert(vehicleid, slot)
     return 1;
 }
 
-stock DeletePlayerTicket(playerid, sqlid, bool:notification = false)
+stock DeletePlayerTicket(playerid, sqlid, bool:mdc_notification = false)
 {
     new
         query[256];
     format(query, sizeof(query), "DELETE FROM tickets WHERE `id` = '%d'", sqlid);
     mysql_tquery(g_SQL, query, "");
 
-    if (notification)
+    if (mdc_notification)
         SendFormatMessage(playerid, MESSAGE_TYPE_SUCCESS, "Kazna #%d je uspjesno izbrisana iz baze podataka.", sqlid);
 }
 
@@ -142,16 +170,6 @@ Public:LoadingVehicleTickets(vehicleid)
             cache_get_value_name_int(i,  "isShown"  , VehicleInfo[vehicleid][vTicketShown][i]);
             cache_get_value_name_int(i,  "price"    , VehicleInfo[vehicleid][vTickets][i]);
             cache_get_value_name_int(i,  "time"     , VehicleInfo[vehicleid][vTicketStamp][i]);
-
-            #if defined MOD_DEBUG
-                printf("DEBUG CAR TICKETS: i(%d) | sqlid(%d) | isShown(%d) | price(%d) | time(%d)",
-                    i,
-                    VehicleInfo[vehicleid][vSQLID],
-                    VehicleInfo[vehicleid][vTicketShown][i],
-                    VehicleInfo[vehicleid][vTickets][i],
-                    VehicleInfo[vehicleid][vTicketStamp][i]
-                );
-            #endif
         }
     }
     return 1;
@@ -162,7 +180,7 @@ stock LoadPlayerTickets(playerid, const playername[])
 {
     new
         query[128];
-    mysql_format(g_SQL, query, sizeof(query), "SELECT * FROM tickets WHERE `primatelj` = '%e'", playername);
+    mysql_format(g_SQL, query, sizeof(query), "SELECT * FROM tickets WHERE `reciever` = '%e'", playername);
 
     inline OnTicketLoad()
     {
@@ -177,23 +195,23 @@ stock LoadPlayerTickets(playerid, const playername[])
         for (new i = 0; i < cache_num_rows(); i++)
         {
             cache_get_value_name_int(i, "id", TicketInfo[i][tkID]);
-            cache_get_value_name(i,"primatelj"  , tmp, sizeof(tmp));
-            format(TicketInfo[i][tkPrimatelj], MAX_PLAYER_NAME, tmp );
+            cache_get_value_name(i,"reciever"   , tmp, sizeof(tmp));
+            format(TicketInfo[i][tkReciever], MAX_PLAYER_NAME, tmp );
             cache_get_value_name(i,"officer"    , tmp, sizeof(tmp));
             format(TicketInfo[i][tkOfficer], MAX_PLAYER_NAME, tmp );
-            cache_get_value_name_int(i, "novac", TicketInfo[i][tkNovac]);
-            cache_get_value_name(i, "razlog", tmp, sizeof(tmp));
-            format(TicketInfo[i][tkRazlog], 100, tmp );
-            cache_get_value_name(i, "datum", tmp, sizeof(tmp));
-            format(TicketInfo[i][tkDatum], 30, tmp );
+            cache_get_value_name_int(i, "money", TicketInfo[i][tkMoney]);
+            cache_get_value_name(i, "reason"    , tmp, sizeof(tmp));
+            format(TicketInfo[i][tkReason], MAX_TICKET_REASON_LEN, tmp );
+            cache_get_value_name(i, "date"  , tmp, sizeof(tmp));
+            format(TicketInfo[i][tkDate], 32, tmp );
 
             format(motd, sizeof(motd), "ID #%d | Datum: %s | Primatelj: %s | Officer: %s | Iznos kazne: %d$ | Razlog: %s\n",
                 TicketInfo[i][tkID],
-                TicketInfo[i][tkDatum],
-                TicketInfo[i][tkPrimatelj],
+                TicketInfo[i][tkDate],
+                TicketInfo[i][tkReciever],
                 TicketInfo[i][tkOfficer],
-                TicketInfo[i][tkNovac],
-                TicketInfo[i][tkRazlog]
+                TicketInfo[i][tkMoney],
+                TicketInfo[i][tkReason]
             );
             strcat(buffer, motd, sizeof(buffer));
         }
@@ -244,13 +262,10 @@ CMD:ticket(playerid, params[])
     new param[12], id;
     if (sscanf(params, "s[12] ", param)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /ticket [show / vehicleshow / pay / vehiclepay ]");
 
-    // TODO: use YHash instead of slow strcmp matching: switch (_YHash(param)) { case _H<show>: } etc
-    // https://web.archive.org/web/20190419205838/https://forum.sa-mp.com/showthread.php?t=571305
+
     if (!strcmp(param, "show", true))
-    {
         LoadPlayerTickets(playerid, GetName(playerid, false));
-    }
-    if (!strcmp(param, "vehicleshow", true))
+    else if (!strcmp(param, "vehicleshow", true))
     {
         new vehicleid = PlayerInfo[playerid][pSpawnedCar];
 
@@ -262,28 +277,28 @@ CMD:ticket(playerid, params[])
 
         ShowVehicleTickets(playerid, vehicleid);
     }
-    if (!strcmp(param, "pay", true))
+    else if (!strcmp(param, "pay", true))
     {
         if (!IsPlayerInRangeOfPoint(playerid, 30.0, 1301.4661, 764.3820, -98.6427)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste unutar City Hall-a!");
         if (sscanf( params, "s[12]i", param, id)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /ticket pay [ID kazne]");
 
         new
-            ticketsQuery[62],
+            ticketsQuery[84],
             tmp[64],
-            prima[MAX_PLAYER_NAME],
+            reciever[MAX_PLAYER_NAME],
             Cache:result;
 
-        format(ticketsQuery, 62, "SELECT id, primatelj, novac FROM tickets WHERE id = '%d'", id);
+        format(ticketsQuery, sizeof(ticketsQuery), "SELECT id, reciever, money FROM tickets WHERE id = '%d'", id);
         result = mysql_query(g_SQL, ticketsQuery);
         if (!cache_num_rows()) return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "Ne postoji kazna sa ID-em #%d !", id);
 
         new ticketId, moneys;
-        cache_get_value_name(0, "primatelj", tmp, sizeof(tmp));
-        format(prima, MAX_PLAYER_NAME, tmp );
+        cache_get_value_name(0, "reciever", tmp, sizeof(tmp));
+        format(reciever, MAX_PLAYER_NAME, tmp );
         cache_get_value_name_int(0, "id"        , ticketId);
-        cache_get_value_name_int(0, "novac"     , moneys);
+        cache_get_value_name_int(0, "money"     , moneys);
 
-        if (!strcmp(prima, GetName(playerid,false), true) && ticketId == id)
+        if (!strcmp(reciever, GetName(playerid,false), true) && ticketId == id)
         {
             if (AC_GetPlayerMoney(playerid) < moneys) return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate dovoljno novaca, fali vam %d$.", moneys-AC_GetPlayerMoney(playerid));
 
@@ -331,31 +346,30 @@ CMD:ticket(playerid, params[])
 
         VehicleInfo[vehicleid][vTicketsSQLID][tmpSlot]    = 0;
         VehicleInfo[vehicleid][vTickets][tmpSlot]         = 0;
-        VehicleInfo[vehicleid][vTicketShown][tmpSlot]     = 0;
-        VehicleInfo[vehicleid][vTicketStamp][tmpSlot]     = 0;
+        VehicleInfo[vehicleid][vTicketShown][tmpSlot]     = false;
+        VehicleInfo[vehicleid][vTicketStamp][tmpSlot]     = false;
     }
     return 1;
 }
 
 CMD:giveticket(playerid, params[])
 {
-    // TODO: reduce level of nesting
     if (!IsACop(playerid) && !IsASD(playerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste autorizovani!");
     if (PlayerInfo[playerid][pLawDuty] == 0) return SendClientMessage(playerid,COLOR_RED, "Niste na du�nosti!");
     if (IsPlayerInAnyVehicle(playerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, " Morate biti izvan vozila!");
 
     new giveplayerid, pick[8];
 
-    if (sscanf(params, "s[8] ", pick)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /giveticket [person/vehicle]");
+    if (sscanf(params, "s[8] ", pick)) 
+        return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /giveticket [person/vehicle]");
 
-    // TODO: use YSI YHash
-    new reason[100], moneys;
+    new reason[MAX_TICKET_REASON_LEN], moneys;
     if (!strcmp(pick, "person", true))
     {
         if (sscanf( params, "s[8]uis[99]", pick, giveplayerid, moneys, reason)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /giveticket person [playerid/dio imena] [novci] [razlog]");
         if (giveplayerid == INVALID_PLAYER_ID) return SendMessage(playerid, MESSAGE_TYPE_ERROR, " Igrac nije online!");
         if (!ProxDetectorS(5.0, playerid, giveplayerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Igrac nije blizu vas!");
-        if (strlen(reason) >= 100) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Razlog moze imati max 100 znakova!");
+        if (strlen(reason) >= MAX_TICKET_REASON_LEN) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Razlog moze imati max 100 znakova!");
         if (49 > moneys > 20001) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Maksimalno 20000$, minimalno 50$!");
 
         InsertPlayerTicket(playerid, giveplayerid, moneys, reason);
@@ -371,55 +385,52 @@ CMD:giveticket(playerid, params[])
     else if (!strcmp(pick, "vehicle", true))
     {
         new vehicleid;
-        if (sscanf( params, "s[8]iis[64]", pick, vehicleid, moneys, reason)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /giveticket vehicle [vehicleid ((/DL))][iznos kazne][razlog]");
-        if (vehicleid == INVALID_VEHICLE_ID) return SendMessage(playerid, MESSAGE_TYPE_ERROR, " Vozilo nije spawnano! (( ID vozila na /DL! ))");
-        if (VehicleInfo[vehicleid][vUsage] != VEHICLE_USAGE_PRIVATE) return SendMessage(playerid, MESSAGE_TYPE_ERROR, " Mozete kazniti samo privatna vozila!");
-
+        if (sscanf( params, "s[8]iis[64]", pick, vehicleid, moneys, reason)) 
+            return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /giveticket vehicle [vehicleid ((/DL))][iznos kazne][razlog]");
+        if (vehicleid == INVALID_VEHICLE_ID) 
+            return SendMessage(playerid, MESSAGE_TYPE_ERROR, " Vozilo nije spawnano! (( ID vozila na /DL! ))");
+        if (VehicleInfo[vehicleid][vUsage] != VEHICLE_USAGE_PRIVATE) 
+            return SendMessage(playerid, MESSAGE_TYPE_ERROR, " Mozete kazniti samo privatna vozila!");
         if(!IsPlayerInRangeOfVehicle(playerid, vehicleid, 5.0))
             SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nisi blizu vozila!");
+        if(strlen(reason) < 1 || strlen(reason) > MAX_TICKET_REASON_LEN)
+            return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "Ticket reason can't be shorter than 1 or longer than %d chars!", MAX_TICKET_REASON_LEN);
+        if(moneys < 1 || moneys > MAX_TICKET_MONEY_VAL)    
+            return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "Ticket price can't be less than 1 or more than %d chars!", MAX_TICKET_MONEY_VAL);
+        new
+            tkts = -1;
 
-        if (1 <= strlen(reason) <= 63)
+        for (new t = 0; t <= 4; ++t)
         {
-            if (1 <= moneys <= 10000)
+            if (!VehicleInfo[vehicleid][vTickets][t])
             {
+                VehicleInfo[vehicleid][vTickets][t]     = moneys;
+                VehicleInfo[vehicleid][vTicketShown][t] = false;
+                VehicleInfo[vehicleid][vTicketStamp][t] = gettime();
+
+                // MySQL Query
                 new
-                    tkts = -1;
-
-                for (new t = 0; t <= 4; ++t)
-                {
-                    if (!VehicleInfo[vehicleid][vTickets][t])
-                    {
-                        VehicleInfo[vehicleid][vTickets][t]     = moneys;
-                        VehicleInfo[vehicleid][vTicketShown][t] = 0;
-                        VehicleInfo[vehicleid][vTicketStamp][t] = gettime();
-
-                        // MySQL Query
-                        new
-                            ticketInsertQuery[256];
-                        mysql_format(g_SQL, ticketInsertQuery, 256, "INSERT INTO `cocars_tickets`(`vehicle_id`, `isShown`, `price`, `reason`, `time`) VALUES ('%d','0','%d','%e','%d')",
-                            VehicleInfo[vehicleid][vSQLID],
-                            VehicleInfo[vehicleid][vTickets][t],
-                            reason,
-                            gettime()
-                        );
-                        mysql_tquery(g_SQL, ticketInsertQuery, "OnVehicleTicketInsert", "ii" , vehicleid, t);
-                        tkts = t;
-                        break;
-                    }
-                }
-                if (tkts != -1)
-                {
-                    new
-                        tmpString[120];
-
-                    format(tmpString, sizeof(tmpString), "*[HQ] %s %s je izdao %d kaznu na vozilo (ID: %d) od %d$ za: %s.", ReturnPlayerRankName(playerid), GetName(playerid), tkts+1, vehicleid, moneys, reason);
-                    SendRadioMessage(PlayerInfo[playerid][pMember], COLOR_COP, tmpString);
-                }
-                else return SendMessage(playerid, MESSAGE_TYPE_ERROR, " Vozilo vec ima previse ne placenih kazni!");
+                    ticketInsertQuery[256];
+                mysql_format(g_SQL, ticketInsertQuery, 256, "INSERT INTO `cocars_tickets`(`vehicle_id`, `isShown`, `price`, `reason`, `time`) VALUES ('%d','0','%d','%e','%d')",
+                    VehicleInfo[vehicleid][vSQLID],
+                    VehicleInfo[vehicleid][vTickets][t],
+                    reason,
+                    gettime()
+                );
+                mysql_tquery(g_SQL, ticketInsertQuery, "OnVehicleTicketInsert", "ii" , vehicleid, t);
+                tkts = t;
+                break;
             }
-            else SendMessage(playerid, MESSAGE_TYPE_ERROR, " Kazna mora biti izmedju 1 i 10.000$!");
         }
-        else SendMessage(playerid, MESSAGE_TYPE_ERROR, " Duzina razloga mora biti izmedju 1 i 63 znaka!");
+        if (tkts != -1)
+        {
+            new
+                tmpString[120];
+
+            format(tmpString, sizeof(tmpString), "*[HQ] %s %s je izdao %d kaznu na vozilo (ID: %d) od %d$ za: %s.", ReturnPlayerRankName(playerid), GetName(playerid), tkts+1, vehicleid, moneys, reason);
+            SendRadioMessage(PlayerInfo[playerid][pMember], COLOR_COP, tmpString);
+        }
+        else return SendMessage(playerid, MESSAGE_TYPE_ERROR, " Vozilo vec ima previse ne placenih kazni!");
     }
     return 1;
 }

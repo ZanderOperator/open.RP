@@ -399,11 +399,11 @@ stock ResetVehicleInfo(vehicleid)
 	VehicleInfo[ vehicleid ][ vTickets ][ 2 ]			= 0;
 	VehicleInfo[ vehicleid ][ vTickets ][ 3 ]			= 0;
 	VehicleInfo[ vehicleid ][ vTickets ][ 4 ]			= 0;
-	VehicleInfo[ vehicleid ][ vTicketShown ][ 0 ]		= 1;
-	VehicleInfo[ vehicleid ][ vTicketShown ][ 1 ]		= 1;
-	VehicleInfo[ vehicleid ][ vTicketShown ][ 2 ]		= 1;
-	VehicleInfo[ vehicleid ][ vTicketShown ][ 3 ]		= 1;
-	VehicleInfo[ vehicleid ][ vTicketShown ][ 4 ]		= 1;
+	VehicleInfo[ vehicleid ][ vTicketShown ][ 0 ]		= true;
+	VehicleInfo[ vehicleid ][ vTicketShown ][ 1 ]		= true;
+	VehicleInfo[ vehicleid ][ vTicketShown ][ 2 ]		= true;
+	VehicleInfo[ vehicleid ][ vTicketShown ][ 3 ]		= true;
+	VehicleInfo[ vehicleid ][ vTicketShown ][ 4 ]		= true;
 		
 	SirenObject[ vehicleid ]							= INVALID_OBJECT_ID;
 

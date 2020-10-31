@@ -1,12 +1,5 @@
 // >> Made by Runner!
 #include <YSI_Coding\y_hooks>
-/*
-if(!VehicleInfo[vehicleid][vTickets][t])
-					{
-						VehicleInfo[vehicleid][vTickets][t] = moneys;
-						VehicleInfo[vehicleid][vTicketShown][t]	= 0;
-						VehicleInfo[vehicleid][vTicketStamp][t] = gettime();*/
-						
 						
 #define DAYS_NEEDED		259200 // 3 dana u sekundama!
 #define IMPOUNDER_ID	(17)
