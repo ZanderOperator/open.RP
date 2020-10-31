@@ -171,7 +171,6 @@ Public:LoadingVehicleTickets(vehicleid)
     return 1;
 }
 
-
 stock LoadPlayerTickets(playerid, const playername[])
 {
     new
@@ -421,7 +420,7 @@ CMD:giveticket(playerid, params[])
         new
             tkts = -1;
 
-        for (new t = 0; t <= 4; ++t)
+        for (new t = 0; t < MAX_VEHICLE_TICKETS; t++)
         {
             if (!VehicleInfo[vehicleid][vTickets][t])
             {
