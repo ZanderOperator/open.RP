@@ -37,7 +37,6 @@ stock IsANoTrunkVehicle(modelid)
 stock SortNearestVehicle(v[MAX_VEHICLES_IN_RANGE][E_CLOSEST_VEHICLES], pool_size)
 {
 	new tmp = INVALID_VEHICLE_ID, bool:swapped;
-
 	do
 	{
 		swapped = false;
@@ -78,6 +77,9 @@ stock GetNearestVehicle(playerid, VEHICLE_TYPE = -1, VEHICLE_FACTION = -1)
 		if(IsPlayerInRangeOfVehicle(playerid, i, 10.0))
 		{
 			slotid = Iter_Free(CloseVehicles);
+			if(slotid == -1) // Limit of MAX_VEHICLES_IN_RANGE reached
+				break;
+				
 			Iter_Add(CloseVehicles, slotid);
 
 			GetVehiclePos(i, vX, vY, vZ);
