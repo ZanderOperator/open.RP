@@ -491,3 +491,9 @@ hook OnVehicleStreamOut(vehicleid, forplayerid)
 		Iter_Remove(VisualVehicles[forplayerid], vehicleid);
 	return 1;
 }
+
+hook OnPlayerDisconnect(playerid)
+{
+	Iter_Clear(VisualVehicles[playerid]);
+	return 1;
+}
