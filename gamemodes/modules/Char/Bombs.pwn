@@ -226,7 +226,7 @@ CMD:bomb(playerid, params[])
 			}
 			case BOMB_TYPE_CAR: 
 			{
-				new vehicle = getPlayerNearestVehicle(playerid);
+				new vehicle = GetNearestVehicle(playerid);
 				if(vehicle == INVALID_VEHICLE_ID) 
 					return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You are not near any vehicle!");
 				CreateBomb(playerid, BOMB_TYPE_CAR, 0, vehicle);

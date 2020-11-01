@@ -280,8 +280,10 @@ Public:OnServerVehicleLoad()
 		}
 		LinkVehicleToInterior(vCarID, 	VehicleInfo[vCarID][vInt]);
 		SetVehicleVirtualWorld(vCarID, 	VehicleInfo[vCarID][vViwo]);
+
+		Iter_Add(Vehicles[VehicleInfo[vCarID][vUsage]], vCarID);
 	}
-	printf("MySQL Report: Cars Loaded (%d)!", cache_num_rows());
+	printf("MySQL Report: Vehicles Loaded (%d / %d)!", cache_num_rows(), MAX_VEHICLES);
 	return 1;
 }
 
@@ -464,9 +466,6 @@ stock AC_CreateVehicle(vehicletype, Float:x, Float:y, Float:z, Float:rotation, c
 	new
 		id = CreateVehicle(vehicletype, Float:x, Float:y, Float:z, Float:rotation, color1, color2, respawn_delay, sirenon);
 
-	if(!Iter_Contains(Vehicles, id))
-		Iter_Add(Vehicles, id);
-
 	VehicleInfo[id][vModel] = vehicletype;
 	VehicleInfo[id][vRespawn] = respawn_delay;
 	VehicleInfo[id][vServerTeleport] = false;
@@ -486,7 +485,7 @@ stock AC_CreateVehicle(vehicletype, Float:x, Float:y, Float:z, Float:rotation, c
 stock AC_DestroyVehicle(vehicleid)
 {
 	if( vehicleid == INVALID_VEHICLE_ID ) 		return 0;
-	if( !Iter_Contains(Vehicles, vehicleid) || !IsValidVehicle(vehicleid) )	
+	if( !IsValidVehicle(vehicleid) )	
 		return 0;
 
 	RemoveAllVehicleTuning(vehicleid);
@@ -513,7 +512,8 @@ stock AC_DestroyVehicle(vehicleid)
 	VehicleInfo[vehicleid][vEngineRunning] = 0;
 	VehicleAlarmStarted[vehicleid] = false;
 	DestroyVehicle(vehicleid);
-	Iter_Remove(Vehicles, vehicleid);
+	if(Iter_Contains(Vehicles[VehicleInfo[vehicleid][vUsage]], vehicleid))
+		Iter_Remove(Vehicles[VehicleInfo[vehicleid][vUsage]], vehicleid);
 	defer ResetVehicleSafeDelete(vehicleid);
 	return 1;
 }
@@ -585,7 +585,7 @@ stock AC_SetVehicleToRespawn(vehicleid, bool:oldpos = false)
 		Float:vhealth;
 
 	if(vehicleid == INVALID_VEHICLE_ID)	return 0;
-	if( !Iter_Contains(Vehicles, vehicleid) ) return 0;
+	if( !Iter_Contains(Vehicles[VehicleInfo[vehicleid][vUsage]], vehicleid) ) return 0;
 	VehicleInfo[vehicleid][vServerTeleport] = true;
 	RemoveAllVehicleTuning(vehicleid);
 	VehicleObjectCheck(vehicleid);
@@ -677,7 +677,6 @@ stock AC_RepairVehicle(vehicleid)
 
 stock AC_SetVehiclePos(vehicleid,Float:x,Float:y,Float:z)
 {
-	if(!Iter_Contains(Vehicles, vehicleid)) return 1;
 	VehicleInfo[vehicleid][vServerTeleport] = true;
 	VehiclePrevInfo[vehicleid][vPosX] = x;
 	VehiclePrevInfo[vehicleid][vPosY] = y;
@@ -761,6 +760,8 @@ Public:ResetVehicleEnumerator()
 {
 	for(new i=0; i<MAX_VEHICLES; i++)
 		ResetVehicleInfo(i);
+	for(new vtype = 0; vtype < MAX_VEHICLE_TYPES; vtype++)
+		Iter_Clear(Vehicles[vtype]);
 	return 1;
 }
 
@@ -830,8 +831,8 @@ timer JackerUnfreeze[3000](playerid)
 
 hook OnVehicleDeath(vehicleid, killerid)
 {
-	if( !Iter_Contains(Vehicles, vehicleid) ) return 0;
 	if(vehicleid == INVALID_VEHICLE_ID) return 0;
+	if( !Iter_Contains(Vehicles[VehicleInfo[vehicleid][vUsage]], vehicleid) ) return 0;
 	if(killerid == INVALID_PLAYER_ID) return AC_SetVehicleToRespawn(vehicleid);
 	if( !IsPlayerLogged(killerid) || !IsPlayerConnected(killerid) ) return AC_SetVehicleToRespawn(vehicleid, true);
 	
@@ -868,7 +869,9 @@ hook OnPlayerUpdate(playerid)
 	if(GetPlayerState(playerid) == PLAYER_STATE_DRIVER)
 	{
 		new vehicleid = GetPlayerVehicleID(playerid);
-		if(!Iter_Contains(Vehicles, vehicleid))
+		if(vehicleid == INVALID_VEHICLE_ID)
+			return 1;
+		if(!Iter_Contains(Vehicles[VehicleInfo[vehicleid][vUsage]], vehicleid))
 			return 1;
 			
 		if(VehicleInfo[ vehicleid ][ vTireArmor ] == 1)

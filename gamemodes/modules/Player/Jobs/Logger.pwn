@@ -747,7 +747,7 @@ CMD:putwood(playerid, params[])
 	new
 	    vid;
 
-	if((vid = getPlayerNearestVehicle(playerid)) != INVALID_VEHICLE_ID)
+	if((vid = GetNearestVehicle(playerid, VEHICLE_USAGE_JOB)) != INVALID_VEHICLE_ID)
 	{
 		new
 			vm = GetVehicleModel(vid);
@@ -784,7 +784,7 @@ CMD:checkvehwood(playerid, params[])
 	if(IsPlayerInAnyVehicle(playerid))
 	    return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne moZeS to raditi dok si u vozilu!");
 
-	new vid = getPlayerNearestVehicle(playerid);
+	new vid = GetNearestVehicle(playerid, VEHICLE_USAGE_JOB);
 	if(vid == INVALID_VEHICLE_ID)
 		return SendClientMessage(playerid,COLOR_RED, "Niste blizu vozila!");
 	
@@ -861,7 +861,7 @@ CMD:takewood(playerid, params[])
 	if(IsPlayerInAnyVehicle(playerid))
 	    return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne moZeS to raditi dok si u vozilu!");
 
-	new vid = getPlayerNearestVehicle(playerid);
+	new vid = GetNearestVehicle(playerid, VEHICLE_USAGE_JOB);
 	if(vid == INVALID_VEHICLE_ID)
 		return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste blizu vozila!");
 	if(VehicleInfo[vid][vTrunk] == VEHICLE_PARAMS_OFF)

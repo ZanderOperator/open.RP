@@ -410,7 +410,7 @@ CMD:giveticket(playerid, params[])
     {
         if (sscanf( params, "s[8]is[64]", pick, moneys, reason)) 
             return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /giveticket vehicle [amount][reason]");
-        new vehicleid = GetPlayerNearestPrivateVehicle(playerid);
+        new vehicleid = GetNearestVehicle(playerid, VEHICLE_USAGE_PRIVATE);
         if (vehicleid == INVALID_VEHICLE_ID) 
             return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You must be near private vehicle in order to issue a ticket!");
         if(strlen(reason) < 1 || strlen(reason) > MAX_TICKET_REASON_LEN)

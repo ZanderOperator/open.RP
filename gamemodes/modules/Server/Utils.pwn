@@ -499,26 +499,6 @@ stock IsValidVehicleModel(model)
     return false;
 }
 
-stock GetClosestVehicle(playerid)
-{
-	if(IsPlayerInAnyVehicle(playerid)) 
-		return GetPlayerVehicleID(playerid);
-	
-	new
-		vehicleid = INVALID_VEHICLE_ID;
-	foreach(new i : Vehicles)
-	{
-		new Float:X, Float:Y, Float:Z;
-		GetVehiclePos(i, X, Y, Z);
-		if(IsPlayerInRangeOfPoint(playerid, 3.0, X, Y, Z)) // 5.0
-		{
-			vehicleid = i;
-			break;
-		}
-	}
-	return vehicleid;
-}
-
 stock SetObjectFaceCoords3D(iObject, Float: fX, Float: fY, Float: fZ, Float: fRollOffset = 0.0, Float: fPitchOffset = 0.0, Float: fYawOffset = 0.0) 
 {
 	new
