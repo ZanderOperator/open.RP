@@ -5676,7 +5676,7 @@ CMD:engine(playerid, params[])
 
 CMD:lock(playerid, params[])
 {
-	new vehicleid = GetClosestVehicle(playerid);
+	new vehicleid = GetNearestVehicle(playerid);
 	if(vehicleid == INVALID_VEHICLE_ID) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste blizu vozila.");
 	new
 		engine, lights, alarm, doors, bonnet, boot, objective,

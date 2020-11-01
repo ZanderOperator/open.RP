@@ -292,24 +292,6 @@ SetPlayerPosObjectOffset(objectid, playerid, Float:offset_x, Float:offset_y, Flo
 	SetPlayerPos(playerid, x, y, z);
 }
 
-stock BubbleSort(a[], size)
-{
-	new tmp=0, bool:swapped;
-
-	do
-	{
-		swapped = false;
-		for(new i=1; i < size; i++) {
-			if(a[i-1] > a[i]) {
-				tmp = a[i];
-				a[i] = a[i-1];
-				a[i-1] = tmp;
-				swapped = true;
-			}
-		}
-	} while(swapped);
-}
-
 timer PokerExit[250](playerid)
 {
 	SetCameraBehindPlayer(playerid);
