@@ -426,6 +426,13 @@ stock gettimestamp()
 	return timestamp;
 }
 
+stock GetServerTime(&hours=0, &minutes=0, &seconds=0)
+{
+	gettime(hours,minutes,seconds);
+	if(hours == 24) hours = 0;
+	if(minutes <= 0) minutes = 0;
+}
+
 stock ReturnDate()
 {
 	static
@@ -456,6 +463,24 @@ stock wait(ms)
     while(GetTickCount() < ms) {}
 }
 
+stock BubbleSort(a[], size)
+{
+	new tmp=0, bool:swapped;
+
+	do
+	{
+		swapped = false;
+		for(new i=1; i < size; i++) {
+			if(a[i-1] > a[i]) {
+				tmp = a[i];
+				a[i] = a[i-1];
+				a[i-1] = tmp;
+				swapped = true;
+			}
+		}
+	} while(swapped);
+}
+
 stock OOCNews(color, const string[])
 {
 	foreach (new i : Player) 
@@ -463,23 +488,6 @@ stock OOCNews(color, const string[])
 		if( IsPlayerLogged(i) || IsPlayerConnected(playerid) )
 			SendClientMessage(i, color, string);
 	}
-}
-
-stock IsANoTrunkVehicle(modelid)
-{
-	switch(modelid)
-	{
-	    case 403,406,407,408,416,417,423,424,425,430,432,434,435,441,443,444,446,447,449,450,452,453,454,457,460,464,465,469,472,473,476,481,485,486,493,494,495,501,502,503,504,505,509,510,512,513,514,515,520,524,525,528,530,531,532,537,538,539,544,552,556,557,564,568,569,570,571,572,573,574,578,583,584, 590,591,592,593,594,595,601,606,607,608,610,611:
-	        return true;
-	}
-	return false;
-}
-
-stock GetServerTime(&hours=0, &minutes=0, &seconds=0)
-{
-	gettime(hours,minutes,seconds);
-	if(hours == 24) hours = 0;
-	if(minutes <= 0) minutes = 0;
 }
 
 stock bool:IsPlayerMoving(playerid)
@@ -547,15 +555,6 @@ stock GivePlayerHealth(playerid,Float:Health)
 		SetPlayerHealth(playerid, 150.0);
 	else
 		SetPlayerHealth(playerid,health+Health);
-}
-
-stock IsALowrider(modelid)
-{
-	switch( modelid ) {
-		case 412, 534, 535, 536, 567, 575, 576: return 1;
-		default: return 0;
-	}
-	return 0;
 }
 
 stock GetXYInFrontOfPoints(&Float:x, &Float:y, Float:angle, Float:distance)

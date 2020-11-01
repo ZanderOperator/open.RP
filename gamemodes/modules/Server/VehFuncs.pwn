@@ -1,5 +1,13 @@
 #include <YSI_Coding\y_hooks>
 
+#define MAX_VEHICLES_IN_RANGE	10
+
+enum E_CLOSEST_VEHICLES
+{
+	cvID,
+	Float:cvDistance
+}
+
 new Iterator:COWeapons[MAX_VEHICLES]<MAX_WEAPON_SLOTS>,
 	Timer:VehicleAlarmTimer[MAX_VEHICLES],
 	Timer:VehicleLightsTimer[MAX_VEHICLES],
@@ -15,33 +23,46 @@ stock bool:IsPlayerInRangeOfVehicle(playerid, vehicleid, Float:range)
 	return false;
 }
 
-stock GetClosestVehicle(playerid)
+stock IsANoTrunkVehicle(modelid)
 {
-	if(IsPlayerInAnyVehicle(playerid)) 
-		return GetPlayerVehicleID(playerid);
-	
-	new
-		vehicleid = INVALID_VEHICLE_ID;
-	
-	for(new vtype = 0; vtype < MAX_VEHICLE_TYPES; vtype++)
+	switch(modelid)
 	{
-		foreach(new i : Vehicles[vtype])
+	    case 403,406,407,408,416,417,423,424,425,430,432,434,435,441,443,444,446,447,449,450,452,453,454,457,460,464,465,469,472,473,476,481,485,486,493,494,495,501,502,503,504,505,509,510,512,513,514,515,520,524,525,528,530,531,532,537,538,539,544,552,556,557,564,568,569,570,571,572,573,574,578,583,584, 590,591,592,593,594,595,601,606,607,608,610,611:
+	        return true;
+	}
+	return false;
+}
+
+stock SortNearestVehicle(v[MAX_VEHICLES_IN_RANGE][E_CLOSEST_VEHICLES], pool_size)
+{
+	new tmp = INVALID_VEHICLE_ID, bool:swapped;
+
+	do
+	{
+		swapped = false;
+		for(new i=1; i < pool_size; i++) 
 		{
-			new Float:X, Float:Y, Float:Z;
-			GetVehiclePos(i, X, Y, Z);
-			if(IsPlayerInRangeOfPoint(playerid, 5.0, X, Y, Z))
+			if(v[i-1][cvDistance] > v[i][cvDistance]) 
 			{
-				vehicleid = i;
-				break;
+				tmp = v[i][cvID];
+				v[i][cvID] = v[i-1][cvID];
+				v[i-1][cvID] = tmp;
+				swapped = true;
 			}
 		}
-	}
-	return vehicleid;
+	} while(swapped);
 }
+
 
 stock GetNearestVehicle(playerid, VEHICLE_TYPE = 0, VEHICLE_FACTION = 0)
 {
-	new vehicleid = INVALID_VEHICLE_ID;
+	new 
+		vehicleid = INVALID_VEHICLE_ID,
+		close_vehicles[MAX_VEHICLES_IN_RANGE][E_CLOSEST_VEHICLES],
+		Iterator:CloseVehicles<MAX_VEHICLES_IN_RANGE>,
+		slotid,
+		Float:vX, Float:vY, Float:vZ;
+
 	if(VEHICLE_TYPE == 0)
 	{
 		for(new vtype = 0; vtype < MAX_VEHICLE_TYPES; vtype++)
@@ -53,9 +74,14 @@ stock GetNearestVehicle(playerid, VEHICLE_TYPE = 0, VEHICLE_FACTION = 0)
 					if(VehicleInfo[i][vFaction] != VEHICLE_FACTION)
 						continue;
 				}
-				if(IsPlayerInRangeOfVehicle(playerid, vehicleid, 5.0))
+				if(IsPlayerInRangeOfVehicle(playerid, i, 10.0))
 				{
-					vehicleid = i;
+					slotid = Iter_Free(CloseVehicles);
+					Iter_Add(CloseVehicles, slotid);
+
+					GetVehiclePos(i, vX, vY, vZ);
+					close_vehicles[slotid][cvDistance] = GetPlayerDistanceFromPoint(playerid, vX, vY, vZ);
+					close_vehicles[slotid][cvID] = i;
 					break;
 				}
 			}
@@ -65,13 +91,20 @@ stock GetNearestVehicle(playerid, VEHICLE_TYPE = 0, VEHICLE_FACTION = 0)
 	{
 		foreach(new i : Vehicles[VEHICLE_TYPE])
 		{
-			if(IsPlayerInRangeOfVehicle(playerid, vehicleid, 5.0))
+			if(IsPlayerInRangeOfVehicle(playerid, i, 10.0))
 			{
-				vehicleid = i;
+				slotid = Iter_Free(CloseVehicles);
+				Iter_Add(CloseVehicles, slotid);
+
+				GetVehiclePos(i, vX, vY, vZ);
+				close_vehicles[slotid][cvDistance] = GetPlayerDistanceFromPoint(playerid, vX, vY, vZ);
+				close_vehicles[slotid][cvID] = i;
 				break;
 			}
 		}
-	}	
+	}
+	SortNearestVehicle(close_vehicles, Iter_Count(CloseVehicles));
+	vehicleid = close_vehicles[0][cvID];	
 	return vehicleid;
 }
 
@@ -351,6 +384,15 @@ stock IsAPlane(model)
 	switch(model) {
 		case 592, 577, 511, 512, 593, 520, 553, 476, 519, 460, 513, 548, 425, 417, 487, 488, 497, 563, 447, 469:
 			return 1;
+	}
+	return 0;
+}
+
+stock IsALowrider(modelid)
+{
+	switch( modelid ) {
+		case 412, 534, 535, 536, 567, 575, 576: return 1;
+		default: return 0;
 	}
 	return 0;
 }
