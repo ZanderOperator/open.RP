@@ -676,7 +676,7 @@ CMD:package(playerid, params[]) {
 
 	if(strcmp(action, "vehtake", true) == 0) 
 	{
-		new package_id, vehicleid = GetPlayerNearestPrivateVehicle(playerid);
+		new package_id, vehicleid = GetNearestVehicle(playerid, VEHICLE_USAGE_PRIVATE);
 
 		if(sscanf(params, "s[25]i", action, package_id)) {
 			SendClientMessage(playerid, COLOR_RED, "[ ? ]: /package vehtake [package_id].");
@@ -710,7 +710,7 @@ CMD:package(playerid, params[]) {
 
 	if(strcmp(action, "vehput", true) == 0) 
 	{
-		new package_id, vehicleid = GetPlayerNearestPrivateVehicle(playerid);
+		new package_id, vehicleid = GetNearestVehicle(playerid, VEHICLE_USAGE_PRIVATE);
 
 		if(sscanf(params, "s[25]i", action, package_id)) {
 			SendClientMessage(playerid, COLOR_RED, "[ ? ]: /package vehput [package_id].");

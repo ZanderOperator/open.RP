@@ -7,25 +7,6 @@ new Iterator:COWeapons[MAX_VEHICLES]<MAX_WEAPON_SLOTS>,
 	bool:VehicleBlinking[MAX_VEHICLES],
 	bool:VehicleAlarmStarted[MAX_VEHICLES];
 
-
-stock getPlayerNearestVehicle(playerid)
-{
-	new
-		vehicleid = INVALID_VEHICLE_ID,
-		Float:PosX, Float:PosY, Float:PosZ;
-	
-	foreach(new i : Vehicles)
-	{
-		GetVehiclePos( i, PosX, PosY, PosZ );
-		if( IsPlayerInRangeOfPoint( playerid, 7.0, PosX, PosY, PosZ ) )
-		{
-			vehicleid = i;
-			break;
-		}
-	}	
-	return vehicleid;
-}
-
 stock bool:IsPlayerInRangeOfVehicle(playerid, vehicleid, Float:range)
 {
 	new Float:vX, Float:vY, Float: vZ;
@@ -34,19 +15,61 @@ stock bool:IsPlayerInRangeOfVehicle(playerid, vehicleid, Float:range)
 	return false;
 }
 
-stock GetPlayerNearestPrivateVehicle(playerid)
+stock GetClosestVehicle(playerid)
 {
-	new
-		vehicleid = INVALID_VEHICLE_ID,
-		Float:PosX, Float:PosY, Float:PosZ;
+	if(IsPlayerInAnyVehicle(playerid)) 
+		return GetPlayerVehicleID(playerid);
 	
-	foreach(new i : COVehicles)
+	new
+		vehicleid = INVALID_VEHICLE_ID;
+	
+	for(new vtype = 0; vtype < MAX_VEHICLE_TYPES; vtype++)
 	{
-		GetVehiclePos( i, PosX, PosY, PosZ );
-		if( IsPlayerInRangeOfPoint( playerid, 7.0, PosX, PosY, PosZ ) )
+		foreach(new i : Vehicles[vtype])
 		{
-			vehicleid = i;
-			break;
+			new Float:X, Float:Y, Float:Z;
+			GetVehiclePos(i, X, Y, Z);
+			if(IsPlayerInRangeOfPoint(playerid, 5.0, X, Y, Z))
+			{
+				vehicleid = i;
+				break;
+			}
+		}
+	}
+	return vehicleid;
+}
+
+stock GetNearestVehicle(playerid, VEHICLE_TYPE = 0, VEHICLE_FACTION = 0)
+{
+	new vehicleid = INVALID_VEHICLE_ID;
+	if(VEHICLE_TYPE == 0)
+	{
+		for(new vtype = 0; vtype < MAX_VEHICLE_TYPES; vtype++)
+		{
+			foreach(new i : Vehicles[vtype])
+			{
+				if(VEHICLE_FACTION != 0)
+				{
+					if(VehicleInfo[i][vFaction] != VEHICLE_FACTION)
+						continue;
+				}
+				if(IsPlayerInRangeOfVehicle(playerid, vehicleid, 5.0))
+				{
+					vehicleid = i;
+					break;
+				}
+			}
+		}
+	}
+	else
+	{
+		foreach(new i : Vehicles[VEHICLE_TYPE])
+		{
+			if(IsPlayerInRangeOfVehicle(playerid, vehicleid, 5.0))
+			{
+				vehicleid = i;
+				break;
+			}
 		}
 	}	
 	return vehicleid;
@@ -97,7 +120,7 @@ stock CheckPlayerVehicle(playerid)
 {
 	new
 		found = -1;
-	foreach(new vehicleid : COVehicles)
+	foreach(new vehicleid : Vehicles[VEHICLE_USAGE_PRIVATE])
 	{
 		if(VehicleInfo[vehicleid][vUsage] == VEHICLE_USAGE_PRIVATE && PlayerInfo[playerid][pSQLID] == VehicleInfo[vehicleid][vOwnerID])
 		{
@@ -242,7 +265,7 @@ stock GetVehicleOffset(vehicleid, type, &Float:x, &Float:y, &Float:z)
 {
     new Float:fPos[4], Float:fSize[3];
  
-    if (!Iter_Contains(Vehicles, vehicleid))
+    if (!Iter_Contains(Vehicles[VehicleInfo[vehicleid][vUsage]], vehicleid))
     {
         x = 0.0;
         y = 0.0;

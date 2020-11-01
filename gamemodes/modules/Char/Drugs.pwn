@@ -391,7 +391,7 @@ CMD:drug(playerid, params[])
 		if((vehid = GetPlayerVehicleID(playerid)) == 0)
 			return SendClientMessage(playerid, COLOR_RED, "[GRESKA]: Nisi u vozilu!");
 			
-		if(!Iter_Contains(COVehicles, vehid))
+		if(!Iter_Contains(Vehicles[VEHICLE_USAGE_PRIVATE], vehid))
 			return SendClientMessage(playerid, COLOR_RED, "[GRESKA]: Vozilo nije CO vozilo!");
 
 		if(slot > 5 || slot < 1)
@@ -459,7 +459,7 @@ CMD:drug(playerid, params[])
 		if((vehid = GetPlayerVehicleID(playerid)) == 0)
 			return SendClientMessage(playerid, COLOR_RED, "[GRESKA]: Nisi u vozilu!");
 			
-		if(!Iter_Contains(COVehicles, vehid))
+		if(!Iter_Contains(Vehicles[VEHICLE_USAGE_PRIVATE], vehid))
 			return SendClientMessage(playerid, COLOR_RED, "[GRESKA]: Vozilo nije CO vozilo!");
 			
 		if(slot > MAX_VEHICLE_DRUGS || slot < 1)
@@ -697,7 +697,7 @@ CMD:drug(playerid, params[])
 		if(!IsPlayerInAnyVehicle(playerid)) 
 			return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Morate biti unutar vozila!");
 		
-		if(!Iter_Contains(COVehicles, vid)) 
+		if(!Iter_Contains(Vehicles[VEHICLE_USAGE_PRIVATE], vid)) 
 			return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste u privatnome vozilu!");
 
 		ListVehicleDrugs(playerid, vid);

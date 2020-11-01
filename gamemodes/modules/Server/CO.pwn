@@ -595,7 +595,6 @@ stock BuyVehicle(playerid, bool:credit_activated = false)
 	mysql_tquery(g_SQL, insertCoQuery, "OnVehicleBuy", "ii", playerid, cCar);
 	mysql_tquery(g_SQL, "COMMIT", "");
 
-	Iter_Add(COVehicles, cCar);
 	SetVehicleNumberPlate(cCar, "");
 	
 	ResetVehicleTrunkWeapons(cCar);
@@ -1267,6 +1266,8 @@ public OnVehicleBuy(playerid, vehicleid)
 	VehicleInfo[vehicleid][vParts]          	= 0;
 	VehicleInfo[vehicleid][vDestroys]			= 0;
 	VehicleInfo[vehicleid][vImpounded]			= 0;
+
+	Iter_Add(Vehicles[VEHICLE_USAGE_PRIVATE], vehicleid);
 	return 1;
 }
 
@@ -2300,15 +2301,15 @@ stock ParkVehicleInfo(vehicleid)
 	);
 	mysql_tquery(g_SQL, saveQuery, "");	
 
+	// Unistavanje vozila
+	AC_DestroyVehicle(vehicleid);
+
 	// Resetiranje Enuma
 	ResetVehicleTrunkWeapons(vehicleid);
 	ResetVehiclePackages(vehicleid);
 	ResetVehicleInfo(vehicleid);
 	ResetVehicleDrugs(vehicleid);
 
-	// Unistavanje vozila
-	AC_DestroyVehicle(vehicleid);
-	Iter_Remove(COVehicles, vehicleid);
 	return 1;
 }
 
@@ -2472,9 +2473,10 @@ stock SpawnVehicleInfo(playerid, pick)
 			LoadVehicleDrugs(vehicleid);
 
 			//
-			Iter_Add(COVehicles, vehicleid);
+			Iter_Add(Vehicles[VEHICLE_USAGE_PRIVATE], vehicleid);
 			PlayerInfo[playerid][pSpawnedCar] = vehicleid;
-		} else return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne posjedujete vozilo na tome slotu!");
+		} 
+		else return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne posjedujete vozilo na tome slotu!");
 	}
 	mysql_tquery_inline_new(g_SQL, tmpQuery, using inline SpawningPlayerVehicle, "i", playerid);
 	return PlayerInfo[playerid][pSpawnedCar];
@@ -3328,70 +3330,73 @@ task VehicleGlobalTask[1000]()
 	{
 		VehicleTimer = gettimestamp() + 100;
 		GlobalVehicleStamp = gettimestamp() + 45;
-		foreach(new vehicleid : Vehicles)
+		for(new i = 0; i < MAX_VEHICLE_TYPES; i++)
 		{
-			if(VehicleInfo[vehicleid][vUsage] == VEHICLE_USAGE_PRIVATE)		//CO je!
+			foreach(new vehicleid : Vehicles[i])
 			{
-				if(VehicleInfo[vehicleid][vEngineRunning]) CheckVehicleEngine(vehicleid);
-				if(!IsVehicleOccupied(vehicleid))
-				CheckEngineHeat(vehicleid);
-				
-				if(VehicleInfo[ vehicleid ][ vBodyArmor ] == 1)
+				if(i == VEHICLE_USAGE_PRIVATE)
 				{
-					new Float:Vhealth;
-					GetVehicleHealth(vehicleid, Vhealth);
-					if(Vhealth > 600.00)
+					if(VehicleInfo[vehicleid][vEngineRunning]) CheckVehicleEngine(vehicleid);
+					if(!IsVehicleOccupied(vehicleid))
+					CheckEngineHeat(vehicleid);
+					
+					if(VehicleInfo[ vehicleid ][ vBodyArmor ] == 1)
 					{
-						static 
-							vcpanels, 
-							vcdoors, 
-							vclights, 
-							vctires;
-						
-						GetVehicleDamageStatus(vehicleid, vcpanels, vcdoors, vclights, vctires); // pripazi
-						UpdateVehicleDamageStatus(vehicleid, 0, 0, 0, vctires);
+						new Float:Vhealth;
+						GetVehicleHealth(vehicleid, Vhealth);
+						if(Vhealth > 600.00)
+						{
+							static 
+								vcpanels, 
+								vcdoors, 
+								vclights, 
+								vctires;
+							
+							GetVehicleDamageStatus(vehicleid, vcpanels, vcdoors, vclights, vctires); // pripazi
+							UpdateVehicleDamageStatus(vehicleid, 0, 0, 0, vctires);
+						}
 					}
 				}
-			}
-			VehicleInfo[vehicleid][vSpawned] = 0;
-			VehicleInfo[vehicleid][vServerTeleport] = false;
-			if(IsAHelio(GetVehicleModel(vehicleid)) || IsAPlane(GetVehicleModel(vehicleid)) || IsABike(GetVehicleModel(vehicleid)) ||
-				VehicleInfo[vehicleid][vUsage] == VEHICLE_USAGE_NORMAL || VehicleInfo[vehicleid][vUsage] == VEHICLE_USAGE_JOB ||
-				VehicleInfo[vehicleid][vUsage] ==  VEHICLE_USAGE_LICENSE) continue;
-				
-			if(VehicleInfo[vehicleid][vEngineRunning])
-			{
-				new
-					Float:health;
-				GetVehicleHealth(vehicleid, health);
-				if(health <= 390.0) {
-					if(!VehicleInfo[vehicleid][vDestroyed]) {
-						new
-							playerid = GetVehicleDriver(vehicleid);
-							
-						SendClientMessage(playerid, COLOR_RED, "Vase je vozilo unisteno, zovite mehanicara!");
-						AC_SetVehicleHealth(vehicleid, 390.0);
-						VehicleInfo[vehicleid][vDestroyed] = true;
+				VehicleInfo[vehicleid][vSpawned] = 0;
+				VehicleInfo[vehicleid][vServerTeleport] = false;
+				if(IsAHelio(GetVehicleModel(vehicleid)) || IsAPlane(GetVehicleModel(vehicleid)) || IsABike(GetVehicleModel(vehicleid)) ||
+					VehicleInfo[vehicleid][vUsage] == VEHICLE_USAGE_NORMAL || VehicleInfo[vehicleid][vUsage] == VEHICLE_USAGE_JOB ||
+					VehicleInfo[vehicleid][vUsage] ==  VEHICLE_USAGE_LICENSE) continue;
+					
+				if(VehicleInfo[vehicleid][vEngineRunning])
+				{
+					new
+						Float:health;
+					GetVehicleHealth(vehicleid, health);
+					if(health <= 390.0) {
+						if(!VehicleInfo[vehicleid][vDestroyed]) {
+							new
+								playerid = GetVehicleDriver(vehicleid);
+								
+							SendClientMessage(playerid, COLOR_RED, "Vase je vozilo unisteno, zovite mehanicara!");
+							AC_SetVehicleHealth(vehicleid, 390.0);
+							VehicleInfo[vehicleid][vDestroyed] = true;
 
+							new
+								engine, lights, alarm, doors, bonnet, boot, objective;
+							GetVehicleParamsEx(vehicleid, engine, lights, alarm, doors, bonnet, boot, objective);
+							SetVehicleParamsEx(vehicleid, 0, lights, alarm, doors, bonnet, boot, objective);
+							VehicleInfo[vehicleid][vEngineRunning] = false;
+						}
+					}
+
+					if(VehicleInfo[vehicleid][vFuel] > 0)
+						VehicleInfo[vehicleid][vFuel]--;
+					if(VehicleInfo[vehicleid][vFuel] == 0) {
+						GameTextForPlayer(GetVehicleDriver(vehicleid), "~r~Ostali ste bez goriva...", 1000, 1);
 						new
 							engine, lights, alarm, doors, bonnet, boot, objective;
+
 						GetVehicleParamsEx(vehicleid, engine, lights, alarm, doors, bonnet, boot, objective);
 						SetVehicleParamsEx(vehicleid, 0, lights, alarm, doors, bonnet, boot, objective);
+
 						VehicleInfo[vehicleid][vEngineRunning] = false;
 					}
-				}
-
-				if(VehicleInfo[vehicleid][vFuel] > 0)
-					VehicleInfo[vehicleid][vFuel]--;
-				if(VehicleInfo[vehicleid][vFuel] == 0) {
-					GameTextForPlayer(GetVehicleDriver(vehicleid), "~r~Ostali ste bez goriva...", 1000, 1);
-					new
-						engine, lights, alarm, doors, bonnet, boot, objective;
-
-					GetVehicleParamsEx(vehicleid, engine, lights, alarm, doors, bonnet, boot, objective);
-					SetVehicleParamsEx(vehicleid, 0, lights, alarm, doors, bonnet, boot, objective);
-
-					VehicleInfo[vehicleid][vEngineRunning] = false;
 				}
 			}
 		}
@@ -3400,7 +3405,7 @@ task VehicleGlobalTask[1000]()
 	if(gettimestamp() >= VehicleTimer)
 	{
 		VehicleTimer = gettimestamp() + 60;
-		foreach(new vehicleid : COVehicles)
+		foreach(new vehicleid : Vehicles[VEHICLE_USAGE_PRIVATE])
 		{
 			if(VehicleInfo[vehicleid][vEngineRunning]) CheckVehicleEngine(vehicleid);
 			if(!IsVehicleOccupied(vehicleid))
@@ -3411,43 +3416,46 @@ task VehicleGlobalTask[1000]()
 	if(gettimestamp() >= GlobalVehicleStamp)
 	{
 		GlobalVehicleStamp = gettimestamp() + 90;
-		foreach(new vehicleid : Vehicles)
+		for(new i = 0; i < MAX_VEHICLE_TYPES; i++)
 		{
-			VehicleInfo[vehicleid][vSpawned] = 0;
-			VehicleInfo[vehicleid][vServerTeleport] = false;
-			if(IsAHelio(GetVehicleModel(vehicleid)) || IsAPlane(GetVehicleModel(vehicleid)) || IsABike(GetVehicleModel(vehicleid)) ||
-				VehicleInfo[vehicleid][vUsage] == VEHICLE_USAGE_NORMAL || VehicleInfo[vehicleid][vUsage] == VEHICLE_USAGE_JOB ||
-				VehicleInfo[vehicleid][vUsage] ==  VEHICLE_USAGE_LICENSE) continue;
-			if(VehicleInfo[vehicleid][vEngineRunning])
+			foreach(new vehicleid : Vehicles[i])
 			{
-				new
-					Float:health;
-				GetVehicleHealth(vehicleid, health);
-				if(health <= 390.0) {
-					if(!VehicleInfo[vehicleid][vDestroyed]) {
-						SendClientMessage(GetVehicleDriver(vehicleid), COLOR_RED, "Vase je vozilo unisteno, zovite mehanicara!");
-						AC_SetVehicleHealth(vehicleid, 390.0);
-						VehicleInfo[vehicleid][vDestroyed] = true;
+				VehicleInfo[vehicleid][vSpawned] = 0;
+				VehicleInfo[vehicleid][vServerTeleport] = false;
+				if(IsAHelio(GetVehicleModel(vehicleid)) || IsAPlane(GetVehicleModel(vehicleid)) || IsABike(GetVehicleModel(vehicleid)) ||
+					VehicleInfo[vehicleid][vUsage] == VEHICLE_USAGE_NORMAL || VehicleInfo[vehicleid][vUsage] == VEHICLE_USAGE_JOB ||
+					VehicleInfo[vehicleid][vUsage] ==  VEHICLE_USAGE_LICENSE) continue;
+				if(VehicleInfo[vehicleid][vEngineRunning])
+				{
+					new
+						Float:health;
+					GetVehicleHealth(vehicleid, health);
+					if(health <= 390.0) {
+						if(!VehicleInfo[vehicleid][vDestroyed]) {
+							SendClientMessage(GetVehicleDriver(vehicleid), COLOR_RED, "Vase je vozilo unisteno, zovite mehanicara!");
+							AC_SetVehicleHealth(vehicleid, 390.0);
+							VehicleInfo[vehicleid][vDestroyed] = true;
 
+							new
+								engine, lights, alarm, doors, bonnet, boot, objective;
+							GetVehicleParamsEx(vehicleid, engine, lights, alarm, doors, bonnet, boot, objective);
+							SetVehicleParamsEx(vehicleid, 0, lights, alarm, doors, bonnet, boot, objective);
+							VehicleInfo[vehicleid][vEngineRunning] = false;
+						}
+					}
+
+					if(VehicleInfo[vehicleid][vFuel] > 0)
+						VehicleInfo[vehicleid][vFuel]--;
+					if(VehicleInfo[vehicleid][vFuel] == 0) {
+						GameTextForPlayer(GetVehicleDriver(vehicleid), "~r~Ostali ste bez goriva...", 1000, 1);
 						new
 							engine, lights, alarm, doors, bonnet, boot, objective;
+
 						GetVehicleParamsEx(vehicleid, engine, lights, alarm, doors, bonnet, boot, objective);
 						SetVehicleParamsEx(vehicleid, 0, lights, alarm, doors, bonnet, boot, objective);
+
 						VehicleInfo[vehicleid][vEngineRunning] = false;
 					}
-				}
-
-				if(VehicleInfo[vehicleid][vFuel] > 0)
-					VehicleInfo[vehicleid][vFuel]--;
-				if(VehicleInfo[vehicleid][vFuel] == 0) {
-					GameTextForPlayer(GetVehicleDriver(vehicleid), "~r~Ostali ste bez goriva...", 1000, 1);
-					new
-						engine, lights, alarm, doors, bonnet, boot, objective;
-
-					GetVehicleParamsEx(vehicleid, engine, lights, alarm, doors, bonnet, boot, objective);
-					SetVehicleParamsEx(vehicleid, 0, lights, alarm, doors, bonnet, boot, objective);
-
-					VehicleInfo[vehicleid][vEngineRunning] = false;
 				}
 			}
 		}
@@ -4213,7 +4221,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 				return 1;
 			}
 			new 
-				vehicleid = GetPlayerNearestPrivateVehicle(playerid),
+				vehicleid = GetNearestVehicle(playerid, VEHICLE_USAGE_PRIVATE),
 				wslot = WeaponToList[playerid][listitem];
 				
 			if(VehicleInfo[vehicleid][vTrunk] == VEHICLE_PARAMS_OFF) 
@@ -4347,7 +4355,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 			new vehicleid = GetPlayerVehicleID(playerid),
 				moneys = CalculateVehiclePrice(vehicleid, 1);
 			
-			if(!Iter_Contains(COVehicles, vehicleid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Vase vozilo nije CO!");
+			if(!Iter_Contains(Vehicles[VEHICLE_USAGE_PRIVATE], vehicleid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Vase vozilo nije CO!");
 			if(PlayerInfo[playerid][pSpawnedCar] != vehicleid) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Morate se nalaziti u svome CO-u!");
 
 			if(IsPlayerInRangeOfPoint(playerid, 100.0, DealerInfo[1][flPosX], DealerInfo[1][flPosY], DealerInfo[1][flPosZ])) moneys = CalculateVehiclePrice(vehicleid, 2);
@@ -4433,7 +4441,7 @@ hook OnPlayerEditObject(playerid, playerobject, objectid, response, Float:fX, Fl
 					wslot = Bit4_Get(gr_WeaponTrunkEditSlot, playerid),
 					AttachVehID = INVALID_VEHICLE_ID;
 					
-				AttachVehID = GetPlayerNearestPrivateVehicle(playerid);
+				AttachVehID = GetNearestVehicle(playerid, VEHICLE_USAGE_PRIVATE);
 				if(AttachVehID != INVALID_VEHICLE_ID)
 				{	
 					if(VehicleInfo[AttachVehID][vWeaponSQLID][wslot] <= 0) // 0, -1, ..
@@ -5059,7 +5067,7 @@ CMD:car(playerid, params[])
 			BreakLockKickTick[playerid]		= 0;
 			Bit2_Set(gr_PlayerLockBreaking, playerid, 0);
 		}
-		new vehicleid = GetPlayerNearestPrivateVehicle(playerid);
+		new vehicleid = GetNearestVehicle(playerid, VEHICLE_USAGE_PRIVATE);
 		if(vehicleid == INVALID_VEHICLE_ID) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste blizu privatnog vozila.");
 		if(!VehicleInfo[vehicleid][vLocked]) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Vozilo je otkljucano!");
 		if(vehicleid == PlayerInfo[playerid][pSpawnedCar]) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne mozes obijati svoje vozilo!");
@@ -5197,7 +5205,7 @@ CMD:car(playerid, params[])
 			!IsPlayerInRangeOfPoint(playerid, 100.0, DealerInfo[2][flPosX], DealerInfo[2][flPosY], DealerInfo[2][flPosZ])) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste kod Los Santos Junkyard-a!");
 		if(!IsPlayerInAnyVehicle(playerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Morate biti u vozilu!");
 		new vehicleid = GetPlayerVehicleID(playerid);
-		if(!Iter_Contains(COVehicles, vehicleid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Vase vozilo nije CO!");
+		if(!Iter_Contains(Vehicles[VEHICLE_USAGE_PRIVATE], vehicleid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Vase vozilo nije CO!");
 		if(PlayerInfo[playerid][pSpawnedCar] != vehicleid) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Morate se nalaziti u svome CO-u!");		
 		new modelid = GetVehicleByModel(GetVehicleModel(vehicleid));
 		if(modelid == -1) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "To vozilo nije iz Wangs Cars!");	
@@ -5218,7 +5226,7 @@ CMD:trunk(playerid, params[])
 		return SendClientMessage(playerid, -1, "[ ? ]: /trunk [open/take/put/break]");
 		
 	new
-		vehicleid = GetPlayerNearestPrivateVehicle(playerid),
+		vehicleid = GetNearestVehicle(playerid, VEHICLE_USAGE_PRIVATE),
 		engine, lights, alarm, doors, bonnet, boot, objective,
 		pick[10];
 
@@ -5461,35 +5469,35 @@ CMD:setcostats(playerid, params[])
 	if(!strcmp(pick, "destroys", true)) {
 		if(sscanf(params, "s[10]ii", pick, vehicleid, input)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /setcostats destroys [kolicina]");
 		if(input < 0 || input > 7) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nevaljan unos (0-7)!");
-		if(!Iter_Contains(COVehicles, vehicleid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste unijeli CO vozilo (/dl)!");
+		if(!Iter_Contains(Vehicles[VEHICLE_USAGE_PRIVATE], vehicleid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste unijeli CO vozilo (/dl)!");
 		VehicleInfo[vehicleid][vDestroys] = input;
 		SendFormatMessage(playerid, MESSAGE_TYPE_INFO, "Namjestili ste unistenja na vozilu id %d na %d.", vehicleid, input);
 	}
 	else if(!strcmp(pick, "alarm", true)) {
 		if(sscanf(params, "s[10]ii", pick, vehicleid, input)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /setcostats alarm [level]");
 		if(input < 1 || input > 4) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nevaljan unos (1-4)!");
-		if(!Iter_Contains(COVehicles, vehicleid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste unijeli CO vozilo (/dl)!");
+		if(!Iter_Contains(Vehicles[VEHICLE_USAGE_PRIVATE], vehicleid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste unijeli CO vozilo (/dl)!");
 		VehicleInfo[vehicleid][vAlarm] = input;
 		SendFormatMessage(playerid, MESSAGE_TYPE_INFO, "Namjestili ste alarm na vozilu id %d na level %d.", vehicleid, input);
 	}
 	else if(!strcmp(pick, "immob", true)) {
 		if(sscanf(params, "s[10]ii", pick, vehicleid, input)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /setcostats immob [level]");
 		if(input < 1 || input > 5) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nevaljan unos (1-5)!");
-		if(!Iter_Contains(COVehicles, vehicleid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste unijeli CO vozilo (/dl)!");
+		if(!Iter_Contains(Vehicles[VEHICLE_USAGE_PRIVATE], vehicleid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste unijeli CO vozilo (/dl)!");
 		VehicleInfo[vehicleid][vImmob] = input;
 		SendFormatMessage(playerid, MESSAGE_TYPE_INFO, "Namjestili ste imobilizator na vozilu id %d na level %d.", vehicleid, input);
 	}
 	else if(!strcmp(pick, "lock", true)) {
 		if(sscanf(params, "s[10]ii", pick, vehicleid, input)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /setcostats lock [level]");
 		if(input < 1 || input > 3) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nevaljan unos (1-3)!");
-		if(!Iter_Contains(COVehicles, vehicleid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste unijeli CO vozilo (/dl)!");
+		if(!Iter_Contains(Vehicles[VEHICLE_USAGE_PRIVATE], vehicleid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste unijeli CO vozilo (/dl)!");
 		VehicleInfo[vehicleid][vLock] = input;
 		SendFormatMessage(playerid, MESSAGE_TYPE_INFO, "Namjestili ste bravu na vozilu id %d na level %d.", vehicleid, input);
 	}
 	else if(!strcmp(pick, "insurance", true)) {
 		if(sscanf(params, "s[10]ii", pick, vehicleid, input)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /setcostats lock [level]");
 		if(input < 0 || input > 3) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nevaljan unos (0-3)!");
-		if(!Iter_Contains(COVehicles, vehicleid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste unijeli CO vozilo (/dl)!");
+		if(!Iter_Contains(Vehicles[VEHICLE_USAGE_PRIVATE], vehicleid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste unijeli CO vozilo (/dl)!");
 		VehicleInfo[vehicleid][vInsurance] = input;
 		SendFormatMessage(playerid, MESSAGE_TYPE_INFO, "Namjestili ste osiguranje na vozilu id %d na level %d.", vehicleid, input);
 	} else {
@@ -5825,54 +5833,7 @@ CMD:createvehicle(playerid, params[])
 	CreateNewVehicle(playerid, vehCarId);
 	return 1;
 }
-CMD:deletevehicle(playerid, params[])
-{
-	new
-		pick,
-		vehicleid = GetPlayerVehicleID(playerid),
-		deleteQuery[ 128 ];
 
-	if(PlayerInfo[playerid][pAdmin] < 4) return SendClientMessage(playerid, COLOR_RED, "Nisi ovlasten za koristenje ove komande.");
-	if(sscanf(params, "i", pick)) {
-		SendClientMessage(playerid, COLOR_RED, "[ ? ]: /deletevehicle [odabir]");
-		SendClientMessage(playerid, COLOR_RED, "[ ! ] 1 - Vehicle (/veh), 2 - Car Ownership, 3 - Faction/Job");
-		return 1;
-	}
-	switch(pick) 
-	{
-		case 1: {
-			DestroyFarmerObjects(playerid);
-			AC_DestroyVehicle(vehicleid);
-			ResetVehicleInfo(vehicleid);
-			DestroyAdminVehicle(playerid, vehicleid);
-			SendFormatMessage(playerid, MESSAGE_TYPE_INFO, "Uspjesno ste izbrisali vozilo %d iz baze/igre!", vehicleid);
-		}
-		case 2: {
-			if(PlayerInfo[playerid][pAdmin] < 1338) return SendClientMessage(playerid, COLOR_RED, "Nisi ovlasten za koristenje ove komande.");
-
-			format(deleteQuery, sizeof(deleteQuery), "DELETE FROM `cocars` WHERE `id` = '%d'", VehicleInfo[vehicleid][vSQLID]);
-			mysql_tquery(g_SQL, deleteQuery, "");
-			SendFormatMessage(playerid, MESSAGE_TYPE_INFO, "Uspjesno ste izbrisali vozilo %d iz baze/igre!", vehicleid);
-
-			DestroyFarmerObjects(playerid);
-			AC_DestroyVehicle(vehicleid);
-			ResetVehicleInfo(vehicleid);
-		}
-		case 3: {
-			if(PlayerInfo[playerid][pAdmin] < 1338) return SendClientMessage(playerid, COLOR_RED, "Nisi ovlasten za koristenje ove komande.");
-
-			format(deleteQuery, sizeof(deleteQuery), "DELETE FROM `server_cars` WHERE `id` = '%d'", VehicleInfo[vehicleid][vSQLID]);
-			mysql_tquery(g_SQL, deleteQuery, "");
-
-			SendFormatMessage(playerid, MESSAGE_TYPE_INFO, "Uspjesno ste izbrisali vozilo %d iz baze/igre!", vehicleid);
-
-			DestroyFarmerObjects(playerid);
-			AC_DestroyVehicle(vehicleid);
-			ResetVehicleInfo(vehicleid);
-		}
-	}
-	return 1;
-}
 CMD:cl(playerid, params[])
 {
 	new

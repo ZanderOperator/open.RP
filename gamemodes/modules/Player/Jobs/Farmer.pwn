@@ -1083,7 +1083,7 @@ CMD:seeds(playerid, params[])
 	else if( !strcmp(param, "put", true) ) 
 	{
 		if( PlayerInfo[playerid][pFreeWorks] < 5) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne mozete vise raditi! Pricekajte payday.");
-		foreach(new i: Vehicles)
+		foreach(new i: Vehicles[VEHICLE_USAGE_PRIVATE])
 		{
 			if( GetVehicleModel(i) == 610 ) 
 			{
@@ -1103,7 +1103,8 @@ CMD:seeds(playerid, params[])
 	return 1;
 }
 
-CMD:tow2(playerid, params[]) { // brooks
+CMD:tow2(playerid, params[]) 
+{ // brooks
 	new vehicleid = GetPlayerVehicleID(playerid),
 		Float:X, Float:Y, Float:Z;
 	if((PlayerInfo[playerid][pJob] != FARMER_ID)) return SendClientMessage( playerid, COLOR_RED, "Niste zaposleni kao farmer.");
@@ -1115,7 +1116,7 @@ CMD:tow2(playerid, params[]) { // brooks
 	if( IsPlayerInAnyVehicle(playerid))  {
 		if( IsTrailerAttachedToVehicle(GetPlayerVehicleID(playerid))) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Traktor vec ima prikolicu!");
 
-		foreach(new i: Vehicles)
+		foreach(new i: Vehicles[VEHICLE_USAGE_PRIVATE])
 		{
 			GetVehiclePos(i, X, Y, Z);
 			if( GetVehicleDistanceFromPoint(GetPlayerVehicleID(playerid), X, Y, Z) <= 5.0) 
@@ -1142,7 +1143,7 @@ CMD:attach_trailer(playerid, params[])
 		if( GetVehicleModel(GetPlayerVehicleID(playerid)) != 531) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste u traktoru!");
 		if( IsTrailerAttachedToVehicle(GetPlayerVehicleID(playerid))) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Traktor vec ima prikolicu!");
 
-		foreach(new i: Vehicles)
+		foreach(new i: Vehicles[VEHICLE_USAGE_PRIVATE])
 		{
 			GetVehiclePos(i, X, Y, Z);
 			if( GetVehicleDistanceFromPoint(GetPlayerVehicleID(playerid), X, Y, Z) <= 3.0) 

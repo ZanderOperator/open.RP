@@ -203,6 +203,7 @@
 #define MAX_FACTIONS							(21)
 #define MAX_APARTMENTS							(500)
 #define MAX_VEHICLE_TICKETS						(5)
+#define MAX_VEHICLE_TYPES						(10)
 #define MAX_GARAGES                 			(1500)
 #define MAX_SERVER_SKINS						(800)
 #define MAX_ILEGAL_GARAGES						(10)
@@ -349,8 +350,8 @@
 new MySQL:g_SQL;
 
 // Server Iterators
-new Iterator:COVehicles<MAX_VEHICLES>,
-	Iterator:Vehicles<MAX_VEHICLES>,
+new
+	Iterator:Vehicles[MAX_VEHICLE_TYPES]<MAX_VEHICLES>,
 	Iterator:Skins<MAX_MENU_ITEMS>,
 	Iterator:Pickups<MAX_PICKUP>,
 	Iterator:Factions<MAX_FACTIONS>,
@@ -2188,8 +2189,6 @@ stock ResetPlayerEnumerator()
 Public:ResetIterators()
 {
 	Iter_Clear(Player);
-	Iter_Clear(COVehicles);
-	Iter_Clear(Vehicles);
 	Iter_Clear(Pickups);
 	Iter_Clear(Factions);
 	Iter_Clear(Houses);

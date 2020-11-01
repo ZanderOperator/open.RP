@@ -1368,11 +1368,13 @@ CMD:faction(playerid,params[])
 		format(tmpQuery, 128, "SELECT * FROM accounts WHERE facMemId = '%d' OR facLeadId = '%d'", PlayerInfo[playerid][pLeader], PlayerInfo[playerid][pLeader]);
 		mysql_tquery(g_SQL, tmpQuery, "OnFactionCountings", "i", playerid);
 	}
-	else if( !strcmp(option, "resetcars", true) ) {
+	else if( !strcmp(option, "resetcars", true) ) 
+	{
 		if( !PlayerInfo[playerid][pLeader] ) return SendClientMessage(playerid,COLOR_RED, "Da bi koristili ovu komandu moraS biti lider!");
-		foreach(new x : Vehicles)
+		foreach(new x : Vehicles[VEHICLE_USAGE_FACTION])
 		{
-			if(VehicleInfo[x][vFaction] == PlayerInfo[playerid][pLeader]) {
+			if(VehicleInfo[x][vFaction] == PlayerInfo[playerid][pLeader]) 
+			{
 				if(!IsVehicleOccupied(x))
 					SetVehicleToRespawn(x);
 			}

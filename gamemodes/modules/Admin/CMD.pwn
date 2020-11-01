@@ -24,7 +24,6 @@
 new
 	bool: pns_garages = true,
 	bool: count_started = false,
-	CreatedCar	= 0,
 	Admin_Vehicle[MAX_PLAYERS][MAX_ADMIN_VEHICLES],
 	Admin_vCounter[MAX_PLAYERS];
 
@@ -319,7 +318,8 @@ CreateAdminVehicles(admin, carid) {
 	return (true);
 }
 
-Public:DestroyAdminVehicle(admin, carid) {
+Public:DestroyAdminVehicle(admin, carid) 
+{
 	for (new i = 0; i < MAX_ADMIN_VEHICLES; i ++) {
 		if(Admin_Vehicle[admin][i] == carid) {
 			Admin_Vehicle[admin][i] = -1;
@@ -3049,10 +3049,12 @@ CMD:healcar(playerid, params[])
 CMD:fuelcars(playerid, params[])
 {
 	if (PlayerInfo[playerid][pAdmin] < 1337) return SendClientMessage(playerid, COLOR_RED, "Niste ovlasteni za koristenje ove komande!");
-	foreach(new c: Vehicles)
-		VehicleInfo[c][vFuel] = 100;
-
-	SendClientMessage(playerid, COLOR_RED, "[ ! ] Svi auti napunjeni gorivom ! ");
+	for(new i = 0; i < MAX_VEHICLE_TYPES; i++)
+	{
+		foreach(new c: Vehicles[i])
+			VehicleInfo[c][vFuel] = 100;
+	}
+	SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "All Vehicles are now 100% full of gas.");
 	return 1;
 }
 
@@ -3062,7 +3064,7 @@ CMD:fuelcar(playerid, params[])
 	new
 		fuel, vehicleid;
 	if( sscanf( params, "ii", vehicleid, fuel ) ) return SendClientMessage(playerid, COLOR_RED, "[ ? ]:  /fuelcar [vehicleid][kolicina]");
-	if( vehicleid == INVALID_VEHICLE_ID || !Iter_Contains(Vehicles, vehicleid) ) return SendClientMessage( playerid, COLOR_RED, "Nevaljan unos vehicleida!");
+	if( vehicleid == INVALID_VEHICLE_ID || !IsValidVehicle(vehicleid) ) return SendClientMessage( playerid, COLOR_RED, "Nevaljan unos vehicleida!");
 	if( 1 <= fuel <= 100 ) {
 		VehicleInfo[ vehicleid ][ vFuel ] = fuel;
 		va_SendClientMessage(playerid, COLOR_RED, "[ ! ] Vozilo %d je napunjeno %d posto goriva!", vehicleid, fuel);
@@ -3384,9 +3386,13 @@ CMD:rac(playerid, params[])
 {
 	if (PlayerInfo[playerid][pAdmin] < 4) return SendClientMessage(playerid, COLOR_RED, "Niste ovlasteni za koristenje ove komande!");
 	va_SendClientMessageToAll(COLOR_LIGHTRED, "[AdmCmd]: Admin %s je respawnao sva non-occupied vozila na serveru.", GetName(playerid));
-	foreach(new c : Vehicles) {
-		if( !IsVehicleOccupied(c) )
-			SetVehicleToRespawn(c);
+	for(new i = 0; i < MAX_VEHICLE_TYPES; i++)
+	{
+		foreach(new c : Vehicles[i]) 
+		{
+			if( !IsVehicleOccupied(c) )
+				SetVehicleToRespawn(c);
+		}
 	}
 	return 1;
 }
@@ -3508,13 +3514,65 @@ CMD:veh(playerid, params[])
 	GetVehicleParamsEx(carid,engine,lights,alarm,doors,bonnet,boot,objective);
 	SetVehicleParamsEx(carid,VEHICLE_PARAMS_ON,lights,alarm,doors,bonnet,boot,objective);
 	PutPlayerInVehicle(playerid, carid, 0);
-	CreatedCar ++;
+	Iter_Add(Vehicles[VEHICLE_USAGE_NORMAL], carid);
 	CreateAdminVehicles(playerid, carid);
 	
 	format(globalstring, sizeof(globalstring), "[ ! ] Spawnali ste vozilo ID %d, Model: %d. (/veh)", carid, car);
 	SendClientMessage(playerid, COLOR_RED, globalstring);
 	SetVehicleVirtualWorld(carid, GetPlayerVirtualWorld(playerid));
 	LinkVehicleToInterior(carid, GetPlayerInterior(playerid));
+	return 1;
+}
+
+CMD:deletevehicle(playerid, params[])
+{
+	new
+		pick,
+		vehicleid = GetPlayerVehicleID(playerid),
+		deleteQuery[ 128 ];
+
+	if(PlayerInfo[playerid][pAdmin] < 4) return SendClientMessage(playerid, COLOR_RED, "Nisi ovlasten za koristenje ove komande.");
+	if(sscanf(params, "i", pick)) {
+		SendClientMessage(playerid, COLOR_RED, "[ ? ]: /deletevehicle [odabir]");
+		SendClientMessage(playerid, COLOR_RED, "[ ! ] 1 - Vehicle (/veh), 2 - Car Ownership, 3 - Faction/Job");
+		return 1;
+	}
+	switch(pick) 
+	{
+		case 1: 
+		{
+			DestroyFarmerObjects(playerid);
+			AC_DestroyVehicle(vehicleid);
+			ResetVehicleInfo(vehicleid);
+			DestroyAdminVehicle(playerid, vehicleid);
+			SendFormatMessage(playerid, MESSAGE_TYPE_INFO, "Uspjesno ste izbrisali vozilo %d iz baze/igre!", vehicleid);
+		}
+		case 2: 
+		{
+			if(PlayerInfo[playerid][pAdmin] < 1338) 
+				return SendClientMessage(playerid, COLOR_RED, "Nisi ovlasten za koristenje ove komande.");
+
+			format(deleteQuery, sizeof(deleteQuery), "DELETE FROM `cocars` WHERE `id` = '%d'", VehicleInfo[vehicleid][vSQLID]);
+			mysql_tquery(g_SQL, deleteQuery, "");
+			SendFormatMessage(playerid, MESSAGE_TYPE_INFO, "Uspjesno ste izbrisali %s(SQL: %d) iz baze/igre!", vehicleid);
+
+			DestroyFarmerObjects(playerid);
+			AC_DestroyVehicle(vehicleid);
+			ResetVehicleInfo(vehicleid);
+		}
+		case 3: {
+			if(PlayerInfo[playerid][pAdmin] < 1338) return SendClientMessage(playerid, COLOR_RED, "Nisi ovlasten za koristenje ove komande.");
+
+			format(deleteQuery, sizeof(deleteQuery), "DELETE FROM `server_cars` WHERE `id` = '%d'", VehicleInfo[vehicleid][vSQLID]);
+			mysql_tquery(g_SQL, deleteQuery, "");
+
+			SendFormatMessage(playerid, MESSAGE_TYPE_INFO, "Uspjesno ste izbrisali vozilo %d iz baze/igre!", vehicleid);
+
+			DestroyFarmerObjects(playerid);
+			AC_DestroyVehicle(vehicleid);
+			ResetVehicleInfo(vehicleid);
+		}
+	}
 	return 1;
 }
 
@@ -4568,26 +4626,32 @@ CMD:rtcinradius(playerid, params[])
 	new
 		engine, lights, alarm, doors, bonnet, boot, objective;
 	
-	foreach(new c: Vehicles)
+	for(new i = 0; i < MAX_VEHICLE_TYPES; i++)
 	{
-		if(IsPlayerInRangeOfVehicle(playerid, c, radius))
+		foreach(new c: Vehicles[i])
 		{
-            if( !IsPlayerInVehicle(playerid, c) ) 
+			if(IsPlayerInRangeOfVehicle(playerid, c, radius))
 			{
-				if( VehicleInfo[ c ][ vUsage ] == VEHICLE_USAGE_EVENT ) {
-					VehicleObjectCheck(c);
-					GetVehicleParamsEx(c, engine, lights, alarm, doors, bonnet, boot, objective);
-					SetVehicleParamsEx(c, VEHICLE_PARAMS_ON, lights, alarm, doors, bonnet, boot, objective);
-					SetVehicleToRespawn(c);
-					LinkVehicleToInterior(c, 0);
-				} else {
-					VehicleObjectCheck(c);
-					GetVehicleParamsEx(c, engine, lights, alarm, doors, bonnet, boot, objective);
-					SetVehicleParamsEx(c, engine, lights, alarm, doors, bonnet, boot, objective);
-					SetVehicleToRespawn(c);
-					LinkVehicleToInterior(c, 0);
+				if( !IsPlayerInVehicle(playerid, c) ) 
+				{
+					if( VehicleInfo[ c ][ vUsage ] == VEHICLE_USAGE_EVENT ) 
+					{
+						VehicleObjectCheck(c);
+						GetVehicleParamsEx(c, engine, lights, alarm, doors, bonnet, boot, objective);
+						SetVehicleParamsEx(c, VEHICLE_PARAMS_ON, lights, alarm, doors, bonnet, boot, objective);
+						SetVehicleToRespawn(c);
+						LinkVehicleToInterior(c, 0);
+					} 
+					else 
+					{
+						VehicleObjectCheck(c);
+						GetVehicleParamsEx(c, engine, lights, alarm, doors, bonnet, boot, objective);
+						SetVehicleParamsEx(c, engine, lights, alarm, doors, bonnet, boot, objective);
+						SetVehicleToRespawn(c);
+						LinkVehicleToInterior(c, 0);
+					}
 				}
-		    }
+			}
 		}
 	}
 	SendFormatMessage(playerid, MESSAGE_TYPE_SUCCESS, "Sva vozila u radiusu %2.f od vas su respawnana! Ukoliko zelite respawnati prikolicu, koristite /dl te /rtcacar!", radius);
@@ -5170,7 +5234,8 @@ CMD:rtcacar(playerid, params[])
 	new
 		vehicleid;
 	if( sscanf( params, "i", vehicleid)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /rtcacar [vehicleid]");
-	if(!Iter_Contains(Vehicles, vehicleid))
+	
+	if(!IsValidVehicle(vehicleid))
 		return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "Vozilo ID %d ne postoji na serveru!", vehicleid);
 	if(IsVehicleOccupied(vehicleid))
 		return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "Netko se trenutno nalazi u vozilu ID %d!", vehicleid);

@@ -2710,36 +2710,39 @@ CMD:tow(playerid, params[])
 	new 
 		bool:found = false,
 		pvid = GetPlayerVehicleID(playerid);	
-		
-	foreach(new vid : Vehicles)
+	
+	for(new i = 0; i < MAX_VEHICLE_TYPES; i++)
 	{
-		if(IsPlayerInRangeOfVehicle(playerid, vid, 7.0) && (vid != pvid))
+		foreach(new vid : Vehicles[i])
 		{
-			found = true;
-			if(IsTrailerAttachedToVehicle(pvid))
+			if(IsPlayerInRangeOfVehicle(playerid, vid, 7.0) && (vid != pvid))
 			{
-				if(ImpounderJob[playerid][ivID] != 0)
+				found = true;
+				if(IsTrailerAttachedToVehicle(pvid))
 				{
-					if(ImpounderJob[playerid][ivID] == vid)
-						OPUnTowIV(playerid, vid);
-				}
-				DetachTrailerFromVehicle(pvid);
-			}
-			else
-			{
-				if(ImpounderJob[playerid][ivID] != 0)
-				{
-					if(ImpounderJob[playerid][ivID] != vid)
-					{	
-						SendClientMessage(playerid, COLOR_RED, "[GRESKA]: Ovo vozilo nije na tvojoj impound listi!");
-						return 1;
+					if(ImpounderJob[playerid][ivID] != 0)
+					{
+						if(ImpounderJob[playerid][ivID] == vid)
+							OPUnTowIV(playerid, vid);
 					}
-					else
-						OPTowIV(playerid, vid);
+					DetachTrailerFromVehicle(pvid);
 				}
-				AttachTrailerToVehicle(vid, pvid);
+				else
+				{
+					if(ImpounderJob[playerid][ivID] != 0)
+					{
+						if(ImpounderJob[playerid][ivID] != vid)
+						{	
+							SendClientMessage(playerid, COLOR_RED, "[GRESKA]: Ovo vozilo nije na tvojoj impound listi!");
+							return 1;
+						}
+						else
+							OPTowIV(playerid, vid);
+					}
+					AttachTrailerToVehicle(vid, pvid);
+				}
+				break;
 			}
-			break;
 		}
 	}
 	if(!found) SendClientMessage(playerid,COLOR_RED, "Nema automobila okolo.");
@@ -2748,7 +2751,7 @@ CMD:tow(playerid, params[])
 CMD:putintrunk(playerid, params[])
 {
 	new
-		vehicleid = getPlayerNearestVehicle(playerid), 
+		vehicleid = GetNearestVehicle(playerid),
 		giveplayerid;
 	
     if( vehicleid == INVALID_VEHICLE_ID ) 				

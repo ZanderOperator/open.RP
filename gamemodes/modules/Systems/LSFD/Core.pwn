@@ -705,16 +705,8 @@ CMD:equipment(playerid, params[])
             ShowPlayerDialog(playerid, DIALOG_FD_EQUIP, DIALOG_STYLE_LIST, "LSFD Equipment", "Duty\nSkin\nDodaci\nHeal", "Choose", "Abort");
         else
         {
-            new vehicleid = -1;
-            foreach(new i : Vehicles)
-            {
-                if (VehicleInfo[i][vFaction] == 2 && IsPlayerInRangeOfVehicle(playerid, i, 10.0))
-                {
-                    vehicleid = i;
-                    break;
-                }
-            }
-            if (vehicleid == -1) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nisi blizu svlacionice/FD vozila!");
+            new vehicleid = GetNearestVehicle(playerid, VEHICLE_USAGE_FACTION, FACTION_TYPE_FD);
+            if (vehicleid == INVALID_VEHICLE_ID) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nisi blizu svlacionice/FD vozila!");
             ShowPlayerDialog(playerid, DIALOG_FD_EQUIP, DIALOG_STYLE_LIST, "LSFD Equipment", "Duty\nSkin\nDodaci\nHeal\nCivil Skin", "Choose", "Abort");
         }
     }

@@ -973,7 +973,7 @@ CMD:dropitem(playerid, params[])
 	if( !RobbingInfo[ playerid ][ rbSlotsGoods ][ slot ] ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate nista u tome slotu, koristite /stolengoods za vise infomracija!");
 	
 	new
-		vehicleid = getPlayerNearestVehicle(playerid);
+		vehicleid = GetNearestVehicle(playerid);
 	if( vehicleid == INVALID_VEHICLE_ID ) {
 		 // Baci na pod
 		DumpStolenGood(playerid, slot);
@@ -1008,7 +1008,7 @@ CMD:dropitem(playerid, params[])
 CMD:takeitem(playerid, params[])
 {
 	if( RobbingInfo[ playerid ][ rbSlotsGoods ][ 0 ] != 0 && RobbingInfo[ playerid ][ rbSlotsGoods ][ 1 ] != 0 && RobbingInfo[ playerid ][ rbSlotsGoods ][ 2 ] != 0 && RobbingInfo[ playerid ][ rbSlotsGoods ][ 3 ] != 0 && RobbingInfo[ playerid ][ rbSlotsGoods ][ 4 ] != 0 ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Vas inventory je pun!");
-	new vehicleid = getPlayerNearestVehicle(playerid);
+	new vehicleid = GetNearestVehicle(playerid);
 	if( vehicleid == INVALID_VEHICLE_ID ) 
 	{ // Uzmi s poda
 		if( !PickUpStolenGood(playerid) ) 

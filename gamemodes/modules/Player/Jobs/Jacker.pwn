@@ -349,10 +349,10 @@ stock CountVehicleKinds()
 		
 	Iter_Clear(VehicleTypes);
 	
-	if(Iter_Count(COVehicles) == 0)
+	if(Iter_Count(Vehicles[VEHICLE_USAGE_PRIVATE]) == 0)
 		return 0;
 		
-	foreach(new vehicleid: COVehicles)
+	foreach(new vehicleid: Vehicles[VEHICLE_USAGE_PRIVATE])
 	{
 		model = GetVehicleModel(vehicleid);
 		carid = GetVehicleByModel(model);
@@ -375,7 +375,7 @@ stock GetVehiclesForIlegalGarages(garage)
 		{
 			CARID_GET:
 			
-			vehid = Iter_Random(COVehicles),
+			vehid = Iter_Random(Vehicles[VEHICLE_USAGE_PRIVATE]),
 			carid = GetVehicleByModel(GetVehicleModel(vehid));
 				
 			if( carid == -1 ) goto CARID_GET;
@@ -1082,7 +1082,7 @@ CMD:jacker(playerid, params[])
 		
 		if( PlayerJackingCar[ playerid ] == -1 ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Morate uzeti misiju!");
 		if( vehicleid == PlayerInfo[ playerid ][ pSpawnedCar ] ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne mozete svoje vozilo uzeti!");
-		if( !Iter_Contains(COVehicles, vehicleid) ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Vozilo koje ste ukrali treba biti privatno, a ne iznajmljeno ili organizacijsko!");
+		if( !Iter_Contains(Vehicles[VEHICLE_USAGE_PRIVATE], vehicleid) ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Vozilo koje ste ukrali treba biti privatno, a ne iznajmljeno ili organizacijsko!");
 		if( !IsPlayerInAnyVehicle(playerid) ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste unutar vozila!");
 		if( health < 550.0 ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Vozilo mora biti u boljem stanju (550+ HPa)!");
 		

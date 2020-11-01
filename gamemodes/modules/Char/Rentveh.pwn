@@ -106,6 +106,7 @@ stock static PlayerRentVehicle(playerid, modelid, price)
 	VehiclePrevInfo[rentedVehID[playerid]][vRotZ] = VehicleInfo[ rentedVehID[playerid] ][ vAngle ];
 	VehiclePrevInfo[rentedVehID[playerid]][vPosDiff] = 0.0;
 
+	VehicleInfo[ rentedVehID[playerid] ][ vUsage ]				= VEHICLE_USAGE_RENT;
 	VehicleInfo[ rentedVehID[playerid] ][ vColor1 ]				= color1;
 	VehicleInfo[ rentedVehID[playerid] ][ vColor2 ]				= color2;
 	VehicleInfo[ rentedVehID[playerid] ][ vInt ]				= GetPlayerInterior(playerid);
@@ -118,6 +119,7 @@ stock static PlayerRentVehicle(playerid, modelid, price)
 	VehicleInfo[ rentedVehID[playerid] ][ vUsage ] 				= 5;
 	VehicleInfo[ rentedVehID[playerid] ][ vEngineRunning ]		= 0;
 	
+	Iter_Add(Vehicles[VEHICLE_USAGE_RENT], rentedVehID[playerid]);
 
 	PlayerToBusinessMoneyTAX(playerid, 76, price); // Novac ide u biznis 76
 	
@@ -217,8 +219,8 @@ hook OnVehicleDeath(vehicleid, killerid)
 				PlayerToBusinessMoneyTAX(playerid, 76, 250);// Novac ide u biznis 76
 				
 				DestroyFarmerObjects(playerid);
-				ResetVehicleInfo( rentedVehID[playerid] );
 				AC_DestroyVehicle(rentedVehID[playerid]);
+				ResetVehicleInfo( rentedVehID[playerid] );
 				
 				rentedVehicle[playerid] 	= false;
 				rentedVehID[playerid] 		= -1;
@@ -296,8 +298,8 @@ CMD:rentveh(playerid, params[])
 		if(GetPlayerVehicleID(playerid) != rentedVehID[playerid]) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Moras biti u iznajmljenom vozilu!");
 		
 		rentedVehicle[playerid] = false;
-		ResetVehicleInfo( rentedVehID[playerid] );
 		AC_DestroyVehicle(rentedVehID[playerid]);
+		ResetVehicleInfo( rentedVehID[playerid] );
 		rentedVehID[playerid] = INVALID_VEHICLE_ID;
 		GameTextForPlayer(playerid, "~g~Vraceno rentano vozilo", 1000, 1);
 	}

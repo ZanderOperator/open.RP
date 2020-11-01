@@ -310,7 +310,7 @@ hook OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
 		}
 		else if(gGarbagePicked[playerid] == true && gStartedWork[playerid] == 2)
 		{
-			new vID = getPlayerNearestVehicle(playerid),
+			new vID = GetNearestVehicle(playerid, VEHICLE_USAGE_JOB),
 				Float:vehPos[3];
 			getPosBehindVehicle(vID, vehPos[0], vehPos[1], vehPos[2], 0.5);
 			if(!IsVehicleATrashTruck(vID)) return SendClientMessage( playerid, COLOR_RED, "Ne ubacujete smece u TrashMastera!");
@@ -371,7 +371,7 @@ hook OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
 	    {
 			if(gDeponyEmpty[playerid] == 1)
 			{
-			    new vID = getPlayerNearestVehicle(playerid),
+			    new vID = GetNearestVehicle(playerid, VEHICLE_USAGE_JOB),
 					Float:vehPos[3];
 				if(!IsVehicleATrashTruck(vID)) return SendClientMessage( playerid, COLOR_RED, "Ne vadite smece iz Trash Mastera!");
 				getPosBehindVehicle(vID, vehPos[0], vehPos[1], vehPos[2], 0.5);

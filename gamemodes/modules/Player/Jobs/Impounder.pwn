@@ -65,7 +65,7 @@ CMD:jobimpound(playerid, params[])
 	new
 		c = 0;
 	
-	foreach(new v : COVehicles)
+	foreach(new v : Vehicles[VEHICLE_USAGE_PRIVATE])
 	{
 		if(!VehicleInfo[v][vImpounded])
 		{
@@ -135,6 +135,7 @@ CMD:jobimpound(playerid, params[])
 		SetVehicleParamsForPlayer(vehicle, playerid, 1, 1);
 		
 		VehicleInfo[vehicle][vJob] = 99;
+		VehicleInfo[vehicle][vUsage] = VEHICLE_USAGE_JOB;
 		VehicleInfo[vehicle][vCanStart] = 0;
 		VehicleInfo[vehicle][vLocked] = 1;
 		
@@ -142,6 +143,7 @@ CMD:jobimpound(playerid, params[])
 		ImpounderJob[playerid][ivID] = vehicle;
 		
 		SetVehicleNumberPlate(vehicle, "FCK FIVEO");
+		Iter_Add(Vehicles[VEHICLE_USAGE_JOB], vehicle);
 		
 		va_SendClientMessage(playerid, COLOR_GREEN, "[IMPOUNDER DISPATCH]: Vozilo s neplacenim kaznama marke %s pronadjeno!", ReturnVehicleName(vmodel));
 		va_SendClientMessage(playerid, COLOR_GREEN, "[IMPOUNDER DISPATCH]: Otidji do vozila i impoundaj ga! Vozilo se nalazi na %s!", GetVehicleStreet(vehicle));

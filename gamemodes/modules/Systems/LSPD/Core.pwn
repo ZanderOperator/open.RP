@@ -1822,9 +1822,10 @@ CMD:uncuff(playerid, params[])
 
 CMD:pdtrunk(playerid, params[])
 {
-    if (!IsACop(playerid) && !IsASD(playerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, " Niste policajac!");
+    if (!IsACop(playerid) && !IsASD(playerid)) 
+        return SendMessage(playerid, MESSAGE_TYPE_ERROR, " Niste policajac!");
 
-    new vehicleid = getPlayerNearestVehicle(playerid);
+    new vehicleid = GetNearestVehicle(playerid);
     if (vehicleid == INVALID_VEHICLE_ID)
         return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste blizu vozila!");
     if (IsVehicleWithoutTrunk(GetVehicleModel(vehicleid))) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ovo vozilo nema prtljaznik!");
@@ -2215,17 +2216,16 @@ CMD:take(playerid, params[])
 
 CMD:checktrunk(playerid, params[])
 {
-    // TODO: helper function GetNearestVehicle(playerid)
-    new vehicleid = getPlayerNearestVehicle(playerid);
-    if (vehicleid == INVALID_VEHICLE_ID) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste blizu vozila.");
-    if (IsANoTrunkVehicle(GetVehicleModel(vehicleid))) return SendClientMessage(playerid, COLOR_RED, "Ovo vozilo nema prtljaznik!");
-    // TODO^^: helper function GetNearestVehicleWithATrunk(playerid)
-
-
-    if (GetPlayerState(playerid) != PLAYER_STATE_ONFOOT) return SendClientMessage(playerid, COLOR_RED, "Morate biti na nogama da biste koristili ovu komandu.");
-    if (VehicleInfo[vehicleid][vTrunk] == VEHICLE_PARAMS_OFF) return SendClientMessage(playerid, COLOR_RED, "Prtljaznik je zatvoren.");
-    if (!Iter_Contains(COVehicles, vehicleid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Vozilo mora biti CO da bi ga pretresli!");
-
+    new vehicleid = GetNearestVehicle(playerid, VEHICLE_USAGE_PRIVATE);
+    if (vehicleid == INVALID_VEHICLE_ID) 
+        return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste blizu privatnog vozila.");
+    if (IsANoTrunkVehicle(GetVehicleModel(vehicleid))) 
+        return SendClientMessage(playerid, COLOR_RED, "Ovo vozilo nema prtljaznik!");
+    if (GetPlayerState(playerid) != PLAYER_STATE_ONFOOT) 
+        return SendClientMessage(playerid, COLOR_RED, "Morate biti na nogama da biste koristili ovu komandu.");
+    if (VehicleInfo[vehicleid][vTrunk] == VEHICLE_PARAMS_OFF) 
+        return SendClientMessage(playerid, COLOR_RED, "Prtljaznik je zatvoren.");
+   
     ShowPlayerDialog(playerid, DIALOG_VEH_CHECKTRUNK, DIALOG_STYLE_MSGBOX, "Oruzja u vozilu:", ListPlayerVehicleWeapons(playerid, vehicleid), "Exit", "");
 
     new
@@ -2554,8 +2554,7 @@ CMD:pdunlock(playerid, params[])
     if (!IsPlayerInRangeOfPoint(playerid, 30.0, 1985.1077, -2183.0867, 13.5469))
         return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste na mjestu za koristenje /pdunlock komande!");
 
-    // TODO: helper function GetNearestCOVehicle(playerid)
-    new vehicleid = GetPlayerNearestPrivateVehicle(playerid);
+    new vehicleid = GetNearestVehicle(playerid, VEHICLE_USAGE_PRIVATE);
     if (vehicleid == INVALID_VEHICLE_ID) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste blizu vozila.");
 
     // TODO: helper function ToggleVehicleLock(vehicleid)/UnlockVehicle(vehicleid)
@@ -2580,7 +2579,7 @@ CMD:cleartrunk(playerid, params[])
     if (PlayerInfo[playerid][pRank] < FactionInfo[PlayerInfo[playerid][pMember]][rClrTrunk])
          return va_SendClientMessage(playerid,COLOR_RED, "Niste policajac R%d+!", FactionInfo[PlayerInfo[playerid][pMember]][rClrTrunk]);
 
-    new vehicleid = GetPlayerNearestPrivateVehicle(playerid);
+    new vehicleid = GetNearestVehicle(playerid, VEHICLE_USAGE_PRIVATE);
     if (vehicleid == INVALID_VEHICLE_ID) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste blizu vozila.");
 
     new
@@ -2859,52 +2858,16 @@ CMD:returnduty(playerid, params[])
     if (!IsACop(playerid) && !IsFDMember(playerid) && !IsASD(playerid) && !IsAGov(playerid)) return SendClientMessage(playerid,COLOR_RED, "Niste ovlasteni!");
     if (PlayerInfo[playerid][pLawDuty] == 1) return SendClientMessage(playerid,COLOR_RED, "Vec ste na duznosti!");
 
-    new vehicleid = INVALID_VEHICLE_ID;
-
+    new vehicleid;
     if (IsACop(playerid))
-    {
-        foreach(new i : Vehicles) 
-        {
-            if (VehicleInfo[i][vFaction] == 1 && IsPlayerInRangeOfVehicle(playerid, i, 5.0)) 
-            {
-                vehicleid = i;
-                break;
-            }
-        }
-    }
+        vehicleid = GetNearestVehicle(playerid, VEHICLE_USAGE_FACTION, FACTION_TYPE_LAW);
     else if (IsFDMember(playerid))
-    {
-        foreach(new i : Vehicles)
-        {
-            if (VehicleInfo[i][vFaction] == 2 && IsPlayerInRangeOfVehicle(playerid, i, 5.0)) 
-            {
-                vehicleid = i;
-                break;
-            }
-        }
-    }
+        vehicleid = GetNearestVehicle(playerid, VEHICLE_USAGE_FACTION, FACTION_TYPE_FD);
     else if (IsASD(playerid))
-    {
-        foreach(new i : Vehicles)
-        {
-            if (VehicleInfo[i][vFaction] == 3 && IsPlayerInRangeOfVehicle(playerid, i, 5.0)) 
-            {
-                vehicleid = i;
-                break;
-            }
-        }
-    }
+        vehicleid = GetNearestVehicle(playerid, VEHICLE_USAGE_FACTION, FACTION_TYPE_LAW2);
     else if (IsAGov(playerid))
-    {
-        foreach(new i : Vehicles)
-        {
-            if (VehicleInfo[i][vFaction] == 4 && IsPlayerInRangeOfVehicle(playerid, i, 5.0)) 
-            {
-                vehicleid = i;
-                break;
-            }
-        }
-    }
+        vehicleid = GetNearestVehicle(playerid, VEHICLE_USAGE_FACTION, FACTION_TYPE_LEGAL);
+   
     if (vehicleid == INVALID_VEHICLE_ID)
         return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nisi blizu fakcijskog vozila!");
 

@@ -62,7 +62,7 @@ timer ANPRTimer[2000](playerid)
         Float:vX, Float:vY, Float:vZ,
         string[86];
 
-    foreach(new i : COVehicles)
+    foreach(new i : Vehicles[VEHICLE_USAGE_PRIVATE])
     {
         if (!IsPlayerInVehicle(playerid, i) && IsVehicleStreamedIn(i, playerid))
         {
