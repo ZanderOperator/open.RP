@@ -9,6 +9,7 @@ enum E_CLOSEST_VEHICLES
 }
 
 new Iterator:COWeapons[MAX_VEHICLES]<MAX_WEAPON_SLOTS>,
+	Iterator:VisualVehicles[MAX_PLAYERS]<MAX_VEHICLES>,
 	Timer:VehicleAlarmTimer[MAX_VEHICLES],
 	Timer:VehicleLightsTimer[MAX_VEHICLES],
 	VehicleLightsBlinker[MAX_VEHICLES],
@@ -53,8 +54,7 @@ stock SortNearestVehicle(v[MAX_VEHICLES_IN_RANGE][E_CLOSEST_VEHICLES], pool_size
 	} while(swapped);
 }
 
-
-stock GetNearestVehicle(playerid, VEHICLE_TYPE = 0, VEHICLE_FACTION = 0)
+stock GetNearestVehicle(playerid, VEHICLE_TYPE = -1, VEHICLE_FACTION = -1)
 {
 	new 
 		vehicleid = INVALID_VEHICLE_ID,
@@ -62,45 +62,28 @@ stock GetNearestVehicle(playerid, VEHICLE_TYPE = 0, VEHICLE_FACTION = 0)
 		Iterator:CloseVehicles<MAX_VEHICLES_IN_RANGE>,
 		slotid,
 		Float:vX, Float:vY, Float:vZ;
-
-	if(VEHICLE_TYPE == 0)
+	
+	foreach(new i : VisualVehicles[playerid])
 	{
-		for(new vtype = 0; vtype < MAX_VEHICLE_TYPES; vtype++)
+		if(VEHICLE_TYPE != -1)
 		{
-			foreach(new i : Vehicles[vtype])
-			{
-				if(VEHICLE_FACTION != 0)
-				{
-					if(VehicleInfo[i][vFaction] != VEHICLE_FACTION)
-						continue;
-				}
-				if(IsPlayerInRangeOfVehicle(playerid, i, 10.0))
-				{
-					slotid = Iter_Free(CloseVehicles);
-					Iter_Add(CloseVehicles, slotid);
-
-					GetVehiclePos(i, vX, vY, vZ);
-					close_vehicles[slotid][cvDistance] = GetPlayerDistanceFromPoint(playerid, vX, vY, vZ);
-					close_vehicles[slotid][cvID] = i;
-					break;
-				}
-			}
+			if(VehicleInfo[i][vUsage] != VEHICLE_TYPE)
+				continue;
 		}
-	}
-	else
-	{
-		foreach(new i : Vehicles[VEHICLE_TYPE])
+		if(VEHICLE_FACTION != -1)
 		{
-			if(IsPlayerInRangeOfVehicle(playerid, i, 10.0))
-			{
-				slotid = Iter_Free(CloseVehicles);
-				Iter_Add(CloseVehicles, slotid);
+			if(VehicleInfo[i][vFaction] != VEHICLE_FACTION)
+				continue;
+		}
+		if(IsPlayerInRangeOfVehicle(playerid, i, 10.0))
+		{
+			slotid = Iter_Free(CloseVehicles);
+			Iter_Add(CloseVehicles, slotid);
 
-				GetVehiclePos(i, vX, vY, vZ);
-				close_vehicles[slotid][cvDistance] = GetPlayerDistanceFromPoint(playerid, vX, vY, vZ);
-				close_vehicles[slotid][cvID] = i;
-				break;
-			}
+			GetVehiclePos(i, vX, vY, vZ);
+			close_vehicles[slotid][cvDistance] = GetPlayerDistanceFromPoint(playerid, vX, vY, vZ);
+			close_vehicles[slotid][cvID] = i;
+			break;
 		}
 	}
 	SortNearestVehicle(close_vehicles, Iter_Count(CloseVehicles));
@@ -494,13 +477,17 @@ setTire(vehid, tireid, stat)
 	}
 	return 1;
 }
-/*
-hook OnGameModeInit()
+
+hook OnVehicleStreamIn(vehicleid, forplayerid)
 {
-	for(new i = 0; i < MAX_VEHICLES; i++)
-	{
-		Iter_Clear(COWeapons[i]);
-		Iter_Clear(COWObjects[i]);
-	}
+	if(!Iter_Contains(VisualVehicles[forplayerid], vehicleid))
+		Iter_Add(VisualVehicles[forplayerid], vehicleid);
 	return 1;
-}*/
+}
+
+hook OnVehicleStreamOut(vehicleid, forplayerid)
+{
+	if(Iter_Contains(VisualVehicles[forplayerid], vehicleid))
+		Iter_Remove(VisualVehicles[forplayerid], vehicleid);
+	return 1;
+}

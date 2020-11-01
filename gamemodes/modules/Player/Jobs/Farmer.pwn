@@ -1087,7 +1087,7 @@ CMD:seeds(playerid, params[])
 		{
 			if( GetVehicleModel(i) == 610 ) 
 			{
-				if( IsPlayerInRangeOfVehicle(playerid, i, 2.0) ) 
+				if( IsPlayerInRangeOfVehicle(playerid, i, 5.0) ) 
 				{
 					if( !SeedInfo[playerid][sSeeds] ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate sjemenke kod sebe!");
 					SeedInfo[playerid][sSeeds] 			= 0;

@@ -685,8 +685,6 @@ CMD:package(playerid, params[]) {
 		}
 		if( vehicleid == INVALID_VEHICLE_ID )
 			return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste blizu privatnog vozila!");
-		if( !IsPlayerInRangeOfVehicle(playerid, vehicleid, 5.0) )
-			return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste blizu vozila!");
 		if( VehicleInfo[vehicleid][vTrunk] == VEHICLE_PARAMS_OFF )
 			return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Prtljaznik nije otvoren!");
 		if(!IsPlayerNearTrunk(playerid, vehicleid))
@@ -719,8 +717,6 @@ CMD:package(playerid, params[]) {
 		}
 		if( vehicleid == INVALID_VEHICLE_ID )
 			return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste blizu privatnog vozila!");
-		if( !IsPlayerInRangeOfVehicle(playerid, vehicleid, 5.0) )
-			return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste blizu vozila!");
 		if( VehicleInfo[vehicleid][vTrunk] == VEHICLE_PARAMS_OFF )
 			return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Prtljaznik nije otvoren!");
 		if(!IsPlayerNearTrunk(playerid, vehicleid))
