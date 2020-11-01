@@ -215,26 +215,15 @@ CMD:pizza(playerid, params[])
 	if( !strcmp( pick, "take", true ) ) {
 		
 		new 
-			vehicleid = INVALID_VEHICLE_ID;
-		if( IsPlayerInAnyVehicle(playerid) ) 				return SendClientMessage( playerid, COLOR_RED, "Ne smijete biti u vozilu!");
-		if( !Bit8_Get( gr_PlayerPizzas, playerid ) ) 		return SendClientMessage( playerid, COLOR_RED, "Niste uzeli pizzu iz Well Stacked Pizze!");
-
-		foreach(new i : Vehicles[VEHICLE_USAGE_JOB]) 
-		{
-			if( VehicleInfo[ i ][ vJob ] == 2 ) 
-			{
-				if( GetVehicleModel( i ) == 448 ) 
-				{
-					if( IsPlayerInRangeOfVehicle( playerid, i, 5.0 ) ) 
-					{
-						vehicleid = i;
-						break;
-					}
-				}
-			}
-		}
-		if( vehicleid == INVALID_VEHICLE_ID ) return SendClientMessage( playerid, COLOR_RED, "Niste blizu pizzaboy motora!");
-		
+			vehicleid = GetNearestVehicle(playerid, VEHICLE_USAGE_JOB);
+		if( IsPlayerInAnyVehicle(playerid) ) 				
+			return SendClientMessage( playerid, COLOR_RED, "Ne smijete biti u vozilu!");
+		if( !Bit8_Get( gr_PlayerPizzas, playerid ) ) 		
+			return SendClientMessage( playerid, COLOR_RED, "Niste uzeli pizzu iz Well Stacked Pizze!");
+		if( vehicleid == INVALID_VEHICLE_ID ) 
+			return SendClientMessage( playerid, COLOR_RED, "Niste blizu pizzaboy motora!");
+		if( GetVehicleModel( i ) != 448 ) 
+			return SendClientMessage( playerid, COLOR_RED, "Vehicle is not pizzaboy motor!");
 		if( IsPlayerAttachedObjectSlotUsed( playerid, 7 ) ) 
 			RemovePlayerAttachedObject( playerid, 7 );
 		

@@ -3,7 +3,7 @@
 #endif
 #define MODULE_TICKETS
 
-#define MAX_TICKET_REASON_LEN           (100)
+#define MAX_TICKET_REASON_LEN           (100)   
 #define MAX_TICKET_MONEY_VAL            (10000)
 
 /*
@@ -52,9 +52,6 @@ static
     ##       ##     ## ##   ### ##    ## ##    ## 
     ##        #######  ##    ##  ######   ######  
 */
-
-// TODO: make all non-API/helper functions static and make API forward declarations
-// in LSPD_h.pwn header file
 
 stock SaveVehicleTicketStatus(vehicleid, ticket_slot)
 {
@@ -345,7 +342,7 @@ CMD:ticket(playerid, params[])
         if(AC_GetPlayerMoney(playerid) <  VehicleInfo[vehicleid][vTickets][tmpSlot]) 
             return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "You don't have enough money, you are missing %s.", FormatNumber(VehicleInfo[vehicleid][vTickets][tmpSlot]-AC_GetPlayerMoney(playerid)));
         
-        PlayerToOrgMoney(playerid, FACTION_TYPE_LAW, VehicleInfo[vehicleid][vTickets][tmpSlot]); // Novac dolazi u faction bank
+        PlayerToOrgMoney(playerid, FACTION_TYPE_LAW, VehicleInfo[vehicleid][vTickets][tmpSlot]); 
 
         va_SendClientMessage(playerid, COLOR_RED, "Clerk: You have paid Ticket #%d on your %s for %s.",
             slot,
@@ -428,7 +425,6 @@ CMD:giveticket(playerid, params[])
                 VehicleInfo[vehicleid][vTicketShown][t] = false;
                 VehicleInfo[vehicleid][vTicketStamp][t] = gettime();
 
-                // MySQL Query
                 new
                     ticketInsertQuery[256];
                 mysql_format(g_SQL, ticketInsertQuery, 256, "INSERT INTO `cocars_tickets`(`vehicle_id`, `isShown`, `price`, `reason`, `time`) VALUES ('%d','0','%d','%e','%d')",
