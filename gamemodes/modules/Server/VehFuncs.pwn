@@ -54,10 +54,10 @@ stock SortNearestVehicle(v[MAX_VEHICLES_IN_RANGE][E_CLOSEST_VEHICLES], pool_size
 
 stock GetNearestVehicle(playerid, VEHICLE_TYPE = -1, VEHICLE_FACTION = -1)
 {
+	static close_vehicles[MAX_VEHICLES_IN_RANGE][E_CLOSEST_VEHICLES];
+
 	new 
 		vehicleid = INVALID_VEHICLE_ID,
-		close_vehicles[MAX_VEHICLES_IN_RANGE][E_CLOSEST_VEHICLES],
-		Iterator:CloseVehicles<MAX_VEHICLES_IN_RANGE>,
 		slotid,
 		Float:vX, Float:vY, Float:vZ;
 	
@@ -75,19 +75,13 @@ stock GetNearestVehicle(playerid, VEHICLE_TYPE = -1, VEHICLE_FACTION = -1)
 		}
 		if(IsPlayerInRangeOfVehicle(playerid, i, 10.0))
 		{
-			slotid = Iter_Free(CloseVehicles);
-			if(slotid == -1) // Limit of MAX_VEHICLES_IN_RANGE reached
-				break;
-				
-			Iter_Add(CloseVehicles, slotid);
-
+			slotid = sizeof(close_vehicles) + 1;
 			GetVehiclePos(i, vX, vY, vZ);
 			close_vehicles[slotid][cvDistance] = GetPlayerDistanceFromPoint(playerid, vX, vY, vZ);
 			close_vehicles[slotid][cvID] = i;
-			break;
 		}
 	}
-	SortNearestVehicle(close_vehicles, Iter_Count(CloseVehicles));
+	SortNearestVehicle(close_vehicles, sizeof(close_vehicles));
 	vehicleid = close_vehicles[0][cvID];	
 	return vehicleid;
 }
