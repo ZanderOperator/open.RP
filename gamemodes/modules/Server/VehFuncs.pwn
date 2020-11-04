@@ -9,7 +9,6 @@ enum E_CLOSEST_VEHICLES
 }
 
 new Iterator:COWeapons[MAX_VEHICLES]<MAX_WEAPON_SLOTS>,
-	Iterator:VisualVehicles[MAX_PLAYERS]<MAX_VEHICLES>,
 	Timer:VehicleAlarmTimer[MAX_VEHICLES],
 	Timer:VehicleLightsTimer[MAX_VEHICLES],
 	VehicleLightsBlinker[MAX_VEHICLES],
@@ -62,7 +61,7 @@ stock GetNearestVehicle(playerid, VEHICLE_TYPE = -1, VEHICLE_FACTION = -1)
 		slotid,
 		Float:vX, Float:vY, Float:vZ;
 	
-	foreach(new i : VisualVehicles[playerid])
+	foreach(new i : StreamedVehicle[playerid])
 	{
 		if(VEHICLE_TYPE != -1)
 		{
@@ -477,25 +476,5 @@ setTire(vehid, tireid, stat)
  			UpdateVehicleDamageStatus(vehid, panels, doors, lights, encode_tires(t1, t2, t3, stat));
 	    }
 	}
-	return 1;
-}
-
-hook OnVehicleStreamIn(vehicleid, forplayerid)
-{
-	if(!Iter_Contains(VisualVehicles[forplayerid], vehicleid))
-		Iter_Add(VisualVehicles[forplayerid], vehicleid);
-	return 1;
-}
-
-hook OnVehicleStreamOut(vehicleid, forplayerid)
-{
-	if(Iter_Contains(VisualVehicles[forplayerid], vehicleid))
-		Iter_Remove(VisualVehicles[forplayerid], vehicleid);
-	return 1;
-}
-
-hook OnPlayerDisconnect(playerid)
-{
-	Iter_Clear(VisualVehicles[playerid]);
 	return 1;
 }
