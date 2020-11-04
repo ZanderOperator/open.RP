@@ -73,9 +73,12 @@ stock GetNearestVehicle(playerid, VEHICLE_TYPE = -1, VEHICLE_FACTION = -1)
 			if(VehicleInfo[i][vFaction] != VEHICLE_FACTION)
 				continue;
 		}
+		slotid = sizeof(close_vehicles) + 1;
+		if(slotid >= MAX_VEHICLES_IN_RANGE)
+			break;
+
 		if(IsPlayerInRangeOfVehicle(playerid, i, 10.0))
 		{
-			slotid = sizeof(close_vehicles) + 1;
 			GetVehiclePos(i, vX, vY, vZ);
 			close_vehicles[slotid][cvDistance] = GetPlayerDistanceFromPoint(playerid, vX, vY, vZ);
 			close_vehicles[slotid][cvID] = i;
