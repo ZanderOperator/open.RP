@@ -63,6 +63,10 @@ stock GetNearestVehicle(playerid, VEHICLE_TYPE = -1, VEHICLE_FACTION = -1)
 	
 	foreach(new i : StreamedVehicle[playerid])
 	{
+		slotid = sizeof(close_vehicles) + 1;
+		if(slotid >= MAX_VEHICLES_IN_RANGE)
+			break;
+			
 		if(VEHICLE_TYPE != -1)
 		{
 			if(VehicleInfo[i][vUsage] != VEHICLE_TYPE)
@@ -73,10 +77,6 @@ stock GetNearestVehicle(playerid, VEHICLE_TYPE = -1, VEHICLE_FACTION = -1)
 			if(VehicleInfo[i][vFaction] != VEHICLE_FACTION)
 				continue;
 		}
-		slotid = sizeof(close_vehicles) + 1;
-		if(slotid >= MAX_VEHICLES_IN_RANGE)
-			break;
-
 		if(IsPlayerInRangeOfVehicle(playerid, i, 10.0))
 		{
 			GetVehiclePos(i, vX, vY, vZ);
