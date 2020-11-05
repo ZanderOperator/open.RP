@@ -310,7 +310,7 @@ CMD:rentveh(playerid, params[])
 			engine, lights, alarm, doors, bonnet, boot, objective;
 
 		if( !IsPlayerInRangeOfVehicle(playerid, rent_vID, 5.0) ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, " Niste blizu svoga vozila!");
-		if(IsANoTrunkVehicle(GetVehicleModel(rent_vID))) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ovo vozilo nema prtljaznik!");
+		if(IsVehicleWithoutTrunk(GetVehicleModel(rent_vID))) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ovo vozilo nema prtljaznik!");
 		if(GetPlayerState(playerid) != PLAYER_STATE_ONFOOT) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Morate biti na nogama da biste zatvorili/otvorili prtljaznik.");
 		GetVehicleParamsEx(rent_vID, engine, lights, alarm, doors, bonnet, boot, objective);
 		if(VehicleInfo[rent_vID][vTrunk] == VEHICLE_PARAMS_OFF) {

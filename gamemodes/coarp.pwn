@@ -364,7 +364,6 @@ new
 	Iterator:ComplexRooms<MAX_COMPLEX_ROOMS>,
 	Iterator:Garages<MAX_GARAGES>,
 	Iterator:IllegalGarages<MAX_ILEGAL_GARAGES>,
-	Iterator:COWObjects	[MAX_VEHICLES]<MAX_WEAPON_SLOTS>,
 	Iterator:V_PACKAGES[MAX_VEHICLES]<MAX_PACKAGE_VEHICLE>;
 
 // Player Iterators
