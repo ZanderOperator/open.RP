@@ -760,9 +760,9 @@ stock PutPlayerWeaponInTrunk(playerid, vehicleid, weaponid)
 	new Float:x, Float:y, Float:z, Float: rz,
 		model = WeaponModels(weaponid),
 		vmodel = GetVehicleModel(vehicleid),
-		slot = Iter_Free(COWeapons[vehicleid]);
+		slot = Iter_Free(VehWeapon[vehicleid]);
 	
-	if(!IsANoTrunkVehicle(vmodel) && !IsABike(model) && !IsAMotorBike(model))
+	if(!IsVehicleWithoutTrunk(vmodel) && !IsABike(model) && !IsAMotorBike(model))
 	{
 		StoreWeaponInTrunk(playerid, vehicleid, slot);
 		GetVehicleZAngle(vehicleid, rz);
@@ -827,7 +827,7 @@ stock StoreWeaponInTrunk(playerid, vehicleid, slot)
 	);
 	#endif
 	
-	Iter_Add(COWeapons[vehicleid], slot);
+	Iter_Add(VehWeapon[vehicleid], slot);
 	return 1;
 }
 
@@ -872,7 +872,7 @@ stock TakePlayerWeaponFromTrunk(playerid, vehicleid, slot)
 	VehicleInfo[vehicleid][vWeaponId][slot] 	= 0;
 	VehicleInfo[vehicleid][vWeaponAmmo][slot] 	= 0;
 	
-	Iter_Remove(COWeapons[vehicleid], slot);
+	Iter_Remove(VehWeapon[vehicleid], slot);
 	ResetPlayerWeaponList(playerid);
 	AntiSpamInfo[playerid][asCarTrunk] = gettimestamp() + ANTI_SPAM_CAR_WEAPON;
 	return 1;
@@ -894,20 +894,20 @@ stock ClearWeaponObject(vehicleid, slot)
 		VehicleInfo[vehicleid][vOffsetyR][slot]      		= 0;
 		VehicleInfo[vehicleid][vOffsetzR][slot]      		= 0;
 	}
-	Iter_Remove(COWObjects[vehicleid], slot);
+	Iter_Remove(VehWeaponObject[vehicleid], slot);
 	return 1;
 }
 
 stock ResetVehicleTrunkWeapons(vehicleid)
 {
-	foreach(new wslot: COWeapons[vehicleid])
+	foreach(new wslot: VehWeapon[vehicleid])
 	{
 		ClearWeaponObject(vehicleid, wslot);
 		VehicleInfo[vehicleid][vWeaponSQLID][wslot] 		= -1;
 		VehicleInfo[vehicleid][vWeaponId][wslot]			= 0;
 		VehicleInfo[vehicleid][vWeaponAmmo][wslot]		= 0;
 	}
-	Iter_Clear(COWeapons[vehicleid]);
+	Iter_Clear(VehWeapon[vehicleid]);
 	return 1;
 }
 
@@ -1046,7 +1046,7 @@ stock CheckVehicleWeaponCapacities(playerid, vehicleid)
 	
 	if(PlayerInfo[playerid][pDonateRank] > 0)
 		maxweapons += 1;
-	if(Iter_Count(COWeapons[vehicleid]) >= maxweapons)
+	if(Iter_Count(VehWeapon[vehicleid]) >= maxweapons)
 		return 0;
 	else return 1;
 }
@@ -1061,11 +1061,11 @@ stock CheckVehicleWeaponTrunkSpace(playerid, vehicleid)
 	if(PlayerInfo[playerid][pDonateRank] > 0)
 		maxweapons += 1;
 		
-	if(Iter_Count(COWeapons[vehicleid]) >= maxweapons)
+	if(Iter_Count(VehWeapon[vehicleid]) >= maxweapons)
 		va_SendClientMessage(playerid, COLOR_RED, "[ ! ] Zapunili ste sve skladisne prostore za oruzje u %s-u.", carname);
 	else
 	{
-		new rest = maxweapons - Iter_Count(COWeapons[vehicleid]);
+		new rest = maxweapons - Iter_Count(VehWeapon[vehicleid]);
 		SendFormatMessage(playerid, MESSAGE_TYPE_INFO, "Preostalo je jos mjesta za %d oruzja u prtljazniku %s-a.", rest, carname);
 	}
 	return 1;
@@ -1152,7 +1152,7 @@ Public:LoadingVehicleWeapons(vehicleid)
 			cache_get_value_name_int(i, "weapon_id"	, VehicleInfo[vehicleid][vWeaponId][i]);
 			cache_get_value_name_int(i, "ammo"		, VehicleInfo[vehicleid][vWeaponAmmo][i]);
 			
-			Iter_Add(COWeapons[vehicleid], i);
+			Iter_Add(VehWeapon[vehicleid], i);
 		}
 	}
 	LoadVehicleWeaponPos(vehicleid);
@@ -1162,7 +1162,7 @@ Public:LoadingVehicleWeapons(vehicleid)
 stock ListPlayerVehicleWeapons(playerid, vehicleid)
 {
 	new buffer[756], wname[32], counter = 0;
-	foreach(new wslot: COWeapons[vehicleid])
+	foreach(new wslot: VehWeapon[vehicleid])
 	{
 		GetWeaponName(VehicleInfo[vehicleid][vWeaponId][wslot], wname, 32);
 		format(buffer, 756, "%s"COL_WHITE"%s(%d metaka)\n", 
@@ -1185,7 +1185,7 @@ public LoadingVehicleWeaponPos(vehicleid)
 	    for(new i = 0; i < cache_num_rows(); i++) 
 		{	
 			cache_get_value_name_int(i,    "weaponsql"	, tmpSQL);
-			foreach(new wslot: COWeapons[vehicleid])
+			foreach(new wslot: VehWeapon[vehicleid])
 			{
 				if(VehicleInfo[vehicleid][vWeaponSQLID][wslot] == tmpSQL)
 				{
@@ -1201,7 +1201,7 @@ public LoadingVehicleWeaponPos(vehicleid)
 				
 					VehicleInfo[vehicleid][vWeaponObjectID][wslot] = CreateObject(WeaponModels(VehicleInfo[vehicleid][vWeaponId][wslot]), 0.0, 0.0, 0.0, 0, 0, 0, 0);	
 					AttachObjectToVehicle(VehicleInfo[vehicleid][vWeaponObjectID][wslot], vehicleid, VehicleInfo[vehicleid][vOffsetx][wslot], VehicleInfo[vehicleid][vOffsety][wslot], VehicleInfo[vehicleid][vOffsetz][wslot], VehicleInfo[vehicleid][vOffsetxR][wslot], VehicleInfo[vehicleid][vOffsetyR][wslot], VehicleInfo[vehicleid][vOffsetzR][wslot]);
-					Iter_Add(COWObjects[vehicleid], wslot);
+					Iter_Add(VehWeaponObject[vehicleid], wslot);
 				}
 			}
 		}
@@ -5237,7 +5237,7 @@ CMD:trunk(playerid, params[])
 	if(!strcmp(pick, "open", true)) 
 	{
 		if(vehicleid != PlayerInfo[playerid][pSpawnedCar]) return SendMessage(playerid, MESSAGE_TYPE_ERROR, " Samo vlastitom vozilu mozete otvarati prtljaznik!");
-		if(IsANoTrunkVehicle(GetVehicleModel(vehicleid))) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ovo vozilo nema prtljaznik!");
+		if(IsVehicleWithoutTrunk(GetVehicleModel(vehicleid))) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ovo vozilo nema prtljaznik!");
 		if(GetPlayerState(playerid) != PLAYER_STATE_ONFOOT) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Morate biti na nogama da biste zatvorili/otvorili prtljaznik.");
 		GetVehicleParamsEx(vehicleid, engine, lights, alarm, doors, bonnet, boot, objective);
 		if(VehicleInfo[vehicleid][vTrunk] == VEHICLE_PARAMS_OFF) {
@@ -5297,7 +5297,7 @@ CMD:trunk(playerid, params[])
 		}
 		if(VehicleInfo[vehicleid][vTrunk] == VEHICLE_PARAMS_ON) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Vozilo ima otvoren prtljaznik!");
 		if(vehicleid == PlayerInfo[playerid][pSpawnedCar]) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne mozes obijati svoje vozilo!");
-		if(IsANoTrunkVehicle(GetVehicleModel(vehicleid))) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ovo vozilo nema prtljaznik!");
+		if(IsVehicleWithoutTrunk(GetVehicleModel(vehicleid))) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ovo vozilo nema prtljaznik!");
 		
 		switch(VehicleInfo[vehicleid][vLock]) 
 		{

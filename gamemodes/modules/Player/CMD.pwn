@@ -2756,7 +2756,7 @@ CMD:putintrunk(playerid, params[])
 	
     if( vehicleid == INVALID_VEHICLE_ID ) 				
 		return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste blizu vozila.");
-    if( IsANoTrunkVehicle(GetVehicleModel(vehicleid)) ) 
+    if( IsVehicleWithoutTrunk(GetVehicleModel(vehicleid)) ) 
 		return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ovo vozilo nema prtljaznik!");
     if( VehicleInfo[vehicleid][vTrunk] == VEHICLE_PARAMS_OFF ) 
 		return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Prtljaznik tog auta je zatvoren.");

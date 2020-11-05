@@ -454,8 +454,8 @@ stock ResetVehicleInfo(vehicleid)
 		DestroyDynamic3DTextLabel(TrunkHealth3DText[vehicleid]);
 		TrunkHealth3DText[vehicleid] = Text3D:INVALID_3DTEXT_ID;
 	}
-	Iter_Clear(COWeapons[vehicleid]);
-	Iter_Clear(COWObjects[vehicleid]);
+	Iter_Clear(VehWeapon[vehicleid]);
+	Iter_Clear(VehWeaponObject[vehicleid]);
 
 	Bit1_Set( gr_VehicleAttachedBomb, vehicleid, false );
 	Bit16_Set( gr_LastDriver, vehicleid, INVALID_PLAYER_ID );

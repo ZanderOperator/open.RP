@@ -1,14 +1,10 @@
 #include <YSI_Coding\y_hooks>
 
-#define MAX_VEHICLES_IN_RANGE	10
+#define MAX_VEHICLES_IN_RANGE		(15)
+#define MAX_NEAR_VEHICLE_RANGE		(10.0)
 
-enum E_CLOSEST_VEHICLES
-{
-	cvID,
-	Float:cvDistance
-}
-
-new Iterator:COWeapons[MAX_VEHICLES]<MAX_WEAPON_SLOTS>,
+new Iterator:VehWeapon[MAX_VEHICLES]<MAX_WEAPON_SLOTS>,
+	Iterator:VehWeaponObject[MAX_VEHICLES]<MAX_WEAPON_SLOTS>,
 	Timer:VehicleAlarmTimer[MAX_VEHICLES],
 	Timer:VehicleLightsTimer[MAX_VEHICLES],
 	VehicleLightsBlinker[MAX_VEHICLES],
@@ -23,14 +19,10 @@ stock bool:IsPlayerInRangeOfVehicle(playerid, vehicleid, Float:range)
 	return false;
 }
 
-stock IsANoTrunkVehicle(modelid)
+enum E_CLOSEST_VEHICLES
 {
-	switch(modelid)
-	{
-	    case 403,406,407,408,416,417,423,424,425,430,432,434,435,441,443,444,446,447,449,450,452,453,454,457,460,464,465,469,472,473,476,481,485,486,493,494,495,501,502,503,504,505,509,510,512,513,514,515,520,524,525,528,530,531,532,537,538,539,544,552,556,557,564,568,569,570,571,572,573,574,578,583,584, 590,591,592,593,594,595,601,606,607,608,610,611:
-	        return true;
-	}
-	return false;
+	cvID,
+	Float:cvDistance
 }
 
 stock SortNearestVehicle(v[MAX_VEHICLES_IN_RANGE][E_CLOSEST_VEHICLES], pool_size)
@@ -77,7 +69,7 @@ stock GetNearestVehicle(playerid, VEHICLE_TYPE = -1, VEHICLE_FACTION = -1)
 			if(VehicleInfo[i][vFaction] != VEHICLE_FACTION)
 				continue;
 		}
-		if(IsPlayerInRangeOfVehicle(playerid, i, 10.0))
+		if(IsPlayerInRangeOfVehicle(playerid, i, MAX_NEAR_VEHICLE_RANGE))
 		{
 			GetVehiclePos(i, vX, vY, vZ);
 			close_vehicles[slotid][cvDistance] = GetPlayerDistanceFromPoint(playerid, vX, vY, vZ);
@@ -105,7 +97,7 @@ WeaponModels(weaponid)
 
 stock RemoveTrunkObjects(vehicleid)
 {
-	foreach(new wslot: COWObjects[vehicleid])
+	foreach(new wslot: VehWeaponObject[vehicleid])
 	{
 		if(IsValidObject(VehicleInfo[vehicleid][vWeaponObjectID][wslot]))
 		{
@@ -119,7 +111,7 @@ stock RemoveTrunkObjects(vehicleid)
 
 stock RespawnTrunkObjects(vehicleid)
 {
-	foreach(new wslot: COWObjects[vehicleid])
+	foreach(new wslot: VehWeaponObject[vehicleid])
 	{
 		if(IsValidObject(VehicleInfo[vehicleid][vWeaponObjectID][wslot]))
 		{
@@ -258,7 +250,6 @@ stock ResetVehicleAlarm(vehicleid)
 	SetVehicleParamsEx(vehicleid, VEHICLE_PARAMS_OFF, VEHICLE_PARAMS_OFF, VEHICLE_PARAMS_OFF, VEHICLE_PARAMS_OFF, VEHICLE_PARAMS_OFF, VEHICLE_PARAMS_OFF, VEHICLE_PARAMS_OFF);
 	return 1;
 }
-
 
 stock IsVehicleWithoutTrunk(modelid)
 {

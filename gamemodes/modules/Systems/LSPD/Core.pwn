@@ -2219,7 +2219,7 @@ CMD:checktrunk(playerid, params[])
     new vehicleid = GetNearestVehicle(playerid, VEHICLE_USAGE_PRIVATE);
     if (vehicleid == INVALID_VEHICLE_ID) 
         return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste blizu privatnog vozila.");
-    if (IsANoTrunkVehicle(GetVehicleModel(vehicleid))) 
+    if (IsVehicleWithoutTrunk(GetVehicleModel(vehicleid))) 
         return SendClientMessage(playerid, COLOR_RED, "Ovo vozilo nema prtljaznik!");
     if (GetPlayerState(playerid) != PLAYER_STATE_ONFOOT) 
         return SendClientMessage(playerid, COLOR_RED, "Morate biti na nogama da biste koristili ovu komandu.");
@@ -2604,7 +2604,7 @@ CMD:cleartrunk(playerid, params[])
             VehicleInfo[vehicleid][vWeaponSQLID][wslot] = -1;
             VehicleInfo[vehicleid][vWeaponId][wslot]    = 0;
             VehicleInfo[vehicleid][vWeaponAmmo][wslot]  = 0;
-            Iter_Remove(COWeapons[vehicleid], wslot);
+            Iter_Remove(VehWeapon[vehicleid], wslot);
         }
     }
 
