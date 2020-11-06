@@ -46,16 +46,14 @@ stock SortNearestVehicle(v[MAX_VEHICLES_IN_RANGE][E_CLOSEST_VEHICLES], pool_size
 
 stock GetNearestVehicle(playerid, VEHICLE_TYPE = -1, VEHICLE_FACTION = -1)
 {
-	static close_vehicles[MAX_VEHICLES_IN_RANGE][E_CLOSEST_VEHICLES];
-
 	new 
 		vehicleid = INVALID_VEHICLE_ID,
-		slotid,
-		Float:vX, Float:vY, Float:vZ;
+		slotid = 0,
+		Float:vX, Float:vY, Float:vZ,
+		close_vehicles[MAX_VEHICLES_IN_RANGE][E_CLOSEST_VEHICLES];
 	
 	foreach(new i : StreamedVehicle[playerid])
 	{
-		slotid = sizeof(close_vehicles) + 1;
 		if(slotid >= MAX_VEHICLES_IN_RANGE)
 			break;
 			
@@ -74,9 +72,10 @@ stock GetNearestVehicle(playerid, VEHICLE_TYPE = -1, VEHICLE_FACTION = -1)
 			GetVehiclePos(i, vX, vY, vZ);
 			close_vehicles[slotid][cvDistance] = GetPlayerDistanceFromPoint(playerid, vX, vY, vZ);
 			close_vehicles[slotid][cvID] = i;
+			slotid++;
 		}
 	}
-	SortNearestVehicle(close_vehicles, sizeof(close_vehicles));
+	SortNearestVehicle(close_vehicles, slotid);
 	vehicleid = close_vehicles[0][cvID];	
 	return vehicleid;
 }
