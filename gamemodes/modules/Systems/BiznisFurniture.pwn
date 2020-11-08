@@ -572,7 +572,7 @@ static stock BuyBlankInterior(playerid, biznisid)
         BizzInfo[biznisid][bVirtualWorld],
         BizzInfo[biznisid][bSQLID]
     );
-    mysql_tquery(g_SQL, query, "");
+    mysql_tquery(g_SQL, query);
 
     DestroyFurnitureBlankIntTDs(playerid);
     PlayerToBudgetMoney(playerid, BlankBiznisInts[interior][iPrice]); // Novac ide u proracun
@@ -1202,7 +1202,7 @@ static stock CreateBiznisFurnitureObject(playerid, modelid, Float:x, Float:y, Fl
         if (BizzInfo[biznisid][bFurSQL][index] > 0)
         {
             format(query, sizeof(query), "DELETE FROM `biznis_furniture` WHERE `sqlid` = '%d' LIMIT 1", BizzInfo[biznisid][bFurSQL][index]);
-            mysql_tquery(g_SQL, query, "", "");
+            mysql_tquery(g_SQL, query);
         }
 
         // TODO: helper function, this is repeated more than once
@@ -1360,7 +1360,7 @@ static stock SetFurnitureObjectPos(playerid, Float:x, Float:y, Float:z, Float:rx
         rz,
         BizzInfo[biznisid][bFurSQL][index]
     );
-    mysql_tquery(g_SQL, query, "");
+    mysql_tquery(g_SQL, query);
 
     // TODO: this is repetitive code, extract it to a helper function
     new colorid;
@@ -1406,7 +1406,7 @@ static stock SetFurnitureObjectTexture(playerid, slot, index, slotid)
         BizzInfo[biznisid][bFurTxtId][slotid][slot],
         BizzInfo[biznisid][bFurSQL][slotid]
     );
-    mysql_tquery(g_SQL, query, "");
+    mysql_tquery(g_SQL, query);
     return 1;
 }
 
@@ -1434,7 +1434,7 @@ static stock SetFurnitureObjectColor(playerid, slot, index, slotid)
         BizzInfo[biznisid][bFurColId][slotid][slot],
         BizzInfo[biznisid][bFurSQL][slotid]
     );
-    mysql_tquery(g_SQL, query, "");
+    mysql_tquery(g_SQL, query);
     return 1;
 }
 
@@ -1455,7 +1455,7 @@ static stock DeleteFurnitureObject(biznisid, index, playerid)
 
     new query[64];
     format(query, sizeof(query), "DELETE FROM biznis_furniture WHERE sqlid = '%d'", BizzInfo[biznisid][bFurSQL][index]);
-    mysql_tquery(g_SQL, query, "");
+    mysql_tquery(g_SQL, query);
 
     DestroyDynamicObject(BizzInfo[biznisid][bFurObjectid][index]);
 
@@ -1515,7 +1515,7 @@ static stock DestroyAllFurnitureObjects(playerid, biznisid)
     new query[128];
     mysql_tquery(g_SQL, "BEGIN");
     format(query, sizeof(query), "DELETE FROM `biznis_furniture` WHERE `biznisid` = '%d'", BizzInfo[biznisid][bSQLID]);
-    mysql_tquery(g_SQL, query, "");
+    mysql_tquery(g_SQL, query);
     mysql_tquery(g_SQL, "COMMIT");
 
     format(query, sizeof(query), "UPDATE `bizzes` SET `fur_slots` = '%d' WHERE `id` = '%d'", BizzInfo[biznisid][bFurSlots], BizzInfo[biznisid][bSQLID]);
@@ -2814,7 +2814,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                 slot + 1,
                 BizzInfo[biznisid][bFurSQL][slot]
             );
-            mysql_tquery(g_SQL, query, "");
+            mysql_tquery(g_SQL, query);
 
             SetDynamicObjectMaterial(BizzInfo[biznisid][bFurObjectid][ BizzPlayerEditIndex[playerid] ], slot, -1, "none", "none", 0);
 

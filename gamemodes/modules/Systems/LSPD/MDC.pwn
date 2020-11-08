@@ -656,7 +656,7 @@ stock InsertPlayerMDCCrime(playerid, giveplayerid, reason[], jailtime)
         JailInfo[giveplayerid][jTime],
         JailInfo[giveplayerid][jDate]
     );
-    mysql_tquery(g_SQL, query, "");
+    mysql_tquery(g_SQL, query);
     mysql_tquery(g_SQL, "COMMIT");
 }
 
@@ -665,7 +665,7 @@ static DeletePlayerMDCCrime(playerid, sqlid)
     new
         query[64];
     format(query, sizeof(query), "DELETE FROM jail WHERE `id` = '%d'", sqlid);
-    mysql_tquery(g_SQL, query, "");
+    mysql_tquery(g_SQL, query);
     SendFormatMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uspjesno ste obrisali dosje #%d!", sqlid);
 }
 
@@ -679,7 +679,7 @@ static InsertAPBInfo(playerid, const suspect[], const description[], type)
         type,
         GetName(playerid, true)
     );
-    mysql_tquery(g_SQL, query, "");
+    mysql_tquery(g_SQL, query);
     return 1;
 }
 
@@ -688,7 +688,7 @@ static RemoveAPBInfo(sqlid)
     new
         query[64];
     format(query, sizeof(query), "DELETE FROM apb WHERE id = '%d' LIMIT 1", sqlid);
-    mysql_tquery(g_SQL, query, "");
+    mysql_tquery(g_SQL, query);
     return 1;
 }
 

@@ -34,7 +34,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 					format(string, sizeof(string), "%s ubacuje svoj listic u glasacku kutiju.", GetName(playerid, false));
 					ProxDetector(25.0, playerid, string,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE);
 					format(Query, sizeof(Query), "UPDATE `elections` SET `glasovi` = '%d' WHERE `opcija` = 'Za'", glasovi);
-					mysql_tquery(g_SQL, Query, "", "");
+					mysql_tquery(g_SQL, Query);
 				}
 				case 1:
 					{
@@ -53,7 +53,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 					format(string, sizeof(string), "%s ubacuje svoj listic u glasacku kutiju.", GetName(playerid, false));
 					ProxDetector(25.0, playerid, string,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE);
 					format(Query, sizeof(Query), "UPDATE `elections` SET `glasovi` = '%d' WHERE `opcija` = 'Protiv'", glasovi);
-					mysql_tquery(g_SQL, Query, "", "");
+					mysql_tquery(g_SQL, Query);
 					}
 			}
 			return 1;

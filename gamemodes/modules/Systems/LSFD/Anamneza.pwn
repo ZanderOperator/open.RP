@@ -26,7 +26,7 @@ stock InsertPlayerCarton(playerid, giveplayerid, const disease[])
 		GetName(playerid,false),
 		date
 	);
-	mysql_tquery(g_SQL, tmpQuery, "");
+	mysql_tquery(g_SQL, tmpQuery);
 	SendFormatMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uspjesno si dodao zapis u karton za %s.", GetName(giveplayerid,true));
 }
 
@@ -35,7 +35,7 @@ stock static DeletePlayerCarton(playerid, sqlid)
 	new
 		destroyQuery[ 64 ];
 	format( destroyQuery, sizeof(destroyQuery), "DELETE FROM anamneza WHERE `id` = '%d'", sqlid);
-	mysql_tquery(g_SQL, destroyQuery, "");
+	mysql_tquery(g_SQL, destroyQuery);
 	SendFormatMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uspjesno ste obrisali karton broj: #%d!", sqlid);
 }
 

@@ -349,7 +349,7 @@ public LoadingPlayerDeaths(playerid)
 	new
 		deleteQuery[128];
 	format(deleteQuery, 128, "DELETE FROM `player_deaths` WHERE `player_id` = '%d'", PlayerInfo[playerid][pSQLID]);
-	mysql_tquery(g_SQL, deleteQuery, "", "");
+	mysql_tquery(g_SQL, deleteQuery);
 	return 1;
 }
 
@@ -450,7 +450,7 @@ timer StartDeathCount[1000](playerid)
 			new
 				deleteQuery[128];
 			format(deleteQuery, 128, "DELETE FROM `player_deaths` WHERE `player_id` = '%d'", PlayerInfo[playerid][pSQLID]);
-			mysql_tquery(g_SQL, deleteQuery, "", "");
+			mysql_tquery(g_SQL, deleteQuery);
 			
 			SetPlayerHealth(playerid, 0);
 		}

@@ -237,7 +237,7 @@ DeleteVehiclePackage(vehicleid, slot) {
 	format(query, sizeof(query), "DELETE FROM `cocars_wpackages` WHERE `id` = '%d'",
 		VehicleInfo[vehicleid][packSQLID][slot]
 	);
-	mysql_tquery(g_SQL, query, "", "");
+	mysql_tquery(g_SQL, query);
 
 	Iter_Remove(V_PACKAGES[vehicleid], slot);
 	return (true);
@@ -253,7 +253,7 @@ DeletePlayerPackage(playerid, package_id) {
 	format(query, sizeof(query), "DELETE FROM `player_wpackages` WHERE `id` = '%d'",
 		PlayerPackage[playerid][p_SQLID][package_id]
 	);
-	mysql_tquery(g_SQL, query, "", "");
+	mysql_tquery(g_SQL, query);
 	return (true);
 }
 
@@ -627,7 +627,7 @@ CMD:package(playerid, params[]) {
 				format(d_query, 128, "DELETE FROM `cocars_wpackages` WHERE `id` = '%d'",
 					VehicleInfo[vehicleid][packSQLID][i]
 				);
-				mysql_tquery(g_SQL, d_query, "", "");
+				mysql_tquery(g_SQL, d_query);
 			}
 		}
 		SendFormatMessage(playerid, COLOR_RED, "[ ! ] Uspjesno ste vozilu id %d obrisali sve weapon pakete.", vehicleid);

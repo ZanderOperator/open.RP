@@ -243,7 +243,7 @@ stock InflictPlayerDamage(playerid, issuerid, bodypart, Float:damage)
 						PlayerInfo[playerid][pDeathVW],
 						gettimestamp()
 					);
-					mysql_tquery(g_SQL, deathQuery, "", "");
+					mysql_tquery(g_SQL, deathQuery);
 				}
 				return (true);
 			}
@@ -362,7 +362,7 @@ stock DealDamage(playerid, issuerid, Float: health, Float: armour, Float: damage
 						PlayerInfo[playerid][pDeathVW],
 						gettimestamp()
 					);
-					mysql_tquery(g_SQL, deathQuery, "", "");
+					mysql_tquery(g_SQL, deathQuery);
 				}
 			}
 		}

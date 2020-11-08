@@ -30,7 +30,7 @@ stock AC_GivePlayerMoney(playerid, amount)
 			PlayerInfo[playerid][pMoney],
 			PlayerInfo[playerid][pSQLID]
 		);
-	mysql_tquery(g_SQL, tmpQuery, "", "");
+	mysql_tquery(g_SQL, tmpQuery);
 	// ---------------------------------
 	return PlayerInfo[playerid][pMoney];
 }
@@ -47,7 +47,7 @@ stock AC_SetPlayerMoney(playerid, amount)
 			PlayerInfo[playerid][pMoney],
 			PlayerInfo[playerid][pSQLID]
 		);
-	mysql_tquery(g_SQL, tmpQuery, "", "");
+	mysql_tquery(g_SQL, tmpQuery);
 	// ---------------------------------
 	return PlayerInfo[playerid][pMoney];
 }

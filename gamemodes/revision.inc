@@ -1,1 +1,1 @@
-#define GIT_REV "09694760"
+#define GIT_REV "6d3fd6ef"

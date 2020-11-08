@@ -70,7 +70,7 @@ stock SaveCityInfo()
 		CityInfo[ cIllegalBudget ],
 		CityInfo[ cTax ]
 	);
-	mysql_tquery(g_SQL, tmpQuery, "");
+	mysql_tquery(g_SQL, tmpQuery);
 	return 1;
 }
 
@@ -205,7 +205,7 @@ stock SaveFactionBanks()
 		if(FactionInfo[fid][fType] == FACTION_TYPE_LAW || FactionInfo[fid][fType] == FACTION_TYPE_LAW2 || FactionInfo[fid][fType] == FACTION_TYPE_FD || FactionInfo[fid][fType] == FACTION_TYPE_NEWS)  	
 		{
 			format( saveQuery, sizeof(saveQuery), "UPDATE `server_factions` SET `factionbank` = '%d' WHERE `id` = '%d'", FactionInfo[fid][fFactionBank], FactionInfo[fid][fID] );
-			mysql_tquery(g_SQL, saveQuery, "", "");
+			mysql_tquery(g_SQL, saveQuery);
 		}
 	}
 	return 1;
@@ -675,7 +675,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 				format( tmpQuery, 128, "UPDATE city SET tax = '%d' WHERE 1",
 					CityInfo[ cTax ]
 				);
-				mysql_tquery(g_SQL, tmpQuery, "");
+				mysql_tquery(g_SQL, tmpQuery);
 				
 				SendFormatMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uspjesno ste promjenili porez u Los Santosu, sada on iznosi %d posto", 
 					CityInfo[ cTax ]
@@ -855,7 +855,7 @@ CMD:setcity(playerid, params[])
 		format( tmpQuery, 128, "UPDATE city SET budget = '%d' WHERE 1",
 			CityInfo[ cBudget ]
 		);
-		mysql_tquery(g_SQL, tmpQuery, "");
+		mysql_tquery(g_SQL, tmpQuery);
 	}
 	else if( !strcmp(pick, "tax", true) ) {
 		if( sscanf( params, "s[8]i", pick, moneys ) )  {
@@ -869,7 +869,7 @@ CMD:setcity(playerid, params[])
 		format( tmpQuery, 128, "UPDATE city SET tax = '%d' WHERE 1",
 			CityInfo[ cTax ]
 		);
-		mysql_tquery(g_SQL, tmpQuery, "");
+		mysql_tquery(g_SQL, tmpQuery);
 	}
 	else if( !strcmp(pick, "ibudget", true) ) {
 		if( sscanf( params, "s[8]i", pick, moneys ) )  {
@@ -882,7 +882,7 @@ CMD:setcity(playerid, params[])
 		format( tmpQuery, 128, "UPDATE city SET illegalbudget = '%d' WHERE 1",
 			CityInfo[ cIllegalBudget ]
 		);
-		mysql_tquery(g_SQL, tmpQuery, "");
+		mysql_tquery(g_SQL, tmpQuery);
 	}
 	return 1;
 }

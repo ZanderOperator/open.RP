@@ -2266,7 +2266,7 @@ CMD:impound(playerid, params[])
         VehicleInfo[vehicleid][vImpounded],
         VehicleInfo[vehicleid][vSQLID]
     );
-    mysql_tquery(g_SQL, query, "", "");
+    mysql_tquery(g_SQL, query);
 
     new
         engine, lights, alarm, doors, bonnect, boot, objective;
@@ -2298,7 +2298,7 @@ CMD:payimpound(playerid, params[])
         VehicleInfo[vehicleid][vImpounded],
         VehicleInfo[vehicleid][vSQLID]
     );
-    mysql_tquery(g_SQL, tmpQuery, "", "");
+    mysql_tquery(g_SQL, tmpQuery);
 
     PlayerToOrgMoney(playerid, FACTION_TYPE_LAW, IMPOUND_PRICE); // novac igraea ide u factionbank od PDa
 
@@ -2596,7 +2596,7 @@ CMD:cleartrunk(playerid, params[])
             format(query, sizeof(query), "DELETE FROM `cocars_weapons` WHERE `id` = '%d'",
                 VehicleInfo[vehicleid][vWeaponSQLID][wslot]
             );
-            mysql_tquery(g_SQL, query, "", "");
+            mysql_tquery(g_SQL, query);
 
             DeleteWeaponObject(vehicleid, wslot);
             ClearWeaponObject(vehicleid, wslot);

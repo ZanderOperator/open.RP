@@ -90,7 +90,7 @@ ResetMonthPaydays()
 {
 	new resetString[128];
 	mysql_format(g_SQL, resetString, sizeof(resetString), "UPDATE `experience` SET `monthpaydays` = '0' WHERE 1");
-	mysql_tquery(g_SQL, resetString, "", "");
+	mysql_tquery(g_SQL, resetString);
 	return 1;
 }
 
@@ -178,7 +178,7 @@ Public:CheckAccountsForInactivity()
 			if(jobkey != 0 && loginstamp <= (gettimestamp() - MAX_JOB_INACTIVITY_TIME) && monthpaydays < 3) // 
 			{
 				mysql_format(g_SQL, updateQuery, sizeof(updateQuery), "UPDATE `accounts` SET `jobkey` = '0', `contracttime` = '0' WHERE `sqlid` = '%d'", sqlid);
-				mysql_tquery(g_SQL, updateQuery, "", "");
+				mysql_tquery(g_SQL, updateQuery);
 				
 				RemoveOfflineJob(jobkey);
 				
@@ -288,10 +288,10 @@ Public:CheckAccountsForInactivity()
 						bankmoney += HouseInfo[houseid][hTakings];
 						
 					mysql_format(g_SQL, updateQuery, sizeof(updateQuery), "UPDATE `accounts` SET `bankMoney` = '%d' WHERE `sqlid` = '%d'", bankmoney, sqlid);
-					mysql_tquery(g_SQL, updateQuery, "", "");
+					mysql_tquery(g_SQL, updateQuery);
 					
 					mysql_format(g_SQL, updateQuery, sizeof(updateQuery), "UPDATE `houses` SET `ownerid` = '0', `takings` = '0' WHERE `id` = '%d'", HouseInfo[houseid][hSQLID]);
-					mysql_tquery(g_SQL, updateQuery, "", "");
+					mysql_tquery(g_SQL, updateQuery);
 					
 					Log_Write("logfiles/inactive_players.txt", "(%s) %s[SQLID: %d] due to inactivity lost his house %s[SQLID: %d] and got %d$ refunded.",
 						ReturnDate(),
@@ -321,12 +321,12 @@ Public:CheckAccountsForInactivity()
 				{
 					bankmoney += GarageInfo[garageid][gPrice];
 					mysql_format(g_SQL, updateQuery, sizeof(updateQuery), "UPDATE `accounts` SET `bankMoney` = '%d' WHERE `sqlid` = '%d'", bankmoney, sqlid);
-					mysql_tquery(g_SQL, updateQuery, "", "");
+					mysql_tquery(g_SQL, updateQuery);
 					
 					mysql_format(g_SQL, updateQuery, sizeof(updateQuery), "UPDATE `server_garages` SET `ownerid` = '0' WHERE `id` = '%d'", 
 						GarageInfo[garageid][gSQLID]
 					);
-					mysql_tquery(g_SQL, updateQuery, "", "");
+					mysql_tquery(g_SQL, updateQuery);
 					
 					Log_Write("logfiles/inactive_players.txt", "(%s) %s[SQLID: %d] due to inactivity lost his garage %s[SQLID: %d] and got %d$ refunded.",
 						ReturnDate(),
@@ -359,10 +359,10 @@ Public:CheckAccountsForInactivity()
 						bankmoney += BizzInfo[bizzid][bTill];
 						
 					mysql_format(g_SQL, updateQuery, sizeof(updateQuery), "UPDATE `accounts` SET `bankMoney` = '%d' WHERE `sqlid` = '%d'", bankmoney, sqlid);
-					mysql_tquery(g_SQL, updateQuery, "", "");
+					mysql_tquery(g_SQL, updateQuery);
 					
 					mysql_format(g_SQL, updateQuery, sizeof(updateQuery), "UPDATE `bizzes` SET `ownerid` = '0' WHERE `id` = '%d'", BizzInfo[bizzid][bSQLID]);
-					mysql_tquery(g_SQL, updateQuery, "", "");
+					mysql_tquery(g_SQL, updateQuery);
 					
 					Log_Write("logfiles/inactive_players.txt", "(%s) %s[SQLID: %d] due to inactivity lost Business %s[SQLID: %d] and got %d$ refunded.",
 						ReturnDate(),
@@ -392,10 +392,10 @@ Public:CheckAccountsForInactivity()
 					if(ComplexInfo[cid][cTill] > 0)
 						bankmoney += ComplexInfo[cid][cTill];
 					mysql_format(g_SQL, updateQuery, sizeof(updateQuery), "UPDATE `accounts` SET `bankMoney` = '%d' WHERE `sqlid` = '%d'", bankmoney, sqlid);
-					mysql_tquery(g_SQL, updateQuery, "", "");
+					mysql_tquery(g_SQL, updateQuery);
 					
 					mysql_format(g_SQL, updateQuery, sizeof(updateQuery), "UPDATE `server_complex` SET `owner_id` = '0' WHERE `id` = '%d'", ComplexInfo[cid][cSQLID]);
-					mysql_tquery(g_SQL, updateQuery, "", "");
+					mysql_tquery(g_SQL, updateQuery);
 					
 					Log_Write("logfiles/inactive_players.txt", "(%s) %s[SQLID: %d] due to inactivity lost his Complex %s[SQLID: %d] and got %d$ refunded.",
 						ReturnDate(),
@@ -424,7 +424,7 @@ Public:CheckAccountsForInactivity()
 				if(crid != INVALID_COMPLEX_ID)
 				{	
 					mysql_format(g_SQL, updateQuery, sizeof(updateQuery), "UPDATE `server_complex_rooms` SET `ownerid` = '0' WHERE `id` = '%d'", ComplexRoomInfo[crid][cSQLID]);
-					mysql_tquery(g_SQL, updateQuery, "", "");
+					mysql_tquery(g_SQL, updateQuery);
 					
 					Log_Write("logfiles/inactive_players.txt", "(%s) %s[SQLID: %d] due to inactivity lost his Complex Room %s [SQLID: %d].",
 						ReturnDate(),
@@ -564,10 +564,10 @@ Public:CheckAccountsForInactivity()
 						bankmoney += HouseInfo[houseid][hTakings];
 						
 					mysql_format(g_SQL, updateQuery, sizeof(updateQuery), "UPDATE `accounts` SET `bankMoney` = '%d' WHERE `sqlid` = '%d'", bankmoney, sqlid);
-					mysql_tquery(g_SQL, updateQuery, "", "");
+					mysql_tquery(g_SQL, updateQuery);
 					
 					mysql_format(g_SQL, updateQuery, sizeof(updateQuery), "UPDATE `houses` SET `ownerid` = '0', `takings` = '0' WHERE `id` = '%d'", HouseInfo[houseid][hSQLID]);
-					mysql_tquery(g_SQL, updateQuery, "", "");
+					mysql_tquery(g_SQL, updateQuery);
 					
 					Log_Write("logfiles/inactive_players.txt", "(%s) %s[SQLID: %d] due to inactivity lost his house on adress %s[SQLID: %d] and got %d$ refunded.",
 						ReturnDate(),
@@ -597,12 +597,12 @@ Public:CheckAccountsForInactivity()
 				{
 					bankmoney += GarageInfo[garageid][gPrice];
 					mysql_format(g_SQL, updateQuery, sizeof(updateQuery), "UPDATE `accounts` SET `bankMoney` = '%d' WHERE `sqlid` = '%d'", bankmoney, sqlid);
-					mysql_tquery(g_SQL, updateQuery, "", "");
+					mysql_tquery(g_SQL, updateQuery);
 					
 					mysql_format(g_SQL, updateQuery, sizeof(updateQuery), "UPDATE `server_garages` SET `ownerid` = '0' WHERE `id` = '%d'", 
 						GarageInfo[garageid][gSQLID]
 					);
-					mysql_tquery(g_SQL, updateQuery, "", "");
+					mysql_tquery(g_SQL, updateQuery);
 					
 					Log_Write("logfiles/inactive_players.txt", "(%s) %s[SQLID: %d] due to inactivity lost his garage %s[SQLID: %d] and got %d$ refunded.",
 						ReturnDate(),
@@ -635,10 +635,10 @@ Public:CheckAccountsForInactivity()
 						bankmoney += BizzInfo[bizzid][bTill];
 						
 					mysql_format(g_SQL, updateQuery, sizeof(updateQuery), "UPDATE `accounts` SET `bankMoney` = '%d' WHERE `sqlid` = '%d'", bankmoney, sqlid);
-					mysql_tquery(g_SQL, updateQuery, "", "");
+					mysql_tquery(g_SQL, updateQuery);
 					
 					mysql_format(g_SQL, updateQuery, sizeof(updateQuery), "UPDATE `bizzes` SET `ownerid` = '0' WHERE `id` = '%d'", BizzInfo[bizzid][bSQLID]);
-					mysql_tquery(g_SQL, updateQuery, "", "");
+					mysql_tquery(g_SQL, updateQuery);
 					
 					Log_Write("logfiles/inactive_players.txt", "(%s) %s[SQLID: %d] due to inactivity lost his Business %s[SQLID: %d] and got %d$ refunded.",
 						ReturnDate(),
@@ -668,10 +668,10 @@ Public:CheckAccountsForInactivity()
 					if(ComplexInfo[cid][cTill] > 0)
 						bankmoney += ComplexInfo[cid][cTill];
 					mysql_format(g_SQL, updateQuery, sizeof(updateQuery), "UPDATE `accounts` SET `bankMoney` = '%d' WHERE `sqlid` = '%d'", bankmoney, sqlid);
-					mysql_tquery(g_SQL, updateQuery, "", "");
+					mysql_tquery(g_SQL, updateQuery);
 					
 					mysql_format(g_SQL, updateQuery, sizeof(updateQuery), "UPDATE `server_complex` SET `owner_id` = '0' WHERE `id` = '%d'", ComplexInfo[cid][cSQLID]);
-					mysql_tquery(g_SQL, updateQuery, "", "");
+					mysql_tquery(g_SQL, updateQuery);
 					
 					Log_Write("logfiles/inactive_players.txt", "(%s) %s[SQLID: %d] due to inactivity lost his Complex %s[SQLID: %d] and got %d$ refunded.",
 						ReturnDate(),
@@ -700,7 +700,7 @@ Public:CheckAccountsForInactivity()
 				if(crid != INVALID_COMPLEX_ID)
 				{	
 					mysql_format(g_SQL, updateQuery, sizeof(updateQuery), "UPDATE `server_complex_rooms` SET `ownerid` = '0' WHERE `id` = '%d'", ComplexRoomInfo[crid][cSQLID]);
-					mysql_tquery(g_SQL, updateQuery, "", "");
+					mysql_tquery(g_SQL, updateQuery);
 					
 					Log_Write("logfiles/inactive_players.txt", "(%s) %s[SQLID: %d] due to inactivity lost his Complex Room on adress %s[SQLID: %d].",
 						ReturnDate(),
@@ -1255,14 +1255,14 @@ stock ChangePlayerName(playerid, newname[], type, bool:admin_cn = false)
 		oldname,
 		newname
 	);
-	mysql_pquery(g_SQL, cnQuery, "");
+	mysql_pquery(g_SQL, cnQuery);
 	
 	mysql_format(g_SQL, cnQuery, sizeof(cnQuery), "UPDATE `accounts` SET `name` = '%e', `sex` = '%d' WHERE `sqlid` = '%d'",
 		newname,
 		PlayerInfo[ playerid ][pAge],
 		PlayerInfo[ playerid ][ pSQLID ]
 	);
-	mysql_pquery(g_SQL, cnQuery, "");
+	mysql_pquery(g_SQL, cnQuery);
 	
 	PlayerInfo[ playerid ][ pArrested ] = 0;
 	PlayerInfo[ playerid ][ pGunLic ] 	= 0;
@@ -1587,7 +1587,7 @@ stock IsValidInactivity(sqlid)
 		else // Prijavljena neaktivnost je istekla
 		{
 			format(inactiveQuery, sizeof(inactiveQuery), "DELETE FROM `inactive_accounts` WHERE `sqlid` = '%d'", sqlid);
-			mysql_tquery(g_SQL, inactiveQuery, "", "");
+			mysql_tquery(g_SQL, inactiveQuery);
 			value = false;
 		}
 	}

@@ -2185,7 +2185,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 
                     new query[128];
                     format(query, sizeof(query), "UPDATE `houses` SET `rentabil` = '1' WHERE `id` = '%d'", HouseInfo[house][hSQLID]);
-                    mysql_tquery(g_SQL, query, "", "");
+                    mysql_tquery(g_SQL, query);
 
                     GameTextForPlayer(playerid, "~g~Kuca stavljena na iznajmljivanje", 1000, 1);
                 }
@@ -2195,7 +2195,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 
                     new query[128];
                     format(query, sizeof(query), "UPDATE `houses` SET `rentabil` = '0' WHERE `id` = '%d'", HouseInfo[house][hSQLID]);
-                    mysql_tquery(g_SQL, query, "", "");
+                    mysql_tquery(g_SQL, query);
 
                     GameTextForPlayer(playerid, "~r~Kuca maknuta sa iznajmljivanja", 1000, 1);
                 }
@@ -2236,7 +2236,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 
             new query[256];
             format(query, sizeof(query), "UPDATE `houses` SET `rent` = '%d' WHERE `id` = '%d'", HouseInfo[house][hRent], HouseInfo[house][hSQLID]);
-            mysql_tquery(g_SQL, query, "", "");
+            mysql_tquery(g_SQL, query);
 
             va_SendClientMessage(playerid, COLOR_RED, "[ ! ] Stanarina postavljena na $%d", HouseInfo[house][hRent]);
             return 1;
@@ -2514,7 +2514,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                     {
                         HouseInfo[house][hSkin1] = GetPlayerSkin(playerid);
                         format(query, sizeof(query), "UPDATE `houses` SET `skin1` = '%d' WHERE `id` = '%d'", HouseInfo[house][hSkin1], HouseInfo[house][hSQLID]);
-                        mysql_tquery(g_SQL, query, "", "");
+                        mysql_tquery(g_SQL, query);
 
                         SendClientMessage(playerid, COLOR_RED, "[ ! ] Uspjesno ste spremili skin u slot 1!");
                     }
@@ -2522,7 +2522,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                     {
                         HouseInfo[house][hSkin2] = GetPlayerSkin(playerid);
                         format(query, sizeof(query), "UPDATE `houses` SET `skin2` = '%d' WHERE `id` = '%d'", HouseInfo[house][hSkin2], HouseInfo[house][hSQLID]);
-                        mysql_tquery(g_SQL, query, "", "");
+                        mysql_tquery(g_SQL, query);
 
                         SendClientMessage(playerid, COLOR_RED, "[ ! ] Uspjesno ste spremili skin u slot 2!");
                     }
@@ -2530,7 +2530,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                     {
                         HouseInfo[house][hSkin3] = GetPlayerSkin(playerid);
                         format(query, sizeof(query), "UPDATE `houses` SET `skin3` = '%d' WHERE `id` = '%d'", HouseInfo[house][hSkin3], HouseInfo[house][hSQLID]);
-                        mysql_tquery(g_SQL, query, "", "");
+                        mysql_tquery(g_SQL, query);
 
                         SendClientMessage(playerid, COLOR_RED, "[ ! ] Uspjesno ste spremili skin u slot 3!");
                     }
@@ -2604,7 +2604,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                     }
                     HouseInfo[house][hSkin1] = 0;
                     format(query, sizeof(query), "UPDATE `houses` SET `skin1` = '%d' WHERE `id` = '%d'", HouseInfo[house][hSkin1], HouseInfo[house][hSQLID]);
-                    mysql_tquery(g_SQL, query, "", "");
+                    mysql_tquery(g_SQL, query);
 
                     SendClientMessage(playerid, COLOR_RED, "[ ! ] Uspjesno ste obrisali skin iz slota 1!");
                 }
@@ -2617,7 +2617,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                     }
                     HouseInfo[house][hSkin2] = 0;
                     format(query, sizeof(query), "UPDATE `houses` SET `skin2` = '%d' WHERE `id` = '%d'", HouseInfo[house][hSkin2], HouseInfo[house][hSQLID]);
-                    mysql_tquery(g_SQL, query, "", "");
+                    mysql_tquery(g_SQL, query);
 
                     SendClientMessage(playerid, COLOR_RED, "[ ! ] Uspjesno ste obrisali skin iz slota 1!");
                 }
@@ -2630,7 +2630,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                     }
                     HouseInfo[house][hSkin3] = 0;
                     format(query, sizeof(query), "UPDATE `houses` SET `skin3` = '%d' WHERE `id` = '%d'", HouseInfo[house][hSkin3], HouseInfo[house][hSQLID]);
-                    mysql_tquery(g_SQL, query, "", "");
+                    mysql_tquery(g_SQL, query);
 
                     SendClientMessage(playerid, COLOR_RED, "[ ! ] Uspjesno ste obrisali skin iz slota 1!");
                 }
@@ -3251,7 +3251,7 @@ CMD:houseentrance(playerid, params[])
         HouseInfo[houseid][h3dViwo],
         HouseInfo[houseid][hSQLID]
     );
-    mysql_tquery(g_SQL, query, "");
+    mysql_tquery(g_SQL, query);
     return 1;
 }
 
@@ -3282,7 +3282,7 @@ CMD:customhouseint(playerid, params[])
         HouseInfo[houseid][hInt],
         HouseInfo[houseid][hSQLID]
     );
-    mysql_tquery(g_SQL, query, "");
+    mysql_tquery(g_SQL, query);
     return 1;
 }
 
@@ -3568,7 +3568,7 @@ CMD:houseint(playerid, params[])
         HouseInfo[proplev][hInt],
         HouseInfo[proplev][hSQLID]
     );
-    mysql_tquery(g_SQL, query, "", "");
+    mysql_tquery(g_SQL, query);
     return 1;
 }
 

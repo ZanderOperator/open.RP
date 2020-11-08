@@ -345,7 +345,7 @@ Public: OnHelperPINHashed(playerid, level)
 	format(PlayerInfo[playerid][pTeamPIN], BCRYPT_HASH_LENGTH, saltedPin);
 		
 	mysql_format(g_SQL, query, 512, "UPDATE `accounts` SET `teampin` = '%e',`helper` = '%d' WHERE `sqlid` = '%d' LIMIT 1", saltedPin, level, PlayerInfo[playerid][pSQLID]);
-	mysql_tquery(g_SQL, query, "", "");
+	mysql_tquery(g_SQL, query);
 	return 1;
 }
 
@@ -356,7 +356,7 @@ Public: OnAdminPINHashed(playerid, level)
 	format(PlayerInfo[playerid][pTeamPIN], BCRYPT_HASH_LENGTH, saltedPin);
 		
 	mysql_format(g_SQL, query, 512, "UPDATE `accounts` SET `teampin` = '%e',`adminLvl` = '%d' WHERE `sqlid` = '%d' LIMIT 1", saltedPin, level, PlayerInfo[playerid][pSQLID]);
-	mysql_tquery(g_SQL, query, "", "");
+	mysql_tquery(g_SQL, query);
 	return 1;
 }
 
@@ -845,7 +845,7 @@ public AddAdminMessage(playerid, user_name[], reason[])
 		}	
 		mysql_format( g_SQL, query, sizeof(query), "UPDATE `accounts` SET `AdminMessage` = '%e', `AdminMessageBy` = '%e', `AdmMessageConfirm` = '0' WHERE `name` = '%e'",
 			reason, GetName(playerid, true), user_name);
-		mysql_tquery(g_SQL, query, "", "");
+		mysql_tquery(g_SQL, query);
 
 		format(string, sizeof(string), "[!] Navedeni korisnik ce sada dobiti vasu notifikaciju prilikom logina.");
 		SendClientMessage(playerid, COLOR_RED, string);
@@ -862,7 +862,7 @@ Public:SendServerMessage(sqlid, reason[])
 		reason, 
 		sqlid
 	);
-	mysql_tquery(g_SQL, query, "", "");
+	mysql_tquery(g_SQL, query);
 }
 
 forward OfflineJailPlayer(playerid, playername[], jailtime);
@@ -874,7 +874,7 @@ public OfflineJailPlayer(playerid, playername[], jailtime)
 	{
   		new TmpQuery[ 256 ];
 		mysql_format(g_SQL, TmpQuery, sizeof(TmpQuery), "UPDATE `accounts` SET `jailed` = '1', `jailtime` = '%d' WHERE `name` = '%e'", jailtime, playername);
-		mysql_tquery(g_SQL, TmpQuery, "", "");
+		mysql_tquery(g_SQL, TmpQuery);
 	}
 	else return SendClientMessage(playerid, COLOR_RED, "[GRESKA - MySQL]: Ne postoji korisnik s tim nickom!");
 	return 1;
@@ -993,7 +993,7 @@ Public:ChargePlayer(playerid, const targetname[], money)
 		new
 			TmpQuery[ 128 ];
 		mysql_format(g_SQL, TmpQuery, sizeof(TmpQuery), "UPDATE `accounts` SET `handMoney` = '%d' WHERE `name` = '%e'", playerMoney, targetname);
-		mysql_tquery(g_SQL, TmpQuery, "", "");
+		mysql_tquery(g_SQL, TmpQuery);
 	}
 	else return SendClientMessage(playerid, COLOR_RED, "[GRESKA - MySQL]: Ne postoji korisnik s tim nickom!");
 	return 1;
@@ -1021,7 +1021,7 @@ public ChargepPlayer(playerid, const tagername[], Float:percent, const reason[])
 		new
 			TmpQuery[ 128 ];
 		mysql_format(g_SQL, TmpQuery, sizeof(TmpQuery), "UPDATE `accounts` SET `handMoney` = '%d' WHERE `name` = '%e'", playerMoney, tagername);
-		mysql_tquery(g_SQL, TmpQuery, "", "");
+		mysql_tquery(g_SQL, TmpQuery);
 	}
 	else return SendClientMessage(playerid, COLOR_RED, "Ne postoji korisnik s tim nickom!");
 	return 1;
@@ -1061,7 +1061,7 @@ public CheckPlayerPrison(playerid, const targetname[], minutes, const reason[])
     if(prisoned != 0) return SendClientMessage(playerid,COLOR_RED, "Taj igrac je vec u arei/zatvoru!");
 	
 	mysql_format(g_SQL, mysqlquery, sizeof(mysqlquery), "UPDATE `accounts` SET `jailed` = '2',`jailtime` = '%d' WHERE `name` = '%e' LIMIT 1", minutes, targetname);
-	mysql_tquery(g_SQL, mysqlquery, "", "");
+	mysql_tquery(g_SQL, mysqlquery);
 		
 	va_SendClientMessage(playerid,COLOR_RED, "[ ! ] Uspjesno si smjestio offline igraca '%s' u areu na %d minuta.",targetname, minutes);
 	return 1;
@@ -1089,11 +1089,11 @@ public LoadPlayerWarns(playerid, targetname[],reason[])
 		Log_Write("/logfiles/a_ban.txt", "(%s) %s [OFFLINE] got banned from Game Admin %s. Reason: 3. Warn", ReturnDate(), targetname, GetName(playerid, false));
 		#endif
 		mysql_format(g_SQL, mysqlquery, sizeof(mysqlquery), "UPDATE `accounts` SET `playaWarns` = '0' WHERE `name` = '%e' LIMIT 1", targetname);
-        mysql_tquery(g_SQL, mysqlquery, "", "");
+        mysql_tquery(g_SQL, mysqlquery);
     } else {
 		va_SendClientMessage(playerid,COLOR_RED, "[ ! ] Uspjesno si warnao igraca %s, te mu je to ukupno %d warn!",targetname,warns);
         mysql_format(g_SQL, mysqlquery, sizeof(mysqlquery), "UPDATE `accounts` SET `playaWarns` = '%d' WHERE `name` = '%e' LIMIT 1", warns, targetname);
-        mysql_tquery(g_SQL, mysqlquery, "", "");
+        mysql_tquery(g_SQL, mysqlquery);
     }
 	return 1;
 }
@@ -1248,7 +1248,7 @@ public OfflinePlayerVehicles(playerid, giveplayerid)
 		angle,
 		PlayerInfo[giveplayerid][pSQLID]
 	);
-	mysql_tquery(g_SQL, Query, "");
+	mysql_tquery(g_SQL, Query);
 	
 	if(vehicleid != -1) {
 	    VehicleInfo[vehicleid][vParkX]	= x;
@@ -1774,7 +1774,7 @@ CMD:makehelper(playerid, params[])
 	if(!level) 
 	{
 		format(query, 128, "UPDATE `accounts` SET `teampin` = '',`helper` = '0' WHERE `sqlid` = '%d' LIMIT 1", PlayerInfo[giveplayerid][pSQLID]);
-		mysql_tquery(g_SQL, query, "", "");
+		mysql_tquery(g_SQL, query);
 		
 		PlayerInfo[giveplayerid][pTempRank][0] 	= 0;
 		PlayerInfo[giveplayerid][pHelper] 		= 0;
@@ -1880,7 +1880,7 @@ CMD:inactivity(playerid, params[])
 			endstamp,
 			reason
 		);
-		mysql_pquery(g_SQL, insertQuery, "", "");
+		mysql_pquery(g_SQL, insertQuery);
 		
 		#if defined MODULE_LOGS
 		Log_Write("logfiles/a_inactive_players.txt", "(%s) %s[A%d] approved %s[SQLID: %d] %d days long inactivity. Reason: %s",
@@ -1931,7 +1931,7 @@ CMD:inactivity(playerid, params[])
 		}
 		new deleteQuery[200];
 		mysql_format(g_SQL, deleteQuery, sizeof(deleteQuery), "DELETE FROM `inactive_accounts` WHERE `sqlid` = '%d'", sqlid);
-		mysql_tquery(g_SQL, deleteQuery, "", "");
+		mysql_tquery(g_SQL, deleteQuery);
 		
 		#if defined MODULE_LOGS
 		Log_Write("logfiles/a_inactive_players.txt", "(%s) %s[A%d] deleted %s[SQLID: %d] registered inactivity from database.",
@@ -2082,7 +2082,7 @@ CMD:makeadmin(playerid, params[])
 	
 	if(!level) {
 		format(dquery, 128, "UPDATE `accounts` SET `teampin` = '',`adminLvl` = '0' WHERE `sqlid` = '%d' LIMIT 1", PlayerInfo[giveplayerid][pSQLID]);
-		mysql_tquery(g_SQL, dquery, "", "");
+		mysql_tquery(g_SQL, dquery);
 		
 		PlayerInfo[giveplayerid][pTempRank][0] 	= 0;
 		PlayerInfo[giveplayerid][pAdmin] 		= 0;
@@ -2121,7 +2121,7 @@ CMD:makeadminex(playerid, params[])
 			gplayername[MAX_PLAYER_NAME];
 		if(sscanf(params, "s[24] ", gplayername)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /makeadminex [Ime_Prezime] [Level(1-1338)]");
 		mysql_format(g_SQL, mysqlquery, sizeof(mysqlquery), "UPDATE `accounts` SET `adminLvl` = '%d' WHERE `name` = '%e' LIMIT 1", level, gplayername);
-		mysql_tquery(g_SQL, mysqlquery, "", "");
+		mysql_tquery(g_SQL, mysqlquery);
 	}
 	else SendClientMessage(playerid, COLOR_RED, "Niste ovlasteni za koristenje ove komande!");
 	return 1;
@@ -2602,7 +2602,7 @@ CMD:address(playerid, params[])
 	new TmpQuery[105];
 	format(HouseInfo[id][hAdress], 32, address);
 	mysql_format(g_SQL, TmpQuery, 105, "UPDATE `houses` SET `adress` = '%e' WHERE `id` = '%d'", address, HouseInfo[id][hSQLID]);
-	mysql_tquery(g_SQL, TmpQuery, "", "");
+	mysql_tquery(g_SQL, TmpQuery);
 	va_SendClientMessage(playerid, COLOR_RED, "[ ! ] Promjenili ste adresu kuce u %s", address);
 	return 1;
 }
@@ -2631,7 +2631,7 @@ CMD:edit(playerid, params[])
 					propid = i;
 					HouseInfo[i][hLevel] = proplev;
 					format(TmpQuery, 128, "UPDATE `houses` SET `level` = '%d' WHERE `id` = '%d'", proplev, HouseInfo[i][hSQLID]);
-					mysql_tquery(g_SQL, TmpQuery, "", "");
+					mysql_tquery(g_SQL, TmpQuery);
 				}
 				else if(strcmp(x_job,"price",true) == 0)
 				{
@@ -2639,7 +2639,7 @@ CMD:edit(playerid, params[])
 					propid = i;
 					HouseInfo[i][hValue] = proplev;
 					format(TmpQuery, 128, "UPDATE `houses` SET `value` = '%d' WHERE `id` = '%d'", proplev, HouseInfo[i][hSQLID]);
-					mysql_tquery(g_SQL, TmpQuery, "", "");
+					mysql_tquery(g_SQL, TmpQuery);
 				}
 				else if(strcmp(x_job,"locked",true) == 0)
 				{
@@ -2653,7 +2653,7 @@ CMD:edit(playerid, params[])
 					propid = i;
 					HouseInfo[i][hDoorLevel] = proplev;
 					format(TmpQuery, 128, "UPDATE `houses` SET `doorlevel` = '%d' WHERE `id` = '%d'", proplev, HouseInfo[i][hSQLID]);
-					mysql_tquery(g_SQL, TmpQuery, "", "");
+					mysql_tquery(g_SQL, TmpQuery);
 				}
 				else if(strcmp(x_job,"locklevel",true) == 0)
 				{
@@ -2661,7 +2661,7 @@ CMD:edit(playerid, params[])
 					propid = i;
 					HouseInfo[i][hLockLevel] = proplev;
 					format(TmpQuery, 128, "UPDATE `houses` SET `locklevel` = '%d' WHERE `id` = '%d'", proplev, HouseInfo[i][hSQLID]);
-					mysql_tquery(g_SQL, TmpQuery, "", "");
+					mysql_tquery(g_SQL, TmpQuery);
 				}
 				else if(strcmp(x_job,"alarmlevel",true) == 0)
 				{
@@ -2669,7 +2669,7 @@ CMD:edit(playerid, params[])
 					propid = i;
 					HouseInfo[i][hAlarm] = proplev;
 					format(TmpQuery, 128, "UPDATE `houses` SET `alarm` = '%d' WHERE `id` = '%d'", proplev, HouseInfo[i][hSQLID]);
-					mysql_tquery(g_SQL, TmpQuery, "", "");
+					mysql_tquery(g_SQL, TmpQuery);
 				}
 				else if(strcmp(x_job,"hviwo",true) == 0)
 				{
@@ -2677,7 +2677,7 @@ CMD:edit(playerid, params[])
 					propid = i;
 					HouseInfo[i][hVirtualWorld] = proplev;
 					format(TmpQuery, 128, "UPDATE `houses` SET `viwo` = '%d' WHERE `id` = '%d'", proplev, HouseInfo[i][hSQLID]);
-					mysql_tquery(g_SQL, TmpQuery, "", "");
+					mysql_tquery(g_SQL, TmpQuery);
 				}
 			}
 		}
@@ -2695,7 +2695,7 @@ CMD:edit(playerid, params[])
 					propid = i;
 					BizzInfo[i][bLevelNeeded] = proplev;
 					format(TmpQuery, 128, "UPDATE `bizzes` SET `levelneeded` = '%d' WHERE `id` = '%d'", proplev, BizzInfo[i][bSQLID]);
-					mysql_tquery(g_SQL, TmpQuery, "", "");
+					mysql_tquery(g_SQL, TmpQuery);
 				}
 				else if(strcmp(x_job,"price",true) == 0)
 				{
@@ -2703,7 +2703,7 @@ CMD:edit(playerid, params[])
 					propid = i;
 					BizzInfo[i][bBuyPrice] = proplev;
 					format(TmpQuery, 128, "UPDATE `bizzes` SET `buyprice` = '%d' WHERE `id` = '%d'", proplev, BizzInfo[i][bSQLID]);
-					mysql_tquery(g_SQL, TmpQuery, "", "");
+					mysql_tquery(g_SQL, TmpQuery);
 				}
 				else if(strcmp(x_job,"funds",true) == 0)
 				{
@@ -2711,7 +2711,7 @@ CMD:edit(playerid, params[])
 					propid = i;
 					BizzInfo[i][bTill] = proplev;
 					format(TmpQuery, 128, "UPDATE `bizzes` SET `till` = '%d' WHERE `id` = '%d'", proplev, BizzInfo[i][bSQLID]);
-					mysql_tquery(g_SQL, TmpQuery, "", "");
+					mysql_tquery(g_SQL, TmpQuery);
 				}
 				else if(strcmp(x_job,"locked",true) == 0)
 				{
@@ -2725,7 +2725,7 @@ CMD:edit(playerid, params[])
 					propid = i;
 					BizzInfo[i][bVirtualWorld] = proplev;
 					format(TmpQuery, 128, "UPDATE `bizzes` SET `virtualworld` = '%d' WHERE `id` = '%d'", proplev, BizzInfo[i][bSQLID]);
-					mysql_tquery(g_SQL, TmpQuery, "", "");
+					mysql_tquery(g_SQL, TmpQuery);
 				}
 				else if(strcmp(x_job,"type",true) == 0)
 				{
@@ -2734,7 +2734,7 @@ CMD:edit(playerid, params[])
 					if(proplev < 0 || proplev > 14) return SendClientMessage(playerid, COLOR_RED, "[ ! ]: Type range is 0-14!");
 					BizzInfo[i][bType] = proplev;
 					format(TmpQuery, 128, "UPDATE `bizzes` SET `type` = '%d' WHERE `id` = '%d'", proplev, BizzInfo[i][bSQLID]);
-					mysql_tquery(g_SQL, TmpQuery, "", "");
+					mysql_tquery(g_SQL, TmpQuery);
 				}
 			}
 		}
@@ -2780,7 +2780,7 @@ CMD:asellbiz(playerid, params[])
 		format( TmpQuery, sizeof(TmpQuery), "UPDATE `bizzes` SET `ownerid` = '0', `co_ownerid` = '0' WHERE `id` = '%d'", 
 			BizzInfo[ biz ][bSQLID]
 		);
-		mysql_tquery(g_SQL, TmpQuery, "", "");
+		mysql_tquery(g_SQL, TmpQuery);
 		if(foundonline == 0)
 		{
 			// Update accounts
@@ -2788,12 +2788,12 @@ CMD:asellbiz(playerid, params[])
 				BizzInfo[ biz ][bBuyPrice],
 				BizzInfo[ biz ][bOwnerID]
 			);
-			mysql_tquery(g_SQL, TmpQuery, "", "");
+			mysql_tquery(g_SQL, TmpQuery);
 			// Update proracun
 			format( TmpQuery, sizeof(TmpQuery), "UPDATE `city` SET `budget` = `budget` - '%d'", 
 				BizzInfo[ biz ][bBuyPrice]
 			);
-			mysql_tquery(g_SQL, TmpQuery, "", "");
+			mysql_tquery(g_SQL, TmpQuery);
 		}
 		
 		//------------------------------------------------------
@@ -2839,7 +2839,7 @@ CMD:asellgarage(playerid, params[])
 		format( TmpQuery, sizeof(TmpQuery), "UPDATE `server_garages` SET `ownerid` = '0' WHERE `id` = '%d'", 
 			GarageInfo[garage][gSQLID]
 		);
-		mysql_tquery(g_SQL, TmpQuery, "", "");
+		mysql_tquery(g_SQL, TmpQuery);
 		
 		GarageInfo[garage][gOwnerID] 				= 0;
 		GarageInfo[ garage ][ gLocked ] 			= 1;
@@ -2875,7 +2875,7 @@ CMD:asellhouse(playerid, params[])
 		new TmpQuery[128];
 		// Update houses
 		format(TmpQuery, 128, "UPDATE `houses` SET `ownerid`='0' WHERE `ownerid` = '%d'", HouseInfo[ house ][hOwnerID]);
-		mysql_tquery(g_SQL, TmpQuery, "", "");
+		mysql_tquery(g_SQL, TmpQuery);
 		
 		if(foundonline == 0)
 		{
@@ -2884,13 +2884,13 @@ CMD:asellhouse(playerid, params[])
 				HouseInfo[ house ][hValue],
 				HouseInfo[ house ][hOwnerID]
 			);
-			mysql_tquery(g_SQL, TmpQuery, "", "");
+			mysql_tquery(g_SQL, TmpQuery);
 			
 			// Update proracun
 			format( TmpQuery, sizeof(TmpQuery), "UPDATE `city` SET `budget` = `budget` - '%d'", 
 				HouseInfo[ house ][hValue]
 			);
-			mysql_tquery(g_SQL, TmpQuery, "", "");
+			mysql_tquery(g_SQL, TmpQuery);
 		}
 		
 			
@@ -2937,7 +2937,7 @@ CMD:asellcomplex(playerid, params[])
 		
 		// Update Complex MySQL table
 		format(TmpQuery, 128, "UPDATE `server_complex` SET `owner_id`= '0' WHERE `id` = '%d'", ComplexInfo[ complex ][ cSQLID ]);
-		mysql_tquery(g_SQL, TmpQuery, "", "");
+		mysql_tquery(g_SQL, TmpQuery);
 		
 		if(foundonline == 0)
 		{
@@ -2946,13 +2946,13 @@ CMD:asellcomplex(playerid, params[])
 				ComplexInfo[complex][cPrice],
 				ComplexInfo[complex][cOwnerID]
 			);
-			mysql_tquery(g_SQL, TmpQuery, "", "");
+			mysql_tquery(g_SQL, TmpQuery);
 			
 			// Update proracun
 			format( TmpQuery, sizeof(TmpQuery), "UPDATE `city` SET `budget` = `budget` - '%d'", 
 				ComplexInfo[complex][cPrice]
 			);
-			mysql_tquery(g_SQL, TmpQuery, "", "");
+			mysql_tquery(g_SQL, TmpQuery);
 		}
 				
 		ComplexInfo[complex][cOwnerID]		= -1;
@@ -3553,7 +3553,7 @@ CMD:deletevehicle(playerid, params[])
 				return SendClientMessage(playerid, COLOR_RED, "Nisi ovlasten za koristenje ove komande.");
 
 			format(deleteQuery, sizeof(deleteQuery), "DELETE FROM `cocars` WHERE `id` = '%d'", VehicleInfo[vehicleid][vSQLID]);
-			mysql_tquery(g_SQL, deleteQuery, "");
+			mysql_tquery(g_SQL, deleteQuery);
 			SendFormatMessage(playerid, MESSAGE_TYPE_INFO, "Uspjesno ste izbrisali %s(SQL: %d) iz baze/igre!", vehicleid);
 
 			DestroyFarmerObjects(playerid);
@@ -3564,7 +3564,7 @@ CMD:deletevehicle(playerid, params[])
 			if(PlayerInfo[playerid][pAdmin] < 1338) return SendClientMessage(playerid, COLOR_RED, "Nisi ovlasten za koristenje ove komande.");
 
 			format(deleteQuery, sizeof(deleteQuery), "DELETE FROM `server_cars` WHERE `id` = '%d'", VehicleInfo[vehicleid][vSQLID]);
-			mysql_tquery(g_SQL, deleteQuery, "");
+			mysql_tquery(g_SQL, deleteQuery);
 
 			SendFormatMessage(playerid, MESSAGE_TYPE_INFO, "Uspjesno ste izbrisali vozilo %d iz baze/igre!", vehicleid);
 
@@ -3685,7 +3685,7 @@ CMD:undie(playerid, params[])
 	new
 		deleteQuery[128];
 	format(deleteQuery, 128, "DELETE FROM `player_deaths` WHERE `player_id` = '%d'", PlayerInfo[giveplayerid][pSQLID]);
-	mysql_tquery(g_SQL, deleteQuery, "", "");
+	mysql_tquery(g_SQL, deleteQuery);
 
  	format(globalstring, sizeof(globalstring), "AdmWarn: %s je ugasio RPDeath stanje korisniku %s!", GetName(playerid,false), GetName(giveplayerid,false));
 	SendAdminMessage(COLOR_RED, globalstring);
@@ -4273,7 +4273,7 @@ CMD:prisonex(playerid, params[])
 		tmp_reason,
 		date
 	);
-	mysql_tquery(g_SQL, prsnQuery, "", "");
+	mysql_tquery(g_SQL, prsnQuery);
 	return 1;
 }
 
@@ -4315,7 +4315,7 @@ CMD:warnex(playerid, params[])
 		tmp_reason,
 		date
 	);
-	mysql_tquery(g_SQL, TmpQuery, "", "");
+	mysql_tquery(g_SQL, TmpQuery);
 	return 1;
 }
 
@@ -4421,7 +4421,7 @@ CMD:prison(playerid, params[])
 		reason,
 		date
 	);
-	mysql_tquery(g_SQL, prsnQuery, "", "");
+	mysql_tquery(g_SQL, prsnQuery);
 	return 1;
 }
 
@@ -4515,7 +4515,7 @@ CMD:charge(playerid, params[])
 		reason,
 		date
 	);
-	mysql_tquery(g_SQL, TmpQuery, "", "");
+	mysql_tquery(g_SQL, TmpQuery);
 	return 1;
 }
 
@@ -4558,7 +4558,7 @@ CMD:chargep(playerid, params[])
 		reason,
 		date
 	);
-	mysql_tquery(g_SQL, TmpQuery, "", "");
+	mysql_tquery(g_SQL, TmpQuery);
 	return 1;
 }
 
@@ -4986,7 +4986,7 @@ CMD:warn(playerid, params[])
 		reason,
 		date
 	);
-	mysql_tquery(g_SQL, wrnQuery, "", "");
+	mysql_tquery(g_SQL, wrnQuery);
 	return 1;
 }
 

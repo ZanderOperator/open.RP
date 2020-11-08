@@ -806,7 +806,7 @@ CMD:recover(playerid, params[])
     new
         query[128];
     format(query, sizeof(query), "DELETE FROM `player_deaths` WHERE `player_id` = '%d'", PlayerInfo[giveplayerid][pSQLID]);
-    mysql_tquery(g_SQL, query, "", "");
+    mysql_tquery(g_SQL, query);
 
     va_SendClientMessage(giveplayerid, COLOR_RED, "[ ! ] Bolnicar %s vas je izlijecio i vise niste u post death stanju!",
         GetName(playerid)

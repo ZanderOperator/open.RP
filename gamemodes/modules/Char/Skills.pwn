@@ -78,7 +78,7 @@ SavePlayerSkill(playerid)
 		PlayerInfo[playerid][pSkills][8],
 		PlayerInfo[playerid][pSQLID]
 	);
-	mysql_tquery(g_SQL, skillQuery, "", "");
+	mysql_tquery(g_SQL, skillQuery);
 	return 1;
 }
 
@@ -138,7 +138,7 @@ public OnPlayerSkillsLoad(playerid)
 			PlayerInfo[playerid][pSkills][7],
 			PlayerInfo[playerid][pSkills][8]
 		);
-		mysql_tquery(g_SQL, skillQuery, "", "");
+		mysql_tquery(g_SQL, skillQuery);
 	}
 	return 1;
 }

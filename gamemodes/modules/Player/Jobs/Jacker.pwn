@@ -289,7 +289,7 @@ stock static CheckForGarageWantedLevel(garage, bool:save=false)
 		new
 			tmpString[ 128 ];
 		format(tmpString, 128, "UPDATE ilegal_garages SET wanted = '%d' WHERE id = '%d'", IlegalGarage[ garage ][ igWantedLevel ], IlegalGarage[ garage ][ igSQLID ]);
-		mysql_tquery(g_SQL, tmpString, "");
+		mysql_tquery(g_SQL, tmpString);
 	}
 	new
 		tmpString[ 135 ];		
@@ -1114,7 +1114,7 @@ CMD:jacker(playerid, params[])
 		IllegalBudgetToPlayerMoney(playerid, JackerMoney[ playerid ]); // ilegalni budget se updatea i igrac dobiva novce
 		IlegalGarage[ garage ][ igCarsJacked ]++;
 		format(tmpString, 128, "UPDATE ilegal_garages SET jackedcars = '%d' WHERE id = '%d'", IlegalGarage[ garage ][ igCarsJacked ], IlegalGarage[ garage ][ igSQLID ]);
-		mysql_tquery(g_SQL, tmpString, "");
+		mysql_tquery(g_SQL, tmpString);
 		GetVehicleNameByModel(LandVehicles[ PlayerJackingCar[ playerid ] ][ viModelid ], vehicleName, MAX_VEHICLE_NAME);
 		SendFormatMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uspjesno ste zavrsili %s jacker misiju i zaradili %i$.", vehicleName, JackerMoney[ playerid ]);
 				

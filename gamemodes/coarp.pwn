@@ -2150,7 +2150,7 @@ RegisterPlayerDeath(playerid, killerid) // funkcija
 			PlayerInfo[playerid][pDeathVW],
 			gettimestamp()
 		);
-		mysql_tquery(g_SQL, deathQuery, "", "");
+		mysql_tquery(g_SQL, deathQuery);
 	}
 	AC_ResetPlayerWeapons(playerid);
 
@@ -3261,7 +3261,7 @@ hook OnPlayerDisconnect(playerid, reason)
 				PlayerInfo[playerid][pSkin],
 				gettimestamp()
 			);
-			mysql_tquery(g_SQL, crashQuery, "", "");
+			mysql_tquery(g_SQL, crashQuery);
 
 			if(reason == 0)
 			{
@@ -3275,7 +3275,7 @@ hook OnPlayerDisconnect(playerid, reason)
 	new
 	    logUpdate[64];
 	format(logUpdate, sizeof(logUpdate), "UPDATE `accounts` SET `online` = '0' WHERE `sqlid` = '%d'", PlayerInfo[ playerid ][ pSQLID ]);
-	mysql_tquery(g_SQL, logUpdate, "");
+	mysql_tquery(g_SQL, logUpdate);
 
 	// Tuning
 	if( Bit1_Get( gr_PlayerInTuningMode	, playerid ) )

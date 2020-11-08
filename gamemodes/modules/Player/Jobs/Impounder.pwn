@@ -242,7 +242,7 @@ OPUnTowIV(playerid, veh)
 			VehicleInfo[veh][vImpounded],
 			VehicleInfo[veh][vSQLID]
 		);
-		mysql_tquery(g_SQL, bigquery, "", "");
+		mysql_tquery(g_SQL, bigquery);
 	
 		new
 			engine, lights, alarm, doors, bonnect, boot, objective;

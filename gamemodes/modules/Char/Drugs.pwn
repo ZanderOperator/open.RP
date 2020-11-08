@@ -919,7 +919,7 @@ DeletePlayerDrug(playerid, slot = -1) // pripazi kako koristis, slot -1 znaci da
 	if(slot == -1)
 	{
 		mysql_format(g_SQL, sqlstring, sizeof(sqlstring), "DELETE FROM `player_drugs` WHERE `player_id` = '%d'", PlayerInfo[playerid][pSQLID]);
-		mysql_tquery(g_SQL, sqlstring, "", "");
+		mysql_tquery(g_SQL, sqlstring);
 		
 		for(new d = 0; d != MAX_PLAYER_DRUGS; ++d)
 		{
@@ -936,7 +936,7 @@ DeletePlayerDrug(playerid, slot = -1) // pripazi kako koristis, slot -1 znaci da
 			return 0;
 			
 		mysql_format(g_SQL, sqlstring, sizeof(sqlstring), "DELETE FROM `player_drugs` WHERE `id` = '%d'", PlayerDrugs[playerid][dSQLID][slot]);
-		mysql_tquery(g_SQL, sqlstring, "", "");
+		mysql_tquery(g_SQL, sqlstring);
 				
 		PlayerDrugs[playerid][dSQLID][slot] = -1;
 		PlayerDrugs[playerid][dCode][slot] = 0;
@@ -1048,7 +1048,7 @@ DeleteVehicleDrug(vehicleid, slot = -1) // pripazi kako koristis, slot -1 znaci 
 	if(slot == -1)
 	{
 		mysql_format(g_SQL, sqlstring, sizeof(sqlstring), "DELETE FROM `cocars_drugs` WHERE `vehicle_id` = '%d'", VehicleInfo[vehicleid][vSQLID]);
-		mysql_tquery(g_SQL, sqlstring, "", "");
+		mysql_tquery(g_SQL, sqlstring);
 		
 		ResetVehicleDrugs(vehicleid);
 	}
@@ -1058,7 +1058,7 @@ DeleteVehicleDrug(vehicleid, slot = -1) // pripazi kako koristis, slot -1 znaci 
 			return 0;
 			
 		mysql_format(g_SQL, sqlstring, sizeof(sqlstring), "DELETE FROM `cocars_drugs` WHERE `id` = '%d'", VehicleDrugs[vehicleid][vsqlid][slot]);
-		mysql_tquery(g_SQL, sqlstring, "", "");
+		mysql_tquery(g_SQL, sqlstring);
 		
 		VehicleDrugs[vehicleid][vsqlid][slot] = 0;
 		VehicleDrugs[vehicleid][vtype][slot] = 0;

@@ -288,7 +288,7 @@ stock PlayerToRouletteMoney(playerid, money)
 				BizzInfo[bizzid][bTill],
 				BizzInfo[bizzid][bSQLID]
 			);
-			mysql_tquery(g_SQL, tillUpdate, "");
+			mysql_tquery(g_SQL, tillUpdate);
 			break;
 		}
 	}

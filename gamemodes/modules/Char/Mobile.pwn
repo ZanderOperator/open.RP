@@ -220,7 +220,7 @@ stock CreatePlayerContacts(playerid)
 	format(createContactQuery, 428, "INSERT INTO `player_mobile_contacts`(`player_id`, `title_1`, `number_1`, `title_2`, `number_2`, `title_3`, `number_3`, `title_4`, `number_4`, `title_5`, `number_5`, `title_6`, `number_6`, `title_7`, `number_7`, `title_8`, `number_8`, `title_9`, `number_9`, `title_10`, `number_10`) VALUES ('%d', 'N/A', '0', 'N/A', '0', 'N/A', '0', 'N/A', '0', 'N/A', '0', 'N/A', '0', 'N/A', '0', 'N/A', '0', 'N/A', '0', 'N/A', '0')",
 		PlayerInfo[playerid][pSQLID]
 	);
-	mysql_tquery(g_SQL, createContactQuery, "", "");
+	mysql_tquery(g_SQL, createContactQuery);
 }
 
 stock DeletePlayerContacts(playerid)
@@ -230,7 +230,7 @@ stock DeletePlayerContacts(playerid)
 	format(createContactQuery, 68, "DELETE FROM `player_mobile_contacts` WHERE player_id = '%d'",
 		PlayerInfo[playerid][pSQLID]
 	);
-	mysql_tquery(g_SQL, createContactQuery, "", "");
+	mysql_tquery(g_SQL, createContactQuery);
 }
 
 stock SavePlayerContacts(playerid, bool:reason = false)
@@ -259,7 +259,7 @@ stock SavePlayerContacts(playerid, bool:reason = false)
 			PlayerContactName[playerid][9],
 			PlayerInfo[playerid][pSQLID]
 		);
-		mysql_tquery(g_SQL, mobileUpdate, "", "");
+		mysql_tquery(g_SQL, mobileUpdate);
 
 		format(mobileUpdate, 560, "UPDATE `player_mobile_contacts` SET `number_1` = '%d', `number_2` = '%d', `number_3` = '%d', `number_4` = '%d', `number_5` = '%d', `number_6` = '%d', `number_7` = '%d', `number_8` = '%d', `number_9` = '%d', `number_10` = '%d' WHERE `player_id` = '%d'",
 			PlayerContactNumber[playerid][0],
@@ -274,7 +274,7 @@ stock SavePlayerContacts(playerid, bool:reason = false)
 			PlayerContactNumber[playerid][9],
 			PlayerInfo[playerid][pSQLID]
 		);
-		mysql_tquery(g_SQL, mobileUpdate, "", "");
+		mysql_tquery(g_SQL, mobileUpdate);
 	}
 	return 1;
 }
@@ -357,7 +357,7 @@ stock SavePlayerContactSlot(playerid, slotid)
 			);
 		}
 	}
-	mysql_tquery(g_SQL, mobileUpdate, "", "");
+	mysql_tquery(g_SQL, mobileUpdate);
 	return 1;
 }
 
@@ -586,7 +586,7 @@ stock DeleteTower(towerid)
 	TowerInfo[ towerid ][ twPosRZ ] = 0.0;
 	TowerInfo[ towerid ][ twRadius ] = 0.0;
 	format(tmpQuery, sizeof(tmpQuery), "DELETE FROM `signaltowers` WHERE `id` = '%d' LIMIT 1", TowerInfo[ towerid ][ twSQLID ]);
-	mysql_tquery(g_SQL, tmpQuery, "");
+	mysql_tquery(g_SQL, tmpQuery);
 	return 1;
 }
 

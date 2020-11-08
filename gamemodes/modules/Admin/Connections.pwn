@@ -27,13 +27,13 @@ stock SaveAdminConnectionTime(playerid)
 			PlayerInfo[ playerid ][ pAdminHours ], 
 			PlayerInfo[ playerid ][ pSQLID ] 
 		);
-		mysql_tquery(g_SQL, adminConnQuery, "", "");
+		mysql_tquery(g_SQL, adminConnQuery);
 	} else {
 		format(adminConnQuery, 128, "INSERT INTO `stats_admins` (`sqlid`, `date`, `times`) VALUES ('%d',CURDATE(),'%d')", 
 			PlayerInfo[ playerid ][ pSQLID ],
 			PlayerInfo[ playerid ][ pAdminHours ]
 		);
-		mysql_tquery(g_SQL, adminConnQuery, "", "");
+		mysql_tquery(g_SQL, adminConnQuery);
 	}
 	cache_delete(result);
 	return 1;
