@@ -50,7 +50,7 @@ stock SaveVehicleTicketStatus(vehicleid, ticket_slot)
         VehicleInfo[vehicleid][vTicketShown][ticket_slot],
         VehicleInfo[vehicleid][vTicketsSQLID][ticket_slot]
     );
-    mysql_tquery(g_SQL, updateQuery, "", "");
+    mysql_tquery(g_SQL, updateQuery);
     return 1;
 }
 
@@ -106,7 +106,7 @@ static stock InsertPlayerTicket(playerid, giveplayerid, money, const reason[])
         TicketInfo[giveplayerid][tkReason],
         TicketInfo[giveplayerid][tkDate]
     );
-    mysql_tquery(g_SQL, query, "");
+    mysql_tquery(g_SQL, query);
     mysql_tquery(g_SQL, "COMMIT");
 
     SendFormatMessage(playerid, MESSAGE_TYPE_SUCCESS, "You have given a ticket to %s! ", TicketInfo[giveplayerid][tkReciever]);
@@ -124,7 +124,7 @@ stock DeletePlayerTicket(playerid, sqlid, bool:mdc_notification = false)
     new
         query[256];
     format(query, sizeof(query), "DELETE FROM tickets WHERE `id` = '%d'", sqlid);
-    mysql_tquery(g_SQL, query, "");
+    mysql_tquery(g_SQL, query);
 
     if (mdc_notification)
         SendFormatMessage(playerid, MESSAGE_TYPE_SUCCESS, "Ticket #%d is sucessfully removed from database.", sqlid);

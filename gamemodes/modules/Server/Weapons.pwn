@@ -117,7 +117,7 @@ stock AC_SavePlayerWeapon(playerid, slotid)
 			PlayerWeapons[playerid][pwHidden][slotid],
 			PlayerWeapons[playerid][pwSQLID][slotid]
 		);
-		mysql_tquery(g_SQL, weaponUpdate, "", "");
+		mysql_tquery(g_SQL, weaponUpdate);
 	}
 	else if(PlayerWeapons[playerid][pwSQLID][slotid] == -1 && PlayerWeapons[playerid][pwAmmo][slotid] > 0)
 	{
@@ -328,7 +328,7 @@ stock AC_ResetPlayerWeapons(playerid, bool:base_reset=true)
 		new
 			weapDeleteQuery[128];
 		format(weapDeleteQuery, 128, "DELETE FROM `player_weapons` WHERE `player_id` = '%d'", PlayerInfo[playerid][pSQLID]);
-		mysql_tquery(g_SQL, weapDeleteQuery, "", "");
+		mysql_tquery(g_SQL, weapDeleteQuery);
 	}
 	return 1;
 }
@@ -375,7 +375,7 @@ stock AC_ResetPlayerWeapon(playerid, weaponid, bool:base_update=true)
 		new
 			weapDeleteQuery[128];
 		format(weapDeleteQuery, 128, "DELETE FROM `player_weapons` WHERE `player_id` = '%d' AND `weapon_id` = '%d'", PlayerInfo[playerid][pSQLID], weaponid);
-		mysql_tquery(g_SQL, weapDeleteQuery, "", "");
+		mysql_tquery(g_SQL, weapDeleteQuery);
 	}
 	//Tick
 	PlayerTick[playerid][ptWeapon] = gettimestamp() + 5;

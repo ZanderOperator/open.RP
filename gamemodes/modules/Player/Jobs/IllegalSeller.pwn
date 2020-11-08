@@ -117,7 +117,7 @@ stock static UpdateWOCrate(slotid) // Updateanje package crate
 		PlayerITInfo[ slotid ][ cWeaponAmmo ],
 		PlayerITInfo[ slotid ][ cSQLID ]
 	);
-	mysql_tquery(g_SQL, tmpQuery, "");
+	mysql_tquery(g_SQL, tmpQuery);
 	return 1;
 }
 
@@ -145,7 +145,7 @@ stock static DeleteWOCrate(slotid) // Delete package crate
 {
 	new destroyQuery[ 64];
 	format( destroyQuery, sizeof(destroyQuery), "DELETE FROM weapon_order_crates WHERE `id` = '%d' LIMIT 1", PlayerITInfo[ slotid ][ cSQLID ]);
-	mysql_tquery(g_SQL, destroyQuery, "");
+	mysql_tquery(g_SQL, destroyQuery);
 	return 1;
 }
 

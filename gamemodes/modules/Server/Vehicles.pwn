@@ -744,7 +744,7 @@ stock static SaveVehicle(vehicleid)
 		VehicleInfo[ vehicleid ][ vOverHeated],
 		VehicleInfo[ vehicleid ][ vSQLID ]
 	);
-	mysql_tquery(g_SQL, saveQuery, "");
+	mysql_tquery(g_SQL, saveQuery);
 }
 
 stock VehicleObjectCheck(vehicleid)

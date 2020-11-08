@@ -473,7 +473,7 @@ stock DeleteVehicleTuning(vehicleid)
 	new	
 		tmpString[ 64 ];
 	format( tmpString, sizeof(tmpString), "DELETE FROM `vehicle_tuning` WHERE `vehid`='%d'", VehicleInfo[ vehicleid ][ vSQLID ] );
-	mysql_tquery(g_SQL, tmpString, "");
+	mysql_tquery(g_SQL, tmpString);
 	return 1;
 }
 
@@ -511,7 +511,7 @@ Public:OnVehicleTuningLoad(vehicleid, save)
 				VehicleInfo[vehicleid][vPaintJob],
 				VehicleInfo[vehicleid][vSQLID]
 			);
-			mysql_tquery(g_SQL, tmpQuery, "");
+			mysql_tquery(g_SQL, tmpQuery);
 		} 
 		else 
 		{
@@ -532,13 +532,13 @@ Public:OnVehicleTuningLoad(vehicleid, save)
 				VehicleInfo[vehicleid][vLeftVent],
 				VehicleInfo[vehicleid][vPaintJob]
 			);
-			mysql_tquery(g_SQL, tmpQuery, "");
+			mysql_tquery(g_SQL, tmpQuery);
 		}
 		format(smallQuery, sizeof(smallQuery), "UPDATE cocars SET `tuned` = '%d' WHERE `id` = '%d'",
 			VehicleInfo[vehicleid][vTuned],
 			VehicleInfo[vehicleid][vSQLID]
 		);
-		mysql_tquery(g_SQL, smallQuery, "");
+		mysql_tquery(g_SQL, smallQuery);
 		return 1;
 	} 
 	else 
@@ -1716,7 +1716,7 @@ CMD:remove_tuning(playerid, params[])
 		VehicleInfo[vehicleid][vTuned],
 		VehicleInfo[vehicleid][vSQLID]
 	);
-	mysql_tquery(g_SQL, saveQuery, "");
+	mysql_tquery(g_SQL, saveQuery);
 	new vehname[36];
 	strunpack( vehname, Model_Name(VehicleInfo[vehicleid][vModel]) );
 	SendFormatMessage(playerid, MESSAGE_TYPE_SUCCESS, "Tuning je uspjesno uklonjen sa %s [SQL ID: %d]", vehname, VehicleInfo[vehicleid][vSQLID]);

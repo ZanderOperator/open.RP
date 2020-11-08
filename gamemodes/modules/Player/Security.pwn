@@ -82,7 +82,7 @@ Public: OnPasswordUpdateEx(sqlid)
 		password,
 		sqlid
 	);
-	mysql_tquery(g_SQL, updatePasswordQuery, "", "");
+	mysql_tquery(g_SQL, updatePasswordQuery);
 	return 1;
 }
 
@@ -100,7 +100,7 @@ Public: OnPasswordUpdate(playerid)
 		password,
 		PlayerInfo[playerid][pSQLID]
 	);
-	mysql_tquery(g_SQL, updatePasswordQuery, "", "");
+	mysql_tquery(g_SQL, updatePasswordQuery);
 	return 1;
 }
 stock UpdateRegisteredPassword(playerid)
@@ -225,7 +225,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 				PlayerInfo[playerid][pSecQuestAnswer],
 				PlayerInfo[playerid][pSQLID]
 			);
-			mysql_pquery(g_SQL, tmpQuery, "", "");
+			mysql_pquery(g_SQL, tmpQuery);
 			
 			Log_Write("/logfiles/a_security.txt", "(%s) %s(%s) changed his security question into '%s'.", 
 				GetName(playerid,false), 
@@ -257,7 +257,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 				PlayerInfo[playerid][pEmail],
 				PlayerInfo[playerid][pSQLID]
 			);
-			mysql_tquery(g_SQL, tmpQuery, "", "");
+			mysql_tquery(g_SQL, tmpQuery);
 			
 			ShowPlayerDialog(playerid, 0, DIALOG_STYLE_MSGBOX, "USPJESAN UNOS E-MAIL ADRESE", "Uspjesno ste unijeli e-mail adresu!\nZapisite ju negdje jer ce vam trebati!", "Ok", "");
 			return 1;

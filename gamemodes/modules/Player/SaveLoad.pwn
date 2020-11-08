@@ -146,7 +146,7 @@ CheckPlayerInactivity(playerid)
 		
 		new deleteQuery[128];
 		format(deleteQuery, sizeof(deleteQuery), "DELETE FROM `inactive_accounts` WHERE `sqlid` = '%d'", PlayerInfo[playerid][pSQLID]);
-		mysql_tquery(g_SQL, deleteQuery, "", "");
+		mysql_tquery(g_SQL, deleteQuery);
 		SendClientMessage(playerid, COLOR_LIGHTRED, "[SERVER]: Neaktivnost koju ste imali prijavljenu u bazi podataka je deaktivirana.");
 		
 		return 1;
@@ -696,12 +696,12 @@ SafeSpawnPlayer(playerid)
 		gettimestamp(),
 		GetPlayerIP(playerid)
 	);
-	mysql_pquery(g_SQL, connectQuery, "");
+	mysql_pquery(g_SQL, connectQuery);
 	
 	new loginQuery[128];
 	
 	format(loginQuery, 128, "UPDATE `accounts` SET `online` = '1' WHERE `sqlid` = '%d'", PlayerInfo[ playerid ][ pSQLID ]);
-	mysql_tquery(g_SQL, loginQuery, "");
+	mysql_tquery(g_SQL, loginQuery);
 	
 	if( ( 10 <= PlayerInfo[ playerid ][ pJob ] <= 12 ) && ( !PlayerInfo[playerid][pMember] && !PlayerInfo[playerid][pLeader])  )
 		PlayerInfo[ playerid ][ pJob ] = 0;
@@ -720,7 +720,7 @@ SafeSpawnPlayer(playerid)
 			UpdatePremiumHouseFurSlots(playerid, -1, PlayerInfo[ playerid ][ pHouseKey ]);
 			
 		format(loginQuery, 128, "UPDATE `accounts` SET `vipRank` = '0', `vipTime` = '0' WHERE `sqlid` = '%d'", PlayerInfo[ playerid ][ pSQLID ]); //Svaki put kad bi nekon isteka donator skripta bi sve ovo iznad radila iako je isteka jer prikazuje bivsim donatorima ovaj tekst (neko nije stavia da se sejva donatorrank i time) mislin da je nepotrebno stavljat u save query kad igrac izlazi jer je napravljeno kad se daje donator da odmah sprema
-		mysql_tquery(g_SQL, loginQuery, "");
+		mysql_tquery(g_SQL, loginQuery);
 	}
 	if( isnull(PlayerInfo[playerid][pSecQuestAnswer]) && isnull(PlayerInfo[playerid][pEmail]) )
 	{
@@ -795,7 +795,7 @@ stock SavePlayerData(playerid)
 		PlayerInfo[playerid][cIP],
 		PlayerInfo[playerid][pSQLID]
 	);
-	mysql_tquery(g_SQL, mysqlUpdate, "", "");
+	mysql_tquery(g_SQL, mysqlUpdate);
 
 	mysql_format(g_SQL, mysqlUpdate, sizeof(mysqlUpdate), "UPDATE `accounts` SET `muted` = '%d', `sex` = '%d', `age` = '%d', `changenames` = '%d', `changetimes` = '%d', `handMoney` = '%d', `bankMoney` = '%d' WHERE `sqlid` = '%d'",
 		PlayerInfo[playerid][pMuted],
@@ -807,7 +807,7 @@ stock SavePlayerData(playerid)
 		PlayerInfo[playerid][pBank],
 		PlayerInfo[playerid][pSQLID]
 	);
-	mysql_tquery(g_SQL, mysqlUpdate, "", "");
+	mysql_tquery(g_SQL, mysqlUpdate);
 	
 	mysql_format(g_SQL, mysqlUpdate, sizeof(mysqlUpdate), "UPDATE `accounts` SET `connecttime` = '%d', `contracttime` = '%d', `freeworks` = '%d', `fishworks` = '%d', `fishsqlid` = '%d', `levels` = '%d', `respects` = '%d' WHERE `sqlid` = '%d'",
 		PlayerInfo[playerid][pConnectTime],
@@ -829,7 +829,7 @@ stock SavePlayerData(playerid)
 		PlayerInfo[playerid][pFishingSkill],
 		PlayerInfo[playerid][pSQLID]
 	);
-	mysql_tquery(g_SQL, mysqlUpdate, "", "");
+	mysql_tquery(g_SQL, mysqlUpdate);
 
 	mysql_format(g_SQL, mysqlUpdate, sizeof(mysqlUpdate), "UPDATE `accounts` SET `jailed` = '%d', `jailtime` = '%d', `bailprice` = '%d' WHERE `sqlid` = '%d'",
 		PlayerInfo[playerid][pJailed],
@@ -837,7 +837,7 @@ stock SavePlayerData(playerid)
 		PlayerInfo[playerid][pBailPrice],
 		PlayerInfo[playerid][pSQLID]
 	);
-	mysql_tquery(g_SQL, mysqlUpdate, "", "");
+	mysql_tquery(g_SQL, mysqlUpdate);
 
 	mysql_format(g_SQL, mysqlUpdate, sizeof(mysqlUpdate), "UPDATE `accounts` SET `carlic` = '%d', `gunlic` = '%d', `boatlic` = '%d', `fishlic` = '%d', `flylic` = '%d' WHERE `sqlid` = '%d'",
 		PlayerInfo[playerid][pCarLic],
@@ -847,7 +847,7 @@ stock SavePlayerData(playerid)
 		PlayerInfo[playerid][pFlyLic],
 		PlayerInfo[playerid][pSQLID]
 	);
-	mysql_tquery(g_SQL, mysqlUpdate, "", "");
+	mysql_tquery(g_SQL, mysqlUpdate);
 		
 	mysql_format(g_SQL, mysqlUpdate, sizeof(mysqlUpdate), "UPDATE `accounts` SET `rentkey` = '%d', `maskid` = '%d', `hunger` = '%f' WHERE `sqlid` = '%d'",
 		PlayerInfo[playerid][pRentKey],
@@ -855,7 +855,7 @@ stock SavePlayerData(playerid)
 		PlayerInfo[playerid][pHunger],
 		PlayerInfo[playerid][pSQLID]
 	);
-	mysql_tquery(g_SQL, mysqlUpdate, "", "");
+	mysql_tquery(g_SQL, mysqlUpdate);
 
 	mysql_format(g_SQL, mysqlUpdate, sizeof(mysqlUpdate), "UPDATE `accounts` SET `spawnedcar` = '%d', `armour` = '%f', `muscle` = '%d', `arrested` = '%d', `fightstyle` = '%d' WHERE `sqlid` = '%d'",
 		PlayerInfo[playerid][pSpawnedCar],
@@ -865,7 +865,7 @@ stock SavePlayerData(playerid)
 		PlayerInfo[playerid][pFightStyle],
 		PlayerInfo[playerid][pSQLID]
 	);
-	mysql_tquery(g_SQL, mysqlUpdate, "", "");
+	mysql_tquery(g_SQL, mysqlUpdate);
 
 	mysql_format(g_SQL, mysqlUpdate, sizeof(mysqlUpdate), "UPDATE `accounts` SET `clock` = '%d', `rope` = '%d', `cigaretes` = '%d', `lighter` = '%d', `playaPayDay` = '%d', `playaPDMoney` = '%d', `profit` = '%d' WHERE `sqlid` = '%d'",
 		PlayerInfo[playerid][pClock],
@@ -877,13 +877,13 @@ stock SavePlayerData(playerid)
 		PlayerInfo[playerid][pProfit],
 		PlayerInfo[playerid][pSQLID]
 	);
-	mysql_tquery(g_SQL, mysqlUpdate, "", "");
+	mysql_tquery(g_SQL, mysqlUpdate);
 	
 	mysql_format(g_SQL, mysqlUpdate, sizeof(mysqlUpdate), "UPDATE `accounts` SET `lijektimer` = '%d' WHERE `sqlid` = '%d'",
 		PlayerInfo[playerid][pLijekTimer],
 		PlayerInfo[playerid][pSQLID]
 	);
-	mysql_tquery(g_SQL, mysqlUpdate, "", "");	
+	mysql_tquery(g_SQL, mysqlUpdate);	
 	
 	mysql_format(g_SQL, mysqlUpdate, sizeof(mysqlUpdate), "UPDATE `accounts` SET `passport` = '%d', `SAMPid` = '%e', `forumname` = '%e' WHERE `sqlid` = '%d'",
 		PlayerInfo[playerid][pPassport],
@@ -891,7 +891,7 @@ stock SavePlayerData(playerid)
 		PlayerInfo[playerid][pForumName],
 		PlayerInfo[playerid][pSQLID]
 	);
-	mysql_tquery(g_SQL, mysqlUpdate, "", "");
+	mysql_tquery(g_SQL, mysqlUpdate);
 	
 	mysql_format(g_SQL, mysqlUpdate, sizeof(mysqlUpdate), "UPDATE `accounts` SET `gymtimes` = '%d', `gymcounter` = '%d', `boombox` = '%d', `boomboxtype` = '%d', `casinocool` = '%d', news = '%d', `HasRadio` = '%d' WHERE `sqlid` = '%d'",
 		PlayerInfo[playerid][pGymTimes],
@@ -902,7 +902,7 @@ stock SavePlayerData(playerid)
 		PlayerInfo[playerid][pNews],
 		PlayerInfo[playerid][pHasRadio],
 		PlayerInfo[playerid][pSQLID]);
-	mysql_tquery(g_SQL, mysqlUpdate, "", "");
+	mysql_tquery(g_SQL, mysqlUpdate);
 	
 	mysql_format(g_SQL, mysqlUpdate, sizeof(mysqlUpdate), "UPDATE `accounts` SET `voted` = '%d', `drugused` = '%d', `drugseconds` = '%d', `lastdrug` = '%d'   WHERE `sqlid` = '%d'",
 		PlayerInfo[playerid][pVoted],
@@ -910,7 +910,7 @@ stock SavePlayerData(playerid)
 		PlayerInfo[playerid][pDrugSeconds],
 		PlayerInfo[playerid][pDrugOrder],
 		PlayerInfo[playerid][pSQLID]);
-	mysql_tquery(g_SQL, mysqlUpdate, "", "");
+	mysql_tquery(g_SQL, mysqlUpdate);
 	
 	mysql_format(g_SQL, mysqlUpdate, sizeof(mysqlUpdate), "UPDATE `accounts` SET `savings_cool` = '%d', `savings_time` = '%d', `savings_type` = '%d', `savings_money` = '%d' WHERE `sqlid` = '%d'",
 		PlayerInfo[playerid][pSavingsCool],
@@ -919,7 +919,7 @@ stock SavePlayerData(playerid)
 		PlayerInfo[playerid][pSavingsMoney],
 		PlayerInfo[playerid][pSQLID]
 	);
-	mysql_tquery(g_SQL, mysqlUpdate, "", "");
+	mysql_tquery(g_SQL, mysqlUpdate);
 	
 	mysql_format(g_SQL, mysqlUpdate, sizeof(mysqlUpdate), "UPDATE `accounts` SET `ammutime` = '%d', `warekey` = '%d', `mustread` = '%d', `lastupdatever` = '%e', `JackerCoolDown` = '%d', `FurnPremium` = '%d' WHERE `sqlid` = '%d'",
 		PlayerInfo[playerid][pAmmuTime],
@@ -929,27 +929,27 @@ stock SavePlayerData(playerid)
 		PlayerInfo[playerid][JackerCoolDown],
 		PlayerInfo[playerid][FurnPremium],
 		PlayerInfo[playerid][pSQLID]);
-	mysql_tquery(g_SQL, mysqlUpdate, "", "");
+	mysql_tquery(g_SQL, mysqlUpdate);
 	
 	mysql_format(g_SQL, mysqlUpdate, sizeof(mysqlUpdate), "UPDATE `accounts` SET `paydayDialog` = '%e', `paydaydate` = '%e' WHERE `sqlid` = '%d'",
 		PlayerInfo[playerid][pPayDayDialog],
 		PlayerInfo[playerid][pPayDayDate],
 		PlayerInfo[playerid][pSQLID]);
-	mysql_tquery(g_SQL, mysqlUpdate, "", "");
+	mysql_tquery(g_SQL, mysqlUpdate);
 	
 	mysql_format(g_SQL, mysqlUpdate, sizeof(mysqlUpdate), "UPDATE `accounts` SET `Radio1` = '%d', `Slot1` = '%d', `Radio2` = '%d', `Slot2` = '%d', `Radio3` = '%d', `Slot3` = '%d' WHERE `sqlid` = '%d'",
 		PlayerInfo[playerid][pRadio][1], PlayerInfo[playerid][pRadioSlot][1],
 		PlayerInfo[playerid][pRadio][2], PlayerInfo[playerid][pRadioSlot][2],
 		PlayerInfo[playerid][pRadio][3], PlayerInfo[playerid][pRadioSlot][3],
 		PlayerInfo[playerid][pSQLID]);
-	mysql_tquery(g_SQL, mysqlUpdate, "", "");
+	mysql_tquery(g_SQL, mysqlUpdate);
 	
 	mysql_format(g_SQL, mysqlUpdate, sizeof(mysqlUpdate), "UPDATE `accounts` SET `AdmMessageConfirm` = '%d', `AdminMessage` = '%e', `AdminMessageBy` = '%e' WHERE `sqlid` = '%d'",
 		PlayerInfo[playerid][pAdmMsgConfirm],
 		PlayerInfo[playerid][pAdminMsg],
 		PlayerInfo[playerid][pAdminMsgBy],
 		PlayerInfo[playerid][pSQLID]);
-	mysql_tquery(g_SQL, mysqlUpdate, "", "");
+	mysql_tquery(g_SQL, mysqlUpdate);
 	
 	mysql_tquery(g_SQL, "COMMIT");
 	return 1;

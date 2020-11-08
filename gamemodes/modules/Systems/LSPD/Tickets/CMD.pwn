@@ -104,7 +104,7 @@ CMD:ticket(playerid, params[])
 
         new query[55];
         format(query, sizeof(query), "DELETE FROM `cocars_tickets` WHERE `id` = '%d'", VehicleInfo[vehicleid][vTicketsSQLID][tmpSlot]);
-        mysql_tquery(g_SQL, query, "", "");
+        mysql_tquery(g_SQL, query);
 
         VehicleInfo[vehicleid][vTicketsSQLID][tmpSlot]    = 0;
         VehicleInfo[vehicleid][vTickets][tmpSlot]         = 0;

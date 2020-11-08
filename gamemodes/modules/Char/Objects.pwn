@@ -741,7 +741,7 @@ stock SaveObjectSlot(playerid, slot)
 			PlayerObject[playerid][slot][poColor2],
 			PlayerObject[playerid][slot][poSQLID]
 		);
-		mysql_tquery(g_SQL, mysqlUpdate, "", "");
+		mysql_tquery(g_SQL, mysqlUpdate);
 		return 1;
 	}
 	return 1;

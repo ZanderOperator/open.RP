@@ -401,7 +401,7 @@ stock SavePlayerExperience(playerid)
 		ExpInfo[playerid][eMonthPayDays],
 		PlayerInfo[playerid][pSQLID]
 	);
-	mysql_tquery(g_SQL, mysqlUpdate, "", "");
+	mysql_tquery(g_SQL, mysqlUpdate);
 	return 1;
 }
 
@@ -529,7 +529,7 @@ stock GivePlayerExperience(playerid, playername[])
 		
 	new expQuery[150];
 	format(expQuery, sizeof(expQuery), "UPDATE `experience` SET `points` = '%d', `allpoints` = '%d' WHERE `sqlid` = '%d'", points, allpoints, sqlid);
-	mysql_tquery(g_SQL, expQuery, "");
+	mysql_tquery(g_SQL, expQuery);
 	
 	SendFormatMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uspjesno ste dali %s 1 EXP.", playername);
 	if(HappyHours)
@@ -558,7 +558,7 @@ stock RewardPlayerForActivity(sqlid, amount)
 		
 	new expQuery[150];
 	format(expQuery, sizeof(expQuery), "UPDATE `experience` SET `points` = '%d', `allpoints` = '%d' WHERE `sqlid` = '%d'", points, allpoints, sqlid);
-	mysql_tquery(g_SQL, expQuery, "");
+	mysql_tquery(g_SQL, expQuery);
 	return 1;
 }
 	

@@ -2202,7 +2202,7 @@ static stock BuyBlankInterior(playerid, house)
         HouseInfo[house][hExitZ],
         HouseInfo[house][hSQLID]
     );
-    mysql_tquery(g_SQL, intQuery, "");
+    mysql_tquery(g_SQL, intQuery);
 
     DestroyFurnitureBlankIntTDs(playerid);
     PlayerToBudgetMoney(playerid, BlankInts[interior][iPrice]); // Novac ide u proracun
@@ -2268,7 +2268,7 @@ UpdatePremiumHouseFurSlots(playerid, admin_name = -1, houseid)
 
     new query[128];
     format(query, sizeof(query), "UPDATE `houses` SET `fur_slots` = '%d' WHERE `id` = '%d'", HouseInfo[houseid][hFurSlots], HouseInfo[houseid][hSQLID]);
-    mysql_tquery(g_SQL, query, "");
+    mysql_tquery(g_SQL, query);
 
     if (admin_name != -1)
         va_SendClientMessage(playerid, COLOR_RED, "[ ! ] Administrator %s vam je refreshao house slot-ove, imate %d slotova u kuci.", GetName(admin_name, true), HouseInfo[houseid][hFurSlots]);
@@ -2283,7 +2283,7 @@ SetPlayerPremiumFurniture(playerid, houseid)
 
     new query[128];
     format(query, sizeof(query), "UPDATE `houses` SET `fur_slots` = '%d' WHERE `id` = '%d'", HouseInfo[houseid][hFurSlots], HouseInfo[houseid][hSQLID]);
-    mysql_tquery(g_SQL, query, "");
+    mysql_tquery(g_SQL, query);
     return 1;
 }
 
@@ -2934,7 +2934,7 @@ static stock CreateFurnitureObject(playerid, modelid, Float:x, Float:y, Float:z,
         if (HouseInfo[houseid][hFurSQL][index] > 0)
         {
             format(query, sizeof(query), "DELETE FROM `furniture` WHERE `sqlid` = '%d' LIMIT 1", HouseInfo[houseid][hFurSQL][index]);
-            mysql_tquery(g_SQL, query, "", "");
+            mysql_tquery(g_SQL, query);
         }
 
         HouseInfo[houseid][hFurModelid][index]  = -1;
@@ -3109,7 +3109,7 @@ static stock SetFurnitureObjectPos(playerid, Float:x, Float:y, Float:z, Float:rx
         rz,
         HouseInfo[houseid][hFurSQL][index]
     );
-    mysql_tquery(g_SQL, query, "");
+    mysql_tquery(g_SQL, query);
 
     // TODO: repetitive code, helper function
     new colorid;
@@ -3154,7 +3154,7 @@ static stock SetFurnitureObjectTexture(playerid, slot, index, slotid)
         HouseInfo[houseid][hFurTxtId][slotid][slot],
         HouseInfo[houseid][hFurSQL][slotid]
     );
-    mysql_tquery(g_SQL, query, "");
+    mysql_tquery(g_SQL, query);
 
     SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uspjesno ste postavili texturu na vas namjestaj.");
     return 1;
@@ -3189,7 +3189,7 @@ static stock SetFurnitureObjectColor(playerid, slot, index, slotid)
         HouseInfo[houseid][hFurColId][slotid][slot],
         HouseInfo[houseid][hFurSQL][slotid]
     );
-    mysql_tquery(g_SQL, query, "");
+    mysql_tquery(g_SQL, query);
     return 1;
 }
 
@@ -3211,7 +3211,7 @@ static stock DeleteFurnitureObject(houseid, playerid, index)
 
     new query[64];
     format(query, sizeof(query), "DELETE FROM furniture WHERE sqlid = '%d'", HouseInfo[houseid][hFurSQL][index]);
-    mysql_tquery(g_SQL, query, "");
+    mysql_tquery(g_SQL, query);
 
     va_SendClientMessage(playerid, COLOR_RED, "[ ! ] Uspjesno ste obrisali objekt[Model ID: %d - Slot Index: %d].", HouseInfo[houseid][hFurModelid][index], index);
 
@@ -3287,7 +3287,7 @@ static stock DestroyAllFurnitureObjects(playerid, houseid)
     new query[128];
     mysql_tquery(g_SQL, "BEGIN");
     format(query, sizeof(query), "DELETE FROM `furniture` WHERE `houseid` = '%d'", HouseInfo[houseid][hSQLID]);
-    mysql_tquery(g_SQL, query, "");
+    mysql_tquery(g_SQL, query);
     mysql_tquery(g_SQL, "COMMIT");
 
     // TODO: this query below was never executed, oversight or?
@@ -4515,7 +4515,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                 (slot+1),
                 HouseInfo[houseid][hFurSQL][edit_index]
             );
-            mysql_tquery(g_SQL, query, "");
+            mysql_tquery(g_SQL, query);
 
             SetDynamicObjectMaterial(HouseInfo[houseid][hFurObjectid][edit_index], slot, -1, "none", "none", 0);
             SendFormatMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uspjesno ste obrisali teksturu i boju na Slotu %d za odabrani objekt.", slot);

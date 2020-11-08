@@ -207,7 +207,7 @@ timer MechCountForPlayer[1000](playerid, giveplayerid, service)
 					VehicleInfo[ GetPlayerVehicleID(playerid) ][ vDestroys ],
 					VehicleInfo[GetPlayerVehicleID(playerid)][vSQLID]
 				);
-				mysql_tquery(g_SQL, bigquery, "");
+				mysql_tquery(g_SQL, bigquery);
 			}
 			case 4:
 			{
@@ -235,7 +235,7 @@ timer MechCountForPlayer[1000](playerid, giveplayerid, service)
 					VehicleInfo[GetPlayerVehicleID(playerid)][vStereo],
 					VehicleInfo[GetPlayerVehicleID(playerid)][vSQLID]
 				);
-				mysql_tquery(g_SQL, bigquery, "");
+				mysql_tquery(g_SQL, bigquery);
 			}
 			case 6: 
 			{
@@ -271,7 +271,7 @@ timer MechCountForPlayer[1000](playerid, giveplayerid, service)
 					VehicleInfo[GetPlayerVehicleID(playerid)][vTireArmor],
 					VehicleInfo[GetPlayerVehicleID(playerid)][vSQLID]
 				);
-				mysql_tquery(g_SQL, bigquery, "");
+				mysql_tquery(g_SQL, bigquery);
 			}
 			case 7: 
 			{
@@ -301,7 +301,7 @@ timer MechCountForPlayer[1000](playerid, giveplayerid, service)
 					VehicleInfo[GetPlayerVehicleID(playerid)][vBodyArmor],
 					VehicleInfo[GetPlayerVehicleID(playerid)][vSQLID]
 				);
-				mysql_tquery(g_SQL, bigquery, "");
+				mysql_tquery(g_SQL, bigquery);
 			}
 			case 8: 
 			{

@@ -751,7 +751,7 @@ stock DeleteWeaponObject(vehicleid, slotid)
 {
 	new string[100];
 	format(string, sizeof(string), "DELETE FROM `cocars_wobjects` WHERE `weaponsql` = '%d'", VehicleInfo[vehicleid][vWeaponSQLID][slotid]);
-	mysql_tquery(g_SQL, string, "");
+	mysql_tquery(g_SQL, string);
 	return 1;
 }
 
@@ -846,7 +846,7 @@ stock TakePlayerWeaponFromTrunk(playerid, vehicleid, slot)
 	format(deleteWeaponQuery, 128, "DELETE FROM `cocars_weapons` WHERE `id` = '%d'",
 		VehicleInfo[vehicleid][vWeaponSQLID][slot]
 	);
-	mysql_tquery(g_SQL, deleteWeaponQuery, "", "");
+	mysql_tquery(g_SQL, deleteWeaponQuery);
 	
 	GetWeaponName(VehicleInfo[vehicleid][vWeaponId][slot], gunname, sizeof(gunname));
 	
@@ -2299,7 +2299,7 @@ stock ParkVehicleInfo(vehicleid)
 		VehicleInfo[vehicleid][vNOSCap],
 		VehicleInfo[vehicleid][vSQLID]
 	);
-	mysql_tquery(g_SQL, saveQuery, "");	
+	mysql_tquery(g_SQL, saveQuery);	
 
 	// Unistavanje vozila
 	AC_DestroyVehicle(vehicleid);
@@ -3983,7 +3983,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 						VehicleInfo[PlayerInfo[playerid][pSpawnedCar]][vAudio],
 						VehicleInfo[PlayerInfo[playerid][pSpawnedCar]][vSQLID]
 					);
-					mysql_tquery(g_SQL, tmpQuery, "");
+					mysql_tquery(g_SQL, tmpQuery);
 
 					PlayerPlaySound(playerid, 1133, 0, 0, 0);
 				}
@@ -3996,7 +3996,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 					new
 						dkeyquery[138];
 					format(dkeyquery, sizeof(dkeyquery), "UPDATE `cocars` SET `sparekey1` = '-1', `sparekey2` = '-1' WHERE `id` = '%d'", VehicleInfo[PlayerInfo[playerid][pSpawnedCar]][vSQLID]);
-					mysql_tquery(g_SQL, dkeyquery, "");
+					mysql_tquery(g_SQL, dkeyquery);
 					VehicleInfo[PlayerInfo[playerid][pSpawnedCar]][vSpareKey1] = -1;
 					VehicleInfo[PlayerInfo[playerid][pSpawnedCar]][vSpareKey2] = -1;
 					SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uspjesno ste zamjenili bravu, te su svi duplicirani kljucevi beskorisni.");
@@ -4040,7 +4040,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 			format(tmpQuery, 54, "UPDATE `cocars` SET `immob` = '%d' WHERE `id` = '%d'",
 				VehicleInfo[PlayerInfo[playerid][pSpawnedCar]][vImmob],
 				VehicleInfo[PlayerInfo[playerid][pSpawnedCar]][vSQLID]);
-			mysql_tquery(g_SQL, tmpQuery, "");
+			mysql_tquery(g_SQL, tmpQuery);
 
 			// Message
 			new
@@ -4097,7 +4097,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 				VehicleInfo[PlayerInfo[playerid][pSpawnedCar]][vInsurance],
 				VehicleInfo[PlayerInfo[playerid][pSpawnedCar]][vSQLID]
 			);
-			mysql_tquery(g_SQL, tmpQuery, "");
+			mysql_tquery(g_SQL, tmpQuery);
 
 			// Message
 			format(poliString, 43, "[ ! ] Nova polica osiguranja je Level %d!", VehicleInfo[PlayerInfo[playerid][pSpawnedCar]][vInsurance]);
@@ -4135,7 +4135,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 				VehicleInfo[PlayerInfo[playerid][pSpawnedCar]][vAlarm],
 				VehicleInfo[PlayerInfo[playerid][pSpawnedCar]][vSQLID]
 			);
-			mysql_tquery(g_SQL, tmpQuery, "");
+			mysql_tquery(g_SQL, tmpQuery);
 
 			// Message
 			SendFormatMessage(playerid, MESSAGE_TYPE_INFO, "Novi level alarma je %d!", VehicleInfo[PlayerInfo[playerid][pSpawnedCar]][vAlarm]);
@@ -4170,7 +4170,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 			format(tmpQuery, 90, "UPDATE `cocars` SET `batterylife` = '%d' WHERE `id` = '%d'",
 				VehicleInfo[PlayerInfo[playerid][pSpawnedCar]][vBatteryLife],
 				VehicleInfo[PlayerInfo[playerid][pSpawnedCar]][vSQLID]);
-			mysql_tquery(g_SQL, tmpQuery, "");
+			mysql_tquery(g_SQL, tmpQuery);
 
 			// Message
 			new
@@ -4205,7 +4205,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 			format(tmpQuery, 90, "UPDATE `cocars` SET `lock` = '%d' WHERE `id` = '%d'",
 				VehicleInfo[PlayerInfo[playerid][pSpawnedCar]][vLock],
 				VehicleInfo[PlayerInfo[playerid][pSpawnedCar]][vSQLID]);
-			mysql_tquery(g_SQL, tmpQuery, "");
+			mysql_tquery(g_SQL, tmpQuery);
 
 			// Message
 			new
@@ -4329,7 +4329,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 				PlayerInfo[playerid][pSQLID],
 				VehicleInfo[sellVehid][vSQLID]
 			);
-			mysql_tquery(g_SQL, tmpQuery, "");
+			mysql_tquery(g_SQL, tmpQuery);
 			VehicleInfo[sellVehid][vOwnerID] 	= PlayerInfo[playerid][pSQLID];
 			PlayerInfo[sellerid][pSpawnedCar] 	= -1;
 			#if defined MOD_DEBUG
@@ -4626,7 +4626,7 @@ CMD:duplicatekey(playerid, params[])
 			SendClientMessage(playerid, COLOR_RED, tmpString);
             new dkeyquery[128];
 			format(dkeyquery, sizeof(dkeyquery), "UPDATE `cocars` SET `sparekey1` = '%d' WHERE `id` = '%d'", VehicleInfo[vehicleid][vSpareKey1], VehicleInfo[vehicleid][vSQLID]);
-			mysql_tquery(g_SQL, dkeyquery, "");
+			mysql_tquery(g_SQL, dkeyquery);
 			return 1;
 		}
 		if(VehicleInfo[vehicleid][vSpareKey2] < 0)
@@ -4642,7 +4642,7 @@ CMD:duplicatekey(playerid, params[])
 			SendClientMessage(playerid, COLOR_RED, tmpString);
             new dkeyquery[128];
 			format(dkeyquery, sizeof(dkeyquery), "UPDATE `cocars` SET `sparekey2` = '%d' WHERE `id` = '%d'", VehicleInfo[vehicleid][vSpareKey2], VehicleInfo[vehicleid][vSQLID]);
-			mysql_tquery(g_SQL, dkeyquery, "");
+			mysql_tquery(g_SQL, dkeyquery);
 			return 1;
 		}
 		SendMessage(playerid, MESSAGE_TYPE_ERROR, " Nemate vise rezervnih kljuceva!");
@@ -4793,7 +4793,7 @@ CMD:car(playerid, params[])
 					SendClientMessage(playerid, COLOR_GREEN,colorString);
 
 					format(colorQuery, sizeof(colorQuery), "UPDATE `cocars` SET `color1` = '%d' WHERE `id` = '%d'", color, VehicleInfo[PlayerInfo[playerid][pSpawnedCar]][vSQLID]);
-					mysql_tquery(g_SQL, colorQuery, "");
+					mysql_tquery(g_SQL, colorQuery);
 				} else {
 					VehicleInfo[PlayerInfo[playerid][pSpawnedCar]][vColor2] = color;
 					ChangeVehicleColor( vehicleid, VehicleInfo[ PlayerInfo[ playerid ][ pSpawnedCar ] ][ vColor1 ], color );
@@ -4802,7 +4802,7 @@ CMD:car(playerid, params[])
 					SendClientMessage(playerid, COLOR_GREEN,colorString);
 
 					format(colorQuery, sizeof(colorQuery), "UPDATE `cocars` SET `color2` = '%d' WHERE `id` = '%d'", color, VehicleInfo[PlayerInfo[playerid][pSpawnedCar]][vSQLID]);
-					mysql_tquery(g_SQL, colorQuery, "");
+					mysql_tquery(g_SQL, colorQuery);
 				}
 				PlayerPlaySound(playerid, 1134, 0, 0, 0);
 				PlayerToBudgetMoney(playerid, 500); // Novac ide u proracun od igraca
@@ -4952,7 +4952,7 @@ CMD:car(playerid, params[])
 			GetPlayerVirtualWorld(playerid),
 			VehicleInfo[vehicleid][vSQLID]
 		);
-		mysql_tquery(g_SQL, bigquery, "");
+		mysql_tquery(g_SQL, bigquery);
 
 		if(PlayerInfo[playerid][pDonateRank] < 3) {
 			PlayerToBudgetMoney(playerid, 100); // Novac ide u proracun
@@ -5127,7 +5127,7 @@ CMD:car(playerid, params[])
 			VehicleInfo[PlayerInfo[playerid][pSpawnedCar]][vNumberPlate],
 			VehicleInfo[PlayerInfo[playerid][pSpawnedCar]][vSQLID]
 		);
-		mysql_tquery(g_SQL, bigquery, "");
+		mysql_tquery(g_SQL, bigquery);
 	}
 	else if(!strcmp(pick, "unregister", true))
 	{
@@ -5150,7 +5150,7 @@ CMD:car(playerid, params[])
 		format(bigquery, sizeof(bigquery), "UPDATE `cocars` SET `numberplate` = '0' WHERE `id` = '%d'",
 			VehicleInfo[PlayerInfo[playerid][pSpawnedCar]][vSQLID]
 		);
-		mysql_tquery(g_SQL, bigquery, "");
+		mysql_tquery(g_SQL, bigquery);
 	}
 	else if(!strcmp(pick, "sell", true)) 
 	{
@@ -5450,7 +5450,7 @@ CMD:veh_plate(playerid, params[])
 			VehicleInfo[vehicleid][vNumberPlate],
 			VehicleInfo[vehicleid][vSQLID]
 		);
-		mysql_tquery(g_SQL, bigquery, "");
+		mysql_tquery(g_SQL, bigquery);
 	}
 	return 1;
 }

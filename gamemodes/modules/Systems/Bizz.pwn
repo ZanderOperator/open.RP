@@ -3771,7 +3771,7 @@ CMD:custombizint(playerid, params[])
         BizzInfo[bizz][bCanEnter],
         BizzInfo[bizz][bSQLID]
     );
-    mysql_tquery(g_SQL, query, "");
+    mysql_tquery(g_SQL, query);
     return 1;
 }
 
@@ -4075,7 +4075,7 @@ CMD:bizentrance(playerid, params[])
         Z,
         BizzInfo[proplev][bSQLID]
     );
-    mysql_tquery(g_SQL, query, "");
+    mysql_tquery(g_SQL, query);
     return 1;
 }
 

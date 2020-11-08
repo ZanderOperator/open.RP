@@ -130,7 +130,7 @@ stock LogTransaction ( playerid, giveplayerid, money, logtype )
 		ReturnDate(),
 		desc
 	);
-	mysql_tquery(g_SQL, TmpQuery, "", "");
+	mysql_tquery(g_SQL, TmpQuery);
 	return 1;
 }
 // ########################## STOCKS 1884 ###########################################
@@ -161,7 +161,7 @@ stock PlayerToPlayerMoneyTAX ( playerid, giveplayerid, money, bool:log=false, lo
 	format( TmpQuery, sizeof(TmpQuery), "UPDATE `city` SET `budget` = '%d'", 
 			CityInfo[cBudget]
 		);
-	mysql_tquery(g_SQL, TmpQuery, "", "");
+	mysql_tquery(g_SQL, TmpQuery);
 	// Ako je je bool:log 1 onda se sprema u tablicu
 	if(log) 
 		LogTransaction ( playerid, giveplayerid, safemoney, logtype );
@@ -186,14 +186,14 @@ stock PlayerToBusinessMoneyTAX ( playerid, bizid, money)
 	format( TmpQuery, sizeof(TmpQuery), "UPDATE `city` SET `budget` = '%d'", 
 			CityInfo[cBudget]
 		);
-	mysql_tquery(g_SQL, TmpQuery, "", "");
+	mysql_tquery(g_SQL, TmpQuery);
 		
 	// Update biznisa
 	format( TmpQuery2, sizeof(TmpQuery2), "UPDATE `bizzes` SET `till` = '%d' WHERE `id` = '%d'",
 			BizzInfo[bizid][bTill],
 			BizzInfo[bizid][bSQLID]
 		);
-	mysql_tquery(g_SQL, TmpQuery2, "", "");
+	mysql_tquery(g_SQL, TmpQuery2);
 	return 1;
 }
 // IGRAc - BIZNIS (NEOPOREZIVA) --------------------------------------------------------------------
@@ -210,7 +210,7 @@ stock PlayerToBusinessMoney ( playerid, bizid, money )
 			BizzInfo[bizid][bTill],
 			BizzInfo[bizid][bSQLID]
 		);
-	mysql_tquery(g_SQL, TmpQuery, "", "");
+	mysql_tquery(g_SQL, TmpQuery);
 	return 1;
 }
 // BIZNIS - IGRAc (OPOREZIVA) -----------------------------------------------------------------------------
@@ -230,13 +230,13 @@ stock BusinessToPlayerMoneyTAX ( playerid, bizid, money )
 	format( TmpQuery, sizeof(TmpQuery), "UPDATE `city` SET `budget` = '%d'", 
 			CityInfo[cBudget]
 		);
-	mysql_tquery(g_SQL, TmpQuery, "", "");
+	mysql_tquery(g_SQL, TmpQuery);
 	// Update biznisa
 	format( TmpQuery2, sizeof(TmpQuery2), "UPDATE `bizzes` SET `till` = '%d' WHERE `id` = '%d'",
 			BizzInfo[bizid][bTill],
 			BizzInfo[bizid][bSQLID]
 		);
-	mysql_tquery(g_SQL, TmpQuery2, "", "");
+	mysql_tquery(g_SQL, TmpQuery2);
 	return 1;
 }
 
@@ -253,7 +253,7 @@ stock BusinessToPlayerMoney ( playerid, bizid, money )
 			BizzInfo[bizid][bTill],
 			BizzInfo[bizid][bSQLID]
 		);
-	mysql_tquery(g_SQL, TmpQuery, "", "");
+	mysql_tquery(g_SQL, TmpQuery);
 	return 1;
 }
 // IGRAc - PRORACUN (NEOPOREZIVA) -----------------------------------------------------------------------------
@@ -273,7 +273,7 @@ stock PlayerToBudgetMoney(playerid, money )
 	format( TmpQuery, sizeof(TmpQuery), "UPDATE `city` SET `budget` = '%d'", 
 			CityInfo[cBudget]
 		);
-	mysql_tquery(g_SQL, TmpQuery, "", "");
+	mysql_tquery(g_SQL, TmpQuery);
 	return 1;
 }
 // PRORAcUN - IGRAc (NEOPOREZIVA) -----------------------------------------------------------------------------
@@ -288,7 +288,7 @@ stock BudgetToPlayerMoney (playerid, money )
 	format( TmpQuery, sizeof(TmpQuery), "UPDATE `city` SET `budget` = '%d'", 
 			CityInfo[cBudget]
 		);
-	mysql_tquery(g_SQL, TmpQuery, "", "");
+	mysql_tquery(g_SQL, TmpQuery);
 	return 1;
 }
 // PRORAcUN - IGRAc BANKA (NEOPOREZIVA) -----------------------------------------------------------------------------
@@ -303,13 +303,13 @@ stock BudgetToPlayerBankMoney (playerid, money )
 	format( TmpQuery, sizeof(TmpQuery), "UPDATE `city` SET `budget` = '%d'", 
 			CityInfo[cBudget]
 		);
-	mysql_tquery(g_SQL, TmpQuery, "", "");
+	mysql_tquery(g_SQL, TmpQuery);
 	// Update accounts
 	format( TmpQuery2, sizeof(TmpQuery2), "UPDATE `accounts` SET `bankMoney` = '%d' WHERE `sqlid` = '%d'", 
 			PlayerInfo[playerid][pBank],
 			PlayerInfo[playerid][pSQLID]
 		);
-	mysql_tquery(g_SQL, TmpQuery2, "", "");
+	mysql_tquery(g_SQL, TmpQuery2);
 	return 1;
 }
 // IGRAc BANKA - PRORACUN (NEOPOREZIVA) -------------------------------------------------------
@@ -325,13 +325,13 @@ stock PlayerBankToBudgetMoney ( playerid, money )
 	format( TmpQuery, sizeof(TmpQuery), "UPDATE `city` SET `budget` = '%d'", 
 			CityInfo[cBudget]
 		);
-	mysql_tquery(g_SQL, TmpQuery, "", "");
+	mysql_tquery(g_SQL, TmpQuery);
 	// Update bank money
 	format( TmpQuery2, sizeof(TmpQuery2), "UPDATE `accounts` SET `bankMoney` = '%d' WHERE `sqlid` = '%d'",
 			PlayerInfo[playerid][pBank],
 			PlayerInfo[playerid][pSQLID]
 		);
-	mysql_tquery(g_SQL, TmpQuery2, "", "");
+	mysql_tquery(g_SQL, TmpQuery2);
 	return 1;
 }
 // IGRAc - COMPLEX (NEOPOREZIVA) -----------------------------------------------------------------------------
@@ -347,7 +347,7 @@ stock PlayerToComplexMoney (playerid, complexid, money )
 			ComplexInfo[complexid][cTill],
 			ComplexInfo[complexid][cSQLID]
 		);
-	mysql_tquery(g_SQL, TmpQuery, "", "");
+	mysql_tquery(g_SQL, TmpQuery);
 	return 1;
 }
 // IGRAc - COMPLEX (OPOREZIVA) --------------------------------------------------------------------
@@ -367,13 +367,13 @@ stock PlayerToComplexMoneyTAX ( playerid, complexid, money )
 	format( TmpQuery, sizeof(TmpQuery), "UPDATE `city` SET `budget` = '%d'", 
 			CityInfo[cBudget]
 		);
-	mysql_tquery(g_SQL, TmpQuery, "", "");
+	mysql_tquery(g_SQL, TmpQuery);
 	// Update complexa
 	format( TmpQuery2, sizeof(TmpQuery2), "UPDATE `server_complex` SET `till` = '%d' WHERE `id` = '%d'",
 			ComplexInfo[complexid][cTill],
 			ComplexInfo[complexid][cSQLID]
 		);
-	mysql_tquery(g_SQL, TmpQuery2, "", "");
+	mysql_tquery(g_SQL, TmpQuery2);
 	return 1;
 }
 // IGRAc BANKA - COMPLEX (NEOPOREZIVA) -------------------------------------------------------
@@ -389,13 +389,13 @@ stock PlayerBankToComplexMoney ( playerid, complexid, money )
 			ComplexInfo[complexid][cTill],
 			ComplexInfo[complexid][cSQLID]
 		);
-	mysql_tquery(g_SQL, TmpQuery, "", "");
+	mysql_tquery(g_SQL, TmpQuery);
 	// Update bank money accounts
 	format( TmpQuery2, sizeof(TmpQuery2), "UPDATE `accounts` SET `bankMoney` = '%d' WHERE `sqlid` = '%d'",
 			PlayerInfo[playerid][pBank],
 			PlayerInfo[playerid][pSQLID]
 		);
-	mysql_tquery(g_SQL, TmpQuery2, "", "");
+	mysql_tquery(g_SQL, TmpQuery2);
 	return 1;
 }
 // IGRAc BANKA - COMPLEX (OPOREZIVA) -------------------------------------------------------
@@ -418,18 +418,18 @@ stock PlayerBankToComplexMoneyTAX ( playerid, complexid, money )
 			ComplexInfo[complexid][cTill],
 			ComplexInfo[complexid][cSQLID]
 		);
-	mysql_tquery(g_SQL, TmpQuery, "", "");
+	mysql_tquery(g_SQL, TmpQuery);
 	// Update bank money accounts
 	format( TmpQuery2, sizeof(TmpQuery2), "UPDATE `accounts` SET `bankMoney` = '%d' WHERE `sqlid` = '%d'",
 			PlayerInfo[playerid][pBank],
 			PlayerInfo[playerid][pSQLID]
 		);
-	mysql_tquery(g_SQL, TmpQuery2, "", "");
+	mysql_tquery(g_SQL, TmpQuery2);
 	// Update proracuna
 	format( TmpQuery3, sizeof(TmpQuery3), "UPDATE `city` SET `budget` = '%d'", 
 			CityInfo[cBudget]
 		);
-	mysql_tquery(g_SQL, TmpQuery3, "", "");
+	mysql_tquery(g_SQL, TmpQuery3);
 	return 1;
 }
 // COMPLEX - IGRAc (NEOPOREZIVA) ----------------------------------------------------------------------------
@@ -444,7 +444,7 @@ stock ComplexToPlayerMoney (playerid, complexid, money )
 			ComplexInfo[complexid][cTill],
 			ComplexInfo[complexid][cSQLID]
 		);
-	mysql_tquery(g_SQL, TmpQuery, "", "");
+	mysql_tquery(g_SQL, TmpQuery);
 	return 1;
 }
 
@@ -465,13 +465,13 @@ stock ComplexToPlayerMoneyTAX ( playerid, complexid, money )
 	format( TmpQuery, sizeof(TmpQuery), "UPDATE `city` SET `budget` = '%d'", 
 			CityInfo[cBudget]
 		);
-	mysql_tquery(g_SQL, TmpQuery, "", "");
+	mysql_tquery(g_SQL, TmpQuery);
 	// Update complexa
 	format( TmpQuery2, sizeof(TmpQuery2), "UPDATE `server_complex` SET `till` = '%d' WHERE `id` = '%d'",
 			ComplexInfo[complexid][cTill],
 			ComplexInfo[complexid][cSQLID]
 		);
-	mysql_tquery(g_SQL, TmpQuery2, "", "");
+	mysql_tquery(g_SQL, TmpQuery2);
 	return 1;
 }
 // IGRAc - KUcA (NEOPOREZIVA) --------------------------------------------------------------------
@@ -486,7 +486,7 @@ stock PlayerToHouseMoney ( playerid, houseid, money )
 			HouseInfo[houseid][hTakings],
 			HouseInfo[houseid][hSQLID]
 		);
-	mysql_tquery(g_SQL, TmpQuery, "", "");
+	mysql_tquery(g_SQL, TmpQuery);
 	return 1;
 }
 // IGRAc - KUcA (OPOREZIVA) --------------------------------------------------------------------
@@ -506,13 +506,13 @@ stock PlayerToHouseMoneyTAX ( playerid, houseid, money )
 	format( TmpQuery, sizeof(TmpQuery), "UPDATE `city` SET `budget` = '%d'", 
 			CityInfo[cBudget]
 		);
-	mysql_tquery(g_SQL, TmpQuery, "", "");
+	mysql_tquery(g_SQL, TmpQuery);
 	// Update kuce
 	format( TmpQuery2, sizeof(TmpQuery2), "UPDATE `houses` SET `bank` = '%d' WHERE `id` = '%d'",
 			HouseInfo[houseid][hTakings],
 			HouseInfo[houseid][hSQLID]
 		);
-	mysql_tquery(g_SQL, TmpQuery2, "", "");
+	mysql_tquery(g_SQL, TmpQuery2);
 	return 1;
 }
 // PLAYER BANKA - KUCA (OPOREZIVA) -------------------------------------------------------
@@ -533,19 +533,19 @@ stock PlayerBankToHouseMoneyTAX ( playerid, houseid, money )
 	format( TmpQuery, sizeof(TmpQuery), "UPDATE `city` SET `budget` = '%d'", 
 			CityInfo[cBudget]
 		);
-	mysql_tquery(g_SQL, TmpQuery, "", "");
+	mysql_tquery(g_SQL, TmpQuery);
 	// Update bank money accounts
 	format( TmpQuery2, sizeof(TmpQuery2), "UPDATE `accounts` SET `bankMoney` = '%d' WHERE `sqlid` = '%d'",
 			PlayerInfo[playerid][pBank],
 			PlayerInfo[playerid][pSQLID]
 		);
-	mysql_tquery(g_SQL, TmpQuery2, "", "");
+	mysql_tquery(g_SQL, TmpQuery2);
 	// Update kuce
 	format( TmpQuery3, sizeof(TmpQuery3), "UPDATE `houses` SET `bank` = '%d' WHERE `id` = '%d'",
 			HouseInfo[houseid][hTakings],
 			HouseInfo[houseid][hSQLID]
 		);
-	mysql_tquery(g_SQL, TmpQuery3, "", "");
+	mysql_tquery(g_SQL, TmpQuery3);
 	return 1;
 }
 // KUcA - IGRAc (NEOPOREZIVA) -----------------------------------------------------------------------------
@@ -562,7 +562,7 @@ stock HouseToPlayerMoney ( playerid, houseid, money )
 		HouseInfo[houseid][hTakings],
 		HouseInfo[houseid][hSQLID]
 		);
-	mysql_tquery(g_SQL, TmpQuery, "", "");
+	mysql_tquery(g_SQL, TmpQuery);
 	return 1;
 }
 // KUcA - IGRAc (OPOREZIVA) -----------------------------------------------------------------------------
@@ -582,13 +582,13 @@ stock HouseToPlayerMoneyTAX ( playerid, houseid, money )
 	format( TmpQuery, sizeof(TmpQuery), "UPDATE `city` SET `budget` = '%d'", 
 			CityInfo[cBudget]
 		);
-	mysql_tquery(g_SQL, TmpQuery, "", "");
+	mysql_tquery(g_SQL, TmpQuery);
 	// Update kuce
 	format( TmpQuery2, sizeof(TmpQuery2), "UPDATE `houses` SET `bank` = '%d' WHERE `id` = '%d'",
 			HouseInfo[houseid][hTakings],
 			HouseInfo[houseid][hSQLID]
 		);
-	mysql_tquery(g_SQL, TmpQuery2, "", "");
+	mysql_tquery(g_SQL, TmpQuery2);
 	return 1;
 }
 // IGRAc - ORGANIZACIJA (NEOPOREZIVA) -----------------------------------------FACTIONBANK----------------------
@@ -607,7 +607,7 @@ stock PlayerToOrgMoney ( playerid, ftype, money )
 					FactionInfo[ i ][ fFactionBank ],
 					FactionInfo[ i ][ fID ]
 				);
-			mysql_tquery(g_SQL, TmpQuery, "", "");
+			mysql_tquery(g_SQL, TmpQuery);
 			break;
 		}
 	}
@@ -636,7 +636,7 @@ stock PlayerToOrgMoneyTAX ( playerid, ftype, money )
 					FactionInfo[ i ][ fFactionBank ],
 					FactionInfo[ i ][ fID ]
 				);
-			mysql_tquery(g_SQL, TmpQuery, "", "");
+			mysql_tquery(g_SQL, TmpQuery);
 			break;
 		}
 	}
@@ -644,7 +644,7 @@ stock PlayerToOrgMoneyTAX ( playerid, ftype, money )
 	format( TmpQuery2, sizeof(TmpQuery2), "UPDATE `city` SET `budget` = '%d'", 
 			CityInfo[cBudget]
 		);
-	mysql_tquery(g_SQL, TmpQuery2, "", "");
+	mysql_tquery(g_SQL, TmpQuery2);
 	return 1;
 }
 // ORGANIZACIJA - IGRAc (NEOPOREZIVA) -------------------------------------FACTIONBANK----------------------
@@ -662,7 +662,7 @@ stock OrgToPlayerMoney ( playerid, ftype, money )
 					FactionInfo[ i ][ fFactionBank ],
 					FactionInfo[ i ][ fID ]
 				);
-			mysql_tquery(g_SQL, TmpQuery, "", "");
+			mysql_tquery(g_SQL, TmpQuery);
 			break;
 		}
 	}
@@ -691,7 +691,7 @@ stock OrgToPlayerMoneyTAX ( playerid, ftype, money )
 					FactionInfo[ i ][ fFactionBank ],
 					FactionInfo[ i ][ fID ]
 				);
-			mysql_tquery(g_SQL, TmpQuery, "", "");
+			mysql_tquery(g_SQL, TmpQuery);
 			break;
 		}
 	}
@@ -700,7 +700,7 @@ stock OrgToPlayerMoneyTAX ( playerid, ftype, money )
 	format( TmpQuery2, sizeof(TmpQuery2), "UPDATE `city` SET `budget` = '%d'", 
 			CityInfo[cBudget]
 		);
-	mysql_tquery(g_SQL, TmpQuery2, "", "");
+	mysql_tquery(g_SQL, TmpQuery2);
 	return 1;
 }
 // ORGANIZACIJA - IGRAc BANKA (NEOPOREZIVA) -------------------------------------FACTIONBANK----------------------
@@ -720,7 +720,7 @@ stock OrgToPlayerBankMoney ( playerid, ftype, money )
 					FactionInfo[ i ][ fFactionBank ],
 					FactionInfo[ i ][ fID ]
 				);
-			mysql_tquery(g_SQL, TmpQuery, "", "");
+			mysql_tquery(g_SQL, TmpQuery);
 			break;
 		}
 	}
@@ -731,7 +731,7 @@ stock OrgToPlayerBankMoney ( playerid, ftype, money )
 			PlayerInfo[playerid][pBank],
 			PlayerInfo[playerid][pSQLID]
 		);
-	mysql_tquery(g_SQL, TmpQuery2, "", "");
+	mysql_tquery(g_SQL, TmpQuery2);
 	return 1;
 }
 // IGRAc - ILEGALNI PRORACUN (NEOPOREZIVA) -----------------------------------------------------------------------------
@@ -746,7 +746,7 @@ stock PlayerToIllegalBudgetMoney (playerid, money )
 	format( TmpQuery, sizeof(TmpQuery), "UPDATE `city` SET `illegalbudget` = '%d'", 
 			CityInfo[cIllegalBudget]
 		);
-	mysql_tquery(g_SQL, TmpQuery, "", "");
+	mysql_tquery(g_SQL, TmpQuery);
 	return 1;
 }
 // ILEGALNI PRORACUN - IGRAc (NEOPOREZIVA) -----------------------------------------------------------------------------
@@ -762,7 +762,7 @@ stock IllegalBudgetToPlayerMoney (playerid, money )
 	format( TmpQuery, sizeof(TmpQuery), "UPDATE `city` SET `illegalbudget` = '%d'", 
 			CityInfo[cIllegalBudget]
 		);
-	mysql_tquery(g_SQL, TmpQuery, "", "");
+	mysql_tquery(g_SQL, TmpQuery);
 	return 1;
 }
 // WAREHOUSE - ILEGALNI PRORACUN (NEOPOREZIVA) -----------------------------------------------------------------------------
@@ -777,7 +777,7 @@ stock WarehouseToIllegalBudgetMoney(whid, money)
 	format( TmpQuery, sizeof(TmpQuery), "UPDATE `city` SET `illegalbudget` = '%d'", 
 			CityInfo[cIllegalBudget]
 		);
-	mysql_tquery(g_SQL, TmpQuery, "", "");
+	mysql_tquery(g_SQL, TmpQuery);
 	UpdateWarehouseMoney(whid);
 	return 1;
 }
@@ -800,7 +800,7 @@ stock WarehouseToIllegalBudgetMoney(whid, money)
 			PlayerInfo[playerid][pPayDayMoney],
 			PlayerInfo[playerid][pSQLID]
 		);
-	mysql_tquery(g_SQL, TmpQuery2, "", "");
+	mysql_tquery(g_SQL, TmpQuery2);
 	return 1;
 }
 // PRORAcUN - IGRAc RADNA KNJIZICA (NEOPOREZIVA) -----------------------------------------------------------------------------
@@ -822,7 +822,7 @@ stock BudgetToPlayerBankMoney (playerid, money )
 			PlayerInfo[playerid][pPayDayMoney],
 			PlayerInfo[playerid][pSQLID]
 		);
-	mysql_tquery(g_SQL, TmpQuery2, "", "");
+	mysql_tquery(g_SQL, TmpQuery2);
 	return 1;
 }
 // RADNA KNJIZICA - IGRAc (OPOREZIVA) -----------------------------------------------------------------------------
@@ -840,7 +840,7 @@ stock PayDayToPlayerMoney (playerid, money )
 			PlayerInfo[playerid][pPayDayMoney],
 			PlayerInfo[playerid][pSQLID]
 		);
-	mysql_tquery(g_SQL, TmpQuery, "", "");
+	mysql_tquery(g_SQL, TmpQuery);
 	return 1;
 }*/
 // BANKA - IGRAc (NEOPOREZIVA) -----------------------------------------------------------------------------
@@ -857,7 +857,7 @@ stock BankToPlayerMoney (playerid, money )
 			PlayerInfo[playerid][pBank],
 			PlayerInfo[playerid][pSQLID]
 		);
-	mysql_tquery(g_SQL, TmpQuery, "", "");
+	mysql_tquery(g_SQL, TmpQuery);
 	return 1;
 }
 // IGRAc - BANKA (NEOPOREZIVA) -----------------------------------------------------------------------------
@@ -874,7 +874,7 @@ stock PlayerToBankMoney (playerid, money )
 			PlayerInfo[playerid][pBank],
 			PlayerInfo[playerid][pSQLID]
 		);
-	mysql_tquery(g_SQL, TmpQuery, "", "");
+	mysql_tquery(g_SQL, TmpQuery);
 	return 1;
 }
 // BIZNIS - PRORACUN (NEOPOREZIVA) -------------------------------------------------------
@@ -891,13 +891,13 @@ stock BusinessToBudgetMoney ( bizid, money )
 	format( TmpQuery, sizeof(TmpQuery), "UPDATE `city` SET `budget` = '%d'", 
 			CityInfo[cBudget]
 		);
-	mysql_tquery(g_SQL, TmpQuery, "", "");
+	mysql_tquery(g_SQL, TmpQuery);
 	// Update biznisa
 	format( TmpQuery2, sizeof(TmpQuery2), "UPDATE `bizzes` SET `till` = '%d' WHERE `id` = '%d'",
 			BizzInfo[bizid][bTill],
 			BizzInfo[bizid][bSQLID]
 		);
-	mysql_tquery(g_SQL, TmpQuery2, "", "");
+	mysql_tquery(g_SQL, TmpQuery2);
 	return 1;
 }
 // PRORACUN - BIZNIS (NEOPOREZIVA) -------------------------------------------------------
@@ -914,13 +914,13 @@ stock BudgetToBusinessMoney ( bizid, money )
 	format( TmpQuery, sizeof(TmpQuery), "UPDATE `city` SET `budget` = '%d'", 
 			CityInfo[cBudget]
 		);
-	mysql_tquery(g_SQL, TmpQuery, "", "");
+	mysql_tquery(g_SQL, TmpQuery);
 	// Update biznisa
 	format( TmpQuery2, sizeof(TmpQuery2), "UPDATE `bizzes` SET `till` = '%d' WHERE `id` = '%d'",
 			BizzInfo[bizid][bTill],
 			BizzInfo[bizid][bSQLID]
 		);
-	mysql_tquery(g_SQL, TmpQuery2, "", "");
+	mysql_tquery(g_SQL, TmpQuery2);
 	return 1;
 }
 // PRORACUN - ORGANIZACIJA (NEOPOREZIVA)
@@ -941,7 +941,7 @@ stock BudgetToOrgMoney ( ftype, money )
 					FactionInfo[ i ][ fFactionBank ],
 					FactionInfo[ i ][ fID ]
 				);
-			mysql_tquery(g_SQL, TmpQuery, "", "");
+			mysql_tquery(g_SQL, TmpQuery);
 			break;
 		}
 	}
@@ -949,7 +949,7 @@ stock BudgetToOrgMoney ( ftype, money )
 	format( TmpQuery2, sizeof(TmpQuery2), "UPDATE `city` SET `budget` = '%d'", 
 			CityInfo[cBudget]
 		);
-	mysql_tquery(g_SQL, TmpQuery2, "", "");
+	mysql_tquery(g_SQL, TmpQuery2);
 	return 1;
 }
 // ORGANIZACIJA - PRORACUN(NEOPOREZIVA)
@@ -970,7 +970,7 @@ stock OrgToBudgetMoney ( ftype, money )
 					FactionInfo[ i ][ fFactionBank ],
 					FactionInfo[ i ][ fID ]
 				);
-			mysql_tquery(g_SQL, TmpQuery, "", "");
+			mysql_tquery(g_SQL, TmpQuery);
 			break;
 		}
 	}
@@ -979,7 +979,7 @@ stock OrgToBudgetMoney ( ftype, money )
 	format( TmpQuery2, sizeof(TmpQuery2), "UPDATE `city` SET `budget` = '%d'", 
 			CityInfo[cBudget]
 		);
-	mysql_tquery(g_SQL, TmpQuery2, "", "");
+	mysql_tquery(g_SQL, TmpQuery2);
 	return 1;
 }
 // ILEGALNI PRORACUN - LEGALNI 
@@ -996,7 +996,7 @@ stock IllegalToLegalBudgetMoney (money)
 			CityInfo[cBudget],
 			CityInfo[cIllegalBudget]
 		);
-	mysql_tquery(g_SQL, TmpQuery, "", "");
+	mysql_tquery(g_SQL, TmpQuery);
 	return 1;
 }
 
@@ -1017,7 +1017,7 @@ stock PlayerToOrgMoney ( playerid, orgid, money )
 		FactionInfo[ orgid ][ fFactionBank ],
 		FactionInfo[ orgid ][ fID ]
 	);
-	mysql_tquery(g_SQL, TmpQuery, "", "");
+	mysql_tquery(g_SQL, TmpQuery);
 	return 1;
 }
 
@@ -1041,13 +1041,13 @@ stock PlayerToOrgMoneyTAX ( playerid, orgid, money )
 			FactionInfo[ i ][ fFactionBank ],
 			FactionInfo[ i ][ fID ]
 		);
-	mysql_tquery(g_SQL, TmpQuery, "", "");
+	mysql_tquery(g_SQL, TmpQuery);
 
 	// Update proracuna
 	format( TmpQuery2, sizeof(TmpQuery2), "UPDATE `city` SET `budget` = '%d'", 
 			CityInfo[cBudget]
 		);
-	mysql_tquery(g_SQL, TmpQuery2, "", "");
+	mysql_tquery(g_SQL, TmpQuery2);
 	return 1;
 }
 // ORGANIZACIJA - IGRAc (NEOPOREZIVA) -------------------------------------FACTIONBANK----------------------
@@ -1064,7 +1064,7 @@ stock OrgToPlayerMoney ( playerid, orgid, money )
 			FactionInfo[ orgid ][ fFactionBank ],
 			FactionInfo[ orgid ][ fID ]
 		);
-	mysql_tquery(g_SQL, TmpQuery, "", "");
+	mysql_tquery(g_SQL, TmpQuery);
 	return 1;
 }
 // ORGANIZACIJA - IGRAc (OPOREZIVA) -------------------------------------------FACTIONBANK----------------------
@@ -1087,13 +1087,13 @@ stock OrgToPlayerMoneyTAX ( playerid, orgid, money )
 			FactionInfo[orgid][fFactionBank],
 			FactionInfo[orgid][fID]
 		);
-	mysql_tquery(g_SQL, TmpQuery, "", "");
+	mysql_tquery(g_SQL, TmpQuery);
 
 	// Update proracuna
 	format( TmpQuery2, sizeof(TmpQuery2), "UPDATE `city` SET `budget` = '%d'", 
 			CityInfo[cBudget]
 		);
-	mysql_tquery(g_SQL, TmpQuery2, "", "");
+	mysql_tquery(g_SQL, TmpQuery2);
 	return 1;
 }
 */

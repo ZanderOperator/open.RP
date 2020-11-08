@@ -42,7 +42,7 @@ LoadPlayerCredit(playerid)
 			mysql_format(g_SQL, tmpQuery, sizeof(tmpQuery), "INSERT INTO `player_credits`(`sqlid`, `type`, `rate`, `amount`, `unpaid`, `used`, `timestamp`) VALUES ('%d', '0', '0', '0', '0', '0', '0')",
 				PlayerInfo[ playerid ][ pSQLID ]
 			);
-			mysql_tquery(g_SQL, tmpQuery, "");
+			mysql_tquery(g_SQL, tmpQuery);
 			return 1;
 		}
 			
@@ -70,7 +70,7 @@ SavePlayerCredit(playerid)
 		CreditInfo[playerid][cTimestamp],
 		PlayerInfo[playerid][pSQLID]
 	);
-	mysql_tquery(g_SQL, mysqlQuery, "", "");
+	mysql_tquery(g_SQL, mysqlQuery);
 	return 1;
 }
 
@@ -343,12 +343,12 @@ BankTransferMoney(playerid, giveplayerid, MoneyAmmount)
 			PlayerInfo[ playerid ][ pBank ],
 			PlayerInfo[ playerid ][ pSQLID]
 		);
-	mysql_tquery(g_SQL, bankTransferQuery, "");
+	mysql_tquery(g_SQL, bankTransferQuery);
 	format(bankTransferQuery, sizeof(bankTransferQuery), "UPDATE `accounts` SET `bankmoney` = '%d' WHERE sqlid = '%d'",
 			PlayerInfo[ giveplayerid ][ pBank ],
 			PlayerInfo[ giveplayerid ][ pSQLID]
 		);
-	mysql_tquery(g_SQL, bankTransferQuery, "");
+	mysql_tquery(g_SQL, bankTransferQuery);
 		
 	if(MoneyAmmount >= 1000) {
 		format(btmpString, sizeof(btmpString), "[A] Bank transfer: %s je prebacio $%d igracu %s", GetName(playerid, false), MoneyAmmount, GetName(giveplayerid, false));
@@ -541,7 +541,7 @@ TakePlayerProperty(playerid)
 				
 			// Update houses table
 			format(TmpQuery, 128, "UPDATE `houses` SET `ownerid` = '0' WHERE `ownerid` = '%d'", PlayerInfo[playerid][pSQLID]);
-			mysql_tquery(g_SQL, TmpQuery, "", "");
+			mysql_tquery(g_SQL, TmpQuery);
 
 			SetPlayerSpawnInfo(playerid);
 			
@@ -564,7 +564,7 @@ TakePlayerProperty(playerid)
 			format( TmpQuery, sizeof(TmpQuery), "UPDATE `bizzes` SET `ownerid` = '0', `co_ownerid` = '0' WHERE `id` = '%d'", 
 				BizzInfo[ biz ][bSQLID]
 			);
-			mysql_tquery(g_SQL, TmpQuery, "", "");
+			mysql_tquery(g_SQL, TmpQuery);
 		}
 	}
 	return 1;
