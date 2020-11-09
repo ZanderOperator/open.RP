@@ -40,9 +40,9 @@
 #include "modules/Systems/LSPD/Roadblocks.pwn"
 #include "modules/Systems/LSPD/MDC.pwn"
 #include "modules/Systems/LSPD/Flashbang.pwn"
+
 // Tickets
-#include "modules/Systems/LSPD/Tickets/Funcs.pwn"
-#include "modules/Systems/LSPD/Tickets/CMD.pwn"
+#include "modules/Systems/LSPD\Tickets/Core.inc"
 
 #include "modules/Systems/LSPD/Spikes.pwn"
 #include "modules/Systems/LSPD/Gunrack.pwn"

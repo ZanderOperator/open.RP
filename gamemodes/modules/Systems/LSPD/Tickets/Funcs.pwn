@@ -1,9 +1,11 @@
 // For this file, include guard generation must be disabled as it might be included more than once
-#if defined _funcs_included
-    #undef _funcs_included
+#if defined _inc_funcs
+    #undef _inc_funcs
 #endif
 
 #include <YSI_Coding\y_hooks>
+
+#include "modules/Systems/LSPD\Tickets/Header.pwn"
 
 #define MAX_TICKET_REASON_LEN           (100)   
 #define MAX_TICKET_MONEY_VAL            (10000)
@@ -88,7 +90,7 @@ stock GetVehicleTicketReason(ticketsql)
     return reason;
 }
 
-static stock InsertPlayerTicket(playerid, giveplayerid, money, const reason[])
+stock InsertPlayerTicket(playerid, giveplayerid, money, const reason[])
 {
     TicketInfo[giveplayerid][tkMoney] = money;
     strcat(TicketInfo[giveplayerid][tkReciever], GetName(giveplayerid, false), MAX_PLAYER_NAME);
