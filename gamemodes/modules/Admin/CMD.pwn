@@ -355,7 +355,7 @@ Public: OnAdminPINHashed(playerid, level)
 	bcrypt_get_hash(saltedPin);
 	format(PlayerInfo[playerid][pTeamPIN], BCRYPT_HASH_LENGTH, saltedPin);
 		
-	mysql_format(g_SQL, query, 512, "UPDATE `accounts` SET `teampin` = '%e',`adminLvl` = '%d' WHERE `sqlid` = '%d' LIMIT 1", saltedPin, level, PlayerInfo[playerid][pSQLID]);
+	mysql_format(g_SQL, query, sizeof(query), "UPDATE `accounts` SET `teampin` = '%e',`adminLvl` = '%d' WHERE `sqlid` = '%d' LIMIT 1", PlayerInfo[playerid][pTeamPIN], level, PlayerInfo[playerid][pSQLID]);
 	mysql_tquery(g_SQL, query);
 	return 1;
 }
