@@ -164,7 +164,7 @@ public OnPlayerEnterRaceCheckpoint(playerid)
             GameTextForPlayer(playerid, "~r~Pricekaj ovdje do pocetka Dakar utrke.", 5000, 3);
             DisablePlayerRaceCheckpoint(playerid);
         }
-        case 2 .. (sizeof(DakarCheckpoints)-3):
+        case 2 .. (sizeof(DakarCheckpoints)-2):
         {
             new cp = DakarPlayerCP[playerid];
 
@@ -178,7 +178,7 @@ public OnPlayerEnterRaceCheckpoint(playerid)
 
             DakarPlayerCP[playerid]++;
         }
-        case (sizeof(DakarCheckpoints)-2):
+        case (sizeof(DakarCheckpoints)-1):
         {
             new cp = DakarPlayerCP[playerid];
 
@@ -192,7 +192,7 @@ public OnPlayerEnterRaceCheckpoint(playerid)
 
             DakarPlayerCP[playerid]++;
         }
-        case (sizeof(DakarCheckpoints)-1):
+        case sizeof(DakarCheckpoints):
         {
             PlayerPlaySound(playerid, 1185, 0.0, 0.0, 0.0);
             defer StopFinishSound(playerid);
@@ -202,6 +202,7 @@ public OnPlayerEnterRaceCheckpoint(playerid)
             DakarPlayers--;
             DakarPlayer  [playerid] = 0;
             DakarPlayerCP[playerid] = 0;
+            Bit1_Set(gr_OnEvent, playerid, false);
 
             if (FirstDakarWinner == INVALID_PLAYER_ID)
             {
@@ -499,7 +500,8 @@ CMD:dakar(playerid, params[])
 
         for (new i = 0; i < sizeof(dakar_vehicle); i++)
         {
-            DestroyVehicle(dakar_vehicle[i]);
+            if (IsValidVehicle(dakar_vehicle[i]))
+                DestroyVehicle(dakar_vehicle[i]);
         }
         MoveDynamicObject(dakar_fence[0], 378.345764, 2489.771484, 16.167931, 50.000);
         MoveDynamicObject(dakar_fence[1], 378.744781, 2515.375977, 16.184555, 50.000);

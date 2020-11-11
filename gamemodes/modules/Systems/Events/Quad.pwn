@@ -231,7 +231,7 @@ hook OnPlayerEnterRaceCP(playerid)
             GameTextForPlayer(playerid, "~r~Pricekaj ovdje do pocetka Quad utrke.", 5000, 3);
             DisablePlayerRaceCheckpoint(playerid);
         }
-        case 2 .. (sizeof(QuadCheckpoints)-3):
+        case 2 .. (sizeof(QuadCheckpoints)-2):
         {
             new cp = QuadPlayerCP[playerid];
 
@@ -245,7 +245,7 @@ hook OnPlayerEnterRaceCP(playerid)
 
             QuadPlayerCP[playerid]++;
         }
-        case (sizeof(QuadCheckpoints)-2):
+        case (sizeof(QuadCheckpoints)-1):
         {
             new cp = QuadPlayerCP[playerid];
 
@@ -259,7 +259,7 @@ hook OnPlayerEnterRaceCP(playerid)
 
             QuadPlayerCP[playerid]++;
         }
-        case (sizeof(QuadCheckpoints)-1):
+        case sizeof(QuadCheckpoints):
         {
             PlayerPlaySound(playerid, 1185, 0.0, 0.0, 0.0);
             defer StopFinishSound(playerid);
@@ -269,6 +269,7 @@ hook OnPlayerEnterRaceCP(playerid)
             QuadPlayers--;
             QuadPlayer  [playerid] = 0;
             QuadPlayerCP[playerid] = 0;
+            Bit1_Set(gr_OnEvent, playerid, false);
 
             if (FirstQuadWinner == INVALID_PLAYER_ID)
             {
@@ -358,7 +359,7 @@ timer OnQuadCountDown[1000]()
             SetPlayerRaceCheckpoint(i, 0,
                 QuadCheckpoints[cp][0],   QuadCheckpoints[cp][1],   QuadCheckpoints[cp][2],
                 QuadCheckpoints[cp+1][0], QuadCheckpoints[cp+1][1], QuadCheckpoints[cp+1][2],
-                DAKAR_CP_SIZE
+                QUAD_CP_SIZE
             );
             QuadPlayerCP[i]++;
 
@@ -436,7 +437,7 @@ CMD:quad(playerid, params[])
             return SendClientMessage(playerid, COLOR_RED, "Vec ste se joinali na Quad.");
 
         QuadPlayer  [playerid] = 1;
-        QuadPlayerCP[playerid] = 0;
+        QuadPlayerCP[playerid] = 1;
         QuadPlayers++;
 
         //SetPlayerHealth(playerid, 100.0);
@@ -505,7 +506,8 @@ CMD:quad(playerid, params[])
         MoveDynamicObject(quad_fence, -305.29999, 1507.5, 75, 50.000);
         for (new i = 0; i < sizeof(quad_vehicle); i++)
         {
-            DestroyVehicle(quad_vehicle[i]);
+            if (IsValidVehicle(quad_vehicle[i]))
+                DestroyVehicle(quad_vehicle[i]);
         }
         return 1;
     }
