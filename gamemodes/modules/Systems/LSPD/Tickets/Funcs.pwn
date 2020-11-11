@@ -1,8 +1,3 @@
-// For this file, include guard generation must be disabled as it might be included more than once
-#if defined _inc_funcs
-    #undef _inc_funcs
-#endif
-
 #include <YSI_Coding\y_hooks>
 
 #include "modules/Systems/LSPD\Tickets/Header.pwn"

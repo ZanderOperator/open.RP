@@ -103,6 +103,7 @@ Public: OnPasswordUpdate(playerid)
 	mysql_tquery(g_SQL, updatePasswordQuery);
 	return 1;
 }
+
 stock UpdateRegisteredPassword(playerid)
 {
 	bcrypt_hash(PlayerInfo[playerid][pPassword], BCRYPT_COST, "OnPasswordUpdate", "d", playerid);
@@ -361,8 +362,8 @@ CMD:account(playerid, params[])
 }
 
 
-CMD:changepass(playerid, params[]) {
-
+CMD:changepass(playerid, params[]) 
+{
 	new Cache: mysql_search, usersql, mysql_buffer[128], usernick[MAX_PLAYER_NAME], passnew[32];
 	
 	if( !IsPlayerAdmin(playerid) && PlayerInfo[playerid][pAdmin] < 1338 ) return SendClientMessage(playerid, COLOR_RED, "Niste ovlasteni za koristenje ove komande!");

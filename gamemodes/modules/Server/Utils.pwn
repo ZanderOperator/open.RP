@@ -755,7 +755,9 @@ stock va_SendClientMessageToAll(colour, const fmat[], va_args<>)
 
 stock va_ShowPlayerDialog(playerid, dialogid, style, caption[], fmat[], button1[], button2[], va_args<>)
 {
-	return ShowPlayerDialog(playerid, dialogid, style, caption, va_return(fmat, va_start<7>), button1, button2);
+	new d_string[4096];
+	va_format(d_string, sizeof(d_string), fmat, va_start<7>);
+	return ShowPlayerDialog(playerid, dialogid, style, caption, d_string, button1, button2);
 }
 
 stock SetPlayerPosEx(playerid, Float:x, Float:y, Float:z, viwo=0, interior=0, bool:update=true)
@@ -1688,11 +1690,4 @@ ReturnName(playerid)
 	    
 	GetPlayerName(playerid, p_name, 24);
 	return p_name;
-}
-
-// credits go to: RyDeR`
-stock randomString(strDest[], strLen = 10)
-{
-    while(strLen--)
-        strDest[strLen] = random(2) ? (random(26) + (random(2) ? 'a' : 'A')) : (random(10) + '0');
 }

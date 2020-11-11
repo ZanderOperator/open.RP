@@ -272,7 +272,7 @@ public LoadPlayerData(playerid)
 		cache_get_value_name_int(0, "levels"		, PlayerInfo[playerid][pLevel]);
 		cache_get_value_name_int(0, "connecttime"	, PlayerInfo[playerid][pConnectTime]);
 		
-		cache_get_value_name(0, 	"teampin"		, PlayerInfo[playerid][pTeamPIN]		, 129);
+		cache_get_value_name(0, 	"teampin"		, PlayerInfo[playerid][pTeamPIN]		, BCRYPT_HASH_LENGTH);
 		cache_get_value_name_int(0, "secquestion"	, PlayerInfo[playerid][pSecQuestion]);
 		cache_get_value_name(0, 	"secawnser"		, PlayerInfo[playerid][pSecQuestAnswer]	, 31);
 		cache_get_value_name(0, 	"email"			, PlayerInfo[playerid][pEmail]			, MAX_PLAYER_MAIL);
@@ -281,7 +281,7 @@ public LoadPlayerData(playerid)
 		cache_get_value_name_int(0, "lastloginstamp", PlayerInfo[playerid][pLastLoginTimestamp]);
 		cache_get_value_name(0, 	"lastip"		, PlayerInfo[playerid][pLastIP]			, 24);
 		
-		cache_get_value_name(0, 	"password"		, PlayerInfo[playerid][pPassword]		, 129);
+		cache_get_value_name(0, 	"password"		, PlayerInfo[playerid][pPassword]		, BCRYPT_HASH_LENGTH);
 		cache_get_value_name_int(0, "spawnchange"	, PlayerInfo[playerid][pSpawnChange]);
 		
 		cache_get_value_name_int(0, "registered"	, PlayerInfo[playerid][pRegistered]);
@@ -1283,7 +1283,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 				if(6 <= strlen(inputtext) <= 12) {
 					format(dialogtext, sizeof(dialogtext), ""COL_WHITE"Unesite svoj vazeci e-mail radi dodatne sigurnosti\n\vaseg racuna:");
 					ShowPlayerDialog(playerid, DIALOG_REG_MAIL, DIALOG_STYLE_INPUT, ""COL_WHITE"REGISTRACIJA - E-MAIL(4/6)", dialogtext, "Input", "Abort");
-					format(PlayerInfo[playerid][pPassword], 129, inputtext);
+					format(PlayerInfo[playerid][pPassword], BCRYPT_HASH_LENGTH, inputtext);
 					Bit8_Set(gr_RegisterInputs, playerid, 0);
 					return 1;
 				}
