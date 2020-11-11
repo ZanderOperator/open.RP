@@ -650,7 +650,8 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 			{
 				if(IsPlayerInRangeOfPoint(playerid, 10.0, BasketInfo[i][KosX],BasketInfo[i][KosY],BasketInfo[i][KosZ]))
 				{
-					if(BasketInfo[i][Players] >= MAX_BASKET_PLAYERS) return va_SendErrorMessage(playerid, "Maksimum igraca po igralistu je %d.", MAX_BASKET_PLAYERS);
+					if(BasketInfo[i][Players] >= MAX_BASKET_PLAYERS) 
+						return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "Maksimum igraca po igralistu je %d.", MAX_BASKET_PLAYERS);
 					for(new j=0; j < MAX_BASKET_PLAYERS; j++)
 					{
 						if(BasketInfo[i][Player][j] == INVALID_PLAYER_ID)
@@ -1131,7 +1132,7 @@ CMD:playbasket(playerid, params[])
 			if(i != 1) // Seville i East Los Santos Tereni - 2 kosa
 			{
 				if(BasketInfo[i][Players] >= MAX_BASKET_PLAYERS) 
-					return va_SendErrorMessage(playerid, "Maksimum igraca po igralistu je %d.", MAX_BASKET_PLAYERS);
+					return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "Maksimum igraca po igralistu je %d.", MAX_BASKET_PLAYERS);
 				if(BasketInfo[i][pTeam1][0] == EOS || BasketInfo[i][pTeam2][0] == EOS)
 					ShowPlayerDialog(playerid, DIALOG_BASKET_TEAM, DIALOG_STYLE_INPUT, "Naziv ekipe:", "Molimo Vas unesite naziv svoje ekipe\nMaksimalan unos naziva: 32 znaka.", "Input", "Exit"); 
 				else

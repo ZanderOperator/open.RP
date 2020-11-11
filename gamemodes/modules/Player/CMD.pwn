@@ -2591,7 +2591,7 @@ CMD:changename(playerid, params[])
 			if(PlayerInfo[playerid][pDonateRank] > 0)
 			{
 				if(PlayerInfo[playerid][pChangeTimes] == 0)
-					return va_SendErrorMessage(playerid, "Potrosili ste sve dodatne changenameove koje ste dobili sa Premium Paketom. Izmjena dostupna za %s.", UnixTimestampToTime(PlayerInfo[ playerid ][ pChangenames ]));
+					return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "Potrosili ste sve dodatne changenameove koje ste dobili sa Premium Paketom. Izmjena dostupna za %s.", UnixTimestampToTime(PlayerInfo[ playerid ][ pChangenames ]));
 			}
 			else 
 				return SendClientMessage(playerid, COLOR_LIGHTRED, "Niste vlasnik Premium Donator paketa. Vise o donacijama na forum.cityofangels-roleplay.com");
