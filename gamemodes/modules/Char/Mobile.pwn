@@ -2925,7 +2925,7 @@ hook OnPlayerEditDynObject(playerid, objectid, response, Float:x, Float:y, Float
 			CreateTower(newtwid);
 		    DestroyDynamicObject(objectid);
 			CreateTowerObject(newtwid);
-			va_SendInfoMessage(playerid, "Kreirali ste signalni toranj! [ID:%d | SQLID:%d]", newtwid, TowerSQLID(newtwid));
+			SendFormatMessage(playerid, MESSAGE_TYPE_INFO, "Kreirali ste signalni toranj! [ID:%d | SQLID:%d]", newtwid, TowerSQLID(newtwid));
 		}
 		else if(response == 0)
 		{
@@ -3781,7 +3781,7 @@ CMD:destroytower(playerid, params[])
 	new dtowerid;
 	if(sscanf(params, "i", dtowerid)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /destroytower [id]");
 	if(!DeleteTower(dtowerid)) SendFormatMessage(playerid, MESSAGE_TYPE_ERROR,"Taj toranj ne postoji u bazi podataka (koristite IG id, a ne SQLID)!");
-	va_SendInfoMessage(playerid, "Unistili ste toranj ID %d!", dtowerid);
+	SendFormatMessage(playerid, MESSAGE_TYPE_INFO, "Unistili ste toranj ID %d!", dtowerid);
 	return 1;
 }
 

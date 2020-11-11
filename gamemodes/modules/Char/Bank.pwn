@@ -337,8 +337,8 @@ BankTransferMoney(playerid, giveplayerid, MoneyAmmount)
 		bankTransferQuery[128];
 	PlayerInfo[ playerid ][ pBank ] -= MoneyAmmount;
 	PlayerInfo[ giveplayerid ][ pBank ] += MoneyAmmount;
-	va_SendInfoMessage(playerid, "Prebacili ste $%d na racun %s!", MoneyAmmount, GetName(giveplayerid,true));
-	va_SendInfoMessage(giveplayerid, "%s vam je prebacio $%d na bankovni racun.", GetName(playerid,true), MoneyAmmount);
+	va_SendClientMessage(playerid, COLOR_LIGHTBLUE, "Prebacili ste $%d na racun %s!", MoneyAmmount, GetName(giveplayerid,true));
+	va_SendClientMessage(giveplayerid, COLOR_LIGHTBLUE, "%s vam je prebacio $%d na bankovni racun.", GetName(playerid,true), MoneyAmmount);
 	format(bankTransferQuery, sizeof(bankTransferQuery), "UPDATE `accounts` SET `bankmoney` = '%d' WHERE sqlid = '%d'",
 			PlayerInfo[ playerid ][ pBank ],
 			PlayerInfo[ playerid ][ pSQLID]

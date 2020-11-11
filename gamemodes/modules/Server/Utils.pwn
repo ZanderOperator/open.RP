@@ -597,16 +597,6 @@ stock GetPosBehindVehicle(vehicleid, &Float:x, &Float:y, &Float:z, Float:offset=
     return 1;
 }
 
-stock va_SendErrorMessage(playerid, const frmmat[], va_args<>)
-{
-    return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, va_return(frmmat, va_start<2>));
-}
-
-stock va_SendInfoMessage(playerid, const frmmat[], va_args<>)
-{
-    return SendFormatMessage(playerid, MESSAGE_TYPE_INFO, va_return(frmmat, va_start<2>));
-}
-
 stock SendErrorMessage(playerid, smsgstring[])
 {
 	return SendMessage(playerid, MESSAGE_TYPE_ERROR, smsgstring);
@@ -1681,7 +1671,11 @@ stock randomEx(min, max)
 }*/
 
 mysql_fquery(MySQL:connectionHandle, const fquery[], va_args<>)
-	return mysql_tquery(connectionHandle, va_return(fquery, va_start<2>));
+{
+	new va_query[2048];
+	va_format(va_query, sizeof(va_query), fquery, va_start<2>);
+	return mysql_tquery(connectionHandle, va_query);
+}
 
 ReturnName(playerid)
 {

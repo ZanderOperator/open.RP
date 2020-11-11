@@ -1384,7 +1384,8 @@ CMD:faction(playerid, params[])
             }
         }
 
-        if (!found) return va_SendErrorMessage(playerid, "Komanda %s ne postoji u permisijama!", cmdname);
+        if (!found) 
+            return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "Komanda %s ne postoji u permisijama!", cmdname);
 
         va_SendClientMessage(playerid, COLOR_RED, "[ ! ] Postavio si komandu %s na rank %d.", cmdname, rnk);
 
