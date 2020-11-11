@@ -1,6 +1,7 @@
 #include <YSI_Coding\y_hooks>
 				
-// Server Updates Dialog by Logan - July 2019.
+// Server Updates Dialog by Logan - Last Updated November 2020.
+
 static 	
 		page1[1280],
 		page2[1280],
@@ -32,7 +33,7 @@ stock LoadUpdateList()
         format(updateCaption, sizeof(updateCaption), "%s Update", SCRIPT_VERSION);
         fclose(handle);
     }
-    else print("The file \"changelog.txt\" does not exists, or can't be opened.");
+    else print("The file \"Changelog.txt\" does not exists, or can't be opened.");
     return 1;
 }
 
@@ -95,12 +96,12 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 					}
 					else 
 					{
-						if(isnull(page2))
+						if(isnull(page2) && isnull(page3))
 						{
 							format(PlayerInfo[playerid][pLastUpdateVer], 24, "%s", SCRIPT_VERSION);
-							return RewardPlayer(playerid);
+					 		RewardPlayer(playerid);
 						}
-						else if(isnull(page3))
+						else if(!isnull(page2) && isnull(page3))
 						{
 							PlayerUpdatePage[playerid] = 2;
 							ShowPlayerDialog(playerid, DIALOG_UPDATE_LIST, DIALOG_STYLE_MSGBOX, updateCaption, page2, "Exit", "");
@@ -121,12 +122,12 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 					}
 					else 
 					{
-						if(isnull(page3))
+						if(isnull(page3) && isnull(page4))
 						{
 							format(PlayerInfo[playerid][pLastUpdateVer], 24, "%s", SCRIPT_VERSION);
-							return RewardPlayer(playerid);
+							RewardPlayer(playerid);
 						}
-						else if(isnull(page4))
+						else if(!isnull(page3) && isnull(page4))
 						{
 							PlayerUpdatePage[playerid] = 3;	
 							ShowPlayerDialog(playerid, DIALOG_UPDATE_LIST, DIALOG_STYLE_MSGBOX, updateCaption, page3, "Exit", "");
@@ -150,7 +151,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 						if(isnull(page4))
 						{
 							format(PlayerInfo[playerid][pLastUpdateVer], 24, "%s", SCRIPT_VERSION);
-							return RewardPlayer(playerid);
+							RewardPlayer(playerid);
 						}
 						else
 						{

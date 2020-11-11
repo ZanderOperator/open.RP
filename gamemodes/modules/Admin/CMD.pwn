@@ -340,22 +340,59 @@ ResetAdminVehVars(admin) {
 
 Public: OnHelperPINHashed(playerid, level)
 {
-	new saltedPin[BCRYPT_HASH_LENGTH], query[256];
+	new 
+		saltedPin[BCRYPT_HASH_LENGTH];
 	bcrypt_get_hash(saltedPin);
-	format(PlayerInfo[playerid][pTeamPIN], BCRYPT_HASH_LENGTH, saltedPin);
-		
-	mysql_format(g_SQL, query, sizeof(query), "UPDATE `accounts` SET `teampin` = '%e',`helper` = '%d' WHERE `sqlid` = '%d' LIMIT 1", PlayerInfo[playerid][pTeamPIN], level, PlayerInfo[playerid][pSQLID]);
+
+	PlayerInfo[playerid][pTeamPIN][0] = EOS;
+	strcat(PlayerInfo[playerid][pTeamPIN], saltedPin, BCRYPT_HASH_LENGTH);
+
+	new 
+		query[256];	
+	mysql_format(g_SQL, query, sizeof(query), "UPDATE `accounts` SET `teampin` = '%e', `helper` = '%d' WHERE `sqlid` = '%d' LIMIT 1", 
+		saltedPin, 
+		level, 
+		PlayerInfo[playerid][pSQLID]
+	);
 	mysql_tquery(g_SQL, query);
 	return 1;
 }
 
 Public: OnAdminPINHashed(playerid, level)
 {
-	new saltedPin[BCRYPT_HASH_LENGTH], query[256];
+	new 
+		saltedPin[BCRYPT_HASH_LENGTH];
 	bcrypt_get_hash(saltedPin);
-	format(PlayerInfo[playerid][pTeamPIN], BCRYPT_HASH_LENGTH, saltedPin);
+
+	PlayerInfo[playerid][pTeamPIN][0] = EOS;
+	strcat(PlayerInfo[playerid][pTeamPIN], saltedPin, BCRYPT_HASH_LENGTH);
 		
-	mysql_format(g_SQL, query, sizeof(query), "UPDATE `accounts` SET `teampin` = '%e',`adminLvl` = '%d' WHERE `sqlid` = '%d' LIMIT 1", PlayerInfo[playerid][pTeamPIN], level, PlayerInfo[playerid][pSQLID]);
+	new 
+		query[256];	
+	mysql_format(g_SQL, query, sizeof(query), "UPDATE `accounts` SET `teampin` = '%e', `adminLvl` = '%d' WHERE `sqlid` = '%d' LIMIT 1", 
+		saltedPin, 
+		level, 
+		PlayerInfo[playerid][pSQLID]
+	);
+	mysql_tquery(g_SQL, query);
+	return 1;
+}
+
+Public: OnTeamPINHashed(playerid)
+{
+	new 
+		saltedPin[BCRYPT_HASH_LENGTH];
+	bcrypt_get_hash(saltedPin);
+	
+	PlayerInfo[playerid][pTeamPIN][0] = EOS;
+	strcat(PlayerInfo[playerid][pTeamPIN], saltedPin, BCRYPT_HASH_LENGTH);
+
+	new 
+		query[256];	
+	mysql_format(g_SQL, query, sizeof(query), "UPDATE `accounts` SET `teampin` = '%e' WHERE `sqlid` = '%d' LIMIT 1", 
+		saltedPin, 
+		PlayerInfo[playerid][pSQLID]
+	);
 	mysql_tquery(g_SQL, query);
 	return 1;
 }
@@ -387,7 +424,6 @@ Public: OnPINChecked(playerid, status)
 		}
 	}
 	return 1;
-
 }
 
 
@@ -1767,8 +1803,8 @@ CMD:makehelper(playerid, params[])
 	if( !IsPlayerAdmin(playerid) && PlayerInfo[playerid][pAdmin] != 1338 ) return SendClientMessage(playerid, COLOR_RED, "Niste ovlasteni za koristenje ove komande!");
 	
 	new 
-		giveplayerid, level, query[128];
-	if(sscanf(params, "ui", giveplayerid, level)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /makehelper [Playerid/DioImena] [level(1-4)]");
+		giveplayerid, level, query[128], teamPIN[12];
+	if(sscanf(params, "uis[12]", giveplayerid, level, teamPIN)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /makehelper [Playerid/DioImena] [level(1-4)]");
 	if(giveplayerid == INVALID_PLAYER_ID) return SendClientMessage(playerid, COLOR_RED, "Igrac nije online!");
 	
 	if(!level) 
@@ -1785,13 +1821,9 @@ CMD:makehelper(playerid, params[])
 	}
 	
 	if( !strlen(PlayerInfo[giveplayerid][pTeamPIN]) ) 
-	{
-		new	
-			randomPin[6];
-		randomString(randomPin,5);
-		va_ShowPlayerDialog(giveplayerid, 0, DIALOG_STYLE_MSGBOX, "Helper PIN kod", "Cestitamo na dobijenom helper ranku!\nServer je generirao PIN za vas koji cete koristiti nakon logiranja na server sa komandom /alogin.\nNe odajite ga nikome ni pod koju cijenu i dobro ga upamtite ili zapisite!\nVas PIN glasi:"COL_COMPADMIN"%s", "Okay", "", randomPin);
-
-		bcrypt_hash(randomPin, BCRYPT_COST, "OnHelperPINHashed", "d", giveplayerid);
+	{		
+		va_ShowPlayerDialog(giveplayerid, 0, DIALOG_STYLE_MSGBOX, "Helper PIN kod", "Congrats on your Game Helper position!\nTeam PIN is unique for you, and is your Game Admin credentials, each login you have to use /alogin to use Team Commands.\nDo not give your Team PIN to anyone and remember it well/write it down!\nYour Team PIN is:"COL_COMPADMIN"%s\n"COL_RED"You are REQUIRED to set your Forum Nick with /forumname.", "Okay", "", teamPIN);
+		bcrypt_hash(teamPIN, BCRYPT_COST, "OnHelperPINHashed", "dd", giveplayerid, level);
 	}
 	
 	#if defined MODULE_LOGS
@@ -2021,7 +2053,8 @@ CMD:ach(playerid, params[]) {
 	return (true);
 }
 
-CMD:playercars(playerid, params[]) {
+CMD:playercars(playerid, params[]) 
+{
 	new 
 		Cache: mysql_search,
 		player_sqlid,
@@ -2059,7 +2092,7 @@ CMD:teampin(playerid, params[])
 	if(strlen(teampin) < 1 || strlen(teampin) > 12)
 		return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Team PIN ne moze biti kraci od jednog, ni dulji od 12 znakova!");
 	
-	bcrypt_hash(teampin, BCRYPT_COST, "OnPINHashed", "d", giveplayerid);
+	bcrypt_hash(teampin, BCRYPT_COST, "OnTeamPINHashed", "d", giveplayerid);
 	
 	va_SendClientMessage(playerid, COLOR_RED, "[SERVER]  Uspjesno ste postavili %s Team PIN na: %s", GetName(giveplayerid, true), teampin );
 	va_SendClientMessage(giveplayerid, COLOR_RED, "[SERVER] Administrator %s Vam je uspjesno postavio Team PIN na: %s", GetName(playerid, true), teampin );
@@ -2073,8 +2106,8 @@ CMD:makeadmin(playerid, params[])
 	if( !IsPlayerAdmin(playerid) && PlayerInfo[playerid][pAdmin] != 1338 ) return SendClientMessage(playerid, COLOR_RED, "Niste ovlasteni za koristenje ove komande!");
 	
 	new 
-		giveplayerid, level;
-	if(sscanf(params, "ui", giveplayerid, level)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /makeadmin [Playerid/DioImena] [level(1-1338)]");
+		giveplayerid, level, teamPIN[12];
+	if(sscanf(params, "uis[12]", giveplayerid, level, teamPIN)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /makeadmin [Playerid/DioImena] [level(1-1338)] [Team PIN for /alogin]");
 	if(giveplayerid == INVALID_PLAYER_ID) return SendClientMessage(playerid, COLOR_RED, "Igrac nije online!");
 	
 	new
@@ -2093,13 +2126,10 @@ CMD:makeadmin(playerid, params[])
 		return 1;
 	}
 	
-	if( !strlen(PlayerInfo[giveplayerid][pTeamPIN]) ) {
-		new	
-			randomPin[6];
-		randomString(randomPin,5);
-		va_ShowPlayerDialog(giveplayerid, 0, DIALOG_STYLE_MSGBOX, "Admin PIN kod", "Cestitamo na dobijenom admin ranku!\nServer je generirao PIN za vas koji cete koristiti nakon logiranja na server sa komandom /alogin.\nNe odajite ga nikome ni pod koju cijenu i dobro ga upamtite ili zapisite!\nVas PIN glasi:"COL_COMPADMIN"%s\nObavezno podesite svoj Forum Nick sa komandom /forumname.", "Okay", "", randomPin);
-
-		bcrypt_hash(randomPin, BCRYPT_COST, "OnAdminPINHashed", "d", giveplayerid);
+	if( !strlen(PlayerInfo[giveplayerid][pTeamPIN]) ) 
+	{
+		va_ShowPlayerDialog(giveplayerid, 0, DIALOG_STYLE_MSGBOX, "Admin PIN kod", "Congrats on your Game Admin position!\nTeam PIN is unique for you, and is your Game Admin credentials, each login you have to use /alogin to use Team Commands.\nDo not give your Team PIN to anyone and remember it well/write it down!\nYour Team PIN is:"COL_COMPADMIN"%s\n"COL_RED"You are REQUIRED to set your Forum Nick with /forumname.", "Okay", "", teamPIN);
+		bcrypt_hash(teamPIN, BCRYPT_COST, "OnAdminPINHashed", "dd", giveplayerid, level);
 	}
 	
 	PlayerInfo[giveplayerid][pAdmin] = PlayerInfo[giveplayerid][pTempRank][0] = level;
@@ -2119,7 +2149,7 @@ CMD:makeadminex(playerid, params[])
 		new
 			level,
 			gplayername[MAX_PLAYER_NAME];
-		if(sscanf(params, "s[24] ", gplayername)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /makeadminex [Ime_Prezime] [Level(1-1338)]");
+		if(sscanf(params, "s[24] ", gplayername)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /makeadminex [Ime_Prezime] [Level(1-1338)] [Team PIN for /alogin]");
 		mysql_format(g_SQL, mysqlquery, sizeof(mysqlquery), "UPDATE `accounts` SET `adminLvl` = '%d' WHERE `name` = '%e' LIMIT 1", level, gplayername);
 		mysql_tquery(g_SQL, mysqlquery);
 	}

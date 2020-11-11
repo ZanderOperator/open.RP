@@ -93,7 +93,7 @@
 // YSI by Y_Less
 #define YSI_NO_HEAP_MALLOC
 
-// During sampctl p ensure check: CGEN_MEMORY(needs to be 90000) and MAX_COMMANDS(needs to be 1024) 
+// After sampctl p ensure check: CGEN_MEMORY(needs to be 90000) and MAX_COMMANDS(needs to be 1024) 
 #define CGEN_MEMORY				(90000)		// Internal Define - code parser/generator memory
 #define MAX_COMMANDS			(1024)		// Internal Define - y_commands
 
@@ -144,7 +144,7 @@
 #define SERVER_NAME								"City of Angels"
 #define COPYRIGHT                           	"Copyright (c) 2020 City of Angels Roleplay"
 #define WEB_URL									"forum.cityofangels-roleplay.com"
-#define SCRIPT_VERSION							"CoA RP v18.5.5.-"#GIT_REV
+#define SCRIPT_VERSION							"CoA RP v18.6.0.-"#GIT_REV
 #define DEV_NAME   								"Woo-Logan"
 
 // -Macros

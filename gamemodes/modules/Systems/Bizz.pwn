@@ -951,8 +951,6 @@ stock DeleteBiznis(bizz)
 static stock SetPlayerPosFinish(playerid)
 {
     new bizz = Bit16_Get( gr_PlayerInBiznis, playerid);
-    if (bizz == INVALID_BIZNIS_ID) return 0;
-
     switch (Bit8_Get(gr_PlayerSkinStore, playerid))
     {
         case 1: // Zip
