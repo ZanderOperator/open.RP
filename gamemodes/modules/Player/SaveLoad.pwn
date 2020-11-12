@@ -127,7 +127,6 @@ timer SetPlayerCrash[6000](playerid)
 
 //Forwards
 forward CheckPlayerInBase(playerid);
-forward PasswordForQuery(playerid, const inputtext[]);
 forward LoadPlayerData(playerid);
 forward RegisterPlayer(playerid);
 forward OnAccountFinish(playerid);
@@ -187,22 +186,6 @@ Public: OnPasswordChecked(playerid)
 	return 1;
 }
 
-public PasswordForQuery(playerid, const inputtext[])
-{
-	new rows;
-    cache_get_row_count(rows);
-    if(rows)
-	{
-		new sqlid, input_password[12], sql_password[BCRYPT_HASH_LENGTH];
-		strcat(input_password, inputtext, 12);
-
-		cache_get_value_name_int(0, "sqlid", sqlid);
-        cache_get_value_name(0, "password", sql_password, BCRYPT_HASH_LENGTH);
-		
-		bcrypt_check(input_password, sql_password,  "OnPasswordChecked", "d", playerid);
-	}
-	return 1;
-}
 public CheckPlayerInBase(playerid)
 {
 	if(cache_num_rows()) { //Registriran
@@ -690,18 +673,18 @@ SafeSpawnPlayer(playerid)
 	OnSecurityBreach[playerid] = false;
 	
 	SafeSpawning[playerid] = true;
-	new connectQuery[105];
-	mysql_format(g_SQL, connectQuery, 105, "INSERT INTO `player_connects`(`player_id`, `time`, `aip`) VALUES ('%d','%d','%e')",
+
+	mysql_fquery(g_SQL,
+		"INSERT INTO `player_connects`(`player_id`, `time`, `aip`) VALUES ('%d','%d','%e')",
 		PlayerInfo[playerid][pSQLID],
 		gettimestamp(),
 		GetPlayerIP(playerid)
 	);
-	mysql_pquery(g_SQL, connectQuery);
 	
-	new loginQuery[128];
-	
-	format(loginQuery, 128, "UPDATE `accounts` SET `online` = '1' WHERE `sqlid` = '%d'", PlayerInfo[ playerid ][ pSQLID ]);
-	mysql_tquery(g_SQL, loginQuery);
+	mysql_fquery(g_SQL,
+		 "UPDATE `accounts` SET `online` = '1' WHERE `sqlid` = '%d'",
+		 PlayerInfo[ playerid ][ pSQLID ]
+	);
 	
 	if( ( 10 <= PlayerInfo[ playerid ][ pJob ] <= 12 ) && ( !PlayerInfo[playerid][pMember] && !PlayerInfo[playerid][pLeader])  )
 		PlayerInfo[ playerid ][ pJob ] = 0;
@@ -718,9 +701,11 @@ SafeSpawnPlayer(playerid)
 			UpdatePremiumBizFurSlots(playerid);
 		if(PlayerInfo[playerid][pHouseKey] != INVALID_HOUSE_ID)
 			UpdatePremiumHouseFurSlots(playerid, -1, PlayerInfo[ playerid ][ pHouseKey ]);
-			
-		format(loginQuery, 128, "UPDATE `accounts` SET `vipRank` = '0', `vipTime` = '0' WHERE `sqlid` = '%d'", PlayerInfo[ playerid ][ pSQLID ]); //Svaki put kad bi nekon isteka donator skripta bi sve ovo iznad radila iako je isteka jer prikazuje bivsim donatorima ovaj tekst (neko nije stavia da se sejva donatorrank i time) mislin da je nepotrebno stavljat u save query kad igrac izlazi jer je napravljeno kad se daje donator da odmah sprema
-		mysql_tquery(g_SQL, loginQuery);
+
+		mysql_fquery(g_SQL,
+		 	"UPDATE `accounts` SET `vipRank` = '0', `vipTime` = '0' WHERE `sqlid` = '%d'",
+		 	PlayerInfo[ playerid ][ pSQLID ]
+		);
 	}
 	if( isnull(PlayerInfo[playerid][pSecQuestAnswer]) && isnull(PlayerInfo[playerid][pEmail]) )
 	{
@@ -751,7 +736,7 @@ SafeSpawnPlayer(playerid)
 	TogglePlayerControllable(playerid, false);
 	StopAudioStreamForPlayer(playerid);
 	va_SendClientMessage(playerid, COLOR_LIGHTBLUE, "[City of Angels]: "COL_WHITE"Dobrodosao natrag, "COL_LIGHTBLUE"%s"COL_WHITE"!", GetName(playerid));
-	CallLocalFunction("OnPlayerSpawn", "i", playerid);
+	//CallLocalFunction("OnPlayerSpawn", "i", playerid);
 	return 1;
 }
 
@@ -1153,9 +1138,23 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 				BanMessage(playerid);
 				return 1;
 			}
-			new loginCheckQuery[256];
-			mysql_format(g_SQL, loginCheckQuery, sizeof(loginCheckQuery),"SELECT * FROM `accounts` WHERE `name` = '%e' LIMIT 0,1", GetName(playerid, false));
-			mysql_tquery(g_SQL, loginCheckQuery, "PasswordForQuery", "is", playerid, inputtext);
+			new input_password[12];
+			strcat(input_password, inputtext, 12);
+			inline PasswordForQuery()
+			{
+				new sqlid, sql_password[BCRYPT_HASH_LENGTH];
+
+				cache_get_value_name_int(0, "sqlid", sqlid);
+				cache_get_value_name(0, "password", sql_password, BCRYPT_HASH_LENGTH);
+				
+				bcrypt_check(input_password, sql_password,  "OnPasswordChecked", "d", playerid);
+				return 1;
+			}
+			MySQL_TQueryInline(
+				g_SQL, 
+				using inline PasswordForQuery,
+				va_fquery(g_SQL, "SELECT sqlid, password FROM accounts WHERE name = '%e'", GetName(playerid, false)) 
+			);
 			return 1;
 		}
 		case DIALOG_SEC_SAMPID:

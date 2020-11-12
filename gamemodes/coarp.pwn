@@ -2809,7 +2809,6 @@ public ServerRestartRequest(index, response_code, data[])
         printf("[ERROR]: Automatic Server Restart via API was unsucessful! Response Code: %d", response_code);
 }
 
-
 /*
 	######## ##     ## ##    ##  ######  ######## ####  #######  ##    ##  ######
 	##       ##     ## ###   ## ##    ##    ##     ##  ##     ## ###   ## ##    ##
@@ -2846,11 +2845,9 @@ hook OnGameModeInit()
 		print("[SERVER ERROR]: Failed to connect MySQL Database!");
 		return 1;
 	}
-	new gstring[64];
-	format(gstring, sizeof(gstring), "hostname %s", HOSTNAME);
-	SendRconCommand(gstring);
 	mysql_log(ERROR | WARNING);
 	print("Report: MySQL Connection & Log Mode Established.");
+
 	MapAndreas_Init(MAP_ANDREAS_MODE_MINIMAL, "scriptfiles/SAmin.hmap");
 	print("Report: MapAndreas Initialised.");
 
@@ -2903,11 +2900,15 @@ hook OnGameModeInit()
 
 
 	// Server Informations
+	new gstring[64];
+	format(gstring, sizeof(gstring), "hostname %s", HOSTNAME);
+	SendRconCommand(gstring);
  	SetGameModeText(SCRIPT_VERSION);
 	for(new i = 0; i < 312; i++) {
         if(IsValidSkin(i))
             AddPlayerClass(i,0.0,0.0,0.0,0.0,-1,-1,-1,-1,-1,-1);
     }
+	print("Report: Server Info Loaded.");
 
 	// Auto Unlock Settings
 	GMX = 2;
@@ -2951,7 +2952,6 @@ hook OnGameModeInit()
 	new tmphour, tmpmins, tmpsecs;
 	GetServerTime(tmphour, tmpmins, tmpsecs);
 	SetWorldTime(tmphour);
-
 	return 1;
 }
 

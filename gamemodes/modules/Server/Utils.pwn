@@ -1673,8 +1673,15 @@ stock randomEx(min, max)
 mysql_fquery(MySQL:connectionHandle, const fquery[], va_args<>)
 {
 	new va_query[2048];
-	va_format(va_query, sizeof(va_query), fquery, va_start<2>);
+	mysql_format(connectionHandle, va_query, sizeof(va_query), fquery, va_start<2>);
 	return mysql_tquery(connectionHandle, va_query);
+}
+
+va_fquery(MySQL:connectionHandle, const fquery[], va_args<>)
+{
+	new va_query[2048];
+	mysql_format(connectionHandle, va_query, sizeof(va_query), fquery, va_start<2>);
+	return va_query;
 }
 
 ReturnName(playerid)
