@@ -4538,11 +4538,6 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 
 hook OnPlayerEditObject(playerid, playerobject, objectid, response, Float:fX, Float:fY, Float:fZ, Float:fRotX, Float:fRotY, Float:fRotZ)
 {
-    if (!playerobject)
-    {
-        return;
-    }
-
     switch (Bit4_Get(r_PlayerEditState, playerid))
     {
         case EDIT_STATE_PREVIEW:

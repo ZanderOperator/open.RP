@@ -2638,7 +2638,7 @@ CMD:address(playerid, params[])
 }
 CMD:edit(playerid, params[])
 {
-	new x_job[32], proplev, proptype = 0, propid = -1;
+	new i, x_job[32], proplev, proptype = 0, propid = -1;
 	if(PlayerInfo[playerid][pAdmin] < 1337) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You don't have premissions to use this command!");
 	if (sscanf(params, "s[32]i", x_job, proplev)) {
 		SendClientMessage(playerid, COLOR_RED, "|___________ Edit Houses/Business ___________|");
@@ -2648,134 +2648,126 @@ CMD:edit(playerid, params[])
 		SendClientMessage(playerid, COLOR_RED, "|____________________________________________|");
 		return 1;
 	}
-    foreach(new i:Houses)
+	i = GetNearestBizz(playerid);
+	if(i != INVALID_BIZNIS_ID)
 	{
-		if (IsPlayerInRangeOfPoint(playerid,2,HouseInfo[i][hEnterX], HouseInfo[i][hEnterY], HouseInfo[i][hEnterZ]) && HouseInfo[i][h3dViwo] == GetPlayerVirtualWorld(playerid))
+		new TmpQuery[128];
+		if(proplev >= 0)
 		{
-		    new TmpQuery[128];
-			if(proplev > 0)
+			if(strcmp(x_job,"level",true) == 0)
 			{
-			    if(strcmp(x_job,"level",true) == 0)
-			    {
-					proptype = 1;
-					propid = i;
-					HouseInfo[i][hLevel] = proplev;
-					format(TmpQuery, 128, "UPDATE `houses` SET `level` = '%d' WHERE `id` = '%d'", proplev, HouseInfo[i][hSQLID]);
-					mysql_tquery(g_SQL, TmpQuery);
-				}
-				else if(strcmp(x_job,"price",true) == 0)
-				{
-					proptype = 1;
-					propid = i;
-					HouseInfo[i][hValue] = proplev;
-					format(TmpQuery, 128, "UPDATE `houses` SET `value` = '%d' WHERE `id` = '%d'", proplev, HouseInfo[i][hSQLID]);
-					mysql_tquery(g_SQL, TmpQuery);
-				}
-				else if(strcmp(x_job,"locked",true) == 0)
-				{
-					proptype = 1;
-					propid = i;
-					HouseInfo[i][hLock] = proplev;
-				}
-				else if(strcmp(x_job,"doorlevel",true) == 0)
-				{
-					proptype = 1;
-					propid = i;
-					HouseInfo[i][hDoorLevel] = proplev;
-					format(TmpQuery, 128, "UPDATE `houses` SET `doorlevel` = '%d' WHERE `id` = '%d'", proplev, HouseInfo[i][hSQLID]);
-					mysql_tquery(g_SQL, TmpQuery);
-				}
-				else if(strcmp(x_job,"locklevel",true) == 0)
-				{
-					proptype = 1;
-					propid = i;
-					HouseInfo[i][hLockLevel] = proplev;
-					format(TmpQuery, 128, "UPDATE `houses` SET `locklevel` = '%d' WHERE `id` = '%d'", proplev, HouseInfo[i][hSQLID]);
-					mysql_tquery(g_SQL, TmpQuery);
-				}
-				else if(strcmp(x_job,"alarmlevel",true) == 0)
-				{
-					proptype = 1;
-					propid = i;
-					HouseInfo[i][hAlarm] = proplev;
-					format(TmpQuery, 128, "UPDATE `houses` SET `alarm` = '%d' WHERE `id` = '%d'", proplev, HouseInfo[i][hSQLID]);
-					mysql_tquery(g_SQL, TmpQuery);
-				}
-				else if(strcmp(x_job,"hviwo",true) == 0)
-				{
-					proptype = 1;
-					propid = i;
-					HouseInfo[i][hVirtualWorld] = proplev;
-					format(TmpQuery, 128, "UPDATE `houses` SET `viwo` = '%d' WHERE `id` = '%d'", proplev, HouseInfo[i][hSQLID]);
-					mysql_tquery(g_SQL, TmpQuery);
-				}
+				proptype = 2;
+				propid = i;
+				BizzInfo[i][bLevelNeeded] = proplev;
+				format(TmpQuery, 128, "UPDATE `bizzes` SET `levelneeded` = '%d' WHERE `id` = '%d'", proplev, BizzInfo[i][bSQLID]);
+				mysql_tquery(g_SQL, TmpQuery);
+			}
+			else if(strcmp(x_job,"price",true) == 0)
+			{
+				proptype = 2;
+				propid = i;
+				BizzInfo[i][bBuyPrice] = proplev;
+				format(TmpQuery, 128, "UPDATE `bizzes` SET `buyprice` = '%d' WHERE `id` = '%d'", proplev, BizzInfo[i][bSQLID]);
+				mysql_tquery(g_SQL, TmpQuery);
+			}
+			else if(strcmp(x_job,"funds",true) == 0)
+			{
+				proptype = 2;
+				propid = i;
+				BizzInfo[i][bTill] = proplev;
+				format(TmpQuery, 128, "UPDATE `bizzes` SET `till` = '%d' WHERE `id` = '%d'", proplev, BizzInfo[i][bSQLID]);
+				mysql_tquery(g_SQL, TmpQuery);
+			}
+			else if(strcmp(x_job,"locked",true) == 0)
+			{
+				proptype = 2;
+				propid = i;
+				BizzInfo[i][bLocked] = proplev;
+			}
+			else if(strcmp(x_job,"bizviwo",true) == 0)
+			{
+				proptype = 2;
+				propid = i;
+				BizzInfo[i][bVirtualWorld] = proplev;
+				format(TmpQuery, 128, "UPDATE `bizzes` SET `virtualworld` = '%d' WHERE `id` = '%d'", proplev, BizzInfo[i][bSQLID]);
+				mysql_tquery(g_SQL, TmpQuery);
+			}
+			else if(strcmp(x_job,"type",true) == 0)
+			{
+				proptype = 2;
+				propid = i;
+				if(proplev < 0 || proplev > 14) return SendClientMessage(playerid, COLOR_RED, "[ ! ]: Type range is 0-14!");
+				BizzInfo[i][bType] = proplev;
+				format(TmpQuery, 128, "UPDATE `bizzes` SET `type` = '%d' WHERE `id` = '%d'", proplev, BizzInfo[i][bSQLID]);
+				mysql_tquery(g_SQL, TmpQuery);
 			}
 		}
+		if(proptype != 0 && propid != -1)
+			return va_SendClientMessage(playerid, COLOR_RED, "[ ! ]: You just adjusted %s on Bizz ID %d[SQLID: %d][Name: %s] on value %d.", x_job, propid, BizzInfo[propid][bSQLID], BizzInfo[propid][bMessage], proplev);
 	}
-	foreach(new i:Bizzes)
+    i = GetNearestHouse(playerid);
+	if(i != INVALID_HOUSE_ID)
 	{
-		if (IsPlayerInRangeOfPoint(playerid,3,BizzInfo[i][bEntranceX], BizzInfo[i][bEntranceY], BizzInfo[i][bEntranceZ]))
+		new TmpQuery[128];
+		if(proplev > 0)
 		{
-		    new TmpQuery[128];
-			if(proplev >= 0)
+			if(strcmp(x_job,"level",true) == 0)
 			{
-			    if(strcmp(x_job,"level",true) == 0)
-			    {
-					proptype = 2;
-					propid = i;
-					BizzInfo[i][bLevelNeeded] = proplev;
-					format(TmpQuery, 128, "UPDATE `bizzes` SET `levelneeded` = '%d' WHERE `id` = '%d'", proplev, BizzInfo[i][bSQLID]);
-					mysql_tquery(g_SQL, TmpQuery);
-				}
-				else if(strcmp(x_job,"price",true) == 0)
-				{
-					proptype = 2;
-					propid = i;
-					BizzInfo[i][bBuyPrice] = proplev;
-					format(TmpQuery, 128, "UPDATE `bizzes` SET `buyprice` = '%d' WHERE `id` = '%d'", proplev, BizzInfo[i][bSQLID]);
-					mysql_tquery(g_SQL, TmpQuery);
-				}
-				else if(strcmp(x_job,"funds",true) == 0)
-				{
-					proptype = 2;
-					propid = i;
-					BizzInfo[i][bTill] = proplev;
-					format(TmpQuery, 128, "UPDATE `bizzes` SET `till` = '%d' WHERE `id` = '%d'", proplev, BizzInfo[i][bSQLID]);
-					mysql_tquery(g_SQL, TmpQuery);
-				}
-				else if(strcmp(x_job,"locked",true) == 0)
-				{
-					proptype = 2;
-					propid = i;
-					BizzInfo[i][bLocked] = proplev;
-				}
-				else if(strcmp(x_job,"bizviwo",true) == 0)
-				{
-					proptype = 2;
-					propid = i;
-					BizzInfo[i][bVirtualWorld] = proplev;
-					format(TmpQuery, 128, "UPDATE `bizzes` SET `virtualworld` = '%d' WHERE `id` = '%d'", proplev, BizzInfo[i][bSQLID]);
-					mysql_tquery(g_SQL, TmpQuery);
-				}
-				else if(strcmp(x_job,"type",true) == 0)
-				{
-					proptype = 2;
-					propid = i;
-					if(proplev < 0 || proplev > 14) return SendClientMessage(playerid, COLOR_RED, "[ ! ]: Type range is 0-14!");
-					BizzInfo[i][bType] = proplev;
-					format(TmpQuery, 128, "UPDATE `bizzes` SET `type` = '%d' WHERE `id` = '%d'", proplev, BizzInfo[i][bSQLID]);
-					mysql_tquery(g_SQL, TmpQuery);
-				}
+				proptype = 1;
+				propid = i;
+				HouseInfo[i][hLevel] = proplev;
+				format(TmpQuery, 128, "UPDATE `houses` SET `level` = '%d' WHERE `id` = '%d'", proplev, HouseInfo[i][hSQLID]);
+				mysql_tquery(g_SQL, TmpQuery);
+			}
+			else if(strcmp(x_job,"price",true) == 0)
+			{
+				proptype = 1;
+				propid = i;
+				HouseInfo[i][hValue] = proplev;
+				format(TmpQuery, 128, "UPDATE `houses` SET `value` = '%d' WHERE `id` = '%d'", proplev, HouseInfo[i][hSQLID]);
+				mysql_tquery(g_SQL, TmpQuery);
+			}
+			else if(strcmp(x_job,"locked",true) == 0)
+			{
+				proptype = 1;
+				propid = i;
+				HouseInfo[i][hLock] = proplev;
+			}
+			else if(strcmp(x_job,"doorlevel",true) == 0)
+			{
+				proptype = 1;
+				propid = i;
+				HouseInfo[i][hDoorLevel] = proplev;
+				format(TmpQuery, 128, "UPDATE `houses` SET `doorlevel` = '%d' WHERE `id` = '%d'", proplev, HouseInfo[i][hSQLID]);
+				mysql_tquery(g_SQL, TmpQuery);
+			}
+			else if(strcmp(x_job,"locklevel",true) == 0)
+			{
+				proptype = 1;
+				propid = i;
+				HouseInfo[i][hLockLevel] = proplev;
+				format(TmpQuery, 128, "UPDATE `houses` SET `locklevel` = '%d' WHERE `id` = '%d'", proplev, HouseInfo[i][hSQLID]);
+				mysql_tquery(g_SQL, TmpQuery);
+			}
+			else if(strcmp(x_job,"alarmlevel",true) == 0)
+			{
+				proptype = 1;
+				propid = i;
+				HouseInfo[i][hAlarm] = proplev;
+				format(TmpQuery, 128, "UPDATE `houses` SET `alarm` = '%d' WHERE `id` = '%d'", proplev, HouseInfo[i][hSQLID]);
+				mysql_tquery(g_SQL, TmpQuery);
+			}
+			else if(strcmp(x_job,"hviwo",true) == 0)
+			{
+				proptype = 1;
+				propid = i;
+				HouseInfo[i][hVirtualWorld] = proplev;
+				format(TmpQuery, 128, "UPDATE `houses` SET `viwo` = '%d' WHERE `id` = '%d'", proplev, HouseInfo[i][hSQLID]);
+				mysql_tquery(g_SQL, TmpQuery);
 			}
 		}
-	}
-	if(proptype != 0 && propid != -1)
-	{
-		switch(proptype)
-		{
-			case 1: va_SendClientMessage(playerid, COLOR_RED, "[ ! ]: You just adjusted %s on House ID %d[SQLID: %d][Adress: %s] on value %d.", x_job, propid, HouseInfo[propid][hSQLID], HouseInfo[propid][hAdress], proplev);
-			case 2: va_SendClientMessage(playerid, COLOR_RED, "[ ! ]: You just adjusted %s on Bizz ID %d[SQLID: %d][Name: %s] on value %d.", x_job, propid, BizzInfo[propid][bSQLID], BizzInfo[propid][bMessage], proplev);
-		}
+		if(proptype != 0 && propid != -1)
+			return va_SendClientMessage(playerid, COLOR_RED, "[ ! ]: You just adjusted %s on House ID %d[SQLID: %d][Adress: %s] on value %d.", x_job, propid, HouseInfo[propid][hSQLID], HouseInfo[propid][hAdress], proplev);
 	}
 	else SendMessage(playerid, MESSAGE_TYPE_ERROR, "Unfortunately, house/business for editing wasn't found in your proximity.");
 	return 1;

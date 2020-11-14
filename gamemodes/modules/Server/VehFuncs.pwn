@@ -23,42 +23,17 @@ stock bool:IsPlayerInRangeOfVehicle(playerid, vehicleid, Float:range)
 	return false;
 }
 
-enum E_CLOSEST_VEHICLES
-{
-	cvID,
-	Float:cvDistance
-}
-
-stock SortNearestVehicle(v[MAX_VEHICLES_IN_RANGE][E_CLOSEST_VEHICLES], pool_size)
-{
-	new tmp = INVALID_VEHICLE_ID, bool:swapped;
-	do
-	{
-		swapped = false;
-		for(new i=1; i < pool_size; i++) 
-		{
-			if(v[i-1][cvDistance] > v[i][cvDistance]) 
-			{
-				tmp = v[i][cvID];
-				v[i][cvID] = v[i-1][cvID];
-				v[i-1][cvID] = tmp;
-				swapped = true;
-			}
-		}
-	} while(swapped);
-}
-
 stock GetNearestVehicle(playerid, VEHICLE_TYPE = -1, VEHICLE_FACTION = -1)
 {
 	new 
 		vehicleid = INVALID_VEHICLE_ID,
 		slotid = 0,
 		Float:vX, Float:vY, Float:vZ,
-		close_vehicles[MAX_VEHICLES_IN_RANGE][E_CLOSEST_VEHICLES];
+		close_vehicles[MAX_SUBJECTS_IN_RANGE][E_CLOSEST_SUBJECTS];
 	
 	foreach(new i : StreamedVehicle[playerid])
 	{
-		if(slotid >= MAX_VEHICLES_IN_RANGE)
+		if(slotid >= MAX_SUBJECTS_IN_RANGE)
 			break;
 			
 		if(VEHICLE_TYPE != -1)
@@ -74,13 +49,13 @@ stock GetNearestVehicle(playerid, VEHICLE_TYPE = -1, VEHICLE_FACTION = -1)
 		if(IsPlayerInRangeOfVehicle(playerid, i, MAX_NEAR_VEHICLE_RANGE))
 		{
 			GetVehiclePos(i, vX, vY, vZ);
-			close_vehicles[slotid][cvDistance] = GetPlayerDistanceFromPoint(playerid, vX, vY, vZ);
-			close_vehicles[slotid][cvID] = i;
+			close_vehicles[slotid][cDistance] = GetPlayerDistanceFromPoint(playerid, vX, vY, vZ);
+			close_vehicles[slotid][cID] = i;
 			slotid++;
 		}
 	}
-	SortNearestVehicle(close_vehicles, slotid);
-	vehicleid = close_vehicles[0][cvID];	
+	SortNearestRangeID(close_vehicles, slotid);
+	vehicleid = close_vehicles[0][cID];	
 	return vehicleid;
 }
 
