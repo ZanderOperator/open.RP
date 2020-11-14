@@ -198,6 +198,31 @@ stock CheckHouseInfoTextDraws(playerid)
     return 1;
 }
 
+stock GetNearestHouse(playerid)
+{
+	new 
+		houseid = INVALID_BIZNIS_ID,
+		slotid = 0,
+		Float:hX, Float:hY, Float:hZ,
+		close_houses[MAX_SUBJECTS_IN_RANGE][E_CLOSEST_SUBJECTS];
+	
+	foreach(new i : Houses)
+	{
+		if(slotid >= MAX_SUBJECTS_IN_RANGE)
+			break;
+		
+		if(IsPlayerInRangeOfPoint(playerid, MAX_NEAR_VEHICLE_RANGE,  HouseInfo[i][hEnterX], HouseInfo[i][hEnterY], HouseInfo[i][hEnterZ]))
+		{
+			close_houses[slotid][cDistance] = GetPlayerDistanceFromPoint(playerid, hX, hY, hZ);
+			close_houses[slotid][cID] = i;
+			slotid++;
+		}
+	}
+	SortNearestRangeID(close_houses, slotid);
+	houseid = close_houses[0][cID];	
+	return houseid;
+}
+
 stock ResetHouseVariables(playerid)
 {
     tmpPos[playerid][0]     = 0.0;

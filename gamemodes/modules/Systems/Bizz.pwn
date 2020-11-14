@@ -244,6 +244,36 @@ stock bool:IsAtBar(playerid)
 }
 
 // TODO: bool
+stock GetNearestBizz(playerid, BIZZ_TYPE = -1)
+{
+	new 
+		bizzid = INVALID_BIZNIS_ID,
+		slotid = 0,
+		Float:bX, Float:bY, Float:bZ,
+		close_bizzes[MAX_SUBJECTS_IN_RANGE][E_CLOSEST_SUBJECTS];
+	
+	foreach(new i : Bizzes)
+	{
+		if(slotid >= MAX_SUBJECTS_IN_RANGE)
+			break;
+		
+        if(BIZZ_TYPE != -1)
+		{
+			if(BizzInfo[i][bType] != BIZZ_TYPE)
+				continue;
+		}
+		if(IsPlayerInRangeOfPoint(playerid, MAX_NEAR_VEHICLE_RANGE,  BizzInfo[i][bEntranceX], BizzInfo[i][bEntranceY], BizzInfo[i][bEntranceZ]))
+		{
+			close_bizzes[slotid][cDistance] = GetPlayerDistanceFromPoint(playerid, bX, bY, bZ);
+			close_bizzes[slotid][cID] = i;
+			slotid++;
+		}
+	}
+	SortNearestRangeID(close_bizzes, slotid);
+	bizzid = close_bizzes[0][cID];	
+	return bizzid;
+}
+
 stock IsAt247(playerid)
 {
     if (!SafeSpawned[playerid])

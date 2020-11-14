@@ -1,5 +1,7 @@
 #include <YSI_Coding\y_hooks>
 
+#define MAX_SUBJECTS_IN_RANGE			(15)
+
 /*
 	##     ##    ###     ######  ########   #######   ######  
 	###   ###   ## ##   ##    ## ##     ## ##     ## ##    # 
@@ -1691,4 +1693,29 @@ ReturnName(playerid)
 	    
 	GetPlayerName(playerid, p_name, 24);
 	return p_name;
+}
+
+enum E_CLOSEST_SUBJECTS
+{
+	cID,
+	Float:cDistance
+}
+
+stock SortNearestRangeID(v[MAX_SUBJECTS_IN_RANGE][E_CLOSEST_SUBJECTS], pool_size)
+{
+	new tmp = INVALID_VEHICLE_ID, bool:swapped;
+	do
+	{
+		swapped = false;
+		for(new i=1; i < pool_size; i++) 
+		{
+			if(v[i-1][cDistance] > v[i][cDistance]) 
+			{
+				tmp = v[i][cID];
+				v[i][cID] = v[i-1][cID];
+				v[i-1][cID] = tmp;
+				swapped = true;
+			}
+		}
+	} while(swapped);
 }

@@ -2692,9 +2692,9 @@ Public:GlobalServerTimer()
 	}
 	if(GMX != 1 && tmphour == 5 && tmpmins == 5 && tmpsecs < 10)//if(tmphour == 5 && tmpmins == 5 && tmpsecs == 10)
 	{
-		GMX = 1;
 		CheckAccountsForInactivity(); // Skidanje posla i imovine neaktivnim igracima
 		#if defined AUTO_RESTART_SEQ
+		GMX = 1;
 		StartGMX();
 		#endif
 	}
