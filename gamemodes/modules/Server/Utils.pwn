@@ -1674,14 +1674,14 @@ stock randomEx(min, max)
 
 mysql_fquery(MySQL:connectionHandle, const fquery[], va_args<>)
 {
-	new va_query[2048];
-	mysql_format(connectionHandle, va_query, sizeof(va_query), fquery, va_start<2>);
-	return mysql_tquery(connectionHandle, va_query);
+	new frmt_query[4096];
+	mysql_format(connectionHandle, frmt_query, sizeof(frmt_query), fquery, va_start<2>);
+	return mysql_tquery(connectionHandle, frmt_query);
 }
 
 va_fquery(MySQL:connectionHandle, const fquery[], va_args<>)
 {
-	new va_query[2048];
+	new va_query[4096];
 	mysql_format(connectionHandle, va_query, sizeof(va_query), fquery, va_start<2>);
 	return va_query;
 }
