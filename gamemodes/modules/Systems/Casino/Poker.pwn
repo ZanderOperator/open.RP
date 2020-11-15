@@ -2058,7 +2058,7 @@ DestroyPokerTable(tableid)
 RemovePokerTable(tableid)
 {
 	new destroyQuery[ 128 ];
-	format( destroyQuery, sizeof(destroyQuery), "DELETE FROM poker_tables WHERE `sqlid` = '%d'", PokerTable[ tableid ][ pkrSQL ]);
+	format( destroyQuery, sizeof(destroyQuery), "DELETE FROM poker_tables WHERE sqlid = '%d'", PokerTable[ tableid ][ pkrSQL ]);
 	mysql_tquery(g_SQL, destroyQuery);
 	return 1;
 }

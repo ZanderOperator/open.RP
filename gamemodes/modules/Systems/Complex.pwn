@@ -516,7 +516,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                     mysql_tquery(g_SQL, query);
 
                     PlayerInfo[playerid][pSpawnChange] = 0;
-                    format(query, sizeof(query), "UPDATE `accounts` SET `spawnchange` = '%d' WHERE `sqlid` = '%d'",
+                    format(query, sizeof(query), "UPDATE accounts SET `spawnchange` = '%d' WHERE sqlid = '%d'",
                         PlayerInfo[playerid][pSpawnChange],
                         PlayerInfo[playerid][pSQLID]
                     );
@@ -539,7 +539,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                     );
                     mysql_tquery(g_SQL, query);
 
-                    format(query, sizeof(query), "UPDATE `accounts` SET `spawnchange` = '0' WHERE `sqlid` = '%d'",
+                    format(query, sizeof(query), "UPDATE accounts SET `spawnchange` = '0' WHERE sqlid = '%d'",
                         ComplexRoomInfo[complex][cOwnerID]
                     );
                     mysql_tquery(g_SQL, query);
@@ -776,13 +776,13 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                 );
                 mysql_tquery(g_SQL, query);
 
-                format(query, sizeof(query), "UPDATE `accounts` SET `spawnchange` = '%d' WHERE `sqlid` = '%d'",
+                format(query, sizeof(query), "UPDATE accounts SET `spawnchange` = '%d' WHERE sqlid = '%d'",
                     PlayerInfo[playerid][pSpawnChange],
                     PlayerInfo[playerid][pSQLID]
                 );
                 mysql_tquery(g_SQL, query);
 
-                format(query, sizeof(query), "UPDATE `accounts` SET `spawnchange` = '%d' WHERE `sqlid` = '%d'",
+                format(query, sizeof(query), "UPDATE accounts SET `spawnchange` = '%d' WHERE sqlid = '%d'",
                     PlayerInfo[pID][pSpawnChange],
                     PlayerInfo[pID][pSQLID]
                 );
@@ -939,7 +939,7 @@ CMD:rentroom(playerid, params[])
     );
     mysql_tquery(g_SQL, query);
 
-    format(query, sizeof(query), "UPDATE `accounts` SET `spawnchange` = '%d' WHERE `sqlid` = '%d'",
+    format(query, sizeof(query), "UPDATE accounts SET `spawnchange` = '%d' WHERE sqlid = '%d'",
         PlayerInfo[playerid][pSpawnChange],
         PlayerInfo[playerid][pSQLID]
     );

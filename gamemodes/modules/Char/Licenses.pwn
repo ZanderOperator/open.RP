@@ -169,7 +169,7 @@ hook OnPlayerEnterCheckpoint(playerid)
 				
 				// MySQL query
 				new boatLicUpdate[70];
-				format(boatLicUpdate, 70, "UPDATE `accounts` SET `boatlic` = '1' WHERE `sqlid` = '%d'",
+				format(boatLicUpdate, 70, "UPDATE accounts SET `boatlic` = '1' WHERE sqlid = '%d'",
 					PlayerInfo[playerid][pSQLID]
 				);
 				mysql_pquery(g_SQL, boatLicUpdate);
@@ -204,7 +204,7 @@ hook OnPlayerEnterCheckpoint(playerid)
 				
 				// MySQL query
 				new carLicUpdate[70];
-				format(carLicUpdate, 70, "UPDATE `accounts` SET `carlic` = '1' WHERE `sqlid` = '%d'",
+				format(carLicUpdate, 70, "UPDATE accounts SET `carlic` = '1' WHERE sqlid = '%d'",
 					PlayerInfo[playerid][pSQLID]
 				);
 				mysql_pquery(g_SQL, carLicUpdate);
@@ -381,7 +381,7 @@ CMD:buylicenses(playerid, params[])
 		
 		// MySQL query
 		new flyLicUpdate[64];
-		format(flyLicUpdate, 64, "UPDATE `accounts` SET `flylic` = '1' WHERE `sqlid` = '%d'",
+		format(flyLicUpdate, 64, "UPDATE accounts SET `flylic` = '1' WHERE sqlid = '%d'",
 			PlayerInfo[playerid][pSQLID]
 		);
 		mysql_pquery(g_SQL, flyLicUpdate);
@@ -396,7 +396,7 @@ CMD:buylicenses(playerid, params[])
 		
 		// MySQL query
 		new fishLicUpdate[64];
-		format(fishLicUpdate, 64, "UPDATE `accounts` SET `fishlic` = '1' WHERE `sqlid` = '%d'",
+		format(fishLicUpdate, 64, "UPDATE accounts SET `fishlic` = '1' WHERE sqlid = '%d'",
 			PlayerInfo[playerid][pSQLID]
 		);
 		mysql_pquery(g_SQL, fishLicUpdate);

@@ -1779,7 +1779,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
             #endif
 
             // Stats save - Buyer
-            format(query, sizeof(query), "UPDATE `accounts` SET `levels` = '%d', `respects` = '%d', `handMoney` = '%d', `bankMoney` = '%d' WHERE `sqlid` = '%d' LIMIT 1",
+            format(query, sizeof(query), "UPDATE accounts SET `levels` = '%d', `respects` = '%d', `handMoney` = '%d', `bankMoney` = '%d' WHERE sqlid = '%d' LIMIT 1",
                 PlayerInfo[playerid][pLevel],
                 PlayerInfo[playerid][pRespects],
                 PlayerInfo[playerid][pMoney],
@@ -1789,7 +1789,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
             mysql_tquery(g_SQL, query);
 
             // Stats save - Seller
-            format(query, sizeof(query), "UPDATE `accounts` SET `levels` = '%d', `respects` = '%d', `handMoney` = '%d', `bankMoney` = '%d' WHERE `sqlid` = '%d' LIMIT 1",
+            format(query, sizeof(query), "UPDATE accounts SET `levels` = '%d', `respects` = '%d', `handMoney` = '%d', `bankMoney` = '%d' WHERE sqlid = '%d' LIMIT 1",
                 PlayerInfo[pID][pLevel],
                 PlayerInfo[pID][pRespects],
                 PlayerInfo[pID][pMoney],
@@ -2102,7 +2102,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                         if (PlayerInfo[playerid][pHasRadio]) return SendClientMessage(playerid, COLOR_RED, "Vec posjedujete radio!");
                         PlayerInfo[playerid][pHasRadio] = 1;
 
-                        format(string, sizeof(string), "UPDATE `accounts` SET `HasRadio` = '%d' WHERE `sqlid` = '%d'",
+                        format(string, sizeof(string), "UPDATE accounts SET `HasRadio` = '%d' WHERE sqlid = '%d'",
                             PlayerInfo[playerid][pHasRadio],
                             PlayerInfo[playerid][pSQLID]
                         );
@@ -2986,7 +2986,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                     SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "Kupljen radio [1500$]");
 
                     new query[128];
-                    format(query, sizeof(query), "UPDATE `accounts` SET `HasRadio` = '%d' WHERE `sqlid` = '%d'",
+                    format(query, sizeof(query), "UPDATE accounts SET `HasRadio` = '%d' WHERE sqlid = '%d'",
                         PlayerInfo[playerid][pHasRadio],
                         PlayerInfo[playerid][pSQLID]
                     );
@@ -3112,7 +3112,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
             ApplyAnimationEx(playerid, "CLOTHES", "CLO_Pose_Legs", 4.1, 0, 0, 0, 0, 0, 1, 0);
 
             new query[128];
-            format(query, sizeof(query), "UPDATE `accounts` SET `playaSkin` = '%d' WHERE `sqlid` = '%d'",
+            format(query, sizeof(query), "UPDATE accounts SET `playaSkin` = '%d' WHERE sqlid = '%d'",
                 PlayerInfo[playerid][pChar],
                 PlayerInfo[playerid][pSQLID]
             );

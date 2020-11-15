@@ -26,7 +26,7 @@ stock AC_GivePlayerMoney(playerid, amount)
     GameTextForPlayer(playerid, str, 1000, 1);
     PlayerPlaySound(playerid, 1054 ,x,y,z);
 	// Update u tablice odma --------------------
-	format( tmpQuery, sizeof(tmpQuery), "UPDATE `accounts` SET `handMoney` = '%d' WHERE `sqlid` = '%d'",
+	format( tmpQuery, sizeof(tmpQuery), "UPDATE accounts SET `handMoney` = '%d' WHERE sqlid = '%d'",
 			PlayerInfo[playerid][pMoney],
 			PlayerInfo[playerid][pSQLID]
 		);
@@ -43,7 +43,7 @@ stock AC_SetPlayerMoney(playerid, amount)
 	GivePlayerMoney(playerid, PlayerInfo[playerid][pMoney]);
 	PlayerTick[playerid][ptMoney] = gettimestamp();
 	// Update u tablice odma --------------------
-	format( tmpQuery, sizeof(tmpQuery), "UPDATE `accounts` SET `handMoney` = '%d' WHERE `sqlid` = '%d'",
+	format( tmpQuery, sizeof(tmpQuery), "UPDATE accounts SET `handMoney` = '%d' WHERE sqlid = '%d'",
 			PlayerInfo[playerid][pMoney],
 			PlayerInfo[playerid][pSQLID]
 		);

@@ -216,7 +216,7 @@ GivePlayerPayCheck(playerid)
 	{
 		PlayerInfo[playerid][pSavingsTime]--;
 		if(PlayerInfo[playerid][pSavingsTime] > 0)
-			mysql_fquery(g_SQL, "UPDATE `accounts` SET `savings_time` = '%d' WHERE `sqlid` = '%d' LIMIT 1", PlayerInfo[playerid][pSavingsTime], PlayerInfo[playerid][pSQLID]);
+			mysql_fquery(g_SQL, "UPDATE accounts SET `savings_time` = '%d' WHERE sqlid = '%d' LIMIT 1", PlayerInfo[playerid][pSavingsTime], PlayerInfo[playerid][pSQLID]);
 
 		if(PlayerInfo[playerid][pSavingsTime] <= 0)
 		{
@@ -236,7 +236,7 @@ GivePlayerPayCheck(playerid)
 			PlayerInfo[playerid][pSavingsMoney] = 0;
 
 			new savingsQuery[170];
-			format(savingsQuery, 170, "UPDATE `accounts` SET `bankMoney` = '%d', `savings_cool` = '30', `savings_time` = '0', `savings_type` = '0', `savings_money` = '0' WHERE `sqlid` = '%d'",
+			format(savingsQuery, 170, "UPDATE accounts SET `bankMoney` = '%d', `savings_cool` = '30', `savings_time` = '0', `savings_type` = '0', `savings_money` = '0' WHERE sqlid = '%d'",
 				PlayerInfo[playerid][pBank],
 				PlayerInfo[playerid][pSQLID]
 			);
@@ -256,7 +256,7 @@ GivePlayerPayCheck(playerid)
 			PlayerInfo[playerid][pSavingsCool] = 0;
 
 		new savingsQuery[96];
-		format(savingsQuery, 96, "UPDATE `accounts` SET `savings_cool` = '%d' WHERE `sqlid` = '%d'",
+		format(savingsQuery, 96, "UPDATE accounts SET `savings_cool` = '%d' WHERE sqlid = '%d'",
 			PlayerInfo[playerid][pSavingsCool],
 			PlayerInfo[playerid][pSQLID]
 		);

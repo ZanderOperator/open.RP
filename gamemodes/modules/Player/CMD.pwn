@@ -394,7 +394,7 @@ CMD:channel(playerid, params[])
 
 		new
 			channelLeave[128];
-		format(channelLeave, sizeof(channelLeave), "DELETE FROM `accounts` WHERE `sqlid` = '%d'",
+		format(channelLeave, sizeof(channelLeave), "DELETE FROM accounts WHERE sqlid = '%d'",
 			PlayerInfo[playerid][pRadio][slotid],
 			PlayerInfo[playerid][pRadioSlot][slotid],
 			PlayerInfo[playerid][pSQLID]
@@ -2634,7 +2634,7 @@ CMD:setlook(playerid, params[])
 		
 		new
 			tmpQuery[ 315 ];
-		mysql_format(g_SQL, tmpQuery, 315, "UPDATE `accounts` SET `look` = '%e' WHERE `sqlid` = '%d'",
+		mysql_format(g_SQL, tmpQuery, 315, "UPDATE accounts SET `look` = '%e' WHERE sqlid = '%d'",
 			PlayerInfo[ playerid ][ pLook ], 
 			PlayerInfo[ playerid ][ pSQLID ]
 		);
@@ -2895,7 +2895,7 @@ CMD:spawnchange(playerid, params[])
 	SetPlayerSpawnInfo(playerid);
 	
 	new tmpQuery[ 70 ];
-	format(tmpQuery, 70, "UPDATE `accounts` SET `spawnchange` = '%d' WHERE `sqlid` = '%d'", 
+	format(tmpQuery, 70, "UPDATE accounts SET `spawnchange` = '%d' WHERE sqlid = '%d'", 
 		PlayerInfo[playerid][pSpawnChange],
 		PlayerInfo[playerid][pSQLID]
 	);

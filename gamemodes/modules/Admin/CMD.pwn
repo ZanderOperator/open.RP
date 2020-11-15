@@ -349,7 +349,7 @@ Public: OnHelperPINHashed(playerid, level)
 
 	new 
 		query[256];	
-	mysql_format(g_SQL, query, sizeof(query), "UPDATE `accounts` SET `teampin` = '%e', `helper` = '%d' WHERE `sqlid` = '%d' LIMIT 1", 
+	mysql_format(g_SQL, query, sizeof(query), "UPDATE accounts SET `teampin` = '%e', `helper` = '%d' WHERE sqlid = '%d' LIMIT 1", 
 		saltedPin, 
 		level, 
 		PlayerInfo[playerid][pSQLID]
@@ -369,7 +369,7 @@ Public: OnAdminPINHashed(playerid, level)
 		
 	new 
 		query[256];	
-	mysql_format(g_SQL, query, sizeof(query), "UPDATE `accounts` SET `teampin` = '%e', `adminLvl` = '%d' WHERE `sqlid` = '%d' LIMIT 1", 
+	mysql_format(g_SQL, query, sizeof(query), "UPDATE accounts SET `teampin` = '%e', `adminLvl` = '%d' WHERE sqlid = '%d' LIMIT 1", 
 		saltedPin, 
 		level, 
 		PlayerInfo[playerid][pSQLID]
@@ -389,7 +389,7 @@ Public: OnTeamPINHashed(playerid)
 
 	new 
 		query[256];	
-	mysql_format(g_SQL, query, sizeof(query), "UPDATE `accounts` SET `teampin` = '%e' WHERE `sqlid` = '%d' LIMIT 1", 
+	mysql_format(g_SQL, query, sizeof(query), "UPDATE accounts SET `teampin` = '%e' WHERE sqlid = '%d' LIMIT 1", 
 		saltedPin, 
 		PlayerInfo[playerid][pSQLID]
 	);
@@ -879,7 +879,7 @@ public AddAdminMessage(playerid, user_name[], reason[])
 				return 1;
 			}
 		}	
-		mysql_format( g_SQL, query, sizeof(query), "UPDATE `accounts` SET `AdminMessage` = '%e', `AdminMessageBy` = '%e', `AdmMessageConfirm` = '0' WHERE `name` = '%e'",
+		mysql_format( g_SQL, query, sizeof(query), "UPDATE accounts SET `AdminMessage` = '%e', `AdminMessageBy` = '%e', `AdmMessageConfirm` = '0' WHERE `name` = '%e'",
 			reason, GetName(playerid, true), user_name);
 		mysql_tquery(g_SQL, query);
 
@@ -894,7 +894,7 @@ public AddAdminMessage(playerid, user_name[], reason[])
 Public:SendServerMessage(sqlid, reason[])
 {
 	new query[4096];
-	mysql_format( g_SQL, query, sizeof(query), "UPDATE `accounts` SET `AdminMessage` = '%e', `AdminMessageBy` = 'Server', `AdmMessageConfirm` = '0' WHERE `sqlid` = '%d'",
+	mysql_format( g_SQL, query, sizeof(query), "UPDATE accounts SET `AdminMessage` = '%e', `AdminMessageBy` = 'Server', `AdmMessageConfirm` = '0' WHERE sqlid = '%d'",
 		reason, 
 		sqlid
 	);
@@ -909,7 +909,7 @@ public OfflineJailPlayer(playerid, playername[], jailtime)
 	if(rows)
 	{
   		new TmpQuery[ 256 ];
-		mysql_format(g_SQL, TmpQuery, sizeof(TmpQuery), "UPDATE `accounts` SET `jailed` = '1', `jailtime` = '%d' WHERE `name` = '%e'", jailtime, playername);
+		mysql_format(g_SQL, TmpQuery, sizeof(TmpQuery), "UPDATE accounts SET `jailed` = '1', `jailtime` = '%d' WHERE `name` = '%e'", jailtime, playername);
 		mysql_tquery(g_SQL, TmpQuery);
 	}
 	else return SendClientMessage(playerid, COLOR_RED, "[GRESKA - MySQL]: Ne postoji korisnik s tim nickom!");
@@ -919,7 +919,7 @@ public OfflineJailPlayer(playerid, playername[], jailtime)
 stock CheckInactivePlayer(playerid, sql)
 {
 	new tmpQuery[128], dialogstring[2056];
-	format(tmpQuery, sizeof(tmpQuery), "SELECT * FROM  `inactive_accounts` WHERE `sqlid` = '%d' LIMIT 0,1", sql);
+	format(tmpQuery, sizeof(tmpQuery), "SELECT * FROM  `inactive_accounts` WHERE sqlid = '%d' LIMIT 0,1", sql);
 	inline OnInactivePlayerLoad()
 	{	
 		new 
@@ -1028,7 +1028,7 @@ Public:ChargePlayer(playerid, const targetname[], money)
 		
 		new
 			TmpQuery[ 128 ];
-		mysql_format(g_SQL, TmpQuery, sizeof(TmpQuery), "UPDATE `accounts` SET `handMoney` = '%d' WHERE `name` = '%e'", playerMoney, targetname);
+		mysql_format(g_SQL, TmpQuery, sizeof(TmpQuery), "UPDATE accounts SET `handMoney` = '%d' WHERE `name` = '%e'", playerMoney, targetname);
 		mysql_tquery(g_SQL, TmpQuery);
 	}
 	else return SendClientMessage(playerid, COLOR_RED, "[GRESKA - MySQL]: Ne postoji korisnik s tim nickom!");
@@ -1056,7 +1056,7 @@ public ChargepPlayer(playerid, const tagername[], Float:percent, const reason[])
 
 		new
 			TmpQuery[ 128 ];
-		mysql_format(g_SQL, TmpQuery, sizeof(TmpQuery), "UPDATE `accounts` SET `handMoney` = '%d' WHERE `name` = '%e'", playerMoney, tagername);
+		mysql_format(g_SQL, TmpQuery, sizeof(TmpQuery), "UPDATE accounts SET `handMoney` = '%d' WHERE `name` = '%e'", playerMoney, tagername);
 		mysql_tquery(g_SQL, TmpQuery);
 	}
 	else return SendClientMessage(playerid, COLOR_RED, "Ne postoji korisnik s tim nickom!");
@@ -1096,7 +1096,7 @@ public CheckPlayerPrison(playerid, const targetname[], minutes, const reason[])
 	cache_get_value_name_int(0, "jailed", prisoned);
     if(prisoned != 0) return SendClientMessage(playerid,COLOR_RED, "Taj igrac je vec u arei/zatvoru!");
 	
-	mysql_format(g_SQL, mysqlquery, sizeof(mysqlquery), "UPDATE `accounts` SET `jailed` = '2',`jailtime` = '%d' WHERE `name` = '%e' LIMIT 1", minutes, targetname);
+	mysql_format(g_SQL, mysqlquery, sizeof(mysqlquery), "UPDATE accounts SET `jailed` = '2',`jailtime` = '%d' WHERE `name` = '%e' LIMIT 1", minutes, targetname);
 	mysql_tquery(g_SQL, mysqlquery);
 		
 	va_SendClientMessage(playerid,COLOR_RED, "[ ! ] Uspjesno si smjestio offline igraca '%s' u areu na %d minuta.",targetname, minutes);
@@ -1124,11 +1124,11 @@ public LoadPlayerWarns(playerid, targetname[],reason[])
 		#if defined MODULE_LOGS
 		Log_Write("/logfiles/a_ban.txt", "(%s) %s [OFFLINE] got banned from Game Admin %s. Reason: 3. Warn", ReturnDate(), targetname, GetName(playerid, false));
 		#endif
-		mysql_format(g_SQL, mysqlquery, sizeof(mysqlquery), "UPDATE `accounts` SET `playaWarns` = '0' WHERE `name` = '%e' LIMIT 1", targetname);
+		mysql_format(g_SQL, mysqlquery, sizeof(mysqlquery), "UPDATE accounts SET `playaWarns` = '0' WHERE `name` = '%e' LIMIT 1", targetname);
         mysql_tquery(g_SQL, mysqlquery);
     } else {
 		va_SendClientMessage(playerid,COLOR_RED, "[ ! ] Uspjesno si warnao igraca %s, te mu je to ukupno %d warn!",targetname,warns);
-        mysql_format(g_SQL, mysqlquery, sizeof(mysqlquery), "UPDATE `accounts` SET `playaWarns` = '%d' WHERE `name` = '%e' LIMIT 1", warns, targetname);
+        mysql_format(g_SQL, mysqlquery, sizeof(mysqlquery), "UPDATE accounts SET `playaWarns` = '%d' WHERE `name` = '%e' LIMIT 1", warns, targetname);
         mysql_tquery(g_SQL, mysqlquery);
     }
 	return 1;
@@ -1809,7 +1809,7 @@ CMD:makehelper(playerid, params[])
 	
 	if(!level) 
 	{
-		format(query, 128, "UPDATE `accounts` SET `teampin` = '',`helper` = '0' WHERE `sqlid` = '%d' LIMIT 1", PlayerInfo[giveplayerid][pSQLID]);
+		format(query, 128, "UPDATE accounts SET `teampin` = '',`helper` = '0' WHERE sqlid = '%d' LIMIT 1", PlayerInfo[giveplayerid][pSQLID]);
 		mysql_tquery(g_SQL, query);
 		
 		PlayerInfo[giveplayerid][pTempRank][0] 	= 0;
@@ -1962,7 +1962,7 @@ CMD:inactivity(playerid, params[])
 			}
 		}
 		new deleteQuery[200];
-		mysql_format(g_SQL, deleteQuery, sizeof(deleteQuery), "DELETE FROM `inactive_accounts` WHERE `sqlid` = '%d'", sqlid);
+		mysql_format(g_SQL, deleteQuery, sizeof(deleteQuery), "DELETE FROM `inactive_accounts` WHERE sqlid = '%d'", sqlid);
 		mysql_tquery(g_SQL, deleteQuery);
 		
 		#if defined MODULE_LOGS
@@ -2064,7 +2064,7 @@ CMD:playercars(playerid, params[])
 	if(sscanf(params, "s[MAX_PLAYER_NAME]", player_nick)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /playercars [Ime_Prezime].");
 	
 	// mysql
-	mysql_format(g_SQL, buffer, sizeof(buffer), "SELECT sqlid FROM `accounts` WHERE `name` = '%e' LIMIT 0,1", player_nick);
+	mysql_format(g_SQL, buffer, sizeof(buffer), "SELECT sqlid FROM accounts WHERE `name` = '%e' LIMIT 0,1", player_nick);
 	mysql_search = mysql_query(g_SQL, buffer);
 	cache_get_value_name_int(0, "sqlid"	, player_sqlid);
 	cache_delete(mysql_search);
@@ -2114,7 +2114,7 @@ CMD:makeadmin(playerid, params[])
 		dquery[128];
 	
 	if(!level) {
-		format(dquery, 128, "UPDATE `accounts` SET `teampin` = '',`adminLvl` = '0' WHERE `sqlid` = '%d' LIMIT 1", PlayerInfo[giveplayerid][pSQLID]);
+		format(dquery, 128, "UPDATE accounts SET `teampin` = '',`adminLvl` = '0' WHERE sqlid = '%d' LIMIT 1", PlayerInfo[giveplayerid][pSQLID]);
 		mysql_tquery(g_SQL, dquery);
 		
 		PlayerInfo[giveplayerid][pTempRank][0] 	= 0;
@@ -2150,7 +2150,7 @@ CMD:makeadminex(playerid, params[])
 			level,
 			gplayername[MAX_PLAYER_NAME];
 		if(sscanf(params, "s[24] ", gplayername)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /makeadminex [Ime_Prezime] [Level(1-1338)] [Team PIN for /alogin]");
-		mysql_format(g_SQL, mysqlquery, sizeof(mysqlquery), "UPDATE `accounts` SET `adminLvl` = '%d' WHERE `name` = '%e' LIMIT 1", level, gplayername);
+		mysql_format(g_SQL, mysqlquery, sizeof(mysqlquery), "UPDATE accounts SET `adminLvl` = '%d' WHERE `name` = '%e' LIMIT 1", level, gplayername);
 		mysql_tquery(g_SQL, mysqlquery);
 	}
 	else SendClientMessage(playerid, COLOR_RED, "Niste ovlasteni za koristenje ove komande!");
@@ -2295,7 +2295,7 @@ CMD:givepremium(playerid, params[])
 			UpdatePremiumBizFurSlots(giveplayerid);
 		new
 			vipUpdtQuery[ 128 ];
-		format( vipUpdtQuery, 128, "UPDATE `accounts` SET `vipRank` = '%d', `vipTime` = '%d', `dvehperms` = '%d' WHERE `sqlid` = '%d'",
+		format( vipUpdtQuery, 128, "UPDATE accounts SET `vipRank` = '%d', `vipTime` = '%d', `dvehperms` = '%d' WHERE sqlid = '%d'",
 			PlayerInfo[giveplayerid][pDonateRank],
 			PlayerInfo[giveplayerid][pDonateTime],
 			PlayerInfo[giveplayerid][pDonatorVehPerms],
@@ -2361,7 +2361,7 @@ CMD:givepremium(playerid, params[])
 			UpdatePremiumBizFurSlots(giveplayerid);
 		new
 			vipUpdtQuery[ 128 ];
-		format( vipUpdtQuery, 128, "UPDATE `accounts` SET `vipRank` = '%d', `vipTime` = '%d', `dvehperms` = '%d' WHERE `sqlid` = '%d'",
+		format( vipUpdtQuery, 128, "UPDATE accounts SET `vipRank` = '%d', `vipTime` = '%d', `dvehperms` = '%d' WHERE sqlid = '%d'",
 			PlayerInfo[giveplayerid][pDonateRank],
 			PlayerInfo[giveplayerid][pDonateTime],
 			PlayerInfo[giveplayerid][pDonatorVehPerms],
@@ -2434,7 +2434,7 @@ CMD:givepremium(playerid, params[])
 			UpdatePremiumBizFurSlots(giveplayerid);
 		new
 			vipUpdtQuery[ 128 ];
-		format( vipUpdtQuery, 128, "UPDATE `accounts` SET `vipRank` = '%d', `vipTime` = '%d', `dvehperms` = '%d' WHERE `sqlid` = '%d'",
+		format( vipUpdtQuery, 128, "UPDATE accounts SET `vipRank` = '%d', `vipTime` = '%d', `dvehperms` = '%d' WHERE sqlid = '%d'",
 			PlayerInfo[giveplayerid][pDonateRank],
 			PlayerInfo[giveplayerid][pDonateTime],
 			PlayerInfo[giveplayerid][pDonatorVehPerms],
@@ -2507,7 +2507,7 @@ CMD:givepremium(playerid, params[])
 			UpdatePremiumBizFurSlots(giveplayerid);
 		new
 			vipUpdtQuery[ 128 ];
-		format( vipUpdtQuery, 128, "UPDATE `accounts` SET `vipRank` = '%d', `vipTime` = '%d', `dvehperms` = '%d' WHERE `sqlid` = '%d'",
+		format( vipUpdtQuery, 128, "UPDATE accounts SET `vipRank` = '%d', `vipTime` = '%d', `dvehperms` = '%d' WHERE sqlid = '%d'",
 			PlayerInfo[giveplayerid][pDonateRank],
 			PlayerInfo[giveplayerid][pDonateTime],
 			PlayerInfo[giveplayerid][pDonatorVehPerms],
@@ -2806,7 +2806,7 @@ CMD:asellbiz(playerid, params[])
 		if(foundonline == 0)
 		{
 			// Update accounts
-			format( TmpQuery, sizeof(TmpQuery), "UPDATE `accounts` SET `handMoney` = `handMoney` + '%d' WHERE `sqlid` = '%d'", 
+			format( TmpQuery, sizeof(TmpQuery), "UPDATE accounts SET `handMoney` = `handMoney` + '%d' WHERE sqlid = '%d'", 
 				BizzInfo[ biz ][bBuyPrice],
 				BizzInfo[ biz ][bOwnerID]
 			);
@@ -2902,7 +2902,7 @@ CMD:asellhouse(playerid, params[])
 		if(foundonline == 0)
 		{
 			// Update accounts
-			format( TmpQuery, sizeof(TmpQuery), "UPDATE `accounts` SET `handMoney` = `handMoney` + '%d' WHERE `sqlid` = '%d'", 
+			format( TmpQuery, sizeof(TmpQuery), "UPDATE accounts SET `handMoney` = `handMoney` + '%d' WHERE sqlid = '%d'", 
 				HouseInfo[ house ][hValue],
 				HouseInfo[ house ][hOwnerID]
 			);
@@ -2964,7 +2964,7 @@ CMD:asellcomplex(playerid, params[])
 		if(foundonline == 0)
 		{
 			// Update accounts
-			format( TmpQuery, sizeof(TmpQuery), "UPDATE `accounts` SET `handMoney` = `handMoney` + '%d' WHERE `sqlid` = '%d'", 
+			format( TmpQuery, sizeof(TmpQuery), "UPDATE accounts SET `handMoney` = `handMoney` + '%d' WHERE sqlid = '%d'", 
 				ComplexInfo[complex][cPrice],
 				ComplexInfo[complex][cOwnerID]
 			);
@@ -3022,7 +3022,7 @@ CMD:asellcomplexroom(playerid, params[])
 		);
 		mysql_tquery( g_SQL, Query, "", "" );
 		
-		format(Query, sizeof(Query), "UPDATE `accounts` SET `spawnchange` = '%d' WHERE `sqlid` = '%d'", 
+		format(Query, sizeof(Query), "UPDATE accounts SET `spawnchange` = '%d' WHERE sqlid = '%d'", 
 			PlayerInfo[playerid][pSpawnChange],
 			PlayerInfo[playerid][pSQLID]
 		);
@@ -3103,7 +3103,7 @@ CMD:factionmembers(playerid, params[])
 	if (orgid < 1 || orgid > 16) return SendClientMessage(playerid, COLOR_RED, "Ne dopusten unos (1-16)!");
 	
 	new selectFactionMemb[96];
-	format(selectFactionMemb, sizeof(selectFactionMemb),"SELECT * FROM `accounts` WHERE `facMemId` = '%d' LIMIT 1", orgid);
+	format(selectFactionMemb, sizeof(selectFactionMemb),"SELECT * FROM accounts WHERE `facMemId` = '%d' LIMIT 1", orgid);
     mysql_tquery(g_SQL, selectFactionMemb, "CountFactionMembers", "ii", playerid, orgid);
 	return 1;
 }
@@ -3147,7 +3147,7 @@ CMD:setstat(playerid, params[])
 			SetPlayerScore( giveplayerid, amount );
 			
 			new levelUpUpdate[100];
-			format(levelUpUpdate, 100, "UPDATE `accounts` SET `levels` = '%d', `respects` = '%d' WHERE `sqlid` = '%d'",
+			format(levelUpUpdate, 100, "UPDATE accounts SET `levels` = '%d', `respects` = '%d' WHERE sqlid = '%d'",
 				PlayerInfo[giveplayerid][pLevel],
 				PlayerInfo[giveplayerid][pRespects],
 				PlayerInfo[giveplayerid][pSQLID]
@@ -3325,7 +3325,7 @@ CMD:skin(playerid, params[])
 	
 	// MySQL Query
 	new skinUpdateQuery[128];
-	format(skinUpdateQuery, 128, "UPDATE `accounts` SET `playaSkin` = '%d' WHERE `sqlid` = '%d'", PlayerInfo[giveplayerid][pChar], PlayerInfo[giveplayerid][pSQLID]);
+	format(skinUpdateQuery, 128, "UPDATE accounts SET `playaSkin` = '%d' WHERE sqlid = '%d'", PlayerInfo[giveplayerid][pChar], PlayerInfo[giveplayerid][pSQLID]);
 	mysql_tquery(g_SQL, skinUpdateQuery);
 	return 1;
 }
@@ -4239,7 +4239,7 @@ CMD:iptoname(playerid, params[])
 	if(strcount(ip, ".") < 3) return SendClientMessage(playerid, COLOR_RED, "Niste unijeli valjnu IP adresu!");
 	new
 		ipToNameQuery[ 256 ];
-	mysql_format(g_SQL, ipToNameQuery, 256, "SELECT `name`,`online`,`lastip` FROM  `player_connects` INNER JOIN  `accounts` ON accounts.sqlid = player_connects.player_id WHERE `aip` = '%e'", ip);
+	mysql_format(g_SQL, ipToNameQuery, 256, "SELECT `name`,`online`,`lastip` FROM  `player_connects` INNER JOIN  accounts ON accounts.sqlid = player_connects.player_id WHERE `aip` = '%e'", ip);
 	mysql_tquery(g_SQL, ipToNameQuery, "LoadNamesFromIp", "is", playerid, ip);
 	return 1;
 }
@@ -4266,11 +4266,11 @@ CMD:prisonex(playerid, params[])
     if (sscanf(params,"s[24]is[20]", targetname, sati, reason)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /prisonex [Ime] [minute] [Razlog]");
     if (strlen(reason) < 1 || strlen(reason) > 20) return SendClientMessage(playerid, COLOR_RED, "Ne mozete ispod 0 ili preko 20 znakova za razlog!");
 
-   	mysql_format(g_SQL, mysqlquery, sizeof(mysqlquery), "SELECT * FROM `accounts` WHERE `name` = '%e' LIMIT 1", targetname);
+   	mysql_format(g_SQL, mysqlquery, sizeof(mysqlquery), "SELECT * FROM accounts WHERE `name` = '%e' LIMIT 1", targetname);
     mysql_tquery(g_SQL, mysqlquery, "CheckPlayerPrison", "isis", playerid, targetname, sati, reason);
 	
 	new sqlid, prsnQuery[256];
-	mysql_format(g_SQL, prsnQuery, sizeof(prsnQuery), "SELECT `sqlid` FROM `accounts` WHERE `name` = '%e' LIMIT 0,1", targetname);
+	mysql_format(g_SQL, prsnQuery, sizeof(prsnQuery), "SELECT `sqlid` FROM accounts WHERE `name` = '%e' LIMIT 0,1", targetname);
 	
 	new 
 		Cache:result = mysql_query(g_SQL, prsnQuery);
@@ -4309,11 +4309,11 @@ CMD:warnex(playerid, params[])
     if (sscanf(params,"s[24]s[20]", targetname, reason)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /warnex [Ime] [Razlog]");
 	if (strlen(reason) < 1 || strlen(reason) > 20) return SendClientMessage(playerid, COLOR_RED, "Ne mozete ispod 0 ili preko 20 znakova za razlog!");
    	
-   	mysql_format(g_SQL, mysqlquery, sizeof(mysqlquery), "SELECT * FROM `accounts` WHERE `name` = '%e' LIMIT 1", targetname);
+   	mysql_format(g_SQL, mysqlquery, sizeof(mysqlquery), "SELECT * FROM accounts WHERE `name` = '%e' LIMIT 1", targetname);
     mysql_tquery(g_SQL, mysqlquery, "LoadPlayerWarns", "iss", playerid, targetname, reason);
 	
 	new sqlid, TmpQuery[200];
-	mysql_format(g_SQL, TmpQuery, sizeof(TmpQuery), "SELECT `sqlid` FROM `accounts` WHERE `name` = '%e'", targetname);
+	mysql_format(g_SQL, TmpQuery, sizeof(TmpQuery), "SELECT `sqlid` FROM accounts WHERE `name` = '%e'", targetname);
 	
 	new 
 		Cache:result = mysql_query(g_SQL, TmpQuery);
@@ -4507,14 +4507,14 @@ CMD:charge(playerid, params[])
     if( sscanf(params,"s[24]is[31]", targetname, money, reason) ) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /chargeex [Ime][Iznos][Razlog]");
     if( strlen(targetname) > 24 ) return SendClientMessage(playerid, COLOR_RED, "Maksimalna velicina imena je 24!");
 	if( strlen(reason) > 31 ) return SendClientMessage(playerid, COLOR_RED, "Maksimalna velicina razloga je 31!");
-	mysql_format(g_SQL, globalstring, sizeof(globalstring), "SELECT * FROM `accounts` WHERE `name` = '%e'", targetname);
+	mysql_format(g_SQL, globalstring, sizeof(globalstring), "SELECT * FROM accounts WHERE `name` = '%e'", targetname);
 	mysql_tquery(g_SQL, globalstring, "ChargePlayer", "isi", playerid, targetname, money);
 	
 	format(globalstring, sizeof(globalstring), "[ ! ] Uspjesno ste chargeali igraca %s!", targetname);
 	SendClientMessage(playerid, COLOR_GREEN, globalstring);
 	
 	new sqlid, TmpQuery[200];
-	mysql_format(g_SQL, TmpQuery, sizeof(TmpQuery), "SELECT `sqlid` FROM `accounts` WHERE `name` = '%e' LIMIT 0,1", targetname);
+	mysql_format(g_SQL, TmpQuery, sizeof(TmpQuery), "SELECT `sqlid` FROM accounts WHERE `name` = '%e' LIMIT 0,1", targetname);
 	
 	new 
 		Cache:result = mysql_query(g_SQL, TmpQuery);
@@ -4756,7 +4756,7 @@ CMD:banex(playerid, params[])
 	if( strlen(targetname) > 24 ) return SendClientMessage(playerid, COLOR_RED, "Maksimalna velicina imena je 24!");
     if (strlen(reason) < 1 || strlen(reason) > 24) return SendClientMessage(playerid, COLOR_RED, "Maksimalna velicina razloga je 24, a minimalna 1!");
 	
-	mysql_format(g_SQL, globalstring, sizeof(globalstring), "SELECT * FROM `accounts` WHERE `name` = '%e'", targetname);
+	mysql_format(g_SQL, globalstring, sizeof(globalstring), "SELECT * FROM accounts WHERE `name` = '%e'", targetname);
 	mysql_tquery(g_SQL, globalstring, "OfflineBanPlayer", "issi", playerid, targetname, reason, days);
 
 	va_SendClientMessage(playerid, COLOR_RED, "[ ! ] Uspjesno ste banali igraca %s!", targetname);
@@ -4778,7 +4778,7 @@ CMD:jailex(playerid, params[])
 	    GetPlayerName(i, LoopName, sizeof(LoopName));
 		if(!strcmp(giveplayername, LoopName)) return SendClientMessage(playerid, COLOR_RED, "Taj igraè je online!");
 	}
-	mysql_format(g_SQL, globalstring, sizeof(globalstring), "SELECT * FROM `accounts` WHERE `name` = '%e'", giveplayername);
+	mysql_format(g_SQL, globalstring, sizeof(globalstring), "SELECT * FROM accounts WHERE `name` = '%e'", giveplayername);
 	mysql_tquery(g_SQL, globalstring, "OfflineJailPlayer", "issi", playerid, giveplayername, time);
 
 	va_SendClientMessage(playerid, COLOR_RED, "[ ! ] Uspjesno ste zatvorili igraca %s!", giveplayername);
@@ -5331,7 +5331,7 @@ CMD:checklastlogin(playerid, params[])
 	//if(PlayerInfo[playerid][pAdmin] < 1) return SendClientMessage(playerid, COLOR_RED, "Niste ovlasteni!"); Da vratimo na staro da igraci mogu gledat kad je tko bio online zadnji put radi kuca i biznisa..
 	new targetname[MAX_PLAYER_NAME], string[128];
 	if (sscanf(params, "s[24]", targetname)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /checklastlogin [Ime_Prezime]");
-	mysql_format(g_SQL, string, sizeof(string), "SELECT * FROM `accounts` WHERE `name` = '%e' LIMIT 0,1", targetname); // da budemo sigurniji jos vise haha iako je %e ista stvar al dobro
+	mysql_format(g_SQL, string, sizeof(string), "SELECT * FROM accounts WHERE `name` = '%e' LIMIT 0,1", targetname); // da budemo sigurniji jos vise haha iako je %e ista stvar al dobro
     mysql_tquery(g_SQL, string, "CheckPlayerData", "is", playerid, targetname);
 	return 1;
 }
@@ -5414,7 +5414,7 @@ CMD:checkoffline(playerid, params[])
 
 	new targetname[MAX_PLAYER_NAME];
 	if (sscanf(params, "s[24]", targetname)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /checkoffline [Ime]");
-	mysql_format(g_SQL, globalstring, sizeof(globalstring),"SELECT * FROM `accounts` WHERE `name` = '%e' LIMIT 1", targetname);
+	mysql_format(g_SQL, globalstring, sizeof(globalstring),"SELECT * FROM accounts WHERE `name` = '%e' LIMIT 1", targetname);
     mysql_tquery(g_SQL, globalstring, "CheckOffline", "is", playerid, targetname);
 	return 1;
 }
@@ -6292,7 +6292,7 @@ CMD:adminmsg(playerid, params[])
 	if (sscanf(params, "s[25]s[128]", playerb, n_reason))
 		return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /adminmsg [character name] [message]");
 
-	mysql_format(g_SQL, mysqlquery, sizeof(mysqlquery), "SELECT * FROM `accounts` WHERE `name` = '%e' LIMIT 1", playerb);
+	mysql_format(g_SQL, mysqlquery, sizeof(mysqlquery), "SELECT * FROM accounts WHERE `name` = '%e' LIMIT 1", playerb);
     mysql_tquery(g_SQL, mysqlquery, "AddAdminMessage", "iss", playerid, playerb, n_reason);
 	return true;
 }

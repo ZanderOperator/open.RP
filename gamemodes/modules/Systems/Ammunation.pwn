@@ -400,7 +400,7 @@ CMD:ammunation(playerid, params[])
         PlayerInfo[giveplayerid][pAmmuTime] = 0;
 
         new query[128];
-        format(query, sizeof(query), "UPDATE `accounts` SET `ammutime`=0 WHERE `sqlid`=%d", PlayerInfo[giveplayerid][pSQLID]);
+        format(query, sizeof(query), "UPDATE accounts SET `ammutime`=0 WHERE sqlid=%d", PlayerInfo[giveplayerid][pSQLID]);
         mysql_tquery(g_SQL, query);
 
         va_SendClientMessage(giveplayerid, COLOR_RED, "[ ! ] Admin %s ti je resetirao vrijeme kupovine oruzja u Ammunationu!", GetName(playerid));

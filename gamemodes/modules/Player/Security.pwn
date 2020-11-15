@@ -78,7 +78,7 @@ Public: OnPasswordUpdateEx(sqlid)
 	
 	new
 		updatePasswordQuery[256];
-	mysql_format(g_SQL, updatePasswordQuery, sizeof(updatePasswordQuery), "UPDATE `accounts` SET `password` = '%e' WHERE `sqlid` = '%d' LIMIT 1",
+	mysql_format(g_SQL, updatePasswordQuery, sizeof(updatePasswordQuery), "UPDATE accounts SET `password` = '%e' WHERE sqlid = '%d' LIMIT 1",
 		password,
 		sqlid
 	);
@@ -96,7 +96,7 @@ Public: OnPasswordUpdate(playerid)
 	
 	new
 		updatePasswordQuery[256];
-	mysql_format(g_SQL, updatePasswordQuery, sizeof(updatePasswordQuery), "UPDATE `accounts` SET `password` = '%e' WHERE `sqlid` = '%d' LIMIT 1",
+	mysql_format(g_SQL, updatePasswordQuery, sizeof(updatePasswordQuery), "UPDATE accounts SET `password` = '%e' WHERE sqlid = '%d' LIMIT 1",
 		password,
 		PlayerInfo[playerid][pSQLID]
 	);
@@ -221,7 +221,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 			
 			new
 				tmpQuery[ 512 ];
-			mysql_format(g_SQL, tmpQuery, sizeof(tmpQuery), "UPDATE `accounts` SET `secquestion` = '%d', `secawnser` = '%e' WHERE `sqlid` = '%d' LIMIT 1",
+			mysql_format(g_SQL, tmpQuery, sizeof(tmpQuery), "UPDATE accounts SET `secquestion` = '%d', `secawnser` = '%e' WHERE sqlid = '%d' LIMIT 1",
 				PlayerInfo[playerid][pSecQuestion],
 				PlayerInfo[playerid][pSecQuestAnswer],
 				PlayerInfo[playerid][pSQLID]
@@ -254,7 +254,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 			
 			new
 				tmpQuery[ 512 ];
-			mysql_format(g_SQL, tmpQuery, sizeof(tmpQuery), "UPDATE `accounts` SET `email` = '%e' WHERE `sqlid` = '%d' LIMIT 1",
+			mysql_format(g_SQL, tmpQuery, sizeof(tmpQuery), "UPDATE accounts SET `email` = '%e' WHERE sqlid = '%d' LIMIT 1",
 				PlayerInfo[playerid][pEmail],
 				PlayerInfo[playerid][pSQLID]
 			);
@@ -370,7 +370,7 @@ CMD:changepass(playerid, params[])
 	if(sscanf(params, "s[24]s[32]", usernick, passnew)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /changepass [Ime_Prezime] [password].");
 	
 	// mysql search
-	mysql_format(g_SQL, mysql_buffer, sizeof(mysql_buffer), "SELECT sqlid FROM `accounts` WHERE `name` = '%e' LIMIT 0,1", usernick);
+	mysql_format(g_SQL, mysql_buffer, sizeof(mysql_buffer), "SELECT sqlid FROM accounts WHERE `name` = '%e' LIMIT 0,1", usernick);
 	mysql_search = mysql_query(g_SQL, mysql_buffer);
 	if(!cache_num_rows())
 		return va_SendClientMessage(playerid,COLOR_RED, "Account %s ne postoji!", usernick), cache_delete(mysql_search);

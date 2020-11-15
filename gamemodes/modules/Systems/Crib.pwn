@@ -801,7 +801,7 @@ stock BuyHouse(playerid, bool:credit_activated = false)
     );
     mysql_tquery(g_SQL, query);
 
-    format(query, sizeof(query), "UPDATE `accounts` SET `spawnchange` = '%d' WHERE `sqlid` = '%d'",
+    format(query, sizeof(query), "UPDATE accounts SET `spawnchange` = '%d' WHERE sqlid = '%d'",
         PlayerInfo[playerid][pSpawnChange],
         PlayerInfo[playerid][pSQLID]
     );
@@ -823,7 +823,7 @@ stock BuyHouse(playerid, bool:credit_activated = false)
     Bit16_Set(gr_PlayerInHouse, playerid, house);
     PlayerInfo[playerid][pSpawnChange] = 1;
 
-    format(query, sizeof(query), "UPDATE `accounts` SET `spawnchange` = '%d' WHERE `sqlid` = '%d'",
+    format(query, sizeof(query), "UPDATE accounts SET `spawnchange` = '%d' WHERE sqlid = '%d'",
         PlayerInfo[playerid][pSpawnChange],
         PlayerInfo[playerid][pSQLID]
     );
@@ -1801,13 +1801,13 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
             mysql_tquery(g_SQL, query);
 
             // Spawn Change Seller & Buyer
-            format(query, sizeof(query), "UPDATE `accounts` SET `spawnchange` = '%d' WHERE `sqlid` = '%d'",
+            format(query, sizeof(query), "UPDATE accounts SET `spawnchange` = '%d' WHERE sqlid = '%d'",
                 PlayerInfo[pID][pSpawnChange],
                 PlayerInfo[pID][pSQLID]
             );
             mysql_tquery(g_SQL, query);
 
-            format(query, sizeof(query), "UPDATE `accounts` SET `spawnchange` = '%d' WHERE `sqlid` = '%d'",
+            format(query, sizeof(query), "UPDATE accounts SET `spawnchange` = '%d' WHERE sqlid = '%d'",
                 PlayerInfo[playerid][pSpawnChange],
                 PlayerInfo[playerid][pSQLID]
             );
@@ -2508,7 +2508,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                     PlayerInfo[playerid][pSpawnChange] = 0;
                     PlayerInfo[playerid][FurnPremium] = 0;
 
-                    format(query, sizeof(query), "UPDATE `accounts` SET `spawnchange` = '%d' WHERE `sqlid` = '%d'",
+                    format(query, sizeof(query), "UPDATE accounts SET `spawnchange` = '%d' WHERE sqlid = '%d'",
                         PlayerInfo[playerid][pSpawnChange],
                         PlayerInfo[playerid][pSQLID]
                     );
@@ -3782,7 +3782,7 @@ CMD:rent(playerid, params[])
             SendClientMessage(playerid, COLOR_GREEN, string);
             PlayerInfo[playerid][pSpawnChange] = 1;
 
-            format(string, sizeof(string), "UPDATE `accounts` SET `spawnchange` = '%d' WHERE `sqlid` = '%d'",
+            format(string, sizeof(string), "UPDATE accounts SET `spawnchange` = '%d' WHERE sqlid = '%d'",
                 PlayerInfo[playerid][pSpawnChange],
                 PlayerInfo[playerid][pSQLID]
             );

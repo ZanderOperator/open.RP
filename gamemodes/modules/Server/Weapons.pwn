@@ -110,7 +110,7 @@ stock AC_SavePlayerWeapon(playerid, slotid)
 		weaponUpdate[160];
 	if(PlayerWeapons[playerid][pwSQLID][slotid] != -1 && PlayerWeapons[playerid][pwAmmo][slotid] > 0)
 	{
-		format(weaponUpdate, 160, "UPDATE `player_weapons` SET `player_id` = '%d', `weapon_id` = '%d', `weapon_ammo` = '%d', `hidden` = '%d' WHERE `sqlid` = '%d'",
+		format(weaponUpdate, 160, "UPDATE `player_weapons` SET `player_id` = '%d', `weapon_id` = '%d', `weapon_ammo` = '%d', `hidden` = '%d' WHERE sqlid = '%d'",
 			PlayerInfo[playerid][pSQLID],
 			PlayerWeapons[playerid][pwWeaponId][slotid],
 			PlayerWeapons[playerid][pwAmmo][slotid],

@@ -725,7 +725,7 @@ stock SaveObjectSlot(playerid, slot)
 	new mysqlUpdate[ 512 ];
 	if(PlayerObject[playerid][slot][poSQLID] != -1 && PlayerObject[playerid][slot][poModelid] != -1)
 	{
-		format(mysqlUpdate, sizeof(mysqlUpdate), "UPDATE `player_objects` SET  `placed` = '%d', `bone` = '%d', `posX` = '%f', `posY` = '%f', `posZ` = '%f', `rotX` = '%f', `rotY` = '%f', `rotZ` = '%f', `sizeX` = '%f', `sizeY` = '%f', `sizeZ` = '%f', `color1` = '%d', `color2` = '%d' WHERE `sqlid`= '%d'",
+		format(mysqlUpdate, sizeof(mysqlUpdate), "UPDATE `player_objects` SET  `placed` = '%d', `bone` = '%d', `posX` = '%f', `posY` = '%f', `posZ` = '%f', `rotX` = '%f', `rotY` = '%f', `rotZ` = '%f', `sizeX` = '%f', `sizeY` = '%f', `sizeZ` = '%f', `color1` = '%d', `color2` = '%d' WHERE sqlid= '%d'",
 			PlayerObject[playerid][slot][poPlaced],
 			PlayerObject[playerid][slot][poBoneId],
 			PlayerObject[playerid][slot][poPosX],

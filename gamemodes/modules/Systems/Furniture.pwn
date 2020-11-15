@@ -2933,7 +2933,7 @@ static stock CreateFurnitureObject(playerid, modelid, Float:x, Float:y, Float:z,
         }
         if (HouseInfo[houseid][hFurSQL][index] > 0)
         {
-            format(query, sizeof(query), "DELETE FROM `furniture` WHERE `sqlid` = '%d' LIMIT 1", HouseInfo[houseid][hFurSQL][index]);
+            format(query, sizeof(query), "DELETE FROM `furniture` WHERE sqlid = '%d' LIMIT 1", HouseInfo[houseid][hFurSQL][index]);
             mysql_tquery(g_SQL, query);
         }
 
@@ -3100,7 +3100,7 @@ static stock SetFurnitureObjectPos(playerid, Float:x, Float:y, Float:z, Float:rx
     HouseInfo[houseid][hFurRotZ][index]     = rz;
 
     new query[512];
-    format(query, sizeof(query), "UPDATE furniture SET `pos_x` = '%f',`pos_y` = '%f',`pos_z` = '%f',`rot_x` = '%f',`rot_y` = '%f',`rot_z` = '%f' WHERE `sqlid` = '%d'",
+    format(query, sizeof(query), "UPDATE furniture SET `pos_x` = '%f',`pos_y` = '%f',`pos_z` = '%f',`rot_x` = '%f',`rot_y` = '%f',`rot_z` = '%f' WHERE sqlid = '%d'",
         x,
         y,
         z,

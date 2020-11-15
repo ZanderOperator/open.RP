@@ -305,7 +305,7 @@ stock BudgetToPlayerBankMoney (playerid, money )
 		);
 	mysql_tquery(g_SQL, TmpQuery);
 	// Update accounts
-	format( TmpQuery2, sizeof(TmpQuery2), "UPDATE `accounts` SET `bankMoney` = '%d' WHERE `sqlid` = '%d'", 
+	format( TmpQuery2, sizeof(TmpQuery2), "UPDATE accounts SET `bankMoney` = '%d' WHERE sqlid = '%d'", 
 			PlayerInfo[playerid][pBank],
 			PlayerInfo[playerid][pSQLID]
 		);
@@ -327,7 +327,7 @@ stock PlayerBankToBudgetMoney ( playerid, money )
 		);
 	mysql_tquery(g_SQL, TmpQuery);
 	// Update bank money
-	format( TmpQuery2, sizeof(TmpQuery2), "UPDATE `accounts` SET `bankMoney` = '%d' WHERE `sqlid` = '%d'",
+	format( TmpQuery2, sizeof(TmpQuery2), "UPDATE accounts SET `bankMoney` = '%d' WHERE sqlid = '%d'",
 			PlayerInfo[playerid][pBank],
 			PlayerInfo[playerid][pSQLID]
 		);
@@ -391,7 +391,7 @@ stock PlayerBankToComplexMoney ( playerid, complexid, money )
 		);
 	mysql_tquery(g_SQL, TmpQuery);
 	// Update bank money accounts
-	format( TmpQuery2, sizeof(TmpQuery2), "UPDATE `accounts` SET `bankMoney` = '%d' WHERE `sqlid` = '%d'",
+	format( TmpQuery2, sizeof(TmpQuery2), "UPDATE accounts SET `bankMoney` = '%d' WHERE sqlid = '%d'",
 			PlayerInfo[playerid][pBank],
 			PlayerInfo[playerid][pSQLID]
 		);
@@ -420,7 +420,7 @@ stock PlayerBankToComplexMoneyTAX ( playerid, complexid, money )
 		);
 	mysql_tquery(g_SQL, TmpQuery);
 	// Update bank money accounts
-	format( TmpQuery2, sizeof(TmpQuery2), "UPDATE `accounts` SET `bankMoney` = '%d' WHERE `sqlid` = '%d'",
+	format( TmpQuery2, sizeof(TmpQuery2), "UPDATE accounts SET `bankMoney` = '%d' WHERE sqlid = '%d'",
 			PlayerInfo[playerid][pBank],
 			PlayerInfo[playerid][pSQLID]
 		);
@@ -535,7 +535,7 @@ stock PlayerBankToHouseMoneyTAX ( playerid, houseid, money )
 		);
 	mysql_tquery(g_SQL, TmpQuery);
 	// Update bank money accounts
-	format( TmpQuery2, sizeof(TmpQuery2), "UPDATE `accounts` SET `bankMoney` = '%d' WHERE `sqlid` = '%d'",
+	format( TmpQuery2, sizeof(TmpQuery2), "UPDATE accounts SET `bankMoney` = '%d' WHERE sqlid = '%d'",
 			PlayerInfo[playerid][pBank],
 			PlayerInfo[playerid][pSQLID]
 		);
@@ -727,7 +727,7 @@ stock OrgToPlayerBankMoney ( playerid, ftype, money )
 	PlayerInfo[playerid][pBank] += safemoney; 					// Igrac dobiva puni izos na banku
 	
 	// Update accounts
-	format( TmpQuery2, sizeof(TmpQuery2), "UPDATE `accounts` SET `bankMoney` = '%d' WHERE `sqlid` = '%d'", 
+	format( TmpQuery2, sizeof(TmpQuery2), "UPDATE accounts SET `bankMoney` = '%d' WHERE sqlid = '%d'", 
 			PlayerInfo[playerid][pBank],
 			PlayerInfo[playerid][pSQLID]
 		);
@@ -796,7 +796,7 @@ stock WarehouseToIllegalBudgetMoney(whid, money)
 			CityInfo[cBudget]
 		);
 	// Update accounts
-	format( TmpQuery2, sizeof(TmpQuery2), "UPDATE `accounts` SET `playaPDMoney` = '%d' WHERE `sqlid` = '%d'", 
+	format( TmpQuery2, sizeof(TmpQuery2), "UPDATE accounts SET `playaPDMoney` = '%d' WHERE sqlid = '%d'", 
 			PlayerInfo[playerid][pPayDayMoney],
 			PlayerInfo[playerid][pSQLID]
 		);
@@ -818,7 +818,7 @@ stock BudgetToPlayerBankMoney (playerid, money )
 			CityInfo[cBudget]
 		);
 	// Update accounts
-	format( TmpQuery2, sizeof(TmpQuery2), "UPDATE `accounts` SET `playaPDMoney` = '%d' WHERE `sqlid` = '%d'", 
+	format( TmpQuery2, sizeof(TmpQuery2), "UPDATE accounts SET `playaPDMoney` = '%d' WHERE sqlid = '%d'", 
 			PlayerInfo[playerid][pPayDayMoney],
 			PlayerInfo[playerid][pSQLID]
 		);
@@ -836,7 +836,7 @@ stock PayDayToPlayerMoney (playerid, money )
 
 	
 	// Update accounts (ne treba update handmoney jer se to radi u AC_GivePlayerMoney)
-	format( TmpQuery, sizeof(TmpQuery), "UPDATE `accounts` SET `playaPDMoney` = '%d' WHERE `sqlid` = '%d'", 
+	format( TmpQuery, sizeof(TmpQuery), "UPDATE accounts SET `playaPDMoney` = '%d' WHERE sqlid = '%d'", 
 			PlayerInfo[playerid][pPayDayMoney],
 			PlayerInfo[playerid][pSQLID]
 		);
@@ -853,7 +853,7 @@ stock BankToPlayerMoney (playerid, money )
 	AC_GivePlayerMoney(playerid, safemoney); 				// Igrac dobiva novac na ruke 
 
 	// Update accounts (ne treba update handmoney jer se to radi u AC_GivePlayerMoney)
-	format( TmpQuery, sizeof(TmpQuery), "UPDATE `accounts` SET `bankMoney` = '%d' WHERE `sqlid` = '%d'", 
+	format( TmpQuery, sizeof(TmpQuery), "UPDATE accounts SET `bankMoney` = '%d' WHERE sqlid = '%d'", 
 			PlayerInfo[playerid][pBank],
 			PlayerInfo[playerid][pSQLID]
 		);
@@ -870,7 +870,7 @@ stock PlayerToBankMoney (playerid, money )
 	PlayerInfo[ playerid ][ pBank ] += safemoney;			// igrac dobiva novac na banku
 
 	// Update accounts (ne treba update handmoney jer se to radi u AC_GivePlayerMoney)
-	format( TmpQuery, sizeof(TmpQuery), "UPDATE `accounts` SET `bankMoney` = '%d' WHERE `sqlid` = '%d'", 
+	format( TmpQuery, sizeof(TmpQuery), "UPDATE accounts SET `bankMoney` = '%d' WHERE sqlid = '%d'", 
 			PlayerInfo[playerid][pBank],
 			PlayerInfo[playerid][pSQLID]
 		);

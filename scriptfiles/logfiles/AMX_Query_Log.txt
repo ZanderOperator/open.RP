@@ -1,24 +1,24 @@
  
 [07/08/2020, 16:40:30] - MySQL Error ID: 1452
-Error Cannot add or update a child row: a foreign key constraint fails (`zcityofangels1`.`player_crashes`, CONSTRAINT `player_crashes_ibfk_1` FOREIGN KEY (`player_id`) REFERENCES `accounts` (`sqlid`)): Callback 
+Error Cannot add or update a child row: a foreign key constraint fails (`zcityofangels1`.`player_crashes`, CONSTRAINT `player_crashes_ibfk_1` FOREIGN KEY (`player_id`) REFERENCES accounts (`sqlid`)): Callback 
 Query: INSERT INTO `player_crashes`(`player_id`,`pos_x`,`pos_y`,`pos_z`,`interior`,`viwo`,`armor`,`health`,`skin`,`time`) VALUES ('0','1369.02','-1408.06','33.69','0','3232','0.000000','0.000000','20090','1596818430')
 AMX backtrace:
 #0 native GetBacktrace () in crashdetect.so
 #1 0079e008 in public OnQueryError (errorid=1452, error[]=@05fd29c0 "Cannot add or update a child row: a foreign key constraint fails (`zcityofangels...", callback[]=@05fd29bc "", query[]=@05fd2670 "INSERT INTO `player_crashes`(`player_id`,`pos_x`,`pos_y`,`pos_z`,`interior`,`viw...", MySQL:handle=1) at gamemodes\coarp.pwn:3275
 
 [10/08/2020, 20:29:33] - MySQL Error ID: 1064
-Error You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '(BROJ LEVELA GDJE "x") WHERE `sqlid` = 7444' at line 1: Callback 
-Query: UPDATE `accounts` SET `levels` = 99(BROJ LEVELA GDJE "x") WHERE `sqlid` = 7444
+Error You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '(BROJ LEVELA GDJE "x") WHERE sqlid = 7444' at line 1: Callback 
+Query: UPDATE accounts SET `levels` = 99(BROJ LEVELA GDJE "x") WHERE sqlid = 7444
 AMX backtrace:
 #0 native GetBacktrace () in crashdetect.so
-#1 0079e008 in public OnQueryError (errorid=1064, error[]=@05fd27b0 "You have an error in your SQL syntax; check the manual that corresponds to your ...", callback[]=@05fd27ac "", query[]=@05fd2670 "UPDATE `accounts` SET `levels` = 99(BROJ LEVELA GDJE "x") WHERE `sqlid` = 7444", MySQL:handle=1) at gamemodes\coarp.pwn:3275
+#1 0079e008 in public OnQueryError (errorid=1064, error[]=@05fd27b0 "You have an error in your SQL syntax; check the manual that corresponds to your ...", callback[]=@05fd27ac "", query[]=@05fd2670 "UPDATE accounts SET `levels` = 99(BROJ LEVELA GDJE "x") WHERE sqlid = 7444", MySQL:handle=1) at gamemodes\coarp.pwn:3275
 
 [10/08/2020, 20:33:15] - MySQL Error ID: 1064
-Error You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '(BROJ LEVELA GDJE "x") WHERE `sqlid` = 7444' at line 1: Callback 
-Query: UPDATE `accounts` SET `levels` = 99(BROJ LEVELA GDJE "x") WHERE `sqlid` = 7444
+Error You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '(BROJ LEVELA GDJE "x") WHERE sqlid = 7444' at line 1: Callback 
+Query: UPDATE accounts SET `levels` = 99(BROJ LEVELA GDJE "x") WHERE sqlid = 7444
 AMX backtrace:
 #0 native GetBacktrace () in crashdetect.so
-#1 0079e008 in public OnQueryError (errorid=1064, error[]=@05fd27b0 "You have an error in your SQL syntax; check the manual that corresponds to your ...", callback[]=@05fd27ac "", query[]=@05fd2670 "UPDATE `accounts` SET `levels` = 99(BROJ LEVELA GDJE "x") WHERE `sqlid` = 7444", MySQL:handle=1) at gamemodes\coarp.pwn:3275
+#1 0079e008 in public OnQueryError (errorid=1064, error[]=@05fd27b0 "You have an error in your SQL syntax; check the manual that corresponds to your ...", callback[]=@05fd27ac "", query[]=@05fd2670 "UPDATE accounts SET `levels` = 99(BROJ LEVELA GDJE "x") WHERE sqlid = 7444", MySQL:handle=1) at gamemodes\coarp.pwn:3275
 
 [18/08/2020, 16:27:41] - MySQL Error ID: 1064
 Error You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near ''34' at line 1: Callback 
@@ -49,11 +49,11 @@ AMX backtrace:
 #1 0079e008 in public OnQueryError (errorid=1054, error[]=@05fd2814 "Unknown column 'weapons' in 'field list'", callback[]=@05fd2810 "", query[]=@05fd2670 "UPDATE `server_factions_permissions` SET `weapons` = '2' WHERE `server_factions_...", MySQL:handle=1) at gamemodes\coarp.pwn:3275
 
 [13/09/2020, 19:42:09] - MySQL Error ID: 1064
-Error You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '(BROJ LEVELA GDJE "x") WHERE `sqlid` = 1488' at line 1: Callback 
-Query: UPDATE `accounts` SET `levels` = 19(BROJ LEVELA GDJE "x") WHERE `sqlid` = 1488
+Error You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '(BROJ LEVELA GDJE "x") WHERE sqlid = 1488' at line 1: Callback 
+Query: UPDATE accounts SET `levels` = 19(BROJ LEVELA GDJE "x") WHERE sqlid = 1488
 AMX backtrace:
 #0 native GetBacktrace () in crashdetect.so
-#1 0079e008 in public OnQueryError (errorid=1064, error[]=@05fd27b0 "You have an error in your SQL syntax; check the manual that corresponds to your ...", callback[]=@05fd27ac "", query[]=@05fd2670 "UPDATE `accounts` SET `levels` = 19(BROJ LEVELA GDJE "x") WHERE `sqlid` = 1488", MySQL:handle=1) at gamemodes\coarp.pwn:3275
+#1 0079e008 in public OnQueryError (errorid=1064, error[]=@05fd27b0 "You have an error in your SQL syntax; check the manual that corresponds to your ...", callback[]=@05fd27ac "", query[]=@05fd2670 "UPDATE accounts SET `levels` = 19(BROJ LEVELA GDJE "x") WHERE sqlid = 1488", MySQL:handle=1) at gamemodes\coarp.pwn:3275
 
 [15/09/2020, 20:57:48] - MySQL Error ID: 1054
 Error Unknown column 'resetcars' in 'field list': Callback 
@@ -77,11 +77,11 @@ AMX backtrace:
 #1 0079e008 in public OnQueryError (errorid=1054, error[]=@05fd281c "Unknown column 'resetcars' in 'field list'", callback[]=@05fd2818 "", query[]=@05fd2670 "UPDATE `server_factions_permissions` SET `resetcars` = '7' WHERE `server_faction...", MySQL:handle=1) at gamemodes\coarp.pwn:3275
 
 [17/09/2020, 17:41:10] - MySQL Error ID: 1064
-Error You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '(BROJ LEVELA GDJE "x") WHERE `sqlid` = 1488' at line 1: Callback 
-Query: UPDATE `accounts` SET `levels` = 15 (BROJ LEVELA GDJE "x") WHERE `sqlid` = 1488
+Error You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '(BROJ LEVELA GDJE "x") WHERE sqlid = 1488' at line 1: Callback 
+Query: UPDATE accounts SET `levels` = 15 (BROJ LEVELA GDJE "x") WHERE sqlid = 1488
 AMX backtrace:
 #0 native GetBacktrace () in crashdetect.so
-#1 0079e008 in public OnQueryError (errorid=1064, error[]=@05fd27b4 "You have an error in your SQL syntax; check the manual that corresponds to your ...", callback[]=@05fd27b0 "", query[]=@05fd2670 "UPDATE `accounts` SET `levels` = 15 (BROJ LEVELA GDJE "x") WHERE `sqlid` = 1488", MySQL:handle=1) at gamemodes\coarp.pwn:3275
+#1 0079e008 in public OnQueryError (errorid=1064, error[]=@05fd27b4 "You have an error in your SQL syntax; check the manual that corresponds to your ...", callback[]=@05fd27b0 "", query[]=@05fd2670 "UPDATE accounts SET `levels` = 15 (BROJ LEVELA GDJE "x") WHERE sqlid = 1488", MySQL:handle=1) at gamemodes\coarp.pwn:3275
 
 [21/09/2020, 21:09:12] - MySQL Error ID: 1062
 Error Duplicate entry '21714' for key 'weaponsql': Callback 
@@ -92,10 +92,10 @@ AMX backtrace:
 
 [27/09/2020, 21:35:45] - MySQL Error ID: 1054
 Error Unknown column 'level' in 'field list': Callback 
-Query: UPDATE `accounts` SET `level` = '42' WHERE `sqlid` = 4379
+Query: UPDATE accounts SET `level` = '42' WHERE sqlid = 4379
 AMX backtrace:
 #0 native GetBacktrace () in crashdetect.so
-#1 0079e008 in public OnQueryError (errorid=1054, error[]=@05fd275c "Unknown column 'level' in 'field list'", callback[]=@05fd2758 "", query[]=@05fd2670 "UPDATE `accounts` SET `level` = '42' WHERE `sqlid` = 4379", MySQL:handle=1) at gamemodes\coarp.pwn:3275
+#1 0079e008 in public OnQueryError (errorid=1054, error[]=@05fd275c "Unknown column 'level' in 'field list'", callback[]=@05fd2758 "", query[]=@05fd2670 "UPDATE accounts SET `level` = '42' WHERE sqlid = 4379", MySQL:handle=1) at gamemodes\coarp.pwn:3275
 
 [27/09/2020, 21:38:24] - MySQL Error ID: 1054
 Error Unknown column 'level' in 'field list': Callback 
@@ -112,32 +112,32 @@ AMX backtrace:
 #1 0079e008 in public OnQueryError (errorid=1062, error[]=@05fd29c8 "Duplicate entry '21890' for key 'weaponsql'", callback[]=@05fd29c4 "", query[]=@05fd2670 "INSERT INTO cocars_wobjects (model, weaponsql, vehicle_id, offsetx, offsety, off...", MySQL:handle=1) at gamemodes\coarp.pwn:3275
 
 [30/09/2020, 00:28:15] - MySQL Error ID: 1064
-Error You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '(BROJ LEVELA GDJE "x") WHERE `sqlid` = 7826' at line 1: Callback 
-Query: UPDATE `accounts` SET `levels` = 4(BROJ LEVELA GDJE "x") WHERE `sqlid` = 7826
+Error You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '(BROJ LEVELA GDJE "x") WHERE sqlid = 7826' at line 1: Callback 
+Query: UPDATE accounts SET `levels` = 4(BROJ LEVELA GDJE "x") WHERE sqlid = 7826
 AMX backtrace:
 #0 native GetBacktrace () in crashdetect.so
-#1 0079e008 in public OnQueryError (errorid=1064, error[]=@05fd27ac "You have an error in your SQL syntax; check the manual that corresponds to your ...", callback[]=@05fd27a8 "", query[]=@05fd2670 "UPDATE `accounts` SET `levels` = 4(BROJ LEVELA GDJE "x") WHERE `sqlid` = 7826", MySQL:handle=1) at gamemodes\coarp.pwn:3275
+#1 0079e008 in public OnQueryError (errorid=1064, error[]=@05fd27ac "You have an error in your SQL syntax; check the manual that corresponds to your ...", callback[]=@05fd27a8 "", query[]=@05fd2670 "UPDATE accounts SET `levels` = 4(BROJ LEVELA GDJE "x") WHERE sqlid = 7826", MySQL:handle=1) at gamemodes\coarp.pwn:3275
 
 [30/09/2020, 00:31:10] - MySQL Error ID: 1064
-Error You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '(BROJ LEVELA GDJE "4") WHERE `sqlid` = 7826' at line 1: Callback 
-Query: UPDATE `accounts` SET `levels` = 4(BROJ LEVELA GDJE "4") WHERE `sqlid` = 7826
+Error You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '(BROJ LEVELA GDJE "4") WHERE sqlid = 7826' at line 1: Callback 
+Query: UPDATE accounts SET `levels` = 4(BROJ LEVELA GDJE "4") WHERE sqlid = 7826
 AMX backtrace:
 #0 native GetBacktrace () in crashdetect.so
-#1 0079e008 in public OnQueryError (errorid=1064, error[]=@05fd27ac "You have an error in your SQL syntax; check the manual that corresponds to your ...", callback[]=@05fd27a8 "", query[]=@05fd2670 "UPDATE `accounts` SET `levels` = 4(BROJ LEVELA GDJE "4") WHERE `sqlid` = 7826", MySQL:handle=1) at gamemodes\coarp.pwn:3275
+#1 0079e008 in public OnQueryError (errorid=1064, error[]=@05fd27ac "You have an error in your SQL syntax; check the manual that corresponds to your ...", callback[]=@05fd27a8 "", query[]=@05fd2670 "UPDATE accounts SET `levels` = 4(BROJ LEVELA GDJE "4") WHERE sqlid = 7826", MySQL:handle=1) at gamemodes\coarp.pwn:3275
 
 [01/10/2020, 22:03:01] - MySQL Error ID: 1064
-Error You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '(BROJ LEVELA GDJE "x") WHERE `sqlid` = 7826' at line 1: Callback 
-Query: UPDATE `accounts` SET `levels` = 5(BROJ LEVELA GDJE "x") WHERE `sqlid` = 7826
+Error You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '(BROJ LEVELA GDJE "x") WHERE sqlid = 7826' at line 1: Callback 
+Query: UPDATE accounts SET `levels` = 5(BROJ LEVELA GDJE "x") WHERE sqlid = 7826
 AMX backtrace:
 #0 native GetBacktrace () in crashdetect.so
-#1 0079e008 in public OnQueryError (errorid=1064, error[]=@05fd27ac "You have an error in your SQL syntax; check the manual that corresponds to your ...", callback[]=@05fd27a8 "", query[]=@05fd2670 "UPDATE `accounts` SET `levels` = 5(BROJ LEVELA GDJE "x") WHERE `sqlid` = 7826", MySQL:handle=1) at gamemodes\coarp.pwn:3275
+#1 0079e008 in public OnQueryError (errorid=1064, error[]=@05fd27ac "You have an error in your SQL syntax; check the manual that corresponds to your ...", callback[]=@05fd27a8 "", query[]=@05fd2670 "UPDATE accounts SET `levels` = 5(BROJ LEVELA GDJE "x") WHERE sqlid = 7826", MySQL:handle=1) at gamemodes\coarp.pwn:3275
 
 [01/10/2020, 22:05:44] - MySQL Error ID: 1064
-Error You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '(BROJ LEVELA GDJE "x") WHERE `sqlid` = 7826' at line 1: Callback 
-Query: UPDATE `accounts` SET `levels` = 5 (BROJ LEVELA GDJE "x") WHERE `sqlid` = 7826
+Error You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '(BROJ LEVELA GDJE "x") WHERE sqlid = 7826' at line 1: Callback 
+Query: UPDATE accounts SET `levels` = 5 (BROJ LEVELA GDJE "x") WHERE sqlid = 7826
 AMX backtrace:
 #0 native GetBacktrace () in crashdetect.so
-#1 0079e008 in public OnQueryError (errorid=1064, error[]=@05fd27b0 "You have an error in your SQL syntax; check the manual that corresponds to your ...", callback[]=@05fd27ac "", query[]=@05fd2670 "UPDATE `accounts` SET `levels` = 5 (BROJ LEVELA GDJE "x") WHERE `sqlid` = 7826", MySQL:handle=1) at gamemodes\coarp.pwn:3275
+#1 0079e008 in public OnQueryError (errorid=1064, error[]=@05fd27b0 "You have an error in your SQL syntax; check the manual that corresponds to your ...", callback[]=@05fd27ac "", query[]=@05fd2670 "UPDATE accounts SET `levels` = 5 (BROJ LEVELA GDJE "x") WHERE sqlid = 7826", MySQL:handle=1) at gamemodes\coarp.pwn:3275
 
 [07/10/2020, 13:50:43] - MySQL Error ID: 1062
 Error Duplicate entry '22095' for key 'weaponsql': Callback 
