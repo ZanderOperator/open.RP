@@ -1883,8 +1883,6 @@ new
 	Bit1:	gr_CreateObject			<MAX_PLAYERS> =	 Bit1: false,
 	Bit1:	gr_OnEvent				<MAX_PLAYERS>  = Bit1: false,
 	Bit1:	gr_PlayerDownloading	<MAX_PLAYERS>  = Bit1: false,
-	Bit1:	gr_PlayerExiting		<MAX_PLAYERS>  = Bit1: false,
-	Bit1:	gr_PlayerEntering		<MAX_PLAYERS>  = Bit1: false,
 	// TODO: misspelled, FirstSpawn
 	Bit1:	gr_FristSpawn			<MAX_PLAYERS>  = Bit1: false,
 	Bit1: 	gr_SafeBreaking			<MAX_PLAYERS>  = Bit1: false,
@@ -2222,8 +2220,6 @@ ResetPlayerVariables(playerid)
 	format(PlayerInfo[playerid][pCallsign], 60, "");
 	//rBits
 	Bit1_Set( gr_PlayerDownloading		, playerid, false );
-	Bit1_Set( gr_PlayerExiting			, playerid, false );
-	Bit1_Set( gr_PlayerEntering			, playerid, false );
 	Bit1_Set( gr_PlayerHouseAlarmOff	, playerid, false );
 	Bit1_Set( gr_FristSpawn				, playerid, false );
 	Bit1_Set( gr_OnLive					, playerid, false );
@@ -2960,18 +2956,6 @@ task GlobalServerTask[1000]() // izvodi se svakih sekundu
 	GMXTimer();
 	GlobalServerTimer();
 	DynamicWeather();
-	return 1;
-}
-
-timer SafeEnterCheck[4000](playerid)
-{
-	Bit1_Set(gr_PlayerEntering, playerid, false);
-	return 1;
-}
-
-timer SafeExitCheck[4000](playerid)
-{
-	Bit1_Set(gr_PlayerExiting, playerid, false);
 	return 1;
 }
 
@@ -3840,9 +3824,6 @@ hook OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
 
 hook OnPlayerUpdate(playerid)
 {
-	if( Bit1_Get(gr_PlayerExiting, playerid) && GetPlayerInterior(playerid) == 0)
-		defer SafeExitCheck(playerid);
-
 	if( IsPlayerAlive(playerid) )
 	{
 		if(PlayerTick[playerid][ptMoney] < gettimestamp()) 
@@ -3855,6 +3836,10 @@ hook OnPlayerUpdate(playerid)
 			return 1;
 		}
 	}
+	// TODO: remove this as it's wasting sync ticks, there's no need
+	// to constantly update player int & vw. If they're hacking, just
+	// punish them when they change ints/vw in a small amount of time
+
 	// Int & ViWo Sync Check
 	new
 		complexid = Bit16_Get( gr_PlayerInComplex, playerid ),
@@ -3870,8 +3855,6 @@ hook OnPlayerUpdate(playerid)
 			SetPlayerInterior(playerid, 0);
 			SetPlayerVirtualWorld(playerid, 0);
 		}
-		if( ( complexid != INVALID_COMPLEX_ID || roomid != INVALID_COMPLEX_ID || houseid != INVALID_HOUSE_ID || bizzid != INVALID_BIZNIS_ID || pickupid != -1 ) && Bit1_Get(gr_PlayerEntering, playerid) )
-			defer SafeEnterCheck(playerid);
 	}
 	return 1;
 }

@@ -2857,7 +2857,6 @@ CMD:enter(playerid, params[])
                 PickupInfo[pickup][epOrganizations] == 255 ||
                 PickupInfo[pickup][epJob] == 255)
             {
-                Bit1_Set(gr_PlayerEntering, playerid, true);
                 SetPlayerPosEx(playerid,PickupInfo[pickup][epExitx],PickupInfo[pickup][epExity],PickupInfo[pickup][epExitz],PickupInfo[pickup][epViwo],PickupInfo[pickup][epInt],true);
                 GameTextForPlayer(playerid, PickupInfo[pickup][epDiscription], 500, 1);
                 Bit16_Set(gr_PlayerInPickup, playerid, pickup);
@@ -2894,7 +2893,6 @@ CMD:enter(playerid, params[])
             PlayAudioStreamForPlayer(playerid, BizzInfo[biznis][bMusicURL]);
         }
         if (BizzInfo[biznis][bFurLoaded] == false) ReloadBizzFurniture(biznis);
-        Bit1_Set(gr_PlayerEntering, playerid, true);
         SetPlayerPosEx(playerid, BizzInfo[biznis][bExitX], BizzInfo[biznis][bExitY], BizzInfo[biznis][bExitZ], BizzInfo[biznis][bVirtualWorld], BizzInfo[biznis][bInterior], true);
         Bit16_Set(gr_PlayerInBiznis, playerid, biznis);
         DestroyBizzInfoTD(playerid);
@@ -2914,7 +2912,6 @@ CMD:enter(playerid, params[])
             return 1;
         }
 
-        Bit1_Set(gr_PlayerEntering, playerid, true);
         SetPlayerPosEx(playerid, ComplexRoomInfo[rcomplex][cExitX], ComplexRoomInfo[rcomplex][cExitY], ComplexRoomInfo[rcomplex][cExitZ], ComplexRoomInfo[rcomplex][cViwo], ComplexRoomInfo[rcomplex][cInt], true);
         Bit16_Set(gr_PlayerInRoom, playerid, rcomplex);
         if (PlayerInfo[playerid][pComplexRoomKey] == rcomplex)
@@ -2925,7 +2922,6 @@ CMD:enter(playerid, params[])
     }
     else if (complex != INVALID_COMPLEX_ID)
     {
-        Bit1_Set(gr_PlayerEntering, playerid, true);
         SetPlayerPosEx(playerid, ComplexInfo[complex][cExitX], ComplexInfo[complex][cExitY], ComplexInfo[complex][cExitZ], ComplexInfo[complex][cViwo], ComplexInfo[complex][cInt], true);
         Bit16_Set(gr_PlayerInComplex, playerid, complex);
         if (PlayerInfo[playerid][pComplexKey] == complex)
@@ -2966,7 +2962,6 @@ CMD:enter(playerid, params[])
         {
             ReloadHouseFurniture(house);
         }
-        Bit1_Set(gr_PlayerEntering, playerid, true);
         SetPlayerPosEx(playerid, HouseInfo[house][hExitX], HouseInfo[house][hExitY], HouseInfo[house][hExitZ], HouseInfo[house][hVirtualWorld], HouseInfo[house][hInt], true);
 
         Bit16_Set(gr_PlayerInHouse, playerid, house);
@@ -3023,7 +3018,6 @@ CMD:exit(playerid, params[])
     if (pickup != -1)
     {
         Bit16_Set(gr_PlayerInPickup, playerid, -1);
-        Bit1_Set(gr_PlayerExiting, playerid, true);
         SetPlayerPosEx(playerid,PickupInfo[pickup][epEntrancex], PickupInfo[pickup][epEntrancey], PickupInfo[pickup][epEntrancez], PickupInfo[pickup][epEnterViwo], PickupInfo[pickup][epEnterInt], true);
 
         onexit[playerid] = 1;
@@ -3034,7 +3028,6 @@ CMD:exit(playerid, params[])
     else if (complex != INVALID_COMPLEX_ID)
     {
         Bit16_Set(gr_PlayerInComplex, playerid, INVALID_COMPLEX_ID);
-        Bit1_Set(gr_PlayerExiting, playerid, true);
 
         /*if (aprilfools[playerid])
             complex = random(MAX_COMPLEX/2);*/
@@ -3065,7 +3058,6 @@ CMD:exit(playerid, params[])
             SetPlayerPosEx(playerid, BizzInfo[biznis][bEntranceX], BizzInfo[biznis][bEntranceY], BizzInfo[biznis][bEntranceZ], 0, 0, false);
             SetPlayerInterior(playerid, 0);
             SetPlayerVirtualWorld(playerid, 0);
-            Bit1_Set(gr_PlayerExiting, playerid, true);
             Bit16_Set(gr_PlayerInBiznis, playerid, INVALID_BIZNIS_ID);
             StopAudioStreamForPlayer(playerid);
 
@@ -3085,7 +3077,6 @@ CMD:exit(playerid, params[])
 
             SetPlayerPosEx(playerid, ComplexRoomInfo[rcomplex][cEnterX], ComplexRoomInfo[rcomplex][cEnterY], ComplexRoomInfo[rcomplex][cEnterZ], ComplexRoomInfo[rcomplex][cVWExit], ComplexRoomInfo[rcomplex][cIntExit]);
             Bit16_Set(gr_PlayerInRoom, playerid, INVALID_COMPLEX_ID);
-            Bit1_Set(gr_PlayerExiting, playerid, true);
             StopAudioStreamForPlayer(playerid);
 
             onexit[playerid] = 1;
@@ -3133,7 +3124,6 @@ CMD:exit(playerid, params[])
                 SetPlayerVirtualWorld(playerid, 0);
             }
             Bit16_Set(gr_PlayerInGarage, playerid, INVALID_HOUSE_ID);
-            Bit1_Set(gr_PlayerExiting, playerid, true);
         }
         return 1;
     }
@@ -3174,7 +3164,6 @@ CMD:exit(playerid, params[])
 
 
             Bit16_Set(gr_PlayerInHouse, playerid, INVALID_HOUSE_ID);
-            Bit1_Set(gr_PlayerExiting, playerid, true);
             return 1;
         }
     }
