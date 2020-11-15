@@ -1165,7 +1165,6 @@ CMD:warehouse(playerid, params[])
             return 1;
         }
 
-        Bit1_Set( gr_PlayerEntering, playerid, true);
         SetPlayerPosEx( playerid, WarehouseInfo[wh][whExit][0], WarehouseInfo[wh][whExit][1], WarehouseInfo[wh][whExit][2], WarehouseInfo[wh][whViwo], WarehouseInfo[wh][whInt], true);
         Bit16_Set( gr_PlayerInWarehouse, playerid, wh);
         return 1;
@@ -1200,7 +1199,6 @@ CMD:warehouse(playerid, params[])
             return 1;
         }
 
-        Bit1_Set( gr_PlayerExiting, playerid, true);
         SetPlayerPosEx( playerid, WarehouseInfo[wh][whEnter][0], WarehouseInfo[wh][whEnter][1], WarehouseInfo[wh][whEnter][2], 0, 0, false);
         Bit16_Set( gr_PlayerInWarehouse, playerid, INVALID_HOUSE_ID);
         return 1;
