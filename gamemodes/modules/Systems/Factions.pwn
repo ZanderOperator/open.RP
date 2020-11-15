@@ -305,7 +305,7 @@ public OnAdminFactionCreate(orgid)
 stock RemoveLeaders(orgid)
 {
     new query[128];
-    format(query, sizeof(query), "UPDATE `accounts` SET `facLeadId` = '0', `facMemId` = '0' WHERE `facLeadId` = '%d'",
+    format(query, sizeof(query), "UPDATE accounts SET `facLeadId` = '0', `facMemId` = '0' WHERE `facLeadId` = '%d'",
         orgid
         // TODO: have no idea what facLeadId relates to, Player Sqlid or Faction Sqlid but use Faction SQL Id here
         // orgid == FactionInfo[faction_index][fID]
@@ -326,7 +326,7 @@ stock RemoveLeaders(orgid)
 stock RemoveMembers(orgid)
 {
     new query[128];
-    format(query, sizeof(query), "UPDATE `accounts` SET `facMemId` = '0' WHERE `facMemId` = '%d'",
+    format(query, sizeof(query), "UPDATE accounts SET `facMemId` = '0' WHERE `facMemId` = '%d'",
         orgid
         // TODO: have no idea what facLeadId relates to, Player Sqlid or Faction Sqlid but use Faction SQL Id here
         // orgid == FactionInfo[faction_index][fID]
@@ -659,13 +659,13 @@ public UninvitePlayer(playerid, const targetname[])
     }
 
     new query[512];
-    mysql_format(g_SQL, query, sizeof(query), "UPDATE `accounts` SET `spawnchange` = '0', `facMemId` = 0, `facLeadId` = 0, `facRank` = 0 WHERE `name` = '%e' LIMIT 1", targetname);
+    mysql_format(g_SQL, query, sizeof(query), "UPDATE accounts SET `spawnchange` = '0', `facMemId` = 0, `facLeadId` = 0, `facRank` = 0 WHERE `name` = '%e' LIMIT 1", targetname);
     mysql_pquery(g_SQL, query);
 
     format(query, sizeof(query), "DELETE FROM `player_weapons` WHERE `player_id` = '%d'", playerSQLID);
     mysql_pquery(g_SQL, query);
 
-    format(query, sizeof(query), "DELETE FROM `accounts` WHERE `sqlid` = '%d'",
+    format(query, sizeof(query), "DELETE FROM accounts WHERE sqlid = '%d'",
         PlayerInfo[playerid][pRadio],
         PlayerInfo[playerid][pRadioSlot],
         PlayerInfo[playerid][pSQLID]
@@ -1114,7 +1114,7 @@ CMD:afaction(playerid, params[])
         );
         #endif
 
-        format(string, sizeof(string), "UPDATE `accounts` SET `facLeadId` = '%d', `facMemId` = '%d', `facRank` = '%d' WHERE `sqlid` = '%d'",
+        format(string, sizeof(string), "UPDATE accounts SET `facLeadId` = '%d', `facMemId` = '%d', `facRank` = '%d' WHERE sqlid = '%d'",
             PlayerInfo[targetid][pLeader],
             PlayerInfo[targetid][pMember],
             PlayerInfo[targetid][pRank],
@@ -1140,7 +1140,7 @@ CMD:afaction(playerid, params[])
         if (targetid == INVALID_PLAYER_ID) return SendClientMessage(playerid, COLOR_RED, "Invalidan ID igraca!");
         if (PlayerInfo[targetid][pLeader] == 0) return SendClientMessage(playerid, COLOR_RED, "Taj igrac nije lider!");
 
-        format(string, sizeof(string), "UPDATE `accounts` SET `facLeadId` = '0', `facMemId` = '0', `facRank` = '0' WHERE `sqlid` = '%d'", PlayerInfo[targetid][pSQLID]);
+        format(string, sizeof(string), "UPDATE accounts SET `facLeadId` = '0', `facMemId` = '0', `facRank` = '0' WHERE sqlid = '%d'", PlayerInfo[targetid][pSQLID]);
         mysql_tquery(g_SQL, string);
 
         #if defined MODULE_LOGS
@@ -1273,7 +1273,7 @@ CMD:faction(playerid, params[])
             RemovePlayerJob(targetid);
         }
 
-        format(string, sizeof(string), "UPDATE `accounts` SET `facMemId` = '%d', `facRank` = '%d' WHERE `sqlid` = '%d'",
+        format(string, sizeof(string), "UPDATE accounts SET `facMemId` = '%d', `facRank` = '%d' WHERE sqlid = '%d'",
             PlayerInfo[targetid][pMember],
             PlayerInfo[targetid][pRank],
             PlayerInfo[targetid][pSQLID]
@@ -1433,7 +1433,7 @@ CMD:faction(playerid, params[])
             PlayerInfo[playerid][pSkin] = 299;
         }
 
-        format(string, sizeof(string), "UPDATE `accounts` SET `facMemId` = '0', `facRank` = '0' WHERE `sqlid` = '%d'",
+        format(string, sizeof(string), "UPDATE accounts SET `facMemId` = '0', `facRank` = '0' WHERE sqlid = '%d'",
             PlayerInfo[targetid][pSQLID]
         );
         mysql_tquery(g_SQL, string);
@@ -1446,7 +1446,7 @@ CMD:faction(playerid, params[])
         );
         mysql_tquery(g_SQL, string);
 
-        format(string, sizeof(string), "DELETE FROM `accounts` WHERE `sqlid` = '%d'",
+        format(string, sizeof(string), "DELETE FROM accounts WHERE sqlid = '%d'",
             PlayerInfo[targetid][pRadio],
             PlayerInfo[targetid][pRadioSlot],
             PlayerInfo[targetid][pSQLID]
@@ -1479,7 +1479,7 @@ CMD:faction(playerid, params[])
         Log_Write("/logfiles/orgs_invite.txt", "(%s) %s(%s) gave %s(%s) Rank %d in faction %s.", GetName(playerid,false), GetPlayerIP(playerid), GetName(targetid,false), GetPlayerIP(targetid), rank, FactionInfo[PlayerInfo[playerid][pMember]][fName]);
         #endif
 
-        format(string, sizeof(string), "UPDATE `accounts` SET `facRank` = '%d' WHERE `sqlid` = '%d'",
+        format(string, sizeof(string), "UPDATE accounts SET `facRank` = '%d' WHERE sqlid = '%d'",
             PlayerInfo[targetid][pRank],
             PlayerInfo[targetid][pSQLID]
         );
@@ -1634,7 +1634,7 @@ CMD:faction(playerid, params[])
         PlayerInfo[targetid][pChar] = skin;
 
         PlayerToBudgetMoney(targetid, 300);
-        format(string, sizeof(string), "UPDATE `accounts` SET `playaSkin` = '%d' WHERE `sqlid` = '%d'", PlayerInfo[targetid][pChar], PlayerInfo[targetid][pSQLID]);
+        format(string, sizeof(string), "UPDATE accounts SET `playaSkin` = '%d' WHERE sqlid = '%d'", PlayerInfo[targetid][pChar], PlayerInfo[targetid][pSQLID]);
         mysql_tquery(g_SQL, string);
     }
     return 1;
@@ -1698,7 +1698,7 @@ CMD:quitfaction(playerid, params[])
     }
 
     new query[280];
-    format(query, sizeof(query), "UPDATE `accounts` SET `spawnchange` = '0', `facMemId` = '0', `facRank` = '0', `facLeadId` = '0' WHERE `sqlid` = '%d'",
+    format(query, sizeof(query), "UPDATE accounts SET `spawnchange` = '0', `facMemId` = '0', `facRank` = '0', `facLeadId` = '0' WHERE sqlid = '%d'",
         PlayerInfo[playerid][pSQLID]
     );
     mysql_tquery(g_SQL, query);

@@ -21,7 +21,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 					ExpInfo[playerid][ePoints] -= LEVEL_UP_EXP;
 					
 					new expQueryUpdate[90];
-					format(expQueryUpdate, sizeof(expQueryUpdate), "UPDATE `experience` SET `points` = '%d' WHERE `sqlid` = '%d'",
+					format(expQueryUpdate, sizeof(expQueryUpdate), "UPDATE `experience` SET `points` = '%d' WHERE sqlid = '%d'",
 						ExpInfo[playerid][ePoints],
 						PlayerInfo[playerid][pSQLID]
 					);
@@ -29,7 +29,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 					
 					PlayerInfo[playerid][pLevel]++;
 					new levelUpUpdate[90];
-					format(levelUpUpdate, 90, "UPDATE `accounts` SET `levels` = '%d' WHERE `sqlid` = '%d'",
+					format(levelUpUpdate, 90, "UPDATE accounts SET `levels` = '%d' WHERE sqlid = '%d'",
 						PlayerInfo[playerid][pLevel],
 						PlayerInfo[playerid][pSQLID]
 					);
@@ -48,7 +48,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 					ExpInfo[playerid][ePoints] -= MAX_FURSLOTS_EXP;
 					
 					new expQueryUpdate[90];
-					format(expQueryUpdate, sizeof(expQueryUpdate), "UPDATE `experience` SET `points` = '%d' WHERE `sqlid` = '%d'",
+					format(expQueryUpdate, sizeof(expQueryUpdate), "UPDATE `experience` SET `points` = '%d' WHERE sqlid = '%d'",
 						ExpInfo[playerid][ePoints],
 						PlayerInfo[playerid][pSQLID]
 					);
@@ -69,7 +69,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 					ExpInfo[playerid][ePoints] -= PREMIUM_BRONZE_EXP;
 					
 					new expQueryUpdate[90];
-					format(expQueryUpdate, sizeof(expQueryUpdate), "UPDATE `experience` SET `points` = '%d' WHERE `sqlid` = '%d'",
+					format(expQueryUpdate, sizeof(expQueryUpdate), "UPDATE `experience` SET `points` = '%d' WHERE sqlid = '%d'",
 						ExpInfo[playerid][ePoints],
 						PlayerInfo[playerid][pSQLID]
 					);
@@ -103,7 +103,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 						UpdatePremiumBizFurSlots(playerid);
 					new
 						vipUpdtQuery[ 128 ];
-					format( vipUpdtQuery, 128, "UPDATE `accounts` SET `vipRank` = '%d', `vipTime` = '%d' WHERE `sqlid` = '%d'",
+					format( vipUpdtQuery, 128, "UPDATE accounts SET `vipRank` = '%d', `vipTime` = '%d' WHERE sqlid = '%d'",
 						PlayerInfo[playerid][pDonateRank],
 						PlayerInfo[playerid][pDonateTime],
 						PlayerInfo[playerid][pSQLID]
@@ -134,7 +134,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 					ExpInfo[playerid][ePoints] -= PREMIUM_SILVER_EXP;
 				
 					new expQueryUpdate[90];
-					format(expQueryUpdate, sizeof(expQueryUpdate), "UPDATE `experience` SET `points` = '%d' WHERE `sqlid` = '%d'",
+					format(expQueryUpdate, sizeof(expQueryUpdate), "UPDATE `experience` SET `points` = '%d' WHERE sqlid = '%d'",
 						ExpInfo[playerid][ePoints],
 						PlayerInfo[playerid][pSQLID]
 					);
@@ -167,7 +167,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 						UpdatePremiumBizFurSlots(playerid);
 					new
 						vipUpdtQuery[ 128 ];
-					format( vipUpdtQuery, 128, "UPDATE `accounts` SET `vipRank` = '%d', `vipTime` = '%d' WHERE `sqlid` = '%d'",
+					format( vipUpdtQuery, 128, "UPDATE accounts SET `vipRank` = '%d', `vipTime` = '%d' WHERE sqlid = '%d'",
 						PlayerInfo[playerid][pDonateRank],
 						PlayerInfo[playerid][pDonateTime],
 						PlayerInfo[playerid][pSQLID]
@@ -197,7 +197,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 					ExpInfo[playerid][ePoints] -= PREMIUM_GOLD_EXP;
 				
 					new expQueryUpdate[90];
-					format(expQueryUpdate, sizeof(expQueryUpdate), "UPDATE `experience` SET `points` = '%d' WHERE `sqlid` = '%d'",
+					format(expQueryUpdate, sizeof(expQueryUpdate), "UPDATE `experience` SET `points` = '%d' WHERE sqlid = '%d'",
 						ExpInfo[playerid][ePoints],
 						PlayerInfo[playerid][pSQLID]
 					);
@@ -235,7 +235,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 						UpdatePremiumBizFurSlots(playerid);
 					new
 						vipUpdtQuery[ 128 ];
-					format( vipUpdtQuery, 128, "UPDATE `accounts` SET `vipRank` = '%d', `vipTime` = '%d' WHERE `sqlid` = '%d'",
+					format( vipUpdtQuery, 128, "UPDATE accounts SET `vipRank` = '%d', `vipTime` = '%d' WHERE sqlid = '%d'",
 						PlayerInfo[playerid][pDonateRank],
 						PlayerInfo[playerid][pDonateTime],
 						PlayerInfo[playerid][pSQLID]
@@ -356,7 +356,7 @@ stock ListBestOverallEXP(playerid)
 stock LoadPlayerExperience(playerid)
 {
 	new expstring[100];
-	format(expstring, sizeof(expstring), "SELECT * FROM `experience` WHERE `sqlid` = '%d'", PlayerInfo[playerid][pSQLID]);
+	format(expstring, sizeof(expstring), "SELECT * FROM `experience` WHERE sqlid = '%d'", PlayerInfo[playerid][pSQLID]);
 	mysql_tquery(g_SQL, expstring, "OnPlayerLoadExperience", "i", playerid);
 	return 1;
 }
@@ -392,7 +392,7 @@ stock SavePlayerExperience(playerid)
 		return 1;
 	
 	new mysqlUpdate[200];
-	format(mysqlUpdate, 200, "UPDATE `experience` SET `givenexp` = '%d', `allpoints` = '%d', `points` = '%d', `lastpayday` = '%d', `daypaydays` = '%d', `monthpaydays` = '%d' WHERE `sqlid` = '%d'",
+	format(mysqlUpdate, 200, "UPDATE `experience` SET `givenexp` = '%d', `allpoints` = '%d', `points` = '%d', `lastpayday` = '%d', `daypaydays` = '%d', `monthpaydays` = '%d' WHERE sqlid = '%d'",
 		ExpInfo[playerid][eGivenEXP],
 		ExpInfo[playerid][eAllPoints],
 		ExpInfo[playerid][ePoints],
@@ -452,7 +452,7 @@ stock CanPlayerTakeExp(playerid, giveplayerid)
 stock CanPlayerTakeExpEx(playerid, playername[]) 
 {
 	new sqlid, level, idQuery[100];
-	mysql_format(g_SQL, idQuery, sizeof(idQuery), "SELECT * FROM `accounts` WHERE `name` = '%e' LIMIT 0,1", playername);
+	mysql_format(g_SQL, idQuery, sizeof(idQuery), "SELECT * FROM accounts WHERE `name` = '%e' LIMIT 0,1", playername);
 	
 	new 
 		Cache:result = mysql_query(g_SQL, idQuery),
@@ -474,7 +474,7 @@ stock CanPlayerTakeExpEx(playerid, playername[])
 		return 0;
 	}
 	new expstring[100];
-	format(expstring, sizeof(expstring), "SELECT * FROM `experience` WHERE `sqlid` = '%d'", sqlid);
+	format(expstring, sizeof(expstring), "SELECT * FROM `experience` WHERE sqlid = '%d'", sqlid);
 	new Cache:result2 = mysql_query(g_SQL, expstring);
 	
 	new lastpayday, daypaydays, currentday, day;
@@ -502,7 +502,7 @@ stock GivePlayerExperience(playerid, playername[])
 {
 	new sqlid, idQuery[100];
 	
-	mysql_format(g_SQL, idQuery, sizeof(idQuery), "SELECT `sqlid` FROM `accounts` WHERE `name` = '%e' LIMIT 0,1", playername);
+	mysql_format(g_SQL, idQuery, sizeof(idQuery), "SELECT `sqlid` FROM accounts WHERE `name` = '%e' LIMIT 0,1", playername);
 	new Cache:result = mysql_query(g_SQL, idQuery),
 		rows;
 		
@@ -516,7 +516,7 @@ stock GivePlayerExperience(playerid, playername[])
 	cache_delete(result);
 	
 	new expstring[100];
-	format(expstring, sizeof(expstring), "SELECT * FROM `experience` WHERE `sqlid` = '%d'", sqlid);
+	format(expstring, sizeof(expstring), "SELECT * FROM `experience` WHERE sqlid = '%d'", sqlid);
 	new Cache:result2 = mysql_query(g_SQL, expstring),
 		points,
 		allpoints;
@@ -528,7 +528,7 @@ stock GivePlayerExperience(playerid, playername[])
 	cache_delete(result2);
 		
 	new expQuery[150];
-	format(expQuery, sizeof(expQuery), "UPDATE `experience` SET `points` = '%d', `allpoints` = '%d' WHERE `sqlid` = '%d'", points, allpoints, sqlid);
+	format(expQuery, sizeof(expQuery), "UPDATE `experience` SET `points` = '%d', `allpoints` = '%d' WHERE sqlid = '%d'", points, allpoints, sqlid);
 	mysql_tquery(g_SQL, expQuery);
 	
 	SendFormatMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uspjesno ste dali %s 1 EXP.", playername);
@@ -545,7 +545,7 @@ stock GivePlayerExperience(playerid, playername[])
 stock RewardPlayerForActivity(sqlid, amount)
 {	
 	new expstring[100];
-	format(expstring, sizeof(expstring), "SELECT * FROM `experience` WHERE `sqlid` = '%d'", sqlid);
+	format(expstring, sizeof(expstring), "SELECT * FROM `experience` WHERE sqlid = '%d'", sqlid);
 	new Cache:result2 = mysql_query(g_SQL, expstring),
 		points,
 		allpoints;
@@ -557,7 +557,7 @@ stock RewardPlayerForActivity(sqlid, amount)
 	cache_delete(result2);
 		
 	new expQuery[150];
-	format(expQuery, sizeof(expQuery), "UPDATE `experience` SET `points` = '%d', `allpoints` = '%d' WHERE `sqlid` = '%d'", points, allpoints, sqlid);
+	format(expQuery, sizeof(expQuery), "UPDATE `experience` SET `points` = '%d', `allpoints` = '%d' WHERE sqlid = '%d'", points, allpoints, sqlid);
 	mysql_tquery(g_SQL, expQuery);
 	return 1;
 }

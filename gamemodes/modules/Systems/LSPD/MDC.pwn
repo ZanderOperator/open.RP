@@ -1240,7 +1240,7 @@ hook OnPlayerClickPlayerTD(playerid, PlayerText:playertextid)
                 query[128];
 
             // TODO: make complement TargetSqlid[playerid] with TargetName, to eliminate the need for a second query
-            mysql_format(g_SQL, query, sizeof(query), "SELECT sqlid FROM `accounts` WHERE `name` = '%e' LIMIT 0,1", TargetName[playerid]);
+            mysql_format(g_SQL, query, sizeof(query), "SELECT sqlid FROM accounts WHERE `name` = '%e' LIMIT 0,1", TargetName[playerid]);
             result = mysql_query(g_SQL, query);
             //counts = cache_num_rows();
             cache_get_value_name_int(0, "sqlid", player_sqlid);

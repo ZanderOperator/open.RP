@@ -2094,15 +2094,12 @@ RegisterPlayerDeath(playerid, killerid) // funkcija
 	);
 	DMERSBroadCast(COLOR_RED, tmpString, 1);
 
-	new
-		tmpQuery[ 128 ];
-	format(tmpQuery, 128, "INSERT INTO `server_deaths` (`killer_id`, `death_id`, `weaponid`, `date`) VALUES ('%d','%d','%d','%d')",
+	mysql_fquery(g_SQL, "INSERT INTO server_deaths (killer_id, death_id, weaponid, date) VALUES ('%d','%d','%d','%d')",
 		PlayerInfo[ KilledBy[playerid] ][ pSQLID ],
 		PlayerInfo[ playerid ][ pSQLID ],
 		KilledReason[playerid],
 		gettimestamp()
 	);
-	mysql_tquery(g_SQL, tmpQuery);
 	
 	#if defined MODULE_LOGS
 	Log_Write("logfiles/kills.txt", "(%s) %s{%d}(%s) has killed %s{%d}(%s) with %s(%d).",
@@ -2137,9 +2134,7 @@ RegisterPlayerDeath(playerid, killerid) // funkcija
 		//DropPlayerWeapons(playerid, X, Y);
 		//DropPlayerDrugs(playerid, X, Y, true);
 
-		new
-			deathQuery[256];
-		format(deathQuery, 256, "INSERT INTO `player_deaths`(`player_id`, `pos_x`, `pos_y`, `pos_z`, `interior`, `viwo`, `time`) VALUES ('%d','%f','%f','%f','%d','%d','%d')",
+		mysql_fquery(g_SQL, "INSERT INTO player_deaths(player_id, pos_x, pos_y, pos_z, interior, viwo, time) VALUES ('%d','%f','%f','%f','%d','%d','%d')",
 			PlayerInfo[playerid][pSQLID],
 			PlayerInfo[playerid][pDeath][0],
 			PlayerInfo[playerid][pDeath][1],
@@ -2148,7 +2143,6 @@ RegisterPlayerDeath(playerid, killerid) // funkcija
 			PlayerInfo[playerid][pDeathVW],
 			gettimestamp()
 		);
-		mysql_tquery(g_SQL, deathQuery);
 	}
 	AC_ResetPlayerWeapons(playerid);
 
@@ -3231,9 +3225,7 @@ hook OnPlayerDisconnect(playerid, reason)
 
 			GetPlayerPos(playerid, PlayerInfo[playerid][pCrashPos][0], PlayerInfo[playerid][pCrashPos][1], PlayerInfo[playerid][pCrashPos][2]);
 
-			new
-				crashQuery[256];
-			format(crashQuery, 256, "INSERT INTO `player_crashes`(`player_id`,`pos_x`,`pos_y`,`pos_z`,`interior`,`viwo`,`armor`,`health`,`skin`,`time`) VALUES ('%d','%.2f','%.2f','%.2f','%d','%d','%f','%f','%d','%d')",
+			mysql_fquery(g_SQL, "INSERT INTO player_crashes(player_id,pos_x,pos_y,pos_z,interior,viwo,armor,health,skin,time) VALUES ('%d','%.2f','%.2f','%.2f','%d','%d','%f','%f','%d','%d')",
 				PlayerInfo[playerid][pSQLID],
 				PlayerInfo[playerid][pCrashPos][0],
 				PlayerInfo[playerid][pCrashPos][1],
@@ -3245,8 +3237,6 @@ hook OnPlayerDisconnect(playerid, reason)
 				PlayerInfo[playerid][pSkin],
 				gettimestamp()
 			);
-			mysql_tquery(g_SQL, crashQuery);
-
 			if(reason == 0)
 			{
 				new	tmpString[ 73 ];
@@ -3256,10 +3246,7 @@ hook OnPlayerDisconnect(playerid, reason)
 		}
 	}
 	// Offline query
-	new
-	    logUpdate[64];
-	format(logUpdate, sizeof(logUpdate), "UPDATE `accounts` SET `online` = '0' WHERE `sqlid` = '%d'", PlayerInfo[ playerid ][ pSQLID ]);
-	mysql_tquery(g_SQL, logUpdate);
+	mysql_fquery(g_SQL, "UPDATE accounts SET online = '0' WHERE sqlid = '%d'", PlayerInfo[ playerid ][ pSQLID ]);
 
 	// Tuning
 	if( Bit1_Get( gr_PlayerInTuningMode	, playerid ) )
@@ -3275,12 +3262,9 @@ hook OnPlayerDisconnect(playerid, reason)
 		KickMessage(playerid);
 	}
 
-	new query[222];
-	format( query, sizeof(query), "UPDATE `accounts` SET `AdminMessage` = '', `AdminMessageBy` = '', `AdmMessageConfirm` = '0' WHERE `sqlid` = '%d'", // koji je ovo kurac
+	mysql_fquery(g_SQL, "UPDATE accounts SET AdminMessage = '', AdminMessageBy = '', AdmMessageConfirm = '0' WHERE sqlid = '%d'", // koji je ovo kurac
     	PlayerInfo[playerid][pSQLID]
 	);
-	mysql_tquery(g_SQL, query);
-
 	defer SafeResetPlayerVariables(playerid);
 	return 1;
 }
@@ -3333,12 +3317,13 @@ public OnPlayerRequestClass(playerid, classid)
 		// Player Camera
 		TogglePlayerControllable(playerid, false);
 
-		new
-			checkquery[128];
-
 		GetPlayerIp(playerid, PlayerInfo[playerid][cIP], 24);
-		mysql_format(g_SQL, checkquery,sizeof(checkquery),"SELECT * FROM `accounts` WHERE `name` = '%e' LIMIT 0,1", tmpname);
-		mysql_tquery(g_SQL, checkquery, "CheckPlayerInBase", "i", playerid);
+		mysql_tquery(g_SQL, 
+			va_fquery(g_SQL, "SELECT sql FROM accounts WHERE `name` = '%e' LIMIT 0,1", tmpname), 
+			"CheckPlayerInBase", 
+			"i", 
+			playerid
+		);
 	}
 	return 1;
 }

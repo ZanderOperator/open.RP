@@ -33,7 +33,7 @@ stock IsAtBank(playerid) {
 LoadPlayerCredit(playerid)
 {
 	new tmpQuery[200], rows;
-	mysql_format(g_SQL, tmpQuery, sizeof(tmpQuery), "SELECT * FROM `player_credits` WHERE `sqlid` = '%d' LIMIT 0,1", PlayerInfo[playerid][pSQLID]);
+	mysql_format(g_SQL, tmpQuery, sizeof(tmpQuery), "SELECT * FROM `player_credits` WHERE sqlid = '%d' LIMIT 0,1", PlayerInfo[playerid][pSQLID]);
 	inline OnPlayerCreditLoad()
 	{
 		rows = cache_num_rows();
@@ -61,7 +61,7 @@ LoadPlayerCredit(playerid)
 SavePlayerCredit(playerid)
 {
 	new mysqlQuery[200];
-	format(mysqlQuery, sizeof(mysqlQuery), "UPDATE `player_credits` SET `rate` = '%d', `type` = '%d', `amount` = '%d', `unpaid` = '%d', `used` = '%d', `timestamp` = '%d' WHERE `sqlid` = '%d' LIMIT 1",
+	format(mysqlQuery, sizeof(mysqlQuery), "UPDATE `player_credits` SET `rate` = '%d', `type` = '%d', `amount` = '%d', `unpaid` = '%d', `used` = '%d', `timestamp` = '%d' WHERE sqlid = '%d' LIMIT 1",
 		CreditInfo[playerid][cRate],
 		CreditInfo[playerid][cCreditType],
 		CreditInfo[playerid][cAmount],
@@ -214,7 +214,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 			// MySQL update
 			
 			new savingsQuery[256];
-			format(savingsQuery, 256, "UPDATE `accounts` SET `bankMoney` = '%d', `savings_cool` = '%d', `savings_time` = '%d', `savings_type` = '%d', `savings_money` = '%d' WHERE `sqlid` = '%d'",
+			format(savingsQuery, 256, "UPDATE accounts SET `bankMoney` = '%d', `savings_cool` = '%d', `savings_time` = '%d', `savings_type` = '%d', `savings_money` = '%d' WHERE sqlid = '%d'",
 				PlayerInfo[playerid][pBank],
 				PlayerInfo[playerid][pSavingsCool],
 				PlayerInfo[playerid][pSavingsTime],
@@ -339,12 +339,12 @@ BankTransferMoney(playerid, giveplayerid, MoneyAmmount)
 	PlayerInfo[ giveplayerid ][ pBank ] += MoneyAmmount;
 	va_SendClientMessage(playerid, COLOR_LIGHTBLUE, "Prebacili ste $%d na racun %s!", MoneyAmmount, GetName(giveplayerid,true));
 	va_SendClientMessage(giveplayerid, COLOR_LIGHTBLUE, "%s vam je prebacio $%d na bankovni racun.", GetName(playerid,true), MoneyAmmount);
-	format(bankTransferQuery, sizeof(bankTransferQuery), "UPDATE `accounts` SET `bankmoney` = '%d' WHERE sqlid = '%d'",
+	format(bankTransferQuery, sizeof(bankTransferQuery), "UPDATE accounts SET `bankmoney` = '%d' WHERE sqlid = '%d'",
 			PlayerInfo[ playerid ][ pBank ],
 			PlayerInfo[ playerid ][ pSQLID]
 		);
 	mysql_tquery(g_SQL, bankTransferQuery);
-	format(bankTransferQuery, sizeof(bankTransferQuery), "UPDATE `accounts` SET `bankmoney` = '%d' WHERE sqlid = '%d'",
+	format(bankTransferQuery, sizeof(bankTransferQuery), "UPDATE accounts SET `bankmoney` = '%d' WHERE sqlid = '%d'",
 			PlayerInfo[ giveplayerid ][ pBank ],
 			PlayerInfo[ giveplayerid ][ pSQLID]
 		);
