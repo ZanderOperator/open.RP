@@ -21,6 +21,8 @@
     ########  ######## ##       #### ##    ## ######## 
 */
 
+#define MAX_NEAR_BIZZ_RANGE                 (25.0)
+
 #define CP_TYPE_BIZZ_VIP_ENTRANCE           (3)
 
 // Ints
@@ -147,57 +149,6 @@ static
     Bit16:  gr_DJBizKey             <MAX_PLAYERS>,
     Bit16:  gr_PlayerSkinId         <MAX_PLAYERS>;
 
-static const Float:BarPositions[][4] =
-{
-    {25.0,    497.7613,    -79.9566,  998.7651},  // Bar (Large)
-    {25.0,   -466.9822,   2189.4441,  1501.0850}, // Bar (Small-Textured)
-    {25.0,   1206.2334,    -29.3733,  1000.9531}, // Small Strip Club
-    {45.0,    502.3909,    -19.8775,  1000.6797}, // Alhambra
-    {45.0,   1215.4012,    -15.2610,  1000.9219}, // Pig Pen
-    {25.0,   -223.3076,   1405.6151,  27.7734},   // Bar (Small)
-    {25.0,    681.4567,   -455.4606,  -25.6099},  // Zbugani Bar
-    {25.0,  -2659.0117,   1410.1823,  906.277},   // JIZZY
-    {25.0,    505.2372,   -196.5106,  998.8359},  // LITTLE NAPLES
-    {25.0,     98.5275,    227.0853,  1197.0959}, // Turkish Coffee
-    {25.0,   2496.2830,    999.0912,  9201.0859}, // Nocni klub
-    {25.0,   1162.6226,  -1535.3922,  21.7394},   // Mall Bar
-    {25.0,   1197.1238,   -904.0923,  51.9605},   // BURG GORE
-    {25.0,   1002.4330,  -1559.1761,  2066.5969}, // The Tune
-    {25.0,    985.0701,  -1552.1790,  21.5078},   // The Tune
-    {25.0,    318.5311,   1830.4390,  1496.1759},
-    {25.0,    318.5357,   1834.8458,  1496.1759},
-    {25.0,    968.7755,    -46.5383,  1001.1172},
-    {25.0,    352.9546,   1852.4523,  1232.3059}, // Regller Disko
-    {25.0,    712.2067,    186.2624,  1000.6660}, // Bar (North Hollywood)
-    {25.0,     90.5280,   -208.8320,  1603.2111}  // TGB
-};
-
-static const Float:FuelStations[][3] =
-{
-    {1004.0070,   -939.3102,   42.1797},
-    {1944.3260,   -1772.9254,  13.3906},
-    {-90.5515,    -1169.4578,  2.4079 },
-    {-1609.7958,  -2718.2048,  48.5391},
-    {-2029.4968,  156.4366,    28.9498},
-    {-2408.7590,  976.0934,    45.4175},
-    {-2243.9629,  -2560.6477,  31.8841},
-    {-1676.6323,  414.0262,    6.9484 },
-    {2202.2349,   2474.3494,   10.5258},
-    {614.9333,    1689.7418,   6.6968 },
-    {-1328.8250,  2677.2173,   49.7665},
-    {70.3882,     1218.6783,   18.5165},
-    {2113.7390,   920.1079,    10.5255},
-    {-1327.7218,  2678.8723,   50.0625},
-    {1488.67,     -2400.87,    14.12  },
-    {1765.69,     -2287.06,    27.29  },
-    {655.6758,    -565.4126,   15.33  },
-    {1545.19,     -1352.68,    329.97 },
-    {2287.2417,   -2055.3201,  12.5479},
-    {-203.2578,   2595.1746,   62.7031},
-    {-244.0873,   -2151.0396,  29.7099},
-    {1381.6085,   457.7586,    19.9545}
-};
-
 static const BizzTypesNames[MAX_BIZZ_TYPES][20] =
 {
     "Other",            // BIZZ_TYPE_OTHER
@@ -231,18 +182,6 @@ static const BizzTypesNames[MAX_BIZZ_TYPES][20] =
     ##        #######  ##    ##  ######   ######  
 */
 
-stock bool:IsAtBar(playerid)
-{
-    for (new i = 0; i < sizeof(BarPositions); i++)
-    {
-        if (IsPlayerInRangeOfPoint(playerid, BarPositions[0], BarPositions[1], BarPositions[2], BarPositions[3]))
-        {
-            return true;
-        }
-    }
-    return false;
-}
-
 // TODO: bool
 stock GetNearestBizz(playerid, BIZZ_TYPE = -1)
 {
@@ -262,7 +201,7 @@ stock GetNearestBizz(playerid, BIZZ_TYPE = -1)
 			if(BizzInfo[i][bType] != BIZZ_TYPE)
 				continue;
 		}
-		if(IsPlayerInRangeOfPoint(playerid, MAX_NEAR_VEHICLE_RANGE,  BizzInfo[i][bEntranceX], BizzInfo[i][bEntranceY], BizzInfo[i][bEntranceZ]))
+		if(IsPlayerInRangeOfPoint(playerid, MAX_NEAR_BIZZ_RANGE, BizzInfo[i][bEntranceX], BizzInfo[i][bEntranceY], BizzInfo[i][bEntranceZ]))
 		{
 			close_bizzes[slotid][cDistance] = GetPlayerDistanceFromPoint(playerid, bX, bY, bZ);
 			close_bizzes[slotid][cID] = i;
@@ -851,34 +790,6 @@ static stock GetStoreProducts(bizz)
         }
     }
     return buffer;
-}
-
-stock IsPlayerNearGasStation(playerid)
-{
-    for (new i = 0; i < sizeof(FuelStations); i++)
-    {
-        // Range was 5.0 previously
-        if (IsPlayerInRangeOfPoint(playerid, 6.5, FuelStations[i][0], FuelStations[i][1], FuelStations[i][2]))
-        {
-            return 1;
-        }
-    }
-    return 0;
-}
-
-// TODO: rename to Bizz and use an 'absolute' distance check comparing the distances, instead of the 'cylindrical'
-// IsPlayerInRangeOfPoint check
-stock GetPlayerNearestBiznis(playerid)
-{
-    new value = INVALID_BIZNIS_ID;
-    foreach(new b: Bizzes)
-    {
-        if (IsPlayerInRangeOfPoint(playerid, 5.0, BizzInfo[b][bEntranceX], BizzInfo[b][bEntranceY], BizzInfo[b][bEntranceZ]))
-        {
-            value = b;
-        }
-    }
-    return value;
 }
 
 stock ResetBizzInfo(bizz, bool:server_startup = false)
@@ -3867,24 +3778,20 @@ CMD:menu(playerid, params[])
 CMD:buybiznis(playerid, params[])
 {
     if (PlayerInfo[playerid][pBizzKey] != INVALID_BIZNIS_ID) return SendClientMessage(playerid, COLOR_RED, "Vec posjedujete biznis!");
+    new bizz = GetNearestBizz(playerid);
+    if(bizz == INVALID_BIZNIS_ID)
+        return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You are not near any business!");
 
-    foreach(new bizz : Bizzes)
-    {
-        if (IsPlayerInRangeOfPoint(playerid, 5.0, BizzInfo[bizz][bEntranceX], BizzInfo[bizz][bEntranceY], BizzInfo[bizz][bEntranceZ]) && !BizzInfo[bizz][bOwnerID])
-        {
-            if (PlayerInfo[playerid][pLevel] < BizzInfo[bizz][bLevelNeeded])
-                return va_SendClientMessage(playerid, COLOR_LIGHTRED, "Moras biti level %d da bi kupio biznis!", BizzInfo[bizz][bLevelNeeded]);
-            if (BizzInfo[bizz][bType] == BIZZ_TYPE_BYCITY)
-                return SendClientMessage(playerid, COLOR_RED, "Ne mozete kupiti biznis jer je u posjedu grada!");
-            if (CalculatePlayerBuyMoney(playerid, BUY_TYPE_BIZZ) < BizzInfo[bizz][bBuyPrice])
-                return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nemas dovoljno novca za kupovinu ovog biznisa!");
+    if (PlayerInfo[playerid][pLevel] < BizzInfo[bizz][bLevelNeeded])
+        return va_SendClientMessage(playerid, COLOR_LIGHTRED, "Moras biti level %d da bi kupio biznis!", BizzInfo[bizz][bLevelNeeded]);
+    if (BizzInfo[bizz][bType] == BIZZ_TYPE_BYCITY)
+        return SendClientMessage(playerid, COLOR_RED, "Ne mozete kupiti biznis jer je u posjedu grada!");
+    if (CalculatePlayerBuyMoney(playerid, BUY_TYPE_BIZZ) < BizzInfo[bizz][bBuyPrice])
+        return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nemas dovoljno novca za kupovinu ovog biznisa!");
 
-            buyBizID[playerid] = bizz;
-            paymentBuyPrice[playerid] = BizzInfo[bizz][bBuyPrice];
-            GetPlayerPaymentOption(playerid, BUY_TYPE_BIZZ);
-            break;
-        }
-    }
+    buyBizID[playerid] = bizz;
+    paymentBuyPrice[playerid] = BizzInfo[bizz][bBuyPrice];
+    GetPlayerPaymentOption(playerid, BUY_TYPE_BIZZ);
     return 1;
 }
 
@@ -4111,16 +4018,8 @@ CMD:bizinfo(playerid, params[])
 {
     if (PlayerInfo[playerid][pAdmin] < 4) return SendClientMessage(playerid, COLOR_RED, "Nisi administrator!");
 
-    new bizz = INVALID_BIZNIS_ID;
-    foreach(new i : Bizzes)
-    {
-        if (IsPlayerInRangeOfPoint(playerid, 8.0, BizzInfo[i][bEntranceX], BizzInfo[i][bEntranceY], BizzInfo[i][bEntranceZ]))
-        {
-            bizz = i;
-            break;
-        }
-    }
-    if (bizz == INVALID_BIZNIS_ID) return SendClientMessage(playerid, COLOR_RED, "Ne nalazis se ispred ulaza biznisa.");
+    new bizz = GetNearestBizz(playerid);
+    if (bizz == INVALID_BIZNIS_ID) return SendClientMessage(playerid, COLOR_RED, "You are not near any business!");
 
     va_SendClientMessage(playerid, COLOR_YELLOW, "[INFO] Bizz ID: %d | Bizz MySQL ID: %d", bizz, BizzInfo[bizz][bSQLID]);
     va_SendClientMessage(playerid, COLOR_RED, "[INFO] Stanje u blagajni biznisa: %d$", BizzInfo[bizz][bTill]);
@@ -4308,7 +4207,7 @@ CMD:deletebiz(playerid, params[])
     if (PlayerInfo[playerid][pAdmin] < 1338)
         return SendClientMessage(playerid, COLOR_RED, "Niste Administrator Level 1338");
 
-    new bizz = GetPlayerNearestBiznis(playerid);
+    new bizz = GetNearestBizz(playerid);
     if (bizz == INVALID_BIZNIS_ID)
         return SendClientMessage(playerid, COLOR_RED, "Niste u blizini nijednog biznisa!");
 
