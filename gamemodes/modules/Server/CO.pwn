@@ -546,53 +546,63 @@ stock BuyVehicle(playerid, bool:credit_activated = false)
 	VehicleInfo[cCar][vViwo] 			= 0;
 
 	//SQL
-	new insertCoQuery[1500];
-
 	mysql_tquery(g_SQL, "BEGIN", "");
-	mysql_format(g_SQL, insertCoQuery, 1500, "INSERT INTO `cocars`(`modelid`, `color1`, `color2`, `numberplate`, `parkX`, `parkY`, `parkZ`, `angle`, `interior`, `viwo`, `ownerid`, `enginetype`, `enginelife`, `enginescrewed`, `heat`, `overheated`, `fuel`, `batterylife`, `insurance`, `panels`, `doors`, `tires`, `lights`, `travel`, `lock`, `alarm`, `immob`, `audio`, `canstart`, `parts`, `destroys`, `health`, `batterytype`, `hydraulics`, `impounded`, `sirenon`, `sparekey1`, `sparekey2`, `bodyarmor`, `tirearmor`, `nos`) VALUES ('%d','%d','%d','%e','%.2f','%.2f','%.2f','%.2f','%d','%d','%d','%d','%d','%d','%f','%d','%d','%d','%d','%d','%d','%d','%d','%f','%d','%d','%d','%d','%d','%d','%d','%f','%d','%d','%d','%d','%d','%d','%d','%d', '%d')",
-		modelid,
-		PreviewColor1[playerid],
-		PreviewColor2[playerid],
-		"",
-		VehicleBuyPos[PlayerDealer[playerid]][0],
-		VehicleBuyPos[PlayerDealer[playerid]][1],
-		VehicleBuyPos[PlayerDealer[playerid]][2],
-		VehicleBuyPos[PlayerDealer[playerid]][3],
-		0,
-		0,
-		PlayerInfo[playerid][pSQLID],
-		engineType,
-		ENGINE_LIFE_STOCK,
-		0,
-		0.0,
-		0,
-		100,
-		BATTERY_LIFE_STOCK,
-		0,
-		0,
-		0,
-		0,
-		0,
-		0.0,
-		1,
-		1,
-		1,
-		1,
-		1,
-		0,
-		0,
-		1000.0,
-		BATTERY_TYPE_STOCK,
-		0,
-		0,
-		0,
-		-1,
-		-1,
-		0.0,
-		0.0,
-		0
+	mysql_tquery(g_SQL, 
+		va_fquery(g_SQL, 
+			"INSERT INTO cocars(modelid, color1, color2, numberplate, parkX, parkY, parkZ, angle,\n\
+				interior, viwo, ownerid, enginetype, enginelife, enginescrewed, heat, overheated, fuel,\n\
+				batterylife, insurance, panels, doors, tires, lights, travel, lock, alarm, immob,\n\
+				audio, canstart, parts, destroys, health, batterytype, hydraulics,\n\
+				impounded, sirenon, sparekey1, sparekey2, bodyarmor, tirearmor, nos) VALUES \n\
+				('%d','%d','%d','%e','%.2f','%.2f','%.2f','%.2f','%d','%d','%d','%d','%d','%d','%f',\n\
+				'%d','%d','%d','%d','%d','%d','%d','%d','%f','%d','%d','%d','%d','%d','%d','%d','%f',\n\
+				'%d','%d','%d','%d','%d','%d','%d','%d','%d')",
+			modelid,
+			PreviewColor1[playerid],
+			PreviewColor2[playerid],
+			"",
+			VehicleBuyPos[PlayerDealer[playerid]][0],
+			VehicleBuyPos[PlayerDealer[playerid]][1],
+			VehicleBuyPos[PlayerDealer[playerid]][2],
+			VehicleBuyPos[PlayerDealer[playerid]][3],
+			0,
+			0,
+			PlayerInfo[playerid][pSQLID],
+			engineType,
+			ENGINE_LIFE_STOCK,
+			0,
+			0.0,
+			0,
+			100,
+			BATTERY_LIFE_STOCK,
+			0,
+			0,
+			0,
+			0,
+			0,
+			0.0,
+			1,
+			1,
+			1,
+			1,
+			1,
+			0,
+			0,
+			1000.0,
+			BATTERY_TYPE_STOCK,
+			0,
+			0,
+			0,
+			-1,
+			-1,
+			0.0,
+			0.0,
+			0), 
+		"OnVehicleBuy", 
+		"ii", 
+		playerid, 
+		cCar
 	);
-	mysql_tquery(g_SQL, insertCoQuery, "OnVehicleBuy", "ii", playerid, cCar);
 	mysql_tquery(g_SQL, "COMMIT", "");
 
 	SetVehicleNumberPlate(cCar, "");
@@ -632,19 +642,21 @@ stock BuyVehicle(playerid, bool:credit_activated = false)
 	{
 		PlayerInfo[playerid][pDonatorVehicle] = modelid;
 		
-		new donatorVehUpdate[128];
-		format(donatorVehUpdate, 128, "UPDATE accounts SET `donateveh` = '%d' WHERE sqlid = '%d'", PlayerInfo[playerid][pDonatorVehicle], PlayerInfo[playerid][pSQLID]);
-		mysql_tquery(g_SQL, donatorVehUpdate);
+		mysql_fquery(g_SQL, "UPDATE accounts SET donateveh = '%d' WHERE sqlid = '%d'", 
+			PlayerInfo[playerid][pDonatorVehicle],
+			PlayerInfo[playerid][pSQLID]
+		);	
 	}
 
-
-    if(LandVehicles[PreviewType[playerid]][viPremium]){
+    if(LandVehicles[PreviewType[playerid]][viPremium])
+	{
         PlayerInfo[playerid][pDonatorVehPerms] -= 1;
         SendClientMessage(playerid, COLOR_RED, "[ ! ] Kupili ste VIP vozilo, potrosili ste jednu donatorsku dozvolu.");
 
-        new donatorVehPerms[128];
-		format(donatorVehPerms, 128, "UPDATE accounts SET `dvehperms` = '%d' WHERE sqlid = '%d'", PlayerInfo[playerid][pDonatorVehPerms], PlayerInfo[playerid][pSQLID]);
-		mysql_tquery(g_SQL, donatorVehPerms);
+       	mysql_fquery(g_SQL, "UPDATE accounts SET dvehperms = '%d' WHERE sqlid = '%d'", 
+			PlayerInfo[playerid][pDonatorVehPerms], 
+			PlayerInfo[playerid][pSQLID]
+		);
 	}
 	
 	#if defined MODULE_LOGS
@@ -733,25 +745,19 @@ stock CheckVehicleList(playerid)
 
 DeleteVehicleFromBase(vsqlid)
 {
-	new query[128];
-	
-	format(query, 128, "DELETE FROM `cocars_weapons` WHERE `vehicle_id` = '%d'", vsqlid);
-	mysql_tquery(g_SQL, query);
-	
-	format(query, 128, "DELETE FROM `cocars_tickets` WHERE `vehicle_id` = '%d'", vsqlid);
-	mysql_tquery(g_SQL, query);
-	
-	format(query, 128, "DELETE FROM `cocars` WHERE `id` = '%d'", vsqlid);
-	mysql_tquery(g_SQL, query);
-	
+	mysql_fquery(g_SQL, "DELETE FROM cocars_drugs WHERE vehicle_id = '%d'", vsqlid);
+	mysql_fquery(g_SQL, "DELETE FROM cocars_weapons WHERE vehicle_id = '%d'", vsqlid);
+	mysql_fquery(g_SQL, "DELETE FROM cocars_wobjects WHERE vehicle_id = '%d'", vsqlid);
+	mysql_fquery(g_SQL, "DELETE FROM cocars_tickets WHERE vehicle_id = '%d'", vsqlid);
+	mysql_fquery(g_SQL, "DELETE FROM cocars WHERE id = '%d'", vsqlid);
 	return 1;
 }
 
 stock DeleteWeaponObject(vehicleid, slotid)
 {
-	new string[100];
-	format(string, sizeof(string), "DELETE FROM `cocars_wobjects` WHERE `weaponsql` = '%d'", VehicleInfo[vehicleid][vWeaponSQLID][slotid]);
-	mysql_tquery(g_SQL, string);
+	mysql_fquery(g_SQL, "DELETE FROM cocars_wobjects WHERE weaponsql = '%d'", 
+		VehicleInfo[vehicleid][vWeaponSQLID][slotid]
+	);
 	return 1;
 }
 
@@ -800,7 +806,6 @@ stock StoreWeaponInTrunk(playerid, vehicleid, slot)
 		
 	GetWeaponName(weaponid, gunname, sizeof(gunname));
 	
-	new weaponInsertQuery[160];
 	if(AC_GetPlayerAmmo(playerid) <= 0) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate oruzje u rukama!");
 	if(AC_GetPlayerWeapon(playerid) == 0) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate oruzje u rukama!");
 	VehicleInfo[vehicleid][vWeaponId][slot] 	= weaponid;
@@ -808,12 +813,17 @@ stock StoreWeaponInTrunk(playerid, vehicleid, slot)
 	AC_ResetPlayerWeapon(playerid, weaponid);
 	
 	// Query
-	format(weaponInsertQuery, sizeof(weaponInsertQuery), "INSERT INTO `cocars_weapons`(`vehicle_id`, `weapon_id`, `ammo`) VALUES ('%d','%d','%d')",
-		VehicleInfo[vehicleid][vSQLID],
-		VehicleInfo[vehicleid][vWeaponId][slot],
-		VehicleInfo[vehicleid][vWeaponAmmo][slot]
+	mysql_tquery(g_SQL,
+		va_fquery(g_SQL, "INSERT INTO cocars_weapons(vehicle_id, weapon_id, ammo) VALUES ('%d','%d','%d')",
+			VehicleInfo[vehicleid][vSQLID],
+			VehicleInfo[vehicleid][vWeaponId][slot],
+			VehicleInfo[vehicleid][vWeaponAmmo][slot]
+		), 
+		"OnVehicleWeaponInsert", 
+		"ii", 
+		vehicleid, 
+		slot
 	);
-	mysql_tquery(g_SQL, weaponInsertQuery, "OnVehicleWeaponInsert", "ii", vehicleid, slot);
 
 	#if defined MODULE_LOGS	
 	Log_Write("logfiles/weapon_trunkput.txt", "(%s) %s [Vehicle SQLID:%d] stored %s with %d bullets in %s(Slot %d).", 
@@ -833,7 +843,7 @@ stock StoreWeaponInTrunk(playerid, vehicleid, slot)
 
 stock TakePlayerWeaponFromTrunk(playerid, vehicleid, slot)
 {	
-	new	deleteWeaponQuery[128],
+	new	
 		gunname[32],
 		carname[36];
 	
@@ -843,10 +853,9 @@ stock TakePlayerWeaponFromTrunk(playerid, vehicleid, slot)
 	SetAnimationForWeapon(playerid, VehicleInfo[vehicleid][vWeaponId][slot], puzavac);
 	
 	// Query			
-	format(deleteWeaponQuery, 128, "DELETE FROM `cocars_weapons` WHERE `id` = '%d'",
+	mysql_fquery(g_SQL, "DELETE FROM cocars_weapons WHERE id = '%d'",
 		VehicleInfo[vehicleid][vWeaponSQLID][slot]
 	);
-	mysql_tquery(g_SQL, deleteWeaponQuery);
 	
 	GetWeaponName(VehicleInfo[vehicleid][vWeaponId][slot], gunname, sizeof(gunname));
 	
@@ -914,11 +923,11 @@ stock ResetVehicleTrunkWeapons(vehicleid)
 
 /*
 .88b  d88. d888888b .d8888.  .o88b.
-88'YbdP`88   `88'   88'  YP d8P  Y8
-88  88  88    88    `8bo.   8P
-88  88  88    88      `Y8b. 8b
+88'YbdP88   88'   88'  YP d8P  Y8
+88  88  88    88    8bo.   8P
+88  88  88    88      Y8b. 8b
 88  88  88   .88.   db   8D Y8b  d8
-YP  YP  YP Y888888P `8888Y'  `Y88P'
+YP  YP  YP Y888888P 8888Y'  Y88P'
 */
 
 stock GetVehicleInfoOwner(vehicleid)
@@ -1095,7 +1104,7 @@ stock LoadVehiclePackage(vehicleid)
 {
 	new
 		query[128];
-	format(query, sizeof(query), "SELECT * FROM `cocars_wpackages` WHERE `vehicleid` = '%d' LIMIT 0,15",
+	format(query, sizeof(query), "SELECT * FROM cocars_wpackages WHERE vehicleid = '%d' LIMIT 0,15",
 		VehicleInfo[vehicleid][vSQLID]
 	);
 	mysql_pquery(g_SQL, query, "LoadingVehiclePackages", "i", vehicleid);
@@ -1106,7 +1115,7 @@ stock LoadVehicleWeapons(vehicleid)
 {
 	new
 		tmpQuery[128];
-	format(tmpQuery, 128, "SELECT * FROM `cocars_weapons` WHERE `vehicle_id` = '%d' LIMIT 0,7",
+	format(tmpQuery, 128, "SELECT * FROM cocars_weapons WHERE vehicle_id = '%d' LIMIT 0,7",
 		VehicleInfo[vehicleid][vSQLID]
 	);
 	mysql_pquery(g_SQL, tmpQuery, "LoadingVehicleWeapons", "i", vehicleid);
@@ -1117,7 +1126,7 @@ stock LoadVehicleWeaponPos(vehicleid)
 {
 	new
 		tmpQuery[128];
-	format(tmpQuery, 128, "SELECT * FROM `cocars_wobjects` WHERE `vehicle_id` = '%d'",
+	format(tmpQuery, 128, "SELECT * FROM cocars_wobjects WHERE vehicle_id = '%d'",
 		VehicleInfo[vehicleid][vSQLID]
 	);
 	mysql_pquery(g_SQL, tmpQuery, "LoadingVehicleWeaponPos", "i", vehicleid);
@@ -1280,11 +1289,11 @@ public OnVehicleWeaponInsert(vehicleid, slot)
 
 /*
 	d888888b d8888b. .d8888.
-	`~~88~~' 88  `8D 88'  YP
-	   88    88   88 `8bo.
-	   88    88   88   `Y8b.
+	~~88~~' 88  8D 88'  YP
+	   88    88   88 8bo.
+	   88    88   88   Y8b.
 	   88    88  .8D db   8D
-	   YP    Y8888D' `8888Y'
+	   YP    Y8888D' 8888Y'
 */
 
 stock static CreateCarsTextDraws(playerid)
@@ -1671,10 +1680,10 @@ stock DestroyCarsTextDraws(playerid)
 /*
 	.d8888.  .o88b. d88888b d8b   db d88888b
 	88'  YP d8P  Y8 88'     888o  88 88'
-	`8bo.   8P      88ooooo 88V8o 88 88ooooo
-	  `Y8b. 8b      88~~~~~ 88 V8o88 88~~~~~
+	8bo.   8P      88ooooo 88V8o 88 88ooooo
+	  Y8b. 8b      88~~~~~ 88 V8o88 88~~~~~
 	db   8D Y8b  d8 88.     88  V888 88.
-	`8888Y'  `Y88P' Y88888P VP   V8P Y88888P
+	8888Y'  Y88P' Y88888P VP   V8P Y88888P
 */
 stock static CreatePreviewScene(playerid, dealer)
 {
@@ -1834,11 +1843,11 @@ stock static LastShopCamera(playerid)
 
 /*
 db    db d88888b db   db d888888b  .o88b. db      d88888b
-88    88 88'     88   88   `88'   d8P  Y8 88      88'
+88    88 88'     88   88   88'   d8P  Y8 88      88'
 Y8    8P 88ooooo 88ooo88    88    8P      88      88ooooo
-`8b  d8' 88~~~~~ 88~~~88    88    8b      88      88~~~~~
- `8bd8'  88.     88   88   .88.   Y8b  d8 88booo. 88.
-   YP    Y88888P YP   YP Y888888P  `Y88P' Y88888P Y88888P
+8b  d8' 88~~~~~ 88~~~88    88    8b      88      88~~~~~
+ 8bd8'  88.     88   88   .88.   Y8b  d8 88booo. 88.
+   YP    Y88888P YP   YP Y888888P  Y88P' Y88888P Y88888P
 */
 stock static NextVehicle(playerid)
 {
@@ -1954,11 +1963,11 @@ stock static PreviouseVehicle(playerid)
 
 /*
 	 .o88b.  .d88b.  db       .d88b.  d8888b. .d8888.
-	d8P  Y8 .8P  Y8. 88      .8P  Y8. 88  `8D 88'  YP
-	8P      88    88 88      88    88 88oobY' `8bo.
-	8b      88    88 88      88    88 88`8b     `Y8b.
-	Y8b  d8 `8b  d8' 88booo. `8b  d8' 88 `88. db   8D
-	 `Y88P'  `Y88P'  Y88888P  `Y88P'  88   YD `8888Y'
+	d8P  Y8 .8P  Y8. 88      .8P  Y8. 88  8D 88'  YP
+	8P      88    88 88      88    88 88oobY' 8bo.
+	8b      88    88 88      88    88 888b     Y8b.
+	Y8b  d8 8b  d8' 88booo. 8b  d8' 88 88. db   8D
+	 Y88P'  Y88P'  Y88888P  Y88P'  88   YD 8888Y'
 */
 stock static NextVehColor(playerid, type)
 {
@@ -1996,11 +2005,11 @@ stock static PrevVehColor(playerid, type)
 
 /*
 	d888888b d88888b .d8888. d888888b      d8888b. d888888b d8888b. d88888b
-	`~~88~~' 88'     88'  YP `~~88~~'      88  `8D   `88'   88  `8D 88'
-	   88    88ooooo `8bo.      88         88oobY'    88    88   88 88ooooo
-	   88    88~~~~~   `Y8b.    88         88`8b      88    88   88 88~~~~~
-	   88    88.     db   8D    88         88 `88.   .88.   88  .8D 88.
-	   YP    Y88888P `8888Y'    YP         88   YD Y888888P Y8888D' Y88888P
+	~~88~~' 88'     88'  YP ~~88~~'      88  8D   88'   88  8D 88'
+	   88    88ooooo 8bo.      88         88oobY'    88    88   88 88ooooo
+	   88    88~~~~~   Y8b.    88         888b      88    88   88 88~~~~~
+	   88    88.     db   8D    88         88 88.   .88.   88  .8D 88.
+	   YP    Y88888P 8888Y'    YP         88   YD Y888888P Y8888D' Y88888P
 */
 
 stock static CreateTestCar(playerid)
@@ -2050,7 +2059,7 @@ stock static CreateTestCar(playerid)
 
 /*
 	d88888b d8b   db  d888b  d888888b d8b   db d88888b
-	88'     888o  88 88' Y8b   `88'   888o  88 88'
+	88'     888o  88 88' Y8b   88'   888o  88 88'
 	88ooooo 88V8o 88 88         88    88V8o 88 88ooooo
 	88~~~~~ 88 V8o88 88  ooo    88    88 V8o88 88~~~~~
 	88.     88  V888 88. ~8~   .88.   88  V888 88.
@@ -2186,10 +2195,10 @@ stock GetEngineTypeString(type)
 
 /*
 	d8888b.  .d8b.  d888888b d888888b d88888b d8888b. db    db
-	88  `8D d8' `8b `~~88~~' `~~88~~' 88'     88  `8D `8b  d8'
-	88oooY' 88ooo88    88       88    88ooooo 88oobY'  `8bd8'
-	88~~~b. 88~~~88    88       88    88~~~~~ 88`8b      88
-	88   8D 88   88    88       88    88.     88 `88.    88
+	88  8D d8' 8b ~~88~~' ~~88~~' 88'     88  8D 8b  d8'
+	88oooY' 88ooo88    88       88    88ooooo 88oobY'  8bd8'
+	88~~~b. 88~~~88    88       88    88~~~~~ 888b      88
+	88   8D 88   88    88       88    88.     88 88.    88
 	Y8888P' YP   YP    YP       YP    Y88888P 88   YD    YP
 */
 
@@ -2225,11 +2234,11 @@ stock GetBatteryLifeStringTD(vehicleid)
 
 /*
 	d888888b d8b   db .d8888. db    db d8888b.  .d8b.  d8b   db  .o88b. d88888b
-	  `88'   888o  88 88'  YP 88    88 88  `8D d8' `8b 888o  88 d8P  Y8 88'
-	   88    88V8o 88 `8bo.   88    88 88oobY' 88ooo88 88V8o 88 8P      88ooooo
-	   88    88 V8o88   `Y8b. 88    88 88`8b   88~~~88 88 V8o88 8b      88~~~~~
-	  .88.   88  V888 db   8D 88b  d88 88 `88. 88   88 88  V888 Y8b  d8 88.
-	Y888888P VP   V8P `8888Y' ~Y8888P' 88   YD YP   YP VP   V8P  `Y88P' Y88888P
+	  88'   888o  88 88'  YP 88    88 88  8D d8' 8b 888o  88 d8P  Y8 88'
+	   88    88V8o 88 8bo.   88    88 88oobY' 88ooo88 88V8o 88 8P      88ooooo
+	   88    88 V8o88   Y8b. 88    88 888b   88~~~88 88 V8o88 8b      88~~~~~
+	  .88.   88  V888 db   8D 88b  d88 88 88. 88   88 88  V888 Y8b  d8 88.
+	Y888888P VP   V8P 8888Y' ~Y8888P' 88   YD YP   YP VP   V8P  Y88P' Y88888P
 */
 
 stock CalculateVehiclePrice(vehicleid, type = 1)
@@ -2264,10 +2273,10 @@ stock CalculateVehiclePrice(vehicleid, type = 1)
 
 /*
 	d8888b.  .d8b.  d8888b. db   dD
-	88  `8D d8' `8b 88  `8D 88 ,8P'
+	88  8D d8' 8b 88  8D 88 ,8P'
 	88oodD' 88ooo88 88oobY' 88,8P
-	88~~~   88~~~88 88`8b   88`8b
-	88      88   88 88 `88. 88 `88.
+	88~~~   88~~~88 888b   888b
+	88      88   88 88 88. 88 88.
 	88      YP   YP 88   YD YP   YD
 */
 
@@ -2279,9 +2288,10 @@ stock ParkVehicleInfo(vehicleid)
 	GetVehicleDamageStatus(vehicleid, VehicleInfo[vehicleid][vPanels], VehicleInfo[vehicleid][vDoors], VehicleInfo[vehicleid][vLights], VehicleInfo[vehicleid][vTires]);
 
 	// SQL spremanje
-	new
-		saveQuery[400];
-	format(saveQuery, sizeof(saveQuery), "UPDATE `cocars` SET panels = '%d', doors = '%d', lights = '%d', tires = '%d', fuel = '%d', travel = '%f', batterylife = '%d', heat = '%f', overheated = '%d', enginelife = '%d', enginescrewed = '%d', health = '%f', destroys = '%d', batterytype = '%d', nos = '%d' WHERE id = '%d'",
+	mysql_fquery(g_SQL,
+	 	"UPDATE cocars SET panels = '%d', doors = '%d', lights = '%d', tires = '%d', fuel = '%d', travel = '%f',\n\
+			batterylife = '%d', heat = '%f', overheated = '%d', enginelife = '%d', enginescrewed = '%d', health = '%f',\n\
+		 	destroys = '%d', batterytype = '%d', nos = '%d' WHERE id = '%d'",
 		VehicleInfo[vehicleid][vPanels],
 		VehicleInfo[vehicleid][vDoors],
 		VehicleInfo[vehicleid][vLights],
@@ -2299,7 +2309,6 @@ stock ParkVehicleInfo(vehicleid)
 		VehicleInfo[vehicleid][vNOSCap],
 		VehicleInfo[vehicleid][vSQLID]
 	);
-	mysql_tquery(g_SQL, saveQuery);	
 
 	// Unistavanje vozila
 	AC_DestroyVehicle(vehicleid);
@@ -2328,10 +2337,6 @@ stock ResetVehicleList(playerid)
 
 stock SpawnVehicleInfo(playerid, pick)
 {
-	new
-		tmpQuery[64];
-	format(tmpQuery, 64, "SELECT * FROM `cocars` WHERE `id` = '%d' LIMIT 0,1", pick);
-
 	inline SpawningPlayerVehicle()
 	{
 		if(cache_num_rows()) {
@@ -2478,7 +2483,12 @@ stock SpawnVehicleInfo(playerid, pick)
 		} 
 		else return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne posjedujete vozilo na tome slotu!");
 	}
-	mysql_tquery_inline_new(g_SQL, tmpQuery, using inline SpawningPlayerVehicle, "i", playerid);
+	MySQL_TQueryInline(g_SQL,  
+		using inline SpawningPlayerVehicle, 
+		va_fquery(g_SQL, "SELECT * FROM cocars WHERE id = '%d' LIMIT 0,1", pick),
+		"i", 
+		playerid
+	);
 	return PlayerInfo[playerid][pSpawnedCar];
 }
 
@@ -2486,8 +2496,8 @@ stock SpawnVehicleInfo(playerid, pick)
 d888888b d8888b. d88888b db    db d88888b db
    88    88   8D 88'     88    88 88'     88
    88    88oobY' 88ooooo Y8    8P 88ooooo 88
-   88    88 8b   88      `8b  d8' 88      88
-   88    88  88. 88.      `8bd8'  88.     88
+   88    88 8b   88      8b  d8' 88      88
+   88    88  88. 88.      8bd8'  88.     88
    YP    88   YD Y88888P    YP    Y88888P Y88888P
 */
 
@@ -2502,11 +2512,11 @@ stock static GetVehicleTravel(vehicleid)
 
 /*
 	d8888b.  .d88b.   .d88b.  d8888b.      			db   db d88888b  .d8b.  db      d888888b db   db
-	88  `8D .8P  Y8. .8P  Y8. 88  `8D      			88   88 88'     d8' `8b 88      `~~88~~' 88   88
+	88  8D .8P  Y8. .8P  Y8. 88  8D      			88   88 88'     d8' 8b 88      ~~88~~' 88   88
 	88   88 88    88 88    88 88oobY'      			88ooo88 88ooooo 88ooo88 88         88    88ooo88
-	88   88 88    88 88    88 88`8b    & Trunk  	88~~~88 88~~~~~ 88~~~88 88         88    88~~~88
-	88  .8D `8b  d8' `8b  d8' 88 `88.     			88   88 88.     88   88 88booo.    88    88   88
-	Y8888D'  `Y88P'   `Y88P'  88   YD      			YP   YP Y88888P YP   YP Y88888P    YP    YP   YP
+	88   88 88    88 88    88 888b    & Trunk  	88~~~88 88~~~~~ 88~~~88 88         88    88~~~88
+	88  .8D 8b  d8' 8b  d8' 88 88.     			88   88 88.     88   88 88booo.    88    88   88
+	Y8888D'  Y88P'   Y88P'  88   YD      			YP   YP Y88888P YP   YP Y88888P    YP    YP   YP
 */
 
 stock static CheckVehicleDoorHealth(playerid, vehicleid)
@@ -2610,10 +2620,10 @@ stock static CheckVehicleTrunkHealth(playerid, vehicleid)
 
 /*
 	 .d8b.  db       .d8b.  d8888b. .88b  d88.
-	d8' `8b 88      d8' `8b 88  `8D 88'YbdP`88
+	d8' 8b 88      d8' 8b 88  8D 88'YbdP88
 	88ooo88 88      88ooo88 88oobY' 88  88  88
-	88~~~88 88      88~~~88 88`8b   88  88  88
-	88   88 88booo. 88   88 88 `88. 88  88  88
+	88~~~88 88      88~~~88 888b   88  88  88
+	88   88 88booo. 88   88 88 88. 88  88  88
 	YP   YP Y88888P YP   YP 88   YD YP  YP  YP
 */
 
@@ -2736,11 +2746,11 @@ stock static SendAlarmMessageToPolice(vehicleid, bool:streaming)
 
 /*
 	db   db  .d88b.  d888888b db   d8b   db d888888b d8888b. d88888b
-	88   88 .8P  Y8. `~~88~~' 88   I8I   88   `88'   88  `8D 88'
+	88   88 .8P  Y8. ~~88~~' 88   I8I   88   88'   88  8D 88'
 	88ooo88 88    88    88    88   I8I   88    88    88oobY' 88ooooo
-	88~~~88 88    88    88    Y8   I8I   88    88    88`8b   88~~~~~
-	88   88 `8b  d8'    88    `8b d8'8b d8'   .88.   88 `88. 88.
-	YP   YP  `Y88P'     YP     `8b8' `8d8'  Y888888P 88   YD Y88888P
+	88~~~88 88    88    88    Y8   I8I   88    88    888b   88~~~~~
+	88   88 8b  d8'    88    8b d8'8b d8'   .88.   88 88. 88.
+	YP   YP  Y88P'     YP     8b8' 8d8'  Y888888P 88   YD Y88888P
 */
 
 stock ResetHotWireVars(playerid)
@@ -3977,14 +3987,10 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 					VehicleInfo[PlayerInfo[playerid][pSpawnedCar]][vAudio] = 1;
 
 					// Query
-					new
-						tmpQuery[128];
-					format(tmpQuery, 128, "UPDATE `cocars` SET `audio` = '%d' WHERE `id` = '%d'",
+					mysql_fquery(g_SQL, "UPDATE cocars SET audio = '%d' WHERE id = '%d'",
 						VehicleInfo[PlayerInfo[playerid][pSpawnedCar]][vAudio],
 						VehicleInfo[PlayerInfo[playerid][pSpawnedCar]][vSQLID]
 					);
-					mysql_tquery(g_SQL, tmpQuery);
-
 					PlayerPlaySound(playerid, 1133, 0, 0, 0);
 				}
 				case 5: // Alarm
@@ -3993,10 +3999,11 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 				{
 					if(AC_GetPlayerMoney(playerid) < 2000) return SendMessage(playerid, MESSAGE_TYPE_ERROR, " Nemate 2.000$!");
 					PlayerToBudgetMoney(playerid, 2000); // Novac ide u proracun od igraca
-					new
-						dkeyquery[138];
-					format(dkeyquery, sizeof(dkeyquery), "UPDATE `cocars` SET `sparekey1` = '-1', `sparekey2` = '-1' WHERE `id` = '%d'", VehicleInfo[PlayerInfo[playerid][pSpawnedCar]][vSQLID]);
-					mysql_tquery(g_SQL, dkeyquery);
+					
+					mysql_fquery(g_SQL, "UPDATE cocars SET sparekey1 = '-1', sparekey2 = '-1' WHERE id = '%d'", 
+						VehicleInfo[PlayerInfo[playerid][pSpawnedCar]][vSQLID]
+					);
+
 					VehicleInfo[PlayerInfo[playerid][pSpawnedCar]][vSpareKey1] = -1;
 					VehicleInfo[PlayerInfo[playerid][pSpawnedCar]][vSpareKey2] = -1;
 					SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uspjesno ste zamjenili bravu, te su svi duplicirani kljucevi beskorisni.");
@@ -4035,13 +4042,10 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 			}
 
 			// Query
-			new
-				tmpQuery[54];
-			format(tmpQuery, 54, "UPDATE `cocars` SET `immob` = '%d' WHERE `id` = '%d'",
+			mysql_fquery(g_SQL, "UPDATE cocars SET immob = '%d' WHERE id = '%d'",
 				VehicleInfo[PlayerInfo[playerid][pSpawnedCar]][vImmob],
-				VehicleInfo[PlayerInfo[playerid][pSpawnedCar]][vSQLID]);
-			mysql_tquery(g_SQL, tmpQuery);
-
+				VehicleInfo[PlayerInfo[playerid][pSpawnedCar]][vSQLID]
+			);
 			// Message
 			new
 				tmpString[51];
@@ -4091,13 +4095,10 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 			}
 
 			// Query
-			new
-				tmpQuery[128];
-			format(tmpQuery, 128, "UPDATE `cocars` SET `insurance` = '%d' WHERE `id` = '%d'",
+			mysql_fquery(g_SQL, "UPDATE cocars SET insurance = '%d' WHERE id = '%d'",
 				VehicleInfo[PlayerInfo[playerid][pSpawnedCar]][vInsurance],
 				VehicleInfo[PlayerInfo[playerid][pSpawnedCar]][vSQLID]
 			);
-			mysql_tquery(g_SQL, tmpQuery);
 
 			// Message
 			format(poliString, 43, "[ ! ] Nova polica osiguranja je Level %d!", VehicleInfo[PlayerInfo[playerid][pSpawnedCar]][vInsurance]);
@@ -4129,13 +4130,10 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 			}
 
 			// Query
-			new
-				tmpQuery[128];
-			format(tmpQuery, 128, "UPDATE `cocars` SET `alarm` = '%d' WHERE `id` = '%d'",
+			mysql_fquery(g_SQL, "UPDATE cocars SET alarm = '%d' WHERE id = '%d'",
 				VehicleInfo[PlayerInfo[playerid][pSpawnedCar]][vAlarm],
 				VehicleInfo[PlayerInfo[playerid][pSpawnedCar]][vSQLID]
 			);
-			mysql_tquery(g_SQL, tmpQuery);
 
 			// Message
 			SendFormatMessage(playerid, MESSAGE_TYPE_INFO, "Novi level alarma je %d!", VehicleInfo[PlayerInfo[playerid][pSpawnedCar]][vAlarm]);
@@ -4165,12 +4163,10 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 			}
 
 			// Query
-			new
-				tmpQuery[90];
-			format(tmpQuery, 90, "UPDATE `cocars` SET `batterylife` = '%d' WHERE `id` = '%d'",
+			mysql_fquery(g_SQL, "UPDATE cocars SET batterylife = '%d' WHERE id = '%d'",
 				VehicleInfo[PlayerInfo[playerid][pSpawnedCar]][vBatteryLife],
-				VehicleInfo[PlayerInfo[playerid][pSpawnedCar]][vSQLID]);
-			mysql_tquery(g_SQL, tmpQuery);
+				VehicleInfo[PlayerInfo[playerid][pSpawnedCar]][vSQLID]
+			);
 
 			// Message
 			new
@@ -4200,12 +4196,10 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 			}
 
 			// Query
-			new
-				tmpQuery[90];
-			format(tmpQuery, 90, "UPDATE `cocars` SET `lock` = '%d' WHERE `id` = '%d'",
+			mysql_fquery(g_SQL, "UPDATE cocars SET lock = '%d' WHERE id = '%d'",
 				VehicleInfo[PlayerInfo[playerid][pSpawnedCar]][vLock],
-				VehicleInfo[PlayerInfo[playerid][pSpawnedCar]][vSQLID]);
-			mysql_tquery(g_SQL, tmpQuery);
+				VehicleInfo[PlayerInfo[playerid][pSpawnedCar]][vSQLID]
+			);
 
 			// Message
 			new
@@ -4323,13 +4317,11 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 			SendClientMessage(sellerid, COLOR_RED, "[ ! ] Uspjesno ste prodali vozilo!");
 
 			// SQL
-			new
-				tmpQuery[256];
-			format(tmpQuery, 256, "UPDATE `cocars` SET `ownerid` = '%d' WHERE `id` = '%d'",
+			mysql_fquery(g_SQL, "UPDATE cocars SET ownerid = '%d' WHERE id = '%d'",
 				PlayerInfo[playerid][pSQLID],
 				VehicleInfo[sellVehid][vSQLID]
 			);
-			mysql_tquery(g_SQL, tmpQuery);
+
 			VehicleInfo[sellVehid][vOwnerID] 	= PlayerInfo[playerid][pSQLID];
 			PlayerInfo[sellerid][pSpawnedCar] 	= -1;
 			#if defined MOD_DEBUG
@@ -4474,8 +4466,9 @@ hook OnPlayerEditObject(playerid, playerobject, objectid, response, Float:fX, Fl
 					VehicleInfo[AttachVehID][vWeaponObjectID][wslot] = CreateObject(model, 0, 0, 0, 0, 0, 0, 100.0);
 					AttachObjectToVehicle(VehicleInfo[AttachVehID][vWeaponObjectID][wslot], AttachVehID, finalx, finaly, ofz, fRotX, fRotY, ofaz);
 
-					new tmpQuery[300];
-					mysql_format(g_SQL, tmpQuery, sizeof(tmpQuery), "INSERT INTO cocars_wobjects (model, weaponsql, vehicle_id, offsetx, offsety, offsetz, offsetrx, offsetry, offsetrz) VALUES ('%d', '%d', %d, %f, %f, %f, %f, %f, %f)", 
+					mysql_fquery(g_SQL, 
+						"INSERT INTO cocars_wobjects (model, weaponsql, vehicle_id, offsetx, offsety,\n\ 
+							offsetz, offsetrx, offsetry, offsetrz) VALUES ('%d', '%d', %d, %f, %f, %f, %f, %f, %f)", 
 						model,
 						VehicleInfo[AttachVehID][vWeaponSQLID][wslot], 
 						VehicleInfo[AttachVehID][vSQLID], 
@@ -4486,7 +4479,7 @@ hook OnPlayerEditObject(playerid, playerobject, objectid, response, Float:fX, Fl
 						VehicleInfo[AttachVehID][vOffsetyR][wslot],
 						VehicleInfo[AttachVehID][vOffsetzR][wslot]
 					);
-					mysql_tquery(g_SQL, tmpQuery);
+
 					EditingTrunkWeaponObject[playerid] = 0;
 					EditingTrunkWeaponModel[playerid] = 0;
 					Bit1_Set(gr_PlayerTrunkEdit, playerid, false);
@@ -4624,9 +4617,11 @@ CMD:duplicatekey(playerid, params[])
 			SendClientMessage(plid, COLOR_YELLOW, tmpString);
 			format(tmpString, sizeof(tmpString), "[ ! ] Dali ste rezervni kljuc svog vozila %s. (SLOT: 1 - KEYID: %d)", GetName(plid, true), PlayerInfo[plid][pSQLID]);
 			SendClientMessage(playerid, COLOR_RED, tmpString);
-            new dkeyquery[128];
-			format(dkeyquery, sizeof(dkeyquery), "UPDATE `cocars` SET `sparekey1` = '%d' WHERE `id` = '%d'", VehicleInfo[vehicleid][vSpareKey1], VehicleInfo[vehicleid][vSQLID]);
-			mysql_tquery(g_SQL, dkeyquery);
+           
+		    mysql_fquery(g_SQL, "UPDATE cocars SET sparekey1 = '%d' WHERE id = '%d'", 
+				VehicleInfo[vehicleid][vSpareKey1], 
+				VehicleInfo[vehicleid][vSQLID]
+			);
 			return 1;
 		}
 		if(VehicleInfo[vehicleid][vSpareKey2] < 0)
@@ -4640,9 +4635,11 @@ CMD:duplicatekey(playerid, params[])
 			SendClientMessage(plid, COLOR_YELLOW, tmpString);
 			format(tmpString, sizeof(tmpString), "[ ! ] Dali ste rezervni kljuc svog vozila %s. (SLOT: 2 - KEYID: %d)", GetName(plid, true), PlayerInfo[plid][pSQLID]);
 			SendClientMessage(playerid, COLOR_RED, tmpString);
-            new dkeyquery[128];
-			format(dkeyquery, sizeof(dkeyquery), "UPDATE `cocars` SET `sparekey2` = '%d' WHERE `id` = '%d'", VehicleInfo[vehicleid][vSpareKey2], VehicleInfo[vehicleid][vSQLID]);
-			mysql_tquery(g_SQL, dkeyquery);
+           
+		   	mysql_fquery(g_SQL, "UPDATE cocars SET sparekey2 = '%d' WHERE id = '%d'", 
+				VehicleInfo[vehicleid][vSpareKey2], 
+				VehicleInfo[vehicleid][vSQLID]
+			);
 			return 1;
 		}
 		SendMessage(playerid, MESSAGE_TYPE_ERROR, " Nemate vise rezervnih kljuceva!");
@@ -4782,8 +4779,8 @@ CMD:car(playerid, params[])
 				if(color > 255 || color < 0) return SendMessage(playerid, MESSAGE_TYPE_ERROR, " Broj boje nemoze biti manji od 0 i veci od 255.");
 
 				new
-					colorString[26],
-					colorQuery[128];
+					colorString[26];
+				
 				if(slot == 1)
 				{
 					VehicleInfo[PlayerInfo[playerid][pSpawnedCar]][vColor1] = color;
@@ -4792,17 +4789,23 @@ CMD:car(playerid, params[])
 					format(colorString, sizeof(colorString), "1. boja auta je sada %d.", color);
 					SendClientMessage(playerid, COLOR_GREEN,colorString);
 
-					format(colorQuery, sizeof(colorQuery), "UPDATE `cocars` SET `color1` = '%d' WHERE `id` = '%d'", color, VehicleInfo[PlayerInfo[playerid][pSpawnedCar]][vSQLID]);
-					mysql_tquery(g_SQL, colorQuery);
-				} else {
+					mysql_fquery(g_SQL, "UPDATE cocars SET color1 = '%d' WHERE id = '%d'", 
+						color,
+						VehicleInfo[PlayerInfo[playerid][pSpawnedCar]][vSQLID]
+					);
+				} 
+				else 
+				{
 					VehicleInfo[PlayerInfo[playerid][pSpawnedCar]][vColor2] = color;
 					ChangeVehicleColor( vehicleid, VehicleInfo[ PlayerInfo[ playerid ][ pSpawnedCar ] ][ vColor1 ], color );
 
 					format(colorString, sizeof(colorString), "2. boja auta je sada %d.",color);
 					SendClientMessage(playerid, COLOR_GREEN,colorString);
 
-					format(colorQuery, sizeof(colorQuery), "UPDATE `cocars` SET `color2` = '%d' WHERE `id` = '%d'", color, VehicleInfo[PlayerInfo[playerid][pSpawnedCar]][vSQLID]);
-					mysql_tquery(g_SQL, colorQuery);
+					mysql_fquery(g_SQL, "UPDATE cocars SET color2 = '%d' WHERE id = '%d'", 
+						color,
+						VehicleInfo[PlayerInfo[playerid][pSpawnedCar]][vSQLID]
+					);
 				}
 				PlayerPlaySound(playerid, 1134, 0, 0, 0);
 				PlayerToBudgetMoney(playerid, 500); // Novac ide u proracun od igraca
@@ -4941,9 +4944,9 @@ CMD:car(playerid, params[])
 		VehicleInfo[vehicleid][vInt] = GetPlayerInterior(playerid);
 		VehicleInfo[vehicleid][vViwo] = GetPlayerVirtualWorld(playerid);
 
-		new
-			bigquery[256];
-		format(bigquery, sizeof(bigquery), "UPDATE `cocars` SET `parkX` = '%.4f', `parkY` = '%.4f', `parkZ` = '%.4f', `angle` = '%.4f', `interior` = '%d', `viwo` = '%d' WHERE `id` = '%d'",
+		mysql_fquery(g_SQL, 
+			"UPDATE cocars SET parkX = '%.4f', parkY = '%.4f', parkZ = '%.4f',\n\
+				angle = '%.4f', interior = '%d', viwo = '%d' WHERE id = '%d'",
 			X,
 			Y,
 			Z,
@@ -4952,7 +4955,6 @@ CMD:car(playerid, params[])
 			GetPlayerVirtualWorld(playerid),
 			VehicleInfo[vehicleid][vSQLID]
 		);
-		mysql_tquery(g_SQL, bigquery);
 
 		if(PlayerInfo[playerid][pDonateRank] < 3) {
 			PlayerToBudgetMoney(playerid, 100); // Novac ide u proracun
@@ -5121,13 +5123,10 @@ CMD:car(playerid, params[])
 		SendClientMessage(playerid, COLOR_GREEN, tmpString);
 		SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "Parkirajte vase vozilo pa ga opet spawnajte da vidite vasu registraciju!");
 
-		new
-			bigquery[128];
-		mysql_format(g_SQL, bigquery, sizeof(bigquery), "UPDATE `cocars` SET `numberplate` = '%e' WHERE `id` = '%d'",
+		mysql_fquery(g_SQL, "UPDATE cocars SET numberplate = '%e' WHERE id = '%d'",
 			VehicleInfo[PlayerInfo[playerid][pSpawnedCar]][vNumberPlate],
 			VehicleInfo[PlayerInfo[playerid][pSpawnedCar]][vSQLID]
 		);
-		mysql_tquery(g_SQL, bigquery);
 	}
 	else if(!strcmp(pick, "unregister", true))
 	{
@@ -5145,12 +5144,9 @@ CMD:car(playerid, params[])
 		SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uklonili ste registraciju vasem vozilu!");
 		SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "Registracija ce nestati nakon sto parkirate vozilo i ponovno ga spawnate!");
 
-		new
-			bigquery[128];
-		format(bigquery, sizeof(bigquery), "UPDATE `cocars` SET `numberplate` = '0' WHERE `id` = '%d'",
+		mysql_fquery(g_SQL, "UPDATE cocars SET numberplate = '0' WHERE id = '%d'",
 			VehicleInfo[PlayerInfo[playerid][pSpawnedCar]][vSQLID]
 		);
-		mysql_tquery(g_SQL, bigquery);
 	}
 	else if(!strcmp(pick, "sell", true)) 
 	{
@@ -5444,13 +5440,10 @@ CMD:veh_plate(playerid, params[])
 		SendClientMessage(playerid, COLOR_GREEN, tmpString);
 		SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "Parkirajte vase vozilo pa ga opet spawnajte da vidite vasu registraciju!");
 
-		new
-			bigquery[128];
-		mysql_format(g_SQL, bigquery, sizeof(bigquery), "UPDATE `cocars` SET `numberplate` = '%e' WHERE `id` = '%d'",
+		mysql_fquery(g_SQL, "UPDATE cocars SET numberplate = '%e' WHERE id = '%d'",
 			VehicleInfo[vehicleid][vNumberPlate],
 			VehicleInfo[vehicleid][vSQLID]
 		);
-		mysql_tquery(g_SQL, bigquery);
 	}
 	return 1;
 }
@@ -5959,15 +5952,12 @@ CMD:get(playerid, params[])
 				return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste u blizini benzinske postaje!");
 			
 			PlayerToBusinessMoneyTAX(playerid, bizid, moneys);
-			new
-				gasTillQuery[ 100 ];
-				
-			format( gasTillQuery, sizeof(gasTillQuery), "UPDATE `bizzes` SET  `till` = '%d' WHERE `id` = '%d'", 
+			
+			mysql_fquery(g_SQL, "UPDATE bizzes SET  till = '%d' WHERE id = '%d'", 
 				BizzInfo[ bizid ][ bTill ],
 				BizzInfo[ bizid ][bSQLID]
 			);
-			mysql_tquery( g_SQL, gasTillQuery, "", "");
-			
+
 			PlayerInfo[ playerid ][ pCanisterLiters ] 	+= fuel;
 			PlayerInfo[ playerid ][ pCanisterType ] 	= type;
 			va_SendClientMessage( playerid, COLOR_RED, "[ ! ] Uspjesno ste napunili kanister s %d litara. Mozete koristiti /fillcar unutar zeljena vozila!", fuel);

@@ -89,7 +89,7 @@ stock HOOK_Ban(playerid, adminid, const reason[], days=-1, bool:anticheat=false)
 	format( PlayerInfo[ playerid ][ pBanReason ], 32, reason );
 
 	new accUpdtQuery[200];
-	mysql_format( g_SQL, accUpdtQuery, 200, "UPDATE accounts SET `playaUnbanTime` = '%d', `playaBanReason` = '%e' WHERE sqlid = '%d'",
+	mysql_format( g_SQL, accUpdtQuery, 200, "UPDATE accounts SET playaUnbanTime = '%d', playaBanReason = '%e' WHERE sqlid = '%d'",
 		PlayerInfo[ playerid ][ pUnbanTime ],
 		reason,
 		PlayerInfo[ playerid ][ pSQLID ]
@@ -97,7 +97,7 @@ stock HOOK_Ban(playerid, adminid, const reason[], days=-1, bool:anticheat=false)
 	mysql_tquery(g_SQL, accUpdtQuery);
 
 	new banInsertQuery[256];
-	mysql_format( g_SQL, banInsertQuery, 256, "INSERT INTO `bans` (`id_igraca`, `name`, `player_ip`, `forumname`, `reason`, `date`, `unban`) VALUES ('%d', '%e', '%e', '%e', '%e', '%e', '%d')",
+	mysql_format( g_SQL, banInsertQuery, 256, "INSERT INTO bans (id_igraca, name, player_ip, forumname, reason, date, unban) VALUES ('%d', '%e', '%e', '%e', '%e', '%e', '%d')",
 		PlayerInfo[playerid][pSQLID],
 		GetName( playerid, false ),
 		GetPlayerIP( playerid ),
@@ -144,7 +144,7 @@ stock HOOK_BanEx(playerid, const playername[], const playerip[], adminid, const 
 	format(date, sizeof(date), "%02d.%02d.%d.", day, month, year);
 
 	new sqlid, banexQuery[128];
-	mysql_format( g_SQL, banexQuery, sizeof(banexQuery), "SELECT `sqlid` FROM accounts WHERE `name` = '%e' LIMIT 0,1", playername);
+	mysql_format( g_SQL, banexQuery, sizeof(banexQuery), "SELECT sqlid FROM accounts WHERE name = '%e' LIMIT 0,1", playername);
 
 	new
 		Cache:result = mysql_query(g_SQL, banexQuery);
@@ -152,7 +152,7 @@ stock HOOK_BanEx(playerid, const playername[], const playerip[], adminid, const 
 	cache_delete(result);
 
 	new accUpdtQuery[200];
-	mysql_format(g_SQL, accUpdtQuery, 200, "UPDATE accounts SET `playaUnbanTime` = '%d', `playaBanReason` = '%e' WHERE `name` = '%e'",
+	mysql_format(g_SQL, accUpdtQuery, 200, "UPDATE accounts SET playaUnbanTime = '%d', playaBanReason = '%e' WHERE name = '%e'",
 		unban_time,
 		reason,
 		playername
@@ -160,7 +160,7 @@ stock HOOK_BanEx(playerid, const playername[], const playerip[], adminid, const 
 	mysql_tquery(g_SQL, accUpdtQuery);
 
 	new banInsertQuery[256];
-	mysql_format( g_SQL, banInsertQuery, 256, "INSERT INTO `bans` (`id_igraca`, `name`, `player_ip`, `forumname`, `reason`, `date`, `unban`) VALUES ('%d', '%e', '%e', '%e', '%e', '%e', '%d')",
+	mysql_format( g_SQL, banInsertQuery, 256, "INSERT INTO bans (id_igraca, name, player_ip, forumname, reason, date, unban) VALUES ('%d', '%e', '%e', '%e', '%e', '%e', '%d')",
 		sqlid,
 		playername,
 		playerip,
@@ -176,7 +176,7 @@ stock HOOK_BanEx(playerid, const playername[], const playerip[], adminid, const 
 stock UnbanPlayerName(const playername[], adminid)
 {
 	new unbanQuery[135];
-	mysql_format(g_SQL, unbanQuery, 135, "UPDATE accounts SET `playaUnbanTime` = '0', `playaBanReason` = '' WHERE `name` = '%e'",
+	mysql_format(g_SQL, unbanQuery, 135, "UPDATE accounts SET playaUnbanTime = '0', playaBanReason = '' WHERE name = '%e'",
 		playername
 	);
 	mysql_tquery(g_SQL, unbanQuery);
