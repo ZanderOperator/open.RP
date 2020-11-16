@@ -523,12 +523,12 @@ stock CheckVehicleTuning(sql, vehicleid)
 	new	tmpQuery[128],
 		mysqlQuery[ 256 ],
 		modelid;
-	format(tmpQuery, 128, "SELECT * FROM `cocars` WHERE `id` = '%d'", sql);
+	format(tmpQuery, 128, "SELECT * FROM cocars WHERE id = '%d'", sql);
 	inline CheckingPlayerVehicle()
 	{
 		if( !cache_num_rows() ) return 1;
 		cache_get_value_name_int(0,  	"modelid"	, modelid);
-		format(mysqlQuery, 256, "SELECT * FROM `vehicle_tuning` WHERE `vehid` = '%d' LIMIT 0,1", sql );
+		format(mysqlQuery, 256, "SELECT * FROM vehicle_tuning WHERE vehid = '%d' LIMIT 0,1", sql );
 		mysql_tquery(g_SQL, mysqlQuery, "OnVehicleTuningCheck", "iii", vehicleid, modelid, sql);
 	}
 	mysql_tquery_inline(g_SQL, tmpQuery, using inline CheckingPlayerVehicle, "ii", vehicleid, sql);
@@ -569,7 +569,7 @@ Public:OnVehicleTuningCheck(vehicleid, modelid, sql)
 {
 	new
 		mysqlQuery[ 256 ];
-	format(mysqlQuery, 256, "SELECT * FROM `vehicle_tuning` WHERE `vehid` = '%d' LIMIT 0,1", VehicleInfo[ vehicleid ][ vSQLID ] );
+	format(mysqlQuery, 256, "SELECT * FROM vehicle_tuning WHERE vehid = '%d' LIMIT 0,1", VehicleInfo[ vehicleid ][ vSQLID ] );
 	mysql_tquery(g_SQL, mysqlQuery, "OnVehicleTuningLoad", "iii", vehicleid, 0, playerid);
 	return 1;
 }*/
@@ -578,7 +578,7 @@ stock DeleteVehicleTuning(vehicleid)
 {
 	new	
 		tmpString[ 64 ];
-	format( tmpString, sizeof(tmpString), "DELETE FROM `vehicle_tuning` WHERE `vehid`='%d'", VehicleInfo[ vehicleid ][ vSQLID ] );
+	format( tmpString, sizeof(tmpString), "DELETE FROM vehicle_tuning WHERE vehid='%d'", VehicleInfo[ vehicleid ][ vSQLID ] );
 	mysql_tquery(g_SQL, tmpString, "");
 	return 1;
 }
@@ -587,7 +587,7 @@ stock SaveVehicleTuning(vehicleid)
 {
 	new
 		tmpQuery[ 128 ];
-	format(tmpQuery, 128, "SELECT * FROM `vehicle_tuning` WHERE `vehid` = '%d' LIMIT 0,1", VehicleInfo[ vehicleid ][ vSQLID ] );
+	format(tmpQuery, 128, "SELECT * FROM vehicle_tuning WHERE vehid = '%d' LIMIT 0,1", VehicleInfo[ vehicleid ][ vSQLID ] );
 	mysql_tquery(g_SQL, tmpQuery, "OnVehicleTuningLoad", "iii", vehicleid, 1, GetVehicleInfoOwner(vehicleid));
 	return 1;
 }
@@ -598,7 +598,7 @@ Public:OnVehicleTuningLoad(vehicleid, save, playerid)
 		tmpQuery[ 256 ];
 	if( save ) {
 		if( cache_num_rows() ) {
-			format(tmpQuery, 256, "UPDATE vehicle_tuning SET `comp0` = '%d', `comp1` = '%d', `comp2` = '%d', `comp3` = '%d', `comp4` = '%d', `comp5` = '%d', `paintjob` = '%d' WHERE `vehid` = '%d'",
+			format(tmpQuery, 256, "UPDATE vehicle_tuning SET comp0 = '%d', comp1 = '%d', comp2 = '%d', comp3 = '%d', comp4 = '%d', comp5 = '%d', paintjob = '%d' WHERE vehid = '%d'",
 				TuningInfo[ vehicleid ][ tdComponent ][ 0 ],
 				TuningInfo[ vehicleid ][ tdComponent ][ 1 ],
 				TuningInfo[ vehicleid ][ tdComponent ][ 2 ],
@@ -610,7 +610,7 @@ Public:OnVehicleTuningLoad(vehicleid, save, playerid)
 			);
 			mysql_tquery(g_SQL, tmpQuery, "");
 		} else {
-			format(tmpQuery, 256, "INSERT INTO `vehicle_tuning`(`vehid`, `comp0`, `comp1`, `comp2`, `comp3`, `comp4`, `comp5`, `paintjob`) VALUES ('%d','%d','%d','%d','%d','%d','%d','%d')",
+			format(tmpQuery, 256, "INSERT INTO vehicle_tuning(vehid, comp0, comp1, comp2, comp3, comp4, comp5, paintjob) VALUES ('%d','%d','%d','%d','%d','%d','%d','%d')",
 				VehicleInfo[ vehicleid ][ vSQLID ],
 				TuningInfo[ vehicleid ][ tdComponent ][ 0 ],
 				TuningInfo[ vehicleid ][ tdComponent ][ 1 ],
@@ -696,11 +696,11 @@ stock TuneVehicle(vehicleid)
 
 /*
 	.d8888. db       .d88b.  d888888b .d8888. 
-	88'  YP 88      .8P  Y8. `~~88~~' 88'  YP 
-	`8bo.   88      88    88    88    `8bo.   
-	  `Y8b. 88      88    88    88      `Y8b. 
-	db   8D 88booo. `8b  d8'    88    db   8D 
-	`8888Y' Y88888P  `Y88P'     YP    `8888Y'
+	88'  YP 88      .8P  Y8. ~~88~~' 88'  YP 
+	8bo.   88      88    88    88    8bo.   
+	  Y8b. 88      88    88    88      Y8b. 
+	db   8D 88booo. 8b  d8'    88    db   8D 
+	8888Y' Y88888P  Y88P'     YP    8888Y'
 */
 stock DestroySlotsTextDraws(playerid)
 {	
@@ -1079,11 +1079,11 @@ stock InitTuningSlots(playerid, vehicleid)
 
 /*
 	 .o88b.  .d88b.  .88b  d88. d8888b.      .88b  d88. d88888b d8b   db db    db 
-	d8P  Y8 .8P  Y8. 88'YbdP`88 88  `8D      88'YbdP`88 88'     888o  88 88    88 
+	d8P  Y8 .8P  Y8. 88'YbdP88 88  8D      88'YbdP88 88'     888o  88 88    88 
 	8P      88    88 88  88  88 88oodD'      88  88  88 88ooooo 88V8o 88 88    88 
 	8b      88    88 88  88  88 88~~~        88  88  88 88~~~~~ 88 V8o88 88    88 
-	Y8b  d8 `8b  d8' 88  88  88 88           88  88  88 88.     88  V888 88b  d88 
-	 `Y88P'  `Y88P'  YP  YP  YP 88           YP  YP  YP Y88888P VP   V8P ~Y8888P'
+	Y8b  d8 8b  d8' 88  88  88 88           88  88  88 88.     88  V888 88b  d88 
+	 Y88P'  Y88P'  YP  YP  YP 88           YP  YP  YP Y88888P VP   V8P ~Y8888P'
 */
 stock DestroyTuningTDs(playerid)
 {
@@ -1296,7 +1296,7 @@ stock ShowTuningTDs(playerid)
 
 /*
 	.88b  d88.  .d8b.  d888888b d8b   db 
-	88'YbdP`88 d8' `8b   `88'   888o  88 
+	88'YbdP88 d8' 8b   88'   888o  88 
 	88  88  88 88ooo88    88    88V8o 88 
 	88  88  88 88~~~88    88    88 V8o88 
 	88  88  88 88   88   .88.   88  V888 

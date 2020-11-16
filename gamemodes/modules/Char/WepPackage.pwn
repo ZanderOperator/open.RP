@@ -84,7 +84,7 @@ new
 LoadPlayerPackage(playerid) {
 	new query[128];
 
-	format(query, sizeof(query), "SELECT * FROM `player_wpackages` WHERE `playerSQL` = '%d' LIMIT 0,10",
+	format(query, sizeof(query), "SELECT * FROM player_wpackages WHERE playerSQL = '%d' LIMIT 0,10",
 		PlayerInfo[playerid][pSQLID]
 	);
 	mysql_pquery(g_SQL, query, "LoadingPlayerPackages", "i", playerid);
@@ -150,7 +150,7 @@ stock LogWpackages(string[])
 
 SavePlayerPackages(playerid, slot) {
 	new query[ 164 ];
-	format(query, sizeof(query), "INSERT INTO `player_wpackages`(`playerSQL`, `weap`, `ammo`) VALUES ('%d', '%d', '%d')",
+	format(query, sizeof(query), "INSERT INTO player_wpackages(playerSQL, weap, ammo) VALUES ('%d', '%d', '%d')",
 		PlayerInfo[playerid][pSQLID],
 		PlayerPackage[playerid][p_weapon][slot],
 		PlayerPackage[playerid][p_amount][slot]
@@ -161,7 +161,7 @@ SavePlayerPackages(playerid, slot) {
 
 SaveVehiclePackages(vehicleid, slot) {
 	new query[ 164 ];
-	format(query, sizeof(query), "INSERT INTO `cocars_wpackages`(`vehicleid`, `weap`, `ammo`) VALUES ('%d','%d','%d')",
+	format(query, sizeof(query), "INSERT INTO cocars_wpackages(vehicleid, weap, ammo) VALUES ('%d','%d','%d')",
 		VehicleInfo[vehicleid][vSQLID],
 		VehicleInfo[vehicleid][packWepID][slot],
 		VehicleInfo[vehicleid][packAmmo][slot]
@@ -234,7 +234,7 @@ DeleteVehiclePackage(vehicleid, slot) {
 	VehicleInfo[vehicleid][packWepID][slot] = 0;
 	VehicleInfo[vehicleid][packAmmo][slot] = 0;
 
-	format(query, sizeof(query), "DELETE FROM `cocars_wpackages` WHERE `id` = '%d'",
+	format(query, sizeof(query), "DELETE FROM cocars_wpackages WHERE id = '%d'",
 		VehicleInfo[vehicleid][packSQLID][slot]
 	);
 	mysql_tquery(g_SQL, query);
@@ -250,7 +250,7 @@ DeletePlayerPackage(playerid, package_id) {
 	PlayerPackage[playerid][p_amount][package_id] = 0;
 	PlayerPackage[playerid][packExists][package_id] = 0;
 
-	format(query, sizeof(query), "DELETE FROM `player_wpackages` WHERE `id` = '%d'",
+	format(query, sizeof(query), "DELETE FROM player_wpackages WHERE id = '%d'",
 		PlayerPackage[playerid][p_SQLID][package_id]
 	);
 	mysql_tquery(g_SQL, query);
@@ -624,7 +624,7 @@ CMD:package(playerid, params[]) {
 				VehicleInfo[vehicleid][packWepID][i] = 0;
 				VehicleInfo[vehicleid][packAmmo][i] = 0;
 
-				format(d_query, 128, "DELETE FROM `cocars_wpackages` WHERE `id` = '%d'",
+				format(d_query, 128, "DELETE FROM cocars_wpackages WHERE id = '%d'",
 					VehicleInfo[vehicleid][packSQLID][i]
 				);
 				mysql_tquery(g_SQL, d_query);

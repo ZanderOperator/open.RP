@@ -135,7 +135,7 @@ stock static CreateNewPickup(playerid, pickup)
 		bigquery[556];
 	mysql_tquery(g_SQL, "BEGIN", "");
 	
-	mysql_format(g_SQL, bigquery, sizeof(bigquery), "INSERT INTO server_pickups (`pickupmodel`,`pickuptype`,`canenter`,`entrancex`, `entrancey`, `entrancez`,`exitx`,`exity`,`exitz`,`enterdiscription`, `discription`, `viwo`, `organizations`, `job`, `pint`) VALUES ('%d', '%d', '%d', '%f', '%f', '%f', '%f', '%f', '%f', '%e', '%e', '%d', '%d', '%d', '%d')",
+	mysql_format(g_SQL, bigquery, sizeof(bigquery), "INSERT INTO server_pickups (pickupmodel,pickuptype,canenter,entrancex, entrancey, entrancez,exitx,exity,exitz,enterdiscription, discription, viwo, organizations, job, pint) VALUES ('%d', '%d', '%d', '%f', '%f', '%f', '%f', '%f', '%f', '%e', '%e', '%d', '%d', '%d', '%d')",
 		PickupInfo[pickup][epPickupModel],
 		PickupInfo[pickup][epPickupType],
 		PickupInfo[pickup][epCanEnter],
@@ -269,7 +269,7 @@ CMD:deletepickup(playerid, params[])
 	
 	new
 		bigquery[128];
-	format(bigquery, sizeof(bigquery), "DELETE FROM server_pickups WHERE `id` = '%d'", PickupInfo[pickup][epSQLID]);
+	format(bigquery, sizeof(bigquery), "DELETE FROM server_pickups WHERE id = '%d'", PickupInfo[pickup][epSQLID]);
 	mysql_tquery(g_SQL,bigquery,"");
 	
 	DestroyDynamicPickup(PickupInfo[pickup][epID]);
@@ -291,7 +291,7 @@ CMD:pickupint(playerid, params[])
 	
 	new
 		bigquery[ 512 ];
-	format(bigquery, sizeof(bigquery), "UPDATE server_pickups SET `exitx` = '%f', `exity` = '%f', `exitz` = '%f', `viwo` = '%d' WHERE `id` = '%d'",
+	format(bigquery, sizeof(bigquery), "UPDATE server_pickups SET exitx = '%f', exity = '%f', exitz = '%f', viwo = '%d' WHERE id = '%d'",
 		PickupInfo[pickup][epExitx],
 		PickupInfo[pickup][epExity],
 		PickupInfo[pickup][epExitz],

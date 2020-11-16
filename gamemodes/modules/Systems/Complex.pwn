@@ -95,7 +95,7 @@ stock GetComplexRooms(sqlid)
             Cache:result,
             query[128];
 
-        format(query, sizeof(query), "SELECT COUNT(id) FROM `server_complex_rooms` WHERE `complex_id` = '%d' AND `active` = 1", sqlid);
+        format(query, sizeof(query), "SELECT COUNT(id) FROM server_complex_rooms WHERE complex_id = '%d' AND active = 1", sqlid);
         result = mysql_query(g_SQL, query);
         cache_get_value_index(0, 0, dest);
         cache_delete(result);
@@ -511,12 +511,12 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 
                     ComplexInfo[complex][cOwnerID]  = -1;
 
-                    format(query, sizeof(query), "UPDATE `server_complex` SET `owner_id` = 0 WHERE `id` = '%d'",
+                    format(query, sizeof(query), "UPDATE server_complex SET owner_id = 0 WHERE id = '%d'",
                         ComplexInfo[complex][cSQLID]);
                     mysql_tquery(g_SQL, query);
 
                     PlayerInfo[playerid][pSpawnChange] = 0;
-                    format(query, sizeof(query), "UPDATE accounts SET `spawnchange` = '%d' WHERE sqlid = '%d'",
+                    format(query, sizeof(query), "UPDATE accounts SET spawnchange = '%d' WHERE sqlid = '%d'",
                         PlayerInfo[playerid][pSpawnChange],
                         PlayerInfo[playerid][pSQLID]
                     );
@@ -534,12 +534,12 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 
                     va_SendClientMessage(playerid, COLOR_RED, "[ ! ] Uspjesno ste izbacili %s iz vaseg Complex-a!", GetPlayerNameFromSQL(ComplexRoomInfo[complex][cOwnerID]));
 
-                    format(query, sizeof(query), "UPDATE `server_complex_rooms` SET `ownerid` = '0' WHERE `id` = '%d'",
+                    format(query, sizeof(query), "UPDATE server_complex_rooms SET ownerid = '0' WHERE id = '%d'",
                         ComplexRoomInfo[complex][cSQLID]
                     );
                     mysql_tquery(g_SQL, query);
 
-                    format(query, sizeof(query), "UPDATE accounts SET `spawnchange` = '0' WHERE sqlid = '%d'",
+                    format(query, sizeof(query), "UPDATE accounts SET spawnchange = '0' WHERE sqlid = '%d'",
                         ComplexRoomInfo[complex][cOwnerID]
                     );
                     mysql_tquery(g_SQL, query);
@@ -611,7 +611,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                     ComplexRoomInfo[room_id][cRPickup] = CreateDynamicPickup(1273, 2, ComplexRoomInfo[room_id][cEnterX], ComplexRoomInfo[room_id][cEnterY], ComplexRoomInfo[room_id][cEnterZ], ComplexRoomInfo[room_id][cVWExit], ComplexRoomInfo[room_id][cIntExit], -1, 30.0);
 
                     new query[128];
-                    format(query, sizeof(query), "UPDATE `server_complex_rooms` SET `active` = '%d' WHERE `id` = '%d'",
+                    format(query, sizeof(query), "UPDATE server_complex_rooms SET active = '%d' WHERE id = '%d'",
                         ComplexRoomInfo[room_id][cActive],
                         ComplexRoomInfo[room_id][cSQLID]
                     );
@@ -646,7 +646,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                     ComplexRoomInfo[room_id][cQuality]++;
 
                     new query[128];
-                    format(query, sizeof(query), "UPDATE `server_complex_rooms` SET `quality` = '%d' WHERE `id` = '%d'",
+                    format(query, sizeof(query), "UPDATE server_complex_rooms SET quality = '%d' WHERE id = '%d'",
                         ComplexRoomInfo[room_id][cQuality],
                         ComplexRoomInfo[room_id][cSQLID]
                     );
@@ -672,7 +672,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 
             ComplexRoomInfo[room_id][cValue] = value;
 
-            format(query, sizeof(query), "UPDATE `server_complex_rooms` SET `value` = '%d' WHERE `id` = '%d'",
+            format(query, sizeof(query), "UPDATE server_complex_rooms SET value = '%d' WHERE id = '%d'",
                 ComplexRoomInfo[room_id][cValue],
                 ComplexRoomInfo[room_id][cSQLID]
             );
@@ -695,7 +695,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
             SendClientMessage(playerid, COLOR_RED, "[ ! ] Uspjesno si promjenio naziv kompleksa.");
             // TODO: strcpy
             format(ComplexInfo[complex_id][cName], 25, inputtext);
-            mysql_format(g_SQL, query, sizeof(query), "UPDATE `server_complex` SET `name` = '%e' WHERE `id` = '%d'",
+            mysql_format(g_SQL, query, sizeof(query), "UPDATE server_complex SET name = '%e' WHERE id = '%d'",
                 ComplexInfo[complex_id][cName],
                 ComplexInfo[complex_id][cSQLID]
             );
@@ -770,19 +770,19 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                 PlayerInfo[playerid][pSpawnChange] = 3;
 
                 new query[128];
-                format(query, sizeof(query), "UPDATE `server_complex` SET `owner_id` = '%d' WHERE `id` = '%d'",
+                format(query, sizeof(query), "UPDATE server_complex SET owner_id = '%d' WHERE id = '%d'",
                     ComplexInfo[complex_id][cOwnerID],
                     ComplexInfo[complex_id][cSQLID]
                 );
                 mysql_tquery(g_SQL, query);
 
-                format(query, sizeof(query), "UPDATE accounts SET `spawnchange` = '%d' WHERE sqlid = '%d'",
+                format(query, sizeof(query), "UPDATE accounts SET spawnchange = '%d' WHERE sqlid = '%d'",
                     PlayerInfo[playerid][pSpawnChange],
                     PlayerInfo[playerid][pSQLID]
                 );
                 mysql_tquery(g_SQL, query);
 
-                format(query, sizeof(query), "UPDATE accounts SET `spawnchange` = '%d' WHERE sqlid = '%d'",
+                format(query, sizeof(query), "UPDATE accounts SET spawnchange = '%d' WHERE sqlid = '%d'",
                     PlayerInfo[pID][pSpawnChange],
                     PlayerInfo[pID][pSQLID]
                 );
@@ -876,7 +876,7 @@ CMD:buycomplex(playerid, params[])
     PlayerPlayTrackSound(playerid);
 
     new query[84];
-    format(query, sizeof(query), "UPDATE `server_complex` SET `owner_id` = '%d' WHERE `id` = '%d'",
+    format(query, sizeof(query), "UPDATE server_complex SET owner_id = '%d' WHERE id = '%d'",
         PlayerInfo[playerid][pSQLID],
         ComplexInfo[complex][cSQLID]
     );
@@ -933,13 +933,13 @@ CMD:rentroom(playerid, params[])
     ComplexRoomInfo[complex][cOwnerID] = PlayerInfo[playerid][pSQLID];
 
     new query[88];
-    format(query, sizeof(query), "UPDATE `server_complex_rooms` SET `ownerid` = '%d' WHERE `id` = '%d'",
+    format(query, sizeof(query), "UPDATE server_complex_rooms SET ownerid = '%d' WHERE id = '%d'",
         PlayerInfo[playerid][pSQLID],
         ComplexRoomInfo[complex][cSQLID]
     );
     mysql_tquery(g_SQL, query);
 
-    format(query, sizeof(query), "UPDATE accounts SET `spawnchange` = '%d' WHERE sqlid = '%d'",
+    format(query, sizeof(query), "UPDATE accounts SET spawnchange = '%d' WHERE sqlid = '%d'",
         PlayerInfo[playerid][pSpawnChange],
         PlayerInfo[playerid][pSQLID]
     );
@@ -969,7 +969,7 @@ CMD:unrentroom(playerid, params[])
     if (complex_id == INVALID_COMPLEX_ID) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Vi nemate zakupljenu sobu!");
 
     new query[188];
-    format(query, sizeof(query), "UPDATE `server_complex_rooms` SET `ownerid` = '0' WHERE `id` = '%d'",
+    format(query, sizeof(query), "UPDATE server_complex_rooms SET ownerid = '0' WHERE id = '%d'",
         ComplexRoomInfo[complex_id][cSQLID]
     );
     mysql_tquery(g_SQL, query);

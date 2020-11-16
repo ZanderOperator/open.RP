@@ -24,7 +24,7 @@ stock LoadPlayerSkills(playerid)
 {
 	new 
 		tmpQuery[128];
-	format(tmpQuery, 128, "SELECT * FROM `skill` WHERE `player_id` = '%d' LIMIT 0,1",
+	format(tmpQuery, 128, "SELECT * FROM skill WHERE player_id = '%d' LIMIT 0,1",
 		PlayerInfo[playerid][pSQLID]
 	);
 	mysql_tquery(g_SQL, tmpQuery, "OnPlayerSkillsLoad", "i", playerid);
@@ -66,7 +66,7 @@ SavePlayerSkill(playerid)
 	new
 		skillQuery[ 256 ];
 		
-	format(skillQuery, 256, "UPDATE `skill` SET `skill0` = '%d', `skill1` = '%d', `skill2` = '%d', `skill3` = '%d', `skill4` = '%d', `skill5` = '%d', `skill6` = '%d', `skill7` = '%d', `skill8` = '%d' WHERE `player_id` = '%d'",
+	format(skillQuery, 256, "UPDATE skill SET skill0 = '%d', skill1 = '%d', skill2 = '%d', skill3 = '%d', skill4 = '%d', skill5 = '%d', skill6 = '%d', skill7 = '%d', skill8 = '%d' WHERE player_id = '%d'",
 		PlayerInfo[playerid][pSkills][0],
 		PlayerInfo[playerid][pSkills][1],
 		PlayerInfo[playerid][pSkills][2],
@@ -126,7 +126,7 @@ public OnPlayerSkillsLoad(playerid)
 		new
 			skillQuery[ 300 ];
 
-		format(skillQuery, sizeof(skillQuery), "INSERT INTO `skill` (`player_id`, `skill0`, `skill1`, `skill2`, `skill3`, `skill4`, `skill5`, `skill6`, `skill7`, `skill8`) VALUES ('%d', '%d', '%d', '%d', '%d', '%d', '%d', '%d', '%d', '%d')",
+		format(skillQuery, sizeof(skillQuery), "INSERT INTO skill (player_id, skill0, skill1, skill2, skill3, skill4, skill5, skill6, skill7, skill8) VALUES ('%d', '%d', '%d', '%d', '%d', '%d', '%d', '%d', '%d', '%d')",
 			PlayerInfo[playerid][pSQLID],
 			PlayerInfo[playerid][pSkills][0],
 			PlayerInfo[playerid][pSkills][1],

@@ -696,7 +696,7 @@ stock LoadPlayerObjects(playerid)
 {
 	new
 		tmpQuery[128];
-	format(tmpQuery, 128, "SELECT * FROM `player_objects` WHERE `player_id` = '%d' LIMIT 0,7",
+	format(tmpQuery, 128, "SELECT * FROM player_objects WHERE player_id = '%d' LIMIT 0,7",
 		PlayerInfo[playerid][pSQLID]
 	);
 	mysql_tquery(g_SQL, tmpQuery, "OnPlayerObjectsLoad", "i", playerid);
@@ -709,7 +709,7 @@ stock InsertObjectSlot(playerid, slot)
 	
 	if(PlayerObject[playerid][slot][poSQLID] == -1)
 	{
-		format(mysqlInsert, sizeof(mysqlInsert), "INSERT INTO `player_objects` (`player_id`, `model`, `placed`, `bone`) VALUES ('%d', '%d', '%d', '%d')",
+		format(mysqlInsert, sizeof(mysqlInsert), "INSERT INTO player_objects (player_id, model, placed, bone) VALUES ('%d', '%d', '%d', '%d')",
 			PlayerInfo[playerid][pSQLID],
 			PlayerObject[playerid][slot][poModelid],
 			PlayerObject[playerid][slot][poPlaced],
@@ -725,7 +725,7 @@ stock SaveObjectSlot(playerid, slot)
 	new mysqlUpdate[ 512 ];
 	if(PlayerObject[playerid][slot][poSQLID] != -1 && PlayerObject[playerid][slot][poModelid] != -1)
 	{
-		format(mysqlUpdate, sizeof(mysqlUpdate), "UPDATE `player_objects` SET  `placed` = '%d', `bone` = '%d', `posX` = '%f', `posY` = '%f', `posZ` = '%f', `rotX` = '%f', `rotY` = '%f', `rotZ` = '%f', `sizeX` = '%f', `sizeY` = '%f', `sizeZ` = '%f', `color1` = '%d', `color2` = '%d' WHERE sqlid= '%d'",
+		format(mysqlUpdate, sizeof(mysqlUpdate), "UPDATE player_objects SET  placed = '%d', bone = '%d', posX = '%f', posY = '%f', posZ = '%f', rotX = '%f', rotY = '%f', rotZ = '%f', sizeX = '%f', sizeY = '%f', sizeZ = '%f', color1 = '%d', color2 = '%d' WHERE sqlid= '%d'",
 			PlayerObject[playerid][slot][poPlaced],
 			PlayerObject[playerid][slot][poBoneId],
 			PlayerObject[playerid][slot][poPosX],
@@ -751,7 +751,7 @@ stock DeleteObjectSlot(playerid, slot)
 {
 	new
 		deleteObject[90];
-	format(deleteObject, 90, "DELETE FROM `player_objects` WHERE sqlid = '%d' AND player_id = '%d'",
+	format(deleteObject, 90, "DELETE FROM player_objects WHERE sqlid = '%d' AND player_id = '%d'",
 		PlayerObject[playerid][slot][poSQLID],
 		PlayerInfo[playerid][pSQLID]
 	);

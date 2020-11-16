@@ -2258,7 +2258,7 @@ CMD:impound(playerid, params[])
 
     new
         query[200];
-    format(query, sizeof(query), "UPDATE `cocars` SET `parkX` = '%f', `parkY` = '%f', `parkZ` = '%f', `angle` = '%f', `impounded` = '%d' WHERE `id` = '%d'",
+    format(query, sizeof(query), "UPDATE cocars SET parkX = '%f', parkY = '%f', parkZ = '%f', angle = '%f', impounded = '%d' WHERE id = '%d'",
         X,
         Y,
         Z,
@@ -2294,7 +2294,7 @@ CMD:payimpound(playerid, params[])
 
     new
         tmpQuery[128];
-    format(tmpQuery, sizeof(tmpQuery), "UPDATE cocars SET `impounded` = '%d' WHERE id = '%d'",
+    format(tmpQuery, sizeof(tmpQuery), "UPDATE cocars SET impounded = '%d' WHERE id = '%d'",
         VehicleInfo[vehicleid][vImpounded],
         VehicleInfo[vehicleid][vSQLID]
     );
@@ -2593,7 +2593,7 @@ CMD:cleartrunk(playerid, params[])
     {
         if (VehicleInfo[vehicleid][vWeaponSQLID][wslot] != -1)
         {
-            format(query, sizeof(query), "DELETE FROM `cocars_weapons` WHERE `id` = '%d'",
+            format(query, sizeof(query), "DELETE FROM cocars_weapons WHERE id = '%d'",
                 VehicleInfo[vehicleid][vWeaponSQLID][wslot]
             );
             mysql_tquery(g_SQL, query);

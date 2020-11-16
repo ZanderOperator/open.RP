@@ -52,7 +52,7 @@ stock LoadPlayerSkills(playerid, jobid)
 {
 	new
 		tmpQuery[ 128 ];
-	format( tmpQuery, 128, "SELECT * FROM `skills` WHERE `id` = '%d' AND jobid = '%d'", PlayerInfo[ playerid ][ pSQLID ], jobid );
+	format( tmpQuery, 128, "SELECT * FROM skills WHERE id = '%d' AND jobid = '%d'", PlayerInfo[ playerid ][ pSQLID ], jobid );
 	mysql_pquery(g_SQL, tmpQuery, "OnPlayerSkillsLoad", "ii", playerid, jobid);
 }
 
@@ -102,7 +102,7 @@ stock DeletePlayerSkill(playerid, jobid)
 		
 	new
 		tmpQuery[ 128 ];
-	format( tmpQuery, 128, "DELETE * FROM `skills` WHERE `id` = '%d' AND jobid = '%d'", PlayerInfo[ playerid ][ pSQLID ], jobid );
+	format( tmpQuery, 128, "DELETE * FROM skills WHERE id = '%d' AND jobid = '%d'", PlayerInfo[ playerid ][ pSQLID ], jobid );
 	mysql_tquery(g_SQL, tmpQuery, "", "");
 	return 1;
 }

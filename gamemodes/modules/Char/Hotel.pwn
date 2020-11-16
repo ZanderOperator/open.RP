@@ -67,7 +67,7 @@ hook OnGameModeInit()
 	hotel_maps = CreateDynamicObject(19325, -330.081207, 1543.675659, 1909.768676, -0.099999, -0.100003, -46.100040, -1, -1, -1, 300.00, 300.00);
 	SetDynamicObjectMaterialText(hotel_maps, 0, "SKYLINE", 140, "Ariel", 120, 1, 0xFF000000, 0x00000000, 1);
 	hotel_maps = CreateDynamicObject(19325, -330.081207, 1543.672607, 1908.968261, -0.099999, -0.100003, -46.100040, -1, -1, -1, 300.00, 300.00);
-	SetDynamicObjectMaterialText(hotel_maps, 0, "`FEEL THE CLASS`", 140, "Ariel", 50, 1, 0xFF000000, 0x00000000, 1);
+	SetDynamicObjectMaterialText(hotel_maps, 0, "FEEL THE CLASS", 140, "Ariel", 50, 1, 0xFF000000, 0x00000000, 1);
 	hotel_maps = CreateDynamicObject(14599, -323.250488, 1557.844848, 1906.579345, 0.000000, 0.000000, 0.000000, -1, -1, -1, 300.00, 300.00);
 	SetDynamicObjectMaterial(hotel_maps, 0, 19297, "matlights", "invisible", 0x00000000);
 	SetDynamicObjectMaterial(hotel_maps, 2, 19297, "matlights", "invisible", 0x00000000);

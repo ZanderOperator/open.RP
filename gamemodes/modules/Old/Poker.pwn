@@ -109,7 +109,7 @@ static stock
 	 ######     ##     #######   ######  ##    ##  ######  
 */
 stock LoadPokerTables() {
-	mysql_tquery(g_SQL, "SELECT * FROM `pokertables` WHERE 1", "OnPokerTablesLoad");
+	mysql_tquery(g_SQL, "SELECT * FROM pokertables WHERE 1", "OnPokerTablesLoad");
 }
 
 stock static GetCardNameByID(cardid) {
@@ -449,7 +449,7 @@ static stock PotToPlayerMoney ( giveplayerid, tableid, money )
 		{
 			BizzInfo[bizzid][bTill] += bizudio;				// Biznis dobiva 10% pota
 			
-			format(tillUpdate, 60, "UPDATE `bizzes` SET `till` = '%d' WHERE `id` = '%d'",
+			format(tillUpdate, 60, "UPDATE bizzes SET till = '%d' WHERE id = '%d'",
 				BizzInfo[bizzid][bTill],
 				BizzInfo[bizzid][bSQLID]
 			);

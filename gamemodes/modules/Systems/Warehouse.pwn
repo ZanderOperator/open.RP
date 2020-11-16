@@ -113,7 +113,7 @@ stock ResetWarehouseEnum(wh)
 stock LoadFactionWarehouse(factionid)
 {
     new query[128];
-    format(query, sizeof(query), "SELECT * FROM `server_warehouses` WHERE `fid` = '%d'",
+    format(query, sizeof(query), "SELECT * FROM server_warehouses WHERE fid = '%d'",
         FactionInfo[factionid][fID]
     );
     mysql_tquery(g_SQL, query, "OnWarehouseLoaded", "i", factionid);
@@ -150,7 +150,7 @@ stock LoadWarehouseWeapons(factid)
     new query[128],
         whid = FetchWarehouseEnumFromFaction(factid);
 
-    format(query, sizeof(query), "SELECT * FROM `warehouse_weapons` WHERE `fid` = '%d'",
+    format(query, sizeof(query), "SELECT * FROM warehouse_weapons WHERE fid = '%d'",
         factid
     );
     mysql_tquery(g_SQL, query, "OnWarehouseWeaponsLoaded", "i", whid);
@@ -185,7 +185,7 @@ stock PutWeaponInWarehouse(playerid, weaponid, ammo)
     WarehouseWeapons[whid][wslot][whWeaponId] = weaponid;
     WarehouseWeapons[whid][wslot][whAmmo] = ammo;
 
-    format(query, sizeof(query), "INSERT INTO `warehouse_weapons`(`fid`, `weaponid`, `ammo`) VALUES ('%d','%d','%d')",
+    format(query, sizeof(query), "INSERT INTO warehouse_weapons(fid, weaponid, ammo) VALUES ('%d','%d','%d')",
         FactionInfo[fid][fID],
         weaponid,
         ammo
@@ -334,7 +334,7 @@ stock ListWarehouseWeapons(whid)
 stock RemoveWeaponFromWarehouse(whid, weaponslot)
 {
     new query[84];
-    format(query, sizeof(query), "DELETE FROM `warehouse_weapons` WHERE `id` = '%d'", WarehouseWeapons[whid][weaponslot][whWeaponSQL]);
+    format(query, sizeof(query), "DELETE FROM warehouse_weapons WHERE id = '%d'", WarehouseWeapons[whid][weaponslot][whWeaponSQL]);
     mysql_tquery(g_SQL, query);
 
     WarehouseWeapons[whid][weaponslot][whWeaponSQL] = -1;
@@ -351,7 +351,7 @@ stock RemoveWeaponsFromWarehouse(whid)
     new query[84];
     foreach(new weaponslot: WhWeapons[whid])
     {
-        format(query, sizeof(query), "DELETE FROM `warehouse_weapons` WHERE `id` = '%d'", WarehouseWeapons[whid][weaponslot][whWeaponSQL]);
+        format(query, sizeof(query), "DELETE FROM warehouse_weapons WHERE id = '%d'", WarehouseWeapons[whid][weaponslot][whWeaponSQL]);
         mysql_tquery(g_SQL, query);
 
         WarehouseWeapons[whid][weaponslot][whWeaponSQL] = -1;
@@ -366,7 +366,7 @@ stock RemoveWeaponsFromWarehouse(whid)
 stock UpdateWarehouseLock(wh)
 {
     new query[84];
-    format(query, sizeof(query), "UPDATE `server_warehouses` SET `lock`='%d' WHERE `fid`='%d'",
+    format(query, sizeof(query), "UPDATE server_warehouses SET lock='%d' WHERE fid='%d'",
         WarehouseInfo[wh][whLocked],
         WarehouseInfo[wh][whFactionSQLID]
     );
@@ -377,7 +377,7 @@ stock UpdateWarehouseLock(wh)
 stock UpdateWarehouseMoney(wh)
 {
     new query[84];
-    format(query, sizeof(query), "UPDATE `server_warehouses` SET `money`='%d' WHERE `fid`='%d'",
+    format(query, sizeof(query), "UPDATE server_warehouses SET money='%d' WHERE fid='%d'",
         WarehouseInfo[wh][whMoney],
         WarehouseInfo[wh][whFactionSQLID]
     );
@@ -392,7 +392,7 @@ stock MoveWarehouse(wh, Float:x, Float:y, Float:z)
     WarehouseInfo[wh][whEnter][2] = z;
 
     new query[180];
-    format(query, sizeof(query), "UPDATE `server_warehouses` SET `enterX`='%f', `enterY`='%f', `enterZ`='%f' WHERE `fid`='%d'",
+    format(query, sizeof(query), "UPDATE server_warehouses SET enterX='%f', enterY='%f', enterZ='%f' WHERE fid='%d'",
         x,
         y,
         z,
@@ -421,7 +421,7 @@ stock AddWarehouse(wh, factionid, Float:x, Float:y, Float:z)
     WarehouseInfo[wh][whPickupID] =  CreateDynamicPickup(1239, 1, WarehouseInfo[wh][whVault][0], WarehouseInfo[wh][whVault][1], WarehouseInfo[wh][whVault][2], WarehouseInfo[wh][whViwo], WarehouseInfo[wh][whInt], -1);
 
     new query[350];
-    format(query, sizeof(query), "INSERT INTO `server_warehouses`(`fid`, `enterX`, `enterY`, `enterZ`, `exitX` , `exitY` , `exitZ`, `vaultX`, `vaultY`, `vaultZ`, `int`, `viwo`, `lock`, `money`) VALUES ('%d','%f','%f','%f','%f','%f','%f','%f','%f','%f','%d','%d','%d','%d')",
+    format(query, sizeof(query), "INSERT INTO server_warehouses(fid, enterX, enterY, enterZ, exitX , exitY , exitZ, vaultX, vaultY, vaultZ, int, viwo, lock, money) VALUES ('%d','%f','%f','%f','%f','%f','%f','%f','%f','%f','%d','%d','%d','%d')",
         WarehouseInfo[wh][whFactionSQLID],
         WarehouseInfo[wh][whEnter][0],
         WarehouseInfo[wh][whEnter][1],
@@ -445,7 +445,7 @@ stock AddWarehouse(wh, factionid, Float:x, Float:y, Float:z)
 stock RemoveWarehouse(wh)
 {
     new query[84];
-    format(query, sizeof(query), "DELETE FROM `server_warehouses` WHERE `fid` = '%d'", WarehouseInfo[wh][whFactionSQLID]);
+    format(query, sizeof(query), "DELETE FROM server_warehouses WHERE fid = '%d'", WarehouseInfo[wh][whFactionSQLID]);
     mysql_tquery(g_SQL, query);
 
     RemoveWeaponsFromWarehouse(wh);
@@ -743,7 +743,7 @@ stock TransferWarehouseGoods(rwhid, vwhid)
     {
         foreach(new wslot: WhWeapons[vwhid])
         {
-            format(query, sizeof(query), "UPDATE `warehouse_weapons` SET `fid`='%d' WHERE `id`='%d'",
+            format(query, sizeof(query), "UPDATE warehouse_weapons SET fid='%d' WHERE id='%d'",
                 FactionInfo[robberfid][fID],
                 WarehouseWeapons[vwhid][wslot][whWeaponSQL]
             );

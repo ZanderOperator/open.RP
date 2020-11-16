@@ -101,7 +101,7 @@ stock LoadPlayerDog(playerid)
 {
 	new
 		tmpQuery[128];
-	format(tmpQuery, 128, "SELECT * FROM `player_dogs` WHERE `player_id` = '%d' LIMIT 0,1",
+	format(tmpQuery, 128, "SELECT * FROM player_dogs WHERE player_id = '%d' LIMIT 0,1",
 		PlayerInfo[playerid][pSQLID]
 	);
 	mysql_tquery(g_SQL, tmpQuery, "LoadingPlayerDogs", "i", playerid);
@@ -128,7 +128,7 @@ stock static PlayerBuyDog(playerid, listitem)
 	// MySQL
 	new
 		dogBuyQuery[256];
-	format(dogBuyQuery, 256, "INSERT INTO `player_dogs`(`player_id`, `modelid`, `interior`, `viwo`, `spawn_x`, `spawn_y`, `spawn_z`) VALUES ('%d','%d','%d','%d','%f','%f','%f')",
+	format(dogBuyQuery, 256, "INSERT INTO player_dogs(player_id, modelid, interior, viwo, spawn_x, spawn_y, spawn_z) VALUES ('%d','%d','%d','%d','%f','%f','%f')",
 		PlayerInfo[playerid][pSQLID],
 		PlayerDog[playerid][pdModelId],
 		PlayerDog[playerid][pdInterior],
@@ -387,7 +387,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 		// MySQL
 		new
 			dogDelQuery[76];
-		format(dogDelQuery, 76, "DELETE FROM `player_dogs`WHERE `player_id` = '%d' AND `id` = '%d'",
+		format(dogDelQuery, 76, "DELETE FROM player_dogsWHERE player_id = '%d' AND id = '%d'",
 			PlayerInfo[playerid][pSQLID],
 			PlayerDog[playerid][pdSQLID]
 		);
@@ -584,7 +584,7 @@ CMD:dog(playerid, params[])
 		
 		// MySQL
 		new spotQuery[256];
-		format(spotQuery, 256, "UPDATE `player_dogs` SET `interior`='%d',`viwo`='%d',`spawn_x`='%f',`spawn_y`='%f',`spawn_z`='%f' WHERE `id` = '%d'",
+		format(spotQuery, 256, "UPDATE player_dogs SET interior='%d',viwo='%d',spawn_x='%f',spawn_y='%f',spawn_z='%f' WHERE id = '%d'",
 			PlayerDog[playerid][pdInterior],
 			PlayerDog[playerid][pdViwo],
 			PlayerDog[playerid][pdSpawnPosX],

@@ -153,11 +153,11 @@ stock SetServerWeather()
 
 /*
 	.d8888. d8b   db d888888b    d88b d88888b  d888b  
-	88'  YP 888o  88   `88'      `8P' 88'     88' Y8b 
-	`8bo.   88V8o 88    88        88  88ooooo 88      
-	  `Y8b. 88 V8o88    88        88  88~~~~~ 88  ooo 
+	88'  YP 888o  88   88'      8P' 88'     88' Y8b 
+	8bo.   88V8o 88    88        88  88ooooo 88      
+	  Y8b. 88 V8o88    88        88  88~~~~~ 88  ooo 
 	db   8D 88  V888   .88.   db. 88  88.     88. ~8~ 
-	`8888Y' VP   V8P Y888888P Y8888P  Y88888P  Y888P  
+	8888Y' VP   V8P Y888888P Y8888P  Y88888P  Y888P  
 */
 stock StartSnowFallingForPlayer(playerid)
 {
@@ -210,7 +210,7 @@ stock DestroyPlayerSnow(playerid)
 
 /*
 	db      d88888b d8888b.
-	88      88'     88  `8D
+	88      88'     88  8D
 	88      88ooooo 88   88
 	88      88~~~~~ 88   88
 	88booo. 88.     88  .8D
@@ -270,10 +270,10 @@ public OnPlayerSnowingMove(playerid)
 
 /*
 	d888888b d88888b .88b  d88. d8888b. d88888b d8888b.  .d8b.  d888888b db    db d8888b.  .d8b.
-	`~~88~~' 88'     88'YbdP`88 88  `8D 88'     88  `8D d8' `8b `~~88~~' 88    88 88  `8D d8' `8b
+	~~88~~' 88'     88'YbdP88 88  8D 88'     88  8D d8' 8b ~~88~~' 88    88 88  8D d8' 8b
 	   88    88ooooo 88  88  88 88oodD' 88ooooo 88oobY' 88ooo88    88    88    88 88oobY' 88ooo88
-	   88    88~~~~~ 88  88  88 88~~~   88~~~~~ 88`8b   88~~~88    88    88    88 88`8b   88~~~88
-	   88    88.     88  88  88 88      88.     88 `88. 88   88    88    88b  d88 88 `88. 88   88
+	   88    88~~~~~ 88  88  88 88~~~   88~~~~~ 888b   88~~~88    88    88    88 888b   88~~~88
+	   88    88.     88  88  88 88      88.     88 88. 88   88    88    88b  d88 88 88. 88   88
 	   YP    Y88888P YP  YP  YP 88      Y88888P 88   YD YP   YP    YP    ~Y8888P' 88   YD YP   YP
 */
 /* stock CreateTempTextdraws(playerid)
@@ -398,10 +398,10 @@ stock DestroyTempTextDraws(playerid)
 */
 /*
 	d888888b d88888b .88b  d88. d8888b. d88888b d8888b.  .d8b.  d888888b db    db d8888b.  .d8b.
-	`~~88~~' 88'     88'YbdP`88 88  `8D 88'     88  `8D d8' `8b `~~88~~' 88    88 88  `8D d8' `8b
+	~~88~~' 88'     88'YbdP88 88  8D 88'     88  8D d8' 8b ~~88~~' 88    88 88  8D d8' 8b
 	   88    88ooooo 88  88  88 88oodD' 88ooooo 88oobY' 88ooo88    88    88    88 88oobY' 88ooo88
-	   88    88~~~~~ 88  88  88 88~~~   88~~~~~ 88`8b   88~~~88    88    88    88 88`8b   88~~~88
-	   88    88.     88  88  88 88      88.     88 `88. 88   88    88    88b  d88 88 `88. 88   88
+	   88    88~~~~~ 88  88  88 88~~~   88~~~~~ 888b   88~~~88    88    88    88 888b   88~~~88
+	   88    88.     88  88  88 88      88.     88 88. 88   88    88    88b  d88 88 88. 88   88
 	   YP    Y88888P YP  YP  YP 88      Y88888P 88   YD YP   YP    YP    ~Y8888P' 88   YD YP   YP
 */
 hook OnPlayerInteriorChange(playerid, newinteriorid, oldinteriorid)
@@ -516,7 +516,7 @@ hook OnPlayerSpawn(playerid)
 
 /*
 	db      d88888b d8888b.
-	88      88'     88  `8D
+	88      88'     88  8D
 	88      88ooooo 88   88
 	88      88~~~~~ 88   88
 	88booo. 88.     88  .8D
@@ -1435,11 +1435,11 @@ hook OnPlayerLeaveDynArea(playerid, areaid)
 
 /*
 	.d8888. d8b   db d888888b    d88b d88888b  d888b  
-	88'  YP 888o  88   `88'      `8P' 88'     88' Y8b 
-	`8bo.   88V8o 88    88        88  88ooooo 88      
-	  `Y8b. 88 V8o88    88        88  88~~~~~ 88  ooo 
+	88'  YP 888o  88   88'      8P' 88'     88' Y8b 
+	8bo.   88V8o 88    88        88  88ooooo 88      
+	  Y8b. 88 V8o88    88        88  88~~~~~ 88  ooo 
 	db   8D 88  V888   .88.   db. 88  88.     88. ~8~ 
-	`8888Y' VP   V8P Y888888P Y8888P  Y88888P  Y888P  
+	8888Y' VP   V8P Y888888P Y8888P  Y88888P  Y888P  
 */
 
 public OnPlayerObjectMoved(playerid, objectid)

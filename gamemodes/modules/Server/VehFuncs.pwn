@@ -123,7 +123,7 @@ stock GetPlayerVehicleList(playerid)
 {
 	new
 		tmpQuery[128];
-	format(tmpQuery, 128, "SELECT * FROM `cocars` WHERE `ownerid` = '%d' LIMIT 0,%d",
+	format(tmpQuery, 128, "SELECT * FROM cocars WHERE ownerid = '%d' LIMIT 0,%d",
 		PlayerInfo[playerid][pSQLID],
 		MAX_PLAYER_CARS
 	);

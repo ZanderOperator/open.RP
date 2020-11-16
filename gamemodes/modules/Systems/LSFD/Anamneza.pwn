@@ -20,7 +20,7 @@ stock InsertPlayerCarton(playerid, giveplayerid, const disease[])
 		tmpQuery[ 258 ];
 	getdate(Year, Month, Day);
 	format( date, 24, "%02d.%02d.%d.", Day, Month, Year);
-	mysql_format(g_SQL, tmpQuery, sizeof(tmpQuery), "INSERT INTO anamneza (`pacient`, `disease`, `doctor`, `date`) VALUES ('%e', '%e', '%e', '%e')",
+	mysql_format(g_SQL, tmpQuery, sizeof(tmpQuery), "INSERT INTO anamneza (pacient, disease, doctor, date) VALUES ('%e', '%e', '%e', '%e')",
 		GetName(giveplayerid,false),
 		disease,
 		GetName(playerid,false),
@@ -34,7 +34,7 @@ stock static DeletePlayerCarton(playerid, sqlid)
 {
 	new
 		destroyQuery[ 64 ];
-	format( destroyQuery, sizeof(destroyQuery), "DELETE FROM anamneza WHERE `id` = '%d'", sqlid);
+	format( destroyQuery, sizeof(destroyQuery), "DELETE FROM anamneza WHERE id = '%d'", sqlid);
 	mysql_tquery(g_SQL, destroyQuery);
 	SendFormatMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uspjesno ste obrisali karton broj: #%d!", sqlid);
 }
@@ -43,7 +43,7 @@ stock CheckPlayerCarton(playerid, const name[])
 {
 	new financesQuery[160];
 		
-	mysql_format(g_SQL, financesQuery, sizeof(financesQuery), "SELECT * FROM anamneza WHERE `pacient` = '%e' ORDER BY id DESC", name );
+	mysql_format(g_SQL, financesQuery, sizeof(financesQuery), "SELECT * FROM anamneza WHERE pacient = '%e' ORDER BY id DESC", name );
 	mysql_tquery(g_SQL, financesQuery, "OnPlayerCartonFinish", "is", playerid, name);
 	return 1;
 }

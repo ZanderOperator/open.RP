@@ -98,7 +98,7 @@ CMD:ticket(playerid, params[])
         );
 
         new query[55];
-        format(query, sizeof(query), "DELETE FROM `cocars_tickets` WHERE `id` = '%d'", VehicleInfo[vehicleid][vTicketsSQLID][tmpSlot]);
+        format(query, sizeof(query), "DELETE FROM cocars_tickets WHERE id = '%d'", VehicleInfo[vehicleid][vTicketsSQLID][tmpSlot]);
         mysql_tquery(g_SQL, query);
 
         VehicleInfo[vehicleid][vTicketsSQLID][tmpSlot]    = 0;
@@ -174,7 +174,7 @@ CMD:giveticket(playerid, params[])
 
                 new
                     ticketInsertQuery[256];
-                mysql_format(g_SQL, ticketInsertQuery, 256, "INSERT INTO `cocars_tickets`(`vehicle_id`, `isShown`, `price`, `reason`, `time`) VALUES ('%d','0','%d','%e','%d')",
+                mysql_format(g_SQL, ticketInsertQuery, 256, "INSERT INTO cocars_tickets(vehicle_id, isShown, price, reason, time) VALUES ('%d','0','%d','%e','%d')",
                     VehicleInfo[vehicleid][vSQLID],
                     VehicleInfo[vehicleid][vTickets][t],
                     reason,

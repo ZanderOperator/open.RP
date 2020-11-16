@@ -136,7 +136,7 @@ CheckPlayerInactivity(playerid)
 		if(!cache_num_rows())
 			return 1;
 		
-		mysql_fquery(g_SQL, "DELETE FROM `inactive_accounts` WHERE sqlid = '%d'", PlayerInfo[playerid][pSQLID]);
+		mysql_fquery(g_SQL, "DELETE FROM inactive_accounts WHERE sqlid = '%d'", PlayerInfo[playerid][pSQLID]);
 		SendClientMessage(playerid, COLOR_LIGHTRED, "[SERVER]: Neaktivnost koju ste imali prijavljenu u bazi podataka je deaktivirana.");		
 		return 1;
 	}
@@ -621,7 +621,7 @@ stock IsEMailInDB(const email[])
 		Cache:result,
 		counts;
 	
-	mysql_format(g_SQL, emailQuery, sizeof(emailQuery), "SELECT * FROM accounts WHERE `email` = '%e'", email);
+	mysql_format(g_SQL, emailQuery, sizeof(emailQuery), "SELECT * FROM accounts WHERE email = '%e'", email);
 	result = mysql_query(g_SQL, emailQuery);
 	counts = cache_num_rows();
 	cache_delete(result);
@@ -668,14 +668,14 @@ SafeSpawnPlayer(playerid)
 	SafeSpawning[playerid] = true;
 
 	mysql_fquery(g_SQL,
-		"INSERT INTO `player_connects`(`player_id`, `time`, `aip`) VALUES ('%d','%d','%e')",
+		"INSERT INTO player_connects(player_id, time, aip) VALUES ('%d','%d','%e')",
 		PlayerInfo[playerid][pSQLID],
 		gettimestamp(),
 		GetPlayerIP(playerid)
 	);
 	
 	mysql_fquery(g_SQL,
-		 "UPDATE accounts SET `online` = '1' WHERE sqlid = '%d'",
+		 "UPDATE accounts SET online = '1' WHERE sqlid = '%d'",
 		 PlayerInfo[ playerid ][ pSQLID ]
 	);
 	
@@ -696,7 +696,7 @@ SafeSpawnPlayer(playerid)
 			UpdatePremiumHouseFurSlots(playerid, -1, PlayerInfo[ playerid ][ pHouseKey ]);
 
 		mysql_fquery(g_SQL,
-		 	"UPDATE accounts SET `vipRank` = '0', `vipTime` = '0' WHERE sqlid = '%d'",
+		 	"UPDATE accounts SET vipRank = '0', vipTime = '0' WHERE sqlid = '%d'",
 		 	PlayerInfo[ playerid ][ pSQLID ]
 		);
 	}

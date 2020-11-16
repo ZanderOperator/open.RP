@@ -138,22 +138,22 @@ saveDMV_License(playerid, license_id)
 	switch(license_id) {
 		case 0: {
 			PlayerInfo[ playerid ][ pCarLic ] = 1;
-			format(query, sizeof(query), "UPDATE `accounts` SET `carlic` = '1' WHERE `sqlid` = '%d'",PlayerInfo[playerid][pSQLID]);
+			format(query, sizeof(query), "UPDATE accounts SET carlic = '1' WHERE sqlid = '%d'",PlayerInfo[playerid][pSQLID]);
 		}
 		
 		case 1: {
 			PlayerInfo[ playerid ][ pBoatLic ] = 1;
-			format(query, sizeof(query), "UPDATE `accounts` SET `boatlic` = '1' WHERE `sqlid` = '%d'",PlayerInfo[playerid][pSQLID]);
+			format(query, sizeof(query), "UPDATE accounts SET boatlic = '1' WHERE sqlid = '%d'",PlayerInfo[playerid][pSQLID]);
 		}
 		
 		case 2: {
 			PlayerInfo[playerid][pFlyLic] = 1;
-			format(query, sizeof(query), "UPDATE `accounts` SET `flylic` = '1' WHERE `sqlid` = '%d'",PlayerInfo[playerid][pSQLID]);
+			format(query, sizeof(query), "UPDATE accounts SET flylic = '1' WHERE sqlid = '%d'",PlayerInfo[playerid][pSQLID]);
 		}
 		
 		case 3: {
 			PlayerInfo[playerid][pFishLic] = 1;
-			format(query, sizeof(query), "UPDATE `accounts` SET `fishlic` = '1' WHERE `sqlid` = '%d'",PlayerInfo[playerid][pSQLID]);
+			format(query, sizeof(query), "UPDATE accounts SET fishlic = '1' WHERE sqlid = '%d'",PlayerInfo[playerid][pSQLID]);
 		}
 	}
 	return mysql_pquery(g_SQL, query);

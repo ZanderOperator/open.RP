@@ -91,7 +91,7 @@ stock GetPlayerPhoneNumber(sqlid)
 		number = 0,
 		numberstr[12];
 
-	format(playerQuery, sizeof(playerQuery), "SELECT `number` FROM `player_phones` WHERE `player_id` = '%d' AND `type` = '1'", sqlid);
+	format(playerQuery, sizeof(playerQuery), "SELECT number FROM player_phones WHERE player_id = '%d' AND type = '1'", sqlid);
 	result = mysql_query(g_SQL, playerQuery);
 	cache_get_value_index_int(0, 0, number);
 	cache_delete(result);
@@ -107,7 +107,7 @@ stock static OnPlayerKhawajaDataLoad(playerid, const playername[])
 {
 	new mysqlQuery[128];
 
-	format(mysqlQuery, 128, "SELECT * FROM accounts WHERE `name` = '%e' LIMIT 0,1", playername);
+	format(mysqlQuery, 128, "SELECT * FROM accounts WHERE name = '%e' LIMIT 0,1", playername);
 	inline OnPlayerMDCLoad()
 	{
 		if(!cache_num_rows())
@@ -198,7 +198,7 @@ stock static OnPlayerArrestDataLoad(playerid, const playername[])
 {
 	new mysqlQuery[128];
 
-	format(mysqlQuery, 128, "SELECT * FROM jail WHERE `suspect` = '%e'", playername);
+	format(mysqlQuery, 128, "SELECT * FROM jail WHERE suspect = '%e'", playername);
 	inline OnArrestLoad()
 	{
 		new buffer[ 2048];
@@ -251,7 +251,7 @@ stock static OnPlayerTicketsLoad(playerid, const playername[])
 {
 	new mysqlQuery[128];
 
-	format(mysqlQuery, 128, "SELECT * FROM tickets WHERE `primatelj` = '%e' LIMIT 10", playername);
+	format(mysqlQuery, 128, "SELECT * FROM tickets WHERE primatelj = '%e' LIMIT 10", playername);
 	inline OnTicketsLoad()
 	{
 		new buffer[ 2048 ];
@@ -310,7 +310,7 @@ stock static OnPlayerTicketsLoad(playerid, const playername[])
 stock static OnPlayerCoVehsLoad(playerid, playersqlid)
 {
 	new mysqlQuery[128];
-	format(mysqlQuery, 128, "SELECT * FROM cocars WHERE `ownerid` = '%d' AND numberplate != '' AND numberplate != '0' LIMIT 10", playersqlid);
+	format(mysqlQuery, 128, "SELECT * FROM cocars WHERE ownerid = '%d' AND numberplate != '' AND numberplate != '0' LIMIT 10", playersqlid);
 	inline OnCoVehicleLoad()
 	{
 		new buffer[ 2048 ];
@@ -370,7 +370,7 @@ stock static OnPlayerAPBLoad(playerid, const playername[])
 {
 	new mysqlQuery[128];
 
-	format(mysqlQuery, 128, "SELECT * FROM apb WHERE `suspect` = '%e'", playername);
+	format(mysqlQuery, 128, "SELECT * FROM apb WHERE suspect = '%e'", playername);
 	inline OnAPBLoad()
 	{
 		new buffer[ 2048 ];
@@ -426,7 +426,7 @@ stock GetAPBList(playerid)
 {
 	new mysqlQuery[128];
 
-	format(mysqlQuery, 128, "SELECT * FROM apb ORDER BY `id` DESC");
+	format(mysqlQuery, 128, "SELECT * FROM apb ORDER BY id DESC");
 	inline OnAPBListLoad()
 	{
 		if(!cache_num_rows())
@@ -480,7 +480,7 @@ stock GetSuspectAPB(playerid, const playername[])
 {
 	new mysqlQuery[128];
 
-	format(mysqlQuery, 128, "SELECT * FROM apb WHERE `suspect` = '%e'", playername);
+	format(mysqlQuery, 128, "SELECT * FROM apb WHERE suspect = '%e'", playername);
 	inline OnAPBLoad()
 	{
 		if(!cache_num_rows())
@@ -608,7 +608,7 @@ stock InsertPlayerMDCCrime(playerid, giveplayerid, reason[], jailtime)
 		tmpQuery[ 512 ];
 	mysql_tquery(g_SQL, "BEGIN");
 
-	format(tmpQuery, sizeof(tmpQuery), "INSERT INTO `jail` (`suspect`, `policeman`, `reason`, `jailtime`, `date`) VALUES ('%e', '%e', '%e', '%d', '%e')",
+	format(tmpQuery, sizeof(tmpQuery), "INSERT INTO jail (suspect, policeman, reason, jailtime, date) VALUES ('%e', '%e', '%e', '%d', '%e')",
 		JailInfo[ giveplayerid ][ jSuspectName ],
 		JailInfo[ giveplayerid ][ jPoliceName ],
 		JailInfo[ giveplayerid ][ jReason ],
@@ -623,7 +623,7 @@ stock static DeletePlayerMDCCrime(playerid, sqlid)
 {
 	new
 		destroyQuery[ 256 ];
-	format( destroyQuery, sizeof(destroyQuery), "DELETE FROM jail WHERE `id` = '%d'", sqlid);
+	format( destroyQuery, sizeof(destroyQuery), "DELETE FROM jail WHERE id = '%d'", sqlid);
 	mysql_tquery(g_SQL, destroyQuery, "");
 	SendFormatMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uspjesno ste obrisali dosje #%d!", sqlid);
 }
@@ -632,7 +632,7 @@ stock static InsertAPBInfo(playerid, const suspect[], const description[], type)
 {
 	new
 		tmpQuery[ 256 ];
-	format(tmpQuery, 256, "INSERT INTO `apb`(`suspect`, `description`, `type`, `pdname`) VALUES ('%e','%e','%d','%e')",
+	format(tmpQuery, 256, "INSERT INTO apb(suspect, description, type, pdname) VALUES ('%e','%e','%d','%e')",
 		suspect,
 		description,
 		type,
@@ -674,7 +674,7 @@ stock GetPlayerMDCRecord(playerid, const playername[])
 		tmp[ 32 ],
 		mysqlQuery[ 128 ];
 
-	format(mysqlQuery, 256, "SELECT * FROM jail WHERE `suspect` = '%e'", playername);
+	format(mysqlQuery, 256, "SELECT * FROM jail WHERE suspect = '%e'", playername);
 
 	inline OnSuspectLoad() {
 		format(buffer, sizeof(buffer), "{A4BDDE}ID | IME/PREZIME | OFFICER | RAZLOG | VRIJEME KAZNE | DATUM UHICENJA"COL_WHITE"\n");
@@ -2448,7 +2448,7 @@ hook OnPlayerClickPlayerTD(playerid, PlayerText:playertextid)
 				player_sqlid,
 				sqlstring[128];
 
-			format(sqlstring, sizeof(sqlstring), "SELECT sqlid FROM `accounts` WHERE `name` = '%e' LIMIT 0,1", TargetName[playerid]);
+			format(sqlstring, sizeof(sqlstring), "SELECT sqlid FROM accounts WHERE name = '%e' LIMIT 0,1", TargetName[playerid]);
 			result = mysql_query(g_SQL, sqlstring);
 			//counts = cache_num_rows();
 			cache_get_value_name_int(0, "sqlid"	, player_sqlid);

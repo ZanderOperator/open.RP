@@ -144,7 +144,7 @@ stock static InsertWOCrate(slotid) // Dodavanje package crate
 stock static DeleteWOCrate(slotid) // Delete package crate
 {
 	new destroyQuery[ 64];
-	format( destroyQuery, sizeof(destroyQuery), "DELETE FROM weapon_order_crates WHERE `id` = '%d' LIMIT 1", PlayerITInfo[ slotid ][ cSQLID ]);
+	format( destroyQuery, sizeof(destroyQuery), "DELETE FROM weapon_order_crates WHERE id = '%d' LIMIT 1", PlayerITInfo[ slotid ][ cSQLID ]);
 	mysql_tquery(g_SQL, destroyQuery);
 	return 1;
 }

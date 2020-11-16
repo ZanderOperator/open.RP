@@ -249,15 +249,15 @@ CMD:repaircar(playerid, params[])
 stock SavePayNSpray(sprayid)
 {
 	new string[1024];
-	format(string, sizeof(string), "UPDATE `paynsprays` SET \
-		`Status`=%d, \
-		`PosX`=%f, \
-		`PosY`=%f, \
-		`PosZ`=%f, \
-		`VW`=%d, \
-		`Int`=%d, \
-		`GroupCost`=%d, \
-		`RegCost`=%d WHERE `id`=%d",
+	format(string, sizeof(string), "UPDATE paynsprays SET \
+		Status=%d, \
+		PosX=%f, \
+		PosY=%f, \
+		PosZ=%f, \
+		VW=%d, \
+		Int=%d, \
+		GroupCost=%d, \
+		RegCost=%d WHERE id=%d",
 		PayNSprays[sprayid][pnsStatus],
 		PayNSprays[sprayid][pnsPosX],
 		PayNSprays[sprayid][pnsPosY],
@@ -311,14 +311,14 @@ stock RehashPayNSprays()
 stock LoadPayNSpray(sprayid)
 {
 	new string[128];
-	format(string, sizeof(string), "SELECT * FROM `paynsprays` WHERE `id`=%d", sprayid);
+	format(string, sizeof(string), "SELECT * FROM paynsprays WHERE id=%d", sprayid);
 	mysql_tquery(g_SQL, string, "OnLoadPayNSpray", "i", sprayid);
 }
 
 stock LoadPayNSprays()
 {
 	printf("[LoadPayNSprays] Loading data from database...");
-	mysql_tquery(g_SQL, "SELECT * FROM `paynsprays`", "OnLoadPayNSprays", "");
+	mysql_tquery(g_SQL, "SELECT * FROM paynsprays", "OnLoadPayNSprays", "");
 }
 
 forward OnLoadPayNSpray(index);

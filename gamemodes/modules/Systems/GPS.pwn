@@ -110,7 +110,7 @@ public on_GPScreate(gps_id)
 LoadGPS()
 {
     Iter_Clear(GPS_location);
-    mysql_tquery(g_SQL, "SELECT * FROM `gps`", "GPS_Load", "");
+    mysql_tquery(g_SQL, "SELECT * FROM gps", "GPS_Load", "");
     return 1;
 }
 
@@ -141,7 +141,7 @@ public GPS_Load()
 GPS_Save(gpsid)
 {
     new query[256];
-    mysql_format(g_SQL, query, sizeof(query), "UPDATE `gps` SET `gpsName` = '%e', `gpsPosX` = '%.4f', `gpsPosY` = '%.4f', `gpsPosZ` = '%.4f', `gpsMapIcon` = '%d', `admin_gps` = '%d' WHERE `id` = '%d'",
+    mysql_format(g_SQL, query, sizeof(query), "UPDATE gps SET gpsName = '%e', gpsPosX = '%.4f', gpsPosY = '%.4f', gpsPosZ = '%.4f', gpsMapIcon = '%d', admin_gps = '%d' WHERE id = '%d'",
         GPS_data[gpsid][gpsName],
         GPS_data[gpsid][gpsPos][0],
         GPS_data[gpsid][gpsPos][1],
@@ -166,7 +166,7 @@ Create_GPS(gps_name[], Float:X, Float:Y, Float:Z)
     GPS_data[free_id][gpsAdmin]    = 0;
 
     SetString(GPS_data[free_id][gpsName], gps_name);
-    mysql_tquery(g_SQL, "INSERT INTO `gps` (`gpsCreated`) VALUES(1)", "on_GPScreate", "d", free_id);
+    mysql_tquery(g_SQL, "INSERT INTO gps (gpsCreated) VALUES(1)", "on_GPScreate", "d", free_id);
     return free_id;
 }
 
@@ -179,7 +179,7 @@ Delete_GPS(gpsid)
     }
 
     new query[64];
-    format(query, sizeof(query), "DELETE FROM `gps` WHERE `id` = '%d'", GPS_data[gpsid][gpsID]);
+    format(query, sizeof(query), "DELETE FROM gps WHERE id = '%d'", GPS_data[gpsid][gpsID]);
     mysql_tquery(g_SQL, query);
 
     // TODO: SetString?! use strcpy

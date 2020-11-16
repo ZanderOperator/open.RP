@@ -151,7 +151,7 @@ BizVehicleDelete(biznis) {
 	BizzInfo[biznis][b_Vpos][2] = 0;
 	BizzInfo[biznis][b_Vpos][3] = 0;
 	
-	format(query, 64, "DELETE FROM `server_biznis_vehicles` WHERE id = '%d'", 
+	format(query, 64, "DELETE FROM server_biznis_vehicles WHERE id = '%d'", 
 		BizzInfo[biznis][b_VSQLID]
 	);
 	mysql_tquery(g_SQL, query, "", "");
@@ -183,7 +183,7 @@ BizVehicleBuy(playerid, vehicle_model, price, color) {
 	
 	//mySQL
 	new query[ 164 ];
-	format(query, sizeof(query), "INSERT INTO `server_biznis_vehicles` (`biznis_id`, `bVehModel`, `bVehColor`) VALUES ('%d','%d','%d')",
+	format(query, sizeof(query), "INSERT INTO server_biznis_vehicles (biznis_id, bVehModel, bVehColor) VALUES ('%d','%d','%d')",
 		BizzInfo[biznis][bSQLID],
 		vehicle_model,
 		color
@@ -339,7 +339,7 @@ public OnPlayerKeyStateChange(playerid, newkeys, oldkeys) {
 					BiznisProducts[bizid][bpAmount][i] = BiznisProducts[bizid][bpAmount][i] + (quantity);
 					PlayerStats[playerid][pProducts] = (0);					
 								
-					format(query, 100, "UPDATE `server_biznis_products` SET `amount` = '%d' WHERE `id` = '%d'",
+					format(query, 100, "UPDATE server_biznis_products SET amount = '%d' WHERE id = '%d'",
 						BiznisProducts[bizid][bpAmount][i],
 						BiznisProducts[bizid][bpSQLID][i]
 					);
@@ -387,7 +387,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) {
 				_BizVehicleEPos[playerid] = (false);
 				SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uspjesno ste postavili poziciju za vase vozilo u firmi, da ga kontrolirate kucajte /products.");
 				
-				format(query, 165, "UPDATE `server_biznis_vehicles` SET `bVehPos1` = '%f', `bVehPos2` = '%f', `bVehPos3` = '%f', `bVehPos4` = '%f'  WHERE `id` = '%d'",
+				format(query, 165, "UPDATE server_biznis_vehicles SET bVehPos1 = '%f', bVehPos2 = '%f', bVehPos3 = '%f', bVehPos4 = '%f'  WHERE id = '%d'",
 					BizzInfo[ PlayerInfo[playerid][pBizzKey] ][b_Vpos][0],
 					BizzInfo[ PlayerInfo[playerid][pBizzKey] ][b_Vpos][1],
 					BizzInfo[ PlayerInfo[playerid][pBizzKey] ][b_Vpos][2],
@@ -1088,7 +1088,7 @@ CMD:products(playerid, params[]) {
 		BizzInfo[biznis][b_Vpos][3] = A;
 		
 		// mysql 
-		format(query, 165, "UPDATE `server_biznis_vehicles` SET `bVehPos1` = '%f', `bVehPos2` = '%f', `bVehPos3` = '%f', `bVehPos4` = '%f'  WHERE `id` = '%d'",
+		format(query, 165, "UPDATE server_biznis_vehicles SET bVehPos1 = '%f', bVehPos2 = '%f', bVehPos3 = '%f', bVehPos4 = '%f'  WHERE id = '%d'",
 			BizzInfo[ biznis ][b_Vpos][0],
 			BizzInfo[ biznis ][b_Vpos][1],
 			BizzInfo[ biznis ][b_Vpos][2],

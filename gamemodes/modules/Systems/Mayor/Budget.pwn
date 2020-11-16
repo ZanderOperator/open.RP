@@ -213,7 +213,7 @@ stock SaveFactionBanks()
         if (FactionInfo[fid][fType] == FACTION_TYPE_LAW || FactionInfo[fid][fType] == FACTION_TYPE_LAW2 ||
             FactionInfo[fid][fType] == FACTION_TYPE_FD || FactionInfo[fid][fType] == FACTION_TYPE_NEWS)
         {
-            format(query, sizeof(query), "UPDATE `server_factions` SET `factionbank` = '%d' WHERE `id` = '%d'", FactionInfo[fid][fFactionBank], FactionInfo[fid][fID]);
+            format(query, sizeof(query), "UPDATE server_factions SET factionbank = '%d' WHERE id = '%d'", FactionInfo[fid][fFactionBank], FactionInfo[fid][fID]);
             mysql_tquery(g_SQL, query);
         }
     }
@@ -225,7 +225,7 @@ stock SaveFactionBanks()
 stock CheckPlayerTransactions(playerid, const name[])
 {
     new query[160];
-    mysql_format(g_SQL, query, sizeof(query), "SELECT * FROM `server_transactions` WHERE `sendername` = '%e' OR `recievername` = '%e' ORDER BY `id` DESC",
+    mysql_format(g_SQL, query, sizeof(query), "SELECT * FROM server_transactions WHERE sendername = '%e' OR recievername = '%e' ORDER BY id DESC",
         name,
         name
     );
@@ -299,7 +299,7 @@ public OnPlayerTransactionFinish(playerid, const searchednick[])
 stock ListServerTransactions(playerid, type)
 {
     new query[180];
-    format(query, sizeof(query), "SELECT * FROM `server_transactions` WHERE `logtype` = '%d' ORDER BY `id` DESC", type);
+    format(query, sizeof(query), "SELECT * FROM server_transactions WHERE logtype = '%d' ORDER BY id DESC", type);
     mysql_tquery(g_SQL, query, "OnTransListQueryFinish", "ii", playerid, type);
     return 1;
 }
@@ -992,7 +992,7 @@ CMD:finance(playerid, params[])
         if (PlayerInfo[playerid][pLeader] != 4) return SendMessage(playerid, MESSAGE_TYPE_ERROR, " Niste Mayor!");
 
         new query[90];
-        format(query, sizeof(query), "DELETE FROM `server_transactions` WHERE id = '%d'", id);
+        format(query, sizeof(query), "DELETE FROM server_transactions WHERE id = '%d'", id);
         mysql_tquery(g_SQL, query);
 
         va_SendClientMessage(playerid, COLOR_RED, "[ ! ] Uspjesno ste obrisali transakciju [ID: %d] iz baze podataka.", id);
