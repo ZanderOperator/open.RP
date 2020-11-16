@@ -21,8 +21,10 @@
     ########  ######## ##       #### ##    ## ######## 
 */
 
-#define ZONE_WIDTH          150.0
-#define ZONE_HEIGHT         195.0
+#define ZONE_WIDTH              150.0
+#define ZONE_HEIGHT             195.0
+
+#define MAX_NEAR_HOUSE_RANGE    25.0
 
 #define CP_TYPE_HOUSE       (1)
 
@@ -211,7 +213,7 @@ stock GetNearestHouse(playerid)
 		if(slotid >= MAX_SUBJECTS_IN_RANGE)
 			break;
 		
-		if(IsPlayerInRangeOfPoint(playerid, MAX_NEAR_VEHICLE_RANGE,  HouseInfo[i][hEnterX], HouseInfo[i][hEnterY], HouseInfo[i][hEnterZ]))
+		if(IsPlayerInRangeOfPoint(playerid, MAX_NEAR_HOUSE_RANGE,  HouseInfo[i][hEnterX], HouseInfo[i][hEnterY], HouseInfo[i][hEnterZ]))
 		{
 			close_houses[slotid][cDistance] = GetPlayerDistanceFromPoint(playerid, hX, hY, hZ);
 			close_houses[slotid][cID] = i;
@@ -1175,20 +1177,6 @@ static stock SetPlayerFootEntering(playerid)
      `Y88P' 88   YD  `Y88P'   `8b8' `8d8'  Y8888P' YP   YP 88   YD
 */
 
-stock IsPlayerNearHouse(playerid)
-{
-    new house; // TODO: when put to "-1", adjust logic for -1 as invalid value
-    foreach(new houseid: Houses)
-    {
-        if (IsPlayerInRangeOfPoint(playerid, 10.0, HouseInfo[houseid][hEnterX], HouseInfo[houseid][hEnterY], HouseInfo[houseid][hEnterZ]))
-        {
-            house = houseid;
-            break;
-        }
-    }
-    return house;
-}
-
 stock SetPlayerCrowbarBreaking(playerid)
 {
     Bit1_Set(gr_CrowbarBreaking, playerid, true);
@@ -1629,13 +1617,13 @@ hook OnPlayerWeaponShot(playerid, weaponid, hittype, hitid, Float:fX, Float:fY, 
         return 1;
     }
     // TODO: revise bounds checking for houseid. houseid = 0 should be a valid array index, don't harcode sqlids!!!
-    new houseid = IsPlayerNearHouse(playerid);
-    if (houseid == 0 || !HouseInfo[houseid][hLock])
+    new houseid = GetNearestHouse(playerid);
+    if (houseid == INVALID_HOUSE_ID || !HouseInfo[houseid][hLock])
     {
         return 1;
     }
 
-    if (GetDistanceBetweenPoints3D(HouseInfo[houseid][hEnterX], HouseInfo[houseid][hEnterY], HouseInfo[houseid][hEnterZ], fX, fY, fZ) <= 2.0)
+    if (GetDistanceBetweenPoints3D(HouseInfo[houseid][hEnterX], HouseInfo[houseid][hEnterY], HouseInfo[houseid][hEnterZ], fX, fY, fZ) <= 2.5)
     {
         if (!IsACop(playerid))
         {
@@ -2806,21 +2794,13 @@ CMD:enter(playerid, params[])
     if (Bit1_Get(r_PlayerDoorPeek, playerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne mozete uci u kucu dok virite kroz vrata!");
 
     new
-        biznis = INVALID_BIZNIS_ID,
+        biznis = GetNearestBizz(playerid),
         pickup = -1,
         complex = INVALID_COMPLEX_ID,
         rcomplex = INVALID_COMPLEX_ID,
         viwo = GetPlayerVirtualWorld(playerid),
         interior = GetPlayerInterior(playerid);
 
-    foreach(new i : Bizzes)
-    {
-        if (IsPlayerInRangeOfPoint(playerid, 3.0, BizzInfo[i][bEntranceX], BizzInfo[i][bEntranceY], BizzInfo[i][bEntranceZ]))
-        {
-            biznis = i;
-            break;
-        }
-    }
     foreach(new c : Complex)
     {
         if (IsPlayerInRangeOfPoint(playerid, 3.0, ComplexInfo[c][cEnterX], ComplexInfo[c][cEnterY], ComplexInfo[c][cEnterZ]))

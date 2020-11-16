@@ -5332,7 +5332,7 @@ CMD:fill(playerid, params[])
 		vehicleid = GetPlayerVehicleID(playerid),
 		fuel;
 
-	new bizid = GetNearestGasBiznis(playerid);
+	new bizid = GetNearestBizz(playerid, BIZZ_TYPE_GASSTATION);
 	if( bizid == INVALID_BIZNIS_ID ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, " Niste u blizini benzinske postaje!");
 	if( ( vehicleid == 0 || vehicleid == -1 ) || IsABike( GetVehicleModel( vehicleid ) ) ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, " Nepravilno vozilo!");
 	if( sscanf(params, "i", fuel ) ) {
@@ -5918,7 +5918,8 @@ CMD:get(playerid, params[])
 			type, fuel, total;
 			
 		if( sscanf( params, "s[6]ii", param, type, fuel ) ) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /get fuel [0 - Benzin, 1 - Dizel][kolicina]");
-		if( !IsPlayerNearGasStation( playerid ) ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste blizu benzinske stanice!");
+		if( GetNearestBizz(playerid, BIZZ_TYPE_GASSTATION) == INVALID_BIZNIS_ID ) 
+			return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste blizu benzinske stanice!");
 		total = PlayerInfo[ playerid ][ pCanisterLiters ] + fuel;
 		if (total > 25 ) return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "Maksimalno 25 litara, treutno imate %d", PlayerInfo[ playerid ][ pCanisterLiters ]);
 		if( type > 1 || type < 0 ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Tip mora biti izmedju 0 i 1!");
@@ -5953,8 +5954,9 @@ CMD:get(playerid, params[])
 			}
 			moneys = floatround(moneys);
 			if( AC_GetPlayerMoney( playerid ) <  moneys) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate toliko novca!");
-			new bizid = GetNearestGasBiznis(playerid);
-			if( bizid == INVALID_BIZNIS_ID ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste u blizini benzinske postaje!");
+			new bizid = GetNearestBizz(playerid, BIZZ_TYPE_GASSTATION);
+			if( bizid == INVALID_BIZNIS_ID ) 
+				return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste u blizini benzinske postaje!");
 			
 			PlayerToBusinessMoneyTAX(playerid, bizid, moneys);
 			new
