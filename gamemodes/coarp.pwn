@@ -2134,7 +2134,8 @@ RegisterPlayerDeath(playerid, killerid) // funkcija
 		//DropPlayerWeapons(playerid, X, Y);
 		//DropPlayerDrugs(playerid, X, Y, true);
 
-		mysql_fquery(g_SQL, "INSERT INTO player_deaths(player_id, pos_x, pos_y, pos_z, interior, viwo, time) VALUES ('%d','%f','%f','%f','%d','%d','%d')",
+		mysql_fquery(g_SQL, "INSERT INTO player_deaths(player_id, pos_x, pos_y, pos_z, interior, viwo, time) \n\
+			VALUES ('%d','%f','%f','%f','%d','%d','%d')",
 			PlayerInfo[playerid][pSQLID],
 			PlayerInfo[playerid][pDeath][0],
 			PlayerInfo[playerid][pDeath][1],
@@ -3225,7 +3226,8 @@ hook OnPlayerDisconnect(playerid, reason)
 
 			GetPlayerPos(playerid, PlayerInfo[playerid][pCrashPos][0], PlayerInfo[playerid][pCrashPos][1], PlayerInfo[playerid][pCrashPos][2]);
 
-			mysql_fquery(g_SQL, "INSERT INTO player_crashes(player_id,pos_x,pos_y,pos_z,interior,viwo,armor,health,skin,time) VALUES ('%d','%.2f','%.2f','%.2f','%d','%d','%f','%f','%d','%d')",
+			mysql_fquery(g_SQL, "INSERT INTO player_crashes(player_id,pos_x,pos_y,pos_z,interior,viwo,armor,health,\n\
+				skin,time) VALUES ('%d','%.2f','%.2f','%.2f','%d','%d','%f','%f','%d','%d')",
 				PlayerInfo[playerid][pSQLID],
 				PlayerInfo[playerid][pCrashPos][0],
 				PlayerInfo[playerid][pCrashPos][1],
@@ -3261,10 +3263,12 @@ hook OnPlayerDisconnect(playerid, reason)
 		SendClientMessage(playerid, COLOR_RED, "[OBAVIJEST] Spremljeni su Vasi podaci. Server Vas je automatski kickao.");
 		KickMessage(playerid);
 	}
-
-	mysql_fquery(g_SQL, "UPDATE accounts SET AdminMessage = '', AdminMessageBy = '', AdmMessageConfirm = '0' WHERE sqlid = '%d'", // koji je ovo kurac
-    	PlayerInfo[playerid][pSQLID]
-	);
+	if(SafeSpawned[playerid])
+		mysql_fquery(g_SQL, "UPDATE accounts SET AdminMessage = '', AdminMessageBy = '', AdmMessageConfirm = '0' \n\
+	 		WHERE sqlid = '%d'", 
+    		PlayerInfo[playerid][pSQLID]
+		);
+		
 	defer SafeResetPlayerVariables(playerid);
 	return 1;
 }
