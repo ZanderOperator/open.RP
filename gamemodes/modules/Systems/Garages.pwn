@@ -162,7 +162,7 @@ static stock CreateGarageInfoTD(playerid)
 
 stock LoadServerGarages()
 {
-    mysql_tquery(g_SQL, "SELECT * FROM `server_garages` WHERE 1", "OnServerGaragesLoad", "");
+    mysql_tquery(g_SQL, "SELECT * FROM server_garages WHERE 1", "OnServerGaragesLoad", "");
     return 1;
 }
 
@@ -473,7 +473,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
             PlayerInfo[seller][pGarageKey] = -1;
 
             new query[64];
-            format(query, sizeof(query), "UPDATE `server_garages` SET `ownerid` = '%d' WHERE `id` = '%d'",
+            format(query, sizeof(query), "UPDATE server_garages SET ownerid = '%d' WHERE id = '%d'",
                    GarageInfo[garage][gOwnerID],
                    GarageInfo[garage][gSQLID]
             );
@@ -569,7 +569,7 @@ CMD:create_garage(playerid, params[])
     format(GarageInfo[garage][gAdress], 16, adress);
 
     new query[600];
-    mysql_format(g_SQL, query, sizeof(query), "INSERT INTO `server_garages` (`ownerid`, `adress`, `price`, `locked`, `houseid`, `enterX`, `enterY`, `enterZ`, `exitX`, `exitY`, `exitZ`) VALUES ('0', '%e', '%d', '0', '%d', '%.4f', '%.4f', '%.4f', '%.4f', '%.4f', '%.4f')",
+    mysql_format(g_SQL, query, sizeof(query), "INSERT INTO server_garages (ownerid, adress, price, locked, houseid, enterX, enterY, enterZ, exitX, exitY, exitZ) VALUES ('0', '%e', '%d', '0', '%d', '%.4f', '%.4f', '%.4f', '%.4f', '%.4f', '%.4f')",
         GarageInfo[garage][gAdress],
         GarageInfo[garage][gPrice],
         GarageInfo[garage][gHouseID],
@@ -665,7 +665,7 @@ CMD:garage(playerid, params[])
         GarageInfo[nearGarage][gLocked] = 1;
 
         new query[128];
-        format(query, sizeof(query), "UPDATE `server_garages` SET `ownerid` = '%d', `locked` = '1' WHERE `id` = '%d'",
+        format(query, sizeof(query), "UPDATE server_garages SET ownerid = '%d', locked = '1' WHERE id = '%d'",
                GarageInfo[nearGarage][gOwnerID],
                GarageInfo[nearGarage][gSQLID]
         );
@@ -736,7 +736,7 @@ CMD:garage(playerid, params[])
         GarageInfo[garageid][gExitZ] = GaragesIntInfo[type][giZ];
 
         new query[256];
-        format(query, sizeof(query), "UPDATE `server_garages` SET `exitX` = '%f', `exitY` = '%f', `exitZ` = '%f' WHERE `id` = '%d'",
+        format(query, sizeof(query), "UPDATE server_garages SET exitX = '%f', exitY = '%f', exitZ = '%f' WHERE id = '%d'",
                GarageInfo[garageid][gExitX],
                GarageInfo[garageid][gExitY],
                GarageInfo[garageid][gExitZ],
@@ -764,7 +764,7 @@ CMD:garage(playerid, params[])
         if (garageid == -1) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste blizu garaze!");
 
         new query[64];
-        format(query, sizeof(query), "DELETE FROM `server_garages` WHERE `id` = '%d' LIMIT 1", GarageInfo[garageid][gSQLID]);
+        format(query, sizeof(query), "DELETE FROM server_garages WHERE id = '%d' LIMIT 1", GarageInfo[garageid][gSQLID]);
         mysql_tquery(g_SQL, query);
 
         if (IsValidDynamicPickup(GarageInfo[garageid][gEnterPck]))
@@ -909,7 +909,7 @@ CMD:garageentrance(playerid, params[])
     GarageInfo[proplev][gEnterPck] = CreateDynamicPickup(19522, 2, GarageInfo[proplev][gEnterX], GarageInfo[proplev][gEnterY], GarageInfo[proplev][gEnterZ], -1, -1, -1, 100.0);
 
     new query[256];
-    format(query, sizeof(query), "UPDATE `server_garages` SET `enterX` = '%f', `enterY` = '%f', `enterZ` = '%f' WHERE `id` = '%d'",
+    format(query, sizeof(query), "UPDATE server_garages SET enterX = '%f', enterY = '%f', enterZ = '%f' WHERE id = '%d'",
            X,
            Y,
            Z,
@@ -947,7 +947,7 @@ CMD:customgarageint(playerid, params[])
     GarageInfo[garageid][gExitZ] = Z;
 
     new query[256];
-    format(query, sizeof(query), "UPDATE `server_garages` SET `exitX` = '%f', `exitY` = '%f', `exitZ` = '%f' WHERE `id` = '%d'",
+    format(query, sizeof(query), "UPDATE server_garages SET exitX = '%f', exitY = '%f', exitZ = '%f' WHERE id = '%d'",
         GarageInfo[garageid][gExitX],
         GarageInfo[garageid][gExitY],
         GarageInfo[garageid][gExitZ],

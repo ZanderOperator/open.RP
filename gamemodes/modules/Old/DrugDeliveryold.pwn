@@ -25,7 +25,7 @@ new	FactionDrugs[MAX_FACTIONS][E_DRUG_DELIVERY_DATA][MAX_DELIVERY_TYPES];
 stock LoadDrugDelivery()
 {
 	new loadQuery[100];
-	format(loadQuery, sizeof(loadQuery), "SELECT * FROM `drug_deliveries`");
+	format(loadQuery, sizeof(loadQuery), "SELECT * FROM drug_deliveries");
 	mysql_tquery(g_SQL, loadQuery, "LoadingDrugDelivery", "");
 	return 1;
 }
@@ -44,7 +44,7 @@ Public:LoadingDrugDelivery()
 stock UpdateDrugDelivery()
 {
 	new updateQuery[128];
-	format(updateQuery, 128, "UPDATE `drug_deliveries` SET `coke`='%d', `heroin`='%d', `ecstasy`='%d', `nextdelivery`='%d' WHERE `id`='1'", 
+	format(updateQuery, 128, "UPDATE drug_deliveries SET coke='%d', heroin='%d', ecstasy='%d', nextdelivery='%d' WHERE id='1'", 
 		Cocaine,
 		Heroin,
 		Ecstasy,
@@ -84,7 +84,7 @@ stock ResetFactionDrugsUptake()
 	new resetQuery[128];
 	foreach(new factionid: Factions)
 	{
-		format(resetQuery, sizeof(resetQuery), "UPDATE `server_factions` SET `coke_taken` = '0', `heroin_taken` = '0', `ecstasy_taken` = '0' WHERE id = '%d'",
+		format(resetQuery, sizeof(resetQuery), "UPDATE server_factions SET coke_taken = '0', heroin_taken = '0', ecstasy_taken = '0' WHERE id = '%d'",
 			FactionInfo[factionid][fID]
 		);
 		mysql_tquery(g_SQL, resetQuery, "", "");
@@ -99,7 +99,7 @@ stock ResetFactionDrugsUptake()
 stock UpdateFactionDrugsUptake(factionid)
 {
 	new updateQuery[128];
-	format(updateQuery, sizeof(updateQuery), "UPDATE `server_factions` SET `coke_taken` = '%d', `heroin_taken` = '%d', `ecstasy_taken` = '%d' WHERE id = '%d'",
+	format(updateQuery, sizeof(updateQuery), "UPDATE server_factions SET coke_taken = '%d', heroin_taken = '%d', ecstasy_taken = '%d' WHERE id = '%d'",
 		FactionDrugs[factionid][dTaken][DELIVERY_TYPE_COKE],
 		FactionDrugs[factionid][dTaken][DELIVERY_TYPE_HEROIN],
 		FactionDrugs[factionid][dTaken][DELIVERY_TYPE_ECSTASY],

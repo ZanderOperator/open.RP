@@ -717,8 +717,8 @@ stock static SaveVehicle(vehicleid)
 	new
 		saveQuery[ 512 ];
 
-	mysql_format(g_SQL, saveQuery, 512, "UPDATE `server_cars` SET `model` = '%d', `type` = '%d', `usage` = '%d', `parkX` = '%f', `parkY` = '%f', `parkZ` = '%f', `angle` = '%f', `color1` = '%d', `color2` = '%d', `respawn` = '%d', `sirenon` = '%d', `faction` = '%d', `job` = '%d', `locked` = '%d',\
-	 `int` = '%d', `viwo` = '%d', `health` = '%f', `numberplate` = '%e', `paintjob` = '%d', `impounded` = '%d', `text` = '%e', `travel` = '%d', `overheated` = '%d' WHERE `id` = '%d'",
+	mysql_format(g_SQL, saveQuery, 512, "UPDATE server_cars SET model = '%d', type = '%d', usage = '%d', parkX = '%f', parkY = '%f', parkZ = '%f', angle = '%f', color1 = '%d', color2 = '%d', respawn = '%d', sirenon = '%d', faction = '%d', job = '%d', locked = '%d',\
+	 int = '%d', viwo = '%d', health = '%f', numberplate = '%e', paintjob = '%d', impounded = '%d', text = '%e', travel = '%d', overheated = '%d' WHERE id = '%d'",
 		VehicleInfo[ vehicleid ][ vModel ],
 		VehicleInfo[ vehicleid ][ vType ],
 		VehicleInfo[ vehicleid ][ vUsage ],
@@ -770,7 +770,7 @@ stock CreateNewVehicle(playerid, vehicleid)
 	mysql_tquery(g_SQL, "BEGIN", "");
 	new
 		createQuery[ 1328 ];
-	mysql_format(g_SQL, createQuery, sizeof(createQuery), "INSERT INTO server_cars (`model`, `type`, `usage`, `parkX`, `parkY`, `parkZ`, `angle`, `color1`, `color2`, `respawn`, `sirenon`, `faction`, `job`, `locked`, `int`, `viwo`, `health`, `numberplate`, `paintjob`, `impounded`, `text`, `travel`) VALUES ('%d','%d','%d','%f','%f','%f','%f','%d','%d','%d','%d','%d','%d','%d','%d','%d','%f','%e','%d','%d','%e','%d')",
+	mysql_format(g_SQL, createQuery, sizeof(createQuery), "INSERT INTO server_cars (model, type, usage, parkX, parkY, parkZ, angle, color1, color2, respawn, sirenon, faction, job, locked, int, viwo, health, numberplate, paintjob, impounded, text, travel) VALUES ('%d','%d','%d','%f','%f','%f','%f','%d','%d','%d','%d','%d','%d','%d','%d','%d','%f','%e','%d','%d','%e','%d')",
 		VehicleInfo[ vehicleid ][ vModel ],
 		VehicleInfo[ vehicleid ][ vType ],
 		VehicleInfo[ vehicleid ][ vUsage ],

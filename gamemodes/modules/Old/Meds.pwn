@@ -23,7 +23,7 @@ Public:LoadPlayerMeds(playerid)
 	new
 		tmpQuery[128];
 
-	format(tmpQuery, 128, "SELECT * FROM `player_meds` WHERE `player_id` = '%d'", PlayerInfo[playerid][pSQLID]);
+	format(tmpQuery, 128, "SELECT * FROM player_meds WHERE player_id = '%d'", PlayerInfo[playerid][pSQLID]);
 	mysql_tquery(g_SQL, tmpQuery, "LoadingPlayerMeds", "i", playerid);
 	return 1;
 }

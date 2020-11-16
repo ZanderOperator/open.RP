@@ -284,7 +284,7 @@ stock PlayerToRouletteMoney(playerid, money)
 		{
 			BizzInfo[bizzid][bTill] += money;				// Biznisu idu pare ulozene na rulet
 			
-			format(tillUpdate, 60, "UPDATE `bizzes` SET `till` = '%d' WHERE `id` = '%d'",
+			format(tillUpdate, 60, "UPDATE bizzes SET till = '%d' WHERE id = '%d'",
 				BizzInfo[bizzid][bTill],
 				BizzInfo[bizzid][bSQLID]
 			);

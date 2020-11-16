@@ -122,7 +122,7 @@ stock LogTransaction ( playerid, giveplayerid, money, logtype )
 			format(desc, sizeof(desc), "Adresa garaze: %s", GarageInfo[garage][gAdress]);
 		}
 	}
-	mysql_format(g_SQL, TmpQuery, 384, "INSERT INTO `server_transactions` (`sendername`, `recievername`, `money`, `logtype`, `date`, `description`) VALUES ('%e','%e','%d','%d','%e','%e')",
+	mysql_format(g_SQL, TmpQuery, 384, "INSERT INTO server_transactions (sendername, recievername, money, logtype, date, description) VALUES ('%e','%e','%d','%d','%e','%e')",
 		GetName(playerid, false),
 		GetName(giveplayerid, false),
 		money,
@@ -158,7 +158,7 @@ stock PlayerToPlayerMoneyTAX ( playerid, giveplayerid, money, bool:log=false, lo
 	AC_GivePlayerMoney(giveplayerid, finalmoney); 			// Kupac dobiva razliku punog iznosa od kojeg se oduzeo porez
 	
 	// Update proracuna
-	format( TmpQuery, sizeof(TmpQuery), "UPDATE `city` SET `budget` = '%d'", 
+	format( TmpQuery, sizeof(TmpQuery), "UPDATE city SET budget = '%d'", 
 			CityInfo[cBudget]
 		);
 	mysql_tquery(g_SQL, TmpQuery);
@@ -183,13 +183,13 @@ stock PlayerToBusinessMoneyTAX ( playerid, bizid, money)
 	BizzInfo[ bizid ][ bTill ] += finalmoney;				// Biznis dobiva razliku punog iznosa i poreza
 	
 	// Update proracuna
-	format( TmpQuery, sizeof(TmpQuery), "UPDATE `city` SET `budget` = '%d'", 
+	format( TmpQuery, sizeof(TmpQuery), "UPDATE city SET budget = '%d'", 
 			CityInfo[cBudget]
 		);
 	mysql_tquery(g_SQL, TmpQuery);
 		
 	// Update biznisa
-	format( TmpQuery2, sizeof(TmpQuery2), "UPDATE `bizzes` SET `till` = '%d' WHERE `id` = '%d'",
+	format( TmpQuery2, sizeof(TmpQuery2), "UPDATE bizzes SET till = '%d' WHERE id = '%d'",
 			BizzInfo[bizid][bTill],
 			BizzInfo[bizid][bSQLID]
 		);
@@ -206,7 +206,7 @@ stock PlayerToBusinessMoney ( playerid, bizid, money )
 	BizzInfo[ bizid ][ bTill ] += safemoney;				// Biznis dobiva puni iznos
 	
 	// Update biznisa
-	format( TmpQuery, sizeof(TmpQuery), "UPDATE `bizzes` SET `till` = '%d' WHERE `id` = '%d'",
+	format( TmpQuery, sizeof(TmpQuery), "UPDATE bizzes SET till = '%d' WHERE id = '%d'",
 			BizzInfo[bizid][bTill],
 			BizzInfo[bizid][bSQLID]
 		);
@@ -227,12 +227,12 @@ stock BusinessToPlayerMoneyTAX ( playerid, bizid, money )
 	CityInfo[cBudget] += taxmoney; 							// Oporezivi dio ide u proracun
 	AC_GivePlayerMoney(playerid, finalmoney); 				// Igrac dobiva razliku punog iznosa i poreza 
 	// Update proracuna
-	format( TmpQuery, sizeof(TmpQuery), "UPDATE `city` SET `budget` = '%d'", 
+	format( TmpQuery, sizeof(TmpQuery), "UPDATE city SET budget = '%d'", 
 			CityInfo[cBudget]
 		);
 	mysql_tquery(g_SQL, TmpQuery);
 	// Update biznisa
-	format( TmpQuery2, sizeof(TmpQuery2), "UPDATE `bizzes` SET `till` = '%d' WHERE `id` = '%d'",
+	format( TmpQuery2, sizeof(TmpQuery2), "UPDATE bizzes SET till = '%d' WHERE id = '%d'",
 			BizzInfo[bizid][bTill],
 			BizzInfo[bizid][bSQLID]
 		);
@@ -249,7 +249,7 @@ stock BusinessToPlayerMoney ( playerid, bizid, money )
 	AC_GivePlayerMoney(playerid, safemoney); 				// Igrac dobiva puni izos
 	
 	// Update biznisa
-	format( TmpQuery, sizeof(TmpQuery), "UPDATE `bizzes` SET `till` = '%d' WHERE `id` = '%d'",
+	format( TmpQuery, sizeof(TmpQuery), "UPDATE bizzes SET till = '%d' WHERE id = '%d'",
 			BizzInfo[bizid][bTill],
 			BizzInfo[bizid][bSQLID]
 		);
@@ -270,7 +270,7 @@ stock PlayerToBudgetMoney(playerid, money )
 	CityInfo[cBudget] += safemoney; 						// Novac ide u proracun
 	
 	// Update proracuna
-	format( TmpQuery, sizeof(TmpQuery), "UPDATE `city` SET `budget` = '%d'", 
+	format( TmpQuery, sizeof(TmpQuery), "UPDATE city SET budget = '%d'", 
 			CityInfo[cBudget]
 		);
 	mysql_tquery(g_SQL, TmpQuery);
@@ -285,7 +285,7 @@ stock BudgetToPlayerMoney (playerid, money )
 	AC_GivePlayerMoney(playerid, safemoney); 				// Novac se daje igracu
 	
 	// Update proracuna
-	format( TmpQuery, sizeof(TmpQuery), "UPDATE `city` SET `budget` = '%d'", 
+	format( TmpQuery, sizeof(TmpQuery), "UPDATE city SET budget = '%d'", 
 			CityInfo[cBudget]
 		);
 	mysql_tquery(g_SQL, TmpQuery);
@@ -300,12 +300,12 @@ stock BudgetToPlayerBankMoney (playerid, money )
 	CityInfo[cBudget] -= safemoney; 						// Novac se oduzima iz proracuna
 	PlayerInfo[playerid][pBank] += safemoney; 		//  Novac sjeda na radnu knjizicu igrac
 	// Update proracuna
-	format( TmpQuery, sizeof(TmpQuery), "UPDATE `city` SET `budget` = '%d'", 
+	format( TmpQuery, sizeof(TmpQuery), "UPDATE city SET budget = '%d'", 
 			CityInfo[cBudget]
 		);
 	mysql_tquery(g_SQL, TmpQuery);
 	// Update accounts
-	format( TmpQuery2, sizeof(TmpQuery2), "UPDATE accounts SET `bankMoney` = '%d' WHERE sqlid = '%d'", 
+	format( TmpQuery2, sizeof(TmpQuery2), "UPDATE accounts SET bankMoney = '%d' WHERE sqlid = '%d'", 
 			PlayerInfo[playerid][pBank],
 			PlayerInfo[playerid][pSQLID]
 		);
@@ -322,12 +322,12 @@ stock PlayerBankToBudgetMoney ( playerid, money )
 	CityInfo[ cBudget ] += safemoney;
 	
 	// Update proracuna
-	format( TmpQuery, sizeof(TmpQuery), "UPDATE `city` SET `budget` = '%d'", 
+	format( TmpQuery, sizeof(TmpQuery), "UPDATE city SET budget = '%d'", 
 			CityInfo[cBudget]
 		);
 	mysql_tquery(g_SQL, TmpQuery);
 	// Update bank money
-	format( TmpQuery2, sizeof(TmpQuery2), "UPDATE accounts SET `bankMoney` = '%d' WHERE sqlid = '%d'",
+	format( TmpQuery2, sizeof(TmpQuery2), "UPDATE accounts SET bankMoney = '%d' WHERE sqlid = '%d'",
 			PlayerInfo[playerid][pBank],
 			PlayerInfo[playerid][pSQLID]
 		);
@@ -343,7 +343,7 @@ stock PlayerToComplexMoney (playerid, complexid, money )
 	ComplexInfo[ complexid ][ cTill ] += safemoney;
 	
 	// Update complexa
-	format( TmpQuery, sizeof(TmpQuery), "UPDATE `server_complex` SET `till` = '%d' WHERE `id` = '%d'",
+	format( TmpQuery, sizeof(TmpQuery), "UPDATE server_complex SET till = '%d' WHERE id = '%d'",
 			ComplexInfo[complexid][cTill],
 			ComplexInfo[complexid][cSQLID]
 		);
@@ -364,12 +364,12 @@ stock PlayerToComplexMoneyTAX ( playerid, complexid, money )
 	CityInfo[cBudget] += taxmoney; 							// Oporezivi dio ide u proracun
 	ComplexInfo[ complexid ][ cTill ] += finalmoney;		// Complex dobiva razliku punog iznosa i poreza
 	// Update proracuna
-	format( TmpQuery, sizeof(TmpQuery), "UPDATE `city` SET `budget` = '%d'", 
+	format( TmpQuery, sizeof(TmpQuery), "UPDATE city SET budget = '%d'", 
 			CityInfo[cBudget]
 		);
 	mysql_tquery(g_SQL, TmpQuery);
 	// Update complexa
-	format( TmpQuery2, sizeof(TmpQuery2), "UPDATE `server_complex` SET `till` = '%d' WHERE `id` = '%d'",
+	format( TmpQuery2, sizeof(TmpQuery2), "UPDATE server_complex SET till = '%d' WHERE id = '%d'",
 			ComplexInfo[complexid][cTill],
 			ComplexInfo[complexid][cSQLID]
 		);
@@ -385,13 +385,13 @@ stock PlayerBankToComplexMoney ( playerid, complexid, money )
 	PlayerInfo[ playerid ][ pBank ] -= safemoney; 					// Novac se oduzima igracu s bank. racuna
 	ComplexInfo[ complexid ][ cTill ] += safemoney;					// Novac ide u kompleks
 	// Update complexa
-	format( TmpQuery, sizeof(TmpQuery), "UPDATE `server_complex` SET `till` = '%d' WHERE `id` = '%d'",
+	format( TmpQuery, sizeof(TmpQuery), "UPDATE server_complex SET till = '%d' WHERE id = '%d'",
 			ComplexInfo[complexid][cTill],
 			ComplexInfo[complexid][cSQLID]
 		);
 	mysql_tquery(g_SQL, TmpQuery);
 	// Update bank money accounts
-	format( TmpQuery2, sizeof(TmpQuery2), "UPDATE accounts SET `bankMoney` = '%d' WHERE sqlid = '%d'",
+	format( TmpQuery2, sizeof(TmpQuery2), "UPDATE accounts SET bankMoney = '%d' WHERE sqlid = '%d'",
 			PlayerInfo[playerid][pBank],
 			PlayerInfo[playerid][pSQLID]
 		);
@@ -414,19 +414,19 @@ stock PlayerBankToComplexMoneyTAX ( playerid, complexid, money )
 	CityInfo[cBudget] += taxmoney; 									// Oporezivi dio ide u proracun
 	ComplexInfo[ complexid ][ cTill ] += finalmoney;				// Oporezivi novac ide u kompleks
 	// Update complexa
-	format( TmpQuery, sizeof(TmpQuery), "UPDATE `server_complex` SET `till` = '%d' WHERE `id` = '%d'",
+	format( TmpQuery, sizeof(TmpQuery), "UPDATE server_complex SET till = '%d' WHERE id = '%d'",
 			ComplexInfo[complexid][cTill],
 			ComplexInfo[complexid][cSQLID]
 		);
 	mysql_tquery(g_SQL, TmpQuery);
 	// Update bank money accounts
-	format( TmpQuery2, sizeof(TmpQuery2), "UPDATE accounts SET `bankMoney` = '%d' WHERE sqlid = '%d'",
+	format( TmpQuery2, sizeof(TmpQuery2), "UPDATE accounts SET bankMoney = '%d' WHERE sqlid = '%d'",
 			PlayerInfo[playerid][pBank],
 			PlayerInfo[playerid][pSQLID]
 		);
 	mysql_tquery(g_SQL, TmpQuery2);
 	// Update proracuna
-	format( TmpQuery3, sizeof(TmpQuery3), "UPDATE `city` SET `budget` = '%d'", 
+	format( TmpQuery3, sizeof(TmpQuery3), "UPDATE city SET budget = '%d'", 
 			CityInfo[cBudget]
 		);
 	mysql_tquery(g_SQL, TmpQuery3);
@@ -440,7 +440,7 @@ stock ComplexToPlayerMoney (playerid, complexid, money )
 	ComplexInfo[ complexid ][ cTill ] -= safemoney;			// Complex gubi novac
 	AC_GivePlayerMoney(playerid, safemoney); 				// Igrac dobiva novac
 	// Update complexa
-	format( TmpQuery, sizeof(TmpQuery), "UPDATE `server_complex` SET `till` = '%d' WHERE `id` = '%d'",
+	format( TmpQuery, sizeof(TmpQuery), "UPDATE server_complex SET till = '%d' WHERE id = '%d'",
 			ComplexInfo[complexid][cTill],
 			ComplexInfo[complexid][cSQLID]
 		);
@@ -462,12 +462,12 @@ stock ComplexToPlayerMoneyTAX ( playerid, complexid, money )
 	CityInfo[cBudget] += taxmoney; 							// Oporezivi dio ide u proracun
 	AC_GivePlayerMoney(playerid, finalmoney); 				// Igracu dobiva novac poslije oporezivanja
 	// Update proracuna
-	format( TmpQuery, sizeof(TmpQuery), "UPDATE `city` SET `budget` = '%d'", 
+	format( TmpQuery, sizeof(TmpQuery), "UPDATE city SET budget = '%d'", 
 			CityInfo[cBudget]
 		);
 	mysql_tquery(g_SQL, TmpQuery);
 	// Update complexa
-	format( TmpQuery2, sizeof(TmpQuery2), "UPDATE `server_complex` SET `till` = '%d' WHERE `id` = '%d'",
+	format( TmpQuery2, sizeof(TmpQuery2), "UPDATE server_complex SET till = '%d' WHERE id = '%d'",
 			ComplexInfo[complexid][cTill],
 			ComplexInfo[complexid][cSQLID]
 		);
@@ -482,7 +482,7 @@ stock PlayerToHouseMoney ( playerid, houseid, money )
 	AC_GivePlayerMoney(playerid, -safemoney); 				// Igracu se oduzima puni iznos
 	HouseInfo[ houseid ][ hTakings ] += safemoney;			// Kuca dobiva puni iznos
 	// Update kuce
-	format( TmpQuery, sizeof(TmpQuery), "UPDATE `houses` SET `bank` = '%d' WHERE `id` = '%d'",
+	format( TmpQuery, sizeof(TmpQuery), "UPDATE houses SET bank = '%d' WHERE id = '%d'",
 			HouseInfo[houseid][hTakings],
 			HouseInfo[houseid][hSQLID]
 		);
@@ -503,12 +503,12 @@ stock PlayerToHouseMoneyTAX ( playerid, houseid, money )
 	AC_GivePlayerMoney(playerid, -safemoney); 				// Igracu se oduzima puni iznos
 	HouseInfo[ houseid ][ hTakings ] += finalmoney;			// Kuca dobiva razliku punog iznosa i poreza
 	// Update proracuna
-	format( TmpQuery, sizeof(TmpQuery), "UPDATE `city` SET `budget` = '%d'", 
+	format( TmpQuery, sizeof(TmpQuery), "UPDATE city SET budget = '%d'", 
 			CityInfo[cBudget]
 		);
 	mysql_tquery(g_SQL, TmpQuery);
 	// Update kuce
-	format( TmpQuery2, sizeof(TmpQuery2), "UPDATE `houses` SET `bank` = '%d' WHERE `id` = '%d'",
+	format( TmpQuery2, sizeof(TmpQuery2), "UPDATE houses SET bank = '%d' WHERE id = '%d'",
 			HouseInfo[houseid][hTakings],
 			HouseInfo[houseid][hSQLID]
 		);
@@ -530,18 +530,18 @@ stock PlayerBankToHouseMoneyTAX ( playerid, houseid, money )
 	CityInfo[cBudget] += taxmoney; 								// Oporezivi dio ide u proracun
 	HouseInfo[ houseid ][ hTakings ] += finalmoney;				// Kuca dobiva razliku punog iznosa i poreza
 	// Update proracuna
-	format( TmpQuery, sizeof(TmpQuery), "UPDATE `city` SET `budget` = '%d'", 
+	format( TmpQuery, sizeof(TmpQuery), "UPDATE city SET budget = '%d'", 
 			CityInfo[cBudget]
 		);
 	mysql_tquery(g_SQL, TmpQuery);
 	// Update bank money accounts
-	format( TmpQuery2, sizeof(TmpQuery2), "UPDATE accounts SET `bankMoney` = '%d' WHERE sqlid = '%d'",
+	format( TmpQuery2, sizeof(TmpQuery2), "UPDATE accounts SET bankMoney = '%d' WHERE sqlid = '%d'",
 			PlayerInfo[playerid][pBank],
 			PlayerInfo[playerid][pSQLID]
 		);
 	mysql_tquery(g_SQL, TmpQuery2);
 	// Update kuce
-	format( TmpQuery3, sizeof(TmpQuery3), "UPDATE `houses` SET `bank` = '%d' WHERE `id` = '%d'",
+	format( TmpQuery3, sizeof(TmpQuery3), "UPDATE houses SET bank = '%d' WHERE id = '%d'",
 			HouseInfo[houseid][hTakings],
 			HouseInfo[houseid][hSQLID]
 		);
@@ -558,7 +558,7 @@ stock HouseToPlayerMoney ( playerid, houseid, money )
 	AC_GivePlayerMoney( playerid, safemoney ); 				// Igrac dobiva puni izos
 	
 	// Update kuce
-	format( TmpQuery, sizeof(TmpQuery), "UPDATE `houses` SET `bank` = '%d' WHERE `id` = '%d'",
+	format( TmpQuery, sizeof(TmpQuery), "UPDATE houses SET bank = '%d' WHERE id = '%d'",
 		HouseInfo[houseid][hTakings],
 		HouseInfo[houseid][hSQLID]
 		);
@@ -579,12 +579,12 @@ stock HouseToPlayerMoneyTAX ( playerid, houseid, money )
 	CityInfo[cBudget] += taxmoney; 							// Oporezivi dio ide u proracun
 	AC_GivePlayerMoney(playerid, finalmoney); 				// Igrac dobiva razliku punog iznosa i poreza 
 	// Update proracuna
-	format( TmpQuery, sizeof(TmpQuery), "UPDATE `city` SET `budget` = '%d'", 
+	format( TmpQuery, sizeof(TmpQuery), "UPDATE city SET budget = '%d'", 
 			CityInfo[cBudget]
 		);
 	mysql_tquery(g_SQL, TmpQuery);
 	// Update kuce
-	format( TmpQuery2, sizeof(TmpQuery2), "UPDATE `houses` SET `bank` = '%d' WHERE `id` = '%d'",
+	format( TmpQuery2, sizeof(TmpQuery2), "UPDATE houses SET bank = '%d' WHERE id = '%d'",
 			HouseInfo[houseid][hTakings],
 			HouseInfo[houseid][hSQLID]
 		);
@@ -603,7 +603,7 @@ stock PlayerToOrgMoney ( playerid, ftype, money )
 		{
 			FactionInfo[i][ fFactionBank ] += safemoney;		// Org factionbank dobiva puni iznos
 			// Update fakcije
-			format( TmpQuery, sizeof(TmpQuery), "UPDATE `server_factions` SET `factionbank` = '%d' WHERE `id` = '%d'",
+			format( TmpQuery, sizeof(TmpQuery), "UPDATE server_factions SET factionbank = '%d' WHERE id = '%d'",
 					FactionInfo[ i ][ fFactionBank ],
 					FactionInfo[ i ][ fID ]
 				);
@@ -632,7 +632,7 @@ stock PlayerToOrgMoneyTAX ( playerid, ftype, money )
 		{
 			FactionInfo[ i ][ fFactionBank ] += finalmoney;		// Org factionbank dobiva razliku
 			// Update fakcije
-			format( TmpQuery, sizeof(TmpQuery), "UPDATE `server_factions` SET `factionbank` = '%d' WHERE `id` = '%d'",
+			format( TmpQuery, sizeof(TmpQuery), "UPDATE server_factions SET factionbank = '%d' WHERE id = '%d'",
 					FactionInfo[ i ][ fFactionBank ],
 					FactionInfo[ i ][ fID ]
 				);
@@ -641,7 +641,7 @@ stock PlayerToOrgMoneyTAX ( playerid, ftype, money )
 		}
 	}
 	// Update proracuna
-	format( TmpQuery2, sizeof(TmpQuery2), "UPDATE `city` SET `budget` = '%d'", 
+	format( TmpQuery2, sizeof(TmpQuery2), "UPDATE city SET budget = '%d'", 
 			CityInfo[cBudget]
 		);
 	mysql_tquery(g_SQL, TmpQuery2);
@@ -658,7 +658,7 @@ stock OrgToPlayerMoney ( playerid, ftype, money )
 		{
 			FactionInfo[ i ][ fFactionBank ] -= safemoney;		// Org factionbank se oduzima puni iznos
 			// Update fakcije
-			format( TmpQuery, sizeof(TmpQuery), "UPDATE `server_factions` SET `factionbank` = '%d' WHERE `id` = '%d'",
+			format( TmpQuery, sizeof(TmpQuery), "UPDATE server_factions SET factionbank = '%d' WHERE id = '%d'",
 					FactionInfo[ i ][ fFactionBank ],
 					FactionInfo[ i ][ fID ]
 				);
@@ -687,7 +687,7 @@ stock OrgToPlayerMoneyTAX ( playerid, ftype, money )
 		{
 			FactionInfo[ i ][ fFactionBank ] -= safemoney;		// Org factionbank se oduzima puni iznos
 			// Update fakcije
-			format( TmpQuery, sizeof(TmpQuery), "UPDATE `server_factions` SET `factionbank` = '%d' WHERE `id` = '%d'",
+			format( TmpQuery, sizeof(TmpQuery), "UPDATE server_factions SET factionbank = '%d' WHERE id = '%d'",
 					FactionInfo[ i ][ fFactionBank ],
 					FactionInfo[ i ][ fID ]
 				);
@@ -697,7 +697,7 @@ stock OrgToPlayerMoneyTAX ( playerid, ftype, money )
 	}
 	AC_GivePlayerMoney(playerid, finalmoney); 				// Igrac dobiva razliku punog iznosa i poreza 
 	// Update proracuna
-	format( TmpQuery2, sizeof(TmpQuery2), "UPDATE `city` SET `budget` = '%d'", 
+	format( TmpQuery2, sizeof(TmpQuery2), "UPDATE city SET budget = '%d'", 
 			CityInfo[cBudget]
 		);
 	mysql_tquery(g_SQL, TmpQuery2);
@@ -716,7 +716,7 @@ stock OrgToPlayerBankMoney ( playerid, ftype, money )
 		{
 			FactionInfo[ i ][ fFactionBank ] -= safemoney;		// Org factionbank se oduzima puni iznos
 			// Update fakcije
-			format( TmpQuery, sizeof(TmpQuery), "UPDATE `server_factions` SET `factionbank` = '%d' WHERE `id` = '%d'",
+			format( TmpQuery, sizeof(TmpQuery), "UPDATE server_factions SET factionbank = '%d' WHERE id = '%d'",
 					FactionInfo[ i ][ fFactionBank ],
 					FactionInfo[ i ][ fID ]
 				);
@@ -727,7 +727,7 @@ stock OrgToPlayerBankMoney ( playerid, ftype, money )
 	PlayerInfo[playerid][pBank] += safemoney; 					// Igrac dobiva puni izos na banku
 	
 	// Update accounts
-	format( TmpQuery2, sizeof(TmpQuery2), "UPDATE accounts SET `bankMoney` = '%d' WHERE sqlid = '%d'", 
+	format( TmpQuery2, sizeof(TmpQuery2), "UPDATE accounts SET bankMoney = '%d' WHERE sqlid = '%d'", 
 			PlayerInfo[playerid][pBank],
 			PlayerInfo[playerid][pSQLID]
 		);
@@ -743,7 +743,7 @@ stock PlayerToIllegalBudgetMoney (playerid, money )
 	AC_GivePlayerMoney(playerid, -safemoney); 				// Novac se oduzima igracu
 	CityInfo[cIllegalBudget] += safemoney; 					// Novac ide u ilegalni proracun
 	// Update illegal budget
-	format( TmpQuery, sizeof(TmpQuery), "UPDATE `city` SET `illegalbudget` = '%d'", 
+	format( TmpQuery, sizeof(TmpQuery), "UPDATE city SET illegalbudget = '%d'", 
 			CityInfo[cIllegalBudget]
 		);
 	mysql_tquery(g_SQL, TmpQuery);
@@ -759,7 +759,7 @@ stock IllegalBudgetToPlayerMoney (playerid, money )
 	AC_GivePlayerMoney(playerid, safemoney); 				// Novac se daje igracu
 	
 	// Update illegal budget
-	format( TmpQuery, sizeof(TmpQuery), "UPDATE `city` SET `illegalbudget` = '%d'", 
+	format( TmpQuery, sizeof(TmpQuery), "UPDATE city SET illegalbudget = '%d'", 
 			CityInfo[cIllegalBudget]
 		);
 	mysql_tquery(g_SQL, TmpQuery);
@@ -774,7 +774,7 @@ stock WarehouseToIllegalBudgetMoney(whid, money)
 	WarehouseInfo[whid][whMoney] -= money;				// Novac se oduzima warehouseu
 	CityInfo[cIllegalBudget] += safemoney; 					// Novac ide u ilegalni proracun
 	// Update illegal budget
-	format( TmpQuery, sizeof(TmpQuery), "UPDATE `city` SET `illegalbudget` = '%d'", 
+	format( TmpQuery, sizeof(TmpQuery), "UPDATE city SET illegalbudget = '%d'", 
 			CityInfo[cIllegalBudget]
 		);
 	mysql_tquery(g_SQL, TmpQuery);
@@ -792,11 +792,11 @@ stock WarehouseToIllegalBudgetMoney(whid, money)
 	CityInfo[cBudget] += safemoney; 						// Novac ide u proracun
 	
 	// Update proracuna
-	format( TmpQuery, sizeof(TmpQuery), "UPDATE `city` SET `budget` = '%d'", 
+	format( TmpQuery, sizeof(TmpQuery), "UPDATE city SET budget = '%d'", 
 			CityInfo[cBudget]
 		);
 	// Update accounts
-	format( TmpQuery2, sizeof(TmpQuery2), "UPDATE accounts SET `playaPDMoney` = '%d' WHERE sqlid = '%d'", 
+	format( TmpQuery2, sizeof(TmpQuery2), "UPDATE accounts SET playaPDMoney = '%d' WHERE sqlid = '%d'", 
 			PlayerInfo[playerid][pPayDayMoney],
 			PlayerInfo[playerid][pSQLID]
 		);
@@ -814,11 +814,11 @@ stock BudgetToPlayerBankMoney (playerid, money )
 	PlayerInfo[playerid][pPayDayMoney] += safemoney; 		//  Novac sjeda na radnu knjizicu igraca
 	
 	// Update proracuna
-	format( TmpQuery, sizeof(TmpQuery), "UPDATE `city` SET `budget` = '%d'", 
+	format( TmpQuery, sizeof(TmpQuery), "UPDATE city SET budget = '%d'", 
 			CityInfo[cBudget]
 		);
 	// Update accounts
-	format( TmpQuery2, sizeof(TmpQuery2), "UPDATE accounts SET `playaPDMoney` = '%d' WHERE sqlid = '%d'", 
+	format( TmpQuery2, sizeof(TmpQuery2), "UPDATE accounts SET playaPDMoney = '%d' WHERE sqlid = '%d'", 
 			PlayerInfo[playerid][pPayDayMoney],
 			PlayerInfo[playerid][pSQLID]
 		);
@@ -836,7 +836,7 @@ stock PayDayToPlayerMoney (playerid, money )
 
 	
 	// Update accounts (ne treba update handmoney jer se to radi u AC_GivePlayerMoney)
-	format( TmpQuery, sizeof(TmpQuery), "UPDATE accounts SET `playaPDMoney` = '%d' WHERE sqlid = '%d'", 
+	format( TmpQuery, sizeof(TmpQuery), "UPDATE accounts SET playaPDMoney = '%d' WHERE sqlid = '%d'", 
 			PlayerInfo[playerid][pPayDayMoney],
 			PlayerInfo[playerid][pSQLID]
 		);
@@ -853,7 +853,7 @@ stock BankToPlayerMoney (playerid, money )
 	AC_GivePlayerMoney(playerid, safemoney); 				// Igrac dobiva novac na ruke 
 
 	// Update accounts (ne treba update handmoney jer se to radi u AC_GivePlayerMoney)
-	format( TmpQuery, sizeof(TmpQuery), "UPDATE accounts SET `bankMoney` = '%d' WHERE sqlid = '%d'", 
+	format( TmpQuery, sizeof(TmpQuery), "UPDATE accounts SET bankMoney = '%d' WHERE sqlid = '%d'", 
 			PlayerInfo[playerid][pBank],
 			PlayerInfo[playerid][pSQLID]
 		);
@@ -870,7 +870,7 @@ stock PlayerToBankMoney (playerid, money )
 	PlayerInfo[ playerid ][ pBank ] += safemoney;			// igrac dobiva novac na banku
 
 	// Update accounts (ne treba update handmoney jer se to radi u AC_GivePlayerMoney)
-	format( TmpQuery, sizeof(TmpQuery), "UPDATE accounts SET `bankMoney` = '%d' WHERE sqlid = '%d'", 
+	format( TmpQuery, sizeof(TmpQuery), "UPDATE accounts SET bankMoney = '%d' WHERE sqlid = '%d'", 
 			PlayerInfo[playerid][pBank],
 			PlayerInfo[playerid][pSQLID]
 		);
@@ -888,12 +888,12 @@ stock BusinessToBudgetMoney ( bizid, money )
 	CityInfo[cBudget] += safemoney; 							// Novac ide u proracun
 	
 	// Update proracuna
-	format( TmpQuery, sizeof(TmpQuery), "UPDATE `city` SET `budget` = '%d'", 
+	format( TmpQuery, sizeof(TmpQuery), "UPDATE city SET budget = '%d'", 
 			CityInfo[cBudget]
 		);
 	mysql_tquery(g_SQL, TmpQuery);
 	// Update biznisa
-	format( TmpQuery2, sizeof(TmpQuery2), "UPDATE `bizzes` SET `till` = '%d' WHERE `id` = '%d'",
+	format( TmpQuery2, sizeof(TmpQuery2), "UPDATE bizzes SET till = '%d' WHERE id = '%d'",
 			BizzInfo[bizid][bTill],
 			BizzInfo[bizid][bSQLID]
 		);
@@ -911,12 +911,12 @@ stock BudgetToBusinessMoney ( bizid, money )
 	BizzInfo[ bizid ][ bTill ] += safemoney; 					// Biznisu se oduzima puni iznos
 	
 	// Update proracuna
-	format( TmpQuery, sizeof(TmpQuery), "UPDATE `city` SET `budget` = '%d'", 
+	format( TmpQuery, sizeof(TmpQuery), "UPDATE city SET budget = '%d'", 
 			CityInfo[cBudget]
 		);
 	mysql_tquery(g_SQL, TmpQuery);
 	// Update biznisa
-	format( TmpQuery2, sizeof(TmpQuery2), "UPDATE `bizzes` SET `till` = '%d' WHERE `id` = '%d'",
+	format( TmpQuery2, sizeof(TmpQuery2), "UPDATE bizzes SET till = '%d' WHERE id = '%d'",
 			BizzInfo[bizid][bTill],
 			BizzInfo[bizid][bSQLID]
 		);
@@ -937,7 +937,7 @@ stock BudgetToOrgMoney ( ftype, money )
 		{
 			FactionInfo[i][ fFactionBank ] += safemoney;		// Org factionbank dobiva puni iznos
 			// Update fakcije
-			format( TmpQuery, sizeof(TmpQuery), "UPDATE `server_factions` SET `factionbank` = '%d' WHERE `id` = '%d'",
+			format( TmpQuery, sizeof(TmpQuery), "UPDATE server_factions SET factionbank = '%d' WHERE id = '%d'",
 					FactionInfo[ i ][ fFactionBank ],
 					FactionInfo[ i ][ fID ]
 				);
@@ -946,7 +946,7 @@ stock BudgetToOrgMoney ( ftype, money )
 		}
 	}
 	// Update proracuna
-	format( TmpQuery2, sizeof(TmpQuery2), "UPDATE `city` SET `budget` = '%d'", 
+	format( TmpQuery2, sizeof(TmpQuery2), "UPDATE city SET budget = '%d'", 
 			CityInfo[cBudget]
 		);
 	mysql_tquery(g_SQL, TmpQuery2);
@@ -966,7 +966,7 @@ stock OrgToBudgetMoney ( ftype, money )
 		{
 			FactionInfo[i][ fFactionBank ] -= safemoney;		// Org factionbank se oduzima novac
 			// Update fakcije
-			format( TmpQuery, sizeof(TmpQuery), "UPDATE `server_factions` SET `factionbank` = '%d' WHERE `id` = '%d'",
+			format( TmpQuery, sizeof(TmpQuery), "UPDATE server_factions SET factionbank = '%d' WHERE id = '%d'",
 					FactionInfo[ i ][ fFactionBank ],
 					FactionInfo[ i ][ fID ]
 				);
@@ -976,7 +976,7 @@ stock OrgToBudgetMoney ( ftype, money )
 	}
 	CityInfo[cBudget] += safemoney; 							// Iznos dolazi u proracun
 	// Update proracuna
-	format( TmpQuery2, sizeof(TmpQuery2), "UPDATE `city` SET `budget` = '%d'", 
+	format( TmpQuery2, sizeof(TmpQuery2), "UPDATE city SET budget = '%d'", 
 			CityInfo[cBudget]
 		);
 	mysql_tquery(g_SQL, TmpQuery2);
@@ -992,7 +992,7 @@ stock IllegalToLegalBudgetMoney (money)
 	CityInfo[cBudget] += safemoney; 						// Novac dolazi u legalni proracun
 
 	// Update illegal budget
-	format( TmpQuery, sizeof(TmpQuery), "UPDATE `city` SET `budget` = '%d', `illegalbudget` = '%d'", 
+	format( TmpQuery, sizeof(TmpQuery), "UPDATE city SET budget = '%d', illegalbudget = '%d'", 
 			CityInfo[cBudget],
 			CityInfo[cIllegalBudget]
 		);
@@ -1013,7 +1013,7 @@ stock PlayerToOrgMoney ( playerid, orgid, money )
 	AC_GivePlayerMoney(playerid, -safemoney); 					// Igracu se oduzima puni iznos
 	FactionInfo[orgid][ fFactionBank ] += safemoney;
 	
-	format( TmpQuery, sizeof(TmpQuery), "UPDATE `server_factions` SET `factionbank` = '%d' WHERE `id` = '%d'",
+	format( TmpQuery, sizeof(TmpQuery), "UPDATE server_factions SET factionbank = '%d' WHERE id = '%d'",
 		FactionInfo[ orgid ][ fFactionBank ],
 		FactionInfo[ orgid ][ fID ]
 	);
@@ -1037,14 +1037,14 @@ stock PlayerToOrgMoneyTAX ( playerid, orgid, money )
 	FactionInfo[ orgid ][ fFactionBank ] += finalmoney;			// Org factionbank dobiva razliku
 	
 	// Update fakcije
-	format( TmpQuery, sizeof(TmpQuery), "UPDATE `server_factions` SET `factionbank` = '%d' WHERE `id` = '%d'",
+	format( TmpQuery, sizeof(TmpQuery), "UPDATE server_factions SET factionbank = '%d' WHERE id = '%d'",
 			FactionInfo[ i ][ fFactionBank ],
 			FactionInfo[ i ][ fID ]
 		);
 	mysql_tquery(g_SQL, TmpQuery);
 
 	// Update proracuna
-	format( TmpQuery2, sizeof(TmpQuery2), "UPDATE `city` SET `budget` = '%d'", 
+	format( TmpQuery2, sizeof(TmpQuery2), "UPDATE city SET budget = '%d'", 
 			CityInfo[cBudget]
 		);
 	mysql_tquery(g_SQL, TmpQuery2);
@@ -1060,7 +1060,7 @@ stock OrgToPlayerMoney ( playerid, orgid, money )
 	AC_GivePlayerMoney(playerid, safemoney); 				// Igrac dobiva puni izos
 	
 	// Update fakcije
-	format( TmpQuery, sizeof(TmpQuery), "UPDATE `server_factions` SET `factionbank` = '%d' WHERE `id` = '%d'",
+	format( TmpQuery, sizeof(TmpQuery), "UPDATE server_factions SET factionbank = '%d' WHERE id = '%d'",
 			FactionInfo[ orgid ][ fFactionBank ],
 			FactionInfo[ orgid ][ fID ]
 		);
@@ -1083,14 +1083,14 @@ stock OrgToPlayerMoneyTAX ( playerid, orgid, money )
 	AC_GivePlayerMoney(playerid, finalmoney); 				// Igrac dobiva razliku punog iznosa i poreza 
 	
 	// Update fakcije
-	format( TmpQuery, sizeof(TmpQuery), "UPDATE `server_factions` SET `factionbank` = '%d' WHERE `id` = '%d'",
+	format( TmpQuery, sizeof(TmpQuery), "UPDATE server_factions SET factionbank = '%d' WHERE id = '%d'",
 			FactionInfo[orgid][fFactionBank],
 			FactionInfo[orgid][fID]
 		);
 	mysql_tquery(g_SQL, TmpQuery);
 
 	// Update proracuna
-	format( TmpQuery2, sizeof(TmpQuery2), "UPDATE `city` SET `budget` = '%d'", 
+	format( TmpQuery2, sizeof(TmpQuery2), "UPDATE city SET budget = '%d'", 
 			CityInfo[cBudget]
 		);
 	mysql_tquery(g_SQL, TmpQuery2);

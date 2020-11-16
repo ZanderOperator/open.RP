@@ -327,7 +327,7 @@ stock LoadPlayerDeath(playerid)
 {
 	new
 		tmpQuery[128];
-	format(tmpQuery, 128, "SELECT * FROM `player_deaths` WHERE `player_id` = '%d' LIMIT 0,1",
+	format(tmpQuery, 128, "SELECT * FROM player_deaths WHERE player_id = '%d' LIMIT 0,1",
 		PlayerInfo[playerid][pSQLID]
 	);
 	mysql_tquery(g_SQL, tmpQuery, "LoadingPlayerDeaths", "i", playerid);
@@ -348,7 +348,7 @@ public LoadingPlayerDeaths(playerid)
 
 	new
 		deleteQuery[128];
-	format(deleteQuery, 128, "DELETE FROM `player_deaths` WHERE `player_id` = '%d'", PlayerInfo[playerid][pSQLID]);
+	format(deleteQuery, 128, "DELETE FROM player_deaths WHERE player_id = '%d'", PlayerInfo[playerid][pSQLID]);
 	mysql_tquery(g_SQL, deleteQuery);
 	return 1;
 }
@@ -449,7 +449,7 @@ timer StartDeathCount[1000](playerid)
 			
 			new
 				deleteQuery[128];
-			format(deleteQuery, 128, "DELETE FROM `player_deaths` WHERE `player_id` = '%d'", PlayerInfo[playerid][pSQLID]);
+			format(deleteQuery, 128, "DELETE FROM player_deaths WHERE player_id = '%d'", PlayerInfo[playerid][pSQLID]);
 			mysql_tquery(g_SQL, deleteQuery);
 			
 			SetPlayerHealth(playerid, 0);

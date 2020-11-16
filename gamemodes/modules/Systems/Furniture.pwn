@@ -2072,11 +2072,11 @@ forward OnFurnitureObjectCreates(houseid, index);
 
 /*
     d888888b d8b   db d888888b d88888b d8888b. d888888b  .d88b.  d8888b.
-      `88'   888o  88 `~~88~~' 88'     88  `8D   `88'   .8P  Y8. 88  `8D
+      88'   888o  88 ~~88~~' 88'     88  8D   88'   .8P  Y8. 88  8D
        88    88V8o 88    88    88ooooo 88oobY'    88    88    88 88oobY'
-       88    88 V8o88    88    88~~~~~ 88`8b      88    88    88 88`8b
-      .88.   88  V888    88    88.     88 `88.   .88.   `8b  d8' 88 `88.
-    Y888888P VP   V8P    YP    Y88888P 88   YD Y888888P  `Y88P'  88   YD
+       88    88 V8o88    88    88~~~~~ 888b      88    88    88 888b
+      .88.   88  V888    88    88.     88 88.   .88.   8b  d8' 88 88.
+    Y888888P VP   V8P    YP    Y88888P 88   YD Y888888P  Y88P'  88   YD
 */
 
 static stock DestroyFurnitureBlankIntTDs(playerid)
@@ -2267,7 +2267,7 @@ UpdatePremiumHouseFurSlots(playerid, admin_name = -1, houseid)
     HouseInfo[houseid][hFurSlots] = GetFurnitureSlots(playerid, PlayerInfo[playerid][pDonateRank]);
 
     new query[128];
-    format(query, sizeof(query), "UPDATE `houses` SET `fur_slots` = '%d' WHERE `id` = '%d'", HouseInfo[houseid][hFurSlots], HouseInfo[houseid][hSQLID]);
+    format(query, sizeof(query), "UPDATE houses SET fur_slots = '%d' WHERE id = '%d'", HouseInfo[houseid][hFurSlots], HouseInfo[houseid][hSQLID]);
     mysql_tquery(g_SQL, query);
 
     if (admin_name != -1)
@@ -2282,18 +2282,18 @@ SetPlayerPremiumFurniture(playerid, houseid)
     PlayerInfo[playerid][FurnPremium] = (1);
 
     new query[128];
-    format(query, sizeof(query), "UPDATE `houses` SET `fur_slots` = '%d' WHERE `id` = '%d'", HouseInfo[houseid][hFurSlots], HouseInfo[houseid][hSQLID]);
+    format(query, sizeof(query), "UPDATE houses SET fur_slots = '%d' WHERE id = '%d'", HouseInfo[houseid][hFurSlots], HouseInfo[houseid][hSQLID]);
     mysql_tquery(g_SQL, query);
     return 1;
 }
 
 /*
      .d88b.  d8888b.    d88b d88888b  .o88b. d888888b .d8888.
-    .8P  Y8. 88  `8D    `8P' 88'     d8P  Y8 `~~88~~' 88'  YP
-    88    88 88oooY'     88  88ooooo 8P         88    `8bo.
-    88    88 88~~~b.     88  88~~~~~ 8b         88      `Y8b.
-    `8b  d8' 88   8D db. 88  88.     Y8b  d8    88    db   8D
-     `Y88P'  Y8888P' Y8888P  Y88888P  `Y88P'    YP    `8888Y'
+    .8P  Y8. 88  8D    8P' 88'     d8P  Y8 ~~88~~' 88'  YP
+    88    88 88oooY'     88  88ooooo 8P         88    8bo.
+    88    88 88~~~b.     88  88~~~~~ 8b         88      Y8b.
+    8b  d8' 88   8D db. 88  88.     Y8b  d8    88    db   8D
+     Y88P'  Y8888P' Y8888P  Y88888P  Y88P'    YP    8888Y'
 */
 
 public OnFurnitureObjectsLoad(houseid)
@@ -2874,7 +2874,7 @@ static stock CreateFurnitureObject(playerid, modelid, Float:x, Float:y, Float:z,
     }
 
     new query[512];
-    format(query, sizeof(query), "INSERT INTO `furniture`(`houseid`, `modelid`, `door`, `door_z`, `locked_door`, `pos_x`, `pos_y`, `pos_z`, `rot_x`, `rot_y`, `rot_z`, `texture_1`, `texture_2`, `texture_3`, `texture_4`, `texture_5`, `color_1`, `color_2`, `color_3`, `color_4`, `color_5`) VALUES ('%d', '%d', '%d', '%f', '%d', '%f', '%f', '%f', '%f', '%f', '%f', '%d', '%d', '%d', '%d', '%d', '%d', '%d', '%d', '%d', '%d')",
+    format(query, sizeof(query), "INSERT INTO furniture(houseid, modelid, door, door_z, locked_door, pos_x, pos_y, pos_z, rot_x, rot_y, rot_z, texture_1, texture_2, texture_3, texture_4, texture_5, color_1, color_2, color_3, color_4, color_5) VALUES ('%d', '%d', '%d', '%f', '%d', '%f', '%f', '%f', '%f', '%f', '%f', '%d', '%d', '%d', '%d', '%d', '%d', '%d', '%d', '%d', '%d')",
         HouseInfo[houseid][hSQLID],
         modelid,
         HouseInfo[houseid][hFurDoor][index],
@@ -2933,7 +2933,7 @@ static stock CreateFurnitureObject(playerid, modelid, Float:x, Float:y, Float:z,
         }
         if (HouseInfo[houseid][hFurSQL][index] > 0)
         {
-            format(query, sizeof(query), "DELETE FROM `furniture` WHERE sqlid = '%d' LIMIT 1", HouseInfo[houseid][hFurSQL][index]);
+            format(query, sizeof(query), "DELETE FROM furniture WHERE sqlid = '%d' LIMIT 1", HouseInfo[houseid][hFurSQL][index]);
             mysql_tquery(g_SQL, query);
         }
 
@@ -3017,7 +3017,7 @@ static stock CopyFurnitureObject(playerid, copyid)
     }
 
     new query[512];
-    format(query, sizeof(query), "INSERT INTO `furniture`(`houseid`, `modelid`, `door`, `door_z`, `locked_door`, `pos_x`, `pos_y`, `pos_z`, `rot_x`, `rot_y`, `rot_z`, `texture_1`, `texture_2`, `texture_3`, `texture_4`, `texture_5`, `color_1`, `color_2`, `color_3`, `color_4`, `color_5`) VALUES ('%d', '%d', '%d', '%f', '%d', '%f', '%f', '%f', '%f', '%f', '%f', '%d', '%d', '%d', '%d', '%d', '%d', '%d', '%d', '%d', '%d')",
+    format(query, sizeof(query), "INSERT INTO furniture(houseid, modelid, door, door_z, locked_door, pos_x, pos_y, pos_z, rot_x, rot_y, rot_z, texture_1, texture_2, texture_3, texture_4, texture_5, color_1, color_2, color_3, color_4, color_5) VALUES ('%d', '%d', '%d', '%f', '%d', '%f', '%f', '%f', '%f', '%f', '%f', '%d', '%d', '%d', '%d', '%d', '%d', '%d', '%d', '%d', '%d')",
         HouseInfo[houseid][hSQLID],
         HouseInfo[houseid][hFurModelid][index],
         HouseInfo[houseid][hFurDoor][index],
@@ -3100,7 +3100,7 @@ static stock SetFurnitureObjectPos(playerid, Float:x, Float:y, Float:z, Float:rx
     HouseInfo[houseid][hFurRotZ][index]     = rz;
 
     new query[512];
-    format(query, sizeof(query), "UPDATE furniture SET `pos_x` = '%f',`pos_y` = '%f',`pos_z` = '%f',`rot_x` = '%f',`rot_y` = '%f',`rot_z` = '%f' WHERE sqlid = '%d'",
+    format(query, sizeof(query), "UPDATE furniture SET pos_x = '%f',pos_y = '%f',pos_z = '%f',rot_x = '%f',rot_y = '%f',rot_z = '%f' WHERE sqlid = '%d'",
         x,
         y,
         z,
@@ -3149,7 +3149,7 @@ static stock SetFurnitureObjectTexture(playerid, slot, index, slotid)
     HouseInfo[houseid][hFurTxtId][slotid][slot] = index;
 
     new query[128];
-    format(query, sizeof(query), "UPDATE furniture SET `texture_%d` = '%d' WHERE sqlid = '%d'",
+    format(query, sizeof(query), "UPDATE furniture SET texture_%d = '%d' WHERE sqlid = '%d'",
         (slot+1),
         HouseInfo[houseid][hFurTxtId][slotid][slot],
         HouseInfo[houseid][hFurSQL][slotid]
@@ -3184,7 +3184,7 @@ static stock SetFurnitureObjectColor(playerid, slot, index, slotid)
     if (tmpslot >= 5) tmpslot = 4;
 
     new query[128];
-    format(query, sizeof(query), "UPDATE furniture SET `color_%d` = '%d' WHERE sqlid = '%d'",
+    format(query, sizeof(query), "UPDATE furniture SET color_%d = '%d' WHERE sqlid = '%d'",
         tmpslot,
         HouseInfo[houseid][hFurColId][slotid][slot],
         HouseInfo[houseid][hFurSQL][slotid]
@@ -3286,13 +3286,13 @@ static stock DestroyAllFurnitureObjects(playerid, houseid)
 
     new query[128];
     mysql_tquery(g_SQL, "BEGIN");
-    format(query, sizeof(query), "DELETE FROM `furniture` WHERE `houseid` = '%d'", HouseInfo[houseid][hSQLID]);
+    format(query, sizeof(query), "DELETE FROM furniture WHERE houseid = '%d'", HouseInfo[houseid][hSQLID]);
     mysql_tquery(g_SQL, query);
     mysql_tquery(g_SQL, "COMMIT");
 
     // TODO: this query below was never executed, oversight or?
     // "updateSlotsQuery"
-    //format(query, sizeof(query), "UPDATE `houses` SET `fur_slots` = '%d' WHERE `id` = '%d'", HouseInfo[houseid][hFurSlots], HouseInfo[houseid][hSQLID]);
+    //format(query, sizeof(query), "UPDATE houses SET fur_slots = '%d' WHERE id = '%d'", HouseInfo[houseid][hFurSlots], HouseInfo[houseid][hSQLID]);
     return 1;
 }
 
@@ -4510,7 +4510,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
             HouseInfo[houseid][hFurColId][edit_index][slot] = -1;
 
             new query[256];
-            format(query, sizeof(query), "UPDATE furniture SET `texture_%d` = '0', `color_%d` = '-1' WHERE sqlid = '%d'",
+            format(query, sizeof(query), "UPDATE furniture SET texture_%d = '0', color_%d = '-1' WHERE sqlid = '%d'",
                 (slot+1),
                 (slot+1),
                 HouseInfo[houseid][hFurSQL][edit_index]
@@ -4649,11 +4649,11 @@ hook OnFSelectionResponse(playerid, fselectid, modelid, response)
 
 /*
     d888888b d8b   db d888888b d88888b d8888b. d888888b  .d88b.  d8888b.
-      `88'   888o  88 `~~88~~' 88'     88  `8D   `88'   .8P  Y8. 88  `8D
+      88'   888o  88 ~~88~~' 88'     88  8D   88'   .8P  Y8. 88  8D
        88    88V8o 88    88    88ooooo 88oobY'    88    88    88 88oobY'
-       88    88 V8o88    88    88~~~~~ 88`8b      88    88    88 88`8b
-      .88.   88  V888    88    88.     88 `88.   .88.   `8b  d8' 88 `88.
-    Y888888P VP   V8P    YP    Y88888P 88   YD Y888888P  `Y88P'  88   YD
+       88    88 V8o88    88    88~~~~~ 888b      88    88    88 888b
+      .88.   88  V888    88    88.     88 88.   .88.   8b  d8' 88 88.
+    Y888888P VP   V8P    YP    Y88888P 88   YD Y888888P  Y88P'  88   YD
 */
 
 CMD:bint(playerid, params[])
@@ -4704,11 +4704,11 @@ CMD:bint(playerid, params[])
 
 /*
      .d88b.  d8888b.    d88b d88888b  .o88b. d888888b .d8888.
-    .8P  Y8. 88  `8D    `8P' 88'     d8P  Y8 `~~88~~' 88'  YP
-    88    88 88oooY'     88  88ooooo 8P         88    `8bo.
-    88    88 88~~~b.     88  88~~~~~ 8b         88      `Y8b.
-    `8b  d8' 88   8D db. 88  88.     Y8b  d8    88    db   8D
-     `Y88P'  Y8888P' Y8888P  Y88888P  `Y88P'    YP    `8888Y'
+    .8P  Y8. 88  8D    8P' 88'     d8P  Y8 ~~88~~' 88'  YP
+    88    88 88oooY'     88  88ooooo 8P         88    8bo.
+    88    88 88~~~b.     88  88~~~~~ 8b         88      Y8b.
+    8b  d8' 88   8D db. 88  88.     Y8b  d8    88    db   8D
+     Y88P'  Y8888P' Y8888P  Y88888P  Y88P'    YP    8888Y'
 */
 
 CMD:furniture(playerid, params[])

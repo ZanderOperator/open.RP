@@ -39,7 +39,7 @@ Public:StoreWorkerInDB(playerid, biznis, slot) {
 stock SaveBiznisWorkers(biznis, workerSQL, slot) {
 	new query[ 1024 ];
 	if(slot == 1) {
-		format(query, sizeof(query), "UPDATE `server_biznis_workers` SET `Worker` = '%s', `Role` = '%s', `Salary` = '%d', `Earned` = '%d', `Time` = '%d'  WHERE `ID` = '%d'",
+		format(query, sizeof(query), "UPDATE server_biznis_workers SET Worker = '%s', Role = '%s', Salary = '%d', Earned = '%d', Time = '%d'  WHERE ID = '%d'",
 			BizzInfo[biznis][b_Worker1],
 			BizzInfo[biznis][b_Wrole1],
 			BizzInfo[biznis][b_Wsalary][0], 
@@ -49,7 +49,7 @@ stock SaveBiznisWorkers(biznis, workerSQL, slot) {
 		);
 	}
 	else if(slot == 2) {
-		format(query, sizeof(query), "UPDATE `server_biznis_workers` SET `Worker` = '%s', `Role` = '%s', `Salary` = '%d', `Earned` = '%d', `Time` = '%d'  WHERE `ID` = '%d'",
+		format(query, sizeof(query), "UPDATE server_biznis_workers SET Worker = '%s', Role = '%s', Salary = '%d', Earned = '%d', Time = '%d'  WHERE ID = '%d'",
 			BizzInfo[biznis][b_Worker2],
 			BizzInfo[biznis][b_Wrole2],
 			BizzInfo[biznis][b_Wsalary][1], 
@@ -59,7 +59,7 @@ stock SaveBiznisWorkers(biznis, workerSQL, slot) {
 		);
 	}
 	else if(slot == 3) {
-		format(query, sizeof(query), "UPDATE `server_biznis_workers` SET `Worker` = '%s', `Role` = '%s', `Salary` = '%d', `Earned` = '%d', `Time` = '%d'  WHERE `ID` = '%d'",
+		format(query, sizeof(query), "UPDATE server_biznis_workers SET Worker = '%s', Role = '%s', Salary = '%d', Earned = '%d', Time = '%d'  WHERE ID = '%d'",
 			BizzInfo[biznis][b_Worker3],
 			BizzInfo[biznis][b_Wrole3],
 			BizzInfo[biznis][b_Wsalary][2], 
@@ -69,7 +69,7 @@ stock SaveBiznisWorkers(biznis, workerSQL, slot) {
 		);
 	}
 	else if(slot == 4) {
-		format(query, sizeof(query), "UPDATE `server_biznis_workers` SET `Worker` = '%s', `Role` = '%s', `Salary` = '%d', `Earned` = '%d', `Time` = '%d'  WHERE `ID` = '%d'",
+		format(query, sizeof(query), "UPDATE server_biznis_workers SET Worker = '%s', Role = '%s', Salary = '%d', Earned = '%d', Time = '%d'  WHERE ID = '%d'",
 			BizzInfo[biznis][b_Worker4],
 			BizzInfo[biznis][b_Wrole4],
 			BizzInfo[biznis][b_Wsalary][3], 
@@ -79,7 +79,7 @@ stock SaveBiznisWorkers(biznis, workerSQL, slot) {
 		);
 	}
 	else if(slot == 5) {
-		format(query, sizeof(query), "UPDATE `server_biznis_workers` SET `Worker` = '%s', `Role` = '%s', `Salary` = '%d', `Earned` = '%d', `Time` = '%d'  WHERE `ID` = '%d'",
+		format(query, sizeof(query), "UPDATE server_biznis_workers SET Worker = '%s', Role = '%s', Salary = '%d', Earned = '%d', Time = '%d'  WHERE ID = '%d'",
 			BizzInfo[biznis][b_Worker5],
 			BizzInfo[biznis][b_Wrole5],
 			BizzInfo[biznis][b_Wsalary][4], 
@@ -145,10 +145,10 @@ stock WorkerList(biznis) {
 
 stock WorkerQuit(playerid, biznis, slot) {
 	new query[164];
-	format(query, sizeof(query), "DELETE FROM `server_biznis_workers` WHERE `ID` = '%d'", BizzInfo[biznis][b_WorkerSQL][slot]);
+	format(query, sizeof(query), "DELETE FROM server_biznis_workers WHERE ID = '%d'", BizzInfo[biznis][b_WorkerSQL][slot]);
 	mysql_tquery(g_SQL, query, "", "");
 	
-	format(query, sizeof(query), "UPDATE `accounts` SET `pBusinessJob` = '-1', `pBusinessWorkTime` = '0' WHERE `sqlid` = '%d'",
+	format(query, sizeof(query), "UPDATE accounts SET pBusinessJob = '-1', pBusinessWorkTime = '0' WHERE sqlid = '%d'",
 		PlayerInfo[playerid][pSQLID]);
 	mysql_pquery(g_SQL, query);
 	
@@ -193,10 +193,10 @@ stock WorkerRemove(playerid, slot, worker, biznis) {
 	
 	// mysql
 	new query[64];
-	format(query, sizeof(query), "DELETE FROM `server_biznis_workers` WHERE `ID` = '%d'", BizzInfo[biznis][b_WorkerSQL][slot]);
+	format(query, sizeof(query), "DELETE FROM server_biznis_workers WHERE ID = '%d'", BizzInfo[biznis][b_WorkerSQL][slot]);
 	mysql_tquery(g_SQL, query, "", "");
 	
-	format(query, sizeof(query), "UPDATE `accounts` SET `pBusinessJob` = '%d', `pBusinessWorkTime` = '%d' WHERE `sqlid` = '%d'",
+	format(query, sizeof(query), "UPDATE accounts SET pBusinessJob = '%d', pBusinessWorkTime = '%d' WHERE sqlid = '%d'",
 		PlayerInfo[worker][pBusinessJob],
 		PlayerInfo[worker][pBusinessWorkTime],
 		PlayerInfo[worker][pSQLID]
@@ -273,7 +273,7 @@ stock WorkerAdd(playerid, workerid, biznis, salary, role[], work_time, slot) {
 		SetString(BizzInfo[biznis][b_Worker5],GetName(workerid));
 		SetString(BizzInfo[biznis][b_Wrole5],role);
 	}
-	format(query, sizeof(query), "INSERT INTO `server_biznis_workers` (`biznis_id`, `Worker`, `Role`, `Salary`, `Time`, `Earned`) VALUES ('%d', '%s', '%s', '%d', '%d', '0')",
+	format(query, sizeof(query), "INSERT INTO server_biznis_workers (biznis_id, Worker, Role, Salary, Time, Earned) VALUES ('%d', '%s', '%s', '%d', '%d', '0')",
 		BizzInfo[biznis][bSQLID],
 		GetName(workerid),
 		role,
@@ -282,7 +282,7 @@ stock WorkerAdd(playerid, workerid, biznis, salary, role[], work_time, slot) {
 	);
 	mysql_tquery(g_SQL, query, "StoreWorkerInDB", "iii", playerid, biznis, slot);	
 	
-	format(query, sizeof(query), "UPDATE `accounts` SET `pBusinessJob` = '%d', `pBusinessWorkTime` = '%d' WHERE `sqlid` = '%d'",
+	format(query, sizeof(query), "UPDATE accounts SET pBusinessJob = '%d', pBusinessWorkTime = '%d' WHERE sqlid = '%d'",
 		PlayerInfo[workerid][pBusinessJob],
 		PlayerInfo[workerid][pBusinessWorkTime],
 		PlayerInfo[workerid][pSQLID]

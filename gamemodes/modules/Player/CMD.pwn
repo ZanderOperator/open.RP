@@ -2145,7 +2145,7 @@ CMD:dump(playerid, params[])
 			DeletePlayerContacts(playerid);
 			// brise iz baze
 			new	mobileDelete[128];
-			format(mobileDelete, 128, "DELETE FROM `player_phones` WHERE `player_id` = '%d' AND `type` = '1'",
+			format(mobileDelete, 128, "DELETE FROM player_phones WHERE player_id = '%d' AND type = '1'",
 				PlayerInfo[playerid][pSQLID]
 			);
 			mysql_tquery(g_SQL, mobileDelete);
@@ -2167,7 +2167,7 @@ CMD:dump(playerid, params[])
             ProxDetector(15.0, playerid, tmpString, COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE);
 			// Brise iz baze
 			new	mobileDelete[128];
-			format(mobileDelete, 128, "DELETE FROM `player_phones` WHERE `player_id` = '%d' AND `type` = '2'",
+			format(mobileDelete, 128, "DELETE FROM player_phones WHERE player_id = '%d' AND type = '2'",
 				PlayerInfo[playerid][pSQLID]
 			);
 			mysql_tquery(g_SQL, mobileDelete);
@@ -2634,7 +2634,7 @@ CMD:setlook(playerid, params[])
 		
 		new
 			tmpQuery[ 315 ];
-		mysql_format(g_SQL, tmpQuery, 315, "UPDATE accounts SET `look` = '%e' WHERE sqlid = '%d'",
+		mysql_format(g_SQL, tmpQuery, 315, "UPDATE accounts SET look = '%e' WHERE sqlid = '%d'",
 			PlayerInfo[ playerid ][ pLook ], 
 			PlayerInfo[ playerid ][ pSQLID ]
 		);
@@ -2895,7 +2895,7 @@ CMD:spawnchange(playerid, params[])
 	SetPlayerSpawnInfo(playerid);
 	
 	new tmpQuery[ 70 ];
-	format(tmpQuery, 70, "UPDATE accounts SET `spawnchange` = '%d' WHERE sqlid = '%d'", 
+	format(tmpQuery, 70, "UPDATE accounts SET spawnchange = '%d' WHERE sqlid = '%d'", 
 		PlayerInfo[playerid][pSpawnChange],
 		PlayerInfo[playerid][pSQLID]
 	);

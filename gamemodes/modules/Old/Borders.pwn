@@ -148,7 +148,7 @@ CMD:passport(playerid, params[])
 		
 		// MySQL query
 		new passUpdate[64];
-		format(passUpdate, 64, "UPDATE `accounts` SET `passport` = '1' WHERE `sqlid` = '%d'",
+		format(passUpdate, 64, "UPDATE accounts SET passport = '1' WHERE sqlid = '%d'",
 			PlayerInfo[playerid][pSQLID]
 		);
 		mysql_tquery(g_SQL, passUpdate);

@@ -43,7 +43,7 @@ stock SaveVehicleTicketStatus(vehicleid, ticket_slot)
 {
     new updateQuery[ 100 ];
     
-    format(updateQuery, sizeof(updateQuery), "UPDATE `cocars_tickets` SET `isShown` = '%d' WHERE `id` = '%d'", 
+    format(updateQuery, sizeof(updateQuery), "UPDATE cocars_tickets SET isShown = '%d' WHERE id = '%d'", 
         VehicleInfo[vehicleid][vTicketShown][ticket_slot],
         VehicleInfo[vehicleid][vTicketsSQLID][ticket_slot]
     );
@@ -75,7 +75,7 @@ stock GetVehicleTicketReason(ticketsql)
         Cache:result,
         ticketQuery[128];
 
-    format(ticketQuery, sizeof(ticketQuery), "SELECT `reason` FROM `cocars_tickets` WHERE `id` = '%d'", ticketsql);
+    format(ticketQuery, sizeof(ticketQuery), "SELECT reason FROM cocars_tickets WHERE id = '%d'", ticketsql);
     result = mysql_query(g_SQL, ticketQuery);
     if (result == MYSQL_INVALID_CACHE)
         format(reason, sizeof(reason), "None");
@@ -96,7 +96,7 @@ stock InsertPlayerTicket(playerid, giveplayerid, money, const reason[])
     new query[512];
     mysql_tquery(g_SQL, "BEGIN");
 
-    mysql_format(g_SQL, query, sizeof(query), "INSERT INTO tickets (`reciever`, `officer`, `money`, `reason`, `date`) VALUES ('%e', '%e', '%d', '%e', '%e')",
+    mysql_format(g_SQL, query, sizeof(query), "INSERT INTO tickets (reciever, officer, money, reason, date) VALUES ('%e', '%e', '%d', '%e', '%e')",
         TicketInfo[giveplayerid][tkReciever],
         TicketInfo[giveplayerid][tkOfficer],
         TicketInfo[giveplayerid][tkMoney],
@@ -120,7 +120,7 @@ stock DeletePlayerTicket(playerid, sqlid, bool:mdc_notification = false)
 {
     new
         query[256];
-    format(query, sizeof(query), "DELETE FROM tickets WHERE `id` = '%d'", sqlid);
+    format(query, sizeof(query), "DELETE FROM tickets WHERE id = '%d'", sqlid);
     mysql_tquery(g_SQL, query);
 
     if (mdc_notification)
@@ -131,7 +131,7 @@ stock LoadVehicleTickets(vehicleid)
 {
     new
         query[128];
-    format(query, sizeof(query), "SELECT * FROM `cocars_tickets` WHERE `vehicle_id` = '%d' LIMIT 0,%d",
+    format(query, sizeof(query), "SELECT * FROM cocars_tickets WHERE vehicle_id = '%d' LIMIT 0,%d",
         VehicleInfo[vehicleid][vSQLID],
         MAX_VEHICLE_TICKETS
     );
@@ -158,7 +158,7 @@ stock LoadPlayerTickets(playerid, const playername[])
 {
     new
         query[128];
-    mysql_format(g_SQL, query, sizeof(query), "SELECT * FROM tickets WHERE `reciever` = '%e'", playername);
+    mysql_format(g_SQL, query, sizeof(query), "SELECT * FROM tickets WHERE reciever = '%e'", playername);
 
     inline OnTicketLoad()
     {

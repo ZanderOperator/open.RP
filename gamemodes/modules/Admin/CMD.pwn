@@ -2971,7 +2971,7 @@ CMD:asellcomplex(playerid, params[])
 			mysql_tquery(g_SQL, TmpQuery);
 			
 			// Update proracun
-			format( TmpQuery, sizeof(TmpQuery), "UPDATE city SET `budget = budget - '%d'", 
+			format( TmpQuery, sizeof(TmpQuery), "UPDATE city SET budget = budget - '%d'", 
 				ComplexInfo[complex][cPrice]
 			);
 			mysql_tquery(g_SQL, TmpQuery);

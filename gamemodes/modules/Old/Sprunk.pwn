@@ -92,7 +92,7 @@ stock SaveSprunks()
 		updateQuery[256];
 	for(new i = 0; i < MAX_SPRUNKS; i++)
 	{
-		format(updateQuery, sizeof(updateQuery), "UPDATE `sprunks` SET `money` = '%i', `destroyed` = '%i', `amount` = '%i' WHERE `id` = '%i'",
+		format(updateQuery, sizeof(updateQuery), "UPDATE sprunks SET money = '%i', destroyed = '%i', amount = '%i' WHERE id = '%i'",
 			SprunkInfo[ i ] [ spMoney ],
 			SprunkInfo[ i ] [ spDestroyed ],
 			SprunkInfo[ i ] [ spAmount ],
@@ -490,7 +490,7 @@ hook OnPlayerEditDynObject(playerid, objectid, response, Float:x, Float:y, Float
 						SprunkInfo[ slot ][ spLabelID ] = Create3DTextLabel("MASINA UNISTENA", 0xFF000077, SprunkInfo[ slot ][ spPos ][ 0 ], SprunkInfo[ slot ][ spPos ][ 1 ], SprunkInfo[ slot ][ spPos ][ 2 ], 25.0, SprunkInfo[ slot ][ spWorldID ]);
 					new
 						tmpQuery[512];
-					format(tmpQuery,sizeof(tmpQuery),"INSERT INTO sprunks  (`posX`, `posY`, `posZ`, `rotX`, `rotY`, `rotZ`, `destroyed`, `amount`, `money`, `worldID`, `intID`, `type`) VALUES ('%f', '%f', '%f', '%f', '%f', '%f', '%i', '%i', '%i', '%i', '%i', '%i')",
+					format(tmpQuery,sizeof(tmpQuery),"INSERT INTO sprunks  (posX, posY, posZ, rotX, rotY, rotZ, destroyed, amount, money, worldID, intID, type) VALUES ('%f', '%f', '%f', '%f', '%f', '%f', '%i', '%i', '%i', '%i', '%i', '%i')",
 					SprunkInfo[ slot ][ spPos ][ 0 ],
 					SprunkInfo[ slot ][ spPos ][ 1 ],
 					SprunkInfo[ slot ][ spPos ][ 2 ],	
@@ -513,7 +513,7 @@ hook OnPlayerEditDynObject(playerid, objectid, response, Float:x, Float:y, Float
 						Update3dLabelPos(slot);
 					new
 						tmpQuery[256];
-					format(tmpQuery,sizeof(tmpQuery), "UPDATE `sprunks` SET `posX` = '%f', `posY` = '%f', `posZ` = '%f', `rotX` = '%f', `rotY` = '%f', `rotZ` = '%f' WHERE `id` = '%i'", 
+					format(tmpQuery,sizeof(tmpQuery), "UPDATE sprunks SET posX = '%f', posY = '%f', posZ = '%f', rotX = '%f', rotY = '%f', rotZ = '%f' WHERE id = '%i'", 
 					SprunkInfo[ slot ][ spPos ][ 0 ],
 					SprunkInfo[ slot ][ spPos ][ 1 ],
 					SprunkInfo[ slot ][ spPos ][ 2 ],
@@ -568,7 +568,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 				new
 					deleteQuery[128],
 					slot = TempObjectID[playerid];
-				format(deleteQuery, sizeof(deleteQuery), "DELETE FROM `sprunks` WHERE `id` = '%i'", SprunkInfo[ slot ][spSQLID]);
+				format(deleteQuery, sizeof(deleteQuery), "DELETE FROM sprunks WHERE id = '%i'", SprunkInfo[ slot ][spSQLID]);
 				mysql_tquery(g_SQL, deleteQuery, "", "");
 				DeleteSprunkMachine(slot);
 				SendMessage(playerid, MESSAGE_TYPE_INFO, "Uspjesno ste obrisali masinu iz baze podataka.");

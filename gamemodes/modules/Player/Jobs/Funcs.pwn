@@ -42,7 +42,7 @@ new JobData[E_JOBS_DATA];
 
 SaveJobData() {
 	new query[300];
-	format(query, sizeof(query), "UPDATE `server_jobs` SET `Sweeper` = '%d', `Mechanic` = '%d', `Crafter` = '%d', `Taxi` = '%d', `Farmer` = '%d', `Logger` = '%d', `Garbage` = '%d', `Impounder` = '%d', `Transporter` = '%d' WHERE 1",
+	format(query, sizeof(query), "UPDATE server_jobs SET Sweeper = '%d', Mechanic = '%d', Crafter = '%d', Taxi = '%d', Farmer = '%d', Logger = '%d', Garbage = '%d', Impounder = '%d', Transporter = '%d' WHERE 1",
 		JobData[SWEEPER],
 		JobData[MECHANIC],
 		JobData[CRAFTER],

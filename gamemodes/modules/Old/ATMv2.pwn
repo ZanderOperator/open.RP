@@ -167,7 +167,7 @@ ATM_Create(Float:x, Float:y, Float:z, int, vw)
 		    
 		    Iter_Add(Atm, a);
 
-			if(mysql_tquery(1, "INSERT INTO `server_atms` (`x`, `y`, `z`, `rx`, `ry`, `rz`, `vw`, `a_int`) VALUES ('0.0', '0.0', '0.0', '0.0', '0.0', '0.0', '0', '0')", "OnATMCreated", "d", a))
+			if(mysql_tquery(1, "INSERT INTO server_atms (x, y, z, rx, ry, rz, vw, a_int) VALUES ('0.0', '0.0', '0.0', '0.0', '0.0', '0.0', '0', '0')", "OnATMCreated", "d", a))
 				ATM_Save(a);
 
 			return a;

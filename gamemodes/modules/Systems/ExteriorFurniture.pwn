@@ -208,7 +208,7 @@ static ExteriorMisc[][E_EXTERIOR_MISC_DATA] =
 stock LoadHouseExterior(houseid)
 {
     new query[128];
-    format(query, sizeof(query), "SELECT * FROM `house_exteriors` WHERE `house_id` = '%d'", HouseInfo[houseid][hSQLID]);
+    format(query, sizeof(query), "SELECT * FROM house_exteriors WHERE house_id = '%d'", HouseInfo[houseid][hSQLID]);
     mysql_pquery(g_SQL, query, "OnHouseExteriorLoad", "i", houseid);
 }
 
@@ -309,7 +309,7 @@ static stock CreateExteriorObject(playerid)
 
 
     new query[256];
-    mysql_format(g_SQL, query, sizeof(query), "INSERT INTO `house_exteriors`(`house_id`, `modelid`, `pos_x`, `pos_y`, `pos_z`, `rot_x`, `rot_y`, `rot_z`) VALUES ('%d','%d','%f','%f','%f','%f','%f','%f')",
+    mysql_format(g_SQL, query, sizeof(query), "INSERT INTO house_exteriors(house_id, modelid, pos_x, pos_y, pos_z, rot_x, rot_y, rot_z) VALUES ('%d','%d','%f','%f','%f','%f','%f','%f')",
         HouseInfo[PlayerInfo[playerid][pHouseKey]][hSQLID],
         PlayerExteriorInfo[playerid][peModelId],
         PlayerExteriorInfo[playerid][pePosX],
@@ -340,7 +340,7 @@ static stock SetExteriorObjectPos(playerid, Float:fX, Float:fY, Float:fZ, Float:
     ExteriorInfo[houseid][heRotZ][index] = fRotZ;
 
     new query[200];
-    format(query, sizeof(query), "UPDATE `house_exteriors` SET `pos_x`='%f',`pos_y`='%f',`pos_z`='%f',`rot_x`='%f',`rot_y`='%f',`rot_z`='%f' WHERE `id` = '%d'",
+    format(query, sizeof(query), "UPDATE house_exteriors SET pos_x='%f',pos_y='%f',pos_z='%f',rot_x='%f',rot_y='%f',rot_z='%f' WHERE id = '%d'",
         ExteriorInfo[houseid][hePosX][index],
         ExteriorInfo[houseid][hePosY][index],
         ExteriorInfo[houseid][hePosZ][index],
@@ -431,7 +431,7 @@ static stock DeleteExteriorObject(houseid, index, bool:iter_clear = false)
     }
 
     new query[128];
-    format(query, sizeof(query), "DELETE FROM `house_exteriors` WHERE `id` = '%d'", ExteriorInfo[houseid][heSQLID][index]);
+    format(query, sizeof(query), "DELETE FROM house_exteriors WHERE id = '%d'", ExteriorInfo[houseid][heSQLID][index]);
     mysql_tquery(g_SQL, query);
 
     ExteriorInfo[houseid][heSQLID][index]       = -1;

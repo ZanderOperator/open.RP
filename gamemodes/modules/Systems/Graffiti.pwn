@@ -331,7 +331,7 @@ stock InsertGraffitIntoDB(grafid)
     new query[256];
     mysql_tquery(g_SQL, "BEGIN", "");
     // TODO: consider splitting the text below in to two or more lines
-    mysql_format(g_SQL, query, sizeof(query), "INSERT INTO `graffiti` (`text`,`font`,`fontsize`,`fontcolor`,`posx`,`posy`,`posz`,`rotx`,`roty`,`rotz`,`author`) VALUES ('%e','%d','%d','%d','%f','%f','%f','%f','%f','%f','%e')",
+    mysql_format(g_SQL, query, sizeof(query), "INSERT INTO graffiti (text,font,fontsize,fontcolor,posx,posy,posz,rotx,roty,rotz,author) VALUES ('%e','%d','%d','%d','%f','%f','%f','%f','%f','%f','%e')",
         GraffitInfo[grafid][gText],
         GraffitInfo[grafid][gFont],
         GraffitInfo[grafid][gFontSize],
@@ -465,7 +465,7 @@ stock EditGraffit(grafid, Float:newX, Float:newY, Float:newZ, Float:newRotX, Flo
     GraffitInfo[grafid][gRotZ] = newRotZ;
 
     new query[512];
-    format(query, sizeof(query), "UPDATE `graffiti` SET `posx` = '%f', `posy` = '%f', `posz` = '%f', `rotx` = '%f', `roty` = '%f', `rotz` = '%f' WHERE `id` = '%d'",
+    format(query, sizeof(query), "UPDATE graffiti SET posx = '%f', posy = '%f', posz = '%f', rotx = '%f', roty = '%f', rotz = '%f' WHERE id = '%d'",
         GraffitInfo[grafid][gPosX],
         GraffitInfo[grafid][gPosY],
         GraffitInfo[grafid][gPosZ],
@@ -484,7 +484,7 @@ stock DestroyGraffit(grafid)
     if (grafid == -1) return 0;
 
     new query[256];
-    format(query, sizeof(query), "DELETE FROM `graffiti` WHERE `id` = '%i'", GraffitInfo[grafid][gId]);
+    format(query, sizeof(query), "DELETE FROM graffiti WHERE id = '%i'", GraffitInfo[grafid][gId]);
     mysql_tquery(g_SQL, query);
 
     if (IsValidDynamicObject(GraffitInfo[grafid][gObject]))
@@ -667,7 +667,7 @@ stock InsertSprayTagIntoDB(tagid)
 {
     new query[1024];
     // TODO: consider splitting this long line below
-    mysql_format(g_SQL, query, sizeof(query), "INSERT INTO spraytags (`modelid`,`posx`,`posy`,`posz`,`rotx`,`roty`,`rotz`,`faction`,`author`) VALUES ('%d','%f','%f','%f','%f','%f','%f','%d','%e')",
+    mysql_format(g_SQL, query, sizeof(query), "INSERT INTO spraytags (modelid,posx,posy,posz,rotx,roty,rotz,faction,author) VALUES ('%d','%f','%f','%f','%f','%f','%f','%d','%e')",
         TagInfo[tagid][tModelid],
         TagInfo[tagid][tPosX],
         TagInfo[tagid][tPosY],
@@ -757,7 +757,7 @@ stock EditSprayTag(tagid, Float:newX, Float:newY, Float:newZ, Float:newRotX, Flo
     TagInfo[tagid][tRotZ] = newRotZ;
 
     new query[512];
-    format(query, sizeof(query), "UPDATE spraytags SET `posx` = '%f', `posy` = '%f', `posz` = '%f', `rotx` = '%f', `roty` = '%f', `rotz` = '%f' WHERE `id` = '%d'",
+    format(query, sizeof(query), "UPDATE spraytags SET posx = '%f', posy = '%f', posz = '%f', rotx = '%f', roty = '%f', rotz = '%f' WHERE id = '%d'",
         TagInfo[tagid][tPosX],
         TagInfo[tagid][tPosY],
         TagInfo[tagid][tPosZ],
@@ -777,7 +777,7 @@ stock DestroySprayTag(tagid)
         DestroyDynamicObject(TagInfo[tagid][tgObject]);
 
     new query[256];
-    format(query, sizeof(query), "DELETE FROM spraytags WHERE `id` = '%d'", TagInfo[tagid][tId]);
+    format(query, sizeof(query), "DELETE FROM spraytags WHERE id = '%d'", TagInfo[tagid][tId]);
     mysql_tquery(g_SQL, query);
 
     TagInfo[tagid][tId]         = -1;

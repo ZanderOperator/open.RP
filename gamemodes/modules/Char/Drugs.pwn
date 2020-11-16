@@ -89,7 +89,7 @@ Public:LoadVehicleDrugs(vehicleid)
 	new
 		tmpQuery[128];
 
-	format(tmpQuery, 128, "SELECT * FROM `cocars_drugs` WHERE `vehicle_id` = '%d'", VehicleInfo[vehicleid][vSQLID]);
+	format(tmpQuery, 128, "SELECT * FROM cocars_drugs WHERE vehicle_id = '%d'", VehicleInfo[vehicleid][vSQLID]);
 	mysql_tquery(g_SQL, tmpQuery, "LoadingVehicleDrugs", "d", vehicleid);
 	return 1;
 }
@@ -120,7 +120,7 @@ Public:LoadPlayerDrugs(playerid)
 	new
 		tmpQuery[128];
 
-	format(tmpQuery, 128, "SELECT * FROM `player_drugs` WHERE `player_id` = '%d'", PlayerInfo[playerid][pSQLID]);
+	format(tmpQuery, 128, "SELECT * FROM player_drugs WHERE player_id = '%d'", PlayerInfo[playerid][pSQLID]);
 	mysql_tquery(g_SQL, tmpQuery, "LoadingPlayerDrugs", "i", playerid);
 	return 1;
 }
@@ -353,7 +353,7 @@ CMD:drug(playerid, params[])
 		if(PlayerDrugs[playerid][dAmount][slot] < 0.01)
 			DeletePlayerDrug(playerid, slot);
 		else
-			mysql_fquery(g_SQL, "UPDATE `player_drugs` SET `amount` = '%f' WHERE `id` = '%d'", PlayerDrugs[playerid][dAmount][slot], PlayerDrugs[playerid][dSQLID][slot]);
+			mysql_fquery(g_SQL, "UPDATE player_drugs SET amount = '%f' WHERE id = '%d'", PlayerDrugs[playerid][dAmount][slot], PlayerDrugs[playerid][dSQLID][slot]);
 			
 		va_SendClientMessage(playerid, COLOR_YELLOW, "Dao si %.2f %s droge %s igracu %s!", damnt, (drugs[dcode][dEffect] == DRUG_TYPE_TABLET) ? ("tableta") : ("grama"), drugs[dcode][dName], GetName(giveplayerid, false));
 		va_SendClientMessage(giveplayerid, COLOR_LIGHTBLUE, "Igrac %s vam je dao %.2f %s droge %s!", GetName(playerid, false), damnt, (drugs[dcode][dEffect] == DRUG_TYPE_TABLET) ? ("tableta") : ("grama"), drugs[dcode][dName]);
@@ -428,7 +428,7 @@ CMD:drug(playerid, params[])
 		if(PlayerDrugs[playerid][dAmount][slot] < 0.01)
 			DeletePlayerDrug(playerid, slot);
 		else
-			mysql_fquery(g_SQL, "UPDATE `player_drugs` SET `amount` = '%f' WHERE `id` = '%d'", PlayerDrugs[playerid][dAmount][slot], PlayerDrugs[playerid][dSQLID][slot]);
+			mysql_fquery(g_SQL, "UPDATE player_drugs SET amount = '%f' WHERE id = '%d'", PlayerDrugs[playerid][dAmount][slot], PlayerDrugs[playerid][dSQLID][slot]);
 			
 		va_SendClientMessage(playerid, COLOR_YELLOW, "Stavio si %.2f %s droge %s u slot %d u vozilo %s!", damnt, (drugs[dcode][dEffect] == DRUG_TYPE_TABLET) ? ("tableta") : ("grama"), drugs[dcode][dName], vdslot+1, ReturnVehicleName(GetVehicleModel(vehid)));
 		#if defined MODULE_LOGS
@@ -494,7 +494,7 @@ CMD:drug(playerid, params[])
 		if(VehicleDrugs[vehid][vamount][slot] < 0.01)
 			DeleteVehicleDrug(vehid, slot);
 		else
-			mysql_fquery(g_SQL, "UPDATE `cocars_drugs` SET `amount` = '%f' WHERE `id` = '%d'", VehicleDrugs[vehid][vamount][slot], VehicleDrugs[vehid][vsqlid][slot]);
+			mysql_fquery(g_SQL, "UPDATE cocars_drugs SET amount = '%f' WHERE id = '%d'", VehicleDrugs[vehid][vamount][slot], VehicleDrugs[vehid][vsqlid][slot]);
 			
 		va_SendClientMessage(playerid, COLOR_YELLOW, "Uzeo si %.2f %s droge %s iz slota %d iz vozila %s!", damnt, (drugs[dcode][dEffect] == DRUG_TYPE_TABLET) ? ("tableta") : ("grama"), drugs[dcode][dName], slot+1, ReturnVehicleName(GetVehicleModel(vehid)));
 		#if defined MODULE_LOGS
@@ -666,7 +666,7 @@ CMD:drug(playerid, params[])
 		if(PlayerDrugs[playerid][dAmount][slot] < 0.01)
 			DeletePlayerDrug(playerid, slot);
 		else
-			mysql_fquery(g_SQL, "UPDATE `player_drugs` SET `amount` = '%f' WHERE `id` = '%d'", PlayerDrugs[playerid][dAmount][slot], PlayerDrugs[playerid][dSQLID][slot]);
+			mysql_fquery(g_SQL, "UPDATE player_drugs SET amount = '%f' WHERE id = '%d'", PlayerDrugs[playerid][dAmount][slot], PlayerDrugs[playerid][dSQLID][slot]);
 		
 		PlayerInfo[playerid][pDrugUsed] = dtyp;
 		PlayerInfo[playerid][pDrugSeconds] = drugs[dtyp][dUseTime];
@@ -765,13 +765,13 @@ CMD:drug(playerid, params[])
 			else
 			{
 				PlayerDrugs[playerid][dAmount][slot] -= damnt;
-				mysql_fquery(g_SQL, "UPDATE `player_drugs` SET `amount` = '%f' WHERE `id` = '%d'", PlayerDrugs[playerid][dAmount][slot], PlayerDrugs[playerid][dSQLID][slot]);
+				mysql_fquery(g_SQL, "UPDATE player_drugs SET amount = '%f' WHERE id = '%d'", PlayerDrugs[playerid][dAmount][slot], PlayerDrugs[playerid][dSQLID][slot]);
 			}
 			DeletePlayerDrug(playerid, slot2);
 			return 1;
 		}
 		else
-			mysql_fquery(g_SQL, "UPDATE `player_drugs` SET `effect` = '%f' WHERE `id` = '%d'", PlayerDrugs[playerid][dEffect][slot2], PlayerDrugs[playerid][dSQLID][slot2]);
+			mysql_fquery(g_SQL, "UPDATE player_drugs SET effect = '%f' WHERE id = '%d'", PlayerDrugs[playerid][dEffect][slot2], PlayerDrugs[playerid][dSQLID][slot2]);
 		
 		va_SendClientMessage(playerid, COLOR_YELLOW, "[INFO]: Pomjesao si %.2f %s droge %s i sad imaš %.2f %s u slotu %d!", 
 			damnt, 
@@ -807,9 +807,9 @@ CMD:drug(playerid, params[])
 		if(PlayerDrugs[playerid][dAmount][slot] < 0.01)
 			DeletePlayerDrug(playerid, slot);
 		else
-			mysql_fquery(g_SQL, "UPDATE `player_drugs` SET `amount` = '%f' WHERE `id` = '%d'", PlayerDrugs[playerid][dAmount][slot], PlayerDrugs[playerid][dSQLID][slot]);
+			mysql_fquery(g_SQL, "UPDATE player_drugs SET amount = '%f' WHERE id = '%d'", PlayerDrugs[playerid][dAmount][slot], PlayerDrugs[playerid][dSQLID][slot]);
 			
-		mysql_fquery(g_SQL, "UPDATE `player_drugs` SET `amount` = '%f' WHERE `id` = '%d'", PlayerDrugs[playerid][dAmount][slot2], PlayerDrugs[playerid][dSQLID][slot2]);
+		mysql_fquery(g_SQL, "UPDATE player_drugs SET amount = '%f' WHERE id = '%d'", PlayerDrugs[playerid][dAmount][slot2], PlayerDrugs[playerid][dSQLID][slot2]);
 		return 1;
 	}
 	else if(!strcmp(item, "drop", true)) // MapAndreas_FindZ_For2DCoord(Float:X, Float:Y, &Float:Z);//// COMMENTAJ TOKOM TESTA
@@ -862,7 +862,7 @@ CMD:drug(playerid, params[])
 		if(PlayerDrugs[playerid][dAmount][slot] < 0.01)
 			DeletePlayerDrug(playerid, slot);
 		else
-			mysql_fquery(g_SQL, "UPDATE `player_drugs` SET `amount` = '%f' WHERE `id` = '%d'", PlayerDrugs[playerid][dAmount][slot], PlayerDrugs[playerid][dSQLID][slot]);
+			mysql_fquery(g_SQL, "UPDATE player_drugs SET amount = '%f' WHERE id = '%d'", PlayerDrugs[playerid][dAmount][slot], PlayerDrugs[playerid][dSQLID][slot]);
 		
 		return 1;
 	}
@@ -918,7 +918,7 @@ DeletePlayerDrug(playerid, slot = -1) // pripazi kako koristis, slot -1 znaci da
 	
 	if(slot == -1)
 	{
-		mysql_format(g_SQL, sqlstring, sizeof(sqlstring), "DELETE FROM `player_drugs` WHERE `player_id` = '%d'", PlayerInfo[playerid][pSQLID]);
+		mysql_format(g_SQL, sqlstring, sizeof(sqlstring), "DELETE FROM player_drugs WHERE player_id = '%d'", PlayerInfo[playerid][pSQLID]);
 		mysql_tquery(g_SQL, sqlstring);
 		
 		for(new d = 0; d != MAX_PLAYER_DRUGS; ++d)
@@ -935,7 +935,7 @@ DeletePlayerDrug(playerid, slot = -1) // pripazi kako koristis, slot -1 znaci da
 		if(PlayerDrugs[playerid][dCode][slot] == 0)
 			return 0;
 			
-		mysql_format(g_SQL, sqlstring, sizeof(sqlstring), "DELETE FROM `player_drugs` WHERE `id` = '%d'", PlayerDrugs[playerid][dSQLID][slot]);
+		mysql_format(g_SQL, sqlstring, sizeof(sqlstring), "DELETE FROM player_drugs WHERE id = '%d'", PlayerDrugs[playerid][dSQLID][slot]);
 		mysql_tquery(g_SQL, sqlstring);
 				
 		PlayerDrugs[playerid][dSQLID][slot] = -1;
@@ -993,7 +993,7 @@ GivePlayerDrug(playerid, typ, Float:dmnt, Float:dq)
 	new
 		drugsql[250];
 	
-	mysql_format(g_SQL, drugsql, sizeof(drugsql), "INSERT INTO `player_drugs` (`player_id`, `code`, `amount`, `effect`, `timestamp`) VALUES ('%d', '%d', '%f', '%f', '%d')",
+	mysql_format(g_SQL, drugsql, sizeof(drugsql), "INSERT INTO player_drugs (player_id, code, amount, effect, timestamp) VALUES ('%d', '%d', '%f', '%f', '%d')",
 		PlayerInfo[playerid][pSQLID],
 		typ,
 		dmnt,
@@ -1025,7 +1025,7 @@ GiveVehicleDrug(vehicleid, dtyp, Float:damnt, Float:dqua)
 	new
 		drugsql[250];
 	
-	mysql_format(g_SQL, drugsql, sizeof(drugsql), "INSERT INTO `cocars_drugs` (`vehicle_id`, `code`, `amount`, `quality`, `timestamp`) VALUES ('%d', '%d', '%f', '%f', '%d')",
+	mysql_format(g_SQL, drugsql, sizeof(drugsql), "INSERT INTO cocars_drugs (vehicle_id, code, amount, quality, timestamp) VALUES ('%d', '%d', '%f', '%f', '%d')",
 		VehicleInfo[vehicleid][vSQLID],
 		dtyp,
 		damnt,
@@ -1047,7 +1047,7 @@ DeleteVehicleDrug(vehicleid, slot = -1) // pripazi kako koristis, slot -1 znaci 
 	
 	if(slot == -1)
 	{
-		mysql_format(g_SQL, sqlstring, sizeof(sqlstring), "DELETE FROM `cocars_drugs` WHERE `vehicle_id` = '%d'", VehicleInfo[vehicleid][vSQLID]);
+		mysql_format(g_SQL, sqlstring, sizeof(sqlstring), "DELETE FROM cocars_drugs WHERE vehicle_id = '%d'", VehicleInfo[vehicleid][vSQLID]);
 		mysql_tquery(g_SQL, sqlstring);
 		
 		ResetVehicleDrugs(vehicleid);
@@ -1057,7 +1057,7 @@ DeleteVehicleDrug(vehicleid, slot = -1) // pripazi kako koristis, slot -1 znaci 
 		if(VehicleDrugs[vehicleid][vsqlid][slot] == 0)
 			return 0;
 			
-		mysql_format(g_SQL, sqlstring, sizeof(sqlstring), "DELETE FROM `cocars_drugs` WHERE `id` = '%d'", VehicleDrugs[vehicleid][vsqlid][slot]);
+		mysql_format(g_SQL, sqlstring, sizeof(sqlstring), "DELETE FROM cocars_drugs WHERE id = '%d'", VehicleDrugs[vehicleid][vsqlid][slot]);
 		mysql_tquery(g_SQL, sqlstring);
 		
 		VehicleDrugs[vehicleid][vsqlid][slot] = 0;

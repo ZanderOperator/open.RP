@@ -156,7 +156,7 @@ stock GetPlayerNameFromSQL(sqlid)
 	    new	Cache:result,
 			playerQuery[ 128 ];
 
-		format(playerQuery, sizeof(playerQuery), "SELECT `name` FROM accounts WHERE sqlid = '%d'", sqlid);
+		format(playerQuery, sizeof(playerQuery), "SELECT name FROM accounts WHERE sqlid = '%d'", sqlid);
 		result = mysql_query(g_SQL, playerQuery);
 		cache_get_value_index(0, 0, dest);
 		cache_delete(result);
@@ -1414,7 +1414,7 @@ stock CheckStringForIP(text[])
 stock ConvertNameToSQLID(const name[])
 {
 	new sqlid = -1, sqlquery[128];
-	mysql_format(g_SQL, sqlquery, sizeof(sqlquery), "SELECT `sqlid` FROM accounts WHERE `name` = '%e' LIMIT 0,1", name);
+	mysql_format(g_SQL, sqlquery, sizeof(sqlquery), "SELECT sqlid FROM accounts WHERE name = '%e' LIMIT 0,1", name);
 	
 	new 
 		Cache:result = mysql_query(g_SQL, sqlquery);
@@ -1427,7 +1427,7 @@ stock ConvertSQLIDToName(id)
 {
 	new nick[24], 
 		sqlquery[128];
-	format( sqlquery, sizeof(sqlquery), "SELECT `name` FROM accounts WHERE sqlid = '%d' LIMIT 0,1", id);
+	format( sqlquery, sizeof(sqlquery), "SELECT name FROM accounts WHERE sqlid = '%d' LIMIT 0,1", id);
 	
 	new 
 		Cache:result = mysql_query(g_SQL, sqlquery);

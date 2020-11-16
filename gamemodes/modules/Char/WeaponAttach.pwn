@@ -125,7 +125,7 @@ stock RefreshPlayerWeaponSettings(playerid, weaponid)
 	new updateString[256],
 		index = GetWeaponObjectEnum(weaponid);
 
-	format( updateString, sizeof(updateString), "UPDATE `weaponsettings` SET `WeaponID` = '%d', `PosX` = '%f', `PosY` = '%f', `PosZ` = '%f', `RotX` = '%f', `RotY` = '%f', `RotZ` = '%f' WHERE `id` = '%d'",
+	format( updateString, sizeof(updateString), "UPDATE weaponsettings SET WeaponID = '%d', PosX = '%f', PosY = '%f', PosZ = '%f', RotX = '%f', RotY = '%f', RotZ = '%f' WHERE id = '%d'",
 		weaponid,
 		WeaponSettings[playerid][index][Position][0],
 		WeaponSettings[playerid][index][Position][1],

@@ -87,7 +87,7 @@ stock AC_LoadPlayerWeapons(playerid)
 {
 	new
 		loadPlayaWeapons[72];
-	format(loadPlayaWeapons, 72, "SELECT * FROM `player_weapons` WHERE `player_id` = '%d'",
+	format(loadPlayaWeapons, 72, "SELECT * FROM player_weapons WHERE player_id = '%d'",
 		PlayerInfo[playerid][pSQLID]
 	);
 	mysql_pquery(g_SQL, loadPlayaWeapons, "LoadPlayerWeapons", "i", playerid);
@@ -110,7 +110,7 @@ stock AC_SavePlayerWeapon(playerid, slotid)
 		weaponUpdate[160];
 	if(PlayerWeapons[playerid][pwSQLID][slotid] != -1 && PlayerWeapons[playerid][pwAmmo][slotid] > 0)
 	{
-		format(weaponUpdate, 160, "UPDATE `player_weapons` SET `player_id` = '%d', `weapon_id` = '%d', `weapon_ammo` = '%d', `hidden` = '%d' WHERE sqlid = '%d'",
+		format(weaponUpdate, 160, "UPDATE player_weapons SET player_id = '%d', weapon_id = '%d', weapon_ammo = '%d', hidden = '%d' WHERE sqlid = '%d'",
 			PlayerInfo[playerid][pSQLID],
 			PlayerWeapons[playerid][pwWeaponId][slotid],
 			PlayerWeapons[playerid][pwAmmo][slotid],
@@ -121,7 +121,7 @@ stock AC_SavePlayerWeapon(playerid, slotid)
 	}
 	else if(PlayerWeapons[playerid][pwSQLID][slotid] == -1 && PlayerWeapons[playerid][pwAmmo][slotid] > 0)
 	{
-		format(weaponUpdate, 160, "INSERT INTO `player_weapons` (`player_id`, `weapon_id`, `weapon_ammo`, `hidden`) VALUES ('%d', '%d', '%d', '%d')",
+		format(weaponUpdate, 160, "INSERT INTO player_weapons (player_id, weapon_id, weapon_ammo, hidden) VALUES ('%d', '%d', '%d', '%d')",
 			PlayerInfo[playerid][pSQLID],
 			PlayerWeapons[playerid][pwWeaponId][slotid],
 			PlayerWeapons[playerid][pwAmmo][slotid],
@@ -327,7 +327,7 @@ stock AC_ResetPlayerWeapons(playerid, bool:base_reset=true)
 		// MySQL Query
 		new
 			weapDeleteQuery[128];
-		format(weapDeleteQuery, 128, "DELETE FROM `player_weapons` WHERE `player_id` = '%d'", PlayerInfo[playerid][pSQLID]);
+		format(weapDeleteQuery, 128, "DELETE FROM player_weapons WHERE player_id = '%d'", PlayerInfo[playerid][pSQLID]);
 		mysql_tquery(g_SQL, weapDeleteQuery);
 	}
 	return 1;
@@ -374,7 +374,7 @@ stock AC_ResetPlayerWeapon(playerid, weaponid, bool:base_update=true)
 	{
 		new
 			weapDeleteQuery[128];
-		format(weapDeleteQuery, 128, "DELETE FROM `player_weapons` WHERE `player_id` = '%d' AND `weapon_id` = '%d'", PlayerInfo[playerid][pSQLID], weaponid);
+		format(weapDeleteQuery, 128, "DELETE FROM player_weapons WHERE player_id = '%d' AND weapon_id = '%d'", PlayerInfo[playerid][pSQLID], weaponid);
 		mysql_tquery(g_SQL, weapDeleteQuery);
 	}
 	//Tick

@@ -234,7 +234,7 @@ OPUnTowIV(playerid, veh)
 	
 		new
 			bigquery[ 512 ];
-		format(bigquery, sizeof(bigquery), "UPDATE `cocars` SET `parkX` = '%f', `parkY` = '%f', `parkZ` = '%f', `angle` = '%f', `impounded` = '%d' WHERE `id` = '%d'",
+		format(bigquery, sizeof(bigquery), "UPDATE cocars SET parkX = '%f', parkY = '%f', parkZ = '%f', angle = '%f', impounded = '%d' WHERE id = '%d'",
 			X,
 			Y,
 			Z,

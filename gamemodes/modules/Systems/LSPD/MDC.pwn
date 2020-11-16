@@ -3,8 +3,8 @@
               |         |                            
 ,-.-.,---.,---|,---.    |---.,   .    . . .,---.,---.
 | | |,---||   ||---'    |   ||   |    | | ||   ||   |
-` ' '`---^`---'`---'    `---'`---|    `-'-'`---'`---'
-                             `---'
+ ' '---^---'---'    ---'---|    -'-'---'---'
+                             ---'
 APB % MDC
 NOTES:
 OBRISATI U COARP LoadAPBData()
@@ -98,7 +98,7 @@ static GetPlayerPhoneNumber(sqlid)
         number = 0,
         numberstr[12];
 
-    format(query, sizeof(query), "SELECT `number` FROM `player_phones` WHERE `player_id` = '%d' AND `type` = '1'", sqlid);
+    format(query, sizeof(query), "SELECT number FROM player_phones WHERE player_id = '%d' AND type = '1'", sqlid);
     result = mysql_query(g_SQL, query);
     cache_get_value_index_int(0, 0, number);
     cache_delete(result);
@@ -116,7 +116,7 @@ static GetPlayerPhoneNumber(sqlid)
 static OnPlayerMDCDataLoad(playerid, const playername[])
 {
     new query[128];
-    mysql_format(g_SQL, query, sizeof(query), "SELECT * FROM accounts WHERE `name` = '%e' LIMIT 0,1", playername);
+    mysql_format(g_SQL, query, sizeof(query), "SELECT * FROM accounts WHERE name = '%e' LIMIT 0,1", playername);
 
     inline OnPlayerMDCLoad()
     {
@@ -211,7 +211,7 @@ static OnPlayerMDCDataLoad(playerid, const playername[])
 static OnPlayerArrestDataLoad(playerid, const playername[])
 {
     new query[128];
-    mysql_format(g_SQL, query, sizeof(query), "SELECT * FROM jail WHERE `suspect` = '%e'", playername);
+    mysql_format(g_SQL, query, sizeof(query), "SELECT * FROM jail WHERE suspect = '%e'", playername);
 
     inline OnArrestLoad()
     {
@@ -268,7 +268,7 @@ static OnPlayerArrestDataLoad(playerid, const playername[])
 static OnPlayerTicketsLoad(playerid, const playername[])
 {
     new query[128];
-    mysql_format(g_SQL, query, sizeof(query), "SELECT * FROM tickets WHERE `primatelj` = '%e' LIMIT 10", playername);
+    mysql_format(g_SQL, query, sizeof(query), "SELECT * FROM tickets WHERE primatelj = '%e' LIMIT 10", playername);
 
     inline OnTicketsLoad()
     {
@@ -332,7 +332,7 @@ static OnPlayerTicketsLoad(playerid, const playername[])
 static OnPlayerCoVehsLoad(playerid, playersqlid)
 {
     new query[128];
-    format(query, sizeof(query), "SELECT * FROM cocars WHERE `ownerid` = '%d' AND numberplate != '' AND numberplate != '0' LIMIT 10", playersqlid);
+    format(query, sizeof(query), "SELECT * FROM cocars WHERE ownerid = '%d' AND numberplate != '' AND numberplate != '0' LIMIT 10", playersqlid);
 
     inline OnCoVehicleLoad()
     {
@@ -396,7 +396,7 @@ static OnPlayerCoVehsLoad(playerid, playersqlid)
 static OnPlayerAPBLoad(playerid, const playername[])
 {
     new query[128];
-    mysql_format(g_SQL, query, sizeof(query), "SELECT * FROM apb WHERE `suspect` = '%e'", playername);
+    mysql_format(g_SQL, query, sizeof(query), "SELECT * FROM apb WHERE suspect = '%e'", playername);
 
     inline OnAPBLoad()
     {
@@ -455,7 +455,7 @@ static OnPlayerAPBLoad(playerid, const playername[])
 static GetAPBList(playerid)
 {
     new query[128];
-    format(query, sizeof(query), "SELECT * FROM apb ORDER BY `id` DESC");
+    format(query, sizeof(query), "SELECT * FROM apb ORDER BY id DESC");
 
     inline OnAPBListLoad()
     {
@@ -511,7 +511,7 @@ static GetAPBList(playerid)
 static GetSuspectAPB(playerid, const playername[])
 {
     new query[128];
-    mysql_format(g_SQL, query, sizeof(query), "SELECT * FROM apb WHERE `suspect` = '%e'", playername);
+    mysql_format(g_SQL, query, sizeof(query), "SELECT * FROM apb WHERE suspect = '%e'", playername);
 
     inline OnAPBLoad()
     {
@@ -650,7 +650,7 @@ stock InsertPlayerMDCCrime(playerid, giveplayerid, reason[], jailtime)
         query[256];
     mysql_tquery(g_SQL, "BEGIN");
 
-    mysql_format(g_SQL, query, sizeof(query), "INSERT INTO `jail` (`suspect`, `policeman`, `reason`, `jailtime`, `date`) VALUES ('%e', '%e', '%e', '%d', '%e')",
+    mysql_format(g_SQL, query, sizeof(query), "INSERT INTO jail (suspect, policeman, reason, jailtime, date) VALUES ('%e', '%e', '%e', '%d', '%e')",
         JailInfo[giveplayerid][jSuspectName],
         JailInfo[giveplayerid][jPoliceName],
         JailInfo[giveplayerid][jReason],
@@ -665,7 +665,7 @@ static DeletePlayerMDCCrime(playerid, sqlid)
 {
     new
         query[64];
-    format(query, sizeof(query), "DELETE FROM jail WHERE `id` = '%d'", sqlid);
+    format(query, sizeof(query), "DELETE FROM jail WHERE id = '%d'", sqlid);
     mysql_tquery(g_SQL, query);
     SendFormatMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uspjesno ste obrisali dosje #%d!", sqlid);
 }
@@ -674,7 +674,7 @@ static InsertAPBInfo(playerid, const suspect[], const description[], type)
 {
     new
         query[256];
-    mysql_format(g_SQL, query, sizeof(query), "INSERT INTO `apb`(`suspect`, `description`, `type`, `pdname`) VALUES ('%e','%e','%d','%e')",
+    mysql_format(g_SQL, query, sizeof(query), "INSERT INTO apb(suspect, description, type, pdname) VALUES ('%e','%e','%d','%e')",
         suspect,
         description,
         type,
@@ -717,7 +717,7 @@ static GetPlayerMDCRecord(playerid, const playername[])
         tmp[32],
         query[128];
 
-    mysql_format(g_SQL, query, sizeof(query), "SELECT * FROM jail WHERE `suspect` = '%e'", playername);
+    mysql_format(g_SQL, query, sizeof(query), "SELECT * FROM jail WHERE suspect = '%e'", playername);
 
     inline OnSuspectLoad()
     {
@@ -1240,7 +1240,7 @@ hook OnPlayerClickPlayerTD(playerid, PlayerText:playertextid)
                 query[128];
 
             // TODO: make complement TargetSqlid[playerid] with TargetName, to eliminate the need for a second query
-            mysql_format(g_SQL, query, sizeof(query), "SELECT sqlid FROM accounts WHERE `name` = '%e' LIMIT 0,1", TargetName[playerid]);
+            mysql_format(g_SQL, query, sizeof(query), "SELECT sqlid FROM accounts WHERE name = '%e' LIMIT 0,1", TargetName[playerid]);
             result = mysql_query(g_SQL, query);
             //counts = cache_num_rows();
             cache_get_value_name_int(0, "sqlid", player_sqlid);
@@ -1290,7 +1290,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 
             new mobilenumber = strval(inputtext);
             new query[128];
-            format(query, sizeof(query), "SELECT * FROM player_phones WHERE `number` = '%d' LIMIT 0,1", mobilenumber);
+            format(query, sizeof(query), "SELECT * FROM player_phones WHERE number = '%d' LIMIT 0,1", mobilenumber);
 
             inline OnMobileNumberCheck()
             {

@@ -238,7 +238,7 @@ Public:LoadPlayerDrugs(playerid)
 {
 	new
 		tmpQuery[128];
-	format(tmpQuery, 128, "SELECT * FROM `player_drugs` WHERE `player_id` = '%d' LIMIT 0,5",
+	format(tmpQuery, 128, "SELECT * FROM player_drugs WHERE player_id = '%d' LIMIT 0,5",
 		PlayerInfo[playerid][pSQLID]
 	);
 	mysql_tquery(g_SQL, tmpQuery, "LoadingPlayerDrugs", "i", playerid);
@@ -301,7 +301,7 @@ SavePlayerDrugSlot(playerid, slotid)
 	{
 		new
 			drugUpdate[128];
-		format(drugUpdate, 128, "UPDATE `player_drugs` SET `code`='%d', `amount`='%.2f', `effect`='%d', `timestamp`='%d' WHERE `id`='%d'",
+		format(drugUpdate, 128, "UPDATE player_drugs SET code='%d', amount='%.2f', effect='%d', timestamp='%d' WHERE id='%d'",
 			PlayerDrugs[playerid][dCode][slotid],
 			PlayerDrugs[playerid][dAmount][slotid],
 			PlayerDrugs[playerid][dEffect][slotid],
@@ -314,7 +314,7 @@ SavePlayerDrugSlot(playerid, slotid)
 	{		
 		new
 			drugInsert[170];
-		format(drugInsert, 170, "INSERT INTO `player_drugs`(`player_id`,`code`,`amount`,`effect`,`timestamp`) VALUES ('%d','%d','%.2f','%d','%d')",
+		format(drugInsert, 170, "INSERT INTO player_drugs(player_id,code,amount,effect,timestamp) VALUES ('%d','%d','%.2f','%d','%d')",
 			PlayerInfo[playerid][pSQLID],
 			PlayerDrugs[playerid][dCode][slotid],
 			PlayerDrugs[playerid][dAmount][slotid],
@@ -328,7 +328,7 @@ SavePlayerDrugSlot(playerid, slotid)
 		// SQL
 		new
 			drugFinishQuery[128];
-		format(drugFinishQuery, 128, "DELETE FROM `player_drugs` WHERE `id` = '%d'", PlayerDrugs[playerid][dSQLID][slotid]);
+		format(drugFinishQuery, 128, "DELETE FROM player_drugs WHERE id = '%d'", PlayerDrugs[playerid][dSQLID][slotid]);
 		mysql_tquery(g_SQL, drugFinishQuery, "", "");
 		
 		PlayerDrugs[playerid][dSQLID][slotid]	= -1;
@@ -353,7 +353,7 @@ stock DeletePlayerDrugs(playerid)
 {
 	new
 		drugFinishQuery[128];
-	format(drugFinishQuery, 128, "DELETE FROM `player_drugs` WHERE `player_id` = '%d'", PlayerInfo[playerid][pSQLID]);
+	format(drugFinishQuery, 128, "DELETE FROM player_drugs WHERE player_id = '%d'", PlayerInfo[playerid][pSQLID]);
 	mysql_tquery(g_SQL, drugFinishQuery, "", "");
 	
 	for(new i = 0; i < 5; i++)
@@ -1049,7 +1049,7 @@ stock static CreateWeed(weedid, Objectid, viwo, Planted, Hourspassed, Ready, Gra
 	mysql_tquery(g_SQL, "BEGIN", "");
 	new
 		tmpQuery[ 256 ];
-	format(tmpQuery, 256, "INSERT INTO weed (`objectid`, `planted`, `hourspassed`, `ready`, `viwo`, `grams`, `plantx`, `planty`, `plantz`, `author`) VALUES ('%d', '%d', '%d', '%d', '%d','%d','%f','%f','%f','%e')",
+	format(tmpQuery, 256, "INSERT INTO weed (objectid, planted, hourspassed, ready, viwo, grams, plantx, planty, plantz, author) VALUES ('%d', '%d', '%d', '%d', '%d','%d','%f','%f','%f','%e')",
 		Objectid,
 		Planted,
 		Hourspassed,
@@ -1070,7 +1070,7 @@ stock UpdateWeed(Ready, Hourspassed, Grams, SQLID, Float:X, Float:Y, Float:Z)
 {
 	new
 		tmpQuery[ 256 ];
-	format(tmpQuery, 256, "UPDATE weed SET hourspassed = '%d', ready = '%d', grams = '%d', plantx = '%.2f', planty = '%.2f', plantz = '%.2f' WHERE `id` = '%d'",
+	format(tmpQuery, 256, "UPDATE weed SET hourspassed = '%d', ready = '%d', grams = '%d', plantx = '%.2f', planty = '%.2f', plantz = '%.2f' WHERE id = '%d'",
 		Hourspassed,
 		Ready,
 		Grams,
@@ -1085,7 +1085,7 @@ stock UpdateWeed(Ready, Hourspassed, Grams, SQLID, Float:X, Float:Y, Float:Z)
 
 /*
 	.88b  d88. d88888b d888888b db   db
-	88'YbdP`88 88'     `~~88~~' 88   88
+	88'YbdP88 88'     ~~88~~' 88   88
 	88  88  88 88ooooo    88    88ooo88
 	88  88  88 88~~~~~    88    88~~~88
 	88  88  88 88.        88    88   88
@@ -1332,7 +1332,7 @@ CheckVehicleDrugsInBase()
 	
 	new
 		loadString[ 128 ];
-	format(loadString, 128, "SELECT * FROM `cocars_drugs` WHERE timestamp <= '%d'",drugtimestamp);
+	format(loadString, 128, "SELECT * FROM cocars_drugs WHERE timestamp <= '%d'",drugtimestamp);
 	mysql_pquery(g_SQL, loadString, "OnVehicleDrugsCheck", "");
 	return 1;
 }
@@ -1352,7 +1352,7 @@ Public:OnVehicleDrugsCheck()
 			dcode -= DRUG_QUALITY_DECREASE;
 			timestamp = gettimestamp() + DRUG_TIMESTAMP;
 			
-			format(updateQuery, 128, "UPDATE `cocars_drugs` SET `code` = '%d', `timestamp` = '%d' WHERE `id` = '%d'", 
+			format(updateQuery, 128, "UPDATE cocars_drugs SET code = '%d', timestamp = '%d' WHERE id = '%d'", 
 				dcode,
 				timestamp,
 				sqlid
@@ -1983,7 +1983,7 @@ CMD:drug(playerid, params[])
 			new
 				insertVehDrugQuery[180];
 				
-			format(insertVehDrugQuery, sizeof(insertVehDrugQuery), "INSERT INTO `cocars_drugs`(`vehicle_id`, `code`, `amount`, `timestamp`) VALUES ('%d','%d','%.2f','%d')",
+			format(insertVehDrugQuery, sizeof(insertVehDrugQuery), "INSERT INTO cocars_drugs(vehicle_id, code, amount, timestamp) VALUES ('%d','%d','%.2f','%d')",
 				VehicleInfo[vehicleid][vSQLID],
 				VehicleInfo[vehicleid][vDrugCode][index],
 				VehicleInfo[vehicleid][vDrug][index],
@@ -1998,7 +1998,7 @@ CMD:drug(playerid, params[])
 			// SQL
 			new
 				drugRemove[128];
-			format(drugRemove, 128, "DELETE FROM `player_drugs` WHERE `id` = '%d'", PlayerDrugs[playerid][dSQLID][slot2]);
+			format(drugRemove, 128, "DELETE FROM player_drugs WHERE id = '%d'", PlayerDrugs[playerid][dSQLID][slot2]);
 			mysql_tquery(g_SQL, drugRemove, "", "");
 			
 			// Drug Dump
@@ -2243,7 +2243,7 @@ CMD:drug(playerid, params[])
 			UpgradePlayerSkill(playerid, 8);
 			new
 				tmpQuery[ 256 ];
-			format(tmpQuery, sizeof(tmpQuery), "DELETE FROM `weed` WHERE `id` = '%d'", WeedInfo[plantid][wdSQLID]);
+			format(tmpQuery, sizeof(tmpQuery), "DELETE FROM weed WHERE id = '%d'", WeedInfo[plantid][wdSQLID]);
             mysql_tquery(g_SQL, tmpQuery, "");
 			
 	        if(PlayerDrugs[playerid][dCode][0] == 0)
@@ -2326,7 +2326,7 @@ CMD:drug(playerid, params[])
 
 		new
 			tmpQuery[ 128 ];
-		format(tmpQuery, sizeof(tmpQuery), "DELETE FROM weed WHERE `id` = '%d'", WeedInfo[plantid][wdSQLID]);
+		format(tmpQuery, sizeof(tmpQuery), "DELETE FROM weed WHERE id = '%d'", WeedInfo[plantid][wdSQLID]);
 		mysql_tquery(g_SQL, tmpQuery, "");
 
 		WeedInfo[plantid][wReady] 		= false;

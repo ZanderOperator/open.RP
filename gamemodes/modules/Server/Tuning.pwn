@@ -178,14 +178,14 @@ static const
 	{ 1098, "Access Wheels", 4800, CARMODTYPE_WHEELS },
 	{ 1099, "Left Chrome Sideskirt", 2800, CARMODTYPE_SIDESKIRT },
 	{ 1100, "Chrome Grill", 2800, -1 }, // Bullbar
-	{ 1101, "Left `Chrome Flames` Sideskirt", 2800, CARMODTYPE_SIDESKIRT },
-	{ 1102, "Left `Chrome Strip` Sideskirt", 2800, CARMODTYPE_SIDESKIRT },
+	{ 1101, "Left Chrome Flames Sideskirt", 2800, CARMODTYPE_SIDESKIRT },
+	{ 1102, "Left Chrome Strip Sideskirt", 2800, CARMODTYPE_SIDESKIRT },
 	{ 1103, "Covertible Roof", 4000, CARMODTYPE_ROOF },
 	{ 1104, "Chrome Exhaust", 7000, CARMODTYPE_EXHAUST },
 	{ 1105, "Slamin Exhaust", 7000, CARMODTYPE_EXHAUST },
-	{ 1106, "Right `Chrome Arches`", 2800, CARMODTYPE_SIDESKIRT },
-	{ 1107, "Left `Chrome Strip` Sideskirt", 2800, CARMODTYPE_SIDESKIRT },
-	{ 1108, "Right `Chrome Strip` Sideskirt", 2800, CARMODTYPE_SIDESKIRT },
+	{ 1106, "Right Chrome Arches", 2800, CARMODTYPE_SIDESKIRT },
+	{ 1107, "Left Chrome Strip Sideskirt", 2800, CARMODTYPE_SIDESKIRT },
+	{ 1108, "Right Chrome Strip Sideskirt", 2800, CARMODTYPE_SIDESKIRT },
 	{ 1109, "Chrome", 2800, -1 }, // Bullbar
 	{ 1110, "Slamin", 2800, -1 }, // Bullbar
 	{ 1111, "Little Sign", 100, -1 }, // sig
@@ -195,13 +195,13 @@ static const
 	{ 1115, "Chrome", 2800, -1 }, // Bullbar
 	{ 1116, "Slamin", 2800, -1 }, // Bullbar
 	{ 1117, "Chrome Front Bumper", 8000, CARMODTYPE_FRONT_BUMPER },
-	{ 1118, "Right `Chrome Trim` Sideskirt", 2800, CARMODTYPE_SIDESKIRT },
-	{ 1119, "Right `Wheelcovers` Sideskirt", 2800, CARMODTYPE_SIDESKIRT },
-	{ 1120, "Left `Chrome Trim` Sideskirt", 2800, CARMODTYPE_SIDESKIRT },
-	{ 1121, "Left `Wheelcovers` Sideskirt", 2800, CARMODTYPE_SIDESKIRT },
-	{ 1122, "Right `Chrome Flames` Sideskirt", 2800, CARMODTYPE_SIDESKIRT },
+	{ 1118, "Right Chrome Trim Sideskirt", 2800, CARMODTYPE_SIDESKIRT },
+	{ 1119, "Right Wheelcovers Sideskirt", 2800, CARMODTYPE_SIDESKIRT },
+	{ 1120, "Left Chrome Trim Sideskirt", 2800, CARMODTYPE_SIDESKIRT },
+	{ 1121, "Left Wheelcovers Sideskirt", 2800, CARMODTYPE_SIDESKIRT },
+	{ 1122, "Right Chrome Flames Sideskirt", 2800, CARMODTYPE_SIDESKIRT },
 	{ 1123, "Bullbar Chrome Bars", 2800, -1 }, // Bullbar
-	{ 1124, "Left `Chrome Arches` Sideskirt", 28000, CARMODTYPE_SIDESKIRT },
+	{ 1124, "Left Chrome Arches Sideskirt", 28000, CARMODTYPE_SIDESKIRT },
 	{ 1125, "Bullbar Chrome Lights", 2800, -1 }, // Bullbar
 	{ 1126, "Chrome Exhaust", 7000, CARMODTYPE_EXHAUST },
 	{ 1127, "Slamin Exhaust", 7000, CARMODTYPE_EXHAUST },
@@ -210,11 +210,11 @@ static const
 	{ 1130, "Hardtop Roof", 4000, CARMODTYPE_ROOF },
 	{ 1131, "Softtop Roof", 4000, CARMODTYPE_ROOF },
 	{ 1132, "Slamin Exhaust", 7000, CARMODTYPE_EXHAUST },
-	{ 1133, "Right `Chrome Strip` Sideskirt", 2800, CARMODTYPE_SIDESKIRT },
-	{ 1134, "Right `Chrome Strip` Sideskirt", 2800, CARMODTYPE_SIDESKIRT },
+	{ 1133, "Right Chrome Strip Sideskirt", 2800, CARMODTYPE_SIDESKIRT },
+	{ 1134, "Right Chrome Strip Sideskirt", 2800, CARMODTYPE_SIDESKIRT },
 	{ 1135, "Slamin Exhaust", 7000, CARMODTYPE_EXHAUST },
 	{ 1136, "Chrome Exhaust", 7000, CARMODTYPE_EXHAUST },
-	{ 1137, "Left `Chrome Strip` Sideskirt", 2800, CARMODTYPE_SIDESKIRT },
+	{ 1137, "Left Chrome Strip Sideskirt", 2800, CARMODTYPE_SIDESKIRT },
 	{ 1138, "Alien Spoiler", 7000, CARMODTYPE_SPOILER },
 	{ 1139, "X-Flow Spoiler", 7000, CARMODTYPE_SPOILER },
 	{ 1140, "X-Flow Rear Bumper", 8000, CARMODTYPE_REAR_BUMPER },
@@ -318,7 +318,7 @@ stock CreatePlayerTuningTextDraws( playerid ) {
 	PlayerTextDrawFont(playerid, TuningBuy[ playerid ][ 2 ], 2);
 	PlayerTextDrawSetProportional(playerid, TuningBuy[ playerid ][ 2 ], 1);
 
-	TuningBuy[ playerid ][ 3 ] = CreatePlayerTextDraw(playerid, 222.500000, 352.916656, "Left `Chrome Flames` Sideskirt");
+	TuningBuy[ playerid ][ 3 ] = CreatePlayerTextDraw(playerid, 222.500000, 352.916656, "Left Chrome Flames Sideskirt");
 	PlayerTextDrawLetterSize(playerid, TuningBuy[ playerid ][ 3 ], 0.244999, 1.092499);
 	PlayerTextDrawAlignment(playerid, TuningBuy[ playerid ][ 3 ], 1);
 	PlayerTextDrawColor(playerid, TuningBuy[ playerid ][ 3 ], -1);
@@ -462,7 +462,7 @@ stock LoadVehicleTuning(vehicleid)
 {
 	new
 		mysqlQuery[ 256 ];
-	format(mysqlQuery, 256, "SELECT * FROM `vehicle_tuning` WHERE `vehid` = '%d' LIMIT 0,1", VehicleInfo[ vehicleid ][ vSQLID ] );
+	format(mysqlQuery, 256, "SELECT * FROM vehicle_tuning WHERE vehid = '%d' LIMIT 0,1", VehicleInfo[ vehicleid ][ vSQLID ] );
 	mysql_tquery(g_SQL, mysqlQuery, "OnVehicleTuningLoad", "ii", vehicleid, 0);
 	return 1;
 }
@@ -472,7 +472,7 @@ stock DeleteVehicleTuning(vehicleid)
 {
 	new	
 		tmpString[ 64 ];
-	format( tmpString, sizeof(tmpString), "DELETE FROM `vehicle_tuning` WHERE `vehid`='%d'", VehicleInfo[ vehicleid ][ vSQLID ] );
+	format( tmpString, sizeof(tmpString), "DELETE FROM vehicle_tuning WHERE vehid='%d'", VehicleInfo[ vehicleid ][ vSQLID ] );
 	mysql_tquery(g_SQL, tmpString);
 	return 1;
 }
@@ -481,7 +481,7 @@ stock SaveVehicleTuning(vehicleid)
 {
 	new
 		tmpQuery[ 128 ];
-	format(tmpQuery, 128, "SELECT * FROM `vehicle_tuning` WHERE `vehid` = '%d' LIMIT 0,1", VehicleInfo[ vehicleid ][ vSQLID ] );
+	format(tmpQuery, 128, "SELECT * FROM vehicle_tuning WHERE vehid = '%d' LIMIT 0,1", VehicleInfo[ vehicleid ][ vSQLID ] );
 	mysql_tquery(g_SQL, tmpQuery, "OnVehicleTuningLoad", "ii", vehicleid, 1);
 	return 1;
 }
@@ -494,7 +494,7 @@ Public:OnVehicleTuningLoad(vehicleid, save)
 	{
 		if( cache_num_rows() ) 
 		{
-			format(tmpQuery, 380, "UPDATE vehicle_tuning SET `spoiler` = '%d', `hood` = '%d', `roof` = '%d', `skirt` = '%d', `lamps` = '%d', `nitro` = '%d', `exhaust` = '%d', `wheels` = '%d', `hydraulic` = '%d', `fbumper` = '%d', `rbumper` = '%d', `rvent` = '%d', `lvent` = '%d', `paintjob` = '%d' WHERE `vehid` = '%d'",
+			format(tmpQuery, 380, "UPDATE vehicle_tuning SET spoiler = '%d', hood = '%d', roof = '%d', skirt = '%d', lamps = '%d', nitro = '%d', exhaust = '%d', wheels = '%d', hydraulic = '%d', fbumper = '%d', rbumper = '%d', rvent = '%d', lvent = '%d', paintjob = '%d' WHERE vehid = '%d'",
 				VehicleInfo[vehicleid][vSpoiler],
 				VehicleInfo[vehicleid][vHood],
 				VehicleInfo[vehicleid][vRoof],
@@ -515,7 +515,7 @@ Public:OnVehicleTuningLoad(vehicleid, save)
 		} 
 		else 
 		{
-			format(tmpQuery, 380, "INSERT INTO `vehicle_tuning`(`vehid`, `spoiler`, `hood`, `roof`, `skirt`, `lamps`, `nitro`, `exhaust`, `wheels`, `hydraulic`, `fbumper`, `rbumper`, `rvent`, `lvent`, `paintjob`) VALUES ('%d','%d','%d','%d','%d','%d','%d','%d','%d','%d','%d','%d','%d','%d','%d')",
+			format(tmpQuery, 380, "INSERT INTO vehicle_tuning(vehid, spoiler, hood, roof, skirt, lamps, nitro, exhaust, wheels, hydraulic, fbumper, rbumper, rvent, lvent, paintjob) VALUES ('%d','%d','%d','%d','%d','%d','%d','%d','%d','%d','%d','%d','%d','%d','%d')",
 				VehicleInfo[vehicleid][vSQLID],
 				VehicleInfo[vehicleid][vSpoiler],
 				VehicleInfo[vehicleid][vHood],
@@ -534,7 +534,7 @@ Public:OnVehicleTuningLoad(vehicleid, save)
 			);
 			mysql_tquery(g_SQL, tmpQuery);
 		}
-		format(smallQuery, sizeof(smallQuery), "UPDATE cocars SET `tuned` = '%d' WHERE `id` = '%d'",
+		format(smallQuery, sizeof(smallQuery), "UPDATE cocars SET tuned = '%d' WHERE id = '%d'",
 			VehicleInfo[vehicleid][vTuned],
 			VehicleInfo[vehicleid][vSQLID]
 		);
@@ -1712,7 +1712,7 @@ CMD:remove_tuning(playerid, params[])
 	VehicleInfo[vehicleid][vTuned] = false;
 	new
 		saveQuery[60];
-	format( saveQuery, sizeof(saveQuery), "UPDATE `cocars` SET tuned = '%d' WHERE id = '%d'",
+	format( saveQuery, sizeof(saveQuery), "UPDATE cocars SET tuned = '%d' WHERE id = '%d'",
 		VehicleInfo[vehicleid][vTuned],
 		VehicleInfo[vehicleid][vSQLID]
 	);

@@ -123,7 +123,7 @@ new
 */
 /*
 	.88b  d88.  .d8b.  d888888b d8b   db 
-	88'YbdP`88 d8' `8b   `88'   888o  88 
+	88'YbdP88 d8' 8b   88'   888o  88 
 	88  88  88 88ooo88    88    88V8o 88 
 	88  88  88 88~~~88    88    88 V8o88 
 	88  88  88 88   88   .88.   88  V888 
@@ -212,11 +212,11 @@ stock static SetStolenGoodInInventory(playerid, type)
 
 /*
 	.d8888. db   dD d888888b db      db        db 
-	88'  YP 88 ,8P'   `88'   88      88       o88 
-	`8bo.   88,8P      88    88      88        88 
-	  `Y8b. 88`8b      88    88      88        88 
-	db   8D 88 `88.   .88.   88booo. 88booo.   88 
-	`8888Y' YP   YD Y888888P Y88888P Y88888P   VP
+	88'  YP 88 ,8P'   88'   88      88       o88 
+	8bo.   88,8P      88    88      88        88 
+	  Y8b. 888b      88    88      88        88 
+	db   8D 88 88.   .88.   88booo. 88booo.   88 
+	8888Y' YP   YD Y888888P Y88888P Y88888P   VP
 */
 stock static GetPocketDialogLists(playerid, listitem)
 {
@@ -357,7 +357,7 @@ stock static PickPocketTargetPlayer(playerid, type)
 				PlayerInfo[ targetid ][ pMobileCost ]		= 0;
 				
 				new	deleteMobile[128];
-				format(deleteMobile, 128, "DELETE FROM `player_phones` WHERE `player_id` = '%d' AND `type` = '1'",
+				format(deleteMobile, 128, "DELETE FROM player_phones WHERE player_id = '%d' AND type = '1'",
 					PlayerInfo[targetid][pSQLID]
 				);
 				mysql_tquery(g_SQL, deleteMobile);
@@ -393,7 +393,7 @@ stock static PickPocketTargetPlayer(playerid, type)
 			{
 				PlayerInfo[ targetid ][ pCryptoNumber ]		= 0;
 				new	cryptoDelete[128];
-				format(cryptoDelete, 128, "DELETE FROM `player_phones` WHERE `player_id` = '%d' AND `type` = '2'",
+				format(cryptoDelete, 128, "DELETE FROM player_phones WHERE player_id = '%d' AND type = '2'",
 					PlayerInfo[targetid][pSQLID]
 				);
 				mysql_tquery(g_SQL, cryptoDelete);				
@@ -455,11 +455,11 @@ stock static PickPocketTargetPlayer(playerid, type)
 }
 /*
 	.d8888. db   dD d888888b db      db           .d888b. 
-	88'  YP 88 ,8P'   `88'   88      88           VP  `8D 
-	`8bo.   88,8P      88    88      88              odD' 
-	  `Y8b. 88`8b      88    88      88            .88'   
-	db   8D 88 `88.   .88.   88booo. 88booo.      j88.    
-	`8888Y' YP   YD Y888888P Y88888P Y88888P      888888D
+	88'  YP 88 ,8P'   88'   88      88           VP  8D 
+	8bo.   88,8P      88    88      88              odD' 
+	  Y8b. 888b      88    88      88            .88'   
+	db   8D 88 88.   .88.   88booo. 88booo.      j88.    
+	8888Y' YP   YD Y888888P Y88888P Y88888P      888888D
 */
 stock static GetDumpedGoodSlot()
 {
@@ -589,11 +589,11 @@ stock static PickUpVehicleStolenGood(playerid, vehicleid)
 
 /*
 	.d8888. db   dD d888888b db      db           d8888b. 
-	88'  YP 88 ,8P'   `88'   88      88           VP  `8D 
-	`8bo.   88,8P      88    88      88             oooY' 
-	  `Y8b. 88`8b      88    88      88             ~~~b. 
-	db   8D 88 `88.   .88.   88booo. 88booo.      db   8D 
-	`8888Y' YP   YD Y888888P Y88888P Y88888P      Y8888P' 
+	88'  YP 88 ,8P'   88'   88      88           VP  8D 
+	8bo.   88,8P      88    88      88             oooY' 
+	  Y8b. 888b      88    88      88             ~~~b. 
+	db   8D 88 88.   .88.   88booo. 88booo.      db   8D 
+	8888Y' YP   YD Y888888P Y88888P Y88888P      Y8888P' 
 */
 stock static DestroySafeLockingTDs(playerid)
 {

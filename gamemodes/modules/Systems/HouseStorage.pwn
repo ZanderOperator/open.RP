@@ -70,7 +70,7 @@ static
 HouseStorage_Save(storage_id)
 {
     new query[256];
-    format(query, sizeof(query), "UPDATE `house_storage` SET `storageHouse` = '%d', `storageX` = '%.4f', `storageY` = '%.4f', `storageZ` = '%.4f', `storageA` = '%.4f', `storageInterior` = '%d', `storageWorld` = '%d' WHERE `storageID` = '%d'",
+    format(query, sizeof(query), "UPDATE house_storage SET storageHouse = '%d', storageX = '%.4f', storageY = '%.4f', storageZ = '%.4f', storageA = '%.4f', storageInterior = '%d', storageWorld = '%d' WHERE storageID = '%d'",
         HouseStorage[storage_id][storageHouse],
         HouseStorage[storage_id][storagePos][0],
         HouseStorage[storage_id][storagePos][1],
@@ -87,7 +87,7 @@ HouseStorage_Save(storage_id)
 HouseStorage_SaveWep(storage_id, wepid)
 {
     new query[256];
-    format(query, sizeof(query), "UPDATE `house_storage` SET `gunID%d` = '%d', `ammoID%d` = '%d' WHERE `storageID` = '%d'",
+    format(query, sizeof(query), "UPDATE house_storage SET gunID%d = '%d', ammoID%d = '%d' WHERE storageID = '%d'",
         wepid,
         HouseStorage[storage_id][storageWeapons][wepid],
         wepid,
@@ -187,7 +187,7 @@ GetRackLimit(playerid)
 
 stock LoadHStorage()
 {
-    mysql_tquery(g_SQL, "SELECT * FROM `house_storage`", "HouseStorage_Load", "");
+    mysql_tquery(g_SQL, "SELECT * FROM house_storage", "HouseStorage_Load", "");
     return 1;
 }
 
@@ -272,7 +272,7 @@ Storage_RackCreate(playerid, houseid)
 
     Storage_RackRefresh(i);
     HouseStorage_Save(i);
-    mysql_tquery(g_SQL, "INSERT INTO `house_storage` (`storageCreated`) VALUES(1)", "OnRackCreated", "d", i);
+    mysql_tquery(g_SQL, "INSERT INTO house_storage (storageCreated) VALUES(1)", "OnRackCreated", "d", i);
     return i;
 }
 
@@ -309,7 +309,7 @@ Storage_RackDelete(storageid)
     }
 
     new query[64];
-    format(query, sizeof(query), "DELETE FROM `house_storage` WHERE `storageID` = '%d'", HouseStorage[storageid][storageID]);
+    format(query, sizeof(query), "DELETE FROM house_storage WHERE storageID = '%d'", HouseStorage[storageid][storageID]);
     mysql_tquery(g_SQL, query);
 
     for (new i = 0; i < (MAX_WEAPON_ONRACK + 1); i++)

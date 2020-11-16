@@ -203,7 +203,7 @@ timer MechCountForPlayer[1000](playerid, giveplayerid, service)
 
 				new
 					bigquery[ 256 ];
-				format(bigquery, sizeof(bigquery), "UPDATE `cocars` SET `destroys` = '%d' WHERE `id` = '%d'",
+				format(bigquery, sizeof(bigquery), "UPDATE cocars SET destroys = '%d' WHERE id = '%d'",
 					VehicleInfo[ GetPlayerVehicleID(playerid) ][ vDestroys ],
 					VehicleInfo[GetPlayerVehicleID(playerid)][vSQLID]
 				);
@@ -231,7 +231,7 @@ timer MechCountForPlayer[1000](playerid, giveplayerid, service)
 
 				new
 					bigquery[ 256 ];
-				format(bigquery, sizeof(bigquery), "UPDATE `cocars` SET `stereo` = '%d' WHERE `id` = '%d'",
+				format(bigquery, sizeof(bigquery), "UPDATE cocars SET stereo = '%d' WHERE id = '%d'",
 					VehicleInfo[GetPlayerVehicleID(playerid)][vStereo],
 					VehicleInfo[GetPlayerVehicleID(playerid)][vSQLID]
 				);
@@ -267,7 +267,7 @@ timer MechCountForPlayer[1000](playerid, giveplayerid, service)
 
 				new
 					bigquery[ 256 ];
-				format(bigquery, sizeof(bigquery), "UPDATE `cocars` SET `tirearmor` = '%d' WHERE `id` = '%d'",
+				format(bigquery, sizeof(bigquery), "UPDATE cocars SET tirearmor = '%d' WHERE id = '%d'",
 					VehicleInfo[GetPlayerVehicleID(playerid)][vTireArmor],
 					VehicleInfo[GetPlayerVehicleID(playerid)][vSQLID]
 				);
@@ -297,7 +297,7 @@ timer MechCountForPlayer[1000](playerid, giveplayerid, service)
 
 				new
 					bigquery[ 256 ];
-				format(bigquery, sizeof(bigquery), "UPDATE `cocars` SET `bodyarmor` = '%d' WHERE `id` = '%d'",
+				format(bigquery, sizeof(bigquery), "UPDATE cocars SET bodyarmor = '%d' WHERE id = '%d'",
 					VehicleInfo[GetPlayerVehicleID(playerid)][vBodyArmor],
 					VehicleInfo[GetPlayerVehicleID(playerid)][vSQLID]
 				);

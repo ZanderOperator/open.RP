@@ -43,7 +43,7 @@ new
 	
 //=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~ (load & save)
 /*Load_InventoryDrop() {
-	mysql_tquery(g_SQL, "SELECT * FROM `inventory_dropitem`", "Load_InvDrop", "");
+	mysql_tquery(g_SQL, "SELECT * FROM inventory_dropitem", "Load_InvDrop", "");
 	return (true);
 }
 
@@ -81,7 +81,7 @@ Public:Load_InvDrop() {
 
 LoadPlayerInventory(playerid, sql_id) {
 	new query[128];
-	format(query, sizeof(query), "SELECT * FROM `player_inventory` WHERE `owner_sqlID` = '%d'", sql_id);
+	format(query, sizeof(query), "SELECT * FROM player_inventory WHERE owner_sqlID = '%d'", sql_id);
 	mysql_tquery(g_SQL, query, "Load_PlayerInventory", "i", playerid);
 	return (true);
 }
@@ -125,14 +125,14 @@ inventory_remove(playerid, item[], quantity = 1) {
 			inventory_data[playerid][itemid][invType] = ITEM_TYPE_NONE;
 			
 			
-			format(query, sizeof(query), "DELETE FROM `player_inventory` WHERE `owner_sqlID` = '%d' AND `invID` = '%d'",PlayerInfo[playerid][pSQLID],inventory_data[playerid][itemid][invID]);
+			format(query, sizeof(query), "DELETE FROM player_inventory WHERE owner_sqlID = '%d' AND invID = '%d'",PlayerInfo[playerid][pSQLID],inventory_data[playerid][itemid][invID]);
 			mysql_tquery(g_SQL, query);
 				       
             inventory_data[playerid][itemid][invID] = 0;	    
 		}
 		else if (quantity != -1 && inventory_data[playerid][itemid][invQuantity] > 0) {
 				
-			format(query, sizeof(query), "UPDATE `player_inventory` SET `invQuantity` = `invQuantity` - %d WHERE `owner_sqlID` = '%d' AND `invID` = '%d'",quantity,PlayerInfo[playerid][pSQLID],inventory_data[playerid][itemid][invID]);
+			format(query, sizeof(query), "UPDATE player_inventory SET invQuantity = invQuantity - %d WHERE owner_sqlID = '%d' AND invID = '%d'",quantity,PlayerInfo[playerid][pSQLID],inventory_data[playerid][itemid][invID]);
 			mysql_tquery(g_SQL, query);
 		}
 		return (true);
@@ -239,7 +239,7 @@ inventory_add(playerid, item[], model, itemtype, quantity = 1) {
 
 			SetString(inventory_data[playerid][itemid][invItem], item);
 			
-			format(insertQuery, sizeof(insertQuery), "INSERT INTO `player_inventory` (`owner_sqlID`, `invItem`, `InvType`, `invModel`, `invQuantity`) VALUES('%d', '%s', '%d', '%d', '%d')", PlayerInfo[playerid][pSQLID], item, itemtype, model, quantity);
+			format(insertQuery, sizeof(insertQuery), "INSERT INTO player_inventory (owner_sqlID, invItem, InvType, invModel, invQuantity) VALUES('%d', '%s', '%d', '%d', '%d')", PlayerInfo[playerid][pSQLID], item, itemtype, model, quantity);
 			mysql_tquery(g_SQL, insertQuery, "StorePitemInDB", "dd", playerid, itemid); 
 			return (itemid);
 	    }
@@ -247,7 +247,7 @@ inventory_add(playerid, item[], model, itemtype, quantity = 1) {
 	}
 	else
 	{
-		format(insertQuery, sizeof(insertQuery), "UPDATE `player_inventory` SET `invQuantity` = `invQuantity` + %d WHERE `owner_sqlID` = '%d' AND `invID` = '%d'", quantity, PlayerInfo[playerid][pSQLID], inventory_data[playerid][itemid][invID]);
+		format(insertQuery, sizeof(insertQuery), "UPDATE player_inventory SET invQuantity = invQuantity + %d WHERE owner_sqlID = '%d' AND invID = '%d'", quantity, PlayerInfo[playerid][pSQLID], inventory_data[playerid][itemid][invID]);
 	    mysql_tquery(g_SQL, insertQuery);
 		
 		inventory_data[playerid][itemid][invQuantity] += quantity;
@@ -587,7 +587,7 @@ item_drop(item[], playere[], model, type_item, quantity, Float:x, Float:y, Float
 		format(buffer, sizeof(buffer), "{C3C3C3}[ %s ]\n'Y'", item);
 		inventory_items[i][invdrop_Text3D] = CreateDynamic3DTextLabel(buffer, -1, x, y, z, 5.0, INVALID_PLAYER_ID, INVALID_VEHICLE_ID, 0, world, interior);
 		
-		/*format( insertQuery, sizeof(insertQuery), "INSERT INTO `inventory_dropitem` (`itemName`, `itemPlayer`, `itemModel`, `itemType`, `itemQuantity`, `itemX`, `itemY`, `itemZ`, `itemInt`, `itemWorld`) VALUES('%s', '%s', '%d', '%d', '%d', '%.4f', '%.4f', '%.4f', '%d', '%d')",
+		/*format( insertQuery, sizeof(insertQuery), "INSERT INTO inventory_dropitem (itemName, itemPlayer, itemModel, itemType, itemQuantity, itemX, itemY, itemZ, itemInt, itemWorld) VALUES('%s', '%s', '%d', '%d', '%d', '%.4f', '%.4f', '%.4f', '%d', '%d')",
 			item, playere, model, type_item, quantity, x, y, z, interior, world);
 		mysql_tquery(g_SQL, insertQuery, "StoreItemInDB", "d", i);*/
 		return (i);
@@ -626,7 +626,7 @@ item_droprefresh(itemid) {
 	    inventory_items[itemid][invdrop_World] = 0;
 		inventory_items[itemid][invdrop_Type] = 0;
 		
-		//format(query, sizeof(query), "DELETE FROM `inventory_dropitem` WHERE `ID` = '%d'", inventory_items[itemid][invdrop_ID]);
+		//format(query, sizeof(query), "DELETE FROM inventory_dropitem WHERE ID = '%d'", inventory_items[itemid][invdrop_ID]);
 		//mysql_tquery(g_SQL, query, "", "");
 
 	    DestroyDynamicObject(inventory_items[itemid][invdrop_ObjectID]);

@@ -123,7 +123,7 @@ static stock UpdateAmmuWeapon(slotid) // Updateanje ourzja u listi
 static stock DeleteAmmuWeapon(slotid) // Delete oruzja iz liste
 {
     new query[70];
-    format(query, sizeof(query), "DELETE FROM ammunation_weapons WHERE `id`=%d LIMIT 1", AmmuInfo[slotid][aiSQLID]);
+    format(query, sizeof(query), "DELETE FROM ammunation_weapons WHERE id=%d LIMIT 1", AmmuInfo[slotid][aiSQLID]);
     mysql_tquery(g_SQL, query);
     return 1;
 }
@@ -400,7 +400,7 @@ CMD:ammunation(playerid, params[])
         PlayerInfo[giveplayerid][pAmmuTime] = 0;
 
         new query[128];
-        format(query, sizeof(query), "UPDATE accounts SET `ammutime`=0 WHERE sqlid=%d", PlayerInfo[giveplayerid][pSQLID]);
+        format(query, sizeof(query), "UPDATE accounts SET ammutime=0 WHERE sqlid=%d", PlayerInfo[giveplayerid][pSQLID]);
         mysql_tquery(g_SQL, query);
 
         va_SendClientMessage(giveplayerid, COLOR_RED, "[ ! ] Admin %s ti je resetirao vrijeme kupovine oruzja u Ammunationu!", GetName(playerid));
