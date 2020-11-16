@@ -3319,7 +3319,7 @@ public OnPlayerRequestClass(playerid, classid)
 
 		GetPlayerIp(playerid, PlayerInfo[playerid][cIP], 24);
 		mysql_tquery(g_SQL, 
-			va_fquery(g_SQL, "SELECT sql FROM accounts WHERE `name` = '%e' LIMIT 0,1", tmpname), 
+			va_fquery(g_SQL, "SELECT sql FROM accounts WHERE name = '%e' LIMIT 0,1", tmpname), 
 			"CheckPlayerInBase", 
 			"i", 
 			playerid
