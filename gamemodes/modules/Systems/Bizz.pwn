@@ -299,7 +299,7 @@ stock LoadBiznisProducts(bizz_id)
     if (bizz_id < 0 || bizz_id >= MAX_BIZZS) return 0;
 
     new query[128];
-    format(query, sizeof(query), "SELECT * FROM server_biznis_products WHERE biznis_id=%d", BizzInfo[bizz_id][bSQLID]);
+    format(query, sizeof(query), "SELECT * FROM server_biznis_products WHERE biznis_id = '%d'", BizzInfo[bizz_id][bSQLID]);
     mysql_pquery(g_SQL, query, "OnServerBiznisProductsLoad", "i", bizz_id);
     return 1;
 }
@@ -309,7 +309,7 @@ stock LoadBiznisVips(bizz_id)
     if (bizz_id < 0 || bizz_id >= MAX_BIZZS) return 0;
 
     new query[128];
-    format(query, sizeof(query), "SELECT * FROM server_biznis_vips WHERE biznis_id=%d LIMIT 0,1", BizzInfo[bizz_id][bSQLID]);
+    format(query, sizeof(query), "SELECT * FROM server_biznis_vips WHERE biznis_id = '%d' LIMIT 0,1", BizzInfo[bizz_id][bSQLID]);
     mysql_pquery(g_SQL, query, "OnServerVipsLoad", "i", bizz_id);
     return 1;
 }
@@ -521,13 +521,11 @@ stock BuyBiznis(playerid, bool:credit_activated = false)
         price -= CreditInfo[playerid][cAmount];
     PlayerToBudgetMoney(playerid, price);
 
-    new query[158];
-    format(query, sizeof(query), "UPDATE bizzes SET ownerid = '%d', till = '%d' WHERE id = '%d'",
+    mysql_fquery(g_SQL, "UPDATE bizzes SET ownerid = '%d', till = '%d' WHERE id = '%d'",
         PlayerInfo[playerid][pSQLID],
         BizzInfo[bizz][bTill],
         BizzInfo[bizz][bSQLID]
     );
-    mysql_tquery(g_SQL, query);
 
     #if defined MODULE_LOGS
     Log_Write("/logfiles/buy_biznis.txt", "(%s) %s bought business %s[SQLID: %d] for %d$. (%s).",
@@ -682,13 +680,11 @@ static stock RemoveStoreArticle(bizz, article)
     if (bizz < 0 || bizz >= MAX_BIZZS) return 0;
     if (article < 0 || article >= MAX_BIZZ_ARTICLES) return 0;
 
-    new query[128];
-    format(query, sizeof(query), "DELETE FROM server_biznis_products WHERE biznis_id = '%d' AND id = '%d' AND type='%d'",
+    mysql_fquery(g_SQL, "DELETE FROM server_biznis_products WHERE biznis_id = '%d' AND id = '%d' AND type='%d'",
         BizzInfo[bizz][bSQLID],
         BiznisProducts[bizz][bpSQLID][article],
         BiznisProducts[bizz][bpType][article]
     );
-    mysql_tquery(g_SQL, query);
 
     BiznisProducts[bizz][bpSQLID][article]  = -1;
     BiznisProducts[bizz][bpType][article]   = INVALID_PRODUCT_ID;
@@ -721,33 +717,36 @@ static stock SetStoreProductOnSale(bizz, product, price)
 
     BiznisProducts[bizz][bpType][id]   = product;
     BiznisProducts[bizz][bpPrice][id]  = price;
-    BiznisProducts[bizz][bpAmount][id] = 0;
+    BiznisProducts[bizz][bpAmount][id] = 100;
 
-    new query[128];
-    format(query, sizeof(query), "INSERT INTO server_bizz_products(biznis_id, type, price, amount) VALUES ('%d', '%d', '%d', '%d')",
-        BizzInfo[bizz][bSQLID],
-        BiznisProducts[bizz][bpType][id],
-        BiznisProducts[bizz][bpPrice][id],
-        BiznisProducts[bizz][bpAmount][id]
+    mysql_tquery(g_SQL, 
+        va_fquery(g_SQL, "INSERT INTO server_bizz_products(biznis_id, type, price, amount) \n\
+            VALUES ('%d', '%d', '%d', '%d')",
+            BizzInfo[bizz][bSQLID],
+            BiznisProducts[bizz][bpType][id],
+            BiznisProducts[bizz][bpPrice][id],
+            BiznisProducts[bizz][bpAmount][id]
+        ), 
+        "OnBiznisProductInsert", 
+        "ii", 
+        bizz, 
+        id
     );
-    mysql_tquery(g_SQL, query, "OnBiznisProductInsert", "ii", bizz, id);
     return 1;
 }
 
-static stock UpdateBiznisProducts(bizz, product, productid)
+static stock UpdateBizzProduct(bizz, productid)
 {
-    if (bizz < 0 || bizz >= MAX_BIZZS) return 0;
-    if (product == INVALID_PRODUCT_ID || product < 100) return 0;
+    if (!Iter_Contains(Bizzes, bizz)) 
+        return 1;
 
-    new query[135];
-    format(query, sizeof(query), "UPDATE server_biznis_products SET type = '%d', price = '%d', amount = '%d' WHERE id = '%d' AND type = '%d'",
+    mysql_fquery(g_SQL, 
+        "UPDATE server_biznis_products SET type = '%d', price = '%d', amount = '%d' WHERE id = '%d'",
         BiznisProducts[bizz][bpType][productid],
         BiznisProducts[bizz][bpPrice][productid],
         BiznisProducts[bizz][bpAmount][productid],
-        BiznisProducts[bizz][bpSQLID][productid],
-        BiznisProducts[bizz][bpType][productid]
+        BiznisProducts[bizz][bpSQLID][productid]
     );
-    mysql_tquery(g_SQL, query);
     return 1;
 }
 
@@ -843,20 +842,26 @@ stock InsertNewBizz(playerid, bizz)
 {
     if (bizz < 0 || bizz >= MAX_BIZZS) return 0;
 
-    new query[256];
-    mysql_format(g_SQL, query, sizeof(query), "INSERT INTO bizzes(id, message, canenter,entrancex, entrancey, entrancez, levelneeded, buyprice, type, fur_slots) VALUES (null, '%e','%d','%f','%f','%f','%d','%d','%d','%d')",
-        BizzInfo[bizz][bMessage],
-        BizzInfo[bizz][bCanEnter],
-        BizzInfo[bizz][bEntranceX],
-        BizzInfo[bizz][bEntranceY],
-        BizzInfo[bizz][bEntranceZ],
-        BizzInfo[bizz][bLevelNeeded],
-        BizzInfo[bizz][bBuyPrice],
-        BizzInfo[bizz][bType],
-        BizzInfo[bizz][bFurSlots],
-        BizzInfo[bizz][bGasPrice]
+    mysql_tquery(g_SQL, 
+        va_fquery(g_SQL, 
+            "INSERT INTO bizzes(id, message, canenter,entrancex, entrancey, entrancez,\n\
+            levelneeded, buyprice, type, fur_slots) VALUES (null, '%e','%d','%f','%f','%f','%d','%d','%d','%d')",
+            BizzInfo[bizz][bMessage],
+            BizzInfo[bizz][bCanEnter],
+            BizzInfo[bizz][bEntranceX],
+            BizzInfo[bizz][bEntranceY],
+            BizzInfo[bizz][bEntranceZ],
+            BizzInfo[bizz][bLevelNeeded],
+            BizzInfo[bizz][bBuyPrice],
+            BizzInfo[bizz][bType],
+            BizzInfo[bizz][bFurSlots],
+            BizzInfo[bizz][bGasPrice]
+        ),
+        "OnBizzInsertQuery", 
+        "ii", 
+        playerid, 
+        bizz
     );
-    mysql_tquery(g_SQL, query, "OnBizzInsertQuery", "ii", playerid, bizz);
     return 1;
 }
 
@@ -878,12 +883,8 @@ Public:OnBizzInsertQuery(playerid, bizz)
 
 stock DeleteBiznis(bizz)
 {
-    if (bizz < 0 || bizz >= MAX_BIZZS) return 0;
-
-    new query[64];
-    format(query, sizeof(query), "DELETE FROM bizzes WHERE id=%d", BizzInfo[bizz][bSQLID]);
-    mysql_tquery(g_SQL, query);
-
+    if (!Iter_Contains(Bizzes, bizz)) return 1;
+    mysql_fquery(g_SQL, "DELETE FROM bizzes WHERE id = '%d'", BizzInfo[bizz][bSQLID]);
     ResetBizzInfo(bizz);
     Iter_Remove(Bizzes, bizz);
     return 1;
@@ -1220,9 +1221,10 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                             BizzInfo[bouse][bLocked] ^= 1; // toggle
                             GameTextForPlayer(playerid, (BizzInfo[bouse][bLocked]) ? ("~g~Zakljucano") : ("~g~Otkljucano"), 1000, 5);
 
-                            new query[128];
-                            format(query, sizeof(query), "UPDATE bizzes SET locked=%d WHERE id=%d", BizzInfo[bouse][bLocked], BizzInfo[bouse][bSQLID]);
-                            mysql_tquery(g_SQL, query);
+                            mysql_fquery(g_SQL, "UPDATE bizzes SET locked = '%d' WHERE id = '%d'", 
+                                BizzInfo[bouse][bLocked], 
+                                BizzInfo[bouse][bSQLID]
+                            );
                         }
                         case 5:
                         {   // Rekonstrukcija
@@ -1267,9 +1269,10 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                                     PlayerToBudgetMoney(playerid, 20000); // novac dolazi u budget
                                 }
                             }
-                            new query[128];
-                            format(query, sizeof(query), "UPDATE bizzes SET destroyed = '%d' WHERE id = '%d'", BizzInfo[bouse][bDestroyed], BizzInfo[bouse][bSQLID]);
-                            mysql_tquery(g_SQL, query);
+                            mysql_fquery(g_SQL, "UPDATE bizzes SET destroyed = '%d' WHERE id = '%d'", 
+                                BizzInfo[bouse][bDestroyed], 
+                                BizzInfo[bouse][bSQLID]
+                            );
                         }
                         case 6:
                         {   // Cijena produkta
@@ -1340,9 +1343,10 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                             BizzInfo[bouse][bLocked] ^= 1; // toggle
                             GameTextForPlayer(playerid, (BizzInfo[bouse][bLocked] ) ? ("~g~Zakljucano") : ("~g~Otkljucano"), 1000, 5);
 
-                            new query[128];
-                            format(query, sizeof(query), "UPDATE bizzes SET locked=%d WHERE id=%d", BizzInfo[bouse][bLocked], BizzInfo[bouse][bSQLID]);
-                            mysql_tquery(g_SQL, query);
+                            mysql_fquery(g_SQL, "UPDATE bizzes SET locked= '%d' WHERE id= '%d'", 
+                                BizzInfo[bouse][bLocked], 
+                                BizzInfo[bouse][bSQLID]
+                            );
                         }
                         case 6:
                         {   // Rekonstrukcija
@@ -1375,9 +1379,10 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                                     PlayerToBudgetMoney(playerid, 20000); // novac dolazi u budget
                                 }
                             }
-                            new query[128];
-                            format(query, sizeof(query), "UPDATE bizzes SET destroyed = '%d' WHERE id = '%d'", BizzInfo[bouse][bDestroyed], BizzInfo[bouse][bSQLID]);
-                            mysql_tquery(g_SQL, query);
+                            mysql_fquery(g_SQL, "UPDATE bizzes SET destroyed = '%d' WHERE id = '%d'", 
+                                BizzInfo[bouse][bDestroyed], 
+                                BizzInfo[bouse][bSQLID]
+                            );
                         }
                         case 7:
                         {   // Cijena produkta
@@ -1444,9 +1449,10 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                             BizzInfo[bouse][bLocked] ^= 1; // toggle
                             GameTextForPlayer(playerid, (BizzInfo[bouse][bLocked]) ? ("~g~Zakljucano") : ("~g~Otkljucano"), 1000, 5);
 
-                            new query[128];
-                            format(query, sizeof(query), "UPDATE bizzes SET locked=%d WHERE id=%d", BizzInfo[bouse][bLocked], BizzInfo[bouse][bSQLID]);
-                            mysql_tquery(g_SQL, query);
+                            mysql_fquery(g_SQL, "UPDATE bizzes SET locked = '%d' WHERE id = '%d'", 
+                                BizzInfo[bouse][bLocked], 
+                                BizzInfo[bouse][bSQLID]
+                            );
                         }
                         case 5:
                         {   // Rekonstrukcija
@@ -1491,9 +1497,10 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                                     PlayerToBudgetMoney(playerid, 20000); // novac dolazi u budget
                                 }
                             }
-                            new query[128];
-                            format(query, sizeof(query), "UPDATE bizzes SET destroyed = '%d' WHERE id = '%d'", BizzInfo[bouse][bDestroyed], BizzInfo[bouse][bSQLID]);
-                            mysql_tquery(g_SQL, query);
+                            mysql_fquery(g_SQL, "UPDATE bizzes SET destroyed = '%d' WHERE id = '%d'", 
+                                BizzInfo[bouse][bDestroyed], 
+                                BizzInfo[bouse][bSQLID]
+                            );
                         }
                         case 6:
                         {   // Ime biznisa
@@ -1524,9 +1531,10 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                             BizzInfo[bouse][bLocked] ^= 1; // toggle
                             GameTextForPlayer(playerid, (BizzInfo[bouse][bLocked] ) ? ("~g~Zakljucano") : ("~g~Otkljucano"), 1000, 5);
 
-                            new query[128];
-                            format(query, sizeof(query), "UPDATE bizzes SET locked=%d WHERE id=%d", BizzInfo[bouse][bLocked], BizzInfo[bouse][bSQLID]);
-                            mysql_tquery(g_SQL, query);
+                            mysql_fquery(g_SQL, "UPDATE bizzes SET locked = '%d' WHERE id = '%d'", 
+                                BizzInfo[bouse][bLocked], 
+                                BizzInfo[bouse][bSQLID]
+                            );
                         }
                         case 2:
                         {   // Rekonstrukcija
@@ -1571,9 +1579,10 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                                     PlayerToBudgetMoney(playerid, 20000); // novac dolazi u budget
                                 }
                             }
-                            new query[128];
-                            format(query, sizeof(query), "UPDATE bizzes SET destroyed = '%d' WHERE id = '%d'", BizzInfo[bouse][bDestroyed], BizzInfo[bouse][bSQLID]);
-                            mysql_tquery(g_SQL, query);
+                            mysql_fquery(g_SQL, "UPDATE bizzes SET destroyed = '%d' WHERE id = '%d'", 
+                                BizzInfo[bouse][bDestroyed], 
+                                BizzInfo[bouse][bSQLID]
+                            );
                         }
                         case 3:
                         {   // Postavljanje cijene produkta
@@ -1657,13 +1666,12 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
             PlayerInfo[pID][pBizzKey]      = INVALID_BIZNIS_ID;
 
             new
-                bizz = PlayerInfo[playerid][pBizzKey],
-                query[512];
-            format(query, sizeof(query), "UPDATE bizzes SET ownerid = '%d' WHERE id = '%d'",
+                bizz = PlayerInfo[playerid][pBizzKey];
+
+            mysql_fquery(g_SQL, "UPDATE bizzes SET ownerid = '%d' WHERE id = '%d'",
                 PlayerInfo[playerid][pSQLID],
                 BizzInfo[bizz][bSQLID]
             );
-            mysql_tquery(g_SQL, query);
 
             BizzInfo[bizz][bOwnerID] = PlayerInfo[playerid][pSQLID];
 
@@ -1689,25 +1697,6 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
             );
             #endif
 
-            // Stats save - Buyer
-            format(query, sizeof(query), "UPDATE accounts SET levels = '%d', respects = '%d', handMoney = '%d', bankMoney = '%d' WHERE sqlid = '%d' LIMIT 1",
-                PlayerInfo[playerid][pLevel],
-                PlayerInfo[playerid][pRespects],
-                PlayerInfo[playerid][pMoney],
-                PlayerInfo[playerid][pBank],
-                PlayerInfo[playerid][pSQLID]
-            );
-            mysql_tquery(g_SQL, query);
-
-            // Stats save - Seller
-            format(query, sizeof(query), "UPDATE accounts SET levels = '%d', respects = '%d', handMoney = '%d', bankMoney = '%d' WHERE sqlid = '%d' LIMIT 1",
-                PlayerInfo[pID][pLevel],
-                PlayerInfo[pID][pRespects],
-                PlayerInfo[pID][pMoney],
-                PlayerInfo[pID][pBank],
-                PlayerInfo[pID][pSQLID]
-            );
-            mysql_tquery(g_SQL, query);
             return 1;
         }
         case DIALOG_BIZNIS_ARTICLELIST:
@@ -1794,6 +1783,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
             // Polica
             new slot = Bit4_Get(gr_ArticleSlot, playerid);
             BiznisProducts[bouse][bpPrice][slot] = price;
+            UpdateBizzProduct(bouse, slot);
 
             new bizz_type = BizzInfo[bouse][bType];
             if (bizz_type == BIZZ_TYPE_DUCAN)
@@ -1857,6 +1847,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
             BiznisProducts[bouse][bpAmount][listitem] = BizzInfo[bouse][bMaxProducts];
             PlayerToBudgetMoney(playerid, 500); // Novac od igraca ide u proracun
             SendClientMessage(playerid, COLOR_RED, "[ ! ]  Uspjesno ste refillali odabrani artikl!");
+            UpdateBizzProduct(bouse, listitem);
 
             switch (BizzInfo[bouse][bType])
             {
@@ -1891,9 +1882,10 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
             format(BizzInfo[bouse][bMessage], 16, inputtext);
             va_SendClientMessage(playerid, COLOR_RED, "[ ! ]  Ime biznisa promjenjeno u %s.", BizzInfo[bouse][bMessage]);
 
-            new query[128];
-            mysql_format(g_SQL, query, sizeof(query), "UPDATE bizzes SET message = '%e' WHERE id = '%d' LIMIT 1", BizzInfo[bouse][bMessage], BizzInfo[bouse][bSQLID]);
-            mysql_tquery(g_SQL, query);
+            mysql_fquery(g_SQL, "UPDATE bizzes SET message = '%e' WHERE id = '%d'", 
+                BizzInfo[bouse][bMessage], 
+                BizzInfo[bouse][bSQLID]
+            );
 
             switch (BizzInfo[bouse][bType])
             {
@@ -1910,10 +1902,9 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 
             new
                 bizz = Bit16_Get(gr_PlayerInBiznis, playerid),
-                bizz_type = BizzInfo[bizz][bType],
-                string[128];
+                bizz_type = BizzInfo[bizz][bType];
 
-            if (bizz < 0 || bizz >= MAX_BIZZS) return 1;
+            if (!Iter_Contains(Bizzes, bizz)) return 1;
 
             if (bizz_type == BIZZ_TYPE_DUCAN)
             {
@@ -1991,11 +1982,10 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                     {
                         PlayerInfo[playerid][pMobileCost] += 20;
 
-                        format(string, sizeof(string), "UPDATE player_phones SET money = '%d' WHERE player_id = '%d' AND type = '1'",
+                        mysql_fquery(g_SQL, "UPDATE player_phones SET money = '%d' WHERE player_id = '%d' AND type = '1'",
                             PlayerInfo[playerid][pMobileCost],
                             PlayerInfo[playerid][pSQLID]
                         );
-                        mysql_tquery(g_SQL, string);
                     }
                     case PRODUCT_CLOCK:
                     {
@@ -2013,24 +2003,23 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                         if (PlayerInfo[playerid][pHasRadio]) return SendClientMessage(playerid, COLOR_RED, "Vec posjedujete radio!");
                         PlayerInfo[playerid][pHasRadio] = 1;
 
-                        format(string, sizeof(string), "UPDATE accounts SET HasRadio = '%d' WHERE sqlid = '%d'",
+                        mysql_fquery(g_SQL, "UPDATE accounts SET HasRadio = '%d' WHERE sqlid = '%d'",
                             PlayerInfo[playerid][pHasRadio],
                             PlayerInfo[playerid][pSQLID]
                         );
-                        mysql_tquery(g_SQL, string);
                     }
                 }
 
                 PlayerPlaySound(playerid, 1052, 0.0, 0.0, 0.0);
                 PlayerToBusinessMoneyTAX(playerid, bizz, BiznisProducts[bizz][bpPrice][listitem]); // Novac od igraca ide u biznis, ali se oporezuje
-                UpdateBiznisProducts(bizz, BiznisProducts[bizz][bpType][listitem], listitem);
+                UpdateBizzProduct(bizz, listitem);
 
                 BiznisProducts[bizz][bpAmount][listitem]--;
                 if (!BiznisProducts[bizz][bpAmount][listitem])
                 {
                     BiznisProducts[bizz][bpAmount][listitem] = MAX_BIZZ_PRODUCTS;
                     BusinessToBudgetMoney(bizz, 500); // Novac iz biznisa ide u proracun
-                    UpdateBiznisProducts(bizz, BiznisProducts[bizz][bpType][listitem], listitem);
+                    UpdateBizzProduct(bizz, listitem);
                 }
 
                 va_SendClientMessage(playerid, COLOR_RED, "[ ! ]  Kupili ste %s za %d$",
@@ -2046,13 +2035,13 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                 BiznisProducts[bizz][bpAmount][listitem]--;
                 PlayerToBusinessMoneyTAX(playerid, bizz, BiznisProducts[bizz][bpPrice][listitem]); // Stavka koja se kupuje se oporezuje..
 
-                UpdateBiznisProducts(bizz, BiznisProducts[bizz][bpType][listitem], listitem);
+                UpdateBizzProduct(bizz, listitem);
 
                 if (!BiznisProducts[bizz][bpAmount][listitem])
                 {
                     BiznisProducts[bizz][bpAmount][listitem] = MAX_BIZZ_PRODUCTS;
                     BusinessToBudgetMoney (bizz, 500); // Novac ide u proracun iz biznisa
-                    UpdateBiznisProducts(bizz, BiznisProducts[bizz][bpType][listitem], listitem);
+                    UpdateBizzProduct(bizz, listitem);
                 }
 
                 va_GameTextForPlayer(playerid, "~g~Pijete %s...", 1000, 1,
@@ -2149,9 +2138,10 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
             BizzInfo[bouse][bEntranceCost] = value;
             SendClientMessage(playerid, COLOR_RED, "[ ! ]  Postavili ste novu cijenu ulaza!");
 
-            new query[128];
-            format(query, sizeof(query), "UPDATE bizzes SET entrancecost = '%d' WHERE id = '%d'", BizzInfo[bouse][bEntranceCost], BizzInfo[bouse][bSQLID]);
-            mysql_tquery(g_SQL, query);
+            mysql_fquery(g_SQL, "UPDATE bizzes SET entrancecost = '%d' WHERE id = '%d'", 
+                BizzInfo[bouse][bEntranceCost], 
+                BizzInfo[bouse][bSQLID]
+            );
 
             switch (BizzInfo[bouse][bType])
             {
@@ -2879,12 +2869,10 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                     PlayerPlaySound(playerid, 1052, 0.0, 0.0, 0.0);
                     SendClientMessage(playerid, COLOR_RED, "[ ! ]  Kupljen bon za mobitel! [25$]");
 
-                    new query[128];
-                    format(query, sizeof(query), "UPDATE player_phones SET money = '%d' WHERE player_id = '%d' AND type = '1'",
+                    mysql_fquery(g_SQL, "UPDATE player_phones SET money = '%d' WHERE player_id = '%d' AND type = '1'",
                         PlayerInfo[playerid][pMobileCost],
                         PlayerInfo[playerid][pSQLID]
                     );
-                    mysql_tquery(g_SQL, query);
                 }
                 case 12:
                 {
@@ -2896,12 +2884,10 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                     PlayerInfo[playerid][pHasRadio] = 1;
                     SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "Kupljen radio [1500$]");
 
-                    new query[128];
-                    format(query, sizeof(query), "UPDATE accounts SET HasRadio = '%d' WHERE sqlid = '%d'",
+                    mysql_fquery(g_SQL, "UPDATE accounts SET HasRadio = '%d' WHERE sqlid = '%d'",
                         PlayerInfo[playerid][pHasRadio],
                         PlayerInfo[playerid][pSQLID]
                     );
-                    mysql_tquery(g_SQL, query);
                 }
                 case 13:
                 {
@@ -2951,9 +2937,11 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
             BizzInfo[bouse][bPriceProd] = strval(inputtext);
             SendClientMessage(playerid, COLOR_RED, "Uspjesno ste promjenili cijene produkta.");
 
-            new query[128];
-            format(query, sizeof(query), "UPDATE bizzes SET priceprod = '%d' WHERE id = '%d'", BizzInfo[bouse][bPriceProd], BizzInfo[bouse][bSQLID]);
-            mysql_tquery(g_SQL, query);
+            mysql_fquery(g_SQL, "UPDATE bizzes SET priceprod = '%d' WHERE id = '%d'", 
+                BizzInfo[bouse][bPriceProd], 
+                BizzInfo[bouse][bSQLID]
+            );
+
             return 1;
         }
         case DIALOG_BIZNIS_MUSIC:
@@ -3022,12 +3010,11 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 
             ApplyAnimationEx(playerid, "CLOTHES", "CLO_Pose_Legs", 4.1, 0, 0, 0, 0, 0, 1, 0);
 
-            new query[128];
-            format(query, sizeof(query), "UPDATE accounts SET playaSkin = '%d' WHERE sqlid = '%d'",
+            mysql_fquery(g_SQL, "UPDATE accounts SET playaSkin = '%d' WHERE sqlid = '%d'",
                 PlayerInfo[playerid][pChar],
                 PlayerInfo[playerid][pSQLID]
             );
-            mysql_tquery(g_SQL, query);
+
             return 1;
         }
     }
@@ -3087,12 +3074,13 @@ CMD:createvip(playerid, params[])
     if (PlayerInfo[playerid][pAdmin] < 1337) return SendClientMessage(playerid, COLOR_RED, "Niste ovlasteni za koristenje ove komande!");
     if (bizz == INVALID_BIZNIS_ID) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne nalazite se unutar biznisa!");
     if (sscanf( params, "i", pick)) return SendClientMessage(playerid, -1, "[ ? ]: /createvip [0-9] (0 za micanje sobe)");
-
+    if (pick < 0 || pick > 9) 
+        return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Input can't be lesser than 0, or larger than 9!");
+    
     new
         Float:X, Float:Y,Float:Z;
     GetPlayerPos(playerid, X, Y, Z);
 
-    new query[256];
     switch (pick)
     {
         case 0:
@@ -3104,14 +3092,12 @@ CMD:createvip(playerid, params[])
             BizzInfo[bizz][bVipExit][0]  = 0.0;
             BizzInfo[bizz][bVipExit][1]  = 0.0;
             BizzInfo[bizz][bVipExit][2]  = 0.0;
-
-            format(query, sizeof(query), "DELETE FROM server_biznis_vips WHERE biznis_id = '%d'", BizzInfo[bizz][bSQLID]);
-            mysql_tquery(g_SQL, query);
-
+            
             if (IsValidDynamicCP(BizzInfo[bizz][bVipCP]))
-            {
                 DestroyDynamicCP(BizzInfo[bizz][bVipCP]);
-            }
+           
+            mysql_fquery(g_SQL, "DELETE FROM server_biznis_vips WHERE biznis_id = '%d'", BizzInfo[bizz][bSQLID]);           
+            return 1;
         }
         case 1:
         {
@@ -3123,22 +3109,9 @@ CMD:createvip(playerid, params[])
             BizzInfo[bizz][bVipExit][1]   = 7681.1011;
             BizzInfo[bizz][bVipExit][2]   = 2980.4;
 
-            format(query, sizeof(query), "INSERT INTO server_biznis_vips(biznis_id, type, x, y, z, exit_x, exit_y, exit_z) VALUES ('%d','%d','%f','%f','%f','%f','%f','%f')",
-                BizzInfo[bizz][bSQLID],
-                BizzInfo[bizz][bVipType],
-                BizzInfo[bizz][bVipEnter][0],
-                BizzInfo[bizz][bVipEnter][1],
-                BizzInfo[bizz][bVipEnter][2],
-                BizzInfo[bizz][bVipExit][0],
-                BizzInfo[bizz][bVipExit][1],
-                BizzInfo[bizz][bVipExit][2]
-            );
-            mysql_tquery(g_SQL, query);
-
             if (IsValidDynamicCP(BizzInfo[bizz][bVipCP]))
-            {
                 DestroyDynamicCP(BizzInfo[bizz][bVipCP]);
-            }
+
             BizzInfo[bizz][bVipCP] = CreateDynamicCP(BizzInfo[bizz][bVipEnter][0], BizzInfo[bizz][bVipEnter][1], BizzInfo[bizz][bVipEnter][2]-1, 3.0, BizzInfo[bizz][bVirtualWorld], BizzInfo[bizz][bInterior], -1, 5.0);
         }
         case 2:
@@ -3151,22 +3124,9 @@ CMD:createvip(playerid, params[])
             BizzInfo[bizz][bVipExit][1]    = 4321.5127;
             BizzInfo[bizz][bVipExit][2]    = 1000.5;
 
-            format(query, sizeof(query), "INSERT INTO server_biznis_vips(biznis_id, type, x, y, z, exit_x, exit_y, exit_z) VALUES ('%d','%d','%f','%f','%f','%f','%f','%f')",
-                BizzInfo[bizz][bSQLID],
-                BizzInfo[bizz][bVipType],
-                BizzInfo[bizz][bVipEnter][0],
-                BizzInfo[bizz][bVipEnter][1],
-                BizzInfo[bizz][bVipEnter][2],
-                BizzInfo[bizz][bVipExit][0],
-                BizzInfo[bizz][bVipExit][1],
-                BizzInfo[bizz][bVipExit][2]
-            );
-            mysql_tquery(g_SQL, query);
-
             if (IsValidDynamicCP(BizzInfo[bizz][bVipCP]))
-            {
                 DestroyDynamicCP(BizzInfo[bizz][bVipCP]);
-            }
+
             BizzInfo[bizz][bVipCP] = CreateDynamicCP(BizzInfo[bizz][bVipEnter][0], BizzInfo[bizz][bVipEnter][1], BizzInfo[bizz][bVipEnter][2]-1, 3.0, BizzInfo[bizz][bVirtualWorld], BizzInfo[bizz][bInterior], -1, 5.0);
         }
         case 3:
@@ -3180,9 +3140,8 @@ CMD:createvip(playerid, params[])
             BizzInfo[bizz][bVipExit][2]    = 3000.5;
 
             if (IsValidDynamicCP(BizzInfo[bizz][bVipCP]))
-            {
                 DestroyDynamicCP(BizzInfo[bizz][bVipCP]);
-            }
+            
             BizzInfo[bizz][bVipCP] = CreateDynamicCP(BizzInfo[bizz][bVipEnter][0], BizzInfo[bizz][bVipEnter][1], BizzInfo[bizz][bVipEnter][2]-1, 3.0, BizzInfo[bizz][bVirtualWorld], BizzInfo[bizz][bInterior], -1, 5.0);
         }
         case 4:
@@ -3195,22 +3154,9 @@ CMD:createvip(playerid, params[])
             BizzInfo[bizz][bVipExit][1]    = -369.2497;
             BizzInfo[bizz][bVipExit][2]    = 998.8359;
 
-            format(query, sizeof(query), "INSERT INTO server_biznis_vips(biznis_id, type, x, y, z, exit_x, exit_y, exit_z) VALUES ('%d','%d','%f','%f','%f','%f','%f','%f')",
-                BizzInfo[bizz][bSQLID],
-                BizzInfo[bizz][bVipType],
-                BizzInfo[bizz][bVipEnter][0],
-                BizzInfo[bizz][bVipEnter][1],
-                BizzInfo[bizz][bVipEnter][2],
-                BizzInfo[bizz][bVipExit][0],
-                BizzInfo[bizz][bVipExit][1],
-                BizzInfo[bizz][bVipExit][2]
-            );
-            mysql_tquery(g_SQL, query);
-
             if (IsValidDynamicCP(BizzInfo[bizz][bVipCP]))
-            {
                 DestroyDynamicCP(BizzInfo[bizz][bVipCP]);
-            }
+            
             BizzInfo[bizz][bVipCP] = CreateDynamicCP(BizzInfo[bizz][bVipEnter][0], BizzInfo[bizz][bVipEnter][1], BizzInfo[bizz][bVipEnter][2]-1, 3.0, BizzInfo[bizz][bVirtualWorld], BizzInfo[bizz][bInterior], -1, 5.0);
         }
         case 5:
@@ -3223,22 +3169,9 @@ CMD:createvip(playerid, params[])
             BizzInfo[bizz][bVipExit][1]    = -36.3570;
             BizzInfo[bizz][bVipExit][2]    = 999.87;
 
-            format(query, sizeof(query), "INSERT INTO server_biznis_vips(biznis_id, type, x, y, z, exit_x, exit_y, exit_z) VALUES ('%d','%d','%f','%f','%f','%f','%f','%f')",
-                BizzInfo[bizz][bSQLID],
-                BizzInfo[bizz][bVipType],
-                BizzInfo[bizz][bVipEnter][0],
-                BizzInfo[bizz][bVipEnter][1],
-                BizzInfo[bizz][bVipEnter][2],
-                BizzInfo[bizz][bVipExit][0],
-                BizzInfo[bizz][bVipExit][1],
-                BizzInfo[bizz][bVipExit][2]
-           );
-            mysql_tquery(g_SQL, query);
-
             if (IsValidDynamicCP(BizzInfo[bizz][bVipCP]))
-            {
                 DestroyDynamicCP(BizzInfo[bizz][bVipCP]);
-            }
+            
             BizzInfo[bizz][bVipCP] = CreateDynamicCP(BizzInfo[bizz][bVipEnter][0], BizzInfo[bizz][bVipEnter][1], BizzInfo[bizz][bVipEnter][2]-1, 3.0, BizzInfo[bizz][bVirtualWorld], BizzInfo[bizz][bInterior], -1, 5.0);
         }
         case 6:
@@ -3251,22 +3184,9 @@ CMD:createvip(playerid, params[])
             BizzInfo[bizz][bVipExit][1]    = 1303.9072;
             BizzInfo[bizz][bVipExit][2]    = 1501.0859;
 
-            format(query, sizeof(query), "INSERT INTO server_biznis_vips(biznis_id, type, x, y, z, exit_x, exit_y, exit_z) VALUES ('%d','%d','%f','%f','%f','%f','%f','%f')",
-                BizzInfo[bizz][bSQLID],
-                BizzInfo[bizz][bVipType],
-                BizzInfo[bizz][bVipEnter][0],
-                BizzInfo[bizz][bVipEnter][1],
-                BizzInfo[bizz][bVipEnter][2],
-                BizzInfo[bizz][bVipExit][0],
-                BizzInfo[bizz][bVipExit][1],
-                BizzInfo[bizz][bVipExit][2]
-            );
-            mysql_tquery(g_SQL, query);
-
             if (IsValidDynamicCP(BizzInfo[bizz][bVipCP]))
-            {
                 DestroyDynamicCP(BizzInfo[bizz][bVipCP]);
-            }
+            
             BizzInfo[bizz][bVipCP] = CreateDynamicCP(BizzInfo[bizz][bVipEnter][0], BizzInfo[bizz][bVipEnter][1], BizzInfo[bizz][bVipEnter][2]-1, 3.0, BizzInfo[bizz][bVirtualWorld], BizzInfo[bizz][bInterior], -1, 5.0);
         }
         case 7:
@@ -3279,22 +3199,9 @@ CMD:createvip(playerid, params[])
             BizzInfo[bizz][bVipExit][1]    = 138.5768127;
             BizzInfo[bizz][bVipExit][2]    = 131.1377106;
 
-            format(query, sizeof(query), "INSERT INTO server_biznis_vips(biznis_id, type, x, y, z, exit_x, exit_y, exit_z) VALUES ('%d','%d','%f','%f','%f','%f','%f','%f')",
-                BizzInfo[bizz][bSQLID],
-                BizzInfo[bizz][bVipType],
-                BizzInfo[bizz][bVipEnter][0],
-                BizzInfo[bizz][bVipEnter][1],
-                BizzInfo[bizz][bVipEnter][2],
-                BizzInfo[bizz][bVipExit][0],
-                BizzInfo[bizz][bVipExit][1],
-                BizzInfo[bizz][bVipExit][2]
-            );
-            mysql_tquery(g_SQL, query);
-
             if (IsValidDynamicCP(BizzInfo[bizz][bVipCP]))
-            {
                 DestroyDynamicCP(BizzInfo[bizz][bVipCP]);
-            }
+            
             BizzInfo[bizz][bVipCP] = CreateDynamicCP(BizzInfo[bizz][bVipEnter][0], BizzInfo[bizz][bVipEnter][1], BizzInfo[bizz][bVipEnter][2]-1, 3.0, BizzInfo[bizz][bVirtualWorld], BizzInfo[bizz][bInterior], -1, 5.0);
         }
         case 8:
@@ -3307,22 +3214,9 @@ CMD:createvip(playerid, params[])
             BizzInfo[bizz][bVipExit][1]      = 173.4578400;
             BizzInfo[bizz][bVipExit][2]      = 75.8140030;
 
-            format(query, sizeof(query), "INSERT INTO server_biznis_vips(biznis_id, type, x, y, z, exit_x, exit_y, exit_z) VALUES ('%d','%d','%f','%f','%f','%f','%f','%f')",
-                BizzInfo[bizz][bSQLID],
-                BizzInfo[bizz][bVipType],
-                BizzInfo[bizz][bVipEnter][0],
-                BizzInfo[bizz][bVipEnter][1],
-                BizzInfo[bizz][bVipEnter][2],
-                BizzInfo[bizz][bVipExit][0],
-                BizzInfo[bizz][bVipExit][1],
-                BizzInfo[bizz][bVipExit][2]
-            );
-            mysql_tquery(g_SQL, query);
-
             if (IsValidDynamicCP(BizzInfo[bizz][bVipCP]))
-            {
                 DestroyDynamicCP(BizzInfo[bizz][bVipCP]);
-            }
+            
             BizzInfo[bizz][bVipCP] = CreateDynamicCP(BizzInfo[bizz][bVipEnter][0], BizzInfo[bizz][bVipEnter][1], BizzInfo[bizz][bVipEnter][2]-1, 3.0, BizzInfo[bizz][bVirtualWorld], BizzInfo[bizz][bInterior], -1, 5.0);
         }
         case 9:
@@ -3335,27 +3229,23 @@ CMD:createvip(playerid, params[])
             BizzInfo[bizz][bVipExit][1]    = -1617.9247;
             BizzInfo[bizz][bVipExit][2]    = 2000.5590;
 
-            format(query, sizeof(query), "INSERT INTO server_biznis_vips(biznis_id, type, x, y, z, exit_x, exit_y, exit_z) VALUES ('%d','%d','%f','%f','%f','%f','%f','%f')",
-                BizzInfo[bizz][bSQLID],
-                BizzInfo[bizz][bVipType],
-                BizzInfo[bizz][bVipEnter][0],
-                BizzInfo[bizz][bVipEnter][1],
-                BizzInfo[bizz][bVipEnter][2],
-                BizzInfo[bizz][bVipExit][0],
-                BizzInfo[bizz][bVipExit][1],
-                BizzInfo[bizz][bVipExit][2]
-            );
-            mysql_tquery(g_SQL, query);
-
             if (IsValidDynamicCP(BizzInfo[bizz][bVipCP]))
-            {
                 DestroyDynamicCP(BizzInfo[bizz][bVipCP]);
-            }
+            
             BizzInfo[bizz][bVipCP] = CreateDynamicCP(BizzInfo[bizz][bVipEnter][0], BizzInfo[bizz][bVipEnter][1], BizzInfo[bizz][bVipEnter][2]-1, 3.0, BizzInfo[bizz][bVirtualWorld], BizzInfo[bizz][bInterior], -1, 5.0);
         }
-        default:
-            SendClientMessage(playerid, COLOR_RED, "Broj sobe ne moze biti manji od 0 ili veci od 9!");
     }
+    mysql_fquery(g_SQL, "INSERT INTO server_biznis_vips(biznis_id, type, x, y, z, exit_x, exit_y, exit_z) \n\
+        VALUES ('%d','%d','%f','%f','%f','%f','%f','%f')",
+        BizzInfo[bizz][bSQLID],
+        BizzInfo[bizz][bVipType],
+        BizzInfo[bizz][bVipEnter][0],
+        BizzInfo[bizz][bVipEnter][1],
+        BizzInfo[bizz][bVipEnter][2],
+        BizzInfo[bizz][bVipExit][0],
+        BizzInfo[bizz][bVipExit][1],
+        BizzInfo[bizz][bVipExit][2]
+    );
     return 1;
 }
 
@@ -3372,9 +3262,7 @@ CMD:setfuelprice(playerid, params[])
 
     BizzInfo[bizz][bGasPrice] = fuelprice;
 
-    new query[128];
-    format(query, sizeof(query), "UPDATE bizzes SET gasprice = '%d' WHERE id = '%d'", fuelprice, BizzInfo[bizz][bSQLID]);
-    mysql_tquery(g_SQL, query);
+    mysql_fquery(g_SQL, "UPDATE bizzes SET gasprice = '%d' WHERE id = '%d'", fuelprice, BizzInfo[bizz][bSQLID]);
     return 1;
 }
 
@@ -3663,8 +3551,8 @@ CMD:bizint(playerid, params[])
     BizzInfo[bizz][bVirtualWorld] = BizzInfo[bizz][bInterior] + BizzInfo[bizz][bSQLID];
     BizzInfo[bizz][bCanEnter] = 1;
 
-    new query[300];
-    format(query, sizeof(query), "UPDATE bizzes SET exitx = '%f', exity = '%f', exitz = '%f', interior = '%d', virtualworld = '%d', canenter = '%d' WHERE id = '%d'",
+    mysql_fquery(g_SQL, "UPDATE bizzes SET exitx = '%f', exity = '%f', exitz = '%f',\n\
+        interior = '%d', virtualworld = '%d', canenter = '%d' WHERE id = '%d'",
         BizzInfo[bizz][bExitX],
         BizzInfo[bizz][bExitY],
         BizzInfo[bizz][bExitZ],
@@ -3673,7 +3561,6 @@ CMD:bizint(playerid, params[])
         BizzInfo[bizz][bCanEnter],
         BizzInfo[bizz][bSQLID]
     );
-    mysql_tquery(g_SQL, query);
 
     return 1;
 }
@@ -3700,8 +3587,8 @@ CMD:custombizint(playerid, params[])
     if (!BizzInfo[bizz][bCanEnter])
         BizzInfo[bizz][bCanEnter] = 1;
 
-    new query[300];
-    format(query, sizeof(query), "UPDATE bizzes SET exitx = '%f', exity = '%f', exitz = '%f', interior = '%d', virtualworld = '%d', canenter = '%d' WHERE id = '%d'",
+    mysql_fquery(g_SQL, "UPDATE bizzes SET exitx = '%f', exity = '%f', exitz = '%f',\n\ 
+        interior = '%d', virtualworld = '%d', canenter = '%d' WHERE id = '%d'",
         BizzInfo[bizz][bExitX],
         BizzInfo[bizz][bExitY],
         BizzInfo[bizz][bExitZ],
@@ -3710,7 +3597,7 @@ CMD:custombizint(playerid, params[])
         BizzInfo[bizz][bCanEnter],
         BizzInfo[bizz][bSQLID]
     );
-    mysql_tquery(g_SQL, query);
+
     return 1;
 }
 
@@ -4002,15 +3889,13 @@ CMD:bizentrance(playerid, params[])
     );
     ABroadCast(COLOR_LIGHTRED, string, 4);
 
-    new
-        query[256];
-    format(query, sizeof(query), "UPDATE bizzes SET entrancex = '%f', entrancey = '%f', entrancez = '%f' WHERE id = '%d'",
+    mysql_fquery(g_SQL, "UPDATE bizzes SET entrancex = '%f', entrancey = '%f', entrancez = '%f' WHERE id = '%d'",
         X,
         Y,
         Z,
         BizzInfo[proplev][bSQLID]
     );
-    mysql_tquery(g_SQL, query);
+
     return 1;
 }
 
