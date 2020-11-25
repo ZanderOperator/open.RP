@@ -4873,7 +4873,7 @@ CMD:car(playerid, params[])
 		if(PlayerInfo[playerid][pDonateRank] < 2)
 		{
 			if(AC_GetPlayerMoney(playerid) < 1000) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate dovoljno novca za naknadu za vucu od 1000$!");
-			PlayerToOrgMoneyTAX(playerid, 1, 1000); // Novac ide PDu uz porez koji ide drzavi
+			PlayerToFactionMoneyTAX(playerid, 1, 1000); // Novac ide PDu uz porez koji ide drzavi
 		}
 		// Timer
 		PlayerCarTow[playerid] = true;
@@ -5107,7 +5107,7 @@ CMD:car(playerid, params[])
 		if(IsHaveNoNumberPlate(VehicleInfo[PlayerInfo[playerid][pSpawnedCar]][vModel])) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne mozete staviti registraciju na to vozilo!");
 		if(AC_GetPlayerMoney(playerid) < 1000) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate 1.000$!");
 
-		PlayerToOrgMoneyTAX(playerid, 1, 1000); // Novac ide u PD, dok oporezivi dio ide drZavi
+		PlayerToFactionMoneyTAX(playerid, 1, 1000); // Novac ide u PD, dok oporezivi dio ide drZavi
 
 		PlayerPlaySound(playerid, 1052, 0.0, 0.0, 0.0);
 

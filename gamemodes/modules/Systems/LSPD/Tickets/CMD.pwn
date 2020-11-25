@@ -57,7 +57,7 @@ CMD:ticket(playerid, params[])
             if (AC_GetPlayerMoney(playerid) < moneys) 
                 return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "You don't have enough money, you are missing %s.", FormatNumber(moneys-AC_GetPlayerMoney(playerid)));
 
-            PlayerToOrgMoney(playerid, FACTION_TYPE_LAW, moneys); 
+            PlayerToFactionMoney(playerid, FACTION_TYPE_LAW, moneys); 
             DeletePlayerTicket(playerid, id, false);
             SendFormatMessage(playerid, MESSAGE_TYPE_SUCCESS, "You paid Ticket #%d (%s).", id, FormatNumber(moneys));
         }
@@ -89,7 +89,7 @@ CMD:ticket(playerid, params[])
         if(AC_GetPlayerMoney(playerid) <  VehicleInfo[vehicleid][vTickets][tmpSlot]) 
             return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "You don't have enough money, you are missing %s.", FormatNumber(VehicleInfo[vehicleid][vTickets][tmpSlot]-AC_GetPlayerMoney(playerid)));
         
-        PlayerToOrgMoney(playerid, FACTION_TYPE_LAW, VehicleInfo[vehicleid][vTickets][tmpSlot]); 
+        PlayerToFactionMoney(playerid, FACTION_TYPE_LAW, VehicleInfo[vehicleid][vTickets][tmpSlot]); 
 
         va_SendClientMessage(playerid, COLOR_RED, "Clerk: You have paid Ticket #%d on your %s for %s.",
             slot,

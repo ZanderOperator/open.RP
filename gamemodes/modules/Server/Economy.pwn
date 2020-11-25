@@ -3,98 +3,68 @@
 #define MINIMAL_LEGAL_BUDGET		(1000000)
 #define MINIMAL_ILLEGAL_BUDGET		(100000)
 
-/* #########################################################
-City of Angels Economy module
+/* 
+#########################################################
+Money Transactions module
 Functions by Woo & Logan
-Update accounts tablice sto se tice novaca ne treba jer se automatski odraduje na AC_GivePlayerMoney
 ######################################################### */
 /*
-// IGRAc / IGRAc
 
-PlayerToPlayerMoney ( playerid, giveplayerid, money ) //  transakcija IGRAc - IGRAc (NEOPOREZIVA)
-PlayerToPlayerMoneyTAX ( playerid, giveplayerid, money ) //  transakcija IGRAc - IGRAc (OPOREZIVA)
+- Functions with TAX suffix are directly taxable money transactions.
+- Transaction module is used internally for managing money, tax and instant database storage.
 
-// IGRAc / BIZNIS
+PlayerToPlayerMoney ( playerid, giveplayerid, money ) 
+PlayerToPlayerMoneyTAX ( playerid, giveplayerid, money ) 
 
-PlayerToBusinessMoneyTAX ( playerid, bizid, money ) //  transakcija IGRAc - BIZNIS (OPOREZIVA)
-PlayerToBusinessMoney ( playerid, bizid, money ) //  transakcija IGRAc - BIZNIS (NEOPOREZIVA)
-BusinessToPlayerMoneyTAX ( playerid, bizid, money ) // transakcija BIZNIS - IGRAc (OPOREZIVA)
-BusinessToPlayerMoney ( playerid, bizid, money ) // transakcija BIZNIS - IGRAc (NEOPOREZIVA)
+PlayerToBusinessMoneyTAX ( playerid, bizid, money ) 
+PlayerToBusinessMoney ( playerid, bizid, money ) 
+BusinessToPlayerMoneyTAX ( playerid, bizid, money ) 
+BusinessToPlayerMoney ( playerid, bizid, money ) 
 
-// IGRAc i PRORAcUN
+PlayerToBudgetMoney ( playerid, money ) 
+BudgetToPlayerMoney ( playerid, money )
 
-PlayerToBudgetMoney ( playerid, money ) // transakcija IGRAc - PRORAcUN (svaka je NEOPOREZIV kao takva)
-BudgetToPlayerMoney ( playerid, money ) // transakcija PRORAcUN - IGRAc (NEOPOREZIV)
+PlayerToComplexMoney ( playerid, complexid, money ) 
+PlayerToComplexMoneyTAX ( playerid, complexid, money )
+PlayerBankToComplexMoney ( playerid, complexid, money )
+PlayerBankToComplexMoneyTAX ( playerid, complexid, money )  
+ComplexToPlayerMoney ( playerid, complexid, money )
+ComplexToPlayerMoneyTAX ( playerid, complexid, money ) 
 
-// IGRAc i COMPLEX
+PlayerToHouseMoney ( playerid, houseid, money )
+PlayerToHouseMoneyTAX ( playerid, houseid, money )  
+PlayerBankToHouseMoneyTAX ( playerid, houseid, money )
+HouseToPlayerMoney ( playerid, houseid, money ) 
+HouseToPlayerMoneyTAX ( playerid, houseid, money ) 
 
-PlayerToComplexMoney ( playerid, complexid, money ) // transakcija IGRAc - COMPLEX (NEOPOREZIV)
-PlayerToComplexMoneyTAX ( playerid, complexid, money ) // transakcija IGRAc - COMPLEX (OPOREZIVA)
-PlayerBankToComplexMoney ( playerid, complexid, money )// PLAYER BANKA - COMPLEX (NEOPOREZIVA)
-PlayerBankToComplexMoneyTAX ( playerid, complexid, money )  // PLAYER BANKA - COMPLEX (OPOREZIVA)
-ComplexToPlayerMoney ( playerid, complexid, money ) // transakcija COMPLEX - IGRAc (NEOPOREZIV)
-ComplexToPlayerMoneyTAX ( playerid, complexid, money ) // transakcija COMPLEX - IGRAc (OPOREZIVA)
-
-// IGRAc i KUcA
-
-PlayerToHouseMoney ( playerid, houseid, money ) // transakcija IGRAc - KUcA (NEOPOREZIV)
-PlayerToHouseMoneyTAX ( playerid, houseid, money )  // transakcija IGRAc - KUcA (OPOREZIVA)
-PlayerBankToHouseMoneyTAX ( playerid, houseid, money )// PLAYER BANKA - KUcA 	(OPOREZIVA)
-HouseToPlayerMoney ( playerid, houseid, money ) // transakcija KUcA - IGRAc (NEOPOREZIV)
-HouseToPlayerMoneyTAX ( playerid, houseid, money ) // transakcija KUcA - IGRAc (OPOREZIVA)
-
-// IGRAc i ORGANIZACIJA
-
-PlayerToOrgMoney ( playerid, ftype, money ) // transakcija IGRAc - ORGANIZACIJA (NEOPOREZIV)
-PlayerToOrgMoneyTAX ( playerid, ftype, money ) // transakcija IGRAc - ORGANIZACIJA (OPOREZIVA)
-OrgToPlayerMoney ( playerid, ftype, money ) // transakcija ORGANIZACIJA - IGRAc (NEOPOREZIV)
-OrgToPlayerMoneyTAX ( playerid, ftype, money ) // transakcija ORGANIZACIJA - IGRAc (OPOREZIVA)
-OrgToPlayerBankMoney ( playerid, ftype, money ) // transakcija ORGANIZACIJA - IGRAc BANKA (NEOPOREZIV)
-
-// NOVAC U ILLEGALNI BUDGET (kasnije se prebacuje i LEGAL budget)
+FactionToPlayerMoneyTAX ( playerid, ftype, money ) 
+FactionToPlayerBankMoney ( playerid, ftype, money )
 
 PlayerToIllegalBudgetMoney ( playerid, money )
 IllegalBudgetToPlayerMoney ( playerid, money )
 WarehouseToIllegalBudgetMoney ( whid, money )
 
-// RADNA KNJIZICA IGRAcA i PRORACUN 
-
-PayDayToBudgetMoney (playerid, money )
 BudgetToPlayerBankMoney (playerid, money )
-
-// RADNA KNJIZICA i IGRAc
-
-PayDayToPlayerMoney (playerid, money )
-
-// IGRAc BANKA i IGRAc
 
 BankToPlayerMoney (playerid, money )
 PlayerToBankMoney (playerid, money )
 
-// IGRAc BANKA i PRORAcUN
+PlayerBankToBudgetMoney ( playerid, money ) 
+BudgetToPlayerBankMoney ( playerid, money ) 
 
-PlayerBankToBudgetMoney ( playerid, money ) // PLAYER BANKA - PRORACUN (NEOPOREZIVA)
-BudgetToPlayerBankMoney ( playerid, money ) // PRORAcUN - PLAYER BANKA (NEOPOREZIVA)
+BusinessToBudgetMoney ( bizid, money )
 
-// BIZNIS i PRORAcUN
+BudgetToFactionMoney ( ftype, money ) 
+FactionToBudgetMoney ( ftype, money ) 
 
-BusinessToBudgetMoney ( bizid, money ) // BIZNIS - PRORACUN 	(NEOPOREZIVA)
-
-// ORGANIZACIJA i PRORAcUN
-
-BudgetToOrgMoney ( ftype, money ) // PRORACUN - ORGANIZACIJA 	(NEOPOREZIVA)
-OrgToBudgetMoney ( ftype, money ) // ORGANIZACIJA - PRORACUN	(NEOPOREZIVA)
-
-// ILEGALNI PRORACUN U LEGALNI
-
-IllegalToLegalBudgetMoney (money) // Ilegalni proracun u legalni
+IllegalToLegalBudgetMoney (money) 
 
 */
 
-// LOG funkcije
+// Function for evidenting transasctions of valuable estate(vehicles, houses, businesses, complexes, garages etc.)
 stock LogTransaction ( playerid, giveplayerid, money, logtype )
 {
-	new TmpQuery[384], desc[64];
+	new desc[64];
 	switch(logtype)
 	{
 		case LOG_TYPE_BIZSELL: {
@@ -122,7 +92,9 @@ stock LogTransaction ( playerid, giveplayerid, money, logtype )
 			format(desc, sizeof(desc), "Adresa garaze: %s", GarageInfo[garage][gAdress]);
 		}
 	}
-	mysql_format(g_SQL, TmpQuery, 384, "INSERT INTO server_transactions (sendername, recievername, money, logtype, date, description) VALUES ('%e','%e','%d','%d','%e','%e')",
+	mysql_fquery(g_SQL, 
+		"INSERT INTO server_transactions (sendername, recievername, money, logtype, date, description) \n\
+			VALUES ('%e','%e','%d','%d','%e','%e')",
 		GetName(playerid, false),
 		GetName(giveplayerid, false),
 		money,
@@ -130,970 +102,642 @@ stock LogTransaction ( playerid, giveplayerid, money, logtype )
 		ReturnDate(),
 		desc
 	);
-	mysql_tquery(g_SQL, TmpQuery);
 	return 1;
 }
-// ########################## STOCKS 1884 ###########################################
-// IGRAc - IGRAc (NEOPOREZIVA) --------------------------------------------------------
+
 stock PlayerToPlayerMoney ( playerid, giveplayerid, money )
 {
-	new safemoney = floatround(floatabs(money)); 			// Apsolutna vrijednost inputa money
+	new safemoney = floatround(floatabs(money)); 		
 	
-	AC_GivePlayerMoney(playerid, -safemoney); 				// jednom igracu se oduzima novac
-	AC_GivePlayerMoney(giveplayerid, safemoney); 			// drugom se dodaje novac
+	AC_GivePlayerMoney(playerid, -safemoney); 				
+	AC_GivePlayerMoney(giveplayerid, safemoney); 			
 	return 1;
 }
-// IGRAc - IGRAc (OPOREZIVA) ---------------------------------------------------------------------
-stock PlayerToPlayerMoneyTAX ( playerid, giveplayerid, money, bool:log=false, logtype=0 )
+
+stock PlayerToPlayerMoneyTAX ( playerid, giveplayerid, money, bool:log = false, logtype = 0 )
 {
-	new safemoney = floatround(floatabs(money)), 				// Puni iznos
-		TAX = CityInfo[cTax], 									// Porez
-		Float:taxmoneyfloat =  safemoney * floatdiv(TAX,100), 	// Kalkulacija poreza
-		taxmoney = floatround(taxmoneyfloat),					// Zaokrizivanje kalkulacija poreza
-		finalmoney = safemoney - taxmoney, 						// Razlika punog iznosa i poreza
-		TmpQuery[128];											// Stringovi za mysql_tquery
+	new 
+		safemoney = floatround(floatabs(money)), 				
+		TAX = CityInfo[cTax], 								
+		Float:taxmoneyfloat =  safemoney * floatdiv(TAX,100), 
+		taxmoney = floatround(taxmoneyfloat),					
+		finalmoney = safemoney - taxmoney;										
 	
-	AC_GivePlayerMoney(playerid, -safemoney); 				// Prodavacu se oduzima cijeli iznos
-	CityInfo[cBudget] += taxmoney; 							// OporeZen novac ide u proracun
-	AC_GivePlayerMoney(giveplayerid, finalmoney); 			// Kupac dobiva razliku punog iznosa od kojeg se oduzeo porez
+	AC_GivePlayerMoney(playerid, -safemoney); 				 							
+	AC_GivePlayerMoney(giveplayerid, finalmoney); 			
 	
-	// Update proracuna
-	format( TmpQuery, sizeof(TmpQuery), "UPDATE city SET budget = '%d'", 
-			CityInfo[cBudget]
-		);
-	mysql_tquery(g_SQL, TmpQuery);
-	// Ako je je bool:log 1 onda se sprema u tablicu
+	CityInfo[cBudget] += taxmoney;
+	mysql_fquery(g_SQL, "UPDATE city SET budget = '%d'", CityInfo[cBudget]);
+
 	if(log) 
 		LogTransaction ( playerid, giveplayerid, safemoney, logtype );
 	return 1;
 }
-// IGRAc - BIZNIS (OPOREZIVA) --------------------------------------------------------------------
+
 stock PlayerToBusinessMoneyTAX ( playerid, bizid, money)
 {
-	new safemoney = floatround(floatabs(money)), 				// Puni iznos
-		TAX = CityInfo[cTax], 									// Porez
-		Float:taxmoneyfloat =  safemoney * floatdiv(TAX,100), 	// Kalkulacija poreza
-		taxmoney = floatround(taxmoneyfloat),					// Zaokrizivanje kalkulacija poreza
-		finalmoney = safemoney - taxmoney, 						// Razlika punog iznosa i poreza
-		TmpQuery[128], 
-		TmpQuery2[128];											// Stringovi za mysql_tquery
+	new 
+		safemoney = floatround(floatabs(money)), 			
+		TAX = CityInfo[cTax], 									
+		Float:taxmoneyfloat =  safemoney * floatdiv(TAX,100), 
+		taxmoney = floatround(taxmoneyfloat),					
+		finalmoney = safemoney - taxmoney;
 		
-	AC_GivePlayerMoney(playerid, -safemoney); 				// Igracu se oduzima puni iznos
-	CityInfo[cBudget] += taxmoney; 							// Oporezivi dio ide u proracun
-	BizzInfo[ bizid ][ bTill ] += finalmoney;				// Biznis dobiva razliku punog iznosa i poreza
-	
-	// Update proracuna
-	format( TmpQuery, sizeof(TmpQuery), "UPDATE city SET budget = '%d'", 
-			CityInfo[cBudget]
-		);
-	mysql_tquery(g_SQL, TmpQuery);
-		
-	// Update biznisa
-	format( TmpQuery2, sizeof(TmpQuery2), "UPDATE bizzes SET till = '%d' WHERE id = '%d'",
-			BizzInfo[bizid][bTill],
-			BizzInfo[bizid][bSQLID]
-		);
-	mysql_tquery(g_SQL, TmpQuery2);
+	AC_GivePlayerMoney(playerid, -safemoney); 				 							
+
+	CityInfo[cBudget] += taxmoney;
+	mysql_fquery(g_SQL, "UPDATE city SET budget = '%d'", CityInfo[cBudget]);
+
+	BizzInfo[ bizid ][ bTill ] += finalmoney;
+	mysql_fquery(g_SQL, "UPDATE bizzes SET till = '%d' WHERE id = '%d'",
+		BizzInfo[bizid][bTill],
+		BizzInfo[bizid][bSQLID]
+	);
 	return 1;
 }
-// IGRAc - BIZNIS (NEOPOREZIVA) --------------------------------------------------------------------
+
 stock PlayerToBusinessMoney ( playerid, bizid, money )
 {
-	new safemoney = floatround(floatabs(money)), 			// Puni iznos
-		TmpQuery[128];
+	new safemoney = floatround(floatabs(money));
 	
-	AC_GivePlayerMoney( playerid, -safemoney ); 			// Igracu se oduzima puni iznos
-	BizzInfo[ bizid ][ bTill ] += safemoney;				// Biznis dobiva puni iznos
+	AC_GivePlayerMoney( playerid, -safemoney ); 			
 	
-	// Update biznisa
-	format( TmpQuery, sizeof(TmpQuery), "UPDATE bizzes SET till = '%d' WHERE id = '%d'",
-			BizzInfo[bizid][bTill],
-			BizzInfo[bizid][bSQLID]
-		);
-	mysql_tquery(g_SQL, TmpQuery);
+	BizzInfo[ bizid ][ bTill ] += safemoney;				
+	mysql_fquery(g_SQL, "UPDATE bizzes SET till = '%d' WHERE id = '%d'",
+		BizzInfo[bizid][bTill],
+		BizzInfo[bizid][bSQLID]
+	);
 	return 1;
 }
-// BIZNIS - IGRAc (OPOREZIVA) -----------------------------------------------------------------------------
+
 stock BusinessToPlayerMoneyTAX ( playerid, bizid, money )
 {
-	new safemoney = floatround(floatabs(money)), 				// Puni iznos
-		TAX = CityInfo[cTax], 									// Porez
-		Float:taxmoneyfloat =  safemoney * floatdiv(TAX,100), 	// Kalkulacija poreza
-		taxmoney = floatround(taxmoneyfloat),					// Zaokrizivanje kalkulacija poreza
-		finalmoney = safemoney - taxmoney, 						// Razlika punog iznosa i poreza
-		TmpQuery[128],
-		TmpQuery2[128];
-	BizzInfo[ bizid ][ bTill ] -= safemoney;				// Biznisu se oduizima puni iznos
-	CityInfo[cBudget] += taxmoney; 							// Oporezivi dio ide u proracun
-	AC_GivePlayerMoney(playerid, finalmoney); 				// Igrac dobiva razliku punog iznosa i poreza 
-	// Update proracuna
-	format( TmpQuery, sizeof(TmpQuery), "UPDATE city SET budget = '%d'", 
-			CityInfo[cBudget]
-		);
-	mysql_tquery(g_SQL, TmpQuery);
-	// Update biznisa
-	format( TmpQuery2, sizeof(TmpQuery2), "UPDATE bizzes SET till = '%d' WHERE id = '%d'",
-			BizzInfo[bizid][bTill],
-			BizzInfo[bizid][bSQLID]
-		);
-	mysql_tquery(g_SQL, TmpQuery2);
+	new
+		safemoney = floatround(floatabs(money)), 				
+		TAX = CityInfo[cTax], 									
+		Float:taxmoneyfloat =  safemoney * floatdiv(TAX,100), 	
+		taxmoney = floatround(taxmoneyfloat),					
+		finalmoney = safemoney - taxmoney;
+						
+	AC_GivePlayerMoney(playerid, finalmoney); 				
+
+	CityInfo[cBudget] += taxmoney;
+	mysql_fquery(g_SQL,"UPDATE city SET budget = '%d'", CityInfo[cBudget]);
+
+	BizzInfo[ bizid ][ bTill ] -= safemoney;
+	mysql_fquery(g_SQL, "UPDATE bizzes SET till = '%d' WHERE id = '%d'",
+		BizzInfo[bizid][bTill],
+		BizzInfo[bizid][bSQLID]
+	);
 	return 1;
 }
 
-// BIZNIS - IGRAc (NEOPOREZIVA) -----------------------------------------------------------------------------
 stock BusinessToPlayerMoney ( playerid, bizid, money )
 {
-	new safemoney = money,//floatround(floatabs(money)),			// Puni iznos
-		TmpQuery[128];
-	BizzInfo[ bizid ][ bTill ] -= safemoney;				// Biznisu se oduizima puni iznos
-	AC_GivePlayerMoney(playerid, safemoney); 				// Igrac dobiva puni izos
-	
-	// Update biznisa
-	format( TmpQuery, sizeof(TmpQuery), "UPDATE bizzes SET till = '%d' WHERE id = '%d'",
-			BizzInfo[bizid][bTill],
-			BizzInfo[bizid][bSQLID]
-		);
-	mysql_tquery(g_SQL, TmpQuery);
+	new safemoney = money;
+					
+	AC_GivePlayerMoney(playerid, safemoney); 			
+
+	BizzInfo[ bizid ][ bTill ] -= safemoney;
+	mysql_fquery(g_SQL, "UPDATE bizzes SET till = '%d' WHERE id = '%d'",
+		BizzInfo[bizid][bTill],
+		BizzInfo[bizid][bSQLID]
+	);
 	return 1;
 }
-// IGRAc - PRORACUN (NEOPOREZIVA) -----------------------------------------------------------------------------
+
 stock PlayerToBudgetMoney(playerid, money )
 {
-	if(money == 0)
-		return 0;
-
-	new 
-		safemoney = money, 			// Puni iznos
-		TmpQuery[64];
+	new safemoney = money;
 	
-	AC_GivePlayerMoney(playerid, -safemoney); 				// Novac se oduzima igracu
-	CityInfo[cBudget] += safemoney; 						// Novac ide u proracun
+	AC_GivePlayerMoney(playerid, -safemoney); 				
 	
-	// Update proracuna
-	format( TmpQuery, sizeof(TmpQuery), "UPDATE city SET budget = '%d'", 
-			CityInfo[cBudget]
-		);
-	mysql_tquery(g_SQL, TmpQuery);
+	CityInfo[cBudget] += safemoney; 
+	mysql_fquery(g_SQL, "UPDATE city SET budget = '%d'", CityInfo[cBudget]);
 	return 1;
 }
-// PRORAcUN - IGRAc (NEOPOREZIVA) -----------------------------------------------------------------------------
+
 stock BudgetToPlayerMoney (playerid, money )
 {
-	new safemoney = floatround(floatabs(money)), 			// Puni iznos
-		TmpQuery[64];
-	CityInfo[cBudget] -= safemoney; 						// Novac se oduzima iz proracuna
-	AC_GivePlayerMoney(playerid, safemoney); 				// Novac se daje igracu
-	
-	// Update proracuna
-	format( TmpQuery, sizeof(TmpQuery), "UPDATE city SET budget = '%d'", 
-			CityInfo[cBudget]
-		);
-	mysql_tquery(g_SQL, TmpQuery);
-	return 1;
-}
-// PRORAcUN - IGRAc BANKA (NEOPOREZIVA) -----------------------------------------------------------------------------
-stock BudgetToPlayerBankMoney (playerid, money )
-{
-	new safemoney = floatround(floatabs(money)), 			// Puni iznos
-		TmpQuery[64],
-		TmpQuery2[128];
-	CityInfo[cBudget] -= safemoney; 						// Novac se oduzima iz proracuna
-	PlayerInfo[playerid][pBank] += safemoney; 		//  Novac sjeda na radnu knjizicu igrac
-	// Update proracuna
-	format( TmpQuery, sizeof(TmpQuery), "UPDATE city SET budget = '%d'", 
-			CityInfo[cBudget]
-		);
-	mysql_tquery(g_SQL, TmpQuery);
-	// Update accounts
-	format( TmpQuery2, sizeof(TmpQuery2), "UPDATE accounts SET bankMoney = '%d' WHERE sqlid = '%d'", 
-			PlayerInfo[playerid][pBank],
-			PlayerInfo[playerid][pSQLID]
-		);
-	mysql_tquery(g_SQL, TmpQuery2);
-	return 1;
-}
-// IGRAc BANKA - PRORACUN (NEOPOREZIVA) -------------------------------------------------------
-stock PlayerBankToBudgetMoney ( playerid, money )
-{
-	new safemoney = floatround(floatabs(money)), 			// Puni iznos
-		TmpQuery[64],
-		TmpQuery2[128];
-	PlayerInfo[ playerid ][ pBank ] -= safemoney;
-	CityInfo[ cBudget ] += safemoney;
-	
-	// Update proracuna
-	format( TmpQuery, sizeof(TmpQuery), "UPDATE city SET budget = '%d'", 
-			CityInfo[cBudget]
-		);
-	mysql_tquery(g_SQL, TmpQuery);
-	// Update bank money
-	format( TmpQuery2, sizeof(TmpQuery2), "UPDATE accounts SET bankMoney = '%d' WHERE sqlid = '%d'",
-			PlayerInfo[playerid][pBank],
-			PlayerInfo[playerid][pSQLID]
-		);
-	mysql_tquery(g_SQL, TmpQuery2);
-	return 1;
-}
-// IGRAc - COMPLEX (NEOPOREZIVA) -----------------------------------------------------------------------------
-stock PlayerToComplexMoney (playerid, complexid, money )
-{
-	new safemoney = floatround(floatabs(money)), 			// Puni iznos
-		TmpQuery[128];
-	AC_GivePlayerMoney(playerid, -safemoney); 				// Novac se oduzima igracu
-	ComplexInfo[ complexid ][ cTill ] += safemoney;
-	
-	// Update complexa
-	format( TmpQuery, sizeof(TmpQuery), "UPDATE server_complex SET till = '%d' WHERE id = '%d'",
-			ComplexInfo[complexid][cTill],
-			ComplexInfo[complexid][cSQLID]
-		);
-	mysql_tquery(g_SQL, TmpQuery);
-	return 1;
-}
-// IGRAc - COMPLEX (OPOREZIVA) --------------------------------------------------------------------
-stock PlayerToComplexMoneyTAX ( playerid, complexid, money )
-{
-	new safemoney = floatround(floatabs(money)), 				// Puni iznos
-		TAX = CityInfo[cTax], 									// Porez
-		Float:taxmoneyfloat =  safemoney * floatdiv(TAX,100), 	// Kalkulacija poreza
-		taxmoney = floatround(taxmoneyfloat),					// Zaokrizivanje kalkulacija poreza
-		finalmoney = safemoney - taxmoney, 						// Razlika punog iznosa i poreza
-		TmpQuery[64],
-		TmpQuery2[128];		
-	AC_GivePlayerMoney(playerid, -safemoney); 				// Igracu se oduzima puni iznos
-	CityInfo[cBudget] += taxmoney; 							// Oporezivi dio ide u proracun
-	ComplexInfo[ complexid ][ cTill ] += finalmoney;		// Complex dobiva razliku punog iznosa i poreza
-	// Update proracuna
-	format( TmpQuery, sizeof(TmpQuery), "UPDATE city SET budget = '%d'", 
-			CityInfo[cBudget]
-		);
-	mysql_tquery(g_SQL, TmpQuery);
-	// Update complexa
-	format( TmpQuery2, sizeof(TmpQuery2), "UPDATE server_complex SET till = '%d' WHERE id = '%d'",
-			ComplexInfo[complexid][cTill],
-			ComplexInfo[complexid][cSQLID]
-		);
-	mysql_tquery(g_SQL, TmpQuery2);
-	return 1;
-}
-// IGRAc BANKA - COMPLEX (NEOPOREZIVA) -------------------------------------------------------
-stock PlayerBankToComplexMoney ( playerid, complexid, money )
-{
-	new safemoney = floatround(floatabs(money)), 					// Puni iznos
-		TmpQuery[128],
-		TmpQuery2[150];
-	PlayerInfo[ playerid ][ pBank ] -= safemoney; 					// Novac se oduzima igracu s bank. racuna
-	ComplexInfo[ complexid ][ cTill ] += safemoney;					// Novac ide u kompleks
-	// Update complexa
-	format( TmpQuery, sizeof(TmpQuery), "UPDATE server_complex SET till = '%d' WHERE id = '%d'",
-			ComplexInfo[complexid][cTill],
-			ComplexInfo[complexid][cSQLID]
-		);
-	mysql_tquery(g_SQL, TmpQuery);
-	// Update bank money accounts
-	format( TmpQuery2, sizeof(TmpQuery2), "UPDATE accounts SET bankMoney = '%d' WHERE sqlid = '%d'",
-			PlayerInfo[playerid][pBank],
-			PlayerInfo[playerid][pSQLID]
-		);
-	mysql_tquery(g_SQL, TmpQuery2);
-	return 1;
-}
-// IGRAc BANKA - COMPLEX (OPOREZIVA) -------------------------------------------------------
-stock PlayerBankToComplexMoneyTAX ( playerid, complexid, money )
-{
-	new safemoney = floatround(floatabs(money)), 				// Puni iznos
-		TAX = CityInfo[cTax], 									// Porez
-		Float:taxmoneyfloat =  safemoney * floatdiv(TAX,100), 	// Kalkulacija poreza
-		taxmoney = floatround(taxmoneyfloat),					// Zaokrizivanje kalkulacija poreza
-		finalmoney = safemoney - taxmoney, 						// Razlika punog iznosa i poreza
-		TmpQuery[64],
-		TmpQuery2[128],
-		TmpQuery3[128];
-		
-	PlayerInfo[ playerid ][ pBank ] -= safemoney; 					// Novac se oduzima igracu s bank. racuna
-	CityInfo[cBudget] += taxmoney; 									// Oporezivi dio ide u proracun
-	ComplexInfo[ complexid ][ cTill ] += finalmoney;				// Oporezivi novac ide u kompleks
-	// Update complexa
-	format( TmpQuery, sizeof(TmpQuery), "UPDATE server_complex SET till = '%d' WHERE id = '%d'",
-			ComplexInfo[complexid][cTill],
-			ComplexInfo[complexid][cSQLID]
-		);
-	mysql_tquery(g_SQL, TmpQuery);
-	// Update bank money accounts
-	format( TmpQuery2, sizeof(TmpQuery2), "UPDATE accounts SET bankMoney = '%d' WHERE sqlid = '%d'",
-			PlayerInfo[playerid][pBank],
-			PlayerInfo[playerid][pSQLID]
-		);
-	mysql_tquery(g_SQL, TmpQuery2);
-	// Update proracuna
-	format( TmpQuery3, sizeof(TmpQuery3), "UPDATE city SET budget = '%d'", 
-			CityInfo[cBudget]
-		);
-	mysql_tquery(g_SQL, TmpQuery3);
-	return 1;
-}
-// COMPLEX - IGRAc (NEOPOREZIVA) ----------------------------------------------------------------------------
-stock ComplexToPlayerMoney (playerid, complexid, money )
-{
-	new safemoney = floatround(floatabs(money)), 			// Puni iznos
-		TmpQuery[128];
-	ComplexInfo[ complexid ][ cTill ] -= safemoney;			// Complex gubi novac
-	AC_GivePlayerMoney(playerid, safemoney); 				// Igrac dobiva novac
-	// Update complexa
-	format( TmpQuery, sizeof(TmpQuery), "UPDATE server_complex SET till = '%d' WHERE id = '%d'",
-			ComplexInfo[complexid][cTill],
-			ComplexInfo[complexid][cSQLID]
-		);
-	mysql_tquery(g_SQL, TmpQuery);
+	new safemoney = floatround(floatabs(money));
+
+	AC_GivePlayerMoney(playerid, safemoney);
+
+	CityInfo[cBudget] -= safemoney; 
+	mysql_fquery(g_SQL, "UPDATE city SET budget = '%d'", CityInfo[cBudget]);
 	return 1;
 }
 
-// COMPLEX - IGRAc (OPOREZIVA) --------------------------------------------------------------------
+stock BudgetToPlayerBankMoney (playerid, money )
+{
+	new safemoney = floatround(floatabs(money));
+
+	CityInfo[cBudget] -= safemoney; 
+	mysql_fquery(g_SQL, "UPDATE city SET budget = '%d'", CityInfo[cBudget]);
+	
+	PlayerInfo[playerid][pBank] += safemoney; 
+	mysql_fquery(g_SQL, "UPDATE accounts SET bankMoney = '%d' WHERE sqlid = '%d'", 
+		PlayerInfo[playerid][pBank],
+		PlayerInfo[playerid][pSQLID]
+	);
+	return 1;
+}
+
+stock PlayerBankToBudgetMoney ( playerid, money )
+{
+	new safemoney = floatround(floatabs(money));
+
+	CityInfo[ cBudget ] += safemoney;
+	mysql_fquery(g_SQL, "UPDATE city SET budget = '%d'", CityInfo[cBudget]);
+
+	PlayerInfo[ playerid ][ pBank ] -= safemoney;
+	mysql_fquery(g_SQL, "UPDATE accounts SET bankMoney = '%d' WHERE sqlid = '%d'",
+		PlayerInfo[playerid][pBank],
+		PlayerInfo[playerid][pSQLID]
+	);
+	return 1;
+}
+
+stock PlayerToComplexMoney (playerid, complexid, money )
+{
+	new safemoney = floatround(floatabs(money));
+
+	AC_GivePlayerMoney(playerid, -safemoney); 		
+
+	ComplexInfo[ complexid ][ cTill ] += safemoney;
+	mysql_fquery(g_SQL, "UPDATE server_complex SET till = '%d' WHERE id = '%d'",
+		ComplexInfo[complexid][cTill],
+		ComplexInfo[complexid][cSQLID]
+	);
+	return 1;
+}
+
+stock PlayerToComplexMoneyTAX ( playerid, complexid, money )
+{
+	new 
+		safemoney = floatround(floatabs(money)), 				
+		TAX = CityInfo[cTax], 									
+		Float:taxmoneyfloat =  safemoney * floatdiv(TAX,100), 
+		taxmoney = floatround(taxmoneyfloat),					
+		finalmoney = safemoney - taxmoney;
+
+	AC_GivePlayerMoney(playerid, -safemoney); 	
+
+	CityInfo[cBudget] += taxmoney; 				
+	mysql_fquery(g_SQL, "UPDATE city SET budget = '%d'", CityInfo[cBudget]);
+
+	ComplexInfo[ complexid ][ cTill ] += finalmoney;
+	mysql_fquery(g_SQL, "UPDATE server_complex SET till = '%d' WHERE id = '%d'",
+		ComplexInfo[complexid][cTill],
+		ComplexInfo[complexid][cSQLID]
+	);
+	return 1;
+}
+
+stock PlayerBankToComplexMoney ( playerid, complexid, money )
+{
+	new safemoney = floatround(floatabs(money));
+					
+	ComplexInfo[ complexid ][ cTill ] += safemoney;				
+	mysql_fquery(g_SQL, "UPDATE server_complex SET till = '%d' WHERE id = '%d'",
+		ComplexInfo[complexid][cTill],
+		ComplexInfo[complexid][cSQLID]
+	);
+
+	PlayerInfo[ playerid ][ pBank ] -= safemoney; 
+	mysql_fquery(g_SQL, "UPDATE accounts SET bankMoney = '%d' WHERE sqlid = '%d'",
+		PlayerInfo[playerid][pBank],
+		PlayerInfo[playerid][pSQLID]
+	);
+	return 1;
+}
+
+stock PlayerBankToComplexMoneyTAX ( playerid, complexid, money )
+{
+	new
+		safemoney = floatround(floatabs(money)), 				
+		TAX = CityInfo[cTax], 								
+		Float:taxmoneyfloat =  safemoney * floatdiv(TAX,100), 	
+		taxmoney = floatround(taxmoneyfloat),				
+		finalmoney = safemoney - taxmoney;	
+						
+	CityInfo[cBudget] += taxmoney;
+	mysql_fquery(g_SQL, "UPDATE city SET budget = '%d'", CityInfo[cBudget]);
+
+	ComplexInfo[ complexid ][ cTill ] += finalmoney;			
+	mysql_fquery(g_SQL, "UPDATE server_complex SET till = '%d' WHERE id = '%d'",
+		ComplexInfo[complexid][cTill],
+		ComplexInfo[complexid][cSQLID]
+	);
+
+	PlayerInfo[ playerid ][ pBank ] -= safemoney; 
+	mysql_fquery(g_SQL, "UPDATE accounts SET bankMoney = '%d' WHERE sqlid = '%d'",
+		PlayerInfo[playerid][pBank],
+		PlayerInfo[playerid][pSQLID]
+	);
+
+	
+	return 1;
+}
+
+stock ComplexToPlayerMoney (playerid, complexid, money )
+{
+	new safemoney = floatround(floatabs(money));
+				
+	AC_GivePlayerMoney(playerid, safemoney); 				
+
+	ComplexInfo[ complexid ][ cTill ] -= safemoney;
+	mysql_fquery(g_SQL, "UPDATE server_complex SET till = '%d' WHERE id = '%d'",
+		ComplexInfo[complexid][cTill],
+		ComplexInfo[complexid][cSQLID]
+	);
+	return 1;
+}
+
 stock ComplexToPlayerMoneyTAX ( playerid, complexid, money )
 {
-	new safemoney = floatround(floatabs(money)), 				// Puni iznos
-		TAX = CityInfo[cTax], 									// Porez
-		Float:taxmoneyfloat =  safemoney * floatdiv(TAX,100), 	// Kalkulacija poreza
-		taxmoney = floatround(taxmoneyfloat),					// Zaokrizivanje kalkulacija poreza
-		finalmoney = safemoney - taxmoney, 						// Razlika punog iznosa i poreza
-		TmpQuery[64],
-		TmpQuery2[128];
-	ComplexInfo[ complexid ][ cTill ] -= safemoney;			// Complexu se oduzima puni iznos
-	CityInfo[cBudget] += taxmoney; 							// Oporezivi dio ide u proracun
-	AC_GivePlayerMoney(playerid, finalmoney); 				// Igracu dobiva novac poslije oporezivanja
-	// Update proracuna
-	format( TmpQuery, sizeof(TmpQuery), "UPDATE city SET budget = '%d'", 
-			CityInfo[cBudget]
-		);
-	mysql_tquery(g_SQL, TmpQuery);
-	// Update complexa
-	format( TmpQuery2, sizeof(TmpQuery2), "UPDATE server_complex SET till = '%d' WHERE id = '%d'",
-			ComplexInfo[complexid][cTill],
-			ComplexInfo[complexid][cSQLID]
-		);
-	mysql_tquery(g_SQL, TmpQuery2);
+	new 
+		safemoney = floatround(floatabs(money)), 				
+		TAX = CityInfo[cTax], 									
+		Float:taxmoneyfloat =  safemoney * floatdiv(TAX,100), 
+		taxmoney = floatround(taxmoneyfloat),					
+		finalmoney = safemoney - taxmoney;
+						
+	AC_GivePlayerMoney(playerid, finalmoney); 
+
+	CityInfo[cBudget] += taxmoney; 
+	mysql_fquery(g_SQL, "UPDATE city SET budget = '%d'", CityInfo[cBudget]);
+	
+	ComplexInfo[ complexid ][ cTill ] -= safemoney;	
+	mysql_fquery(g_SQL, "UPDATE server_complex SET till = '%d' WHERE id = '%d'",
+		ComplexInfo[complexid][cTill],
+		ComplexInfo[complexid][cSQLID]
+	);
 	return 1;
 }
-// IGRAc - KUcA (NEOPOREZIVA) --------------------------------------------------------------------
 stock PlayerToHouseMoney ( playerid, houseid, money )
 {
-	new safemoney = floatround(floatabs(money)), 			// Puni iznos
-		TmpQuery[64];
-	AC_GivePlayerMoney(playerid, -safemoney); 				// Igracu se oduzima puni iznos
-	HouseInfo[ houseid ][ hTakings ] += safemoney;			// Kuca dobiva puni iznos
-	// Update kuce
-	format( TmpQuery, sizeof(TmpQuery), "UPDATE houses SET bank = '%d' WHERE id = '%d'",
-			HouseInfo[houseid][hTakings],
-			HouseInfo[houseid][hSQLID]
-		);
-	mysql_tquery(g_SQL, TmpQuery);
-	return 1;
-}
-// IGRAc - KUcA (OPOREZIVA) --------------------------------------------------------------------
-stock PlayerToHouseMoneyTAX ( playerid, houseid, money )
-{
-	new safemoney = floatround(floatabs(money)), 				// Puni iznos
-		TAX = CityInfo[cTax], 									// Porez
-		Float:taxmoneyfloat =  safemoney * floatdiv(TAX,100), 	// Kalkulacija poreza
-		taxmoney = floatround(taxmoneyfloat),					// Zaokrizivanje kalkulacija poreza
-		finalmoney = safemoney - taxmoney, 						// Razlika punog iznosa i poreza
-		TmpQuery[64],
-		TmpQuery2[128];
-	CityInfo[cBudget] += taxmoney; 							// Oporezivi dio ide u proracun
-	AC_GivePlayerMoney(playerid, -safemoney); 				// Igracu se oduzima puni iznos
-	HouseInfo[ houseid ][ hTakings ] += finalmoney;			// Kuca dobiva razliku punog iznosa i poreza
-	// Update proracuna
-	format( TmpQuery, sizeof(TmpQuery), "UPDATE city SET budget = '%d'", 
-			CityInfo[cBudget]
-		);
-	mysql_tquery(g_SQL, TmpQuery);
-	// Update kuce
-	format( TmpQuery2, sizeof(TmpQuery2), "UPDATE houses SET bank = '%d' WHERE id = '%d'",
-			HouseInfo[houseid][hTakings],
-			HouseInfo[houseid][hSQLID]
-		);
-	mysql_tquery(g_SQL, TmpQuery2);
-	return 1;
-}
-// PLAYER BANKA - KUCA (OPOREZIVA) -------------------------------------------------------
-stock PlayerBankToHouseMoneyTAX ( playerid, houseid, money )
-{
-	new safemoney = floatround(floatabs(money)), 				// Puni iznos
-		TAX = CityInfo[cTax], 									// Porez
-		Float:taxmoneyfloat =  safemoney * floatdiv(TAX,100), 	// Kalkulacija poreza
-		taxmoney = floatround(taxmoneyfloat),					// Zaokrizivanje kalkulacija poreza
-		finalmoney = safemoney - taxmoney, 						// Razlika punog iznosa i poreza
-		TmpQuery[128],
-		TmpQuery2[150],
-		TmpQuery3[128];
-	PlayerInfo[playerid][pBank] -= safemoney; 					// Igracu se oduzima puni iznos iz banke
-	CityInfo[cBudget] += taxmoney; 								// Oporezivi dio ide u proracun
-	HouseInfo[ houseid ][ hTakings ] += finalmoney;				// Kuca dobiva razliku punog iznosa i poreza
-	// Update proracuna
-	format( TmpQuery, sizeof(TmpQuery), "UPDATE city SET budget = '%d'", 
-			CityInfo[cBudget]
-		);
-	mysql_tquery(g_SQL, TmpQuery);
-	// Update bank money accounts
-	format( TmpQuery2, sizeof(TmpQuery2), "UPDATE accounts SET bankMoney = '%d' WHERE sqlid = '%d'",
-			PlayerInfo[playerid][pBank],
-			PlayerInfo[playerid][pSQLID]
-		);
-	mysql_tquery(g_SQL, TmpQuery2);
-	// Update kuce
-	format( TmpQuery3, sizeof(TmpQuery3), "UPDATE houses SET bank = '%d' WHERE id = '%d'",
-			HouseInfo[houseid][hTakings],
-			HouseInfo[houseid][hSQLID]
-		);
-	mysql_tquery(g_SQL, TmpQuery3);
-	return 1;
-}
-// KUcA - IGRAc (NEOPOREZIVA) -----------------------------------------------------------------------------
-stock HouseToPlayerMoney ( playerid, houseid, money )
-{
-	new safemoney = floatround(floatabs(money)), 			// Puni iznos
-		TmpQuery[64];
-	
-	HouseInfo[ houseid ][ hTakings ] -= safemoney;			// Kuci se oduzima puni iznos
-	AC_GivePlayerMoney( playerid, safemoney ); 				// Igrac dobiva puni izos
-	
-	// Update kuce
-	format( TmpQuery, sizeof(TmpQuery), "UPDATE houses SET bank = '%d' WHERE id = '%d'",
+	new safemoney = floatround(floatabs(money));	
+	AC_GivePlayerMoney(playerid, -safemoney); 
+
+	HouseInfo[ houseid ][ hTakings ] += safemoney;	
+	mysql_fquery(g_SQL, "UPDATE houses SET bank = '%d' WHERE id = '%d'",
 		HouseInfo[houseid][hTakings],
 		HouseInfo[houseid][hSQLID]
-		);
-	mysql_tquery(g_SQL, TmpQuery);
+	);
 	return 1;
 }
-// KUcA - IGRAc (OPOREZIVA) -----------------------------------------------------------------------------
+
+stock PlayerToHouseMoneyTAX ( playerid, houseid, money )
+{
+	new
+		safemoney = floatround(floatabs(money)), 				
+		TAX = CityInfo[cTax], 									
+		Float:taxmoneyfloat =  safemoney * floatdiv(TAX,100), 	
+		taxmoney = floatround(taxmoneyfloat),				
+		finalmoney = safemoney - taxmoney;
+							
+	AC_GivePlayerMoney(playerid, -safemoney); 					
+	
+	CityInfo[cBudget] += taxmoney; 	
+	mysql_fquery(g_SQL, "UPDATE city SET budget = '%d'", CityInfo[cBudget]);
+
+	HouseInfo[ houseid ][ hTakings ] += finalmoney;
+	mysql_fquery(g_SQL, "UPDATE houses SET bank = '%d' WHERE id = '%d'",
+		HouseInfo[houseid][hTakings],
+		HouseInfo[houseid][hSQLID]
+	);
+	return 1;
+}
+stock PlayerBankToHouseMoneyTAX ( playerid, houseid, money )
+{
+	new
+		safemoney = floatround(floatabs(money)), 				
+		TAX = CityInfo[cTax], 									
+		Float:taxmoneyfloat =  safemoney * floatdiv(TAX,100), 	
+		taxmoney = floatround(taxmoneyfloat),				
+		finalmoney = safemoney - taxmoney; 					
+	
+	CityInfo[cBudget] += taxmoney; 								
+	mysql_fquery(g_SQL, "UPDATE city SET budget = '%d'", CityInfo[cBudget]);
+
+	PlayerInfo[playerid][pBank] -= safemoney;
+	mysql_fquery(g_SQL, "UPDATE accounts SET bankMoney = '%d' WHERE sqlid = '%d'",
+		PlayerInfo[playerid][pBank],
+		PlayerInfo[playerid][pSQLID]
+	);
+
+	HouseInfo[ houseid ][ hTakings ] += finalmoney;
+	mysql_fquery(g_SQL, "UPDATE houses SET bank = '%d' WHERE id = '%d'",
+		HouseInfo[houseid][hTakings],
+		HouseInfo[houseid][hSQLID]
+	);
+	return 1;
+}
+
+stock HouseToPlayerMoney ( playerid, houseid, money )
+{
+	new safemoney = floatround(floatabs(money));
+				
+	AC_GivePlayerMoney( playerid, safemoney ); 				
+	
+	HouseInfo[ houseid ][ hTakings ] -= safemoney;
+	mysql_fquery(g_SQL, "UPDATE houses SET bank = '%d' WHERE id = '%d'",
+		HouseInfo[houseid][hTakings],
+		HouseInfo[houseid][hSQLID]
+	);
+	return 1;
+}
+
 stock HouseToPlayerMoneyTAX ( playerid, houseid, money )
 {
-	new safemoney = floatround(floatabs(money)), 				// Puni iznos
-		TAX = CityInfo[cTax], 									// Porez
-		Float:taxmoneyfloat =  safemoney * floatdiv(TAX,100), 	// Kalkulacija poreza
-		taxmoney = floatround(taxmoneyfloat),					// Zaokrizivanje kalkulacija poreza
-		finalmoney = safemoney - taxmoney, 						// Razlika punog iznosa i poreza
-		TmpQuery[64],
-		TmpQuery2[64];
-	HouseInfo[ houseid ][ hTakings ] -= safemoney;			// Kuci se oduizima puni iznos
-	CityInfo[cBudget] += taxmoney; 							// Oporezivi dio ide u proracun
-	AC_GivePlayerMoney(playerid, finalmoney); 				// Igrac dobiva razliku punog iznosa i poreza 
-	// Update proracuna
-	format( TmpQuery, sizeof(TmpQuery), "UPDATE city SET budget = '%d'", 
-			CityInfo[cBudget]
-		);
-	mysql_tquery(g_SQL, TmpQuery);
-	// Update kuce
-	format( TmpQuery2, sizeof(TmpQuery2), "UPDATE houses SET bank = '%d' WHERE id = '%d'",
-			HouseInfo[houseid][hTakings],
-			HouseInfo[houseid][hSQLID]
-		);
-	mysql_tquery(g_SQL, TmpQuery2);
+	new 
+		safemoney = floatround(floatabs(money)), 				
+		TAX = CityInfo[cTax], 									
+		Float:taxmoneyfloat =  safemoney * floatdiv(TAX,100), 
+		taxmoney = floatround(taxmoneyfloat),					
+		finalmoney = safemoney - taxmoney;			
+							
+	AC_GivePlayerMoney(playerid, finalmoney); 				
+
+	CityInfo[cBudget] += taxmoney; 	
+	mysql_fquery(g_SQL, "UPDATE city SET budget = '%d'", CityInfo[cBudget]);
+
+	HouseInfo[ houseid ][ hTakings ] -= safemoney;
+	mysql_fquery(g_SQL, "UPDATE houses SET bank = '%d' WHERE id = '%d'",
+		HouseInfo[houseid][hTakings],
+		HouseInfo[houseid][hSQLID]
+	);
 	return 1;
 }
-// IGRAc - ORGANIZACIJA (NEOPOREZIVA) -----------------------------------------FACTIONBANK----------------------
-stock PlayerToOrgMoney ( playerid, ftype, money )
+
+stock PlayerToFactionMoney ( playerid, ftype, money )
 {
-	new safemoney = floatround(floatabs(money)), 				// Puni iznos
-		TmpQuery[128];
-	AC_GivePlayerMoney(playerid, -safemoney); 					// Igracu se oduzima puni iznos
-	foreach(new i : Factions) // trazi organizaciju po ftypeu
+	new safemoney = floatround(floatabs(money));
+
+	AC_GivePlayerMoney(playerid, -safemoney); 					
+
+	foreach(new i : Factions) 
 	{
 		if(FactionInfo[i][fType] == ftype)
 		{
-			FactionInfo[i][ fFactionBank ] += safemoney;		// Org factionbank dobiva puni iznos
-			// Update fakcije
-			format( TmpQuery, sizeof(TmpQuery), "UPDATE server_factions SET factionbank = '%d' WHERE id = '%d'",
-					FactionInfo[ i ][ fFactionBank ],
-					FactionInfo[ i ][ fID ]
-				);
-			mysql_tquery(g_SQL, TmpQuery);
+			FactionInfo[i][ fFactionBank ] += safemoney;
+			mysql_fquery(g_SQL, "UPDATE server_factions SET factionbank = '%d' WHERE id = '%d'",
+				FactionInfo[ i ][ fFactionBank ],
+				FactionInfo[ i ][ fID ]
+			);
 			break;
 		}
 	}
 	return 1;
 }
-// IGRAc - ORGANIZACIJA (OPOREZIVA) ----------------------------------FACTIONBANK----------------------
-stock PlayerToOrgMoneyTAX ( playerid, ftype, money )
+
+stock PlayerToFactionMoneyTAX ( playerid, ftype, money )
 {
-	new safemoney = floatround(floatabs(money)), 				// Puni iznos
-		TAX = CityInfo[cTax], 									// Porez
-		Float:taxmoneyfloat =  safemoney * floatdiv(TAX,100), 	// Kalkulacija poreza
-		taxmoney = floatround(taxmoneyfloat),					// Zaokrizivanje kalkulacija poreza
-		finalmoney = safemoney - taxmoney, 						// Razlika punog iznosa i poreza
-		TmpQuery[128],
-		TmpQuery2[64];
+	new 
+		safemoney = floatround(floatabs(money)), 				
+		TAX = CityInfo[cTax], 									
+		Float:taxmoneyfloat =  safemoney * floatdiv(TAX,100), 
+		taxmoney = floatround(taxmoneyfloat),					
+		finalmoney = safemoney - taxmoney;
 	
-	AC_GivePlayerMoney(playerid, -safemoney); 					// Igracu se oduzima puni iznos
-	CityInfo[cBudget] += taxmoney; 								// Oporezivi dio ide u proracun
-	foreach(new i : Factions) 									// trazi organizaciju po ftypeu
-	{
-		if(FactionInfo[i][fType] == ftype)
-		{
-			FactionInfo[ i ][ fFactionBank ] += finalmoney;		// Org factionbank dobiva razliku
-			// Update fakcije
-			format( TmpQuery, sizeof(TmpQuery), "UPDATE server_factions SET factionbank = '%d' WHERE id = '%d'",
-					FactionInfo[ i ][ fFactionBank ],
-					FactionInfo[ i ][ fID ]
-				);
-			mysql_tquery(g_SQL, TmpQuery);
-			break;
-		}
-	}
-	// Update proracuna
-	format( TmpQuery2, sizeof(TmpQuery2), "UPDATE city SET budget = '%d'", 
-			CityInfo[cBudget]
-		);
-	mysql_tquery(g_SQL, TmpQuery2);
-	return 1;
-}
-// ORGANIZACIJA - IGRAc (NEOPOREZIVA) -------------------------------------FACTIONBANK----------------------
-stock OrgToPlayerMoney ( playerid, ftype, money )
-{
-	new safemoney = floatround(floatabs(money)), 			// Puni iznos
-		TmpQuery[128];
-	foreach(new i : Factions) // trazi organizaciju po ftypeu
-	{
-		if(FactionInfo[i][fType] == ftype)
-		{
-			FactionInfo[ i ][ fFactionBank ] -= safemoney;		// Org factionbank se oduzima puni iznos
-			// Update fakcije
-			format( TmpQuery, sizeof(TmpQuery), "UPDATE server_factions SET factionbank = '%d' WHERE id = '%d'",
-					FactionInfo[ i ][ fFactionBank ],
-					FactionInfo[ i ][ fID ]
-				);
-			mysql_tquery(g_SQL, TmpQuery);
-			break;
-		}
-	}
-	AC_GivePlayerMoney(playerid, safemoney); 				// Igrac dobiva puni izos
-	return 1;
-}
-// ORGANIZACIJA - IGRAc (OPOREZIVA) -------------------------------------------FACTIONBANK----------------------
-stock OrgToPlayerMoneyTAX ( playerid, ftype, money )
-{
-	new safemoney = floatround(floatabs(money)), 				// Puni iznos
-		TAX = CityInfo[cTax], 									// Porez
-		Float:taxmoneyfloat =  safemoney * floatdiv(TAX,100), 	// Kalkulacija poreza
-		taxmoney = floatround(taxmoneyfloat),					// Zaokrizivanje kalkulacija poreza
-		finalmoney = safemoney - taxmoney, 						// Razlika punog iznosa i poreza
-		TmpQuery[128],
-		TmpQuery2[64];
-		
-	CityInfo[cBudget] += taxmoney; 							// Oporezivi dio ide u proracun
-	foreach(new i : Factions) // trazi organizaciju po ftypeu
-	{
-		if(FactionInfo[i][fType] == ftype)
-		{
-			FactionInfo[ i ][ fFactionBank ] -= safemoney;		// Org factionbank se oduzima puni iznos
-			// Update fakcije
-			format( TmpQuery, sizeof(TmpQuery), "UPDATE server_factions SET factionbank = '%d' WHERE id = '%d'",
-					FactionInfo[ i ][ fFactionBank ],
-					FactionInfo[ i ][ fID ]
-				);
-			mysql_tquery(g_SQL, TmpQuery);
-			break;
-		}
-	}
-	AC_GivePlayerMoney(playerid, finalmoney); 				// Igrac dobiva razliku punog iznosa i poreza 
-	// Update proracuna
-	format( TmpQuery2, sizeof(TmpQuery2), "UPDATE city SET budget = '%d'", 
-			CityInfo[cBudget]
-		);
-	mysql_tquery(g_SQL, TmpQuery2);
-	return 1;
-}
-// ORGANIZACIJA - IGRAc BANKA (NEOPOREZIVA) -------------------------------------FACTIONBANK----------------------
-stock OrgToPlayerBankMoney ( playerid, ftype, money )
-{
-	new safemoney = floatround(floatabs(money)), 				// Puni iznos
-		TmpQuery[100],
-		TmpQuery2[100];
-		
-	foreach(new i : Factions) // trazi organizaciju po ftypeu
-	{
-		if(FactionInfo[i][fType] == ftype)
-		{
-			FactionInfo[ i ][ fFactionBank ] -= safemoney;		// Org factionbank se oduzima puni iznos
-			// Update fakcije
-			format( TmpQuery, sizeof(TmpQuery), "UPDATE server_factions SET factionbank = '%d' WHERE id = '%d'",
-					FactionInfo[ i ][ fFactionBank ],
-					FactionInfo[ i ][ fID ]
-				);
-			mysql_tquery(g_SQL, TmpQuery);
-			break;
-		}
-	}
-	PlayerInfo[playerid][pBank] += safemoney; 					// Igrac dobiva puni izos na banku
+	AC_GivePlayerMoney(playerid, -safemoney); 					
 	
-	// Update accounts
-	format( TmpQuery2, sizeof(TmpQuery2), "UPDATE accounts SET bankMoney = '%d' WHERE sqlid = '%d'", 
-			PlayerInfo[playerid][pBank],
-			PlayerInfo[playerid][pSQLID]
-		);
-	mysql_tquery(g_SQL, TmpQuery2);
+	CityInfo[cBudget] += taxmoney;
+	mysql_fquery(g_SQL, "UPDATE city SET budget = '%d'", CityInfo[cBudget]);
+
+	foreach(new i : Factions) 								
+	{
+		if(FactionInfo[i][fType] == ftype)
+		{
+			FactionInfo[ i ][ fFactionBank ] += finalmoney;		
+			mysql_fquery(g_SQL, "UPDATE server_factions SET factionbank = '%d' WHERE id = '%d'",
+				FactionInfo[ i ][ fFactionBank ],
+				FactionInfo[ i ][ fID ]
+			);
+			break;
+		}
+	}
 	return 1;
 }
-// IGRAc - ILEGALNI PRORACUN (NEOPOREZIVA) -----------------------------------------------------------------------------
+
+stock FactionToPlayerMoney ( playerid, ftype, money )
+{
+	new safemoney = floatround(floatabs(money));
+
+	foreach(new i : Factions) 
+	{
+		if(FactionInfo[i][fType] == ftype)
+		{
+			FactionInfo[ i ][ fFactionBank ] -= safemoney;		
+			mysql_fquery(g_SQL, "UPDATE server_factions SET factionbank = '%d' WHERE id = '%d'",
+				FactionInfo[ i ][ fFactionBank ],
+				FactionInfo[ i ][ fID ]
+			);
+			break;
+		}
+	}
+	AC_GivePlayerMoney(playerid, safemoney); 				
+	return 1;
+}
+
+stock FactionToPlayerMoneyTAX ( playerid, ftype, money )
+{
+	new 
+		safemoney = floatround(floatabs(money)), 				
+		TAX = CityInfo[cTax], 									
+		Float:taxmoneyfloat =  safemoney * floatdiv(TAX,100), 	
+		taxmoney = floatround(taxmoneyfloat),					
+		finalmoney = safemoney - taxmoney;
+		
+	CityInfo[cBudget] += taxmoney; 	
+	mysql_fquery(g_SQL,, "UPDATE city SET budget = '%d'", CityInfo[cBudget]);
+
+	foreach(new i : Factions) 
+	{
+		if(FactionInfo[i][fType] == ftype)
+		{
+			FactionInfo[ i ][ fFactionBank ] -= safemoney;		
+			mysql_fquery(g_SQL, "UPDATE server_factions SET factionbank = '%d' WHERE id = '%d'",
+				FactionInfo[ i ][ fFactionBank ],
+				FactionInfo[ i ][ fID ]
+			);
+			break;
+		}
+	}
+	AC_GivePlayerMoney(playerid, finalmoney); 	
+	return 1;
+}
+
+stock FactionToPlayerBankMoney ( playerid, ftype, money )
+{
+	new safemoney = floatround(floatabs(money));
+		
+	foreach(new i : Factions) 
+	{
+		if(FactionInfo[i][fType] == ftype)
+		{
+			FactionInfo[ i ][ fFactionBank ] -= safemoney;		
+			mysql_fquery(g_SQL, "UPDATE server_factions SET factionbank = '%d' WHERE id = '%d'",
+				FactionInfo[ i ][ fFactionBank ],
+				FactionInfo[ i ][ fID ]
+			);
+			break;
+		}
+	}
+	PlayerInfo[playerid][pBank] += safemoney; 
+	mysql_fquery(g_SQL, "UPDATE accounts SET bankMoney = '%d' WHERE sqlid = '%d'", 
+		PlayerInfo[playerid][pBank],
+		PlayerInfo[playerid][pSQLID]
+	);
+	return 1;
+}
+
+stock BudgetToFactionMoney ( ftype, money )
+{
+	new safemoney = floatround(floatabs(money));
+	
+	CityInfo[cBudget] -= safemoney;
+	mysql_fquery(g_SQL,  "UPDATE city SET budget = '%d'", CityInfo[cBudget]);
+
+	foreach(new i : Factions)
+	{
+		if(FactionInfo[i][fType] == ftype)
+		{
+			FactionInfo[ i ][ fFactionBank ] += safemoney;		
+			mysql_fquery(g_SQL, "UPDATE server_factions SET factionbank = '%d' WHERE id = '%d'",
+				FactionInfo[ i ][ fFactionBank ],
+				FactionInfo[ i ][ fID ]
+			);
+			break;
+		}
+	}
+	return 1;
+}
+
+stock FactionToBudgetMoney ( ftype, money )
+{
+	new safemoney = floatround(floatabs(money));
+	
+	foreach(new i : Factions)
+	{
+		if(FactionInfo[i][fType] == ftype)
+		{
+			FactionInfo[ i ][ fFactionBank ] -= safemoney;		
+			mysql_fquery(g_SQL, "UPDATE server_factions SET factionbank = '%d' WHERE id = '%d'",
+				FactionInfo[ i ][ fFactionBank ],
+				FactionInfo[ i ][ fID ]
+			);
+			break;
+		}
+	}
+	CityInfo[cBudget] += safemoney;
+	mysql_fquery(g_SQL,  "UPDATE city SET budget = '%d'", CityInfo[cBudget]);
+	return 1;
+}
+
 stock PlayerToIllegalBudgetMoney (playerid, money )
 {
-	new safemoney = floatround(floatabs(money)), 			// Puni iznos
-		TmpQuery[64];
+	new safemoney = floatround(floatabs(money));
 	
-	AC_GivePlayerMoney(playerid, -safemoney); 				// Novac se oduzima igracu
-	CityInfo[cIllegalBudget] += safemoney; 					// Novac ide u ilegalni proracun
-	// Update illegal budget
-	format( TmpQuery, sizeof(TmpQuery), "UPDATE city SET illegalbudget = '%d'", 
-			CityInfo[cIllegalBudget]
-		);
-	mysql_tquery(g_SQL, TmpQuery);
+	AC_GivePlayerMoney(playerid, -safemoney); 
+
+	CityInfo[cIllegalBudget] += safemoney; 
+	mysql_fquery(g_SQL, "UPDATE city SET illegalbudget = '%d'", CityInfo[cIllegalBudget]);
 	return 1;
 }
-// ILEGALNI PRORACUN - IGRAc (NEOPOREZIVA) -----------------------------------------------------------------------------
+
 stock IllegalBudgetToPlayerMoney (playerid, money )
 {
-	new safemoney = floatround(floatabs(money)), 			// Puni iznos
-		TmpQuery[64];
+	new safemoney = floatround(floatabs(money));
 	
-	CityInfo[cIllegalBudget] -= safemoney; 					// Novac ide iz ilegalnog proracuna
-	AC_GivePlayerMoney(playerid, safemoney); 				// Novac se daje igracu
-	
-	// Update illegal budget
-	format( TmpQuery, sizeof(TmpQuery), "UPDATE city SET illegalbudget = '%d'", 
-			CityInfo[cIllegalBudget]
-		);
-	mysql_tquery(g_SQL, TmpQuery);
+	CityInfo[cIllegalBudget] -= safemoney;
+	mysql_fquery(g_SQL, "UPDATE city SET illegalbudget = '%d'", CityInfo[cIllegalBudget]);
+
+	AC_GivePlayerMoney(playerid, safemoney);
 	return 1;
 }
-// WAREHOUSE - ILEGALNI PRORACUN (NEOPOREZIVA) -----------------------------------------------------------------------------
+
 stock WarehouseToIllegalBudgetMoney(whid, money)
 {
-	new safemoney = floatround(floatabs(money)), 			// Puni iznos
-		TmpQuery[64];
+	new safemoney = floatround(floatabs(money));
 	
-	WarehouseInfo[whid][whMoney] -= money;				// Novac se oduzima warehouseu
-	CityInfo[cIllegalBudget] += safemoney; 					// Novac ide u ilegalni proracun
-	// Update illegal budget
-	format( TmpQuery, sizeof(TmpQuery), "UPDATE city SET illegalbudget = '%d'", 
-			CityInfo[cIllegalBudget]
-		);
-	mysql_tquery(g_SQL, TmpQuery);
+	CityInfo[cIllegalBudget] += safemoney;
+	mysql_fquery(g_SQL, "UPDATE city SET illegalbudget = '%d'", CityInfo[cIllegalBudget]);
+	
+	WarehouseInfo[whid][whMoney] -= money;
 	UpdateWarehouseMoney(whid);
 	return 1;
 }
-// IGRAc RADNA KNJIZICA - PRORACUN (NEOPOREZIVA) -----------------------------------------------------------------------------
-/*stock PayDayToBudgetMoney (playerid, money )
-{
-	new safemoney = floatround(floatabs(money)), 			// Puni iznos
-		TmpQuery[64],
-		TmpQuery2[128];
-	
-	PlayerInfo[playerid][pPayDayMoney] -= safemoney; 		//  Novac se oduzima igracu s radne knjiZice
-	CityInfo[cBudget] += safemoney; 						// Novac ide u proracun
-	
-	// Update proracuna
-	format( TmpQuery, sizeof(TmpQuery), "UPDATE city SET budget = '%d'", 
-			CityInfo[cBudget]
-		);
-	// Update accounts
-	format( TmpQuery2, sizeof(TmpQuery2), "UPDATE accounts SET playaPDMoney = '%d' WHERE sqlid = '%d'", 
-			PlayerInfo[playerid][pPayDayMoney],
-			PlayerInfo[playerid][pSQLID]
-		);
-	mysql_tquery(g_SQL, TmpQuery2);
-	return 1;
-}
-// PRORAcUN - IGRAc RADNA KNJIZICA (NEOPOREZIVA) -----------------------------------------------------------------------------
-stock BudgetToPlayerBankMoney (playerid, money )
-{
-	new safemoney = floatround(floatabs(money)), 			// Puni iznos
-		TmpQuery[64],
-		TmpQuery2[128];
-	
-	CityInfo[cBudget] -= safemoney; 						// Novac se oduzima iz proracuna
-	PlayerInfo[playerid][pPayDayMoney] += safemoney; 		//  Novac sjeda na radnu knjizicu igraca
-	
-	// Update proracuna
-	format( TmpQuery, sizeof(TmpQuery), "UPDATE city SET budget = '%d'", 
-			CityInfo[cBudget]
-		);
-	// Update accounts
-	format( TmpQuery2, sizeof(TmpQuery2), "UPDATE accounts SET playaPDMoney = '%d' WHERE sqlid = '%d'", 
-			PlayerInfo[playerid][pPayDayMoney],
-			PlayerInfo[playerid][pSQLID]
-		);
-	mysql_tquery(g_SQL, TmpQuery2);
-	return 1;
-}
-// RADNA KNJIZICA - IGRAc (OPOREZIVA) -----------------------------------------------------------------------------
-stock PayDayToPlayerMoney (playerid, money )
-{
-	new safemoney = floatround(floatabs(money)), 			// Puni iznos
-		TmpQuery[128];
 
-	PlayerInfo[ playerid ][ pPayDayMoney ] -= safemoney;	// Radnoj knjizici se oduzima puni iznos
-	AC_GivePlayerMoney(playerid, safemoney); 				// Igrac dobiva novac na ruke 
-
-	
-	// Update accounts (ne treba update handmoney jer se to radi u AC_GivePlayerMoney)
-	format( TmpQuery, sizeof(TmpQuery), "UPDATE accounts SET playaPDMoney = '%d' WHERE sqlid = '%d'", 
-			PlayerInfo[playerid][pPayDayMoney],
-			PlayerInfo[playerid][pSQLID]
-		);
-	mysql_tquery(g_SQL, TmpQuery);
-	return 1;
-}*/
-// BANKA - IGRAc (NEOPOREZIVA) -----------------------------------------------------------------------------
 stock BankToPlayerMoney (playerid, money )
 {
-	new safemoney = floatround(floatabs(money)), 			// Puni iznos
-		TmpQuery[128];
+	new safemoney = floatround(floatabs(money));		
+	
+	AC_GivePlayerMoney(playerid, safemoney);
 
-	PlayerInfo[ playerid ][ pBank ] -= safemoney;			// sa bankovnog racuna se mice novac
-	AC_GivePlayerMoney(playerid, safemoney); 				// Igrac dobiva novac na ruke 
-
-	// Update accounts (ne treba update handmoney jer se to radi u AC_GivePlayerMoney)
-	format( TmpQuery, sizeof(TmpQuery), "UPDATE accounts SET bankMoney = '%d' WHERE sqlid = '%d'", 
-			PlayerInfo[playerid][pBank],
-			PlayerInfo[playerid][pSQLID]
-		);
-	mysql_tquery(g_SQL, TmpQuery);
+	PlayerInfo[ playerid ][ pBank ] -= safemoney;
+	mysql_fquery(g_SQL, "UPDATE accounts SET bankMoney = '%d' WHERE sqlid = '%d'", 
+		PlayerInfo[playerid][pBank],
+		PlayerInfo[playerid][pSQLID]
+	);
 	return 1;
 }
-// IGRAc - BANKA (NEOPOREZIVA) -----------------------------------------------------------------------------
+
 stock PlayerToBankMoney (playerid, money )
 {
-	new safemoney = floatround(floatabs(money)), 			// Puni iznos
-		TmpQuery[128];
+	new safemoney = floatround(floatabs(money));
 		
-	AC_GivePlayerMoney(playerid, -safemoney); 				// Igracu se oduzima novac iz ruke
-	PlayerInfo[ playerid ][ pBank ] += safemoney;			// igrac dobiva novac na banku
-
-	// Update accounts (ne treba update handmoney jer se to radi u AC_GivePlayerMoney)
-	format( TmpQuery, sizeof(TmpQuery), "UPDATE accounts SET bankMoney = '%d' WHERE sqlid = '%d'", 
-			PlayerInfo[playerid][pBank],
-			PlayerInfo[playerid][pSQLID]
-		);
-	mysql_tquery(g_SQL, TmpQuery);
+	AC_GivePlayerMoney(playerid, -safemoney); 				
+	
+	PlayerInfo[ playerid ][ pBank ] += safemoney;		
+	mysql_fquery(g_SQL,  "UPDATE accounts SET bankMoney = '%d' WHERE sqlid = '%d'", 
+		PlayerInfo[playerid][pBank],
+		PlayerInfo[playerid][pSQLID]
+	);
 	return 1;
 }
-// BIZNIS - PRORACUN (NEOPOREZIVA) -------------------------------------------------------
+
 stock BusinessToBudgetMoney ( bizid, money )
 {
-	new safemoney = floatround(floatabs(money)), 				// Puni iznos
-		TmpQuery[64],
-		TmpQuery2[128];
-		
-	BizzInfo[ bizid ][ bTill ] -= safemoney; 					// Biznisu se oduzima puni iznos
-	CityInfo[cBudget] += safemoney; 							// Novac ide u proracun
-	
-	// Update proracuna
-	format( TmpQuery, sizeof(TmpQuery), "UPDATE city SET budget = '%d'", 
-			CityInfo[cBudget]
-		);
-	mysql_tquery(g_SQL, TmpQuery);
-	// Update biznisa
-	format( TmpQuery2, sizeof(TmpQuery2), "UPDATE bizzes SET till = '%d' WHERE id = '%d'",
-			BizzInfo[bizid][bTill],
-			BizzInfo[bizid][bSQLID]
-		);
-	mysql_tquery(g_SQL, TmpQuery2);
+	new safemoney = floatround(floatabs(money));
+
+	CityInfo[cBudget] += safemoney; 						
+	mysql_fquery(g_SQL,  "UPDATE city SET budget = '%d'", CityInfo[cBudget]);
+
+	BizzInfo[ bizid ][ bTill ] -= safemoney; 
+	mysql_fquery(g_SQL, "UPDATE bizzes SET till = '%d' WHERE id = '%d'",
+		BizzInfo[bizid][bTill],
+		BizzInfo[bizid][bSQLID]
+	);
 	return 1;
 }
-// PRORACUN - BIZNIS (NEOPOREZIVA) -------------------------------------------------------
+
 stock BudgetToBusinessMoney ( bizid, money )
 {
-	new safemoney = floatround(floatabs(money)), 				// Puni iznos
-		TmpQuery[64],
-		TmpQuery2[128];
+	new safemoney = floatround(floatabs(money));
 		
-	CityInfo[cBudget] -= safemoney; 							// Novac ide u proracun
-	BizzInfo[ bizid ][ bTill ] += safemoney; 					// Biznisu se oduzima puni iznos
-	
-	// Update proracuna
-	format( TmpQuery, sizeof(TmpQuery), "UPDATE city SET budget = '%d'", 
-			CityInfo[cBudget]
-		);
-	mysql_tquery(g_SQL, TmpQuery);
-	// Update biznisa
-	format( TmpQuery2, sizeof(TmpQuery2), "UPDATE bizzes SET till = '%d' WHERE id = '%d'",
-			BizzInfo[bizid][bTill],
-			BizzInfo[bizid][bSQLID]
-		);
-	mysql_tquery(g_SQL, TmpQuery2);
+	CityInfo[cBudget] -= safemoney;
+	mysql_fquery(g_SQL,  "UPDATE city SET budget = '%d'", CityInfo[cBudget]);
+
+	BizzInfo[ bizid ][ bTill ] += safemoney;
+	mysql_fquery(g_SQL,  "UPDATE bizzes SET till = '%d' WHERE id = '%d'",
+		BizzInfo[bizid][bTill],
+		BizzInfo[bizid][bSQLID]
+	);
 	return 1;
 }
-// PRORACUN - ORGANIZACIJA (NEOPOREZIVA)
-stock BudgetToOrgMoney ( ftype, money )
-{
-	new safemoney = floatround(floatabs(money)), 				// Puni iznos
-		TmpQuery[128],
-		TmpQuery2[64];
-	
-	CityInfo[cBudget] -= safemoney; 							// Puni iznos izlazi iz proracuna
-	foreach(new i : Factions) // trazi organizaciju po ftypeu
-	{
-		if(FactionInfo[i][fType] == ftype)
-		{
-			FactionInfo[i][ fFactionBank ] += safemoney;		// Org factionbank dobiva puni iznos
-			// Update fakcije
-			format( TmpQuery, sizeof(TmpQuery), "UPDATE server_factions SET factionbank = '%d' WHERE id = '%d'",
-					FactionInfo[ i ][ fFactionBank ],
-					FactionInfo[ i ][ fID ]
-				);
-			mysql_tquery(g_SQL, TmpQuery);
-			break;
-		}
-	}
-	// Update proracuna
-	format( TmpQuery2, sizeof(TmpQuery2), "UPDATE city SET budget = '%d'", 
-			CityInfo[cBudget]
-		);
-	mysql_tquery(g_SQL, TmpQuery2);
-	return 1;
-}
-// ORGANIZACIJA - PRORACUN(NEOPOREZIVA)
-stock OrgToBudgetMoney ( ftype, money )
-{
-	new safemoney = floatround(floatabs(money)), 				// Puni iznos
-		TmpQuery[128],
-		TmpQuery2[64];
-	
-	
-	foreach(new i : Factions) // trazi organizaciju po ftypeu
-	{
-		if(FactionInfo[i][fType] == ftype)
-		{
-			FactionInfo[i][ fFactionBank ] -= safemoney;		// Org factionbank se oduzima novac
-			// Update fakcije
-			format( TmpQuery, sizeof(TmpQuery), "UPDATE server_factions SET factionbank = '%d' WHERE id = '%d'",
-					FactionInfo[ i ][ fFactionBank ],
-					FactionInfo[ i ][ fID ]
-				);
-			mysql_tquery(g_SQL, TmpQuery);
-			break;
-		}
-	}
-	CityInfo[cBudget] += safemoney; 							// Iznos dolazi u proracun
-	// Update proracuna
-	format( TmpQuery2, sizeof(TmpQuery2), "UPDATE city SET budget = '%d'", 
-			CityInfo[cBudget]
-		);
-	mysql_tquery(g_SQL, TmpQuery2);
-	return 1;
-}
-// ILEGALNI PRORACUN - LEGALNI 
+
 stock IllegalToLegalBudgetMoney (money)
 {
-	new safemoney = floatround(floatabs(money)), 			// Puni iznos
-		TmpQuery[82];
+	new safemoney = floatround(floatabs(money));
 	
-	CityInfo[cIllegalBudget] -= safemoney; 					// Novac ide iz ilegalnog proracuna
-	CityInfo[cBudget] += safemoney; 						// Novac dolazi u legalni proracun
+	CityInfo[cIllegalBudget] -= safemoney; 	
+	CityInfo[cBudget] += safemoney; 
 
-	// Update illegal budget
-	format( TmpQuery, sizeof(TmpQuery), "UPDATE city SET budget = '%d', illegalbudget = '%d'", 
-			CityInfo[cBudget],
-			CityInfo[cIllegalBudget]
-		);
-	mysql_tquery(g_SQL, TmpQuery);
-	return 1;
-}
-
-// ########################## CMDS ###########################################
-// Komanda za kalkulaciju poreza prebacena u PLAYER CMDS mapu
-/*
-#### ORGANIZACIJSKI NOVAC PO IDu A NE PO FTYPE KAKO JE SADA!!! VVVVVVV
-// IGRAc - ORGANIZACIJA (NEOPOREZIVA) -----------------------------------------FACTIONBANK----------------------
-stock PlayerToOrgMoney ( playerid, orgid, money )
-{
-	new safemoney = floatround(floatabs(money)), 				// Puni iznos
-		TmpQuery[128];
-	
-	AC_GivePlayerMoney(playerid, -safemoney); 					// Igracu se oduzima puni iznos
-	FactionInfo[orgid][ fFactionBank ] += safemoney;
-	
-	format( TmpQuery, sizeof(TmpQuery), "UPDATE server_factions SET factionbank = '%d' WHERE id = '%d'",
-		FactionInfo[ orgid ][ fFactionBank ],
-		FactionInfo[ orgid ][ fID ]
+	mysql_fquery(g_SQL, "UPDATE city SET budget = '%d', illegalbudget = '%d'", 
+		CityInfo[cBudget],
+		CityInfo[cIllegalBudget]
 	);
-	mysql_tquery(g_SQL, TmpQuery);
 	return 1;
 }
-
-// IGRAc - ORGANIZACIJA (OPOREZIVA) ----------------------------------FACTIONBANK----------------------
-stock PlayerToOrgMoneyTAX ( playerid, orgid, money )
-{
-	new safemoney = floatround(floatabs(money)), 				// Puni iznos
-		TAX = CityInfo[cTax], 									// Porez
-		Float:taxmoneyfloat =  safemoney * floatdiv(TAX,100), 	// Kalkulacija poreza
-		taxmoney = floatround(taxmoneyfloat),					// Zaokrizivanje kalkulacija poreza
-		finalmoney = safemoney - taxmoney, 						// Razlika punog iznosa i poreza
-		TmpQuery[128],
-		TmpQuery2[64];
-	
-	AC_GivePlayerMoney(playerid, -safemoney); 					// Igracu se oduzima puni iznos
-	CityInfo[cBudget] += taxmoney; 								// Oporezivi dio ide u proracun
-	FactionInfo[ orgid ][ fFactionBank ] += finalmoney;			// Org factionbank dobiva razliku
-	
-	// Update fakcije
-	format( TmpQuery, sizeof(TmpQuery), "UPDATE server_factions SET factionbank = '%d' WHERE id = '%d'",
-			FactionInfo[ i ][ fFactionBank ],
-			FactionInfo[ i ][ fID ]
-		);
-	mysql_tquery(g_SQL, TmpQuery);
-
-	// Update proracuna
-	format( TmpQuery2, sizeof(TmpQuery2), "UPDATE city SET budget = '%d'", 
-			CityInfo[cBudget]
-		);
-	mysql_tquery(g_SQL, TmpQuery2);
-	return 1;
-}
-// ORGANIZACIJA - IGRAc (NEOPOREZIVA) -------------------------------------FACTIONBANK----------------------
-stock OrgToPlayerMoney ( playerid, orgid, money )
-{
-	new safemoney = floatround(floatabs(money)), 			// Puni iznos
-		TmpQuery[128];
-		
-	FactionInfo[ i ][ fFactionBank ] -= safemoney;			// Org factionbank se oduzima puni iznos
-	AC_GivePlayerMoney(playerid, safemoney); 				// Igrac dobiva puni izos
-	
-	// Update fakcije
-	format( TmpQuery, sizeof(TmpQuery), "UPDATE server_factions SET factionbank = '%d' WHERE id = '%d'",
-			FactionInfo[ orgid ][ fFactionBank ],
-			FactionInfo[ orgid ][ fID ]
-		);
-	mysql_tquery(g_SQL, TmpQuery);
-	return 1;
-}
-// ORGANIZACIJA - IGRAc (OPOREZIVA) -------------------------------------------FACTIONBANK----------------------
-stock OrgToPlayerMoneyTAX ( playerid, orgid, money )
-{
-	new safemoney = floatround(floatabs(money)), 				// Puni iznos
-		TAX = CityInfo[cTax], 									// Porez
-		Float:taxmoneyfloat =  safemoney * floatdiv(TAX,100), 	// Kalkulacija poreza
-		taxmoney = floatround(taxmoneyfloat),					// Zaokrizivanje kalkulacija poreza
-		finalmoney = safemoney - taxmoney, 						// Razlika punog iznosa i poreza
-		TmpQuery[128],
-		TmpQuery2[64];
-		
-	CityInfo[cBudget] += taxmoney; 							// Oporezivi dio ide u proracun
-	FactionInfo[orgid][fFactionBank] -= safemoney;		// Org factionbank se oduzima puni iznos
-	AC_GivePlayerMoney(playerid, finalmoney); 				// Igrac dobiva razliku punog iznosa i poreza 
-	
-	// Update fakcije
-	format( TmpQuery, sizeof(TmpQuery), "UPDATE server_factions SET factionbank = '%d' WHERE id = '%d'",
-			FactionInfo[orgid][fFactionBank],
-			FactionInfo[orgid][fID]
-		);
-	mysql_tquery(g_SQL, TmpQuery);
-
-	// Update proracuna
-	format( TmpQuery2, sizeof(TmpQuery2), "UPDATE city SET budget = '%d'", 
-			CityInfo[cBudget]
-		);
-	mysql_tquery(g_SQL, TmpQuery2);
-	return 1;
-}
-*/

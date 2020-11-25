@@ -278,7 +278,7 @@ CMD:news(playerid, params[])
     format(message, sizeof(message), "~y~%s: ~w~%s", GetName(playerid, false), params);
     if (!SendNews(message)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Pricekajte da se tekst obrise!");
 
-    BudgetToOrgMoney( FACTION_TYPE_NEWS, 100); // dobivaju novac iz proracuna
+    BudgetToFactionMoney( FACTION_TYPE_NEWS, 100); // dobivaju novac iz proracuna
     PlayerInfo[playerid][pNews]++;
     SendNewsT = gettimestamp() + 5;
     return 1;

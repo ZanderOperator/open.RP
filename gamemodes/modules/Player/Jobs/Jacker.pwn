@@ -1007,7 +1007,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 			IlegalGarage[ PlayerInfo[ playerid ][ pIllegalGarageKey ] ][ igWantedLevel ]	= 0;
 			IlegalGarage[ PlayerInfo[ playerid ][ pIllegalGarageKey ] ][ igCarsJacked ]	= 0;
 			SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uspjesno ste spustili wanted level na 0!");
-			PlayerToOrgMoney( playerid, FACTION_TYPE_LAW, PlayerBribeMoney[ playerid ]); // Novac dolazi u PD factionbank
+			PlayerToFactionMoney( playerid, FACTION_TYPE_LAW, PlayerBribeMoney[ playerid ]); // Novac dolazi u PD factionbank
 			PlayerBribeMoney[ playerid ] = 0;
 			return 1;
 		}
