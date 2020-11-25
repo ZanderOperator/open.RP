@@ -16,24 +16,29 @@
 */
 stock SaveAdminConnectionTime(playerid)
 {
-	new
-		adminConnQuery[ 128 ],
-		Cache:result;
-	format( adminConnQuery, 128, "SELECT * FROM stats_admins WHERE sqlid = '%d' AND EXTRACT(MONTH FROM date) = EXTRACT(MONTH FROM CURDATE()) LIMIT 0,1", PlayerInfo[ playerid ][ pSQLID ] );
-	result = mysql_query(g_SQL, adminConnQuery);
+	new Cache:result;
 	
-	if( cache_num_rows() ) {
-		format(adminConnQuery, 128, "UPDATE stats_admins SET times = '%d' WHERE sqlid = '%d'", 
+	result = mysql_query(g_SQL, 
+				va_fquery(g_SQL, 
+					"SELECT * FROM stats_admins WHERE sqlid = '%d' AND \n\
+						EXTRACT(MONTH FROM date) = EXTRACT(MONTH FROM CURDATE()) LIMIT 0,1", 
+					PlayerInfo[ playerid ][ pSQLID ]
+				)
+			);
+	
+	if( cache_num_rows() ) 
+	{
+		mysql_fquery(g_SQL, "UPDATE stats_admins SET times = '%d' WHERE sqlid = '%d'", 
 			PlayerInfo[ playerid ][ pAdminHours ], 
 			PlayerInfo[ playerid ][ pSQLID ] 
 		);
-		mysql_tquery(g_SQL, adminConnQuery);
-	} else {
-		format(adminConnQuery, 128, "INSERT INTO stats_admins (sqlid, date, times) VALUES ('%d',CURDATE(),'%d')", 
+	} 
+	else 
+	{
+		mysql_fquery(g_SQL, "INSERT INTO stats_admins (sqlid, date, times) VALUES ('%d',CURDATE(),'%d')", 
 			PlayerInfo[ playerid ][ pSQLID ],
 			PlayerInfo[ playerid ][ pAdminHours ]
 		);
-		mysql_tquery(g_SQL, adminConnQuery);
 	}
 	cache_delete(result);
 	return 1;
@@ -41,10 +46,16 @@ stock SaveAdminConnectionTime(playerid)
 
 stock LoadAdminConnectionTime(playerid)
 {
-	new
-		tmpQuery[ 128 ];
-	format( tmpQuery, 128, "SELECT * FROM stats_admins WHERE sqlid = '%d' AND EXTRACT(MONTH FROM date) = EXTRACT(MONTH FROM CURDATE())", PlayerInfo[ playerid ][ pSQLID ] );
-	mysql_tquery(g_SQL, tmpQuery, "OnAdminConnectionTimeLoaded", "i", playerid);
+	mysql_tquery(g_SQL, 
+		va_fquery(g_SQL, 
+			"SELECT * FROM stats_admins WHERE sqlid = '%d' \n\
+				AND EXTRACT(MONTH FROM date) = EXTRACT(MONTH FROM CURDATE())", 
+			PlayerInfo[ playerid ][ pSQLID ] 
+		), 
+		"OnAdminConnectionTimeLoaded", 
+		"i", 
+		playerid
+	);
 	return 1;
 }
 
@@ -57,10 +68,15 @@ stock static GetAdminConnectionTime(playerid, giveplayerid)
 
 stock static GetAdminConnectionTimeEx(playerid, sqlid)
 {
-	new
-		tmpQuery[ 128 ];
-	format( tmpQuery, 128, "SELECT * FROM stats_admins WHERE sqlid = '%d' AND EXTRACT(MONTH FROM date) = EXTRACT(MONTH FROM CURDATE())", sqlid );
-	mysql_tquery(g_SQL, tmpQuery, "OnAdminConnectionTimeExLoad", "i", playerid);
+	mysql_tquery(g_SQL, 
+		va_fquery(g_SQL, 
+			"SELECT * FROM stats_admins WHERE sqlid = '%d' AND EXTRACT(MONTH FROM date) = EXTRACT(MONTH FROM CURDATE())",
+			 sqlid
+		), 
+		"OnAdminConnectionTimeExLoad", 
+		"i", 
+		playerid
+	);
 	return 1;
 }
 
