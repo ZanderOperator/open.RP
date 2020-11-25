@@ -431,12 +431,12 @@ timer StartDeathCount[1000](playerid)
 			/*new
 				money = floatround(PlayerInfo[ playerid ][ pBank ] * 0.01);
 			SendFormatMessage(playerid, MESSAGE_TYPE_INFO, "Platio si bolnicke troskove u visini od %d$!", money);
-			PlayerToOrgMoneyTAX(playerid, FACTION_TYPE_FD, money); // novac bolnici i proracunu*/
+			PlayerToFactionMoneyTAX(playerid, FACTION_TYPE_FD, money); // novac bolnici i proracunu*/
 			
 			//Alternativa �isto da FD ima prihod novca.
 			
             SendClientMessage(playerid, COLOR_RED, "[ ! ] Platio si bolnicke troskove u visini od 500$!");
-			PlayerToOrgMoneyTAX(playerid, FACTION_TYPE_FD, 500); // novac bolnici i proracunu*/
+			PlayerToFactionMoneyTAX(playerid, FACTION_TYPE_FD, 500); // novac bolnici i proracunu*/
 			
 			PlayerInfo[ playerid ][ pDeath ][ 0 ] 	= 0.0;
 			PlayerInfo[ playerid ][ pDeath ][ 1 ] 	= 0.0;

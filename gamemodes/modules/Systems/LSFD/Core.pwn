@@ -799,7 +799,7 @@ CMD:recover(playerid, params[])
 
     StopPlayerDeath(giveplayerid);
     ResetPlayerWounded(giveplayerid);
-    BudgetToOrgMoney(FACTION_TYPE_FD, RECOVERY_PRICE); //dobivaju nagradu za recover od drzave
+    BudgetToFactionMoney(FACTION_TYPE_FD, RECOVERY_PRICE); //dobivaju nagradu za recover od drzave
     SetPlayerHealth(giveplayerid, 50.0);
     TogglePlayerControllable(giveplayerid, true);
 
@@ -965,7 +965,7 @@ CMD:confirmation(playerid, params[])
 
         format(string, sizeof(string), "[INFO] Za uvjerenje platili ste %d$.", PSIHO_PRICE);
         SendClientMessage(giveplayerid, -1, string);
-        PlayerToOrgMoney(giveplayerid, FACTION_TYPE_FD, PSIHO_PRICE);
+        PlayerToFactionMoney(giveplayerid, FACTION_TYPE_FD, PSIHO_PRICE);
     }
     else if (strcmp(option,"zdrav_sposobnost",true) == 0)
     {
@@ -988,7 +988,7 @@ CMD:confirmation(playerid, params[])
         SendRadioMessage(2, TEAM_BLUE_COLOR, string);
         format(string, sizeof(string), "[INFO] Za uvjerenje platili ste %d$.", ZDRAV_PRICE);
         SendClientMessage(giveplayerid, -1, string);
-        PlayerToOrgMoney(giveplayerid, FACTION_TYPE_FD, ZDRAV_PRICE);
+        PlayerToFactionMoney(giveplayerid, FACTION_TYPE_FD, ZDRAV_PRICE);
     }
     else if (strcmp(option,"radna_sposobnost",true) == 0)
     {
@@ -1011,7 +1011,7 @@ CMD:confirmation(playerid, params[])
         SendRadioMessage(2, TEAM_BLUE_COLOR, string);
         format(string, sizeof(string), "[INFO] Za uvjerenje platili ste %d$.", RADNA_PRICE);
         SendClientMessage(giveplayerid, -1, string);
-        PlayerToOrgMoney(giveplayerid, FACTION_TYPE_FD, RADNA_PRICE);
+        PlayerToFactionMoney(giveplayerid, FACTION_TYPE_FD, RADNA_PRICE);
     }
     else SendClientMessage(playerid, COLOR_RED, "Nepoznata opcija, pokusajte ponovo!");
     return 1;

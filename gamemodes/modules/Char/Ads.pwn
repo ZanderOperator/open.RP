@@ -183,7 +183,7 @@ stock static CreateAdForPlayer(playerid)
 	new price = floatround(strlen(AdsInfo[index][adText]) * PRICE_PER_CHAR) * AdsInfo[index][adTimes];
 	if(PlayerInfo[playerid][pDonateRank] > 0)
 		price = 0;
-	PlayerToOrgMoneyTAX( playerid, FACTION_TYPE_NEWS, price); // placanje oglasa novac u faction bank od LSNa
+	PlayerToFactionMoneyTAX( playerid, FACTION_TYPE_NEWS, price); // placanje oglasa novac u faction bank od LSNa
 	va_GameTextForPlayer(playerid, "~r~Placeno za reklamu: $%d", 5000, 5, price);
 	
 	lastAdId = index;		
@@ -445,7 +445,7 @@ CMD:carad(playerid, params[])
 		VehicleInfo[ vehicleid ][ vVehicleAdId ] = CreateDynamic3DTextLabel(text, COLOR_WHITE, 0.9697, -1.7760, 0.0680, 4.0, INVALID_PLAYER_ID, vehicleid, 1, -1, -1, -1, 4.0);
 		
 		SendFormatMessage(playerid, MESSAGE_TYPE_SUCCESS, "Postavili ste oglas na vozilo i platili %d$", money);
-		PlayerToOrgMoneyTAX( playerid, FACTION_TYPE_NEWS, money); // placanje oglasa novac u faction bank od LSNa
+		PlayerToFactionMoneyTAX( playerid, FACTION_TYPE_NEWS, money); // placanje oglasa novac u faction bank od LSNa
 	}
 	else if(!strcmp(pick, "delete", true))
 	{

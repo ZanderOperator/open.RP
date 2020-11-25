@@ -769,7 +769,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
             if (money < 1) return SendClientMessage(playerid, COLOR_RED, "Svota novca ne moze biti manja od 1$");
             if (money > AC_GetPlayerMoney(playerid)) return SendClientMessage(playerid, COLOR_RED, "Nemate toliko novaca u ruci!");
 
-            PlayerToOrgMoney(playerid, FactionInfo[fid][fType], money);
+            PlayerToFactionMoney(playerid, FactionInfo[fid][fType], money);
             va_SendClientMessage(playerid, COLOR_RED, "[ ! ] Uspjesno ste stavili %d$ na %s Faction Bank.", money, FactionInfo[fid][fName]);
 
             // Log
@@ -799,7 +799,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
             if (money < 1) return SendClientMessage(playerid, COLOR_RED, "Svota novca ne moze biti manja od 1$");
             if (money > FactionInfo[fid][fFactionBank]) return SendClientMessage(playerid, COLOR_RED, "Ne postoji tolika svota novaca u tom Faction Banku!");
 
-            OrgToPlayerMoney(playerid, FactionInfo[fid][fType], money);
+            FactionToPlayerMoney(playerid, FactionInfo[fid][fType], money);
             va_SendClientMessage(playerid, COLOR_RED, "[ ! ] Uspjesno ste digli %d$ sa %s Faction Bank.", money, FactionInfo[fid][fName]);
 
             // Log
