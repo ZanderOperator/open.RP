@@ -714,11 +714,11 @@ stock LoadServerVehicles()
 
 stock static SaveVehicle(vehicleid)
 {
-	new
-		saveQuery[ 512 ];
-
-	mysql_format(g_SQL, saveQuery, 512, "UPDATE server_cars SET model = '%d', type = '%d', usage = '%d', parkX = '%f', parkY = '%f', parkZ = '%f', angle = '%f', color1 = '%d', color2 = '%d', respawn = '%d', sirenon = '%d', faction = '%d', job = '%d', locked = '%d',\
-	 int = '%d', viwo = '%d', health = '%f', numberplate = '%e', paintjob = '%d', impounded = '%d', text = '%e', travel = '%d', overheated = '%d' WHERE id = '%d'",
+	mysql_fquery(g_SQL,
+		"UPDATE server_cars SET model = '%d', type = '%d', usage = '%d', parkX = '%f', parkY = '%f', parkZ = '%f',\n\
+			angle = '%f', color1 = '%d', color2 = '%d', respawn = '%d', sirenon = '%d', faction = '%d', job = '%d', locked = '%d',\n\
+	 		int = '%d', viwo = '%d', health = '%f', numberplate = '%e', paintjob = '%d', impounded = '%d', text = '%e',\n\
+		  	travel = '%d', overheated = '%d' WHERE id = '%d'",
 		VehicleInfo[ vehicleid ][ vModel ],
 		VehicleInfo[ vehicleid ][ vType ],
 		VehicleInfo[ vehicleid ][ vUsage ],
@@ -744,7 +744,6 @@ stock static SaveVehicle(vehicleid)
 		VehicleInfo[ vehicleid ][ vOverHeated],
 		VehicleInfo[ vehicleid ][ vSQLID ]
 	);
-	mysql_tquery(g_SQL, saveQuery);
 }
 
 stock VehicleObjectCheck(vehicleid)
@@ -768,33 +767,40 @@ Public:ResetVehicleEnumerator()
 stock CreateNewVehicle(playerid, vehicleid)
 {
 	mysql_tquery(g_SQL, "BEGIN", "");
-	new
-		createQuery[ 1328 ];
-	mysql_format(g_SQL, createQuery, sizeof(createQuery), "INSERT INTO server_cars (model, type, usage, parkX, parkY, parkZ, angle, color1, color2, respawn, sirenon, faction, job, locked, int, viwo, health, numberplate, paintjob, impounded, text, travel) VALUES ('%d','%d','%d','%f','%f','%f','%f','%d','%d','%d','%d','%d','%d','%d','%d','%d','%f','%e','%d','%d','%e','%d')",
-		VehicleInfo[ vehicleid ][ vModel ],
-		VehicleInfo[ vehicleid ][ vType ],
-		VehicleInfo[ vehicleid ][ vUsage ],
-		VehicleInfo[ vehicleid ][ vParkX ],
-		VehicleInfo[ vehicleid ][ vParkY ],
-		VehicleInfo[ vehicleid ][ vParkZ ],
-		VehicleInfo[ vehicleid ][ vAngle ],
-		VehicleInfo[ vehicleid ][ vColor1 ],
-		VehicleInfo[ vehicleid ][ vColor2 ],
-		VehicleInfo[ vehicleid ][ vRespawn ],
-		VehicleInfo[ vehicleid ][ vSirenon ],
-		VehicleInfo[ vehicleid ][ vFaction ],
-		VehicleInfo[ vehicleid ][ vJob ],
-		VehicleInfo[ vehicleid ][ vLocked ],
-		VehicleInfo[ vehicleid ][ vInt ],
-		VehicleInfo[ vehicleid ][ vViwo ],
-		VehicleInfo[ vehicleid ][ vHealth ],
-		VehicleInfo[ vehicleid ][ vNumberPlate ],
-		VehicleInfo[ vehicleid ][ vPaintJob ],
-		VehicleInfo[ vehicleid ][ vImpounded ],
-		VehicleInfo[ vehicleid ][ vText ],
-		VehicleInfo[ vehicleid ][ vTravel ]
+	
+	mysql_tquery(g_SQL, 
+		va_fquery(g_SQL, 
+			"INSERT INTO server_cars (model, type, usage, parkX, parkY, parkZ, angle, color1, color2, respawn,\n\
+			sirenon, faction, job, locked, int, viwo, health, numberplate, paintjob, impounded, text, travel) \n\
+			VALUES ('%d','%d','%d','%f','%f','%f','%f','%d','%d','%d','%d','%d','%d','%d','%d','%d','%f','%e','%d','%d','%e','%d')",
+			VehicleInfo[ vehicleid ][ vModel ],
+			VehicleInfo[ vehicleid ][ vType ],
+			VehicleInfo[ vehicleid ][ vUsage ],
+			VehicleInfo[ vehicleid ][ vParkX ],
+			VehicleInfo[ vehicleid ][ vParkY ],
+			VehicleInfo[ vehicleid ][ vParkZ ],
+			VehicleInfo[ vehicleid ][ vAngle ],
+			VehicleInfo[ vehicleid ][ vColor1 ],
+			VehicleInfo[ vehicleid ][ vColor2 ],
+			VehicleInfo[ vehicleid ][ vRespawn ],
+			VehicleInfo[ vehicleid ][ vSirenon ],
+			VehicleInfo[ vehicleid ][ vFaction ],
+			VehicleInfo[ vehicleid ][ vJob ],
+			VehicleInfo[ vehicleid ][ vLocked ],
+			VehicleInfo[ vehicleid ][ vInt ],
+			VehicleInfo[ vehicleid ][ vViwo ],
+			VehicleInfo[ vehicleid ][ vHealth ],
+			VehicleInfo[ vehicleid ][ vNumberPlate ],
+			VehicleInfo[ vehicleid ][ vPaintJob ],
+			VehicleInfo[ vehicleid ][ vImpounded ],
+			VehicleInfo[ vehicleid ][ vText ],
+			VehicleInfo[ vehicleid ][ vTravel ]
+		),
+		"OnServerVehicleCreate", 
+		"i", 
+		vehicleid
 	);
-	mysql_tquery(g_SQL, createQuery, "OnServerVehicleCreate", "i", vehicleid);
+
 	mysql_tquery(g_SQL, "COMMIT", "");
 
 	printf("Script Report: Admin %s je kreirao vehicle ID %d",

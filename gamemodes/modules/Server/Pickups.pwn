@@ -131,28 +131,34 @@ stock static ClearInputsPick(playerid)
 
 stock static CreateNewPickup(playerid, pickup)
 {
-	new
-		bigquery[556];
+
 	mysql_tquery(g_SQL, "BEGIN", "");
-	
-	mysql_format(g_SQL, bigquery, sizeof(bigquery), "INSERT INTO server_pickups (pickupmodel,pickuptype,canenter,entrancex, entrancey, entrancez,exitx,exity,exitz,enterdiscription, discription, viwo, organizations, job, pint) VALUES ('%d', '%d', '%d', '%f', '%f', '%f', '%f', '%f', '%f', '%e', '%e', '%d', '%d', '%d', '%d')",
-		PickupInfo[pickup][epPickupModel],
-		PickupInfo[pickup][epPickupType],
-		PickupInfo[pickup][epCanEnter],
-		PickupInfo[pickup][epEntrancex],
-		PickupInfo[pickup][epEntrancey],
-		PickupInfo[pickup][epEntrancez],
-		PickupInfo[pickup][epExitx],
-		PickupInfo[pickup][epExity],
-		PickupInfo[pickup][epExitz],
-		PickupInfo[pickup][epEnterDiscription],
-		PickupInfo[pickup][epDiscription],
-		PickupInfo[pickup][epViwo],
-		PickupInfo[pickup][epOrganizations],
-		PickupInfo[pickup][epJob],
-		PickupInfo[pickup][epInt]
+
+	mysql_tquery(g_SQL,
+		va_fquery(g_SQL,
+			"INSERT INTO server_pickups (pickupmodel,pickuptype,canenter,\n\
+				entrancex, entrancey, entrancez,exitx,exity,exitz,enterdiscription, discription, viwo, organizations, job, pint) \n\
+				VALUES ('%d', '%d', '%d', '%f', '%f', '%f', '%f', '%f', '%f', '%e', '%e', '%d', '%d', '%d', '%d')",
+			PickupInfo[pickup][epPickupModel],
+			PickupInfo[pickup][epPickupType],
+			PickupInfo[pickup][epCanEnter],
+			PickupInfo[pickup][epEntrancex],
+			PickupInfo[pickup][epEntrancey],
+			PickupInfo[pickup][epEntrancez],
+			PickupInfo[pickup][epExitx],
+			PickupInfo[pickup][epExity],
+			PickupInfo[pickup][epExitz],
+			PickupInfo[pickup][epEnterDiscription],
+			PickupInfo[pickup][epDiscription],
+			PickupInfo[pickup][epViwo],
+			PickupInfo[pickup][epOrganizations],
+			PickupInfo[pickup][epJob],
+			PickupInfo[pickup][epInt]
+		),
+	 	"OnPickupCreate", 
+		"i", 
+		pickup
 	);
-	mysql_tquery(g_SQL, bigquery, "OnPickupCreate", "i", pickup);
 	mysql_tquery(g_SQL, "COMMIT", "");
 		
     PickupInfo[pickup][ epID ] = CreateDynamicPickup(PickupInfo[pickup][epPickupModel], PickupInfo[pickup][epPickupType], PickupInfo[pickup][epEntrancex], PickupInfo[pickup][epEntrancey], PickupInfo[pickup][epEntrancez], -1, -1, -1);
@@ -267,10 +273,7 @@ CMD:deletepickup(playerid, params[])
 	PickupInfo[pickup][epExity] 		= 0.0;
 	PickupInfo[pickup][epExitz] 		= 0.0;
 	
-	new
-		bigquery[128];
-	format(bigquery, sizeof(bigquery), "DELETE FROM server_pickups WHERE id = '%d'", PickupInfo[pickup][epSQLID]);
-	mysql_tquery(g_SQL,bigquery,"");
+	mysql_fquery(g_SQL, "DELETE FROM server_pickups WHERE id = '%d'", PickupInfo[pickup][epSQLID]);
 	
 	DestroyDynamicPickup(PickupInfo[pickup][epID]);
 	return 1;
