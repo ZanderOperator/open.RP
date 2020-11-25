@@ -2094,7 +2094,8 @@ RegisterPlayerDeath(playerid, killerid) // funkcija
 	);
 	DMERSBroadCast(COLOR_RED, tmpString, 1);
 
-	mysql_fquery(g_SQL, "INSERT INTO server_deaths (killer_id, death_id, weaponid, date) VALUES ('%d','%d','%d','%d')",
+	mysql_fquery(g_SQL, "INSERT INTO server_deaths (killer_id, death_id, weaponid, date) \n\
+		VALUES ('%d','%d','%d','%d')",
 		PlayerInfo[ KilledBy[playerid] ][ pSQLID ],
 		PlayerInfo[ playerid ][ pSQLID ],
 		KilledReason[playerid],

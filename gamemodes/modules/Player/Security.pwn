@@ -76,13 +76,10 @@ Public: OnPasswordUpdateEx(sqlid)
 	new password[BCRYPT_HASH_LENGTH];
 	bcrypt_get_hash(password);
 	
-	new
-		updatePasswordQuery[256];
-	mysql_format(g_SQL, updatePasswordQuery, sizeof(updatePasswordQuery), "UPDATE accounts SET password = '%e' WHERE sqlid = '%d' LIMIT 1",
+	mysql_fquery(g_SQL, "UPDATE accounts SET password = '%e' WHERE sqlid = '%d'",
 		password,
 		sqlid
 	);
-	mysql_tquery(g_SQL, updatePasswordQuery);
 	return 1;
 }
 
@@ -94,13 +91,10 @@ Public: OnPasswordUpdate(playerid)
 	PlayerInfo[playerid][pPassword][0] = EOS;
 	strcat(PlayerInfo[playerid][pPassword], password, BCRYPT_HASH_LENGTH);
 	
-	new
-		updatePasswordQuery[256];
-	mysql_format(g_SQL, updatePasswordQuery, sizeof(updatePasswordQuery), "UPDATE accounts SET password = '%e' WHERE sqlid = '%d' LIMIT 1",
+	mysql_fquery(g_SQL, "UPDATE accounts SET password = '%e' WHERE sqlid = '%d'",
 		password,
 		PlayerInfo[playerid][pSQLID]
 	);
-	mysql_tquery(g_SQL, updatePasswordQuery);
 	return 1;
 }
 
@@ -125,24 +119,31 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 {
 	switch(dialogid)
 	{
-		case DIALOG_SEC_MAIN: {
-			if(!response) return 1;
+		case DIALOG_SEC_MAIN: 
+		{
+			if(!response)
+				return 1;
+
 			switch(listitem)
 			{
-				case 0: { //E-Mail
+				case 0: 
+				{ //E-Mail
 					if(isnull(PlayerInfo[playerid][pSecQuestAnswer])) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate uneseno sigurnosno pitanje! Sigurnosno pitanje MORA biti uneseno ako zelite nesto mjenjati!");
 					
 					Bit2_Set(gr_QuestionType, playerid, 1);
 					ShowPlayerDialog(playerid, DIALOG_SEC_INPUTQ, DIALOG_STYLE_INPUT, "UNOS ODGOVORA NA SIGURNOSNO PITANJE", secQuestions[PlayerInfo[playerid][pSecQuestion]], "Input", "Abort");
 				}
-				case 1: { //Password
+				case 1: 
+				{ //Password
 					if(isnull(PlayerInfo[playerid][pSecQuestAnswer])) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate uneseno sigurnosno pitanje! Sigurnosno pitanje MORA biti uneseno ako zelite nesto mjenjati!");
 					
 					Bit2_Set(gr_QuestionType, playerid, 2);
 					ShowPlayerDialog(playerid, DIALOG_SEC_INPUTQ, DIALOG_STYLE_INPUT, "UNOS ODGOVORA NA SIGURNOSNO PITANJE", secQuestions[PlayerInfo[playerid][pSecQuestion]], "Input", "Abort");
 				}
-				case 2: { //Sigurnosno Pitanje
-					if(isnull(PlayerInfo[playerid][pSecQuestAnswer])) {
+				case 2: 
+				{ //Sigurnosno Pitanje
+					if(isnull(PlayerInfo[playerid][pSecQuestAnswer])) 
+					{
 						new motd[68],
 							tmpstring[504];
 						for(new i = 0; i < MAX_SECURITY_QUESTIONS; i++)
@@ -158,8 +159,10 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 			}
 			return 1;
 		}
-		case DIALOG_SEC_SECQUEST: {
-			if(!response) {
+		case DIALOG_SEC_SECQUEST: 
+		{
+			if(!response) 
+			{
 				new tmpString[81];
 				if(PlayerInfo[playerid][pSecQuestion] == -1)
 					format(tmpString, sizeof(tmpString), "Izmjeni e-mail\nIzmjeni sifru\n"COL_RED"Unesi sigurnosno pitanje");
@@ -169,14 +172,15 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 			}
 			
 			PlayerInfo[playerid][pSecQuestion] = listitem;
-			new 
-				tmpString[165];
+			new tmpString[165];
 			format(tmpString, 165, "Unesite odgovor na sigurnosno pitanje:\n%s\n\nNAPOMENA: Duzina odgovora MORA biti izmedju 3-30 znakova!", secQuestions[PlayerInfo[playerid][pSecQuestion]]);
 			ShowPlayerDialog(playerid, DIALOG_SEC_QUESTANSWER, DIALOG_STYLE_PASSWORD, "UNOS ODGOVORA NA PITANJE", tmpString, "Input", "Abort");
 			return 1;
 		}
-		case DIALOG_SEC_QUESTANSWER: {
-			if(!response) {
+		case DIALOG_SEC_QUESTANSWER: 
+		{
+			if(!response) 
+			{
 				new tmpString[81];
 				if(PlayerInfo[playerid][pSecQuestion] == -1) 
 					format(tmpString, sizeof(tmpString), "Izmjeni e-mail\nIzmjeni sifru\n"COL_RED"Unesi sigurnosno pitanje");
@@ -194,20 +198,20 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 			}
 			if( strfind(inputtext, "%", true) != -1 || strfind(inputtext, "\n", true) != -1 || strfind(inputtext, "=", true) != -1 || strfind(inputtext, "+", true) != -1 || strfind(inputtext, "'", true) != -1 || strfind(inputtext, ">", true) != -1 || strfind(inputtext, "^", true) != -1 || strfind(inputtext, "|", true) != -1 || strfind(inputtext, "?", true) != -1 || strfind(inputtext, "*", true) != -1 || strfind(inputtext, "#", true) != -1 || strfind(inputtext, "!", true) != -1 || strfind(inputtext, "$", true) != -1 )
 			{
-				new 
-					tmpString[175];
+				new tmpString[175];
 				format(tmpString, 165, "Unesite odgovor na sigurnosno pitanje:\n%s\n\n"COL_RED"Nedozvoljeni znakovi u sigurnosnom odgovoru!", secQuestions[PlayerInfo[playerid][pSecQuestion]]);
 				ShowPlayerDialog(playerid, DIALOG_SEC_QUESTANSWER, DIALOG_STYLE_PASSWORD, "UNOS ODGOVORA NA PITANJE", tmpString, "Input", "Abort");
 				return 1;
 			}
-			if(strlen(inputtext) < 3 || strlen(inputtext) > 30) {
-				new 
-					tmpString[175];
+			if(strlen(inputtext) < 3 || strlen(inputtext) > 30) 
+			{
+				new tmpString[175];
 				format(tmpString, 165, "Unesite odgovor na sigurnosno pitanje:\n%s\n\n"COL_RED"NAPOMENA: Duzina odgovora MORA biti izmedju 3-30 znakova!", secQuestions[PlayerInfo[playerid][pSecQuestion]]);
 				ShowPlayerDialog(playerid, DIALOG_SEC_QUESTANSWER, DIALOG_STYLE_PASSWORD, "UNOS ODGOVORA NA PITANJE", tmpString, "Input", "Abort");
 				return 1;
 			}
-			if(isnull(inputtext)) {
+			if(isnull(inputtext)) 
+			{
 				new tmpString[81];
 				if(PlayerInfo[playerid][pSecQuestion] == -1) 
 					format(tmpString, sizeof(tmpString), "Izmjeni e-mail\nIzmjeni sifru\n"COL_RED"Unesi sigurnosno pitanje");
@@ -216,27 +220,28 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 				return 1;
 			}
 			
-			format(PlayerInfo[playerid][pSecQuestAnswer], 31, inputtext);
-			SendClientMessage(playerid, COLOR_RED, "[ ! ] Uspjesno ste postavili odgovor na sigurnosno pitanje! Zapisite ga negdje jer ce vam trebati!");
+			PlayerInfo[playerid][pSecQuestAnswer][0] = EOS;
+			strcat(PlayerInfo[playerid][pSecQuestAnswer], inputtext, 31);
 			
-			new
-				tmpQuery[ 512 ];
-			mysql_format(g_SQL, tmpQuery, sizeof(tmpQuery), "UPDATE accounts SET secquestion = '%d', secawnser = '%e' WHERE sqlid = '%d' LIMIT 1",
+			mysql_fquery(g_SQL, "UPDATE accounts SET secquestion = '%d', secawnser = '%e' WHERE sqlid = '%d'",
 				PlayerInfo[playerid][pSecQuestion],
 				PlayerInfo[playerid][pSecQuestAnswer],
 				PlayerInfo[playerid][pSQLID]
 			);
-			mysql_pquery(g_SQL, tmpQuery);
 			
 			Log_Write("/logfiles/a_security.txt", "(%s) %s(%s) changed his security question into '%s'.", 
 				GetName(playerid,false), 
 				GetPlayerIP(playerid), 
 				secQuestions[PlayerInfo[playerid][pSecQuestion]]
 			);
+
+			ShowPlayerDialog(playerid, 0, DIALOG_STYLE_MSGBOX, "USPJESAN UNOS", "Uspjesno ste unijeli odgovor na sigurnosno pitanje!\nZapisite ga negdje jer ce vam trebati!", "Ok", "");
 			return 1;
 		}
-		case DIALOG_SEC_MAIL: {
-			if(!response) {
+		case DIALOG_SEC_MAIL: 
+		{
+			if(!response) 
+			{
 				new tmpString[81];
 				if(PlayerInfo[playerid][pSecQuestion] == -1) 
 					format(tmpString, sizeof(tmpString), "Izmjeni e-mail\nIzmjeni sifru\n"COL_RED"Unesi sigurnosno pitanje");
@@ -250,21 +255,22 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 				return ShowPlayerDialog(playerid, DIALOG_SEC_MAIL, DIALOG_STYLE_INPUT, "UNOS E-MAIL ADRESE", "Unesite novu e-mail adresu.\n"COL_RED"Nedozvoljeni znakovi u E-Mailu!", "Input", "Abort");
 			if(strlen(inputtext) > MAX_PLAYER_MAIL-1) return ShowPlayerDialog(playerid, DIALOG_SEC_MAIL, DIALOG_STYLE_INPUT, "UNOS E-MAIL ADRESE", "Unesite novu e-mail adresu.\n"COL_RED"Prevelik unos e-mail adrese!", "Input", "Abort");
 			if(!IsValidEMail(inputtext)) return ShowPlayerDialog(playerid, DIALOG_SEC_MAIL, DIALOG_STYLE_INPUT, "UNOS E-MAIL ADRESE", "Unesite novu e-mail adresu.\n"COL_RED"Tu adresu netko koristi ili nije po standardima (obrati se adminima)!", "Input", "Abort");
-			format(PlayerInfo[playerid][pEmail], MAX_PLAYER_MAIL, inputtext);
 			
-			new
-				tmpQuery[ 512 ];
-			mysql_format(g_SQL, tmpQuery, sizeof(tmpQuery), "UPDATE accounts SET email = '%e' WHERE sqlid = '%d' LIMIT 1",
+			PlayerInfo[playerid][pEmail][0] = EOS;
+			strcat(PlayerInfo[playerid][pEmail], inputtext, MAX_PLAYER_MAIL);
+			
+			mysql_fquery(g_SQL, "UPDATE accounts SET email = '%e' WHERE sqlid = '%d'",
 				PlayerInfo[playerid][pEmail],
 				PlayerInfo[playerid][pSQLID]
 			);
-			mysql_tquery(g_SQL, tmpQuery);
 			
-			ShowPlayerDialog(playerid, 0, DIALOG_STYLE_MSGBOX, "USPJESAN UNOS E-MAIL ADRESE", "Uspjesno ste unijeli e-mail adresu!\nZapisite ju negdje jer ce vam trebati!", "Ok", "");
+			ShowPlayerDialog(playerid, 0, DIALOG_STYLE_MSGBOX, "USPJESAN UNOS", "Uspjesno ste unijeli e-mail adresu!\nZapisite ju negdje jer ce vam trebati!", "Ok", "");
 			return 1;
 		}
-		case DIALOG_SEC_PASS: {
-			if(!response) {
+		case DIALOG_SEC_PASS: 
+		{
+			if(!response) 
+			{
 				new tmpString[81];
 				if(PlayerInfo[playerid][pSecQuestion] == -1) 
 					format(tmpString, sizeof(tmpString), "Izmjeni e-mail\nIzmjeni sifru\n"COL_RED"Unesi sigurnosno pitanje");
@@ -286,13 +292,17 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 				ShowPlayerDialog(playerid, DIALOG_SEC_PASS, DIALOG_STYLE_PASSWORD, "UNOS NOVE SIFRE", "Unesite novu sifru:\n"COL_RED"Prevelik unos sifre (veca od 10)\n\n"COL_RED"NAPOMENA: Dobro spremite svoju sifru, ako ju izgubite obratite se administraciji!", "Input", "Abort");
 				return 1;
 			}
+			PlayerInfo[playerid][pPassword][0] = EOS;
 			strcat(PlayerInfo[playerid][pPassword], inputtext, BCRYPT_COST);
 			UpdateRegisteredPassword(playerid);
-			SendClientMessage( playerid, COLOR_RED, "[ ! ]: Uspjesno ste promjenili svoj password.");
+
+			ShowPlayerDialog(playerid, 0, DIALOG_STYLE_MSGBOX, "USPJESAN UNOS", "Uspjesno ste unijeli vas novi password!\nZapisite ga negdje jer ce vam trebati!", "Ok", "");			
 			return 1;
 		}
-		case DIALOG_SEC_NEWS: {
-			if(!response) {
+		case DIALOG_SEC_NEWS: 
+		{
+			if(!response) 
+			{
 				new tmpString[81];
 				if(PlayerInfo[playerid][pSecQuestion] == -1) 
 					format(tmpString, sizeof(tmpString), "Izmjeni e-mail\nIzmjeni sifru\n"COL_RED"Unesi sigurnosno pitanje");
@@ -302,7 +312,8 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 			}
 			return 1;
 		}
-		case DIALOG_SEC_INPUTQ: {
+		case DIALOG_SEC_INPUTQ: 
+		{
 			if(!response) {
 				new tmpString[81];
 				if(PlayerInfo[playerid][pSecQuestion] == -1) 
@@ -316,18 +327,21 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 			{
 				switch(Bit2_Get(gr_QuestionType, playerid))
 				{
-					case 1: {
+					case 1: 
+					{
 						Bit2_Set(gr_QuestionType, playerid, 0);
 						ShowPlayerDialog(playerid, DIALOG_SEC_MAIL, DIALOG_STYLE_INPUT, "UNOS E-MAIL ADRESE", "Unesite novu e-mail adresu:", "Input", "Abort");
 					}
-					case 2: {
+					case 2: 
+					{
 						Bit2_Set(gr_QuestionType, playerid, 0);
 						ShowPlayerDialog(playerid, DIALOG_SEC_PASS, DIALOG_STYLE_PASSWORD, "UNOS NOVE SIFRE", "Unesite novu sifru:\n\n"COL_RED"NAPOMENA: Dobro spremite svoju sifru, ako ju izgubite obratite se administraciji!", "Input", "Abort");
 					}
 				}
-			} else {
-				new
-					tmpString[ 128 ];
+			}
+			else
+			{
+				new tmpString[ 128 ];
 				format( tmpString, sizeof(tmpString), "%s\n"COL_RED"Niste unijeli valjani odgovor na sigurnosno pitanje!", secQuestions[PlayerInfo[playerid][pSecQuestion]] );
 				ShowPlayerDialog(playerid, DIALOG_SEC_INPUTQ, DIALOG_STYLE_INPUT, "UNOS ODGOVORA NA SIGURNOSNO PITANJE", tmpString, "Input", "Abort");
 			}
@@ -350,8 +364,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 CMD:account(playerid, params[])
 {
 	#pragma unused params
-	new 
-		tmpString[81];
+	new tmpString[81];
 	if(isnull(PlayerInfo[playerid][pSecQuestAnswer])) 
 		format(tmpString, sizeof(tmpString), "Izmjeni e-mail\nIzmjeni sifru\n"COL_RED"Unesi sigurnosno pitanje");
 	else format(tmpString, sizeof(tmpString), "Izmjeni e-mail\nIzmjeni sifru");
@@ -370,7 +383,7 @@ CMD:changepass(playerid, params[])
 	if(sscanf(params, "s[24]s[32]", usernick, passnew)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /changepass [Ime_Prezime] [password].");
 	
 	// mysql search
-	mysql_format(g_SQL, mysql_buffer, sizeof(mysql_buffer), "SELECT sqlid FROM accounts WHERE name = '%e' LIMIT 0,1", usernick);
+	mysql_format(g_SQL, mysql_buffer, sizeof(mysql_buffer), "SELECT sqlid FROM accounts WHERE name = '%e'", usernick);
 	mysql_search = mysql_query(g_SQL, mysql_buffer);
 	if(!cache_num_rows())
 		return va_SendClientMessage(playerid,COLOR_RED, "Account %s ne postoji!", usernick), cache_delete(mysql_search);
