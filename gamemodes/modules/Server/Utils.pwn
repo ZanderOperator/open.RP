@@ -2,6 +2,9 @@
 
 #define MAX_SUBJECTS_IN_RANGE			(15)
 
+// Main MySQL query string
+new va_query[6144];
+
 /*
 	##     ##    ###     ######  ########   #######   ######  
 	###   ###   ## ##   ##    ## ##     ## ##     ## ##    # 
@@ -1674,14 +1677,12 @@ stock randomEx(min, max)
 
 mysql_fquery(MySQL:connectionHandle, const fquery[], va_args<>)
 {
-	new frmt_query[6144];
-	mysql_format(connectionHandle, frmt_query, sizeof(frmt_query), fquery, va_start<2>);
-	return mysql_tquery(connectionHandle, frmt_query);
+	mysql_format(connectionHandle, va_query, sizeof(va_query), fquery, va_start<2>);
+	return mysql_tquery(connectionHandle, va_query);
 }
 
 va_fquery(MySQL:connectionHandle, const fquery[], va_args<>)
 {
-	new va_query[6144];
 	mysql_format(connectionHandle, va_query, sizeof(va_query), fquery, va_start<2>);
 	return va_query;
 }
