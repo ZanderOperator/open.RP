@@ -29,7 +29,6 @@ new
 
 static stock
     globalstring[128],
-	mysqlquery[256],
     cstring[40];
 
 new
@@ -86,17 +85,19 @@ stock IsOnHelperDuty(playerid)
 
 ShowPlayerCars(playerid, playersqlid, player_name[])
 {
-	new mysqlQuery[128], owner_name[MAX_PLAYER_NAME];
+	new owner_name[MAX_PLAYER_NAME];
 	SetString(owner_name, player_name);
-	format(mysqlQuery, 128, "SELECT * FROM cocars WHERE ownerid = '%d' LIMIT 10", playersqlid);
+
 	inline OnLoadPlayerVehicles()
 	{
 		new 
 			tmpModelID,
 			tmpCarMysqlID,
 			vehName[ 32 ];
+		
 		va_SendClientMessage(playerid, COLOR_RED, "[ %s's Vehicle List ]:", owner_name);	
-		for( new i = 0; i < cache_num_rows(); i++) {
+		for( new i = 0; i < cache_num_rows(); i++) 
+		{
 			cache_get_value_name_int(i, "id", tmpCarMysqlID);
 			cache_get_value_name_int(i, "modelid", tmpModelID);
 			
@@ -106,7 +107,11 @@ ShowPlayerCars(playerid, playersqlid, player_name[])
 		if(!cache_num_rows()) 
 			SendClientMessage(playerid, COLOR_WHITE,"- Ovaj igrac ne posjeduje vozila.");
 	}
-	mysql_tquery_inline_new(g_SQL, mysqlQuery, using inline OnLoadPlayerVehicles, "");
+	MySQL_TQueryInline(g_SQL,  
+		using inline OnLoadPlayerVehicles,
+		va_fquery(g_SQL, "SELECT * FROM cocars WHERE ownerid = '%d' LIMIT 10", playersqlid),
+		""
+	);
 	return 1;
 }
 
@@ -347,14 +352,11 @@ Public: OnHelperPINHashed(playerid, level)
 	PlayerInfo[playerid][pTeamPIN][0] = EOS;
 	strcat(PlayerInfo[playerid][pTeamPIN], saltedPin, BCRYPT_HASH_LENGTH);
 
-	new 
-		query[256];	
-	mysql_format(g_SQL, query, sizeof(query), "UPDATE accounts SET teampin = '%e', helper = '%d' WHERE sqlid = '%d' LIMIT 1", 
+	mysql_fquery(g_SQL, "UPDATE accounts SET teampin = '%e', helper = '%d' WHERE sqlid = '%d' LIMIT 1", 
 		saltedPin, 
 		level, 
 		PlayerInfo[playerid][pSQLID]
 	);
-	mysql_tquery(g_SQL, query);
 	return 1;
 }
 
@@ -366,15 +368,12 @@ Public: OnAdminPINHashed(playerid, level)
 
 	PlayerInfo[playerid][pTeamPIN][0] = EOS;
 	strcat(PlayerInfo[playerid][pTeamPIN], saltedPin, BCRYPT_HASH_LENGTH);
-		
-	new 
-		query[256];	
-	mysql_format(g_SQL, query, sizeof(query), "UPDATE accounts SET teampin = '%e', adminLvl = '%d' WHERE sqlid = '%d' LIMIT 1", 
+	
+	mysql_fquery(g_SQL, "UPDATE accounts SET teampin = '%e', adminLvl = '%d' WHERE sqlid = '%d' LIMIT 1", 
 		saltedPin, 
 		level, 
 		PlayerInfo[playerid][pSQLID]
 	);
-	mysql_tquery(g_SQL, query);
 	return 1;
 }
 
@@ -387,13 +386,10 @@ Public: OnTeamPINHashed(playerid)
 	PlayerInfo[playerid][pTeamPIN][0] = EOS;
 	strcat(PlayerInfo[playerid][pTeamPIN], saltedPin, BCRYPT_HASH_LENGTH);
 
-	new 
-		query[256];	
-	mysql_format(g_SQL, query, sizeof(query), "UPDATE accounts SET teampin = '%e' WHERE sqlid = '%d' LIMIT 1", 
+	mysql_fquery(g_SQL, "UPDATE accounts SET teampin = '%e' WHERE sqlid = '%d' LIMIT 1", 
 		saltedPin, 
 		PlayerInfo[playerid][pSQLID]
 	);
-	mysql_tquery(g_SQL, query);
 	return 1;
 }
 
@@ -848,7 +844,7 @@ public OfflineBanPlayer(playerid, playername[], reason[], days)
 forward AddAdminMessage(playerid, user_name[], reason[]);
 public AddAdminMessage(playerid, user_name[], reason[])
 {
-	new rows, query[4096], string[128];
+	new rows, string[128];
 	
     cache_get_row_count(rows);
 	if (rows)
@@ -879,9 +875,12 @@ public AddAdminMessage(playerid, user_name[], reason[])
 				return 1;
 			}
 		}	
-		mysql_format( g_SQL, query, sizeof(query), "UPDATE accounts SET AdminMessage = '%e', AdminMessageBy = '%e', AdmMessageConfirm = '0' WHERE name = '%e'",
-			reason, GetName(playerid, true), user_name);
-		mysql_tquery(g_SQL, query);
+		mysql_fquery(g_SQL,
+			"UPDATE accounts SET AdminMessage = '%e', AdminMessageBy = '%e', AdmMessageConfirm = '0' WHERE name = '%e'",
+			reason, 
+			GetName(playerid, true), 
+			user_name
+		);
 
 		format(string, sizeof(string), "[!] Navedeni korisnik ce sada dobiti vasu notifikaciju prilikom logina.");
 		SendClientMessage(playerid, COLOR_RED, string);
@@ -893,12 +892,12 @@ public AddAdminMessage(playerid, user_name[], reason[])
 
 Public:SendServerMessage(sqlid, reason[])
 {
-	new query[4096];
-	mysql_format( g_SQL, query, sizeof(query), "UPDATE accounts SET AdminMessage = '%e', AdminMessageBy = 'Server', AdmMessageConfirm = '0' WHERE sqlid = '%d'",
+	mysql_fquery(g_SQL, 
+		"UPDATE accounts SET AdminMessage = '%e', AdminMessageBy = 'Server', AdmMessageConfirm = '0' WHERE sqlid = '%d'",
 		reason, 
 		sqlid
 	);
-	mysql_tquery(g_SQL, query);
+	return 1;
 }
 
 forward OfflineJailPlayer(playerid, playername[], jailtime);
@@ -907,19 +906,14 @@ public OfflineJailPlayer(playerid, playername[], jailtime)
 	new rows;
     cache_get_row_count(rows);
 	if(rows)
-	{
-  		new TmpQuery[ 256 ];
-		mysql_format(g_SQL, TmpQuery, sizeof(TmpQuery), "UPDATE accounts SET jailed = '1', jailtime = '%d' WHERE name = '%e'", jailtime, playername);
-		mysql_tquery(g_SQL, TmpQuery);
-	}
+  		mysql_fquery(g_SQL, "UPDATE accounts SET jailed = '1', jailtime = '%d' WHERE name = '%e'", jailtime, playername);
 	else return SendClientMessage(playerid, COLOR_RED, "[GRESKA - MySQL]: Ne postoji korisnik s tim nickom!");
 	return 1;
 }
 
 stock CheckInactivePlayer(playerid, sql)
 {
-	new tmpQuery[128], dialogstring[2056];
-	format(tmpQuery, sizeof(tmpQuery), "SELECT * FROM  inactive_accounts WHERE sqlid = '%d' LIMIT 0,1", sql);
+	new dialogstring[2056];
 	inline OnInactivePlayerLoad()
 	{	
 		new 
@@ -958,14 +952,19 @@ stock CheckInactivePlayer(playerid, sql)
 		ShowPlayerDialog(playerid, DIALOG_INACTIVITY_CHECK, DIALOG_STYLE_MSGBOX, "Provjera neaktivnosti igraca:", dialogstring, "Close", "");
 		return 1;
 	}
-	mysql_tquery_inline_new(g_SQL, tmpQuery, using inline OnInactivePlayerLoad, "i", playerid);
+	MySQL_TQueryInline(g_SQL,  
+		using inline OnInactivePlayerLoad,
+		va_fquery(g_SQL, "SELECT * FROM  inactive_accounts WHERE sqlid = '%d' LIMIT 0,1", sql),
+		"i", 
+		playerid
+	);
 	return 1;
 }
 
 stock ListInactivePlayers(playerid)
 {
-	new tmpQuery[128], dialogstring[2056];
-	format(tmpQuery, sizeof(tmpQuery), "SELECT * FROM  inactive_accounts ORDER BY inactive_accounts.id DESC LIMIT 0 , 30");
+	new dialogstring[2056];
+
 	inline OnInactiveAccountsList()
 	{
 		new rows;
@@ -1012,56 +1011,14 @@ stock ListInactivePlayers(playerid)
 		}
 		else return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Trenutno nema prijavljenih neaktivnosti u bazi podataka!");
 	}
-	mysql_tquery_inline_new(g_SQL, tmpQuery, using inline OnInactiveAccountsList, "i", playerid);
+	MySQL_TQueryInline(g_SQL,  
+		using inline OnInactiveAccountsList,
+		va_fquery(g_SQL, "SELECT * FROM  inactive_accounts ORDER BY inactive_accounts.id DESC LIMIT 0 , 30"),
+		"i", 
+		playerid
+	);
 	return 1;
 }
-
-/*
-Public:ChargePlayer(playerid, const targetname[], money)
-{
-	new rows;
-    cache_get_row_count(rows);
-	if( rows ) {
-		new playerMoney;
-		cache_get_value_name_int(0, "handMoney", playerMoney);
-		playerMoney -= money;
-		
-		new
-			TmpQuery[ 128 ];
-		mysql_format(g_SQL, TmpQuery, sizeof(TmpQuery), "UPDATE accounts SET handMoney = '%d' WHERE name = '%e'", playerMoney, targetname);
-		mysql_tquery(g_SQL, TmpQuery);
-	}
-	else return SendClientMessage(playerid, COLOR_RED, "[GRESKA - MySQL]: Ne postoji korisnik s tim nickom!");
-	return 1;
-}
-
-forward ChargepPlayer(playerid, const tagername[], Float:percent, const reason[]);
-public ChargepPlayer(playerid, const tagername[], Float:percent, const reason[])
-{
-	new rows;
-    cache_get_row_count(rows);
-	if( rows ) {
-		new playerMoney, ank;
-		cache_get_value_name_int(0, "handMoney", playerMoney);
-		cache_get_value_name_int(0, "bankMoney", ank);
-		
-		va_SendClientMessageToAll(COLOR_RED, "AdmCMD: %s je novcano kaznio igraca %s sa $%d, razlog: %s", 
-			GetName(playerid,false), 
-			tagername, 
-			floatround(( ank + playerMoney ) * percent), 
-			reason
-		);
-		
-		playerMoney -= floatround(( playerBank + playerMoney ) * percent);
-
-		new
-			TmpQuery[ 128 ];
-		mysql_format(g_SQL, TmpQuery, sizeof(TmpQuery), "UPDATE accounts SET handMoney = '%d' WHERE name = '%e'", playerMoney, tagername);
-		mysql_tquery(g_SQL, TmpQuery);
-	}
-	else return SendClientMessage(playerid, COLOR_RED, "Ne postoji korisnik s tim nickom!");
-	return 1;
-}*/
 
 timer OnAdminCountDown[1000]()
 {
@@ -1096,8 +1053,7 @@ public CheckPlayerPrison(playerid, const targetname[], minutes, const reason[])
 	cache_get_value_name_int(0, "jailed", prisoned);
     if(prisoned != 0) return SendClientMessage(playerid,COLOR_RED, "Taj igrac je vec u arei/zatvoru!");
 	
-	mysql_format(g_SQL, mysqlquery, sizeof(mysqlquery), "UPDATE accounts SET jailed = '2',jailtime = '%d' WHERE name = '%e' LIMIT 1", minutes, targetname);
-	mysql_tquery(g_SQL, mysqlquery);
+	mysql_fquery(g_SQL, "UPDATE accounts SET jailed = '2', jailtime = '%d' WHERE name = '%e'", minutes, targetname);
 		
 	va_SendClientMessage(playerid,COLOR_RED, "[ ! ] Uspjesno si smjestio offline igraca '%s' u areu na %d minuta.",targetname, minutes);
 	return 1;
@@ -1117,19 +1073,20 @@ public LoadPlayerWarns(playerid, targetname[],reason[])
     new 
 		warns = currentwarns + 1;
 		
-    if(warns == 3) {
+    if(warns == 3) 
+	{
 		OfflineBanPlayer(playerid, targetname, "3. Warn", 10);
         SendClientMessage(playerid,COLOR_RED, "[ ! ] Taj igrac je imao 3. warna te je automatski banan!");
         va_SendClientMessageToAll(COLOR_RED,"AdmCMD: %s [Offline] je dobio ban od admina %s, razlog: 3. Warn",targetname,GetName(playerid,false));
 		#if defined MODULE_LOGS
 		Log_Write("/logfiles/a_ban.txt", "(%s) %s [OFFLINE] got banned from Game Admin %s. Reason: 3. Warn", ReturnDate(), targetname, GetName(playerid, false));
 		#endif
-		mysql_format(g_SQL, mysqlquery, sizeof(mysqlquery), "UPDATE accounts SET playaWarns = '0' WHERE name = '%e' LIMIT 1", targetname);
-        mysql_tquery(g_SQL, mysqlquery);
-    } else {
+		mysql_fquery(g_SQL, "UPDATE accounts SET playaWarns = '0' WHERE name = '%e'", targetname);
+    } 
+	else 
+	{
 		va_SendClientMessage(playerid,COLOR_RED, "[ ! ] Uspjesno si warnao igraca %s, te mu je to ukupno %d warn!",targetname,warns);
-        mysql_format(g_SQL, mysqlquery, sizeof(mysqlquery), "UPDATE accounts SET playaWarns = '%d' WHERE name = '%e' LIMIT 1", warns, targetname);
-        mysql_tquery(g_SQL, mysqlquery);
+        mysql_fquery(g_SQL, "UPDATE accounts SET playaWarns = '%d' WHERE name = '%e'", warns, targetname);
     }
 	return 1;
 }
@@ -1265,8 +1222,8 @@ public OfflinePlayerVehicles(playerid, giveplayerid)
 	    Float:x,
 		Float:y,
 		Float:z,
-		Float:angle,
-		Query[1256];
+		Float:angle;
+
 	if(IsPlayerInAnyVehicle(playerid))
 	{
 	    GetVehiclePos(GetPlayerVehicleID(playerid), x, y, z);
@@ -1277,14 +1234,15 @@ public OfflinePlayerVehicles(playerid, giveplayerid)
 		GetPlayerPos(playerid, x, y, z);
 		GetPlayerFacingAngle(playerid, angle);
 	}
-	format( Query, sizeof(Query), "UPDATE cocars SET parkX = '%f', parkY = '%f', parkZ = '%f', angle = '%f', viwo = '0' WHERE ownerid = '%d'",
+	
+	mysql_fquery(g_SQL, 
+		"UPDATE cocars SET parkX = '%f', parkY = '%f', parkZ = '%f', angle = '%f', viwo = '0' WHERE ownerid = '%d'",
 		x,
 		y,
 		z,
 		angle,
 		PlayerInfo[giveplayerid][pSQLID]
 	);
-	mysql_tquery(g_SQL, Query);
 	
 	if(vehicleid != -1) {
 	    VehicleInfo[vehicleid][vParkX]	= x;
@@ -1344,12 +1302,16 @@ public CheckPlayerData(playerid, const name[])
 		new sqlid;
 		cache_get_value_name_int(0, "sqlid", sqlid);
 		
-		new string[96];
-		format(string, sizeof(string),"SELECT * FROM player_connects WHERE player_id = '%d' ORDER BY time DESC LIMIT 1", sqlid);
-		mysql_pquery(g_SQL, string, "CheckLastLogin", "is", playerid, name);
+		mysql_tquery(g_SQL, 
+			va_fquery(g_SQL, "SELECT * FROM player_connects WHERE player_id = '%d' ORDER BY time DESC LIMIT 1", sqlid), 
+			"CheckLastLogin", 
+			"is", 
+			playerid, 
+			name
+		);
 	}
-	else
-	    SendClientMessage(playerid, COLOR_RED, "Nick je nepostojeci u bazi podataka.");
+	else SendClientMessage(playerid, COLOR_RED, "Nick je nepostojeci u bazi podataka.");
+	
 	return 1;
 }
 
@@ -1803,14 +1765,16 @@ CMD:makehelper(playerid, params[])
 	if( !IsPlayerAdmin(playerid) && PlayerInfo[playerid][pAdmin] != 1338 ) return SendClientMessage(playerid, COLOR_RED, "Niste ovlasteni za koristenje ove komande!");
 	
 	new 
-		giveplayerid, level, query[128], teamPIN[12];
+		giveplayerid, level, teamPIN[12];
 	if(sscanf(params, "uis[12]", giveplayerid, level, teamPIN)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /makehelper [Playerid/DioImena] [level(1-4)]");
 	if(giveplayerid == INVALID_PLAYER_ID) return SendClientMessage(playerid, COLOR_RED, "Igrac nije online!");
 	
 	if(!level) 
 	{
-		format(query, 128, "UPDATE accounts SET teampin = '',helper = '0' WHERE sqlid = '%d' LIMIT 1", PlayerInfo[giveplayerid][pSQLID]);
-		mysql_tquery(g_SQL, query);
+		mysql_fquery(g_SQL, 
+			"UPDATE accounts SET teampin = '', helper = '0' WHERE sqlid = '%d'", 
+			PlayerInfo[giveplayerid][pSQLID]
+		);
 		
 		PlayerInfo[giveplayerid][pTempRank][0] 	= 0;
 		PlayerInfo[giveplayerid][pHelper] 		= 0;
@@ -1905,14 +1869,13 @@ CMD:inactivity(playerid, params[])
 				}
 			}
 		}
-		new insertQuery[200];
-		mysql_format(g_SQL, insertQuery, sizeof(insertQuery), "INSERT INTO inactive_accounts(sqlid, startstamp, endstamp, reason) VALUES ('%d','%d','%d','%e')",
+		mysql_fquery(g_SQL, 
+			"INSERT INTO inactive_accounts(sqlid, startstamp, endstamp, reason) VALUES ('%d','%d','%d','%e')",
 			sqlid,
 			startstamp,
 			endstamp,
 			reason
 		);
-		mysql_pquery(g_SQL, insertQuery);
 		
 		#if defined MODULE_LOGS
 		Log_Write("logfiles/a_inactive_players.txt", "(%s) %s[A%d] approved %s[SQLID: %d] %d days long inactivity. Reason: %s",
@@ -1961,9 +1924,7 @@ CMD:inactivity(playerid, params[])
 				}
 			}
 		}
-		new deleteQuery[200];
-		mysql_format(g_SQL, deleteQuery, sizeof(deleteQuery), "DELETE FROM inactive_accounts WHERE sqlid = '%d'", sqlid);
-		mysql_tquery(g_SQL, deleteQuery);
+		mysql_fquery(g_SQL, "DELETE FROM inactive_accounts WHERE sqlid = '%d'", sqlid);
 		
 		#if defined MODULE_LOGS
 		Log_Write("logfiles/a_inactive_players.txt", "(%s) %s[A%d] deleted %s[SQLID: %d] registered inactivity from database.",
@@ -2110,12 +2071,12 @@ CMD:makeadmin(playerid, params[])
 	if(sscanf(params, "uis[12]", giveplayerid, level, teamPIN)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /makeadmin [Playerid/DioImena] [level(1-1338)] [Team PIN for /alogin]");
 	if(giveplayerid == INVALID_PLAYER_ID) return SendClientMessage(playerid, COLOR_RED, "Igrac nije online!");
 	
-	new
-		dquery[128];
 	
-	if(!level) {
-		format(dquery, 128, "UPDATE accounts SET teampin = '',adminLvl = '0' WHERE sqlid = '%d' LIMIT 1", PlayerInfo[giveplayerid][pSQLID]);
-		mysql_tquery(g_SQL, dquery);
+	if(!level) 
+	{
+		mysql_fquery(g_SQL, "UPDATE accounts SET teampin = '',adminLvl = '0' WHERE sqlid = '%d'", 
+			PlayerInfo[giveplayerid][pSQLID]
+		);
 		
 		PlayerInfo[giveplayerid][pTempRank][0] 	= 0;
 		PlayerInfo[giveplayerid][pAdmin] 		= 0;
@@ -2145,33 +2106,20 @@ CMD:makeadmin(playerid, params[])
 
 CMD:makeadminex(playerid, params[])
 {
-	if( IsPlayerAdmin(playerid) || PlayerInfo[playerid][pAdmin] == 1338 ) {
+	if( IsPlayerAdmin(playerid) || PlayerInfo[playerid][pAdmin] == 1338 ) 
+	{
 		new
 			level,
 			gplayername[MAX_PLAYER_NAME];
 		if(sscanf(params, "s[24] ", gplayername)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /makeadminex [Ime_Prezime] [Level(1-1338)] [Team PIN for /alogin]");
-		mysql_format(g_SQL, mysqlquery, sizeof(mysqlquery), "UPDATE accounts SET adminLvl = '%d' WHERE name = '%e' LIMIT 1", level, gplayername);
-		mysql_tquery(g_SQL, mysqlquery);
+		
+		mysql_fquery(g_SQL, "UPDATE accounts SET adminLvl = '%d' WHERE name = '%e' LIMIT 1", level, gplayername);
 	}
 	else SendClientMessage(playerid, COLOR_RED, "Niste ovlasteni za koristenje ove komande!");
 	return 1;
 }
 
 // Administrator Level 1338
-
-//Kojeg ce ti djavla kad ne radi, lol.
-/*
-CMD:kickallplayers(playerid, params[])
-{
-	if( !IsPlayerAdmin(playerid) ) return SendClientMessage(playerid, COLOR_RED, "Niste ovlasteni za koristenje ove komande!");
-	foreach(new i : Player)
-	{
-		if(i != playerid)
-			KickMessage(i);
-	}
-	return 1;
-}
-*/
 CMD:happyhours(playerid, params[])
 {
 	if (PlayerInfo[playerid][pAdmin] < 1338) return SendClientMessage(playerid, COLOR_RED, "Niste ovlasteni za koristenje ove komande!");
@@ -2293,27 +2241,23 @@ CMD:givepremium(playerid, params[])
 			UpdatePremiumHouseFurSlots(giveplayerid, -1, PlayerInfo[ giveplayerid ][ pHouseKey ]);
 		if(PlayerInfo[giveplayerid][pBizzKey] != INVALID_BIZNIS_ID)
 			UpdatePremiumBizFurSlots(giveplayerid);
-		new
-			vipUpdtQuery[ 128 ];
-		format( vipUpdtQuery, 128, "UPDATE accounts SET vipRank = '%d', vipTime = '%d', dvehperms = '%d' WHERE sqlid = '%d'",
+		
+		mysql_fquery(g_SQL, "UPDATE accounts SET vipRank = '%d', vipTime = '%d', dvehperms = '%d' WHERE sqlid = '%d'",
 			PlayerInfo[giveplayerid][pDonateRank],
 			PlayerInfo[giveplayerid][pDonateTime],
 			PlayerInfo[giveplayerid][pDonatorVehPerms],
 			PlayerInfo[giveplayerid][pSQLID]
 		);
-		mysql_tquery(g_SQL, vipUpdtQuery);
-
 
 		// MySQL Log
-		new vipLog[200];
-		format(vipLog, sizeof(vipLog), "INSERT INTO player_vips(player_id, admin_id, rank, created_at, expires_at) VALUES ('%d','%d','%d','%d','%d')",
+		mysql_fquery(g_SQL, 
+			"INSERT INTO player_vips(player_id, admin_id, rank, created_at, expires_at) VALUES ('%d','%d','%d','%d','%d')",
 			PlayerInfo[giveplayerid][pSQLID],
 			PlayerInfo[playerid][pSQLID],
 			PlayerInfo[giveplayerid][pDonateRank],
 			gettimestamp(),
 			PlayerInfo[giveplayerid][pDonateTime]
 		);
-		mysql_pquery(g_SQL, vipLog);
 
 		#if defined MODULE_LOGS
 		Log_Write("logfiles/a_givepremium.txt", "(%s) Administrator %s gave VIP Bronze %s[SQLID: %d].",
@@ -2359,26 +2303,22 @@ CMD:givepremium(playerid, params[])
 			UpdatePremiumHouseFurSlots(giveplayerid, -1, PlayerInfo[ giveplayerid ][ pHouseKey ]);
 		if(PlayerInfo[giveplayerid][pBizzKey] != INVALID_BIZNIS_ID)
 			UpdatePremiumBizFurSlots(giveplayerid);
-		new
-			vipUpdtQuery[ 128 ];
-		format( vipUpdtQuery, 128, "UPDATE accounts SET vipRank = '%d', vipTime = '%d', dvehperms = '%d' WHERE sqlid = '%d'",
+		
+		mysql_fquery(g_SQL, "UPDATE accounts SET vipRank = '%d', vipTime = '%d', dvehperms = '%d' WHERE sqlid = '%d'",
 			PlayerInfo[giveplayerid][pDonateRank],
 			PlayerInfo[giveplayerid][pDonateTime],
 			PlayerInfo[giveplayerid][pDonatorVehPerms],
 			PlayerInfo[giveplayerid][pSQLID]
 		);
-		mysql_tquery(g_SQL, vipUpdtQuery);
 
-		// MySQL Log
-		new vipLog[200];
-		format(vipLog, sizeof(vipLog), "INSERT INTO player_vips(player_id, admin_id, rank, created_at, expires_at) VALUES ('%d','%d','%d','%d','%d')",
+		mysql_fquery(g_SQL, 
+			"INSERT INTO player_vips(player_id, admin_id, rank, created_at, expires_at) VALUES ('%d','%d','%d','%d','%d')",
 			PlayerInfo[giveplayerid][pSQLID],
 			PlayerInfo[playerid][pSQLID],
 			PlayerInfo[giveplayerid][pDonateRank],
 			gettimestamp(),
 			PlayerInfo[giveplayerid][pDonateTime]
 		);
-		mysql_pquery(g_SQL, vipLog);
 
 		#if defined MODULE_LOGS
 		Log_Write("logfiles/a_givepremium.txt", "(%s) Administrator %s gave VIP Silver %s[SQLID: %d].",
@@ -2432,26 +2372,22 @@ CMD:givepremium(playerid, params[])
 			UpdatePremiumHouseFurSlots(giveplayerid, -1, PlayerInfo[ giveplayerid ][ pHouseKey ]);
 		if(PlayerInfo[giveplayerid][pBizzKey] != INVALID_BIZNIS_ID)
 			UpdatePremiumBizFurSlots(giveplayerid);
-		new
-			vipUpdtQuery[ 128 ];
-		format( vipUpdtQuery, 128, "UPDATE accounts SET vipRank = '%d', vipTime = '%d', dvehperms = '%d' WHERE sqlid = '%d'",
+		
+		mysql_fquery(g_SQL, "UPDATE accounts SET vipRank = '%d', vipTime = '%d', dvehperms = '%d' WHERE sqlid = '%d'",
 			PlayerInfo[giveplayerid][pDonateRank],
 			PlayerInfo[giveplayerid][pDonateTime],
 			PlayerInfo[giveplayerid][pDonatorVehPerms],
 			PlayerInfo[giveplayerid][pSQLID]
 		);
-		mysql_tquery(g_SQL, vipUpdtQuery);
 
-		// MySQL Log
-		new vipLog[200];
-		format(vipLog, sizeof(vipLog), "INSERT INTO player_vips(player_id, admin_id, rank, created_at, expires_at) VALUES ('%d','%d','%d','%d','%d')",
+		mysql_fquery(g_SQL, 
+			"INSERT INTO player_vips(player_id, admin_id, rank, created_at, expires_at) VALUES ('%d','%d','%d','%d','%d')",
 			PlayerInfo[giveplayerid][pSQLID],
 			PlayerInfo[playerid][pSQLID],
 			PlayerInfo[giveplayerid][pDonateRank],
 			gettimestamp(),
 			PlayerInfo[giveplayerid][pDonateTime]
 		);
-		mysql_pquery(g_SQL, vipLog);
 
 		#if defined MODULE_LOGS
 		Log_Write("logfiles/a_givepremium.txt", "(%s) Administrator %s gave VIP Gold %s[SQLID: %d].",
@@ -2505,26 +2441,22 @@ CMD:givepremium(playerid, params[])
 			UpdatePremiumHouseFurSlots(giveplayerid, -1, PlayerInfo[ giveplayerid ][ pHouseKey ]);
 		if(PlayerInfo[giveplayerid][pBizzKey] != INVALID_BIZNIS_ID)
 			UpdatePremiumBizFurSlots(giveplayerid);
-		new
-			vipUpdtQuery[ 128 ];
-		format( vipUpdtQuery, 128, "UPDATE accounts SET vipRank = '%d', vipTime = '%d', dvehperms = '%d' WHERE sqlid = '%d'",
+		
+		mysql_fquery(g_SQL, "UPDATE accounts SET vipRank = '%d', vipTime = '%d', dvehperms = '%d' WHERE sqlid = '%d'",
 			PlayerInfo[giveplayerid][pDonateRank],
 			PlayerInfo[giveplayerid][pDonateTime],
 			PlayerInfo[giveplayerid][pDonatorVehPerms],
 			PlayerInfo[giveplayerid][pSQLID]
 		);
-		mysql_tquery(g_SQL, vipUpdtQuery);
 
-		// MySQL Log
-		new vipLog[200];
-		format(vipLog, sizeof(vipLog), "INSERT INTO player_vips(player_id, admin_id, rank, created_at, expires_at) VALUES ('%d','%d','%d','%d','%d')",
+		mysql_fquery(g_SQL, 
+			"INSERT INTO player_vips(player_id, admin_id, rank, created_at, expires_at) VALUES ('%d','%d','%d','%d','%d')",
 			PlayerInfo[giveplayerid][pSQLID],
 			PlayerInfo[playerid][pSQLID],
 			PlayerInfo[giveplayerid][pDonateRank],
 			gettimestamp(),
 			PlayerInfo[giveplayerid][pDonateTime]
 		);
-		mysql_pquery(g_SQL, vipLog);
 
 		#if defined MODULE_LOGS
 		Log_Write("logfiles/a_givepremium.txt", "(%s) Administrator %s gave VIP Platinum %s[SQLID: %d].",
@@ -2629,17 +2561,17 @@ CMD:address(playerid, params[])
 	if( !Iter_Contains(Houses, id) ) return SendClientMessage(playerid, COLOR_RED, "Morate biti blizu kuce!");
 	if( !IsPlayerInRangeOfPoint(playerid, 15.0, HouseInfo[ id ][ hEnterX ], HouseInfo[ id ][ hEnterY ], HouseInfo[ id ][ hEnterZ ] ) ) return SendClientMessage( playerid, COLOR_RED, "Morate biti blizu kuce!");
 	
-	new TmpQuery[105];
 	format(HouseInfo[id][hAdress], 32, address);
-	mysql_format(g_SQL, TmpQuery, 105, "UPDATE houses SET adress = '%e' WHERE id = '%d'", address, HouseInfo[id][hSQLID]);
-	mysql_tquery(g_SQL, TmpQuery);
+	mysql_fquery(g_SQL, "UPDATE houses SET adress = '%e' WHERE id = '%d'", address, HouseInfo[id][hSQLID]);
 	va_SendClientMessage(playerid, COLOR_RED, "[ ! ] Promjenili ste adresu kuce u %s", address);
 	return 1;
 }
 CMD:edit(playerid, params[])
 {
+	if(PlayerInfo[playerid][pAdmin] < 1337) 
+		return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You don't have premissions to use this command!");
+
 	new i, x_job[32], proplev, proptype = 0, propid = -1;
-	if(PlayerInfo[playerid][pAdmin] < 1337) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You don't have premissions to use this command!");
 	if (sscanf(params, "s[32]i", x_job, proplev)) {
 		SendClientMessage(playerid, COLOR_RED, "|___________ Edit Houses/Business ___________|");
 		SendClientMessage(playerid, COLOR_RED, "[ ? ]: /edit [option] [value]");
@@ -2651,7 +2583,6 @@ CMD:edit(playerid, params[])
 	i = GetNearestBizz(playerid);
 	if(i != INVALID_BIZNIS_ID)
 	{
-		new TmpQuery[128];
 		if(proplev >= 0)
 		{
 			if(strcmp(x_job,"level",true) == 0)
@@ -2659,38 +2590,35 @@ CMD:edit(playerid, params[])
 				proptype = 2;
 				propid = i;
 				BizzInfo[i][bLevelNeeded] = proplev;
-				format(TmpQuery, 128, "UPDATE bizzes SET levelneeded = '%d' WHERE id = '%d'", proplev, BizzInfo[i][bSQLID]);
-				mysql_tquery(g_SQL, TmpQuery);
+				mysql_fquery(g_SQL, "UPDATE bizzes SET levelneeded = '%d' WHERE id = '%d'", proplev, BizzInfo[i][bSQLID]);
 			}
 			else if(strcmp(x_job,"price",true) == 0)
 			{
 				proptype = 2;
 				propid = i;
 				BizzInfo[i][bBuyPrice] = proplev;
-				format(TmpQuery, 128, "UPDATE bizzes SET buyprice = '%d' WHERE id = '%d'", proplev, BizzInfo[i][bSQLID]);
-				mysql_tquery(g_SQL, TmpQuery);
+				mysql_fquery(g_SQL, "UPDATE bizzes SET buyprice = '%d' WHERE id = '%d'", proplev, BizzInfo[i][bSQLID]);
 			}
 			else if(strcmp(x_job,"funds",true) == 0)
 			{
 				proptype = 2;
 				propid = i;
 				BizzInfo[i][bTill] = proplev;
-				format(TmpQuery, 128, "UPDATE bizzes SET till = '%d' WHERE id = '%d'", proplev, BizzInfo[i][bSQLID]);
-				mysql_tquery(g_SQL, TmpQuery);
+				mysql_fquery(g_SQL, "UPDATE bizzes SET till = '%d' WHERE id = '%d'", proplev, BizzInfo[i][bSQLID]);
 			}
 			else if(strcmp(x_job,"locked",true) == 0)
 			{
 				proptype = 2;
 				propid = i;
 				BizzInfo[i][bLocked] = proplev;
+				mysql_fquery(g_SQL, "UPDATE bizzes SET locked = '%d' WHERE id = '%d'", proplev, BizzInfo[i][bSQLID]);
 			}
 			else if(strcmp(x_job,"bizviwo",true) == 0)
 			{
 				proptype = 2;
 				propid = i;
 				BizzInfo[i][bVirtualWorld] = proplev;
-				format(TmpQuery, 128, "UPDATE bizzes SET virtualworld = '%d' WHERE id = '%d'", proplev, BizzInfo[i][bSQLID]);
-				mysql_tquery(g_SQL, TmpQuery);
+				mysql_fquery(g_SQL, "UPDATE bizzes SET virtualworld = '%d' WHERE id = '%d'", proplev, BizzInfo[i][bSQLID]);
 			}
 			else if(strcmp(x_job,"type",true) == 0)
 			{
@@ -2698,8 +2626,7 @@ CMD:edit(playerid, params[])
 				propid = i;
 				if(proplev < 0 || proplev > 14) return SendClientMessage(playerid, COLOR_RED, "[ ! ]: Type range is 0-14!");
 				BizzInfo[i][bType] = proplev;
-				format(TmpQuery, 128, "UPDATE bizzes SET type = '%d' WHERE id = '%d'", proplev, BizzInfo[i][bSQLID]);
-				mysql_tquery(g_SQL, TmpQuery);
+				mysql_fquery(g_SQL, "UPDATE bizzes SET type = '%d' WHERE id = '%d'", proplev, BizzInfo[i][bSQLID]);
 			}
 		}
 		if(proptype != 0 && propid != -1)
@@ -2708,7 +2635,6 @@ CMD:edit(playerid, params[])
     i = GetNearestHouse(playerid);
 	if(i != INVALID_HOUSE_ID)
 	{
-		new TmpQuery[128];
 		if(proplev > 0)
 		{
 			if(strcmp(x_job,"level",true) == 0)
@@ -2716,54 +2642,49 @@ CMD:edit(playerid, params[])
 				proptype = 1;
 				propid = i;
 				HouseInfo[i][hLevel] = proplev;
-				format(TmpQuery, 128, "UPDATE houses SET level = '%d' WHERE id = '%d'", proplev, HouseInfo[i][hSQLID]);
-				mysql_tquery(g_SQL, TmpQuery);
+				mysql_fquery(g_SQL,"UPDATE houses SET level = '%d' WHERE id = '%d'", proplev, HouseInfo[i][hSQLID]);
 			}
 			else if(strcmp(x_job,"price",true) == 0)
 			{
 				proptype = 1;
 				propid = i;
 				HouseInfo[i][hValue] = proplev;
-				format(TmpQuery, 128, "UPDATE houses SET value = '%d' WHERE id = '%d'", proplev, HouseInfo[i][hSQLID]);
-				mysql_tquery(g_SQL, TmpQuery);
+				mysql_fquery(g_SQL, "UPDATE houses SET value = '%d' WHERE id = '%d'", proplev, HouseInfo[i][hSQLID]);
 			}
 			else if(strcmp(x_job,"locked",true) == 0)
 			{
 				proptype = 1;
 				propid = i;
 				HouseInfo[i][hLock] = proplev;
+				mysql_fquery(g_SQL, "UPDATE houses SET lock = '%d' WHERE id = '%d'", proplev, HouseInfo[i][hSQLID]);
 			}
 			else if(strcmp(x_job,"doorlevel",true) == 0)
 			{
 				proptype = 1;
 				propid = i;
 				HouseInfo[i][hDoorLevel] = proplev;
-				format(TmpQuery, 128, "UPDATE houses SET doorlevel = '%d' WHERE id = '%d'", proplev, HouseInfo[i][hSQLID]);
-				mysql_tquery(g_SQL, TmpQuery);
+				mysql_fquery(g_SQL, "UPDATE houses SET doorlevel = '%d' WHERE id = '%d'", proplev, HouseInfo[i][hSQLID]);
 			}
 			else if(strcmp(x_job,"locklevel",true) == 0)
 			{
 				proptype = 1;
 				propid = i;
 				HouseInfo[i][hLockLevel] = proplev;
-				format(TmpQuery, 128, "UPDATE houses SET locklevel = '%d' WHERE id = '%d'", proplev, HouseInfo[i][hSQLID]);
-				mysql_tquery(g_SQL, TmpQuery);
+				mysql_fquery(g_SQL, "UPDATE houses SET locklevel = '%d' WHERE id = '%d'", proplev, HouseInfo[i][hSQLID]);
 			}
 			else if(strcmp(x_job,"alarmlevel",true) == 0)
 			{
 				proptype = 1;
 				propid = i;
 				HouseInfo[i][hAlarm] = proplev;
-				format(TmpQuery, 128, "UPDATE houses SET alarm = '%d' WHERE id = '%d'", proplev, HouseInfo[i][hSQLID]);
-				mysql_tquery(g_SQL, TmpQuery);
+				mysql_fquery(g_SQL, "UPDATE houses SET alarm = '%d' WHERE id = '%d'", proplev, HouseInfo[i][hSQLID]);
 			}
 			else if(strcmp(x_job,"hviwo",true) == 0)
 			{
 				proptype = 1;
 				propid = i;
 				HouseInfo[i][hVirtualWorld] = proplev;
-				format(TmpQuery, 128, "UPDATE houses SET viwo = '%d' WHERE id = '%d'", proplev, HouseInfo[i][hSQLID]);
-				mysql_tquery(g_SQL, TmpQuery);
+				mysql_fquery(g_SQL, "UPDATE houses SET viwo = '%d' WHERE id = '%d'", proplev, HouseInfo[i][hSQLID]);
 			}
 		}
 		if(proptype != 0 && propid != -1)
@@ -2774,163 +2695,139 @@ CMD:edit(playerid, params[])
 }
 CMD:asellbiz(playerid, params[])
 {
+	if(PlayerInfo[playerid][pAdmin] < 1337) 
+		return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You don't have premissions to use this command!");
+
     new biz, foundonline = 0;
     if(sscanf(params, "i", biz)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /asellbiz [bizid]");
-	if(PlayerInfo[playerid][pAdmin] >= 1337)
-	{	
-		foreach(new i : Player)
+
+	foreach(new i : Player)
+	{
+		if(PlayerInfo[i][pOnline] == true)
 		{
-			if(PlayerInfo[i][pOnline] == true)
+			if(PlayerInfo[i][pSQLID] == BizzInfo[biz][bOwnerID])
 			{
-				if(PlayerInfo[i][pSQLID] == BizzInfo[biz][bOwnerID])
-				{
-					PlayerInfo[i][pBizzKey] = INVALID_BIZNIS_ID;
-					va_SendClientMessage(i, COLOR_RED, "[ ! ]: Your business has been moved out by Game Admin %s, you got %s refund in return.", GetName(playerid, false), FormatNumber(BizzInfo[biz][bBuyPrice]));
-					BudgetToPlayerMoney(i, BizzInfo[biz][bBuyPrice]);
-					foundonline = 1;
-				}
-				if(BizzInfo[biz][bco_OwnerID] == PlayerInfo[i][pSQLID])
-				{
-					PlayerInfo[i][pBusiness] = INVALID_BIZNIS_ID;
-					PlayerInfo[playerid][BizCoOwner] = false;
-					va_SendClientMessage(i, COLOR_RED, "[ ! ] Your co-owned business has been moved out by Game Admin %s.", GetName(playerid, false));
-				}
+				PlayerInfo[i][pBizzKey] = INVALID_BIZNIS_ID;
+				va_SendClientMessage(i, COLOR_RED, "[ ! ]: Your business has been moved out by Game Admin %s, you got %s refund in return.", GetName(playerid, false), FormatNumber(BizzInfo[biz][bBuyPrice]));
+				BudgetToPlayerMoney(i, BizzInfo[biz][bBuyPrice]);
+				foundonline = 1;
+			}
+			if(BizzInfo[biz][bco_OwnerID] == PlayerInfo[i][pSQLID])
+			{
+				PlayerInfo[i][pBusiness] = INVALID_BIZNIS_ID;
+				PlayerInfo[playerid][BizCoOwner] = false;
+				va_SendClientMessage(i, COLOR_RED, "[ ! ] Your co-owned business has been moved out by Game Admin %s.", GetName(playerid, false));
 			}
 		}
-		new TmpQuery[128];
-		// Update bizzes
-		format( TmpQuery, sizeof(TmpQuery), "UPDATE bizzes SET ownerid = '0', co_ownerid = '0' WHERE id = '%d'", 
-			BizzInfo[ biz ][bSQLID]
-		);
-		mysql_tquery(g_SQL, TmpQuery);
-		if(foundonline == 0)
-		{
-			// Update accounts
-			format( TmpQuery, sizeof(TmpQuery), "UPDATE accounts SET handMoney = handMoney + '%d' WHERE sqlid = '%d'", 
-				BizzInfo[ biz ][bBuyPrice],
-				BizzInfo[ biz ][bOwnerID]
-			);
-			mysql_tquery(g_SQL, TmpQuery);
-			// Update proracun
-			format( TmpQuery, sizeof(TmpQuery), "UPDATE city SET budget = budget - '%d'", 
-				BizzInfo[ biz ][bBuyPrice]
-			);
-			mysql_tquery(g_SQL, TmpQuery);
-		}
-		
-		//------------------------------------------------------
-
-		BizzInfo[biz][bLocked] 	= 1;
-		BizzInfo[biz][bOwnerID] = 0;
-		BizzInfo[biz][bco_OwnerID] = 0;
-		
-		PlayerPlaySound(playerid, 1052, 0.0, 0.0, 0.0);
-		va_SendClientMessage(playerid, COLOR_RED, "[ ! ]: You sold Business %s with admin command, buy price was returned to the previous owner!", BizzInfo[biz][bMessage]);
-		format(globalstring, sizeof(globalstring), "Game Admin %s moved out Business %s [ID %d][SQLID: %d].",GetName(playerid, false), BizzInfo[biz][bMessage], biz, BizzInfo[biz][bSQLID]);
-		SendAdminMessage(COLOR_LIGHTBLUE, globalstring);
-		#if defined MODULE_LOGS
-		Log_Write("/logfiles/a_sellbiz.txt", "(%s) Game Admin %s moved out Business %s[ID %d][SQLID: %d]", ReturnDate(), GetName(playerid, false), BizzInfo[biz][bMessage], biz, BizzInfo[biz][bSQLID]);
-		#endif
-		
 	}
-	else SendMessage(playerid, MESSAGE_TYPE_ERROR, "You don't have permissions to use this command.");
+	mysql_fquery(g_SQL, "UPDATE bizzes SET ownerid = '0', co_ownerid = '0' WHERE id = '%d'", BizzInfo[ biz ][bSQLID]);
+	if(foundonline == 0)
+	{
+		mysql_fquery(g_SQL, "UPDATE accounts SET handMoney = handMoney + '%d' WHERE sqlid = '%d'", 
+			BizzInfo[ biz ][bBuyPrice],
+			BizzInfo[ biz ][bOwnerID]
+		);
+		
+		mysql_fquery(g_SQL,"UPDATE city SET budget = budget - '%d'", BizzInfo[ biz ][bBuyPrice]);
+	}
+	
+	//------------------------------------------------------
+
+	BizzInfo[biz][bLocked] 	= 1;
+	BizzInfo[biz][bOwnerID] = 0;
+	BizzInfo[biz][bco_OwnerID] = 0;
+	
+	PlayerPlaySound(playerid, 1052, 0.0, 0.0, 0.0);
+	va_SendClientMessage(playerid, COLOR_RED, "[ ! ]: You sold Business %s with admin command, buy price was returned to the previous owner!", BizzInfo[biz][bMessage]);
+	format(globalstring, sizeof(globalstring), "Game Admin %s moved out Business %s [ID %d][SQLID: %d].",GetName(playerid, false), BizzInfo[biz][bMessage], biz, BizzInfo[biz][bSQLID]);
+	SendAdminMessage(COLOR_LIGHTBLUE, globalstring);
+	#if defined MODULE_LOGS
+	Log_Write("/logfiles/a_sellbiz.txt", "(%s) Game Admin %s moved out Business %s[ID %d][SQLID: %d]", ReturnDate(), GetName(playerid, false), BizzInfo[biz][bMessage], biz, BizzInfo[biz][bSQLID]);
+	#endif
+		
 	return 1;
 }
 
 CMD:asellgarage(playerid, params[])
 {
-    new garage,
-		TmpQuery[158];
+	if(PlayerInfo[playerid][pAdmin] < 1337) 
+		return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You don't have premissions to use this command!");
+
+    new garage;
+
     if(sscanf(params, "i", garage)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /asellgarage [garageid]");
 	
 	if(!Iter_Contains(Garages, garage)) return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "Garage ID %d doesn't exist!", garage);
 		
-	
-	if(PlayerInfo[playerid][pAdmin] >= 1337)
-	{	
-		foreach(new i : Player)
+	foreach(new i : Player)
+	{
+		if(PlayerInfo[i][pGarageKey] == garage)
 		{
-			if(PlayerInfo[i][pGarageKey] == garage)
-			{
-				PlayerInfo[i][pGarageKey] = -1;
-				va_SendClientMessage(i, COLOR_RED, "[ ! ]: Your garage has been moved out by Game Admin %s!", GetName(playerid, false));
-				break;
-			}				
-		}
-		
-		format( TmpQuery, sizeof(TmpQuery), "UPDATE server_garages SET ownerid = '0' WHERE id = '%d'", 
-			GarageInfo[garage][gSQLID]
-		);
-		mysql_tquery(g_SQL, TmpQuery);
-		
-		GarageInfo[garage][gOwnerID] 				= 0;
-		GarageInfo[ garage ][ gLocked ] 			= 1;
-		PlayerPlaySound(playerid, 1052, 0.0, 0.0, 0.0);
-		SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "You sold garage %s with admin command!");
-		format(globalstring, sizeof(globalstring), "Game Admin %s moved out garage %s[ID: %d][SQLID: %d].", GetName(playerid, false), GarageInfo[garage][gAdress], garage, GarageInfo[garage][gSQLID]);
-		SendAdminMessage(COLOR_LIGHTBLUE, globalstring);
-		#if defined MODULE_LOGS
-		Log_Write("/logfiles/a_sellhouse.txt", "(%s) Game Admin %s moved out garage %s[ID: %d][SQLID: %d].", ReturnDate(), GetName(playerid, false), GarageInfo[garage][gAdress], garage, GarageInfo[garage][gSQLID]);
-		#endif
+			PlayerInfo[i][pGarageKey] = -1;
+			va_SendClientMessage(i, COLOR_RED, "[ ! ]: Your garage has been moved out by Game Admin %s!", GetName(playerid, false));
+			break;
+		}				
 	}
-	else SendMessage(playerid, MESSAGE_TYPE_ERROR, "You don't have permissions to use this command.");
+	
+	mysql_fquery(g_SQL, "UPDATE server_garages SET ownerid = '0' WHERE id = '%d'", GarageInfo[garage][gSQLID]);
+	
+	GarageInfo[garage][gOwnerID] 				= 0;
+	GarageInfo[ garage ][ gLocked ] 			= 1;
+	PlayerPlaySound(playerid, 1052, 0.0, 0.0, 0.0);
+	SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "You sold garage %s with admin command!");
+	format(globalstring, sizeof(globalstring), "Game Admin %s moved out garage %s[ID: %d][SQLID: %d].", GetName(playerid, false), GarageInfo[garage][gAdress], garage, GarageInfo[garage][gSQLID]);
+	SendAdminMessage(COLOR_LIGHTBLUE, globalstring);
+	#if defined MODULE_LOGS
+	Log_Write("/logfiles/a_sellhouse.txt", "(%s) Game Admin %s moved out garage %s[ID: %d][SQLID: %d].", ReturnDate(), GetName(playerid, false), GarageInfo[garage][gAdress], garage, GarageInfo[garage][gSQLID]);
+	#endif
 	return 1;
 }
 
 CMD:asellhouse(playerid, params[])
 {
+	if(PlayerInfo[playerid][pAdmin] < 1337) 
+		return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You don't have premissions to use this command!");
+
 	new house, foundonline = 0;
     if(sscanf(params, "i", house)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /asellhouse [houseid]");
-   	if(PlayerInfo[playerid][pAdmin] >= 1337) 
+   
+	foreach(new i : Player)
 	{
-		foreach(new i : Player)
+		if(PlayerInfo[i][pOnline] == true && PlayerInfo[i][pSQLID] == HouseInfo[house][hOwnerID])
 		{
-			if(PlayerInfo[i][pOnline] == true && PlayerInfo[i][pSQLID] == HouseInfo[house][hOwnerID])
-			{
-				PlayerInfo[i][pHouseKey] = INVALID_HOUSE_ID;
-				va_SendClientMessage(i, COLOR_RED, "[ ! ]: Your house has been moved out by Game Admin %s, you got refunded buy price in return!", GetName(playerid, false));
-				BudgetToPlayerMoney(i, HouseInfo[house][hValue]);
-				foundonline = 1;
-				break;
-			}				
-		}
-		new TmpQuery[128];
-		// Update houses
-		format(TmpQuery, 128, "UPDATE houses SET ownerid='0' WHERE ownerid = '%d'", HouseInfo[ house ][hOwnerID]);
-		mysql_tquery(g_SQL, TmpQuery);
-		
-		if(foundonline == 0)
-		{
-			// Update accounts
-			format( TmpQuery, sizeof(TmpQuery), "UPDATE accounts SET handMoney = handMoney + '%d' WHERE sqlid = '%d'", 
-				HouseInfo[ house ][hValue],
-				HouseInfo[ house ][hOwnerID]
-			);
-			mysql_tquery(g_SQL, TmpQuery);
-			
-			// Update proracun
-			format( TmpQuery, sizeof(TmpQuery), "UPDATE city SET budget = budget - '%d'", 
-				HouseInfo[ house ][hValue]
-			);
-			mysql_tquery(g_SQL, TmpQuery);
-		}
-		
-			
-		HouseInfo[house][hOwnerID]		= 0;
-		HouseInfo[house][hLock] 		= 1;
-		HouseInfo[house][hSafePass] 	= 0;
-		HouseInfo[house][hSafeStatus] 	= 0;
-	    HouseInfo[house][hOrmar] 		= 0;
-		
-		PlayerPlaySound(playerid, 1052, 0.0, 0.0, 0.0);
-		va_SendClientMessage(playerid, COLOR_RED, "[ ! ]: You sold a house on adress %s, buy price was returned to the previous owner!", HouseInfo[house][hAdress]);
-		format(globalstring, sizeof(globalstring), "Game Admin %s moved out House on adress %s[ID %d][SQLID: %d]", GetName(playerid, false), HouseInfo[house][hAdress], house, HouseInfo[house][hSQLID]);
-		SendAdminMessage(COLOR_LIGHTBLUE, globalstring);
-		#if defined MODULE_LOGS
-		Log_Write("/logfiles/a_sellhouse.txt", "(%s) Game Admin %s moved out House on adress %s[ID %d][SQLID: %d]", ReturnDate(), GetName(playerid, false), HouseInfo[house][hAdress], house, HouseInfo[house][hSQLID]);
-		#endif
+			PlayerInfo[i][pHouseKey] = INVALID_HOUSE_ID;
+			va_SendClientMessage(i, COLOR_RED, "[ ! ]: Your house has been moved out by Game Admin %s, you got refunded buy price in return!", GetName(playerid, false));
+			BudgetToPlayerMoney(i, HouseInfo[house][hValue]);
+			foundonline = 1;
+			break;
+		}				
 	}
-	else SendMessage(playerid, MESSAGE_TYPE_ERROR, "You don't have permissions to use this command.");
+	mysql_fquery(g_SQL, "UPDATE houses SET ownerid='0' WHERE ownerid = '%d'", HouseInfo[ house ][hOwnerID]);
+	
+	if(foundonline == 0)
+	{
+		mysql_fquery(g_SQL, "UPDATE accounts SET handMoney = handMoney + '%d' WHERE sqlid = '%d'", 
+			HouseInfo[ house ][hValue],
+			HouseInfo[ house ][hOwnerID]
+		);
+		mysql_fquery(g_SQL, "UPDATE city SET budget = budget - '%d'", HouseInfo[ house ][hValue]);
+	}
+	
+		
+	HouseInfo[house][hOwnerID]		= 0;
+	HouseInfo[house][hLock] 		= 1;
+	HouseInfo[house][hSafePass] 	= 0;
+	HouseInfo[house][hSafeStatus] 	= 0;
+	HouseInfo[house][hOrmar] 		= 0;
+	
+	PlayerPlaySound(playerid, 1052, 0.0, 0.0, 0.0);
+	va_SendClientMessage(playerid, COLOR_RED, "[ ! ]: You sold a house on adress %s, buy price was returned to the previous owner!", HouseInfo[house][hAdress]);
+	format(globalstring, sizeof(globalstring), "Game Admin %s moved out House on adress %s[ID %d][SQLID: %d]", GetName(playerid, false), HouseInfo[house][hAdress], house, HouseInfo[house][hSQLID]);
+	SendAdminMessage(COLOR_LIGHTBLUE, globalstring);
+	#if defined MODULE_LOGS
+	Log_Write("/logfiles/a_sellhouse.txt", "(%s) Game Admin %s moved out House on adress %s[ID %d][SQLID: %d]", ReturnDate(), GetName(playerid, false), HouseInfo[house][hAdress], house, HouseInfo[house][hSQLID]);
+	#endif
+	
 	return 1;
 }
 
@@ -2939,104 +2836,88 @@ CMD:asellcomplex(playerid, params[])
 {
 	new complex, foundonline = 0;
     if(sscanf(params, "i", complex)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /asellcomplex [complexid]");
-   	if(PlayerInfo[playerid][pAdmin] >= 1337) {
-		foreach(new i : Player)
+   	if(PlayerInfo[playerid][pAdmin] < 1337) 
+		return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You don't have premissions to use this command!");
+	
+	foreach(new i : Player)
+	{
+		if(PlayerInfo[i][pOnline] == true)
 		{
-			if(PlayerInfo[i][pOnline] == true)
+			if(PlayerInfo[i][pSQLID] == ComplexInfo[complex][cOwnerID]) 
 			{
-				if(PlayerInfo[i][pSQLID] == ComplexInfo[complex][cOwnerID]) 
-				{
-					PlayerInfo[i][pComplexKey] = INVALID_COMPLEX_ID;
-					va_SendClientMessage(i, COLOR_RED, "[ ! ]: Your Complex has been moved out by Game Admin %s, you got refunded buy price of it!", GetName(playerid, false));
-					BudgetToPlayerMoney(i, ComplexInfo[ complex ][ cPrice ]);
-					foundonline = 1;
-					break;
-				}
+				PlayerInfo[i][pComplexKey] = INVALID_COMPLEX_ID;
+				va_SendClientMessage(i, COLOR_RED, "[ ! ]: Your Complex has been moved out by Game Admin %s, you got refunded buy price of it!", GetName(playerid, false));
+				BudgetToPlayerMoney(i, ComplexInfo[ complex ][ cPrice ]);
+				foundonline = 1;
+				break;
 			}
 		}
-		
-		new TmpQuery[128];
-		
-		// Update Complex MySQL table
-		format(TmpQuery, 128, "UPDATE server_complex SET owner_id= '0' WHERE id = '%d'", ComplexInfo[ complex ][ cSQLID ]);
-		mysql_tquery(g_SQL, TmpQuery);
-		
-		if(foundonline == 0)
-		{
-			// Update accounts
-			format( TmpQuery, sizeof(TmpQuery), "UPDATE accounts SET handMoney = handMoney + '%d' WHERE sqlid = '%d'", 
-				ComplexInfo[complex][cPrice],
-				ComplexInfo[complex][cOwnerID]
-			);
-			mysql_tquery(g_SQL, TmpQuery);
-			
-			// Update proracun
-			format( TmpQuery, sizeof(TmpQuery), "UPDATE city SET budget = budget - '%d'", 
-				ComplexInfo[complex][cPrice]
-			);
-			mysql_tquery(g_SQL, TmpQuery);
-		}
-				
-		ComplexInfo[complex][cOwnerID]		= -1;
-		
-		PlayerPlaySound(playerid, 1052, 0.0, 0.0, 0.0);
-		va_SendClientMessage(playerid, COLOR_RED, "[ ! ]: You sold Complex %s with admin command, the owner got the buy price of Complex in return!", ComplexInfo[complex][cName]);
-		format(globalstring, sizeof(globalstring), "Game Admin %s moved out Complex %s[ID %d][SQLID: %d]", GetName(playerid, false), ComplexInfo[complex][cName], complex, ComplexInfo[complex][cSQLID]);
-		SendAdminMessage(COLOR_LIGHTBLUE, globalstring);
-		#if defined MODULE_LOGS
-		Log_Write("/logfiles/a_sellcomplex.txt", "(%s) Game Admin %s moved out Complex %s[ID %d][SQLID: %d]", ReturnDate(), GetName(playerid, false), ComplexInfo[complex][cName], complex, ComplexInfo[complex][cSQLID]);
-		#endif
 	}
-	else SendMessage(playerid, MESSAGE_TYPE_ERROR, "You don't have permissions to use this command.");
+	mysql_fquery(g_SQL, "UPDATE server_complex SET owner_id= '0' WHERE id = '%d'", ComplexInfo[ complex ][ cSQLID ]);	
+	if(foundonline == 0)
+	{
+		// Update accounts
+		mysql_fquery(g_SQL, "UPDATE accounts SET handMoney = handMoney + '%d' WHERE sqlid = '%d'", 
+			ComplexInfo[complex][cPrice],
+			ComplexInfo[complex][cOwnerID]
+		);
+		
+		mysql_fquery(g_SQL, "UPDATE city SET budget = budget - '%d'", ComplexInfo[complex][cPrice]);
+	}
+			
+	ComplexInfo[complex][cOwnerID]		= -1;
+	
+	PlayerPlaySound(playerid, 1052, 0.0, 0.0, 0.0);
+	va_SendClientMessage(playerid, COLOR_RED, "[ ! ]: You sold Complex %s with admin command, the owner got the buy price of Complex in return!", ComplexInfo[complex][cName]);
+	format(globalstring, sizeof(globalstring), "Game Admin %s moved out Complex %s[ID %d][SQLID: %d]", GetName(playerid, false), ComplexInfo[complex][cName], complex, ComplexInfo[complex][cSQLID]);
+	SendAdminMessage(COLOR_LIGHTBLUE, globalstring);
+	#if defined MODULE_LOGS
+	Log_Write("/logfiles/a_sellcomplex.txt", "(%s) Game Admin %s moved out Complex %s[ID %d][SQLID: %d]", ReturnDate(), GetName(playerid, false), ComplexInfo[complex][cName], complex, ComplexInfo[complex][cSQLID]);
+	#endif
 	return 1;
 }
 
 CMD:asellcomplexroom(playerid, params[])
 {
+	if(PlayerInfo[playerid][pAdmin] < 1337) 
+		return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You don't have premissions to use this command!");
+
 	new complex;
     if(sscanf(params, "i", complex)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /asellcomplexroom [complexroomid]");
-   	if(PlayerInfo[playerid][pAdmin] >= 1337) {
-		foreach(new i : Player)
+		
+	foreach(new i : Player)
+	{
+		if(PlayerInfo[i][pOnline] == true)
 		{
-			if(PlayerInfo[i][pOnline] == true)
+			if(PlayerInfo[i][pSQLID] == ComplexRoomInfo[complex][cOwnerID]) 
 			{
-				if(PlayerInfo[i][pSQLID] == ComplexRoomInfo[complex][cOwnerID]) 
-				{
-					PlayerInfo[i][pComplexKey] = INVALID_COMPLEX_ID;
-					va_SendClientMessage(i, COLOR_RED, "[ ! ]: You got moved out of Complex Room on adress %s by Game Admin %s!", ComplexRoomInfo[complex][cAdress], GetName(playerid, false));
-					break;
-				}
+				PlayerInfo[i][pComplexKey] = INVALID_COMPLEX_ID;
+				va_SendClientMessage(i, COLOR_RED, "[ ! ]: You got moved out of Complex Room on adress %s by Game Admin %s!", ComplexRoomInfo[complex][cAdress], GetName(playerid, false));
+				break;
 			}
 		}
-		
-		//Enum
-		PlayerInfo[playerid][pComplexRoomKey] = INVALID_COMPLEX_ID;
-		PlayerInfo[ playerid ][ pSpawnChange ] = 3;
-		ComplexRoomInfo[complex][cOwnerID] = -1;
-		
-		//SQL
-		new
-			Query[ 128 ];
-		format( Query, sizeof(Query), "UPDATE server_complex_rooms SET ownerid = '0' WHERE id = '%d'",
-			ComplexRoomInfo[ complex ][cSQLID]
-		);
-		mysql_tquery( g_SQL, Query, "", "" );
-		
-		format(Query, sizeof(Query), "UPDATE accounts SET spawnchange = '%d' WHERE sqlid = '%d'", 
-			PlayerInfo[playerid][pSpawnChange],
-			PlayerInfo[playerid][pSQLID]
-		);
-		mysql_tquery(g_SQL, Query);
-
-		PlayerPlaySound(playerid, 1052, 0.0, 0.0, 0.0);
-		SendClientMessage(playerid, COLOR_RED, "[ ! ] Iselio si complex sobu admin komandom!");
-		format(globalstring, sizeof(globalstring), "Game Admin %s moved out Complex Room on adress %s[ID %d][SQLID: %d]", GetName(playerid, false), ComplexRoomInfo[complex][cAdress], complex, ComplexRoomInfo[complex][cSQLID]);
-		SendAdminMessage(COLOR_LIGHTBLUE, globalstring);
-		#if defined MODULE_LOGS
-		Log_Write("/logfiles/a_sellcomplex.txt", "(%s) Game Admin %s moved out Complex Room on adress %s[ID %d][SQLID: %d]", ReturnDate(), GetName(playerid, false), ComplexRoomInfo[complex][cAdress], complex, ComplexRoomInfo[complex][cSQLID]);
-		#endif
 	}
-	else SendMessage(playerid, MESSAGE_TYPE_ERROR, "You don't have permissions to use this command.");
+	
+	// Enum
+	PlayerInfo[playerid][pComplexRoomKey] = INVALID_COMPLEX_ID;
+	PlayerInfo[ playerid ][ pSpawnChange ] = 3;
+	ComplexRoomInfo[complex][cOwnerID] = -1;
+	
+	// SQL
+	mysql_fquery(g_SQL, "UPDATE server_complex_rooms SET ownerid = '0' WHERE id = '%d'", ComplexRoomInfo[ complex ][cSQLID]);
+	
+	mysql_fquery(g_SQL, "UPDATE accounts SET spawnchange = '%d' WHERE sqlid = '%d'", 
+		PlayerInfo[playerid][pSpawnChange],
+		PlayerInfo[playerid][pSQLID]
+	);
+
+	PlayerPlaySound(playerid, 1052, 0.0, 0.0, 0.0);
+	SendClientMessage(playerid, COLOR_RED, "[ ! ] Iselio si complex sobu admin komandom!");
+	format(globalstring, sizeof(globalstring), "Game Admin %s moved out Complex Room on adress %s[ID %d][SQLID: %d]", GetName(playerid, false), ComplexRoomInfo[complex][cAdress], complex, ComplexRoomInfo[complex][cSQLID]);
+	SendAdminMessage(COLOR_LIGHTBLUE, globalstring);
+	#if defined MODULE_LOGS
+	Log_Write("/logfiles/a_sellcomplex.txt", "(%s) Game Admin %s moved out Complex Room on adress %s[ID %d][SQLID: %d]", ReturnDate(), GetName(playerid, false), ComplexRoomInfo[complex][cAdress], complex, ComplexRoomInfo[complex][cSQLID]);
+	#endif
 	return 1;
 }
 
@@ -3084,13 +2965,16 @@ CMD:fuelcar(playerid, params[])
 {
 	if (PlayerInfo[playerid][pAdmin] < 1337) return SendClientMessage(playerid, COLOR_RED, "Niste ovlasteni za koristenje ove komande!");
 	new
-		fuel, vehicleid;
+		fuel, 
+		vehicleid;
 	if( sscanf( params, "ii", vehicleid, fuel ) ) return SendClientMessage(playerid, COLOR_RED, "[ ? ]:  /fuelcar [vehicleid][kolicina]");
 	if( vehicleid == INVALID_VEHICLE_ID || !IsValidVehicle(vehicleid) ) return SendClientMessage( playerid, COLOR_RED, "Nevaljan unos vehicleida!");
-	if( 1 <= fuel <= 100 ) {
+	if( 1 <= fuel <= 100 ) 
+	{
 		VehicleInfo[ vehicleid ][ vFuel ] = fuel;
 		va_SendClientMessage(playerid, COLOR_RED, "[ ! ] Vozilo %d je napunjeno %d posto goriva!", vehicleid, fuel);
-	} else SendClientMessage( playerid, COLOR_RED, "Kolicina mora biti izmedju 1 i 100!");
+	} 
+	else SendClientMessage( playerid, COLOR_RED, "Kolicina mora biti izmedju 1 i 100!");
 	return 1;
 }
 
@@ -3102,9 +2986,13 @@ CMD:factionmembers(playerid, params[])
 	if (sscanf(params, "i", orgid)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /factionmembers [Orgid]");
 	if (orgid < 1 || orgid > 16) return SendClientMessage(playerid, COLOR_RED, "Ne dopusten unos (1-16)!");
 	
-	new selectFactionMemb[96];
-	format(selectFactionMemb, sizeof(selectFactionMemb),"SELECT * FROM accounts WHERE facMemId = '%d' LIMIT 1", orgid);
-    mysql_tquery(g_SQL, selectFactionMemb, "CountFactionMembers", "ii", playerid, orgid);
+    mysql_tquery(g_SQL, 
+		va_fquery(g_SQL, "SELECT * FROM accounts WHERE facMemId = '%d' LIMIT 1", orgid), 
+		"CountFactionMembers", 
+		"ii", 
+		playerid, 
+		orgid
+	);
 	return 1;
 }
 
@@ -3122,8 +3010,9 @@ CMD:weather(playerid, params[])
 
 CMD:setstat(playerid, params[])
 {
-    
-    if (PlayerInfo[playerid][pAdmin] < 1337) return SendClientMessage(playerid, COLOR_RED, "Niste ovlasteni za koristenje ove komande!");
+    if (PlayerInfo[playerid][pAdmin] < 1337) 
+		return SendClientMessage(playerid, COLOR_RED, "Niste ovlasteni za koristenje ove komande!");
+
     new giveplayerid, stat, amount;
     if (sscanf(params, "uii", giveplayerid, stat, amount))
 	{
@@ -3137,7 +3026,9 @@ CMD:setstat(playerid, params[])
 		SendClientMessage(playerid, COLOR_GREY, "(25 - Complex Key), (26 - Complex Room Key), (27 - Fishing skill)");
 		return 1;
     }
-    if (!IsPlayerConnected(giveplayerid)) return SendClientMessage(playerid, COLOR_RED, "Taj igraè nije online!");
+    if (!IsPlayerConnected(giveplayerid)) 
+		return SendClientMessage(playerid, COLOR_RED, "Taj igraè nije online!");
+	
 	switch (stat)
 	{
 		case 1:
@@ -3146,13 +3037,11 @@ CMD:setstat(playerid, params[])
 			format(globalstring, sizeof(globalstring), "   Korisnik je postavljen na level %d.", amount);
 			SetPlayerScore( giveplayerid, amount );
 			
-			new levelUpUpdate[100];
-			format(levelUpUpdate, 100, "UPDATE accounts SET levels = '%d', respects = '%d' WHERE sqlid = '%d'",
+			mysql_fquery(g_SQL, "UPDATE accounts SET levels = '%d', respects = '%d' WHERE sqlid = '%d'",
 				PlayerInfo[giveplayerid][pLevel],
 				PlayerInfo[giveplayerid][pRespects],
 				PlayerInfo[giveplayerid][pSQLID]
 			);
-			mysql_tquery(g_SQL, levelUpUpdate);
 		}
 		case 2:
 		{
@@ -3323,10 +3212,10 @@ CMD:skin(playerid, params[])
 	PlayerInfo[giveplayerid][pSkin] = skin;
 	PlayerInfo[giveplayerid][pChar] = skin;
 	
-	// MySQL Query
-	new skinUpdateQuery[128];
-	format(skinUpdateQuery, 128, "UPDATE accounts SET playaSkin = '%d' WHERE sqlid = '%d'", PlayerInfo[giveplayerid][pChar], PlayerInfo[giveplayerid][pSQLID]);
-	mysql_tquery(g_SQL, skinUpdateQuery);
+	mysql_fquery(g_SQL, "UPDATE accounts SET playaSkin = '%d' WHERE sqlid = '%d'", 
+		PlayerInfo[giveplayerid][pChar], 
+		PlayerInfo[giveplayerid][pSQLID]
+	);
 	return 1;
 }
 
@@ -3550,8 +3439,7 @@ CMD:deletevehicle(playerid, params[])
 {
 	new
 		pick,
-		vehicleid = GetPlayerVehicleID(playerid),
-		deleteQuery[ 128 ];
+		vehicleid = GetPlayerVehicleID(playerid);
 
 	if(PlayerInfo[playerid][pAdmin] < 4) return SendClientMessage(playerid, COLOR_RED, "Nisi ovlasten za koristenje ove komande.");
 	if(sscanf(params, "i", pick)) {
@@ -3574,21 +3462,29 @@ CMD:deletevehicle(playerid, params[])
 			if(PlayerInfo[playerid][pAdmin] < 1338) 
 				return SendClientMessage(playerid, COLOR_RED, "Nisi ovlasten za koristenje ove komande.");
 
-			format(deleteQuery, sizeof(deleteQuery), "DELETE FROM cocars WHERE id = '%d'", VehicleInfo[vehicleid][vSQLID]);
-			mysql_tquery(g_SQL, deleteQuery);
-			SendFormatMessage(playerid, MESSAGE_TYPE_INFO, "Uspjesno ste izbrisali %s(SQL: %d) iz baze/igre!", vehicleid);
+			mysql_fquery(g_SQL, "DELETE FROM cocars WHERE id = '%d'", VehicleInfo[vehicleid][vSQLID]);
+			
+			va_SendClientMessage(playerid, COLOR_LIGHTRED, "Uspjesno ste izbrisali %s(ID: %d | SQLID: %d) iz baze/igre!", 
+				ReturnVehicleName(VehicleInfo[vehicleid][vModel]),
+				vehicleid,
+				VehicleInfo[vehicleid][vSQLID]
+			);
 
 			DestroyFarmerObjects(playerid);
 			AC_DestroyVehicle(vehicleid);
 			ResetVehicleInfo(vehicleid);
 		}
-		case 3: {
+		case 3: 
+		{
 			if(PlayerInfo[playerid][pAdmin] < 1338) return SendClientMessage(playerid, COLOR_RED, "Nisi ovlasten za koristenje ove komande.");
 
-			format(deleteQuery, sizeof(deleteQuery), "DELETE FROM server_cars WHERE id = '%d'", VehicleInfo[vehicleid][vSQLID]);
-			mysql_tquery(g_SQL, deleteQuery);
+			mysql_fquery(g_SQL, "DELETE FROM server_cars WHERE id = '%d'", VehicleInfo[vehicleid][vSQLID]);
 
-			SendFormatMessage(playerid, MESSAGE_TYPE_INFO, "Uspjesno ste izbrisali vozilo %d iz baze/igre!", vehicleid);
+			va_SendClientMessage(playerid, COLOR_LIGHTRED, "Uspjesno ste izbrisali %s(ID: %d | SQLID: %d) iz baze/igre!", 
+				ReturnVehicleName(VehicleInfo[vehicleid][vModel]),
+				vehicleid,
+				VehicleInfo[vehicleid][vSQLID]
+			);
 
 			DestroyFarmerObjects(playerid);
 			AC_DestroyVehicle(vehicleid);
@@ -3704,10 +3600,7 @@ CMD:undie(playerid, params[])
 	SetPlayerHealth(giveplayerid, 25.0);
 	TogglePlayerControllable(giveplayerid, true);
 
-	new
-		deleteQuery[128];
-	format(deleteQuery, 128, "DELETE FROM player_deaths WHERE player_id = '%d'", PlayerInfo[giveplayerid][pSQLID]);
-	mysql_tquery(g_SQL, deleteQuery);
+	mysql_fquery(g_SQL, "DELETE FROM player_deaths WHERE player_id = '%d'", PlayerInfo[giveplayerid][pSQLID]);
 
  	format(globalstring, sizeof(globalstring), "AdmWarn: %s je ugasio RPDeath stanje korisniku %s!", GetName(playerid,false), GetName(giveplayerid,false));
 	SendAdminMessage(COLOR_RED, globalstring);
@@ -4201,16 +4094,18 @@ CMD:jobids(playerid, params[])
 }
 CMD:buyparkall(playerid, params[])
 {
-	new
-	    Query[128],
-		giveplayerid;
+	new giveplayerid;
 	if(PlayerInfo[playerid][pAdmin] < 2) return SendClientMessage(playerid, COLOR_RED, "Niste ovlasteni za koristenje ove komande!");
 	if(sscanf(params, "u", giveplayerid)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /buyparkall [playerid/dio imena]");
 	if(!IsPlayerConnected(giveplayerid)) return SendClientMessage(playerid, COLOR_RED, "Taj igraè nije online!");
-	format(Query, sizeof(Query), "SELECT COUNT(ownerid) FROM cocars WHERE ownerid = '%d'",
-	    PlayerInfo[giveplayerid][pSQLID]
+	
+	mysql_tquery(g_SQL, 
+		va_fquery(g_SQL, "SELECT COUNT(ownerid) FROM cocars WHERE ownerid = '%d'", PlayerInfo[giveplayerid][pSQLID]), 
+		"OfflinePlayerVehicles", 
+		"ii", 
+		playerid, 
+		giveplayerid
 	);
-	mysql_tquery(g_SQL, Query, "OfflinePlayerVehicles", "ii", playerid, giveplayerid);
 	return 1;
 }
 CMD:getip(playerid, params[])
@@ -4237,10 +4132,16 @@ CMD:iptoname(playerid, params[])
 		ip[ MAX_PLAYER_IP ];
 	if(sscanf(params, "s[24]", ip)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /iptoname [IP adresa]");
 	if(strcount(ip, ".") < 3) return SendClientMessage(playerid, COLOR_RED, "Niste unijeli valjnu IP adresu!");
-	new
-		ipToNameQuery[ 256 ];
-	mysql_format(g_SQL, ipToNameQuery, 256, "SELECT name,online,lastip FROM  player_connects INNER JOIN  accounts ON accounts.sqlid = player_connects.player_id WHERE aip = '%e'", ip);
-	mysql_tquery(g_SQL, ipToNameQuery, "LoadNamesFromIp", "is", playerid, ip);
+
+	mysql_tquery(g_SQL,
+		va_fquery(g_SQL, 
+			"SELECT name,online,lastip FROM  player_connects INNER JOIN\n\
+				accounts ON accounts.sqlid = player_connects.player_id WHERE aip = '%e'", ip), 
+		"LoadNamesFromIp", 
+		"is", 
+		playerid, 
+		ip
+	);
 	return 1;
 }
 
@@ -4266,14 +4167,19 @@ CMD:prisonex(playerid, params[])
     if (sscanf(params,"s[24]is[20]", targetname, sati, reason)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /prisonex [Ime] [minute] [Razlog]");
     if (strlen(reason) < 1 || strlen(reason) > 20) return SendClientMessage(playerid, COLOR_RED, "Ne mozete ispod 0 ili preko 20 znakova za razlog!");
 
-   	mysql_format(g_SQL, mysqlquery, sizeof(mysqlquery), "SELECT * FROM accounts WHERE name = '%e' LIMIT 1", targetname);
-    mysql_tquery(g_SQL, mysqlquery, "CheckPlayerPrison", "isis", playerid, targetname, sati, reason);
+    mysql_tquery(g_SQL, 
+		va_fquery(g_SQL, "SELECT * FROM accounts WHERE name = '%e' LIMIT 1", targetname), 
+		"CheckPlayerPrison", 
+		"isis", 
+		playerid, 
+		targetname, 
+		sati, 
+		reason
+	);
 	
-	new sqlid, prsnQuery[256];
-	mysql_format(g_SQL, prsnQuery, sizeof(prsnQuery), "SELECT sqlid FROM accounts WHERE name = '%e' LIMIT 0,1", targetname);
-	
-	new 
-		Cache:result = mysql_query(g_SQL, prsnQuery);
+	new sqlid, prsnQuery[128];
+	mysql_format(g_SQL, prsnQuery, sizeof(prsnQuery), "SELECT sqlid FROM accounts WHERE name = '%e'", targetname);
+	new Cache:result = mysql_query(g_SQL, prsnQuery);
 	cache_get_value_name_int(0, "sqlid", sqlid);
 	cache_delete(result);
 	
@@ -4287,7 +4193,8 @@ CMD:prisonex(playerid, params[])
 		
 	GetPlayerName(playerid, forumname, MAX_PLAYER_NAME);
 	
-	mysql_format( g_SQL, prsnQuery, sizeof(prsnQuery), "INSERT INTO prisons (id_igraca,name, forumname, time, reason, date) VALUES ('%d', '%e', '%e', '%d', '%e', '%e')",
+	mysql_fquery(g_SQL, 
+		"INSERT INTO prisons (id_igraca,name, forumname, time, reason, date) VALUES ('%d', '%e', '%e', '%d', '%e', '%e')",
 		sqlid,
 		targetname,
 		PlayerInfo[playerid][pForumName],
@@ -4295,7 +4202,6 @@ CMD:prisonex(playerid, params[])
 		tmp_reason,
 		date
 	);
-	mysql_tquery(g_SQL, prsnQuery);
 	return 1;
 }
 
@@ -4309,8 +4215,14 @@ CMD:warnex(playerid, params[])
     if (sscanf(params,"s[24]s[20]", targetname, reason)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /warnex [Ime] [Razlog]");
 	if (strlen(reason) < 1 || strlen(reason) > 20) return SendClientMessage(playerid, COLOR_RED, "Ne mozete ispod 0 ili preko 20 znakova za razlog!");
    	
-   	mysql_format(g_SQL, mysqlquery, sizeof(mysqlquery), "SELECT * FROM accounts WHERE name = '%e' LIMIT 1", targetname);
-    mysql_tquery(g_SQL, mysqlquery, "LoadPlayerWarns", "iss", playerid, targetname, reason);
+    mysql_tquery(g_SQL, 
+		va_fquery(g_SQL, "SELECT * FROM accounts WHERE name = '%e'", targetname), 
+		"LoadPlayerWarns", 
+		"iss", 
+		playerid, 
+		targetname, 
+		reason
+	);
 	
 	new sqlid, TmpQuery[200];
 	mysql_format(g_SQL, TmpQuery, sizeof(TmpQuery), "SELECT sqlid FROM accounts WHERE name = '%e'", targetname);
@@ -4330,14 +4242,13 @@ CMD:warnex(playerid, params[])
 		
 	GetPlayerName(playerid, forumname, MAX_PLAYER_NAME);
 	
-	mysql_format(g_SQL, TmpQuery, sizeof(TmpQuery), "INSERT INTO warns (id_igraca,name, forumname, reason, date) VALUES ('%d', '%e', '%e', '%e', '%e')",
+	mysql_fquery(g_SQL, "INSERT INTO warns (id_igraca,name, forumname, reason, date) VALUES ('%d', '%e', '%e', '%e', '%e')",
 		sqlid,
 		targetname,
 		PlayerInfo[playerid][pForumName],
 		tmp_reason,
 		date
 	);
-	mysql_tquery(g_SQL, TmpQuery);
 	return 1;
 }
 
@@ -4428,14 +4339,14 @@ CMD:prison(playerid, params[])
 	format(time, sizeof(time), "%02d:%02d:%02d", hour, minute, second);
 
  	new
-		prsnQuery[256],
 		forumname [ MAX_PLAYER_NAME ],
 		playername[ MAX_PLAYER_NAME ];
 
 	GetPlayerName(playerid, forumname, MAX_PLAYER_NAME);
 	GetPlayerName(giveplayerid, playername, MAX_PLAYER_NAME);
 
-	mysql_format(g_SQL, prsnQuery, sizeof(prsnQuery), "INSERT INTO prisons (id_igraca,name, forumname, time, reason, date) VALUES ('%d', '%e', '%e', '%d', '%e', '%e')",
+	mysql_fquery(g_SQL, 
+		"INSERT INTO prisons (id_igraca,name, forumname, time, reason, date) VALUES ('%d', '%e', '%e', '%d', '%e', '%e')",
 		PlayerInfo[giveplayerid][pSQLID],
 		playername,
 		PlayerInfo[playerid][pForumName],
@@ -4443,7 +4354,6 @@ CMD:prison(playerid, params[])
 		reason,
 		date
 	);
-	mysql_tquery(g_SQL, prsnQuery);
 	return 1;
 }
 
@@ -4473,7 +4383,6 @@ CMD:charge(playerid, params[])
 	PlayerToBudgetMoney(giveplayerid, money);
 
 
-	new TmpQuery[200];
 	new
 		forumname[ MAX_PLAYER_NAME ],
 		playername[ MAX_PLAYER_NAME ];
@@ -4485,7 +4394,8 @@ CMD:charge(playerid, params[])
 	getdate(year, month, day);
 	format(date, sizeof(date), "%02d.%02d.%d.", day, month, year);
 
-	mysql_format(g_SQL, TmpQuery, sizeof(TmpQuery), "INSERT INTO charges (id_igraca,name, admin_name, money, reason, date) VALUES ('%d', '%e', '%e', '%d', '%e', '%e')",
+	mysql_fquery(g_SQL, 
+		"INSERT INTO charges (id_igraca,name, admin_name, money, reason, date) VALUES ('%d', '%e', '%e', '%d', '%e', '%e')",
 		PlayerInfo[giveplayerid][pSQLID],
 		playername,
 		PlayerInfo[playerid][pForumName],
@@ -4493,113 +4403,8 @@ CMD:charge(playerid, params[])
 		result,
 		date
 	);
-	mysql_tquery(g_SQL, TmpQuery);
 	return 1;
 }
-
-/*CMD:chargeex(playerid, params[])
-{
-    if (PlayerInfo[playerid][pAdmin] < 2) return SendClientMessage(playerid, COLOR_RED, "Niste ovlasteni za koristenje ove komande!");
-	new
-	    targetname[MAX_PLAYER_NAME],
-	    money,
-		reason[32];
-    if( sscanf(params,"s[24]is[31]", targetname, money, reason) ) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /chargeex [Ime][Iznos][Razlog]");
-    if( strlen(targetname) > 24 ) return SendClientMessage(playerid, COLOR_RED, "Maksimalna velicina imena je 24!");
-	if( strlen(reason) > 31 ) return SendClientMessage(playerid, COLOR_RED, "Maksimalna velicina razloga je 31!");
-	mysql_format(g_SQL, globalstring, sizeof(globalstring), "SELECT * FROM accounts WHERE name = '%e'", targetname);
-	mysql_tquery(g_SQL, globalstring, "ChargePlayer", "isi", playerid, targetname, money);
-	
-	format(globalstring, sizeof(globalstring), "[ ! ] Uspjesno ste chargeali igraca %s!", targetname);
-	SendClientMessage(playerid, COLOR_GREEN, globalstring);
-	
-	new sqlid, TmpQuery[200];
-	mysql_format(g_SQL, TmpQuery, sizeof(TmpQuery), "SELECT sqlid FROM accounts WHERE name = '%e' LIMIT 0,1", targetname);
-	
-	new 
-		Cache:result = mysql_query(g_SQL, TmpQuery);
-	cache_get_value_name_int(0, "sqlid", sqlid);
-	cache_delete(result);
-	
-	new year, month, day, date[32];
-	getdate(year, month, day);
-	format(date, sizeof(date), "%02d.%02d.%d.", day, month, year);
-	
-	new
-		admin_name[ MAX_PLAYER_NAME ];
-	GetPlayerName(playerid, admin_name, MAX_PLAYER_NAME);
-	
-	mysql_format(g_SQL, TmpQuery, sizeof(TmpQuery), "INSERT INTO charges (id_igraca,name, admin_name, money, reason, date) VALUES ('%d', '%e', '%e', '%d', '%e', '%e')",
-		sqlid,
-		targetname,
-		admin_name,
-		money,
-		reason,
-		date
-	);
-	mysql_tquery(g_SQL, TmpQuery);
-	return 1;
-}
-
-CMD:chargep(playerid, params[])
-{
-	if (PlayerInfo[playerid][pAdmin] < 2) return SendClientMessage(playerid, COLOR_RED, "Niste ovlasteni za koristenje ove komande!");
-	new percentage, giveplayerid, reason[36];
-	
-	if( sscanf( params, "uis[36]", giveplayerid, percentage, reason ) ) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /chargep [ID/DioImena] [Postotak] [Razlog]");
-	if( giveplayerid == INVALID_PLAYER_ID ) return SendClientMessage(playerid, COLOR_RED, "Igrac nije online!");
-	if( percentage < 0 || percentage > 100 ) return SendClientMessage(playerid, COLOR_RED, "Ne mozete unijeti manje od 0 i vise od 100 posto!");
-	
-	new razlika = floatround(( PlayerInfo[ giveplayerid ][ pBank ] + PlayerInfo[ giveplayerid ][ pMoney ] ) * floatdiv(percentage, 100), floatround_round);
-	
-	va_SendClientMessageToAll(COLOR_RED, "AdmCMD: %s je novcano kaznio igraca %s sa $%d, razlog: %s", 
-		GetName(playerid,false), 
-		GetName(giveplayerid,false), 
-		razlika,
-		reason
-	);
-	AC_GivePlayerMoney(giveplayerid, -razlika);
-	
-	new year, month, day, date[32];
-	getdate(year, month, day);
-	format(date, sizeof(date), "%02d.%02d.%d.", day, month, year);
-	
-	new 
-		TmpQuery[256],
-		admin_name[ MAX_PLAYER_NAME ],
-		playername[ MAX_PLAYER_NAME ];
-		
-	GetPlayerName(playerid, admin_name, MAX_PLAYER_NAME);
-	GetPlayerName(giveplayerid, playername, MAX_PLAYER_NAME);
-	
-	mysql_format(g_SQL, TmpQuery, sizeof(TmpQuery), "INSERT INTO charges (id_igraca,name, admin_name, money, reason, date) VALUES ('%d', '%e', '%e', '%d', '%e', '%e')",
-		PlayerInfo[giveplayerid][pSQLID],
-		playername,
-		admin_name,
-		razlika,
-		reason,
-		date
-	);
-	mysql_tquery(g_SQL, TmpQuery);
-	return 1;
-}
-
-CMD:chargepex(playerid, params[])
-{
-	if (PlayerInfo[playerid][pAdmin] < 2) return SendClientMessage(playerid, COLOR_RED, "Niste ovlasteni za koristenje ove komande!");
-	new
-		percentage,
-		playerName[ MAX_PLAYER_NAME ],
-		reason[ 36 ];
-	if( sscanf( params, "s[24]is[36]", playerName, percentage, reason ) ) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /chargepex [ime][postotak][razlog]");
-	if( percentage < 0 || percentage > 100 ) return SendClientMessage(playerid, COLOR_RED, "Ne mozete unijeti manje od 0 i vise od 100 posto!");
-	new
-		Float:precent = percentage / 100;
-		
-	mysql_format(g_SQL, globalstring, sizeof(globalstring), "SELECT * FROM accounts WHERE name = '%e'", playerName);
-	mysql_tquery(g_SQL, globalstring, "ChargepPlayer", "isfs", playerid, playerName, precent, reason);
-	return 1;
-}*/
 
 CMD:gotocar(playerid, params[])
 {
@@ -4756,8 +4561,15 @@ CMD:banex(playerid, params[])
 	if( strlen(targetname) > 24 ) return SendClientMessage(playerid, COLOR_RED, "Maksimalna velicina imena je 24!");
     if (strlen(reason) < 1 || strlen(reason) > 24) return SendClientMessage(playerid, COLOR_RED, "Maksimalna velicina razloga je 24, a minimalna 1!");
 	
-	mysql_format(g_SQL, globalstring, sizeof(globalstring), "SELECT * FROM accounts WHERE name = '%e'", targetname);
-	mysql_tquery(g_SQL, globalstring, "OfflineBanPlayer", "issi", playerid, targetname, reason, days);
+	mysql_tquery(g_SQL, 
+		va_fquery(g_SQL, "SELECT * FROM accounts WHERE name = '%e'", targetname), 
+		"OfflineBanPlayer", 
+		"issi", 
+		playerid, 
+		targetname, 
+		reason, 
+		days
+	);
 
 	va_SendClientMessage(playerid, COLOR_RED, "[ ! ] Uspjesno ste banali igraca %s!", targetname);
 	return 1;
@@ -4773,13 +4585,21 @@ CMD:jailex(playerid, params[])
 	if (sscanf(params, "s[24]i", giveplayername, time)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /jailex [Ime] [Time(minutes)]");
 	if( strlen(giveplayername) > 24 ) return SendClientMessage(playerid, COLOR_RED, "Maksimalna velicina imena je 24!");
 	if (time < 1) return SendClientMessage(playerid, COLOR_RED, "Vrijeme pritvora ne moze biti manje od 1 minute!");
+	
 	foreach (new i : Player)
 	{
 	    GetPlayerName(i, LoopName, sizeof(LoopName));
 		if(!strcmp(giveplayername, LoopName)) return SendClientMessage(playerid, COLOR_RED, "Taj igraè je online!");
 	}
-	mysql_format(g_SQL, globalstring, sizeof(globalstring), "SELECT * FROM accounts WHERE name = '%e'", giveplayername);
-	mysql_tquery(g_SQL, globalstring, "OfflineJailPlayer", "issi", playerid, giveplayername, time);
+
+	mysql_tquery(g_SQL, 
+		va_fquery(g_SQL, "SELECT * FROM accounts WHERE name = '%e'", giveplayername), 
+		"OfflineJailPlayer", 
+		"issi", 
+		playerid, 
+		giveplayername, 
+		time
+	);
 
 	va_SendClientMessage(playerid, COLOR_RED, "[ ! ] Uspjesno ste zatvorili igraca %s!", giveplayername);
 	return 1;
@@ -4995,20 +4815,19 @@ CMD:warn(playerid, params[])
 
 	new
 		forumname[ MAX_PLAYER_NAME ],
-		playername[ MAX_PLAYER_NAME ],
-		wrnQuery[256];
+		playername[ MAX_PLAYER_NAME ];
 
 	GetPlayerName(playerid, forumname, MAX_PLAYER_NAME);
 	GetPlayerName(giveplayerid, playername, MAX_PLAYER_NAME);
 
-	mysql_format(g_SQL, wrnQuery, sizeof(wrnQuery), "INSERT INTO warns (id_igraca,name, forumname, reason, date) VALUES ('%d', '%e', '%e', '%e', '%e')",
+	mysql_fquery(g_SQL,
+		 "INSERT INTO warns (id_igraca,name, forumname, reason, date) VALUES ('%d', '%e', '%e', '%e', '%e')",
 		PlayerInfo[giveplayerid][pSQLID],
 		playername,
 		PlayerInfo[playerid][pForumName],
 		reason,
 		date
 	);
-	mysql_tquery(g_SQL, wrnQuery);
 	return 1;
 }
 
@@ -5329,10 +5148,17 @@ CMD:goto(playerid, params[])
 CMD:checklastlogin(playerid, params[])
 {
 	//if(PlayerInfo[playerid][pAdmin] < 1) return SendClientMessage(playerid, COLOR_RED, "Niste ovlasteni!"); Da vratimo na staro da igraci mogu gledat kad je tko bio online zadnji put radi kuca i biznisa..
-	new targetname[MAX_PLAYER_NAME], string[128];
-	if (sscanf(params, "s[24]", targetname)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /checklastlogin [Ime_Prezime]");
-	mysql_format(g_SQL, string, sizeof(string), "SELECT * FROM accounts WHERE name = '%e' LIMIT 0,1", targetname); // da budemo sigurniji jos vise haha iako je %e ista stvar al dobro
-    mysql_tquery(g_SQL, string, "CheckPlayerData", "is", playerid, targetname);
+	new targetname[MAX_PLAYER_NAME];
+	if (sscanf(params, "s[24]", targetname)) 
+		return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /checklastlogin [Ime_Prezime]");
+	
+    mysql_tquery(g_SQL, 
+		va_fquery(g_SQL, "SELECT * FROM accounts WHERE name = '%e'", targetname), 
+		"CheckPlayerData", 
+		"is", 
+		playerid, 
+		targetname
+	);
 	return 1;
 }
 
@@ -5414,8 +5240,14 @@ CMD:checkoffline(playerid, params[])
 
 	new targetname[MAX_PLAYER_NAME];
 	if (sscanf(params, "s[24]", targetname)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /checkoffline [Ime]");
-	mysql_format(g_SQL, globalstring, sizeof(globalstring),"SELECT * FROM accounts WHERE name = '%e' LIMIT 1", targetname);
-    mysql_tquery(g_SQL, globalstring, "CheckOffline", "is", playerid, targetname);
+    
+	mysql_tquery(g_SQL, 
+		va_fquery(g_SQL, "SELECT * FROM accounts WHERE name = '%e' LIMIT 1", targetname), 
+		"CheckOffline", 
+		"is", 
+		playerid, 
+		targetname
+	);
 	return 1;
 }
 
@@ -6292,9 +6124,14 @@ CMD:adminmsg(playerid, params[])
 	if (sscanf(params, "s[25]s[128]", playerb, n_reason))
 		return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /adminmsg [character name] [message]");
 
-	mysql_format(g_SQL, mysqlquery, sizeof(mysqlquery), "SELECT * FROM accounts WHERE name = '%e' LIMIT 1", playerb);
-    mysql_tquery(g_SQL, mysqlquery, "AddAdminMessage", "iss", playerid, playerb, n_reason);
-	return true;
+    mysql_tquery(g_SQL, 
+		va_fquery(g_SQL, "SELECT * FROM accounts WHERE name = '%e'", playerb), 
+		"AddAdminMessage", "iss", 
+		playerid, 
+		playerb, 
+		n_reason
+	);
+	return 1;
 }
 
 CMD:kickall(playerid, params[])
