@@ -11,7 +11,7 @@ SHERIFF'S 		20900 - 20999
 
 Public:LoadCustomModels()
 {
-	//Female skins
+	// Female skins
     AddCharModel(308, 20001, "skins/Female/coa_girl1.dff", "skins/Female/coa_girl1.txd");
 	AddCharModel(308, 20002, "skins/Female/coa_girl2.dff", "skins/Female/coa_girl2.txd");
 	AddCharModel(308, 20003, "skins/Female/coa_girl3.dff", "skins/Female/coa_girl3.txd");
@@ -53,8 +53,7 @@ Public:LoadCustomModels()
 	AddCharModel(308, 20039, "skins/Female/coa_girl39.dff", "skins/Female/coa_girl39.txd");
 	AddCharModel(308, 20040, "skins/Female/coa_girl40.dff", "skins/Female/coa_girl40.txd");
 
-	//Male skins
-
+	// Male skins
 	AddCharModel(2, 20042, "skins/Male/coa_male1.dff", "skins/Male/coa_male1.txd");
 	AddCharModel(2, 20043, "skins/Male/coa_male2.dff", "skins/Male/coa_male2.txd");
 	AddCharModel(2, 20044, "skins/Male/coa_male3.dff", "skins/Male/coa_male3.txd");
@@ -129,7 +128,7 @@ Public:LoadCustomModels()
 	AddCharModel(2, 20113, "skins/Male/coa_male72.dff", "skins/Male/coa_male72.txd");
 
 
-	//Bikers
+	// Bikers
 	AddCharModel(2, 20114, "skins/Bikers/coa_biker1.dff", "skins/Bikers/coa_biker1.txd");
 	AddCharModel(2, 20115, "skins/Bikers/coa_biker2.dff", "skins/Bikers/coa_biker2.txd");
 	AddCharModel(2, 20116, "skins/Bikers/coa_biker3.dff", "skins/Bikers/coa_biker3.txd");
@@ -140,12 +139,12 @@ Public:LoadCustomModels()
 	AddCharModel(2, 20121, "skins/Bikers/coa_biker8.dff", "skins/Bikers/coa_biker8.txd");
 	AddCharModel(2, 20122, "skins/Bikers/coa_biker9.dff", "skins/Bikers/coa_biker9.txd");
 
-	//GANG
-	//female
+	// GANG
+	// Female
 	AddCharModel(308, 20123, "skins/GANG/coa_gangf1.dff", "skins/GANG/coa_gangf1.txd");
 	AddCharModel(308, 20124, "skins/GANG/coa_gangf2.dff", "skins/GANG/coa_gangf2.txd");
 	AddCharModel(308, 20125, "skins/GANG/coa_gangf3.dff", "skins/GANG/coa_gangf3.txd");
-	//male
+	// Male
 	AddCharModel(2, 20126, "skins/GANG/coa_gangm1.dff", "skins/GANG/coa_gangm1.txd");
 	AddCharModel(2, 20127, "skins/GANG/coa_gangm2.dff", "skins/GANG/coa_gangm2.txd");
 	AddCharModel(2, 20128, "skins/GANG/coa_gangm3.dff", "skins/GANG/coa_gangm3.txd");
@@ -158,7 +157,7 @@ Public:LoadCustomModels()
 	AddCharModel(2, 20135, "skins/GANG/coa_gangm10.dff", "skins/GANG/coa_gangm10.txd");
 	AddCharModel(2, 20136, "skins/GANG/coa_gangm11.dff", "skins/GANG/coa_gangm11.txd");
 	
-	//New Skins
+	// New Skins
 	AddCharModel(2, 20137, "skins/newones/coa_bigli1.dff", "skins/newones/coa_bigli1.txd");
 	AddCharModel(2, 20138, "skins/newones/coa_bigli2.dff", "skins/newones/coa_bigli2.txd");
 	AddCharModel(2, 20139, "skins/newones/coa_bigli3.dff", "skins/newones/coa_bigli3.txd");
@@ -176,7 +175,7 @@ Public:LoadCustomModels()
 	AddCharModel(2, 20151, "skins/newones/coa_bigli15.dff", "skins/newones/coa_bigli15.txd");
 	AddCharModel(2, 20152, "skins/newones/coa_bigli16.dff", "skins/newones/coa_bigli16.txd");
 	
-	//Darwin Skins
+	// Darwin Skins
 	AddCharModel(2, 20153, "skins/Donator/coa_darwin1.dff", "skins/Donator/coa_darwin1.txd");
 	AddCharModel(2, 20154, "skins/Donator/coa_darwin2.dff", "skins/Donator/coa_darwin2.txd");
 	AddCharModel(2, 20155, "skins/Donator/coa_darwin3.dff", "skins/Donator/coa_darwin3.txd");
@@ -194,7 +193,7 @@ Public:LoadCustomModels()
 	AddCharModel(308, 20165, "skins/newones/wfyri_3.dff", "skins/newones/wfyri_3.txd");
 	AddCharModel(308, 20166, "skins/newones/wfyri_4.dff", "skins/newones/wfyri_4.txd");
 	
-	//LSPD
+	// LSPD
     AddCharModel(280, 20500, "skins/LSPD/coa_asianpd.dff", "skins/LSPD/coa_asianpd.txd");
 	AddCharModel(280, 20501, "skins/LSPD/coa_bmypd1.dff", "skins/LSPD/coa_bmypd1.txd");
 	AddCharModel(280, 20502, "skins/LSPD/coa_bmypd2.dff", "skins/LSPD/coa_bmypd2.txd");
@@ -269,7 +268,7 @@ Public:LoadCustomModels()
     AddCharModel(280, 20571, "skins/LSPD/hoffman4.dff", "skins/LSPD/hoffman4.txd");
     AddCharModel(280, 20572, "skins/LSPD/hoffman5.dff", "skins/LSPD/hoffman5.txd");
 
-	//LSFD - 20600 - 20699
+	// LSFD - 20600 - 20699
     AddCharModel(2, 20600, "skins/LSFD/coa_lvemt1.dff", "skins/LSFD/coa_lvemt1.txd");
     AddCharModel(2, 20601, "skins/LSFD/coa_lvemt2.dff", "skins/LSFD/coa_lvemt2.txd");
     AddCharModel(2, 20602, "skins/LSFD/africanmedic.dff", "skins/LSFD/africanmedic.txd");
@@ -287,7 +286,7 @@ Public:LoadCustomModels()
     AddCharModel(2, 20614, "skins/LSFD/lvfd1.dff", "skins/LSFD/lvfd1.txd");
     AddCharModel(2, 20615, "skins/LSFD/sffd1.dff", "skins/LSFD/sffd1.txd");
 	
-	//GOV - 20700 - 20799
+	// GOV - 20700 - 20799
 	AddCharModel(2, 20700, "skins/GOV/coa_gov1.dff", "skins/GOV/coa_gov1.txd");
 	AddCharModel(2, 20701, "skins/GOV/coa_gov2.dff", "skins/GOV/coa_gov2.txd");
 	AddCharModel(2, 20702, "skins/GOV/coa_gov3.dff", "skins/GOV/coa_gov3.txd");
@@ -308,13 +307,13 @@ Public:LoadCustomModels()
 	AddCharModel(2, 20717, "skins/GOV/coa_gov18.dff", "skins/GOV/coa_gov18.txd");
 	AddCharModel(2, 20718, "skins/GOV/coa_mayor.dff", "skins/GOV/coa_mayor.txd");
 
-    //LSN - 20800 - 20899
+    // LSN - 20800 - 20899
     AddCharModel(2, 20800, "skins/LSN/coa_lsn1.dff", "skins/LSN/coa_lsn1.txd");
     AddCharModel(2, 20801, "skins/LSN/coa_lsn2.dff", "skins/LSN/coa_lsn2.txd");
     AddCharModel(2, 20802, "skins/LSN/coa_lsn3.dff", "skins/LSN/coa_lsn3.txd");
     AddCharModel(2, 20803, "skins/LSN/coa_lsn4.dff", "skins/LSN/coa_lsn4.txd");
 
-	//Sheriff Skins - 20900 - 20999
+	// Sheriff Skins - 20900 - 20999
     AddCharModel(2, 20900, "skins/Sheriffs/ksd1.dff", "skins/Sheriffs/ksd1.txd");
     AddCharModel(2, 20901, "skins/Sheriffs/ksd2.dff", "skins/Sheriffs/ksd2.txd");
     AddCharModel(2, 20902, "skins/Sheriffs/ksd3.dff", "skins/Sheriffs/ksd3.txd");
@@ -353,7 +352,7 @@ Public:LoadCustomModels()
     AddCharModel(2, 20935, "skins/Sheriffs/ksd38.dff", "skins/Sheriffs/ksd38.txd");
 	AddCharModel(2, 20936, "skins/Sheriffs/ksd7.dff", "skins/Sheriffs/ksd7.txd");
     
-    // Static models
+    // Static Models
 	AddSimpleModel(-1, 19315, -2001, "coa_bldog.dff", "coa_bldog.txd");
 	AddSimpleModel(-1, 19315, -2002, "coa_brdog.dff", "coa_brdog.txd");
 	AddSimpleModel(-1, 19315, -2003, "coa_grdog.dff", "coa_grdog.txd");
@@ -510,5 +509,6 @@ Public:LoadCustomModels()
 	AddSimpleModel(-1, 19801, -2165, "attachments/fd_maskica.dff", "attachments/fd_maskica.txd");
 	AddSimpleModel(-1, 19920, -2166, "attachments/fd_pancir.dff", "attachments/fd_pancir.txd");
 	AddSimpleModel(-1, 19916, -2167, "attachments/fd_znacka.dff", "attachments/fd_znacka.txd");
+	
 	return 1;
 }

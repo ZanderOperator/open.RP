@@ -460,41 +460,45 @@ stock DeletePlayerTuningTD(playerid)
 //==============================================================================
 stock LoadVehicleTuning(vehicleid)
 {
-	new
-		mysqlQuery[ 256 ];
-	format(mysqlQuery, 256, "SELECT * FROM vehicle_tuning WHERE vehid = '%d' LIMIT 0,1", VehicleInfo[ vehicleid ][ vSQLID ] );
-	mysql_tquery(g_SQL, mysqlQuery, "OnVehicleTuningLoad", "ii", vehicleid, 0);
+	mysql_tquery(g_SQL, 
+		va_fquery(g_SQL, "SELECT * FROM vehicle_tuning WHERE vehid = '%d' LIMIT 0,1", VehicleInfo[ vehicleid ][ vSQLID ] ),
+	 	"OnVehicleTuningLoad", 
+	 	"ii", 
+		 vehicleid, 
+	 	false
+	);
 	return 1;
 }
 
 
 stock DeleteVehicleTuning(vehicleid)
 {
-	new	
-		tmpString[ 64 ];
-	format( tmpString, sizeof(tmpString), "DELETE FROM vehicle_tuning WHERE vehid='%d'", VehicleInfo[ vehicleid ][ vSQLID ] );
-	mysql_tquery(g_SQL, tmpString);
+	mysql_fquery(g_SQL, "DELETE FROM vehicle_tuning WHERE vehid='%d'", VehicleInfo[ vehicleid ][ vSQLID ] );
 	return 1;
 }
 
 stock SaveVehicleTuning(vehicleid)
 {
-	new
-		tmpQuery[ 128 ];
-	format(tmpQuery, 128, "SELECT * FROM vehicle_tuning WHERE vehid = '%d' LIMIT 0,1", VehicleInfo[ vehicleid ][ vSQLID ] );
-	mysql_tquery(g_SQL, tmpQuery, "OnVehicleTuningLoad", "ii", vehicleid, 1);
+	mysql_tquery(g_SQL, 
+		va_fquery(g_SQL, "SELECT * FROM vehicle_tuning WHERE vehid = '%d'", VehicleInfo[ vehicleid ][ vSQLID ] ), 
+		"OnVehicleTuningLoad", 
+		"ii", 
+		vehicleid, 
+		true
+	);
 	return 1;
 }
 
-Public:OnVehicleTuningLoad(vehicleid, save)
+Public:OnVehicleTuningLoad(vehicleid, bool:save)
 {
-	new tmpQuery[ 380 ],
-		smallQuery[80];
 	if( save ) 
 	{
 		if( cache_num_rows() ) 
 		{
-			format(tmpQuery, 380, "UPDATE vehicle_tuning SET spoiler = '%d', hood = '%d', roof = '%d', skirt = '%d', lamps = '%d', nitro = '%d', exhaust = '%d', wheels = '%d', hydraulic = '%d', fbumper = '%d', rbumper = '%d', rvent = '%d', lvent = '%d', paintjob = '%d' WHERE vehid = '%d'",
+			mysql_fquery(g_SQL,
+			 	"UPDATE vehicle_tuning SET spoiler = '%d', hood = '%d', roof = '%d', skirt = '%d', lamps = '%d',\n\
+					nitro = '%d', exhaust = '%d', wheels = '%d', hydraulic = '%d', fbumper = '%d', rbumper = '%d',\n\
+					rvent = '%d', lvent = '%d', paintjob = '%d' WHERE vehid = '%d'",
 				VehicleInfo[vehicleid][vSpoiler],
 				VehicleInfo[vehicleid][vHood],
 				VehicleInfo[vehicleid][vRoof],
@@ -511,11 +515,13 @@ Public:OnVehicleTuningLoad(vehicleid, save)
 				VehicleInfo[vehicleid][vPaintJob],
 				VehicleInfo[vehicleid][vSQLID]
 			);
-			mysql_tquery(g_SQL, tmpQuery);
 		} 
 		else 
 		{
-			format(tmpQuery, 380, "INSERT INTO vehicle_tuning(vehid, spoiler, hood, roof, skirt, lamps, nitro, exhaust, wheels, hydraulic, fbumper, rbumper, rvent, lvent, paintjob) VALUES ('%d','%d','%d','%d','%d','%d','%d','%d','%d','%d','%d','%d','%d','%d','%d')",
+			mysql_fquery(g_SQL, 
+				"INSERT INTO vehicle_tuning(vehid, spoiler, hood, roof, skirt, lamps, nitro, exhaust, wheels,\n\
+					hydraulic, fbumper, rbumper, rvent, lvent, paintjob) \n\
+					VALUES ('%d','%d','%d','%d','%d','%d','%d','%d','%d','%d','%d','%d','%d','%d','%d')",
 				VehicleInfo[vehicleid][vSQLID],
 				VehicleInfo[vehicleid][vSpoiler],
 				VehicleInfo[vehicleid][vHood],
@@ -532,13 +538,11 @@ Public:OnVehicleTuningLoad(vehicleid, save)
 				VehicleInfo[vehicleid][vLeftVent],
 				VehicleInfo[vehicleid][vPaintJob]
 			);
-			mysql_tquery(g_SQL, tmpQuery);
 		}
-		format(smallQuery, sizeof(smallQuery), "UPDATE cocars SET tuned = '%d' WHERE id = '%d'",
+		mysql_fquery(g_SQL, "UPDATE cocars SET tuned = '%d' WHERE id = '%d'",
 			VehicleInfo[vehicleid][vTuned],
 			VehicleInfo[vehicleid][vSQLID]
 		);
-		mysql_tquery(g_SQL, smallQuery);
 		return 1;
 	} 
 	else 
@@ -1710,16 +1714,16 @@ CMD:remove_tuning(playerid, params[])
 	DeleteVehicleTuning(vehicleid);
 	ResetTuning(vehicleid); 
 	VehicleInfo[vehicleid][vTuned] = false;
-	new
-		saveQuery[60];
-	format( saveQuery, sizeof(saveQuery), "UPDATE cocars SET tuned = '%d' WHERE id = '%d'",
+	
+	mysql_fquery(g_SQL, "UPDATE cocars SET tuned = '%d' WHERE id = '%d'",
 		VehicleInfo[vehicleid][vTuned],
 		VehicleInfo[vehicleid][vSQLID]
 	);
-	mysql_tquery(g_SQL, saveQuery);
-	new vehname[36];
-	strunpack( vehname, Model_Name(VehicleInfo[vehicleid][vModel]) );
-	SendFormatMessage(playerid, MESSAGE_TYPE_SUCCESS, "Tuning je uspjesno uklonjen sa %s [SQL ID: %d]", vehname, VehicleInfo[vehicleid][vSQLID]);
+
+	SendFormatMessage(playerid, MESSAGE_TYPE_SUCCESS, "Tuning je uspjesno uklonjen sa %s [SQL ID: %d]", 
+		ReturnVehicleName(VehicleInfo[vehicleid][vModel]), 
+		VehicleInfo[vehicleid][vSQLID]
+	);
 	return 1;
 }
 //==============================================================================

@@ -743,13 +743,172 @@ stock CheckVehicleList(playerid)
 	return 1;
 }
 
-DeleteVehicleFromBase(vsqlid)
+stock DeleteVehicleFromBase(vsqlid)
 {
 	mysql_fquery(g_SQL, "DELETE FROM cocars_drugs WHERE vehicle_id = '%d'", vsqlid);
 	mysql_fquery(g_SQL, "DELETE FROM cocars_weapons WHERE vehicle_id = '%d'", vsqlid);
 	mysql_fquery(g_SQL, "DELETE FROM cocars_wobjects WHERE vehicle_id = '%d'", vsqlid);
 	mysql_fquery(g_SQL, "DELETE FROM cocars_tickets WHERE vehicle_id = '%d'", vsqlid);
 	mysql_fquery(g_SQL, "DELETE FROM cocars WHERE id = '%d'", vsqlid);
+	return 1;
+}
+
+stock RemoveTrunkObjects(vehicleid)
+{
+	foreach(new wslot: VehWeaponObject[vehicleid])
+	{
+		if(IsValidObject(VehicleInfo[vehicleid][vWeaponObjectID][wslot]))
+		{
+			DestroyObject(VehicleInfo[vehicleid][vWeaponObjectID][wslot]);
+			VehicleInfo[vehicleid][vWeaponObjectID][wslot] = INVALID_OBJECT_ID;
+		}
+	}
+	return 1;
+}
+
+
+stock RespawnTrunkObjects(vehicleid)
+{
+	foreach(new wslot: VehWeaponObject[vehicleid])
+	{
+		if(IsValidObject(VehicleInfo[vehicleid][vWeaponObjectID][wslot]))
+		{
+			VehicleInfo[vehicleid][vWeaponObjectID][wslot] = CreateObject(WeaponModels(VehicleInfo[vehicleid][vWeaponId][wslot]), VehicleInfo[vehicleid][vOffsetx], VehicleInfo[vehicleid][vOffsety], VehicleInfo[vehicleid][vOffsetz], VehicleInfo[vehicleid][vOffsetxR], VehicleInfo[vehicleid][vOffsetyR], VehicleInfo[vehicleid][vOffsetzR], 50.0);
+			AttachObjectToVehicle(VehicleInfo[vehicleid][vWeaponObjectID][wslot], vehicleid, VehicleInfo[vehicleid][vOffsetx][wslot], VehicleInfo[vehicleid][vOffsety][wslot], VehicleInfo[vehicleid][vOffsetz][wslot], VehicleInfo[vehicleid][vOffsetxR][wslot], VehicleInfo[vehicleid][vOffsetyR][wslot], VehicleInfo[vehicleid][vOffsetzR][wslot]);
+		}
+	}
+	return 1;
+}
+
+stock CheckPlayerVehicle(playerid)
+{
+	new
+		found = -1;
+	foreach(new vehicleid : Vehicles[VEHICLE_USAGE_PRIVATE])
+	{
+		if(VehicleInfo[vehicleid][vUsage] == VEHICLE_USAGE_PRIVATE && PlayerInfo[playerid][pSQLID] == VehicleInfo[vehicleid][vOwnerID])
+		{
+			found = vehicleid;
+			break;
+		}
+	}
+	if(found == -1)
+		PlayerInfo[playerid][pSpawnedCar] = -1;
+	else
+		PlayerInfo[playerid][pSpawnedCar] = found;
+	return 1;
+}
+
+stock GetPlayerVehicleList(playerid)
+{
+
+	mysql_tquery(g_SQL, 
+		va_fquery(g_SQL, "SELECT * FROM cocars WHERE ownerid = '%d' LIMIT 0,%d",
+			PlayerInfo[playerid][pSQLID],
+			MAX_PLAYER_CARS
+		), 
+		"LoadingPlayerVehicle", 
+		"i", 
+		playerid
+	);
+	return 1;
+}
+
+stock CheckVehicleInsurance(vehicleid)
+{
+	new Float:vehHealth = VehicleInfo[vehicleid][vHealth];
+	switch(VehicleInfo[vehicleid][vInsurance]) {
+		case 0: {
+		    if(VehicleInfo[vehicleid][vBodyArmor] == 1)
+			{
+				if(vehHealth < 1400.0) AC_SetVehicleHealth(vehicleid, 1400.0);
+			}
+			else
+			{
+				if(vehHealth < 900.0) AC_SetVehicleHealth(vehicleid, 390.0);
+			}
+			UpdateVehicleDamageStatus(vehicleid, VehicleInfo[vehicleid][vPanels], VehicleInfo[vehicleid][vDoors], VehicleInfo[vehicleid][vLights], VehicleInfo[vehicleid][vTires]);
+		}
+		case 1: {
+			UpdateVehicleDamageStatus(vehicleid, 0, 0, 0, 0);
+
+			VehicleInfo[vehicleid][vPanels]		= 0;
+			VehicleInfo[vehicleid][vDoors]		= 0;
+			VehicleInfo[vehicleid][vLights]		= 0;
+			VehicleInfo[vehicleid][vTires]		= 0;
+
+		    if(VehicleInfo[vehicleid][vBodyArmor] == 1)
+			{
+				if(vehHealth < 1600.0) AC_SetVehicleHealth(vehicleid, 1600.0);
+			}
+			else
+			{
+				if(vehHealth < 1000.0) AC_SetVehicleHealth(vehicleid, 1000.0);
+			}
+		}
+		case 2: {
+			UpdateVehicleDamageStatus(vehicleid, 0, 0, 0, 0);
+
+			VehicleInfo[vehicleid][vDestroyed]	= false;
+			VehicleInfo[vehicleid][vPanels]		= 0;
+			VehicleInfo[vehicleid][vDoors]		= 0;
+			VehicleInfo[vehicleid][vLights]		= 0;
+			VehicleInfo[vehicleid][vTires]		= 0;
+
+		    if(VehicleInfo[vehicleid][vBodyArmor] == 1)
+			{
+				if(vehHealth < 1600.0) AC_SetVehicleHealth(vehicleid, 1600.0);
+			}
+			else
+			{
+				if(vehHealth < 1000.0) AC_SetVehicleHealth(vehicleid, 1000.0);
+			}
+		}
+		case 3: {
+			UpdateVehicleDamageStatus(vehicleid, 0, 0, 0, 0);
+
+			VehicleInfo[vehicleid][vDestroyed]	= false;
+			VehicleInfo[vehicleid][vPanels]		= 0;
+			VehicleInfo[vehicleid][vDoors]		= 0;
+			VehicleInfo[vehicleid][vLights]		= 0;
+			VehicleInfo[vehicleid][vTires]		= 0;
+
+		    if(VehicleInfo[vehicleid][vBodyArmor] == 1)
+			{
+				if(vehHealth < 1600.0) AC_SetVehicleHealth(vehicleid, 1600.0);
+			}
+			else
+			{
+				if(vehHealth < 1000.0) AC_SetVehicleHealth(vehicleid, 1000.0);
+			}
+		}
+	}
+	
+	#if defined MODULE_SPIKES
+	if(VehicleInfo[vehicleid][vTireArmor] == 1)
+	{
+	    AddVehicleComponent(vehicleid, 1025);
+	    if(VehicleInfo[vehicleid][vTires] == 0)
+	    {
+	    	vTireHP[vehicleid][0] = 100;
+	    	vTireHP[vehicleid][1] = 100;
+	    	vTireHP[vehicleid][2] = 100;
+	    	vTireHP[vehicleid][3] = 100;
+    	}
+    	VOSDelay(vehicleid);
+	}
+	#endif
+	return 1;
+}
+
+stock ResetVehicleAlarm(vehicleid)
+{
+	stop VehicleAlarmTimer[vehicleid];
+	stop VehicleLightsTimer[vehicleid];
+	VehicleLightsBlinker[vehicleid] = 0;
+	VehicleBlinking[vehicleid] = false;
+	VehicleAlarmStarted[vehicleid] = false;
+	SetVehicleParamsEx(vehicleid, VEHICLE_PARAMS_OFF, VEHICLE_PARAMS_OFF, VEHICLE_PARAMS_OFF, VEHICLE_PARAMS_OFF, VEHICLE_PARAMS_OFF, VEHICLE_PARAMS_OFF, VEHICLE_PARAMS_OFF);
 	return 1;
 }
 
@@ -1102,34 +1261,34 @@ stock ResetPlayerWeaponList(playerid)
 
 stock LoadVehiclePackage(vehicleid) 
 {
-	new
-		query[128];
-	format(query, sizeof(query), "SELECT * FROM cocars_wpackages WHERE vehicleid = '%d' LIMIT 0,15",
-		VehicleInfo[vehicleid][vSQLID]
+	mysql_tquery(g_SQL, 
+		va_fquery(g_SQL, "SELECT * FROM cocars_wpackages WHERE vehicleid = '%d' LIMIT 0,15", VehicleInfo[vehicleid][vSQLID]), 
+		"LoadingVehiclePackages", 
+		"i", 
+		vehicleid
 	);
-	mysql_pquery(g_SQL, query, "LoadingVehiclePackages", "i", vehicleid);
-	return (true);
+	return 1;
 }
 
 stock LoadVehicleWeapons(vehicleid)
 {
-	new
-		tmpQuery[128];
-	format(tmpQuery, 128, "SELECT * FROM cocars_weapons WHERE vehicle_id = '%d' LIMIT 0,7",
-		VehicleInfo[vehicleid][vSQLID]
+	mysql_tquery(g_SQL, 
+		va_fquery(g_SQL, "SELECT * FROM cocars_weapons WHERE vehicle_id = '%d' LIMIT 0,7", VehicleInfo[vehicleid][vSQLID]), 
+		"LoadingVehicleWeapons", 
+		"i", 
+		vehicleid
 	);
-	mysql_pquery(g_SQL, tmpQuery, "LoadingVehicleWeapons", "i", vehicleid);
 	return 1;
 }
 
 stock LoadVehicleWeaponPos(vehicleid)
-{
-	new
-		tmpQuery[128];
-	format(tmpQuery, 128, "SELECT * FROM cocars_wobjects WHERE vehicle_id = '%d'",
-		VehicleInfo[vehicleid][vSQLID]
+{ 
+	mysql_tquery(g_SQL, 
+		va_fquery(g_SQL, "SELECT * FROM cocars_wobjects WHERE vehicle_id = '%d' LIMIT 0,7", VehicleInfo[vehicleid][vSQLID]),
+		"LoadingVehicleWeaponPos", 
+		"i", 
+		vehicleid
 	);
-	mysql_pquery(g_SQL, tmpQuery, "LoadingVehicleWeaponPos", "i", vehicleid);
 	return 1;
 }
 

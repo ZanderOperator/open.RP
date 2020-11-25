@@ -46,6 +46,7 @@ static stock
 	##    ##    ##    ##     ## ##    ## ##   ##  ##    ## 
 	 ######     ##     #######   ######  ##    ##  ######  
 */
+
 stock static GetPlayerFromCP(checkpointid)
 {
 	foreach(new playerid : Player)

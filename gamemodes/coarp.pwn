@@ -147,17 +147,7 @@
 #define SCRIPT_VERSION							"CoA RP v18.6.0.-"#GIT_REV
 #define DEV_NAME   								"Woo-Logan"
 
-#include "modules/Server/Defines.pwn"
-
-/*
-	######## ##    ## ##     ## ##     ##  ######
-	##       ###   ## ##     ## ###   ### ##    ##
-	##       ####  ## ##     ## #### #### ##
-	######   ## ## ## ##     ## ## ### ##  ###### 		& Iterators
-	##       ##  #### ##     ## ##     ##       ##
-	##       ##   ### ##     ## ##     ## ##    ##
-	######## ##    ##  #######  ##     ##  ######
-*/
+#include "modules/Server\Preincludes/Defines.inc"
 
 // Main Database Connection Handler
 new MySQL:g_SQL;
@@ -184,7 +174,8 @@ new
 	Iterator:P_PACKAGES[MAX_PLAYERS]<MAX_PLAYER_PACKAGES>,
 	Iterator:P_Weapons[MAX_PLAYERS]<MAX_PLAYER_WEAPON_SLOTS>;
 
-#include "modules/Server/Enumerators.pwn"
+// Enumerators
+#include "modules/Server\Preincludes/Enumerators.inc"
 
 /*
 	##     ##    ###    ########   ######
