@@ -19,21 +19,16 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 						return va_SendClientMessage(playerid,COLOR_RED, "Potrebno je %d EXP-a da bi iskoristili Level Up!", LEVEL_UP_EXP);
 						
 					ExpInfo[playerid][ePoints] -= LEVEL_UP_EXP;
-					
-					new expQueryUpdate[90];
-					format(expQueryUpdate, sizeof(expQueryUpdate), "UPDATE experience SET points = '%d' WHERE sqlid = '%d'",
+					mysql_fquery(g_SQL, "UPDATE experience SET points = '%d' WHERE sqlid = '%d'",
 						ExpInfo[playerid][ePoints],
 						PlayerInfo[playerid][pSQLID]
 					);
-					mysql_pquery(g_SQL, expQueryUpdate);
 					
 					PlayerInfo[playerid][pLevel]++;
-					new levelUpUpdate[90];
-					format(levelUpUpdate, 90, "UPDATE accounts SET levels = '%d' WHERE sqlid = '%d'",
+					mysql_fquery(g_SQL, "UPDATE accounts SET levels = '%d' WHERE sqlid = '%d'",
 						PlayerInfo[playerid][pLevel],
 						PlayerInfo[playerid][pSQLID]
 					);
-					mysql_pquery(g_SQL, levelUpUpdate);
 					
 					SetPlayerScore(playerid, PlayerInfo[playerid][pLevel]);
 					GameTextForPlayer( playerid, "~g~Level up!", 1000, 1 );
@@ -44,19 +39,17 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 				{
 					if(ExpInfo[playerid][ePoints] < MAX_FURSLOTS_EXP)
 						return va_SendClientMessage(playerid,COLOR_RED, "Potrebno je %d EXP-a da bi dobili %d Furniture slotova!", MAX_FURSLOTS_EXP, FURNITURE_PREMIUM_OBJECTS);
-					
+					if(PlayerInfo[playerid][pHouseKey] == INVALID_HOUSE_ID)
+						return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You have to be a house owner to use that EXP buy option!");
+
 					ExpInfo[playerid][ePoints] -= MAX_FURSLOTS_EXP;
-					
-					new expQueryUpdate[90];
-					format(expQueryUpdate, sizeof(expQueryUpdate), "UPDATE experience SET points = '%d' WHERE sqlid = '%d'",
+					mysql_fquery(g_SQL, "UPDATE experience SET points = '%d' WHERE sqlid = '%d'",
 						ExpInfo[playerid][ePoints],
 						PlayerInfo[playerid][pSQLID]
 					);
-					mysql_pquery(g_SQL, expQueryUpdate);
 					
 					PlayerInfo[playerid][FurnPremium] = 1;
-					if(PlayerInfo[playerid][pHouseKey] != INVALID_HOUSE_ID)
-						SetPlayerPremiumFurniture(playerid, PlayerInfo[playerid][pHouseKey]);
+					SetPlayerPremiumFurniture(playerid, PlayerInfo[playerid][pHouseKey]);
 					
 					SendFormatMessage(playerid, MESSAGE_TYPE_SUCCESS, "Iskoristili ste %d EXP-a za %d Furniture slotova. Preostalo: %d EXP", MAX_FURSLOTS_EXP, FURNITURE_PREMIUM_OBJECTS, ExpInfo[playerid][ePoints]);
 					return 1;
@@ -67,13 +60,10 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 						return va_SendClientMessage(playerid,COLOR_RED, "Potrebno je %d EXP-a da bi dobili Premium Bronze paket!", PREMIUM_BRONZE_EXP);
 					
 					ExpInfo[playerid][ePoints] -= PREMIUM_BRONZE_EXP;
-					
-					new expQueryUpdate[90];
-					format(expQueryUpdate, sizeof(expQueryUpdate), "UPDATE experience SET points = '%d' WHERE sqlid = '%d'",
+					mysql_fquery(g_SQL, "UPDATE experience SET points = '%d' WHERE sqlid = '%d'",
 						ExpInfo[playerid][ePoints],
 						PlayerInfo[playerid][pSQLID]
 					);
-					mysql_pquery(g_SQL, expQueryUpdate);
 				
 					// Premium Bronze
 					PlayerInfo[ playerid ][ pMaskID ] = 100000 + random(899999);
@@ -101,26 +91,23 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 						UpdatePremiumHouseFurSlots(playerid, -1, PlayerInfo[ playerid ][ pHouseKey ]);
 					if(PlayerInfo[playerid][pBizzKey] != INVALID_BIZNIS_ID)
 						UpdatePremiumBizFurSlots(playerid);
-					new
-						vipUpdtQuery[ 128 ];
-					format( vipUpdtQuery, 128, "UPDATE accounts SET vipRank = '%d', vipTime = '%d' WHERE sqlid = '%d'",
+					
+					mysql_fquery(g_SQL, "UPDATE accounts SET vipRank = '%d', vipTime = '%d' WHERE sqlid = '%d'",
 						PlayerInfo[playerid][pDonateRank],
 						PlayerInfo[playerid][pDonateTime],
 						PlayerInfo[playerid][pSQLID]
-					);
-					mysql_tquery(g_SQL, vipUpdtQuery);
-					
+					);					
 					
 					// MySQL Log
-					new vipLog[200];
-					format(vipLog, sizeof(vipLog), "INSERT INTO player_vips(player_id, admin_id, rank, created_at, expires_at) VALUES ('%d','%d','%d','%d','%d')",
+					mysql_fquery(g_SQL, 
+						"INSERT INTO player_vips(player_id, admin_id, rank, created_at, expires_at) \n\
+							VALUES ('%d','%d','%d','%d','%d')",
 						PlayerInfo[playerid][pSQLID],
 						PlayerInfo[playerid][pSQLID],
 						PlayerInfo[playerid][pDonateRank],
 						gettimestamp(),
 						PlayerInfo[playerid][pDonateTime]
 					);
-					mysql_pquery(g_SQL, vipLog);
 					
 					SendFormatMessage(playerid, MESSAGE_TYPE_SUCCESS, "Iskoristili ste %d EXP-a za Premium Bronze. Preostalo: %d EXP", PREMIUM_BRONZE_EXP, ExpInfo[playerid][ePoints]);
 					SendClientMessage(playerid, COLOR_RED, "[SERVER]  Iskrene cestitke na Premium paketu! Vas Premium paket traje sljedecih mjesec dana.");
@@ -132,13 +119,10 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 						return va_SendClientMessage(playerid,COLOR_RED, "Potrebno je %d EXP-a da bi dobili Premium Silver paket!", PREMIUM_SILVER_EXP);
 					
 					ExpInfo[playerid][ePoints] -= PREMIUM_SILVER_EXP;
-				
-					new expQueryUpdate[90];
-					format(expQueryUpdate, sizeof(expQueryUpdate), "UPDATE experience SET points = '%d' WHERE sqlid = '%d'",
+					mysql_fquery(g_SQL, "UPDATE experience SET points = '%d' WHERE sqlid = '%d'",
 						ExpInfo[playerid][ePoints],
 						PlayerInfo[playerid][pSQLID]
 					);
-					mysql_pquery(g_SQL, expQueryUpdate);
 					
 					PlayerInfo[ playerid ][ pMaskID ] = 100000 + random(899999);
 					
@@ -165,25 +149,23 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 						UpdatePremiumHouseFurSlots(playerid, -1, PlayerInfo[ playerid ][ pHouseKey ]);
 					if(PlayerInfo[playerid][pBizzKey] != INVALID_BIZNIS_ID)
 						UpdatePremiumBizFurSlots(playerid);
-					new
-						vipUpdtQuery[ 128 ];
-					format( vipUpdtQuery, 128, "UPDATE accounts SET vipRank = '%d', vipTime = '%d' WHERE sqlid = '%d'",
+					
+					mysql_fquery(g_SQL, "UPDATE accounts SET vipRank = '%d', vipTime = '%d' WHERE sqlid = '%d'",
 						PlayerInfo[playerid][pDonateRank],
 						PlayerInfo[playerid][pDonateTime],
 						PlayerInfo[playerid][pSQLID]
 					);
-					mysql_tquery(g_SQL, vipUpdtQuery);
 					
 					// MySQL Log
-					new vipLog[200];
-					format(vipLog, sizeof(vipLog), "INSERT INTO player_vips(player_id, admin_id, rank, created_at, expires_at) VALUES ('%d','%d','%d','%d','%d')",
+					mysql_fquery(g_SQL, 
+						"INSERT INTO player_vips(player_id, admin_id, rank, created_at, expires_at) \n\
+							VALUES ('%d','%d','%d','%d','%d')",
 						PlayerInfo[playerid][pSQLID],
 						PlayerInfo[playerid][pSQLID],
 						PlayerInfo[playerid][pDonateRank],
 						gettimestamp(),
 						PlayerInfo[playerid][pDonateTime]
 					);
-					mysql_pquery(g_SQL, vipLog);
 					
 					SendFormatMessage(playerid, MESSAGE_TYPE_SUCCESS, "Iskoristili ste %d EXP-a za Premium Silver. Preostalo: %d EXP", PREMIUM_SILVER_EXP, ExpInfo[playerid][ePoints]);
 					SendClientMessage(playerid,COLOR_RED, "[SERVER] Iskrene cestitke na Premium paketu! Vas Premium paket traje sljedecih mjesec dana.");
@@ -195,13 +177,10 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 						return va_SendClientMessage(playerid,COLOR_RED, "Potrebno je %d EXP-a da bi dobili Premium Gold paket!", PREMIUM_GOLD_EXP);
 					
 					ExpInfo[playerid][ePoints] -= PREMIUM_GOLD_EXP;
-				
-					new expQueryUpdate[90];
-					format(expQueryUpdate, sizeof(expQueryUpdate), "UPDATE experience SET points = '%d' WHERE sqlid = '%d'",
+					mysql_fquery(g_SQL, "UPDATE experience SET points = '%d' WHERE sqlid = '%d'",
 						ExpInfo[playerid][ePoints],
 						PlayerInfo[playerid][pSQLID]
 					);
-					mysql_pquery(g_SQL, expQueryUpdate);
 					
 					PlayerInfo[ playerid ][ pMaskID ] = 100000 + random(899999);
 					
@@ -233,25 +212,23 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 						UpdatePremiumHouseFurSlots(playerid, -1, PlayerInfo[ playerid ][ pHouseKey ]);
 					if(PlayerInfo[playerid][pBizzKey] != INVALID_BIZNIS_ID)
 						UpdatePremiumBizFurSlots(playerid);
-					new
-						vipUpdtQuery[ 128 ];
-					format( vipUpdtQuery, 128, "UPDATE accounts SET vipRank = '%d', vipTime = '%d' WHERE sqlid = '%d'",
+					
+					mysql_fquery(g_SQL,"UPDATE accounts SET vipRank = '%d', vipTime = '%d' WHERE sqlid = '%d'",
 						PlayerInfo[playerid][pDonateRank],
 						PlayerInfo[playerid][pDonateTime],
 						PlayerInfo[playerid][pSQLID]
 					);
-					mysql_tquery(g_SQL, vipUpdtQuery);
 					
 					// MySQL Log
-					new vipLog[200];
-					format(vipLog, sizeof(vipLog), "INSERT INTO player_vips(player_id, admin_id, rank, created_at, expires_at) VALUES ('%d','%d','%d','%d','%d')",
+					mysql_fquery(g_SQL, 
+						"INSERT INTO player_vips(player_id, admin_id, rank, created_at, expires_at) \n\
+							VALUES ('%d','%d','%d','%d','%d')",
 						PlayerInfo[playerid][pSQLID],
 						PlayerInfo[playerid][pSQLID],
 						PlayerInfo[playerid][pDonateRank],
 						gettimestamp(),
 						PlayerInfo[playerid][pDonateTime]
 					);
-					mysql_pquery(g_SQL, vipLog);
 					
 					SendFormatMessage(playerid, MESSAGE_TYPE_SUCCESS, "Iskoristili ste %d EXP-a za Premium Gold. Preostalo: %d EXP", PREMIUM_GOLD_EXP, ExpInfo[playerid][ePoints]);
 					SendClientMessage(playerid, COLOR_RED, "[SERVER]  Iskrene cestitke na Premium paketu! Vas Premium paket traje sljedecih mjesec dana.");
@@ -285,8 +262,7 @@ stock ResetPlayerExperience(playerid)
 
 stock ListBestTemporaryEXP(playerid)
 {
-	new tempExpQuery[100], dialogstring[2056];
-	format(tempExpQuery, sizeof(tempExpQuery), "SELECT * FROM  experience ORDER BY experience.points DESC LIMIT 0 , 30");
+	new dialogstring[2056];
 	inline OnPlayerLoadTempBestEXP()
 	{
 		new rows;
@@ -314,14 +290,18 @@ stock ListBestTemporaryEXP(playerid)
 			return 1;
 		}
 	}
-	mysql_tquery_inline_new(g_SQL, tempExpQuery, using inline OnPlayerLoadTempBestEXP, "i", playerid);
+	MySQL_TQueryInline(g_SQL,  
+		using inline OnPlayerLoadTempBestEXP, 
+	 	"SELECT * FROM  experience ORDER BY experience.points DESC LIMIT 0 , 30",
+		"i", 
+		playerid
+	);
 	return 1;
 }
 
 stock ListBestOverallEXP(playerid)
 {
-	new tempExpQuery[100], dialogstring[1930];
-	format(tempExpQuery, sizeof(tempExpQuery), "SELECT * FROM  experience ORDER BY experience.allpoints DESC LIMIT 0 , 30");
+	new dialogstring[2056];
 	inline OnListOverallBestEXP()
 	{
 		new rows;
@@ -349,15 +329,23 @@ stock ListBestOverallEXP(playerid)
 			return 1;
 		}
 	}
-	mysql_tquery_inline_new(g_SQL, tempExpQuery, using inline OnListOverallBestEXP, "i", playerid);
+	MySQL_TQueryInline(g_SQL,  
+		using inline OnListOverallBestEXP, 
+		"SELECT * FROM  experience ORDER BY experience.allpoints DESC LIMIT 0 , 30",
+		"i", 
+		playerid
+	);
 	return 1;
 }
 
 stock LoadPlayerExperience(playerid)
-{
-	new expstring[100];
-	format(expstring, sizeof(expstring), "SELECT * FROM experience WHERE sqlid = '%d'", PlayerInfo[playerid][pSQLID]);
-	mysql_tquery(g_SQL, expstring, "OnPlayerLoadExperience", "i", playerid);
+{	
+	mysql_tquery(g_SQL, 
+		va_fquery(g_SQL, "SELECT * FROM experience WHERE sqlid = '%d'", PlayerInfo[playerid][pSQLID]), 
+		"OnPlayerLoadExperience", 
+		"i", 
+		playerid
+	);
 	return 1;
 }
 
@@ -391,8 +379,9 @@ stock SavePlayerExperience(playerid)
 	if( !SafeSpawned[playerid] )	
 		return 1;
 	
-	new mysqlUpdate[200];
-	format(mysqlUpdate, 200, "UPDATE experience SET givenexp = '%d', allpoints = '%d', points = '%d', lastpayday = '%d', daypaydays = '%d', monthpaydays = '%d' WHERE sqlid = '%d'",
+	mysql_fquery(g_SQL, 
+		"UPDATE experience SET givenexp = '%d', allpoints = '%d', points = '%d', lastpayday = '%d',\n\
+			daypaydays = '%d', monthpaydays = '%d' WHERE sqlid = '%d'",
 		ExpInfo[playerid][eGivenEXP],
 		ExpInfo[playerid][eAllPoints],
 		ExpInfo[playerid][ePoints],
@@ -401,7 +390,6 @@ stock SavePlayerExperience(playerid)
 		ExpInfo[playerid][eMonthPayDays],
 		PlayerInfo[playerid][pSQLID]
 	);
-	mysql_tquery(g_SQL, mysqlUpdate);
 	return 1;
 }
 
@@ -500,10 +488,9 @@ stock CanPlayerTakeExpEx(playerid, playername[])
 
 stock GivePlayerExperience(playerid, playername[])
 {
-	new sqlid, idQuery[100];
+	new sqlid;
 	
-	mysql_format(g_SQL, idQuery, sizeof(idQuery), "SELECT sqlid FROM accounts WHERE name = '%e' LIMIT 0,1", playername);
-	new Cache:result = mysql_query(g_SQL, idQuery),
+	new Cache:result = mysql_query(g_SQL, va_fquery(g_SQL, "SELECT sqlid FROM accounts WHERE name = '%e'", playername)),
 		rows;
 		
     cache_get_row_count(rows);
@@ -515,9 +502,7 @@ stock GivePlayerExperience(playerid, playername[])
 	cache_get_value_name_int(0, "sqlid", sqlid);
 	cache_delete(result);
 	
-	new expstring[100];
-	format(expstring, sizeof(expstring), "SELECT * FROM experience WHERE sqlid = '%d'", sqlid);
-	new Cache:result2 = mysql_query(g_SQL, expstring),
+	new Cache:result2 = mysql_query(g_SQL, va_fquery(g_SQL, "SELECT * FROM experience WHERE sqlid = '%d'", sqlid)),
 		points,
 		allpoints;
 	
@@ -527,9 +512,11 @@ stock GivePlayerExperience(playerid, playername[])
 	allpoints++;
 	cache_delete(result2);
 		
-	new expQuery[150];
-	format(expQuery, sizeof(expQuery), "UPDATE experience SET points = '%d', allpoints = '%d' WHERE sqlid = '%d'", points, allpoints, sqlid);
-	mysql_tquery(g_SQL, expQuery);
+	mysql_fquery(g_SQL,  "UPDATE experience SET points = '%d', allpoints = '%d' WHERE sqlid = '%d'", 
+		points, 
+		allpoints, 
+		sqlid
+	);
 	
 	SendFormatMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uspjesno ste dali %s 1 EXP.", playername);
 	if(HappyHours)
@@ -556,9 +543,11 @@ stock RewardPlayerForActivity(sqlid, amount)
 	allpoints +=amount;
 	cache_delete(result2);
 		
-	new expQuery[150];
-	format(expQuery, sizeof(expQuery), "UPDATE experience SET points = '%d', allpoints = '%d' WHERE sqlid = '%d'", points, allpoints, sqlid);
-	mysql_tquery(g_SQL, expQuery);
+	mysql_fquery(g_SQL, "UPDATE experience SET points = '%d', allpoints = '%d' WHERE sqlid = '%d'", 
+		points, 
+		allpoints, 
+		sqlid
+	);
 	return 1;
 }
 	

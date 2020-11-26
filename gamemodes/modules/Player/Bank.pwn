@@ -32,17 +32,15 @@ stock IsAtBank(playerid) {
 
 LoadPlayerCredit(playerid)
 {
-	new tmpQuery[200], rows;
-	mysql_format(g_SQL, tmpQuery, sizeof(tmpQuery), "SELECT * FROM player_credits WHERE sqlid = '%d' LIMIT 0,1", PlayerInfo[playerid][pSQLID]);
 	inline OnPlayerCreditLoad()
 	{
-		rows = cache_num_rows();
-		if(!rows)
+		if(!cache_num_rows())
 		{
-			mysql_format(g_SQL, tmpQuery, sizeof(tmpQuery), "INSERT INTO player_credits(sqlid, type, rate, amount, unpaid, used, timestamp) VALUES ('%d', '0', '0', '0', '0', '0', '0')",
+			mysql_fquery(g_SQL, 
+				"INSERT INTO player_credits(sqlid, type, rate, amount, unpaid, used, timestamp) \n\
+					VALUES ('%d', '0', '0', '0', '0', '0', '0')",
 				PlayerInfo[ playerid ][ pSQLID ]
 			);
-			mysql_tquery(g_SQL, tmpQuery);
 			return 1;
 		}
 			
@@ -54,14 +52,20 @@ LoadPlayerCredit(playerid)
 		cache_get_value_name_int(0, "timestamp"	, CreditInfo[playerid][cTimestamp]);
 		return 1;
 	}
-	mysql_tquery_inline_new(g_SQL, tmpQuery, using inline OnPlayerCreditLoad, "i", playerid);
+	MySQL_TQueryInline(g_SQL,  
+		using inline OnPlayerCreditLoad, 
+		va_fquery(g_SQL, "SELECT * FROM player_credits WHERE sqlid = '%d' LIMIT 0,1", PlayerInfo[playerid][pSQLID]),
+		"i", 
+		playerid
+	);
 	return 1;
 }
 
 SavePlayerCredit(playerid)
 {
-	new mysqlQuery[200];
-	format(mysqlQuery, sizeof(mysqlQuery), "UPDATE player_credits SET rate = '%d', type = '%d', amount = '%d', unpaid = '%d', used = '%d', timestamp = '%d' WHERE sqlid = '%d' LIMIT 1",
+	mysql_fquery(g_SQL, 
+		"UPDATE player_credits SET rate = '%d', type = '%d', amount = '%d',\n\
+			unpaid = '%d', used = '%d', timestamp = '%d' WHERE sqlid = '%d'",
 		CreditInfo[playerid][cRate],
 		CreditInfo[playerid][cCreditType],
 		CreditInfo[playerid][cAmount],
@@ -70,7 +74,6 @@ SavePlayerCredit(playerid)
 		CreditInfo[playerid][cTimestamp],
 		PlayerInfo[playerid][pSQLID]
 	);
-	mysql_tquery(g_SQL, mysqlQuery);
 	return 1;
 }
 
@@ -210,11 +213,10 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 			PlayerInfo[playerid][pSavingsCool] = 0;
 			PlayerInfo[playerid][pSavingsType] = PlayerInfo[playerid][pSavingsTime];
 			PlayerInfo[playerid][pBank] -= PlayerInfo[playerid][pSavingsMoney];
-			
-			// MySQL update
-			
-			new savingsQuery[256];
-			format(savingsQuery, 256, "UPDATE accounts SET bankMoney = '%d', savings_cool = '%d', savings_time = '%d', savings_type = '%d', savings_money = '%d' WHERE sqlid = '%d'",
+						
+			mysql_fquery(g_SQL, 
+				"UPDATE accounts SET bankMoney = '%d', savings_cool = '%d', savings_time = '%d', savings_type = '%d',\n\
+					savings_money = '%d' WHERE sqlid = '%d'",
 				PlayerInfo[playerid][pBank],
 				PlayerInfo[playerid][pSavingsCool],
 				PlayerInfo[playerid][pSavingsTime],
@@ -222,7 +224,6 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 				PlayerInfo[playerid][pSavingsMoney],
 				PlayerInfo[playerid][pSQLID]
 			);
-			mysql_pquery(g_SQL, savingsQuery);
 			
 			// Message
 			SendFormatMessage(playerid, MESSAGE_TYPE_INFO, "Orocio si %d$ na %d h po kamatnoj stopi od %d%! Novac je prebacen sa bankovnog racuna na orocenje.", FormatNumber(PlayerInfo[playerid][pSavingsMoney]), PlayerInfo[playerid][pSavingsTime], PlayerInfo[playerid][pSavingsTime]);
@@ -333,22 +334,21 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 BankTransferMoney(playerid, giveplayerid, MoneyAmmount)
 {
 	new
-		btmpString[ 128 ],
-		bankTransferQuery[128];
+		btmpString[ 128 ];
 	PlayerInfo[ playerid ][ pBank ] -= MoneyAmmount;
 	PlayerInfo[ giveplayerid ][ pBank ] += MoneyAmmount;
 	va_SendClientMessage(playerid, COLOR_LIGHTBLUE, "Prebacili ste $%d na racun %s!", MoneyAmmount, GetName(giveplayerid,true));
 	va_SendClientMessage(giveplayerid, COLOR_LIGHTBLUE, "%s vam je prebacio $%d na bankovni racun.", GetName(playerid,true), MoneyAmmount);
-	format(bankTransferQuery, sizeof(bankTransferQuery), "UPDATE accounts SET bankmoney = '%d' WHERE sqlid = '%d'",
-			PlayerInfo[ playerid ][ pBank ],
-			PlayerInfo[ playerid ][ pSQLID]
-		);
-	mysql_tquery(g_SQL, bankTransferQuery);
-	format(bankTransferQuery, sizeof(bankTransferQuery), "UPDATE accounts SET bankmoney = '%d' WHERE sqlid = '%d'",
-			PlayerInfo[ giveplayerid ][ pBank ],
-			PlayerInfo[ giveplayerid ][ pSQLID]
-		);
-	mysql_tquery(g_SQL, bankTransferQuery);
+	
+	mysql_fquery(g_SQL, "UPDATE accounts SET bankmoney = '%d' WHERE sqlid = '%d'",
+		PlayerInfo[ playerid ][ pBank ],
+		PlayerInfo[ playerid ][ pSQLID]
+	);
+
+	mysql_fquery(g_SQL, "UPDATE accounts SET bankmoney = '%d' WHERE sqlid = '%d'",
+		PlayerInfo[ giveplayerid ][ pBank ],
+		PlayerInfo[ giveplayerid ][ pSQLID]
+	);
 		
 	if(MoneyAmmount >= 1000) {
 		format(btmpString, sizeof(btmpString), "[A] Bank transfer: %s je prebacio $%d igracu %s", GetName(playerid, false), MoneyAmmount, GetName(giveplayerid, false));
@@ -482,8 +482,7 @@ TakePlayerProperty(playerid)
 	if(PlayerInfo[playerid][pHouseKey] == INVALID_HOUSE_ID && PlayerInfo[playerid][pBizzKey] == INVALID_BIZNIS_ID)
 		return 1;
 	
-	new TmpQuery[128],
-		type = GetValuablePropertyType(playerid);
+	new type = GetValuablePropertyType(playerid);
 		
 	switch(type)
 	{
@@ -539,9 +538,7 @@ TakePlayerProperty(playerid)
 			HouseInfo[house][hSafeStatus] 	= 0;
 			HouseInfo[house][hOrmar] 		= 0;
 				
-			// Update houses table
-			format(TmpQuery, 128, "UPDATE houses SET ownerid = '0' WHERE ownerid = '%d'", PlayerInfo[playerid][pSQLID]);
-			mysql_tquery(g_SQL, TmpQuery);
+			mysql_fquery(g_SQL, "UPDATE houses SET ownerid = '0' WHERE ownerid = '%d'", PlayerInfo[playerid][pSQLID]);
 
 			SetPlayerSpawnInfo(playerid);
 			
@@ -560,11 +557,7 @@ TakePlayerProperty(playerid)
 			BizzInfo[biz][bOwnerID] = 0;
 			BizzInfo[biz][bco_OwnerID] = 0;
 			
-			// Update bizzes table
-			format( TmpQuery, sizeof(TmpQuery), "UPDATE bizzes SET ownerid = '0', co_ownerid = '0' WHERE id = '%d'", 
-				BizzInfo[ biz ][bSQLID]
-			);
-			mysql_tquery(g_SQL, TmpQuery);
+			mysql_fquery(g_SQL, "UPDATE bizzes SET ownerid = '0', co_ownerid = '0' WHERE id = '%d'", BizzInfo[ biz ][bSQLID]);
 		}
 	}
 	return 1;

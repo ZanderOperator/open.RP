@@ -392,21 +392,18 @@ CMD:channel(playerid, params[])
 		PlayerInfo[playerid][pRadio][slotid] = 0;
 		PlayerInfo[playerid][pRadioSlot][slotid] = 0;
 
-		new
-			channelLeave[128];
-		format(channelLeave, sizeof(channelLeave), "DELETE FROM accounts WHERE sqlid = '%d'",
+		mysql_fquery(g_SQL, "DELETE FROM accounts WHERE sqlid = '%d'",
 			PlayerInfo[playerid][pRadio][slotid],
 			PlayerInfo[playerid][pRadioSlot][slotid],
 			PlayerInfo[playerid][pSQLID]
 		);
-		mysql_tquery(g_SQL, channelLeave);
 		
 		format(string, sizeof(string), "Napustili ste radio na slotu %d.", slotid);
 		SendClientMessage(playerid, COLOR_RED, string);
 	}
 	if( !strcmp( choice, "set", true ) ) 
 	{
-		new channel, slotid, query[90];
+		new channel, slotid;
 		if(!PlayerInfo[playerid][pHasRadio]) 
 			return SendClientMessage(playerid, COLOR_RED, "Nemate radio.");
 		if(sscanf(params, "s[16]ii", choice, channel, slotid))
@@ -434,14 +431,13 @@ CMD:channel(playerid, params[])
 		PlayerInfo[playerid][pRadioSlot][slotid] = slotid;
 		va_SendClientMessage(playerid, COLOR_RED, "[ ! ] Sada ce te slusati kanal broj %d pod slotom %d.", channel, slotid);
 
-		format(query, sizeof(query), "UPDATE accounts SET Radio%d = '%d', Slot%d = '%d' WHERE sqlid = '%d'",
+		mysql_fquery(g_SQL, "UPDATE accounts SET Radio%d = '%d', Slot%d = '%d' WHERE sqlid = '%d'",
 			slotid,
 			PlayerInfo[playerid][pRadio][slotid],
 			slotid,
 			PlayerInfo[playerid][pRadioSlot][slotid],
 			PlayerInfo[playerid][pSQLID]
 		);
-		mysql_tquery(g_SQL, query);
 	}
 	if( !strcmp( choice, "playerfreq", true ) ) 
 	{
@@ -2143,12 +2139,8 @@ CMD:dump(playerid, params[])
 			PhoneStatus[playerid] = 0;
 			CancelSelectTextDraw(playerid);
 			DeletePlayerContacts(playerid);
-			// brise iz baze
-			new	mobileDelete[128];
-			format(mobileDelete, 128, "DELETE FROM player_phones WHERE player_id = '%d' AND type = '1'",
-				PlayerInfo[playerid][pSQLID]
-			);
-			mysql_tquery(g_SQL, mobileDelete);
+			
+			mysql_fquery(g_SQL, "DELETE FROM player_phones WHERE player_id = '%d' AND type = '1'", PlayerInfo[playerid][pSQLID]);
 			
 			SendClientMessage(playerid, COLOR_LIGHTBLUE, "** Bacio si mobitel!");
 	        format(tmpString, sizeof(tmpString), "* %s baca mobitel u daljinu.", GetName(playerid, true));
@@ -2165,12 +2157,8 @@ CMD:dump(playerid, params[])
 			SendClientMessage(playerid, COLOR_LIGHTBLUE, "** Bacio si cryto!");
 	        format(tmpString, sizeof(tmpString), "* %s baca crypto u daljinu.", GetName(playerid, true));
             ProxDetector(15.0, playerid, tmpString, COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE);
-			// Brise iz baze
-			new	mobileDelete[128];
-			format(mobileDelete, 128, "DELETE FROM player_phones WHERE player_id = '%d' AND type = '2'",
-				PlayerInfo[playerid][pSQLID]
-			);
-			mysql_tquery(g_SQL, mobileDelete);
+			
+			mysql_fquery(g_SQL, "DELETE FROM player_phones WHERE player_id = '%d' AND type = '2'", PlayerInfo[playerid][pSQLID]);
 		}
 		else SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate crypto!");
 	}
@@ -2632,13 +2620,11 @@ CMD:setlook(playerid, params[])
 		
 		format( PlayerInfo[ playerid ][ pLook ], 120, "%s", inputLook );
 		
-		new
-			tmpQuery[ 315 ];
-		mysql_format(g_SQL, tmpQuery, 315, "UPDATE accounts SET look = '%e' WHERE sqlid = '%d'",
+		mysql_fquery(g_SQL, "UPDATE accounts SET look = '%e' WHERE sqlid = '%d'",
 			PlayerInfo[ playerid ][ pLook ], 
 			PlayerInfo[ playerid ][ pSQLID ]
 		);
-		mysql_pquery(g_SQL, tmpQuery);
+
 		SendMessage(playerid, MESSAGE_TYPE_INFO, "Uspjesno ste postavili vas izgled, koristite /showme za prikaz izgleda.");
 		
 	} 
@@ -2894,12 +2880,10 @@ CMD:spawnchange(playerid, params[])
 	PlayerInfo[playerid][pSpawnChange] = spawn;
 	SetPlayerSpawnInfo(playerid);
 	
-	new tmpQuery[ 70 ];
-	format(tmpQuery, 70, "UPDATE accounts SET spawnchange = '%d' WHERE sqlid = '%d'", 
+	mysql_fquery(g_SQL, "UPDATE accounts SET spawnchange = '%d' WHERE sqlid = '%d'", 
 		PlayerInfo[playerid][pSpawnChange],
 		PlayerInfo[playerid][pSQLID]
 	);
-	mysql_tquery(g_SQL, tmpQuery);
 	
     SendMessage(playerid, MESSAGE_TYPE_INFO, "Sljedeci put cete se spawnati na zeljenom mjestu.");
 	return 1;

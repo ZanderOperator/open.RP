@@ -86,11 +86,12 @@ hook OnPlayerDisconnect(playerid, reason)
 	
 Public:LoadVehicleDrugs(vehicleid)
 {	
-	new
-		tmpQuery[128];
-
-	format(tmpQuery, 128, "SELECT * FROM cocars_drugs WHERE vehicle_id = '%d'", VehicleInfo[vehicleid][vSQLID]);
-	mysql_tquery(g_SQL, tmpQuery, "LoadingVehicleDrugs", "d", vehicleid);
+	mysql_tquery(g_SQL, 
+		va_fquery(g_SQL, "SELECT * FROM cocars_drugs WHERE vehicle_id = '%d'", VehicleInfo[vehicleid][vSQLID]), 
+		"LoadingVehicleDrugs", 
+		"i", 
+		vehicleid
+	);
 	return 1;
 }
 
@@ -117,11 +118,12 @@ public LoadingVehicleDrugs(vehicleid)
 
 Public:LoadPlayerDrugs(playerid)
 {
-	new
-		tmpQuery[128];
-
-	format(tmpQuery, 128, "SELECT * FROM player_drugs WHERE player_id = '%d'", PlayerInfo[playerid][pSQLID]);
-	mysql_tquery(g_SQL, tmpQuery, "LoadingPlayerDrugs", "i", playerid);
+	mysql_tquery(g_SQL, 
+		va_fquery(g_SQL, "SELECT * FROM player_drugs WHERE player_id = '%d'", PlayerInfo[playerid][pSQLID]), 
+		"LoadingPlayerDrugs", 
+		"i", 
+		playerid
+	);
 	return 1;
 }
 
@@ -913,14 +915,10 @@ DeletePlayerDrug(playerid, slot = -1) // pripazi kako koristis, slot -1 znaci da
 	if(slot > MAX_PLAYER_DRUGS || slot < -1)
 		return 0;
 	
-	new
-		sqlstring[70];
-	
 	if(slot == -1)
 	{
-		mysql_format(g_SQL, sqlstring, sizeof(sqlstring), "DELETE FROM player_drugs WHERE player_id = '%d'", PlayerInfo[playerid][pSQLID]);
-		mysql_tquery(g_SQL, sqlstring);
-		
+		mysql_fquery(g_SQL, "DELETE FROM player_drugs WHERE player_id = '%d'", PlayerInfo[playerid][pSQLID]);
+
 		for(new d = 0; d != MAX_PLAYER_DRUGS; ++d)
 		{
 			PlayerDrugs[playerid][dSQLID][d] = -1;
@@ -935,8 +933,7 @@ DeletePlayerDrug(playerid, slot = -1) // pripazi kako koristis, slot -1 znaci da
 		if(PlayerDrugs[playerid][dCode][slot] == 0)
 			return 0;
 			
-		mysql_format(g_SQL, sqlstring, sizeof(sqlstring), "DELETE FROM player_drugs WHERE id = '%d'", PlayerDrugs[playerid][dSQLID][slot]);
-		mysql_tquery(g_SQL, sqlstring);
+		mysql_fquery(g_SQL, "DELETE FROM player_drugs WHERE id = '%d'", PlayerDrugs[playerid][dSQLID][slot]);
 				
 		PlayerDrugs[playerid][dSQLID][slot] = -1;
 		PlayerDrugs[playerid][dCode][slot] = 0;
@@ -990,17 +987,22 @@ GivePlayerDrug(playerid, typ, Float:dmnt, Float:dq)
 	PlayerDrugs[playerid][dEffect][emptyslot] = dq;
 	PlayerDrugs[playerid][dTimeStamp][emptyslot] = gettime();
 	
-	new
-		drugsql[250];
 	
-	mysql_format(g_SQL, drugsql, sizeof(drugsql), "INSERT INTO player_drugs (player_id, code, amount, effect, timestamp) VALUES ('%d', '%d', '%f', '%f', '%d')",
-		PlayerInfo[playerid][pSQLID],
-		typ,
-		dmnt,
-		dq,
-		gettime()
+	mysql_tquery(g_SQL, 
+		va_fquery(g_SQL, 
+			"INSERT INTO player_drugs (player_id, code, amount, effect, timestamp) VALUES ('%d', '%d', '%f', '%f', '%d')",
+			PlayerInfo[playerid][pSQLID],
+			typ,
+			dmnt,
+			dq,
+			gettime()
+		), 
+		"GetDrugSQLID", 
+		"iii", 
+		playerid, 
+		emptyslot, 
+		0
 	);
-	mysql_tquery(g_SQL, drugsql, "GetDrugSQLID", "ddd", playerid, emptyslot, 0);
 	
 	return emptyslot;
 }
@@ -1022,17 +1024,21 @@ GiveVehicleDrug(vehicleid, dtyp, Float:damnt, Float:dqua)
 	VehicleDrugs[vehicleid][vquality][emptyslot] = dqua;
 	VehicleDrugs[vehicleid][vtimestamp][emptyslot] = gettime();
 	
-	new
-		drugsql[250];
-	
-	mysql_format(g_SQL, drugsql, sizeof(drugsql), "INSERT INTO cocars_drugs (vehicle_id, code, amount, quality, timestamp) VALUES ('%d', '%d', '%f', '%f', '%d')",
-		VehicleInfo[vehicleid][vSQLID],
-		dtyp,
-		damnt,
-		dqua,
-		gettime()
+	mysql_tquery(g_SQL, 
+		va_fquery(g_SQL, 
+			"INSERT INTO cocars_drugs (vehicle_id, code, amount, quality, timestamp) VALUES ('%d', '%d', '%f', '%f', '%d')",
+			VehicleInfo[vehicleid][vSQLID],
+			dtyp,
+			damnt,
+			dqua,
+			gettime()
+		), 
+		"GetDrugSQLID", 
+		"iii", 
+		vehicleid, 
+		emptyslot, 
+		1
 	);
-	mysql_tquery(g_SQL, drugsql, "GetDrugSQLID", "ddd", vehicleid, emptyslot, 1);
 	
 	return emptyslot;
 }
@@ -1042,13 +1048,10 @@ DeleteVehicleDrug(vehicleid, slot = -1) // pripazi kako koristis, slot -1 znaci 
 	if(slot > MAX_VEHICLE_DRUGS || slot < -1)
 		return 0;
 	
-	new
-		sqlstring[70];
 	
 	if(slot == -1)
 	{
-		mysql_format(g_SQL, sqlstring, sizeof(sqlstring), "DELETE FROM cocars_drugs WHERE vehicle_id = '%d'", VehicleInfo[vehicleid][vSQLID]);
-		mysql_tquery(g_SQL, sqlstring);
+		mysql_fquery(g_SQL, "DELETE FROM cocars_drugs WHERE vehicle_id = '%d'", VehicleInfo[vehicleid][vSQLID]);
 		
 		ResetVehicleDrugs(vehicleid);
 	}
@@ -1057,8 +1060,7 @@ DeleteVehicleDrug(vehicleid, slot = -1) // pripazi kako koristis, slot -1 znaci 
 		if(VehicleDrugs[vehicleid][vsqlid][slot] == 0)
 			return 0;
 			
-		mysql_format(g_SQL, sqlstring, sizeof(sqlstring), "DELETE FROM cocars_drugs WHERE id = '%d'", VehicleDrugs[vehicleid][vsqlid][slot]);
-		mysql_tquery(g_SQL, sqlstring);
+		mysql_fquery(g_SQL,"DELETE FROM cocars_drugs WHERE id = '%d'", VehicleDrugs[vehicleid][vsqlid][slot]);
 		
 		VehicleDrugs[vehicleid][vsqlid][slot] = 0;
 		VehicleDrugs[vehicleid][vtype][slot] = 0;

@@ -325,12 +325,12 @@ stock CreateDeathInfos(playerid, situation = 0)
 }
 stock LoadPlayerDeath(playerid)
 {
-	new
-		tmpQuery[128];
-	format(tmpQuery, 128, "SELECT * FROM player_deaths WHERE player_id = '%d' LIMIT 0,1",
-		PlayerInfo[playerid][pSQLID]
+	mysql_tquery(g_SQL, 
+		va_fquery(g_SQL, "SELECT * FROM player_deaths WHERE player_id = '%d'", PlayerInfo[playerid][pSQLID]),
+		"LoadingPlayerDeaths", 
+		"i", 
+		playerid
 	);
-	mysql_tquery(g_SQL, tmpQuery, "LoadingPlayerDeaths", "i", playerid);
 	return 1;
 }
 forward LoadingPlayerDeaths(playerid);
@@ -346,10 +346,7 @@ public LoadingPlayerDeaths(playerid)
 	cache_get_value_name_int(0, "viwo", PlayerInfo[playerid][pDeathVW]);
 	PlayerInfo[playerid][pKilled] = 1;
 
-	new
-		deleteQuery[128];
-	format(deleteQuery, 128, "DELETE FROM player_deaths WHERE player_id = '%d'", PlayerInfo[playerid][pSQLID]);
-	mysql_tquery(g_SQL, deleteQuery);
+	mysql_fquery(g_SQL, "DELETE FROM player_deaths WHERE player_id = '%d'", PlayerInfo[playerid][pSQLID]);
 	return 1;
 }
 
@@ -426,17 +423,8 @@ timer StartDeathCount[1000](playerid)
 			DestroyDeathInfo(playerid);
 			DestroyDeathTDs(playerid);
 			
-			
-			//Izba�eno da igra� gubi ogromne svote novca.
-			/*new
-				money = floatround(PlayerInfo[ playerid ][ pBank ] * 0.01);
-			SendFormatMessage(playerid, MESSAGE_TYPE_INFO, "Platio si bolnicke troskove u visini od %d$!", money);
-			PlayerToFactionMoneyTAX(playerid, FACTION_TYPE_FD, money); // novac bolnici i proracunu*/
-			
-			//Alternativa �isto da FD ima prihod novca.
-			
-            SendClientMessage(playerid, COLOR_RED, "[ ! ] Platio si bolnicke troskove u visini od 500$!");
 			PlayerToFactionMoneyTAX(playerid, FACTION_TYPE_FD, 500); // novac bolnici i proracunu*/
+			SendClientMessage(playerid, COLOR_RED, "[ ! ] Platio si bolnicke troskove u visini od 500$!");
 			
 			PlayerInfo[ playerid ][ pDeath ][ 0 ] 	= 0.0;
 			PlayerInfo[ playerid ][ pDeath ][ 1 ] 	= 0.0;
@@ -447,11 +435,7 @@ timer StartDeathCount[1000](playerid)
             ResetPlayerWounded(playerid);
 			SetPlayerDrunkLevel(playerid, 0);
 			
-			new
-				deleteQuery[128];
-			format(deleteQuery, 128, "DELETE FROM player_deaths WHERE player_id = '%d'", PlayerInfo[playerid][pSQLID]);
-			mysql_tquery(g_SQL, deleteQuery);
-			
+			mysql_fquery(g_SQL, "DELETE FROM player_deaths WHERE player_id = '%d'", PlayerInfo[playerid][pSQLID]);			
 			SetPlayerHealth(playerid, 0);
 		}
 	}

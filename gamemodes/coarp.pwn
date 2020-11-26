@@ -678,8 +678,10 @@ ResetPlayerVariables(playerid)
 	Bit16_Set( gr_PlayerInfrontHouse	, playerid, INVALID_HOUSE_ID );
 	Player_SetAmbulanceId(playerid, INVALID_VEHICLE_ID);
 	blockedNews[playerid] = false;
+	
 	// Mobile
 	ResetMobileVariables(playerid);
+	ResetMobileContacts(playerid);
 
 	// Exiting Vars
 	PlayerSafeExit[playerid][giX] = 0;

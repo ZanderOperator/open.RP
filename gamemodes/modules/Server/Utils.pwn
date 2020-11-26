@@ -1696,6 +1696,39 @@ ReturnName(playerid)
 	return p_name;
 }
 
+ReturnJob(jobid)
+{
+	new tmpString[20];
+	switch(jobid)  
+	{
+		case 1:  format(tmpString, 20, "Cistac ulica");
+		case 2:  format(tmpString, 20, "Pizza Boy");
+		case 3:  format(tmpString, 20, "Mehanicar");
+		case 4:  format(tmpString, 20, "Kosac trave");
+		case 5:  format(tmpString, 20, "Tvornicki radnik");
+		case 6:  format(tmpString, 20, "Taksist");
+		case 7:  format(tmpString, 20, "Farmer");
+		case 8:  format(tmpString, 20, "Nepoznato");
+		case 9:  format(tmpString, 20, "Nepoznato");
+		case 12: format(tmpString, 20, "Gun Dealer");
+		case 13: format(tmpString, 20, "Car Jacker");
+		case 14: format(tmpString, 20, "Drvosjeca");
+		case 15: format(tmpString, 20, "Nepoznato");
+		case 16: format(tmpString, 20, "Smetlar");
+		case 17: format(tmpString, 20, "Vehicle Impounder");
+		case 18: format(tmpString, 20, "Transporter");
+		case 19: format(tmpString, 20, "Nepoznato");
+		case 20: format(tmpString, 20, "Nepoznato");
+		case 21: format(tmpString, 20, "Nepoznato");
+		case 22: format(tmpString, 20, "Nepoznato");
+		case 23: format(tmpString, 20, "Nepoznato");
+		case 24: format(tmpString, 20, "Nepoznato");
+		case 25: format(tmpString, 20, "Nepoznato");
+		default: format(tmpString, 20, "Nezaposlen");
+	}
+	return tmpString;
+}
+
 enum E_CLOSEST_SUBJECTS
 {
 	cID,
