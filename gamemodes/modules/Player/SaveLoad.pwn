@@ -752,7 +752,6 @@ stock SavePlayerData(playerid)
 	SavePlayerExperience(playerid);
 	UpdatePlayerMobile(playerid);
 	AC_SavePlayerWeapons(playerid);
-	SavePlayerSkill(playerid);
 	//SavePlayerFishes(playerid);
 	
 	#if defined MODULE_ADMIN_CONNECTIONS

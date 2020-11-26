@@ -75,7 +75,7 @@ hook OnPlayerEnterCheckpoint(playerid)
 		        DisablePlayerCheckpoint(playerid);
 				Bit1_Set(gr_IsWorkingJob, playerid, false);
 		        PlayerInfo[playerid][pFreeWorks] -= 5;
-		        UpgradePlayerSkill(playerid, 7);
+		        UpgradePlayerSkill(playerid);
 				
 				new money;
 				switch(GetPlayerSkillLevel(playerid, 7)) // Skill ID 7 - Transporter Skill

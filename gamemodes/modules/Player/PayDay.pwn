@@ -62,12 +62,10 @@ GivePlayerPayCheck(playerid)
 		PlayerInfo[playerid][pMobileCost] = 0;
 		profit -= PlayerInfo[playerid][pMobileCost];
 		
-		new	moneyUpdate[100];
-		format(moneyUpdate, 100, "UPDATE player_phones SET money = '%d' WHERE player_id = '%d' AND type = '1'",
+		mysql_fquery(g_SQL, "UPDATE player_phones SET money = '%d' WHERE player_id = '%d' AND type = '1'",
 			PlayerInfo[playerid][pMobileCost],
 			PlayerInfo[playerid][pSQLID]
 		);
-		mysql_tquery(g_SQL, moneyUpdate);
 	}
 	format(f_dialog,sizeof(f_dialog), "\n{3C95C2}Imovina:");
 	strcat(p_dialog,f_dialog, sizeof(p_dialog));
@@ -255,12 +253,10 @@ GivePlayerPayCheck(playerid)
 		if(PlayerInfo[playerid][pSavingsCool] < 0)
 			PlayerInfo[playerid][pSavingsCool] = 0;
 
-		new savingsQuery[96];
-		format(savingsQuery, 96, "UPDATE accounts SET savings_cool = '%d' WHERE sqlid = '%d'",
+		mysql_fquery(g_SQL, "UPDATE accounts SET savings_cool = '%d' WHERE sqlid = '%d'",
 			PlayerInfo[playerid][pSavingsCool],
 			PlayerInfo[playerid][pSQLID]
 		);
-		mysql_tquery(g_SQL, savingsQuery);
 	}
 	format(f_dialog,sizeof(f_dialog), "\n{3C95C2}Prihodi:");
 	strcat(p_dialog,f_dialog, sizeof(p_dialog));

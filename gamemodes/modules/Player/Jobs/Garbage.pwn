@@ -135,7 +135,7 @@ stock static CheckGarbages(playerid)
 		BudgetToPlayerBankMoney (playerid, money ); // novac sjeda na radnu knjizicu iz proracuna
 		PlayerInfo[playerid][pPayDayMoney] += money;
 		PlayerInfo[playerid][pFreeWorks] -= 5;
-		UpgradePlayerSkill(playerid, 2);
+		UpgradePlayerSkill(playerid);
 		gStartedWork[playerid] = 0;
 		gHasGarbage[playerid] = false;
 		DestroyPlayerObject(playerid, tObject[playerid]);
@@ -354,7 +354,7 @@ hook OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
 					BudgetToPlayerBankMoney (playerid, money ); // novac sjeda na radnu knjizicu iz proracuna
 					PlayerInfo[playerid][pPayDayMoney] += money;
 					PlayerInfo[playerid][pFreeWorks] -= 5;
-					UpgradePlayerSkill(playerid, 2);
+					UpgradePlayerSkill(playerid);
 					gStartedWork[playerid] = 0;
 					pOnDepony[playerid] = 0;
 					gHasGarbage[playerid] = false;

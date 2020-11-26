@@ -155,7 +155,6 @@ enum E_PLAYER_DATA
 	pVoted,
 	pPassport,
 	hRope,
-	pSkills[MAX_SKILLS],
 	pPhoneBG,
 	pPhoneMask,
 	pAmmuTime,
