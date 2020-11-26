@@ -1,5 +1,16 @@
 #include <YSI_Coding\y_hooks>
 
+#include "modules/Player/Death.pwn"
+#include "modules/Player/Drugs.pwn"
+#include "modules/Player/Bank.pwn"
+#include "modules/Player/Mobile.pwn"
+#include "modules/Player/Skills.pwn"
+#include "modules/Player/Objects.pwn"
+#include "modules/Player/Wounded.pwn"
+#include "modules/Player/Experience.pwn"
+#include "modules/Player/WeaponAttach.pwn"
+#include "modules/Player/WepPackage.pwn"
+
 #include "modules/Player/Tracking.pwn"
 #include "modules/Player/Security.pwn"
 #include "modules/Player/Functions.pwn"

@@ -80,26 +80,38 @@ stock CreateBomb(playerid, bomb_type = BOMB_TYPE_C4_TIME, bomb_time = MIN_BOMB_T
 stock DetonateBomb(playerid)
 {
 	if( !BombInfo[ playerid ][ bPlanted ] ) return 0;
-	if( BombInfo[ playerid ][ bVehicleid ] != INVALID_VEHICLE_ID ) {
-		new
-			Float:vPos[3];
-		GetVehiclePos(BombInfo[ playerid ][ bVehicleid ], vPos[0],vPos[1],vPos[2]);
-  		CreateExplosion(vPos[0],vPos[1],vPos[2], 3, 10.0);
+	
+	new 
+		Float: bX, 
+		Float: bY, 
+		Float: bZ;
+
+	if( BombInfo[ playerid ][ bVehicleid ] != INVALID_VEHICLE_ID ) 
+	{
+		GetVehiclePos(BombInfo[ playerid ][ bVehicleid ], bX, bY, bZ);
+  		CreateExplosion(bX, bY, bZ, 3, 10.0);
 		SetVehicleHealth(BombInfo[ playerid ][ bVehicleid ], 250.0);
 		UpdateVehicleDamageStatus(BombInfo[ playerid ][ bVehicleid ], 16909060, 16909060, 5, 15);
 	}
 	else
 	{
+		bX = BombInfo[ playerid ][ bPos ][ 0 ];
+		bY = BombInfo[ playerid ][ bPos ][ 1 ];
+		bZ = BombInfo[ playerid ][ bPos ][ 2 ];
 		CreateExplosion(BombInfo[ playerid ][ bPos ][ 0 ], BombInfo[ playerid ][ bPos ][ 1 ], BombInfo[ playerid ][ bPos ][ 2 ], 6, 450.0);
 	}
-
  	#if defined MODULE_DEATH
+	new 
+		Float: damage = 75.0,
+		Float: health,
+		Float: armour;
 	foreach (new i : Player)
 	{
-		if (IsPlayerInRangeOfPoint(i, 20.0, bPos[0], bPos[1], bPos[2]) || IsPlayerInRangeOfPoint(i, 20.0, vPos[0], vPos[1], vPos[2]) )
+		if (IsPlayerInRangeOfPoint(i, 20.0, bX, bY, bZ ))
 		{
-			damage = 200;
-			DealDamage(playerid, issuerid, health, armour, damage, bodypart);
+			GetPlayerHealth(i, health);
+			GetPlayerArmour(i, armour);
+			DealDamage(i, playerid, health, armour, damage, BODY_PART_TORSO);
 		}
 	}
 	#endif

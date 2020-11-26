@@ -445,13 +445,16 @@ stock GetMobileName(modelid)
 stock BuyPlayerPhone(playerid, listid)
 {
 	if(AC_GetPlayerMoney(playerid) < PhoneModels[listid][phModelPrice]) 
-		return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "Nemas dovoljno novca da kupis %s(%d$)!", PhoneModels[id][phModelName], PhoneModels[id][phModelPrice]);
+		return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "Nemas dovoljno novca da kupis %s(%d$)!", 
+					PhoneModels[listid][phModelName], 
+					PhoneModels[listid][phModelPrice]
+				);
 
 	PlayerToBudgetMoney(playerid, PhoneModels[listid][phModelPrice]); // Novac ide u proracun jer je Verona Mall
 	PlayerInfo[playerid][pMobileModel] = PhoneModels[listid][phModelID];
 	PlayerInfo[playerid][pMobileNumber] = 100000 + random(899999);
 	va_SendClientMessage(playerid, COLOR_RED,  "[ ! ]  Vas novi broj mobilnog telefona je %d.", PlayerInfo[playerid][pMobileNumber]);
-	va_SendClientMessage(playerid, COLOR_RED, "[ ! ]  Uspjesno ste kupili %s!", PhoneModels[id][phModelName]);
+	va_SendClientMessage(playerid, COLOR_RED, "[ ! ]  Uspjesno ste kupili %s!", PhoneModels[listid][phModelName]);
 	PlayerPlaySound(playerid, 1052, 0.0, 0.0, 0.0);
 	PlayerInfo[playerid][pMobileCost] = 0;
 	PlayerInfo[playerid][pPhoneBG] = -1263225696;
