@@ -1,3 +1,5 @@
+// Char folder modules represent non database storing features.
+
 #include <YSI_Coding\y_hooks>
 
 // Hobbies Core
