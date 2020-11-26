@@ -1206,6 +1206,7 @@ stock GetWeaponNameEx(weaponid)
 		case 51: strcat(weaponName, "Explosion", sizeof(weaponName));
 		case 53: strcat(weaponName, "Drowning", sizeof(weaponName));
 		case 54: strcat(weaponName, "Falling Death", sizeof(weaponName));
+		case PACKAGE_PANCIR: strcat(weaponName, "Kevlar Vest", sizeof(weaponName));
 		case 255: strcat(weaponName, "Suicide", sizeof(weaponName));
 		default: strcat(weaponName, "Unknown", sizeof(weaponName));
 	}

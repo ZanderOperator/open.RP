@@ -30,12 +30,12 @@ new PlayerSkills[MAX_PLAYERS][E_SKILLS_INFO][MAX_SKILLS];
 
 stock LoadPlayerSkills(playerid)
 {
-	new 
-		tmpQuery[128];
-	format(tmpQuery, 128, "SELECT * FROM skill WHERE player_id = '%d' LIMIT 0,1",
-		PlayerInfo[playerid][pSQLID]
+	mysql_tquery(g_SQL, 
+		va_fquery(g_SQL, "SELECT * FROM skill WHERE player_id = '%d'", PlayerInfo[playerid][pSQLID]), 
+		"OnPlayerSkillsLoad", 
+		"i", 
+		playerid
 	);
-	mysql_tquery(g_SQL, tmpQuery, "OnPlayerSkillsLoad", "i", playerid);
 	return 1;
 }
 
@@ -103,7 +103,7 @@ stock UpgradePlayerSkill(playerid, points = 1)
 	else if(PlayerSkills[playerid][sSkill][skillid] == 249)
 		skill = 5;
 	if(skill > 0) {
-		SendFormatMessage(playerid, MESSAGE_TYPE_SUCCESS, "Vas Skill Level posla se povecao na Level %d.", skill);
+		SendFormatMessage(playerid, MESSAGE_TYPE_SUCCESS, "Your job skill level increased. Now it's %d, congratz!", skill);
 	}
 	PlayerSkills[playerid][sSkill][skillid] += points;
 	if(PlayerSkills[playerid][sSkill][skillid] >= 250) 
@@ -221,13 +221,13 @@ CMD:skills(playerid, params[])
 	SendMessage(playerid, MESSAGE_TYPE_INFO, "Maximal amount of skill points per skill is 250.");
 	
 	new 
-		motd[80],
+		motd[64],
 		dstring[512],
 		bool:tabtag = false;
 
 	for(new i = 0; i < MAX_SKILLS; i++)
 	{
-		format(motd, 80,  "%s ID: %d | %s | (%d/%d, Level %d) %s", 
+		format(motd, 64,  "%s ID: %d | %s | (%d/%d, Level %d) %s", 
 			(!tabtag) ? ("") : ("\n"), 
 			i,
 			ReturnJob(PlayerSkills[playerid][sJob][i]),
