@@ -1,3 +1,5 @@
+// Player folder modules represent ONLY database storing features.
+
 #include <YSI_Coding\y_hooks>
 
 #include "modules/Player/Death.pwn"
