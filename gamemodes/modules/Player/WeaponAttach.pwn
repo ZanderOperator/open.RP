@@ -122,10 +122,11 @@ stock IsWeaponHideable(weaponid)
 
 stock RefreshPlayerWeaponSettings(playerid, weaponid)
 {
-	new updateString[256],
-		index = GetWeaponObjectEnum(weaponid);
+	new index = GetWeaponObjectEnum(weaponid);
 
-	format( updateString, sizeof(updateString), "UPDATE weaponsettings SET WeaponID = '%d', PosX = '%f', PosY = '%f', PosZ = '%f', RotX = '%f', RotY = '%f', RotZ = '%f' WHERE id = '%d'",
+	mysql_fquery(g_SQL, 
+		"UPDATE weaponsettings SET WeaponID = '%d', PosX = '%f', PosY = '%f', PosZ = '%f',\n\
+			RotX = '%f', RotY = '%f', RotZ = '%f' WHERE id = '%d'",
 		weaponid,
 		WeaponSettings[playerid][index][Position][0],
 		WeaponSettings[playerid][index][Position][1],
@@ -135,7 +136,6 @@ stock RefreshPlayerWeaponSettings(playerid, weaponid)
 		WeaponSettings[playerid][index][Position][5],
 		WeaponSettings[playerid][index][wsSQLID]
 	);
-	mysql_tquery(g_SQL, updateString);
 	return 1;
 }
 
@@ -144,9 +144,18 @@ stock SavePlayerWeaponSettings(playerid, weaponid)
 	new index = GetWeaponObjectEnum(weaponid);
 	if(WeaponSettings[playerid][index][wsSQLID] == -1)
 	{
-		new string[100];
-		format( string, sizeof(string), "INSERT INTO weaponsettings (playerid, WeaponID, Bone) VALUES ('%d', %d, %d)", PlayerInfo[playerid][pSQLID], weaponid, WeaponSettings[playerid][index][Bone]);
-        mysql_tquery(g_SQL, string, "OnWeaponSettingsInsert", "ii", playerid, weaponid);
+		
+        mysql_tquery(g_SQL, 
+			va_fquery(g_SQL, "INSERT INTO weaponsettings (playerid, WeaponID, Bone) VALUES ('%d', %d, %d)", 
+				PlayerInfo[playerid][pSQLID], 
+				weaponid, 
+				WeaponSettings[playerid][index][Bone]
+			), 
+			"OnWeaponSettingsInsert", 
+			"ii", 
+			playerid, 
+			weaponid
+		);
 	}
 	else RefreshPlayerWeaponSettings(playerid, weaponid);
 	return 1;
@@ -162,9 +171,13 @@ Public:OnWeaponSettingsInsert(playerid, weaponid)
 
 stock LoadPlayerWeaponSettings(playerid)
 {
-	new string[70];
-	format( string, sizeof(string), "SELECT * FROM weaponsettings WHERE playerid = '%d'", PlayerInfo[playerid][pSQLID]);
-    mysql_tquery(g_SQL, string, "OnWeaponsLoaded", "i", playerid);
+	
+    mysql_tquery(g_SQL, 
+		va_fquery(g_SQL, "SELECT * FROM weaponsettings WHERE playerid = '%d'", PlayerInfo[playerid][pSQLID]),
+		"OnWeaponsLoaded", 
+		"i", 
+		playerid
+	);
 	return 1;
 }
 
