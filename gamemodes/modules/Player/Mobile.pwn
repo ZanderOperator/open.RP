@@ -11,6 +11,9 @@
 */
 #define MOBILE_OBJECT_SLOT	9
 
+#define MAX_MOBILE_CONTACTS 10
+#define MAX_CONTACT_LEN		11
+
 #define SPEED_MUL   0.1
 #define MAX_Z_VEL 0.02
 
@@ -21,7 +24,6 @@
 #define PHONE_TEXTDRAWS 	104
 
 #define MAX_TOWERS          100
-#define MAX_CONTACTS        10
 
 #define PHONE_HIDE 			0
 #define PHONE_SHOW 			1
@@ -140,12 +142,16 @@ new	PhoneModels[10][ E_PHONE_MODEL_INFO ] = {
 	{18873, "Nokia 3210"					, 89}
 };
 
+new 
+	PlayerContactSQL[ MAX_PLAYERS ] [ MAX_MOBILE_CONTACTS ],
+	PlayerContactName[ MAX_PLAYERS ][ MAX_MOBILE_CONTACTS ][ MAX_CONTACT_LEN ],
+	PlayerContactNumber[ MAX_PLAYERS ][ MAX_MOBILE_CONTACTS ];
+
 static
     bool:MobileOn[MAX_PLAYERS] = {true, ...};
 
 // rBits
 new
-	Bit1:	gr_LoadedContacts		<MAX_PLAYERS>  	= { Bit1: false, ...},
 	Bit1:	gr_CanHangup			<MAX_PLAYERS>  	= { Bit1: true, ...},
 	Bit1: 	gr_PlayerTakingSelfie 	<MAX_PLAYERS>	= { Bit1: false, ... },
 	Bit1:	gr_PlayerUsingPhonebooth		<MAX_PLAYERS>	= { Bit1: false, ... },
@@ -157,8 +163,6 @@ new
 	Float:SelfieHeight[ MAX_PLAYERS ],
 	Timer:PlayerMobileRingTimer[MAX_PLAYERS],
 	StartCallTimestamp[ MAX_PLAYERS ] = { 0, ... },
-	PlayerContactName[ MAX_PLAYERS ][ 11 ][ 11 ],
-	PlayerContactNumber[ MAX_PLAYERS ][ 11 ],
 	PlayerCallPlayer[ MAX_PLAYERS ],
 	bool:SpeakerPhone[ MAX_PLAYERS ],
 	DialogInputNumber[ MAX_PLAYERS ][11],
@@ -174,6 +178,8 @@ stock static
 	TowerEditingNetwork[MAX_PLAYERS][24];
 
 stock static PlayerText:PhoneTD[MAX_PLAYERS][PHONE_TEXTDRAWS];
+
+new Iterator: MobileContacts[MAX_PLAYERS]<MAX_MOBILE_CONTACTS>;
 
 
 /*
@@ -198,180 +204,84 @@ stock Player_SetMobileOn(playerid, bool:v)
 
 stock LoadTowerData()
 {
-	mysql_tquery(g_SQL, "SELECT * FROM signaltowers WHERE id >= 0", "OnTowerLoaded");
+	mysql_tquery(g_SQL, 
+		va_fquery(g_SQL, "SELECT * FROM signaltowers WHERE id >= 0"), 
+		"OnTowerLoaded", 
+		""
+	);
 	return 1;
 }
 
 stock LoadPlayerContacts(playerid)
 {
-	new
-		tmpQuery[128];
-	format(tmpQuery, 128, "SELECT * FROM player_mobile_contacts WHERE player_id = '%d' LIMIT 0,11",
-		PlayerInfo[playerid][pSQLID]
+	mysql_tquery(g_SQL, 
+		va_fquery(g_SQL, "SELECT * FROM player_mobile_contacts WHERE player_id = '%d' LIMIT %d", 
+			PlayerInfo[playerid][pSQLID],
+			MAX_MOBILE_CONTACTS
+		), 
+		"OnPlayerContactsLoad", 
+		"i", 
+		playerid
 	);
-	mysql_tquery(g_SQL, tmpQuery, "OnPlayerContactsLoad", "i", playerid);
 	return 1;
-}
-
-stock CreatePlayerContacts(playerid)
-{
-	new
-		createContactQuery[428];
-	format(createContactQuery, 428, "INSERT INTO player_mobile_contacts(player_id, title_1, number_1, title_2, number_2, title_3, number_3, title_4, number_4, title_5, number_5, title_6, number_6, title_7, number_7, title_8, number_8, title_9, number_9, title_10, number_10) VALUES ('%d', 'N/A', '0', 'N/A', '0', 'N/A', '0', 'N/A', '0', 'N/A', '0', 'N/A', '0', 'N/A', '0', 'N/A', '0', 'N/A', '0', 'N/A', '0')",
-		PlayerInfo[playerid][pSQLID]
-	);
-	mysql_tquery(g_SQL, createContactQuery);
 }
 
 stock DeletePlayerContacts(playerid)
 {
-	new
-		createContactQuery[68];
-	format(createContactQuery, 68, "DELETE FROM player_mobile_contacts WHERE player_id = '%d'",
-		PlayerInfo[playerid][pSQLID]
-	);
-	mysql_tquery(g_SQL, createContactQuery);
-}
-
-stock SavePlayerContacts(playerid, bool:reason = false)
-{
-	if(!reason) {
-		for(new i = 0;i < 10;i++) {
-			if(PlayerContactNumber[playerid][i] != 0) {
-				SavePlayerContactSlot(playerid, i);
-			}
-		}
-	}
-	else
-	{
-		new
-			mobileUpdate[560];
-		mysql_format(g_SQL, mobileUpdate, 560, "UPDATE player_mobile_contacts SET title_1 = '%e', title_2 = '%e', title_3 = '%e', title_4 = '%e', title_5 = '%e', title_6 = '%e', title_7 = '%e', title_8 = '%e', title_9 = '%e', title_10 = '%e' WHERE player_id = '%d'",
-			PlayerContactName[playerid][0],
-			PlayerContactName[playerid][1],
-			PlayerContactName[playerid][2],
-			PlayerContactName[playerid][3],
-			PlayerContactName[playerid][4],
-			PlayerContactName[playerid][5],
-			PlayerContactName[playerid][6],
-			PlayerContactName[playerid][7],
-			PlayerContactName[playerid][8],
-			PlayerContactName[playerid][9],
-			PlayerInfo[playerid][pSQLID]
-		);
-		mysql_tquery(g_SQL, mobileUpdate);
-
-		format(mobileUpdate, 560, "UPDATE player_mobile_contacts SET number_1 = '%d', number_2 = '%d', number_3 = '%d', number_4 = '%d', number_5 = '%d', number_6 = '%d', number_7 = '%d', number_8 = '%d', number_9 = '%d', number_10 = '%d' WHERE player_id = '%d'",
-			PlayerContactNumber[playerid][0],
-			PlayerContactNumber[playerid][1],
-			PlayerContactNumber[playerid][2],
-			PlayerContactNumber[playerid][3],
-			PlayerContactNumber[playerid][4],
-			PlayerContactNumber[playerid][5],
-			PlayerContactNumber[playerid][6],
-			PlayerContactNumber[playerid][7],
-			PlayerContactNumber[playerid][8],
-			PlayerContactNumber[playerid][9],
-			PlayerInfo[playerid][pSQLID]
-		);
-		mysql_tquery(g_SQL, mobileUpdate);
-	}
+	mysql_fquery(g_SQL, "DELETE FROM player_mobile_contacts WHERE player_id = '%d'", PlayerInfo[playerid][pSQLID]);
 	return 1;
 }
 
-stock SavePlayerContactSlot(playerid, slotid)
+stock SavePlayerContact(playerid, slotid)
 {
-	new
-		mobileUpdate[130];
+	mysql_fquery(g_SQL, "UPDATE player_mobile_contacts SET title = '%e', number = '%d' WHERE sqlid = '%d'",
+		PlayerContactName[playerid][slotid],
+		PlayerContactNumber[playerid][slotid],
+		PlayerContactSQL[playerid][slotid]
+	);
+	return 1;
+}
 
-	switch(slotid)
-	{
-		case 0: {
-			mysql_format(g_SQL, mobileUpdate, 130, "UPDATE player_mobile_contacts SET title_1 = '%e', number_1 = '%d' WHERE player_id = '%d'",
-				PlayerContactName[playerid][0],
-				PlayerContactNumber[playerid][0],
-				PlayerInfo[playerid][pSQLID]
-			);
-		}
-		case 1: {
-			mysql_format(g_SQL, mobileUpdate, 130, "UPDATE player_mobile_contacts SET title_2 = '%e', number_2 = '%d' WHERE player_id = '%d'",
-				PlayerContactName[playerid][1],
-				PlayerContactNumber[playerid][1],
-				PlayerInfo[playerid][pSQLID]
-			);
-		}
-		case 2: {
-			mysql_format(g_SQL, mobileUpdate, 130, "UPDATE player_mobile_contacts SET title_3 = '%e', number_3 = '%d' WHERE player_id = '%d'",
-				PlayerContactName[playerid][2],
-				PlayerContactNumber[playerid][2],
-				PlayerInfo[playerid][pSQLID]
-			);
-		}
-		case 3: {
-			mysql_format(g_SQL, mobileUpdate, 130, "UPDATE player_mobile_contacts SET title_4 = '%e', number_4 = '%d' WHERE player_id = '%d'",
-				PlayerContactName[playerid][3],
-				PlayerContactNumber[playerid][3],
-				PlayerInfo[playerid][pSQLID]
-			);
-		}
-		case 4: {
-			mysql_format(g_SQL, mobileUpdate, 130, "UPDATE player_mobile_contacts SET title_5 = '%e', number_5 = '%d' WHERE player_id = '%d'",
-				PlayerContactName[playerid][4],
-				PlayerContactNumber[playerid][4],
-				PlayerInfo[playerid][pSQLID]
-			);
-		}
-		case 5: {
-			mysql_format(g_SQL, mobileUpdate, 130, "UPDATE player_mobile_contacts SET title_6 = '%e', number_6 = '%d' WHERE player_id = '%d'",
-				PlayerContactName[playerid][5],
-				PlayerContactNumber[playerid][5],
-				PlayerInfo[playerid][pSQLID]
-			);
-		}
-		case 6: {
-			mysql_format(g_SQL, mobileUpdate, 130, "UPDATE player_mobile_contacts SET title_7 = '%e', number_7 = '%d' WHERE player_id = '%d'",
-				PlayerContactName[playerid][6],
-				PlayerContactNumber[playerid][6],
-				PlayerInfo[playerid][pSQLID]
-			);
-		}
-		case 7: {
-			mysql_format(g_SQL, mobileUpdate, 130, "UPDATE player_mobile_contacts SET title_8 = '%e', number_8 = '%d' WHERE player_id = '%d'",
-				PlayerContactName[playerid][7],
-				PlayerContactNumber[playerid][7],
-				PlayerInfo[playerid][pSQLID]
-			);
-		}
-		case 8: {
-			mysql_format(g_SQL, mobileUpdate, 130, "UPDATE player_mobile_contacts SET title_9 = '%e', number_9 = '%d' WHERE player_id = '%d'",
-				PlayerContactName[playerid][8],
-				PlayerContactNumber[playerid][8],
-				PlayerInfo[playerid][pSQLID]
-			);
-		}
-		case 9: {
-			mysql_format(g_SQL, mobileUpdate, 130, "UPDATE player_mobile_contacts SET title_10 = '%e', number_10 = '%d' WHERE player_id = '%d'",
-				PlayerContactName[playerid][9],
-				PlayerContactNumber[playerid][9],
-				PlayerInfo[playerid][pSQLID]
-			);
-		}
-	}
-	mysql_tquery(g_SQL, mobileUpdate);
+stock InsertMobileContact(playerid, slotid)
+{
+	mysql_tquery(g_SQL,
+		va_fquery(g_SQL, "INSERT INTO player_mobile_contacts(player_id, title, number) VALUES ('%d', '%e', '%d')",
+			PlayerInfo[playerid][pSQLID],
+			PlayerContactName[playerid][slotid],
+			PlayerContactNumber[playerid][slotid]
+		),
+		"OnMobileContactInsert",
+		"ii",
+		playerid,
+		slotid
+	);
+	return 1;
+}
+
+Public: OnMobileContactInsert(playerid, slotid)
+{
+	PlayerContactSQL[playerid][slotid] = cache_insert_id();
+	Iter_Add(MobileContacts[playerid], slotid);
+	return 1;
+}
+
+stock DeleteMobileContact(sqlid)
+{
+	mysql_fquery(g_SQL, "DELETE FROM player_mobile_contacts WHERE sqlid = '%d'", sqlid);
 	return 1;
 }
 
 stock SavePlayerMobile(playerid, type=1)
 {
-	new	mobileInsert[256], deleteMobile[128];
 	if(type == 1)
 	{
-		format(deleteMobile, 128, "DELETE FROM player_phones WHERE player_id = '%d' AND type = '1'",
+		mysql_fquery(g_SQL, "DELETE FROM player_phones WHERE player_id = '%d' AND type = '1'",
 			PlayerInfo[playerid][pSQLID]
 		);
-		mysql_tquery(g_SQL, deleteMobile); // Prvo obrisi pa onda tek dodaj
 
-		format(mobileInsert, sizeof(mobileInsert), "INSERT INTO player_phones(player_id, type, model, number, money, background, mask, time) VALUES ('%d','%d','%d','%d','%d','%d','%d','%d')",
+		mysql_fquery(g_SQL, 
+			"INSERT INTO player_phones(player_id, type, model, number, money, background, mask, time) \n\
+				VALUES ('%d','%d','%d','%d','%d','%d','%d','%d')",
 			PlayerInfo[playerid][pSQLID],
 			type,
 			PlayerInfo[playerid][pMobileModel],
@@ -381,16 +291,16 @@ stock SavePlayerMobile(playerid, type=1)
 			PlayerInfo[playerid][pPhoneMask],
 			gettimestamp()
 		);
-		mysql_tquery(g_SQL, mobileInsert);
 	}
 	else if(type == 2)
 	{
-		format(deleteMobile, 128, "DELETE FROM player_phones WHERE player_id = '%d' AND type = '2'",
+		mysql_fquery(g_SQL, "DELETE FROM player_phones WHERE player_id = '%d' AND type = '2'",
 			PlayerInfo[playerid][pSQLID]
 		);
-		mysql_tquery(g_SQL, deleteMobile); // Prvo obrisi pa onda tek dodaj
 
-		format(mobileInsert, sizeof(mobileInsert), "INSERT INTO player_phones(player_id, type, model, number, money, background, mask, time, cryptonumber) VALUES ('%d','%d','%d','%d','%d','%d','%d','%d','%d')",
+		mysql_fquery(g_SQL, 
+			"INSERT INTO player_phones(player_id, type, model, number, money, background, mask, time, cryptonumber) \n\
+				VALUES ('%d','%d','%d','%d','%d','%d','%d','%d','%d')",
 			PlayerInfo[playerid][pSQLID],
 			type,
 			0,
@@ -401,7 +311,6 @@ stock SavePlayerMobile(playerid, type=1)
 			gettimestamp(),
 			PlayerInfo[playerid][pCryptoNumber]
 		);
-		mysql_tquery(g_SQL, mobileInsert);
 	}
 	return 1;
 }
@@ -459,7 +368,8 @@ stock BuyPlayerPhone(playerid, listid)
 	PlayerInfo[playerid][pMobileCost] = 0;
 	PlayerInfo[playerid][pPhoneBG] = -1263225696;
 	PlayerInfo[playerid][pPhoneMask] = 0;
-	CreatePlayerContacts(playerid);
+	
+	ResetMobileContacts(playerid);
 	SavePlayerMobile(playerid);
 	return 1;
 }
@@ -468,32 +378,32 @@ stock UpdatePlayerMobile(playerid)
 {
 	if(PlayerInfo[playerid][pMobileNumber] != 0)
 	{
-		new mobileUpdate[150];
-		format(mobileUpdate, sizeof(mobileUpdate), "UPDATE player_phones SET model= '%d', number = '%d', money = '%d' WHERE player_id = '%d' AND type = '1'",
+		mysql_fquery(g_SQL, 
+			"UPDATE player_phones SET model= '%d', number = '%d', money = '%d' WHERE player_id = '%d' AND type = '1'",
 			PlayerInfo[playerid][pMobileModel],
 			PlayerInfo[playerid][pMobileNumber],
 			PlayerInfo[playerid][pMobileCost],
 			PlayerInfo[playerid][pSQLID]
 		);
-		mysql_tquery(g_SQL, mobileUpdate);
 	}
 	if(PlayerInfo[playerid][pCryptoNumber] != 0)
 	{
-		new cryptoUpdate[150];
-		format(cryptoUpdate, sizeof(cryptoUpdate), "UPDATE player_phones SET cryptonumber = '%d' WHERE player_id = '%d' AND type = '2'",
+		mysql_fquery(g_SQL, "UPDATE player_phones SET cryptonumber = '%d' WHERE player_id = '%d' AND type = '2'",
 			PlayerInfo[playerid][pCryptoNumber],
 			PlayerInfo[playerid][pSQLID]
 		);
-		mysql_tquery(g_SQL, cryptoUpdate);
 	}
 	return 1;
 }
 
 stock LoadPlayerMobile(playerid)
 {
-	new	loadMobile[128];
-	format(loadMobile, 128, "SELECT * FROM player_phones WHERE player_id = '%d' LIMIT 0,2", PlayerInfo[playerid][pSQLID]);
-	mysql_tquery(g_SQL, loadMobile, "OnPlayerMobileLoad", "i", playerid);
+	mysql_tquery(g_SQL, 
+		va_fquery(g_SQL, "SELECT * FROM player_phones WHERE player_id = '%d' LIMIT 0,2", PlayerInfo[playerid][pSQLID]), 
+		"OnPlayerMobileLoad", 
+		"i", 
+		playerid
+	);
 	return 1;
 }
 
@@ -527,6 +437,8 @@ public OnPlayerMobileLoad(playerid)
 				cache_get_value_name_int(i, "money"			, PlayerInfo[playerid][pMobileCost]);
 				cache_get_value_name_int(i, "background"	, PlayerInfo[playerid][pPhoneBG]);
 				cache_get_value_name_int(i, "mask"			, PlayerInfo[playerid][pPhoneMask]);
+				
+				LoadPlayerContacts(playerid);
 			}
 			else if(mobileType == 2)
 			{
@@ -558,27 +470,31 @@ public GetFreeTowerID()
 
 stock CreateTower(towerid)
 {
-	new
-		tmpQuery[ 256 ];
-	mysql_format(g_SQL, tmpQuery, sizeof(tmpQuery), "INSERT INTO signaltowers (network,posx,posy,posz,posrx,posry,posrz,radius) VALUES ('%e','%f','%f','%f','%f','%f','%f','%f')",
-		TowerInfo[ towerid ][ twNetwork ],
-		TowerInfo[ towerid ][ twPosX ],
-		TowerInfo[ towerid ][ twPosY ],
-		TowerInfo[ towerid ][ twPosZ ],
-		TowerInfo[ towerid ][ twPosRX ],
-		TowerInfo[ towerid ][ twPosRY ],
-		TowerInfo[ towerid ][ twPosRZ ],
-		TowerInfo[ towerid ][ twRadius ]
+	mysql_tquery(g_SQL, 
+		va_fquery(g_SQL, 
+			"INSERT INTO signaltowers (network,posx,posy,posz,posrx,posry,posrz,radius) \n\
+				VALUES ('%e','%f','%f','%f','%f','%f','%f','%f')",
+			TowerInfo[ towerid ][ twNetwork ],
+			TowerInfo[ towerid ][ twPosX ],
+			TowerInfo[ towerid ][ twPosY ],
+			TowerInfo[ towerid ][ twPosZ ],
+			TowerInfo[ towerid ][ twPosRX ],
+			TowerInfo[ towerid ][ twPosRY ],
+			TowerInfo[ towerid ][ twPosRZ ],
+			TowerInfo[ towerid ][ twRadius ]
+		), 
+		"OnTowerCreated", 
+		"i", 
+		towerid
 	);
-	mysql_tquery(g_SQL, tmpQuery, "OnTowerCreated", "i", towerid);
 	return 1;
 }
 
 stock DeleteTower(towerid)
 {
 	if(TowerInfo[ towerid ][ twPosX ] == 0.0 && TowerInfo[ towerid ][ twPosY ] == 0.0 && TowerInfo[ towerid ][ twPosZ ] == 0.0) return 0;
-	new
-		tmpQuery[ 256 ];
+	
+	
 	DestroyDynamicObject(TowerInfo[towerid][twObject]);
 	format(TowerInfo[ towerid ][ twNetwork ], 24, "");
 	TowerInfo[ towerid ][ twPosX ] = 0.0;
@@ -588,8 +504,8 @@ stock DeleteTower(towerid)
 	TowerInfo[ towerid ][ twPosRY ] = 0.0;
 	TowerInfo[ towerid ][ twPosRZ ] = 0.0;
 	TowerInfo[ towerid ][ twRadius ] = 0.0;
-	format(tmpQuery, sizeof(tmpQuery), "DELETE FROM signaltowers WHERE id = '%d' LIMIT 1", TowerInfo[ towerid ][ twSQLID ]);
-	mysql_tquery(g_SQL, tmpQuery);
+
+	mysql_fquery(g_SQL, "DELETE FROM signaltowers WHERE id = '%d' LIMIT 1", TowerInfo[ towerid ][ twSQLID ]);
 	return 1;
 }
 
@@ -2028,26 +1944,31 @@ public PhoneAction(playerid, phaction)
 
 stock GetContactNumberName(playerid, numberstring[])
 {
-    new ContactNo = strval(numberstring);
-	new CntNumbSTR[11];
-    for(new i = 0; i < 10; i++)
+    new 
+		ContactNo = strval(numberstring),
+		CntNumbSTR[MAX_CONTACT_LEN];
+
+    foreach(new i: MobileContacts[playerid])
 	{
-	    if(PlayerContactNumber[playerid][i] == ContactNo) return PlayerContactName[playerid][i];
+	    if(PlayerContactNumber[playerid][i] == ContactNo) 
+			return PlayerContactName[playerid][i];
 	}
-	format(CntNumbSTR, sizeof(CntNumbSTR), "%d", ContactNo);
+	format(CntNumbSTR, MAX_CONTACT_LEN, "%d", ContactNo);
 	return CntNumbSTR;
 }
 
 stock GetContactNumberNameEx(playerid, ContactNo)
 {
-	new CntNumbSTR[11],
+	new 
+		CntNumbSTR[MAX_CONTACT_LEN],
 		bool:found = false;
-    for(new i = 0; i < 10; i++)
+
+    foreach(new i: MobileContacts[playerid])
 	{
 	    if(PlayerContactNumber[playerid][i] == ContactNo)
 		{
 			strreplace(PlayerContactName[playerid][i], '_', ' ');
-			format(CntNumbSTR, 11, "%s", PlayerContactName[playerid][i]);
+			format(CntNumbSTR, MAX_CONTACT_LEN, "%s", PlayerContactName[playerid][i]);
 			strreplace(PlayerContactName[playerid][i], ' ', '_');
 			found = true;
 			break;
@@ -2130,31 +2051,15 @@ stock ShowGPS(playerid)
 
 stock SetContactVars(playerid)
 {
-	for(new i = 0; i < 10; i++)
+	for(new i = 0; i < MAX_MOBILE_CONTACTS; i++)
 	{
 	    strreplace(PlayerContactName[playerid][i], ' ', '_');
 		strreplace(PlayerContactName[playerid][i], '~', '-');
+
+		if(PlayerContactNumber[playerid][i] != 0) 
+			PlayerTextDrawSetString(playerid, PhoneTD[playerid][87+i], PlayerContactName[playerid][i]);
+		else PlayerTextDrawSetString(playerid, PhoneTD[playerid][87+i], "N/A");
 	}
-	if(PlayerContactNumber[playerid][0] != 0) PlayerTextDrawSetString(playerid, PhoneTD[playerid][87], PlayerContactName[playerid][0]);
-	else PlayerTextDrawSetString(playerid, PhoneTD[playerid][87], "N/A");
-	if(PlayerContactNumber[playerid][1] != 0) PlayerTextDrawSetString(playerid, PhoneTD[playerid][88], PlayerContactName[playerid][1]);
-	else PlayerTextDrawSetString(playerid, PhoneTD[playerid][88], "N/A");
-	if(PlayerContactNumber[playerid][2] != 0) PlayerTextDrawSetString(playerid, PhoneTD[playerid][89], PlayerContactName[playerid][2]);
-	else PlayerTextDrawSetString(playerid, PhoneTD[playerid][89], "N/A");
-	if(PlayerContactNumber[playerid][3] != 0) PlayerTextDrawSetString(playerid, PhoneTD[playerid][90], PlayerContactName[playerid][3]);
-	else PlayerTextDrawSetString(playerid, PhoneTD[playerid][90], "N/A");
-	if(PlayerContactNumber[playerid][4] != 0) PlayerTextDrawSetString(playerid, PhoneTD[playerid][91], PlayerContactName[playerid][4]);
-	else PlayerTextDrawSetString(playerid, PhoneTD[playerid][91], "N/A");
-	if(PlayerContactNumber[playerid][5] != 0) PlayerTextDrawSetString(playerid, PhoneTD[playerid][92], PlayerContactName[playerid][5]);
-	else PlayerTextDrawSetString(playerid, PhoneTD[playerid][92], "N/A");
-	if(PlayerContactNumber[playerid][6] != 0) PlayerTextDrawSetString(playerid, PhoneTD[playerid][93], PlayerContactName[playerid][6]);
-	else PlayerTextDrawSetString(playerid, PhoneTD[playerid][93], "N/A");
-	if(PlayerContactNumber[playerid][7] != 0) PlayerTextDrawSetString(playerid, PhoneTD[playerid][94], PlayerContactName[playerid][7]);
-	else PlayerTextDrawSetString(playerid, PhoneTD[playerid][94], "N/A");
-	if(PlayerContactNumber[playerid][8] != 0) PlayerTextDrawSetString(playerid, PhoneTD[playerid][95], PlayerContactName[playerid][8]);
-	else PlayerTextDrawSetString(playerid, PhoneTD[playerid][95], "N/A");
-	if(PlayerContactNumber[playerid][9] != 0) PlayerTextDrawSetString(playerid, PhoneTD[playerid][96], PlayerContactName[playerid][9]);
-	else PlayerTextDrawSetString(playerid, PhoneTD[playerid][96], "N/A");
 	return 1;
 }
 
@@ -2177,11 +2082,22 @@ stock ResetMobileVariables(playerid)
 	ReloadSMS(playerid);
 
     Player_SetMobileOn(playerid, true);
-	Bit1_Set( gr_LoadedContacts		, playerid, false );
 	Bit1_Set( gr_PlayerTakingSelfie , playerid, false );
 	Bit1_Set( gr_PlayerUsingPhonebooth		, playerid, false );
 	Bit8_Set( gr_RingingTime		, playerid, 0 );
 	Bit8_Set( gr_MobileContactSlot 	, playerid, 0 );
+	return 1;
+}
+
+stock ResetMobileContacts(playerid)
+{
+	for(new i = 0; i < MAX_MOBILE_CONTACTS; i++)
+	{
+		PlayerContactSQL[playerid][i] = -1;
+		PlayerContactName[playerid][i][0] = EOS;
+		PlayerContactNumber[playerid][i] = 0;
+	}
+	Iter_Clear(MobileContacts[playerid]);
 	return 1;
 }
 
@@ -2266,12 +2182,10 @@ stock SendSMS(playerid, recnumber, smsmessage[])
 	SendInfoMessage(gplayerid, "Dobili ste novu SMS poruku!");
 
 	PlayerInfo[ playerid ][ pMobileCost ] ++;
-	new	moneyUpdate[128];
-	format(moneyUpdate, 128, "UPDATE player_phones SET money = '%d' WHERE player_id = '%d' AND type = '1'",
+	mysql_fquery(g_SQL, "UPDATE player_phones SET money = '%d' WHERE player_id = '%d' AND type = '1'",
 		PlayerInfo[playerid][pMobileCost],
 		PlayerInfo[playerid][pSQLID]
 	);
-	mysql_tquery(g_SQL, moneyUpdate);
 
 	new
 	    sms_string[42];
@@ -3132,10 +3046,13 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 		    PlayerTextDrawColor(playerid, PhoneTD[playerid][103], PlayerInfo[playerid][pPhoneMask]);
 		    if(PhoneStatus[playerid] == PHONE_SHOW) PhoneAction(playerid, PHONE_SHOW);
 		}
-		case DIALOG_MOBILE_CONTACTS_MAIN: {
+		case DIALOG_MOBILE_CONTACTS_MAIN: 
+		{
 			if( !response ) return 1;
-			switch( listitem ) {
-				case 0: {
+			switch( listitem ) 
+			{
+				case 0: 
+				{
 				    new slotid = ContactEditing[playerid];
 				    if(PlayerContactNumber[ playerid ][ slotid ] == 0) return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR,"Slot u imeniku je slobodan!");
 					PhoneTDAction[playerid] = PTD_ACTION_CALL;
@@ -3162,7 +3079,8 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 					    PlayerTextDrawCreated[playerid][62] = 0;
 					}
 				}
-				case 1: {
+				case 1: 
+				{
 				    new slotid = ContactEditing[playerid];
 				    if(PlayerContactNumber[ playerid ][ slotid ] == 0) return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR,"Slot u imeniku je slobodan!");
 					PhoneTDAction[playerid] = PTD_ACTION_SMS;
@@ -3170,7 +3088,8 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 					format(DialogInputNumber[playerid], 11, "%d", PlayerContactNumber[playerid][slotid]);
 					va_ShowPlayerDialog( playerid, DIALOG_MOBILE_SMS_TEXT, DIALOG_STYLE_INPUT, "MOBITEL - SMS", "Upisite poruku:", "Send", "Abort");
 				}
-				case 2: {
+				case 2: 
+				{
 				    new
 						slotid = ContactEditing[playerid];
 
@@ -3178,14 +3097,19 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 
 					if(slotid < 0)
 					    slotid = 0;
+					
+					DeleteMobileContact(PlayerContactSQL[ playerid ][ slotid ]);
 
 					PlayerContactName[ playerid ][ slotid ][ 0 ] 	= EOS;
 					PlayerContactNumber[ playerid ][ slotid ] 		= 0;
+					PlayerContactSQL[ playerid ][ slotid ]			= -1;
+
+					Iter_Remove(MobileContacts[playerid], slotid);
 
 					SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uspjesno ste obrisali kontakt!");
 				}
-
-				case 3: {
+				case 3: 
+				{
 				    new
 						slotid = ContactEditing[playerid];
 				    if( 0 <= ContactEditing[playerid] <= 9 ) {
@@ -3197,28 +3121,33 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 			}
 			return 1;
 		}
-		case DIALOG_MOBILE_ADDSLOT: {
+		case DIALOG_MOBILE_ADDSLOT: 
+		{
 			if( !IsNumeric(inputtext) && response ) return ShowPlayerDialog( playerid, DIALOG_MOBILE_ADDSLOT, DIALOG_STYLE_INPUT, "MOBILE - KONTAKTI DODAVANJE", "Unesite slot u koji zelite dodati kontakt:\n"COL_RED"Unos mora biti u brojevima!", "Input", "Abort");
-			new
-				slotid = strval( inputtext );
-			if( 1 <= slotid <= 10 ) {
+			
+			new slotid = strval( inputtext );
+			if( 1 <= slotid <= MAX_MOBILE_CONTACTS ) 
+			{
 				if( PlayerContactNumber[ playerid ][ (slotid-1) ] != 0 ) SendFormatMessage(playerid, MESSAGE_TYPE_ERROR,"Slot je popunjen, ako nastavite onda cete obrisati postojece podatke!");
 				Bit8_Set( gr_MobileContactSlot, playerid, slotid-1 );
 				ShowPlayerDialog( playerid, DIALOG_MOBILE_ADDNAME, DIALOG_STYLE_INPUT, "MOBILE - KONTAKTI DODAVANJE", "Unesite naziv kontakta:", "Input", "Abort");
-			} else {
+			} 
+			else 
+			{
 				ShowPlayerDialog( playerid, DIALOG_MOBILE_ADDSLOT, DIALOG_STYLE_INPUT, "MOBILE - KONTAKTI DODAVANJE", "Unesite slot u koji zelite dodati kontakt:\n"COL_RED"Minimalan unos je 1, a maksimalan 10 znakova!", "Input", "Abort");
 			}
 			return 1;
 		}
-		case DIALOG_MOBILE_ADDNAME: {
-			if( 1 <= strlen( inputtext ) <= 15 )
+		case DIALOG_MOBILE_ADDNAME: 
+		{
+			if( 1 <= strlen( inputtext ) <= MAX_CONTACT_LEN )
 			{
-				format( PlayerContactName[ playerid ][ Bit8_Get( gr_MobileContactSlot, playerid ) ], 11, inputtext );
+				format( PlayerContactName[ playerid ][ Bit8_Get( gr_MobileContactSlot, playerid ) ], MAX_CONTACT_LEN, inputtext );
 				ShowPlayerDialog( playerid, DIALOG_MOBILE_ADDNUM, DIALOG_STYLE_INPUT, "MOBILE - KONTAKTI DODAVANJE", "Unesite telefonski broj u slot:", "Input", "Abort");
 			}
 			else
 			{
-				ShowPlayerDialog( playerid, DIALOG_MOBILE_ADDNAME, DIALOG_STYLE_INPUT, "MOBILE - KONTAKTI DODAVANJE", "Unesite naziv kontakta:\n"COL_RED"Minimalan unos je 1, a maksimalan 15!", "Input", "Abort");
+				va_ShowPlayerDialog( playerid, DIALOG_MOBILE_ADDNAME, DIALOG_STYLE_INPUT, "MOBILE - KONTAKTI DODAVANJE", "Unesite naziv kontakta:\n"COL_RED"Minimalan unos je 1, a maksimalan %s!", "Input", "Abort", MAX_CONTACT_LEN);
 			}
 			return 1;
 		}
@@ -3233,7 +3162,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 			PlayerContactNumber[ playerid ][ slotid ] = strval(inputtext);
 			SendInfoMessage(playerid, "Uspjesno ste dodali kontakt.");
 			SetContactVars(playerid);
-			SavePlayerContactSlot(playerid, slotid);
+			InsertMobileContact(playerid, slotid);
 			return 1;
 		}
 		case DIALOG_MOBILE_REMSLOT:
@@ -3242,13 +3171,17 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 
 			if(slotid < 0)
 			    slotid = 0;
+			
+			DeleteMobileContact(PlayerContactSQL[ playerid ][ slotid ]);
 
+			Iter_Remove(MobileContacts[playerid], slotid);
+
+			PlayerContactSQL[ playerid ][ slotid ] 			= -1;
 			PlayerContactName[ playerid ][ slotid ][ 0 ] 	= EOS;
 			PlayerContactNumber[ playerid ][ slotid ] 		= 0;
 
 			SendInfoMessage(playerid, "Uspjesno ste obrisali kontakt.");
 			SetContactVars(playerid);
-			SavePlayerContactSlot(playerid, slotid);
 		}
 		case DIALOG_MOBILE_EDITSLOT:
 		{
@@ -3259,25 +3192,27 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 			} else ShowPlayerDialog( playerid, DIALOG_MOBILE_EDITSLOT, DIALOG_STYLE_INPUT, "MOBILE - KONTAKTI UREDJIVANJE", "Unesite slot koji zelite urediti:", "Input", "Abort");
 			return 1;
 		}
-		case DIALOG_MOBILE_EDITNAME: {
+		case DIALOG_MOBILE_EDITNAME: 
+		{
 			if( isnull(inputtext) ) return ShowPlayerDialog( playerid, DIALOG_MOBILE_EDITNAME, DIALOG_STYLE_INPUT, "MOBITEL - KONTAKTI UREDJIVANJE", "Unesite naziv slota:", "Input", "Abort");
 
-			format( PlayerContactName[ playerid ][ Bit8_Get( gr_MobileContactSlot, playerid ) ], 11, inputtext );
+			format( PlayerContactName[ playerid ][ Bit8_Get( gr_MobileContactSlot, playerid ) ], MAX_CONTACT_LEN, inputtext );
 			ShowPlayerDialog( playerid, DIALOG_MOBILE_EDITNUM, DIALOG_STYLE_INPUT, "MOBITEL - KONTAKTI UREDJIVANJE", "Unesite telefonski broj:", "Input", "Abort");
 			return 1;
 		}
-		case DIALOG_MOBILE_EDITNUM: {
+		case DIALOG_MOBILE_EDITNUM: 
+		{
 			if( isnull(inputtext) ) return ShowPlayerDialog( playerid, DIALOG_MOBILE_EDITNAME, DIALOG_STYLE_INPUT, "MOBITEL - KONTAKTI UREDJIVANJE", "Unesite naziv slota:", "Input", "Abort");
 
 			new
 				slotid = Bit8_Get( gr_MobileContactSlot, playerid );
 			PlayerContactNumber[ playerid ][ slotid ] = strval(inputtext);
 			SetContactVars(playerid);
-			SavePlayerContactSlot(playerid, slotid);
+			SavePlayerContact(playerid, slotid);
 
 			new
-				tmpString[ 45 ];
-			format( tmpString, 45, "Slot: %d\nIme: %s\nBroj: %d",
+				tmpString[ 60 ];
+			format( tmpString, 60, "%d.\nIme: %s\nBroj: %d",
 				slotid+1,
 				PlayerContactName[ playerid ][ slotid ],
 				PlayerContactNumber[ playerid ][ slotid ]
@@ -3285,16 +3220,16 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 			ShowPlayerDialog( playerid, 0, DIALOG_STYLE_MSGBOX, "MOBITEL - KONTAKTI UREDJIVANJE", tmpString, "Ok", "");
 			return 1;
 		}
-		case DIALOG_MOBILE_CONTACTS: {
-
+		case DIALOG_MOBILE_CONTACTS: 
+		{
 			if( !response ) return 1;
 			Bit8_Set( gr_MobileContactSlot, playerid, listitem );
 			ShowPlayerDialog( playerid, DIALOG_MOBILE_CONTACTS_CALL, DIALOG_STYLE_MSGBOX, "MOBILE - KONTAKTI", "Zelite li nazvati trazenog kontakta?", "Call", "Abort");
 			return 1;
 		}
-		case DIALOG_MOBILE_CONTACTS_CALL: {
+		case DIALOG_MOBILE_CONTACTS_CALL: 
+		{
 			if( !response ) return 1;
-
 			new slotid = Bit8_Get( gr_MobileContactSlot, playerid );
 			PhoneCall(playerid, PlayerContactNumber[ playerid ][ slotid ]);
 			return 1;
@@ -3638,41 +3573,16 @@ public OnPlayerContactsLoad(playerid)
 	#if defined MOD_DEBUG
 		printf("DEBUG CONTACTS: count(%d)", cache_num_rows());
 	#endif
-
-	if(cache_num_rows())
+	new rows = cache_num_rows();
+	if(!rows)
+		return 1;
+	
+	for(new i = 0; i < rows; i++)
 	{
-	    cache_get_value_name(0, "title_1",  PlayerContactName[playerid][0], 11);
-		cache_get_value_name_int(0, "number_1", PlayerContactNumber[playerid][0]);
-
-		cache_get_value_name(0, "title_2",  PlayerContactName[playerid][1], 11);
-		cache_get_value_name_int(0, "number_2", PlayerContactNumber[playerid][1]);
-
-		cache_get_value_name(0, "title_3",  PlayerContactName[playerid][2], 11);
-		cache_get_value_name_int(0,	"number_3", PlayerContactNumber[playerid][2]);
-
-		cache_get_value_name(0, "title_4",  PlayerContactName[playerid][3], 11);
-		cache_get_value_name_int(0, "number_4", PlayerContactNumber[playerid][3]);
-
-		cache_get_value_name(0, "title_5",  PlayerContactName[playerid][4], 11);
-		cache_get_value_name_int(0, "number_5", PlayerContactNumber[playerid][4]);
-
-		cache_get_value_name(0, "title_6",  PlayerContactName[playerid][5], 11);
-		cache_get_value_name_int(0, "number_6", PlayerContactNumber[playerid][5]);
-
-		cache_get_value_name(0, "title_7",  PlayerContactName[playerid][6], 11);
-		cache_get_value_name_int(0, "number_7", PlayerContactNumber[playerid][6]);
-
-		cache_get_value_name(0, "title_8",  PlayerContactName[playerid][7], 11);
-		cache_get_value_name_int(0, "number_8", PlayerContactNumber[playerid][7]);
-
-		cache_get_value_name(0, "title_9",  PlayerContactName[playerid][8], 11);
-		cache_get_value_name_int(0, "number_9", PlayerContactNumber[playerid][8]);
-
-		cache_get_value_name(0, "title_10", PlayerContactName[playerid][9], 11);
-		cache_get_value_name_int(0, "number_10", PlayerContactNumber[playerid][9]);
+	    cache_get_value_name(i, "title",  PlayerContactName[playerid][i], MAX_CONTACT_LEN);
+		cache_get_value_name_int(i, "number", PlayerContactNumber[playerid][i]);
+		Iter_Add(MobileContacts[playerid], i);
 	}
-	else CreatePlayerContacts(playerid);
-	Bit1_Set( gr_LoadedContacts		, playerid, true );
 	return 1;
 }
 
@@ -3826,8 +3736,6 @@ CMD:phone(playerid, params[])
 {
 	if( PlayerInfo[playerid][pKilled] ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne mozes koristiti ovu komandu dok si u DeathModeu!");
 	if( !PlayerInfo[ playerid ][ pMobileNumber ] ) return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR,"Nemate mobitel!");
-	if(!Bit1_Get(gr_LoadedContacts, playerid))
-		LoadPlayerContacts(playerid);
 	PhoneTDAction[playerid] = PTD_ACTION_HOME;
 	if(PhoneStatus[playerid] == PHONE_SHOW || PhoneStatus[playerid] == PHONE_NEXT)
 	{
@@ -3991,12 +3899,10 @@ CMD:hangup(playerid, params[])
 			PlayerInfo[playerid][pMobileCost] += cost;
 			va_SendClientMessage(playerid, COLOR_RED, "[ ! ] Poziv je naplacen %d$", cost);
 
-			new	moneyUpdate[140];
-			format(moneyUpdate, 140, "UPDATE player_phones SET money = '%d' WHERE player_id = '%d' AND type = '1'",
+			mysql_fquery(g_SQL, "UPDATE player_phones SET money = '%d' WHERE player_id = '%d' AND type = '1'",
 				PlayerInfo[playerid][pMobileCost],
 				PlayerInfo[playerid][pSQLID]
 			);
-			mysql_tquery(g_SQL, moneyUpdate);
 		}
 	}
 	PlayerHangup(playerid); // unutra ima i za giveplayerid
@@ -4035,29 +3941,26 @@ CMD:cryptotext(playerid, params[])
 	return 1;
 }
 
-CMD:cryptonumber(playerid, params[]) {
+CMD:cryptonumber(playerid, params[]) 
+{
 	new _crypt;
-
     if(sscanf(params, "i", _crypt)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /cryptonumber [crypto number]");
  	if(PlayerInfo[playerid][pCryptoNumber] == 0) return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR,"Nemate crypto.");
 	if(PlayerInfo[playerid][pJailed] != 0) return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR,"Nemozete trenutno poslati poruku!");
 	if(_crypt < 100 || _crypt > 999999) return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR,"Broj moze biti izmedju 100 i 999999!");
 
-	new	Cache:result, counts, cryptoQuery[128], sqlstring[128];
-
-	format(cryptoQuery, sizeof(cryptoQuery), "SELECT * FROM player_phones WHERE type = '2' AND cryptonumber = '%d' LIMIT 0,1", _crypt);
-	result = mysql_query(g_SQL, cryptoQuery);
-	counts = cache_num_rows();
+	new	Cache:result;
+	
+	result = mysql_query(g_SQL, va_fquery(g_SQL, "SELECT * FROM player_phones WHERE type = '2' AND cryptonumber = '%d'", _crypt));
+	if( cache_num_rows() ) 
+		return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Taj broj CRYPTOa vec postoji!");
 	cache_delete(result);
-	if( counts ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Taj broj CRYPTOa vec postoji!");
-
-	// Promjena broja cryptoa
+	
 	PlayerInfo[playerid][pCryptoNumber] = _crypt;
-	format(sqlstring, 128, "UPDATE player_phones SET cryptonumber = '%d' WHERE player_id = '%d' AND type = '2' ORDER BY id DESC LIMIT 1",
+	mysql_fquery(g_SQL, "UPDATE player_phones SET cryptonumber = '%d' WHERE player_id = '%d' AND type = '2' ORDER BY id DESC LIMIT 1",
 		PlayerInfo[playerid][pCryptoNumber],
 		PlayerInfo[playerid][pSQLID]
 	);
-	mysql_tquery(g_SQL, sqlstring);
 
 	va_SendClientMessage(playerid, COLOR_RED, "Promijenili ste svoj broj cryptoa! Novi broj: %d", _crypt);
 	return 1;

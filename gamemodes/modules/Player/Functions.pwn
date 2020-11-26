@@ -88,19 +88,19 @@ new TaxiData[MAX_PLAYERS][E_DATA_TAXI];
 
 ResetMonthPaydays()
 {
-	new resetString[128];
-	mysql_format(g_SQL, resetString, sizeof(resetString), "UPDATE experience SET monthpaydays = '0' WHERE 1");
-	mysql_tquery(g_SQL, resetString);
+	mysql_fquery(g_SQL, "UPDATE experience SET monthpaydays = '0' WHERE 1");
 	return 1;
 }
 
 Public:CheckAccountsForInactivity()
 {	
-	new currentday, currentmonth, loadString[ 128 ], logString[2048];
-			
-	new inactivetimestamp = gettimestamp() - MAX_JOB_INACTIVITY_TIME;
-	mysql_format(g_SQL, loadString, 128, "SELECT * FROM accounts WHERE lastloginstamp <= '%d'",inactivetimestamp);
+	new 
+		currentday, 
+		currentmonth, 
+		logString[2048],
+		inactivetimestamp = gettimestamp() - MAX_JOB_INACTIVITY_TIME;
 	
+	// Inactivity check based on last login timestamp
 	inline OnInactiveAccsLoad()
 	{
 		new rows;
@@ -115,9 +115,7 @@ Public:CheckAccountsForInactivity()
 			loginstamp,
 			propertytimestamp, 
 			playername[24], 
-			updateQuery[150],
-			motd[256],
-			tmpString[20];
+			motd[256];
 			
 		new 
 			donaterank = 0,
@@ -177,44 +175,14 @@ Public:CheckAccountsForInactivity()
 			
 			if(jobkey != 0 && loginstamp <= (gettimestamp() - MAX_JOB_INACTIVITY_TIME) && monthpaydays < 3) // 
 			{
-				mysql_format(g_SQL, updateQuery, sizeof(updateQuery), "UPDATE accounts SET jobkey = '0', contracttime = '0' WHERE sqlid = '%d'", sqlid);
-				mysql_tquery(g_SQL, updateQuery);
-				
+				mysql_fquery(g_SQL, "UPDATE accounts SET jobkey = '0', contracttime = '0' WHERE sqlid = '%d'", sqlid);				
 				RemoveOfflineJob(jobkey);
-				
-				switch(jobkey)  
-				{
-					 case 1:  format(tmpString, 20, "Cistac ulica");
-					 case 2:  format(tmpString, 20, "Pizza Boy");
-					 case 3:  format(tmpString, 20, "Mehanicar");
-					 case 4:  format(tmpString, 20, "Kosac trave");
-					 case 5:  format(tmpString, 20, "Tvornicki radnik");
-					 case 6:  format(tmpString, 20, "Taksist");
-					 case 7:  format(tmpString, 20, "Farmer");
-					 case 8:  format(tmpString, 20, "Nepoznato");
-					 case 9:  format(tmpString, 20, "Nepoznato");
-					 case 12: format(tmpString, 20, "Gun Dealer");
-					 case 13: format(tmpString, 20, "Car Jacker");
-					 case 14: format(tmpString, 20, "Drvosjeca");
-					 case 15: format(tmpString, 20, "Nepoznato");
-					 case 16: format(tmpString, 20, "Smetlar");
-					 case 17: format(tmpString, 20, "Vehicle Impounder");
-					 case 18: format(tmpString, 20, "Transporter");
-					 case 19: format(tmpString, 20, "Nepoznato");
-					 case 20: format(tmpString, 20, "Nepoznato");
-					 case 21: format(tmpString, 20, "Nepoznato");
-					 case 22: format(tmpString, 20, "Nepoznato");
-					 case 23: format(tmpString, 20, "Nepoznato");
-					 case 24: format(tmpString, 20, "Nepoznato");
-					 case 25: format(tmpString, 20, "Nepoznato");
-					 default: format(tmpString, 20, "Nezaposlen");
-				}
 				
 				Log_Write("logfiles/inactive_players.txt", "(%s) %s[SQLID: %d] due to inactivity lost his %s[Job ID:%d] job i %d hours of job contract.",
 					ReturnDate(),
 					playername,
 					sqlid,
-					tmpString,
+					ReturnJob(jobkey),
 					jobkey,
 					contracttime
 				);
@@ -222,13 +190,13 @@ Public:CheckAccountsForInactivity()
 				if(isnull(logString))
 					format(motd, sizeof(motd), "[%s] - Izgubili ste	posao %s i %d sati ugovora radi nedovoljne aktivnosti.",
 						ReturnDate(),
-						tmpString,
+						ReturnJob(jobkey),
 						contracttime
 					);
 				else
 					format(motd, sizeof(motd), "\n[%s] - Izgubili ste posao %s i %d sati ugovora radi nedovoljne aktivnosti.",
 						ReturnDate(),
-						tmpString,
+						ReturnJob(jobkey),
 						contracttime
 					);
 					
@@ -287,11 +255,11 @@ Public:CheckAccountsForInactivity()
 					if(HouseInfo[houseid][hTakings] > 0)
 						bankmoney += HouseInfo[houseid][hTakings];
 						
-					mysql_format(g_SQL, updateQuery, sizeof(updateQuery), "UPDATE accounts SET bankMoney = '%d' WHERE sqlid = '%d'", bankmoney, sqlid);
-					mysql_tquery(g_SQL, updateQuery);
+					mysql_fquery(g_SQL, "UPDATE accounts SET bankMoney = '%d' WHERE sqlid = '%d'", bankmoney, sqlid);					
 					
-					mysql_format(g_SQL, updateQuery, sizeof(updateQuery), "UPDATE houses SET ownerid = '0', takings = '0' WHERE id = '%d'", HouseInfo[houseid][hSQLID]);
-					mysql_tquery(g_SQL, updateQuery);
+					mysql_fquery(g_SQL, "UPDATE houses SET ownerid = '0', takings = '0' WHERE id = '%d'",
+						 HouseInfo[houseid][hSQLID]
+					);
 					
 					Log_Write("logfiles/inactive_players.txt", "(%s) %s[SQLID: %d] due to inactivity lost his house %s[SQLID: %d] and got %d$ refunded.",
 						ReturnDate(),
@@ -320,13 +288,11 @@ Public:CheckAccountsForInactivity()
 				if(garageid != INVALID_HOUSE_ID)
 				{
 					bankmoney += GarageInfo[garageid][gPrice];
-					mysql_format(g_SQL, updateQuery, sizeof(updateQuery), "UPDATE accounts SET bankMoney = '%d' WHERE sqlid = '%d'", bankmoney, sqlid);
-					mysql_tquery(g_SQL, updateQuery);
+					mysql_fquery(g_SQL, "UPDATE accounts SET bankMoney = '%d' WHERE sqlid = '%d'", bankmoney, sqlid);
 					
-					mysql_format(g_SQL, updateQuery, sizeof(updateQuery), "UPDATE server_garages SET ownerid = '0' WHERE id = '%d'", 
+					mysql_fquery(g_SQL, "UPDATE server_garages SET ownerid = '0' WHERE id = '%d'", 
 						GarageInfo[garageid][gSQLID]
 					);
-					mysql_tquery(g_SQL, updateQuery);
 					
 					Log_Write("logfiles/inactive_players.txt", "(%s) %s[SQLID: %d] due to inactivity lost his garage %s[SQLID: %d] and got %d$ refunded.",
 						ReturnDate(),
@@ -358,11 +324,9 @@ Public:CheckAccountsForInactivity()
 					if(BizzInfo[ bizzid ][ bTill ] > 0)
 						bankmoney += BizzInfo[bizzid][bTill];
 						
-					mysql_format(g_SQL, updateQuery, sizeof(updateQuery), "UPDATE accounts SET bankMoney = '%d' WHERE sqlid = '%d'", bankmoney, sqlid);
-					mysql_tquery(g_SQL, updateQuery);
+					mysql_fquery(g_SQL, "UPDATE accounts SET bankMoney = '%d' WHERE sqlid = '%d'", bankmoney, sqlid);					
 					
-					mysql_format(g_SQL, updateQuery, sizeof(updateQuery), "UPDATE bizzes SET ownerid = '0' WHERE id = '%d'", BizzInfo[bizzid][bSQLID]);
-					mysql_tquery(g_SQL, updateQuery);
+					mysql_fquery(g_SQL, "UPDATE bizzes SET ownerid = '0' WHERE id = '%d'", BizzInfo[bizzid][bSQLID]);
 					
 					Log_Write("logfiles/inactive_players.txt", "(%s) %s[SQLID: %d] due to inactivity lost Business %s[SQLID: %d] and got %d$ refunded.",
 						ReturnDate(),
@@ -391,11 +355,10 @@ Public:CheckAccountsForInactivity()
 					bankmoney += ComplexInfo[cid][cPrice];
 					if(ComplexInfo[cid][cTill] > 0)
 						bankmoney += ComplexInfo[cid][cTill];
-					mysql_format(g_SQL, updateQuery, sizeof(updateQuery), "UPDATE accounts SET bankMoney = '%d' WHERE sqlid = '%d'", bankmoney, sqlid);
-					mysql_tquery(g_SQL, updateQuery);
 					
-					mysql_format(g_SQL, updateQuery, sizeof(updateQuery), "UPDATE server_complex SET owner_id = '0' WHERE id = '%d'", ComplexInfo[cid][cSQLID]);
-					mysql_tquery(g_SQL, updateQuery);
+					mysql_fquery(g_SQL, "UPDATE accounts SET bankMoney = '%d' WHERE sqlid = '%d'", bankmoney, sqlid);
+					
+					mysql_fquery(g_SQL, "UPDATE server_complex SET owner_id = '0' WHERE id = '%d'", ComplexInfo[cid][cSQLID]);
 					
 					Log_Write("logfiles/inactive_players.txt", "(%s) %s[SQLID: %d] due to inactivity lost his Complex %s[SQLID: %d] and got %d$ refunded.",
 						ReturnDate(),
@@ -423,9 +386,10 @@ Public:CheckAccountsForInactivity()
 				}
 				if(crid != INVALID_COMPLEX_ID)
 				{	
-					mysql_format(g_SQL, updateQuery, sizeof(updateQuery), "UPDATE server_complex_rooms SET ownerid = '0' WHERE id = '%d'", ComplexRoomInfo[crid][cSQLID]);
-					mysql_tquery(g_SQL, updateQuery);
-					
+					mysql_fquery(g_SQL, "UPDATE server_complex_rooms SET ownerid = '0' WHERE id = '%d'",
+						ComplexRoomInfo[crid][cSQLID]
+					);					
+
 					Log_Write("logfiles/inactive_players.txt", "(%s) %s[SQLID: %d] due to inactivity lost his Complex Room %s [SQLID: %d].",
 						ReturnDate(),
 						playername,
@@ -455,12 +419,17 @@ Public:CheckAccountsForInactivity()
 		cache_delete(Data);
 		return 1;
 	}
-	mysql_tquery_inline_new(g_SQL, loadString, using inline OnInactiveAccsLoad, "");
+
+	MySQL_TQueryInline(g_SQL,  
+		using inline OnInactiveAccsLoad, 
+		va_fquery(g_SQL,  "SELECT * FROM accounts WHERE lastloginstamp <= '%d'",inactivetimestamp),
+		""
+	);
 	
+	// Inactivity check based on minimal amount of paydays per month required to maintain property
 	getdate(_, currentmonth, currentday);
 	if(currentday == 1) 
 	{
-		mysql_format(g_SQL, loadString, 128, "SELECT * FROM experience WHERE monthpaydays < '%d'", MIN_MONTH_PAYDAYS);
 		inline OnMinPayDayAccsLoad()
 		{
 			new rows, Cache:QueryData;
@@ -469,8 +438,7 @@ Public:CheckAccountsForInactivity()
 
 			new 
 				sqlid,
-				playername[24], 
-				updateQuery[150],
+				playername[24],
 				motd[256];
 				
 			new 
@@ -563,11 +531,11 @@ Public:CheckAccountsForInactivity()
 					if(HouseInfo[houseid][hTakings] > 0)
 						bankmoney += HouseInfo[houseid][hTakings];
 						
-					mysql_format(g_SQL, updateQuery, sizeof(updateQuery), "UPDATE accounts SET bankMoney = '%d' WHERE sqlid = '%d'", bankmoney, sqlid);
-					mysql_tquery(g_SQL, updateQuery);
+					mysql_fquery(g_SQL, "UPDATE accounts SET bankMoney = '%d' WHERE sqlid = '%d'", bankmoney, sqlid);
 					
-					mysql_format(g_SQL, updateQuery, sizeof(updateQuery), "UPDATE houses SET ownerid = '0', takings = '0' WHERE id = '%d'", HouseInfo[houseid][hSQLID]);
-					mysql_tquery(g_SQL, updateQuery);
+					mysql_fquery(g_SQL, "UPDATE houses SET ownerid = '0', takings = '0' WHERE id = '%d'", 
+						HouseInfo[houseid][hSQLID]
+					);
 					
 					Log_Write("logfiles/inactive_players.txt", "(%s) %s[SQLID: %d] due to inactivity lost his house on adress %s[SQLID: %d] and got %d$ refunded.",
 						ReturnDate(),
@@ -596,13 +564,11 @@ Public:CheckAccountsForInactivity()
 				if(garageid != INVALID_HOUSE_ID)
 				{
 					bankmoney += GarageInfo[garageid][gPrice];
-					mysql_format(g_SQL, updateQuery, sizeof(updateQuery), "UPDATE accounts SET bankMoney = '%d' WHERE sqlid = '%d'", bankmoney, sqlid);
-					mysql_tquery(g_SQL, updateQuery);
+					mysql_fquery(g_SQL, "UPDATE accounts SET bankMoney = '%d' WHERE sqlid = '%d'", bankmoney, sqlid);
 					
-					mysql_format(g_SQL, updateQuery, sizeof(updateQuery), "UPDATE server_garages SET ownerid = '0' WHERE id = '%d'", 
+					mysql_fquery(g_SQL, "UPDATE server_garages SET ownerid = '0' WHERE id = '%d'", 
 						GarageInfo[garageid][gSQLID]
 					);
-					mysql_tquery(g_SQL, updateQuery);
 					
 					Log_Write("logfiles/inactive_players.txt", "(%s) %s[SQLID: %d] due to inactivity lost his garage %s[SQLID: %d] and got %d$ refunded.",
 						ReturnDate(),
@@ -634,11 +600,9 @@ Public:CheckAccountsForInactivity()
 					if(BizzInfo[ bizzid ][ bTill ] > 0)
 						bankmoney += BizzInfo[bizzid][bTill];
 						
-					mysql_format(g_SQL, updateQuery, sizeof(updateQuery), "UPDATE accounts SET bankMoney = '%d' WHERE sqlid = '%d'", bankmoney, sqlid);
-					mysql_tquery(g_SQL, updateQuery);
+					mysql_fquery(g_SQL, "UPDATE accounts SET bankMoney = '%d' WHERE sqlid = '%d'", bankmoney, sqlid);
 					
-					mysql_format(g_SQL, updateQuery, sizeof(updateQuery), "UPDATE bizzes SET ownerid = '0' WHERE id = '%d'", BizzInfo[bizzid][bSQLID]);
-					mysql_tquery(g_SQL, updateQuery);
+					mysql_fquery(g_SQL, "UPDATE bizzes SET ownerid = '0' WHERE id = '%d'", BizzInfo[bizzid][bSQLID]);
 					
 					Log_Write("logfiles/inactive_players.txt", "(%s) %s[SQLID: %d] due to inactivity lost his Business %s[SQLID: %d] and got %d$ refunded.",
 						ReturnDate(),
@@ -667,11 +631,10 @@ Public:CheckAccountsForInactivity()
 					bankmoney += ComplexInfo[cid][cPrice];
 					if(ComplexInfo[cid][cTill] > 0)
 						bankmoney += ComplexInfo[cid][cTill];
-					mysql_format(g_SQL, updateQuery, sizeof(updateQuery), "UPDATE accounts SET bankMoney = '%d' WHERE sqlid = '%d'", bankmoney, sqlid);
-					mysql_tquery(g_SQL, updateQuery);
 					
-					mysql_format(g_SQL, updateQuery, sizeof(updateQuery), "UPDATE server_complex SET owner_id = '0' WHERE id = '%d'", ComplexInfo[cid][cSQLID]);
-					mysql_tquery(g_SQL, updateQuery);
+					mysql_fquery(g_SQL, "UPDATE accounts SET bankMoney = '%d' WHERE sqlid = '%d'", bankmoney, sqlid);
+					
+					mysql_fquery(g_SQL, "UPDATE server_complex SET owner_id = '0' WHERE id = '%d'", ComplexInfo[cid][cSQLID]);
 					
 					Log_Write("logfiles/inactive_players.txt", "(%s) %s[SQLID: %d] due to inactivity lost his Complex %s[SQLID: %d] and got %d$ refunded.",
 						ReturnDate(),
@@ -699,8 +662,9 @@ Public:CheckAccountsForInactivity()
 				}
 				if(crid != INVALID_COMPLEX_ID)
 				{	
-					mysql_format(g_SQL, updateQuery, sizeof(updateQuery), "UPDATE server_complex_rooms SET ownerid = '0' WHERE id = '%d'", ComplexRoomInfo[crid][cSQLID]);
-					mysql_tquery(g_SQL, updateQuery);
+					mysql_fquery(g_SQL, "UPDATE server_complex_rooms SET ownerid = '0' WHERE id = '%d'", 
+						ComplexRoomInfo[crid][cSQLID]
+					);
 					
 					Log_Write("logfiles/inactive_players.txt", "(%s) %s[SQLID: %d] due to inactivity lost his Complex Room on adress %s[SQLID: %d].",
 						ReturnDate(),
@@ -730,9 +694,13 @@ Public:CheckAccountsForInactivity()
 			cache_delete(QueryData);
 			return 1;
 		}
-		mysql_tquery_inline_new(g_SQL, loadString, using inline OnMinPayDayAccsLoad, "");
+		MySQL_TQueryInline(g_SQL,  
+			using inline OnMinPayDayAccsLoad, 
+			va_fquery(g_SQL, "SELECT * FROM experience WHERE monthpaydays < '%d'", MIN_MONTH_PAYDAYS),
+			""
+		);
 
-		mysql_format(g_SQL, loadString, sizeof(loadString), "SELECT * FROM  experience ORDER BY experience.monthpaydays DESC LIMIT 0 , 30");
+		// Monthly EXP rewards for top 5 players with most paydays in previous month
 		inline OnRewardActivePlayers()
 		{
 			new rows, rewarded= 0, sql, monthpaydays, Cache:RewardQueryData;
@@ -845,8 +813,13 @@ Public:CheckAccountsForInactivity()
 			cache_delete(RewardQueryData);
 			ResetMonthPaydays();
 			return 1;
-		}	
-		mysql_tquery_inline_new(g_SQL, loadString, using inline OnRewardActivePlayers, "");
+		}
+
+		MySQL_TQueryInline(g_SQL,  
+			using inline OnRewardActivePlayers, 
+			va_fquery(g_SQL, "SELECT * FROM  experience ORDER BY experience.monthpaydays DESC LIMIT 0 , 30"),
+			""
+		);
 		return 1;
 	}
 	return 1;
@@ -1015,13 +988,11 @@ stock LevelUp(playerid)
 		else
 			PlayerInfo[playerid][pRespects] = 0;
 
-		new levelUpUpdate[90];
-		format(levelUpUpdate, 90, "UPDATE accounts SET levels = '%d', respects = '%d' WHERE sqlid = '%d'",
+		mysql_fquery(g_SQL, "UPDATE accounts SET levels = '%d', respects = '%d' WHERE sqlid = '%d'",
 			PlayerInfo[playerid][pLevel],
 			PlayerInfo[playerid][pRespects],
 			PlayerInfo[playerid][pSQLID]
 		);
-		mysql_pquery(g_SQL, levelUpUpdate);
 
 		SetPlayerScore(playerid, PlayerInfo[playerid][pLevel]);
 	}
@@ -1123,14 +1094,9 @@ Public:PlayerMinuteTask(playerid)
 	return 1;	
 }
 
-/*new
-	timercheck = 0;
-*/
 timer PlayerGlobalTask[1000](playerid)
 {
-	/*printf("PlayerGlobalTask took %d miliseconds!", tickcount() - timercheck);
-	timercheck = tickcount();*/
-	
+
 	if ( !SafeSpawned[playerid] || !IsPlayerConnected(playerid) ) return 1;
 	if( gettimestamp() >= PlayerTaskTStamp[playerid] )
 		PlayerMinuteTask(playerid);	
@@ -1197,36 +1163,13 @@ timer PlayerGlobalTask[1000](playerid)
 	##    ##    ##    ##     ## ##    ## ##   ##  ##    ## 
 	 ######     ##     #######   ######  ##    ##  ######  
 */
-/**
-    <summary>
-        Funkcija za promjenu imena igracu.
-    </summary>
-	
-	<param name="playerid">
-        ID igraca kojem mijenjamo ime.
-    </param>
-	
-	<param name="newname">
-        Novo ime.
-    </param>
-
-    <returns>
-        /
-    </returns>
-
-    <remarks>
-        -
-    </remarks>
-*/
 
 stock ChangePlayerName(playerid, newname[], type, bool:admin_cn = false)
 {	
 	new	Cache:result,
-		counts,
-		cnQuery[ 200 ];
+		counts;
 	
-	mysql_format(g_SQL, cnQuery, sizeof(cnQuery), "SELECT * FROM accounts WHERE name = '%e' LIMIT 0,1", newname);
-	result = mysql_query(g_SQL, cnQuery);
+	result = mysql_query(g_SQL, va_fquery(g_SQL, "SELECT * FROM accounts WHERE name = '%e' LIMIT 0,1", newname));
 	counts = cache_num_rows();
 	cache_delete(result);
 	
@@ -1250,19 +1193,17 @@ stock ChangePlayerName(playerid, newname[], type, bool:admin_cn = false)
 	#endif
 	
 	// MySQL
-	mysql_format(g_SQL, cnQuery, sizeof(cnQuery), "INSERT INTO player_changenames(player_id, old_name, new_name) VALUES ('%d','%e','%e')",
+	mysql_fquery(g_SQL, "INSERT INTO player_changenames(player_id, old_name, new_name) VALUES ('%d','%e','%e')",
 		PlayerInfo[ playerid ][ pSQLID ],
 		oldname,
 		newname
 	);
-	mysql_pquery(g_SQL, cnQuery);
 	
-	mysql_format(g_SQL, cnQuery, sizeof(cnQuery), "UPDATE accounts SET name = '%e', sex = '%d' WHERE sqlid = '%d'",
+	mysql_fquery(g_SQL, "UPDATE accounts SET name = '%e', sex = '%d' WHERE sqlid = '%d'",
 		newname,
 		PlayerInfo[ playerid ][pAge],
 		PlayerInfo[ playerid ][ pSQLID ]
 	);
-	mysql_pquery(g_SQL, cnQuery);
 	
 	PlayerInfo[ playerid ][ pArrested ] = 0;
 	PlayerInfo[ playerid ][ pGunLic ] 	= 0;
@@ -1290,23 +1231,6 @@ stock ChangePlayerName(playerid, newname[], type, bool:admin_cn = false)
 	return 1;
 }
 
-/**
-    <summary>
-        Provjera za hunger sistem.
-    </summary>
-	
-	<param name="playerid">
-        ID igraca na kojem ce se vrSiti provjera.
-    </param>
-
-    <returns>
-        /
-    </returns>
-
-    <remarks>
-        -
-    </remarks>
-*/
 stock static HungerCheck(playerid)
 {
 	if(PlayerWounded[playerid] || PlayerInfo[playerid][pKilled] > 0)
@@ -1473,12 +1397,10 @@ stock GetPlayerFPS(playerid)
 
 stock GetPlayerAdminMessage(id)
 {
-	new message[2048], 
-		sqlquery[128];
-	format( sqlquery, sizeof(sqlquery), "SELECT AdminMessage FROM accounts WHERE sqlid = '%d' LIMIT 0,1", id);
+	new message[2048];
 	
 	new 
-		Cache:result = mysql_query(g_SQL, sqlquery);
+		Cache:result = mysql_query(g_SQL, va_fquery(g_SQL, "SELECT AdminMessage FROM accounts WHERE sqlid = '%d'", id));
 	cache_get_value_name(0, "AdminMessage", message, 2048);
 	cache_delete(result);
 	return message;
@@ -1487,14 +1409,11 @@ stock GetPlayerAdminMessage(id)
 stock GetPlayerVIP(sqlid)
 {
 	new	Cache:result,
-		rows,
-		value = 0,
-		inactiveQuery[ 128 ];
+		value = 0;
 
-	format(inactiveQuery, sizeof(inactiveQuery), "SELECT vipRank FROM accounts WHERE sqlid = '%d' LIMIT 0 , 1", sqlid);
-	result = mysql_query(g_SQL, inactiveQuery);
-	rows = cache_num_rows();
-	if(!rows)
+	result = mysql_query(g_SQL, va_fquery(g_SQL, "SELECT vipRank FROM accounts WHERE sqlid = '%d'", sqlid));
+	 
+	if(!cache_num_rows())
 		value = 0;
 	else
 		cache_get_value_name_int(0, "vipRank", value);
@@ -1506,14 +1425,11 @@ stock GetPlayerVIP(sqlid)
 stock GetPlayerBankMoney(sqlid)
 {
 	new	Cache:result,
-		rows,
-		value = 0,
-		inactiveQuery[ 128 ];
+		value = 0;
 
-	format(inactiveQuery, sizeof(inactiveQuery), "SELECT bankMoney FROM accounts WHERE sqlid = '%d' LIMIT 0 , 1", sqlid);
-	result = mysql_query(g_SQL, inactiveQuery);
-	rows = cache_num_rows();
-	if(!rows)
+	result = mysql_query(g_SQL, va_fquery(g_SQL, "SELECT bankMoney FROM accounts WHERE sqlid = '%d' LIMIT 0 , 1", sqlid));
+
+	if(!cache_num_rows())
 		value = 0;
 	else
 		cache_get_value_name_int(0, "bankMoney", value);
@@ -1525,14 +1441,10 @@ stock GetPlayerBankMoney(sqlid)
 stock GetPlayerPaydayCount(sqlid)
 {
 	new	Cache:result,
-		rows,
-		value = 0,
-		inactiveQuery[ 128 ];
+		value = 0;
 
-	format(inactiveQuery, sizeof(inactiveQuery), "SELECT monthpaydays FROM experience WHERE sqlid = '%d' LIMIT 0 , 1", sqlid);
-	result = mysql_query(g_SQL, inactiveQuery);
-	rows = cache_num_rows();
-	if(!rows)
+	result = mysql_query(g_SQL, va_fquery(g_SQL, "SELECT monthpaydays FROM experience WHERE sqlid = '%d'", sqlid));
+	if(!cache_num_rows())
 		value = 0;
 	else
 		cache_get_value_name_int(0, "monthpaydays", value);
@@ -1544,16 +1456,13 @@ stock GetPlayerPaydayCount(sqlid)
 stock IsAccountTeamStaff(sqlid)
 {
 	new	Cache:result,
-		rows,
 		bool:value = false,
 		admin = 0,
-		helper = 0,
-		inactiveQuery[ 128 ];
+		helper = 0;
 
-	format(inactiveQuery, sizeof(inactiveQuery), "SELECT adminLvl, helper FROM accounts WHERE sqlid = '%d' LIMIT 0 , 1", sqlid);
-	result = mysql_query(g_SQL, inactiveQuery);
-	rows = cache_num_rows();
-	if(!rows)
+	result = mysql_query(g_SQL, va_fquery(g_SQL, "SELECT adminLvl, helper FROM accounts WHERE sqlid = '%d' LIMIT 0 , 1", sqlid));
+
+	if(!cache_num_rows())
 		value = false;
 	else
 	{
@@ -1569,15 +1478,15 @@ stock IsAccountTeamStaff(sqlid)
 stock IsValidInactivity(sqlid)
 {
 	new	Cache:result,
-		rows,
 		bool:value = false,
-		endstamp,
-		inactiveQuery[ 128 ];
+		endstamp;
 
-	format(inactiveQuery, sizeof(inactiveQuery), "SELECT sqlid, endstamp FROM inactive_accounts WHERE sqlid = '%d' LIMIT 0 , 1", sqlid);
-	result = mysql_query(g_SQL, inactiveQuery);
-	rows = cache_num_rows();
-	if(!rows)
+	
+	result = mysql_query(g_SQL, va_fquery(g_SQL, 
+				"SELECT sqlid, endstamp FROM inactive_accounts WHERE sqlid = '%d' LIMIT 0 , 1", sqlid)
+			);
+
+	if(!cache_num_rows())
 		value = false;
 	else
 	{
@@ -1586,8 +1495,7 @@ stock IsValidInactivity(sqlid)
 			value = true;
 		else // Prijavljena neaktivnost je istekla
 		{
-			format(inactiveQuery, sizeof(inactiveQuery), "DELETE FROM inactive_accounts WHERE sqlid = '%d'", sqlid);
-			mysql_tquery(g_SQL, inactiveQuery);
+			mysql_fquery(g_SQL, "DELETE FROM inactive_accounts WHERE sqlid = '%d'", sqlid);
 			value = false;
 		}
 	}
@@ -1616,12 +1524,13 @@ stock GetPlayerMobileNumberFromSQL(sqlid)
 {
     new
 		dest = 0;
-	if( sqlid > 0 ) {
-	    new	Cache:result,
-			mobileQuery[ 128 ];
-
-		format(mobileQuery, sizeof(mobileQuery), "SELECT number FROM player_phones WHERE player_id = '%d' AND type = '1'", sqlid);
-		result = mysql_query(g_SQL, mobileQuery);
+	
+	if( sqlid > 0 ) 
+	{
+	    new	Cache:result;
+		result = mysql_query(g_SQL, 
+					va_fquery(g_SQL, "SELECT number FROM player_phones WHERE player_id = '%d' AND type = '1'", sqlid)
+				);
   		cache_get_value_index_int(0, 0, dest);
 		cache_delete(result);
 	} 
@@ -1760,12 +1669,8 @@ stock GetPlayerNameFromID(mysqlid)
 		return name;
 	}
 	
-	new
-		nameQuery[ 128 ],
-		Cache:result;
-	
-	format(nameQuery, 128, "SELECT name FROM accounts WHERE sqlid = '%d'", mysqlid);
-	result = mysql_query(g_SQL, nameQuery);
+	new Cache:result;
+	result = mysql_query(g_SQL, va_fquery(g_SQL, "SELECT name FROM accounts WHERE sqlid = '%d'", mysqlid));
 	
 	cache_get_value_name(0, "name",  name);
 	cache_delete(result);
@@ -1802,42 +1707,8 @@ stock ShowPlayerStats(playerid, targetid)
 	);
     strcat(pDialog,motd, sizeof(pDialog));
 
-	switch(PlayerInfo[targetid][pJob])  {
-         case 1:  format(tmpString, 20, "Cistac ulica");
-         case 2:  format(tmpString, 20, "Pizza Boy");
-         case 3:  format(tmpString, 20, "Mehanicar");
-         case 4:  format(tmpString, 20, "Kosac trave");
-         case 5:  format(tmpString, 20, "Tvornicki radnik");
-         case 6:  format(tmpString, 20, "Taksist");
-         case 7:  format(tmpString, 20, "Farmer");
-		 case 8:  format(tmpString, 20, "Nepoznato");
-         case 9:  format(tmpString, 20, "Nepoznato");
-         case 12: format(tmpString, 20, "Gun Dealer");
-         case 13: format(tmpString, 20, "Car Jacker");
-         case 14: format(tmpString, 20, "Drvosjeca");
-         case 15: format(tmpString, 20, "Nepoznato");
-         case 16: format(tmpString, 20, "Smetlar");
-         case 17: format(tmpString, 20, "Vehicle Impounder");
-         case 18: format(tmpString, 20, "Transporter");
-         case 19: format(tmpString, 20, "Nepoznato");
-         case 20: format(tmpString, 20, "Nepoznato");
-         case 21: format(tmpString, 20, "Nepoznato");
-		 case 22: format(tmpString, 20, "Nepoznato");
-		 case 23: format(tmpString, 20, "Nepoznato");
-         case 24: format(tmpString, 20, "Nepoznato");
-         case 25: format(tmpString, 20, "Nepoznato");
-         default: format(tmpString, 20, "Nezaposlen");
-    }
-	/*new
-		tmpMarried[MAX_PLAYER_NAME];
-	if(!isnull(PlayerInfo[targetid][pMarriedTo]))
-		format( tmpMarried, MAX_PLAYER_NAME, PlayerInfo[targetid][pMarriedTo] );
-	else
-		format( tmpMarried, MAX_PLAYER_NAME, "Nikim");*/
-	//ispred Posao: fali Ozenjen s: %s
     format(motd, sizeof(motd),""COL_WHITE"Posao: [%s] | Ugovor: [%d/%d] | Uhicen: [%d] | Profit po PayDayu: [$%d] | Organizacija: [%s] | Rank u organizaciji: [%s (%d)] | Hunger: [%.2f]\n",
-		//tmpMarried,
-		tmpString,
+		ReturnJob(PlayerInfo[targetid][pJob]),
 		PlayerInfo[targetid][pContractTime],
 		PlayerInfo[targetid][pDonateRank] ? 1 : 5,
 		PlayerInfo[targetid][pArrested],
@@ -1972,11 +1843,16 @@ stock RemovePlayerScreenFade(playerid)
 stock IllegalFactionJobCheck(factionid, jobid)
 {
     new	Cache:result,
-		counts,
-		tmpQuery[256];
+		counts;
 
-	format(tmpQuery, sizeof(tmpQuery), "SELECT * FROM accounts WHERE jobkey = '%d' AND (facMemId = '%d' OR facLeadId = '%d')", jobid, factionid, factionid);
-	result = mysql_query(g_SQL, tmpQuery);
+	result = mysql_query(g_SQL, 
+				va_fquery(g_SQL, "SELECT * FROM accounts WHERE jobkey = '%d' AND (facMemId = '%d' OR facLeadId = '%d')", 
+					jobid, 
+					factionid, 
+					factionid
+				)
+			);
+
 	counts = cache_num_rows();
 	cache_delete(result);
 	
