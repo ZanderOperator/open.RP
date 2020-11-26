@@ -303,7 +303,7 @@ stock static PickPocketTargetPlayer(playerid, type)
 				);
 				SetPlayerChatBubble(playerid, tmpString, COLOR_PURPLE, 20, 20000);
 				SendFormatMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uspjesno ste ukrali %d$ iz djepa!", money);
-				UpgradePlayerSkill(playerid, 5, 5);
+				UpgradePlayerSkill(playerid);
 			}
 			if( succeed == 1 || succeed == 2 || succeed == 4 || succeed == 5 ) {
 				new
@@ -332,7 +332,7 @@ stock static PickPocketTargetPlayer(playerid, type)
 				);
 				SetPlayerChatBubble(playerid, tmpString, COLOR_PURPLE, 20, 20000);
 				SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uspjesno ste ukrali Sat iz djepa. Prodajte ju u East Los Santosu s /sellgoods!");
-				UpgradePlayerSkill(playerid, 5, 5);
+				UpgradePlayerSkill(playerid);
 				SetStolenGoodInInventory(playerid, DIALOG_TYPE_WATCH);
 			}
 			if( succeed == 1 || succeed == 3 || succeed == 4 ) {
@@ -371,7 +371,7 @@ stock static PickPocketTargetPlayer(playerid, type)
 				);
 				SetPlayerChatBubble(playerid, tmpString, COLOR_PURPLE, 20, 20000);
 				SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uspjesno ste ukrali Mobitel iz djepa. Prodajte ga u East Los Santosu s /sellgoods!");
-				UpgradePlayerSkill(playerid, 5, 5);
+				UpgradePlayerSkill(playerid);
 				SetStolenGoodInInventory(playerid, DIALOG_TYPE_MOBILE);
 			}
 			if( succeed == 3 || succeed == 4 || succeed == 5 ) {
@@ -406,7 +406,7 @@ stock static PickPocketTargetPlayer(playerid, type)
 				);
 				SetPlayerChatBubble(playerid, tmpString, COLOR_PURPLE, 20, 20000);
 				SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uspjesno ste ukrali Crypto iz djepa. Prodajte ju u East Los Santosu s /sellgoods!");
-				UpgradePlayerSkill(playerid, 5, 5);
+				UpgradePlayerSkill(playerid);
 				SetStolenGoodInInventory(playerid, DIALOG_TYPE_CRYPTO);
 			}
 			if( succeed == 1 || succeed == 2 || succeed == 3 ) {
@@ -436,7 +436,7 @@ stock static PickPocketTargetPlayer(playerid, type)
 				);
 				SetPlayerChatBubble(playerid, tmpString, COLOR_PURPLE, 20, 20000);
 				SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uspjesno ste ukrali Masku iz djepa. Prodajte ju u East Los Santosu s /sellgoods!");
-				UpgradePlayerSkill(playerid, 5, 5);
+				UpgradePlayerSkill(playerid);
 				SetStolenGoodInInventory(playerid, DIALOG_TYPE_MASK);
 			}
 			if( succeed == 1 || succeed == 4 || succeed == 5 ) {
@@ -938,7 +938,7 @@ CMD:stealitems(playerid, params[])
 			SetStolenGoodInInventory(playerid, DIALOG_TYPE_RADIO);
 			SetPlayerSpecialAction(playerid, SPECIAL_ACTION_CARRY);
 			PlayerInfo[playerid][pFreeWorks] 	-= 5;
-			UpgradePlayerSkill(playerid, 5, 5);
+			UpgradePlayerSkill(playerid);
 		}
 		case 2: {
 			if( !HouseInfo[ house ][ hTV ] ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Kuca nema televizor!");
@@ -948,7 +948,7 @@ CMD:stealitems(playerid, params[])
 			SetStolenGoodInInventory(playerid, DIALOG_TYPE_TV);
 			SetPlayerSpecialAction(playerid, SPECIAL_ACTION_CARRY);
 			PlayerInfo[playerid][pFreeWorks] 	-= 5;
-			UpgradePlayerSkill(playerid, 5, 5);
+			UpgradePlayerSkill(playerid);
 		}
 		case 3: {
 			if( !HouseInfo[ house ][ hMicrowave ] ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Kuca nema mikrovalnu!");
@@ -958,7 +958,7 @@ CMD:stealitems(playerid, params[])
 			SetStolenGoodInInventory(playerid, DIALOG_TYPE_MICRO);
 			SetPlayerSpecialAction(playerid, SPECIAL_ACTION_CARRY);
 			PlayerInfo[playerid][pFreeWorks] 	-= 5;
-			UpgradePlayerSkill(playerid, 5, 5);
+			UpgradePlayerSkill(playerid);
 		}
 	}
 	return 1;
@@ -1045,7 +1045,7 @@ CMD:stealmoney(playerid, params[])
 			SendFormatMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uspjesno ste ukrali %d$ iz sefa!", stolen_money);
 			HouseToPlayerMoney(playerid, house, stolen_money);
 			PlayerInfo[playerid][pFreeWorks] 	-= 7;
-			UpgradePlayerSkill(playerid, 5, 5);
+			UpgradePlayerSkill(playerid);
 			#if defined MODULE_LOGS
 			Log_Write("/logfiles/job_burglar.txt", "(%s) Player %s(%s) stole %d$ from house safe. (Adress: %s | SQLID: %d)", 
 				ReturnDate(), 
@@ -1068,7 +1068,7 @@ CMD:stealmoney(playerid, params[])
 			SendFormatMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uspjesno ste ukrali %d$ iz sefa!", stolen_money);
 			HouseToPlayerMoney(playerid, house, stolen_money);
 			PlayerInfo[playerid][pFreeWorks] 	-= 7;
-			UpgradePlayerSkill(playerid, 5, 5);
+			UpgradePlayerSkill(playerid);
 			AntiSpamInfo[playerid][stHouseMoney] = gettimestamp() + ANTI_SPAM_STEAL_MONEY;
 			#if defined MODULE_LOGS
 			Log_Write("/logfiles/job_burglar.txt", "(%s) Player %s(%s) stole %d$ from house safe. (Adress: %s | SQLID: %d)", 

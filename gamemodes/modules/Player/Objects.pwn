@@ -694,38 +694,45 @@ stock HandlePlayerObjectSelection(playerid, item)
 
 stock LoadPlayerObjects(playerid)
 {
-	new
-		tmpQuery[128];
-	format(tmpQuery, 128, "SELECT * FROM player_objects WHERE player_id = '%d' LIMIT 0,7",
-		PlayerInfo[playerid][pSQLID]
+	mysql_tquery(g_SQL, 
+		va_fquery(g_SQL, "SELECT * FROM player_objects WHERE player_id = '%d' LIMIT 0,7",
+			PlayerInfo[playerid][pSQLID]
+		), 
+		"OnPlayerObjectsLoad", 
+		"i", 
+		playerid
 	);
-	mysql_tquery(g_SQL, tmpQuery, "OnPlayerObjectsLoad", "i", playerid);
 	return 1;
 }
 
 stock InsertObjectSlot(playerid, slot)
 {
-	new mysqlInsert[ 128 ];
-	
 	if(PlayerObject[playerid][slot][poSQLID] == -1)
 	{
-		format(mysqlInsert, sizeof(mysqlInsert), "INSERT INTO player_objects (player_id, model, placed, bone) VALUES ('%d', '%d', '%d', '%d')",
-			PlayerInfo[playerid][pSQLID],
-			PlayerObject[playerid][slot][poModelid],
-			PlayerObject[playerid][slot][poPlaced],
-			PlayerObject[playerid][slot][poBoneId]
+		mysql_tquery(g_SQL, 
+			va_fquery(g_SQL, "INSERT INTO player_objects (player_id, model, placed, bone) VALUES ('%d', '%d', '%d', '%d')",
+				PlayerInfo[playerid][pSQLID],
+				PlayerObject[playerid][slot][poModelid],
+				PlayerObject[playerid][slot][poPlaced],
+				PlayerObject[playerid][slot][poBoneId]
+			), 
+			"OnPlayerObjectInsert", 
+			"ii", 
+			playerid, 
+			slot
 		);
-		mysql_tquery(g_SQL, mysqlInsert, "OnPlayerObjectInsert", "ii", playerid, slot);
 		return 1;
 	}
 	return 1;
 }
 stock SaveObjectSlot(playerid, slot)
 {
-	new mysqlUpdate[ 512 ];
 	if(PlayerObject[playerid][slot][poSQLID] != -1 && PlayerObject[playerid][slot][poModelid] != -1)
 	{
-		format(mysqlUpdate, sizeof(mysqlUpdate), "UPDATE player_objects SET  placed = '%d', bone = '%d', posX = '%f', posY = '%f', posZ = '%f', rotX = '%f', rotY = '%f', rotZ = '%f', sizeX = '%f', sizeY = '%f', sizeZ = '%f', color1 = '%d', color2 = '%d' WHERE sqlid= '%d'",
+		mysql_fquery(g_SQL, 
+			"UPDATE player_objects SET  placed = '%d', bone = '%d', posX = '%f', posY = '%f', posZ = '%f',\n\
+				rotX = '%f', rotY = '%f', rotZ = '%f', sizeX = '%f', sizeY = '%f', sizeZ = '%f',\n\
+				color1 = '%d', color2 = '%d' WHERE sqlid= '%d'",
 			PlayerObject[playerid][slot][poPlaced],
 			PlayerObject[playerid][slot][poBoneId],
 			PlayerObject[playerid][slot][poPosX],
@@ -741,7 +748,6 @@ stock SaveObjectSlot(playerid, slot)
 			PlayerObject[playerid][slot][poColor2],
 			PlayerObject[playerid][slot][poSQLID]
 		);
-		mysql_tquery(g_SQL, mysqlUpdate);
 		return 1;
 	}
 	return 1;
@@ -749,13 +755,10 @@ stock SaveObjectSlot(playerid, slot)
 
 stock DeleteObjectSlot(playerid, slot)
 {
-	new
-		deleteObject[90];
-	format(deleteObject, 90, "DELETE FROM player_objects WHERE sqlid = '%d' AND player_id = '%d'",
+	mysql_fquery(g_SQL, "DELETE FROM player_objects WHERE sqlid = '%d' AND player_id = '%d'",
 		PlayerObject[playerid][slot][poSQLID],
 		PlayerInfo[playerid][pSQLID]
 	);
-	mysql_tquery(g_SQL, deleteObject);
 	return 1;
 }
 

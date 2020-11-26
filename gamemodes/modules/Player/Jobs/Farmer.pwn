@@ -431,7 +431,7 @@ timer CombineCheck[200](playerid)
 		new Profit = (random(650) + 505) + (GetPlayerSkillLevel(playerid, 0) * 20);
 		va_SendClientMessage(playerid, COLOR_RED, "[ ! ] Zaradio si $%d, placa ti je sjela na racun.", Profit);
 		ResetFarmerVars(playerid);
-		UpgradePlayerSkill(playerid, 0);
+		UpgradePlayerSkill(playerid);
 		BudgetToPlayerBankMoney(playerid, Profit);
 		PlayerInfo[playerid][pPayDayMoney] += Profit;
 		PlayerInfo[playerid][pFreeWorks] -= 5;
@@ -840,9 +840,10 @@ CMD:milk(playerid, params[])
 		MilkInfo[playerid][mLiters] = 0;
 		SendFormatMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uspjesno ste spremili kanister sa mlijekom u spremiste, te ste zaradili %i$!", moneys);
 		ResetFarmerVars(playerid);
-		UpgradePlayerSkill(playerid, 0);
+		UpgradePlayerSkill(playerid);
 	}
-	else if( !strcmp(param, "take", true) ) {
+	else if( !strcmp(param, "take", true) ) 
+	{
 		if( (PlayerInfo[playerid][pJob] != FARMER_ID)) return SendClientMessage( playerid, COLOR_RED, "Niste farmer!");
 		if( !MilkInfo[playerid][mTransporting]) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne transportirate mlijeko!");
 		if( !IsPlayerInRangeOfPoint(playerid, 8.0, -1.3600, 74.3902, 3.1172)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne nalazite se blizu spremista!");
@@ -859,7 +860,8 @@ CMD:milk(playerid, params[])
     	SendClientMessage(playerid, COLOR_RED, "[ ! ] Odite do svog kamiona, te kucajte /milk put kako bi stavili kanister na kamion.");
     	return SendClientMessage(playerid, -1, "Kanister mozete baciti sa /dropcanister.");
 	}
-	else if( !strcmp(param, "put", true) ) {
+	else if( !strcmp(param, "put", true) ) 
+	{
 		new
 			VehicleModel;
 
@@ -1001,7 +1003,7 @@ CMD:milk(playerid, params[])
 		va_SendClientMessage(playerid, COLOR_RED, "[ ! ] Zaradio si $%d, placa ti je sjela na racun.", moneys);
 		
 		ResetFarmerVars(playerid);
-		UpgradePlayerSkill(playerid, 0);
+		UpgradePlayerSkill(playerid);
 	}
 	else if( !strcmp(param, "stop", true) ) {
 		MilkInfo[playerid][mMilking] = 0;
@@ -1323,7 +1325,7 @@ CMD:crops(playerid, params[])
 			PlayerInfo[playerid][pPayDayMoney] += moneys;
 			va_SendClientMessage(playerid, COLOR_RED, "[ ! ] Zaradio si $%d, placa ti je sjela na racun.", moneys);
 			ResetFarmerVars(playerid);
-			UpgradePlayerSkill(playerid, 0);
+			UpgradePlayerSkill(playerid);
 		}
 
 		SendFormatMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uspjesno ste spremili vrecu sa usjevom u spremiste!");
@@ -1512,7 +1514,7 @@ CMD:crops(playerid, params[])
     	SeedInfo[playerid][sTransporting] = 0;
     	va_SendClientMessage(playerid, COLOR_RED, "[ ! ] Zaradio si $%d, placa ti je sjela na racun.", moneys);
 		ResetFarmerVars(playerid);
-		UpgradePlayerSkill(playerid, 0);
+		UpgradePlayerSkill(playerid);
 	}
 	return 1;
 }
@@ -1630,7 +1632,7 @@ CMD:eggs(playerid, params[])
 		EggInfo[playerid][eProcessed] = 0;
 		SendFormatMessage(playerid, MESSAGE_TYPE_INFO, "Uspjesno ste spremili kutiju s jajima, te ste zaradili %i$!", Profit);
 		ResetFarmerVars(playerid);
-		UpgradePlayerSkill(playerid, 0);
+		UpgradePlayerSkill(playerid);
 	}
 	else if( !strcmp(param, "take", true) )
 	{
@@ -1822,7 +1824,7 @@ CMD:eggs(playerid, params[])
 		va_SendClientMessage(playerid, COLOR_RED, "[ ! ] Zaradio si $%d, placa ti je sjela na racun.", Profit);
 	
 		ResetFarmerVars(playerid);
-		UpgradePlayerSkill(playerid, 0);
+		UpgradePlayerSkill(playerid);
 	}
 	return 1;
 }

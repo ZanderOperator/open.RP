@@ -1124,7 +1124,7 @@ CMD:jacker(playerid, params[])
 		PlayerInfo[playerid][JackerCoolDown] = 1; // svakih sat vremena moze odradit jedan posao.
 		UpdateIlegalGarages(garage);
 		CheckForGarageWantedLevel(garage, true);
-		UpgradePlayerSkill(playerid, 6);
+		UpgradePlayerSkill(playerid);
 	}
 	else if( !strcmp(param, "stop", true) ) {
 		if( PlayerJackingCar[ playerid ] == -1) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate aktivnu misiju!");

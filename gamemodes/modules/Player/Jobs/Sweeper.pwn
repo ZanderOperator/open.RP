@@ -85,7 +85,7 @@ hook OnPlayerEnterCheckpoint(playerid)
 
 				BudgetToPlayerBankMoney(playerid, money); // dobiva novac na knjizicu iz proracuna
 				PlayerInfo[playerid][pPayDayMoney] += money;
-				UpgradePlayerSkill(playerid, 2);
+				UpgradePlayerSkill(playerid);
 				PlayerInfo[playerid][pFreeWorks] -= 5;
 				Bit1_Set( r_Sweeping, playerid, false );
 				Bit1_Set( gr_IsWorkingJob, playerid, false );
