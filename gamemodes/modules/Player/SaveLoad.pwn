@@ -617,12 +617,10 @@ public OnAccountFinish(playerid)
 stock IsEMailInDB(const email[])
 {
 	new 
-		emailQuery[128],
 		Cache:result,
 		counts;
 	
-	mysql_format(g_SQL, emailQuery, sizeof(emailQuery), "SELECT * FROM accounts WHERE email = '%e'", email);
-	result = mysql_query(g_SQL, emailQuery);
+	result = mysql_query(g_SQL, va_fquery(g_SQL, "SELECT * FROM accounts WHERE email = '%e'", email));
 	counts = cache_num_rows();
 	cache_delete(result);
 	return counts;
@@ -765,7 +763,7 @@ stock SavePlayerData(playerid)
 		"UPDATE accounts SET registered = '%d', adminLvl = '%d', helper = '%d', playaWarns = '%d', lastlogin = '%e',\n\
 			lastloginstamp = '%d', lastip = '%e', muted = '%d', sex = '%d', age = '%d', changenames = '%d',\n\
 			changetimes = '%d', handMoney = '%d', bankMoney = '%d', connecttime = '%d', contracttime = '%d',\n\
-			freeworks = '%d', fishworks = '%d', fishsqlid = '%d', levels = '%d', respects = '%d', jobkey = '%d',\n\  
+			freeworks = '%d', fishworks = '%d', fishsqlid = '%d', levels = '%d', respects = '%d', jobkey = '%d',\n\
 			parts = '%d', contracttime = '%d', health = '%f', FishingSkill = '%d',\n\
 			jailed = '%d', jailtime = '%d', bailprice = '%d',\n\
 			carlic = '%d', gunlic = '%d', boatlic = '%d', fishlic = '%d', flylic = '%d', rentkey = '%d',\n\
@@ -773,7 +771,7 @@ stock SavePlayerData(playerid)
 			fightstyle = '%d', clock = '%d', rope = '%d', cigaretes = '%d', lighter = '%d',\n\
 			playaPayDay = '%d', playaPDMoney = '%d', profit = '%d', lijektimer = '%d', passport = '%d',\n\
 			SAMPid = '%e', forumname = '%e', gymtimes = '%d', gymcounter = '%d',\n\
-			boombox = '%d', boomboxtype = '%d', casinocool = '%d', news = '%d', HasRadio = '%d', voted = '%d',\n\ 
+			boombox = '%d', boomboxtype = '%d', casinocool = '%d', news = '%d', HasRadio = '%d', voted = '%d',\n\
 			drugused = '%d', drugseconds = '%d', lastdrug = '%d',\n\
 			savings_cool = '%d', savings_time = '%d', savings_type = '%d', savings_money = '%d',\n\
 			ammutime = '%d', warekey = '%d', mustread = '%d', lastupdatever = '%e', JackerCoolDown = '%d',\n\

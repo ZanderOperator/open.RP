@@ -205,10 +205,7 @@ Public:CheckAccountsForInactivity()
 			// Property Inactivity Check
 			propertytimestamp = gettimestamp() - MAX_INACTIVITY_TIME;
 			if(loginstamp <= propertytimestamp)
-			{
-				
-				cache_get_value_name_int(i, "bankMoney"	, bankmoney);
-				
+			{				
 				foreach(new h: Houses)
 				{
 					if(HouseInfo[h][hOwnerID] == sqlid)
@@ -251,11 +248,11 @@ Public:CheckAccountsForInactivity()
 				}
 				if(houseid != INVALID_HOUSE_ID)
 				{
-					bankmoney += HouseInfo[houseid][hValue];
+					bankmoney = HouseInfo[houseid][hValue];
 					if(HouseInfo[houseid][hTakings] > 0)
 						bankmoney += HouseInfo[houseid][hTakings];
 						
-					mysql_fquery(g_SQL, "UPDATE accounts SET bankMoney = '%d' WHERE sqlid = '%d'", bankmoney, sqlid);					
+					mysql_fquery(g_SQL, "UPDATE accounts SET bankMoney = bankMoney + '%d' WHERE sqlid = '%d'", bankmoney, sqlid);					
 					
 					mysql_fquery(g_SQL, "UPDATE houses SET ownerid = '0', takings = '0' WHERE id = '%d'",
 						 HouseInfo[houseid][hSQLID]
@@ -287,8 +284,8 @@ Public:CheckAccountsForInactivity()
 				}
 				if(garageid != INVALID_HOUSE_ID)
 				{
-					bankmoney += GarageInfo[garageid][gPrice];
-					mysql_fquery(g_SQL, "UPDATE accounts SET bankMoney = '%d' WHERE sqlid = '%d'", bankmoney, sqlid);
+					bankmoney = GarageInfo[garageid][gPrice];
+					mysql_fquery(g_SQL, "UPDATE accounts SET bankMoney = bankMoney + '%d' WHERE sqlid = '%d'", bankmoney, sqlid);
 					
 					mysql_fquery(g_SQL, "UPDATE server_garages SET ownerid = '0' WHERE id = '%d'", 
 						GarageInfo[garageid][gSQLID]
@@ -320,11 +317,11 @@ Public:CheckAccountsForInactivity()
 				}
 				if(bizzid != INVALID_BIZNIS_ID)
 				{
-					bankmoney += BizzInfo[bizzid][bBuyPrice];
+					bankmoney = BizzInfo[bizzid][bBuyPrice];
 					if(BizzInfo[ bizzid ][ bTill ] > 0)
 						bankmoney += BizzInfo[bizzid][bTill];
 						
-					mysql_fquery(g_SQL, "UPDATE accounts SET bankMoney = '%d' WHERE sqlid = '%d'", bankmoney, sqlid);					
+					mysql_fquery(g_SQL, "UPDATE accounts SET bankMoney = bankMoney + '%d' WHERE sqlid = '%d'", bankmoney, sqlid);					
 					
 					mysql_fquery(g_SQL, "UPDATE bizzes SET ownerid = '0' WHERE id = '%d'", BizzInfo[bizzid][bSQLID]);
 					
@@ -352,11 +349,11 @@ Public:CheckAccountsForInactivity()
 				}
 				if(cid != INVALID_COMPLEX_ID)
 				{
-					bankmoney += ComplexInfo[cid][cPrice];
+					bankmoney = ComplexInfo[cid][cPrice];
 					if(ComplexInfo[cid][cTill] > 0)
 						bankmoney += ComplexInfo[cid][cTill];
 					
-					mysql_fquery(g_SQL, "UPDATE accounts SET bankMoney = '%d' WHERE sqlid = '%d'", bankmoney, sqlid);
+					mysql_fquery(g_SQL, "UPDATE accounts SET bankMoney = bankMoney + '%d' WHERE sqlid = '%d'", bankmoney, sqlid);
 					
 					mysql_fquery(g_SQL, "UPDATE server_complex SET owner_id = '0' WHERE id = '%d'", ComplexInfo[cid][cSQLID]);
 					
@@ -467,7 +464,6 @@ Public:CheckAccountsForInactivity()
 
 				format(playername, sizeof(playername), "%s", ConvertSQLIDToName(sqlid));
 				donaterank = GetPlayerVIP(sqlid);
-				bankmoney = GetPlayerBankMoney(sqlid);
 				strcat(logString, GetPlayerAdminMessage(sqlid), sizeof(logString));
 
 				if(IsValidInactivity(sqlid)) // Ukoliko postoji prijavljena neaktivnost koja jos uvijek traje
@@ -527,11 +523,11 @@ Public:CheckAccountsForInactivity()
 				}
 				if(houseid != INVALID_HOUSE_ID)
 				{
-					bankmoney += HouseInfo[houseid][hValue];
+					bankmoney = HouseInfo[houseid][hValue];
 					if(HouseInfo[houseid][hTakings] > 0)
 						bankmoney += HouseInfo[houseid][hTakings];
 						
-					mysql_fquery(g_SQL, "UPDATE accounts SET bankMoney = '%d' WHERE sqlid = '%d'", bankmoney, sqlid);
+					mysql_fquery(g_SQL, "UPDATE accounts SET bankMoney = bankMoney +'%d' WHERE sqlid = '%d'", bankmoney, sqlid);
 					
 					mysql_fquery(g_SQL, "UPDATE houses SET ownerid = '0', takings = '0' WHERE id = '%d'", 
 						HouseInfo[houseid][hSQLID]
@@ -563,8 +559,8 @@ Public:CheckAccountsForInactivity()
 				}
 				if(garageid != INVALID_HOUSE_ID)
 				{
-					bankmoney += GarageInfo[garageid][gPrice];
-					mysql_fquery(g_SQL, "UPDATE accounts SET bankMoney = '%d' WHERE sqlid = '%d'", bankmoney, sqlid);
+					bankmoney = GarageInfo[garageid][gPrice];
+					mysql_fquery(g_SQL, "UPDATE accounts SET bankMoney = bankMoney +'%d' WHERE sqlid = '%d'", bankmoney, sqlid);
 					
 					mysql_fquery(g_SQL, "UPDATE server_garages SET ownerid = '0' WHERE id = '%d'", 
 						GarageInfo[garageid][gSQLID]
@@ -596,11 +592,11 @@ Public:CheckAccountsForInactivity()
 				}
 				if(bizzid != INVALID_BIZNIS_ID)
 				{
-					bankmoney += BizzInfo[bizzid][bBuyPrice];
+					bankmoney = BizzInfo[bizzid][bBuyPrice];
 					if(BizzInfo[ bizzid ][ bTill ] > 0)
 						bankmoney += BizzInfo[bizzid][bTill];
 						
-					mysql_fquery(g_SQL, "UPDATE accounts SET bankMoney = '%d' WHERE sqlid = '%d'", bankmoney, sqlid);
+					mysql_fquery(g_SQL, "UPDATE accounts SET bankMoney = bankMoney +'%d' WHERE sqlid = '%d'", bankmoney, sqlid);
 					
 					mysql_fquery(g_SQL, "UPDATE bizzes SET ownerid = '0' WHERE id = '%d'", BizzInfo[bizzid][bSQLID]);
 					
@@ -628,11 +624,11 @@ Public:CheckAccountsForInactivity()
 				}
 				if(cid != INVALID_COMPLEX_ID)
 				{
-					bankmoney += ComplexInfo[cid][cPrice];
+					bankmoney = ComplexInfo[cid][cPrice];
 					if(ComplexInfo[cid][cTill] > 0)
 						bankmoney += ComplexInfo[cid][cTill];
 					
-					mysql_fquery(g_SQL, "UPDATE accounts SET bankMoney = '%d' WHERE sqlid = '%d'", bankmoney, sqlid);
+					mysql_fquery(g_SQL, "UPDATE accounts SET bankMoney = bankMoney + '%d' WHERE sqlid = '%d'", bankmoney, sqlid);
 					
 					mysql_fquery(g_SQL, "UPDATE server_complex SET owner_id = '0' WHERE id = '%d'", ComplexInfo[cid][cSQLID]);
 					
@@ -1417,22 +1413,6 @@ stock GetPlayerVIP(sqlid)
 		value = 0;
 	else
 		cache_get_value_name_int(0, "vipRank", value);
-	
-	cache_delete(result);
-	return value;
-}
-
-stock GetPlayerBankMoney(sqlid)
-{
-	new	Cache:result,
-		value = 0;
-
-	result = mysql_query(g_SQL, va_fquery(g_SQL, "SELECT bankMoney FROM accounts WHERE sqlid = '%d' LIMIT 0 , 1", sqlid));
-
-	if(!cache_num_rows())
-		value = 0;
-	else
-		cache_get_value_name_int(0, "bankMoney", value);
 	
 	cache_delete(result);
 	return value;

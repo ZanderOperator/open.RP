@@ -232,9 +232,9 @@ stock InflictPlayerDamage(playerid, issuerid, bodypart, Float:damage)
 					//DropPlayerWeapons(playerid, X, Y);
 					//DropPlayerDrugs(playerid, X, Y, true);
 
-					new
-						deathQuery[256];
-					format(deathQuery, 256, "INSERT INTO player_deaths(player_id, pos_x, pos_y, pos_z, interior, viwo, time) VALUES ('%d','%f','%f','%f','%d','%d','%d')",
+					mysql_fquery(g_SQL, 
+						"INSERT INTO player_deaths(player_id, pos_x, pos_y, pos_z, interior, viwo, time) \n\
+							VALUES ('%d','%f','%f','%f','%d','%d','%d')",
 						PlayerInfo[playerid][pSQLID],
 						PlayerInfo[playerid][pDeath][0],
 						PlayerInfo[playerid][pDeath][1],
@@ -243,7 +243,6 @@ stock InflictPlayerDamage(playerid, issuerid, bodypart, Float:damage)
 						PlayerInfo[playerid][pDeathVW],
 						gettimestamp()
 					);
-					mysql_tquery(g_SQL, deathQuery);
 				}
 				return (true);
 			}
@@ -351,9 +350,9 @@ stock DealDamage(playerid, issuerid, Float: health, Float: armour, Float: damage
 					//DropPlayerWeapons(playerid, X, Y);
 					//DropPlayerDrugs(playerid, X, Y, true);
 
-					new
-						deathQuery[256];
-					format(deathQuery, 256, "INSERT INTO player_deaths(player_id, pos_x, pos_y, pos_z, interior, viwo, time) VALUES ('%d','%f','%f','%f','%d','%d','%d')",
+					mysql_fquery(g_SQL, 
+						"INSERT INTO player_deaths(player_id, pos_x, pos_y, pos_z, interior, viwo, time) \n\
+							VALUES ('%d','%f','%f','%f','%d','%d','%d')",
 						PlayerInfo[playerid][pSQLID],
 						PlayerInfo[playerid][pDeath][0],
 						PlayerInfo[playerid][pDeath][1],
@@ -362,7 +361,6 @@ stock DealDamage(playerid, issuerid, Float: health, Float: armour, Float: damage
 						PlayerInfo[playerid][pDeathVW],
 						gettimestamp()
 					);
-					mysql_tquery(g_SQL, deathQuery);
 				}
 			}
 		}

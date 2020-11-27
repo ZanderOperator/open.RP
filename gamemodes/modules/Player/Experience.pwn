@@ -365,12 +365,11 @@ Public:OnPlayerLoadExperience(playerid)
 	}
 	else
 	{
-		new insertQuery[200];
-		format(insertQuery, sizeof(insertQuery), "INSERT INTO experience (sqlid,givenexp,allpoints,points,lastpayday,daypaydays,monthpaydays) VALUES ('%d', '0', '0', '0', '0', '0', '0')",
-			PlayerInfo[playerid][pSQLID]
-		);
-		mysql_query(g_SQL, insertQuery);
-		return 1;
+		return mysql_fquery(g_SQL, 
+					"INSERT INTO experience (sqlid,givenexp,allpoints,points,lastpayday,daypaydays,monthpaydays) \n\
+						VALUES ('%d', '0', '0', '0', '0', '0', '0')",
+					PlayerInfo[playerid][pSQLID]
+				);
 	}
 }
 
@@ -439,11 +438,10 @@ stock CanPlayerTakeExp(playerid, giveplayerid)
 
 stock CanPlayerTakeExpEx(playerid, playername[]) 
 {
-	new sqlid, level, idQuery[100];
-	mysql_format(g_SQL, idQuery, sizeof(idQuery), "SELECT * FROM accounts WHERE name = '%e' LIMIT 0,1", playername);
-	
 	new 
-		Cache:result = mysql_query(g_SQL, idQuery),
+		sqlid, 
+		level,
+		Cache:result = mysql_query(g_SQL, va_fquery(g_SQL, "SELECT sqlid, levels FROM accounts WHERE name = '%e'", playername)),
 		rows;
 		
     cache_get_row_count(rows);
@@ -461,9 +459,10 @@ stock CanPlayerTakeExpEx(playerid, playername[])
 		va_SendClientMessage(playerid,COLOR_RED, "%s je Level %d, treba biti Level 2 da bi primio EXP.", playername, level);
 		return 0;
 	}
-	new expstring[100];
-	format(expstring, sizeof(expstring), "SELECT * FROM experience WHERE sqlid = '%d'", sqlid);
-	new Cache:result2 = mysql_query(g_SQL, expstring);
+
+	new Cache:result2 = mysql_query(g_SQL, 
+							va_fquery(g_SQL, "SELECT lastpayday, daypaydays FROM experience WHERE sqlid = '%d'", sqlid)
+						);
 	
 	new lastpayday, daypaydays, currentday, day;
 	cache_get_value_name_int(0, "lastpayday"	, lastpayday);
@@ -490,10 +489,10 @@ stock GivePlayerExperience(playerid, playername[])
 {
 	new sqlid;
 	
-	new Cache:result = mysql_query(g_SQL, va_fquery(g_SQL, "SELECT sqlid FROM accounts WHERE name = '%e'", playername)),
-		rows;
-		
-    cache_get_row_count(rows);
+	new Cache:result = mysql_query(g_SQL, va_fquery(g_SQL, "SELECT sqlid FROM accounts WHERE name = '%e'", playername));
+
+	new rows;
+	cache_get_row_count(rows);
 	if(!rows)
 	{
 		va_SendClientMessage(playerid,COLOR_RED, "Ne postoji korisnik s tim nickom!");
@@ -501,20 +500,11 @@ stock GivePlayerExperience(playerid, playername[])
 	}
 	cache_get_value_name_int(0, "sqlid", sqlid);
 	cache_delete(result);
-	
-	new Cache:result2 = mysql_query(g_SQL, va_fquery(g_SQL, "SELECT * FROM experience WHERE sqlid = '%d'", sqlid)),
-		points,
-		allpoints;
-	
-	cache_get_value_name_int(0, "points", points);
-	cache_get_value_name_int(0, "points", allpoints);
-	points++;
-	allpoints++;
-	cache_delete(result2);
 		
-	mysql_fquery(g_SQL,  "UPDATE experience SET points = '%d', allpoints = '%d' WHERE sqlid = '%d'", 
-		points, 
-		allpoints, 
+	mysql_fquery(g_SQL,  
+		"UPDATE experience SET points = points + '%d', allpoints = allpoints + '%d' WHERE sqlid = '%d'", 
+		1, 
+		1, 
 		sqlid
 	);
 	
@@ -531,21 +521,9 @@ stock GivePlayerExperience(playerid, playername[])
 
 stock RewardPlayerForActivity(sqlid, amount)
 {	
-	new expstring[100];
-	format(expstring, sizeof(expstring), "SELECT * FROM experience WHERE sqlid = '%d'", sqlid);
-	new Cache:result2 = mysql_query(g_SQL, expstring),
-		points,
-		allpoints;
-	
-	cache_get_value_name_int(0, "points", points);
-	cache_get_value_name_int(0, "points", allpoints);
-	points += amount;
-	allpoints +=amount;
-	cache_delete(result2);
-		
-	mysql_fquery(g_SQL, "UPDATE experience SET points = '%d', allpoints = '%d' WHERE sqlid = '%d'", 
-		points, 
-		allpoints, 
+	mysql_fquery(g_SQL, "UPDATE experience SET points = points +'%d', allpoints = allpoints + '%d' WHERE sqlid = '%d'", 
+		amount, 
+		amount, 
 		sqlid
 	);
 	return 1;

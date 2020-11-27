@@ -37,12 +37,14 @@ enum E_JOBS_DATA {
 new JobData[E_JOBS_DATA];
 
 /*
-	- mySQL
+	- MySQL
 */
 
-SaveJobData() {
-	new query[300];
-	format(query, sizeof(query), "UPDATE server_jobs SET Sweeper = '%d', Mechanic = '%d', Crafter = '%d', Taxi = '%d', Farmer = '%d', Logger = '%d', Garbage = '%d', Impounder = '%d', Transporter = '%d' WHERE 1",
+SaveJobData() 
+{
+	mysql_fquery(g_SQL, 
+		"UPDATE server_jobs SET Sweeper = '%d', Mechanic = '%d', Crafter = '%d', Taxi = '%d', Farmer = '%d',\n\
+		Logger = '%d', Garbage = '%d', Impounder = '%d', Transporter = '%d' WHERE 1",
 		JobData[SWEEPER],
 		JobData[MECHANIC],
 		JobData[CRAFTER],
@@ -53,16 +55,21 @@ SaveJobData() {
 		JobData[IMPOUNDER],
 		JobData[TRANSPORTER]
 	);
-	return mysql_tquery(g_SQL, query);
-}
-
-LoadServerJobs() {
-	mysql_tquery(g_SQL, "SELECT * FROM server_jobs WHERE 1", "OnServerJobsLoaded");
 	return 1;
 }
 
-forward OnServerJobsLoaded();
-public OnServerJobsLoaded() {
+LoadServerJobs() 
+{
+	mysql_tquery(g_SQL, 
+		va_fquery(g_SQL, "SELECT * FROM server_jobs WHERE 1"), 
+		"OnServerJobsLoaded",
+		""
+	);
+	return 1;
+}
+
+Public: OnServerJobsLoaded() 
+{
 	new rows = cache_num_rows();
 	if(!rows) return printf( "MySQL Report: No Server Jobs exist to load.");
 	
