@@ -2019,14 +2019,12 @@ CMD:playercars(playerid, params[])
 	new 
 		Cache: mysql_search,
 		player_sqlid,
-		buffer[128],
 		player_nick[MAX_PLAYER_NAME];
+		
 	if( !IsPlayerAdmin(playerid) && PlayerInfo[playerid][pAdmin] != 1338 ) return SendClientMessage(playerid, COLOR_RED, "Niste ovlasteni za koristenje ove komande!");
 	if(sscanf(params, "s[MAX_PLAYER_NAME]", player_nick)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /playercars [Ime_Prezime].");
 	
-	// mysql
-	mysql_format(g_SQL, buffer, sizeof(buffer), "SELECT sqlid FROM accounts WHERE name = '%e' LIMIT 0,1", player_nick);
-	mysql_search = mysql_query(g_SQL, buffer);
+	mysql_search = mysql_query(g_SQL, va_fquery(g_SQL, "SELECT sqlid FROM accounts WHERE name = '%e'", player_nick));
 	cache_get_value_name_int(0, "sqlid"	, player_sqlid);
 	cache_delete(mysql_search);
 	
@@ -4177,9 +4175,10 @@ CMD:prisonex(playerid, params[])
 		reason
 	);
 	
-	new sqlid, prsnQuery[128];
-	mysql_format(g_SQL, prsnQuery, sizeof(prsnQuery), "SELECT sqlid FROM accounts WHERE name = '%e'", targetname);
-	new Cache:result = mysql_query(g_SQL, prsnQuery);
+	new 
+		sqlid,
+		Cache:result = mysql_query(g_SQL, va_fquery(g_SQL, "SELECT sqlid FROM accounts WHERE name = '%e'", targetname));
+
 	cache_get_value_name_int(0, "sqlid", sqlid);
 	cache_delete(result);
 	
@@ -4224,11 +4223,8 @@ CMD:warnex(playerid, params[])
 		reason
 	);
 	
-	new sqlid, TmpQuery[200];
-	mysql_format(g_SQL, TmpQuery, sizeof(TmpQuery), "SELECT sqlid FROM accounts WHERE name = '%e'", targetname);
-	
-	new 
-		Cache:result = mysql_query(g_SQL, TmpQuery);
+	new sqlid, 
+		Cache:result = mysql_query(g_SQL, va_fquery(g_SQL, "SELECT sqlid FROM accounts WHERE name = '%e'", targetname));
 	cache_get_value_name_int(0, "sqlid", sqlid);
 	cache_delete(result);
 	

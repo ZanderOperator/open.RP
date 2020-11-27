@@ -174,7 +174,8 @@ stock static CalculateGoodsMoney(playerid)
 {
 	new
 		count = 0;
-	for(new i = 0; i < 5; i++) {
+	for(new i = 0; i < 5; i++) 
+	{
 		if( RobbingInfo[ playerid ][ rbSlotsGoods ][ i ] == DIALOG_TYPE_WATCH )
 			count += GOOD_MONEY_WATCH;
 		if( RobbingInfo[ playerid ][ rbSlotsGoods ][ i ] == DIALOG_TYPE_MOBILE )
@@ -221,6 +222,7 @@ stock static SetStolenGoodInInventory(playerid, type)
 stock static GetPocketDialogLists(playerid, listitem)
 {
 	if( playerid == INVALID_PLAYER_ID ) return -1;
+	
 	new
 		type = -1,
 		i = 0;
@@ -269,8 +271,10 @@ stock static InitPlayerPocket(playerid, targetid)
 		dialogPos++;
 	}
 	if( !strlen(buffer) ) return SendClientMessage( playerid, COLOR_RED, "Odabrani gradjanin nema nista u dzepovima!");
+	
 	new
 		caption[ MAX_PLAYER_NAME + 9 ];
+	
 	format( caption, sizeof(caption), "DZEP OD %s", 
 		GetName(targetid, false)
 	);
@@ -285,12 +289,15 @@ stock static PickPocketTargetPlayer(playerid, type)
 	
 	new
 		targetid = PickPocketPlayer[ playerid ];	
-	switch( type ) {
-		case DIALOG_TYPE_MONEY:	{
+	switch( type )
+	 {
+		case DIALOG_TYPE_MONEY:	
+		{
 			new
 				succeed = 1 + random(5);
 				
-			if( succeed == 3 ) {
+			if( succeed == 3 ) 
+			{
 				new
 					money = 51;//( ( GetPlayerSkillLevel(playerid, 5) + 1 ) * 10 );
 				PlayerToPlayerMoney( targetid, playerid, money); // Playerid krade od targetida (zato je targetid na prvom mjestu, njemu se oduzima)
@@ -305,7 +312,8 @@ stock static PickPocketTargetPlayer(playerid, type)
 				SendFormatMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uspjesno ste ukrali %d$ iz djepa!", money);
 				UpgradePlayerSkill(playerid);
 			}
-			if( succeed == 1 || succeed == 2 || succeed == 4 || succeed == 5 ) {
+			if( succeed == 1 || succeed == 2 || succeed == 4 || succeed == 5 ) 
+			{
 				new
 					tmpString[ 114 ];
 				format(tmpString, 114, "* %s zavlaci svoju ruku u %s djep i ne uspjeva uzeti novce iz istog.", 
@@ -315,7 +323,8 @@ stock static PickPocketTargetPlayer(playerid, type)
 				ProxDetector(25.0, playerid, tmpString, COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE);
 			}
 		}
-		case DIALOG_TYPE_WATCH: {
+		case DIALOG_TYPE_WATCH: 
+		{
 			if( RobbingInfo[ playerid ][ rbSlotsGoods ][ 0 ] && RobbingInfo[ playerid ][ rbSlotsGoods ][ 1 ] && RobbingInfo[ playerid ][ rbSlotsGoods ][ 2 ] && RobbingInfo[ playerid ][ rbSlotsGoods ][ 3 ] && RobbingInfo[ playerid ][ rbSlotsGoods ][ 4 ] ) return SendClientMessage( playerid, COLOR_RED, "Vas inventory je pun!");
 			
 			new
@@ -345,8 +354,10 @@ stock static PickPocketTargetPlayer(playerid, type)
 				ProxDetector(25.0, playerid, tmpString, COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE);
 			}
 		}		
-		case DIALOG_TYPE_MOBILE: {
-			if( RobbingInfo[ playerid ][ rbSlotsGoods ][ 0 ] && RobbingInfo[ playerid ][ rbSlotsGoods ][ 1 ] && RobbingInfo[ playerid ][ rbSlotsGoods ][ 2 ] && RobbingInfo[ playerid ][ rbSlotsGoods ][ 3 ] && RobbingInfo[ playerid ][ rbSlotsGoods ][ 4 ] ) return SendClientMessage( playerid, COLOR_RED, "Vas inventory je pun!");
+		case DIALOG_TYPE_MOBILE: 
+		{
+			if( RobbingInfo[ playerid ][ rbSlotsGoods ][ 0 ] && RobbingInfo[ playerid ][ rbSlotsGoods ][ 1 ] && RobbingInfo[ playerid ][ rbSlotsGoods ][ 2 ] && RobbingInfo[ playerid ][ rbSlotsGoods ][ 3 ] && RobbingInfo[ playerid ][ rbSlotsGoods ][ 4 ] ) 
+				return SendClientMessage( playerid, COLOR_RED, "Vas inventory je pun!");
 			
 			new
 				succeed = 1 + random(5);
@@ -356,11 +367,10 @@ stock static PickPocketTargetPlayer(playerid, type)
 				PlayerInfo[ targetid ][ pMobileModel ]		= 0;
 				PlayerInfo[ targetid ][ pMobileCost ]		= 0;
 				
-				new	deleteMobile[128];
-				format(deleteMobile, 128, "DELETE FROM player_phones WHERE player_id = '%d' AND type = '1'",
+				mysql_fquery(g_SQL, "DELETE FROM player_phones WHERE player_id = '%d' AND type = '1'",
 					PlayerInfo[targetid][pSQLID]
 				);
-				mysql_tquery(g_SQL, deleteMobile);
+				ResetMobileContacts(targetid);
 				Player_SetTappedBy(playerid, INVALID_PLAYER_ID);
 				
 				new
@@ -384,7 +394,8 @@ stock static PickPocketTargetPlayer(playerid, type)
 				ProxDetector(25.0, playerid, tmpString, COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE);
 			}
 		}		
-		case DIALOG_TYPE_CRYPTO: {
+		case DIALOG_TYPE_CRYPTO: 
+		{
 			if( RobbingInfo[ playerid ][ rbSlotsGoods ][ 0 ] && RobbingInfo[ playerid ][ rbSlotsGoods ][ 1 ] && RobbingInfo[ playerid ][ rbSlotsGoods ][ 2 ] && RobbingInfo[ playerid ][ rbSlotsGoods ][ 3 ] && RobbingInfo[ playerid ][ rbSlotsGoods ][ 4 ] ) return SendClientMessage( playerid, COLOR_RED, "Vas inventory je pun!");
 			
 			new
@@ -392,12 +403,11 @@ stock static PickPocketTargetPlayer(playerid, type)
 			if( succeed == 4 || succeed == 5 ) 
 			{
 				PlayerInfo[ targetid ][ pCryptoNumber ]		= 0;
-				new	cryptoDelete[128];
-				format(cryptoDelete, 128, "DELETE FROM player_phones WHERE player_id = '%d' AND type = '2'",
+				
+				mysql_fquery(g_SQL, "DELETE FROM player_phones WHERE player_id = '%d' AND type = '2'",
 					PlayerInfo[targetid][pSQLID]
 				);
-				mysql_tquery(g_SQL, cryptoDelete);				
-				
+
 				new
 					tmpString[ 110 ];
 				format(tmpString, 110, "* %s zavlaci svoju ruku u %s djep i stavlja crypto u svoj djep.", 
@@ -419,7 +429,8 @@ stock static PickPocketTargetPlayer(playerid, type)
 				ProxDetector(25.0, playerid, tmpString, COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE);
 			}
 		}
-		case DIALOG_TYPE_MASK: {
+		case DIALOG_TYPE_MASK: 
+		{
 			if( RobbingInfo[ playerid ][ rbSlotsGoods ][ 0 ] && RobbingInfo[ playerid ][ rbSlotsGoods ][ 1 ] && RobbingInfo[ playerid ][ rbSlotsGoods ][ 2 ] && RobbingInfo[ playerid ][ rbSlotsGoods ][ 3 ] && RobbingInfo[ playerid ][ rbSlotsGoods ][ 4 ] ) return SendClientMessage( playerid, COLOR_RED, "Vas inventory je pun!");
 			
 			new

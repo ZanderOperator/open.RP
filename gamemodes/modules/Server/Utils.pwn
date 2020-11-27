@@ -1676,12 +1676,14 @@ stock randomEx(min, max)
 	return ip;
 }*/
 
+// Formated mysq_tquery
 mysql_fquery(MySQL:connectionHandle, const fquery[], va_args<>)
 {
 	mysql_format(connectionHandle, va_query, sizeof(va_query), fquery, va_start<2>);
 	return mysql_tquery(connectionHandle, va_query);
 }
 
+// Formated mysql_format with direct string returning
 va_fquery(MySQL:connectionHandle, const fquery[], va_args<>)
 {
 	mysql_format(connectionHandle, va_query, sizeof(va_query), fquery, va_start<2>);
