@@ -201,13 +201,10 @@ timer MechCountForPlayer[1000](playerid, giveplayerid, service)
 
 				PlayerInfo[ giveplayerid ][ pParts ] -= 5;
 
-				new
-					bigquery[ 256 ];
-				format(bigquery, sizeof(bigquery), "UPDATE cocars SET destroys = '%d' WHERE id = '%d'",
+				mysql_fquery(g_SQL, "UPDATE cocars SET destroys = '%d' WHERE id = '%d'",
 					VehicleInfo[ GetPlayerVehicleID(playerid) ][ vDestroys ],
 					VehicleInfo[GetPlayerVehicleID(playerid)][vSQLID]
 				);
-				mysql_tquery(g_SQL, bigquery);
 			}
 			case 4:
 			{
@@ -229,13 +226,10 @@ timer MechCountForPlayer[1000](playerid, giveplayerid, service)
 
 				PlayerInfo[ giveplayerid ][ pParts ] -= 2;
 
-				new
-					bigquery[ 256 ];
-				format(bigquery, sizeof(bigquery), "UPDATE cocars SET stereo = '%d' WHERE id = '%d'",
+				mysql_fquery(g_SQL, "UPDATE cocars SET stereo = '%d' WHERE id = '%d'",
 					VehicleInfo[GetPlayerVehicleID(playerid)][vStereo],
 					VehicleInfo[GetPlayerVehicleID(playerid)][vSQLID]
 				);
-				mysql_tquery(g_SQL, bigquery);
 			}
 			case 6: 
 			{
@@ -265,13 +259,10 @@ timer MechCountForPlayer[1000](playerid, giveplayerid, service)
 
 				PlayerInfo[ giveplayerid ][ pParts ] -= 4000;
 
-				new
-					bigquery[ 256 ];
-				format(bigquery, sizeof(bigquery), "UPDATE cocars SET tirearmor = '%d' WHERE id = '%d'",
+				mysql_fquery(g_SQL, "UPDATE cocars SET tirearmor = '%d' WHERE id = '%d'",
 					VehicleInfo[GetPlayerVehicleID(playerid)][vTireArmor],
 					VehicleInfo[GetPlayerVehicleID(playerid)][vSQLID]
 				);
-				mysql_tquery(g_SQL, bigquery);
 			}
 			case 7: 
 			{
@@ -295,13 +286,10 @@ timer MechCountForPlayer[1000](playerid, giveplayerid, service)
 
 				PlayerInfo[ giveplayerid ][ pParts ] -= 7000;
 
-				new
-					bigquery[ 256 ];
-				format(bigquery, sizeof(bigquery), "UPDATE cocars SET bodyarmor = '%d' WHERE id = '%d'",
+				mysql_fquery(g_SQL, "UPDATE cocars SET bodyarmor = '%d' WHERE id = '%d'",
 					VehicleInfo[GetPlayerVehicleID(playerid)][vBodyArmor],
 					VehicleInfo[GetPlayerVehicleID(playerid)][vSQLID]
 				);
-				mysql_tquery(g_SQL, bigquery);
 			}
 			case 8: 
 			{

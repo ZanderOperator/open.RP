@@ -243,7 +243,11 @@ new
 /////////////////////////////////////////////////////
 stock LoadGarages()
 {
-	mysql_tquery(g_SQL, "SELECT * FROM ilegal_garages WHERE 1", "OnServerIlegalGaragesLoad");
+	mysql_tquery(g_SQL, 
+		va_fquery(g_SQL, "SELECT * FROM ilegal_garages WHERE 1"), 
+		"OnServerIlegalGaragesLoad",
+		""
+	);
 	return 1;
 }
 
@@ -285,11 +289,12 @@ stock static CheckForGarageWantedLevel(garage, bool:save=false)
 		case 96 .. 136:  { IlegalGarage[ garage ][ igWantedLevel ] 	= 2; tmpStars = "**";  }
 		case 137 .. 177: { IlegalGarage[ garage ][ igWantedLevel ]	= 3; tmpStars = "***"; }
 	}
-	if( !save ) {
-		new
-			tmpString[ 128 ];
-		format(tmpString, 128, "UPDATE ilegal_garages SET wanted = '%d' WHERE id = '%d'", IlegalGarage[ garage ][ igWantedLevel ], IlegalGarage[ garage ][ igSQLID ]);
-		mysql_tquery(g_SQL, tmpString);
+	if( !save ) 
+	{
+		mysql_fquery(g_SQL, "UPDATE ilegal_garages SET wanted = '%d' WHERE id = '%d'", 
+			IlegalGarage[ garage ][ igWantedLevel ], 
+			IlegalGarage[ garage ][ igSQLID ]
+		);
 	}
 	new
 		tmpString[ 135 ];		
@@ -1108,13 +1113,16 @@ CMD:jacker(playerid, params[])
 	
 		new
 			garage = JackerIlegalGarage[ playerid ],
-			tmpString[ 128 ],
 			vehicleName[MAX_VEHICLE_NAME];	
 
 		IllegalBudgetToPlayerMoney(playerid, JackerMoney[ playerid ]); // ilegalni budget se updatea i igrac dobiva novce
+		
 		IlegalGarage[ garage ][ igCarsJacked ]++;
-		format(tmpString, 128, "UPDATE ilegal_garages SET jackedcars = '%d' WHERE id = '%d'", IlegalGarage[ garage ][ igCarsJacked ], IlegalGarage[ garage ][ igSQLID ]);
-		mysql_tquery(g_SQL, tmpString);
+		mysql_fquery(g_SQL, "UPDATE ilegal_garages SET jackedcars = '%d' WHERE id = '%d'", 
+			IlegalGarage[ garage ][ igCarsJacked ], 
+			IlegalGarage[ garage ][ igSQLID ]
+		);
+				
 		GetVehicleNameByModel(LandVehicles[ PlayerJackingCar[ playerid ] ][ viModelid ], vehicleName, MAX_VEHICLE_NAME);
 		SendFormatMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uspjesno ste zavrsili %s jacker misiju i zaradili %i$.", vehicleName, JackerMoney[ playerid ]);
 				

@@ -225,11 +225,14 @@ Taxi_Biznis(playerid, taxi_points, fare) {
 	return (true);
 }
 
-SaveTaxiPoints(playerid, taxi_p, taxi_v) {
-	new query[128];
-	format(query, 128, "UPDATE accounts SET taxiPoints = '%d', taxiVoted = '%d' WHERE sqlid = '%d'",
-		taxi_p, taxi_v, PlayerInfo[playerid][pSQLID]);
-	mysql_tquery( g_SQL, query );
+SaveTaxiPoints(playerid, taxi_p, taxi_v) 
+{
+	
+	mysql_fquery(g_SQL, 
+		"UPDATE accounts SET taxiPoints = '%d', taxiVoted = '%d' WHERE sqlid = '%d'",
+		taxi_p, taxi_v, 
+		PlayerInfo[playerid][pSQLID]
+	);
 	return (true);
 }
 /*

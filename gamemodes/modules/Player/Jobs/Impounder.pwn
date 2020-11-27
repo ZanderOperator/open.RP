@@ -232,9 +232,8 @@ OPUnTowIV(playerid, veh)
 		VehicleInfo[ veh ][ vAngle ] 		= z_rot;
 		VehicleInfo[ veh ][ vImpounded ] 	= 1;
 	
-		new
-			bigquery[ 512 ];
-		format(bigquery, sizeof(bigquery), "UPDATE cocars SET parkX = '%f', parkY = '%f', parkZ = '%f', angle = '%f', impounded = '%d' WHERE id = '%d'",
+		mysql_fquery(g_SQL,
+			"UPDATE cocars SET parkX = '%f', parkY = '%f', parkZ = '%f', angle = '%f', impounded = '%d' WHERE id = '%d'",
 			X,
 			Y,
 			Z,
@@ -242,7 +241,6 @@ OPUnTowIV(playerid, veh)
 			VehicleInfo[veh][vImpounded],
 			VehicleInfo[veh][vSQLID]
 		);
-		mysql_tquery(g_SQL, bigquery);
 	
 		new
 			engine, lights, alarm, doors, bonnect, boot, objective;

@@ -233,12 +233,12 @@ GivePlayerPayCheck(playerid)
 			PlayerInfo[playerid][pSavingsType] = 0;
 			PlayerInfo[playerid][pSavingsMoney] = 0;
 
-			new savingsQuery[170];
-			format(savingsQuery, 170, "UPDATE accounts SET bankMoney = '%d', savings_cool = '30', savings_time = '0', savings_type = '0', savings_money = '0' WHERE sqlid = '%d'",
+			mysql_fquery(g_SQL, 
+				"UPDATE accounts SET bankMoney = '%d', savings_cool = '30', savings_time = '0',\n\
+					savings_type = '0', savings_money = '0' WHERE sqlid = '%d'",
 				PlayerInfo[playerid][pBank],
 				PlayerInfo[playerid][pSQLID]
 			);
-			mysql_pquery(g_SQL, savingsQuery);
 
 			// Poruke
 			format(f_dialog,sizeof(f_dialog), "\n\t{3C95C2}Stednja:");

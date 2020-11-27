@@ -113,7 +113,7 @@
 #define PACKAGE_COOLDOWN						(120)	// Svakih '?' koliko ce se moci narucit paket.
 #define MINUTES_TILL_PACKAGE_ARRIVE			 	(10) // Koliko minuta treba da paket dodje u warehouse.
 #define INVALID_PACKAGE_ID						(-1)	// Invalid ID
-#define PACKAGE_PANCIR							(6969)	// Pancir Package (random id)
+#define PACKAGE_PANCIR							(60)	// Pancir Package (random id)
 
 // Drugs
 #define MAX_PLAYER_DRUGS						(5)
