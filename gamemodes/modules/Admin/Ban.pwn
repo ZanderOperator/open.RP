@@ -141,11 +141,9 @@ stock HOOK_BanEx(playerid, const playername[], const playerip[], adminid, const 
 	getdate(year, month, day);
 	format(date, sizeof(date), "%02d.%02d.%d.", day, month, year);
 
-	new sqlid, banexQuery[128];
-	mysql_format( g_SQL, banexQuery, sizeof(banexQuery), "SELECT sqlid FROM accounts WHERE name = '%e' LIMIT 0,1", playername);
+	new sqlid,
+		Cache:result = mysql_query(g_SQL, va_fquery(g_SQL, "SELECT sqlid FROM accounts WHERE name = '%e'", playername));
 
-	new
-		Cache:result = mysql_query(g_SQL, banexQuery);
 	cache_get_value_name_int(0, "sqlid", sqlid);
 	cache_delete(result);
 
