@@ -2195,14 +2195,12 @@ static stock BuyBlankInterior(playerid, house)
     HouseInfo[house][hExitY] = BlankInts[interior][iPosY];
     HouseInfo[house][hExitZ] = BlankInts[interior][iPosZ];
 
-    new intQuery[256];
-    format(intQuery, 256, "UPDATE houses SET exitX = '%f', exitY = '%f', exitZ = '%f' WHERE id = '%d'",
+    mysql_fquery(g_SQL, "UPDATE houses SET exitX = '%f', exitY = '%f', exitZ = '%f' WHERE id = '%d'",
         HouseInfo[house][hExitX],
         HouseInfo[house][hExitY],
         HouseInfo[house][hExitZ],
         HouseInfo[house][hSQLID]
     );
-    mysql_tquery(g_SQL, intQuery);
 
     DestroyFurnitureBlankIntTDs(playerid);
     PlayerToBudgetMoney(playerid, BlankInts[interior][iPrice]); // Novac ide u proracun
@@ -2263,27 +2261,33 @@ GetFurnitureSlots(playerid, donator_level)
 
 UpdatePremiumHouseFurSlots(playerid, admin_name = -1, houseid)
 {
-    // TODO: houseid bounds check
+    if(!Iter_Contains(Houses, houseid))
+        return 1;
+
     HouseInfo[houseid][hFurSlots] = GetFurnitureSlots(playerid, PlayerInfo[playerid][pDonateRank]);
 
-    new query[128];
-    format(query, sizeof(query), "UPDATE houses SET fur_slots = '%d' WHERE id = '%d'", HouseInfo[houseid][hFurSlots], HouseInfo[houseid][hSQLID]);
-    mysql_tquery(g_SQL, query);
+    mysql_fquery(g_SQL, "UPDATE houses SET fur_slots = '%d' WHERE id = '%d'", 
+        HouseInfo[houseid][hFurSlots], 
+        HouseInfo[houseid][hSQLID]
+    );
 
     if (admin_name != -1)
-        va_SendClientMessage(playerid, COLOR_RED, "[ ! ] Administrator %s vam je refreshao house slot-ove, imate %d slotova u kuci.", GetName(admin_name, true), HouseInfo[houseid][hFurSlots]);
+        va_SendClientMessage(playerid, COLOR_RED, "[ ! ] Game Admin %s adjusted your House Furniture Slots, now you have %d slots available.", GetName(admin_name, true), HouseInfo[houseid][hFurSlots]);
     return 1;
 }
 
 SetPlayerPremiumFurniture(playerid, houseid)
 {
-    // TODO: houseid bounds check
-    HouseInfo[houseid][hFurSlots] = (FURNITURE_PREMIUM_OBJECTS);
-    PlayerInfo[playerid][FurnPremium] = (1);
+    if(!Iter_Contains(Houses, houseid))
+        return 1;
 
-    new query[128];
-    format(query, sizeof(query), "UPDATE houses SET fur_slots = '%d' WHERE id = '%d'", HouseInfo[houseid][hFurSlots], HouseInfo[houseid][hSQLID]);
-    mysql_tquery(g_SQL, query);
+    HouseInfo[houseid][hFurSlots] = (FURNITURE_PREMIUM_OBJECTS);
+    PlayerInfo[playerid][FurnPremium] = 1;
+
+    mysql_fquery(g_SQL, "UPDATE houses SET fur_slots = '%d' WHERE id = '%d'", 
+        HouseInfo[houseid][hFurSlots], 
+        HouseInfo[houseid][hSQLID]
+    );
     return 1;
 }
 
@@ -2360,6 +2364,44 @@ public OnFurnitureObjectsLoad(houseid)
     return 1;
 }
 
+static stock InsertFurnitureObject(houseid, index)
+{
+    mysql_tquery(g_SQL, 
+        va_fquery(g_SQL, 
+            "INSERT INTO furniture(houseid, modelid, door, door_z, locked_door, pos_x, pos_y, pos_z, rot_x, rot_y, rot_z,\n\
+                texture_1, texture_2, texture_3, texture_4, texture_5, color_1, color_2, color_3, color_4, color_5) \n\
+                VALUES ('%d', '%d', '%d', '%f', '%d', '%f', '%f', '%f', '%f', '%f', '%f', '%d', '%d', '%d', '%d','%d',\n\
+                '%d', '%d', '%d', '%d', '%d')",
+            HouseInfo[houseid][hSQLID],
+            HouseInfo[houseid][hFurModelid][index],
+            HouseInfo[houseid][hFurDoor][index],
+            HouseInfo[houseid][hFurDoorZ][index],
+            HouseInfo[houseid][hFurDoorLckd][index],
+            HouseInfo[houseid][hFurPosX][index],
+            HouseInfo[houseid][hFurPosY][index],
+            HouseInfo[houseid][hFurPosZ][index],
+            HouseInfo[houseid][hFurRotX][index],
+            HouseInfo[houseid][hFurRotY][index],
+            HouseInfo[houseid][hFurRotZ][index],
+            HouseInfo[houseid][hFurTxtId][index][0],
+            HouseInfo[houseid][hFurTxtId][index][1],
+            HouseInfo[houseid][hFurTxtId][index][2],
+            HouseInfo[houseid][hFurTxtId][index][3],
+            HouseInfo[houseid][hFurTxtId][index][4],
+            HouseInfo[houseid][hFurColId][index][0],
+            HouseInfo[houseid][hFurColId][index][1],
+            HouseInfo[houseid][hFurColId][index][2],
+            HouseInfo[houseid][hFurColId][index][3],
+            HouseInfo[houseid][hFurColId][index][4]
+        ), 
+        "OnFurnitureObjectCreates", 
+        "ii", 
+        houseid, 
+        index
+    );
+    return 1;
+}
+
 public OnFurnitureObjectCreates(houseid, index)
 {
     // TODO: houseid, index bounds check
@@ -2375,11 +2417,14 @@ public OnFurnitureObjectCreates(houseid, index)
 
 stock LoadHouseFurnitureObjects(houseid)
 {
-    if (houseid == INVALID_HOUSE_ID) return 1;
-
-    new query[55];
-    format(query, sizeof(query), "SELECT * FROM furniture WHERE houseid = '%d'", HouseInfo[houseid][hSQLID]);
-    mysql_pquery(g_SQL, query, "OnFurnitureObjectsLoad", "i", houseid);
+    if (!Iter_Contains(Houses, houseid)) return 1;
+   
+    mysql_tquery(g_SQL, 
+        va_fquery(g_SQL, "SELECT * FROM furniture WHERE houseid = '%d'", HouseInfo[houseid][hSQLID]), 
+        "OnFurnitureObjectsLoad", 
+        "i", 
+        houseid
+    );
     return 1;
 }
 
@@ -2873,97 +2918,31 @@ static stock CreateFurnitureObject(playerid, modelid, Float:x, Float:y, Float:z,
         PlayerPrwsObject[playerid] = INVALID_OBJECT_ID;
     }
 
-    new query[512];
-    format(query, sizeof(query), "INSERT INTO furniture(houseid, modelid, door, door_z, locked_door, pos_x, pos_y, pos_z, rot_x, rot_y, rot_z, texture_1, texture_2, texture_3, texture_4, texture_5, color_1, color_2, color_3, color_4, color_5) VALUES ('%d', '%d', '%d', '%f', '%d', '%f', '%f', '%f', '%f', '%f', '%f', '%d', '%d', '%d', '%d', '%d', '%d', '%d', '%d', '%d', '%d')",
-        HouseInfo[houseid][hSQLID],
+    InsertFurnitureObject(houseid, index);
+
+    HouseInfo[houseid][hFurObjectid][index] = CreateDynamicObject(modelid, x, y, z, rx, ry, rz, HouseInfo[houseid][hVirtualWorld], HouseInfo[houseid][hInt], -1, FURNITURE_OBJECT_DRAW_DISTANCE, FURNITURE_OBJECT_DRAW_DISTANCE);
+
+    new price = GetFurnitureObjectPrice(playerid, PlayerPrwsIndex[playerid]);
+    SendFormatMessage(playerid, MESSAGE_TYPE_SUCCESS, "Kupili ste objekt za %d$ i stavili ga u slot %d!", price, index + 1);
+    PlayerToBudgetMoney(playerid, price); // novac ide u proracun
+    Bit4_Set(r_PlayerEditState, playerid, 0);
+
+    #if defined MODULE_LOGS
+    Log_Write("/logfiles/furniture_buy.txt", "(%s) Player %s bought an object(modelid: %d) for %d$ in House Furniture and placed it into slot %d.",
+        ReturnDate(),
+        GetName(playerid, false),
         modelid,
-        HouseInfo[houseid][hFurDoor][index],
-        HouseInfo[houseid][hFurDoorZ][index],
-        HouseInfo[houseid][hFurDoorLckd][index],
-        HouseInfo[houseid][hFurPosX][index],
-        HouseInfo[houseid][hFurPosY][index],
-        HouseInfo[houseid][hFurPosZ][index],
-        HouseInfo[houseid][hFurRotX][index],
-        HouseInfo[houseid][hFurRotY][index],
-        HouseInfo[houseid][hFurRotZ][index],
-        HouseInfo[houseid][hFurTxtId][index][0],
-        HouseInfo[houseid][hFurTxtId][index][1],
-        HouseInfo[houseid][hFurTxtId][index][2],
-        HouseInfo[houseid][hFurTxtId][index][3],
-        HouseInfo[houseid][hFurTxtId][index][4],
-        HouseInfo[houseid][hFurColId][index][0],
-        HouseInfo[houseid][hFurColId][index][1],
-        HouseInfo[houseid][hFurColId][index][2],
-        HouseInfo[houseid][hFurColId][index][3],
-        HouseInfo[houseid][hFurColId][index][4]
+        price,
+        index
     );
-    mysql_tquery(g_SQL, query, "OnFurnitureObjectCreates", "ii", houseid, index);
-
-    if (mysql_errno() == 0)
-    {
-        HouseInfo[houseid][hFurObjectid][index] = CreateDynamicObject(modelid, x, y, z, rx, ry, rz, HouseInfo[houseid][hVirtualWorld], HouseInfo[houseid][hInt], -1, FURNITURE_OBJECT_DRAW_DISTANCE, FURNITURE_OBJECT_DRAW_DISTANCE);
-
-        new price = GetFurnitureObjectPrice(playerid, PlayerPrwsIndex[playerid]);
-        SendFormatMessage(playerid, MESSAGE_TYPE_SUCCESS, "Kupili ste objekt za %d$ i stavili ga u slot %d!", price, index + 1);
-        PlayerToBudgetMoney(playerid, price); // novac ide u proracun
-        Bit4_Set(r_PlayerEditState, playerid, 0);
-
-        #if defined MODULE_LOGS
-        Log_Write("/logfiles/furniture_buy.txt", "(%s) Player %s bought an object(modelid: %d) for %d$ in House Furniture and placed it into slot %d.",
-            ReturnDate(),
-            GetName(playerid, false),
-            modelid,
-            price,
-            index
-        );
-        #endif
-        PlayerPrwsObject[playerid] = INVALID_OBJECT_ID;
-        PlayerPrwsIndex [playerid] = -1;
-        PlayerPrwsModel [playerid] = -1;
-        FurObjectSection[playerid] = 0;
-        FurnObjectsType [playerid] = 0;
-        Streamer_Update(playerid);
-    }
-    else
-    {
-        if (IsValidDynamicObject(HouseInfo[houseid][hFurObjectid][index]))
-        {
-            DestroyDynamicObject(HouseInfo[houseid][hFurObjectid][index]);
-            HouseInfo[houseid][hFurObjectid][index] = INVALID_OBJECT_ID;
-        }
-        if (HouseInfo[houseid][hFurSQL][index] > 0)
-        {
-            format(query, sizeof(query), "DELETE FROM furniture WHERE sqlid = '%d' LIMIT 1", HouseInfo[houseid][hFurSQL][index]);
-            mysql_tquery(g_SQL, query);
-        }
-
-        HouseInfo[houseid][hFurModelid][index]  = -1;
-        HouseInfo[houseid][hFurPosX][index]     = 0.0;
-        HouseInfo[houseid][hFurPosY][index]     = 0.0;
-        HouseInfo[houseid][hFurPosZ][index]     = 0.0;
-        HouseInfo[houseid][hFurRotX][index]     = 0.0;
-        HouseInfo[houseid][hFurRotY][index]     = 0.0;
-        HouseInfo[houseid][hFurRotZ][index]     = 0.0;
-        HouseInfo[houseid][hExists][index]      = 0;
-        HouseInfo[houseid][hFurCounter]--;
-
-        HouseInfo[houseid][hFurTxtId][index][0] = 0;
-        HouseInfo[houseid][hFurTxtId][index][1] = 0;
-        HouseInfo[houseid][hFurTxtId][index][2] = 0;
-        HouseInfo[houseid][hFurTxtId][index][3] = 0;
-        HouseInfo[houseid][hFurTxtId][index][4] = 0;
-
-        HouseInfo[houseid][hFurColId][index][0] = -1;
-        HouseInfo[houseid][hFurColId][index][1] = -1;
-        HouseInfo[houseid][hFurColId][index][2] = -1;
-        HouseInfo[houseid][hFurColId][index][3] = -1;
-        HouseInfo[houseid][hFurColId][index][4] = -1;
-
-        // TODO: Internal MySQL errors shouldn't be shown to the user, instead, log it
-        va_SendClientMessage(playerid, COLOR_RED, "[MySQL ERROR #%d]: Dogodila se pogreska prilikom spremanja objekta (index: %d) u bazu podataka! Vasi novci nisu oduzeti, pokusajte ponovno kasnije!", mysql_errno(), index);
-    }
-
+    #endif
+    PlayerPrwsObject[playerid] = INVALID_OBJECT_ID;
+    PlayerPrwsIndex [playerid] = -1;
+    PlayerPrwsModel [playerid] = -1;
+    FurObjectSection[playerid] = 0;
+    FurnObjectsType [playerid] = 0;
     Streamer_Update(playerid);
+
     return index;
 }
 
@@ -3016,31 +2995,7 @@ static stock CopyFurnitureObject(playerid, copyid)
         }
     }
 
-    new query[512];
-    format(query, sizeof(query), "INSERT INTO furniture(houseid, modelid, door, door_z, locked_door, pos_x, pos_y, pos_z, rot_x, rot_y, rot_z, texture_1, texture_2, texture_3, texture_4, texture_5, color_1, color_2, color_3, color_4, color_5) VALUES ('%d', '%d', '%d', '%f', '%d', '%f', '%f', '%f', '%f', '%f', '%f', '%d', '%d', '%d', '%d', '%d', '%d', '%d', '%d', '%d', '%d')",
-        HouseInfo[houseid][hSQLID],
-        HouseInfo[houseid][hFurModelid][index],
-        HouseInfo[houseid][hFurDoor][index],
-        HouseInfo[houseid][hFurDoorZ][index],
-        HouseInfo[houseid][hFurDoorLckd][index],
-        HouseInfo[houseid][hFurPosX][index],
-        HouseInfo[houseid][hFurPosY][index],
-        HouseInfo[houseid][hFurPosZ][index],
-        HouseInfo[houseid][hFurRotX][index],
-        HouseInfo[houseid][hFurRotY][index],
-        HouseInfo[houseid][hFurRotZ][index],
-        HouseInfo[houseid][hFurTxtId][index][0],
-        HouseInfo[houseid][hFurTxtId][index][1],
-        HouseInfo[houseid][hFurTxtId][index][2],
-        HouseInfo[houseid][hFurTxtId][index][3],
-        HouseInfo[houseid][hFurTxtId][index][4],
-        HouseInfo[houseid][hFurColId][index][0],
-        HouseInfo[houseid][hFurColId][index][1],
-        HouseInfo[houseid][hFurColId][index][2],
-        HouseInfo[houseid][hFurColId][index][3],
-        HouseInfo[houseid][hFurColId][index][4]
-    );
-    mysql_tquery(g_SQL, query, "OnFurnitureObjectCreates", "ii", houseid, index);
+    InsertFurnitureObject(houseid, index);
 
     Streamer_Update(playerid);
     SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uspjesno ste kopirali odabrani objekt! Sada ga postavite gdje zelite.");
@@ -3099,8 +3054,8 @@ static stock SetFurnitureObjectPos(playerid, Float:x, Float:y, Float:z, Float:rx
     HouseInfo[houseid][hFurRotY][index]     = ry;
     HouseInfo[houseid][hFurRotZ][index]     = rz;
 
-    new query[512];
-    format(query, sizeof(query), "UPDATE furniture SET pos_x = '%f',pos_y = '%f',pos_z = '%f',rot_x = '%f',rot_y = '%f',rot_z = '%f' WHERE sqlid = '%d'",
+    mysql_fquery(g_SQL,
+        "UPDATE furniture SET pos_x = '%f',pos_y = '%f',pos_z = '%f',rot_x = '%f',rot_y = '%f',rot_z = '%f' WHERE sqlid = '%d'",
         x,
         y,
         z,
@@ -3109,7 +3064,6 @@ static stock SetFurnitureObjectPos(playerid, Float:x, Float:y, Float:z, Float:rx
         rz,
         HouseInfo[houseid][hFurSQL][index]
     );
-    mysql_tquery(g_SQL, query);
 
     // TODO: repetitive code, helper function
     new colorid;
@@ -3148,13 +3102,11 @@ static stock SetFurnitureObjectTexture(playerid, slot, index, slotid)
     PlayerEditTxtIndex[playerid]                = -1;
     HouseInfo[houseid][hFurTxtId][slotid][slot] = index;
 
-    new query[128];
-    format(query, sizeof(query), "UPDATE furniture SET texture_%d = '%d' WHERE sqlid = '%d'",
+    mysql_fquery(g_SQL, "UPDATE furniture SET texture_%d = '%d' WHERE sqlid = '%d'",
         (slot+1),
         HouseInfo[houseid][hFurTxtId][slotid][slot],
         HouseInfo[houseid][hFurSQL][slotid]
     );
-    mysql_tquery(g_SQL, query);
 
     SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uspjesno ste postavili texturu na vas namjestaj.");
     return 1;
@@ -3183,13 +3135,11 @@ static stock SetFurnitureObjectColor(playerid, slot, index, slotid)
     new tmpslot = slot + 1;
     if (tmpslot >= 5) tmpslot = 4;
 
-    new query[128];
-    format(query, sizeof(query), "UPDATE furniture SET color_%d = '%d' WHERE sqlid = '%d'",
+    mysql_fquery(g_SQL, "UPDATE furniture SET color_%d = '%d' WHERE sqlid = '%d'",
         tmpslot,
         HouseInfo[houseid][hFurColId][slotid][slot],
         HouseInfo[houseid][hFurSQL][slotid]
     );
-    mysql_tquery(g_SQL, query);
     return 1;
 }
 
@@ -3209,9 +3159,7 @@ static stock DeleteFurnitureObject(houseid, playerid, index)
     if (houseid == INVALID_HOUSE_ID) return 0;
     // TODO: houseid, index bounds check
 
-    new query[64];
-    format(query, sizeof(query), "DELETE FROM furniture WHERE sqlid = '%d'", HouseInfo[houseid][hFurSQL][index]);
-    mysql_tquery(g_SQL, query);
+    mysql_fquery(g_SQL, "DELETE FROM furniture WHERE sqlid = '%d'", HouseInfo[houseid][hFurSQL][index]);
 
     va_SendClientMessage(playerid, COLOR_RED, "[ ! ] Uspjesno ste obrisali objekt[Model ID: %d - Slot Index: %d].", HouseInfo[houseid][hFurModelid][index], index);
 
@@ -3284,15 +3232,14 @@ static stock DestroyAllFurnitureObjects(playerid, houseid)
 
     Iter_Clear(HouseFurInt[houseid]);
 
-    new query[128];
     mysql_tquery(g_SQL, "BEGIN");
-    format(query, sizeof(query), "DELETE FROM furniture WHERE houseid = '%d'", HouseInfo[houseid][hSQLID]);
-    mysql_tquery(g_SQL, query);
+    mysql_fquery(g_SQL, "DELETE FROM furniture WHERE houseid = '%d'", HouseInfo[houseid][hSQLID]);
     mysql_tquery(g_SQL, "COMMIT");
 
-    // TODO: this query below was never executed, oversight or?
-    // "updateSlotsQuery"
-    //format(query, sizeof(query), "UPDATE houses SET fur_slots = '%d' WHERE id = '%d'", HouseInfo[houseid][hFurSlots], HouseInfo[houseid][hSQLID]);
+    mysql_fquery(g_SQL, "UPDATE houses SET fur_slots = '%d' WHERE id = '%d'", 
+        HouseInfo[houseid][hFurSlots], 
+        HouseInfo[houseid][hSQLID]
+    );
     return 1;
 }
 
@@ -4509,13 +4456,11 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
             HouseInfo[houseid][hFurTxtId][edit_index][slot] = 0;
             HouseInfo[houseid][hFurColId][edit_index][slot] = -1;
 
-            new query[256];
-            format(query, sizeof(query), "UPDATE furniture SET texture_%d = '0', color_%d = '-1' WHERE sqlid = '%d'",
+            mysql_fquery(g_SQL, "UPDATE furniture SET texture_%d = '0', color_%d = '-1' WHERE sqlid = '%d'",
                 (slot+1),
                 (slot+1),
                 HouseInfo[houseid][hFurSQL][edit_index]
             );
-            mysql_tquery(g_SQL, query);
 
             SetDynamicObjectMaterial(HouseInfo[houseid][hFurObjectid][edit_index], slot, -1, "none", "none", 0);
             SendFormatMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uspjesno ste obrisali teksturu i boju na Slotu %d za odabrani objekt.", slot);

@@ -391,12 +391,6 @@ CMD:channel(playerid, params[])
 
 		PlayerInfo[playerid][pRadio][slotid] = 0;
 		PlayerInfo[playerid][pRadioSlot][slotid] = 0;
-
-		mysql_fquery(g_SQL, "DELETE FROM accounts WHERE sqlid = '%d'",
-			PlayerInfo[playerid][pRadio][slotid],
-			PlayerInfo[playerid][pRadioSlot][slotid],
-			PlayerInfo[playerid][pSQLID]
-		);
 		
 		format(string, sizeof(string), "Napustili ste radio na slotu %d.", slotid);
 		SendClientMessage(playerid, COLOR_RED, string);

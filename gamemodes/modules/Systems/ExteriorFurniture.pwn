@@ -207,9 +207,12 @@ static ExteriorMisc[][E_EXTERIOR_MISC_DATA] =
 
 stock LoadHouseExterior(houseid)
 {
-    new query[128];
-    format(query, sizeof(query), "SELECT * FROM house_exteriors WHERE house_id = '%d'", HouseInfo[houseid][hSQLID]);
-    mysql_pquery(g_SQL, query, "OnHouseExteriorLoad", "i", houseid);
+    mysql_tquery(g_SQL, 
+        va_fquery(g_SQL, "SELECT * FROM house_exteriors WHERE house_id = '%d'", HouseInfo[houseid][hSQLID]), 
+        "OnHouseExteriorLoad", 
+        "i", 
+        houseid
+    );
 }
 
 stock ReloadHouseExterior(houseid)
@@ -307,19 +310,24 @@ static stock CreateExteriorObject(playerid)
     ExteriorInfo[houseid][heRotY][index]        = PlayerExteriorInfo[playerid][peRotY];
     ExteriorInfo[houseid][heRotZ][index]        = PlayerExteriorInfo[playerid][peRotZ];
 
-
-    new query[256];
-    mysql_format(g_SQL, query, sizeof(query), "INSERT INTO house_exteriors(house_id, modelid, pos_x, pos_y, pos_z, rot_x, rot_y, rot_z) VALUES ('%d','%d','%f','%f','%f','%f','%f','%f')",
-        HouseInfo[PlayerInfo[playerid][pHouseKey]][hSQLID],
-        PlayerExteriorInfo[playerid][peModelId],
-        PlayerExteriorInfo[playerid][pePosX],
-        PlayerExteriorInfo[playerid][pePosY],
-        PlayerExteriorInfo[playerid][pePosZ],
-        PlayerExteriorInfo[playerid][peRotX],
-        PlayerExteriorInfo[playerid][peRotY],
-        PlayerExteriorInfo[playerid][peRotZ]
+    mysql_tquery(g_SQL, 
+        va_fquery(g_SQL, 
+            "INSERT INTO house_exteriors(house_id, modelid, pos_x, pos_y, pos_z, rot_x, rot_y, rot_z) \n\
+                VALUES ('%d','%d','%f','%f','%f','%f','%f','%f')",
+            HouseInfo[PlayerInfo[playerid][pHouseKey]][hSQLID],
+            PlayerExteriorInfo[playerid][peModelId],
+            PlayerExteriorInfo[playerid][pePosX],
+            PlayerExteriorInfo[playerid][pePosY],
+            PlayerExteriorInfo[playerid][pePosZ],
+            PlayerExteriorInfo[playerid][peRotX],
+            PlayerExteriorInfo[playerid][peRotY],
+            PlayerExteriorInfo[playerid][peRotZ]
+        ), 
+        "OnExteriorObjectsInsert", 
+        "ii", 
+        playerid, 
+        index
     );
-    mysql_tquery(g_SQL, query, "OnExteriorObjectsInsert", "ii", playerid, index);
 
     ResetPlayerExteriorVars(playerid);
     return 1;
@@ -339,8 +347,8 @@ static stock SetExteriorObjectPos(playerid, Float:fX, Float:fY, Float:fZ, Float:
     ExteriorInfo[houseid][heRotY][index] = fRotY;
     ExteriorInfo[houseid][heRotZ][index] = fRotZ;
 
-    new query[200];
-    format(query, sizeof(query), "UPDATE house_exteriors SET pos_x='%f',pos_y='%f',pos_z='%f',rot_x='%f',rot_y='%f',rot_z='%f' WHERE id = '%d'",
+    mysql_fquery(g_SQL, 
+        "UPDATE house_exteriors SET pos_x='%f',pos_y='%f',pos_z='%f',rot_x='%f',rot_y='%f',rot_z='%f' WHERE id = '%d'",
         ExteriorInfo[houseid][hePosX][index],
         ExteriorInfo[houseid][hePosY][index],
         ExteriorInfo[houseid][hePosZ][index],
@@ -349,7 +357,6 @@ static stock SetExteriorObjectPos(playerid, Float:fX, Float:fY, Float:fZ, Float:
         ExteriorInfo[houseid][heRotZ][index],
         ExteriorInfo[houseid][heSQLID][index]
     );
-    mysql_tquery(g_SQL, query);
 
     ResetPlayerExteriorVars(playerid);
     Streamer_UpdateEx(playerid, fX, fY, fZ);
@@ -430,9 +437,7 @@ static stock DeleteExteriorObject(houseid, index, bool:iter_clear = false)
         ExteriorInfo[houseid][heObjectId][index] = INVALID_OBJECT_ID;
     }
 
-    new query[128];
-    format(query, sizeof(query), "DELETE FROM house_exteriors WHERE id = '%d'", ExteriorInfo[houseid][heSQLID][index]);
-    mysql_tquery(g_SQL, query);
+    mysql_fquery(g_SQL, "DELETE FROM house_exteriors WHERE id = '%d'", ExteriorInfo[houseid][heSQLID][index]);
 
     ExteriorInfo[houseid][heSQLID][index]       = -1;
     ExteriorInfo[houseid][heHouseId][index]     = 0;

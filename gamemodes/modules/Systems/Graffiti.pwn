@@ -159,9 +159,10 @@ static
 // TODO: bad spelling. LoadGraffiti
 stock LoadGraffits()
 {
-    new query[128];
-    format(query, sizeof(query), "SELECT * FROM graffiti WHERE 1 LIMIT 0,%d", MAX_GRAFS);
-    mysql_tquery(g_SQL, query, "OnGraffitsLoad");
+    mysql_tquery(g_SQL,
+        va_fquery(g_SQL, "SELECT * FROM graffiti WHERE 1 LIMIT 0,%d", MAX_GRAFS), 
+        "OnGraffitsLoad"
+    );
     return 1;
 }
 
@@ -327,24 +328,30 @@ stock GetGrafColor(colorid)
 }
 
 stock InsertGraffitIntoDB(grafid)
-{
-    new query[256];
+{    
     mysql_tquery(g_SQL, "BEGIN", "");
-    // TODO: consider splitting the text below in to two or more lines
-    mysql_format(g_SQL, query, sizeof(query), "INSERT INTO graffiti (text,font,fontsize,fontcolor,posx,posy,posz,rotx,roty,rotz,author) VALUES ('%e','%d','%d','%d','%f','%f','%f','%f','%f','%f','%e')",
-        GraffitInfo[grafid][gText],
-        GraffitInfo[grafid][gFont],
-        GraffitInfo[grafid][gFontSize],
-        GraffitInfo[grafid][gColor],
-        GraffitInfo[grafid][gPosX],
-        GraffitInfo[grafid][gPosY],
-        GraffitInfo[grafid][gPosZ],
-        GraffitInfo[grafid][gRotX],
-        GraffitInfo[grafid][gRotY],
-        GraffitInfo[grafid][gRotZ],
-        GraffitInfo[grafid][gAuthor]
+
+    mysql_tquery(g_SQL, 
+        va_fquery(g_SQL, 
+            "INSERT INTO graffiti (text,font,fontsize,fontcolor,posx,posy,posz,rotx,roty,rotz,author) \n\
+                VALUES ('%e','%d','%d','%d','%f','%f','%f','%f','%f','%f','%e')",
+            GraffitInfo[grafid][gText],
+            GraffitInfo[grafid][gFont],
+            GraffitInfo[grafid][gFontSize],
+            GraffitInfo[grafid][gColor],
+            GraffitInfo[grafid][gPosX],
+            GraffitInfo[grafid][gPosY],
+            GraffitInfo[grafid][gPosZ],
+            GraffitInfo[grafid][gRotX],
+            GraffitInfo[grafid][gRotY],
+            GraffitInfo[grafid][gRotZ],
+            GraffitInfo[grafid][gAuthor]
+        ), 
+        "OnGraffitCreate", 
+        "i", 
+        grafid
     );
-    mysql_tquery(g_SQL, query, "OnGraffitCreate", "i", grafid);
+
     mysql_tquery(g_SQL, "COMMIT", "");
     return 1;
 }
@@ -464,8 +471,8 @@ stock EditGraffit(grafid, Float:newX, Float:newY, Float:newZ, Float:newRotX, Flo
     GraffitInfo[grafid][gRotY] = newRotY;
     GraffitInfo[grafid][gRotZ] = newRotZ;
 
-    new query[512];
-    format(query, sizeof(query), "UPDATE graffiti SET posx = '%f', posy = '%f', posz = '%f', rotx = '%f', roty = '%f', rotz = '%f' WHERE id = '%d'",
+    mysql_fquery(g_SQL, 
+        "UPDATE graffiti SET posx = '%f', posy = '%f', posz = '%f', rotx = '%f', roty = '%f', rotz = '%f' WHERE id = '%d'",
         GraffitInfo[grafid][gPosX],
         GraffitInfo[grafid][gPosY],
         GraffitInfo[grafid][gPosZ],
@@ -474,7 +481,6 @@ stock EditGraffit(grafid, Float:newX, Float:newY, Float:newZ, Float:newRotX, Flo
         GraffitInfo[grafid][gRotZ],
         GraffitInfo[grafid][gId]
     );
-    mysql_tquery(g_SQL, query);
 
     Streamer_SetFloatData(STREAMER_TYPE_OBJECT, GraffitInfo[grafid][gObject], E_STREAMER_DRAW_DISTANCE, GRAFFIT_DRAW_DISTANCE);
 }
@@ -483,9 +489,7 @@ stock DestroyGraffit(grafid)
 {
     if (grafid == -1) return 0;
 
-    new query[256];
-    format(query, sizeof(query), "DELETE FROM graffiti WHERE id = '%i'", GraffitInfo[grafid][gId]);
-    mysql_tquery(g_SQL, query);
+    mysql_fquery(g_SQL, "DELETE FROM graffiti WHERE id = '%i'", GraffitInfo[grafid][gId]);
 
     if (IsValidDynamicObject(GraffitInfo[grafid][gObject]))
         DestroyDynamicObject(GraffitInfo[grafid][gObject]);
@@ -577,9 +581,11 @@ public OnTagsLoaded()
 
 stock LoadTags()
 {
-    new query[128];
-    format(query, sizeof(query), "SELECT * FROM spraytags WHERE 1 LIMIT 0,%d", MAX_TAGS);
-    mysql_tquery(g_SQL, query, "OnTagsLoaded");
+    mysql_tquery(g_SQL, 
+        va_fquery(g_SQL, "SELECT * FROM spraytags WHERE 1 LIMIT 0,%d", MAX_TAGS), 
+        "OnTagsLoaded",
+        ""
+    );
     return 1;
 }
 
@@ -665,9 +671,9 @@ stock GetOfficialGangTag(playerid)
 
 stock InsertSprayTagIntoDB(tagid)
 {
-    new query[1024];
-    // TODO: consider splitting this long line below
-    mysql_format(g_SQL, query, sizeof(query), "INSERT INTO spraytags (modelid,posx,posy,posz,rotx,roty,rotz,faction,author) VALUES ('%d','%f','%f','%f','%f','%f','%f','%d','%e')",
+    mysql_fquery(g_SQL,
+        "INSERT INTO spraytags (modelid,posx,posy,posz,rotx,roty,rotz,faction,author) \n\
+            VALUES ('%d','%f','%f','%f','%f','%f','%f','%d','%e')",
         TagInfo[tagid][tModelid],
         TagInfo[tagid][tPosX],
         TagInfo[tagid][tPosY],
@@ -678,7 +684,6 @@ stock InsertSprayTagIntoDB(tagid)
         TagInfo[tagid][tFaction],
         TagInfo[tagid][tAuthor]
     );
-    mysql_tquery(g_SQL, query);
     return 1;
 }
 
@@ -756,8 +761,8 @@ stock EditSprayTag(tagid, Float:newX, Float:newY, Float:newZ, Float:newRotX, Flo
     TagInfo[tagid][tRotY] = newRotY;
     TagInfo[tagid][tRotZ] = newRotZ;
 
-    new query[512];
-    format(query, sizeof(query), "UPDATE spraytags SET posx = '%f', posy = '%f', posz = '%f', rotx = '%f', roty = '%f', rotz = '%f' WHERE id = '%d'",
+    mysql_fquery(g_SQL, 
+        "UPDATE spraytags SET posx = '%f', posy = '%f', posz = '%f', rotx = '%f', roty = '%f', rotz = '%f' WHERE id = '%d'",
         TagInfo[tagid][tPosX],
         TagInfo[tagid][tPosY],
         TagInfo[tagid][tPosZ],
@@ -766,7 +771,6 @@ stock EditSprayTag(tagid, Float:newX, Float:newY, Float:newZ, Float:newRotX, Flo
         TagInfo[tagid][tRotZ],
         TagInfo[tagid][tId]
     );
-    mysql_tquery(g_SQL, query);
 
     Streamer_SetFloatData(STREAMER_TYPE_OBJECT, TagInfo[tagid][tgObject], E_STREAMER_DRAW_DISTANCE, GRAFFIT_DRAW_DISTANCE);
 }
@@ -776,9 +780,7 @@ stock DestroySprayTag(tagid)
     if (IsValidDynamicObject(TagInfo[tagid][tgObject]))
         DestroyDynamicObject(TagInfo[tagid][tgObject]);
 
-    new query[256];
-    format(query, sizeof(query), "DELETE FROM spraytags WHERE id = '%d'", TagInfo[tagid][tId]);
-    mysql_tquery(g_SQL, query);
+    mysql_fquery(g_SQL, "DELETE FROM spraytags WHERE id = '%d'", TagInfo[tagid][tId]);
 
     TagInfo[tagid][tId]         = -1;
     TagInfo[tagid][tModelid]    = -1;

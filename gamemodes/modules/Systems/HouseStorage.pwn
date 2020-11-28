@@ -69,8 +69,9 @@ static
 
 HouseStorage_Save(storage_id)
 {
-    new query[256];
-    format(query, sizeof(query), "UPDATE house_storage SET storageHouse = '%d', storageX = '%.4f', storageY = '%.4f', storageZ = '%.4f', storageA = '%.4f', storageInterior = '%d', storageWorld = '%d' WHERE storageID = '%d'",
+    mysql_fquery(g_SQL, 
+        "UPDATE house_storage SET storageHouse = '%d', storageX = '%.4f', storageY = '%.4f', storageZ = '%.4f',\n\
+            storageA = '%.4f', storageInterior = '%d', storageWorld = '%d' WHERE storageID = '%d'",
         HouseStorage[storage_id][storageHouse],
         HouseStorage[storage_id][storagePos][0],
         HouseStorage[storage_id][storagePos][1],
@@ -80,21 +81,18 @@ HouseStorage_Save(storage_id)
         HouseStorage[storage_id][storageWorld],
         HouseStorage[storage_id][storageID]
     );
-    mysql_tquery(g_SQL, query);
     return 1;
 }
 
 HouseStorage_SaveWep(storage_id, wepid)
 {
-    new query[256];
-    format(query, sizeof(query), "UPDATE house_storage SET gunID%d = '%d', ammoID%d = '%d' WHERE storageID = '%d'",
+    mysql_fquery(g_SQL, "UPDATE house_storage SET gunID%d = '%d', ammoID%d = '%d' WHERE storageID = '%d'",
         wepid,
         HouseStorage[storage_id][storageWeapons][wepid],
         wepid,
         HouseStorage[storage_id][storageAmmo][wepid],
         HouseStorage[storage_id][storageID]
     );
-    mysql_tquery(g_SQL, query);
     return 1;
 }
 
@@ -308,9 +306,7 @@ Storage_RackDelete(storageid)
         return 1;
     }
 
-    new query[64];
-    format(query, sizeof(query), "DELETE FROM house_storage WHERE storageID = '%d'", HouseStorage[storageid][storageID]);
-    mysql_tquery(g_SQL, query);
+    mysql_fquery(g_SQL, "DELETE FROM house_storage WHERE storageID = '%d'", HouseStorage[storageid][storageID]);
 
     for (new i = 0; i < (MAX_WEAPON_ONRACK + 1); i++)
     {

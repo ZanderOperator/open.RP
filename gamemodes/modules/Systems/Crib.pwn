@@ -341,7 +341,11 @@ stock DestroyHouseInfoTD(playerid)
 
 stock LoadHouses()
 {
-    mysql_tquery(g_SQL, "SELECT * FROM houses WHERE 1", "OnServerHousesLoad", "");
+    mysql_tquery(g_SQL, 
+        va_fquery(g_SQL, "SELECT * FROM houses WHERE 1"), 
+        "OnServerHousesLoad", 
+        ""
+    );
     return 1;
 }
 
