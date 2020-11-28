@@ -1417,11 +1417,10 @@ stock CheckStringForIP(text[])
 
 stock ConvertNameToSQLID(const name[])
 {
-	new sqlid = -1, sqlquery[128];
-	mysql_format(g_SQL, sqlquery, sizeof(sqlquery), "SELECT sqlid FROM accounts WHERE name = '%e' LIMIT 0,1", name);
+	new sqlid = -1;
 	
 	new 
-		Cache:result = mysql_query(g_SQL, sqlquery);
+		Cache:result = mysql_query(g_SQL, va_fquery(g_SQL, "SELECT sqlid FROM accounts WHERE name = '%e'", name));
 	cache_get_value_name_int(0, "sqlid", sqlid);
 	cache_delete(result);
 	return sqlid;
@@ -1431,7 +1430,7 @@ stock ConvertSQLIDToName(id)
 {
 	new nick[24], 
 		sqlquery[128];
-	format( sqlquery, sizeof(sqlquery), "SELECT name FROM accounts WHERE sqlid = '%d' LIMIT 0,1", id);
+	format( sqlquery, sizeof(sqlquery), "SELECT name FROM accounts WHERE sqlid = '%d'", id);
 	
 	new 
 		Cache:result = mysql_query(g_SQL, sqlquery);
@@ -1681,6 +1680,13 @@ mysql_fquery(MySQL:connectionHandle, const fquery[], va_args<>)
 {
 	mysql_format(connectionHandle, va_query, sizeof(va_query), fquery, va_start<2>);
 	return mysql_tquery(connectionHandle, va_query);
+}
+
+// Formated mysql_pquery
+mysql_fquery_ex(MySQL:connectionHandle, const fquery[], va_args<>)
+{
+	mysql_format(connectionHandle, va_query, sizeof(va_query), fquery, va_start<2>);
+	return mysql_pquery(connectionHandle, va_query);
 }
 
 // Formated mysql_format with direct string returning

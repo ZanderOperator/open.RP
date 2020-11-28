@@ -124,7 +124,6 @@
 // MySQL
 #include <a_mysql>
 #include <YSI_Coding\y_inline>
-#define mysql_tquery_inline_new(%0,%1,%2,%3) MySQL_TQueryInline(%0,%2,%1,%3)
 
 // SHA-1 of latest commit - GIT_REV define
 #include "revision.inc"
@@ -1729,7 +1728,7 @@ public OnPlayerRequestClass(playerid, classid)
 
 		GetPlayerIp(playerid, PlayerInfo[playerid][cIP], 24);
 		mysql_tquery(g_SQL, 
-			va_fquery(g_SQL, "SELECT sql FROM accounts WHERE name = '%e' LIMIT 0,1", tmpname), 
+			va_fquery(g_SQL, "SELECT sql FROM accounts WHERE name = '%e'", tmpname), 
 			"CheckPlayerInBase", 
 			"i", 
 			playerid

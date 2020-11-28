@@ -1297,7 +1297,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
             }
             MySQL_TQueryInline(g_SQL,  
                 using inline OnMobileNumberCheck, 
-                va_fquery(g_SQL, "SELECT player_id, model FROM player_phones WHERE number = '%d' LIMIT 0,1", mobilenumber),
+                va_fquery(g_SQL, "SELECT player_id, model FROM player_phones WHERE number = '%d'", mobilenumber),
                 ""
             );
         }

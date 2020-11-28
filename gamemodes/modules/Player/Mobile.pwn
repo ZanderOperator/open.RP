@@ -399,7 +399,7 @@ stock UpdatePlayerMobile(playerid)
 stock LoadPlayerMobile(playerid)
 {
 	mysql_tquery(g_SQL, 
-		va_fquery(g_SQL, "SELECT * FROM player_phones WHERE player_id = '%d' LIMIT 0,2", PlayerInfo[playerid][pSQLID]), 
+		va_fquery(g_SQL, "SELECT * FROM player_phones WHERE player_id = '%d'", PlayerInfo[playerid][pSQLID]), 
 		"OnPlayerMobileLoad", 
 		"i", 
 		playerid

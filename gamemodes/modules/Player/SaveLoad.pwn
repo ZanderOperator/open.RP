@@ -142,7 +142,7 @@ CheckPlayerInactivity(playerid)
 	}
 	MySQL_TQueryInline(g_SQL,  
 		using inline OnPlayerInactivityCheck, 
-		va_fquery(g_SQL, "SELECT sqlid FROM inactive_accounts WHERE sqlid = '%d' LIMIT 0,1", 
+		va_fquery(g_SQL, "SELECT sqlid FROM inactive_accounts WHERE sqlid = '%d'", 
 			PlayerInfo[playerid][pSQLID]), 
 		"i", 
 		playerid
@@ -155,8 +155,8 @@ Public: OnPasswordChecked(playerid)
 	new bool:match = bcrypt_is_equal();
 	if(match)
 	{
-		mysql_tquery(g_SQL, 
-			va_fquery(g_SQL, "SELECT * FROM accounts WHERE name = '%e' LIMIT 0,1", GetName(playerid, false)),
+		mysql_pquery(g_SQL, 
+			va_fquery(g_SQL, "SELECT * FROM accounts WHERE name = '%e'", GetName(playerid, false)),
 			"LoadPlayerData", 
 			"i", 
 			playerid
@@ -549,7 +549,7 @@ public LoadPlayerData(playerid)
 public RegisterPlayer(playerid)
 {
 	format(PlayerInfo[playerid][pLastLogin], 24, ReturnDate());
-    mysql_tquery(g_SQL,
+    mysql_pquery(g_SQL,
 		va_fquery(g_SQL, 
 			"INSERT INTO accounts (registered,register_date,name,password,teampin,email,\n\
 				secawnser,expdate,levels,age,sex,handMoney,bankMoney,jobkey,playaSkin,casinocool) \n\
@@ -759,7 +759,7 @@ stock SavePlayerData(playerid)
 	
 	mysql_tquery(g_SQL, "START TRANSACTION");
 
-	mysql_fquery(g_SQL, 
+	mysql_fquery_ex(g_SQL, 
 		"UPDATE accounts SET registered = '%d', adminLvl = '%d', helper = '%d', playaWarns = '%d', lastlogin = '%e',\n\
 			lastloginstamp = '%d', lastip = '%e', muted = '%d', sex = '%d', age = '%d', changenames = '%d',\n\
 			changetimes = '%d', handMoney = '%d', bankMoney = '%d', connecttime = '%d', contracttime = '%d',\n\
@@ -997,7 +997,7 @@ stock SetPlayerSpawnInfo(playerid)
 stock LoadPlayerCrashes(playerid)
 {
 	mysql_tquery(g_SQL, 
-		va_fquery(g_SQL, "SELECT * FROM player_crashes WHERE player_id = '%d' LIMIT 0,1", 
+		va_fquery(g_SQL, "SELECT * FROM player_crashes WHERE player_id = '%d'", 
 			PlayerInfo[playerid][pSQLID]), 
 		"LoadingPlayerCrashes", 
 		"i", 

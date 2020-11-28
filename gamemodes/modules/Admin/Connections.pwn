@@ -21,7 +21,7 @@ stock SaveAdminConnectionTime(playerid)
 	result = mysql_query(g_SQL, 
 				va_fquery(g_SQL, 
 					"SELECT * FROM stats_admins WHERE sqlid = '%d' AND \n\
-						EXTRACT(MONTH FROM date) = EXTRACT(MONTH FROM CURDATE()) LIMIT 0,1", 
+						EXTRACT(MONTH FROM date) = EXTRACT(MONTH FROM CURDATE())", 
 					PlayerInfo[ playerid ][ pSQLID ]
 				)
 			);
