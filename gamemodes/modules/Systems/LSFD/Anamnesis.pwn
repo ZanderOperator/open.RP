@@ -16,35 +16,38 @@ stock InsertPlayerCarton(playerid, giveplayerid, const disease[])
 	new Day,
 		Month,
 		Year,
-		date[24],
-		tmpQuery[ 258 ];
+		date[24];
+
 	getdate(Year, Month, Day);
 	format( date, 24, "%02d.%02d.%d.", Day, Month, Year);
-	mysql_format(g_SQL, tmpQuery, sizeof(tmpQuery), "INSERT INTO anamneza (pacient, disease, doctor, date) VALUES ('%e', '%e', '%e', '%e')",
+	
+	mysql_fquery(g_SQL, "INSERT INTO anamnesis (patient, disease, doctor, date) VALUES ('%e', '%e', '%e', '%e')",
 		GetName(giveplayerid,false),
 		disease,
 		GetName(playerid,false),
 		date
 	);
-	mysql_tquery(g_SQL, tmpQuery);
+
 	SendFormatMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uspjesno si dodao zapis u karton za %s.", GetName(giveplayerid,true));
+    return 1;
 }
 
 stock static DeletePlayerCarton(playerid, sqlid) 
 {
-	new
-		destroyQuery[ 64 ];
-	format( destroyQuery, sizeof(destroyQuery), "DELETE FROM anamneza WHERE id = '%d'", sqlid);
-	mysql_tquery(g_SQL, destroyQuery);
+	va_fquery(g_SQL, "DELETE FROM anamnesis WHERE id = '%d'", sqlid);
 	SendFormatMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uspjesno ste obrisali karton broj: #%d!", sqlid);
+    return 1;
 }
 
 stock CheckPlayerCarton(playerid, const name[])
 {
-	new financesQuery[160];
-		
-	mysql_format(g_SQL, financesQuery, sizeof(financesQuery), "SELECT * FROM anamneza WHERE pacient = '%e' ORDER BY id DESC", name );
-	mysql_tquery(g_SQL, financesQuery, "OnPlayerCartonFinish", "is", playerid, name);
+	mysql_tquery(g_SQL, 
+    	va_fquery(g_SQL, "SELECT * FROM anamnesis WHERE patient = '%e' ORDER BY id DESC", name), 
+        "OnPlayerCartonFinish", 
+        "is", 
+        playerid, 
+        name
+    );
 	return 1;
 }
 
@@ -81,7 +84,7 @@ public OnPlayerCartonFinish(playerid, const playername[])
 		strcat(buffer, motd, sizeof(buffer));		
 	}
 	new tmpString[46];
-	format(tmpString, 46, "ANAMNEZA - Karton: %s", playername);
+	format(tmpString, 46, "anamnesis - Karton: %s", playername);
 	ShowPlayerDialog(playerid, 0, DIALOG_STYLE_MSGBOX, tmpString, buffer, "Close", "");
 	return 1;
 }
@@ -95,36 +98,37 @@ public OnPlayerCartonFinish(playerid, const playername[])
 	##    ## ##     ## ##     ## 
 	 ######  ##     ## ########  
 */
-CMD:anamneza(playerid, params[])
+CMD:anamnesis(playerid, params[])
 {
-	new opcija[20], pacient[30], disease[128], giveplayerid, ID;
+	new opcija[20], patient[30], disease[128], giveplayerid, ID;
     if( !IsFDMember(playerid) ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste doktor!");
 	if(PlayerInfo[playerid][pRank] < 1) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Moras biti rank 1 ili vise da bi koristio ovo !");
 	if( sscanf( params, "s[20] ", opcija ) )
 	{
-		SendClientMessage(playerid, COLOR_RED, "[ ? ]: /anamneza [opcija]");
+		SendClientMessage(playerid, COLOR_RED, "[ ? ]: /anamnesis [opcija]");
 		SendClientMessage(playerid, COLOR_RED, "[ ! ] check - insert - delete");
 		return 1;
 	}
 	if(strcmp(opcija,"check",true) == 0) // check
 	{
-		if( sscanf( params, "s[20]s[30]", opcija, pacient ) ) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /anamneza [opcija] [Ime_Prezime]");
-		if( 1 <= strlen( pacient ) <= MAX_PLAYER_NAME )
-			{
-				if( strfind(pacient, "_", true) == -1 ) return SendClientMessage(playerid, COLOR_RED, "NAPOMENA: Mora biti s znakom '_'! ");
-				CheckPlayerCarton(playerid, pacient);
-			}
+		if( sscanf( params, "s[20]s[30]", opcija, patient ) ) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /anamnesis [opcija] [Ime_Prezime]");
+		if( 1 <= strlen( patient ) <= MAX_PLAYER_NAME )
+        {
+            if( strfind(patient, "_", true) == -1 ) 
+                return SendClientMessage(playerid, COLOR_RED, "NAPOMENA: Mora biti s znakom '_'! ");
+            CheckPlayerCarton(playerid, patient);
+        }
 	}
 	else if(strcmp(opcija,"insert",true) == 0) //  insert
 	{
-		if( sscanf( params, "s[20]us[100]", opcija, giveplayerid, disease ) ) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /anamneza insert [ID/Ime_Prezime] [Opis bolesti]");
+		if( sscanf( params, "s[20]us[100]", opcija, giveplayerid, disease ) ) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /anamnesis insert [ID/Ime_Prezime] [Opis bolesti]");
 		if (strlen(disease) >= 100) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Opis bolesti moze imati max 100 znakova!");
 		if( giveplayerid == INVALID_PLAYER_ID ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, " Igrac nije online!");
 		InsertPlayerCarton(playerid, giveplayerid, disease);
 	}
 	else if(strcmp(opcija,"delete",true) == 0) // delete
 	{
-		if( sscanf( params, "s[20]i", opcija, ID ) ) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /anamneza delete [rbr]");
+		if( sscanf( params, "s[20]i", opcija, ID ) ) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /anamnesis delete [rbr]");
 		if( PlayerInfo[ playerid ][ pRank ] < 6 ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Samo doktori sa vecom pozicijom! ((r6+))");
 		DeletePlayerCarton(playerid, ID);
 	}

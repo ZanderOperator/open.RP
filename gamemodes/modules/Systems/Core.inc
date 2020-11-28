@@ -52,7 +52,7 @@
 
 // LSFD
 #include "modules/Systems/LSFD/Ambulance.pwn"
-#include "modules/Systems/LSFD/Anamneza.pwn"
+#include "modules/Systems/LSFD/Anamnesis.pwn"
 #include "modules/Systems/LSFD/Rope.pwn"
 #include "modules/Systems/LSFD/Core.pwn"
 

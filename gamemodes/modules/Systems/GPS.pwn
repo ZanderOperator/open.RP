@@ -110,12 +110,15 @@ public on_GPScreate(gps_id)
 LoadGPS()
 {
     Iter_Clear(GPS_location);
-    mysql_tquery(g_SQL, "SELECT * FROM gps", "GPS_Load", "");
+    mysql_tquery(g_SQL, 
+        va_fquery(g_SQL, "SELECT * FROM gps"), 
+        "GPS_Load", 
+        ""
+    );
     return 1;
 }
 
-forward GPS_Load();
-public GPS_Load()
+Public: GPS_Load()
 {
     new rows = cache_num_rows();
     if (rows == 0) return 1;
@@ -140,8 +143,9 @@ public GPS_Load()
 
 GPS_Save(gpsid)
 {
-    new query[256];
-    mysql_format(g_SQL, query, sizeof(query), "UPDATE gps SET gpsName = '%e', gpsPosX = '%.4f', gpsPosY = '%.4f', gpsPosZ = '%.4f', gpsMapIcon = '%d', admin_gps = '%d' WHERE id = '%d'",
+    mysql_fquery(g_SQL, 
+        "UPDATE gps SET gpsName = '%e', gpsPosX = '%.4f', gpsPosY = '%.4f', gpsPosZ = '%.4f',\n\
+            gpsMapIcon = '%d', admin_gps = '%d' WHERE id = '%d'",
         GPS_data[gpsid][gpsName],
         GPS_data[gpsid][gpsPos][0],
         GPS_data[gpsid][gpsPos][1],
@@ -150,7 +154,6 @@ GPS_Save(gpsid)
         GPS_data[gpsid][gpsAdmin],
         GPS_data[gpsid][gpsID]
     );
-    mysql_tquery(g_SQL, query);
     return 1;
 }
 
@@ -166,7 +169,12 @@ Create_GPS(gps_name[], Float:X, Float:Y, Float:Z)
     GPS_data[free_id][gpsAdmin]    = 0;
 
     SetString(GPS_data[free_id][gpsName], gps_name);
-    mysql_tquery(g_SQL, "INSERT INTO gps (gpsCreated) VALUES(1)", "on_GPScreate", "d", free_id);
+    mysql_tquery(g_SQL, 
+        "INSERT INTO gps (gpsCreated) VALUES(1)", 
+        "on_GPScreate", 
+        "i", 
+        free_id
+    );
     return free_id;
 }
 
@@ -178,9 +186,7 @@ Delete_GPS(gpsid)
             RemovePlayerMapIcon(gpsid, GPS_data[i][gpsMapIcon]);
     }
 
-    new query[64];
-    format(query, sizeof(query), "DELETE FROM gps WHERE id = '%d'", GPS_data[gpsid][gpsID]);
-    mysql_tquery(g_SQL, query);
+    mysql_fquery(g_SQL, "DELETE FROM gps WHERE id = '%d'", GPS_data[gpsid][gpsID]);
 
     // TODO: SetString?! use strcpy
     SetString(GPS_data[gpsid][gpsName], "None");

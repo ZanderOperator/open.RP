@@ -101,14 +101,18 @@ Public:OnAmmuWeaponsLoaded()
 
 stock LoadAmmuData() // Loadanje cijele baze
 {
-    mysql_tquery(g_SQL, "SELECT * FROM ammunation_weapons", "OnAmmuWeaponsLoaded");
+    mysql_tquery(g_SQL, 
+        va_fquery(g_SQL, "SELECT * FROM ammunation_weapons"), 
+        "OnAmmuWeaponsLoaded",
+        ""
+    );
     return 1;
 }
 
 static stock UpdateAmmuWeapon(slotid) // Updateanje ourzja u listi
 {
-    new query[180];
-    mysql_format(g_SQL, query, sizeof(query), "UPDATE ammunation_weapons SET name='%e',weapon=%d,price=%d,license=%d,maxbullets=%d WHERE id=%d",
+    mysql_fquery(g_SQL, 
+        "UPDATE ammunation_weapons SET name='%e',weapon=%d,price=%d,license=%d,maxbullets=%d WHERE id=%d",
         AmmuInfo[slotid][aiName],
         AmmuInfo[slotid][aiWeapon],
         AmmuInfo[slotid][aiPrice],
@@ -116,29 +120,30 @@ static stock UpdateAmmuWeapon(slotid) // Updateanje ourzja u listi
         AmmuInfo[slotid][aiMaxBullets],
         AmmuInfo[slotid][aiSQLID]
     );
-    mysql_tquery(g_SQL, query);
     return 1;
 }
 
 static stock DeleteAmmuWeapon(slotid) // Delete oruzja iz liste
 {
-    new query[70];
-    format(query, sizeof(query), "DELETE FROM ammunation_weapons WHERE id=%d LIMIT 1", AmmuInfo[slotid][aiSQLID]);
-    mysql_tquery(g_SQL, query);
+    mysql_fquery(g_SQL, "DELETE FROM ammunation_weapons WHERE id=%d", AmmuInfo[slotid][aiSQLID]);
     return 1;
 }
 
 static stock InsertAmmuWeapon(slotid) // Dodavanje novog oruzja
 {
-    new query[160];
-    mysql_format(g_SQL, query, sizeof(query), "INSERT INTO ammunation_weapons (name, weapon, price, license, maxbullets) VALUES ('%e',%d,%d,%d,%d)",
-        AmmuInfo[slotid][aiName],
-        AmmuInfo[slotid][aiWeapon],
-        AmmuInfo[slotid][aiPrice],
-        AmmuInfo[slotid][aiLicense],
-        AmmuInfo[slotid][aiMaxBullets]
+    mysql_tquery(g_SQL, 
+        va_fquery(g_SQL, 
+            "INSERT INTO ammunation_weapons (name, weapon, price, license, maxbullets) VALUES ('%e',%d,%d,%d,%d)",
+            AmmuInfo[slotid][aiName],
+            AmmuInfo[slotid][aiWeapon],
+            AmmuInfo[slotid][aiPrice],
+            AmmuInfo[slotid][aiLicense],
+            AmmuInfo[slotid][aiMaxBullets]
+        ), 
+        "OnAmmuWeaponInsert", 
+        "i", 
+        slotid
     );
-    mysql_tquery(g_SQL, query, "OnAmmuWeaponInsert", "i", slotid);
     return 1;
 }
 
@@ -399,9 +404,7 @@ CMD:ammunation(playerid, params[])
 
         PlayerInfo[giveplayerid][pAmmuTime] = 0;
 
-        new query[128];
-        format(query, sizeof(query), "UPDATE accounts SET ammutime=0 WHERE sqlid=%d", PlayerInfo[giveplayerid][pSQLID]);
-        mysql_tquery(g_SQL, query);
+        mysql_fquery(g_SQL, "UPDATE accounts SET ammutime=0 WHERE sqlid=%d", PlayerInfo[giveplayerid][pSQLID]);
 
         va_SendClientMessage(giveplayerid, COLOR_RED, "[ ! ] Admin %s ti je resetirao vrijeme kupovine oruzja u Ammunationu!", GetName(playerid));
         va_SendClientMessage(playerid, COLOR_RED, "[ ! ] Resetirao si igracu %s vrijeme kupovine oruzja u Ammunationu!", GetName(giveplayerid));

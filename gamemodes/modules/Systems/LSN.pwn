@@ -392,12 +392,10 @@ CMD:callnews(playerid,params[])
 
     PlayerInfo[playerid][pMobileCost] -= 3;
 
-    new query[128];
-    format(query, sizeof(query), "UPDATE player_phones SET money = '%d' WHERE player_id = '%d' AND type = '1'",
+    mysql_fquery(g_SQL, "UPDATE player_phones SET money = '%d' WHERE player_id = '%d' AND type = '1'",
         PlayerInfo[playerid][pMobileCost],
         PlayerInfo[playerid][pSQLID]
     );
-    mysql_tquery(g_SQL, query);
     return 1;
 }
 

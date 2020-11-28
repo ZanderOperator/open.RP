@@ -276,19 +276,16 @@ stock PlayerToRouletteMoney(playerid, money)
 	PlayerPlaySound( playerid, 1083, 0.0, 0.0, 0.0 );
 	
 	// Update Casino blagajne
-	new tillUpdate[60];
 	foreach(new bizzid: Bizzes) 
 	{
 		if(BizzInfo[bizzid][bType] == BIZZ_TYPE_CASINO && IsPlayerInRangeOfPoint(playerid, 200.0, BizzInfo[bizzid][bExitX], BizzInfo[bizzid][bExitY], BizzInfo[bizzid][bExitZ]) 
 		&& GetPlayerInterior(playerid) == BizzInfo[bizzid][bInterior] && GetPlayerVirtualWorld(playerid) == BizzInfo[bizzid][bVirtualWorld])
 		{
 			BizzInfo[bizzid][bTill] += money;				// Biznisu idu pare ulozene na rulet
-			
-			format(tillUpdate, 60, "UPDATE bizzes SET till = '%d' WHERE id = '%d'",
+			mysql_fquery(g_SQL, "UPDATE bizzes SET till = '%d' WHERE id = '%d'",
 				BizzInfo[bizzid][bTill],
 				BizzInfo[bizzid][bSQLID]
 			);
-			mysql_tquery(g_SQL, tillUpdate);
 			break;
 		}
 	}

@@ -236,7 +236,11 @@ stock IsAt247(playerid)
 
 stock LoadBizz()
 {
-    mysql_tquery(g_SQL, "SELECT * FROM bizzes WHERE 1", "OnServerBizzesLoad", "");
+    mysql_tquery(g_SQL, 
+        va_fquery(g_SQL, "SELECT * FROM bizzes WHERE 1"), 
+        "OnServerBizzesLoad", 
+        ""
+    );
     return 1;
 }
 
@@ -296,29 +300,35 @@ public OnServerBizzesLoad()
 
 stock LoadBiznisProducts(bizz_id)
 {
-    if (bizz_id < 0 || bizz_id >= MAX_BIZZS) return 0;
+    if(!Iter_Contains(Bizzes, bizz_id))
+        return 0;
 
-    new query[128];
-    format(query, sizeof(query), "SELECT * FROM server_biznis_products WHERE biznis_id = '%d'", BizzInfo[bizz_id][bSQLID]);
-    mysql_pquery(g_SQL, query, "OnServerBiznisProductsLoad", "i", bizz_id);
+    mysql_tquery(g_SQL, 
+        va_fquery(g_SQL, "SELECT * FROM server_biznis_products WHERE biznis_id = '%d'", BizzInfo[bizz_id][bSQLID]), 
+        "OnServerBiznisProductsLoad", 
+        "i", 
+        bizz_id
+    );
     return 1;
 }
 
 stock LoadBiznisVips(bizz_id)
 {
-    if (bizz_id < 0 || bizz_id >= MAX_BIZZS) return 0;
+    if(!Iter_Contains(Bizzes, bizz_id))
+        return 1;
 
-    new query[128];
-    format(query, sizeof(query), "SELECT * FROM server_biznis_vips WHERE biznis_id = '%d' LIMIT 0,1", BizzInfo[bizz_id][bSQLID]);
-    mysql_pquery(g_SQL, query, "OnServerVipsLoad", "i", bizz_id);
+    mysql_tquery(g_SQL,
+        va_fquery(g_SQL, "SELECT * FROM server_biznis_vips WHERE biznis_id = '%d'", BizzInfo[bizz_id][bSQLID]),
+        "OnServerVipsLoad",
+        "i",
+        bizz_id
+    );
     return 1;
 }
 
 forward OnServerBiznisProductsLoad(bizz_id);
 public OnServerBiznisProductsLoad(bizz_id)
 {
-    if (bizz_id < 0 || bizz_id >= MAX_BIZZS) return 0;
-
     new num_rows = cache_num_rows();
     if (!num_rows)
     {
@@ -338,11 +348,9 @@ public OnServerBiznisProductsLoad(bizz_id)
 forward OnServerVipsLoad(bizz_id);
 public OnServerVipsLoad(bizz_id)
 {
-    if (bizz_id < 0 || bizz_id >= MAX_BIZZS) return 0;
-
     if (!cache_num_rows())
     {
-        return 0;
+        return 1;
     }
 
     cache_get_value_name_int  (0,    "type"    , BizzInfo[bizz_id][bVipType]);

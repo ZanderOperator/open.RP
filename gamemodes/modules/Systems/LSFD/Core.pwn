@@ -789,8 +789,7 @@ CMD:recover(playerid, params[])
 {
     if (!IsFDMember(playerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, " Niste LSFD!");
 
-    new
-        giveplayerid;
+    new giveplayerid;
     if (sscanf( params, "u", giveplayerid)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /recover [dio imena/playerid]");
     if (giveplayerid == INVALID_PLAYER_ID) return SendMessage(playerid, MESSAGE_TYPE_ERROR, " Nevaljan playerid!");
     if (!PlayerInfo[giveplayerid ][pKilled ] && !PlayerWounded[giveplayerid]) return SendMessage(playerid, MESSAGE_TYPE_ERROR, " Igrac nije ubijen/ozlijedjen!");
@@ -803,10 +802,7 @@ CMD:recover(playerid, params[])
     SetPlayerHealth(giveplayerid, 50.0);
     TogglePlayerControllable(giveplayerid, true);
 
-    new
-        query[128];
-    format(query, sizeof(query), "DELETE FROM player_deaths WHERE player_id = '%d'", PlayerInfo[giveplayerid][pSQLID]);
-    mysql_tquery(g_SQL, query);
+    mysql_fquery(g_SQL, "DELETE FROM player_deaths WHERE player_id = '%d'", PlayerInfo[giveplayerid][pSQLID]);
 
     va_SendClientMessage(giveplayerid, COLOR_RED, "[ ! ] Bolnicar %s vas je izlijecio i vise niste u post death stanju!",
         GetName(playerid)

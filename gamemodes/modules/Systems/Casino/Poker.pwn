@@ -1280,9 +1280,7 @@ Public:InitPokerTables()
 
 stock LoadPokerTables()
 {
-	new loadQuery[64];
-	format(loadQuery, 64, "SELECT * FROM poker_tables WHERE 1");
-	mysql_tquery(g_SQL, loadQuery, "OnPokerTablesLoaded", "");
+	mysql_tquery(g_SQL, "SELECT * FROM poker_tables WHERE 1", "OnPokerTablesLoaded", "");
 	return 1;
 }
 
@@ -1312,23 +1310,29 @@ SavePokerTable(idx)
 {
 	if(PokerTable[idx][pkrSQL] == -1)
 	{
-		new insertQuery[ 256 ];
-		format(insertQuery, sizeof(insertQuery), "INSERT INTO poker_tables (X, Y, Z, RX, RY, RZ, virtualworld, interior) VALUES ('%f', '%f', '%f', '%f', '%f', '%f', '%d', '%d')",
-			PokerTable[idx][pkrX],
-			PokerTable[idx][pkrY],
-			PokerTable[idx][pkrZ],
-			PokerTable[idx][pkrRX],
-			PokerTable[idx][pkrRY],
-			PokerTable[idx][pkrRZ],
-			PokerTable[idx][pkrVW],
-			PokerTable[idx][pkrInt]
+		mysql_tquery( g_SQL, 
+			va_fquery(g_SQL, 
+				"INSERT INTO poker_tables (X, Y, Z, RX, RY, RZ, virtualworld, interior) \n\
+					VALUES ('%f', '%f', '%f', '%f', '%f', '%f', '%d', '%d')",
+				PokerTable[idx][pkrX],
+				PokerTable[idx][pkrY],
+				PokerTable[idx][pkrZ],
+				PokerTable[idx][pkrRX],
+				PokerTable[idx][pkrRY],
+				PokerTable[idx][pkrRZ],
+				PokerTable[idx][pkrVW],
+				PokerTable[idx][pkrInt]
+			), 
+			"OnPokerTableInsert", 
+			"i", 
+			idx
 		);
-		mysql_tquery( g_SQL, insertQuery, "OnPokerTableInsert", "i", idx);
 	}
 	else
 	{
-		new updateQuery[ 256 ];
-		format(updateQuery, sizeof(updateQuery), "UPDATE poker_tables SET X = '%f', Y = '%f', Z = '%f', RX = '%f', RY = '%f', RZ = '%f', virtualworld = '%d', interior = '%d' WHERE sqlid = '%d'",
+		mysql_fquery(g_SQL, 
+			"UPDATE poker_tables SET X = '%f', Y = '%f', Z = '%f', RX = '%f', RY = '%f', RZ = '%f',\n\
+				virtualworld = '%d', interior = '%d' WHERE sqlid = '%d'",
 			PokerTable[idx][pkrX],
 			PokerTable[idx][pkrY],
 			PokerTable[idx][pkrZ],
@@ -1339,7 +1343,6 @@ SavePokerTable(idx)
 			PokerTable[idx][pkrInt],
 			PokerTable[idx][pkrSQL]
 		);
-		mysql_tquery( g_SQL, updateQuery, "", "" );
 	}
 	return 1;
 }
@@ -2057,9 +2060,7 @@ DestroyPokerTable(tableid)
 
 RemovePokerTable(tableid)
 {
-	new destroyQuery[ 128 ];
-	format( destroyQuery, sizeof(destroyQuery), "DELETE FROM poker_tables WHERE sqlid = '%d'", PokerTable[ tableid ][ pkrSQL ]);
-	mysql_tquery(g_SQL, destroyQuery);
+	mysql_fquery(g_SQL, "DELETE FROM poker_tables WHERE sqlid = '%d'", PokerTable[ tableid ][ pkrSQL ]);
 	return 1;
 }
 
