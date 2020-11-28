@@ -54,7 +54,7 @@ LoadPlayerCredit(playerid)
 	}
 	MySQL_TQueryInline(g_SQL,  
 		using inline OnPlayerCreditLoad, 
-		va_fquery(g_SQL, "SELECT * FROM player_credits WHERE sqlid = '%d' LIMIT 0,1", PlayerInfo[playerid][pSQLID]),
+		va_fquery(g_SQL, "SELECT * FROM player_credits WHERE sqlid = '%d'", PlayerInfo[playerid][pSQLID]),
 		"i", 
 		playerid
 	);

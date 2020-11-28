@@ -954,7 +954,7 @@ stock CheckInactivePlayer(playerid, sql)
 	}
 	MySQL_TQueryInline(g_SQL,  
 		using inline OnInactivePlayerLoad,
-		va_fquery(g_SQL, "SELECT * FROM  inactive_accounts WHERE sqlid = '%d' LIMIT 0,1", sql),
+		va_fquery(g_SQL, "SELECT * FROM  inactive_accounts WHERE sqlid = '%d'", sql),
 		"i", 
 		playerid
 	);

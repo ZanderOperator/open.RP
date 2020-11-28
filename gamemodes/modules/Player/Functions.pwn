@@ -1165,7 +1165,7 @@ stock ChangePlayerName(playerid, newname[], type, bool:admin_cn = false)
 	new	Cache:result,
 		counts;
 	
-	result = mysql_query(g_SQL, va_fquery(g_SQL, "SELECT * FROM accounts WHERE name = '%e' LIMIT 0,1", newname));
+	result = mysql_query(g_SQL, va_fquery(g_SQL, "SELECT sqlid FROM accounts WHERE name = '%e'", newname));
 	counts = cache_num_rows();
 	cache_delete(result);
 	
@@ -1440,7 +1440,7 @@ stock IsAccountTeamStaff(sqlid)
 		admin = 0,
 		helper = 0;
 
-	result = mysql_query(g_SQL, va_fquery(g_SQL, "SELECT adminLvl, helper FROM accounts WHERE sqlid = '%d' LIMIT 0 , 1", sqlid));
+	result = mysql_query(g_SQL, va_fquery(g_SQL, "SELECT adminLvl, helper FROM accounts WHERE sqlid = '%d'", sqlid));
 
 	if(!cache_num_rows())
 		value = false;
@@ -1463,7 +1463,7 @@ stock IsValidInactivity(sqlid)
 
 	
 	result = mysql_query(g_SQL, va_fquery(g_SQL, 
-				"SELECT sqlid, endstamp FROM inactive_accounts WHERE sqlid = '%d' LIMIT 0 , 1", sqlid)
+				"SELECT sqlid, endstamp FROM inactive_accounts WHERE sqlid = '%d'", sqlid)
 			);
 
 	if(!cache_num_rows())

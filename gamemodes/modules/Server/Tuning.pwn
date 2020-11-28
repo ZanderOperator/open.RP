@@ -461,7 +461,7 @@ stock DeletePlayerTuningTD(playerid)
 stock LoadVehicleTuning(vehicleid)
 {
 	mysql_tquery(g_SQL, 
-		va_fquery(g_SQL, "SELECT * FROM vehicle_tuning WHERE vehid = '%d' LIMIT 0,1", VehicleInfo[ vehicleid ][ vSQLID ] ),
+		va_fquery(g_SQL, "SELECT * FROM vehicle_tuning WHERE vehid = '%d'", VehicleInfo[ vehicleid ][ vSQLID ] ),
 	 	"OnVehicleTuningLoad", 
 	 	"ii", 
 		 vehicleid, 
