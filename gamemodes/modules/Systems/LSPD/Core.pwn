@@ -2256,9 +2256,8 @@ CMD:impound(playerid, params[])
     VehicleInfo[vehicleid][vAngle]      = z_rot;
     VehicleInfo[vehicleid][vImpounded]  = 1;
 
-    new
-        query[200];
-    format(query, sizeof(query), "UPDATE cocars SET parkX = '%f', parkY = '%f', parkZ = '%f', angle = '%f', impounded = '%d' WHERE id = '%d'",
+    mysql_fquery(g_SQL, 
+        "UPDATE cocars SET parkX = '%f', parkY = '%f', parkZ = '%f', angle = '%f', impounded = '%d' WHERE id = '%d'",
         X,
         Y,
         Z,
@@ -2266,7 +2265,6 @@ CMD:impound(playerid, params[])
         VehicleInfo[vehicleid][vImpounded],
         VehicleInfo[vehicleid][vSQLID]
     );
-    mysql_tquery(g_SQL, query);
 
     new
         engine, lights, alarm, doors, bonnect, boot, objective;
@@ -2292,13 +2290,10 @@ CMD:payimpound(playerid, params[])
 
     VehicleInfo[vehicleid][vImpounded]  = 0;
 
-    new
-        tmpQuery[128];
-    format(tmpQuery, sizeof(tmpQuery), "UPDATE cocars SET impounded = '%d' WHERE id = '%d'",
+    mysql_fquery(g_SQL, "UPDATE cocars SET impounded = '%d' WHERE id = '%d'",
         VehicleInfo[vehicleid][vImpounded],
         VehicleInfo[vehicleid][vSQLID]
     );
-    mysql_tquery(g_SQL, tmpQuery);
 
     PlayerToFactionMoney(playerid, FACTION_TYPE_LAW, IMPOUND_PRICE); // novac igraea ide u factionbank od PDa
 
@@ -2587,16 +2582,16 @@ CMD:cleartrunk(playerid, params[])
     format(string, sizeof(string), "* %s uzima sav sadrzaj iz vozila.", GetName(playerid, true));
     SetPlayerChatBubble(playerid, string, COLOR_PURPLE, 20, 20000);
 
+    mysql_fquery(g_SQL, "DELETE FROM cocars_weapons WHERE vehicle_id = '%d'", VehicleInfo[vehicleid][vSQLID]);
+
     // TODO: helper function Delete/RemoveTrunkWeapon(vehicleid)
-    new query[80];
     for (new wslot = 0; wslot < MAX_WEAPON_SLOTS; wslot++)
     {
         if (VehicleInfo[vehicleid][vWeaponSQLID][wslot] != -1)
         {
-            format(query, sizeof(query), "DELETE FROM cocars_weapons WHERE id = '%d'",
+            mysql_fquery(g_SQL, "DELETE FROM cocars_weapons WHERE id = '%d'",
                 VehicleInfo[vehicleid][vWeaponSQLID][wslot]
             );
-            mysql_tquery(g_SQL, query);
 
             DeleteWeaponObject(vehicleid, wslot);
             ClearWeaponObject(vehicleid, wslot);

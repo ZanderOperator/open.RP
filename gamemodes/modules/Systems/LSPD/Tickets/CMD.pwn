@@ -36,13 +36,12 @@ CMD:ticket(playerid, params[])
             return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /ticket pay [Ticket ID]");
 
         new
-            ticketsQuery[84],
             tmp[64],
             reciever[MAX_PLAYER_NAME],
             Cache:result;
 
-        format(ticketsQuery, sizeof(ticketsQuery), "SELECT id, reciever, money FROM tickets WHERE id = '%d'", id);
-        result = mysql_query(g_SQL, ticketsQuery);
+        result = mysql_query(g_SQL, va_fquery(g_SQL, "SELECT id, reciever, money FROM tickets WHERE id = '%d'", id));
+
         if (!cache_num_rows()) 
             return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "Ticket ID #%d doesn't exist!", id);
 
@@ -97,9 +96,7 @@ CMD:ticket(playerid, params[])
             FormatNumber(VehicleInfo[vehicleid][vTickets][tmpSlot])
         );
 
-        new query[55];
-        format(query, sizeof(query), "DELETE FROM cocars_tickets WHERE id = '%d'", VehicleInfo[vehicleid][vTicketsSQLID][tmpSlot]);
-        mysql_tquery(g_SQL, query);
+        mysql_fquery(g_SQL, "DELETE FROM cocars_tickets WHERE id = '%d'", VehicleInfo[vehicleid][vTicketsSQLID][tmpSlot]);
 
         VehicleInfo[vehicleid][vTicketsSQLID][tmpSlot]    = 0;
         VehicleInfo[vehicleid][vTickets][tmpSlot]         = 0;
@@ -172,15 +169,20 @@ CMD:giveticket(playerid, params[])
                 VehicleInfo[vehicleid][vTicketShown][t] = false;
                 VehicleInfo[vehicleid][vTicketStamp][t] = gettime();
 
-                new
-                    ticketInsertQuery[256];
-                mysql_format(g_SQL, ticketInsertQuery, 256, "INSERT INTO cocars_tickets(vehicle_id, isShown, price, reason, time) VALUES ('%d','0','%d','%e','%d')",
-                    VehicleInfo[vehicleid][vSQLID],
-                    VehicleInfo[vehicleid][vTickets][t],
-                    reason,
-                    gettime()
+                mysql_tquery(g_SQL, 
+                    va_fquery(g_SQL, 
+                        "INSERT INTO cocars_tickets(vehicle_id, isShown, price, reason, time) VALUES ('%d','0','%d','%e','%d')",
+                        VehicleInfo[vehicleid][vSQLID],
+                        VehicleInfo[vehicleid][vTickets][t],
+                        reason,
+                        gettime()
+                    ), 
+                    "OnVehicleTicketInsert", 
+                    "ii", 
+                    vehicleid, 
+                    t
                 );
-                mysql_tquery(g_SQL, ticketInsertQuery, "OnVehicleTicketInsert", "ii" , vehicleid, t);
+                
                 tkts = t;
                 break;
             }

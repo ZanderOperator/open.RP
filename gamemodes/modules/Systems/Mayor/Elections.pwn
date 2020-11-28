@@ -74,8 +74,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                     format(string, sizeof(string), "%s ubacuje svoj listic u glasacku kutiju.", GetName(playerid, false));
                     ProxDetector(25.0, playerid, string, COLOR_PURPLE, COLOR_PURPLE, COLOR_PURPLE, COLOR_PURPLE, COLOR_PURPLE);
 
-                    format(string, sizeof(string), "UPDATE elections SET glasovi = '%d' WHERE opcija = 'Za'", votes);
-                    mysql_tquery(g_SQL, string);
+                    mysql_fquery(g_SQL,"UPDATE elections SET glasovi = '%d' WHERE opcija = 'Za'", votes);
                 }
                 case 1:
                 {
@@ -92,8 +91,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                     format(string, sizeof(string), "%s ubacuje svoj listic u glasacku kutiju.", GetName(playerid, false));
                     ProxDetector(25.0, playerid, string, COLOR_PURPLE, COLOR_PURPLE, COLOR_PURPLE, COLOR_PURPLE, COLOR_PURPLE);
 
-                    format(string, sizeof(string), "UPDATE elections SET glasovi = '%d' WHERE opcija = 'Protiv'", votes);
-                    mysql_tquery(g_SQL, string);
+                    mysql_fquery(g_SQL, "UPDATE elections SET glasovi = '%d' WHERE opcija = 'Protiv'", votes);
                 }
             }
             return 1;

@@ -1826,7 +1826,7 @@ stock IllegalFactionJobCheck(factionid, jobid)
 		counts;
 
 	result = mysql_query(g_SQL, 
-				va_fquery(g_SQL, "SELECT * FROM accounts WHERE jobkey = '%d' AND (facMemId = '%d' OR facLeadId = '%d')", 
+				va_fquery(g_SQL, "SELECT sqlid FROM accounts WHERE jobkey = '%d' AND (facMemId = '%d' OR facLeadId = '%d')", 
 					jobid, 
 					factionid, 
 					factionid

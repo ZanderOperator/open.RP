@@ -41,13 +41,10 @@ static
 
 stock SaveVehicleTicketStatus(vehicleid, ticket_slot)
 {
-    new updateQuery[ 100 ];
-    
-    format(updateQuery, sizeof(updateQuery), "UPDATE cocars_tickets SET isShown = '%d' WHERE id = '%d'", 
+    mysql_fquery(g_SQL, "UPDATE cocars_tickets SET isShown = '%d' WHERE id = '%d'", 
         VehicleInfo[vehicleid][vTicketShown][ticket_slot],
         VehicleInfo[vehicleid][vTicketsSQLID][ticket_slot]
     );
-    mysql_tquery(g_SQL, updateQuery);
     return 1;
 }
 
@@ -72,11 +69,9 @@ stock GetVehicleTicketReason(ticketsql)
 {
     new
         reason[MAX_TICKET_REASON_LEN],
-        Cache:result,
-        ticketQuery[128];
+        Cache:result;
 
-    format(ticketQuery, sizeof(ticketQuery), "SELECT reason FROM cocars_tickets WHERE id = '%d'", ticketsql);
-    result = mysql_query(g_SQL, ticketQuery);
+    result = mysql_query(g_SQL, va_fquery(g_SQL, "SELECT reason FROM cocars_tickets WHERE id = '%d'", ticketsql));
     if (result == MYSQL_INVALID_CACHE)
         format(reason, sizeof(reason), "None");
     else
@@ -93,17 +88,17 @@ stock InsertPlayerTicket(playerid, giveplayerid, money, const reason[])
     strcat(TicketInfo[giveplayerid][tkReason], reason, MAX_TICKET_REASON_LEN);
     strcat(TicketInfo[giveplayerid][tkDate], ReturnDate(), 32);
 
-    new query[512];
     mysql_tquery(g_SQL, "BEGIN");
 
-    mysql_format(g_SQL, query, sizeof(query), "INSERT INTO tickets (reciever, officer, money, reason, date) VALUES ('%e', '%e', '%d', '%e', '%e')",
+    mysql_fquery(g_SQL, 
+        "INSERT INTO tickets (reciever, officer, money, reason, date) VALUES ('%e', '%e', '%d', '%e', '%e')",
         TicketInfo[giveplayerid][tkReciever],
         TicketInfo[giveplayerid][tkOfficer],
         TicketInfo[giveplayerid][tkMoney],
         TicketInfo[giveplayerid][tkReason],
         TicketInfo[giveplayerid][tkDate]
     );
-    mysql_tquery(g_SQL, query);
+
     mysql_tquery(g_SQL, "COMMIT");
 
     SendFormatMessage(playerid, MESSAGE_TYPE_SUCCESS, "You have given a ticket to %s! ", TicketInfo[giveplayerid][tkReciever]);
@@ -118,10 +113,7 @@ Public:OnVehicleTicketInsert(vehicleid, slot)
 
 stock DeletePlayerTicket(playerid, sqlid, bool:mdc_notification = false)
 {
-    new
-        query[256];
-    format(query, sizeof(query), "DELETE FROM tickets WHERE id = '%d'", sqlid);
-    mysql_tquery(g_SQL, query);
+    mysql_fquery(g_SQL, "DELETE FROM tickets WHERE id = '%d'", sqlid);
 
     if (mdc_notification)
         SendFormatMessage(playerid, MESSAGE_TYPE_SUCCESS, "Ticket #%d is sucessfully removed from database.", sqlid);
@@ -129,13 +121,15 @@ stock DeletePlayerTicket(playerid, sqlid, bool:mdc_notification = false)
 
 stock LoadVehicleTickets(vehicleid)
 {
-    new
-        query[128];
-    format(query, sizeof(query), "SELECT * FROM cocars_tickets WHERE vehicle_id = '%d' LIMIT 0,%d",
-        VehicleInfo[vehicleid][vSQLID],
-        MAX_VEHICLE_TICKETS
+    mysql_tquery(g_SQL, 
+        va_fquery(g_SQL, "SELECT * FROM cocars_tickets WHERE vehicle_id = '%d' LIMIT 0,%d",
+            VehicleInfo[vehicleid][vSQLID],
+            MAX_VEHICLE_TICKETS
+        ), 
+        "LoadingVehicleTickets", 
+        "i", 
+        vehicleid
     );
-    mysql_pquery(g_SQL, query, "LoadingVehicleTickets", "i", vehicleid);
     return 1;
 }
 
@@ -156,11 +150,7 @@ Public:LoadingVehicleTickets(vehicleid)
 
 stock LoadPlayerTickets(playerid, const playername[])
 {
-    new
-        query[128];
-    mysql_format(g_SQL, query, sizeof(query), "SELECT * FROM tickets WHERE reciever = '%e'", playername);
-
-    inline OnTicketLoad()
+    inline OnTicketsLoad()
     {
         if (!cache_num_rows())
             return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Entered citizen has no fines registered!");
@@ -198,7 +188,11 @@ stock LoadPlayerTickets(playerid, const playername[])
         format(string, sizeof(string), "[%s - TICKETS]", playername);
         ShowPlayerDialog(playerid, 0, DIALOG_STYLE_MSGBOX, string, buffer, "Close", "");
     }
-    mysql_tquery_inline_new(g_SQL, query, using inline OnTicketLoad, "");
+    MySQL_TQueryInline(g_SQL,  
+		using inline OnTicketsLoad, 
+		va_fquery(g_SQL, "SELECT * FROM tickets WHERE reciever = '%e'", playername),
+		""
+	);
     return 1;
 }
 
