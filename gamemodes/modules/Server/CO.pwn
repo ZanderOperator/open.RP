@@ -2644,7 +2644,7 @@ stock SpawnVehicleInfo(playerid, pick)
 	}
 	MySQL_TQueryInline(g_SQL,  
 		using inline SpawningPlayerVehicle, 
-		va_fquery(g_SQL, "SELECT * FROM cocars WHERE id = '%d' LIMIT 0,1", pick),
+		va_fquery(g_SQL, "SELECT * FROM cocars WHERE id = '%d'", pick),
 		"i", 
 		playerid
 	);

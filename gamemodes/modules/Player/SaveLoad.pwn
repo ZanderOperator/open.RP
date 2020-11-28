@@ -620,7 +620,7 @@ stock IsEMailInDB(const email[])
 		Cache:result,
 		counts;
 	
-	result = mysql_query(g_SQL, va_fquery(g_SQL, "SELECT * FROM accounts WHERE email = '%e'", email));
+	result = mysql_query(g_SQL, va_fquery(g_SQL, "SELECT sqlid FROM accounts WHERE email = '%e'", email));
 	counts = cache_num_rows();
 	cache_delete(result);
 	return counts;

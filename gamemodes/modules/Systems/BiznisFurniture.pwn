@@ -675,11 +675,14 @@ public OnBizzFurnitureObjectCreate(biznisid, index)
 // Stocks
 stock LoadBiznisFurnitureObjects(biznisid)
 {
-    if (biznisid == INVALID_BIZNIS_ID) return 1;
+    if(!Iter_Contains(Bizzes, biznisid)) return 1;
 
-    new query[256];
-    format(query, sizeof(query), "SELECT * FROM biznis_furniture WHERE biznisid = '%d'", BizzInfo[biznisid][bSQLID]);
-    mysql_pquery(g_SQL, query, "OnBizzFurnitureObjectsLoad", "i", biznisid);
+    mysql_tquery(g_SQL, 
+        va_fquery(g_SQL, "SELECT * FROM biznis_furniture WHERE biznisid = '%d'", BizzInfo[biznisid][bSQLID]), 
+        "OnBizzFurnitureObjectsLoad", 
+        "i", 
+        biznisid
+    );
     return 1;
 }
 
