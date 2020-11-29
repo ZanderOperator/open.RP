@@ -113,8 +113,8 @@ stock DeleteFaction(orgid)
 
 stock LoadServerFactions()
 {
-    mysql_tquery(g_SQL, 
-        va_fquery(g_SQL, "SELECT * FROM server_factions"), 
+    mysql_pquery(g_SQL, 
+        va_fquery(g_SQL, "SELECT * FROM server_factions WHERE 1"), 
         "OnFactionLoaded",
         ""
     );
@@ -123,7 +123,7 @@ stock LoadServerFactions()
 
 stock LoadFactionPermissions(factionid)
 {
-    mysql_tquery(g_SQL, 
+    mysql_pquery(g_SQL, 
         va_fquery(g_SQL, "SELECT * FROM server_factions_permissions WHERE id = '%d'", FactionInfo[factionid][fID]), 
         "OnFactionPermissionsLoaded", 
         "i", 
@@ -272,7 +272,7 @@ stock SaveFaction(orgid)
     if (isnull(FactionInfo[orgid][fRankName15]))
         format(FactionInfo[orgid][fRankName15], 24, "None");
 
-    mysql_tquery(g_SQL, 
+    mysql_pquery(g_SQL, 
         va_fquery(g_SQL, 
             "INSERT INTO server_factions (id, used,name,type,rank1,rank2,rank3,rank4,rank5,rank6,rank7,rank8,rank9,\n\
                 rank10,rank11,rank12,rank13,rank14,rank15,ranks,factionbank) \n\

@@ -659,6 +659,43 @@ public OnBizzFurnitureObjectsLoad(biznisid)
     return 1;
 }
 
+stock InsertBizzFurnitureObject(biznisid, index)
+{
+    mysql_pquery(g_SQL, 
+        va_fquery(g_SQL, 
+            "INSERT INTO biznis_furniture (biznisid,modelid,door,door_z,locked_door,pos_x,pos_y,pos_z,rot_x,rot_y,rot_z,\n\
+                texture_1,texture_2,texture_3,texture_4,texture_5,color_1,color_2,color_3,color_4,color_5) \n\
+                VALUES ('%d','%d','%d','%f','%d','%f','%f','%f','%f','%f','%f','%d','%d','%d','%d','%d','%d','%d','%d','%d','%d')",
+            BizzInfo[biznisid][bSQLID],
+            BizzInfo[biznisid][bFurModelid][index],
+            BizzInfo[biznisid][bFurDoor][index],
+            BizzInfo[biznisid][bFurDoorZ][index],
+            BizzInfo[biznisid][bFurDoorLckd][index],
+            BizzInfo[biznisid][bFurPosX][index],
+            BizzInfo[biznisid][bFurPosY][index],
+            BizzInfo[biznisid][bFurPosZ][index],
+            BizzInfo[biznisid][bFurRotX][index],
+            BizzInfo[biznisid][bFurRotY][index],
+            BizzInfo[biznisid][bFurRotZ][index],
+            BizzInfo[biznisid][bFurTxtId][index][0],
+            BizzInfo[biznisid][bFurTxtId][index][1],
+            BizzInfo[biznisid][bFurTxtId][index][2],
+            BizzInfo[biznisid][bFurTxtId][index][3],
+            BizzInfo[biznisid][bFurTxtId][index][4],
+            BizzInfo[biznisid][bFurColId][index][0],
+            BizzInfo[biznisid][bFurColId][index][1],
+            BizzInfo[biznisid][bFurColId][index][2],
+            BizzInfo[biznisid][bFurColId][index][3],
+            BizzInfo[biznisid][bFurColId][index][4]
+        ), 
+        "OnBizzFurnitureObjectCreate", 
+        "ii", 
+        biznisid, 
+        index
+    );
+    return 1;
+}
+
 public OnBizzFurnitureObjectCreate(biznisid, index)
 {
     #if defined MOD_DEBUG
@@ -677,7 +714,7 @@ stock LoadBiznisFurnitureObjects(biznisid)
 {
     if(!Iter_Contains(Bizzes, biznisid)) return 1;
 
-    mysql_tquery(g_SQL, 
+    mysql_pquery(g_SQL, 
         va_fquery(g_SQL, "SELECT * FROM biznis_furniture WHERE biznisid = '%d'", BizzInfo[biznisid][bSQLID]), 
         "OnBizzFurnitureObjectsLoad", 
         "i", 
@@ -1130,42 +1167,8 @@ static stock CreateBiznisFurnitureObject(playerid, modelid, Float:x, Float:y, Fl
         BizzInfo[biznisid][bFurDoorLckd][index]   = 0;
     }
     
- 
-    mysql_tquery(g_SQL, 
-        va_fquery(g_SQL,
-            "INSERT INTO biznis_furniture(biznisid, modelid, door, door_z, locked_door, pos_x, pos_y, pos_z,\n\
-                rot_x, rot_y, rot_z, texture_1, texture_2, texture_3, texture_4, texture_5,\n\
-                color_1, color_2, color_3, color_4, color_5) \n\
-                VALUES ('%d', '%d', '%d', '%f', '%d', '%f', '%f', '%f', '%f',\n\
-                '%f', '%f', '%d', '%d', '%d', '%d', '%d', '%d', '%d', '%d', '%d', '%d')",
-            BizzInfo[biznisid][bSQLID],
-            BizzInfo[biznisid][bFurModelid][index],
-            BizzInfo[biznisid][bFurDoor][index],
-            BizzInfo[biznisid][bFurDoorZ][index],
-            BizzInfo[biznisid][bFurDoorLckd][index],
-            BizzInfo[biznisid][bFurPosX][index],
-            BizzInfo[biznisid][bFurPosY][index],
-            BizzInfo[biznisid][bFurPosZ][index],
-            BizzInfo[biznisid][bFurRotX][index],
-            BizzInfo[biznisid][bFurRotY][index],
-            BizzInfo[biznisid][bFurRotZ][index],
-            BizzInfo[biznisid][bFurTxtId][index][0],
-            BizzInfo[biznisid][bFurTxtId][index][1],
-            BizzInfo[biznisid][bFurTxtId][index][2],
-            BizzInfo[biznisid][bFurTxtId][index][3],
-            BizzInfo[biznisid][bFurTxtId][index][4],
-            BizzInfo[biznisid][bFurColId][index][0],
-            BizzInfo[biznisid][bFurColId][index][1],
-            BizzInfo[biznisid][bFurColId][index][2],
-            BizzInfo[biznisid][bFurColId][index][3],
-            BizzInfo[biznisid][bFurColId][index][4]
-        ),
-        "OnBizzFurnitureObjectCreate", 
-        "ii", 
-        biznisid, 
-        index
-    );
-
+    InsertBizzFurnitureObject(biznisid, index);
+    
     #if defined MOD_DEBUG
     printf("[DEBUG] FURNITURE BUY: player(%s) | index(%d) | biznisid(%d) | modelid(%d) | pos(%.2f, %.2f, %.2f)",
         GetName(playerid,false),
@@ -1278,38 +1281,7 @@ static stock CopyFurnitureObject(playerid, copyid)
         }
     }
 
-    mysql_tquery(g_SQL, 
-        va_fquery(g_SQL, 
-            "INSERT INTO biznis_furniture (biznisid,modelid,door,door_z,locked_door,pos_x,pos_y,pos_z,rot_x,rot_y,rot_z,\n\
-                texture_1,texture_2,texture_3,texture_4,texture_5,color_1,color_2,color_3,color_4,color_5) \n\
-                VALUES ('%d','%d','%d','%f','%d','%f','%f','%f','%f','%f','%f','%d','%d','%d','%d','%d','%d','%d','%d','%d','%d')",
-            BizzInfo[biznisid][bSQLID],
-            BizzInfo[biznisid][bFurModelid][index],
-            BizzInfo[biznisid][bFurDoor][index],
-            BizzInfo[biznisid][bFurDoorZ][index],
-            BizzInfo[biznisid][bFurDoorLckd][index],
-            BizzInfo[biznisid][bFurPosX][index],
-            BizzInfo[biznisid][bFurPosY][index],
-            BizzInfo[biznisid][bFurPosZ][index],
-            BizzInfo[biznisid][bFurRotX][index],
-            BizzInfo[biznisid][bFurRotY][index],
-            BizzInfo[biznisid][bFurRotZ][index],
-            BizzInfo[biznisid][bFurTxtId][index][0],
-            BizzInfo[biznisid][bFurTxtId][index][1],
-            BizzInfo[biznisid][bFurTxtId][index][2],
-            BizzInfo[biznisid][bFurTxtId][index][3],
-            BizzInfo[biznisid][bFurTxtId][index][4],
-            BizzInfo[biznisid][bFurColId][index][0],
-            BizzInfo[biznisid][bFurColId][index][1],
-            BizzInfo[biznisid][bFurColId][index][2],
-            BizzInfo[biznisid][bFurColId][index][3],
-            BizzInfo[biznisid][bFurColId][index][4]
-        ), 
-        "OnBizzFurnitureObjectCreate", 
-        "ii", 
-        biznisid, 
-        index
-    );
+    InsertBizzFurnitureObject(biznisid, index);
 
     Streamer_Update(playerid);
     SendClientMessage(playerid, COLOR_GREEN, "[INFO]: Uspjesno ste kopirali odabrani objekt! Sada ga postavite gdje zelite.");
@@ -1523,9 +1495,9 @@ static stock DestroyAllFurnitureObjects(playerid, biznisid)
     }
     BizzInfo[biznisid][bFurSlots] = GetPlayerFurnitureSlots(playerid);
 
-    mysql_tquery(g_SQL, "BEGIN");
-    mysql_fquery(g_SQL, "DELETE FROM biznis_furniture WHERE biznisid = '%d'", BizzInfo[biznisid][bSQLID]);
-    mysql_tquery(g_SQL, "COMMIT");
+    mysql_pquery(g_SQL, "BEGIN");
+    mysql_fquery_ex(g_SQL, "DELETE FROM biznis_furniture WHERE biznisid = '%d'", BizzInfo[biznisid][bSQLID]);
+    mysql_pquery(g_SQL, "COMMIT");
 
     mysql_fquery(g_SQL, "UPDATE bizzes SET fur_slots = '%d' WHERE id = '%d'", 
         BizzInfo[biznisid][bFurSlots], 

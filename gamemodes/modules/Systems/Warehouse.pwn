@@ -112,7 +112,7 @@ stock ResetWarehouseEnum(wh)
 
 stock LoadFactionWarehouse(factionid)
 {
-    mysql_tquery(g_SQL, 
+    mysql_pquery(g_SQL, 
         va_fquery(g_SQL, "SELECT * FROM server_warehouses WHERE fid = '%d'", FactionInfo[factionid][fID]), 
         "OnWarehouseLoaded", 
         "i", 
@@ -150,7 +150,7 @@ stock LoadWarehouseWeapons(factid)
 {
     new whid = FetchWarehouseEnumFromFaction(factid);
 
-    mysql_tquery(g_SQL, 
+    mysql_pquery(g_SQL, 
         va_fquery(g_SQL, "SELECT * FROM warehouse_weapons WHERE fid = '%d'", factid), 
         "OnWarehouseWeaponsLoaded", 
         "i", 
@@ -423,7 +423,7 @@ stock AddWarehouse(wh, factionid, Float:x, Float:y, Float:z)
     WarehouseInfo[wh][whMoney] = 0;
     WarehouseInfo[wh][whPickupID] =  CreateDynamicPickup(1239, 1, WarehouseInfo[wh][whVault][0], WarehouseInfo[wh][whVault][1], WarehouseInfo[wh][whVault][2], WarehouseInfo[wh][whViwo], WarehouseInfo[wh][whInt], -1);
 
-    mysql_fquery(g_SQL, 
+    mysql_fquery_ex(g_SQL, 
         "INSERT INTO server_warehouses(fid, enterX, enterY, enterZ, exitX , exitY , exitZ, vaultX, vaultY, vaultZ,\n\
             int, viwo, lock, money) VALUES ('%d','%f','%f','%f','%f','%f','%f','%f','%f','%f','%d','%d','%d','%d')",
         WarehouseInfo[wh][whFactionSQLID],

@@ -169,9 +169,10 @@ CMD:giveticket(playerid, params[])
                 VehicleInfo[vehicleid][vTicketShown][t] = false;
                 VehicleInfo[vehicleid][vTicketStamp][t] = gettime();
 
-                mysql_tquery(g_SQL, 
+                mysql_pquery(g_SQL, 
                     va_fquery(g_SQL, 
-                        "INSERT INTO cocars_tickets(vehicle_id, isShown, price, reason, time) VALUES ('%d','0','%d','%e','%d')",
+                        "INSERT INTO cocars_tickets(vehicle_id, isShown, price, reason, time) \n\
+                            VALUES ('%d','0','%d','%e','%d')",
                         VehicleInfo[vehicleid][vSQLID],
                         VehicleInfo[vehicleid][vTickets][t],
                         reason,

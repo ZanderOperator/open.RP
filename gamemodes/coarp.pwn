@@ -537,7 +537,7 @@ RegisterPlayerDeath(playerid, killerid) // funkcija
 		//DropPlayerWeapons(playerid, X, Y);
 		//DropPlayerDrugs(playerid, X, Y, true);
 
-		mysql_fquery(g_SQL, "INSERT INTO player_deaths(player_id, pos_x, pos_y, pos_z, interior, viwo, time) \n\
+		mysql_fquery_ex(g_SQL, "INSERT INTO player_deaths(player_id, pos_x, pos_y, pos_z, interior, viwo, time) \n\
 			VALUES ('%d','%f','%f','%f','%d','%d','%d')",
 			PlayerInfo[playerid][pSQLID],
 			PlayerInfo[playerid][pDeath][0],
@@ -1631,7 +1631,7 @@ hook OnPlayerDisconnect(playerid, reason)
 
 			GetPlayerPos(playerid, PlayerInfo[playerid][pCrashPos][0], PlayerInfo[playerid][pCrashPos][1], PlayerInfo[playerid][pCrashPos][2]);
 
-			mysql_fquery(g_SQL, "INSERT INTO player_crashes(player_id,pos_x,pos_y,pos_z,interior,viwo,armor,health,\n\
+			mysql_fquery_ex(g_SQL, "INSERT INTO player_crashes(player_id,pos_x,pos_y,pos_z,interior,viwo,armor,health,\n\
 				skin,time) VALUES ('%d','%.2f','%.2f','%.2f','%d','%d','%f','%f','%d','%d')",
 				PlayerInfo[playerid][pSQLID],
 				PlayerInfo[playerid][pCrashPos][0],

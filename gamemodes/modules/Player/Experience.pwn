@@ -290,7 +290,7 @@ stock ListBestTemporaryEXP(playerid)
 			return 1;
 		}
 	}
-	MySQL_TQueryInline(g_SQL,  
+	MySQL_PQueryInline(g_SQL,  
 		using inline OnPlayerLoadTempBestEXP, 
 	 	"SELECT * FROM  experience ORDER BY experience.points DESC LIMIT 0 , 30",
 		"i", 
@@ -329,7 +329,7 @@ stock ListBestOverallEXP(playerid)
 			return 1;
 		}
 	}
-	MySQL_TQueryInline(g_SQL,  
+	MySQL_PQueryInline(g_SQL,  
 		using inline OnListOverallBestEXP, 
 		"SELECT * FROM  experience ORDER BY experience.allpoints DESC LIMIT 0 , 30",
 		"i", 

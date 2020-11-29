@@ -101,7 +101,7 @@ Public:OnAmmuWeaponsLoaded()
 
 stock LoadAmmuData() // Loadanje cijele baze
 {
-    mysql_tquery(g_SQL, 
+    mysql_pquery(g_SQL, 
         va_fquery(g_SQL, "SELECT * FROM ammunation_weapons"), 
         "OnAmmuWeaponsLoaded",
         ""
@@ -131,7 +131,7 @@ static stock DeleteAmmuWeapon(slotid) // Delete oruzja iz liste
 
 static stock InsertAmmuWeapon(slotid) // Dodavanje novog oruzja
 {
-    mysql_tquery(g_SQL, 
+    mysql_pquery(g_SQL, 
         va_fquery(g_SQL, 
             "INSERT INTO ammunation_weapons (name, weapon, price, license, maxbullets) VALUES ('%e',%d,%d,%d,%d)",
             AmmuInfo[slotid][aiName],

@@ -204,7 +204,7 @@ stock Player_SetMobileOn(playerid, bool:v)
 
 stock LoadTowerData()
 {
-	mysql_tquery(g_SQL, 
+	mysql_pquery(g_SQL, 
 		va_fquery(g_SQL, "SELECT * FROM signaltowers WHERE id >= 0"), 
 		"OnTowerLoaded", 
 		""
@@ -214,7 +214,7 @@ stock LoadTowerData()
 
 stock LoadPlayerContacts(playerid)
 {
-	mysql_tquery(g_SQL, 
+	mysql_pquery(g_SQL, 
 		va_fquery(g_SQL, "SELECT * FROM player_mobile_contacts WHERE player_id = '%d' LIMIT %d", 
 			PlayerInfo[playerid][pSQLID],
 			MAX_MOBILE_CONTACTS
@@ -244,7 +244,7 @@ stock SavePlayerContact(playerid, slotid)
 
 stock InsertMobileContact(playerid, slotid)
 {
-	mysql_tquery(g_SQL,
+	mysql_pquery(g_SQL,
 		va_fquery(g_SQL, "INSERT INTO player_mobile_contacts(player_id, title, number) VALUES ('%d', '%e', '%d')",
 			PlayerInfo[playerid][pSQLID],
 			PlayerContactName[playerid][slotid],
@@ -470,7 +470,7 @@ public GetFreeTowerID()
 
 stock CreateTower(towerid)
 {
-	mysql_tquery(g_SQL, 
+	mysql_pquery(g_SQL, 
 		va_fquery(g_SQL, 
 			"INSERT INTO signaltowers (network,posx,posy,posz,posrx,posry,posrz,radius) \n\
 				VALUES ('%e','%f','%f','%f','%f','%f','%f','%f')",

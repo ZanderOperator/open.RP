@@ -341,7 +341,7 @@ stock DestroyHouseInfoTD(playerid)
 
 stock LoadHouses()
 {
-    mysql_tquery(g_SQL, 
+    mysql_pquery(g_SQL, 
         va_fquery(g_SQL, "SELECT * FROM houses WHERE 1"), 
         "OnServerHousesLoad", 
         ""
@@ -404,7 +404,7 @@ Public:OnServerHousesLoad()
 
 static stock InsertHouseInDB(houseid, playerid) // Dodavanje nove kuce
 {
-    mysql_tquery(g_SQL, 
+    mysql_pquery(g_SQL, 
         va_fquery(g_SQL, 
             "INSERT INTO houses (level, value, adress, enterX, enterY, enterZ,\n\
                 exitX, exitY, exitZ, ownerid, int) VALUES \n\

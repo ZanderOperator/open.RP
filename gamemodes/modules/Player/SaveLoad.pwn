@@ -757,7 +757,7 @@ stock SavePlayerData(playerid)
 		SaveAdminConnectionTime(playerid);
 	#endif
 	
-	mysql_tquery(g_SQL, "START TRANSACTION");
+	mysql_pquery(g_SQL, "START TRANSACTION");
 
 	mysql_fquery_ex(g_SQL, 
 		"UPDATE accounts SET registered = '%d', adminLvl = '%d', helper = '%d', playaWarns = '%d', lastlogin = '%e',\n\
@@ -863,7 +863,7 @@ stock SavePlayerData(playerid)
 		PlayerInfo[playerid][pAdminMsgBy],
 		PlayerInfo[playerid][pSQLID]
 	);
-	mysql_tquery(g_SQL, "COMMIT");
+	mysql_pquery(g_SQL, "COMMIT");
 	return 1;
 }
 

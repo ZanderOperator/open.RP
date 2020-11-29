@@ -109,7 +109,10 @@ ShowPlayerCars(playerid, playersqlid, player_name[])
 	}
 	MySQL_TQueryInline(g_SQL,  
 		using inline OnLoadPlayerVehicles,
-		va_fquery(g_SQL, "SELECT * FROM cocars WHERE ownerid = '%d' LIMIT 10", playersqlid),
+		va_fquery(g_SQL, "SELECT id, modelid FROM cocars WHERE ownerid = '%d' LIMIT %d", 
+			playersqlid,
+			MAX_PLAYER_CARS
+		),
 		""
 	);
 	return 1;
@@ -2985,7 +2988,7 @@ CMD:factionmembers(playerid, params[])
 	if (orgid < 1 || orgid > 16) return SendClientMessage(playerid, COLOR_RED, "Ne dopusten unos (1-16)!");
 	
     mysql_tquery(g_SQL, 
-		va_fquery(g_SQL, "SELECT * FROM accounts WHERE facMemId = '%d' LIMIT 1", orgid), 
+		va_fquery(g_SQL, "SELECT sqlid FROM accounts WHERE facMemId = '%d'", orgid), 
 		"CountFactionMembers", 
 		"ii", 
 		playerid, 
@@ -4166,7 +4169,7 @@ CMD:prisonex(playerid, params[])
     if (strlen(reason) < 1 || strlen(reason) > 20) return SendClientMessage(playerid, COLOR_RED, "Ne mozete ispod 0 ili preko 20 znakova za razlog!");
 
     mysql_tquery(g_SQL, 
-		va_fquery(g_SQL, "SELECT * FROM accounts WHERE name = '%e' LIMIT 1", targetname), 
+		va_fquery(g_SQL, "SELECT jailed FROM accounts WHERE name = '%e'", targetname), 
 		"CheckPlayerPrison", 
 		"isis", 
 		playerid, 
@@ -4192,8 +4195,8 @@ CMD:prisonex(playerid, params[])
 		
 	GetPlayerName(playerid, forumname, MAX_PLAYER_NAME);
 	
-	mysql_fquery(g_SQL, 
-		"INSERT INTO prisons (id_igraca,name, forumname, time, reason, date) VALUES ('%d', '%e', '%e', '%d', '%e', '%e')",
+	mysql_fquery_ex(g_SQL, 
+		"INSERT INTO prisons (player_id,name, forumname, time, reason, date) VALUES ('%d', '%e', '%e', '%d', '%e', '%e')",
 		sqlid,
 		targetname,
 		PlayerInfo[playerid][pForumName],
@@ -4215,7 +4218,7 @@ CMD:warnex(playerid, params[])
 	if (strlen(reason) < 1 || strlen(reason) > 20) return SendClientMessage(playerid, COLOR_RED, "Ne mozete ispod 0 ili preko 20 znakova za razlog!");
    	
     mysql_tquery(g_SQL, 
-		va_fquery(g_SQL, "SELECT * FROM accounts WHERE name = '%e'", targetname), 
+		va_fquery(g_SQL, "SELECT playaWarns FROM accounts WHERE name = '%e'", targetname), 
 		"LoadPlayerWarns", 
 		"iss", 
 		playerid, 
@@ -4238,7 +4241,7 @@ CMD:warnex(playerid, params[])
 		
 	GetPlayerName(playerid, forumname, MAX_PLAYER_NAME);
 	
-	mysql_fquery(g_SQL, "INSERT INTO warns (id_igraca,name, forumname, reason, date) VALUES ('%d', '%e', '%e', '%e', '%e')",
+	mysql_fquery_ex(g_SQL, "INSERT INTO warns (player_id,name, forumname, reason, date) VALUES ('%d', '%e', '%e', '%e', '%e')",
 		sqlid,
 		targetname,
 		PlayerInfo[playerid][pForumName],
@@ -4341,8 +4344,8 @@ CMD:prison(playerid, params[])
 	GetPlayerName(playerid, forumname, MAX_PLAYER_NAME);
 	GetPlayerName(giveplayerid, playername, MAX_PLAYER_NAME);
 
-	mysql_fquery(g_SQL, 
-		"INSERT INTO prisons (id_igraca,name, forumname, time, reason, date) VALUES ('%d', '%e', '%e', '%d', '%e', '%e')",
+	mysql_fquery_ex(g_SQL, 
+		"INSERT INTO prisons (player_id,name, forumname, time, reason, date) VALUES ('%d', '%e', '%e', '%d', '%e', '%e')",
 		PlayerInfo[giveplayerid][pSQLID],
 		playername,
 		PlayerInfo[playerid][pForumName],
@@ -4391,7 +4394,7 @@ CMD:charge(playerid, params[])
 	format(date, sizeof(date), "%02d.%02d.%d.", day, month, year);
 
 	mysql_fquery(g_SQL, 
-		"INSERT INTO charges (id_igraca,name, admin_name, money, reason, date) VALUES ('%d', '%e', '%e', '%d', '%e', '%e')",
+		"INSERT INTO charges (player_id,name, admin_name, money, reason, date) VALUES ('%d', '%e', '%e', '%d', '%e', '%e')",
 		PlayerInfo[giveplayerid][pSQLID],
 		playername,
 		PlayerInfo[playerid][pForumName],
@@ -4558,7 +4561,7 @@ CMD:banex(playerid, params[])
     if (strlen(reason) < 1 || strlen(reason) > 24) return SendClientMessage(playerid, COLOR_RED, "Maksimalna velicina razloga je 24, a minimalna 1!");
 	
 	mysql_tquery(g_SQL, 
-		va_fquery(g_SQL, "SELECT * FROM accounts WHERE name = '%e'", targetname), 
+		va_fquery(g_SQL, "SELECT lastip FROM accounts WHERE name = '%e'", targetname), 
 		"OfflineBanPlayer", 
 		"issi", 
 		playerid, 
@@ -4589,7 +4592,7 @@ CMD:jailex(playerid, params[])
 	}
 
 	mysql_tquery(g_SQL, 
-		va_fquery(g_SQL, "SELECT * FROM accounts WHERE name = '%e'", giveplayername), 
+		va_fquery(g_SQL, "SELECT sqlid FROM accounts WHERE name = '%e'", giveplayername), 
 		"OfflineJailPlayer", 
 		"issi", 
 		playerid, 
@@ -4817,7 +4820,7 @@ CMD:warn(playerid, params[])
 	GetPlayerName(giveplayerid, playername, MAX_PLAYER_NAME);
 
 	mysql_fquery(g_SQL,
-		 "INSERT INTO warns (id_igraca,name, forumname, reason, date) VALUES ('%d', '%e', '%e', '%e', '%e')",
+		 "INSERT INTO warns (player_id,name, forumname, reason, date) VALUES ('%d', '%e', '%e', '%e', '%e')",
 		PlayerInfo[giveplayerid][pSQLID],
 		playername,
 		PlayerInfo[playerid][pForumName],
@@ -5149,7 +5152,7 @@ CMD:checklastlogin(playerid, params[])
 		return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /checklastlogin [Ime_Prezime]");
 	
     mysql_tquery(g_SQL, 
-		va_fquery(g_SQL, "SELECT * FROM accounts WHERE name = '%e'", targetname), 
+		va_fquery(g_SQL, "SELECT sqlid FROM accounts WHERE name = '%e'", targetname), 
 		"CheckPlayerData", 
 		"is", 
 		playerid, 
@@ -5238,7 +5241,11 @@ CMD:checkoffline(playerid, params[])
 	if (sscanf(params, "s[24]", targetname)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /checkoffline [Ime]");
     
 	mysql_tquery(g_SQL, 
-		va_fquery(g_SQL, "SELECT * FROM accounts WHERE name = '%e' LIMIT 1", targetname), 
+		va_fquery(g_SQL, 
+			"SELECT sqlid, name, levels, facMemId, handMoney, bankMoney, vipRank,\n\
+				adminLvl, jobkey, playaWarns, connecttime FROM accounts WHERE name = '%e'", 
+			targetname
+		), 
 		"CheckOffline", 
 		"is", 
 		playerid, 
@@ -6121,7 +6128,7 @@ CMD:adminmsg(playerid, params[])
 		return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /adminmsg [character name] [message]");
 
     mysql_tquery(g_SQL, 
-		va_fquery(g_SQL, "SELECT * FROM accounts WHERE name = '%e'", playerb), 
+		va_fquery(g_SQL, "SELECT online FROM accounts WHERE name = '%e'", playerb), 
 		"AddAdminMessage", "iss", 
 		playerid, 
 		playerb, 

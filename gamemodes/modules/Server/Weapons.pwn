@@ -109,7 +109,8 @@ stock AC_SavePlayerWeapon(playerid, slotid)
 	if(PlayerWeapons[playerid][pwSQLID][slotid] != -1 && PlayerWeapons[playerid][pwAmmo][slotid] > 0)
 	{
 		mysql_fquery(g_SQL, 
-			"UPDATE player_weapons SET player_id = '%d', weapon_id = '%d', weapon_ammo = '%d', hidden = '%d' WHERE sqlid = '%d'",
+			"UPDATE player_weapons SET player_id = '%d', weapon_id = '%d', weapon_ammo = '%d', hidden = '%d'\n\
+				WHERE sqlid = '%d'",
 			PlayerInfo[playerid][pSQLID],
 			PlayerWeapons[playerid][pwWeaponId][slotid],
 			PlayerWeapons[playerid][pwAmmo][slotid],
@@ -121,7 +122,8 @@ stock AC_SavePlayerWeapon(playerid, slotid)
 	{
 		mysql_tquery(g_SQL, 
 				va_fquery(g_SQL, 
-				"INSERT INTO player_weapons (player_id, weapon_id, weapon_ammo, hidden) VALUES ('%d', '%d', '%d', '%d')",
+				"INSERT INTO player_weapons (player_id, weapon_id, weapon_ammo, hidden) \n\
+					VALUES ('%d', '%d', '%d', '%d')",
 				PlayerInfo[playerid][pSQLID],
 				PlayerWeapons[playerid][pwWeaponId][slotid],
 				PlayerWeapons[playerid][pwAmmo][slotid],

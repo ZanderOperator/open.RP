@@ -60,7 +60,7 @@ SaveJobData()
 
 LoadServerJobs() 
 {
-	mysql_tquery(g_SQL, 
+	mysql_pquery(g_SQL, 
 		va_fquery(g_SQL, "SELECT * FROM server_jobs WHERE 1"), 
 		"OnServerJobsLoaded",
 		""

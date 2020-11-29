@@ -76,7 +76,7 @@ stock DestroyCompInfoTD(playerid)
 
 stock LoadComplex()
 {
-    mysql_tquery(g_SQL,
+    mysql_pquery(g_SQL,
         va_fquery(g_SQL, "SELECT * FROM server_complex WHERE 1"), 
         "OnServerComplexLoad",
         ""
@@ -86,7 +86,7 @@ stock LoadComplex()
 
 stock LoadComplexRooms()
 {
-    mysql_tquery(g_SQL, 
+    mysql_pquery(g_SQL, 
         va_fquery(g_SQL,"SELECT * FROM server_complex_rooms WHERE 1"), 
         "OnServerRoomsLoad",
         ""

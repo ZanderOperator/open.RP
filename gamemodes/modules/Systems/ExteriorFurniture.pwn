@@ -207,7 +207,7 @@ static ExteriorMisc[][E_EXTERIOR_MISC_DATA] =
 
 stock LoadHouseExterior(houseid)
 {
-    mysql_tquery(g_SQL, 
+    mysql_pquery(g_SQL, 
         va_fquery(g_SQL, "SELECT * FROM house_exteriors WHERE house_id = '%d'", HouseInfo[houseid][hSQLID]), 
         "OnHouseExteriorLoad", 
         "i", 
@@ -310,7 +310,7 @@ static stock CreateExteriorObject(playerid)
     ExteriorInfo[houseid][heRotY][index]        = PlayerExteriorInfo[playerid][peRotY];
     ExteriorInfo[houseid][heRotZ][index]        = PlayerExteriorInfo[playerid][peRotZ];
 
-    mysql_tquery(g_SQL, 
+    mysql_pquery(g_SQL, 
         va_fquery(g_SQL, 
             "INSERT INTO house_exteriors(house_id, modelid, pos_x, pos_y, pos_z, rot_x, rot_y, rot_z) \n\
                 VALUES ('%d','%d','%f','%f','%f','%f','%f','%f')",
