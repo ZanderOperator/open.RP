@@ -232,7 +232,7 @@ stock InflictPlayerDamage(playerid, issuerid, bodypart, Float:damage)
 					//DropPlayerWeapons(playerid, X, Y);
 					//DropPlayerDrugs(playerid, X, Y, true);
 
-					mysql_fquery(g_SQL, 
+					mysql_fquery_ex(g_SQL, 
 						"INSERT INTO player_deaths(player_id, pos_x, pos_y, pos_z, interior, viwo, time) \n\
 							VALUES ('%d','%f','%f','%f','%d','%d','%d')",
 						PlayerInfo[playerid][pSQLID],
@@ -350,7 +350,7 @@ stock DealDamage(playerid, issuerid, Float: health, Float: armour, Float: damage
 					//DropPlayerWeapons(playerid, X, Y);
 					//DropPlayerDrugs(playerid, X, Y, true);
 
-					mysql_fquery(g_SQL, 
+					mysql_fquery_ex(g_SQL, 
 						"INSERT INTO player_deaths(player_id, pos_x, pos_y, pos_z, interior, viwo, time) \n\
 							VALUES ('%d','%f','%f','%f','%d','%d','%d')",
 						PlayerInfo[playerid][pSQLID],

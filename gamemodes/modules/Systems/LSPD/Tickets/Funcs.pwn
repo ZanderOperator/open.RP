@@ -90,7 +90,7 @@ stock InsertPlayerTicket(playerid, giveplayerid, money, const reason[])
 
     mysql_tquery(g_SQL, "BEGIN");
 
-    mysql_fquery(g_SQL, 
+    mysql_fquery_ex(g_SQL, 
         "INSERT INTO tickets (reciever, officer, money, reason, date) VALUES ('%e', '%e', '%d', '%e', '%e')",
         TicketInfo[giveplayerid][tkReciever],
         TicketInfo[giveplayerid][tkOfficer],

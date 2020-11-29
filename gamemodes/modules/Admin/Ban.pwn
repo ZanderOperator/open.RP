@@ -94,8 +94,8 @@ stock HOOK_Ban(playerid, adminid, const reason[], days=-1, bool:anticheat=false)
 		PlayerInfo[ playerid ][ pSQLID ]
 	);
 
-	mysql_fquery(g_SQL, 
-		"INSERT INTO bans (id_igraca, name, player_ip, forumname, reason, date, unban) \n\
+	mysql_fquery_ex(g_SQL, 
+		"INSERT INTO bans (player_id, name, player_ip, forumname, reason, date, unban) \n\
 			VALUES ('%d', '%e', '%e', '%e', '%e', '%e', '%d')",
 		PlayerInfo[playerid][pSQLID],
 		GetName( playerid, false ),
@@ -153,8 +153,8 @@ stock HOOK_BanEx(playerid, const playername[], const playerip[], adminid, const 
 		playername
 	);
 
-	mysql_fquery(g_SQL, 
-		"INSERT INTO bans (id_igraca, name, player_ip, forumname, reason, date, unban) \n\
+	mysql_fquery_ex(g_SQL, 
+		"INSERT INTO bans (player_id, name, player_ip, forumname, reason, date, unban) \n\
 			VALUES ('%d', '%e', '%e', '%e', '%e', '%e', '%d')",
 		sqlid,
 		playername,

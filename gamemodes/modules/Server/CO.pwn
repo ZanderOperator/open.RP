@@ -546,8 +546,9 @@ stock BuyVehicle(playerid, bool:credit_activated = false)
 	VehicleInfo[cCar][vViwo] 			= 0;
 
 	//SQL
-	mysql_tquery(g_SQL, "BEGIN", "");
-	mysql_tquery(g_SQL, 
+	mysql_pquery(g_SQL, "BEGIN");
+	
+	mysql_pquery(g_SQL, 
 		va_fquery(g_SQL, 
 			"INSERT INTO cocars(modelid, color1, color2, numberplate, parkX, parkY, parkZ, angle,\n\
 				interior, viwo, ownerid, enginetype, enginelife, enginescrewed, heat, overheated, fuel,\n\
@@ -603,7 +604,8 @@ stock BuyVehicle(playerid, bool:credit_activated = false)
 		playerid, 
 		cCar
 	);
-	mysql_tquery(g_SQL, "COMMIT", "");
+	
+	mysql_pquery(g_SQL, "COMMIT");
 
 	SetVehicleNumberPlate(cCar, "");
 	
@@ -801,9 +803,9 @@ stock CheckPlayerVehicle(playerid)
 
 stock GetPlayerVehicleList(playerid)
 {
-
 	mysql_tquery(g_SQL, 
-		va_fquery(g_SQL, "SELECT * FROM cocars WHERE ownerid = '%d' LIMIT 0,%d",
+		va_fquery(g_SQL, 
+			"SELECT id, modelid, parkX, parkY, parkZ FROM cocars WHERE ownerid = '%d' LIMIT %d",
 			PlayerInfo[playerid][pSQLID],
 			MAX_PLAYER_CARS
 		), 
@@ -1276,7 +1278,10 @@ stock LoadVehiclePackage(vehicleid)
 stock LoadVehicleWeapons(vehicleid)
 {
 	mysql_tquery(g_SQL, 
-		va_fquery(g_SQL, "SELECT * FROM cocars_weapons WHERE vehicle_id = '%d' LIMIT 0,7", VehicleInfo[vehicleid][vSQLID]), 
+		va_fquery(g_SQL, 
+			"SELECT * FROM cocars_weapons WHERE vehicle_id = '%d' LIMIT 0,7", 
+			VehicleInfo[vehicleid][vSQLID]
+		), 
 		"LoadingVehicleWeapons", 
 		"i", 
 		vehicleid
@@ -1287,7 +1292,10 @@ stock LoadVehicleWeapons(vehicleid)
 stock LoadVehicleWeaponPos(vehicleid)
 { 
 	mysql_tquery(g_SQL, 
-		va_fquery(g_SQL, "SELECT * FROM cocars_wobjects WHERE vehicle_id = '%d' LIMIT 0,7", VehicleInfo[vehicleid][vSQLID]),
+		va_fquery(g_SQL, 
+			"SELECT * FROM cocars_wobjects WHERE vehicle_id = '%d' LIMIT 0,7", 
+			VehicleInfo[vehicleid][vSQLID]
+		),
 		"LoadingVehicleWeaponPos", 
 		"i", 
 		vehicleid
@@ -1300,8 +1308,8 @@ Public:LoadingPlayerVehicle(playerid)
 	#if defined MOD_DEBUG
 		printf("DEBUG CARS: count(%d)", cache_num_rows());
 	#endif
-
-	if(cache_num_rows()) {
+	if(cache_num_rows()) 
+	{
 	    for(new i = 0; i < cache_num_rows(); i++) {
 			cache_get_value_name_int(i, 	"id"		, VehicleInfoSQLID[playerid][i]);
 			cache_get_value_name_int(i, 	"modelid"	, VehicleInfoModel[playerid][i]);
@@ -2449,8 +2457,7 @@ stock ParkVehicleInfo(vehicleid)
 	GetVehicleHealth(vehicleid, vehHealth);
 	GetVehicleDamageStatus(vehicleid, VehicleInfo[vehicleid][vPanels], VehicleInfo[vehicleid][vDoors], VehicleInfo[vehicleid][vLights], VehicleInfo[vehicleid][vTires]);
 
-	// SQL spremanje
-	mysql_fquery(g_SQL,
+	mysql_fquery_ex(g_SQL,
 	 	"UPDATE cocars SET panels = '%d', doors = '%d', lights = '%d', tires = '%d', fuel = '%d', travel = '%f',\n\
 			batterylife = '%d', heat = '%f', overheated = '%d', enginelife = '%d', enginescrewed = '%d', health = '%f',\n\
 		 	destroys = '%d', batterytype = '%d', nos = '%d' WHERE id = '%d'",
@@ -2645,7 +2652,7 @@ stock SpawnVehicleInfo(playerid, pick)
 		} 
 		else return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne posjedujete vozilo na tome slotu!");
 	}
-	MySQL_TQueryInline(g_SQL,  
+	MySQL_PQueryInline(g_SQL,  
 		using inline SpawningPlayerVehicle, 
 		va_fquery(g_SQL, "SELECT * FROM cocars WHERE id = '%d'", pick),
 		"i", 

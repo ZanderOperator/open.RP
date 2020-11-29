@@ -417,7 +417,7 @@ Public:CheckAccountsForInactivity()
 		return 1;
 	}
 
-	MySQL_TQueryInline(g_SQL,  
+	MySQL_PQueryInline(g_SQL,  
 		using inline OnInactiveAccsLoad, 
 		va_fquery(g_SQL,  "SELECT * FROM accounts WHERE lastloginstamp <= '%d'",inactivetimestamp),
 		""
@@ -690,7 +690,7 @@ Public:CheckAccountsForInactivity()
 			cache_delete(QueryData);
 			return 1;
 		}
-		MySQL_TQueryInline(g_SQL,  
+		MySQL_PQueryInline(g_SQL,  
 			using inline OnMinPayDayAccsLoad, 
 			va_fquery(g_SQL, "SELECT * FROM experience WHERE monthpaydays < '%d'", MIN_MONTH_PAYDAYS),
 			""
@@ -811,7 +811,7 @@ Public:CheckAccountsForInactivity()
 			return 1;
 		}
 
-		MySQL_TQueryInline(g_SQL,  
+		MySQL_PQueryInline(g_SQL,  
 			using inline OnRewardActivePlayers, 
 			va_fquery(g_SQL, "SELECT * FROM  experience ORDER BY experience.monthpaydays DESC LIMIT 0 , 30"),
 			""

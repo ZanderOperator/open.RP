@@ -49,7 +49,7 @@ new
 */
 stock LoadPickups()
 {
-	mysql_tquery(g_SQL, "SELECT * FROM server_pickups WHERE 1", "OnPickupsLoad");
+	mysql_pquery(g_SQL, "SELECT * FROM server_pickups WHERE 1", "OnPickupsLoad");
 	return 1;
 }
 
@@ -132,9 +132,9 @@ stock static ClearInputsPick(playerid)
 stock static CreateNewPickup(playerid, pickup)
 {
 
-	mysql_tquery(g_SQL, "BEGIN", "");
+	mysql_pquery(g_SQL, "BEGIN");
 
-	mysql_tquery(g_SQL,
+	mysql_pquery(g_SQL,
 		va_fquery(g_SQL,
 			"INSERT INTO server_pickups (pickupmodel,pickuptype,canenter,\n\
 				entrancex, entrancey, entrancez,exitx,exity,exitz,enterdiscription, discription, viwo, organizations, job, pint) \n\
@@ -159,7 +159,7 @@ stock static CreateNewPickup(playerid, pickup)
 		"i", 
 		pickup
 	);
-	mysql_tquery(g_SQL, "COMMIT", "");
+	mysql_pquery(g_SQL, "COMMIT");
 		
     PickupInfo[pickup][ epID ] = CreateDynamicPickup(PickupInfo[pickup][epPickupModel], PickupInfo[pickup][epPickupType], PickupInfo[pickup][epEntrancex], PickupInfo[pickup][epEntrancey], PickupInfo[pickup][epEntrancez], -1, -1, -1);
 	Iter_Add(Pickups, pickup);

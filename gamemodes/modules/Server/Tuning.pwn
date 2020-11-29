@@ -518,7 +518,7 @@ Public:OnVehicleTuningLoad(vehicleid, bool:save)
 		} 
 		else 
 		{
-			mysql_fquery(g_SQL, 
+			mysql_fquery_ex(g_SQL, 
 				"INSERT INTO vehicle_tuning(vehid, spoiler, hood, roof, skirt, lamps, nitro, exhaust, wheels,\n\
 					hydraulic, fbumper, rbumper, rvent, lvent, paintjob) \n\
 					VALUES ('%d','%d','%d','%d','%d','%d','%d','%d','%d','%d','%d','%d','%d','%d','%d')",

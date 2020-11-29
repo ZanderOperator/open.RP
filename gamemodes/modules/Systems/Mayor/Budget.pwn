@@ -49,7 +49,7 @@ static
 
 stock LoadCityStuff()
 {
-    mysql_tquery(g_SQL, "SELECT * FROM city WHERE 1", "OnCityLoaded");
+    mysql_pquery(g_SQL, "SELECT * FROM city WHERE 1", "OnCityLoaded");
     return 1;
 }
 
@@ -223,7 +223,7 @@ stock SaveFactionBanks()
 
 stock CheckPlayerTransactions(playerid, const name[])
 {
-    mysql_tquery(g_SQL, 
+    mysql_pquery(g_SQL, 
         va_fquery(g_SQL, "SELECT * FROM server_transactions WHERE sendername = '%e' OR recievername = '%e' ORDER BY id DESC",
             name,
             name
@@ -301,7 +301,7 @@ public OnPlayerTransactionFinish(playerid, const searchednick[])
 
 stock ListServerTransactions(playerid, type)
 {
-    mysql_tquery(g_SQL, 
+    mysql_pquery(g_SQL, 
         va_fquery(g_SQL, "SELECT * FROM server_transactions WHERE logtype = '%d' ORDER BY id DESC", type), 
         "OnTransListQueryFinish", 
         "ii", 

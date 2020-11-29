@@ -159,7 +159,7 @@ static
 // TODO: bad spelling. LoadGraffiti
 stock LoadGraffits()
 {
-    mysql_tquery(g_SQL,
+    mysql_pquery(g_SQL,
         va_fquery(g_SQL, "SELECT * FROM graffiti WHERE 1 LIMIT 0,%d", MAX_GRAFS), 
         "OnGraffitsLoad"
     );
@@ -329,9 +329,9 @@ stock GetGrafColor(colorid)
 
 stock InsertGraffitIntoDB(grafid)
 {    
-    mysql_tquery(g_SQL, "BEGIN", "");
+    mysql_pquery(g_SQL, "BEGIN", "");
 
-    mysql_tquery(g_SQL, 
+    mysql_pquery(g_SQL, 
         va_fquery(g_SQL, 
             "INSERT INTO graffiti (text,font,fontsize,fontcolor,posx,posy,posz,rotx,roty,rotz,author) \n\
                 VALUES ('%e','%d','%d','%d','%f','%f','%f','%f','%f','%f','%e')",
@@ -352,7 +352,7 @@ stock InsertGraffitIntoDB(grafid)
         grafid
     );
 
-    mysql_tquery(g_SQL, "COMMIT", "");
+    mysql_pquery(g_SQL, "COMMIT", "");
     return 1;
 }
 
@@ -581,7 +581,7 @@ public OnTagsLoaded()
 
 stock LoadTags()
 {
-    mysql_tquery(g_SQL, 
+    mysql_pquery(g_SQL, 
         va_fquery(g_SQL, "SELECT * FROM spraytags WHERE 1 LIMIT 0,%d", MAX_TAGS), 
         "OnTagsLoaded",
         ""
@@ -671,7 +671,7 @@ stock GetOfficialGangTag(playerid)
 
 stock InsertSprayTagIntoDB(tagid)
 {
-    mysql_fquery(g_SQL,
+    mysql_fquery_ex(g_SQL,
         "INSERT INTO spraytags (modelid,posx,posy,posz,rotx,roty,rotz,faction,author) \n\
             VALUES ('%d','%f','%f','%f','%f','%f','%f','%d','%e')",
         TagInfo[tagid][tModelid],

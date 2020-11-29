@@ -1280,7 +1280,7 @@ Public:InitPokerTables()
 
 stock LoadPokerTables()
 {
-	mysql_tquery(g_SQL, "SELECT * FROM poker_tables WHERE 1", "OnPokerTablesLoaded", "");
+	mysql_pquery(g_SQL, "SELECT * FROM poker_tables WHERE 1", "OnPokerTablesLoaded", "");
 	return 1;
 }
 
@@ -1310,7 +1310,7 @@ SavePokerTable(idx)
 {
 	if(PokerTable[idx][pkrSQL] == -1)
 	{
-		mysql_tquery( g_SQL, 
+		mysql_pquery( g_SQL, 
 			va_fquery(g_SQL, 
 				"INSERT INTO poker_tables (X, Y, Z, RX, RY, RZ, virtualworld, interior) \n\
 					VALUES ('%f', '%f', '%f', '%f', '%f', '%f', '%d', '%d')",

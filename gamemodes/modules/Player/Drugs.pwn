@@ -990,7 +990,8 @@ GivePlayerDrug(playerid, typ, Float:dmnt, Float:dq)
 	
 	mysql_tquery(g_SQL, 
 		va_fquery(g_SQL, 
-			"INSERT INTO player_drugs (player_id, code, amount, effect, timestamp) VALUES ('%d', '%d', '%f', '%f', '%d')",
+			"INSERT INTO player_drugs (player_id, code, amount, effect, timestamp) \n\
+				VALUES ('%d', '%d', '%f', '%f', '%d')",
 			PlayerInfo[playerid][pSQLID],
 			typ,
 			dmnt,
@@ -1026,7 +1027,8 @@ GiveVehicleDrug(vehicleid, dtyp, Float:damnt, Float:dqua)
 	
 	mysql_tquery(g_SQL, 
 		va_fquery(g_SQL, 
-			"INSERT INTO cocars_drugs (vehicle_id, code, amount, quality, timestamp) VALUES ('%d', '%d', '%f', '%f', '%d')",
+			"INSERT INTO cocars_drugs (vehicle_id, code, amount, quality, timestamp) \n\
+				VALUES ('%d', '%d', '%f', '%f', '%d')",
 			VehicleInfo[vehicleid][vSQLID],
 			dtyp,
 			damnt,

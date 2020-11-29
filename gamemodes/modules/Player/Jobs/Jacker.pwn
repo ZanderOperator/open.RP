@@ -243,7 +243,7 @@ new
 /////////////////////////////////////////////////////
 stock LoadGarages()
 {
-	mysql_tquery(g_SQL, 
+	mysql_pquery(g_SQL, 
 		va_fquery(g_SQL, "SELECT * FROM ilegal_garages WHERE 1"), 
 		"OnServerIlegalGaragesLoad",
 		""

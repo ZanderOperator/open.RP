@@ -236,7 +236,7 @@ stock IsAt247(playerid)
 
 stock LoadBizz()
 {
-    mysql_tquery(g_SQL, 
+    mysql_pquery(g_SQL, 
         va_fquery(g_SQL, "SELECT * FROM bizzes WHERE 1"), 
         "OnServerBizzesLoad", 
         ""
@@ -303,7 +303,7 @@ stock LoadBiznisProducts(bizz_id)
     if(!Iter_Contains(Bizzes, bizz_id))
         return 0;
 
-    mysql_tquery(g_SQL, 
+    mysql_pquery(g_SQL, 
         va_fquery(g_SQL, "SELECT * FROM server_biznis_products WHERE biznis_id = '%d'", BizzInfo[bizz_id][bSQLID]), 
         "OnServerBiznisProductsLoad", 
         "i", 
@@ -317,7 +317,7 @@ stock LoadBiznisVips(bizz_id)
     if(!Iter_Contains(Bizzes, bizz_id))
         return 1;
 
-    mysql_tquery(g_SQL,
+    mysql_pquery(g_SQL,
         va_fquery(g_SQL, "SELECT * FROM server_biznis_vips WHERE biznis_id = '%d'", BizzInfo[bizz_id][bSQLID]),
         "OnServerVipsLoad",
         "i",
@@ -727,7 +727,7 @@ static stock SetStoreProductOnSale(bizz, product, price)
     BiznisProducts[bizz][bpPrice][id]  = price;
     BiznisProducts[bizz][bpAmount][id] = 100;
 
-    mysql_tquery(g_SQL, 
+    mysql_pquery(g_SQL, 
         va_fquery(g_SQL, "INSERT INTO server_bizz_products(biznis_id, type, price, amount) \n\
             VALUES ('%d', '%d', '%d', '%d')",
             BizzInfo[bizz][bSQLID],
@@ -850,7 +850,7 @@ stock InsertNewBizz(playerid, bizz)
 {
     if (bizz < 0 || bizz >= MAX_BIZZS) return 0;
 
-    mysql_tquery(g_SQL, 
+    mysql_pquery(g_SQL, 
         va_fquery(g_SQL, 
             "INSERT INTO bizzes(id, message, canenter,entrancex, entrancey, entrancez,\n\
             levelneeded, buyprice, type, fur_slots) VALUES (null, '%e','%d','%f','%f','%f','%d','%d','%d','%d')",
@@ -3243,8 +3243,9 @@ CMD:createvip(playerid, params[])
             BizzInfo[bizz][bVipCP] = CreateDynamicCP(BizzInfo[bizz][bVipEnter][0], BizzInfo[bizz][bVipEnter][1], BizzInfo[bizz][bVipEnter][2]-1, 3.0, BizzInfo[bizz][bVirtualWorld], BizzInfo[bizz][bInterior], -1, 5.0);
         }
     }
-    mysql_fquery(g_SQL, "INSERT INTO server_biznis_vips(biznis_id, type, x, y, z, exit_x, exit_y, exit_z) \n\
-        VALUES ('%d','%d','%f','%f','%f','%f','%f','%f')",
+    mysql_fquery_ex(g_SQL, 
+        "INSERT INTO server_biznis_vips(biznis_id, type, x, y, z, exit_x, exit_y, exit_z) \n\
+            VALUES ('%d','%d','%f','%f','%f','%f','%f','%f')",
         BizzInfo[bizz][bSQLID],
         BizzInfo[bizz][bVipType],
         BizzInfo[bizz][bVipEnter][0],

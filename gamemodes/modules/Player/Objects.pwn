@@ -709,8 +709,9 @@ stock InsertObjectSlot(playerid, slot)
 {
 	if(PlayerObject[playerid][slot][poSQLID] == -1)
 	{
-		mysql_tquery(g_SQL, 
-			va_fquery(g_SQL, "INSERT INTO player_objects (player_id, model, placed, bone) VALUES ('%d', '%d', '%d', '%d')",
+		mysql_pquery(g_SQL, 
+			va_fquery(g_SQL, 
+				"INSERT INTO player_objects (player_id, model, placed, bone) VALUES ('%d', '%d', '%d', '%d')",
 				PlayerInfo[playerid][pSQLID],
 				PlayerObject[playerid][slot][poModelid],
 				PlayerObject[playerid][slot][poPlaced],

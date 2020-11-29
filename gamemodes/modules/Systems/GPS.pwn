@@ -110,8 +110,8 @@ public on_GPScreate(gps_id)
 LoadGPS()
 {
     Iter_Clear(GPS_location);
-    mysql_tquery(g_SQL, 
-        va_fquery(g_SQL, "SELECT * FROM gps"), 
+    mysql_pquery(g_SQL, 
+        va_fquery(g_SQL, "SELECT * FROM gps WHERE 1"), 
         "GPS_Load", 
         ""
     );

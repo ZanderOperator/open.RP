@@ -134,7 +134,6 @@ static OnPlayerMDCDataLoad(playerid, const playername[])
         cache_get_value_name_int(0, "boatlic"       , loadInfo[pBoatLic]);
         cache_get_value_name_int(0, "fishlic"       , loadInfo[pFishLic]);
         cache_get_value_name_int(0, "flylic"        , loadInfo[pFlyLic]);
-        cache_get_value_name_int(0, "flylic"        , loadInfo[pFlyLic]);
         cache_get_value_name    (0, "look"          , loadInfo[pLook]);
 
         // Load House Key
@@ -198,9 +197,12 @@ static OnPlayerMDCDataLoad(playerid, const playername[])
         PlayerTextDrawSetString(playerid, MDCHeader[playerid], tmpString);
         SelectTextDraw(playerid, 0x427AF4FF);
     }
-    MySQL_TQueryInline(g_SQL,  
+    MySQL_PQueryInline(g_SQL,  
 		using inline OnPlayerMDCLoad, 
-		va_fquery(g_SQL, "SELECT * FROM accounts WHERE name = '%e'", playername),
+		va_fquery(g_SQL, 
+            "SELECT sqlid, playaSkin, sex, age, jailed, jailtime, arrested,\n\
+            carlic, gunlic, boatlic, fishlic, flylic, look FROM accounts WHERE name = '%e'", playername
+        ),
 		""
 	);
     return 1;
@@ -254,7 +256,7 @@ static OnPlayerArrestDataLoad(playerid, const playername[])
         PlayerTextDrawSetString(playerid, MDCOtherText[playerid], buffer);
         SelectTextDraw(playerid, 0x427AF4FF);
     }
-    MySQL_TQueryInline(g_SQL,  
+    MySQL_PQueryInline(g_SQL,  
 		using inline OnArrestLoad, 
 		va_fquery(g_SQL, "SELECT * FROM jail WHERE suspect = '%e'", playername),
 		""
@@ -382,13 +384,18 @@ static OnPlayerCoVehsLoad(playerid, playersqlid)
         PlayerTextDrawSetString(playerid, MDCOtherText[playerid], buffer);
         SelectTextDraw(playerid, 0x427AF4FF);
     }
-    MySQL_TQueryInline(g_SQL,  
+
+    MySQL_PQueryInline(g_SQL,  
 		using inline OnCoVehicleLoad, 
-		va_fquery(g_SQL, "SELECT * FROM cocars WHERE ownerid = '%d' AND numberplate != '' AND numberplate != '0' LIMIT 10",
-            playersqlid
+		va_fquery(g_SQL, 
+            "SELECT  modelid, numberplate, color1, color2, impounded FROM cocars\n\
+                WHERE ownerid = '%d' AND numberplate != '' AND numberplate != '0' LIMIT %d",
+            playersqlid,
+            MAX_PLAYER_CARS
         ),
 		""
 	);
+
     return 1;
 }
 
@@ -646,9 +653,9 @@ stock InsertPlayerMDCCrime(playerid, giveplayerid, reason[], jailtime)
         Secs
     );
 
-    mysql_tquery(g_SQL, "BEGIN");
+    mysql_pquery(g_SQL, "BEGIN");
 
-    mysql_fquery(g_SQL, 
+    mysql_pquery(g_SQL, 
         "INSERT INTO jail (suspect, policeman, reason, jailtime, date) VALUES ('%e', '%e', '%e', '%d', '%e')",
         JailInfo[giveplayerid][jSuspectName],
         JailInfo[giveplayerid][jPoliceName],
@@ -657,7 +664,7 @@ stock InsertPlayerMDCCrime(playerid, giveplayerid, reason[], jailtime)
         JailInfo[giveplayerid][jDate]
     );
 
-    mysql_tquery(g_SQL, "COMMIT");
+    mysql_pquery(g_SQL, "COMMIT");
     return 1;
 }
 
@@ -670,7 +677,7 @@ static DeletePlayerMDCCrime(playerid, sqlid)
 
 static InsertAPBInfo(playerid, const suspect[], const description[], type)
 {
-    mysql_fquery(g_SQL,
+    mysql_fquery_ex(g_SQL,
         "INSERT INTO apb(suspect, description, type, pdname) VALUES ('%e','%e','%d','%e')",
         suspect,
         description,
@@ -743,7 +750,7 @@ static GetPlayerMDCRecord(playerid, const playername[])
         format(string, sizeof(string), "%s-DOSJE", tmpJail[jSuspectName]);
         ShowPlayerDialog(playerid, 0, DIALOG_STYLE_MSGBOX, string, buffer, "Close", "");
     }
-    MySQL_TQueryInline(g_SQL,  
+    MySQL_PQueryInline(g_SQL,  
 		using inline OnSuspectLoad, 
 		va_fquery(g_SQL,  "SELECT * FROM jail WHERE suspect = '%e'", playername),
 		""

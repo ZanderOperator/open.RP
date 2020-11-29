@@ -2366,7 +2366,7 @@ public OnFurnitureObjectsLoad(houseid)
 
 static stock InsertFurnitureObject(houseid, index)
 {
-    mysql_tquery(g_SQL, 
+    mysql_pquery(g_SQL, 
         va_fquery(g_SQL, 
             "INSERT INTO furniture(houseid, modelid, door, door_z, locked_door, pos_x, pos_y, pos_z, rot_x, rot_y, rot_z,\n\
                 texture_1, texture_2, texture_3, texture_4, texture_5, color_1, color_2, color_3, color_4, color_5) \n\
@@ -2419,7 +2419,7 @@ stock LoadHouseFurnitureObjects(houseid)
 {
     if (!Iter_Contains(Houses, houseid)) return 1;
    
-    mysql_tquery(g_SQL, 
+    mysql_pquery(g_SQL, 
         va_fquery(g_SQL, "SELECT * FROM furniture WHERE houseid = '%d'", HouseInfo[houseid][hSQLID]), 
         "OnFurnitureObjectsLoad", 
         "i", 
@@ -3232,9 +3232,9 @@ static stock DestroyAllFurnitureObjects(playerid, houseid)
 
     Iter_Clear(HouseFurInt[houseid]);
 
-    mysql_tquery(g_SQL, "BEGIN");
-    mysql_fquery(g_SQL, "DELETE FROM furniture WHERE houseid = '%d'", HouseInfo[houseid][hSQLID]);
-    mysql_tquery(g_SQL, "COMMIT");
+    mysql_pquery(g_SQL, "BEGIN");
+    mysql_fquery_ex(g_SQL, "DELETE FROM furniture WHERE houseid = '%d'", HouseInfo[houseid][hSQLID]);
+    mysql_pquery(g_SQL, "COMMIT");
 
     mysql_fquery(g_SQL, "UPDATE houses SET fur_slots = '%d' WHERE id = '%d'", 
         HouseInfo[houseid][hFurSlots], 

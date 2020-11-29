@@ -185,7 +185,7 @@ GetRackLimit(playerid)
 
 stock LoadHStorage()
 {
-    mysql_tquery(g_SQL, "SELECT * FROM house_storage", "HouseStorage_Load", "");
+    mysql_pquery(g_SQL, "SELECT * FROM house_storage WHERE 1", "HouseStorage_Load", "");
     return 1;
 }
 
@@ -270,6 +270,7 @@ Storage_RackCreate(playerid, houseid)
 
     Storage_RackRefresh(i);
     HouseStorage_Save(i);
+    
     mysql_tquery(g_SQL, "INSERT INTO house_storage (storageCreated) VALUES(1)", "OnRackCreated", "d", i);
     return i;
 }

@@ -162,7 +162,7 @@ static stock CreateGarageInfoTD(playerid)
 
 stock LoadServerGarages()
 {
-    mysql_tquery(g_SQL, 
+    mysql_pquery(g_SQL, 
         va_fquery(g_SQL, "SELECT * FROM server_garages WHERE 1"), 
         "OnServerGaragesLoad", 
         ""
@@ -571,10 +571,11 @@ CMD:create_garage(playerid, params[])
     format(GarageInfo[garage][gAdress], 16, adress);
 
     
-    mysql_tquery(g_SQL, 
+    mysql_pquery(g_SQL, 
         va_fquery(g_SQL, 
-        "INSERT INTO server_garages (ownerid, adress, price, locked, houseid, enterX, enterY, enterZ, exitX, exitY, exitZ) \n\
-            VALUES ('0', '%e', '%d', '0', '%d', '%.4f', '%.4f', '%.4f', '%.4f', '%.4f', '%.4f')",
+            "INSERT INTO server_garages (ownerid, adress, price, locked, houseid, enterX, enterY, enterZ,\n\
+                exitX, exitY, exitZ) \n\
+                VALUES ('0', '%e', '%d', '0', '%d', '%.4f', '%.4f', '%.4f', '%.4f', '%.4f', '%.4f')",
             GarageInfo[garage][gAdress],
             GarageInfo[garage][gPrice],
             GarageInfo[garage][gHouseID],

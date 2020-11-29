@@ -92,7 +92,7 @@ stock LogTransaction ( playerid, giveplayerid, money, logtype )
 			format(desc, sizeof(desc), "Adresa garaze: %s", GarageInfo[garage][gAdress]);
 		}
 	}
-	mysql_fquery(g_SQL, 
+	mysql_fquery_ex(g_SQL, 
 		"INSERT INTO server_transactions (sendername, recievername, money, logtype, date, description) \n\
 			VALUES ('%e','%e','%d','%d','%e','%e')",
 		GetName(playerid, false),
