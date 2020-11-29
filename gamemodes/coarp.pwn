@@ -893,6 +893,7 @@ ResetPlayerVariables(playerid)
 	PlayerInfo[playerid][pHasRadio] 		= 0;
 	PlayerInfo[playerid][pMainSlot] 		= 0;
 	
+	ResetPlayerSkills(playerid);
 	ResetCreditVars(playerid);
 
 	PlayerInfo[playerid][pRadio][1] 		= 0;

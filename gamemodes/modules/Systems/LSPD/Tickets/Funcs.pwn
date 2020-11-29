@@ -83,6 +83,7 @@ stock GetVehicleTicketReason(ticketsql)
 stock InsertPlayerTicket(playerid, giveplayerid, money, const reason[])
 {
     TicketInfo[giveplayerid][tkMoney] = money;
+
     strcat(TicketInfo[giveplayerid][tkReciever], GetName(giveplayerid, false), MAX_PLAYER_NAME);
     strcat(TicketInfo[giveplayerid][tkOfficer], GetName(playerid, false), MAX_PLAYER_NAME);
     strcat(TicketInfo[giveplayerid][tkReason], reason, MAX_TICKET_REASON_LEN);
