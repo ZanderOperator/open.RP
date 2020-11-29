@@ -28,6 +28,17 @@ new PlayerSkills[MAX_PLAYERS][E_SKILLS_INFO][MAX_SKILLS];
 	 ######     ##     #######   ######  ##    ##  ######  
 */
 
+stock ResetPlayerSkills(playerid)
+{
+	for(new i = 0; i < MAX_SKILLS; i++)
+	{
+    	PlayerSkills[playerid][sSQLID][i] = -1;
+		PlayerSkills[playerid][sSkill][i] = 0;
+		PlayerSkills[playerid][sJob][i]	  = 0;
+	}
+	return 1;
+}
+
 stock LoadPlayerSkills(playerid)
 {
 	mysql_tquery(g_SQL, 
@@ -36,17 +47,6 @@ stock LoadPlayerSkills(playerid)
 		"i", 
 		playerid
 	);
-	return 1;
-}
-
-stock ResetPlayerSkills(playerid)
-{
-	for(new i = 0; i < MAX_SKILLS; i++)
-	{
-		PlayerSkills[playerid][sSQLID][i] = -1;
-		PlayerSkills[playerid][sJob][i] = 0;
-		PlayerSkills[playerid][sSkill][i] = 0;
-	}
 	return 1;
 }
 
