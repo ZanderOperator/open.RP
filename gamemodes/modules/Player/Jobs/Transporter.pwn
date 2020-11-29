@@ -1,4 +1,5 @@
 #include <YSI_Coding\y_hooks>
+#include "modules/Player/Player_h.pwn"
 
 #define TRANSPORTER_ID	(18)
 
@@ -73,7 +74,7 @@ hook OnPlayerEnterCheckpoint(playerid)
 		        TWorking[playerid] = 0;
 		        TCarry[playerid] = 0;
 		        DisablePlayerCheckpoint(playerid);
-				Bit1_Set(gr_IsWorkingJob, playerid, false);
+				Player_SetIsWorkingJob(playerid, false);
 		        PlayerJob[playerid][pFreeWorks] -= 5;
 		        UpgradePlayerSkill(playerid);
 				
@@ -141,34 +142,35 @@ hook OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
 
 hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 {
-	switch( dialogid )
-	{
-		case DIALOG_ADRIAPOSAO:
-		{
-			if(response)
-	     	{
-				if(PlayerJob[playerid][pFreeWorks] < 1)
-					return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Odradio si dovoljno za ovaj payday! Pricekaj iduci.");
-	      		SendClientMessage(playerid,-1,"{FA5656}[ ! ] Idi do stovarista (kutija) da uzmes kutiju proizvoda (levi klik kada dodjete).");
-	        	Bit1_Set(gr_IsWorkingJob, playerid, true);
-				TWorking[playerid] = 1;
-	        	carjob[playerid] = GetPlayerVehicleID(playerid);
-	        	TogglePlayerControllable(playerid, 1);
-	         	TDone[playerid] = 1;
-	         	EarlyDeliveryTimer[playerid] = 1;
-				defer JobFinish(playerid);
-	        }
-	        else
-	        {
-	            TDone[playerid] = 0;
-				Bit1_Set(gr_IsWorkingJob, playerid, false);
-	        	SetVehicleToRespawn(GetPlayerVehicleID(playerid));
-	         	RemovePlayerFromVehicle(playerid);
-	         	TogglePlayerControllable(playerid, 1);
-	        }
-		}
-	}
-	return 0;
+    if (dialogid == DIALOG_ADRIAPOSAO)
+    {
+        if (response)
+        {
+            if (PlayerJob[playerid][pFreeWorks] < 1)
+            {
+                SendMessage(playerid, MESSAGE_TYPE_ERROR, "Odradio si dovoljno za ovaj payday! Pricekaj iduci.");
+                return 1;
+            }
+            SendClientMessage(playerid, -1, "{FA5656}[ ! ] Idi do stovarista (kutija) da uzmes kutiju proizvoda (levi klik kada dodjete).");
+            Player_SetIsWorkingJob(playerid, true);
+            TWorking[playerid] = 1;
+            carjob[playerid] = GetPlayerVehicleID(playerid);
+            TogglePlayerControllable(playerid, 1);
+            TDone[playerid] = 1;
+            EarlyDeliveryTimer[playerid] = 1;
+            defer JobFinish(playerid);
+        }
+        else
+        {
+            TDone[playerid] = 0;
+            Player_SetIsWorkingJob(playerid, false);
+            SetVehicleToRespawn(GetPlayerVehicleID(playerid));
+            RemovePlayerFromVehicle(playerid);
+            TogglePlayerControllable(playerid, 1);
+        }
+        return 1;
+    }
+    return 0;
 }
 
 timer JobFinish[60000](playerid)

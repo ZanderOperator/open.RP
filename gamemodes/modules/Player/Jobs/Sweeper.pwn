@@ -1,4 +1,5 @@
 #include <YSI_Coding\y_hooks>
+#include "modules/Player/Player_h.pwn"
 
 /*
 	########  ######## ######## #### ##    ## ########  ######  
@@ -88,7 +89,7 @@ hook OnPlayerEnterCheckpoint(playerid)
 				UpgradePlayerSkill(playerid);
 				PlayerJob[playerid][pFreeWorks] -= 5;
 				Bit1_Set( r_Sweeping, playerid, false );
-				Bit1_Set( gr_IsWorkingJob, playerid, false );
+				Player_SetIsWorkingJob(playerid, false);
 				TogglePlayerAllDynamicCPs(playerid, true);
 				PlayerCleanerCP[playerid] = 0;
 				
@@ -125,7 +126,7 @@ CMD:sweep(playerid, params[])
 		{
 			if( Bit1_Get( r_Sweeping, playerid ) ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Vec ste poceli sa poslom!");
 			Bit1_Set( r_Sweeping, playerid, true );
-			Bit1_Set( gr_IsWorkingJob, playerid, true );
+			Player_SetIsWorkingJob(playerid, true);
 			PlayerCleanerCP[playerid] = 0;
 			
 			DisablePlayerCheckpoint(playerid);
@@ -148,7 +149,7 @@ CMD:sweep(playerid, params[])
 
 			PlayerJob[playerid][pFreeWorks] -= 5;
 			Bit1_Set( r_Sweeping, playerid, false );
-			Bit1_Set( gr_IsWorkingJob, playerid, false );
+			Player_SetIsWorkingJob(playerid, false);
 			TogglePlayerAllDynamicCPs(playerid, true);
 			DisablePlayerCheckpoint(playerid);
 			

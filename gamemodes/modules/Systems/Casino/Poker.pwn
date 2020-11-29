@@ -2137,15 +2137,15 @@ JoinPokerTable(playerid, tableid)
 
 DoesHavePokerTablePerm(playerid, tableid)
 {
-	if( Bit16_Get( gr_PlayerInHouse, playerid ) != INVALID_HOUSE_ID && Bit16_Get( gr_PlayerInHouse, playerid ) >= 0 )
+	new houseid = Player_InHouse(playerid),
+		bizzid  = Player_InBusiness(playerid);
+	if (houseid != INVALID_HOUSE_ID && houseid >= 0)
 	{
-		new houseid = Bit16_Get( gr_PlayerInHouse, playerid );
 		if(HouseInfo[houseid][hOwnerID] == PlayerInfo[playerid][pSQLID] && HouseInfo[houseid][hInt] == PokerTable[tableid][pkrInt] && HouseInfo[houseid][hVirtualWorld] == PokerTable[tableid][pkrVW])
 			return 1;
 	}
-	else if( Bit16_Get( gr_PlayerInBiznis, playerid ) != INVALID_BIZNIS_ID && Bit16_Get( gr_PlayerInBiznis, playerid ) < MAX_BIZZS)
+	else if (bizzid != INVALID_BIZNIS_ID && bizzid < MAX_BIZZS)
 	{
-		new bizzid = Bit16_Get( gr_PlayerInBiznis, playerid );
 		if( (BizzInfo[bizzid][bOwnerID] == PlayerInfo[playerid][pSQLID] || BizzInfo[bizzid][bco_OwnerID] == PlayerInfo[playerid][pSQLID]) && BizzInfo[bizzid][bInterior] == PokerTable[tableid][pkrInt] && BizzInfo[bizzid][bVirtualWorld] == PokerTable[tableid][pkrVW])
 			return 1;
 	}
@@ -2175,9 +2175,11 @@ CountHousePokerTables(houseid)
 
 GetPokerTableLimit(playerid)
 {
-	if( Bit16_Get( gr_PlayerInHouse, playerid ) != INVALID_HOUSE_ID && Bit16_Get( gr_PlayerInHouse, playerid ) >= 0 )
+	new houseid = Player_InHouse(playerid),
+		bizzid  = Player_InBusiness(playerid);
+
+	if (houseid != INVALID_HOUSE_ID)
 	{
-		new houseid = Bit16_Get( gr_PlayerInHouse, playerid );
 		if(HouseInfo[houseid][hOwnerID] == PlayerInfo[playerid][pSQLID])
 		{
 			new tableCount = CountHousePokerTables(houseid);
@@ -2215,14 +2217,22 @@ GetPokerTableLimit(playerid)
 				}
 			}
 		}
-		else SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste vlasnik kuce u kojoj se nalazite!");
+		else
+		{
+			SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste vlasnik kuce u kojoj se nalazite!");
+		}
 	}
-	else if( Bit16_Get( gr_PlayerInBiznis, playerid ) != INVALID_BIZNIS_ID && Bit16_Get( gr_PlayerInBiznis, playerid ) < MAX_BIZZS)
+	else if (bizzid != INVALID_BIZNIS_ID)
 	{
-		new bizzid = Bit16_Get( gr_PlayerInBiznis, playerid );
-		if( (BizzInfo[bizzid][bOwnerID] == PlayerInfo[playerid][pSQLID] || BizzInfo[bizzid][bco_OwnerID] == PlayerInfo[playerid][pSQLID]) && BizzInfo[bizzid][bType] == BIZZ_TYPE_CASINO)
+		if (BizzInfo[bizzid][bType] == BIZZ_TYPE_CASINO &&
+			(BizzInfo[bizzid][bOwnerID] == PlayerInfo[playerid][pSQLID] || BizzInfo[bizzid][bco_OwnerID] == PlayerInfo[playerid][pSQLID]))
+		{
 			return 1;
-		else SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste vlasnik/suvlasnik kasina / biznis nije kasino!");
+		}
+		else
+		{
+			SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste vlasnik/suvlasnik kasina / biznis nije kasino!");
+		}
 	}
 	return 0;
 }

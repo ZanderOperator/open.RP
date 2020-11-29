@@ -2,6 +2,7 @@
 
 // Header - Functions forward
 #include "modules/Systems/LSPD\Tickets/Header.pwn"
+#include "modules/Player/Player_h.pwn"
 
 /*
 	########  ######## ######## #### ##    ## ########  ######
@@ -5141,7 +5142,7 @@ CMD:car(playerid, params[])
 	}
 	else if(!strcmp(pick, "parklocate", true))
 	{
-		if(Bit1_Get(gr_IsWorkingJob, playerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne mozete koristiti GPS dok radite!");
+		if(Player_IsWorkingJob(playerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne mozete koristiti GPS dok radite!");
 		if(PlayerInfo[playerid][pSpawnedCar] == -1) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste spawnali vozilo!");
 		if(PlayerParkLocation[playerid] == 0)
 		{
@@ -5159,7 +5160,7 @@ CMD:car(playerid, params[])
 	}
 	else if(!strcmp(pick, "locate", true))
 	{
-		if(Bit1_Get(gr_IsWorkingJob, playerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne mozete koristiti GPS dok radite!");
+		if(Player_IsWorkingJob(playerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne mozete koristiti GPS dok radite!");
 		if(PlayerInfo[playerid][pSpawnedCar] == -1) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste spawnali vozilo!");
 		if(IsVehicleOccupied(PlayerInfo[playerid][pSpawnedCar])) return SendClientMessage(playerid, COLOR_RED, "[ ! ] Neko se nalazi u vasem vozilu");
 		//if(!VehicleInfo[PlayerInfo[playerid][pSpawnedCar]][vGPS]) return SendErrorMessage(playerid, "GPS je onemogucen na vasem vozilu, vozite ga na popravak!");

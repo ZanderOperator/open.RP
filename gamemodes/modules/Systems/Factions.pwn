@@ -49,6 +49,10 @@ static
     creatingFaction,
     blockfam[MAX_FACTIONS];
 
+static
+    RequestingBackup[MAX_PLAYERS],
+    bool:FactionChatOn[MAX_PLAYERS] = {true, ...};
+
 
 /*
     ######## ##     ## ##    ##  ######   ######  
@@ -436,7 +440,7 @@ stock SendFactionMessage(family, color, sstring[])
 {
     foreach(new i : Player)
     {
-        if (PlayerFaction[i][pMember] == family && Bit1_Get(gr_FactionChatTog, i))
+        if (PlayerFaction[i][pMember] == family && FactionChatOn[i])
         {
             SendClientMessage(i, color, sstring);
         }
@@ -628,21 +632,21 @@ stock IsPlayerAimingAt(playerid, Float:x, Float:y, Float:z, Float:radius)
 
 timer OnPlayerBackup[1000](playerid)
 {
-    if (Bit4_Get(gr_Backup, playerid) != 0)
+    if (RequestingBackup[playerid] != 0)
     {
         foreach(new i : Player)
         {
-            if (Bit4_Get(gr_Backup, playerid) == 1)
+            if (RequestingBackup[playerid] == 1)
             {
                 if (IsACop(i))
                     SetPlayerMarkerForPlayer(i, playerid, 0x8D8DFFFF);
             }
-            else if (Bit4_Get(gr_Backup, playerid) == 2)
+            else if (RequestingBackup[playerid] == 2)
             {
                 if (IsFDMember(i))
                     SetPlayerMarkerForPlayer(i, playerid, 0xFF9499FF);
             }
-            else if (Bit4_Get(gr_Backup, playerid) == 5)
+            else if (RequestingBackup[playerid] == 5)
             {
                 if (IsASD(i))
                     SetPlayerMarkerForPlayer(i, playerid, 0xFF9499FF);
@@ -739,6 +743,12 @@ public OnFactionCountings(playerid)
     ##     ## ##     ## ##     ## ##   ##  ##    ## 
     ##     ##  #######   #######  ##    ##  ######  
 */
+
+hook ResetPlayerVariables(playerid)
+{
+    RequestingBackup[playerid] = 0;
+    FactionChatOn[playerid] = true;
+}
 
 hook LoadServerData()
 {
@@ -1692,7 +1702,7 @@ CMD:f(playerid, params[])
     new member = PlayerFaction[playerid][pMember], result[64], playername[MAX_PLAYER_NAME], string[256];
     if (member == 0) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Moras biti clan organizacije da bi koristio ovu komandu!");
     if (blockfam[member] == 1) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Chat organizacije je blokiran!");
-    if (!Bit1_Get(gr_FactionChatTog, playerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Iskljucen vam je faction chat!");
+    if (!FactionChatOn[playerid]) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Iskljucen vam je faction chat!");
 
     if (sscanf(params, "s[64]", result)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /f [TEKST]");
 
@@ -1712,9 +1722,9 @@ CMD:f(playerid, params[])
 
 CMD:togf(playerid, params[])
 {
-    Bit1_Set(gr_FactionChatTog, playerid, !Bit1_Get(gr_FactionChatTog, playerid));
+    FactionChatOn[playerid] = !FactionChatOn[playerid];
     va_SendClientMessage(playerid, COLOR_RED, "[ ! ] %s vidjeti faction chat!",
-        (Bit1_Get(gr_FactionChatTog, playerid)) ? ("Sada cete") : ("Vise necete")
+        FactionChatOn[playerid] ? ("Sada cete") : ("Vise necete")
     );
     return 1;
 }
@@ -1898,7 +1908,7 @@ CMD:bk(playerid, params[])
         SendClientMessage(playerid, COLOR_RED, "Nisi LSPD/LSFD!");
         return 1;
     }
-    if (Bit4_Get(gr_Backup, playerid) != 1)
+    if (RequestingBackup[playerid] != 1)
     {
         SendClientMessage(playerid, COLOR_RED, "Vec imate aktivan zahtjev za pojacanje!");
         return 1;
@@ -1942,7 +1952,7 @@ CMD:bk(playerid, params[])
         }
     }
 
-    Bit4_Set(gr_Backup, playerid, backup_type);
+    RequestingBackup[playerid] = backup_type;
     SendClientMessage(playerid, COLOR_RED, "Pozvali ste pojacanje na svojoj lokaciji, dispatcher ce obavijestiti aktivne jedinice.");
     SendClientMessage(playerid, COLOR_RED, "[ ! ] Ukucajte /bkc da bi ste izbrisali pojacanje.");
     BackupTimer[playerid] = repeat OnPlayerBackup(playerid);
@@ -1956,7 +1966,7 @@ CMD:bkc(playerid, params[])
         SendClientMessage(playerid, COLOR_RED, "Nisi LSPD/LSFD!");
         return 1;
     }
-    if (Bit4_Get(gr_Backup, playerid) == 0)
+    if (RequestingBackup[playerid] == 0)
     {
         SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate aktivan zahtjev za pojacanje!");
         return 1;
@@ -1967,7 +1977,7 @@ CMD:bkc(playerid, params[])
         SetPlayerMarkerForPlayer(i, playerid, TEAM_HIT_COLOR);
     }
     SendMessage(playerid, MESSAGE_TYPE_INFO, "Ugasili ste aktivni GPS backup. Vase kolege ne vide vasu lokaciju!");
-    Bit4_Set(gr_Backup,playerid, 0);
+    RequestingBackup[playerid] = 0;
     stop BackupTimer[playerid];
     return 1;
 }
@@ -1981,7 +1991,7 @@ CMD:bkall(playerid, params[])
     }
 
     new string[144];
-    if (Bit4_Get(gr_Backup, playerid) == 0)
+    if (RequestingBackup[playerid] == 0)
     {
         format(string, sizeof(string), "[%s DISPACER]: %s %s zahtjeva hitnu pomoc svih law agencija! Lokacija: GPS", ReturnPlayerFactionName(playerid), ReturnPlayerRankName(playerid), GetName(playerid));
         SendLawMessage(0xE30040FF, string);
@@ -1995,10 +2005,10 @@ CMD:bkall(playerid, params[])
         }
         SendClientMessage(playerid, COLOR_RED, "Pozvali ste pojacanje na svojoj lokaciji, dispatcher ce obavijestiti sve sluzbe!");
         SendClientMessage(playerid, COLOR_WHITE, "Ukucajte /bkall da bi ste ugasili GPS.");
-        Bit4_Set(gr_Backup,playerid, 2);
+        RequestingBackup[playerid] = 2;
         BackupTimer[playerid] = repeat OnPlayerBackup(playerid);
     }
-    else if (Bit4_Get(gr_Backup, playerid) == 2)
+    else if (RequestingBackup[playerid] == 2)
     {
         foreach(new i : Player)
         {
@@ -2008,7 +2018,7 @@ CMD:bkall(playerid, params[])
             }
         }
         SendMessage(playerid, MESSAGE_TYPE_INFO, "Opozvao si GPS, kolege vise nece vidjeti tvoju lokaciju!");
-        Bit4_Set(gr_Backup,playerid, 0);
+        RequestingBackup[playerid] = 0;
         stop BackupTimer[playerid];
     }
     return 1;
@@ -2022,7 +2032,7 @@ CMD:emsbk(playerid, params[])
         return 1;
     }
 
-    if (Bit4_Get(gr_Backup, playerid) == 0)
+    if (RequestingBackup[playerid] == 0)
     {
         new string[128];
         format(string, sizeof(string), "[%s DISPACER]: %s %s zahtjeva hitnu pomoc LSFD! Lokacija: GPS", ReturnPlayerFactionName(playerid), ReturnPlayerRankName(playerid), GetName(playerid));
@@ -2037,10 +2047,10 @@ CMD:emsbk(playerid, params[])
         }
         SendClientMessage(playerid, COLOR_RED, "Pozvali ste pojacanje na svojoj lokaciji, dispatcher ce obavijestiti sve sluzbe!");
         SendClientMessage(playerid, COLOR_WHITE, "Ukucajte /bkall da bi ste ugasili GPS.");
-        Bit4_Set(gr_Backup,playerid, 2);
+        RequestingBackup[playerid] = 2;
         BackupTimer[playerid] = repeat OnPlayerBackup(playerid);
     }
-    else if (Bit4_Get(gr_Backup, playerid) == 2)
+    else if (RequestingBackup[playerid] == 2)
     {
         foreach(new i : Player)
         {
@@ -2050,7 +2060,7 @@ CMD:emsbk(playerid, params[])
             }
         }
         SendMessage(playerid, MESSAGE_TYPE_INFO, "Opozvao si GPS, kolege vise nece vidjeti tvoju lokaciju!");
-        Bit4_Set(gr_Backup,playerid, 0);
+        RequestingBackup[playerid] = 0;
         stop BackupTimer[playerid];
     }
     return 1;

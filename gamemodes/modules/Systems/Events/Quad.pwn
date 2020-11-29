@@ -269,7 +269,7 @@ hook OnPlayerEnterRaceCP(playerid)
             QuadPlayers--;
             QuadPlayer  [playerid] = 0;
             QuadPlayerCP[playerid] = 0;
-            Bit1_Set(gr_OnEvent, playerid, false);
+            Player_SetOnEvent(playerid, false);
 
             if (FirstQuadWinner == INVALID_PLAYER_ID)
             {
@@ -450,7 +450,7 @@ CMD:quad(playerid, params[])
         );
         SendClientMessage(playerid, COLOR_RED, "[QUAD]: Uspjesno ste se prijavili za Quad event. Udjite u vozilo i stanite na marker.");
         SendClientMessage(playerid, COLOR_RED, "[QUAD]: Ukoliko zelite odustati, tipkajte /quad quit.");
-        Bit1_Set(gr_OnEvent, playerid, true);
+        Player_SetOnEvent(playerid, true);
         return 1;
     }
     else if (!strcmp(action, "startrace", true))
@@ -493,7 +493,7 @@ CMD:quad(playerid, params[])
             DisablePlayerRaceCheckpoint(i);
             QuadPlayer  [i] = 0;
             QuadPlayerCP[i] = 0;
-            Bit1_Set(gr_OnEvent, i, false);
+            Player_SetOnEvent(i, false);
         }
 
         QuadStarted = false;
@@ -529,7 +529,7 @@ CMD:quad(playerid, params[])
 
         QuadPlayer  [playerid] = 0;
         QuadPlayerCP[playerid] = 0;
-        Bit1_Set(gr_OnEvent, playerid, false);
+        Player_SetOnEvent(playerid, false);
         DisablePlayerRaceCheckpoint(playerid);
         SendClientMessage(playerid, COLOR_WHITE, "[SERVER] Odustali ste od Quad utrke.");
         return 1;

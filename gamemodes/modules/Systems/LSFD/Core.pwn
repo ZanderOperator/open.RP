@@ -152,8 +152,6 @@ hook OnPlayerDisconnect(playerid, reason)
     Player_SetUsingStretcher  (playerid, false);
     Player_SetStretcherSpawned(playerid, false);
 
-    Bit1_Set(gr_WeaponAllowed,playerid, false);
-
     return 1;
 }
 

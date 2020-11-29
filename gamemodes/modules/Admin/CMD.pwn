@@ -1,4 +1,5 @@
 #include <YSI_Coding\y_hooks>
+#include "modules/Player/Player_h.pwn"
 
 // Admin Modules included at the bottom
 #define PLAYER_SPECATE_VEH		(1)
@@ -27,6 +28,7 @@ new
 	Admin_Vehicle[MAX_PLAYERS][MAX_ADMIN_VEHICLES],
 	Admin_vCounter[MAX_PLAYERS];
 
+// TODO: don't use global strings, use local
 static stock
     globalstring[128],
     cstring[40];
@@ -1932,7 +1934,7 @@ CMD:hm(playerid, params[])
 {
 	if(!Bit1_Get(h_HelperOnDuty, playerid))
 		return SendClientMessage(playerid,COLOR_RED, "Niste ste na Helper duznosti!");
-	if (Bit1_Get(gr_MaskUse, playerid))
+	if (Player_UsingMask(playerid))
 		return SendClientMessage(playerid,COLOR_RED, "Skinite masku prije nego sto koristite /hm!");
 	if(PlayerInfo[playerid][pHelper] >= 1)
 	{
@@ -4655,21 +4657,26 @@ CMD:gethere(playerid, params[])
 			SetPlayerInterior(giveplayerid, GetPlayerInterior(playerid));
 			SetPlayerVirtualWorld(giveplayerid, GetPlayerVirtualWorld(playerid));
 		}
-		if( Bit16_Get( gr_PlayerInBiznis, playerid ) != INVALID_BIZNIS_ID ) 
-			Bit16_Set( gr_PlayerInBiznis, giveplayerid, Bit16_Get( gr_PlayerInBiznis, playerid ) );
-		if( Bit16_Get( gr_PlayerInHouse, playerid )  != INVALID_HOUSE_ID )  
-			Bit16_Set( gr_PlayerInHouse, giveplayerid, Bit16_Get( gr_PlayerInHouse, playerid ) );
-		if( Bit16_Get( gr_PlayerInComplex, playerid ) != INVALID_COMPLEX_ID )
-			Bit16_Set( gr_PlayerInComplex, giveplayerid, Bit16_Get( gr_PlayerInComplex, playerid ) );
-		if( Bit16_Get( gr_PlayerInRoom, playerid ) != INVALID_COMPLEX_ID )
-			Bit16_Set( gr_PlayerInRoom, giveplayerid, Bit16_Get( gr_PlayerInRoom, playerid ) );
-		if( Bit16_Get( gr_PlayerInPickup, playerid ) != -1 )
-			Bit16_Set( gr_PlayerInPickup, giveplayerid, Bit16_Get( gr_PlayerInPickup, playerid ) );
-			
-		format(globalstring, sizeof(globalstring), "Teleportiran si od strane admina %s", GetName(playerid,false));
-		SendClientMessage(giveplayerid, -1, globalstring);
-		format(globalstring, sizeof(globalstring), "Teleportirao si %s, ID %d", GetName(giveplayerid,false), giveplayerid);
-		SendClientMessage(playerid, -1, globalstring);
+		new
+			complexid = Player_InApartmentComplex(playerid),
+			roomid    = Player_InApartmentRoom(playerid),
+			houseid   = Player_InHouse(playerid),
+			bizzid    = Player_InBusiness(playerid),
+			pickupid  = Player_InPickup(playerid);
+
+		if (bizzid != INVALID_BIZNIS_ID)
+			Player_SetInBusiness(giveplayerid, bizzid);
+		if (houseid != INVALID_HOUSE_ID)
+			Player_SetInHouse(giveplayerid, houseid);
+		if (complexid != INVALID_COMPLEX_ID)
+			Player_SetInApartmentComplex(giveplayerid, complexid);
+		if (roomid != INVALID_COMPLEX_ID)
+			Player_SetInApartmentRoom(giveplayerid, roomid);
+		if (pickupid != -1)
+			Player_SetInPickup(giveplayerid, pickupid);
+
+		va_SendClientMessage(giveplayerid, COLOR_WHITE, "Teleportiran si od strane admina %s", GetName(playerid, false));
+		va_SendClientMessage(playerid, COLOR_WHITE, "Teleportirao si %s, ID %d", GetName(giveplayerid, false), giveplayerid);
 	}
 	else SendClientMessage(playerid, COLOR_RED, "Niste ovlasteni za koristenje ove komande!");
 	return 1;
@@ -5028,43 +5035,51 @@ CMD:gotopos(playerid, params[])
 
 CMD:goto(playerid, params[])
 {
-    if (PlayerInfo[playerid][pAdmin] >= 1 || PlayerInfo[playerid][pHelper] >= 1) {
+	if (PlayerInfo[playerid][pAdmin] >= 1 || PlayerInfo[playerid][pHelper] >= 1)
+	{
 		new giveplayerid;
 		if (sscanf(params, "u", giveplayerid)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /goto [ID/Dio imena]");
 		if (!IsPlayerConnected(giveplayerid)) return SendClientMessage(playerid, COLOR_RED, "Taj igrac nije online!");
 		if( IsPlayerReconing(playerid) ) return SendClientMessage(playerid, COLOR_RED, "Morate iskljuciti reconing!");
 		if( IsPlayerReconing(giveplayerid) ) return SendClientMessage(playerid, COLOR_RED, "Igrac recona drugog igraca!");
-		
+
 		new
 			Float:plocx,
 			Float:plocy,
 			Float:plocz;
 		GetPlayerPos(giveplayerid, plocx, plocy, plocz);
-		
-		
-		if (GetPlayerState(playerid) == 2) {
+
+		if (GetPlayerState(playerid) == 2)
+		{
 			AC_SetVehiclePos(GetPlayerVehicleID(playerid), plocx, plocy+2, plocz);
 			SetVehicleVirtualWorld(GetPlayerVehicleID(playerid), GetPlayerVirtualWorld(giveplayerid));
 			LinkVehicleToInterior(GetPlayerVehicleID(playerid), GetPlayerInterior(giveplayerid));
 		}
-		else {
+		else
+		{
 			SetPlayerPos(playerid, plocx, plocy+2, plocz);
 			SetPlayerInterior(playerid, GetPlayerInterior(giveplayerid));
 			SetPlayerVirtualWorld(playerid, GetPlayerVirtualWorld(giveplayerid));
-		
-			if( Bit16_Get( gr_PlayerInBiznis, giveplayerid ) != INVALID_BIZNIS_ID ) 
-				Bit16_Set( gr_PlayerInBiznis, playerid, Bit16_Get( gr_PlayerInBiznis, giveplayerid ) );
-			if( Bit16_Get( gr_PlayerInHouse, giveplayerid )  != INVALID_HOUSE_ID )  
-				Bit16_Set( gr_PlayerInHouse, playerid, Bit16_Get( gr_PlayerInHouse, giveplayerid ) );
-			if( Bit16_Get( gr_PlayerInComplex, giveplayerid ) != INVALID_COMPLEX_ID )
-				Bit16_Set( gr_PlayerInComplex, playerid, Bit16_Get( gr_PlayerInComplex, giveplayerid ) );
-			if( Bit16_Get( gr_PlayerInRoom, giveplayerid ) != INVALID_COMPLEX_ID )
-				Bit16_Set( gr_PlayerInRoom, playerid, Bit16_Get( gr_PlayerInRoom, giveplayerid ) );
-			if( Bit16_Get( gr_PlayerInPickup, giveplayerid ) != -1 )
-				Bit16_Set( gr_PlayerInPickup, playerid, Bit16_Get( gr_PlayerInPickup, giveplayerid ) );
+
+			new
+				complexid = Player_InApartmentComplex(giveplayerid),
+				roomid    = Player_InApartmentRoom(giveplayerid),
+				houseid   = Player_InHouse(giveplayerid),
+				bizzid    = Player_InBusiness(giveplayerid),
+				pickupid  = Player_InPickup(giveplayerid);
 			
-			format(globalstring, sizeof(globalstring), "Teleportiran si do %s, ID %d", GetName(giveplayerid,false), giveplayerid);
-			SendClientMessage(playerid, COLOR_GREY, globalstring);
+			if (bizzid != INVALID_BIZNIS_ID)
+				Player_SetInBusiness(playerid, bizzid);
+			if (houseid != INVALID_HOUSE_ID)
+				Player_SetInHouse(playerid, houseid);
+			if (complexid != INVALID_COMPLEX_ID)
+				Player_SetInApartmentComplex(playerid, complexid);
+			if (roomid != INVALID_COMPLEX_ID)
+				Player_SetInApartmentRoom(playerid, roomid);
+			if (pickupid != -1)
+				Player_SetInPickup(playerid, pickupid);
+
+			va_SendClientMessage(playerid, COLOR_GREY, "Teleportiran si do %s, ID %d", GetName(giveplayerid, false), giveplayerid);
 		}
 	}
 	else SendClientMessage(playerid, COLOR_RED, "Niste ovlasteni za koristenje ove komande!");
@@ -5216,12 +5231,12 @@ CMD:respawn(playerid, params[])
 	new resstring[120];
 	format(resstring, sizeof(resstring), "Admin %s vas je respawnovao.", GetName(playerid,false));
 	SendMessage(giveplayerid, COLOR_RED, resstring);
-    Bit16_Get(gr_PlayerInHouse, giveplayerid, 0);
-    Bit16_Get(gr_PlayerInGarage, giveplayerid, 0);
-    Bit16_Get(gr_PlayerInRoom, giveplayerid, 0);
-    Bit16_Get(gr_PlayerInBiznis, giveplayerid, 0);
-    Bit16_Get(gr_PlayerInComplex, giveplayerid, 0);
-	
+
+	Player_SetInBusiness(giveplayerid, INVALID_BIZNIS_ID);
+	Player_SetInHouse(giveplayerid, INVALID_HOUSE_ID);
+	Player_SetInGarage(giveplayerid, 0);
+	Player_SetInApartmentComplex(giveplayerid, INVALID_COMPLEX_ID);
+	Player_SetInApartmentRoom(giveplayerid, INVALID_COMPLEX_ID);
     SpawnPlayer(giveplayerid);
 	
 	return 1;
@@ -5360,16 +5375,15 @@ CMD:dmers(playerid, params[])
 
 CMD:masked(playerid, params[])
 {
-
 	if (PlayerInfo[playerid][pAdmin] < 1) return SendClientMessage(playerid, COLOR_RED, "Niste ovlasteni za koristenje ove komande!");
+
 	SendClientMessage(playerid, COLOR_SKYBLUE, "Igraci s maskama:");
 	foreach (new i : Player)
 	{
-		if (Bit1_Get(gr_MaskUse, i))
-		{
-			format(globalstring, sizeof(globalstring), "** ID: %d *** %s, MASK ID: %d", i, GetName(i, false), PlayerInfo[i][pMaskID]);
-			SendClientMessage(playerid, -1, globalstring);
-		}
+		if (!Player_UsingMask(i)) continue;
+
+		format(globalstring, sizeof(globalstring), "** ID: %d *** %s, MASK ID: %d", i, GetName(i, false), PlayerInfo[i][pMaskID]);
+		SendClientMessage(playerid, -1, globalstring);
 	}
 	return 1;
 }

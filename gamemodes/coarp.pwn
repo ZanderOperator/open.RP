@@ -283,13 +283,10 @@ new
 	Bit1: 	gr_PlayerPickingJack 	<MAX_PLAYERS> =  Bit1: false,
 	Bit1:	gr_PlayerJackSure 		<MAX_PLAYERS> =  Bit1: false,
 	Bit1:	gr_CreateObject			<MAX_PLAYERS> =	 Bit1: false,
-	Bit1:	gr_OnEvent				<MAX_PLAYERS>  = Bit1: false,
 	Bit1:	gr_PlayerDownloading	<MAX_PLAYERS>  = Bit1: false,
 	// TODO: misspelled, FirstSpawn
 	Bit1:	gr_FristSpawn			<MAX_PLAYERS>  = Bit1: false,
 	Bit1: 	gr_SafeBreaking			<MAX_PLAYERS>  = Bit1: false,
-	Bit1:	gr_PlayerHouseAlarmOff	<MAX_PLAYERS>  = Bit1: false,
-	Bit1:	gr_OnLive				<MAX_PLAYERS>  = Bit1: false,
 	Bit1: 	gr_PlayerLoggedIn 		<MAX_PLAYERS>  = Bit1: false,
 	Bit1: 	gr_PlayerLoggingIn 		<MAX_PLAYERS>  = Bit1: false,
 	Bit1: 	gr_NewUser				<MAX_PLAYERS>  = Bit1: false,
@@ -299,16 +296,10 @@ new
 	Bit1:	gr_ForbiddenPM			<MAX_PLAYERS>  = Bit1: false,
 	Bit1:	gr_BlockedPM			<MAX_PLAYERS>  = Bit1: false,
 	Bit1:	gr_PlayerAlive			<MAX_PLAYERS>  = Bit1: false,
-	Bit1:	gr_Dice					<MAX_PLAYERS>  = Bit1: false,
-	Bit1:	gr_FakeGunLic			<MAX_PLAYERS>  = Bit1: false,
-	Bit1:	gr_MaskUse				<MAX_PLAYERS>  = Bit1: false,
 	Bit1:	gr_MobileSpeaker		<MAX_PLAYERS>  = Bit1: false,
 	Bit1:	gr_SmokingCiggy			<MAX_PLAYERS>  = Bit1: false,
-	Bit1:	gr_GovRepair			<MAX_PLAYERS>  = Bit1: false,
-	Bit1:	gr_WeaponAllowed		<MAX_PLAYERS>  = Bit1: false,
 	Bit1:	gr_HasRubber			<MAX_PLAYERS>  = Bit1: false,
 	Bit1:	gr_PlayerSendKill		<MAX_PLAYERS>  = Bit1: false,
-	Bit1:	gr_FactionChatTog		<MAX_PLAYERS>  = Bit1: true,
 	Bit1:	gr_PlayerRadio			<MAX_PLAYERS>  = Bit1: true,
 	Bit1:	gr_TrunkOffer			<MAX_PLAYERS>  = Bit1: false,
 	Bit1:	gr_PlayerInTrunk		<MAX_PLAYERS>  = Bit1: false,
@@ -323,7 +314,6 @@ new
 	Bit1:   gr_ImpoundApproval      <MAX_PLAYERS>  = Bit1: false,
 	Bit1:   gr_HaveOffer        	<MAX_PLAYERS>  = Bit1: false,
 	Bit1:	gr_UsingMechanic 		<MAX_PLAYERS>  = Bit1: false,
-	Bit1: 	gr_IsWorkingJob			<MAX_PLAYERS>  = Bit1: false,
 	Bit1:	gr_MallPreviewActive	<MAX_PLAYERS>  = Bit1: false,
 	Bit1:	r_ColorSelect			<MAX_PLAYERS>  = Bit1: false,
 	Bit1:	gr_PlayerInTuningMode	<MAX_PLAYERS>  = Bit1: false,
@@ -333,7 +323,6 @@ new
 	Bit2:	gr_TipEdita				<MAX_PLAYERS>  = Bit2: 0,
 	Bit2:	gr_PlayerJumps			<MAX_PLAYERS>  = Bit2: 0,
 	Bit4:	gr_WeaponTrunkEditSlot	<MAX_PLAYERS>  = Bit4: 0,
-	Bit4:	gr_Backup				<MAX_PLAYERS>  = Bit4: 0,
 	Bit4:	gr_MusicCircle			<MAX_PLAYERS>  = Bit4: 0,
 	Bit4:	r_ColorSlotId			<MAX_PLAYERS>  = Bit4: 0,
 	Bit4:	gr_AttachmentIndexSel	<MAX_PLAYERS>  = Bit4: 0,
@@ -344,24 +333,12 @@ new
 	Bit8:	gr_HandleItem			<MAX_PLAYERS>  = Bit8: 0,
 	Bit8: 	gr_ObjectPrice			<MAX_PLAYERS>  = Bit8: 0,
 	Bit8:	gr_MallType				<MAX_PLAYERS>  = Bit8: 0,
-	Bit8: 	gr_PhoneLine			<MAX_PLAYERS>  = Bit8: 15,
-	Bit8: 	gr_Groceries			<MAX_PLAYERS>  = Bit8: 0,
 	Bit8: 	gr_LoginInputs			<MAX_PLAYERS>  = Bit8: 0,
 	Bit8: 	gr_RegisterInputs		<MAX_PLAYERS>  = Bit8: 0,
-	Bit8:   gr_GovMDC               <MAX_PLAYERS>  = Bit8: INVALID_PLAYER_ID,
-	Bit8: 	gr_Food					<MAX_PLAYERS>  = Bit8: 0,
-	Bit8: 	gr_Drink				<MAX_PLAYERS>  = Bit8: 0,
 	Bit8:	gr_ShakeStyle			<MAX_PLAYERS>  = Bit8: 0,
 	Bit16:	gr_IdMehanicara			<MAX_PLAYERS>  = Bit16: INVALID_PLAYER_ID,
-	Bit16: 	gr_PlayerInfrontHouse	<MAX_PLAYERS>  = Bit16: INVALID_HOUSE_ID,
 	Bit16:	gr_ShakeOffer			<MAX_PLAYERS>  = Bit16: 0,
-	Bit16: 	gr_LastPMId				<MAX_PLAYERS>  = Bit16: 0,
-	Bit16: 	gr_PlayerInHouse		<MAX_PLAYERS>  = Bit16: 9999,
-    Bit16: 	gr_PlayerInGarage		<MAX_PLAYERS>  = Bit16: 9999,
-    Bit16: 	gr_PlayerInRoom			<MAX_PLAYERS>  = Bit16: 999,
-	Bit16:	gr_PlayerInBiznis		<MAX_PLAYERS>  = Bit16: INVALID_BIZNIS_ID,
-	Bit16:	gr_PlayerInComplex		<MAX_PLAYERS>  = Bit16: INVALID_COMPLEX_ID,
-	Bit16:	gr_PlayerInPickup		<MAX_PLAYERS>  = Bit16: -1;
+	Bit16: 	gr_LastPMId				<MAX_PLAYERS>  = Bit16: 0;
 
 new
     secquestattempt[MAX_PLAYERS] = 3,
@@ -559,11 +536,11 @@ RegisterPlayerDeath(playerid, killerid) // funkcija
 	PhoneStatus[playerid] = PHONE_HIDE;
 	CancelSelectTextDraw(playerid);
 
-	if(Bit1_Get( gr_MaskUse, playerid ) && IsValidDynamic3DTextLabel(NameText[playerid]))
+	if (Player_UsingMask(playerid) && IsValidDynamic3DTextLabel(NameText[playerid]))
 	{
 		DestroyDynamic3DTextLabel(NameText[playerid]);
 		NameText[playerid] = Text3D:INVALID_3DTEXT_ID;
-		Bit1_Set(gr_MaskUse, playerid, false);
+		Player_SetUsingMask(playerid, false);
 	}
 	KilledBy[playerid] = INVALID_PLAYER_ID;
 	WoundedBy[playerid] = INVALID_PLAYER_ID;
@@ -618,30 +595,21 @@ ResetPlayerVariables(playerid)
 	format(PlayerInfo[playerid][pCallsign], 60, "");
 	//rBits
 	Bit1_Set( gr_PlayerDownloading		, playerid, false );
-	Bit1_Set( gr_PlayerHouseAlarmOff	, playerid, false );
 	Bit1_Set( gr_FristSpawn				, playerid, false );
-	Bit1_Set( gr_OnLive					, playerid, false );
 	Bit1_Set( gr_PlayerLoggingIn 		, playerid, false );
 	Bit1_Set( gr_PlayerLoggedIn 		, playerid, false );
 	Bit1_Set( gr_NewUser				, playerid, false );
 	Bit1_Set( gr_PlayerTimeOut			, playerid, false );
 	Bit1_Set( gr_ForbiddenPM			, playerid, false );
 	Bit1_Set( gr_BlockedPM				, playerid, false );
-	Bit1_Set( gr_OnEvent				, playerid, false );
 	Bit1_Set( gr_CreateObject			, playerid, false );
 	Bit1_Set( gr_Blockedreport			, playerid, false );
 	Bit1_Set( gr_PlayerAlive			, playerid, true  );
-	Bit1_Set( gr_FakeGunLic				, playerid, false );
-	Bit1_Set( gr_Dice					, playerid, false );
-	Bit1_Set( gr_MaskUse				, playerid, false );
 	Bit1_Set( gr_MobileSpeaker			, playerid, false );
 	Bit1_Set( gr_SmokingCiggy			, playerid, false );
-	Bit1_Set( gr_GovRepair				, playerid, false );
-	Bit1_Set( gr_WeaponAllowed			, playerid, false );
 	Bit1_Set( gr_HasRubber				, playerid, false );
 	Bit1_Set( gr_PlayerSendKill			, playerid, false );
 	Bit1_Set( gr_animchat               , playerid, false );
-	Bit1_Set( gr_FactionChatTog			, playerid, true );
 	Bit1_Set( gr_PlayerRadio			, playerid, true );
 	Bit1_Set( gr_TrunkOffer				, playerid, false );
 	Bit1_Set( gr_PlayerTrunkEdit        , playerid, false );
@@ -651,31 +619,29 @@ ResetPlayerVariables(playerid)
 	Bit1_Set( gr_BlindFold				, playerid, false );
 	Player_SetIsTied(playerid, false);
 	Bit1_Set( gr_ImpoundApproval		, playerid, false );
-	Bit1_Set( gr_IsWorkingJob			, playerid, false );
 	Bit2_Set( gr_BikeBunnyHop			, playerid, 0 );
 	Bit2_Set( gr_PlayerJumps			, playerid, 0 );
 	Bit4_Set( gr_WeaponTrunkEditSlot	, playerid, 0 );
-	Bit4_Set( gr_Backup					, playerid, 0 );
 	Bit4_Set( gr_MusicCircle			, playerid, 0 );
 	Bit4_Set( gr_SpecateId				, playerid, 0 );
-	Bit8_Set( gr_GovMDC                 , playerid, INVALID_PLAYER_ID );
 	Bit8_Set( gr_LoginInputs			, playerid, 0 );
 	Bit8_Set( gr_RegisterInputs			, playerid, 0 );
-	Bit8_Set( gr_Groceries				, playerid, 0 );
-	Bit8_Set( gr_Food					, playerid, 0 );
-	Bit8_Set( gr_Drink					, playerid, 0 );
 	Bit8_Set( gr_ShakeStyle				, playerid, 0 );
 	Bit16_Set( gr_ShakeOffer			, playerid, 999 );
 	Player_SetLastVehicle(playerid, INVALID_VEHICLE_ID);
 	Bit16_Set( gr_LastPMId				, playerid, 999 );
-	Bit16_Set( gr_PlayerInBiznis		, playerid, 999 );
-	Bit16_Set( gr_PlayerInRoom          , playerid, 999 );
-	Bit16_Set( gr_PlayerInComplex       , playerid, INVALID_COMPLEX_ID );
-	Bit16_Set( gr_PlayerInPickup        , playerid, -1 );
-	Bit16_Set( gr_PlayerInHouse			, playerid, INVALID_HOUSE_ID );
-	Bit16_Set( gr_PlayerInGarage		, playerid, INVALID_HOUSE_ID );
-	Bit16_Set( gr_PlayerInfrontHouse	, playerid, INVALID_HOUSE_ID );
 	Player_SetAmbulanceId(playerid, INVALID_VEHICLE_ID);
+
+    // TODO: these should be moved to their own modules and hooking ResetPlayerVariables
+    Player_SetInBusiness        (playerid, INVALID_BIZNIS_ID);
+    Player_SetInApartmentComplex(playerid, INVALID_COMPLEX_ID);
+    Player_SetInApartmentRoom   (playerid, INVALID_COMPLEX_ID);
+    Player_SetInHouse           (playerid, INVALID_HOUSE_ID);
+    Player_SetInfrontHouse      (playerid, INVALID_HOUSE_ID);
+    Player_SetInGarage          (playerid, INVALID_HOUSE_ID);
+    Player_SetInPickup          (playerid, -1);
+
+
 	blockedNews[playerid] = false;
 	
 	// Mobile
@@ -715,12 +681,10 @@ ResetPlayerVariables(playerid)
 
 	Bit1_Set( gr_PlayerUsingPhonebooth			, playerid, false );
 	Bit1_Set( gr_PlayerTakingSelfie		, playerid, false );
-	Bit8_Set( gr_PhoneLine				, playerid, 15 );
 	Bit8_Set( gr_RingingTime			, playerid, 0 );
 
 	// Admin
 	Bit1_Set(gr_SaveArmour, 	playerid, false);
-	Bit1_Set(gr_MaskUse, 		playerid, false);
 
 	// Administrator
 	Bit1_Set(a_AdminChat, 		playerid, true);
@@ -1747,7 +1711,7 @@ hook OnPlayerSpawn(playerid)
 			SendClientMessage(playerid, COLOR_LIGHTRED, "** You are returned to position where you were wounded. **");
 			SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "** You can't use /l chat and /me command. /c, /ame i /do are allowed during RP **");
 
-			Bit1_Set( gr_MaskUse, playerid, false );
+			Player_SetUsingMask(playerid, false);
 			if( PlayerInfo[ playerid ][ pMaskID ])
 			{
 				if( PlayerVIP[playerid][pDonateRank] < 2)
@@ -1771,7 +1735,7 @@ hook OnPlayerSpawn(playerid)
 			SendClientMessage(playerid, COLOR_LIGHTRED, "You are in Death Mode. You have been returned to location of your death.**");
 			SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "** You can't use /l chat and /me command. /c, /ame i /do are allowed during RP **");
 
-			Bit1_Set( gr_MaskUse, playerid, false );
+			Player_SetUsingMask(playerid, false);
 			if( PlayerInfo[ playerid ][ pMaskID ])
 			{
 				if( PlayerVIP[playerid][pDonateRank] < 2)
@@ -1818,9 +1782,11 @@ hook OnPlayerSpawn(playerid)
 							else if( PlayerInfo[playerid][pRentKey] != INVALID_HOUSE_ID )
 								house = PlayerInfo[playerid][pRentKey];
 
+							// TODO: this logic is probably wrong, if setting player outside int
+							// set their int and vw to 0
 							SetPlayerInterior( playerid, HouseInfo[ house ][ hInt ] );
 							SetPlayerVirtualWorld( playerid, HouseInfo[ house ][ hVirtualWorld ]);
-							//Bit16_Set( gr_PlayerInHouse, playerid, house ); - da probamo napravit hoce li portat pred kucu
+							//Player_SetInHouse(playerid, house); - da probamo napravit hoce li portat pred kucu
 							SetPlayerPosEx(playerid, HouseInfo[ house ][ hEnterX ], HouseInfo[ house ][ hEnterY ], HouseInfo[ house ][ hEnterZ ], 0, 0, true);
 							SetPlayerHealth(playerid, 100);
 							return 1;
@@ -1874,7 +1840,7 @@ hook OnPlayerSpawn(playerid)
 							SetPlayerPosEx(playerid, ComplexRoomInfo[ complex ][ cExitX ], ComplexRoomInfo[ complex ][ cExitY ], ComplexRoomInfo[ complex ][ cExitZ ], 0, 0, true);
 							SetPlayerInterior( playerid, ComplexRoomInfo[ complex ][ cInt ] );
 							SetPlayerVirtualWorld( playerid, ComplexRoomInfo[ complex ][ cViwo ]);
-							Bit16_Set(gr_PlayerInRoom, playerid, complex);
+							Player_SetInApartmentRoom(playerid, complex);
 							SetPlayerHealth(playerid, 100);
 							return 1;
 						}
@@ -2024,10 +1990,10 @@ hook OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
 			);
 		  	ProxDetector(15.0, playerid, tmpString, COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE);
 		}
-		if( Bit1_Get( gr_Drink, playerid ) )
+		if(Player_HasDrink(playerid))
 		{
 	        SetPlayerSpecialAction(playerid,0);
-	        Bit1_Set( gr_Drink, playerid, false );
+	        Player_SetHasDrink(playerid, false);
 
 			new
 				tmpString[ 50 ];
@@ -2132,11 +2098,11 @@ hook OnPlayerUpdate(playerid)
 
 	// Int & ViWo Sync Check
 	new
-		complexid = Bit16_Get( gr_PlayerInComplex, playerid ),
-		roomid 	= Bit16_Get( gr_PlayerInRoom, playerid ),
-		houseid 	= Bit16_Get( gr_PlayerInHouse, playerid ),
-		bizzid 	= Bit16_Get( gr_PlayerInBiznis, playerid ),
-		pickupid 	= Bit16_Get( gr_PlayerInPickup, playerid );
+		complexid = Player_InApartmentComplex(playerid),
+		roomid    = Player_InApartmentRoom(playerid),
+		houseid   = Player_InHouse(playerid),
+		bizzid    = Player_InBusiness(playerid),
+		pickupid  = Player_InPickup(playerid);
 
 	if(PlayerInfo[playerid][pAdmin] == 0)
 	{
@@ -2154,15 +2120,23 @@ public OnPlayerInteriorChange(playerid, newinteriorid, oldinteriorid)
 	return 1;
 }
 
+// TODO: should be a part of mask module
 public OnPlayerStreamIn(playerid, forplayerid)
 {
-	if(Bit1_Get(gr_MaskUse, forplayerid)) {
-	    if(PlayerInfo[playerid][pAdmin] > 0 && Bit1_Get(a_AdminOnDuty, playerid))
-	        ShowPlayerNameTagForPlayer(playerid, forplayerid, true);
-	    else
-	    	ShowPlayerNameTagForPlayer(playerid, forplayerid, false);
-	}
-	else
-	    ShowPlayerNameTagForPlayer(playerid, forplayerid, true);
-	return 1;
+    if (Player_UsingMask(forplayerid))
+    {
+        if (PlayerInfo[playerid][pAdmin] > 0 && Bit1_Get(a_AdminOnDuty, playerid))
+        {
+            ShowPlayerNameTagForPlayer(playerid, forplayerid, true);
+        }
+        else
+        {
+            ShowPlayerNameTagForPlayer(playerid, forplayerid, false);
+        }
+    }
+    else
+    {
+        ShowPlayerNameTagForPlayer(playerid, forplayerid, true);
+    }
+    return 1;
 }

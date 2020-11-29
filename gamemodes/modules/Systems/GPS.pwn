@@ -17,6 +17,7 @@
 */
 
 #include <YSI_Coding\y_hooks>
+#include "modules/Player/Player_h.pwn"
 
 
 /*
@@ -79,8 +80,9 @@ new
 
     PlayerText:gps_Meters[MAX_PLAYERS] = {PlayerText:INVALID_TEXT_DRAW, ...},
 
-    Iterator:GPS_location<MAX_GPS_LOCATIONS>,
-    Bit1:gps_Activated<MAX_PLAYERS> = Bit1:false;
+    Iterator:GPS_location<MAX_GPS_LOCATIONS>;
+
+static bool:GPSActivated[MAX_PLAYERS] = {false, ...};
 
 
 /*
@@ -92,6 +94,16 @@ new
     ##       ##     ## ##   ### ##    ## ##    ## 
     ##        #######  ##    ##  ######   ######  
 */
+
+stock bool:Player_GpsActivated(playerid)
+{
+    return GPSActivated[playerid];
+}
+
+stock Player_SetGpsActivated(playerid, bool:v)
+{
+    GPSActivated[playerid] = v;
+}
 
 // TODO: horrible naming, keep it consistent
 forward on_GPScreate(gps_id);
@@ -199,11 +211,11 @@ Delete_GPS(gpsid)
 
 DisableGPS(playerid)
 {
-    if (Bit1_Get(gps_Activated, playerid))
+    if (Player_GpsActivated(playerid))
     {
         DisablePlayerCheckpoint(playerid);
         gps_DistanceTD(playerid, bool:false);
-        Bit1_Set(gps_Activated, playerid, false);
+        Player_SetGpsActivated(playerid, false);
 
         foreach(new i : GPS_location)
         {
@@ -219,7 +231,7 @@ DisableGPS(playerid)
 
 GPS_Active_Check(playerid)
 {
-    return Bit1_Get(gps_Activated, playerid);
+    return Player_GpsActivated(playerid);
 }
 
 // TODO: delete
@@ -264,7 +276,7 @@ gps_DistanceTD(playerid, bool:show)
 
 Public:gps_GetDistance(playerid, gpsid, Float:X, Float:Y, Float:Z)
 {
-    if (Bit1_Get(gps_Activated, playerid))
+    if (Player_GpsActivated(playerid))
     {
         new Float:gpsLocation, buffer[64];
         gpsLocation = GetPlayerDistanceFromPoint(playerid, X, Y, Z);
@@ -272,7 +284,7 @@ Public:gps_GetDistance(playerid, gpsid, Float:X, Float:Y, Float:Z)
         format(buffer, sizeof(buffer), "~w~(GPS)_~y~%s - %0.2f_meters...", GPS_data[gpsid][gpsName], gpsLocation);
         PlayerTextDrawSetString(playerid, gps_Meters[playerid], buffer);
     }
-    else if (!Bit1_Get(gps_Activated, playerid))
+    else
     {
         gps_DistanceTD(playerid, false);
     }
@@ -316,12 +328,13 @@ hook OnPlayerSpawn(playerid)
 
 hook OnPlayerEnterCheckpoint(playerid)
 {
-    if (Bit1_Get(gps_Activated, playerid))
+    if (Player_GpsActivated(playerid))
     {
-        Bit1_Set(gps_Activated, playerid, false);
         DisablePlayerCheckpoint(playerid);
-        GameTextForPlayer(playerid, "~g~Stigli ste na odrediste!", 1500, 1);
         gps_DistanceTD(playerid, false);
+        Player_SetGpsActivated(playerid, false);
+
+        GameTextForPlayer(playerid, "~g~Stigli ste na odrediste!", 1500, 1);
     }
     return 1;
 }
@@ -372,7 +385,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
         case DIALOG_LOCATIONSGPS:
         {
             new enum_id = GPSToList[playerid][listitem];
-            Bit1_Set(gps_Activated, playerid, true);
+            Player_SetGpsActivated(playerid, true);
             gps_DistanceTD(playerid, true);
 
             GPSInfo[playerid][gGPSID] = enum_id;
@@ -464,18 +477,19 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 
 CMD:gps(playerid, params[])
 {
-    if (Bit1_Get(gr_IsWorkingJob, playerid))
+    if (Player_IsWorkingJob(playerid))
     {
         SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne mozete koristiti GPS dok radite!");
         return 1;
     }
 
-    if (Bit1_Get(gps_Activated, playerid))
+    if (Player_GpsActivated(playerid))
     {
-        SendClientMessage(playerid, COLOR_RED, "[ ! ] Deaktivirali ste stari GPS.");
-        Bit1_Set(gps_Activated, playerid, false);
         DisablePlayerCheckpoint(playerid);
         gps_DistanceTD(playerid, bool:false);
+        Player_SetGpsActivated(playerid, false);
+
+        SendClientMessage(playerid, COLOR_RED, "[ ! ] Deaktivirali ste stari GPS.");
         return 1;
     }
 

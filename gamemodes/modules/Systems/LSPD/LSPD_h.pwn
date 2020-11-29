@@ -19,6 +19,9 @@ forward Player_SetOnPoliceDuty(playerid, bool:v);
 forward bool:Player_ApprovedUndercover(playerid);
 forward Player_SetApprovedUndercover(playerid, bool:v);
 
+forward bool:Player_CanRepairGovVehicle(playerid);
+forward Player_SetCanRepairGovVehicle(playerid, bool:v);
+
 // SWAT
 forward bool:Player_IsSWAT(playerid);
 forward Player_SetIsSWAT(playerid, bool:v);

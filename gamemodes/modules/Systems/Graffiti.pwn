@@ -131,13 +131,12 @@ static
     Iterator:SprayTags<MAX_TAGS>;
 
 static
-    Bit1:r_GrafCreateStarted <MAX_PLAYERS> = {Bit1: false, ...},
-    Bit1:r_TaggCreateStarted <MAX_PLAYERS> = {Bit1: false, ...},
-    Bit1:r_TagEditStarted    <MAX_PLAYERS> = {Bit1: false, ...},
-    Bit1:r_GraffitEditStarted<MAX_PLAYERS> = {Bit1: false, ...},
-    Bit1:r_GrafApprove       <MAX_PLAYERS> = {Bit1: false, ...};
+    bool:GrafCreateStarted[MAX_PLAYERS] = {false, ...},
+    bool:TagCreateStarted [MAX_PLAYERS] = {false, ...},
+    bool:TagEditStarted   [MAX_PLAYERS] = {false, ...},
+    bool:GrafEditStarted  [MAX_PLAYERS] = {false, ...},
+    bool:GrafApproved     [MAX_PLAYERS] = {false, ...},
 
-static
     LastPlayerTag[MAX_PLAYERS],
     LastPlayerGraffiti[MAX_PLAYERS],
     GraffitiObjectEdit[MAX_PLAYERS],
@@ -504,7 +503,7 @@ stock DestroyGraffit(grafid)
 
 stock UpdateGraffitProgress(playerid, grafid)
 {
-    if (!GraffitCPInfo[playerid][gProgress] && Bit1_Get(r_GrafCreateStarted, playerid))
+    if (!GraffitCPInfo[playerid][gProgress] && GrafCreateStarted[playerid])
     {
         new
             Float:X, Float:Y, Float:Z;
@@ -535,7 +534,7 @@ stock UpdateGraffitProgress(playerid, grafid)
             new bool:is_crouching = GetPlayerSpecialAction(playerid) == SPECIAL_ACTION_DUCK;
             Z += (is_crouching) ? (-0.3) : 0.7;
             CreateGraffit(playerid, grafid, GraffitInfo[grafid][gText], X, Y, Z, 0.0, 0.0, angle);
-            Bit1_Set(r_GrafCreateStarted, playerid, false);
+            GrafCreateStarted[playerid] = false;
             DestroyGraffitCheckpoint(playerid);
             DestroyPlayerProgressBar(playerid, gProgressBar[playerid]);
             InsertGraffitIntoDB(grafid);
@@ -810,7 +809,7 @@ stock UpdateSprayTagProgress(playerid, tagid)
         CreateSprayTagCheckpoint(playerid,tagid,X,Y,Z);
         PlayerInfo[playerid][pTagID] = tagid;
         TagCPInfo[tagid][tProgress] += GRAFFIT_SPRAYING_UP;
-        Bit1_Set(r_TaggCreateStarted, playerid, true);
+        TagCreateStarted[playerid] = true;
     }
     else if (TagCPInfo[tagid][tProgress] > 0)
     {
@@ -819,7 +818,7 @@ stock UpdateSprayTagProgress(playerid, tagid)
 
         if (TagCPInfo[tagid][tProgress] >= 100)
         {
-            Bit1_Set(r_TaggCreateStarted, playerid, false);
+            TagCreateStarted[playerid] = false;
             DestroySprayTagCheckpoint(tagid);
             DestroyPlayerProgressBar(playerid, tProgressBar[playerid]);
 
@@ -861,12 +860,12 @@ stock UpdateSprayTagProgress(playerid, tagid)
 
 Public:SprayingBarChecker(playerid)
 {
-    if (Bit1_Get(r_GrafCreateStarted, playerid))
+    if (GrafCreateStarted[playerid])
     {
         if (!IsPlayerInRangeOfPoint(playerid, 2.5, GraffitCPInfo[playerid][gCPX], GraffitCPInfo[playerid][gCPY], GraffitCPInfo[playerid][gCPZ]))
             HidePlayerProgressBar(playerid, gProgressBar[playerid]);
     }
-    else if (Bit1_Get(r_TaggCreateStarted, playerid))
+    else if (TagCreateStarted[playerid])
     {
         new tagid = PlayerInfo[playerid][pTagID];
         if (!IsPlayerInRangeOfPoint(playerid, 2.5, TagCPInfo[tagid][tCPX], TagCPInfo[tagid][tCPY], TagCPInfo[tagid][tCPZ]))
@@ -884,7 +883,7 @@ Public:SprayingTaggTimer(playerid)
     {
         if (AC_GetPlayerWeapon(playerid) == 41)
         {
-            if (Bit1_Get(r_TaggCreateStarted, playerid) && !Bit1_Get(r_GrafCreateStarted, playerid))
+            if (TagCreateStarted[playerid] && !GrafCreateStarted[playerid])
             {
                 new tagid = PlayerInfo[playerid][pTagID];
                 if (!IsPlayerInRangeOfPoint(playerid, 1.5, TagCPInfo[tagid][tCPX], TagCPInfo[tagid][tCPY], TagCPInfo[tagid][tCPZ])) return 1;
@@ -892,7 +891,7 @@ Public:SprayingTaggTimer(playerid)
                 SetPlayerProgressBarValue(playerid, tProgressBar[playerid], TagCPInfo[tagid][tProgress]);
                 ShowPlayerProgressBar(playerid, tProgressBar[playerid]);
             }
-            else if (!Bit1_Get(r_TaggCreateStarted, playerid) && !Bit1_Get(r_GrafCreateStarted, playerid))
+            else if (!TagCreateStarted[playerid] && !GrafCreateStarted[playerid])
             {
                 if (!GetOfficialGangTag(playerid)) return 1;
                 if (GetFactionTagCount(GetPlayerOrganisation(playerid)) == 100) return 1;
@@ -903,7 +902,7 @@ Public:SprayingTaggTimer(playerid)
                 ShowPlayerProgressBar(playerid, tProgressBar[playerid]);
                 UpdateSprayTagProgress(playerid, tagid);
             }
-            if (Bit1_Get(r_GrafCreateStarted, playerid))
+            if (GrafCreateStarted[playerid])
             {
                 new grafid = PlayerInfo[playerid][pGrafID];
                 if (!IsPlayerInRangeOfPoint(playerid, 1.5, GraffitCPInfo[playerid][gCPX], GraffitCPInfo[playerid][gCPY], GraffitCPInfo[playerid][gCPZ])) return 1;
@@ -937,14 +936,14 @@ hook LoadServerData()
 
 hook OnPlayerDisconnect(playerid, reason)
 {
-    if (Bit1_Get(r_GrafCreateStarted, playerid))
+    if (GrafCreateStarted[playerid])
     {
-        Bit1_Set(r_GrafCreateStarted, playerid, false);
+        GrafCreateStarted[playerid] = false;
         DestroyGraffitCheckpoint(playerid);
     }
-    if (Bit1_Get(r_TaggCreateStarted, playerid))
+    if (TagCreateStarted[playerid])
     {
-        Bit1_Set(r_TaggCreateStarted, playerid, false);
+        TagCreateStarted[playerid] = false;
         DestroySprayTagCheckpoint(PlayerInfo[playerid][pTagID]);
     }
     return 1;
@@ -1072,7 +1071,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
             format(GraffitInfo[grafid][gText], 32, "%s", inputtext);
             GameTextForPlayer(playerid, "~w~Spraying time", 1000, 1);
 
-            Bit1_Set(r_GrafCreateStarted, playerid, true);
+            GrafCreateStarted[playerid] = true;
             UpdateGraffitProgress(playerid, grafid);
             gProgressBar[playerid] = CreatePlayerProgressBar(playerid, 55.0, 319.0, _, _, 0x1932AAFF, 100.0);
             SetPlayerProgressBarValue(playerid, gProgressBar[playerid], 0.0);
@@ -1085,7 +1084,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 
 hook OnPlayerEditDynObject(playerid, objectid, response, Float:x, Float:y, Float:z, Float:rx, Float:ry, Float:rz)
 {
-    if (!Bit1_Get(r_GrafApprove, playerid))
+    if (!GrafApproved[playerid])
     {
         return 1;
     }
@@ -1106,16 +1105,16 @@ hook OnPlayerEditDynObject(playerid, objectid, response, Float:x, Float:y, Float
                 SetDynamicObjectRot(GraffitInfo[index][gObject], rx, ry, rz);
                 EditGraffit(index, x, y, z, rx, ry, rz);
 
-                EditingGraffitiIndex[playerid]  = 999;
-                GraffitiObjectEdit[playerid]    = -1;
+                EditingGraffitiIndex[playerid] = 999;
+                GraffitiObjectEdit[playerid]   = -1;
             }
             else if (response == EDIT_RESPONSE_CANCEL)
             {
                 SetDynamicObjectPos(GraffitInfo[index][gObject], GraffitInfo[index][gPosX], GraffitInfo[index][gPosY], GraffitInfo[index][gPosZ]);
                 SetDynamicObjectRot(GraffitInfo[index][gObject], GraffitInfo[index][gRotX], GraffitInfo[index][gRotY], GraffitInfo[index][gRotZ]);
 
-                EditingGraffitiIndex[playerid]  = 999;
-                GraffitiObjectEdit[playerid]    = -1;
+                EditingGraffitiIndex[playerid] = 999;
+                GraffitiObjectEdit[playerid]   = -1;
             }
         }
         case EDIT_SPRAYTAG:
@@ -1126,16 +1125,16 @@ hook OnPlayerEditDynObject(playerid, objectid, response, Float:x, Float:y, Float
                 SetDynamicObjectRot(TagInfo[index][tgObject], rx, ry, rz);
                 EditSprayTag(index, x, y, z, rx, ry, rz);
 
-                EditingGraffitiIndex[playerid]  = 999;
-                GraffitiObjectEdit[playerid]    = -1;
+                EditingGraffitiIndex[playerid] = 999;
+                GraffitiObjectEdit[playerid]   = -1;
             }
             else if (response == EDIT_RESPONSE_CANCEL)
             {
                 SetDynamicObjectPos(TagInfo[index][tgObject], TagInfo[index][tPosX], TagInfo[index][tPosY], TagInfo[index][tPosZ]);
                 SetDynamicObjectRot(TagInfo[index][tgObject], TagInfo[index][tRotX], TagInfo[index][tRotY], TagInfo[index][tRotZ]);
 
-                EditingGraffitiIndex[playerid]  = 999;
-                GraffitiObjectEdit[playerid]    = -1;
+                EditingGraffitiIndex[playerid] = 999;
+                GraffitiObjectEdit[playerid]   = -1;
             }
         }
     }
@@ -1165,14 +1164,14 @@ CMD:spraytag(playerid, params[])
 
     if (!strcmp(pick, "edit", true))
     {
-        if (Bit1_Get(r_TagEditStarted, playerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Vec uredjujete jedan grafit!");
+        if (TagEditStarted[playerid]) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Vec uredjujete jedan grafit!");
 
         if (PlayerInfo[playerid][pAdmin] >= 1)
         {
             new tagid = GetSprayTagIdFromPlaya(playerid, 2.0);
             if (!tagid) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste u blizini niti jednog grafita!");
 
-            Bit1_Set(r_TagEditStarted, playerid, true);
+            TagEditStarted[playerid] = true;
             EditDynamicObject(playerid, TagInfo[tagid][tgObject]);
             GraffitiObjectEdit[playerid] = EDIT_SPRAYTAG;
         }
@@ -1181,7 +1180,7 @@ CMD:spraytag(playerid, params[])
             new tagid = GetPlayersSprayTag(playerid, LastPlayerTag[playerid], 5.0);
             if (!tagid) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nisi u blizini svojega tagga!");
 
-            Bit1_Set(r_TagEditStarted, playerid, true);
+            TagEditStarted[playerid] = true;
             EditDynamicObject(playerid, LastPlayerTag[playerid]);
             GraffitiObjectEdit[playerid] = EDIT_SPRAYTAG;
         }
@@ -1226,7 +1225,7 @@ CMD:graffit(playerid, params[])
 
     if (!strcmp(pick, "create", false, 6))
     {
-        if (!Bit1_Get(r_GrafApprove, playerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nemas dozvolu za grafite!");
+        if (!GrafApproved[playerid]) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nemas dozvolu za grafite!");
         if (GetGraffitIdFromPlaya(playerid, 5.0) != -1) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne smijes postavljati tako blizu grafite!");
 
         PlayerInfo[playerid][pGrafID] = Iter_Free(Graffits);
@@ -1236,7 +1235,7 @@ CMD:graffit(playerid, params[])
     }
     else if (!strcmp(pick, "edit", true))
     {
-        if (Bit1_Get(r_GraffitEditStarted, playerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Vec uredjujete jedan grafit!");
+        if (GrafEditStarted[playerid]) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Vec uredjujete jedan grafit!");
 
         if (PlayerInfo[playerid][pAdmin] >= 1)
         {
@@ -1286,14 +1285,14 @@ CMD:graffit(playerid, params[])
     }
     else if (!strcmp(pick, "approve", true))
     {
-        new gplayerid;
+        new giveplayerid;
         if (PlayerInfo[playerid][pAdmin] < 3) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ovlasteni za koristenje ove komande!");
-        if (sscanf(params, "s[9]u", pick, gplayerid)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /graffit aprove [playerid/dio imena]");
-        if (gplayerid == INVALID_PLAYER_ID) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Krivi playerid!");
+        if (sscanf(params, "s[9]u", pick, giveplayerid)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /graffit aprove [playerid/dio imena]");
+        if (giveplayerid == INVALID_PLAYER_ID) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Krivi playerid!");
 
-        Bit1_Set(r_GrafApprove, gplayerid, true);
-        va_SendClientMessage(gplayerid, COLOR_RED, "[ ! ] Admin %s ti je dao dozvolu za pravljenje grafita!", GetName(playerid, false));
-        va_SendClientMessage(playerid, COLOR_RED, "[ ! ] Dao si %s dozvolu za pravljenje grafita!", GetName(gplayerid, false));
+        GrafApproved[giveplayerid] = true;
+        va_SendClientMessage(giveplayerid, COLOR_RED, "[ ! ] Admin %s ti je dao dozvolu za pravljenje grafita!", GetName(playerid, false));
+        va_SendClientMessage(playerid, COLOR_RED, "[ ! ] Dao si %s dozvolu za pravljenje grafita!", GetName(giveplayerid, false));
         return 1;
     }
     return 1;

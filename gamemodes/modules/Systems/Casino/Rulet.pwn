@@ -22,6 +22,7 @@ enum
 	ROULETTE_TYPE_STUPAC,
 	ROULETTE_TYPE_PARNEPAR,
 };
+
 enum E_RULET_TABLES_DATA
 {
 	Float:rtPosX,
@@ -33,7 +34,7 @@ enum E_RULET_TABLES_DATA
 	rtMaxWage,
 	rtPickupid
 }
-stock
+static
 	RTable[ MAX_RULET_TABLES ][ E_RULET_TABLES_DATA ] = {
 		{ 794.8000, 416.1000, 1070.9000, 5, 0, 20, 	200,	-1 },
 		{ 789.7000, 416.0000, 1070.9000, 5, 0, 500, 5000,	-1 },
@@ -48,7 +49,7 @@ enum E_RULET_CHIP_DATA
 	Float:rcPosY,
 	Float:rcPosZ
 }
-new
+static const
 	RChips[][ E_RULET_CHIP_DATA ] = {
 		{ 0, 0.0545, 	0.5675,  -0.3000 },
 		{ 1, -0.1935, 	0.4203,  -0.3000 },
@@ -101,8 +102,7 @@ new
 		{ 48, -0.6936,  -0.8122, -0.3000 }  // nepar
 	};
 
-// PlayerVars (32 bit)
-static stock
+static
 	RoulettSlot[ MAX_PLAYERS ],				// Zadnji slot koji igrac stavlja
 	RouletteTable[ MAX_PLAYERS ],			// Stol za kojim igra
 	RoulettWholeBet[ MAX_PLAYERS ], 		// Cijeli unos oklada
@@ -115,21 +115,16 @@ static stock
 	RouletteParNepar[ MAX_PLAYERS ][ 47 ],	// Koju je par/nepar odabrao
 	RouletteType[ MAX_PLAYERS ][ 47 ],		// Tip oklade
 	Timer:GlobalRoulette[ MAX_PLAYERS ],	// Timer za glavni dio ruleta (biranje broja)
-	Timer:WaitingRoulette[ MAX_PLAYERS ];	// Timer koji ceka da igrac odabere okladu
-	
-// PlayerVars (rBits)
-static stock
-	Bit1: 	gr_RuletWaintingOn		<MAX_PLAYERS>  = {Bit1:false, ...},
-	Bit8: 	gr_RuletWaiting			<MAX_PLAYERS>  = {Bit8:0, ... },
-	Bit8:	gr_RouletteCount		<MAX_PLAYERS>  = {Bit8:0, ... };
+	Timer:WaitingRoulette[ MAX_PLAYERS ],	// Timer koji ceka da igrac odabere okladu
+	bool:RuletWaitingForPlayers[MAX_PLAYERS] = {false, ...},
+	RuletWaitingTime[MAX_PLAYERS] = {0, ... },
+	RouletteCount[MAX_PLAYERS] = {0, ... };
 
-// TextDraws
+// TODO: make these variables private ("static") when commandments are followed in BlackJack.pwn: ln 791
 new
 	PlayerText:RuletWages[ MAX_PLAYERS ]	 	= { PlayerText:INVALID_TEXT_DRAW, ... },
 	PlayerText:RuletNote[ MAX_PLAYERS ]		 	= { PlayerText:INVALID_TEXT_DRAW, ... },
-	PlayerText:RuletTitle[ MAX_PLAYERS ]	 	= { PlayerText:INVALID_TEXT_DRAW, ... };
-	
-static stock
+	PlayerText:RuletTitle[ MAX_PLAYERS ]	 	= { PlayerText:INVALID_TEXT_DRAW, ... },
 	PlayerText:RuletColor[MAX_PLAYERS] 		 	= { PlayerText:INVALID_TEXT_DRAW, ... },
 	PlayerText:RuletNumber[MAX_PLAYERS] 	 	= { PlayerText:INVALID_TEXT_DRAW, ... },
 	PlayerText:RuletBcg1[ MAX_PLAYERS ]		 	= { PlayerText:INVALID_TEXT_DRAW, ... },
@@ -142,9 +137,8 @@ static stock
 	PlayerText:RuletPotWholeInput[ MAX_PLAYERS ]= { PlayerText:INVALID_TEXT_DRAW, ... },
 	PlayerText:RuletPotNow[ MAX_PLAYERS ] 		= { PlayerText:INVALID_TEXT_DRAW, ... },
 	PlayerText:RuletPotNowInput[ MAX_PLAYERS ] 	= { PlayerText:INVALID_TEXT_DRAW, ... };
-	
-// Iteratori
-new
+
+static
 	Iterator:RuletTables<MAX_RULET_TABLES>;
 
 /*
@@ -190,16 +184,21 @@ stock DestroyRuletWorkers()
 }
 
 stock ResetRuletTable(playerid)
+{
 	RouletteTable[playerid] = -1;
-	
+}
+
 stock ResetRuletArrays(playerid, bool:autodestruct = false)
 { 
 	// TextDraws
 	if( !autodestruct )
+	{
 		DestroyRouletteTDs(playerid);
+	}
 	DestroyRuletPickupTDs(playerid);
 	DestroyRuletPotTDs(playerid);
 
+	// TODO: fk magic numbers
 	for(new i = 0; i < 47; i++)
 	{
 		RoulettBet[ playerid ][ i ]			= 0; 
@@ -209,18 +208,17 @@ stock ResetRuletArrays(playerid, bool:autodestruct = false)
 		RouletteParNepar[ playerid ][ i ]	= -1;
 		RouletteStupac[ playerid ][ i ]		= -1;
 		RouletteType[ playerid ][ i ]		= -1;
+
 		DestroyDynamicObject(RouletteChipObj[ playerid ][ i ]);
 		RouletteChipObj[ playerid ][ i ] = INVALID_OBJECT_ID;
 	}
 
-	// Arrays (32bit)
 	RoulettSlot[ playerid ]					= 0;
 	RoulettWholeBet[ playerid ]				= 0;
 
-	// rBits
-	Bit1_Set( gr_RuletWaintingOn, playerid, 	false );
-	Bit8_Set( gr_RuletWaiting,	  playerid, 	0 );
-	Bit8_Set( gr_RouletteCount,   playerid, 	0 );
+	RuletWaitingForPlayers[playerid] = false;
+	RuletWaitingTime[playerid] = 0;
+	RouletteCount[playerid] = 0;
 
 	stop GlobalRoulette[ playerid ];
 	stop WaitingRoulette[ playerid ];
@@ -229,14 +227,16 @@ stock ResetRuletArrays(playerid, bool:autodestruct = false)
 
 stock DestroyRouletteTDs(playerid)
 {
-	if( RuletColor[playerid] != PlayerText:INVALID_TEXT_DRAW ) {
-		PlayerTextDrawDestroy( playerid, RuletColor[playerid] );
-		RuletColor[playerid] 	= PlayerText:INVALID_TEXT_DRAW;
+	if (RuletColor[playerid] != PlayerText:INVALID_TEXT_DRAW)
+	{
+		PlayerTextDrawDestroy(playerid, RuletColor[playerid]);
+		RuletColor[playerid] = PlayerText:INVALID_TEXT_DRAW;
 	}
 	
-	if( RuletNumber[playerid] != PlayerText:INVALID_TEXT_DRAW ) {
-		PlayerTextDrawDestroy( playerid, RuletNumber[playerid] );
-		RuletNumber[playerid] 	= PlayerText:INVALID_TEXT_DRAW;
+	if (RuletNumber[playerid] != PlayerText:INVALID_TEXT_DRAW)
+	{
+		PlayerTextDrawDestroy(playerid, RuletNumber[playerid]);
+		RuletNumber[playerid] = PlayerText:INVALID_TEXT_DRAW;
 	}
 	return 1;
 }
@@ -292,7 +292,7 @@ stock PlayerToRouletteMoney(playerid, money)
 	return 1;
 }
 
-stock static ShowRouletteTD(playerid, number)
+static stock ShowRouletteTD(playerid, number)
 {
 	switch( number ) {
 		case 0: {																		// Zelena
@@ -338,7 +338,7 @@ stock InitRuletTables()
 	return 1;
 }
 
-stock static IsPlayerInRangeOfRuletTable( playerid )
+static stock IsPlayerInRangeOfRuletTable( playerid )
 {
 	new
 		tableid = -1;
@@ -353,7 +353,7 @@ stock static IsPlayerInRangeOfRuletTable( playerid )
 	return tableid;
 }
 
-stock static CreateRuletChips(playerid, slot)
+static stock CreateRuletChips(playerid, slot)
 {
 	new
 		number,
@@ -426,7 +426,7 @@ stock static CreateRuletChips(playerid, slot)
 	return 1;
 }
 
-stock static IsPlayerWinner(playerid, number)
+static stock IsPlayerWinner(playerid, number)
 {
 	if( RouletteTable[ playerid ] == -1 ) return 0;
 	for( new x = 0; x <= RoulettSlot[ playerid ]; x++ ) {
@@ -740,77 +740,91 @@ stock ShowRuletPickupTDs(playerid)
 
 stock DestroyRuletPickupTDs(playerid)
 {
-	if( RuletBcg1[ playerid ]	!= PlayerText:INVALID_TEXT_DRAW ) {
-		PlayerTextDrawDestroy( playerid, RuletBcg1[ playerid ]	);
-		RuletBcg1[ playerid ]	= PlayerText:INVALID_TEXT_DRAW;
+	if (RuletBcg1[playerid] != PlayerText:INVALID_TEXT_DRAW)
+	{
+		PlayerTextDrawDestroy(playerid, RuletBcg1[playerid]);
+		RuletBcg1[playerid] = PlayerText:INVALID_TEXT_DRAW;
 	}
-	
-	if( RuletBcg2[ playerid ]	!= PlayerText:INVALID_TEXT_DRAW ) {
-		PlayerTextDrawDestroy( playerid, RuletBcg2[ playerid ]  );
-		RuletBcg2[ playerid ]	= PlayerText:INVALID_TEXT_DRAW;
+
+	if (RuletBcg2[playerid] != PlayerText:INVALID_TEXT_DRAW)
+	{
+		PlayerTextDrawDestroy(playerid, RuletBcg2[playerid]);
+		RuletBcg2[playerid] = PlayerText:INVALID_TEXT_DRAW;
 	}
-	
-	if( RuletTitle[ playerid ]  != PlayerText:INVALID_TEXT_DRAW ) {
-		PlayerTextDrawDestroy( playerid, RuletTitle[ playerid ] );
-		RuletTitle[ playerid ]  = PlayerText:INVALID_TEXT_DRAW;
+
+	if (RuletTitle[playerid] != PlayerText:INVALID_TEXT_DRAW)
+	{
+		PlayerTextDrawDestroy(playerid, RuletTitle[playerid]);
+		RuletTitle[playerid] = PlayerText:INVALID_TEXT_DRAW;
 	}
-	
-	if( RuletNote[ playerid ]	!= PlayerText:INVALID_TEXT_DRAW ) {
-		PlayerTextDrawDestroy( playerid, RuletNote[ playerid ]  );
-		RuletNote[ playerid ]	= PlayerText:INVALID_TEXT_DRAW;
+
+	if (RuletNote[playerid] != PlayerText:INVALID_TEXT_DRAW)
+	{
+		PlayerTextDrawDestroy(playerid, RuletNote[playerid]);
+		RuletNote[playerid] = PlayerText:INVALID_TEXT_DRAW;
 	}
-	
-	if( RuletWages[ playerid ]  != PlayerText:INVALID_TEXT_DRAW ) {
-		PlayerTextDrawDestroy( playerid, RuletWages[ playerid ] );
-		RuletWages[ playerid ]  = PlayerText:INVALID_TEXT_DRAW;
+
+	if (RuletWages[playerid] != PlayerText:INVALID_TEXT_DRAW)
+	{
+		PlayerTextDrawDestroy(playerid, RuletWages[playerid]);
+		RuletWages[playerid] = PlayerText:INVALID_TEXT_DRAW;
 	}
 	return 1;
 }
 
-stock static DestroyRuletPotTDs(playerid)
+static stock DestroyRuletPotTDs(playerid)
 {
-	if( RuletPotBcg[ playerid ] 		!= PlayerText:INVALID_TEXT_DRAW ) {
-		PlayerTextDrawDestroy( playerid, RuletPotBcg[ playerid ] 		);
-		RuletPotBcg[ playerid ] 		= PlayerText:INVALID_TEXT_DRAW;
+	if (RuletPotBcg[playerid] != PlayerText:INVALID_TEXT_DRAW)
+	{
+		PlayerTextDrawDestroy(playerid, RuletPotBcg[playerid]);
+		RuletPotBcg[playerid] = PlayerText:INVALID_TEXT_DRAW;
 	}
-	if( RuletPotTitle[ playerid ] 		!= PlayerText:INVALID_TEXT_DRAW ) {
-		PlayerTextDrawDestroy( playerid, RuletPotTitle[ playerid ] 		);
-		RuletPotTitle[ playerid ] 		= PlayerText:INVALID_TEXT_DRAW;
+
+	if (RuletPotTitle[playerid] != PlayerText:INVALID_TEXT_DRAW)
+	{
+		PlayerTextDrawDestroy(playerid, RuletPotTitle[playerid]);
+		RuletPotTitle[playerid] = PlayerText:INVALID_TEXT_DRAW;
 	}
-	
-	if( RuletPotMax[ playerid ] 		!= PlayerText:INVALID_TEXT_DRAW ) {
-		PlayerTextDrawDestroy( playerid, RuletPotMax[ playerid ] 		);
-		RuletPotMax[ playerid ] 		= PlayerText:INVALID_TEXT_DRAW;
+
+	if (RuletPotMax[playerid] != PlayerText:INVALID_TEXT_DRAW)
+	{
+		PlayerTextDrawDestroy(playerid, RuletPotMax[playerid]);
+		RuletPotMax[playerid] = PlayerText:INVALID_TEXT_DRAW;
 	}
-	
-	if( RuletPotMaxInput[ playerid ] 	!= PlayerText:INVALID_TEXT_DRAW ) {
-		PlayerTextDrawDestroy( playerid, RuletPotMaxInput[ playerid ] 	);
-		RuletPotMaxInput[ playerid ] 	= PlayerText:INVALID_TEXT_DRAW;
+
+	if (RuletPotMaxInput[playerid] != PlayerText:INVALID_TEXT_DRAW)
+	{
+		PlayerTextDrawDestroy(playerid, RuletPotMaxInput[playerid]);
+		RuletPotMaxInput[playerid] = PlayerText:INVALID_TEXT_DRAW;
 	}
-	
-	if( RuletPotWhole[ playerid ] 		!= PlayerText:INVALID_TEXT_DRAW ) {
-		PlayerTextDrawDestroy( playerid, RuletPotWhole[ playerid ] 		);
-		RuletPotWhole[ playerid ] 		= PlayerText:INVALID_TEXT_DRAW;
+
+	if (RuletPotWhole[playerid] != PlayerText:INVALID_TEXT_DRAW)
+	{
+		PlayerTextDrawDestroy(playerid, RuletPotWhole[playerid]);
+		RuletPotWhole[playerid] = PlayerText:INVALID_TEXT_DRAW;
 	}
-	
-	if( RuletPotWholeInput[ playerid ]	!= PlayerText:INVALID_TEXT_DRAW ) {
-		PlayerTextDrawDestroy( playerid, RuletPotWholeInput[ playerid ]	);
-		RuletPotWholeInput[ playerid ] 		= PlayerText:INVALID_TEXT_DRAW;
+
+	if (RuletPotWholeInput[playerid] != PlayerText:INVALID_TEXT_DRAW)
+	{
+		PlayerTextDrawDestroy(playerid, RuletPotWholeInput[playerid]);
+		RuletPotWholeInput[playerid] = PlayerText:INVALID_TEXT_DRAW;
 	}
-	
-	if( RuletPotNow[ playerid ] 		!= PlayerText:INVALID_TEXT_DRAW ) {
-		PlayerTextDrawDestroy( playerid, RuletPotNow[ playerid ] );
-		RuletPotNow[ playerid ] 	= PlayerText:INVALID_TEXT_DRAW;
+
+	if (RuletPotNow[playerid] != PlayerText:INVALID_TEXT_DRAW)
+	{
+		PlayerTextDrawDestroy(playerid, RuletPotNow[playerid]);
+		RuletPotNow[playerid] = PlayerText:INVALID_TEXT_DRAW;
 	}
-	
-	if( RuletPotNowInput[ playerid ] 	!= PlayerText:INVALID_TEXT_DRAW ) {
-		PlayerTextDrawDestroy( playerid, RuletPotNowInput[ playerid ] );
-		RuletPotNowInput[ playerid ] 	= PlayerText:INVALID_TEXT_DRAW;
+
+	if (RuletPotNowInput[playerid] != PlayerText:INVALID_TEXT_DRAW)
+	{
+		PlayerTextDrawDestroy(playerid, RuletPotNowInput[playerid]);
+		RuletPotNowInput[playerid] = PlayerText:INVALID_TEXT_DRAW;
 	}
 	return 1;
 }
 
-stock static ShowRuletPotTDs(playerid)
+static stock ShowRuletPotTDs(playerid)
 {
 	DestroyRuletPotTDs(playerid);
 	RuletPotBcg[playerid] = CreatePlayerTextDraw(playerid, 137.800018, 143.179992, "usebox");
@@ -923,38 +937,38 @@ timer FadeRouletteTD[2000](playerid)
 
 timer RuletWaitingTimer[1000](playerid)
 {
-	Bit8_Set( gr_RuletWaiting, playerid, Bit8_Get( gr_RuletWaiting, playerid ) - 1 );
+	RuletWaitingTime[playerid]--;
+
+	va_GameTextForPlayer(playerid, "~w~%d", 1000, 4, RuletWaitingTime[playerid]);
+	PlayerPlaySound(playerid, 1056, 0.0, 0.0, 0.0);
 	
-	new
-		tmpText[ 6 ];
-	format( tmpText, 6, "~w~%d", 
-		Bit8_Get( gr_RuletWaiting, playerid )
-	);
-	GameTextForPlayer( playerid, tmpText, 1000, 4 );
-	PlayerPlaySound( playerid, 1056, 0.0, 0.0, 0.0 );
-	
-	if( Bit8_Get( gr_RuletWaiting, playerid ) == 2 ) 
+	if (RuletWaitingTime[playerid] == 2)
 	{
 		SendMessage(playerid, MESSAGE_TYPE_INFO, "Waiting for other players...");
-		PlayerPlaySound( playerid, 5408, 0.0, 0.0, 0.0 );
+		PlayerPlaySound(playerid, 5408, 0.0, 0.0, 0.0);
 	}
-	else if( Bit8_Get( gr_RuletWaiting, playerid ) == 0 )
+	else if (RuletWaitingTime[playerid] == 0)
 	{
-		GameTextForPlayer( playerid, "", 100, 4 );
-		Bit8_Set( gr_RuletWaiting, playerid, 20 );
+		GameTextForPlayer(playerid, "", 100, 4);
+		RuletWaitingTime[playerid] = 20;
+		RuletWaitingForPlayers[playerid] = false;
 		stop WaitingRoulette[playerid];
-		Bit1_Set( gr_RuletWaintingOn, playerid, false );
+
 		CreateRouletteTDs(playerid);
-		
-		PlayerPlaySound(playerid,1063,0.0,0.0,0.0); 
-		PlayerPlaySound( playerid, 33400,0.0,0.0,0.0); 
+
+		// TODO: this is called in a million of places, extract to a helper func
+		// RuletPlayWinningSounds(playerid)
+		PlayerPlaySound(playerid, 1063, 0.0, 0.0, 0.0);
+		PlayerPlaySound(playerid, 33400, 0.0, 0.0, 0.0);
 		
 		GlobalRoulette[playerid] = repeat RouletteTimer(playerid);
 	}
 }
 
-stock static PlayRouletteNumberSound(playerid, number)
+static stock PlayRouletteNumberSound(playerid, number)
 {
+	// TODO: make a "static const" array, lose the switch case statement, index into
+	// the array, return the number, and make ONE call to PlayerPlaySound.
 	switch(number) {
 		case 0: 	PlayerPlaySound( playerid, 5438, 0.0, 0.0, 0.0 );  // Zero
 		case 1: 	PlayerPlaySound( playerid, 5439, 0.0, 0.0, 0.0 );  // Red - 1
@@ -1001,36 +1015,35 @@ timer RouletteTimer[500](playerid)
 	new
 		number = minrand(0, 36);
 	ShowRouletteTD(playerid, number);
-	Bit8_Set( gr_RouletteCount, playerid, Bit8_Get( gr_RouletteCount, playerid ) + 1 );
+	RouletteCount[playerid]++;
 	
-	PlayerPlaySound(playerid,1063,0.0,0.0,0.0); 
-	PlayerPlaySound( playerid, 33400,0.0,0.0,0.0); 
+	PlayerPlaySound(playerid, 1063, 0.0, 0.0, 0.0);
+	PlayerPlaySound(playerid, 33400, 0.0, 0.0, 0.0);
 	
-	if( Bit8_Get( gr_RouletteCount, playerid ) == 23 )
-		PlayerPlaySound( playerid, 33401,0.0,0.0,0.0);
-		
-	if( Bit8_Get( gr_RouletteCount, playerid ) == 25 )
+	if (RouletteCount[playerid] == 23)
+	{
+		PlayerPlaySound(playerid, 33401, 0.0, 0.0, 0.0);
+	}
+	else if (RouletteCount[playerid] == 25)
 	{
 		DestroyRuletPotTDs(playerid);
 		stop GlobalRoulette[playerid];
 		defer FadeRouletteTD(playerid);
 		
 		PlayRouletteNumberSound(playerid, number);
-		if( !IsPlayerWinner(playerid, number) ) {			
-			new
-				tmpString[ 25 ];
-			format( tmpString, 25, "~r~Loser~n~~w~%d$",
-				RoulettWholeBet[ playerid ]
-			);
-			GameTextForPlayer( playerid, tmpString, 1500, 6 );
-		} else {
-			PlayerPlaySound( playerid, 5449, 0.0, 0.0, 0.0 ); 
+		if (!IsPlayerWinner(playerid, number))
+		{
+			va_GameTextForPlayer( playerid, "~r~Loser~n~~w~%d$", 1500, 6, RoulettWholeBet[playerid]);
+		}
+		else
+		{
+			PlayerPlaySound(playerid, 5449, 0.0, 0.0, 0.0); 
 			//AC_GivePlayerMoney(playerid, RoulettWholeBet[ playerid ]);
 			va_SendClientMessage(playerid, 0xF4D942AA, "RULET: %d", number);
 		}
 		ResetRuletArrays(playerid, true);
 		ResetRuletTable(playerid);
-		Bit8_Set( gr_RouletteCount, playerid, 0 );
+		RouletteCount[playerid] = 0;
 	}
 	return 1;
 }
@@ -1260,14 +1273,14 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 				);
 				PlayerTextDrawSetString( playerid, RuletPotNowInput[playerid], tmpString );				
 				
-				if( !Bit1_Get( gr_RuletWaintingOn, playerid ) ) {
+				if (RuletWaitingForPlayers[playerid])
+				{
 					PlayerInfo[playerid][pCasinoCool]--;
-					
-					// Timer
-					Bit8_Set( gr_RuletWaiting, playerid, 15 );
-					GameTextForPlayer( playerid, "~w~15", 1000, 4 );
+					RuletWaitingTime[playerid] = 15;
+					GameTextForPlayer(playerid, "~w~15", 1000, 4);
+
 					WaitingRoulette[playerid] = repeat RuletWaitingTimer(playerid);
-					Bit1_Set( gr_RuletWaintingOn, playerid, true );
+					RuletWaitingForPlayers[playerid] = true;
 				}
 				RoulettSlot[ playerid ]++;
 			} else {

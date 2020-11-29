@@ -41,7 +41,7 @@
 enum Storage_Data
 {
     storageID,
-    storageExists,
+    bool:storageExists,
     storageHouse,
     Float:storagePos[4],
     storageInterior,
@@ -50,7 +50,7 @@ enum Storage_Data
     storageAmmo[MAX_WEAPON_ONRACK],
     storageObjects[MAX_WEAPON_ONRACK+1]
 };
-new HouseStorage[MAX_HOUSE_STORAGE][Storage_Data];
+static HouseStorage[MAX_HOUSE_STORAGE][Storage_Data];
 
 static
     p_EditRack[MAX_PLAYERS] = INVALID_PLAYER_ID,
@@ -66,6 +66,24 @@ static
     ##       ##     ## ##   ### ##    ## ##    ## 
     ##        #######  ##    ##  ######   ######  
 */
+
+bool:Storage_Exists(storageid)
+{
+    if (storageid < 0 || storageid > MAX_HOUSE_STORAGE)
+    {
+        return false;
+    }
+    return HouseStorage[storageid][storageExists];
+}
+
+stock Storage_GetId(storageid)
+{
+    if (storageid < 0 || storageid > MAX_HOUSE_STORAGE)
+    {
+        return -1;
+    }
+    return HouseStorage[storageid][storageID];
+}
 
 HouseStorage_Save(storage_id)
 {
@@ -191,49 +209,53 @@ stock LoadHouseStorages()
 
 Storage_RackRefresh(storageid)
 {
-    if (storageid != -1 && HouseStorage[storageid][storageExists])
+    if (!Storage_Exists(storageid))
     {
-        if (IsValidDynamicObject(HouseStorage[storageid][storageObjects][4]))
-        {
-            DestroyDynamicObject(HouseStorage[storageid][storageObjects][4]);
-        }
-        Storage_Refresh(storageid);
-        HouseStorage[storageid][storageObjects][4] = CreateDynamicObject(2475, HouseStorage[storageid][storagePos][0], HouseStorage[storageid][storagePos][1], HouseStorage[storageid][storagePos][2], 0.0, 0.0, HouseStorage[storageid][storagePos][3], HouseStorage[storageid][storageWorld], HouseStorage[storageid][storageInterior]);
+        return 1;
     }
+
+    if (IsValidDynamicObject(HouseStorage[storageid][storageObjects][4]))
+    {
+        DestroyDynamicObject(HouseStorage[storageid][storageObjects][4]);
+    }
+    Storage_Refresh(storageid);
+    HouseStorage[storageid][storageObjects][4] = CreateDynamicObject(2475, HouseStorage[storageid][storagePos][0], HouseStorage[storageid][storagePos][1], HouseStorage[storageid][storagePos][2], 0.0, 0.0, HouseStorage[storageid][storagePos][3], HouseStorage[storageid][storageWorld], HouseStorage[storageid][storageInterior]);
     return 1;
 }
 
 Storage_Refresh(storageid)
 {
-    if (storageid != -1 && HouseStorage[storageid][storageExists])
+    if (!Storage_Exists(storageid))
     {
-        new
-            Float:x,
-            Float:y,
-            Float:z;
+        return 1;
+    }
 
-        z = HouseStorage[storageid][storagePos][2] + 2.19;
-        for (new i = 0; i < MAX_WEAPON_ONRACK; i++) if (IsValidDynamicObject(HouseStorage[storageid][storageObjects][i]))
+    new
+        Float:x,
+        Float:y,
+        Float:z;
+
+    z = HouseStorage[storageid][storagePos][2] + 2.19;
+    for (new i = 0; i < MAX_WEAPON_ONRACK; i++) if (IsValidDynamicObject(HouseStorage[storageid][storageObjects][i]))
+    {
+        DestroyDynamicObject(HouseStorage[storageid][storageObjects][i]);
+
+        HouseStorage[storageid][storageObjects][i] = INVALID_OBJECT_ID;
+    }
+    for (new i = 0; i < MAX_WEAPON_ONRACK; i++)
+    {
+        if (HouseStorage[storageid][storageWeapons][i])
         {
-            DestroyDynamicObject(HouseStorage[storageid][storageObjects][i]);
+            x = HouseStorage[storageid][storagePos][0] - (0.2 * floatsin(-HouseStorage[storageid][storagePos][3], degrees) + (0.45 * floatsin(-HouseStorage[storageid][storagePos][3] - 90, degrees)));
+            y = HouseStorage[storageid][storagePos][1] - (0.2 * floatcos(-HouseStorage[storageid][storagePos][3], degrees) + (0.45 * floatcos(-HouseStorage[storageid][storagePos][3] - 90, degrees)));
 
+            HouseStorage[storageid][storageObjects][i] = CreateDynamicObject(GetWeaponModel(HouseStorage[storageid][storageWeapons][i]), x, y, z, 94.7, 93.7, (22 <= HouseStorage[storageid][storageWeapons][i] <= 38) ? (HouseStorage[storageid][storagePos][3] + 90.0) : (HouseStorage[storageid][storagePos][3]), HouseStorage[storageid][storageWorld], HouseStorage[storageid][storageInterior]);
+        }
+        else
+        {
             HouseStorage[storageid][storageObjects][i] = INVALID_OBJECT_ID;
         }
-        for (new i = 0; i < MAX_WEAPON_ONRACK; i++)
-        {
-            if (HouseStorage[storageid][storageWeapons][i])
-            {
-                x = HouseStorage[storageid][storagePos][0] - (0.2 * floatsin(-HouseStorage[storageid][storagePos][3], degrees) + (0.45 * floatsin(-HouseStorage[storageid][storagePos][3] - 90, degrees)));
-                y = HouseStorage[storageid][storagePos][1] - (0.2 * floatcos(-HouseStorage[storageid][storagePos][3], degrees) + (0.45 * floatcos(-HouseStorage[storageid][storagePos][3] - 90, degrees)));
-
-                HouseStorage[storageid][storageObjects][i] = CreateDynamicObject(GetWeaponModel(HouseStorage[storageid][storageWeapons][i]), x, y, z, 94.7, 93.7, (22 <= HouseStorage[storageid][storageWeapons][i] <= 38) ? (HouseStorage[storageid][storagePos][3] + 90.0) : (HouseStorage[storageid][storagePos][3]), HouseStorage[storageid][storageWorld], HouseStorage[storageid][storageInterior]);
-            }
-            else
-            {
-                HouseStorage[storageid][storageObjects][i] = INVALID_OBJECT_ID;
-            }
-            z = z - 0.69;
-        }
+        z = z - 0.69;
     }
     return 1;
 }
@@ -275,22 +297,42 @@ Storage_RackCreate(playerid, houseid)
     return i;
 }
 
-Storage_RackNear(playerid)
+Storage_PlayerNearRack(playerid)
 {
-    foreach(new i: HStorage_Iter) if (HouseStorage[i][storageExists] && IsPlayerInRangeOfPoint(playerid, 2.0, HouseStorage[i][storagePos][0], HouseStorage[i][storagePos][1], HouseStorage[i][storagePos][2]))
+    new storageid = -1;
+    foreach(new i: HStorage_Iter)
     {
+        if (!Storage_Exists(i))
+        {
+            continue;
+        }
+        if (!IsPlayerInRangeOfPoint(playerid, 2.0, HouseStorage[i][storagePos][0], HouseStorage[i][storagePos][1], HouseStorage[i][storagePos][2]))
+        {
+            continue;
+        }
+
         if (GetPlayerInterior(playerid) == HouseStorage[i][storageInterior] && GetPlayerVirtualWorld(playerid) == HouseStorage[i][storageWorld])
-            return i;
+        {
+            storageid = i;
+            break;
+        }
     }
-    return -1;
+    return storageid;
 }
 
-House_DeleteRacks(playerid)
+Storage_DeleteHouseRacks(playerid)
 {
-    foreach(new i: HStorage_Iter) if (HouseStorage[i][storageExists])
+    foreach(new i: HStorage_Iter)
     {
+        if (!Storage_Exists(i))
+        {
+            continue;
+        }
+
         if (GetPlayerInterior(playerid) == HouseStorage[i][storageInterior] && GetPlayerVirtualWorld(playerid) == HouseStorage[i][storageWorld])
-        Storage_RackDelete(i);
+        {
+            Storage_RackDelete(i);
+        }
     }
     return -1;
 }
@@ -302,7 +344,7 @@ Storage_RackDelete(storageid)
         return 1;
     }
 
-    if (!HouseStorage[storageid][storageExists])
+    if (!Storage_Exists(storageid))
     {
         return 1;
     }
@@ -326,7 +368,7 @@ Storage_RackDelete(storageid)
     return 1;
 }
 
-Storage_HouseRack(playerid)
+Storage_HouseRackCount(playerid)
 {
     new count = 0;
     foreach(new i: HStorage_Iter)
@@ -337,7 +379,49 @@ Storage_HouseRack(playerid)
     return count;
 }
 
-ListHouseStorage(storageid)
+Storage_GetRackWeaponInSlot(storageid, slot)
+{
+    if (!Storage_Exists(storageid) || slot < 0 || slot > MAX_WEAPON_ONRACK)
+    {
+        return -1;
+    }
+
+    return HouseStorage[storageid][storageWeapons][slot];
+}
+
+Storage_GetRackAmmoInSlot(storageid, slot)
+{
+    if (!Storage_Exists(storageid) || slot < 0 || slot > MAX_WEAPON_ONRACK)
+    {
+        return 0;
+    }
+
+    return HouseStorage[storageid][storageAmmo][slot];
+}
+
+Storage_SetRackWeaponInSlot(storageid, slot, weapon)
+{
+    if (!Storage_Exists(storageid) || slot < 0 || slot > MAX_WEAPON_ONRACK)
+    {
+        return 0;
+    }
+
+    HouseStorage[storageid][storageWeapons][slot] = weapon;
+    return 1;
+}
+
+Storage_SetRackAmmoInSlot(storageid, slot, ammo)
+{
+    if (!Storage_Exists(storageid) || slot < 0 || slot > MAX_WEAPON_ONRACK)
+    {
+        return 0;
+    }
+
+    HouseStorage[storageid][storageAmmo][slot] = ammo;
+    return 1;
+}
+
+Storage_ListHouseStorage(storageid)
 {
     new
         winfo[256],
@@ -345,15 +429,17 @@ ListHouseStorage(storageid)
     format(motd, sizeof(motd), "\n");
     strcat(winfo, motd, sizeof(winfo));
 
-    if (storageid != -1 && HouseStorage[storageid][storageExists])
+    if (!Storage_Exists(storageid))
     {
-        for (new i = 0; i < MAX_WEAPON_ONRACK; i++)
+        return winfo;
+    }
+
+    for (new i = 0; i < MAX_WEAPON_ONRACK; i++)
+    {
+        if (HouseStorage[storageid][storageWeapons][i] != 0)
         {
-            if (HouseStorage[storageid][storageWeapons][i] != 0)
-            {
-                format(motd, sizeof(motd), "\t{3C95C2}[slot %d]: %s [%d/500 metaka].\n", i+1, GetWeaponNameEx(HouseStorage[storageid][storageWeapons][i]), HouseStorage[storageid][storageAmmo][i]);
-                strcat(winfo, motd, sizeof(winfo));
-            }
+            format(motd, sizeof(motd), "\t{3C95C2}[slot %d]: %s [%d/500 metaka].\n", i+1, GetWeaponNameEx(HouseStorage[storageid][storageWeapons][i]), HouseStorage[storageid][storageAmmo][i]);
+            strcat(winfo, motd, sizeof(winfo));
         }
     }
     return winfo;
@@ -361,7 +447,7 @@ ListHouseStorage(storageid)
 
 Public:OnRackCreated(storageid, playerid)
 {
-    if (storageid == -1 || !HouseStorage[storageid][storageExists])
+    if (!Storage_Exists(storageid))
     {
         return 0;
     }
@@ -412,11 +498,11 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                     if (IsACop(playerid) || IsASD(playerid))
                         return SendMessage(playerid, MESSAGE_TYPE_ERROR, " Ne smijete to koristiti!");
 
-                    new storageid = Storage_RackNear(playerid);
+                    new storageid = Storage_PlayerNearRack(playerid);
                     if (storageid == -1)
                         return SendErrorMessage(playerid, "Morate biti u blizini Rack-a u vasoj kuci.");
 
-                    if (storageid != -1 && HouseStorage[storageid][storageExists])
+                    if (Storage_Exists(storageid))
                     {
                         new string[256];
                         for (new i = 0; i < MAX_WEAPON_ONRACK; i++)
@@ -447,11 +533,11 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
             {
                 case 0:
                 {
-                    new storageid = Storage_RackNear(playerid);
+                    new storageid = Storage_PlayerNearRack(playerid);
                     if (storageid == -1)
                         return SendErrorMessage(playerid, "Morate biti u blizini Rack-a u vasoj kuci.");
 
-                    if (storageid != -1 && HouseStorage[storageid][storageExists])
+                    if (Storage_Exists(storageid))
                     {
                         new string[256];
                         for (new i = 0; i < MAX_WEAPON_ONRACK; i++)
@@ -493,15 +579,15 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                 }
                 case 3:
                 { // info
-                    new storageid = Storage_RackNear(playerid);
+                    new storageid = Storage_PlayerNearRack(playerid);
                     if (storageid == -1)
                         return SendErrorMessage(playerid, "Morate biti u blizini Stalka u vasoj kuci.");
 
-                    ShowPlayerDialog(playerid, DIALOG_HSTORAGE_INFO, DIALOG_STYLE_MSGBOX, "{3C95C2}[ Stalak - Statistika ]", ListHouseStorage(storageid), "Ok", "");
+                    ShowPlayerDialog(playerid, DIALOG_HSTORAGE_INFO, DIALOG_STYLE_MSGBOX, "{3C95C2}[ Stalak - Statistika ]", Storage_ListHouseStorage(storageid), "Ok", "");
                 }
                 case 4:
                 { // Izbrisi Stalak
-                    new storageid = Storage_RackNear(playerid);
+                    new storageid = Storage_PlayerNearRack(playerid);
                     if (storageid == -1)
                         return SendErrorMessage(playerid, "Niste u blizini stalka u vasoj kuci.");
 
@@ -543,7 +629,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                 return 1;
             }
 
-            new id = Storage_RackNear(playerid),
+            new id = Storage_PlayerNearRack(playerid),
                 house = PlayerInfo[playerid][pHouseKey],
                 puzavac = IsCrounching(playerid); // TODO: rename, crouching
 
@@ -588,7 +674,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                 return 1;
             }
 
-            if (Storage_HouseRack(playerid) >= GetRackLimit(playerid))
+            if (Storage_HouseRackCount(playerid) >= GetRackLimit(playerid))
                 return SendClientMessage(playerid, COLOR_LIGHTRED, "[ERROR]: Kuca vec posjeduje stalak, da mozete imati vise morate biti donator.");
 
             new id = Storage_RackCreate(playerid, PlayerInfo[playerid][pHouseKey]);
@@ -609,7 +695,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                 return 1;
             }
 
-            new id = Storage_RackNear(playerid),
+            new id = Storage_PlayerNearRack(playerid),
             weapon = AC_GetPlayerWeapon(playerid),
             ammo = AC_GetPlayerAmmo(playerid);
 
@@ -671,13 +757,13 @@ CMD:check_gunrack(playerid, params[])
         return 1;
     }
 
-    new storageid = Storage_RackNear(playerid);
+    new storageid = Storage_PlayerNearRack(playerid);
     if (storageid == -1)
     {
         SendErrorMessage(playerid, "Morate biti u blizini Stalka.");
         return 1;
     }
 
-    ShowPlayerDialog(playerid, 0, DIALOG_STYLE_MSGBOX, "{3C95C2}[ Stalak - Statistika ]", ListHouseStorage(storageid), "Ok", "");
+    ShowPlayerDialog(playerid, 0, DIALOG_STYLE_MSGBOX, "{3C95C2}[ Stalak - Statistika ]", Storage_ListHouseStorage(storageid), "Ok", "");
     return 1;
 }

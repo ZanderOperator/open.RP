@@ -1,4 +1,5 @@
 #include <YSI_Coding\y_hooks>
+#include "modules/Player/Player_h.pwn"
 #include "modules/Systems/LSPD/LSPD_h.pwn"
 
 #if defined MODULE_MOBILE
@@ -172,6 +173,7 @@ new
 
 stock static
 	PhoneStatus[MAX_PLAYERS],
+	PhoneLine[MAX_PLAYERS],
 	TowerEditingObj[MAX_PLAYERS],
 	Float:TowerEditingRadius[MAX_PLAYERS],
 	PhoneUpdateTick[MAX_PLAYERS],
@@ -200,6 +202,16 @@ stock bool:Player_MobileOn(playerid)
 stock Player_SetMobileOn(playerid, bool:v)
 {
     MobileOn[playerid] = v;
+}
+
+stock Player_PhoneLine(playerid)
+{
+    return PhoneLine[playerid];
+}
+
+stock Player_SetPhoneLine(playerid, v)
+{
+    PhoneLine[playerid] = v;
 }
 
 stock LoadTowerData()
@@ -535,10 +547,26 @@ stock SignalStrength(playerid, towerid)
 {
 	new Float:TowerDistance = DistanceFromTower(playerid, towerid);
 	new Float:TWRadius = TowerInfo[towerid][twRadius];
-	if( Bit16_Get( gr_PlayerInBiznis, playerid ) != INVALID_BIZNIS_ID && Bit16_Get( gr_PlayerInBiznis, playerid ) < MAX_BIZZS) return 5;
-	if( Bit16_Get( gr_PlayerInGarage, playerid ) != INVALID_HOUSE_ID ) return 5;
-	if( Bit16_Get( gr_PlayerInHouse, playerid ) != INVALID_HOUSE_ID && Bit16_Get( gr_PlayerInHouse, playerid ) > 0 ) return 5;
-	if( GetPlayerVirtualWorld(playerid) != 0 || GetPlayerInterior(playerid) != 0 ) return 5;
+	new
+		houseid  = Player_InHouse(playerid),
+		bizzid   = Player_InBusiness(playerid),
+		garageid = Player_InGarage(playerid);
+	if (bizzid >= 0 && bizzid != INVALID_BIZNIS_ID && bizzid < MAX_BIZZS)
+	{
+		return 5;
+	}
+	if (houseid >= 0 && houseid != INVALID_HOUSE_ID && houseid < MAX_HOUSES)
+	{
+		return 5;
+	}
+	if (garageid >= 0 && garageid != INVALID_HOUSE_ID && garageid < MAX_HOUSES)
+	{
+		return 5;
+	}
+	if (GetPlayerVirtualWorld(playerid) != 0 || GetPlayerInterior(playerid) != 0)
+	{
+		return 5;
+	}
 
 	if((TowerDistance >= 0) && (TowerDistance < (TWRadius/5)))
 		return 5;
@@ -2020,12 +2048,13 @@ stock PhoneTDVars()
 
 stock ShowGPS(playerid)
 {
-	if(Bit1_Get(gr_IsWorkingJob, playerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne mozete koristiti GPS dok radite!");
-	if( Bit1_Get(gps_Activated, playerid) )
+	if(Player_IsWorkingJob(playerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne mozete koristiti GPS dok radite!");
+	if(Player_GpsActivated(playerid))
 	{
-		SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "Deaktivirali ste stari GPS.");
-		Bit1_Set(gps_Activated, playerid, false);
 		DisablePlayerCheckpoint(playerid);
+
+		SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "Deaktivirali ste stari GPS.");
+		Player_SetGpsActivated(playerid, false);
 		return 1;
 	}
 	new buff[MAX_GPS_LOCATIONS*32],
@@ -2387,7 +2416,7 @@ stock PhoneCall(playerid, callnumber)
 		CallingId[ playerid ] = 222;
 		NewsPhone[ lineIndex ][ npNumber ] 		= PlayerInfo[ playerid ][ pMobileNumber ];
 		NewsPhone[ lineIndex ][ npPlayerID ] 	= playerid;
-		Bit8_Set(gr_PhoneLine, playerid, lineIndex);
+		PhoneLine[playerid] = lineIndex;
 		return 1;
 	}
 	valstr(callstr, callnumber);

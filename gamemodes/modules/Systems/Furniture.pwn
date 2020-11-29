@@ -10,6 +10,7 @@
 */
 
 #include <YSI_Coding\y_hooks>
+#include "modules/Systems/Header.pwn"
 
 
 /*
@@ -2028,6 +2029,9 @@ new const ObjectsFood[][E_FOOD_OBJECTS_DATA] =
 };
 
 static
+    PreviewingInterior  [MAX_PLAYERS] = {-1, ...},
+    EditState           [MAX_PLAYERS] = {-1, ...},
+
     FurObjectSection    [MAX_PLAYERS],
     FurnObjectsType     [MAX_PLAYERS],
     PlayerPrwsObject    [MAX_PLAYERS] = { INVALID_OBJECT_ID, ... },
@@ -2042,11 +2046,6 @@ static
     PlayerEditClsIndex  [MAX_PLAYERS],
     LastTextureListIndex[MAX_PLAYERS],
     TextureDialogItem   [MAX_PLAYERS][16];
-
-static
-    Bit1:r_PlayerPrwsBInt <MAX_PLAYERS>,
-    Bit4:r_PlayerEditState<MAX_PLAYERS>,
-    Bit8:r_PlayerPrwsInt  <MAX_PLAYERS>;
 
 static
     PlayerText:IntBcg1 [MAX_PLAYERS] = {PlayerText:INVALID_TEXT_DRAW, ...},
@@ -2176,8 +2175,7 @@ static stock SetPlayerInteriorPreview(playerid, interior)
     if (playerid == INVALID_PLAYER_ID) return 0;
     if (interior > sizeof(BlankInts)) return 0;
 
-    Bit1_Set(r_PlayerPrwsBInt, playerid, true );
-    Bit8_Set(r_PlayerPrwsInt, playerid, interior);
+    PreviewingInterior[playerid] = interior;
     SendFormatMessage(playerid, MESSAGE_TYPE_INFO, "Trenutno pregledavate interijer %s. Za kupnju kucajte /bint buy!", BlankInts[interior][iName]);
     CreateFurnitureBlankIntTDs(playerid, BlankInts[interior][iName], BlankInts[interior][iPrice]);
     SetPlayerPosEx(playerid, BlankInts[interior][iPosX], BlankInts[interior][iPosY], BlankInts[interior][iPosZ], playerid, 1, true);
@@ -2187,7 +2185,7 @@ static stock SetPlayerInteriorPreview(playerid, interior)
 static stock BuyBlankInterior(playerid, house)
 {
     // TODO: house bounds check
-    new interior = Bit8_Get(r_PlayerPrwsInt, playerid);
+    new interior = PreviewingInterior[playerid];
 
     if (AC_GetPlayerMoney(playerid) < BlankInts[interior][iPrice]) SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate dovoljno novaca za kupovinu enterijera (%d$)!", BlankInts[interior][iPrice]);
 
@@ -2210,7 +2208,7 @@ static stock BuyBlankInterior(playerid, house)
         BlankInts[interior][iPrice]
     );
     DestroyAllFurnitureObjects(playerid, house);
-    House_DeleteRacks(playerid);
+    Storage_DeleteHouseRacks(playerid);
     SpawnPlayer(playerid);
     return 1;
 }
@@ -2218,7 +2216,7 @@ static stock BuyBlankInterior(playerid, house)
 static stock ExitBlankInteriorPreview(playerid)
 {
     if (playerid == INVALID_PLAYER_ID) return 0;
-    if (!Bit1_Get(r_PlayerPrwsBInt, playerid)) return 0;
+    if (PreviewingInterior[playerid] == -1) return 0;
 
     DestroyFurnitureBlankIntTDs(playerid);
 
@@ -2226,7 +2224,7 @@ static stock ExitBlankInteriorPreview(playerid)
     // TODO: house bounds check
     SetPlayerPosEx(playerid, HouseInfo[house][hEnterX], HouseInfo[house][hEnterY], HouseInfo[house][hEnterZ], 0, 0, true);
     SendMessage(playerid, MESSAGE_TYPE_INFO, "Uspjesno ste izasli iz pregleda interijera!");
-    Bit1_Set(r_PlayerPrwsBInt, playerid, false );
+    PreviewingInterior[playerid] = -1;
     return 1;
 }
 
@@ -2866,7 +2864,7 @@ static stock CreateFurniturePreviewObject(playerid, modelid, index)
     PlayerPrwsModel[playerid]     = modelid;
 
     SendMessage(playerid, MESSAGE_TYPE_INFO, "Trenutno uredjujete objekt. Kliknite na save ikonicu za kupovinu objekta!");
-    Bit4_Set(r_PlayerEditState, playerid, EDIT_STATE_PREVIEW );
+    EditState[playerid] = EDIT_STATE_PREVIEW;
     return 1;
 }
 
@@ -2925,7 +2923,7 @@ static stock CreateFurnitureObject(playerid, modelid, Float:x, Float:y, Float:z,
     new price = GetFurnitureObjectPrice(playerid, PlayerPrwsIndex[playerid]);
     SendFormatMessage(playerid, MESSAGE_TYPE_SUCCESS, "Kupili ste objekt za %d$ i stavili ga u slot %d!", price, index + 1);
     PlayerToBudgetMoney(playerid, price); // novac ide u proracun
-    Bit4_Set(r_PlayerEditState, playerid, 0);
+    EditState[playerid] = 0;
 
     #if defined MODULE_LOGS
     Log_Write("/logfiles/furniture_buy.txt", "(%s) Player %s bought an object(modelid: %d) for %d$ in House Furniture and placed it into slot %d.",
@@ -3017,7 +3015,7 @@ static stock EditFurnitureObject(playerid, index)
         HouseInfo[houseid][hFurObjectid][index] = INVALID_OBJECT_ID;
 
         PlayerEditObject[playerid] = CreatePlayerObject(playerid, HouseInfo[houseid][hFurModelid][index], HouseInfo[houseid][hFurPosX][index], HouseInfo[houseid][hFurPosY][index], HouseInfo[houseid][hFurPosZ][index], HouseInfo[houseid][hFurRotX][index], HouseInfo[houseid][hFurRotY][index], HouseInfo[houseid][hFurRotZ][index]);
-        Bit4_Set(r_PlayerEditState, playerid, EDIT_STATE_EDIT );
+        EditState[playerid] = EDIT_STATE_EDIT;
         EditPlayerObject(playerid, PlayerEditObject[playerid]);
     }
     else
@@ -3081,7 +3079,8 @@ static stock SetFurnitureObjectPos(playerid, Float:x, Float:y, Float:z, Float:rx
     }
 
     Streamer_Update(playerid);
-    Bit4_Set(r_PlayerEditState, playerid, 0);
+
+    EditState       [playerid] = -1;
     PlayerEditObject[playerid] = INVALID_OBJECT_ID;
     PlayerEditIndex [playerid] = -1;
     return 1;
@@ -3558,7 +3557,7 @@ hook OnPlayerDisconnect(playerid, reason)
 {
     DestroyFurnitureBlankIntTDs(playerid);
 
-    if (Bit4_Get(r_PlayerEditState, playerid) != 0)
+    if (EditState[playerid] != -1)
     {
         if (IsValidPlayerObject(playerid, PlayerPrwsObject[playerid]))
         {
@@ -3566,7 +3565,7 @@ hook OnPlayerDisconnect(playerid, reason)
             DestroyPlayerObject(playerid, PlayerPrwsObject[playerid]);
             PlayerPrwsObject[playerid] = INVALID_OBJECT_ID;
         }
-        Bit4_Set(r_PlayerEditState, playerid, 0);
+        EditState[playerid] = -1;
     }
 
     FreeFurniture_Slot[playerid]   = INVALID_OBJECT_ID;
@@ -4483,7 +4482,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 
 hook OnPlayerEditObject(playerid, playerobject, objectid, response, Float:fX, Float:fY, Float:fZ, Float:fRotX, Float:fRotY, Float:fRotZ)
 {
-    switch (Bit4_Get(r_PlayerEditState, playerid))
+    switch (EditState[playerid])
     {
         case EDIT_STATE_PREVIEW:
         {
@@ -4504,7 +4503,7 @@ hook OnPlayerEditObject(playerid, playerobject, objectid, response, Float:fX, Fl
                 PlayerPrwsModel [playerid] = -1;
                 FurObjectSection[playerid] = 0;
                 FurnObjectsType [playerid] = 0;
-                Bit4_Set(r_PlayerEditState, playerid, 0);
+                EditState       [playerid] = -1;
             }
         }
         case EDIT_STATE_EDIT:
@@ -4523,7 +4522,7 @@ hook OnPlayerEditObject(playerid, playerobject, objectid, response, Float:fX, Fl
                 if (IsValidPlayerObject(playerid, objectid))
                 {
                     SetFurnitureObjectPos(playerid, fX, fY, fZ, fRotX, fRotY, fRotZ);
-                    Bit4_Set(r_PlayerEditState, playerid, 0);
+                    EditState[playerid] = -1;
                 }
             }
         }
@@ -4613,8 +4612,7 @@ CMD:bint(playerid, params[])
 
     if (!strcmp(param, "test", true))
     {
-        new
-            houseid = PlayerInfo[playerid][pHouseKey];
+        new houseid = PlayerInfo[playerid][pHouseKey];
         // TODO: why are there some houseids hardcoded here? remove this.
         if (houseid == INVALID_HOUSE_ID || (556 < houseid < 575)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Morate posjedovati kucu ili posjedujete apartman.");
         if (!IsPlayerInRangeOfPoint(playerid, 50.0, HouseInfo[houseid][hEnterX], HouseInfo[houseid][hEnterY], HouseInfo[houseid][hEnterZ])) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Morate biti ispred kuce!");
@@ -4627,21 +4625,18 @@ CMD:bint(playerid, params[])
             strcat(buffer, row);
         }
         ShowPlayerDialog(playerid, DIALOG_BLANK_INTS_LIST, DIALOG_STYLE_TABLIST_HEADERS, "Blank Interiors", buffer, "Choose", "Abort");
-        return 1;
     }
     else if (!strcmp(param, "buy", true))
     {
-        if (!Bit1_Get(r_PlayerPrwsBInt, playerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Morate prvo uci i pregledati prazan interijer!");
-        new
-            houseid = PlayerInfo[playerid][pHouseKey];
+        if (PreviewingInterior[playerid] == -1) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Morate prvo uci i pregledati prazan interijer!");
+        new houseid = PlayerInfo[playerid][pHouseKey];
         if (houseid == INVALID_HOUSE_ID) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Morate posjedovati kucu!");
 
         ShowPlayerDialog(playerid, DIALOG_FURNITURE_BINT_SURE, DIALOG_STYLE_MSGBOX, "{3C95C2} [ INTERIOR - WARNING ]", "Zelite li kupiti prazan interijer?\n"COL_RED"[UPOZORENJE]: Police s oruzjem, droga i trenutni namjestaj u vasoj kuci ce biti obrisan\nNapominjemo Vam da prije nego sto se odlucite za promijenu interiora, izvadite oruzje i drogu.", "Yes", "No");
-        return 1;
     }
     else if (!strcmp(param, "exit", true))
     {
-        if (!Bit1_Get(r_PlayerPrwsBInt, playerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne gledate prazne interijere!");
+        if (PreviewingInterior[playerid] == -1) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne gledate prazne interijere!");
         if (!ExitBlankInteriorPreview(playerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Dogodila se nekakva pogreska, ponovno kucajte /bint exit!");
     }
     return 1;
@@ -4675,7 +4670,7 @@ CMD:furniture(playerid, params[])
 
     if (!strcmp("menu", param, true))
     {
-        if (Bit4_Get(r_PlayerEditState, playerid) != 0)
+        if (EditState[playerid] != -1)
         {
             if (IsValidPlayerObject(playerid, PlayerPrwsObject[playerid]))
             {
@@ -4683,7 +4678,7 @@ CMD:furniture(playerid, params[])
                 DestroyPlayerObject(playerid, PlayerPrwsObject[playerid]);
                 PlayerPrwsObject[playerid] = INVALID_OBJECT_ID;
             }
-            Bit4_Set(r_PlayerEditState, playerid, 0);
+            EditState[playerid] = -1;
         }
         new
             houseid = GetPlayerFurnitureHouse(playerid);
@@ -4727,8 +4722,8 @@ CMD:furniture(playerid, params[])
 CMD:door(playerid, params[])
 {
     new
-        houseid = Bit16_Get(gr_PlayerInHouse, playerid),
-        biznisid = Bit16_Get(gr_PlayerInBiznis, playerid);
+        houseid  = Player_InHouse(playerid),
+        biznisid = Player_InBusiness(playerid);
 
     if (houseid != INVALID_HOUSE_ID)
     {

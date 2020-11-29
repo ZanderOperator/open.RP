@@ -104,6 +104,7 @@ static
     tmpInterior[MAX_PLAYERS],
     tmpSkin[MAX_PLAYERS],
     tmpViwo[MAX_PLAYERS],
+    SkinSlot[MAX_PLAYERS],
     CreatingHouseID[MAX_PLAYERS],
     PickLockTimeC[MAX_PLAYERS],
     Timer:PickLockTimer[MAX_PLAYERS],
@@ -113,18 +114,21 @@ static
     wooGate[3],
     wooGateStatus[3];
 
-// TODO: move this variable elsewhere and make a getter and setter for it
-new
-    PlayerHouseCP[MAX_PLAYERS],
-    // same
-    Bit1: gr_HouseAlarm       <MAX_HOUSES>,
-    Bit1: r_PlayerDoorPeek    <MAX_PLAYERS>,
-    Bit1: gr_CrowbarBreaking  <MAX_PLAYERS>,
-    Bit1: gr_PlayerPickLocking<MAX_PLAYERS>,
-    Bit1: gr_PlayerFootKicking<MAX_PLAYERS>,
-    Bit2: gr_SkinSlot         <MAX_PLAYERS>,
-    Bit2: gr_PlayerPickSlot   <MAX_PLAYERS>,
-    Bit16:gr_DynamicHouseID   <MAX_PLAYERS>;
+enum
+{
+    DOOR_RAM_NONE = 0,
+    DOOR_RAM_FOOT = 1,
+    DOOR_RAM_CROWBAR = 2
+};
+
+static
+    HouseCP[MAX_PLAYERS],
+    bool:HouseAlarmActive[MAX_HOUSES],
+    // House door picklocking
+    bool:PickingLock[MAX_PLAYERS],
+    PickLockSlot[MAX_PLAYERS],
+    // House door ram
+    RammingDoor[MAX_PLAYERS] = {DOOR_RAM_NONE, ...};
 
 static
     PlayerText:HouseBcg1        [MAX_PLAYERS] = {PlayerText:INVALID_TEXT_DRAW, ...},
@@ -142,6 +146,17 @@ static
     PlayerText:FootKickingBcg2  [MAX_PLAYERS] = {PlayerText:INVALID_TEXT_DRAW, ...},
     PlayerText:FootKickingText  [MAX_PLAYERS] = {PlayerText:INVALID_TEXT_DRAW, ...};
 
+// TODO: figure out the best place for these variables, ideally, they should be
+// placed in their own modules
+static
+    InHouse           [MAX_PLAYERS] = {INVALID_HOUSE_ID, ...},
+    InfrontHouse      [MAX_PLAYERS] = {INVALID_HOUSE_ID, ...},
+    InGarage          [MAX_PLAYERS] = {INVALID_HOUSE_ID, ...},
+    InBusiness        [MAX_PLAYERS] = {INVALID_BIZNIS_ID, ...},
+    InApartmentComplex[MAX_PLAYERS] = {INVALID_COMPLEX_ID, ...},
+    InApartmentRoom   [MAX_PLAYERS] = {INVALID_COMPLEX_ID, ...},
+    InPickup          [MAX_PLAYERS] = {-1, ...};
+
 
 /*
     ######## ##     ## ##    ##  ######   ######  
@@ -152,6 +167,118 @@ static
     ##       ##     ## ##   ### ##    ## ##    ## 
     ##        #######  ##    ##  ######   ######  
 */
+
+// TODO: some of these should be moved
+Player_InHouse(playerid)
+{
+    return InHouse[playerid];
+}
+
+Player_SetInHouse(playerid, v)
+{
+    InHouse[playerid] = v;
+}
+
+Player_InfrontHouse(playerid)
+{
+    return InfrontHouse[playerid];
+}
+
+Player_SetInfrontHouse(playerid, v)
+{
+    InfrontHouse[playerid] = v;
+}
+
+Player_InApartmentComplex(playerid)
+{
+    return InApartmentComplex[playerid];
+}
+
+Player_SetInApartmentComplex(playerid, v)
+{
+    InApartmentComplex[playerid] = v;
+}
+
+Player_InApartmentRoom(playerid)
+{
+    return InApartmentRoom[playerid];
+}
+
+Player_SetInApartmentRoom(playerid, v)
+{
+    InApartmentRoom[playerid] = v;
+}
+
+Player_InGarage(playerid)
+{
+    return InGarage[playerid];
+}
+
+Player_SetInGarage(playerid, v)
+{
+    InGarage[playerid] = v;
+}
+
+Player_InBusiness(playerid)
+{
+    return InBusiness[playerid];
+}
+
+Player_SetInBusiness(playerid, v)
+{
+    InBusiness[playerid] = v;
+}
+
+Player_InPickup(playerid)
+{
+    return InPickup[playerid];
+}
+
+Player_SetInPickup(playerid, v)
+{
+    InPickup[playerid] = v;
+}
+
+Player_GetHouseCP(playerid)
+{
+    return HouseCP[playerid];
+}
+
+Player_SetHouseCP(playerid, v)
+{
+    HouseCP[playerid] = v;
+}
+
+Player_GetRammingDoor(playerid)
+{
+    return RammingDoor[playerid];
+}
+
+Player_SetRammingDoor(playerid, v)
+{
+    RammingDoor[playerid] = v;
+}
+
+// TODO: finish getters/setters and move HouseInfo from coarp.pwn to this module
+stock House_GetSqlid(houseid)
+{
+    if (!Iter_Contains(Houses, houseid))
+    {
+        return -1;
+    }
+
+    return HouseInfo[houseid][hSQLID];
+}
+
+stock House_GetAddress(houseid)
+{
+    if (!Iter_Contains(Houses, houseid))
+    {
+        return "(None)";
+    }
+
+    return HouseInfo[houseid][hAdress];
+}
 
 Public:OnHouseInsertInDB(houseid, playerid)
 {
@@ -176,6 +303,9 @@ stock Float:GetDistanceBetweenPoints3D(Float:x1,Float:y1,Float:z1,Float:x2,Float
 
 stock UpdateHouseVirtualWorld(houseid)
 {
+    if (!Iter_Contains(Houses, houseid))
+        return 1;
+
     mysql_fquery(g_SQL, "UPDATE houses SET viwo = '%d' WHERE id = '%d'",
         HouseInfo[houseid][hVirtualWorld],
         HouseInfo[houseid][hSQLID]
@@ -185,15 +315,15 @@ stock UpdateHouseVirtualWorld(houseid)
 
 stock CheckHouseInfoTextDraws(playerid)
 {
-    new houseid = Bit16_Get(gr_PlayerInfrontHouse, playerid);
+    new houseid = Player_InfrontHouse(playerid);
     if (!Iter_Contains(Houses, houseid))
         return 1;
 
     if (!IsPlayerInDynamicCP(playerid, HouseInfo[houseid][hEnterCP]))
     {
         DestroyHouseInfoTD(playerid);
-        PlayerHouseCP[playerid]         = -1;
-        Bit16_Set(gr_PlayerInfrontHouse, playerid, INVALID_HOUSE_ID);
+        Player_SetHouseCP(playerid, -1);
+        Player_SetInfrontHouse(playerid, INVALID_HOUSE_ID);
     }
     return 1;
 }
@@ -231,6 +361,7 @@ stock ResetHouseVariables(playerid)
 
     tmpInterior[playerid]       = 0;
     tmpSkin[playerid]           = 1;
+    SkinSlot[playerid]          = 0;
     tmpViwo[playerid]           = 0;
     CreatingHouseID[playerid] = INVALID_HOUSE_ID;
 
@@ -241,13 +372,11 @@ stock ResetHouseVariables(playerid)
     ResetLockPickVars(playerid);
     ResetDoorKickingVars(playerid);
 
-    Bit1_Set(gr_CrowbarBreaking,        playerid, false);
-    Bit1_Set(r_PlayerDoorPeek,          playerid, false);
-    Bit2_Set(gr_SkinSlot,               playerid, 0);
-    Bit2_Set(gr_PlayerPickSlot,     playerid, 3);
-    Bit16_Set(gr_PlayerInHouse,         playerid, INVALID_HOUSE_ID);
-    Bit16_Set(gr_PlayerInfrontHouse,    playerid, INVALID_HOUSE_ID);
-    Bit16_Set(gr_DynamicHouseID,        playerid, INVALID_HOUSE_ID);
+    RammingDoor[playerid] = DOOR_RAM_NONE;
+    PickingLock[playerid] = false;
+    PickLockSlot[playerid] = 3;
+    Player_SetInHouse       (playerid, INVALID_HOUSE_ID);
+    Player_SetInfrontHouse  (playerid, INVALID_HOUSE_ID);
     return 1;
 }
 
@@ -509,13 +638,13 @@ static stock StopHouseAlarm(houseid)
                 DestroyDynamicMapIcon(GlobalMapIcon[i]);
         }
     }
-    Bit1_Set(gr_HouseAlarm, houseid, false);
+    HouseAlarmActive[houseid] = false;
 }
 
 stock PlayHouseAlarm(houseid)
 {
     if (houseid == INVALID_HOUSE_ID) return 1;
-    if (Bit1_Get(gr_HouseAlarm, houseid)) return 1;
+    if (HouseAlarmActive[houseid]) return 1;
 
     new string[64];
     switch (HouseInfo[houseid][hAlarm])
@@ -686,7 +815,7 @@ stock PlayHouseAlarm(houseid)
             SendClientMessage(ownerid, COLOR_YELLOW, "[SMS] Netko obija Vasu kucu! Pozurite se do nje i sprijecite provalu, poslao: Kucni alarm");
         }
     }
-    Bit1_Set(gr_HouseAlarm, houseid, true);
+    HouseAlarmActive[houseid] = true;
     return 1;
 }
 
@@ -725,11 +854,11 @@ stock ResetHouseInfo(houseid)
     HouseInfo[houseid][hAlarm]              = 0;
     HouseInfo[houseid][hLockLevel]          = 0;
 
-    if (Bit1_Get(gr_HouseAlarm, houseid))
+    if (HouseAlarmActive[houseid])
     {
         GangZoneDestroy(HouseAlarmZone[houseid]);
         stop GlobalZoneT[houseid];
-        Bit1_Set(gr_HouseAlarm, houseid, false);
+        HouseAlarmActive[houseid] = false;
     }
     stop GlobalMapIconT[houseid];
 
@@ -749,7 +878,7 @@ Public:ResetHouseEnumerator()
 
 stock BuyHouse(playerid, bool:credit_activated = false)
 {
-    new house =  Bit16_Get(gr_PlayerInfrontHouse, playerid);
+    new house = Player_InfrontHouse(playerid);
     // TODO: bounds check
     PlayerInfo[playerid][pHouseKey] = house;
     PlayerInfo[playerid][pSpawnChange] = 1;
@@ -779,7 +908,7 @@ stock BuyHouse(playerid, bool:credit_activated = false)
     SetPlayerPos(playerid, HouseInfo[house][hExitX], HouseInfo[house][hExitY], HouseInfo[house][hExitZ]);
     SetPlayerInterior(playerid, HouseInfo[house][hInt]);
     SetPlayerVirtualWorld(playerid, HouseInfo[house][hVirtualWorld]);
-    Bit16_Set(gr_PlayerInHouse, playerid, house);
+    Player_SetInHouse(playerid, house);
     PlayerInfo[playerid][pSpawnChange] = 1;
 
     mysql_fquery(g_SQL, "UPDATE accounts SET spawnchange = '%d' WHERE sqlid = '%d'",
@@ -820,7 +949,7 @@ static stock RemoveHouse(houseid)
 */
 static stock ResetLockPickVars(playerid)
 {
-    if (!Bit1_Get(gr_PlayerPickLocking, playerid)) return 1;
+    if (!PickingLock[playerid]) return 1;
 
     PickLockMaxValue[playerid][0] = 0.0;
     PickLockMaxValue[playerid][1] = 0.0;
@@ -831,9 +960,9 @@ static stock ResetLockPickVars(playerid)
     stop PlayerPickLockTimer[playerid];
     DestroyPickLockTDs(playerid);
 
-    Bit1_Set(gr_PlayerPickLocking,  playerid, false);
-    Bit2_Set(gr_SkinSlot,               playerid, 0);
-    Bit2_Set(gr_PlayerPickSlot,     playerid, 3);
+    PickingLock[playerid] = false;
+    PickLockSlot[playerid] = 3;
+    SkinSlot[playerid] = 0;
 
     DestroyPlayerProgressBar(playerid, PickLockBars[playerid][0]);
     DestroyPlayerProgressBar(playerid, PickLockBars[playerid][1]);
@@ -989,7 +1118,7 @@ static stock SetPlayerPickLock(playerid)
     new
         value,
         time,
-        house = Bit16_Get(gr_PlayerInfrontHouse, playerid);
+        house = Player_InfrontHouse(playerid);
 
     switch (HouseInfo[house][hLockLevel])
     {
@@ -997,8 +1126,8 @@ static stock SetPlayerPickLock(playerid)
         case 3: { value = 60; time = 100; }
     }
 
-    Bit2_Set(gr_PlayerPickSlot,     playerid, 0);
-    Bit1_Set(gr_PlayerPickLocking, playerid, true);
+    PickingLock[playerid] = true;
+    PickLockSlot[playerid] = 0;
 
     PickLockMaxValue[playerid][0] = float(random(value)) + 1.5;
     PickLockMaxValue[playerid][1] = float(random(value)) + 1.0;
@@ -1042,7 +1171,7 @@ static stock ResetDoorKickingVars(playerid)
 {
     DestroyFootEnterTDs(playerid);
     DestroyPlayerProgressBar(playerid, FootKickingBar[playerid]);
-    Bit1_Set(gr_PlayerFootKicking, playerid, false);
+    RammingDoor[playerid] = DOOR_RAM_NONE;
 }
 
 static stock DestroyFootEnterTDs(playerid)
@@ -1112,9 +1241,7 @@ static stock SetPlayerFootEntering(playerid)
     CreateFootEnterTDs(playerid);
     FootKickingBar[playerid] = CreatePlayerProgressBar(playerid, 246.000000, 330.0, 158.0, 15.0, COLOR_GREEN, 100.0, BAR_DIRECTION_RIGHT);
     ShowPlayerProgressBar(playerid, FootKickingBar[playerid]);
-
-    Bit1_Set(gr_PlayerFootKicking, playerid, true);
-
+    Player_SetRammingDoor(playerid, DOOR_RAM_FOOT);
 
     TogglePlayerControllable(playerid, false);
     ApplyAnimationEx(playerid, "POLICE", "Door_Kick", 3.1, 0, 1, 1, 1, 0, 1, 0);
@@ -1131,10 +1258,10 @@ static stock SetPlayerFootEntering(playerid)
 
 stock SetPlayerCrowbarBreaking(playerid)
 {
-    Bit1_Set(gr_CrowbarBreaking, playerid, true);
+    Player_SetRammingDoor(playerid, DOOR_RAM_CROWBAR);
 
     new
-        house = Bit16_Get(gr_PlayerInfrontHouse, playerid),
+        house = Player_InfrontHouse(playerid),
         keyTime,
         wholeTime,
         result;
@@ -1151,6 +1278,18 @@ stock SetPlayerCrowbarBreaking(playerid)
     return 1;
 }
 
+stock IsCrowbarBreaking(playerid)
+{
+    return Player_GetRammingDoor(playerid) == DOOR_RAM_CROWBAR;
+}
+
+stock CancelCrowbarBreaking(playerid)
+{
+    DisablePlayerKeyInput(playerid);
+    TogglePlayerControllable(playerid, true);
+    Player_SetRammingDoor(playerid, DOOR_RAM_NONE);
+}
+
 
 /*
     ######## #### ##     ## ######## ########   ######
@@ -1164,14 +1303,14 @@ stock SetPlayerCrowbarBreaking(playerid)
 
 timer PickLockTimerFunction[800](playerid)
 {
-    if (!Bit1_Get(gr_PlayerPickLocking, playerid))
+    if (!PickingLock[playerid])
         stop PlayerPickLockTimer[playerid];
 
-    new slot = Bit2_Get(gr_PlayerPickSlot, playerid);
+    new slot = PickLockSlot[playerid];
     if (GetPlayerProgressBarValue(playerid, PickLockBars[playerid][slot]) < 0.0) return 1;
     if (GetPlayerProgressBarValue(playerid, PickLockBars[playerid][slot]) >= PickLockMaxValue[playerid][slot]) return 1;
 
-    SetPlayerProgressBarValue(playerid, PickLockBars[playerid][slot], GetPlayerProgressBarValue(playerid, PickLockBars[playerid][Bit2_Get(gr_PlayerPickSlot, playerid)]) - 0.15);
+    SetPlayerProgressBarValue(playerid, PickLockBars[playerid][slot], GetPlayerProgressBarValue(playerid, PickLockBars[playerid][slot]) - 0.15);
 
     new result = floatround(PickLockMaxValue[playerid][slot] - GetPlayerProgressBarValue(playerid, PickLockBars[playerid][slot]));
     UpdatePickLockTD(playerid, slot, result);
@@ -1194,10 +1333,13 @@ timer PicklockTime[1000](playerid, houseid)
     {
         ResetLockPickVars(playerid);
 
+        // Setting of HouseAlarmOff was never implemented
+        /*
         if (!Bit1_Get(gr_PlayerHouseAlarmOff, playerid))
         {
             PlayHouseAlarm(houseid);
-        }
+        }*/
+        PlayHouseAlarm(houseid);
     }
 }
 
@@ -1298,20 +1440,22 @@ hook OnPlayerEnterDynamicCP(playerid, checkpointid)
     }
 
     PlayerTextDrawSetString(playerid, HouseInfoTD[playerid], string);
-    PlayerHouseCP[playerid]         = checkpointid;
-    Bit16_Set(gr_PlayerInfrontHouse, playerid, house);
+    Player_SetHouseCP(playerid, checkpointid);
+    Player_SetInfrontHouse(playerid, house);
     return 1;
 }
 
 hook OnPlayerLeaveDynamicCP(playerid, checkpointid)
 {
-    new house = (checkpointid - 1);
-    if (1 <= house <= Iter_Count(Houses))
+    new house = checkpointid - 1;
+    if (!Iter_Contains(Houses, house))
     {
-        DestroyHouseInfoTD(playerid);
-        PlayerHouseCP[playerid]         = -1;
-        Bit16_Set(gr_PlayerInfrontHouse, playerid, INVALID_HOUSE_ID);
+        return 1;
     }
+
+    DestroyHouseInfoTD(playerid);
+    Player_SetHouseCP(playerid, -1);
+    Player_SetInfrontHouse(playerid, INVALID_HOUSE_ID);
     return 1;
 }
 
@@ -1321,13 +1465,13 @@ public OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
     /*if ((newkeys & KEY_FIRE) && !(oldkeys & KEY_FIRE))
     {
         if (Bit1_Get(gr_PlayerRamDoor, playerid)) {
-            if (!IsPlayerInDynamicCP(playerid, PlayerHouseCP[playerid])) return 1;
+            if (!IsPlayerInDynamicCP(playerid, Player_GetHouseCP(playerid))) return 1;
             Bit8_Set(gr_PlayerRamDoorCnt, playerid, Bit8_Get(gr_PlayerRamDoorCnt, playerid) + 1);
             ApplyAnimationEx(playerid, "CHAINSAW","WEAPON_csawlo", 4.1, 0, 0 ,0 , 0, 0, 1, 0);
 
             if (Bit8_Get(gr_PlayerRamDoorCnt, playerid) == 25) {
                 GameTextForPlayer(playerid, "~g~Vrata su pala na pod!", 2000, 1);
-                HouseInfo[Bit16_Get(gr_PlayerInfrontHouse, playerid)][hDoorCrashed] = false;
+                HouseInfo[Player_InfrontHouse(playerid)][hDoorCrashed] = false;
                 Bit1_Set(gr_PlayerRamDoor, playerid, false);
                 Bit8_Set(gr_PlayerRamDoorCnt, playerid, 0);
             }
@@ -1416,13 +1560,17 @@ public OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
 
     if ((newkeys & KEY_SPRINT) && !(oldkeys & KEY_SPRINT))
     {
-        if (Bit1_Get(gr_PlayerFootKicking, playerid))
+        if (Player_GetRammingDoor(playerid) == DOOR_RAM_FOOT)
         {
             if (GetPlayerAnimationIndex(playerid) == 1189) return 1;
 
             new
-                house = Bit16_Get(gr_PlayerInfrontHouse, playerid),
+                house = Player_InfrontHouse(playerid),
                 Float:tmpHealth;
+            if (!Iter_Contains(Houses, house))
+            {
+                return 1;
+            }
 
             ApplyAnimationEx(playerid, "POLICE", "Door_Kick", 3.1, 0, 1, 1, 1, 0, 1, 0);
             GetPlayerHealth(playerid, tmpHealth);
@@ -1445,8 +1593,9 @@ public OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
             SetPlayerProgressBarValue(playerid, FootKickingBar[playerid], GetPlayerProgressBarValue(playerid, FootKickingBar[playerid]) + progressBar);
             if (GetPlayerProgressBarValue(playerid, FootKickingBar[playerid]) >= 50.0)
             {
-                if (!Bit1_Get(gr_PlayerHouseAlarmOff, playerid))
-                    PlayHouseAlarm(house);
+                // Setting of HouseAlarmOff was never implemented
+                //if (!Bit1_Get(gr_PlayerHouseAlarmOff, playerid))
+                PlayHouseAlarm(house);
             }
             if (GetPlayerProgressBarValue(playerid, FootKickingBar[playerid]) == 100.0)
             {
@@ -1457,10 +1606,10 @@ public OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
             }
             return 1;
         }
-        if (Bit1_Get(gr_PlayerPickLocking, playerid))
+        if (PickingLock[playerid])
         {
             new
-                slot = Bit4_Get(gr_PlayerPickSlot, playerid),
+                slot = PickLockSlot[playerid],
                 result = floatround(PickLockMaxValue[playerid][slot] - GetPlayerProgressBarValue(playerid, PickLockBars[playerid][slot]));
             UpdatePickLockTD(playerid, slot, result);
 
@@ -1473,7 +1622,8 @@ public OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
                 if (IsDoorUnlocked(playerid))
                 {
                     SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uspjesno ste otkljucali vrata!");
-                    HouseInfo[Bit16_Get(gr_PlayerInfrontHouse, playerid)][hLock] = 0;
+                    // TODO: NO! Extract into variable, and do bounds checking on HouseInfo "index"
+                    HouseInfo[Player_InfrontHouse(playerid)][hLock] = 0;
                     ResetLockPickVars(playerid);
                     TogglePlayerControllable(playerid, true);
                 }
@@ -1484,9 +1634,9 @@ public OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
     }
     else if ((newkeys & KEY_YES) && !(oldkeys & KEY_YES))
     {
-        if (Bit1_Get(gr_PlayerPickLocking, playerid))
+        if (PickingLock[playerid])
         {
-            new slot = Bit4_Get(gr_PlayerPickSlot, playerid);
+            new slot = PickLockSlot[playerid];
 
             slot++;
             if (slot > 2)
@@ -1510,14 +1660,14 @@ public OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
             HidePlayerProgressBar(playerid, PickLockBars[playerid][slot]);
             ShowPlayerProgressBar(playerid, PickLockBars[playerid][slot]);
 
-            Bit4_Set(gr_PlayerPickSlot, playerid, slot);
+            PickLockSlot[playerid] = slot;
         }
     }
     else if ((newkeys & KEY_NO) && !(oldkeys & KEY_NO))
     {
-        if (Bit1_Get(gr_PlayerPickLocking, playerid))
+        if (PickingLock[playerid])
         {
-            new slot = Bit4_Get(gr_PlayerPickSlot, playerid);
+            new slot = PickLockSlot[playerid];
 
             slot--;
             if (slot < 0)
@@ -1540,7 +1690,7 @@ public OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
 
             HidePlayerProgressBar(playerid, PickLockBars[playerid][slot]);
             ShowPlayerProgressBar(playerid, PickLockBars[playerid][slot]);
-            Bit4_Set(gr_PlayerPickSlot, playerid, slot);
+            PickLockSlot[playerid] = slot;
         }
     }
     return 1;
@@ -1550,7 +1700,7 @@ hook OnPlayerKeyInputEnds(playerid, type, succeeded)
 {
     if (type == 1 && succeeded == 1)
     {
-        new house = Bit16_Get(gr_PlayerInfrontHouse, playerid);
+        new house = Player_InfrontHouse(playerid);
         // TODO: bounds checking
         HouseInfo[house][hLock] = 0;
 
@@ -1561,8 +1711,9 @@ hook OnPlayerKeyInputEnds(playerid, type, succeeded)
         new rand = random(5);
         if (rand == 5 || rand == 2 || rand == 1)
         {
-            if (!Bit1_Get(gr_PlayerHouseAlarmOff, playerid))
-                PlayHouseAlarm(house);
+            // Setting of HouseAlarmOff was never implemented
+            //if (!Bit1_Get(gr_PlayerHouseAlarmOff, playerid))
+            PlayHouseAlarm(house);
         }
     }
     return 1;
@@ -1595,7 +1746,7 @@ hook OnPlayerWeaponShot(playerid, weaponid, hittype, hitid, Float:fX, Float:fY, 
 
         foreach(new i: Player)
         {
-            if (Bit16_Get(gr_PlayerInHouse, i) == houseid)
+            if (Player_InHouse(i) == houseid)
             {
                 format(string, sizeof(string), "* Cuje se intenzivni zvuk pucnja sacmarice kod vratiju. ((%s))", GetName(playerid, true));
                 ProxDetector(50.0, i, string, COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE);
@@ -2124,7 +2275,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                 case 0:
                 { // Otkljucaj
                     new
-                        house = Bit16_Get(gr_PlayerInHouse, playerid);
+                        house = Player_InHouse(playerid);
                     if (house == INVALID_HOUSE_ID) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ispred ulaznih vrata!");
                     if (PlayerInfo[playerid][pHouseKey] != house) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nemas kljuc!");
 
@@ -2144,7 +2295,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                 case 1:
                 { // Zakljucaj
                     new
-                        house = Bit16_Get(gr_PlayerInHouse, playerid);
+                        house = Player_InHouse(playerid);
                     if (house == INVALID_HOUSE_ID) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ispred ulaznih vrata!");
                     if (PlayerInfo[playerid][pHouseKey] != house) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nemas kljuc!");
                     if (IsPlayerInRangeOfPoint(playerid, 8.0, HouseInfo[house][hEnterX], HouseInfo[house][hEnterY], HouseInfo[house][hEnterZ]))
@@ -2283,7 +2434,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
             {
                 case 0:
                 { // Spremi
-                    if (Bit8_Get(gr_Groceries, playerid) == 0)
+                    if (Player_GetGroceriesQuantity(playerid) == 0)
                     {
                         SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste kupili namirnice u 24/7!");
                         return 1;
@@ -2294,9 +2445,9 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                         return 1;
                     }
 
-                    HouseInfo[house][hGroceries] += Bit8_Get(gr_Groceries, playerid);
+                    HouseInfo[house][hGroceries] += Player_GetGroceriesQuantity(playerid);
                     GameTextForPlayer(playerid, "~g~Namirnice su pospremljene", 1000, 1);
-                    Bit8_Set(gr_Groceries, playerid, 0);
+                    Player_SetGroceriesQuantity(playerid, 0);
                 }
                 case 1: // Jelo
                 {
@@ -2649,7 +2800,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
             }
 
             new skin;
-            switch (Bit2_Get(gr_SkinSlot, playerid))
+            switch (SkinSlot[playerid])
             {
                 case 1: skin = HouseInfo[house][hSkin1];
                 case 2: skin = HouseInfo[house][hSkin2];
@@ -2695,8 +2846,8 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                     if (HouseInfo[house][hSkin1])
                     {
                         tmpSkin[playerid] = GetPlayerSkin(playerid);
+                        SkinSlot[playerid] = 1;
                         SetPlayerSkin(playerid, HouseInfo[house][hSkin1]);
-                        Bit2_Set(gr_SkinSlot, playerid, 1);
 
                         CreatePlayerClosedScene(playerid);
                     }
@@ -2706,8 +2857,8 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                     if (HouseInfo[house][hSkin2])
                     {
                         tmpSkin[playerid] = GetPlayerSkin(playerid);
+                        SkinSlot[playerid] = 2;
                         SetPlayerSkin(playerid, HouseInfo[house][hSkin2]);
-                        Bit2_Set(gr_SkinSlot, playerid, 2);
 
                         CreatePlayerClosedScene(playerid);
                     }
@@ -2717,8 +2868,8 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                     if (HouseInfo[house][hSkin3])
                     {
                         tmpSkin[playerid] = GetPlayerSkin(playerid);
+                        SkinSlot[playerid] = 3;
                         SetPlayerSkin(playerid, HouseInfo[house][hSkin3]);
-                        Bit2_Set(gr_SkinSlot, playerid, 3);
 
                         CreatePlayerClosedScene(playerid);
                     }
@@ -2763,7 +2914,7 @@ CMD:enter(playerid, params[])
         SetPlayerPosEx(playerid, 1122.9961, -2036.8920, 1701.0578, 25, 2, true);
         return 1;
     }
-    if (Bit1_Get(r_PlayerDoorPeek, playerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne mozete uci u kucu dok virite kroz vrata!");
+    //if (Bit1_Get(r_PlayerDoorPeek, playerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne mozete uci u kucu dok virite kroz vrata!");
 
     new
         biznis = GetNearestBizz(playerid),
@@ -2811,7 +2962,7 @@ CMD:enter(playerid, params[])
             {
                 SetPlayerPosEx(playerid,PickupInfo[pickup][epExitx],PickupInfo[pickup][epExity],PickupInfo[pickup][epExitz],PickupInfo[pickup][epViwo],PickupInfo[pickup][epInt],true);
                 GameTextForPlayer(playerid, PickupInfo[pickup][epDiscription], 500, 1);
-                Bit16_Set(gr_PlayerInPickup, playerid, pickup);
+                Player_SetInPickup(playerid, pickup);
 
                 entering[playerid] = 1;
                 TogglePlayerControllable(playerid, false);
@@ -2846,7 +2997,7 @@ CMD:enter(playerid, params[])
         }
         if (BizzInfo[biznis][bFurLoaded] == false) ReloadBizzFurniture(biznis);
         SetPlayerPosEx(playerid, BizzInfo[biznis][bExitX], BizzInfo[biznis][bExitY], BizzInfo[biznis][bExitZ], BizzInfo[biznis][bVirtualWorld], BizzInfo[biznis][bInterior], true);
-        Bit16_Set(gr_PlayerInBiznis, playerid, biznis);
+        Player_SetInBusiness(playerid, biznis);
         DestroyBizzInfoTD(playerid);
 
         entering[playerid] = 1;
@@ -2865,7 +3016,7 @@ CMD:enter(playerid, params[])
         }
 
         SetPlayerPosEx(playerid, ComplexRoomInfo[rcomplex][cExitX], ComplexRoomInfo[rcomplex][cExitY], ComplexRoomInfo[rcomplex][cExitZ], ComplexRoomInfo[rcomplex][cViwo], ComplexRoomInfo[rcomplex][cInt], true);
-        Bit16_Set(gr_PlayerInRoom, playerid, rcomplex);
+        Player_SetInApartmentRoom(playerid, rcomplex);
         if (PlayerInfo[playerid][pComplexRoomKey] == rcomplex)
         {
             GameTextForPlayer(playerid, "Dobrodosli!", 500, 1);
@@ -2875,7 +3026,7 @@ CMD:enter(playerid, params[])
     else if (complex != INVALID_COMPLEX_ID)
     {
         SetPlayerPosEx(playerid, ComplexInfo[complex][cExitX], ComplexInfo[complex][cExitY], ComplexInfo[complex][cExitZ], ComplexInfo[complex][cViwo], ComplexInfo[complex][cInt], true);
-        Bit16_Set(gr_PlayerInComplex, playerid, complex);
+        Player_SetInApartmentComplex(playerid, complex);
         if (PlayerInfo[playerid][pComplexKey] == complex)
         {
             GameTextForPlayer(playerid, "Dobrodosli u svoj Complex!", 500, 1);
@@ -2890,10 +3041,11 @@ CMD:enter(playerid, params[])
     {
         PlayStorageAlarm(playerid, false);
     }
-    else if (IsPlayerInDynamicCP(playerid, PlayerHouseCP[playerid]))
+    else if (IsPlayerInDynamicCP(playerid, Player_GetHouseCP(playerid)))
     {
-        if (Bit16_Get(gr_PlayerInfrontHouse, playerid) == INVALID_HOUSE_ID) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ispred kuce (niste u checkpointu)!");
-        new house = Bit16_Get(gr_PlayerInfrontHouse, playerid);
+        new house = Player_InfrontHouse(playerid);
+        if (house == INVALID_HOUSE_ID) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ispred kuce (niste u checkpointu)!");
+
         if (HouseInfo[house][h3dViwo] != GetPlayerVirtualWorld(playerid))
         {
             SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ispred biznisa ili kuce!");
@@ -2916,7 +3068,7 @@ CMD:enter(playerid, params[])
         }
         SetPlayerPosEx(playerid, HouseInfo[house][hExitX], HouseInfo[house][hExitY], HouseInfo[house][hExitZ], HouseInfo[house][hVirtualWorld], HouseInfo[house][hInt], true);
 
-        Bit16_Set(gr_PlayerInHouse, playerid, house);
+        Player_SetInHouse(playerid, house);
         DestroyHouseInfoTD(playerid);
 
         if (IsHousePlayingMusic(house))
@@ -2967,9 +3119,15 @@ CMD:exit(playerid, params[])
         }
     }
 
+    new
+        house    = Player_InHouse(playerid),
+        biznis   = Player_InBusiness(playerid),
+        rcomplex = Player_InApartmentRoom(playerid),
+        garage   = Player_InGarage(playerid);
+
     if (pickup != -1)
     {
-        Bit16_Set(gr_PlayerInPickup, playerid, -1);
+        Player_SetInPickup(playerid, -1);
         SetPlayerPosEx(playerid,PickupInfo[pickup][epEntrancex], PickupInfo[pickup][epEntrancey], PickupInfo[pickup][epEntrancez], PickupInfo[pickup][epEnterViwo], PickupInfo[pickup][epEnterInt], true);
 
         onexit[playerid] = 1;
@@ -2979,7 +3137,7 @@ CMD:exit(playerid, params[])
     }
     else if (complex != INVALID_COMPLEX_ID)
     {
-        Bit16_Set(gr_PlayerInComplex, playerid, INVALID_COMPLEX_ID);
+        Player_SetInApartmentComplex(playerid, INVALID_COMPLEX_ID);
 
         /*if (aprilfools[playerid])
             complex = random(MAX_COMPLEX/2);*/
@@ -2990,9 +3148,8 @@ CMD:exit(playerid, params[])
         SendMessage(playerid, MESSAGE_TYPE_INFO, "Pritisnite tipku 'N' ukoliko vam se mapa loadala");
         return 1;
     }
-    else if (Bit16_Get(gr_PlayerInBiznis, playerid ) != INVALID_BIZNIS_ID && Bit16_Get(gr_PlayerInBiznis, playerid ) < MAX_BIZZS)
+    else if (biznis != INVALID_BIZNIS_ID && biznis < MAX_BIZZS)
     {
-        new biznis = Bit16_Get(gr_PlayerInBiznis, playerid);
         if (IsPlayerInRangeOfPoint(playerid, 2.0, BizzInfo[biznis][bExitX], BizzInfo[biznis][bExitY], BizzInfo[biznis][bExitZ]))
         {
             if (GetPlayerSkin(playerid) != PlayerInfo[playerid][pChar] && !PlayerInfo[playerid][pLawDuty])
@@ -3010,7 +3167,7 @@ CMD:exit(playerid, params[])
             SetPlayerPosEx(playerid, BizzInfo[biznis][bEntranceX], BizzInfo[biznis][bEntranceY], BizzInfo[biznis][bEntranceZ], 0, 0, false);
             SetPlayerInterior(playerid, 0);
             SetPlayerVirtualWorld(playerid, 0);
-            Bit16_Set(gr_PlayerInBiznis, playerid, INVALID_BIZNIS_ID);
+            Player_SetInBusiness(playerid, INVALID_BIZNIS_ID);
             StopAudioStreamForPlayer(playerid);
 
             onexit[playerid] = 1;
@@ -3019,16 +3176,15 @@ CMD:exit(playerid, params[])
             return 1;
         }
     }
-    else if (Bit16_Get(gr_PlayerInRoom, playerid ) != INVALID_COMPLEX_ID && Bit16_Get(gr_PlayerInRoom, playerid) < MAX_COMPLEX_ROOMS)
+    else if (rcomplex != INVALID_COMPLEX_ID && rcomplex < MAX_COMPLEX_ROOMS)
     {
-        new rcomplex = Bit16_Get(gr_PlayerInRoom, playerid);
         if (IsPlayerInRangeOfPoint(playerid, 2.0, ComplexRoomInfo[rcomplex][cExitX], ComplexRoomInfo[rcomplex][cExitY], ComplexRoomInfo[rcomplex][cExitZ]))
         {
             /*if (aprilfools[playerid])
                 rcomplex = random(MAX_COMPLEX_ROOMS/2);*/
 
             SetPlayerPosEx(playerid, ComplexRoomInfo[rcomplex][cEnterX], ComplexRoomInfo[rcomplex][cEnterY], ComplexRoomInfo[rcomplex][cEnterZ], ComplexRoomInfo[rcomplex][cVWExit], ComplexRoomInfo[rcomplex][cIntExit]);
-            Bit16_Set(gr_PlayerInRoom, playerid, INVALID_COMPLEX_ID);
+            Player_SetInApartmentRoom(playerid, INVALID_COMPLEX_ID);
             StopAudioStreamForPlayer(playerid);
 
             onexit[playerid] = 1;
@@ -3037,9 +3193,8 @@ CMD:exit(playerid, params[])
         }
         return 1;
     }
-    else if (Bit16_Get(gr_PlayerInGarage, playerid ) != INVALID_HOUSE_ID )
+    else if (garage != INVALID_HOUSE_ID)
     {
-        new garage = Bit16_Get(gr_PlayerInGarage, playerid);
         if (IsPlayerInRangeOfPoint(playerid, 10.0, GarageInfo[garage][gExitX], GarageInfo[garage][gExitY], GarageInfo[garage][gExitZ]))
         {
             /*if (aprilfools[playerid])
@@ -3075,13 +3230,12 @@ CMD:exit(playerid, params[])
                 SetPlayerInterior(playerid, 0);
                 SetPlayerVirtualWorld(playerid, 0);
             }
-            Bit16_Set(gr_PlayerInGarage, playerid, INVALID_HOUSE_ID);
+            Player_SetInGarage(playerid, INVALID_HOUSE_ID);
         }
         return 1;
     }
-    else if (Bit16_Get(gr_PlayerInHouse, playerid) != INVALID_HOUSE_ID && Bit16_Get(gr_PlayerInHouse, playerid) >= 0)
+    else if (house != INVALID_HOUSE_ID && house >= 0)
     {
-        new house = Bit16_Get(gr_PlayerInHouse, playerid);
         if (IsPlayerInRangeOfPoint(playerid, 10.0, HouseInfo[house][hExitX], HouseInfo[house][hExitY], HouseInfo[house][hExitZ]))
         {
             if (IsPlayerSafeBreaking(playerid))
@@ -3115,7 +3269,7 @@ CMD:exit(playerid, params[])
             }
 
 
-            Bit16_Set(gr_PlayerInHouse, playerid, INVALID_HOUSE_ID);
+            Player_SetInHouse(playerid, INVALID_HOUSE_ID);
             return 1;
         }
     }
@@ -3125,7 +3279,7 @@ CMD:exit(playerid, params[])
 // TODO: remove if unused/obsolete
 /*CMD:peek(playerid, params[])
 {
-    new house = Bit16_Get(gr_PlayerInHouse, playerid);
+    new house = Player_InHouse(playerid);
     if (Bit1_Get(r_PlayerDoorPeek, playerid))
     {
         Streamer_UpdateEx(playerid, HouseInfo[house][hExitX], HouseInfo[house][hExitY], HouseInfo[house][hExitZ]);
@@ -3158,9 +3312,9 @@ CMD:exit(playerid, params[])
 
 CMD:buyhouse(playerid, params[])
 {
-    if (!IsPlayerInDynamicCP(playerid, PlayerHouseCP[playerid])) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ispred kuce (niste u checkpointu)!");
+    if (!IsPlayerInDynamicCP(playerid, Player_GetHouseCP(playerid))) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ispred kuce (niste u checkpointu)!");
 
-    new house = Bit16_Get(gr_PlayerInfrontHouse, playerid);
+    new house = Player_InfrontHouse(playerid);
     if (house == INVALID_HOUSE_ID) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ispred kuce (niste u checkpointu)!");
     if (!IsPlayerInRangeOfPoint(playerid, 5.0, HouseInfo[house][hEnterX], HouseInfo[house][hEnterY], HouseInfo[house][hEnterZ])) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste blizu kuce!");
     if (HouseInfo[house][hOwnerID]) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Kuca mora biti na prodaju!");
@@ -3537,11 +3691,11 @@ CMD:houseint(playerid, params[])
 
 CMD:ring(playerid, params[])
 {
-    if (!IsPlayerInDynamicCP(playerid, PlayerHouseCP[playerid])) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ispred kuce ili garaze (niste u checkpointu)!");
-    if (Bit16_Get(gr_PlayerInfrontHouse, playerid) == INVALID_HOUSE_ID) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ispred kuce ili garaze (niste u checkpointu)!");
+    if (!IsPlayerInDynamicCP(playerid, Player_GetHouseCP(playerid))) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ispred kuce ili garaze (niste u checkpointu)!");
+    if (Player_InfrontHouse(playerid) == INVALID_HOUSE_ID) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ispred kuce ili garaze (niste u checkpointu)!");
 
     new
-        houseid = Bit16_Get(gr_PlayerInfrontHouse, playerid);
+        houseid = Player_InfrontHouse(playerid);
     if (houseid != INVALID_HOUSE_ID)
     {
         PlaySoundForPlayersInRange(20801, 80.0, HouseInfo[houseid][hExitX], HouseInfo[houseid][hExitY], HouseInfo[houseid][hExitZ]);
@@ -3552,11 +3706,11 @@ CMD:ring(playerid, params[])
 
 CMD:knock(playerid, params[])
 {
-    if (!IsPlayerInDynamicCP(playerid, PlayerHouseCP[playerid])) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ispred kuce (niste u checkpointu)!");
-    if (Bit16_Get(gr_PlayerInfrontHouse, playerid) == INVALID_HOUSE_ID) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ispred kuce (niste u checkpointu)!");
+    if (!IsPlayerInDynamicCP(playerid, Player_GetHouseCP(playerid))) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ispred kuce (niste u checkpointu)!");
+    if (Player_InfrontHouse(playerid) == INVALID_HOUSE_ID) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ispred kuce (niste u checkpointu)!");
 
     new
-        house = Bit16_Get(gr_PlayerInfrontHouse, playerid),
+        house = Player_InfrontHouse(playerid),
         string[45];
 
     if (IsPlayerInRangeOfPoint(playerid,2.0, HouseInfo[house][hEnterX], HouseInfo[house][hEnterY], HouseInfo[house][hEnterZ])
@@ -3577,7 +3731,7 @@ CMD:knock(playerid, params[])
 CMD:doorshout(playerid, params[])
 {
     if (AntiSpamInfo[playerid][asDoorShout] > gettimestamp()) return va_SendClientMessage(playerid, COLOR_RED, "[ANTI-SPAM]: Ne spamajte sa komandom! Pricekajte %d sekundi pa nastavite!", ANTI_SPAM_DOOR_SHOUT);
-    if (Bit16_Get(gr_PlayerInfrontHouse, playerid) == INVALID_HOUSE_ID && Bit16_Get(gr_PlayerInHouse, playerid) == INVALID_HOUSE_ID) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ispred kuce/u kuci!");
+    if (Player_InfrontHouse(playerid) == INVALID_HOUSE_ID && Player_InHouse(playerid) == INVALID_HOUSE_ID) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ispred kuce/u kuci!");
 
     new
         result[100],
@@ -3586,9 +3740,9 @@ CMD:doorshout(playerid, params[])
     if (sscanf(params, "s[100]", result)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /doorshout [text]");
 
     // TODO: this is code duplication. try to refactor it.
-    if (Bit16_Get(gr_PlayerInfrontHouse, playerid) != INVALID_HOUSE_ID)
+    if (Player_InfrontHouse(playerid) != INVALID_HOUSE_ID)
     {
-        house = Bit16_Get(gr_PlayerInfrontHouse, playerid);
+        house = Player_InfrontHouse(playerid);
         // TODO: bounds checking
         if (!IsPlayerInRangeOfPoint(playerid, 2.0, HouseInfo[house][hEnterX], HouseInfo[house][hEnterY], HouseInfo[house][hEnterZ]) && HouseInfo[house][h3dViwo] == GetPlayerVirtualWorld(playerid))
         {
@@ -3613,13 +3767,13 @@ CMD:doorshout(playerid, params[])
             ProxDetector(30.0, playerid, string, COLOR_HELPER,COLOR_HELPER,COLOR_HELPER,COLOR_HELPER,COLOR_HELPER);
             color = COLOR_ORANGE;
         }
-        if (Bit1_Get(gr_MaskUse, playerid) && !IsOnAdminDuty(playerid))
+        if (Player_UsingMask(playerid) && !IsOnAdminDuty(playerid))
         {
             format(string, sizeof(string), "Maska_%d se dere[VRATA]: %s !!", PlayerInfo[playerid][pMaskID], result);
             ProxDetector(30.0, playerid, string, COLOR_FADE1,COLOR_FADE2,COLOR_FADE3,COLOR_FADE4,COLOR_FADE5);
             color = COLOR_FADE1;
         }
-        if (!IsOnAdminDuty(playerid) && !Bit1_Get(gr_MaskUse, playerid))
+        if (!IsOnAdminDuty(playerid) && !Player_UsingMask(playerid))
         {
             format(string, sizeof(string), "%s se dere[VRATA]: %s !!", GetName(playerid, true), result);
             ProxDetector(30.0, playerid, string, COLOR_FADE1,COLOR_FADE2,COLOR_FADE3,COLOR_FADE4,COLOR_FADE5);
@@ -3637,9 +3791,9 @@ CMD:doorshout(playerid, params[])
     }
     else
     {
-        if (Bit16_Get(gr_PlayerInHouse, playerid) != INVALID_HOUSE_ID)
+        if (Player_InHouse(playerid) != INVALID_HOUSE_ID)
         {
-            house = Bit16_Get(gr_PlayerInHouse, playerid);
+            house = Player_InHouse(playerid);
             // TODO: bounds checking
             if (!IsPlayerInRangeOfPoint(playerid, 5.0, HouseInfo[house][hExitX], HouseInfo[house][hExitY], HouseInfo[house][hExitZ]) && HouseInfo[house][hVirtualWorld] == GetPlayerVirtualWorld(playerid))
             {
@@ -3664,13 +3818,13 @@ CMD:doorshout(playerid, params[])
                 ProxDetector(30.0, playerid, string, COLOR_HELPER,COLOR_HELPER,COLOR_HELPER,COLOR_HELPER,COLOR_HELPER);
                 color = COLOR_ORANGE;
             }
-            if (Bit1_Get(gr_MaskUse, playerid) && !IsOnAdminDuty(playerid))
+            if (Player_UsingMask(playerid) && !IsOnAdminDuty(playerid))
             {
                 format(string, sizeof(string), "Maska_%d se dere[VRATA]: %s !!", PlayerInfo[playerid][pMaskID], result);
                 ProxDetector(30.0, playerid, string, COLOR_FADE1,COLOR_FADE2,COLOR_FADE3,COLOR_FADE4,COLOR_FADE5);
                 color = COLOR_FADE1;
             }
-            if (!IsOnAdminDuty(playerid) && !Bit1_Get(gr_MaskUse, playerid))
+            if (!IsOnAdminDuty(playerid) && !Player_UsingMask(playerid))
             {
                 format(string, sizeof(string), "%s se dere[VRATA]: %s !!", GetName(playerid, true), result);
                 ProxDetector(30.0, playerid, string, COLOR_FADE1,COLOR_FADE2,COLOR_FADE3,COLOR_FADE4,COLOR_FADE5);
@@ -3714,8 +3868,8 @@ CMD:rent(playerid, params[])
             }
 
             new
-                houseid = Bit16_Get(gr_PlayerInfrontHouse, playerid);
-            if (!IsPlayerInDynamicCP(playerid, PlayerHouseCP[playerid]) || houseid == INVALID_HOUSE_ID) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ispred kuce (niste u checkpointu)!");
+                houseid = Player_InfrontHouse(playerid);
+            if (!IsPlayerInDynamicCP(playerid, Player_GetHouseCP(playerid)) || houseid == INVALID_HOUSE_ID) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ispred kuce (niste u checkpointu)!");
             if (!HouseInfo[houseid][hRentabil]) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Kuca nije na rent!");
             if (AC_GetPlayerMoney(playerid) < HouseInfo[houseid][hRent]) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate toliko novca!");
 
@@ -3782,11 +3936,11 @@ stock IsOwnerOfHouseOnline(houseid)
 
 CMD:picklock(playerid, params[])
 {
-    if (!IsPlayerInDynamicCP(playerid, PlayerHouseCP[playerid])) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ispred kuce!");
+    if (!IsPlayerInDynamicCP(playerid, Player_GetHouseCP(playerid))) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ispred kuce!");
 
     new
         pick[6],
-        house = Bit16_Get(gr_PlayerInfrontHouse, playerid);
+        house = Player_InfrontHouse(playerid);
     if (house == INVALID_HOUSE_ID) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Morate biti ispred kuce(u checkpointu)!");
     if (!IsOwnerOfHouseOnline(house)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Mozete provaljivati samo kada je vlasnik online!");
 
@@ -3816,7 +3970,7 @@ CMD:picklock(playerid, params[])
     }
     else if (!strcmp(pick, "tools", true))
     {
-        if (Bit1_Get(gr_PlayerPickLocking, playerid))
+        if (PickingLock[playerid])
         {
             ResetLockPickVars(playerid);
             TogglePlayerControllable(playerid, true);
@@ -3837,11 +3991,11 @@ CMD:picklock(playerid, params[])
 
 CMD:doorram(playerid, params[])
 {
-    if (!IsPlayerInDynamicCP(playerid, PlayerHouseCP[playerid])) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ispred kuce!");
+    if (!IsPlayerInDynamicCP(playerid, Player_GetHouseCP(playerid))) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ispred kuce!");
 
     new
         param[8],
-        house = Bit16_Get(gr_PlayerInfrontHouse, playerid);
+        house = Player_InfrontHouse(playerid);
     if (house == INVALID_HOUSE_ID) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Morate biti ispred kuce(u checkpointu)!");
     if (!HouseInfo[house][hLock]) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Vrata su otkljucana!");
     if (!IsOwnerOfHouseOnline(house)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Mozete provaljivati samo kada je vlasnik online!");
@@ -3849,13 +4003,13 @@ CMD:doorram(playerid, params[])
 
     if (!strcmp("foot", param, true))
     {
-        if (Bit1_Get(gr_PlayerFootKicking, playerid))
+        /*if (Player_GetRammingDoor(playerid) == DOOR_RAM_FOOT)
         {
             TogglePlayerControllable(playerid, true);
             ResetDoorKickingVars(playerid);
             return 1;
-        }
-        if (Bit1_Get(gr_PlayerFootKicking, playerid))
+        }*/
+        if (Player_GetRammingDoor(playerid) == DOOR_RAM_FOOT)
         {
             SendMessage(playerid, MESSAGE_TYPE_ERROR, "Vec razvaljujete vrata!");
             return 1;
@@ -3871,11 +4025,11 @@ CMD:doorram(playerid, params[])
     }
     if (!strcmp("crowbar", param, true))
     {
-        if (Bit1_Get(gr_CrowbarBreaking, playerid))
+        if (Player_GetRammingDoor(playerid) == DOOR_RAM_CROWBAR)
         {
             DisablePlayerKeyInput(playerid);
             TogglePlayerControllable(playerid, true);
-            Bit1_Set(gr_CrowbarBreaking, playerid, false);
+            Player_SetRammingDoor(playerid, DOOR_RAM_NONE);
             return 1;
         }
 

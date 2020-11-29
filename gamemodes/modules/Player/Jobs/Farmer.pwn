@@ -1,4 +1,5 @@
 #include <YSI_Coding\y_hooks>
+#include "modules/Player/Player_h.pwn"
 
 #define FARMER_ID		(7)
 
@@ -197,7 +198,7 @@ hook OnPlayerDisconnect(playerid, reason)
 		if( IsValidDynamicObject(CombineInfo[playerid][cPlant][i]))
 			DestroyDynamicObject(CombineInfo[playerid][cPlant][i]);
 	}
-	Bit1_Set( gr_IsWorkingJob, playerid, false );
+	Player_SetIsWorkingJob(playerid, false);
 	DestroyFarmerObjects(playerid);
 	ResetFarmerVars(playerid);
 	return 1;
@@ -330,7 +331,7 @@ hook OnPlayerLeaveDynArea(playerid, areaid)
 			    if( IsValidDynamicObject(CombineInfo[playerid][cPlant][i]))
 	        		DestroyDynamicObject(CombineInfo[playerid][cPlant][i]);
 			}
-			Bit1_Set( gr_IsWorkingJob, playerid, false );
+			Player_SetIsWorkingJob(playerid, false);
 	    	SendClientMessage(playerid, COLOR_RED, "[ ! ] Izasli ste iz podrucja te ste automatski prestali raditi posao.");
 			DestroyFarmerObjects(playerid);
 			ResetFarmerVars(playerid);
@@ -790,7 +791,7 @@ CMD:milk(playerid, params[])
 		TogglePlayerControllable(playerid, 0);
 		ApplyAnimation(playerid, "BOMBER", "BOM_Plant_Loop", 4.1, 1, 0, 0, 0, 300000, 0);
 		SetPlayerKeyInput(playerid, 50, 1900, 180, 5);
-		Bit1_Set( gr_IsWorkingJob, playerid, true );
+		Player_SetIsWorkingJob(playerid, true);
 		SendMessage(playerid, MESSAGE_TYPE_INFO, "Zapoceli ste sa muznjom krave!");
 		SendClientMessage(playerid, COLOR_RED, "[ ! ] Ako zelite prestati sa muznjom, kucajte /milk stop da bi prestali muziti kravu.");
 	}
@@ -799,7 +800,7 @@ CMD:milk(playerid, params[])
 			MilkInfo[playerid][mTransfering] = 0;
 			ClearAnimations(playerid);
 			TogglePlayerControllable(playerid, 1);
-			Bit1_Set( gr_IsWorkingJob, playerid, false );
+			Player_SetIsWorkingJob(playerid, false);
 			SendMessage(playerid, MESSAGE_TYPE_INFO, "Prekinuli ste sa prijenos mlijeka u kanister.");
 			return 1;
 		}
@@ -813,7 +814,7 @@ CMD:milk(playerid, params[])
 		TogglePlayerControllable(playerid, 0);
 		ApplyAnimation(playerid, "BOMBER", "BOM_Plant_Loop", 4.1, 1, 0, 0, 0, 30000, 0);
 		defer TransferingMilk(playerid);
-		Bit1_Set( gr_IsWorkingJob, playerid, true );
+		Player_SetIsWorkingJob(playerid, true);
 		SendMessage(playerid, MESSAGE_TYPE_INFO, "Zapoceli ste prijenos mlijeka iz kante u kanister! Pricekajte dok se ne zavrsi proces.");
 		return SendClientMessage(playerid, COLOR_RED, "[ ! ] Ako zelite prestati sa prelijevanjem, upisite /milk transfer da bi prestali prijenos mlijeka u kanister.");
 	}
@@ -1007,7 +1008,7 @@ CMD:milk(playerid, params[])
 	}
 	else if( !strcmp(param, "stop", true) ) {
 		MilkInfo[playerid][mMilking] = 0;
-		Bit1_Set( gr_IsWorkingJob, playerid, false );
+		Player_SetIsWorkingJob(playerid, false);
 		TogglePlayerControllable(playerid, 1);
 
 		RemovePlayerAttachedObject(playerid, 9);
@@ -1194,7 +1195,7 @@ CMD:plant(playerid, params[])
 	if( !IsTrailerAttachedToVehicle(GetPlayerVehicleID(playerid))) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Traktor nema prikolicu!");
 	if( SeedInfo[playerid][sTrailerSeeds] == 0) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate sjemenke u prikolici!");
 	
-	Bit1_Set( gr_IsWorkingJob, playerid, true );
+	Player_SetIsWorkingJob(playerid, true);
 	SeedInfo[playerid][sZone] = CreateDynamicCircle(0.2381, -70.7436, 65.0, -1, -1, playerid);
 	SeedInfo[playerid][sWork] = 1;
 	SendMessage(playerid, MESSAGE_TYPE_INFO, "Zapoceli ste rad sa traktorom!");
@@ -1254,7 +1255,7 @@ CMD:harvest(playerid, params[])
 		ClearAnimations(playerid);
 		TogglePlayerControllable(playerid, 1);
 		SeedInfo[playerid][sHarvesting] = 0;
-		Bit1_Set( gr_IsWorkingJob, playerid, false );
+		Player_SetIsWorkingJob(playerid, false);
 		SendMessage(playerid, MESSAGE_TYPE_INFO, "Prestali ste sa zetvom usjeva.");
 		return 1;
 	}
@@ -1276,7 +1277,7 @@ CMD:harvest(playerid, params[])
 		    if( IsDynamicObjectMoving(SeedInfo[playerid][sPlant][i])) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Usjev nije spreman za zetvu!");
 		    if( SeedInfo[playerid][sHarvesting]) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Vec ste zapoceli zetvu usjeva!");
 
-			Bit1_Set( gr_IsWorkingJob, playerid, true );
+			Player_SetIsWorkingJob(playerid, true);
 			SeedInfo[playerid][sHarvesting] = 1;
 			TogglePlayerControllable(playerid, 0);
 			ApplyAnimation(playerid, "BOMBER", "BOM_Plant", 4.1, 1, 0, 0, 0, 30000, 0);
@@ -1341,7 +1342,7 @@ CMD:crops(playerid, params[])
 		SetPlayerAttachedObject(playerid, 8, 2060, 5, 0.020000, 0.119999, 0.185999, -72.500053, -9.700006, -76.799949, 1.000000, 1.000000, 1.000000);
 		SetPlayerSpecialAction(playerid, 25);
 		SeedInfo[playerid][sStorageCrops] = 1;
-		Bit1_Set( gr_IsWorkingJob, playerid, true );
+		Player_SetIsWorkingJob(playerid, true);
 		SendMessage(playerid, MESSAGE_TYPE_INFO, "Uzeli ste vrecu sa usjevom iz spremista!");
 		SendClientMessage(playerid, COLOR_RED, "[ ! ] Odite do svog kamiona, te kucajte /crops put kako bi stavili vrecu na kamion.");
 		return SendClientMessage(playerid, COLOR_RED, "[ ! ] Vrecu mozete baciti sa /crops drop.");
@@ -1582,7 +1583,7 @@ CMD:eggs(playerid, params[])
 		if( EggInfo[playerid][eFullCarton]) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Vec imate kutiju s jajima kod sebe!");
 		if ( EggInfo[playerid][eCollecting] ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Vec sakupljate jaja u kutiju!");
 		
-		Bit1_Set( gr_IsWorkingJob, playerid, true );
+		Player_SetIsWorkingJob(playerid, true);
 		EggInfo[playerid][eCollecting] = 1;
 		TogglePlayerControllable(playerid, 0);
 		ApplyAnimation(playerid, "BOMBER", "BOM_Plant", 4.1, 1, 0, 0, 0, 1, 0);
@@ -1846,7 +1847,7 @@ CMD:transport(playerid, params[])
 	        SeedInfo[playerid][sTransportCP] = 1;
 			SetPlayerCheckpoint(playerid, -9.4406, 54.8088, 3.1172, 4.0);
 	        SeedInfo[playerid][sTransporting] = 1;
-			Bit1_Set( gr_IsWorkingJob, playerid, true );
+			Player_SetIsWorkingJob(playerid, true);
 	        SendMessage(playerid, MESSAGE_TYPE_INFO, "Uspjesno ste zapoceli sa transportom usjeva!");
 	        SendClientMessage(playerid, COLOR_RED, "[ ! ] Odite do skladista za usjeve, te upisite /crops take kako bi uzeli vrecu s usjevima iz skladista.");
 		}
@@ -1855,7 +1856,7 @@ CMD:transport(playerid, params[])
 		    MilkInfo[playerid][mTransportCP] = 1;
 			SetPlayerCheckpoint(playerid, -1.3600, 74.3902, 3.1172, 4.0);
 		    MilkInfo[playerid][mTransporting] = 1;
-			Bit1_Set( gr_IsWorkingJob, playerid, true );
+			Player_SetIsWorkingJob(playerid, true);
 		    SendMessage(playerid, MESSAGE_TYPE_INFO, "Uspjesno ste zapoceli sa transportom mlijeka!");
 	        SendClientMessage(playerid, COLOR_RED, "[ ! ] Odite do skladista za mlijeko, te upisite /milk take kako bi uzeli kanister s mlijekom iz skladista.");
 		}
@@ -1864,7 +1865,7 @@ CMD:transport(playerid, params[])
 			EggInfo[playerid][eTransportCP] = 1;
 			SetPlayerCheckpoint(playerid, -79.3684, 90.7796, 3.1172, 4.0);
 			EggInfo[playerid][eTransporting] = 1;
-			Bit1_Set( gr_IsWorkingJob, playerid, true );
+			Player_SetIsWorkingJob(playerid, true);
 			SendMessage(playerid, MESSAGE_TYPE_INFO, "Uspjesno ste zapoceli sa transportom jaja!");
 	        SendClientMessage(playerid, COLOR_RED, "[ ! ]  Odite do skladista za jaja, te upisite /eggs take kako bi uzeli kutiju s jajima iz skladista.");
 		}
@@ -1877,7 +1878,7 @@ CMD:stoptransport(playerid, params[])
 {
 	if( !SeedInfo[playerid][sTransporting] && !MilkInfo[playerid][mTransporting] && !EggInfo[playerid][eTransporting]) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Trenutno ne transportirate nista!");
 	
-	Bit1_Set( gr_IsWorkingJob, playerid, false );
+	Player_SetIsWorkingJob(playerid, false);
     TruckInfo[playerid][tCropNumber] = 0;
     TruckInfo[playerid][tEggsNumber] = 0;
 	TruckInfo[playerid][tLimit] = 0;

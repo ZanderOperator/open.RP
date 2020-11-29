@@ -18,6 +18,7 @@
 #include "modules/Systems/Casino/Poker.pwn"
 
 // Events
+#include "modules/Systems/Events/Core.pwn"
 #include "modules/Systems/Events/Dakar.pwn"
 #include "modules/Systems/Events/Quad.pwn"
 

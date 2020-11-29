@@ -46,7 +46,7 @@ static
 
 static
     Timer:HideGarageTD[MAX_PLAYERS],
-    Bit1:r_HDTimer<MAX_PLAYERS> = {Bit1:false, ...},
+    bool:HideGarageTimerActive[MAX_PLAYERS] = {false, ...},
     GarageSeller[MAX_PLAYERS],
     GarageBuyer[MAX_PLAYERS],
     GaragePrice[MAX_PLAYERS];
@@ -200,7 +200,7 @@ public OnHouseGaragesLoad()
 
 timer HideGaragesTDs[3000](playerid)
 {
-    Bit1_Set(r_HDTimer, playerid, false);
+    HideGarageTimerActive[playerid] = false;
     DestroyGarageInfoTD(playerid);
     return 1;
 }
@@ -444,10 +444,10 @@ hook OnGameModeInit()
 
 hook OnPlayerDisconnect(playerid, reason)
 {
-    if (Bit1_Get(r_HDTimer, playerid))
+    if (HideGarageTimerActive[playerid])
     {
         stop HideGarageTD[playerid];
-        Bit1_Set(r_HDTimer, playerid, false);
+        HideGarageTimerActive[playerid] = false;
     }
     if (GarageBuyer[playerid] != INVALID_PLAYER_ID)
     {
@@ -528,7 +528,7 @@ hook OnPlayerPickUpDynPickup(playerid, pickupid)
             }
 
             PlayerTextDrawSetString(playerid, GarageInfoTD[playerid], string);
-            Bit1_Set(r_HDTimer, playerid, true);
+            HideGarageTimerActive[playerid] = true;
             HideGarageTD[playerid] = defer HideGaragesTDs(playerid);
             break;
         }
@@ -621,7 +621,7 @@ CMD:garage(playerid, params[])
             return 1;
         }
         if (IsPlayerInRangeOfPoint(playerid, 10.0, GarageInfo[garage][gEnterX], GarageInfo[garage][gEnterY], GarageInfo[garage][gEnterZ])
-            || Bit16_Get(gr_PlayerInGarage, playerid) != 9999)
+            || Player_InGarage(playerid) != INVALID_HOUSE_ID)
         {
             SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste blizu svoje garaze!");
             return 1;
@@ -852,7 +852,7 @@ CMD:genter(playerid, params[])
         SetVehiclePosEx(playerid, GarageInfo[garage][gExitX], GarageInfo[garage][gExitY] + 1.5, GarageInfo[garage][gExitZ], GarageInfo[garage][gSQLID], 5, true);
         SetVehicleZAngle(vehicleid, 90.0);
     }
-    Bit16_Set(gr_PlayerInGarage, playerid, garage);
+    Player_SetInGarage(playerid, garage);
     DestroyGarageInfoTD(playerid);
     return 1;
 }

@@ -1,4 +1,5 @@
 #include <YSI_Coding\y_hooks>
+#include "modules/Player/Player_h.pwn"
 
 /*
 	########  ######## ######## #### ##    ## ########  ######  
@@ -142,7 +143,7 @@ stock static CheckGarbages(playerid)
 		tObject[playerid] = INVALID_OBJECT_ID;
 		DisablePlayerCheckpoint(playerid);
 		Bit8_Set( gr_TrashPickuped, playerid, 0 );
-		Bit1_Set( gr_IsWorkingJob, playerid, false );
+		Player_SetIsWorkingJob(playerid, false);
 		TogglePlayerAllDynamicCPs(playerid, true);
 		return 1;
 	}
@@ -480,7 +481,7 @@ CMD:garbage(playerid, params[])
 		TogglePlayerAllDynamicCPs(playerid, false);
 		new Pos = random(sizeof(randomTrashPos));
 		gStartedWork[playerid] = 1;
-		Bit1_Set( gr_IsWorkingJob, playerid, true );
+		Player_SetIsWorkingJob(playerid, true);
 		tObject[playerid] = CreatePlayerObject(playerid, 2672, randomTrashPos[Pos][0], randomTrashPos[Pos][1], randomTrashPos[Pos][2], 0.00000, 0.00000, 0.00000, 300.0);
 		SetPlayerCheckpoint(playerid, randomTrashPos[Pos][0], randomTrashPos[Pos][1], randomTrashPos[Pos][2], 2.0);
         SendMessage(playerid, MESSAGE_TYPE_INFO, "Smece vam je oznaceno crvenim na mapi, a kontenjeri rozim covjecicima.");
@@ -518,7 +519,7 @@ CMD:garbage(playerid, params[])
 			tObject[playerid] = INVALID_OBJECT_ID;
 			DisablePlayerCheckpoint(playerid);
 			SendMessage(playerid, MESSAGE_TYPE_INFO, "Ostavili ste radnu odjecu te zavrsili posao.");
-			Bit1_Set( gr_IsWorkingJob, playerid, false );
+			Player_SetIsWorkingJob(playerid, false);
 			Bit8_Set( gr_TrashPickuped, playerid, 0 );
 		}
 		return 1;
@@ -541,7 +542,7 @@ CMD:garbage(playerid, params[])
 		Bit8_Set( gr_TrashPickuped, playerid, 0 );
 		TogglePlayerAllDynamicCPs(playerid, true);
 		DisablePlayerCheckpoint(playerid);
-		Bit1_Set( gr_IsWorkingJob, playerid, false );
+		Player_SetIsWorkingJob(playerid, false);
 		SendClientMessage( playerid, COLOR_RED, "[ ! ] Uspjesno ste prekinuli posao smetlara!");
 	}
 	return 1;

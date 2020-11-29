@@ -310,7 +310,7 @@ PlayerHitCombination(playerid, combination_id)
 
             // Storage Rob
             PlayerStopRob(playerid);
-            StorageRob(playerid, Storage_RackNear(playerid));
+            StorageRob(playerid, Storage_PlayerNearRack(playerid));
 
             TogglePlayerControllable(playerid, true);
             SendClientMessage(playerid, COLOR_RED, "[ ! ] [ROBBERY]: Uspjesno ste provalili u gunrack safe, sada mozete ukrasti oruzje.");
@@ -325,28 +325,7 @@ PlayerHitCombination(playerid, combination_id)
 
 StorageRob(playerid, storage_id)
 {
-    // TODO: check if storage_id in range
-    if (storage_id == -1)
-        return 1;
-
-    if (!HouseStorage[storage_id][storageExists])
-    {
-        return 1;
-    }
-
-    new string[256];
-    for (new i = 0; i < MAX_WEAPON_ONRACK; i++)
-    {
-        if (!HouseStorage[storage_id][storageWeapons][i])
-        {
-            format(string, sizeof(string), "%s{3C95C2}[SLOT %d]: EMPTY SLOT\n", string, i + 1);
-        }
-        else
-        {
-            format(string, sizeof(string), "%s{3C95C2}[SLOT %d]:  %s  [ammo: %d/500]\n", string, i + 1, GetWeaponNameEx(HouseStorage[storage_id][storageWeapons][i]), HouseStorage[storage_id][storageAmmo][i]);
-        }
-    }
-    ShowPlayerDialog(playerid, DIALOG_ROB_STORAGE, DIALOG_STYLE_LIST, "[STORAGE] - Weapons", string, "Take", "Close");
+    va_ShowPlayerDialog(playerid, DIALOG_ROB_STORAGE, DIALOG_STYLE_LIST, "[STORAGE] - Weapons", Storage_ListHouseStorage(storage_id), "Take", "Close");
     return 1;
 }
 
@@ -489,27 +468,32 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
             if (response)
             {
                 new
-                    storage_id = Storage_RackNear(playerid),
+                    storage_id = Storage_PlayerNearRack(playerid),
                     puzavac = IsCrounching(playerid);
 
                 if (storage_id == -1)
                     return 1;
 
-                if (HouseStorage[storage_id][storageWeapons][listitem])
+                new
+                    rack_weapon = Storage_GetRackWeaponInSlot(storage_id, listitem),
+                    rack_ammo   = Storage_GetRackAmmoInSlot(storage_id, listitem);
+                if (rack_weapon <= 0)
                 {
-                    if (!CheckPlayerWeapons(playerid, HouseStorage[storage_id][storageWeapons][listitem])) return 1;
-                    AC_GivePlayerWeapon(playerid, HouseStorage[storage_id][storageWeapons][listitem], HouseStorage[storage_id][storageAmmo][listitem]);
-                    SetAnimationForWeapon(playerid, HouseStorage[storage_id][storageWeapons][listitem], puzavac);
-
-                    HouseStorage[storage_id][storageWeapons][listitem] = 0;
-                    HouseStorage[storage_id][storageAmmo][listitem] = 0;
-                    HouseStorage_SaveWep(storage_id, listitem);
-
-                    Storage_RackRefresh(storage_id);
-                    HouseStorage_Save(storage_id);
-
-                    StorageRob(playerid, storage_id); // reload dialog.
+                    return 1;
                 }
+
+                if (!CheckPlayerWeapons(playerid, rack_weapon)) return 1;
+                AC_GivePlayerWeapon(playerid, rack_weapon, rack_ammo);
+                SetAnimationForWeapon(playerid, rack_weapon, puzavac);
+
+                Storage_SetRackWeaponInSlot(storage_id, listitem, 0);
+                Storage_SetRackAmmoInSlot(storage_id, listitem, 0);
+                HouseStorage_SaveWep(storage_id, listitem);
+
+                Storage_RackRefresh(storage_id);
+                HouseStorage_Save(storage_id);
+
+                StorageRob(playerid, storage_id); // reload dialog.
             }
             return 1;
         }
@@ -526,7 +510,7 @@ hook OnPlayerClickPlayerTD(playerid, PlayerText:playertextid)
 
     if (playertextid == srobTD[playerid][12])
     {
-        new string[128], house_id = Bit16_Get(gr_PlayerInHouse, playerid);
+        new string[128], house_id = Player_InHouse(playerid);
 
         PlayerStopRob(playerid);
         SendClientMessage(playerid, COLOR_RED, "[ROBBERY]: Zbog pokusaja obijanja gunrack-a, alarm se aktivirao. Policija je obavjestena.");
@@ -595,8 +579,8 @@ hook OnPlayerClickPlayerTD(playerid, PlayerText:playertextid)
 CMD:gunrack_rob(playerid, params[])
 {
     new
-        storage_id = Storage_RackNear(playerid),
-        house_id = Bit16_Get(gr_PlayerInHouse, playerid);
+        storage_id = Storage_PlayerNearRack(playerid),
+        house_id = Player_InHouse(playerid);
 
     if (storage_id == -1)
         return SendErrorMessage(playerid, "Kako bi zapoceli storage-rob, morate biti u blizini stalka.");

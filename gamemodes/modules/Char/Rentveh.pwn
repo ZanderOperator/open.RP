@@ -1,4 +1,5 @@
 #include <YSI_Coding\y_hooks>
+#include "modules/Player/Player_h.pwn"
 
 /*
 	########  ######## ######## #### ##    ## ########  ######  
@@ -272,7 +273,7 @@ CMD:rentveh(playerid, params[])
 	}
 	else if(!strcmp(param, "locate", true))
 	{
-		if(Bit1_Get(gr_IsWorkingJob, playerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne mozete koristiti GPS dok radite!");
+		if(Player_IsWorkingJob(playerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne mozete koristiti GPS dok radite!");
 		if(gStartedWork[playerid]) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne smijete to koristiti dok radite!");
 	    if(locatedRentedVeh[playerid] == false)
 		{

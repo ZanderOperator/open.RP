@@ -394,11 +394,9 @@ static const ObjectsParticles[][E_PARTICLES_OBJECTS_DATA] =
 };
 
 static
-    Bit1:r_PlayerPrwsBizzBInt <MAX_PLAYERS>,
-    Bit4:r_PlayerBizzEditState<MAX_PLAYERS>,
-    Bit8:r_PlayerPrwsBizzInt  <MAX_PLAYERS>;
+    BizzEditState           [MAX_PLAYERS] = {-1, ...},
+    BizzViewingInterior     [MAX_PLAYERS] = {-1, ...},
 
-static
     BizzFurObjectSection    [MAX_PLAYERS],
     BizzFurnObjectsType     [MAX_PLAYERS],
     BizzPlayerPrwsObject    [MAX_PLAYERS] = {INVALID_OBJECT_ID, ...},
@@ -541,8 +539,7 @@ static stock SetPlayerInteriorPreview(playerid, interior)
     // TODO: proper bounds check
     if (interior > sizeof(BlankBiznisInts)) return 0;
 
-    Bit1_Set(r_PlayerPrwsBizzBInt, playerid, true);
-    Bit8_Set(r_PlayerPrwsBizzInt, playerid, interior);
+    BizzViewingInterior[playerid] = interior;
 
     va_SendClientMessage(playerid, COLOR_YELLOW, "[INFO]: Trenutno pregledavate interijer %s. Za kupnju kucajte /bint buy!", BlankBiznisInts[interior][iName]);
     CreateFurnitureBlankIntTDs(playerid, BlankBiznisInts[interior][iName], BlankBiznisInts[interior][iPrice]);
@@ -552,7 +549,7 @@ static stock SetPlayerInteriorPreview(playerid, interior)
 
 static stock BuyBlankInterior(playerid, biznisid)
 {
-    new interior = Bit8_Get(r_PlayerPrwsBizzInt, playerid);
+    new interior = BizzViewingInterior[playerid];
     // TODO: bounds check
     if (AC_GetPlayerMoney(playerid) < BlankBiznisInts[interior][iPrice])
     {
@@ -589,7 +586,7 @@ static stock BuyBlankInterior(playerid, biznisid)
 static stock ExitBlankInteriorPreview(playerid)
 {
     if (playerid == INVALID_PLAYER_ID) return 0;
-    if (!Bit1_Get(r_PlayerPrwsBizzBInt, playerid)) return 0;
+    if (BizzViewingInterior[playerid] == -1) return 0;
 
     DestroyFurnitureBlankIntTDs(playerid);
 
@@ -597,7 +594,7 @@ static stock ExitBlankInteriorPreview(playerid)
     // TODO: bounds check
     SetPlayerPosEx(playerid, BizzInfo[biznisid][bEntranceX], BizzInfo[biznisid][bEntranceY], BizzInfo[biznisid][bEntranceZ], 0, 0, true);
     SendClientMessage(playerid, COLOR_YELLOW, "[INFO]: Uspjesno ste izasli iz pregleda interijera!");
-    Bit1_Set(r_PlayerPrwsBizzBInt, playerid, false);
+    BizzViewingInterior[playerid] = -1;
     return 1;
 }
 
@@ -1122,7 +1119,7 @@ static stock CreateFurniturePreviewObject(playerid, modelid, index)
     BizzPlayerPrwsModel[playerid]     = modelid;
 
     SendClientMessage(playerid, COLOR_YELLOW, "[INFO]: Trenutno uredjujete objekt. Kliknite na save ikonicu za kupovinu objekta!");
-    Bit4_Set(r_PlayerBizzEditState, playerid, EDIT_STATE_PREVIEW);
+    BizzEditState[playerid] = EDIT_STATE_PREVIEW;
     return 1;
 }
 
@@ -1190,7 +1187,7 @@ static stock CreateBiznisFurnitureObject(playerid, modelid, Float:x, Float:y, Fl
         new price = GetFurnitureObjectPrice(playerid, BizzPlayerPrwsIndex[playerid]);
         va_SendClientMessage(playerid, COLOR_GREEN, "[INFO]: Kupili ste objekt za %d$ i stavili ga u slot %d!", price, index + 1);
         PlayerToBudgetMoney(playerid, price); // Novac ide u proracun
-        Bit4_Set(r_PlayerBizzEditState, playerid, 0);
+        BizzEditState[playerid] = -1;
 
         #if defined MODULE_LOGS
         Log_Write("/logfiles/furniture_buy.txt", "(%s) Player %s bought an object(modelid: %d) for %d$ in Business Furniture and placed it into slot %d.",
@@ -1303,8 +1300,8 @@ static stock EditFurnitureObject(playerid, index)
         DestroyDynamicObject(BizzInfo[biznisid][bFurObjectid][index]);
         BizzInfo[biznisid][bFurObjectid][index] = INVALID_OBJECT_ID;
 
-        BizzPlayerEditObject[playerid]    = CreatePlayerObject(playerid, BizzInfo[biznisid][bFurModelid][index], BizzInfo[biznisid][bFurPosX][index], BizzInfo[biznisid][bFurPosY][index], BizzInfo[biznisid][bFurPosZ][index], BizzInfo[biznisid][bFurRotX][index], BizzInfo[biznisid][bFurRotY][index], BizzInfo[biznisid][bFurRotZ][index]);
-        Bit4_Set(r_PlayerBizzEditState, playerid, EDIT_STATE_EDIT);
+        BizzPlayerEditObject[playerid] = CreatePlayerObject(playerid, BizzInfo[biznisid][bFurModelid][index], BizzInfo[biznisid][bFurPosX][index], BizzInfo[biznisid][bFurPosY][index], BizzInfo[biznisid][bFurPosZ][index], BizzInfo[biznisid][bFurRotX][index], BizzInfo[biznisid][bFurRotY][index], BizzInfo[biznisid][bFurRotZ][index]);
+        BizzEditState[playerid] = EDIT_STATE_EDIT;
         EditPlayerObject(playerid, BizzPlayerEditObject[playerid]);
     }
     else
@@ -1369,10 +1366,10 @@ static stock SetFurnitureObjectPos(playerid, Float:x, Float:y, Float:z, Float:rx
     }
 
     Streamer_Update(playerid);
-    Bit4_Set(r_PlayerBizzEditState, playerid, 0);
 
-    BizzPlayerEditObject[playerid]    = INVALID_OBJECT_ID;
-    BizzPlayerEditIndex[playerid]     = -1;
+    BizzEditState       [playerid] = 0;
+    BizzPlayerEditObject[playerid] = INVALID_OBJECT_ID;
+    BizzPlayerEditIndex [playerid] = -1;
     return 1;
 }
 
@@ -1965,7 +1962,7 @@ hook OnPlayerDisconnect(playerid, reason)
 {
     DestroyFurnitureBlankIntTDs(playerid);
 
-    if (Bit4_Get(r_PlayerBizzEditState, playerid) != 0)
+    if (BizzEditState[playerid] != -1)
     {
         if (IsValidPlayerObject(playerid, BizzPlayerPrwsObject[playerid]))
         {
@@ -1973,7 +1970,7 @@ hook OnPlayerDisconnect(playerid, reason)
             DestroyPlayerObject(playerid, BizzPlayerPrwsObject[playerid]);
             BizzPlayerPrwsObject[playerid] = INVALID_OBJECT_ID;
         }
-        Bit4_Set(r_PlayerBizzEditState, playerid, 0);
+        BizzEditState[playerid] = -1;
     }
 
     BizzFurObjectSection[playerid]     = -1;
@@ -2822,7 +2819,7 @@ hook OnPlayerEditObject(playerid, playerobject, objectid, response, Float:fX, Fl
     {
         return 1;
     }
-    switch (Bit4_Get(r_PlayerBizzEditState, playerid))
+    switch (BizzEditState[playerid])
     {
         case EDIT_STATE_PREVIEW:
         {
@@ -2843,7 +2840,7 @@ hook OnPlayerEditObject(playerid, playerobject, objectid, response, Float:fX, Fl
                 BizzPlayerPrwsModel [playerid] = 0;
                 BizzFurObjectSection[playerid] = 0;
                 BizzFurnObjectsType [playerid] = 0;
-                Bit4_Set(r_PlayerBizzEditState, playerid, 0);
+                BizzEditState[playerid] = -1;
             }
         }
         case EDIT_STATE_EDIT:
@@ -2862,7 +2859,7 @@ hook OnPlayerEditObject(playerid, playerobject, objectid, response, Float:fX, Fl
                 if (IsValidPlayerObject(playerid, objectid))
                 {
                     SetFurnitureObjectPos(playerid, fX, fY, fZ, fRotX, fRotY, fRotZ);
-                    Bit4_Set(r_PlayerBizzEditState, playerid, 0);
+                    BizzEditState[playerid] = -1;
                 }
             }
         }
@@ -2965,13 +2962,13 @@ CMD:biznis_bint(playerid, params[])
     }
     else if (!strcmp(param, "buy", true))
     {
-        if (!Bit1_Get(r_PlayerPrwsBizzBInt, playerid)) return SendClientMessage(playerid, COLOR_RED, "[GRESKA]: Morate prvo uci i pregledati prazan interijer!");
+        if (BizzViewingInterior[playerid] == -1) return SendClientMessage(playerid, COLOR_RED, "[GRESKA]: Morate prvo uci i pregledati prazan interijer!");
 
         ShowPlayerDialog(playerid, DIALOG_BIZZ_FURN_BINT_SURE, DIALOG_STYLE_MSGBOX, "Blank Interiors", "Zelite li kupiti prazan interijer?\n"COL_RED"Svi prijasnji objekti ce se obrisati!", "Yes", "No");
     }
     else if (!strcmp(param, "exit", true))
     {
-        if (!Bit1_Get(r_PlayerPrwsBizzBInt, playerid)) return SendClientMessage(playerid, COLOR_RED, "[GRESKA]: Ne gledate prazne interijere!");
+        if (BizzViewingInterior[playerid] == -1) return SendClientMessage(playerid, COLOR_RED, "[GRESKA]: Ne gledate prazne interijere!");
         if (!ExitBlankInteriorPreview(playerid)) return SendClientMessage(playerid, COLOR_RED, "[GRESKA]: Dogodila se nekakva pogreska, ponovno kucajte /bint exit!");
     }
     return 1;
@@ -2994,7 +2991,7 @@ CMD:biznis_furniture(playerid, params[])
         return 1;
     }
 
-    if (!strcmp( "menu", param, true))
+    if (!strcmp(param, "menu", true))
     {
         new biznisid = GetPlayerFurnitureBiznis(playerid);
         if (biznisid == INVALID_BIZNIS_ID) return SendClientMessage(playerid, COLOR_RED, "[GRESKA]: Morate posjedovati/uredjivati biznis.");
@@ -3006,7 +3003,7 @@ CMD:biznis_furniture(playerid, params[])
             return 1;
         }
 
-        if (Bit4_Get(r_PlayerBizzEditState, playerid) != 0)
+        if (BizzEditState[playerid] != -1)
         {
             if (IsValidPlayerObject(playerid, BizzPlayerPrwsObject[playerid]))
             {
@@ -3014,11 +3011,11 @@ CMD:biznis_furniture(playerid, params[])
                 DestroyPlayerObject(playerid, BizzPlayerPrwsObject[playerid]);
                 BizzPlayerPrwsObject[playerid] = INVALID_OBJECT_ID;
             }
-            Bit4_Set(r_PlayerBizzEditState, playerid, 0);
+            BizzEditState[playerid] = -1;
         }
         ShowPlayerDialog(playerid, DIALOG_BIZZ_FURN_MENU, DIALOG_STYLE_LIST, "Biznis Furniture - Menu", "Kupi objekt\nUredi", "Choose", "Abort");
     }
-    else if (!strcmp( "approve", param, true))
+    else if (!strcmp(param, "approve", true))
     {
         new biznisid = GetPlayerFurnitureBiznis(playerid);
         if (biznisid == INVALID_BIZNIS_ID) return SendClientMessage(playerid, COLOR_RED, "[GRESKA]: Morate posjedovati/uredjivati biznis.");

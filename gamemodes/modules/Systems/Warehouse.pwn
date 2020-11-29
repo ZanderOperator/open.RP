@@ -39,8 +39,6 @@ enum // U coarp.amx
     DIALOG_WAREHOUSE_INFO
 }; */
 
-static Bit2:gr_PlayerInWarehouse<MAX_PLAYERS> = Bit2: -1;
-
 enum whInfo
 {
     whFactionSQLID, // SQL ID of Faction that warehouse belongs to (( FactionInfo[factionid][fID] ))
@@ -1166,7 +1164,6 @@ CMD:warehouse(playerid, params[])
         }
 
         SetPlayerPosEx( playerid, WarehouseInfo[wh][whExit][0], WarehouseInfo[wh][whExit][1], WarehouseInfo[wh][whExit][2], WarehouseInfo[wh][whViwo], WarehouseInfo[wh][whInt], true);
-        Bit16_Set( gr_PlayerInWarehouse, playerid, wh);
         return 1;
     }
     /*
@@ -1200,7 +1197,6 @@ CMD:warehouse(playerid, params[])
         }
 
         SetPlayerPosEx( playerid, WarehouseInfo[wh][whEnter][0], WarehouseInfo[wh][whEnter][1], WarehouseInfo[wh][whEnter][2], 0, 0, false);
-        Bit16_Set( gr_PlayerInWarehouse, playerid, INVALID_HOUSE_ID);
         return 1;
     }
     else if (!strcmp(option, "put", true))
