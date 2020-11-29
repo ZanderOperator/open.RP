@@ -14,6 +14,7 @@
 */
 
 #include <YSI_Coding\y_hooks>
+#include "modules/Systems/Header.pwn"
 
 
 /*
@@ -53,7 +54,6 @@ static
     lspd_doors  [13],
     lspd_dstatus[13];
 
-// Player Vars
 static
     bool:undercover_mask     [MAX_PLAYERS] = {false, ...},
     Text3D:unknown_text      [MAX_PLAYERS],
@@ -82,7 +82,9 @@ static
 
     bool:PDVehLocked         [MAX_PLAYERS] = {false, ...},
     PDLockedSeat             [MAX_PLAYERS],
-    PDLockedVeh              [MAX_PLAYERS] = {INVALID_VEHICLE_ID, ...};
+    PDLockedVeh              [MAX_PLAYERS] = {INVALID_VEHICLE_ID, ...},
+
+    bool:AllowedGovVehRepair [MAX_PLAYERS] = {false, ...};
 
 
 /*
@@ -163,6 +165,16 @@ stock bool:Player_ApprovedUndercover(playerid)
 stock Player_SetApprovedUndercover(playerid, bool:v)
 {
     PDApprovedUndercover[playerid] = v;
+}
+
+stock bool:Player_CanRepairGovVehicle(playerid)
+{
+    return AllowedGovVehRepair[playerid];
+}
+
+stock Player_SetCanRepairGovVehicle(playerid, bool:v)
+{
+    AllowedGovVehRepair[playerid] = v;
 }
 
 // Callbacks
@@ -1920,7 +1932,7 @@ CMD:govrepair(playerid, params[])
                     VehicleInfo[vehicleid][vFuel] = 100;
                     VehicleInfo[vehicleid][vCanStart] = 1;
                     VehicleInfo[vehicleid][vDestroyed] = false;
-                    Bit1_Set( gr_GovRepair, playerid, false );
+                    Player_SetCanRepairGovVehicle(playerid, false);
                     FactionToBudgetMoney(FACTION_TYPE_LAW, 100); // Novac ide iz factionbank u proraeun
                     SendClientMessage(playerid, COLOR_RED, "[ ! ] Vase vozilo je popravljeno i napunjeno gorivom.");
                 }
@@ -1935,7 +1947,7 @@ CMD:govrepair(playerid, params[])
                 VehicleInfo[vehicleid][vFuel] = 100;
                 VehicleInfo[vehicleid][vCanStart] = 1;
                 VehicleInfo[vehicleid][vDestroyed] = false;
-                Bit1_Set( gr_GovRepair, playerid, false );
+                Player_SetCanRepairGovVehicle(playerid, false);
                 FactionToBudgetMoney( FACTION_TYPE_LAW2, 100); // Novac ide iz factionbank u proraeun
                 SendClientMessage(playerid, COLOR_RED, "[ ! ] Vase vozilo je popravljeno i napunjeno gorivom.");
             }
@@ -1950,7 +1962,7 @@ CMD:govrepair(playerid, params[])
                 VehicleInfo[vehicleid][vFuel] = 100;
                 VehicleInfo[vehicleid][vCanStart] = 1;
                 VehicleInfo[vehicleid][vDestroyed] = false;
-                Bit1_Set( gr_GovRepair, playerid, false );
+                Player_SetCanRepairGovVehicle(playerid, false);
                 FactionToBudgetMoney( FACTION_TYPE_NEWS, 100); // Novac ide iz factionbank u proraeun
                 SendClientMessage(playerid, COLOR_LIGHTBLUE, "Vase vozilo je popravljeno i napunjeno gorivom.");
             }
@@ -1965,7 +1977,7 @@ CMD:govrepair(playerid, params[])
                 VehicleInfo[vehicleid][vFuel] = 100;
                 VehicleInfo[vehicleid][vCanStart] = 1;
                 VehicleInfo[vehicleid][vDestroyed] = false;
-                Bit1_Set( gr_GovRepair, playerid, false );
+                Player_SetCanRepairGovVehicle(playerid, false);
                 FactionToBudgetMoney( FACTION_TYPE_FD, 100); // Novac ide iz factionbank u proraeun
                 SendClientMessage(playerid, COLOR_LIGHTBLUE, "Vase vozilo je popravljeno i napunjeno gorivom.");
             }
@@ -1982,7 +1994,7 @@ CMD:govrepair(playerid, params[])
             VehicleInfo[vehicleid][vFuel] = 100;
             VehicleInfo[vehicleid][vCanStart] = 1;
             VehicleInfo[vehicleid][vDestroyed] = false;
-            Bit1_Set( gr_GovRepair, playerid, false );
+            Player_SetCanRepairGovVehicle(playerid, false);
             SendClientMessage(playerid, COLOR_LIGHTBLUE, "Vase vozilo je popravljeno i napunjeno gorivom.");
         }
         else return SendClientMessage(playerid, COLOR_RED, "[ ! ] Niste na mjestu za popravak vozila!");
@@ -2780,19 +2792,16 @@ CMD:hq(playerid, params[])
 CMD:ramdoor(playerid, params[])
 {
     if (!IsACop(playerid) && !IsFDMember(playerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste pripadnik PD/FD!");
-    if (!IsPlayerInDynamicCP(playerid, PlayerHouseCP[playerid] )) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ispred kuce!");
+    if (!IsPlayerInDynamicCP(playerid, Player_GetHouseCP(playerid))) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ispred kuce!");
 
     new
-        house = Bit16_Get( gr_PlayerInfrontHouse, playerid );
-
+        house = Player_InfrontHouse(playerid);
     if (house == INVALID_HOUSE_ID) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne nalazite se pred vratima kuce!");
     if (!HouseInfo[house][hLock] ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Vrata su otkljucana!");
 
-    if (Bit1_Get( gr_CrowbarBreaking, playerid ))
+    if (IsCrowbarBreaking(playerid))
     {
-        DisablePlayerKeyInput(playerid);
-        TogglePlayerControllable(playerid, true);
-        Bit1_Set( gr_CrowbarBreaking, playerid, false );
+        CancelCrowbarBreaking(playerid);
         return 1;
     }
 
@@ -2815,29 +2824,29 @@ CMD:housetake(playerid, params[])
 
     new
         param[8],
-        house = Bit16_Get( gr_PlayerInHouse, playerid );
+        house = Player_InHouse(playerid);
 
     if (house == INVALID_HOUSE_ID) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste u kuci!");
-    if (sscanf(params, "s[8] ", param)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /housetake [weapons]");
+    if (sscanf(params, "s[8]", param)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /housetake [weapons]");
 
     if (!strcmp(param, "weapons", true))
     {
         // Enum
-        new id = Storage_RackNear(playerid);
+        new id = Storage_PlayerNearRack(playerid);
         if (id == -1)
             return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste u blizini police s oruzjem!");
 
-        for (new i = 0; i < 4; i++)
+        for (new i = 0; i < MAX_WEAPON_ONRACK; i++)
         {
-            HouseStorage[id][storageWeapons][i] = 0;
-            HouseStorage[id][storageAmmo][i] = 0;
+            Storage_SetRackWeaponInSlot(id, i, 0);
+            Storage_SetRackAmmoInSlot(id, i, 0);
             HouseStorage_SaveWep(id, i);
         }
         Storage_RackRefresh(id);
         HouseStorage_Save(id);
 
         #if defined MODULE_LOGS
-        Log_Write("/logfiles/pd_housetakes.txt", "(%s) %s emptied out all weapons from storage[SQLID:%d] of house[Adress: %s | SQLID: %d]", ReturnDate(), GetName(playerid, false), HouseStorage[id][storageID], HouseInfo[house][hAdress], HouseInfo[house][hSQLID]);
+        Log_Write("/logfiles/pd_housetakes.txt", "(%s) %s emptied out all weapons from storage[ID: %d] of house[Address: %s | SQLID: %d]", ReturnDate(), GetName(playerid, false), Storage_GetId(id), House_GetAddress(house), House_GetSqlid(house));
         #endif
 
         new

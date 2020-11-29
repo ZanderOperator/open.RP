@@ -258,6 +258,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 			if( !response ) return 1;
 			new url[256];
 			ClearBoomBoxListItems(playerid);
+			// TODO: refactor, make an array of all URLs
 			switch(listitem)
 			{
 				case 0: format(url, sizeof(url), "%s", HIP_HOP_RADIO_URL);
@@ -276,13 +277,14 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 				case 13: format(url, sizeof(url), "%s", FREEBROOKLYN_RADIO_URL);
 			}
 			new
-				houseid = Bit16_Get( gr_PlayerInHouse, playerid );
+				houseid = Player_InHouse(playerid);
 
 			if( GetPlayerState(playerid) == PLAYER_STATE_ONFOOT )
 			{
 				if( houseid != INVALID_HOUSE_ID )
 				{
 					HouseMusicURL[houseid][0] = EOS;
+					// TODO: strcpy
 					format(HouseMusicURL[houseid], 256, "%s", url);
 					foreach(new i : Player) {
 						if( IsPlayerInRangeOfPoint(i, 25.0, HouseInfo[ houseid ][ hExitX ], HouseInfo[ houseid ][ hExitY ],HouseInfo[ houseid ][ hExitZ ]) && GetPlayerVirtualWorld( i ) == HouseInfo[ houseid ][ hVirtualWorld ] ) {
@@ -501,7 +503,7 @@ CMD:music(playerid, params[])
 		}
 		else if( pick == 3 ) {
 			new
-				houseid = Bit16_Get( gr_PlayerInHouse, playerid );
+				houseid = Player_InHouse(playerid);
 			if( houseid == INVALID_HOUSE_ID ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste unutar kuce!");
 			if( !IsPlayerInRangeOfPoint(playerid, 25.0, HouseInfo[ houseid ][ hExitX ], HouseInfo[ houseid ][ hExitY ],HouseInfo[ houseid ][ hExitZ ]) && GetPlayerVirtualWorld( playerid ) != HouseInfo[ houseid ][ hVirtualWorld ] ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste unutar kuce!");
 			if( !HouseInfo[ houseid ][ hRadio ] ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Kuca ne posjeduje radio!");
@@ -515,10 +517,12 @@ CMD:music(playerid, params[])
 	}
 	else if(!strcmp(option, "stop"))
 	{
-		if( !IsPlayerInAnyVehicle(playerid) ) {
-			if( Bit16_Get( gr_PlayerInHouse, playerid ) != INVALID_HOUSE_ID ) {
+		if (!IsPlayerInAnyVehicle(playerid))
+		{
+			if(Player_InHouse(playerid) != INVALID_HOUSE_ID)
+			{
 				new
-					houseid = Bit16_Get( gr_PlayerInHouse, playerid );
+					houseid = Player_InHouse(playerid);
 				HouseMusicURL[ houseid ][ 0 ] = EOS;
 				foreach(new i : Player) {
 					if( IsPlayerInRangeOfPoint(i, 25.0, HouseInfo[ houseid ][ hExitX ], HouseInfo[ houseid ][ hExitY ],HouseInfo[ houseid ][ hExitZ ]) && GetPlayerVirtualWorld( i ) == HouseInfo[ houseid ][ hVirtualWorld ] ) {
@@ -541,7 +545,9 @@ CMD:music(playerid, params[])
 				if( IsPlayerInRangeOfPoint(i, 20.0, ox, oy, oz) )
 					StopAudioStreamForPlayer(i);
 			}
-		} else {
+		}
+		else
+		{
 			format(string, sizeof(string), "*%s gasi radio u vozilu.", GetName(playerid, true));
 			SetPlayerChatBubble(playerid, string, COLOR_PURPLE, 30.0, 10000);
 			VehiclePlayingMusic[ GetPlayerVehicleID(playerid) ] = false;

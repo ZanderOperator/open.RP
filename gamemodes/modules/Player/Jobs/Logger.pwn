@@ -1,4 +1,5 @@
 #include <YSI_Coding\y_hooks>
+#include "modules/Player/Player_h.pwn"
 
 #define MAX_WOODS (46)
 #define MAX_D_WOODS (10)
@@ -648,7 +649,7 @@ CMD:cuttree(playerid, params[])
 		CuttingTree[playerid] = id;
 		printf("ID:%d, CuttingTree[playerid]:%d", id, CuttingTree[playerid]);
 		CutTreeSec[playerid] = 60;
-		Bit1_Set( gr_IsWorkingJob, playerid, true );
+		Player_SetIsWorkingJob(playerid, true);
 
 		TreeT[playerid] = repeat CutTree[1000](playerid, id, false);
 		
@@ -692,7 +693,7 @@ cmd_stopcuttree2(playerid)
 	RemovePlayerAttachedObject(playerid, 8);
 	RemovePlayerAttachedObject(playerid, 9);
 
-	Bit1_Set( gr_IsWorkingJob, playerid, false );
+	Player_SetIsWorkingJob(playerid, false);
     TogglePlayerControllable(playerid, 1);
     ClearAnimations(playerid, 1);
 	return 1;
@@ -931,7 +932,7 @@ CMD:sellwood(playerid, params[])
 	BudgetToPlayerBankMoney(playerid, money); // novac sjeda na racun iz proracuna
 	PaydayInfo[playerid][pPayDayMoney] += money;
 	PlayerJob[playerid][pFreeWorks] -= 5;
-	Bit1_Set( gr_IsWorkingJob, playerid, true );
+	Player_SetIsWorkingJob(playerid, true);
 	
 	pWood[playerid] = 0;
 	pWoodT[playerid] = 0;

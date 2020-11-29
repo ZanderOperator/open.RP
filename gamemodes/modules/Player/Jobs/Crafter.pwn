@@ -1,4 +1,5 @@
 #include <YSI_Coding\y_hooks>
+#include "modules/Player/Player_h.pwn"
 
 /*
 	########  ######## ######## #### ##    ## ########  ######  
@@ -572,7 +573,7 @@ CMD:craft(playerid, params[])
 		SetPlayerSpecialAction(playerid, SPECIAL_ACTION_NONE);
 		SetCameraBehindPlayer(playerid);
 		Bit1_Set( gr_PlayerWorkCrafting, playerid, false );
-		Bit1_Set( gr_IsWorkingJob, playerid, false );
+		Player_SetIsWorkingJob(playerid, false);
 		return SendClientMessage( playerid, COLOR_RED, "Prestali ste raditi posao craftera!");
 	}
 	if( PlayerInfo[ playerid ][ pFreeWorks ] < 1 ) 				return SendClientMessage( playerid, COLOR_RED, "Ne mozes vise raditi!");
@@ -580,7 +581,7 @@ CMD:craft(playerid, params[])
 	
 	
 	SendClientMessage( playerid, COLOR_RED, "[ ! ] Krenite do checkpointa i ukljucite sve generatore!");
-	Bit1_Set( gr_IsWorkingJob, playerid, true );
+	Player_SetIsWorkingJob(playerid, true);
 	Bit1_Set( gr_PlayerWorkCrafting, playerid, true );
 	Bit4_Set( gr_CraftingGeneratorId, playerid, 1 );
 	SetPlayerCheckpoint(playerid, 2560.5459, -1348.2162, 1043.1500, CRAFTING_CP_SIZE);

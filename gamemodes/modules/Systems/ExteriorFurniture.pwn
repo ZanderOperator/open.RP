@@ -43,10 +43,10 @@
 */
 
 static
-    Bit4: r_ExteriorEditType <MAX_PLAYERS>,
-    Bit16:r_ExteriorObjectsId<MAX_PLAYERS>,
-    Bit16:r_ExteriorEditId   <MAX_PLAYERS>,
-    Bit16:r_ExteriorBuyType  <MAX_PLAYERS>;
+    ExteriorEditType [MAX_PLAYERS],
+    ExteriorObjectsId[MAX_PLAYERS],
+    ExteriorEditId   [MAX_PLAYERS],
+    ExteriorBuyType  [MAX_PLAYERS];
 
 enum E_HOUSE_EXTERIOR_DATA
 {
@@ -250,7 +250,7 @@ static stock CreatePreviewObject(playerid)
     GetXYInFrontOfPlayer(playerid, X, Y, 1.5);
 
     PlayerExteriorInfo[playerid][peObjectId] = CreatePlayerObject(playerid, PlayerExteriorInfo[playerid][peModelId], X, Y, Z, 0.0, 0.0, 0.0);
-    Bit4_Set(r_ExteriorEditType, playerid, EXT_EDIT_TYPE_BUY);
+    ExteriorEditType[playerid] = EXT_EDIT_TYPE_BUY;
     EditPlayerObject(playerid, PlayerExteriorInfo[playerid][peObjectId]);
     return 1;
 }
@@ -274,7 +274,7 @@ static stock FindFreeSlot(houseid)
 
 static stock CreateExteriorObject(playerid)
 {
-    if (Bit4_Get(r_ExteriorEditType, playerid) != EXT_EDIT_TYPE_BUY) return 0;
+    if (ExteriorEditType[playerid] != EXT_EDIT_TYPE_BUY) return 0;
 
     new
         houseid = PlayerInfo[playerid][pHouseKey],
@@ -337,7 +337,7 @@ static stock SetExteriorObjectPos(playerid, Float:fX, Float:fY, Float:fZ, Float:
 {
     new
         houseid = PlayerInfo[playerid][pHouseKey],
-        index = Bit16_Get(r_ExteriorEditId, playerid);
+        index   = ExteriorEditId[playerid];
 
     ExteriorInfo[houseid][heObjectId][index] = CreateDynamicObject(ExteriorInfo[houseid][heModelId][index], fX, fY, fZ, fRotX, fRotY, fRotZ, 0, 0, -1, EXTERIOR_DRAW_DISTANCE, EXTERIOR_DRAW_DISTANCE);
     ExteriorInfo[houseid][hePosX][index] = fX;
@@ -395,8 +395,8 @@ static stock EditExteriorObject(playerid, index)
                                                     PlayerExteriorInfo[playerid][peRotZ]
                                                 );
 
-    Bit4_Set(r_ExteriorEditType, playerid, EXT_EDIT_TYPE_EDIT);
-    Bit16_Set(r_ExteriorEditId, playerid, index);
+    ExteriorEditType[playerid] = EXT_EDIT_TYPE_EDIT;
+    ExteriorEditId  [playerid] = index;
     EditPlayerObject(playerid, PlayerExteriorInfo[playerid][peObjectId]);
     return 1;
 }
@@ -472,10 +472,10 @@ static stock ResetPlayerExteriorVars(playerid)
     PlayerExteriorInfo[playerid][peRotY]    = 0.0;
     PlayerExteriorInfo[playerid][peRotZ]    = 0.0;
 
-    Bit4_Set(r_ExteriorEditType, playerid, 0);
-    Bit16_Set(r_ExteriorObjectsId, playerid, 0);
-    Bit16_Set(r_ExteriorEditId, playerid, 0);
-    Bit16_Set(r_ExteriorBuyType, playerid, 0);
+    ExteriorEditType [playerid] = 0;
+    ExteriorObjectsId[playerid] = 0;
+    ExteriorEditId   [playerid] = 0;
+    ExteriorBuyType  [playerid] = 0;
     return 1;
 }
 
@@ -608,7 +608,7 @@ hook OnPlayerEditObject(playerid, playerobject, objectid, response, Float:fX, Fl
 
     if (!IsValidPlayerObject(playerid, objectid)) return;
 
-    switch (Bit4_Get(r_ExteriorEditType, playerid))
+    switch (ExteriorEditType[playerid])
     {
         case EXT_EDIT_TYPE_BUY:
         {
@@ -677,7 +677,7 @@ hook OnPlayerEditObject(playerid, playerobject, objectid, response, Float:fX, Fl
                 }
                 case EDIT_RESPONSE_CANCEL:
                 {
-                    ResetExteriorObject(playerid, Bit16_Get(r_ExteriorEditId, playerid));
+                    ResetExteriorObject(playerid, ExteriorEditId[playerid]);
                 }
             }
         }
@@ -695,7 +695,9 @@ hook OnFSelectionResponse(playerid, fselectid, modelid, response)
             if (!response) return ShowPlayerDialog(playerid, DIALOG_EXTERIOR_BUY_TYPE, DIALOG_STYLE_LIST, "Exteriors - Kupovina objekta (Tip)", "Biljke\nNamjestaj\nOstalo", "Choose", "Abort");
 
             new index = Player_ModelToIndex(playerid, modelid);
-            switch (Bit16_Get(r_ExteriorBuyType, playerid))
+            // TODO: bounds checking
+            // TODO: refactor code below, no need for three, or even X number of cases. call a helper function.
+            switch (ExteriorBuyType[playerid])
             {
                 case 0:
                 {   // Biljke
@@ -703,7 +705,7 @@ hook OnFSelectionResponse(playerid, fselectid, modelid, response)
                         ExteriorPlants[index][epName],
                         ExteriorPlants[index][epPrice]
                     );
-                    Bit16_Set(r_ExteriorObjectsId, playerid, index);
+                    ExteriorObjectsId[playerid] = index;
                 }
                 case 1:
                 {   // Furniture
@@ -711,7 +713,7 @@ hook OnFSelectionResponse(playerid, fselectid, modelid, response)
                         ExteriorFurniture[index][efName],
                         ExteriorFurniture[index][efPrice]
                     );
-                    Bit16_Set(r_ExteriorObjectsId, playerid, index);
+                    ExteriorObjectsId[playerid] = index;
                 }
                 case 2:
                 {   // Misc
@@ -719,7 +721,7 @@ hook OnFSelectionResponse(playerid, fselectid, modelid, response)
                         ExteriorMisc[index][emName],
                         ExteriorMisc[index][emPrice]
                     );
-                    Bit16_Set(r_ExteriorObjectsId, playerid, index);
+                    ExteriorObjectsId[playerid] = index;
                 }
             }
         }
@@ -820,7 +822,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
         case DIALOG_EXTERIOR_BUY_TYPE:
         {
             if (!response) return ShowPlayerDialog(playerid, DIALOG_EXTERIOR_MENU, DIALOG_STYLE_LIST, "Exteriors", "Kupi objekt\nUredi object\nObrisati objekt\nObrisati SVE objekte", "Choose", "Abort");
-
+            // TODO: refactor in to a helper function, no need for branching
             switch (listitem)
             {
                 case 0: // Biljke
@@ -858,16 +860,17 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                 }
             }
             fselection_show(playerid, DIALOG_EXTERIOR_BUY, "Exterior Buy");
-            Bit16_Set(r_ExteriorBuyType, playerid, listitem);
+            ExteriorBuyType[playerid] = listitem;
             return 1;
         }
         case DIALOG_EXTERIOR_SURE:
         {
             if (!response) return ShowPlayerDialog(playerid, DIALOG_EXTERIOR_BUY_TYPE, DIALOG_STYLE_LIST, "Exteriors - Kupovina objekta (Tip)", "Biljke\nNamjestaj\nOstalo", "Choose", "Abort");
 
+            // TODO: refactor, no need for three cases or branching.
             new
-                index = Bit16_Get(r_ExteriorObjectsId, playerid),
-                type = Bit16_Get(r_ExteriorBuyType, playerid);
+                index = ExteriorObjectsId[playerid],
+                type  = ExteriorBuyType[playerid];
             switch (type)
             {
                 case 0:
@@ -877,7 +880,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 
                     PlayerExteriorInfo[playerid][peModelId] = ExteriorPlants[index][epModelid];
                     PlayerExteriorInfo[playerid][pePrice]   = ExteriorPlants[index][epPrice];
-                    Bit16_Set(r_ExteriorObjectsId, playerid, 0);
+                    ExteriorObjectsId[playerid] = 0;
 
                     CreatePreviewObject(playerid);
                 }
@@ -888,7 +891,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 
                     PlayerExteriorInfo[playerid][peModelId] = ExteriorFurniture[index][efModelid];
                     PlayerExteriorInfo[playerid][pePrice]   = ExteriorFurniture[index][efPrice];
-                    Bit16_Set(r_ExteriorObjectsId, playerid, 0);
+                    ExteriorObjectsId[playerid] = 0;
 
                     CreatePreviewObject(playerid);
                 }
@@ -899,7 +902,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 
                     PlayerExteriorInfo[playerid][peModelId] = ExteriorMisc[index][emModelid];
                     PlayerExteriorInfo[playerid][pePrice]   = ExteriorMisc[index][emPrice];
-                    Bit16_Set(r_ExteriorObjectsId, playerid, 0);
+                    ExteriorObjectsId[playerid] = 0;
 
                     CreatePreviewObject(playerid);
                 }

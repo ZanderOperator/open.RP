@@ -1,4 +1,5 @@
 #include <YSI_Coding\y_hooks>
+#include "modules/Systems/Header.pwn"
 #include "modules/Systems/LSPD/LSPD_h.pwn"
 
 #if defined MODULE_BURGLAR
@@ -902,9 +903,8 @@ CMD:crack_alarm(playerid, params[])
 {
 	if( ( PlayerJob[playerid][pJob] != ROBBER_ID ) || GetPlayerSkillLevel(playerid, 5) < 2) return SendClientMessage( playerid, COLOR_RED, "Niste lopov ili nemate dovoljan skill level!");
 	new
-		house = Bit16_Get( gr_PlayerInfrontHouse, playerid );
-		
-	if( !IsPlayerInDynamicCP(playerid, PlayerHouseCP[ playerid ] ) ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Morate biti unutar house checkpointa!");
+		house = Player_InfrontHouse(playerid);
+	if( !IsPlayerInDynamicCP(playerid, Player_GetHouseCP(playerid) ) ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Morate biti unutar house checkpointa!");
 	if( house == INVALID_HOUSE_ID || house == 0 ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Morate biti ispred kuce!");
 	if( !HouseInfo[ house ][ hAlarm ] ) return SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "Kuca nema alarm!");
 
@@ -928,7 +928,7 @@ CMD:stealitems(playerid, params[])
 {
 	if( ( PlayerJob[playerid][pJob] != ROBBER_ID ) || GetPlayerSkillLevel(playerid, 5) < 2 ) return SendClientMessage( playerid, COLOR_RED, "Niste lopov ili nemate dovoljan skill level!");
 	new
-		house = Bit16_Get( gr_PlayerInHouse, playerid );
+		house = Player_InHouse(playerid);
 	if( house == INVALID_HOUSE_ID || !house ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste u kuci!");
 	if( house == PlayerInfo[playerid][pHouseKey] ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne mozes svoju kucu krasti!");
 	new	
@@ -1039,7 +1039,7 @@ CMD:stealmoney(playerid, params[])
 	if( ( PlayerJob[playerid][pJob] != ROBBER_ID ) || GetPlayerSkillLevel(playerid, 5) < 3 ) return SendClientMessage( playerid, COLOR_RED, "Niste lopov ili nemate dovoljan skill level!");
 	if( PlayerInfo[ playerid ][ pFreeWorks ] < 1 ) 	return SendClientMessage( playerid, COLOR_RED, "Ne mozes vise krasti (cekajte payday)!");
 	new
-		house = Bit16_Get( gr_PlayerInHouse, playerid );
+		house = Player_InHouse(playerid);
 	if( house == INVALID_HOUSE_ID || !house ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste u kuci!");
 	if( !( IsPlayerInRangeOfPoint(playerid, 15.0, HouseInfo[ house ][ hExitX ], HouseInfo[ house ][ hExitY ],HouseInfo[ house ][ hExitZ ] ) && GetPlayerVirtualWorld( playerid ) == HouseInfo[ house ][ hVirtualWorld ] ) ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste blizu sefa za novce!");
 	if( !HouseInfo[ house ][ hTakings ] ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "U sefu nema novaca!");

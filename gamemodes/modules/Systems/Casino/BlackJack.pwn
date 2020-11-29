@@ -6,6 +6,8 @@
 
 #define GETTING_DEALER_CARDS	( 0 )
 #define GETTING_PLAYER_CARDS	( 1 )
+
+#define DEAL_CARDS_NUM (5)
 //#define CASINO_GAIN_INDEX		0.3
 
 enum E_BLACK_JACK_DATA
@@ -17,7 +19,7 @@ enum E_BLACK_JACK_DATA
 	bjMax,
 	bjPickupid
 }
-static stock
+static const
 	BlackJack[][ E_BLACK_JACK_DATA ] = {
 		{ 793.6000, 423.5000, 1070.9000, 10, 		100 		},
 		{ 793.6000, 428.4000, 1070.9000, 10, 		100 		},
@@ -40,7 +42,8 @@ enum E_BLACK_JACK_CARDS
 	bjcName[6],
 	bjcScore
 }
-stock
+
+static const
 	PlayingCards[][E_BLACK_JACK_CARDS] = {
 		{ "cd1s", 	1 },
 		{ "cd1h", 	1 },
@@ -96,27 +99,26 @@ stock
 		{ "cd13c", 	13}
 	};
 
-// Variables (32bit)
-static stock
+static
 	BlackJackWager[ MAX_PLAYERS ],
 	LastPlayerBJCard[ MAX_PLAYERS ],
 	LastDealerBJCard[ MAX_PLAYERS ],
 	BlackJackTable[ MAX_PLAYERS ],
 	PlayerBJCard[ MAX_PLAYERS ][ 6 ],
 	DealerBJCard[ MAX_PLAYERS ][ 6 ],
+	// TODO: split this into two 2D arrays: one holding the card index, and other with the card name
+	// Alternatively, just use the two arrays above, and just get the card name when needed.
+	// A cards index is enough to identify the card.
 	PlayerBJTDCard[ MAX_PLAYERS ][ 6 ][ 33 ],
-	DealerBJTDCard[ MAX_PLAYERS ][ 6 ][ 33 ];
+	DealerBJTDCard[ MAX_PLAYERS ][ 6 ][ 33 ],
+	PlayerBlackjackState[MAX_PLAYERS],
+	DealerCardExpose[MAX_PLAYERS],
+	// TODO: no need for these two last variables as all information is already contained
+	// in the arrays Player/DealerBJCard. Just loop through the indices and check if its a valid card num.
+	PlayerDealtCardsNum[MAX_PLAYERS],
+	DealerDealtCardsNum[MAX_PLAYERS];
 
-// Variables (rBits)
-static stock
-	Bit1:	gr_PlayerPlayBlackJack	<MAX_PLAYERS>,
-	Bit1:	gr_DealerCardExpose		<MAX_PLAYERS>,
-	Bit4:	gr_PlayerInBlackJack	<MAX_PLAYERS>,
-	Bit4:	gr_PlayerBlackCards		<MAX_PLAYERS>,
-	Bit4:	gr_DealerBlackCards		<MAX_PLAYERS>;
-
-// TextDraws
-static stock
+static
 	PlayerText:PlayerBlackCards[ MAX_PLAYERS ][ 5 ],
 	PlayerText:DealerBlackCards[ MAX_PLAYERS ][ 5 ],
 	PlayerText:PlayerBlackBcg[ MAX_PLAYERS ]	= { PlayerText:INVALID_TEXT_DRAW, ... },
@@ -134,7 +136,7 @@ static stock
 	PlayerText:PlayHelpBcg[MAX_PLAYERS]			= { PlayerText:INVALID_TEXT_DRAW, ... },
 	PlayerText:PlayHelpText[MAX_PLAYERS]		= { PlayerText:INVALID_TEXT_DRAW, ... };
 
-new
+static
 	Iterator:JackTables<4>;
 /*
 	 ######  ########  #######   ######  ##    ## 
@@ -161,21 +163,25 @@ stock DestoryBlackJackWorkers()
 	DestroyActor(BlackJackDealer[3]);
 }*/
 
-stock static DestroyBlackJackWagerHelpTDs(playerid)
+static stock DestroyBlackJackWagerHelpTDs(playerid)
 {
-	if( WagerHelpBcg[playerid] != PlayerText:INVALID_TEXT_DRAW ) {
-		PlayerTextDrawDestroy( playerid, WagerHelpBcg[playerid] );
+	if (WagerHelpBcg[playerid] != PlayerText:INVALID_TEXT_DRAW)
+	{
+		PlayerTextDrawDestroy(playerid, WagerHelpBcg[playerid]);
 		WagerHelpBcg[playerid] = PlayerText:INVALID_TEXT_DRAW;
 	}
-	if( WagerHelpText[playerid] != PlayerText:INVALID_TEXT_DRAW ) {
-		PlayerTextDrawDestroy( playerid, WagerHelpText[playerid] );
+
+	if (WagerHelpText[playerid] != PlayerText:INVALID_TEXT_DRAW)
+	{
+		PlayerTextDrawDestroy(playerid, WagerHelpText[playerid]);
 		WagerHelpText[playerid] = PlayerText:INVALID_TEXT_DRAW;
 	}
 }
 
-stock static CreateBlackJackWagerHelpTDs(playerid)
+static stock CreateBlackJackWagerHelpTDs(playerid)
 {
 	DestroyBlackJackWagerHelpTDs(playerid);
+
 	WagerHelpBcg[playerid] = CreatePlayerTextDraw(playerid, 618.700073, 110.027999, "usebox");
 	PlayerTextDrawLetterSize(playerid, WagerHelpBcg[playerid], 0.000000, 4.837780);
 	PlayerTextDrawTextSize(playerid, WagerHelpBcg[playerid], 487.900054, 0.000000);
@@ -201,19 +207,22 @@ stock static CreateBlackJackWagerHelpTDs(playerid)
 	return 1;
 }
 
-stock static DestroyBlackJackPlayHelpTDs(playerid)
+static stock DestroyBlackJackPlayHelpTDs(playerid)
 {
-	if( PlayHelpBcg[playerid] != PlayerText:INVALID_TEXT_DRAW ) {
-		PlayerTextDrawDestroy( playerid, PlayHelpBcg[playerid] );
+	if (PlayHelpBcg[playerid] != PlayerText:INVALID_TEXT_DRAW)
+	{
+		PlayerTextDrawDestroy(playerid, PlayHelpBcg[playerid]);
 		PlayHelpBcg[playerid] = PlayerText:INVALID_TEXT_DRAW;
 	}
-	if( PlayHelpText[playerid] != PlayerText:INVALID_TEXT_DRAW ) {
-		PlayerTextDrawDestroy( playerid, PlayHelpText[playerid] );
+
+	if (PlayHelpText[playerid] != PlayerText:INVALID_TEXT_DRAW)
+	{
+		PlayerTextDrawDestroy(playerid, PlayHelpText[playerid]);
 		PlayHelpText[playerid] = PlayerText:INVALID_TEXT_DRAW;
 	}
 }
 
-stock static CreateBlackJackPlayHelpTDs(playerid)
+static stock CreateBlackJackPlayHelpTDs(playerid)
 {
 	DestroyBlackJackPlayHelpTDs(playerid);
 	
@@ -241,7 +250,7 @@ stock static CreateBlackJackPlayHelpTDs(playerid)
 	PlayerTextDrawShow(playerid, PlayHelpText[playerid]);
 }
 
-stock static DestroyBlackJackWagerTDs(playerid)
+static stock DestroyBlackJackWagerTDs(playerid)
 {
 	PlayerTextDrawDestroy( playerid, BlackWageBcg[playerid]		);
 	PlayerTextDrawDestroy( playerid, BlackWageTitle[playerid]	);
@@ -263,9 +272,10 @@ stock static DestroyBlackJackWagerTDs(playerid)
 	return 1;
 }
 
-stock static CreateBlackJackWagerTDs(playerid)
+static stock CreateBlackJackWagerTDs(playerid)
 {
 	DestroyBlackJackWagerTDs(playerid);
+
 	BlackWageBcg[playerid] = CreatePlayerTextDraw(playerid, 135.050033, 181.166671, "usebox");
 	PlayerTextDrawLetterSize(playerid, BlackWageBcg[playerid], 0.000000, 13.992408);
 	PlayerTextDrawTextSize(playerid, BlackWageBcg[playerid], 35.500000, 0.000000);
@@ -356,10 +366,10 @@ stock static CreateBlackJackWagerTDs(playerid)
 	PlayerTextDrawShow(playerid, BlackWagePlayers[playerid]);
 }
 
-stock static CreateBlackJackBackground(playerid)
+static stock CreateBlackJackBackground(playerid)
 {
 	DestroyPlayerBlackBcg(playerid);
-	// Player
+
 	PlayerBlackBcg[playerid] = CreatePlayerTextDraw(playerid, 478.249816, 340.467529, "usebox");
 	PlayerTextDrawLetterSize(playerid, PlayerBlackBcg[playerid], 0.000000, 9.954999);
 	PlayerTextDrawTextSize(playerid, PlayerBlackBcg[playerid], 197.499984, 0.000000);
@@ -371,8 +381,7 @@ stock static CreateBlackJackBackground(playerid)
 	PlayerTextDrawSetOutline(playerid, PlayerBlackBcg[playerid], 0);
 	PlayerTextDrawFont(playerid, PlayerBlackBcg[playerid], 0);
 	PlayerTextDrawShow(playerid, PlayerBlackBcg[playerid]);
-	
-	// Dealer
+
 	DealerBlackBcg[playerid] = CreatePlayerTextDraw(playerid, 478.249816, 17.684036, "usebox");
 	PlayerTextDrawLetterSize(playerid, 	DealerBlackBcg[playerid], 0.000000, 9.763334);
 	PlayerTextDrawTextSize(playerid, 	DealerBlackBcg[playerid], 197.499984, 0.000000);
@@ -402,66 +411,42 @@ stock PlayerText:CreateBlackJackCard(playerid, Float:PosX, Float:PosY, card[])
 	return tmpBlackCard;
 }
 
-stock static DestroyPlayerBlackBcg(playerid)
+static stock DestroyPlayerBlackBcg(playerid)
 {
-	if( PlayerBlackBcg[playerid] != PlayerText:INVALID_TEXT_DRAW ) {
-		PlayerTextDrawDestroy( playerid, PlayerBlackBcg[playerid] );
-		PlayerBlackBcg[playerid]	= PlayerText:INVALID_TEXT_DRAW;
+	if (PlayerBlackBcg[playerid] != PlayerText:INVALID_TEXT_DRAW)
+	{
+		PlayerTextDrawDestroy(playerid, PlayerBlackBcg[playerid]);
+		PlayerBlackBcg[playerid] = PlayerText:INVALID_TEXT_DRAW;
 	}
-	if( DealerBlackBcg[playerid] != PlayerText:INVALID_TEXT_DRAW ) {
-		PlayerTextDrawDestroy( playerid, DealerBlackBcg[playerid] );
-		DealerBlackBcg[playerid]	= PlayerText:INVALID_TEXT_DRAW;
+
+	if (DealerBlackBcg[playerid] != PlayerText:INVALID_TEXT_DRAW)
+	{
+		PlayerTextDrawDestroy(playerid, DealerBlackBcg[playerid]);
+		DealerBlackBcg[playerid] = PlayerText:INVALID_TEXT_DRAW;
 	}
 	return 1;
 }
 
-stock static DestroyPlayerBlackCards(playerid)
+static stock DestroyPlayerBlackCards(playerid)
 {
-	if( PlayerBlackCards[ playerid ][ 0 ] != PlayerText:INVALID_TEXT_DRAW ) {
-		PlayerTextDrawDestroy( playerid, PlayerBlackCards[ playerid ][ 0 ] );
-		PlayerBlackCards[ playerid ][ 0 ]	= PlayerText:INVALID_TEXT_DRAW;
-	}
-	if( PlayerBlackCards[ playerid ][ 1 ] != PlayerText:INVALID_TEXT_DRAW ) {
-		PlayerTextDrawDestroy( playerid, PlayerBlackCards[ playerid ][ 1 ] );
-		PlayerBlackCards[ playerid ][ 1 ]	= PlayerText:INVALID_TEXT_DRAW;
-	}
-	if( PlayerBlackCards[ playerid ][ 2 ] != PlayerText:INVALID_TEXT_DRAW ) {
-		PlayerTextDrawDestroy( playerid, PlayerBlackCards[ playerid ][ 2 ] );
-		PlayerBlackCards[ playerid ][ 2 ]	= PlayerText:INVALID_TEXT_DRAW;
-	}
-	if( PlayerBlackCards[ playerid ][ 3 ] != PlayerText:INVALID_TEXT_DRAW ) {
-		PlayerTextDrawDestroy( playerid, PlayerBlackCards[ playerid ][ 3 ] );
-		PlayerBlackCards[ playerid ][ 3 ]	= PlayerText:INVALID_TEXT_DRAW;
-	}
-	if( PlayerBlackCards[ playerid ][ 4 ] != PlayerText:INVALID_TEXT_DRAW ) {
-		PlayerTextDrawDestroy( playerid, PlayerBlackCards[ playerid ][ 4 ] );
-		PlayerBlackCards[ playerid ][ 4 ]	= PlayerText:INVALID_TEXT_DRAW;
-	}
-	
-	if( DealerBlackCards[ playerid ][ 0 ] != PlayerText:INVALID_TEXT_DRAW ) {
-		PlayerTextDrawDestroy( playerid, DealerBlackCards[ playerid ][ 0 ] );
-		DealerBlackCards[ playerid ][ 0 ]	= PlayerText:INVALID_TEXT_DRAW;
-	}
-	if( DealerBlackCards[ playerid ][ 1 ] != PlayerText:INVALID_TEXT_DRAW ) {
-		PlayerTextDrawDestroy( playerid, DealerBlackCards[ playerid ][ 1 ] );
-		DealerBlackCards[ playerid ][ 1 ]	= PlayerText:INVALID_TEXT_DRAW;
-	}
-	if( DealerBlackCards[ playerid ][ 2 ] != PlayerText:INVALID_TEXT_DRAW ) {
-		PlayerTextDrawDestroy( playerid, DealerBlackCards[ playerid ][ 2 ] );
-		DealerBlackCards[ playerid ][ 2 ]	= PlayerText:INVALID_TEXT_DRAW;
-	}
-	if( DealerBlackCards[ playerid ][ 3 ] != PlayerText:INVALID_TEXT_DRAW ) {
-		PlayerTextDrawDestroy( playerid, DealerBlackCards[ playerid ][ 3 ] );
-		DealerBlackCards[ playerid ][ 3 ]	= PlayerText:INVALID_TEXT_DRAW;
-	}
-	if( DealerBlackCards[ playerid ][ 4 ] != PlayerText:INVALID_TEXT_DRAW ) {
-		PlayerTextDrawDestroy( playerid, DealerBlackCards[ playerid ][ 4 ] );
-		DealerBlackCards[ playerid ][ 4 ]	= PlayerText:INVALID_TEXT_DRAW;
+	for (new i = 0; i != DEAL_CARDS_NUM; i++)
+	{
+		if (PlayerBlackCards[playerid][i] != PlayerText:INVALID_TEXT_DRAW)
+		{
+			PlayerTextDrawDestroy(playerid, PlayerBlackCards[playerid][i]);
+			PlayerBlackCards[playerid][i] = PlayerText:INVALID_TEXT_DRAW;
+		}
+
+		if (DealerBlackCards[playerid][i] != PlayerText:INVALID_TEXT_DRAW)
+		{
+			PlayerTextDrawDestroy(playerid, DealerBlackCards[playerid][i]);
+			DealerBlackCards[playerid][i] = PlayerText:INVALID_TEXT_DRAW;
+		}
 	}
 	return 1;
 }
 
-stock static ShowBlackJackCards(playerid)
+static stock ShowBlackJackCards(playerid)
 {
 	new
 		Float:PosX	= 202.55,
@@ -472,8 +457,10 @@ stock static ShowBlackJackCards(playerid)
 	DestroyPlayerBlackCards(playerid);	
 	PlayerPlaySound( playerid, 5600, 0.0, 0.0, 0.0 );
 	
-	for( new i = 0; i < 5; i++ ) {
-		if( i < Bit4_Get( gr_PlayerBlackCards, playerid ) ) {
+	for (new i = 0; i < DEAL_CARDS_NUM; i++)
+	{
+		if (i < PlayerDealtCardsNum[playerid])
+		{
 			PlayerBlackCards[ playerid ][ i ] = CreateBlackJackCard(playerid, PosX, PosY, PlayerBJTDCard[ playerid ][ i ] );
 			
 			new
@@ -516,23 +503,26 @@ stock static ShowBlackJackCards(playerid)
 			// TD
 			PlayerTextDrawSetString( playerid, BlackWagePlayers[playerid], tmpString );			
 			PosX 	+= CARD_WIDTH + 2.0;
-		}		
-		if( i < Bit4_Get( gr_DealerBlackCards, playerid ) ) {
-			if( !i && !Bit1_Get( gr_DealerCardExpose, playerid ) ) 	
+		}
+
+		if (i < DealerDealtCardsNum[playerid])
+		{
+			if (i == 0 && !DealerCardExpose[playerid])
 				DealerBlackCards[ playerid ][ i ] = CreateBlackJackCard(playerid, DPosX, DPosY, "LD_CARD:cdback");
 			else 	
 				DealerBlackCards[ playerid ][ i ] = CreateBlackJackCard(playerid, DPosX, DPosY, DealerBJTDCard[ playerid ][ i ] );
+
 			DPosX 	+= CARD_WIDTH + 2.0;
 		}
 	}
 	return 1;
 }
 
-stock static GetDealerBlackJackScore(playerid)
+static stock GetDealerBlackJackScore(playerid)
 {
 	new
 		count = 0;
-	for( new i = 0; i < 5; i++ ) {
+	for( new i = 0; i < DEAL_CARDS_NUM; i++ ) {
 		if( DealerBJCard[ playerid ][ i ] != -1 ) {
 			if( PlayingCards[ DealerBJCard[ playerid ][ i ] ][ bjcScore ] == 1 ) {
 				if( 0 <= count <= 9 )
@@ -547,11 +537,11 @@ stock static GetDealerBlackJackScore(playerid)
 	return count;
 }
 
-stock static GetPlayerBlackJackScore(playerid)
+static stock GetPlayerBlackJackScore(playerid)
 {
 	new
 		count = 0;
-	for( new i = 0; i < 5; i++ ) {
+	for( new i = 0; i < DEAL_CARDS_NUM; i++ ) {
 		if( PlayerBJCard[ playerid ][ i ] != -1 ) {
 			if( PlayingCards[ PlayerBJCard[ playerid ][ i ] ][ bjcScore ] == 1 ) {
 				if( 0 <= count <= 9 )
@@ -566,7 +556,7 @@ stock static GetPlayerBlackJackScore(playerid)
 	return count;
 }
 
-stock static GetBlackJackCard(playerid, type)
+static stock GetBlackJackCard(playerid, type)
 {
 	loop_start:
 	
@@ -595,9 +585,12 @@ stock static GetBlackJackCard(playerid, type)
 		if( cardid > 2 && random(3) == 2 )
 			cardid--;
 		
-		if( DealerBJCard[playerid][0] != cardid && DealerBJCard[playerid][1] != cardid ) {
-			if( PlayerBJCard[playerid][0] != cardid && PlayerBJCard[playerid][1] != cardid && PlayerBJCard[playerid][2] != cardid && PlayerBJCard[playerid][3] != cardid && PlayerBJCard[playerid][4] != cardid ) {						
-			
+		if (DealerBJCard[playerid][0] != cardid && DealerBJCard[playerid][1] != cardid)
+		{
+			if (PlayerBJCard[playerid][0] != cardid && PlayerBJCard[playerid][1] != cardid &&
+				PlayerBJCard[playerid][2] != cardid && PlayerBJCard[playerid][3] != cardid &&
+				PlayerBJCard[playerid][4] != cardid )
+			{
 				PlayerBJCard[ playerid ][ LastPlayerBJCard[playerid] ] = cardid;
 				format( PlayerBJTDCard[ playerid ][ LastPlayerBJCard[playerid] ], 32, "LD_CARD:%s", PlayingCards[ cardid ][ bjcName ] );
 				LastPlayerBJCard[playerid]++;
@@ -619,48 +612,30 @@ stock ResetBlackJack(playerid)
 	DestroyPlayerBlackBcg(playerid);
 	DestroyPlayerBlackCards(playerid);
 
-	// 32bit
 	BlackJackWager[ playerid ] 				= 0;
 	LastPlayerBJCard[ playerid ]			= 0;
 	LastDealerBJCard[ playerid ]			= 0;
 	BlackJackTable[ playerid ]				= -1;
-	
-	DealerBJCard[ playerid ][ 0 ] 			= -1;
-	DealerBJCard[ playerid ][ 1 ] 			= -1;
-	DealerBJCard[ playerid ][ 2 ] 			= -1;
-	DealerBJCard[ playerid ][ 3 ] 			= -1;
-	DealerBJCard[ playerid ][ 4 ] 			= -1;
-	
-	PlayerBJCard[ playerid ][ 0 ] 			= -1;
-	PlayerBJCard[ playerid ][ 1 ] 			= -1;
-	PlayerBJCard[ playerid ][ 2 ] 			= -1;
-	PlayerBJCard[ playerid ][ 3 ] 			= -1;
-	PlayerBJCard[ playerid ][ 4 ] 			= -1;
-	
-	PlayerBJTDCard[ playerid ][ 0 ][ 0 ] 	= EOS;
-	PlayerBJTDCard[ playerid ][ 1 ][ 0 ] 	= EOS;
-	PlayerBJTDCard[ playerid ][ 2 ][ 0 ] 	= EOS;
-	PlayerBJTDCard[ playerid ][ 3 ][ 0 ] 	= EOS;
-	PlayerBJTDCard[ playerid ][ 4 ][ 0 ] 	= EOS;
-	
-	DealerBJTDCard[ playerid ][ 0 ][ 0 ] 	= EOS;
-	DealerBJTDCard[ playerid ][ 1 ][ 0 ] 	= EOS;
-	DealerBJTDCard[ playerid ][ 2 ][ 0 ] 	= EOS;
-	DealerBJTDCard[ playerid ][ 3 ][ 0 ] 	= EOS;
-	DealerBJTDCard[ playerid ][ 4 ][ 0 ] 	= EOS;
-	
-	// rBits
-	Bit1_Set( gr_PlayerPlayBlackJack, 	playerid, false );
-	Bit1_Set( gr_DealerCardExpose,		playerid, false );
-	Bit4_Set( gr_PlayerInBlackJack,		playerid, 0 );
-	Bit4_Set( gr_PlayerBlackCards, 		playerid, 0 );
-	Bit4_Set( gr_DealerBlackCards, 		playerid, 0 );
+
+	for (new i = 0; i != DEAL_CARDS_NUM; i++)
+	{
+		DealerBJCard[playerid][i] = -1;
+		PlayerBJCard[playerid][i] = -1;
+
+		PlayerBJTDCard[playerid][i][0] = EOS;
+		DealerBJTDCard[playerid][i][0] = EOS;
+	}
+
+	DealerCardExpose[playerid] = false;
+	PlayerBlackjackState[playerid] = 0;
+	PlayerDealtCardsNum[playerid] = 0;
+	DealerDealtCardsNum[playerid] = 0;
 	
 	TogglePlayerControllable(playerid, true);
 	return 1;
 }
 
-stock static CheckPlayerBlackJackWinner(playerid)
+static stock CheckPlayerBlackJackWinner(playerid)
 {
 	new
 		dealerScore = GetDealerBlackJackScore(playerid), 
@@ -668,7 +643,6 @@ stock static CheckPlayerBlackJackWinner(playerid)
 		money = BlackJackWager[ playerid ] + floatround( BlackJackWager[ playerid ] * 0.8 ),
 		tmpString[ 25 ];
 
-	// TextDraws
 	DestroyBlackJackWagerTDs(playerid);
 	DestroyPlayerBlackBcg(playerid);
 	DestroyPlayerBlackCards(playerid);
@@ -771,7 +745,7 @@ stock InitBlackJackTables()
 	printf("Script Report: %d blackjack tables loaded!", Iter_Count(JackTables));
 }
 
-stock static IsPlayerNearBlackJackTable(playerid)
+static stock IsPlayerNearBlackJackTable(playerid)
 {
 	new
 		tableid = -1;
@@ -782,14 +756,6 @@ stock static IsPlayerNearBlackJackTable(playerid)
 		}
 	}
 	return tableid;
-}
-
-// Timers
-timer OnBlackJackCardExpose[1500](playerid)
-{
-	CheckPlayerBlackJackWinner(playerid);
-	ResetBlackJack(playerid);
-	return 1;
 }
 
 /*
@@ -815,14 +781,19 @@ hook OnPlayerPickUpDynPickup(playerid, pickupid)
 			format( tmpString, 50, "   Blackjack %d",
 				tableid+1
 			);
+			// TODO: RuletTitle text draw should be made private to the "Rulet.pwn" module.
 			PlayerTextDrawSetString(playerid, RuletTitle[playerid], tmpString);
 			
 			format( tmpString, 50, "Min. Ulog: %d$~n~Max. Ulog: %d$",
 				BlackJack[ tableid ][ bjMin ],
 				BlackJack[ tableid ][ bjMax ]
 			);
+			// TODO: all these text draws should be made private to the "Rulet.pwn" module.
+			// Make your own text draws for this module and DO NOT introduce coupling.
+			// If something is to be shared by multiple modules, extract that functionality
+			// into a higher level module that shall be used by both via a API.
 			PlayerTextDrawSetString(playerid, RuletWages[playerid], tmpString);
-			PlayerTextDrawSetString( playerid, RuletNote[playerid], "Kucajte /blackjack za igru");
+			PlayerTextDrawSetString(playerid, RuletNote[playerid], "Kucajte /blackjack za igru");
 			
 			defer FadeRuletWagesTD(playerid);
 			break;
@@ -840,131 +811,175 @@ hook OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
 	// KEY_NO					- Predaje se i dobije polovicu uloga (samo u prvoj ruci!)
 	// KEY_FIRE					- Hit
 	// KEY_CROUCH				- Stay
-	
-	if( (newkeys & KEY_SPRINT) && !(oldkeys & KEY_SPRINT) ) {
-		if( !Bit1_Get( gr_PlayerPlayBlackJack, playerid ) ) return 1;
-		if( Bit4_Get( gr_PlayerInBlackJack, playerid ) == 1 ) {
-		
-			if( AC_GetPlayerMoney(playerid) < BlackJackWager[ playerid ] ) 
+
+	if (PlayerBlackjackState[playerid] < 1)
+	{
+		return 1;
+	}
+
+	if ((newkeys & KEY_SPRINT) && !(oldkeys & KEY_SPRINT))
+	{
+		if (AC_GetPlayerMoney(playerid) < BlackJackWager[playerid])
+		{
+			SendMessage(playerid, MESSAGE_TYPE_ERROR, "You don't have enough money!");
+
+			// TODO: PlayRandomDeniedSound(playerid)
+			switch (random(2))
 			{
-				SendMessage(playerid, MESSAGE_TYPE_ERROR, "You don't have enough money!");
-				switch( random(2) ) {
-					case 0: PlayerPlaySound( playerid, 5823, 0.0, 0.0, 0.0 );
-					case 1: PlayerPlaySound( playerid, 5824, 0.0, 0.0, 0.0 );
-					case 2: PlayerPlaySound( playerid, 5825, 0.0, 0.0, 0.0 );
-					default: 
-						PlayerPlaySound( playerid, 5823, 0.0, 0.0, 0.0 );
-				}
-				return 1;
+				case 0:  PlayerPlaySound(playerid, 5823, 0.0, 0.0, 0.0);
+				case 1:  PlayerPlaySound(playerid, 5824, 0.0, 0.0, 0.0);
+				case 2:  PlayerPlaySound(playerid, 5825, 0.0, 0.0, 0.0);
+				default: PlayerPlaySound(playerid, 5823, 0.0, 0.0, 0.0);
 			}
-			
-			PlayerInfo[playerid][pCasinoCool]--;
-			
-			// Postavke karata
-			Bit4_Set( gr_PlayerBlackCards, playerid,  2 );
-			Bit4_Set( gr_DealerBlackCards, playerid,  2 );
-			
-			CreateBlackJackBackground(playerid);
-			DestroyBlackJackWagerTDs(playerid);
-			CreateBlackJackWagerTDs(playerid);
-			
-			DestroyBlackJackWagerHelpTDs(playerid);
-			CreateBlackJackPlayHelpTDs(playerid);
-			
-			GetBlackJackCard(playerid, GETTING_PLAYER_CARDS);
-			GetBlackJackCard(playerid, GETTING_PLAYER_CARDS);
-			
-			GetBlackJackCard(playerid, GETTING_DEALER_CARDS);
-			GetBlackJackCard(playerid, GETTING_DEALER_CARDS);
-			ShowBlackJackCards(playerid);
-			
-			
-			new
-				tmpString[ 9 ];
-			format( tmpString, 9, "$%d", BlackJackWager[ playerid ] );
-			PlayerTextDrawSetString( playerid, BlackWageWholen[playerid], tmpString );
-			Bit4_Set( gr_PlayerInBlackJack, playerid, 2 );
 			return 1;
 		}
+
+		// TODO: this should be a general purpose per-player or per-module cooldown variable
+		PlayerInfo[playerid][pCasinoCool]--;
+
+		// Postavke karata
+		PlayerDealtCardsNum[playerid] = DealerDealtCardsNum[playerid] = 2;
+
+		CreateBlackJackBackground(playerid);
+		DestroyBlackJackWagerTDs(playerid);
+		CreateBlackJackWagerTDs(playerid);
+
+		DestroyBlackJackWagerHelpTDs(playerid);
+		CreateBlackJackPlayHelpTDs(playerid);
+
+		GetBlackJackCard(playerid, GETTING_PLAYER_CARDS);
+		GetBlackJackCard(playerid, GETTING_PLAYER_CARDS);
+
+		GetBlackJackCard(playerid, GETTING_DEALER_CARDS);
+		GetBlackJackCard(playerid, GETTING_DEALER_CARDS);
+		ShowBlackJackCards(playerid);
+
+		// TODO: this should become a helper function UpdatePlayerWager or sth
+		new str[9];
+		format(str, sizeof(str), "$%d", BlackJackWager[playerid]);
+		PlayerTextDrawSetString(playerid, BlackWageWholen[playerid], str);
+
+		PlayerBlackjackState[playerid] = 2;
+		return 1;
 	}
-	if( (newkeys & KEY_JUMP) && !(oldkeys & KEY_JUMP) ) {
-		if( Bit4_Get( gr_PlayerInBlackJack, playerid ) == 1 ) {
-			if( BlackJackWager[ playerid ] >= BlackJack[ BlackJackTable[ playerid ] ][ bjMax] ) return 1;
-			BlackJackWager[ playerid ]++;
-			new
-				tmpString[ 9 ];
-			format( tmpString, 9, "$%d", BlackJackWager[ playerid ] );
-			PlayerTextDrawSetString( playerid, BlackWageWholen[playerid], tmpString );
+
+	if ((newkeys & KEY_JUMP) && !(oldkeys & KEY_JUMP))
+	{
+		if (BlackJackWager[playerid] >= BlackJack[BlackJackTable[playerid]][bjMax])
+			return 1;
+
+		BlackJackWager[playerid]++;
+		// TODO: code repetition
+		new str[9];
+		format(str, sizeof(str), "$%d", BlackJackWager[playerid]);
+		PlayerTextDrawSetString(playerid, BlackWageWholen[playerid], str);
+	}
+
+	if ((newkeys & KEY_WALK) && !(oldkeys & KEY_WALK))
+	{
+		if (PlayerBlackjackState[playerid] != 1)
+		{
+			return 1;
 		}
+
+		if (BlackJackWager[playerid] <= BlackJack[BlackJackTable[playerid]][bjMin])
+			return 1;
+
+		BlackJackWager[playerid]--;
+
+		new str[9];
+		format(str, sizeof(str), "$%d", BlackJackWager[playerid]);
+		PlayerTextDrawSetString(playerid, BlackWageWholen[playerid], str);
 	}
-	if( (newkeys & KEY_WALK) && !(oldkeys & KEY_WALK) ) {
-		if( Bit4_Get( gr_PlayerInBlackJack, playerid ) == 1 ) {
-			if( BlackJackWager[ playerid ] <= BlackJack[ BlackJackTable[ playerid ] ][ bjMin ] ) return 1;
-			BlackJackWager[ playerid ]--;
-			new
-				tmpString[ 9 ];
-			format( tmpString, 9, "$%d", BlackJackWager[ playerid ] );
-			PlayerTextDrawSetString( playerid, BlackWageWholen[playerid], tmpString );
+
+	if ((newkeys & KEY_SECONDARY_ATTACK) && !(oldkeys & KEY_SECONDARY_ATTACK))
+	{
+		DestroyBlackJackWagerTDs(playerid);
+		DestroyPlayerBlackBcg(playerid);
+		DestroyPlayerBlackCards(playerid);
+		DestroyBlackJackPlayHelpTDs(playerid);
+		DestroyBlackJackWagerHelpTDs(playerid);
+
+		if (PlayerBlackjackState[playerid] == 2)
+		{
+			PlayerToBusinessMoney(playerid, 104, BlackJackWager[playerid]); // Novac od igraca ide kasinu (bizid: 104)
 		}
+		ResetBlackJack(playerid);
 	}
-	if( (newkeys & KEY_SECONDARY_ATTACK) && !(oldkeys & KEY_SECONDARY_ATTACK) ) {
-		if( Bit1_Get( gr_PlayerPlayBlackJack, playerid ) ) {			
-			// TDs
+
+	if ((newkeys & KEY_NO) && !(oldkeys & KEY_NO))
+	{
+		if (PlayerBlackjackState[playerid] == 2)
+		{
 			DestroyBlackJackWagerTDs(playerid);
 			DestroyPlayerBlackBcg(playerid);
 			DestroyPlayerBlackCards(playerid);
-			DestroyBlackJackPlayHelpTDs(playerid);
-			DestroyBlackJackWagerHelpTDs(playerid);
-			
-			// Player
-			if( Bit4_Get( gr_PlayerInBlackJack, playerid ) == 2 ) {
-				PlayerToBusinessMoney(playerid, 104, BlackJackWager[ playerid ]); // Novac od igraca ide kasinu (bizid: 104)
-			}	
+
+			GameTextForPlayer(playerid, "~w~Odustali ste i vraceno vam je pola uloga!", 1300, 1);
+			PlayerToBusinessMoney(playerid, 104, BlackJackWager[playerid] / 2); // Novac od igraca ide kasinu (bizid: 104)
+
 			ResetBlackJack(playerid);
 		}
-	}
-	if( (newkeys & KEY_NO) && !(oldkeys & KEY_NO) ) {
-		if( Bit1_Get( gr_PlayerPlayBlackJack, playerid ) ) {
-			if( Bit4_Get( gr_PlayerInBlackJack, playerid ) == 2 ) {
-				// TDs
-				DestroyBlackJackWagerTDs(playerid);
-				DestroyPlayerBlackBcg(playerid);
-				DestroyPlayerBlackCards(playerid);
-			
-				// Text
-				GameTextForPlayer( playerid, "~w~Odustali ste i vraceno vam je pola uloga!", 1300, 1 );
-				PlayerToBusinessMoney(playerid, 104, BlackJackWager[ playerid ] / 2); // Novac od igraca ide kasinu (bizid: 104)
-				
-				
-				ResetBlackJack(playerid);
-			} else GameTextForPlayer( playerid, "Niste u prvoj ruci!", 900, 1 );
+		else
+		{
+			GameTextForPlayer(playerid, "Niste u prvoj ruci!", 900, 1);
 		}
 	}
-	if( (newkeys & KEY_FIRE) && !(oldkeys & KEY_FIRE) ) {
-		if( Bit4_Get( gr_PlayerInBlackJack, playerid ) == 2 ) {	
-			if( Bit4_Get( gr_PlayerBlackCards, playerid ) < 5 ) {
-				GetBlackJackCard(playerid, GETTING_PLAYER_CARDS);
-				Bit4_Set( gr_PlayerBlackCards, playerid, Bit4_Get( gr_PlayerBlackCards, playerid ) + 1 );
-				ShowBlackJackCards(playerid);
-			}
+
+	if ((newkeys & KEY_FIRE) && !(oldkeys & KEY_FIRE))
+	{
+		if (PlayerBlackjackState[playerid] != 2)
+		{
+			return 1;
 		}
-	}
-	if( (newkeys & KEY_CROUCH) && !(oldkeys & KEY_CROUCH) ) {
-		if( Bit4_Get( gr_PlayerInBlackJack, playerid ) == 2 ) {	
-			Bit1_Set( gr_DealerCardExpose, playerid, true );
-			
+		if (PlayerDealtCardsNum[playerid] < 5)
+		{
+			GetBlackJackCard(playerid, GETTING_PLAYER_CARDS);
+			// TODO: this variable should be increased in a function that deals in the cards
+			PlayerDealtCardsNum[playerid] = PlayerDealtCardsNum[playerid] + 1;
+
 			ShowBlackJackCards(playerid);
-			printf("DEBUG: score(%d)", GetDealerBlackJackScore(playerid));
-			
-			new
-				tmpString[ 6 ];
-			format( tmpString, 6, "%d", GetDealerBlackJackScore(playerid) );
-			PlayerTextDrawSetString( playerid, BlackWageDealers[playerid], tmpString );
-			defer OnBlackJackCardExpose(playerid);
 		}
+	}
+
+	if ((newkeys & KEY_CROUCH) && !(oldkeys & KEY_CROUCH))
+	{
+		if (PlayerBlackjackState[playerid] == 2)
+		{
+			return 1;
+		}
+
+		DealerCardExpose[playerid] = true;
+
+		ShowBlackJackCards(playerid);
+		printf("DEBUG: score(%d)", GetDealerBlackJackScore(playerid));
+
+		new str[6];
+		format(str, sizeof(str), "%d", GetDealerBlackJackScore(playerid));
+		PlayerTextDrawSetString(playerid, BlackWageDealers[playerid], str);
+		defer OnBlackJackCardExpose(playerid);
 	}
 	return 1;
 }
+
+
+/*
+    ######## #### ##     ## ######## ########   ######  
+       ##     ##  ###   ### ##       ##     ## ##    ## 
+       ##     ##  #### #### ##       ##     ## ##       
+       ##     ##  ## ### ## ######   ########   ######  
+       ##     ##  ##     ## ##       ##   ##         ## 
+       ##     ##  ##     ## ##       ##    ##  ##    ## 
+       ##    #### ##     ## ######## ##     ##  ######  
+*/
+
+timer OnBlackJackCardExpose[1500](playerid)
+{
+	CheckPlayerBlackJackWinner(playerid);
+	ResetBlackJack(playerid);
+	return 1;
+}
+
 
 /*
 	 ######  ##     ## ########  
@@ -1013,7 +1028,6 @@ CMD:blackjack(playerid, params[])
 	
 	CreateBlackJackWagerHelpTDs(playerid);
 	
-	Bit4_Set( gr_PlayerInBlackJack, 	playerid, 1 );
-	Bit1_Set( gr_PlayerPlayBlackJack, 	playerid, true );
+	PlayerBlackjackState[playerid] = 1;
 	return 1;
 }*/

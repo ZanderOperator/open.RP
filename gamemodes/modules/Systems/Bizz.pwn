@@ -125,7 +125,6 @@ enum E_BIZNIS_PRODUCTS_DATA
 }
 static BiznisProducts[MAX_BIZZS][E_BIZNIS_PRODUCTS_DATA][MAX_BIZZ_ARTICLES];
 
-// TextDraws
 static
     PlayerText:BiznisBcg1  [MAX_PLAYERS] = {PlayerText:INVALID_TEXT_DRAW, ...},
     PlayerText:BiznisBcg2  [MAX_PLAYERS] = {PlayerText:INVALID_TEXT_DRAW, ...},
@@ -133,21 +132,16 @@ static
     PlayerText:BizzInfoTD  [MAX_PLAYERS] = {PlayerText:INVALID_TEXT_DRAW, ...},
     PlayerText:BiznisCMDTD [MAX_PLAYERS] = {PlayerText:INVALID_TEXT_DRAW, ...};
 
-// Player vars
 static
     Timer:PlayerTDTimer[MAX_PLAYERS],
-    VeronaSkinRectangle;
-
-// rBits
-static
-    Bit1:   gr_IsADJ                <MAX_PLAYERS>,
-    Bit2:   gr_DerivatSlot          <MAX_PLAYERS>,
-    Bit4:   gr_ArticleSlot          <MAX_PLAYERS>,
-    Bit8:   gr_PlayerSkinPrice      <MAX_PLAYERS>,
-    Bit8:   gr_PlayerSkinStore      <MAX_PLAYERS>,
-    Bit16:  gr_ArticleIdInput       <MAX_PLAYERS>,
-    Bit16:  gr_DJBizKey             <MAX_PLAYERS>,
-    Bit16:  gr_PlayerSkinId         <MAX_PLAYERS>;
+    VeronaSkinRectangle,
+    bool:IsDJ[MAX_PLAYERS],
+    DJBizzKey[MAX_PLAYERS],
+    ArticleSlot[MAX_PLAYERS],
+    ArticleIdInput[MAX_PLAYERS],
+    PlayerSkinId[MAX_PLAYERS],
+    PlayerSkinPrice[MAX_PLAYERS],
+    PlayerSkinStore[MAX_PLAYERS];
 
 static const BizzTypesNames[MAX_BIZZ_TYPES][20] =
 {
@@ -172,6 +166,7 @@ static const BizzTypesNames[MAX_BIZZ_TYPES][20] =
     "Benzinska"         // BIZZ_TYPE_GASSTATION
 };
 
+
 /*
     ######## ##     ## ##    ##  ######   ######  
     ##       ##     ## ###   ## ##    ## ##    ## 
@@ -181,6 +176,27 @@ static const BizzTypesNames[MAX_BIZZ_TYPES][20] =
     ##       ##     ## ##   ### ##    ## ##    ## 
     ##        #######  ##    ##  ######   ######  
 */
+
+// TODO: Move to Player module, make a job or w/e
+stock bool:Player_IsDJ(playerid)
+{
+    return IsDJ[playerid];
+}
+
+stock Player_SetIsDJ(playerid, bool:v)
+{
+    IsDJ[playerid] = v;
+}
+
+stock Player_GetDJBizzKey(playerid)
+{
+    return DJBizzKey[playerid];
+}
+
+stock Player_SetDJBizzKey(playerid, v)
+{
+    DJBizzKey[playerid] = v;
+}
 
 // TODO: bool
 stock GetNearestBizz(playerid, BIZZ_TYPE = -1)
@@ -900,8 +916,11 @@ stock DeleteBiznis(bizz)
 
 static stock SetPlayerPosFinish(playerid)
 {
-    new bizz = Bit16_Get( gr_PlayerInBiznis, playerid);
-    switch (Bit8_Get(gr_PlayerSkinStore, playerid))
+    // TODO: better name this function, do bizz bounds checking, remove the switch
+    // and make a static array with player positions, ints etc and use that
+    new bizz = Player_InBusiness(playerid);
+
+    switch (PlayerSkinStore[playerid])
     {
         case 1: // Zip
         {
@@ -956,8 +975,8 @@ Public:ResetBuySkin(playerid)
 {
     SetPlayerSkin(playerid, PlayerInfo[playerid][pChar]);
 
-    Bit16_Set(gr_PlayerSkinId, playerid, 0);
-    Bit16_Set(gr_PlayerSkinPrice, playerid, 0);
+    PlayerSkinId[playerid] = 0;
+    PlayerSkinPrice[playerid] = 0;
     return 1;
 }
 
@@ -1026,19 +1045,19 @@ hook OnFSelectionResponse(playerid, fselectid, modelid, response)
         if (!response)
             return SetPlayerPosFinish(playerid);
 
-        new skinid = Player_ModelToIndex(playerid, modelid);
-        if (AC_GetPlayerMoney(playerid) < ServerSkins[sPrice][skinid])
+        new skin_index = Player_ModelToIndex(playerid, modelid);
+        if (AC_GetPlayerMoney(playerid) < ServerSkins[sPrice][skin_index])
         {
-            va_SendClientMessage(playerid,COLOR_RED, "Nemas dovoljno novca za kupnju skina %d ($%d)!", ServerSkins[sSkinID][skinid], ServerSkins[sPrice][skinid]);
+            va_SendClientMessage(playerid,COLOR_RED, "Nemas dovoljno novca za kupnju skina %d ($%d)!", ServerSkins[sSkinID][skin_index], ServerSkins[sPrice][skin_index]);
             SetPlayerPosFinish(playerid);
             return 1;
         }
-        Bit16_Set(gr_PlayerSkinId, playerid, ServerSkins[sSkinID][skinid]);
-        Bit16_Set(gr_PlayerSkinPrice, playerid, ServerSkins[sPrice][skinid]);
+        PlayerSkinId   [playerid] = ServerSkins[sSkinID][skin_index];
+        PlayerSkinPrice[playerid] = ServerSkins[sPrice][skin_index];
 
-        SetPlayerSkin(playerid, ServerSkins[sSkinID][skinid]);
+        SetPlayerSkin(playerid, ServerSkins[sSkinID][skin_index]);
 
-        va_SendClientMessage(playerid, COLOR_RED, "[ ! ] Izabrao si skin ID %d ($%d)! Koristi /buyskin za kupovinu!", ServerSkins[sSkinID][skinid], ServerSkins[sPrice][skinid]);
+        va_SendClientMessage(playerid, COLOR_RED, "[ ! ] Izabrao si skin ID %d ($%d)! Koristi /buyskin za kupovinu!", ServerSkins[sSkinID][skin_index], ServerSkins[sPrice][skin_index]);
 
         SetPlayerPosFinish(playerid);
     }
@@ -1062,7 +1081,7 @@ hook OnPlayerLeaveDynArea(playerid, areaid)
 {
     if (VeronaSkinRectangle == areaid)
     {
-        if (Bit16_Get(gr_PlayerSkinId, playerid) != 0 && Bit16_Get(gr_PlayerSkinPrice, playerid) != 0 && !PlayerInfo[playerid][pLawDuty])
+        if (PlayerSkinId[playerid] != 0 && PlayerSkinPrice[playerid] != 0 && !PlayerInfo[playerid][pLawDuty])
         {
             SendClientMessage(playerid, COLOR_RED, "[ ! ] Odustali ste od kupovine skina!");
             ResetBuySkin(playerid);
@@ -1076,15 +1095,14 @@ hook OnPlayerDisconnect(playerid, reason)
     DestroyBizzInfoTD(playerid);
     stop PlayerTDTimer[playerid];
 
-    FreeBizzID[playerid] = INVALID_BIZNIS_ID;
-    Bit1_Set(gr_IsADJ              ,   playerid, false);
-    Bit2_Set(gr_DerivatSlot        ,   playerid, 0);
-    Bit4_Set(gr_ArticleSlot        ,   playerid, 0);
-    Bit16_Set(gr_ArticleIdInput    ,   playerid, 0);
-    Bit16_Set(gr_PlayerSkinId      ,   playerid, 0);
-    Bit16_Set(gr_PlayerSkinPrice   ,   playerid, 0);
-    Bit16_Set(gr_DJBizKey          ,   playerid, INVALID_BIZNIS_ID);
-    Bit16_Set(gr_PlayerInBiznis    ,   playerid, INVALID_BIZNIS_ID);
+    FreeBizzID     [playerid] = INVALID_BIZNIS_ID;
+    ArticleSlot    [playerid] = 0;
+    ArticleIdInput [playerid] = 0;
+    PlayerSkinId   [playerid] = 0;
+    PlayerSkinPrice[playerid] = 0;
+    Player_SetIsDJ(playerid, false);
+    Player_SetDJBizzKey(playerid, INVALID_BIZNIS_ID);
+    Player_SetInBusiness(playerid, INVALID_BIZNIS_ID);
     return 1;
 }
 
@@ -1723,10 +1741,10 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                     if (!response) return ShowPlayerDialog(playerid, DIALOG_BIZNIS_MAIN, DIALOG_STYLE_LIST, "MOJ BIZNIS", "Info\nCijena ulaza\nPostavi artikl\nSkini artikl\nPostavi cijenu artikla\nVrata\nRekonstrukcija biznisa($20.000)\nPostavi cijenu produkata\nIme Biznisa\nProdaj biznis igracu", "Choose","Exit");
             }
 
-            if (!IsValidArticle(bouse, (listitem+100))) return SendClientMessage(playerid, COLOR_RED, "Taj je artikl vec na policama!");
+            new article_nr = listitem + 100;
+            if (!IsValidArticle(bouse, article_nr)) return SendClientMessage(playerid, COLOR_RED, "Taj je artikl vec na policama!");
 
-            Bit16_Set(gr_ArticleIdInput, playerid, (listitem+100));
-
+            ArticleIdInput[playerid] = article_nr;
             ShowPlayerDialog(playerid, DIALOG_BIZNIS_ARTICLEPRICE, DIALOG_STYLE_INPUT, "MOJ BIZNIS - CIJENA ARTIKLA", "Unesite cijenu artikla\nOna mora biti izmedju 5 i 1000$!", "Input", "Abort");
             return 1;
         }
@@ -1745,7 +1763,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
             if (AC_GetPlayerMoney(playerid) < 500) return SendClientMessage(playerid, COLOR_RED, "Nemate 500$ u djepu!");
 
             // Polica
-            SetStoreProductOnSale(bouse, Bit16_Get(gr_ArticleIdInput, playerid), price);
+            SetStoreProductOnSale(bouse, ArticleIdInput[playerid], price);
 
             new bizz_type = BizzInfo[bouse][bType];
             if (bizz_type == BIZZ_TYPE_DUCAN)
@@ -1753,7 +1771,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                 PlayerToBudgetMoney(playerid, 500); // Novac od igraca ide u proracun
 
                 va_SendClientMessage(playerid, COLOR_RED, "[ ! ]  Artikl %s ste stavili na svoje police!",
-                    GetStoreProductName(Bit16_Get(gr_ArticleIdInput, playerid))
+                    GetStoreProductName(ArticleIdInput[playerid])
                 );
                 ShowPlayerDialog(playerid, DIALOG_BIZNIS_MAIN, DIALOG_STYLE_LIST, "MOJ BIZNIS", "Info\nPostavi artikl\nSkini artikl\nPostavi cijenu artikla\nVrata\nRekonstrukcija biznisa($20.000)\nPostavi cijenu produkata\nIme Biznisa\nProdaj biznis igracu", "Choose","Exit");
             }
@@ -1762,7 +1780,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                 PlayerToBudgetMoney(playerid, 500); // Novac od igraca ide u proracun
 
                 va_SendClientMessage(playerid, COLOR_RED, "[ ! ]  Pice %s je sada u ponudi pica!",
-                    GetDrinkName(Bit16_Get(gr_ArticleIdInput, playerid))
+                    GetDrinkName(ArticleIdInput[playerid])
                 );
                 ShowPlayerDialog(playerid, DIALOG_BIZNIS_MAIN, DIALOG_STYLE_LIST, "MOJ BIZNIS", "Info\nCijena ulaza\nPostavi artikl\nSkini artikl\nPostavi cijenu artikla\nVrata\nRekonstrukcija biznisa($20.000)\nPostavi cijenu produkata\nIme Biznisa\nProdaj biznis igracu", "Choose","Exit");
             }
@@ -1778,7 +1796,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                     if (!response) return ShowPlayerDialog(playerid, DIALOG_BIZNIS_MAIN, DIALOG_STYLE_LIST, "MOJ BIZNIS", "Info\nCijena ulaza\nPostavi artikl\nSkini artikl\nPostavi cijenu artikla\nVrata\nRekonstrukcija biznisa($20.000)\nPostavi cijenu produkata\nIme Biznisa\nProdaj biznis igracu", "Choose","Exit");
             }
 
-            Bit4_Set(gr_ArticleSlot, playerid, listitem);
+            ArticleSlot[playerid] = listitem;
             ShowPlayerDialog(playerid, DIALOG_BIZNIS_ARTICLESETPRICE, DIALOG_STYLE_INPUT, "MOJ BIZNIS - CIJENA ARTIKLA", "Unesite cijenu artikla\nOna mora biti izmedju 5 i 1000$!", "Input", "Abort");
             return 1;
         }
@@ -1795,7 +1813,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                 return 1;
             }
             // Polica
-            new slot = Bit4_Get(gr_ArticleSlot, playerid);
+            new slot = ArticleSlot[playerid];
             BiznisProducts[bouse][bpPrice][slot] = price;
             UpdateBizzProduct(bouse, slot);
 
@@ -1915,7 +1933,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
             if (!response) return 1;
 
             new
-                bizz = Bit16_Get(gr_PlayerInBiznis, playerid),
+                bizz = Player_InBusiness(playerid),
                 bizz_type = BizzInfo[bizz][bType];
 
             if (!Iter_Contains(Bizzes, bizz)) return 1;
@@ -1928,9 +1946,9 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                 switch (BiznisProducts[bizz][bpType][listitem])
                 {
                     case PRODUCT_BURGERS, PRODUCT_CAKE, PRODUCT_HOTDOG, PRODUCT_PIZZA:
-                        Bit1_Set(gr_Food, playerid, true);
+                        Player_SetHasFood(playerid, true);
                     case PRODUCT_COLA, PRODUCT_PEPSI, PRODUCT_WINE, PRODUCT_WATER, PRODUCT_BEER:
-                        Bit1_Set(gr_Drink, playerid, true);
+                        Player_SetHasDrink(playerid, true);
                     case PRODUCT_CIGARS:
                     {
                         if (PlayerInfo[playerid][pAge] < 18) return SendClientMessage(playerid, COLOR_YELLOW, "Prodavacica: Ne prodajemo cigarete mladima od 18 godina.");
@@ -1938,8 +1956,8 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                     }
                     case PRODUCT_GROCERIES:
                     {
-                        if (Bit8_Get(gr_Groceries, playerid) == 20) return SendClientMessage(playerid, COLOR_RED, "Vec imate namirnice, spremite ih!");
-                        Bit8_Set(gr_Groceries, playerid, 20);
+                        if (Player_GetGroceriesQuantity(playerid) == 20) return SendClientMessage(playerid, COLOR_RED, "Vec imate namirnice, spremite ih!");
+                        Player_SetGroceriesQuantity(playerid, 20);
                     }
                     case PRODUCT_MASK:
                     {
@@ -2007,7 +2025,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                         PlayerInfo[playerid][pClock] = 1;
                     }
                     case PRODUCT_DICE:
-                        Bit1_Set(gr_Dice, playerid, true);
+                        Player_SetHasDice(playerid, true);
                     case PRODUCT_LIGHTER:
                         PlayerInfo[playerid][pLighter] = 1;
                     case PRODUCT_ROPE:
@@ -2172,7 +2190,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 
             new
                 string[47],
-                bizz = Bit16_Get(gr_PlayerInBiznis, playerid);
+                bizz = Player_InBusiness(playerid);
 
             if (bizz < 0 || bizz >= MAX_BIZZS) return 1;
 
@@ -2266,7 +2284,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 
             new
                 string[48],
-                bizz = Bit16_Get(gr_PlayerInBiznis, playerid);
+                bizz = Player_InBusiness(playerid);
 
             if (bizz < 0 || bizz >= MAX_BIZZS) return 1;
 
@@ -2367,7 +2385,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 
             new
                 string[51],
-                bizz = Bit16_Get( gr_PlayerInBiznis, playerid);
+                bizz = Player_InBusiness(playerid);
 
             switch (listitem)
             {
@@ -2490,7 +2508,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
         {
             new
                 string[64],
-                bizz = Bit16_Get(gr_PlayerInBiznis, playerid);
+                bizz = Player_InBusiness(playerid);
 
             switch (listitem)
             {
@@ -2613,7 +2631,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
         {
             new
                 string[51],
-                bizz = Bit16_Get(gr_PlayerInBiznis, playerid);
+                bizz = Player_InBusiness(playerid);
 
             if (bizz < 0 || bizz >= MAX_BIZZS) return 1;
 
@@ -2743,10 +2761,10 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
             {
                 case 0:
                 {
-                    if (Bit1_Get(gr_FakeGunLic, playerid)) return SendClientMessage(playerid, COLOR_RED, "Vec imas dozvolu");
+                    if (Player_HasFakeGunLicense(playerid)) return SendClientMessage(playerid, COLOR_RED, "Vec imas dozvolu");
 
                     SendClientMessage(playerid, COLOR_RED, "[ ! ] Kupi ste laznu dozvolu za oruzje.");
-                    Bit1_Set(gr_FakeGunLic, playerid, true);
+                    Player_SetHasFakeGunLicense(playerid, true);
                 }
                 case 1:
                 {
@@ -2759,7 +2777,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
         case DIALOG_MALL_BUY:
         {
             if (!response) return 1;
-
+            // TODO: refactor this switch-case with generic impl. and by returning data from an array
             switch (listitem)
             {
                 case 0:
@@ -2769,18 +2787,18 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                     PlayerToBudgetMoney(playerid, 1); // APosto je VERONA MALL novac ide u budget
 
                     SendClientMessage(playerid, COLOR_RED, "[ ! ]  Kupljena kockica! [1$]");
-                    Bit1_Set(gr_Dice, playerid, true);
+                    Player_SetHasDice(playerid, true);
                     PlayerPlaySound(playerid, 1052, 0.0, 0.0, 0.0);
                 }
                 case 1:
                 {
                     if (AC_GetPlayerMoney(playerid) < 5) return SendClientMessage(playerid, COLOR_RED, "Nemate 5$!");
-                    if (Bit1_Get(gr_Drink, playerid)) return SendClientMessage(playerid, COLOR_RED, "Vec imate neko pice u inventoryu! Koristite /drink!");
+                    if (Player_HasDrink(playerid)) return SendClientMessage(playerid, COLOR_RED, "Vec imate neko pice u inventoryu! Koristite /drink!");
 
                     PlayerToBudgetMoney(playerid, 5); // APosto je VERONA MALL novac ide u budget
 
                     SendClientMessage(playerid, COLOR_RED, "[ ! ]  Kupljena Coca Cola! [5$]");
-                    Bit1_Set(gr_Drink, playerid, true);
+                    Player_SetHasDrink(playerid, true);
                     PlayerPlaySound(playerid, 1052, 0.0, 0.0, 0.0);
                 }
                 case 2:
@@ -2964,7 +2982,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 
             if (isnull(inputtext)) return ShowPlayerDialog(playerid, DIALOG_BIZNIS_MUSIC, DIALOG_STYLE_INPUT, "BIZNIS MUSIC", "Unesite live streaming link.\nNPR. shoutcast, listen2myradio, ...", "Input", "Abort");
 
-            new bizz = Bit1_Get(gr_IsADJ, playerid) ? Bit16_Get(gr_DJBizKey, playerid) : bouse;
+            new bizz = Player_IsDJ(playerid) ? Player_GetDJBizzKey(playerid) : bouse;
             if (bizz < 0 || bizz >= MAX_BIZZS) return 1;
             // TODO: strcpy
             format(BizzInfo[bizz][bMusicURL], 96, inputtext);
@@ -2983,9 +3001,9 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
         case DIALOG_SKINSURE:
         {
             new
-                bizz = Bit16_Get(gr_PlayerInBiznis, playerid),
-                player_skin = Bit16_Get(gr_PlayerSkinId, playerid),
-                skin_price = Bit16_Get(gr_PlayerSkinPrice, playerid);
+                bizz        = Player_InBusiness(playerid),
+                player_skin = PlayerSkinId[playerid],
+                skin_price  = PlayerSkinPrice[playerid];
 
             if (!response)
             {
@@ -2999,14 +3017,14 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                 SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate dovoljno novca (%d$)!", skin_price);
                 SetPlayerSkin(playerid, player_skin);
 
-                Bit16_Set(gr_PlayerSkinId, playerid, 0);
-                Bit16_Set(gr_PlayerSkinPrice, playerid, 0);
+                PlayerSkinId   [playerid] = 0;
+                PlayerSkinPrice[playerid] = 0;
 
                 //SetPlayerPosFinish(playerid);
                 return 1;
             }
 
-            Bit16_Set(gr_PlayerSkinId, playerid, GetPlayerSkin(playerid));
+            PlayerSkinId[playerid] = GetPlayerSkin(playerid);
 
             va_GameTextForPlayer(playerid, "~r~-%d$", 1000, 1,
                 skin_price
@@ -3018,7 +3036,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
             else
                 PlayerToBudgetMoney(playerid, skin_price); // Posto je VERONA MALL novac ide u budget
 
-            PlayerInfo[playerid][pChar] = Bit16_Get(gr_PlayerSkinId, playerid);
+            PlayerInfo[playerid][pChar] = PlayerSkinId[playerid];
             ResetBuySkin(playerid);
             //SetPlayerPosFinish(playerid);
 
@@ -3065,7 +3083,7 @@ timer PlayerBiznisInfo[5000](playerid)
 
 CMD:buyskin(playerid, params[])
 {
-    if (Bit16_Get(gr_PlayerSkinId, playerid) == 0 || Bit16_Get(gr_PlayerSkinPrice, playerid) == 0)
+    if (PlayerSkinId[playerid] == 0 || PlayerSkinPrice[playerid] == 0)
     {
         SendClientMessage(playerid, COLOR_RED, "Ne mozete koristiti ovu komandu jer niste izabrali skin na /buy!");
         return 1;
@@ -3074,7 +3092,7 @@ CMD:buyskin(playerid, params[])
     va_ShowPlayerDialog(playerid, DIALOG_SKINSURE, DIALOG_STYLE_MSGBOX, "Kupovina skina",
         "Zelite li kupiti ovaj skin?\n\tINFO:\nSkinid: %d\nCijena: %d"COL_GREEN"$", "Buy", "Abort",
         GetPlayerSkin(playerid),
-        Bit16_Get(gr_PlayerSkinPrice, playerid)
+        PlayerSkinPrice[playerid]
     );
     return 1;
 }
@@ -3083,7 +3101,7 @@ CMD:createvip(playerid, params[])
 {
     new
         pick,
-        bizz = Bit16_Get(gr_PlayerInBiznis, playerid);
+        bizz = Player_InBusiness(playerid);
 
     if (PlayerInfo[playerid][pAdmin] < 1337) return SendClientMessage(playerid, COLOR_RED, "Niste ovlasteni za koristenje ove komande!");
     if (bizz == INVALID_BIZNIS_ID) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne nalazite se unutar biznisa!");
@@ -3640,7 +3658,7 @@ CMD:menu(playerid, params[])
     if (AntiSpamInfo[playerid][asBuying] > gettime()) return va_SendClientMessage(playerid, COLOR_RED, "[ANTI-SPAM]: Ne spamajte sa komandom! Pricekajte %d sekundi pa nastavite!", ANTI_SPAM_BUY_TIME);
 
     new
-        bizz = Bit16_Get(gr_PlayerInBiznis, playerid);
+        bizz = Player_InBusiness(playerid);
     if (bizz != INVALID_BIZNIS_ID && BizzInfo[bizz][bType] == BIZZ_TYPE_BAR)
     {
         va_ShowPlayerDialog(playerid, DIALOG_BIZNIS_BUYING, DIALOG_STYLE_LIST, "PONUDA PICA", "%s", "Popij", "Abort", GetStoreProducts(bizz));
@@ -3715,17 +3733,21 @@ CMD:buy(playerid, params[])
         SetPlayerCameraLookAt(playerid, 1093.4979, -1436.0308, 15.7300);
         TogglePlayerControllable(playerid, 0);
         SetPlayerVirtualWorld(playerid, playerid);
-        Bit8_Set(gr_PlayerSkinStore, playerid, 5);
+        PlayerSkinStore[playerid] = 5;
         ShowSkinModelDialog(playerid);
     }
     else
     {
-        new bizz = Bit16_Get(gr_PlayerInBiznis, playerid);
+        new bizz = Player_InBusiness(playerid);
         if (bizz == INVALID_BIZNIS_ID || bizz > MAX_BIZZS)
         {
             SendClientMessage(playerid, COLOR_RED, "Niste u biznisu!");
+            return 1;
         }
 
+        // TODO: All of this can be made more dynamic... load a business type, load business articles...
+        // save positions/angles/ints/camera pos to a table and load that...
+        // then, based on bizz type, ofc, execute "hardcoded" things in gamemode, but make it as generic as possible
         switch (BizzInfo[bizz][bType])
         {
             case BIZZ_TYPE_DUCAN:
@@ -3735,14 +3757,14 @@ CMD:buy(playerid, params[])
                     if (AntiSpamInfo[playerid][asBuying] > gettime()) return va_SendClientMessage(playerid, COLOR_RED, "[ANTI-SPAM]: Ne spamajte sa komandom! Pricekajte %d sekundi pa nastavite!", ANTI_SPAM_BUY_TIME);
 
                     new string[870];
-                    format(string, sizeof(string), "%s", GetStoreProducts(Bit16_Get(gr_PlayerInBiznis, playerid)));
+                    format(string, sizeof(string), "%s", GetStoreProducts(Player_InBusiness(playerid)));
                     if (isnull(string)) return SendClientMessage(playerid, COLOR_RED, "[ ! ]  Prodavaonica nije napravila ponudu artikala!");
 
                     ShowPlayerDialog(playerid, DIALOG_BIZNIS_BUYING, DIALOG_STYLE_LIST, "KUPOVINA", string, "Buy", "Abort");
                     AntiSpamInfo[playerid][asBuying] = gettime() + ANTI_SPAM_BUY_TIME;
                 }
             }
-            case BIZZ_TYPE_SUBURBAN, BIZZ_TYPE_PROLAPS,  BIZZ_TYPE_ZIP, BIZZ_TYPE_BINCO:
+            case BIZZ_TYPE_SUBURBAN, BIZZ_TYPE_PROLAPS, BIZZ_TYPE_ZIP, BIZZ_TYPE_BINCO:
             {
                 if (IsPlayerInRangeOfPoint(playerid, 3.0, 161.4402,-84.7554,1001.8047))
                 {   // Zip
@@ -3752,7 +3774,7 @@ CMD:buy(playerid, params[])
                     SetPlayerCameraLookAt(playerid, 155.4923,-75.8575,1001.8047);
                     TogglePlayerControllable(playerid, 0);
                     SetPlayerVirtualWorld(playerid, playerid);
-                    Bit8_Set(gr_PlayerSkinStore, playerid, 1);
+                    PlayerSkinStore[playerid] = 1;
                     ShowSkinModelDialog(playerid);
                 }
                 else if (IsPlayerInRangeOfPoint(playerid, 3.0, 207.5430,-101.4424,1005.2578))
@@ -3764,7 +3786,7 @@ CMD:buy(playerid, params[])
                     //SetPlayerCameraLookAt(playerid, 155.4923,-75.8575,1001.8047);
                     TogglePlayerControllable(playerid, 0);
                     SetPlayerVirtualWorld(playerid, playerid);
-                    Bit8_Set(gr_PlayerSkinStore, playerid, 2);
+                    PlayerSkinStore[playerid] = 2;
                     ShowSkinModelDialog(playerid);
                 }
                 else if (IsPlayerInRangeOfPoint(playerid, 3.0, 207.0127,-129.8306,1003.5078))
@@ -3776,7 +3798,7 @@ CMD:buy(playerid, params[])
                     //SetPlayerCameraLookAt(playerid, 155.4923,-75.8575,1001.8047);
                     TogglePlayerControllable(playerid, 0);
                     SetPlayerVirtualWorld(playerid, playerid);
-                    Bit8_Set(gr_PlayerSkinStore, playerid, 3);
+                    PlayerSkinStore[playerid] = 3;
                     ShowSkinModelDialog(playerid);
                 }
                 else if (IsPlayerInRangeOfPoint(playerid, 3.0, 203.8190,-43.9678,1001.8047))
@@ -3788,7 +3810,7 @@ CMD:buy(playerid, params[])
                     //SetPlayerCameraLookAt(playerid, 155.4923,-75.8575,1001.8047);
                     TogglePlayerControllable(playerid, 0);
                     SetPlayerVirtualWorld(playerid, playerid);
-                    Bit8_Set(gr_PlayerSkinStore, playerid, 4);
+                    PlayerSkinStore[playerid] = 4;
                     ShowSkinModelDialog(playerid);
                 }
                 else SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste u clothing shopu!");
@@ -3800,7 +3822,7 @@ CMD:buy(playerid, params[])
 
 CMD:bmusic(playerid, params[])
 {
-    if (PlayerInfo[playerid][pBizzKey] == INVALID_BIZNIS_ID && !Bit1_Get( gr_IsADJ, playerid))
+    if (PlayerInfo[playerid][pBizzKey] == INVALID_BIZNIS_ID && !Player_IsDJ(playerid))
     {
         SendClientMessage(playerid, COLOR_RED, "Ne posjedujes biznis/nisi DJ!");
         return 1;
@@ -3815,7 +3837,7 @@ CMD:bmusic(playerid, params[])
     }
 
     new
-        bizz = Bit1_Get(gr_IsADJ, playerid) ? Bit16_Get(gr_DJBizKey, playerid) : bouse;
+        bizz = Player_IsDJ(playerid) ? Player_GetDJBizzKey(playerid) : bouse;
 
     if (bizz == INVALID_BIZNIS_ID || bizz > MAX_BIZZS)
     {
@@ -3843,7 +3865,7 @@ CMD:makedj(playerid, params[])
     if (PlayerInfo[playerid][pBizzKey] == INVALID_BIZNIS_ID) return SendClientMessage(playerid, COLOR_RED, "Ne posjedujes biznis!");
 
     new
-        bizz = Bit16_Get(gr_PlayerInBiznis, playerid),
+        bizz = Player_InBusiness(playerid),
         giveplayerid;
 
     // TODO: why not just reuse PlayerInfo[playerid][pBizzKey] as the index to BizzInfo array?
@@ -3857,16 +3879,18 @@ CMD:makedj(playerid, params[])
     if (sscanf(params, "u", giveplayerid)) return SendClientMessage(playerid, -1, "[ ? ]: /makedj [DioImena/Playerid]");
     if (bizz == INVALID_BIZNIS_ID || bizz != bouse) return SendClientMessage(playerid, COLOR_RED, "Niste unutar svojeg biznisa!");
 
-    if (Bit1_Get(gr_IsADJ, giveplayerid))
+    // TODO: DJ variable is not saved anywhere. Remove this from businesses and instead make DJ a profession/job
+    // Then, link that profession to a business (this might need extending the "Player/Char" enumerator/system)
+    if (Player_IsDJ(giveplayerid))
     {
-        Bit1_Set(gr_IsADJ, giveplayerid, false);
-        Bit16_Set(gr_DJBizKey, giveplayerid, INVALID_BIZNIS_ID);
+        Player_SetIsDJ(giveplayerid, false);
+        Player_SetDJBizzKey(giveplayerid, INVALID_BIZNIS_ID);
         SendClientMessage(giveplayerid, COLOR_RED, "[ ! ]  Vise niste zaposleni kao DJ!");
     }
     else
     {
-        Bit1_Set(gr_IsADJ, giveplayerid, true);
-        Bit16_Set(gr_DJBizKey, giveplayerid, bizz);
+        Player_SetIsDJ(giveplayerid, true);
+        Player_SetDJBizzKey(giveplayerid, bizz);
 
         va_SendClientMessage(playerid, COLOR_YELLOW, "[ ! ]  Zaposlio si %s kao novog DJ-a!", GetName(giveplayerid, true));
         va_SendClientMessage(giveplayerid, COLOR_YELLOW, "[ ! ]  %s te je zaposlio kao svoga DJ-a!", GetName(playerid, true));
@@ -4122,7 +4146,7 @@ CMD:deletebiz(playerid, params[])
 
 CMD:microphone(playerid, params[])
 {
-    if (PlayerInfo[playerid][pBizzKey] == INVALID_BIZNIS_ID && !Bit1_Get( gr_IsADJ, playerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne posjedujes biznis/nisi DJ!");
+    if (PlayerInfo[playerid][pBizzKey] == INVALID_BIZNIS_ID && !Player_IsDJ(playerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne posjedujes biznis/nisi DJ!");
 
     if (isnull(params))
     {

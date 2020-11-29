@@ -202,7 +202,7 @@ public OnPlayerEnterRaceCheckpoint(playerid)
             DakarPlayers--;
             DakarPlayer  [playerid] = 0;
             DakarPlayerCP[playerid] = 0;
-            Bit1_Set(gr_OnEvent, playerid, false);
+            Player_SetOnEvent(playerid, false);
 
             if (FirstDakarWinner == INVALID_PLAYER_ID)
             {
@@ -447,7 +447,7 @@ CMD:dakar(playerid, params[])
         */
         SendClientMessage(playerid, COLOR_RED, "[DAKAR]: Uspjesno ste se prijavili za Dakar event. Udjite u vozilo i stanite na marker.");
         SendClientMessage(playerid, COLOR_RED, "[DAKAR]: Ukoliko zelite odustati, tipkajte /dakar quit.");
-        Bit1_Set(gr_OnEvent, playerid, true);
+        Player_SetOnEvent(playerid, true);
     }
     else if (!strcmp(action, "startrace", true))
     {
@@ -487,7 +487,7 @@ CMD:dakar(playerid, params[])
             DisablePlayerRaceCheckpoint(i);
             DakarPlayer  [i] = 0;
             DakarPlayerCP[i] = 0;
-            Bit1_Set(gr_OnEvent, i, false);
+            Player_SetOnEvent(i, false);
         }
 
         DakarStarted = false;
@@ -524,7 +524,7 @@ CMD:dakar(playerid, params[])
 
         DakarPlayer  [playerid] = 0;
         DakarPlayerCP[playerid] = 0;
-        Bit1_Set(gr_OnEvent, playerid, false);
+        Player_SetOnEvent(playerid, false);
         DisablePlayerRaceCheckpoint(playerid);
         SendClientMessage(playerid, COLOR_WHITE, "[SERVER] Odustali ste od Dakar utrke.");
         return 1;

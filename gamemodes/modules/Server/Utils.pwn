@@ -1,4 +1,5 @@
 #include <YSI_Coding\y_hooks>
+#include "modules/Player/Player_h.pwn"
 
 #define MAX_SUBJECTS_IN_RANGE			(15)
 
@@ -143,8 +144,8 @@ stock GetName(playerid, bool:replace=true)
 	GetPlayerName(playerid, name, sizeof(name));
 	
 	if( replace ) {
-		if( Bit1_Get( gr_MaskUse, playerid ) )
-			format(name, 24, "Maska_%d", PlayerInfo[ playerid ][ pMaskID ] );
+		if (Player_UsingMask(playerid))
+			format(name, sizeof(name), "Maska_%d", PlayerInfo[ playerid ][ pMaskID ] );
 		else 
 			strreplace(name, '_', ' ');
 	}

@@ -34,7 +34,8 @@ static
     // Varijabla koja sprema u kojoj pod kojim listitemom je koja fakcija (NPR ako je 2 ilegalna onda ce ovako izgledat)
     // [0] [1] -> PD
     // [1] [3] -> FD
-    FactionToList[MAX_PLAYERS][10];
+    FactionToList[MAX_PLAYERS][10],
+    GovMDC[MAX_PLAYERS] = {INVALID_PLAYER_ID, ...};
 
 
 /*
@@ -383,20 +384,14 @@ hook OnGameModeInit()
     return 1;
 }
 
-hook OnPlayerDisconnect(playerid, reason)
+hook ResetPlayerVariables(playerid)
 {
-    FactionToList[playerid][0] = -1;
-    FactionToList[playerid][1] = -1;
-    FactionToList[playerid][2] = -1;
-    FactionToList[playerid][3] = -1;
-    FactionToList[playerid][4] = -1;
-    FactionToList[playerid][5] = -1;
-    FactionToList[playerid][6] = -1;
-    FactionToList[playerid][7] = -1;
-    FactionToList[playerid][8] = -1;
-    FactionToList[playerid][9] = -1;
-    FactionListID[playerid]    = -1;
-    return 1;
+    for (new i = 0; i != 10; i++)
+    {
+        FactionToList[playerid][i] = -1;
+    }
+    FactionListID[playerid] = -1;
+    GovMDC[playerid] = INVALID_PLAYER_ID;
 }
 
 hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
@@ -851,14 +846,18 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
         }
         case DIALOG_GOVMDC:
         {
+            if (GovMDC[playerid] == INVALID_PLAYER_ID)
+            {
+                return 1;
+            }
             if (response)
             { // Ako pritisne Pregled transakcija
-                CheckPlayerTransactions(playerid, GetName(Bit8_Get( gr_GovMDC, playerid), false));
-                Bit8_Set(gr_GovMDC, playerid, INVALID_PLAYER_ID);
+                CheckPlayerTransactions(playerid, GetName(GovMDC[playerid], false));
+                GovMDC[playerid] = INVALID_PLAYER_ID;
             }
             else
             { // Ako pritisne ESC ili NE
-                Bit8_Set(gr_GovMDC, playerid, INVALID_PLAYER_ID);
+                GovMDC[playerid] = INVALID_PLAYER_ID;
             }
             return 1;
         }
@@ -1007,7 +1006,7 @@ CMD:govmdc(playerid, params[])
     if (sscanf(params, "u", giveplayerid)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /govmdc [ID/DioImena]");
     if (giveplayerid == INVALID_PLAYER_ID || !IsPlayerLogged(giveplayerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Taj igrac nije ulogiran!");
 
-    Bit8_Set(gr_GovMDC, playerid, giveplayerid);
+    GovMDC[playerid] = giveplayerid;
     ShowGovMDC(playerid, giveplayerid);
     return 1;
 }

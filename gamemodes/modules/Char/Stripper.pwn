@@ -258,7 +258,7 @@ hook OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
 			SetCameraBehindPlayer(playerid);
 			
 			new 
-				biznis = Bit16_Get( gr_PlayerInBiznis, playerid );
+				biznis = Player_InBusiness(playerid);
 			if( biznis != INVALID_BIZNIS_ID ) {
 				SetPlayerInterior(playerid, BizzInfo[ biznis ][ bInterior ]);
 				SetPlayerVirtualWorld(playerid, BizzInfo[ biznis ][ bVirtualWorld ]); 

@@ -9,6 +9,7 @@
 */
 
 #include <YSI_Coding\y_hooks>
+#include "modules/Player/Player_h.pwn"
 
 
 /*
@@ -37,6 +38,7 @@
 
 
 static
+    bool:OnLive[MAX_PLAYERS],
     NewsText[MAX_NEWS_LINES][MAX_NEWS_STR_SIZE],
     Text:NewsLineTextDraw[MAX_NEWS_LINES],
     NewsLineNumber      = 0,
@@ -53,6 +55,16 @@ static
     ##       ##     ## ##   ### ##    ## ##    ## 
     ##        #######  ##    ##  ######   ######  
 */
+
+stock bool:Player_IsOnAir(playerid)
+{
+    return OnLive[playerid];
+}
+
+stock Player_SetIsOnAir(playerid, bool:v)
+{
+    OnLive[playerid] = v;
+}
 
 stock NewsLineCheck()
 {
@@ -154,17 +166,17 @@ hook OnPlayerSpawn(playerid)
     return 1;
 }
 
-hook OnPlayerDisconnect(playerid, reason)
+hook ResetPlayerVariables(playerid)
 {
-    // TODO: Bit8 is unsigned, when converted to regular int, use -1 for invalid condition
-    if (Bit8_Get(gr_PhoneLine, playerid) != 15)
+    new lineIndex = Player_PhoneLine(playerid);
+    if (lineIndex != -1)
     {
-        new lineIndex = Bit8_Get(gr_PhoneLine, playerid);
         NewsPhone[lineIndex][npNumber]   = 0;
         NewsPhone[lineIndex][npPlayerID] = -1;
-        Bit8_Set(gr_PhoneLine, playerid, 15);
+        Player_SetPhoneLine(playerid, -1);
     }
-    return 1;
+
+    OnLive[playerid] = false;
 }
 
 hook OnPlayerConnect(playerid)
@@ -240,7 +252,7 @@ CMD:live(playerid, params[])
     GetPlayerName(playerid, playerName, MAX_PLAYER_NAME);
     GetPlayerName(giveplayerid, newsName, MAX_PLAYER_NAME);
 
-    if (Bit1_Get(gr_OnLive, giveplayerid))
+    if (OnLive[giveplayerid])
     {
         SendFormatMessage(playerid, MESSAGE_TYPE_INFO, "Skinuli ste dozvolu gostu %s za pricanje u eter.", playerName);
         va_SendClientMessage(giveplayerid, COLOR_YELLOW, "[INFO]: Izgubili ste dozvolu za govor u eteru od novinara %s!", newsName);
@@ -250,7 +262,7 @@ CMD:live(playerid, params[])
         SendFormatMessage(playerid, MESSAGE_TYPE_INFO, "Dali ste dozvolu gostu %s za ulazak u eter. Da skines dozvolu koristi /live.", playerName);
         va_SendClientMessage(giveplayerid, COLOR_YELLOW, "[INFO]: Dobili ste dozvolu za govor u eteru od novinara %s!", newsName);
     }
-    Bit1_Set(gr_OnLive, giveplayerid, !Bit1_Get(gr_OnLive, giveplayerid));
+    OnLive[giveplayerid] = !OnLive[giveplayerid];
     return 1;
 }
 

@@ -1,4 +1,5 @@
 #include <YSI_Coding\y_hooks>
+#include "modules/Player/Player_h.pwn"
 #include "modules/Systems/LSPD/LSPD_h.pwn"
 
 new
@@ -147,25 +148,27 @@ CMD:time(playerid, params[])
     return 1;
 }
 
+// TODO: should be a part of mask module
 CMD:mask(playerid, params[])
 {
 	if( PlayerInfo[ playerid ][ pMaskID ] == -1 || PlayerInfo[ playerid ][ pMaskID ] == 0 )
 		return SendClientMessage( playerid, COLOR_RED, "[GRESKA]: Ne posjedujes masku!" );
 
 	new buffer[80];
-	if( !Bit1_Get(gr_MaskUse, playerid)) 
-	{	
-		foreach(new i : Player) {
+	if (!Player_UsingMask(playerid))
+	{
+		foreach(new i : Player)
+		{
 			ShowPlayerNameTagForPlayer(i, playerid, 0);
 		}
 		SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "Stavili ste masku na glavu. Korsitite /mask opet ukoliko je zelite skinuti.");
-		Bit1_Set( gr_MaskUse, playerid, true);
+		Player_SetUsingMask(playerid, true);
 		format(buffer, sizeof(buffer), "* %s stavlja masku na glavu.", GetName(playerid, true));
 		SendClientMessage(playerid, COLOR_PURPLE, buffer);
 		SetPlayerChatBubble(playerid, buffer, COLOR_PURPLE, 20, 10000);
-		
+
 		GameTextForPlayer(playerid, "~b~STAVILI STE MASKU", 5000, 4);
-		
+
 		#if defined MODULE_LOGS
 		if(PlayerInfo[ playerid ][ pMaskID ] == 0) 
 		{
@@ -179,7 +182,7 @@ CMD:mask(playerid, params[])
 			);
 		}
 		#endif
-		
+
 		new
 			maskName[24];
 		format(maskName, sizeof(maskName), "Maska_%d", PlayerInfo[playerid][pMaskID]);
@@ -191,18 +194,19 @@ CMD:mask(playerid, params[])
 		NameText[playerid] = CreateDynamic3DTextLabel(maskName, 0xB2B2B2AA, 0, 0, -20, 25, playerid, INVALID_VEHICLE_ID, 1);
 		Streamer_SetFloatData(STREAMER_TYPE_3D_TEXT_LABEL, NameText[playerid] , E_STREAMER_ATTACH_OFFSET_Z, 0.18);
 	}
-	else {
-		foreach(new i : Player) {
+	else
+	{
+		foreach(new i : Player)
+		{
 			ShowPlayerNameTagForPlayer(i, playerid, 1);
 		}
-				
-		Bit1_Set( gr_MaskUse, playerid, false );
+
+		Player_SetUsingMask(playerid, false);
 		format(buffer, sizeof(buffer), "* %s skida masku sa glave.", GetName(playerid, true));
 		SendClientMessage(playerid, COLOR_PURPLE, buffer);
 		SetPlayerChatBubble(playerid, buffer, COLOR_PURPLE, 20, 10000);
-		
 		GameTextForPlayer(playerid, "~b~SKINULI STE MASKU", 5000, 4);
-			
+
 		if(IsValidDynamic3DTextLabel(NameText[playerid]))
 		{
 			DestroyDynamic3DTextLabel(NameText[playerid]);
@@ -445,16 +449,13 @@ CMD:tognametag(playerid, params[])
 
 CMD:blockb(playerid, params[])
 {
-	if( Bit1_Get(gr_BlockedOOC, playerid) ) 
-	{
-		Bit1_Set(gr_BlockedOOC, playerid, false);
-		SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "Ukljucio si OOC chat!");
-	} 
-	else 
-	{
-		Bit1_Set(gr_BlockedOOC, playerid, true);
-		SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "Iskljucio si OOC chat!");
-	}
+	new
+		str[32],
+		bool:status = !Player_HasBlockedOOCChat(playerid);
+	Player_SetHasBlockedOOCChat(playerid, status);
+
+	format(str, sizeof(str), "%s si OOC chat!", (status) ? ("Ukljucio") : ("Iskljucio"));
+	SendMessage(playerid, MESSAGE_TYPE_SUCCESS, str);
 	return 1;
 }
 CMD:b(playerid, params[])
@@ -898,14 +899,15 @@ CMD:showlicenses(playerid, params[])
 		LicenseInfo[playerid][pFishLic] ? ("Da") : ("Ne")
 	);
 	SendClientMessage(giveplayerid, COLOR_GREY, tmpString);
-	
-	if(Bit1_Get( gr_FakeGunLic, playerid ) ){
-	    format(tmpString, sizeof(tmpString), "** Dovola za oruzje: Da.");
+
+	if (Player_HasFakeGunLicense(playerid))
+	{
+		format(tmpString, sizeof(tmpString), "** Dozvola za oruzje: Da.");
 	}
 	else
 	{
 		format(tmpString, sizeof(tmpString), "** Dozvola za oruzje: %s.",
-		LicenseInfo[playerid][pGunLic] ? ("Da") : ("Ne"));
+			   LicenseInfo[playerid][pGunLic] ? ("Da") : ("Ne"));
 	}
 	SendClientMessage(giveplayerid, COLOR_GREY, tmpString);
 	SendClientMessage(giveplayerid, -1, "|______________________________________________|");
@@ -969,8 +971,8 @@ CMD:refresh(playerid, params[]) {
     if(Frozen[playerid]) return SendClientMessage(playerid, COLOR_RED, "Freezani ste, ne mozete koristi ovu komandu");
 		
 	new
-		houseid = Bit16_Get(gr_PlayerInHouse, playerid),
-		biznisid = Bit16_Get(gr_PlayerInBiznis, playerid);
+		houseid = Player_InHouse(playerid),
+		biznisid = Player_InBusiness(playerid);
 		
 	if(!IsPlayerAlive(playerid) )
 		return SendMessage(playerid, MESSAGE_TYPE_ERROR,"Mrtvi ste, ne mozete koristit ovu komandu.");
@@ -1380,8 +1382,8 @@ CMD:accept(playerid, params[])
 		
 		if(rank < FactionInfo[member][rAGovRepair]) 
 				return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "Morate biti rank %d kako bi ste mogli koristiti ovu komandu!", FactionInfo[member][rAGovRepair]);
-		
-		Bit1_Set( gr_GovRepair, giveplayerid, true );
+
+		Player_SetCanRepairGovVehicle(giveplayerid, true);
 		SendFormatMessage(playerid, MESSAGE_TYPE_INFO, "Dopustili ste %s da moze koristit /govrepair komandu.", GetName(giveplayerid,true));
 		va_SendClientMessage(giveplayerid, COLOR_RED, "[ ! ] %s vam je dopustio da mozete koristit /govrepair komandu.", GetName(playerid,true));
 		SendClientMessage(giveplayerid, COLOR_RED, "[ ! ] Mozes jednom popraviti i napuniti auto.");
@@ -1400,7 +1402,8 @@ CMD:accept(playerid, params[])
 		
 		SendFormatMessage(playerid, MESSAGE_TYPE_INFO, "Dopustili ste %s da moze koristit /buygun komandu.", GetName(giveplayerid));
 		va_SendClientMessage(giveplayerid, COLOR_RED, "[ ! ] %s vam je dopustio da mozete koristit /buygun komandu.", GetName(playerid));
-		Bit1_Set( gr_WeaponAllowed, giveplayerid, true );
+		// TODO: Variable was unused, only reset to false in OPD. Implement this functionality or remove it completely.
+		//Bit1_Set( gr_WeaponAllowed, giveplayerid, true );
 		SendClientMessage(giveplayerid, COLOR_RED, "[ ! ] Imate pravo na oruzje iz armorya. Koristite /buygun!");
 	}
 	else if(strcmp(pick,"igarage",true) == 0) 
@@ -1638,9 +1641,9 @@ CMD:coin(playerid, params[])
 
 CMD:dice(playerid, params[])
 {
-	if(PlayerInfo[playerid][pMuted]) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne mozes pricati!");
+	if (PlayerInfo[playerid][pMuted]) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne mozes pricati!");
     new dice = minrand(1,7), string[61];
-	if( !Bit1_Get( gr_Dice, playerid ) ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nemas kockicu");
+	if (Player_HasDice(playerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nemas kockicu");
 	format(string, sizeof(string), "** %s baca kockicu koja pada na broj %d", GetName(playerid, true),dice);
 	ProxDetector(5.0, playerid, string, COLOR_GREEN,COLOR_GREEN,COLOR_GREEN,COLOR_GREEN,COLOR_GREEN);
     return 1;
@@ -2052,7 +2055,7 @@ CMD:give(playerid, params[])
 	    if(PlayerInfo[playerid][pKilled]) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne mozes koristiti ovu komandu dok si u DeathModeu!");
     	if (sscanf(params, "s[32]u", x_nr, giveplayerid)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /give dice [Playerid/DioImena]");
 		if( IsPlayerReconing(playerid) ) return SendClientMessage(playerid, COLOR_RED, "Taj igrac nije dovoljno blizu vas.");
-		if( !Bit1_Get( gr_Dice, playerid ) ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nemas kockicu");
+		if(Player_HasDice(playerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nemas kockicu");
 		if(giveplayerid == playerid) return SendClientMessage(playerid, COLOR_RED, "Ne mozete sami sebi davati kocku!");
 		if (Bit1_Get(gr_PlayerLoggedIn, giveplayerid) != 0)
 		{
@@ -2060,8 +2063,8 @@ CMD:give(playerid, params[])
 		    {
      			if (ProxDetectorS(3.0, playerid, giveplayerid))
 			    {
-					Bit1_Set( gr_Dice, playerid, false );
-					Bit1_Set( gr_Dice, giveplayerid, true );
+					Player_SetHasDice(playerid, false);
+					Player_SetHasDice(giveplayerid, true);
     				PlayerPlaySound(giveplayerid, 1052, 0.0, 0.0, 0.0);
 					format(globalstring, sizeof(globalstring), "* %s uzima kocku iz djepa i daje ga %s.", GetName(playerid), GetName(giveplayerid));
 			        ProxDetector(5.0, playerid, globalstring, COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE);
@@ -2074,18 +2077,18 @@ CMD:give(playerid, params[])
     }
 	else if(strcmp(x_nr,"flicense",true) == 0)
 	{
-		if(PlayerInfo[playerid][pKilled]) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne mozes koristiti ovu komandu dok si u DeathModeu!");
+		if (PlayerInfo[playerid][pKilled]) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne mozes koristiti ovu komandu dok si u DeathModeu!");
 		if (sscanf(params, "s[32]u", x_nr, giveplayerid)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /give flicense [Playerid/DioImena]");
-		if( IsPlayerReconing(giveplayerid) ) return SendClientMessage(playerid, COLOR_RED, "Taj igrac nije dovoljno blizu vas.");
-		if(Bit1_Get( gr_FakeGunLic, playerid ) ) return SendClientMessage(playerid, COLOR_RED, " Nemate laznu dozvolu za oruzje");
+		if (IsPlayerReconing(giveplayerid)) return SendClientMessage(playerid, COLOR_RED, "Taj igrac nije dovoljno blizu vas.");
+		if (Player_HasFakeGunLicense(playerid)) return SendClientMessage(playerid, COLOR_RED, " Nemate laznu dozvolu za oruzje");
 		if (Bit1_Get(gr_PlayerLoggedIn, giveplayerid) != 0)
 		{
   			if(giveplayerid != INVALID_PLAYER_ID)
 		    {
      			if (ProxDetectorS(3.0, playerid, giveplayerid))
 			    {
-					Bit1_Set( gr_FakeGunLic, playerid, false );
-					Bit1_Set( gr_FakeGunLic, giveplayerid, true );
+					Player_SetHasFakeGunLicense(playerid, false);
+					Player_SetHasFakeGunLicense(giveplayerid, true);
     				PlayerPlaySound(giveplayerid, 1052, 0.0, 0.0, 0.0);
 					format(globalstring, sizeof(globalstring), "* %s uzima dozvolu iz dzepa i daje je %s.", GetName(playerid), GetName(giveplayerid));
 			        ProxDetector(5.0, playerid, globalstring, COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE);
@@ -2394,24 +2397,26 @@ CMD:exittrunk(playerid, params[])
    	return 1;
 }
 
+// TODO: news related functionality should be moved to news/broadcast module
 CMD:toglive(playerid, params[])
 {
-	if( Bit1_Get( gr_BlockedLIVE, playerid ) ) {
-		Bit1_Set( gr_BlockedLIVE, playerid, false );
-		SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "Ukljucio si News Live chat!");
-	} else {
-		Bit1_Set( gr_BlockedLIVE, playerid, true );
-		SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "Iskljucio si News Live chat!");
-	}
+	new
+		str[32],
+		bool:status = !Player_OnAirBlocked(playerid);
+	Player_SetOnAirBlocked(playerid, status);
+
+	format(str, sizeof(str), "%s si News Live chat!", (status) ? ("Ukljucio") : ("Iskljucio"));
+	SendMessage(playerid, MESSAGE_TYPE_SUCCESS, str);
 	return 1;
 }
 
+// TODO: news related functionality should be moved to news/broadcast module
 CMD:mic(playerid, params[])
 {
-	if( !Bit1_Get(gr_OnLive, playerid) ) return  SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nisi u LIVEu");
-	if( Bit1_Get( gr_BlockedLIVE, playerid ) ) return 1;
+	if (!Player_IsOnAir(playerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nisi u LIVEu");
+	if (Player_OnAirBlocked(playerid)) return 1;
 
-	va_SendClientMessageToAll(COLOR_ORANGE, "** %s (UZIVO) %s: %s", (  IsANews(playerid) ? ("REPORTER") : ("GOST") ), GetName(playerid), params);
+	va_SendClientMessageToAll(COLOR_ORANGE, "** %s (UZIVO) %s: %s", IsANews(playerid) ? ("REPORTER") : ("GOST"), GetName(playerid), params);
 	return 1;
 }
 

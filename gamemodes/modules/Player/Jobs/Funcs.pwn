@@ -36,6 +36,8 @@ enum E_JOBS_DATA {
 }
 new JobData[E_JOBS_DATA];
 
+static bool:IsWorkingJob[MAX_PLAYERS] = {false, ...};
+
 /*
 	- MySQL
 */
@@ -88,6 +90,16 @@ Public: OnServerJobsLoaded()
 /*
 	- Functions
 */
+
+stock bool:Player_IsWorkingJob(playerid)
+{
+	return IsWorkingJob[playerid];
+}
+
+stock Player_SetIsWorkingJob(playerid, bool:v)
+{
+	IsWorkingJob[playerid] = v;
+}
 
 SetPlayerJob(playerid, job_id) {
 	switch(job_id) {
@@ -299,6 +311,11 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 		}
 	}
 	return 0;
+}
+
+hook ResetPlayerVariables(playerid)
+{
+	IsWorkingJob[playerid] = false;
 }
 
 /*

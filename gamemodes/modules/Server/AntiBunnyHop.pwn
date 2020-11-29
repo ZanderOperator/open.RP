@@ -8,6 +8,7 @@
 
 // reminder: Na svakom PayDay-u se resetiraju varijable.
 #include <YSI_Coding\y_hooks>
+#include "modules/Systems/Events/Header.pwn"
 
 /*
 	- defines
@@ -43,7 +44,7 @@ hook OnPlayerKeyStateChange(playerid, newkeys, oldkeys) {
     if(HOLDING(KEY_SPRINT)) {
 		if(PRESSED(KEY_JUMP)) {
 		    if(!IsPlayerInAnyVehicle(playerid)) {
-				if(!Bit1_Get( gr_OnEvent, playerid)) {
+				if(!Player_OnEvent(playerid)) {
 				
 					if(PlayerInfo[playerid][pAdmin] >= 4)
 						return (true);

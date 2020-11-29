@@ -1,4 +1,5 @@
 #include <YSI_Coding\y_hooks>
+#include "modules/Player/Player_h.pwn"
 
 /*
 	##     ##    ###     ######  ########   #######   ######  
@@ -52,15 +53,23 @@ enum E_ADO_LABEL_INFO
 	Float:lablpos[3]
 }
 
+static
+    bool:BlockedLive[MAX_PLAYERS],
+    bool:BlockedOOC[MAX_PLAYERS],
+    bool:UsingMask[MAX_PLAYERS],
+    bool:HasDice[MAX_PLAYERS],
+    bool:HasDrink[MAX_PLAYERS],
+    bool:HasFood[MAX_PLAYERS],
+    bool:FakeGunLic[MAX_PLAYERS],
+    PlayerGroceries[MAX_PLAYERS];
+
 new
-	AdoLabels[MAX_ADO_LABELS][E_ADO_LABEL_INFO],
-	Bit1:	gr_BlockedLIVE			<MAX_PLAYERS>,
-	Bit1:	gr_BlockedOOC			<MAX_PLAYERS>;
-	
+    AdoLabels[MAX_ADO_LABELS][E_ADO_LABEL_INFO];
+
 new
-	PlayerDrunkLevel[MAX_PLAYERS],
+    PlayerDrunkLevel[MAX_PLAYERS],
     PlayerFPS[MAX_PLAYERS],
-	PlayerFPSUnix[MAX_PLAYERS];
+    PlayerFPSUnix[MAX_PLAYERS];
 
 enum E_DATA_TAXI 
 {
@@ -85,6 +94,87 @@ new TaxiData[MAX_PLAYERS][E_DATA_TAXI];
 	##       ##     ## ##   ### ##    ##    ##     ##  ##     ## ##   ### ##    ## 
 	##        #######  ##    ##  ######     ##    ####  #######  ##    ##  ######  
 */
+
+// TODO: "BlockedLive" / OnAirBlocked should be moved to Systems/LSN.pwn module
+stock bool:Player_OnAirBlocked(playerid)
+{
+    return BlockedLive[playerid];
+}
+
+stock Player_SetOnAirBlocked(playerid, bool:v)
+{
+    BlockedLive[playerid] = v;
+}
+
+stock bool:Player_HasBlockedOOCChat(playerid)
+{
+    return BlockedOOC[playerid];
+}
+
+stock Player_SetHasBlockedOOCChat(playerid, bool:v)
+{
+    BlockedOOC[playerid] = v;
+}
+
+stock bool:Player_HasDice(playerid)
+{
+    return HasDice[playerid];
+}
+
+stock Player_SetHasDice(playerid, bool:v)
+{
+    HasDice[playerid] = v;
+}
+
+stock bool:Player_HasFakeGunLicense(playerid)
+{
+    return FakeGunLic[playerid];
+}
+
+stock Player_SetHasFakeGunLicense(playerid, bool:v)
+{
+    FakeGunLic[playerid] = v;
+}
+
+stock Player_GetGroceriesQuantity(playerid)
+{
+    return PlayerGroceries[playerid];
+}
+
+stock Player_SetGroceriesQuantity(playerid, v)
+{
+    PlayerGroceries[playerid] = v;
+}
+
+stock bool:Player_HasDrink(playerid)
+{
+    return HasDrink[playerid];
+}
+
+stock Player_SetHasDrink(playerid, bool:v)
+{
+    HasDrink[playerid] = v;
+}
+
+stock bool:Player_HasFood(playerid)
+{
+    return HasFood[playerid];
+}
+
+stock Player_SetHasFood(playerid, bool:v)
+{
+    HasFood[playerid] = v;
+}
+
+stock bool:Player_UsingMask(playerid)
+{
+    return UsingMask[playerid];
+}
+
+stock Player_SetUsingMask(playerid, bool:v)
+{
+    UsingMask[playerid] = v;
+}
 
 ResetMonthPaydays()
 {
@@ -772,11 +862,12 @@ Public:CheckAccountsForInactivity()
 	return 1;
 }
 
+// TODO: should be a part of mask module
 stock CheckPlayerMasks(playerid)
 {
 	foreach(new i : Player) 
 	{
-		if(Bit1_Get(gr_MaskUse, i)) 	
+		if (Player_UsingMask(i))
 			ShowPlayerNameTagForPlayer(playerid, i, 0);
 	}
 	return 1;
@@ -792,7 +883,7 @@ stock CheckPlayerInteriors(playerid)
 	{
 		if(IsPlayerInRangeOfPoint(playerid, 100.0, HouseInfo[h][hExitX], HouseInfo[h][hExitY], HouseInfo[h][hExitZ]) && HouseInfo[h][hInt] == interior && HouseInfo[h][hVirtualWorld] == virtualworld)
 		{
-			Bit16_Set(gr_PlayerInHouse, playerid, h);
+			Player_SetInHouse(playerid, h);
 			return 1;
 		}
 	}
@@ -800,7 +891,7 @@ stock CheckPlayerInteriors(playerid)
 	{
 		if(IsPlayerInRangeOfPoint(playerid, 100.0, BizzInfo[b][bExitX], BizzInfo[b][bExitY], BizzInfo[b][bExitZ]) && BizzInfo[b][bInterior] == interior && BizzInfo[b][bVirtualWorld] == virtualworld)
 		{
-			Bit16_Set(gr_PlayerInBiznis, playerid, b);
+			Player_SetInBusiness(playerid, b);
 			return 1;
 		}
 	}
@@ -808,7 +899,7 @@ stock CheckPlayerInteriors(playerid)
 	{
 		if(IsPlayerInRangeOfPoint(playerid, 100.0, PickupInfo[pickup][epExitx],PickupInfo[pickup][epExity],PickupInfo[pickup][epExitz]) && PickupInfo[pickup][epInt] == interior && PickupInfo[pickup][epViwo] == virtualworld)
 		{
-			Bit16_Set(gr_PlayerInPickup, playerid, pickup);
+			Player_SetInPickup(playerid, pickup);
 			return 1;
 		}
 	}
@@ -816,7 +907,7 @@ stock CheckPlayerInteriors(playerid)
 	{
 		if(IsPlayerInRangeOfPoint(playerid, 100.0, ComplexInfo[c][cExitX], ComplexInfo[c][cExitY], ComplexInfo[c][cExitZ]) && ComplexInfo[c][cInt] == interior && ComplexInfo[c][cViwo] == virtualworld) 
 		{
-			Bit16_Set(gr_PlayerInComplex, playerid, c);
+			Player_SetInApartmentComplex(playerid, c);
 			return 1;
 		}
 	}
@@ -824,7 +915,7 @@ stock CheckPlayerInteriors(playerid)
 	{
 		if(IsPlayerInRangeOfPoint(playerid, 100.0, ComplexRoomInfo[cr][cExitX], ComplexRoomInfo[cr][cExitY], ComplexRoomInfo[cr][cEnterZ]) && interior == ComplexRoomInfo[cr][cIntExit] && virtualworld == ComplexRoomInfo[cr][cVWExit] ) 
 		{
-			Bit16_Set(gr_PlayerInRoom, playerid, cr);
+			Player_SetInApartmentRoom(playerid, cr);
 			return 1;
 		}
 	}
@@ -832,7 +923,7 @@ stock CheckPlayerInteriors(playerid)
 	{
 		if(IsPlayerInRangeOfPoint(playerid, 100.0, GarageInfo[ garage ][ gExitX ], GarageInfo[ garage ][ gExitY ], GarageInfo[ garage ][ gExitZ ]))
 		{
-			Bit16_Set(gr_PlayerInGarage, playerid, garage);
+			Player_SetInGarage(playerid, garage);
 			return 1;
 		}
 	}
@@ -1085,7 +1176,7 @@ timer PlayerGlobalTask[1000](playerid)
 			VehicleInfo[pcar][vEngineRunning] = false;
 		}
 	}
-	if(Bit1_Get(gps_Activated, playerid))
+	if(Player_GpsActivated(playerid))
 		gps_GetDistance(playerid, GPSInfo[playerid][gGPSID], GPSInfo[playerid][gX], GPSInfo[playerid][gY], GPSInfo[playerid][gZ]);
 	
 	CheckHouseInfoTextDraws(playerid); // House Info Textdraw removal if not in checkpoint 
@@ -1516,7 +1607,7 @@ stock OOCProxDetector(Float:radi, playerid, string[], col1, col2, col3, col4, co
 		{
 			if(GetPlayerVirtualWorld(playerid) == GetPlayerVirtualWorld(i))
 			{
-				if( !Bit1_Get(gr_BlockedOOC, i) )
+				if(!Player_HasBlockedOOCChat(i))
 				{
 					GetPlayerPos(i, posx, posy, posz);
 					tempposx = (oldposx -posx);
@@ -1544,7 +1635,7 @@ stock OOCProxDetector(Float:radi, playerid, string[], col1, col2, col3, col4, co
 						SendClientMessage(i, col5, string);
 					}
 				}
-				else if(Bit1_Get(gr_BlockedOOC, i) && (PlayerInfo[playerid][pAdmin] || PlayerInfo[playerid][pHelper]))
+				else if(Player_HasBlockedOOCChat(i) && (PlayerInfo[playerid][pAdmin] || PlayerInfo[playerid][pHelper]))
 				{
 					GetPlayerPos(i, posx, posy, posz);
 					tempposx = (oldposx -posx);
@@ -1834,6 +1925,20 @@ hook OnPlayerDisconnect(playerid, reason)
 		}
 	}
 	return 1;
+}
+
+hook ResetPlayerVariables(playerid)
+{
+    // TODO: should be moved to Systems/LSN.pwn module along with getter/setter impl.
+    BlockedLive[playerid] = false;
+    BlockedOOC[playerid] = false;
+    UsingMask[playerid] = false;
+
+    HasDice[playerid] = false;
+    HasDrink[playerid] = false;
+    HasFood[playerid] = false;
+    FakeGunLic[playerid] = false;
+    PlayerGroceries[playerid] = 0;
 }
 /*
 public OnPlayerPause(playerid)
