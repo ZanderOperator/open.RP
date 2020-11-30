@@ -257,7 +257,7 @@ static stock CreatePreviewObject(playerid)
 
 static stock GetPlayerExteriorSlots(playerid)
 {
-    switch (PlayerInfo[playerid][pDonateRank])
+    switch (PlayerVIP[playerid][pDonateRank])
     {
         case 1: return EXTERIOR_OBJS_VIP_BRONZE;
         case 2: return EXTERIOR_OBJS_VIP_SILVER;

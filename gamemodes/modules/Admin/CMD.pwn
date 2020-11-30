@@ -2231,33 +2231,29 @@ CMD:givepremium(playerid, params[])
 		#endif
 		
 		PlayerInfo[giveplayerid][pFreeWorks] 	= 25;
- 		PlayerInfo[giveplayerid][pDonateRank] 	= 1;
 		PlayerInfo[giveplayerid][pRespects] 	+= 10;
 		PlayerInfo[giveplayerid][pChangeTimes] 	+= 2;
 		PlayerInfo[giveplayerid][pLevel] 		+= 1;
-		PlayerInfo[giveplayerid][pDonatorVehPerms] 	= 2;
-		PlayerInfo[giveplayerid][pDonateTime]	= gettimestamp() + 2592000;
+
+		PlayerVIP[giveplayerid][pDonateRank] 	= 1;
+		PlayerVIP[giveplayerid][pDonatorVehPerms] 	= 2;
+		PlayerVIP[giveplayerid][pDonateTime]	= gettimestamp() + 2592000;
 
 		if(PlayerInfo[giveplayerid][pHouseKey] != INVALID_HOUSE_ID)
 			UpdatePremiumHouseFurSlots(giveplayerid, -1, PlayerInfo[ giveplayerid ][ pHouseKey ]);
 		if(PlayerInfo[giveplayerid][pBizzKey] != INVALID_BIZNIS_ID)
 			UpdatePremiumBizFurSlots(giveplayerid);
 		
-		mysql_fquery(g_SQL, "UPDATE accounts SET vipRank = '%d', vipTime = '%d', dvehperms = '%d' WHERE sqlid = '%d'",
-			PlayerInfo[giveplayerid][pDonateRank],
-			PlayerInfo[giveplayerid][pDonateTime],
-			PlayerInfo[giveplayerid][pDonatorVehPerms],
-			PlayerInfo[giveplayerid][pSQLID]
-		);
+		SavePlayerVIP(giveplayerid);
 
 		// MySQL Log
 		mysql_fquery(g_SQL, 
 			"INSERT INTO player_vips(player_id, admin_id, rank, created_at, expires_at) VALUES ('%d','%d','%d','%d','%d')",
 			PlayerInfo[giveplayerid][pSQLID],
 			PlayerInfo[playerid][pSQLID],
-			PlayerInfo[giveplayerid][pDonateRank],
+			PlayerVIP[giveplayerid][pDonateRank],
 			gettimestamp(),
-			PlayerInfo[giveplayerid][pDonateTime]
+			PlayerVIP[giveplayerid][pDonateTime]
 		);
 
 		#if defined MODULE_LOGS
@@ -2293,32 +2289,28 @@ CMD:givepremium(playerid, params[])
 		#endif
 
 		PlayerInfo[giveplayerid][pFreeWorks] 	= 25;
- 		PlayerInfo[giveplayerid][pDonateRank] 	= 2;
 		PlayerInfo[giveplayerid][pRespects] 	+= 20;
 		PlayerInfo[giveplayerid][pLevel] 		+= 2;
 		PlayerInfo[giveplayerid][pChangeTimes] 	+= 3;
-		PlayerInfo[giveplayerid][pDonatorVehPerms] 	= 2;
-		PlayerInfo[giveplayerid][pDonateTime]	= gettimestamp() + 2592000;
+
+		PlayerVIP[giveplayerid][pDonateRank] 	= 2;
+		PlayerVIP[giveplayerid][pDonatorVehPerms] 	= 2;		
+		PlayerVIP[giveplayerid][pDonateTime]	= gettimestamp() + 2592000;
 
 		if(PlayerInfo[giveplayerid][pHouseKey] != INVALID_HOUSE_ID)
 			UpdatePremiumHouseFurSlots(giveplayerid, -1, PlayerInfo[ giveplayerid ][ pHouseKey ]);
 		if(PlayerInfo[giveplayerid][pBizzKey] != INVALID_BIZNIS_ID)
 			UpdatePremiumBizFurSlots(giveplayerid);
 		
-		mysql_fquery(g_SQL, "UPDATE accounts SET vipRank = '%d', vipTime = '%d', dvehperms = '%d' WHERE sqlid = '%d'",
-			PlayerInfo[giveplayerid][pDonateRank],
-			PlayerInfo[giveplayerid][pDonateTime],
-			PlayerInfo[giveplayerid][pDonatorVehPerms],
-			PlayerInfo[giveplayerid][pSQLID]
-		);
+		SavePlayerVIP(giveplayerid);
 
 		mysql_fquery(g_SQL, 
 			"INSERT INTO player_vips(player_id, admin_id, rank, created_at, expires_at) VALUES ('%d','%d','%d','%d','%d')",
 			PlayerInfo[giveplayerid][pSQLID],
 			PlayerInfo[playerid][pSQLID],
-			PlayerInfo[giveplayerid][pDonateRank],
+			PlayerVIP[giveplayerid][pDonateRank],
 			gettimestamp(),
-			PlayerInfo[giveplayerid][pDonateTime]
+			PlayerVIP[giveplayerid][pDonateTime]
 		);
 
 		#if defined MODULE_LOGS
@@ -2354,14 +2346,15 @@ CMD:givepremium(playerid, params[])
 		#endif
 
 		PlayerInfo[giveplayerid][pFreeWorks] 	= 30;
-		PlayerInfo[giveplayerid][pDonateRank] 	= 3;
 		PlayerInfo[giveplayerid][pRespects] 	+= 30;
 		PlayerInfo[giveplayerid][pLevel] 		+= 3;
 		PlayerInfo[giveplayerid][pChangeTimes] 	+= 5;
 		if(PlayerInfo[giveplayerid][pWarns] >= 1)
 			PlayerInfo[giveplayerid][pWarns] 		-= 1;
-		PlayerInfo[giveplayerid][pDonatorVehPerms] 	= 2;	
-		PlayerInfo[giveplayerid][pDonateTime]	= gettimestamp() + 2592000;
+		
+		PlayerVIP[giveplayerid][pDonateRank] 		= 3;
+		PlayerVIP[giveplayerid][pDonatorVehPerms] 	= 2;	
+		PlayerVIP[giveplayerid][pDonateTime]		= gettimestamp() + 2592000;
 
 		PlayerInfo[giveplayerid][pCarLic] 	= 1;
 		PlayerInfo[giveplayerid][pFlyLic] 	= 1;
@@ -2374,20 +2367,15 @@ CMD:givepremium(playerid, params[])
 		if(PlayerInfo[giveplayerid][pBizzKey] != INVALID_BIZNIS_ID)
 			UpdatePremiumBizFurSlots(giveplayerid);
 		
-		mysql_fquery(g_SQL, "UPDATE accounts SET vipRank = '%d', vipTime = '%d', dvehperms = '%d' WHERE sqlid = '%d'",
-			PlayerInfo[giveplayerid][pDonateRank],
-			PlayerInfo[giveplayerid][pDonateTime],
-			PlayerInfo[giveplayerid][pDonatorVehPerms],
-			PlayerInfo[giveplayerid][pSQLID]
-		);
+		SavePlayerVIP(giveplayerid);
 
 		mysql_fquery(g_SQL, 
 			"INSERT INTO player_vips(player_id, admin_id, rank, created_at, expires_at) VALUES ('%d','%d','%d','%d','%d')",
 			PlayerInfo[giveplayerid][pSQLID],
 			PlayerInfo[playerid][pSQLID],
-			PlayerInfo[giveplayerid][pDonateRank],
+			PlayerVIP[giveplayerid][pDonateRank],
 			gettimestamp(),
-			PlayerInfo[giveplayerid][pDonateTime]
+			PlayerVIP[giveplayerid][pDonateTime]
 		);
 
 		#if defined MODULE_LOGS
@@ -2424,13 +2412,14 @@ CMD:givepremium(playerid, params[])
 		#endif
 
 		PlayerInfo[giveplayerid][pFreeWorks] 		= 50;
-		PlayerInfo[giveplayerid][pDonateRank] 		= 4;
 		PlayerInfo[giveplayerid][pRespects] 		+= 50;
 		PlayerInfo[giveplayerid][pLevel] 			+= 4;
 		PlayerInfo[giveplayerid][pChangeTimes] 		+= 7;
 		PlayerInfo[giveplayerid][pWarns]			= 0;
-		PlayerInfo[giveplayerid][pDonatorVehPerms] 	= 2;
-		PlayerInfo[giveplayerid][pDonateTime]		= gettimestamp() + 3888000; // 45 dana
+
+		PlayerVIP[giveplayerid][pDonateRank] 		= 4;
+		PlayerVIP[giveplayerid][pDonatorVehPerms] 	= 2;
+		PlayerVIP[giveplayerid][pDonateTime]		= gettimestamp() + 3888000; // 45 dana
 
 		PlayerInfo[giveplayerid][pCarLic] 	= 1;
 		PlayerInfo[giveplayerid][pFlyLic] 	= 1;
@@ -2443,20 +2432,15 @@ CMD:givepremium(playerid, params[])
 		if(PlayerInfo[giveplayerid][pBizzKey] != INVALID_BIZNIS_ID)
 			UpdatePremiumBizFurSlots(giveplayerid);
 		
-		mysql_fquery(g_SQL, "UPDATE accounts SET vipRank = '%d', vipTime = '%d', dvehperms = '%d' WHERE sqlid = '%d'",
-			PlayerInfo[giveplayerid][pDonateRank],
-			PlayerInfo[giveplayerid][pDonateTime],
-			PlayerInfo[giveplayerid][pDonatorVehPerms],
-			PlayerInfo[giveplayerid][pSQLID]
-		);
+		SavePlayerVIP(giveplayerid);
 
 		mysql_fquery(g_SQL, 
 			"INSERT INTO player_vips(player_id, admin_id, rank, created_at, expires_at) VALUES ('%d','%d','%d','%d','%d')",
 			PlayerInfo[giveplayerid][pSQLID],
 			PlayerInfo[playerid][pSQLID],
-			PlayerInfo[giveplayerid][pDonateRank],
+			PlayerVIP[giveplayerid][pDonateRank],
 			gettimestamp(),
-			PlayerInfo[giveplayerid][pDonateTime]
+			PlayerVIP[giveplayerid][pDonateTime]
 		);
 
 		#if defined MODULE_LOGS
@@ -3085,7 +3069,7 @@ CMD:setstat(playerid, params[])
   		}
 		case 10:
 		{
-		    PlayerInfo[giveplayerid][pDonateRank] = amount;
+		    PlayerVIP[giveplayerid][pDonateRank] = amount;
 			format(globalstring, sizeof(globalstring), "   Korisnik je sada Premium Account Level %d.", amount);
   		}
 		case 11:
@@ -3165,7 +3149,7 @@ CMD:setstat(playerid, params[])
 		}
 		case 22:
 		{
-		    PlayerInfo[giveplayerid][pDonateRank] = amount;
+		    PlayerVIP[giveplayerid][pDonateRank] = amount;
 		    format(globalstring, sizeof(globalstring), "   Korisnikov DonateRank je sada %d", amount);
 		}
 		case 23:

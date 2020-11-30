@@ -49,7 +49,7 @@ CMD:enterspray( playerid, params[] ) {
 	pnscolor1 = VehicleInfo[vehicleid][vColor1];
 	pnscolor2 = VehicleInfo[vehicleid][vColor2];
 	
-	if(PlayerInfo[playerid][pDonateRank] != 0)
+	if(PlayerVIP[playerid][pDonateRank] != 0)
 		price = 0;
 		
 	if( AC_GetPlayerMoney( playerid ) < price ) return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate dovoljno novca( %s ).", FormatNumber(price));

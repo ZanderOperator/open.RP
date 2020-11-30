@@ -3891,7 +3891,7 @@ CMD:speakerphone(playerid, params[])
 CMD:hangup(playerid, params[])
 {
 	if( !Bit1_Get( gr_CanHangup, playerid ) ) return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR,"Ne razgovaras na telefon.");
-	if(PlayerInfo[playerid][pDonateRank] == 0)
+	if(PlayerVIP[playerid][pDonateRank] == 0)
 	{
 		if(StartCallTimestamp[playerid] != 0)
 		{

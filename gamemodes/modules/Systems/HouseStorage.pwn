@@ -166,7 +166,7 @@ GetRackLimit(playerid)
 {
     // TODO: delete this
     /*
-    switch (PlayerInfo[playerid][pDonateRank])
+    switch (PlayerVIP[playerid][pDonateRank])
     {
         case 0: // normalan igrac
             return 1;
@@ -180,7 +180,7 @@ GetRackLimit(playerid)
             return 5;
     }
     */
-    return (PlayerInfo[playerid][pDonateRank] + 1);
+    return (PlayerVIP[playerid][pDonateRank] + 1);
 }
 
 stock LoadHStorage()

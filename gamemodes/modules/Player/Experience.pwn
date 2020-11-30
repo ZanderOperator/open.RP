@@ -80,11 +80,11 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 					#endif
 					
 					PlayerInfo[playerid][pFreeWorks] 	= 25;
-					PlayerInfo[playerid][pDonateRank] 	= 1;
+					PlayerVIP[playerid][pDonateRank] 	= 1;
 					PlayerInfo[playerid][pRespects] 	+= 10;
 					PlayerInfo[playerid][pChangeTimes] 	+= 2;
 					PlayerInfo[playerid][pLevel] 		+= 1;
-					PlayerInfo[playerid][pDonateTime]	= gettimestamp() + 2592000;
+					PlayerVIP[playerid][pDonateTime]	= gettimestamp() + 2592000;
 					BudgetToPlayerMoney(playerid, 15000); // budjet - igrac
 					
 					if(PlayerInfo[playerid][pHouseKey] != INVALID_HOUSE_ID)
@@ -92,11 +92,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 					if(PlayerInfo[playerid][pBizzKey] != INVALID_BIZNIS_ID)
 						UpdatePremiumBizFurSlots(playerid);
 					
-					mysql_fquery(g_SQL, "UPDATE accounts SET vipRank = '%d', vipTime = '%d' WHERE sqlid = '%d'",
-						PlayerInfo[playerid][pDonateRank],
-						PlayerInfo[playerid][pDonateTime],
-						PlayerInfo[playerid][pSQLID]
-					);					
+					SavePlayerVIP(playerid);					
 					
 					// MySQL Log
 					mysql_fquery(g_SQL, 
@@ -104,9 +100,9 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 							VALUES ('%d','%d','%d','%d','%d')",
 						PlayerInfo[playerid][pSQLID],
 						PlayerInfo[playerid][pSQLID],
-						PlayerInfo[playerid][pDonateRank],
+						PlayerVIP[playerid][pDonateRank],
 						gettimestamp(),
-						PlayerInfo[playerid][pDonateTime]
+						PlayerVIP[playerid][pDonateTime]
 					);
 					
 					SendFormatMessage(playerid, MESSAGE_TYPE_SUCCESS, "Iskoristili ste %d EXP-a za Premium Bronze. Preostalo: %d EXP", PREMIUM_BRONZE_EXP, ExpInfo[playerid][ePoints]);
@@ -138,11 +134,11 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 					#endif
 					
 					PlayerInfo[playerid][pFreeWorks] 	= 25;
-					PlayerInfo[playerid][pDonateRank] 	= 2;
+					PlayerVIP[playerid][pDonateRank] 	= 2;
 					PlayerInfo[playerid][pRespects] 	+= 20;
 					PlayerInfo[playerid][pLevel] 		+= 2;
 					PlayerInfo[playerid][pChangeTimes] 	+= 3;
-					PlayerInfo[playerid][pDonateTime]	= gettimestamp() + 2592000;
+					PlayerVIP[playerid][pDonateTime]	= gettimestamp() + 2592000;
 					BudgetToPlayerMoney(playerid, 30000); // budjet - igrac
 					
 					if(PlayerInfo[playerid][pHouseKey] != INVALID_HOUSE_ID)
@@ -150,11 +146,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 					if(PlayerInfo[playerid][pBizzKey] != INVALID_BIZNIS_ID)
 						UpdatePremiumBizFurSlots(playerid);
 					
-					mysql_fquery(g_SQL, "UPDATE accounts SET vipRank = '%d', vipTime = '%d' WHERE sqlid = '%d'",
-						PlayerInfo[playerid][pDonateRank],
-						PlayerInfo[playerid][pDonateTime],
-						PlayerInfo[playerid][pSQLID]
-					);
+					SavePlayerVIP(playerid);
 					
 					// MySQL Log
 					mysql_fquery(g_SQL, 
@@ -162,9 +154,9 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 							VALUES ('%d','%d','%d','%d','%d')",
 						PlayerInfo[playerid][pSQLID],
 						PlayerInfo[playerid][pSQLID],
-						PlayerInfo[playerid][pDonateRank],
+						PlayerVIP[playerid][pDonateRank],
 						gettimestamp(),
-						PlayerInfo[playerid][pDonateTime]
+						PlayerVIP[playerid][pDonateTime]
 					);
 					
 					SendFormatMessage(playerid, MESSAGE_TYPE_SUCCESS, "Iskoristili ste %d EXP-a za Premium Silver. Preostalo: %d EXP", PREMIUM_SILVER_EXP, ExpInfo[playerid][ePoints]);
@@ -196,11 +188,11 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 					#endif
 					
 					PlayerInfo[playerid][pFreeWorks] 	= 30;
-					PlayerInfo[playerid][pDonateRank] 	= 3;
+					PlayerVIP[playerid][pDonateRank] 	= 3;
 					PlayerInfo[playerid][pRespects] 	+= 30;
 					PlayerInfo[playerid][pLevel] 		+= 3;
 					PlayerInfo[playerid][pChangeTimes] 	+= 5;
-					PlayerInfo[playerid][pDonateTime]	= gettimestamp() + 2592000;
+					PlayerVIP[playerid][pDonateTime]	= gettimestamp() + 2592000;
 					BudgetToPlayerMoney(playerid, 40000); // budjet - igrac
 					
 					PlayerInfo[playerid][pCarLic] 	= 1;
@@ -213,11 +205,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 					if(PlayerInfo[playerid][pBizzKey] != INVALID_BIZNIS_ID)
 						UpdatePremiumBizFurSlots(playerid);
 					
-					mysql_fquery(g_SQL,"UPDATE accounts SET vipRank = '%d', vipTime = '%d' WHERE sqlid = '%d'",
-						PlayerInfo[playerid][pDonateRank],
-						PlayerInfo[playerid][pDonateTime],
-						PlayerInfo[playerid][pSQLID]
-					);
+					SavePlayerVIP(playerid);
 					
 					// MySQL Log
 					mysql_fquery(g_SQL, 
@@ -225,9 +213,9 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 							VALUES ('%d','%d','%d','%d','%d')",
 						PlayerInfo[playerid][pSQLID],
 						PlayerInfo[playerid][pSQLID],
-						PlayerInfo[playerid][pDonateRank],
+						PlayerVIP[playerid][pDonateRank],
 						gettimestamp(),
-						PlayerInfo[playerid][pDonateTime]
+						PlayerVIP[playerid][pDonateTime]
 					);
 					
 					SendFormatMessage(playerid, MESSAGE_TYPE_SUCCESS, "Iskoristili ste %d EXP-a za Premium Gold. Preostalo: %d EXP", PREMIUM_GOLD_EXP, ExpInfo[playerid][ePoints]);

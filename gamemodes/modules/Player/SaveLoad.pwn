@@ -1,5 +1,7 @@
 #include <YSI_Coding\y_hooks>
 
+#include "modules/Player\SaveLoad/player_vip_status.pwn"
+
 /*
 	##     ##    ###    ########   ######  
 	##     ##   ## ##   ##     ## ##    ## 
@@ -272,10 +274,6 @@ public LoadPlayerData(playerid)
 		cache_get_value_name_int(0, "helper"		, PlayerInfo[playerid][pTempRank][1]);
 		cache_get_value_name_int(0, "playaWarns"	, PlayerInfo[playerid][pWarns]);
 
-		cache_get_value_name_int(0, "vipRank"		, PlayerInfo[playerid][pDonateRank]);
-		cache_get_value_name_int(0,	"vipTime"		, PlayerInfo[playerid][pDonateTime]);
-		cache_get_value_name_int(0,	"donateveh"		, PlayerInfo[playerid][pDonatorVehicle]);
-		cache_get_value_name_int(0,	"dvehperms"		, PlayerInfo[playerid][pDonatorVehPerms]);
 		cache_get_value_name_int(0, "muted"			, PlayerInfo[playerid][pMuted]);
 		cache_get_value_name_int(0, "respects"		, PlayerInfo[playerid][pRespects]);
 
@@ -427,6 +425,9 @@ public LoadPlayerData(playerid)
 			KickMessage(playerid);
 			return 1;
 		}
+		// Player VIP status
+		LoadPlayerVIP(playerid);
+
 		// Weapons & Drugs
 		LoadPlayerWeaponSettings(playerid);
 		AC_LoadPlayerWeapons(playerid);
@@ -684,19 +685,16 @@ SafeSpawnPlayer(playerid)
 		PlayerNewUser_Set(playerid, true);
 		
 	// Donacije
-	if( PlayerInfo[playerid][pDonateTime] < gettimestamp() && PlayerInfo[playerid][pDonateRank] > 0 ) {
+	if( PlayerVIP[playerid][pDonateTime] < gettimestamp() && PlayerVIP[playerid][pDonateRank] > 0 ) {
 		SendClientMessage( playerid, COLOR_ORANGE, "[CoA Server]: Vrijeme vaseg Premium VIP paketa je isteklo! Ukoliko zelite produziti VIP onda donirajte opet!");
-		PlayerInfo[playerid][pDonateTime] = 0;
-		PlayerInfo[playerid][pDonateRank] = 0;
+		PlayerVIP[playerid][pDonateTime] = 0;
+		PlayerVIP[playerid][pDonateRank] = 0;
 		if(PlayerInfo[playerid][pBizzKey] != INVALID_BIZNIS_ID)
 			UpdatePremiumBizFurSlots(playerid);
 		if(PlayerInfo[playerid][pHouseKey] != INVALID_HOUSE_ID)
 			UpdatePremiumHouseFurSlots(playerid, -1, PlayerInfo[ playerid ][ pHouseKey ]);
 
-		mysql_fquery(g_SQL,
-		 	"UPDATE accounts SET vipRank = '0', vipTime = '0' WHERE sqlid = '%d'",
-		 	PlayerInfo[ playerid ][ pSQLID ]
-		);
+		SavePlayerVIP(playerid);
 	}
 	if( isnull(PlayerInfo[playerid][pSecQuestAnswer]) && isnull(PlayerInfo[playerid][pEmail]) )
 	{
@@ -746,6 +744,7 @@ stock SavePlayerData(playerid)
     if( !SafeSpawned[playerid] )	
 		return 1;
 	
+	SavePlayerVIP(playerid);
 	SavePlayerCredit(playerid);
 	SavePlayerExperience(playerid);
 	UpdatePlayerMobile(playerid);

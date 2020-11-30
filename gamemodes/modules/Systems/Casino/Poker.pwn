@@ -2180,7 +2180,7 @@ GetPokerTableLimit(playerid)
 		if(HouseInfo[houseid][hOwnerID] == PlayerInfo[playerid][pSQLID])
 		{
 			new tableCount = CountHousePokerTables(houseid);
-			switch(PlayerInfo[playerid][pDonateRank])
+			switch(PlayerVIP[playerid][pDonateRank])
 			{
 				case 0:
 				{

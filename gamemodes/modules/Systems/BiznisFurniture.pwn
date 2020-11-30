@@ -988,7 +988,7 @@ static stock GetFurnitureObjectModel(playerid, index)
 
 static stock GetPlayerFurnitureSlots(playerid)
 {
-    switch (PlayerInfo[playerid][pDonateRank])
+    switch (PlayerVIP[playerid][pDonateRank])
     {
         case 1: return BIZZ_FURNITURE_VIP_BRONZE_OBJCTS;
         case 2: return BIZZ_FURNITURE_VIP_SILVER_OBJCTS;

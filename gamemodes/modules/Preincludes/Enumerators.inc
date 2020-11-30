@@ -24,12 +24,8 @@ enum E_PLAYER_DATA
 	pTempRank[2],
 	pAdminHours,
 	pHelper,
-	pDonateRank,
-	pDonateTime,
-	pDonatorVehicle,
-	pDonatorVehPerms,
-	pConnectTime,
 	pTempConnectTime,
+	pConnectTime,
 	pMuted,
 	pRespects,
 	pTeam,
@@ -194,6 +190,15 @@ enum E_PLAYER_DATA
 	pSkillTransporter
 }
 new PlayerInfo[ MAX_PLAYERS ][ E_PLAYER_DATA ];
+
+enum E_VIP_INFO
+{
+	pDonateRank,
+	pDonateTime,
+	pDonatorVehicle,
+	pDonatorVehPerms,
+}
+new PlayerVIP[ MAX_PLAYERS ][ E_VIP_INFO ];
 
 enum E_CREDIT_INFO
 {

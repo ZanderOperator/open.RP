@@ -251,15 +251,15 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 				}
 			}
 			// Set FreeWorks
-			if(PlayerInfo[playerid][pDonateRank] == 0)
+			if(PlayerVIP[playerid][pDonateRank] == 0)
 				PlayerInfo[playerid][pFreeWorks] = NORMAL_FREE_WORKS;	
-			else if(PlayerInfo[playerid][pDonateRank] == 1)
+			else if(PlayerVIP[playerid][pDonateRank] == 1)
 				PlayerInfo[playerid][pFreeWorks] = BRONZE_DONATOR_FREE_WORKS;
-			else if(PlayerInfo[playerid][pDonateRank] == 2)
+			else if(PlayerVIP[playerid][pDonateRank] == 2)
 				PlayerInfo[playerid][pFreeWorks] = SILVER_DONATOR_FREE_WORKS;
-			else if(PlayerInfo[playerid][pDonateRank] == 3)
+			else if(PlayerVIP[playerid][pDonateRank] == 3)
 				PlayerInfo[playerid][pFreeWorks] = GOLD_DONATOR_FREE_WORKS;
-			else if(PlayerInfo[playerid][pDonateRank] == 4)
+			else if(PlayerVIP[playerid][pDonateRank] == 4)
 				PlayerInfo[playerid][pFreeWorks] = PLATINUM_DONATOR_FREE_WORKS;
 				
 			return 1;
@@ -276,15 +276,15 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 					if( PlayerInfo[ playerid ][ pLevel ] < 3 ) 
 						return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Samo igraci level 3+ mogu biti lopovi.");
 					PlayerInfo[ playerid ][ pJob ] 			= 9;
-					if(PlayerInfo[playerid][pDonateRank] == 0)
+					if(PlayerVIP[playerid][pDonateRank] == 0)
 						PlayerInfo[playerid][pFreeWorks] = NORMAL_FREE_WORKS;	
-					else if(PlayerInfo[playerid][pDonateRank] == 1)
+					else if(PlayerVIP[playerid][pDonateRank] == 1)
 						PlayerInfo[playerid][pFreeWorks] = BRONZE_DONATOR_FREE_WORKS;
-					else if(PlayerInfo[playerid][pDonateRank] == 2)
+					else if(PlayerVIP[playerid][pDonateRank] == 2)
 						PlayerInfo[playerid][pFreeWorks] = SILVER_DONATOR_FREE_WORKS;
-					else if(PlayerInfo[playerid][pDonateRank] == 3)
+					else if(PlayerVIP[playerid][pDonateRank] == 3)
 						PlayerInfo[playerid][pFreeWorks] = GOLD_DONATOR_FREE_WORKS;
-					else if(PlayerInfo[playerid][pDonateRank] == 4)
+					else if(PlayerVIP[playerid][pDonateRank] == 4)
 						PlayerInfo[playerid][pFreeWorks] = PLATINUM_DONATOR_FREE_WORKS;
 					SendClientMessage( playerid, COLOR_RED, "[ ! ] Zaposlili ste se kao lopov!");
 				}
@@ -317,7 +317,7 @@ CMD:quitjob(playerid, params[])
 {
 	if(PlayerInfo[playerid][pJob] == 0) return SendClientMessage( playerid, COLOR_RED, "Nemate posao!");
 	if(PlayerInfo[playerid][pFreeWorks] < 15) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Pricekajte PayDay i NE radite ture da mozete dati otkaz na svome poslu!");
-	switch( PlayerInfo[playerid][pDonateRank]) {
+	switch( PlayerVIP[playerid][pDonateRank]) {
 		case 0: {
 			if(PlayerInfo[playerid][pContractTime] >= 5) {
 				SendMessage(playerid, MESSAGE_TYPE_INFO, "Vec ste ispunili vas 5 sat ugovora, i dali ste otkaz na poslu.");

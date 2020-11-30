@@ -81,7 +81,7 @@ hook OnPlayerCommandReceived(playerid, cmdtext[], e_COMMAND_ERRORS:success)
 */
 stock SetPlayerAFKLimit(playerid)
 {
-	switch(PlayerInfo[playerid][pDonateRank])
+	switch(PlayerVIP[playerid][pDonateRank])
 	{
 	    case 1: MaxPlayerAFK[playerid] = 12;
 	    case 2: MaxPlayerAFK[playerid] = 13;

@@ -1536,7 +1536,7 @@ hook OnPlayerClickPlayerTD(playerid, PlayerText:playertextid)
 				new cid = TPInfo[ playerid ][ tID ];
 				if(cid == -1) return SendErrorMessage(playerid, "Dogodila se greska pri kupnji. Izadjite iz tuning menija sa ESC te pokusajte ponovno.");
 				
-				if(PlayerInfo[playerid][pDonateRank] < 2)
+				if(PlayerVIP[playerid][pDonateRank] < 2)
 					if( AC_GetPlayerMoney( playerid ) < cInfo[ TPInfo[ playerid ][ tID ] ][ cPrice ] ) return SendErrorMessage( playerid, "Nemate dovoljno novaca.");
 
 		        RemoveVehicleComponent( vehicleid, cInfo[ TPInfo[ playerid ][ tID ] ][ cID ] );
@@ -1547,7 +1547,7 @@ hook OnPlayerClickPlayerTD(playerid, PlayerText:playertextid)
 				
 				new vehname[36];
 				strunpack( vehname, Model_Name(VehicleInfo[vehicleid][vModel]) );
-				if(PlayerInfo[playerid][pDonateRank] > 1)
+				if(PlayerVIP[playerid][pDonateRank] > 1)
 					SendFormatMessage(playerid, MESSAGE_TYPE_SUCCESS, "Besplatno ste ugradili %s na %s.", cInfo[ cid ][ cName ], vehname);
 				else
 				{
@@ -1557,7 +1557,7 @@ hook OnPlayerClickPlayerTD(playerid, PlayerText:playertextid)
 			}
 			else if( TPInfo[ playerid ][ tPaintjob ] == true ) {
 			
-				if(PlayerInfo[playerid][pDonateRank] < 2)
+				if(PlayerVIP[playerid][pDonateRank] < 2)
 					if( AC_GetPlayerMoney( playerid ) < pjInfo[ TPInfo[ playerid ][ tID ] ][ pPrice ] ) return SendErrorMessage( playerid, "Nemate dovoljno novaca.");
 			
 			    new paintid = TPInfo[ playerid ][ tID ];
@@ -1572,7 +1572,7 @@ hook OnPlayerClickPlayerTD(playerid, PlayerText:playertextid)
 				
 				new vehname[36];
 				strunpack( vehname, Model_Name(VehicleInfo[vehicleid][vModel]) );
-				if(PlayerInfo[playerid][pDonateRank] > 1)
+				if(PlayerVIP[playerid][pDonateRank] > 1)
 					SendFormatMessage(playerid, MESSAGE_TYPE_SUCCESS, "Besplatno ste ugradili PaintJob na %s.", vehname);
 				else
 				{
