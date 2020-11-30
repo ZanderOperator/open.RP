@@ -165,13 +165,13 @@ hook OnFSelectionResponse(playerid, fselectid, modelid, response)
 			multiple = _RentPrice[playerid];
 
 		price *= _RentPrice[playerid];
-		if(PlayerInfo[playerid][pDonateRank] == 0)
+		if(PlayerVIP[playerid][pDonateRank] == 0)
 			price = RentVehInfo[index][rvPrice] * multiple;
-		else if	(PlayerInfo[playerid][pDonateRank] == 1)
+		else if	(PlayerVIP[playerid][pDonateRank] == 1)
 			price = RentVehInfo[index][rvPrice] * multiple / 4;
-		else if	(PlayerInfo[playerid][pDonateRank] == 2)
+		else if	(PlayerVIP[playerid][pDonateRank] == 2)
 			price = RentVehInfo[index][rvPrice] * multiple / 2;
-		else if	(PlayerInfo[playerid][pDonateRank] == 3 || PlayerInfo[playerid][pDonateRank] == 4)
+		else if	(PlayerVIP[playerid][pDonateRank] == 3 || PlayerVIP[playerid][pDonateRank] == 4)
 			price = 0;
 			
 		if(AC_GetPlayerMoney(playerid) < price) return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "Rent ovog vozila kosta %s!", FormatNumber(price));
@@ -191,13 +191,13 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 			new price = RentVehInfo[listitem][rvPrice],
 				multiple = _RentPrice[playerid];
 			price *= _RentPrice[playerid];
-			if(PlayerInfo[playerid][pDonateRank] == 0)
+			if(PlayerVIP[playerid][pDonateRank] == 0)
 				price = RentVehInfo[listitem][rvPrice] * multiple;
-			else if	(PlayerInfo[playerid][pDonateRank] == 1)
+			else if	(PlayerVIP[playerid][pDonateRank] == 1)
 				price = RentVehInfo[listitem][rvPrice] * multiple / 4;
-			else if	(PlayerInfo[playerid][pDonateRank] == 2)
+			else if	(PlayerVIP[playerid][pDonateRank] == 2)
 				price = RentVehInfo[listitem][rvPrice] * multiple / 2;
-			else if	(PlayerInfo[playerid][pDonateRank] == 3 || PlayerInfo[playerid][pDonateRank] == 4)
+			else if	(PlayerVIP[playerid][pDonateRank] == 3 || PlayerVIP[playerid][pDonateRank] == 4)
 				price = 0;
 			
 			if(AC_GetPlayerMoney(playerid) < price) return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "Rent ovog vozila kosta %d$!", price);

@@ -300,10 +300,10 @@ GivePlayerPayCheck(playerid)
 		strcat(p_dialog,f_dialog, sizeof(p_dialog));
 		profit += PlayerInfo[playerid][pPayDayMoney];
 	}
-	if(PlayerInfo[playerid][pDonateRank] > 0)
+	if(PlayerVIP[playerid][pDonateRank] > 0)
 	{
 		new vipmoney = 0;
-		switch(PlayerInfo[playerid][pDonateRank])
+		switch(PlayerVIP[playerid][pDonateRank])
 		{
 			case 1,2,3: vipmoney = 200;
 			case 4: vipmoney = 300;
@@ -393,7 +393,7 @@ GivePlayerPayCheck(playerid)
 
 	PlayerInfo[playerid][pConnectTime]++; 		// sati igranja
 
-	switch(PlayerInfo[playerid][pDonateRank])
+	switch(PlayerVIP[playerid][pDonateRank])
 	{
 		case 0: PlayerInfo[playerid][pFreeWorks] = 15;
 		case 1: PlayerInfo[playerid][pFreeWorks] = 25;

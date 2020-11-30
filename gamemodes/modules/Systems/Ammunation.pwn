@@ -218,11 +218,11 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
             {
                 7, 5, 3, 1, 1
             };
-            new donate_rank = PlayerInfo[playerid][pDonateRank];
+            new donate_rank = PlayerVIP[playerid][pDonateRank];
             // Postavljanje igracu zabranu na X dana kupovanja
             PlayerAmmunationBuyTime(playerid, ammu_cooldown_time[donate_rank % sizeof(ammu_cooldown_time)]);
             /* TODO: delete this once understood code above. Just make sure modulo by is equal to the size of the array.
-            switch (PlayerInfo[playerid][pDonateRank])
+            switch (PlayerVIP[playerid][pDonateRank])
             {
                 case 0: PlayerAmmunationBuyTime(playerid, 7);
                 case 1: PlayerAmmunationBuyTime(playerid, 5); // Postavljanje igracu zabranu na 7 dana kupovanja

@@ -973,7 +973,7 @@ stock LevelUp(playerid)
 		}
 
 		PlayerInfo[playerid][pLevel]++;
-		if(PlayerInfo[playerid][pDonateRank] > 0)
+		if(PlayerVIP[playerid][pDonateRank] > 0)
 		{
 			PlayerInfo[playerid][pRespects] -= expamount;
 			new total = PlayerInfo[playerid][pRespects];
@@ -1206,7 +1206,7 @@ stock ChangePlayerName(playerid, newname[], type, bool:admin_cn = false)
 	SavePlayerData(playerid);
 	
 	if(admin_cn == (false)) {
-		if( !PlayerInfo[ playerid ][ pDonateRank ] )
+		if( !PlayerVIP[playerid][pDonateRank] )
 			PlayerToBudgetMoney( playerid, 10000);
 	}
 	if(type == 1)
@@ -1221,7 +1221,7 @@ stock ChangePlayerName(playerid, newname[], type, bool:admin_cn = false)
 	
 	// Poruka
 	va_SendClientMessage( playerid, COLOR_RED, "[ ! ] Uspjesno ste promjenili ime u %s, ponovno se logirajte s novim imenom!", newname);
-	if(PlayerInfo[playerid][pDonateRank] > 0)
+	if(PlayerVIP[playerid][pDonateRank] > 0)
 		va_SendClientMessage( playerid, COLOR_RED, "[ ! ] Preostalo Vam je %d besplatnih changenameova.", PlayerInfo[playerid][pChangeTimes]);
 	KickMessage(playerid);
 	return 1;
@@ -1690,7 +1690,7 @@ stock ShowPlayerStats(playerid, targetid)
     format(motd, sizeof(motd),""COL_WHITE"Posao: [%s] | Ugovor: [%d/%d] | Uhicen: [%d] | Profit po PayDayu: [$%d] | Organizacija: [%s] | Rank u organizaciji: [%s (%d)] | Hunger: [%.2f]\n",
 		ReturnJob(PlayerInfo[targetid][pJob]),
 		PlayerInfo[targetid][pContractTime],
-		PlayerInfo[targetid][pDonateRank] ? 1 : 5,
+		PlayerVIP[targetid][pDonateRank] ? 1 : 5,
 		PlayerInfo[targetid][pArrested],
 		PlayerInfo[targetid][pPayDayMoney],
 		ReturnPlayerFactionName(targetid),
@@ -1708,7 +1708,7 @@ stock ShowPlayerStats(playerid, targetid)
 	);
 	strcat(pDialog,motd, sizeof(pDialog));
 
-	switch( PlayerInfo[targetid][pDonateRank] ) {
+	switch( PlayerVIP[targetid][pDonateRank] ) {
 		case 1: format(tmpString, 20, "Bronze");
 		case 2:	format(tmpString, 20, "Silver");
 		case 3:	format(tmpString, 20, "Gold");
@@ -1731,8 +1731,8 @@ stock ShowPlayerStats(playerid, targetid)
 		PlayerInfo[targetid][pMuscle],
 		PlayerInfo[targetid][pWarns],
 		( 60 - PlayerInfo[targetid][pPayDay] ),
-		PlayerInfo[targetid][pDonatorVehicle],
-		PlayerInfo[targetid][pDonatorVehPerms],
+		PlayerVIP[targetid][pDonatorVehicle],
+		PlayerVIP[targetid][pDonatorVehPerms],
 		PlayerInfo[targetid][pMobileCost]
 	);
     strcat(pDialog,motd, sizeof(pDialog));

@@ -1003,7 +1003,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 			new
 				money = Bit8_Get( gr_ObjectPrice, playerid );
 
-   			if(PlayerInfo[playerid][pDonateRank] > 1)
+   			if(PlayerVIP[playerid][pDonateRank] > 1)
 	   		money = 0;
 			if( AC_GetPlayerMoney(playerid) < money ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate toliko novca!");
 			
@@ -1564,7 +1564,7 @@ CMD:objects(playerid, params[])
 	        ShowPlayerDialog(playerid, DIALOG_NEWCLOTHING, DIALOG_STYLE_LIST, \
 	        "{FF0000}Sistem objekata - Izaberite slot", tmpString, "Izaberi", "Izadji");
 		}
-		else if(PlayerInfo[ playerid ][ pDonateRank ] > 0 ) // Premium shop
+		else if(PlayerVIP[playerid][pDonateRank] > 0 ) // Premium shop
 		{
 	        for(new x;x<MAX_CUSTOMIZED_OBJECTS;x++)
 	        {

@@ -193,7 +193,7 @@ stock DropPlayerWeapons(playerid, Float:x, Float:y)
 /*
 stock DropPlayerMoney(playerid) // Na Death Modeu
 {
-	if(PlayerInfo[playerid][pDonateRank] > 1) return 0;
+	if(PlayerVIP[playerid][pDonateRank] > 1) return 0;
 	new money = AC_GetPlayerMoney(playerid);
 	if(money > 0)
 	{

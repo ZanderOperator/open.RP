@@ -1109,7 +1109,7 @@ CMD:pm(playerid, params[])
 
 CMD:blockpm(playerid,params[])
 {
-    if( !PlayerInfo[playerid][pAdmin] && !PlayerInfo[playerid][pDonateRank] && !PlayerInfo[playerid][pLeader] ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nisi ovlasten za koristenje ove komande!");
+    if( !PlayerInfo[playerid][pAdmin] && !PlayerVIP[playerid][pDonateRank] && !PlayerInfo[playerid][pLeader] ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nisi ovlasten za koristenje ove komande!");
 
 	if( Bit1_Get( gr_BlockedPM, playerid ) ) {
 		Bit1_Set( gr_BlockedPM, playerid, false );
@@ -2565,12 +2565,12 @@ CMD:changename(playerid, params[])
 	{
 		case 1:
 		{
-			if( PlayerInfo[ playerid ][ pChangenames ] > gettimestamp() && !PlayerInfo[playerid][pDonateRank]) return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate vise prava na promjene imena! Izmjena dostupna za %s.", UnixTimestampToTime(PlayerInfo[ playerid ][ pChangenames ]));
-			if( !PlayerInfo[ playerid ][ pDonateRank ] && AC_GetPlayerMoney( playerid ) < 10000 ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate 10.000$!");
+			if( PlayerInfo[ playerid ][ pChangenames ] > gettimestamp() && !PlayerVIP[playerid][pDonateRank]) return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate vise prava na promjene imena! Izmjena dostupna za %s.", UnixTimestampToTime(PlayerInfo[ playerid ][ pChangenames ]));
+			if( !PlayerVIP[playerid][pDonateRank] && AC_GetPlayerMoney( playerid ) < 10000 ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate 10.000$!");
 		}
 		case 2:
 		{
-			if(PlayerInfo[playerid][pDonateRank] > 0)
+			if(PlayerVIP[playerid][pDonateRank] > 0)
 			{
 				if(PlayerInfo[playerid][pChangeTimes] == 0)
 					return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "Potrosili ste sve dodatne changenameove koje ste dobili sa Premium Paketom. Izmjena dostupna za %s.", UnixTimestampToTime(PlayerInfo[ playerid ][ pChangenames ]));

@@ -819,7 +819,7 @@ ResetPlayerVariables(playerid)
 	PlayerInfo[playerid][pTempRank][1]		= 0;
 	PlayerInfo[playerid][pAdminHours]		= 0;
 	PlayerInfo[playerid][pHelper]			= 0;
-	PlayerInfo[playerid][pDonateRank]		= 0;
+	PlayerVIP[playerid][pDonateRank]		= 0;
 	PlayerInfo[playerid][pConnectTime]		= 0;
 	PlayerInfo[playerid][pMuted]			= 0;
 	PlayerInfo[playerid][pRespects]			= 0;
@@ -915,8 +915,8 @@ ResetPlayerVariables(playerid)
 	PlayerInfo[playerid][pTagID]			= -1;
 	PlayerInfo[playerid][hRope] 			= 0;
 	PlayerInfo[playerid][pAmmuTime]			= 0;
-	PlayerInfo[playerid][pDonatorVehicle] 	= 0;
-	PlayerInfo[playerid][pDonatorVehPerms] 	= 0;
+	PlayerVIP[playerid][pDonatorVehicle] 	= 0;
+	PlayerVIP[playerid][pDonatorVehPerms] 	= 0;
 	PlayerInfo[playerid][pPrimaryWeapon] 	= 0;
 	PlayerInfo[playerid][pSecondaryWeapon] 	= 0;
 	PlayerInfo[playerid][pWarehouseKey] 	= -1;
@@ -1803,7 +1803,7 @@ hook OnPlayerSpawn(playerid)
 
    	SetPlayerArmour(playerid, PlayerInfo[playerid][pArmour]);
 
-	if(PlayerInfo[playerid][pDonateRank] != 0)
+	if(PlayerVIP[playerid][pDonateRank] != 0)
 		SetPlayerHealth(playerid, 99.0);
 	else SetPlayerHealth(playerid, 50.0);
 
@@ -1855,7 +1855,7 @@ hook OnPlayerSpawn(playerid)
 			Bit1_Set( gr_MaskUse, playerid, false );
 			if( PlayerInfo[ playerid ][ pMaskID ])
 			{
-				if( PlayerInfo[ playerid ][ pDonateRank ] < 2)
+				if( PlayerVIP[playerid][pDonateRank] < 2)
 					PlayerInfo[ playerid ][ pMaskID ] = 0;
 			}
 
@@ -1879,7 +1879,7 @@ hook OnPlayerSpawn(playerid)
 			Bit1_Set( gr_MaskUse, playerid, false );
 			if( PlayerInfo[ playerid ][ pMaskID ])
 			{
-				if( PlayerInfo[ playerid ][ pDonateRank ] < 2)
+				if( PlayerVIP[playerid][pDonateRank] < 2)
 					PlayerInfo[ playerid ][ pMaskID ] = 0;
 			}
 

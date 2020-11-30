@@ -2264,7 +2264,7 @@ UpdatePremiumHouseFurSlots(playerid, admin_name = -1, houseid)
     if(!Iter_Contains(Houses, houseid))
         return 1;
 
-    HouseInfo[houseid][hFurSlots] = GetFurnitureSlots(playerid, PlayerInfo[playerid][pDonateRank]);
+    HouseInfo[houseid][hFurSlots] = GetFurnitureSlots(playerid, PlayerVIP[playerid][pDonateRank]);
 
     mysql_fquery(g_SQL, "UPDATE houses SET fur_slots = '%d' WHERE id = '%d'", 
         HouseInfo[houseid][hFurSlots], 
@@ -2879,7 +2879,7 @@ static stock CreateFurnitureObject(playerid, modelid, Float:x, Float:y, Float:z,
         return SendErrorMessage(playerid, "Niste u svojoj kuci / nemate dozvolu za postavljanje namjestaja.");
 
     new index = GetHouseFurnitureSlot(playerid, houseid);
-    if (HouseInfo[houseid][hFurCounter] == GetFurnitureSlots(playerid, PlayerInfo[playerid][pDonateRank]))
+    if (HouseInfo[houseid][hFurCounter] == GetFurnitureSlots(playerid, PlayerVIP[playerid][pDonateRank]))
         return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate dovoljno mjesta za objekte!");
 
     // TODO: index bounds check
@@ -2955,7 +2955,7 @@ static stock CopyFurnitureObject(playerid, copyid)
         return SendErrorMessage(playerid, "Niste u svojoj kuci / nemate dozvolu za postavljanje namjestaja.");
 
     new index = Iter_Free(HouseFurInt[houseid]);
-    if (HouseInfo[houseid][hFurCounter] == GetFurnitureSlots(playerid, PlayerInfo[playerid][pDonateRank]))
+    if (HouseInfo[houseid][hFurCounter] == GetFurnitureSlots(playerid, PlayerVIP[playerid][pDonateRank]))
         return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate dovoljno mjesta za objekte!");
 
     HouseInfo[houseid][hFurCounter]++;
@@ -3227,7 +3227,7 @@ static stock DestroyAllFurnitureObjects(playerid, houseid)
             HouseInfo[houseid][hFurColId][index][4] = -1;
         }
     }
-    HouseInfo[houseid][hFurSlots]  = GetFurnitureSlots(playerid, PlayerInfo[playerid][pDonateRank]);
+    HouseInfo[houseid][hFurSlots]  = GetFurnitureSlots(playerid, PlayerVIP[playerid][pDonateRank]);
     HouseInfo[houseid][hFurLoaded] = false;
 
     Iter_Clear(HouseFurInt[houseid]);
@@ -4126,7 +4126,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                         }
                         case 5:
                         {
-                            if (!PlayerInfo[playerid][pDonateRank])
+                            if (!PlayerVIP[playerid][pDonateRank])
                             {
                                 SendClientMessage(playerid, COLOR_RED, "[ ! ] Samo VIP korisnici mogu ovo koristiti!");
                                 ShowPlayerDialog(playerid, DIALOG_FURNITURE_BUY, DIALOG_STYLE_LIST, "Furniture - Kategorije", "Dnevni Boravak\nKuhinja\nKupaonica\nSobe\nOstalo\n", "Choose", "Abort");
@@ -4669,7 +4669,7 @@ CMD:furniture(playerid, params[])
     if (sscanf(params, "s[8]", param))
     {
         SendClientMessage(playerid, COLOR_RED, "[ ? ]: /furniture [approve/menu]");
-        va_SendClientMessage(playerid, COLOR_RED, "[ ! ] Trenutno imate %d/%d popunjenih slotova u vasoj kuci.", Iter_Count(HouseFurInt[furhouse]), GetFurnitureSlots(playerid, PlayerInfo[playerid][pDonateRank]));
+        va_SendClientMessage(playerid, COLOR_RED, "[ ! ] Trenutno imate %d/%d popunjenih slotova u vasoj kuci.", Iter_Count(HouseFurInt[furhouse]), GetFurnitureSlots(playerid, PlayerVIP[playerid][pDonateRank]));
         return 1;
     }
 

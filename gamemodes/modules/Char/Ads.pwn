@@ -181,7 +181,7 @@ stock static CreateAdForPlayer(playerid)
 	Iter_Add(Ads, index);
 	
 	new price = floatround(strlen(AdsInfo[index][adText]) * PRICE_PER_CHAR) * AdsInfo[index][adTimes];
-	if(PlayerInfo[playerid][pDonateRank] > 0)
+	if(PlayerVIP[playerid][pDonateRank] > 0)
 		price = 0;
 	PlayerToFactionMoneyTAX( playerid, FACTION_TYPE_NEWS, price); // placanje oglasa novac u faction bank od LSNa
 	va_GameTextForPlayer(playerid, "~r~Placeno za reklamu: $%d", 5000, 5, price);
@@ -392,7 +392,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 				return ShowPlayerDialog(playerid, DIALOG_ADS_CREATE_STYLE, DIALOG_STYLE_LIST, "LS OGLASNIK - Stil oglasa", "Prodaja\nKupovina\nReklama", "Choose", "Abort");
 
 			new price = strlen(PlayerAdsInfo[playerid][padText]) * PRICE_PER_CHAR * PlayerAdsInfo[playerid][padTimes];
-			if(PlayerInfo[playerid][pDonateRank] > 0)
+			if(PlayerVIP[playerid][pDonateRank] > 0)
 				price = 0;
 			else
 				if(price > AC_GetPlayerMoney(playerid)) return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "[GRESKA] Nemate dovoljno novaca za platiti oglas. Cijena oglasa je %d$.", price);
