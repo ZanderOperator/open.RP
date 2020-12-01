@@ -903,13 +903,20 @@ Public:SendServerMessage(sqlid, reason[])
 	return 1;
 }
 
-forward OfflineJailPlayer(playerid, playername[], jailtime);
-public OfflineJailPlayer(playerid, playername[], jailtime)
+forward OfflineJailPlayer(playerid, jailtime);
+public OfflineJailPlayer(playerid, jailtime)
 {
 	new rows;
     cache_get_row_count(rows);
 	if(rows)
-  		mysql_fquery(g_SQL, "UPDATE accounts SET jailed = '1', jailtime = '%d' WHERE name = '%e'", jailtime, playername);
+	{
+		new sqlid;
+		cache_get_value_name_int(0,  "sqlid", sqlid);
+  		mysql_fquery(g_SQL, "UPDATE player_jail SET jailed = '1', jailtime = '%d' WHERE sqlid = '%d'", 
+		  	jailtime, 
+			sqlid
+		);
+	}
 	else return SendClientMessage(playerid, COLOR_RED, "[GRESKA - MySQL]: Ne postoji korisnik s tim nickom!");
 	return 1;
 }
@@ -1111,7 +1118,6 @@ public CheckOffline(playerid, const name[])
 		organizacija,
 		gotovina,
 		banka,
-		donatorrank,
 		housekey = 9999,
 		bizkey = 999,
 		garagekey = -1,
@@ -1130,7 +1136,6 @@ public CheckOffline(playerid, const name[])
 	cache_get_value_name_int(0,"facMemId",organizacija);
 	cache_get_value_name_int(0,"handMoney",gotovina);
 	cache_get_value_name_int(0,"bankMoney",banka);
-	cache_get_value_name_int(0,"vipRank",donatorrank);
 	
 	cache_get_value_name_int(0,"adminLvl",admin);
 	cache_get_value_name_int(0,"jobkey",jobkey);
@@ -1180,13 +1185,12 @@ public CheckOffline(playerid, const name[])
 		}
 	}
 	
-	va_SendClientMessage(playerid, COLOR_ORANGE, "Ime: %s - Level: %d - Org: %d - Novac: %d$ - Banka: %d$ - Donator Rank: %d",
+	va_SendClientMessage(playerid, COLOR_ORANGE, "Ime: %s - Level: %d - Org: %d - Novac: %d$ - Banka: %d$",
 		aname,
 		level,
 		organizacija,
 		gotovina,
-		banka,
-		donatorrank
+		banka
 	);
 	va_SendClientMessage(playerid, COLOR_ORANGE, "Sati igranja: %d - Posao: %d - Warns: %d - Admin: %d",
 		playhrs,
@@ -1462,8 +1466,8 @@ public OnPlayerClickPlayer(playerid, clickedplayerid, source)
 			PlayerInfo[clickedplayerid][pLevel],
 			PlayerInfo[clickedplayerid][pConnectTime],
 			PlayerInfo[clickedplayerid][pWarns],
-			PlayerInfo[clickedplayerid][pJailed],
-			PlayerInfo[clickedplayerid][pJailTime]
+			PlayerJail[clickedplayerid][pJailed],
+			PlayerJail[clickedplayerid][pJailTime]
 		);
 		if(PlayerInfo[clickedplayerid][pBizzKey] > 0)
 		{
@@ -3123,7 +3127,7 @@ CMD:setstat(playerid, params[])
   		}
 		case 19:
 		{
-		    PlayerInfo[giveplayerid][pArrested] = amount;
+		    PlayerJail[giveplayerid][pArrested] = amount;
 			format(globalstring, sizeof(globalstring), "   Namjestio si da je korisnik uhicen %d puta.", amount);
   		}
 		case 20:
@@ -4276,8 +4280,8 @@ CMD:unprison(playerid, params[])
 	SendClientMessage(playerid, COLOR_RED, globalstring);
 	format(globalstring, sizeof(globalstring), "* Admin %s vas je pustio iz Fort DeMorgan zatvora.", GetName(playerid,false));
 	SendClientMessage(giveplayerid, COLOR_RED, globalstring);
-	PlayerInfo[giveplayerid][pJailed] = 0;
-	PlayerInfo[giveplayerid][pJailTime] = 0;
+	PlayerJail[giveplayerid][pJailed] = 0;
+	PlayerJail[giveplayerid][pJailTime] = 0;
 	SetPlayerPosEx(giveplayerid, 1481.0739,-1741.8704,13.5469, 0, 0, true);
 	SetPlayerWorldBounds(giveplayerid, 20000.0000, -20000.0000, 20000.0000, -20000.0000);
 	new playerip[MAX_PLAYER_IP];
@@ -4499,13 +4503,13 @@ CMD:prisoned(playerid, params[])
     SendClientMessage(playerid, COLOR_SKYBLUE, "*___________________________ Online igraci u bolnici/zatvoru/arei ___________________________*");
 	foreach (new i : Player)
 	{
-		if (PlayerInfo[i][pJailed] >= 1)
+		if (PlayerJail[i][pJailed] >= 1)
 		{
-			if (PlayerInfo[i][pJailed] == 1) 		
+			if (PlayerJail[i][pJailed] == 1) 		
 			{ 
 				type = "Jail"; 
 			}
-			else if(PlayerInfo[i][pJailed] == 3) 	
+			else if(PlayerJail[i][pJailed] == 3) 	
 			{ 
 				type = "Bolnica"; 
 			}
@@ -4513,7 +4517,7 @@ CMD:prisoned(playerid, params[])
 			{
 				type = "F.DeMorgan";
 			}
-			va_SendClientMessage(playerid, COLOR_GREY, "%s | %s (%d) - Vrijeme: %d minuta", type, GetName(i), i, PlayerInfo[i][pJailTime]);
+			va_SendClientMessage(playerid, COLOR_GREY, "%s | %s (%d) - Vrijeme: %d minuta", type, GetName(i), i, PlayerJail[i][pJailTime]);
 		}
 	}
 	return 1;
@@ -4578,9 +4582,8 @@ CMD:jailex(playerid, params[])
 	mysql_tquery(g_SQL, 
 		va_fquery(g_SQL, "SELECT sqlid FROM accounts WHERE name = '%e'", giveplayername), 
 		"OfflineJailPlayer", 
-		"issi", 
+		"ii", 
 		playerid, 
-		giveplayername, 
 		time
 	);
 
@@ -4603,7 +4606,7 @@ CMD:jail(playerid, params[])
 	va_SendClientMessage(playerid, COLOR_RED, "[ ! ] Stavio si %s u zatvor.", GetName(giveplayerid,false));
 	va_SendClientMessage(giveplayerid, COLOR_RED, "[ ! ] Stavljeni ste u zatvor od strane administratora %s.", PlayerInfo[playerid][pForumName]);
 	
-	PlayerInfo[giveplayerid][pArrested] 	+= 1;
+	PlayerJail[giveplayerid][pArrested] 	+= 1;
 	PutPlayerInJail(giveplayerid, time, 1); // County Jail je 1
     PutPlayerInSector(giveplayerid);
 	va_SendClientMessage(giveplayerid, COLOR_RED, "[ADMIN JAIL] Pritvoreni ste na %d minuta. Jamcevina: Nedostupna", time);
@@ -4626,8 +4629,8 @@ CMD:unjail(playerid, params[])
 	new giveplayerid;
     if (sscanf(params, "u", giveplayerid)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /unjail [ID/DioImena]");
     if (!IsPlayerConnected(giveplayerid)) return SendClientMessage(playerid, COLOR_RED, "Taj igraè nije online!");
-	if (PlayerInfo[giveplayerid][pJailed] == 0) return SendClientMessage(playerid, COLOR_RED, "Igrac nije u jailu!");
-	if (PlayerInfo[giveplayerid][pJailed] == 1)
+	if (PlayerJail[giveplayerid][pJailed] == 0) return SendClientMessage(playerid, COLOR_RED, "Igrac nije u jailu!");
+	if (PlayerJail[giveplayerid][pJailed] == 1)
 	{
 		format(globalstring, sizeof(globalstring), "* Oslobodili ste %s.", GetName(giveplayerid,false));
 		SendClientMessage(playerid, COLOR_RED, globalstring);
@@ -4635,9 +4638,9 @@ CMD:unjail(playerid, params[])
 		SendClientMessage(giveplayerid, COLOR_RED, globalstring);
 		SetPVarInt(giveplayerid, "WantedPoints", 0);
 		AC_SetPlayerWeapons(giveplayerid);
-		PlayerInfo[giveplayerid][pJailed] = 0;
-		PlayerInfo[giveplayerid][pJailTime] = 0;
-		PlayerInfo[playerid][pBailPrice] = 0;
+		PlayerJail[giveplayerid][pJailed] = 0;
+		PlayerJail[giveplayerid][pJailTime] = 0;
+		PlayerJail[playerid][pBailPrice] = 0;
 		SetPlayerPos(giveplayerid, 90.6552, -236.3789, 1.5781);
 		SetPlayerInterior(playerid, 0);
 
@@ -4696,7 +4699,7 @@ CMD:gethere(playerid, params[])
 		if (sscanf(params, "u", giveplayerid)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /gethere [ID/DioImena]");
 		if (!IsPlayerConnected(giveplayerid)) return SendClientMessage(playerid, COLOR_RED, "Taj igraè nije online!");
 		if (PlayerInfo[giveplayerid][pAdmin] > 1337) return SendClientMessage(playerid, COLOR_RED, "Pitajte Administratora da se teleportira do Vas.");
-		if (PlayerInfo[giveplayerid][pJailed] > 0) {
+		if (PlayerJail[giveplayerid][pJailed] > 0) {
 			ShowPlayerDialog(playerid, DIALOG_JAIL_GETHERE, DIALOG_STYLE_MSGBOX, "Warning", "Igrac kojeg zelite portati je u zatvoru.", "Port", "Exit");
 			PortedPlayer[playerid] = giveplayerid;
 			return 1;
@@ -5226,7 +5229,7 @@ CMD:checkoffline(playerid, params[])
     
 	mysql_tquery(g_SQL, 
 		va_fquery(g_SQL, 
-			"SELECT sqlid, name, levels, facMemId, handMoney, bankMoney, vipRank,\n\
+			"SELECT sqlid, name, levels, facMemId, handMoney, bankMoney, \n\
 				adminLvl, jobkey, playaWarns, connecttime FROM accounts WHERE name = '%e'", 
 			targetname
 		), 

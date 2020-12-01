@@ -491,7 +491,7 @@ CMD:findobjectowner(playerid, params[])
 
 CMD:editobject(playerid, params[])
 {
-	if(PlayerInfo[playerid][pJailed])
+	if(PlayerJail[playerid][pJailed])
 	    return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Trenutno ne moZete koristiti ovu komandu!");
 
 	if(AreAllPObjectSlotsEmpty(playerid))
@@ -510,7 +510,7 @@ CMD:editobject(playerid, params[])
 
 CMD:createobject(playerid, params[])
 {
-	if(PlayerInfo[playerid][pJailed])
+	if(PlayerJail[playerid][pJailed])
 	    return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Trenutno ne mozete koristiti ovu komandu!");
 				
 	if(!Bit1_Get( gr_CreateObject, playerid)) 

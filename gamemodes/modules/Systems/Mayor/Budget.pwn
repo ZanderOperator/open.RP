@@ -126,7 +126,7 @@ stock ShowGovMDC(playerid, targetid)
     format(motd, sizeof(motd),"{DCE4ED}Broj telefona: %d\nPosao: %s\nUhicivan puta: %d\n\n",
         PlayerInfo[targetid][pMobileNumber],
         string,
-        PlayerInfo[targetid][pArrested]
+        PlayerJail[targetid][pArrested]
     );
     strcat(govDialog, motd, sizeof(govDialog));
 

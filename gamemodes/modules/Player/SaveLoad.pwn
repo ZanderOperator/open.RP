@@ -1,6 +1,8 @@
 #include <YSI_Coding\y_hooks>
 
 #include "modules/Player\SaveLoad/player_vip_status.pwn"
+#include "modules/Player\SaveLoad/player_licenses.pwn"
+#include "modules/Player\SaveLoad/player_jail.pwn"
 
 /*
 	##     ##    ###    ########   ######  
@@ -46,7 +48,7 @@ timer SetPlayerCrash[6000](playerid)
 	
 	if(PlayerInfo[playerid][pCrashPos][0] != 0.0 && PlayerInfo[playerid][pCrashInt] != -1)
 	{
-		if( PlayerInfo[playerid][pJailed] )
+		if( PlayerJail[playerid][pJailed] )
 		{
 			mysql_fquery(g_SQL, "DELETE FROM player_crashes WHERE id = '%d'", PlayerInfo[playerid][pCrashId]);
 
@@ -296,10 +298,6 @@ public LoadPlayerData(playerid)
 
         cache_get_value_name_int(0,  "playaSkin"	, PlayerInfo[playerid][pChar]);
 		format(PlayerInfo[playerid][pAccent]		, sizeof(string), string);
-
-		cache_get_value_name_int(0,  "jailed"		, PlayerInfo[playerid][pJailed]);		
-		cache_get_value_name_int(0,  "jailtime"		, PlayerInfo[playerid][pJailTime]); 
-		cache_get_value_name_int(0,  "bailprice"		, PlayerInfo[playerid][pBailPrice]);
 		
 		cache_get_value_name_int(0,  "rentkey"		, PlayerInfo[playerid][pRentKey]);
 		cache_get_value_name_int(0,  "maskid"		, PlayerInfo[playerid][pMaskID]);
@@ -308,7 +306,6 @@ public LoadPlayerData(playerid)
 
 		cache_get_value_name_float(0,"armour"		, PlayerInfo[playerid][pArmour]);
 		cache_get_value_name_int(0, "muscle"		, PlayerInfo[playerid][pMuscle]);
-		cache_get_value_name_int(0, "arrested"		, PlayerInfo[playerid][pArrested]);
 		cache_get_value_name_int(0,	"fightstyle"	, PlayerInfo[playerid][pFightStyle]);
 
 		cache_get_value_name_int(0, "clock"			, PlayerInfo[playerid][pClock]);
@@ -419,6 +416,12 @@ public LoadPlayerData(playerid)
 		}
 		// Player VIP status
 		LoadPlayerVIP(playerid);
+
+		// Jail Stats
+		LoadPlayerJailStats(playerid);
+
+		// Licenses
+		LoadPlayerLicenses(playerid);
 
 		// Weapons & Drugs
 		LoadPlayerWeaponSettings(playerid);
@@ -755,9 +758,8 @@ stock SavePlayerData(playerid)
 			changetimes = '%d', handMoney = '%d', bankMoney = '%d', connecttime = '%d', contracttime = '%d',\n\
 			freeworks = '%d', fishworks = '%d', fishsqlid = '%d', levels = '%d', respects = '%d', jobkey = '%d',\n\
 			parts = '%d', contracttime = '%d', health = '%f', FishingSkill = '%d',\n\
-			jailed = '%d', jailtime = '%d', bailprice = '%d',\n\
 			rentkey = '%d',\n\
-			maskid = '%d', hunger = '%f', spawnedcar = '%d', armour = '%f', muscle = '%d', arrested = '%d',\n\
+			maskid = '%d', hunger = '%f', spawnedcar = '%d', armour = '%f', muscle = '%d',\n\
 			fightstyle = '%d', clock = '%d', rope = '%d', cigaretes = '%d', lighter = '%d',\n\
 			playaPayDay = '%d', playaPDMoney = '%d', profit = '%d', lijektimer = '%d',\n\
 			SAMPid = '%e', forumname = '%e', gymtimes = '%d', gymcounter = '%d',\n\
@@ -795,16 +797,12 @@ stock SavePlayerData(playerid)
 		PlayerInfo[playerid][pContractTime],
 		PlayerInfo[playerid][pHealth],
 		PlayerInfo[playerid][pFishingSkill],
-		PlayerInfo[playerid][pJailed],
-		PlayerInfo[playerid][pJailTime],
-		PlayerInfo[playerid][pBailPrice],
 		PlayerInfo[playerid][pRentKey],
 		PlayerInfo[playerid][pMaskID],
 		PlayerInfo[playerid][pHunger],
 		PlayerInfo[playerid][pSpawnedCar],
 		PlayerInfo[playerid][pArmour],
 		PlayerInfo[playerid][pMuscle],
-		PlayerInfo[playerid][pArrested],
 		PlayerInfo[playerid][pFightStyle],
 		PlayerInfo[playerid][pClock],
 		PlayerInfo[playerid][hRope],
@@ -854,12 +852,12 @@ stock SavePlayerData(playerid)
 
 stock SetPlayerSpawnInfo(playerid)
 {
-	if(PlayerInfo[playerid][pJailed] == 2)
+	if(PlayerJail[playerid][pJailed] == 2)
 	{
 		SetSpawnInfo(playerid, 0, PlayerInfo[playerid][pChar], -10.9639, 2329.3030, 24.4, 0, 0, 0, 0, 0, 0, 0);
 		Streamer_UpdateEx(playerid,  -10.9639, 2329.3030, 24.4);
 	}
-	else if(PlayerInfo[playerid][pJailed] == 3)
+	else if(PlayerJail[playerid][pJailed] == 3)
 	{
 		SetSpawnInfo(playerid, 0, PlayerInfo[playerid][pChar],  1199.1404,1305.8285,-54.7172, 0, 0, 0, 0, 0, 0, 0);
 		SetPlayerInterior(playerid, 17);

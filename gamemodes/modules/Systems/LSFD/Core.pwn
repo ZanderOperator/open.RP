@@ -915,7 +915,7 @@ CMD:treatment(playerid, params[])
     if (giveplayerid == INVALID_PLAYER_ID) return SendMessage(playerid, MESSAGE_TYPE_ERROR, " Unijeli ste krivi playerid!");
     if (time < 0 || time > 100) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nevaljan unos vremena tretmana!");
     if (giveplayerid == playerid) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne mozete sami sebe stavljati na tretman!");
-    if (PlayerInfo[giveplayerid ][pJailed]) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Igrac je vec na tretmanu ili je zatvoren!");
+    if (PlayerJail[giveplayerid ][pJailed]) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Igrac je vec na tretmanu ili je zatvoren!");
 
     PutPlayerInJail(giveplayerid, time, 5); // 5 je treatment program
     SendFormatMessage(playerid, MESSAGE_TYPE_INFO, "Postavio si %s na lijecenje.",GetName(giveplayerid, true));

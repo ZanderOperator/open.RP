@@ -85,11 +85,6 @@ enum E_PLAYER_DATA
 	Float:pMarker3[3],
 	Float:pMarker4[3],
 	Float:pMarker5[3],
-	pJailed,
-	pJailTime,
-	pBailPrice,
-	pJailJob,
-	pOdradio,
 	pInt,
 	pViwo,
 	pMaskID,
@@ -104,7 +99,6 @@ enum E_PLAYER_DATA
 	pGymTimes,
 	pGymCounter,
 	Float:pHunger,
-	pArrested,
 	pFightStyle,
 	Float:pDeath[3],
 	pDeathInt,
@@ -204,6 +198,16 @@ enum E_LICENSES_INFO
 	pPassport
 }
 new LicenseInfo[ MAX_PLAYERS ][ E_LICENSES_INFO ];
+
+enum E_P_JAIL_INFO
+{
+	pJailed,
+	pJailTime,
+	pArrested,
+	pBailPrice,
+	pJailJob
+}
+new PlayerJail[ MAX_PLAYERS ][ E_P_JAIL_INFO ];
 
 enum E_CREDIT_INFO
 {

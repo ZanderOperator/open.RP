@@ -504,13 +504,13 @@ CMD:time(playerid, params[])
 		
 		if (minuite < 10 	)
 		{
-			if (PlayerInfo[playerid][pJailTime] > 0) 
+			if (PlayerJail[playerid][pJailTime] > 0) 
 				format(timeString, sizeof(timeString), "~y~%d %s~n~~g~|~w~%d:0%d~g~|~n~~w~Vrijeme pritvora: %d min", 
 					day, 
 					mtext, 
 					hour,
 					minuite, 
-					PlayerInfo[playerid][pJailTime]
+					PlayerJail[playerid][pJailTime]
 				);
 			else 
 				format(timeString, sizeof(timeString), "~y~%d %s~n~~g~|~w~%d:0%d~g~|", 
@@ -522,13 +522,13 @@ CMD:time(playerid, params[])
 		}
 		else
 		{
-			if (PlayerInfo[playerid][pJailTime] > 0) 
+			if (PlayerJail[playerid][pJailTime] > 0) 
 				format(timeString, sizeof(timeString), "~y~%d %s~n~~g~|~w~%d:%d~g~|~n~~w~Vrijeme pritvora: %d min", 
 					day, 
 					mtext, 
 					hour,
 					minuite, 
-					PlayerInfo[playerid][pJailTime]
+					PlayerJail[playerid][pJailTime]
 				);
 			else format(timeString, sizeof(timeString), "~y~%d %s~n~~g~|~w~%d:%d:%d~g~|", 
 				day, 
@@ -1827,12 +1827,12 @@ CMD:oldcar(playerid, params[])
 
 CMD:prisontime(playerid, params[])
 {
-	if(PlayerInfo[playerid][pJailed] < 1) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nisi zatvoren!");
-	switch(PlayerInfo[playerid][pJailed])
+	if(PlayerJail[playerid][pJailed] < 1) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nisi zatvoren!");
+	switch(PlayerJail[playerid][pJailed])
 	{
-		case 1: va_SendClientMessage(playerid, COLOR_RED, "[ ! ] Zatvoreni ste u zatvoru jos %d minuta!", PlayerInfo[playerid][pJailTime]);
-		case 2: va_SendClientMessage(playerid, COLOR_RED, "[ ! ] Zatvoreni ste u Fort DeMoragnu jos %d minuta!", PlayerInfo[playerid][pJailTime]);
-		case 3: va_SendClientMessage(playerid, COLOR_RED, "[ ! ] Zatvoreni ste u zatvoru jos %d minuta!", PlayerInfo[playerid][pJailTime]);
+		case 1: va_SendClientMessage(playerid, COLOR_RED, "[ ! ] Zatvoreni ste u zatvoru jos %d minuta!", PlayerJail[playerid][pJailTime]);
+		case 2: va_SendClientMessage(playerid, COLOR_RED, "[ ! ] Zatvoreni ste u Fort DeMoragnu jos %d minuta!", PlayerJail[playerid][pJailTime]);
+		case 3: va_SendClientMessage(playerid, COLOR_RED, "[ ! ] Zatvoreni ste u zatvoru jos %d minuta!", PlayerJail[playerid][pJailTime]);
 	}    
     return 1;
 }
@@ -2839,7 +2839,7 @@ CMD:setwalk(playerid, params[])
 CMD:spawnchange(playerid, params[])
 {
 	new spawn;
-	if(PlayerInfo[playerid][pJailed] == 1) return SendMessage(playerid, MESSAGE_TYPE_ERROR,"U zatvoru ste, ne mozete to!");
+	if(PlayerJail[playerid][pJailed] == 1) return SendMessage(playerid, MESSAGE_TYPE_ERROR,"U zatvoru ste, ne mozete to!");
 	if(sscanf(params, "i", spawn)) { SendClientMessage(playerid, COLOR_WHITE,"[ ? ]: /spawnchange [0-5]"); SendClientMessage(playerid, COLOR_WHITE,"0 - Standardno | 1 - Kuca | 2 - Organizacija (LSPD/LSFD/LSN/GOV) | 3 - Complex Room | 4 - LSPD Wilshire Station. |5 LSPD Harbor"); return 1; }
 	if(spawn < 0 || spawn > 5) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Neispravan ID spawna! (0-5)");
 	if(spawn == 1)
