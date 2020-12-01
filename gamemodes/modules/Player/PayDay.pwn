@@ -328,9 +328,9 @@ GivePlayerPayCheck(playerid)
 			strcat(p_dialog,f_dialog, sizeof(p_dialog));
 		}
 	}
-	if(PlayerInfo[playerid][pJob] == 6 || PlayerInfo[playerid][pJob] == 3) { // IC POSLOVI
-		if(PlayerInfo[playerid][pJob] == 6) {
-			new taxi_job = PlayerInfo[playerid][pContractTime] * 8, calculate = 0;
+	if(PlayerJob[playerid][pJob] == 6 || PlayerJob[playerid][pJob] == 3) { // IC POSLOVI
+		if(PlayerJob[playerid][pJob] == 6) {
+			new taxi_job = PlayerJob[playerid][pContractTime] * 8, calculate = 0;
 			if(taxi_job > 700)
 				taxi_job = 700;
 				
@@ -341,8 +341,8 @@ GivePlayerPayCheck(playerid)
 			strcat(p_dialog,f_dialog, sizeof(p_dialog));
 			PlayerInfo[playerid][pPayDayMoney] = 0;
 		}
-		else if(PlayerInfo[playerid][pJob] == 3) {
-			new workingbonus = PlayerInfo[playerid][pContractTime] * 8;
+		else if(PlayerJob[playerid][pJob] == 3) {
+			new workingbonus = PlayerJob[playerid][pContractTime] * 8;
 			if(workingbonus > 700)
 				workingbonus = 700;
 
@@ -352,13 +352,13 @@ GivePlayerPayCheck(playerid)
 			strcat(p_dialog,f_dialog, sizeof(p_dialog));
 		}
 	}
-	if(PlayerInfo[playerid][pJob] > 0 && PlayerInfo[playerid][pContractTime] >= 1) // OOC poslovi
+	if(PlayerJob[playerid][pJob] > 0 && PlayerJob[playerid][pContractTime] >= 1) // OOC poslovi
 	{
-		if(PlayerInfo[playerid][pJob] != 9 && PlayerInfo[playerid][pJob] != 10 && PlayerInfo[playerid][pJob] != 12 && PlayerInfo[playerid][pJob] != 13 && PlayerInfo[playerid][pJob] != 6 && PlayerInfo[playerid][pJob] != 3)
+		if(PlayerJob[playerid][pJob] != 9 && PlayerJob[playerid][pJob] != 10 && PlayerJob[playerid][pJob] != 12 && PlayerJob[playerid][pJob] != 13 && PlayerJob[playerid][pJob] != 6 && PlayerJob[playerid][pJob] != 3)
 		{
 			if(PlayerInfo[playerid][pBusinessJob] == -1) {
 				new workingbonus;
-				workingbonus = PlayerInfo[playerid][pContractTime] * 10;
+				workingbonus = PlayerJob[playerid][pContractTime] * 10;
 				if(workingbonus > 500)
 					workingbonus = 500; // Maksimum je 500$ po paydayu
 				BudgetToPlayerBankMoney(playerid, workingbonus); // treba prebaciti na bankovni racun
@@ -395,11 +395,11 @@ GivePlayerPayCheck(playerid)
 
 	switch(PlayerVIP[playerid][pDonateRank])
 	{
-		case 0: PlayerInfo[playerid][pFreeWorks] = 15;
-		case 1: PlayerInfo[playerid][pFreeWorks] = 25;
-		case 2: PlayerInfo[playerid][pFreeWorks] = 25;
-		case 3: PlayerInfo[playerid][pFreeWorks] = 30;
-		case 4: PlayerInfo[playerid][pFreeWorks] = 50;
+		case 0: PlayerJob[playerid][pFreeWorks] = 15;
+		case 1: PlayerJob[playerid][pFreeWorks] = 25;
+		case 2: PlayerJob[playerid][pFreeWorks] = 25;
+		case 3: PlayerJob[playerid][pFreeWorks] = 30;
+		case 4: PlayerJob[playerid][pFreeWorks] = 50;
 	}
 
 	PlayerInfo[playerid][pFishWorks] 	= 0;
@@ -407,8 +407,8 @@ GivePlayerPayCheck(playerid)
 	PlayerInfo[ playerid ][ pAdminHours ]++;	// dodavanje admin satnice
 
 	// Dodavanje sati ugvora za posao
-	if(PlayerInfo[playerid][pJob] != 0)
-		PlayerInfo[playerid][pContractTime]++;
+	if(PlayerJob[playerid][pJob] != 0)
+		PlayerJob[playerid][pContractTime]++;
 
 
 	// GYM izgled

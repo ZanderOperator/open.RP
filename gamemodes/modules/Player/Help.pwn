@@ -48,7 +48,7 @@ CMD:jobhelp(playerid, params[])
 }
 
 CMD:jobcmds(playerid, params[]) {
-	switch(PlayerInfo[playerid][pJob])
+	switch(PlayerJob[playerid][pJob])
 	{
 		case 1: {
 			SendClientMessage(playerid, COLOR_LIGHTBLUE, "* _______________________ JOB COMMANDS _______________________ *");

@@ -1100,7 +1100,7 @@ public LoadPlayerWarns(playerid, targetname[],reason[])
     }
 	return 1;
 }
-
+// TODO: workaround - SQL reorganization
 forward CheckOffline(playerid, const name[]);
 public CheckOffline(playerid, const name[])
 {
@@ -1122,7 +1122,7 @@ public CheckOffline(playerid, const name[])
 		bizkey = 999,
 		garagekey = -1,
 		admin,
-		jobkey,
+		//jobkey,
 		warnings,
 		playhrs,
 		complexkey,
@@ -1138,7 +1138,7 @@ public CheckOffline(playerid, const name[])
 	cache_get_value_name_int(0,"bankMoney",banka);
 	
 	cache_get_value_name_int(0,"adminLvl",admin);
-	cache_get_value_name_int(0,"jobkey",jobkey);
+	//cache_get_value_name_int(0,"jobkey",jobkey);
 	cache_get_value_name_int(0,"playaWarns",warnings);
 	cache_get_value_name_int(0,"connecttime",playhrs);
 	
@@ -1192,9 +1192,9 @@ public CheckOffline(playerid, const name[])
 		gotovina,
 		banka
 	);
-	va_SendClientMessage(playerid, COLOR_ORANGE, "Sati igranja: %d - Posao: %d - Warns: %d - Admin: %d",
+	va_SendClientMessage(playerid, COLOR_ORANGE, "Sati igranja: %d - Warns: %d - Admin: %d",
 		playhrs,
-		jobkey,
+		//jobkey,
 		warnings,
 		admin
 	);
@@ -2234,7 +2234,7 @@ CMD:givepremium(playerid, params[])
 		);
 		#endif
 		
-		PlayerInfo[giveplayerid][pFreeWorks] 	= 25;
+		PlayerJob[giveplayerid][pFreeWorks] 	= 25;
 		PlayerInfo[giveplayerid][pRespects] 	+= 10;
 		PlayerInfo[giveplayerid][pChangeTimes] 	+= 2;
 		PlayerInfo[giveplayerid][pLevel] 		+= 1;
@@ -2292,7 +2292,7 @@ CMD:givepremium(playerid, params[])
 		);
 		#endif
 
-		PlayerInfo[giveplayerid][pFreeWorks] 	= 25;
+		PlayerJob[giveplayerid][pFreeWorks] 	= 25;
 		PlayerInfo[giveplayerid][pRespects] 	+= 20;
 		PlayerInfo[giveplayerid][pLevel] 		+= 2;
 		PlayerInfo[giveplayerid][pChangeTimes] 	+= 3;
@@ -2349,7 +2349,7 @@ CMD:givepremium(playerid, params[])
 		);
 		#endif
 
-		PlayerInfo[giveplayerid][pFreeWorks] 	= 30;
+		PlayerJob[giveplayerid][pFreeWorks] 	= 30;
 		PlayerInfo[giveplayerid][pRespects] 	+= 30;
 		PlayerInfo[giveplayerid][pLevel] 		+= 3;
 		PlayerInfo[giveplayerid][pChangeTimes] 	+= 5;
@@ -2415,7 +2415,7 @@ CMD:givepremium(playerid, params[])
 		);
 		#endif
 
-		PlayerInfo[giveplayerid][pFreeWorks] 		= 50;
+		PlayerJob[giveplayerid][pFreeWorks] 		= 50;
 		PlayerInfo[giveplayerid][pRespects] 		+= 50;
 		PlayerInfo[giveplayerid][pLevel] 			+= 4;
 		PlayerInfo[giveplayerid][pChangeTimes] 		+= 7;
@@ -3099,7 +3099,7 @@ CMD:setstat(playerid, params[])
   		}
 		case 14:
 		{
-			if(PlayerInfo[giveplayerid][pJob] != 0) 
+			if(PlayerJob[giveplayerid][pJob] != 0) 
 				RemovePlayerJob(giveplayerid);
 					
 			SetPlayerJob(giveplayerid, amount);
@@ -3107,7 +3107,7 @@ CMD:setstat(playerid, params[])
   		}
 		case 15:
 		{
-            PlayerInfo[giveplayerid][pContractTime] = amount;
+            PlayerJob[giveplayerid][pContractTime] = amount;
 			format(globalstring, sizeof(globalstring), "   Korisnikov ugovor je postavljen na %d.", amount);
   		}
   		case 16:
@@ -3117,7 +3117,7 @@ CMD:setstat(playerid, params[])
   		}
 		case 17:
 		{
-		    PlayerInfo[giveplayerid][pJob] = amount;
+		    PlayerJob[giveplayerid][pJob] = amount;
 			format(globalstring, sizeof(globalstring), "   Korisnikov Job Key je postavljen na %d.", amount);
   		}
 		case 18:
@@ -5227,10 +5227,11 @@ CMD:checkoffline(playerid, params[])
 	new targetname[MAX_PLAYER_NAME];
 	if (sscanf(params, "s[24]", targetname)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /checkoffline [Ime]");
     
+	// TODO: workaround - SQL reorganization
 	mysql_tquery(g_SQL, 
 		va_fquery(g_SQL, 
 			"SELECT sqlid, name, levels, facMemId, handMoney, bankMoney, \n\
-				adminLvl, jobkey, playaWarns, connecttime FROM accounts WHERE name = '%e'", 
+				adminLvl, playaWarns, connecttime FROM accounts WHERE name = '%e'", 
 			targetname
 		), 
 		"CheckOffline", 

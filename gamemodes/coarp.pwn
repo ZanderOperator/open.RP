@@ -833,9 +833,7 @@ ResetPlayerVariables(playerid)
 	PlayerInfo[playerid][pSavingsTime]		= 0;
 	PlayerInfo[playerid][pSavingsType]		= 0;
 	PlayerInfo[playerid][pSavingsMoney]		= 0;
-	PlayerInfo[playerid][pContractTime]		= 0;
 	PlayerInfo[playerid][pTempConnectTime]	= 0;
-	PlayerInfo[playerid][pFreeWorks]		= 0;
 	PlayerInfo[playerid][pFishWorks]		= 0;
 	PlayerInfo[playerid][pFishSQLID] 		= -1;
 	PlayerInfo[playerid][pLawDuty]          = 0;
@@ -860,7 +858,6 @@ ResetPlayerVariables(playerid)
 	PlayerInfo[playerid][pKilled]			= 0;
 	PlayerInfo[playerid][pDeathInt] 		= 0;
 	PlayerInfo[playerid][pDeathVW] 			= 0;
-	PlayerInfo[playerid][pJob]				= 0;
 
 	PlayerInfo[playerid][pInt]				= 0;
 	PlayerInfo[playerid][pViwo]				= 0;

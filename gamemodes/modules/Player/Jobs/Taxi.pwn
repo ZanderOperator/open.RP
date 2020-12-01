@@ -249,7 +249,7 @@ hook OnPlayerStateChange(playerid, newstate, oldstate)
 {
 	if(oldstate == PLAYER_STATE_ONFOOT && newstate == PLAYER_STATE_DRIVER) {
 		if(IsATaxi(GetVehicleModel(GetPlayerVehicleID(playerid))) ) {
-			if( PlayerInfo[playerid][pJob] == PLAYER_JOB_TAXI ) {
+			if( PlayerJob[playerid][pJob] == PLAYER_JOB_TAXI ) {
 				if(TaxiData[playerid][eTaxiDuty] == true)
 					return CreateTaximeter(playerid, true);
 			}
@@ -330,7 +330,7 @@ hook OnPlayerExitVehicle(playerid, vehicleid) {
 */
 
 CMD:taxi(playerid, params[]) {		
-	if(PlayerInfo[playerid][pJob] != PLAYER_JOB_TAXI) 
+	if(PlayerJob[playerid][pJob] != PLAYER_JOB_TAXI) 
 		return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Moras biti clan taxi sluzbe da bi mogao koristiti komandu!");
 			
 	new action[18],
@@ -416,7 +416,7 @@ CMD:taxi(playerid, params[]) {
 		TaxiData[playerid][eTaxiPassanger] = passanger_id;
 		TaxiData[playerid][eTaxiPayment] = 0;
 		TaxiData[playerid][eTaxiTraveled] = 1;
-		PlayerInfo[playerid][pFreeWorks] -= 1;
+		PlayerJob[playerid][pFreeWorks] -= 1;
 		
 		TaxiData[passanger_id][eTaxiDriver] = playerid;
 		TaxiData[passanger_id][eTaxiActive] = (true);

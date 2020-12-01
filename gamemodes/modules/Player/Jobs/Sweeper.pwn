@@ -69,7 +69,7 @@ hook OnPlayerDisconnect(playerid, reason)
 
 hook OnPlayerEnterCheckpoint(playerid)
 {
-	if(PlayerInfo[playerid][pJob] == SWEEPER_ID) 
+	if(PlayerJob[playerid][pJob] == SWEEPER_ID) 
 	{
 		if( Bit1_Get( r_Sweeping, playerid ) && GPS_Active_Check(playerid)) 
 		{
@@ -86,7 +86,7 @@ hook OnPlayerEnterCheckpoint(playerid)
 				BudgetToPlayerBankMoney(playerid, money); // dobiva novac na knjizicu iz proracuna
 				PlayerInfo[playerid][pPayDayMoney] += money;
 				UpgradePlayerSkill(playerid);
-				PlayerInfo[playerid][pFreeWorks] -= 5;
+				PlayerJob[playerid][pFreeWorks] -= 5;
 				Bit1_Set( r_Sweeping, playerid, false );
 				Bit1_Set( gr_IsWorkingJob, playerid, false );
 				TogglePlayerAllDynamicCPs(playerid, true);
@@ -114,7 +114,7 @@ hook OnPlayerEnterCheckpoint(playerid)
 */
 CMD:sweep(playerid, params[])
 {
-	if(PlayerInfo[playerid][pJob] != SWEEPER_ID) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste zaposleni kao smecar!");
+	if(PlayerJob[playerid][pJob] != SWEEPER_ID) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste zaposleni kao smecar!");
 	new
 		vehicleID = GetPlayerVehicleID(playerid),
 		pick[ 8 ];
@@ -146,7 +146,7 @@ CMD:sweep(playerid, params[])
 			if(VehicleInfo[ vehicleID ][ vJob ] != 1) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ovo vozilo nije za ovaj posao!");
 			if( !Bit1_Get( r_Sweeping, playerid ) ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Vi niste poceli sa poslom!");
 
-			PlayerInfo[playerid][pFreeWorks] -= 5;
+			PlayerJob[playerid][pFreeWorks] -= 5;
 			Bit1_Set( r_Sweeping, playerid, false );
 			Bit1_Set( gr_IsWorkingJob, playerid, false );
 			TogglePlayerAllDynamicCPs(playerid, true);

@@ -2394,12 +2394,12 @@ CMD:give(playerid, params[])
 		if(Bit1_Get(gr_PlayerLoggedIn, giveplayerid) != 0) {
   			if(giveplayerid != INVALID_PLAYER_ID) {
      			if (ProxDetectorS(3.0, playerid, giveplayerid))  {
-     			    if(PlayerInfo[giveplayerid][pJob] != 0) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Taj igrac vec ima posao!");
+     			    if(PlayerJob[giveplayerid][pJob] != 0) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Taj igrac vec ima posao!");
      			    if( PlayerInfo[ giveplayerid ][ pMember ] != PlayerInfo[playerid][pLeader] ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Igrac mora biti u vasoj organizaciji!");
 				 	if(strcmp(posao,"carjacker",true) == 0) {
 			            if( FactionInfo[PlayerInfo[playerid][pLeader]][fType] == 4 || FactionInfo[PlayerInfo[playerid][pLeader]][fType] == 6 ) { 
 							if( IllegalFactionJobCheck(PlayerInfo[playerid][pLeader], 13) >= 5) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Maksimalan broj car jackera po organizaciji je 5!");
-						   	PlayerInfo[giveplayerid][pJob] = 13;
+						   	PlayerJob[giveplayerid][pJob] = 13;
 
 							SendFormatMessage(playerid, MESSAGE_TYPE_SUCCESS, "Dali ste posao car jackera igracu %s.", GetName(giveplayerid, true));
 							va_SendClientMessage(giveplayerid, COLOR_RED, "[ ! ] Igrac %s vam je dao posao car jacker.", GetName(playerid, true));

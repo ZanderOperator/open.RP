@@ -434,9 +434,9 @@ IsPlayerCredible(playerid, amount)
 			goto end_point;
 		}
 	}
-	if((PlayerInfo[playerid][pJob] >= 1 && PlayerInfo[playerid][pJob] <= 7) || (PlayerInfo[playerid][pJob] >= 14 && PlayerInfo[playerid][pJob] <= 18))
+	if((PlayerJob[playerid][pJob] >= 1 && PlayerJob[playerid][pJob] <= 7) || (PlayerJob[playerid][pJob] >= 14 && PlayerJob[playerid][pJob] <= 18))
 	{
-		if(PlayerInfo[playerid][pContractTime] > 15)
+		if(PlayerJob[playerid][pContractTime] > 15)
 		{
 			value = true;
 			goto end_point;

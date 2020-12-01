@@ -107,6 +107,9 @@ enum E_PLAYER_DATA
 	pCiggaretes,
 	pLighter,
 	pParts,
+	JackerCoolDown,
+	taxiPoints,
+	taxiVoted,
 	pLawDuty,
 	pPDDuty,
 	pChar,
@@ -151,9 +154,6 @@ enum E_PLAYER_DATA
 	bool:pRaceCreator,
 	pCurrentZone[MAX_ZONE_NAME],
 	pWish,
-	JackerCoolDown,
-	taxiPoints,
-	taxiVoted,
 	pNicksToggled,
 	FurnPremium,
 	pHasRadio,
@@ -178,6 +178,14 @@ enum E_PLAYER_DATA
 	pSkillTransporter
 }
 new PlayerInfo[ MAX_PLAYERS ][ E_PLAYER_DATA ];
+
+enum E_P_JOB_INFO
+{
+	pJob,
+	pContractTime,
+	pFreeWorks
+}
+new PlayerJob[ MAX_PLAYERS ][ E_PLAYER_DATA ];
 
 enum E_VIP_INFO
 {
