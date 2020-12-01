@@ -46,6 +46,7 @@
 static stock
 	//Jail Job
 	JailJ[MAX_PLAYERS],
+	JailJobProgress[MAX_PLAYERS],
 	JailSmece[MAX_PLAYERS],
 	Float:SmeceX[MAX_PLAYERS], Float:SmeceY[MAX_PLAYERS], Float:SmeceZ[MAX_PLAYERS],
 	smecence[MAX_PLAYERS],
@@ -182,32 +183,32 @@ stock PutPlayerInJail(playerid, time, type)
 {
 	TogglePlayerControllable(playerid, 0);
 	if(type == 1) {// PD jail
-		PlayerInfo[playerid][pJailed] = 1;
-		PlayerInfo[playerid][pJailTime] = time;
+		PlayerJail[playerid][pJailed] = 1;
+		PlayerJail[playerid][pJailTime] = time;
 		SetPlayerInterior(playerid, 0);
 		PutPlayerInSector(playerid);
 	}
 	else if(type == 2) {// Fort De morgan
-		PlayerInfo[playerid][pJailed] = 2;
-		PlayerInfo[playerid][pJailTime] = time;
+		PlayerJail[playerid][pJailed] = 2;
+		PlayerJail[playerid][pJailTime] = time;
 		SetPlayerPosEx(playerid, -10.9639, 2329.3030, 24.4, playerid, 0, true);
 
 	}
 	else if(type == 3) {// SD Pritvor
-		PlayerInfo[playerid][pJailed] = 3;
-		PlayerInfo[playerid][pJailTime] = time;
+		PlayerJail[playerid][pJailed] = 3;
+		PlayerJail[playerid][pJailTime] = time;
 		PutPlayerInCustody(playerid);
 	}
 	/*else if(type == 4) {// Ne znam sta je al stavit cu da je tamnica u PD zatvoru
-		PlayerInfo[playerid][pJailed] = 4;
-		PlayerInfo[playerid][pJailTime] = time;
+		PlayerJail[playerid][pJailed] = 4;
+		PlayerJail[playerid][pJailTime] = time;
 		SetPlayerInterior(playerid, 7);
 		PutPlayerInSector(playerid, 3); // Stavlja ga u tamnica sektor
 	}*/
 	else if(type == 5) // ASGH Intenzivna - Treatment
 	{
-		PlayerInfo[playerid][pJailed] = 5;
-		PlayerInfo[playerid][pJailTime] = time;
+		PlayerJail[playerid][pJailed] = 5;
+		PlayerJail[playerid][pJailTime] = time;
 		SetPlayerPosEx(playerid, 1439.6251, 1506.4286, -68.6758, 10, 4); // Intenzivna jedinica ASGH
 		ApplyAnimation(playerid,"CRACK","crckidle4", 4.0, 1, 0, 0, 1, 0);
 	}
@@ -6819,7 +6820,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 {
     if(dialogid == D_JAILJOB)
 	{
-	    if(PlayerInfo[playerid][pJailJob] != 0) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Vec si zaposlen u zatvoru!");
+	    if(PlayerJail[playerid][pJailJob] != 0) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Vec si zaposlen u zatvoru!");
 		if(!response)
 	    {
 	        SendMessage(playerid, MESSAGE_TYPE_ERROR,"{FBE204}* Odbili ste zatvorski posao smecara.");
@@ -6828,7 +6829,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 		if(response)
 	    {
 	        SendMessage(playerid, MESSAGE_TYPE_ERROR,"{FBE204}* Od sada u zatvoru mozete raditi kao smecar. Dobijacete honorarni posao. Da zapocnete pisite /jailjob.");
-	        PlayerInfo[playerid][pJailJob] = 1;
+	        PlayerJail[playerid][pJailJob] = 1;
 	        return true;
 		}
 	}
@@ -6938,8 +6939,8 @@ hook OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
 		{
   			if(!IsPlayerInAnyVehicle(playerid))
 	    	{
-	    	    if(PlayerInfo[playerid][pJailJob] != 0) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Imas zatvorski posao!");
-	    	    if(PlayerInfo[playerid][pJailed] != 1) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nije te PD uhapsiom, zato ne mozes raditi zatvorski posao!");
+	    	    if(PlayerJail[playerid][pJailJob] != 0) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Imas zatvorski posao!");
+	    	    if(PlayerJail[playerid][pJailed] != 1) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nije te PD uhapsiom, zato ne mozes raditi zatvorski posao!");
 				ShowPlayerDialog(playerid, D_JAILJOB, DIALOG_STYLE_MSGBOX, "{FBE204}Zatvorski posao", "Da li zelite da radite kao smecar u zatvoru?\nDobijate honorarnu platu, plus vam se smanjuje kazna.", "Yes", "No");
 			}
 		}
@@ -8360,6 +8361,7 @@ stock SendMessageToPrisoners(option[], message[])
 }
 hook OnPlayerDeath(playerid, killerid, reason)
 {
+	JailJobProgress[playerid] = 0;
 	JailJ[playerid] = 0;
 	JailSmece[playerid] = 0;
 
@@ -8391,8 +8393,8 @@ CMD:cells(playerid, params[])
 
 CMD:grabtrash(playerid,params[])
 {
- 	if(PlayerInfo[playerid][pJailed] == 0) return SendMessage(playerid, MESSAGE_TYPE_ERROR,"Niste u zatvoru!");
-	if(PlayerInfo[playerid][pJailJob] != 1) return SendMessage(playerid, MESSAGE_TYPE_ERROR,"Nemas zatvorski posao smecara.");
+ 	if(PlayerJail[playerid][pJailed] == 0) return SendMessage(playerid, MESSAGE_TYPE_ERROR,"Niste u zatvoru!");
+	if(PlayerJail[playerid][pJailJob] != 1) return SendMessage(playerid, MESSAGE_TYPE_ERROR,"Nemas zatvorski posao smecara.");
 	if(JailJ[playerid] < 1) return SendMessage(playerid, MESSAGE_TYPE_ERROR,"Nemas pokrenut zatvorski posao!");
 	if(JailSmece[playerid] == 1) return SendMessage(playerid, MESSAGE_TYPE_ERROR,"Vec si pokupio smece!");
 	if(!IsPlayerInRangeOfPoint(playerid, 2, SmeceX[playerid], SmeceY[playerid], SmeceZ[playerid])) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nisi kod crne kese!");
@@ -8405,21 +8407,21 @@ CMD:grabtrash(playerid,params[])
 
 CMD:droptrash(playerid,params[])
 {
-	if(PlayerInfo[playerid][pJailed] == 0) return SendMessage(playerid, MESSAGE_TYPE_ERROR,"Niste u zatvoru!");
-	if(PlayerInfo[playerid][pJailJob] != 1) return SendMessage(playerid, MESSAGE_TYPE_ERROR,"Nemas zatvorski posao smecara.");
+	if(PlayerJail[playerid][pJailed] == 0) return SendMessage(playerid, MESSAGE_TYPE_ERROR,"Niste u zatvoru!");
+	if(PlayerJail[playerid][pJailJob] != 1) return SendMessage(playerid, MESSAGE_TYPE_ERROR,"Nemas zatvorski posao smecara.");
 	if(JailJ[playerid] < 1) return SendMessage(playerid, MESSAGE_TYPE_ERROR,"Nemas pokrenut zatvorski posao!");
 	if(JailSmece[playerid] == 0) return SendMessage(playerid, MESSAGE_TYPE_ERROR,"Nisi pokupio smece!");
 	if(!IsPlayerInRangeOfPoint(playerid, 2.5, 113.226722, -248.827789, 1.390041)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nisi kod kontejnera!");
 	if(JailJ[playerid] > 13)
 	{
-	    PlayerInfo[playerid][pOdradio] += 20;
+	    JailJobProgress[playerid] += 20;
 	    JailJ[playerid] = 0;
 	    JailSmece[playerid] = 0;
     	RemovePlayerAttachedObject(playerid, 9);
     	SmeceX[playerid] = 0.0;
     	SmeceY[playerid] = 0.0;
     	SmeceZ[playerid] = 0.0;
-    	new kolicina = PlayerInfo[playerid][pOdradio] * 55;
+    	new kolicina = JailJobProgress[playerid] * 55;
 		BudgetToPlayerMoney(playerid, kolicina);
 		new string[34];
 		format(string, sizeof(string), "Dobili ste %d$ za obavljeni posao.",  kolicina);
@@ -8485,15 +8487,15 @@ CMD:droptrash(playerid,params[])
 }
 CMD:jailjob(playerid,params[])
 {
-    if(PlayerInfo[playerid][pJailed] == 0) return SendMessage(playerid, MESSAGE_TYPE_ERROR,"Niste u zatvoru!");
-	if(PlayerInfo[playerid][pJailed] != 1) return SendMessage(playerid, MESSAGE_TYPE_ERROR,"Ne mozes raditi ovaj posao, jer te nije PD uhapsio!");
-	if(PlayerInfo[playerid][pJailJob] != 1) return SendMessage(playerid, MESSAGE_TYPE_ERROR,"Nemas zatvorski posao smecara.");
+    if(PlayerJail[playerid][pJailed] == 0) return SendMessage(playerid, MESSAGE_TYPE_ERROR,"Niste u zatvoru!");
+	if(PlayerJail[playerid][pJailed] != 1) return SendMessage(playerid, MESSAGE_TYPE_ERROR,"Ne mozes raditi ovaj posao, jer te nije PD uhapsio!");
+	if(PlayerJail[playerid][pJailJob] != 1) return SendMessage(playerid, MESSAGE_TYPE_ERROR,"Nemas zatvorski posao smecara.");
 	if(!IsPlayerInRangeOfPoint(playerid, 2, 108.0369, -256.7454, 1.57817)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Morate biti kod pickup-a posla!");
 	if(JailJ[playerid] > 0) return SendMessage(playerid, MESSAGE_TYPE_ERROR,"Vec radite u zatvoru.");
-	if(PlayerInfo[playerid][pOdradio] > 0)
+	if(JailJobProgress[playerid] > 0)
 	{
 	    new dada[128];
-	    format(dada, 128, "Ovaj posao mozes pokrenuti tek za %d minuta", PlayerInfo[playerid][pOdradio]);
+	    format(dada, 128, "Ovaj posao mozes pokrenuti tek za %d minuta", JailJobProgress[playerid]);
 		SendClientMessage(playerid, COLOR_RED, dada);
 	    return true;
 	}
@@ -8561,7 +8563,7 @@ CMD:runaway(playerid, params[]){
 	SetPlayerVirtualWorld(playerid, 0);
  	SendMessage(playerid, COLOR_RED,"Uspjesno ste pobjegli iz zatvora!");
  	
- 	if(PlayerInfo[playerid][pJailed] == 1)
+ 	if(PlayerJail[playerid][pJailed] == 1)
 		defer RunAwayTimer();
 
 	return 1;

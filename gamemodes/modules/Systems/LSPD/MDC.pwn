@@ -120,17 +120,21 @@ static OnPlayerMDCDataLoad(playerid, const playername[], sqlid)
 
         new
             loadInfo[E_PLAYER_DATA],
+            jailInfo[E_P_JAIL_INFO],
             licInfo[E_LICENSES_INFO];
 
-        // Load Accounts
+        // General Account Info
         cache_get_value_name_int(0, "sqlid"         , loadInfo[pSQLID]);
         cache_get_value_name_int(0, "playaSkin"     , loadInfo[pSkin]);
         cache_get_value_name_int(0, "sex"           , loadInfo[pSex]);
         cache_get_value_name_int(0, "age"           , loadInfo[pAge]);
-        cache_get_value_name_int(0, "jailed"        , loadInfo[pJailed]);
-        cache_get_value_name_int(0, "jailtime"      , loadInfo[pJailTime]);
-        cache_get_value_name_int(0, "arrested"      , loadInfo[pArrested]);
         cache_get_value_name    (0, "look"          , loadInfo[pLook]);
+
+        // Arrest Record Info
+        cache_get_value_name_int(0, "jailed"        , jailInfo[pJailed]);
+        cache_get_value_name_int(0, "jailtime"      , jailInfo[pJailTime]);
+        cache_get_value_name_int(0, "arrested"      , jailInfo[pArrested]);
+        cache_get_value_name_int(0, "bailprice"     , jailInfo[pBailPrice]);
 
         cache_get_value_name_int(0, "carlic"        , licInfo[pCarLic]);
         cache_get_value_name_int(0, "gunlic"        , licInfo[pGunLic]);
@@ -182,10 +186,11 @@ static OnPlayerMDCDataLoad(playerid, const playername[], sqlid)
 
         tmpGunLic = (licInfo[pGunLic] == 1) ? ("~b~CCW~l~") : ((licInfo[pGunLic] == 2) ? ("~g~CCW~l~") : ("~r~No~l~"));
         format(mdcString2, sizeof(mdcString2),
-            "~b~CURRENT STATUS~l~~n~Jailed: %s~n~Jail time: %d h~n~Arrested: %d~n~~n~~b~LICENSES~l~~n~Drivers: %s~n~Weapon: %s~n~Boat: %s~n~Fish: %s~n~Pilot: %s~n~Passport: %s",
-            loadInfo[pJailed] == 1 ? ("~g~Yes~l~") : ("~r~No~l~"),
-            loadInfo[pJailTime],
-            loadInfo[pArrested],
+            "~b~CURRENT STATUS~l~~n~Jailed: %s~n~Jail time: %d h~n~Arrested: %d~n~Bail price: %d~n~~n~~b~LICENSES~l~~n~Drivers: %s~n~Weapon: %s~n~Boat: %s~n~Fish: %s~n~Pilot: %s~n~Passport: %s",
+            jailInfo[pJailed] == 1 ? ("~g~Yes~l~") : ("~r~No~l~"),
+            jailInfo[pJailTime],
+            jailInfo[pArrested],
+            jailInfo[pBailPrice],
             licInfo[pCarLic]  >= 1 ? ("~g~Yes~l~") : ("~r~No~l~"),
             tmpGunLic,
             licInfo[pBoatLic] >= 1 ? ("~g~Yes~l~") : ("~r~No~l~"),
@@ -206,8 +211,8 @@ static OnPlayerMDCDataLoad(playerid, const playername[], sqlid)
 		using inline OnPlayerMDCLoad, 
         va_fquery(g_SQL, 
             "SELECT \n\
-                accounts.sqlid, accounts.playaSkin, accounts.sex, accounts.age, accounts.look,\n\
-                player_jail.jailed, player_jail.jailtime, player_jail.arrested, \n\
+                accounts.sqlid, accounts.playaSkin, accounts.sex, accounts.age, accounts.look, \n\
+                player_jail.*, \n\
                 player_licenses.* \n\
                 FROM accounts, player_jail, player_licenses \n\
                 WHERE accounts.sqlid = player_jail.sqlid = player_licenses.sqlid = '%d'",

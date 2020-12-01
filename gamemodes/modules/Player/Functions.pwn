@@ -1034,41 +1034,41 @@ Public:PlayerMinuteTask(playerid)
 	if(PlayerInfo[playerid][pPayDay] >= 60)
 		GivePlayerPayCheck(playerid);
 		
-	if(PlayerInfo[playerid][pJailTime] > 0)
-		PlayerInfo[playerid][pJailTime] -= 1;
-	else if(PlayerInfo[playerid][pJailTime] == 0 )
+	if(PlayerJail[playerid][pJailTime] > 0)
+		PlayerJail[playerid][pJailTime] -= 1;
+	else if(PlayerJail[playerid][pJailTime] == 0 )
 	{
-		if( PlayerInfo[playerid][pJailed] == 1 )
+		if( PlayerJail[playerid][pJailed] == 1 )
 		{
 			SetPlayerPosEx(playerid, 90.6552, -236.3789, 1.5781, 0, 0, false);
 			SetPlayerWorldBounds(playerid, 20000.0000, -20000.0000, 20000.0000, -20000.0000);
 			SetPlayerColor(playerid, COLOR_PLAYER);
 			SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "Slobodni ste, platili ste svoj dug drustvu!");
 		}
-		else if( PlayerInfo[playerid][pJailed] == 2 )
+		else if( PlayerJail[playerid][pJailed] == 2 )
 		{
 			SetPlayerPosEx(playerid, 1482.7426, -1740.1372, 13.7500, 0, 0, false);
 			SetPlayerWorldBounds(playerid, 20000.0000, -20000.0000, 20000.0000, -20000.0000);
 			SetPlayerColor(playerid, COLOR_PLAYER);
 			SendClientMessage(playerid, COLOR_LIGHTBLUE, "Pusten si iz Fort DeMorgana, pripazi na ponasanje i server pravila!");
 		}
-		else if( PlayerInfo[playerid][pJailed] == 3 )
+		else if( PlayerJail[playerid][pJailed] == 3 )
 		{
 			SetPlayerPosEx(playerid, 636.7744,-601.3240,16.3359, 0, 0, false);
 			SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "Slobodni ste, platili ste svoj dug drustvu!");
 		}
-		else if( PlayerInfo[playerid][pJailed] == 5 ) // Treatment
+		else if( PlayerJail[playerid][pJailed] == 5 ) // Treatment
 		{
 			TogglePlayerControllable(playerid, 1);
 			ClearAnim(playerid);
 			SetPlayerPosEx(playerid, 1185.4681,-1323.8542,13.5720, 0, 0, false);
 			SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "Zavrsilo je vase lijecenje, otpusteni ste iz bolnice!");
 		}
-		PlayerInfo[playerid][pJailed] = 0;
-		PlayerInfo[playerid][pJailTime] = 0;
+		PlayerJail[playerid][pJailed] = 0;
+		PlayerJail[playerid][pJailTime] = 0;
 	}
-	else if(PlayerInfo[playerid][pJailTime] < 0)
-		PlayerInfo[playerid][pJailTime] = 0;
+	else if(PlayerJail[playerid][pJailTime] < 0)
+		PlayerJail[playerid][pJailTime] = 0;
 		
 		
 	if(PlayerInfo[playerid][pDrugUsed] != 0)
@@ -1201,7 +1201,7 @@ stock ChangePlayerName(playerid, newname[], type, bool:admin_cn = false)
 		PlayerInfo[ playerid ][ pSQLID ]
 	);
 	
-	PlayerInfo[ playerid ][ pArrested ] = 0;
+	PlayerJail[ playerid ][ pArrested ] = 0;
 	LicenseInfo[playerid][pGunLic] 	= 0;
 	SavePlayerData(playerid);
 	
@@ -1407,7 +1407,7 @@ stock GetPlayerVIP(sqlid)
 	new	Cache:result,
 		value = 0;
 
-	result = mysql_query(g_SQL, va_fquery(g_SQL, "SELECT vipRank FROM accounts WHERE sqlid = '%d'", sqlid));
+	result = mysql_query(g_SQL, va_fquery(g_SQL, "SELECT vipRank FROM player_vip_status WHERE sqlid = '%d'", sqlid));
 	 
 	if(!cache_num_rows())
 		value = 0;
@@ -1691,7 +1691,7 @@ stock ShowPlayerStats(playerid, targetid)
 		ReturnJob(PlayerInfo[targetid][pJob]),
 		PlayerInfo[targetid][pContractTime],
 		PlayerVIP[targetid][pDonateRank] ? 1 : 5,
-		PlayerInfo[targetid][pArrested],
+		PlayerJail[targetid][pArrested],
 		PlayerInfo[targetid][pPayDayMoney],
 		ReturnPlayerFactionName(targetid),
 		ReturnPlayerRankName(targetid),

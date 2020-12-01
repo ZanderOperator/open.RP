@@ -1652,7 +1652,7 @@ CMD:arrest(playerid, params[])
 
     AC_ResetPlayerWeapons(giveplayerid);
     LicenseInfo[giveplayerid][pGunLic]    = 0; // ukidanje dozvole za oruzje
-    PlayerInfo[giveplayerid][pArrested] += 1; // Dodavanje arrest rekorda +1
+    PlayerJail[giveplayerid][pArrested] += 1; // Dodavanje arrest rekorda +1
 
     if (IsPlayerInRangeOfPoint(playerid, 10.0, 1940.9509, 809.7464, -46.6122))
         PutPlayerInJail(giveplayerid, jailtime, 1);
@@ -1682,11 +1682,11 @@ CMD:editarrest(playerid, params[])
     }
     if (!IsPlayerConnected(giveplayerid))    return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Uneseni igrac nije online!");
     if (pick < 1 || pick > 2) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Pogresan izbor.");
-    if (PlayerInfo[giveplayerid][pJailed] != 1) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Igrac nije u zatvoru.");
+    if (PlayerJail[giveplayerid][pJailed] != 1) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Igrac nije u zatvoru.");
 
     if (pick == 1)
     {
-        PlayerInfo[giveplayerid][pJailTime] = ammount;
+        PlayerJail[giveplayerid][pJailTime] = ammount;
         SendFormatMessage(playerid, MESSAGE_TYPE_INFO, "Promjenili ste vrijeme u zatvoru igracu %s na %i", GetName(giveplayerid), ammount);
     }
     else if (pick == 2)
@@ -1721,7 +1721,7 @@ CMD:unfree(playerid, params[])
         SendClientMessage(playerid, COLOR_RED, "Ne mozete osloboditi sami sebe!");
         return 1;
     }
-    if (PlayerInfo[giveplayerid][pJailed] != 1)
+    if (PlayerJail[giveplayerid][pJailed] != 1)
     {
         SendMessage(playerid, MESSAGE_TYPE_ERROR, "Igrac nije zatvoren ili je u AREI!");
         return 1;
@@ -1732,9 +1732,9 @@ CMD:unfree(playerid, params[])
     format(string, sizeof(string), "* Oslobodjeni ste, oslobodio vas je %s %s.", ReturnPlayerRankName(playerid), GetName(playerid));
     SendClientMessage(giveplayerid, COLOR_LIGHTBLUE, string);
     // TODO: make a function, ResetPlayerJailVariables(playerid)
-    PlayerInfo[giveplayerid][pBailPrice] = 0;
-    PlayerInfo[giveplayerid][pJailed] = 0;
-    PlayerInfo[giveplayerid][pJailTime] = 1;
+    PlayerJail[giveplayerid][pBailPrice] = 0;
+    PlayerJail[giveplayerid][pJailed] = 0;
+    PlayerJail[giveplayerid][pJailTime] = 1;
     SetPlayerColor(giveplayerid,TEAM_HIT_COLOR);
     return 1;
 }

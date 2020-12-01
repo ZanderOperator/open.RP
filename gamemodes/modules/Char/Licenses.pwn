@@ -173,7 +173,7 @@ hook OnPlayerEnterCheckpoint(playerid)
 				LicenseInfo[playerid][pBoatLic] = 1;
 				
 				// MySQL query
-				mysql_fquery(g_SQL, "UPDATE accounts SET boatlic = '1' WHERE sqlid = '%d'",
+				mysql_fquery(g_SQL, "UPDATE player_licenses SET boatlic = '1' WHERE sqlid = '%d'",
 					PlayerInfo[playerid][pSQLID]
 				);
 				
@@ -206,7 +206,7 @@ hook OnPlayerEnterCheckpoint(playerid)
 				SendClientMessage( playerid, COLOR_RED, "[ ! ] Uspjesno ste polozili vozacku za automobil!");
 				LicenseInfo[playerid][pCarLic] = 1;
 				
-				mysql_fquery(g_SQL, "UPDATE accounts SET carlic = '1' WHERE sqlid = '%d'",
+				mysql_fquery(g_SQL, "UPDATE player_licenses SET carlic = '1' WHERE sqlid = '%d'",
 					PlayerInfo[playerid][pSQLID]
 				);
 				
@@ -408,7 +408,7 @@ CMD:buylicenses(playerid, params[])
 		LicenseInfo[playerid][pFlyLic] = 1;
 		PlayerToBudgetMoney(playerid, FLY_LICENSE_PRICE); // u proracun novci idu
 		
-		mysql_fquery(g_SQL, "UPDATE accounts SET flylic = '1' WHERE sqlid = '%d'",
+		mysql_fquery(g_SQL, "UPDATE player_licenses SET flylic = '1' WHERE sqlid = '%d'",
 			PlayerInfo[playerid][pSQLID]
 		);		
 	}
@@ -423,7 +423,7 @@ CMD:buylicenses(playerid, params[])
 		LicenseInfo[playerid][pFishLic] = 1;
 		PlayerToBudgetMoney(playerid, FISH_LICENSE_PRICE); // u proracun novci idu
 		
-		mysql_fquery(g_SQL, "UPDATE accounts SET fishlic = '1' WHERE sqlid = '%d'",
+		mysql_fquery(g_SQL, "UPDATE player_licenses SET fishlic = '1' WHERE sqlid = '%d'",
 			PlayerInfo[playerid][pSQLID]
 		);
 	}

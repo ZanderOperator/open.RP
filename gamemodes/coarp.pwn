@@ -862,11 +862,6 @@ ResetPlayerVariables(playerid)
 	PlayerInfo[playerid][pDeathVW] 			= 0;
 	PlayerInfo[playerid][pJob]				= 0;
 
-	PlayerInfo[playerid][pJailed]			= 0;
-	PlayerInfo[playerid][pJailTime]			= 0;
-	PlayerInfo[playerid][pJailJob] 			= 0;
-	PlayerInfo[playerid][pOdradio]          = 0;
-	PlayerInfo[playerid][pBailPrice]		= 0;
 	PlayerInfo[playerid][pInt]				= 0;
 	PlayerInfo[playerid][pViwo]				= 0;
 	PlayerInfo[playerid][pMaskID]			= -1;
@@ -882,7 +877,6 @@ ResetPlayerVariables(playerid)
 	PlayerInfo[playerid][pGymCounter]		= 0;
 	PlayerInfo[playerid][pGymTimes]			= 0;
 	PlayerInfo[playerid][pParts]			= 0;
-	PlayerInfo[playerid][pArrested]			= 0;
 	PlayerInfo[playerid][pChar]				= 0;
 	PlayerInfo[playerid][pBoomBox] 			= 0;
 	PlayerInfo[playerid][pBoomBoxType] 		= 0;
@@ -1888,9 +1882,9 @@ hook OnPlayerSpawn(playerid)
 		}
 		else if(PlayerInfo[ playerid ][ pKilled ] == 0)
 		{
-			if( PlayerInfo[playerid][pJailed] > 0)
+			if( PlayerJail[playerid][pJailed] > 0)
 			{
-				PutPlayerInJail(playerid, PlayerInfo[playerid][pJailTime], PlayerInfo[playerid][pJailed]);
+				PutPlayerInJail(playerid, PlayerJail[playerid][pJailTime], PlayerJail[playerid][pJailed]);
 				SetPlayerHealth(playerid, 100);
 				return 1;
 			}

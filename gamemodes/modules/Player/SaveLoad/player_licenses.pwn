@@ -16,8 +16,8 @@ Public: LoadingPlayerLicenses(playerid)
     if(!cache_num_rows())
     {
         mysql_fquery_ex(g_SQL, 
-            "INSERT INTO player_licenses(sqlid, vipRank, vipTime, donateveh, dvehperms) \n\
-                VALUES('%d' 0, 0, 0, 0)",
+            "INSERT INTO player_licenses(sqlid, carlic, gunlic, boatlic, fishlic, flylic, passport) \n\
+                VALUES('%d', '0', '0', '0', '0', '0', '0')",
             PlayerInfo[playerid][pSQLID]
         );
         return 1;

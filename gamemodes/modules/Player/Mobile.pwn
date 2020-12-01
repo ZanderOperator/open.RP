@@ -2331,7 +2331,8 @@ stock PhoneCall(playerid, callnumber)
 		if( !PlayerInfo[ playerid ][ pMobileNumber ] ) return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR,"Nemate mobitel!");
 		if(GetPlayerSignal(playerid) < 1 && callnumber != 911) return SendMessage( playerid, MESSAGE_TYPE_ERROR, "** No signal **");
 	}
-	if(callnumber == 911) { // FD/PD
+	if(callnumber == 911) 
+	{ // FD/PD
 		SetPlayerSpecialAction(playerid, SPECIAL_ACTION_USECELLPHONE);
 
 		SendClientMessage(playerid, COLOR_WHITE, "HINT: Sada mozete koristiti T da bi ste razgovarali na telefon, ukucajte /hangup da bi ste prekinuli poziv");
@@ -2340,14 +2341,16 @@ stock PhoneCall(playerid, callnumber)
 		Bit1_Set( gr_CanHangup, playerid, true );
 		return 1;
 	}
-	if( callnumber == 444 ) { // Taxisti
+	if( callnumber == 444 ) 
+	{ // Taxisti
 		SetPlayerSpecialAction(playerid, SPECIAL_ACTION_USECELLPHONE);
 		SendClientMessage(playerid, COLOR_RED, "Taxi Dispatcher: Pozdrav, recite nam vasu lokaciju?");
 		CallingId[ playerid ] =  444;
 		Bit1_Set( gr_CanHangup, playerid, true );
 		return 1;
 	}
-	if( callnumber == 555 ) { // Mehanicari
+	if( callnumber == 555 ) 
+	{ // Mehanicari
 		SetPlayerSpecialAction(playerid, SPECIAL_ACTION_USECELLPHONE);
 		SendClientMessage(playerid, COLOR_RED, "Dispatcher: Pozdrav, recite tip vaseg kvara.?");
 		CallingId[ playerid ] =  555;
@@ -2366,11 +2369,14 @@ stock PhoneCall(playerid, callnumber)
 		Bit1_Set( gr_CanHangup, playerid, true );
 		return 1;
 	}
-	if( callnumber == 222 ) {
+	if( callnumber == 222 ) 
+	{
 		new
 			lineIndex = -1;
-		for( new i = 0; i < 10; i++ ) {
-			if( !NewsPhone[ i ][ npNumber ] ) {
+		for( new i = 0; i < 10; i++ ) 
+		{
+			if( !NewsPhone[ i ][ npNumber ] ) 
+			{
 				lineIndex = i;
 				break;
 			}
@@ -2385,16 +2391,21 @@ stock PhoneCall(playerid, callnumber)
 		return 1;
 	}
 	valstr(callstr, callnumber);
-	if( strlen(callstr) == 6 ) {
+	if( strlen(callstr) == 6 ) 
+	{
 		new
 			gplayerid = INVALID_PLAYER_ID;
 
-		if( callnumber == PlayerInfo[ playerid ][ pMobileNumber ] ) return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR,"Ne mozete zvati sami sebe!");
-		foreach(new i : Player) {
-			if( PlayerInfo[ i ][ pMobileNumber ] == callnumber && callnumber != 0 ) {
+		if( callnumber == PlayerInfo[ playerid ][ pMobileNumber ] ) 
+			return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "Ne mozete zvati sami sebe!");
+		foreach(new i : Player) 
+		{
+			if( PlayerInfo[ i ][ pMobileNumber ] == callnumber && callnumber != 0 ) 
+			{
 				gplayerid = i;
 
-				if( PlayerInfo[ gplayerid ][ pJailed ] != 0 ) return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR,"Osoba se ne moze javiti.");
+				if( PlayerJail[ gplayerid ][ pJailed ] != 0 ) 
+					return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR,"Osoba se ne moze javiti.");
 				if( GetPlayerSignal(gplayerid) < 1 || IsPlayerReconing(gplayerid) || GetPlayerTalkingOnPhone(gplayerid) != -1 || !Player_MobileOn(gplayerid))
 				{
 					format(PTDTextString, sizeof(PTDTextString), "~r~ZAUZETO");
@@ -3916,7 +3927,7 @@ CMD:cryptotext(playerid, params[])
 
     if(sscanf(params, "is[80]", cryptonumber, inputstring)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /cryptotext [crypto number] [text]");
  	if(PlayerInfo[playerid][pCryptoNumber] == 0) return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR,"Nemate crypto.");
-	if(PlayerInfo[playerid][pJailed] != 0) return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR,"Nemozete trenutno poslati poruku!");
+	if(PlayerJail[playerid][pJailed] != 0) return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR,"Nemozete trenutno poslati poruku!");
     if(strlen(inputstring) > 80) return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR,"Poruka je preduga,nemoze imati vise od 80 znakova!");
 	new
 		globalstring[ 128 ];
@@ -3946,7 +3957,7 @@ CMD:cryptonumber(playerid, params[])
 	new _crypt;
     if(sscanf(params, "i", _crypt)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /cryptonumber [crypto number]");
  	if(PlayerInfo[playerid][pCryptoNumber] == 0) return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR,"Nemate crypto.");
-	if(PlayerInfo[playerid][pJailed] != 0) return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR,"Nemozete trenutno poslati poruku!");
+	if(PlayerJail[playerid][pJailed] != 0) return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR,"Nemozete trenutno poslati poruku!");
 	if(_crypt < 100 || _crypt > 999999) return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR,"Broj moze biti izmedju 100 i 999999!");
 
 	new	Cache:result;
