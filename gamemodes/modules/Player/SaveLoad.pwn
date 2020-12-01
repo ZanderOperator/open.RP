@@ -5,6 +5,7 @@
 #include "modules/Player\SaveLoad/player_licenses.pwn"
 #include "modules/Player\SaveLoad/player_jail.pwn"
 #include "modules/Player\SaveLoad/player_job.pwn"
+#include "modules/Player\SaveLoad/player_payday.pwn"
 
 /*
 	##     ##    ###    ########   ######  
@@ -311,11 +312,6 @@ public LoadPlayerData(playerid)
 		cache_get_value_name_int(0, "rope"			, PlayerInfo[playerid][hRope]);
 		cache_get_value_name_int(0, "cigaretes"		, PlayerInfo[playerid][pCiggaretes]);	
 		cache_get_value_name_int(0, "lighter"		, PlayerInfo[playerid][pLighter]);		
-		cache_get_value_name_int(0, "playaPayDay"	, PlayerInfo[playerid][pPayDay]);	
-		cache_get_value_name_int(0, "playaPDMoney"	, PlayerInfo[playerid][pPayDayMoney]);
-		cache_get_value_name_int(0, "profit"		, PlayerInfo[playerid][pProfit]);
-		cache_get_value_name(0, 	"paydayDialog"	, PlayerInfo[playerid][pPayDayDialog], 2048);
-		cache_get_value_name(0, 	"paydaydate"	, PlayerInfo[playerid][pPayDayDate], 32);
 
 		cache_get_value_name_int(0, "lijektimer"	, PlayerInfo[playerid][pLijekTimer]);
 		cache_get_value_name_int(0,	"gymtimes"		, PlayerInfo[playerid][pGymTimes]);
@@ -413,19 +409,16 @@ public LoadPlayerData(playerid)
 			KickMessage(playerid);
 			return 1;
 		}
-
 		// Player Job & Job Stats
 		LoadPlayerJob(playerid); 
-
+		// Player Payday Stats
+		LoadPlayerPayday(playerid);
 		// Player VIP status
 		LoadPlayerVIP(playerid);
-
 		// Jail Stats
 		LoadPlayerJailStats(playerid);
-
 		// Licenses
 		LoadPlayerLicenses(playerid);
-
 		// Weapons & Drugs
 		LoadPlayerWeaponSettings(playerid);
 		AC_LoadPlayerWeapons(playerid);
@@ -578,8 +571,8 @@ public OnAccountFinish(playerid)
 	PlayerInfo[playerid][pRegistered] 		= 0;
 	PlayerInfo[playerid][pLevel] 			= 1;
 	PlayerInfo[playerid][pChar] 			= 29;
-	PlayerInfo[playerid][pPayDayMoney] 		= 0;
-	PlayerInfo[playerid][pProfit]			= 0;
+	PaydayInfo[playerid][pPayDayMoney] 		= 0;
+	PaydayInfo[playerid][pProfit]			= 0;
 	PlayerJob[playerid][pFreeWorks] 		= 15;
 	PlayerInfo[playerid][pMuted] 			= true;
 	PlayerInfo[playerid][pAdmin] 			= 0;
@@ -763,13 +756,12 @@ stock SavePlayerData(playerid)
 			rentkey = '%d',\n\
 			maskid = '%d', hunger = '%f', spawnedcar = '%d', armour = '%f', muscle = '%d',\n\
 			fightstyle = '%d', clock = '%d', rope = '%d', cigaretes = '%d', lighter = '%d',\n\
-			playaPayDay = '%d', playaPDMoney = '%d', profit = '%d', lijektimer = '%d',\n\
 			SAMPid = '%e', forumname = '%e', gymtimes = '%d', gymcounter = '%d',\n\
 			boombox = '%d', boomboxtype = '%d', casinocool = '%d', news = '%d', HasRadio = '%d', voted = '%d',\n\
 			drugused = '%d', drugseconds = '%d', lastdrug = '%d',\n\
 			savings_cool = '%d', savings_time = '%d', savings_type = '%d', savings_money = '%d',\n\
 			ammutime = '%d', warekey = '%d', mustread = '%d', lastupdatever = '%e', JackerCoolDown = '%d',\n\
-			FurnPremium = '%d', paydayDialog = '%e', paydaydate = '%e',\n\
+			FurnPremium = '%d',\n\
 			Radio1 = '%d', Slot1 = '%d', Radio2 = '%d', Slot2 = '%d', Radio3 = '%d', Slot3 = '%d',\n\
 			AdmMessageConfirm = '%d', AdminMessage = '%e', AdminMessageBy = '%e' \n\
 			WHERE sqlid = '%d'",
@@ -806,10 +798,6 @@ stock SavePlayerData(playerid)
 		PlayerInfo[playerid][hRope],
 		PlayerInfo[playerid][pCiggaretes],
 		PlayerInfo[playerid][pLighter],
-		PlayerInfo[playerid][pPayDay],
-		PlayerInfo[playerid][pPayDayMoney],
-		PlayerInfo[playerid][pProfit],
-		PlayerInfo[playerid][pLijekTimer],
 		LicenseInfo[playerid][pPassport],
 		PlayerInfo[playerid][pSAMPid],
 		PlayerInfo[playerid][pForumName],
@@ -834,8 +822,6 @@ stock SavePlayerData(playerid)
 		PlayerInfo[playerid][pLastUpdateVer],
 		PlayerInfo[playerid][JackerCoolDown],
 		PlayerInfo[playerid][FurnPremium],
-		PlayerInfo[playerid][pPayDayDialog],
-		PlayerInfo[playerid][pPayDayDate],
 		PlayerInfo[playerid][pRadio][1], PlayerInfo[playerid][pRadioSlot][1],
 		PlayerInfo[playerid][pRadio][2], PlayerInfo[playerid][pRadioSlot][2],
 		PlayerInfo[playerid][pRadio][3], PlayerInfo[playerid][pRadioSlot][3],

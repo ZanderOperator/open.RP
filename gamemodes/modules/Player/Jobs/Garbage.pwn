@@ -133,7 +133,7 @@ stock static CheckGarbages(playerid)
 		va_SendClientMessage(playerid, COLOR_RED, "[ ! ] Zaradio si $%d, placa ti je sjela na racun.", money);
 
 		BudgetToPlayerBankMoney (playerid, money ); // novac sjeda na radnu knjizicu iz proracuna
-		PlayerInfo[playerid][pPayDayMoney] += money;
+		PaydayInfo[playerid][pPayDayMoney] += money;
 		PlayerJob[playerid][pFreeWorks] -= 5;
 		UpgradePlayerSkill(playerid);
 		gStartedWork[playerid] = 0;
@@ -352,7 +352,7 @@ hook OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
 					va_SendClientMessage(playerid, COLOR_RED, "[ ! ] Zaradio si $%d, placa ti je sjela na racun.", money);
 
 					BudgetToPlayerBankMoney (playerid, money ); // novac sjeda na radnu knjizicu iz proracuna
-					PlayerInfo[playerid][pPayDayMoney] += money;
+					PaydayInfo[playerid][pPayDayMoney] += money;
 					PlayerJob[playerid][pFreeWorks] -= 5;
 					UpgradePlayerSkill(playerid);
 					gStartedWork[playerid] = 0;

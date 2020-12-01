@@ -191,7 +191,7 @@ timer OnPlayerFirstTimeEnter[12000](playerid, step)
 			PlayerInfo[playerid][pLevel] 		= 1;
 			PlayerInfo[playerid][pSkin] 		= 29;
 			PlayerInfo[playerid][pChar] 		= 29;
-			PlayerInfo[playerid][pPayDayMoney] 	= 0;
+			PaydayInfo[playerid][pPayDayMoney] 	= 0;
 			PlayerJob[playerid][pFreeWorks] 	= 15;
 			PlayerInfo[playerid][pMuted] 		= false;
 			PlayerInfo[playerid][pAdmin] 		= 0;

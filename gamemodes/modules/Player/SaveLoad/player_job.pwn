@@ -31,7 +31,7 @@ Public: LoadingPlayerJob(playerid)
 SavePlayerJob(playerid)
 {
     mysql_fquery_ex(g_SQL,
-        "UPDATE player_job SET jobkey = '%d', contracttime = '%d', freeworks = '%d'WHERE sqlid = '%d'",
+        "UPDATE player_job SET jobkey = '%d', contracttime = '%d', freeworks = '%d' WHERE sqlid = '%d'",
         PlayerJob[playerid][pJob],
         PlayerJob[playerid][pContractTime],
         PlayerJob[playerid][pFreeWorks],

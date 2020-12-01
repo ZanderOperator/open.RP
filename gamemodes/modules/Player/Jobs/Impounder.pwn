@@ -254,7 +254,7 @@ OPUnTowIV(playerid, veh)
 		
 	va_SendClientMessage(playerid, COLOR_GREEN, "[ ! ] Zaradio si $%d, placa ti je sjela na racun.", money);
 	BudgetToPlayerBankMoney(playerid, money);
-	PlayerInfo[playerid][pPayDayMoney] += money;
+	PaydayInfo[playerid][pPayDayMoney] += money;
 	
 	ResetImpoundVars(playerid);
 	

@@ -84,7 +84,7 @@ hook OnPlayerEnterCheckpoint(playerid)
 				va_SendClientMessage(playerid, COLOR_RED, "[ ! ] Zaradio si $%d, placa ti je sjela na racun.", money);
 
 				BudgetToPlayerBankMoney(playerid, money); // dobiva novac na knjizicu iz proracuna
-				PlayerInfo[playerid][pPayDayMoney] += money;
+				PaydayInfo[playerid][pPayDayMoney] += money;
 				UpgradePlayerSkill(playerid);
 				PlayerJob[playerid][pFreeWorks] -= 5;
 				Bit1_Set( r_Sweeping, playerid, false );

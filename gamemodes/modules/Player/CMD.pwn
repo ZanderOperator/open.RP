@@ -915,8 +915,8 @@ CMD:admins(playerid, params[])
 CMD:payday(playerid, params[])
 {
 	new title[64];
-	format(title, sizeof(title), "* [%s] %s", PlayerInfo[playerid][pPayDayDate], GetName(playerid));
-	ShowPlayerDialog(playerid, 0, DIALOG_STYLE_MSGBOX, title, PlayerInfo[playerid][pPayDayDialog], "Close", "");
+	format(title, sizeof(title), "* [%s] %s", PaydayInfo[playerid][pPayDayDate], GetName(playerid));
+	ShowPlayerDialog(playerid, 0, DIALOG_STYLE_MSGBOX, title, PaydayInfo[playerid][pPayDayDialog], "Close", "");
 	return 1;
 }
 
@@ -1616,7 +1616,7 @@ CMD:accept(playerid, params[])
 		if( AC_GetPlayerMoney(playerid) < price )		return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate toliko novca!");
 	    
 		PlayerToPlayerMoneyTAX(playerid, repairman, price, false);
-		PlayerInfo[repairman][pPayDayMoney] += price; 
+		PaydayInfo[repairman][pPayDayMoney] += price; 
 		
 	    switch(Bit4_Get( gr_TipUsluge, playerid)) {
 			case 1: {

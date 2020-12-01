@@ -87,7 +87,7 @@ hook OnPlayerEnterCheckpoint(playerid)
 					case 5: money = 1100;
 				}
 				BudgetToPlayerBankMoney(playerid, money);
-				PlayerInfo[playerid][pPayDayMoney] += money;
+				PaydayInfo[playerid][pPayDayMoney] += money;
 				va_SendClientMessage(playerid, COLOR_GREEN, "[ ! ] Zaradio si $%d, placa ti je sjela na racun.", money);
 	        }
 		}

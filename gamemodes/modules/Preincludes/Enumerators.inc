@@ -45,12 +45,6 @@ enum E_PLAYER_DATA
 	pFishWorks,
 	pFishSQLID,
 	pDutySystem,
-	pPayDay,
-	pPayDayMoney,
-	pProfit,
-	pPayDayHad,
-	pPayDayDialog[2048],
-	pPayDayDate[32],
 	pBizzKey,
 	pBusiness,
 	pBusinessJob,
@@ -178,6 +172,17 @@ enum E_PLAYER_DATA
 	pSkillTransporter
 }
 new PlayerInfo[ MAX_PLAYERS ][ E_PLAYER_DATA ];
+
+enum E_PAYDAY_INFO
+{
+	pPayDay,
+	pPayDayMoney,
+	pProfit,
+	pPayDayHad,
+	pPayDayDialog[2048],
+	pPayDayDate[32]
+}
+new PaydayInfo[ MAX_PLAYERS ][ E_PAYDAY_INFO ];
 
 enum E_P_JOB_INFO
 {

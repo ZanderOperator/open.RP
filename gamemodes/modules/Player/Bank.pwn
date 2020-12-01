@@ -450,7 +450,7 @@ IsPlayerCredible(playerid, amount)
 	if(value)
 	{
 		new ratevalue = amount / 250;
-		if( (PlayerInfo[playerid][pProfit] + 100) < ratevalue && PlayerInfo[playerid][pBank] < (amount * 0.7) )
+		if( (PaydayInfo[playerid][pProfit] + 100) < ratevalue && PlayerInfo[playerid][pBank] < (amount * 0.7) )
 		{
 			SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "Morate imati barem %d$ profita po placi/70% iznosa kredita na banci da bi mogli redovno placati kredit.", (ratevalue + 100));
 			value = false;

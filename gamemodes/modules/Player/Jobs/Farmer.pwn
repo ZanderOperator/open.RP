@@ -433,7 +433,7 @@ timer CombineCheck[200](playerid)
 		ResetFarmerVars(playerid);
 		UpgradePlayerSkill(playerid);
 		BudgetToPlayerBankMoney(playerid, Profit);
-		PlayerInfo[playerid][pPayDayMoney] += Profit;
+		PaydayInfo[playerid][pPayDayMoney] += Profit;
 		PlayerJob[playerid][pFreeWorks] -= 5;
 	} else {
 		if( IsPlayerInAnyVehicle(playerid)) 
@@ -993,7 +993,7 @@ CMD:milk(playerid, params[])
 		TruckInfo[playerid][tYOffes] = 0.0;
 
     	BudgetToPlayerBankMoney (playerid, moneys);
-		PlayerInfo[playerid][pPayDayMoney] += moneys;
+		PaydayInfo[playerid][pPayDayMoney] += moneys;
 		PlayerJob[playerid][pFreeWorks] -= 5;
 		MilkInfo[playerid][mTransportCP] = 0;
 		MilkInfo[playerid][mFactoryCP] = 0;
@@ -1322,7 +1322,7 @@ CMD:crops(playerid, params[])
 			new moneys = SeedInfo[playerid][sStored] * 20 + (GetPlayerSkillLevel(playerid, 0) * 20);
 			PlayerJob[playerid][pFreeWorks] -= 5;
 			BudgetToPlayerBankMoney (playerid, moneys); // sjeda novac na knjizicu
-			PlayerInfo[playerid][pPayDayMoney] += moneys;
+			PaydayInfo[playerid][pPayDayMoney] += moneys;
 			va_SendClientMessage(playerid, COLOR_RED, "[ ! ] Zaradio si $%d, placa ti je sjela na racun.", moneys);
 			ResetFarmerVars(playerid);
 			UpgradePlayerSkill(playerid);
@@ -1504,7 +1504,7 @@ CMD:crops(playerid, params[])
 		TruckInfo[playerid][tZOffes] = 0.0;
 
     	BudgetToPlayerBankMoney (playerid, moneys); // novac iz proracuna ide na knjizicu
-		PlayerInfo[playerid][pPayDayMoney] += moneys;
+		PaydayInfo[playerid][pPayDayMoney] += moneys;
 		PlayerJob[playerid][pFreeWorks] -= 5;
 
 		SeedInfo[playerid][sTransportCP] = 0;
@@ -1814,7 +1814,7 @@ CMD:eggs(playerid, params[])
 		TruckInfo[playerid][tZOffes] = 0.0;
 
 		BudgetToPlayerBankMoney (playerid, Profit); // novac sjeda na knjizicu iz proracuna
-		PlayerInfo[playerid][pPayDayMoney] += Profit;
+		PaydayInfo[playerid][pPayDayMoney] += Profit;
 		PlayerJob[playerid][pFreeWorks] -= 5;
 		EggInfo[playerid][eTransportCP] = 0;
 		EggInfo[playerid][eFactoryCP] = 0;

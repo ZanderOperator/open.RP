@@ -35,10 +35,10 @@ GivePlayerPayCheck(playerid)
 		p_dialog[2048],
 		f_dialog[256];
 	
-	PlayerInfo[playerid][pPayDayDate][0] = EOS;
-	strcat(PlayerInfo[playerid][pPayDayDate], ReturnDate(), 32);
+	PaydayInfo[playerid][pPayDayDate][0] = EOS;
+	strcat(PaydayInfo[playerid][pPayDayDate], ReturnDate(), 32);
 	
-	format(p_dialog, sizeof(p_dialog), "\t %s - Financijsko izvjesce - %s", PlayerInfo[playerid][pPayDayDate], GetName(playerid));
+	format(p_dialog, sizeof(p_dialog), "\t %s - Financijsko izvjesce - %s", PaydayInfo[playerid][pPayDayDate], GetName(playerid));
 	
 	// Pretplata na CRYPTO 50 dolara
 	if(PlayerInfo[playerid][pCryptoNumber] != 0 || PlayerInfo[playerid][pMobileCost] > 0)
@@ -294,11 +294,11 @@ GivePlayerPayCheck(playerid)
 		format(f_dialog,sizeof(f_dialog), "\n\tPlaca: +%s (Bonus: %s)", FormatNumber(orgsalary), FormatNumber(orgbonus));
 		strcat(p_dialog,f_dialog, sizeof(p_dialog));
 	}
-	if(PlayerInfo[playerid][pPayDayMoney] > 0)
+	if(PaydayInfo[playerid][pPayDayMoney] > 0)
 	{
-		format(f_dialog,sizeof(f_dialog), "\n\tIsplata odradjenog posla: +%s", FormatNumber(PlayerInfo[playerid][pPayDayMoney]));
+		format(f_dialog,sizeof(f_dialog), "\n\tIsplata odradjenog posla: +%s", FormatNumber(PaydayInfo[playerid][pPayDayMoney]));
 		strcat(p_dialog,f_dialog, sizeof(p_dialog));
-		profit += PlayerInfo[playerid][pPayDayMoney];
+		profit += PaydayInfo[playerid][pPayDayMoney];
 	}
 	if(PlayerVIP[playerid][pDonateRank] > 0)
 	{
@@ -339,7 +339,7 @@ GivePlayerPayCheck(playerid)
 			profit += taxi_job;
 			format(f_dialog,sizeof(f_dialog), "\n\tTaxi Company bonus: %s", FormatNumber(calculate));
 			strcat(p_dialog,f_dialog, sizeof(p_dialog));
-			PlayerInfo[playerid][pPayDayMoney] = 0;
+			PaydayInfo[playerid][pPayDayMoney] = 0;
 		}
 		else if(PlayerJob[playerid][pJob] == 3) {
 			new workingbonus = PlayerJob[playerid][pContractTime] * 8;
@@ -380,11 +380,11 @@ GivePlayerPayCheck(playerid)
  	}
 	format(f_dialog,sizeof(f_dialog), "\nUkupni profit: "COL_GREEN"+%s "COL_RED"(Izracun ne sadrzi troskove kredita i dobitke stednje)", FormatNumber(profit));
 	strcat(p_dialog,f_dialog, sizeof(p_dialog));
-	PlayerInfo[playerid][pProfit] = profit;
+	PaydayInfo[playerid][pProfit] = profit;
 
 	// OSTALO
-	PlayerInfo[playerid][pPayDayHad]++;
-	PlayerInfo[playerid][pPayDay] 		= 0; 	// resetiranje payday minuta na 0
+	PaydayInfo[playerid][pPayDayHad]++;
+	PaydayInfo[playerid][pPayDay] 		= 0; 	// resetiranje payday minuta na 0
 
 	if(PlayerInfo[playerid][pLijekTimer] > 0)
 		PlayerInfo[playerid][pLijekTimer]--;
@@ -495,8 +495,8 @@ GivePlayerPayCheck(playerid)
 	else if(IsPlayerInVehicle(playerid, GetPlayerVehicleID(playerid))) {
 		SendMessage(playerid, MESSAGE_TYPE_INFO, "Stigao vam je PayDay (( /payday ))");
 	}
-	PlayerInfo[playerid][pPayDayDialog] 	= EOS;
-	strcat(PlayerInfo[playerid][pPayDayDialog], p_dialog, 2048);
-	PlayerInfo[playerid][pPayDayMoney] = 0;
+	PaydayInfo[playerid][pPayDayDialog] 	= EOS;
+	strcat(PaydayInfo[playerid][pPayDayDialog], p_dialog, 2048);
+	PaydayInfo[playerid][pPayDayMoney] = 0;
 	return 1;
 }

@@ -1033,8 +1033,8 @@ Public:PlayerMinuteTask(playerid)
 		SavePlayerCredit(playerid);
 		SendClientMessage(playerid, COLOR_YELLOW, "[SMS]: Automatski vam je ponisten namjenski kredit radi neobavljanja kupovne obveze.");
 	}
-	PlayerInfo[playerid][pPayDay] += 1;
-	if(PlayerInfo[playerid][pPayDay] >= 60)
+	PaydayInfo[playerid][pPayDay] += 1;
+	if(PaydayInfo[playerid][pPayDay] >= 60)
 		GivePlayerPayCheck(playerid);
 		
 	if(PlayerJail[playerid][pJailTime] > 0)
@@ -1695,7 +1695,7 @@ stock ShowPlayerStats(playerid, targetid)
 		PlayerInfo[targetid][pContractTime],
 		PlayerVIP[targetid][pDonateRank] ? 1 : 5,
 		PlayerJail[targetid][pArrested],
-		PlayerInfo[targetid][pPayDayMoney],
+		PaydayInfo[targetid][pPayDayMoney],
 		ReturnPlayerFactionName(targetid),
 		ReturnPlayerRankName(targetid),
 		PlayerInfo[targetid][pRank],
@@ -1733,7 +1733,7 @@ stock ShowPlayerStats(playerid, targetid)
     format(motd, sizeof(motd),""COL_WHITE"Muscle lvl: [%d] | Warnings: [%d/3] | Vrijeme do place: [%d minuta] | VIP Vozilo: [%d] | Donator Veh Perms: [%d] | Mobile Credits: [%d$]\n",
 		PlayerInfo[targetid][pMuscle],
 		PlayerInfo[targetid][pWarns],
-		( 60 - PlayerInfo[targetid][pPayDay] ),
+		( 60 - PaydayInfo[targetid][pPayDay] ),
 		PlayerVIP[targetid][pDonatorVehicle],
 		PlayerVIP[targetid][pDonatorVehPerms],
 		PlayerInfo[targetid][pMobileCost]
