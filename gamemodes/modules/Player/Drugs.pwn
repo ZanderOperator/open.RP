@@ -676,7 +676,7 @@ CMD:drug(playerid, params[])
 		//PlayerInfo[playerid][pDrugUses] ++;
 		//PlayerInfo[playerid][pLastDrug] = dtyp;
 		
-		PlayerInfo[playerid][pPayDay] += time;
+		PaydayInfo[playerid][pPayDay] += time;
 		#if defined MODULE_LOGS
 		Log_Write("logfiles/drug_use.txt", "(%s) %s{%d} used %.2f %s of %s from slot %d and shortened his payday by %d min. Quality: %.3f.", 
 			ReturnDate(), 

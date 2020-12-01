@@ -163,7 +163,7 @@ timer OnPlayerCrafting[1000](playerid, type)
 			va_SendClientMessage(playerid, COLOR_RED, "[ ! ] Zaradio si $%d, placa ti je sjela na bankovni racun.", money);
 			UpgradePlayerSkill(playerid);
 			BudgetToPlayerBankMoney(playerid, money); // sjeda mu placa na bankovni racun iz proracuna
-			PlayerInfo[playerid][pPayDayMoney] += money;
+			PaydayInfo[playerid][pPayDayMoney] += money;
 			PlayerJob[playerid][pFreeWorks] 	-= 5;
 			
 			TogglePlayerControllable(playerid, true);

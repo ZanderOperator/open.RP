@@ -795,8 +795,6 @@ ResetPlayerVariables(playerid)
 	PlayerInfo[playerid][pLastIP]			= EOS;
 	PlayerInfo[playerid][pSAMPid] 			= EOS;
 	PlayerInfo[playerid][pEmail][0] 		= EOS;
-	PlayerInfo[playerid][pPayDayDialog] 	= EOS;
-	PlayerInfo[playerid][pPayDayDate] 		= EOS;	//String
 
 	PlayerInfo[playerid][pSecQuestAnswer][0]= EOS;
 	PlayerInfo[playerid][pAccent][0]		= EOS;
@@ -838,10 +836,7 @@ ResetPlayerVariables(playerid)
 	PlayerInfo[playerid][pFishSQLID] 		= -1;
 	PlayerInfo[playerid][pLawDuty]          = 0;
 	PlayerInfo[playerid][pDutySystem]		= 0;
-	PlayerInfo[playerid][pPayDay]			= 0;
-	PlayerInfo[playerid][pPayDayMoney]		= 0;
-	PlayerInfo[playerid][pProfit]			= 0;
-	PlayerInfo[playerid][pPayDayHad]		= 0;
+	PaydayInfo[playerid][pPayDayHad]		= 0;
 	PlayerInfo[playerid][pHouseKey]			= INVALID_HOUSE_ID;
 	PlayerInfo[playerid][pRentKey]			= INVALID_HOUSE_ID;
 	PlayerInfo[playerid][pLeader]			= 0;

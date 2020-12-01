@@ -3112,7 +3112,7 @@ CMD:setstat(playerid, params[])
   		}
   		case 16:
   		{
-  		    PlayerInfo[giveplayerid][pPayDay] = amount;
+  		    PaydayInfo[giveplayerid][pPayDay] = amount;
   		    format(globalstring, sizeof(globalstring), "   Korisnikovo vrijeme do place je postavljeno na %d.", amount);
   		}
 		case 17:
@@ -3148,7 +3148,7 @@ CMD:setstat(playerid, params[])
   		}
 		case 21:
 		{
-		    PlayerInfo[giveplayerid][pPayDayMoney] += amount;
+		    PaydayInfo[giveplayerid][pPayDayMoney] += amount;
 		    format(globalstring, sizeof(globalstring), "   Korisnikov Payday money je sada %d", amount);
 		}
 		case 22:
