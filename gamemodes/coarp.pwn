@@ -861,11 +861,7 @@ ResetPlayerVariables(playerid)
 	PlayerInfo[playerid][pDeathInt] 		= 0;
 	PlayerInfo[playerid][pDeathVW] 			= 0;
 	PlayerInfo[playerid][pJob]				= 0;
-	PlayerInfo[playerid][pCarLic]			= 0;
-	PlayerInfo[playerid][pGunLic]			= 0;
-	PlayerInfo[playerid][pBoatLic]			= 0;
-	PlayerInfo[playerid][pFishLic]			= 0;
-	PlayerInfo[playerid][pFlyLic]			= 0;
+
 	PlayerInfo[playerid][pJailed]			= 0;
 	PlayerInfo[playerid][pJailTime]			= 0;
 	PlayerInfo[playerid][pJailJob] 			= 0;

@@ -205,7 +205,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                 return 1;
             }
             if (AC_GetPlayerMoney(playerid) < money) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate dovoljno novaca!");
-            if (PlayerInfo[playerid][pGunLic] == 0) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate licensu za oruzje!");
+            if (LicenseInfo[playerid][pGunLic] == 0) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate licensu za oruzje!");
 
             if (!CheckPlayerWeapons(playerid, AmmuInfo[index][aiWeapon])) return 1;
 
@@ -420,7 +420,7 @@ CMD:ammunation(playerid, params[])
 CMD:buyarmour(playerid, params[])
 {
     if (!IsPlayerInRangeOfPoint(playerid, 4.0, 295.0016, -38.3526, 1001.5156)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, " Ne nalazite se na mjestu za kupovinu armoura.");
-    if (PlayerInfo[playerid][pGunLic] == 0) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate licensu za oruzje!");
+    if (LicenseInfo[playerid][pGunLic] == 0) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate licensu za oruzje!");
     if (AC_GetPlayerMoney(playerid) < 6000) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate dovoljno novaca!");
 
     PlayerPlaySound(playerid, 1150, 0.0, 0.0, 0.0);
@@ -440,7 +440,7 @@ CMD:issueweaplic(playerid, params[])
         SendClientMessage(playerid, COLOR_RED, "[ ? ]: /issueweaplicense [playerid/name]");
         return 1;
     }
-    if (PlayerInfo[giveplayerid][pGunLic] == 1)
+    if (LicenseInfo[giveplayerid][pGunLic] == 1)
     {
         SendClientMessage(playerid, COLOR_RED, "Osoba vec ima dozvolu za oruzje!");
         return 1;
@@ -451,7 +451,7 @@ CMD:issueweaplic(playerid, params[])
         return 1;
     }
 
-    PlayerInfo[giveplayerid][pGunLic] = 1;
+    LicenseInfo[giveplayerid][pGunLic] = 1;
     PlayerPlaySound(giveplayerid, 1052, 0.0, 0.0, 0.0);
 
     new string[120];
@@ -468,7 +468,7 @@ CMD:revokeweaplic(playerid, params[])
         SendClientMessage(playerid, COLOR_RED, "[ ? ]: /revokeweaplic [playerid/name]");
         return 1;
     }
-    if (PlayerInfo[giveplayerid][pGunLic] == 0)
+    if (LicenseInfo[giveplayerid][pGunLic] == 0)
     {
         SendClientMessage(playerid, COLOR_RED, "Osoba nema dozvolu za oruzje!");
         return 1;
@@ -479,7 +479,7 @@ CMD:revokeweaplic(playerid, params[])
         return 1;
     }
 
-    PlayerInfo[giveplayerid][pGunLic] = 0;
+    LicenseInfo[giveplayerid][pGunLic] = 0;
     PlayerPlaySound(giveplayerid, 1052, 0.0, 0.0, 0.0);
 
     new string[120];

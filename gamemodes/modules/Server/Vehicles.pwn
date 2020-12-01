@@ -981,17 +981,17 @@ hook OnPlayerStateChange(playerid, newstate, oldstate)
 		new
 			vehicleid = GetPlayerVehicleID(playerid);
 
-		if( VehicleInfo[ vehicleid ][ vType ] == VEHICLE_TYPE_BOAT && !PlayerInfo[ playerid ][ pBoatLic ] ) {
+		if( VehicleInfo[ vehicleid ][ vType ] == VEHICLE_TYPE_BOAT && !LicenseInfo[playerid][pBoatLic] ) {
 			SendMessage(playerid, MESSAGE_TYPE_ERROR, " Ne znate upravljati brodom pa ste izasli!");
 			RemovePlayerFromVehicle(playerid);
 			return 1;
 		}
-		if( ( VehicleInfo[ vehicleid ][ vType ] == VEHICLE_TYPE_PLANE || IsAHelio( GetVehicleModel( vehicleid ) ) ) && !PlayerInfo[ playerid ][ pFlyLic ] ) {
+		if( ( VehicleInfo[ vehicleid ][ vType ] == VEHICLE_TYPE_PLANE || IsAHelio( GetVehicleModel( vehicleid ) ) ) && !LicenseInfo[playerid][pFlyLic] ) {
 			SendMessage(playerid, MESSAGE_TYPE_ERROR, " Ne znate upravljati avionom pa ste izasli!");
 			RemovePlayerFromVehicle(playerid);
 			return 1;
 		}
-		if( ( VehicleInfo[ vehicleid ][ vType ] == VEHICLE_TYPE_CAR || VehicleInfo[ vehicleid ][ vType ] == VEHICLE_TYPE_MOTOR ) && !PlayerInfo[ playerid ][ pCarLic ] && !IsABike(vehicleid) ) 
+		if( ( VehicleInfo[ vehicleid ][ vType ] == VEHICLE_TYPE_CAR || VehicleInfo[ vehicleid ][ vType ] == VEHICLE_TYPE_MOTOR ) && !LicenseInfo[playerid][pCarLic] && !IsABike(vehicleid) ) 
 			SendClientMessage( playerid, COLOR_RED, "[ ! ] Nemate vozacku dozvolu pazite se policije!");
 
 		if( VehicleInfo[ vehicleid ][ vJob ] != 0 ) {

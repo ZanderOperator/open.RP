@@ -1651,7 +1651,7 @@ CMD:arrest(playerid, params[])
     SendClientMessage(giveplayerid, COLOR_RED, "[ ! ] Nakon sto ste uhiceni, ostali ste bez dozvole za oruzje!");
 
     AC_ResetPlayerWeapons(giveplayerid);
-    PlayerInfo[giveplayerid][pGunLic]    = 0; // ukidanje dozvole za oruzje
+    LicenseInfo[giveplayerid][pGunLic]    = 0; // ukidanje dozvole za oruzje
     PlayerInfo[giveplayerid][pArrested] += 1; // Dodavanje arrest rekorda +1
 
     if (IsPlayerInRangeOfPoint(playerid, 10.0, 1940.9509, 809.7464, -46.6122))
@@ -2094,7 +2094,7 @@ CMD:take(playerid, params[])
         SendClientMessage(giveplayerid, 0xCC0000FF, tmpString);
         SendClientMessage(giveplayerid, COLOR_LIGHTBLUE, "|____________________________________________________________________|");
 
-        PlayerInfo[giveplayerid][pCarLic] = 0;
+        LicenseInfo[giveplayerid][pCarLic] = 0;
     }
     else if (strcmp(opcija,"weaponpackage",true) == 0)
     {
@@ -2128,7 +2128,7 @@ CMD:take(playerid, params[])
 
         format(tmpString, sizeof(tmpString), "* Policajac %s vam je oduzeo dozvolu za letenje.", GetName(playerid));
         SendClientMessage(giveplayerid, COLOR_LIGHTBLUE, tmpString);
-        PlayerInfo[giveplayerid][pFlyLic] = 0;
+        LicenseInfo[giveplayerid][pFlyLic] = 0;
     }
     else if (strcmp(opcija,"toolkit",true) == 0)
     {
@@ -2161,7 +2161,7 @@ CMD:take(playerid, params[])
 
             format(tmpString, sizeof(tmpString), "[ ! ] Policajac %s vam je oduzeo dozvolu za oruzje.", GetName(playerid));
             SendClientMessage(giveplayerid, COLOR_ORANGE, tmpString);
-            PlayerInfo[giveplayerid][pGunLic] = 0;
+            LicenseInfo[giveplayerid][pGunLic] = 0;
         }
         else SendMessage(playerid, MESSAGE_TYPE_ERROR, "Taj igrac nije blizu vas !");
     }*/
@@ -2176,7 +2176,7 @@ CMD:take(playerid, params[])
 
             format(tmpString, sizeof(tmpString), "[ ! ] Policajac %s vam je oduzeo dozvolu za brod.", GetName(playerid));
             SendClientMessage(giveplayerid, COLOR_ORANGE, tmpString);
-            PlayerInfo[giveplayerid][pBoatLic] = 0;
+            LicenseInfo[giveplayerid][pBoatLic] = 0;
         }
         else SendMessage(playerid, MESSAGE_TYPE_ERROR, "Taj igrac nije blizu vas !");
     }

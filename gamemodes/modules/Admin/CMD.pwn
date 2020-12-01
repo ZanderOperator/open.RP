@@ -2356,11 +2356,11 @@ CMD:givepremium(playerid, params[])
 		PlayerVIP[giveplayerid][pDonatorVehPerms] 	= 2;	
 		PlayerVIP[giveplayerid][pDonateTime]		= gettimestamp() + 2592000;
 
-		PlayerInfo[giveplayerid][pCarLic] 	= 1;
-		PlayerInfo[giveplayerid][pFlyLic] 	= 1;
-		PlayerInfo[giveplayerid][pBoatLic] 	= 1;
-		PlayerInfo[giveplayerid][pFishLic]  = 1;
-		PlayerInfo[giveplayerid][pGunLic]	= 1;
+		LicenseInfo[giveplayerid][pCarLic] 	= 1;
+		LicenseInfo[giveplayerid][pFlyLic] 	= 1;
+		LicenseInfo[giveplayerid][pBoatLic] = 1;
+		LicenseInfo[giveplayerid][pFishLic] = 1;
+		LicenseInfo[giveplayerid][pGunLic]	= 1;
 
 		if(PlayerInfo[giveplayerid][pHouseKey] != INVALID_HOUSE_ID)
 			UpdatePremiumHouseFurSlots(giveplayerid, -1, PlayerInfo[ giveplayerid ][ pHouseKey ]);
@@ -2421,11 +2421,11 @@ CMD:givepremium(playerid, params[])
 		PlayerVIP[giveplayerid][pDonatorVehPerms] 	= 2;
 		PlayerVIP[giveplayerid][pDonateTime]		= gettimestamp() + 3888000; // 45 dana
 
-		PlayerInfo[giveplayerid][pCarLic] 	= 1;
-		PlayerInfo[giveplayerid][pFlyLic] 	= 1;
-		PlayerInfo[giveplayerid][pBoatLic] 	= 1;
-		PlayerInfo[giveplayerid][pFishLic]  = 1;
-		PlayerInfo[giveplayerid][pGunLic] 	= 2;
+		LicenseInfo[giveplayerid][pCarLic] 	= 1;
+		LicenseInfo[giveplayerid][pFlyLic] 	= 1;
+		LicenseInfo[giveplayerid][pBoatLic] = 1;
+		LicenseInfo[giveplayerid][pFishLic] = 1;
+		LicenseInfo[giveplayerid][pGunLic] 	= 2;
 
 		if(PlayerInfo[giveplayerid][pHouseKey] != INVALID_HOUSE_ID)
 			UpdatePremiumHouseFurSlots(giveplayerid, -1, PlayerInfo[ giveplayerid ][ pHouseKey ]);
@@ -3501,7 +3501,7 @@ CMD:givelicense(playerid, params[])
 	    {
 	        case 1:
 	        {
-	            PlayerInfo[giveplayerid][pCarLic] = 1;
+	            LicenseInfo[giveplayerid][pCarLic] = 1;
 	            format(string, sizeof(string), "* Admin %s vam je dao Drivinglicense.", GetName(playerid,false));
 	            SendClientMessage(giveplayerid, COLOR_SKYBLUE, string);
 	            format(string, sizeof(string), "* Dao si %s Drivinglicense.", GetName(giveplayerid,false));
@@ -3517,7 +3517,7 @@ CMD:givelicense(playerid, params[])
 					return 1;
 				}
 				//if(vrsta > 2 || vrsta < 0) return SendClientMessage(playerid, COLOR_RED, "   Nemoj ici ispod broja 0, ili iznad 2!");
-	    		PlayerInfo[giveplayerid][pGunLic] = 1;
+	    		LicenseInfo[giveplayerid][pGunLic] = 1;
 				PlayerPlaySound(giveplayerid, 1052, 0.0, 0.0, 0.0);
 	            format(string, sizeof(string), "* Admin %s vam je dao Gunlicense.", GetName(playerid,false));
 	            SendClientMessage(giveplayerid, COLOR_SKYBLUE, string);
@@ -3526,7 +3526,7 @@ CMD:givelicense(playerid, params[])
 	        }
 	        case 3:
 	        {
-	            PlayerInfo[giveplayerid][pFlyLic] = 1;
+	            LicenseInfo[giveplayerid][pFlyLic] = 1;
 	            format(string, sizeof(string), "* Admin %s vam je dao Flyinglicense.", GetName(playerid,false));
 	            SendClientMessage(giveplayerid, COLOR_SKYBLUE, string);
 	            format(string, sizeof(string), "* Dao si %s Flyinglicense.", GetName(giveplayerid,false));
@@ -3534,7 +3534,7 @@ CMD:givelicense(playerid, params[])
 	        }
 	        case 4:
 	        {
-	            PlayerInfo[giveplayerid][pBoatLic] = 1;
+	            LicenseInfo[giveplayerid][pBoatLic] = 1;
 	            format(string, sizeof(string), "* Admin %s vam je dao Boatlicense.", GetName(playerid,false));
 	            SendClientMessage(giveplayerid, COLOR_SKYBLUE, string);
 	            format(string, sizeof(string), "* Dao si %s Boatlicense.", GetName(giveplayerid,false));
@@ -3542,7 +3542,7 @@ CMD:givelicense(playerid, params[])
 	        }
 	        case 5:
 	        {
-	            PlayerInfo[giveplayerid][pFishLic] = 1;
+	            LicenseInfo[giveplayerid][pFishLic] = 1;
 	            format(string, sizeof(string), "* Admin %s vam je dao Fishlicense.", GetName(playerid,false));
 	            SendClientMessage(giveplayerid, COLOR_SKYBLUE, string);
 	            format(string, sizeof(string), "* Dao si %s Fishlicense.", GetName(giveplayerid,false));
@@ -3752,7 +3752,7 @@ CMD:atake(playerid, params[])
   		SendClientMessage(playerid, -1, globalstring);
     	format(globalstring, sizeof(globalstring), "* Admin %s vam je oduzeo vozacku dozvolu.", GetName(playerid,false));
 	    SendClientMessage(giveplayerid, -1, globalstring);
-	    PlayerInfo[giveplayerid][pCarLic] = false;
+	    LicenseInfo[giveplayerid][pCarLic] = false;
 	}
 	else if (strcmp(x_nr, "flyinglicense", true) == 0)
 	{
@@ -3761,7 +3761,7 @@ CMD:atake(playerid, params[])
     	SendClientMessage(playerid, -1, globalstring);
 	    format(globalstring, sizeof(globalstring), "* Admin %s vam je oduzeo dozvolu za avione.", GetName(playerid,false));
 	    SendClientMessage(giveplayerid, -1, globalstring);
-	    PlayerInfo[giveplayerid][pFlyLic] = false;
+	    LicenseInfo[giveplayerid][pFlyLic] = false;
 	}
 	else if (strcmp(x_nr, "boatlicense", true) == 0)
 	{
@@ -3770,7 +3770,7 @@ CMD:atake(playerid, params[])
 	    SendClientMessage(playerid, -1, globalstring);
 	    format(globalstring, sizeof(globalstring), "* Admin %s vam je oduzeo dozvolu za brodove.", GetName(playerid,false));
 	    SendClientMessage(giveplayerid, -1, globalstring);
-	    PlayerInfo[giveplayerid][pBoatLic] = false;
+	    LicenseInfo[giveplayerid][pBoatLic] = false;
 	}
 	else if (strcmp(x_nr, "fishinglicense", true) == 0)
 	{
@@ -3779,7 +3779,7 @@ CMD:atake(playerid, params[])
 		SendClientMessage(playerid, -1, globalstring);
 		format(globalstring, sizeof(globalstring), "* Admin %s vam je oduzeo dozvolu za ribolov.", GetName(playerid,false));
 		SendClientMessage(giveplayerid, -1, globalstring);
-		PlayerInfo[giveplayerid][pFishLic] = false;
+		LicenseInfo[giveplayerid][pFishLic] = false;
 	}
 	else if (strcmp(x_nr, "weaponlicense", true) == 0)
 	{
@@ -3788,7 +3788,7 @@ CMD:atake(playerid, params[])
 	    SendClientMessage(playerid, -1, globalstring);
 	    format(globalstring, sizeof(globalstring), "* Admin %s vam je oduzeo dozvolu za oruzje.", GetName(playerid,false));
 	    SendClientMessage(giveplayerid, -1, globalstring);
-	    PlayerInfo[giveplayerid][pGunLic] = 0;
+	    LicenseInfo[giveplayerid][pGunLic] = 0;
 	}
 	else if (strcmp(x_nr, "weapons", true) == 0)
 	{
@@ -4608,9 +4608,9 @@ CMD:jail(playerid, params[])
     PutPlayerInSector(giveplayerid);
 	va_SendClientMessage(giveplayerid, COLOR_RED, "[ADMIN JAIL] Pritvoreni ste na %d minuta. Jamcevina: Nedostupna", time);
 	
-	if(PlayerInfo[giveplayerid][pGunLic] != 0) {
+	if(LicenseInfo[giveplayerid][pGunLic] != 0) {
 		SendClientMessage(giveplayerid, COLOR_RED, "[ ! ] Nakon sto ste uhiceni, ostali ste bez dozvole za oruzje!");
-		PlayerInfo[giveplayerid][pGunLic] = 0;
+		LicenseInfo[giveplayerid][pGunLic] = 0;
 	}
 	#if defined MODULE_LOGS
 	new playerip[MAX_PLAYER_IP];

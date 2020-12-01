@@ -195,10 +195,10 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 					PlayerVIP[playerid][pDonateTime]	= gettimestamp() + 2592000;
 					BudgetToPlayerMoney(playerid, 40000); // budjet - igrac
 					
-					PlayerInfo[playerid][pCarLic] 	= 1;
-					PlayerInfo[playerid][pFlyLic] 	= 1;
-					PlayerInfo[playerid][pBoatLic] 	= 1;
-					PlayerInfo[playerid][pFishLic]  = 1;
+					LicenseInfo[playerid][pCarLic] 	= 1;
+					LicenseInfo[playerid][pFlyLic] 	= 1;
+					LicenseInfo[playerid][pBoatLic] 	= 1;
+					LicenseInfo[playerid][pFishLic]  = 1;
 					
 					if(PlayerInfo[playerid][pHouseKey] != INVALID_HOUSE_ID)
 						UpdatePremiumHouseFurSlots(playerid, -1, PlayerInfo[ playerid ][ pHouseKey ]);

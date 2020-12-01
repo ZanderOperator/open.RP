@@ -44,7 +44,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 				{
 					case 0:
 					{
-						if(PlayerInfo[playerid][pCarLic] == 1)
+						if(LicenseInfo[playerid][pCarLic] == 1)
 							return SendClientMessage(playerid, COLOR_RED, "Vec imas vozacku dozvolu!");
 						
 						ShowPlayerDialog(playerid, DIALOG_LICENSE_CONFIRM, DIALOG_STYLE_MSGBOX, "Vozacka Dozvola", "Jeste li sigurni da zelite zapoceti test?\nTest ce vas kostati 1000$, 100$ po pokusaju.", "Da", "Back");
@@ -54,7 +54,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 						SendClientMessage(playerid, COLOR_RED, "Trenutno nije dozvoljena kupovina license za oruzje. ((Zahtjev za licensu postavite na forumu!))");
 					case 2:
 					{
-						if(PlayerInfo[playerid][pFlyLic] == 1)
+						if(LicenseInfo[playerid][pFlyLic] == 1)
 							return SendClientMessage(playerid, COLOR_RED, "Vec imas dozvolu za letenje!");
 						
 						ShowPlayerDialog(playerid, DIALOG_LICENSE_CONFIRM, DIALOG_STYLE_MSGBOX, "Dozvola za letenje", "Jeste li sigurni da zelite kupiti dozvolu za letenje?\nDozvola kosta 3000$.", "Da", "Back");
@@ -62,7 +62,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 					}
 					case 3:
 					{
-						if(PlayerInfo[playerid][pBoatLic] == 1)
+						if(LicenseInfo[playerid][pBoatLic] == 1)
 							return SendClientMessage(playerid, COLOR_RED, "Vec imas dozvolu za brod!");
 						
 						ShowPlayerDialog(playerid, DIALOG_LICENSE_CONFIRM, DIALOG_STYLE_MSGBOX, "Dozvola za brod", "Jeste li sigurni da zelite kupiti dozvolu za brod?\nDozvola kosta 3000$.", "Da", "Back");
@@ -70,7 +70,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 					}
 					case 4:
 					{
-						if(PlayerInfo[playerid][pFishLic] == 1)
+						if(LicenseInfo[playerid][pFishLic] == 1)
 							return SendClientMessage(playerid, COLOR_RED, "Vec imas dozvolu za ribolov!");
 						
 						ShowPlayerDialog(playerid, DIALOG_LICENSE_CONFIRM, DIALOG_STYLE_MSGBOX, "Dozvola za ribolov", "Jeste li sigurni da zelite kupiti dozvolu za ribolov?\nDozvola kosta 800$.", "Da", "Back");
@@ -105,7 +105,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 						return SendClientMessage(playerid, COLOR_RED, "Nemas dovoljno novca (3000$).");
 					
 					ShowPlayerDialog(playerid, -1, DIALOG_STYLE_MSGBOX, "Dozvola za letenje", "Kupio si dozvolu za letenje!\nZelimo vam siguran i ugodan let.", "Exit", "");
-					PlayerInfo[playerid][pFlyLic] = 1;
+					LicenseInfo[playerid][pFlyLic] = 1;
 					
 					PlayerToBudgetMoney(playerid, 3000);
 				}
@@ -115,7 +115,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 						return SendClientMessage(playerid, COLOR_RED, "Nemas dovoljno novca (3000$).");
 					
 					ShowPlayerDialog(playerid, -1, DIALOG_STYLE_MSGBOX, "Dozvola za brod", "Kupio si dozvolu za brod!\nZelimo vam sigurnu i ugodnu voznju.", "Exit", "");
-					PlayerInfo[playerid][pBoatLic] = 1;
+					LicenseInfo[playerid][pBoatLic] = 1;
 					
 					PlayerToBudgetMoney(playerid, 3000);
 				}
@@ -125,7 +125,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 						return SendClientMessage(playerid, COLOR_RED, "Nemas dovoljno novca (800$).");
 					
 					ShowPlayerDialog(playerid, -1, DIALOG_STYLE_MSGBOX, "Dozvola za letenje", "Kupio si dozvolu za ribolov!.", "Exit", "");
-					PlayerInfo[playerid][pFishLic] = 1;
+					LicenseInfo[playerid][pFishLic] = 1;
 					
 					PlayerToBudgetMoney(playerid, 800);
 				}
@@ -154,7 +154,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 					{
 						ShowPlayerDialog(playerid, -1, DIALOG_STYLE_MSGBOX, "Vozacka dozvola", "Cestitamo, prosli ste ispit za vozacku dozvolu!\nZelimo vam sigurnu i ugodnu voznju.", "Exit", "");
 						
-						PlayerInfo[playerid][pCarLic] = 1;
+						LicenseInfo[playerid][pCarLic] = 1;
 						
 						PlayerQuestion[playerid] = -1;
 						PlayerAnswers[playerid] = 0;

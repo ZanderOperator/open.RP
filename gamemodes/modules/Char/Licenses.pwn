@@ -110,7 +110,7 @@ hook OnPlayerStateChange(playerid, newstate, oldstate)
 		if( VehicleInfo[ GetPlayerVehicleID(playerid) ][ vUsage ] == VEHICLE_USAGE_LICENSE )
 		{
 			if( GetVehicleModel(GetPlayerVehicleID(playerid)) == 410 ) {
-				if( PlayerInfo[ playerid ][ pCarLic ] )	{
+				if( LicenseInfo[playerid][pCarLic] )	{
 					SendMessage(playerid, MESSAGE_TYPE_ERROR, "Vec posjedujete vozacku dozvolu!");
 					RemovePlayerFromVehicle(playerid);
 				}
@@ -125,7 +125,7 @@ hook OnPlayerStateChange(playerid, newstate, oldstate)
 			}
 			else if( GetVehicleModel(GetPlayerVehicleID(playerid)) == 446 ) 
 			{
-				if( PlayerInfo[ playerid ][ pBoatLic ] ) 
+				if( LicenseInfo[playerid][pBoatLic] ) 
 				{
 					SendMessage(playerid, MESSAGE_TYPE_ERROR, "Vec posjedujete dozvolu za brod!");
 					RemovePlayerFromVehicle(playerid);
@@ -170,7 +170,7 @@ hook OnPlayerEnterCheckpoint(playerid)
 				SetVehicleToRespawn(GetPlayerVehicleID(playerid));
 				RemovePlayerFromVehicle(playerid);
 				SendClientMessage( playerid, COLOR_RED, "[ ! ] Uspjesno ste polozili vozacku za brod!");
-				PlayerInfo[ playerid ][ pBoatLic ] = 1;
+				LicenseInfo[playerid][pBoatLic] = 1;
 				
 				// MySQL query
 				mysql_fquery(g_SQL, "UPDATE accounts SET boatlic = '1' WHERE sqlid = '%d'",
@@ -204,7 +204,7 @@ hook OnPlayerEnterCheckpoint(playerid)
 				SetVehicleToRespawn(GetPlayerVehicleID(playerid));
 				RemovePlayerFromVehicle(playerid);
 				SendClientMessage( playerid, COLOR_RED, "[ ! ] Uspjesno ste polozili vozacku za automobil!");
-				PlayerInfo[ playerid ][ pCarLic ] = 1;
+				LicenseInfo[playerid][pCarLic] = 1;
 				
 				mysql_fquery(g_SQL, "UPDATE accounts SET carlic = '1' WHERE sqlid = '%d'",
 					PlayerInfo[playerid][pSQLID]
@@ -371,7 +371,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 
 CMD:takedriving(playerid, params[])
 {
-	if( PlayerInfo[ playerid ][ pCarLic ] ) 		
+	if( LicenseInfo[playerid][pCarLic] ) 		
 		return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Vec posjedujete vozacku dozvolu!");
 	if( Bit1_Get( gr_DrivingStarted, playerid ) ) 	
 		return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Vec polazete vozacki!");
@@ -399,13 +399,13 @@ CMD:buylicenses(playerid, params[])
 	
 	if( !strcmp( pick, "fly") ) 
 	{
-		if( PlayerInfo[playerid][pFlyLic] )			
+		if( LicenseInfo[playerid][pFlyLic] )			
 			return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Vec imate dozvolu za letenje!");
 		if( AC_GetPlayerMoney(playerid) < FLY_LICENSE_PRICE )
 			return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate %d$!", FLY_LICENSE_PRICE );
 		
 		GameTextForPlayer(playerid, "~g~Kupljena dozvola za letenje!", 1500, 1);
-		PlayerInfo[playerid][pFlyLic] = 1;
+		LicenseInfo[playerid][pFlyLic] = 1;
 		PlayerToBudgetMoney(playerid, FLY_LICENSE_PRICE); // u proracun novci idu
 		
 		mysql_fquery(g_SQL, "UPDATE accounts SET flylic = '1' WHERE sqlid = '%d'",
@@ -414,13 +414,13 @@ CMD:buylicenses(playerid, params[])
 	}
 	else if( !strcmp( pick, "fish") )
 	 {
-		if( PlayerInfo[playerid][pFishLic] )		
+		if( LicenseInfo[playerid][pFishLic] )		
 			return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Vec imate dozvolu za ribolov!");
 		if( AC_GetPlayerMoney(playerid) < FISH_LICENSE_PRICE ) 	
 			return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate %d$!", FISH_LICENSE_PRICE );
 		
 		GameTextForPlayer(playerid, "~g~Kupljena dozvola za ribolov!", 1500, 1);
-		PlayerInfo[playerid][pFishLic] = 1;
+		LicenseInfo[playerid][pFishLic] = 1;
 		PlayerToBudgetMoney(playerid, FISH_LICENSE_PRICE); // u proracun novci idu
 		
 		mysql_fquery(g_SQL, "UPDATE accounts SET fishlic = '1' WHERE sqlid = '%d'",
