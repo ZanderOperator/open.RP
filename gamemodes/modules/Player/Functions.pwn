@@ -1202,7 +1202,7 @@ stock ChangePlayerName(playerid, newname[], type, bool:admin_cn = false)
 	);
 	
 	PlayerInfo[ playerid ][ pArrested ] = 0;
-	PlayerInfo[ playerid ][ pGunLic ] 	= 0;
+	LicenseInfo[playerid][pGunLic] 	= 0;
 	SavePlayerData(playerid);
 	
 	if(admin_cn == (false)) {

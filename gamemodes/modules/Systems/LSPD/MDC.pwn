@@ -111,7 +111,7 @@ static GetPlayerPhoneNumber(sqlid)
 // MySQL Callbacks
 
 // Player GENERAL
-static OnPlayerMDCDataLoad(playerid, const playername[])
+static OnPlayerMDCDataLoad(playerid, const playername[], sqlid)
 {
     inline OnPlayerMDCLoad()
     {
@@ -119,7 +119,8 @@ static OnPlayerMDCDataLoad(playerid, const playername[])
             return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, " Korisnik %s ne postoji!", playername);
 
         new
-            loadInfo[E_PLAYER_DATA];
+            loadInfo[E_PLAYER_DATA],
+            licInfo[E_LICENSES_INFO];
 
         // Load Accounts
         cache_get_value_name_int(0, "sqlid"         , loadInfo[pSQLID]);
@@ -129,13 +130,14 @@ static OnPlayerMDCDataLoad(playerid, const playername[])
         cache_get_value_name_int(0, "jailed"        , loadInfo[pJailed]);
         cache_get_value_name_int(0, "jailtime"      , loadInfo[pJailTime]);
         cache_get_value_name_int(0, "arrested"      , loadInfo[pArrested]);
-        cache_get_value_name_int(0, "carlic"        , loadInfo[pCarLic]);
-        cache_get_value_name_int(0, "gunlic"        , loadInfo[pGunLic]);
-        cache_get_value_name_int(0, "boatlic"       , loadInfo[pBoatLic]);
-        cache_get_value_name_int(0, "fishlic"       , loadInfo[pFishLic]);
-        cache_get_value_name_int(0, "flylic"        , loadInfo[pFlyLic]);
         cache_get_value_name    (0, "look"          , loadInfo[pLook]);
 
+        cache_get_value_name_int(0, "carlic"        , licInfo[pCarLic]);
+        cache_get_value_name_int(0, "gunlic"        , licInfo[pGunLic]);
+        cache_get_value_name_int(0, "boatlic"       , licInfo[pBoatLic]);
+        cache_get_value_name_int(0, "fishlic"       , licInfo[pFishLic]);
+        cache_get_value_name_int(0, "flylic"        , licInfo[pFlyLic]);
+        cache_get_value_name_int(0, "passport"      , licInfo[pPassport]);
         // Load House Key
         foreach(new house : Houses)
         {
@@ -166,7 +168,7 @@ static OnPlayerMDCDataLoad(playerid, const playername[])
             format(tmpLook, sizeof(tmpLook), "%s", loadInfo[pLook]);
             format(tmpLook2, sizeof(tmpLook2), "\n", loadInfo[pLook][60]);
         }
-        tmpGunLic = (loadInfo[pGunLic] == 1) ? ("~b~CCW~l~") : ((loadInfo[pGunLic] == 2) ? ("~g~CCW~l~") : ("~r~No~l~"));
+        
         format(mdcString, sizeof(mdcString),
             "Profile: %s~n~Address: %s~n~Phone Number: %s~n~Sex: %s~n~Age: %d~n~~g~Desc.:~l~ ~n~%s~n~%s~n~",
             playername,
@@ -178,16 +180,18 @@ static OnPlayerMDCDataLoad(playerid, const playername[])
             tmpLook2
         );
 
+        tmpGunLic = (licInfo[pGunLic] == 1) ? ("~b~CCW~l~") : ((licInfo[pGunLic] == 2) ? ("~g~CCW~l~") : ("~r~No~l~"));
         format(mdcString2, sizeof(mdcString2),
-            "~b~CURRENT STATUS~l~~n~Jailed: %s~n~Jail time: %d h~n~Arrested: %d~n~~n~~b~LICENSES~l~~n~Drivers: %s~n~Weapon: %s~n~Boat: %s~n~Fish: %s~n~Pilot: %s",
+            "~b~CURRENT STATUS~l~~n~Jailed: %s~n~Jail time: %d h~n~Arrested: %d~n~~n~~b~LICENSES~l~~n~Drivers: %s~n~Weapon: %s~n~Boat: %s~n~Fish: %s~n~Pilot: %s~n~Passport: %s",
             loadInfo[pJailed] == 1 ? ("~g~Yes~l~") : ("~r~No~l~"),
             loadInfo[pJailTime],
             loadInfo[pArrested],
-            loadInfo[pCarLic]  >= 1 ? ("~g~Yes~l~") : ("~r~No~l~"),
+            licInfo[pCarLic]  >= 1 ? ("~g~Yes~l~") : ("~r~No~l~"),
             tmpGunLic,
-            loadInfo[pBoatLic] >= 1 ? ("~g~Yes~l~") : ("~r~No~l~"),
-            loadInfo[pFishLic] >= 1 ? ("~g~Yes~l~") : ("~r~No~l~"),
-            loadInfo[pFlyLic]  >= 1 ? ("~g~Yes~l~") : ("~r~No~l~")
+            licInfo[pBoatLic] >= 1 ? ("~g~Yes~l~") : ("~r~No~l~"),
+            licInfo[pFishLic] >= 1 ? ("~g~Yes~l~") : ("~r~No~l~"),
+            licInfo[pFlyLic]  >= 1 ? ("~g~Yes~l~") : ("~r~No~l~"),
+            licInfo[pPassport]  >= 1 ? ("~g~Yes~l~") : ("~r~No~l~")
         );
 
         CreateMDCTextDraws(playerid, loadInfo[pSkin], false);
@@ -197,11 +201,17 @@ static OnPlayerMDCDataLoad(playerid, const playername[])
         PlayerTextDrawSetString(playerid, MDCHeader[playerid], tmpString);
         SelectTextDraw(playerid, 0x427AF4FF);
     }
+        
     MySQL_PQueryInline(g_SQL,  
 		using inline OnPlayerMDCLoad, 
-		va_fquery(g_SQL, 
-            "SELECT sqlid, playaSkin, sex, age, jailed, jailtime, arrested,\n\
-            carlic, gunlic, boatlic, fishlic, flylic, look FROM accounts WHERE name = '%e'", playername
+        va_fquery(g_SQL, 
+            "SELECT \n\
+                accounts.sqlid, accounts.playaSkin, accounts.sex, accounts.age, accounts.look,\n\
+                player_jail.jailed, player_jail.jailtime, player_jail.arrested, \n\
+                player_licenses.* \n\
+                FROM accounts, player_jail, player_licenses \n\
+                WHERE accounts.sqlid = player_jail.sqlid = player_licenses.sqlid = '%d'",
+            sqlid
         ),
 		""
 	);
@@ -1221,7 +1231,13 @@ hook OnPlayerClickPlayerTD(playerid, PlayerText:playertextid)
         }
         if (playertextid == MDCGeneralButton[playerid])
         {
-            OnPlayerMDCDataLoad(playerid, TargetName[playerid]);
+            new player_sqlid = GetSQLFromPlayerName(TargetName[playerid]);
+            if(player_sqlid == -1)
+                return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "%s ne postoji registriran u bazi!", 
+                    TargetName[playerid]
+                );
+
+            OnPlayerMDCDataLoad(playerid, TargetName[playerid], player_sqlid);
         }
         if (playertextid == MDCTicketsButton[playerid])
         {
@@ -1232,18 +1248,13 @@ hook OnPlayerClickPlayerTD(playerid, PlayerText:playertextid)
             OnPlayerAPBLoad(playerid, TargetName[playerid]);
         }
         if (playertextid == MDCVehButton[playerid])
-        { // Mora od upisanog imena izvuci SQLID jer spremanje nije po imenu
-            new
-                Cache:result,
-                //counts,
-                player_sqlid;
+        {
+            new player_sqlid = GetSQLFromPlayerName(TargetName[playerid]);
+            if(player_sqlid == -1)
+                return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "%s ne postoji registriran u bazi!", 
+                    TargetName[playerid]
+                );
 
-            // TODO: make complement TargetSqlid[playerid] with TargetName, to eliminate the need for a second query
-            result = mysql_query(g_SQL, va_fquery(g_SQL, "SELECT sqlid FROM accounts WHERE name = '%e'", TargetName[playerid]));
-            //counts = cache_num_rows();
-            cache_get_value_name_int(0, "sqlid", player_sqlid);
-            cache_delete(result);
-            //if (!counts) return 1;
             OnPlayerCoVehsLoad(playerid, player_sqlid);
         }
         if (playertextid == MDCRecordButton[playerid])
@@ -1312,9 +1323,18 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
         {
             if (!response) return ShowPlayerDialog(playerid, DIALOG_MDC_MAIN, DIALOG_STYLE_LIST, "Mobile Data Computer - HOME", "Pretrazi osobu\nPretrazi vozilo\nProvjera dosjea\nProvjera kazni", "Choose", "Abort");
 
-            if (strfind(inputtext, "_", true) == -1) return ShowPlayerDialog(playerid, DIALOG_MDC_PLAYER, DIALOG_STYLE_INPUT, "Mobile Data Computer - PLAYER", "Unesite ime i prezime osobe\nNAPOMENA: Mora biti s znakom '_'!", "Input", "Abort");
+            if (strfind(inputtext, "_", true) == -1) 
+                return ShowPlayerDialog(playerid, DIALOG_MDC_PLAYER, DIALOG_STYLE_INPUT, "Mobile Data Computer - PLAYER", "Unesite ime i prezime osobe\nNAPOMENA: Mora biti s znakom '_'!", "Input", "Abort");
+            
+            new player_sqlid = GetSQLFromPlayerName(TargetName[playerid]);
+            if(player_sqlid == -1)
+                return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "%s ne postoji registriran u bazi!", 
+                    TargetName[playerid]
+                );
+
             format(TargetName[playerid], MAX_PLAYER_NAME, "%s", inputtext);
-            OnPlayerMDCDataLoad(playerid, TargetName[playerid]);
+            OnPlayerMDCDataLoad(playerid, TargetName[playerid], player_sqlid);
+
         }
         case DIALOG_MDC_VEHICLE:
         {

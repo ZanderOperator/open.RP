@@ -80,11 +80,6 @@ enum E_PLAYER_DATA
 	pMarriedTo[MAX_PLAYER_NAME],
 	pAccent[19],
 	pKilled,
-	pCarLic,
-	pGunLic,
-	pBoatLic,
-	pFishLic,
-	pFlyLic,
 	Float:pMarker1[3],
 	Float:pMarker2[3],
 	Float:pMarker3[3],
@@ -149,7 +144,6 @@ enum E_PLAYER_DATA
 	bool:approved,
 	hWhistle,
 	pVoted,
-	pPassport,
 	hRope,
 	pPhoneBG,
 	pPhoneMask,
@@ -199,6 +193,17 @@ enum E_VIP_INFO
 	pDonatorVehPerms,
 }
 new PlayerVIP[ MAX_PLAYERS ][ E_VIP_INFO ];
+
+enum E_LICENSES_INFO
+{
+	pCarLic,
+	pGunLic,
+	pBoatLic,
+	pFishLic,
+	pFlyLic,
+	pPassport
+}
+new LicenseInfo[ MAX_PLAYERS ][ E_LICENSES_INFO ];
 
 enum E_CREDIT_INFO
 {

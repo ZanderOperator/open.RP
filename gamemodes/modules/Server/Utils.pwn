@@ -151,6 +151,22 @@ stock GetName(playerid, bool:replace=true)
 	return name;
 }
 
+stock GetSQLFromPlayerName(const playername[])
+{
+	new 
+		sqlid = -1,
+		Cache:result = mysql_query(g_SQL, va_fquery(g_SQL, "SELECT sqlid FROM accounts WHERE name = '%e'", playername));
+
+	new rows;
+	cache_get_row_count(rows);
+	if(!rows)
+		return -1;
+
+	cache_get_value_name_int(0, "sqlid", sqlid);
+	cache_delete(result);
+	return sqlid;
+}
+
 stock GetPlayerNameFromSQL(sqlid)
 {
     new

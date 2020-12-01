@@ -296,13 +296,6 @@ public LoadPlayerData(playerid)
 
         cache_get_value_name_int(0,  "playaSkin"	, PlayerInfo[playerid][pChar]);
 		format(PlayerInfo[playerid][pAccent]		, sizeof(string), string);
-		cache_get_value_name(0,		 "marriedto"	, PlayerInfo[playerid][pMarriedTo]	, MAX_PLAYER_NAME);
-
-		cache_get_value_name_int(0,  "carlic"		, PlayerInfo[playerid][pCarLic]);
-		cache_get_value_name_int(0,  "gunlic"		, PlayerInfo[playerid][pGunLic]);
-		cache_get_value_name_int(0,	 "boatlic"		, PlayerInfo[playerid][pBoatLic]);
-		cache_get_value_name_int(0,	 "fishlic"		, PlayerInfo[playerid][pFishLic]);
-		cache_get_value_name_int(0,	 "flylic"		, PlayerInfo[playerid][pFlyLic]);
 
 		cache_get_value_name_int(0,  "jailed"		, PlayerInfo[playerid][pJailed]);		
 		cache_get_value_name_int(0,  "jailtime"		, PlayerInfo[playerid][pJailTime]); 
@@ -341,7 +334,6 @@ public LoadPlayerData(playerid)
 		cache_get_value_name_int(0,	"casinocool"	, PlayerInfo[playerid][pCasinoCool]);
 		cache_get_value_name_int(0,	"news"			, PlayerInfo[playerid][pNews]);
 		cache_get_value_name_int(0,	"voted"			, PlayerInfo[playerid][pVoted]);
-		cache_get_value_name_int(0,	"passport"		, PlayerInfo[playerid][pPassport]);
 		
 		cache_get_value_name_int(0,	"savings_cool"	, PlayerInfo[playerid][pSavingsCool]);
 		cache_get_value_name_int(0,	"savings_time"	, PlayerInfo[playerid][pSavingsTime]);
@@ -744,7 +736,6 @@ stock SavePlayerData(playerid)
     if( !SafeSpawned[playerid] )	
 		return 1;
 	
-	SavePlayerVIP(playerid);
 	SavePlayerCredit(playerid);
 	SavePlayerExperience(playerid);
 	UpdatePlayerMobile(playerid);
@@ -765,10 +756,10 @@ stock SavePlayerData(playerid)
 			freeworks = '%d', fishworks = '%d', fishsqlid = '%d', levels = '%d', respects = '%d', jobkey = '%d',\n\
 			parts = '%d', contracttime = '%d', health = '%f', FishingSkill = '%d',\n\
 			jailed = '%d', jailtime = '%d', bailprice = '%d',\n\
-			carlic = '%d', gunlic = '%d', boatlic = '%d', fishlic = '%d', flylic = '%d', rentkey = '%d',\n\
+			rentkey = '%d',\n\
 			maskid = '%d', hunger = '%f', spawnedcar = '%d', armour = '%f', muscle = '%d', arrested = '%d',\n\
 			fightstyle = '%d', clock = '%d', rope = '%d', cigaretes = '%d', lighter = '%d',\n\
-			playaPayDay = '%d', playaPDMoney = '%d', profit = '%d', lijektimer = '%d', passport = '%d',\n\
+			playaPayDay = '%d', playaPDMoney = '%d', profit = '%d', lijektimer = '%d',\n\
 			SAMPid = '%e', forumname = '%e', gymtimes = '%d', gymcounter = '%d',\n\
 			boombox = '%d', boomboxtype = '%d', casinocool = '%d', news = '%d', HasRadio = '%d', voted = '%d',\n\
 			drugused = '%d', drugseconds = '%d', lastdrug = '%d',\n\
@@ -807,11 +798,6 @@ stock SavePlayerData(playerid)
 		PlayerInfo[playerid][pJailed],
 		PlayerInfo[playerid][pJailTime],
 		PlayerInfo[playerid][pBailPrice],
-		PlayerInfo[playerid][pCarLic],
-		PlayerInfo[playerid][pGunLic],
-		PlayerInfo[playerid][pBoatLic],
-		PlayerInfo[playerid][pFishLic],
-		PlayerInfo[playerid][pFlyLic],
 		PlayerInfo[playerid][pRentKey],
 		PlayerInfo[playerid][pMaskID],
 		PlayerInfo[playerid][pHunger],
@@ -828,7 +814,7 @@ stock SavePlayerData(playerid)
 		PlayerInfo[playerid][pPayDayMoney],
 		PlayerInfo[playerid][pProfit],
 		PlayerInfo[playerid][pLijekTimer],
-		PlayerInfo[playerid][pPassport],
+		LicenseInfo[playerid][pPassport],
 		PlayerInfo[playerid][pSAMPid],
 		PlayerInfo[playerid][pForumName],
 		PlayerInfo[playerid][pGymTimes],

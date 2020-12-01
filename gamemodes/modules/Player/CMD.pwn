@@ -1216,28 +1216,28 @@ CMD:screenfade(playerid, params[])
 CMD:licenses(playerid, params[])
 {
 	new tmpString[ 40 ];
-	//gunlic = PlayerInfo[playerid][pGunLic];
+	//gunlic = LicenseInfo[playerid][pGunLic];
 	//tip = (gunlic == 1) ? ("PF") : ((gunlic == 2) ? ("CCW") : ("N/A"));
 	
     SendClientMessage(playerid, -1, "|__________________ Licenses __________________|");
     format(tmpString, sizeof(tmpString), "** Vozacka Dozvola: %s.", 
-		PlayerInfo[playerid][pCarLic] ? ("Da") : ("Ne")
+		LicenseInfo[playerid][pCarLic] ? ("Da") : ("Ne")
 	);
 	SendClientMessage(playerid, COLOR_GREY, tmpString);
 	format(tmpString, sizeof(tmpString), "** Dozvola za letenje: %s.", 
-		PlayerInfo[playerid][pFlyLic] ? ("Da") : ("Ne")
+		LicenseInfo[playerid][pFlyLic] ? ("Da") : ("Ne")
 	);
 	SendClientMessage(playerid, COLOR_GREY, tmpString);
 	format(tmpString, sizeof(tmpString), "** Dozvola za brodove: %s.", 
-		PlayerInfo[playerid][pBoatLic] ? ("Da") : ("Ne")
+		LicenseInfo[playerid][pBoatLic] ? ("Da") : ("Ne")
 	);
 	SendClientMessage(playerid, COLOR_GREY, tmpString);
 	format(tmpString, sizeof(tmpString), "** Dozvola za pecanje: %s.", 
-		PlayerInfo[playerid][pFishLic] ? ("Da") : ("Ne")
+		LicenseInfo[playerid][pFishLic] ? ("Da") : ("Ne")
 	);
 	SendClientMessage(playerid, COLOR_GREY, tmpString);
 	format(tmpString, sizeof(tmpString), "** Dozvola za oruzje: %s.", 
-		PlayerInfo[playerid][pGunLic] ? ("Da") : ("Ne")
+		LicenseInfo[playerid][pGunLic] ? ("Da") : ("Ne")
 	);
 	SendClientMessage(playerid, COLOR_GREY, tmpString);
 	SendClientMessage(playerid, -1, "|______________________________________________|");
@@ -1279,24 +1279,24 @@ CMD:showlicenses(playerid, params[])
 		return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Taj igrac nije blizu tebe!");
 	
 	new tmpString[ 40 ];
-	//gunlic = PlayerInfo[playerid][pGunLic];
+	//gunlic = LicenseInfo[playerid][pGunLic];
 	//tip = (gunlic == 1) ? ("PF") : ((gunlic == 2) ? ("CCW") : ("N/A"));
 	
     va_SendClientMessage(giveplayerid, -1, "|__________________ Licenses (%s) __________________|", GetName(playerid, false));
     format(tmpString, sizeof(tmpString), "** Vozacka Dozvola: %s.", 
-		PlayerInfo[playerid][pCarLic] ? ("Da") : ("Ne")
+		LicenseInfo[playerid][pCarLic] ? ("Da") : ("Ne")
 	);
 	SendClientMessage(giveplayerid, COLOR_GREY, tmpString);
 	format(tmpString, sizeof(tmpString), "** Dozvola za letenje: %s.", 
-		PlayerInfo[playerid][pFlyLic] ? ("Da") : ("Ne")
+		LicenseInfo[playerid][pFlyLic] ? ("Da") : ("Ne")
 	);
 	SendClientMessage(giveplayerid, COLOR_GREY, tmpString);
 	format(tmpString, sizeof(tmpString), "** Dozvola za brodove: %s.", 
-		PlayerInfo[playerid][pBoatLic] ? ("Da") : ("Ne")
+		LicenseInfo[playerid][pBoatLic] ? ("Da") : ("Ne")
 	);
 	SendClientMessage(giveplayerid, COLOR_GREY, tmpString);
 	format(tmpString, sizeof(tmpString), "** Dozvola za pecanje: %s.", 
-		PlayerInfo[playerid][pFishLic] ? ("Da") : ("Ne")
+		LicenseInfo[playerid][pFishLic] ? ("Da") : ("Ne")
 	);
 	SendClientMessage(giveplayerid, COLOR_GREY, tmpString);
 	
@@ -1306,7 +1306,7 @@ CMD:showlicenses(playerid, params[])
 	else
 	{
 		format(tmpString, sizeof(tmpString), "** Dozvola za oruzje: %s.",
-		PlayerInfo[playerid][pGunLic] ? ("Da") : ("Ne"));
+		LicenseInfo[playerid][pGunLic] ? ("Da") : ("Ne"));
 	}
 	SendClientMessage(giveplayerid, COLOR_GREY, tmpString);
 	SendClientMessage(giveplayerid, -1, "|______________________________________________|");
@@ -2366,10 +2366,10 @@ CMD:give(playerid, params[])
             {
      			if(ProxDetectorS(3.0, playerid, giveplayerid))
 	            {
-	    			if(PlayerInfo[giveplayerid][pGunLic] >= 1) return SendClientMessage(playerid, COLOR_RED, "Osoba vec ima dozvolu za oruzje!");
+	    			if(LicenseInfo[giveplayerid][pGunLic] >= 1) return SendClientMessage(playerid, COLOR_RED, "Osoba vec ima dozvolu za oruzje!");
 	    			if((IsACop(playerid) && PlayerInfo[playerid][pRank] > 5) || PlayerInfo[playerid][pLeader] == 1)
 					{
-	    			    PlayerInfo[giveplayerid][pGunLic] = vrsta;
+	    			    LicenseInfo[giveplayerid][pGunLic] = vrsta;
 				        PlayerPlaySound(giveplayerid, 1052, 0.0, 0.0, 0.0);
 				    	format(globalstring, sizeof(globalstring), "* %s daje %s dozvolu za oruzje.", GetName(playerid), GetName(giveplayerid));
         				ProxDetector(20.0, playerid, globalstring, COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE);

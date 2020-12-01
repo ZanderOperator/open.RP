@@ -42,6 +42,12 @@ SavePlayerVIP(playerid)
     return 1;
 }
 
+hook SavePlayerData(playerid)
+{
+    SavePlayerVIP(playerid);
+    return 1;
+}
+
 hook ResetPlayerVariables(playerid)
 {
     PlayerVIP[playerid][pDonateRank]		= 0;
