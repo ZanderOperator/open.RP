@@ -50,13 +50,13 @@ ResetImpoundVars(playerid)
 
 CMD:jobimpound(playerid, params[])
 {
-	if(PlayerInfo[playerid][pJob] != IMPOUNDER_ID)
+	if(PlayerJob[playerid][pJob] != IMPOUNDER_ID)
 		return SendClientMessage(playerid, COLOR_RED, "[GRESKA]: Nemas posao impoundera!");
 	
 	if(ImpounderJob[playerid][ivID] != 0)
 		return SendClientMessage(playerid, COLOR_RED, "[GRESKA]: Vec radis posao!");
 		
-	if(PlayerInfo[playerid][pFreeWorks] < 1)
+	if(PlayerJob[playerid][pFreeWorks] < 1)
 		return SendClientMessage(playerid, COLOR_RED, "[GRESKA]: Odradio si dovoljno za ovaj payday! Pricekaj iduci.");
 	
 	if(GetVehicleModel(GetPlayerVehicleID(playerid)) != 525)
@@ -155,7 +155,7 @@ CMD:jobimpound(playerid, params[])
 
 CMD:stopimpound(playerid, params[])
 {
-	if(PlayerInfo[playerid][pJob] != IMPOUNDER_ID)
+	if(PlayerJob[playerid][pJob] != IMPOUNDER_ID)
 		return SendClientMessage(playerid, COLOR_RED, "[GRESKA]: Nemas posao impoundera!");
 
 	ResetImpoundVars(playerid);
@@ -247,7 +247,7 @@ OPUnTowIV(playerid, veh)
 		GetVehicleParamsEx(veh, engine, lights, alarm, doors, bonnect, boot, objective);
 		SetVehicleParamsEx(veh, VEHICLE_PARAMS_OFF, VEHICLE_PARAMS_OFF, VEHICLE_PARAMS_OFF, 1, bonnect, boot, objective);
 	}
-	PlayerInfo[playerid][pFreeWorks] -= 5;
+	PlayerJob[playerid][pFreeWorks] -= 5;
 	
 	new 
 		money = minrand(350, 450);

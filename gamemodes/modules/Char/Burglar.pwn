@@ -866,7 +866,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 */
 CMD:stolengoods(playerid, params[])
 {
-	if( PlayerInfo[ playerid ][ pJob ] != ROBBER_ID ) return SendClientMessage( playerid, COLOR_RED, "Niste lopov!");
+	if( PlayerJob[playerid][pJob] != ROBBER_ID ) return SendClientMessage( playerid, COLOR_RED, "Niste lopov!");
 	if( RobbingInfo[ playerid ][ rbSlotsGoods ][ 0 ] == 0 && RobbingInfo[ playerid ][ rbSlotsGoods ][ 1 ] == 0 && RobbingInfo[ playerid ][ rbSlotsGoods ][ 2 ] == 0 && RobbingInfo[ playerid ][ rbSlotsGoods ][ 3 ] == 0 && RobbingInfo[ playerid ][ rbSlotsGoods ][ 4 ] == 0 ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Vas inventory je prazan!");
 	ShowPlayerDialog(playerid, 0, DIALOG_STYLE_MSGBOX, "POPIS UKRADENE ROBE", ListStolenGoods(playerid), "OK", "");
 	return 1;
@@ -900,7 +900,7 @@ CMD:sellgoods(playerid, params[])
 // SKILL 2 - HOUSE
 CMD:crack_alarm(playerid, params[])
 {
-	if( ( PlayerInfo[ playerid ][ pJob ] != ROBBER_ID ) || GetPlayerSkillLevel(playerid, 5) < 2) return SendClientMessage( playerid, COLOR_RED, "Niste lopov ili nemate dovoljan skill level!");
+	if( ( PlayerJob[playerid][pJob] != ROBBER_ID ) || GetPlayerSkillLevel(playerid, 5) < 2) return SendClientMessage( playerid, COLOR_RED, "Niste lopov ili nemate dovoljan skill level!");
 	new
 		house = Bit16_Get( gr_PlayerInfrontHouse, playerid );
 		
@@ -926,7 +926,7 @@ CMD:crack_alarm(playerid, params[])
 
 CMD:stealitems(playerid, params[])
 {
-	if( ( PlayerInfo[ playerid ][ pJob ] != ROBBER_ID ) || GetPlayerSkillLevel(playerid, 5) < 2 ) return SendClientMessage( playerid, COLOR_RED, "Niste lopov ili nemate dovoljan skill level!");
+	if( ( PlayerJob[playerid][pJob] != ROBBER_ID ) || GetPlayerSkillLevel(playerid, 5) < 2 ) return SendClientMessage( playerid, COLOR_RED, "Niste lopov ili nemate dovoljan skill level!");
 	new
 		house = Bit16_Get( gr_PlayerInHouse, playerid );
 	if( house == INVALID_HOUSE_ID || !house ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste u kuci!");
@@ -948,7 +948,7 @@ CMD:stealitems(playerid, params[])
 			SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uspjesno ste ukrali radio! Idite do prodavackog mjesta za prodaju.");
 			SetStolenGoodInInventory(playerid, DIALOG_TYPE_RADIO);
 			SetPlayerSpecialAction(playerid, SPECIAL_ACTION_CARRY);
-			PlayerInfo[playerid][pFreeWorks] 	-= 5;
+			PlayerJob[playerid][pFreeWorks] 	-= 5;
 			UpgradePlayerSkill(playerid);
 		}
 		case 2: {
@@ -958,7 +958,7 @@ CMD:stealitems(playerid, params[])
 			SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uspjesno ste ukrali televizor! Idite do prodavackog mjesta za prodaju.");
 			SetStolenGoodInInventory(playerid, DIALOG_TYPE_TV);
 			SetPlayerSpecialAction(playerid, SPECIAL_ACTION_CARRY);
-			PlayerInfo[playerid][pFreeWorks] 	-= 5;
+			PlayerJob[playerid][pFreeWorks] 	-= 5;
 			UpgradePlayerSkill(playerid);
 		}
 		case 3: {
@@ -968,7 +968,7 @@ CMD:stealitems(playerid, params[])
 			SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uspjesno ste ukrali mikrovalnu! Idite do prodavackog mjesta za prodaju.");
 			SetStolenGoodInInventory(playerid, DIALOG_TYPE_MICRO);
 			SetPlayerSpecialAction(playerid, SPECIAL_ACTION_CARRY);
-			PlayerInfo[playerid][pFreeWorks] 	-= 5;
+			PlayerJob[playerid][pFreeWorks] 	-= 5;
 			UpgradePlayerSkill(playerid);
 		}
 	}
@@ -1036,7 +1036,7 @@ CMD:takeitem(playerid, params[])
 // SKILL 3 - HOUSE MONEY
 CMD:stealmoney(playerid, params[])
 {
-	if( ( PlayerInfo[ playerid ][ pJob ] != ROBBER_ID ) || GetPlayerSkillLevel(playerid, 5) < 3 ) return SendClientMessage( playerid, COLOR_RED, "Niste lopov ili nemate dovoljan skill level!");
+	if( ( PlayerJob[playerid][pJob] != ROBBER_ID ) || GetPlayerSkillLevel(playerid, 5) < 3 ) return SendClientMessage( playerid, COLOR_RED, "Niste lopov ili nemate dovoljan skill level!");
 	if( PlayerInfo[ playerid ][ pFreeWorks ] < 1 ) 	return SendClientMessage( playerid, COLOR_RED, "Ne mozes vise krasti (cekajte payday)!");
 	new
 		house = Bit16_Get( gr_PlayerInHouse, playerid );
@@ -1055,7 +1055,7 @@ CMD:stealmoney(playerid, params[])
 			stolen_money = floatround(( HouseInfo[ house ][ hTakings ] ) / 3);
 			SendFormatMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uspjesno ste ukrali %d$ iz sefa!", stolen_money);
 			HouseToPlayerMoney(playerid, house, stolen_money);
-			PlayerInfo[playerid][pFreeWorks] 	-= 7;
+			PlayerJob[playerid][pFreeWorks] 	-= 7;
 			UpgradePlayerSkill(playerid);
 			#if defined MODULE_LOGS
 			Log_Write("/logfiles/job_burglar.txt", "(%s) Player %s(%s) stole %d$ from house safe. (Adress: %s | SQLID: %d)", 
@@ -1078,7 +1078,7 @@ CMD:stealmoney(playerid, params[])
 			stolen_money = floatround(( HouseInfo[ house ][ hTakings ] ) / 2);
 			SendFormatMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uspjesno ste ukrali %d$ iz sefa!", stolen_money);
 			HouseToPlayerMoney(playerid, house, stolen_money);
-			PlayerInfo[playerid][pFreeWorks] 	-= 7;
+			PlayerJob[playerid][pFreeWorks] 	-= 7;
 			UpgradePlayerSkill(playerid);
 			AntiSpamInfo[playerid][stHouseMoney] = gettimestamp() + ANTI_SPAM_STEAL_MONEY;
 			#if defined MODULE_LOGS

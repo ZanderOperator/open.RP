@@ -134,7 +134,7 @@ stock static CheckGarbages(playerid)
 
 		BudgetToPlayerBankMoney (playerid, money ); // novac sjeda na radnu knjizicu iz proracuna
 		PlayerInfo[playerid][pPayDayMoney] += money;
-		PlayerInfo[playerid][pFreeWorks] -= 5;
+		PlayerJob[playerid][pFreeWorks] -= 5;
 		UpgradePlayerSkill(playerid);
 		gStartedWork[playerid] = 0;
 		gHasGarbage[playerid] = false;
@@ -282,7 +282,7 @@ hook OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
 {
 	if(PRESSED(KEY_FIRE))
 	{
-	    if(PlayerInfo[playerid][pJob] != PLAYER_JOB_GARBAGE) return 1;
+	    if(PlayerJob[playerid][pJob] != PLAYER_JOB_GARBAGE) return 1;
 		if(gHasGarbage[playerid] == true && gStartedWork[playerid] == 1)
 		{
 			new nContainer = GetNearestContainer(playerid);
@@ -353,7 +353,7 @@ hook OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
 
 					BudgetToPlayerBankMoney (playerid, money ); // novac sjeda na radnu knjizicu iz proracuna
 					PlayerInfo[playerid][pPayDayMoney] += money;
-					PlayerInfo[playerid][pFreeWorks] -= 5;
+					PlayerJob[playerid][pFreeWorks] -= 5;
 					UpgradePlayerSkill(playerid);
 					gStartedWork[playerid] = 0;
 					pOnDepony[playerid] = 0;
@@ -367,7 +367,7 @@ hook OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
 	}
 	if(PRESSED(KEY_NO))
 	{
-	    if(PlayerInfo[playerid][pJob] == PLAYER_JOB_GARBAGE)
+	    if(PlayerJob[playerid][pJob] == PLAYER_JOB_GARBAGE)
 	    {
 			if(gDeponyEmpty[playerid] == 1)
 			{
@@ -405,7 +405,7 @@ hook OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
 
 hook OnPlayerEnterCheckpoint(playerid)
 {
-	if(PlayerInfo[playerid][pJob] == PLAYER_JOB_GARBAGE) 
+	if(PlayerJob[playerid][pJob] == PLAYER_JOB_GARBAGE) 
 	{	
 		if( gStartedWork[playerid] == 1 ) 
 		{
@@ -468,7 +468,7 @@ CMD:garbage(playerid, params[])
 {
 	new
 		pick[ 8 ];
-	if(PlayerInfo[playerid][pJob] != PLAYER_JOB_GARBAGE) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste zaposleni kao smetlar!");
+	if(PlayerJob[playerid][pJob] != PLAYER_JOB_GARBAGE) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste zaposleni kao smetlar!");
 	if( sscanf( params, "s[8] ", pick ) ) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /garbage [foot/truck/clothes/stop]");
 	
 	if( !strcmp( pick, "foot", true ) ) 

@@ -92,6 +92,8 @@ ResetMonthPaydays()
 	return 1;
 }
 
+
+// TODO: MULTIPLE TABLE SELECT workaround - sql reorganization
 Public:CheckAccountsForInactivity()
 {	
 	new 
@@ -150,6 +152,7 @@ Public:CheckAccountsForInactivity()
 				continue;
 
 			monthpaydays = GetPlayerPaydayCount(sqlid);
+			donaterank = GetPlayerVIP(sqlid);
 			
 			cache_set_active(Data); // Povratak cachea nakon provjere u bazi
 				
@@ -157,8 +160,7 @@ Public:CheckAccountsForInactivity()
 			cache_get_value_name_int(i, "jobkey", jobkey);
 			cache_get_value_name_int(i, "contracttime", contracttime);
 			cache_get_value_name_int(i, "lastloginstamp", loginstamp);
-			cache_get_value_name_int(i, "vipRank", donaterank);
-			
+
 			switch(donaterank)
 			{
 				case 1: loginstamp += (5 * 24 * 3600);
@@ -175,7 +177,7 @@ Public:CheckAccountsForInactivity()
 			
 			if(jobkey != 0 && loginstamp <= (gettimestamp() - MAX_JOB_INACTIVITY_TIME) && monthpaydays < 3) // 
 			{
-				mysql_fquery(g_SQL, "UPDATE accounts SET jobkey = '0', contracttime = '0' WHERE sqlid = '%d'", sqlid);				
+				mysql_fquery(g_SQL, "UPDATE player_jobs SET jobkey = '0', contracttime = '0' WHERE sqlid = '%d'", sqlid);				
 				RemoveOfflineJob(jobkey);
 				
 				Log_Write("logfiles/inactive_players.txt", "(%s) %s[SQLID: %d] due to inactivity lost his %s[Job ID:%d] job i %d hours of job contract.",
@@ -416,6 +418,7 @@ Public:CheckAccountsForInactivity()
 		cache_delete(Data);
 		return 1;
 	}
+	// sqlid, jobkey, contracttime, lastloginstamp, monthpaydays, donaterank, adminmessage
 
 	MySQL_PQueryInline(g_SQL,  
 		using inline OnInactiveAccsLoad, 
@@ -1820,13 +1823,13 @@ stock RemovePlayerScreenFade(playerid)
 	BlindTD[playerid] = PlayerText:INVALID_TEXT_DRAW;
 	return 1;
 }
-stock IllegalFactionJobCheck(factionid, jobid)
+stock IllegalFactionJobCheck(factionid, jobid) // TODO: workaround - sql reorganization
 {
     new	Cache:result,
 		counts;
 
 	result = mysql_query(g_SQL, 
-				va_fquery(g_SQL, "SELECT sqlid FROM accounts WHERE jobkey = '%d' AND (facMemId = '%d' OR facLeadId = '%d')", 
+				va_fquery(g_SQL, "SELECT sqlid FROM player_jobs WHERE jobkey = '%d' AND (facMemId = '%d' OR facLeadId = '%d')", 
 					jobid, 
 					factionid, 
 					factionid

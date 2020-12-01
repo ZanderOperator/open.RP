@@ -164,7 +164,7 @@ timer OnPlayerCrafting[1000](playerid, type)
 			UpgradePlayerSkill(playerid);
 			BudgetToPlayerBankMoney(playerid, money); // sjeda mu placa na bankovni racun iz proracuna
 			PlayerInfo[playerid][pPayDayMoney] += money;
-			PlayerInfo[playerid][pFreeWorks] 	-= 5;
+			PlayerJob[playerid][pFreeWorks] 	-= 5;
 			
 			TogglePlayerControllable(playerid, true);
 			ApplyAnimationEx(playerid, "CARRY", "crry_prtial", 4.0, 0, 0, 0, 0, 0, 1, 0);
@@ -563,7 +563,7 @@ public OnPlayerEnterCheckpoint(playerid)
 */
 CMD:craft(playerid, params[])
 {
-	if( PlayerInfo[ playerid ][ pJob ] != PLAYER_JOB_CRAFTER ) 	return SendClientMessage( playerid, COLOR_RED, "Niste zaposleni kao crafter!");
+	if( PlayerJob[playerid][pJob] != PLAYER_JOB_CRAFTER ) 	return SendClientMessage( playerid, COLOR_RED, "Niste zaposleni kao crafter!");
 	if( Bit1_Get( gr_PlayerWorkCrafting, playerid ) ) {	
 		Bit4_Set( gr_CraftingCPId, 			playerid, 0 );
 		Bit4_Set( gr_CraftingGeneratorId, 	playerid, 0 );

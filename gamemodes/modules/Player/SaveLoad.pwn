@@ -1,8 +1,10 @@
 #include <YSI_Coding\y_hooks>
 
+// Core Tables Save/Load Functions
 #include "modules/Player\SaveLoad/player_vip_status.pwn"
 #include "modules/Player\SaveLoad/player_licenses.pwn"
 #include "modules/Player\SaveLoad/player_jail.pwn"
+#include "modules/Player\SaveLoad/player_job.pwn"
 
 /*
 	##     ##    ###    ########   ######  
@@ -286,11 +288,8 @@ public LoadPlayerData(playerid)
 		cache_get_value_name_int(0,  "handMoney"	, PlayerInfo[playerid][pMoney]);
 		cache_get_value_name_int(0,  "bankMoney"	, PlayerInfo[playerid][pBank]);
 
-		cache_get_value_name_int(0,  "jobkey"		, PlayerInfo[playerid][pJob]);
-		cache_get_value_name_int(0,  "freeworks"	, PlayerInfo[playerid][pFreeWorks]);
 		cache_get_value_name_int(0,  "fishworks"	, PlayerInfo[playerid][pFishWorks]);
 		cache_get_value_name_int(0,  "parts"		, PlayerInfo[playerid][pParts]);
-		cache_get_value_name_int(0,  "contracttime"	, PlayerInfo[playerid][pContractTime]);
 		cache_get_value_name_int(0,  "facLeadId"	, PlayerInfo[playerid][pLeader]);
 		cache_get_value_name_int(0,  "facMemId"		, PlayerInfo[playerid][pMember]);
 		cache_get_value_name_int(0,  "facRank"		, PlayerInfo[playerid][pRank]);
@@ -414,6 +413,10 @@ public LoadPlayerData(playerid)
 			KickMessage(playerid);
 			return 1;
 		}
+
+		// Player Job & Job Stats
+		LoadPlayerJob(playerid); 
+
 		// Player VIP status
 		LoadPlayerVIP(playerid);
 
@@ -548,8 +551,8 @@ public RegisterPlayer(playerid)
     mysql_pquery(g_SQL,
 		va_fquery(g_SQL, 
 			"INSERT INTO accounts (registered,register_date,name,password,teampin,email,\n\
-				secawnser,expdate,levels,age,sex,handMoney,bankMoney,jobkey,playaSkin,casinocool) \n\
-				VALUES ('0','%e','%e','%e','','%e','','','%d','%d','%d','%d','%d','%d','%d','%d')",
+				secawnser,expdate,levels,age,sex,handMoney,bankMoney,playaSkin,casinocool) \n\
+				VALUES ('0','%e','%e','%e','','%e','','','%d','%d','%d','%d','%d','%d','%d')",
 			ReturnDate(),
 			GetName(playerid, false),
 			PlayerInfo[playerid][pPassword],
@@ -559,7 +562,6 @@ public RegisterPlayer(playerid)
 			PlayerInfo[playerid][pSex],
 			NEW_PLAYER_MONEY,
 			NEW_PLAYER_BANK,
-			0,
 			29,
 			5), 
 		"OnAccountFinish", 
@@ -578,7 +580,7 @@ public OnAccountFinish(playerid)
 	PlayerInfo[playerid][pChar] 			= 29;
 	PlayerInfo[playerid][pPayDayMoney] 		= 0;
 	PlayerInfo[playerid][pProfit]			= 0;
-	PlayerInfo[playerid][pFreeWorks] 		= 15;
+	PlayerJob[playerid][pFreeWorks] 		= 15;
 	PlayerInfo[playerid][pMuted] 			= true;
 	PlayerInfo[playerid][pAdmin] 			= 0;
 	PlayerInfo[playerid][pHelper] 			= 0; 
@@ -673,8 +675,8 @@ SafeSpawnPlayer(playerid)
 		 PlayerInfo[ playerid ][ pSQLID ]
 	);
 	
-	if( ( 10 <= PlayerInfo[ playerid ][ pJob ] <= 12 ) && ( !PlayerInfo[playerid][pMember] && !PlayerInfo[playerid][pLeader])  )
-		PlayerInfo[ playerid ][ pJob ] = 0;
+	if( ( 10 <= PlayerJob[playerid][pJob] <= 12 ) && ( !PlayerInfo[playerid][pMember] && !PlayerInfo[playerid][pLeader])  )
+		PlayerJob[playerid][pJob] = 0;
 
 	if( !PlayerInfo[playerid][pRegistered] )
 		PlayerNewUser_Set(playerid, true);
@@ -755,9 +757,9 @@ stock SavePlayerData(playerid)
 	mysql_fquery_ex(g_SQL, 
 		"UPDATE accounts SET registered = '%d', adminLvl = '%d', helper = '%d', playaWarns = '%d', lastlogin = '%e',\n\
 			lastloginstamp = '%d', lastip = '%e', muted = '%d', sex = '%d', age = '%d', changenames = '%d',\n\
-			changetimes = '%d', handMoney = '%d', bankMoney = '%d', connecttime = '%d', contracttime = '%d',\n\
-			freeworks = '%d', fishworks = '%d', fishsqlid = '%d', levels = '%d', respects = '%d', jobkey = '%d',\n\
-			parts = '%d', contracttime = '%d', health = '%f', FishingSkill = '%d',\n\
+			changetimes = '%d', handMoney = '%d', bankMoney = '%d', connecttime = '%d',\n\
+			fishworks = '%d', fishsqlid = '%d', levels = '%d', respects = '%d',\n\
+			parts = '%d', health = '%f', FishingSkill = '%d',\n\
 			rentkey = '%d',\n\
 			maskid = '%d', hunger = '%f', spawnedcar = '%d', armour = '%f', muscle = '%d',\n\
 			fightstyle = '%d', clock = '%d', rope = '%d', cigaretes = '%d', lighter = '%d',\n\
@@ -786,15 +788,11 @@ stock SavePlayerData(playerid)
 		PlayerInfo[playerid][pMoney],
 		PlayerInfo[playerid][pBank],
 		PlayerInfo[playerid][pConnectTime],
-		PlayerInfo[playerid][pContractTime],
-		PlayerInfo[playerid][pFreeWorks],
 		PlayerInfo[playerid][pFishWorks],
 		PlayerInfo[playerid][pFishSQLID],
 		PlayerInfo[playerid][pLevel],
 		PlayerInfo[playerid][pRespects],
-		PlayerInfo[playerid][pJob],
 		PlayerInfo[playerid][pParts],
-		PlayerInfo[playerid][pContractTime],
 		PlayerInfo[playerid][pHealth],
 		PlayerInfo[playerid][pFishingSkill],
 		PlayerInfo[playerid][pRentKey],

@@ -101,14 +101,14 @@ SetPlayerJob(playerid, job_id) {
 		case 17: JobData[IMPOUNDER] ++;
 		case 18: JobData[TRANSPORTER] ++;
 	}
-	PlayerInfo[playerid][pJob] = job_id;
-	PlayerInfo[playerid][pContractTime] = 0;
+	PlayerJob[playerid][pJob] = job_id;
+	PlayerJob[playerid][pContractTime] = 0;
 	SaveJobData();
 	return (true);
 }
 
 RemovePlayerJob(playerid) {
-	switch(PlayerInfo[playerid][pJob]) {
+	switch(PlayerJob[playerid][pJob]) {
 		case 1: JobData[SWEEPER] --;
 		case 3: JobData[MECHANIC] --;
 		case 5: JobData[CRAFTER] --;
@@ -119,8 +119,8 @@ RemovePlayerJob(playerid) {
 		case 17: JobData[IMPOUNDER] --;
 		case 18: JobData[TRANSPORTER] --;
 	}
-	PlayerInfo[playerid][pJob] 	= 0;
-	PlayerInfo[playerid][pContractTime] = 0;
+	PlayerJob[playerid][pJob] 	= 0;
+	PlayerJob[playerid][pContractTime] = 0;
 	SaveJobData();
 	return (true);
 }
@@ -252,15 +252,15 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 			}
 			// Set FreeWorks
 			if(PlayerVIP[playerid][pDonateRank] == 0)
-				PlayerInfo[playerid][pFreeWorks] = NORMAL_FREE_WORKS;	
+				PlayerJob[playerid][pFreeWorks] = NORMAL_FREE_WORKS;	
 			else if(PlayerVIP[playerid][pDonateRank] == 1)
-				PlayerInfo[playerid][pFreeWorks] = BRONZE_DONATOR_FREE_WORKS;
+				PlayerJob[playerid][pFreeWorks] = BRONZE_DONATOR_FREE_WORKS;
 			else if(PlayerVIP[playerid][pDonateRank] == 2)
-				PlayerInfo[playerid][pFreeWorks] = SILVER_DONATOR_FREE_WORKS;
+				PlayerJob[playerid][pFreeWorks] = SILVER_DONATOR_FREE_WORKS;
 			else if(PlayerVIP[playerid][pDonateRank] == 3)
-				PlayerInfo[playerid][pFreeWorks] = GOLD_DONATOR_FREE_WORKS;
+				PlayerJob[playerid][pFreeWorks] = GOLD_DONATOR_FREE_WORKS;
 			else if(PlayerVIP[playerid][pDonateRank] == 4)
-				PlayerInfo[playerid][pFreeWorks] = PLATINUM_DONATOR_FREE_WORKS;
+				PlayerJob[playerid][pFreeWorks] = PLATINUM_DONATOR_FREE_WORKS;
 				
 			return 1;
 		}
@@ -275,17 +275,17 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 				{
 					if( PlayerInfo[ playerid ][ pLevel ] < 3 ) 
 						return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Samo igraci level 3+ mogu biti lopovi.");
-					PlayerInfo[ playerid ][ pJob ] 			= 9;
+					PlayerJob[playerid][pJob] 			= 9;
 					if(PlayerVIP[playerid][pDonateRank] == 0)
-						PlayerInfo[playerid][pFreeWorks] = NORMAL_FREE_WORKS;	
+						PlayerJob[playerid][pFreeWorks] = NORMAL_FREE_WORKS;	
 					else if(PlayerVIP[playerid][pDonateRank] == 1)
-						PlayerInfo[playerid][pFreeWorks] = BRONZE_DONATOR_FREE_WORKS;
+						PlayerJob[playerid][pFreeWorks] = BRONZE_DONATOR_FREE_WORKS;
 					else if(PlayerVIP[playerid][pDonateRank] == 2)
-						PlayerInfo[playerid][pFreeWorks] = SILVER_DONATOR_FREE_WORKS;
+						PlayerJob[playerid][pFreeWorks] = SILVER_DONATOR_FREE_WORKS;
 					else if(PlayerVIP[playerid][pDonateRank] == 3)
-						PlayerInfo[playerid][pFreeWorks] = GOLD_DONATOR_FREE_WORKS;
+						PlayerJob[playerid][pFreeWorks] = GOLD_DONATOR_FREE_WORKS;
 					else if(PlayerVIP[playerid][pDonateRank] == 4)
-						PlayerInfo[playerid][pFreeWorks] = PLATINUM_DONATOR_FREE_WORKS;
+						PlayerJob[playerid][pFreeWorks] = PLATINUM_DONATOR_FREE_WORKS;
 					SendClientMessage( playerid, COLOR_RED, "[ ! ] Zaposlili ste se kao lopov!");
 				}
 			}
@@ -301,7 +301,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 
 CMD:takejob(playerid, params[])
 {
-	if(PlayerInfo[playerid][pJob] != 0) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Imate posao, koristite /quitjob!");
+	if(PlayerJob[playerid][pJob] != 0) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Imate posao, koristite /quitjob!");
 	if( IsACop(playerid) || IsFDMember(playerid) || IsASD(playerid) || IsAGov(playerid) ) return SendClientMessage( playerid, COLOR_RED, "Ne smijete biti u organizaciji!");
 	
 	if( IsPlayerInRangeOfPoint(playerid, 7.0, 1617.5137,-1560.1582,14.1662) )
@@ -315,35 +315,35 @@ CMD:takejob(playerid, params[])
 
 CMD:quitjob(playerid, params[])
 {
-	if(PlayerInfo[playerid][pJob] == 0) return SendClientMessage( playerid, COLOR_RED, "Nemate posao!");
-	if(PlayerInfo[playerid][pFreeWorks] < 15) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Pricekajte PayDay i NE radite ture da mozete dati otkaz na svome poslu!");
+	if(PlayerJob[playerid][pJob] == 0) return SendClientMessage( playerid, COLOR_RED, "Nemate posao!");
+	if(PlayerJob[playerid][pFreeWorks] < 15) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Pricekajte PayDay i NE radite ture da mozete dati otkaz na svome poslu!");
 	switch( PlayerVIP[playerid][pDonateRank]) {
 		case 0: {
-			if(PlayerInfo[playerid][pContractTime] >= 5) {
+			if(PlayerJob[playerid][pContractTime] >= 5) {
 				SendMessage(playerid, MESSAGE_TYPE_INFO, "Vec ste ispunili vas 5 sat ugovora, i dali ste otkaz na poslu.");
 				RemovePlayerJob(playerid);
 			} else {
-				new chours = 5 - PlayerInfo[playerid][pContractTime];
+				new chours = 5 - PlayerJob[playerid][pContractTime];
 				SendFormatMessage(playerid, MESSAGE_TYPE_INFO, "Jos imate %d sati rada da bi ste ispunili svoj ugovor i dali otkaz.", chours);
 			}
 		}
 		case 1: {
-			if(PlayerInfo[playerid][pContractTime] >= 2) {
+			if(PlayerJob[playerid][pContractTime] >= 2) {
 				SendMessage(playerid, MESSAGE_TYPE_INFO, "Vec ste ispunili vas 2 sata ugovora, i dali ste otkaz na poslu.");
 				RemovePlayerJob(playerid);
 			} else {
-				new chours = 2 - PlayerInfo[playerid][pContractTime];
+				new chours = 2 - PlayerJob[playerid][pContractTime];
 				SendFormatMessage(playerid, MESSAGE_TYPE_INFO, "Jos imate %d sati rada da bi ste ispunili svoj ugovor i dali otkaz.", chours);
 			}
 		}
 		case 2: {
-			if(PlayerInfo[playerid][pContractTime] >= 1)
+			if(PlayerJob[playerid][pContractTime] >= 1)
 			{
 				SendMessage(playerid, MESSAGE_TYPE_INFO, "Vec ste ispunili vas 1 sat ugovora, i dali ste otkaz na poslu.");
 				RemovePlayerJob(playerid);
-				PlayerInfo[playerid][pContractTime] = 0;
+				PlayerJob[playerid][pContractTime] = 0;
 			} else {
-				new chours = 2 - PlayerInfo[playerid][pContractTime];
+				new chours = 2 - PlayerJob[playerid][pContractTime];
 				SendFormatMessage(playerid, MESSAGE_TYPE_INFO, "Jos imate %d sati rada da bi ste ispunili svoj ugovor i dali otkaz.", chours);
 			}
 		}

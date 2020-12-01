@@ -2799,7 +2799,7 @@ CMD:enter(playerid, params[])
         {
             if (PlayerInfo[playerid][pMember] == PickupInfo[pickup][epOrganizations] ||
                 PlayerInfo[playerid][pLeader] == PickupInfo[pickup][epOrganizations] ||
-                PlayerInfo[playerid][pJob] == PickupInfo[pickup][epJob] ||
+                PlayerJob[playerid][pJob] == PickupInfo[pickup][epJob] ||
                 PickupInfo[pickup][epOrganizations] == 255 ||
                 PickupInfo[pickup][epJob] == 255)
             {

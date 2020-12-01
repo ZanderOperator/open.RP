@@ -1711,9 +1711,9 @@ CMD:quitfaction(playerid, params[])
 
     SendMessage(playerid, MESSAGE_TYPE_INFO, "Napustili ste organizaciju i sada ste civil.");
 
-    if (10 <= PlayerInfo[playerid][pJob] <= 12)
+    if (10 <= PlayerJob[playerid][pJob] <= 12)
     {
-        PlayerInfo[playerid][pJob] = 0;
+        PlayerJob[playerid][pJob] = 0;
     }
     if (IsACop(playerid) || IsASD(playerid) || IsFDMember(playerid) || IsAGov(playerid))
     {

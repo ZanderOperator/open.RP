@@ -79,7 +79,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 					);
 					#endif
 					
-					PlayerInfo[playerid][pFreeWorks] 	= 25;
+					PlayerJob[playerid][pFreeWorks] 	= 25;
 					PlayerVIP[playerid][pDonateRank] 	= 1;
 					PlayerInfo[playerid][pRespects] 	+= 10;
 					PlayerInfo[playerid][pChangeTimes] 	+= 2;
@@ -133,7 +133,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 					);
 					#endif
 					
-					PlayerInfo[playerid][pFreeWorks] 	= 25;
+					PlayerJob[playerid][pFreeWorks] 	= 25;
 					PlayerVIP[playerid][pDonateRank] 	= 2;
 					PlayerInfo[playerid][pRespects] 	+= 20;
 					PlayerInfo[playerid][pLevel] 		+= 2;
@@ -187,7 +187,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 					);
 					#endif
 					
-					PlayerInfo[playerid][pFreeWorks] 	= 30;
+					PlayerJob[playerid][pFreeWorks] 	= 30;
 					PlayerVIP[playerid][pDonateRank] 	= 3;
 					PlayerInfo[playerid][pRespects] 	+= 30;
 					PlayerInfo[playerid][pLevel] 		+= 3;

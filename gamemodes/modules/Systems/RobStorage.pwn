@@ -383,7 +383,7 @@ PlayerStartRob(playerid, storage_id, rob_timer = MAX_ROB_TIME, house_id)
 
     // TODO: move rob_started to this module, make a static bool variable and make a getter/setter for it
     rob_started[playerid] = true;
-    PlayerInfo[playerid][pFreeWorks] -= 15;
+    PlayerJob[playerid][pFreeWorks] -= 15;
     TogglePlayerControllable(playerid, false);
 
     new send_message[128], buffer[35+5];

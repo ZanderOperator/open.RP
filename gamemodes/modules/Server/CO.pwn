@@ -3249,7 +3249,7 @@ stock static CheckHotWireInput(playerid, bool:endtick = false)
 				}
 				case 26 .. 50: 
 				{ // HoÄ‡e
-					if(PlayerInfo[playerid][pJob] == 13)
+					if(PlayerJob[playerid][pJob] == 13)
 					{
 						GameTextForPlayer(playerid, "~g~Motor ukljucen, GPS lokator i alarm iskljuceni", 5000, 4);
 						VehicleInfo[vehicleid][vGPS] = false;
@@ -3263,7 +3263,7 @@ stock static CheckHotWireInput(playerid, bool:endtick = false)
 		} else { // Akumulator je u savrÅ¡enom stanju!
 
 			if(VehicleInfo[vehicleid][vEngineLife] > 10000) {
-				if(PlayerInfo[playerid][pJob] == 13)
+				if(PlayerJob[playerid][pJob] == 13)
 				{
 					GameTextForPlayer(playerid, "~g~Motor ukljucen, GPS lokator i alarm iskljuceni", 5000, 4);
 					VehicleInfo[vehicleid][vGPS] = false;
@@ -3277,7 +3277,7 @@ stock static CheckHotWireInput(playerid, bool:endtick = false)
 			{
 				switch(random(50)) {
 					case 0 .. 25: {
-						if(PlayerInfo[playerid][pJob] == 13)
+						if(PlayerJob[playerid][pJob] == 13)
 						{
 							GameTextForPlayer(playerid, "~g~Motor ukljucen, GPS lokator i alarm iskljuceni", 5000, 4);
 							VehicleInfo[vehicleid][vGPS] = false;
@@ -5721,7 +5721,7 @@ CMD:engine(playerid, params[])
 		VehicleInfo[vehicleid][vEngineRunning] = 0;
 	} else {
 		if( !VehicleInfo[ vehicleid ][ vFuel ] ) 	return SendMessage(playerid, MESSAGE_TYPE_ERROR, " Vozilo je ostalo bez goriva!");
-		if( !VehicleInfo[ vehicleid ][ vCanStart ] && VehicleInfo[vehicleid][vGPS] && PlayerInfo[playerid][pJob] != 13) return SendMessage(playerid, MESSAGE_TYPE_ERROR, " Vozilo je unisteno! Zovite mehanicara na /call 555!");
+		if( !VehicleInfo[ vehicleid ][ vCanStart ] && VehicleInfo[vehicleid][vGPS] && PlayerJob[playerid][pJob] != 13) return SendMessage(playerid, MESSAGE_TYPE_ERROR, " Vozilo je unisteno! Zovite mehanicara na /call 555!");
 		if( VehicleInfo[ vehicleid ][ vImpounded ] ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, " Vozilo je zaplijenjeno od strane policije!");
 
 		#if defined MODULE_BOMBS
@@ -5866,7 +5866,7 @@ CMD:lock(playerid, params[])
 			}
 		}
 		case VEHICLE_USAGE_JOB: {
-			if( VehicleInfo[ vehicleid ][ vJob ] != PlayerInfo[ playerid ][ pJob ] ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, " Nemate kljuc od ovog vozila!");
+			if( VehicleInfo[ vehicleid ][ vJob ] != PlayerJob[playerid][pJob] ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, " Nemate kljuc od ovog vozila!");
 			if( !VehicleInfo[ vehicleid ][ vLocked ] ) {
 				GameTextForPlayer( playerid, "~w~Vozilo ~r~zakljucano", 800, 4 );
 				SetVehicleParamsEx( vehicleid, engine, lights, alarm, 1, bonnet, boot, objective );

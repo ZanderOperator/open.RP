@@ -55,7 +55,7 @@ static stock ReturnSkillID(playerid)
 	new value = -1;
 	for(new i = 0; i < MAX_SKILLS; i++)
 	{
-		if(PlayerSkills[playerid][sJob][i] == PlayerInfo[playerid][pJob])
+		if(PlayerSkills[playerid][sJob][i] == PlayerJob[playerid][pJob])
 		{
 			value = i;
 			break;
@@ -74,9 +74,9 @@ static stock CreatePlayerSkill(playerid)
 	{
 		if(PlayerSkills[playerid][sJob][i] == 0)
 		{
-			if(PlayerInfo[playerid][pJob] == 0) // The ONLY skill in gamemode that's not job constrainted.
+			if(PlayerJob[playerid][pJob] == 0) // The ONLY skill in gamemode that's not job constrainted.
 				PlayerSkills[playerid][sJob][i] = SKILL_BURGLAR; 
-			else PlayerSkills[playerid][sJob][i] = PlayerInfo[playerid][pJob];
+			else PlayerSkills[playerid][sJob][i] = PlayerJob[playerid][pJob];
 			value = i;
 			break;
 		}
@@ -164,7 +164,7 @@ static stock SavePlayerSkill(playerid, skillid)
 	}
 	else
 	{
-		PlayerSkills[playerid][sJob][skillid] = PlayerInfo[playerid][pJob];
+		PlayerSkills[playerid][sJob][skillid] = PlayerJob[playerid][pJob];
 		mysql_tquery(g_SQL,
 			"INSERT INTO skill(playerid, jobid, skill) VALUES('%d', '%d', '%d')",
 			PlayerInfo[playerid][pSQLID],

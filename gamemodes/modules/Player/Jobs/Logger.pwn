@@ -245,7 +245,7 @@ hook OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
 
 hook OnPlayerEnterVehicle(playerid, vehicleid, ispassenger)
 {
-	if(PlayerInfo[playerid][pJob] == WOODCUT_JOB_ID)
+	if(PlayerJob[playerid][pJob] == WOODCUT_JOB_ID)
 	{
 		if(pWood[playerid])
 		{
@@ -620,7 +620,7 @@ timer RespawnTree[TREE_RESPAWN_TIME * 60 * 1000](treeid)
 
 CMD:cuttree(playerid, params[])
 {
-	if( PlayerInfo[ playerid ][ pJob ] != WOODCUT_JOB_ID )
+	if( PlayerJob[playerid][pJob] != WOODCUT_JOB_ID )
 		return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste drvosjeca!");
 		
     if(PlayerInfo[ playerid ][ pFreeWorks ] < 1)
@@ -673,7 +673,7 @@ CMD:cuttree(playerid, params[])
 
 CMD:stopcuttree(playerid, params[])
 {
-	if( PlayerInfo[ playerid ][ pJob ] != WOODCUT_JOB_ID )
+	if( PlayerJob[playerid][pJob] != WOODCUT_JOB_ID )
 		return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste drvosje�a!");
 		
     if(CuttingTree[playerid] == -1)
@@ -700,7 +700,7 @@ cmd_stopcuttree2(playerid)
 
 CMD:treeinfo(playerid, params[])
 {
-	if( PlayerInfo[ playerid ][ pJob ] != WOODCUT_JOB_ID )
+	if( PlayerJob[playerid][pJob] != WOODCUT_JOB_ID )
 		return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste drvosje�a!");
 
 	new
@@ -738,7 +738,7 @@ CMD:gototree(playerid, params[])
 
 CMD:putwood(playerid, params[])
 {
-	if( PlayerInfo[ playerid ][ pJob ] != WOODCUT_JOB_ID )
+	if( PlayerJob[playerid][pJob] != WOODCUT_JOB_ID )
 		return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste drvosje�a!");
 
 	if(!pWood[playerid])
@@ -778,7 +778,7 @@ CMD:putwood(playerid, params[])
 
 CMD:checkvehwood(playerid, params[])
 {
-	if( PlayerInfo[ playerid ][ pJob ] != WOODCUT_JOB_ID )
+	if( PlayerJob[playerid][pJob] != WOODCUT_JOB_ID )
 		return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste drvosje�a!");
 
 	if(IsPlayerInAnyVehicle(playerid))
@@ -812,7 +812,7 @@ CMD:checkvehwood(playerid, params[])
 
 CMD:checkmywood(playerid, params[])
 {
-	if( PlayerInfo[ playerid ][ pJob ] != WOODCUT_JOB_ID )
+	if( PlayerJob[playerid][pJob] != WOODCUT_JOB_ID )
 		return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste drvosje�a!");
 
 	if(!pWood[playerid])
@@ -829,7 +829,7 @@ CMD:checkmywood(playerid, params[])
 
 CMD:pickupwood(playerid, params[])
 {
-	if( PlayerInfo[ playerid ][ pJob ] != WOODCUT_JOB_ID )
+	if( PlayerJob[playerid][pJob] != WOODCUT_JOB_ID )
 		return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste drvosje�a!");
 
 	if(IsPlayerInAnyVehicle(playerid))
@@ -852,7 +852,7 @@ CMD:pickupwood(playerid, params[])
 
 CMD:takewood(playerid, params[])
 {
-	if( PlayerInfo[ playerid ][ pJob ] != WOODCUT_JOB_ID )
+	if( PlayerJob[playerid][pJob] != WOODCUT_JOB_ID )
 		return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste drvosje�a!");
 
 	if(pWood[playerid])
@@ -913,7 +913,7 @@ CMD:takewood(playerid, params[])
 
 CMD:sellwood(playerid, params[])
 {
-	if( PlayerInfo[ playerid ][ pJob ] != WOODCUT_JOB_ID )
+	if( PlayerJob[playerid][pJob] != WOODCUT_JOB_ID )
 		return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste drvosjeca!");
 	    
 	if(IsPlayerInAnyVehicle(playerid))
@@ -930,7 +930,7 @@ CMD:sellwood(playerid, params[])
 	va_SendClientMessage(playerid, COLOR_RED, "[ ! ] Zaradio si $%d, placa ti je sjela na racun.", money);
 	BudgetToPlayerBankMoney(playerid, money); // novac sjeda na racun iz proracuna
 	PlayerInfo[playerid][pPayDayMoney] += money;
-	PlayerInfo[playerid][pFreeWorks] -= 5;
+	PlayerJob[playerid][pFreeWorks] -= 5;
 	Bit1_Set( gr_IsWorkingJob, playerid, true );
 	
 	pWood[playerid] = 0;
