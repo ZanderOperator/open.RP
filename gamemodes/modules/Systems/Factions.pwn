@@ -1430,8 +1430,14 @@ CMD:faction(playerid, params[])
 
         PlayerFaction[targetid][pMember] = 0;
         PlayerFaction[targetid][pRank] = 0;
-        PlayerInfo[playerid][pRadio] = 0;
-        PlayerInfo[playerid][pRadioSlot] = 0;
+       
+        PlayerRadio[targetid][pMainSlot] = 0;
+        PlayerRadio[targetid][pRadio][1] = 0; 
+        PlayerRadio[targetid][pRadioSlot][1] = 0;
+        PlayerRadio[targetid][pRadio][2] = 0;
+        PlayerRadio[targetid][pRadioSlot][2] = 0;
+        PlayerRadio[targetid][pRadio][3] = 0; 
+        PlayerRadio[targetid][pRadioSlot][3] = 0;
 
         if (IsACop(targetid) || IsFDMember(targetid))
         {
@@ -1456,12 +1462,6 @@ CMD:faction(playerid, params[])
         mysql_fquery(g_SQL, "INSERT INTO faction_logs(faction_id, log_text, time) VALUES ('%d','%e',NOW())",
             PlayerFaction[playerid][pLeader],
             logText
-        );
-
-        mysql_fquery(g_SQL, "DELETE FROM accounts WHERE sqlid = '%d'",
-            PlayerInfo[targetid][pRadio],
-            PlayerInfo[targetid][pRadioSlot],
-            PlayerInfo[targetid][pSQLID]
         );
 
         #if defined MODULE_LOGS
@@ -1759,8 +1759,14 @@ CMD:quitfaction(playerid, params[])
 
     PlayerInfo[playerid][pSkin]         = 60;
     PlayerInfo[playerid][pSpawnChange]  = 0;
-    PlayerInfo[playerid][pRadio]        = 0;
-    PlayerInfo[playerid][pRadioSlot]    = 0;
+    
+    PlayerRadio[playerid][pMainSlot] = 0;
+    PlayerRadio[playerid][pRadio][1] = 0; 
+    PlayerRadio[playerid][pRadioSlot][1] = 0;
+    PlayerRadio[playerid][pRadio][2] = 0;
+    PlayerRadio[playerid][pRadioSlot][2] = 0;
+    PlayerRadio[playerid][pRadio][3] = 0; 
+    PlayerRadio[playerid][pRadioSlot][3] = 0;
     return 1;
 }
 

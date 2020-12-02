@@ -10,6 +10,7 @@
 #include "modules/Player\SaveLoad/player_savings.pwn"
 #include "modules/Player\SaveLoad/player_credits.pwn"
 #include "modules/Player\SaveLoad/player_faction.pwn"
+#include "modules/Player\SaveLoad/player_radio.pwn"
 
 /*
 	##     ##    ###    ########   ######  
@@ -337,17 +338,6 @@ public LoadPlayerData(playerid)
 		cache_get_value_name_int(0, "pBusinessWorkTime", PlayerInfo[playerid][pBusinessWorkTime]);
 		cache_get_value_name_int(0, "FurnPremium"	, PlayerInfo[playerid][FurnPremium]);
 		
-		cache_get_value_name_int(0,	"HasRadio"		, PlayerInfo[playerid][pHasRadio]);
-		cache_get_value_name_int(0, "MainSlot"      , PlayerInfo[playerid][pMainSlot]);
-
-		cache_get_value_name_int(0, "Radio1", PlayerInfo[playerid][pRadio][1]);
-		cache_get_value_name_int(0, "Radio2", PlayerInfo[playerid][pRadio][2]);
-		cache_get_value_name_int(0, "Radio3", PlayerInfo[playerid][pRadio][3]);
-
-		cache_get_value_name_int(0, "Slot1", PlayerInfo[playerid][pRadioSlot][1]);
-		cache_get_value_name_int(0, "Slot2", PlayerInfo[playerid][pRadioSlot][2]);
-		cache_get_value_name_int(0, "Slot3", PlayerInfo[playerid][pRadioSlot][3]);
-		
 		cache_get_value_name_int(0, "drugused", PlayerInfo[playerid][pDrugUsed]);
 		cache_get_value_name_int(0, "drugseconds", PlayerInfo[playerid][pDrugSeconds]);
 		cache_get_value_name_int(0, "lastdrug", PlayerInfo[playerid][pDrugOrder]);
@@ -423,6 +413,9 @@ public LoadPlayerData(playerid)
 
 		// Licenses
 		LoadPlayerLicenses(playerid);
+
+		// Inventory
+		LoadPlayerRadio(playerid);
 
 		// Weapons & Drugs
 		LoadPlayerWeaponSettings(playerid);
@@ -761,11 +754,10 @@ stock SavePlayerData(playerid)
 			maskid = '%d', hunger = '%f', spawnedcar = '%d', armour = '%f', muscle = '%d',\n\
 			fightstyle = '%d', clock = '%d', rope = '%d', cigaretes = '%d', lighter = '%d',\n\
 			SAMPid = '%e', forumname = '%e', gymtimes = '%d', gymcounter = '%d',\n\
-			boombox = '%d', boomboxtype = '%d', casinocool = '%d', news = '%d', HasRadio = '%d', voted = '%d',\n\
+			boombox = '%d', boomboxtype = '%d', casinocool = '%d', news = '%d', voted = '%d',\n\
 			drugused = '%d', drugseconds = '%d', lastdrug = '%d',\n\
 			ammutime = '%d', warekey = '%d', mustread = '%d', lastupdatever = '%e', JackerCoolDown = '%d',\n\
 			FurnPremium = '%d',\n\
-			Radio1 = '%d', Slot1 = '%d', Radio2 = '%d', Slot2 = '%d', Radio3 = '%d', Slot3 = '%d',\n\
 			AdmMessageConfirm = '%d', AdminMessage = '%e', AdminMessageBy = '%e' \n\
 			WHERE sqlid = '%d'",
 		PlayerInfo[playerid][pRegistered],
@@ -810,7 +802,6 @@ stock SavePlayerData(playerid)
 		PlayerInfo[playerid][pBoomBoxType],
 		PlayerInfo[playerid][pCasinoCool],
 		PlayerInfo[playerid][pNews],
-		PlayerInfo[playerid][pHasRadio],
 		PlayerInfo[playerid][pVoted],
 		PlayerInfo[playerid][pDrugUsed],
 		PlayerInfo[playerid][pDrugSeconds],
@@ -821,9 +812,6 @@ stock SavePlayerData(playerid)
 		PlayerInfo[playerid][pLastUpdateVer],
 		PlayerInfo[playerid][JackerCoolDown],
 		PlayerInfo[playerid][FurnPremium],
-		PlayerInfo[playerid][pRadio][1], PlayerInfo[playerid][pRadioSlot][1],
-		PlayerInfo[playerid][pRadio][2], PlayerInfo[playerid][pRadioSlot][2],
-		PlayerInfo[playerid][pRadio][3], PlayerInfo[playerid][pRadioSlot][3],
 		PlayerInfo[playerid][pAdmMsgConfirm],
 		PlayerInfo[playerid][pAdminMsg],
 		PlayerInfo[playerid][pAdminMsgBy],

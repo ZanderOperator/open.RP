@@ -870,16 +870,6 @@ ResetPlayerVariables(playerid)
 	PlayerInfo[playerid][pChar]				= 0;
 	PlayerInfo[playerid][pBoomBox] 			= 0;
 	PlayerInfo[playerid][pBoomBoxType] 		= 0;
-	PlayerInfo[playerid][pHasRadio] 		= 0;
-	PlayerInfo[playerid][pMainSlot] 		= 0;
-
-	PlayerInfo[playerid][pRadio][1] 		= 0;
-	PlayerInfo[playerid][pRadio][2] 		= 0;
-	PlayerInfo[playerid][pRadio][3] 		= 0;
-
-	PlayerInfo[playerid][pRadioSlot][1] 	= 0;
-	PlayerInfo[playerid][pRadioSlot][2] 	= 0;
-	PlayerInfo[playerid][pRadioSlot][3] 	= 0;
 
 	PlayerInfo[playerid][pUnbanTime] 		= 0;
 	PlayerInfo[playerid][pCasinoCool]		= 0;
