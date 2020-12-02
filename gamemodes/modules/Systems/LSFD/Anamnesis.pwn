@@ -102,7 +102,7 @@ CMD:anamnesis(playerid, params[])
 {
 	new opcija[20], patient[30], disease[128], giveplayerid, ID;
     if( !IsFDMember(playerid) ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste doktor!");
-	if(PlayerInfo[playerid][pRank] < 1) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Moras biti rank 1 ili vise da bi koristio ovo !");
+	if(PlayerFaction[playerid][pRank] < 1) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Moras biti rank 1 ili vise da bi koristio ovo !");
 	if( sscanf( params, "s[20] ", opcija ) )
 	{
 		SendClientMessage(playerid, COLOR_RED, "[ ? ]: /anamnesis [opcija]");
@@ -129,7 +129,7 @@ CMD:anamnesis(playerid, params[])
 	else if(strcmp(opcija,"delete",true) == 0) // delete
 	{
 		if( sscanf( params, "s[20]i", opcija, ID ) ) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /anamnesis delete [rbr]");
-		if( PlayerInfo[ playerid ][ pRank ] < 6 ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Samo doktori sa vecom pozicijom! ((r6+))");
+		if( PlayerFaction[playerid][pRank] < 6 ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Samo doktori sa vecom pozicijom! ((r6+))");
 		DeletePlayerCarton(playerid, ID);
 	}
 	else SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nepoznato ime za odabir!");

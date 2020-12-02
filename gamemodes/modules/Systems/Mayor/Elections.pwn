@@ -127,7 +127,7 @@ CMD:votes(playerid, params[])
 
     if (!strcmp(option, "lock", true))
     {
-        if (PlayerInfo[playerid][pLeader] != 4)
+        if (PlayerFaction[playerid][pLeader] != 4)
         {
              SendMessage(playerid, MESSAGE_TYPE_ERROR, "Samo gradonacelnik moze koristiti ovu komandu.");
              return 1;

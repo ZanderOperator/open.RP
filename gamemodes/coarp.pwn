@@ -839,9 +839,7 @@ ResetPlayerVariables(playerid)
 	PaydayInfo[playerid][pPayDayHad]		= 0;
 	PlayerInfo[playerid][pHouseKey]			= INVALID_HOUSE_ID;
 	PlayerInfo[playerid][pRentKey]			= INVALID_HOUSE_ID;
-	PlayerInfo[playerid][pLeader]			= 0;
-	PlayerInfo[playerid][pMember]			= 0;
-	PlayerInfo[playerid][pRank]				= 0;
+
 	PlayerInfo[playerid][pCrashId]			= -1;
 	PlayerInfo[playerid][pCrashVW]			= -1;
 	PlayerInfo[playerid][pCrashInt]			= -1;
@@ -1912,9 +1910,9 @@ hook OnPlayerSpawn(playerid)
 					}
 					case 2:
 					{
-						if(PlayerInfo[playerid][pMember] > 0)
+						if(PlayerFaction[playerid][pMember] > 0)
 						{
-							switch(PlayerInfo[playerid][pMember])
+							switch(PlayerFaction[playerid][pMember])
 							{
 								case 1:
 								{

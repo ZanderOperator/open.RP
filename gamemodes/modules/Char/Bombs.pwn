@@ -206,7 +206,7 @@ CMD:bomb(playerid, params[])
 	{
 		if( !IsPlayerInRangeOfPoint(playerid, 8.0, 2116.0029, 182.7116, 0.4943) ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste blizu mjesta gdje se kupuju bombe!");
 		if( !Bit1_Get( r_BombAccept, playerid ) ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Morate traziti admina level 4+ za dopustenje!");
-		if( !PlayerInfo[ playerid ][ pMember ] || !PlayerInfo[ playerid ][ pLeader ] ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Morate biti u official organizaciji da kupujete bombu!");
+		if( !PlayerFaction[playerid][pMember] || !PlayerFaction[playerid][pLeader] ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Morate biti u official organizaciji da kupujete bombu!");
 		ShowPlayerDialog(playerid, DIALOG_BOMB, DIALOG_STYLE_LIST, "KUPOVINA BOMBI", "C4(Timer) [35.000$]\nC4(Trigger) [40.000$]\nCar Bomb[25.000$]", "Choose", "Abort");
 	}
 	else if( !strcmp(param, "approve", true) ) 

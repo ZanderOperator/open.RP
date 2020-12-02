@@ -612,19 +612,19 @@ stock GetPlayerOrganisation(playerid)
     // also wtf is this function, just return pMember/pLeader directly....
     // be sure to make an array of gang/organisation names if you'd like. like player was invited to join org Blabla
     // etc
-    if (PlayerInfo[playerid][pMember] == 1 || PlayerInfo[playerid][pLeader] == 1)        porg = 1;
-    else if (PlayerInfo[playerid][pMember] == 2 || PlayerInfo[playerid][pLeader] == 2)   porg = 2;
-    else if (PlayerInfo[playerid][pMember] == 3 || PlayerInfo[playerid][pLeader] == 3)   porg = 3;
-    else if (PlayerInfo[playerid][pMember] == 4 || PlayerInfo[playerid][pLeader] == 4)   porg = 4;
-    else if (PlayerInfo[playerid][pMember] == 5 || PlayerInfo[playerid][pLeader] == 5)   porg = 5;   //MS-13
-    else if (PlayerInfo[playerid][pMember] == 6 || PlayerInfo[playerid][pLeader] == 6)   porg = 6;   //Eastsiderz
-    else if (PlayerInfo[playerid][pMember] == 7 || PlayerInfo[playerid][pLeader] == 7)   porg = 7;
-    else if (PlayerInfo[playerid][pMember] == 8 || PlayerInfo[playerid][pLeader] == 8)   porg = 8;
-    else if (PlayerInfo[playerid][pMember] == 9 || PlayerInfo[playerid][pLeader] == 9)   porg = 9;   //Bloods
-    else if (PlayerInfo[playerid][pMember] == 10 || PlayerInfo[playerid][pLeader] == 10) porg = 10;
-    else if (PlayerInfo[playerid][pMember] == 11 || PlayerInfo[playerid][pLeader] == 11) porg = 11;
-    else if (PlayerInfo[playerid][pMember] == 12 || PlayerInfo[playerid][pLeader] == 12) porg = 12;
-    else if (PlayerInfo[playerid][pMember] == 13 || PlayerInfo[playerid][pLeader] == 13) porg = 13;
+    if (PlayerFaction[playerid][pMember] == 1 || PlayerFaction[playerid][pLeader] == 1)        porg = 1;
+    else if (PlayerFaction[playerid][pMember] == 2 || PlayerFaction[playerid][pLeader] == 2)   porg = 2;
+    else if (PlayerFaction[playerid][pMember] == 3 || PlayerFaction[playerid][pLeader] == 3)   porg = 3;
+    else if (PlayerFaction[playerid][pMember] == 4 || PlayerFaction[playerid][pLeader] == 4)   porg = 4;
+    else if (PlayerFaction[playerid][pMember] == 5 || PlayerFaction[playerid][pLeader] == 5)   porg = 5;   //MS-13
+    else if (PlayerFaction[playerid][pMember] == 6 || PlayerFaction[playerid][pLeader] == 6)   porg = 6;   //Eastsiderz
+    else if (PlayerFaction[playerid][pMember] == 7 || PlayerFaction[playerid][pLeader] == 7)   porg = 7;
+    else if (PlayerFaction[playerid][pMember] == 8 || PlayerFaction[playerid][pLeader] == 8)   porg = 8;
+    else if (PlayerFaction[playerid][pMember] == 9 || PlayerFaction[playerid][pLeader] == 9)   porg = 9;   //Bloods
+    else if (PlayerFaction[playerid][pMember] == 10 || PlayerFaction[playerid][pLeader] == 10) porg = 10;
+    else if (PlayerFaction[playerid][pMember] == 11 || PlayerFaction[playerid][pLeader] == 11) porg = 11;
+    else if (PlayerFaction[playerid][pMember] == 12 || PlayerFaction[playerid][pLeader] == 12) porg = 12;
+    else if (PlayerFaction[playerid][pMember] == 13 || PlayerFaction[playerid][pLeader] == 13) porg = 13;
     return porg;
 }
 

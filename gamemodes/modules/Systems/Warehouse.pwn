@@ -179,7 +179,7 @@ stock PutWeaponInWarehouse(playerid, weaponid, ammo)
     AC_ResetPlayerWeapon(playerid, weaponid);
 
     new 
-        fid = PlayerInfo[playerid][pMember],
+        fid = PlayerFaction[playerid][pMember],
         whid = FetchWarehouseEnumFromFaction(FactionInfo[fid][fID]),
         wslot = Iter_Free(WhWeapons[whid]);
 
@@ -539,7 +539,7 @@ stock CountOnlineMembers(factionid)
     new count = 0;
     foreach (new i : Player)
     {
-        if (PlayerInfo[i][pMember] == factionid)
+        if (PlayerFaction[i][pMember] == factionid)
         {
             count++;
         }
@@ -553,7 +553,7 @@ stock CountMembersInRadius(warehouseid, factionid)
     new count = 0;
     foreach (new i : Player)
     {
-        if (PlayerInfo[i][pMember] == factionid)
+        if (PlayerFaction[i][pMember] == factionid)
         {
             if (IsPlayerInRangeOfPoint(i, 20.0, WarehouseInfo[warehouseid][whVault][0], WarehouseInfo[warehouseid][whVault][1], WarehouseInfo[warehouseid][whVault][2]))
                 count++;
@@ -570,7 +570,7 @@ stock CheckRobbersInRadius(warehouseid, factionid)
     foreach (new i : Player)
     {
         robber = Iter_Contains(Robbers, i);
-        if (!robber && PlayerInfo[i][pMember] == factionid && GetPlayerVirtualWorld(i) == WarehouseInfo[warehouseid][whViwo])
+        if (!robber && PlayerFaction[i][pMember] == factionid && GetPlayerVirtualWorld(i) == WarehouseInfo[warehouseid][whViwo])
         {
             if (IsPlayerInRangeOfPoint(i, 20.0, WarehouseInfo[warehouseid][whVault][0], WarehouseInfo[warehouseid][whVault][1], WarehouseInfo[warehouseid][whVault][2]))
                 Iter_Add(Robbers, i);
@@ -639,7 +639,7 @@ task CheckWarehouseRobbery[1000]()
 
 stock StartWarehouseRobbery(playerid, warehouseid)
 {
-    new fid = PlayerInfo[playerid][pMember],
+    new fid = PlayerFaction[playerid][pMember],
         startmessage[128],
         vfid;
 
@@ -694,7 +694,7 @@ stock WarehouseRobAlarm(warehouseid, factionid)
 {
     foreach(new i: Player)
     {
-        if (PlayerInfo[i][pWarehouseKey] == warehouseid || PlayerInfo[i][pLeader] == factionid)
+        if (PlayerInfo[i][pWarehouseKey] == warehouseid || PlayerFaction[i][pLeader] == factionid)
         {
             SendClientMessage(i, COLOR_YELLOW, "SMS: Tihi alarm Warehousea se oglasio na znakove provale.");
         }
@@ -877,7 +877,7 @@ static stock IsAtValidWarehouse(playerid, whid) // Provjerava da li igrac pred w
 {
     // TODO: bounds chcking and make a getter for Faction SQLID as FactionInfo should be private to Factions.pwn
     // TODO: also, make this function bool: if it returns true/false
-    new fid = PlayerInfo[playerid][pMember];
+    new fid = PlayerFaction[playerid][pMember];
     if (FactionInfo[fid][fID] == WarehouseInfo[whid][whFactionSQLID])
     {
         return true;
@@ -986,7 +986,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
             if (amount <= 0)
                 return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Kolicina novca ne moze biti manja od 1$!");
 
-            new fid = PlayerInfo[playerid][pMember],
+            new fid = PlayerFaction[playerid][pMember],
                 warehouseid = FetchWarehouseEnumFromFaction(FactionInfo[fid][fID]);
             // TODO: bounds checking
             WarehouseInfo[warehouseid][whMoney] += amount;
@@ -1012,7 +1012,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
         case WAREHOUSE_MONEY_TAKE:
         {
             new amount = strval(inputtext),
-                fid = PlayerInfo[playerid][pMember],
+                fid = PlayerFaction[playerid][pMember],
                 warehouseid = FetchWarehouseEnumFromFaction(FactionInfo[fid][fID]);
             // TODO: bounds checking for warehouseid
             if (amount <= 0)
@@ -1050,7 +1050,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
             {
                 case 0:
                 {
-                    new fid = PlayerInfo[playerid][pMember],
+                    new fid = PlayerFaction[playerid][pMember],
                         // TODO: bounds checking
                         whid = FetchWarehouseEnumFromFaction(FactionInfo[fid][fID]);
                     if (!Iter_Count(WhWeapons[whid]))
@@ -1062,7 +1062,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                 }
                 case 1:
                 {
-                    new fid = PlayerInfo[playerid][pMember],
+                    new fid = PlayerFaction[playerid][pMember],
                         // TODO: bounds checking
                         whid = FetchWarehouseEnumFromFaction(FactionInfo[fid][fID]),
                         moneyvalue[64];
@@ -1078,7 +1078,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                 ResetPlayerWeaponList(playerid);
                 return 1;
             }
-            new fid = PlayerInfo[playerid][pMember],
+            new fid = PlayerFaction[playerid][pMember],
                 // TODO: bounds checking
                 whid = FetchWarehouseEnumFromFaction(FactionInfo[fid][fID]),
                 wslot = WeaponToList[playerid][listitem],
@@ -1140,7 +1140,7 @@ CMD:warehouse(playerid, params[])
     if (!strcmp(option, "info", true))
     {
         new wh = IsAtWarehouseEntrance(playerid),
-            flid = PlayerInfo[playerid][pLeader];
+            flid = PlayerFaction[playerid][pLeader];
         // TODO: flid bounds checking
         if (wh == -1)
             return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ispred vaulta warehousea svoje organizacije!");
@@ -1230,7 +1230,7 @@ CMD:warehouse(playerid, params[])
     else if (!strcmp(option, "lock", true))
     {
         new wh = IsAtWarehouseVault(playerid),
-            flid = PlayerInfo[playerid][pLeader],
+            flid = PlayerFaction[playerid][pLeader],
             // TODO: flid bounds checking
             string[64];
         if (wh == -1)
@@ -1259,8 +1259,8 @@ CMD:warehouse(playerid, params[])
     }
     else if (!strcmp(option, "givekeys", true))
     {
-        new fid = PlayerInfo[playerid][pMember],
-            flid = PlayerInfo[playerid][pLeader],
+        new fid = PlayerFaction[playerid][pMember],
+            flid = PlayerFaction[playerid][pLeader],
             // TODO: bounds checking
             wh = FetchWarehouseEnumFromFaction(FactionInfo[fid][fID]),
             giveplayerid;
@@ -1273,7 +1273,7 @@ CMD:warehouse(playerid, params[])
         if (PlayerInfo[playerid][pWarehouseKey] != WarehouseInfo[wh][whFactionSQLID] && FactionInfo[flid][fID] != WarehouseInfo[wh][whFactionSQLID])
             return SendClientMessage(playerid,  COLOR_RED, "Nemate kljuc od sefa warehousea / niste leader organizacije.");
         if (!IsPlayerLogged(giveplayerid) || !IsPlayerConnected(giveplayerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Taj igrac nije ulogiran!");
-        if (PlayerInfo[giveplayerid][pMember] != PlayerInfo[playerid][pMember])
+        if (PlayerFaction[giveplayerid][pMember] != PlayerFaction[playerid][pMember])
             return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Igrac nije clan vase organizacije da bi mu mogli dati svoje kljuceve skladista!");
 
         if (PlayerInfo[playerid][pWarehouseKey] != -1)
@@ -1285,7 +1285,7 @@ CMD:warehouse(playerid, params[])
     else if (!strcmp(option, "rob", true))
     {
         new wh = IsAtWarehouseVault(playerid),
-            fid = PlayerInfo[playerid][pMember];
+            fid = PlayerFaction[playerid][pMember];
         // TODO: fid bounds checking
         if (RobberyInfo[whActive] == true)
             return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Pljacka je vec u toku. Pricekajte neko vrijeme pa pokusajte ponovno!");

@@ -1703,10 +1703,10 @@ CMD:unfree(playerid, params[])
 {
     if (!IsACop(playerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste LSPD/SASD!");
 
-    // TODO: what if PlayerInfo[playerid][pMember] is -1 or out of bounds? Do not index into an array so HASTILY
+    // TODO: what if PlayerFaction[playerid][pMember] is -1 or out of bounds? Do not index into an array so HASTILY
     // Always do bounds checking when appropriate
-    if (PlayerInfo[playerid][pRank] < FactionInfo[PlayerInfo[playerid][pMember]][rUnFree])
-        return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "Morate biti rank %d kako bi ste mogli koristiti ovu komandu!", FactionInfo[PlayerInfo[playerid][pMember]][rUnFree]);
+    if (PlayerFaction[playerid][pRank] < FactionInfo[PlayerFaction[playerid][pMember]][rUnFree])
+        return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "Morate biti rank %d kako bi ste mogli koristiti ovu komandu!", FactionInfo[PlayerFaction[playerid][pMember]][rUnFree]);
 
     new giveplayerid, string[128];
     if (sscanf(params, "u", giveplayerid)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /unfree [playerid/dio imena]");
@@ -1741,7 +1741,7 @@ CMD:unfree(playerid, params[])
 
 CMD:cuff(playerid, params[])
 {
-    if (!(IsACop(playerid) || IsASD(playerid) || (IsAGov(playerid) && PlayerInfo[playerid][pRank] >= 2)))
+    if (!(IsACop(playerid) || IsASD(playerid) || (IsAGov(playerid) && PlayerFaction[playerid][pRank] >= 2)))
     {
         SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nisi LSPD");
         return 1;
@@ -1779,7 +1779,7 @@ CMD:cuff(playerid, params[])
 
 CMD:uncuff(playerid, params[])
 {
-    if (!(IsACop(playerid) || IsASD(playerid) || (IsAGov(playerid) && PlayerInfo[playerid][pRank] >= 2)))
+    if (!(IsACop(playerid) || IsASD(playerid) || (IsAGov(playerid) && PlayerFaction[playerid][pRank] >= 2)))
     {
         SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nisi LSPD");
         return 1;
@@ -1854,7 +1854,7 @@ CMD:pdtrunk(playerid, params[])
 CMD:pdramp(playerid, params[])
 {
     if (!IsPlayerInRangeOfPoint(playerid, 20, 1544.7363,-1627.0232,13.3672)) return SendClientMessage(playerid, COLOR_RED,"Niste u blizini rampe!");
-    if (PlayerInfo[playerid][pLeader] != 1 && PlayerInfo[playerid][pMember] != 1) return SendClientMessage(playerid, COLOR_RED,"Niste clan LS-PDa.");
+    if (PlayerFaction[playerid][pLeader] != 1 && PlayerFaction[playerid][pMember] != 1) return SendClientMessage(playerid, COLOR_RED,"Niste clan LS-PDa.");
 
     rampstatus ^= 1; // toggle
     if (rampstatus)
@@ -1904,13 +1904,13 @@ CMD:govrepair(playerid, params[])
     if (!IsPlayerInAnyVehicle(playerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste u vozilu!");
 
     // TODO: reduce level of nesting (at least by 2, maybe even 3 levels)
-    new fid = PlayerInfo[playerid][pMember];
+    new fid = PlayerFaction[playerid][pMember];
     if (fid != 4)
     {
         if (FactionInfo[fid][fFactionBank] < 100) return SendClientMessage(playerid,COLOR_RED, "Vasa organizacija nema novaca!");
         if (IsACop(playerid))
         {
-            if (PlayerInfo[playerid][pMember] == 1)
+            if (PlayerFaction[playerid][pMember] == 1)
             {
                 // TODO: consider splitting this long line (split at around 120 characters)
                 if (IsPlayerInRangeOfPoint(playerid, 5.0, 1570.4080,-1632.6095,13.3828) || IsPlayerInRangeOfPoint(playerid, 10.0, 755.9906,-1431.2805,13.5234) || IsPlayerInRangeOfPoint(playerid, 10.0, 1136.7454,2286.2957,10.8203) || IsPlayerInRangeOfPoint(playerid, 10.0, 2055.0149,-2150.2551,26.1129))
@@ -2002,24 +2002,24 @@ CMD:codes(playerid, params[])
 CMD:suspend(playerid, params[])
 {
     new giveplayerid, string[128];
-    if ((PlayerInfo[playerid][pLeader] == 1 || (PlayerInfo[playerid][pRank] >= 11 && PlayerInfo[playerid][pMember] == 1)) || PlayerInfo[playerid][pLeader] == 5)
+    if ((PlayerFaction[playerid][pLeader] == 1 || (PlayerFaction[playerid][pRank] >= 11 && PlayerFaction[playerid][pMember] == 1)) || PlayerFaction[playerid][pLeader] == 5)
     {
         if (sscanf(params, "u", giveplayerid)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /suspend [playerid/dio imena]");
         if (giveplayerid == INVALID_PLAYER_ID) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Taj igrac nije na serveru.");
 
-        PlayerInfo[giveplayerid][pRank] = 0;
+        PlayerFaction[giveplayerid][pRank] = 0;
         PlayerInfo[giveplayerid][pLawDuty] = 0;
         format(string, sizeof(string), "[ ! ] Suspendirali ste %s sa duznosti!", GetName(giveplayerid));
         SendClientMessage(playerid, COLOR_RED, string);
         format(string, sizeof(string), "[ ! ] Suspendirani ste sa duznosti! Command officer %s", GetName(playerid));
         SendClientMessage(giveplayerid, COLOR_RED, string);
     }
-    else if (PlayerInfo[playerid][pLeader] == 4)
+    else if (PlayerFaction[playerid][pLeader] == 4)
     {
         if (sscanf(params, "u", giveplayerid)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /suspend [playerid/dio imena]");
         if (giveplayerid == INVALID_PLAYER_ID) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Taj igrac nije na serveru.");
 
-        PlayerInfo[giveplayerid][pRank] = 0;
+        PlayerFaction[giveplayerid][pRank] = 0;
         PlayerInfo[giveplayerid][pLawDuty] = 0;
         format(string, sizeof(string), "[ ! ] Suspendirali ste %s sa duznosti!", GetName(giveplayerid));
         SendClientMessage(playerid, COLOR_RED, string);
@@ -2065,7 +2065,7 @@ CMD:take(playerid, params[])
 {
     new opcija[20], giveplayerid;
     if (!IsACop(playerid) && !IsASD(playerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste policajac !");
-    if (PlayerInfo[playerid][pRank] < 1) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Moras biti rank 1 ili vise da bi koristio ovo !");
+    if (PlayerFaction[playerid][pRank] < 1) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Moras biti rank 1 ili vise da bi koristio ovo !");
 
     if (sscanf( params, "us[20] ", giveplayerid, opcija))
     {
@@ -2085,7 +2085,7 @@ CMD:take(playerid, params[])
 
         new tmpString[120];
         format(tmpString, sizeof(tmpString), "*[HQ] %s %s je oduzeo vozacku dozvolu %s.", ReturnPlayerRankName(playerid), GetName(playerid), GetName(giveplayerid));
-        SendRadioMessage(PlayerInfo[playerid][pMember], COLOR_COP, tmpString);
+        SendRadioMessage(PlayerFaction[playerid][pMember], COLOR_COP, tmpString);
 
         SendClientMessage(giveplayerid, COLOR_LIGHTBLUE, "|_____________________ Oduzeta vozacka dozvola ______________________|");
         format(tmpString, sizeof(tmpString), "* %s %s vam je oduzeo vozacku dozvolu na %d dana.", ReturnPlayerRankName(playerid), GetName(playerid), dani);
@@ -2124,7 +2124,7 @@ CMD:take(playerid, params[])
         new
             tmpString[120];
         format(tmpString, sizeof(tmpString), "*[HQ] %s %s je oduzeo dozvolu za letenje %s.", ReturnPlayerRankName(playerid), GetName(playerid), GetName(giveplayerid));
-        SendRadioMessage(PlayerInfo[playerid][pMember], COLOR_COP, tmpString);
+        SendRadioMessage(PlayerFaction[playerid][pMember], COLOR_COP, tmpString);
 
         format(tmpString, sizeof(tmpString), "* Policajac %s vam je oduzeo dozvolu za letenje.", GetName(playerid));
         SendClientMessage(giveplayerid, COLOR_LIGHTBLUE, tmpString);
@@ -2157,7 +2157,7 @@ CMD:take(playerid, params[])
             new
                 tmpString[120];
             format(tmpString, sizeof(tmpString), "*[HQ] %s %s je oduzeo dozvolu za oruzje %s.", ReturnPlayerRankName(playerid), GetName(playerid), GetName(giveplayerid));
-            SendRadioMessage(PlayerInfo[playerid][pMember], COLOR_COP, tmpString);
+            SendRadioMessage(PlayerFaction[playerid][pMember], COLOR_COP, tmpString);
 
             format(tmpString, sizeof(tmpString), "[ ! ] Policajac %s vam je oduzeo dozvolu za oruzje.", GetName(playerid));
             SendClientMessage(giveplayerid, COLOR_ORANGE, tmpString);
@@ -2172,7 +2172,7 @@ CMD:take(playerid, params[])
             new
                 tmpString[120];
             format(tmpString, sizeof(tmpString), "*[HQ] %s %s je oduzeoeku dozvolu za brod%s.", ReturnPlayerRankName(playerid), GetName(playerid), GetName(giveplayerid));
-            SendRadioMessage(PlayerInfo[playerid][pMember], COLOR_COP, tmpString);
+            SendRadioMessage(PlayerFaction[playerid][pMember], COLOR_COP, tmpString);
 
             format(tmpString, sizeof(tmpString), "[ ! ] Policajac %s vam je oduzeo dozvolu za brod.", GetName(playerid));
             SendClientMessage(giveplayerid, COLOR_ORANGE, tmpString);
@@ -2274,7 +2274,7 @@ CMD:impound(playerid, params[])
     new
         tmpString[120];
     format(tmpString, sizeof(tmpString), "*[HQ] %s %s je zaplijenio vozilo (ID: %d).", ReturnPlayerRankName(playerid), GetName(playerid), vehicleid);
-    SendRadioMessage(PlayerInfo[playerid][pMember], COLOR_COP, tmpString);
+    SendRadioMessage(PlayerFaction[playerid][pMember], COLOR_COP, tmpString);
     RemovePlayerFromVehicle(playerid);
     return 1;
 }
@@ -2364,7 +2364,7 @@ CMD:fdgarage(playerid, params[])
 
 CMD:pdgarage(playerid, params[])
 {
-    if (!IsACop(playerid) && PlayerInfo[playerid][pLeader] != 1)
+    if (!IsACop(playerid) && PlayerFaction[playerid][pLeader] != 1)
         return SendClientMessage(playerid,COLOR_RED, "Niste policajac!");
 
     // TODO: reduce level of nesting
@@ -2422,7 +2422,7 @@ CMD:pdgarage(playerid, params[])
 
 CMD:pdgarage1(playerid, params[])
 {
-    if (!IsACop(playerid) && PlayerInfo[playerid][pLeader] != 1)
+    if (!IsACop(playerid) && PlayerFaction[playerid][pLeader] != 1)
         return SendClientMessage(playerid,COLOR_RED, "Niste policajac!");
 
     // TODO: reduce level of nesting
@@ -2483,7 +2483,7 @@ CMD:pdgarage1(playerid, params[])
 // TODO: no idea what SD means, but it should be part of SD module commands
 CMD:sdgarage(playerid, params[])
 {
-    if (!IsASD(playerid) && PlayerInfo[playerid][pLeader] != 1)
+    if (!IsASD(playerid) && PlayerFaction[playerid][pLeader] != 1)
         return SendClientMessage(playerid,COLOR_RED, "Niste policajac!");
 
     // TODO: reduce level of nesting
@@ -2543,7 +2543,7 @@ CMD:sdgarage(playerid, params[])
 
 CMD:pdunlock(playerid, params[])
 {
-    if (!IsACop(playerid) && PlayerInfo[playerid][pLeader] != 1 && !IsASD(playerid) && PlayerInfo[playerid][pLeader] != 3)
+    if (!IsACop(playerid) && PlayerFaction[playerid][pLeader] != 1 && !IsASD(playerid) && PlayerFaction[playerid][pLeader] != 3)
         return SendClientMessage(playerid,COLOR_RED, "Niste policajac!");
 
     if (!IsPlayerInRangeOfPoint(playerid, 30.0, 1985.1077, -2183.0867, 13.5469))
@@ -2569,10 +2569,10 @@ CMD:pdunlock(playerid, params[])
 
 CMD:cleartrunk(playerid, params[])
 {
-    if (!IsACop(playerid) && PlayerInfo[playerid][pLeader] != 1) return SendClientMessage(playerid,COLOR_RED, "Niste policajac!");
+    if (!IsACop(playerid) && PlayerFaction[playerid][pLeader] != 1) return SendClientMessage(playerid,COLOR_RED, "Niste policajac!");
 
-    if (PlayerInfo[playerid][pRank] < FactionInfo[PlayerInfo[playerid][pMember]][rClrTrunk])
-         return va_SendClientMessage(playerid,COLOR_RED, "Niste policajac R%d+!", FactionInfo[PlayerInfo[playerid][pMember]][rClrTrunk]);
+    if (PlayerFaction[playerid][pRank] < FactionInfo[PlayerFaction[playerid][pMember]][rClrTrunk])
+         return va_SendClientMessage(playerid,COLOR_RED, "Niste policajac R%d+!", FactionInfo[PlayerFaction[playerid][pMember]][rClrTrunk]);
 
     new vehicleid = GetNearestVehicle(playerid, VEHICLE_USAGE_PRIVATE);
     if (vehicleid == INVALID_VEHICLE_ID) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste blizu vozila.");
@@ -2752,9 +2752,9 @@ CMD:pa(playerid, params[])
     new zone[100];
     format(zone, sizeof(zone), GetPlayerStreet(playerid));
     format(tmpString, sizeof(tmpString), "[HQ] Panic Alarm se upalio od strane %s %s.", ReturnPlayerRankName(playerid), GetName(playerid, false));
-    SendRadioMessage(PlayerInfo[playerid][pMember], COLOR_SKYBLUE, tmpString);
+    SendRadioMessage(PlayerFaction[playerid][pMember], COLOR_SKYBLUE, tmpString);
     format(tmpString, sizeof(tmpString), "[HQ] Zadnja lokacija je %s.", zone);
-    SendRadioMessage(PlayerInfo[playerid][pMember], COLOR_SKYBLUE, tmpString);
+    SendRadioMessage(PlayerFaction[playerid][pMember], COLOR_SKYBLUE, tmpString);
 
     PanicAlarmSpamFlag[playerid] = true;
     defer PASpamTimer(playerid);
@@ -2773,7 +2773,7 @@ CMD:hq(playerid, params[])
     if (sscanf(params, "s[86]", result)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /hq [text]");
 
     format(string, sizeof(string), "[HQ] %s %s: %s", ReturnPlayerRankName(playerid), GetName(playerid, false), result);
-    SendRadioMessage(PlayerInfo[playerid][pMember], COLOR_SKYBLUE, string);
+    SendRadioMessage(PlayerFaction[playerid][pMember], COLOR_SKYBLUE, string);
     return 1;
 }
 

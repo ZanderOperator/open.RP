@@ -252,24 +252,24 @@ GivePlayerPayCheck(playerid)
 	format(f_dialog,sizeof(f_dialog), "\n{3C95C2}Prihodi:");
 	strcat(p_dialog,f_dialog, sizeof(p_dialog));
 	// Dobitak ako je u organizaciji I AKO NIJE
-	if(PlayerInfo[playerid][pMember] > 0 )
+	if(PlayerFaction[playerid][pMember] > 0 )
 	{
 		new
-			factionbank = FactionInfo[PlayerInfo[playerid][pMember]][fFactionBank], //dohvati koliko novaca ima fakcija u kojoj je igrac
-			orgranks = FactionInfo[PlayerInfo[playerid][pMember]][fRanks], 					//dohvati koliko rankova ima fakcija u kojoj je igrac
+			factionbank = FactionInfo[PlayerFaction[playerid][pMember]][fFactionBank], //dohvati koliko novaca ima fakcija u kojoj je igrac
+			orgranks = FactionInfo[PlayerFaction[playerid][pMember]][fRanks], 					//dohvati koliko rankova ima fakcija u kojoj je igrac
 			Float:salarypercent = 0.01;
 
-		switch (PlayerInfo[playerid][pMember] ) {
+		switch (PlayerFaction[playerid][pMember] ) {
 			case 1, 3: { //LSPD i SASD
-				for( new i = 0; i <= PlayerInfo[playerid][pRank]; i++ )
+				for( new i = 0; i <= PlayerFaction[playerid][pRank]; i++ )
 					orgsalary += floatround(PD_SD_SALARY/orgranks);
 			}
 			case 2, 5: { //LSFD i LSN
-				for( new i = 0; i <= PlayerInfo[playerid][pRank]; i++ )
+				for( new i = 0; i <= PlayerFaction[playerid][pRank]; i++ )
 					orgsalary += floatround(FD_LSN_SALARY/orgranks);
 			}
 			case 4: { //GOV 1400
-				for( new i = 0; i <= PlayerInfo[playerid][pRank]; i++ )
+				for( new i = 0; i <= PlayerFaction[playerid][pRank]; i++ )
 					orgsalary += floatround(GOV_SALARY/orgranks);
 			}
 			default: {
@@ -279,7 +279,7 @@ GivePlayerPayCheck(playerid)
 
 		orgbonus = floatround(factionbank * salarypercent); 											// 0.01$% od FactionBanke organizacije
 		BudgetToPlayerBankMoney(playerid, orgsalary); 													// Novac iz proracuna igracu na bank. racun
-		FactionToPlayerBankMoney( playerid, FactionInfo[PlayerInfo[playerid][pMember]][fType], orgbonus); 		// Novac iz factionbanke igra?u na bank.ra?un.
+		FactionToPlayerBankMoney( playerid, FactionInfo[PlayerFaction[playerid][pMember]][fType], orgbonus); 		// Novac iz factionbanke igra?u na bank.ra?un.
 		orgsalary += orgbonus;
 		profit += orgsalary;
 		format(f_dialog,sizeof(f_dialog), "\n\tPlaca: +%s (Bonus: %s)", FormatNumber(orgsalary), FormatNumber(orgbonus));

@@ -3905,14 +3905,16 @@ hook OnPlayerConnect(playerid)
 
 hook OnVehicleStreamIn(vehicleid, forplayerid)
 {
-	if(CopStreamVeh[forplayerid] == vehicleid && (PlayerInfo[forplayerid][pMember] == 1 || PlayerInfo[forplayerid][pLeader] == 1))
+	if(CopStreamVeh[forplayerid] == vehicleid && (
+		PlayerFaction[forplayerid][pMember] == 1 || PlayerFaction[forplayerid][pLeader] == 1))
 		SetVehicleParamsForPlayer(vehicleid, forplayerid, 1, 0);
     return 1;
 }
 
 hook OnVehicleStreamOut(vehicleid, forplayerid)
 {
-	if(CopStreamVeh[forplayerid] == vehicleid && (PlayerInfo[forplayerid][pMember] == 1 || PlayerInfo[forplayerid][pLeader] == 1))
+	if(CopStreamVeh[forplayerid] == vehicleid && 
+		(PlayerFaction[forplayerid][pMember] == 1 || PlayerFaction[forplayerid][pLeader] == 1))
 		SetVehicleParamsForPlayer(vehicleid, forplayerid, 0, 0);
     return 1;
 }
@@ -5884,7 +5886,9 @@ CMD:lock(playerid, params[])
 			}
 		}
 		case VEHICLE_USAGE_FACTION: {
-			if( VehicleInfo[ vehicleid ][ vFaction ] != ( !PlayerInfo[playerid ][ pLeader ] ? PlayerInfo[playerid ][ pMember ] : PlayerInfo[playerid ][ pLeader ] ) ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, " Nemate kljuc od ovog vozila!");
+			if( VehicleInfo[ vehicleid ][ vFaction ] != 
+				( !PlayerFaction[playerid ][ pLeader ] ? PlayerFaction[playerid ][ pMember ] : PlayerFaction[playerid ][ pLeader ] ) ) 
+				return SendMessage(playerid, MESSAGE_TYPE_ERROR, " Nemate kljuc od ovog vozila!");
 			if( !VehicleInfo[ vehicleid ][ vLocked ] ) {
 				GameTextForPlayer( playerid, "~w~Vozilo ~r~zakljucano", 800, 4 );
 				SetVehicleParamsEx( vehicleid, engine, lights, alarm, 1, bonnet, boot, objective );

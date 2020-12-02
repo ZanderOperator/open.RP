@@ -8,6 +8,7 @@
 #include "modules/Player\SaveLoad/player_payday.pwn"
 #include "modules/Player\SaveLoad/player_savings.pwn"
 #include "modules/Player\SaveLoad/player_credits.pwn"
+#include "modules/Player\SaveLoad/player_faction.pwn"
 
 /*
 	##     ##    ###    ########   ######  
@@ -292,9 +293,6 @@ public LoadPlayerData(playerid)
 
 		cache_get_value_name_int(0,  "fishworks"	, PlayerInfo[playerid][pFishWorks]);
 		cache_get_value_name_int(0,  "parts"		, PlayerInfo[playerid][pParts]);
-		cache_get_value_name_int(0,  "facLeadId"	, PlayerInfo[playerid][pLeader]);
-		cache_get_value_name_int(0,  "facMemId"		, PlayerInfo[playerid][pMember]);
-		cache_get_value_name_int(0,  "facRank"		, PlayerInfo[playerid][pRank]);
         cache_get_value_name_float(0,"health"		, PlayerInfo[playerid][pHealth]);
 
         cache_get_value_name_int(0,  "playaSkin"	, PlayerInfo[playerid][pChar]);
@@ -405,6 +403,9 @@ public LoadPlayerData(playerid)
 			KickMessage(playerid);
 			return 1;
 		}
+        // Player Faction Stats
+        LoadPlayerFaction(playerid);
+
 		// Player Job & Job Stats
 		LoadPlayerJob(playerid); 
 
@@ -672,7 +673,7 @@ SafeSpawnPlayer(playerid)
 		 PlayerInfo[ playerid ][ pSQLID ]
 	);
 	
-	if( ( 10 <= PlayerJob[playerid][pJob] <= 12 ) && ( !PlayerInfo[playerid][pMember] && !PlayerInfo[playerid][pLeader])  )
+	if( ( 10 <= PlayerJob[playerid][pJob] <= 12 ) && ( !PlayerFaction[playerid][pMember] && !PlayerFaction[playerid][pLeader])  )
 		PlayerJob[playerid][pJob] = 0;
 
 	if( !PlayerInfo[playerid][pRegistered] )
@@ -891,7 +892,7 @@ stock SetPlayerSpawnInfo(playerid)
 			}
 			case 2:
 			{
-				switch(PlayerInfo[playerid][pMember])
+				switch(PlayerFaction[playerid][pMember])
 				{
 					case 1:
 					{

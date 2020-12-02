@@ -92,7 +92,7 @@ stock SendWalkieTalkieMessage(member, color, sstring[])
 {
     foreach (new i : Player)
     {
-        if (PlayerInfo[i][pMember] == member)
+        if (PlayerFaction[i][pMember] == member)
         {
             SendClientMessage(i, color, sstring);
             PlayerPlaySound(i, 1058, 0.0, 0.0, 0.0);
@@ -310,7 +310,7 @@ CMD:tognews(playerid, params[])
 
 CMD:lsnstat(playerid, params[])
 {
-    if (PlayerInfo[playerid][pLeader] != 5) return SendMessage(playerid, MESSAGE_TYPE_ERROR, " Niste novinar!");
+    if (PlayerFaction[playerid][pLeader] != 5) return SendMessage(playerid, MESSAGE_TYPE_ERROR, " Niste novinar!");
 
     new
         param[7],
@@ -357,7 +357,7 @@ CMD:lsndown(playerid, params[])
 
 CMD:reset_news(playerid, params[])
 {
-    if (PlayerInfo[playerid][pAdmin] < 4 && PlayerInfo[playerid][pLeader] != 5)
+    if (PlayerInfo[playerid][pAdmin] < 4 && PlayerFaction[playerid][pLeader] != 5)
     {
         SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste Leader/Admin Lvl 4+!");
         return 1;

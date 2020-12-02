@@ -1698,7 +1698,7 @@ stock ShowPlayerStats(playerid, targetid)
 		PaydayInfo[targetid][pPayDayMoney],
 		ReturnPlayerFactionName(targetid),
 		ReturnPlayerRankName(targetid),
-		PlayerInfo[targetid][pRank],
+		PlayerFaction[targetid][pRank],
 		PlayerInfo[targetid][pHunger]
 	);
 	strcat(pDialog,motd, sizeof(pDialog));

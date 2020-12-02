@@ -966,7 +966,7 @@ CMD:charity(playerid, params[])
 CMD:finance(playerid, params[])
 {
     new pick[10],
-        fid = PlayerInfo[playerid][pMember];
+        fid = PlayerFaction[playerid][pMember];
     // TODO: fid bounds check
     if (FactionInfo[fid][fType] != FACTION_TYPE_LEGAL) return SendClientMessage(playerid, COLOR_RED, "Niste pripadnik Los Santos Govermenta!");
     if (sscanf(params, "s[10]", pick))
@@ -989,7 +989,7 @@ CMD:finance(playerid, params[])
             return 1;
         }
         if (id < 0) return SendClientMessage(playerid, COLOR_RED, "ID transakcije ne moze biti manji od 0!");
-        if (PlayerInfo[playerid][pLeader] != 4) return SendMessage(playerid, MESSAGE_TYPE_ERROR, " Niste Mayor!");
+        if (PlayerFaction[playerid][pLeader] != 4) return SendMessage(playerid, MESSAGE_TYPE_ERROR, " Niste Mayor!");
 
         mysql_fquery(g_SQL, "DELETE FROM server_transactions WHERE id = '%d'", id);
 
@@ -1001,7 +1001,7 @@ CMD:finance(playerid, params[])
 
 CMD:govmdc(playerid, params[])
 {
-    if (PlayerInfo[playerid][pMember] != 4) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ovlasteni za koristenje ove komande!");
+    if (PlayerFaction[playerid][pMember] != 4) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ovlasteni za koristenje ove komande!");
 
     new giveplayerid;
     if (sscanf(params, "u", giveplayerid)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /govmdc [ID/DioImena]");

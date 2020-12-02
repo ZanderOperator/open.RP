@@ -144,7 +144,7 @@ CMD:dflares(playerid, params[])
         return 1;
     }
 
-    if (PlayerInfo[playerid][pRank] >= 2)
+    if (PlayerFaction[playerid][pRank] >= 2)
     {
         DeleteClosestFlare(playerid);
     }
@@ -158,7 +158,7 @@ CMD:daflares(playerid, params[])
         return 1;
     }
 
-    if (PlayerInfo[playerid][pRank] >= 1 || PlayerInfo[playerid][pAdmin] >= 2)
+    if (PlayerFaction[playerid][pRank] >= 1 || PlayerInfo[playerid][pAdmin] >= 2)
     {
         DeleteAllFlare();
     }

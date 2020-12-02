@@ -780,7 +780,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 
                 if ((PlayerInfo[pID][pHouseKey] != INVALID_HOUSE_ID) || (PlayerInfo[pID][pRentKey] != INVALID_HOUSE_ID))
                     PlayerInfo[pID][pSpawnChange] = 1;
-                else if (PlayerInfo[pID][pMember] != 0 || PlayerInfo[pID][pLeader] != 0)
+                else if (PlayerFaction[pID][pMember] != 0 || PlayerFaction[pID][pLeader] != 0)
                     PlayerInfo[pID][pSpawnChange] = 2;
                 else PlayerInfo[pID][pSpawnChange] = 0;
 
@@ -959,7 +959,7 @@ CMD:unrentroom(playerid, params[])
     ComplexRoomInfo[complex_id][cOwnerID] = -1;
     PlayerInfo[playerid][pComplexRoomKey] = INVALID_COMPLEX_ID;
 
-    if (PlayerInfo[playerid][pMember] != 0 || PlayerInfo[playerid][pLeader] != 0)
+    if (PlayerFaction[playerid][pMember] != 0 || PlayerFaction[playerid][pLeader] != 0)
     {
         PlayerInfo[playerid][pSpawnChange] = 2;
     }
