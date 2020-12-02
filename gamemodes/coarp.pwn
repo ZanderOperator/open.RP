@@ -827,10 +827,10 @@ ResetPlayerVariables(playerid)
 	PlayerInfo[playerid][pChangeTimes]		= 0;
 	PlayerInfo[playerid][pMoney]			= 0;
 	PlayerInfo[playerid][pBank]				= 0;
-	PlayerInfo[playerid][pSavingsCool]		= 0;
-	PlayerInfo[playerid][pSavingsTime]		= 0;
-	PlayerInfo[playerid][pSavingsType]		= 0;
-	PlayerInfo[playerid][pSavingsMoney]		= 0;
+	PlayerSavings[playerid][pSavingsCool]		= 0;
+	PlayerSavings[playerid][pSavingsTime]		= 0;
+	PlayerSavings[playerid][pSavingsType]		= 0;
+	PlayerSavings[playerid][pSavingsMoney]		= 0;
 	PlayerInfo[playerid][pTempConnectTime]	= 0;
 	PlayerInfo[playerid][pFishWorks]		= 0;
 	PlayerInfo[playerid][pFishSQLID] 		= -1;
@@ -874,9 +874,6 @@ ResetPlayerVariables(playerid)
 	PlayerInfo[playerid][pBoomBoxType] 		= 0;
 	PlayerInfo[playerid][pHasRadio] 		= 0;
 	PlayerInfo[playerid][pMainSlot] 		= 0;
-	
-	ResetPlayerSkills(playerid);
-	ResetCreditVars(playerid);
 
 	PlayerInfo[playerid][pRadio][1] 		= 0;
 	PlayerInfo[playerid][pRadio][2] 		= 0;

@@ -210,28 +210,28 @@ GivePlayerPayCheck(playerid)
 	}
 	payday_savings:
 	// Savings
-	if(PlayerInfo[playerid][pSavingsType] > 0)
+	if(PlayerSavings[playerid][pSavingsType] > 0)
 	{
-		PlayerInfo[playerid][pSavingsTime]--;
-		if(PlayerInfo[playerid][pSavingsTime] > 0)
-			mysql_fquery(g_SQL, "UPDATE accounts SET savings_time = '%d' WHERE sqlid = '%d' LIMIT 1", PlayerInfo[playerid][pSavingsTime], PlayerInfo[playerid][pSQLID]);
+		PlayerSavings[playerid][pSavingsTime]--;
+		if(PlayerSavings[playerid][pSavingsTime] > 0)
+			mysql_fquery(g_SQL, "UPDATE accounts SET savings_time = '%d' WHERE sqlid = '%d' LIMIT 1", PlayerSavings[playerid][pSavingsTime], PlayerInfo[playerid][pSQLID]);
 
-		if(PlayerInfo[playerid][pSavingsTime] <= 0)
+		if(PlayerSavings[playerid][pSavingsTime] <= 0)
 		{
-			new	Float:savingsmoneyfloat = PlayerInfo[playerid][pSavingsMoney] * floatdiv(PlayerInfo[playerid][pSavingsType], 100), 	// izracunava ulozen novac * stopa
+			new	Float:savingsmoneyfloat = PlayerSavings[playerid][pSavingsMoney] * floatdiv(PlayerSavings[playerid][pSavingsType], 100), 	// izracunava ulozen novac * stopa
 				savingsmoney = floatround(savingsmoneyfloat), // zaokruzuje ga
-				totalmoney = PlayerInfo[playerid][pSavingsMoney] + savingsmoney; // dodaje stopu na glavnicu
+				totalmoney = PlayerSavings[playerid][pSavingsMoney] + savingsmoney; // dodaje stopu na glavnicu
 
-			// savings = PlayerInfo[playerid][pSavingsMoney] + floatround( PlayerInfo[playerid][pSavingsMoney] * (PlayerInfo[playerid][pSavingsType] / 100) );
+			// savings = PlayerSavings[playerid][pSavingsMoney] + floatround( PlayerSavings[playerid][pSavingsMoney] * (PlayerSavings[playerid][pSavingsType] / 100) );
 
 			// Novac iz prora?una dolazi igra?u na bankovni racun
 			BudgetToPlayerBankMoney(playerid, totalmoney);
 
 			// Clear
-			PlayerInfo[playerid][pSavingsCool] = 30;
-			PlayerInfo[playerid][pSavingsTime] = 0;
-			PlayerInfo[playerid][pSavingsType] = 0;
-			PlayerInfo[playerid][pSavingsMoney] = 0;
+			PlayerSavings[playerid][pSavingsCool] = 30;
+			PlayerSavings[playerid][pSavingsTime] = 0;
+			PlayerSavings[playerid][pSavingsType] = 0;
+			PlayerSavings[playerid][pSavingsMoney] = 0;
 
 			mysql_fquery(g_SQL, 
 				"UPDATE accounts SET bankMoney = '%d', savings_cool = '30', savings_time = '0',\n\
@@ -247,14 +247,14 @@ GivePlayerPayCheck(playerid)
 			strcat(p_dialog,f_dialog, sizeof(p_dialog));
 		}
 	}
-	if(PlayerInfo[playerid][pSavingsCool] > 0)
+	if(PlayerSavings[playerid][pSavingsCool] > 0)
 	{
-		PlayerInfo[playerid][pSavingsCool] -= 1;
-		if(PlayerInfo[playerid][pSavingsCool] < 0)
-			PlayerInfo[playerid][pSavingsCool] = 0;
+		PlayerSavings[playerid][pSavingsCool] -= 1;
+		if(PlayerSavings[playerid][pSavingsCool] < 0)
+			PlayerSavings[playerid][pSavingsCool] = 0;
 
 		mysql_fquery(g_SQL, "UPDATE accounts SET savings_cool = '%d' WHERE sqlid = '%d'",
-			PlayerInfo[playerid][pSavingsCool],
+			PlayerSavings[playerid][pSavingsCool],
 			PlayerInfo[playerid][pSQLID]
 		);
 	}

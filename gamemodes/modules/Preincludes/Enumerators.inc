@@ -35,10 +35,6 @@ enum E_PLAYER_DATA
 	pChangeTimes,
 	pMoney,
 	pBank,
-	pSavingsCool,
-	pSavingsTime,
-	pSavingsType,
-	pSavingsMoney,
 	pJob,
 	pContractTime,
 	pFreeWorks,
@@ -221,6 +217,15 @@ enum E_P_JAIL_INFO
 	pJailJob
 }
 new PlayerJail[ MAX_PLAYERS ][ E_P_JAIL_INFO ];
+
+enum E_SAVINGS_INFO
+{
+	pSavingsCool,
+	pSavingsTime,
+	pSavingsType,
+	pSavingsMoney,
+} 
+new PlayerSavings[ MAX_PLAYERS ][ E_SAVINGS_INFO ];
 
 enum E_CREDIT_INFO
 {

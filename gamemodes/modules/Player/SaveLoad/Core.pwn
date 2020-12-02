@@ -6,6 +6,8 @@
 #include "modules/Player\SaveLoad/player_jail.pwn"
 #include "modules/Player\SaveLoad/player_job.pwn"
 #include "modules/Player\SaveLoad/player_payday.pwn"
+#include "modules/Player\SaveLoad/player_savings.pwn"
+#include "modules/Player\SaveLoad/player_credits.pwn"
 
 /*
 	##     ##    ###    ########   ######  
@@ -121,7 +123,6 @@ timer SetPlayerCrash[6000](playerid)
 	AC_SetPlayerWeapons(playerid);
 	LoadPlayerSkills(playerid);
 	LoadPlayerObjects(playerid);
-	LoadPlayerCredit(playerid);
 	CheckPlayerInteriors(playerid);
 	CheckPlayerInactivity(playerid);
 	CheckPlayerMasks(playerid);
@@ -327,11 +328,6 @@ public LoadPlayerData(playerid)
 		cache_get_value_name_int(0,	"news"			, PlayerInfo[playerid][pNews]);
 		cache_get_value_name_int(0,	"voted"			, PlayerInfo[playerid][pVoted]);
 		
-		cache_get_value_name_int(0,	"savings_cool"	, PlayerInfo[playerid][pSavingsCool]);
-		cache_get_value_name_int(0,	"savings_time"	, PlayerInfo[playerid][pSavingsTime]);
-		cache_get_value_name_int(0,	"savings_type"	, PlayerInfo[playerid][pSavingsType]);
-		cache_get_value_name_int(0,	"savings_money"	, PlayerInfo[playerid][pSavingsMoney]);
-		
 		cache_get_value_name_int(0,	"ammutime"		, PlayerInfo[playerid][pAmmuTime]);
 		cache_get_value_name_int(0,	"warekey"		, PlayerInfo[playerid][pWarehouseKey]);
 		cache_get_value_name_int(0, "taxiPoints"	, PlayerInfo[playerid][taxiPoints]);
@@ -411,19 +407,27 @@ public LoadPlayerData(playerid)
 		}
 		// Player Job & Job Stats
 		LoadPlayerJob(playerid); 
+
+        // Player Bank Stats
+        LoadPlayerCredit(playerid);
+        LoadPlayerSavings(playerid);
+
 		// Player Payday Stats
 		LoadPlayerPayday(playerid);
+
 		// Player VIP status
 		LoadPlayerVIP(playerid);
+
 		// Jail Stats
 		LoadPlayerJailStats(playerid);
+
 		// Licenses
 		LoadPlayerLicenses(playerid);
+
 		// Weapons & Drugs
 		LoadPlayerWeaponSettings(playerid);
 		AC_LoadPlayerWeapons(playerid);
 		LoadPlayerPackage(playerid);
-		
 		LoadPlayerDrugs(playerid);
 		
 		// Car Ownership list
@@ -759,7 +763,6 @@ stock SavePlayerData(playerid)
 			SAMPid = '%e', forumname = '%e', gymtimes = '%d', gymcounter = '%d',\n\
 			boombox = '%d', boomboxtype = '%d', casinocool = '%d', news = '%d', HasRadio = '%d', voted = '%d',\n\
 			drugused = '%d', drugseconds = '%d', lastdrug = '%d',\n\
-			savings_cool = '%d', savings_time = '%d', savings_type = '%d', savings_money = '%d',\n\
 			ammutime = '%d', warekey = '%d', mustread = '%d', lastupdatever = '%e', JackerCoolDown = '%d',\n\
 			FurnPremium = '%d',\n\
 			Radio1 = '%d', Slot1 = '%d', Radio2 = '%d', Slot2 = '%d', Radio3 = '%d', Slot3 = '%d',\n\
@@ -812,10 +815,6 @@ stock SavePlayerData(playerid)
 		PlayerInfo[playerid][pDrugUsed],
 		PlayerInfo[playerid][pDrugSeconds],
 		PlayerInfo[playerid][pDrugOrder],
-		PlayerInfo[playerid][pSavingsCool],
-		PlayerInfo[playerid][pSavingsTime],
-		PlayerInfo[playerid][pSavingsType],
-		PlayerInfo[playerid][pSavingsMoney],
 		PlayerInfo[playerid][pAmmuTime],
 		PlayerInfo[playerid][pWarehouseKey],
 		PlayerInfo[playerid][pMustRead],
