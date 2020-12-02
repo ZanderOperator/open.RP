@@ -1539,7 +1539,6 @@ hook OnPlayerDisconnect(playerid, reason)
 	// Login Time && IP fetch
 	format(PlayerInfo[playerid][pLastLogin], 24, ReturnDate());
 	//GetPlayerIp(playerid, PlayerInfo[playerid][pLastIP], MAX_PLAYER_IP);
-	PlayerInfo[playerid][pAdmMsgConfirm] = 0;
 	GotRod[playerid] = 0;
 	RemovePlayerFromVehicle(playerid);
 	new Float:armour;
@@ -1632,16 +1631,12 @@ hook OnPlayerDisconnect(playerid, reason)
 	
 	// Player Sets
 	secquestattempt[playerid] = 3;
-	if(GMX == 1) {
+	if(GMX == 1) 
+	{
 		SendClientMessage(playerid, COLOR_RED, "[OBAVIJEST] Spremljeni su Vasi podaci. Server Vas je automatski kickao.");
 		KickMessage(playerid);
 	}
-	if(SafeSpawned[playerid])
-		mysql_fquery(g_SQL, "UPDATE accounts SET AdminMessage = '', AdminMessageBy = '', AdmMessageConfirm = '0' \n\
-	 		WHERE sqlid = '%d'", 
-    		PlayerInfo[playerid][pSQLID]
-		);
-		
+	
 	defer SafeResetPlayerVariables(playerid);
 	return 1;
 }

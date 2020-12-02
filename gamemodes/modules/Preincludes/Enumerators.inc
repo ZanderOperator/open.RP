@@ -150,10 +150,6 @@ enum E_PLAYER_DATA
 	pFishingSkill,
  	//speedo
  	pSpeedo,
-	//admin msgs
-	pAdminMsg[2048],
-	pAdminMsgBy[60],
-	pAdmMsgConfirm,
 	//pm
 	pPMText[128],
 	pPMing,
@@ -253,6 +249,14 @@ enum E_P_RADIO_INFO
 	pMainSlot
 }
 new PlayerRadio[ MAX_PLAYERS ][ E_P_RADIO_INFO ];
+
+enum E_P_ADMIN_MSG
+{
+	pAdminMsg[1536],
+	pAdminMsgBy[60],
+	bool:pAdmMsgConfirm,
+}
+new PlayerAdminMessage[ MAX_PLAYERS ][ E_P_ADMIN_MSG ];
 
 enum E_GARAGE_DATA {
 	gSQLID,
