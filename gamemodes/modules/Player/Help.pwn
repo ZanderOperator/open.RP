@@ -138,7 +138,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext [])
 					case 1: ShowPlayerDialog(playerid, DIALOG_HELP, DIALOG_STYLE_MSGBOX, "Vozilo", "/gps\n/car\n/fill\n/get fuel\n/tow\n/oldcar\n/doors\n/windows\n/trunk\n/showcostats\n/duplicatekey\n/tuning\n/bonnet\n/eject", "Ok", "");
 					case 2: 
 					{
-						if(PlayerInfo[playerid][pMember] == 0)
+						if(PlayerFaction[playerid][pMember] == 0)
 							return SendClientMessage(playerid,COLOR_RED, "ERROR:{FFFFFF} Niste clan ni jedne legalne organizacije!");
 						else
 						{

@@ -372,9 +372,9 @@ GetPlayerPaymentOption(playerid, type)
 IsPlayerCredible(playerid, amount)
 {
 	new bool:value = false;
-	if(PlayerInfo[playerid][pMember] > 0)
+	if(PlayerFaction[playerid][pMember] > 0)
 	{
-		new fid = PlayerInfo[playerid][pMember];
+		new fid = PlayerFaction[playerid][pMember];
 		if(FactionInfo[fid][fType] != FACTION_TYPE_LAW && FactionInfo[fid][fType] != FACTION_TYPE_LAW2 && FactionInfo[fid][fType] != FACTION_TYPE_FD && FactionInfo[fid][fType] != FACTION_TYPE_NEWS) 	
 			value = false;
 		else 

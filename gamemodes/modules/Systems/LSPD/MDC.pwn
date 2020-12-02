@@ -1364,7 +1364,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                 }
                 case 1:
                 { // Brisanje
-                    if (PlayerInfo[playerid][pRank] < 4) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Samo PD officeri rank 4+ mogu ovdje!");
+                    if (PlayerFaction[playerid][pRank] < 4) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Samo PD officeri rank 4+ mogu ovdje!");
                     ShowPlayerDialog(playerid, DIALOG_MDC_DRECORD_ID, DIALOG_STYLE_INPUT, "MDC - PLAYER", "Unesite ID dosjea kojeg zelite obrisati:", "Input", "Abort");
                 }
             }
@@ -1407,7 +1407,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                 }
                 case 1:
                 { // Brisanje
-                    if (PlayerInfo[playerid][pRank] < 4) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Samo PD officeri rank 4+ mogu ovdje!");
+                    if (PlayerFaction[playerid][pRank] < 4) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Samo PD officeri rank 4+ mogu ovdje!");
 
                     ShowPlayerDialog(playerid, DIALOG_MDC_DTICKET_ID, DIALOG_STYLE_INPUT, "MDC - TICKET", "Unesite ID dosjea kojeg zelite obrisati:", "Input", "Abort");
                 }
@@ -1507,7 +1507,7 @@ CMD:apb(playerid, params[])
 
             new string[128];
             format(string, sizeof(string), "** [HQ] ** APB ** %s je dodao APB zapis na %s **", GetName(playerid,true), suspect);
-            SendRadioMessage(PlayerInfo[playerid][pMember], TEAM_YELLOW_COLOR, string);
+            SendRadioMessage(PlayerFaction[playerid][pMember], TEAM_YELLOW_COLOR, string);
         }
     }
     else if (!strcmp(pick, "check", true))

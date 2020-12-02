@@ -50,9 +50,6 @@ enum E_PLAYER_DATA
 	pComplexKey,
 	pComplexRoomKey,
 	pRentKey,
-	pLeader,
-	pMember,
-	pRank,
 	Float:pSHealth,
 	Float:pHealth,
 	Float:pArmour,
@@ -237,6 +234,14 @@ enum E_CREDIT_INFO
 	cTimestamp
 }
 new CreditInfo[ MAX_PLAYERS ][ E_CREDIT_INFO ];
+
+enum E_PLAYER_FACTION_INFO
+{
+	pLeader,
+	pMember,
+	pRank
+}
+new PlayerFaction[ MAX_PLAYERS ][ E_PLAYER_FACTION_INFO ];
 
 enum E_GARAGE_DATA {
 	gSQLID,

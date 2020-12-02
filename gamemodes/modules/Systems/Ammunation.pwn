@@ -445,7 +445,7 @@ CMD:issueweaplic(playerid, params[])
         SendClientMessage(playerid, COLOR_RED, "Osoba vec ima dozvolu za oruzje!");
         return 1;
     }
-    if (!(IsACop(playerid) && PlayerInfo[playerid][pRank] > 5) || PlayerInfo[playerid][pLeader] != 1)
+    if (!(IsACop(playerid) && PlayerFaction[playerid][pRank] > 5) || PlayerFaction[playerid][pLeader] != 1)
     {
         SendClientMessage(playerid, COLOR_RED, "Niste ovlasteni!");
         return 1;
@@ -456,7 +456,7 @@ CMD:issueweaplic(playerid, params[])
 
     new string[120];
     format(string, sizeof(string), "*[HQ] %s %s je izdao weapon licensu %s.", ReturnPlayerRankName(playerid), GetName(playerid), GetName(giveplayerid));
-    SendRadioMessage(PlayerInfo[playerid][pMember], COLOR_COP, string);
+    SendRadioMessage(PlayerFaction[playerid][pMember], COLOR_COP, string);
     return 1;
 }
 
@@ -484,6 +484,6 @@ CMD:revokeweaplic(playerid, params[])
 
     new string[120];
     format(string, sizeof(string), "*[HQ] %s %s je oduzeo weapon licensu %s.", ReturnPlayerRankName(playerid), GetName(playerid), GetName(giveplayerid));
-    SendRadioMessage(PlayerInfo[playerid][pMember], COLOR_COP, string);
+    SendRadioMessage(PlayerFaction[playerid][pMember], COLOR_COP, string);
     return 1;
 }

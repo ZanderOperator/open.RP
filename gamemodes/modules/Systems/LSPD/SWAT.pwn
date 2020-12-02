@@ -99,7 +99,7 @@ CMD:swat(playerid, params[])
             SetPlayerHealth(playerid, 150.0);
 
             format(string, sizeof(string), "*[HQ] SWAT operativac %s je slobodan za pozive.", GetName(playerid,false));
-            SendRadioMessage(PlayerInfo[playerid][pMember], COLOR_COP, string);
+            SendRadioMessage(PlayerFaction[playerid][pMember], COLOR_COP, string);
         }
         else
         {
@@ -110,7 +110,7 @@ CMD:swat(playerid, params[])
             if (armour >= 99.0) SetPlayerArmour(playerid, 99.0);
 
             format(string, sizeof(string), "*[HQ] SWAT operativac %s je sada van duznosti.", GetName(playerid,false));
-            SendRadioMessage(PlayerInfo[playerid][pMember], COLOR_COP, string);
+            SendRadioMessage(PlayerFaction[playerid][pMember], COLOR_COP, string);
         }
     }
     else SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nisi na mjestu za uzimanje SWAT opreme");

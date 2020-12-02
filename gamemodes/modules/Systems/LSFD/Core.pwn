@@ -268,7 +268,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 
                     SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "Sada ste na duznosti i mozete koristit FD komande.");
                     format(string, sizeof(string), "*[HQ] %s %s je na duznosti.", ReturnPlayerRankName(playerid), GetName(playerid,false));
-                    SendRadioMessage(PlayerInfo[playerid][pMember], COLOR_DARKYELLOW, string);
+                    SendRadioMessage(PlayerFaction[playerid][pMember], COLOR_DARKYELLOW, string);
 
                     format(string, sizeof(string), "* %s oblaci svoju radnu uniformu i priprema se za posao.", GetName(playerid, true));
                     ProxDetector(10.0, playerid, string, COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE);
@@ -291,7 +291,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 
                     SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "Sada ste van  duznosti i ne mozete koristit FD komande.");
                     format(string, sizeof(string), "*[HQ] %s %s je van duznosti.", ReturnPlayerRankName(playerid), GetName(playerid,false));
-                    SendRadioMessage(PlayerInfo[playerid][pMember], COLOR_DARKYELLOW, string);
+                    SendRadioMessage(PlayerFaction[playerid][pMember], COLOR_DARKYELLOW, string);
 
                     format(string, sizeof(string), "* %s svlaci svoju radnu uniformu i oblaci civilnu.", GetName(playerid, true));
                     ProxDetector(10.0, playerid, string, COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE);
@@ -376,7 +376,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 
                     SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "Sada ste na duznosti i mozete koristit FD komande.");
                     format(string, sizeof(string), "*[HQ] %s %s je na duznosti.", ReturnPlayerRankName(playerid), GetName(playerid,false));
-                    SendRadioMessage(PlayerInfo[playerid][pMember], COLOR_ALLDEPT, string);
+                    SendRadioMessage(PlayerFaction[playerid][pMember], COLOR_ALLDEPT, string);
 
                     format(string, sizeof(string), "* %s oblaci svoju radnu uniformu i priprema se za posao.", GetName(playerid, true));
                     ProxDetector(10.0, playerid, string, COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE);
@@ -398,7 +398,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 
                     SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "Sada ste van  duznosti i ne mozete koristit FD komande.");
                     format(string, sizeof(string), "*[HQ] %s %s je van duznosti.", ReturnPlayerRankName(playerid), GetName(playerid,false));
-                    SendRadioMessage(PlayerInfo[playerid][pMember], COLOR_ALLDEPT, string);
+                    SendRadioMessage(PlayerFaction[playerid][pMember], COLOR_ALLDEPT, string);
 
                     format(string, sizeof(string), "* %s svlaci svoju radnu uniformu i oblaci civilnu.", GetName(playerid, true));
                     ProxDetector(10.0, playerid, string, COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE);
@@ -591,7 +591,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                 case 3:
                 { // Buygun
                     if (PlayerInfo[playerid][pLevel] < 2) return SendMessage(playerid, MESSAGE_TYPE_ERROR, " Ne mozete koristiti ovu komandu dok ste level 1!"), ShowPlayerDialog(playerid, DIALOG_PD_EQUIP, DIALOG_STYLE_LIST, "LSPD Equipment", "Skin\nDuty\nHeal\nWeapons", "Choose", "Abort");
-                    if (IsACop(playerid) && PlayerInfo[playerid][pRank] < 2) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste rank 2!"), ShowPlayerDialog(playerid, DIALOG_PD_EQUIP, DIALOG_STYLE_LIST, "LSPD Equipment", "Skin\nDuty\nHeal\nWeapons", "Choose", "Abort");
+                    if (IsACop(playerid) && PlayerFaction[playerid][pRank] < 2) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste rank 2!"), ShowPlayerDialog(playerid, DIALOG_PD_EQUIP, DIALOG_STYLE_LIST, "LSPD Equipment", "Skin\nDuty\nHeal\nWeapons", "Choose", "Abort");
                     ShowPlayerDialog(playerid,DIALOG_PD_BUYGUN,DIALOG_STYLE_LIST,"POLICE ARMOURY","Desert Eagle - 50 metaka\nShotgun - 50 metaka\nMP5 - 150 metaka\nM4 - 200 metaka\nSniper Rifle - 50 metaka\nKnife\nTeargas - 10\nColt45 - 50\nSilenced - 50 metaka\nSpraycan\nNitestick\nBean Bag - 50 metaka\nRifle - 50 komanda","Choose","Exit");
                 }
             }
@@ -630,7 +630,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 
                     SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "Sada ste na duznosti i mozete koristit PD komande.");
                     format(string, sizeof(string), "*[HQ] %s %s je na duznosti.", ReturnPlayerRankName(playerid), GetName(playerid,false));
-                    SendRadioMessage(PlayerInfo[playerid][pMember], COLOR_COP, string);
+                    SendRadioMessage(PlayerFaction[playerid][pMember], COLOR_COP, string);
 
                     format(string, sizeof(string), "* %s oblaci svoju radnu uniformu i priprema se za posao.", GetName(playerid, true));
                     ProxDetector(10.0, playerid, string, COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE);
@@ -655,7 +655,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 
                     SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "Sada ste van  duznosti i ne mozete koristit PD komande.");
                     format(string, sizeof(string), "*[HQ] %s %s je van duznosti.", ReturnPlayerRankName(playerid), GetName(playerid,false));
-                    SendRadioMessage(PlayerInfo[playerid][pMember], COLOR_COP, string);
+                    SendRadioMessage(PlayerFaction[playerid][pMember], COLOR_COP, string);
 
                     format(string, sizeof(string), "* %s svlaci svoju radnu uniformu i oblaci civilnu.", GetName(playerid, true));
                     ProxDetector(10.0, playerid, string, COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE);
@@ -760,7 +760,7 @@ CMD:createexplosion(playerid, params[])
 
 CMD:rtcfdcars(playerid, params[])
 {
-    if (PlayerInfo[playerid][pLeader] != 2) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nisi lider LSFDa!");
+    if (PlayerFaction[playerid][pLeader] != 2) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nisi lider LSFDa!");
 
     for (new x = 0; x < MAX_VEHICLES; x++)
     {
@@ -929,8 +929,8 @@ CMD:confirmation(playerid, params[])
     new year, month, day;
     new rand = random(9999);
 
-    if (!IsFDMember(playerid) || PlayerInfo[playerid][pRank] < 2) return SendClientMessage(playerid, COLOR_RED, "Niste doktor ili ste premal rank");
-    if (IsFDMember(playerid) && PlayerInfo[playerid][pRank] < 1) return SendClientMessage(playerid, COLOR_RED, "Suspendirani ste!");
+    if (!IsFDMember(playerid) || PlayerFaction[playerid][pRank] < 2) return SendClientMessage(playerid, COLOR_RED, "Niste doktor ili ste premal rank");
+    if (IsFDMember(playerid) && PlayerFaction[playerid][pRank] < 1) return SendClientMessage(playerid, COLOR_RED, "Suspendirani ste!");
     if (sscanf(params, "s[20]u", option, giveplayerid))
     {
         SendClientMessage(playerid, COLOR_RED, "|__________________ {FA5656]Davanje uvjerenja __________________|");

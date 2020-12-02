@@ -62,16 +62,16 @@ static
 
 Public:FetchPlayerFaction(playerid)
 {
-    return PlayerInfo[playerid][pMember];
+    return PlayerFaction[playerid][pMember];
 }
 
 Public:FetchPlayerFactionType(playerid)
 {
-    if (!Iter_Contains(Factions, PlayerInfo[playerid][pMember]))
+    if (!Iter_Contains(Factions, PlayerFaction[playerid][pMember]))
     {
         return 0;
     }
-    return FactionInfo[PlayerInfo[playerid][pMember]][fType];
+    return FactionInfo[PlayerFaction[playerid][pMember]][fType];
 }
 
 stock IsFreeSlot(orgid)
@@ -328,15 +328,15 @@ stock ResetFaction(fid)
 stock RemoveLeaders(orgid)
 {
     mysql_fquery(g_SQL, 
-        "UPDATE accounts SET facLeadId = '0', facMemId = '0' WHERE facLeadId = '%d'",
+        "UPDATE player_faction SET facLeadId = '0', facMemId = '0' WHERE facLeadId = '%d'",
         orgid
     );
 
     foreach(new i : Player)
     {
-        if (PlayerInfo[i][pLeader] == orgid)
+        if (PlayerFaction[i][pLeader] == orgid)
         {
-            PlayerInfo[i][pLeader] = 0;
+            PlayerFaction[i][pLeader] = 0;
             SendClientMessage(i, COLOR_RED, "[ ! ] Dobili ste kick iz organizacije zbog njenog brisanja!");
         }
     }
@@ -352,9 +352,9 @@ stock RemoveMembers(orgid)
 
     foreach(new i : Player)
     {
-        if (PlayerInfo[i][pMember] == orgid)
+        if (PlayerFaction[i][pMember] == orgid)
         {
-            PlayerInfo[i][pMember] = 0;
+            PlayerFaction[i][pMember] = 0;
             SendClientMessage(i, COLOR_RED, "[ ! ] Dobili ste kick iz organizacije zbog njenog brisanja!");
         }
     }
@@ -364,8 +364,8 @@ stock RemoveMembers(orgid)
 stock ReturnPlayerRankName(playerid)
 {
     new
-        member  = PlayerInfo[playerid][pMember],
-        rank    = PlayerInfo[playerid][pRank],
+        member  = PlayerFaction[playerid][pMember],
+        rank    = PlayerFaction[playerid][pRank],
         rtext[64];
 
     // TODO: total abomination. no need for switch, refactor FactionInfo
@@ -394,7 +394,7 @@ stock ReturnPlayerFactionName(playerid)
 {
     new
         string[25],
-        faction = PlayerInfo[playerid][pMember];
+        faction = PlayerFaction[playerid][pMember];
     // TODO: strcpy
     if (faction < 1 || faction > MAX_FACTIONS-1)
         format(string, sizeof(string), "Civil");
@@ -407,7 +407,7 @@ stock ReturnPlayerFactionName(playerid)
 stock ReturnRankName(rank, playerid)
 {
     new
-        member = PlayerInfo[playerid][pMember],
+        member = PlayerFaction[playerid][pMember],
         rtext[64];
 
     // TODO: total abomination. no need for switch, refactor FactionInfo
@@ -436,7 +436,7 @@ stock SendFactionMessage(family, color, sstring[])
 {
     foreach(new i : Player)
     {
-        if (PlayerInfo[i][pMember] == family && Bit1_Get(gr_FactionChatTog, i))
+        if (PlayerFaction[i][pMember] == family && Bit1_Get(gr_FactionChatTog, i))
         {
             SendClientMessage(i, color, sstring);
         }
@@ -447,7 +447,7 @@ stock SendRadioMessage(member, color, sstring[])
 {
     foreach(new i : Player)
     {
-        if (PlayerInfo[i][pMember] == member && PlayerInfo[i][pLawDuty] != 0)
+        if (PlayerFaction[i][pMember] == member && PlayerInfo[i][pLawDuty] != 0)
         {
             SendClientMessage(i, color, sstring);
             PlayerPlaySound(i, 1058, 0.0, 0.0, 0.0);
@@ -482,7 +482,7 @@ stock CountMembers(orgid)
     new count;
     foreach(new i : Player)
     {
-        if (PlayerInfo[i][pMember] == orgid) count++;
+        if (PlayerFaction[i][pMember] == orgid) count++;
     }
     return count;
 }
@@ -493,7 +493,7 @@ stock CountFDMembers()
     new count;
     foreach(new i : Player)
     {
-        new member = PlayerInfo[i][pMember];
+        new member = PlayerFaction[i][pMember];
         if (FactionInfo[member][fType] == 2) count++;
     }
     return count;
@@ -505,7 +505,7 @@ stock CountFDMembers()
 // PlayerLeaderOfFaction(playerid, faction) or similar. Also, make these funcs bool:
 stock IsADoC(playerid)
 {
-    if (PlayerInfo[playerid][pMember] == 3 || PlayerInfo[playerid][pLeader] == 3)
+    if (PlayerFaction[playerid][pMember] == 3 || PlayerFaction[playerid][pLeader] == 3)
     {
         return 1;
     }
@@ -514,7 +514,7 @@ stock IsADoC(playerid)
 
 stock IsAFM(playerid)
 {
-    if (PlayerInfo[playerid][pMember] == 6 || PlayerInfo[playerid][pLeader] == 6)
+    if (PlayerFaction[playerid][pMember] == 6 || PlayerFaction[playerid][pLeader] == 6)
     {
         return 1;
     }
@@ -523,7 +523,7 @@ stock IsAFM(playerid)
 
 stock IsAGov(playerid)
 {
-    if (FactionInfo[PlayerInfo[playerid][pMember]][fType] == FACTION_TYPE_LEGAL)
+    if (FactionInfo[PlayerFaction[playerid][pMember]][fType] == FACTION_TYPE_LEGAL)
     {
         return 1;
     }
@@ -532,7 +532,7 @@ stock IsAGov(playerid)
 
 stock IsACop(playerid)
 {
-    if (FactionInfo[PlayerInfo[playerid][pMember]][fType] == FACTION_TYPE_LAW && PlayerInfo[playerid][pMember] == 1)
+    if (FactionInfo[PlayerFaction[playerid][pMember]][fType] == FACTION_TYPE_LAW && PlayerFaction[playerid][pMember] == 1)
     {
         return 1;
     }
@@ -541,7 +541,7 @@ stock IsACop(playerid)
 
 stock IsASD(playerid)
 {
-    if (FactionInfo[PlayerInfo[playerid][pMember]][fType] == FACTION_TYPE_LAW2 && PlayerInfo[playerid][pMember] == 3)
+    if (FactionInfo[PlayerFaction[playerid][pMember]][fType] == FACTION_TYPE_LAW2 && PlayerFaction[playerid][pMember] == 3)
     {
         return 1;
     }
@@ -550,7 +550,7 @@ stock IsASD(playerid)
 
 stock IsFDMember(playerid)
 {
-    if (FactionInfo[PlayerInfo[playerid][pMember]][fType] == FACTION_TYPE_FD)
+    if (FactionInfo[PlayerFaction[playerid][pMember]][fType] == FACTION_TYPE_FD)
     {
         return 1;
     }
@@ -559,7 +559,7 @@ stock IsFDMember(playerid)
 
 stock IsANews(playerid)
 {
-    if (FactionInfo[PlayerInfo[playerid][pMember]][fType] == FACTION_TYPE_NEWS)
+    if (FactionInfo[PlayerFaction[playerid][pMember]][fType] == FACTION_TYPE_NEWS)
     {
         return 1;
     }
@@ -568,7 +568,7 @@ stock IsANews(playerid)
 
 stock IsARacer(playerid)
 {
-    if (FactionInfo[PlayerInfo[playerid][pMember]][fType] == FACTION_TYPE_RACERS)
+    if (FactionInfo[PlayerFaction[playerid][pMember]][fType] == FACTION_TYPE_RACERS)
     {
         return 1;
     }
@@ -665,19 +665,24 @@ public UninvitePlayer(playerid, const targetname[])
     }
 
     new playerMember, playerLeader, playerSQLID;
-    cache_get_value_name_int(0, "facMemId", playerMember);
-    cache_get_value_name_int(0, "facLeadId", playerLeader);
     cache_get_value_name_int(0, "sqlid", playerSQLID);
+    cache_get_value_name_int(0, "facLeadId", playerLeader);
+    cache_get_value_name_int(0, "facMemId", playerMember);   
 
-    if (playerMember != PlayerInfo[playerid][pMember] || playerLeader != PlayerInfo[playerid][pLeader])
+    if (playerMember != PlayerFaction[playerid][pMember] || playerLeader != PlayerFaction[playerid][pLeader])
     {
         SendClientMessage(playerid, COLOR_RED, "Igrac nije u tvojoj organizaciji! ");
         return 1;
     }
 
     mysql_fquery(g_SQL, 
-        "UPDATE accounts SET spawnchange = '0', facMemId = 0, facLeadId = 0, facRank = 0 WHERE name = '%e'", 
-        targetname
+        "UPDATE player_faction SET facLeadId = '0', facMemId = '0', facRank = '0' WHERE sqlid = '%d'", 
+        playerSQLID
+    );
+
+    mysql_fquery(g_SQL, 
+        "UPDATE accounts SET spawnchange = '0' WHERE sqlid = '%d'", 
+        playerSQLID
     );
 
     mysql_fquery(g_SQL, "DELETE FROM player_weapons WHERE player_id = '%d'", playerSQLID);
@@ -697,15 +702,15 @@ public OnFactionMembersList(playerid)
     }
 
     new
-        memberName[MAX_PLAYER_NAME],
-        memberRank;
+        memberRank, 
+        sqlid;
 
     SendClientMessage(playerid, COLOR_LIGHTBLUE, "*__________________________[SVI CLANOVI]__________________________*");
     for (new row = 0; row < cache_num_rows(); row++)
     {
-        cache_get_value_name( row, "name", memberName, 25);
+        cache_get_value_name_int( row, "sqlid", sqlid);
         cache_get_value_name_int( row, "facRank", memberRank);
-        va_SendClientMessage(playerid, COLOR_WHITE, "[IME]: %s | [RANK]: %d", memberName, memberRank);
+        va_SendClientMessage(playerid, COLOR_WHITE, "[IME]: %s | [RANK]: %d", GetPlayerNameFromSQL(sqlid), memberRank);
     }
     return 1;
 }
@@ -720,7 +725,7 @@ public OnFactionCountings(playerid)
         return 1;
     }
 
-    SendFormatMessage(playerid, MESSAGE_TYPE_INFO, "Stanje organizacije (%d/%d)", CountMembers(PlayerInfo[playerid][pMember]), num_rows);
+    SendFormatMessage(playerid, MESSAGE_TYPE_INFO, "Stanje organizacije (%d/%d)", CountMembers(PlayerFaction[playerid][pMember]), num_rows);
     return 1;
 }
 
@@ -744,7 +749,7 @@ hook OnGameModeInit()
 
 hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 {
-    new fid = PlayerInfo[playerid][pMember];
+    new fid = PlayerFaction[playerid][pMember];
     switch (dialogid)
     {
         case DIALOG_AFACTIONC:
@@ -983,10 +988,10 @@ CMD:afaction(playerid, params[])
 
         foreach(new i : Player)
         {
-            if (PlayerInfo[i][pMember] == fid)
+            if (PlayerFaction[i][pMember] == fid)
             {
                 GetPlayerName(i, name, sizeof(name));
-                format(string, sizeof(string), "%s, %s (( Rank: %d))", name, ReturnPlayerRankName(i), PlayerInfo[i][pRank]);
+                format(string, sizeof(string), "%s, %s (( Rank: %d))", name, ReturnPlayerRankName(i), PlayerFaction[i][pRank]);
                 SendClientMessage(playerid, COLOR_WHITE, string);
             }
         }
@@ -1109,9 +1114,9 @@ CMD:afaction(playerid, params[])
         if (fid < 1 || fid > MAX_FACTIONS) return SendClientMessage(playerid, COLOR_RED, "Invalidan ID fakcije");
 
         fid--;
-        PlayerInfo[targetid][pLeader]   = fid;
-        PlayerInfo[targetid][pMember]   = fid;
-        PlayerInfo[targetid][pRank]     = FactionInfo[fid][fRanks];
+        PlayerFaction[targetid][pLeader]   = fid;
+        PlayerFaction[targetid][pMember]   = fid;
+        PlayerFaction[targetid][pRank]     = FactionInfo[fid][fRanks];
 
         #if defined MODULE_LOGS
         Log_Write("/logfiles/orgs_leader.txt", "(%s) %s(%s) made %s(%s) the leader of faction %s.",
@@ -1124,10 +1129,10 @@ CMD:afaction(playerid, params[])
         );
         #endif
 
-        mysql_fquery(g_SQL, "UPDATE accounts SET facLeadId = '%d', facMemId = '%d', facRank = '%d' WHERE sqlid = '%d'",
-            PlayerInfo[targetid][pLeader],
-            PlayerInfo[targetid][pMember],
-            PlayerInfo[targetid][pRank],
+        mysql_fquery(g_SQL, "UPDATE player_faction SET facLeadId = '%d', facMemId = '%d', facRank = '%d' WHERE sqlid = '%d'",
+            PlayerFaction[targetid][pLeader],
+            PlayerFaction[targetid][pMember],
+            PlayerFaction[targetid][pRank],
             PlayerInfo[targetid][pSQLID]
         );
 
@@ -1147,9 +1152,9 @@ CMD:afaction(playerid, params[])
         new targetid;
         if (sscanf(params, "s[16]u", option, targetid)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /afaction removeleader [ID/Dio Imena]");
         if (targetid == INVALID_PLAYER_ID) return SendClientMessage(playerid, COLOR_RED, "Invalidan ID igraca!");
-        if (PlayerInfo[targetid][pLeader] == 0) return SendClientMessage(playerid, COLOR_RED, "Taj igrac nije lider!");
+        if (PlayerFaction[targetid][pLeader] == 0) return SendClientMessage(playerid, COLOR_RED, "Taj igrac nije lider!");
 
-        mysql_fquery(g_SQL, "UPDATE accounts SET facLeadId = '0', facMemId = '0', facRank = '0' WHERE sqlid = '%d'", 
+        mysql_fquery(g_SQL, "UPDATE player_faction SET facLeadId = '0', facMemId = '0', facRank = '0' WHERE sqlid = '%d'", 
             PlayerInfo[targetid][pSQLID]
         );
 
@@ -1160,13 +1165,13 @@ CMD:afaction(playerid, params[])
             GetPlayerIP(playerid),
             GetName(targetid, false),
             GetPlayerIP(targetid),
-            FactionInfo[PlayerInfo[targetid][pMember]][fName]
+            FactionInfo[PlayerFaction[targetid][pMember]][fName]
         );
         #endif
 
-        PlayerInfo[targetid][pLeader] = 0;
-        PlayerInfo[targetid][pMember] = 0;
-        PlayerInfo[targetid][pRank]   = 0;
+        PlayerFaction[targetid][pLeader] = 0;
+        PlayerFaction[targetid][pMember] = 0;
+        PlayerFaction[targetid][pRank]   = 0;
 
         va_SendClientMessage(playerid, COLOR_LIGHTBLUE, "Skinuo si %s sa lidera organizacije.", GetName(targetid, true));
         va_SendClientMessage(targetid, COLOR_LIGHTBLUE, "Skinut si sa lidera organizacije od strane Admina %s.", GetName(playerid, true));
@@ -1254,7 +1259,7 @@ CMD:faction(playerid, params[])
 {
     new option[16], string[256];
 
-    if (!PlayerInfo[playerid][pMember])
+    if (!PlayerFaction[playerid][pMember])
     {
         SendClientMessage(playerid, COLOR_RED, "Nisi clan organizacije!");
         return 1;
@@ -1262,7 +1267,7 @@ CMD:faction(playerid, params[])
     if (sscanf(params, "s[16]", option))
     {
         SendClientMessage(playerid, COLOR_RED, "[ ? ]: /faction [OPCIJA]");
-        if (PlayerInfo[playerid][pLeader] != 0)
+        if (PlayerFaction[playerid][pLeader] != 0)
         {
             SendClientMessage(playerid, COLOR_RED, "[ ! ] invite - uninvite - setrank - blockchat - uninviteex - allmembers - permissions - resetcars - skin");
         }
@@ -1273,13 +1278,13 @@ CMD:faction(playerid, params[])
     if (!strcmp(option, "invite", true))
     {
         new targetid;
-        if (!PlayerInfo[playerid][pLeader]) return SendClientMessage(playerid, COLOR_RED, "Da bi koristili ovu komandu morate biti lider!");
+        if (!PlayerFaction[playerid][pLeader]) return SendClientMessage(playerid, COLOR_RED, "Da bi koristili ovu komandu morate biti lider!");
         if (sscanf(params, "s[16]u", option, targetid)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /faction invite [ID/DioImena]");
         if (targetid == INVALID_PLAYER_ID) return SendClientMessage(playerid, COLOR_RED, "Invalidan ID igraca!");
-        if (PlayerInfo[targetid][pMember] != 0) return SendClientMessage(playerid, COLOR_RED, "Taj igrac je vec u nekoj organizaciji!");
+        if (PlayerFaction[targetid][pMember] != 0) return SendClientMessage(playerid, COLOR_RED, "Taj igrac je vec u nekoj organizaciji!");
 
-        PlayerInfo[targetid][pMember] = PlayerInfo[playerid][pLeader];
-        PlayerInfo[targetid][pRank]   = 1;
+        PlayerFaction[targetid][pMember] = PlayerFaction[playerid][pLeader];
+        PlayerFaction[targetid][pRank]   = 1;
 
         if (IsACop(targetid) || IsASD(targetid) || IsFDMember(targetid))
         {
@@ -1287,24 +1292,24 @@ CMD:faction(playerid, params[])
         }
 
         mysql_fquery(g_SQL, "UPDATE accounts SET facMemId = '%d', facRank = '%d' WHERE sqlid = '%d'",
-            PlayerInfo[targetid][pMember],
-            PlayerInfo[targetid][pRank],
+            PlayerFaction[targetid][pMember],
+            PlayerFaction[targetid][pRank],
             PlayerInfo[targetid][pSQLID]
         );
 
         new logText[100];
-        format(logText, sizeof(logText), "%s je pozvao %s u %s", GetName(playerid,false), GetName(targetid,false), FactionInfo[PlayerInfo[targetid][pMember]][fName]);
+        format(logText, sizeof(logText), "%s je pozvao %s u %s", GetName(playerid,false), GetName(targetid,false), FactionInfo[PlayerFaction[targetid][pMember]][fName]);
         
         mysql_fquery(g_SQL, "INSERT INTO faction_logs(faction_id, log_text, time) VALUES ('%d','%e',NOW())",
-            PlayerInfo[targetid][pMember],
+            PlayerFaction[targetid][pMember],
             logText
         );
         #if defined MODULE_LOGS
-        Log_Write("/logfiles/orgs_invite.txt", "(%s) %s(%s) invited %s(%s) to join %s.", GetName(playerid,false), GetPlayerIP(playerid), GetName(targetid,false), GetPlayerIP(targetid), FactionInfo[PlayerInfo[playerid][pMember]][fName]);
+        Log_Write("/logfiles/orgs_invite.txt", "(%s) %s(%s) invited %s(%s) to join %s.", GetName(playerid,false), GetPlayerIP(playerid), GetName(targetid,false), GetPlayerIP(targetid), FactionInfo[PlayerFaction[playerid][pMember]][fName]);
         #endif
 
         va_SendClientMessage(targetid, COLOR_LIGHTBLUE, "Dodan si u organizaciju %s od strane lidera %s.",
-            FactionInfo[ PlayerInfo[playerid][pLeader] ][fName], GetName(playerid, true));
+            FactionInfo[ PlayerFaction[playerid][pLeader] ][fName], GetName(playerid, true));
         va_SendClientMessage(playerid, COLOR_LIGHTBLUE, "Dodao si %s u organizaciju.", GetName(targetid, true));
         return 1;
     }
@@ -1313,8 +1318,8 @@ CMD:faction(playerid, params[])
         new
             rnk,
             cmdname[16],
-            mmbr = PlayerInfo[playerid][pMember];
-        if (!PlayerInfo[playerid][pLeader]) return SendClientMessage(playerid, COLOR_RED, "Da bi koristili ovu komandu morate biti lider!");
+            mmbr = PlayerFaction[playerid][pMember];
+        if (!PlayerFaction[playerid][pLeader]) return SendClientMessage(playerid, COLOR_RED, "Da bi koristili ovu komandu morate biti lider!");
         if (sscanf(params, "s[16]s[16]d", option, cmdname, rnk))
         {
             SendClientMessage(playerid, COLOR_RED, "[ ? ]: /faction permissions [komanda][rank]");
@@ -1410,10 +1415,10 @@ CMD:faction(playerid, params[])
     else if (!strcmp(option, "uninvite", true))
     {
         new playername[MAX_PLAYER_NAME], targetname[MAX_PLAYER_NAME], targetid;
-        if (PlayerInfo[playerid][pLeader] == 0) return SendClientMessage(playerid, COLOR_RED, "Da bi koristili ovu komandu morate biti lider!");
+        if (PlayerFaction[playerid][pLeader] == 0) return SendClientMessage(playerid, COLOR_RED, "Da bi koristili ovu komandu morate biti lider!");
         if (sscanf(params, "s[16]u", option, targetid)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /faction uninvite [ID/DioImena]");
         if (targetid == INVALID_PLAYER_ID) return SendClientMessage(playerid, COLOR_RED, "Invalidan ID igraca!");
-        if (PlayerInfo[targetid][pMember] != PlayerInfo[playerid][pLeader]) return SendClientMessage(playerid, COLOR_RED, "Taj igrac nije u tvojoj organizaciji!");
+        if (PlayerFaction[targetid][pMember] != PlayerFaction[playerid][pLeader]) return SendClientMessage(playerid, COLOR_RED, "Taj igrac nije u tvojoj organizaciji!");
 
         GetPlayerName(playerid, playername, sizeof(playername));
         GetPlayerName(targetid, targetname, sizeof(targetname));
@@ -1423,8 +1428,8 @@ CMD:faction(playerid, params[])
             AC_ResetPlayerWeapons(targetid);
         }
 
-        PlayerInfo[targetid][pMember] = 0;
-        PlayerInfo[targetid][pRank] = 0;
+        PlayerFaction[targetid][pMember] = 0;
+        PlayerFaction[targetid][pRank] = 0;
         PlayerInfo[playerid][pRadio] = 0;
         PlayerInfo[playerid][pRadioSlot] = 0;
 
@@ -1447,9 +1452,9 @@ CMD:faction(playerid, params[])
         );
 
         new logText[100];
-        format(logText, sizeof(logText), "%s je izbacio %s iz %s", GetName(playerid,false), GetName(targetid,false), FactionInfo[ PlayerInfo[playerid][pLeader] ][fName]);
+        format(logText, sizeof(logText), "%s je izbacio %s iz %s", GetName(playerid,false), GetName(targetid,false), FactionInfo[ PlayerFaction[playerid][pLeader] ][fName]);
         mysql_fquery(g_SQL, "INSERT INTO faction_logs(faction_id, log_text, time) VALUES ('%d','%e',NOW())",
-            PlayerInfo[playerid][pLeader],
+            PlayerFaction[playerid][pLeader],
             logText
         );
 
@@ -1460,10 +1465,10 @@ CMD:faction(playerid, params[])
         );
 
         #if defined MODULE_LOGS
-        Log_Write("/logfiles/orgs_invite.txt", "(%s) %s(%s) kicked out %s(%s) from %s.", GetName(playerid,false), GetPlayerIP(playerid), GetName(targetid,false), GetPlayerIP(targetid), FactionInfo[PlayerInfo[playerid][pMember]][fName]);
+        Log_Write("/logfiles/orgs_invite.txt", "(%s) %s(%s) kicked out %s(%s) from %s.", GetName(playerid,false), GetPlayerIP(playerid), GetName(targetid,false), GetPlayerIP(targetid), FactionInfo[PlayerFaction[playerid][pMember]][fName]);
         #endif
 
-        new fid = PlayerInfo[playerid][pLeader];
+        new fid = PlayerFaction[playerid][pLeader];
         va_SendClientMessage(targetid, COLOR_RED, "[ ! ] Izbacen si iz organizacije %s od strane lidera %s.", FactionInfo[fid][fName], GetName(playerid, true));
         va_SendClientMessage(playerid, COLOR_RED, "[ ! ] Izbacio si %s iz organizacije.", targetname);
         return 1;
@@ -1471,37 +1476,41 @@ CMD:faction(playerid, params[])
     else if (!strcmp(option, "setrank", true))
     {
         new playername[MAX_PLAYER_NAME], targetname[MAX_PLAYER_NAME], targetid, rank;
-        if (PlayerInfo[playerid][pLeader] == 0) return SendClientMessage(playerid, COLOR_RED, "Da bi koristili ovu komandu morate biti lider!");
+        if (PlayerFaction[playerid][pLeader] == 0) return SendClientMessage(playerid, COLOR_RED, "Da bi koristili ovu komandu morate biti lider!");
         if (sscanf(params, "s[16]ui", option, targetid, rank)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /faction setrank [ID/DioImena] [Broj ranka]");
         if (targetid == INVALID_PLAYER_ID) return SendClientMessage(playerid, COLOR_RED, "Invalidan ID igraca!");
-        if (PlayerInfo[targetid][pMember] != PlayerInfo[playerid][pLeader]) return SendClientMessage(playerid, COLOR_RED, "Taj igrac nije u tvojoj organizaciji!");
-        if (rank < 1 || rank > FactionInfo[PlayerInfo[playerid][pLeader]][fRanks]) return SendClientMessage(playerid, COLOR_RED, "Nepravilan rank!");
+        if (PlayerFaction[targetid][pMember] != PlayerFaction[playerid][pLeader]) return SendClientMessage(playerid, COLOR_RED, "Taj igrac nije u tvojoj organizaciji!");
+        if (rank < 1 || rank > FactionInfo[PlayerFaction[playerid][pLeader]][fRanks]) return SendClientMessage(playerid, COLOR_RED, "Nepravilan rank!");
 
         GetPlayerName(playerid, playername, sizeof(playername));
         GetPlayerName(targetid, targetname, sizeof(targetname));
-        PlayerInfo[targetid][pRank] = rank;
+        PlayerFaction[targetid][pRank] = rank;
 
         #if defined MODULE_LOGS
-        Log_Write("/logfiles/orgs_invite.txt", "(%s) %s(%s) gave %s(%s) Rank %d in faction %s.", GetName(playerid,false), GetPlayerIP(playerid), GetName(targetid,false), GetPlayerIP(targetid), rank, FactionInfo[PlayerInfo[playerid][pMember]][fName]);
+        Log_Write("/logfiles/orgs_invite.txt", "(%s) %s(%s) gave %s(%s) Rank %d in faction %s.", GetName(playerid,false), GetPlayerIP(playerid), GetName(targetid,false), GetPlayerIP(targetid), rank, FactionInfo[PlayerFaction[playerid][pMember]][fName]);
         #endif
 
         mysql_fquery(g_SQL, "UPDATE accounts SET facRank = '%d' WHERE sqlid = '%d'",
-            PlayerInfo[targetid][pRank],
+            PlayerFaction[targetid][pRank],
             PlayerInfo[targetid][pSQLID]
         );
 
         new
             logText[100];
-        format(logText, sizeof(logText), "%s je stavio %s rank %d", GetName(playerid,false), GetName(targetid,false), PlayerInfo[targetid][pRank]);
+        format(logText, sizeof(logText), "%s je stavio %s rank %d", 
+            GetName(playerid,false), 
+            GetName(targetid,false), 
+            PlayerFaction[targetid][pRank]
+        );
         mysql_fquery(g_SQL, "INSERT INTO faction_logs(faction_id, log_text, time) VALUES ('%d','%e',NOW())",
-            PlayerInfo[playerid][pLeader],
+            PlayerFaction[playerid][pLeader],
             logText
         );
 
         va_SendClientMessage(targetid, COLOR_LIGHTBLUE, "Postavljen ti je Rank (%s)[%d] na organizaciji %s od strane %s %s.",
             ReturnPlayerRankName(targetid),
             rank,
-            FactionInfo[PlayerInfo[playerid][pLeader]][fName],
+            FactionInfo[PlayerFaction[playerid][pLeader]][fName],
             ReturnPlayerRankName(playerid),
             GetName(playerid, true)
         );
@@ -1515,7 +1524,7 @@ CMD:faction(playerid, params[])
     else if (!strcmp(option, "members", true))
     {
         new fid, name[MAX_PLAYER_NAME];
-        fid = PlayerInfo[playerid][pMember];
+        fid = PlayerFaction[playerid][pMember];
 
         SendClientMessage(playerid, COLOR_WHITE, "");
         format(string, sizeof(string), "Online clanovi organizacije ID %d - %s", fid+1, FactionInfo[fid][fName]);
@@ -1524,7 +1533,7 @@ CMD:faction(playerid, params[])
         // TODO: extract this to a helper function getting all the online/offline members of a faction
         foreach(new i : Player)
         {
-            if (PlayerInfo[i][pMember] != fid)
+            if (PlayerFaction[i][pMember] != fid)
             {
                 continue;
             }
@@ -1536,7 +1545,7 @@ CMD:faction(playerid, params[])
                 va_SendClientMessage(playerid, COLOR_WHITE, "%s, %s (( Rank: %d[S:%d] | %s))",
                     name,
                     ReturnPlayerRankName(i),
-                    PlayerInfo[i][pRank],
+                    PlayerFaction[i][pRank],
                     PlayerInfo[i][pLawDuty],
                     GetPlayerStreet(i)
                 );
@@ -1546,7 +1555,7 @@ CMD:faction(playerid, params[])
                 va_SendClientMessage(playerid, COLOR_WHITE, "%s, %s (( Rank: %d))",
                     name,
                     ReturnPlayerRankName(i),
-                    PlayerInfo[i][pRank]
+                    PlayerFaction[i][pRank]
                 );
             }
         }
@@ -1555,7 +1564,7 @@ CMD:faction(playerid, params[])
     }
     else if (!strcmp(option, "blockchat", true))
     {
-        new fid = PlayerInfo[playerid][pLeader];
+        new fid = PlayerFaction[playerid][pLeader];
         if (!fid) return SendClientMessage(playerid, COLOR_RED, "Da bi koristili ovu komandu morate biti lider!");
 
         new name[MAX_PLAYER_NAME];
@@ -1571,14 +1580,17 @@ CMD:faction(playerid, params[])
     }
     else if (!strcmp(option, "uninviteex", true))
     {
-        if (!PlayerInfo[playerid][pLeader]) return SendClientMessage(playerid, COLOR_RED, "Da bi koristili ovu komandu morate biti lider!");
+        if (!PlayerFaction[playerid][pLeader]) return SendClientMessage(playerid, COLOR_RED, "Da bi koristili ovu komandu morate biti lider!");
 
         new targetname[MAX_PLAYER_NAME];
         if (sscanf(params, "s[16]s[24]", option, targetname)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /faction uninviteex [ime]");
         if (!IsValidNick(targetname)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Morate unijeti roleplay nick!");
+        new sqlid = GetSQLFromPlayerName(targetname);
+        if(sqlid == -1)
+            return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "Korisnik %s ne postoji u bazi podataka.", targetname);
 
         mysql_tquery(g_SQL, 
-            va_fquery(g_SQL, "SELECT sqlid, facMemId, facLeadId FROM accounts WHERE name = '%e'", targetname), 
+            va_fquery(g_SQL, "SELECT * FROM player_faction WHERE sqlid = '%d'", sqlid), 
             "UninvitePlayer", 
             "is", 
             playerid, 
@@ -1588,12 +1600,12 @@ CMD:faction(playerid, params[])
     }
     else if (!strcmp(option, "allmembers", true))
     {
-        if (!PlayerInfo[playerid][pLeader]) return SendClientMessage(playerid, COLOR_RED, "Da bi koristili ovu komandu morate biti lider!");
+        if (!PlayerFaction[playerid][pLeader]) return SendClientMessage(playerid, COLOR_RED, "Da bi koristili ovu komandu morate biti lider!");
         
         mysql_tquery(g_SQL, 
-            va_fquery(g_SQL,  "SELECT name, facRank FROM accounts WHERE facMemId = '%d' OR facLeadId = '%d'", 
-                PlayerInfo[playerid][pLeader], 
-                PlayerInfo[playerid][pLeader]
+            va_fquery(g_SQL,  "SELECT sqlid, facRank FROM player_faction WHERE facMemId = '%d' OR facLeadId = '%d'", 
+                PlayerFaction[playerid][pLeader], 
+                PlayerFaction[playerid][pLeader]
             ), 
             "OnFactionMembersList", 
             "i", 
@@ -1605,9 +1617,9 @@ CMD:faction(playerid, params[])
     {
         mysql_tquery(g_SQL, 
             va_fquery(g_SQL, 
-                "SELECT sqlid FROM accounts WHERE facMemId = '%d' OR facLeadId = '%d'", 
-                PlayerInfo[playerid][pLeader], 
-                PlayerInfo[playerid][pLeader]
+                "SELECT sqlid FROM player_faction WHERE facMemId = '%d' OR facLeadId = '%d'", 
+                PlayerFaction[playerid][pLeader], 
+                PlayerFaction[playerid][pLeader]
             ), 
             "OnFactionCountings",
             "i", 
@@ -1617,7 +1629,7 @@ CMD:faction(playerid, params[])
     }
     else if (!strcmp(option, "resetcars", true))
     {
-        new fid = PlayerInfo[playerid][pLeader];
+        new fid = PlayerFaction[playerid][pLeader];
         if (!fid) return SendClientMessage(playerid, COLOR_RED, "Da bi koristili ovu komandu morate biti lider!");
 
         foreach(new x : Vehicles[VEHICLE_USAGE_FACTION])
@@ -1633,7 +1645,7 @@ CMD:faction(playerid, params[])
     }
     else if (!strcmp(option, "bank", true))
     {
-        new fid = PlayerInfo[playerid][pLeader];
+        new fid = PlayerFaction[playerid][pLeader];
         if (!fid) return SendClientMessage(playerid, COLOR_RED, "Da bi koristili ovu komandu morate biti lider!");
         if (!IsAtBank(playerid)) return SendClientMessage(playerid, COLOR_RED, "Morate biti u banci da bi ste mogli koristiti ovu komandu !");
         if (FactionInfo[fid][fType] != FACTION_TYPE_LAW && FactionInfo[fid][fType] != FACTION_TYPE_LAW2 && FactionInfo[fid][fType] != FACTION_TYPE_FD && FactionInfo[fid][fType] != FACTION_TYPE_NEWS)
@@ -1648,9 +1660,9 @@ CMD:faction(playerid, params[])
     else if (!strcmp(option, "skin", true))
     {
         new targetid, skin;
-        if (!PlayerInfo[playerid][pLeader]) return SendClientMessage(playerid, COLOR_RED, "Da bi koristili ovu komandu morate biti lider!");
+        if (!PlayerFaction[playerid][pLeader]) return SendClientMessage(playerid, COLOR_RED, "Da bi koristili ovu komandu morate biti lider!");
         if (sscanf(params, "s[16]ui", option, targetid, skin)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /faction skin [ID/DioImena] [ID SKINA]");
-        if (PlayerInfo[targetid][pMember] != PlayerInfo[playerid][pLeader]) return SendClientMessage(playerid, COLOR_RED, "Taj igrac nije u tvojoj organizaciji!");
+        if (PlayerFaction[targetid][pMember] != PlayerFaction[playerid][pLeader]) return SendClientMessage(playerid, COLOR_RED, "Taj igrac nije u tvojoj organizaciji!");
         if (targetid == INVALID_PLAYER_ID) return SendClientMessage(playerid, COLOR_RED, "Invalidan ID igraca!");
 
         SetPlayerSkin(targetid, skin);
@@ -1671,7 +1683,7 @@ CMD:f(playerid, params[])
         return 1;
     }
 
-    new member = PlayerInfo[playerid][pMember], result[64], playername[MAX_PLAYER_NAME], string[256];
+    new member = PlayerFaction[playerid][pMember], result[64], playername[MAX_PLAYER_NAME], string[256];
     if (member == 0) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Moras biti clan organizacije da bi koristio ovu komandu!");
     if (blockfam[member] == 1) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Chat organizacije je blokiran!");
     if (!Bit1_Get(gr_FactionChatTog, playerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Iskljucen vam je faction chat!");
@@ -1703,7 +1715,7 @@ CMD:togf(playerid, params[])
 
 CMD:quitfaction(playerid, params[])
 {
-    if (PlayerInfo[playerid][pMember] > 0 || PlayerInfo[playerid][pLeader] > 0)
+    if (PlayerFaction[playerid][pMember] > 0 || PlayerFaction[playerid][pLeader] > 0)
     {
         SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nisi u organizaciji!");
         return 1;
@@ -1720,14 +1732,14 @@ CMD:quitfaction(playerid, params[])
         AC_ResetPlayerWeapons(playerid);
     }
 
-    mysql_fquery(g_SQL, "UPDATE accounts SET spawnchange = '0', facMemId = '0', facRank = '0', facLeadId = '0' WHERE sqlid = '%d'",
+    mysql_fquery(g_SQL, "UPDATE accounts SET spawnchange = '0' WHERE sqlid = '%d'",
         PlayerInfo[playerid][pSQLID]
     );
 
     new logText[80];
-    format(logText, sizeof(logText), "%s je izasao iz %s", GetName(playerid,false), FactionInfo[PlayerInfo[playerid][pLeader]][fName]);
+    format(logText, sizeof(logText), "%s je izasao iz %s", GetName(playerid,false), FactionInfo[PlayerFaction[playerid][pLeader]][fName]);
     mysql_fquery(g_SQL, "INSERT INTO faction_logs(faction_id, log_text, time) VALUES ('%d','%e',NOW())",
-        PlayerInfo[playerid][pMember],
+        PlayerFaction[playerid][pMember],
         logText
     );
 
@@ -1735,14 +1747,16 @@ CMD:quitfaction(playerid, params[])
     Log_Write("logfiles/faction_quit.txt", "(%s) Player %s quitted faction %s.",
         ReturnDate(),
         GetName(playerid, false),
-        FactionInfo[PlayerInfo[playerid][pMember]][fName]
+        FactionInfo[PlayerFaction[playerid][pMember]][fName]
     );
     #endif
 
     PlayerInfo[playerid][pTeam]         = 3;
-    PlayerInfo[playerid][pLeader]       = 0;
-    PlayerInfo[playerid][pMember]       = 0;
-    PlayerInfo[playerid][pRank]         = 0;
+    PlayerFaction[playerid][pLeader]       = 0;
+    PlayerFaction[playerid][pMember]       = 0;
+    PlayerFaction[playerid][pRank]         = 0;
+    SavePlayerFaction(playerid); 
+
     PlayerInfo[playerid][pSkin]         = 60;
     PlayerInfo[playerid][pSpawnChange]  = 0;
     PlayerInfo[playerid][pRadio]        = 0;
@@ -1760,7 +1774,7 @@ CMD:m(playerid, params[])
     GetPlayerName(playerid, playername, sizeof(playername));
     if (IsACop(playerid) || IsASD(playerid))
     {
-        if (PlayerInfo[playerid][pMember] == 1 && PlayerInfo[playerid][pRank] < 1)
+        if (PlayerFaction[playerid][pMember] == 1 && PlayerFaction[playerid][pRank] < 1)
         {
             SendMessage(playerid, MESSAGE_TYPE_ERROR, "Suspendirani ste!");
             return 1;
@@ -1794,7 +1808,7 @@ CMD:r(playerid, params[])
 {
     if (isnull(params))
         return SendErrorMessage(playerid, "Ne mozete poslati prazan /r!");
-    new member = PlayerInfo[playerid][pMember],string[256];
+    new member = PlayerFaction[playerid][pMember],string[256];
     if (!IsACop(playerid) && !IsFDMember(playerid)&& !IsASD(playerid) && !IsAGov(playerid)) return SendClientMessage(playerid, COLOR_RED, "Niste ovla?teni!");
     if (member == 0) return SendClientMessage(playerid, COLOR_RED, "Moras biti clan organizacije da bi koristio ovu komandu!");
     #if defined EVENTSTARTED
@@ -1834,7 +1848,7 @@ CMD:d(playerid, params[])
     // TODO: 144 is max message len
     new string[256];
     if (isnull(params)) return SendErrorMessage(playerid, "Ne mozete poslati prazan /d!");
-    if (PlayerInfo[playerid][pMember] == 0) return SendClientMessage(playerid, COLOR_RED, "Moras biti clan organizacije da bi koristio ovu komandu!");
+    if (PlayerFaction[playerid][pMember] == 0) return SendClientMessage(playerid, COLOR_RED, "Moras biti clan organizacije da bi koristio ovu komandu!");
     if (!IsACop(playerid) && !IsFDMember(playerid) && !IsASD(playerid) && !IsAGov(playerid)) return SendClientMessage(playerid, COLOR_RED, "Niste ovla?teni!");
     if (PlayerInfo[playerid][pLawDuty] == 0) return SendClientMessage(playerid, COLOR_RED, "Niste na duznosti!");
 
@@ -2035,10 +2049,10 @@ CMD:gov(playerid, params[])
     if (isnull(params)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /gov [text]");
     if (PlayerInfo[playerid][pMuted] == 1) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nemozete pricati, usutkani ste");
 
-    if ((IsACop(playerid)     && PlayerInfo[playerid][pRank] >= 4) ||
-        (IsFDMember(playerid) && PlayerInfo[playerid][pRank] >= 4) ||
-        (IsAGov(playerid)     && PlayerInfo[playerid][pRank] >= 6) ||
-        (IsASD(playerid)      && PlayerInfo[playerid][pRank] >= 6))
+    if ((IsACop(playerid)     && PlayerFaction[playerid][pRank] >= 4) ||
+        (IsFDMember(playerid) && PlayerFaction[playerid][pRank] >= 4) ||
+        (IsAGov(playerid)     && PlayerFaction[playerid][pRank] >= 6) ||
+        (IsASD(playerid)      && PlayerFaction[playerid][pRank] >= 6))
     {
         va_SendClientMessageToAll(0x6CA1FFFF, "[Government Announcement] %s", params);
         PlayerPlaySound(playerid, 1137, 0.0, 0.0, 0.0);
@@ -2056,7 +2070,7 @@ CMD:gov(playerid, params[])
 
 CMD:showbadge(playerid, params[])
 {
-    new member = PlayerInfo[playerid][pMember], giveplayerid;
+    new member = PlayerFaction[playerid][pMember], giveplayerid;
     if (sscanf(params, "u", giveplayerid))
         return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /showbadge [ID/Dio Imena]");
     if (member == 0)
@@ -2077,7 +2091,7 @@ CMD:showbadge(playerid, params[])
 
 CMD:showaccreditation(playerid, params[])
 {
-    new member = PlayerInfo[playerid][pMember], giveplayerid;
+    new member = PlayerFaction[playerid][pMember], giveplayerid;
     if (sscanf(params, "u", giveplayerid))
         return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /showaccreditation [ID/Dio Imena]");
     if (member == 0)
@@ -2085,7 +2099,7 @@ CMD:showaccreditation(playerid, params[])
     if (giveplayerid == INVALID_PLAYER_ID || !IsPlayerNearPlayer(playerid, giveplayerid, 5.0))
         return SendClientMessage(playerid, COLOR_RED, "Igrac nije na serveru ili nije blizu vas!");
 
-    if (!IsANews(playerid) || PlayerInfo[playerid][pLeader] != 8)
+    if (!IsANews(playerid) || PlayerFaction[playerid][pLeader] != 8)
     {
         SendMessage(playerid, MESSAGE_TYPE_ERROR, "Moras biti clan LSN organizacije da bi koristio ovu komandu!");
         return 1;
@@ -2110,9 +2124,9 @@ CMD:carsign(playerid, params[])
         SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nisi ovlasten za koristenje ove komande!");
         return 1;
     }
-    if (PlayerInfo[playerid][pRank] < FactionInfo[PlayerInfo[playerid][pMember]][rCarSign])
+    if (PlayerFaction[playerid][pRank] < FactionInfo[PlayerFaction[playerid][pMember]][rCarSign])
     {
-        SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "Morate biti rank %d kako bi ste mogli koristiti ovu komandu!", FactionInfo[PlayerInfo[playerid][pMember]][rCarSign]);
+        SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "Morate biti rank %d kako bi ste mogli koristiti ovu komandu!", FactionInfo[PlayerFaction[playerid][pMember]][rCarSign]);
         return 1;
     }
     if (sscanf(params, "s[8] ", pick))
@@ -2187,14 +2201,14 @@ CMD:callsign(playerid, params[])
     }
     if (strcmp(pick, "set") == 0)
     {
-        if (PlayerInfo[playerid][pLeader] == 1 || PlayerInfo[playerid][pLeader] == 2 || PlayerInfo[playerid][pLeader] == 3 || PlayerInfo[playerid][pLeader] == 4)
+        if (PlayerFaction[playerid][pLeader] == 1 || PlayerFaction[playerid][pLeader] == 2 || PlayerFaction[playerid][pLeader] == 3 || PlayerFaction[playerid][pLeader] == 4)
         {
             new sign[26], gplayerid;
             if (sscanf(params, "s[6]us[20]", pick, gplayerid, sign)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /callsign set [playerid/dio imena][text]");
             if (gplayerid == INVALID_PLAYER_ID) return SendClientMessage(playerid, COLOR_RED, "Krivi playerid!");
-            if ((PlayerInfo[gplayerid][pMember] != 1 && PlayerInfo[gplayerid][pRank] < 1) && PlayerInfo[playerid][pLeader] == 1) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "On nije pripadnik LSPDa ili nema rank 1+!");
-            else if ((PlayerInfo[gplayerid][pMember] != 2 && PlayerInfo[gplayerid][pRank] < 1) && PlayerInfo[playerid][pLeader] == 2) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "On nije pripadnik LSFDa ili nema rank 1+!");
-            else if ((PlayerInfo[gplayerid][pMember] != 3 && PlayerInfo[gplayerid][pRank] < 1) && PlayerInfo[playerid][pLeader] == 3) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "On nije pripadnik SASDa ili nema rank 1+!");
+            if ((PlayerInfo[gplayerid][pMember] != 1 && PlayerInfo[gplayerid][pRank] < 1) && PlayerFaction[playerid][pLeader] == 1) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "On nije pripadnik LSPDa ili nema rank 1+!");
+            else if ((PlayerInfo[gplayerid][pMember] != 2 && PlayerInfo[gplayerid][pRank] < 1) && PlayerFaction[playerid][pLeader] == 2) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "On nije pripadnik LSFDa ili nema rank 1+!");
+            else if ((PlayerInfo[gplayerid][pMember] != 3 && PlayerInfo[gplayerid][pRank] < 1) && PlayerFaction[playerid][pLeader] == 3) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "On nije pripadnik SASDa ili nema rank 1+!");
 
             strmid(PlayerInfo[gplayerid][pSign], sign, 0, strlen(sign), 26);
             new gplayername[MAX_PLAYER_NAME];
@@ -2237,7 +2251,7 @@ CMD:callsign(playerid, params[])
         if (IsACop(playerid))
         {
             foreach(new i : Player) {
-                if (PlayerInfo[i][pMember] == 1) {
+                if (PlayerFaction[i][pMember] == 1) {
                     if (strlen(PlayerInfo[i][pSign]) != 0) {
                         GetPlayerName(i, gplayername, sizeof(gplayername));
                         format(string, sizeof(string), "* %s callsign: %s *", gplayername, PlayerInfo[i][pSign]);
@@ -2249,7 +2263,7 @@ CMD:callsign(playerid, params[])
         else if (IsASD(playerid))
         {
             foreach(new i : Player) {
-                if (PlayerInfo[i][pMember] == 5) {
+                if (PlayerFaction[i][pMember] == 5) {
                     if (strlen(PlayerInfo[i][pSign]) != 0) {
                         GetPlayerName(i, gplayername, sizeof(gplayername));
                         format(string, sizeof(string), "* %s callsign: %s *", gplayername, PlayerInfo[i][pSign]);
@@ -2261,7 +2275,7 @@ CMD:callsign(playerid, params[])
         else if (IsFDMember(playerid))
         {
             foreach(new i : Player) {
-                if (PlayerInfo[i][pMember] == 2) {
+                if (PlayerFaction[i][pMember] == 2) {
                     if (strlen(PlayerInfo[i][pSign]) > 0) {
                         GetPlayerName(i, gplayername, sizeof(gplayername));
                         format(string, sizeof(string), "* %s callsign: %s *", gplayername, PlayerInfo[i][pSign]);
@@ -2286,16 +2300,16 @@ CMD:frtc(playerid, params[])
     }
 
     // TODO: rewrite this and use defines
-    if (PlayerInfo[playerid][pLeader] == 0 || /* player cant rtc if not leader */
-        PlayerInfo[playerid][pLeader] != 1 || PlayerInfo[playerid][pLeader] != 2 ||
-        PlayerInfo[playerid][pLeader] != 4 || PlayerInfo[playerid][pLeader] != 5)
+    if (PlayerFaction[playerid][pLeader] == 0 || /* player cant rtc if not leader */
+        PlayerFaction[playerid][pLeader] != 1 || PlayerFaction[playerid][pLeader] != 2 ||
+        PlayerFaction[playerid][pLeader] != 4 || PlayerFaction[playerid][pLeader] != 5)
         /* player cant rtc if not leader of these orgs: 1,2,4,5 */
     {
         SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste lider organizacije!");
         return 1;
     }
 
-    if (PlayerInfo[playerid][pLeader] == VehicleInfo[vehid][vFaction])
+    if (PlayerFaction[playerid][pLeader] == VehicleInfo[vehid][vFaction])
     {
         SetVehicleToRespawn(vehid);
         SendFormatMessage(playerid, MESSAGE_TYPE_INFO, "Respawnao si vozilo ID %d. (/frtc)", vehid);

@@ -135,7 +135,7 @@ CMD:rb(playerid, params[])
         rb;
 
     if (!IsACop(playerid) && !IsASD(playerid) && !IsFDMember(playerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, " Niste policajac/SD/FD!");
-    if (PlayerInfo[playerid][pRank] >= 2)
+    if (PlayerFaction[playerid][pRank] >= 2)
     {
         if (sscanf(params, "i", rb))
         {
@@ -303,7 +303,7 @@ CMD:rrb(playerid, params[])
     // TODO: reduce level of nesting
     if (IsACop(playerid) || IsFDMember(playerid) || IsASD(playerid))
     {
-        if (PlayerInfo[playerid][pRank] >= 2)
+        if (PlayerFaction[playerid][pRank] >= 2)
         {
             DeleteClosestRoadblock(playerid);
             GameTextForPlayer(playerid,"~w~Roadblock ~r~Removed!",3000,1);
@@ -318,9 +318,9 @@ CMD:removeall(playerid, params[])
     // TODO: reduce level of nesting
     if (IsACop(playerid) || IsASD(playerid) || IsFDMember(playerid) || PlayerInfo[playerid][pAdmin] >= 2)
     {
-        if (PlayerInfo[playerid][pRank] >= 1 || PlayerInfo[playerid][pAdmin] >= 2)
+        if (PlayerFaction[playerid][pRank] >= 1 || PlayerInfo[playerid][pAdmin] >= 2)
         {
-            if (PlayerInfo[playerid][pMember] == 1 && PlayerInfo[playerid][pRank] < 1) return SendClientMessage(playerid, COLOR_RED, "Suspendirani ste!");
+            if (PlayerFaction[playerid][pMember] == 1 && PlayerFaction[playerid][pRank] < 1) return SendClientMessage(playerid, COLOR_RED, "Suspendirani ste!");
 
             DeleteAllRoadblocks(playerid);
 

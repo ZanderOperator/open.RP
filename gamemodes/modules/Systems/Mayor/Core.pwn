@@ -75,12 +75,12 @@ hook OnGameModeInit()
 // TODO: refactor this abomination and probably use dynamic areas
 hook OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
 {
-    // TODO: bounds checking for PlayerInfo[playerid][pMember] and extract it to a variable
+    // TODO: bounds checking for PlayerFaction[playerid][pMember] and extract it to a variable
     if (PRESSED(KEY_YES))
     {
         if (IsPlayerInRangeOfPoint(playerid, 3.0, 1288.548217, 755.028747, -97.373825))
         {
-            if (FactionInfo[PlayerInfo[playerid][pMember]][fType] != FACTION_TYPE_LEGAL)
+            if (FactionInfo[PlayerFaction[playerid][pMember]][fType] != FACTION_TYPE_LEGAL)
                 return 1;
 
             if (gov_status[0] == 0)
@@ -98,7 +98,7 @@ hook OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
         }
         else if (IsPlayerInRangeOfPoint(playerid, 3.0, 1288.548217, 755.028747, -92.923904))
         {
-            if (FactionInfo[PlayerInfo[playerid][pMember]][fType] != FACTION_TYPE_LEGAL)
+            if (FactionInfo[PlayerFaction[playerid][pMember]][fType] != FACTION_TYPE_LEGAL)
                 return 1;
             if (gov_status[2] == 0)
             {
@@ -115,7 +115,7 @@ hook OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
         }
         else if (IsPlayerInRangeOfPoint(playerid, 3.0, 1312.890625, 758.029113, -97.393829))
         {
-            if (FactionInfo[PlayerInfo[playerid][pMember]][fType] != FACTION_TYPE_LEGAL)
+            if (FactionInfo[PlayerFaction[playerid][pMember]][fType] != FACTION_TYPE_LEGAL)
                 return 1;
             if (gov_status[4] == 0)
             {
@@ -132,7 +132,7 @@ hook OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
         }
         else if (IsPlayerInRangeOfPoint(playerid, 3.0, 1305.600341, 778.698486, -97.373817))
         {
-            if (FactionInfo[PlayerInfo[playerid][pMember]][fType] != FACTION_TYPE_LEGAL)
+            if (FactionInfo[PlayerFaction[playerid][pMember]][fType] != FACTION_TYPE_LEGAL)
                 return 1;
 
             if (gov_status[6] == 0)
@@ -150,7 +150,7 @@ hook OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
         }
         else if (IsPlayerInRangeOfPoint(playerid, 3.0, 1308.890136, 783.608825, -97.393829))
         {
-            if (FactionInfo[PlayerInfo[playerid][pMember]][fType] != FACTION_TYPE_LEGAL)
+            if (FactionInfo[PlayerFaction[playerid][pMember]][fType] != FACTION_TYPE_LEGAL)
                 return 1;
 
             if (gov_status[8] == 0)
@@ -166,7 +166,7 @@ hook OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
         }
         else if (IsPlayerInRangeOfPoint(playerid, 3.0, 1308.890136, 794.949096, -97.393829))
         {
-            if (FactionInfo[PlayerInfo[playerid][pMember]][fType] != FACTION_TYPE_LEGAL)
+            if (FactionInfo[PlayerFaction[playerid][pMember]][fType] != FACTION_TYPE_LEGAL)
                 return 1;
 
             if (gov_status[9] == 0)
@@ -182,7 +182,7 @@ hook OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
         }
         else if (IsPlayerInRangeOfPoint(playerid, 3.0, 1312.850585, 755.799133, -92.923858))
         {
-            if (FactionInfo[PlayerInfo[playerid][pMember]][fType] != FACTION_TYPE_LEGAL)
+            if (FactionInfo[PlayerFaction[playerid][pMember]][fType] != FACTION_TYPE_LEGAL)
                 return 1;
 
             if (gov_status[10] == 0)
@@ -213,7 +213,7 @@ hook OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
 
 CMD:govgarage(playerid, params[])
 {
-    if (FactionInfo[PlayerInfo[playerid][pMember]][fType] != FACTION_TYPE_LEGAL)
+    if (FactionInfo[PlayerFaction[playerid][pMember]][fType] != FACTION_TYPE_LEGAL)
         return SendClientMessage(playerid, COLOR_RED, "Nisi pripadnik vlade!");
 
     if (IsPlayerInRangeOfPoint(playerid, 15.0, 1480.7675, -1827.8673, 13.5469)

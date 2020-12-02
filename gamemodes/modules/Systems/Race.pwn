@@ -517,7 +517,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 
 CMD:race(playerid, params[])
 {
-    if (!IsARacer(playerid) || PlayerInfo[playerid][pRank] < FactionInfo[PlayerInfo[playerid][pMember]][rRace])
+    if (!IsARacer(playerid) || PlayerFaction[playerid][pRank] < FactionInfo[PlayerFaction[playerid][pMember]][rRace])
     {
         SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste pripadnik rejsera");
         return 1;

@@ -1109,7 +1109,7 @@ CMD:pm(playerid, params[])
 
 CMD:blockpm(playerid,params[])
 {
-    if( !PlayerInfo[playerid][pAdmin] && !PlayerVIP[playerid][pDonateRank] && !PlayerInfo[playerid][pLeader] ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nisi ovlasten za koristenje ove komande!");
+    if( !PlayerInfo[playerid][pAdmin] && !PlayerVIP[playerid][pDonateRank] && !PlayerFaction[playerid][pLeader] ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nisi ovlasten za koristenje ove komande!");
 
 	if( Bit1_Get( gr_BlockedPM, playerid ) ) {
 		Bit1_Set( gr_BlockedPM, playerid, false );
@@ -1512,7 +1512,7 @@ CMD:accept(playerid, params[])
 			giveplayerid;
 		if( sscanf(params, "s[16]u", pick, giveplayerid)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /accept undercover [ID/Dio Imena]");
 	    if( giveplayerid == INVALID_PLAYER_ID) return SendClientMessage(playerid,COLOR_RED, "Taj igrac nije online.");
-		if(PlayerInfo[playerid][pLeader] != 1 && (PlayerInfo[playerid][pRank] < 5 && !IsACop(playerid)) || PlayerInfo[playerid][pLeader] != 3 && (PlayerInfo[playerid][pRank] < 6 && !IsASD(playerid)))  
+		if(PlayerFaction[playerid][pLeader] != 1 && (PlayerFaction[playerid][pRank] < 5 && !IsACop(playerid)) || PlayerFaction[playerid][pLeader] != 3 && (PlayerFaction[playerid][pRank] < 6 && !IsASD(playerid)))  
 			return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste lider PD-a/SD-a/R6+!");
 
 		if(!IsACop(giveplayerid) && !IsASD(giveplayerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Odabrani igrac nije u LSPD/Sherrif's Departmentu!");
@@ -1527,7 +1527,7 @@ CMD:accept(playerid, params[])
 			giveplayerid;
 		if( sscanf(params, "s[16]u", pick, giveplayerid) ) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /accept swat [ID/Dio Imena]");
 	    if( giveplayerid == INVALID_PLAYER_ID ) return SendClientMessage(playerid,COLOR_RED, "Taj igrac nije online.");
-		if( ( IsACop(playerid) && PlayerInfo[playerid][pRank] >= FactionInfo[PlayerInfo[playerid][pMember]][rABuyGun] ) || ( IsASD(playerid) && PlayerInfo[playerid][pRank] >= FactionInfo[PlayerInfo[playerid][pMember]][rABuyGun]) ) {
+		if( ( IsACop(playerid) && PlayerFaction[playerid][pRank] >= FactionInfo[PlayerFaction[playerid][pMember]][rABuyGun] ) || ( IsASD(playerid) && PlayerFaction[playerid][pRank] >= FactionInfo[PlayerFaction[playerid][pMember]][rABuyGun]) ) {
 			SendFormatMessage(playerid, MESSAGE_TYPE_INFO, "Dopustili ste %s da moze koristit /swat komandu.", GetName(giveplayerid,true));
 			va_SendClientMessage(giveplayerid, COLOR_RED, "[ ! ] %s vam je dopustio da mozete koristit /swat komandu.", GetName(playerid,true));
 			Player_SetIsSWAT(giveplayerid, true);
@@ -1768,12 +1768,12 @@ CMD:accept(playerid, params[])
 	}
 	else if(strcmp(pick,"govrepair",true) == 0)
 	{
-		if(FactionInfo[PlayerInfo[playerid][pMember]][rAGovRepair] == 0)
+		if(FactionInfo[PlayerFaction[playerid][pMember]][rAGovRepair] == 0)
 			return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Komanda 'accept govrepair' je trenutno izgaSena od strane lidera! Koristite /govrepair kako bi popravili vozilo.");
 		
 		new
-			rank = PlayerInfo[playerid][pRank],
-			member = PlayerInfo[playerid][pMember],
+			rank = PlayerFaction[playerid][pRank],
+			member = PlayerFaction[playerid][pMember],
 			giveplayerid;
 			
 	    if( sscanf(params, "s[16]u", pick, giveplayerid)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /accept govrepair [ID/Dio Imena]");
@@ -1789,15 +1789,15 @@ CMD:accept(playerid, params[])
 	}
 	else if(strcmp(pick,"buygun",true) == 0) 
 	{
-		if(FactionInfo[PlayerInfo[playerid][pMember]][rABuyGun] == 0)
+		if(FactionInfo[PlayerFaction[playerid][pMember]][rABuyGun] == 0)
 			return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Komanda /accept buygun je trenutno izgasena od strane lidera! Koristite /buygun kako bi uzeli oruzje.");
 		new giveplayerid;
 	    if(sscanf(params, "s[16]u", pick, giveplayerid)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /accept buygun [ID/Dio Imena]");
 		if(giveplayerid == INVALID_PLAYER_ID) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Taj igrac nije online!");
 		if(!IsACop(playerid) && !IsASD(playerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Samo LSPD/SASD mogu davati dozvole za uzimanje oruzja u Armoury-u.");
 		if(!IsACop(giveplayerid) && !IsASD(giveplayerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Samo LSPD/SASD mogu uzimati dozvole za uzimanje oruzja u Armoury-u.");
-		if(PlayerInfo[playerid][pRank] < FactionInfo[PlayerInfo[playerid][pMember]][rBuyGun]) 
-			return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "Morate biti rank %d kako bi ste mogli koristiti ovu komandu!", FactionInfo[PlayerInfo[playerid][pMember]][rBuyGun]);
+		if(PlayerFaction[playerid][pRank] < FactionInfo[PlayerFaction[playerid][pMember]][rBuyGun]) 
+			return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "Morate biti rank %d kako bi ste mogli koristiti ovu komandu!", FactionInfo[PlayerFaction[playerid][pMember]][rBuyGun]);
 		
 		SendFormatMessage(playerid, MESSAGE_TYPE_INFO, "Dopustili ste %s da moze koristit /buygun komandu.", GetName(giveplayerid));
 		va_SendClientMessage(giveplayerid, COLOR_RED, "[ ! ] %s vam je dopustio da mozete koristit /buygun komandu.", GetName(playerid));
@@ -1809,7 +1809,7 @@ CMD:accept(playerid, params[])
 		new giveplayerid;
 	    if( sscanf(params, "s[16]u", pick, giveplayerid)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /accept igarage [ID/Dio Imena]");
 		if( giveplayerid == INVALID_PLAYER_ID) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Taj igrac nije online!");
-		if( ( IsACop(playerid) && PlayerInfo[playerid][pRank] >= 2 ) ) 
+		if( ( IsACop(playerid) && PlayerFaction[playerid][pRank] >= 2 ) ) 
 		{
 			SendFormatMessage(playerid, MESSAGE_TYPE_INFO, "Dopustili ste %s da moze uci u Impound Garazu!", GetName(giveplayerid));
 			va_SendClientMessage(giveplayerid, COLOR_RED, "[ ! ] %s vam je dopustio da mozete uci u Impound Garazu (/impoundgarage)!", GetName(playerid));
@@ -2367,7 +2367,7 @@ CMD:give(playerid, params[])
      			if(ProxDetectorS(3.0, playerid, giveplayerid))
 	            {
 	    			if(LicenseInfo[giveplayerid][pGunLic] >= 1) return SendClientMessage(playerid, COLOR_RED, "Osoba vec ima dozvolu za oruzje!");
-	    			if((IsACop(playerid) && PlayerInfo[playerid][pRank] > 5) || PlayerInfo[playerid][pLeader] == 1)
+	    			if((IsACop(playerid) && PlayerFaction[playerid][pRank] > 5) || PlayerFaction[playerid][pLeader] == 1)
 					{
 	    			    LicenseInfo[giveplayerid][pGunLic] = vrsta;
 				        PlayerPlaySound(giveplayerid, 1052, 0.0, 0.0, 0.0);
@@ -2395,10 +2395,10 @@ CMD:give(playerid, params[])
   			if(giveplayerid != INVALID_PLAYER_ID) {
      			if (ProxDetectorS(3.0, playerid, giveplayerid))  {
      			    if(PlayerJob[giveplayerid][pJob] != 0) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Taj igrac vec ima posao!");
-     			    if( PlayerInfo[ giveplayerid ][ pMember ] != PlayerInfo[playerid][pLeader] ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Igrac mora biti u vasoj organizaciji!");
+     			    if( PlayerFaction[giveplayerid][pMember] != PlayerFaction[playerid][pLeader] ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Igrac mora biti u vasoj organizaciji!");
 				 	if(strcmp(posao,"carjacker",true) == 0) {
-			            if( FactionInfo[PlayerInfo[playerid][pLeader]][fType] == 4 || FactionInfo[PlayerInfo[playerid][pLeader]][fType] == 6 ) { 
-							if( IllegalFactionJobCheck(PlayerInfo[playerid][pLeader], 13) >= 5) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Maksimalan broj car jackera po organizaciji je 5!");
+			            if( FactionInfo[PlayerFaction[playerid][pLeader]][fType] == 4 || FactionInfo[PlayerFaction[playerid][pLeader]][fType] == 6 ) { 
+							if( IllegalFactionJobCheck(PlayerFaction[playerid][pLeader], 13) >= 5) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Maksimalan broj car jackera po organizaciji je 5!");
 						   	PlayerJob[giveplayerid][pJob] = 13;
 
 							SendFormatMessage(playerid, MESSAGE_TYPE_SUCCESS, "Dali ste posao car jackera igracu %s.", GetName(giveplayerid, true));
@@ -2849,10 +2849,10 @@ CMD:spawnchange(playerid, params[])
 	}
 	else if(spawn == 2)
 	{
-		if(PlayerInfo[playerid][pMember] == 0 && PlayerInfo[playerid][pLeader] == 0)
+		if(PlayerFaction[playerid][pMember] == 0 && PlayerFaction[playerid][pLeader] == 0)
 			return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste clan organizacije!");
 		
-		new factionid = PlayerInfo[playerid][pMember];
+		new factionid = PlayerFaction[playerid][pMember];
 		if(FactionInfo[factionid][fType] != 1 && FactionInfo[factionid][fType] != 2 && FactionInfo[factionid][fType] != 3 && FactionInfo[factionid][fType] != 7 && FactionInfo[factionid][fType] != 8) // Legalne fakcije
 			return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste clan legalne organizacije!");
 	}

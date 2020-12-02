@@ -1512,7 +1512,7 @@ CMD:objects(playerid, params[])
 	    }
 		else if(IsPlayerInRangeOfPoint(playerid, 5, 1315.2745,757.4198,-93.1678)) // Gov
 		{
-			if(FactionInfo[PlayerInfo[playerid][pMember]][fType] != FACTION_TYPE_LEGAL)
+			if(FactionInfo[PlayerFaction[playerid][pMember]][fType] != FACTION_TYPE_LEGAL)
 				return (true);
 	        for(new x; x < MAX_CUSTOMIZED_OBJECTS; x++)
 	        {

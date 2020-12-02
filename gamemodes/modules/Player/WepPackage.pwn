@@ -476,7 +476,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 			get_PackageID[playerid] = free_id;
 			PackageOrdered[playerid] = true;
 
-			PackageData[free_id][faction_ID]	= PlayerInfo[playerid][pMember];
+			PackageData[free_id][faction_ID]	= PlayerFaction[playerid][pMember];
 			PackageData[free_id][PackageAmount] = package_amount;
 			PackageData[free_id][PackageWeapon] = show_WeaponList[package_wep][wep_ID];
 			Iter_Add(PACKAGES, free_id);

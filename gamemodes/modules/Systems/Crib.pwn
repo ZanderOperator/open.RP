@@ -2797,8 +2797,8 @@ CMD:enter(playerid, params[])
     {
         if (PickupInfo[pickup][epCanEnter] == 1)
         {
-            if (PlayerInfo[playerid][pMember] == PickupInfo[pickup][epOrganizations] ||
-                PlayerInfo[playerid][pLeader] == PickupInfo[pickup][epOrganizations] ||
+            if (PlayerFaction[playerid][pMember] == PickupInfo[pickup][epOrganizations] ||
+                PlayerFaction[playerid][pLeader] == PickupInfo[pickup][epOrganizations] ||
                 PlayerJob[playerid][pJob] == PickupInfo[pickup][epJob] ||
                 PickupInfo[pickup][epOrganizations] == 255 ||
                 PickupInfo[pickup][epJob] == 255)

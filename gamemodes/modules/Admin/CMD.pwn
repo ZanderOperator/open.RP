@@ -1293,7 +1293,7 @@ public CountFactionMembers(playerid, orgid)
 	new activeMembers = 0;
 	foreach(new i : Player)
 	{
-		if(PlayerInfo[i][pMember] == orgid || PlayerInfo[i][pLeader] == orgid)
+		if(PlayerFaction[i][pMember] == orgid || PlayerFaction[i][pLeader] == orgid)
 			activeMembers++;
 	}
 	
@@ -1459,7 +1459,7 @@ public OnPlayerClickPlayer(playerid, clickedplayerid, source)
 			PlayerInfo[clickedplayerid][pMobileNumber],
 			ReturnPlayerFactionName(clickedplayerid),
 			ReturnPlayerRankName(clickedplayerid),
-			PlayerInfo[clickedplayerid][pRank]
+			PlayerFaction[clickedplayerid][pRank]
 		);
 		
 		va_SendClientMessage(playerid, 0xC9C9C9FF, "OOC: Lvl: [%d] - Sati: [%d] - Warn: [%d/3] - Jail: [%d] - Jailtime: [%d]",

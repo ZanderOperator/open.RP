@@ -197,7 +197,7 @@ timer OnPlayerTracingNumber[5000](playerid, targetid, type)
 
 CMD:tap(playerid, params[])
 {
-    if (!IsACop(playerid) && PlayerInfo[playerid][pRank] < 2) 
+    if (!IsACop(playerid) && PlayerFaction[playerid][pRank] < 2) 
         return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste policajac rank 2+.");
 
     new
@@ -259,9 +259,9 @@ CMD:tap(playerid, params[])
 
 CMD:wiretap(playerid, params[])
 {
-    new faction = PlayerInfo[playerid][pMember];
+    new faction = PlayerFaction[playerid][pMember];
     if (faction == -1) return 1;
-    if (!IsACop(playerid) && PlayerInfo[playerid][pRank] < FactionInfo[faction][rLstnNumber])
+    if (!IsACop(playerid) && PlayerFaction[playerid][pRank] < FactionInfo[faction][rLstnNumber])
     {
         SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "Niste policajac r%d+!", FactionInfo[faction][rLstnNumber]);
         return 1;

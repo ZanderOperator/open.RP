@@ -139,10 +139,10 @@ CMD:giveticket(playerid, params[])
         new
             tmpString[120];
         format(tmpString, sizeof(tmpString), "*[HQ] %s %s issued a %s ticket to %s.", ReturnPlayerRankName(playerid), GetName(playerid), FormatNumber(moneys), GetName(giveplayerid,false));
-        SendRadioMessage(PlayerInfo[playerid][pMember], COLOR_COP, tmpString);
+        SendRadioMessage(PlayerFaction[playerid][pMember], COLOR_COP, tmpString);
 
         format(tmpString, sizeof(tmpString), "*[HQ] Reason: %s.", reason);
-        SendRadioMessage(PlayerInfo[playerid][pMember], COLOR_COP, tmpString);
+        SendRadioMessage(PlayerFaction[playerid][pMember], COLOR_COP, tmpString);
 
         va_SendClientMessage(giveplayerid, COLOR_RED, "[ ! ]  Officer %s gave you a %s ticket. Reason: %s", GetName(playerid,false), FormatNumber(moneys), reason);
         SendClientMessage(giveplayerid, COLOR_RED, "(( Use /ticket to view and pay your tickets. ))");
@@ -202,10 +202,10 @@ CMD:giveticket(playerid, params[])
             VehicleInfo[vehicleid][vOwner],
             FormatNumber(moneys) 
         );
-        SendRadioMessage(PlayerInfo[playerid][pMember], COLOR_COP, tmpString);
+        SendRadioMessage(PlayerFaction[playerid][pMember], COLOR_COP, tmpString);
 
         format(tmpString, sizeof(tmpString), "*[HQ] Reason: %s.", reason);
-        SendRadioMessage(PlayerInfo[playerid][pMember], COLOR_COP, tmpString);
+        SendRadioMessage(PlayerFaction[playerid][pMember], COLOR_COP, tmpString);
     }
     return 1;
 }

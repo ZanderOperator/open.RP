@@ -8375,7 +8375,7 @@ CMD:jail_alert(playerid, params[])
 		string[156], result[86];
 	if(sscanf(params, "s[86]", result)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /jail_alert [text]");
 	format(string, sizeof(string), "[Jail Alert] %s %s: %s", ReturnPlayerRankName(playerid), GetName(playerid, false), result);
-	SendRadioMessage(PlayerInfo[playerid][pMember], COLOR_COP, string);
+	SendRadioMessage(PlayerFaction[playerid][pMember], COLOR_COP, string);
 	return 1;
 }
 /*

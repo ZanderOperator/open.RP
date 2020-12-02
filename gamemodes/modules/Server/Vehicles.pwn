@@ -1010,7 +1010,7 @@ hook OnPlayerStateChange(playerid, newstate, oldstate)
 			SendClientMessage(GetVehicleDriver( vehicleid ), COLOR_RED, "Vase je vozilo unisteno, zovite mehanicara ili pronadjite obliznji Pay 'n' Spray!");
 
 		if( vehicleid == INVALID_VEHICLE_ID || vehicleid == 0 ) return 1;
-		if( PlayerInfo[ playerid ][ pMember ] != VehicleInfo[ vehicleid ][ vFaction ] && VehicleInfo[ vehicleid ][ vFaction ] > 0  ) {
+		if( PlayerFaction[playerid][pMember] != VehicleInfo[ vehicleid ][ vFaction ] && VehicleInfo[ vehicleid ][ vFaction ] > 0  ) {
 			RemovePlayerFromVehicle(playerid);
 			SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste pripadnik organizacije da mozete voziti organizacijska vozila!");
 			return 1;
