@@ -99,7 +99,7 @@ Public:CheckAccountsForInactivity()
 	new 
 		currentday, 
 		currentmonth, 
-		logString[2048],
+		logString[1536],
 		inactivetimestamp = gettimestamp() - MAX_JOB_INACTIVITY_TIME;
 	
 	// Inactivity check based on last login timestamp
@@ -120,6 +120,7 @@ Public:CheckAccountsForInactivity()
 			motd[256];
 			
 		new 
+			bool:d = false,
 			donaterank = 0,
 			bool:skip = false,
 			monthpaydays = 0,
@@ -135,6 +136,7 @@ Public:CheckAccountsForInactivity()
 			
 		for( new i=0; i < rows; i++ ) 
 		{
+			d = false;
 			donaterank = 0;
 			skip = false;
 			monthpaydays = 0;
@@ -173,7 +175,10 @@ Public:CheckAccountsForInactivity()
 				continue;
 			}
 			
-			cache_get_value_name(0, "AdminMessage", logString, 2048); 
+			strcat(logString, GetPlayerAdminMessage(sqlid), sizeof(logString)); 
+			if(isnull(logString))
+				d = false;
+			else d = true;
 			
 			if(jobkey != 0 && loginstamp <= (gettimestamp() - MAX_JOB_INACTIVITY_TIME) && monthpaydays < 3) // 
 			{
@@ -188,21 +193,15 @@ Public:CheckAccountsForInactivity()
 					jobkey,
 					contracttime
 				);
-	
-				if(isnull(logString))
-					format(motd, sizeof(motd), "[%s] - Izgubili ste	posao %s i %d sati ugovora radi nedovoljne aktivnosti.",
-						ReturnDate(),
-						ReturnJob(jobkey),
-						contracttime
-					);
-				else
-					format(motd, sizeof(motd), "\n[%s] - Izgubili ste posao %s i %d sati ugovora radi nedovoljne aktivnosti.",
-						ReturnDate(),
-						ReturnJob(jobkey),
-						contracttime
-					);
-					
-				strcat(logString, motd, 2048);
+
+				format(motd, sizeof(motd), "%s[%s] - Izgubili ste	posao %s i %d sati ugovora radi nedovoljne aktivnosti.",
+					(!d) ? ("") : ("\n"),
+					ReturnDate(),
+					ReturnJob(jobkey),
+					contracttime
+				);
+				strcat(logString, motd, 1536);
+				d = true;
 			}
 			// Property Inactivity Check
 			propertytimestamp = gettimestamp() - MAX_INACTIVITY_TIME;
@@ -269,20 +268,14 @@ Public:CheckAccountsForInactivity()
 						(HouseInfo[houseid][hValue] + HouseInfo[houseid][hTakings])
 					);
 					
-					if(isnull(logString))
-						format(motd, sizeof(motd), "[%s] - Izgubili ste kucu na adresi %s radi nedovoljne aktivnosti i dobili %d$ naknade na bankovni racun.",
-							ReturnDate(),
-							HouseInfo[houseid][hAdress], 
-							(HouseInfo[houseid][hValue] + HouseInfo[houseid][hTakings])
-						);
-					else
-						format(motd, sizeof(motd), "\n[%s] - Izgubili ste kucu na adresi %s radi nedovoljne aktivnosti i dobili %d$ naknade na bankovni racun.",
-							ReturnDate(),
-							HouseInfo[houseid][hAdress], 
-							(HouseInfo[houseid][hValue] + HouseInfo[houseid][hTakings])
-						);
-						
-					strcat(logString, motd, 2048);
+					format(motd, sizeof(motd), "%s[%s] - Izgubili ste kucu na adresi %s radi nedovoljne aktivnosti i dobili %d$ naknade na bankovni racun.",
+						(!d) ? ("") : ("\n"),
+						ReturnDate(),
+						HouseInfo[houseid][hAdress], 
+						(HouseInfo[houseid][hValue] + HouseInfo[houseid][hTakings])
+					);		
+					strcat(logString, motd, 1536);
+					d = true;
 				}
 				if(garageid != INVALID_HOUSE_ID)
 				{
@@ -302,20 +295,14 @@ Public:CheckAccountsForInactivity()
 						GarageInfo[garageid][gPrice]
 					);
 					
-					if(isnull(logString))
-						format(motd, sizeof(motd), "[%s] - Izgubili ste garazu %s radi nedovoljne aktivnosti i dobili %d$ naknade na bankovni racun.",
-							ReturnDate(),
-							GarageInfo[garageid][gAdress],
-							GarageInfo[garageid][gPrice]
-						);
-					else
-						format(motd, sizeof(motd), "\n[%s] - Izgubili ste garazu %s radi nedovoljne aktivnosti i dobili %d$ naknade na bankovni racun.",
-							ReturnDate(),
-							GarageInfo[garageid][gAdress],
-							GarageInfo[garageid][gPrice]
-						);
-						
-					strcat(logString, motd, 2048);
+					format(motd, sizeof(motd), "%s[%s] - Izgubili ste garazu %s radi nedovoljne aktivnosti i dobili %d$ naknade na bankovni racun.",
+						(!d) ? ("") : ("\n"),
+						ReturnDate(),
+						GarageInfo[garageid][gAdress],
+						GarageInfo[garageid][gPrice]
+					);
+					strcat(logString, motd, 1536);
+					d = true;
 				}
 				if(bizzid != INVALID_BIZNIS_ID)
 				{
@@ -336,18 +323,14 @@ Public:CheckAccountsForInactivity()
 						(BizzInfo[bizzid][bBuyPrice] + BizzInfo[bizzid][bTill])
 					);
 					
-					if(isnull(logString))
-						format(motd, sizeof(motd), "[%s] - Izgubili ste biznis %s radi nedovoljne aktivnosti i dobili %d$ naknade na bankovni racun.", 
-							BizzInfo[bizzid][bMessage],
-							(BizzInfo[bizzid][bBuyPrice] + BizzInfo[bizzid][bTill])
-						);
-					else
-						format(motd, sizeof(motd), "\n[%s] - Izgubili ste biznis %s radi nedovoljne aktivnosti i dobili %d$ naknade na bankovni racun.", 
-							BizzInfo[bizzid][bMessage],
-							(BizzInfo[bizzid][bBuyPrice] + BizzInfo[bizzid][bTill])
-						);
-						
-					strcat(logString, motd, 2048);
+					format(motd, sizeof(motd), "%s[%s] - Izgubili ste biznis %s radi nedovoljne aktivnosti i dobili %d$ naknade na bankovni racun.", 
+						(!d) ? ("") : ("\n"),
+						ReturnDate(),
+						BizzInfo[bizzid][bMessage],
+						(BizzInfo[bizzid][bBuyPrice] + BizzInfo[bizzid][bTill])
+					);
+					strcat(logString, motd, 1536);
+					d = true;
 				}
 				if(cid != INVALID_COMPLEX_ID)
 				{
@@ -356,7 +339,6 @@ Public:CheckAccountsForInactivity()
 						bankmoney += ComplexInfo[cid][cTill];
 					
 					mysql_fquery(g_SQL, "UPDATE accounts SET bankMoney = bankMoney + '%d' WHERE sqlid = '%d'", bankmoney, sqlid);
-					
 					mysql_fquery(g_SQL, "UPDATE server_complex SET owner_id = '0' WHERE id = '%d'", ComplexInfo[cid][cSQLID]);
 					
 					Log_Write("logfiles/inactive_players.txt", "(%s) %s[SQLID: %d] due to inactivity lost his Complex %s[SQLID: %d] and got %d$ refunded.",
@@ -368,20 +350,14 @@ Public:CheckAccountsForInactivity()
 						ComplexInfo[cid][cPrice]
 					);
 					
-					if(isnull(logString))
-						format(motd, sizeof(motd), "[%s] - Izgubili ste complex %s radi nedovoljne aktivnosti i dobili %d$ naknade na bankovni racun.",
-							ReturnDate(),
-							ComplexInfo[cid][cName],
-							(ComplexInfo[cid][cPrice] + ComplexInfo[cid][cTill])
-						);
-					else
-						format(motd, sizeof(motd), "\n[%s] - Izgubili ste complex %s radi nedovoljne aktivnosti i dobili %d$ naknade na bankovni racun.",
-							ReturnDate(),
-							ComplexInfo[cid][cName],
-							(ComplexInfo[cid][cPrice] + ComplexInfo[cid][cTill])
-						);
-						
-					strcat(logString, motd, 2048);
+					format(motd, sizeof(motd), "%s[%s] - Izgubili ste complex %s radi nedovoljne aktivnosti i dobili %d$ naknade na bankovni racun.",
+						(!d) ? ("") : ("\n"),
+						ReturnDate(),
+						ComplexInfo[cid][cName],
+						(ComplexInfo[cid][cPrice] + ComplexInfo[cid][cTill])
+					);	
+					strcat(logString, motd, 1536);
+					d = true;
 				}
 				if(crid != INVALID_COMPLEX_ID)
 				{	
@@ -397,20 +373,14 @@ Public:CheckAccountsForInactivity()
 						ComplexRoomInfo[crid][cSQLID]
 					);
 					
-					if(isnull(logString))
-						format(motd, sizeof(motd), "[%s] - Izgubili ste sobu %s u Complexu %s radi nedovoljne aktivnosti.", 
-							ReturnDate(),
-							ComplexRoomInfo[crid][cAdress],
-							ComplexInfo[GetComplexEnumID(crid)][cName]
-						);
-					else
-						format(motd, sizeof(motd), "\n[%s] - Izgubili ste sobu %s u Complexu %s radi nedovoljne aktivnosti.", 
-							ReturnDate(),
-							ComplexRoomInfo[crid][cAdress],
-							ComplexInfo[GetComplexEnumID(crid)][cName]
-						);
-						
-					strcat(logString, motd, 2048);
+					format(motd, sizeof(motd), "%s[%s] - Izgubili ste sobu %s u Complexu %s radi nedovoljne aktivnosti.", 
+						(!d) ? ("") : ("\n"),
+						ReturnDate(),
+						ComplexRoomInfo[crid][cAdress],
+						ComplexInfo[GetComplexEnumID(crid)][cName]
+					);
+					strcat(logString, motd, 1536);
+					d = true;
 				}
 				SendServerMessage(sqlid, logString);
 			}
@@ -442,6 +412,7 @@ Public:CheckAccountsForInactivity()
 				motd[256];
 				
 			new 
+				bool:d = false,
 				donaterank = 0,
 				bool:skip = false,
 				bankmoney = 0,
@@ -453,6 +424,7 @@ Public:CheckAccountsForInactivity()
 
 			for(new i = 0; i < rows; i++)
 			{
+				d = false;
 				donaterank = 0;
 				skip = false;
 				bankmoney = 0;
@@ -467,7 +439,11 @@ Public:CheckAccountsForInactivity()
 
 				format(playername, sizeof(playername), "%s", ConvertSQLIDToName(sqlid));
 				donaterank = GetPlayerVIP(sqlid);
-				strcat(logString, GetPlayerAdminMessage(sqlid), sizeof(logString));
+				
+				strcat(logString, GetPlayerAdminMessage(sqlid), sizeof(logString)); 
+				if(isnull(logString))
+					d = false;
+				else d = true;
 
 				if(IsValidInactivity(sqlid)) // Ukoliko postoji prijavljena neaktivnost koja jos uvijek traje
 					continue;
@@ -545,20 +521,15 @@ Public:CheckAccountsForInactivity()
 						(HouseInfo[houseid][hValue] + HouseInfo[houseid][hTakings])
 					);
 					
-					if(isnull(logString))
-						format(motd, sizeof(motd), "[%s] - Izgubili ste kucu na adresi %s radi nedovoljne aktivnosti i dobili %d$ naknade na bankovni racun.",
-							ReturnDate(),
-							HouseInfo[houseid][hAdress], 
-							(HouseInfo[houseid][hValue] + HouseInfo[houseid][hTakings])
-						);
-					else
-						format(motd, sizeof(motd), "\n[%s] - Izgubili ste kucu na adresi %s radi nedovoljne aktivnosti i dobili %d$ naknade na bankovni racun.",
-							ReturnDate(),
-							HouseInfo[houseid][hAdress], 
-							(HouseInfo[houseid][hValue] + HouseInfo[houseid][hTakings])
-						);
-						
-					strcat(logString, motd, 2048);
+				
+					format(motd, sizeof(motd), "%s[%s] - Izgubili ste kucu na adresi %s radi nedovoljne aktivnosti i dobili %d$ naknade na bankovni racun.",
+						(!d) ? ("") : ("\n"),
+						ReturnDate(),
+						HouseInfo[houseid][hAdress], 
+						(HouseInfo[houseid][hValue] + HouseInfo[houseid][hTakings])
+					);
+					strcat(logString, motd, 1536);
+					d = true;
 				}
 				if(garageid != INVALID_HOUSE_ID)
 				{
@@ -578,20 +549,14 @@ Public:CheckAccountsForInactivity()
 						GarageInfo[garageid][gPrice]
 					);
 					
-					if(isnull(logString))
-						format(motd, sizeof(motd), "[%s] - Izgubili ste garazu %s radi nedovoljne aktivnosti i dobili %d$ naknade na bankovni racun.",
-							ReturnDate(),
-							GarageInfo[garageid][gAdress],
-							GarageInfo[garageid][gPrice]
-						);
-					else
-						format(motd, sizeof(motd), "\n[%s] - Izgubili ste garazu %s radi nedovoljne aktivnosti i dobili %d$ naknade na bankovni racun.",
-							ReturnDate(),
-							GarageInfo[garageid][gAdress],
-							GarageInfo[garageid][gPrice]
-						);
-						
-					strcat(logString, motd, 2048);
+					format(motd, sizeof(motd), "%s[%s] - Izgubili ste garazu %s radi nedovoljne aktivnosti i dobili %d$ naknade na bankovni racun.",
+						(!d) ? ("") : ("\n"),
+						ReturnDate(),
+						GarageInfo[garageid][gAdress],
+						GarageInfo[garageid][gPrice]
+					);
+					strcat(logString, motd, 1536);
+					d = true;
 				}
 				if(bizzid != INVALID_BIZNIS_ID)
 				{
@@ -612,18 +577,13 @@ Public:CheckAccountsForInactivity()
 						(BizzInfo[bizzid][bBuyPrice] + BizzInfo[bizzid][bTill])
 					);
 					
-					if(isnull(logString))
-						format(motd, sizeof(motd), "[%s] - Izgubili ste biznis %s radi nedovoljne aktivnosti i dobili %d$ naknade na bankovni racun.", 
-							BizzInfo[bizzid][bMessage],
-							(BizzInfo[bizzid][bBuyPrice] + BizzInfo[bizzid][bTill])
-						);
-					else
-						format(motd, sizeof(motd), "\n[%s] - Izgubili ste biznis %s radi nedovoljne aktivnosti i dobili %d$ naknade na bankovni racun.", 
-							BizzInfo[bizzid][bMessage],
-							(BizzInfo[bizzid][bBuyPrice] + BizzInfo[bizzid][bTill])
-						);
-						
-					strcat(logString, motd, 2048);
+					format(motd, sizeof(motd), "%s[%s] - Izgubili ste biznis %s radi nedovoljne aktivnosti i dobili %d$ naknade na bankovni racun.", 
+						(!d) ? ("") : ("\n"),
+						BizzInfo[bizzid][bMessage],
+						(BizzInfo[bizzid][bBuyPrice] + BizzInfo[bizzid][bTill])
+					);
+					strcat(logString, motd, 1536);
+					d = true;
 				}
 				if(cid != INVALID_COMPLEX_ID)
 				{
@@ -644,20 +604,14 @@ Public:CheckAccountsForInactivity()
 						ComplexInfo[cid][cPrice]
 					);
 					
-					if(isnull(logString))
-						format(motd, sizeof(motd), "[%s] - Izgubili ste complex %s radi nedovoljne aktivnosti i dobili %d$ naknade na bankovni racun.",
-							ReturnDate(),
-							ComplexInfo[cid][cName],
-							(ComplexInfo[cid][cPrice] + ComplexInfo[cid][cTill])
-						);
-					else
-						format(motd, sizeof(motd), "\n[%s] - Izgubili ste complex %s radi nedovoljne aktivnosti i dobili %d$ naknade na bankovni racun.",
-							ReturnDate(),
-							ComplexInfo[cid][cName],
-							(ComplexInfo[cid][cPrice] + ComplexInfo[cid][cTill])
-						);
-						
-					strcat(logString, motd, 2048);
+					format(motd, sizeof(motd), "%s[%s] - Izgubili ste complex %s radi nedovoljne aktivnosti i dobili %d$ naknade na bankovni racun.",
+						(!d) ? ("") : ("\n"),
+						ReturnDate(),
+						ComplexInfo[cid][cName],
+						(ComplexInfo[cid][cPrice] + ComplexInfo[cid][cTill])
+					);
+					strcat(logString, motd, 1536);
+					d = true;
 				}
 				if(crid != INVALID_COMPLEX_ID)
 				{	
@@ -673,20 +627,14 @@ Public:CheckAccountsForInactivity()
 						ComplexRoomInfo[crid][cSQLID]
 					);
 					
-					if(isnull(logString))
-						format(motd, sizeof(motd), "[%s] - Izgubili ste sobu %s u Complexu %s radi nedovoljne aktivnosti.", 
-							ReturnDate(),
-							ComplexRoomInfo[crid][cAdress],
-							ComplexInfo[GetComplexEnumID(crid)][cName]
-						);
-					else
-						format(motd, sizeof(motd), "\n[%s] - Izgubili ste sobu %s u Complexu %s radi nedovoljne aktivnosti.", 
-							ReturnDate(),
-							ComplexRoomInfo[crid][cAdress],
-							ComplexInfo[GetComplexEnumID(crid)][cName]
-						);
-						
-					strcat(logString, motd, 2048);
+					format(motd, sizeof(motd), "%s[%s] - Izgubili ste sobu %s u Complexu %s radi nedovoljne aktivnosti.", 
+						(!d) ? ("") : ("\n"),
+						ReturnDate(),
+						ComplexRoomInfo[crid][cAdress],
+						ComplexInfo[GetComplexEnumID(crid)][cName]
+					);
+					strcat(logString, motd, 1536);
+					d = true;
 				}
 				SendServerMessage(sqlid, logString);
 			}

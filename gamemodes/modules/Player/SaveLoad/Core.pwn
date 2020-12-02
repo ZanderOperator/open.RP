@@ -1,6 +1,6 @@
 #include <YSI_Coding\y_hooks>
 
-// Core Tables Save/Load Functions
+// Core Table Save/Load Functions
 #include "modules/Player\SaveLoad/player_vip_status.pwn"
 #include "modules/Player\SaveLoad/player_licenses.pwn"
 #include "modules/Player\SaveLoad/player_jail.pwn"
@@ -102,20 +102,20 @@ timer SetPlayerCrash[6000](playerid)
 		GetPlayerPreviousInfo(playerid);
 		LearnPlayer(playerid, 1);
 	}
-	if(strcmp(PlayerInfo[playerid][pLastUpdateVer], SCRIPT_VERSION, true) != 0 && !isnull(PlayerInfo[playerid][pAdminMsg]) && PlayerInfo[playerid][pAdmMsgConfirm] == 0)
+	if(strcmp(PlayerInfo[playerid][pLastUpdateVer], SCRIPT_VERSION, true) != 0 && !isnull(PlayerAdminMessage[playerid][pAdminMsg]) && !PlayerAdminMessage[playerid][pAdmMsgConfirm])
 	{
 		va_SendClientMessage(playerid, COLOR_LIGHTBLUE, "[City of Angels]: "COL_WHITE"Server je updatean na verziju "COL_LIGHTBLUE"%s"COL_WHITE", za vise informacija - /update.", SCRIPT_VERSION);
 		ShowAdminMessage(playerid);
 		goto spawn_end;
 	}
-	else if(strcmp(PlayerInfo[playerid][pLastUpdateVer], SCRIPT_VERSION, true) != 0 && (PlayerInfo[playerid][pAdmMsgConfirm] || isnull(PlayerInfo[playerid][pAdminMsg])))
+	else if(strcmp(PlayerInfo[playerid][pLastUpdateVer], SCRIPT_VERSION, true) != 0 && (PlayerAdminMessage[playerid][pAdmMsgConfirm] || isnull(PlayerAdminMessage[playerid][pAdminMsg])))
 	{
 		if(strcmp(PlayerInfo[playerid][pLastUpdateVer], SCRIPT_VERSION, true) != 0)
 			PlayerReward[playerid] = true;
 		ShowPlayerUpdateList(playerid);
 		goto spawn_end;
 	}
-	else if(!isnull(PlayerInfo[playerid][pAdminMsg]) && PlayerInfo[playerid][pAdmMsgConfirm] == 0 && strcmp(PlayerInfo[playerid][pLastUpdateVer], SCRIPT_VERSION, true) == 0)
+	else if(!isnull(PlayerAdminMessage[playerid][pAdminMsg]) && !PlayerAdminMessage[playerid][pAdmMsgConfirm] && strcmp(PlayerInfo[playerid][pLastUpdateVer], SCRIPT_VERSION, true) == 0)
 	{
 		ShowAdminMessage(playerid);
 		goto spawn_end;
@@ -341,11 +341,6 @@ public LoadPlayerData(playerid)
 		cache_get_value_name_int(0, "drugused", PlayerInfo[playerid][pDrugUsed]);
 		cache_get_value_name_int(0, "drugseconds", PlayerInfo[playerid][pDrugSeconds]);
 		cache_get_value_name_int(0, "lastdrug", PlayerInfo[playerid][pDrugOrder]);
-		
-		//Adminmsg
-		cache_get_value_name(0, "AdminMessage", PlayerInfo[playerid][pAdminMsg], 2048);
-		cache_get_value_name(0, "AdminMessageBy", PlayerInfo[playerid][pAdminMsgBy], 60);
-		cache_get_value_name_int(0, "AdmMessageConfirm", PlayerInfo[playerid][pAdmMsgConfirm]);
 		
 		//Fisher
 		cache_get_value_name_int(0, "FishingSkill", PlayerInfo[playerid][pFishingSkill]);
@@ -721,7 +716,7 @@ stock ShowAdminMessage(playerid)
 	new 
 		string[2048];
 		
-	format(string, sizeof(string), "Obavijest od %s\n%s", PlayerInfo[playerid][pAdminMsgBy], PlayerInfo[playerid][pAdminMsg]);
+	format(string, sizeof(string), "Obavijest od %s\n%s", PlayerAdminMessage[playerid][pAdminMsgBy], PlayerAdminMessage[playerid][pAdminMsg]);
 	ShowPlayerDialog(playerid, DIALOG_ADMIN_MSG, DIALOG_STYLE_MSGBOX, "Admin Message", string, "Ok", "");
 	return 1;
 }
@@ -758,7 +753,6 @@ stock SavePlayerData(playerid)
 			drugused = '%d', drugseconds = '%d', lastdrug = '%d',\n\
 			ammutime = '%d', warekey = '%d', mustread = '%d', lastupdatever = '%e', JackerCoolDown = '%d',\n\
 			FurnPremium = '%d',\n\
-			AdmMessageConfirm = '%d', AdminMessage = '%e', AdminMessageBy = '%e' \n\
 			WHERE sqlid = '%d'",
 		PlayerInfo[playerid][pRegistered],
 		PlayerInfo[playerid][pTempRank][0],
@@ -812,9 +806,6 @@ stock SavePlayerData(playerid)
 		PlayerInfo[playerid][pLastUpdateVer],
 		PlayerInfo[playerid][JackerCoolDown],
 		PlayerInfo[playerid][FurnPremium],
-		PlayerInfo[playerid][pAdmMsgConfirm],
-		PlayerInfo[playerid][pAdminMsg],
-		PlayerInfo[playerid][pAdminMsgBy],
 		PlayerInfo[playerid][pSQLID]
 	);
 	mysql_pquery(g_SQL, "COMMIT");
