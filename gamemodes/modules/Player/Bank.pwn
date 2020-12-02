@@ -168,15 +168,11 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 			PlayerInfo[playerid][pBank] -= PlayerSavings[playerid][pSavingsMoney];
 						
 			mysql_fquery(g_SQL, 
-				"UPDATE accounts SET bankMoney = '%d', savings_cool = '%d', savings_time = '%d', savings_type = '%d',\n\
-					savings_money = '%d' WHERE sqlid = '%d'",
+				"UPDATE accounts SET bankMoney = '%d' WHERE sqlid = '%d'",
 				PlayerInfo[playerid][pBank],
-				PlayerSavings[playerid][pSavingsCool],
-				PlayerSavings[playerid][pSavingsTime],
-				PlayerSavings[playerid][pSavingsType],
-				PlayerSavings[playerid][pSavingsMoney],
 				PlayerInfo[playerid][pSQLID]
 			);
+			SavePlayerSavings(playerid);
 			
 			// Message
 			SendFormatMessage(playerid, MESSAGE_TYPE_INFO, "Orocio si %d$ na %d h po kamatnoj stopi od %d%! Novac je prebacen sa bankovnog racuna na orocenje.", FormatNumber(PlayerSavings[playerid][pSavingsMoney]), PlayerSavings[playerid][pSavingsTime], PlayerSavings[playerid][pSavingsTime]);
