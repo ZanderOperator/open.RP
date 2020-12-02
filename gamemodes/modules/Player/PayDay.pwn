@@ -213,39 +213,33 @@ GivePlayerPayCheck(playerid)
 	if(PlayerSavings[playerid][pSavingsType] > 0)
 	{
 		PlayerSavings[playerid][pSavingsTime]--;
-		if(PlayerSavings[playerid][pSavingsTime] > 0)
-			mysql_fquery(g_SQL, "UPDATE accounts SET savings_time = '%d' WHERE sqlid = '%d' LIMIT 1", PlayerSavings[playerid][pSavingsTime], PlayerInfo[playerid][pSQLID]);
-
 		if(PlayerSavings[playerid][pSavingsTime] <= 0)
 		{
-			new	Float:savingsmoneyfloat = PlayerSavings[playerid][pSavingsMoney] * floatdiv(PlayerSavings[playerid][pSavingsType], 100), 	// izracunava ulozen novac * stopa
+			new	
+				Float:savingsmoneyfloat = PlayerSavings[playerid][pSavingsMoney] 
+						* floatdiv(PlayerSavings[playerid][pSavingsType], 100), 	
 				savingsmoney = floatround(savingsmoneyfloat), // zaokruzuje ga
 				totalmoney = PlayerSavings[playerid][pSavingsMoney] + savingsmoney; // dodaje stopu na glavnicu
 
-			// savings = PlayerSavings[playerid][pSavingsMoney] + floatround( PlayerSavings[playerid][pSavingsMoney] * (PlayerSavings[playerid][pSavingsType] / 100) );
 
-			// Novac iz prora?una dolazi igra?u na bankovni racun
 			BudgetToPlayerBankMoney(playerid, totalmoney);
 
-			// Clear
 			PlayerSavings[playerid][pSavingsCool] = 30;
 			PlayerSavings[playerid][pSavingsTime] = 0;
 			PlayerSavings[playerid][pSavingsType] = 0;
 			PlayerSavings[playerid][pSavingsMoney] = 0;
 
 			mysql_fquery(g_SQL, 
-				"UPDATE accounts SET bankMoney = '%d', savings_cool = '30', savings_time = '0',\n\
-					savings_type = '0', savings_money = '0' WHERE sqlid = '%d'",
+				"UPDATE accounts SET bankMoney = '%d'WHERE sqlid = '%d'",
 				PlayerInfo[playerid][pBank],
 				PlayerInfo[playerid][pSQLID]
 			);
-
-			// Poruke
 			format(f_dialog,sizeof(f_dialog), "\n\t{3C95C2}Stednja:");
 			strcat(p_dialog,f_dialog, sizeof(p_dialog));
 			format(f_dialog,sizeof(f_dialog), "\nProslo je vase vrijeme orocene stednje, te se primili %s na svoj bankovni racun!", FormatNumber(totalmoney));
 			strcat(p_dialog,f_dialog, sizeof(p_dialog));
 		}
+		SavePlayerSavings(playerid);
 	}
 	if(PlayerSavings[playerid][pSavingsCool] > 0)
 	{
@@ -253,10 +247,7 @@ GivePlayerPayCheck(playerid)
 		if(PlayerSavings[playerid][pSavingsCool] < 0)
 			PlayerSavings[playerid][pSavingsCool] = 0;
 
-		mysql_fquery(g_SQL, "UPDATE accounts SET savings_cool = '%d' WHERE sqlid = '%d'",
-			PlayerSavings[playerid][pSavingsCool],
-			PlayerInfo[playerid][pSQLID]
-		);
+		SavePlayerSavings(playerid);
 	}
 	format(f_dialog,sizeof(f_dialog), "\n{3C95C2}Prihodi:");
 	strcat(p_dialog,f_dialog, sizeof(p_dialog));
