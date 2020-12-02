@@ -50,7 +50,6 @@ enum E_PLAYER_DATA
 	pComplexKey,
 	pComplexRoomKey,
 	pRentKey,
-	Float:pSHealth,
 	Float:pHealth,
 	Float:pArmour,
 	pCrashId,
@@ -143,10 +142,6 @@ enum E_PLAYER_DATA
 	pWish,
 	pNicksToggled,
 	FurnPremium,
-	pHasRadio,
-	pRadio[4],
-	pRadioSlot[4],
-	pMainSlot,
 	pAddingRoadblock,
 	pRoadblockObject,
 	pRoadblockModel,
@@ -249,6 +244,15 @@ enum E_PLAYER_FACTION_INFO
 	pRank
 }
 new PlayerFaction[ MAX_PLAYERS ][ E_PLAYER_FACTION_INFO ];
+
+enum E_P_RADIO_INFO
+{
+	pHasRadio,
+	pRadio[4],
+	pRadioSlot[4],
+	pMainSlot
+}
+new PlayerRadio[ MAX_PLAYERS ][ E_P_RADIO_INFO ];
 
 enum E_GARAGE_DATA {
 	gSQLID,

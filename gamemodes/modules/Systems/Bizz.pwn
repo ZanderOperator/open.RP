@@ -2008,11 +2008,11 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                         PlayerInfo[playerid][hRope] = 1;
                     case PRODUCT_RADIO:
                     {
-                        if (PlayerInfo[playerid][pHasRadio]) return SendClientMessage(playerid, COLOR_RED, "Vec posjedujete radio!");
-                        PlayerInfo[playerid][pHasRadio] = 1;
+                        if (PlayerRadio[playerid][pHasRadio]) return SendClientMessage(playerid, COLOR_RED, "Vec posjedujete radio!");
+                        PlayerRadio[playerid][pHasRadio] = 1;
 
                         mysql_fquery(g_SQL, "UPDATE accounts SET HasRadio = '%d' WHERE sqlid = '%d'",
-                            PlayerInfo[playerid][pHasRadio],
+                            PlayerRadio[playerid][pHasRadio],
                             PlayerInfo[playerid][pSQLID]
                         );
                     }
@@ -2884,16 +2884,16 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                 }
                 case 12:
                 {
-                    if (PlayerInfo[playerid][pHasRadio] == 1) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Vec posjedujete radio!");
+                    if (PlayerRadio[playerid][pHasRadio] == 1) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Vec posjedujete radio!");
                     if (AC_GetPlayerMoney(playerid) < 1500) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate 1500$!");
 
                     PlayerToBudgetMoney(playerid, 1500); // APosto je VERONA MALL novac ide u budget
 
-                    PlayerInfo[playerid][pHasRadio] = 1;
+                    PlayerRadio[playerid][pHasRadio] = 1;
                     SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "Kupljen radio [1500$]");
 
                     mysql_fquery(g_SQL, "UPDATE accounts SET HasRadio = '%d' WHERE sqlid = '%d'",
-                        PlayerInfo[playerid][pHasRadio],
+                        PlayerRadio[playerid][pHasRadio],
                         PlayerInfo[playerid][pSQLID]
                     );
                 }

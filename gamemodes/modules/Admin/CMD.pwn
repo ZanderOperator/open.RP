@@ -3034,7 +3034,6 @@ CMD:setstat(playerid, params[])
 		}
 		case 2:
 		{
-			PlayerInfo[giveplayerid][pSHealth] = amount;
 			format(globalstring, sizeof(globalstring), "   Korisnik ce se od sada stvarati sa %d energije.", amount);
 		}
 		case 3:

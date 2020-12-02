@@ -2008,9 +2008,9 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 
 stock GetChannelSlot(playerid, channel)
 {
-	if(channel == PlayerInfo[playerid][pRadio][1])return 1;
-	if(channel == PlayerInfo[playerid][pRadio][2])return 2;
-	if(channel == PlayerInfo[playerid][pRadio][3])return 3;
+	if(channel == PlayerRadio[playerid][pRadio][1])return 1;
+	if(channel == PlayerRadio[playerid][pRadio][2])return 2;
+	if(channel == PlayerRadio[playerid][pRadio][3])return 3;
 
 	return false;
 }
