@@ -30,53 +30,6 @@ stock IsAtBank(playerid) {
 	##     ##  #######   #######  ##    ## 
 */
 
-LoadPlayerCredit(playerid)
-{
-	inline OnPlayerCreditLoad()
-	{
-		if(!cache_num_rows())
-		{
-			mysql_fquery(g_SQL, 
-				"INSERT INTO player_credits(sqlid, type, rate, amount, unpaid, used, timestamp) \n\
-					VALUES ('%d', '0', '0', '0', '0', '0', '0')",
-				PlayerInfo[ playerid ][ pSQLID ]
-			);
-			return 1;
-		}
-			
-		cache_get_value_name_int(0, "type"		, CreditInfo[playerid][cCreditType]);
-		cache_get_value_name_int(0, "rate"		, CreditInfo[playerid][cRate]);
-		cache_get_value_name_int(0, "amount"	, CreditInfo[playerid][cAmount]);
-		cache_get_value_name_int(0, "unpaid"	, CreditInfo[playerid][cUnpaid]);
-		cache_get_value_name_int(0, "used"		, CreditInfo[playerid][cUsed]);
-		cache_get_value_name_int(0, "timestamp"	, CreditInfo[playerid][cTimestamp]);
-		return 1;
-	}
-	MySQL_TQueryInline(g_SQL,  
-		using inline OnPlayerCreditLoad, 
-		va_fquery(g_SQL, "SELECT * FROM player_credits WHERE sqlid = '%d'", PlayerInfo[playerid][pSQLID]),
-		"i", 
-		playerid
-	);
-	return 1;
-}
-
-SavePlayerCredit(playerid)
-{
-	mysql_fquery(g_SQL, 
-		"UPDATE player_credits SET rate = '%d', type = '%d', amount = '%d',\n\
-			unpaid = '%d', used = '%d', timestamp = '%d' WHERE sqlid = '%d'",
-		CreditInfo[playerid][cRate],
-		CreditInfo[playerid][cCreditType],
-		CreditInfo[playerid][cAmount],
-		CreditInfo[playerid][cUnpaid],
-		CreditInfo[playerid][cUsed],
-		CreditInfo[playerid][cTimestamp],
-		PlayerInfo[playerid][pSQLID]
-	);
-	return 1;
-}
-
 hook ResetPlayerVariables(playerid)
 {
 	Bit16_Set(r_SavingsMoney, playerid, 0);
@@ -210,32 +163,32 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 			if( !response ) 
 				return ResetSavingsVars(playerid), SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "Odbili ste staviti novac na stedni racun.");
 			
-			PlayerInfo[playerid][pSavingsCool] = 0;
-			PlayerInfo[playerid][pSavingsType] = PlayerInfo[playerid][pSavingsTime];
-			PlayerInfo[playerid][pBank] -= PlayerInfo[playerid][pSavingsMoney];
+			PlayerSavings[playerid][pSavingsCool] = 0;
+			PlayerSavings[playerid][pSavingsType] = PlayerSavings[playerid][pSavingsTime];
+			PlayerInfo[playerid][pBank] -= PlayerSavings[playerid][pSavingsMoney];
 						
 			mysql_fquery(g_SQL, 
 				"UPDATE accounts SET bankMoney = '%d', savings_cool = '%d', savings_time = '%d', savings_type = '%d',\n\
 					savings_money = '%d' WHERE sqlid = '%d'",
 				PlayerInfo[playerid][pBank],
-				PlayerInfo[playerid][pSavingsCool],
-				PlayerInfo[playerid][pSavingsTime],
-				PlayerInfo[playerid][pSavingsType],
-				PlayerInfo[playerid][pSavingsMoney],
+				PlayerSavings[playerid][pSavingsCool],
+				PlayerSavings[playerid][pSavingsTime],
+				PlayerSavings[playerid][pSavingsType],
+				PlayerSavings[playerid][pSavingsMoney],
 				PlayerInfo[playerid][pSQLID]
 			);
 			
 			// Message
-			SendFormatMessage(playerid, MESSAGE_TYPE_INFO, "Orocio si %d$ na %d h po kamatnoj stopi od %d%! Novac je prebacen sa bankovnog racuna na orocenje.", FormatNumber(PlayerInfo[playerid][pSavingsMoney]), PlayerInfo[playerid][pSavingsTime], PlayerInfo[playerid][pSavingsTime]);
+			SendFormatMessage(playerid, MESSAGE_TYPE_INFO, "Orocio si %d$ na %d h po kamatnoj stopi od %d%! Novac je prebacen sa bankovnog racuna na orocenje.", FormatNumber(PlayerSavings[playerid][pSavingsMoney]), PlayerSavings[playerid][pSavingsTime], PlayerSavings[playerid][pSavingsTime]);
 			
 			#if defined MODULE_LOGS
 			Log_Write("logfiles/bank_savings.txt", "(%s) Player %s[%d] started savings in bank for %dh(Interest rate at the end of savings: %d%) and invested %d$.", 
 				ReturnDate(), 
 				GetName(playerid), 
 				PlayerInfo[playerid][pSQLID], 
-				PlayerInfo[playerid][pSavingsTime],
-				PlayerInfo[playerid][pSavingsTime],
-				PlayerInfo[playerid][pSavingsMoney]
+				PlayerSavings[playerid][pSavingsTime],
+				PlayerSavings[playerid][pSavingsTime],
+				PlayerSavings[playerid][pSavingsMoney]
 			);
 			#endif
 		}
@@ -578,10 +531,10 @@ ResetCreditVars(playerid)
 
 ResetSavingsVars(playerid)
  {
-	PlayerInfo[playerid][pSavingsCool] = 0;
-	PlayerInfo[playerid][pSavingsTime] = 0;
-	PlayerInfo[playerid][pSavingsType] = 0;
-	PlayerInfo[playerid][pSavingsMoney] = 0;
+	PlayerSavings[playerid][pSavingsCool] = 0;
+	PlayerSavings[playerid][pSavingsTime] = 0;
+	PlayerSavings[playerid][pSavingsType] = 0;
+	PlayerSavings[playerid][pSavingsMoney] = 0;
 	return (true);
 }
 
@@ -682,8 +635,8 @@ CMD:bank(playerid, params[])
 		}
 		if(CreditInfo[playerid][cCreditType] != 0) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Jos niste otplatili svoj kredit te ne mozete zapoceti stednju.");
 		if(PlayerInfo[playerid][pLevel] < 3) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Morate biti level 3+ da koristite ovu komandu!");
-		if(PlayerInfo[playerid][pSavingsType] > 0) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Morate cekati kraj stednje!");
-		if(PlayerInfo[playerid][pSavingsCool]) return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "Morate cekati jos %d paydayeva da uzmete novu stednju!", PlayerInfo[playerid][pSavingsCool]);
+		if(PlayerSavings[playerid][pSavingsType] > 0) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Morate cekati kraj stednje!");
+		if(PlayerSavings[playerid][pSavingsCool]) return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "Morate cekati jos %d paydayeva da uzmete novu stednju!", PlayerSavings[playerid][pSavingsCool]);
 		if((PlayerInfo[playerid][pBank] - money) < 0) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate dovoljno novaca na bankovnom racunu!");
 		if(money > 200001) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne mozete stavljati vece svote od 200 000$!");
 		if(time < 10 || time > 101) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Vrijeme stednje ne moze biti manje od 1h, ni vece od 100h!");
@@ -691,19 +644,19 @@ CMD:bank(playerid, params[])
 		format(buffer, 128, "\nJeste li sigurni da zelite staviti %s na vas stedni racun?", FormatNumber(money));
 		ShowPlayerDialog(playerid, DIALOG_ACCEPT_SAVINGS, DIALOG_STYLE_MSGBOX, "* Savings - Confirm", buffer, "(da)", "Close");
 		
-		PlayerInfo[playerid][pSavingsTime] = time;
-		PlayerInfo[playerid][pSavingsMoney] = money;
+		PlayerSavings[playerid][pSavingsTime] = time;
+		PlayerSavings[playerid][pSavingsMoney] = money;
 	}
 	else if(!strcmp(pick, "savingsinfo", true))
 	{
 		if(PlayerInfo[playerid][pLevel] < 3) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Morate biti level 3+ da koristite ovu komandu!");
-		if(PlayerInfo[playerid][pSavingsType] == 0) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate aktivnu stednju!");
+		if(PlayerSavings[playerid][pSavingsType] == 0) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate aktivnu stednju!");
 		new bankstring[128];
 
 		format(bankstring, sizeof(bankstring), "[BANKA]: Iznos orocene stednje: [%d$] | [%d] paydaya do kraja orocene stednje | Kamatna stopa: [%d %]", 
-			PlayerInfo[playerid][pSavingsMoney],
-			PlayerInfo[playerid][pSavingsTime], 
-			PlayerInfo[playerid][pSavingsType]);
+			PlayerSavings[playerid][pSavingsMoney],
+			PlayerSavings[playerid][pSavingsTime], 
+			PlayerSavings[playerid][pSavingsType]);
 		
 		SendFormatMessage(playerid, MESSAGE_TYPE_INFO, bankstring);
 		return 1;

@@ -1704,10 +1704,10 @@ stock ShowPlayerStats(playerid, targetid)
 	strcat(pDialog,motd, sizeof(pDialog));
 	
 	format(motd, sizeof(motd),""COL_WHITE"Bankovna stednja: [%dh / %dh] | Ulozeno novaca: [%d$] | Zabrana stednje: [%dh]\n\n\n",
-		PlayerInfo[targetid][pSavingsTime],
-		PlayerInfo[targetid][pSavingsType],
-		PlayerInfo[targetid][pSavingsMoney],
-		PlayerInfo[targetid][pSavingsCool]
+		PlayerSavings[playerid][pSavingsTime],
+		PlayerSavings[playerid][pSavingsType],
+		PlayerSavings[playerid][pSavingsMoney],
+		PlayerSavings[playerid][pSavingsCool]
 	);
 	strcat(pDialog,motd, sizeof(pDialog));
 

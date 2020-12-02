@@ -1,4 +1,4 @@
-// Player folder modules represent ONLY database storing features.
+// Player folder modules represents ONLY database storing features.
 
 #include <YSI_Coding\y_hooks>
 
@@ -29,8 +29,9 @@
 #include "modules/Player/Jobs/Taxi.pwn"
 #include "modules/Player/Jobs/Funcs.pwn"
 
+#include "modules/Player\SaveLoad/Core.pwn"
+
 #include "modules/Player/AFKTimer.pwn"
-#include "modules/Player/SaveLoad.pwn"
 #include "modules/Player/Tutorial.pwn"
 #include "modules/Player/RPQuiz.pwn"
 #include "modules/Player/PayDay.pwn"
