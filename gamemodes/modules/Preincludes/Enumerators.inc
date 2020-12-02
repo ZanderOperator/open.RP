@@ -185,6 +185,13 @@ enum E_P_JOB_INFO
 }
 new PlayerJob[ MAX_PLAYERS ][ E_PLAYER_DATA ];
 
+enum E_P_TAXI_INFO
+{
+	pTaxiPoints,
+	pTaxiVoted
+}
+new TaxiInfo[ MAX_PLAYERS ][ E_P_TAXI_INFO ];
+
 enum E_VIP_INFO
 {
 	pDonateRank,

@@ -355,12 +355,14 @@ CMD:quitjob(playerid, params[])
 	return (true);
 }
 
-CMD:jobduty(playerid, params[]) {
+CMD:jobduty(playerid, params[]) 
+{
 	SendClientMessage(playerid, COLOR_RED, "[ ! ] [ Jobs - On Duty ]:");
 	SendClientMessage(playerid, COLOR_RED, "[ ! ]  Taxi Company:");
-	foreach(new i: Player) {
+	foreach(new i: Player) 
+	{
 		if(TaxiData[i][eTaxiDuty] == true) {
-			new Float: t_overall = float(PlayerInfo[i][taxiPoints]) / float(PlayerInfo[i][taxiVoted]);
+			new Float: t_overall = float(TaxiInfo[i][pTaxiPoints]) / float(TaxiInfo[i][pTaxiVoted]);
 			va_SendClientMessage(playerid, -1, "Ime: %s // Taxi Rating: %.1f // Kontakt broj: %d.", GetName(i), t_overall, PlayerInfo[i][pMobileNumber]);
 		}
 	}

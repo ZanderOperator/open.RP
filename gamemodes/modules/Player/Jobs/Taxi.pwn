@@ -225,16 +225,6 @@ Taxi_Biznis(playerid, taxi_points, fare) {
 	return (true);
 }
 
-SaveTaxiPoints(playerid, taxi_p, taxi_v) 
-{
-	
-	mysql_fquery(g_SQL, 
-		"UPDATE accounts SET taxiPoints = '%d', taxiVoted = '%d' WHERE sqlid = '%d'",
-		taxi_p, taxi_v, 
-		PlayerInfo[playerid][pSQLID]
-	);
-	return (true);
-}
 /*
 	- hooks
 */
@@ -266,22 +256,25 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 		{
 			new taxist = TaxiData[playerid][eTaxiDriver],
 				rating = listitem+1;
-			if(!response) 
-				ResetTaxiVariables(playerid), SendMessage(playerid, MESSAGE_TYPE_INFO, "Odustali ste od davanja ocjene taxisti.");
-			if(response) {			
-				PlayerInfo[taxist][taxiPoints] += rating;
-				PlayerInfo[taxist][taxiVoted] += 1;
-				
-				new Float: t_overall = float(PlayerInfo[taxist][taxiPoints]) / (PlayerInfo[taxist][taxiVoted]);
-				
-				SendFormatMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uspjesno ste dali Taxisti %s ocjenu %d za voznju.", GetName(taxist), rating);
-				SendFormatMessage(taxist, MESSAGE_TYPE_SUCCESS, "Uspjesno ste dobili ocjenu %d za vasu taxi voznju, sada imate ukupnu ocjenu %.1f", rating, t_overall);
-				
-				SaveTaxiPoints(taxist, PlayerInfo[taxist][taxiPoints], PlayerInfo[taxist][taxiVoted]);
-				Taxi_Biznis(taxist, PlayerInfo[taxist][taxiPoints], TaxiData[playerid][eTaxiPayment]);
-				
+
+			if(!response)
+			{ 
 				ResetTaxiVariables(playerid);
+				return SendMessage(playerid, MESSAGE_TYPE_INFO, "Odustali ste od davanja ocjene taxisti.");
 			}
+	
+			TaxiInfo[taxist][pTaxiPoints] += rating;
+			TaxiInfo[taxist][pTaxiVoted] += 1;
+			
+			new Float: t_overall = float(TaxiInfo[taxist][pTaxiPoints]) / (TaxiInfo[taxist][pTaxiVoted]);
+			
+			SendFormatMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uspjesno ste dali Taxisti %s ocjenu %d za voznju.", GetName(taxist), rating);
+			SendFormatMessage(taxist, MESSAGE_TYPE_SUCCESS, "Uspjesno ste dobili ocjenu %d za vasu taxi voznju, sada imate ukupnu ocjenu %.1f", rating, t_overall);
+			
+			SavePlayerTaxiStats(playerid);
+			Taxi_Biznis(taxist, TaxiInfo[taxist][pTaxiPoints], TaxiData[playerid][eTaxiPayment]);
+			
+			ResetTaxiVariables(playerid);
 		}
 	}
 	return 0;
@@ -329,24 +322,27 @@ hook OnPlayerExitVehicle(playerid, vehicleid) {
 	- Commands
 */
 
-CMD:taxi(playerid, params[]) {		
+CMD:taxi(playerid, params[]) 
+{		
 	if(PlayerJob[playerid][pJob] != PLAYER_JOB_TAXI) 
 		return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Moras biti clan taxi sluzbe da bi mogao koristiti komandu!");
 			
 	new action[18],
 		string[128];
 		
-	if (sscanf(params, "s[18] ", action)) {
+	if (sscanf(params, "s[18] ", action)) 
+	{
 		SendClientMessage(playerid, COLOR_WHITE, "[KORISTI]: /taxi [opcija].");
 		SendClientMessage(playerid, COLOR_RED, "[ ! ] start, stop, duty, setfare, myrating.");
 		return (true);
     }
 	
-	if(strcmp(action,"myrating",true) == 0) {
-		if(PlayerInfo[playerid][taxiPoints] == 0) 
+	if(strcmp(action,"myrating",true) == 0) 
+	{
+		if(TaxiInfo[playerid][pTaxiPoints] == 0) 
 			return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Vi jos uvijek nemate Taxi Rating!");
 			
-		new Float: t_overall = float(PlayerInfo[playerid][taxiPoints]) / float(PlayerInfo[playerid][taxiVoted]);
+		new Float: t_overall = float(TaxiInfo[playerid][pTaxiPoints]) / float(TaxiInfo[playerid][pTaxiVoted]);
 		SendFormatMessage(playerid, MESSAGE_TYPE_SUCCESS, "Vas trenutni rating je: %.1f", t_overall);
 	}
 	

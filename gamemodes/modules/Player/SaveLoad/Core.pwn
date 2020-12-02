@@ -5,6 +5,7 @@
 #include "modules/Player\SaveLoad/player_licenses.pwn"
 #include "modules/Player\SaveLoad/player_jail.pwn"
 #include "modules/Player\SaveLoad/player_job.pwn"
+#include "modules/Player\SaveLoad/player_taxi.pwn"
 #include "modules/Player\SaveLoad/player_payday.pwn"
 #include "modules/Player\SaveLoad/player_savings.pwn"
 #include "modules/Player\SaveLoad/player_credits.pwn"
@@ -272,6 +273,7 @@ public LoadPlayerData(playerid)
 		cache_get_value_name(0, 	"lastip"		, PlayerInfo[playerid][pLastIP]			, 24);
 		
 		cache_get_value_name(0, 	"password"		, PlayerInfo[playerid][pPassword]		, BCRYPT_HASH_LENGTH);
+		cache_get_value_name(0, 	"lastupdatever"	, PlayerInfo[playerid][pLastUpdateVer]	, 24);
 		cache_get_value_name_int(0, "spawnchange"	, PlayerInfo[playerid][pSpawnChange]);
 		
 		cache_get_value_name_int(0, "registered"	, PlayerInfo[playerid][pRegistered]);
@@ -328,10 +330,8 @@ public LoadPlayerData(playerid)
 		
 		cache_get_value_name_int(0,	"ammutime"		, PlayerInfo[playerid][pAmmuTime]);
 		cache_get_value_name_int(0,	"warekey"		, PlayerInfo[playerid][pWarehouseKey]);
-		cache_get_value_name_int(0, "taxiPoints"	, PlayerInfo[playerid][taxiPoints]);
-		cache_get_value_name_int(0, "taxiVoted"		, PlayerInfo[playerid][taxiVoted]);
+		
 		cache_get_value_name_int(0,	"mustread"		, PlayerInfo[playerid][pMustRead]);
-		cache_get_value_name(0, 	"lastupdatever"	, PlayerInfo[playerid][pLastUpdateVer], 24);
 		cache_get_value_name_int(0, "JackerCoolDown", PlayerInfo[playerid][JackerCoolDown]);
 		cache_get_value_name_int(0, "pBusinessJob", PlayerInfo[playerid][pBusinessJob]);
 		cache_get_value_name_int(0, "pBusinessWorkTime", PlayerInfo[playerid][pBusinessWorkTime]);
@@ -339,7 +339,6 @@ public LoadPlayerData(playerid)
 		
 		cache_get_value_name_int(0,	"HasRadio"		, PlayerInfo[playerid][pHasRadio]);
 		cache_get_value_name_int(0, "MainSlot"      , PlayerInfo[playerid][pMainSlot]);
-		
 
 		cache_get_value_name_int(0, "Radio1", PlayerInfo[playerid][pRadio][1]);
 		cache_get_value_name_int(0, "Radio2", PlayerInfo[playerid][pRadio][2]);
@@ -351,7 +350,6 @@ public LoadPlayerData(playerid)
 		
 		cache_get_value_name_int(0, "drugused", PlayerInfo[playerid][pDrugUsed]);
 		cache_get_value_name_int(0, "drugseconds", PlayerInfo[playerid][pDrugSeconds]);
-
 		cache_get_value_name_int(0, "lastdrug", PlayerInfo[playerid][pDrugOrder]);
 		
 		//Adminmsg
@@ -408,6 +406,7 @@ public LoadPlayerData(playerid)
 
 		// Player Job & Job Stats
 		LoadPlayerJob(playerid); 
+		LoadPlayerTaxiStats(playerid);
 
         // Player Bank Stats
         LoadPlayerCredit(playerid);
