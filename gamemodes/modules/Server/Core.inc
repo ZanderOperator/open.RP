@@ -14,7 +14,6 @@
 #include "modules/Server/Logo.pwn"
 #include "modules/Server/KeyInput.pwn"
 #include "modules/Server/Player.pwn"
-#include "modules/Server/Weapons.pwn"
 #include "modules/Server/Money.pwn"
 #include "modules/Server/AntiBunnyHop.pwn"
 #include "modules/Server/Economy.pwn"

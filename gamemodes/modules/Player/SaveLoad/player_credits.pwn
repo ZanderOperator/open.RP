@@ -31,6 +31,12 @@ LoadPlayerCredit(playerid)
 	return 1;
 }
 
+hook LoadPlayerStats(playerid)
+{
+	LoadPlayerCredit(playerid);
+	return 1;
+}
+
 SavePlayerCredit(playerid)
 {
 	mysql_fquery_ex(g_SQL, 

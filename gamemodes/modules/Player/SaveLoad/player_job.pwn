@@ -28,6 +28,12 @@ Public: LoadingPlayerJob(playerid)
     return 1;
 }
 
+hook LoadPlayerStats(playerid)
+{
+    LoadPlayerJob(playerid);
+    return 1;
+}
+
 SavePlayerJob(playerid)
 {
     mysql_fquery_ex(g_SQL,

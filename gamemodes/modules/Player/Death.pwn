@@ -360,6 +360,12 @@ public LoadingPlayerDeaths(playerid)
 	##     ##  #######   #######  ##    ## 
 */
 
+hook LoadPlayerStats(playerid)
+{
+	LoadPlayerDeath(playerid);
+	return 1;
+}
+
 hook OnPlayerDisconnect(playerid, reason)
 {
 	if( Bit1_Get( gr_DeathCountStarted, playerid ) ) 

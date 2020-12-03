@@ -28,6 +28,12 @@ Public: LoadingPlayerTaxiStats(playerid)
     return 1;
 }
 
+hook LoadPlayerStats(playerid)
+{
+    LoadPlayerTaxiStats(playerid);
+    return 1;
+}
+
 SavePlayerTaxiStats(playerid)
 {
     mysql_fquery_ex(g_SQL,

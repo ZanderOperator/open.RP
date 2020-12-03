@@ -2,6 +2,7 @@
 
 #include <YSI_Coding\y_hooks>
 
+#include "modules/Player/Weapons.pwn"
 #include "modules/Player/Death.pwn"
 #include "modules/Player/Drugs.pwn"
 #include "modules/Player/Bank.pwn"

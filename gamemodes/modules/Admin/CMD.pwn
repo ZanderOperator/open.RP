@@ -844,64 +844,6 @@ public OfflineBanPlayer(playerid, playername[], reason[], days)
 	return 1;
 }
 
-forward AddAdminMessage(playerid, user_name[], reason[]);
-public AddAdminMessage(playerid, user_name[], reason[])
-{
-	new rows;
-	
-    cache_get_row_count(rows);
-	if(!rows)
-	 	return SendClientMessage(playerid, COLOR_RED, "[GRESKA - MySQL]: Ne postoji korisnik s tim nickom!");
-	
-	new
-		on,
-		sqlid;
-	
-	cache_get_value_name_int(0, "sqlid" , sqlid);
-	cache_get_value_name_int(0, "online" , on);
-	
-	if(on)
-	{
-		sscanf(user_name, "u", on);
-		
-		if(on != INVALID_PLAYER_ID && IsPlayerConnected(on) && SafeSpawned[on])
-		{
-			va_SendClientMessage(on, COLOR_NICEYELLOW, "(( PM od %s[%d]: %s ))", 
-				GetName(playerid, false), 
-				playerid, 
-				reason
-			);
-			va_SendClientMessage(playerid, COLOR_RED, "(( PM za %s[%d]: %s ))", 
-				user_name, 
-				on, 
-				reason
-			);
-			SendClientMessage(playerid, COLOR_RED, "[!] Navedeni korisnik je bio in-game te mu je poslana poruka.");
-			return 1;
-		}
-	}	
-	mysql_fquery(g_SQL,
-		"UPDATE player_admin_msg SET AdminMessage = '%e', AdminMessageBy = '%e', AdmMessageConfirm = '0' WHERE sqlid = '%d'",
-		reason, 
-		GetName(playerid, true), 
-		sqlid
-	);
-
-	SendFormatMessage(playerid, MESSAGE_TYPE_SUCCESS, "You have sucessfully left %s a message: %s", user_name, reason);
-	return 1;
-}
-
-Public:SendServerMessage(sqlid, reason[])
-{
-	mysql_fquery(g_SQL, 
-		"UPDATE player_admin_msg SET AdminMessage = '%e', AdminMessageBy = 'Server', AdmMessageConfirm = '0' \n\
-			WHERE sqlid = '%d'",
-		reason, 
-		sqlid
-	);
-	return 1;
-}
-
 forward OfflineJailPlayer(playerid, jailtime);
 public OfflineJailPlayer(playerid, jailtime)
 {

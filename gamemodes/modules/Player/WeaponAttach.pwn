@@ -240,6 +240,12 @@ Public:OPEAW(playerid, response, index, modelid, boneid, Float:foX, Float:foY, F
     return 1;
 }
 
+hook LoadPlayerStats(playerid)
+{
+	LoadPlayerWeaponSettings(playerid);
+	return 1;
+}
+
 hook OnPlayerUpdate(playerid)
 {
 	UpdatePlayerWeaponSettings(playerid);

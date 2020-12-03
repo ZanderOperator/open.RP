@@ -28,6 +28,12 @@ Public: LoadingPlayerFaction(playerid)
     return 1;
 }
 
+hook LoadPlayerStats(playerid)
+{
+    LoadPlayerFaction(playerid);
+    return 1;
+}
+
 SavePlayerFaction(playerid)
 {
     mysql_fquery_ex(g_SQL,

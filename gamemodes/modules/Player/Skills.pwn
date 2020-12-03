@@ -206,6 +206,12 @@ public OnPlayerSkillsLoad(playerid)
 	return 1;
 }
 
+hook LoadPlayerStats(playerid)
+{
+	LoadPlayerSkills(playerid);
+	return 1;
+}
+
 hook ResetPlayerVariables(playerid)
 {
 	ResetPlayerSkills(playerid);
