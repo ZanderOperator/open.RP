@@ -11,6 +11,7 @@
 #include "modules/Player\SaveLoad/player_credits.pwn"
 #include "modules/Player\SaveLoad/player_faction.pwn"
 #include "modules/Player\SaveLoad/player_radio.pwn"
+#include "modules/Player\SaveLoad/player_admin_msg.pwn"
 
 /*
 	##     ##    ###    ########   ######  
@@ -123,9 +124,11 @@ timer SetPlayerCrash[6000](playerid)
 
 	spawn_end:	
 	SafeSpawned[ playerid ] = true;
+
 	AC_SetPlayerWeapons(playerid);
-	LoadPlayerSkills(playerid);
-	LoadPlayerObjects(playerid);
+
+	// Player Checks
+	CheckPlayerVehicle(playerid);
 	CheckPlayerInteriors(playerid);
 	CheckPlayerInactivity(playerid);
 	CheckPlayerMasks(playerid);
@@ -134,7 +137,9 @@ timer SetPlayerCrash[6000](playerid)
 
 //Forwards
 forward CheckPlayerInBase(playerid);
+forward LoadPlayerStats(playerid);
 forward LoadPlayerData(playerid);
+forward SavePlayerData(playerid);
 forward RegisterPlayer(playerid);
 forward OnAccountFinish(playerid);
 
@@ -247,6 +252,13 @@ public CheckPlayerInBase(playerid)
 			KickMessage(playerid);
 		}
 	}
+	return 1;
+}
+
+public LoadPlayerStats(playerid)
+{
+	// Crashes
+	LoadPlayerCrashes(playerid);
 	return 1;
 }
 
@@ -386,59 +398,9 @@ public LoadPlayerData(playerid)
 			KickMessage(playerid);
 			return 1;
 		}
-        // Player Faction Stats
-        LoadPlayerFaction(playerid);
 
-		// Player Job & Job Stats
-		LoadPlayerJob(playerid); 
-		LoadPlayerTaxiStats(playerid);
-
-        // Player Bank Stats
-        LoadPlayerCredit(playerid);
-        LoadPlayerSavings(playerid);
-
-		// Player Payday Stats
-		LoadPlayerPayday(playerid);
-
-		// Player VIP status
-		LoadPlayerVIP(playerid);
-
-		// Jail Stats
-		LoadPlayerJailStats(playerid);
-
-		// Licenses
-		LoadPlayerLicenses(playerid);
-
-		// Inventory
-		LoadPlayerRadio(playerid);
-
-		// Weapons & Drugs
-		LoadPlayerWeaponSettings(playerid);
-		AC_LoadPlayerWeapons(playerid);
-		LoadPlayerPackage(playerid);
-		LoadPlayerDrugs(playerid);
+		LoadPlayerStats(playerid);
 		
-		// Car Ownership list
-		CheckPlayerVehicle(playerid);
-		GetPlayerVehicleList(playerid);
-		
-		// Crashes
-		LoadPlayerCrashes(playerid);
-		
-		// Roleplay Experience(EXP)
-		LoadPlayerExperience(playerid);
-		
-		// Mobile
-		LoadPlayerMobile(playerid);
-		LoadPlayerDeath(playerid);
-		
-		//Fish	
-		//LoadPlayerFishes(playerid);
-		
-		// Rest of preload
-		if( PlayerInfo[ playerid ][ pAdmin ] || PlayerInfo[ playerid ][ pHelper ] )
-			LoadAdminConnectionTime(playerid);
-			
 		// Biznis & house & complex keys
 		PlayerInfo[playerid][pBizzKey] 	= INVALID_BIZNIS_ID;
 		PlayerInfo[playerid][pBusiness] = INVALID_BIZNIS_ID;
@@ -721,21 +683,10 @@ stock ShowAdminMessage(playerid)
 	return 1;
 }
 
-stock SavePlayerData(playerid)
+public SavePlayerData(playerid)
 {
     if( !SafeSpawned[playerid] )	
 		return 1;
-	
-	SavePlayerCredit(playerid);
-	SavePlayerExperience(playerid);
-	UpdatePlayerMobile(playerid);
-	AC_SavePlayerWeapons(playerid);
-	//SavePlayerFishes(playerid);
-	
-	#if defined MODULE_ADMIN_CONNECTIONS
-	if( PlayerInfo[ playerid ][ pAdmin ] || PlayerInfo[ playerid ][ pHelper ] )
-		SaveAdminConnectionTime(playerid);
-	#endif
 	
 	mysql_pquery(g_SQL, "START TRANSACTION");
 
@@ -979,6 +930,7 @@ public LoadingPlayerCrashes(playerid)
 	##     ##  #######   #######  ##    ##  ######  
 */
 
+#include <YSI_Coding\y_hooks>
 hook OnPlayerDisconnect(playerid, reason)
 {
 	if( Bit1_Get(gr_LoginChecksOn, playerid ) )

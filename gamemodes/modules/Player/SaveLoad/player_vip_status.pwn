@@ -29,6 +29,12 @@ Public: LoadingPlayerVIP(playerid)
     return 1;
 }
 
+hook LoadPlayerStats(playerid)
+{
+    LoadPlayerVIP(playerid);
+    return 1;
+}
+
 SavePlayerVIP(playerid)
 {
     mysql_fquery_ex(g_SQL,

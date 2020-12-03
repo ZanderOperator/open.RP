@@ -116,7 +116,7 @@ public LoadingVehicleDrugs(vehicleid)
 	return 1;
 }
 
-Public:LoadPlayerDrugs(playerid)
+LoadPlayerDrugs(playerid)
 {
 	mysql_tquery(g_SQL, 
 		va_fquery(g_SQL, "SELECT * FROM player_drugs WHERE player_id = '%d'", PlayerInfo[playerid][pSQLID]), 
@@ -1169,6 +1169,11 @@ CMD:agivedrug(playerid, params[])
 	return 1;
 }
 
+hook LoadPlayerStats(playerid)
+{
+	LoadPlayerDrugs(playerid);
+	return 1;
+}
 
 hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 {

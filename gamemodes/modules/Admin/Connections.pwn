@@ -16,6 +16,9 @@
 */
 stock SaveAdminConnectionTime(playerid)
 {
+	if( !PlayerInfo[ playerid ][ pAdmin ] && !PlayerInfo[ playerid ][ pHelper ] )
+		return 1;
+
 	new Cache:result;
 	
 	result = mysql_query(g_SQL, 
@@ -46,6 +49,9 @@ stock SaveAdminConnectionTime(playerid)
 
 stock LoadAdminConnectionTime(playerid)
 {
+	if( !PlayerInfo[playerid][pTempRank][0] && !PlayerInfo[playerid][pTempRank][1] )
+		return 1;
+
 	mysql_tquery(g_SQL, 
 		va_fquery(g_SQL, 
 			"SELECT * FROM stats_admins WHERE sqlid = '%d' \n\
@@ -101,6 +107,18 @@ Public:OnAdminConnectionTimeExLoad(playerid)
 	}
 	else
 		SendClientMessage(playerid, COLOR_RED, "[ ! ]: Game Admin doesn't exist/didn't spend time on server this month!");
+	return 1;
+}
+
+hook LoadPlayerStats(playerid)
+{
+	LoadAdminConnectionTime(playerid);
+	return 1;
+}
+
+hook SavePlayerData(playerid)
+{
+	SaveAdminConnectionTime(playerid);
 	return 1;
 }
 

@@ -374,7 +374,7 @@ stock BuyPlayerPhone(playerid, listid)
 	return 1;
 }
 
-stock UpdatePlayerMobile(playerid)
+UpdatePlayerMobile(playerid)
 {
 	if(PlayerInfo[playerid][pMobileNumber] != 0)
 	{
@@ -2556,6 +2556,18 @@ stock PlayerHangup(playerid)
 	##     ## ##     ## ##     ## ##   ##  ##    ##
 	##     ##  #######   #######  ##    ##  ######
 */
+
+hook LoadPlayerStats(playerid)
+{
+	LoadPlayerMobile(playerid);
+	return 1;
+}
+
+hook SavePlayerData(playerid)
+{
+	UpdatePlayerMobile(playerid);
+	return 1;
+}
 
 hook OnPlayerConnect(playerid)
 {

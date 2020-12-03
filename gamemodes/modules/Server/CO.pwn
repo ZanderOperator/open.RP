@@ -3668,6 +3668,12 @@ timer ParkPlayerVehicle[5000](playerid, vehicleid)
 	return 1;
 }
 
+hook LoadPlayerStats(playerid)
+{
+	GetPlayerVehicleList(playerid);
+	return 1;
+}
+
 hook OnVehicleDeath(vehicleid, killerid)
 {
 	RemovePlayerFromVehicle(killerid);

@@ -31,6 +31,12 @@ Public: LoadingPlayerSavings(playerid)
     return 1;
 }
 
+hook LoadPlayerStats(playerid)
+{
+    LoadPlayerSavings(playerid);
+    return 1;
+}
+
 SavePlayerSavings(playerid)
 {
     mysql_fquery_ex(g_SQL,

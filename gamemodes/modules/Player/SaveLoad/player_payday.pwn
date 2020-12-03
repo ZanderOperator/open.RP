@@ -31,6 +31,12 @@ Public: LoadingPlayerPayday(playerid)
     return 1;
 }
 
+hook LoadPlayerStats(playerid)
+{
+    LoadPlayerPayday(playerid);
+    return 1;
+}
+
 SavePlayerPayday(playerid)
 {
     mysql_fquery_ex(g_SQL,

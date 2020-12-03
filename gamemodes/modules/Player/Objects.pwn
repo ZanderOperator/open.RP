@@ -964,6 +964,12 @@ public OnPlayerObjectInsert(playerid, slot)
 	##     ##  #######   #######  ##    ## 
 */
 
+hook LoadPlayerStats(playerid)
+{
+	LoadPlayerObjects(playerid);
+	return 1;
+}
+
 hook OnPlayerDeath(playerid, killerid, reason)
 {
 	for(new i = 0; i < MAX_CUSTOMIZED_OBJECTS; i++)

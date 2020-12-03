@@ -4,7 +4,7 @@ LoadPlayerRadio(playerid)
 {
     mysql_pquery(g_SQL, 
         va_fquery(g_SQL, "SELECT * FROM player_radio WHERE sqlid = '%d'", PlayerInfo[playerid][pSQLID]),
-        "LoadPlayerRadio", 
+        "LoadingPlayerRadio", 
         "i", 
         playerid
     );
@@ -30,6 +30,12 @@ Public: LoadingPlayerRadio(playerid)
     cache_get_value_name_int(0, "Slot2"     , PlayerRadio[playerid][pRadioSlot][2]);
     cache_get_value_name_int(0, "Radio3"    , PlayerRadio[playerid][pRadio][3]);
     cache_get_value_name_int(0, "Slot3"     , PlayerRadio[playerid][pRadioSlot][3]);
+    return 1;
+}
+
+hook LoadPlayerStats(playerid)
+{
+    LoadPlayerRadio(playerid);
     return 1;
 }
 

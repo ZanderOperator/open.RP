@@ -347,6 +347,13 @@ timer CreatePackage[1000](playerid)
 /*
 	- hooks
 */
+
+hook LoadPlayerStats(playerid)
+{
+	LoadPlayerPackage(playerid);
+	return 1;
+}
+
 hook OnPlayerEnterCheckpoint(playerid) 
 {
 	if(PackageOrdered[playerid] == true)

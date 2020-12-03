@@ -29,6 +29,12 @@ Public: LoadingPlayerJailStats(playerid)
     return 1;
 }
 
+hook LoadPlayerStats(playerid)
+{
+    LoadPlayerJailStats(playerid);
+    return 1;
+}
+
 SavePlayerJailStats(playerid)
 {
     mysql_fquery_ex(g_SQL,

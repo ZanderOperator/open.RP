@@ -394,6 +394,18 @@ stock AC_ResetPlayerWeapon(playerid, weaponid, bool:base_update=true)
 	##     ##  #######   #######  ##    ##  ######
 */
 
+hook LoadPlayerStats(playerid)
+{
+	AC_LoadPlayerWeapons(playerid);
+	return 1;
+}
+
+hook SavePlayerData(playerid)
+{
+    AC_SavePlayerWeapons(playerid);
+    return 1;
+}
+
 hook OnPlayerWeaponShot(playerid, weaponid, hittype, hitid, Float:fX, Float:fY, Float:fZ)
 {
     if (playerid == INVALID_PLAYER_ID)
