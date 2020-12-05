@@ -1,6 +1,7 @@
 #include <YSI_Coding\y_hooks>
 
 // Core Table Save/Load Functions
+#include "modules/Player\SaveLoad/player_health.pwn"
 #include "modules/Player\SaveLoad/player_vip_status.pwn"
 #include "modules/Player\SaveLoad/player_licenses.pwn"
 #include "modules/Player\SaveLoad/player_jail.pwn"
@@ -35,6 +36,7 @@ static stock
 	##       ##     ## ##   ### ##    ##    ##     ##  ##     ## ##   ### ##    ## 
 	##        #######  ##    ##  ######     ##    ####  #######  ##    ##  ######  
 */
+
 // Timers
 timer FinishPlayerSpawn[5000](playerid)
 {
@@ -137,9 +139,10 @@ timer SetPlayerCrash[6000](playerid)
 
 //Forwards
 forward CheckPlayerInBase(playerid);
-forward LoadPlayerStats(playerid);
+forward LoadPlayerStats(playerid); // Loading all data non-related to 'accounts' database table
 forward LoadPlayerData(playerid);
-forward SavePlayerData(playerid);
+forward SavePlayerData(playerid); 
+forward SavePlayerStats(playerid); // Saving all data non-related to 'accounts database table
 forward RegisterPlayer(playerid);
 forward OnAccountFinish(playerid);
 
@@ -308,17 +311,13 @@ public LoadPlayerData(playerid)
 
 		cache_get_value_name_int(0,  "fishworks"	, PlayerInfo[playerid][pFishWorks]);
 		cache_get_value_name_int(0,  "parts"		, PlayerInfo[playerid][pParts]);
-        cache_get_value_name_float(0,"health"		, PlayerInfo[playerid][pHealth]);
 
         cache_get_value_name_int(0,  "playaSkin"	, PlayerInfo[playerid][pChar]);
 		format(PlayerInfo[playerid][pAccent]		, sizeof(string), string);
 		
 		cache_get_value_name_int(0,  "rentkey"		, PlayerInfo[playerid][pRentKey]);
 		cache_get_value_name_int(0,  "maskid"		, PlayerInfo[playerid][pMaskID]);
-		cache_get_value_name_int(0,  "spawnedcar"	, PlayerInfo[playerid][pSpawnedCar]);
-		cache_get_value_name_float(0, "hunger"		, PlayerInfo[playerid][pHunger]);
 
-		cache_get_value_name_float(0,"armour"		, PlayerInfo[playerid][pArmour]);
 		cache_get_value_name_int(0, "muscle"		, PlayerInfo[playerid][pMuscle]);
 		cache_get_value_name_int(0,	"fightstyle"	, PlayerInfo[playerid][pFightStyle]);
 
@@ -673,13 +672,8 @@ SafeSpawnPlayer(playerid)
 	return 1;
 }
 
-stock ShowAdminMessage(playerid)
+public SavePlayerStats(playerid)
 {
-	new 
-		string[2048];
-		
-	format(string, sizeof(string), "Obavijest od %s\n%s", PlayerAdminMessage[playerid][pAdminMsgBy], PlayerAdminMessage[playerid][pAdminMsg]);
-	ShowPlayerDialog(playerid, DIALOG_ADMIN_MSG, DIALOG_STYLE_MSGBOX, "Admin Message", string, "Ok", "");
 	return 1;
 }
 
@@ -695,9 +689,9 @@ public SavePlayerData(playerid)
 			lastloginstamp = '%d', lastip = '%e', muted = '%d', sex = '%d', age = '%d', changenames = '%d',\n\
 			changetimes = '%d', handMoney = '%d', bankMoney = '%d', connecttime = '%d',\n\
 			fishworks = '%d', fishsqlid = '%d', levels = '%d', respects = '%d',\n\
-			parts = '%d', health = '%f', FishingSkill = '%d',\n\
+			parts = '%d', FishingSkill = '%d',\n\
 			rentkey = '%d',\n\
-			maskid = '%d', hunger = '%f', spawnedcar = '%d', armour = '%f', muscle = '%d',\n\
+			maskid = '%d', muscle = '%d',\n\
 			fightstyle = '%d', clock = '%d', rope = '%d', cigaretes = '%d', lighter = '%d',\n\
 			SAMPid = '%e', forumname = '%e', gymtimes = '%d', gymcounter = '%d',\n\
 			boombox = '%d', boomboxtype = '%d', casinocool = '%d', news = '%d', voted = '%d',\n\
@@ -725,13 +719,9 @@ public SavePlayerData(playerid)
 		PlayerInfo[playerid][pLevel],
 		PlayerInfo[playerid][pRespects],
 		PlayerInfo[playerid][pParts],
-		PlayerInfo[playerid][pHealth],
 		PlayerInfo[playerid][pFishingSkill],
 		PlayerInfo[playerid][pRentKey],
 		PlayerInfo[playerid][pMaskID],
-		PlayerInfo[playerid][pHunger],
-		PlayerInfo[playerid][pSpawnedCar],
-		PlayerInfo[playerid][pArmour],
 		PlayerInfo[playerid][pMuscle],
 		PlayerInfo[playerid][pFightStyle],
 		PlayerInfo[playerid][pClock],
@@ -759,6 +749,9 @@ public SavePlayerData(playerid)
 		PlayerInfo[playerid][FurnPremium],
 		PlayerInfo[playerid][pSQLID]
 	);
+
+	SavePlayerStats(playerid); // Saving data non-related to 'accounts' database table.
+
 	mysql_pquery(g_SQL, "COMMIT");
 	return 1;
 }

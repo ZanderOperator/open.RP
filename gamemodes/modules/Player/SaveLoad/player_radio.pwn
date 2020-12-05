@@ -57,7 +57,7 @@ SavePlayerRadio(playerid)
     return 1;
 }
 
-hook SavePlayerData(playerid)
+hook SavePlayerStats(playerid)
 {
     SavePlayerRadio(playerid);
     return 1;

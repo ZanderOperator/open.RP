@@ -626,7 +626,7 @@ CMD:drug(playerid, params[])
 				ApplyAnimation(playerid,"SMOKING","M_smk_in",3.0,0,0,0,0,0, 1);
 				SetPlayerSpecialAction(playerid,21);
 				
-				PlayerInfo[playerid][pHunger] = 5.0;
+				PlayerHealth[playerid][pHunger] = 5.0;
 			}
 			case DRUG_TYPE_SNORT:
 			{

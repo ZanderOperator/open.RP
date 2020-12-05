@@ -47,7 +47,7 @@ SavePlayerAdminMessage(playerid)
     return 1;
 }
 
-hook SavePlayerData(playerid)
+hook SavePlayerStats(playerid)
 {
     SavePlayerAdminMessage(playerid);
     return 1;
@@ -127,5 +127,15 @@ SendServerMessage(sqlid, reason[])
 		reason, 
 		sqlid
 	);
+	return 1;
+}
+
+ShowAdminMessage(playerid)
+{
+	new 
+		string[2048];
+		
+	format(string, sizeof(string), "Obavijest od %s\n%s", PlayerAdminMessage[playerid][pAdminMsgBy], PlayerAdminMessage[playerid][pAdminMsg]);
+	ShowPlayerDialog(playerid, DIALOG_ADMIN_MSG, DIALOG_STYLE_MSGBOX, "Admin Message", string, "Ok", "");
 	return 1;
 }

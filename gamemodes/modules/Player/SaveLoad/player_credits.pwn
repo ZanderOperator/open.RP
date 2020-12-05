@@ -53,7 +53,7 @@ SavePlayerCredit(playerid)
 	return 1;
 }
 
-hook SavePlayerData(playerid)
+hook SavePlayerStats(playerid)
 {
 	SavePlayerCredit(playerid);
 	return 1;

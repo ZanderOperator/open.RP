@@ -53,7 +53,7 @@ SavePlayerPayday(playerid)
     return 1;
 }
 
-hook SavePlayerData(playerid)
+hook SavePlayerStats(playerid)
 {
     SavePlayerPayday(playerid);
     return 1;
