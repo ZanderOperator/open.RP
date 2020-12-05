@@ -1,7 +1,5 @@
 #include <YSI_Coding\y_hooks>
 
-
-
 /*
 	##     ##    ###    ########   ######
 	##     ##   ## ##   ##     ## ##    ##
@@ -323,7 +321,8 @@ hook ResetPlayerVariables(playerid)
 	return 1;
 }
 
-hook OnGameModeInit() {
+hook OnGameModeInit() 
+{
 	// Vrata Garaze HQ
 	vgate[0] = CreateDynamicObject(19906, 2313.87354, -1342.76282, 26.31350,   0.00000, 0.00000, 90.00000);
 	vgate[1] = CreateDynamicObject(19906, 2313.97339, -1351.76880, 26.31350,   0.00000, 0.00000, 90.00000);

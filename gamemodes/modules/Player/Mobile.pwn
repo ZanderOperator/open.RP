@@ -205,7 +205,7 @@ stock Player_SetMobileOn(playerid, bool:v)
 stock LoadTowerData()
 {
 	mysql_pquery(g_SQL, 
-		va_fquery(g_SQL, "SELECT * FROM signaltowers WHERE id >= 0"), 
+		va_fquery(g_SQL, "SELECT * FROM signaltowers WHERE 1"), 
 		"OnTowerLoaded", 
 		""
 	);
@@ -2556,6 +2556,18 @@ stock PlayerHangup(playerid)
 	##     ## ##     ## ##     ## ##   ##  ##    ##
 	##     ##  #######   #######  ##    ##  ######
 */
+
+hook LoadServerData()
+{
+	LoadTowerData();
+	return 1;
+}
+
+hook OnGameModeInit()
+{
+	PhoneTDVars();
+	return 1;
+}
 
 hook LoadPlayerStats(playerid)
 {

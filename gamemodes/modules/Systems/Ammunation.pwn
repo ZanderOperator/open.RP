@@ -99,10 +99,10 @@ Public:OnAmmuWeaponsLoaded()
     return 1;
 }
 
-stock LoadAmmuData() // Loadanje cijele baze
+stock LoadAmmunation() 
 {
     mysql_pquery(g_SQL, 
-        va_fquery(g_SQL, "SELECT * FROM ammunation_weapons"), 
+        "SELECT * FROM ammunation_weapons WHERE 1", 
         "OnAmmuWeaponsLoaded",
         ""
     );
@@ -176,6 +176,12 @@ static stock PlayerAmmunationBuyTime(playerid, days)
     ##     ## ##     ## ##     ## ##   ##
     ##     ##  #######   #######  ##    ##
 */
+
+hook LoadServerData()
+{
+    LoadAmmunation();
+    return 1;
+}
 
 hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 {

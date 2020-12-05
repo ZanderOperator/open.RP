@@ -928,6 +928,13 @@ Public:SprayingTaggTimer(playerid)
     ##     ##  #######   #######  ##    ##  ######  
 */
 
+hook LoadServerData()
+{
+    LoadGraffits();
+	LoadTags();
+    return 1;
+}
+
 hook OnPlayerDisconnect(playerid, reason)
 {
     if (Bit1_Get(r_GrafCreateStarted, playerid))

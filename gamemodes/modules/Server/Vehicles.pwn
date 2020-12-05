@@ -819,6 +819,12 @@ stock CheckVehicleObjects(vehicleid)
 	return 1;
 }
 
+timer JackerUnfreeze[3000](playerid)
+{
+	TogglePlayerControllable(playerid, true);
+	return 1;
+}
+
 /*
 	##     ##  #######   #######  ##    ##  ######
 	##     ## ##     ## ##     ## ##   ##  ##    ##
@@ -829,9 +835,9 @@ stock CheckVehicleObjects(vehicleid)
 	##   	##  #######   #######  ##    ##  ######
 */
 
-timer JackerUnfreeze[3000](playerid)
+hook LoadServerData()
 {
-	TogglePlayerControllable(playerid, true);
+	LoadServerVehicles();
 	return 1;
 }
 

@@ -466,6 +466,22 @@ stock ReturnDate()
 	return date;
 }
 
+stock ReturnTime()
+{
+	new time[12];
+	new tmphour, tmpmins, tmpsecs;
+	GetServerTime(tmphour, tmpmins, tmpsecs);
+	format(time, 12, "%s%d:%s%d:%s%d",
+		(tmphour >= 10) ? ("") : ("0"),
+		tmphour,
+		(tmpmins >= 10) ? ("") : ("0"), 
+		tmpmins,
+		(tmpsecs >= 10) ? ("") : ("0"), 
+		tmpsecs
+	);
+	return time;
+}
+
 stock IsPlayerUsingVPN(playerid)
 {
 	new 

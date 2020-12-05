@@ -1236,6 +1236,12 @@ timer DestroyGlobalMapIcon[480000]()
     ##     ##  #######   #######  ##    ##  ######
 */
 
+hook LoadServerData()
+{
+    LoadHouses();
+    return 1;
+}
+
 hook OnGameModeInit()
 {
     wooGate[0] = CreateObject(980, 785.585754, -1152.468017, 25.328947, 0.000000, 0.000000, 90.000000, 300.00);

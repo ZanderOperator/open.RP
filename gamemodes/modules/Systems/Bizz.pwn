@@ -234,7 +234,7 @@ stock IsAt247(playerid)
     return value;
 }
 
-stock LoadBizz()
+stock LoadBizzes()
 {
     mysql_pquery(g_SQL, 
         va_fquery(g_SQL, "SELECT * FROM bizzes WHERE 1"), 
@@ -971,6 +971,12 @@ Public:ResetBuySkin(playerid)
     ##     ## ##     ## ##     ## ##   ##  ##    ##
     ##     ##  #######   #######  ##    ##  ######
 */
+
+hook LoadServerData()
+{
+    LoadBizzes();
+    return 1;
+}
 
 hook OnPlayerPickUpDynPickup(playerid, pickupid)
 {

@@ -1,4 +1,5 @@
 // TODO: count how many Objects,TextDraws etc this module uses and write it in header
+// TODO: Great sense of humor :)
 /*
     #### ##    ##  ######  ##       ##     ## ########  ######## 
      ##  ###   ## ##    ## ##       ##     ## ##     ## ##       

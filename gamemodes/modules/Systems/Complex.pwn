@@ -74,7 +74,7 @@ stock DestroyCompInfoTD(playerid)
     return 1;
 }
 
-stock LoadComplex()
+stock LoadComplexes()
 {
     mysql_pquery(g_SQL,
         va_fquery(g_SQL, "SELECT * FROM server_complex WHERE 1"), 
@@ -88,7 +88,7 @@ stock LoadComplexRooms()
 {
     mysql_pquery(g_SQL, 
         va_fquery(g_SQL,"SELECT * FROM server_complex_rooms WHERE 1"), 
-        "OnServerRoomsLoad",
+        "OnComplexRoomsLoad",
         ""
     );
     return 1;
@@ -244,8 +244,8 @@ static stock CreateCompInfoTD(playerid)
     return 1;
 }
 
-forward OnServerRoomsLoad();
-public OnServerRoomsLoad()
+forward OnComplexRoomsLoad();
+public OnComplexRoomsLoad()
 {
     new num_rows = cache_num_rows();
     if (!num_rows) return printf("MySQL Report: No complex rooms exist to load.");
@@ -367,6 +367,13 @@ public OnServerComplexLoad()
     ##     ## ##     ## ##     ## ##   ##  ##    ##
     ##     ##  #######   #######  ##    ##  ######
 */
+
+hook LoadServerData()
+{
+    LoadComplexes();
+    LoadComplexRooms();
+    return 1;
+}
 
 hook OnPlayerPickUpDynPickup(playerid, pickupid)
 {

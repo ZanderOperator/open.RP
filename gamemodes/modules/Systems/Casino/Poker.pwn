@@ -1234,7 +1234,8 @@ PokerRotateActivePlayer(tableid)
 
 Public:InitPokerTables()
 {
-	for(new i = 0; i < MAX_POKERTABLES; i++) {
+	for(new i = 0; i < MAX_POKERTABLES; i++) 
+	{
 		PokerTable[i][pkrSQL] = -1;
 		PokerTable[i][pkrActive] = 0;
 		PokerTable[i][pkrPlaced] = 0;
@@ -2504,6 +2505,12 @@ CMD:poker(playerid, params[])
 	if( !strcmp(pick, "table", true) )
 		return ShowCasinoGamesMenu(playerid, DIALOG_CGAMESSETUPPOKER);
 
+	return 1;
+}
+
+hook LoadServerData()
+{
+	InitPokerTables();
 	return 1;
 }
 
