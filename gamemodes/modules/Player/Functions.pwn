@@ -1186,7 +1186,7 @@ stock static HungerCheck(playerid)
 	new 
 		Float:health;	
 	if( PlayerHealth[playerid][pHunger] < 0.0 ) {
-		if( PlayerInfo[ playerid ][ pMuscle ] > 10 ) {
+		if( PlayerGym[playerid][pMuscle] > 10 ) {
 			PlayerHealth[playerid][pHunger] -= 0.001;
 		} else PlayerHealth[playerid][pHunger] -= 0.006;
 		
@@ -1679,7 +1679,7 @@ stock ShowPlayerStats(playerid, targetid)
     strcat(pDialog,motd, sizeof(pDialog));
 
     format(motd, sizeof(motd),""COL_WHITE"Muscle lvl: [%d] | Warnings: [%d/3] | Vrijeme do place: [%d minuta] | VIP Vozilo: [%d] | Donator Veh Perms: [%d] | Mobile Credits: [%d$]\n",
-		PlayerInfo[targetid][pMuscle],
+		PlayerGym[targetid][pMuscle],
 		PlayerInfo[targetid][pWarns],
 		( 60 - PaydayInfo[targetid][pPayDay] ),
 		PlayerVIP[targetid][pDonatorVehicle],
