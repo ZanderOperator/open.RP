@@ -290,6 +290,12 @@ Public:gps_GetDistance(playerid, gpsid, Float:X, Float:Y, Float:Z)
     ##     ##  #######   #######  ##    ##  ######
 */
 
+hook LoadServerData()
+{
+    LoadGPS();
+    return 1;
+}
+
 hook OnPlayerDisconnect(playerid, reason)
 {
     DisableGPS(playerid);

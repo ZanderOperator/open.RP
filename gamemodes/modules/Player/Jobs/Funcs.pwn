@@ -163,6 +163,12 @@ JobsList() {
 	- hooks
 */	
 
+hook LoadServerData()
+{
+	LoadServerJobs();
+	return 1;
+}
+
 hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 {
 	switch(dialogid) 

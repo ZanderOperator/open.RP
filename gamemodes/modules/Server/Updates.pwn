@@ -78,6 +78,12 @@ stock RewardPlayer(playerid)
 	}
 	return 1;
 }
+
+hook OnGameModeInit()
+{
+	LoadUpdateList();
+	return 1;
+}
 	
 hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 {

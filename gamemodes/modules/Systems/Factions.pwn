@@ -111,7 +111,7 @@ stock DeleteFaction(orgid)
     return 1;
 }
 
-stock LoadServerFactions()
+stock LoadFactions()
 {
     mysql_pquery(g_SQL, 
         va_fquery(g_SQL, "SELECT * FROM server_factions WHERE 1"), 
@@ -739,6 +739,12 @@ public OnFactionCountings(playerid)
     ##     ## ##     ## ##     ## ##   ##  ##    ## 
     ##     ##  #######   #######  ##    ##  ######  
 */
+
+hook LoadServerData()
+{
+    LoadFactions();
+    return 1;
+}
 
 hook OnGameModeInit()
 {

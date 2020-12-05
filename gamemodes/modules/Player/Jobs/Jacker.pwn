@@ -241,7 +241,7 @@ new
 	  \_____|______|_| \_|______|_|  \_\/_/    \_\______|
 */
 /////////////////////////////////////////////////////
-stock LoadGarages()
+stock LoadIlegalGarages()
 {
 	mysql_pquery(g_SQL, 
 		va_fquery(g_SQL, "SELECT * FROM ilegal_garages WHERE 1"), 
@@ -911,6 +911,13 @@ stock static SendPoliceAlertMessage(vehicleid, garage)
 	##     ## ##     ## ##     ## ##   ##  ##    ## 
 	##     ##  #######   #######  ##    ##  ######  
 */
+
+hook LoadServerData()
+{
+	LoadIlegalGarages();
+	return 1;
+}
+
 hook OnGameModeInit()
 {
 	CreateDynamicObject(11387,2526.132,-2425.633,15.899,0.000,0.000,-43.500,-1,-1,-1,300.000,300.000);

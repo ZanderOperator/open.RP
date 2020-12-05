@@ -101,76 +101,49 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 
 CMD:time(playerid, params[])
 {
-    if(PlayerInfo[playerid][pClock] == 1)
+    if(!PlayerInfo[playerid][pClock])
+		SendMessage(playerid,  MESSAGE_TYPE_ERROR, "You don't have a watch!");
+		
+	new mtext[20],year, month,day,
+		timeString[91];
+	getdate(year, month, day);
+	
+	switch(month) 
 	{
-		new mtext[20],year, month,day,
-			timeString[91];
-		getdate(year, month, day);
-		
-		switch(month) {
-			case 1:   mtext = "sij/jan"; 
-			case 2:   mtext = "velj/feb"; 
-			case 3:   mtext = "ozu/mar"; 
-			case 4:   mtext = "tra/apr"; 
-			case 5:   mtext = "svi/maj"; 
-			case 6:   mtext = "lip/jun"; 
-			case 7:   mtext = "srp/jul"; 
-			case 8:   mtext = "kol/aug"; 
-			case 9:   mtext = "ruj/sept"; 
-			case 10:  mtext = "list/okt"; 
-			case 11:  mtext = "stud/nov"; 
-			case 12:  mtext = "pro/dec";
-		}
-		
-	    new hour,minuite,second;
-		gettime(hour,minuite,second);
-		//hour += 1;
-		minuite -= 1;
-		if(hour == 24) hour = 0;
-		
-		if (minuite < 10 	)
-		{
-			if (PlayerJail[playerid][pJailTime] > 0) 
-				format(timeString, sizeof(timeString), "~y~%d %s~n~~g~|~w~%d:0%d~g~|~n~~w~Vrijeme pritvora: %d min", 
-					day, 
-					mtext, 
-					hour,
-					minuite, 
-					PlayerJail[playerid][pJailTime]
-				);
-			else 
-				format(timeString, sizeof(timeString), "~y~%d %s~n~~g~|~w~%d:0%d~g~|", 
-					day, 
-					mtext, 
-					hour,
-					minuite
-				);
-		}
-		else
-		{
-			if (PlayerJail[playerid][pJailTime] > 0) 
-				format(timeString, sizeof(timeString), "~y~%d %s~n~~g~|~w~%d:%d~g~|~n~~w~Vrijeme pritvora: %d min", 
-					day, 
-					mtext, 
-					hour,
-					minuite, 
-					PlayerJail[playerid][pJailTime]
-				);
-			else format(timeString, sizeof(timeString), "~y~%d %s~n~~g~|~w~%d:%d:%d~g~|", 
-				day, 
-				mtext, 
-				hour,
-				minuite
-			);
-		}
-		
-		GameTextForPlayer(playerid, timeString, 5000, 1);
-		format(timeString, sizeof(timeString), "* %s gleda koliko je sati.", GetName(playerid,true));
-		ProxDetector(30.0, playerid, timeString, COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE);
-		if(!IsPlayerInAnyVehicle(playerid))
-			ApplyAnimationEx(playerid,"COP_AMBIENT","Coplook_watch",4.1,0,0,0,0,0,1,0);
-    }
-    else SendClientMessage(playerid,  COLOR_RED, "Nemas sat!");
+		case 1:   mtext = "sij/jan"; 
+		case 2:   mtext = "velj/feb"; 
+		case 3:   mtext = "ozu/mar"; 
+		case 4:   mtext = "tra/apr"; 
+		case 5:   mtext = "svi/maj"; 
+		case 6:   mtext = "lip/jun"; 
+		case 7:   mtext = "srp/jul"; 
+		case 8:   mtext = "kol/aug"; 
+		case 9:   mtext = "ruj/sept"; 
+		case 10:  mtext = "list/okt"; 
+		case 11:  mtext = "stud/nov"; 
+		case 12:  mtext = "pro/dec";
+	}
+
+	if (PlayerJail[playerid][pJailTime] > 0) 
+		format(timeString, sizeof(timeString), "~y~%d %s~n~~g~|~w~%s~g~|~n~~w~Jail Time: %d min", 
+			day, 
+			mtext, 
+			ReturnTime(),
+			PlayerJail[playerid][pJailTime]
+		);
+	else 
+		format(timeString, sizeof(timeString), "~y~%d %s~n~~g~|~w~%s~g~|", 
+			day, 
+			mtext, 
+			ReturnTime()
+		);
+	
+	GameTextForPlayer(playerid, timeString, 5000, 1);
+	format(timeString, sizeof(timeString), "* %s gleda koliko je sati.", GetName(playerid,true));
+	ProxDetector(30.0, playerid, timeString, COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE);
+	if(!IsPlayerInAnyVehicle(playerid))
+		ApplyAnimationEx(playerid,"COP_AMBIENT","Coplook_watch",4.1,0,0,0,0,0,1,0);
+
     return 1;
 }
 

@@ -47,6 +47,7 @@ new
 	##    ##    ##    ##     ## ##    ## ##   ##  ##    ## 
 	 ######     ##     #######   ######  ##    ##  ###### 
 */
+
 stock LoadPickups()
 {
 	mysql_pquery(g_SQL, "SELECT * FROM server_pickups WHERE 1", "OnPickupsLoad");
@@ -95,18 +96,6 @@ public OnPickupsLoad()
 	return 1;
 }
 
-hook OnPlayerPickUpDynPickup(playerid, pickupid)
-{
-	foreach(new b : Pickups)
-	{
-		if( PickupInfo[b][epID] == pickupid ) {
-			GameTextForPlayer(playerid, PickupInfo[b][epEnterDiscription], 3100, 5);
-			break;
-		}
-	}
-	return 1;
-}
-
 //Pickups
 stock static ClearInputsPick(playerid)
 {
@@ -127,6 +116,8 @@ stock static ClearInputsPick(playerid)
 	PickupInfo[pickup][epEntrancey] 		= 0.0;
 	PickupInfo[pickup][epEntrancez] 		= 0.0;
 	NewPickupID[playerid] = 0;
+
+	return 1;
 }
 
 stock static CreateNewPickup(playerid, pickup)
@@ -182,20 +173,44 @@ stock static GetPickupID()
 	##     ##  #######   #######  ##    ##  ######  
 */
 
+hook LoadServerData()
+{
+	LoadPickups();
+	return 1;
+}
+
+hook OnPlayerPickUpDynPickup(playerid, pickupid)
+{
+	foreach(new b : Pickups)
+	{
+		if( PickupInfo[b][epID] == pickupid ) 
+		{
+			GameTextForPlayer(playerid, PickupInfo[b][epEnterDiscription], 3100, 5);
+			break;
+		}
+	}
+	return 1;
+}
+
 hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 {
 	switch( dialogid ) 
 	{
-		case DIALOG_DYN_PEDISC: {
-			if(!response) ClearInputsPick(playerid);
-			if(strlen(inputtext) < 2) return SendClientMessage(playerid, COLOR_WHITE, "Enter discription koje ste unijeli nije valjano! (Premalo znakova)");
+		case DIALOG_DYN_PEDISC: 
+		{
+			if(!response) 
+				return ClearInputsPick(playerid);
+			if(strlen(inputtext) < 2) 
+				return SendClientMessage(playerid, COLOR_WHITE, "Enter discription koje ste unijeli nije valjano! (Premalo znakova)");
 
 			format(PickupInfo[ NewPickupID[playerid] ][ epEnterDiscription ], 128, inputtext);
 			ShowPlayerDialog(playerid, DIALOG_DYN_PDISC, DIALOG_STYLE_INPUT, "PICKUP DESCRIPTION", "Unesi pickup description:", "Input", "Abort");
 			return 1;
 		}
-		case DIALOG_DYN_PDISC: {
-			if(!response) ShowPlayerDialog(playerid, DIALOG_DYN_PEDISC, DIALOG_STYLE_INPUT, "Enter discription", "Unesi enter discription:", "Input", "Abort");
+		case DIALOG_DYN_PDISC: 
+		{
+			if(!response) 
+				return ShowPlayerDialog(playerid, DIALOG_DYN_PEDISC, DIALOG_STYLE_INPUT, "Enter discription", "Unesi enter discription:", "Input", "Abort");
 			if(strlen(inputtext) < 2)
 			{
 				SendClientMessage(playerid, COLOR_WHITE, "Enter discription koje ste unijeli nije valjano! (Premalo znakova)");

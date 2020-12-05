@@ -160,18 +160,18 @@ static stock CreateGarageInfoTD(playerid)
     return 1;
 }
 
-stock LoadServerGarages()
+stock LoadHouseGarages()
 {
     mysql_pquery(g_SQL, 
         va_fquery(g_SQL, "SELECT * FROM server_garages WHERE 1"), 
-        "OnServerGaragesLoad", 
+        "OnHouseGaragesLoad", 
         ""
     );
     return 1;
 }
 
-forward OnServerGaragesLoad();
-public OnServerGaragesLoad()
+forward OnHouseGaragesLoad();
+public OnHouseGaragesLoad()
 {
     new num_rows = cache_num_rows();
     if (!num_rows) return printf("MySQL Report: No garages exist to load.");
@@ -215,6 +215,12 @@ timer HideGaragesTDs[3000](playerid)
     ##     ## ##     ## ##     ## ##   ##  ##    ##
     ##     ##  #######   #######  ##    ##  ######
 */
+
+hook LoadServerData()
+{
+    LoadHouseGarages();
+    return 1;
+}
 
 hook OnGameModeInit()
 {

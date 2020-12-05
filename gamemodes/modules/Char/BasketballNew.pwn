@@ -219,6 +219,12 @@ task BallOutTask[1000]()
 	return 1;
 }
 
+hook OnGameModeInit()
+{
+	CreateBaskets();
+	return 1;
+}
+
 hook OnObjectMoved(objectid)
 {
 	new found = 0, basketid;

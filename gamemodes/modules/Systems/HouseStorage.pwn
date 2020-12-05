@@ -183,7 +183,7 @@ GetRackLimit(playerid)
     return (PlayerVIP[playerid][pDonateRank] + 1);
 }
 
-stock LoadHStorage()
+stock LoadHouseStorages()
 {
     mysql_pquery(g_SQL, "SELECT * FROM house_storage WHERE 1", "HouseStorage_Load", "");
     return 1;
@@ -381,6 +381,12 @@ Public:OnRackCreated(storageid, playerid)
     ##     ## ##     ## ##     ## ##   ##  ##    ##
     ##     ##  #######   #######  ##    ##  ######
 */
+
+hook LoadServerData()
+{
+    LoadHouseStorages();
+    return 1;
+}
 
 hook OnPlayerConnect(playerid, reason)
 {

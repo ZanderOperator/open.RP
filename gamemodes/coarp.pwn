@@ -146,6 +146,7 @@
 #define SCRIPT_VERSION							"CoA RP v18.6.0.-"#GIT_REV
 #define DEV_NAME   								"Woo-Logan"
 
+// The rest of the defines
 #include "modules/Preincludes/Defines.inc"
 
 // Main Database Connection Handler
@@ -173,7 +174,7 @@ new
 	Iterator:P_PACKAGES[MAX_PLAYERS]<MAX_PLAYER_PACKAGES>,
 	Iterator:P_Weapons[MAX_PLAYERS]<MAX_PLAYER_WEAPON_SLOTS>;
 
-// Enumerators
+// Global Enumerators
 #include "modules/Preincludes/Enumerators.inc"
 
 /*
@@ -1187,7 +1188,14 @@ main()
 	AntiDeAMX();
 }
 
-hook OnGameModeInit()
+// Database Load & File Load Function used for hooking in OnGameModeInit callback
+forward LoadServerData();
+public LoadServerData() 
+{
+	return 1;
+}
+
+public OnGameModeInit()
 {
 	SendRconCommand("password 6325234hbbzfg12312313gz313"); // Server Lock while everything loads
 
@@ -1260,6 +1268,9 @@ hook OnGameModeInit()
 	ShowPlayerMarkers(1);
 	ManualVehicleEngineAndLights();
 	SetMaxConnections(3, e_FLOOD_ACTION_GHOST);
+	SendRconCommand("cookielogging 0");
+	SendRconCommand("messageholelimit 9000");
+	SendRconCommand("ackslimit 11000");
 	print("Report: GameMode Settings Loaded.");
 
 
@@ -1277,45 +1288,16 @@ hook OnGameModeInit()
 	// Auto Unlock Settings
 	GMX = 2;
 	cseconds = SERVER_UNLOCK_TIME; 
+
+	// Global Loads - Database Load Functions
 	print("Report: MySQL Loading Stage Initialized.");
+	LoadServerData();
+	print("Report: MySQL Loading Stage Finished.");
 
-	// Global Loads
-	LoadGPS();
-	LoadHStorage();
-	LoadHouses();
-	LoadBizz();
-	LoadComplex();
-	LoadComplexRooms();
-	LoadServerVehicles();
-	LoadServerFactions();
-	LoadPickups();
-	LoadAmmuData();
-	LoadTowerData();
-	LoadGraffits();
-	LoadTags();
-	LoadGarages();
-    LoadServerGarages();
-	InitPokerTables();
-	CreateBaskets(); // Update - BasketballNew.pwn
-	PhoneTDVars();
-	LoadServerJobs();
-	LoadUpdateList();
-	
-	//Initilazing
-	//InitRuletTables();
-	//InitBlackJackTables();
-
-	// NPCs
-	//InitRuletWorkers();
-	//InitBlackJackDealers();
-
-	SendRconCommand("cookielogging 0");
-	SendRconCommand("messageholelimit 9000");
-	SendRconCommand("ackslimit 11000");
-
-	new tmphour, tmpmins, tmpsecs;
-	GetServerTime(tmphour, tmpmins, tmpsecs);
-	SetWorldTime(tmphour);
+	printf("Report: GameMode Time Set on %s. %s Loaded Sucessfully!", 
+		ReturnTime(),
+		SERVER_NAME
+	);
 	return 1;
 }
 
@@ -1643,15 +1625,19 @@ hook OnPlayerDisconnect(playerid, reason)
 
 public OnPlayerRequestClass(playerid, classid)
 {
-	if(GMX == 1) {
+	if(IsPlayerLogged(playerid) || SafeSpawned[playerid])
+		return 1;
+
+	if(GMX == 1) 
+	{
 		SendClientMessage(playerid,COLOR_RED, "ERROR: Server is currently in data storing pre-restart process. You have been automatically kicked.");
 		KickMessage(playerid);
 		return 1;
 	}
-	ResetPlayerVariables(playerid);
 	if (!IsPlayerLogged(playerid) || IsPlayerConnected(playerid))
 	{
 		//Resets
+		ResetPlayerVariables(playerid);
 
 		if( IsPlayerNPC(playerid) ) {
 			SpawnPlayer(playerid);
