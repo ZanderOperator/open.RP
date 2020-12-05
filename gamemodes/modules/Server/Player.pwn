@@ -80,7 +80,7 @@ stock AC_SpawnPlayer(playerid)
 stock AC_SetPlayerHealth(playerid, Float:health, bool:admin_duty = false)
 {
 	if(!admin_duty)
-		PlayerInfo[playerid][pHealth] = health;
+		PlayerHealth[playerid][pHealth] = health;
 	return SetPlayerHealth(playerid, health);
 }
 #if defined _ALS_SetPlayerHealth
@@ -93,7 +93,7 @@ stock AC_SetPlayerHealth(playerid, Float:health, bool:admin_duty = false)
 stock AC_SetPlayerArmour(playerid, Float:armour, bool:admin_duty = false)
 {
 	if(!admin_duty)
-		PlayerInfo[playerid][pArmour] = armour;
+		PlayerHealth[playerid][pArmour] = armour;
 	return SetPlayerArmour(playerid, armour);
 }
 #if defined _ALS_SetPlayerArmour

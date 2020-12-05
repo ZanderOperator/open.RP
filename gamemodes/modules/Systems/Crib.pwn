@@ -2346,9 +2346,9 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 
                     SetPlayerSpecialAction(playerid, SPECIAL_ACTION_DRINK_BEER);
 
-                    if (PlayerInfo[playerid][pHunger] < 4.8)
+                    if (PlayerHealth[playerid][pHunger] < 4.8)
                     {
-                        PlayerInfo[playerid][pHunger] += 0.2;
+                        PlayerHealth[playerid][pHunger] += 0.2;
                         SetPlayerDrunkLevel(playerid, drunklevel + 100);
 
                         if (drunklevel > 2000)
@@ -2356,7 +2356,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                     }
                     else
                     {
-                        PlayerInfo[playerid][pHunger] = 5.0;
+                        PlayerHealth[playerid][pHunger] = 5.0;
                         SetPlayerDrunkLevel(playerid, drunklevel + 100);
 
                         if (drunklevel > 2000)
@@ -2373,10 +2373,10 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                     format(string, sizeof(string), "* %s naginje tetrapak te pocinje piti.", GetName(playerid, true));
                     ProxDetector(8.0, playerid, string, COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE);
 
-                    if (PlayerInfo[playerid][pHunger] < 4.8)
-                        PlayerInfo[playerid][pHunger] += 0.2;
+                    if (PlayerHealth[playerid][pHunger] < 4.8)
+                        PlayerHealth[playerid][pHunger] += 0.2;
                     else
-                        PlayerInfo[playerid][pHunger] = 5.0;
+                        PlayerHealth[playerid][pHunger] = 5.0;
                 }
                 case 2:
                 {
@@ -2389,9 +2389,9 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                     format(string, sizeof(string), "* %s naginje flasu te pocinje piti.", GetName(playerid, true));
                     ProxDetector(8.0, playerid, string, COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE);
 
-                    if (PlayerInfo[playerid][pHunger] < 4.8)
+                    if (PlayerHealth[playerid][pHunger] < 4.8)
                     {
-                        PlayerInfo[playerid][pHunger] += 0.2;
+                        PlayerHealth[playerid][pHunger] += 0.2;
                         SetPlayerDrunkLevel(playerid, drunklevel + 200);
 
                         if (drunklevel > 2000)
@@ -2399,7 +2399,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                     }
                     else
                     {
-                        PlayerInfo[playerid][pHunger] = 5.0;
+                        PlayerHealth[playerid][pHunger] = 5.0;
                         SetPlayerDrunkLevel(playerid, drunklevel + 200);
 
                         if (drunklevel > 2000)
@@ -2413,10 +2413,10 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                     ProxDetector(8.0, playerid, string, COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE);
                     ApplyAnimationEx(playerid, "FOOD", "EAT_Burger", 3.0, 0, 0, 0, 0, 0, 1, 0);
 
-                    if (PlayerInfo[playerid][pHunger] < 4.6)
-                        PlayerInfo[playerid][pHunger] += 0.4;
+                    if (PlayerHealth[playerid][pHunger] < 4.6)
+                        PlayerHealth[playerid][pHunger] += 0.4;
                     else
-                        PlayerInfo[playerid][pHunger] = 5.0;
+                        PlayerHealth[playerid][pHunger] = 5.0;
                 }
             }
             return 1;

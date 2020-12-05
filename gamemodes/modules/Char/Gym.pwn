@@ -366,7 +366,7 @@ stock static RemovePlayerFromGym(playerid, mode = -1)
 {
 	if( playerid == INVALID_PLAYER_ID || mode == -1 ) return 0;
 	
-	if( PlayerInfo[ playerid ][ pHunger ] >= 1.5 ) PlayerInfo[ playerid ][ pHunger ] -= 1.5;
+	if( PlayerHealth[playerid][pHunger] >= 1.5 ) PlayerHealth[playerid][pHunger] -= 1.5;
 	if( IsValidPlayerProgressBar(playerid, GymInfo[ playerid ][ gmBar ]) ) {
 		DestroyPlayerProgressBar(playerid, GymInfo[ playerid ][ gmBar ]);
 		GymInfo[ playerid ][ gmBar ] = INVALID_PLAYER_BAR_ID;
@@ -913,7 +913,7 @@ hook OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
 			if( PlayerInfo[playerid][pGymTimes] > 0 ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Treba proci 3 barem Paydaya od zadnjeg treninga da bi ponovno trenirali!");
 			if( !GetPlayerGymMachine(playerid) ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ispred sprava u teretani!");
 			if( !GetPlayerGymMachineStatus(playerid) ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Sprava je zauzeta!");
-			//if( PlayerInfo[ playerid ][ pHunger ] < 1.5 ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne mozete gladni vjezbati (minimalno 1.5 level)!");
+			//if( PlayerHealth[playerid][pHunger] < 1.5 ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne mozete gladni vjezbati (minimalno 1.5 level)!");
 			InitPlayerGym(playerid, Bit4_Get( r_PlayerGymMachine, playerid ));
 		}
 	}

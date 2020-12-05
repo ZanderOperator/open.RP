@@ -50,8 +50,6 @@ enum E_PLAYER_DATA
 	pComplexKey,
 	pComplexRoomKey,
 	pRentKey,
-	Float:pHealth,
-	Float:pArmour,
 	pCrashId,
 	pCrashVW,
 	pCrashInt,
@@ -84,7 +82,6 @@ enum E_PLAYER_DATA
 	pMuscle,
 	pGymTimes,
 	pGymCounter,
-	Float:pHunger,
 	pFightStyle,
 	Float:pDeath[3],
 	pDeathInt,
@@ -257,6 +254,14 @@ enum E_P_ADMIN_MSG
 	bool:pAdmMsgConfirm,
 }
 new PlayerAdminMessage[ MAX_PLAYERS ][ E_P_ADMIN_MSG ];
+
+enum E_PLAYER_HEALTH
+{
+	Float:pHealth,
+	Float:pArmour,
+	Float:pHunger
+}
+new PlayerHealth[ MAX_PLAYERS ][ E_PLAYER_HEALTH ];
 
 enum E_GARAGE_DATA {
 	gSQLID,

@@ -5467,7 +5467,7 @@ CMD:return(playerid, params[])
 	SendClientMessage(playerid, COLOR_RED, "[ ! ] Uspjesno ste vratili oruzja i objekte koje ste imali.");
 	SetPlayerObjects(playerid);
 	AC_SetPlayerWeapons(playerid);
-	SetPlayerArmour(playerid, PlayerInfo[playerid][pArmour]);
+	SetPlayerArmour(playerid, PlayerHealth[playerid][pArmour]);
 	SetPlayerSkin(playerid, oldskin[playerid]);
 	Bit1_Set( a_PlayerReconed, playerid, false );
 	return 1;
@@ -5492,8 +5492,8 @@ CMD:aon(playerid, params[])
 	else 
 	{
 	    SetPlayerColor(playerid, COLOR_PLAYER);
-		SetPlayerHealth(playerid, PlayerInfo[playerid][pHealth]);
-		SetPlayerArmour(playerid, PlayerInfo[playerid][pArmour]);
+		SetPlayerHealth(playerid, PlayerHealth[playerid][pHealth]);
+		SetPlayerArmour(playerid, PlayerHealth[playerid][pArmour]);
 		Bit1_Set(a_AdminOnDuty, playerid, false);
 
 		SendClientMessage(playerid, -1, "Vise niste na admin duznosti!");

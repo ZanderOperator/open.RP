@@ -893,8 +893,6 @@ ResetPlayerVariables(playerid)
 	PlayerInfo[playerid][pRaceCreator]		= false;
 	
 	//Floats
-	PlayerInfo[playerid][pHealth]			= 0.0;
-	PlayerInfo[playerid][pArmour]			= 0.0;
 	PlayerInfo[playerid][pCrashPos][0]		= 0.0;
 	PlayerInfo[playerid][pCrashPos][1]		= 0.0;
 	PlayerInfo[playerid][pCrashPos][2]		= 0.0;
@@ -913,7 +911,6 @@ ResetPlayerVariables(playerid)
 	PlayerInfo[playerid][pMarker5][0]		= 0.0;
 	PlayerInfo[playerid][pMarker5][1]		= 0.0;
 	PlayerInfo[playerid][pMarker5][2]		= 0.0;
-	PlayerInfo[playerid][pHunger]			= 0.0;
 	PlayerTrunkPos[playerid][0] 			= 0.0;
 	PlayerTrunkPos[playerid][1] 			= 0.0;
 	PlayerTrunkPos[playerid][2] 			= 0.0;
@@ -1525,7 +1522,7 @@ hook OnPlayerDisconnect(playerid, reason)
 	RemovePlayerFromVehicle(playerid);
 	new Float:armour;
  	GetPlayerArmour(playerid, armour);
-	PlayerInfo[playerid][pArmour] 	= armour;
+	PlayerHealth[playerid][pArmour] 	= armour;
 
 	new
 		szString[ 73 ];
@@ -1749,7 +1746,7 @@ hook OnPlayerSpawn(playerid)
     SetPlayerSkillLevel(playerid, WEAPONSKILL_SAWNOFF_SHOTGUN,  1);
     AC_SetPlayerMoney(playerid, PlayerInfo[playerid][pMoney]);
 
-   	SetPlayerArmour(playerid, PlayerInfo[playerid][pArmour]);
+   	SetPlayerArmour(playerid, PlayerHealth[playerid][pArmour]);
 
 	if(PlayerVIP[playerid][pDonateRank] != 0)
 		SetPlayerHealth(playerid, 99.0);

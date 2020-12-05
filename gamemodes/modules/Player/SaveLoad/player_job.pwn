@@ -46,7 +46,7 @@ SavePlayerJob(playerid)
     return 1;
 }
 
-hook SavePlayerData(playerid)
+hook SavePlayerStats(playerid)
 {
     SavePlayerJob(playerid);
     return 1;

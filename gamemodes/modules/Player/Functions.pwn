@@ -1185,21 +1185,21 @@ stock static HungerCheck(playerid)
 		
 	new 
 		Float:health;	
-	if( PlayerInfo[ playerid ][ pHunger ] < 0.0 ) {
+	if( PlayerHealth[playerid][pHunger] < 0.0 ) {
 		if( PlayerInfo[ playerid ][ pMuscle ] > 10 ) {
-			PlayerInfo[playerid][pHunger] -= 0.001;
-		} else PlayerInfo[playerid][pHunger] -= 0.006;
+			PlayerHealth[playerid][pHunger] -= 0.001;
+		} else PlayerHealth[playerid][pHunger] -= 0.006;
 		
-		if( PlayerInfo[ playerid ][ pHunger ] < -5.0 ) 
-			PlayerInfo[ playerid ][ pHunger ] = -5.0;
+		if( PlayerHealth[playerid][pHunger] < -5.0 ) 
+			PlayerHealth[playerid][pHunger] = -5.0;
 	}
-	else PlayerInfo[ playerid ][ pHunger ] -= 0.002;
+	else PlayerHealth[playerid][pHunger] -= 0.002;
 
 	GetPlayerHealth(playerid, health);
 	if(health < 100.0)
-		SetPlayerHealth(playerid, health + PlayerInfo[playerid][pHunger]);
-	else if(PlayerInfo[playerid][pHunger] < 0.0)
-		SetPlayerHealth(playerid, health + PlayerInfo[playerid][pHunger]);
+		SetPlayerHealth(playerid, health + PlayerHealth[playerid][pHunger]);
+	else if(PlayerHealth[playerid][pHunger] < 0.0)
+		SetPlayerHealth(playerid, health + PlayerHealth[playerid][pHunger]);
 	return 1;
 }
 
@@ -1647,7 +1647,7 @@ stock ShowPlayerStats(playerid, targetid)
 		ReturnPlayerFactionName(targetid),
 		ReturnPlayerRankName(targetid),
 		PlayerFaction[targetid][pRank],
-		PlayerInfo[targetid][pHunger]
+		PlayerHealth[targetid][pHunger]
 	);
 	strcat(pDialog,motd, sizeof(pDialog));
 	

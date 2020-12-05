@@ -2181,9 +2181,9 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                 case 0:
                 {
                     if (AC_GetPlayerMoney(playerid) < 5) return SendClientMessage(playerid, COLOR_RED, "Nemas 5$!");
-                    if (PlayerInfo[playerid][pHunger] < 3.5)
-                        PlayerInfo[playerid][pHunger] += 1.5;
-                    else PlayerInfo[playerid][pHunger] = 5.0;
+                    if (PlayerHealth[playerid][pHunger] < 3.5)
+                        PlayerHealth[playerid][pHunger] += 1.5;
+                    else PlayerHealth[playerid][pHunger] = 5.0;
 
                     PlayerToBusinessMoney(playerid, bizz, 5); // Novac ide u blagajnu ali se oporezuje
                     format(string, sizeof(string), "* %s jede topli sendvic.", GetName(playerid, true));
@@ -2192,9 +2192,9 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                 case 1:
                 {
                     if (AC_GetPlayerMoney(playerid) < 4) return SendClientMessage(playerid, COLOR_RED, "Nemas 4$!");
-                    if (PlayerInfo[playerid][pHunger] < 3.0)
-                        PlayerInfo[playerid][pHunger] += 2.0;
-                    else PlayerInfo[playerid][pHunger] = 5.0;
+                    if (PlayerHealth[playerid][pHunger] < 3.0)
+                        PlayerHealth[playerid][pHunger] += 2.0;
+                    else PlayerHealth[playerid][pHunger] = 5.0;
 
                     PlayerToBusinessMoney(playerid, bizz, 4); // Novac ide u blagajnu ali se oporezuje
                     format(string, sizeof(string), "* %s jede cevape.", GetName(playerid, true));
@@ -2203,9 +2203,9 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                 case 2:
                 {
                     if (AC_GetPlayerMoney(playerid) < 4) return SendClientMessage(playerid, COLOR_RED, "Nemas 4$!");
-                    if (PlayerInfo[playerid][pHunger] < 3.0)
-                        PlayerInfo[playerid][pHunger] += 2.0;
-                    else PlayerInfo[playerid][pHunger] = 5.0;
+                    if (PlayerHealth[playerid][pHunger] < 3.0)
+                        PlayerHealth[playerid][pHunger] += 2.0;
+                    else PlayerHealth[playerid][pHunger] = 5.0;
 
                     PlayerToBusinessMoney(playerid, bizz, 4); // Novac ide u blagajnu ali se oporezuje
                     format(string, sizeof(string), "* %s jede filete.", GetName(playerid, true));
@@ -2214,9 +2214,9 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                 case 3:
                 {
                     if (AC_GetPlayerMoney(playerid) < 2) return SendClientMessage(playerid, COLOR_RED, "Nemas 2$!");
-                    if (PlayerInfo[playerid][pHunger] < 4.2)
-                        PlayerInfo[playerid][pHunger] += 0.8;
-                    else PlayerInfo[playerid][pHunger] = 5.0;
+                    if (PlayerHealth[playerid][pHunger] < 4.2)
+                        PlayerHealth[playerid][pHunger] += 0.8;
+                    else PlayerHealth[playerid][pHunger] = 5.0;
 
                     PlayerToBusinessMoney(playerid, bizz, 2); // Novac ide u blagajnu ali se oporezuje
                     format(string, sizeof(string), "* %s jede vocnu salatu.", GetName(playerid, true));
@@ -2225,9 +2225,9 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                 case 4:
                 {
                     if (AC_GetPlayerMoney(playerid) < 4) return SendClientMessage(playerid, COLOR_RED, "Nemas 4$!");
-                    if (PlayerInfo[playerid][pHunger] < 3.0)
-                        PlayerInfo[playerid][pHunger] += 2.0;
-                    else PlayerInfo[playerid][pHunger] = 5.0;
+                    if (PlayerHealth[playerid][pHunger] < 3.0)
+                        PlayerHealth[playerid][pHunger] += 2.0;
+                    else PlayerHealth[playerid][pHunger] = 5.0;
 
                     PlayerToBusinessMoney(playerid, bizz, 4); // Novac ide u blagajnu ali se oporezuje
                     format(string, sizeof(string), "* %s jede kebab.", GetName(playerid, true));
@@ -2237,9 +2237,9 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                 case 5:
                 {
                     if (AC_GetPlayerMoney(playerid) < 3) return SendClientMessage(playerid, COLOR_RED, "Nemas 3$!");
-                    if (PlayerInfo[playerid][pHunger] < 4.8)
-                        PlayerInfo[playerid][pHunger] += 0.2;
-                    else PlayerInfo[playerid][pHunger] = 5.0;
+                    if (PlayerHealth[playerid][pHunger] < 4.8)
+                        PlayerHealth[playerid][pHunger] += 0.2;
+                    else PlayerHealth[playerid][pHunger] = 5.0;
 
                     PlayerToBusinessMoney(playerid, bizz, 3); // Novac ide u blagajnu ali se oporezuje
                     format(string, sizeof(string), "* %s pije sprite.", GetName(playerid, true));
@@ -2249,9 +2249,9 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                 case 6:
                 {
                     if (AC_GetPlayerMoney(playerid) < 1) return SendClientMessage(playerid, COLOR_RED, "Nemas 1$!");
-                    if (PlayerInfo[playerid][pHunger] < 4.8)
-                        PlayerInfo[playerid][pHunger] += 0.2;
-                    else PlayerInfo[playerid][pHunger] = 5.0;
+                    if (PlayerHealth[playerid][pHunger] < 4.8)
+                        PlayerHealth[playerid][pHunger] += 0.2;
+                    else PlayerHealth[playerid][pHunger] = 5.0;
 
                     PlayerToBusinessMoney(playerid, bizz, 1); // Novac ide u blagajnu ali se oporezuje
                     format(string, sizeof(string), "* %s pije vodu.", GetName(playerid, true));
@@ -2275,10 +2275,10 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                 case 0:
                 {
                     if (AC_GetPlayerMoney(playerid) < 3) return SendClientMessage(playerid, COLOR_RED, "Nemas 3$!");
-                    if (PlayerInfo[playerid][pHunger] < 3.5)
-                        PlayerInfo[playerid][pHunger] += 1.5;
+                    if (PlayerHealth[playerid][pHunger] < 3.5)
+                        PlayerHealth[playerid][pHunger] += 1.5;
                     else
-                        PlayerInfo[playerid][pHunger] = 5.0;
+                        PlayerHealth[playerid][pHunger] = 5.0;
 
                     PlayerToBusinessMoney(playerid, bizz, 3); // Novac ide u blagajnu ali se oporezuje
                     format(string, sizeof(string), "* %s jede pizzetu.", GetName(playerid, true));
@@ -2287,10 +2287,10 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                 case 1:
                 {
                     if (AC_GetPlayerMoney(playerid) < 6) return SendClientMessage(playerid, COLOR_RED, "Nemas 6$!");
-                    if (PlayerInfo[playerid][pHunger] < 3.0)
-                        PlayerInfo[playerid][pHunger] += 2.0;
+                    if (PlayerHealth[playerid][pHunger] < 3.0)
+                        PlayerHealth[playerid][pHunger] += 2.0;
                     else
-                        PlayerInfo[playerid][pHunger] = 5.0;
+                        PlayerHealth[playerid][pHunger] = 5.0;
 
                     PlayerToBusinessMoney(playerid, bizz, 6); // Novac ide u blagajnu ali se oporezuje
                     format(string, sizeof(string), "* %s jede veliku pizzu.", GetName(playerid, true));
@@ -2299,11 +2299,11 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                 case 2:
                 {
                     if (AC_GetPlayerMoney(playerid) < 5) return SendClientMessage(playerid, COLOR_RED, "Nemas 5$!");
-                    if (PlayerInfo[playerid][pHunger] < 3.5) {
-                        PlayerInfo[playerid][pHunger] += 1.5;
+                    if (PlayerHealth[playerid][pHunger] < 3.5) {
+                        PlayerHealth[playerid][pHunger] += 1.5;
                     }
                     else
-                        PlayerInfo[playerid][pHunger] = 5.0;
+                        PlayerHealth[playerid][pHunger] = 5.0;
 
                     PlayerToBusinessMoney(playerid, bizz, 5); // Novac ide u blagajnu ali se oporezuje
                     format(string, sizeof(string), "* %s jede topli sendvic.", GetName(playerid, true));
@@ -2312,10 +2312,10 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                 case 3:
                 {
                     if (AC_GetPlayerMoney(playerid) < 2) return SendClientMessage(playerid, COLOR_RED, "Nemas 2$!");
-                    if (PlayerInfo[playerid][pHunger] < 4.5)
-                        PlayerInfo[playerid][pHunger] += 0.5;
+                    if (PlayerHealth[playerid][pHunger] < 4.5)
+                        PlayerHealth[playerid][pHunger] += 0.5;
                     else
-                        PlayerInfo[playerid][pHunger] = 5.0;
+                        PlayerHealth[playerid][pHunger] = 5.0;
 
                     PlayerToBusinessMoney(playerid, bizz, 2); // Novac ide u blagajnu ali se oporezuje
                     format(string, sizeof(string), "* %s jede salatu.", GetName(playerid, true));
@@ -2324,10 +2324,10 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                 case 4:
                 {
                     if (AC_GetPlayerMoney(playerid) < 10) return SendClientMessage(playerid, COLOR_RED, "Nemas 10$!");
-                    if (PlayerInfo[playerid][pHunger] < 1.5)
-                        PlayerInfo[playerid][pHunger] += 3.5;
+                    if (PlayerHealth[playerid][pHunger] < 1.5)
+                        PlayerHealth[playerid][pHunger] += 3.5;
                     else
-                        PlayerInfo[playerid][pHunger] = 5.0;
+                        PlayerHealth[playerid][pHunger] = 5.0;
 
                     PlayerToBusinessMoney(playerid, bizz, 10); // Novac ide u blagajnu ali se oporezuje
                     format(string, sizeof(string), "* %s jede Jumbo Pizzu.", GetName(playerid, true));
@@ -2336,10 +2336,10 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                 case 5:
                 {
                     if (AC_GetPlayerMoney(playerid) < 3) return SendClientMessage(playerid, COLOR_RED, "Nemas 3$!");
-                    if (PlayerInfo[playerid][pHunger] < 4.8)
-                        PlayerInfo[playerid][pHunger] += 0.2;
+                    if (PlayerHealth[playerid][pHunger] < 4.8)
+                        PlayerHealth[playerid][pHunger] += 0.2;
                     else
-                        PlayerInfo[playerid][pHunger] = 5.0;
+                        PlayerHealth[playerid][pHunger] = 5.0;
 
                     PlayerToBusinessMoney(playerid, bizz, 3); // Novac ide u blagajnu ali se oporezuje
                     format(string, sizeof(string), "* %s pije Sprite.", GetName(playerid, true));
@@ -2349,10 +2349,10 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                 case 6:
                 {
                     if (AC_GetPlayerMoney(playerid) < 1) return SendClientMessage(playerid, COLOR_RED, "Nemas 1$!");
-                    if (PlayerInfo[playerid][pHunger] < 4.8)
-                        PlayerInfo[playerid][pHunger] += 0.2;
+                    if (PlayerHealth[playerid][pHunger] < 4.8)
+                        PlayerHealth[playerid][pHunger] += 0.2;
                     else
-                        PlayerInfo[playerid][pHunger] = 5.0;
+                        PlayerHealth[playerid][pHunger] = 5.0;
 
                     PlayerToBusinessMoney(playerid, bizz, 1); // Novac ide u blagajnu ali se oporezuje
                     format(string, sizeof(string), "* %s pije vodu.", GetName(playerid, true));
@@ -2374,10 +2374,10 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                 case 0:
                 {
                     if (AC_GetPlayerMoney(playerid) < 6) return SendClientMessage(playerid, COLOR_RED, "Nemas 6$!");
-                    if (PlayerInfo[playerid][pHunger] < 3.5)
-                        PlayerInfo[playerid][pHunger] += 1.5;
+                    if (PlayerHealth[playerid][pHunger] < 3.5)
+                        PlayerHealth[playerid][pHunger] += 1.5;
                     else
-                        PlayerInfo[playerid][pHunger] = 5.0;
+                        PlayerHealth[playerid][pHunger] = 5.0;
 
                     format(string, sizeof(string), "* %s jede Big Mac.", GetName(playerid, true));
                     ProxDetector(8.0, playerid, string, COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE);
@@ -2390,10 +2390,10 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                 case 1:
                 {
                     if (AC_GetPlayerMoney(playerid) < 8) return SendClientMessage(playerid, COLOR_RED, "Nemas 8$!");
-                    if (PlayerInfo[playerid][pHunger] < 3.2)
-                        PlayerInfo[playerid][pHunger] += 1.8;
+                    if (PlayerHealth[playerid][pHunger] < 3.2)
+                        PlayerHealth[playerid][pHunger] += 1.8;
                     else
-                        PlayerInfo[playerid][pHunger] = 5.0;
+                        PlayerHealth[playerid][pHunger] = 5.0;
 
                     format(string, sizeof(string), "* %s jede Burger Menu.", GetName(playerid, true));
                     ProxDetector(8.0, playerid, string, COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE);
@@ -2406,10 +2406,10 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                 case 2:
                 {
                     if (AC_GetPlayerMoney(playerid) < 4) return SendClientMessage(playerid, COLOR_RED, "Nemas 4$!");
-                    if (PlayerInfo[playerid][pHunger] < 4.0)
-                        PlayerInfo[playerid][pHunger] += 1.0;
+                    if (PlayerHealth[playerid][pHunger] < 4.0)
+                        PlayerHealth[playerid][pHunger] += 1.0;
                     else
-                        PlayerInfo[playerid][pHunger] = 5.0;
+                        PlayerHealth[playerid][pHunger] = 5.0;
 
                     format(string, sizeof(string), "* %s jede tost.", GetName(playerid, true));
                     ProxDetector(8.0, playerid, string, COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE);
@@ -2422,10 +2422,10 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                 case 3:
                 {
                     if (AC_GetPlayerMoney(playerid) < 2) return SendClientMessage(playerid, COLOR_RED, "Nemas 2$!");
-                    if (PlayerInfo[playerid][pHunger] < 4.2)
-                        PlayerInfo[playerid][pHunger] += 0.8;
+                    if (PlayerHealth[playerid][pHunger] < 4.2)
+                        PlayerHealth[playerid][pHunger] += 0.8;
                     else
-                        PlayerInfo[playerid][pHunger] = 5.0;
+                        PlayerHealth[playerid][pHunger] = 5.0;
 
                     format(string, sizeof(string), "* %s jede francusku salatu.", GetName(playerid, true));
                     ProxDetector(8.0, playerid, string, COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE);
@@ -2438,10 +2438,10 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                 case 4:
                 {
                     if (AC_GetPlayerMoney(playerid) < 4) return SendClientMessage(playerid, COLOR_RED, "Nemas 4$!");
-                    if (PlayerInfo[playerid][pHunger] < 3.0)
-                        PlayerInfo[playerid][pHunger] += 2.0;
+                    if (PlayerHealth[playerid][pHunger] < 3.0)
+                        PlayerHealth[playerid][pHunger] += 2.0;
                     else
-                        PlayerInfo[playerid][pHunger] = 5.0;
+                        PlayerHealth[playerid][pHunger] = 5.0;
 
                     format(string, sizeof(string), "* %s jede sendvic sa sunkom.", GetName(playerid, true));
                     ProxDetector(8.0, playerid, string, COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE);
@@ -2454,10 +2454,10 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                 case 5:
                 {
                     if (AC_GetPlayerMoney(playerid) < 3) return SendClientMessage(playerid, COLOR_RED, "Nemas 3$!");
-                    if (PlayerInfo[playerid][pHunger] < 4.8)
-                        PlayerInfo[playerid][pHunger] += 0.2;
+                    if (PlayerHealth[playerid][pHunger] < 4.8)
+                        PlayerHealth[playerid][pHunger] += 0.2;
                     else
-                        PlayerInfo[playerid][pHunger] = 5.0;
+                        PlayerHealth[playerid][pHunger] = 5.0;
 
                     format(string, sizeof(string), "* %s pije Sprite.", GetName(playerid, true));
                     ProxDetector(8.0, playerid, string, COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE);
@@ -2470,10 +2470,10 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                 case 6:
                 {
                     if (AC_GetPlayerMoney(playerid) < 1) return SendClientMessage(playerid, COLOR_RED, "Nemas 1$!");
-                    if (PlayerInfo[playerid][pHunger] < 4.9)
-                        PlayerInfo[playerid][pHunger] += 0.1;
+                    if (PlayerHealth[playerid][pHunger] < 4.9)
+                        PlayerHealth[playerid][pHunger] += 0.1;
                     else
-                        PlayerInfo[playerid][pHunger] = 5.0;
+                        PlayerHealth[playerid][pHunger] = 5.0;
 
                     format(string, sizeof(string), "* %s pije vodu.", GetName(playerid, true));
                     ProxDetector(8.0, playerid, string, COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE);
@@ -2497,10 +2497,10 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                 case 0:
                 {
                     if (AC_GetPlayerMoney(playerid) < 3) return SendClientMessage(playerid, COLOR_RED, "Nemas 3$!");
-                    if (PlayerInfo[playerid][pHunger] < 4.0)
-                        PlayerInfo[playerid][pHunger] += 1.0;
+                    if (PlayerHealth[playerid][pHunger] < 4.0)
+                        PlayerHealth[playerid][pHunger] += 1.0;
                     else
-                        PlayerInfo[playerid][pHunger] = 5.0;
+                        PlayerHealth[playerid][pHunger] = 5.0;
 
                     format(string, sizeof(string), "* %s jede juhu.", GetName(playerid, true));
                     ProxDetector(8.0, playerid, string, COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE);
@@ -2513,10 +2513,10 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                 case 1:
                 {
                     if (AC_GetPlayerMoney(playerid) < 5) return SendClientMessage(playerid, COLOR_RED, "Nemas 5$!");
-                    if (PlayerInfo[playerid][pHunger] < 3.0)
-                        PlayerInfo[playerid][pHunger] += 2.0;
+                    if (PlayerHealth[playerid][pHunger] < 3.0)
+                        PlayerHealth[playerid][pHunger] += 2.0;
                     else
-                        PlayerInfo[playerid][pHunger] = 5.0;
+                        PlayerHealth[playerid][pHunger] = 5.0;
 
                     format(string, sizeof(string), "* %s jede piletinu.", GetName(playerid, true));
                     ProxDetector(8.0, playerid, string, COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE);
@@ -2529,10 +2529,10 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                 case 2:
                 {
                     if (AC_GetPlayerMoney(playerid) < 7) return SendClientMessage(playerid, COLOR_RED, "Nemas 7$!");
-                    if (PlayerInfo[playerid][pHunger] < 2.5)
-                        PlayerInfo[playerid][pHunger] += 2.5;
+                    if (PlayerHealth[playerid][pHunger] < 2.5)
+                        PlayerHealth[playerid][pHunger] += 2.5;
                     else
-                        PlayerInfo[playerid][pHunger] = 5.0;
+                        PlayerHealth[playerid][pHunger] = 5.0;
 
                     format(string, sizeof(string), "* %s jede pecenog morskog psa na salatu.", GetName(playerid, true));
                     ProxDetector(8.0, playerid, string, COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE);
@@ -2545,10 +2545,10 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                 case 3:
                 {
                     if (AC_GetPlayerMoney(playerid) < 4) return SendClientMessage(playerid, COLOR_RED, "Nemas 4$!");
-                    if (PlayerInfo[playerid][pHunger] < 3.0)
-                        PlayerInfo[playerid][pHunger] += 2.0;
+                    if (PlayerHealth[playerid][pHunger] < 3.0)
+                        PlayerHealth[playerid][pHunger] += 2.0;
                     else
-                        PlayerInfo[playerid][pHunger] = 5.0;
+                        PlayerHealth[playerid][pHunger] = 5.0;
 
                     format(string, sizeof(string), "* %s jede spaghetti.", GetName(playerid, true));
                     ProxDetector(8.0, playerid, string, COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE);
@@ -2561,10 +2561,10 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                 case 4:
                 {
                     if (AC_GetPlayerMoney(playerid) < 2) return SendClientMessage(playerid, COLOR_RED, "Nemas 2$!");
-                    if (PlayerInfo[playerid][pHunger] < 4.5)
-                        PlayerInfo[playerid][pHunger] += 0.5;
+                    if (PlayerHealth[playerid][pHunger] < 4.5)
+                        PlayerHealth[playerid][pHunger] += 0.5;
                     else
-                        PlayerInfo[playerid][pHunger] = 5.0;
+                        PlayerHealth[playerid][pHunger] = 5.0;
 
                     format(string, sizeof(string), "* %s jede kolac.", GetName(playerid, true));
                     ProxDetector(8.0, playerid, string, COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE);
@@ -2577,10 +2577,10 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                 case 5:
                 {
                     if (AC_GetPlayerMoney(playerid) < 3) return SendClientMessage(playerid, COLOR_RED, "Nemas 3$!");
-                    if (PlayerInfo[playerid][pHunger] < 4.8)
-                        PlayerInfo[playerid][pHunger] += 0.2;
+                    if (PlayerHealth[playerid][pHunger] < 4.8)
+                        PlayerHealth[playerid][pHunger] += 0.2;
                     else
-                        PlayerInfo[playerid][pHunger] = 5.0;
+                        PlayerHealth[playerid][pHunger] = 5.0;
 
                     format(string, sizeof(string), "* %s pije Coca Colu.", GetName(playerid, true));
                     ProxDetector(8.0, playerid, string, COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE);
@@ -2593,10 +2593,10 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                 case 6:
                 {
                     if (AC_GetPlayerMoney(playerid) < 1) return SendClientMessage(playerid, COLOR_RED, "Nemas 1$!");
-                    if (PlayerInfo[playerid][pHunger] < 4.8)
-                        PlayerInfo[playerid][pHunger] += 0.2;
+                    if (PlayerHealth[playerid][pHunger] < 4.8)
+                        PlayerHealth[playerid][pHunger] += 0.2;
                     else
-                        PlayerInfo[playerid][pHunger] = 5.0;
+                        PlayerHealth[playerid][pHunger] = 5.0;
 
                     format(string, sizeof(string), "* %s pije vodu.", GetName(playerid, true));
                     ProxDetector(8.0, playerid, string, COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE);
@@ -2622,10 +2622,10 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                 case 0:
                 {
                     if (AC_GetPlayerMoney(playerid) < 2) return SendClientMessage(playerid, COLOR_RED, "Nemas 2$!");
-                    if (PlayerInfo[playerid][pHunger] < 4.0)
-                        PlayerInfo[playerid][pHunger] += 1.0;
+                    if (PlayerHealth[playerid][pHunger] < 4.0)
+                        PlayerHealth[playerid][pHunger] += 1.0;
                     else
-                        PlayerInfo[playerid][pHunger] = 5.0;
+                        PlayerHealth[playerid][pHunger] = 5.0;
 
                     format(string, sizeof(string), "* %s jede krofnu s visnjom.", GetName(playerid, true));
                     ProxDetector(8.0, playerid, string, COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE);
@@ -2634,10 +2634,10 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                 case 1:
                 {
                     if (AC_GetPlayerMoney(playerid) < 4) return SendClientMessage(playerid, COLOR_RED, "Nemas 4$!");
-                    if (PlayerInfo[playerid][pHunger] < 4.0)
-                        PlayerInfo[playerid][pHunger] += 1.0;
+                    if (PlayerHealth[playerid][pHunger] < 4.0)
+                        PlayerHealth[playerid][pHunger] += 1.0;
                     else
-                        PlayerInfo[playerid][pHunger] = 5.0;
+                        PlayerHealth[playerid][pHunger] = 5.0;
 
                     format(string, sizeof(string), "* %s jede punjenu krofnu.", GetName(playerid, true));
                     ProxDetector(8.0, playerid, string, COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE);
@@ -2647,10 +2647,10 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                 case 2:
                 {
                     if (AC_GetPlayerMoney(playerid) < 4) return SendClientMessage(playerid, COLOR_RED, "Nemas 4$!");
-                    if (PlayerInfo[playerid][pHunger] < 4.0)
-                        PlayerInfo[playerid][pHunger] += 1.0;
+                    if (PlayerHealth[playerid][pHunger] < 4.0)
+                        PlayerHealth[playerid][pHunger] += 1.0;
                     else
-                        PlayerInfo[playerid][pHunger] = 5.0;
+                        PlayerHealth[playerid][pHunger] = 5.0;
 
                     format(string, sizeof(string), "* %s jede krofnu s kokosom.", GetName(playerid, true));
                     ProxDetector(8.0, playerid, string, COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE);
@@ -2659,10 +2659,10 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                 case 3:
                 {
                     if (AC_GetPlayerMoney(playerid) < 3) return SendClientMessage(playerid, COLOR_RED, "Nemas 3$!");
-                    if (PlayerInfo[playerid][pHunger] < 4.0)
-                        PlayerInfo[playerid][pHunger] += 1.0;
+                    if (PlayerHealth[playerid][pHunger] < 4.0)
+                        PlayerHealth[playerid][pHunger] += 1.0;
                     else
-                        PlayerInfo[playerid][pHunger] = 5.0;
+                        PlayerHealth[playerid][pHunger] = 5.0;
 
                     PlayerToBusinessMoney(playerid, bizz, 3); // Novac ide u blagajnu ali se oporezuje
                     format(string, sizeof(string), "* %s jede cokoladnu krofnu.", GetName(playerid, true));
@@ -2671,10 +2671,10 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                 case 4:
                 {
                     if (AC_GetPlayerMoney(playerid) < 3) return SendClientMessage(playerid, COLOR_RED, "Nemas 3$!");
-                    if (PlayerInfo[playerid][pHunger] < 4.8)
-                        PlayerInfo[playerid][pHunger] += 0.2;
+                    if (PlayerHealth[playerid][pHunger] < 4.8)
+                        PlayerHealth[playerid][pHunger] += 0.2;
                     else
-                        PlayerInfo[playerid][pHunger] = 5.0;
+                        PlayerHealth[playerid][pHunger] = 5.0;
 
                     format(string, sizeof(string), "* %s pije Coca Colu.", GetName(playerid, true));
                     ProxDetector(8.0, playerid, string, COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE);
@@ -2683,10 +2683,10 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                 case 5:
                 {
                     if (AC_GetPlayerMoney(playerid) < 1) return SendClientMessage(playerid, COLOR_RED, "Nemas 1$!");
-                    if (PlayerInfo[playerid][pHunger] < 4.8)
-                        PlayerInfo[playerid][pHunger] += 0.2;
+                    if (PlayerHealth[playerid][pHunger] < 4.8)
+                        PlayerHealth[playerid][pHunger] += 0.2;
                     else
-                        PlayerInfo[playerid][pHunger] = 5.0;
+                        PlayerHealth[playerid][pHunger] = 5.0;
 
                     format(string, sizeof(string), "* %s pije vodu.", GetName(playerid, true));
                     ProxDetector(8.0, playerid, string, COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE);
@@ -2704,30 +2704,30 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
             {
                 case 0:
                 {
-                    if (PlayerInfo[playerid][pHunger] < 4.9)
-                        PlayerInfo[playerid][pHunger] += 0.1;
+                    if (PlayerHealth[playerid][pHunger] < 4.9)
+                        PlayerHealth[playerid][pHunger] += 0.1;
                     else
-                        PlayerInfo[playerid][pHunger] = 5.0;
+                        PlayerHealth[playerid][pHunger] = 5.0;
 
                     format(string, sizeof(string), "* %s uzima mahune.", GetName(playerid, true));
                     ProxDetector(8.0, playerid, string, COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE);
                 }
                 case 1:
                 {
-                    if (PlayerInfo[playerid][pHunger] < 4.9)
-                        PlayerInfo[playerid][pHunger] += 0.1;
+                    if (PlayerHealth[playerid][pHunger] < 4.9)
+                        PlayerHealth[playerid][pHunger] += 0.1;
                     else
-                        PlayerInfo[playerid][pHunger] = 5.0;
+                        PlayerHealth[playerid][pHunger] = 5.0;
 
                     format(string, sizeof(string), "* %s uzima grah.", GetName(playerid, true));
                     ProxDetector(8.0, playerid, string, COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE);
                 }
                 case 2:
                 {
-                    if (PlayerInfo[playerid][pHunger] < 4.9)
-                        PlayerInfo[playerid][pHunger] += 0.1;
+                    if (PlayerHealth[playerid][pHunger] < 4.9)
+                        PlayerHealth[playerid][pHunger] += 0.1;
                     else
-                        PlayerInfo[playerid][pHunger] = 5.0;
+                        PlayerHealth[playerid][pHunger] = 5.0;
 
                     format(string, sizeof(string), "* %s uzima poriluk.", GetName(playerid, true));
                     ProxDetector(8.0, playerid, string, COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE);

@@ -413,7 +413,7 @@ GivePlayerPayCheck(playerid)
 			PlayerInfo[ playerid ][ pGymCounter ] = 0;
 		}
 	}
-	if( PlayerInfo[ playerid ][ pHunger ] == 5.0 ) 
+	if( PlayerHealth[playerid][pHunger] == 5.0 ) 
 	{
 		PlayerInfo[ playerid ][ pGymCounter ] += 2;
 		if( PlayerInfo[ playerid ][ pGymCounter ] >= 6 ) 
