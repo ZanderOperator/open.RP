@@ -2,6 +2,7 @@
 
 // Core Table Save/Load Functions
 #include "modules/Player\SaveLoad/player_health.pwn"
+#include "modules/Player\SaveLoad/player_fitness.pwn"
 #include "modules/Player\SaveLoad/player_vip_status.pwn"
 #include "modules/Player\SaveLoad/player_licenses.pwn"
 #include "modules/Player\SaveLoad/player_jail.pwn"
@@ -318,17 +319,12 @@ public LoadPlayerData(playerid)
 		cache_get_value_name_int(0,  "rentkey"		, PlayerInfo[playerid][pRentKey]);
 		cache_get_value_name_int(0,  "maskid"		, PlayerInfo[playerid][pMaskID]);
 
-		cache_get_value_name_int(0, "muscle"		, PlayerInfo[playerid][pMuscle]);
-		cache_get_value_name_int(0,	"fightstyle"	, PlayerInfo[playerid][pFightStyle]);
-
 		cache_get_value_name_int(0, "clock"			, PlayerInfo[playerid][pClock]);
 		cache_get_value_name_int(0, "rope"			, PlayerInfo[playerid][hRope]);
 		cache_get_value_name_int(0, "cigaretes"		, PlayerInfo[playerid][pCiggaretes]);	
 		cache_get_value_name_int(0, "lighter"		, PlayerInfo[playerid][pLighter]);		
 
 		cache_get_value_name_int(0, "lijektimer"	, PlayerInfo[playerid][pLijekTimer]);
-		cache_get_value_name_int(0,	"gymtimes"		, PlayerInfo[playerid][pGymTimes]);
-		cache_get_value_name_int(0,	"gymcounter"	, PlayerInfo[playerid][pGymCounter]);
 		cache_get_value_name_int(0,	"boombox"		, PlayerInfo[playerid][pBoomBox]);
 		cache_get_value_name_int(0,	"boomboxtype"	, PlayerInfo[playerid][pBoomBoxType]);
 		
@@ -691,9 +687,8 @@ public SavePlayerData(playerid)
 			fishworks = '%d', fishsqlid = '%d', levels = '%d', respects = '%d',\n\
 			parts = '%d', FishingSkill = '%d',\n\
 			rentkey = '%d',\n\
-			maskid = '%d', muscle = '%d',\n\
-			fightstyle = '%d', clock = '%d', rope = '%d', cigaretes = '%d', lighter = '%d',\n\
-			SAMPid = '%e', forumname = '%e', gymtimes = '%d', gymcounter = '%d',\n\
+			maskid = '%d', clock = '%d', rope = '%d', cigaretes = '%d', lighter = '%d',\n\
+			SAMPid = '%e', forumname = '%e',\n\
 			boombox = '%d', boomboxtype = '%d', casinocool = '%d', news = '%d', voted = '%d',\n\
 			drugused = '%d', drugseconds = '%d', lastdrug = '%d',\n\
 			ammutime = '%d', warekey = '%d', mustread = '%d', lastupdatever = '%e', JackerCoolDown = '%d',\n\
@@ -722,8 +717,6 @@ public SavePlayerData(playerid)
 		PlayerInfo[playerid][pFishingSkill],
 		PlayerInfo[playerid][pRentKey],
 		PlayerInfo[playerid][pMaskID],
-		PlayerInfo[playerid][pMuscle],
-		PlayerInfo[playerid][pFightStyle],
 		PlayerInfo[playerid][pClock],
 		PlayerInfo[playerid][hRope],
 		PlayerInfo[playerid][pCiggaretes],
@@ -731,8 +724,6 @@ public SavePlayerData(playerid)
 		LicenseInfo[playerid][pPassport],
 		PlayerInfo[playerid][pSAMPid],
 		PlayerInfo[playerid][pForumName],
-		PlayerInfo[playerid][pGymTimes],
-		PlayerInfo[playerid][pGymCounter],
 		PlayerInfo[playerid][pBoomBox],
 		PlayerInfo[playerid][pBoomBoxType],
 		PlayerInfo[playerid][pCasinoCool],

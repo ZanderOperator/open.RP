@@ -79,10 +79,6 @@ enum E_PLAYER_DATA
 	pIllegalGarageKey,
 	pSeeds,
 	pToolkit,
-	pMuscle,
-	pGymTimes,
-	pGymCounter,
-	pFightStyle,
 	Float:pDeath[3],
 	pDeathInt,
 	pDeathVW,
@@ -263,7 +259,17 @@ enum E_PLAYER_HEALTH
 }
 new PlayerHealth[ MAX_PLAYERS ][ E_PLAYER_HEALTH ];
 
-enum E_GARAGE_DATA {
+enum E_PLAYER_GYM_INFO
+{
+	pMuscle,
+	pGymTimes,
+	pGymCounter,
+	pFightStyle
+}
+new PlayerGym[ MAX_PLAYERS ][ E_PLAYER_GYM_INFO ];
+
+enum E_GARAGE_DATA 
+{
 	gSQLID,
 	gOwnerID,
 	gAdress[16],

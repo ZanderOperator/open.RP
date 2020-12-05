@@ -3062,7 +3062,7 @@ CMD:setstat(playerid, params[])
   		}
 		case 18:
 		{
-		    PlayerInfo[giveplayerid][pMuscle] = amount;
+		    PlayerGym[giveplayerid][pMuscle] = amount;
 			format(globalstring, sizeof(globalstring), "   Korisnikov Muscle Skill je postavljen na %d.", amount);
   		}
 		case 19:
@@ -3168,7 +3168,7 @@ CMD:fstyle(playerid, params[])
          	format(string, sizeof(string), "* Postavio si igracu %s fighting style na Normal.", GetName(giveplayerid,false));
           	SendClientMessage(playerid, COLOR_SKYBLUE, string);
            	SetPlayerFightingStyle(giveplayerid, FIGHT_STYLE_NORMAL);
-            PlayerInfo[giveplayerid][pFightStyle] = FIGHT_STYLE_NORMAL;
+            PlayerGym[giveplayerid][pFightStyle] = FIGHT_STYLE_NORMAL;
      	}
       	case 2:
        	{
@@ -3177,7 +3177,7 @@ CMD:fstyle(playerid, params[])
           	format(string, sizeof(string), "* Postavio si igracu %s fighting style na Boxing.", GetName(giveplayerid,false));
             SendClientMessage(playerid, COLOR_SKYBLUE, string);
 	        SetPlayerFightingStyle(giveplayerid, FIGHT_STYLE_BOXING);
-	        PlayerInfo[giveplayerid][pFightStyle] = FIGHT_STYLE_BOXING;
+	        PlayerGym[giveplayerid][pFightStyle] = FIGHT_STYLE_BOXING;
         }
         case 3:
         {
@@ -3186,7 +3186,7 @@ CMD:fstyle(playerid, params[])
 	        format(string, sizeof(string), "* Postavio si igracu %s fighting style na Kung Fu.", GetName(giveplayerid,false));
 	        SendClientMessage(playerid, COLOR_SKYBLUE, string);
 	        SetPlayerFightingStyle(giveplayerid, FIGHT_STYLE_KUNGFU);
-	        PlayerInfo[giveplayerid][pFightStyle] = FIGHT_STYLE_KUNGFU;
+	        PlayerGym[giveplayerid][pFightStyle] = FIGHT_STYLE_KUNGFU;
         }
         case 4:
         {
@@ -3195,7 +3195,7 @@ CMD:fstyle(playerid, params[])
 	        format(string, sizeof(string), "* Postavio si igracu %s fighting style na KneeHead.", GetName(giveplayerid,false));
 	        SendClientMessage(playerid, COLOR_SKYBLUE, string);
 	        SetPlayerFightingStyle(giveplayerid, FIGHT_STYLE_KNEEHEAD);
-	        PlayerInfo[giveplayerid][pFightStyle] = FIGHT_STYLE_KNEEHEAD;
+	        PlayerGym[giveplayerid][pFightStyle] = FIGHT_STYLE_KNEEHEAD;
         }
         case 5:
         {
@@ -3204,7 +3204,7 @@ CMD:fstyle(playerid, params[])
 	        format(string, sizeof(string), "* Postavio si igracu %s fighting style na GrabBack.", GetName(giveplayerid,false));
 	        SendClientMessage(playerid, COLOR_SKYBLUE, string);
          	SetPlayerFightingStyle(giveplayerid, FIGHT_STYLE_GRABKICK);
-	        PlayerInfo[giveplayerid][pFightStyle] = FIGHT_STYLE_GRABKICK;
+	        PlayerGym[giveplayerid][pFightStyle] = FIGHT_STYLE_GRABKICK;
         }
         case 6:
         {
@@ -3213,7 +3213,7 @@ CMD:fstyle(playerid, params[])
           	format(string, sizeof(string), "* Postavio si igracu %s fighting style na Elbow.", GetName(giveplayerid,false));
            	SendClientMessage(playerid, COLOR_SKYBLUE, string);
             SetPlayerFightingStyle(giveplayerid, FIGHT_STYLE_ELBOW);
-            PlayerInfo[giveplayerid][pFightStyle] = FIGHT_STYLE_ELBOW;
+            PlayerGym[giveplayerid][pFightStyle] = FIGHT_STYLE_ELBOW;
 	    }
   		default:
   		SendClientMessage(playerid, COLOR_RED, "Krivi broj opcije!");

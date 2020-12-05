@@ -864,9 +864,6 @@ ResetPlayerVariables(playerid)
 	PlayerInfo[playerid][pIllegalGarageKey]	= -1;
 	PlayerInfo[playerid][pSeeds]			= 0;
 	PlayerInfo[playerid][pToolkit]			= 0;
-	PlayerInfo[playerid][pMuscle]			= 0;
-	PlayerInfo[playerid][pGymCounter]		= 0;
-	PlayerInfo[playerid][pGymTimes]			= 0;
 	PlayerInfo[playerid][pParts]			= 0;
 	PlayerInfo[playerid][pChar]				= 0;
 	PlayerInfo[playerid][pBoomBox] 			= 0;
@@ -874,7 +871,6 @@ ResetPlayerVariables(playerid)
 
 	PlayerInfo[playerid][pUnbanTime] 		= 0;
 	PlayerInfo[playerid][pCasinoCool]		= 0;
-	PlayerInfo[playerid][pFightStyle]		= FIGHT_STYLE_NORMAL;
 	PlayerInfo[playerid][pNews]				= 0;
 	PlayerInfo[playerid][pSentNews]			= 0;
 	PlayerInfo[playerid][pCanisterLiters] 	= 0;
@@ -1732,7 +1728,7 @@ hook OnPlayerSpawn(playerid)
     StopAudioStreamForPlayer(playerid);
     ResetPlayerMoney(playerid);
     SetCameraBehindPlayer(playerid);
-    SetPlayerFightingStyle(playerid, PlayerInfo[playerid][pFightStyle]);
+    SetPlayerFightingStyle(playerid, PlayerGym[playerid][pFightStyle]);
 	
     // Player Skill
     SetPlayerSkillLevel(playerid, WEAPONSKILL_AK47,             999);

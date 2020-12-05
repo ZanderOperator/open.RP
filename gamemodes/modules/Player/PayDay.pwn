@@ -403,34 +403,34 @@ GivePlayerPayCheck(playerid)
 
 
 	// GYM izgled
-	if( ++PlayerInfo[ playerid ][ pGymCounter ] >= 6 ) {
-		PlayerInfo[ playerid ][ pMuscle ]--;
-		if( PlayerInfo[ playerid ][ pMuscle ] <= 0 ) PlayerInfo[ playerid ][ pMuscle ] = 0;
+	if( ++PlayerGym[playerid][pGymCounter] >= 6 ) {
+		PlayerGym[playerid][pMuscle]--;
+		if( PlayerGym[playerid][pMuscle] <= 0 ) PlayerGym[playerid][pMuscle] = 0;
 		else
 		{
-			format(f_dialog,sizeof(f_dialog), "\n{3C95C2}(MUSCLE) Zbog nemara vas se Muscle Level spustio na %d!", PlayerInfo[ playerid ][ pMuscle ]);
+			format(f_dialog,sizeof(f_dialog), "\n{3C95C2}(MUSCLE) Zbog nemara vas se Muscle Level spustio na %d!", PlayerGym[playerid][pMuscle]);
 			strcat(p_dialog,f_dialog, sizeof(p_dialog));
-			PlayerInfo[ playerid ][ pGymCounter ] = 0;
+			PlayerGym[playerid][pGymCounter] = 0;
 		}
 	}
 	if( PlayerHealth[playerid][pHunger] == 5.0 ) 
 	{
-		PlayerInfo[ playerid ][ pGymCounter ] += 2;
-		if( PlayerInfo[ playerid ][ pGymCounter ] >= 6 ) 
+		PlayerGym[playerid][pGymCounter] += 2;
+		if( PlayerGym[playerid][pGymCounter] >= 6 ) 
 		{
-			PlayerInfo[ playerid ][ pMuscle ]--;
-			format(f_dialog,sizeof(f_dialog), "\n{3C95C2}(MUSCLE) Zbog nemara i lose prehrane Muscle Level Vam se spustio na %d!\n", PlayerInfo[ playerid ][ pMuscle ]);
+			PlayerGym[playerid][pMuscle]--;
+			format(f_dialog,sizeof(f_dialog), "\n{3C95C2}(MUSCLE) Zbog nemara i lose prehrane Muscle Level Vam se spustio na %d!\n", PlayerGym[playerid][pMuscle]);
 			strcat(p_dialog,f_dialog, sizeof(p_dialog));
-			PlayerInfo[ playerid ][ pGymCounter ] = 0;
+			PlayerGym[playerid][pGymCounter] = 0;
 		}
 	}
-	if(PlayerInfo[playerid][pGymTimes] > 0) 
+	if(PlayerGym[playerid][pGymTimes] > 0) 
 	{
-		PlayerInfo[playerid][pGymTimes]++;
-		if(PlayerInfo[playerid][pGymTimes] == 4)
+		PlayerGym[playerid][pGymTimes]++;
+		if(PlayerGym[playerid][pGymTimes] == 4)
 		{
-			PlayerInfo[playerid][pGymTimes] = 0;
-			format(f_dialog,sizeof(f_dialog), "\n{3C95C2}(GYM) Ponovno mozete u teretanu. Odradite trening ukoliko ne zelite izgubiti snagu!\n", PlayerInfo[ playerid ][ pMuscle ]);
+			PlayerGym[playerid][pGymTimes] = 0;
+			format(f_dialog,sizeof(f_dialog), "\n{3C95C2}(GYM) Ponovno mozete u teretanu. Odradite trening ukoliko ne zelite izgubiti snagu!\n", PlayerGym[playerid][pMuscle]);
 			strcat(p_dialog,f_dialog, sizeof(p_dialog));
 		}
 	}
