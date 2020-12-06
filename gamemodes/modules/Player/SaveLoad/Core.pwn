@@ -55,7 +55,7 @@ timer SafeHealPlayer[250](playerid)
 }
 
 
-//Forwards
+// Forwards
 forward CheckPlayerInBase(playerid);
 forward LoadPlayerStats(playerid); // Loading all data non-related to 'accounts' database table
 forward SavePlayerStats(playerid); // Saving all data non-related to 'accounts database table
@@ -65,7 +65,7 @@ forward RegisterPlayer(playerid);
 forward OnAccountFinish(playerid);
 
 
-//Publics
+// Publics
 CheckPlayerInactivity(playerid)
 {
 	inline OnPlayerInactivityCheck()
@@ -317,9 +317,11 @@ public LoadPlayerData(playerid)
 		else if( PlayerInfo[ playerid ][ pUnbanTime ] == -2 ) 
 		{
 			va_SendClientMessage( playerid, COLOR_RED, 
-				"[CoA-RP Server]: Your user account has been blocked by the system!\n\
+				"[%s]: Your user account has been blocked by the system!\n\
 					You must create it on User Control Panel (%s) in order for it to be playable!",
-				WEB_URL);
+				SERVER_NAME,
+				WEB_URL
+			);
 			KickMessage(playerid);
 			return 1;
 		}
@@ -957,7 +959,8 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 			{
 				//Kick
 				va_SendClientMessage(playerid, COLOR_RED, 
-					"[SERVER]: You reached %d unsucessful login attempts and you got an IP ban!",
+					"[%s]: You reached %d unsucessful login attempts and you got an IP ban!",
+					SERVER_NAME,
 					MAX_LOGIN_TRIES
 				);
 				BanMessage(playerid);
