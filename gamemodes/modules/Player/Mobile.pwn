@@ -2743,9 +2743,9 @@ hook OnPlayerText(playerid, text[])
 			}
 			else if(strfind(tmp, "droga", true) != -1 || strfind(tmp, "drug", true) != -1 || strfind(tmp, "drugs", true) != -1)
             {
-                if(PlayerInfo[playerid][pDrugOrder] > 0)
+                if(PlayerDrugStatus[playerid][pDrugOrder] > 0)
 				{
-					va_SendClientMessage(playerid, COLOR_YELLOW, "Maska 64361 kaze (mobitel): Nazovi me za %d minuta, nemam sad vremena zauzet sam.", PlayerInfo[playerid][pDrugOrder]);
+					va_SendClientMessage(playerid, COLOR_YELLOW, "Maska 64361 kaze (mobitel): Nazovi me za %d minuta, nemam sad vremena zauzet sam.", PlayerDrugStatus[playerid][pDrugOrder]);
 					PlayerHangup(playerid);
 					return 0;
 				}

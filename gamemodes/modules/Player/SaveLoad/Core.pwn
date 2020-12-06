@@ -2,6 +2,7 @@
 
 // Save/Load Player related func. modules - named after adjacent database tables
 #include "modules/Player\SaveLoad/player_crashes.pwn"
+#include "modules/Player\SaveLoad/player_drug_stats.pwn"
 #include "modules/Player\SaveLoad/player_health.pwn"
 #include "modules/Player\SaveLoad/player_fitness.pwn"
 #include "modules/Player\SaveLoad/player_vip_status.pwn"
@@ -63,7 +64,6 @@ forward LoadPlayerData(playerid);
 forward SavePlayerData(playerid); 
 forward RegisterPlayer(playerid);
 forward OnAccountFinish(playerid);
-
 
 // Publics
 CheckPlayerInactivity(playerid)
@@ -294,10 +294,6 @@ public LoadPlayerData(playerid)
 		cache_get_value_name_int(0, "pBusinessJob", PlayerInfo[playerid][pBusinessJob]);
 		cache_get_value_name_int(0, "pBusinessWorkTime", PlayerInfo[playerid][pBusinessWorkTime]);
 		cache_get_value_name_int(0, "FurnPremium"	, PlayerInfo[playerid][FurnPremium]);
-		
-		cache_get_value_name_int(0, "drugused"		, PlayerInfo[playerid][pDrugUsed]);
-		cache_get_value_name_int(0, "drugseconds"	, PlayerInfo[playerid][pDrugSeconds]);
-		cache_get_value_name_int(0, "lastdrug", PlayerInfo[playerid][pDrugOrder]);
 		
 		//Fisher
 		cache_get_value_name_int(0, "FishingSkill", PlayerInfo[playerid][pFishingSkill]);
@@ -689,7 +685,6 @@ public SavePlayerData(playerid)
 			maskid = '%d', clock = '%d', rope = '%d', cigaretes = '%d', lighter = '%d',\n\
 			SAMPid = '%e', forumname = '%e',\n\
 			boombox = '%d', boomboxtype = '%d', casinocool = '%d', news = '%d', voted = '%d',\n\
-			drugused = '%d', drugseconds = '%d', lastdrug = '%d',\n\
 			ammutime = '%d', warekey = '%d', mustread = '%d', lastupdatever = '%e', JackerCoolDown = '%d',\n\
 			FurnPremium = '%d',\n\
 			WHERE sqlid = '%d'",
@@ -728,9 +723,6 @@ public SavePlayerData(playerid)
 		PlayerInfo[playerid][pCasinoCool],
 		PlayerInfo[playerid][pNews],
 		PlayerInfo[playerid][pVoted],
-		PlayerInfo[playerid][pDrugUsed],
-		PlayerInfo[playerid][pDrugSeconds],
-		PlayerInfo[playerid][pDrugOrder],
 		PlayerInfo[playerid][pAmmuTime],
 		PlayerInfo[playerid][pWarehouseKey],
 		PlayerInfo[playerid][pMustRead],

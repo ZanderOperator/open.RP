@@ -86,9 +86,6 @@ enum E_PLAYER_DATA
 	pLawDuty,
 	pPDDuty,
 	pChar,
-	pDrugUsed,
-	pDrugSeconds,
-	pDrugOrder,
 	bool:pHc,
 	bool:pMuAc,
 	bool:pHCl,
@@ -155,6 +152,14 @@ enum E_P_CRASH_INFO
 	Float:pCrashZ
 }
 new PlayerCrash[ MAX_PLAYERS ][ E_P_CRASH_INFO ];
+
+enum E_P_DRUG_INFO
+{
+	pDrugUsed,
+	pDrugSeconds,
+	pDrugOrder
+}
+new PlayerDrugStatus[ MAX_PLAYERS ][ E_P_DRUG_INFO ];
 
 enum E_PAYDAY_INFO
 {

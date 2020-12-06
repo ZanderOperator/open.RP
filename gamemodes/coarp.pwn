@@ -785,11 +785,7 @@ ResetPlayerVariables(playerid)
 	PlayerTick[playerid][ptVehiclePort]		= 0;
 	PlayerTaskTStamp[playerid] 				= 0;
 
-	//Enums
-	PlayerInfo[playerid][pDrugUsed] = 0;
-	PlayerInfo[playerid][pDrugSeconds] = 0; 
-	PlayerInfo[playerid][pDrugOrder] = 0;
-	
+	//Enums	
 	PlayerInfo[playerid][pForumName] 		= EOS;
 	PlayerInfo[playerid][pLastLogin] 		= EOS;
 	PlayerInfo[playerid][pLastIP]			= EOS;
