@@ -377,11 +377,6 @@ GivePlayerPayCheck(playerid)
 	PaydayInfo[playerid][pPayDayHad]++;
 	PaydayInfo[playerid][pPayDay] 		= 0; 	// resetiranje payday minuta na 0
 
-	if(PlayerInfo[playerid][pLijekTimer] > 0)
-		PlayerInfo[playerid][pLijekTimer]--;
-	else if(PlayerInfo[playerid][pLijekTimer] < 0)
-		PlayerInfo[playerid][pLijekTimer] = 0;	// Skidanje 1 sata za timer koristenja Aspirina/Metadona/Naltrexona
-
 	PlayerInfo[playerid][pConnectTime]++; 		// sati igranja
 
 	switch(PlayerVIP[playerid][pDonateRank])
