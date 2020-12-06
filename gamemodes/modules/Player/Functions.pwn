@@ -1022,17 +1022,17 @@ Public:PlayerMinuteTask(playerid)
 		PlayerJail[playerid][pJailTime] = 0;
 		
 		
-	if(PlayerInfo[playerid][pDrugUsed] != 0)
+	if(PlayerDrugStatus[playerid][pDrugUsed] != 0)
 	{
-		if(-- PlayerInfo[playerid][pDrugSeconds] <= 0)
+		if(-- PlayerDrugStatus[playerid][pDrugSeconds] <= 0)
 		{
-			PlayerInfo[playerid][pDrugSeconds] = 0;
-			PlayerInfo[playerid][pDrugUsed] = 0;
+			PlayerDrugStatus[playerid][pDrugSeconds] = 0;
+			PlayerDrugStatus[playerid][pDrugUsed] = 0;
 		}
 	}
-	if(PlayerInfo[playerid][pDrugOrder] > 0)
+	if(PlayerDrugStatus[playerid][pDrugOrder] > 0)
 	{
-		-- PlayerInfo[playerid][pDrugOrder];
+		-- PlayerDrugStatus[playerid][pDrugOrder];
 	}
 	
 	HungerCheck(playerid);

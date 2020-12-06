@@ -553,8 +553,8 @@ CMD:drug(playerid, params[])
 	}
 	else if(!strcmp(item, "use", true))
 	{
-		if(PlayerInfo[playerid][pDrugSeconds] != 0)
-			return va_SendClientMessage(playerid, COLOR_RED, "[GRESKA]: Ne mozete jos koristiti drogu! Pricekajte jos %d minuta.", PlayerInfo[playerid][pDrugSeconds]);
+		if(PlayerDrugStatus[playerid][pDrugSeconds] != 0)
+			return va_SendClientMessage(playerid, COLOR_RED, "[GRESKA]: Ne mozete jos koristiti drogu! Pricekajte jos %d minuta.", PlayerDrugStatus[playerid][pDrugSeconds]);
         
 		if(sscanf(params, "s[8]if", item, slot, damnt)) 
 		{
@@ -670,8 +670,8 @@ CMD:drug(playerid, params[])
 		else
 			mysql_fquery(g_SQL, "UPDATE player_drugs SET amount = '%f' WHERE id = '%d'", PlayerDrugs[playerid][dAmount][slot], PlayerDrugs[playerid][dSQLID][slot]);
 		
-		PlayerInfo[playerid][pDrugUsed] = dtyp;
-		PlayerInfo[playerid][pDrugSeconds] = drugs[dtyp][dUseTime];
+		PlayerDrugStatus[playerid][pDrugUsed] = dtyp;
+		PlayerDrugStatus[playerid][pDrugSeconds] = drugs[dtyp][dUseTime];
 		
 		//PlayerInfo[playerid][pDrugUses] ++;
 		//PlayerInfo[playerid][pLastDrug] = dtyp;
@@ -1355,7 +1355,7 @@ hook OnPlayerEnterCheckpoint(playerid)
 				);
 				#endif
 				
-				PlayerInfo[playerid][pDrugOrder] = 120;
+				PlayerDrugStatus[playerid][pDrugOrder] = 120;
 				
 				ClearDrugOrder(playerid);
 			}
