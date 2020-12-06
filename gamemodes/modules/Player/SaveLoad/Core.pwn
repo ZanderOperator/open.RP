@@ -1,6 +1,7 @@
 #include <YSI_Coding\y_hooks>
 
-// Core Table Save/Load Functions
+// Save/Load Player related func. modules - named after adjacent database tables
+#include "modules/Player\SaveLoad/player_crashes.pwn"
 #include "modules/Player\SaveLoad/player_health.pwn"
 #include "modules/Player\SaveLoad/player_fitness.pwn"
 #include "modules/Player\SaveLoad/player_vip_status.pwn"
@@ -53,97 +54,13 @@ timer SafeHealPlayer[250](playerid)
 	return 1;
 }
 
-timer SetPlayerCrash[6000](playerid)
-{
-	if(PlayerInfo[playerid][pKilled] <= 0)
-		TogglePlayerControllable(playerid, true);
-	
-	if(PlayerInfo[playerid][pCrashPos][0] != 0.0 && PlayerInfo[playerid][pCrashInt] != -1)
-	{
-		if( PlayerJail[playerid][pJailed] )
-		{
-			mysql_fquery(g_SQL, "DELETE FROM player_crashes WHERE id = '%d'", PlayerInfo[playerid][pCrashId]);
-
-			PlayerInfo[playerid][pCrashId] 		= -1;
-			PlayerInfo[playerid][pCrashArmour]	= 0.0;
-			PlayerInfo[playerid][pCrashHealth]	= 0.0;
-			PlayerInfo[playerid][pCrashVW]		= -1;
-			PlayerInfo[playerid][pCrashInt] 	= -1;
-			PlayerInfo[playerid][pCrashPos][0]	= 0.0;
-			PlayerInfo[playerid][pCrashPos][1]	= 0.0;
-			PlayerInfo[playerid][pCrashPos][2]	= 0.0;
-
-			SafeSpawned[ playerid ] = true;
-			return 1;
-		}
-		//Sets
-		SetPlayerPosEx(playerid,  PlayerInfo[playerid][pCrashPos][0], PlayerInfo[playerid][pCrashPos][1], PlayerInfo[playerid][pCrashPos][2], PlayerInfo[playerid][pCrashVW], PlayerInfo[playerid][pCrashInt], true);
-		SetPlayerSkin(playerid, PlayerInfo[playerid][pSkin]);
-		SetPlayerArmour(playerid, 		PlayerInfo[playerid][pCrashArmour]);
-
-		if( 0.0 <= PlayerInfo[playerid][pCrashHealth] <= 6.0 )
-			SetPlayerHealth(playerid, 100);
-		else
-			SetPlayerHealth(playerid, PlayerInfo[playerid][pCrashHealth]);
-
-		SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uspjesno ste vraceni na prijasnju poziciju.");
-
-		mysql_fquery(g_SQL, "DELETE FROM player_crashes WHERE id = '%d'", PlayerInfo[playerid][pCrashId]);
-	
-		//Resets
-		PlayerInfo[playerid][pCrashId] 		= -1;
-		PlayerInfo[playerid][pCrashArmour]	= 0.0;
-		PlayerInfo[playerid][pCrashHealth]	= 0.0;
-		PlayerInfo[playerid][pCrashVW]		= -1;
-		PlayerInfo[playerid][pCrashInt] 	= -1;
-		PlayerInfo[playerid][pCrashPos][0]	= 0.0;
-		PlayerInfo[playerid][pCrashPos][1]	= 0.0;
-		PlayerInfo[playerid][pCrashPos][2]	= 0.0;
-		crash_checker[playerid] 	= true;
-	}
-	if(PlayerInfo[playerid][pMustRead] == true)
-	{
-		GetPlayerPreviousInfo(playerid);
-		LearnPlayer(playerid, 1);
-	}
-	if(strcmp(PlayerInfo[playerid][pLastUpdateVer], SCRIPT_VERSION, true) != 0 && !isnull(PlayerAdminMessage[playerid][pAdminMsg]) && !PlayerAdminMessage[playerid][pAdmMsgConfirm])
-	{
-		va_SendClientMessage(playerid, COLOR_LIGHTBLUE, "[City of Angels]: "COL_WHITE"Server je updatean na verziju "COL_LIGHTBLUE"%s"COL_WHITE", za vise informacija - /update.", SCRIPT_VERSION);
-		ShowAdminMessage(playerid);
-		goto spawn_end;
-	}
-	else if(strcmp(PlayerInfo[playerid][pLastUpdateVer], SCRIPT_VERSION, true) != 0 && (PlayerAdminMessage[playerid][pAdmMsgConfirm] || isnull(PlayerAdminMessage[playerid][pAdminMsg])))
-	{
-		if(strcmp(PlayerInfo[playerid][pLastUpdateVer], SCRIPT_VERSION, true) != 0)
-			PlayerReward[playerid] = true;
-		ShowPlayerUpdateList(playerid);
-		goto spawn_end;
-	}
-	else if(!isnull(PlayerAdminMessage[playerid][pAdminMsg]) && !PlayerAdminMessage[playerid][pAdmMsgConfirm] && strcmp(PlayerInfo[playerid][pLastUpdateVer], SCRIPT_VERSION, true) == 0)
-	{
-		ShowAdminMessage(playerid);
-		goto spawn_end;
-	}
-
-	spawn_end:	
-	SafeSpawned[ playerid ] = true;
-
-	AC_SetPlayerWeapons(playerid);
-
-	// Player Checks
-	CheckPlayerVehicle(playerid);
-	CheckPlayerInteriors(playerid);
-	CheckPlayerInactivity(playerid);
-	CheckPlayerMasks(playerid);
-	return 1;
-}
 
 //Forwards
 forward CheckPlayerInBase(playerid);
 forward LoadPlayerStats(playerid); // Loading all data non-related to 'accounts' database table
+forward SavePlayerStats(playerid); // Saving all data non-related to 'accounts database table
 forward LoadPlayerData(playerid);
 forward SavePlayerData(playerid); 
-forward SavePlayerStats(playerid); // Saving all data non-related to 'accounts database table
 forward RegisterPlayer(playerid);
 forward OnAccountFinish(playerid);
 
@@ -157,7 +74,10 @@ CheckPlayerInactivity(playerid)
 			return 1;
 		
 		mysql_fquery(g_SQL, "DELETE FROM inactive_accounts WHERE sqlid = '%d'", PlayerInfo[playerid][pSQLID]);
-		SendClientMessage(playerid, COLOR_LIGHTRED, "[SERVER]: Neaktivnost koju ste imali prijavljenu u bazi podataka je deaktivirana.");		
+		va_SendClientMessage(playerid, COLOR_LIGHTRED, 
+			"[%s]: Registered inactivity on current account has been deactivated.",
+			SERVER_NAME
+		);		
 		return 1;
 	}
 	MySQL_TQueryInline(g_SQL,  
@@ -187,18 +107,32 @@ Public: OnPasswordChecked(playerid)
 		Bit8_Set(gr_LoginInputs, playerid, Bit8_Get(gr_LoginInputs, playerid) + 1);
 		if( !( MAX_LOGIN_TRIES - Bit8_Get(gr_LoginInputs, playerid) ) )
 		{
-			//Kick
-			SendClientMessage(playerid, COLOR_RED, "[SERVER]  Dobili ste IP ban radi pogresnih pokusaja ulaska u racun!");
+			va_SendClientMessage(playerid, COLOR_RED, 
+				"[%s]: You have reached maximum(%d) attempts, you got an IP ban!",
+				SERVER_NAME,
+				MAX_LOGIN_TRIES
+			);
 			BanMessage(playerid);
 			return 1;
 		}
 		if(Bit8_Get(gr_LoginInputs, playerid) < 3) 
 		{
-			format(dialogtext, sizeof(dialogtext), ""COL_RED"Krivo ste unijeli podatke za login!\n\
-													"COL_WHITE"Provjerite velika i mala slova, te unesite valjanu sifru.\n\
-													Imate jos "COL_LIGHTBLUE"%d"COL_WHITE"pokusaja za unos valjane sifre!\n\n\n\
-													"COL_RED"Ukoliko ne unesete dobru sifru onda cete dobiti kick!", MAX_LOGIN_TRIES - Bit8_Get(gr_LoginInputs, playerid));
-			ShowPlayerDialog(playerid, DIALOG_LOGIN, DIALOG_STYLE_PASSWORD, ""COL_WHITE"PRIJAVA", dialogtext, "Sign In", "Abort");
+			format(dialogtext, sizeof(dialogtext), 
+				""COL_RED"You have entered wrong password!\n\
+					"COL_WHITE"Check your upper/lower case sensitivity and try again.\n\
+					You have "COL_LIGHTBLUE"%d "COL_WHITE"attempts to input valid password!\n\n\n\
+					"COL_RED"If you exceed max attempt limit, you will be kicked!", 
+				MAX_LOGIN_TRIES - Bit8_Get(gr_LoginInputs, playerid)
+			);
+
+			ShowPlayerDialog(playerid, 
+				DIALOG_LOGIN, 
+				DIALOG_STYLE_PASSWORD, 
+				""COL_WHITE"Login", 
+				dialogtext, 
+				"Proceed", 
+				"Abort"
+			);
 		}
 	}
 	return 1;
@@ -206,63 +140,80 @@ Public: OnPasswordChecked(playerid)
 
 public CheckPlayerInBase(playerid)
 {
-	if(cache_num_rows()) { //Registriran
-		// Player Camera
+	if(cache_num_rows()) 
+	{
 		TogglePlayerControllable(playerid, false);
 		SetCameraBehindPlayer(playerid);
 		RandomPlayerCameraView(playerid);
-		// Show Dialog
-		format(dialogtext, sizeof(dialogtext), ""COL_WHITE"Srdacan pozdrav "COL_LIGHTBLUE"%s!\n\n\
-			"COL_WHITE"Lijepo vas je vidjeti na nasem serveru opet.\n\
-			Molimo da unesete lozinku vaseg korisnickog\n\
-			racuna i da se prijavite. Imate "COL_LIGHTBLUE"%d"COL_WHITE"sekundi da se\n\
-			prijavite, ili cete biti odspojeni sa Servera.\n\n\
-			Hvala i uzivajte i dalje u igranju na City of Angels!",GetName(playerid),MAX_LOGIN_TIME
+
+		format(dialogtext, 
+			sizeof(dialogtext), 
+			""COL_WHITE"Greetings "COL_LIGHTBLUE"%s!\n\n\
+				"COL_WHITE"It's nice to see you again on our server.\n\
+				Please enter your account's password and log in.\n\
+				You have "COL_LIGHTBLUE"%d"COL_WHITE" seconds to\n\
+				sign in, otherwise you'll be kicked out.\n\n\
+				Thank you and we hope you'll enjoy your gameplay\n\
+				on %s!",
+			GetName(playerid),
+			MAX_LOGIN_TIME
 		);					
-		ShowPlayerDialog(playerid, DIALOG_LOGIN, DIALOG_STYLE_PASSWORD, ""COL_WHITE"PRIJAVA", dialogtext, "Sign In", "Abort");
+		
+		ShowPlayerDialog(playerid, 
+			DIALOG_LOGIN, 
+			DIALOG_STYLE_PASSWORD, 
+			""COL_WHITE"Login", 
+			dialogtext, 
+			"Proceed", 
+			"Abort"
+		);
 		
 		Bit8_Set(gr_LoginInputs, playerid, 0);
 		Bit1_Set(gr_LoginChecksOn, playerid, true);
 		LoginCheckTimer[playerid] = defer LoginCheck(playerid);
 	} 
 	else 
-	{ //Nije Registriran
+	{
 		if(regenabled)
 		{
-			SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "U toku je ucitavanje registracije, pricekajte par trenutaka.");
-			
-			new
-				playaIP[16];
-				
+			new playaIP[16];
 			GetPlayerIp(playerid, playaIP, 16);
-			
-			//VPN_RegisterIPCheck(playerid, playaIP); // provjerava IP zbog VPN-a te onda izbaci registraciju ako nije VPN
-			
+						
 			#if defined COA_UCP
-				SendClientMessage(playerid, COLOR_RED, "Niste registrirali svoj racun na ucp.cityofangels-roleplay.com!");
+				va_SendClientMessage(playerid, COLOR_RED, "You haven't registered your account on %s!",
+					WEB_URL
+				);
 				KickMessage(playerid);
 			#else
-				format(dialogtext, sizeof(dialogtext), ""COL_WHITE"Dobrodosao "COL_LIGHTBLUE"%s!\n\n\
-													"COL_WHITE"Vas racun nije registriran, ukoliko\n\
-													se zelite registrirati kliknite na gumb \"Register\"\n\
-													U protivnome cete biti kickani sa servera!",GetName(playerid));
-				ShowPlayerDialog(playerid, DIALOG_REGISTER, DIALOG_STYLE_MSGBOX, ""COL_WHITE"REGISTRACIJA (1/6)", dialogtext, "Register", "Abort");
+				format(dialogtext, 
+					sizeof(dialogtext), 
+					""COL_WHITE"Welcome "COL_LIGHTBLUE"%s!\n\n\
+						"COL_WHITE"Your account isn't registered on our server.\n\
+						If you want to Sign Up, please press \"Register\".\n\
+						Otherwise, you'll be kicked out of the server!",GetName(playerid)
+				);
+				ShowPlayerDialog(playerid, 
+					DIALOG_REGISTER, 
+					DIALOG_STYLE_MSGBOX, 
+					""COL_WHITE"Sign Up (1/6)", 
+					dialogtext, 
+					"Register", 
+					"Abort"
+				);
 			#endif
 		}
 		else
 		{
-			SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "Administrator je trenutno onemogucio registraciju na serveru, pokusajte kasnije.");
-			SendClientMessage(playerid, COLOR_RED, "Administrator je trenutno onemogucio registraciju na serveru, pokusajte kasnije.");
+			SendClientMessage(playerid, COLOR_RED, 
+				"Administrator currently disabled registration on server. Please try again later.");
 			KickMessage(playerid);
 		}
 	}
 	return 1;
 }
 
-public LoadPlayerStats(playerid)
+public LoadPlayerStats(playerid) // Main func. for hooking database loads
 {
-	// Crashes
-	LoadPlayerCrashes(playerid);
 	return 1;
 }
 
@@ -324,7 +275,6 @@ public LoadPlayerData(playerid)
 		cache_get_value_name_int(0, "cigaretes"		, PlayerInfo[playerid][pCiggaretes]);	
 		cache_get_value_name_int(0, "lighter"		, PlayerInfo[playerid][pLighter]);		
 
-		cache_get_value_name_int(0, "lijektimer"	, PlayerInfo[playerid][pLijekTimer]);
 		cache_get_value_name_int(0,	"boombox"		, PlayerInfo[playerid][pBoomBox]);
 		cache_get_value_name_int(0,	"boomboxtype"	, PlayerInfo[playerid][pBoomBoxType]);
 		
@@ -345,8 +295,8 @@ public LoadPlayerData(playerid)
 		cache_get_value_name_int(0, "pBusinessWorkTime", PlayerInfo[playerid][pBusinessWorkTime]);
 		cache_get_value_name_int(0, "FurnPremium"	, PlayerInfo[playerid][FurnPremium]);
 		
-		cache_get_value_name_int(0, "drugused", PlayerInfo[playerid][pDrugUsed]);
-		cache_get_value_name_int(0, "drugseconds", PlayerInfo[playerid][pDrugSeconds]);
+		cache_get_value_name_int(0, "drugused"		, PlayerInfo[playerid][pDrugUsed]);
+		cache_get_value_name_int(0, "drugseconds"	, PlayerInfo[playerid][pDrugSeconds]);
 		cache_get_value_name_int(0, "lastdrug", PlayerInfo[playerid][pDrugOrder]);
 		
 		//Fisher
@@ -354,22 +304,38 @@ public LoadPlayerData(playerid)
 		
 		if( PlayerInfo[ playerid ][ pUnbanTime ] == -1 )
 		{
-			SendClientMessage( playerid, COLOR_RED, "[CoA-RP Server]: Dobili ste dozivotnu zabranu igranja na ovome serveru! Ukoliko mislite da niste zasluzili zalite se na forumu! www.cityofangels-roleplay.com");
+			va_SendClientMessage( playerid, COLOR_RED, 
+				"[%s]: You have been banned for life on this server!\n\
+					If you think your ban was unfair/a mistake, please post an unban request on\n\
+					\n%s",
+				SERVER_NAME,
+				WEB_URL
+			);
 			BanMessage(playerid);
+			return 1;
+		}
+		else if( PlayerInfo[ playerid ][ pUnbanTime ] == -2 ) 
+		{
+			va_SendClientMessage( playerid, COLOR_RED, 
+				"[CoA-RP Server]: Your user account has been blocked by the system!\n\
+					You must create it on User Control Panel (%s) in order for it to be playable!",
+				WEB_URL);
+			KickMessage(playerid);
 			return 1;
 		}
 		else if( PlayerInfo[ playerid ][ pUnbanTime ] == -3)
 		{
-		    SendClientMessage( playerid, COLOR_RED, "[CoA-RP Server]: Vas korisnicki racun je trenutno zakljucan od strane sigurnosnog sistema!");
-		    SendClientMessage( playerid, COLOR_RED, "[CoA-RP Server]: Postavite zahtjev za unban na forumu kako bi otkljucali vas account! (forum.cityofangels-roleplay.com)");
+		    va_SendClientMessage( playerid, COLOR_RED, 
+				"[%s]: Your account has been locked by security system!",
+				SERVER_NAME
+			);
+		    va_SendClientMessage( playerid, COLOR_RED,
+				"[%s]: Please post an unban request on our pages! (%s)",
+				SERVER_NAME,
+				WEB_URL
+			);
 		    KickMessage(playerid);
 		    return 1;
-		}
-
-		if( PlayerInfo[ playerid ][ pUnbanTime ] == -2 ) {
-			SendClientMessage( playerid, COLOR_RED, "[CoA-RP Server]: Vas racun je blokiran od strane sustava! Morate uvesti racun na User Control Panel (ucp.cityofangels-roleplay.com) da biste mogli ponovno igrati!");
-			KickMessage(playerid);
-			return 1;
 		}
 
 		if( PlayerInfo[ playerid ][ pUnbanTime ] < gettimestamp() ) 
@@ -387,8 +353,13 @@ public LoadPlayerData(playerid)
 			TimeFormat(Timestamp:PlayerInfo[ playerid ][ pUnbanTime ], HUMAN_DATE, date);
 			TimeFormat(Timestamp:PlayerInfo[ playerid ][ pUnbanTime ], ISO6801_TIME, time);
 	
-			va_SendClientMessage(playerid, COLOR_LIGHTRED, "[CoA-RP Server]: Vasa zabrana igranja zavrsava "COL_SERVER"%s %s.", date, time);
-			va_SendClientMessage(playerid, COLOR_LIGHTRED, "Razlog bana: %s", PlayerInfo[ playerid ][ pBanReason ]);
+			va_SendClientMessage(playerid, COLOR_LIGHTRED, 
+				"[%s]: Your ban expires on date: "COL_SERVER"%s %s.", 
+				SERVER_NAME,
+				date, 
+				time
+			);
+			va_SendClientMessage(playerid, COLOR_LIGHTRED, "Ban reason: %s", PlayerInfo[ playerid ][ pBanReason ]);
 
 			KickMessage(playerid);
 			return 1;
@@ -396,7 +367,6 @@ public LoadPlayerData(playerid)
 
 		LoadPlayerStats(playerid);
 		
-		// Biznis & house & complex keys
 		PlayerInfo[playerid][pBizzKey] 	= INVALID_BIZNIS_ID;
 		PlayerInfo[playerid][pBusiness] = INVALID_BIZNIS_ID;
 		PlayerInfo[playerid][BizCoOwner] = false;
@@ -406,7 +376,8 @@ public LoadPlayerData(playerid)
 		
 		foreach(new biznis : Bizzes) 
 		{
-			if(BizzInfo[biznis][bOwnerID] == PlayerInfo[playerid][pSQLID]) {
+			if(BizzInfo[biznis][bOwnerID] == PlayerInfo[playerid][pSQLID]) 
+			{
 				PlayerInfo[playerid][pBizzKey] = biznis;
 				PlayerInfo[playerid][pBusiness] = biznis;
 				ReloadBizzFurniture(biznis);
@@ -416,7 +387,8 @@ public LoadPlayerData(playerid)
 		
 		foreach(new biznis : Bizzes)
 		{
-			if(BizzInfo[biznis][bco_OwnerID] == PlayerInfo[playerid][pSQLID]) {
+			if(BizzInfo[biznis][bco_OwnerID] == PlayerInfo[playerid][pSQLID]) 
+			{
 				PlayerInfo[playerid][pBusiness] = biznis;
 				PlayerInfo[playerid][BizCoOwner] = true;
 				break;
@@ -425,7 +397,8 @@ public LoadPlayerData(playerid)
 		
 		foreach(new complex : Complex)
 		{
-			if(ComplexInfo[complex][cOwnerID] == PlayerInfo[playerid][pSQLID]) {
+			if(ComplexInfo[complex][cOwnerID] == PlayerInfo[playerid][pSQLID]) 
+			{
 				PlayerInfo[playerid][pComplexKey] = complex;
 				break;
 			}
@@ -433,7 +406,8 @@ public LoadPlayerData(playerid)
 		
 		foreach(new house : Houses)
 		{
-			if(HouseInfo[house][hOwnerID] == PlayerInfo[playerid][pSQLID]) {
+			if(HouseInfo[house][hOwnerID] == PlayerInfo[playerid][pSQLID]) 
+			{
 				PlayerInfo[playerid][pHouseKey] = house;
 				break;
 			}
@@ -441,7 +415,8 @@ public LoadPlayerData(playerid)
 		
 		foreach(new complexr : ComplexRooms)
 		{
-			if(ComplexRoomInfo[complexr][cOwnerID] == PlayerInfo[playerid][pSQLID]) {
+			if(ComplexRoomInfo[complexr][cOwnerID] == PlayerInfo[playerid][pSQLID]) 
+			{
 				PlayerInfo[playerid][pComplexRoomKey] = complexr;
 				break;
 			}
@@ -457,7 +432,8 @@ public LoadPlayerData(playerid)
 		}
 		foreach(new garage : Garages)
 		{
-			if(GarageInfo[garage][gOwnerID] == PlayerInfo[playerid][pSQLID]) {
+			if(GarageInfo[garage][gOwnerID] == PlayerInfo[playerid][pSQLID]) 
+			{
 				PlayerInfo[playerid][pGarageKey] = garage;
 				break;
 			}
@@ -467,21 +443,38 @@ public LoadPlayerData(playerid)
   		SetPlayerSpawnInfo(playerid);
         Bit1_Set( gr_FristSpawn, playerid, true );
 
-        if(!isnull(PlayerInfo[playerid][pSAMPid]) && PlayerInfo[playerid][pSecQuestion] != 1 && !isnull(PlayerInfo[playerid][pSecQuestAnswer]))
+        if(!isnull(PlayerInfo[playerid][pSAMPid]) && PlayerInfo[playerid][pSecQuestion] != 1 
+			&& !isnull(PlayerInfo[playerid][pSecQuestAnswer]))
         {
             new
                 n_gpci[128];
             gpci(playerid, n_gpci, 128);
-            if(strcmp(n_gpci, PlayerInfo[playerid][pSAMPid])) {
+            if(strcmp(n_gpci, PlayerInfo[playerid][pSAMPid])) 
+			{
                 OnSecurityBreach[playerid] = true;
-                SendClientMessage(playerid, COLOR_RED, "[SERVER]  Izgleda da se logirate s novog racunala koji je nepoznat nasem serveru! Upisite sigurnosni odgovor kako bi nastavili.");
-                va_ShowPlayerDialog(playerid, DIALOG_SEC_SAMPID, DIALOG_STYLE_PASSWORD, ""#COL_RED"SECURITY BREACH", ""#COL_WHITE"Molimo odgovorite na sigurnosno pitanje kako bi nastavili:\n%s", "Answer", "Abort", secQuestions[PlayerInfo[playerid][pSecQuestion]]);
+                
+				va_SendClientMessage(playerid, 
+					COLOR_RED, 
+					"[%s]: Semms to be you are using unknown computer to log in to our server! \n\
+						Please input security answer to continue.",
+					SERVER_NAME
+				);
+
+                va_ShowPlayerDialog(playerid, 
+					DIALOG_SEC_SAMPID, 
+					DIALOG_STYLE_PASSWORD, 
+					""COL_RED"SECURITY BREACH", 
+					""COL_WHITE"Please answer your security question to continue:\n%s", 
+					"Answer", 
+					"Abort", 
+					secQuestions[PlayerInfo[playerid][pSecQuestion]]
+				);
                 return 1;
             }
         }
 
         Bit1_Set(gr_PlayerLoggedIn, playerid, true);
-		SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "U toku je ucitavanje podataka. Pricekajte 5 sekundi.");
+		SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "Please wait for 5 seconds. Loading in progres...");
 		defer FinishPlayerSpawn(playerid);
     }
     return 1;
@@ -537,7 +530,6 @@ public OnAccountFinish(playerid)
 	
 	UpdateRegisteredPassword(playerid);
 	
-	//Player Functions
 	TogglePlayerSpectating(playerid, 0);
 	SetCameraBehindPlayer(playerid);
 	SetPlayerScore(playerid, PlayerInfo[playerid][pLevel]);
@@ -548,7 +540,6 @@ public OnAccountFinish(playerid)
 	
 	CreateLogoTD(playerid);
 	
-	//Tutorial
 	SpawnPlayer(playerid);
     return 1;
 }
@@ -568,14 +559,6 @@ stock IsEMailInDB(const email[])
 
 SafeSpawnPlayer(playerid)
 {
-	if(PlayerInfo[playerid][pSQLID] == 0)
-	{
-		SendClientMessage(playerid, COLOR_RED, "[INFO]: Kickani ste sa servera zbog toga sto server nije pronasao vase podatke! Slikajte ovo i posaljite developerima!");
-		printf("<!> WARNING: Igrac %s[%d](%s) je automatski kickan sa servera, razlog: Nepostojeci SQLID!", GetName(playerid), playerid, ReturnPlayerIP(playerid));
-		KickMessage(playerid);
-		
-		return 1;
-	}
 	new currentday, day;
 	TimeFormat(Timestamp:gettimestamp(), DAY_OF_MONTH, "%d", currentday);
 	TimeFormat(Timestamp:ExpInfo[playerid][eLastPayDayStamp], DAY_OF_MONTH, "%d", day);
@@ -623,37 +606,47 @@ SafeSpawnPlayer(playerid)
 	if( !PlayerInfo[playerid][pRegistered] )
 		PlayerNewUser_Set(playerid, true);
 		
-	// Donacije
-	if( PlayerVIP[playerid][pDonateTime] < gettimestamp() && PlayerVIP[playerid][pDonateRank] > 0 ) {
-		SendClientMessage( playerid, COLOR_ORANGE, "[CoA Server]: Vrijeme vaseg Premium VIP paketa je isteklo! Ukoliko zelite produziti VIP onda donirajte opet!");
+	if( PlayerVIP[playerid][pDonateTime] < gettimestamp() && PlayerVIP[playerid][pDonateRank] > 0 ) 
+	{
+		va_SendClientMessage( playerid, COLOR_ORANGE, 
+			"[%s]: Your InGame Premium VIP status has expired. Please donate again if you want to extend it!",
+			SERVER_NAME
+		);
+		
 		PlayerVIP[playerid][pDonateTime] = 0;
 		PlayerVIP[playerid][pDonateRank] = 0;
 		if(PlayerInfo[playerid][pBizzKey] != INVALID_BIZNIS_ID)
 			UpdatePremiumBizFurSlots(playerid);
 		if(PlayerInfo[playerid][pHouseKey] != INVALID_HOUSE_ID)
 			UpdatePremiumHouseFurSlots(playerid, -1, PlayerInfo[ playerid ][ pHouseKey ]);
-
 		SavePlayerVIP(playerid);
 	}
+
 	if( isnull(PlayerInfo[playerid][pSecQuestAnswer]) && isnull(PlayerInfo[playerid][pEmail]) )
 	{
-		SendClientMessage(playerid, COLOR_RED, "[ ! ] Vas racun je nezasticen! Koristite komandu /account i postavite EMail i sigurnosno pitanje!");
-		SendClientMessage(playerid, COLOR_RED, "[ ! ] Ukoliko ne upisete ove informacije a izgubite vas account vam nece biti vracen.");
+		SendClientMessage(playerid, COLOR_RED, 
+			"[ ! ]: Your account is unprotected. Please setup your e-mail and security question & answer! (/account)");
+		va_SendClientMessage(playerid, COLOR_RED, 
+			"[ ! ]: If you don't fill up your e-mail and security question & answer, \n\
+				%s won't be responsible for your account loss.",
+			SERVER_NAME
+		);
 	}
 	else if(PlayerInfo[playerid][pSecQuestion] == 1 && isnull(PlayerInfo[playerid][pSecQuestAnswer]))
 	{
-		SendClientMessage(playerid, COLOR_RED, "[ ! ] Postavite ili promjenite vase sadasnje pitanje/odgovor kako ne bi ostali bez pristupa vasem racunu!");
-		SendClientMessage(playerid, COLOR_RED, "[ ! ] Koristite komandu /account kako bi dodali sigurnosno pitanje.");
+		SendClientMessage(playerid, COLOR_RED, "[ ! ]: Please setup your security question and answer! (/account)");
 		gpci(playerid, PlayerInfo[playerid][pSAMPid], 128);
 	}
 	else if(isnull(PlayerInfo[playerid][pSAMPid]))
 	{
-		SendClientMessage(playerid, COLOR_RED, "[ ! ] Sljedeci put kad se logirate sa drugog racunala server ce vas pitati odgovor na vase sigurnosno pitanje!");
+		SendClientMessage(playerid, COLOR_RED, 
+			"[ ! ]: Next time you login from different computer, the server will require answer to safety question!");
 		gpci(playerid, PlayerInfo[playerid][pSAMPid], 128);
 	}
-	
-	defer SetPlayerCrash(playerid);
+
 	defer SafeHealPlayer(playerid);
+	FinalPlayerCheck(playerid); // Crash, Private Vehicle, Mask, Interiors and Inactivity Check 
+
 	Streamer_SetVisibleItems(STREAMER_TYPE_OBJECT, OBJECT_STREAM_LIMIT, playerid);
 	Bit1_Set( gr_FristSpawn, playerid, true );
 	Bit1_Set(gr_PlayerLoggedIn, playerid, true);
@@ -663,12 +656,16 @@ SafeSpawnPlayer(playerid)
 	SetPlayerScore(playerid, PlayerInfo[playerid][pLevel]);
 	TogglePlayerControllable(playerid, false);
 	StopAudioStreamForPlayer(playerid);
-	va_SendClientMessage(playerid, COLOR_LIGHTBLUE, "[City of Angels]: "COL_WHITE"Dobrodosao natrag, "COL_LIGHTBLUE"%s"COL_WHITE"!", GetName(playerid));
-	//CallLocalFunction("OnPlayerSpawn", "i", playerid);
+	
+	va_SendClientMessage(playerid, COLOR_LIGHTBLUE, 
+		"[%s]: "COL_WHITE"Welcome back, "COL_LIGHTBLUE"%s"COL_WHITE"!", 
+		SERVER_NAME,
+		GetName(playerid)
+	);
 	return 1;
 }
 
-public SavePlayerStats(playerid)
+public SavePlayerStats(playerid) // Main func. for hooking database updates 
 {
 	return 1;
 }
@@ -762,8 +759,18 @@ stock SetPlayerSpawnInfo(playerid)
 	}
 	else if(PlayerInfo[playerid][pKilled] == 1) 
 	{
-		SetSpawnInfo(playerid, 0, PlayerInfo[playerid][pChar],PlayerInfo[ playerid ][ pDeath ][ 0 ], PlayerInfo[ playerid ][ pDeath ][ 1 ], PlayerInfo[ playerid ][ pDeath ][ 2 ], 0, 0, 0, 0, 0, 0, 0);
-		Streamer_UpdateEx(playerid, PlayerInfo[ playerid ][ pDeath ][ 0 ], PlayerInfo[ playerid ][ pDeath ][ 1 ], PlayerInfo[ playerid ][ pDeath ][ 2 ]);
+		SetSpawnInfo(playerid, 0, 
+			PlayerInfo[playerid][pChar],
+			PlayerInfo[ playerid ][ pDeath ][ 0 ], 
+			PlayerInfo[ playerid ][ pDeath ][ 1 ], 
+			PlayerInfo[ playerid ][ pDeath ][ 2 ], 
+			0, 0, 0, 0, 0, 0, 0
+		);
+		Streamer_UpdateEx(playerid, 
+			PlayerInfo[ playerid ][ pDeath ][ 0 ], 
+			PlayerInfo[ playerid ][ pDeath ][ 1 ], 
+			PlayerInfo[ playerid ][ pDeath ][ 2 ]
+		);
 	}
 	else
 	{
@@ -776,10 +783,10 @@ stock SetPlayerSpawnInfo(playerid)
 			}
 			case 1:
 			{
-				if( ( PlayerInfo[playerid][pHouseKey] != INVALID_HOUSE_ID  ) ||  ( PlayerInfo[playerid][pRentKey] != INVALID_HOUSE_ID ) )
+				if( ( PlayerInfo[playerid][pHouseKey] != INVALID_HOUSE_ID  ) ||  
+					( PlayerInfo[playerid][pRentKey] != INVALID_HOUSE_ID ) )
 				{
-					new
-						house;
+					new house;
 					if(  PlayerInfo[playerid][pHouseKey] != INVALID_HOUSE_ID  )
 					{
 						house = PlayerInfo[playerid][pHouseKey];
@@ -794,8 +801,20 @@ stock SetPlayerSpawnInfo(playerid)
 							ReloadHouseFurniture(house);
 						ReloadHouseExterior(house);
 					}
-					SetSpawnInfo(playerid, 0, PlayerInfo[playerid][pChar], HouseInfo[ house ][ hEnterX ], HouseInfo[ house ][ hEnterY], HouseInfo[ house ][ hEnterZ ], 0, 0, 0, 0, 0, 0, 0);
-					Streamer_UpdateEx(playerid,HouseInfo[ house ][ hEnterX ], HouseInfo[ house ][ hEnterY], HouseInfo[ house ][ hEnterZ ], HouseInfo[ house ][ hVirtualWorld ], HouseInfo[ house ][ hInt ]);
+					SetSpawnInfo(playerid, 0, 
+						PlayerInfo[playerid][pChar], 
+						HouseInfo[ house ][ hEnterX ], 
+						HouseInfo[ house ][ hEnterY], 
+						HouseInfo[ house ][ hEnterZ ], 
+						0, 0, 0, 0, 0, 0, 0
+					);
+					Streamer_UpdateEx(playerid,
+						HouseInfo[ house ][ hEnterX ], 
+						HouseInfo[ house ][ hEnterY], 
+						HouseInfo[ house ][ hEnterZ ], 
+						HouseInfo[ house ][ hVirtualWorld ], 
+						HouseInfo[ house ][ hInt ]
+					);
 				}
 				else
 				{
@@ -843,10 +862,21 @@ stock SetPlayerSpawnInfo(playerid)
 			{
 				if( PlayerInfo[playerid][pComplexRoomKey] != INVALID_COMPLEX_ID )
 				{
-					new
-						complex = PlayerInfo[playerid][pComplexRoomKey];
-					SetSpawnInfo(playerid, 0, PlayerInfo[playerid][pChar], ComplexRoomInfo[complex][cExitX], ComplexRoomInfo[complex][cExitY], ComplexRoomInfo[complex][cExitZ], 0, 0, 0, 0, 0, 0, 0);
-					Streamer_UpdateEx(playerid, ComplexRoomInfo[complex][cExitX], ComplexRoomInfo[complex][cExitY], ComplexRoomInfo[complex][cExitZ], ComplexRoomInfo[complex][cViwo], ComplexRoomInfo[complex][cInt]);
+					new complex = PlayerInfo[playerid][pComplexRoomKey];
+					SetSpawnInfo(playerid, 0, 
+						PlayerInfo[playerid][pChar], 
+						ComplexRoomInfo[complex][cExitX], 
+						ComplexRoomInfo[complex][cExitY], 
+						ComplexRoomInfo[complex][cExitZ], 
+						0, 0, 0, 0, 0, 0, 0
+					);
+					Streamer_UpdateEx(playerid, 
+						ComplexRoomInfo[complex][cExitX], 
+						ComplexRoomInfo[complex][cExitY], 
+						ComplexRoomInfo[complex][cExitZ], 
+						ComplexRoomInfo[complex][cViwo], 
+						ComplexRoomInfo[complex][cInt]
+					);
 				}
 				else
 				{
@@ -874,36 +904,6 @@ stock SetPlayerSpawnInfo(playerid)
 	}
 }
 
-stock LoadPlayerCrashes(playerid)
-{
-	mysql_tquery(g_SQL, 
-		va_fquery(g_SQL, "SELECT * FROM player_crashes WHERE player_id = '%d'", 
-			PlayerInfo[playerid][pSQLID]), 
-		"LoadingPlayerCrashes", 
-		"i", 
-		playerid
-	);
-	return 1;
-}
-
-forward LoadingPlayerCrashes(playerid);
-public LoadingPlayerCrashes(playerid)
-{
-	if(!cache_num_rows()) 
-		return 0;
-	
-	cache_get_value_name_int(0,			"id"		, PlayerInfo[playerid][pCrashId]);
-	cache_get_value_name_float(0,		"pos_x"		, PlayerInfo[playerid][pCrashPos][0]);
-	cache_get_value_name_float(0,		"pos_y"		, PlayerInfo[playerid][pCrashPos][1]);
-	cache_get_value_name_float(0,		"pos_z"		, PlayerInfo[playerid][pCrashPos][2]);
-	cache_get_value_name_int(0, 		"interior"	, PlayerInfo[playerid][pCrashInt]);
-	cache_get_value_name_int(0, 		"viwo"		, PlayerInfo[playerid][pCrashVW]);
-	cache_get_value_name_int(0, 		"skin"		, PlayerInfo[playerid][pSkin]);
-	cache_get_value_name_float(0,		"armor"		, PlayerInfo[playerid][pCrashArmour]);
-	cache_get_value_name_float(0,		"health"	, PlayerInfo[playerid][pCrashHealth]);
-	return 1;
-}
-
 /*
 	##     ##  #######   #######  ##    ##  ######  
 	##     ## ##     ## ##     ## ##   ##  ##    ## 
@@ -929,21 +929,37 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 	{
 		case DIALOG_LOGIN:
 		{
-			if(!response) Kick(playerid);
+			if(!response) 
+				Kick(playerid);
+
 			if(isnull(inputtext))
 			{
-				format(dialogtext, sizeof(dialogtext), ""COL_RED"Ostavili ste prazno polje za lozinku!\n\
-															"COL_WHITE"Provjerite velika i mala slova, te unesite valjanu sifru.\n\
-															Imate jos "COL_LIGHTBLUE"%d"COL_WHITE"pokusaja za unos valjane sifre!\n\n\n\
-															"COL_RED"Ukoliko ne unesete dobru sifru onda cete dobiti kick!", MAX_LOGIN_TRIES - Bit8_Get(gr_LoginInputs, playerid));
-				ShowPlayerDialog(playerid, DIALOG_LOGIN, DIALOG_STYLE_PASSWORD, ""COL_WHITE"PRIJAVA", dialogtext, "Sign In", "Abort");
+				format(dialogtext, sizeof(dialogtext), 
+					""COL_RED"You have left empty input password field!\n\
+						"COL_WHITE"Check your upper/lower case sensitivity and try again.\n\
+						You have "COL_LIGHTBLUE"%d "COL_WHITE"attempts to input valid password!\n\n\n\
+						"COL_RED"If you exceed max attempt limit, you will be kicked!", 
+					MAX_LOGIN_TRIES - Bit8_Get(gr_LoginInputs, playerid)
+				);
+
+				ShowPlayerDialog(playerid, 
+					DIALOG_LOGIN, 
+					DIALOG_STYLE_PASSWORD, 
+					""COL_WHITE"Login", 
+					dialogtext, 
+					"Proceed", 
+					"Abort"
+				);
 				Bit8_Set(gr_LoginInputs, playerid, Bit8_Get(gr_LoginInputs, playerid) + 1);
 				return 1;
 			}
 			if( !( MAX_LOGIN_TRIES - Bit8_Get(gr_LoginInputs, playerid) ) )
 			{
 				//Kick
-				SendClientMessage(playerid, COLOR_RED, "[SERVER]  Dobili ste IP ban radi pogresnih pokusaja ulaska u racun!");
+				va_SendClientMessage(playerid, COLOR_RED, 
+					"[SERVER]: You reached %d unsucessful login attempts and you got an IP ban!",
+					MAX_LOGIN_TRIES
+				);
 				BanMessage(playerid);
 				return 1;
 			}
@@ -955,12 +971,11 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 
 				cache_get_value_name_int(0, "sqlid", sqlid);
 				cache_get_value_name(0, "password", sql_password, BCRYPT_HASH_LENGTH);
-				
+			
 				bcrypt_check(input_password, sql_password,  "OnPasswordChecked", "d", playerid);
 				return 1;
 			}
-			MySQL_TQueryInline(
-				g_SQL, 
+			MySQL_TQueryInline(g_SQL, 
 				using inline PasswordForQuery,
 				va_fquery(g_SQL, "SELECT sqlid, password FROM accounts WHERE name = '%e'", GetName(playerid, false)) 
 			);
@@ -971,7 +986,12 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 		    if(!response)
 				return Kick(playerid);
 
-			if( strfind(inputtext, "%", true) != -1 || strfind(inputtext, "=", true) != -1 || strfind(inputtext, "+", true) != -1 || strfind(inputtext, "'", true) != -1 || strfind(inputtext, ">", true) != -1 || strfind(inputtext, "^", true) != -1 || strfind(inputtext, "|", true) != -1 || strfind(inputtext, "?", true) != -1 || strfind(inputtext, "*", true) != -1 || strfind(inputtext, "#", true) != -1 || strfind(inputtext, "!", true) != -1 || strfind(inputtext, "$", true) != -1 )
+			if( strfind(inputtext, "%", true) != -1 || strfind(inputtext, "=", true) != -1 || 
+				strfind(inputtext, "+", true) != -1 || strfind(inputtext, "'", true) != -1 || 
+				strfind(inputtext, ">", true) != -1 || strfind(inputtext, "^", true) != -1 || 
+				strfind(inputtext, "|", true) != -1 || strfind(inputtext, "?", true) != -1 || 
+				strfind(inputtext, "*", true) != -1 || strfind(inputtext, "#", true) != -1 || 
+				strfind(inputtext, "!", true) != -1 || strfind(inputtext, "$", true) != -1 )
 				return Kick(playerid);
 			
 			if(isnull(inputtext))
@@ -985,16 +1005,28 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 				OnSecurityBreach[playerid] = false;
 
 				#if defined MODULE_LOGS
-                Log_Write("logfiles/GPCI.txt", "(%s) Player %s[%d]{%d}<%s> logged in with unknown GPCI for his account.", ReturnDate(), GetName(playerid), playerid, PlayerInfo[playerid][pSQLID], ReturnPlayerIP(playerid));
+                Log_Write("logfiles/GPCI.txt", 
+					"(%s) Player %s[%d]{%d}<%s> logged in with unknown GPCI for his account.", 
+					ReturnDate(), 
+					GetName(playerid), 
+					playerid, 
+					PlayerInfo[playerid][pSQLID], 
+					ReturnPlayerIP(playerid)
+				);
 				#endif
 				
 				new log_gpci[128];
-				format(log_gpci, sizeof(log_gpci), "Igrac %s[%d] se ulogirao na racun s nepoznatog kompjutera!", GetName(playerid), playerid);
+				format(log_gpci, 
+					sizeof(log_gpci), 
+					"Player %s[%d] logged in with unknown GPCI for his account!", 
+					GetName(playerid), 
+					playerid
+				);
 				ABroadCast(COLOR_LIGHTRED, log_gpci, 1);
 				gpci(playerid, PlayerInfo[playerid][pSAMPid], 128);
 				
 				Bit1_Set(gr_PlayerLoggedIn, playerid, true);
-				SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "U toku je ucitavanje podataka. Pricekajte 5 sekundi.");
+				SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "Please wait for 5 seconds. Loading in progres...");
 				defer FinishPlayerSpawn(playerid);
 				return 1;
             }
@@ -1002,29 +1034,36 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 			{
 			    if(-- secquestattempt[playerid] == 0)
 			    {
-			        SendClientMessage(playerid, -1, "");
-			        SendClientMessage(playerid, -1, "");
-			        SendClientMessage(playerid, -1, "");
-			        SendClientMessage(playerid, -1, "");
-			        SendClientMessage(playerid, -1, "");
-			        SendClientMessage(playerid, -1, "");
-			        SendClientMessage(playerid, -1, "");
-			        SendClientMessage(playerid, -1, "");
-			        SendClientMessage(playerid, -1, "");
-			        SendClientMessage(playerid, -1, "");
+			        ClearPlayerChat(playerid);
 			        
-			        SendClientMessage(playerid, COLOR_RED, "Vas account je sada zakljucan od strane security sistema!");
-			        SendClientMessage(playerid, COLOR_RED, "Postavite zahtjev za unban na forumu kako bi otklju�ali vas account!");
+			        SendClientMessage(playerid, COLOR_RED, "You account is now locked by security system!");
+			        va_SendClientMessage(playerid, COLOR_RED, "Please post an unban request on %s.", WEB_URL);
 
 					#if defined MODULE_BANS
-					HOOK_Ban(playerid, INVALID_PLAYER_ID, "Krivi sigurnosni odgovor", -3,  true);
+					HOOK_Ban(playerid, INVALID_PLAYER_ID, "Wrong safety answer", -3,  true);
 					#endif
 					return 1;
 				}
 				else
 				{
-				    SendClientMessage(playerid, COLOR_RED, "Ukoliko se ne sjecate vaseg odgovora kontaktirajte developere na forumu kako bi Vam pomogli!");
-    				va_ShowPlayerDialog(playerid, DIALOG_SEC_SAMPID, DIALOG_STYLE_PASSWORD, ""#COL_RED"SECURITY BREACH", ""#COL_WHITE"Molimo odgovorite na sigurnosno pitanje kako bi nastavili\nPreostalo pokusaja: "#COL_RED"%d"#COL_WHITE"\n\n%s", "Answer", "Abort", secquestattempt[playerid], secQuestions[PlayerInfo[playerid][pSecQuestion]]);
+				    va_SendClientMessage(playerid, 
+						COLOR_RED, 
+						"If you don't remember your safety answer, please contact our Developers on %s!",
+						WEB_URL
+					);
+
+    				va_ShowPlayerDialog(playerid,
+						DIALOG_SEC_SAMPID, 
+						DIALOG_STYLE_PASSWORD, 
+						""COL_RED"SECURITY BREACH", 
+						""COL_WHITE"Please answer the safety question if you want to proceed.\n\
+							Attempts left: "COL_RED"%d\n\
+							\n"COL_WHITE"%s", 
+						"Answer", 
+						"Abort", 
+						secquestattempt[playerid], 
+						secQuestions[PlayerInfo[playerid][pSecQuestion]]
+					);
 				}
 			}
 			return 1;
@@ -1032,183 +1071,381 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 		case DIALOG_REGISTER:
 		{
 			#if defined COA_UCP
-				SendClientMessage(playerid, COLOR_RED, "Niste registrirali svoj racun na ucp.cityofangels-roleplay.com!");
+				va_SendClientMessage(playerid, COLOR_RED, "You haven't registered your account on %s!", WEB_URL);
 				KickMessage(playerid);
 			#else
-				if(response) {
-					ShowPlayerDialog(playerid, DIALOG_REG_AGREE, DIALOG_STYLE_MSGBOX, ""COL_WHITE"REGISTRACIJA - AGREEMENT(2/6)", ""COL_WHITE"Prihvacate da, tokom svoga igranja na\n\
-					ovom serveru necete krsiti pravila servera, zloupotrebljavati\n\
-					bugove, vrijedati druge igrace, lazno se predstavljati,\n\
-					koristiti zlonamjerne programe ili na bilo koji drugi nacin\n\
-					onemogucavati drugim igracima ugodnu igru na svome serveru\n\n\
-					Ukoliko prihvacate kliknite \"I agree\"!", "I agree", "Abort");
-				}
-				else if(!response) 
+				if(!response) 
 					Kick(playerid);
+
+				ShowPlayerDialog(playerid, 
+					DIALOG_REG_AGREE, 
+					DIALOG_STYLE_MSGBOX, 
+					""COL_WHITE"Sign Up - EULA(2/6)", 
+					""COL_WHITE"With accepting, you agree that while gaming on our server\n\
+						you won't be breaking server rules, exploiting bugs/glitches,\n\
+						insult other players, making false pretenses, use malicious software,\n\
+						hacks, cheats, or in any other way obstruct pleasant gaming experience\n\
+						to other players on this server.\n\
+						"COL_RED"CAUTION: "COL_WHITE"Breaking EULA(End User License Agreement)\n\
+						will lead to "COL_RED"serious "COL_WHITE"sanctions.\n\
+						If you accept our EULA, please klick "COL_LIGHTBLUE"\"Accept\""COL_WHITE"!",
+					"I agree", 
+					"Abort"
+				);
 			#endif
-			return 1;
 		}
 		case DIALOG_REG_AGREE:
 		{
-			if(response) {
-				format(dialogtext, sizeof(dialogtext), ""COL_WHITE"Upisite lozinku kojom ce biti dostupna samo vasa \n\
-														 i koja ce vam omoguciti sigurnost vaseg racuna te, lozinka mora\n\
-														 sadrzavati 6-12 znakova.");
-				ShowPlayerDialog(playerid, DIALOG_REG_PASS, DIALOG_STYLE_PASSWORD, ""COL_WHITE"REGISTRACIJA - PASSWORD(3/6)", dialogtext, "Input", "Abort");
+			if(!response) 
+			{
+				format(dialogtext, 
+					sizeof(dialogtext), 
+					""COL_WHITE"Welcome "COL_LIGHTBLUE"%s!\n\n\
+						"COL_WHITE"Your account isn't registered on our server.\n\
+						If you want to Sign Up, please press \"Register\".\n\
+						Otherwise, you'll be kicked out of the server!",GetName(playerid)
+				);
+
+				ShowPlayerDialog(playerid, 
+					DIALOG_REGISTER, 
+					DIALOG_STYLE_MSGBOX, 
+					""COL_WHITE"Sign Up (1/6)", 
+					dialogtext, 
+					"Register", 
+					"Abort"
+				);
+				return 1;
 			}
-			else if(!response) {
-				format(dialogtext, sizeof(dialogtext), ""COL_WHITE"Dobro dosli "COL_LIGHTBLUE"%s!\n\n\
-													"COL_WHITE"Vas racun nije registriran, ukoliko\n\
-													se zelite registrirati kliknite na gumb \"Register\"\n\
-													Uprotivnome cete biti kickani sa servera!",GetName(playerid));
-				ShowPlayerDialog(playerid, DIALOG_REGISTER, DIALOG_STYLE_MSGBOX, ""COL_WHITE"REGISTRACIJA (1/6)", dialogtext, "Register", "Abort");
-			}
-			return 1;
+
+			format(dialogtext, sizeof(dialogtext), 
+				""COL_WHITE"Please enter a password for your account.\n\
+					Don't share your account password with anyone!\n\
+					\nPassword must be "COL_LIGHTBLUE"6-12 "COL_WHITE"characters long."
+			);
+
+			ShowPlayerDialog(playerid, 
+				DIALOG_REG_PASS, 
+				DIALOG_STYLE_PASSWORD, 
+				""COL_WHITE"Sign Up - Password(3/6)", 
+				dialogtext, 
+				"Input", 
+				"Abort"
+			);
 		}
 		case DIALOG_REG_PASS:
 		{
-			if(response) {
-				if(isnull(inputtext))
-				{
-					format(dialogtext, sizeof(dialogtext), ""COL_WHITE"Upisite lozinku kojom ce biti dostupna samo vama \n\
-														 i koja ce vam omoguciti sigurnost vaseg racuna te, lozinka mora\n\
-														 sadrzavati "COL_LIGHTBLUE"6-12 znakova"COL_WHITE".\n\
-														 "COL_RED"Ostavili ste prazno polje za lozinku!");
-					ShowPlayerDialog(playerid, DIALOG_REG_PASS, DIALOG_STYLE_PASSWORD, ""COL_WHITE"REGISTRACIJA - PASSWORD(3/6)", dialogtext, "Input", "Abort");
-					Bit8_Set(gr_RegisterInputs, playerid, Bit8_Get(gr_RegisterInputs, playerid) + 1);
-					return 1;
-				}
-				if( strfind(inputtext, "%", true) != -1 || strfind(inputtext, "\n", true) != -1 || strfind(inputtext, "=", true) != -1 || strfind(inputtext, "+", true) != -1 || strfind(inputtext, "'", true) != -1 || strfind(inputtext, ">", true) != -1 || strfind(inputtext, "^", true) != -1 || strfind(inputtext, "|", true) != -1 || strfind(inputtext, "?", true) != -1 || strfind(inputtext, "*", true) != -1 || strfind(inputtext, "#", true) != -1 || strfind(inputtext, "!", true) != -1 || strfind(inputtext, "$", true) != -1 )
-				{
-					format(dialogtext, sizeof(dialogtext), ""COL_WHITE"Upisite lozinku kojom ce biti dostupna samo vama \n\
-														 i koja ce vam omoguciti sigurnost vaseg racuna te, lozinka mora\n\
-														 sadrzavati "COL_LIGHTBLUE"6-12 znakova"COL_WHITE".\n\
-														 "COL_RED"Ne smijete upisivati znakove: %+^|?*#!$>' u password!");
-					ShowPlayerDialog(playerid, DIALOG_REG_PASS, DIALOG_STYLE_PASSWORD, ""COL_WHITE"REGISTRACIJA - PASSWORD(3/6)", dialogtext, "Input", "Abort");
-					Bit8_Set(gr_RegisterInputs, playerid, Bit8_Get(gr_RegisterInputs, playerid) + 1);
-					return 1;
-				}
-				if(6 <= strlen(inputtext) <= 12) {
-					format(dialogtext, sizeof(dialogtext), ""COL_WHITE"Unesite svoj vazeci e-mail radi dodatne sigurnosti\n\vaseg racuna:");
-					ShowPlayerDialog(playerid, DIALOG_REG_MAIL, DIALOG_STYLE_INPUT, ""COL_WHITE"REGISTRACIJA - E-MAIL(4/6)", dialogtext, "Input", "Abort");
-					format(PlayerInfo[playerid][pPassword], BCRYPT_HASH_LENGTH, inputtext);
-					Bit8_Set(gr_RegisterInputs, playerid, 0);
-					return 1;
-				}
-				if( (Bit8_Get(gr_RegisterInputs, playerid)) > 3 )
-				{
-					SendClientMessage(playerid, COLOR_RED, "[ ! ] Nedozvoljen broj ponavljanja krivih unosa lozinke.");
-					KickMessage(playerid);
-					return 1;
-				}
-				else {
-					format(dialogtext, sizeof(dialogtext), ""COL_WHITE"Upisite lozinku kojom ce biti dostupna samo vama \n\
-														 i koja ce vam omoguciti sigurnost vaseg racuna te, lozinka mora\n\
-														 sadrzavati "COL_LIGHTBLUE"6-12 znakova"COL_WHITE".");
-					ShowPlayerDialog(playerid, DIALOG_REG_PASS, DIALOG_STYLE_PASSWORD, ""COL_WHITE"REGISTRACIJA - PASSWORD(3/6)", dialogtext, "Input", "Abort");
-					Bit8_Set(gr_RegisterInputs, playerid, Bit8_Get(gr_RegisterInputs, playerid) + 1);
-					return 1;
-				}
+			if(!response) 
+			{
+				ShowPlayerDialog(playerid, 
+					DIALOG_REG_AGREE, 
+					DIALOG_STYLE_MSGBOX, 
+					""COL_WHITE"Sign Up - EULA(2/6)", 
+					""COL_WHITE"With accepting, you agree that while gaming on our server\n\
+						you won't be breaking server rules, exploiting bugs/glitches,\n\
+						insult other players, making false pretenses, use malicious software,\n\
+						hacks, cheats, or in any other way obstruct pleasant gaming experience\n\
+						to other players on this server.\n\
+						"COL_RED"CAUTION: "COL_WHITE"Breaking EULA(End User License Agreement)\n\
+						will lead to "COL_RED"serious "COL_WHITE"sanctions.\n\
+						If you accept our EULA, please klick "COL_LIGHTBLUE"\"Accept\""COL_WHITE"!",
+					"Accept", 
+					"Decline"
+				);
+				return 1;
 			}
-			else if(!response) {
-				ShowPlayerDialog(playerid, DIALOG_REG_AGREE, DIALOG_STYLE_MSGBOX, ""COL_WHITE"REGISTRACIJA - AGREEMENT(2/6)", ""COL_WHITE"Prihvacate da, tokom svoga igranja na\n\
-																					ovom serveru necete krsiti pravila servera, zloupotrebljavati\n\
-																					bugove, vrijedati druge igrace, lazno se predstavljati,\n\
-																					koristiti zlonamjerne programe ili na bilo koji drugi nacin\n\
-																					onemogucavati drugim igracima ugodnu igru na svome serveru\n\n\
-																					Ukoliko prihvacate kliknite \"Accept\"!", "Accept", "Odustajem");
+			
+			if(isnull(inputtext) || !strlen(inputtext))
+			{
+				format(dialogtext, sizeof(dialogtext), 
+					""COL_WHITE"Please enter a password for your account.\n\
+						Don't share your account password with anyone!\n\
+						\nPassword must be "COL_LIGHTBLUE"6-12 "COL_WHITE"characters long.\n\
+						"COL_RED"\nYour input password field was empty!\""
+				);
+
+				ShowPlayerDialog(playerid, 
+					DIALOG_REG_PASS, 
+					DIALOG_STYLE_PASSWORD, 
+					""COL_WHITE"Sign Up - Password(3/6)", 
+					dialogtext, 
+					"Input", 
+					"Abort"
+				);
+				Bit8_Set(gr_RegisterInputs, playerid, Bit8_Get(gr_RegisterInputs, playerid) + 1);
+				return 1;
 			}
-			return 1;
+			if( strfind(inputtext, "%", true) != -1 || strfind(inputtext, "\n", true) != -1 || 
+				strfind(inputtext, "=", true) != -1 || strfind(inputtext, "+", true) != -1 || 
+				strfind(inputtext, "'", true) != -1 || strfind(inputtext, ">", true) != -1 || 
+				strfind(inputtext, "^", true) != -1 || strfind(inputtext, "|", true) != -1 || 
+				strfind(inputtext, "?", true) != -1 || strfind(inputtext, "*", true) != -1 || 
+				strfind(inputtext, "#", true) != -1 || strfind(inputtext, "!", true) != -1 || 
+				strfind(inputtext, "$", true) != -1 )
+			{
+				format(dialogtext, sizeof(dialogtext), 
+					""COL_WHITE"Please enter a password for your account.\n\
+						Don't share your account password with anyone!\n\
+						\nPassword must be "COL_LIGHTBLUE"6-12 "COL_WHITE"characters long.\n\
+						"COL_RED"\nYour input can't contain: "COL_WHITE"%+^|?*#!$>' "COL_RED"in password!\""
+				);
+
+				ShowPlayerDialog(playerid, 
+					DIALOG_REG_PASS, 
+					DIALOG_STYLE_PASSWORD, 
+					""COL_WHITE"Sign Up - Password(3/6)", 
+					dialogtext, 
+					"Input", 
+					"Abort"
+				);
+				Bit8_Set(gr_RegisterInputs, playerid, Bit8_Get(gr_RegisterInputs, playerid) + 1);
+				return 1;
+			}
+			if(6 <= strlen(inputtext) <= 12) 
+			{
+				format(dialogtext, 
+					sizeof(dialogtext), 
+					""COL_WHITE"Please enter valid E-Mail for safety\nof your account:"
+				);
+
+				ShowPlayerDialog(playerid, 
+					DIALOG_REG_MAIL, 
+					DIALOG_STYLE_INPUT, 
+					""COL_WHITE"Sign Up - E-Mail(4/6)", 
+					dialogtext, 
+					"Input", 
+					"Abort"
+				);
+				format(PlayerInfo[playerid][pPassword], BCRYPT_HASH_LENGTH, inputtext);
+				Bit8_Set(gr_RegisterInputs, playerid, 0);
+				return 1;
+			}
+			if( (Bit8_Get(gr_RegisterInputs, playerid)) > 3 )
+			{
+				SendClientMessage(playerid, COLOR_RED, 
+					"[ ! ]: You have reached a maximal limit of wrong register inputs. You have been kicked from server.");
+				KickMessage(playerid);
+				return 1;
+			}
+			else 
+			{
+				format(dialogtext, sizeof(dialogtext), 
+					""COL_WHITE"Please enter a password for your account.\n\
+						Don't share your account password with anyone!\n\
+						\nPassword must be "COL_LIGHTBLUE"6-12 "COL_WHITE"characters long."
+				);
+
+				ShowPlayerDialog(playerid, 
+					DIALOG_REG_PASS, 
+					DIALOG_STYLE_PASSWORD, 
+					""COL_WHITE"Sign Up - Password(3/6)", 
+					dialogtext, 
+					"Input", 
+					"Abort"
+				);
+				Bit8_Set(gr_RegisterInputs, playerid, Bit8_Get(gr_RegisterInputs, playerid) + 1);
+				return 1;
+			}
 		}
 		case DIALOG_REG_MAIL:
 		{
-			if(response) {
-				if(isnull(inputtext))
-				{
-					format(dialogtext, sizeof(dialogtext), ""COL_WHITE"Unesite svoj vazeci e-mail radi dodatne sigurnosti vaseg racuna:"COL_RED"\nOstavili ste prazno polje pod E-Mailom!\n");
-					ShowPlayerDialog(playerid, DIALOG_REG_MAIL, DIALOG_STYLE_INPUT, ""COL_WHITE"REGISTRACIJA - E-MAIL(4/6)", dialogtext, "Input", "Abort");
-					Bit8_Set(gr_RegisterInputs, playerid, Bit8_Get(gr_RegisterInputs, playerid) + 1);
-					return 1;
-				}
-				if( strfind(inputtext, "%", true) != -1 || strfind(inputtext, "\n", true) != -1 || strfind(inputtext, "=", true) != -1 || strfind(inputtext, "+", true) != -1 || strfind(inputtext, "'", true) != -1 || strfind(inputtext, ">", true) != -1 || strfind(inputtext, "^", true) != -1 || strfind(inputtext, "|", true) != -1 || strfind(inputtext, "?", true) != -1 || strfind(inputtext, "*", true) != -1 || strfind(inputtext, "#", true) != -1 || strfind(inputtext, "!", true) != -1 || strfind(inputtext, "$", true) != -1 )
-				{	
-					format(dialogtext, sizeof(dialogtext), ""COL_WHITE"Unesite svoj vazeci e-mail radi dodatne sigurnosti vaseg racuna:"COL_RED"\nNe smijete upisivati znakove: %+^|?*#!$>' u e-mail!\n");
-					ShowPlayerDialog(playerid, DIALOG_REG_MAIL, DIALOG_STYLE_INPUT, ""COL_WHITE"REGISTRACIJA - E-MAIL(4/6)", dialogtext, "Input", "Abort");
-					Bit8_Set(gr_RegisterInputs, playerid, Bit8_Get(gr_RegisterInputs, playerid) + 1);
-					return 1;
-				}
-				if(!strlen(inputtext)) {
-					format(dialogtext, sizeof(dialogtext), ""COL_WHITE"Unesite svoj vazeci e-mail radi dodatne sigurnosti vaseg racuna:");
-					ShowPlayerDialog(playerid, DIALOG_REG_MAIL, DIALOG_STYLE_INPUT, ""COL_WHITE"REGISTRACIJA - E-MAIL(4/6)", dialogtext, "Input", "Abort");
-					Bit8_Set(gr_RegisterInputs, playerid, Bit8_Get(gr_RegisterInputs, playerid) + 1);
-					return 1;
-				}
-				if(!IsValidEMail(inputtext)) {
-					format(dialogtext, sizeof(dialogtext), ""COL_WHITE"Unesite svoj vazeci e-mail radi dodatne sigurnosti vaseg racuna.\n{fa5555}Niste unijeli vazecu e-mail adresu!");
-					ShowPlayerDialog(playerid, DIALOG_REG_MAIL, DIALOG_STYLE_INPUT, ""COL_WHITE"REGISTRACIJA - E-MAIL(4/6)", dialogtext, "Input", "Abort");
-					Bit8_Set(gr_RegisterInputs, playerid, Bit8_Get(gr_RegisterInputs, playerid) + 1);
-					return 1;
-				}
-				if(IsEMailInDB(inputtext)) {
-					format(dialogtext, sizeof(dialogtext), ""COL_WHITE"Unesite svoj vazeci e-mail radi dodatne sigurnosti vaseg racuna.\n{fa5555}Niste unijeli vazecu e-mail adresu!");
-					ShowPlayerDialog(playerid, DIALOG_REG_MAIL, DIALOG_STYLE_INPUT, ""COL_WHITE"REGISTRACIJA - E-MAIL(4/6)", dialogtext, "Input", "Abort");
-					Bit8_Set(gr_RegisterInputs, playerid, Bit8_Get(gr_RegisterInputs, playerid) + 1);
-					return 1;
-				}
-				if( (Bit8_Get(gr_RegisterInputs, playerid)) > 3 )
-				{
-					SendClientMessage(playerid, COLOR_RED, "[ ! ] Nedozvoljen broj ponavljanja krivih unosa E-Maila.");
-					KickMessage(playerid);
-					return 1;
-				}
-				format(PlayerInfo[playerid][pEmail], MAX_PLAYER_MAIL, "%s", inputtext);
-				Bit8_Set(gr_RegisterInputs, playerid, 0);
-				ShowPlayerDialog(playerid, DIALOG_REG_SEX, DIALOG_STYLE_LIST, ""COL_WHITE"REGISTRACIJA - Spol(5/6)", "Musko\nZensko", "Input", "Abort");
+			if(!response) 
+			{
+				format(dialogtext, sizeof(dialogtext), 
+					""COL_WHITE"Please enter a password for your account.\n\
+						Don't share your account password with anyone!\n\
+						\nPassword must be "COL_LIGHTBLUE"6-12 "COL_WHITE"characters long."
+				);
+
+				ShowPlayerDialog(playerid, 
+					DIALOG_REG_PASS, 
+					DIALOG_STYLE_PASSWORD, 
+					""COL_WHITE"Sign Up - Password(3/6)", 
+					dialogtext, 
+					"Input", 
+					"Abort"
+				);
+				return 1;
 			}
-			else if(!response) {
-				format(dialogtext, sizeof(dialogtext), ""COL_WHITE"Upisite lozinku kojom ce biti dostupna samo vasa \n\
-														 i koja ce vam omoguciti sigurnost vaseg racuna te, lozinka mora\n\
-														 sadrzavati "COL_LIGHTBLUE"6-12 znakova"COL_WHITE".");
-				ShowPlayerDialog(playerid, DIALOG_REG_PASS, DIALOG_STYLE_PASSWORD, ""COL_WHITE"REGISTRACIJA - PASSWORD(3/6)", dialogtext, "Input", "Abort");
+			if(!strlen(inputtext) || isnull(inputtext)) 
+			{
+				format(dialogtext, 
+					sizeof(dialogtext), 
+					""COL_WHITE"Please enter valid E-Mail for safety\nof your account:\n\
+						\n"COL_RED"Your input field was empty!"
+				);
+
+				ShowPlayerDialog(playerid, 
+					DIALOG_REG_MAIL, 
+					DIALOG_STYLE_INPUT, 
+					""COL_WHITE"Sign Up - E-Mail(4/6)", 
+					dialogtext, 
+					"Input", 
+					"Abort"
+				);
+				Bit8_Set(gr_RegisterInputs, playerid, Bit8_Get(gr_RegisterInputs, playerid) + 1);
+				return 1;
 			}
-			return 1;
+			if( strfind(inputtext, "%", true) != -1 || strfind(inputtext, "\n", true) != -1 
+				|| strfind(inputtext, "=", true) != -1 || strfind(inputtext, "+", true) != -1 
+				|| strfind(inputtext, "'", true) != -1 || strfind(inputtext, ">", true) != -1 
+				|| strfind(inputtext, "^", true) != -1 || strfind(inputtext, "|", true) != -1 
+				|| strfind(inputtext, "?", true) != -1 || strfind(inputtext, "*", true) != -1 
+				|| strfind(inputtext, "#", true) != -1 || strfind(inputtext, "!", true) != -1 
+				|| strfind(inputtext, "$", true) != -1 )
+			{	
+				format(dialogtext, 
+					sizeof(dialogtext), 
+					""COL_WHITE"Please enter valid E-Mail for safety\nof your account:\n\
+						"COL_RED"\nYour input can't contain: "COL_WHITE"%+^|?*#!$>' "COL_RED"in E-Mail adress!"
+				);
+				
+				ShowPlayerDialog(playerid, 
+					DIALOG_REG_MAIL, 
+					DIALOG_STYLE_INPUT, 
+					""COL_WHITE"Sign Up - E-mail(4/6)", 
+					dialogtext, 
+					"Input", 
+					"Abort"
+				);
+				Bit8_Set(gr_RegisterInputs, playerid, Bit8_Get(gr_RegisterInputs, playerid) + 1);
+				return 1;
+			}
+			if(!IsValidEMail(inputtext)) 
+			{
+				format(dialogtext, 
+					sizeof(dialogtext), 
+					""COL_WHITE"Please enter valid E-Mail for safety\nof your account:\n\
+						\n"COL_RED"E-Mail adress you entered isn't valid!"
+				);
+
+				ShowPlayerDialog(playerid, 
+					DIALOG_REG_MAIL, 
+					DIALOG_STYLE_INPUT, 
+					""COL_WHITE"Sign Up - E-Mail(4/6)", 
+					dialogtext, 
+					"Input", 
+					"Abort"
+				);
+				Bit8_Set(gr_RegisterInputs, playerid, Bit8_Get(gr_RegisterInputs, playerid) + 1);
+				return 1;
+			}
+			if(IsEMailInDB(inputtext)) 
+			{
+				format(dialogtext, 
+					sizeof(dialogtext), 
+					""COL_WHITE"Please enter valid E-Mail for safety\nof your account:\n\
+						\n"COL_RED"E-Mail is already registered in database!"
+				);
+
+				ShowPlayerDialog(playerid, 
+					DIALOG_REG_MAIL, 
+					DIALOG_STYLE_INPUT, 
+					""COL_WHITE"Sign Up - E-Mail(4/6)", 
+					dialogtext, 
+					"Input", 
+					"Abort"
+				);
+				Bit8_Set(gr_RegisterInputs, playerid, Bit8_Get(gr_RegisterInputs, playerid) + 1);
+				return 1;
+			}
+			if( (Bit8_Get(gr_RegisterInputs, playerid)) > 3 )
+			{
+				SendClientMessage(playerid, COLOR_RED,
+					"[ ! ]: You have reach maximal limit of wrong inputs on registration. You have been kicked."
+				);
+				KickMessage(playerid);
+				return 1;
+			}
+			format(PlayerInfo[playerid][pEmail], MAX_PLAYER_MAIL, "%s", inputtext);
+			Bit8_Set(gr_RegisterInputs, playerid, 0);
+			ShowPlayerDialog(playerid, 
+				DIALOG_REG_SEX, 
+				DIALOG_STYLE_LIST, 
+				""COL_WHITE"Sign Up - Spol(5/6)", 
+				"Male\nFemale", 
+				"Input", 
+				"Abort"
+			);
 		}
 		case DIALOG_REG_SEX:
 		{
-			if(response) {
-				switch(listitem)
-				{
-					case 0: PlayerInfo[playerid][pSex] = 1; //musko
-					case 1: PlayerInfo[playerid][pSex] = 2; //zensko
-				}
-				format(dialogtext, sizeof(dialogtext), ""COL_WHITE"Koliko imate godina?\n\n "COL_RED"PAZNJA: Minimalno smijete imati 16, a najvise 80!");
-				ShowPlayerDialog(playerid, DIALOG_REG_AGE, DIALOG_STYLE_INPUT, ""COL_WHITE"REGISTRACIJA - Godine(6/6)", dialogtext, "Input", "Abort");
-			}
-			else if(!response) {
-				format(dialogtext, sizeof(dialogtext), ""COL_WHITE"Unesite svoj vazeci e-mail radi dodatne sigurnosti\nvaseg racuna:");
-				ShowPlayerDialog(playerid, DIALOG_REG_MAIL, DIALOG_STYLE_INPUT, ""COL_WHITE"REGISTRACIJA - E-MAIL(4/6)", dialogtext, "Input", "Abort");
+			if(!response) 
+			{
+				format(dialogtext, 
+					sizeof(dialogtext), 
+					""COL_WHITE"Please enter valid E-Mail for safety\nof your account:"
+				);
+				ShowPlayerDialog(playerid, 
+					DIALOG_REG_MAIL, 
+					DIALOG_STYLE_INPUT, 
+					""COL_WHITE"Sign Up - E-Mail(4/6)", 
+					dialogtext, 
+					"Input", 
+					"Abort"
+				);
 				return 1;
 			}
-			return 1;
+			switch(listitem)
+			{
+				case 0: PlayerInfo[playerid][pSex] = 1; //musko
+				case 1: PlayerInfo[playerid][pSex] = 2; //zensko
+			}
+			ShowPlayerDialog(playerid, 
+				DIALOG_REG_AGE, 
+				DIALOG_STYLE_INPUT, 
+				""COL_WHITE"SIGN UP - Age(6/6)", 
+				""COL_WHITE"How old is your character?\n\
+				\n"COL_RED"CAUTION:"COL_WHITE"Minimal age is 16, maximal 80!", 
+				"Input", 
+				"Abort"
+			);
 		}
 		case DIALOG_REG_AGE:
 		{
-			if(response) {
-				if (!strlen(inputtext)) // Nothing typed in
-				{
-					ShowPlayerDialog(playerid, DIALOG_REG_AGE, DIALOG_STYLE_INPUT, ""COL_WHITE"REGISTRACIJA - Godine(6/6)", ""COL_WHITE"Koliko imate godina?\n\nPAZNJA: Minimalno smijete imati 16, a najvise 80!", "Input", "Abort");
-					return 1;
-				}
-				if (strval(inputtext) >= 16 && strval(inputtext) <= 80)
-				{
-					PlayerInfo[playerid][pAge] = strval(inputtext);
-					
-					RegisterPlayer(playerid);
-				}
-				else ShowPlayerDialog(playerid, DIALOG_REG_AGE, DIALOG_STYLE_INPUT, ""COL_WHITE"REGISTRACIJA - Godine(6/6)", ""COL_WHITE"Koliko imate godina?\n\nPAZNJA: Minimalno smijete imati 16, a najvise 80!", "Input", "Abort");
+			if(!response) 
+			{
+				ShowPlayerDialog(playerid, 
+					DIALOG_REG_SEX, 
+					DIALOG_STYLE_LIST, 
+					""COL_WHITE"Sign Up - Sex(5/6)", 
+					"Male\nFemale", 
+					"Input", 
+					"Abort"
+				);
+				return 1;
 			}
-			else ShowPlayerDialog(playerid, DIALOG_REG_SEX, DIALOG_STYLE_LIST, ""COL_WHITE"REGISTRACIJA - Spol(5/6)", "Musko\nZensko", "Input", "Abort");
-			return 1;
+			
+			if (!strlen(inputtext)) // Nothing typed in
+			{
+				ShowPlayerDialog(playerid, 
+					DIALOG_REG_AGE, 
+					DIALOG_STYLE_INPUT, 
+					""COL_WHITE"SIGN UP - Age(6/6)", 
+					""COL_WHITE"How old is your character?\n\
+					\n"COL_RED"CAUTION:"COL_WHITE"Minimal age is 16, maximal 80!", 
+					"Input", 
+					"Abort"
+				);
+				return 1;
+			}
+			if (strval(inputtext) >= 16 && strval(inputtext) <= 80)
+			{
+				PlayerInfo[playerid][pAge] = strval(inputtext);
+				RegisterPlayer(playerid);
+			}
+			else 
+			{
+				ShowPlayerDialog(playerid, 
+					DIALOG_REG_AGE, 
+					DIALOG_STYLE_INPUT, 
+					""COL_WHITE"Sign Up - Age(6/6)", 
+					""COL_WHITE"How old is your character?\n\
+					\n"COL_RED"CAUTION:"COL_WHITE"Minimal age is 16, maximal 80!", 
+					"Input", 
+					"Abort"
+				);
+				return 1;
+			}
 		}
 	}
 	return 0;

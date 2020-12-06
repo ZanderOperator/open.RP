@@ -431,7 +431,7 @@ CMD:buyarmour(playerid, params[])
 
     PlayerPlaySound(playerid, 1150, 0.0, 0.0, 0.0);
     SetPlayerArmour(playerid, 50);
-    PlayerInfo[playerid][pCrashArmour]  = 50;
+    PlayerCrash[playerid][pCrashArmour]  = 50;
     PlayerToBudgetMoney(playerid, 6000);
 
     SendClientMessage(playerid, COLOR_RED, "[ ! ] Kupili ste pancirku!");

@@ -2503,8 +2503,7 @@ CMD:clearmychat(playerid, params[])
     if(sval < 1 || sval > 20)
         return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne mozete ocistiti vise od 20 poruka ili manje od 1 poruke!");
        
-    for(new l = 0; l != sval; ++l) SendClientMessage(playerid, -1, "");
- 
+    ClearPlayerChat(playerid);
     return 1;
 }
 /*

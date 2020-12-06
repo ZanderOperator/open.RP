@@ -241,7 +241,6 @@ new
 	bool:Frozen[ MAX_PLAYERS ],
 	bool:PlayerBlocked[MAX_PLAYERS],
 	bool:PlayerWoundedAnim[MAX_PLAYERS],
-	bool:crash_checker[MAX_PLAYERS] = false,
 	bool:rob_started[MAX_PLAYERS] = false,
 	bool:blockedNews[MAX_PLAYERS] = false,
 	PlayerSprayID[MAX_PLAYERS],
@@ -841,9 +840,9 @@ ResetPlayerVariables(playerid)
 	PlayerInfo[playerid][pHouseKey]			= INVALID_HOUSE_ID;
 	PlayerInfo[playerid][pRentKey]			= INVALID_HOUSE_ID;
 
-	PlayerInfo[playerid][pCrashId]			= -1;
-	PlayerInfo[playerid][pCrashVW]			= -1;
-	PlayerInfo[playerid][pCrashInt]			= -1;
+	PlayerCrash[playerid][pCrashId]			= -1;
+	PlayerCrash[playerid][pCrashVW]			= -1;
+	PlayerCrash[playerid][pCrashInt]			= -1;
 	PlayerInfo[playerid][pSkin]				= 0;
 	PlayerInfo[playerid][pCryptoNumber]		= 0;
 	PlayerInfo[playerid][pMobileNumber]		= 0;
@@ -889,9 +888,6 @@ ResetPlayerVariables(playerid)
 	PlayerInfo[playerid][pRaceCreator]		= false;
 	
 	//Floats
-	PlayerInfo[playerid][pCrashPos][0]		= 0.0;
-	PlayerInfo[playerid][pCrashPos][1]		= 0.0;
-	PlayerInfo[playerid][pCrashPos][2]		= 0.0;
 	PlayerInfo[playerid][pMarker1][0]		= 0.0;
 	PlayerInfo[playerid][pMarker1][1]		= 0.0;
 	PlayerInfo[playerid][pMarker1][2]		= 0.0;
@@ -1001,7 +997,6 @@ ResetPlayerVariables(playerid)
 	SafeSpawning[ playerid ] 	= false;
 	PlayerSyncs[ playerid ] 	= false;
 	PlayerBlocked[ playerid ] 	= false;
-	crash_checker[playerid] 	= false;
 
 	ResetFactoryVariables(playerid);
 	ResetHouseVariables(playerid);
@@ -1554,46 +1549,9 @@ hook OnPlayerDisconnect(playerid, reason)
 	}
 	if(PlayerInfo[playerid][pAdmin] > 0 || PlayerInfo[playerid][pHelper] > 0)
 		SaveAdminConnectionTime(playerid);
-	if( (reason == 0 || reason == 2) && IsPlayerAlive(playerid) && GMX == 0)
-	{
-		if(SafeSpawned[playerid])
-		{
-			new
-				Float:health,
-				Float:armor;
 
-			GetPlayerHealth(playerid, health);
-			PlayerInfo[playerid][pCrashHealth] 	= health;
-			GetPlayerArmour(playerid, armor);
-			PlayerInfo[playerid][pCrashArmour] 	= armor;
+	CheckPlayerCrash(playerid, reason);
 
-			PlayerInfo[playerid][pCrashVW] 	= GetPlayerVirtualWorld(playerid);
-			PlayerInfo[playerid][pCrashInt] = GetPlayerInterior(playerid);
-			PlayerInfo[playerid][pSkin] = GetPlayerSkin(playerid);
-
-			GetPlayerPos(playerid, PlayerInfo[playerid][pCrashPos][0], PlayerInfo[playerid][pCrashPos][1], PlayerInfo[playerid][pCrashPos][2]);
-
-			mysql_fquery_ex(g_SQL, "INSERT INTO player_crashes(player_id,pos_x,pos_y,pos_z,interior,viwo,armor,health,\n\
-				skin,time) VALUES ('%d','%.2f','%.2f','%.2f','%d','%d','%f','%f','%d','%d')",
-				PlayerInfo[playerid][pSQLID],
-				PlayerInfo[playerid][pCrashPos][0],
-				PlayerInfo[playerid][pCrashPos][1],
-				PlayerInfo[playerid][pCrashPos][2],
-				PlayerInfo[playerid][pCrashInt],
-				PlayerInfo[playerid][pCrashVW],
-				PlayerInfo[playerid][pCrashArmour],
-				PlayerInfo[playerid][pCrashHealth],
-				PlayerInfo[playerid][pSkin],
-				gettimestamp()
-			);
-			if(reason == 0)
-			{
-				new	tmpString[ 73 ];
-				format(tmpString, sizeof(tmpString), "AdmWarn: Player %s just had a Client Crash.",GetName(playerid,false));
-				ABroadCast(COLOR_LIGHTRED,tmpString,1);
-			}
-		}
-	}
 	// Offline query
 	mysql_fquery(g_SQL, "UPDATE accounts SET online = '0' WHERE sqlid = '%d'", PlayerInfo[ playerid ][ pSQLID ]);
 

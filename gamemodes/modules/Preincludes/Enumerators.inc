@@ -50,12 +50,6 @@ enum E_PLAYER_DATA
 	pComplexKey,
 	pComplexRoomKey,
 	pRentKey,
-	pCrashId,
-	pCrashVW,
-	pCrashInt,
-	Float:pCrashArmour,
-	Float:pCrashHealth,
-	Float:pCrashPos[3],
 	pSkin,
 	pMobileCost,
 	pMobileNumber,
@@ -92,7 +86,6 @@ enum E_PLAYER_DATA
 	pLawDuty,
 	pPDDuty,
 	pChar,
-	pLijekTimer,
 	pDrugUsed,
 	pDrugSeconds,
 	pDrugOrder,
@@ -149,6 +142,19 @@ enum E_PLAYER_DATA
 	pSkillTransporter
 }
 new PlayerInfo[ MAX_PLAYERS ][ E_PLAYER_DATA ];
+
+enum E_P_CRASH_INFO
+{
+	pCrashId,
+	pCrashVW,
+	pCrashInt,
+	Float:pCrashArmour,
+	Float:pCrashHealth,
+	Float:pCrashX,
+	Float:pCrashY,
+	Float:pCrashZ
+}
+new PlayerCrash[ MAX_PLAYERS ][ E_P_CRASH_INFO ];
 
 enum E_PAYDAY_INFO
 {
