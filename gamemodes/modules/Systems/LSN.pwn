@@ -386,14 +386,14 @@ CMD:reset_news(playerid, params[])
 
 CMD:callnews(playerid,params[])
 {
-    if (!PlayerInfo[playerid][pMobileNumber]) return SendMessage(playerid, MESSAGE_TYPE_ERROR, " Nemate mobitel!");
-    if (PlayerInfo[playerid][pMobileCost] < 3) return SendMessage(playerid, MESSAGE_TYPE_ERROR, " Nemate novca na mobitelnom racunu da biste pozvali taxi!");
+    if (!PlayerMobile[playerid][pMobileNumber]) return SendMessage(playerid, MESSAGE_TYPE_ERROR, " Nemate mobitel!");
+    if (PlayerMobile[playerid][pMobileCost] < 3) return SendMessage(playerid, MESSAGE_TYPE_ERROR, " Nemate novca na mobitelnom racunu da biste pozvali taxi!");
 
     new string[256], result[128];
     if (sscanf(params, "s[128]", result)) return SendClientMessage(playerid, COLOR_WHITE, "KORISTI: /callnews [opis stanja]");
 
     format(string, sizeof(string), "** [REDAKCIJA - POZIV] Mobitel broj: %d - Stanje: %s",
-        PlayerInfo[playerid][pMobileNumber],
+        PlayerMobile[playerid][pMobileNumber],
         result
     );
     SendWalkieTalkieMessage(5, 0x42C8F5FF, string);
@@ -402,10 +402,10 @@ CMD:callnews(playerid,params[])
     SetPlayerChatBubble(playerid, string, COLOR_PURPLE, 20, 5000);
     SendClientMessage(playerid, COLOR_YELLOW, "* Poslao si poziv u LSN ured!");
 
-    PlayerInfo[playerid][pMobileCost] -= 3;
+    PlayerMobile[playerid][pMobileCost] -= 3;
 
     mysql_fquery(g_SQL, "UPDATE player_phones SET money = '%d' WHERE player_id = '%d' AND type = '1'",
-        PlayerInfo[playerid][pMobileCost],
+        PlayerMobile[playerid][pMobileCost],
         PlayerInfo[playerid][pSQLID]
     );
     return 1;

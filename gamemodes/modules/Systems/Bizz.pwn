@@ -2012,10 +2012,10 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                     }
                     case PRODUCT_PCREDIT:
                     {
-                        PlayerInfo[playerid][pMobileCost] += 20;
+                        PlayerMobile[playerid][pMobileCost] += 20;
 
                         mysql_fquery(g_SQL, "UPDATE player_phones SET money = '%d' WHERE player_id = '%d' AND type = '1'",
-                            PlayerInfo[playerid][pMobileCost],
+                            PlayerMobile[playerid][pMobileCost],
                             PlayerInfo[playerid][pSQLID]
                         );
                     }
@@ -2094,7 +2094,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                 case 1: ShowPlayerDialog(playerid, DIALOG_BIZNIS_CRYPTOBUY, DIALOG_STYLE_LIST, "Odaberite crypto...", "Motorola T-900 Crypto - 50$\nAppollo Gold T25 - 70$\nX3 Crypto - 100$", "Choose", "Abort");
                 case 2:
                 {
-                    if (!PlayerInfo[playerid][pMobileNumber]) return SendErrorMessage(playerid, "Nemate mobitel!");
+                    if (!PlayerMobile[playerid][pMobileNumber]) return SendErrorMessage(playerid, "Nemate mobitel!");
                     PhoneMaskMenu(playerid);
                 }
             }
@@ -2141,10 +2141,10 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
             }
 
             PlayerPlaySound(playerid, 1052, 0.0, 0.0, 0.0);
-            PlayerInfo[playerid][pCryptoNumber] = 100000 + random(899999);
+            PlayerMobile[playerid][pCryptoNumber] = 100000 + random(899999);
 
             va_SendClientMessage(playerid, COLOR_RED, "[ ! ]  Vas novi broj cryptoa je %d",
-                PlayerInfo[playerid][pCryptoNumber]
+                PlayerMobile[playerid][pCryptoNumber]
             );
             SendClientMessage(playerid, COLOR_YELLOW, "[ ! ]  Koristite /cryptotext!");
             SavePlayerMobile(playerid, 2);
@@ -2897,12 +2897,12 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 
                     PlayerToBudgetMoney(playerid, 25); // APosto je VERONA MALL novac ide u budget
 
-                    PlayerInfo[playerid][pMobileCost] += 25;
+                    PlayerMobile[playerid][pMobileCost] += 25;
                     PlayerPlaySound(playerid, 1052, 0.0, 0.0, 0.0);
                     SendClientMessage(playerid, COLOR_RED, "[ ! ]  Kupljen bon za mobitel! [25$]");
 
                     mysql_fquery(g_SQL, "UPDATE player_phones SET money = '%d' WHERE player_id = '%d' AND type = '1'",
-                        PlayerInfo[playerid][pMobileCost],
+                        PlayerMobile[playerid][pMobileCost],
                         PlayerInfo[playerid][pSQLID]
                     );
                 }

@@ -3,7 +3,7 @@
 
 timer SetPlayerCrash[6000](playerid)
 {
-	if(PlayerInfo[playerid][pKilled] <= 0)
+	if(PlayerDeath[playerid][pKilled] <= 0)
 		TogglePlayerControllable(playerid, true);
 	
 	if(PlayerCrash[playerid][pCrashX] != 0.0 && PlayerCrash[playerid][pCrashInt] != -1)
@@ -165,14 +165,14 @@ Public: CheckPlayerCrash(playerid, reason)
 
 stock ResetPlayerCrash(playerid)
 {
-    PlayerCrash[playerid][pCrashId] 		= -1;
+    PlayerCrash[playerid][pCrashId] = -1;
     PlayerCrash[playerid][pCrashArmour]	= 0.0;
     PlayerCrash[playerid][pCrashHealth]	= 0.0;
-    PlayerCrash[playerid][pCrashVW]		= -1;
-    PlayerCrash[playerid][pCrashInt] 	= -1;
-    PlayerCrash[playerid][pCrashX]	= 0.0;
-    PlayerCrash[playerid][pCrashY]	= 0.0;
-    PlayerCrash[playerid][pCrashZ]	= 0.0;
+    PlayerCrash[playerid][pCrashVW]	= -1;
+    PlayerCrash[playerid][pCrashInt] = -1;
+    PlayerCrash[playerid][pCrashX] = 0.0;
+    PlayerCrash[playerid][pCrashY] = 0.0;
+    PlayerCrash[playerid][pCrashZ] = 0.0;
     return 1;
 }
 

@@ -115,7 +115,7 @@ stock static GetPlayerAdsInput(playerid)
 			format(buffer, sizeof(buffer), "[%s] %s (cijena PO DOGOVORU) | Kontakt: [%d]",
 				GetAdStyleString(PlayerAdsInfo[playerid][padStyle]),
 				PlayerAdsInfo[playerid][padText],
-				PlayerInfo[playerid][pMobileNumber]
+				PlayerMobile[playerid][pMobileNumber]
 			);
 		}
 		else {
@@ -123,14 +123,14 @@ stock static GetPlayerAdsInput(playerid)
 				GetAdStyleString(PlayerAdsInfo[playerid][padStyle]),
 				PlayerAdsInfo[playerid][padText],
 				PlayerAdsInfo[playerid][padPrice],
-				PlayerInfo[playerid][pMobileNumber]
+				PlayerMobile[playerid][pMobileNumber]
 			);
 		}
 	} else {
 			format(buffer, sizeof(buffer), "[%s] %s | Kontakt: [%d]",
 				GetAdStyleString(PlayerAdsInfo[playerid][padStyle]),
 				PlayerAdsInfo[playerid][padText],
-				PlayerInfo[playerid][pMobileNumber]
+				PlayerMobile[playerid][pMobileNumber]
 			);
 	}
 	return buffer;

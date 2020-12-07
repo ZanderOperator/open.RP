@@ -81,7 +81,7 @@ stock ApplyWoundedAnimation(playerid, bodypart)
 	if(PlayerWoundedAnim[playerid]) 
 		return 1;
 		
-	if(PlayerInfo[playerid][pKilled] == 0)
+	if(PlayerDeath[playerid][pKilled] == 0)
 	{
 		new cbstring[64];
 		format(cbstring, sizeof(cbstring), "* %s je ranjen i pada na pod.", GetName(playerid, true));
@@ -90,7 +90,7 @@ stock ApplyWoundedAnimation(playerid, bodypart)
 		PlayerWoundedAnim[playerid] = true;
 		PlayerWounded[playerid] = true;
 		PlayerWoundedSeconds[playerid] = gettimestamp() + 30; // 30 sekundi
-		PlayerInfo[playerid][pKilled] = 1; // Wounded state
+		PlayerDeath[playerid][pKilled] = 1; // Wounded state
 		SetPlayerDrunkLevel(playerid, 5000);
 		CreateDeathInfos(playerid, 2); // Wounded Situation
 		if(IsPlayerInAnyVehicle(playerid))
@@ -150,7 +150,7 @@ stock ResetPlayerWounded(playerid)
 
 stock InflictPlayerDamage(playerid, issuerid, bodypart, Float:damage)
 {
-	if(PlayerInfo[playerid][pKilled] != 2 && KilledBy[playerid] == INVALID_PLAYER_ID)
+	if(PlayerDeath[playerid][pKilled] != 2 && KilledBy[playerid] == INVALID_PLAYER_ID)
 	{
 		new Float:health;
 		GetPlayerHealth(playerid, health);
@@ -166,7 +166,7 @@ stock InflictPlayerDamage(playerid, issuerid, bodypart, Float:damage)
 				KilledBy[playerid] = issuerid;
 				KilledReason[playerid] = AC_GetPlayerWeapon(issuerid);
 				
-				PlayerInfo[playerid][pKilled] = 2;
+				PlayerDeath[playerid][pKilled] = 2;
 				SendClientMessage(playerid, COLOR_DEATH, "Smrtno si ranjen. Pricekaj 60 sekundi do ponovnog spawna!");
 				RegisterPlayerDeath(playerid, issuerid);
 
@@ -220,11 +220,11 @@ stock InflictPlayerDamage(playerid, issuerid, bodypart, Float:damage)
 					Float:X, Float:Y, Float:Z;
 				GetPlayerPos(playerid, X, Y, Z);
 
-				PlayerInfo[ playerid ][ pDeath ][ 0 ] 	= X;
-				PlayerInfo[ playerid ][ pDeath ][ 1 ] 	= Y;
-				PlayerInfo[ playerid ][ pDeath ][ 2 ] 	= Z;
-				PlayerInfo[ playerid ][ pDeathInt ] 	= GetPlayerInterior( playerid );
-				PlayerInfo[ playerid ][ pDeathVW ] 		= GetPlayerVirtualWorld( playerid );
+				PlayerDeath[playerid][pDeathX] 	= X;
+				PlayerDeath[playerid][pDeathY] 	= Y;
+				PlayerDeath[playerid][pDeathZ] 	= Z;
+				PlayerDeath[playerid][pDeathInt] 	= GetPlayerInterior( playerid );
+				PlayerDeath[playerid][pDeathVW] 		= GetPlayerVirtualWorld( playerid );
 				if( DeathData[ playerid ][ ddOverall ] > 0)
 				{
 					DeathTime[playerid] = gettimestamp() + 60;
@@ -233,14 +233,15 @@ stock InflictPlayerDamage(playerid, issuerid, bodypart, Float:damage)
 					//DropPlayerDrugs(playerid, X, Y, true);
 
 					mysql_fquery_ex(g_SQL, 
-						"INSERT INTO player_deaths(player_id, pos_x, pos_y, pos_z, interior, viwo, time) \n\
+						"INSERT INTO player_deaths(player_id, killed, pos_x, pos_y, pos_z, interior, viwo, time) \n\
 							VALUES ('%d','%f','%f','%f','%d','%d','%d')",
 						PlayerInfo[playerid][pSQLID],
-						PlayerInfo[playerid][pDeath][0],
-						PlayerInfo[playerid][pDeath][1],
-						PlayerInfo[playerid][pDeath][2],
-						PlayerInfo[playerid][pDeathInt],
-						PlayerInfo[playerid][pDeathVW],
+						PlayerDeath[playerid][pKilled],
+						PlayerDeath[playerid][pDeathX],
+						PlayerDeath[playerid][pDeathY],
+						PlayerDeath[playerid][pDeathZ],
+						PlayerDeath[playerid][pDeathInt],
+						PlayerDeath[playerid][pDeathVW],
 						gettimestamp()
 					);
 				}
@@ -255,7 +256,7 @@ stock InflictPlayerDamage(playerid, issuerid, bodypart, Float:damage)
 
 stock DealDamage(playerid, issuerid, Float: health, Float: armour, Float: damage, bodypart = BODY_PART_GROIN)
 {		
-	if(PlayerInfo[playerid][pKilled] != 2 && KilledBy[playerid] == INVALID_PLAYER_ID)
+	if(PlayerDeath[playerid][pKilled] != 2 && KilledBy[playerid] == INVALID_PLAYER_ID)
 	{		
 		new Float: rest = armour - damage;
 		if(armour > 0)
@@ -282,7 +283,7 @@ stock DealDamage(playerid, issuerid, Float: health, Float: armour, Float: damage
 				KilledBy[playerid] = issuerid;
 				KilledReason[playerid] = AC_GetPlayerWeapon(issuerid);
 				
-				PlayerInfo[playerid][pKilled] = 2;
+				PlayerDeath[playerid][pKilled] = 2;
 				SendMessage(playerid, MESSAGE_TYPE_INFO, "Smrtno si ranjen. Pricekaj 60 sekundi do ponovnog spawna!");
 				RegisterPlayerDeath(playerid, issuerid);
 
@@ -337,11 +338,11 @@ stock DealDamage(playerid, issuerid, Float: health, Float: armour, Float: damage
 					Float:X, Float:Y, Float:Z;
 				GetPlayerPos(playerid, X, Y, Z);
 
-				PlayerInfo[ playerid ][ pDeath ][ 0 ] 	= X;
-				PlayerInfo[ playerid ][ pDeath ][ 1 ] 	= Y;
-				PlayerInfo[ playerid ][ pDeath ][ 2 ] 	= Z;
-				PlayerInfo[ playerid ][ pDeathInt ] 	= GetPlayerInterior( playerid );
-				PlayerInfo[ playerid ][ pDeathVW ] 		= GetPlayerVirtualWorld( playerid );
+				PlayerDeath[playerid][pDeathX] 	= X;
+				PlayerDeath[playerid][pDeathY] 	= Y;
+				PlayerDeath[playerid][pDeathZ] 	= Z;
+				PlayerDeath[playerid][pDeathInt] 	= GetPlayerInterior( playerid );
+				PlayerDeath[playerid][pDeathVW] 		= GetPlayerVirtualWorld( playerid );
 				if( DeathData[ playerid ][ ddOverall ] > 0)
 				{
 					DeathTime[playerid] = gettimestamp() + 60;
@@ -351,14 +352,15 @@ stock DealDamage(playerid, issuerid, Float: health, Float: armour, Float: damage
 					//DropPlayerDrugs(playerid, X, Y, true);
 
 					mysql_fquery_ex(g_SQL, 
-						"INSERT INTO player_deaths(player_id, pos_x, pos_y, pos_z, interior, viwo, time) \n\
+						"INSERT INTO player_deaths(player_id, killed, pos_x, pos_y, pos_z, interior, viwo, time) \n\
 							VALUES ('%d','%f','%f','%f','%d','%d','%d')",
 						PlayerInfo[playerid][pSQLID],
-						PlayerInfo[playerid][pDeath][0],
-						PlayerInfo[playerid][pDeath][1],
-						PlayerInfo[playerid][pDeath][2],
-						PlayerInfo[playerid][pDeathInt],
-						PlayerInfo[playerid][pDeathVW],
+						PlayerDeath[playerid][pKilled],
+						PlayerDeath[playerid][pDeathX],
+						PlayerDeath[playerid][pDeathY],
+						PlayerDeath[playerid][pDeathZ],
+						PlayerDeath[playerid][pDeathInt],
+						PlayerDeath[playerid][pDeathVW],
 						gettimestamp()
 					);
 				}
@@ -466,7 +468,7 @@ timer ApplyVehicleFallOutAnim[2600](playerid)
 
 stock CheckWoundedPlayer(playerid)
 {
-	if(!PlayerWoundedAnim[playerid] || PlayerInfo[playerid][pKilled] != 0)
+	if(!PlayerWoundedAnim[playerid] || PlayerDeath[playerid][pKilled] != 0)
 		return 1;
 	
 	if(gettimestamp() >= PlayerWoundedSeconds[playerid])
@@ -573,7 +575,7 @@ hook OnPlayerTakeDamage(playerid, issuerid, Float: amount, weaponid, bodypart)
 	GetPlayerPos(playerid, dX, dY, dZ);
 	new Float: fDistance = GetPlayerDistanceFromPoint(issuerid, dX, dY, dZ);
 		
-    if(PlayerInfo[playerid][pKilled] == 1 || PlayerInfo[playerid][pKilled] == 2)
+    if(PlayerDeath[playerid][pKilled] == 1 || PlayerDeath[playerid][pKilled] == 2)
     {
         SetPlayerHealth(playerid, 100);
         return 0;
@@ -782,17 +784,19 @@ hook OnPlayerTakeDamage(playerid, issuerid, Float: amount, weaponid, bodypart)
     GetPlayerArmour(playerid, armour);
 	GetPlayerPos(playerid, dX, dY, dZ);
 	
-	switch (weaponid) {
-		case WEAPON_COLT45 .. WEAPON_SNIPER, WEAPON_MINIGUN, WEAPON_SPRAYCAN, WEAPON_FIREEXTINGUISHER: {
-			if(ProxDetectorS(0.7, issuerid, playerid) ) // PISTOL WHIP ANTICHEAT (https://i.gyazo.com/02a12aecf88d4224414128235a0f8d5d.gif) -L3o
-				return (true);
+	switch (weaponid) 
+	{
+		case WEAPON_COLT45 .. WEAPON_SNIPER, WEAPON_MINIGUN, WEAPON_SPRAYCAN, WEAPON_FIREEXTINGUISHER: 
+		{
+			if(ProxDetectorS(0.7, issuerid, playerid) ) 
+				return 1;
 		}
 	}
 	
 	if(weaponid == WEAPON_PARACHUTE)
 		weaponid = 0;
 		
-	if(issuerid != INVALID_PLAYER_ID && bodypart == BODY_PART_HEAD) // POGODAK U GLAVU
+	if(issuerid != INVALID_PLAYER_ID && bodypart == BODY_PART_HEAD)
 	{
 			//Headshot System - na razmatranju
 		/*damage = 200;

@@ -735,19 +735,19 @@ stock SetPlayerSpawnInfo(playerid)
 		SetPlayerInterior(playerid, 17);
 		Streamer_UpdateEx(playerid,  1199.1404,1305.8285,-54.7172);
 	}
-	else if(PlayerInfo[playerid][pKilled] == 1) 
+	else if(PlayerDeath[playerid][pKilled] == 1) 
 	{
 		SetSpawnInfo(playerid, 0, 
 			PlayerInfo[playerid][pChar],
-			PlayerInfo[ playerid ][ pDeath ][ 0 ], 
-			PlayerInfo[ playerid ][ pDeath ][ 1 ], 
-			PlayerInfo[ playerid ][ pDeath ][ 2 ], 
+			PlayerDeath[playerid][pDeathX] , 
+			PlayerDeath[playerid][pDeathY] , 
+			PlayerDeath[playerid][pDeathZ] , 
 			0, 0, 0, 0, 0, 0, 0
 		);
 		Streamer_UpdateEx(playerid, 
-			PlayerInfo[ playerid ][ pDeath ][ 0 ], 
-			PlayerInfo[ playerid ][ pDeath ][ 1 ], 
-			PlayerInfo[ playerid ][ pDeath ][ 2 ]
+			PlayerDeath[playerid][pDeathX] , 
+			PlayerDeath[playerid][pDeathY] , 
+			PlayerDeath[playerid][pDeathZ] 
 		);
 	}
 	else

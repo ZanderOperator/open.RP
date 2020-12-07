@@ -499,11 +499,11 @@ RegisterPlayerDeath(playerid, killerid) // funkcija
 		Float:X, Float:Y, Float:Z;
 	GetPlayerPos(playerid, X, Y, Z);
 
-	PlayerInfo[ playerid ][ pDeath ][ 0 ] 	= X;
-	PlayerInfo[ playerid ][ pDeath ][ 1 ] 	= Y;
-	PlayerInfo[ playerid ][ pDeath ][ 2 ] 	= Z;
-	PlayerInfo[ playerid ][ pDeathInt ] 	= GetPlayerInterior( playerid );
-	PlayerInfo[ playerid ][ pDeathVW ] 		= GetPlayerVirtualWorld( playerid );
+	PlayerDeath[playerid][pDeathX] 	= X;
+	PlayerDeath[playerid][pDeathY] 	= Y;
+	PlayerDeath[playerid][pDeathZ] 	= Z;
+	PlayerDeath[playerid][pDeathInt] 	= GetPlayerInterior( playerid );
+	PlayerDeath[playerid][pDeathVW] 		= GetPlayerVirtualWorld( playerid );
 
 	// FIRST DEATH
 	if( DeathData[ playerid ][ ddOverall ] > 0)
@@ -514,14 +514,15 @@ RegisterPlayerDeath(playerid, killerid) // funkcija
 		//DropPlayerWeapons(playerid, X, Y);
 		//DropPlayerDrugs(playerid, X, Y, true);
 
-		mysql_fquery_ex(g_SQL, "INSERT INTO player_deaths(player_id, pos_x, pos_y, pos_z, interior, viwo, time) \n\
+		mysql_fquery_ex(g_SQL, "INSERT INTO player_deaths(player_id, killed, pos_x, pos_y, pos_z, interior, viwo, time) \n\
 			VALUES ('%d','%f','%f','%f','%d','%d','%d')",
 			PlayerInfo[playerid][pSQLID],
-			PlayerInfo[playerid][pDeath][0],
-			PlayerInfo[playerid][pDeath][1],
-			PlayerInfo[playerid][pDeath][2],
-			PlayerInfo[playerid][pDeathInt],
-			PlayerInfo[playerid][pDeathVW],
+			PlayerDeath[playerid][pKilled],
+			PlayerDeath[playerid][pDeathX],
+			PlayerDeath[playerid][pDeathY],
+			PlayerDeath[playerid][pDeathZ],
+			PlayerDeath[playerid][pDeathInt],
+			PlayerDeath[playerid][pDeathVW],
 			gettimestamp()
 		);
 	}
@@ -546,7 +547,7 @@ RegisterPlayerDeath(playerid, killerid) // funkcija
 	WoundedBy[playerid] = INVALID_PLAYER_ID;
 	KilledReason[playerid] = -1;
 
-	PlayerInfo[playerid][pKilled] = 0;
+	PlayerDeath[playerid][pKilled] = 0;
 
 	Bit1_Set(gr_PlayerAlive, 	playerid, true);
 	return 1;
@@ -760,7 +761,6 @@ ResetPlayerVariables(playerid)
 	PlayerInfo[playerid][pAccent][0]		= EOS;
 	PlayerInfo[playerid][pLook][0]			= EOS;
 	PlayerInfo[playerid][pBanReason][0]		= EOS;
-	PlayerInfo[playerid][pCurrentZone] 		= EOS;
 	PlayerInfo[playerid][pLastUpdateVer] 	= EOS;
 
 	PlayerInfo[playerid][pSQLID] 			= 0; 	//Integer
@@ -777,7 +777,6 @@ ResetPlayerVariables(playerid)
 	PlayerInfo[playerid][pTempRank][1]		= 0;
 	PlayerInfo[playerid][pAdminHours]		= 0;
 	PlayerInfo[playerid][pHelper]			= 0;
-	PlayerVIP[playerid][pDonateRank]		= 0;
 	PlayerInfo[playerid][pConnectTime]		= 0;
 	PlayerInfo[playerid][pMuted]			= 0;
 	PlayerInfo[playerid][pRespects]			= 0;
@@ -787,33 +786,24 @@ ResetPlayerVariables(playerid)
 	PlayerInfo[playerid][pChangeTimes]		= 0;
 	PlayerInfo[playerid][pMoney]			= 0;
 	PlayerInfo[playerid][pBank]				= 0;
-	PlayerSavings[playerid][pSavingsCool]		= 0;
-	PlayerSavings[playerid][pSavingsTime]		= 0;
-	PlayerSavings[playerid][pSavingsType]		= 0;
-	PlayerSavings[playerid][pSavingsMoney]		= 0;
+
 	PlayerInfo[playerid][pTempConnectTime]	= 0;
 	PlayerInfo[playerid][pFishWorks]		= 0;
 	PlayerInfo[playerid][pFishSQLID] 		= -1;
 	PlayerInfo[playerid][pLawDuty]          = 0;
 	PlayerInfo[playerid][pDutySystem]		= 0;
-	PaydayInfo[playerid][pPayDayHad]		= 0;
 	PlayerInfo[playerid][pHouseKey]			= INVALID_HOUSE_ID;
 	PlayerInfo[playerid][pRentKey]			= INVALID_HOUSE_ID;
 
-	PlayerCrash[playerid][pCrashId]			= -1;
-	PlayerCrash[playerid][pCrashVW]			= -1;
-	PlayerCrash[playerid][pCrashInt]			= -1;
 	PlayerInfo[playerid][pSkin]				= 0;
-	PlayerInfo[playerid][pCryptoNumber]		= 0;
-	PlayerInfo[playerid][pMobileNumber]		= 0;
-	PlayerInfo[playerid][pMobileModel]		= 0;
-	PlayerInfo[playerid][pMobileCost] 		= 0;
-	PlayerInfo[playerid][pKilled]			= 0;
-	PlayerInfo[playerid][pDeathInt] 		= 0;
-	PlayerInfo[playerid][pDeathVW] 			= 0;
+	PlayerMobile[playerid][pCryptoNumber]		= 0;
+	PlayerMobile[playerid][pMobileNumber]		= 0;
+	PlayerMobile[playerid][pMobileModel]		= 0;
+	PlayerMobile[playerid][pMobileCost] 		= 0;
+	PlayerDeath[playerid][pKilled]			= 0;
+	PlayerDeath[playerid][pDeathInt] 		= 0;
+	PlayerDeath[playerid][pDeathVW] 			= 0;
 
-	PlayerInfo[playerid][pInt]				= 0;
-	PlayerInfo[playerid][pViwo]				= 0;
 	PlayerInfo[playerid][pMaskID]			= -1;
 	PlayerInfo[playerid][pSpawnedCar]		= -1;
 	PlayerInfo[playerid][pBizzKey]			= INVALID_BIZNIS_ID;
@@ -831,15 +821,13 @@ ResetPlayerVariables(playerid)
 	PlayerInfo[playerid][pUnbanTime] 		= 0;
 	PlayerInfo[playerid][pCasinoCool]		= 0;
 	PlayerInfo[playerid][pNews]				= 0;
-	PlayerInfo[playerid][pSentNews]			= 0;
 	PlayerInfo[playerid][pCanisterLiters] 	= 0;
 	PlayerInfo[playerid][pCanisterType] 	= -1;
 	PlayerInfo[playerid][pGrafID]			= -1;
 	PlayerInfo[playerid][pTagID]			= -1;
 	PlayerInfo[playerid][hRope] 			= 0;
 	PlayerInfo[playerid][pAmmuTime]			= 0;
-	PlayerVIP[playerid][pDonatorVehicle] 	= 0;
-	PlayerVIP[playerid][pDonatorVehPerms] 	= 0;
+
 	PlayerInfo[playerid][pPrimaryWeapon] 	= 0;
 	PlayerInfo[playerid][pSecondaryWeapon] 	= 0;
 	PlayerInfo[playerid][pWarehouseKey] 	= -1;
@@ -866,9 +854,9 @@ ResetPlayerVariables(playerid)
 	PlayerTrunkPos[playerid][0] 			= 0.0;
 	PlayerTrunkPos[playerid][1] 			= 0.0;
 	PlayerTrunkPos[playerid][2] 			= 0.0;
-	PlayerInfo[playerid][pDeath][0] 		= 0.0;
-	PlayerInfo[playerid][pDeath][1] 		= 0.0;
-	PlayerInfo[playerid][pDeath][2] 		= 0.0;
+	PlayerDeath[playerid][pDeathX] 		= 0.0;
+	PlayerDeath[playerid][pDeathY] 		= 0.0;
+	PlayerDeath[playerid][pDeathZ] 		= 0.0;
 
 	// Previous Info(/learn, etc.)
 	ResetPlayerPreviousInfo(playerid);
@@ -961,8 +949,6 @@ ResetPlayerVariables(playerid)
 	//ResetPlayerDrivingVars(playerid);
 	//ResetPlayerFishingVars(playerid);
 	DisablePlayerKeyInput(playerid);
-
-	ResetPlayerSkills(playerid);
 
 	ResetRuletArrays(playerid);
 	ResetRuletTable(playerid);
@@ -1132,7 +1118,7 @@ main()
 	AntiDeAMX();
 }
 
-// Database Load & File Load Function used for hooking in OnGameModeInit callback
+// Database Load Function used for hooking in OnGameModeInit callback
 forward LoadServerData();
 public LoadServerData() 
 {
@@ -1697,12 +1683,12 @@ hook OnPlayerSpawn(playerid)
         TogglePlayerSpectating(playerid, 0);
         Bit1_Set(gr_PlayerAlive, playerid, true);
 
-		if(PlayerInfo[playerid][pKilled] == 1)
+		if(PlayerDeath[playerid][pKilled] == 1)
 		{
-			SetPlayerInterior(playerid, PlayerInfo[ playerid ][ pDeathInt ]);
-			SetPlayerVirtualWorld(playerid, PlayerInfo[ playerid ][ pDeathVW ]);
-			SetPlayerPos(playerid, PlayerInfo[ playerid ][ pDeath ][ 0 ], PlayerInfo[ playerid ][ pDeath ][ 1 ], PlayerInfo[ playerid ][ pDeath ][ 2 ]);
-			Streamer_UpdateEx(playerid, PlayerInfo[playerid][pDeath][0], PlayerInfo[playerid][pDeath][1], PlayerInfo[playerid][pDeath][2], PlayerInfo[playerid][ pDeathVW], PlayerInfo[playerid][pDeathInt]);
+			SetPlayerInterior(playerid, PlayerDeath[playerid][pDeathInt]);
+			SetPlayerVirtualWorld(playerid, PlayerDeath[playerid][pDeathVW]);
+			SetPlayerPos(playerid, PlayerDeath[playerid][pDeathX] , PlayerDeath[playerid][pDeathY] , PlayerDeath[playerid][pDeathZ] );
+			Streamer_UpdateEx(playerid, PlayerDeath[playerid][pDeathX], PlayerDeath[playerid][pDeathY], PlayerDeath[playerid][pDeathZ], PlayerDeath[playerid][pDeathVW], PlayerDeath[playerid][pDeathInt]);
 
 			SendClientMessage(playerid, COLOR_LIGHTRED, "** You are returned to position where you were wounded. **");
 			SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "** You can't use /l chat and /me command. /c, /ame i /do are allowed during RP **");
@@ -1721,12 +1707,12 @@ hook OnPlayerSpawn(playerid)
 			ApplyAnimation(playerid, "PED", "KO_shot_stom", 4.1,0,1,1,1,0,1);
 			return 1;
 		}
-		else if(PlayerInfo[ playerid ][ pKilled ] == 2)
+		else if(PlayerDeath[playerid][pKilled] == 2)
 		{
-			SetPlayerInterior(playerid, PlayerInfo[ playerid ][ pDeathInt ]);
-			SetPlayerVirtualWorld(playerid, PlayerInfo[ playerid ][ pDeathVW ]);
-			SetPlayerPos(playerid, PlayerInfo[ playerid ][ pDeath ][ 0 ], PlayerInfo[ playerid ][ pDeath ][ 1 ], PlayerInfo[ playerid ][ pDeath ][ 2 ]);
-			Streamer_UpdateEx(playerid, PlayerInfo[playerid][pDeath][0], PlayerInfo[playerid][pDeath][1], PlayerInfo[playerid][pDeath][2], PlayerInfo[playerid][ pDeathVW], PlayerInfo[playerid][pDeathInt]);
+			SetPlayerInterior(playerid, PlayerDeath[playerid][pDeathInt]);
+			SetPlayerVirtualWorld(playerid, PlayerDeath[playerid][pDeathVW]);
+			SetPlayerPos(playerid, PlayerDeath[playerid][pDeathX] , PlayerDeath[playerid][pDeathY] , PlayerDeath[playerid][pDeathZ] );
+			Streamer_UpdateEx(playerid, PlayerDeath[playerid][pDeathX], PlayerDeath[playerid][pDeathY], PlayerDeath[playerid][pDeathZ], PlayerDeath[playerid][pDeathVW], PlayerDeath[playerid][pDeathInt]);
 
 			SendClientMessage(playerid, COLOR_LIGHTRED, "You are in Death Mode. You have been returned to location of your death.**");
 			SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "** You can't use /l chat and /me command. /c, /ame i /do are allowed during RP **");
@@ -1745,7 +1731,7 @@ hook OnPlayerSpawn(playerid)
 			ApplyAnimation(playerid, "PED", "KO_shot_stom", 4.1,0,1,1,1,0,1);
 			return 1;
 		}
-		else if(PlayerInfo[ playerid ][ pKilled ] == 0)
+		else if(PlayerDeath[playerid][pKilled] == 0)
 		{
 			if( PlayerJail[playerid][pJailed] > 0)
 			{
