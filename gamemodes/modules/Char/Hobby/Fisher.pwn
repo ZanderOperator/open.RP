@@ -48,7 +48,7 @@ stock IsAtFishPlace(playerid)
 
 UpgradeFishingLevel(playerid) {
 
-    PlayerInfo[playerid][pFishingSkill] += 1;
+    PlayerFish[playerid][pFishingSkill] += 1;
     return 1;
 }
 
@@ -57,11 +57,11 @@ DockFishing(playerid)
     new fstring[512];
     if(GotRod[playerid])
 	{
-		if(PlayerInfo[playerid][pFishWeight] <= 100)
+		if(PlayerFish[playerid][pFishWeight] <= 100)
 		{
 			if(GetPVarInt(playerid, "pFishTime") < gettime())
 			{
-				switch(PlayerInfo[playerid][pFishingSkill])
+				switch(PlayerFish[playerid][pFishingSkill])
 				{
 					case 0 .. 79:
 					{
@@ -82,7 +82,7 @@ DockFishing(playerid)
 								SetPlayerChatBubble(playerid, fstring, COLOR_PURPLE, 30.0, 4000);
 								SendClientMessage(playerid, COLOR_PURPLE, fstring);
 
-								PlayerInfo[playerid][pFishWeight] += 2;
+								PlayerFish[playerid][pFishWeight] += 2;
 								SetPVarInt(playerid, "pFishTime", gettime() + 3);
 								UpgradeFishingLevel(playerid);
 							}
@@ -92,7 +92,7 @@ DockFishing(playerid)
 								SetPlayerChatBubble(playerid, fstring, COLOR_PURPLE, 30.0, 4000);
 								SendClientMessage(playerid, COLOR_PURPLE, fstring);
 
-								PlayerInfo[playerid][pFishWeight] += 3;
+								PlayerFish[playerid][pFishWeight] += 3;
 
 								SetPVarInt(playerid, "pFishTime", gettime() + 3);
 								UpgradeFishingLevel(playerid);
@@ -118,7 +118,7 @@ DockFishing(playerid)
 								SetPlayerChatBubble(playerid, fstring, COLOR_PURPLE, 30.0, 4000);
 								SendClientMessage(playerid, COLOR_PURPLE, fstring);
 
-								PlayerInfo[playerid][pFishWeight] += 2;
+								PlayerFish[playerid][pFishWeight] += 2;
 
 								SetPVarInt(playerid, "pFishTime", gettime() + 3);
 								UpgradeFishingLevel(playerid);
@@ -128,7 +128,7 @@ DockFishing(playerid)
 								format(fstring, sizeof fstring, "{C2A2DA}* %s zabacuju mamac nazad u vodu, te izvlaci White Fish.", GetName( playerid, false ));
 								SetPlayerChatBubble(playerid, fstring, COLOR_PURPLE, 30.0, 4000);
 								SendClientMessage(playerid, COLOR_PURPLE, fstring);
-								PlayerInfo[playerid][pFishWeight] += 3;
+								PlayerFish[playerid][pFishWeight] += 3;
 
 								SetPVarInt(playerid, "pFishTime", gettime() + 3);
 								UpgradeFishingLevel(playerid);
@@ -139,7 +139,7 @@ DockFishing(playerid)
 								SetPlayerChatBubble(playerid, fstring, COLOR_PURPLE, 30.0, 4000);
 								SendClientMessage(playerid, COLOR_PURPLE, fstring);
 
-								PlayerInfo[playerid][pFishWeight] += 6;
+								PlayerFish[playerid][pFishWeight] += 6;
 
 								SetPVarInt(playerid, "pFishTime", gettime() + 3);
 								UpgradeFishingLevel(playerid);
@@ -150,7 +150,7 @@ DockFishing(playerid)
 								SetPlayerChatBubble(playerid, fstring, COLOR_PURPLE, 30.0, 4000);
 								SendClientMessage(playerid, COLOR_PURPLE, fstring);
 
-								PlayerInfo[playerid][pFishWeight] += 8;
+								PlayerFish[playerid][pFishWeight] += 8;
 
 								SetPVarInt(playerid, "pFishTime", gettime() + 3);
 								UpgradeFishingLevel(playerid);
@@ -176,7 +176,7 @@ DockFishing(playerid)
 								SetPlayerChatBubble(playerid, fstring, COLOR_PURPLE, 30.0, 4000);
 								SendClientMessage(playerid, COLOR_PURPLE, fstring);
 
-								PlayerInfo[playerid][pFishWeight] += 2;
+								PlayerFish[playerid][pFishWeight] += 2;
 
 								SetPVarInt(playerid, "pFishTime", gettime() + 3);
 								UpgradeFishingLevel(playerid);
@@ -187,7 +187,7 @@ DockFishing(playerid)
 								SetPlayerChatBubble(playerid, fstring, COLOR_PURPLE, 30.0, 4000);
 								SendClientMessage(playerid, COLOR_PURPLE, fstring);
 
-								PlayerInfo[playerid][pFishWeight] += 3;
+								PlayerFish[playerid][pFishWeight] += 3;
 
 								SetPVarInt(playerid, "pFishTime", gettime() + 3);
 								UpgradeFishingLevel(playerid);
@@ -198,7 +198,7 @@ DockFishing(playerid)
 								SetPlayerChatBubble(playerid, fstring, COLOR_PURPLE, 30.0, 4000);
 								SendClientMessage(playerid, COLOR_PURPLE, fstring);
 
-								PlayerInfo[playerid][pFishWeight] += 6;
+								PlayerFish[playerid][pFishWeight] += 6;
 
 								SetPVarInt(playerid, "pFishTime", gettime() + 3);
 								UpgradeFishingLevel(playerid);
@@ -209,7 +209,7 @@ DockFishing(playerid)
 								SetPlayerChatBubble(playerid, fstring, COLOR_PURPLE, 30.0, 4000);
 								SendClientMessage(playerid, COLOR_PURPLE, fstring);
 
-								PlayerInfo[playerid][pFishWeight] += 8;
+								PlayerFish[playerid][pFishWeight] += 8;
 
 								SetPVarInt(playerid, "pFishTime", gettime() + 3);
 								UpgradeFishingLevel(playerid);
@@ -220,7 +220,7 @@ DockFishing(playerid)
 								SetPlayerChatBubble(playerid, fstring, COLOR_PURPLE, 30.0, 4000);
 								SendClientMessage(playerid, COLOR_PURPLE, fstring);
 
-								PlayerInfo[playerid][pFishWeight] += 10;
+								PlayerFish[playerid][pFishWeight] += 10;
 
 								SetPVarInt(playerid, "pFishTime", gettime() + 3);
 								UpgradeFishingLevel(playerid);
@@ -242,11 +242,11 @@ BoatFishing(playerid)
     new fstring[512];
     if(IsPlayerInRangeOfPoint(playerid, 250.0, 580.4959,-2114.1504,5.4900) || IsPlayerInRangeOfPoint(playerid, 250.0, 93.3936,-2086.8057,-0.3839))
 	{
-  if(PlayerInfo[playerid][pFishWeight] <= 200)
+  if(PlayerFish[playerid][pFishWeight] <= 200)
 		{
 			if(GetPVarInt(playerid, "pFishTime") < gettime())
 			{
-				switch(PlayerInfo[playerid][pFishingSkill])
+				switch(PlayerFish[playerid][pFishingSkill])
 				{
 					case 0 .. 79:
 					{
@@ -267,7 +267,7 @@ BoatFishing(playerid)
 								SetPlayerChatBubble(playerid, fstring, COLOR_PURPLE, 30.0, 4000);
 								SendClientMessage(playerid, COLOR_PURPLE, fstring);
 
-								PlayerInfo[playerid][pFishWeight] += 2;
+								PlayerFish[playerid][pFishWeight] += 2;
 								SetPVarInt(playerid, "pFishTime", gettime() + 3);
 								UpgradeFishingLevel(playerid);
 							}
@@ -277,7 +277,7 @@ BoatFishing(playerid)
 								SetPlayerChatBubble(playerid, fstring, COLOR_PURPLE, 30.0, 4000);
 								SendClientMessage(playerid, COLOR_PURPLE, fstring);
 
-								PlayerInfo[playerid][pFishWeight] += 3;
+								PlayerFish[playerid][pFishWeight] += 3;
 
 								SetPVarInt(playerid, "pFishTime", gettime() + 3);
 								UpgradeFishingLevel(playerid);
@@ -303,7 +303,7 @@ BoatFishing(playerid)
 								SetPlayerChatBubble(playerid, fstring, COLOR_PURPLE, 30.0, 4000);
 								SendClientMessage(playerid, COLOR_PURPLE, fstring);
 
-								PlayerInfo[playerid][pFishWeight] += 2;
+								PlayerFish[playerid][pFishWeight] += 2;
 
 								SetPVarInt(playerid, "pFishTime", gettime() + 3);
 								UpgradeFishingLevel(playerid);
@@ -313,7 +313,7 @@ BoatFishing(playerid)
 								format(fstring, sizeof fstring, "{C2A2DA}* %s zabacuju mamac nazad u vodu, te izvlaci White Fish.", GetName( playerid, false ));
 								SetPlayerChatBubble(playerid, fstring, COLOR_PURPLE, 30.0, 4000);
 								SendClientMessage(playerid, COLOR_PURPLE, fstring);
-								PlayerInfo[playerid][pFishWeight] += 3;
+								PlayerFish[playerid][pFishWeight] += 3;
 
 								SetPVarInt(playerid, "pFishTime", gettime() + 3);
 								UpgradeFishingLevel(playerid);
@@ -324,7 +324,7 @@ BoatFishing(playerid)
 								SetPlayerChatBubble(playerid, fstring, COLOR_PURPLE, 30.0, 4000);
 								SendClientMessage(playerid, COLOR_PURPLE, fstring);
 
-								PlayerInfo[playerid][pFishWeight] += 6;
+								PlayerFish[playerid][pFishWeight] += 6;
 
 								SetPVarInt(playerid, "pFishTime", gettime() + 3);
 								UpgradeFishingLevel(playerid);
@@ -335,7 +335,7 @@ BoatFishing(playerid)
 								SetPlayerChatBubble(playerid, fstring, COLOR_PURPLE, 30.0, 4000);
 								SendClientMessage(playerid, COLOR_PURPLE, fstring);
 
-								PlayerInfo[playerid][pFishWeight] += 8;
+								PlayerFish[playerid][pFishWeight] += 8;
 
 								SetPVarInt(playerid, "pFishTime", gettime() + 3);
 								UpgradeFishingLevel(playerid);
@@ -359,7 +359,7 @@ BoatFishing(playerid)
 								format(fstring, sizeof fstring, "{C2A2DA}* %s zabacuju mamac nazad u vodu, te izvlaci Sheep Head.", GetName( playerid, false ));
 								SetPlayerChatBubble(playerid, fstring, COLOR_PURPLE, 30.0, 4000);
 								SendClientMessage(playerid, COLOR_PURPLE, fstring);
-								PlayerInfo[playerid][pFishWeight] += 2;
+								PlayerFish[playerid][pFishWeight] += 2;
 								SetPVarInt(playerid, "pFishTime", gettime() + 3);
 								UpgradeFishingLevel(playerid);
 							}
@@ -369,7 +369,7 @@ BoatFishing(playerid)
 								SetPlayerChatBubble(playerid, fstring, COLOR_PURPLE, 30.0, 4000);
 								SendClientMessage(playerid, COLOR_PURPLE, fstring);
 
-								PlayerInfo[playerid][pFishWeight] += 3;
+								PlayerFish[playerid][pFishWeight] += 3;
 
 								SetPVarInt(playerid, "pFishTime", gettime() + 3);
 								UpgradeFishingLevel(playerid);
@@ -380,7 +380,7 @@ BoatFishing(playerid)
 								SetPlayerChatBubble(playerid, fstring, COLOR_PURPLE, 30.0, 4000);
 								SendClientMessage(playerid, COLOR_PURPLE, fstring);
 
-								PlayerInfo[playerid][pFishWeight] += 6;
+								PlayerFish[playerid][pFishWeight] += 6;
 
 								SetPVarInt(playerid, "pFishTime", gettime() + 3);
 								UpgradeFishingLevel(playerid);
@@ -391,7 +391,7 @@ BoatFishing(playerid)
 								SetPlayerChatBubble(playerid, fstring, COLOR_PURPLE, 30.0, 4000);
 								SendClientMessage(playerid, COLOR_PURPLE, fstring);
 
-								PlayerInfo[playerid][pFishWeight] += 8;
+								PlayerFish[playerid][pFishWeight] += 8;
 
 								SetPVarInt(playerid, "pFishTime", gettime() + 3);
 								UpgradeFishingLevel(playerid);
@@ -401,7 +401,7 @@ BoatFishing(playerid)
 								format(fstring, sizeof fstring, "{C2A2DA}* %s zabacuju mamac nazad u vodu, te izvlaci Bocaccio.", GetName( playerid, false ));
 								SetPlayerChatBubble(playerid, fstring, COLOR_PURPLE, 30.0, 4000);
 								SendClientMessage(playerid, COLOR_PURPLE, fstring);
-								PlayerInfo[playerid][pFishWeight] += 10;
+								PlayerFish[playerid][pFishWeight] += 10;
 								SetPVarInt(playerid, "pFishTime", gettime() + 3);
 								UpgradeFishingLevel(playerid);
 							}
@@ -411,7 +411,7 @@ BoatFishing(playerid)
 								SetPlayerChatBubble(playerid, fstring, COLOR_PURPLE, 30.0, 4000);
 								SendClientMessage(playerid, COLOR_PURPLE, fstring);
 
-								PlayerInfo[playerid][pFishWeight] += 13;
+								PlayerFish[playerid][pFishWeight] += 13;
 
 								SetPVarInt(playerid, "pFishTime", gettime() + 3);
 								UpgradeFishingLevel(playerid);
@@ -422,7 +422,7 @@ BoatFishing(playerid)
 								SetPlayerChatBubble(playerid, fstring, COLOR_PURPLE, 30.0, 4000);
 								SendClientMessage(playerid, COLOR_PURPLE, fstring);
 
-								PlayerInfo[playerid][pFishWeight] += 15;
+								PlayerFish[playerid][pFishWeight] += 15;
 
 								SetPVarInt(playerid, "pFishTime", gettime() + 3);
 								UpgradeFishingLevel(playerid);
@@ -433,7 +433,7 @@ BoatFishing(playerid)
 								SetPlayerChatBubble(playerid, fstring, COLOR_PURPLE, 30.0, 4000);
 								SendClientMessage(playerid, COLOR_PURPLE, fstring);
 
-								PlayerInfo[playerid][pFishWeight] += 18;
+								PlayerFish[playerid][pFishWeight] += 18;
 
 								SetPVarInt(playerid, "pFishTime", gettime() + 3);
 								UpgradeFishingLevel(playerid);
@@ -458,7 +458,7 @@ BoatFishing(playerid)
 								format(fstring, sizeof fstring, "{C2A2DA}* %s zabacuju mamac nazad u vodu, te izvlaci Sheep Head.", GetName( playerid, false ));
 								SetPlayerChatBubble(playerid, fstring, COLOR_PURPLE, 30.0, 4000);
 								SendClientMessage(playerid, COLOR_PURPLE, fstring);
-								PlayerInfo[playerid][pFishWeight] += 2;
+								PlayerFish[playerid][pFishWeight] += 2;
 
 								SetPVarInt(playerid, "pFishTime", gettime() + 3);
 								UpgradeFishingLevel(playerid);
@@ -469,7 +469,7 @@ BoatFishing(playerid)
 								SetPlayerChatBubble(playerid, fstring, COLOR_PURPLE, 30.0, 4000);
 								SendClientMessage(playerid, COLOR_PURPLE, fstring);
 
-								PlayerInfo[playerid][pFishWeight] += 3;
+								PlayerFish[playerid][pFishWeight] += 3;
 
 								SetPVarInt(playerid, "pFishTime", gettime() + 3);
 								UpgradeFishingLevel(playerid);
@@ -480,7 +480,7 @@ BoatFishing(playerid)
 								SetPlayerChatBubble(playerid, fstring, COLOR_PURPLE, 30.0, 4000);
 								SendClientMessage(playerid, COLOR_PURPLE, fstring);
 
-								PlayerInfo[playerid][pFishWeight] += 6;
+								PlayerFish[playerid][pFishWeight] += 6;
 
 								SetPVarInt(playerid, "pFishTime", gettime() + 3);
 								UpgradeFishingLevel(playerid);
@@ -491,7 +491,7 @@ BoatFishing(playerid)
 								SetPlayerChatBubble(playerid, fstring, COLOR_PURPLE, 30.0, 4000);
 								SendClientMessage(playerid, COLOR_PURPLE, fstring);
 
-								PlayerInfo[playerid][pFishWeight] += 8;
+								PlayerFish[playerid][pFishWeight] += 8;
 
 								SetPVarInt(playerid, "pFishTime", gettime() + 3);
 								UpgradeFishingLevel(playerid);
@@ -502,7 +502,7 @@ BoatFishing(playerid)
 								SetPlayerChatBubble(playerid, fstring, COLOR_PURPLE, 30.0, 4000);
 								SendClientMessage(playerid, COLOR_PURPLE, fstring);
 
-								PlayerInfo[playerid][pFishWeight] += 10;
+								PlayerFish[playerid][pFishWeight] += 10;
 
 								SetPVarInt(playerid, "pFishTime", gettime() + 3);
 								UpgradeFishingLevel(playerid);
@@ -513,7 +513,7 @@ BoatFishing(playerid)
 								SetPlayerChatBubble(playerid, fstring, COLOR_PURPLE, 30.0, 4000);
 								SendClientMessage(playerid, COLOR_PURPLE, fstring);
 
-								PlayerInfo[playerid][pFishWeight] += 13;
+								PlayerFish[playerid][pFishWeight] += 13;
 
 								SetPVarInt(playerid, "pFishTime", gettime() + 3);
 								UpgradeFishingLevel(playerid);
@@ -524,7 +524,7 @@ BoatFishing(playerid)
 								SetPlayerChatBubble(playerid, fstring, COLOR_PURPLE, 30.0, 4000);
 								SendClientMessage(playerid, COLOR_PURPLE, fstring);
 
-								PlayerInfo[playerid][pFishWeight] += 15;
+								PlayerFish[playerid][pFishWeight] += 15;
 
 								SetPVarInt(playerid, "pFishTime", gettime() + 3);
 								UpgradeFishingLevel(playerid);
@@ -535,7 +535,7 @@ BoatFishing(playerid)
 								SetPlayerChatBubble(playerid, fstring, COLOR_PURPLE, 30.0, 4000);
 								SendClientMessage(playerid, COLOR_PURPLE, fstring);
 
-								PlayerInfo[playerid][pFishWeight] += 18;
+								PlayerFish[playerid][pFishWeight] += 18;
 
 								SetPVarInt(playerid, "pFishTime", gettime() + 3);
 								UpgradeFishingLevel(playerid);
@@ -546,7 +546,7 @@ BoatFishing(playerid)
 								SetPlayerChatBubble(playerid, fstring, COLOR_PURPLE, 30.0, 4000);
 								SendClientMessage(playerid, COLOR_PURPLE, fstring);
 
-								PlayerInfo[playerid][pFishWeight] += 31;
+								PlayerFish[playerid][pFishWeight] += 31;
 
 								SetPVarInt(playerid, "pFishTime", gettime() + 3);
 								UpgradeFishingLevel(playerid);
@@ -557,7 +557,7 @@ BoatFishing(playerid)
 								SetPlayerChatBubble(playerid, fstring, COLOR_PURPLE, 30.0, 4000);
 								SendClientMessage(playerid, COLOR_PURPLE, fstring);
 
-								PlayerInfo[playerid][pFishWeight] += 35;
+								PlayerFish[playerid][pFishWeight] += 35;
 								SetPVarInt(playerid, "pFishTime", gettime() + 3);
 								UpgradeFishingLevel(playerid);
 							}
@@ -567,7 +567,7 @@ BoatFishing(playerid)
 								SetPlayerChatBubble(playerid, fstring, COLOR_PURPLE, 30.0, 4000);
 								SendClientMessage(playerid, COLOR_PURPLE, fstring);
 
-								PlayerInfo[playerid][pFishWeight] += 37;
+								PlayerFish[playerid][pFishWeight] += 37;
 
 								SetPVarInt(playerid, "pFishTime", gettime() + 3);
 								UpgradeFishingLevel(playerid);
@@ -593,7 +593,7 @@ BoatFishing(playerid)
 								SetPlayerChatBubble(playerid, fstring, COLOR_PURPLE, 30.0, 4000);
 								SendClientMessage(playerid, COLOR_PURPLE, fstring);
 
-								PlayerInfo[playerid][pFishWeight] += 2;
+								PlayerFish[playerid][pFishWeight] += 2;
 
 								SetPVarInt(playerid, "pFishTime", gettime() + 3);
 								UpgradeFishingLevel(playerid);
@@ -604,7 +604,7 @@ BoatFishing(playerid)
 								SetPlayerChatBubble(playerid, fstring, COLOR_PURPLE, 30.0, 4000);
 								SendClientMessage(playerid, COLOR_PURPLE, fstring);
 
-								PlayerInfo[playerid][pFishWeight] += 3;
+								PlayerFish[playerid][pFishWeight] += 3;
 
 								SetPVarInt(playerid, "pFishTime", gettime() + 3);
 								UpgradeFishingLevel(playerid);
@@ -615,7 +615,7 @@ BoatFishing(playerid)
 								SetPlayerChatBubble(playerid, fstring, COLOR_PURPLE, 30.0, 4000);
 								SendClientMessage(playerid, COLOR_PURPLE, fstring);
 
-								PlayerInfo[playerid][pFishWeight] += 6;
+								PlayerFish[playerid][pFishWeight] += 6;
 
 								SetPVarInt(playerid, "pFishTime", gettime() + 3);
 								UpgradeFishingLevel(playerid);
@@ -626,7 +626,7 @@ BoatFishing(playerid)
 								SetPlayerChatBubble(playerid, fstring, COLOR_PURPLE, 30.0, 4000);
 								SendClientMessage(playerid, COLOR_PURPLE, fstring);
 
-								PlayerInfo[playerid][pFishWeight] += 8;
+								PlayerFish[playerid][pFishWeight] += 8;
 
 								SetPVarInt(playerid, "pFishTime", gettime() + 3);
 								UpgradeFishingLevel(playerid);
@@ -637,7 +637,7 @@ BoatFishing(playerid)
 								SetPlayerChatBubble(playerid, fstring, COLOR_PURPLE, 30.0, 4000);
 								SendClientMessage(playerid, COLOR_PURPLE, fstring);
 
-								PlayerInfo[playerid][pFishWeight] += 10;
+								PlayerFish[playerid][pFishWeight] += 10;
 
 								SetPVarInt(playerid, "pFishTime", gettime() + 3);
 								UpgradeFishingLevel(playerid);
@@ -648,7 +648,7 @@ BoatFishing(playerid)
 								SetPlayerChatBubble(playerid, fstring, COLOR_PURPLE, 30.0, 4000);
 								SendClientMessage(playerid, COLOR_PURPLE, fstring);
 
-								PlayerInfo[playerid][pFishWeight] += 13;
+								PlayerFish[playerid][pFishWeight] += 13;
 
 								SetPVarInt(playerid, "pFishTime", gettime() + 3);
 								UpgradeFishingLevel(playerid);
@@ -659,7 +659,7 @@ BoatFishing(playerid)
 								SetPlayerChatBubble(playerid, fstring, COLOR_PURPLE, 30.0, 4000);
 								SendClientMessage(playerid, COLOR_PURPLE, fstring);
 
-								PlayerInfo[playerid][pFishWeight] += 15;
+								PlayerFish[playerid][pFishWeight] += 15;
 
 								SetPVarInt(playerid, "pFishTime", gettime() + 3);
 								UpgradeFishingLevel(playerid);
@@ -670,7 +670,7 @@ BoatFishing(playerid)
 								SetPlayerChatBubble(playerid, fstring, COLOR_PURPLE, 30.0, 4000);
 								SendClientMessage(playerid, COLOR_PURPLE, fstring);
 
-								PlayerInfo[playerid][pFishWeight] += 18;
+								PlayerFish[playerid][pFishWeight] += 18;
 
 								SetPVarInt(playerid, "pFishTime", gettime() + 3);
 								UpgradeFishingLevel(playerid);
@@ -681,7 +681,7 @@ BoatFishing(playerid)
 								SetPlayerChatBubble(playerid, fstring, COLOR_PURPLE, 30.0, 4000);
 								SendClientMessage(playerid, COLOR_PURPLE, fstring);
 
-								PlayerInfo[playerid][pFishWeight] += 31;
+								PlayerFish[playerid][pFishWeight] += 31;
 
 								SetPVarInt(playerid, "pFishTime", gettime() + 3);
 								UpgradeFishingLevel(playerid);
@@ -692,7 +692,7 @@ BoatFishing(playerid)
 								SetPlayerChatBubble(playerid, fstring, COLOR_PURPLE, 30.0, 4000);
 								SendClientMessage(playerid, COLOR_PURPLE, fstring);
 
-								PlayerInfo[playerid][pFishWeight] += 35;
+								PlayerFish[playerid][pFishWeight] += 35;
 
 								SetPVarInt(playerid, "pFishTime", gettime() + 3);
 								UpgradeFishingLevel(playerid);
@@ -703,7 +703,7 @@ BoatFishing(playerid)
 								SetPlayerChatBubble(playerid, fstring, COLOR_PURPLE, 30.0, 4000);
 								SendClientMessage(playerid, COLOR_PURPLE, fstring);
 
-								PlayerInfo[playerid][pFishWeight] += 37;
+								PlayerFish[playerid][pFishWeight] += 37;
 
 								SetPVarInt(playerid, "pFishTime", gettime() + 3);
 								UpgradeFishingLevel(playerid);
@@ -714,7 +714,7 @@ BoatFishing(playerid)
 								SetPlayerChatBubble(playerid, fstring, COLOR_PURPLE, 30.0, 4000);
 								SendClientMessage(playerid, COLOR_PURPLE, fstring);
 
-								PlayerInfo[playerid][pFishWeight] += 90;
+								PlayerFish[playerid][pFishWeight] += 90;
 
 								SetPVarInt(playerid, "pFishTime", gettime() + 3);
 								UpgradeFishingLevel(playerid);
@@ -742,7 +742,7 @@ CMD:fishinghelp(playerid, params[])
 
 CMD:fishingskills(playerid, params[])
 {
-    new level = PlayerInfo[playerid][pFishingSkill], string[61];
+    new level = PlayerFish[playerid][pFishingSkill], string[61];
    	if(level >=0 && level < 80) SendClientMessage(playerid, COLOR_RED, "Fishing skill = 1"), format(string, sizeof(string), "Morate uspje�no pecati jo� %d puta da bi dobili skill-up.", 50 - level), SendClientMessage(playerid, COLOR_RED, string);
     else if(level >= 80 && level < 130) SendClientMessage(playerid, COLOR_RED, "Fishing skill = 2"), format(string, sizeof(string), "Morate uspje�no pecati jo� %d puta da bi dobili skill-up.", 100 - level), SendClientMessage(playerid, COLOR_RED, string);
 	else if(level >=130 && level < 240) SendClientMessage(playerid, COLOR_RED, "Fishing skill = 3"), format(string, sizeof(string), "Morate uspje�no pecati jo� %d puta da bi dobili skill-up.", 200 - level), SendClientMessage(playerid, COLOR_RED, string);
@@ -771,7 +771,7 @@ CMD:fish(playerid, params[])
 
 CMD:myfish(playerid, params[]) {
     new fstring[512];
-	format(fstring, sizeof(fstring), "[ ! ] Kolicina ribe: %d kg.", PlayerInfo[playerid][pFishWeight]);
+	format(fstring, sizeof(fstring), "[ ! ] Kolicina ribe: %d kg.", PlayerFish[playerid][pFishWeight]);
 	SendClientMessage(playerid, COLOR_RED, fstring);
 	return 1;
 }
@@ -782,22 +782,22 @@ CMD:sellfish(playerid, params[]) {
 	new fstring[512];
     if(GetPVarInt(playerid, "pFishSellTime") < gettime())
     {
-        if(PlayerInfo[playerid][pFishWeight] < 20) return SendClientMessage(playerid, COLOR_GREY, "Morate imati minimalno 20kg, kako bi ih mogli prodati.");
+        if(PlayerFish[playerid][pFishWeight] < 20) return SendClientMessage(playerid, COLOR_GREY, "Morate imati minimalno 20kg, kako bi ih mogli prodati.");
         if(IsPlayerInRangeOfPoint(playerid, 30.0, 2623.5898,-2470.8184,3.0000))
         {
         	if(sscanf(params, "d", amount))
 			{
 				SendClientMessage(playerid, COLOR_GREY, "[ ? ]: /sellfish [amount]");
-				format(fstring, sizeof fstring, "[ ! ] Kolicina ribe: %d kg.", PlayerInfo[playerid][pFishWeight]);
+				format(fstring, sizeof fstring, "[ ! ] Kolicina ribe: %d kg.", PlayerFish[playerid][pFishWeight]);
 				return SendClientMessage(playerid, COLOR_RED, fstring);
 			}
 
             if(amount < 20) return SendClientMessage(playerid, COLOR_RED, "[ ! ] Morate imati minimalno 20, kako bi ih mogli prodati.");
-        	if(PlayerInfo[playerid][pFishWeight] >= amount && PlayerInfo[playerid][pFishWeight] != 0)
+        	if(PlayerFish[playerid][pFishWeight] >= amount && PlayerFish[playerid][pFishWeight] != 0)
        		{
           		new paycheck = amount * randomEx(1,3);
 
-                PlayerInfo[playerid][pFishWeight] -= amount;
+                PlayerFish[playerid][pFishWeight] -= amount;
 				format(fstring, sizeof(fstring), "[ ! ] Prodao si %d kg mesa za %d$.", amount, paycheck);
 				BudgetToPlayerMoney(playerid, paycheck);
 

@@ -3114,7 +3114,7 @@ CMD:setstat(playerid, params[])
   		}
   		case 27:
 		{
-		    PlayerInfo[playerid][pFishingSkill] = amount;
+		    PlayerFish[playerid][pFishingSkill] = amount;
 			format(globalstring, sizeof(globalstring), "   Korisnik sada ima skill posla ribar  %d.", amount);
   		}
 		default:

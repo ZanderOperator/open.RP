@@ -97,12 +97,6 @@ enum E_PLAYER_DATA
 	pAddingRoadblock, // TODO: transition to local var in Labels.pwn
 	pRoadblockObject, // TODO: transition to local var in Labels.pwn
 	pRoadblockModel, // TODO: transition to local var in Labels.pwn
-	
-	//fisher
-	pFishWeight,
-	pFishingSkill,
-	pFishWorks,
-	pFishSQLID,
  	//speedo
  	pSpeedo, // TODO: transition to local var in Speedo.pwn
 	//pm
@@ -149,7 +143,7 @@ enum E_PAYDAY_INFO
 	pPayDayMoney,
 	pProfit,
 	pPayDayHad,
-	pPayDayDialog[2048],
+	pPayDayDialog[1536],
 	pPayDayDate[32]
 }
 new PaydayInfo[ MAX_PLAYERS ][ E_PAYDAY_INFO ];
@@ -269,6 +263,14 @@ enum E_PLAYER_GYM_INFO
 	pFightStyle
 }
 new PlayerGym[ MAX_PLAYERS ][ E_PLAYER_GYM_INFO ];
+
+enum E_PLAYER_FISH_INFO
+{
+	pFishWorks,
+	pFishWeight,
+	pFishingSkill,	
+}
+new PlayerFish[ MAX_PLAYERS ][ E_PLAYER_FISH_INFO ];
 
 enum E_GARAGE_DATA 
 {
