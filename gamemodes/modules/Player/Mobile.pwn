@@ -2613,6 +2613,15 @@ hook SavePlayerData(playerid)
 	return 1;
 }
 
+hook ResetPlayerVariables(playerid)
+{
+	PlayerMobile[playerid][pCryptoNumber]		= 0;
+	PlayerMobile[playerid][pMobileNumber]		= 0;
+	PlayerMobile[playerid][pMobileModel]		= 0;
+	PlayerMobile[playerid][pMobileCost] 		= 0;
+	return 1;
+}
+
 hook OnPlayerConnect(playerid)
 {
 	StartCallTimestamp[playerid] = 0;
