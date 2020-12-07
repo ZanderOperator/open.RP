@@ -235,12 +235,12 @@ stock StopPlayerDeath(playerid)
 	DeathCountStarted_Set(playerid, false);
 	DeathCountSeconds_Set(playerid, 0);
 
-	PlayerInfo[ playerid ][ pDeath ][ 0 ] 	= 0.0;
-	PlayerInfo[ playerid ][ pDeath ][ 1 ] 	= 0.0;
-	PlayerInfo[ playerid ][ pDeath ][ 2 ] 	= 0.0;
-	PlayerInfo[ playerid ][ pDeathInt ] 	= 0;
-	PlayerInfo[ playerid ][ pDeathVW ] 		= 0;
-	PlayerInfo[ playerid ][ pKilled ] 	 	= 0;
+	PlayerDeath[playerid][pDeathX] 	= 0.0;
+	PlayerDeath[playerid][pDeathY] 	= 0.0;
+	PlayerDeath[playerid][pDeathZ] 	= 0.0;
+	PlayerDeath[playerid][pDeathInt] 	= 0;
+	PlayerDeath[playerid][pDeathVW] 		= 0;
+	PlayerDeath[playerid][pKilled] 	 	= 0;
 
 	return 1;
 }
@@ -339,12 +339,12 @@ public LoadingPlayerDeaths(playerid)
 	if(!cache_num_rows())
 		return 0;
 
-	cache_get_value_name_float(0, "pos_x", PlayerInfo[playerid][pDeath][0]);
-	cache_get_value_name_float(0, "pos_y", PlayerInfo[playerid][pDeath][1]);
-	cache_get_value_name_float(0, "pos_z", PlayerInfo[playerid][pDeath][2]);
-	cache_get_value_name_int(0, "interior", PlayerInfo[playerid][pDeathInt]);
-	cache_get_value_name_int(0, "viwo", PlayerInfo[playerid][pDeathVW]);
-	PlayerInfo[playerid][pKilled] = 1;
+	cache_get_value_name_int(0, "killed", PlayerDeath[playerid][pKilled]);
+	cache_get_value_name_float(0, "pos_x", PlayerDeath[playerid][pDeathX]);
+	cache_get_value_name_float(0, "pos_y", PlayerDeath[playerid][pDeathY]);
+	cache_get_value_name_float(0, "pos_z", PlayerDeath[playerid][pDeathZ]);
+	cache_get_value_name_int(0, "interior", PlayerDeath[playerid][pDeathInt]);
+	cache_get_value_name_int(0, "viwo", PlayerDeath[playerid][pDeathVW]);
 
 	mysql_fquery(g_SQL, "DELETE FROM player_deaths WHERE player_id = '%d'", PlayerInfo[playerid][pSQLID]);
 	return 1;
@@ -417,7 +417,8 @@ timer StartDeathCount[1000](playerid)
 		format(tmpString, sizeof(tmpString), "%d SEKUNDI", Bit8_Get(gr_DeathCountSeconds, playerid));
 		PlayerTextDrawSetString(playerid, DeathPlayerTextDraw[playerid], tmpString);
 		
-		if( !Bit8_Get(gr_DeathCountSeconds, playerid) ) {
+		if( !Bit8_Get(gr_DeathCountSeconds, playerid) ) 
+		{
 			GameTextForPlayer( playerid, "~g~Nekoliko sati kasnije...", 1000, 1 );
 			
 			stop DeathTimer[playerid];
@@ -432,12 +433,13 @@ timer StartDeathCount[1000](playerid)
 			PlayerToFactionMoneyTAX(playerid, FACTION_TYPE_FD, 500); // novac bolnici i proracunu*/
 			SendClientMessage(playerid, COLOR_RED, "[ ! ] Platio si bolnicke troskove u visini od 500$!");
 			
-			PlayerInfo[ playerid ][ pDeath ][ 0 ] 	= 0.0;
-			PlayerInfo[ playerid ][ pDeath ][ 1 ] 	= 0.0;
-			PlayerInfo[ playerid ][ pDeath ][ 2 ] 	= 0.0;
-			PlayerInfo[ playerid ][ pDeathInt ] 	= 0;
-			PlayerInfo[ playerid ][ pDeathVW ] 		= 0;
-			PlayerInfo[ playerid ][ pKilled ] 	 	= 0;
+			PlayerDeath[playerid][pDeathX] 	= 0.0;
+			PlayerDeath[playerid][pDeathY] 	= 0.0;
+			PlayerDeath[playerid][pDeathZ] 	= 0.0;
+			PlayerDeath[playerid][pDeathInt] 	= 0;
+			PlayerDeath[playerid][pDeathVW] 		= 0;
+			PlayerDeath[playerid][pKilled] 	 	= 0;
+
             ResetPlayerWounded(playerid);
 			SetPlayerDrunkLevel(playerid, 0);
 			
@@ -461,7 +463,7 @@ CMD:pickitem(playerid, params[])
 {
 	new str[32];
 	if(sscanf(params, "s[32]", str)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /pickitem [weapon]");
-	if(PlayerInfo[playerid][pKilled] > 0)
+	if(PlayerDeath[playerid][pKilled] > 0)
 	    return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne mozes uzimat predmete sa poda dok si u death stanju.");
 	if(strcmp(str, "weapon", true) == 0)
 	{
@@ -496,7 +498,7 @@ CMD:alldamages(playerid, params[])
 	}
 	if( !IsPlayerConnected(gplayerid) ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Pogresan ID igraca/nick!!");
 	if( !SafeSpawned[gplayerid]) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Igrac nije sigurno spawnan!");
-	if ( !PlayerInfo[gplayerid][pKilled] ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Igrac nije u Wounded/Death Modeu!");
+	if( !PlayerDeath[gplayerid][pKilled] ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Igrac nije u Wounded/Death Modeu!");
 
 	new Float: pX, Float: pY, Float: pZ;
 	GetPlayerPos(gplayerid, pX, pY, pZ);

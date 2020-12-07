@@ -790,7 +790,7 @@ CMD:recover(playerid, params[])
     new giveplayerid;
     if (sscanf( params, "u", giveplayerid)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /recover [dio imena/playerid]");
     if (giveplayerid == INVALID_PLAYER_ID) return SendMessage(playerid, MESSAGE_TYPE_ERROR, " Nevaljan playerid!");
-    if (!PlayerInfo[giveplayerid ][pKilled ] && !PlayerWounded[giveplayerid]) return SendMessage(playerid, MESSAGE_TYPE_ERROR, " Igrac nije ubijen/ozlijedjen!");
+    if (!PlayerDeath[giveplayerid][pKilled] && !PlayerWounded[giveplayerid]) return SendMessage(playerid, MESSAGE_TYPE_ERROR, " Igrac nije ubijen/ozlijedjen!");
     if (!ProxDetectorS(3.0, playerid, giveplayerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Igrac nije dovoljno blizu vas!");
     if (DeathCountStarted_Get(giveplayerid)) return SendClientMessage(playerid, COLOR_RED, "Igrac je mrtav i ne moze se reviveati!");
 

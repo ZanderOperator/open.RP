@@ -1399,7 +1399,7 @@ public OnPlayerClickPlayer(playerid, clickedplayerid, source)
 		va_SendClientMessage(playerid, 0xC9C9C9FF, "IC:  Novac: [%d$] - Banka: [%d$] - Mob: [%d] - Org: [%s] - Rank: [%s (%d)]",
 			PlayerInfo[clickedplayerid][pMoney],
 			PlayerInfo[clickedplayerid][pBank],
-			PlayerInfo[clickedplayerid][pMobileNumber],
+			PlayerMobile[clickedplayerid][pMobileNumber],
 			ReturnPlayerFactionName(clickedplayerid),
 			ReturnPlayerRankName(clickedplayerid),
 			PlayerFaction[clickedplayerid][pRank]
@@ -2984,12 +2984,12 @@ CMD:setstat(playerid, params[])
 		}
 		case 5:
 		{
-			PlayerInfo[giveplayerid][pMoney] = amount;
+			PlayerInfo[giveplayerid][pBank] = amount;
 			format(globalstring, sizeof(globalstring), "   Korisnik sada na banci ima $%d novaca.", amount);
   		}
 		case 6:
 		{
-		    PlayerInfo[giveplayerid][pMobileNumber] = amount;
+		    PlayerMobile[giveplayerid][pMobileNumber] = amount;
 			format(globalstring, sizeof(globalstring), "   Korisnikov broj telefona je postavljen na %d.", amount);
   		}
 		case 7:
@@ -5589,7 +5589,6 @@ CMD:setint(playerid, params[])
 	if (sscanf(params, "ui", giveplayerid, intid)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /setint [ID/Dio imena] [Interiorid]");
 	if (!IsPlayerConnected(giveplayerid)) return SendClientMessage(playerid, COLOR_RED, "Taj igraè nije online!");
 	SetPlayerInterior(giveplayerid, intid);
-	PlayerInfo[giveplayerid][pInt] = intid;
 	format(globalstring, sizeof(globalstring), "Interior %d.", intid);
 	SendClientMessage(giveplayerid, -1, globalstring);
 	return 1;

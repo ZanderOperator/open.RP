@@ -300,7 +300,7 @@ CMD:wiretap(playerid, params[])
 
     foreach(new gplayerid : Player)
     {
-        if (PlayerInfo[gplayerid][pMobileNumber] == number)
+        if (PlayerMobile[gplayerid][pMobileNumber] == number)
         {
             if (Player_TappedBy(gplayerid) != INVALID_PLAYER_ID)
             {
@@ -356,7 +356,7 @@ CMD:tracenumber(playerid, params[])
 
     foreach(new gplayerid : Player)
     {
-        if (PlayerInfo[gplayerid][pMobileNumber] == number)
+        if (PlayerMobile[gplayerid][pMobileNumber] == number)
         {
             SendFormatMessage(playerid, MESSAGE_TYPE_SUCCESS, "Poceli ste s trazenjem lokacije broja %d.", number);
 

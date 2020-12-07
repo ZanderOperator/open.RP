@@ -41,12 +41,12 @@ GivePlayerPayCheck(playerid)
 	format(p_dialog, sizeof(p_dialog), "\t %s - Financijsko izvjesce - %s", PaydayInfo[playerid][pPayDayDate], GetName(playerid));
 	
 	// Pretplata na CRYPTO 50 dolara
-	if(PlayerInfo[playerid][pCryptoNumber] != 0 || PlayerInfo[playerid][pMobileCost] > 0)
+	if(PlayerMobile[playerid][pCryptoNumber] != 0 || PlayerMobile[playerid][pMobileCost] > 0)
 	{
 		format(f_dialog,sizeof(f_dialog), "\n{3C95C2}Troskovi pretplate:");
 		strcat(p_dialog,f_dialog, sizeof(p_dialog));
 	}
-	if(PlayerInfo[playerid][pCryptoNumber] != 0){
+	if(PlayerMobile[playerid][pCryptoNumber] != 0){
 
 		format(f_dialog,sizeof(f_dialog), "\n\tCrypto pretplata: -50$");
 		strcat(p_dialog,f_dialog, sizeof(p_dialog));
@@ -54,16 +54,16 @@ GivePlayerPayCheck(playerid)
 		profit -= 50;
 	}
 	// Mobilna pretplata - 1$ po SMS-u, 2$ po minuti poziva
-	if(PlayerInfo[playerid][pMobileCost] > 0)
+	if(PlayerMobile[playerid][pMobileCost] > 0)
 	{
-		format(f_dialog, sizeof(f_dialog), "\n\tMobilna pretplata: -%d$", PlayerInfo[playerid][pMobileCost]); 
+		format(f_dialog, sizeof(f_dialog), "\n\tMobilna pretplata: -%d$", PlayerMobile[playerid][pMobileCost]); 
 		strcat(p_dialog,f_dialog, sizeof(p_dialog));
-		PlayerToBudgetMoney(playerid, PlayerInfo[playerid][pMobileCost]);
-		PlayerInfo[playerid][pMobileCost] = 0;
-		profit -= PlayerInfo[playerid][pMobileCost];
+		PlayerToBudgetMoney(playerid, PlayerMobile[playerid][pMobileCost]);
+		PlayerMobile[playerid][pMobileCost] = 0;
+		profit -= PlayerMobile[playerid][pMobileCost];
 		
 		mysql_fquery(g_SQL, "UPDATE player_phones SET money = '%d' WHERE player_id = '%d' AND type = '1'",
-			PlayerInfo[playerid][pMobileCost],
+			PlayerMobile[playerid][pMobileCost],
 			PlayerInfo[playerid][pSQLID]
 		);
 	}

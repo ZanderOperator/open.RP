@@ -22,7 +22,7 @@ hook OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
 {
     if(newkeys & 128)
 	{
-        if(!Bit1_Get(PlayingBBall, playerid) && PlayerAnim[playerid] && (!PlayerWounded[playerid] && PlayerInfo[playerid][pKilled] == 0) && !IsPlayerAiming(playerid) && PlayerAction[playerid] == PLAYER_ACTION_NONE)
+        if(!Bit1_Get(PlayingBBall, playerid) && PlayerAnim[playerid] && (!PlayerWounded[playerid] && PlayerDeath[playerid][pKilled] == 0) && !IsPlayerAiming(playerid) && PlayerAction[playerid] == PLAYER_ACTION_NONE)
 		{
 			if(GetPlayerAnimationIndex(playerid))
 			{
@@ -64,7 +64,7 @@ hook OnPlayerSpawn(playerid)
 stock ApplyAnimationEx(playerid, animlib[], animname[], Float:fDelta, loop, lockx, locky, freeze, time, forcesync = 1, toggleable = 1) // ReWrap
 {
 	forcesync = 1;
-	if( PlayerWounded[playerid] || PlayerInfo[ playerid ][ pKilled ] > 0 )
+	if( PlayerWounded[playerid] || PlayerDeath[playerid][pKilled] > 0 )
 	   return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne mozete koristiti animacije dok ste u Wounded/Death stanju!");
 	if(GetPlayerSpecialAction(playerid) == SPECIAL_ACTION_CUFFED || Player_IsCuffed(playerid))
 	    return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne mozete koristiti animacije dok ste cuffani!");
@@ -80,7 +80,7 @@ stock ApplyAnimationEx(playerid, animlib[], animname[], Float:fDelta, loop, lock
 
 stock SetPlayerSpecialActionEx(playerid, actionid) // ReWrap
 {
-	if( PlayerWounded[playerid] || PlayerInfo[ playerid ][ pKilled ] > 0 )
+	if( PlayerWounded[playerid] || PlayerDeath[playerid][pKilled] > 0 )
 	   return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne mozete koristiti animacije dok ste u Wounded/Death stanju!");
 	if(GetPlayerSpecialAction(playerid) == SPECIAL_ACTION_CUFFED || Player_IsCuffed(playerid))
 	    return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne mozete koristiti animacije dok ste cuffani!");

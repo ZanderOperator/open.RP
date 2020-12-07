@@ -41,20 +41,12 @@ enum E_PLAYER_DATA
 	pComplexRoomKey,
 	pRentKey,
 	pSkin,
-	pMobileCost,
-	pMobileNumber,
-	pMobileModel,
-	pCryptoNumber,
-	pMarriedTo[MAX_PLAYER_NAME],
 	pAccent[19],
-	pKilled,
 	Float:pMarker1[3],
 	Float:pMarker2[3],
 	Float:pMarker3[3],
 	Float:pMarker4[3],
 	Float:pMarker5[3],
-	pInt,
-	pViwo,
 	pMaskID,
 	pSpawnedCar,
 	pVehKey,
@@ -63,9 +55,6 @@ enum E_PLAYER_DATA
 	pIllegalGarageKey,
 	pSeeds,
 	pToolkit,
-	Float:pDeath[3],
-	pDeathInt,
-	pDeathVW,
 	pClock,
 	pCiggaretes,
 	pLighter,
@@ -85,7 +74,6 @@ enum E_PLAYER_DATA
 	pBanReason[32],
 	pCasinoCool,
 	pNews,
-	pSentNews,
 	pCanisterLiters, // TODO: transition to local var in CO.pwn 
 	pCanisterType, // TODO: transition to local var in CO.pwn
 	pGrafID, // TODO: transition to local var in Graffiti.pwn
@@ -105,12 +93,11 @@ enum E_PLAYER_DATA
 	pLastUpdateVer[24],
 	pRaceSQL,
 	bool:pRaceCreator,
-	pCurrentZone[MAX_ZONE_NAME],
-	pNicksToggled,
 	FurnPremium,
-	pAddingRoadblock,
-	pRoadblockObject,
-	pRoadblockModel,
+	pAddingRoadblock, // TODO: transition to local var in Labels.pwn
+	pRoadblockObject, // TODO: transition to local var in Labels.pwn
+	pRoadblockModel, // TODO: transition to local var in Labels.pwn
+	
 	//fisher
 	pFishWeight,
 	pFishingSkill,
@@ -123,6 +110,17 @@ enum E_PLAYER_DATA
 	pPMing // TODO: transition to local var in Player/CMD.pwn
 }
 new PlayerInfo[ MAX_PLAYERS ][ E_PLAYER_DATA ];
+
+enum E_P_DEATH_INFO
+{
+	pKilled,
+	Float:pDeathX,
+	Float:pDeathY,
+	Float:pDeathZ,
+	pDeathInt,
+	pDeathVW
+}
+new PlayerDeath[ MAX_PLAYERS ][ E_P_DEATH_INFO ];
 
 enum E_P_CRASH_INFO
 {
@@ -163,6 +161,15 @@ enum E_P_JOB_INFO
 	pFreeWorks
 }
 new PlayerJob[ MAX_PLAYERS ][ E_P_JOB_INFO ];
+
+enum E_P_MOBILE_INFO
+{
+	pMobileCost,
+	pMobileNumber,
+	pMobileModel,
+	pCryptoNumber
+}
+new PlayerMobile[ MAX_PLAYERS ][ E_P_MOBILE_INFO ];
 
 enum E_P_TAXI_INFO
 {

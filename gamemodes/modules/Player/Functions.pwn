@@ -1271,7 +1271,7 @@ stock ChangePlayerName(playerid, newname[], type, bool:admin_cn = false)
 
 stock static HungerCheck(playerid)
 {
-	if(PlayerWounded[playerid] || PlayerInfo[playerid][pKilled] > 0)
+	if(PlayerWounded[playerid] || PlayerDeath[playerid][pKilled] > 0)
 		return 1;
 		
 	new 
@@ -1713,15 +1713,15 @@ stock ShowPlayerStats(playerid, targetid)
 	}
 		
     new pDialog[1500];
-	format(motd, sizeof(motd),"Datum: %s\n\n"COL_COABLUE"IC STATS:\n\n"COL_WHITE"%s | Spol: [%s] | Godina: [%d] | Crypto broj: [%d] | Novac: [$%d] | Banka: [$%d] | Broj telefona: [%d]\n",
+	format(motd, sizeof(motd),"Datum: %s\n\n"COL_COABLUE"IC STATS:\n\n"COL_WHITE"%s | Spol: [%s] | Godina: [%d] | Mobile Nr.: [%d] | Crypto Nr.: [%d] | Novac: [$%d] | Banka: [$%d] n",
 		ReturnDate(),
 		GetName(targetid,true),
 		gender,
 		PlayerInfo[targetid][pAge],
-		PlayerInfo[targetid][pCryptoNumber],
+		PlayerMobile[targetid][pMobileNumber],
+		PlayerMobile[targetid][pCryptoNumber],
 		PlayerInfo[targetid][pMoney],
-		PlayerInfo[targetid][pBank],
-		PlayerInfo[targetid][pMobileNumber]
+		PlayerInfo[targetid][pBank]
 	);
     strcat(pDialog,motd, sizeof(pDialog));
 
@@ -1765,13 +1765,13 @@ stock ShowPlayerStats(playerid, targetid)
 	);
     strcat(pDialog,motd, sizeof(pDialog));
 
-    format(motd, sizeof(motd),""COL_WHITE"Muscle lvl: [%d] | Warnings: [%d/3] | Vrijeme do place: [%d minuta] | VIP Vozilo: [%d] | Donator Veh Perms: [%d] | Mobile Credits: [%d$]\n",
+    format(motd, sizeof(motd),""COL_WHITE"Muscle lvl: [%d] | Warnings: [%d/3] | Vrijeme do place: [%d minuta] | VIP Vozilo: [%d] | Donator Veh Perms: [%d] | Mobile Bill: [%d$]\n",
 		PlayerGym[targetid][pMuscle],
 		PlayerInfo[targetid][pWarns],
 		( 60 - PaydayInfo[targetid][pPayDay] ),
 		PlayerVIP[targetid][pDonatorVehicle],
 		PlayerVIP[targetid][pDonatorVehPerms],
-		PlayerInfo[targetid][pMobileCost]
+		PlayerMobile[targetid][pMobileCost]
 	);
     strcat(pDialog,motd, sizeof(pDialog));
 	
