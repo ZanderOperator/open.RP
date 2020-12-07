@@ -347,16 +347,14 @@ GivePlayerPayCheck(playerid)
 	{
 		if(PlayerJob[playerid][pJob] != 9 && PlayerJob[playerid][pJob] != 10 && PlayerJob[playerid][pJob] != 12 && PlayerJob[playerid][pJob] != 13 && PlayerJob[playerid][pJob] != 6 && PlayerJob[playerid][pJob] != 3)
 		{
-			if(PlayerInfo[playerid][pBusinessJob] == -1) {
-				new workingbonus;
-				workingbonus = PlayerJob[playerid][pContractTime] * 10;
-				if(workingbonus > 500)
-					workingbonus = 500; // Maksimum je 500$ po paydayu
-				BudgetToPlayerBankMoney(playerid, workingbonus); // treba prebaciti na bankovni racun
-				profit += workingbonus;
-				format(f_dialog,sizeof(f_dialog), "\n\tPoticaj na radni staz: %s", FormatNumber(workingbonus));
-				strcat(p_dialog,f_dialog, sizeof(p_dialog));
-			}
+			new workingbonus;
+			workingbonus = PlayerJob[playerid][pContractTime] * 10;
+			if(workingbonus > 500)
+				workingbonus = 500; // Maksimum je 500$ po paydayu
+			BudgetToPlayerBankMoney(playerid, workingbonus); // treba prebaciti na bankovni racun
+			profit += workingbonus;
+			format(f_dialog,sizeof(f_dialog), "\n\tPoticaj na radni staz: %s", FormatNumber(workingbonus));
+			strcat(p_dialog,f_dialog, sizeof(p_dialog));
 		}
 	}
 	// HAPPY HOURS

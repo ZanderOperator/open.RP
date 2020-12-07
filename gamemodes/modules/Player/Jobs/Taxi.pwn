@@ -351,7 +351,7 @@ CMD:taxi(playerid, params[])
 		new passanger_id, destination[32], Float: X, Float: Y, Float: Z,
 			buffer_l[32], buffer_p[MAX_PLAYER_NAME], buffer_t[MAX_PLAYER_NAME], buffer_f[12];
 		
-        if(PlayerInfo[ playerid ][ pFreeWorks ] < 1 ) 
+        if(PlayerJob[playerid][pFreeWorks] < 1 ) 
 			return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne mozes vise raditi!");
 			
     	if(TaxiData[playerid][eTaxiDuty] == false) 
@@ -431,7 +431,7 @@ CMD:taxi(playerid, params[])
 	if(strcmp(action,"setfare",true) == 0) {
 		new fare, buffer_f[12], meters;
 		
-        if(PlayerInfo[ playerid ][ pFreeWorks ] < 1 ) 
+        if(PlayerJob[playerid][pFreeWorks] < 1 ) 
 			return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne mozes vise raditi!");
 			
     	if(TaxiData[playerid][eTaxiDuty] == false) 
@@ -464,7 +464,7 @@ CMD:taxi(playerid, params[])
 			return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste u taksiju!");
 			
   		if(TaxiData[playerid][eTaxiDuty] == false) {
-			if( PlayerInfo[ playerid ][ pFreeWorks ] < 1 ) 
+			if( PlayerJob[playerid][pFreeWorks] < 1 ) 
 				return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne mozes vise raditi!");
 			
 			// Vars

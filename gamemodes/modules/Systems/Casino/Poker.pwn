@@ -2146,7 +2146,7 @@ DoesHavePokerTablePerm(playerid, tableid)
 	}
 	else if (bizzid != INVALID_BIZNIS_ID && bizzid < MAX_BIZZS)
 	{
-		if( (BizzInfo[bizzid][bOwnerID] == PlayerInfo[playerid][pSQLID] || BizzInfo[bizzid][bco_OwnerID] == PlayerInfo[playerid][pSQLID]) && BizzInfo[bizzid][bInterior] == PokerTable[tableid][pkrInt] && BizzInfo[bizzid][bVirtualWorld] == PokerTable[tableid][pkrVW])
+		if( (BizzInfo[bizzid][bOwnerID] == PlayerInfo[playerid][pSQLID]) && BizzInfo[bizzid][bInterior] == PokerTable[tableid][pkrInt] && BizzInfo[bizzid][bVirtualWorld] == PokerTable[tableid][pkrVW])
 			return 1;
 	}
 	return 0;
@@ -2225,7 +2225,7 @@ GetPokerTableLimit(playerid)
 	else if (bizzid != INVALID_BIZNIS_ID)
 	{
 		if (BizzInfo[bizzid][bType] == BIZZ_TYPE_CASINO &&
-			(BizzInfo[bizzid][bOwnerID] == PlayerInfo[playerid][pSQLID] || BizzInfo[bizzid][bco_OwnerID] == PlayerInfo[playerid][pSQLID]))
+			(BizzInfo[bizzid][bOwnerID] == PlayerInfo[playerid][pSQLID]))
 		{
 			return 1;
 		}

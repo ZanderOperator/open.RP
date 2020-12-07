@@ -291,8 +291,6 @@ public LoadPlayerData(playerid)
 		
 		cache_get_value_name_int(0,	"mustread"		, PlayerInfo[playerid][pMustRead]);
 		cache_get_value_name_int(0, "JackerCoolDown", PlayerInfo[playerid][JackerCoolDown]);
-		cache_get_value_name_int(0, "pBusinessJob", PlayerInfo[playerid][pBusinessJob]);
-		cache_get_value_name_int(0, "pBusinessWorkTime", PlayerInfo[playerid][pBusinessWorkTime]);
 		cache_get_value_name_int(0, "FurnPremium"	, PlayerInfo[playerid][FurnPremium]);
 		
 		//Fisher
@@ -366,29 +364,25 @@ public LoadPlayerData(playerid)
 		LoadPlayerStats(playerid);
 		
 		PlayerInfo[playerid][pBizzKey] 	= INVALID_BIZNIS_ID;
-		PlayerInfo[playerid][pBusiness] = INVALID_BIZNIS_ID;
-		PlayerInfo[playerid][BizCoOwner] = false;
 		PlayerInfo[playerid][pHouseKey] = INVALID_HOUSE_ID;
 		PlayerInfo[playerid][pComplexKey] = INVALID_COMPLEX_ID;
 		PlayerInfo[playerid][pComplexRoomKey] = INVALID_COMPLEX_ID;
 		
+		foreach(new house : Houses)
+		{
+			if(HouseInfo[house][hOwnerID] == PlayerInfo[playerid][pSQLID]) 
+			{
+				PlayerInfo[playerid][pHouseKey] = house;
+				break;
+			}
+		}
+
 		foreach(new biznis : Bizzes) 
 		{
 			if(BizzInfo[biznis][bOwnerID] == PlayerInfo[playerid][pSQLID]) 
 			{
 				PlayerInfo[playerid][pBizzKey] = biznis;
-				PlayerInfo[playerid][pBusiness] = biznis;
 				ReloadBizzFurniture(biznis);
-				break;
-			}
-		}
-		
-		foreach(new biznis : Bizzes)
-		{
-			if(BizzInfo[biznis][bco_OwnerID] == PlayerInfo[playerid][pSQLID]) 
-			{
-				PlayerInfo[playerid][pBusiness] = biznis;
-				PlayerInfo[playerid][BizCoOwner] = true;
 				break;
 			}
 		}
@@ -398,15 +392,6 @@ public LoadPlayerData(playerid)
 			if(ComplexInfo[complex][cOwnerID] == PlayerInfo[playerid][pSQLID]) 
 			{
 				PlayerInfo[playerid][pComplexKey] = complex;
-				break;
-			}
-		}
-		
-		foreach(new house : Houses)
-		{
-			if(HouseInfo[house][hOwnerID] == PlayerInfo[playerid][pSQLID]) 
-			{
-				PlayerInfo[playerid][pHouseKey] = house;
 				break;
 			}
 		}
@@ -521,7 +506,6 @@ public OnAccountFinish(playerid)
 	PlayerInfo[playerid][pCasinoCool]		= 5;
 	PlayerInfo[playerid][pHouseKey]			= 9999;
 	PlayerInfo[playerid][pBizzKey]			= 999;
-	PlayerInfo[playerid][pBusiness]			= 999;
 	PlayerInfo[playerid][pComplexRoomKey]	= 999;
 	PlayerInfo[playerid][pComplexKey]		= 999;
 	PlayerInfo[playerid][pSpawnedCar]		= -1;

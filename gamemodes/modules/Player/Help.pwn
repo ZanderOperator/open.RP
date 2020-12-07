@@ -47,7 +47,8 @@ CMD:jobhelp(playerid, params[])
 	return (true);
 }
 
-CMD:jobcmds(playerid, params[]) {
+CMD:jobcmds(playerid, params[]) 
+{
 	switch(PlayerJob[playerid][pJob])
 	{
 		case 1: {

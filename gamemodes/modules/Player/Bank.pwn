@@ -504,7 +504,6 @@ TakePlayerProperty(playerid)
 			
 			BizzInfo[biz][bLocked] 	= 1;
 			BizzInfo[biz][bOwnerID] = 0;
-			BizzInfo[biz][bco_OwnerID] = 0;
 			
 			mysql_fquery(g_SQL, "UPDATE bizzes SET ownerid = '0', co_ownerid = '0' WHERE id = '%d'", BizzInfo[ biz ][bSQLID]);
 		}

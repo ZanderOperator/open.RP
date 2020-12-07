@@ -2625,6 +2625,7 @@ CMD:edit(playerid, params[])
 	else SendMessage(playerid, MESSAGE_TYPE_ERROR, "Unfortunately, house/business for editing wasn't found in your proximity.");
 	return 1;
 }
+
 CMD:asellbiz(playerid, params[])
 {
 	if(PlayerInfo[playerid][pAdmin] < 1337) 
@@ -2644,12 +2645,6 @@ CMD:asellbiz(playerid, params[])
 				BudgetToPlayerMoney(i, BizzInfo[biz][bBuyPrice]);
 				foundonline = 1;
 			}
-			if(BizzInfo[biz][bco_OwnerID] == PlayerInfo[i][pSQLID])
-			{
-				PlayerInfo[i][pBusiness] = INVALID_BIZNIS_ID;
-				PlayerInfo[playerid][BizCoOwner] = false;
-				va_SendClientMessage(i, COLOR_RED, "[ ! ] Your co-owned business has been moved out by Game Admin %s.", GetName(playerid, false));
-			}
 		}
 	}
 	mysql_fquery(g_SQL, "UPDATE bizzes SET ownerid = '0', co_ownerid = '0' WHERE id = '%d'", BizzInfo[ biz ][bSQLID]);
@@ -2667,7 +2662,6 @@ CMD:asellbiz(playerid, params[])
 
 	BizzInfo[biz][bLocked] 	= 1;
 	BizzInfo[biz][bOwnerID] = 0;
-	BizzInfo[biz][bco_OwnerID] = 0;
 	
 	PlayerPlaySound(playerid, 1052, 0.0, 0.0, 0.0);
 	va_SendClientMessage(playerid, COLOR_RED, "[ ! ]: You sold Business %s with admin command, buy price was returned to the previous owner!", BizzInfo[biz][bMessage]);

@@ -1362,8 +1362,9 @@ stock HouseProxDetector(houseid, Float:radius, const string[], color)
 
 stock SendJobMessage(job, color, string[])
 {
-	foreach (new i : Player) {
-		if(PlayerInfo[i][pJob] == job)
+	foreach (new i : Player) 
+	{
+		if(PlayerJob[i][pJob] == job)
 			SendClientMessage(i, color, string);
 	}
 }

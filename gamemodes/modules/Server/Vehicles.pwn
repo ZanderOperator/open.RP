@@ -1000,8 +1000,10 @@ hook OnPlayerStateChange(playerid, newstate, oldstate)
 		if( ( VehicleInfo[ vehicleid ][ vType ] == VEHICLE_TYPE_CAR || VehicleInfo[ vehicleid ][ vType ] == VEHICLE_TYPE_MOTOR ) && !LicenseInfo[playerid][pCarLic] && !IsABike(vehicleid) ) 
 			SendClientMessage( playerid, COLOR_RED, "[ ! ] Nemate vozacku dozvolu pazite se policije!");
 
-		if( VehicleInfo[ vehicleid ][ vJob ] != 0 ) {
-			if( VehicleInfo[ vehicleid ][ vJob ] != PlayerInfo[playerid ][ pJob ] ) {
+		if( VehicleInfo[ vehicleid ][ vJob ] != 0 )
+		{
+			if( VehicleInfo[ vehicleid ][ vJob ] != PlayerJob[playerid ][ pJob ] ) 
+			{
 				SendMessage(playerid, MESSAGE_TYPE_ERROR, " Ne znate voziti ovo vozilo!");
 				RemovePlayerFromVehicle(playerid);
 				return 1;

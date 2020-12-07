@@ -474,7 +474,7 @@ CMD:garbage(playerid, params[])
 	
 	if( !strcmp( pick, "foot", true ) ) 
 	{
-		if( PlayerInfo[ playerid ][ pFreeWorks ] < 1 ) return SendClientMessage( playerid, COLOR_RED, "Ne mozes vise raditi!");
+		if( PlayerJob[playerid][pFreeWorks] < 1 ) return SendClientMessage( playerid, COLOR_RED, "Ne mozes vise raditi!");
 		if( !pTakedWC[playerid] ) return SendClientMessage( playerid, COLOR_RED, "Prvo morate koristiti /garbage clothes!");
 		if( gStartedWork[playerid] != 0 ) return SendClientMessage( playerid, COLOR_RED, "Vec radite neki posao! Kucajte /garbage stop!");
 		
@@ -490,7 +490,7 @@ CMD:garbage(playerid, params[])
 	}
 	if( !strcmp( pick, "truck", true ) )
 	{
-		if( PlayerInfo[ playerid ][ pFreeWorks ] < 1 ) return SendClientMessage( playerid, COLOR_RED, "Ne mozes vise raditi!");
+		if( PlayerJob[playerid][pFreeWorks] < 1 ) return SendClientMessage( playerid, COLOR_RED, "Ne mozes vise raditi!");
 		if( !pTakedWC[playerid] ) return SendClientMessage( playerid, COLOR_RED, "Prvo morate koristiti /garbage clothes!");
 		if( GetPlayerSkillLevel(playerid, 2) < 1 ) return SendClientMessage( playerid, COLOR_RED, "Niste smetlar skill 1!");
 		new vID = GetPlayerVehicleID(playerid);
@@ -504,7 +504,7 @@ CMD:garbage(playerid, params[])
 		if( !IsPlayerInRangeOfPoint(playerid, 5.0, 2199.1487,-1972.6333,13.5581 ) ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste blizu pickupa za presvlacenje!");
 		if (pTakedWC[playerid] == false)
 		{
-			if( PlayerInfo[ playerid ][ pFreeWorks ] < 1 ) return SendClientMessage( playerid, COLOR_RED, "Ne mozes vise raditi!");
+			if( PlayerJob[playerid][pFreeWorks] < 1 ) return SendClientMessage( playerid, COLOR_RED, "Ne mozes vise raditi!");
 			pTakedWC[playerid] = true;
 			SetPlayerSkin(playerid, 16);
 			SendMessage(playerid, MESSAGE_TYPE_INFO, "Obukli ste radnu odjecu, koristite /garbage foot ili truck da krenete raditi!");		

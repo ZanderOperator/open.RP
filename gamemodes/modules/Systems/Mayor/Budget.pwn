@@ -86,7 +86,7 @@ stock ShowGovMDC(playerid, targetid)
         string[30],
         motd[160];
     // TODO: make a helper function returning player job name from const array of strings, no need for switch
-    switch (PlayerInfo[targetid][pJob])
+    switch (PlayerJob[targetid][pJob])
     {
          case 1:  format(string, sizeof(string), "Cistac ulica");
          case 2:  format(string, sizeof(string), "Pizza Boy");
