@@ -16,6 +16,7 @@
 #include "modules/Player\SaveLoad/player_faction.pwn"
 #include "modules/Player\SaveLoad/player_radio.pwn"
 #include "modules/Player\SaveLoad/player_admin_msg.pwn"
+#include "modules/Player\SaveLoad/player_fishes.pwn"
 
 /*
 	##     ##    ###    ########   ######  
@@ -261,7 +262,7 @@ public LoadPlayerData(playerid)
 		cache_get_value_name_int(0,  "handMoney"	, PlayerInfo[playerid][pMoney]);
 		cache_get_value_name_int(0,  "bankMoney"	, PlayerInfo[playerid][pBank]);
 
-		cache_get_value_name_int(0,  "fishworks"	, PlayerInfo[playerid][pFishWorks]);
+		
 		cache_get_value_name_int(0,  "parts"		, PlayerInfo[playerid][pParts]);
 
         cache_get_value_name_int(0,  "playaSkin"	, PlayerInfo[playerid][pChar]);
@@ -292,10 +293,7 @@ public LoadPlayerData(playerid)
 		cache_get_value_name_int(0,	"mustread"		, PlayerInfo[playerid][pMustRead]);
 		cache_get_value_name_int(0, "JackerCoolDown", PlayerInfo[playerid][JackerCoolDown]);
 		cache_get_value_name_int(0, "FurnPremium"	, PlayerInfo[playerid][FurnPremium]);
-		
-		//Fisher
-		cache_get_value_name_int(0, "FishingSkill", PlayerInfo[playerid][pFishingSkill]);
-		
+				
 		if( PlayerInfo[ playerid ][ pUnbanTime ] == -1 )
 		{
 			va_SendClientMessage( playerid, COLOR_RED, 
@@ -663,8 +661,8 @@ public SavePlayerData(playerid)
 		"UPDATE accounts SET registered = '%d', adminLvl = '%d', helper = '%d', playaWarns = '%d', lastlogin = '%e',\n\
 			lastloginstamp = '%d', lastip = '%e', muted = '%d', sex = '%d', age = '%d', changenames = '%d',\n\
 			changetimes = '%d', handMoney = '%d', bankMoney = '%d', connecttime = '%d',\n\
-			fishworks = '%d', fishsqlid = '%d', levels = '%d', respects = '%d',\n\
-			parts = '%d', FishingSkill = '%d',\n\
+			levels = '%d', respects = '%d',\n\
+			parts = '%d',\n\
 			rentkey = '%d',\n\
 			maskid = '%d', clock = '%d', rope = '%d', cigaretes = '%d', lighter = '%d',\n\
 			SAMPid = '%e', forumname = '%e',\n\
@@ -687,12 +685,9 @@ public SavePlayerData(playerid)
 		PlayerInfo[playerid][pMoney],
 		PlayerInfo[playerid][pBank],
 		PlayerInfo[playerid][pConnectTime],
-		PlayerInfo[playerid][pFishWorks],
-		PlayerInfo[playerid][pFishSQLID],
 		PlayerInfo[playerid][pLevel],
 		PlayerInfo[playerid][pRespects],
 		PlayerInfo[playerid][pParts],
-		PlayerInfo[playerid][pFishingSkill],
 		PlayerInfo[playerid][pRentKey],
 		PlayerInfo[playerid][pMaskID],
 		PlayerInfo[playerid][pClock],

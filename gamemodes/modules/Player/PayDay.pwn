@@ -386,7 +386,7 @@ GivePlayerPayCheck(playerid)
 		case 4: PlayerJob[playerid][pFreeWorks] = 50;
 	}
 
-	PlayerInfo[playerid][pFishWorks] 	= 0;
+	PlayerFish[playerid][pFishWorks] 	= 0;
 	PlayerInfo[playerid][pCasinoCool]	= 10;	// resetiranje kasino varijabli
 	PlayerInfo[ playerid ][ pAdminHours ]++;	// dodavanje admin satnice
 
@@ -479,8 +479,8 @@ GivePlayerPayCheck(playerid)
 	else if(IsPlayerInVehicle(playerid, GetPlayerVehicleID(playerid))) {
 		SendMessage(playerid, MESSAGE_TYPE_INFO, "Stigao vam je PayDay (( /payday ))");
 	}
-	PaydayInfo[playerid][pPayDayDialog] 	= EOS;
-	strcat(PaydayInfo[playerid][pPayDayDialog], p_dialog, 2048);
+	PaydayInfo[playerid][pPayDayDialog] = EOS;
+	strcat(PaydayInfo[playerid][pPayDayDialog], p_dialog, 1536);
 	PaydayInfo[playerid][pPayDayMoney] = 0;
 	return 1;
 }

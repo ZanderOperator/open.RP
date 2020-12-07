@@ -16,7 +16,7 @@ Public: LoadingPlayerFitness(playerid)
     if(!cache_num_rows())
     {
         mysql_fquery_ex(g_SQL, 
-            "INSERT INTO player_health(sqlid, muscle, gymtimes, gymcounter, fightstyle) \n\
+            "INSERT INTO player_fitness(sqlid, muscle, gymtimes, gymcounter, fightstyle) \n\
                 VALUES('%d', '0', '0', '0', '0')",
             PlayerInfo[playerid][pSQLID]
         );

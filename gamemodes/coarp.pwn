@@ -588,7 +588,6 @@ ResetPlayerVariables(playerid)
 	adminfly[playerid] = 0;
 	playeReport[playerid] = -1;
 	PlayerInfo[playerid][pAddingRoadblock] = 0;
-	PlayerInfo[playerid][pFishingSkill] = 0;
     GotRod[playerid] = 0;
 	//
 	PhoneStatus[playerid] = 0;
@@ -788,8 +787,6 @@ ResetPlayerVariables(playerid)
 	PlayerInfo[playerid][pBank]				= 0;
 
 	PlayerInfo[playerid][pTempConnectTime]	= 0;
-	PlayerInfo[playerid][pFishWorks]		= 0;
-	PlayerInfo[playerid][pFishSQLID] 		= -1;
 	PlayerInfo[playerid][pLawDuty]          = 0;
 	PlayerInfo[playerid][pDutySystem]		= 0;
 	PlayerInfo[playerid][pHouseKey]			= INVALID_HOUSE_ID;
@@ -947,7 +944,6 @@ ResetPlayerVariables(playerid)
 	ResetTaxiVariables(playerid);
 	DestroySpeedoTextDraws(playerid);
 	//ResetPlayerDrivingVars(playerid);
-	//ResetPlayerFishingVars(playerid);
 	DisablePlayerKeyInput(playerid);
 
 	ResetRuletArrays(playerid);

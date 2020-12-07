@@ -26,7 +26,7 @@ Public: LoadingPlayerPayday(playerid)
     cache_get_value_name_int(0, "paydaymoney"	, PaydayInfo[playerid][pPayDayMoney]);
     cache_get_value_name_int(0, "paydayhad"	    , PaydayInfo[playerid][pPayDayHad]);
     cache_get_value_name_int(0, "profit"		, PaydayInfo[playerid][pProfit]);
-    cache_get_value_name(0, 	"dialog"	    , PaydayInfo[playerid][pPayDayDialog], 2048);
+    cache_get_value_name(0, 	"dialog"	    , PaydayInfo[playerid][pPayDayDialog], 1536);
     cache_get_value_name(0, 	"date"	        , PaydayInfo[playerid][pPayDayDate], 32);
     return 1;
 }
