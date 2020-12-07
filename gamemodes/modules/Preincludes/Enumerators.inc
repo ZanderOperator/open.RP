@@ -28,24 +28,14 @@ enum E_PLAYER_DATA
 	pConnectTime,
 	pMuted,
 	pRespects,
-	pTeam,
 	pSex,
 	pAge,
 	pChangenames,
 	pChangeTimes,
 	pMoney,
 	pBank,
-	pJob,
-	pContractTime,
-	pFreeWorks,
-	pFishWorks,
-	pFishSQLID,
 	pDutySystem,
 	pBizzKey,
-	pBusiness,
-	pBusinessJob,
-	pBusinessWorkTime,
-	bool: BizCoOwner,
 	pHouseKey,
 	pComplexKey,
 	pComplexRoomKey,
@@ -81,17 +71,12 @@ enum E_PLAYER_DATA
 	pLighter,
 	pParts,
 	JackerCoolDown,
-	taxiPoints,
-	taxiVoted,
 	pLawDuty,
 	pPDDuty,
 	pChar,
 	bool:pHc,
 	bool:pMuAc,
 	bool:pHCl,
-	pMethAddict,
-	pCrackAddict,
-	pCokeAddict,
 	pBoomBox,
 	pBoomBoxType,
 	pLook[120],
@@ -101,14 +86,13 @@ enum E_PLAYER_DATA
 	pCasinoCool,
 	pNews,
 	pSentNews,
-	pCanisterLiters,
-	pCanisterType,
-	pGrafID,
-	pTagID,
-	packageordered,
-	ammoamountordered,
-	bool:approved,
-	hWhistle,
+	pCanisterLiters, // TODO: transition to local var in CO.pwn 
+	pCanisterType, // TODO: transition to local var in CO.pwn
+	pGrafID, // TODO: transition to local var in Graffiti.pwn
+	pTagID, // TODO: transition to local var in Graffiti.pwn
+	packageordered, // TODO: transition to local var in WepPackage.pwn
+	//bool:approved,
+	hWhistle, // TODO: transition to local var in Hunter.pwn
 	pVoted,
 	hRope,
 	pPhoneBG,
@@ -122,7 +106,6 @@ enum E_PLAYER_DATA
 	pRaceSQL,
 	bool:pRaceCreator,
 	pCurrentZone[MAX_ZONE_NAME],
-	pWish,
 	pNicksToggled,
 	FurnPremium,
 	pAddingRoadblock,
@@ -131,12 +114,13 @@ enum E_PLAYER_DATA
 	//fisher
 	pFishWeight,
 	pFishingSkill,
+	pFishWorks,
+	pFishSQLID,
  	//speedo
- 	pSpeedo,
+ 	pSpeedo, // TODO: transition to local var in Speedo.pwn
 	//pm
-	pPMText[128],
-	pPMing,
-	pSkillTransporter
+	pPMText[128], // TODO: transition to local var in Player/CMD.pwn
+	pPMing // TODO: transition to local var in Player/CMD.pwn
 }
 new PlayerInfo[ MAX_PLAYERS ][ E_PLAYER_DATA ];
 
@@ -178,7 +162,7 @@ enum E_P_JOB_INFO
 	pContractTime,
 	pFreeWorks
 }
-new PlayerJob[ MAX_PLAYERS ][ E_PLAYER_DATA ];
+new PlayerJob[ MAX_PLAYERS ][ E_P_JOB_INFO ];
 
 enum E_P_TAXI_INFO
 {
@@ -491,7 +475,6 @@ enum E_BIZNIS_INFO
 	bSQLID,
 	bType,
 	bOwnerID,
-	bco_OwnerID,
 	bMessage[16],
 	bCanEnter,
 	Float:bEntranceX,

@@ -576,7 +576,7 @@ CMD:craft(playerid, params[])
 		Player_SetIsWorkingJob(playerid, false);
 		return SendClientMessage( playerid, COLOR_RED, "Prestali ste raditi posao craftera!");
 	}
-	if( PlayerInfo[ playerid ][ pFreeWorks ] < 1 ) 				return SendClientMessage( playerid, COLOR_RED, "Ne mozes vise raditi!");
+	if( PlayerJob[playerid][pFreeWorks] < 1 ) 				return SendClientMessage( playerid, COLOR_RED, "Ne mozes vise raditi!");
 	if( !IsPlayerInRangeOfPoint(playerid, 150.0, 2560.1531, -1357.0905, 1043.1147) ) return SendClientMessage( playerid, COLOR_RED, "Morate biti unutar tvornice!");
 	
 	

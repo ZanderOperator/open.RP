@@ -1767,7 +1767,6 @@ CMD:quitfaction(playerid, params[])
     );
     #endif
 
-    PlayerInfo[playerid][pTeam]         = 3;
     PlayerFaction[playerid][pLeader]       = 0;
     PlayerFaction[playerid][pMember]       = 0;
     PlayerFaction[playerid][pRank]         = 0;

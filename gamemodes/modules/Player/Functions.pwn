@@ -1704,17 +1704,13 @@ stock ShowPlayerStats(playerid, targetid)
 {
 	new
 		tmpString[ 20 ],
-		motd[ 256 ], gender[15+1], b_coowner[4];
+		motd[ 256 ], gender[15+1];
 
 	switch(PlayerInfo[targetid][pSex])	{
 		case 0: format(gender, sizeof(gender), "Musko"); // re-bug
 		case 1: format(gender, sizeof(gender), "Musko");
 		case 2: format(gender, sizeof(gender), "Zensko");
 	}
-	if(PlayerInfo[playerid][BizCoOwner] == true)
-		format(b_coowner, sizeof(b_coowner), "Da");
-	else if(PlayerInfo[playerid][BizCoOwner] == false)
-		format(b_coowner, sizeof(b_coowner), "Ne");
 		
     new pDialog[1500];
 	format(motd, sizeof(motd),"Datum: %s\n\n"COL_COABLUE"IC STATS:\n\n"COL_WHITE"%s | Spol: [%s] | Godina: [%d] | Crypto broj: [%d] | Novac: [$%d] | Banka: [$%d] | Broj telefona: [%d]\n",
@@ -1730,8 +1726,8 @@ stock ShowPlayerStats(playerid, targetid)
     strcat(pDialog,motd, sizeof(pDialog));
 
     format(motd, sizeof(motd),""COL_WHITE"Posao: [%s] | Ugovor: [%d/%d] | Uhicen: [%d] | Profit po PayDayu: [$%d] | Organizacija: [%s] | Rank u organizaciji: [%s (%d)] | Hunger: [%.2f]\n",
-		ReturnJob(PlayerInfo[targetid][pJob]),
-		PlayerInfo[targetid][pContractTime],
+		ReturnJob(PlayerJob[targetid][pJob]),
+		PlayerJob[targetid][pContractTime],
 		PlayerVIP[targetid][pDonateRank] ? 1 : 5,
 		PlayerJail[targetid][pArrested],
 		PaydayInfo[targetid][pPayDayMoney],
@@ -1784,17 +1780,15 @@ stock ShowPlayerStats(playerid, targetid)
 	);
 	strcat(pDialog,motd, sizeof(pDialog));
 	
-	format(motd, sizeof(motd),""COL_WHITE"House key: [%d] | Biznis key: [%d] | Garage key: [%d] | RentKey[%d] | CarKey: [%d] | Job Key: [%d] | ComplexKey [%d] | ComplexRoomKey [%d] | Biznis Co-Owner [%s/%d]\n\n\n",
+	format(motd, sizeof(motd),""COL_WHITE"House key: [%d] | Biznis key: [%d] | Garage key: [%d] | RentKey[%d] | CarKey: [%d] | Job Key: [%d] | ComplexKey [%d] | ComplexRoomKey [%d]\n\n\n",
 		PlayerInfo[targetid][pHouseKey],
 		PlayerInfo[targetid][pBizzKey],
 		PlayerInfo[targetid][pGarageKey],
 		PlayerInfo[targetid][pRentKey],
 		PlayerInfo[targetid][pSpawnedCar],
-		PlayerInfo[targetid][pJob],
+		PlayerJob[targetid][pJob],
 		PlayerInfo[targetid][pComplexKey],
-		PlayerInfo[targetid][pComplexRoomKey],
-		b_coowner,
-		PlayerInfo[targetid][pBusiness]	
+		PlayerInfo[targetid][pComplexRoomKey]
 	);
 	strcat(pDialog,motd, sizeof(pDialog));
 	if( PlayerInfo[playerid][pAdmin] >= 1 )

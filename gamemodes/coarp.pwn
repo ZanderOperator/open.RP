@@ -873,10 +873,6 @@ ResetPlayerVariables(playerid)
 	// Previous Info(/learn, etc.)
 	ResetPlayerPreviousInfo(playerid);
 
-	PlayerInfo[playerid][pBusiness] 		= -1;
-	PlayerInfo[playerid][pBusinessJob]		= -1;
-	PlayerInfo[playerid][pBusinessWorkTime]	= 0;
-
 	// Objects
 	for(new i = 0; i < MAX_CUSTOMIZED_OBJECTS; i++)
 	{

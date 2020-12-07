@@ -121,7 +121,7 @@ CMD:sweep(playerid, params[])
 		pick[ 8 ];
 	if( sscanf( params, "s[8] ", pick ) ) return SendClientMessage(playerid, -1, "[KORISTENJE]: /sweep [start/stop]");
 	if (strcmp(pick, "start", true) == 0) {
-		if( PlayerInfo[ playerid ][ pFreeWorks ] < 1 ) return SendClientMessage( playerid, COLOR_RED, "Ne mozes vise raditi!");
+		if( PlayerJob[playerid][pFreeWorks] < 1 ) return SendClientMessage( playerid, COLOR_RED, "Ne mozes vise raditi!");
 		if( IsVehicleASweep(vehicleID) ) 
 		{
 			if( Bit1_Get( r_Sweeping, playerid ) ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Vec ste poceli sa poslom!");

@@ -624,7 +624,7 @@ CMD:cuttree(playerid, params[])
 	if( PlayerJob[playerid][pJob] != WOODCUT_JOB_ID )
 		return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste drvosjeca!");
 		
-    if(PlayerInfo[ playerid ][ pFreeWorks ] < 1)
+    if(PlayerJob[playerid][pFreeWorks] < 1)
 		return SendClientMessage( playerid, COLOR_RED, "Ne mozes vise raditi, pricekajte Pay Day!");
 	    
 	if(IsPlayerInAnyVehicle(playerid))
