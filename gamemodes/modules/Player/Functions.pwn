@@ -1059,7 +1059,7 @@ timer LoginCheck[60000](playerid)
 
 Public:PlayerMinuteTask(playerid)
 {
-	PlayerTaskTStamp[playerid] = gettimestamp() + 60;
+	PlayerTick[playerid][ptMainTimer] = gettimestamp() + 60;
 	
 	if(GetPlayerState(playerid) != PLAYER_STATE_DRIVER && LastVehicle[playerid] != INVALID_VEHICLE_ID) 
 	{
@@ -1134,14 +1134,15 @@ Public:PlayerMinuteTask(playerid)
 
 timer PlayerGlobalTask[1000](playerid)
 {
-
-	if ( !SafeSpawned[playerid] || !IsPlayerConnected(playerid) ) return 1;
-	if( gettimestamp() >= PlayerTaskTStamp[playerid] )
+	if ( !SafeSpawned[playerid] || !IsPlayerConnected(playerid) ) 
+		return 1;
+	
+	if( gettimestamp() >= PlayerTick[playerid][ptMainTimer] )
 		PlayerMinuteTask(playerid);	
 	
-	if(TaxiData[playerid][eTaxiActive] == true) {
+	if(TaxiData[playerid][eTaxiActive] == true) 
 		_TaximeterCount(playerid);
-	}
+
 	
 	PlayerSyncs[ playerid ] = false;
 	new tmphour,tmpmins,tmpsecs;

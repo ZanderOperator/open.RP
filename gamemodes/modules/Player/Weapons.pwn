@@ -182,8 +182,6 @@ stock AC_GivePlayerWeapon(playerid, weaponid, ammo, bool:base_update=true, bool:
 	if(base_update && SafeSpawned[playerid])
 		AC_SavePlayerWeapon(playerid, slot);
 
-	//Tick 3sec
-	PlayerTick[playerid][ptWeapon] = gettimestamp() + 2;
 	return 1;
 }
 
@@ -279,9 +277,6 @@ stock AC_SetPlayerAmmo(playerid, weaponid, ammo)
 
 	//Real Give Func
 	SetPlayerAmmo(playerid, weaponid, ammo);
-
-	//Tick
-	PlayerTick[playerid][ptWeapon] = gettimestamp() + 1;
 	return 1;
 }
 
@@ -294,8 +289,6 @@ stock AC_SetPlayerWeapons(playerid)
 		GivePlayerWeapon(playerid, PlayerWeapons[playerid][pwWeaponId][i], PlayerWeapons[playerid][pwAmmo][i]);
 	}
 	SetPlayerArmedWeapon(playerid, 0);
-	//Tick
-	PlayerTick[playerid][ptWeapon] = gettimestamp() + 5;
 	return 1;
 }
 
@@ -325,7 +318,6 @@ stock AC_ResetPlayerWeapons(playerid, bool:base_reset=true)
 		PlayerWeapons[playerid][pwAmmo][slot] 		= 0;
 	}
 	SetPlayerArmedWeapon(playerid, 0);
-	PlayerTick[playerid][ptWeapon] = gettimestamp() + 5;
 
 	if(base_reset)
 	{
@@ -379,7 +371,6 @@ stock AC_ResetPlayerWeapon(playerid, weaponid, bool:base_update=true)
 			weaponid
 		);
 	}
-	PlayerTick[playerid][ptWeapon] = gettimestamp() + 5;
 	return 1;
 }
 

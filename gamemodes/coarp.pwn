@@ -215,7 +215,6 @@ new Float:ACPosX[MAX_PLAYERS], Float:ACPosY[MAX_PLAYERS], Float:ACPosZ[MAX_PLAYE
 new
 	//_QuickTimer[MAX_PLAYERS] = 0,
 	GlobalMapIcon[MAX_PLAYERS],
-	PlayerTaskTStamp[MAX_PLAYERS],
 	bool:OnSecurityBreach[MAX_PLAYERS] = false,
 	bool:FDArrived[MAX_PLAYERS],
 	Float:PlayerTrunkPos[MAX_PLAYERS][3],
@@ -737,17 +736,10 @@ ResetPlayerVariables(playerid)
 
 	// Ticks
 	PlayerTick[playerid][ptReport]			= gettimestamp();
-	PlayerTick[playerid][ptVehicleCrash]	= gettimestamp();
-	PlayerTick[playerid][ptHealth]			= gettimestamp();
-	PlayerTick[playerid][ptWeapon]			= gettimestamp();
 	PlayerTick[playerid][ptMoney]			= gettimestamp();
-	PlayerTick[playerid][ptArmour]			= gettimestamp();
-	PlayerTick[playerid][ptVehHealth]		= gettimestamp();
 	PlayerTick[playerid][ptHelperHelp]		= gettimestamp();
-	PlayerTick[playerid][ptAirBrake] 		= gettimestamp();
-	PlayerTick[playerid][ptKill]			= 0;
-	PlayerTick[playerid][ptVehiclePort]		= 0;
-	PlayerTaskTStamp[playerid] 				= 0;
+	PlayerTick[playerid][ptKill]			= gettimestamp();
+	PlayerTick[playerid][ptMainTimer] 		= gettimestamp();
 
 	//Enums	
 	PlayerInfo[playerid][pForumName] 		= EOS;

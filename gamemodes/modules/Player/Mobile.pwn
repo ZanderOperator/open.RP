@@ -2652,7 +2652,8 @@ hook OnPlayerText(playerid, text[])
 			idx,
 			tmp[ 128 ];
 		tmp = strtok(text, idx);
-		if( CallingId[ playerid ] == 911 ) {
+		if( CallingId[ playerid ] == 911 ) 
+		{
 			if(!strlen(tmp)) {
 				SendClientMessage(playerid, COLOR_ALLDEPT, "HITNA LINIJA: Oprostite ne razumijem, da li trebate policiju ili hitnu pomoc?");
 				return 0;
@@ -2673,7 +2674,8 @@ hook OnPlayerText(playerid, text[])
 				return 0;
 			}
 		}
-		if(CallingId[ playerid ] == 916) {
+		if(CallingId[ playerid ] == 916) 
+		{
 			if(!strlen(tmp)) {
 				SendClientMessage(playerid, COLOR_ALLDEPT, "HITNA LINIJA: Oprostite ali ne razumijem?");
 				return 0;
@@ -2683,7 +2685,8 @@ hook OnPlayerText(playerid, text[])
 			CallingId[ playerid ] =  915;
 			return 0;
 		}
-		if(CallingId[ playerid ] == 915) {
+		if(CallingId[ playerid ] == 915) 
+		{
 			if(!strlen(tmp)) {
 				SendClientMessage(playerid, 0xFF8282AA, "HITNA LINIJA: Oprostite ali ne razumijem?");
 				return 0;
@@ -2709,7 +2712,8 @@ hook OnPlayerText(playerid, text[])
 			PlayerHangup(playerid);
 			return 0;
 		}
-		if(CallingId[ playerid ] == 913) {
+		if(CallingId[ playerid ] == 913) 
+		{
 			if(!strlen(tmp)) {
 				SendClientMessage(playerid, COLOR_ALLDEPT, "HITNA LINIJA: Oprostite ali ne razumijem?");
 				return 0;
@@ -2744,7 +2748,8 @@ hook OnPlayerText(playerid, text[])
 			PlayerHangup(playerid);
 			return 0;
 		}
-		if(CallingId[ playerid ] == 912) {
+		if(CallingId[ playerid ] == 912) 
+		{
 			if(!strlen(tmp)) {
 				SendClientMessage(playerid, COLOR_ALLDEPT, "HITNA LINIJA: Oprostite ali ne razumijem?");
 				return 0;
@@ -2754,14 +2759,16 @@ hook OnPlayerText(playerid, text[])
 			CallingId[ playerid ] =  913;
 			return 0;
 		}
-		if( CallingId[ playerid ] == 555 ) {
+		if( CallingId[ playerid ] == 555 ) 
+		{
 			if(!strlen(tmp)) return SendClientMessage(playerid, COLOR_YELLOW, "Dispatcher: Oprostite ali ne razumijem?"), 0;
 			strmid(PlayerCrime[playerid][pAccusing], text, 0, strlen(text), 255);
 			SendClientMessage(playerid, COLOR_YELLOW, "Dispatcher: Uredu. Recite vasu trenutnu lokaciju?");
 			CallingId[ playerid ] = 556;
 			return 0;
 		}
-		if( CallingId[ playerid ] == 32715 ) {
+		if( CallingId[ playerid ] == 32715 ) 
+		{
 			if(!strlen(tmp)) {
 				SendClientMessage(playerid, COLOR_YELLOW, "Maska 64361 kaze (mobitel): Priblizi se tom telefonu kurca te ne cujem.");
 				return 0;
