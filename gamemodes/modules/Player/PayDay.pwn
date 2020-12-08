@@ -70,8 +70,8 @@ GivePlayerPayCheck(playerid)
 	format(f_dialog,sizeof(f_dialog), "\n{3C95C2}Imovina:");
 	strcat(p_dialog,f_dialog, sizeof(p_dialog));
 	// Posjeduje kucu -> bills
-	if(PlayerInfo[playerid][pHouseKey] != INVALID_HOUSE_ID && PlayerInfo[playerid][pHouseKey] > 0) {
-		new house = PlayerInfo[playerid][pHouseKey];
+	if(PlayerKeys[playerid][pHouseKey] != INVALID_HOUSE_ID && PlayerKeys[playerid][pHouseKey] > 0) {
+		new house = PlayerKeys[playerid][pHouseKey];
 
 		houselost += floatround( 0.001 * HouseInfo[ house ][ hValue ] );
 		format(f_dialog,sizeof(f_dialog), "\n\tTroskovi kuce + porez: %s", FormatNumber(houselost));
@@ -80,8 +80,8 @@ GivePlayerPayCheck(playerid)
 		profit -= houselost;
 	}
 	// Ako kod nekoga renta
-	if( PlayerInfo[ playerid ][ pRentKey ] != INVALID_HOUSE_ID && PlayerInfo[ playerid ][ pRentKey ] >= 0 )  {
-		new house = PlayerInfo[ playerid ][ pRentKey ];
+	if( PlayerKeys[playerid][pRentKey] != INVALID_HOUSE_ID && PlayerKeys[playerid][pRentKey] >= 0 )  {
+		new house = PlayerKeys[playerid][pRentKey];
 		if(PlayerInfo[playerid][pBank] >= HouseInfo[ house ][ hRent ])
 		{
 			rentlost += HouseInfo[ house ][ hRent ];
@@ -92,20 +92,20 @@ GivePlayerPayCheck(playerid)
 		}
 		else {
 			SendMessage(playerid, MESSAGE_TYPE_INFO, "Izbaceni ste iz podstanarstva jer nemate za najamninu na bankovnom racunu.");
-			PlayerInfo[ playerid ][ pRentKey ] = 9999;
-			PlayerInfo[ playerid ][ pRentKey ] = INVALID_HOUSE_ID;
+			PlayerKeys[playerid][pRentKey] = INVALID_HOUSE_ID;
+			PlayerKeys[playerid][pRentKey] = INVALID_HOUSE_ID;
 			PlayerInfo[ playerid ][ pSpawnChange ] = 0;
 			SetPlayerSpawnInfo(playerid);
 		}
 	}
 	//Rentroom complex - ako igra? renta kompleks room (**oporezivo**)
-	if(PlayerInfo[playerid][pComplexRoomKey] != INVALID_COMPLEX_ID)
+	if(PlayerKeys[playerid][pComplexRoomKey] != INVALID_COMPLEX_ID)
 	{
-		new price = ComplexRoomInfo[PlayerInfo[playerid][pComplexRoomKey]][cValue];
+		new price = ComplexRoomInfo[PlayerKeys[playerid][pComplexRoomKey]][cValue];
 		complexroomlost += price;
 		foreach(new c : Complex)
 		{
-		    if(ComplexInfo[c][cSQLID] == ComplexRoomInfo[PlayerInfo[playerid][pComplexRoomKey]][cComplexID])
+		    if(ComplexInfo[c][cSQLID] == ComplexRoomInfo[PlayerKeys[playerid][pComplexRoomKey]][cComplexID])
 		    {
 				profit -= complexroomlost;
 				PlayerBankToComplexMoneyTAX(playerid, c, complexroomlost);
@@ -116,7 +116,7 @@ GivePlayerPayCheck(playerid)
 		}
 	}
 	// Posjeduje kompleks
-    if(PlayerInfo[playerid][pComplexKey] != INVALID_COMPLEX_ID) {
+    if(PlayerKeys[playerid][pComplexKey] != INVALID_COMPLEX_ID) {
         //complexlost += floatround( 25 * PlayerInfo[ playerid ][ pLevel ] );
 		// pogurati malo komplekse da ih ljudi kupuju
 		complexlost += minrand(200, 1000);
@@ -126,8 +126,8 @@ GivePlayerPayCheck(playerid)
 		profit += complexlost;
     }
 	// Ako posjeduje biznis
-	if( PlayerInfo[ playerid ][ pBizzKey ] != INVALID_BIZNIS_ID ) {
-		new bizid = PlayerInfo[ playerid ][ pBizzKey ],
+	if( PlayerKeys[playerid][pBizzKey] != INVALID_BIZNIS_ID ) {
+		new bizid = PlayerKeys[playerid][pBizzKey],
 			possibility = minrand(0, 800);
 		if (possibility >= 200) {
 			BudgetToBusinessMoney ( bizid, possibility);

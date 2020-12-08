@@ -930,7 +930,7 @@ CMD:stealitems(playerid, params[])
 	new
 		house = Player_InHouse(playerid);
 	if( house == INVALID_HOUSE_ID || !house ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste u kuci!");
-	if( house == PlayerInfo[playerid][pHouseKey] ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne mozes svoju kucu krasti!");
+	if( house == PlayerKeys[playerid][pHouseKey] ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne mozes svoju kucu krasti!");
 	new	
 		param;
 	if( sscanf( params, "i", param ) ) {

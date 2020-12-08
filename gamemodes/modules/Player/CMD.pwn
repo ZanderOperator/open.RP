@@ -832,8 +832,8 @@ CMD:sid(playerid, params[])
 
 	SendClientMessage(giveplayerid, COLOR_RED, "_______________________"); 
 	va_SendClientMessage( giveplayerid, COLOR_WHITE, "Ime: %s   Godine: %d"	, GetName( playerid, false ), PlayerInfo[playerid][pAge] );
-	if(PlayerInfo[playerid][pHouseKey] != INVALID_HOUSE_ID)
-		va_SendClientMessage( giveplayerid, COLOR_WHITE, "Adresa: %s"			, HouseInfo[PlayerInfo[playerid][pHouseKey]][hAdress] );
+	if(PlayerKeys[playerid][pHouseKey] != INVALID_HOUSE_ID)
+		va_SendClientMessage( giveplayerid, COLOR_WHITE, "Adresa: %s"			, HouseInfo[PlayerKeys[playerid][pHouseKey]][hAdress] );
 	va_SendClientMessage( giveplayerid, COLOR_WHITE, "Telefonski broj: %d"	, PlayerMobile[playerid][pMobileNumber]);
 	SendClientMessage( giveplayerid, COLOR_GREEN, "_______________________");
 
@@ -2387,7 +2387,7 @@ CMD:spawnchange(playerid, params[])
 	if(spawn < 0 || spawn > 5) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Neispravan ID spawna! (0-5)");
 	if(spawn == 1)
 	{
-		if(PlayerInfo[playerid][pHouseKey] == INVALID_HOUSE_ID)
+		if(PlayerKeys[playerid][pHouseKey] == INVALID_HOUSE_ID)
 			return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne posjedujete kucu!");
 	}
 	else if(spawn == 2)
@@ -2401,7 +2401,7 @@ CMD:spawnchange(playerid, params[])
 	}
 	else if(spawn == 3)
 	{
-		if(PlayerInfo[playerid][pComplexRoomKey] == INVALID_COMPLEX_ID)
+		if(PlayerKeys[playerid][pComplexRoomKey] == INVALID_COMPLEX_ID)
 			return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne iznajmljujete stan u Complexu!");
 	}
 	else if(spawn == 4) {

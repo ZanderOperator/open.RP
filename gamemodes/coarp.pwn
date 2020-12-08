@@ -763,7 +763,6 @@ ResetPlayerVariables(playerid)
 	PlayerInfo[playerid][pLastUpdateVer] 	= EOS;
 
 	PlayerInfo[playerid][pSQLID] 			= 0; 	//Integer
-	PlayerInfo[playerid][pOnline]           = false;
 	PlayerInfo[playerid][pLastLoginTimestamp] = 0;
 	PlayerInfo[playerid][pRegistered] 		= 0;
 	PlayerInfo[playerid][pTempConnectTime]	= 0;
@@ -789,8 +788,8 @@ ResetPlayerVariables(playerid)
 	PlayerInfo[playerid][pTempConnectTime]	= 0;
 	PlayerInfo[playerid][pLawDuty]          = 0;
 	PlayerInfo[playerid][pDutySystem]		= 0;
-	PlayerInfo[playerid][pHouseKey]			= INVALID_HOUSE_ID;
-	PlayerInfo[playerid][pRentKey]			= INVALID_HOUSE_ID;
+	PlayerKeys[playerid][pHouseKey]			= INVALID_HOUSE_ID;
+	PlayerKeys[playerid][pRentKey]			= INVALID_HOUSE_ID;
 
 	PlayerInfo[playerid][pSkin]				= 0;
 	PlayerMobile[playerid][pCryptoNumber]		= 0;
@@ -802,12 +801,12 @@ ResetPlayerVariables(playerid)
 	PlayerDeath[playerid][pDeathVW] 			= 0;
 
 	PlayerInfo[playerid][pMaskID]			= -1;
-	PlayerInfo[playerid][pSpawnedCar]		= -1;
-	PlayerInfo[playerid][pBizzKey]			= INVALID_BIZNIS_ID;
-	PlayerInfo[playerid][pComplexKey]		= INVALID_COMPLEX_ID;
-	PlayerInfo[playerid][pComplexRoomKey]	= INVALID_COMPLEX_ID;
-	PlayerInfo[playerid][pGarageKey]		= -1;
-	PlayerInfo[playerid][pIllegalGarageKey]	= -1;
+	PlayerKeys[playerid][pVehicleKey]		= -1;
+	PlayerKeys[playerid][pBizzKey]			= INVALID_BIZNIS_ID;
+	PlayerKeys[playerid][pComplexKey]		= INVALID_COMPLEX_ID;
+	PlayerKeys[playerid][pComplexRoomKey]	= INVALID_COMPLEX_ID;
+	PlayerKeys[playerid][pGarageKey]		= -1;
+	PlayerKeys[playerid][pIllegalGarageKey]	= -1;
 	PlayerInfo[playerid][pSeeds]			= 0;
 	PlayerInfo[playerid][pToolkit]			= 0;
 	PlayerInfo[playerid][pParts]			= 0;
@@ -827,10 +826,8 @@ ResetPlayerVariables(playerid)
 
 	PlayerInfo[playerid][pPrimaryWeapon] 	= 0;
 	PlayerInfo[playerid][pSecondaryWeapon] 	= 0;
-	PlayerInfo[playerid][pWarehouseKey] 	= -1;
-	PlayerInfo[playerid][pRaceSQL]			= -1;
+	PlayerKeys[playerid][pWarehouseKey] 	= -1;
 	PlayerInfo[playerid][pMustRead]			= false;
-	PlayerInfo[playerid][pRaceCreator]		= false;
 	
 	//Floats
 	PlayerInfo[playerid][pMarker1][0]		= 0.0;
@@ -1752,13 +1749,13 @@ hook OnPlayerSpawn(playerid)
 					}
 					case 1: 
 					{
-						if( PlayerInfo[playerid][pHouseKey] != INVALID_HOUSE_ID || PlayerInfo[playerid][pRentKey] != INVALID_HOUSE_ID ) {
+						if( PlayerKeys[playerid][pHouseKey] != INVALID_HOUSE_ID || PlayerKeys[playerid][pRentKey] != INVALID_HOUSE_ID ) {
 							new
 								house;
-							if(  PlayerInfo[playerid][pHouseKey] != INVALID_HOUSE_ID )
-								house = PlayerInfo[playerid][pHouseKey];
-							else if( PlayerInfo[playerid][pRentKey] != INVALID_HOUSE_ID )
-								house = PlayerInfo[playerid][pRentKey];
+							if(  PlayerKeys[playerid][pHouseKey] != INVALID_HOUSE_ID )
+								house = PlayerKeys[playerid][pHouseKey];
+							else if( PlayerKeys[playerid][pRentKey] != INVALID_HOUSE_ID )
+								house = PlayerKeys[playerid][pRentKey];
 
 							// TODO: this logic is probably wrong, if setting player outside int
 							// set their int and vw to 0
@@ -1811,10 +1808,10 @@ hook OnPlayerSpawn(playerid)
 					}
 					case 3:
 					{
-						if(PlayerInfo[playerid][pComplexRoomKey] != INVALID_COMPLEX_ID)
+						if(PlayerKeys[playerid][pComplexRoomKey] != INVALID_COMPLEX_ID)
 						{
-							//printf("%s{%d}(%d) >> COMPLEX >> %d", GetName(playerid, true), playerid, PlayerInfo[playerid][pComplexRoomKey]);
-							new complex = PlayerInfo[playerid][pComplexRoomKey];
+							//printf("%s{%d}(%d) >> COMPLEX >> %d", GetName(playerid, true), playerid, PlayerKeys[playerid][pComplexRoomKey]);
+							new complex = PlayerKeys[playerid][pComplexRoomKey];
 							SetPlayerPosEx(playerid, ComplexRoomInfo[ complex ][ cExitX ], ComplexRoomInfo[ complex ][ cExitY ], ComplexRoomInfo[ complex ][ cExitZ ], 0, 0, true);
 							SetPlayerInterior( playerid, ComplexRoomInfo[ complex ][ cInt ] );
 							SetPlayerVirtualWorld( playerid, ComplexRoomInfo[ complex ][ cViwo ]);

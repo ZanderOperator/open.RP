@@ -1183,7 +1183,7 @@ timer PlayerGlobalTask[1000](playerid)
 	CheckWoundedPlayer(playerid);
 	
 	if(PlayerCarTow[playerid])
-		VehicleTowTimer(PlayerInfo[playerid][pSpawnedCar], playerid);
+		VehicleTowTimer(PlayerKeys[playerid][pVehicleKey], playerid);
 	
 	SprayingBarChecker(playerid);
 	SprayingTaggTimer(playerid);
@@ -1781,14 +1781,14 @@ stock ShowPlayerStats(playerid, targetid)
 	strcat(pDialog,motd, sizeof(pDialog));
 	
 	format(motd, sizeof(motd),""COL_WHITE"House key: [%d] | Biznis key: [%d] | Garage key: [%d] | RentKey[%d] | CarKey: [%d] | Job Key: [%d] | ComplexKey [%d] | ComplexRoomKey [%d]\n\n\n",
-		PlayerInfo[targetid][pHouseKey],
-		PlayerInfo[targetid][pBizzKey],
-		PlayerInfo[targetid][pGarageKey],
-		PlayerInfo[targetid][pRentKey],
-		PlayerInfo[targetid][pSpawnedCar],
+		PlayerKeys[targetid][pHouseKey],
+		PlayerKeys[targetid][pBizzKey],
+		PlayerKeys[targetid][pGarageKey],
+		PlayerKeys[targetid][pRentKey],
+		PlayerKeys[targetid][pVehicleKey],
 		PlayerJob[targetid][pJob],
-		PlayerInfo[targetid][pComplexKey],
-		PlayerInfo[targetid][pComplexRoomKey]
+		PlayerKeys[targetid][pComplexKey],
+		PlayerKeys[targetid][pComplexRoomKey]
 	);
 	strcat(pDialog,motd, sizeof(pDialog));
 	if( PlayerInfo[playerid][pAdmin] >= 1 )

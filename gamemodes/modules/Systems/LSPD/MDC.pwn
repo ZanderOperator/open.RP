@@ -121,7 +121,8 @@ static OnPlayerMDCDataLoad(playerid, const playername[], sqlid)
         new
             loadInfo[E_PLAYER_DATA],
             jailInfo[E_P_JAIL_INFO],
-            licInfo[E_LICENSES_INFO];
+            licInfo[E_LICENSES_INFO],
+            housekey = INVALID_HOUSE_ID;
 
         // General Account Info
         cache_get_value_name_int(0, "sqlid"         , loadInfo[pSQLID]);
@@ -147,7 +148,7 @@ static OnPlayerMDCDataLoad(playerid, const playername[], sqlid)
         {
             if (HouseInfo[house][hOwnerID] == loadInfo[pSQLID])
             {
-                loadInfo[pHouseKey] = house;
+                housekey = house;
                 break;
             }
         }
@@ -161,7 +162,7 @@ static OnPlayerMDCDataLoad(playerid, const playername[], sqlid)
             tmpLook2[60],
             tmpGunLic[12];
 
-        ( loadInfo[pHouseKey] != INVALID_HOUSE_ID) && format(tmpAddress, 32, HouseInfo[ loadInfo[pHouseKey] ][hAdress]) || format(tmpAddress, 32, "N/A");
+        ( housekey != INVALID_HOUSE_ID) && format(tmpAddress, 32, HouseInfo[housekey][hAdress]) || format(tmpAddress, 32, "N/A");
         if (strlen(loadInfo[pLook]) > 60)
         {
             format(tmpLook, sizeof(tmpLook), "%.60s", loadInfo[pLook]);

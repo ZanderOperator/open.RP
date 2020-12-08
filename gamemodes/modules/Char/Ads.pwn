@@ -427,7 +427,7 @@ CMD:carad(playerid, params[])
 {
 	if(!IsPlayerInAnyVehicle(playerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Morate biti u vozilu!");
 	new vehicleid = GetPlayerVehicleID(playerid);
-	if(PlayerInfo[ playerid ][ pSpawnedCar ] > -1 && PlayerInfo[ playerid ][ pSpawnedCar ] != vehicleid) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Morate imati spawnati CO i morate biti u njemu!");
+	if(PlayerKeys[playerid][pVehicleKey] > -1 && PlayerKeys[playerid][pVehicleKey] != vehicleid) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Morate imati spawnati CO i morate biti u njemu!");
 	new pick[8];
 	if(sscanf(params, "s[8] ", pick)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /carad [set/delete]");
 	if(!strcmp(pick, "set", true))

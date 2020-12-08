@@ -411,14 +411,14 @@ IsPlayerCredible(playerid, amount)
 GetValuablePropertyType(playerid)
 {
 	new housevalue = 0, bizvalue = 0;
-	if(PlayerInfo[playerid][pHouseKey] != INVALID_HOUSE_ID)
+	if(PlayerKeys[playerid][pHouseKey] != INVALID_HOUSE_ID)
 	{
-		new houseid = PlayerInfo[playerid][pHouseKey];
+		new houseid = PlayerKeys[playerid][pHouseKey];
 		housevalue = HouseInfo[houseid][hValue];
 	}
-	if(PlayerInfo[playerid][pBizzKey] != INVALID_HOUSE_ID)
+	if(PlayerKeys[playerid][pBizzKey] != INVALID_HOUSE_ID)
 	{
-		new bizzid = PlayerInfo[playerid][pBizzKey];
+		new bizzid = PlayerKeys[playerid][pBizzKey];
 		bizvalue = BizzInfo[bizzid][bBuyPrice];
 	}
 	if(housevalue > bizvalue)
@@ -428,7 +428,7 @@ GetValuablePropertyType(playerid)
 
 TakePlayerProperty(playerid)
 {
-	if(PlayerInfo[playerid][pHouseKey] == INVALID_HOUSE_ID && PlayerInfo[playerid][pBizzKey] == INVALID_BIZNIS_ID)
+	if(PlayerKeys[playerid][pHouseKey] == INVALID_HOUSE_ID && PlayerKeys[playerid][pBizzKey] == INVALID_BIZNIS_ID)
 		return 1;
 	
 	new type = GetValuablePropertyType(playerid);
@@ -437,33 +437,33 @@ TakePlayerProperty(playerid)
 	{
 		case 0: // No House/Business
 		{
-			if(PlayerInfo[playerid][pSpawnedCar] != -1) // The proud owner of private vehicle which bank will instantly seize
+			if(PlayerKeys[playerid][pVehicleKey] != -1) // The proud owner of private vehicle which bank will instantly seize
 			{
-				va_SendClientMessage(playerid, COLOR_RED, "[ ! ]: The Bank seized your %s as payment of credit costs.", ReturnVehicleName(VehicleInfo[PlayerInfo[playerid][pSpawnedCar]][vModel]));
+				va_SendClientMessage(playerid, COLOR_RED, "[ ! ]: The Bank seized your %s as payment of credit costs.", ReturnVehicleName(VehicleInfo[PlayerKeys[playerid][pVehicleKey]][vModel]));
 				// Vehicle List Reset
 				ResetVehicleList(playerid);
 
-				DeleteVehicleTuning(PlayerInfo[playerid][pSpawnedCar]);
-				ResetTuning(PlayerInfo[playerid][pSpawnedCar]);
-				DeleteVehicleDrug(PlayerInfo[playerid][pSpawnedCar], -1);
+				DeleteVehicleTuning(PlayerKeys[playerid][pVehicleKey]);
+				ResetTuning(PlayerKeys[playerid][pVehicleKey]);
+				DeleteVehicleDrug(PlayerKeys[playerid][pVehicleKey], -1);
 				
 				// SQL
-				DeleteVehicleFromBase(VehicleInfo[PlayerInfo[playerid][pSpawnedCar]][vSQLID]);
+				DeleteVehicleFromBase(VehicleInfo[PlayerKeys[playerid][pVehicleKey]][vSQLID]);
 
 				#if defined MODULE_LOGS
 				Log_Write("/logfiles/car_delete.txt", "(%s) %s lost his %s because of credit loan debt.",
 					ReturnDate(),
 					GetName(playerid,false),
-					ReturnVehicleName(GetVehicleModel(PlayerInfo[playerid][pSpawnedCar]))
+					ReturnVehicleName(GetVehicleModel(PlayerKeys[playerid][pVehicleKey]))
 				);
 				#endif
 
 				// Brisanje vozila
 				DestroyFarmerObjects(playerid);
-				AC_DestroyVehicle(PlayerInfo[playerid][pSpawnedCar]);
-				ResetVehicleInfo(PlayerInfo[playerid][pSpawnedCar]);
+				AC_DestroyVehicle(PlayerKeys[playerid][pVehicleKey]);
+				ResetVehicleInfo(PlayerKeys[playerid][pVehicleKey]);
 
-				PlayerInfo[playerid][pSpawnedCar] = -1;
+				PlayerKeys[playerid][pVehicleKey] = -1;
 
 				// List
 				GetPlayerVehicleList(playerid);
@@ -473,13 +473,13 @@ TakePlayerProperty(playerid)
 		}
 		case PROPERTY_TYPE_HOUSE:
 		{
-			new house = PlayerInfo[playerid][pHouseKey];
+			new house = PlayerKeys[playerid][pHouseKey];
 			
 			va_SendClientMessage(playerid, COLOR_LIGHTRED, "[BANKA]: Oduzeta vam je kuca na adresi %s zbog potrazivanja banke od %d$ radi neplacanja kredita.", 
 				HouseInfo[house][hAdress],
 				CreditInfo[playerid][cAmount]
 			);
-			PlayerInfo[playerid][pHouseKey] = INVALID_HOUSE_ID;
+			PlayerKeys[playerid][pHouseKey] = INVALID_HOUSE_ID;
 			
 			HouseInfo[house][hOwnerID]		= 0;
 			HouseInfo[house][hLock] 		= 1;
@@ -494,13 +494,13 @@ TakePlayerProperty(playerid)
 		}
 		case PROPERTY_TYPE_BIZZ:
 		{
-			new biz = PlayerInfo[playerid][pBizzKey];
+			new biz = PlayerKeys[playerid][pBizzKey];
 			
 			va_SendClientMessage(playerid, COLOR_LIGHTRED, "[BANKA]: Oduzet vam je biznis %s zbog potrazivanja banke od %d$ radi neplacanja kredita.", 
 				BizzInfo[biz][bMessage],
 				CreditInfo[playerid][cAmount]
 			);
-			PlayerInfo[playerid][pBizzKey] = INVALID_BIZNIS_ID;
+			PlayerKeys[playerid][pBizzKey] = INVALID_BIZNIS_ID;
 			
 			BizzInfo[biz][bLocked] 	= 1;
 			BizzInfo[biz][bOwnerID] = 0;

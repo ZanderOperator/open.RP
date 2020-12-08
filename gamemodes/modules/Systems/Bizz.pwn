@@ -534,7 +534,7 @@ stock BuyBiznis(playerid, bool:credit_activated = false)
     new bizz = buyBizID[playerid];
     if (bizz < 0 || bizz >= MAX_BIZZS) return 0;
 
-    PlayerInfo[playerid][pBizzKey] = bizz;
+    PlayerKeys[playerid][pBizzKey] = bizz;
     //BizzInfo[bizz][bTill]        = 0;
     BizzInfo[bizz][bOwnerID]       = PlayerInfo[playerid][pSQLID];
     PlayerPlayTrackSound(playerid);
@@ -1133,7 +1133,7 @@ hook OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
 hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 {
     // TODO: wtf is "bouse", rename to something meaningful
-    new bouse = PlayerInfo[playerid][pBizzKey];
+    new bouse = PlayerKeys[playerid][pBizzKey];
     switch (dialogid)
     {
         case DIALOG_NEWBIZNIS_NAME:
@@ -1641,7 +1641,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
             }
             new
                 gplayerid = strval(inputtext),
-                bizz = PlayerInfo[playerid][pBizzKey];
+                bizz = PlayerKeys[playerid][pBizzKey];
 
             if (bizz < 0 || bizz >= MAX_BIZZS) return 1;
 
@@ -1651,7 +1651,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                 return 1;
             }
             if (!ProxDetectorS(5.0, playerid, gplayerid)) return SendClientMessage(playerid, COLOR_RED, "Taj igrac nije blizu vas!");
-            if (PlayerInfo[gplayerid][pBizzKey] != 999) return SendClientMessage(playerid, COLOR_RED, "Taj igrac vec ima biznis!");
+            if (PlayerKeys[gplayerid][pBizzKey] != INVALID_BIZNIS_ID) return SendClientMessage(playerid, COLOR_RED, "Taj igrac vec ima biznis!");
 
             GlobalSellingPlayerID[playerid] = gplayerid;
             ShowPlayerDialog(playerid, DIALOG_SELL_BIZ_PRICE, DIALOG_STYLE_INPUT, "PRODAJA VASEG BIZNISA IGRACU", "Unesite cijenu vaseg biznisa", "Input", "Close");
@@ -1694,11 +1694,11 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                 SendClientMessage(playerid, COLOR_RED, "Nitko vam nije ponudio prodaju biznisa!");
                 return 1;
             }
-            PlayerInfo[playerid][pBizzKey] = PlayerInfo[pID][pBizzKey];
-            PlayerInfo[pID][pBizzKey]      = INVALID_BIZNIS_ID;
+            PlayerKeys[playerid][pBizzKey] = PlayerKeys[pID][pBizzKey];
+            PlayerKeys[pID][pBizzKey]      = INVALID_BIZNIS_ID;
 
             new
-                bizz = PlayerInfo[playerid][pBizzKey];
+                bizz = PlayerKeys[playerid][pBizzKey];
 
             mysql_fquery(g_SQL, "UPDATE bizzes SET ownerid = '%d' WHERE id = '%d'",
                 PlayerInfo[playerid][pSQLID],
@@ -1751,7 +1751,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
         case DIALOG_BIZNIS_ARTICLEPRICE:
         {
             //new
-            //  bizz = PlayerInfo[playerid][pBizzKey];
+            //  bizz = PlayerKeys[playerid][pBizzKey];
             if (!response) return ShowPlayerDialog(playerid, DIALOG_BIZNIS_ARTICLELIST, DIALOG_STYLE_LIST, "MOJ BIZNIS - LISTA ARTIKLA", GetArticleList(bouse), "Choose", "Abort");
 
             new price = strval(inputtext);
@@ -1803,7 +1803,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
         case DIALOG_BIZNIS_ARTICLESETPRICE:
         {
             //new
-                //bizz = PlayerInfo[playerid][pBizzKey];
+                //bizz = PlayerKeys[playerid][pBizzKey];
             if (!response) return ShowPlayerDialog(playerid, DIALOG_BIZNIS_ARTICLEINV, DIALOG_STYLE_LIST, "MOJ BIZNIS - ARTIKLI", GetStoreProducts(bouse), "Choose", "Abort");
 
             new price = strval(inputtext);
@@ -2153,7 +2153,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
         case DIALOG_BIZNIS_ENTRANCE:
         {
             //new
-            //  bizz = PlayerInfo[playerid][pBizzKey];
+            //  bizz = PlayerKeys[playerid][pBizzKey];
             new value = strval(inputtext);
             if (!response || (value < 0 || value > 200))
             {
@@ -3637,7 +3637,7 @@ CMD:custombizint(playerid, params[])
 CMD:biznis(playerid, params[])
 {
     new
-        bizz = PlayerInfo[playerid][pBizzKey];
+        bizz = PlayerKeys[playerid][pBizzKey];
     if (bizz == INVALID_BIZNIS_ID) return SendClientMessage(playerid, COLOR_RED, "Ne posjedujete biznis!");
     if (!IsPlayerInRangeOfPoint(playerid, 20.0, BizzInfo[bizz][bEntranceX], BizzInfo[bizz][bEntranceY], BizzInfo[bizz][bEntranceZ]))
         return va_SendClientMessage(playerid, COLOR_RED, "Niste blizu svoga biznisa (%s)!", BizzInfo[bizz][bMessage]);
@@ -3697,7 +3697,7 @@ CMD:menu(playerid, params[])
 
 CMD:buybiznis(playerid, params[])
 {
-    if (PlayerInfo[playerid][pBizzKey] != INVALID_BIZNIS_ID) return SendClientMessage(playerid, COLOR_RED, "Vec posjedujete biznis!");
+    if (PlayerKeys[playerid][pBizzKey] != INVALID_BIZNIS_ID) return SendClientMessage(playerid, COLOR_RED, "Vec posjedujete biznis!");
     new bizz = GetNearestBizz(playerid);
     if(bizz == INVALID_BIZNIS_ID)
         return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You are not near any business!");
@@ -3822,13 +3822,13 @@ CMD:buy(playerid, params[])
 
 CMD:bmusic(playerid, params[])
 {
-    if (PlayerInfo[playerid][pBizzKey] == INVALID_BIZNIS_ID && !Player_IsDJ(playerid))
+    if (PlayerKeys[playerid][pBizzKey] == INVALID_BIZNIS_ID && !Player_IsDJ(playerid))
     {
         SendClientMessage(playerid, COLOR_RED, "Ne posjedujes biznis/nisi DJ!");
         return 1;
     }
 
-    // TODO: why not just reuse PlayerInfo[playerid][pBizzKey] as the index to BizzInfo array?
+    // TODO: why not just reuse PlayerKeys[playerid][pBizzKey] as the index to BizzInfo array?
     new bouse;
     foreach(new i : Bizzes)
     {
@@ -3862,13 +3862,13 @@ CMD:bmusic(playerid, params[])
 
 CMD:makedj(playerid, params[])
 {
-    if (PlayerInfo[playerid][pBizzKey] == INVALID_BIZNIS_ID) return SendClientMessage(playerid, COLOR_RED, "Ne posjedujes biznis!");
+    if (PlayerKeys[playerid][pBizzKey] == INVALID_BIZNIS_ID) return SendClientMessage(playerid, COLOR_RED, "Ne posjedujes biznis!");
 
     new
         bizz = Player_InBusiness(playerid),
         giveplayerid;
 
-    // TODO: why not just reuse PlayerInfo[playerid][pBizzKey] as the index to BizzInfo array?
+    // TODO: why not just reuse PlayerKeys[playerid][pBizzKey] as the index to BizzInfo array?
     new bouse;
     foreach(new i : Bizzes)
     {
@@ -3979,13 +3979,13 @@ CMD:bizwithdraw(playerid, params[])
         bouse,
         cashdeposit;
 
-    if (PlayerInfo[playerid][pBizzKey] == INVALID_BIZNIS_ID)
+    if (PlayerKeys[playerid][pBizzKey] == INVALID_BIZNIS_ID)
     {
         SendClientMessage(playerid, COLOR_RED, "Ne posjedujes biznis.");
         return 1;
     }
 
-    // TODO: why not just reuse PlayerInfo[playerid][pBizzKey] as the index to BizzInfo array?
+    // TODO: why not just reuse PlayerKeys[playerid][pBizzKey] as the index to BizzInfo array?
     foreach(new i : Bizzes)
     {
         if (PlayerInfo[playerid][pSQLID] == BizzInfo[i][bOwnerID])
@@ -4044,13 +4044,13 @@ CMD:bizbank(playerid, params[])
         bouse,
         cashdeposit;
 
-    if (PlayerInfo[playerid][pBizzKey] == INVALID_BIZNIS_ID)
+    if (PlayerKeys[playerid][pBizzKey] == INVALID_BIZNIS_ID)
     {
         SendClientMessage(playerid, COLOR_RED, "Ne posjedujes biznis.");
         return 1;
     }
 
-    // TODO: why not just reuse PlayerInfo[playerid][pBizzKey] as the index to BizzInfo array?
+    // TODO: why not just reuse PlayerKeys[playerid][pBizzKey] as the index to BizzInfo array?
     foreach(new i : Bizzes)
     {
         if (PlayerInfo[playerid][pSQLID] == BizzInfo[i][bOwnerID])
@@ -4146,7 +4146,7 @@ CMD:deletebiz(playerid, params[])
 
 CMD:microphone(playerid, params[])
 {
-    if (PlayerInfo[playerid][pBizzKey] == INVALID_BIZNIS_ID && !Player_IsDJ(playerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne posjedujes biznis/nisi DJ!");
+    if (PlayerKeys[playerid][pBizzKey] == INVALID_BIZNIS_ID && !Player_IsDJ(playerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne posjedujes biznis/nisi DJ!");
 
     if (isnull(params))
     {

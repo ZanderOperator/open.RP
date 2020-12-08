@@ -3,7 +3,6 @@
 enum E_PLAYER_DATA
 {
 	pSQLID,
-	bool:pOnline,
 	pRegistered,
 	pTeamPIN[BCRYPT_HASH_LENGTH],
 	pForumName[24],
@@ -17,6 +16,7 @@ enum E_PLAYER_DATA
 	pWarns,
 	pLevel,
 	pLastLogin[24],
+	pLastUpdateVer[24],
 	pLastLoginTimestamp,
 	pLastIP[MAX_PLAYER_IP],
 	cIP[MAX_PLAYER_IP],
@@ -35,11 +35,6 @@ enum E_PLAYER_DATA
 	pMoney,
 	pBank,
 	pDutySystem,
-	pBizzKey,
-	pHouseKey,
-	pComplexKey,
-	pComplexRoomKey,
-	pRentKey,
 	pSkin,
 	pAccent[19],
 	Float:pMarker1[3],
@@ -48,11 +43,7 @@ enum E_PLAYER_DATA
 	Float:pMarker4[3],
 	Float:pMarker5[3],
 	pMaskID,
-	pSpawnedCar,
-	pVehKey,
 	pCDPlayer,
-	pGarageKey,
-	pIllegalGarageKey,
 	pSeeds,
 	pToolkit,
 	pClock,
@@ -69,7 +60,7 @@ enum E_PLAYER_DATA
 	pBoomBox,
 	pBoomBoxType,
 	pLook[120],
-	pCallsign[60],
+	pCallsign[60], // TODO: transition to local var in Systems LSPD/FD
 	pUnbanTime,
 	pBanReason[32],
 	pCasinoCool,
@@ -83,16 +74,13 @@ enum E_PLAYER_DATA
 	hWhistle, // TODO: transition to local var in Hunter.pwn
 	pVoted,
 	hRope,
-	pPhoneBG,
-	pPhoneMask,
-	pAmmuTime,
-	pPrimaryWeapon,
-	pSecondaryWeapon,
-	pWarehouseKey,
+	pPhoneBG, // TODO: transition to local var in Mobile.pwn
+	pPhoneMask, // TODO: transition to local var in Mobile.pwn
+	pAmmuTime, 
+	pPrimaryWeapon, // TODO: transition to local var in Player/Weapons.pwn
+	pSecondaryWeapon, // TODO: transition to local var in Player/Weapons.pwn
+	
 	bool:pMustRead,
-	pLastUpdateVer[24],
-	pRaceSQL,
-	bool:pRaceCreator,
 	FurnPremium,
 	pAddingRoadblock, // TODO: transition to local var in Labels.pwn
 	pRoadblockObject, // TODO: transition to local var in Labels.pwn
@@ -104,6 +92,20 @@ enum E_PLAYER_DATA
 	pPMing // TODO: transition to local var in Player/CMD.pwn
 }
 new PlayerInfo[ MAX_PLAYERS ][ E_PLAYER_DATA ];
+
+enum E_P_KEYS_INFO
+{
+	pHouseKey,
+	pRentKey,
+	pBizzKey,
+	pComplexKey,
+	pComplexRoomKey,
+	pWarehouseKey,
+	pGarageKey,
+	pIllegalGarageKey,
+	pVehicleKey
+}
+new PlayerKeys[ MAX_PLAYERS ][ E_P_KEYS_INFO ];
 
 enum E_P_DEATH_INFO
 {
@@ -288,8 +290,7 @@ enum E_GARAGE_DATA
 	Float:gExitZ,
 	gHouseID
 }
-new
-	GarageInfo[ MAX_GARAGES ][ E_GARAGE_DATA ];
+new GarageInfo[ MAX_GARAGES ][ E_GARAGE_DATA ];
 
 #define GetPlayerIP(%0) \
 		PlayerInfo[%0][cIP]

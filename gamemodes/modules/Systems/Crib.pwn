@@ -666,7 +666,7 @@ stock PlayHouseAlarm(houseid)
             new ownerid = INVALID_PLAYER_ID;
             foreach (new i : Player)
             {
-                if (houseid == PlayerInfo[i][pHouseKey])
+                if (houseid == PlayerKeys[i][pHouseKey])
                 {
                     ownerid = i;
                     break;
@@ -699,7 +699,7 @@ stock PlayHouseAlarm(houseid)
             new ownerid = INVALID_PLAYER_ID;
             foreach (new i : Player)
             {
-                if (houseid == PlayerInfo[i][pHouseKey])
+                if (houseid == PlayerKeys[i][pHouseKey])
                 {
                     ownerid = i;
                     break;
@@ -733,7 +733,7 @@ stock PlayHouseAlarm(houseid)
 
             foreach (new i : Player)
             {
-                if (IsACop(i) || PlayerInfo[i][pHouseKey] == houseid)
+                if (IsACop(i) || PlayerKeys[i][pHouseKey] == houseid)
                 {
                     GangZoneShowForPlayer(i, gang_zone, COLOR_YELLOW);
                     GangZoneFlashForPlayer(i, gang_zone, COLOR_RED);
@@ -746,7 +746,7 @@ stock PlayHouseAlarm(houseid)
             new ownerid = INVALID_PLAYER_ID;
             foreach (new i : Player)
             {
-                if (houseid == PlayerInfo[i][pHouseKey])
+                if (houseid == PlayerKeys[i][pHouseKey])
                 {
                     ownerid = i;
                     break;
@@ -780,7 +780,7 @@ stock PlayHouseAlarm(houseid)
 
             foreach (new i : Player)
             {
-                if (IsACop(i) || PlayerInfo[i][pHouseKey] == houseid)
+                if (IsACop(i) || PlayerKeys[i][pHouseKey] == houseid)
                 {
                     GangZoneShowForPlayer(i, gang_zone, COLOR_YELLOW);
                     GangZoneFlashForPlayer(i, gang_zone, COLOR_RED);
@@ -803,7 +803,7 @@ stock PlayHouseAlarm(houseid)
             new ownerid = INVALID_PLAYER_ID;
             foreach (new i : Player)
             {
-                if (houseid == PlayerInfo[i][pHouseKey])
+                if (houseid == PlayerKeys[i][pHouseKey])
                 {
                     ownerid = i;
                     break;
@@ -880,7 +880,7 @@ stock BuyHouse(playerid, bool:credit_activated = false)
 {
     new house = Player_InfrontHouse(playerid);
     // TODO: bounds check
-    PlayerInfo[playerid][pHouseKey] = house;
+    PlayerKeys[playerid][pHouseKey] = house;
     PlayerInfo[playerid][pSpawnChange] = 1;
     HouseInfo[house][hOwnerID] = PlayerInfo[playerid][pSQLID];
     //BizzInfo[2][bTill] += HouseInfo[house][hValue];
@@ -1347,7 +1347,7 @@ timer DestroyGlobalZone[480000](houseid)
 {
     foreach(new i : Player)
     {
-        if (PlayerInfo[i][pHouseKey] == houseid || IsACop(i))
+        if (PlayerKeys[i][pHouseKey] == houseid || IsACop(i))
         {
             GangZoneDestroy(HouseAlarmZone[houseid]);
             HouseAlarmZone[houseid] = -1;
@@ -1768,7 +1768,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                 return 1;
             }
 
-            new house = PlayerInfo[playerid][pHouseKey];
+            new house = PlayerKeys[playerid][pHouseKey];
             if (house == INVALID_HOUSE_ID)
             {
                 SendErrorMessage(playerid, "Niste vlasnik kuce!");
@@ -1833,7 +1833,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
             }
 
             new pID = strval(inputtext),
-                houseid = PlayerInfo[playerid][pHouseKey];
+                houseid = PlayerKeys[playerid][pHouseKey];
             // TODO: use defines and don't use high numbers for invalid ID's (unless required), typically, use -1
             if (houseid == 9999)
                 return 1;
@@ -1841,7 +1841,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
             if (!IsPlayerInRangeOfPoint(playerid, 10.0, HouseInfo[houseid][hEnterX], HouseInfo[houseid][hEnterY], HouseInfo[houseid][hEnterZ])) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Morate biti blizu vase kuce!");
             if (!IsPlayerConnected(pID) || !SafeSpawned[pID]) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Taj igrac nije sigurno spawnan/online!");
             if (!ProxDetectorS(5.0, playerid, pID)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Taj igrac nije blizu vas!");
-            if (PlayerInfo[pID][pHouseKey] != INVALID_HOUSE_ID) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Taj igrac vec ima kucu!");
+            if (PlayerKeys[pID][pHouseKey] != INVALID_HOUSE_ID) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Taj igrac vec ima kucu!");
 
             GlobalSellingPlayerID[playerid] = pID;
             ShowPlayerDialog(playerid, DIALOG_SELL_HOUSE_PRICE, DIALOG_STYLE_INPUT, "PRODAJA VASE KUCE IGRACU", "Unesite cijenu vase kuce", "Input", "Close");
@@ -1883,16 +1883,16 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 
             if (AC_GetPlayerMoney(playerid) < housePrice) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate dovoljno novca za kupovinu ove kuce.");
 
-            PlayerInfo[playerid][pHouseKey]     = PlayerInfo[pID][pHouseKey];
-            PlayerInfo[pID][pHouseKey]          = INVALID_HOUSE_ID;
+            PlayerKeys[playerid][pHouseKey]     = PlayerKeys[pID][pHouseKey];
+            PlayerKeys[pID][pHouseKey]          = INVALID_HOUSE_ID;
             PlayerInfo[playerid][pSpawnChange]  = 1;
             PlayerInfo[pID][pSpawnChange]       = 0;
             PlayerInfo[playerid][FurnPremium]   = 0;
-            HouseInfo[PlayerInfo[playerid][pHouseKey]][hOwnerID] = PlayerInfo[playerid][pSQLID];
+            HouseInfo[PlayerKeys[playerid][pHouseKey]][hOwnerID] = PlayerInfo[playerid][pSQLID];
 
             mysql_fquery(g_SQL, "UPDATE houses SET ownerid = '%d' WHERE id = '%d'",
-                HouseInfo[PlayerInfo[playerid][pHouseKey]][hOwnerID],
-                HouseInfo[PlayerInfo[playerid][pHouseKey]][hSQLID]
+                HouseInfo[PlayerKeys[playerid][pHouseKey]][hOwnerID],
+                HouseInfo[PlayerKeys[playerid][pHouseKey]][hSQLID]
             );
 
             // Spawn Change Seller & Buyer
@@ -1922,8 +1922,8 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                 ReturnDate(),
                 GetName(playerid, false),
                 GetPlayerIP(playerid),
-                HouseInfo[PlayerInfo[playerid][pHouseKey]][hAdress],
-                HouseInfo[PlayerInfo[playerid][pHouseKey]][hSQLID],
+                HouseInfo[PlayerKeys[playerid][pHouseKey]][hAdress],
+                HouseInfo[PlayerKeys[playerid][pHouseKey]][hSQLID],
                 GetName(pID, false),
                 GetPlayerIP(pID),
                 housePrice
@@ -1949,7 +1949,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
         {
             new
                 // TODO: rename "bouse" to something meaningful and do bounds checking
-                bouse = PlayerInfo[playerid][pHouseKey],
+                bouse = PlayerKeys[playerid][pHouseKey],
                 length = strval(inputtext);
 
             if (!response)
@@ -1984,7 +1984,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
         case DIALOG_HOUSE_WITHDRAW:
         {
             // TODO: rename, bounds check
-            new bouse = PlayerInfo[playerid][pHouseKey],
+            new bouse = PlayerKeys[playerid][pHouseKey],
                 length = strval(inputtext);
 
             if (!response) return ShowPlayerDialog(playerid, DIALOG_HOUSE_SEF,DIALOG_STYLE_LIST,"KUCNI SEF","Sakrij novac u kucu\nPodigni novac iz kuce","Choose","Back");
@@ -2013,7 +2013,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
         }
         case DIALOG_HOUSE_GUNSEF:
         {
-            new house = PlayerInfo[playerid][pHouseKey];
+            new house = PlayerKeys[playerid][pHouseKey];
             // TODO: bounds check
             if (!response) return ShowPlayerDialog(playerid, DIALOG_HOUSE_SEF,DIALOG_STYLE_LIST,"KUCNI SEF","Sakrij novac u kucu\nPodigni novac iz kuce","Choose","Back");
             if (!HouseInfo[house][hSafe]) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Kuca nema sef!");
@@ -2047,7 +2047,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
         case DIALOG_HOUSE_CHANGEPASS:
         {
             new
-                house = PlayerInfo[playerid][pHouseKey],
+                house = PlayerKeys[playerid][pHouseKey],
                 pass = strval(inputtext);
 
             if (!response) return ShowPlayerDialog(playerid, DIALOG_HOUSE_GUNSEF,DIALOG_STYLE_LIST,"KUCNI SEF","Otkljucaj\nZakljucaj\nInfo\nPromjeni sifru","Choose","Back");
@@ -2072,7 +2072,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
         case DIALOG_HOUSE_UNLOCK:
         {
             new
-                house = PlayerInfo[playerid][pHouseKey],
+                house = PlayerKeys[playerid][pHouseKey],
                 pass = strval(inputtext);
 
             if (!response) return ShowPlayerDialog(playerid, DIALOG_HOUSE_GUNSEF,DIALOG_STYLE_LIST,"KUCNI SEF","Otkljucaj\nZakljucaj\nInfo\nPromjeni sifru","Choose","Back");
@@ -2093,7 +2093,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                 return ShowPlayerDialog(playerid, DIALOG_HOUSE_MAIN, DIALOG_STYLE_LIST,"MOJA KUCA","House Storage\nUpgrades\nOtvori/Zatvori\nNajam\nIzbaci podstanare\nOrmar\nKuhinja\nInfo\nProdaj kucu(Polovina vrijednosti kupnje)\nProdaj igracu","Choose","Exit");
 
             new
-                house = PlayerInfo[playerid][pHouseKey];
+                house = PlayerKeys[playerid][pHouseKey];
 
             if (house == INVALID_HOUSE_ID) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate kucu!");
 
@@ -2277,7 +2277,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                     new
                         house = Player_InHouse(playerid);
                     if (house == INVALID_HOUSE_ID) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ispred ulaznih vrata!");
-                    if (PlayerInfo[playerid][pHouseKey] != house) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nemas kljuc!");
+                    if (PlayerKeys[playerid][pHouseKey] != house) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nemas kljuc!");
 
                     if (IsPlayerInRangeOfPoint(playerid, 8.0, HouseInfo[house][hEnterX], HouseInfo[house][hEnterY], HouseInfo[house][hEnterZ]))
                     {
@@ -2297,7 +2297,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                     new
                         house = Player_InHouse(playerid);
                     if (house == INVALID_HOUSE_ID) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ispred ulaznih vrata!");
-                    if (PlayerInfo[playerid][pHouseKey] != house) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nemas kljuc!");
+                    if (PlayerKeys[playerid][pHouseKey] != house) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nemas kljuc!");
                     if (IsPlayerInRangeOfPoint(playerid, 8.0, HouseInfo[house][hEnterX], HouseInfo[house][hEnterY], HouseInfo[house][hEnterZ]))
                     {
                         HouseInfo[house][hLock] = 1;
@@ -2320,7 +2320,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                 return ShowPlayerDialog(playerid, DIALOG_HOUSE_MAIN, DIALOG_STYLE_LIST,"MOJA KUCA","House Storage\nUpgrades\nOtvori/Zatvori\nNajam\nIzbaci podstanare\nOrmar\nKuhinja\nInfo\nProdaj kucu(Polovina vrijednosti kupnje)\nProdaj igracu","Choose","Exit");
 
             new
-                house = PlayerInfo[playerid][pHouseKey];
+                house = PlayerKeys[playerid][pHouseKey];
             if (house == INVALID_HOUSE_ID) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate kucu!");
 
             switch (listitem)
@@ -2359,7 +2359,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 
             new
                 renting = strval(inputtext),
-                house = PlayerInfo[playerid][pHouseKey];
+                house = PlayerKeys[playerid][pHouseKey];
             // TODO: house bounds checking
             if (renting < 50 || renting > 500)
             {
@@ -2392,10 +2392,10 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                 {
                     foreach(new i : Player)
                     {
-                        if (PlayerInfo[i][pRentKey] == PlayerInfo[playerid][pHouseKey])
+                        if (PlayerKeys[i][pRentKey] == PlayerKeys[playerid][pHouseKey])
                         {
                             SendClientMessage(i, COLOR_RED, "[ ! ] Izbaceni ste iz kuce od strane vlasnika!");
-                            PlayerInfo[i][pRentKey] = INVALID_HOUSE_ID;
+                            PlayerKeys[i][pRentKey] = INVALID_HOUSE_ID;
                         }
                     }
                     SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "Izbacili ste sve podstanare iz kuce ((Koji su trenutno online))!");
@@ -2411,7 +2411,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
             if (giveplayerid == playerid) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne mozete izbaciti samog sebe.");
             if (!IsPlayerConnected(giveplayerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Igrac nije online!");
             if (giveplayerid == INVALID_PLAYER_ID) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Krivi unos id-a!");
-            if (PlayerInfo[giveplayerid][pRentKey] == PlayerInfo[playerid][pHouseKey])
+            if (PlayerKeys[giveplayerid][pRentKey] == PlayerKeys[playerid][pHouseKey])
             {
                 SendMessage(playerid, MESSAGE_TYPE_ERROR, "Igrac ne stanuje kod tebe!");
                 return 1;
@@ -2419,7 +2419,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 
             SendClientMessage(giveplayerid, COLOR_RED, "[ ! ] Izbacen si iz kuce od strane vlasnika!");
             SendClientMessage(playerid, COLOR_RED, "[ ! ] Stanar je uspjesno izbacen na ulicu!");
-            PlayerInfo[giveplayerid][pRentKey] = INVALID_HOUSE_ID;
+            PlayerKeys[giveplayerid][pRentKey] = INVALID_HOUSE_ID;
             return 1;
         }
         case DIALOG_HOUSE_STUFF:
@@ -2428,7 +2428,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                 return ShowPlayerDialog(playerid, DIALOG_HOUSE_MAIN, DIALOG_STYLE_LIST,"MOJA KUCA","House Storage\nUpgrades\nOtvori/Zatvori\nNajam\nIzbaci podstanare\nOrmar\nKuhinja\nInfo\nProdaj kucu(Polovina vrijednosti kupnje)\nProdaj igracu","Choose","Exit");
 
             new
-                house = PlayerInfo[playerid][pHouseKey];
+                house = PlayerKeys[playerid][pHouseKey];
             // TODO: house bounds checking
             switch (listitem)
             {
@@ -2472,7 +2472,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                 return 1;
             }
             new
-                house       = PlayerInfo[playerid][pHouseKey],
+                house       = PlayerKeys[playerid][pHouseKey],
                 drunklevel  = GetPlayerDrunkLevel(playerid),
                 Float:health,
                 string[70];
@@ -2582,7 +2582,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                 case 1:
                 {
                     new
-                        house   = PlayerInfo[playerid][pHouseKey];
+                        house   = PlayerKeys[playerid][pHouseKey];
                     // house bounds checking
                     new
                         sellprice = HouseInfo[house][hValue] / 2;
@@ -2606,7 +2606,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                     BudgetToPlayerMoney(playerid, sellprice); // Igrac dobiva pola vrijednosti kuce od drzave
                     HouseToPlayerMoney(playerid, house, HouseInfo[house][hTakings]); // Dobiva sav novac iz house takingsa
 
-                    PlayerInfo[playerid][pHouseKey] = INVALID_HOUSE_ID;
+                    PlayerKeys[playerid][pHouseKey] = INVALID_HOUSE_ID;
                     PlayerInfo[playerid][pSpawnChange] = 0;
                     PlayerInfo[playerid][FurnPremium] = 0;
 
@@ -2627,7 +2627,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                 return ShowPlayerDialog(playerid, DIALOG_HOUSE_MAIN, DIALOG_STYLE_LIST,"MOJA KUCA","House Storage\nUpgrades\nOtvori/Zatvori\nNajam\nIzbaci podstanare\nOrmar\nKuhinja\nInfo\nProdaj kucu(Polovina vrijednosti kupnje)\nProdaj igracu","Choose","Exit");
 
             new
-                house = PlayerInfo[playerid][pHouseKey];
+                house = PlayerKeys[playerid][pHouseKey];
             // TODO: house bounds checking
             switch (listitem)
             {
@@ -2721,7 +2721,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                 return 1;
             }
 
-            new house = PlayerInfo[playerid][pHouseKey];
+            new house = PlayerKeys[playerid][pHouseKey];
             // TODO: house bounds checking
             switch (listitem)
             {
@@ -2777,7 +2777,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
         {
             new
                 string[128],
-                house = PlayerInfo[playerid][pHouseKey];
+                house = PlayerKeys[playerid][pHouseKey];
             // TODO: house bounds checking
             if (!response)
             {
@@ -2837,7 +2837,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
             }
 
             new
-                house = PlayerInfo[playerid][pHouseKey];
+                house = PlayerKeys[playerid][pHouseKey];
             // TODO: house bounds check
             switch (listitem)
             {
@@ -2979,12 +2979,12 @@ CMD:enter(playerid, params[])
     {
         if (!BizzInfo[biznis][bCanEnter]) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne mozete uci u biznis bez inta!");
 
-        if (PlayerInfo[playerid][pBizzKey] != biznis || BizzInfo[biznis][bLocked])
+        if (PlayerKeys[playerid][pBizzKey] != biznis || BizzInfo[biznis][bLocked])
         {
             GameTextForPlayer(playerid, "~r~Zakljucano", 1000, 1);
             return 1;
         }
-        if (BizzInfo[biznis][bEntranceCost] != 0 && PlayerInfo[playerid][pBizzKey] != biznis)
+        if (BizzInfo[biznis][bEntranceCost] != 0 && PlayerKeys[playerid][pBizzKey] != biznis)
         {
             if (AC_GetPlayerMoney(playerid) < BizzInfo[biznis][bEntranceCost]) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate dovoljno novca da platite ulaz!");
 
@@ -3009,7 +3009,7 @@ CMD:enter(playerid, params[])
     {
         if (!ComplexRoomInfo[rcomplex][cActive]) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Soba nije u funkciji!");
 
-        if (PlayerInfo[playerid][pComplexRoomKey] != rcomplex || !IsOnAdminDuty(playerid) || ComplexRoomInfo[rcomplex][cLock])
+        if (PlayerKeys[playerid][pComplexRoomKey] != rcomplex || !IsOnAdminDuty(playerid) || ComplexRoomInfo[rcomplex][cLock])
         {
             GameTextForPlayer(playerid, "~r~Zakljucano", 1000, 1);
             return 1;
@@ -3017,7 +3017,7 @@ CMD:enter(playerid, params[])
 
         SetPlayerPosEx(playerid, ComplexRoomInfo[rcomplex][cExitX], ComplexRoomInfo[rcomplex][cExitY], ComplexRoomInfo[rcomplex][cExitZ], ComplexRoomInfo[rcomplex][cViwo], ComplexRoomInfo[rcomplex][cInt], true);
         Player_SetInApartmentRoom(playerid, rcomplex);
-        if (PlayerInfo[playerid][pComplexRoomKey] == rcomplex)
+        if (PlayerKeys[playerid][pComplexRoomKey] == rcomplex)
         {
             GameTextForPlayer(playerid, "Dobrodosli!", 500, 1);
         }
@@ -3027,7 +3027,7 @@ CMD:enter(playerid, params[])
     {
         SetPlayerPosEx(playerid, ComplexInfo[complex][cExitX], ComplexInfo[complex][cExitY], ComplexInfo[complex][cExitZ], ComplexInfo[complex][cViwo], ComplexInfo[complex][cInt], true);
         Player_SetInApartmentComplex(playerid, complex);
-        if (PlayerInfo[playerid][pComplexKey] == complex)
+        if (PlayerKeys[playerid][pComplexKey] == complex)
         {
             GameTextForPlayer(playerid, "Dobrodosli u svoj Complex!", 500, 1);
         }
@@ -3052,7 +3052,7 @@ CMD:enter(playerid, params[])
             return 1;
         }
         if (HouseInfo[house][hDoorCrashed]) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Vrata su stradala u pozaru, vatrogasac mora koristiti /ramdoors!");
-        if (PlayerInfo[playerid][pHouseKey] != house || !IsOnAdminDuty(playerid) || HouseInfo[house][hLock] || PlayerInfo[playerid][pRentKey] != house)
+        if (PlayerKeys[playerid][pHouseKey] != house || !IsOnAdminDuty(playerid) || HouseInfo[house][hLock] || PlayerKeys[playerid][pRentKey] != house)
         {
             GameTextForPlayer(playerid, "~r~Zakljucano", 1000, 1);
             return 1;
@@ -3323,10 +3323,10 @@ CMD:buyhouse(playerid, params[])
         SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "Morate biti level %d da bi ste kupili ovu kucu!", HouseInfo[house][hLevel]);
         return 1;
     }
-    if (PlayerInfo[playerid][pHouseKey] < 0)
+    if (PlayerKeys[playerid][pHouseKey] < 0)
         return 1;
 
-    if (PlayerInfo[playerid][pHouseKey] != INVALID_HOUSE_ID && HouseInfo[PlayerInfo[playerid][pHouseKey]][hOwnerID] == PlayerInfo[playerid][pSQLID])
+    if (PlayerKeys[playerid][pHouseKey] != INVALID_HOUSE_ID && HouseInfo[PlayerKeys[playerid][pHouseKey]][hOwnerID] == PlayerInfo[playerid][pSQLID])
         return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Vec posjedujete kucu!");
 
     if (CalculatePlayerBuyMoney(playerid, BUY_TYPE_HOUSE) < HouseInfo[house][hValue])
@@ -3861,7 +3861,7 @@ CMD:rent(playerid, params[])
 
         if (!strcmp(hpick, "start", true))
         {
-            if ((PlayerInfo[playerid][pHouseKey] != INVALID_HOUSE_ID ) || (PlayerInfo[playerid][pRentKey] != INVALID_HOUSE_ID))
+            if ((PlayerKeys[playerid][pHouseKey] != INVALID_HOUSE_ID ) || (PlayerKeys[playerid][pRentKey] != INVALID_HOUSE_ID))
             {
                 SendMessage(playerid, MESSAGE_TYPE_ERROR, "Posjedujete kucu ili rentate kucu!");
                 return 1;
@@ -3873,7 +3873,7 @@ CMD:rent(playerid, params[])
             if (!HouseInfo[houseid][hRentabil]) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Kuca nije na rent!");
             if (AC_GetPlayerMoney(playerid) < HouseInfo[houseid][hRent]) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate toliko novca!");
 
-            PlayerInfo[playerid][pRentKey] = houseid;
+            PlayerKeys[playerid][pRentKey] = houseid;
             PlayerInfo[playerid][pSpawnChange] = 1;
             PlayerToHouseMoneyTAX(playerid, houseid, HouseInfo[houseid][hRent]);
 
@@ -3895,11 +3895,11 @@ CMD:rent(playerid, params[])
         }
         else if (!strcmp(hpick, "stop", true))
         {
-            if ((PlayerInfo[playerid][pRentKey] == INVALID_HOUSE_ID)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne iznajmljujete kucu!");
+            if ((PlayerKeys[playerid][pRentKey] == INVALID_HOUSE_ID)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne iznajmljujete kucu!");
 
-            new house = PlayerInfo[playerid][pRentKey];
+            new house = PlayerKeys[playerid][pRentKey];
             SendFormatMessage(playerid, MESSAGE_TYPE_SUCCESS, "Prestali ste iznajmljivati kucu na adresi %s.", HouseInfo[house][hAdress]);
-            PlayerInfo[playerid][pRentKey] = INVALID_HOUSE_ID;
+            PlayerKeys[playerid][pRentKey] = INVALID_HOUSE_ID;
             PlayerInfo[playerid][pSpawnChange] = 0;
             SetPlayerSpawnInfo(playerid);
         }
@@ -3912,7 +3912,7 @@ CMD:house(playerid, params[])
 {
     if (PlayerInfo[playerid][pLevel] == 1) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nisi level 2+ da mozes koristiti ovu komandu!");
 
-    new house = PlayerInfo[playerid][pHouseKey];
+    new house = PlayerKeys[playerid][pHouseKey];
     if (house == INVALID_HOUSE_ID || HouseInfo[house][hOwnerID] != PlayerInfo[playerid][pSQLID])
     {
         SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne posjedujes kucu!");
@@ -4053,11 +4053,11 @@ CMD:doorram(playerid, params[])
 
 CMD:unrenthouse(playerid, params[])
 {
-    new house = PlayerInfo[playerid][pRentKey];
+    new house = PlayerKeys[playerid][pRentKey];
     if (house == INVALID_HOUSE_ID) return SendClientMessage(playerid, COLOR_RED, "Ne iznajmljujete kucu!");
 
     va_SendClientMessage(playerid, COLOR_RED, "[ ! ] Prestao si iznajmljivati kucu na adresi %s.", HouseInfo[house][hAdress]);
-    PlayerInfo[playerid][pRentKey] = INVALID_HOUSE_ID;
+    PlayerKeys[playerid][pRentKey] = INVALID_HOUSE_ID;
     return 1;
 }
 

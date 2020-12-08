@@ -373,7 +373,7 @@ Storage_HouseRackCount(playerid)
     new count = 0;
     foreach(new i: HStorage_Iter)
     {
-        if (HouseStorage[i][storageExists] && HouseStorage[i][storageHouse] == PlayerInfo[playerid][pHouseKey])
+        if (HouseStorage[i][storageExists] && HouseStorage[i][storageHouse] == PlayerKeys[playerid][pHouseKey])
             count++;
     }
     return count;
@@ -596,7 +596,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                 }
                 case 5:
                 { // Sef za novac.
-                    new house = PlayerInfo[playerid][pHouseKey];
+                    new house = PlayerKeys[playerid][pHouseKey];
                     if (!HouseInfo[house][hSafe]) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Kuca nema sef!");
 
                     ShowPlayerDialog(playerid, DIALOG_HOUSE_SEF, DIALOG_STYLE_LIST, "{3C95C2}[ Safe - Money ]","{3C95C2}[1] - Ostavi novac.\n{3C95C2}[2] - Uzmi novac.","Pick","Exit");
@@ -630,7 +630,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
             }
 
             new id = Storage_PlayerNearRack(playerid),
-                house = PlayerInfo[playerid][pHouseKey],
+                house = PlayerKeys[playerid][pHouseKey],
                 puzavac = IsCrounching(playerid); // TODO: rename, crouching
 
             if (id == -1)
@@ -677,7 +677,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
             if (Storage_HouseRackCount(playerid) >= GetRackLimit(playerid))
                 return SendClientMessage(playerid, COLOR_LIGHTRED, "[ERROR]: Kuca vec posjeduje stalak, da mozete imati vise morate biti donator.");
 
-            new id = Storage_RackCreate(playerid, PlayerInfo[playerid][pHouseKey]);
+            new id = Storage_RackCreate(playerid, PlayerKeys[playerid][pHouseKey]);
             if (id == -1)
                 return SendErrorMessage(playerid, "Trenutno nije moguce kupiti stalak za kucu.");
 

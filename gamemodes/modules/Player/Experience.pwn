@@ -331,7 +331,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 				{
 					if(ExpInfo[playerid][ePoints] < MAX_FURSLOTS_EXP)
 						return va_SendClientMessage(playerid,COLOR_RED, "Potrebno je %d EXP-a da bi dobili %d Furniture slotova!", MAX_FURSLOTS_EXP, FURNITURE_PREMIUM_OBJECTS);
-					if(PlayerInfo[playerid][pHouseKey] == INVALID_HOUSE_ID)
+					if(PlayerKeys[playerid][pHouseKey] == INVALID_HOUSE_ID)
 						return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You have to be a house owner to use that EXP buy option!");
 
 					ExpInfo[playerid][ePoints] -= MAX_FURSLOTS_EXP;
@@ -341,7 +341,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 					);
 					
 					PlayerInfo[playerid][FurnPremium] = 1;
-					SetPlayerPremiumFurniture(playerid, PlayerInfo[playerid][pHouseKey]);
+					SetPlayerPremiumFurniture(playerid, PlayerKeys[playerid][pHouseKey]);
 					
 					SendFormatMessage(playerid, MESSAGE_TYPE_SUCCESS, "Iskoristili ste %d EXP-a za %d Furniture slotova. Preostalo: %d EXP", MAX_FURSLOTS_EXP, FURNITURE_PREMIUM_OBJECTS, ExpInfo[playerid][ePoints]);
 					return 1;
@@ -379,9 +379,9 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 					PlayerVIP[playerid][pDonateTime]	= gettimestamp() + 2592000;
 					BudgetToPlayerMoney(playerid, 15000); // budjet - igrac
 					
-					if(PlayerInfo[playerid][pHouseKey] != INVALID_HOUSE_ID)
-						UpdatePremiumHouseFurSlots(playerid, -1, PlayerInfo[ playerid ][ pHouseKey ]);
-					if(PlayerInfo[playerid][pBizzKey] != INVALID_BIZNIS_ID)
+					if(PlayerKeys[playerid][pHouseKey] != INVALID_HOUSE_ID)
+						UpdatePremiumHouseFurSlots(playerid, -1, PlayerKeys[playerid][pHouseKey]);
+					if(PlayerKeys[playerid][pBizzKey] != INVALID_BIZNIS_ID)
 						UpdatePremiumBizFurSlots(playerid);
 					
 					SavePlayerVIP(playerid);					
@@ -433,9 +433,9 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 					PlayerVIP[playerid][pDonateTime]	= gettimestamp() + 2592000;
 					BudgetToPlayerMoney(playerid, 30000); // budjet - igrac
 					
-					if(PlayerInfo[playerid][pHouseKey] != INVALID_HOUSE_ID)
-						UpdatePremiumHouseFurSlots(playerid, -1, PlayerInfo[ playerid ][ pHouseKey ]);
-					if(PlayerInfo[playerid][pBizzKey] != INVALID_BIZNIS_ID)
+					if(PlayerKeys[playerid][pHouseKey] != INVALID_HOUSE_ID)
+						UpdatePremiumHouseFurSlots(playerid, -1, PlayerKeys[playerid][pHouseKey]);
+					if(PlayerKeys[playerid][pBizzKey] != INVALID_BIZNIS_ID)
 						UpdatePremiumBizFurSlots(playerid);
 					
 					SavePlayerVIP(playerid);
@@ -492,9 +492,9 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 					LicenseInfo[playerid][pBoatLic] 	= 1;
 					LicenseInfo[playerid][pFishLic]  = 1;
 					
-					if(PlayerInfo[playerid][pHouseKey] != INVALID_HOUSE_ID)
-						UpdatePremiumHouseFurSlots(playerid, -1, PlayerInfo[ playerid ][ pHouseKey ]);
-					if(PlayerInfo[playerid][pBizzKey] != INVALID_BIZNIS_ID)
+					if(PlayerKeys[playerid][pHouseKey] != INVALID_HOUSE_ID)
+						UpdatePremiumHouseFurSlots(playerid, -1, PlayerKeys[playerid][pHouseKey]);
+					if(PlayerKeys[playerid][pBizzKey] != INVALID_BIZNIS_ID)
 						UpdatePremiumBizFurSlots(playerid);
 					
 					SavePlayerVIP(playerid);

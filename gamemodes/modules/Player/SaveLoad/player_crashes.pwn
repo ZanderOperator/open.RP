@@ -74,13 +74,13 @@ timer SetPlayerCrash[6000](playerid)
 	return 1;
 }
 
-Public: FinalPlayerCheck(playerid)
+FinalPlayerCheck(playerid)
 {
     defer SetPlayerCrash(playerid);
     return 1;
 }
 
-stock LoadPlayerCrashes(playerid)
+static LoadPlayerCrashes(playerid)
 {
 	mysql_tquery(g_SQL, 
 		va_fquery(g_SQL, "SELECT * FROM player_crashes WHERE player_id = '%d'", 
@@ -110,7 +110,7 @@ public LoadingPlayerCrashes(playerid)
 	return 1;
 }
 
-Public: CheckPlayerCrash(playerid, reason)
+CheckPlayerCrash(playerid, reason)
 {
     if( (reason == 0 || reason == 2) && IsPlayerAlive(playerid) && GMX == 0)
 	{
@@ -163,7 +163,7 @@ Public: CheckPlayerCrash(playerid, reason)
     return 1;
 }
 
-stock ResetPlayerCrash(playerid)
+ResetPlayerCrash(playerid)
 {
     PlayerCrash[playerid][pCrashId] = -1;
     PlayerCrash[playerid][pCrashArmour]	= 0.0;
