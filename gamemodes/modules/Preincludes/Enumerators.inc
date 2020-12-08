@@ -321,7 +321,8 @@ enum E_HIDDEN_WEAPON
 new HiddenWeapon[MAX_PLAYERS][E_HIDDEN_WEAPON];
 
 // Weapon Package Order List
-enum E_WEAPON_PACKAGE {
+enum E_WEAPON_PACKAGE 
+{
 	wep_ID,
 	wep_Name[16],
 	wep_Price
@@ -401,11 +402,11 @@ enum E_HOUSES_INFO {
 	hFurTxtId[ MAX_FURNITURE_SLOT_FIELDS ],
 	hFurColId[ MAX_FURNITURE_SLOT_FIELDS ]
 }
-new
-	HouseInfo[MAX_HOUSES][E_HOUSES_INFO];
+new HouseInfo[MAX_HOUSES][E_HOUSES_INFO];
 
-#define hFurTxtId][%1][%2] hFurTxtId][((%1)*MAX_COLOR_TEXT_SLOTS)+(%2)] // Hacking the compiler to have HouseInfo[ houseid ][ hFurTxtId ][ 0 ][ 0 ]
-#define hFurColId][%1][%2] hFurColId][((%1)*MAX_COLOR_TEXT_SLOTS)+(%2)] // // Hacking the compiler to have HouseInfo[ houseid ][ hFurColId ][ 0 ][ 0 ]
+ // Hacking the compiler to have HouseInfo[ houseid ][ hFurXXX ][ 0 ][ 0 ]
+#define hFurTxtId][%1][%2] hFurTxtId][((%1)*MAX_COLOR_TEXT_SLOTS)+(%2)] 
+#define hFurColId][%1][%2] hFurColId][((%1)*MAX_COLOR_TEXT_SLOTS)+(%2)] 
 
 enum E_COMPLEX_INFO
 {
@@ -425,8 +426,7 @@ enum E_COMPLEX_INFO
 	Float:cExitY,
 	Float:cExitZ
 }
-new
-	ComplexInfo[MAX_COMPLEX][E_COMPLEX_INFO];
+new ComplexInfo[MAX_COMPLEX][E_COMPLEX_INFO];
 
 enum E_COMPLEX_ROOM_INFO {
 	cSQLID,
@@ -471,8 +471,7 @@ enum E_COMPLEX_ROOM_INFO {
 	cTV,
 	cMicrowave
 }
-new
-	ComplexRoomInfo[MAX_COMPLEX_ROOMS][E_COMPLEX_ROOM_INFO];
+new ComplexRoomInfo[MAX_COMPLEX_ROOMS][E_COMPLEX_ROOM_INFO];
 
 enum E_BIZNIS_INFO
 {
@@ -536,23 +535,17 @@ enum E_SERVER_SKINS
 }
 new ServerSkins[E_SERVER_SKINS][MAX_SERVER_SKINS];
 
-enum E_PLAYER_TICKS {
+enum E_PLAYER_TICKS 
+{
 	ptReport,
-	ptVehicleCrash,
-	ptHealth,
-	ptWeapon,
 	ptMoney,
-	ptArmour,
-	ptVehHealth,
 	ptKill,
-	ptFire,
 	ptHelperHelp,
-	ptAirBrake,
-	ptFlyHack,
-	ptVehiclePort
+	ptMainTimer
 }
 new PlayerTick[MAX_PLAYERS][E_PLAYER_TICKS];
 
+// TODO: move to Mobile.pwn local var!
 enum E_VICTIM_DATA
 {
 	pVictimLocation[100],
@@ -577,7 +570,8 @@ enum E_CRIME_DATA
 };
 new PlayerCrime[MAX_PLAYERS][E_CRIME_DATA];
 
-enum E_SAFE_EXIT {
+enum E_SAFE_EXIT 
+{
 	Float:giX,
 	Float:giY,
 	Float:giZ,
@@ -604,8 +598,7 @@ enum E_DRUG_INFO
 	dPricePG
 }
 
-new const 
-	drugs[][E_DRUG_INFO] = 
+new const drugs[][E_DRUG_INFO] = 
 {
 	{"Prazno", 		DRUG_TYPE_NONE,   0, 0, 0},
 	{"Marihuana", 	DRUG_TYPE_SMOKE,  8, 25, 70},
