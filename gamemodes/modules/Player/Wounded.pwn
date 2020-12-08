@@ -207,10 +207,10 @@ stock InflictPlayerDamage(playerid, issuerid, bodypart, Float:damage)
 					ReturnDate(),
 					GetName(issuerid, false),
 					PlayerInfo[issuerid][pSQLID],
-					GetPlayerIP(issuerid),
+					ReturnPlayerIP(issuerid),
 					GetName(playerid, false),
 					PlayerInfo[playerid][pSQLID],
-					GetPlayerIP(playerid),
+					ReturnPlayerIP(playerid),
 					GetWeaponNameEx(AC_GetPlayerWeapon(issuerid)),
 					AC_GetPlayerWeapon(issuerid)
 				);
@@ -325,10 +325,10 @@ stock DealDamage(playerid, issuerid, Float: health, Float: armour, Float: damage
 					ReturnDate(),
 					GetName(issuerid, false),
 					PlayerInfo[issuerid][pSQLID],
-					GetPlayerIP(issuerid),
+					ReturnPlayerIP(issuerid),
 					GetName(playerid, false),
 					PlayerInfo[playerid][pSQLID],
-					GetPlayerIP(playerid),
+					ReturnPlayerIP(playerid),
 					GetWeaponNameEx(AC_GetPlayerWeapon(issuerid)),
 					AC_GetPlayerWeapon(issuerid)
 				);

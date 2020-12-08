@@ -1061,7 +1061,7 @@ CMD:stealmoney(playerid, params[])
 			Log_Write("/logfiles/job_burglar.txt", "(%s) Player %s(%s) stole %d$ from house safe. (Adress: %s | SQLID: %d)", 
 				ReturnDate(), 
 				GetName(playerid, false), 
-				GetPlayerIP(playerid), 
+				ReturnPlayerIP(playerid), 
 				stolen_money, 
 				HouseInfo[house][hAdress], 
 				HouseInfo[house][hSQLID]
@@ -1085,7 +1085,7 @@ CMD:stealmoney(playerid, params[])
 			Log_Write("/logfiles/job_burglar.txt", "(%s) Player %s(%s) stole %d$ from house safe. (Adress: %s | SQLID: %d)", 
 				ReturnDate(), 
 				GetName(playerid, false), 
-				GetPlayerIP(playerid), 
+				ReturnPlayerIP(playerid), 
 				stolen_money, 
 				HouseInfo[house][hAdress], 
 				HouseInfo[house][hSQLID]

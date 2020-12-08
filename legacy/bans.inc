@@ -86,7 +86,7 @@
 // Same as above, but for player IDs.
 // Ex.: LOOP_PLAYER_BANS(new ban : playerid)
 #define LOOP_PLAYER_BANS(%1:%2) \
-	for (%1 = (g_iTempIndex = 0, g_iTempLength = GetIPBanIndices((GetPlayerIP(%2)), g_aiTempBanIndices)); (g_iTempIndex < g_iTempLength, _:__NO_NEW:%1 = g_aiTempBanIndices[g_iTempIndex]); g_iTempIndex++)
+	for (%1 = (g_iTempIndex = 0, g_iTempLength = GetIPBanIndices((ReturnPlayerIP(%2)), g_aiTempBanIndices)); (g_iTempIndex < g_iTempLength, _:__NO_NEW:%1 = g_aiTempBanIndices[g_iTempIndex]); g_iTempIndex++)
 
 // Strip "new" from the loop variable (if any)
 #define __NO_NEW:%1new  %1
@@ -294,12 +294,12 @@ stock IP:GetIntegerIP({IP, _}:...)
 
 // Get an integer IP from a player
 // Questionable function name, I know.
-stock IP:GetPlayerIP(iPlayer) {
+stock IP:ReturnPlayerIP(iPlayer) {
 	static
 		s_szIP[16]
 	;
 	
-	GetPlayerIp(iPlayer, s_szIP, sizeof(s_szIP));
+	ReturnPlayerIP(iPlayer, s_szIP, sizeof(s_szIP));
 	
 	return GetIntegerIP(s_szIP);
 }
@@ -1003,7 +1003,7 @@ stock BanIP({IP, _}:...) {
 
 // Same as above, but for a player ID
 stock BanPlayer(iPlayer, iDuration = DURATION_PERMANENT) {
-	new iBanIndex = BanIP(GetPlayerIP(iPlayer), iDuration);
+	new iBanIndex = BanIP(ReturnPlayerIP(iPlayer), iDuration);
 	
 	if (iBanIndex) {
 		GetPlayerName(iPlayer, gs_szBuffer, sizeof(gs_szBuffer));
@@ -1110,7 +1110,7 @@ stock GetIPBanIndex({IP, _}:...) {
 
 // Same as above, but for a player ID
 stock GetPlayerBanIndex(iPlayer)
-	return GetIPBanIndex(GetPlayerIP(iPlayer));
+	return GetIPBanIndex(ReturnPlayerIP(iPlayer));
 
 stock _GetIPBanIndices(IP:iIP, aiDestination[], iDestinationSize = sizeof(aiDestination)) {
 	new
@@ -1165,7 +1165,7 @@ stock _GetIPBanIndices(IP:iIP, aiDestination[], iDestinationSize = sizeof(aiDest
 #define GetIPBanIndexes(%1,%2)  _GetIPBanIndices(GetIntegerIP(%1), %2)
 
 stock GetPlayerBanIndices(iPlayer, aiDestination[], iDestinationSize = sizeof(aiDestination))
-	return _GetIPBanIndices(GetPlayerIP(iPlayer), aiDestination, iDestinationSize);
+	return _GetIPBanIndices(ReturnPlayerIP(iPlayer), aiDestination, iDestinationSize);
 
 // Get the type of a ban index
 stock GetBanType(iBanIndex) {

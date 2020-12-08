@@ -176,10 +176,7 @@ public CheckPlayerInBase(playerid)
 	else 
 	{
 		if(regenabled)
-		{
-			new playaIP[16];
-			GetPlayerIp(playerid, playaIP, 16);
-						
+		{				
 			#if defined COA_UCP
 				va_SendClientMessage(playerid, COLOR_RED, "You haven't registered your account on %s!",
 					WEB_URL
@@ -220,7 +217,10 @@ public LoadPlayerStats(playerid) // Main func. for hooking database loads
 
 public LoadPlayerData(playerid)
 {
-	new rows;
+	new 
+		rows, 
+		ban_reason[32],
+		unban_time = 0;
     cache_get_row_count(rows);
     if(rows)
 	{
@@ -239,7 +239,6 @@ public LoadPlayerData(playerid)
 		cache_get_value_name(0, 	"SAMPid"		, PlayerInfo[playerid][pSAMPid]			, 128);
 		cache_get_value_name(0, 	"lastlogin"		, PlayerInfo[playerid][pLastLogin]		, 24);
 		cache_get_value_name_int(0, "lastloginstamp", PlayerInfo[playerid][pLastLoginTimestamp]);
-		cache_get_value_name(0, 	"lastip"		, PlayerInfo[playerid][pLastIP]			, 24);
 		
 		cache_get_value_name(0, 	"password"		, PlayerInfo[playerid][pPassword]		, BCRYPT_HASH_LENGTH);
 		cache_get_value_name(0, 	"lastupdatever"	, PlayerInfo[playerid][pLastUpdateVer]	, 24);
@@ -277,11 +276,11 @@ public LoadPlayerData(playerid)
 		cache_get_value_name_int(0, "lighter"		, PlayerInfo[playerid][pLighter]);		
 
 		cache_get_value_name_int(0,	"boombox"		, PlayerInfo[playerid][pBoomBox]);
-		cache_get_value_name_int(0,	"boomboxtype"	, PlayerInfo[playerid][pBoomBoxType]);
 		
 		cache_get_value_name(0,	"look"				, PlayerInfo[playerid][pLook], 120);
-		cache_get_value_name_int(0,	"playaUnbanTime", PlayerInfo[playerid][pUnbanTime]);
-		cache_get_value_name(0, "playaBanReason"	, PlayerInfo[playerid][pBanReason], 32);
+		
+		cache_get_value_name(0, "playaBanReason"	, ban_reason, 32);
+		cache_get_value_name_int(0,	"playaUnbanTime", unban_time);
 		
 		cache_get_value_name_int(0,	"casinocool"	, PlayerInfo[playerid][pCasinoCool]);
 		cache_get_value_name_int(0,	"news"			, PlayerInfo[playerid][pNews]);
@@ -293,7 +292,7 @@ public LoadPlayerData(playerid)
 		cache_get_value_name_int(0, "JackerCoolDown", PlayerInfo[playerid][JackerCoolDown]);
 		cache_get_value_name_int(0, "FurnPremium"	, PlayerInfo[playerid][FurnPremium]);
 				
-		if( PlayerInfo[ playerid ][ pUnbanTime ] == -1 )
+		if( unban_time == -1 )
 		{
 			va_SendClientMessage( playerid, COLOR_RED, 
 				"[%s]: You have been banned for life on this server!\n\
@@ -305,7 +304,7 @@ public LoadPlayerData(playerid)
 			BanMessage(playerid);
 			return 1;
 		}
-		else if( PlayerInfo[ playerid ][ pUnbanTime ] == -2 ) 
+		else if( unban_time == -2 ) 
 		{
 			va_SendClientMessage( playerid, COLOR_RED, 
 				"[%s]: Your user account has been blocked by the system!\n\
@@ -316,7 +315,7 @@ public LoadPlayerData(playerid)
 			KickMessage(playerid);
 			return 1;
 		}
-		else if( PlayerInfo[ playerid ][ pUnbanTime ] == -3)
+		else if( unban_time == -3)
 		{
 		    va_SendClientMessage( playerid, COLOR_RED, 
 				"[%s]: Your account has been locked by security system!",
@@ -331,20 +330,17 @@ public LoadPlayerData(playerid)
 		    return 1;
 		}
 
-		if( PlayerInfo[ playerid ][ pUnbanTime ] < gettimestamp() ) 
+		if( unban_time < gettimestamp() ) 
 		{
 			mysql_fquery(g_SQL, "UPDATE accounts SET playaUnbanTime = '0' WHERE sqlid = '%d'", 
 				PlayerInfo[playerid][pSQLID]
 			);
-			
-			PlayerInfo[ playerid ][ pUnbanTime ] 		= 0;
-			PlayerInfo[ playerid ][ pBanReason ][ 0 ] 	= EOS;
 		} 
 		else 
 		{
 			new date[12], time[12];
-			TimeFormat(Timestamp:PlayerInfo[ playerid ][ pUnbanTime ], HUMAN_DATE, date);
-			TimeFormat(Timestamp:PlayerInfo[ playerid ][ pUnbanTime ], ISO6801_TIME, time);
+			TimeFormat(Timestamp:unban_time, HUMAN_DATE, date);
+			TimeFormat(Timestamp:unban_time, ISO6801_TIME, time);
 	
 			va_SendClientMessage(playerid, COLOR_LIGHTRED, 
 				"[%s]: Your ban expires on date: "COL_SERVER"%s %s.", 
@@ -352,7 +348,7 @@ public LoadPlayerData(playerid)
 				date, 
 				time
 			);
-			va_SendClientMessage(playerid, COLOR_LIGHTRED, "Ban reason: %s", PlayerInfo[ playerid ][ pBanReason ]);
+			va_SendClientMessage(playerid, COLOR_LIGHTRED, "Ban reason: %s", ban_reason);
 
 			KickMessage(playerid);
 			return 1;
@@ -570,7 +566,7 @@ SafeSpawnPlayer(playerid)
 	Log_Write("/logfiles/connects.txt", "(%s) %s(%s) sucessfully connected on the server.",
 		ReturnDate(),
 		GetName(playerid, false),
-		GetPlayerIP(playerid)
+		ReturnPlayerIP(playerid)
 	);
 	#endif
 	
@@ -582,7 +578,7 @@ SafeSpawnPlayer(playerid)
 		"INSERT INTO player_connects(player_id, time, aip) VALUES ('%d','%d','%e')",
 		PlayerInfo[playerid][pSQLID],
 		gettimestamp(),
-		GetPlayerIP(playerid)
+		ReturnPlayerIP(playerid)
 	);
 	
 	mysql_fquery(g_SQL,
@@ -676,7 +672,7 @@ public SavePlayerData(playerid)
 			rentkey = '%d',\n\
 			maskid = '%d', clock = '%d', rope = '%d', cigaretes = '%d', lighter = '%d',\n\
 			SAMPid = '%e', forumname = '%e',\n\
-			boombox = '%d', boomboxtype = '%d', casinocool = '%d', news = '%d', voted = '%d',\n\
+			boombox = '%d', casinocool = '%d', news = '%d', voted = '%d',\n\
 			ammutime = '%d', mustread = '%d', lastupdatever = '%e', JackerCoolDown = '%d',\n\
 			FurnPremium = '%d',\n\
 			WHERE sqlid = '%d'",
@@ -708,7 +704,6 @@ public SavePlayerData(playerid)
 		PlayerInfo[playerid][pSAMPid],
 		PlayerInfo[playerid][pForumName],
 		PlayerInfo[playerid][pBoomBox],
-		PlayerInfo[playerid][pBoomBoxType],
 		PlayerInfo[playerid][pCasinoCool],
 		PlayerInfo[playerid][pNews],
 		PlayerInfo[playerid][pVoted],

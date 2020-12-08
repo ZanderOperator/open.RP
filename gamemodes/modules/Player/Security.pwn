@@ -231,7 +231,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 			
 			Log_Write("/logfiles/a_security.txt", "(%s) %s(%s) changed his security question into '%s'.", 
 				GetName(playerid,false), 
-				GetPlayerIP(playerid), 
+				ReturnPlayerIP(playerid), 
 				secQuestions[PlayerInfo[playerid][pSecQuestion]]
 			);
 

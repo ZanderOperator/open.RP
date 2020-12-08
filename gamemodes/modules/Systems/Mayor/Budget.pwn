@@ -954,7 +954,7 @@ CMD:charity(playerid, params[])
     Log_Write("/logfiles/charity.txt" "(%s) %s(%s) donated %d$ to city budget.",
         ReturnDate(),
         GetName( playerid, false),
-        GetPlayerIP(playerid),
+        ReturnPlayerIP(playerid),
         pay
     );
     #endif

@@ -408,7 +408,11 @@ Public: OnPINChecked(playerid, status)
 		PlayerInfo[playerid][pHelper] 	= PlayerInfo[playerid][pTempRank][1];
 		
 		#if defined MODULE_LOGS
-		Log_Write("/logfiles/pinlogins.txt", "(%s) %s (%s) sucessfully logged into server team system!", ReturnDate(), GetName(playerid, false), GetPlayerIP(playerid));
+		Log_Write("/logfiles/pinlogins.txt", "(%s) %s (%s) sucessfully logged into server team system!", 
+			ReturnDate(), 
+			GetName(playerid, false), 
+			ReturnPlayerIP(playerid)
+		);
 		#endif
 	} 
 	else 
@@ -416,7 +420,11 @@ Public: OnPINChecked(playerid, status)
 		SendClientMessage(playerid, COLOR_RED, "Wrong PIN input! Mistakes will lead to sanctions!");
 		
 		#if defined MODULE_LOGS
-		Log_Write("/logfiles/pinlogins.txt", "(%s) %s (%s) unsucessfully tried to log into server team system!", ReturnDate(), GetName(playerid, false), GetPlayerIP(playerid));
+		Log_Write("/logfiles/pinlogins.txt", "(%s) %s (%s) unsucessfully tried to log into server team system!", 
+			ReturnDate(), 
+			GetName(playerid, false), 
+			ReturnPlayerIP(playerid)
+		);
 		#endif
 		
 		if( ++AdminLoginTry[playerid] && AdminLoginTry[playerid] >= 3 ) {
@@ -1741,7 +1749,14 @@ CMD:makehelper(playerid, params[])
 	}
 	
 	#if defined MODULE_LOGS
-	Log_Write("/logfiles/a_makeah.txt", "(%s) %s(%s) gives %s(%s) Helper Level %d", ReturnDate(), GetName(playerid,false), GetPlayerIP(playerid), GetName(giveplayerid,false), GetPlayerIP(giveplayerid), level);
+	Log_Write("/logfiles/a_makeah.txt", "(%s) %s(%s) gives %s(%s) Helper Level %d", 
+		ReturnDate(), 
+		GetName(playerid,false), 
+		ReturnPlayerIP(playerid), 
+		GetName(giveplayerid,false), 
+		ReturnPlayerIP(giveplayerid), 
+		level
+	);
 	#endif
 	
 	PlayerInfo[giveplayerid][pHelper] = PlayerInfo[giveplayerid][pTempRank][1] = level;
@@ -2044,7 +2059,14 @@ CMD:makeadmin(playerid, params[])
 	PlayerInfo[giveplayerid][pAdmin] = PlayerInfo[giveplayerid][pTempRank][0] = level;
 	
 	#if defined MODULE_LOGS
-	Log_Write("/logfiles/a_makeah.txt", "(%s) %s(%s) gives %s(%s) Game Admin Level %d", ReturnDate(), GetName(playerid,false), GetPlayerIP(playerid), GetName(giveplayerid,false), GetPlayerIP(giveplayerid), level);
+	Log_Write("/logfiles/a_makeah.txt", "(%s) %s(%s) gave %s(%s) Game Admin Level %d", 
+		ReturnDate(), 
+		GetName(playerid,false), 
+		ReturnPlayerIP(playerid), 
+		GetName(giveplayerid,false), 
+		ReturnPlayerIP(giveplayerid), 
+		level
+	);
 	#endif
 	
 	va_SendClientMessage(giveplayerid, COLOR_RED, "[ ! ] Postavljeni ste za Game Admina level %d od Administratora %s", level, GetName(playerid,false));
@@ -2167,12 +2189,10 @@ CMD:givepremium(playerid, params[])
 	    PlayerInfo[ giveplayerid ][ pMaskID ] = 100000 + random(899999);
 		
 		#if defined MODULE_LOGS
-		new playerip[MAX_PLAYER_IP];
-		GetPlayerIp(giveplayerid, playerip, sizeof(playerip));
 		Log_Write("/logfiles/masks.txt", "(%s) %s(%s), Mask ID: %d.",
 			ReturnDate(),
 			GetName(giveplayerid, false),
-			playerip,
+			ReturnPlayerIP(giveplayerid),
 			PlayerInfo[ giveplayerid ][ pMaskID ]
 		);
 		#endif
@@ -2225,12 +2245,10 @@ CMD:givepremium(playerid, params[])
 	    PlayerInfo[ giveplayerid ][ pMaskID ] = 100000 + random(899999);
 		
 		#if defined MODULE_LOGS
-		new playerip[MAX_PLAYER_IP];
-		GetPlayerIp(giveplayerid, playerip, sizeof(playerip));
 		Log_Write("/logfiles/masks.txt", "(%s) %s(%s), Mask ID: %d.",
 			ReturnDate(),
 			GetName(giveplayerid, false),
-			playerip,
+			ReturnPlayerIP(giveplayerid),
 			PlayerInfo[ giveplayerid ][ pMaskID ]
 		);
 		#endif
@@ -2282,12 +2300,10 @@ CMD:givepremium(playerid, params[])
 	    PlayerInfo[ giveplayerid ][ pMaskID ] = 100000 + random(899999);
 		
 		#if defined MODULE_LOGS
-		new playerip[MAX_PLAYER_IP];
-		GetPlayerIp(giveplayerid, playerip, sizeof(playerip));
 		Log_Write("/logfiles/masks.txt", "(%s) %s(%s), Mask ID: %d.",
 			ReturnDate(),
 			GetName(giveplayerid, false),
-			playerip,
+			ReturnPlayerIP(giveplayerid),
 			PlayerInfo[ giveplayerid ][ pMaskID ]
 		);
 		#endif
@@ -2348,12 +2364,10 @@ CMD:givepremium(playerid, params[])
 	    PlayerInfo[ giveplayerid ][ pMaskID ] = 100000 + random(899999);
 		
 		#if defined MODULE_LOGS
-		new playerip[MAX_PLAYER_IP];
-		GetPlayerIp(giveplayerid, playerip, sizeof(playerip));
 		Log_Write("/logfiles/masks.txt", "(%s) %s(%s), Mask ID: %d.",
 			ReturnDate(),
 			GetName(giveplayerid, false),
-			playerip,
+			ReturnPlayerIP(giveplayerid),
 			PlayerInfo[ giveplayerid ][ pMaskID ]
 		);
 		#endif
@@ -3005,11 +3019,15 @@ CMD:setstat(playerid, params[])
 		{
 		    PlayerInfo[giveplayerid][pConnectTime] = amount;
 			format(globalstring, sizeof(globalstring), "   Korisnikovo ukupno vrijeme provedeno na serveru je postavljeno na %d.", amount);
-			new playerip[MAX_PLAYER_IP];
-			GetPlayerIp(playerid, playerip, sizeof(playerip));
 			
 			#if defined MODULE_LOGS
-			Log_Write("/logfiles/a_setstat_connectedtime.txt", "(%s) Game Admin %s[%s] set %s's playing hours on %d.", ReturnDate(), GetName(playerid,false), playerip, GetName(giveplayerid,false), PlayerInfo[giveplayerid][pConnectTime]);
+			Log_Write("/logfiles/a_setstat_connectedtime.txt", "(%s) Game Admin %s[%s] set %s's playing hours on %d.", 
+				ReturnDate(), 
+				GetName(playerid,false), 
+				ReturnPlayerIP(playerid), 
+				GetName(giveplayerid,false), 
+				PlayerInfo[giveplayerid][pConnectTime]
+			);
 			#endif
   		}
 		case 12:
@@ -3019,7 +3037,6 @@ CMD:setstat(playerid, params[])
   		}
 		case 13:
 		{
-        	PlayerInfo[giveplayerid][pSeeds] = amount;
             format(globalstring, sizeof(globalstring), "   Korisnikovi Seedsi za maricu postavljeni na %d.", amount);
   		}
 		case 14:
@@ -3222,12 +3239,8 @@ CMD:rac(playerid, params[])
 	return 1;
 }
 
-new
-	player_pip[35];
-
 hook OnPlayerConnect(playerid)
 {
-	GetPlayerIp(playerid, player_pip, sizeof(player_pip));
 	ResetAdminVehVars(playerid);
 	return 1;
 }
@@ -3243,8 +3256,7 @@ CMD:timeout(playerid, params[])
 	if(sscanf(params, "u", user))
 	    return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /timeout [DioImena/PlayerID]");
 
-	new
-	    str[35];
+	new str[35];
 
 	format(str, 35, "banip %s", ReturnPlayerIP(user));
 	SendRconCommand(str);
@@ -4028,15 +4040,12 @@ CMD:getip(playerid, params[])
 	new	
 		giveplayerid;
 	if( sscanf( params, "u", giveplayerid ) ) return SendClientMessage(playerid, COLOR_RED, "[ ? ]:  /getip [playerid/dio imena]");
-	new
-		playaIp[ 20 ],
-		tmpString[ 54 ];
-		
-	GetPlayerIp( giveplayerid, playaIp, 16 );
-	format( tmpString, sizeof(tmpString), "[ ! ] Playerov IP: %s", 
-		playaIp
+
+	va_SendClientMessage(playerid, 
+		COLOR_RED, 
+		"[ ! ] Playerov IP: %s", 
+		ReturnPlayerIP(giveplayerid)
 	);
-	SendClientMessage( playerid, COLOR_RED, tmpString );
 	return 1;
 }
 CMD:iptoname(playerid, params[])
@@ -4209,10 +4218,14 @@ CMD:unprison(playerid, params[])
 	PlayerJail[giveplayerid][pJailTime] = 0;
 	SetPlayerPosEx(giveplayerid, 1481.0739,-1741.8704,13.5469, 0, 0, true);
 	SetPlayerWorldBounds(giveplayerid, 20000.0000, -20000.0000, 20000.0000, -20000.0000);
-	new playerip[MAX_PLAYER_IP];
-	GetPlayerIp(giveplayerid, playerip, sizeof(playerip));
+	
 	#if defined MODULE_LOGS
-	Log_Write("/logfiles/a_unprison.txt", "(%s) Game Admin %s released %s from F.DeMorgan (%s)", ReturnDate(), GetName(playerid,false), GetName(giveplayerid,false), playerip);
+	Log_Write("/logfiles/a_unprison.txt", "(%s)[IP: %s] Game Admin %s released %s from F.DeMorgan.", 
+		ReturnDate(), 
+		GetName(playerid,false),
+		ReturnPlayerIP(playerid), 
+		GetName(giveplayerid,false), 
+	);
 	#endif
     return 1;
 }
@@ -4239,9 +4252,6 @@ CMD:prison(playerid, params[])
 	SavePlayerExperience(giveplayerid);
 	SendClientMessage(giveplayerid, COLOR_RED, "[ ! ] Radi Admin prisona, izgubili ste 5 trenutnih i 5 Overall EXP-ova.");
 
-	new playerip[MAX_PLAYER_IP];
-	GetPlayerIp(giveplayerid, playerip, sizeof(playerip));
-
 	new hour, minute, second;
 	GetServerTime(hour, minute, second);
 	getdate(year, month, day);
@@ -4258,7 +4268,7 @@ CMD:prison(playerid, params[])
 	GetPlayerName(giveplayerid, playername, MAX_PLAYER_NAME);
 
 	mysql_fquery_ex(g_SQL, 
-		"INSERT INTO prisons (player_id,name, forumname, time, reason, date) VALUES ('%d', '%e', '%e', '%d', '%e', '%e')",
+		"INSERT INTO prisons (player_id, name, forumname, time, reason, date) VALUES ('%d', '%e', '%e', '%d', '%e', '%e')",
 		PlayerInfo[giveplayerid][pSQLID],
 		playername,
 		PlayerInfo[playerid][pForumName],
@@ -4266,6 +4276,15 @@ CMD:prison(playerid, params[])
 		reason,
 		date
 	);
+
+	#if defined MODULE_LOGS
+	Log_Write("/logfiles/a_prison.txt", "(%s)[IP: %s] Game Admin %s prisoned %s in F.DeMorgan.", 
+		ReturnDate(), 
+		GetName(playerid,false),
+		ReturnPlayerIP(playerid), 
+		GetName(giveplayerid,false), 
+	);
+	#endif
 	return 1;
 }
 
@@ -4541,9 +4560,13 @@ CMD:jail(playerid, params[])
 		LicenseInfo[giveplayerid][pGunLic] = 0;
 	}
 	#if defined MODULE_LOGS
-	new playerip[MAX_PLAYER_IP];
-	GetPlayerIp(playerid, playerip, sizeof(playerip));
-	Log_Write("/logfiles/a_jail.txt", "(%s) Game Admin %s(%s) jailed player %s on %d minutes.", ReturnDate(), PlayerInfo[playerid][pForumName], playerip, GetName(giveplayerid,false), time);
+	Log_Write("/logfiles/a_jail.txt", "(%s) Game Admin %s(%s) jailed player %s on %d minutes.", 
+		ReturnDate(), 
+		PlayerInfo[playerid][pForumName], 
+		ReturnPlayerIP(playerid), 
+		GetName(giveplayerid,false), 
+		time
+	);
 	#endif
 	return 1;
 }
@@ -4570,9 +4593,12 @@ CMD:unjail(playerid, params[])
 		SetPlayerInterior(playerid, 0);
 
 		#if defined MODULE_LOGS
-		new playerip[MAX_PLAYER_IP];
-		GetPlayerIp(playerid, playerip, sizeof(playerip));
-		Log_Write("/logfiles/a_unjail.txt", "(%s) Game Admin %s(%s) released %s from jail.", ReturnDate(), GetName(playerid,false), playerip, GetName(giveplayerid,false));
+		Log_Write("/logfiles/a_unjail.txt", "(%s) Game Admin %s(%s) released %s from jail.", 
+			ReturnDate(), 
+			GetName(playerid,false), 
+			ReturnPlayerIP(playerid), 
+			GetName(giveplayerid,false)
+		);
 		#endif
 	}
 	else SendClientMessage(playerid, COLOR_RED, "Taj igrac nije u zatvoru!");
@@ -4671,13 +4697,13 @@ CMD:unban(playerid, params[])
     if (PlayerInfo[playerid][pAdmin] < 2) return SendClientMessage(playerid, COLOR_RED, "Niste ovlasteni za koristenje ove komande!");
 	new targetname[MAX_PLAYER_NAME];
 	if(sscanf(params, "s[24]", targetname )) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /unban [Igracev Nick]");
-   	format(globalstring,sizeof(globalstring),"Uspjesno si unbanao account: %s!", targetname);
-   	SendClientMessage(playerid, COLOR_ORANGE, globalstring);
-	
+	new sqlid = GetSQLFromPlayerName(targetname);
+	if(sqlid == -1)
+		SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "Account %s doesn't exist in database!", targetname);
+
 	#if defined MODULE_BANS
 	UnbanPlayerName(targetname, playerid);
 	#endif
-	format(globalstring, sizeof(globalstring), "%s[%s] je unbanao %s", GetName(playerid,false), GetPlayerIP(playerid), targetname);
 	return 1;
 }
 
@@ -4688,18 +4714,19 @@ CMD:warn(playerid, params[])
     new
         giveplayerid,
 		reason[24],
-		playerip[MAX_PLAYER_IP],
+
 		year,
 		month,
 		day;
     if (sscanf(params, "us[24]", giveplayerid, reason)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /warn [ID/DioImena] [Razlog]");
 	if (strlen(reason) < 1 || strlen(reason) > 24) return SendClientMessage(playerid, COLOR_RED, "Maksimalna velicina razloga je 24, a minimalna 1!");
     if (!IsPlayerConnected(giveplayerid)) return SendClientMessage(playerid, COLOR_RED, "Taj igrae nije online!");
-	GetPlayerIp(giveplayerid, playerip, sizeof(playerip));
+	
 	new
 	    hour,
 		minute,
 		second;
+
 	GetServerTime(hour, minute, second);
 	getdate(year, month, day);
 
@@ -5772,12 +5799,10 @@ CMD:apm(playerid, params[])
  		SendAdminNotification(MESSAGE_TYPE_INFO, str);
 	}
 	#if defined MODULE_LOGS
-	new playerip[MAX_PLAYER_IP];
-	GetPlayerIp(playerid, playerip, sizeof(playerip));
 	Log_Write("/logfiles/a_pm.txt", "(%s) %s(%s) for %s: %s",
 		ReturnDate(),
 		GetName(playerid, false),
-		playerip,
+		ReturnPlayerIP(playerid),
 		GetName(giveplayerid, false),
 		result
 	);

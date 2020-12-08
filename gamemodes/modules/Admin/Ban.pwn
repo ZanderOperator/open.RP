@@ -85,11 +85,9 @@ stock HOOK_Ban(playerid, adminid, const reason[], days=-1, bool:anticheat=false)
 	getdate(year, month, day);
 	format(date, sizeof(date), "%02d.%02d.%d.", day, month, year);
 
-	PlayerInfo[playerid][pUnbanTime] = unban_time;
-	format( PlayerInfo[ playerid ][ pBanReason ], 32, reason );
 
 	mysql_fquery(g_SQL, "UPDATE accounts SET playaUnbanTime = '%d', playaBanReason = '%e' WHERE sqlid = '%d'",
-		PlayerInfo[ playerid ][ pUnbanTime ],
+		unban_time,
 		reason,
 		PlayerInfo[ playerid ][ pSQLID ]
 	);
@@ -99,7 +97,7 @@ stock HOOK_Ban(playerid, adminid, const reason[], days=-1, bool:anticheat=false)
 			VALUES ('%d', '%e', '%e', '%e', '%e', '%e', '%d')",
 		PlayerInfo[playerid][pSQLID],
 		GetName( playerid, false ),
-		GetPlayerIP( playerid ),
+		ReturnPlayerIP( playerid ),
 		PlayerInfo[playerid][pForumName],
 		reason,
 		date,
@@ -177,7 +175,7 @@ stock UnbanPlayerName(const playername[], adminid)
 		ReturnDate(),
 		PlayerInfo[adminid][pForumName],
 		GetName( adminid, false ),
-		GetPlayerIP( adminid ),
+		ReturnPlayerIP( adminid ),
 		playername
 	);
 	#endif
@@ -196,7 +194,7 @@ stock UnbanPlayerIP(const playerip[], adminid)
 	Log_Write("/logfiles/a_unban.txt", "[%s] Game Admin %s(%s) unbanned IP %s",
 		ReturnDate(),
 		GetName( adminid, false ),
-		GetPlayerIP( adminid ),
+		ReturnPlayerIP( adminid ),
 		playerip
 	);
 	#endif

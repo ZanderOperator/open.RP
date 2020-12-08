@@ -1,6 +1,6 @@
 /*
     SA-MP Audio Plugin v0.5
-    Copyright © 2011 Incognito
+    Copyright ï¿½ 2011 Incognito
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -137,7 +137,7 @@ public OnPlayerConnect(playerid)
 	if (!IsPlayerNPC(playerid))
 	{
 		new ip[16], name[MAX_PLAYER_NAME];
-		GetPlayerIp(playerid, ip, sizeof(ip));
+		ReturnPlayerIP(playerid, ip, sizeof(ip));
 		GetPlayerName(playerid, name, sizeof(name));
 		Audio_AddPlayer(playerid, ip, name);
 	}

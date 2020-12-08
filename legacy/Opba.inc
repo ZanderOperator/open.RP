@@ -976,7 +976,7 @@ public OnPlayerConnect(playerid)
 			KillTimer(OPBA_PLagTimer[playerid]);
 			OPBA_PLagTimer[playerid] = -1;
 		}
-		GetPlayerIp(playerid, OPBA_PLagIP[playerid], 16);
+		ReturnPlayerIP(playerid, OPBA_PLagIP[playerid], 16);
 	#endif
 	OPBA_Player[playerid][RacPlayerInt] = -1;
 	OPBA_Player[playerid][RacDetectTimer] = SetTimerEx("OPBA_AirbrakeTeleport", 300, true, "i", playerid);

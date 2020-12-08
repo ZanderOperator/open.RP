@@ -486,10 +486,10 @@ RegisterPlayerDeath(playerid, killerid) // funkcija
 		ReturnDate(),
 		GetName(killerid, false),
 		PlayerInfo[killerid][pSQLID],
-		GetPlayerIP(killerid),
+		ReturnPlayerIP(killerid),
 		GetName(playerid, false),
 		PlayerInfo[playerid][pSQLID],
-		GetPlayerIP(playerid),
+		ReturnPlayerIP(playerid),
 		GetWeaponNameEx(KilledReason[playerid]),
 		KilledReason[playerid]
 	);
@@ -752,14 +752,12 @@ ResetPlayerVariables(playerid)
 	//Enums	
 	PlayerInfo[playerid][pForumName] 		= EOS;
 	PlayerInfo[playerid][pLastLogin] 		= EOS;
-	PlayerInfo[playerid][pLastIP]			= EOS;
 	PlayerInfo[playerid][pSAMPid] 			= EOS;
 	PlayerInfo[playerid][pEmail][0] 		= EOS;
 
 	PlayerInfo[playerid][pSecQuestAnswer][0]= EOS;
 	PlayerInfo[playerid][pAccent][0]		= EOS;
 	PlayerInfo[playerid][pLook][0]			= EOS;
-	PlayerInfo[playerid][pBanReason][0]		= EOS;
 	PlayerInfo[playerid][pLastUpdateVer] 	= EOS;
 
 	PlayerInfo[playerid][pSQLID] 			= 0; 	//Integer
@@ -787,9 +785,7 @@ ResetPlayerVariables(playerid)
 
 	PlayerInfo[playerid][pTempConnectTime]	= 0;
 	PlayerInfo[playerid][pLawDuty]          = 0;
-	PlayerInfo[playerid][pDutySystem]		= 0;
-	PlayerKeys[playerid][pHouseKey]			= INVALID_HOUSE_ID;
-	PlayerKeys[playerid][pRentKey]			= INVALID_HOUSE_ID;
+	
 
 	PlayerInfo[playerid][pSkin]				= 0;
 	PlayerMobile[playerid][pCryptoNumber]		= 0;
@@ -801,20 +797,21 @@ ResetPlayerVariables(playerid)
 	PlayerDeath[playerid][pDeathVW] 			= 0;
 
 	PlayerInfo[playerid][pMaskID]			= -1;
-	PlayerKeys[playerid][pVehicleKey]		= -1;
+	
+	PlayerKeys[playerid][pHouseKey]			= INVALID_HOUSE_ID;
+	PlayerKeys[playerid][pRentKey]			= INVALID_HOUSE_ID;
 	PlayerKeys[playerid][pBizzKey]			= INVALID_BIZNIS_ID;
 	PlayerKeys[playerid][pComplexKey]		= INVALID_COMPLEX_ID;
 	PlayerKeys[playerid][pComplexRoomKey]	= INVALID_COMPLEX_ID;
 	PlayerKeys[playerid][pGarageKey]		= -1;
 	PlayerKeys[playerid][pIllegalGarageKey]	= -1;
-	PlayerInfo[playerid][pSeeds]			= 0;
+	PlayerKeys[playerid][pVehicleKey]		= -1;
+
 	PlayerInfo[playerid][pToolkit]			= 0;
 	PlayerInfo[playerid][pParts]			= 0;
 	PlayerInfo[playerid][pChar]				= 0;
 	PlayerInfo[playerid][pBoomBox] 			= 0;
-	PlayerInfo[playerid][pBoomBoxType] 		= 0;
 
-	PlayerInfo[playerid][pUnbanTime] 		= 0;
 	PlayerInfo[playerid][pCasinoCool]		= 0;
 	PlayerInfo[playerid][pNews]				= 0;
 	PlayerInfo[playerid][pCanisterLiters] 	= 0;
@@ -917,7 +914,7 @@ ResetPlayerVariables(playerid)
 	PlayerSprayVID[playerid]		= 0;
 	PlayerAction[playerid]			= 0;
 
-	PlayerInfo[playerid][cIP] = '\0';
+	PlayerInfo[playerid][cIP] = EOS;
 
 	//Transporter
 	TCarry[playerid] = 0;
@@ -1258,25 +1255,6 @@ hook OnGameModeExit()
     return 1;
 }
 
-public OnIncomingConnection(playerid, ip_address[], port)
-{
-    new	count = 1;
-    for (new i = 0, j = GetPlayerPoolSize(); i <= j; i++)
-    {
-        // TODO: convert IP string to integer and compare integers, it's much faster
-        if (IsPlayerConnected(i) && !strcmp(GetUserIP_Connector(i), ip_address, true))
-        {
-            count++;
-        }
-    }
-
-    if (count > MAX_IP_CONNECTS)
-    {
-        Kick(playerid);
-    }
-    return 1;
-}
-
 public OnQueryError(errorid, const error[], const callback[], const query[], MySQL:handle)
 {
     new backtrace[2048];
@@ -1371,7 +1349,7 @@ public e_COMMAND_ERRORS:OnPlayerCommandReceived(playerid, cmdtext[], e_COMMAND_E
 					GetName(playerid, false),
 					playerid,
 					PlayerInfo[playerid][pSQLID],
-					GetPlayerIP(playerid),
+					ReturnPlayerIP(playerid),
 					cmdtext
 				);
 			}
@@ -1389,7 +1367,7 @@ public e_COMMAND_ERRORS:OnPlayerCommandReceived(playerid, cmdtext[], e_COMMAND_E
 				GetName(playerid, false),
 				playerid,
 				PlayerInfo[playerid][pSQLID],
-				GetPlayerIP(playerid),
+				ReturnPlayerIP(playerid),
 				cmdtext
 			);
 			#endif
@@ -1443,7 +1421,7 @@ hook OnPlayerDisconnect(playerid, reason)
 		stop FinishPlayerSpawn(playerid);
 	// Login Time && IP fetch
 	format(PlayerInfo[playerid][pLastLogin], 24, ReturnDate());
-	//GetPlayerIp(playerid, PlayerInfo[playerid][pLastIP], MAX_PLAYER_IP);
+
 	GotRod[playerid] = 0;
 	RemovePlayerFromVehicle(playerid);
 	new Float:armour;
@@ -1562,6 +1540,7 @@ public OnPlayerRequestClass(playerid, classid)
 		TogglePlayerControllable(playerid, false);
 
 		GetPlayerIp(playerid, PlayerInfo[playerid][cIP], 24);
+
 		mysql_tquery(g_SQL, 
 			va_fquery(g_SQL, "SELECT sql FROM accounts WHERE name = '%e'", tmpname), 
 			"CheckPlayerInBase", 

@@ -558,7 +558,7 @@ stock BuyBiznis(playerid, bool:credit_activated = false)
         BizzInfo[bizz][bMessage],
         BizzInfo[bizz][bSQLID],
         BizzInfo[bizz][bBuyPrice],
-        GetPlayerIP(playerid)
+        ReturnPlayerIP(playerid)
     );
     #endif
 
@@ -1720,11 +1720,11 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
             Log_Write("/logfiles/buy_biznis.txt", "(%s) %s(%s) bought business %s[SQLID: %d] from %s(%s) for %d$.",
                 ReturnDate(),
                 GetName(playerid, false),
-                GetPlayerIP(playerid),
+                ReturnPlayerIP(playerid),
                 BizzInfo[bizz][bMessage],
                 BizzInfo[bizz][bSQLID],
                 GetName(pID, false),
-                GetPlayerIP(pID),
+                ReturnPlayerIP(pID),
                 bizPrice
             );
             #endif
@@ -1966,12 +1966,10 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                         PlayerInfo[playerid][pMaskID] = 100000 + random(899999);
 
                         #if defined MODULE_LOGS
-                        new playerip[MAX_PLAYER_IP];
-                        GetPlayerIp(playerid, playerip, sizeof(playerip));
                         Log_Write("/logfiles/masks.txt", "(%s) %s(%s), Mask ID: %d.",
                             ReturnDate(),
                             GetName(playerid, false),
-                            playerip,
+                            ReturnPlayerIP(playerid),
                             PlayerInfo[playerid][pMaskID]
                         );
                         #endif
@@ -2945,14 +2943,12 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                     if (AC_GetPlayerMoney(playerid) < 100) return SendClientMessage(playerid, COLOR_RED, "Nemate toliko novca (100$)!");
                     PlayerToBudgetMoney(playerid, 100); // APosto je VERONA MALL novac ide u budget
                     PlayerInfo[playerid][pBoomBox]     = 1;
-                    PlayerInfo[playerid][pBoomBoxType] = 0;
                 }
                 case 1:
                 {
                     if (AC_GetPlayerMoney(playerid) < 100) return SendClientMessage(playerid, COLOR_RED, "Nemate toliko novca (100$)!");
                     PlayerToBudgetMoney(playerid, 100); // APosto je VERONA MALL novac ide u budget
-                    PlayerInfo[playerid][pBoomBox]     = 1;
-                    PlayerInfo[playerid][pBoomBoxType] = 1;
+                    PlayerInfo[playerid][pBoomBox]     = 2;
                 }
             }
             return 1;
@@ -4029,7 +4025,7 @@ CMD:bizwithdraw(playerid, params[])
     Log_Write("/logfiles/a_biznis.txt", "(%s) %s(%s) took %d$ from Business %s[SQLID: %d].",
         ReturnDate(),
         GetName(playerid, false),
-        GetPlayerIP(playerid),
+        ReturnPlayerIP(playerid),
         cashdeposit,
         BizzInfo[bouse][bMessage],
         BizzInfo[bouse][bSQLID]
@@ -4082,7 +4078,7 @@ CMD:bizbank(playerid, params[])
     Log_Write("/logfiles/a_biznis.txt", "(%s) %s(%s) deposited %d$ in Business %s[SQLID: %d].",
         ReturnDate(),
         GetName(playerid, false),
-        GetPlayerIP(playerid),
+        ReturnPlayerIP(playerid),
         cashdeposit,
         BizzInfo[bouse][bMessage],
         BizzInfo[bouse][bSQLID]

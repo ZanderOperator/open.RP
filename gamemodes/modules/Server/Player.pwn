@@ -30,13 +30,13 @@ stock PackageLossCheck(playerid)
 		Log_Write("logfiles/packageloss_kick.txt", "(%s) %s(IP: %s) is automatically kicked by server. Reason: Package Loss(%.2f percent).",
 			ReturnDate(),
 			GetName(playerid, false),
-			GetPlayerIP(playerid),
+			ReturnPlayerIP(playerid),
 			packetLoss
 		);
 		new kickstring[128];
 		format(kickstring, sizeof(kickstring), "[SERVER] %s(IP: %s) je kickan radi Package Loss-a(%.2f posto).",
 			GetName(playerid, false),
-			GetPlayerIP(playerid),
+			ReturnPlayerIP(playerid),
 			packetLoss);
 
 		ABroadCast(COLOR_RED,kickstring,1);

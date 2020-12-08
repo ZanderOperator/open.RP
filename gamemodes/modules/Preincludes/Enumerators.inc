@@ -4,6 +4,7 @@ enum E_PLAYER_DATA
 {
 	pSQLID,
 	pRegistered,
+	bool:pMustRead,
 	pTeamPIN[BCRYPT_HASH_LENGTH],
 	pForumName[24],
 	pEmail[MAX_PLAYER_MAIL],
@@ -18,7 +19,6 @@ enum E_PLAYER_DATA
 	pLastLogin[24],
 	pLastUpdateVer[24],
 	pLastLoginTimestamp,
-	pLastIP[MAX_PLAYER_IP],
 	cIP[MAX_PLAYER_IP],
 	pAdmin,
 	pTempRank[2],
@@ -34,37 +34,38 @@ enum E_PLAYER_DATA
 	pChangeTimes,
 	pMoney,
 	pBank,
-	pDutySystem,
-	pSkin,
-	pAccent[19],
+	FurnPremium,
+	pVoted,
+
 	Float:pMarker1[3],
 	Float:pMarker2[3],
 	Float:pMarker3[3],
 	Float:pMarker4[3],
 	Float:pMarker5[3],
+
 	pMaskID,
-	pCDPlayer,
-	pSeeds,
-	pToolkit,
+	pToolkit, 
 	pClock,
 	pCiggaretes,
 	pLighter,
 	pParts,
-	JackerCoolDown,
-	pLawDuty,
-	pPDDuty,
-	pChar,
-	bool:pHc,
-	bool:pMuAc,
-	bool:pHCl,
+	hRope,
 	pBoomBox,
-	pBoomBoxType,
-	pLook[120],
-	pCallsign[60], // TODO: transition to local var in Systems LSPD/FD
-	pUnbanTime,
-	pBanReason[32],
+
 	pCasinoCool,
+	JackerCoolDown,
+	pAmmuTime,
+	
+	pSkin,
+	pChar,
+	pAccent[19],
+	pLook[120],
+	pWalkStyle,
+
 	pNews,
+	
+	pCallsign[60], // TODO: transition to local var in Systems LSPD/FD
+	pLawDuty, // TODO: transition to local var - LSFD/Core.pwn
 	pCanisterLiters, // TODO: transition to local var in CO.pwn 
 	pCanisterType, // TODO: transition to local var in CO.pwn
 	pGrafID, // TODO: transition to local var in Graffiti.pwn
@@ -72,16 +73,14 @@ enum E_PLAYER_DATA
 	packageordered, // TODO: transition to local var in WepPackage.pwn
 	//bool:approved,
 	hWhistle, // TODO: transition to local var in Hunter.pwn
-	pVoted,
-	hRope,
+	
+	
 	pPhoneBG, // TODO: transition to local var in Mobile.pwn
 	pPhoneMask, // TODO: transition to local var in Mobile.pwn
-	pAmmuTime, 
+	 
 	pPrimaryWeapon, // TODO: transition to local var in Player/Weapons.pwn
 	pSecondaryWeapon, // TODO: transition to local var in Player/Weapons.pwn
 	
-	bool:pMustRead,
-	FurnPremium,
 	pAddingRoadblock, // TODO: transition to local var in Labels.pwn
 	pRoadblockObject, // TODO: transition to local var in Labels.pwn
 	pRoadblockModel, // TODO: transition to local var in Labels.pwn
@@ -292,12 +291,6 @@ enum E_GARAGE_DATA
 }
 new GarageInfo[ MAX_GARAGES ][ E_GARAGE_DATA ];
 
-#define GetPlayerIP(%0) \
-		PlayerInfo[%0][cIP]
-
-#define ReturnPlayerIP(%0) \
-		PlayerInfo[%0][cIP]
-
 enum E_EXP_INFO
 {
 	bool:eGivenEXP,
@@ -414,7 +407,8 @@ new
 #define hFurTxtId][%1][%2] hFurTxtId][((%1)*MAX_COLOR_TEXT_SLOTS)+(%2)] // Hacking the compiler to have HouseInfo[ houseid ][ hFurTxtId ][ 0 ][ 0 ]
 #define hFurColId][%1][%2] hFurColId][((%1)*MAX_COLOR_TEXT_SLOTS)+(%2)] // // Hacking the compiler to have HouseInfo[ houseid ][ hFurColId ][ 0 ][ 0 ]
 
-enum E_COMPLEX_INFO {
+enum E_COMPLEX_INFO
+{
 	cSQLID,
 	cPickup,
 	cOwnerID,
