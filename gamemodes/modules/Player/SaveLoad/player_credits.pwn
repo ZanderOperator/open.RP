@@ -1,6 +1,6 @@
 #include <YSI_Coding\y_hooks>
 
-LoadPlayerCredit(playerid)
+static LoadPlayerCredit(playerid)
 {
 	inline OnPlayerCreditLoad()
 	{
@@ -13,7 +13,6 @@ LoadPlayerCredit(playerid)
 			);
 			return 1;
 		}
-			
 		cache_get_value_name_int(0, "type"		, CreditInfo[playerid][cCreditType]);
 		cache_get_value_name_int(0, "rate"		, CreditInfo[playerid][cRate]);
 		cache_get_value_name_int(0, "amount"	, CreditInfo[playerid][cAmount]);

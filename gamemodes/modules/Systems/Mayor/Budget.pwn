@@ -138,33 +138,33 @@ stock ShowGovMDC(playerid, targetid)
 
     new bool:property = false,
         bool:bizz = false;
-    if (PlayerInfo[targetid][pHouseKey] != INVALID_HOUSE_ID)
+    if (PlayerKeys[targetid][pHouseKey] != INVALID_HOUSE_ID)
     {
         format(motd, sizeof(motd),"{DCE4ED}Kuca: %s ((%d)) | Vrijednost nekretnine: %d$\n",
-            HouseInfo[PlayerInfo[targetid][pHouseKey]][hAdress],
-            PlayerInfo[targetid][pHouseKey],
-            HouseInfo[PlayerInfo[targetid][pHouseKey]][hValue]
+            HouseInfo[PlayerKeys[targetid][pHouseKey]][hAdress],
+            PlayerKeys[targetid][pHouseKey],
+            HouseInfo[PlayerKeys[targetid][pHouseKey]][hValue]
         );
         strcat(govDialog, motd, sizeof(govDialog));
         property = true;
     }
-    if (PlayerInfo[targetid][pComplexRoomKey] != INVALID_COMPLEX_ID)
+    if (PlayerKeys[targetid][pComplexRoomKey] != INVALID_COMPLEX_ID)
     {
         format(motd, sizeof(motd),"{DCE4ED}Stan: %s ((%d)) | Iznos najma: %d$\n",
-            ComplexRoomInfo[PlayerInfo[targetid][pComplexRoomKey]][cAdress],
-            PlayerInfo[targetid][pComplexRoomKey],
-            ComplexRoomInfo[PlayerInfo[targetid][pComplexRoomKey]][cValue]
+            ComplexRoomInfo[PlayerKeys[targetid][pComplexRoomKey]][cAdress],
+            PlayerKeys[targetid][pComplexRoomKey],
+            ComplexRoomInfo[PlayerKeys[targetid][pComplexRoomKey]][cValue]
         );
         strcat(govDialog, motd, sizeof(govDialog));
         property = true;
     }
-    if (PlayerInfo[targetid][pComplexKey] != INVALID_COMPLEX_ID)
+    if (PlayerKeys[targetid][pComplexKey] != INVALID_COMPLEX_ID)
     {
         format(motd, sizeof(motd),"{DCE4ED}Complex stanova: %s ((%d)) | Vrijednost nekretnine: %d$ | Stanje blagajne: %d$\n",
-            ComplexInfo[PlayerInfo[targetid][pComplexKey]][cName],
-            PlayerInfo[targetid][pComplexKey],
-            ComplexInfo[PlayerInfo[targetid][pComplexKey]][cPrice],
-            ComplexInfo[PlayerInfo[targetid][pComplexKey]][cTill]
+            ComplexInfo[PlayerKeys[targetid][pComplexKey]][cName],
+            PlayerKeys[targetid][pComplexKey],
+            ComplexInfo[PlayerKeys[targetid][pComplexKey]][cPrice],
+            ComplexInfo[PlayerKeys[targetid][pComplexKey]][cTill]
         );
         strcat(govDialog, motd, sizeof(govDialog));
         property = true;
@@ -174,7 +174,7 @@ stock ShowGovMDC(playerid, targetid)
         format(motd, sizeof(motd),"{DCE4ED}Ne posjeduje nekretninu.\n");
         strcat(govDialog, motd, sizeof(govDialog));
     }
-    new bizzid = PlayerInfo[targetid][pBizzKey];
+    new bizzid = PlayerKeys[targetid][pBizzKey];
     if (bizzid != INVALID_BIZNIS_ID)
     {
         format(motd, sizeof(motd),"{DCE4ED}Biznis: %s ((%d)) | Vrijednost firme: %d$ | Stanje blagajne u firmi: %d$",

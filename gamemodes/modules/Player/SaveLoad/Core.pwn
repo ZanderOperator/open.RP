@@ -268,7 +268,7 @@ public LoadPlayerData(playerid)
         cache_get_value_name_int(0,  "playaSkin"	, PlayerInfo[playerid][pChar]);
 		format(PlayerInfo[playerid][pAccent]		, sizeof(string), string);
 		
-		cache_get_value_name_int(0,  "rentkey"		, PlayerInfo[playerid][pRentKey]);
+		cache_get_value_name_int(0,  "rentkey"		, PlayerKeys[playerid][pRentKey]);
 		cache_get_value_name_int(0,  "maskid"		, PlayerInfo[playerid][pMaskID]);
 
 		cache_get_value_name_int(0, "clock"			, PlayerInfo[playerid][pClock]);
@@ -288,7 +288,6 @@ public LoadPlayerData(playerid)
 		cache_get_value_name_int(0,	"voted"			, PlayerInfo[playerid][pVoted]);
 		
 		cache_get_value_name_int(0,	"ammutime"		, PlayerInfo[playerid][pAmmuTime]);
-		cache_get_value_name_int(0,	"warekey"		, PlayerInfo[playerid][pWarehouseKey]);
 		
 		cache_get_value_name_int(0,	"mustread"		, PlayerInfo[playerid][pMustRead]);
 		cache_get_value_name_int(0, "JackerCoolDown", PlayerInfo[playerid][JackerCoolDown]);
@@ -361,16 +360,20 @@ public LoadPlayerData(playerid)
 
 		LoadPlayerStats(playerid);
 		
-		PlayerInfo[playerid][pBizzKey] 	= INVALID_BIZNIS_ID;
-		PlayerInfo[playerid][pHouseKey] = INVALID_HOUSE_ID;
-		PlayerInfo[playerid][pComplexKey] = INVALID_COMPLEX_ID;
-		PlayerInfo[playerid][pComplexRoomKey] = INVALID_COMPLEX_ID;
+		
+		PlayerKeys[playerid][pHouseKey] = INVALID_HOUSE_ID;
+		PlayerKeys[playerid][pBizzKey] 	= INVALID_BIZNIS_ID;
+		PlayerKeys[playerid][pComplexKey] = INVALID_COMPLEX_ID;
+		PlayerKeys[playerid][pComplexRoomKey] = INVALID_COMPLEX_ID;
+		PlayerKeys[playerid][pGarageKey] = -1;
+		PlayerKeys[playerid][pIllegalGarageKey]	= -1;
+		PlayerKeys[playerid][pVehicleKey] = -1;
 		
 		foreach(new house : Houses)
 		{
 			if(HouseInfo[house][hOwnerID] == PlayerInfo[playerid][pSQLID]) 
 			{
-				PlayerInfo[playerid][pHouseKey] = house;
+				PlayerKeys[playerid][pHouseKey] = house;
 				break;
 			}
 		}
@@ -379,7 +382,7 @@ public LoadPlayerData(playerid)
 		{
 			if(BizzInfo[biznis][bOwnerID] == PlayerInfo[playerid][pSQLID]) 
 			{
-				PlayerInfo[playerid][pBizzKey] = biznis;
+				PlayerKeys[playerid][pBizzKey] = biznis;
 				ReloadBizzFurniture(biznis);
 				break;
 			}
@@ -389,7 +392,7 @@ public LoadPlayerData(playerid)
 		{
 			if(ComplexInfo[complex][cOwnerID] == PlayerInfo[playerid][pSQLID]) 
 			{
-				PlayerInfo[playerid][pComplexKey] = complex;
+				PlayerKeys[playerid][pComplexKey] = complex;
 				break;
 			}
 		}
@@ -398,7 +401,7 @@ public LoadPlayerData(playerid)
 		{
 			if(ComplexRoomInfo[complexr][cOwnerID] == PlayerInfo[playerid][pSQLID]) 
 			{
-				PlayerInfo[playerid][pComplexRoomKey] = complexr;
+				PlayerKeys[playerid][pComplexRoomKey] = complexr;
 				break;
 			}
 		}
@@ -407,7 +410,7 @@ public LoadPlayerData(playerid)
 		{
 			if(IlegalGarage[ igarage ][ igOwner ] == PlayerInfo[playerid][pSQLID])
 			{
-				PlayerInfo[playerid][pIllegalGarageKey] = igarage;
+				PlayerKeys[playerid][pIllegalGarageKey] = igarage;
 				break;
 			}
 		}
@@ -415,7 +418,15 @@ public LoadPlayerData(playerid)
 		{
 			if(GarageInfo[garage][gOwnerID] == PlayerInfo[playerid][pSQLID]) 
 			{
-				PlayerInfo[playerid][pGarageKey] = garage;
+				PlayerKeys[playerid][pGarageKey] = garage;
+				break;
+			}
+		}
+		foreach(new vehicleid : Vehicles[VEHICLE_USAGE_PRIVATE])
+		{
+			if(VehicleInfo[vehicleid][vOwnerID] == PlayerInfo[playerid][pSQLID])
+			{
+				PlayerKeys[playerid][pVehicleKey] = vehicleid;
 				break;
 			}
 		}
@@ -502,11 +513,11 @@ public OnAccountFinish(playerid)
 	PlayerInfo[playerid][pHelper] 			= 0; 
 	PlayerInfo[playerid][pCasinoCool]		= 5;
 	PlayerInfo[playerid][pCasinoCool]		= 5;
-	PlayerInfo[playerid][pHouseKey]			= 9999;
-	PlayerInfo[playerid][pBizzKey]			= 999;
-	PlayerInfo[playerid][pComplexRoomKey]	= 999;
-	PlayerInfo[playerid][pComplexKey]		= 999;
-	PlayerInfo[playerid][pSpawnedCar]		= -1;
+	PlayerKeys[playerid][pHouseKey]			= 9999;
+	PlayerKeys[playerid][pBizzKey]			= 999;
+	PlayerKeys[playerid][pComplexRoomKey]	= 999;
+	PlayerKeys[playerid][pComplexKey]		= 999;
+	PlayerKeys[playerid][pVehicleKey]		= -1;
 	
 	UpdateRegisteredPassword(playerid);
 	
@@ -563,7 +574,6 @@ SafeSpawnPlayer(playerid)
 	);
 	#endif
 	
-	PlayerInfo[playerid][pOnline] = true;
 	OnSecurityBreach[playerid] = false;
 	
 	SafeSpawning[playerid] = true;
@@ -595,10 +605,10 @@ SafeSpawnPlayer(playerid)
 		
 		PlayerVIP[playerid][pDonateTime] = 0;
 		PlayerVIP[playerid][pDonateRank] = 0;
-		if(PlayerInfo[playerid][pBizzKey] != INVALID_BIZNIS_ID)
+		if(PlayerKeys[playerid][pBizzKey] != INVALID_BIZNIS_ID)
 			UpdatePremiumBizFurSlots(playerid);
-		if(PlayerInfo[playerid][pHouseKey] != INVALID_HOUSE_ID)
-			UpdatePremiumHouseFurSlots(playerid, -1, PlayerInfo[ playerid ][ pHouseKey ]);
+		if(PlayerKeys[playerid][pHouseKey] != INVALID_HOUSE_ID)
+			UpdatePremiumHouseFurSlots(playerid, -1, PlayerKeys[playerid][pHouseKey]);
 		SavePlayerVIP(playerid);
 	}
 
@@ -667,7 +677,7 @@ public SavePlayerData(playerid)
 			maskid = '%d', clock = '%d', rope = '%d', cigaretes = '%d', lighter = '%d',\n\
 			SAMPid = '%e', forumname = '%e',\n\
 			boombox = '%d', boomboxtype = '%d', casinocool = '%d', news = '%d', voted = '%d',\n\
-			ammutime = '%d', warekey = '%d', mustread = '%d', lastupdatever = '%e', JackerCoolDown = '%d',\n\
+			ammutime = '%d', mustread = '%d', lastupdatever = '%e', JackerCoolDown = '%d',\n\
 			FurnPremium = '%d',\n\
 			WHERE sqlid = '%d'",
 		PlayerInfo[playerid][pRegistered],
@@ -688,7 +698,7 @@ public SavePlayerData(playerid)
 		PlayerInfo[playerid][pLevel],
 		PlayerInfo[playerid][pRespects],
 		PlayerInfo[playerid][pParts],
-		PlayerInfo[playerid][pRentKey],
+		PlayerKeys[playerid][pRentKey],
 		PlayerInfo[playerid][pMaskID],
 		PlayerInfo[playerid][pClock],
 		PlayerInfo[playerid][hRope],
@@ -703,7 +713,6 @@ public SavePlayerData(playerid)
 		PlayerInfo[playerid][pNews],
 		PlayerInfo[playerid][pVoted],
 		PlayerInfo[playerid][pAmmuTime],
-		PlayerInfo[playerid][pWarehouseKey],
 		PlayerInfo[playerid][pMustRead],
 		PlayerInfo[playerid][pLastUpdateVer],
 		PlayerInfo[playerid][JackerCoolDown],
@@ -756,20 +765,20 @@ stock SetPlayerSpawnInfo(playerid)
 			}
 			case 1:
 			{
-				if( ( PlayerInfo[playerid][pHouseKey] != INVALID_HOUSE_ID  ) ||  
-					( PlayerInfo[playerid][pRentKey] != INVALID_HOUSE_ID ) )
+				if( ( PlayerKeys[playerid][pHouseKey] != INVALID_HOUSE_ID  ) ||  
+					( PlayerKeys[playerid][pRentKey] != INVALID_HOUSE_ID ) )
 				{
 					new house;
-					if(  PlayerInfo[playerid][pHouseKey] != INVALID_HOUSE_ID  )
+					if(  PlayerKeys[playerid][pHouseKey] != INVALID_HOUSE_ID  )
 					{
-						house = PlayerInfo[playerid][pHouseKey];
+						house = PlayerKeys[playerid][pHouseKey];
 						if(!HouseInfo[house][hFurLoaded])
 							ReloadHouseFurniture(house);
 						ReloadHouseExterior(house);
 					}
-					else if( PlayerInfo[playerid][pRentKey] != INVALID_HOUSE_ID )
+					else if( PlayerKeys[playerid][pRentKey] != INVALID_HOUSE_ID )
 					{
-						house = PlayerInfo[playerid][pRentKey];
+						house = PlayerKeys[playerid][pRentKey];
 						if(!HouseInfo[house][hFurLoaded])
 							ReloadHouseFurniture(house);
 						ReloadHouseExterior(house);
@@ -833,9 +842,9 @@ stock SetPlayerSpawnInfo(playerid)
 			} 
 			case 3:
 			{
-				if( PlayerInfo[playerid][pComplexRoomKey] != INVALID_COMPLEX_ID )
+				if( PlayerKeys[playerid][pComplexRoomKey] != INVALID_COMPLEX_ID )
 				{
-					new complex = PlayerInfo[playerid][pComplexRoomKey];
+					new complex = PlayerKeys[playerid][pComplexRoomKey];
 					SetSpawnInfo(playerid, 0, 
 						PlayerInfo[playerid][pChar], 
 						ComplexRoomInfo[complex][cExitX], 

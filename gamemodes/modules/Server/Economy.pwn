@@ -68,15 +68,15 @@ stock LogTransaction ( playerid, giveplayerid, money, logtype )
 	switch(logtype)
 	{
 		case LOG_TYPE_BIZSELL: {
-			new biznis = PlayerInfo[ playerid ][ pBizzKey ];
+			new biznis = PlayerKeys[playerid][pBizzKey];
 			format(desc, sizeof(desc), "Naziv firme: %s", BizzInfo[biznis][bMessage]);
 		}
 		case LOG_TYPE_HOUSESELL: {
-			new house = PlayerInfo[ playerid ][ pHouseKey ];
+			new house = PlayerKeys[playerid][pHouseKey];
 			format(desc, sizeof(desc), "Adresa kuce: %s", HouseInfo[house][hAdress]);
 		}
 		case LOG_TYPE_VEHICLESELL: {
-			new vehid 	= PlayerInfo[ playerid ][ pSpawnedCar ], vehicleName[MAX_VEHICLE_NAME];
+			new vehid 	= PlayerKeys[playerid][pVehicleKey], vehicleName[MAX_VEHICLE_NAME];
 			GetVehicleNameById(vehid, vehicleName, MAX_VEHICLE_NAME);
 			if( !strcmp(VehicleInfo[vehid][vNumberPlate],"0",true) ) 
 				format(desc, sizeof(desc), "Model: %s | Broj tablice: Neregist.", vehicleName);
@@ -84,11 +84,11 @@ stock LogTransaction ( playerid, giveplayerid, money, logtype )
 				format(desc, sizeof(desc), "Model: %s | Broj tablice: %s", vehicleName, VehicleInfo[vehid][vNumberPlate]);
 		}
 		case LOG_TYPE_COMPLEXSELL: {
-			new complex = PlayerInfo[ playerid ][ pComplexKey ];
+			new complex = PlayerKeys[playerid][pComplexKey];
 			format(desc, sizeof(desc), "Naziv kompleksa: %s", ComplexInfo[complex][cName]);
 		}
 		case LOG_TYPE_GARAGESELL: {
-			new garage = PlayerInfo[ playerid ][ pGarageKey ];
+			new garage = PlayerKeys[playerid][pGarageKey];
 			format(desc, sizeof(desc), "Adresa garaze: %s", GarageInfo[garage][gAdress]);
 		}
 	}

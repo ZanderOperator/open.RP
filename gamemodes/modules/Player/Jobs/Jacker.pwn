@@ -1016,8 +1016,8 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 		}
 		case DIALOG_JACKER_BRIBE: {
 			if( !response ) return 1;
-			IlegalGarage[ PlayerInfo[ playerid ][ pIllegalGarageKey ] ][ igWantedLevel ]	= 0;
-			IlegalGarage[ PlayerInfo[ playerid ][ pIllegalGarageKey ] ][ igCarsJacked ]	= 0;
+			IlegalGarage[ PlayerKeys[playerid][pIllegalGarageKey] ][ igWantedLevel ]	= 0;
+			IlegalGarage[ PlayerKeys[playerid][pIllegalGarageKey] ][ igCarsJacked ]	= 0;
 			SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uspjesno ste spustili wanted level na 0!");
 			PlayerToFactionMoney( playerid, FACTION_TYPE_LAW, PlayerBribeMoney[ playerid ]); // Novac dolazi u PD factionbank
 			PlayerBribeMoney[ playerid ] = 0;
@@ -1093,7 +1093,7 @@ CMD:jacker(playerid, params[])
 		GetVehicleHealth(vehicleid, health);
 		
 		if( PlayerJackingCar[ playerid ] == -1 ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Morate uzeti misiju!");
-		if( vehicleid == PlayerInfo[ playerid ][ pSpawnedCar ] ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne mozete svoje vozilo uzeti!");
+		if( vehicleid == PlayerKeys[playerid][pVehicleKey] ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne mozete svoje vozilo uzeti!");
 		if( !Iter_Contains(Vehicles[VEHICLE_USAGE_PRIVATE], vehicleid) ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Vozilo koje ste ukrali treba biti privatno, a ne iznajmljeno ili organizacijsko!");
 		if( !IsPlayerInAnyVehicle(playerid) ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste unutar vozila!");
 		if( health < 550.0 ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Vozilo mora biti u boljem stanju (550+ HPa)!");
@@ -1158,26 +1158,26 @@ CMD:igarage(playerid, params[])
 		return 1;
 	}
 	if( !strcmp(param, "buy", true) ) {
-		if( PlayerInfo[ playerid ][ pIllegalGarageKey ] != -1 ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Vec imate ilegalnu garazu!");
+		if( PlayerKeys[playerid][pIllegalGarageKey] != -1 ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Vec imate ilegalnu garazu!");
 		if( AC_GetPlayerMoney(playerid) < 60000 ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate dovoljno novca za kupovinu ilegalne garaze (60.000$)!");
 		new
 			garage = GetJackerIlegalGarage(playerid);
 		if( garage == -1 ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste blizu car jacker garaze!");
 		if( IlegalGarage[ garage ][ igOwner ] != 0 || IlegalGarage[ garage ][ igOwner ] != 9999 ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Garaza nije na prodaju!");
-		PlayerInfo[ playerid ][ pIllegalGarageKey ] = garage;
+		PlayerKeys[playerid][pIllegalGarageKey] = garage;
 		IlegalGarage[ garage ][ igOwner ] = PlayerInfo[ playerid ][ pSQLID ];
 		CheckForGarageWantedLevel(garage, true);
 		PlayerToIllegalBudgetMoney(playerid, 60000); // Novac dolazi u ilegalni proracun
 	}
 	else if( !strcmp(param, "info", true) ) {
-		if( PlayerInfo[ playerid ][ pIllegalGarageKey ] == -1 ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne posjedujete ilegalnu garazu!");
+		if( PlayerKeys[playerid][pIllegalGarageKey] == -1 ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne posjedujete ilegalnu garazu!");
 		new
 			garage = GetJackerIlegalGarage(playerid);
 		if( garage == -1 || IlegalGarage[ garage ][ igOwner ] != PlayerInfo[ playerid ][ pSQLID ] ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste blizu svoje car jacker garaze/Nemate garazu!");
 		va_ShowPlayerDialog(playerid, 0, DIALOG_STYLE_TABLIST, "Ilegal Garage - Info", "Ime:\t%s\nWanted level:\t%d\nAuta ukradeno:\t%d", "OK", "", IlegalGarage[ garage ][ igName ], IlegalGarage[ garage ][ igWantedLevel ], IlegalGarage[ garage ][ igCarsJacked ]);
 	}
 	else if( !strcmp(param, "bribe", true) ) {
-		if( PlayerInfo[ playerid ][ pIllegalGarageKey ] == -1 ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne posjedujete ilegalnu garazu!");
+		if( PlayerKeys[playerid][pIllegalGarageKey] == -1 ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne posjedujete ilegalnu garazu!");
 		new
 			garage = GetJackerIlegalGarage(playerid);
 		if( garage == -1 || IlegalGarage[ garage ][ igOwner ] != PlayerInfo[ playerid ][ pSQLID ] ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste blizu svoje car jacker garaze/Nemate garazu!");

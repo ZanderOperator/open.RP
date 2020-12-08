@@ -593,9 +593,9 @@ stock ResetFarmerVars(playerid)
 
 stock DestroyFarmerObjects(playerid)
 {
-	if( PlayerInfo[playerid][pSpawnedCar] != -1) 
+	if( PlayerKeys[playerid][pVehicleKey] != -1) 
 	{
-		new VehicleModel = GetVehicleModel(PlayerInfo[playerid][pSpawnedCar]);
+		new VehicleModel = GetVehicleModel(PlayerKeys[playerid][pVehicleKey]);
 		if( VehicleModel == 478 || VehicleModel == 543 || VehicleModel == 422) 
 		{
 			for(new j=0;j<20;j++) {
@@ -870,12 +870,12 @@ CMD:milk(playerid, params[])
 		if( MilkInfo[playerid][mCanister]) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne mozete spremiti taj kanister pri sebi!");
 		if( !MilkInfo[playerid][mStorageCanister]) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate kanister pri sebi!");
 		if( IsPlayerInAnyVehicle(playerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Prvo izadite iz vozila!");
-		if( PlayerInfo[playerid][pSpawnedCar] == -1) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate spawnano vozilo!");
+		if( PlayerKeys[playerid][pVehicleKey] == -1) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate spawnano vozilo!");
 
-		VehicleModel = GetVehicleModel(PlayerInfo[playerid][pSpawnedCar]);
+		VehicleModel = GetVehicleModel(PlayerKeys[playerid][pVehicleKey]);
 		if( VehicleModel != 478 && VehicleModel != 543 && VehicleModel != 422) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate spawnan kamion za prijevoz!");
 
-		if(!IsPlayerInRangeOfVehicle(playerid, PlayerInfo[playerid][pSpawnedCar], 4.0)) 
+		if(!IsPlayerInRangeOfVehicle(playerid, PlayerKeys[playerid][pVehicleKey], 4.0)) 
 			return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne nalazite se blizu svog kamiona!");
 
 		switch(VehicleModel)
@@ -894,7 +894,7 @@ CMD:milk(playerid, params[])
 					TruckInfo[playerid][tYOffes] -= 0.5;
 				}
 				TruckInfo[playerid][t1Object][TruckInfo[playerid][tLimit]] = CreateDynamicObject(918, 0.0, 0.0, 0.0, 0, 0, 96.0, -1, -1, -1, 400.0, 0.0);
-				AttachDynamicObjectToVehicle(TruckInfo[playerid][t1Object][TruckInfo[playerid][tLimit]], PlayerInfo[playerid][pSpawnedCar], -0.72+TruckInfo[playerid][tXOffes], -0.8+TruckInfo[playerid][tYOffes], 0.3, 0.0, 0.0, 0.0);
+				AttachDynamicObjectToVehicle(TruckInfo[playerid][t1Object][TruckInfo[playerid][tLimit]], PlayerKeys[playerid][pVehicleKey], -0.72+TruckInfo[playerid][tXOffes], -0.8+TruckInfo[playerid][tYOffes], 0.3, 0.0, 0.0, 0.0);
 				TruckInfo[playerid][tLimit]++;
 				TruckInfo[playerid][tXOffes] += 0.35;
 				TruckInfo[playerid][tLiters] += MilkInfo[playerid][mLiters];
@@ -914,7 +914,7 @@ CMD:milk(playerid, params[])
 					TruckInfo[playerid][tYOffes] -= 0.5;
 				}
 				TruckInfo[playerid][t1Object][TruckInfo[playerid][tLimit]] = CreateDynamicObject(918, 0.0, 0.0, 0.0, 0, 0, 96.0, -1, -1, -1, 400.0, 0.0);
-				AttachDynamicObjectToVehicle(TruckInfo[playerid][t1Object][TruckInfo[playerid][tLimit]], PlayerInfo[playerid][pSpawnedCar], -0.72+TruckInfo[playerid][tXOffes], -0.8+TruckInfo[playerid][tYOffes], 0.2, 0.0, 0.0, 0.0);
+				AttachDynamicObjectToVehicle(TruckInfo[playerid][t1Object][TruckInfo[playerid][tLimit]], PlayerKeys[playerid][pVehicleKey], -0.72+TruckInfo[playerid][tXOffes], -0.8+TruckInfo[playerid][tYOffes], 0.2, 0.0, 0.0, 0.0);
 				TruckInfo[playerid][tLimit]++;
 				TruckInfo[playerid][tXOffes] += 0.35;
 				TruckInfo[playerid][tLiters] += MilkInfo[playerid][mLiters];
@@ -934,7 +934,7 @@ CMD:milk(playerid, params[])
 					TruckInfo[playerid][tYOffes] -= 0.45;
 				}
 				TruckInfo[playerid][t1Object][TruckInfo[playerid][tLimit]] = CreateDynamicObject(918, 0.0, 0.0, 0.0, 0, 0, 96.0, -1, -1, -1, 400.0, 0.0);
-				AttachDynamicObjectToVehicle(TruckInfo[playerid][t1Object][TruckInfo[playerid][tLimit]], PlayerInfo[playerid][pSpawnedCar], -0.62+TruckInfo[playerid][tXOffes], -0.8+TruckInfo[playerid][tYOffes], 0.1, 0.0, 0.0, 0.0);
+				AttachDynamicObjectToVehicle(TruckInfo[playerid][t1Object][TruckInfo[playerid][tLimit]], PlayerKeys[playerid][pVehicleKey], -0.62+TruckInfo[playerid][tXOffes], -0.8+TruckInfo[playerid][tYOffes], 0.1, 0.0, 0.0, 0.0);
 				TruckInfo[playerid][tLimit]++;
 				TruckInfo[playerid][tXOffes] += 0.3;
 				TruckInfo[playerid][tLiters] += MilkInfo[playerid][mLiters];
@@ -958,12 +958,12 @@ CMD:milk(playerid, params[])
 			string[50],
 			VehicleModel;
 
-		if( PlayerInfo[playerid][pSpawnedCar] == -1) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate spawnano vozilo!");
+		if( PlayerKeys[playerid][pVehicleKey] == -1) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate spawnano vozilo!");
 
-		VehicleModel = GetVehicleModel(PlayerInfo[playerid][pSpawnedCar]);
+		VehicleModel = GetVehicleModel(PlayerKeys[playerid][pVehicleKey]);
 		if( VehicleModel != 478 && VehicleModel != 543 && VehicleModel != 422) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate spawnan kamion za prijevoz!");
 
-		if(!IsPlayerInRangeOfVehicle(playerid, PlayerInfo[playerid][pSpawnedCar], 4.0)) 
+		if(!IsPlayerInRangeOfVehicle(playerid, PlayerKeys[playerid][pVehicleKey], 4.0)) 
 			return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne nalazite se blizu svog kamiona!");
 
 		format(string, sizeof(string), "[ ! ] Trenutno se na kamionu nalazi %i litara.", TruckInfo[playerid][tLiters]);
@@ -974,11 +974,11 @@ CMD:milk(playerid, params[])
 			VehicleModel;
     	if( (PlayerJob[playerid][pJob] != FARMER_ID)) return SendClientMessage( playerid, COLOR_RED, "Niste farmer!");
 		if( !IsPlayerInRangeOfPoint(playerid, 10.0, 2362.4734, -2099.7356, 13.5469) ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne nalazite se blizu tvornice!");
-		if( PlayerInfo[playerid][pSpawnedCar] == -1) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate spawnano vozilo!");
+		if( PlayerKeys[playerid][pVehicleKey] == -1) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate spawnano vozilo!");
 
-		VehicleModel = GetVehicleModel(PlayerInfo[playerid][pSpawnedCar]);
+		VehicleModel = GetVehicleModel(PlayerKeys[playerid][pVehicleKey]);
 		if( VehicleModel != 478 && VehicleModel != 543 && VehicleModel != 422) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate spawnan kamion za prijevoz!");
-		if( !IsPlayerInVehicle(playerid, PlayerInfo[playerid][pSpawnedCar])) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste u svojem kamionu!");
+		if( !IsPlayerInVehicle(playerid, PlayerKeys[playerid][pVehicleKey])) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste u svojem kamionu!");
 
     	if( !TruckInfo[playerid][tLiters]) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate mlijeka u kamionu!");
 
@@ -1359,14 +1359,14 @@ CMD:crops(playerid, params[])
 			return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate vrecu sa usjevom kod sebe!");
 		if( IsPlayerInAnyVehicle(playerid)) 
 			return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Prvo izadite iz vozila!");
-		if( PlayerInfo[playerid][pSpawnedCar] == -1) 
+		if( PlayerKeys[playerid][pVehicleKey] == -1) 
 			return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate spawnano vozilo!");
 
-		VehicleModel = GetVehicleModel(PlayerInfo[playerid][pSpawnedCar]);
+		VehicleModel = GetVehicleModel(PlayerKeys[playerid][pVehicleKey]);
 		if( VehicleModel != 478 && VehicleModel != 543 && VehicleModel != 422)
 			return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate spawnan kamion za prijevoz!");
 
-		if(!IsPlayerInRangeOfVehicle(playerid, PlayerInfo[playerid][pSpawnedCar], 4.0)) 
+		if(!IsPlayerInRangeOfVehicle(playerid, PlayerKeys[playerid][pVehicleKey], 4.0)) 
 			return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne nalazite se blizu svog kamiona!");
 
 		switch(VehicleModel) 
@@ -1391,7 +1391,7 @@ CMD:crops(playerid, params[])
 					TruckInfo[playerid][tZOffes] = 0.2;
 				}
 				TruckInfo[playerid][t1Object][TruckInfo[playerid][tLimit]] = CreateDynamicObject(2060, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, -1, -1, -1, 400.0, 0.0);
-				AttachDynamicObjectToVehicle(TruckInfo[playerid][t1Object][TruckInfo[playerid][tLimit]], PlayerInfo[playerid][pSpawnedCar], -0.4+TruckInfo[playerid][tXOffes], -2.3+TruckInfo[playerid][tYOffes], 0.0+TruckInfo[playerid][tZOffes], 0.0, 0.0, 0.0);
+				AttachDynamicObjectToVehicle(TruckInfo[playerid][t1Object][TruckInfo[playerid][tLimit]], PlayerKeys[playerid][pVehicleKey], -0.4+TruckInfo[playerid][tXOffes], -2.3+TruckInfo[playerid][tYOffes], 0.0+TruckInfo[playerid][tZOffes], 0.0, 0.0, 0.0);
 				TruckInfo[playerid][tLimit]++;
 				TruckInfo[playerid][tYOffes] += 0.4;
 				TruckInfo[playerid][tCropNumber]++;
@@ -1417,7 +1417,7 @@ CMD:crops(playerid, params[])
 					TruckInfo[playerid][tZOffes] = 0.2;
 				}
 				TruckInfo[playerid][t1Object][TruckInfo[playerid][tLimit]] = CreateDynamicObject(2060, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, -1, -1, -1, 400.0, 0.0);
-				AttachDynamicObjectToVehicle(TruckInfo[playerid][t1Object][TruckInfo[playerid][tLimit]], PlayerInfo[playerid][pSpawnedCar], -0.4+TruckInfo[playerid][tXOffes], -2.3+TruckInfo[playerid][tYOffes], 0.0+TruckInfo[playerid][tZOffes], 0.0, 0.0, 0.0);
+				AttachDynamicObjectToVehicle(TruckInfo[playerid][t1Object][TruckInfo[playerid][tLimit]], PlayerKeys[playerid][pVehicleKey], -0.4+TruckInfo[playerid][tXOffes], -2.3+TruckInfo[playerid][tYOffes], 0.0+TruckInfo[playerid][tZOffes], 0.0, 0.0, 0.0);
 				TruckInfo[playerid][tLimit]++;
 				TruckInfo[playerid][tYOffes] += 0.4;
 				TruckInfo[playerid][tCropNumber]++;
@@ -1442,7 +1442,7 @@ CMD:crops(playerid, params[])
 					TruckInfo[playerid][tZOffes] = 0.2;
 				}
 				TruckInfo[playerid][t1Object][TruckInfo[playerid][tLimit]] = CreateDynamicObject(2060, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, -1, -1, -1, 400.0, 0.0);
-				AttachDynamicObjectToVehicle(TruckInfo[playerid][t1Object][TruckInfo[playerid][tLimit]], PlayerInfo[playerid][pSpawnedCar], -0.4+TruckInfo[playerid][tXOffes], -2.1+TruckInfo[playerid][tYOffes], -0.2+TruckInfo[playerid][tZOffes], 0.0, 0.0, 0.0);
+				AttachDynamicObjectToVehicle(TruckInfo[playerid][t1Object][TruckInfo[playerid][tLimit]], PlayerKeys[playerid][pVehicleKey], -0.4+TruckInfo[playerid][tXOffes], -2.1+TruckInfo[playerid][tYOffes], -0.2+TruckInfo[playerid][tZOffes], 0.0, 0.0, 0.0);
 				TruckInfo[playerid][tLimit]++;
 				TruckInfo[playerid][tYOffes] += 0.4;
 				TruckInfo[playerid][tCropNumber]++;
@@ -1465,12 +1465,12 @@ CMD:crops(playerid, params[])
 			string[50],
 			VehicleModel;
 
-		if( PlayerInfo[playerid][pSpawnedCar] == -1) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate spawnano vozilo!");
+		if( PlayerKeys[playerid][pVehicleKey] == -1) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate spawnano vozilo!");
 
-		VehicleModel = GetVehicleModel(PlayerInfo[playerid][pSpawnedCar]);
+		VehicleModel = GetVehicleModel(PlayerKeys[playerid][pVehicleKey]);
 		if( VehicleModel != 478 && VehicleModel != 543 && VehicleModel != 422) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate spawnan kamion za prijevoz!");
 
-		if(!IsPlayerInRangeOfVehicle(playerid, PlayerInfo[playerid][pSpawnedCar], 4.0)) 
+		if(!IsPlayerInRangeOfVehicle(playerid, PlayerKeys[playerid][pVehicleKey], 4.0)) 
 			return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne nalazite se blizu svog kamiona!");
 
 		format(string, sizeof(string), "[ ! ] Trenutno se na kamionu nalazi %i vreca usjeva.", TruckInfo[playerid][tCropNumber]);
@@ -1484,11 +1484,11 @@ CMD:crops(playerid, params[])
     	if( (PlayerJob[playerid][pJob] != FARMER_ID)) return SendClientMessage( playerid, COLOR_RED, "Niste farmer!");
 		if( PlayerJob[playerid][pFreeWorks] < 5) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne mozete vise raditi! Pricekajte payday.");
 		if( !IsPlayerInRangeOfPoint(playerid, 5.0, 2454.6055, -2455.7285, 13.6491) ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne nalazite se blizu tvornice!");
-		if( PlayerInfo[playerid][pSpawnedCar] == -1) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate spawnano vozilo!");
+		if( PlayerKeys[playerid][pVehicleKey] == -1) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate spawnano vozilo!");
 
-		VehicleModel = GetVehicleModel(PlayerInfo[playerid][pSpawnedCar]);
+		VehicleModel = GetVehicleModel(PlayerKeys[playerid][pVehicleKey]);
 		if( VehicleModel != 478 && VehicleModel != 543 && VehicleModel != 422) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate spawnan kamion za prijevoz!");
-		if( !IsPlayerInVehicle(playerid, PlayerInfo[playerid][pSpawnedCar])) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste u svojem kamionu!");
+		if( !IsPlayerInVehicle(playerid, PlayerKeys[playerid][pVehicleKey])) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste u svojem kamionu!");
 
     	if( !TruckInfo[playerid][tCropNumber]) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate usjeva u kamionu!");
 
@@ -1666,14 +1666,14 @@ CMD:eggs(playerid, params[])
 			return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate kutiju sa jajima kod sebe!");
 		if( IsPlayerInAnyVehicle(playerid)) 
 			return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Prvo izadite iz vozila!");
-		if( PlayerInfo[playerid][pSpawnedCar] == -1) 
+		if( PlayerKeys[playerid][pVehicleKey] == -1) 
 			return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate spawnano vozilo!");
 
-		VehicleModel = GetVehicleModel(PlayerInfo[playerid][pSpawnedCar]);
+		VehicleModel = GetVehicleModel(PlayerKeys[playerid][pVehicleKey]);
 		if( VehicleModel != 478 && VehicleModel != 543 && VehicleModel != 422) 
 			return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate spawnan kamion za prijevoz!");
 
-		if(!IsPlayerInRangeOfVehicle(playerid, PlayerInfo[playerid][pSpawnedCar], 4.0)) 
+		if(!IsPlayerInRangeOfVehicle(playerid, PlayerKeys[playerid][pVehicleKey], 4.0)) 
 			return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne nalazite se blizu svog kamiona!");
 
 		switch(VehicleModel)
@@ -1699,7 +1699,7 @@ CMD:eggs(playerid, params[])
 				}
 
 				TruckInfo[playerid][t1Object][TruckInfo[playerid][tLimit]] = CreateDynamicObject(2358, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, -1, -1, -1, 400.0, 30.0);
-				AttachDynamicObjectToVehicle(TruckInfo[playerid][t1Object][TruckInfo[playerid][tLimit]], PlayerInfo[playerid][pSpawnedCar], -0.4+TruckInfo[playerid][tXOffes], -2.2+TruckInfo[playerid][tYOffes], -0.1+TruckInfo[playerid][tZOffes], 0.0, 0.0, 0.0);
+				AttachDynamicObjectToVehicle(TruckInfo[playerid][t1Object][TruckInfo[playerid][tLimit]], PlayerKeys[playerid][pVehicleKey], -0.4+TruckInfo[playerid][tXOffes], -2.2+TruckInfo[playerid][tYOffes], -0.1+TruckInfo[playerid][tZOffes], 0.0, 0.0, 0.0);
 				TruckInfo[playerid][tLimit]++;
 				TruckInfo[playerid][tYOffes] += 0.4;
 				TruckInfo[playerid][tEggsNumber]+= EggInfo[playerid][eEggs];
@@ -1726,7 +1726,7 @@ CMD:eggs(playerid, params[])
 				}
 
 				TruckInfo[playerid][t1Object][TruckInfo[playerid][tLimit]] = CreateDynamicObject(2358, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, -1, -1, -1, 400.0, 30.0);
-				AttachDynamicObjectToVehicle(TruckInfo[playerid][t1Object][TruckInfo[playerid][tLimit]], PlayerInfo[playerid][pSpawnedCar], -0.4+TruckInfo[playerid][tXOffes], -2.3+TruckInfo[playerid][tYOffes], 0.1+TruckInfo[playerid][tZOffes], 0.0, 0.0, 0.0);
+				AttachDynamicObjectToVehicle(TruckInfo[playerid][t1Object][TruckInfo[playerid][tLimit]], PlayerKeys[playerid][pVehicleKey], -0.4+TruckInfo[playerid][tXOffes], -2.3+TruckInfo[playerid][tYOffes], 0.1+TruckInfo[playerid][tZOffes], 0.0, 0.0, 0.0);
 				TruckInfo[playerid][tLimit]++;
 				TruckInfo[playerid][tYOffes] += 0.4;
 				TruckInfo[playerid][tEggsNumber]+= EggInfo[playerid][eEggs];
@@ -1753,7 +1753,7 @@ CMD:eggs(playerid, params[])
 				}
 
 				TruckInfo[playerid][t1Object][TruckInfo[playerid][tLimit]] = CreateDynamicObject(2358, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, -1, -1, -1, 400.0, 30.0);
-				AttachDynamicObjectToVehicle(TruckInfo[playerid][t1Object][TruckInfo[playerid][tLimit]], PlayerInfo[playerid][pSpawnedCar], -0.4+TruckInfo[playerid][tXOffes], -2.3+TruckInfo[playerid][tYOffes], -0.1+TruckInfo[playerid][tZOffes], 0.0, 0.0, 0.0);
+				AttachDynamicObjectToVehicle(TruckInfo[playerid][t1Object][TruckInfo[playerid][tLimit]], PlayerKeys[playerid][pVehicleKey], -0.4+TruckInfo[playerid][tXOffes], -2.3+TruckInfo[playerid][tYOffes], -0.1+TruckInfo[playerid][tZOffes], 0.0, 0.0, 0.0);
 				TruckInfo[playerid][tLimit]++;
 				TruckInfo[playerid][tYOffes] += 0.4;
 				TruckInfo[playerid][tEggsNumber]+= EggInfo[playerid][eEggs];
@@ -1777,12 +1777,12 @@ CMD:eggs(playerid, params[])
 			string[50],
 			VehicleModel;
 
-		if( PlayerInfo[playerid][pSpawnedCar] == -1) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate spawnano vozilo!");
+		if( PlayerKeys[playerid][pVehicleKey] == -1) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate spawnano vozilo!");
 
-		VehicleModel = GetVehicleModel(PlayerInfo[playerid][pSpawnedCar]);
+		VehicleModel = GetVehicleModel(PlayerKeys[playerid][pVehicleKey]);
 		if( VehicleModel != 478 && VehicleModel != 543 && VehicleModel != 422) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate spawnan kamion za prijevoz!");
 
-		if(!IsPlayerInRangeOfVehicle(playerid, PlayerInfo[playerid][pSpawnedCar], 4.0)) 
+		if(!IsPlayerInRangeOfVehicle(playerid, PlayerKeys[playerid][pVehicleKey], 4.0)) 
 			return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne nalazite se blizu svog kamiona!");
 
 		format(string, sizeof(string), "[ ! ] Trenutno se na kamionu nalazi %i jaja.", TruckInfo[playerid][tEggsNumber]);
@@ -1794,11 +1794,11 @@ CMD:eggs(playerid, params[])
 
     	if( (PlayerJob[playerid][pJob] != FARMER_ID)) return SendClientMessage( playerid, COLOR_RED, "Niste farmer!");
 		if( !IsPlayerInRangeOfPoint(playerid, 8.0, 2271.2578, -2351.6902, 13.5469) ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne nalazite se blizu tvornice!");
-    	if( PlayerInfo[playerid][pSpawnedCar] == -1) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate spawnano vozilo!");
+    	if( PlayerKeys[playerid][pVehicleKey] == -1) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate spawnano vozilo!");
 
-		VehicleModel = GetVehicleModel(PlayerInfo[playerid][pSpawnedCar]);
+		VehicleModel = GetVehicleModel(PlayerKeys[playerid][pVehicleKey]);
 		if( VehicleModel != 478 && VehicleModel != 543 && VehicleModel != 422) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate spawnan kamion za prijevoz!");
-		if( !IsPlayerInVehicle(playerid, PlayerInfo[playerid][pSpawnedCar])) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste u svojem kamionu!");
+		if( !IsPlayerInVehicle(playerid, PlayerKeys[playerid][pVehicleKey])) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste u svojem kamionu!");
 
 		if( !TruckInfo[playerid][tEggsNumber]) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate jaja u kamionu!");
 

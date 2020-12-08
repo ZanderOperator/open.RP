@@ -2220,7 +2220,7 @@ static stock ExitBlankInteriorPreview(playerid)
 
     DestroyFurnitureBlankIntTDs(playerid);
 
-    new house = PlayerInfo[playerid][pHouseKey];
+    new house = PlayerKeys[playerid][pHouseKey];
     // TODO: house bounds check
     SetPlayerPosEx(playerid, HouseInfo[house][hEnterX], HouseInfo[house][hEnterY], HouseInfo[house][hEnterZ], 0, 0, true);
     SendMessage(playerid, MESSAGE_TYPE_INFO, "Uspjesno ste izasli iz pregleda interijera!");
@@ -2474,9 +2474,9 @@ static stock GetPlayerFurnitureHouse(playerid)
             houseid = house;
         }
     }
-    if (PlayerInfo[playerid][pHouseKey] != INVALID_HOUSE_ID)
+    if (PlayerKeys[playerid][pHouseKey] != INVALID_HOUSE_ID)
     {
-        new house = PlayerInfo[playerid][pHouseKey];
+        new house = PlayerKeys[playerid][pHouseKey];
         if (IsPlayerInRangeOfPoint(playerid, 250.0, HouseInfo[house][hExitX], HouseInfo[house][hExitY], HouseInfo[house][hExitZ])
             && GetPlayerInterior(playerid) == HouseInfo[house][hInt] && GetPlayerVirtualWorld(playerid) == HouseInfo[house][hVirtualWorld])
         {
@@ -4472,7 +4472,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
         {
             if (!response) return 1;
 
-            new houseid = PlayerInfo[playerid][pHouseKey];
+            new houseid = PlayerKeys[playerid][pHouseKey];
             if (!BuyBlankInterior(playerid, houseid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Dogodila se nekakva pogreska, ponovno kucajte /bint buy!");
             return 1;
         }
@@ -4612,7 +4612,7 @@ CMD:bint(playerid, params[])
 
     if (!strcmp(param, "test", true))
     {
-        new houseid = PlayerInfo[playerid][pHouseKey];
+        new houseid = PlayerKeys[playerid][pHouseKey];
         // TODO: why are there some houseids hardcoded here? remove this.
         if (houseid == INVALID_HOUSE_ID || (556 < houseid < 575)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Morate posjedovati kucu ili posjedujete apartman.");
         if (!IsPlayerInRangeOfPoint(playerid, 50.0, HouseInfo[houseid][hEnterX], HouseInfo[houseid][hEnterY], HouseInfo[houseid][hEnterZ])) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Morate biti ispred kuce!");
@@ -4629,7 +4629,7 @@ CMD:bint(playerid, params[])
     else if (!strcmp(param, "buy", true))
     {
         if (PreviewingInterior[playerid] == -1) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Morate prvo uci i pregledati prazan interijer!");
-        new houseid = PlayerInfo[playerid][pHouseKey];
+        new houseid = PlayerKeys[playerid][pHouseKey];
         if (houseid == INVALID_HOUSE_ID) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Morate posjedovati kucu!");
 
         ShowPlayerDialog(playerid, DIALOG_FURNITURE_BINT_SURE, DIALOG_STYLE_MSGBOX, "{3C95C2} [ INTERIOR - WARNING ]", "Zelite li kupiti prazan interijer?\n"COL_RED"[UPOZORENJE]: Police s oruzjem, droga i trenutni namjestaj u vasoj kuci ce biti obrisan\nNapominjemo Vam da prije nego sto se odlucite za promijenu interiora, izvadite oruzje i drogu.", "Yes", "No");
@@ -4691,14 +4691,14 @@ CMD:furniture(playerid, params[])
     }
     else if (!strcmp("approve", param, true))
     {
-        if (PlayerInfo[playerid][pHouseKey] == INVALID_HOUSE_ID) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne posjedujete kucu!");
+        if (PlayerKeys[playerid][pHouseKey] == INVALID_HOUSE_ID) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne posjedujete kucu!");
 
         new giveplayerid;
         if (sscanf(params, "s[8]u", param, giveplayerid)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /furniture approve [dio imena/playerid]");
         if (giveplayerid == INVALID_PLAYER_ID) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Krivi unos playerida!");
         if (!ProxDetectorS(8.0, playerid, giveplayerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Taj igrac nije blizu vas!");
 
-        if (PlayerEditingHouse[giveplayerid] == PlayerInfo[playerid][pHouseKey])
+        if (PlayerEditingHouse[giveplayerid] == PlayerKeys[playerid][pHouseKey])
         {
             PlayerEditingHouse[giveplayerid] = INVALID_HOUSE_ID;
             SendFormatMessage(playerid, MESSAGE_TYPE_INFO, "Skinuli ste %s dopustenje za uredjivanje kuce!", GetName(giveplayerid, false));
@@ -4708,10 +4708,10 @@ CMD:furniture(playerid, params[])
 
         foreach (new i : Player)
         {
-            if (PlayerEditingHouse[i] == PlayerInfo[playerid][pHouseKey])
+            if (PlayerEditingHouse[i] == PlayerKeys[playerid][pHouseKey])
                 return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "Vec ste odobrili %s da vam uredjuje kucu!", GetName(i, false));
         }
-        PlayerEditingHouse[giveplayerid] = PlayerInfo[playerid][pHouseKey];
+        PlayerEditingHouse[giveplayerid] = PlayerKeys[playerid][pHouseKey];
         SendFormatMessage(playerid, MESSAGE_TYPE_INFO, "Dopustili ste %s da vam uredjuje kucu!", GetName(giveplayerid, false));
         va_SendClientMessage(giveplayerid, COLOR_RED, "[ ! ] %s vam je dopustio da mu uredjujete kucu. Kucajte /furniture menu!", GetName(playerid, false));
         return 1;
@@ -4860,7 +4860,7 @@ CMD:afurniture(playerid, params[])
         }
 
         SendFormatMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uspjesno ste refreshali furniture slotove igracu %s.", GetName(target_id, true));
-        UpdatePremiumHouseFurSlots(target_id, playerid, PlayerInfo[target_id][pHouseKey]);
+        UpdatePremiumHouseFurSlots(target_id, playerid, PlayerKeys[target_id][pHouseKey]);
         return 1;
     }
     return 1;

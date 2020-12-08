@@ -692,7 +692,7 @@ stock WarehouseRobAlarm(warehouseid, factionid)
 {
     foreach(new i: Player)
     {
-        if (PlayerInfo[i][pWarehouseKey] == warehouseid || PlayerFaction[i][pLeader] == factionid)
+        if (PlayerKeys[i][pWarehouseKey] == WarehouseInfo[warehouseid][whFactionSQLID] || PlayerFaction[i][pLeader] == factionid)
         {
             SendClientMessage(i, COLOR_YELLOW, "SMS: Tihi alarm Warehousea se oglasio na znakove provale.");
         }
@@ -1144,7 +1144,7 @@ CMD:warehouse(playerid, params[])
             return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ispred vaulta warehousea svoje organizacije!");
         if (!IsAtValidWarehouse(playerid, wh))
             return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ispred vaulta warehousea svoje organizacije!");
-        if (PlayerInfo[playerid][pWarehouseKey] != WarehouseInfo[wh][whFactionSQLID] && FactionInfo[flid][fID] != WarehouseInfo[wh][whFactionSQLID])
+        if (PlayerKeys[playerid][pWarehouseKey] != WarehouseInfo[wh][whFactionSQLID] && FactionInfo[flid][fID] != WarehouseInfo[wh][whFactionSQLID])
             return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Popis inventara moze vidjeti samo Leader/osoba kojoj je leader povjerio kljuceve!");
 
         new motd[2048],
@@ -1233,7 +1233,7 @@ CMD:warehouse(playerid, params[])
             return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ispred vaulta warehousea svoje organizacije!");
         if (!IsAtValidWarehouse(playerid, wh))
             return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ispred vaulta warehousea svoje organizacije!");
-        if (PlayerInfo[playerid][pWarehouseKey] != WarehouseInfo[wh][whFactionSQLID] && FactionInfo[flid][fID] != WarehouseInfo[wh][whFactionSQLID])
+        if (PlayerKeys[playerid][pWarehouseKey] != WarehouseInfo[wh][whFactionSQLID] && FactionInfo[flid][fID] != WarehouseInfo[wh][whFactionSQLID])
             return SendClientMessage(playerid,  COLOR_RED, "Nemate kljuc od sefa warehousea.");
 
         if (WarehouseInfo[wh][whLocked])
@@ -1266,15 +1266,15 @@ CMD:warehouse(playerid, params[])
             return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne mozete sami sebi dati kljuceve!");
         if (!DoesWarehouseExist(FactionInfo[fid][fID]))
             return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Vasa fakcija ne posjeduje warehouse!");
-        if (PlayerInfo[playerid][pWarehouseKey] != WarehouseInfo[wh][whFactionSQLID] && FactionInfo[flid][fID] != WarehouseInfo[wh][whFactionSQLID])
+        if (PlayerKeys[playerid][pWarehouseKey] != WarehouseInfo[wh][whFactionSQLID] && FactionInfo[flid][fID] != WarehouseInfo[wh][whFactionSQLID])
             return SendClientMessage(playerid,  COLOR_RED, "Nemate kljuc od sefa warehousea / niste leader organizacije.");
         if (!IsPlayerLogged(giveplayerid) || !IsPlayerConnected(giveplayerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Taj igrac nije ulogiran!");
         if (PlayerFaction[giveplayerid][pMember] != PlayerFaction[playerid][pMember])
             return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Igrac nije clan vase organizacije da bi mu mogli dati svoje kljuceve skladista!");
 
-        if (PlayerInfo[playerid][pWarehouseKey] != -1)
-            PlayerInfo[playerid][pWarehouseKey] = -1;
-        PlayerInfo[giveplayerid][pWarehouseKey] = WarehouseInfo[wh][whFactionSQLID];
+        if (PlayerKeys[playerid][pWarehouseKey] != -1)
+            PlayerKeys[playerid][pWarehouseKey] = -1;
+        PlayerKeys[giveplayerid][pWarehouseKey] = WarehouseInfo[wh][whFactionSQLID];
         va_SendClientMessage(playerid, COLOR_RED, "[ ! ] Uspjesno ste dali %s kljuceve od skladista %s.", GetName(giveplayerid, true), FactionInfo[fid][fName]);
         va_SendClientMessage(giveplayerid, COLOR_RED, "[ ! ] %s %s vam je dao kljuceve od skladista %s.", ReturnPlayerRankName(playerid), GetName(playerid, true), FactionInfo[fid][fName]);
     }

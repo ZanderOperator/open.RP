@@ -477,10 +477,10 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
             if (!IsPlayerConnected(seller)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Prodavac nije online!");
             if (AC_GetPlayerMoney(playerid) < GaragePrice[playerid]) return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate dovoljno novaca (%d$)!", GaragePrice[playerid]);
 
-            new garage = PlayerInfo[seller][pGarageKey];
-            PlayerInfo[playerid][pGarageKey] = PlayerInfo[seller][pGarageKey];
+            new garage = PlayerKeys[seller][pGarageKey];
+            PlayerKeys[playerid][pGarageKey] = PlayerKeys[seller][pGarageKey];
             GarageInfo[garage][gOwnerID] = PlayerInfo[playerid][pSQLID];
-            PlayerInfo[seller][pGarageKey] = -1;
+            PlayerKeys[seller][pGarageKey] = -1;
 
             mysql_fquery(g_SQL, "UPDATE server_garages SET ownerid = '%d' WHERE id = '%d'",
                    GarageInfo[garage][gOwnerID],
@@ -605,7 +605,7 @@ CMD:garage(playerid, params[])
 {
     new
         param[10],
-        garage = PlayerInfo[playerid][pGarageKey];
+        garage = PlayerKeys[playerid][pGarageKey];
     if (sscanf(params, "s[10] ", param))
     {
         SendClientMessage(playerid, COLOR_RED, "[ ? ]: /garage [odabir]");
@@ -668,14 +668,14 @@ CMD:garage(playerid, params[])
             SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate dovoljno novca (%d$)", GarageInfo[nearGarage][gPrice]);
             return 1;
         }
-        if (GarageInfo[nearGarage][gHouseID] != INVALID_HOUSE_ID && GarageInfo[nearGarage][gHouseID] != PlayerInfo[playerid][pHouseKey])
+        if (GarageInfo[nearGarage][gHouseID] != INVALID_HOUSE_ID && GarageInfo[nearGarage][gHouseID] != PlayerKeys[playerid][pHouseKey])
         {
             SendMessage(playerid, MESSAGE_TYPE_ERROR, "Morate posjedovati kucu na kojoj je garaza!");
             return 1;
         }
 
         PlayerToBudgetMoney(playerid, GarageInfo[nearGarage][gPrice]); // Novac ide u proracun
-        PlayerInfo[playerid][pGarageKey] = nearGarage;
+        PlayerKeys[playerid][pGarageKey] = nearGarage;
         GarageInfo[nearGarage][gOwnerID] = PlayerInfo[playerid][pSQLID];
         GarageInfo[nearGarage][gLocked] = 1;
 
@@ -708,9 +708,9 @@ CMD:garage(playerid, params[])
             return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Taj igrac nije sigurno spawnan/online!");
         if (!ProxDetectorS(5.0, playerid, giveplayerid))
             return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Taj igrac nije blizu vas!");
-        if (PlayerInfo[giveplayerid][pGarageKey] != -1)
+        if (PlayerKeys[giveplayerid][pGarageKey] != -1)
             return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Kupac vec posjeduje garazu!");
-        if (GarageInfo[garage][gHouseID] != INVALID_HOUSE_ID && PlayerInfo[giveplayerid][pHouseKey] != GarageInfo[garage][gHouseID])
+        if (GarageInfo[garage][gHouseID] != INVALID_HOUSE_ID && PlayerKeys[giveplayerid][pHouseKey] != GarageInfo[garage][gHouseID])
             return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Korisnik nema tu kucu!");
         if (price < 5000 || price > 999999)
             return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Prodajna cijena garaze ne moze biti manja od 5000$, ni veca od 999 999$!");

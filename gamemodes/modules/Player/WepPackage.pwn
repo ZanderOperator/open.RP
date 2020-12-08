@@ -691,7 +691,7 @@ CMD:package(playerid, params[])
 
 	if(strcmp(action, "vehstats", true) == 0) 
 	{
-		new vehicleid = PlayerInfo[playerid][pSpawnedCar];
+		new vehicleid = PlayerKeys[playerid][pVehicleKey];
 		if(vehicleid == -1)
 			return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You don't have a vehicle spawned!");
 			

@@ -36,8 +36,8 @@ hook LoadPlayerStats(playerid)
 SavePlayerDrugStats(playerid)
 {
 	mysql_fquery_ex(g_SQL, 
-		"UPDATE player_drug_stats SET drugused = '%d', drugseconds = '%d', drugorder = '%d',\n\
-		    WHERE sqlid = '%d'",
+		"UPDATE player_drug_stats SET drugused = '%d', drugseconds = '%d', drugorder = '%d' \n\
+			WHERE sqlid = '%d'",
 		PlayerDrugStatus[playerid][pDrugUsed],
         PlayerDrugStatus[playerid][pDrugSeconds],
         PlayerDrugStatus[playerid][pDrugOrder],

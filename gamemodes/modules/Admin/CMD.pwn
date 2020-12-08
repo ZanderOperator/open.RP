@@ -1156,7 +1156,7 @@ public OfflinePlayerVehicles(playerid, giveplayerid)
 {
 	new
 	    cars = cache_num_rows(),
-	    vehicleid = PlayerInfo[giveplayerid][pSpawnedCar],
+	    vehicleid = PlayerKeys[giveplayerid][pVehicleKey],
 		price = cars * 150;
 		
     if(cars == 0)
@@ -1412,7 +1412,7 @@ public OnPlayerClickPlayer(playerid, clickedplayerid, source)
 			PlayerJail[clickedplayerid][pJailed],
 			PlayerJail[clickedplayerid][pJailTime]
 		);
-		if(PlayerInfo[clickedplayerid][pBizzKey] > 0)
+		if(PlayerKeys[clickedplayerid][pBizzKey] != INVALID_BIZNIS_ID)
 		{
 			new biznis;
 			foreach(new i : Bizzes)
@@ -2186,9 +2186,9 @@ CMD:givepremium(playerid, params[])
 		PlayerVIP[giveplayerid][pDonatorVehPerms] 	= 2;
 		PlayerVIP[giveplayerid][pDonateTime]	= gettimestamp() + 2592000;
 
-		if(PlayerInfo[giveplayerid][pHouseKey] != INVALID_HOUSE_ID)
-			UpdatePremiumHouseFurSlots(giveplayerid, -1, PlayerInfo[ giveplayerid ][ pHouseKey ]);
-		if(PlayerInfo[giveplayerid][pBizzKey] != INVALID_BIZNIS_ID)
+		if(PlayerKeys[giveplayerid][pHouseKey] != INVALID_HOUSE_ID)
+			UpdatePremiumHouseFurSlots(giveplayerid, -1, PlayerKeys[giveplayerid][pHouseKey]);
+		if(PlayerKeys[giveplayerid][pBizzKey] != INVALID_BIZNIS_ID)
 			UpdatePremiumBizFurSlots(giveplayerid);
 		
 		SavePlayerVIP(giveplayerid);
@@ -2244,9 +2244,9 @@ CMD:givepremium(playerid, params[])
 		PlayerVIP[giveplayerid][pDonatorVehPerms] 	= 2;		
 		PlayerVIP[giveplayerid][pDonateTime]	= gettimestamp() + 2592000;
 
-		if(PlayerInfo[giveplayerid][pHouseKey] != INVALID_HOUSE_ID)
-			UpdatePremiumHouseFurSlots(giveplayerid, -1, PlayerInfo[ giveplayerid ][ pHouseKey ]);
-		if(PlayerInfo[giveplayerid][pBizzKey] != INVALID_BIZNIS_ID)
+		if(PlayerKeys[giveplayerid][pHouseKey] != INVALID_HOUSE_ID)
+			UpdatePremiumHouseFurSlots(giveplayerid, -1, PlayerKeys[giveplayerid][pHouseKey]);
+		if(PlayerKeys[giveplayerid][pBizzKey] != INVALID_BIZNIS_ID)
 			UpdatePremiumBizFurSlots(giveplayerid);
 		
 		SavePlayerVIP(giveplayerid);
@@ -2309,9 +2309,9 @@ CMD:givepremium(playerid, params[])
 		LicenseInfo[giveplayerid][pFishLic] = 1;
 		LicenseInfo[giveplayerid][pGunLic]	= 1;
 
-		if(PlayerInfo[giveplayerid][pHouseKey] != INVALID_HOUSE_ID)
-			UpdatePremiumHouseFurSlots(giveplayerid, -1, PlayerInfo[ giveplayerid ][ pHouseKey ]);
-		if(PlayerInfo[giveplayerid][pBizzKey] != INVALID_BIZNIS_ID)
+		if(PlayerKeys[giveplayerid][pHouseKey] != INVALID_HOUSE_ID)
+			UpdatePremiumHouseFurSlots(giveplayerid, -1, PlayerKeys[giveplayerid][pHouseKey]);
+		if(PlayerKeys[giveplayerid][pBizzKey] != INVALID_BIZNIS_ID)
 			UpdatePremiumBizFurSlots(giveplayerid);
 		
 		SavePlayerVIP(giveplayerid);
@@ -2374,9 +2374,9 @@ CMD:givepremium(playerid, params[])
 		LicenseInfo[giveplayerid][pFishLic] = 1;
 		LicenseInfo[giveplayerid][pGunLic] 	= 2;
 
-		if(PlayerInfo[giveplayerid][pHouseKey] != INVALID_HOUSE_ID)
-			UpdatePremiumHouseFurSlots(giveplayerid, -1, PlayerInfo[ giveplayerid ][ pHouseKey ]);
-		if(PlayerInfo[giveplayerid][pBizzKey] != INVALID_BIZNIS_ID)
+		if(PlayerKeys[giveplayerid][pHouseKey] != INVALID_HOUSE_ID)
+			UpdatePremiumHouseFurSlots(giveplayerid, -1, PlayerKeys[giveplayerid][pHouseKey]);
+		if(PlayerKeys[giveplayerid][pBizzKey] != INVALID_BIZNIS_ID)
 			UpdatePremiumBizFurSlots(giveplayerid);
 		
 		SavePlayerVIP(giveplayerid);
@@ -2636,15 +2636,12 @@ CMD:asellbiz(playerid, params[])
 
 	foreach(new i : Player)
 	{
-		if(PlayerInfo[i][pOnline] == true)
+		if(SafeSpawned[playerid] && PlayerInfo[i][pSQLID] == BizzInfo[biz][bOwnerID])
 		{
-			if(PlayerInfo[i][pSQLID] == BizzInfo[biz][bOwnerID])
-			{
-				PlayerInfo[i][pBizzKey] = INVALID_BIZNIS_ID;
-				va_SendClientMessage(i, COLOR_RED, "[ ! ]: Your business has been moved out by Game Admin %s, you got %s refund in return.", GetName(playerid, false), FormatNumber(BizzInfo[biz][bBuyPrice]));
-				BudgetToPlayerMoney(i, BizzInfo[biz][bBuyPrice]);
-				foundonline = 1;
-			}
+			PlayerKeys[i][pBizzKey] = INVALID_BIZNIS_ID;
+			va_SendClientMessage(i, COLOR_RED, "[ ! ]: Your business has been moved out by Game Admin %s, you got %s refund in return.", GetName(playerid, false), FormatNumber(BizzInfo[biz][bBuyPrice]));
+			BudgetToPlayerMoney(i, BizzInfo[biz][bBuyPrice]);
+			foundonline = 1;
 		}
 	}
 	mysql_fquery(g_SQL, "UPDATE bizzes SET ownerid = '0', co_ownerid = '0' WHERE id = '%d'", BizzInfo[ biz ][bSQLID]);
@@ -2687,9 +2684,9 @@ CMD:asellgarage(playerid, params[])
 		
 	foreach(new i : Player)
 	{
-		if(PlayerInfo[i][pGarageKey] == garage)
+		if(SafeSpawned[playerid] && PlayerKeys[i][pGarageKey] == garage)
 		{
-			PlayerInfo[i][pGarageKey] = -1;
+			PlayerKeys[i][pGarageKey] = -1;
 			va_SendClientMessage(i, COLOR_RED, "[ ! ]: Your garage has been moved out by Game Admin %s!", GetName(playerid, false));
 			break;
 		}				
@@ -2719,9 +2716,9 @@ CMD:asellhouse(playerid, params[])
    
 	foreach(new i : Player)
 	{
-		if(PlayerInfo[i][pOnline] == true && PlayerInfo[i][pSQLID] == HouseInfo[house][hOwnerID])
+		if(SafeSpawned[playerid] && PlayerInfo[i][pSQLID] == HouseInfo[house][hOwnerID])
 		{
-			PlayerInfo[i][pHouseKey] = INVALID_HOUSE_ID;
+			PlayerKeys[i][pHouseKey] = INVALID_HOUSE_ID;
 			va_SendClientMessage(i, COLOR_RED, "[ ! ]: Your house has been moved out by Game Admin %s, you got refunded buy price in return!", GetName(playerid, false));
 			BudgetToPlayerMoney(i, HouseInfo[house][hValue]);
 			foundonline = 1;
@@ -2739,7 +2736,6 @@ CMD:asellhouse(playerid, params[])
 		mysql_fquery(g_SQL, "UPDATE city SET budget = budget - '%d'", HouseInfo[ house ][hValue]);
 	}
 	
-		
 	HouseInfo[house][hOwnerID]		= 0;
 	HouseInfo[house][hLock] 		= 1;
 	HouseInfo[house][hSafePass] 	= 0;
@@ -2757,7 +2753,6 @@ CMD:asellhouse(playerid, params[])
 	return 1;
 }
 
-// COMPLEX cmds - Woo 17.2.2018. --------------------------------------------------------------------------------------------------------
 CMD:asellcomplex(playerid, params[])
 {
 	new complex, foundonline = 0;
@@ -2767,16 +2762,13 @@ CMD:asellcomplex(playerid, params[])
 	
 	foreach(new i : Player)
 	{
-		if(PlayerInfo[i][pOnline] == true)
+		if(SafeSpawned[playerid] && PlayerInfo[i][pSQLID] == ComplexInfo[complex][cOwnerID]) 
 		{
-			if(PlayerInfo[i][pSQLID] == ComplexInfo[complex][cOwnerID]) 
-			{
-				PlayerInfo[i][pComplexKey] = INVALID_COMPLEX_ID;
-				va_SendClientMessage(i, COLOR_RED, "[ ! ]: Your Complex has been moved out by Game Admin %s, you got refunded buy price of it!", GetName(playerid, false));
-				BudgetToPlayerMoney(i, ComplexInfo[ complex ][ cPrice ]);
-				foundonline = 1;
-				break;
-			}
+			PlayerKeys[i][pComplexKey] = INVALID_COMPLEX_ID;
+			va_SendClientMessage(i, COLOR_RED, "[ ! ]: Your Complex has been moved out by Game Admin %s, you got refunded buy price of it!", GetName(playerid, false));
+			BudgetToPlayerMoney(i, ComplexInfo[ complex ][ cPrice ]);
+			foundonline = 1;
+			break;
 		}
 	}
 	mysql_fquery(g_SQL, "UPDATE server_complex SET owner_id= '0' WHERE id = '%d'", ComplexInfo[ complex ][ cSQLID ]);	
@@ -2813,19 +2805,16 @@ CMD:asellcomplexroom(playerid, params[])
 		
 	foreach(new i : Player)
 	{
-		if(PlayerInfo[i][pOnline] == true)
+		if(SafeSpawned[playerid] && PlayerInfo[i][pSQLID] == ComplexRoomInfo[complex][cOwnerID]) 
 		{
-			if(PlayerInfo[i][pSQLID] == ComplexRoomInfo[complex][cOwnerID]) 
-			{
-				PlayerInfo[i][pComplexKey] = INVALID_COMPLEX_ID;
-				va_SendClientMessage(i, COLOR_RED, "[ ! ]: You got moved out of Complex Room on adress %s by Game Admin %s!", ComplexRoomInfo[complex][cAdress], GetName(playerid, false));
-				break;
-			}
+			PlayerKeys[i][pComplexKey] = INVALID_COMPLEX_ID;
+			va_SendClientMessage(i, COLOR_RED, "[ ! ]: You got moved out of Complex Room on adress %s by Game Admin %s!", ComplexRoomInfo[complex][cAdress], GetName(playerid, false));
+			break;
 		}
 	}
 	
 	// Enum
-	PlayerInfo[playerid][pComplexRoomKey] = INVALID_COMPLEX_ID;
+	PlayerKeys[playerid][pComplexRoomKey] = INVALID_COMPLEX_ID;
 	PlayerInfo[ playerid ][ pSpawnChange ] = 3;
 	ComplexRoomInfo[complex][cOwnerID] = -1;
 	
@@ -2999,12 +2988,12 @@ CMD:setstat(playerid, params[])
   		}
 		case 8:
 		{
-		    PlayerInfo[giveplayerid][pHouseKey] = amount;
+		    PlayerKeys[giveplayerid][pHouseKey] = amount;
 			format(globalstring, sizeof(globalstring), "   Korisnik sada ima kljuc od kuce broj %d.", amount);
   		}
 		case 9:
 		{
-		    PlayerInfo[giveplayerid][pBizzKey] = amount;
+		    PlayerKeys[giveplayerid][pBizzKey] = amount;
 			format(globalstring, sizeof(globalstring), "   Korisnik sada ima kljuc od tvrtke broj %d.", amount);
   		}
 		case 10:
@@ -3099,17 +3088,17 @@ CMD:setstat(playerid, params[])
 		}
 		case 24:
 		{
-			PlayerInfo[giveplayerid][pGarageKey] = amount;
+			PlayerKeys[giveplayerid][pGarageKey] = amount;
 			format(globalstring, sizeof(globalstring), "   Korisnikov Garage key je sada %d", amount);
 		}
 		case 25:
 		{
-		    PlayerInfo[giveplayerid][pComplexKey] = amount;
+		    PlayerKeys[giveplayerid][pComplexKey] = amount;
 			format(globalstring, sizeof(globalstring), "   Korisnik sada ima kljuc od complexa broj %d.", amount);
   		}
 		case 26:
 		{
-		    PlayerInfo[giveplayerid][pComplexRoomKey] = amount;
+		    PlayerKeys[giveplayerid][pComplexRoomKey] = amount;
 			format(globalstring, sizeof(globalstring), "   Korisnik sada ima kljuc od complex sobe broj %d.", amount);
   		}
   		case 27:
@@ -5613,52 +5602,52 @@ CMD:checkcostats(playerid, params[])
 		SendClientMessage(playerid, COLOR_RED, "[ ? ]: /checkcostats [playerid/PartOfName]");
 		return 1;
 	}
-	if(PlayerInfo[giveplayerid][pSpawnedCar] == -1) return SendClientMessage(playerid, COLOR_RED, "Igrac nema spawnano vozilo.");
+	if(PlayerKeys[giveplayerid][pVehicleKey] == -1) return SendClientMessage(playerid, COLOR_RED, "Igrac nema spawnano vozilo.");
 	
 	new name[ 36 ];
-	strunpack( name, Model_Name(VehicleInfo[PlayerInfo[giveplayerid][pSpawnedCar]][vModel]) );
-	format(globalstring, sizeof(globalstring), "Vozilo: %s [Model ID: %d] | Vlasnik: %s", name, VehicleInfo[PlayerInfo[giveplayerid][pSpawnedCar]][vModel], GetName(giveplayerid, true));
+	strunpack( name, Model_Name(VehicleInfo[PlayerKeys[giveplayerid][pVehicleKey]][vModel]) );
+	format(globalstring, sizeof(globalstring), "Vozilo: %s [Model ID: %d] | Vlasnik: %s", name, VehicleInfo[PlayerKeys[giveplayerid][pVehicleKey]][vModel], GetName(giveplayerid, true));
 
 	SendClientMessage(playerid, COLOR_SKYBLUE, globalstring);
-	if(VehicleInfo[PlayerInfo[giveplayerid][pSpawnedCar]][vNumberPlate] != 0)
+	if(VehicleInfo[PlayerKeys[giveplayerid][pVehicleKey]][vNumberPlate] != 0)
 	{
-		format(globalstring, sizeof(globalstring), "Registriran    ||    Registracija: %s", VehicleInfo[PlayerInfo[giveplayerid][pSpawnedCar]][vNumberPlate]);
+		format(globalstring, sizeof(globalstring), "Registriran    ||    Registracija: %s", VehicleInfo[PlayerKeys[giveplayerid][pVehicleKey]][vNumberPlate]);
 		SendClientMessage(playerid, COLOR_WHITE, globalstring);
 	}
 	else SendClientMessage(playerid, COLOR_WHITE, "Neregistriran");
-	if(VehicleInfo[PlayerInfo[giveplayerid][pSpawnedCar]][vLock] == 0)
+	if(VehicleInfo[PlayerKeys[giveplayerid][pVehicleKey]][vLock] == 0)
 		SendClientMessage(playerid, COLOR_WHITE, "Kvaliteta brave: Nekvalitetna");
 	else
 	{
-		format(globalstring, sizeof(globalstring), "Kvaliteta brave: %d", VehicleInfo[PlayerInfo[giveplayerid][pSpawnedCar]][vLock]);
+		format(globalstring, sizeof(globalstring), "Kvaliteta brave: %d", VehicleInfo[PlayerKeys[giveplayerid][pVehicleKey]][vLock]);
 		SendClientMessage(playerid, COLOR_WHITE, globalstring);
 	}
-	if(VehicleInfo[PlayerInfo[giveplayerid][pSpawnedCar]][vImmob] == 0)
+	if(VehicleInfo[PlayerKeys[giveplayerid][pVehicleKey]][vImmob] == 0)
 		SendClientMessage(playerid, COLOR_WHITE, "Imobilizator: Nema");
 	else
 	{
-		format(globalstring, sizeof(globalstring), "Imobilizator level: %d", VehicleInfo[PlayerInfo[giveplayerid][pSpawnedCar]][vImmob]);
+		format(globalstring, sizeof(globalstring), "Imobilizator level: %d", VehicleInfo[PlayerKeys[giveplayerid][pVehicleKey]][vImmob]);
 		SendClientMessage(playerid, COLOR_WHITE, globalstring);
 	}
-	if(VehicleInfo[PlayerInfo[giveplayerid][pSpawnedCar]][vAlarm] > 0)
+	if(VehicleInfo[PlayerKeys[giveplayerid][pVehicleKey]][vAlarm] > 0)
 	{
-		format(globalstring, sizeof(globalstring), "Alarm level: %d", VehicleInfo[PlayerInfo[giveplayerid][pSpawnedCar]][vAlarm]);
+		format(globalstring, sizeof(globalstring), "Alarm level: %d", VehicleInfo[PlayerKeys[giveplayerid][pVehicleKey]][vAlarm]);
 		SendClientMessage(playerid, COLOR_WHITE, globalstring);
 	}
 	else SendClientMessage(playerid, COLOR_WHITE, "Alarm: Nema");
 	
-	if(VehicleInfo[PlayerInfo[giveplayerid][pSpawnedCar]][vInsurance] == 0)
+	if(VehicleInfo[PlayerKeys[giveplayerid][pVehicleKey]][vInsurance] == 0)
 		SendClientMessage(playerid, COLOR_WHITE, "Osiguranje: Neosigurano");
 	else
 	{
-		format(globalstring, sizeof(globalstring), "Osiguranje: %d", VehicleInfo[PlayerInfo[giveplayerid][pSpawnedCar]][vInsurance]);
+		format(globalstring, sizeof(globalstring), "Osiguranje: %d", VehicleInfo[PlayerKeys[giveplayerid][pVehicleKey]][vInsurance]);
 		SendClientMessage(playerid, COLOR_WHITE, globalstring);
 	}
-	if(VehicleInfo[PlayerInfo[giveplayerid][pSpawnedCar]][vDestroys] == 0)
+	if(VehicleInfo[PlayerKeys[giveplayerid][pVehicleKey]][vDestroys] == 0)
 		SendClientMessage(playerid, COLOR_WHITE, "Puta unisteno: Nikada");
 	else
 	{
-		format(globalstring, sizeof(globalstring), "Puta unisteno: %d", VehicleInfo[PlayerInfo[giveplayerid][pSpawnedCar]][vDestroys]);
+		format(globalstring, sizeof(globalstring), "Puta unisteno: %d", VehicleInfo[PlayerKeys[giveplayerid][pVehicleKey]][vDestroys]);
 		SendClientMessage(playerid, COLOR_WHITE, globalstring);
 	}
 	return 1;

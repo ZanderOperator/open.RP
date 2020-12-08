@@ -590,7 +590,7 @@ static stock ExitBlankInteriorPreview(playerid)
 
     DestroyFurnitureBlankIntTDs(playerid);
 
-    new biznisid = PlayerInfo[playerid][pBizzKey];
+    new biznisid = PlayerKeys[playerid][pBizzKey];
     // TODO: bounds check
     SetPlayerPosEx(playerid, BizzInfo[biznisid][bEntranceX], BizzInfo[biznisid][bEntranceY], BizzInfo[biznisid][bEntranceZ], 0, 0, true);
     SendClientMessage(playerid, COLOR_YELLOW, "[INFO]: Uspjesno ste izasli iz pregleda interijera!");
@@ -733,14 +733,14 @@ static stock GetPlayerFurnitureBiznis(playerid)
             return PlayerEditingBiznis[playerid];
         }
     }
-    if (PlayerInfo[playerid][pBizzKey] != INVALID_BIZNIS_ID)
+    if (PlayerKeys[playerid][pBizzKey] != INVALID_BIZNIS_ID)
     {
-        new bizz = PlayerInfo[playerid][pBizzKey];
+        new bizz = PlayerKeys[playerid][pBizzKey];
         // TODO: bounds check
         if (IsPlayerInRangeOfPoint(playerid, 500.0, BizzInfo[bizz][bExitX], BizzInfo[bizz][bExitY], BizzInfo[bizz][bExitZ])
             && GetPlayerInterior(playerid) == BizzInfo[bizz][bInterior])
         {
-            return PlayerInfo[playerid][pBizzKey];
+            return PlayerKeys[playerid][pBizzKey];
         }
     }
     return INVALID_BIZNIS_ID;
@@ -2805,7 +2805,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
         {
             if (!response) return 1;
 
-            new biznisid = PlayerInfo[playerid][pBizzKey];
+            new biznisid = PlayerKeys[playerid][pBizzKey];
             if (!BuyBlankInterior(playerid, biznisid)) return SendClientMessage(playerid, COLOR_RED, "[GRESKA]: Dogodila se nekakva pogreska, ponovno kucajte /bint buy!");
             return 1;
         }
@@ -2930,7 +2930,7 @@ hook OnFSelectionResponse(playerid, fselectid, modelid, response)
 CMD:biznis_bint(playerid, params[])
 {
     //if (!PlayerInfo[playerid][pAdmin]) return SendClientMessage(playerid, COLOR_RED, "[GRESKA]: Niste ovlasteni!");
-    if (PlayerInfo[playerid][pBizzKey] == INVALID_BIZNIS_ID) return SendClientMessage(playerid, COLOR_RED, "[GRESKA]: Morate posjedovati biznis.");
+    if (PlayerKeys[playerid][pBizzKey] == INVALID_BIZNIS_ID) return SendClientMessage(playerid, COLOR_RED, "[GRESKA]: Morate posjedovati biznis.");
 
     new param[6];
     if (sscanf(params, "s[6]", param)) return SendClientMessage(playerid, COLOR_WHITE, "[ ? ]: /biznis_bint [test/buy/exit]");
@@ -3032,14 +3032,14 @@ CMD:biznis_furniture(playerid, params[])
         if (giveplayerid == INVALID_PLAYER_ID) return SendClientMessage(playerid, COLOR_RED, "[GRESKA]: Krivi unos playerida!");
         if (!ProxDetectorS(10.0, playerid, giveplayerid)) return SendClientMessage(playerid, COLOR_RED, "[GRESKA]: Taj igrac nije blizu vas!");
 
-        if (PlayerEditingBiznis[giveplayerid] == PlayerInfo[playerid][pBizzKey])
+        if (PlayerEditingBiznis[giveplayerid] == PlayerKeys[playerid][pBizzKey])
         {
             PlayerEditingBiznis[giveplayerid] = INVALID_BIZNIS_ID;
             va_SendClientMessage(playerid, COLOR_YELLOW, "[INFO]: Skinuli ste %s dopustenje za uredjivanje biznisa!", GetName(giveplayerid, false));
             va_SendClientMessage(giveplayerid, COLOR_YELLOW, "[INFO]: %s vam je skinio dopustenje za uredjivanje njegove biznisa!", GetName(playerid, false));
             return 1;
         }
-        PlayerEditingBiznis[giveplayerid] = PlayerInfo[playerid][pBizzKey];
+        PlayerEditingBiznis[giveplayerid] = PlayerKeys[playerid][pBizzKey];
         va_SendClientMessage(playerid, COLOR_YELLOW, "[INFO]: Dopustili ste %s da vam uredjuje biznis!", GetName(giveplayerid, false));
         va_SendClientMessage(giveplayerid, COLOR_YELLOW, "[INFO]: %s vam je dopustio da mu uredjujete biznis. Kucajte /biznis_furniture menu!", GetName(playerid, false));
     }

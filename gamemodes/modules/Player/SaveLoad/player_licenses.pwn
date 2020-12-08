@@ -22,14 +22,12 @@ Public: LoadingPlayerLicenses(playerid)
         );
         return 1;
     }
-    
     cache_get_value_name_int(0,  "carlic"		, LicenseInfo[playerid][pCarLic]);
     cache_get_value_name_int(0,  "gunlic"		, LicenseInfo[playerid][pGunLic]);
     cache_get_value_name_int(0,	 "boatlic"		, LicenseInfo[playerid][pBoatLic]);
     cache_get_value_name_int(0,	 "fishlic"		, LicenseInfo[playerid][pFishLic]);
     cache_get_value_name_int(0,	 "flylic"		, LicenseInfo[playerid][pFlyLic]);
     cache_get_value_name_int(0,  "passport"		, LicenseInfo[playerid][pPassport]);
-   
     return 1;
 }
 

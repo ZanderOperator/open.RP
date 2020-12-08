@@ -20,7 +20,7 @@ CMD:ticket(playerid, params[])
         LoadPlayerTickets(playerid, GetName(playerid, false));
     else if (!strcmp(param, "vehicleshow", true))
     {
-        new vehicleid = PlayerInfo[playerid][pSpawnedCar];
+        new vehicleid = PlayerKeys[playerid][pVehicleKey];
         if (vehicleid == -1 || vehicleid == INVALID_VEHICLE_ID)
             return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You don't have a spawned private vehicle!");
         if(!VehicleHasFines(vehicleid))
@@ -73,7 +73,7 @@ CMD:ticket(playerid, params[])
         if (sscanf( params, "s[12]i", param, slot)) 
             return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /payticket vehicle [slot (1-5)]");
 
-        new vehicleid = PlayerInfo[playerid][pSpawnedCar];
+        new vehicleid = PlayerKeys[playerid][pVehicleKey];
         if (vehicleid == -1 || vehicleid == INVALID_VEHICLE_ID) 
             return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You don't have an private vehicle spawned!");
         if(!VehicleHasFines(vehicleid))
