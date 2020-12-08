@@ -370,12 +370,12 @@ CMD:music(playerid, params[])
 			MusicInfo[playerid][mX] = x;
 			MusicInfo[playerid][mY] = y;
 			MusicInfo[playerid][mZ] = z;
-			switch(PlayerInfo[playerid][pBoomBoxType]) {
-				case 0: { // Obican crveni boombox
+			switch(PlayerInfo[playerid][pBoomBox]) {
+				case 1: { // Obican crveni boombox
 					BoomBoxObject[playerid] = CreateDynamicObject(2226, x, y, z-0.9, 0, 0, random(100), -1, -1, -1, 200.0);
 					BoomBoxPlanted[playerid] = true;
 				}
-				case 1: { // Silver King
+				case 2: { // Silver King
 					BoomBoxObject[playerid] = CreateDynamicObject(2103, x, y, z-0.9, 0, 0, random(100), -1, -1, -1, 200.0);
 					BoomBoxPlanted[playerid] = true;
 				}
@@ -562,7 +562,7 @@ CMD:music(playerid, params[])
 	    if( !PlayerInfo[playerid][pBoomBox] ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Morate imati boombox kako bi mogli koristiti ovu komandu!");
 	    if( Bit1_Get( gr_AttachedBoombox, playerid ) ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Vec imate boombox na sebi!");
 
-		SetPlayerAttachedObject(playerid, 9, ( PlayerInfo[playerid][pBoomBoxType] == 0 ) ? 2226 : 2103, 5);
+		SetPlayerAttachedObject(playerid, 9, ( PlayerInfo[playerid][pBoomBox] == 1 ) ? 2226 : 2103, 5);
 		EditAttachedObject(playerid, 9);
 		Bit1_Set( gr_AttachedBoombox, playerid, true);
 		SendClientMessage(playerid, COLOR_RED, "[HINT]: Za okretanje kamere koristite ~k~~PED_SPRINT~. Da maknete boombox iz ruke kucajte /music detach!");

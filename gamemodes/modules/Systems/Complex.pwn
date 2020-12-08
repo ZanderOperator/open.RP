@@ -798,11 +798,11 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                 Log_Write("/logfiles/buy_complex.txt", "(%s) %s(%s) bought Complex %s[SQLID: %d] from %s(%s) for %d$.",
                     ReturnDate(),
                     GetName(playerid, false),
-                    GetPlayerIP(playerid),
+                    ReturnPlayerIP(playerid),
                     ComplexInfo[complex_id][cName],
                     ComplexInfo[complex_id][cSQLID],
                     GetName(pID, false),
-                    GetPlayerIP(pID),
+                    ReturnPlayerIP(pID),
                     complexprice
                 );
                 #endif

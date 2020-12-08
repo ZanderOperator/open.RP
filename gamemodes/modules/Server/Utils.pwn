@@ -104,14 +104,6 @@ stock Log_Write(const path[], const str[], {Float,_}:...)
 	fclose(file);
 
 	return 1;
-} 
-
-GetUserIP_Connector(playerid){
-	new
-		ip[39];
-
- 	GetPlayerIp(playerid, ip, sizeof(ip));
-	return ip;
 }
 
 FormatNumber(number, prefix[] = "$")
@@ -481,18 +473,6 @@ stock ReturnTime()
 		tmpsecs
 	);
 	return time;
-}
-
-stock IsPlayerUsingVPN(playerid)
-{
-	new 
-		plrIP[16];
-    GetPlayerIp(playerid, plrIP, sizeof(plrIP));
-	new
-		string[ 128 ];
-	format( string, 128, "cityofangels-roleplay.com/abrakadabra/vpn_detection.php?ip=%s", plrIP );
-	HTTP(playerid, HTTP_GET, string, "", "VpnHttpResponse");
-	return 1;
 }
 
 stock wait(ms)
@@ -1637,16 +1617,6 @@ public UnfreezePlayer(playerid)
 	##     ##    ##       ##    ##        
 	##     ##    ##       ##    ##        
 */
-forward VpnHttpResponse(index, response_code, data[]);
-public VpnHttpResponse(index, response_code, data[])
-{
-	if( response_code == 200 ) {
-		if( !strcmp( data, "detected", true ) ) {
-			va_SendClientMessage(index, COLOR_RED, "[SERVER] Koristite IP %s na kojem je otrkiven VPN koji je zabranjen na serveru!", GetPlayerIP(index));
-			KickMessage(index);
-		}
-	}
-}
 
 stock SetPlayerLookAt(playerid, Float:X, Float:Y)
 {
@@ -1698,16 +1668,6 @@ stock GetXYInFrontOfObject(objectid, &Float:x, &Float:y, Float:distance, bool:ro
 
 stock randomEx(min, max)
     return random(max - min) + min;
-
-/*ReturnPlayerIP(playerid)
-{
-	new
-	    ip[16];
-	    
-	GetPlayerIp(playerid, ip, sizeof(ip));
-
-	return ip;
-}*/
 
 // Formated mysq_tquery
 mysql_fquery(MySQL:connectionHandle, const fquery[], va_args<>)

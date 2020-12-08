@@ -41,7 +41,6 @@ SendPlayerOnFirstTimeTutorial(playerid, step)
 	if(!Bit1_Get(gr_PlayerOnTutorial, playerid))
 	{
 		Bit1_Set( gr_PlayerOnTutorial, playerid, true);
-		IsPlayerUsingVPN(playerid);
 		OnPlayerFirstTimeEnter(playerid, step);
 	}
 }
@@ -199,9 +198,15 @@ timer OnPlayerFirstTimeEnter[12000](playerid, step)
 			PlayerInfo[playerid][pCasinoCool]	= 5;
 			
 			SendClientMessage(playerid, COLOR_SAMP_GREEN, "[HINT]: Ukoliko trebate prijevoz koristite /calltaxi!");
+			
 			new
 				tmpString[ 128 ];
-			format( tmpString, sizeof(tmpString), "AdmWarn: %s[%d] se tek registrirao na server! IP: %s", GetName(playerid,false), playerid, GetPlayerIP(playerid));
+			
+			format( tmpString, sizeof(tmpString), "AdmWarn: %s[%d] se tek registrirao na server! IP: %s", 
+				GetName(playerid,false), 
+				playerid, 
+				ReturnPlayerIP(playerid)
+			);
 			SendAdminMessage(COLOR_RED, tmpString);
 			
 			ClearChatBox(playerid); 

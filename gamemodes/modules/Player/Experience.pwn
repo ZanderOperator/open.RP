@@ -361,12 +361,10 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 					PlayerInfo[ playerid ][ pMaskID ] = 100000 + random(899999);
 					
 					#if defined MODULE_LOGS
-					new playerip[MAX_PLAYER_IP];
-					GetPlayerIp(playerid, playerip, sizeof(playerip));
 					Log_Write("/logfiles/masks.txt", "(%s) %s(%s), Mask ID: %d.",
 						ReturnDate(),
 						GetName(playerid, false),
-						playerip,
+						ReturnPlayerIP(playerid),
 						PlayerInfo[ playerid ][ pMaskID ]
 					);
 					#endif
@@ -415,12 +413,10 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 					PlayerInfo[ playerid ][ pMaskID ] = 100000 + random(899999);
 					
 					#if defined MODULE_LOGS
-					new playerip[MAX_PLAYER_IP];
-					GetPlayerIp(playerid, playerip, sizeof(playerip));
 					Log_Write("/logfiles/masks.txt", "(%s) %s(%s), Mask ID: %d.",
 						ReturnDate(),
 						GetName(playerid, false),
-						playerip,
+						ReturnPlayerIP(playerid),
 						PlayerInfo[ playerid ][ pMaskID ]
 					);
 					#endif
@@ -469,12 +465,10 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 					PlayerInfo[ playerid ][ pMaskID ] = 100000 + random(899999);
 					
 					#if defined MODULE_LOGS
-					new playerip[MAX_PLAYER_IP];
-					GetPlayerIp(playerid, playerip, sizeof(playerip));
 					Log_Write("/logfiles/masks.txt", "(%s) %s(%s), Mask ID: %d.",
 						ReturnDate(),
 						GetName(playerid, false),
-						playerip,
+						ReturnPlayerIP(playerid),
 						PlayerInfo[ playerid ][ pMaskID ]
 					);
 					#endif

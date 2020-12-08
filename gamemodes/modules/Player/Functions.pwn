@@ -1294,31 +1294,8 @@ stock static HungerCheck(playerid)
 	return 1;
 }
 
-/**
-    <summary>
-        Uzimamo igracev IP.
-    </summary>
-	
-	<param name="playerid">
-        Samo objaSnjivo.
-    </param>
-
-    <returns>
-        Igracev IP.
-    </returns>
-
-    <remarks>
-        -
-    </remarks>
-*/
-		
-/*GetPlayerIP(playerid)
-{
-	new 
-		dest[24];
-	GetPlayerIp(playerid, dest, 24);
-    return dest;
-}*/
+ReturnPlayerIP(playerid)
+	return PlayerInfo[playerid][cIP];
 
 /**
     <summary>

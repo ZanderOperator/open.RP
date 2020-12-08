@@ -1138,9 +1138,9 @@ CMD:afaction(playerid, params[])
         Log_Write("/logfiles/orgs_leader.txt", "(%s) %s(%s) made %s(%s) the leader of faction %s.",
             ReturnDate(),
             GetName(playerid, false),
-            GetPlayerIP(playerid),
+            ReturnPlayerIP(playerid),
             GetName(targetid, false),
-            GetPlayerIP(targetid),
+            ReturnPlayerIP(targetid),
             FactionInfo[fid][fName]
         );
         #endif
@@ -1178,9 +1178,9 @@ CMD:afaction(playerid, params[])
         Log_Write("/logfiles/orgs_leader.txt", "(%s) %s(%s) removed %s(%s) the leader of faction %s status.",
             ReturnDate(),
             GetName(playerid, false),
-            GetPlayerIP(playerid),
+            ReturnPlayerIP(playerid),
             GetName(targetid, false),
-            GetPlayerIP(targetid),
+            ReturnPlayerIP(targetid),
             FactionInfo[PlayerFaction[targetid][pMember]][fName]
         );
         #endif
@@ -1321,7 +1321,13 @@ CMD:faction(playerid, params[])
             logText
         );
         #if defined MODULE_LOGS
-        Log_Write("/logfiles/orgs_invite.txt", "(%s) %s(%s) invited %s(%s) to join %s.", GetName(playerid,false), GetPlayerIP(playerid), GetName(targetid,false), GetPlayerIP(targetid), FactionInfo[PlayerFaction[playerid][pMember]][fName]);
+        Log_Write("/logfiles/orgs_invite.txt", "(%s) %s(%s) invited %s(%s) to join %s.", 
+            GetName(playerid,false), 
+            ReturnPlayerIP(playerid), 
+            GetName(targetid,false), 
+            ReturnPlayerIP(targetid), 
+            FactionInfo[PlayerFaction[playerid][pMember]][fName]
+        );
         #endif
 
         va_SendClientMessage(targetid, COLOR_LIGHTBLUE, "Dodan si u organizaciju %s od strane lidera %s.",
@@ -1481,7 +1487,13 @@ CMD:faction(playerid, params[])
         );
 
         #if defined MODULE_LOGS
-        Log_Write("/logfiles/orgs_invite.txt", "(%s) %s(%s) kicked out %s(%s) from %s.", GetName(playerid,false), GetPlayerIP(playerid), GetName(targetid,false), GetPlayerIP(targetid), FactionInfo[PlayerFaction[playerid][pMember]][fName]);
+        Log_Write("/logfiles/orgs_invite.txt", "(%s) %s(%s) kicked out %s(%s) from %s.", 
+            GetName(playerid,false), 
+            ReturnPlayerIP(playerid), 
+            GetName(targetid,false), 
+            ReturnPlayerIP(targetid), 
+            FactionInfo[PlayerFaction[playerid][pMember]][fName]
+        );
         #endif
 
         new fid = PlayerFaction[playerid][pLeader];
@@ -1503,7 +1515,14 @@ CMD:faction(playerid, params[])
         PlayerFaction[targetid][pRank] = rank;
 
         #if defined MODULE_LOGS
-        Log_Write("/logfiles/orgs_invite.txt", "(%s) %s(%s) gave %s(%s) Rank %d in faction %s.", GetName(playerid,false), GetPlayerIP(playerid), GetName(targetid,false), GetPlayerIP(targetid), rank, FactionInfo[PlayerFaction[playerid][pMember]][fName]);
+        Log_Write("/logfiles/orgs_invite.txt", "(%s) %s(%s) gave %s(%s) Rank %d in faction %s.", 
+            GetName(playerid,false), 
+            ReturnPlayerIP(playerid), 
+            GetName(targetid,false), 
+            ReturnPlayerIP(targetid), 
+            rank, 
+            FactionInfo[PlayerFaction[playerid][pMember]][fName]
+        );
         #endif
 
         mysql_fquery(g_SQL, "UPDATE accounts SET facRank = '%d' WHERE sqlid = '%d'",

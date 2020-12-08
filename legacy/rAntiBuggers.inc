@@ -87,7 +87,7 @@ public OnPlayerConnect(playerid)
 	if(IsPlayerNPC(playerid))
 	{
 		new rAB_PIP[17];
-		GetPlayerIp(playerid, rAB_PIP, sizeof(rAB_PIP));
+		ReturnPlayerIP(playerid, rAB_PIP, sizeof(rAB_PIP));
 		new rAB_ServerIP[17];
 		GetSVarString("bind", rAB_ServerIP, sizeof(rAB_ServerIP));
 		if (!!strcmp(rAB_PIP, rAB_ServerIP))

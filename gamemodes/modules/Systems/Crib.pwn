@@ -1921,11 +1921,11 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
             Log_Write("/logfiles/buy_house.txt", "(%s) %s(%s) bought a house on adress %s[SQLID:%d] from %s(%s) for %d$.",
                 ReturnDate(),
                 GetName(playerid, false),
-                GetPlayerIP(playerid),
+                ReturnPlayerIP(playerid),
                 HouseInfo[PlayerKeys[playerid][pHouseKey]][hAdress],
                 HouseInfo[PlayerKeys[playerid][pHouseKey]][hSQLID],
                 GetName(pID, false),
-                GetPlayerIP(pID),
+                ReturnPlayerIP(pID),
                 housePrice
             );
             #endif
@@ -1968,12 +1968,10 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
             );
 
             #if defined MODULE_LOGS
-            new playerip[MAX_PLAYER_IP];
-            GetPlayerIp(playerid, playerip, sizeof(playerip));
             Log_Write("/logfiles/a_house_cash.txt", "(%s) %s(%s) put %d$ in house on adress %s[SQLID: %d].",
                 ReturnDate(),
                 GetName(playerid, false),
-                playerip,
+                ReturnPlayerIP(playerid),
                 length,
                 HouseInfo[bouse][hAdress],
                 HouseInfo[bouse][hSQLID]
@@ -1998,12 +1996,10 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
             );
 
             #if defined MODULE_LOGS
-            new playerip[MAX_PLAYER_IP];
-            GetPlayerIp(playerid, playerip, sizeof(playerip));
             Log_Write("/logfiles/a_house_cash.txt", "(%s) %s(%s) took %d$ from house on adress %s[SQLID: %d].",
                 ReturnDate(),
                 GetName(playerid, false),
-                playerip,
+                ReturnPlayerIP(playerid),
                 length,
                 HouseInfo[bouse][hAdress],
                 HouseInfo[bouse][hSQLID]

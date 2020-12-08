@@ -2621,7 +2621,7 @@ CMD:cleartrunk(playerid, params[])
 
     Log_Write("/logfiles/pd_taketrunk.txt", "(%s) %s(%s) emptied the trunk of %s. [Owner: %s | Owner SQLID: %d]",
         GetName(playerid, false),
-        GetPlayerIP(playerid),
+        ReturnPlayerIP(playerid),
         carname,
         ConvertSQLIDToName(VehicleInfo[vehicleid][vOwner]),
         VehicleInfo[vehicleid][vOwner]

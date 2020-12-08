@@ -72,12 +72,10 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                 CanPMAdmin[playerid][giveplayerid] = 1;
 
 				#if defined MODULE_LOGS
-				new playerip[MAX_PLAYER_IP];
-				GetPlayerIp(playerid, playerip, sizeof(playerip));
 				Log_Write("/logfiles/a_pm.txt", "(%s) %s(%s) for %s: %s",
 					ReturnDate(),
 					GetName(playerid, false),
-					playerip,
+					ReturnPlayerIP(playerid),
 					GetName(giveplayerid, false),
 					text
 				);
@@ -172,12 +170,10 @@ CMD:mask(playerid, params[])
 		#if defined MODULE_LOGS
 		if(PlayerInfo[ playerid ][ pMaskID ] == 0) 
 		{
-			new playerip[MAX_PLAYER_IP];
-			GetPlayerIp(playerid, playerip, sizeof(playerip));
 			Log_Write("/logfiles/masks.txt", "(%s) %s(%s), Mask ID: %d.",
 				ReturnDate(),
 				GetName(playerid, false),
-				playerip,
+				ReturnPlayerIP(playerid),
 				PlayerInfo[ playerid ][ pMaskID ]
 			);
 		}
@@ -667,12 +663,10 @@ CMD:pm(playerid, params[])
 		}
 	}
 	#if defined MODULE_LOGS
-	new playerip[MAX_PLAYER_IP];
-	GetPlayerIp(playerid, playerip, sizeof(playerip));
 	Log_Write("/logfiles/a_pm.txt", "(%s) %s(%s) for %s: %s",
 		ReturnDate(),
 		GetName(playerid, false),
-		playerip,
+		ReturnPlayerIP(playerid),
 		GetName(giveplayerid, false),
 		text
 	);
@@ -899,7 +893,6 @@ CMD:frisk(playerid, params[])
 	va_SendClientMessage(playerid, COLOR_LIGHTBLUE, "*_________________________ %s _________________________*", GetName( giveplayerid, true ));
 	va_SendClientMessage(playerid, COLOR_WHITE, "	Novac: %d$", PlayerInfo[giveplayerid][pMoney]);
 	va_SendClientMessage(playerid, COLOR_WHITE, "	Toolkit: %s", PlayerInfo[giveplayerid][pToolkit] ? ("Da") : ("Ne"));
-	va_SendClientMessage(playerid, COLOR_WHITE, "	Kazetofon: %s", PlayerInfo[giveplayerid][pCDPlayer] ? ("Da") : ("Ne"));
 	va_SendClientMessage(playerid, COLOR_WHITE, "	Sat: %s", PlayerInfo[giveplayerid][pClock] ? ("Da") : ("Ne"));
 	va_SendClientMessage(playerid, COLOR_WHITE, "	Mobitel: %s", GetMobileName(PlayerMobile[giveplayerid][pMobileModel]));
 	SendClientMessage(playerid, COLOR_LIGHTBLUE, "*_________________________ ORUZJA _________________________*");
@@ -1009,10 +1002,10 @@ CMD:pay(playerid, params[])
 		Log_Write("/logfiles/pay.txt", "(%s) %s(%s) paid $%d in cash to %s(%s).", 
 			ReturnDate(),
 			GetName( playerid, false ), 
-			GetPlayerIP(playerid),
+			ReturnPlayerIP(playerid),
 			moneys, 
 			GetName( giveplayerid, false ),
-			GetPlayerIP(giveplayerid)
+			ReturnPlayerIP(giveplayerid)
 		);
 		#endif
 	}
