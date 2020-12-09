@@ -1472,7 +1472,7 @@ CMD:faction(playerid, params[])
             PlayerObject[playerid][4][poModelid] = 0;
             PlayerObject[playerid][5][poModelid] = 0;
             PlayerObject[playerid][6][poModelid] = 0;
-            PlayerInfo[playerid][pSkin] = 299;
+            PlayerAppearance[playerid][pTmpSkin] = 299;
         }
 
         mysql_fquery(g_SQL, "UPDATE accounts SET facMemId = '0', facRank = '0' WHERE sqlid = '%d'",
@@ -1701,11 +1701,14 @@ CMD:faction(playerid, params[])
         if (targetid == INVALID_PLAYER_ID) return SendClientMessage(playerid, COLOR_RED, "Invalidan ID igraca!");
 
         SetPlayerSkin(targetid, skin);
-        PlayerInfo[targetid][pSkin] = skin;
-        PlayerInfo[targetid][pChar] = skin;
+        PlayerAppearance[targetid][pTmpSkin] = skin;
+        PlayerAppearance[targetid][pSkin] = skin;
 
         PlayerToBudgetMoney(targetid, 300);
-        mysql_fquery(g_SQL, "UPDATE accounts SET playaSkin = '%d' WHERE sqlid = '%d'", PlayerInfo[targetid][pChar], PlayerInfo[targetid][pSQLID]);
+        mysql_fquery(g_SQL, "UPDATE player_appearance SET skin = '%d' WHERE sqlid = '%d'", 
+            PlayerAppearance[targetid][pSkin], 
+            PlayerInfo[targetid][pSQLID]
+        );
     }
     return 1;
 }
@@ -1791,7 +1794,7 @@ CMD:quitfaction(playerid, params[])
     PlayerFaction[playerid][pRank]         = 0;
     SavePlayerFaction(playerid); 
 
-    PlayerInfo[playerid][pSkin]         = 60;
+    PlayerAppearance[playerid][pTmpSkin]         = 60;
     PlayerInfo[playerid][pSpawnChange]  = 0;
     
     PlayerRadio[playerid][pMainSlot] = 0;

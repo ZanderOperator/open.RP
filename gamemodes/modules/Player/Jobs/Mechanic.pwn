@@ -782,7 +782,7 @@ CMD:mechanic(playerid, params[]) {
 			MechanicDuty[playerid] = false;
 			
 			SendMessage(playerid, MESSAGE_TYPE_INFO,"Vise niste na duznosti kao Mehanicar!");
-			SetPlayerSkin(playerid, PlayerInfo[playerid][pChar]);
+			SetPlayerSkin(playerid, PlayerAppearance[playerid][pSkin]);
 		}
 	}
 	return (true);

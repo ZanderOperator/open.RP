@@ -1541,10 +1541,10 @@ PrintAccent(playerid)
 	new 
 		string[64];
 	
-	if(!isnull(PlayerInfo[playerid][pAccent]) || PlayerInfo[playerid][pAccent][0] == EOS)
+	if(!isnull(PlayerAppearance[playerid][pAccent]) || PlayerAppearance[playerid][pAccent][0] == EOS)
 		format(string, 64, "");
-	else if( strcmp(PlayerInfo[playerid][pAccent], "None", true) )
-		format(string, 64, "[%s] ", PlayerInfo[playerid][pAccent]);
+	else if( strcmp(PlayerAppearance[playerid][pAccent], "None", true) )
+		format(string, 64, "[%s] ", PlayerAppearance[playerid][pAccent]);
     return string;
 }
 

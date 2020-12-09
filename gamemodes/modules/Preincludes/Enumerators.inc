@@ -37,11 +37,11 @@ enum E_PLAYER_DATA
 	FurnPremium,
 	pVoted,
 
-	Float:pMarker1[3],
-	Float:pMarker2[3],
-	Float:pMarker3[3],
-	Float:pMarker4[3],
-	Float:pMarker5[3],
+	Float:pMarker1[3],	// TODO: translocate as local var to Admin/CMD.pwn
+	Float:pMarker2[3],	// TODO: translocate as local var to Admin/CMD.pwn
+	Float:pMarker3[3],	// TODO: translocate as local var to Admin/CMD.pwn
+	Float:pMarker4[3],	// TODO: translocate as local var to Admin/CMD.pwn
+	Float:pMarker5[3],	// TODO: translocate as local var to Admin/CMD.pwn
 
 	pMaskID,
 	pToolkit, 
@@ -55,12 +55,6 @@ enum E_PLAYER_DATA
 	pCasinoCool,
 	JackerCoolDown,
 	pAmmuTime,
-	
-	pSkin,
-	pChar,
-	pAccent[19],
-	pLook[120],
-	pWalkStyle,
 
 	pNews,
 	
@@ -91,6 +85,16 @@ enum E_PLAYER_DATA
 	pPMing // TODO: transition to local var in Player/CMD.pwn
 }
 new PlayerInfo[ MAX_PLAYERS ][ E_PLAYER_DATA ];
+
+enum E_PLAYER_APPEARANCE
+{
+	pTmpSkin,
+	pSkin,
+	pWalkStyle,
+	pAccent[19],
+	pLook[120]
+}
+new PlayerAppearance[ MAX_PLAYERS ][ E_PLAYER_APPEARANCE ];
 
 enum E_P_KEYS_INFO
 {

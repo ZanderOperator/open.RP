@@ -5,6 +5,7 @@
 #include "modules/Player\SaveLoad/player_drug_stats.pwn"
 #include "modules/Player\SaveLoad/player_health.pwn"
 #include "modules/Player\SaveLoad/player_fitness.pwn"
+#include "modules/Player\SaveLoad/player_appearance.pwn"
 #include "modules/Player\SaveLoad/player_vip_status.pwn"
 #include "modules/Player\SaveLoad/player_licenses.pwn"
 #include "modules/Player\SaveLoad/player_jail.pwn"
@@ -227,7 +228,6 @@ public LoadPlayerData(playerid)
 		stop LoginCheckTimer[playerid];
 		Bit1_Set(gr_LoginChecksOn, playerid, false);
 
-	    new string[20];
 		cache_get_value_name_int(0, "sqlid"			, PlayerInfo[playerid][pSQLID]);
 		cache_get_value_name_int(0, "levels"		, PlayerInfo[playerid][pLevel]);
 		cache_get_value_name_int(0, "connecttime"	, PlayerInfo[playerid][pConnectTime]);
@@ -263,9 +263,6 @@ public LoadPlayerData(playerid)
 
 		
 		cache_get_value_name_int(0,  "parts"		, PlayerInfo[playerid][pParts]);
-
-        cache_get_value_name_int(0,  "playaSkin"	, PlayerInfo[playerid][pChar]);
-		format(PlayerInfo[playerid][pAccent]		, sizeof(string), string);
 		
 		cache_get_value_name_int(0,  "rentkey"		, PlayerKeys[playerid][pRentKey]);
 		cache_get_value_name_int(0,  "maskid"		, PlayerInfo[playerid][pMaskID]);
@@ -277,7 +274,7 @@ public LoadPlayerData(playerid)
 
 		cache_get_value_name_int(0,	"boombox"		, PlayerInfo[playerid][pBoomBox]);
 		
-		cache_get_value_name(0,	"look"				, PlayerInfo[playerid][pLook], 120);
+		cache_get_value_name(0,	"look"				, PlayerAppearance[playerid][pLook], 120);
 		
 		cache_get_value_name(0, "playaBanReason"	, ban_reason, 32);
 		cache_get_value_name_int(0,	"playaUnbanTime", unban_time);
@@ -468,14 +465,14 @@ public LoadPlayerData(playerid)
     return 1;
 }
 
-public RegisterPlayer(playerid)
+public RegisterPlayer(playerid) // TODO: mandatory checkup!
 {
 	format(PlayerInfo[playerid][pLastLogin], 24, ReturnDate());
     mysql_pquery(g_SQL,
 		va_fquery(g_SQL, 
 			"INSERT INTO accounts (registered,register_date,name,password,teampin,email,\n\
-				secawnser,expdate,levels,age,sex,handMoney,bankMoney,playaSkin,casinocool) \n\
-				VALUES ('0','%e','%e','%e','','%e','','','%d','%d','%d','%d','%d','%d','%d')",
+				secawnser,expdate,levels,age,sex,handMoney,bankMoney,casinocool) \n\
+				VALUES ('0','%e','%e','%e','','%e','','','%d','%d','%d','%d','%d','%d')",
 			ReturnDate(),
 			GetName(playerid, false),
 			PlayerInfo[playerid][pPassword],
@@ -485,7 +482,6 @@ public RegisterPlayer(playerid)
 			PlayerInfo[playerid][pSex],
 			NEW_PLAYER_MONEY,
 			NEW_PLAYER_BANK,
-			29,
 			5), 
 		"OnAccountFinish", 
 		"i", 
@@ -500,7 +496,7 @@ public OnAccountFinish(playerid)
 	PlayerInfo[playerid][pSQLID] 			= cache_insert_id();
 	PlayerInfo[playerid][pRegistered] 		= 0;
 	PlayerInfo[playerid][pLevel] 			= 1;
-	PlayerInfo[playerid][pChar] 			= 29;
+	PlayerAppearance[playerid][pSkin] 			= 29;
 	PaydayInfo[playerid][pPayDayMoney] 		= 0;
 	PaydayInfo[playerid][pProfit]			= 0;
 	PlayerJob[playerid][pFreeWorks] 		= 15;
@@ -725,19 +721,19 @@ stock SetPlayerSpawnInfo(playerid)
 {
 	if(PlayerJail[playerid][pJailed] == 2)
 	{
-		SetSpawnInfo(playerid, 0, PlayerInfo[playerid][pChar], -10.9639, 2329.3030, 24.4, 0, 0, 0, 0, 0, 0, 0);
+		SetSpawnInfo(playerid, 0, PlayerAppearance[playerid][pSkin], -10.9639, 2329.3030, 24.4, 0, 0, 0, 0, 0, 0, 0);
 		Streamer_UpdateEx(playerid,  -10.9639, 2329.3030, 24.4);
 	}
 	else if(PlayerJail[playerid][pJailed] == 3)
 	{
-		SetSpawnInfo(playerid, 0, PlayerInfo[playerid][pChar],  1199.1404,1305.8285,-54.7172, 0, 0, 0, 0, 0, 0, 0);
+		SetSpawnInfo(playerid, 0, PlayerAppearance[playerid][pSkin],  1199.1404,1305.8285,-54.7172, 0, 0, 0, 0, 0, 0, 0);
 		SetPlayerInterior(playerid, 17);
 		Streamer_UpdateEx(playerid,  1199.1404,1305.8285,-54.7172);
 	}
 	else if(PlayerDeath[playerid][pKilled] == 1) 
 	{
 		SetSpawnInfo(playerid, 0, 
-			PlayerInfo[playerid][pChar],
+			PlayerAppearance[playerid][pSkin],
 			PlayerDeath[playerid][pDeathX] , 
 			PlayerDeath[playerid][pDeathY] , 
 			PlayerDeath[playerid][pDeathZ] , 
@@ -755,7 +751,7 @@ stock SetPlayerSpawnInfo(playerid)
 		{
 			case 0: 
 			{
-				SetSpawnInfo(playerid, 0, PlayerInfo[playerid][pChar], SPAWN_X, SPAWN_Y, SPAWN_Z, 0, 0, 0, 0, 0, 0, 0);
+				SetSpawnInfo(playerid, 0, PlayerAppearance[playerid][pSkin], SPAWN_X, SPAWN_Y, SPAWN_Z, 0, 0, 0, 0, 0, 0, 0);
 				Streamer_UpdateEx(playerid, SPAWN_X, SPAWN_Y, SPAWN_Z);
 			}
 			case 1:
@@ -779,7 +775,7 @@ stock SetPlayerSpawnInfo(playerid)
 						ReloadHouseExterior(house);
 					}
 					SetSpawnInfo(playerid, 0, 
-						PlayerInfo[playerid][pChar], 
+						PlayerAppearance[playerid][pSkin], 
 						HouseInfo[ house ][ hEnterX ], 
 						HouseInfo[ house ][ hEnterY], 
 						HouseInfo[ house ][ hEnterZ ], 
@@ -795,7 +791,7 @@ stock SetPlayerSpawnInfo(playerid)
 				}
 				else
 				{
-					SetSpawnInfo(playerid, 0, PlayerInfo[playerid][pChar], SPAWN_X, SPAWN_Y, SPAWN_Z, 0, 0, 0, 0, 0, 0, 0);
+					SetSpawnInfo(playerid, 0, PlayerAppearance[playerid][pSkin], SPAWN_X, SPAWN_Y, SPAWN_Z, 0, 0, 0, 0, 0, 0, 0);
 					Streamer_UpdateEx(playerid, SPAWN_X, SPAWN_Y, SPAWN_Z);
 				}
 			}
@@ -805,32 +801,32 @@ stock SetPlayerSpawnInfo(playerid)
 				{
 					case 1:
 					{
-						SetSpawnInfo(playerid, 0, PlayerInfo[playerid][pChar], 1543.1218,-1675.8065,13.5558, 0, 0, 0, 0, 0, 0, 0);
+						SetSpawnInfo(playerid, 0, PlayerAppearance[playerid][pSkin], 1543.1218,-1675.8065,13.5558, 0, 0, 0, 0, 0, 0, 0);
 						Streamer_UpdateEx(playerid, 1543.1218,-1675.8065,13.5558);
 					}
 					case 2:
 					{
-						SetSpawnInfo(playerid, 0, PlayerInfo[playerid][pChar], 1179.1440, -1324.0720, 13.9063, 0, 0, 0, 0, 0, 0, 0);
+						SetSpawnInfo(playerid, 0, PlayerAppearance[playerid][pSkin], 1179.1440, -1324.0720, 13.9063, 0, 0, 0, 0, 0, 0, 0);
 						Streamer_UpdateEx(playerid, 1179.1440, -1324.0720, 13.9063); 
 					}
 					case 3:
 					{
-						SetSpawnInfo(playerid, 0, PlayerInfo[playerid][pChar], 635.5733,-572.5349,16.3359, 0, 0, 0, 0, 0, 0, 0);
+						SetSpawnInfo(playerid, 0, PlayerAppearance[playerid][pSkin], 635.5733,-572.5349,16.3359, 0, 0, 0, 0, 0, 0, 0);
 						Streamer_UpdateEx(playerid, 635.5733,-572.5349,16.3359);
 					}
 					case 4:
 					{
-						SetSpawnInfo(playerid, 0, PlayerInfo[playerid][pChar], 1481.0284,-1766.5795,18.7958, 0, 0, 0, 0, 0, 0, 0);
+						SetSpawnInfo(playerid, 0, PlayerAppearance[playerid][pSkin], 1481.0284,-1766.5795,18.7958, 0, 0, 0, 0, 0, 0, 0);
 						Streamer_UpdateEx(playerid, 1481.0284,-1766.5795,18.7958);
 					}
 					case 5:
 					{
-						SetSpawnInfo(playerid, 0, PlayerInfo[playerid][pChar], 1415.0668,-1177.3187,25.9922, 0, 0, 0, 0, 0, 0, 0);
+						SetSpawnInfo(playerid, 0, PlayerAppearance[playerid][pSkin], 1415.0668,-1177.3187,25.9922, 0, 0, 0, 0, 0, 0, 0);
 						Streamer_UpdateEx(playerid, 1466.6505,-1172.4191,23.8956);
 					}
 					default:
 					{
-						SetSpawnInfo(playerid, 0, PlayerInfo[playerid][pChar], SPAWN_X, SPAWN_Y, SPAWN_Z, 0, 0, 0, 0, 0, 0, 0);
+						SetSpawnInfo(playerid, 0, PlayerAppearance[playerid][pSkin], SPAWN_X, SPAWN_Y, SPAWN_Z, 0, 0, 0, 0, 0, 0, 0);
 						Streamer_UpdateEx(playerid, SPAWN_X, SPAWN_Y, SPAWN_Z);
 					}
 				}
@@ -841,7 +837,7 @@ stock SetPlayerSpawnInfo(playerid)
 				{
 					new complex = PlayerKeys[playerid][pComplexRoomKey];
 					SetSpawnInfo(playerid, 0, 
-						PlayerInfo[playerid][pChar], 
+						PlayerAppearance[playerid][pSkin], 
 						ComplexRoomInfo[complex][cExitX], 
 						ComplexRoomInfo[complex][cExitY], 
 						ComplexRoomInfo[complex][cExitZ], 
@@ -857,24 +853,24 @@ stock SetPlayerSpawnInfo(playerid)
 				}
 				else
 				{
-					SetSpawnInfo(playerid, 0, PlayerInfo[playerid][pChar], SPAWN_X, SPAWN_Y, SPAWN_Z, 0, 0, 0, 0, 0, 0, 0);
+					SetSpawnInfo(playerid, 0, PlayerAppearance[playerid][pSkin], SPAWN_X, SPAWN_Y, SPAWN_Z, 0, 0, 0, 0, 0, 0, 0);
 					Streamer_UpdateEx(playerid, SPAWN_X, SPAWN_Y, SPAWN_Z);
 				}
 			}
 			
 			case 4:
 			{
-				SetSpawnInfo(playerid, 0, PlayerInfo[playerid][pChar], 738.8747,-1415.2773,13.5168, 0, 0, 0, 0, 0, 0, 0);
+				SetSpawnInfo(playerid, 0, PlayerAppearance[playerid][pSkin], 738.8747,-1415.2773,13.5168, 0, 0, 0, 0, 0, 0, 0);
 				Streamer_UpdateEx(playerid, 738.8747,-1415.2773,13.5168);
 			}
 			case 5:
 			{
-				SetSpawnInfo(playerid, 0, PlayerInfo[playerid][pChar], 2139.9543,-2167.1189,13.5469, 0, 0, 0, 0, 0, 0, 0);
+				SetSpawnInfo(playerid, 0, PlayerAppearance[playerid][pSkin], 2139.9543,-2167.1189,13.5469, 0, 0, 0, 0, 0, 0, 0);
 				Streamer_UpdateEx(playerid, 2139.9543,-2167.1189,13.5469);
 			}
 			default:
 			{
-				SetSpawnInfo(playerid, 0, PlayerInfo[playerid][pChar], SPAWN_X, SPAWN_Y, SPAWN_Z, 0, 0, 0, 0, 0, 0, 0);
+				SetSpawnInfo(playerid, 0, PlayerAppearance[playerid][pSkin], SPAWN_X, SPAWN_Y, SPAWN_Z, 0, 0, 0, 0, 0, 0, 0);
 				Streamer_UpdateEx(playerid, SPAWN_X, SPAWN_Y, SPAWN_Z);
 			}
 		}

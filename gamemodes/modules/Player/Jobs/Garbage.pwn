@@ -514,7 +514,7 @@ CMD:garbage(playerid, params[])
 			pTakedWC[playerid] = false;
 			gStartedWork[playerid] = false;
 			gHasGarbage[playerid] = false;
-			SetPlayerSkin(playerid, PlayerInfo[playerid][pChar]);
+			SetPlayerSkin(playerid, PlayerAppearance[playerid][pSkin]);
 			DestroyPlayerObject(playerid, tObject[playerid]);
 			tObject[playerid] = INVALID_OBJECT_ID;
 			DisablePlayerCheckpoint(playerid);

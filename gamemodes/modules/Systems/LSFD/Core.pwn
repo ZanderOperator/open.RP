@@ -284,7 +284,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                     PlayerPlaySound(playerid, 1057, 0.0, 0.0, 0.0);
                     SetPlayerArmour(playerid, 0.0);
                     SetPlayerHealth(playerid, 99.9);
-                    SetPlayerSkin(playerid, PlayerInfo[playerid][pChar]);
+                    SetPlayerSkin(playerid, PlayerAppearance[playerid][pSkin]);
                     PlayerInfo[playerid][pLawDuty] = 0;
 
                     SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "Sada ste van  duznosti i ne mozete koristit FD komande.");
@@ -344,7 +344,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                 }
                 case 4:
                 {
-                    SetPlayerSkin(playerid, PlayerInfo[playerid][pChar]);
+                    SetPlayerSkin(playerid, PlayerAppearance[playerid][pSkin]);
                 }
             }
             return 1;
@@ -391,7 +391,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                     PlayerPlaySound(playerid, 1057, 0.0, 0.0, 0.0);
                     SetPlayerArmour(playerid, 0.0);
                     SetPlayerHealth(playerid, 99.9);
-                    SetPlayerSkin(playerid, PlayerInfo[playerid][pChar]);
+                    SetPlayerSkin(playerid, PlayerAppearance[playerid][pSkin]);
                     PlayerInfo[playerid][pLawDuty] = 0;
 
                     SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "Sada ste van  duznosti i ne mozete koristit FD komande.");
@@ -424,7 +424,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                 case 2:
                     ShowPlayerDialog(playerid, DIALOG_FD_EQUIP_RADNICI, DIALOG_STYLE_LIST, "LSFD Equipment", "Radnik 1\nRadnik 2", "Choose", "Exit");
                 case 3:
-                    SetPlayerSkin(playerid, PlayerInfo[playerid][pChar]);
+                    SetPlayerSkin(playerid, PlayerAppearance[playerid][pSkin]);
             }
             return 1;
         }
@@ -440,9 +440,9 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 
             if (0 <= listitem <= 4)
             {
-                PlayerInfo[playerid][pSkin] = skins_array[listitem];
+                PlayerAppearance[playerid][pTmpSkin] = skins_array[listitem];
             }
-            SetPlayerSkin(playerid, PlayerInfo[playerid][pSkin]);
+            SetPlayerSkin(playerid, PlayerAppearance[playerid][pTmpSkin]);
 
             PlayerPlaySound(playerid, 1057, 0.0, 0.0, 0.0);
             ShowPlayerDialog(playerid, DIALOG_FD_EQUIP, DIALOG_STYLE_LIST, "LSFD Equipment", "Duty\nSkin\nDodaci\nHeal", "Choose", "Abort");
@@ -458,11 +458,11 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 
             switch (listitem)
             {
-                case 0: PlayerInfo[playerid][pSkin] = 278;
-                case 1: PlayerInfo[playerid][pSkin] = 277;
-                case 2: PlayerInfo[playerid][pSkin] = 279;
+                case 0: PlayerAppearance[playerid][pTmpSkin] = 278;
+                case 1: PlayerAppearance[playerid][pTmpSkin] = 277;
+                case 2: PlayerAppearance[playerid][pTmpSkin] = 279;
             }
-            SetPlayerSkin(playerid, PlayerInfo[playerid][pSkin]);
+            SetPlayerSkin(playerid, PlayerAppearance[playerid][pTmpSkin]);
             PlayerPlaySound(playerid, 1057, 0.0, 0.0, 0.0);
             ShowPlayerDialog(playerid, DIALOG_FD_EQUIP, DIALOG_STYLE_LIST, "LSFD Equipment", "Duty\nSkin\nDodaci\nHeal", "Choose", "Abort");
             return 1;
@@ -647,7 +647,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                     PlayerPlaySound(playerid, 1057, 0.0, 0.0, 0.0);
                     SetPlayerArmour(playerid, 0.0);
                     SetPlayerHealth(playerid, 99.9);
-                    SetPlayerSkin(playerid, PlayerInfo[playerid][pChar]);
+                    SetPlayerSkin(playerid, PlayerAppearance[playerid][pSkin]);
                     PlayerInfo[playerid][pLawDuty] = 0;
                     format(PlayerInfo[playerid][pCallsign], 128, "");
 

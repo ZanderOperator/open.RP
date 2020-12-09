@@ -223,7 +223,6 @@ new
 	PlayerExName[ MAX_PLAYERS ][ MAX_PLAYER_NAME ],
 	VehicleEquipment[ MAX_PLAYERS ],
 	VehicleTrunk[ MAX_PLAYERS ],
-	WalkStyle[MAX_PLAYERS],
 	bool:BoomBoxPlanted[ MAX_PLAYERS ],
 	BoomBoxObject[ MAX_PLAYERS ],
 	PlayerAction[MAX_PLAYERS],
@@ -748,8 +747,6 @@ ResetPlayerVariables(playerid)
 	PlayerInfo[playerid][pEmail][0] 		= EOS;
 
 	PlayerInfo[playerid][pSecQuestAnswer][0]= EOS;
-	PlayerInfo[playerid][pAccent][0]		= EOS;
-	PlayerInfo[playerid][pLook][0]			= EOS;
 	PlayerInfo[playerid][pLastUpdateVer] 	= EOS;
 
 	PlayerInfo[playerid][pSQLID] 			= 0; 	//Integer
@@ -779,11 +776,11 @@ ResetPlayerVariables(playerid)
 	PlayerInfo[playerid][pLawDuty]          = 0;
 	
 
-	PlayerInfo[playerid][pSkin]				= 0;
 	PlayerMobile[playerid][pCryptoNumber]		= 0;
 	PlayerMobile[playerid][pMobileNumber]		= 0;
 	PlayerMobile[playerid][pMobileModel]		= 0;
 	PlayerMobile[playerid][pMobileCost] 		= 0;
+
 	PlayerDeath[playerid][pKilled]			= 0;
 	PlayerDeath[playerid][pDeathInt] 		= 0;
 	PlayerDeath[playerid][pDeathVW] 			= 0;
@@ -801,7 +798,6 @@ ResetPlayerVariables(playerid)
 
 	PlayerInfo[playerid][pToolkit]			= 0;
 	PlayerInfo[playerid][pParts]			= 0;
-	PlayerInfo[playerid][pChar]				= 0;
 	PlayerInfo[playerid][pBoomBox] 			= 0;
 
 	PlayerInfo[playerid][pCasinoCool]		= 0;
@@ -1406,7 +1402,6 @@ hook OnPlayerConnect(playerid)
 #include <YSI_Coding\y_hooks>
 hook OnPlayerDisconnect(playerid, reason)
 {
-	WalkStyle[playerid] = 0;
 	entering[playerid] = 0;
 	onexit[playerid] = 0;
 	if(IsPlayerLogging(playerid))
@@ -1634,7 +1629,7 @@ hook OnPlayerSpawn(playerid)
 		SafeSpawning[ playerid ] = true;
 		Bit1_Set( gr_FristSpawn, playerid, false );
 	}
-	SetPlayerSkin(playerid, PlayerInfo[playerid][pChar]);
+	SetPlayerSkin(playerid, PlayerAppearance[playerid][pSkin]);
 
     if(IsANewUser(playerid))
 	{
@@ -1949,11 +1944,11 @@ hook OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
 		  	ProxDetector(15.0, playerid, tmpString, COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE);
 		}
 	}
-	if(WalkStyle[playerid])
+	if(PlayerAppearance[playerid][pWalkStyle])
 	{
 		if(((newkeys & KEY_UP) && (newkeys & KEY_WALK)) || ((newkeys & KEY_DOWN) && (newkeys & KEY_WALK) || ((newkeys & KEY_WALK) && (newkeys & KEY_LEFT)) || ((newkeys & KEY_WALK) && (newkeys & KEY_RIGHT))))
   		{
-   		    switch(WalkStyle[playerid])
+   		    switch(PlayerAppearance[playerid][pWalkStyle])
 			{
 			    case 1:
 			        ApplyAnimationEx(playerid,"PED","WALK_gang1",4.1,1,1,1,1,1,1,0);
