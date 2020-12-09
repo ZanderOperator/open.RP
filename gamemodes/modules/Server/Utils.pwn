@@ -137,7 +137,7 @@ stock GetName(playerid, bool:replace=true)
 	
 	if( replace ) {
 		if (Player_UsingMask(playerid))
-			format(name, sizeof(name), "Maska_%d", PlayerInfo[ playerid ][ pMaskID ] );
+			format(name, sizeof(name), "Maska_%d", PlayerInventory[playerid][pMaskID] );
 		else 
 			strreplace(name, '_', ' ');
 	}

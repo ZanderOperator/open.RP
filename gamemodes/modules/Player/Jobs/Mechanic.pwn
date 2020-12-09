@@ -122,7 +122,7 @@ timer MechCountForPlayer[1000](playerid, giveplayerid, service)
 		{
 			case 1: 
 			{
-			    if(PlayerInfo[ giveplayerid ][ pParts ] < 3) 
+			    if(PlayerInventory[giveplayerid][pParts] < 3) 
 				{
 					SendErrorMessage(playerid, "Mehanicar nema dovoljno djelova!");
 					SendErrorMessage(giveplayerid, "Nemate dovoljno djelova!");
@@ -153,11 +153,11 @@ timer MechCountForPlayer[1000](playerid, giveplayerid, service)
 					ShowNosCap(playerid);
 				}
 
-				PlayerInfo[ giveplayerid ][ pParts ] -= 3;
+				PlayerInventory[giveplayerid][pParts] -= 3;
 			}
 			case 2: 
 			{
-			    if(PlayerInfo[ giveplayerid ][ pParts ] < 3)
+			    if(PlayerInventory[giveplayerid][pParts] < 3)
 				{
 					SendErrorMessage(playerid, "Mehanicar nema dovoljno djelova!");
 					SendErrorMessage(giveplayerid, "Nemate dovoljno djelova!");
@@ -176,11 +176,11 @@ timer MechCountForPlayer[1000](playerid, giveplayerid, service)
 				SendClientMessage(playerid, COLOR_RED, bodyString);
 				GameTextForPlayer( giveplayerid, "~g~Popravljen bodykit!", 1000, 1 );
 
-				PlayerInfo[ giveplayerid ][ pParts ] -= 3;
+				PlayerInventory[giveplayerid][pParts] -= 3;
 			}
 			case 3: 
 			{
-			    if(PlayerInfo[ giveplayerid ][ pParts ] < 5)
+			    if(PlayerInventory[giveplayerid][pParts] < 5)
 				{
 					SendErrorMessage(playerid, "Mehanicar nema dovoljno djelova!");
 					SendErrorMessage(giveplayerid, "Nemate dovoljno djelova!");
@@ -197,7 +197,7 @@ timer MechCountForPlayer[1000](playerid, giveplayerid, service)
 				if( --VehicleInfo[ GetPlayerVehicleID(playerid) ][ vDestroys ] < 2 )
 					VehicleInfo[ GetPlayerVehicleID(playerid) ][ vDestroys ] = 0;
 
-				PlayerInfo[ giveplayerid ][ pParts ] -= 5;
+				PlayerInventory[giveplayerid][pParts] -= 5;
 
 				mysql_fquery(g_SQL, "UPDATE cocars SET destroys = '%d' WHERE id = '%d'",
 					VehicleInfo[ GetPlayerVehicleID(playerid) ][ vDestroys ],
@@ -206,7 +206,7 @@ timer MechCountForPlayer[1000](playerid, giveplayerid, service)
 			}
 			case 4:
 			{
-			    if(PlayerInfo[ giveplayerid ][ pParts ] < 2)
+			    if(PlayerInventory[giveplayerid][pParts] < 2)
 				{
 					SendErrorMessage(playerid, "Mehanicar nema dovoljno djelova!");
 					SendErrorMessage(giveplayerid, "Nemate dovoljno djelova!");
@@ -222,7 +222,7 @@ timer MechCountForPlayer[1000](playerid, giveplayerid, service)
 				SendClientMessage(playerid, COLOR_RED, stereoString);
 				GameTextForPlayer( giveplayerid, "~g~Ugradili ste stereo!", 1000, 1 );
 
-				PlayerInfo[ giveplayerid ][ pParts ] -= 2;
+				PlayerInventory[giveplayerid][pParts] -= 2;
 
 				mysql_fquery(g_SQL, "UPDATE cocars SET stereo = '%d' WHERE id = '%d'",
 					VehicleInfo[GetPlayerVehicleID(playerid)][vStereo],
@@ -231,7 +231,7 @@ timer MechCountForPlayer[1000](playerid, giveplayerid, service)
 			}
 			case 6: 
 			{
-			    if(PlayerInfo[ giveplayerid ][ pParts ] < 4000)
+			    if(PlayerInventory[giveplayerid][pParts] < 4000)
 				{
 					SendErrorMessage(playerid, "Mehanicar nema dovoljno djelova!");
 					SendErrorMessage(giveplayerid, "Nemate dovoljno djelova!");
@@ -255,7 +255,7 @@ timer MechCountForPlayer[1000](playerid, giveplayerid, service)
 				GameTextForPlayer( giveplayerid, "~g~Blindirali ste gume vozila!", 1000, 1 );
 
 
-				PlayerInfo[ giveplayerid ][ pParts ] -= 4000;
+				PlayerInventory[giveplayerid][pParts] -= 4000;
 
 				mysql_fquery(g_SQL, "UPDATE cocars SET tirearmor = '%d' WHERE id = '%d'",
 					VehicleInfo[GetPlayerVehicleID(playerid)][vTireArmor],
@@ -264,7 +264,7 @@ timer MechCountForPlayer[1000](playerid, giveplayerid, service)
 			}
 			case 7: 
 			{
-			    if(PlayerInfo[ giveplayerid ][ pParts ] < 7000)
+			    if(PlayerInventory[giveplayerid][pParts] < 7000)
 				{
 					SendErrorMessage(playerid, "Mehanicar nema dovoljno djelova!");
 					SendErrorMessage(giveplayerid, "Nemate dovoljno djelova!");
@@ -282,7 +282,7 @@ timer MechCountForPlayer[1000](playerid, giveplayerid, service)
 				SendClientMessage(playerid, COLOR_RED, bodyaString);
 				GameTextForPlayer( giveplayerid, "~g~Blindirali ste karoseriju vozila!", 1000, 1 );
 
-				PlayerInfo[ giveplayerid ][ pParts ] -= 7000;
+				PlayerInventory[giveplayerid][pParts] -= 7000;
 
 				mysql_fquery(g_SQL, "UPDATE cocars SET bodyarmor = '%d' WHERE id = '%d'",
 					VehicleInfo[GetPlayerVehicleID(playerid)][vBodyArmor],
@@ -291,7 +291,7 @@ timer MechCountForPlayer[1000](playerid, giveplayerid, service)
 			}
 			case 8: 
 			{
-			    if(PlayerInfo[ giveplayerid ][ pParts ] < 5)
+			    if(PlayerInventory[giveplayerid][pParts] < 5)
 				{
 					SendErrorMessage(playerid, "Mehanicar nema dovoljno djelova!");
 					SendErrorMessage(giveplayerid, "Nemate dovoljno djelova!");
@@ -306,7 +306,7 @@ timer MechCountForPlayer[1000](playerid, giveplayerid, service)
 				SendClientMessage(playerid, COLOR_RED, bodyaString);
 				GameTextForPlayer( giveplayerid, "~g~GPS online!", 1000, 1 );
 
-				PlayerInfo[ giveplayerid ][ pParts ] -= 5;
+				PlayerInventory[giveplayerid][pParts] -= 5;
 			}
 		}
 		return 1;
@@ -459,7 +459,7 @@ CMD:armorcar(playerid, params[]) {
 	}
 	if(strcmp(item,"tires",true) == 0) {
 		if(sscanf(params, "s[12]ui", item, playa, price)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /armorcar tires [ID igraca][Cijena nadogradnje]");
-	    if(PlayerInfo[playerid][pParts] < 4000) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Za blindiranje guma potrebno je najmanje 4000 mehanicarskih dijelova kod sebe ili tow trucku!");
+	    if(PlayerInventory[playerid][pParts] < 4000) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Za blindiranje guma potrebno je najmanje 4000 mehanicarskih dijelova kod sebe ili tow trucku!");
 		if(playa == INVALID_PLAYER_ID) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Igrac nije na serveru!");
 		if( PlayerInfo[ playa ][ pLevel ] < 2 ) return SendClientMessage( playerid, COLOR_RED, "Igrac mora biti veci od level 1!");
    		if(price > 70000 || price < 10) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Krivi unos cijene! (10$-70.000$)");
@@ -481,7 +481,7 @@ CMD:armorcar(playerid, params[]) {
 	}
 	else if(strcmp(item,"body",true) == 0) {
 		if(sscanf(params, "s[12]ui", item, playa, price)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /armorcar body [ID igraca][Cijena nadogradnje]");
-	    if(PlayerInfo[playerid][pParts] < 7000) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Za blindiranje karoserije potrebno je najmanje 7000 mehanicarskih dijelova kod sebe ili tow trucku!");
+	    if(PlayerInventory[playerid][pParts] < 7000) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Za blindiranje karoserije potrebno je najmanje 7000 mehanicarskih dijelova kod sebe ili tow trucku!");
 		if(playa == INVALID_PLAYER_ID) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Igrac nije na serveru!");
 		if( PlayerInfo[ playa ][ pLevel ] < 2 ) return SendClientMessage( playerid, COLOR_RED, "Igrac mora biti veci od level 1!");
    		if(price > 100000 || price < 10) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Krivi unos cijene! (10$-100.000$)");
@@ -521,7 +521,7 @@ CMD:repair(playerid, params[])
 	}
 	if(strcmp(item,"engine",true) == 0) {
 	    if(sscanf(params, "s[12]ui", item, playa, price)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /repair engine [ID igraca][Cijena popravka]");
-	    if(PlayerInfo[playerid][pParts] < 3) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Za popravak motora potrebno je najmanje 3 mehanicarska dijela kod sebe!");
+	    if(PlayerInventory[playerid][pParts] < 3) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Za popravak motora potrebno je najmanje 3 mehanicarska dijela kod sebe!");
 		if(playa == INVALID_PLAYER_ID) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Igrac nije na serveru!");
 		if( PlayerInfo[ playa ][ pLevel ] < 2 ) return SendClientMessage( playerid, COLOR_RED, "Igrac mora biti veci od level 1!");
    		if(price > 250 || price < 10) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Krivi unos cijene! (10$-250$)");
@@ -551,7 +551,7 @@ CMD:repair(playerid, params[])
     else if(strcmp(item,"bodykit",true) == 0)
 	{
         if(sscanf(params, "s[12]ui", item, playa, price)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /repair bodykit [ID igraca][Cijena bodikita]");
-	    if(PlayerInfo[playerid][pParts] < 3) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Za popravak motora potrebno je najmanje 3 mehanicarska dijela kod sebe!");
+	    if(PlayerInventory[playerid][pParts] < 3) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Za popravak motora potrebno je najmanje 3 mehanicarska dijela kod sebe!");
    		if(playa == INVALID_PLAYER_ID) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Igrac nije na serveru!");
    		if( PlayerInfo[ playa ][ pLevel ] < 2 ) return SendClientMessage( playerid, COLOR_RED, "Igrac mora biti veci od level 1!");
 		if(price > 250 || price < 10) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Krivi unos cijene! (10$-250$)");
@@ -579,7 +579,7 @@ CMD:repair(playerid, params[])
 	{
         if( PlayerJob[playerid][pContractTime] < 100 ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate dovoljno iskustva!");
         if( sscanf(params, "s[12]ui", item, playa, price)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /repair destroys [ID igraca][Cijena skidanja]");
-	    if(PlayerInfo[playerid][pParts] < 3) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Za popravak motora potrebno je najmanje 3 mehanicarska dijela kod sebe!");
+	    if(PlayerInventory[playerid][pParts] < 3) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Za popravak motora potrebno je najmanje 3 mehanicarska dijela kod sebe!");
    		if( playa == INVALID_PLAYER_ID ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Igrac nije na serveru!");
 		if( Bit1_Get( gr_HaveOffer, playa, false)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Igracu je vec ponudjena mehanicarska usluga.");
 		if( PlayerInfo[ playa ][ pLevel ] < 2 ) return SendClientMessage( playerid, COLOR_RED, "Igrac mora biti veci od level 1!");
@@ -609,7 +609,7 @@ CMD:repair(playerid, params[])
 	 else if(strcmp(item,"gps",true) == 0)
 	{
         if( sscanf(params, "s[12]ui", item, playa, price)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /repair gps [ID igraca][Cijena popravka]");
-	    if(PlayerInfo[playerid][pParts] < 3) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Za popravak motora potrebno je najmanje 3 mehanicarska dijela kod sebe!");
+	    if(PlayerInventory[playerid][pParts] < 3) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Za popravak motora potrebno je najmanje 3 mehanicarska dijela kod sebe!");
    		if( playa == INVALID_PLAYER_ID ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Igrac nije na serveru!");
 		if( Bit1_Get( gr_HaveOffer, playa, false)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Igracu je vec ponudjena mehanicarska usluga.");
 		if( PlayerInfo[ playa ][ pLevel ] < 2 ) return SendClientMessage( playerid, COLOR_RED, "Igrac mora biti veci od level 1!");
@@ -666,7 +666,7 @@ CMD:parts(playerid, params[])
 		SendMessage(playerid, MESSAGE_TYPE_INFO, "Koristi /parts check da vidis koliko imas djelova kod sebe");
 		
 		PlayerToBudgetMoney(playerid, price); // novac ide u proracun
-		PlayerInfo[playerid][pParts] += ammount;
+		PlayerInventory[playerid][pParts] += ammount;
 	}
 	else if(strcmp(item,"give",true) == 0)
 	{
@@ -677,7 +677,7 @@ CMD:parts(playerid, params[])
 			giveplayerid;
 	    if(sscanf(params, "s[16]ui", item, giveplayerid, ammount)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /parts give [ID/Ime] [kolicina]");
         if( !ProxDetectorS(5.0, playerid, giveplayerid) ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nisi dovoljno blizu tog igraca!");
-	    if( ammount < 1 || ammount > PlayerInfo[playerid][pParts] ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate toliko mehanicarskih dijelova kod sebe !");
+	    if( ammount < 1 || ammount > PlayerInventory[playerid][pParts] ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate toliko mehanicarskih dijelova kod sebe !");
 		if( giveplayerid == INVALID_PLAYER_ID ) return SendClientMessage( playerid, COLOR_RED, "Igrac nije online!");
 
 		va_SendClientMessage(playerid, COLOR_RED, "[ ! ] Dali ste %s %d mehanicarskih djelova.",
@@ -698,8 +698,8 @@ CMD:parts(playerid, params[])
 		);
         SetPlayerChatBubble(playerid, tmpString, COLOR_PURPLE, 20, 5000);
 
-		PlayerInfo[giveplayerid][pParts] += ammount;
-		PlayerInfo[playerid][pParts] -= ammount;
+		PlayerInventory[giveplayerid][pParts] += ammount;
+		PlayerInventory[playerid][pParts] -= ammount;
 	}
 	else if(strcmp(item,"put",true) == 0)
 	{
@@ -711,11 +711,11 @@ CMD:parts(playerid, params[])
 		if(!IsPlayerInAnyVehicle(playerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste u vozilu !");
 	    if(GetVehicleModel(vehicleid) != 525) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste u towtrucku !");
 	    if(sscanf(params, "s[16]i", item, ammount)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /parts put [kolicina]");
-	    if(ammount < 1 || ammount > PlayerInfo[playerid][pParts]) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate toliko mehanicarskih dijelova kod sebe !");
+	    if(ammount < 1 || ammount > PlayerInventory[playerid][pParts]) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate toliko mehanicarskih dijelova kod sebe !");
 		va_GameTextForPlayer( playerid, "~g~+%d dijelova u trucku", 1500, 1, ammount );
 
 		VehicleInfo[vehicleid][vParts] += ammount;
-		PlayerInfo[playerid][pParts] -= ammount;
+		PlayerInventory[playerid][pParts] -= ammount;
 	}
 	else if(strcmp(item,"take",true) == 0)
 	{
@@ -738,14 +738,14 @@ CMD:parts(playerid, params[])
 		);
 
 		VehicleInfo[vehicleid][vParts] 	-= ammount;
-		PlayerInfo[playerid][pParts] 	+= ammount;
+		PlayerInventory[playerid][pParts] 	+= ammount;
 	}
 	else if(strcmp(item,"check",true) == 0)
 	{
 		if( PlayerJob[playerid][pJob] != MECHANIC_ID ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nisi mehanicar!");
 		SendClientMessage(playerid, COLOR_RED, "[ ! ] Mehanicarski djelovi **");
 		SendFormatMessage(playerid, MESSAGE_TYPE_INFO, "Imate %d mehanicarskih djelova kod sebe.",
-			PlayerInfo[playerid][pParts]
+			PlayerInventory[playerid][pParts]
 		);
 	}
 	return 1;

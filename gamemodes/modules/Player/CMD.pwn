@@ -100,7 +100,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 
 CMD:time(playerid, params[])
 {
-    if(!PlayerInfo[playerid][pClock])
+    if(!PlayerInventory[playerid][pWatch])
 		SendMessage(playerid,  MESSAGE_TYPE_ERROR, "You don't have a watch!");
 		
 	new mtext[20],year, month,day,
@@ -149,7 +149,7 @@ CMD:time(playerid, params[])
 // TODO: should be a part of mask module
 CMD:mask(playerid, params[])
 {
-	if( PlayerInfo[ playerid ][ pMaskID ] == -1 || PlayerInfo[ playerid ][ pMaskID ] == 0 )
+	if( PlayerInventory[playerid][pMaskID] == -1 || PlayerInventory[playerid][pMaskID] == 0 )
 		return SendClientMessage( playerid, COLOR_RED, "[GRESKA]: Ne posjedujes masku!" );
 
 	new buffer[80];
@@ -168,20 +168,20 @@ CMD:mask(playerid, params[])
 		GameTextForPlayer(playerid, "~b~STAVILI STE MASKU", 5000, 4);
 
 		#if defined MODULE_LOGS
-		if(PlayerInfo[ playerid ][ pMaskID ] == 0) 
+		if(PlayerInventory[playerid][pMaskID] == 0) 
 		{
 			Log_Write("/logfiles/masks.txt", "(%s) %s(%s), Mask ID: %d.",
 				ReturnDate(),
 				GetName(playerid, false),
 				ReturnPlayerIP(playerid),
-				PlayerInfo[ playerid ][ pMaskID ]
+				PlayerInventory[playerid][pMaskID]
 			);
 		}
 		#endif
 
 		new
 			maskName[24];
-		format(maskName, sizeof(maskName), "Maska_%d", PlayerInfo[playerid][pMaskID]);
+		format(maskName, sizeof(maskName), "Maska_%d", PlayerInventory[playerid][pMaskID]);
 		if(IsValidDynamic3DTextLabel(NameText[playerid]))
 		{
 			DestroyDynamic3DTextLabel(NameText[playerid]);
@@ -892,8 +892,8 @@ CMD:frisk(playerid, params[])
 	
 	va_SendClientMessage(playerid, COLOR_LIGHTBLUE, "*_________________________ %s _________________________*", GetName( giveplayerid, true ));
 	va_SendClientMessage(playerid, COLOR_WHITE, "	Novac: %d$", PlayerInfo[giveplayerid][pMoney]);
-	va_SendClientMessage(playerid, COLOR_WHITE, "	Toolkit: %s", PlayerInfo[giveplayerid][pToolkit] ? ("Da") : ("Ne"));
-	va_SendClientMessage(playerid, COLOR_WHITE, "	Sat: %s", PlayerInfo[giveplayerid][pClock] ? ("Da") : ("Ne"));
+	va_SendClientMessage(playerid, COLOR_WHITE, "	Toolkit: %s", PlayerInventory[giveplayerid][pToolkit] ? ("Da") : ("Ne"));
+	va_SendClientMessage(playerid, COLOR_WHITE, "	Sat: %s", PlayerInventory[giveplayerid][pWatch] ? ("Da") : ("Ne"));
 	va_SendClientMessage(playerid, COLOR_WHITE, "	Mobitel: %s", GetMobileName(PlayerMobile[giveplayerid][pMobileModel]));
 	SendClientMessage(playerid, COLOR_LIGHTBLUE, "*_________________________ ORUZJA _________________________*");
 	foreach(new slot: P_Weapons[giveplayerid])
@@ -1161,9 +1161,12 @@ CMD:accept(playerid, params[])
 		PlayerToPlayerMoneyTAX(playerid, repairman, price, false);
 		PaydayInfo[repairman][pPayDayMoney] += price; 
 		
-	    switch(Bit4_Get( gr_TipUsluge, playerid)) {
-			case 1: {
-                if( PlayerInfo[repairman][pParts] < 3) return SendErrorMessage(playerid, "Mehanicar nema dovoljno mehanicarskih djelova.");
+	    switch(Bit4_Get( gr_TipUsluge, playerid)) 
+		{
+			case 1: 
+			{
+                if( PlayerInventory[repairman][pParts] < 3) 
+					return SendErrorMessage(playerid, "Mehanicar nema dovoljno mehanicarskih djelova.");
 
 				CreateMechanicTextDraw(playerid);
 				CreateMechanicTextDraw(repairman);
@@ -1183,8 +1186,10 @@ CMD:accept(playerid, params[])
 				Bit16_Set( gr_IdMehanicara, 		playerid, 	999 );
 				Repairing[repairman] = (true);
 			}
-			case 2: {
-				if( PlayerInfo[repairman][pParts] < 3) return SendErrorMessage(playerid, "Mehanicar nema dovoljno mehanicarskih djelova.");
+			case 2: 
+			{
+				if( PlayerInventory[repairman][pParts] < 3)
+					return SendErrorMessage(playerid, "Mehanicar nema dovoljno mehanicarskih djelova.");
 
 				CreateMechanicTextDraw(playerid);
 				CreateMechanicTextDraw(repairman);
@@ -1204,8 +1209,10 @@ CMD:accept(playerid, params[])
 				Bit16_Set( gr_IdMehanicara, 	playerid, 	999 );
 				Repairing[repairman] = (true);
 			}
-			case 3: {
-                if( PlayerInfo[repairman][pParts] < 3) return SendErrorMessage(playerid, "Mehanicar nema dovoljno mehanicarskih djelova.");
+			case 3: 
+			{
+                if( PlayerInventory[repairman][pParts] < 3) 
+					return SendErrorMessage(playerid, "Mehanicar nema dovoljno mehanicarskih djelova.");
 
 				CreateMechanicTextDraw(playerid);
 				CreateMechanicTextDraw(repairman);
@@ -1225,8 +1232,10 @@ CMD:accept(playerid, params[])
 				Bit16_Set( gr_IdMehanicara, 	playerid, 	999 );
 				Repairing[repairman] = (true);
 			}
-			case 4: {
-                if( PlayerInfo[repairman][pParts] < 3) return SendErrorMessage(playerid, "Mehanicar nema dovoljno mehanicarskih djelova.");
+			case 4: 
+			{
+                if( PlayerInventory[repairman][pParts] < 3) 
+					return SendErrorMessage(playerid, "Mehanicar nema dovoljno mehanicarskih djelova.");
 
 				CreateMechanicTextDraw(playerid);
 				CreateMechanicTextDraw(repairman);
@@ -1246,8 +1255,11 @@ CMD:accept(playerid, params[])
 				Bit16_Set( gr_IdMehanicara, 	playerid, 	999 );
 				Repairing[repairman] = (true);
 			}
-			case 6: {
-                if( PlayerInfo[repairman][pParts] < 2000) return SendErrorMessage(playerid, "Mehanicar nema dovoljno mehanicarskih djelova.");
+			case 6: 
+			{
+                if( PlayerInventory[repairman][pParts] < 2000) 
+					return SendErrorMessage(playerid, "Mehanicar nema dovoljno mehanicarskih djelova.");
+				
 				CreateMechanicTextDraw(playerid);
 				CreateMechanicTextDraw(repairman);
 
@@ -1266,8 +1278,11 @@ CMD:accept(playerid, params[])
 				Bit16_Set( gr_IdMehanicara, 		playerid, 	999 );
 				Repairing[repairman] = (true);
 			}
-			case 7: {
-                if( PlayerInfo[repairman][pParts] < 3500) return SendErrorMessage(playerid, "Mehanicar nema dovoljno mehanicarskih djelova.");
+			case 7: 
+			{
+                if( PlayerInventory[repairman][pParts] < 3500) 
+					return SendErrorMessage(playerid, "Mehanicar nema dovoljno mehanicarskih djelova.");
+				
 				CreateMechanicTextDraw(playerid);
 				CreateMechanicTextDraw(repairman);
 
@@ -1286,8 +1301,10 @@ CMD:accept(playerid, params[])
 				Bit16_Set( gr_IdMehanicara, 		playerid, 	999 );
 				Repairing[repairman] = (true);
 			}
-			case 8: {
-                if( PlayerInfo[repairman][pParts] < 5) return SendErrorMessage(playerid, "Mehanicar nema dovoljno mehanicarskih djelova.");
+			case 8: 
+			{
+                if( PlayerInventory[repairman][pParts] < 5) 
+					return SendErrorMessage(playerid, "Mehanicar nema dovoljno mehanicarskih djelova.");
 
 				CreateMechanicTextDraw(playerid);
 				CreateMechanicTextDraw(repairman);
@@ -1866,11 +1883,11 @@ CMD:give(playerid, params[])
      			if(ProxDetectorS(3.0, playerid, giveplayerid))
 	            {
 			    	if(giveplayerid == playerid) return SendClientMessage(playerid, COLOR_RED, "Ne mozete sami sebi davati cigarete!");
-	    			if((PlayerInfo[giveplayerid][pCiggaretes] + moneys) > 100) return SendClientMessage(playerid, COLOR_RED, "Osoba moze najvise nositi 100 cigareta kod sebe");
-	    			if(moneys > 0 && PlayerInfo[playerid][pCiggaretes] >= moneys)
+	    			if((PlayerInventory[giveplayerid][pCiggaretes] + moneys) > 100) return SendClientMessage(playerid, COLOR_RED, "Osoba moze najvise nositi 100 cigareta kod sebe");
+	    			if(moneys > 0 && PlayerInventory[playerid][pCiggaretes] >= moneys)
 					{
-	    			    PlayerInfo[giveplayerid][pCiggaretes] += moneys;
-   	    				PlayerInfo[playerid][pCiggaretes] -= moneys;
+	    			    PlayerInventory[giveplayerid][pCiggaretes] += moneys;
+   	    				PlayerInventory[playerid][pCiggaretes] -= moneys;
 				        PlayerPlaySound(giveplayerid, 1052, 0.0, 0.0, 0.0);
 				        format(globalstring, sizeof(globalstring), "Poslali ste %s %d cigareta.", GetName(giveplayerid), moneys);
 			       		SendClientMessage(playerid, COLOR_LIGHTBLUE, globalstring);
@@ -1964,11 +1981,11 @@ CMD:give(playerid, params[])
 		if( giveplayerid == INVALID_PLAYER_ID ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Taj igrac nije online!");
 		if( !ProxDetectorS(3.0, playerid, giveplayerid) ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Taj igrac nije blizu vas!");
 		if( giveplayerid == playerid ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne mozete sami sebi davati upaljac!");
-		if( PlayerInfo[giveplayerid][pLighter] ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Osoba vec ima upaljac");
-		if( !PlayerInfo[playerid][pLighter] ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nemas upaljac!");
+		if( PlayerInventory[giveplayerid][pLighter] ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Osoba vec ima upaljac");
+		if( !PlayerInventory[playerid][pLighter] ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nemas upaljac!");
 		
-		PlayerInfo[playerid][pLighter] = 0;
-		PlayerInfo[giveplayerid][pLighter] = 1;
+		PlayerInventory[playerid][pLighter] = 0;
+		PlayerInventory[giveplayerid][pLighter] = 1;
 		PlayerPlaySound(giveplayerid, 1052, 0.0, 0.0, 0.0);
 		format(globalstring, sizeof(globalstring), "* %s vadi upaljac iz dzepa i daje ga %s.", GetName(playerid), GetName(giveplayerid));
 		ProxDetector(5.0, playerid, globalstring, COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE);
@@ -1982,11 +1999,11 @@ CMD:give(playerid, params[])
 		if( giveplayerid == INVALID_PLAYER_ID ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Taj igrac nije online !");
      	if( !ProxDetectorS(5.0, playerid, giveplayerid) ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Taj igrac nije blizu vas !");
 		if( giveplayerid == playerid ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne mozete sami sebi davati sat!");
-		if( !PlayerInfo[playerid][pClock] ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nemas sat!");
-		if( PlayerInfo[giveplayerid][pClock] ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Osoba vec ima sat!");
+		if( !PlayerInventory[playerid][pWatch] ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nemas sat!");
+		if( PlayerInventory[giveplayerid][pWatch] ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Osoba vec ima sat!");
 	    
-		PlayerInfo[giveplayerid][pClock] = 1;
-	    PlayerInfo[playerid][pClock] = 0;
+		PlayerInventory[giveplayerid][pWatch] = 1;
+	    PlayerInventory[playerid][pWatch] = 0;
 		PlayerPlaySound(giveplayerid, 1052, 0.0, 0.0, 0.0);
 		format(globalstring, sizeof(globalstring), "* %s skida sat s ruke i daje ga %s.", GetName(playerid), GetName(giveplayerid));
 		ProxDetector(5.0, playerid, globalstring, COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE);
@@ -2425,10 +2442,10 @@ CMD:spawnchange(playerid, params[])
 }
 CMD:mycigars(playerid, params[])
 {
-	if(PlayerInfo[playerid][pCiggaretes] == 0) return SendClientMessage(playerid, COLOR_RED, "Nemas cigareta kod sebe.");
+	if(PlayerInventory[playerid][pCiggaretes] == 0) return SendClientMessage(playerid, COLOR_RED, "Nemas cigareta kod sebe.");
 	SendClientMessage(playerid, COLOR_ORANGE, "*_______CIGARS INFO_______*");
-	va_SendClientMessage(playerid, COLOR_GREY,"Cigarete: %d komada",PlayerInfo[playerid][pCiggaretes]);
-	if(!PlayerInfo[playerid][pLighter]) 
+	va_SendClientMessage(playerid, COLOR_GREY,"Cigarete: %d komada",PlayerInventory[playerid][pCiggaretes]);
+	if(!PlayerInventory[playerid][pLighter]) 
 		SendClientMessage(playerid, COLOR_GREY, "Upaljac: Nema");
 	else  
 		SendClientMessage(playerid, COLOR_GREY, "Upaljac: Ima");
@@ -2530,18 +2547,18 @@ CMD:usetoolkit(playerid, params[])
 	new Float:health;
 	new veh = GetPlayerVehicleID(playerid);
     GetVehicleHealth(veh, health);
-	if(PlayerInfo[playerid][pToolkit] != 1) return SendClientMessage(playerid, COLOR_RED, "Nemate toolkit, mozete ga kupiti u 24/7.");
+	if(PlayerInventory[playerid][pToolkit] != 1) return SendClientMessage(playerid, COLOR_RED, "Nemate toolkit, mozete ga kupiti u 24/7.");
 	if(health > 400) return SendClientMessage(playerid, COLOR_RED, "Vasem vozilu nije potreban popravak");
 	
 	AC_SetVehicleHealth(playerid, health+100);
-	PlayerInfo[playerid][pToolkit] = 0;
+	PlayerInventory[playerid][pToolkit] = 0;
 	SendClientMessage(playerid, COLOR_RED, "[ ! ] Popravili ste va�e vozilo za dodatnih 100hp.");
 	return 1;
 }
 CMD:usecigarette(playerid, params[])
 {
-	if( PlayerInfo[playerid][pCiggaretes] < 1 ) return SendClientMessage(playerid, COLOR_RED, "[GRESKA]: Nemate cigareta!");
-	if( !PlayerInfo[playerid][pLighter] ) return SendClientMessage(playerid, COLOR_RED, "[GRESKA]: Nemaš upaljac!");
+	if( PlayerInventory[playerid][pCiggaretes] < 1 ) return SendClientMessage(playerid, COLOR_RED, "[GRESKA]: Nemate cigareta!");
+	if( !PlayerInventory[playerid][pLighter] ) return SendClientMessage(playerid, COLOR_RED, "[GRESKA]: Nemaš upaljac!");
 
 	ApplyAnimationEx(playerid,"SMOKING","M_smk_in",3.0,0,0,0,0,0,1,0);
 	SetPlayerSpecialAction(playerid, 21);
@@ -2557,6 +2574,6 @@ CMD:usecigarette(playerid, params[])
 	ProxDetector(30.0, playerid, tmpString,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE);
 	
 	Bit1_Set( gr_SmokingCiggy, playerid, true );
-	PlayerInfo[playerid][pCiggaretes] -= 1;
+	PlayerInventory[playerid][pCiggaretes] -= 1;
     return 1;
 }

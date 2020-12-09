@@ -781,8 +781,6 @@ ResetPlayerVariables(playerid)
 	PlayerDeath[playerid][pKilled]			= 0;
 	PlayerDeath[playerid][pDeathInt] 		= 0;
 	PlayerDeath[playerid][pDeathVW] 			= 0;
-
-	PlayerInfo[playerid][pMaskID]			= -1;
 	
 	PlayerKeys[playerid][pHouseKey]			= INVALID_HOUSE_ID;
 	PlayerKeys[playerid][pRentKey]			= INVALID_HOUSE_ID;
@@ -793,16 +791,11 @@ ResetPlayerVariables(playerid)
 	PlayerKeys[playerid][pIllegalGarageKey]	= -1;
 	PlayerKeys[playerid][pVehicleKey]		= -1;
 
-	PlayerInfo[playerid][pToolkit]			= 0;
-	PlayerInfo[playerid][pParts]			= 0;
-	PlayerInfo[playerid][pBoomBox] 			= 0;
-
 	PlayerInfo[playerid][pCasinoCool]		= 0;
 	PlayerInfo[playerid][pCanisterLiters] 	= 0;
 	PlayerInfo[playerid][pCanisterType] 	= -1;
 	PlayerInfo[playerid][pGrafID]			= -1;
 	PlayerInfo[playerid][pTagID]			= -1;
-	PlayerInfo[playerid][hRope] 			= 0;
 	PlayerInfo[playerid][pAmmuCool]			= 0;
 
 	PlayerInfo[playerid][pPrimaryWeapon] 	= 0;
@@ -1649,10 +1642,10 @@ hook OnPlayerSpawn(playerid)
 			SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "** You can't use /l chat and /me command. /c, /ame i /do are allowed during RP **");
 
 			Player_SetUsingMask(playerid, false);
-			if( PlayerInfo[ playerid ][ pMaskID ])
+			if( PlayerInventory[playerid][pMaskID])
 			{
 				if( PlayerVIP[playerid][pDonateRank] < 2)
-					PlayerInfo[ playerid ][ pMaskID ] = 0;
+					PlayerInventory[playerid][pMaskID] = 0;
 			}
 
 			TogglePlayerControllable(playerid, 0);
@@ -1673,10 +1666,10 @@ hook OnPlayerSpawn(playerid)
 			SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "** You can't use /l chat and /me command. /c, /ame i /do are allowed during RP **");
 
 			Player_SetUsingMask(playerid, false);
-			if( PlayerInfo[ playerid ][ pMaskID ])
+			if( PlayerInventory[playerid][pMaskID])
 			{
 				if( PlayerVIP[playerid][pDonateRank] < 2)
-					PlayerInfo[ playerid ][ pMaskID ] = 0;
+					PlayerInventory[playerid][pMaskID] = 0;
 			}
 
 			TogglePlayerControllable(playerid, 0);

@@ -41,15 +41,6 @@ enum E_PLAYER_DATA
 	Float:pMarker4[3],	// TODO: translocate as local var to Admin/CMD.pwn
 	Float:pMarker5[3],	// TODO: translocate as local var to Admin/CMD.pwn
 
-	pMaskID,
-	pToolkit, 
-	pClock,
-	pCiggaretes,
-	pLighter,
-	pParts,
-	hRope,
-	pBoomBox,
-
 	pCasinoCool,
 	pJackerCool,
 	pAmmuCool,
@@ -77,6 +68,19 @@ enum E_PLAYER_DATA
 	pPMing // TODO: transition to local var in Player/CMD.pwn
 }
 new PlayerInfo[ MAX_PLAYERS ][ E_PLAYER_DATA ];
+
+enum E_PLAYER_INVENTORY
+{
+	pMaskID,
+	pToolkit, 
+	pWatch,
+	pCiggaretes,
+	pLighter,
+	pParts,
+	pRope,
+	pBoomBox
+}
+new PlayerInventory[ MAX_PLAYERS ][ E_PLAYER_INVENTORY ];
 
 enum E_PLAYER_APPEARANCE
 {

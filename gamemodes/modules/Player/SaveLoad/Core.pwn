@@ -1,6 +1,7 @@
 #include <YSI_Coding\y_hooks>
 
 // Save/Load Player related func. modules - named after adjacent database tables
+#include "modules/Player\SaveLoad/player_inventory.pwn"
 #include "modules/Player\SaveLoad/player_crashes.pwn"
 #include "modules/Player\SaveLoad/player_drug_stats.pwn"
 #include "modules/Player\SaveLoad/player_health.pwn"
@@ -261,20 +262,6 @@ public LoadPlayerData(playerid)
 		cache_get_value_name_int(0,  "handMoney"	, PlayerInfo[playerid][pMoney]);
 		cache_get_value_name_int(0,  "bankMoney"	, PlayerInfo[playerid][pBank]);
 
-		
-		cache_get_value_name_int(0,  "parts"		, PlayerInfo[playerid][pParts]);
-		
-		cache_get_value_name_int(0,  "rentkey"		, PlayerKeys[playerid][pRentKey]);
-		cache_get_value_name_int(0,  "maskid"		, PlayerInfo[playerid][pMaskID]);
-
-		cache_get_value_name_int(0, "clock"			, PlayerInfo[playerid][pClock]);
-		cache_get_value_name_int(0, "rope"			, PlayerInfo[playerid][hRope]);
-		cache_get_value_name_int(0, "cigaretes"		, PlayerInfo[playerid][pCiggaretes]);	
-		cache_get_value_name_int(0, "lighter"		, PlayerInfo[playerid][pLighter]);		
-
-		cache_get_value_name_int(0,	"boombox"		, PlayerInfo[playerid][pBoomBox]);
-		
-		cache_get_value_name(0,	"look"				, PlayerAppearance[playerid][pLook], 120);
 		
 		cache_get_value_name(0, "playaBanReason"	, ban_reason, 32);
 		cache_get_value_name_int(0,	"playaUnbanTime", unban_time);
@@ -688,17 +675,17 @@ public SavePlayerData(playerid)
 		PlayerInfo[playerid][pConnectTime],
 		PlayerInfo[playerid][pLevel],
 		PlayerInfo[playerid][pRespects],
-		PlayerInfo[playerid][pParts],
+		PlayerInventory[playerid][pParts],
 		PlayerKeys[playerid][pRentKey],
-		PlayerInfo[playerid][pMaskID],
-		PlayerInfo[playerid][pClock],
-		PlayerInfo[playerid][hRope],
-		PlayerInfo[playerid][pCiggaretes],
-		PlayerInfo[playerid][pLighter],
+		PlayerInventory[playerid][pMaskID],
+		PlayerInventory[playerid][pWatch],
+		PlayerInventory[playerid][pRope],
+		PlayerInventory[playerid][pCiggaretes],
+		PlayerInventory[playerid][pLighter],
 		LicenseInfo[playerid][pPassport],
 		PlayerInfo[playerid][pSAMPid],
 		PlayerInfo[playerid][pForumName],
-		PlayerInfo[playerid][pBoomBox],
+		PlayerInventory[playerid][pBoomBox],
 		PlayerInfo[playerid][pCasinoCool],
 		PlayerInfo[playerid][pVoted],
 		PlayerInfo[playerid][pAmmuCool],
