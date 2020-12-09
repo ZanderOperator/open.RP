@@ -645,8 +645,6 @@ enum E_VEHICLE_DATA
 {
 	vSQLID,
 	vModel,
-	vSpawned,
-	bool:vServerTeleport,
 	vOwner[MAX_PLAYER_NAME],
 	vOwnerID,
 	vNumberPlate[8],
@@ -699,7 +697,6 @@ enum E_VEHICLE_DATA
 	vViwo,
 	Float:vHealth,
 	bool:vDestroyed,
-	bool:vDeleted,
 	vRespawn,
 	bool:vGPS,
 	bool:vTuned,
@@ -742,21 +739,6 @@ enum E_VEHICLE_DATA
 	vNOSCap
 }
 new VehicleInfo[MAX_VEHICLES][E_VEHICLE_DATA];
-
-enum E_VEHICLE_PREV_DATA
-{
-	Float:vPosX,
-	Float:vPosY,
-	Float:vPosZ,
-	Float:vRotZ,
-	Float:vPosDiff,
-	Float:vHealth,
-	vPanels,
-	vDoors,
-	vTires,
-	vLights
-}
-new VehiclePrevInfo[MAX_VEHICLES][E_VEHICLE_PREV_DATA];
 
 enum E_ANTI_SPAM_DATA
 {
@@ -810,8 +792,7 @@ enum E_FACTION_DATA
 	rUndercover,
 	rAUndercover
 }
-new
-	FactionInfo[MAX_FACTIONS][E_FACTION_DATA];
+new FactionInfo[MAX_FACTIONS][E_FACTION_DATA];
 
 enum E_CITY_DATA
 {
@@ -819,8 +800,7 @@ enum E_CITY_DATA
 	cIllegalBudget,
 	cTax
 }
-new
-	CityInfo[ E_CITY_DATA ];
+new CityInfo[ E_CITY_DATA ];
 
 enum 
 {

@@ -3329,12 +3329,6 @@ CMD:veh(playerid, params[])
 	new carid = AC_CreateVehicle(car, X, Y+4, Z+3, ang, color1, color2, 60000,0);
 	ResetVehicleInfo(carid);
 
-	VehiclePrevInfo[carid][vPosX] = X;
-	VehiclePrevInfo[carid][vPosY] = Y;
-	VehiclePrevInfo[carid][vPosZ] = Z;
-	VehiclePrevInfo[carid][vRotZ] = 0.0;
-	VehiclePrevInfo[carid][vPosDiff] = 0.0;
-	
 	VehicleInfo[ carid ][ vModel ] 		= car;
 	VehicleInfo[ carid ][ vColor1 ] 	= color1;
 	VehicleInfo[ carid ][ vColor2 ] 	= color2;

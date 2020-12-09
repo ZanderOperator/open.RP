@@ -101,12 +101,6 @@ stock static PlayerRentVehicle(playerid, modelid, price)
 	VehicleInfo[ rentedVehID[playerid] ][ vParkZ ]				= RandomVehicleRentSpawn[rvPos][2];
 	VehicleInfo[ rentedVehID[playerid] ][ vAngle ]				= RandomVehicleRentSpawn[rvPos][3];
 
-	VehiclePrevInfo[rentedVehID[playerid]][vPosX] = VehicleInfo[ rentedVehID[playerid] ][ vParkX ];
-	VehiclePrevInfo[rentedVehID[playerid]][vPosY] = VehicleInfo[ rentedVehID[playerid] ][ vParkY ];
-	VehiclePrevInfo[rentedVehID[playerid]][vPosZ] = VehicleInfo[ rentedVehID[playerid] ][ vParkZ ];
-	VehiclePrevInfo[rentedVehID[playerid]][vRotZ] = VehicleInfo[ rentedVehID[playerid] ][ vAngle ];
-	VehiclePrevInfo[rentedVehID[playerid]][vPosDiff] = 0.0;
-
 	VehicleInfo[ rentedVehID[playerid] ][ vUsage ]				= VEHICLE_USAGE_RENT;
 	VehicleInfo[ rentedVehID[playerid] ][ vColor1 ]				= color1;
 	VehicleInfo[ rentedVehID[playerid] ][ vColor2 ]				= color2;

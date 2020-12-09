@@ -17,18 +17,6 @@ static
 	Bit16:	gr_JackedVehicle	<MAX_PLAYERS>,
 	Bit16:	gr_LastDriver		<MAX_VEHICLES>;
 
-timer ResetVehicleSafeTeleport[60](vehicleid)
-{
-	VehicleInfo[vehicleid][vServerTeleport] = false;
-	return 1;
-}
-
-timer ResetVehicleSafeDelete[100](vehicleid)
-{
-	VehicleInfo[vehicleid][vDeleted] = false;
-	return 1;
-}
-
 
 /*
 	##     ## ######## ##     ##    ##     ## ########    ###    ##       ######## ##     ##
@@ -60,12 +48,6 @@ Public:OnServerVehicleLoad()
 
 		vCarID = AC_CreateVehicle( carLoad[vModel], carLoad[vParkX], carLoad[vParkY], carLoad[vParkZ], carLoad[vAngle], carLoad[vColor1], carLoad[vColor2], carLoad[vRespawn], carLoad[vSirenon] );
 		ResetVehicleInfo(vCarID);
-
-		VehiclePrevInfo[vCarID][vPosX] = carLoad[ vParkX ];
-		VehiclePrevInfo[vCarID][vPosY] = carLoad[ vParkY ];
-		VehiclePrevInfo[vCarID][vPosZ] = carLoad[ vParkZ ];
-		VehiclePrevInfo[vCarID][vRotZ] = carLoad[ vAngle ];
-		VehiclePrevInfo[vCarID][vPosDiff] = 0.0;
 
 		VehicleInfo[ vCarID ][ vModel ] 			= carLoad[ vModel ];
 		VehicleInfo[ vCarID ][ vParkX ] 			= carLoad[ vParkX ];
@@ -312,23 +294,10 @@ stock ResetVehicleInfo(vehicleid)
 	ClearVehicleMusic(vehicleid);	
 	ResetTuning(vehicleid);
 	
-	// Vehicle Previous Info
-	VehiclePrevInfo[vehicleid][vPosX] 					= 0.0;
-	VehiclePrevInfo[vehicleid][vPosY] 					= 0.0;
-	VehiclePrevInfo[vehicleid][vPosZ] 					= 0.0;
-	VehiclePrevInfo[vehicleid][vRotZ] 					= 0.0;
-	VehiclePrevInfo[vehicleid][vHealth] 				= 0.0;
-	VehiclePrevInfo[vehicleid][vPanels]					= 0;
-	VehiclePrevInfo[vehicleid][vDoors]					= 0;
-	VehiclePrevInfo[vehicleid][vTires]					= 0;
-	VehiclePrevInfo[vehicleid][vLights]					= 0;
-	
 	// Ints
 	VehicleInfo[ vehicleid ][ vSQLID ]					= -1;
 	VehicleInfo[ vehicleid ][ vModel ]                  = 400;
 	VehicleInfo[ vehicleid ][ vOwnerID ]                = 0;
-	VehicleInfo[ vehicleid ][ vServerTeleport ] 		= false;
-	VehicleInfo[ vehicleid ][ vSpawned ]                = 0;
 	VehicleInfo[ vehicleid ][ vColor1 ]                 = 0;
 	VehicleInfo[ vehicleid ][ vColor2 ]                 = 0;
 	VehicleInfo[ vehicleid ][ vEngineType ]             = 0;
@@ -468,15 +437,7 @@ stock AC_CreateVehicle(vehicletype, Float:x, Float:y, Float:z, Float:rotation, c
 
 	VehicleInfo[id][vModel] = vehicletype;
 	VehicleInfo[id][vRespawn] = respawn_delay;
-	VehicleInfo[id][vServerTeleport] = false;
 	VehicleInfo[id][vViwo] = GetVehicleVirtualWorld(id);
-
-
-	VehiclePrevInfo[id][vPosX] = x;
-	VehiclePrevInfo[id][vPosY] = y;
-	VehiclePrevInfo[id][vPosZ] = z;
-	VehiclePrevInfo[id][vRotZ] = rotation;
-	VehiclePrevInfo[id][vPosDiff] = 0.0;
 
 	CheckVehicleObjects(id);
 	return id;
@@ -496,25 +457,12 @@ stock AC_DestroyVehicle(vehicleid)
 	if(VehicleInfo[vehicleid][vUsage] == 5) // VEHICLE_USAGE_RENT
 		DestroyRentVehicle(vehicleid);
 
-	VehicleInfo[vehicleid][vDeleted]					= true;
-
-	// Vehicle Previous Info
-	VehiclePrevInfo[vehicleid][vPosX] 					= 0.0;
-	VehiclePrevInfo[vehicleid][vPosY] 					= 0.0;
-	VehiclePrevInfo[vehicleid][vPosZ] 					= 0.0;
-	VehiclePrevInfo[vehicleid][vRotZ] 					= 0.0;
-	VehiclePrevInfo[vehicleid][vHealth] 				= 0.0;
-	VehiclePrevInfo[vehicleid][vPanels]					= 0;
-	VehiclePrevInfo[vehicleid][vDoors]					= 0;
-	VehiclePrevInfo[vehicleid][vTires]					= 0;
-	VehiclePrevInfo[vehicleid][vLights]					= 0;
-
 	VehicleInfo[vehicleid][vEngineRunning] = 0;
 	VehicleAlarmStarted[vehicleid] = false;
 	DestroyVehicle(vehicleid);
 	if(Iter_Contains(Vehicles[VehicleInfo[vehicleid][vUsage]], vehicleid))
 		Iter_Remove(Vehicles[VehicleInfo[vehicleid][vUsage]], vehicleid);
-	defer ResetVehicleSafeDelete(vehicleid);
+		
 	return 1;
 }
 
@@ -549,44 +497,13 @@ stock SetRespawnedVehicleParams(vehicleid)
 	return 1;
 }
 
-stock GetVehiclePreviousInfo(vehicleid)
-{
-	if(vehicleid == INVALID_VEHICLE_ID) return 1;
-	new Float:x, Float:y, Float:z, Float:rz;
-	GetVehiclePos(vehicleid, x, y, z);
-	GetVehicleZAngle(vehicleid, rz);
-	VehiclePrevInfo[vehicleid][vPosX] = x;
-	VehiclePrevInfo[vehicleid][vPosY] = y;
-	VehiclePrevInfo[vehicleid][vPosZ] = z;
-	VehiclePrevInfo[vehicleid][vRotZ] = rz;
-	GetVehicleDamageStatus(vehicleid, VehiclePrevInfo[vehicleid][vPanels], VehiclePrevInfo[vehicleid][vDoors], VehiclePrevInfo[vehicleid][vLights], VehiclePrevInfo[vehicleid][vTires]);
-	GetVehicleHealth(vehicleid, VehiclePrevInfo[vehicleid][vHealth]);
-	return 1;
-}
-
-stock SetVehiclePreviousInfo(vehicleid)
-{
-	if(vehicleid == INVALID_VEHICLE_ID) return 0;
-	if(DoesVehicleHavePlayers(vehicleid)) return 0;
-	SetVehiclePos(vehicleid, VehiclePrevInfo[vehicleid][vPosX], VehiclePrevInfo[vehicleid][vPosY], VehiclePrevInfo[vehicleid][vPosZ]);
-	SetVehicleZAngle(vehicleid, VehiclePrevInfo[vehicleid][vRotZ]);
-	UpdateVehicleDamageStatus(vehicleid, VehiclePrevInfo[vehicleid][vPanels], VehiclePrevInfo[vehicleid][vDoors], VehiclePrevInfo[vehicleid][vLights], VehiclePrevInfo[vehicleid][vTires]);
-	SetVehicleHealth(vehicleid, VehiclePrevInfo[vehicleid][vHealth]);
-	SetVehicleVelocity(vehicleid, 0.0, 0.0, 0.0);
-	if(VehicleInfo[vehicleid][vServerTeleport] == true)
-		defer ResetVehicleSafeTeleport(vehicleid);
-	return 1;
-}
-
-
-stock AC_SetVehicleToRespawn(vehicleid, bool:oldpos = false)
+stock AC_SetVehicleToRespawn(vehicleid)
 {
 	new
 		Float:vhealth;
 
 	if(vehicleid == INVALID_VEHICLE_ID)	return 0;
 	if( !Iter_Contains(Vehicles[VehicleInfo[vehicleid][vUsage]], vehicleid) ) return 0;
-	VehicleInfo[vehicleid][vServerTeleport] = true;
 	RemoveAllVehicleTuning(vehicleid);
 	VehicleObjectCheck(vehicleid);
 	ResetVehicleAlarm(vehicleid);
@@ -608,12 +525,6 @@ stock AC_SetVehicleToRespawn(vehicleid, bool:oldpos = false)
 		SetVehicleZAngle(vehicleid, VehicleInfo[vehicleid][vAngle]);
 	}
 	SetRespawnedVehicleParams(vehicleid);
-
-	if(oldpos == true)
-		SetVehiclePreviousInfo(vehicleid);
-	else
-		defer ResetVehicleSafeTeleport(vehicleid);
-
 	GetVehicleHealth(vehicleid, vhealth);
 
 	if(vhealth <= 250.0)
@@ -677,12 +588,7 @@ stock AC_RepairVehicle(vehicleid)
 
 stock AC_SetVehiclePos(vehicleid,Float:x,Float:y,Float:z)
 {
-	VehicleInfo[vehicleid][vServerTeleport] = true;
-	VehiclePrevInfo[vehicleid][vPosX] = x;
-	VehiclePrevInfo[vehicleid][vPosY] = y;
-	VehiclePrevInfo[vehicleid][vPosZ] = z;
 	SetVehicleVelocity(vehicleid, 0.0, 0.0, 0.0);
-	defer ResetVehicleSafeTeleport(vehicleid);
 	return SetVehiclePos(vehicleid, x, y, z);
 }
 #if defined _ALS_SetVehiclePos
@@ -694,7 +600,7 @@ stock AC_SetVehiclePos(vehicleid,Float:x,Float:y,Float:z)
 
 stock AC_SetVehicleVelocity(vehicleid, Float:X, Float:Y, Float:Z)
 {
-	if(!VehicleInfo[vehicleid][vServerTeleport] || DoesVehicleHavePlayers(vehicleid))
+	if(DoesVehicleHavePlayers(vehicleid))
 		return 1;
 	SetVehicleVelocity(vehicleid, X, Y, Z);
 	return 1;
@@ -845,8 +751,9 @@ hook OnVehicleDeath(vehicleid, killerid)
 {
 	if(vehicleid == INVALID_VEHICLE_ID) return 0;
 	if( !Iter_Contains(Vehicles[VehicleInfo[vehicleid][vUsage]], vehicleid) ) return 0;
-	if(killerid == INVALID_PLAYER_ID) return AC_SetVehicleToRespawn(vehicleid);
-	if( !IsPlayerLogged(killerid) || !IsPlayerConnected(killerid) ) return AC_SetVehicleToRespawn(vehicleid, true);
+	if(killerid == INVALID_PLAYER_ID) return SetVehicleToRespawn(vehicleid);
+	if( !IsPlayerLogged(killerid) || !IsPlayerConnected(killerid) ) 
+		return SetVehicleToRespawn(vehicleid);
 	
 	new
 		string[8];
@@ -861,7 +768,7 @@ hook OnVehicleDeath(vehicleid, killerid)
 	printf("(%s) vUsage: %s, GetPlayerVehicleID: %d, vJob = %d, vFaction = %d", ReturnDate(), string, GetPlayerVehicleID(killerid), VehicleInfo[vehicleid][vJob], VehicleInfo[vehicleid][vFaction]);
 	
 	if( VehicleInfo[vehicleid][vUsage] != VEHICLE_USAGE_PRIVATE && VehicleInfo[vehicleid][vUsage] != VEHICLE_USAGE_RENT ) 
-		AC_SetVehicleToRespawn(vehicleid);
+		SetVehicleToRespawn(vehicleid);
 	
 	if(vehicleid == GetPlayerVehicleID(killerid))
 		RemovePlayerFromVehicle(killerid);
@@ -965,19 +872,8 @@ hook OnPlayerDisconnect(playerid, reason)
 {
 	if(!IsPlayerInAnyVehicle(playerid) && GetPlayerState(playerid) != PLAYER_STATE_DRIVER) return 0;
 	if( GetPlayerVehicleID(playerid) && VehicleInfo[ GetPlayerVehicleID(playerid) ][ vJob ] != 0 ) {
-		AC_SetVehicleToRespawn(GetPlayerVehicleID(playerid));
+		SetVehicleToRespawn(GetPlayerVehicleID(playerid));
 	}
-    if(IsPlayerInAnyVehicle(playerid))
-	{
-		new vehicleid = GetPlayerVehicleID(playerid);
-		GetVehiclePreviousInfo(vehicleid);
-	}
-	return 1;
-}
-
-hook OnPlayerExitVehicle(playerid, vehicleid)
-{
-	GetVehiclePreviousInfo(vehicleid);
 	return 1;
 }
 
@@ -1030,12 +926,6 @@ hook OnPlayerStateChange(playerid, newstate, oldstate)
 				PlayAudioStreamForPlayer( playerid, "http://www.broadcastify.com/scripts/playlists/1/2846/-5616135992.m3u");
 		}*/
 		LastVehicleDriver[ vehicleid ] = playerid;
-	}
-	if( oldstate == PLAYER_STATE_PASSENGER && newstate == PLAYER_STATE_ONFOOT ) 
-	{
-		new vehicleid = GetPlayerVehicleID(playerid);
-		GetVehiclePreviousInfo(vehicleid);
-		return 1;
 	}
 	if( ( newstate == PLAYER_STATE_ONFOOT && oldstate == PLAYER_STATE_DRIVER ) && Bit1_Get( gr_JackedPlayer, playerid ) ) {
 	
