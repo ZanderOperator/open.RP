@@ -3,6 +3,7 @@
 enum E_PLAYER_DATA
 {
 	pSQLID,
+	pIP[MAX_PLAYER_IP],
 	pRegistered,
 	bool:pMustRead,
 	pTeamPIN[BCRYPT_HASH_LENGTH],
@@ -19,12 +20,9 @@ enum E_PLAYER_DATA
 	pLastLogin[24],
 	pLastUpdateVer[24],
 	pLastLoginTimestamp,
-	cIP[MAX_PLAYER_IP],
-	pAdmin,
 	pTempRank[2],
-	pAdminHours,
+	pAdmin,
 	pHelper,
-	pTempConnectTime,
 	pConnectTime,
 	pMuted,
 	pRespects,
@@ -34,7 +32,7 @@ enum E_PLAYER_DATA
 	pChangeTimes,
 	pMoney,
 	pBank,
-	FurnPremium,
+	pExtraFurniture,
 	pVoted,
 
 	Float:pMarker1[3],	// TODO: translocate as local var to Admin/CMD.pwn
@@ -53,10 +51,8 @@ enum E_PLAYER_DATA
 	pBoomBox,
 
 	pCasinoCool,
-	JackerCoolDown,
-	pAmmuTime,
-
-	pNews,
+	pJackerCool,
+	pAmmuCool,
 	
 	pCallsign[60], // TODO: transition to local var in Systems LSPD/FD
 	pLawDuty, // TODO: transition to local var - LSFD/Core.pwn
@@ -67,10 +63,6 @@ enum E_PLAYER_DATA
 	packageordered, // TODO: transition to local var in WepPackage.pwn
 	//bool:approved,
 	hWhistle, // TODO: transition to local var in Hunter.pwn
-	
-	
-	pPhoneBG, // TODO: transition to local var in Mobile.pwn
-	pPhoneMask, // TODO: transition to local var in Mobile.pwn
 	 
 	pPrimaryWeapon, // TODO: transition to local var in Player/Weapons.pwn
 	pSecondaryWeapon, // TODO: transition to local var in Player/Weapons.pwn
@@ -163,6 +155,8 @@ new PlayerJob[ MAX_PLAYERS ][ E_P_JOB_INFO ];
 
 enum E_P_MOBILE_INFO
 {
+	pPhoneBG, 
+	pPhoneMask,
 	pMobileCost,
 	pMobileNumber,
 	pMobileModel,

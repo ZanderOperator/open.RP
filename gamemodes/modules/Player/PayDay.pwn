@@ -360,10 +360,10 @@ GivePlayerPayCheck(playerid)
 	// HAPPY HOURS
 	if( HappyHours )
 		PlayerInfo[playerid][pRespects] += ( PlayerInfo[playerid][pLevel] < HappyHoursLVL ) ? 2 : 1;
-	else {
-	    PlayerInfo[playerid][pTempConnectTime]++;
-	    if( PlayerInfo[playerid][pTempConnectTime] > 5 )
-	        PlayerInfo[playerid][pRespects] += PlayerInfo[playerid][pTempConnectTime];
+	else 
+	{
+	    if( ExpInfo[playerid][eDayPayDays] > 5 )
+	        PlayerInfo[playerid][pRespects] += ExpInfo[playerid][eDayPayDays];
 		else
 			PlayerInfo[playerid][pRespects]++;
  	}
@@ -388,7 +388,6 @@ GivePlayerPayCheck(playerid)
 
 	PlayerFish[playerid][pFishWorks] 	= 0;
 	PlayerInfo[playerid][pCasinoCool]	= 10;	// resetiranje kasino varijabli
-	PlayerInfo[ playerid ][ pAdminHours ]++;	// dodavanje admin satnice
 
 	// Dodavanje sati ugvora za posao
 	if(PlayerJob[playerid][pJob] != 0)
@@ -434,7 +433,7 @@ GivePlayerPayCheck(playerid)
 		va_GameTextForPlayer(playerid,"~g~LEVEL UP!~n~%s -> %s",5000,1, PlayerInfo[playerid][pLevel], PlayerInfo[playerid][pLevel]+1);
 	}
 	ResetBH_Script(playerid);
-	PlayerInfo[playerid][JackerCoolDown] = 0;
+	PlayerInfo[playerid][pJackerCool] = 0;
 	// Experience
 	
 	new currentday, day;

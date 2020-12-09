@@ -706,8 +706,8 @@ ResetPlayerVariables(playerid)
 	AntiSpamInfo[ playerid ][ asDoorShout ] 	= 0;
 
 
-	PlayerInfo[playerid][pPhoneBG] = -1263225696;
-	PlayerInfo[playerid][pPhoneMask] = 0;
+	PlayerMobile[playerid][pPhoneBG] = -1263225696;
+	PlayerMobile[playerid][pPhoneMask] = 0;
 
 	// Ulice
 	DestroyZonesTD(playerid);
@@ -752,7 +752,6 @@ ResetPlayerVariables(playerid)
 	PlayerInfo[playerid][pSQLID] 			= 0; 	//Integer
 	PlayerInfo[playerid][pLastLoginTimestamp] = 0;
 	PlayerInfo[playerid][pRegistered] 		= 0;
-	PlayerInfo[playerid][pTempConnectTime]	= 0;
 	PlayerInfo[playerid][pSecQuestion] 		= -1;
 	PlayerInfo[playerid][pBanned]			= 0;
 	PlayerInfo[playerid][pWarns]			= 0;
@@ -760,7 +759,6 @@ ResetPlayerVariables(playerid)
 	PlayerInfo[playerid][pAdmin]			= 0;
 	PlayerInfo[playerid][pTempRank][0]		= 0;
 	PlayerInfo[playerid][pTempRank][1]		= 0;
-	PlayerInfo[playerid][pAdminHours]		= 0;
 	PlayerInfo[playerid][pHelper]			= 0;
 	PlayerInfo[playerid][pConnectTime]		= 0;
 	PlayerInfo[playerid][pMuted]			= 0;
@@ -772,7 +770,6 @@ ResetPlayerVariables(playerid)
 	PlayerInfo[playerid][pMoney]			= 0;
 	PlayerInfo[playerid][pBank]				= 0;
 
-	PlayerInfo[playerid][pTempConnectTime]	= 0;
 	PlayerInfo[playerid][pLawDuty]          = 0;
 	
 
@@ -801,13 +798,12 @@ ResetPlayerVariables(playerid)
 	PlayerInfo[playerid][pBoomBox] 			= 0;
 
 	PlayerInfo[playerid][pCasinoCool]		= 0;
-	PlayerInfo[playerid][pNews]				= 0;
 	PlayerInfo[playerid][pCanisterLiters] 	= 0;
 	PlayerInfo[playerid][pCanisterType] 	= -1;
 	PlayerInfo[playerid][pGrafID]			= -1;
 	PlayerInfo[playerid][pTagID]			= -1;
 	PlayerInfo[playerid][hRope] 			= 0;
-	PlayerInfo[playerid][pAmmuTime]			= 0;
+	PlayerInfo[playerid][pAmmuCool]			= 0;
 
 	PlayerInfo[playerid][pPrimaryWeapon] 	= 0;
 	PlayerInfo[playerid][pSecondaryWeapon] 	= 0;
@@ -902,7 +898,7 @@ ResetPlayerVariables(playerid)
 	PlayerSprayVID[playerid]		= 0;
 	PlayerAction[playerid]			= 0;
 
-	PlayerInfo[playerid][cIP] = EOS;
+	PlayerInfo[playerid][pIP] = EOS;
 
 	//Transporter
 	TCarry[playerid] = 0;
@@ -1526,7 +1522,7 @@ public OnPlayerRequestClass(playerid, classid)
 		// Player Camera
 		TogglePlayerControllable(playerid, false);
 
-		GetPlayerIp(playerid, PlayerInfo[playerid][cIP], 24);
+		GetPlayerIp(playerid, PlayerInfo[playerid][pIP], 24);
 
 		mysql_tquery(g_SQL, 
 			va_fquery(g_SQL, "SELECT sql FROM accounts WHERE name = '%e'", tmpname), 

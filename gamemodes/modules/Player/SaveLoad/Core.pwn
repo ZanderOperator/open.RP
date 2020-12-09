@@ -280,14 +280,13 @@ public LoadPlayerData(playerid)
 		cache_get_value_name_int(0,	"playaUnbanTime", unban_time);
 		
 		cache_get_value_name_int(0,	"casinocool"	, PlayerInfo[playerid][pCasinoCool]);
-		cache_get_value_name_int(0,	"news"			, PlayerInfo[playerid][pNews]);
 		cache_get_value_name_int(0,	"voted"			, PlayerInfo[playerid][pVoted]);
 		
-		cache_get_value_name_int(0,	"ammutime"		, PlayerInfo[playerid][pAmmuTime]);
+		cache_get_value_name_int(0,	"ammutime"		, PlayerInfo[playerid][pAmmuCool]);
 		
 		cache_get_value_name_int(0,	"mustread"		, PlayerInfo[playerid][pMustRead]);
-		cache_get_value_name_int(0, "JackerCoolDown", PlayerInfo[playerid][JackerCoolDown]);
-		cache_get_value_name_int(0, "FurnPremium"	, PlayerInfo[playerid][FurnPremium]);
+		cache_get_value_name_int(0, "JackerCoolDown", PlayerInfo[playerid][pJackerCool]);
+		cache_get_value_name_int(0, "FurnPremium"	, PlayerInfo[playerid][pExtraFurniture]);
 				
 		if( unban_time == -1 )
 		{
@@ -668,7 +667,7 @@ public SavePlayerData(playerid)
 			rentkey = '%d',\n\
 			maskid = '%d', clock = '%d', rope = '%d', cigaretes = '%d', lighter = '%d',\n\
 			SAMPid = '%e', forumname = '%e',\n\
-			boombox = '%d', casinocool = '%d', news = '%d', voted = '%d',\n\
+			boombox = '%d', voted = '%d',\n\
 			ammutime = '%d', mustread = '%d', lastupdatever = '%e', JackerCoolDown = '%d',\n\
 			FurnPremium = '%d',\n\
 			WHERE sqlid = '%d'",
@@ -678,7 +677,7 @@ public SavePlayerData(playerid)
 		PlayerInfo[playerid][pWarns],
 		PlayerInfo[playerid][pLastLogin],
 		PlayerInfo[playerid][pLastLoginTimestamp],
-		PlayerInfo[playerid][cIP],
+		PlayerInfo[playerid][pIP],
 		PlayerInfo[playerid][pMuted],
 		PlayerInfo[playerid][pSex],
 		PlayerInfo[playerid][pAge],
@@ -701,13 +700,12 @@ public SavePlayerData(playerid)
 		PlayerInfo[playerid][pForumName],
 		PlayerInfo[playerid][pBoomBox],
 		PlayerInfo[playerid][pCasinoCool],
-		PlayerInfo[playerid][pNews],
 		PlayerInfo[playerid][pVoted],
-		PlayerInfo[playerid][pAmmuTime],
+		PlayerInfo[playerid][pAmmuCool],
 		PlayerInfo[playerid][pMustRead],
 		PlayerInfo[playerid][pLastUpdateVer],
-		PlayerInfo[playerid][JackerCoolDown],
-		PlayerInfo[playerid][FurnPremium],
+		PlayerInfo[playerid][pJackerCool],
+		PlayerInfo[playerid][pExtraFurniture],
 		PlayerInfo[playerid][pSQLID]
 	);
 

@@ -299,8 +299,8 @@ stock SavePlayerMobile(playerid, type=1)
 			PlayerMobile[playerid][pMobileModel],
 			PlayerMobile[playerid][pMobileNumber],
 			PlayerMobile[playerid][pMobileCost],
-			PlayerInfo[playerid][pPhoneBG],
-			PlayerInfo[playerid][pPhoneMask],
+			PlayerMobile[playerid][pPhoneBG],
+			PlayerMobile[playerid][pPhoneMask],
 			gettimestamp()
 		);
 	}
@@ -378,8 +378,8 @@ stock BuyPlayerPhone(playerid, listid)
 	va_SendClientMessage(playerid, COLOR_RED, "[ ! ]  Uspjesno ste kupili %s!", PhoneModels[listid][phModelName]);
 	PlayerPlaySound(playerid, 1052, 0.0, 0.0, 0.0);
 	PlayerMobile[playerid][pMobileCost] = 0;
-	PlayerInfo[playerid][pPhoneBG] = -1263225696;
-	PlayerInfo[playerid][pPhoneMask] = 0;
+	PlayerMobile[playerid][pPhoneBG] = -1263225696;
+	PlayerMobile[playerid][pPhoneMask] = 0;
 	
 	ResetMobileContacts(playerid);
 	SavePlayerMobile(playerid);
@@ -447,8 +447,8 @@ public OnPlayerMobileLoad(playerid)
 				cache_get_value_name_int(i, "model"			, PlayerMobile[playerid][pMobileModel]);
 				cache_get_value_name_int(i, "number"		, PlayerMobile[playerid][pMobileNumber]);
 				cache_get_value_name_int(i, "money"			, PlayerMobile[playerid][pMobileCost]);
-				cache_get_value_name_int(i, "background"	, PlayerInfo[playerid][pPhoneBG]);
-				cache_get_value_name_int(i, "mask"			, PlayerInfo[playerid][pPhoneMask]);
+				cache_get_value_name_int(i, "background"	, PlayerMobile[playerid][pPhoneBG]);
+				cache_get_value_name_int(i, "mask"			, PlayerMobile[playerid][pPhoneMask]);
 				
 				LoadPlayerContacts(playerid);
 			}
@@ -698,7 +698,7 @@ public PhoneAction(playerid, phaction)
 			PlayerTextDrawLetterSize(playerid, PhoneTD[playerid][7], 0.000000, 0.000000);
 			PlayerTextDrawTextSize(playerid, PhoneTD[playerid][7], 114.000000, 132.000000);
 			PlayerTextDrawAlignment(playerid, PhoneTD[playerid][7], 1);
-			PlayerTextDrawColor(playerid, PhoneTD[playerid][7], PlayerInfo[playerid][pPhoneBG]); //Boja pozadine
+			PlayerTextDrawColor(playerid, PhoneTD[playerid][7], PlayerMobile[playerid][pPhoneBG]); //Boja pozadine
 			PlayerTextDrawSetShadow(playerid, PhoneTD[playerid][7], 0);
 			PlayerTextDrawSetOutline(playerid, PhoneTD[playerid][7], 0);
 			PlayerTextDrawBackgroundColor(playerid, PhoneTD[playerid][7], 255);
@@ -1891,13 +1891,13 @@ public PhoneAction(playerid, phaction)
 	        }
 		}
 
-		if(PlayerInfo[playerid][pPhoneMask] != 0)
+		if(PlayerMobile[playerid][pPhoneMask] != 0)
 		{
 	        PhoneTD[playerid][101] = CreatePlayerTextDraw(playerid, 454.800140, 307.637603, "LD_SPAC:white");
 			PlayerTextDrawLetterSize(playerid, PhoneTD[playerid][101], 0.000000, 0.000000);
 			PlayerTextDrawTextSize(playerid, PhoneTD[playerid][101], 124.000000, 2.000000);
 			PlayerTextDrawAlignment(playerid, PhoneTD[playerid][101], 1);
-			PlayerTextDrawColor(playerid, PhoneTD[playerid][101], PlayerInfo[playerid][pPhoneMask]);
+			PlayerTextDrawColor(playerid, PhoneTD[playerid][101], PlayerMobile[playerid][pPhoneMask]);
 			PlayerTextDrawSetShadow(playerid, PhoneTD[playerid][101], 0);
 			PlayerTextDrawSetOutline(playerid, PhoneTD[playerid][101], 0);
 			PlayerTextDrawBackgroundColor(playerid, PhoneTD[playerid][101], 255);
@@ -1909,7 +1909,7 @@ public PhoneAction(playerid, phaction)
 			PlayerTextDrawLetterSize(playerid, PhoneTD[playerid][102], 0.000000, 0.000000);
 			PlayerTextDrawTextSize(playerid, PhoneTD[playerid][102], 2.000000, 156.000000);
 			PlayerTextDrawAlignment(playerid, PhoneTD[playerid][102], 1);
-			PlayerTextDrawColor(playerid, PhoneTD[playerid][102], PlayerInfo[playerid][pPhoneMask]);
+			PlayerTextDrawColor(playerid, PhoneTD[playerid][102], PlayerMobile[playerid][pPhoneMask]);
 			PlayerTextDrawSetShadow(playerid, PhoneTD[playerid][102], 0);
 			PlayerTextDrawSetOutline(playerid, PhoneTD[playerid][102], 0);
 			PlayerTextDrawBackgroundColor(playerid, PhoneTD[playerid][102], 255);
@@ -1921,7 +1921,7 @@ public PhoneAction(playerid, phaction)
 			PlayerTextDrawLetterSize(playerid, PhoneTD[playerid][103], 0.000000, 0.000000);
 			PlayerTextDrawTextSize(playerid, PhoneTD[playerid][103], 2.000000, 156.000000);
 			PlayerTextDrawAlignment(playerid, PhoneTD[playerid][103], 1);
-			PlayerTextDrawColor(playerid, PhoneTD[playerid][103], PlayerInfo[playerid][pPhoneMask]);
+			PlayerTextDrawColor(playerid, PhoneTD[playerid][103], PlayerMobile[playerid][pPhoneMask]);
 			PlayerTextDrawSetShadow(playerid, PhoneTD[playerid][103], 0);
 			PlayerTextDrawSetOutline(playerid, PhoneTD[playerid][103], 0);
 			PlayerTextDrawBackgroundColor(playerid, PhoneTD[playerid][103], 255);
@@ -3115,18 +3115,18 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 					format( tmpString, sizeof( tmpString ), "Stanje racuna\nZvucnik: "COL_RED"Off\nPozadina");
 				return ShowPlayerDialog( playerid, DIALOG_MOBILE_MAIN, DIALOG_STYLE_LIST, "MOBITEL - MENU", tmpString, "Choose", "Abort");
 			}
-			if(listitem == 0) PlayerInfo[playerid][pPhoneBG] = -1263225696;
-			else PlayerInfo[playerid][pPhoneBG] = BackgroundColors[listitem][0];
-		    PlayerTextDrawColor(playerid, PhoneTD[playerid][7], PlayerInfo[playerid][pPhoneBG]);
+			if(listitem == 0) PlayerMobile[playerid][pPhoneBG] = -1263225696;
+			else PlayerMobile[playerid][pPhoneBG] = BackgroundColors[listitem][0];
+		    PlayerTextDrawColor(playerid, PhoneTD[playerid][7], PlayerMobile[playerid][pPhoneBG]);
 			PhoneAction(playerid, PHONE_SHOW);
 			PhoneStatus[playerid] = PHONE_SHOW;
 		}
 		case DIALOG_MOBILE_MASKS: {
-			if(listitem == 0) PlayerInfo[playerid][pPhoneMask] = 0;
-			else PlayerInfo[playerid][pPhoneMask] = MaskColors[listitem][0];
-		    PlayerTextDrawColor(playerid, PhoneTD[playerid][101], PlayerInfo[playerid][pPhoneMask]);
-		    PlayerTextDrawColor(playerid, PhoneTD[playerid][102], PlayerInfo[playerid][pPhoneMask]);
-		    PlayerTextDrawColor(playerid, PhoneTD[playerid][103], PlayerInfo[playerid][pPhoneMask]);
+			if(listitem == 0) PlayerMobile[playerid][pPhoneMask] = 0;
+			else PlayerMobile[playerid][pPhoneMask] = MaskColors[listitem][0];
+		    PlayerTextDrawColor(playerid, PhoneTD[playerid][101], PlayerMobile[playerid][pPhoneMask]);
+		    PlayerTextDrawColor(playerid, PhoneTD[playerid][102], PlayerMobile[playerid][pPhoneMask]);
+		    PlayerTextDrawColor(playerid, PhoneTD[playerid][103], PlayerMobile[playerid][pPhoneMask]);
 		    if(PhoneStatus[playerid] == PHONE_SHOW) PhoneAction(playerid, PHONE_SHOW);
 		}
 		case DIALOG_MOBILE_CONTACTS_MAIN: 

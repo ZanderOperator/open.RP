@@ -340,7 +340,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 						PlayerInfo[playerid][pSQLID]
 					);
 					
-					PlayerInfo[playerid][FurnPremium] = 1;
+					PlayerInfo[playerid][pExtraFurniture] = 1;
 					SetPlayerPremiumFurniture(playerid, PlayerKeys[playerid][pHouseKey]);
 					
 					SendFormatMessage(playerid, MESSAGE_TYPE_SUCCESS, "Iskoristili ste %d EXP-a za %d Furniture slotova. Preostalo: %d EXP", MAX_FURSLOTS_EXP, FURNITURE_PREMIUM_OBJECTS, ExpInfo[playerid][ePoints]);

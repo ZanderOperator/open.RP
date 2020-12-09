@@ -153,7 +153,7 @@ static stock PlayerAmmunationBuyTime(playerid, days)
     ammutime = days * 86400;
     ammutime += gettimestamp();
     // TODO: getter and setter into Player module
-    PlayerInfo[playerid][pAmmuTime] = ammutime;
+    PlayerInfo[playerid][pAmmuCool] = ammutime;
     // Also, immediately save this value into database...
 
     TimeFormat(Timestamp:ammutime, HUMAN_DATE, date);
@@ -279,7 +279,7 @@ CMD:buyweapon(playerid, params[])
     if (!IsPlayerInRangeOfPoint(playerid, 4.0, 295.0016,-38.3526,1001.5156)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, " Ne nalazite se na mjestu za kupovinu oruzja.");
 
     // --- Provjera je li igracu isteklo vrijeme za kupnju  ------------
-    if (PlayerInfo[playerid][pAmmuTime] < gettimestamp())
+    if (PlayerInfo[playerid][pAmmuCool] < gettimestamp())
     {
         new string[256];
         format(string, sizeof(string), "Oruzje\tCijena\tMaxAmmo\n");
@@ -292,7 +292,7 @@ CMD:buyweapon(playerid, params[])
     }
     else
     {
-        new timestamp = PlayerInfo[playerid][pAmmuTime],
+        new timestamp = PlayerInfo[playerid][pAmmuCool],
             date[12],
             time[12];
 
@@ -408,7 +408,7 @@ CMD:ammunation(playerid, params[])
         new giveplayerid;
         if (sscanf(params, "s[8]u", pick, giveplayerid)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /ammunation rpt [ID/PlayerName]");
 
-        PlayerInfo[giveplayerid][pAmmuTime] = 0;
+        PlayerInfo[giveplayerid][pAmmuCool] = 0;
 
         mysql_fquery(g_SQL, "UPDATE accounts SET ammutime=0 WHERE sqlid=%d", PlayerInfo[giveplayerid][pSQLID]);
 

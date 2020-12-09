@@ -1887,7 +1887,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
             PlayerKeys[pID][pHouseKey]          = INVALID_HOUSE_ID;
             PlayerInfo[playerid][pSpawnChange]  = 1;
             PlayerInfo[pID][pSpawnChange]       = 0;
-            PlayerInfo[playerid][FurnPremium]   = 0;
+            PlayerInfo[playerid][pExtraFurniture]   = 0;
             HouseInfo[PlayerKeys[playerid][pHouseKey]][hOwnerID] = PlayerInfo[playerid][pSQLID];
 
             mysql_fquery(g_SQL, "UPDATE houses SET ownerid = '%d' WHERE id = '%d'",
@@ -2604,7 +2604,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 
                     PlayerKeys[playerid][pHouseKey] = INVALID_HOUSE_ID;
                     PlayerInfo[playerid][pSpawnChange] = 0;
-                    PlayerInfo[playerid][FurnPremium] = 0;
+                    PlayerInfo[playerid][pExtraFurniture] = 0;
 
                     mysql_fquery(g_SQL, "UPDATE accounts SET spawnchange = '%d' WHERE sqlid = '%d'",
                         PlayerInfo[playerid][pSpawnChange],
