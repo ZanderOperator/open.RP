@@ -195,7 +195,7 @@ timer OnPlayerFirstTimeEnter[12000](playerid, step)
 			PlayerInfo[playerid][pMuted] 		= false;
 			PlayerInfo[playerid][pAdmin] 		= 0;
 			PlayerInfo[playerid][pHelper] 		= 0; 
-			PlayerInfo[playerid][pCasinoCool]	= 5;
+			PlayerCoolDown[playerid][pCasinoCool]	= 5;
 			
 			SendClientMessage(playerid, COLOR_SAMP_GREEN, "[HINT]: Ukoliko trebate prijevoz koristite /calltaxi!");
 			

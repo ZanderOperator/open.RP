@@ -3100,7 +3100,7 @@ CMD:setstat(playerid, params[])
 		}
 		case 23:
 		{
-			PlayerInfo[giveplayerid][pCasinoCool] = amount;
+			PlayerCoolDown[giveplayerid][pCasinoCool] = amount;
 			format(globalstring, sizeof(globalstring), "   Korisnikov Casino Cooldown je sada %d", amount);
 		}
 		case 24:

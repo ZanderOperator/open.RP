@@ -387,7 +387,6 @@ GivePlayerPayCheck(playerid)
 	}
 
 	PlayerFish[playerid][pFishWorks] 	= 0;
-	PlayerInfo[playerid][pCasinoCool]	= 10;	// resetiranje kasino varijabli
 
 	// Dodavanje sati ugvora za posao
 	if(PlayerJob[playerid][pJob] != 0)
@@ -433,7 +432,11 @@ GivePlayerPayCheck(playerid)
 		va_GameTextForPlayer(playerid,"~g~LEVEL UP!~n~%s -> %s",5000,1, PlayerInfo[playerid][pLevel], PlayerInfo[playerid][pLevel]+1);
 	}
 	ResetBH_Script(playerid);
-	PlayerInfo[playerid][pJackerCool] = 0;
+	
+	// CoolDown Reset
+	PlayerCoolDown[playerid][pCasinoCool] = 10;	
+	PlayerCoolDown[playerid][pJackerCool] = 0;
+
 	// Experience
 	
 	new currentday, day;

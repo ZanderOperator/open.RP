@@ -1,5 +1,18 @@
 #include <YSI_Coding\y_hooks>
 
+/*      
+
+88888888ba  88                 db   8b        d8 88888888888 88888888ba   
+88      "8b 88                d88b   Y8,    ,8P  88          88      "8b  
+88      ,8P 88               d8'`8b   Y8,  ,8P   88          88      ,8P  
+88aaaaaa8P' 88              d8'  `8b   "8aa8"    88aaaaa     88aaaaaa8P'  
+88""""""'   88             d8YaaaaY8b   `88'     88"""""     88""""88'    
+88          88            d8""""""""8b   88      88          88    `8b    
+88          88           d8'        `8b  88      88          88     `8b   
+88          88888888888 d8'          `8b 88      88888888888 88      `8b  
+                                                                       
+*/
+
 enum E_PLAYER_DATA
 {
 	pSQLID,
@@ -40,10 +53,6 @@ enum E_PLAYER_DATA
 	Float:pMarker3[3],	// TODO: translocate as local var to Admin/CMD.pwn
 	Float:pMarker4[3],	// TODO: translocate as local var to Admin/CMD.pwn
 	Float:pMarker5[3],	// TODO: translocate as local var to Admin/CMD.pwn
-
-	pCasinoCool,
-	pJackerCool,
-	pAmmuCool,
 	
 	pCallsign[60], // TODO: transition to local var in Systems LSPD/FD
 	pLawDuty, // TODO: transition to local var - LSFD/Core.pwn
@@ -67,7 +76,17 @@ enum E_PLAYER_DATA
 	pPMText[128], // TODO: transition to local var in Player/CMD.pwn
 	pPMing // TODO: transition to local var in Player/CMD.pwn
 }
-new PlayerInfo[ MAX_PLAYERS ][ E_PLAYER_DATA ];
+new 
+	PlayerInfo[ MAX_PLAYERS ][ E_PLAYER_DATA ];
+
+enum E_P_COOLDOWN_INFO
+{
+	pCasinoCool,
+	pJackerCool,
+	pAmmuCool
+}
+new 
+	PlayerCoolDown[ MAX_PLAYERS ][ E_P_COOLDOWN_INFO ];
 
 enum E_PLAYER_INVENTORY
 {
@@ -80,7 +99,8 @@ enum E_PLAYER_INVENTORY
 	pRope,
 	pBoomBox
 }
-new PlayerInventory[ MAX_PLAYERS ][ E_PLAYER_INVENTORY ];
+new 	
+	PlayerInventory[ MAX_PLAYERS ][ E_PLAYER_INVENTORY ];
 
 enum E_PLAYER_APPEARANCE
 {
@@ -90,7 +110,8 @@ enum E_PLAYER_APPEARANCE
 	pAccent[19],
 	pLook[120]
 }
-new PlayerAppearance[ MAX_PLAYERS ][ E_PLAYER_APPEARANCE ];
+new 
+	PlayerAppearance[ MAX_PLAYERS ][ E_PLAYER_APPEARANCE ];
 
 enum E_P_KEYS_INFO
 {
@@ -104,7 +125,8 @@ enum E_P_KEYS_INFO
 	pIllegalGarageKey,
 	pVehicleKey
 }
-new PlayerKeys[ MAX_PLAYERS ][ E_P_KEYS_INFO ];
+new 
+	PlayerKeys[ MAX_PLAYERS ][ E_P_KEYS_INFO ];
 
 enum E_P_DEATH_INFO
 {
@@ -115,7 +137,8 @@ enum E_P_DEATH_INFO
 	pDeathInt,
 	pDeathVW
 }
-new PlayerDeath[ MAX_PLAYERS ][ E_P_DEATH_INFO ];
+new 
+	PlayerDeath[ MAX_PLAYERS ][ E_P_DEATH_INFO ];
 
 enum E_P_CRASH_INFO
 {
@@ -128,7 +151,8 @@ enum E_P_CRASH_INFO
 	Float:pCrashY,
 	Float:pCrashZ
 }
-new PlayerCrash[ MAX_PLAYERS ][ E_P_CRASH_INFO ];
+new 
+	PlayerCrash[ MAX_PLAYERS ][ E_P_CRASH_INFO ];
 
 enum E_P_DRUG_INFO
 {
@@ -136,7 +160,8 @@ enum E_P_DRUG_INFO
 	pDrugSeconds,
 	pDrugOrder
 }
-new PlayerDrugStatus[ MAX_PLAYERS ][ E_P_DRUG_INFO ];
+new 
+	PlayerDrugStatus[ MAX_PLAYERS ][ E_P_DRUG_INFO ];
 
 enum E_PAYDAY_INFO
 {
@@ -147,7 +172,8 @@ enum E_PAYDAY_INFO
 	pPayDayDialog[1536],
 	pPayDayDate[32]
 }
-new PaydayInfo[ MAX_PLAYERS ][ E_PAYDAY_INFO ];
+new 
+	PaydayInfo[ MAX_PLAYERS ][ E_PAYDAY_INFO ];
 
 enum E_P_JOB_INFO
 {
@@ -155,7 +181,8 @@ enum E_P_JOB_INFO
 	pContractTime,
 	pFreeWorks
 }
-new PlayerJob[ MAX_PLAYERS ][ E_P_JOB_INFO ];
+new 
+	PlayerJob[ MAX_PLAYERS ][ E_P_JOB_INFO ];
 
 enum E_P_MOBILE_INFO
 {
@@ -166,14 +193,16 @@ enum E_P_MOBILE_INFO
 	pMobileModel,
 	pCryptoNumber
 }
-new PlayerMobile[ MAX_PLAYERS ][ E_P_MOBILE_INFO ];
+new 
+	PlayerMobile[ MAX_PLAYERS ][ E_P_MOBILE_INFO ];
 
 enum E_P_TAXI_INFO
 {
 	pTaxiPoints,
 	pTaxiVoted
 }
-new TaxiInfo[ MAX_PLAYERS ][ E_P_TAXI_INFO ];
+new 	
+	TaxiInfo[ MAX_PLAYERS ][ E_P_TAXI_INFO ];
 
 enum E_VIP_INFO
 {
@@ -182,7 +211,8 @@ enum E_VIP_INFO
 	pDonatorVehicle,
 	pDonatorVehPerms,
 }
-new PlayerVIP[ MAX_PLAYERS ][ E_VIP_INFO ];
+new 	
+	PlayerVIP[ MAX_PLAYERS ][ E_VIP_INFO ];
 
 enum E_LICENSES_INFO
 {
@@ -193,7 +223,8 @@ enum E_LICENSES_INFO
 	pFlyLic,
 	pPassport
 }
-new LicenseInfo[ MAX_PLAYERS ][ E_LICENSES_INFO ];
+new 
+	LicenseInfo[ MAX_PLAYERS ][ E_LICENSES_INFO ];
 
 enum E_P_JAIL_INFO
 {
@@ -203,7 +234,8 @@ enum E_P_JAIL_INFO
 	pBailPrice,
 	pJailJob
 }
-new PlayerJail[ MAX_PLAYERS ][ E_P_JAIL_INFO ];
+new 	
+	PlayerJail[ MAX_PLAYERS ][ E_P_JAIL_INFO ];
 
 enum E_SAVINGS_INFO
 {
@@ -212,7 +244,8 @@ enum E_SAVINGS_INFO
 	pSavingsType,
 	pSavingsMoney,
 } 
-new PlayerSavings[ MAX_PLAYERS ][ E_SAVINGS_INFO ];
+new 
+	PlayerSavings[ MAX_PLAYERS ][ E_SAVINGS_INFO ];
 
 enum E_CREDIT_INFO
 {
@@ -223,7 +256,8 @@ enum E_CREDIT_INFO
 	bool:cUsed,
 	cTimestamp
 }
-new CreditInfo[ MAX_PLAYERS ][ E_CREDIT_INFO ];
+new 
+	CreditInfo[ MAX_PLAYERS ][ E_CREDIT_INFO ];
 
 enum E_PLAYER_FACTION_INFO
 {
@@ -231,7 +265,8 @@ enum E_PLAYER_FACTION_INFO
 	pMember,
 	pRank
 }
-new PlayerFaction[ MAX_PLAYERS ][ E_PLAYER_FACTION_INFO ];
+new 
+	PlayerFaction[ MAX_PLAYERS ][ E_PLAYER_FACTION_INFO ];
 
 enum E_P_RADIO_INFO
 {
@@ -240,7 +275,8 @@ enum E_P_RADIO_INFO
 	pRadioSlot[4],
 	pMainSlot
 }
-new PlayerRadio[ MAX_PLAYERS ][ E_P_RADIO_INFO ];
+new 
+	PlayerRadio[ MAX_PLAYERS ][ E_P_RADIO_INFO ];
 
 enum E_P_ADMIN_MSG
 {
@@ -248,7 +284,8 @@ enum E_P_ADMIN_MSG
 	pAdminMsgBy[60],
 	bool:pAdmMsgConfirm,
 }
-new PlayerAdminMessage[ MAX_PLAYERS ][ E_P_ADMIN_MSG ];
+new 
+	PlayerAdminMessage[ MAX_PLAYERS ][ E_P_ADMIN_MSG ];
 
 enum E_PLAYER_HEALTH
 {
@@ -256,7 +293,8 @@ enum E_PLAYER_HEALTH
 	Float:pArmour,
 	Float:pHunger
 }
-new PlayerHealth[ MAX_PLAYERS ][ E_PLAYER_HEALTH ];
+new 	
+	PlayerHealth[ MAX_PLAYERS ][ E_PLAYER_HEALTH ];
 
 enum E_PLAYER_GYM_INFO
 {
@@ -265,7 +303,8 @@ enum E_PLAYER_GYM_INFO
 	pGymCounter,
 	pFightStyle
 }
-new PlayerGym[ MAX_PLAYERS ][ E_PLAYER_GYM_INFO ];
+new 	
+	PlayerGym[ MAX_PLAYERS ][ E_PLAYER_GYM_INFO ];
 
 enum E_PLAYER_FISH_INFO
 {
@@ -273,7 +312,191 @@ enum E_PLAYER_FISH_INFO
 	pFishWeight,
 	pFishingSkill,	
 }
-new PlayerFish[ MAX_PLAYERS ][ E_PLAYER_FISH_INFO ];
+new 
+	PlayerFish[ MAX_PLAYERS ][ E_PLAYER_FISH_INFO ];
+
+enum E_EXP_INFO
+{
+	bool:eGivenEXP,
+	eAllPoints,
+	ePoints,
+	eLastPayDayStamp,
+	eDayPayDays,
+	eMonthPayDays
+}
+new 
+	ExpInfo[ MAX_PLAYERS ][ E_EXP_INFO ];
+
+enum E_OLDPOS_INFO
+{
+	Float:oPosX,
+	Float:oPosY,
+	Float:oPosZ,
+	oInt,
+	oViwo
+}
+new 
+	PlayerPrevInfo[MAX_PLAYERS][E_OLDPOS_INFO];
+
+enum E_HIDDEN_WEAPON
+{
+	pwSQLID,
+	pwWeaponId,
+	pwAmmo
+}
+new 
+	HiddenWeapon[MAX_PLAYERS][E_HIDDEN_WEAPON];
+
+enum E_PLAYER_TICKS 
+{
+	ptReport,
+	ptMoney,
+	ptKill,
+	ptHelperHelp,
+	ptMainTimer
+}
+new 
+	PlayerTick[MAX_PLAYERS][E_PLAYER_TICKS];
+
+// TODO: move to Mobile.pwn local var!
+enum E_VICTIM_DATA
+{
+	pVictimLocation[100],
+}
+new 
+	PlayerInjured[MAX_PLAYERS][E_VICTIM_DATA];
+
+#define MAX_PHONE_LINES								10
+enum E_PHONE_NEWS_DATA 
+{
+	npPlayerID,
+	npNumber
+}
+new 
+	NewsPhone[ MAX_PHONE_LINES ][ E_PHONE_NEWS_DATA ];
+
+enum E_CRIME_DATA
+{
+	pBplayer[32],
+	pAccusing[32],
+	pAccusedof[32],
+	pVictim[32],
+	pLocation[32]
+};
+new 
+	PlayerCrime[MAX_PLAYERS][E_CRIME_DATA];
+
+enum E_SAFE_EXIT 
+{
+	Float:giX,
+	Float:giY,
+	Float:giZ,
+	Float:giRZ
+}
+
+new 
+	PlayerSafeExit[ MAX_PLAYERS ][E_SAFE_EXIT];
+
+enum E_PLAYER_PACKAGES 
+{
+	p_SQLID,
+	packExists,
+	p_weapon,
+	p_amount
+}
+new 
+	PlayerPackage[MAX_PLAYERS][E_PLAYER_PACKAGES][MAX_PLAYER_PACKAGES];
+
+enum PLAYER_OBJECT_DATA
+{
+	poSQLID,
+	poModelid,
+	poBoneId,
+	bool:poPlaced,
+	Float:poPosX,
+	Float:poPosY,
+	Float:poPosZ,
+	Float:poRotX,
+	Float:poRotY,
+	Float:poRotZ,
+	Float:poScaleX,
+	Float:poScaleY,
+	Float:poScaleZ,
+	poColor1,
+	poColor2
+}
+new 
+	PlayerObject[MAX_PLAYERS][MAX_CUSTOMIZED_OBJECTS][PLAYER_OBJECT_DATA];
+
+enum E_ANTI_SPAM_DATA
+{
+	asPrivateMsg,
+	asCreditPay,
+	asCarTrunk,
+	asHouseWeapon,
+	stHouseMoney,
+	asBuying,
+	asDoorShout
+}
+new
+	AntiSpamInfo[MAX_PLAYERS][E_ANTI_SPAM_DATA];
+
+/*
+
+88888888ba,   88888888ba  88        88   ,ad8888ba,   ad88888ba   
+88      `"8b  88      "8b 88        88  d8"'    `"8b d8"     "8b  
+88        `8b 88      ,8P 88        88 d8'           Y8,          
+88         88 88aaaaaa8P' 88        88 88            `Y8aaaaa,    
+88         88 88""""88'   88        88 88      88888   `"""""8b,  
+88         8P 88    `8b   88        88 Y8,        88         `8b  
+88      .a8P  88     `8b  Y8a.    .a8P  Y8a.    .a88 Y8a     a8P  
+88888888Y"'   88      `8b  `"Y8888Y"'    `"Y88888P"   "Y88888P"   
+
+*/
+
+enum E_DRUG_INFO
+{
+	dName[10],
+	dEffect,
+	dPayDayT,
+	dUseTime,
+	dPricePG
+}
+
+new const drugs[][E_DRUG_INFO] = 
+{
+	{"Prazno", 		DRUG_TYPE_NONE,   0, 0, 0},
+	{"Marihuana", 	DRUG_TYPE_SMOKE,  8, 25, 70},
+	{"Kokain", 		DRUG_TYPE_SNORT,  12, 30, 110},
+	{"Heroin", 		DRUG_TYPE_INJECT, 15, 35, 90},
+	{"Xanax",		DRUG_TYPE_TABLET, 15, 40, 145},
+	{"LSD", 		DRUG_TYPE_TABLET, 15, 50, 160},
+	{"MDMA",		DRUG_TYPE_TABLET, 15, 75, 175}
+};
+
+enum E_DRUG_DATA
+{
+	dSQLID[5],
+	dCode[5],
+	Float:dAmount[5],
+	Float:dEffect[5],
+	dTimeStamp[5]
+}
+new 
+	PlayerDrugs[MAX_PLAYERS][E_DRUG_DATA];
+
+/*
+                                                                                    
+  ,ad8888ba,        db        88888888ba         db        ,ad8888ba,  88888888888  
+ d8"'    `"8b      d88b       88      "8b       d88b      d8"'    `"8b 88           
+d8'               d8'`8b      88      ,8P      d8'`8b    d8'           88           
+88               d8'  `8b     88aaaaaa8P'     d8'  `8b   88            88aaaaa      
+88      88888   d8YaaaaY8b    88""""88'      d8YaaaaY8b  88      88888 88"""""      
+Y8,        88  d8""""""""8b   88    `8b     d8""""""""8b Y8,        88 88           
+ Y8a.    .a88 d8'        `8b  88     `8b   d8'        `8b Y8a.    .a88 88           
+  `"Y88888P" d8'          `8b 88      `8b d8'          `8b `"Y88888P"  88888888888  
+  
+  */
 
 enum E_GARAGE_DATA 
 {
@@ -291,61 +514,21 @@ enum E_GARAGE_DATA
 	Float:gExitZ,
 	gHouseID
 }
-new GarageInfo[ MAX_GARAGES ][ E_GARAGE_DATA ];
+new 
+	GarageInfo[ MAX_GARAGES ][ E_GARAGE_DATA ];
 
-enum E_EXP_INFO
-{
-	bool:eGivenEXP,
-	eAllPoints,
-	ePoints,
-	eLastPayDayStamp,
-	eDayPayDays,
-	eMonthPayDays
-}
-new ExpInfo[ MAX_PLAYERS ][ E_EXP_INFO ];
+/*
 
-enum E_OLDPOS_INFO
-{
-	Float:oPosX,
-	Float:oPosY,
-	Float:oPosZ,
-	oInt,
-	oViwo
-}
-new PlayerPrevInfo[MAX_PLAYERS][E_OLDPOS_INFO];
+88        88   ,ad8888ba,   88        88  ad88888ba  88888888888  
+88        88  d8"'    `"8b  88        88 d8"     "8b 88           
+88        88 d8'        `8b 88        88 Y8,         88           
+88aaaaaaaa88 88          88 88        88 `Y8aaaaa,   88aaaaa      
+88""""""""88 88          88 88        88   `"""""8b, 88"""""      
+88        88 Y8,        ,8P 88        88         `8b 88           
+88        88  Y8a.    .a8P  Y8a.    .a8P Y8a     a8P 88           
+88        88   `"Y8888Y"'    `"Y8888Y"'   "Y88888P"  88888888888  
 
-enum E_HIDDEN_WEAPON
-{
-	pwSQLID,
-	pwWeaponId,
-	pwAmmo
-}
-new HiddenWeapon[MAX_PLAYERS][E_HIDDEN_WEAPON];
-
-// Weapon Package Order List
-enum E_WEAPON_PACKAGE 
-{
-	wep_ID,
-	wep_Name[16],
-	wep_Price
-}
-
-new
-	show_WeaponList[MAX_LISTED_WEAPONS][E_WEAPON_PACKAGE] = {
-	{24, 			"DEAGLE", 			70},
-	{22,		    "COLT",		        45},
-	{29,		    "MP5",		        85},
-	{23,		    "SILENCED",		    60},
-	{25,		    "SHOTGUN",		    90},
-	{32,    		"TEC9",		        60},
-	{28,		    "UZI",		        60},
-	{30,		    "AK47",		        110},
-	{31,		    "M4",		      	125},
-	{34,	    	"SNIPER",         	900},
-	{33,		    "RIFLE",		    130}
-};
-
-new PhoneStatus[ MAX_PLAYERS ];
+*/
 
 enum E_HOUSES_INFO {
 	hSQLID,
@@ -404,11 +587,25 @@ enum E_HOUSES_INFO {
 	hFurTxtId[ MAX_FURNITURE_SLOT_FIELDS ],
 	hFurColId[ MAX_FURNITURE_SLOT_FIELDS ]
 }
-new HouseInfo[MAX_HOUSES][E_HOUSES_INFO];
+new 
+	HouseInfo[MAX_HOUSES][E_HOUSES_INFO];
 
  // Hacking the compiler to have HouseInfo[ houseid ][ hFurXXX ][ 0 ][ 0 ]
 #define hFurTxtId][%1][%2] hFurTxtId][((%1)*MAX_COLOR_TEXT_SLOTS)+(%2)] 
-#define hFurColId][%1][%2] hFurColId][((%1)*MAX_COLOR_TEXT_SLOTS)+(%2)] 
+#define hFurColId][%1][%2] hFurColId][((%1)*MAX_COLOR_TEXT_SLOTS)+(%2)]
+
+/*
+
+  ,ad8888ba,   ,ad8888ba,   88b           d88 88888888ba  88          88888888888 8b        d8  
+ d8"'    `"8b d8"'    `"8b  888b         d888 88      "8b 88          88           Y8,    ,8P   
+d8'          d8'        `8b 88`8b       d8'88 88      ,8P 88          88            `8b  d8'    
+88           88          88 88 `8b     d8' 88 88aaaaaa8P' 88          88aaaaa         Y88P      
+88           88          88 88  `8b   d8'  88 88""""""'   88          88"""""         d88b      
+Y8,          Y8,        ,8P 88   `8b d8'   88 88          88          88            ,8P  Y8,    
+ Y8a.    .a8P Y8a.    .a8P  88    `888'    88 88          88          88           d8'    `8b   
+  `"Y8888Y"'   `"Y8888Y"'   88     `8'     88 88          88888888888 88888888888 8P        Y8  
+
+*/
 
 enum E_COMPLEX_INFO
 {
@@ -428,7 +625,8 @@ enum E_COMPLEX_INFO
 	Float:cExitY,
 	Float:cExitZ
 }
-new ComplexInfo[MAX_COMPLEX][E_COMPLEX_INFO];
+new 
+	ComplexInfo[MAX_COMPLEX][E_COMPLEX_INFO];
 
 enum E_COMPLEX_ROOM_INFO {
 	cSQLID,
@@ -473,7 +671,21 @@ enum E_COMPLEX_ROOM_INFO {
 	cTV,
 	cMicrowave
 }
-new ComplexRoomInfo[MAX_COMPLEX_ROOMS][E_COMPLEX_ROOM_INFO];
+new 
+	ComplexRoomInfo[MAX_COMPLEX_ROOMS][E_COMPLEX_ROOM_INFO];
+
+/*
+
+88888888ba  88        88  ad88888ba  88 888b      88 88888888888 ad88888ba   ad88888ba   
+88      "8b 88        88 d8"     "8b 88 8888b     88 88         d8"     "8b d8"     "8b  
+88      ,8P 88        88 Y8,         88 88 `8b    88 88         Y8,         Y8,          
+88aaaaaa8P' 88        88 `Y8aaaaa,   88 88  `8b   88 88aaaaa    `Y8aaaaa,   `Y8aaaaa,    
+88""""""8b, 88        88   `"""""8b, 88 88   `8b  88 88"""""      `"""""8b,   `"""""8b,  
+88      `8b 88        88         `8b 88 88    `8b 88 88                 `8b         `8b  
+88      a8P Y8a.    .a8P Y8a     a8P 88 88     `8888 88         Y8a     a8P Y8a     a8P  
+88888888P"   `"Y8888Y"'   "Y88888P"  88 88      `888 88888888888 "Y88888P"   "Y88888P"   
+
+*/
 
 enum E_BIZNIS_INFO
 {
@@ -525,123 +737,73 @@ enum E_BIZNIS_INFO
 	bool:bFurLoaded,
     bGasPrice
 }
-new BizzInfo[MAX_BIZZS][E_BIZNIS_INFO];
+new 
+	BizzInfo[MAX_BIZZS][E_BIZNIS_INFO];
 
 #define bFurTxtId][%1][%2] bFurTxtId][((%1)*5)+(%2)]
 #define bFurColId][%1][%2] bFurColId][((%1)*5)+(%2)]
+
+enum
+{
+	BIZZ_TYPE_OTHER   	= 0,
+	BIZZ_TYPE_BAR,
+	BIZZ_TYPE_STRIP,
+	BIZZ_TYPE_RESTORAN,
+	BIZZ_TYPE_BURGER,
+	BIZZ_TYPE_PIZZA,
+	BIZZ_TYPE_CLUCKIN,
+	BIZZ_TYPE_DONUT,
+	BIZZ_TYPE_DUCAN,
+	BIZZ_TYPE_SEXSHOP,
+	BIZZ_TYPE_BINCO,
+	BIZZ_TYPE_ZIP,
+	BIZZ_TYPE_PROLAPS,
+	BIZZ_TYPE_SUBURBAN,
+	BIZZ_TYPE_BYCITY,
+	BIZZ_TYPE_RENTVEH,
+	BIZZ_TYPE_CASINO,
+	BIZZ_TYPE_DRUGSTORE,
+	BIZZ_TYPE_GASSTATION,
+	BIZZ_TYPE_MAX
+}
+#define MAX_BIZZ_TYPES					(BIZZ_TYPE_MAX)
+
+/*
+
+ ad88888ba  88      a8P  88 888b      88  ad88888ba   
+d8"     "8b 88    ,88'   88 8888b     88 d8"     "8b  
+Y8,         88  ,88"     88 88 `8b    88 Y8,          
+`Y8aaaaa,   88,d88'      88 88  `8b   88 `Y8aaaaa,    
+  `"""""8b, 8888"88,     88 88   `8b  88   `"""""8b,  
+        `8b 88P   Y8b    88 88    `8b 88         `8b  
+Y8a     a8P 88     "88,  88 88     `8888 Y8a     a8P  
+ "Y88888P"  88       Y8b 88 88      `888  "Y88888P"  
+
+ */
 
 enum E_SERVER_SKINS
 {
 	sSkinID,
 	sPrice
 }
-new ServerSkins[E_SERVER_SKINS][MAX_SERVER_SKINS];
+new 
+	ServerSkins[E_SERVER_SKINS][MAX_SERVER_SKINS];
 
-enum E_PLAYER_TICKS 
-{
-	ptReport,
-	ptMoney,
-	ptKill,
-	ptHelperHelp,
-	ptMainTimer
-}
-new PlayerTick[MAX_PLAYERS][E_PLAYER_TICKS];
+/*
 
-// TODO: move to Mobile.pwn local var!
-enum E_VICTIM_DATA
-{
-	pVictimLocation[100],
-}
-new PlayerInjured[MAX_PLAYERS][E_VICTIM_DATA];
+8b           d8 88888888888 88        88 88   ,ad8888ba,  88          88888888888 ad88888ba   
+`8b         d8' 88          88        88 88  d8"'    `"8b 88          88         d8"     "8b  
+ `8b       d8'  88          88        88 88 d8'           88          88         Y8,          
+  `8b     d8'   88aaaaa     88aaaaaaaa88 88 88            88          88aaaaa    `Y8aaaaa,    
+   `8b   d8'    88"""""     88""""""""88 88 88            88          88"""""      `"""""8b,  
+    `8b d8'     88          88        88 88 Y8,           88          88                 `8b  
+     `888'      88          88        88 88  Y8a.    .a8P 88          88         Y8a     a8P  
+      `8'       88888888888 88        88 88   `"Y8888Y"'  88888888888 88888888888 "Y88888P"   
 
-#define MAX_PHONE_LINES								10
-enum E_PHONE_NEWS_DATA 
-{
-	npPlayerID,
-	npNumber
-}
-new NewsPhone[ MAX_PHONE_LINES ][ E_PHONE_NEWS_DATA ];
+*/
 
-enum E_CRIME_DATA
-{
-	pBplayer[32],
-	pAccusing[32],
-	pAccusedof[32],
-	pVictim[32],
-	pLocation[32]
-};
-new PlayerCrime[MAX_PLAYERS][E_CRIME_DATA];
-
-enum E_SAFE_EXIT 
-{
-	Float:giX,
-	Float:giY,
-	Float:giZ,
-	Float:giRZ
-}
-
-new PlayerSafeExit[ MAX_PLAYERS ][E_SAFE_EXIT];
-
-enum E_PLAYER_PACKAGES 
-{
-	p_SQLID,
-	packExists,
-	p_weapon,
-	p_amount
-}
-new PlayerPackage[MAX_PLAYERS][E_PLAYER_PACKAGES][MAX_PLAYER_PACKAGES];
-
-enum E_DRUG_INFO
-{
-	dName[10],
-	dEffect,
-	dPayDayT,
-	dUseTime,
-	dPricePG
-}
-
-new const drugs[][E_DRUG_INFO] = 
-{
-	{"Prazno", 		DRUG_TYPE_NONE,   0, 0, 0},
-	{"Marihuana", 	DRUG_TYPE_SMOKE,  8, 25, 70},
-	{"Kokain", 		DRUG_TYPE_SNORT,  12, 30, 110},
-	{"Heroin", 		DRUG_TYPE_INJECT, 15, 35, 90},
-	{"Xanax",		DRUG_TYPE_TABLET, 15, 40, 145},
-	{"LSD", 		DRUG_TYPE_TABLET, 15, 50, 160},
-	{"MDMA",		DRUG_TYPE_TABLET, 15, 75, 175}
-};
-
-enum E_DRUG_DATA
-{
-	dSQLID[5],
-	dCode[5],
-	Float:dAmount[5],
-	Float:dEffect[5],
-	dTimeStamp[5]
-}
-new PlayerDrugs[MAX_PLAYERS][E_DRUG_DATA];
-
-enum PLAYER_OBJECT_DATA
-{
-	poSQLID,
-	poModelid,
-	poBoneId,
-	bool:poPlaced,
-	Float:poPosX,
-	Float:poPosY,
-	Float:poPosZ,
-	Float:poRotX,
-	Float:poRotY,
-	Float:poRotZ,
-	Float:poScaleX,
-	Float:poScaleY,
-	Float:poScaleZ,
-	poColor1,
-	poColor2
-}
-new PlayerObject[MAX_PLAYERS][MAX_CUSTOMIZED_OBJECTS][PLAYER_OBJECT_DATA];
-
-new vTireHP[MAX_VEHICLES][4];
+new 
+	vTireHP[MAX_VEHICLES][4];
 
 enum E_VEHICLE_DATA
 {
@@ -740,20 +902,44 @@ enum E_VEHICLE_DATA
 	vBodyArmor,
 	vNOSCap
 }
-new VehicleInfo[MAX_VEHICLES][E_VEHICLE_DATA];
+new 
+	VehicleInfo[MAX_VEHICLES][E_VEHICLE_DATA];
 
-enum E_ANTI_SPAM_DATA
+enum 
 {
-	asPrivateMsg,
-	asCreditPay,
-	asCarTrunk,
-	asHouseWeapon,
-	stHouseMoney,
-	asBuying,
-	asDoorShout
+	VEHICLE_USAGE_NORMAL 	= 1,
+	VEHICLE_USAGE_PRIVATE	= 2,
+	VEHICLE_USAGE_FACTION	= 3,
+	VEHICLE_USAGE_JOB		= 4,
+	VEHICLE_USAGE_RENT		= 5,
+	VEHICLE_USAGE_PREMIUM	= 6,
+	VEHICLE_USAGE_LICENSE	= 7,
+	VEHICLE_USAGE_NEWBIES	= 8,
+	VEHICLE_USAGE_EVENT		= 9
 }
-new
-	AntiSpamInfo[MAX_PLAYERS][E_ANTI_SPAM_DATA];
+
+enum
+{
+	VEHICLE_TYPE_CAR		= 10,
+	VEHICLE_TYPE_MOTOR		= 11,
+	VEHICLE_TYPE_BIKE		= 12,
+	VEHICLE_TYPE_BOAT		= 13,
+	VEHICLE_TYPE_PLANE		= 14,
+	VEHICLE_TYPE_TRAIN		= 15
+}
+
+/*
+
+88888888888 db        ,ad8888ba, 888888888888 88   ,ad8888ba,   888b      88  ad88888ba   
+88         d88b      d8"'    `"8b     88      88  d8"'    `"8b  8888b     88 d8"     "8b  
+88        d8'`8b    d8'               88      88 d8'        `8b 88 `8b    88 Y8,          
+88aaaaa  d8'  `8b   88                88      88 88          88 88  `8b   88 `Y8aaaaa,    
+88""""" d8YaaaaY8b  88                88      88 88          88 88   `8b  88   `"""""8b,  
+88     d8""""""""8b Y8,               88      88 Y8,        ,8P 88    `8b 88         `8b  
+88    d8'        `8b Y8a.    .a8P     88      88  Y8a.    .a8P  88     `8888 Y8a     a8P  
+88   d8'          `8b `"Y8888Y"'      88      88   `"Y8888Y"'   88      `888  "Y88888P"   
+
+*/
 
 enum E_FACTION_DATA
 {
@@ -794,7 +980,21 @@ enum E_FACTION_DATA
 	rUndercover,
 	rAUndercover
 }
-new FactionInfo[MAX_FACTIONS][E_FACTION_DATA];
+new 
+	FactionInfo[MAX_FACTIONS][E_FACTION_DATA];
+
+/*
+
+  ,ad8888ba,  88 888888888888 8b        d8  
+ d8"'    `"8b 88      88       Y8,    ,8P   
+d8'           88      88        Y8,  ,8P    
+88            88      88         "8aa8"     
+88            88      88          `88'      
+Y8,           88      88           88       
+ Y8a.    .a8P 88      88           88       
+  `"Y8888Y"'  88      88           88       
+
+*/
 
 enum E_CITY_DATA
 {
@@ -802,7 +1002,21 @@ enum E_CITY_DATA
 	cIllegalBudget,
 	cTax
 }
-new CityInfo[ E_CITY_DATA ];
+new 
+	CityInfo[ E_CITY_DATA ];
+
+/*
+
+88888888ba,   88        db        88          ,ad8888ba,     ,ad8888ba,   ad88888ba   
+88      `"8b  88       d88b       88         d8"'    `"8b   d8"'    `"8b d8"     "8b  
+88        `8b 88      d8'`8b      88        d8'        `8b d8'           Y8,          
+88         88 88     d8'  `8b     88        88          88 88            `Y8aaaaa,    
+88         88 88    d8YaaaaY8b    88        88          88 88      88888   `"""""8b,  
+88         8P 88   d8""""""""8b   88        Y8,        ,8P Y8,        88         `8b  
+88      .a8P  88  d8'        `8b  88         Y8a.    .a8P   Y8a.    .a88 Y8a     a8P  
+88888888Y"'   88 d8'          `8b 88888888888 `"Y8888Y"'     `"Y88888P"   "Y88888P"   
+
+*/
 
 enum 
 {
@@ -1392,50 +1606,38 @@ enum
 	DIALOG_UPDATE_LIST
 };
 
-enum
-{
-	BIZZ_TYPE_OTHER   	= 0,
-	BIZZ_TYPE_BAR,
-	BIZZ_TYPE_STRIP,
-	BIZZ_TYPE_RESTORAN,
-	BIZZ_TYPE_BURGER,
-	BIZZ_TYPE_PIZZA,
-	BIZZ_TYPE_CLUCKIN,
-	BIZZ_TYPE_DONUT,
-	BIZZ_TYPE_DUCAN,
-	BIZZ_TYPE_SEXSHOP,
-	BIZZ_TYPE_BINCO,
-	BIZZ_TYPE_ZIP,
-	BIZZ_TYPE_PROLAPS,
-	BIZZ_TYPE_SUBURBAN,
-	BIZZ_TYPE_BYCITY,
-	BIZZ_TYPE_RENTVEH,
-	BIZZ_TYPE_CASINO,
-	BIZZ_TYPE_DRUGSTORE,
-	BIZZ_TYPE_GASSTATION,
-	BIZZ_TYPE_MAX
-}
-#define MAX_BIZZ_TYPES					(BIZZ_TYPE_MAX)
+/*
+                                                                                              
+I8,        8        ,8I 88888888888        db        88888888ba    ,ad8888ba,   888b      88  
+`8b       d8b       d8' 88                d88b       88      "8b  d8"'    `"8b  8888b     88  
+ "8,     ,8"8,     ,8"  88               d8'`8b      88      ,8P d8'        `8b 88 `8b    88  
+  Y8     8P Y8     8P   88aaaaa         d8'  `8b     88aaaaaa8P' 88          88 88  `8b   88  
+  `8b   d8' `8b   d8'   88"""""        d8YaaaaY8b    88""""""'   88          88 88   `8b  88  
+   `8a a8'   `8a a8'    88            d8""""""""8b   88          Y8,        ,8P 88    `8b 88  
+    `8a8'     `8a8'     88           d8'        `8b  88           Y8a.    .a8P  88     `8888  
+     `8'       `8'      88888888888 d8'          `8b 88            `"Y8888Y"'   88      `888  
 
-enum 
+*/
+
+enum E_WEAPON_PACKAGE 
 {
-	VEHICLE_USAGE_NORMAL 	= 1,
-	VEHICLE_USAGE_PRIVATE	= 2,
-	VEHICLE_USAGE_FACTION	= 3,
-	VEHICLE_USAGE_JOB		= 4,
-	VEHICLE_USAGE_RENT		= 5,
-	VEHICLE_USAGE_PREMIUM	= 6,
-	VEHICLE_USAGE_LICENSE	= 7,
-	VEHICLE_USAGE_NEWBIES	= 8,
-	VEHICLE_USAGE_EVENT		= 9
+	wep_ID,
+	wep_Name[16],
+	wep_Price
 }
 
-enum
+new 
+	show_WeaponList[MAX_LISTED_WEAPONS][E_WEAPON_PACKAGE] = 
 {
-	VEHICLE_TYPE_CAR		= 10,
-	VEHICLE_TYPE_MOTOR		= 11,
-	VEHICLE_TYPE_BIKE		= 12,
-	VEHICLE_TYPE_BOAT		= 13,
-	VEHICLE_TYPE_PLANE		= 14,
-	VEHICLE_TYPE_TRAIN		= 15
-}
+	{24, 			"DEAGLE", 			70},
+	{22,		    "COLT",		        45},
+	{29,		    "MP5",		        85},
+	{23,		    "SILENCED",		    60},
+	{25,		    "SHOTGUN",		    90},
+	{32,    		"TEC9",		        60},
+	{28,		    "UZI",		        60},
+	{30,		    "AK47",		        110},
+	{31,		    "M4",		      	125},
+	{34,	    	"SNIPER",         	900},
+	{33,		    "RIFLE",		    130}
+};
