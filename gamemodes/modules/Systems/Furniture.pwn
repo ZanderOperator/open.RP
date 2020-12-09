@@ -2237,7 +2237,7 @@ GetHouseFurnitureSlot(playerid, houseid)
 
 GetFurnitureSlots(playerid, donator_level)
 {
-    if (PlayerInfo[playerid][FurnPremium] == 1)
+    if (PlayerInfo[playerid][pExtraFurniture] == 1)
         return FURNITURE_PREMIUM_OBJECTS;
 
     switch (donator_level)
@@ -2280,7 +2280,7 @@ SetPlayerPremiumFurniture(playerid, houseid)
         return 1;
 
     HouseInfo[houseid][hFurSlots] = (FURNITURE_PREMIUM_OBJECTS);
-    PlayerInfo[playerid][FurnPremium] = 1;
+    PlayerInfo[playerid][pExtraFurniture] = 1;
 
     mysql_fquery(g_SQL, "UPDATE houses SET fur_slots = '%d' WHERE id = '%d'", 
         HouseInfo[houseid][hFurSlots], 

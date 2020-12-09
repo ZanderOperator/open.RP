@@ -1294,7 +1294,7 @@ stock static HungerCheck(playerid)
 }
 
 ReturnPlayerIP(playerid)
-	return PlayerInfo[playerid][cIP];
+	return PlayerInfo[playerid][pIP];
 
 /**
     <summary>

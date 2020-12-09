@@ -291,7 +291,6 @@ CMD:news(playerid, params[])
     if (!SendNews(message)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Pricekajte da se tekst obrise!");
 
     BudgetToFactionMoney( FACTION_TYPE_NEWS, 100); // dobivaju novac iz proracuna
-    PlayerInfo[playerid][pNews]++;
     SendNewsT = gettimestamp() + 5;
     return 1;
 }
@@ -316,35 +315,6 @@ CMD:tognews(playerid, params[])
             TextDrawHideForPlayer(playerid, NewsLineTextDraw[i]);
         }
         SendMessage(playerid, MESSAGE_TYPE_INFO, "Iskljucio si vidljivost LSN-a!");
-    }
-    return 1;
-}
-
-CMD:lsnstat(playerid, params[])
-{
-    if (PlayerFaction[playerid][pLeader] != 5) return SendMessage(playerid, MESSAGE_TYPE_ERROR, " Niste novinar!");
-
-    new
-        param[7],
-        giveplayerid;
-    if (sscanf(params, "s[7] ", param)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /lsnstat [check/delete]");
-
-    if (!strcmp(param, "check", true))
-    {
-        if (sscanf(params, "s[7]u", param, giveplayerid)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /lsnstat check [dio imena/playerid]");
-        if (giveplayerid == INVALID_PLAYER_ID) return SendMessage(playerid, MESSAGE_TYPE_ERROR, " Igrac nije online!");
-        if (!IsANews(giveplayerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, " Igrac nije novinar!");
-
-        SendFormatMessage(playerid, MESSAGE_TYPE_INFO, "Igrac je poslao %d poruka i zaradio %d$!", PlayerInfo[giveplayerid][pNews], ( PlayerInfo[giveplayerid][pNews] * 15)  );
-    }
-    else if (!strcmp(param, "delete", true))
-    {
-        if (sscanf(params, "s[7]u", param, giveplayerid)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /lsnstat check [dio imena/playerid]");
-        if (giveplayerid == INVALID_PLAYER_ID) return SendMessage(playerid, MESSAGE_TYPE_ERROR, " Igrac nije online!");
-        if (!IsANews(giveplayerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, " Igrac nije novinar!");
-
-        PlayerInfo[giveplayerid][pNews] = 0;
-        SendFormatMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uspjesno ste obrisali LSN statse clanu %s", GetName(giveplayerid));
     }
     return 1;
 }

@@ -3143,7 +3143,7 @@ CMD:skin(playerid, params[])
 	PlayerAppearance[giveplayerid][pTmpSkin] = skin;
 	PlayerAppearance[giveplayerid][pSkin] = skin;
 	
-	mysql_fquery(g_SQL, "UPDATE player_appearance SET char = '%d' WHERE sqlid = '%d'", 
+	mysql_fquery(g_SQL, "UPDATE player_appearance SET skin = '%d' WHERE sqlid = '%d'", 
 		PlayerAppearance[giveplayerid][pSkin], 
 		PlayerInfo[giveplayerid][pSQLID]
 	);
