@@ -534,12 +534,6 @@ stock BuyVehicle(playerid, bool:credit_activated = false)
 		cCar = AC_CreateVehicle(modelid, VehicleBuyPos[PlayerDealer[playerid]][0],VehicleBuyPos[PlayerDealer[playerid]][1],VehicleBuyPos[PlayerDealer[playerid]][2],VehicleBuyPos[PlayerDealer[playerid]][3], PreviewColor1[playerid], PreviewColor2[playerid], -1, 0);
 	ResetVehicleInfo(cCar);
 
-	VehiclePrevInfo[cCar][vPosX] = VehicleBuyPos[PlayerDealer[playerid]][0];
-	VehiclePrevInfo[cCar][vPosY] = VehicleBuyPos[PlayerDealer[playerid]][1];
-	VehiclePrevInfo[cCar][vPosZ] = VehicleBuyPos[PlayerDealer[playerid]][2];
-	VehiclePrevInfo[cCar][vRotZ] = VehicleBuyPos[PlayerDealer[playerid]][3];
-	VehiclePrevInfo[cCar][vPosDiff] = 0.0;
-
 	PlayerKeys[playerid][pVehicleKey] 	= cCar;
 	PlayerModel[playerid]				= modelid;
 	PlayerEngine[playerid] 				= engineType;
@@ -1398,7 +1392,6 @@ public OnVehicleBuy(playerid, vehicleid)
 	VehicleInfo[vehicleid][vModel]				= PlayerModel[playerid];
 	VehicleInfo[vehicleid][vColor1]				= PreviewColor1[playerid];
 	VehicleInfo[vehicleid][vColor2]				= PreviewColor2[playerid];
-	VehicleInfo[vehicleid][vSpawned]			= 1;
 	VehicleInfo[vehicleid][vOwnerID] 			= PlayerInfo[playerid][pSQLID];
 	format(VehicleInfo[vehicleid][vNumberPlate], 8, "");
 	VehicleInfo[vehicleid][vParkX]				= VehicleBuyPos[PlayerDealer[playerid]][0];
@@ -2535,12 +2528,6 @@ stock SpawnVehicleInfo(playerid, pick)
 			vehicleid = AC_CreateVehicle(modelid, Pos[0], Pos[1], Pos[2], Pos[3], color[0], color[1], -1, 0);
 			// Resetiranje varijabli
 			ResetVehicleInfo(vehicleid);
-
-			VehiclePrevInfo[vehicleid][vPosX] = Pos[0];
-			VehiclePrevInfo[vehicleid][vPosY] = Pos[1];
-			VehiclePrevInfo[vehicleid][vPosZ] = Pos[2];
-			VehiclePrevInfo[vehicleid][vRotZ] = Pos[3];
-			VehiclePrevInfo[vehicleid][vPosDiff] = 0.0;
 			
 			LinkVehicleToInterior(vehicleid, interior);
 			SetVehicleVirtualWorld(vehicleid, GetPlayerVirtualWorld(playerid)); //viwo??
@@ -3537,8 +3524,6 @@ task VehicleGlobalTask[1000]()
 						}
 					}
 				}
-				VehicleInfo[vehicleid][vSpawned] = 0;
-				VehicleInfo[vehicleid][vServerTeleport] = false;
 				if(IsAHelio(GetVehicleModel(vehicleid)) || IsAPlane(GetVehicleModel(vehicleid)) || IsABike(GetVehicleModel(vehicleid)) ||
 					VehicleInfo[vehicleid][vUsage] == VEHICLE_USAGE_NORMAL || VehicleInfo[vehicleid][vUsage] == VEHICLE_USAGE_JOB ||
 					VehicleInfo[vehicleid][vUsage] ==  VEHICLE_USAGE_LICENSE) continue;
@@ -3600,8 +3585,6 @@ task VehicleGlobalTask[1000]()
 		{
 			foreach(new vehicleid : Vehicles[i])
 			{
-				VehicleInfo[vehicleid][vSpawned] = 0;
-				VehicleInfo[vehicleid][vServerTeleport] = false;
 				if(IsAHelio(GetVehicleModel(vehicleid)) || IsAPlane(GetVehicleModel(vehicleid)) || IsABike(GetVehicleModel(vehicleid)) ||
 					VehicleInfo[vehicleid][vUsage] == VEHICLE_USAGE_NORMAL || VehicleInfo[vehicleid][vUsage] == VEHICLE_USAGE_JOB ||
 					VehicleInfo[vehicleid][vUsage] ==  VEHICLE_USAGE_LICENSE) continue;
@@ -3682,7 +3665,7 @@ hook OnVehicleDeath(vehicleid, killerid)
 	new driverid = LastVehicleDriver[vehicleid];
 	
 	if(driverid == INVALID_PLAYER_ID)
-		return AC_SetVehicleToRespawn(vehicleid, true); 
+		return SetVehicleToRespawn(vehicleid); 
 	
 	//GetVehicleHealth(vehicleid, VehicleInfo[vehicleid][vHealth]);
 	
@@ -3691,11 +3674,11 @@ hook OnVehicleDeath(vehicleid, killerid)
 	if(VehicleInfo[vehicleid][vUsage] == VEHICLE_USAGE_PRIVATE) 
 	{
 		if((PlayerKeys[driverid][pVehicleKey] != vehicleid && PlayerKeys[killerid][pVehicleKey] != vehicleid) || driverid != killerid)
-			return AC_SetVehicleToRespawn(vehicleid, true); 
+			return SetVehicleToRespawn(vehicleid); 
 		if(PlayerInfo[killerid][pSQLID] == VehicleInfo[vehicleid][vOwnerID] && GetPlayerState(killerid) == PLAYER_STATE_DRIVER && GetPlayerVehicleID(killerid) == vehicleid) 
 		{
 			if(PlayerInfo[killerid][pAdmin] > 0 || PlayerInfo[killerid][pHelper] > 0)
-				return AC_SetVehicleToRespawn(vehicleid);
+				return SetVehicleToRespawn(vehicleid);
 			
 			VehicleInfo[vehicleid][vDestroys]++;
 			VehicleInfo[vehicleid][vPanels]		= encode_panels(1, 1, 1, 1, 3, 3, 3);
@@ -3738,7 +3721,7 @@ hook OnVehicleDeath(vehicleid, killerid)
 				}
 			}
 		}
-		AC_SetVehicleToRespawn(vehicleid);
+		SetVehicleToRespawn(vehicleid);
 		return 1;
 	}
 	if(TestCar[driverid] != INVALID_VEHICLE_ID && TestCar[driverid] == vehicleid)
@@ -5948,12 +5931,6 @@ CMD:createvehicle(playerid, params[])
 
 	vehCarId = AC_CreateVehicle(model, X, Y, Z, floatround(Angle), color1, color2, respawndelay, sirenon);
 	ResetVehicleInfo(vehCarId);
-
-	VehiclePrevInfo[vehCarId][vPosX] = X;
-	VehiclePrevInfo[vehCarId][vPosY] = Y;
-	VehiclePrevInfo[vehCarId][vPosZ] = Z;
-	VehiclePrevInfo[vehCarId][vRotZ] = floatround(Angle);
-	VehiclePrevInfo[vehCarId][vPosDiff] = 0.0;
 
 	VehicleInfo[vehCarId][vModel]		= model;
 	VehicleInfo[vehCarId][vParkX] 		= X;

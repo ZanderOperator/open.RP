@@ -124,12 +124,6 @@ CMD:jobimpound(playerid, params[])
 		
 		vehicle = AC_CreateVehicle(vmodel, ranVehPos[rpos][0], ranVehPos[rpos][1], ranVehPos[rpos][2], ranVehPos[rpos][3], random(255), random(255), -1, 0);
 		ResetVehicleInfo(vehicle);
-
-		VehiclePrevInfo[vehicle][vPosX] = ranVehPos[rpos][0];
-		VehiclePrevInfo[vehicle][vPosY] = ranVehPos[rpos][1];
-		VehiclePrevInfo[vehicle][vPosZ] = ranVehPos[rpos][2];
-		VehiclePrevInfo[vehicle][vRotZ] = ranVehPos[rpos][3];
-		VehiclePrevInfo[vehicle][vPosDiff] = 0.0;
 		
 		SetVehicleParamsEx(vehicle, 0, 0, 0, 1, 0, 0, 0);
 		SetVehicleParamsForPlayer(vehicle, playerid, 1, 1);

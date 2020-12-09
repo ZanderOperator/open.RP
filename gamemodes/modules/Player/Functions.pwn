@@ -1155,9 +1155,7 @@ timer PlayerGlobalTask[1000](playerid)
 	if((pcar = GetPlayerVehicleID(playerid)) != INVALID_VEHICLE_ID && GetPlayerState(playerid) == PLAYER_STATE_DRIVER)
 	{
 		LastVehicle[playerid] = GetPlayerVehicleID(playerid);
-		LastVehicleDriver[LastVehicle[playerid]] = playerid;
-		GetVehiclePreviousInfo(LastVehicle[playerid]);
-		
+		LastVehicleDriver[LastVehicle[playerid]] = playerid;		
 		static
 			Float:vhealth;
 
@@ -1165,7 +1163,7 @@ timer PlayerGlobalTask[1000](playerid)
 		
 		if(vhealth < 250.0)
 		{
-			AC_SetVehicleHealth(pcar, 254.0);
+			AC_SetVehicleHealth(pcar, 260.0);
 			CallLocalFunction("OnPlayerCrashVehicle", "idf", playerid, pcar, 0.0);
 			
 			new
