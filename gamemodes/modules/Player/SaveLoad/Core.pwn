@@ -19,6 +19,7 @@
 #include "modules/Player\SaveLoad/player_radio.pwn"
 #include "modules/Player\SaveLoad/player_admin_msg.pwn"
 #include "modules/Player\SaveLoad/player_fishes.pwn"
+#include "modules/Player\SaveLoad/player_cooldowns.pwn"
 
 /*
 	##     ##    ###    ########   ######  
@@ -266,13 +267,13 @@ public LoadPlayerData(playerid)
 		cache_get_value_name(0, "playaBanReason"	, ban_reason, 32);
 		cache_get_value_name_int(0,	"playaUnbanTime", unban_time);
 		
-		cache_get_value_name_int(0,	"casinocool"	, PlayerInfo[playerid][pCasinoCool]);
+		cache_get_value_name_int(0,	"casinocool"	, PlayerCoolDown[playerid][pCasinoCool]);
 		cache_get_value_name_int(0,	"voted"			, PlayerInfo[playerid][pVoted]);
 		
-		cache_get_value_name_int(0,	"ammutime"		, PlayerInfo[playerid][pAmmuCool]);
+		cache_get_value_name_int(0,	"ammutime"		, PlayerCoolDown[playerid][pAmmuCool]);
 		
 		cache_get_value_name_int(0,	"mustread"		, PlayerInfo[playerid][pMustRead]);
-		cache_get_value_name_int(0, "JackerCoolDown", PlayerInfo[playerid][pJackerCool]);
+		cache_get_value_name_int(0, "JackerCoolDown", PlayerCoolDown[playerid][pJackerCool]);
 		cache_get_value_name_int(0, "FurnPremium"	, PlayerInfo[playerid][pExtraFurniture]);
 				
 		if( unban_time == -1 )
@@ -489,8 +490,8 @@ public OnAccountFinish(playerid)
 	PlayerInfo[playerid][pMuted] 			= true;
 	PlayerInfo[playerid][pAdmin] 			= 0;
 	PlayerInfo[playerid][pHelper] 			= 0; 
-	PlayerInfo[playerid][pCasinoCool]		= 5;
-	PlayerInfo[playerid][pCasinoCool]		= 5;
+	PlayerCoolDown[playerid][pCasinoCool]		= 5;
+	PlayerCoolDown[playerid][pCasinoCool]		= 5;
 	PlayerKeys[playerid][pHouseKey]			= 9999;
 	PlayerKeys[playerid][pBizzKey]			= 999;
 	PlayerKeys[playerid][pComplexRoomKey]	= 999;
@@ -686,12 +687,12 @@ public SavePlayerData(playerid)
 		PlayerInfo[playerid][pSAMPid],
 		PlayerInfo[playerid][pForumName],
 		PlayerInventory[playerid][pBoomBox],
-		PlayerInfo[playerid][pCasinoCool],
+		PlayerCoolDown[playerid][pCasinoCool],
 		PlayerInfo[playerid][pVoted],
-		PlayerInfo[playerid][pAmmuCool],
+		PlayerCoolDown[playerid][pAmmuCool],
 		PlayerInfo[playerid][pMustRead],
 		PlayerInfo[playerid][pLastUpdateVer],
-		PlayerInfo[playerid][pJackerCool],
+		PlayerCoolDown[playerid][pJackerCool],
 		PlayerInfo[playerid][pExtraFurniture],
 		PlayerInfo[playerid][pSQLID]
 	);

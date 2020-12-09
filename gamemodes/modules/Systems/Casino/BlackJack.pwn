@@ -835,7 +835,7 @@ hook OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
 		}
 
 		// TODO: this should be a general purpose per-player or per-module cooldown variable
-		PlayerInfo[playerid][pCasinoCool]--;
+		PlayerCoolDown[playerid][pCasinoCool]--;
 
 		// Postavke karata
 		PlayerDealtCardsNum[playerid] = DealerDealtCardsNum[playerid] = 2;
@@ -993,7 +993,7 @@ timer OnBlackJackCardExpose[1500](playerid)
 /*
 CMD:blackjack(playerid, params[])
 {
-	if( !PlayerInfo[playerid][pCasinoCool] ) return SendClientMessage(playerid, COLOR_RED, "[ANTI-ABUSE]: Pricekajte do iduceg paydaya za novo igranje!");
+	if( !PlayerCoolDown[playerid][pCasinoCool] ) return SendClientMessage(playerid, COLOR_RED, "[ANTI-ABUSE]: Pricekajte do iduceg paydaya za novo igranje!");
 	if( PlayerInfo[playerid][pLevel] < 4 ) return SendClientMessage(playerid, COLOR_RED, "[ANTI-ABUSE]: Morate biti level 4+ za igranje u kasinu!");
 	if( BizzInfo[ 104 ][ bTill ] <= 1000 ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Kasino nema dovoljno novaca za nastavak!");
 	new

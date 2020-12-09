@@ -1275,7 +1275,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 				
 				if (RuletWaitingForPlayers[playerid])
 				{
-					PlayerInfo[playerid][pCasinoCool]--;
+					PlayerCoolDown[playerid][pCasinoCool]--;
 					RuletWaitingTime[playerid] = 15;
 					GameTextForPlayer(playerid, "~w~15", 1000, 4);
 
@@ -1309,7 +1309,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 */
 CMD:rulet(playerid, params[])
 {
-	if( !PlayerInfo[playerid][pCasinoCool] ) return SendClientMessage(playerid, COLOR_RED, "[ANTI-ABUSE]: Pricekajte do iduceg paydaya za novo igranje!");
+	if( !PlayerCoolDown[playerid][pCasinoCool] ) return SendClientMessage(playerid, COLOR_RED, "[ANTI-ABUSE]: Pricekajte do iduceg paydaya za novo igranje!");
 	if( PlayerInfo[playerid][pLevel] < 3 ) return SendClientMessage(playerid, COLOR_RED, "[ANTI-ABUSE]: Morate biti level 3+ za igranje u kasinu!");
 	
 	new cbizzid = GetPlayerCasinoID(playerid);

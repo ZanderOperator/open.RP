@@ -214,6 +214,7 @@ new Float:ACPosX[MAX_PLAYERS], Float:ACPosY[MAX_PLAYERS], Float:ACPosZ[MAX_PLAYE
 // Players 32 bit
 new
 	//_QuickTimer[MAX_PLAYERS] = 0,
+	PhoneStatus[ MAX_PLAYERS ],
 	GlobalMapIcon[MAX_PLAYERS],
 	bool:OnSecurityBreach[MAX_PLAYERS] = false,
 	bool:FDArrived[MAX_PLAYERS],
@@ -791,12 +792,10 @@ ResetPlayerVariables(playerid)
 	PlayerKeys[playerid][pIllegalGarageKey]	= -1;
 	PlayerKeys[playerid][pVehicleKey]		= -1;
 
-	PlayerInfo[playerid][pCasinoCool]		= 0;
 	PlayerInfo[playerid][pCanisterLiters] 	= 0;
 	PlayerInfo[playerid][pCanisterType] 	= -1;
 	PlayerInfo[playerid][pGrafID]			= -1;
 	PlayerInfo[playerid][pTagID]			= -1;
-	PlayerInfo[playerid][pAmmuCool]			= 0;
 
 	PlayerInfo[playerid][pPrimaryWeapon] 	= 0;
 	PlayerInfo[playerid][pSecondaryWeapon] 	= 0;

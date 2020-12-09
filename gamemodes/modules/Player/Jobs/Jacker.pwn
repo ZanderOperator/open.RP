@@ -1057,7 +1057,7 @@ CMD:jacker(playerid, params[])
 	if( !strcmp(param, "pick", true) ) {
 		JackerIlegalGarage[ playerid ] = GetJackerIlegalGarage(playerid);
 		if( JackerIlegalGarage[ playerid ] == -1 ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste kod pickupa za ostavljanje vozila!");
-		if( PlayerInfo[playerid][pJackerCool] == 1) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Mora proci 60 minuta za novu misiju!");
+		if( PlayerCoolDown[playerid][pJackerCool] == 1) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Mora proci 60 minuta za novu misiju!");
 		if( PlayerJackingCar[ playerid ] != -1) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Vasa misija i dalje traje! Kucajte /jacker stop za odustanak.");
 
 		new
@@ -1136,7 +1136,7 @@ CMD:jacker(playerid, params[])
 		PlayerJackingCar[ playerid ] = -1;
 		JackerMoney[ playerid ]	= 0;
 		//PlayerJackerCoolDown[ playerid ] = gettimestamp() + 2699999;
-		PlayerInfo[playerid][pJackerCool] = 1; // svakih sat vremena moze odradit jedan posao.
+		PlayerCoolDown[playerid][pJackerCool] = 1; // svakih sat vremena moze odradit jedan posao.
 		UpdateIlegalGarages(garage);
 		CheckForGarageWantedLevel(garage, true);
 		UpgradePlayerSkill(playerid);
