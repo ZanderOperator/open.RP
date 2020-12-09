@@ -103,7 +103,7 @@ CMD:swat(playerid, params[])
         }
         else
         {
-            SetPlayerSkin(playerid, PlayerInfo[playerid][pChar]);
+            SetPlayerSkin(playerid, PlayerAppearance[playerid][pSkin]);
 
             new Float:armour;
             GetPlayerArmour(playerid, armour);

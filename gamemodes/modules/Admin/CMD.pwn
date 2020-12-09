@@ -3140,11 +3140,11 @@ CMD:skin(playerid, params[])
 	//if (skin > 320 || skin < 0) return SendClientMessage(playerid, COLOR_RED, "Ne idite ispod 0 i preko 320!");
 	
 	SetPlayerSkin(giveplayerid, skin);
-	PlayerInfo[giveplayerid][pSkin] = skin;
-	PlayerInfo[giveplayerid][pChar] = skin;
+	PlayerAppearance[giveplayerid][pTmpSkin] = skin;
+	PlayerAppearance[giveplayerid][pSkin] = skin;
 	
-	mysql_fquery(g_SQL, "UPDATE accounts SET playaSkin = '%d' WHERE sqlid = '%d'", 
-		PlayerInfo[giveplayerid][pChar], 
+	mysql_fquery(g_SQL, "UPDATE player_appearance SET char = '%d' WHERE sqlid = '%d'", 
+		PlayerAppearance[giveplayerid][pSkin], 
 		PlayerInfo[giveplayerid][pSQLID]
 	);
 	return 1;

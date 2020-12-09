@@ -25,7 +25,7 @@ timer SetPlayerCrash[6000](playerid)
 			true
 		);
 
-		SetPlayerSkin(playerid, PlayerInfo[playerid][pSkin]);
+		SetPlayerSkin(playerid, PlayerAppearance[playerid][pTmpSkin]);
 		SetPlayerArmour(playerid, PlayerCrash[playerid][pCrashArmour]);
 
 		if( 0.0 <= PlayerCrash[playerid][pCrashHealth] <= 6.0 )
@@ -104,7 +104,7 @@ public LoadingPlayerCrashes(playerid)
 	cache_get_value_name_float(0,		"pos_z"		, PlayerCrash[playerid][pCrashZ]);
 	cache_get_value_name_int(0, 		"interior"	, PlayerCrash[playerid][pCrashInt]);
 	cache_get_value_name_int(0, 		"viwo"		, PlayerCrash[playerid][pCrashVW]);
-	cache_get_value_name_int(0, 		"skin"		, PlayerInfo[playerid][pSkin]);
+	cache_get_value_name_int(0, 		"skin"		, PlayerAppearance[playerid][pTmpSkin]);
 	cache_get_value_name_float(0,		"armor"		, PlayerCrash[playerid][pCrashArmour]);
 	cache_get_value_name_float(0,		"health"	, PlayerCrash[playerid][pCrashHealth]);
 	return 1;
@@ -127,7 +127,7 @@ CheckPlayerCrash(playerid, reason)
 
 			PlayerCrash[playerid][pCrashVW] 	= GetPlayerVirtualWorld(playerid);
 			PlayerCrash[playerid][pCrashInt] = GetPlayerInterior(playerid);
-			PlayerInfo[playerid][pSkin] = GetPlayerSkin(playerid);
+			PlayerAppearance[playerid][pTmpSkin] = GetPlayerSkin(playerid);
 
 			GetPlayerPos(playerid, 
                 PlayerCrash[playerid][pCrashX], 
@@ -146,7 +146,7 @@ CheckPlayerCrash(playerid, reason)
 				PlayerCrash[playerid][pCrashVW],
 				PlayerCrash[playerid][pCrashArmour],
 				PlayerCrash[playerid][pCrashHealth],
-				PlayerInfo[playerid][pSkin],
+				PlayerAppearance[playerid][pTmpSkin],
 				gettimestamp()
 			);
 			if(reason == 0)

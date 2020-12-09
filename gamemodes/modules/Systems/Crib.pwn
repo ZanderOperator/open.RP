@@ -2803,7 +2803,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                 case 3: skin = HouseInfo[house][hSkin3];
             }
 
-            PlayerInfo[playerid][pSkin] = skin;
+            PlayerAppearance[playerid][pTmpSkin] = skin;
             SetPlayerSkin(playerid, skin);
             SetPlayerPos(playerid, tmpPos[playerid][0], tmpPos[playerid][1], tmpPos[playerid][2]);
             SetPlayerInterior(playerid, tmpInterior[playerid]);
@@ -3148,7 +3148,7 @@ CMD:exit(playerid, params[])
     {
         if (IsPlayerInRangeOfPoint(playerid, 2.0, BizzInfo[biznis][bExitX], BizzInfo[biznis][bExitY], BizzInfo[biznis][bExitZ]))
         {
-            if (GetPlayerSkin(playerid) != PlayerInfo[playerid][pChar] && !PlayerInfo[playerid][pLawDuty])
+            if (GetPlayerSkin(playerid) != PlayerAppearance[playerid][pSkin] && !PlayerInfo[playerid][pLawDuty])
             {
                 new biztype = BizzInfo[biznis][bType];
                 if (biztype == BIZZ_TYPE_SUBURBAN || biztype == BIZZ_TYPE_PROLAPS || biztype == BIZZ_TYPE_ZIP || biztype == BIZZ_TYPE_BINCO)

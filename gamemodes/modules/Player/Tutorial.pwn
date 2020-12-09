@@ -188,8 +188,8 @@ timer OnPlayerFirstTimeEnter[12000](playerid, step)
 			//Enum set
 			PlayerInfo[playerid][pRegistered] 	= 1;
 			PlayerInfo[playerid][pLevel] 		= 1;
-			PlayerInfo[playerid][pSkin] 		= 29;
-			PlayerInfo[playerid][pChar] 		= 29;
+			PlayerAppearance[playerid][pTmpSkin] 		= 29;
+			PlayerAppearance[playerid][pSkin] 		= 29;
 			PaydayInfo[playerid][pPayDayMoney] 	= 0;
 			PlayerJob[playerid][pFreeWorks] 	= 15;
 			PlayerInfo[playerid][pMuted] 		= false;
@@ -213,7 +213,7 @@ timer OnPlayerFirstTimeEnter[12000](playerid, step)
 			SetPlayerVirtualWorld(playerid, 0); 
 			SetPlayerInterior(playerid, 0); 
 			SetCameraBehindPlayer(playerid);
-			SetSpawnInfo(playerid, 0, PlayerInfo[playerid][pChar], SPAWN_X, SPAWN_Y, SPAWN_Z, 0, 0, 0, 0, 0, 0, 0);
+			SetSpawnInfo(playerid, 0, PlayerAppearance[playerid][pSkin], SPAWN_X, SPAWN_Y, SPAWN_Z, 0, 0, 0, 0, 0, 0, 0);
 			SafeSpawned[playerid] = true;
 			SpawnPlayer(playerid);
 			TogglePlayerControllable(playerid, 1);

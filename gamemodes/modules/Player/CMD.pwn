@@ -2156,10 +2156,10 @@ CMD:setlook(playerid, params[])
 		if( CheckStringForURL(inputLook) || CheckStringForIP(inputLook) )
 			return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nedozvoljene rijeci/znakovi u postavljanju izgleda!");
 		
-		format( PlayerInfo[ playerid ][ pLook ], 120, "%s", inputLook );
+		format( PlayerAppearance[playerid][pLook], 120, "%s", inputLook );
 		
-		mysql_fquery(g_SQL, "UPDATE accounts SET look = '%e' WHERE sqlid = '%d'",
-			PlayerInfo[ playerid ][ pLook ], 
+		mysql_fquery(g_SQL, "UPDATE player_appearance SET look = '%e' WHERE sqlid = '%d'",
+			PlayerAppearance[playerid][pLook], 
 			PlayerInfo[ playerid ][ pSQLID ]
 		);
 
@@ -2172,12 +2172,12 @@ CMD:setlook(playerid, params[])
 }
 CMD:showme(playerid, params[])
 {
-	if( strlen(PlayerInfo[ playerid ][ pLook ]) >= 1 || strlen(PlayerInfo[ playerid ][ pLook ]) <= 120 )
+	if( strlen(PlayerAppearance[playerid][pLook]) >= 1 || strlen(PlayerAppearance[playerid][pLook]) <= 120 )
 	{
 		new tmpString[ 200 ];
 		format(tmpString, 200, "* %s izgleda kao %s",
 			GetName(playerid, true),
-			PlayerInfo[ playerid ][ pLook ]
+			PlayerAppearance[playerid][pLook]
 		);
 		ProxDetector(15.0, playerid, tmpString, COLOR_SAMP_BLUE,COLOR_SAMP_BLUE,COLOR_SAMP_BLUE,COLOR_SAMP_BLUE,COLOR_SAMP_BLUE);
 	} 
@@ -2192,14 +2192,14 @@ CMD:examine(playerid, params[])
 	if( giveplayerid == playerid ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Koristi /showme");
 	if( IsPlayerReconing(giveplayerid) ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Taj igrac nije blizu vas!");
 	if( IsPlayerInAnyVehicle(giveplayerid) || !ProxDetectorS(20.0, playerid, giveplayerid) ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Taj igrac nije blizu vas ili je u vozilu!");
-	if( strlen(PlayerInfo[ giveplayerid ][ pLook ]) >= 1 || strlen(PlayerInfo[ giveplayerid ][ pLook ]) <= 120 )
+	if( strlen(PlayerAppearance[giveplayerid][pLook]) >= 1 || strlen(PlayerAppearance[giveplayerid][pLook]) <= 120 )
 	{
 		new
 			tmpString[ 200 ],
 			string[ 200];
 		format(tmpString, 200, "* %s izgleda kao %s",
 			GetName(giveplayerid, true),
-			PlayerInfo[ giveplayerid ][ pLook ]
+			PlayerAppearance[giveplayerid][pLook]
 		);
 
 		format(string, sizeof(string), "%s", tmpString);
@@ -2222,7 +2222,7 @@ CMD:accent(playerid, params[])
     if( CheckStringForURL(params) || CheckStringForIP(params) )
 			return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nedozvoljene rijeci/znakovi u postavljanju naglaska!");
 	    
-	format(PlayerInfo[playerid][pAccent], 32, params);
+	format(PlayerAppearance[playerid][pAccent], 32, params);
 	SendClientMessage(playerid, COLOR_RED, "[ ! ] UspjeSno ste promjenili vas naglasak.");
 	return 1;
 }
@@ -2367,8 +2367,13 @@ CMD:setwalk(playerid, params[])
 	new walkStyle;
 	if(sscanf(params, "i", walkStyle)) return SendClientMessage(playerid, COLOR_WHITE,"[ ? ]: /setwalk [ID stila]");
 	if(walkStyle < 1  || walkStyle > 29) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Krivi unos ID stila! (1-29)");
-	WalkStyle[playerid] = walkStyle; // TODO: save walking style into database
     SendFormatMessage(playerid, MESSAGE_TYPE_INFO, "Odabrali ste stil hodanja #%d.", walkStyle);
+
+	PlayerAppearance[playerid][pWalkStyle] = walkStyle; 
+	mysql_fquery(g_SQL, "UPDATE player_appearance SET walkstyle = '%d' WHERE sqlid = '%d'",
+		walkStyle,
+		PlayerInfo[playerid][pSQLID]
+	);
 	return 1;
 }
 

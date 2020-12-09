@@ -973,7 +973,7 @@ static stock SetPlayerPosFinish(playerid)
 
 Public:ResetBuySkin(playerid)
 {
-    SetPlayerSkin(playerid, PlayerInfo[playerid][pChar]);
+    SetPlayerSkin(playerid, PlayerAppearance[playerid][pSkin]);
 
     PlayerSkinId[playerid] = 0;
     PlayerSkinPrice[playerid] = 0;
@@ -3032,14 +3032,14 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
             else
                 PlayerToBudgetMoney(playerid, skin_price); // Posto je VERONA MALL novac ide u budget
 
-            PlayerInfo[playerid][pChar] = PlayerSkinId[playerid];
+            PlayerAppearance[playerid][pSkin] = PlayerSkinId[playerid];
             ResetBuySkin(playerid);
             //SetPlayerPosFinish(playerid);
 
             ApplyAnimationEx(playerid, "CLOTHES", "CLO_Pose_Legs", 4.1, 0, 0, 0, 0, 0, 1, 0);
 
-            mysql_fquery(g_SQL, "UPDATE accounts SET playaSkin = '%d' WHERE sqlid = '%d'",
-                PlayerInfo[playerid][pChar],
+            mysql_fquery(g_SQL, "UPDATE player_appearance SET skin = '%d' WHERE sqlid = '%d'",
+                PlayerAppearance[playerid][pSkin],
                 PlayerInfo[playerid][pSQLID]
             );
 

@@ -111,7 +111,7 @@ static GetPlayerPhoneNumber(sqlid)
 // MySQL Callbacks
 
 // Player GENERAL
-static OnPlayerMDCDataLoad(playerid, const playername[], sqlid)
+static OnPlayerMDCDataLoad(playerid, const playername[], sqlid) // TODO: query reorg. - skin&look
 {
     inline OnPlayerMDCLoad()
     {
@@ -122,27 +122,31 @@ static OnPlayerMDCDataLoad(playerid, const playername[], sqlid)
             loadInfo[E_PLAYER_DATA],
             jailInfo[E_P_JAIL_INFO],
             licInfo[E_LICENSES_INFO],
+            lookInfo[E_PLAYER_APPEARANCE],
             housekey = INVALID_HOUSE_ID;
 
-        // General Account Info
+        // accounts table
         cache_get_value_name_int(0, "sqlid"         , loadInfo[pSQLID]);
-        cache_get_value_name_int(0, "playaSkin"     , loadInfo[pSkin]);
         cache_get_value_name_int(0, "sex"           , loadInfo[pSex]);
         cache_get_value_name_int(0, "age"           , loadInfo[pAge]);
-        cache_get_value_name    (0, "look"          , loadInfo[pLook]);
 
-        // Arrest Record Info
+        // player_jailed table
         cache_get_value_name_int(0, "jailed"        , jailInfo[pJailed]);
         cache_get_value_name_int(0, "jailtime"      , jailInfo[pJailTime]);
         cache_get_value_name_int(0, "arrested"      , jailInfo[pArrested]);
         cache_get_value_name_int(0, "bailprice"     , jailInfo[pBailPrice]);
 
+        // player_licenses
         cache_get_value_name_int(0, "carlic"        , licInfo[pCarLic]);
         cache_get_value_name_int(0, "gunlic"        , licInfo[pGunLic]);
         cache_get_value_name_int(0, "boatlic"       , licInfo[pBoatLic]);
         cache_get_value_name_int(0, "fishlic"       , licInfo[pFishLic]);
         cache_get_value_name_int(0, "flylic"        , licInfo[pFlyLic]);
         cache_get_value_name_int(0, "passport"      , licInfo[pPassport]);
+
+        cache_get_value_name_int(0, "char"          , lookInfo[pTmpSkin]);
+        cache_get_value_name    (0, "look"          , lookInfo[pLook]);
+
         // Load House Key
         foreach(new house : Houses)
         {
@@ -163,15 +167,15 @@ static OnPlayerMDCDataLoad(playerid, const playername[], sqlid)
             tmpGunLic[12];
 
         ( housekey != INVALID_HOUSE_ID) && format(tmpAddress, 32, HouseInfo[housekey][hAdress]) || format(tmpAddress, 32, "N/A");
-        if (strlen(loadInfo[pLook]) > 60)
+        if (strlen(lookInfo[pLook]) > 60)
         {
-            format(tmpLook, sizeof(tmpLook), "%.60s", loadInfo[pLook]);
-            format(tmpLook2, sizeof(tmpLook2), "%s", loadInfo[pLook][60]);
+            format(tmpLook, sizeof(tmpLook), "%.60s", lookInfo[pLook]);
+            format(tmpLook2, sizeof(tmpLook2), "%s", lookInfo[pLook][60]);
         }
         else
         {
-            format(tmpLook, sizeof(tmpLook), "%s", loadInfo[pLook]);
-            format(tmpLook2, sizeof(tmpLook2), "\n", loadInfo[pLook][60]);
+            format(tmpLook, sizeof(tmpLook), "%s", lookInfo[pLook]);
+            format(tmpLook2, sizeof(tmpLook2), "\n", lookInfo[pLook][60]);
         }
         
         format(mdcString, sizeof(mdcString),
@@ -200,7 +204,7 @@ static OnPlayerMDCDataLoad(playerid, const playername[], sqlid)
             licInfo[pPassport]  >= 1 ? ("~g~Yes~l~") : ("~r~No~l~")
         );
 
-        CreateMDCTextDraws(playerid, loadInfo[pSkin], false);
+        CreateMDCTextDraws(playerid, lookInfo[pTmpSkin], false);
         PlayerTextDrawSetString(playerid, MDCProfileText[playerid], mdcString);
         PlayerTextDrawSetString(playerid, MDCOtherText[playerid], mdcString2);
         format(tmpString, sizeof(tmpString), "MDC_PROFILE-_%s", playername);
@@ -212,11 +216,13 @@ static OnPlayerMDCDataLoad(playerid, const playername[], sqlid)
 		using inline OnPlayerMDCLoad, 
         va_fquery(g_SQL, 
             "SELECT \n\
-                accounts.sqlid, accounts.playaSkin, accounts.sex, accounts.age, accounts.look, \n\
+                accounts.sqlid, accounts.sex, accounts.age \n\
                 player_jail.*, \n\
-                player_licenses.* \n\
-                FROM accounts, player_jail, player_licenses \n\
-                WHERE accounts.sqlid = player_jail.sqlid = player_licenses.sqlid = '%d'",
+                player_licenses.*, \n\
+                player_appearance.char, player_appearance.look\n\
+                FROM accounts, player_jail, player_licenses, player_appearance \n\
+                WHERE accounts.sqlid = player_jail.sqlid = player_licenses.sqlid = \n\
+                player_appearance.sqlid = '%d'",
             sqlid
         ),
 		""
