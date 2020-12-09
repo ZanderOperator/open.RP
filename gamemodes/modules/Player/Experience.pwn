@@ -358,14 +358,14 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 					);
 				
 					// Premium Bronze
-					PlayerInfo[ playerid ][ pMaskID ] = 100000 + random(899999);
+					PlayerInventory[playerid][pMaskID] = 100000 + random(899999);
 					
 					#if defined MODULE_LOGS
 					Log_Write("/logfiles/masks.txt", "(%s) %s(%s), Mask ID: %d.",
 						ReturnDate(),
 						GetName(playerid, false),
 						ReturnPlayerIP(playerid),
-						PlayerInfo[ playerid ][ pMaskID ]
+						PlayerInventory[playerid][pMaskID]
 					);
 					#endif
 					
@@ -410,14 +410,14 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 						PlayerInfo[playerid][pSQLID]
 					);
 					
-					PlayerInfo[ playerid ][ pMaskID ] = 100000 + random(899999);
+					PlayerInventory[playerid][pMaskID] = 100000 + random(899999);
 					
 					#if defined MODULE_LOGS
 					Log_Write("/logfiles/masks.txt", "(%s) %s(%s), Mask ID: %d.",
 						ReturnDate(),
 						GetName(playerid, false),
 						ReturnPlayerIP(playerid),
-						PlayerInfo[ playerid ][ pMaskID ]
+						PlayerInventory[playerid][pMaskID]
 					);
 					#endif
 					
@@ -462,14 +462,14 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 						PlayerInfo[playerid][pSQLID]
 					);
 					
-					PlayerInfo[ playerid ][ pMaskID ] = 100000 + random(899999);
+					PlayerInventory[playerid][pMaskID] = 100000 + random(899999);
 					
 					#if defined MODULE_LOGS
 					Log_Write("/logfiles/masks.txt", "(%s) %s(%s), Mask ID: %d.",
 						ReturnDate(),
 						GetName(playerid, false),
 						ReturnPlayerIP(playerid),
-						PlayerInfo[ playerid ][ pMaskID ]
+						PlayerInventory[playerid][pMaskID]
 					);
 					#endif
 					

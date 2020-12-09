@@ -360,7 +360,7 @@ CMD:music(playerid, params[])
 
 	if(!strcmp(option, "put"))
     {
-		if( !PlayerInfo[playerid][pBoomBox] ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Morate imati boombox kako bi mogli koristiti ovu komandu!");
+		if( !PlayerInventory[playerid][pBoomBox] ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Morate imati boombox kako bi mogli koristiti ovu komandu!");
 		if(BoomBoxPlanted[playerid] == false) {
 
 			format(string, sizeof(string), "*%s stavlja svoj boombox na pod.", GetName(playerid, true));
@@ -370,7 +370,7 @@ CMD:music(playerid, params[])
 			MusicInfo[playerid][mX] = x;
 			MusicInfo[playerid][mY] = y;
 			MusicInfo[playerid][mZ] = z;
-			switch(PlayerInfo[playerid][pBoomBox]) {
+			switch(PlayerInventory[playerid][pBoomBox]) {
 				case 1: { // Obican crveni boombox
 					BoomBoxObject[playerid] = CreateDynamicObject(2226, x, y, z-0.9, 0, 0, random(100), -1, -1, -1, 200.0);
 					BoomBoxPlanted[playerid] = true;
@@ -385,7 +385,7 @@ CMD:music(playerid, params[])
 	}
 	else if(!strcmp(option, "take"))
 	{
-		if( !PlayerInfo[playerid][pBoomBox] ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Morate imati boombox kako bi mogli koristiti ovu komandu!");
+		if( !PlayerInventory[playerid][pBoomBox] ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Morate imati boombox kako bi mogli koristiti ovu komandu!");
 		if(BoomBoxPlanted[playerid] == true) {
 			GetDynamicObjectPos(BoomBoxObject[playerid], ox, oy, oz);
 			if(!IsPlayerInRangeOfPoint(playerid, 2.0, ox, oy, oz)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste blizu postavljenog boom boxa!");
@@ -559,16 +559,16 @@ CMD:music(playerid, params[])
 		}
 	}
 	else if( !strcmp(option, "attach", true) ) {
-	    if( !PlayerInfo[playerid][pBoomBox] ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Morate imati boombox kako bi mogli koristiti ovu komandu!");
+	    if( !PlayerInventory[playerid][pBoomBox] ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Morate imati boombox kako bi mogli koristiti ovu komandu!");
 	    if( Bit1_Get( gr_AttachedBoombox, playerid ) ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Vec imate boombox na sebi!");
 
-		SetPlayerAttachedObject(playerid, 9, ( PlayerInfo[playerid][pBoomBox] == 1 ) ? 2226 : 2103, 5);
+		SetPlayerAttachedObject(playerid, 9, ( PlayerInventory[playerid][pBoomBox] == 1 ) ? 2226 : 2103, 5);
 		EditAttachedObject(playerid, 9);
 		Bit1_Set( gr_AttachedBoombox, playerid, true);
 		SendClientMessage(playerid, COLOR_RED, "[HINT]: Za okretanje kamere koristite ~k~~PED_SPRINT~. Da maknete boombox iz ruke kucajte /music detach!");
 	}
 	else if( !strcmp(option, "detach", true) ) {
-	    if( !PlayerInfo[playerid][pBoomBox] ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Morate imati boombox kako bi mogli koristiti ovu komandu!");
+	    if( !PlayerInventory[playerid][pBoomBox] ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Morate imati boombox kako bi mogli koristiti ovu komandu!");
 	    if( !Bit1_Get( gr_AttachedBoombox, playerid ) ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate boombox na sebi!");
 
 		RemovePlayerAttachedObject(playerid, 9);

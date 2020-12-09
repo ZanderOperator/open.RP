@@ -111,7 +111,7 @@ CMD:tie(playerid, params[])
     if (GetPlayerState(giveplayerid) == PLAYER_STATE_DRIVER)
         return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne mozete zavezati igraca koji vozi!");
 
-    if (!PlayerInfo[playerid][hRope])
+    if (!PlayerInventory[playerid][pRope])
         return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate konop!");
 
     if (!Player_IsTied(giveplayerid))

@@ -1952,7 +1952,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                     case PRODUCT_CIGARS:
                     {
                         if (PlayerInfo[playerid][pAge] < 18) return SendClientMessage(playerid, COLOR_YELLOW, "Prodavacica: Ne prodajemo cigarete mladima od 18 godina.");
-                        PlayerInfo[playerid][pCiggaretes] += 20;
+                        PlayerInventory[playerid][pCiggaretes] += 20;
                     }
                     case PRODUCT_GROCERIES:
                     {
@@ -1963,14 +1963,14 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                     {
                         if (PlayerInfo[playerid][pLevel] < 3) return SendClientMessage(playerid, COLOR_RED, "Level 3+ igraci mogu kupovati maske!");
 
-                        PlayerInfo[playerid][pMaskID] = 100000 + random(899999);
+                        PlayerInventory[playerid][pMaskID] = 100000 + random(899999);
 
                         #if defined MODULE_LOGS
                         Log_Write("/logfiles/masks.txt", "(%s) %s(%s), Mask ID: %d.",
                             ReturnDate(),
                             GetName(playerid, false),
                             ReturnPlayerIP(playerid),
-                            PlayerInfo[playerid][pMaskID]
+                            PlayerInventory[playerid][pMaskID]
                         );
                         #endif
                     }
@@ -2000,13 +2000,13 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                     }
                     case PRODUCT_TOOLKIT:
                     {
-                        if (PlayerInfo[playerid][pToolkit]) return SendClientMessage(playerid, COLOR_RED, "Vec imate tool kit!");
-                        PlayerInfo[playerid][pToolkit] = 1;
+                        if (PlayerInventory[playerid][pToolkit]) return SendClientMessage(playerid, COLOR_RED, "Vec imate tool kit!");
+                        PlayerInventory[playerid][pToolkit] = 1;
                     }
                     case PRODUCT_BOOMBOX:
                     {
-                        if (PlayerInfo[playerid][pBoomBox]) return SendClientMessage(playerid, COLOR_RED, "Vec imate kazetofon!");
-                        PlayerInfo[playerid][pBoomBox] = 1;
+                        if (PlayerInventory[playerid][pBoomBox]) return SendClientMessage(playerid, COLOR_RED, "Vec imate kazetofon!");
+                        PlayerInventory[playerid][pBoomBox] = 1;
                     }
                     case PRODUCT_PCREDIT:
                     {
@@ -2019,15 +2019,15 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                     }
                     case PRODUCT_CLOCK:
                     {
-                        if (PlayerInfo[playerid][pClock]) return SendClientMessage(playerid, COLOR_RED, "Vec posjedujete sat!");
-                        PlayerInfo[playerid][pClock] = 1;
+                        if (PlayerInventory[playerid][pWatch]) return SendClientMessage(playerid, COLOR_RED, "Vec posjedujete sat!");
+                        PlayerInventory[playerid][pWatch] = 1;
                     }
                     case PRODUCT_DICE:
                         Player_SetHasDice(playerid, true);
                     case PRODUCT_LIGHTER:
-                        PlayerInfo[playerid][pLighter] = 1;
+                        PlayerInventory[playerid][pLighter] = 1;
                     case PRODUCT_ROPE:
-                        PlayerInfo[playerid][hRope] = 1;
+                        PlayerInventory[playerid][pRope] = 1;
                     case PRODUCT_RADIO:
                     {
                         if (PlayerRadio[playerid][pHasRadio]) return SendClientMessage(playerid, COLOR_RED, "Vec posjedujete radio!");
@@ -2802,24 +2802,24 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                 case 2:
                 {
                     if (AC_GetPlayerMoney(playerid) < 10) return SendClientMessage(playerid, COLOR_RED, "Nemate 10$!");
-                    if (PlayerInfo[playerid][pClock]) return SendClientMessage(playerid, COLOR_RED, "Vec imate sat, koristite /time!");
+                    if (PlayerInventory[playerid][pWatch]) return SendClientMessage(playerid, COLOR_RED, "Vec imate sat, koristite /time!");
 
                     PlayerToBudgetMoney(playerid, 10); // APosto je VERONA MALL novac ide u budget
 
                     SendClientMessage(playerid, COLOR_RED, "[ ! ]  Kupljen sat! [10$]");
-                    PlayerInfo[playerid][pClock] = 1;
+                    PlayerInventory[playerid][pWatch] = 1;
                     PlayerPlaySound(playerid, 1052, 0.0, 0.0, 0.0);
                 }
                 case 3:
                 {
                     if (PlayerInfo[playerid][pLevel] < 3) return SendClientMessage(playerid, COLOR_RED, "Level 3+ igraci mogu kupovati maske!");
                     if (AC_GetPlayerMoney(playerid) < 500) return SendClientMessage(playerid, COLOR_RED, "Nemate 500$!");
-                    if (PlayerInfo[playerid][pMaskID] > 0) return SendClientMessage(playerid, COLOR_RED, "Vec imate masku!");
+                    if (PlayerInventory[playerid][pMaskID] > 0) return SendClientMessage(playerid, COLOR_RED, "Vec imate masku!");
 
                     PlayerToBudgetMoney(playerid, 500); // APosto je VERONA MALL novac ide u budget
 
                     SendClientMessage(playerid, COLOR_RED, "[ ! ]  Kupljena maska! [500$]");
-                    PlayerInfo[playerid][pMaskID] = 100000 + random(899999);
+                    PlayerInventory[playerid][pMaskID] = 100000 + random(899999);
                     PlayerPlaySound(playerid, 1052, 0.0, 0.0, 0.0);
                 }
                 case 4:
@@ -2829,18 +2829,18 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                     PlayerToBudgetMoney(playerid, 10); // APosto je VERONA MALL novac ide u budget
 
                     SendClientMessage(playerid, COLOR_RED, "[ ! ]  Kupljene cigarete! [10$]. Koristite /usecigarette da bi zapalili cigaretu.");
-                    PlayerInfo[playerid][pCiggaretes] += 20;
+                    PlayerInventory[playerid][pCiggaretes] += 20;
                     PlayerPlaySound(playerid, 1052, 0.0, 0.0, 0.0);
                 }
                 case 5:
                 {
                     if (AC_GetPlayerMoney(playerid) < 5) return SendClientMessage(playerid, COLOR_RED, "Nemate 5$!");
-                    if (PlayerInfo[playerid][pLighter]) return SendClientMessage(playerid, COLOR_RED, "Vec posjedujete upaljac!");
+                    if (PlayerInventory[playerid][pLighter]) return SendClientMessage(playerid, COLOR_RED, "Vec posjedujete upaljac!");
 
                     PlayerToBudgetMoney(playerid, 5); // APosto je VERONA MALL novac ide u budget
 
                     SendClientMessage(playerid, COLOR_RED, "[ ! ]  Kupljen upaljac! [5$]");
-                    PlayerInfo[playerid][pLighter] = 1;
+                    PlayerInventory[playerid][pLighter] = 1;
                     PlayerPlaySound(playerid, 1052, 0.0, 0.0, 0.0);
                 }
                 case 6:
@@ -2854,7 +2854,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                     PlayerToBudgetMoney(playerid, 100); // APosto je VERONA MALL novac ide u budget
 
                     PlayerPlaySound(playerid, 1052, 0.0, 0.0, 0.0);
-                    PlayerInfo[playerid][hRope] = 1;
+                    PlayerInventory[playerid][pRope] = 1;
                     SendClientMessage(playerid, COLOR_RED, "[ ! ]  Kupljen konop! [100$]");
                 }
                 case 8:
@@ -2921,12 +2921,12 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                 }
                 case 13:
                 {
-                    if (PlayerInfo[playerid][pToolkit] == 1) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Vec posjedujete toolkit!");
+                    if (PlayerInventory[playerid][pToolkit] == 1) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Vec posjedujete toolkit!");
                     if (AC_GetPlayerMoney(playerid) < 300) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate 300$!");
 
                     PlayerToBudgetMoney(playerid, 300); // APosto je VERONA MALL novac ide u budget
 
-                    PlayerInfo[playerid][pToolkit] = 1;
+                    PlayerInventory[playerid][pToolkit] = 1;
                     SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "Kupljen toolkit [300$]");
                 }
             }
@@ -2942,13 +2942,13 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                 {
                     if (AC_GetPlayerMoney(playerid) < 100) return SendClientMessage(playerid, COLOR_RED, "Nemate toliko novca (100$)!");
                     PlayerToBudgetMoney(playerid, 100); // APosto je VERONA MALL novac ide u budget
-                    PlayerInfo[playerid][pBoomBox]     = 1;
+                    PlayerInventory[playerid][pBoomBox]     = 1;
                 }
                 case 1:
                 {
                     if (AC_GetPlayerMoney(playerid) < 100) return SendClientMessage(playerid, COLOR_RED, "Nemate toliko novca (100$)!");
                     PlayerToBudgetMoney(playerid, 100); // APosto je VERONA MALL novac ide u budget
-                    PlayerInfo[playerid][pBoomBox]     = 2;
+                    PlayerInventory[playerid][pBoomBox]     = 2;
                 }
             }
             return 1;

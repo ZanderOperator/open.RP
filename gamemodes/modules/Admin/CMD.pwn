@@ -2186,14 +2186,14 @@ CMD:givepremium(playerid, params[])
 		ExpInfo[giveplayerid][eAllPoints] += BRONZE_EXP_POINTS;
 		SavePlayerExperience(giveplayerid);
 
-	    PlayerInfo[ giveplayerid ][ pMaskID ] = 100000 + random(899999);
+	    PlayerInventory[giveplayerid][pMaskID] = 100000 + random(899999);
 		
 		#if defined MODULE_LOGS
 		Log_Write("/logfiles/masks.txt", "(%s) %s(%s), Mask ID: %d.",
 			ReturnDate(),
 			GetName(giveplayerid, false),
 			ReturnPlayerIP(giveplayerid),
-			PlayerInfo[ giveplayerid ][ pMaskID ]
+			PlayerInventory[giveplayerid][pMaskID]
 		);
 		#endif
 		
@@ -2242,14 +2242,14 @@ CMD:givepremium(playerid, params[])
 		ExpInfo[giveplayerid][eAllPoints] += SILVER_EXP_POINTS;
 		SavePlayerExperience(giveplayerid);
 
-	    PlayerInfo[ giveplayerid ][ pMaskID ] = 100000 + random(899999);
+	    PlayerInventory[giveplayerid][pMaskID] = 100000 + random(899999);
 		
 		#if defined MODULE_LOGS
 		Log_Write("/logfiles/masks.txt", "(%s) %s(%s), Mask ID: %d.",
 			ReturnDate(),
 			GetName(giveplayerid, false),
 			ReturnPlayerIP(giveplayerid),
-			PlayerInfo[ giveplayerid ][ pMaskID ]
+			PlayerInventory[giveplayerid][pMaskID]
 		);
 		#endif
 
@@ -2297,14 +2297,14 @@ CMD:givepremium(playerid, params[])
 		ExpInfo[giveplayerid][eAllPoints] += GOLD_EXP_POINTS;
 		SavePlayerExperience(giveplayerid);
 
-	    PlayerInfo[ giveplayerid ][ pMaskID ] = 100000 + random(899999);
+	    PlayerInventory[giveplayerid][pMaskID] = 100000 + random(899999);
 		
 		#if defined MODULE_LOGS
 		Log_Write("/logfiles/masks.txt", "(%s) %s(%s), Mask ID: %d.",
 			ReturnDate(),
 			GetName(giveplayerid, false),
 			ReturnPlayerIP(giveplayerid),
-			PlayerInfo[ giveplayerid ][ pMaskID ]
+			PlayerInventory[giveplayerid][pMaskID]
 		);
 		#endif
 
@@ -2361,14 +2361,14 @@ CMD:givepremium(playerid, params[])
 		ExpInfo[giveplayerid][eAllPoints] += PLATINUM_EXP_POINTS;
 		SavePlayerExperience(giveplayerid);
 
-	    PlayerInfo[ giveplayerid ][ pMaskID ] = 100000 + random(899999);
+	    PlayerInventory[giveplayerid][pMaskID] = 100000 + random(899999);
 		
 		#if defined MODULE_LOGS
 		Log_Write("/logfiles/masks.txt", "(%s) %s(%s), Mask ID: %d.",
 			ReturnDate(),
 			GetName(giveplayerid, false),
 			ReturnPlayerIP(giveplayerid),
-			PlayerInfo[ giveplayerid ][ pMaskID ]
+			PlayerInventory[giveplayerid][pMaskID]
 		);
 		#endif
 
@@ -5386,8 +5386,13 @@ CMD:masked(playerid, params[])
 	{
 		if (!Player_UsingMask(i)) continue;
 
-		format(globalstring, sizeof(globalstring), "** ID: %d *** %s, MASK ID: %d", i, GetName(i, false), PlayerInfo[i][pMaskID]);
-		SendClientMessage(playerid, -1, globalstring);
+		va_SendClientMessage(playerid, 
+			-1, 
+			"** ID: %d *** %s, MASK ID: %d", 
+			i, 
+			GetName(i, false), 
+			PlayerInventory[i][pMaskID]
+		);
 	}
 	return 1;
 }

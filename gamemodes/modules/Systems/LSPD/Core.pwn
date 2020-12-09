@@ -2152,7 +2152,7 @@ CMD:take(playerid, params[])
             SendClientMessage(playerid, COLOR_RED, tmpString);
             format(tmpString, sizeof(tmpString), "[ ! ] Policajac %s vam je oduzeo opremu za obijanje.", GetName(playerid));
             SendClientMessage(giveplayerid, COLOR_ORANGE, tmpString);
-            PlayerInfo[giveplayerid][pToolkit] = 0;
+            PlayerInventory[giveplayerid][pToolkit] = 0;
         }
         else SendMessage(playerid, MESSAGE_TYPE_ERROR, "Taj igrac nije blizu vas !");
     }
@@ -2721,7 +2721,7 @@ CMD:undercover(playerid, params[])
 
             new
                 undercover_Name[24];
-            format(undercover_Name, sizeof(undercover_Name), "Unknown_%d", PlayerInfo[playerid][pMaskID]);
+            format(undercover_Name, sizeof(undercover_Name), "Unknown_%d", PlayerInventory[playerid][pMaskID]);
             if (IsValidDynamic3DTextLabel(unknown_text[playerid]))
             {
                 DestroyDynamic3DTextLabel(unknown_text[playerid]);

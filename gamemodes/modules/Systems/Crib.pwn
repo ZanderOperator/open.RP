@@ -3765,7 +3765,7 @@ CMD:doorshout(playerid, params[])
         }
         if (Player_UsingMask(playerid) && !IsOnAdminDuty(playerid))
         {
-            format(string, sizeof(string), "Maska_%d se dere[VRATA]: %s !!", PlayerInfo[playerid][pMaskID], result);
+            format(string, sizeof(string), "Maska_%d se dere[VRATA]: %s !!", PlayerInventory[playerid][pMaskID], result);
             ProxDetector(30.0, playerid, string, COLOR_FADE1,COLOR_FADE2,COLOR_FADE3,COLOR_FADE4,COLOR_FADE5);
             color = COLOR_FADE1;
         }
@@ -3816,7 +3816,7 @@ CMD:doorshout(playerid, params[])
             }
             if (Player_UsingMask(playerid) && !IsOnAdminDuty(playerid))
             {
-                format(string, sizeof(string), "Maska_%d se dere[VRATA]: %s !!", PlayerInfo[playerid][pMaskID], result);
+                format(string, sizeof(string), "Maska_%d se dere[VRATA]: %s !!", PlayerInventory[playerid][pMaskID], result);
                 ProxDetector(30.0, playerid, string, COLOR_FADE1,COLOR_FADE2,COLOR_FADE3,COLOR_FADE4,COLOR_FADE5);
                 color = COLOR_FADE1;
             }
