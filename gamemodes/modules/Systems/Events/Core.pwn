@@ -1,8 +1,3 @@
-#if defined _events_core_included
-  #endinput
-#endif
-#define _events_core_included
-
 /*
     #### ##    ##  ######  ##       ##     ## ########  ######## 
      ##  ###   ## ##    ## ##       ##     ## ##     ## ##       

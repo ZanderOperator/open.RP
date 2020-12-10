@@ -7,7 +7,7 @@ forward bool:Player_OnLawDuty(playerid);
 forward Player_SetLawDuty(playerid, bool:v);
 
 // LSPD
-#include "modules/Systems\LSPD/Header.pwn"
+#include "modules/Systems\LSPD/Header.inc"
 
 // Bizz
 forward Player_InBusiness(playerid);
@@ -42,7 +42,7 @@ forward Player_InPickup(playerid);
 forward Player_SetInPickup(playerid, v);
 
 // Events
-#include "modules/Systems\Events/Header.pwn"
+#include "modules/Systems\Events/Header.inc"
 
 
 // Miscellaneous
