@@ -350,7 +350,7 @@ stock RemoveLeaders(orgid)
 stock RemoveMembers(orgid)
 {
     mysql_fquery(g_SQL, 
-        "UPDATE accounts SET facMemId = '0' WHERE facMemId = '%d'",
+        "UPDATE player_faction SET facMemId = '0' WHERE facMemId = '%d'",
         orgid
     );
 
@@ -1307,7 +1307,7 @@ CMD:faction(playerid, params[])
             RemovePlayerJob(targetid);
         }
 
-        mysql_fquery(g_SQL, "UPDATE accounts SET facMemId = '%d', facRank = '%d' WHERE sqlid = '%d'",
+        mysql_fquery(g_SQL, "UPDATE player_faction SET facMemId = '%d', facRank = '%d' WHERE sqlid = '%d'",
             PlayerFaction[targetid][pMember],
             PlayerFaction[targetid][pRank],
             PlayerInfo[targetid][pSQLID]
@@ -1475,7 +1475,7 @@ CMD:faction(playerid, params[])
             PlayerAppearance[playerid][pTmpSkin] = 299;
         }
 
-        mysql_fquery(g_SQL, "UPDATE accounts SET facMemId = '0', facRank = '0' WHERE sqlid = '%d'",
+        mysql_fquery(g_SQL, "UPDATE player_faction SET facMemId = '0', facRank = '0' WHERE sqlid = '%d'",
             PlayerInfo[targetid][pSQLID]
         );
 
@@ -1525,7 +1525,7 @@ CMD:faction(playerid, params[])
         );
         #endif
 
-        mysql_fquery(g_SQL, "UPDATE accounts SET facRank = '%d' WHERE sqlid = '%d'",
+        mysql_fquery(g_SQL, "UPDATE player_faction SET facRank = '%d' WHERE sqlid = '%d'",
             PlayerFaction[targetid][pRank],
             PlayerInfo[targetid][pSQLID]
         );

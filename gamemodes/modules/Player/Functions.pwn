@@ -182,8 +182,6 @@ ResetMonthPaydays()
 	return 1;
 }
 
-
-// TODO: MULTIPLE TABLE SELECT workaround - sql reorganization
 Public:CheckAccountsForInactivity()
 {	
 	new 
@@ -239,19 +237,18 @@ Public:CheckAccountsForInactivity()
 			logString[0] = EOS;
 			
 			cache_get_value_name_int(i, "sqlid", sqlid);
+			cache_get_value_name(i, 	"name"	, playername, 24);
+			cache_get_value_name_int(i, "lastloginstamp", loginstamp);
 			
 			if(IsValidInactivity(sqlid)) // Ukoliko postoji prijavljena neaktivnost koja jos uvijek traje
 				continue;
 
+			jobkey = GetPlayerJobKey(sqlid);
+			contracttime = GetPlayerContractTime(sqlid);
 			monthpaydays = GetPlayerPaydayCount(sqlid);
 			donaterank = GetPlayerVIP(sqlid);
 			
 			cache_set_active(Data); // Povratak cachea nakon provjere u bazi
-				
-			cache_get_value_name(i, 	"name"	, playername, 24);
-			cache_get_value_name_int(i, "jobkey", jobkey);
-			cache_get_value_name_int(i, "contracttime", contracttime);
-			cache_get_value_name_int(i, "lastloginstamp", loginstamp);
 
 			switch(donaterank)
 			{
@@ -478,11 +475,11 @@ Public:CheckAccountsForInactivity()
 		cache_delete(Data);
 		return 1;
 	}
-	// sqlid, jobkey, contracttime, lastloginstamp, monthpaydays, donaterank, adminmessage
-
 	MySQL_PQueryInline(g_SQL,  
 		using inline OnInactiveAccsLoad, 
-		va_fquery(g_SQL,  "SELECT * FROM accounts WHERE lastloginstamp <= '%d'",inactivetimestamp),
+		va_fquery(g_SQL,  
+			"SELECT sqlid, name, lastloginstamp FROM accounts WHERE lastloginstamp <= '%d'",
+			inactivetimestamp),
 		""
 	);
 	
@@ -1451,6 +1448,36 @@ stock GetPlayerPaydayCount(sqlid)
 	return value;
 }
 
+stock GetPlayerJobKey(sqlid)
+{
+	new	Cache:result,
+		value = 0;
+
+	result = mysql_query(g_SQL, va_fquery(g_SQL, "SELECT jobkey FROM player_job WHERE sqlid = '%d'", sqlid));
+	if(!cache_num_rows())
+		value = 0;
+	else
+		cache_get_value_name_int(0, "jobkey", value);
+	
+	cache_delete(result);
+	return value;
+}
+
+stock GetPlayerContractTime(sqlid)
+{
+	new	Cache:result,
+		value = 0;
+
+	result = mysql_query(g_SQL, va_fquery(g_SQL, "SELECT contracttime FROM player_job WHERE sqlid = '%d'", sqlid));
+	if(!cache_num_rows())
+		value = 0;
+	else
+		cache_get_value_name_int(0, "contracttime", value);
+	
+	cache_delete(result);
+	return value;
+}
+
 stock IsAccountTeamStaff(sqlid)
 {
 	new	Cache:result,
@@ -1832,13 +1859,18 @@ stock RemovePlayerScreenFade(playerid)
 	BlindTD[playerid] = PlayerText:INVALID_TEXT_DRAW;
 	return 1;
 }
-stock IllegalFactionJobCheck(factionid, jobid) // TODO: workaround - sql reorganization
+
+stock IllegalFactionJobCheck(factionid, jobid) 
 {
     new	Cache:result,
 		counts;
 
 	result = mysql_query(g_SQL, 
-				va_fquery(g_SQL, "SELECT sqlid FROM player_jobs WHERE jobkey = '%d' AND (facMemId = '%d' OR facLeadId = '%d')", 
+				va_fquery(g_SQL, 
+					"SELECT sqlid \n\
+						FROM player_jobs, player_faction \n\
+						WHERE player_jobs.jobkey = '%d' \n\
+						AND (player_faction.facMemId = '%d' OR player_faction.facLeadId = '%d')", 
 					jobid, 
 					factionid, 
 					factionid
@@ -1847,7 +1879,6 @@ stock IllegalFactionJobCheck(factionid, jobid) // TODO: workaround - sql reorgan
 
 	counts = cache_num_rows();
 	cache_delete(result);
-	
 	return counts;
 }
 

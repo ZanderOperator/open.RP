@@ -231,50 +231,36 @@ public LoadPlayerData(playerid)
 		Bit1_Set(gr_LoginChecksOn, playerid, false);
 
 		cache_get_value_name_int(0, "sqlid"			, PlayerInfo[playerid][pSQLID]);
-		cache_get_value_name_int(0, "levels"		, PlayerInfo[playerid][pLevel]);
-		cache_get_value_name_int(0, "connecttime"	, PlayerInfo[playerid][pConnectTime]);
-		
+		cache_get_value_name(0, 	"password"		, PlayerInfo[playerid][pPassword]		, BCRYPT_HASH_LENGTH);
 		cache_get_value_name(0, 	"teampin"		, PlayerInfo[playerid][pTeamPIN]		, BCRYPT_HASH_LENGTH);
-		cache_get_value_name_int(0, "secquestion"	, PlayerInfo[playerid][pSecQuestion]);
-		cache_get_value_name(0, 	"secawnser"		, PlayerInfo[playerid][pSecQuestAnswer]	, 31);
-		cache_get_value_name(0, 	"email"			, PlayerInfo[playerid][pEmail]			, MAX_PLAYER_MAIL);
-		cache_get_value_name(0, 	"SAMPid"		, PlayerInfo[playerid][pSAMPid]			, 128);
 		cache_get_value_name(0, 	"lastlogin"		, PlayerInfo[playerid][pLastLogin]		, 24);
 		cache_get_value_name_int(0, "lastloginstamp", PlayerInfo[playerid][pLastLoginTimestamp]);
-		
-		cache_get_value_name(0, 	"password"		, PlayerInfo[playerid][pPassword]		, BCRYPT_HASH_LENGTH);
-		cache_get_value_name(0, 	"lastupdatever"	, PlayerInfo[playerid][pLastUpdateVer]	, 24);
 		cache_get_value_name_int(0, "spawnchange"	, PlayerInfo[playerid][pSpawnChange]);
-		
+		cache_get_value_name_int(0, "secquestion"	, PlayerInfo[playerid][pSecQuestion]);
+		cache_get_value_name(0, 	"secawnser"		, PlayerInfo[playerid][pSecQuestAnswer]	, 31);
+		cache_get_value_name(0, 	"forumname"		, PlayerInfo[playerid][pForumName]		, 24);
+		cache_get_value_name(0, 	"email"			, PlayerInfo[playerid][pEmail]			, MAX_PLAYER_MAIL);
+		cache_get_value_name(0, 	"SAMPid"		, PlayerInfo[playerid][pSAMPid]			, 128);
+		cache_get_value_name(0, 	"lastupdatever"	, PlayerInfo[playerid][pLastUpdateVer]	, 24);
 		cache_get_value_name_int(0, "registered"	, PlayerInfo[playerid][pRegistered]);
-		cache_get_value_name(0, "forumname"			, PlayerInfo[playerid][pForumName], 24);
-
 		cache_get_value_name_int(0, "adminLvl"		, PlayerInfo[playerid][pTempRank][0]);
 		cache_get_value_name_int(0, "helper"		, PlayerInfo[playerid][pTempRank][1]);
 		cache_get_value_name_int(0, "playaWarns"	, PlayerInfo[playerid][pWarns]);
-
+		cache_get_value_name_int(0, "levels"		, PlayerInfo[playerid][pLevel]);
+		cache_get_value_name_int(0, "connecttime"	, PlayerInfo[playerid][pConnectTime]);
 		cache_get_value_name_int(0, "muted"			, PlayerInfo[playerid][pMuted]);
 		cache_get_value_name_int(0, "respects"		, PlayerInfo[playerid][pRespects]);
-
 		cache_get_value_name_int(0,  "sex"			, PlayerInfo[playerid][pSex]);
 		cache_get_value_name_int(0,  "age"			, PlayerInfo[playerid][pAge]);
 		cache_get_value_name_int(0,  "changenames"	, PlayerInfo[playerid][pChangenames]);
 		cache_get_value_name_int(0,  "changetimes"	, PlayerInfo[playerid][pChangeTimes]);
 		cache_get_value_name_int(0,  "handMoney"	, PlayerInfo[playerid][pMoney]);
 		cache_get_value_name_int(0,  "bankMoney"	, PlayerInfo[playerid][pBank]);
-
-		
-		cache_get_value_name(0, "playaBanReason"	, ban_reason, 32);
 		cache_get_value_name_int(0,	"playaUnbanTime", unban_time);
-		
-		cache_get_value_name_int(0,	"casinocool"	, PlayerCoolDown[playerid][pCasinoCool]);
+		cache_get_value_name(0, 	"playaBanReason", ban_reason							, 32);
 		cache_get_value_name_int(0,	"voted"			, PlayerInfo[playerid][pVoted]);
-		
-		cache_get_value_name_int(0,	"ammutime"		, PlayerCoolDown[playerid][pAmmuCool]);
-		
+		cache_get_value_name_int(0, "FurnPremium"	, PlayerInfo[playerid][pExtraFurniture]); 
 		cache_get_value_name_int(0,	"mustread"		, PlayerInfo[playerid][pMustRead]);
-		cache_get_value_name_int(0, "JackerCoolDown", PlayerCoolDown[playerid][pJackerCool]);
-		cache_get_value_name_int(0, "FurnPremium"	, PlayerInfo[playerid][pExtraFurniture]);
 				
 		if( unban_time == -1 )
 		{
@@ -339,7 +325,6 @@ public LoadPlayerData(playerid)
 		}
 
 		LoadPlayerStats(playerid);
-		
 		
 		PlayerKeys[playerid][pHouseKey] = INVALID_HOUSE_ID;
 		PlayerKeys[playerid][pBizzKey] 	= INVALID_BIZNIS_ID;
@@ -458,9 +443,9 @@ public RegisterPlayer(playerid) // TODO: mandatory checkup!
     mysql_pquery(g_SQL,
 		va_fquery(g_SQL, 
 			"INSERT INTO accounts (registered,register_date,name,password,teampin,email,\n\
-				secawnser,expdate,levels,age,sex,handMoney,bankMoney,casinocool) \n\
-				VALUES ('0','%e','%e','%e','','%e','','','%d','%d','%d','%d','%d','%d')",
-			ReturnDate(),
+				secawnser,levels,age,sex,handMoney,bankMoney,casinocool) \n\
+				VALUES ('0','%e','%e','%e','','%e','','%d','%d','%d','%d','%d','%d')",
+			PlayerInfo[playerid][pLastLogin],
 			GetName(playerid, false),
 			PlayerInfo[playerid][pPassword],
 			PlayerInfo[playerid][pEmail],
@@ -564,10 +549,6 @@ SafeSpawnPlayer(playerid)
 		ReturnPlayerIP(playerid)
 	);
 	
-	mysql_fquery(g_SQL,
-		 "UPDATE accounts SET online = '1' WHERE sqlid = '%d'",
-		 PlayerInfo[ playerid ][ pSQLID ]
-	);
 	
 	if( ( 10 <= PlayerJob[playerid][pJob] <= 12 ) && ( !PlayerFaction[playerid][pMember] && !PlayerFaction[playerid][pLeader])  )
 		PlayerJob[playerid][pJob] = 0;
@@ -647,53 +628,24 @@ public SavePlayerData(playerid)
 	mysql_pquery(g_SQL, "START TRANSACTION");
 
 	mysql_fquery_ex(g_SQL, 
-		"UPDATE accounts SET registered = '%d', adminLvl = '%d', helper = '%d', playaWarns = '%d', lastlogin = '%e',\n\
-			lastloginstamp = '%d', lastip = '%e', muted = '%d', sex = '%d', age = '%d', changenames = '%d',\n\
-			changetimes = '%d', handMoney = '%d', bankMoney = '%d', connecttime = '%d',\n\
-			levels = '%d', respects = '%d',\n\
-			parts = '%d',\n\
-			rentkey = '%d',\n\
-			maskid = '%d', clock = '%d', rope = '%d', cigaretes = '%d', lighter = '%d',\n\
-			SAMPid = '%e', forumname = '%e',\n\
-			boombox = '%d', voted = '%d',\n\
-			ammutime = '%d', mustread = '%d', lastupdatever = '%e', JackerCoolDown = '%d',\n\
-			FurnPremium = '%d',\n\
-			WHERE sqlid = '%d'",
-		PlayerInfo[playerid][pRegistered],
-		PlayerInfo[playerid][pTempRank][0],
-		PlayerInfo[playerid][pTempRank][1],
-		PlayerInfo[playerid][pWarns],
+		"UPDATE accounts SET lastlogin = '%e', lastloginstamp = '%d', lastip = '%e', forumname = '%e', \n\
+			lastupdatever = '%e', registered = %d', playaWarns = '%d', levels = '%d', connecttime = '%d', \n\
+			muted = '%d', respects = '%d', changenames = '%d', changetimes = '%d',\n\
+			mustread = '%d' WHERE sqlid = '%d'",
 		PlayerInfo[playerid][pLastLogin],
 		PlayerInfo[playerid][pLastLoginTimestamp],
 		PlayerInfo[playerid][pIP],
+		PlayerInfo[playerid][pForumName],
+		PlayerInfo[playerid][pLastUpdateVer],
+		PlayerInfo[playerid][pRegistered],
+		PlayerInfo[playerid][pWarns],
+		PlayerInfo[playerid][pLevel],
+		PlayerInfo[playerid][pConnectTime],
 		PlayerInfo[playerid][pMuted],
-		PlayerInfo[playerid][pSex],
-		PlayerInfo[playerid][pAge],
+		PlayerInfo[playerid][pRespects],
 		PlayerInfo[playerid][pChangenames],
 		PlayerInfo[playerid][pChangeTimes],
-		PlayerInfo[playerid][pMoney],
-		PlayerInfo[playerid][pBank],
-		PlayerInfo[playerid][pConnectTime],
-		PlayerInfo[playerid][pLevel],
-		PlayerInfo[playerid][pRespects],
-		PlayerInventory[playerid][pParts],
-		PlayerKeys[playerid][pRentKey],
-		PlayerInventory[playerid][pMaskID],
-		PlayerInventory[playerid][pWatch],
-		PlayerInventory[playerid][pRope],
-		PlayerInventory[playerid][pCiggaretes],
-		PlayerInventory[playerid][pLighter],
-		LicenseInfo[playerid][pPassport],
-		PlayerInfo[playerid][pSAMPid],
-		PlayerInfo[playerid][pForumName],
-		PlayerInventory[playerid][pBoomBox],
-		PlayerCoolDown[playerid][pCasinoCool],
-		PlayerInfo[playerid][pVoted],
-		PlayerCoolDown[playerid][pAmmuCool],
 		PlayerInfo[playerid][pMustRead],
-		PlayerInfo[playerid][pLastUpdateVer],
-		PlayerCoolDown[playerid][pJackerCool],
-		PlayerInfo[playerid][pExtraFurniture],
 		PlayerInfo[playerid][pSQLID]
 	);
 

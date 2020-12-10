@@ -639,7 +639,7 @@ stock BuyVehicle(playerid, bool:credit_activated = false)
 	{
 		PlayerVIP[playerid][pDonatorVehicle] = modelid;
 		
-		mysql_fquery(g_SQL, "UPDATE accounts SET donateveh = '%d' WHERE sqlid = '%d'", 
+		mysql_fquery(g_SQL, "UPDATE player_vip_status SET donateveh = '%d' WHERE sqlid = '%d'", 
 			PlayerVIP[playerid][pDonatorVehicle],
 			PlayerInfo[playerid][pSQLID]
 		);	
@@ -650,7 +650,7 @@ stock BuyVehicle(playerid, bool:credit_activated = false)
         PlayerVIP[playerid][pDonatorVehPerms] -= 1;
         SendClientMessage(playerid, COLOR_RED, "[ ! ] Kupili ste VIP vozilo, potrosili ste jednu donatorsku dozvolu.");
 
-       	mysql_fquery(g_SQL, "UPDATE accounts SET dvehperms = '%d' WHERE sqlid = '%d'", 
+       	mysql_fquery(g_SQL, "UPDATE player_vip_status SET dvehperms = '%d' WHERE sqlid = '%d'", 
 			PlayerVIP[playerid][pDonatorVehPerms], 
 			PlayerInfo[playerid][pSQLID]
 		);

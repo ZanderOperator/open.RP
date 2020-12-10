@@ -1001,8 +1001,8 @@ timer OnAdminCountDown[1000]()
 	return 1;
 }
 
-forward CheckPlayerPrison(playerid, const targetname[], minutes, const reason[]);
-public CheckPlayerPrison(playerid, const targetname[], minutes, const reason[])
+forward CheckPlayerPrison(playerid, sqlid, const targetname[], minutes, const reason[]);
+public CheckPlayerPrison(playerid, sqlid, const targetname[], minutes, const reason[]) 
 {
     new 
 		rows;
@@ -1014,7 +1014,7 @@ public CheckPlayerPrison(playerid, const targetname[], minutes, const reason[])
 	cache_get_value_name_int(0, "jailed", prisoned);
     if(prisoned != 0) return SendClientMessage(playerid,COLOR_RED, "Taj igrac je vec u arei/zatvoru!");
 	
-	mysql_fquery(g_SQL, "UPDATE accounts SET jailed = '2', jailtime = '%d' WHERE name = '%e'", minutes, targetname);
+	mysql_fquery(g_SQL, "UPDATE player_jail SET jailed = '2', jailtime = '%d' WHERE sqlid = '%d'", minutes, sqlid);
 		
 	va_SendClientMessage(playerid,COLOR_RED, "[ ! ] Uspjesno si smjestio offline igraca '%s' u areu na %d minuta.",targetname, minutes);
 	return 1;
@@ -1051,47 +1051,46 @@ public LoadPlayerWarns(playerid, targetname[],reason[])
     }
 	return 1;
 }
-// TODO: workaround - SQL reorganization
-forward CheckOffline(playerid, const name[]);
-public CheckOffline(playerid, const name[])
+
+forward CheckOffline(playerid, sqlid, const name[]);
+public CheckOffline(playerid, sqlid, const name[])
 {
-	new
-		rowsCount;
-	cache_get_row_count(rowsCount);
-	if(!rowsCount)
-		return SendClientMessage(playerid, COLOR_RED, "[MySQL]: Taj igrac nije u bazi!");
-	
 	new 
-		temp[ 64 ],
-		sqlid,
 		aname[MAX_PLAYER_NAME],
 		level,
-		organizacija,
-		gotovina,
-		banka,
+		org,
+		rank,
+		cash,
+		bank,
 		housekey = 9999,
 		bizkey = 999,
 		garagekey = -1,
 		admin,
-		//jobkey,
+		helper,
+		jobkey,
+		contracttime,
 		warnings,
 		playhrs,
 		complexkey,
 		cmplxroomkey;
 	
-	cache_get_value_name_int(0, "sqlid", sqlid);
-	cache_get_value_name(0,"name", temp); 	
-	format(aname,sizeof(aname),"%s",temp);
-	
+	// accounts table
+	cache_get_value_name(0, "name", aname, MAX_PLAYER_NAME); 	
 	cache_get_value_name_int(0,"levels",level);
-	cache_get_value_name_int(0,"facMemId",organizacija);
-	cache_get_value_name_int(0,"handMoney",gotovina);
-	cache_get_value_name_int(0,"bankMoney",banka);
-	
+	cache_get_value_name_int(0,"handMoney",cash);
+	cache_get_value_name_int(0,"bankMoney",bank);
 	cache_get_value_name_int(0,"adminLvl",admin);
-	//cache_get_value_name_int(0,"jobkey",jobkey);
+	cache_get_value_name_int(0,"helper",helper);
 	cache_get_value_name_int(0,"playaWarns",warnings);
 	cache_get_value_name_int(0,"connecttime",playhrs);
+
+	// player_job table
+	cache_get_value_name_int(0,"jobkey",jobkey);
+	cache_get_value_name_int(0,"contracttime",contracttime);
+
+	// player_faction table
+	cache_get_value_name_int(0,"facMemId",org);
+	cache_get_value_name_int(0,"facRank",rank);
 	
 	foreach(new biznis : Bizzes) 
 	{
@@ -1113,7 +1112,8 @@ public CheckOffline(playerid, const name[])
 	
 	foreach(new complexr : ComplexRooms)
 	{
-		if(ComplexRoomInfo[complexr][cOwnerID] == sqlid) {
+		if(ComplexRoomInfo[complexr][cOwnerID] == sqlid) 
+		{
 			cmplxroomkey = complexr;
 			break;
 		}
@@ -1136,18 +1136,23 @@ public CheckOffline(playerid, const name[])
 		}
 	}
 	
-	va_SendClientMessage(playerid, COLOR_ORANGE, "Ime: %s - Level: %d - Org: %d - Novac: %d$ - Banka: %d$",
+	va_SendClientMessage(playerid, COLOR_ORANGE, "Name: %s - Level: %d - Org: %s[Rank %d] - Cash: %d$ - Bank: %d$",
 		aname,
 		level,
-		organizacija,
-		gotovina,
-		banka
+		FactionInfo[org][fName],
+		rank,
+		cash,
+		bank
 	);
-	va_SendClientMessage(playerid, COLOR_ORANGE, "Sati igranja: %d - Warns: %d - Admin: %d",
+	va_SendClientMessage(playerid, COLOR_ORANGE, "Hours of gameplay: %d - Warns: %d - Admin Level: %d - Helper Level: %d",
 		playhrs,
-		//jobkey,
 		warnings,
-		admin
+		admin,
+		helper
+	);
+	va_SendClientMessage(playerid, COLOR_ORANGE, "Job: %s - Contract Time on job: %d hours",
+		ReturnJob(jobkey),
+		contracttime
 	);
 	va_SendClientMessage(playerid, COLOR_ORANGE, "House Key: %d - Biz Key: %d - Garage Key: %d - Complex Key: %d - Complex Room Key: %d",
 		housekey,
@@ -2945,26 +2950,29 @@ CMD:setstat(playerid, params[])
     new giveplayerid, stat, amount;
     if (sscanf(params, "uii", giveplayerid, stat, amount))
 	{
-		SendClientMessage(playerid, COLOR_RED, "[ ? ]: /setstat [ID/DioImena] [Statcode] [Amount]");
-		SendClientMessage(playerid, COLOR_GREY, "(1 - Level), (2 - SpawnHealth), (3 - UpgradePoints), (4 - Age), (5 Bank Money)");
-		SendClientMessage(playerid, COLOR_GREY, "(6 - PhoneNumber), (7 - RespectPoints), (8 - HouseKey), (9 - BizKey), (10 - PremiumAccount)");
-		SendClientMessage(playerid, COLOR_GREY, "(11 - Connected Time), (12 - Sex)");
-		SendClientMessage(playerid, COLOR_GREY, "(13 - Seeds), (14 - Players Job), (15 - PlayerContractTime), (16 - VrijemeDoPlace)");
-		SendClientMessage(playerid, COLOR_GREY, "(17 - Job Key), (18 - Muscle Skill), (19 - Puta uhicen), (20 - Changename Dozvola)");
-		SendClientMessage(playerid, COLOR_GREY, "(21 - PayDay Money), (22 - DonateRank), (23 - Casino cool), (24 - Garage key)");
-		SendClientMessage(playerid, COLOR_GREY, "(25 - Complex Key), (26 - Complex Room Key), (27 - Fishing skill)");
+		SendClientMessage(playerid, COLOR_RED, "[ ? ]: /setstat [ID/Nickname] [Statcode] [Amount]");
+		SendClientMessage(playerid, COLOR_GREY, "(1 - Level), (2 - Age), (3 - PhoneNumber)");
+		SendClientMessage(playerid, COLOR_GREY, "(4 - RespectPoints), (5 - Playing Hours), (6 - Sex) ");
+		SendClientMessage(playerid, COLOR_GREY, " (7 - Players Job), (8 - PlayerContractTime), (9 - Minutes Till PayDay)");
+		SendClientMessage(playerid, COLOR_GREY, "(10 - Muscle Skill), (11 - Times Arrested), (12 - Changename Permits)");
+		SendClientMessage(playerid, COLOR_GREY, "(13 - Casino cool), (14 - Fishing skill)");
 		return 1;
     }
-    if (!IsPlayerConnected(giveplayerid)) 
-		return SendClientMessage(playerid, COLOR_RED, "Taj igraè nije online!");
+    if(!SafeSpawned[playerid])
+		return SendMessage(playerid, MESSAGE_TYPE_ERROR, "That player is not online!");
 	
 	switch (stat)
 	{
 		case 1:
 		{
 			PlayerInfo[giveplayerid][pLevel] = amount;
-			format(globalstring, sizeof(globalstring), "   Korisnik je postavljen na level %d.", amount);
 			SetPlayerScore( giveplayerid, amount );
+
+			format(globalstring, sizeof(globalstring), "You've set %s[ID %d]'s level at %d.", 
+				GetName(giveplayerid), 
+				giveplayerid,
+				amount
+			);
 			
 			mysql_fquery(g_SQL, "UPDATE accounts SET levels = '%d', respects = '%d' WHERE sqlid = '%d'",
 				PlayerInfo[giveplayerid][pLevel],
@@ -2974,52 +2982,64 @@ CMD:setstat(playerid, params[])
 		}
 		case 2:
 		{
-			format(globalstring, sizeof(globalstring), "   Korisnik ce se od sada stvarati sa %d energije.", amount);
+		    PlayerInfo[giveplayerid][pAge] = amount;
+
+			format(globalstring, sizeof(globalstring), "You've set %s[ID %d]'s age at %d.", 
+				GetName(giveplayerid), 
+				giveplayerid,
+				amount
+			);
+
+			mysql_fquery(g_SQL, "UPDATE accounts SET age = '%d' WHERE sqlid = '%d'",
+				amount,
+				PlayerInfo[giveplayerid][pSQLID]
+			);
 		}
 		case 3:
 		{
-			format(globalstring, sizeof(globalstring), "   Korisnikovi Upgrade Poeni su postavljeni na %d.", amount);
+		    PlayerMobile[giveplayerid][pMobileNumber] = amount;
+			
+			format(globalstring, sizeof(globalstring), "You've set %s[ID %d]'s mobile number at %d.", 
+				GetName(giveplayerid), 
+				giveplayerid,
+				amount
+			);
+
+			mysql_fquery(g_SQL, "UPDATE player_phones SET number = '%d' WHERE playerid = '%d' AND type = '1'",
+				amount,
+				PlayerInfo[giveplayerid][pSQLID]
+			);
   		}
 		case 4:
 		{
-		    PlayerInfo[giveplayerid][pAge] = amount;
-			format(globalstring, sizeof(globalstring), "   Korisnikove godine su promjenjene na %d.", amount);
-		}
+		    PlayerInfo[giveplayerid][pRespects] = amount;
+			
+			format(globalstring, sizeof(globalstring), "You've set %s[ID %d]'s Respect Points at %d.", 
+				GetName(giveplayerid), 
+				giveplayerid,
+				amount
+			);
+
+			mysql_fquery(g_SQL, "UPDATE accounts SET respects = '%d' WHERE sqlid = '%d'",
+				amount,
+				PlayerInfo[giveplayerid][pSQLID]
+			);
+  		}
 		case 5:
 		{
-			PlayerInfo[giveplayerid][pBank] = amount;
-			format(globalstring, sizeof(globalstring), "   Korisnik sada na banci ima $%d novaca.", amount);
-  		}
-		case 6:
-		{
-		    PlayerMobile[giveplayerid][pMobileNumber] = amount;
-			format(globalstring, sizeof(globalstring), "   Korisnikov broj telefona je postavljen na %d.", amount);
-  		}
-		case 7:
-		{
-		    PlayerInfo[giveplayerid][pRespects] = amount;
-			format(globalstring, sizeof(globalstring), "   Korisnikovi Respekt Poeni su postavljeni na %d.", amount);
-  		}
-		case 8:
-		{
-		    PlayerKeys[giveplayerid][pHouseKey] = amount;
-			format(globalstring, sizeof(globalstring), "   Korisnik sada ima kljuc od kuce broj %d.", amount);
-  		}
-		case 9:
-		{
-		    PlayerKeys[giveplayerid][pBizzKey] = amount;
-			format(globalstring, sizeof(globalstring), "   Korisnik sada ima kljuc od tvrtke broj %d.", amount);
-  		}
-		case 10:
-		{
-		    PlayerVIP[giveplayerid][pDonateRank] = amount;
-			format(globalstring, sizeof(globalstring), "   Korisnik je sada Premium Account Level %d.", amount);
-  		}
-		case 11:
-		{
 		    PlayerInfo[giveplayerid][pConnectTime] = amount;
-			format(globalstring, sizeof(globalstring), "   Korisnikovo ukupno vrijeme provedeno na serveru je postavljeno na %d.", amount);
 			
+			format(globalstring, sizeof(globalstring), "You've set %s[ID %d]'s Playing Hours at %d.", 
+				GetName(giveplayerid), 
+				giveplayerid,
+				amount
+			);
+			
+			mysql_fquery(g_SQL, "UPDATE accounts SET connecttime = '%d' WHERE sqlid = '%d'",
+				amount,
+				PlayerInfo[giveplayerid][pSQLID]
+			);
+
 			#if defined MODULE_LOGS
 			Log_Write("/logfiles/a_setstat_connectedtime.txt", "(%s) Game Admin %s[%s] set %s's playing hours on %d.", 
 				ReturnDate(), 
@@ -3030,53 +3050,118 @@ CMD:setstat(playerid, params[])
 			);
 			#endif
   		}
-		case 12:
+		case 6:
 		{
 		    PlayerInfo[giveplayerid][pSex] = amount;
-			format(globalstring, sizeof(globalstring), "   Korisnikov spol je postavljen na %d.", amount);
+			
+			format(globalstring, sizeof(globalstring), "You've set %s[ID %d]'s sex at %d.", 
+				GetName(giveplayerid), 
+				giveplayerid,
+				amount
+			);
+
+			mysql_fquery(g_SQL, "UPDATE accounts SET sex = '%d' WHERE sqlid = '%d'",
+				amount,
+				PlayerInfo[giveplayerid][pSQLID]
+			);
   		}
-		case 13:
-		{
-            format(globalstring, sizeof(globalstring), "   Korisnikovi Seedsi za maricu postavljeni na %d.", amount);
-  		}
-		case 14:
+		case 7:
 		{
 			if(PlayerJob[giveplayerid][pJob] != 0) 
 				RemovePlayerJob(giveplayerid);
 					
 			SetPlayerJob(giveplayerid, amount);
-			format(globalstring, sizeof(globalstring), "   Korisnik sada ima posao broj %d.", amount);
+			
+			format(globalstring, sizeof(globalstring), "You've set %s[ID %d]'s job as %s.", 
+				GetName(giveplayerid), 
+				giveplayerid,
+				ReturnJob(amount)
+			);
+
+			mysql_fquery(g_SQL, "UPDATE player_job SET jobkey = '%d', contracttime = '0' WHERE sqlid = '%d'",
+				amount,
+				PlayerInfo[giveplayerid][pSQLID]
+			);
   		}
-		case 15:
+		case 8:
 		{
             PlayerJob[giveplayerid][pContractTime] = amount;
-			format(globalstring, sizeof(globalstring), "   Korisnikov ugovor je postavljen na %d.", amount);
+			
+			format(globalstring, sizeof(globalstring), "You've set %s[ID %d]'s job contract time at %d hours.", 
+				GetName(giveplayerid), 
+				giveplayerid,
+				amount
+			);
+
+			mysql_fquery(g_SQL, "UPDATE player_job SET contracttime = '%d' WHERE sqlid = '%d'",
+				amount,
+				PlayerInfo[giveplayerid][pSQLID]
+			);
   		}
-  		case 16:
+  		case 9:
   		{
+			amount = 60 - amount;
+			if(amount <= 0)
+				amount = 1;
+
   		    PaydayInfo[giveplayerid][pPayDay] = amount;
-  		    format(globalstring, sizeof(globalstring), "   Korisnikovo vrijeme do place je postavljeno na %d.", amount);
+  		    
+			format(globalstring, sizeof(globalstring), "You've set %s[ID %d]'s time untill payday at %d minutes.", 
+				GetName(giveplayerid), 
+				giveplayerid,
+				amount
+			);
+
+			mysql_fquery(g_SQL, "UPDATE player_payday SET payday = '%d' WHERE sqlid = '%d'",
+				amount,
+				PlayerInfo[giveplayerid][pSQLID]
+			);
   		}
-		case 17:
-		{
-		    PlayerJob[giveplayerid][pJob] = amount;
-			format(globalstring, sizeof(globalstring), "   Korisnikov Job Key je postavljen na %d.", amount);
-  		}
-		case 18:
+		case 10:
 		{
 		    PlayerGym[giveplayerid][pMuscle] = amount;
-			format(globalstring, sizeof(globalstring), "   Korisnikov Muscle Skill je postavljen na %d.", amount);
+			
+			format(globalstring, sizeof(globalstring), "You've set %s[ID %d]'s muscle level at %d.", 
+				GetName(giveplayerid), 
+				giveplayerid,
+				amount
+			);
+
+			mysql_fquery(g_SQL, "UPDATE player_fitness SET muscle = '%d' WHERE sqlid = '%d'",
+				amount,
+				PlayerInfo[giveplayerid][pSQLID]
+			);
   		}
-		case 19:
+		case 11:
 		{
 		    PlayerJail[giveplayerid][pArrested] = amount;
-			format(globalstring, sizeof(globalstring), "   Namjestio si da je korisnik uhicen %d puta.", amount);
+			
+			format(globalstring, sizeof(globalstring), "You've set %s[ID %d]'s time arrested amount at %d.", 
+				GetName(giveplayerid), 
+				giveplayerid,
+				amount
+			);
+
+			mysql_fquery(g_SQL, "UPDATE player_jail SET arrested = '%d' WHERE sqlid = '%d'",
+				amount,
+				PlayerInfo[giveplayerid][pSQLID]
+			);
   		}
-		case 20:
+		case 12:
 		{
 		    PlayerInfo[giveplayerid][pChangeTimes] = amount;
-		    format(globalstring, sizeof(globalstring), "   Namjestio si da korisnik moze koristiti /changename %d puta.", amount);
+		    
+			format(globalstring, sizeof(globalstring), "You've set %s[ID %d]'s player changename perms at %d.", 
+				GetName(giveplayerid), 
+				giveplayerid,
+				amount
+			);
 		
+			mysql_fquery(g_SQL, "UPDATE accounts SET changetimes = '%d' WHERE sqlid = '%d'",
+				amount,
+				PlayerInfo[giveplayerid][pSQLID]
+			);
+			
 			#if defined MODULE_LOGS
 			Log_Write("logfiles/approve_changename.txt", "(%s) %s[A%d] allowed %d /changename's to %s[SQLID: %d].",
 				ReturnDate(),
@@ -3088,40 +3173,35 @@ CMD:setstat(playerid, params[])
 			);
 			#endif
   		}
-		case 21:
-		{
-		    PaydayInfo[giveplayerid][pPayDayMoney] += amount;
-		    format(globalstring, sizeof(globalstring), "   Korisnikov Payday money je sada %d", amount);
-		}
-		case 22:
-		{
-		    PlayerVIP[giveplayerid][pDonateRank] = amount;
-		    format(globalstring, sizeof(globalstring), "   Korisnikov DonateRank je sada %d", amount);
-		}
-		case 23:
+		case 13:
 		{
 			PlayerCoolDown[giveplayerid][pCasinoCool] = amount;
-			format(globalstring, sizeof(globalstring), "   Korisnikov Casino Cooldown je sada %d", amount);
+			
+			format(globalstring, sizeof(globalstring), "You've set %s[ID %d]'s Casino Cooldown at %d.", 
+				GetName(giveplayerid), 
+				giveplayerid,
+				amount
+			);
+
+			mysql_fquery(g_SQL, "UPDATE player_cooldowns SET casinocooldown = '%d' WHERE sqlid = '%d'",
+				amount,
+				PlayerInfo[giveplayerid][pSQLID]
+			);
 		}
-		case 24:
-		{
-			PlayerKeys[giveplayerid][pGarageKey] = amount;
-			format(globalstring, sizeof(globalstring), "   Korisnikov Garage key je sada %d", amount);
-		}
-		case 25:
-		{
-		    PlayerKeys[giveplayerid][pComplexKey] = amount;
-			format(globalstring, sizeof(globalstring), "   Korisnik sada ima kljuc od complexa broj %d.", amount);
-  		}
-		case 26:
-		{
-		    PlayerKeys[giveplayerid][pComplexRoomKey] = amount;
-			format(globalstring, sizeof(globalstring), "   Korisnik sada ima kljuc od complex sobe broj %d.", amount);
-  		}
-  		case 27:
+  		case 14:
 		{
 		    PlayerFish[playerid][pFishingSkill] = amount;
-			format(globalstring, sizeof(globalstring), "   Korisnik sada ima skill posla ribar  %d.", amount);
+			
+			format(globalstring, sizeof(globalstring), "You've set %s[ID %d]'s fishing skill at %d.", 
+				GetName(giveplayerid), 
+				giveplayerid,
+				amount
+			);
+
+			mysql_fquery(g_SQL, "UPDATE player_fishes SET fishingskill = '%d' WHERE sqlid = '%d'",
+				amount,
+				PlayerInfo[giveplayerid][pSQLID]
+			);
   		}
 		default:
 			SendClientMessage(playerid, COLOR_RED, "Krivi kod stats-a!");
@@ -4075,7 +4155,6 @@ CMD:lastdriver(playerid, params[])
 
 CMD:prisonex(playerid, params[])
 {
-    
     if (PlayerInfo[playerid][pAdmin] < 2) return SendClientMessage(playerid, COLOR_RED, "Niste ovlasteni za koristenje ove komande!");
 	new
 	    targetname[MAX_PLAYER_NAME],
@@ -4084,41 +4163,19 @@ CMD:prisonex(playerid, params[])
     if (sscanf(params,"s[24]is[20]", targetname, sati, reason)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /prisonex [Ime] [minute] [Razlog]");
     if (strlen(reason) < 1 || strlen(reason) > 20) return SendClientMessage(playerid, COLOR_RED, "Ne mozete ispod 0 ili preko 20 znakova za razlog!");
 
+	new sqlid = GetSQLFromPlayerName(targetname);
+	if(sqlid == -1)
+		return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "Account %s doesn't exist.", targetname);
+
     mysql_tquery(g_SQL, 
-		va_fquery(g_SQL, "SELECT jailed FROM accounts WHERE name = '%e'", targetname), 
+		va_fquery(g_SQL, "SELECT jailed FROM player_jail WHERE sqlid = '%d'", sqlid), 
 		"CheckPlayerPrison", 
-		"isis", 
-		playerid, 
+		"iisis", 
+		playerid,
+		sqlid,
 		targetname, 
 		sati, 
 		reason
-	);
-	
-	new 
-		sqlid,
-		Cache:result = mysql_query(g_SQL, va_fquery(g_SQL, "SELECT sqlid FROM accounts WHERE name = '%e'", targetname));
-
-	cache_get_value_name_int(0, "sqlid", sqlid);
-	cache_delete(result);
-	
-	new year, month, day, date[32];
-	getdate(year, month, day);
-	format(date, sizeof(date), "%02d.%02d.%d.", day, month, year);
-	
-	new
-		forumname[ MAX_PLAYER_NAME ],
-		tmp_reason[ 32 ];
-		
-	GetPlayerName(playerid, forumname, MAX_PLAYER_NAME);
-	
-	mysql_fquery_ex(g_SQL, 
-		"INSERT INTO prisons (player_id,name, forumname, time, reason, date) VALUES ('%d', '%e', '%e', '%d', '%e', '%e')",
-		sqlid,
-		targetname,
-		PlayerInfo[playerid][pForumName],
-		sati,
-		tmp_reason,
-		date
 	);
 	return 1;
 }
@@ -4227,7 +4284,7 @@ CMD:unprison(playerid, params[])
 CMD:prison(playerid, params[])
 {
     if (PlayerInfo[playerid][pAdmin] < 2) return SendClientMessage(playerid, COLOR_RED, "Niste ovlasteni za koristenje ove komande!");
-	new giveplayerid, ptime, year, month, day, reason[80];
+	new giveplayerid, ptime, reason[80];
 	if (sscanf(params, "uis[80]", giveplayerid, ptime, reason)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /prison [ID/DioImena] [Vrijeme(minute)] [Razlog]");
     if (!IsPlayerConnected(giveplayerid)) return SendClientMessage(playerid, COLOR_RED, "Taj igrae nije online!");
 	new string[350];
@@ -4245,31 +4302,6 @@ CMD:prison(playerid, params[])
 	ExpInfo[giveplayerid][eAllPoints] -= 5;
 	SavePlayerExperience(giveplayerid);
 	SendClientMessage(giveplayerid, COLOR_RED, "[ ! ] Radi Admin prisona, izgubili ste 5 trenutnih i 5 Overall EXP-ova.");
-
-	new hour, minute, second;
-	GetServerTime(hour, minute, second);
-	getdate(year, month, day);
-
-	new date[20], time[20];
-	format(date, sizeof(date), "%02d.%02d.%d.", day, month, year);
-	format(time, sizeof(time), "%02d:%02d:%02d", hour, minute, second);
-
- 	new
-		forumname [ MAX_PLAYER_NAME ],
-		playername[ MAX_PLAYER_NAME ];
-
-	GetPlayerName(playerid, forumname, MAX_PLAYER_NAME);
-	GetPlayerName(giveplayerid, playername, MAX_PLAYER_NAME);
-
-	mysql_fquery_ex(g_SQL, 
-		"INSERT INTO prisons (player_id, name, forumname, time, reason, date) VALUES ('%d', '%e', '%e', '%d', '%e', '%e')",
-		PlayerInfo[giveplayerid][pSQLID],
-		playername,
-		PlayerInfo[playerid][pForumName],
-		ptime,
-		reason,
-		date
-	);
 
 	#if defined MODULE_LOGS
 	Log_Write("/logfiles/a_prison.txt", "(%s)[IP: %s] Game Admin %s prisoned %s in F.DeMorgan.", 
@@ -5181,21 +5213,31 @@ CMD:rt(playerid, params[])
 CMD:checkoffline(playerid, params[])
 {
     if (PlayerInfo[playerid][pAdmin] < 1 && PlayerInfo[playerid][pHelper] < 1)
-		return SendClientMessage(playerid, COLOR_RED, "Niste ovlasteni za koristenje ove komande!");
+		return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You are not authorised for this command!");
 
 	new targetname[MAX_PLAYER_NAME];
-	if (sscanf(params, "s[24]", targetname)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /checkoffline [Ime]");
+	if (sscanf(params, "s[24]", targetname)) 
+		return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /checkoffline [nickname]");
     
-	// TODO: workaround - SQL reorganization
+	new sqlid = GetSQLFromPlayerName(targetname);
+	if(sqlid == -1)
+		return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "Account %s doesn't exist in database!", targetname);
+
 	mysql_tquery(g_SQL, 
 		va_fquery(g_SQL, 
-			"SELECT sqlid, name, levels, facMemId, handMoney, bankMoney, \n\
-				adminLvl, playaWarns, connecttime FROM accounts WHERE name = '%e'", 
-			targetname
+			"SELECT \n\
+				accounts.sqlid, accounts.name, accounts.levels, accounts.handMoney, accounts.bankMoney, \n\
+                accounts.adminLvl, accounts.helper, accounts.playaWarns, accounts.connecttime, \n\
+                player_job.jobkey, player_job.contracttime, \n\
+                player_faction.facMemId, player_faction.facRank \n\
+                FROM accounts, player_job, player_faction \n\
+                WHERE accounts.sqlid = player_job.sqlid = player_faction.sqlid = '%d'",
+			sqlid
 		), 
 		"CheckOffline", 
-		"is", 
-		playerid, 
+		"iis", 
+		playerid,
+		sqlid, 
 		targetname
 	);
 	return 1;
