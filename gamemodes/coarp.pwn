@@ -803,21 +803,6 @@ ResetPlayerVariables(playerid)
 	PlayerInfo[playerid][pMustRead]			= false;
 	
 	//Floats
-	PlayerInfo[playerid][pMarker1][0]		= 0.0;
-	PlayerInfo[playerid][pMarker1][1]		= 0.0;
-	PlayerInfo[playerid][pMarker1][2]		= 0.0;
-	PlayerInfo[playerid][pMarker2][0]		= 0.0;
-	PlayerInfo[playerid][pMarker2][1]		= 0.0;
-	PlayerInfo[playerid][pMarker2][2]		= 0.0;
-	PlayerInfo[playerid][pMarker3][0]		= 0.0;
-	PlayerInfo[playerid][pMarker3][1]		= 0.0;
-	PlayerInfo[playerid][pMarker3][2]		= 0.0;
-	PlayerInfo[playerid][pMarker4][0]		= 0.0;
-	PlayerInfo[playerid][pMarker4][1]		= 0.0;
-	PlayerInfo[playerid][pMarker4][2]		= 0.0;
-	PlayerInfo[playerid][pMarker5][0]		= 0.0;
-	PlayerInfo[playerid][pMarker5][1]		= 0.0;
-	PlayerInfo[playerid][pMarker5][2]		= 0.0;
 	PlayerTrunkPos[playerid][0] 			= 0.0;
 	PlayerTrunkPos[playerid][1] 			= 0.0;
 	PlayerTrunkPos[playerid][2] 			= 0.0;

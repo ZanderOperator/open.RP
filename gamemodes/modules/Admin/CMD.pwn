@@ -65,6 +65,16 @@ static stock
 	PlayerText:ReconBcg1[MAX_PLAYERS]	= { PlayerText:INVALID_TEXT_DRAW, ... },
 	PlayerText:ReconTitle[MAX_PLAYERS]	= { PlayerText:INVALID_TEXT_DRAW, ... },
 	PlayerText:ReconText[MAX_PLAYERS]	= { PlayerText:INVALID_TEXT_DRAW, ... };
+
+
+// Floats
+static
+	Float:AdminMark1[MAX_PLAYERS][3],
+	Float:AdminMark2[MAX_PLAYERS][3],
+	Float:AdminMark3[MAX_PLAYERS][3],
+	Float:AdminMark4[MAX_PLAYERS][3],
+	Float:AdminMark5[MAX_PLAYERS][3];
+
 /*
 	 ######  ########  #######   ######  ##    ##  ######  
 	##    ##    ##    ##     ## ##    ## ##   ##  ##    ## 
@@ -1354,6 +1364,33 @@ timer OnPlayerReconing[1000](playerid, targetid)
 	##     ## ##     ## ##     ## ##   ##  
 	##     ##  #######   #######  ##    ## 
 */
+
+hook ResetPlayerVariables(playerid)
+{
+	ResetAdminVehVars(playerid);
+
+	AdminMark1[playerid][0] = 0.0;
+	AdminMark1[playerid][1] = 0.0;
+	AdminMark1[playerid][2] = 0.0;
+
+	AdminMark2[playerid][0] = 0.0;
+	AdminMark2[playerid][1] = 0.0;
+	AdminMark2[playerid][2] = 0.0;
+
+	AdminMark3[playerid][0] = 0.0;
+	AdminMark3[playerid][1] = 0.0;
+	AdminMark3[playerid][2] = 0.0;
+
+	AdminMark4[playerid][0] = 0.0;
+	AdminMark4[playerid][1] = 0.0;
+	AdminMark4[playerid][2] = 0.0;
+
+	AdminMark5[playerid][0] = 0.0;
+	AdminMark5[playerid][1] = 0.0;
+	AdminMark5[playerid][2] = 0.0;
+
+	return 1;
+}
 
 hook OnPlayerDisconnect(playerid, reason)
 {
@@ -3319,12 +3356,6 @@ CMD:rac(playerid, params[])
 	return 1;
 }
 
-hook OnPlayerConnect(playerid)
-{
-	ResetAdminVehVars(playerid);
-	return 1;
-}
-
 CMD:timeout(playerid, params[])
 {
 	if(PlayerInfo[playerid][pAdmin] < 1337)
@@ -3973,11 +4004,11 @@ CMD:gotomark(playerid, params[])
 		if (GetPlayerState(playerid) == 2)
 		{
 			new tmpcar = GetPlayerVehicleID(playerid);
-			SetVehiclePos(tmpcar, PlayerInfo[playerid][pMarker1][0],PlayerInfo[playerid][pMarker1][1],PlayerInfo[playerid][pMarker1][2]);
+			SetVehiclePos(tmpcar, AdminMark1[playerid][0],AdminMark1[playerid][1],AdminMark1[playerid][2]);
 		}
 		else
 		{
-			SetPlayerPos(playerid, PlayerInfo[playerid][pMarker1][0], PlayerInfo[playerid][pMarker1][1], PlayerInfo[playerid][pMarker1][2]);
+			SetPlayerPos(playerid, AdminMark1[playerid][0], AdminMark1[playerid][1], AdminMark1[playerid][2]);
 	 	    SetPlayerInterior(playerid, 0);
   			SetPlayerVirtualWorld(playerid, 0);
 		}
@@ -3988,11 +4019,11 @@ CMD:gotomark(playerid, params[])
 		if (GetPlayerState(playerid) == 2)
 		{
 			new tmpcar = GetPlayerVehicleID(playerid);
-			SetVehiclePos(tmpcar, PlayerInfo[playerid][pMarker2][0],PlayerInfo[playerid][pMarker2][1],PlayerInfo[playerid][pMarker2][2]);
+			SetVehiclePos(tmpcar, AdminMark2[playerid][0],AdminMark2[playerid][1],AdminMark2[playerid][2]);
 		}
 		else
 		{
-			SetPlayerPos(playerid, PlayerInfo[playerid][pMarker2][0], PlayerInfo[playerid][pMarker2][1], PlayerInfo[playerid][pMarker2][2]);
+			SetPlayerPos(playerid, AdminMark2[playerid][0], AdminMark2[playerid][1], AdminMark2[playerid][2]);
 	 	    SetPlayerInterior(playerid, 0);
   			SetPlayerVirtualWorld(playerid, 0);
 		}
@@ -4003,11 +4034,11 @@ CMD:gotomark(playerid, params[])
 		if (GetPlayerState(playerid) == 2)
 		{
 			new tmpcar = GetPlayerVehicleID(playerid);
-			SetVehiclePos(tmpcar, PlayerInfo[playerid][pMarker3][0],PlayerInfo[playerid][pMarker3][1],PlayerInfo[playerid][pMarker3][2]);
+			SetVehiclePos(tmpcar, AdminMark3[playerid][0],AdminMark3[playerid][1],AdminMark3[playerid][2]);
 		}
 		else
 		{
-			SetPlayerPos(playerid, PlayerInfo[playerid][pMarker3][0], PlayerInfo[playerid][pMarker3][1], PlayerInfo[playerid][pMarker3][2]);
+			SetPlayerPos(playerid, AdminMark3[playerid][0], AdminMark3[playerid][1], AdminMark3[playerid][2]);
 	 	    SetPlayerInterior(playerid, 0);
   			SetPlayerVirtualWorld(playerid, 0);
 		}
@@ -4018,11 +4049,11 @@ CMD:gotomark(playerid, params[])
 		if (GetPlayerState(playerid) == 2)
 		{
 			new tmpcar = GetPlayerVehicleID(playerid);
-			SetVehiclePos(tmpcar, PlayerInfo[playerid][pMarker4][0], PlayerInfo[playerid][pMarker4][1], PlayerInfo[playerid][pMarker4][2]);
+			SetVehiclePos(tmpcar, AdminMark4[playerid][0], AdminMark4[playerid][1], AdminMark4[playerid][2]);
 		}
 		else
 		{
-			SetPlayerPos(playerid, PlayerInfo[playerid][pMarker4][0], PlayerInfo[playerid][pMarker4][1], PlayerInfo[playerid][pMarker4][2]);
+			SetPlayerPos(playerid, AdminMark4[playerid][0], AdminMark4[playerid][1], AdminMark4[playerid][2]);
 	 	    SetPlayerInterior(playerid, 0);
   			SetPlayerVirtualWorld(playerid, 0);
 		}
@@ -4033,11 +4064,11 @@ CMD:gotomark(playerid, params[])
 		if (GetPlayerState(playerid) == 2)
 		{
 			new tmpcar = GetPlayerVehicleID(playerid);
-			SetVehiclePos(tmpcar, PlayerInfo[playerid][pMarker5][0], PlayerInfo[playerid][pMarker5][1], PlayerInfo[playerid][pMarker5][2]);
+			SetVehiclePos(tmpcar, AdminMark5[playerid][0], AdminMark5[playerid][1], AdminMark5[playerid][2]);
 		}
 		else
 		{
-			SetPlayerPos(playerid, PlayerInfo[playerid][pMarker5][0], PlayerInfo[playerid][pMarker5][1], PlayerInfo[playerid][pMarker5][2]);
+			SetPlayerPos(playerid, AdminMark5[playerid][0], AdminMark5[playerid][1], AdminMark5[playerid][2]);
 	 	    SetPlayerInterior(playerid, 0);
   			SetPlayerVirtualWorld(playerid, 0);
 		}
@@ -4056,27 +4087,27 @@ CMD:mark(playerid, params[])
 	if (id > 5 || id < 1) return SendClientMessage(playerid, COLOR_RED, "Nemojte ici ispod broja 1 ili iznad 5!");
 	if (id == 1)
 	{
-		GetPlayerPos(playerid, PlayerInfo[playerid][pMarker1][0], PlayerInfo[playerid][pMarker1][1], PlayerInfo[playerid][pMarker1][2]);
+		GetPlayerPos(playerid, AdminMark1[playerid][0], AdminMark1[playerid][1], AdminMark1[playerid][2]);
 		SendClientMessage(playerid, -1, "Teleporter destinacija 1.");
 	}
 	else if (id == 2)
 	{
-		GetPlayerPos(playerid, PlayerInfo[playerid][pMarker2][0], PlayerInfo[playerid][pMarker2][1], PlayerInfo[playerid][pMarker2][2]);
+		GetPlayerPos(playerid, AdminMark2[playerid][0], AdminMark2[playerid][1], AdminMark2[playerid][2]);
 		SendClientMessage(playerid, -1, "Teleporter destinacija 2.");
 	}
 	else if (id == 3)
 	{
-		GetPlayerPos(playerid, PlayerInfo[playerid][pMarker3][0], PlayerInfo[playerid][pMarker3][1], PlayerInfo[playerid][pMarker3][2]);
+		GetPlayerPos(playerid, AdminMark3[playerid][0], AdminMark3[playerid][1], AdminMark3[playerid][2]);
 		SendClientMessage(playerid, -1, "Teleporter destinacija 3.");
 	}
 	else if (id == 4)
 	{
-		GetPlayerPos(playerid, PlayerInfo[playerid][pMarker4][0], PlayerInfo[playerid][pMarker4][1], PlayerInfo[playerid][pMarker4][2]);
+		GetPlayerPos(playerid, AdminMark4[playerid][0], AdminMark4[playerid][1], AdminMark4[playerid][2]);
 		SendClientMessage(playerid, -1, "Teleporter destinacija 4.");
 	}
 	else if (id == 5)
 	{
-		GetPlayerPos(playerid, PlayerInfo[playerid][pMarker5][0],PlayerInfo[playerid][pMarker5][1], PlayerInfo[playerid][pMarker5][2]);
+		GetPlayerPos(playerid, AdminMark5[playerid][0],AdminMark5[playerid][1], AdminMark5[playerid][2]);
 		SendClientMessage(playerid, -1, "Teleporter destinacija 5.");
 	}
 	return 1;
