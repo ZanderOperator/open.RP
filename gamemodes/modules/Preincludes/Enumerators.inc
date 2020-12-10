@@ -47,12 +47,6 @@ enum E_PLAYER_DATA
 	pBank,
 	pExtraFurniture,
 	pVoted,
-
-	Float:pMarker1[3],	// TODO: translocate as local var to Admin/CMD.pwn
-	Float:pMarker2[3],	// TODO: translocate as local var to Admin/CMD.pwn
-	Float:pMarker3[3],	// TODO: translocate as local var to Admin/CMD.pwn
-	Float:pMarker4[3],	// TODO: translocate as local var to Admin/CMD.pwn
-	Float:pMarker5[3],	// TODO: translocate as local var to Admin/CMD.pwn
 	
 	pCallsign[60], // TODO: transition to local var in Systems LSPD/FD
 	pLawDuty, // TODO: transition to local var - LSFD/Core.pwn
