@@ -80,7 +80,7 @@ hook OnPlayerDisconnect(playerid, reason)
 CMD:swat(playerid, params[])
 {
     if (!IsACop(playerid) && !IsASD(playerid)) return SendClientMessage(playerid, COLOR_RED, "[ ! ] Niste LSPD.");
-    if (PlayerInfo[playerid][pLawDuty] == 0) return  SendClientMessage(playerid,COLOR_RED, "Niste na duznosti!");
+    if (!Player_OnLawDuty(playerid)) return  SendClientMessage(playerid,COLOR_RED, "Niste na duznosti!");
     if (PlayerInfo[playerid][pLevel] < 2) return SendMessage(playerid, MESSAGE_TYPE_ERROR, " Ne mozete koristiti ovu komandu dok ste level 1!");
 
     new string[70];

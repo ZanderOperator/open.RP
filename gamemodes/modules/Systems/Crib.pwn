@@ -3148,7 +3148,7 @@ CMD:exit(playerid, params[])
     {
         if (IsPlayerInRangeOfPoint(playerid, 2.0, BizzInfo[biznis][bExitX], BizzInfo[biznis][bExitY], BizzInfo[biznis][bExitZ]))
         {
-            if (GetPlayerSkin(playerid) != PlayerAppearance[playerid][pSkin] && !PlayerInfo[playerid][pLawDuty])
+            if (GetPlayerSkin(playerid) != PlayerAppearance[playerid][pSkin] && !Player_OnLawDuty(playerid))
             {
                 new biztype = BizzInfo[biznis][bType];
                 if (biztype == BIZZ_TYPE_SUBURBAN || biztype == BIZZ_TYPE_PROLAPS || biztype == BIZZ_TYPE_ZIP || biztype == BIZZ_TYPE_BINCO)

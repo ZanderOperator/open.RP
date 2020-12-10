@@ -1,6 +1,4 @@
 #include <YSI_Coding\y_hooks>
-#include "modules/Systems/Header.pwn"
-#include "modules/Systems/LSPD/LSPD_h.pwn"
 
 #if defined MODULE_BURGLAR
 	#endinput

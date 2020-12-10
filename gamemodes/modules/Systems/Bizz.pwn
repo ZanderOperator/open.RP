@@ -1081,7 +1081,7 @@ hook OnPlayerLeaveDynArea(playerid, areaid)
 {
     if (VeronaSkinRectangle == areaid)
     {
-        if (PlayerSkinId[playerid] != 0 && PlayerSkinPrice[playerid] != 0 && !PlayerInfo[playerid][pLawDuty])
+        if (PlayerSkinId[playerid] != 0 && PlayerSkinPrice[playerid] != 0 && !Player_OnLawDuty(playerid))
         {
             SendClientMessage(playerid, COLOR_RED, "[ ! ] Odustali ste od kupovine skina!");
             ResetBuySkin(playerid);

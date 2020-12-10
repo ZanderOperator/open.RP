@@ -1,7 +1,5 @@
 #include <YSI_Coding\y_hooks>
 
-#include "modules/Systems/LSPD\Tickets/Header.pwn"
-
 #define MAX_TICKET_REASON_LEN           (100)   
 #define MAX_TICKET_MONEY_VAL            (10000)
 
@@ -24,10 +22,6 @@ enum E_TICKET_DATA
     tkReason[MAX_TICKET_REASON_LEN],
     tkDate[32]
 }
-
-static
-    TicketInfo[MAX_PLAYERS][E_TICKET_DATA];
-
 
 /*
     ######## ##     ## ##    ##  ######   ######  
@@ -82,27 +76,20 @@ stock GetVehicleTicketReason(ticketsql)
 
 stock InsertPlayerTicket(playerid, giveplayerid, money, const reason[])
 {
-    TicketInfo[giveplayerid][tkMoney] = money;
-
-    strcat(TicketInfo[giveplayerid][tkReciever], GetName(giveplayerid, false), MAX_PLAYER_NAME);
-    strcat(TicketInfo[giveplayerid][tkOfficer], GetName(playerid, false), MAX_PLAYER_NAME);
-    strcat(TicketInfo[giveplayerid][tkReason], reason, MAX_TICKET_REASON_LEN);
-    strcat(TicketInfo[giveplayerid][tkDate], ReturnDate(), 32);
-
     mysql_tquery(g_SQL, "BEGIN");
 
     mysql_fquery_ex(g_SQL, 
         "INSERT INTO tickets (reciever, officer, money, reason, date) VALUES ('%e', '%e', '%d', '%e', '%e')",
-        TicketInfo[giveplayerid][tkReciever],
-        TicketInfo[giveplayerid][tkOfficer],
-        TicketInfo[giveplayerid][tkMoney],
-        TicketInfo[giveplayerid][tkReason],
-        TicketInfo[giveplayerid][tkDate]
+        GetName(giveplayerid, false),
+        GetName(playerid, false),
+        money,
+        reason,
+        ReturnDate()
     );
 
     mysql_tquery(g_SQL, "COMMIT");
 
-    SendFormatMessage(playerid, MESSAGE_TYPE_SUCCESS, "You have given a ticket to %s! ", TicketInfo[giveplayerid][tkReciever]);
+    SendFormatMessage(playerid, MESSAGE_TYPE_SUCCESS, "You have given a ticket to %s! ", GetName(giveplayerid, false));
     return 1;
 }
 
@@ -158,29 +145,25 @@ stock LoadPlayerTickets(playerid, const playername[])
 
         new
             buffer[2048],
-            tmp[128],
-            motd[256];
+            motd[256],
+            tickets[E_TICKET_DATA];
 
         for (new i = 0; i < cache_num_rows(); i++)
         {
-            cache_get_value_name_int(i, "id", TicketInfo[i][tkID]);
-            cache_get_value_name(i,"reciever"   , tmp, sizeof(tmp));
-            format(TicketInfo[i][tkReciever], MAX_PLAYER_NAME, tmp );
-            cache_get_value_name(i,"officer"    , tmp, sizeof(tmp));
-            format(TicketInfo[i][tkOfficer], MAX_PLAYER_NAME, tmp );
-            cache_get_value_name_int(i, "money", TicketInfo[i][tkMoney]);
-            cache_get_value_name(i, "reason"    , tmp, sizeof(tmp));
-            format(TicketInfo[i][tkReason], MAX_TICKET_REASON_LEN, tmp );
-            cache_get_value_name(i, "date"  , tmp, sizeof(tmp));
-            format(TicketInfo[i][tkDate], 32, tmp );
+            cache_get_value_name_int(i, "id", tickets[tkID]);
+            cache_get_value_name(i,"reciever"   , tickets[tkReciever], MAX_PLAYER_NAME);
+            cache_get_value_name(i,"officer"    , tickets[tkOfficer], MAX_PLAYER_NAME);
+            cache_get_value_name_int(i, "money", tickets[tkMoney]);
+            cache_get_value_name(i, "reason"    , tickets[tkReason], MAX_TICKET_REASON_LEN);
+            cache_get_value_name(i, "date"  , tickets[tkDate], 32);
 
             format(motd, sizeof(motd), "ID #%d | Date: %s | Reciever: %s | Officer: %s | Fine: %s | Reason: %s\n",
-                TicketInfo[i][tkID],
-                TicketInfo[i][tkDate],
-                TicketInfo[i][tkReciever],
-                TicketInfo[i][tkOfficer],
-                FormatNumber(TicketInfo[i][tkMoney]),
-                TicketInfo[i][tkReason]
+                tickets[tkID],
+                tickets[tkDate],
+                tickets[tkReciever],
+                tickets[tkOfficer],
+                FormatNumber(tickets[tkMoney]),
+                tickets[tkReason]
             );
             strcat(buffer, motd, sizeof(buffer));
         }

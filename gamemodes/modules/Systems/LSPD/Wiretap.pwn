@@ -14,8 +14,6 @@
 */
 
 #include <YSI_Coding\y_hooks>
-#include "modules/Char/Char_h.pwn" // TODO: add to include path
-
 
 /*
     ##     ##    ###    ########   ######

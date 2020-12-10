@@ -1,5 +1,4 @@
 #include <YSI_Coding\y_hooks>
-#include "modules/Player/Player_h.pwn"
 
 #define MAX_WOODS (46)
 #define MAX_D_WOODS (10)

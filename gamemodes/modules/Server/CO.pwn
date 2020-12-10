@@ -1,9 +1,5 @@
 #include <YSI_Coding\y_hooks>
 
-// Header - Functions forward
-#include "modules/Systems/LSPD\Tickets/Header.pwn"
-#include "modules/Player/Player_h.pwn"
-
 /*
 	########  ######## ######## #### ##    ## ########  ######
 	##     ## ##       ##        ##  ###   ## ##       ##    ##
@@ -2886,7 +2882,7 @@ stock static SendAlarmMessageToPolice(vehicleid, bool:streaming)
 	if(vehicleid == -1) return 0;
 
 	foreach(new playerid : Player) {
-		if(IsACop(playerid) || IsASD(playerid) && PlayerInfo[playerid][pLawDuty] == 1)
+		if(IsACop(playerid) || IsASD(playerid) && Player_OnLawDuty(playerid))
 		{
 			new vehicleName[MAX_VEHICLE_NAME];
 			GetVehicleNameById(vehicleid, vehicleName, MAX_VEHICLE_NAME);

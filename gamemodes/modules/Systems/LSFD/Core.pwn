@@ -13,7 +13,6 @@
     #### ##    ##  ######  ########  #######  ########  ######## 
 */
 #include <YSI_Coding\y_hooks>
-#include "modules/Systems/LSPD/LSPD_h.pwn"
 
 /*
     ########  ######## ######## #### ##    ## ######## 
@@ -253,16 +252,14 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
             switch (listitem)
             {
                 case 0:
-                { // Onduty
-
-                    // if (Player_OnLawDuty(playerid))
-                    if (PlayerInfo[playerid][pLawDuty] == 1)
+                {   // On Duty
+                    if (Player_OnLawDuty(playerid))
                     {
                         SendClientMessage(playerid,COLOR_RED, "Vec ste na duznosti!");
                         return 1;
                     }
                     PlayerPlaySound(playerid, 1057, 0.0, 0.0, 0.0);
-                    PlayerInfo[playerid][pLawDuty] = 1;
+                    Player_SetLawDuty(playerid, true);
 
                     SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "Sada ste na duznosti i mozete koristit FD komande.");
                     format(string, sizeof(string), "*[HQ] %s %s je na duznosti.", ReturnPlayerRankName(playerid), GetName(playerid,false));
@@ -272,10 +269,8 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                     ProxDetector(10.0, playerid, string, COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE);
                 }
                 case 1:
-                {   // Offduty
-
-                    // if (!Player_OnLawDuty(playerid))
-                    if (PlayerInfo[playerid][pLawDuty] == 0)
+                {   // Off Duty
+                    if (!Player_OnLawDuty(playerid))
                     {
                         SendClientMessage(playerid,COLOR_RED, "Niste na duznosti!");
                         return 1;
@@ -285,7 +280,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                     SetPlayerArmour(playerid, 0.0);
                     SetPlayerHealth(playerid, 99.9);
                     SetPlayerSkin(playerid, PlayerAppearance[playerid][pSkin]);
-                    PlayerInfo[playerid][pLawDuty] = 0;
+                    Player_SetLawDuty(playerid, false);
 
                     SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "Sada ste van  duznosti i ne mozete koristit FD komande.");
                     format(string, sizeof(string), "*[HQ] %s %s je van duznosti.", ReturnPlayerRankName(playerid), GetName(playerid,false));
@@ -360,17 +355,15 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
             switch (listitem)
             {
                 case 0:
-                {   // Onduty
-
-                    // if (Player_OnLawDuty(playerid))
-                    if (PlayerInfo[playerid][pLawDuty] == 1)
+                {   // On Duty
+                    if (Player_OnLawDuty(playerid))
                     {
                         SendClientMessage(playerid,COLOR_RED, "Vec ste na duznosti.!");
                         return 1;
                     }
 
                     PlayerPlaySound(playerid, 1057, 0.0, 0.0, 0.0);
-                    PlayerInfo[playerid][pLawDuty] = 1;
+                    Player_SetLawDuty(playerid, true);
 
                     SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "Sada ste na duznosti i mozete koristit FD komande.");
                     format(string, sizeof(string), "*[HQ] %s %s je na duznosti.", ReturnPlayerRankName(playerid), GetName(playerid,false));
@@ -380,9 +373,8 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                     ProxDetector(10.0, playerid, string, COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE);
                 }
                 case 1:
-                {   // Offduty
-                    // if (!Player_OnLawDuty(playerid))
-                    if (PlayerInfo[playerid][pLawDuty] == 0)
+                {   // Off Duty
+                    if (!Player_OnLawDuty(playerid))
                     {
                         SendClientMessage(playerid,COLOR_RED, "Niste na duznosti!");
                         return 1;
@@ -392,7 +384,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                     SetPlayerArmour(playerid, 0.0);
                     SetPlayerHealth(playerid, 99.9);
                     SetPlayerSkin(playerid, PlayerAppearance[playerid][pSkin]);
-                    PlayerInfo[playerid][pLawDuty] = 0;
+                    Player_SetLawDuty(playerid, false);
 
                     SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "Sada ste van  duznosti i ne mozete koristit FD komande.");
                     format(string, sizeof(string), "*[HQ] %s %s je van duznosti.", ReturnPlayerRankName(playerid), GetName(playerid,false));
@@ -606,7 +598,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
             {
                 case 0:
                 {   // Onduty
-                    if (PlayerInfo[playerid][pLawDuty] == 1)
+                    if (Player_OnLawDuty(playerid))
                     {
                         SendClientMessage(playerid,COLOR_RED, "Vec ste na duznosti.!");
                         return 1;
@@ -615,16 +607,17 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                     if (!CheckPlayerWeapons(playerid, 24))
                         return 1;
 
-                    AC_ResetPlayerWeapons(playerid); // da se ne skuplja po 1000+ metaka digla
+                    AC_ResetPlayerWeapons(playerid); 
 
                     Player_SetHasTaserGun(playerid, false);
                     Player_SetOnPoliceDuty(playerid, true);
+                    Player_SetLawDuty(playerid, true);
+
                     AC_GivePlayerWeapon(playerid, 3, 1);
                     AC_GivePlayerWeapon(playerid, 24, 50);
                     AC_GivePlayerWeapon(playerid, 41, 1000);
                     AC_GivePlayerWeapon(playerid, WEAPON_SPRAYCAN, 500);
                     PlayerPlaySound(playerid, 1057, 0.0, 0.0, 0.0);
-                    PlayerInfo[playerid][pLawDuty] = 1;
 
                     SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "Sada ste na duznosti i mozete koristit PD komande.");
                     format(string, sizeof(string), "*[HQ] %s %s je na duznosti.", ReturnPlayerRankName(playerid), GetName(playerid,false));
@@ -634,9 +627,8 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                     ProxDetector(10.0, playerid, string, COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE);
                 }
                 case 1:
-                {   // Offduty
-                    // if (!Player_OnLawDuty(playerid))
-                    if (PlayerInfo[playerid][pLawDuty] == 0)
+                {   // Off Duty
+                    if (!Player_OnLawDuty(playerid))
                     {
                         SendClientMessage(playerid,COLOR_RED, "Niste na duznosti!");
                         return 1;
@@ -648,8 +640,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                     SetPlayerArmour(playerid, 0.0);
                     SetPlayerHealth(playerid, 99.9);
                     SetPlayerSkin(playerid, PlayerAppearance[playerid][pSkin]);
-                    PlayerInfo[playerid][pLawDuty] = 0;
-                    format(PlayerInfo[playerid][pCallsign], 128, "");
+                    Player_SetLawDuty(playerid, false);
 
                     SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "Sada ste van  duznosti i ne mozete koristit PD komande.");
                     format(string, sizeof(string), "*[HQ] %s %s je van duznosti.", ReturnPlayerRankName(playerid), GetName(playerid,false));

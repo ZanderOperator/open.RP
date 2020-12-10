@@ -8,7 +8,6 @@
 
 // reminder: Na svakom PayDay-u se resetiraju varijable.
 #include <YSI_Coding\y_hooks>
-#include "modules/Systems/Events/Header.pwn"
 
 /*
 	- defines
