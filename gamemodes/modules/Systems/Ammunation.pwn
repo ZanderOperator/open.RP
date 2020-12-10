@@ -410,7 +410,7 @@ CMD:ammunation(playerid, params[])
 
         PlayerCoolDown[giveplayerid][pAmmuCool] = 0;
 
-        mysql_fquery(g_SQL, "UPDATE accounts SET ammutime=0 WHERE sqlid=%d", PlayerInfo[giveplayerid][pSQLID]);
+        mysql_fquery(g_SQL, "UPDATE player_cooldowns SET ammutime = '0' WHERE sqlid=%d", PlayerInfo[giveplayerid][pSQLID]);
 
         va_SendClientMessage(giveplayerid, COLOR_RED, "[ ! ] Admin %s ti je resetirao vrijeme kupovine oruzja u Ammunationu!", GetName(playerid));
         va_SendClientMessage(playerid, COLOR_RED, "[ ! ] Resetirao si igracu %s vrijeme kupovine oruzja u Ammunationu!", GetName(giveplayerid));

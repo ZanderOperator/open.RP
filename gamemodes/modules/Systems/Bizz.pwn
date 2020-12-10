@@ -2033,7 +2033,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                         if (PlayerRadio[playerid][pHasRadio]) return SendClientMessage(playerid, COLOR_RED, "Vec posjedujete radio!");
                         PlayerRadio[playerid][pHasRadio] = 1;
 
-                        mysql_fquery(g_SQL, "UPDATE accounts SET HasRadio = '%d' WHERE sqlid = '%d'",
+                        mysql_fquery(g_SQL, "UPDATE player_radio SET HasRadio = '%d' WHERE sqlid = '%d'",
                             PlayerRadio[playerid][pHasRadio],
                             PlayerInfo[playerid][pSQLID]
                         );
@@ -2914,7 +2914,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                     PlayerRadio[playerid][pHasRadio] = 1;
                     SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "Kupljen radio [1500$]");
 
-                    mysql_fquery(g_SQL, "UPDATE accounts SET HasRadio = '%d' WHERE sqlid = '%d'",
+                    mysql_fquery(g_SQL, "UPDATE player_radio SET HasRadio = '%d' WHERE sqlid = '%d'",
                         PlayerRadio[playerid][pHasRadio],
                         PlayerInfo[playerid][pSQLID]
                     );

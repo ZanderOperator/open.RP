@@ -111,7 +111,7 @@ static GetPlayerPhoneNumber(sqlid)
 // MySQL Callbacks
 
 // Player GENERAL
-static OnPlayerMDCDataLoad(playerid, const playername[], sqlid) // TODO: query reorg. - skin&look
+static OnPlayerMDCDataLoad(playerid, const playername[], sqlid)
 {
     inline OnPlayerMDCLoad()
     {

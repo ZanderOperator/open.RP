@@ -1440,9 +1440,6 @@ hook OnPlayerDisconnect(playerid, reason)
 
 	CheckPlayerCrash(playerid, reason);
 
-	// Offline query
-	mysql_fquery(g_SQL, "UPDATE accounts SET online = '0' WHERE sqlid = '%d'", PlayerInfo[ playerid ][ pSQLID ]);
-
 	// Tuning
 	if( Bit1_Get( gr_PlayerInTuningMode	, playerid ) )
 		SetVehicleToRespawn(PlayerTuningVehicle[playerid]);
