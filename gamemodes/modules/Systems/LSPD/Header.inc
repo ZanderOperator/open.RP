@@ -60,4 +60,4 @@ forward bool:Player_TracingNumber(playerid);
 forward Player_SetTracingNumber(playerid, bool:v);
 
 // Tickets
-#include "modules/Systems/LSPD\Tickets/Header.pwn"
+#include "modules/Systems/LSPD\Tickets/Header.inc"

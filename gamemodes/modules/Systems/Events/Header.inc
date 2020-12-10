@@ -1,7 +1,4 @@
-// For this file, include guard generation must be disabled as it might be included more than once
-#if defined _header_included
-    #undef _header_included
-#endif
+#include <YSI_Coding\y_hooks>
 
 // Header file where functions should be declared that can be used/accessed from other modules
 
