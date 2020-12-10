@@ -17,7 +17,6 @@
 */
 
 #include <YSI_Coding\y_hooks>
-#include "modules/Player/Player_h.pwn" // Player_GetLastVehicle(playerid)
 
 /*
     ##     ##    ###    ########   ######

@@ -43,6 +43,7 @@
 */
 
 static
+    bool:LawDuty[MAX_PLAYERS] = {false, ...},
     deletingFaction[MAX_PLAYERS],
     Timer:BackupTimer[MAX_PLAYERS],
     creatingInfoId[MAX_PLAYERS],
@@ -63,6 +64,16 @@ static
     ##       ##     ## ##   ### ##    ## ##    ## 
     ##        #######  ##    ##  ######   ######  
 */
+
+stock bool:Player_OnLawDuty(playerid)
+{
+    return LawDuty[playerid];
+}
+
+stock Player_SetLawDuty(playerid, bool:v)
+{
+    LawDuty[playerid] = v;
+}
 
 Public:FetchPlayerFaction(playerid)
 {
@@ -451,7 +462,7 @@ stock SendRadioMessage(member, color, sstring[])
 {
     foreach(new i : Player)
     {
-        if (PlayerFaction[i][pMember] == member && PlayerInfo[i][pLawDuty] != 0)
+        if (PlayerFaction[i][pMember] == member && Player_OnLawDuty(i))
         {
             SendClientMessage(i, color, sstring);
             PlayerPlaySound(i, 1058, 0.0, 0.0, 0.0);
@@ -474,7 +485,7 @@ stock SendLawMessage(color, sstring[])
 {
     foreach(new i : Player)
     {
-        if ((IsACop(i) || IsASD(i) || IsFDMember(i) || IsAGov(i)) && PlayerInfo[i][pLawDuty] != 0)
+        if ((IsACop(i) || IsASD(i) || IsFDMember(i) || IsAGov(i)) && Player_OnLawDuty(i))
         {
             SendClientMessage(i, color, sstring);
         }
@@ -748,6 +759,8 @@ hook ResetPlayerVariables(playerid)
 {
     RequestingBackup[playerid] = 0;
     FactionChatOn[playerid] = true;
+    Player_SetLawDuty(playerid, false);
+    return 1;
 }
 
 hook LoadServerData()
@@ -1581,7 +1594,7 @@ CMD:faction(playerid, params[])
                     name,
                     ReturnPlayerRankName(i),
                     PlayerFaction[i][pRank],
-                    PlayerInfo[i][pLawDuty],
+                    Player_OnLawDuty(playerid),
                     GetPlayerStreet(i)
                 );
             }
@@ -1845,60 +1858,18 @@ CMD:m(playerid, params[])
     return 1;
 }
 
-// TODO: if this is obsolete, remove it
-/*
-CMD:r(playerid, params[])
-{
-    if (isnull(params))
-        return SendErrorMessage(playerid, "Ne mozete poslati prazan /r!");
-    new member = PlayerFaction[playerid][pMember],string[256];
-    if (!IsACop(playerid) && !IsFDMember(playerid)&& !IsASD(playerid) && !IsAGov(playerid)) return SendClientMessage(playerid, COLOR_RED, "Niste ovla?teni!");
-    if (member == 0) return SendClientMessage(playerid, COLOR_RED, "Moras biti clan organizacije da bi koristio ovu komandu!");
-    #if defined EVENTSTARTED
-    new StaticRand = random(2);
-    if (StaticRand == 1) return SendClientMessage( playerid, COLOR_RED, "** Static **");
-    #endif
-    if (PlayerInfo[playerid][pLawDuty] == 0) return SendClientMessage(playerid, COLOR_RED, "Niste na duznosti!");
-
-    if (IsACop(playerid)) {
-        format(string, sizeof(string), "**[CH: PD DISPATCH] %s: %s", GetName(playerid, true), params);
-        SendRadioMessage(member, TEAM_YELLOW_COLOR, string);
-    }
-
-    if (IsFDMember(playerid)) {
-        format(string, sizeof(string), "** [FD DISPATCH] %s: %s **", GetName(playerid, true), params);
-        SendRadioMessage(member, TEAM_YELLOW_COLOR, string);
-    }
-
-    if (IsAGov(playerid)) // ako je gov onda prica u slusalicu
-    {
-        format(string, sizeof(string), "*  %s prica u slusalicu.", GetName(playerid, true));
-        SetPlayerChatBubble(playerid, string, COLOR_PURPLE, 20, 2000);
-    } else { // ako je ostalo prica na radio
-        format(string, sizeof(string), "*  %s prica na radio.", GetName(playerid, true));
-        SetPlayerChatBubble(playerid, string, COLOR_PURPLE, 20, 2000);
-    }
-    if (!IsPlayerReconing(playerid)) {
-        format(string, 256, "** %s [radio]: %s", GetName(playerid, true), params);
-        ProxDetector(4.0, playerid, string, COLOR_FADE1, COLOR_FADE2, COLOR_FADE3, COLOR_FADE4, COLOR_FADE5, true);
-    }
-    return 1;
-}
-*/
-
 CMD:d(playerid, params[])
 {
-    // TODO: 144 is max message len
-    new string[256];
+    new string[144];
     if (isnull(params)) return SendErrorMessage(playerid, "Ne mozete poslati prazan /d!");
     if (PlayerFaction[playerid][pMember] == 0) return SendClientMessage(playerid, COLOR_RED, "Moras biti clan organizacije da bi koristio ovu komandu!");
     if (!IsACop(playerid) && !IsFDMember(playerid) && !IsASD(playerid) && !IsAGov(playerid)) return SendClientMessage(playerid, COLOR_RED, "Niste ovla?teni!");
-    if (PlayerInfo[playerid][pLawDuty] == 0) return SendClientMessage(playerid, COLOR_RED, "Niste na duznosti!");
+    if (!Player_OnLawDuty(playerid)) return SendClientMessage(playerid, COLOR_RED, "Niste na duznosti!");
 
     format(string, sizeof(string), "** [%s] %s %s: %s **", ReturnPlayerFactionName(playerid), ReturnPlayerRankName(playerid), GetName(playerid, true), params);
     SendLawMessage(COLOR_ALLDEPT, string);
 
-    if (IsAGov(playerid)) // ako je gov onda prica u slusalicu
+    if (IsAGov(playerid))
     {
         format(string, sizeof(string), "* %s prica u slusalicu.", GetName(playerid, true));
         SetPlayerChatBubble(playerid, string, COLOR_PURPLE, 20, 2000);
@@ -1913,11 +1884,6 @@ CMD:d(playerid, params[])
     {
         format(string, sizeof(string), "** %s [radio]: %s", GetName(playerid, true), params);
         ProxDetector(4.0, playerid, string, COLOR_FADE1, COLOR_FADE2, COLOR_FADE3, COLOR_FADE4, COLOR_FADE5, true);
-    }
-    else
-    {
-        // ???
-        SendClientMessage(playerid, COLOR_RED, "Niste ovlasteni!");
     }
     return 1;
 }

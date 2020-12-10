@@ -1,9 +1,13 @@
-// For this file, include guard generation must be disabled as it might be included more than once
-#if defined _header_included
-    #undef _header_included
-#endif
+#include <YSI_Coding\y_hooks>
 
 // Header file where functions should be declared that can be used/accessed from other modules
+
+// Faction - Law Duty
+forward bool:Player_OnLawDuty(playerid);
+forward Player_SetLawDuty(playerid, bool:v);
+
+// LSPD
+#include "modules/Systems\LSPD/Header.pwn"
 
 // Bizz
 forward Player_InBusiness(playerid);
@@ -36,6 +40,10 @@ forward Player_SetInGarage(playerid, v);
 // Dynamic Pickup
 forward Player_InPickup(playerid);
 forward Player_SetInPickup(playerid, v);
+
+// Events
+#include "modules/Systems\Events/Header.pwn"
+
 
 // Miscellaneous
 forward bool:Player_IsDJ(playerid);

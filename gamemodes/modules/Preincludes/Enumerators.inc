@@ -47,9 +47,7 @@ enum E_PLAYER_DATA
 	pBank,
 	pExtraFurniture,
 	pVoted,
-	
-	pCallsign[60], // TODO: transition to local var in Systems LSPD/FD
-	pLawDuty, // TODO: transition to local var - LSFD/Core.pwn
+		
 	pCanisterLiters, // TODO: transition to local var in CO.pwn 
 	pCanisterType, // TODO: transition to local var in CO.pwn
 	pGrafID, // TODO: transition to local var in Graffiti.pwn

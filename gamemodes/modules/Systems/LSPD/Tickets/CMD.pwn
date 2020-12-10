@@ -18,6 +18,7 @@ CMD:ticket(playerid, params[])
 
     if (!strcmp(param, "show", true))
         LoadPlayerTickets(playerid, GetName(playerid, false));
+        
     else if (!strcmp(param, "vehicleshow", true))
     {
         new vehicleid = PlayerKeys[playerid][pVehicleKey];
@@ -60,7 +61,7 @@ CMD:ticket(playerid, params[])
             DeletePlayerTicket(playerid, id, false);
             SendFormatMessage(playerid, MESSAGE_TYPE_SUCCESS, "You paid Ticket #%d (%s).", id, FormatNumber(moneys));
         }
-        else SendMessage(playerid, MESSAGE_TYPE_ERROR, "That ticket isn't yours!"); 
+        else SendMessage(playerid, MESSAGE_TYPE_ERROR, "That ticket isn't for you to pay!"); 
         cache_delete(result);
     }
     else if (!strcmp(param, "vehiclepay", true))
@@ -110,7 +111,7 @@ CMD:giveticket(playerid, params[])
 {
     if (!IsACop(playerid) && !IsASD(playerid)) 
         return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You are not law enforcement member!");
-    if (PlayerInfo[playerid][pLawDuty] == 0) 
+    if (!Player_OnLawDuty(playerid)) 
         return SendClientMessage(playerid,COLOR_RED, "You are not on duty!");
     if (IsPlayerInAnyVehicle(playerid)) 
         return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You must be outside of the vehicle!");

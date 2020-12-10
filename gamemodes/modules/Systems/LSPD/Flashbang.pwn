@@ -21,8 +21,6 @@
 */
 
 #include <YSI_Coding\y_hooks>
-#include "modules/systems/LSPD/LSPD_h.pwn"
-// TODO: add LSPD_h.pwn to include path
 
 /*
     ##     ##    ###    ########   ######  

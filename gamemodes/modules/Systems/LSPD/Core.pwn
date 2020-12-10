@@ -14,7 +14,6 @@
 */
 
 #include <YSI_Coding\y_hooks>
-#include "modules/Systems/Header.pwn"
 
 
 /*
@@ -2020,7 +2019,7 @@ CMD:suspend(playerid, params[])
         if (giveplayerid == INVALID_PLAYER_ID) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Taj igrac nije na serveru.");
 
         PlayerFaction[giveplayerid][pRank] = 0;
-        PlayerInfo[giveplayerid][pLawDuty] = 0;
+        Player_SetLawDuty(giveplayerid, false);
         format(string, sizeof(string), "[ ! ] Suspendirali ste %s sa duznosti!", GetName(giveplayerid));
         SendClientMessage(playerid, COLOR_RED, string);
         format(string, sizeof(string), "[ ! ] Suspendirani ste sa duznosti! Command officer %s", GetName(playerid));
@@ -2032,7 +2031,7 @@ CMD:suspend(playerid, params[])
         if (giveplayerid == INVALID_PLAYER_ID) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Taj igrac nije na serveru.");
 
         PlayerFaction[giveplayerid][pRank] = 0;
-        PlayerInfo[giveplayerid][pLawDuty] = 0;
+        Player_SetLawDuty(giveplayerid, false);
         format(string, sizeof(string), "[ ! ] Suspendirali ste %s sa duznosti!", GetName(giveplayerid));
         SendClientMessage(playerid, COLOR_RED, string);
         format(string, sizeof(string), "[ ! ] Suspendirani ste sa duznosti! Mayor %s", GetName(playerid));
@@ -2860,7 +2859,8 @@ CMD:housetake(playerid, params[])
 CMD:returnduty(playerid, params[])
 {
     if (!IsACop(playerid) && !IsFDMember(playerid) && !IsASD(playerid) && !IsAGov(playerid)) return SendClientMessage(playerid,COLOR_RED, "Niste ovlasteni!");
-    if (PlayerInfo[playerid][pLawDuty] == 1) return SendClientMessage(playerid,COLOR_RED, "Vec ste na duznosti!");
+    if (Player_OnLawDuty(playerid)) 
+        return SendClientMessage(playerid,COLOR_RED, "Vec ste na duznosti!");
 
     new vehicleid;
     if (IsACop(playerid))
@@ -2875,12 +2875,11 @@ CMD:returnduty(playerid, params[])
     if (vehicleid == INVALID_VEHICLE_ID)
         return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nisi blizu fakcijskog vozila!");
 
-    // TODO: Player_SetLawDuty(playerid, value)
-    PlayerInfo[playerid][pLawDuty] = 1;
+    Player_SetLawDuty(playerid, true);
     Player_SetOnPoliceDuty(playerid, true);
 
     new tmpstring[120];
-    format(tmpstring, sizeof(tmpstring), "*[HQ] %s %s je ponovo na duznosti ((crash)).", ReturnPlayerRankName(playerid), GetName(playerid,false));
+    format(tmpstring, sizeof(tmpstring), "*[HQ] %s %s je ponovno na duznosti (( Crash )).", ReturnPlayerRankName(playerid), GetName(playerid,false));
 
     if (IsACop(playerid))
         SendRadioMessage(1, COLOR_COP, tmpstring);
@@ -2897,13 +2896,10 @@ CMD:returnduty(playerid, params[])
 CMD:callsign(playerid, params[])
 {
     if (!IsACop(playerid) && !IsASD(playerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste pripadnik PDa/SDa!");
-    if (PlayerInfo[playerid][pLawDuty] == 0) return SendClientMessage(playerid,COLOR_RED, "Morate biti na duznosti!");
+    if (!Player_OnLawDuty(playerid)) return SendClientMessage(playerid,COLOR_RED, "Morate biti na duznosti!");
 
-    // TODO: use sscanf instead of isnull and format
     if (isnull(params))
         return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /callsign [UNIT]");
-
-    format(PlayerInfo[playerid][pCallsign], 60, "%s", params);
 
     new
         str[128];

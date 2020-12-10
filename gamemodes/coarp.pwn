@@ -148,6 +148,10 @@
 
 // The rest of the defines
 #include "modules/Preincludes/Defines.inc"
+// Enumerator Declarations
+#include "modules/Preincludes/Enumerators.inc"
+// Main Header file - purpose is overriding the include order
+#include "modules/Preincludes/Header.inc"
 
 // Main Database Connection Handler
 new MySQL:g_SQL;
@@ -173,9 +177,6 @@ new
 new 
 	Iterator:P_PACKAGES[MAX_PLAYERS]<MAX_PLAYER_PACKAGES>,
 	Iterator:P_Weapons[MAX_PLAYERS]<MAX_PLAYER_WEAPON_SLOTS>;
-
-// Global Enumerators
-#include "modules/Preincludes/Enumerators.inc"
 
 /*
 	##     ##    ###    ########   ######
@@ -590,8 +591,7 @@ ResetPlayerVariables(playerid)
     GotRod[playerid] = 0;
 	//
 	PhoneStatus[playerid] = 0;
-	//PD Callsign
-	format(PlayerInfo[playerid][pCallsign], 60, "");
+
 	//rBits
 	Bit1_Set( gr_PlayerDownloading		, playerid, false );
 	Bit1_Set( gr_FristSpawn				, playerid, false );
@@ -769,10 +769,7 @@ ResetPlayerVariables(playerid)
 	PlayerInfo[playerid][pChangenames]		= 0;
 	PlayerInfo[playerid][pChangeTimes]		= 0;
 	PlayerInfo[playerid][pMoney]			= 0;
-	PlayerInfo[playerid][pBank]				= 0;
-
-	PlayerInfo[playerid][pLawDuty]          = 0;
-	
+	PlayerInfo[playerid][pBank]				= 0;	
 
 	PlayerMobile[playerid][pCryptoNumber]		= 0;
 	PlayerMobile[playerid][pMobileNumber]		= 0;

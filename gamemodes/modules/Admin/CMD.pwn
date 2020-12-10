@@ -1,5 +1,4 @@
 #include <YSI_Coding\y_hooks>
-#include "modules/Player/Player_h.pwn"
 
 // Admin Modules included at the bottom
 #define PLAYER_SPECATE_VEH		(1)

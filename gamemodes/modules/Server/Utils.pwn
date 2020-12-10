@@ -1,10 +1,9 @@
 #include <YSI_Coding\y_hooks>
-#include "modules/Player/Player_h.pwn"
 
 #define MAX_SUBJECTS_IN_RANGE			(15)
 
 // Main MySQL query string
-new va_query[6144];
+new va_query[2048];
 
 /*
 	##     ##    ###     ######  ########   #######   ######  

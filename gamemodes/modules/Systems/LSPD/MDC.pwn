@@ -31,9 +31,6 @@ APB suspect i pdname prebaciti u VARCHAR 24
 
 #include <YSI_Coding\y_hooks>
 
-// Header - Functions forward
-#include "modules/Systems/LSPD/LSPD_h.pwn"
-#include "modules/Systems/LSPD\Tickets/Header.pwn"
 
 /*
     ##     ##    ###    ########   ######  

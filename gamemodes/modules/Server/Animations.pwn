@@ -1,5 +1,4 @@
 #include <YSI_Coding\y_hooks>
-#include "modules/Systems/LSPD/LSPD_h.pwn"
 
 static const AnimLibs[][] =
 {

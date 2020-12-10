@@ -1,6 +1,4 @@
 #include <YSI_Coding\y_hooks>
-#include "modules/Player/Player_h.pwn"
-#include "modules/Systems/LSPD/LSPD_h.pwn"
 
 new
 	Text3D:NameText[MAX_PLAYERS];
