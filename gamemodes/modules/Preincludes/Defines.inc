@@ -58,6 +58,12 @@
 #define MAX_SERVER_SKINS						(800)
 #define MAX_ILEGAL_GARAGES						(10)
 
+// Premium VIP 
+#define PREMIUM_BRONZE							(1)
+#define PREMIUM_SILVER							(2)
+#define PREMIUM_GOLD							(3)
+#define PREMIUM_PLATINUM						(4)
+
 // Max Inactivity Time & Minimum Month PayDays before Job/Property Removal
 #define MAX_JOB_INACTIVITY_TIME					(864000) // 10 days
 #define MAX_INACTIVITY_TIME						(2592000) // 30 days

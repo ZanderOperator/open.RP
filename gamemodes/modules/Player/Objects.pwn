@@ -1001,7 +1001,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 			new
 				money = Bit8_Get( gr_ObjectPrice, playerid );
 
-   			if(PlayerVIP[playerid][pDonateRank] > 1)
+   			if(PlayerVIP[playerid][pDonateRank] > PREMIUM_BRONZE)
 	   		money = 0;
 			if( AC_GetPlayerMoney(playerid) < money ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate toliko novca!");
 			

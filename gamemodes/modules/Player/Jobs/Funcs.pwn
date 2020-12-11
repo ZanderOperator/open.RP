@@ -342,19 +342,19 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 					SendMessage( playerid, MESSAGE_TYPE_INFO, "Zaposlili ste se kao transporter!");
 				}
 			}
-			// Set FreeWorks
-			if(PlayerVIP[playerid][pDonateRank] == 0)
-				PlayerJob[playerid][pFreeWorks] = NORMAL_FREE_WORKS;	
-			else if(PlayerVIP[playerid][pDonateRank] == 1)
-				PlayerJob[playerid][pFreeWorks] = BRONZE_DONATOR_FREE_WORKS;
-			else if(PlayerVIP[playerid][pDonateRank] == 2)
-				PlayerJob[playerid][pFreeWorks] = SILVER_DONATOR_FREE_WORKS;
-			else if(PlayerVIP[playerid][pDonateRank] == 3)
-				PlayerJob[playerid][pFreeWorks] = GOLD_DONATOR_FREE_WORKS;
-			else if(PlayerVIP[playerid][pDonateRank] == 4)
-				PlayerJob[playerid][pFreeWorks] = PLATINUM_DONATOR_FREE_WORKS;
-				
-			return 1;
+			switch(PlayerVIP[playerid][pDonateRank])
+			{
+				case 0: 				
+					PlayerJob[playerid][pFreeWorks] = NORMAL_FREE_WORKS;
+				case PREMIUM_BRONZE: 	
+					PlayerJob[playerid][pFreeWorks] = BRONZE_DONATOR_FREE_WORKS;
+				case PREMIUM_SILVER: 	
+					PlayerJob[playerid][pFreeWorks] = SILVER_DONATOR_FREE_WORKS;
+				case PREMIUM_GOLD: 		
+					PlayerJob[playerid][pFreeWorks] = GOLD_DONATOR_FREE_WORKS;
+				case PREMIUM_PLATINUM: 	
+					PlayerJob[playerid][pFreeWorks] = PLATINUM_DONATOR_FREE_WORKS;
+			}
 		}
 		case DIALOG_IJOBS:
 		{

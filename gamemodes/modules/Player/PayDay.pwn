@@ -383,8 +383,10 @@ GivePlayerPayCheck(playerid)
 		new vipmoney = 0;
 		switch(PlayerVIP[playerid][pDonateRank])
 		{
-			case 1,2,3: vipmoney = 200;
-			case 4: vipmoney = 300;
+			case PREMIUM_BRONZE, PREMIUM_SILVER, PREMIUM_GOLD: 
+				vipmoney = 200;
+			case PREMIUM_PLATINUM: 
+				vipmoney = 300;
 		}
 		BudgetToPlayerBankMoney(playerid, vipmoney); // treba prebaciti na bankovni racun
 		profit += vipmoney;
@@ -466,11 +468,16 @@ GivePlayerPayCheck(playerid)
 
 	switch(PlayerVIP[playerid][pDonateRank])
 	{
-		case 0: PlayerJob[playerid][pFreeWorks] = 15;
-		case 1: PlayerJob[playerid][pFreeWorks] = 25;
-		case 2: PlayerJob[playerid][pFreeWorks] = 25;
-		case 3: PlayerJob[playerid][pFreeWorks] = 30;
-		case 4: PlayerJob[playerid][pFreeWorks] = 50;
+		case 0: 				
+			PlayerJob[playerid][pFreeWorks] = NORMAL_FREE_WORKS;
+		case PREMIUM_BRONZE: 	
+			PlayerJob[playerid][pFreeWorks] = BRONZE_DONATOR_FREE_WORKS;
+		case PREMIUM_SILVER: 	
+			PlayerJob[playerid][pFreeWorks] = SILVER_DONATOR_FREE_WORKS;
+		case PREMIUM_GOLD: 		
+			PlayerJob[playerid][pFreeWorks] = GOLD_DONATOR_FREE_WORKS;
+		case PREMIUM_PLATINUM: 	
+			PlayerJob[playerid][pFreeWorks] = PLATINUM_DONATOR_FREE_WORKS;
 	}
 
 	PlayerFish[playerid][pFishWorks] 	= 0;

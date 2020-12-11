@@ -83,11 +83,11 @@ stock SetPlayerAFKLimit(playerid)
 {
 	switch(PlayerVIP[playerid][pDonateRank])
 	{
-	    case 1: MaxPlayerAFK[playerid] = 12;
-	    case 2: MaxPlayerAFK[playerid] = 13;
-		case 3: MaxPlayerAFK[playerid] = 15;
-		case 4:	MaxPlayerAFK[playerid] = 20;
-		default: MaxPlayerAFK[playerid] = 10;    
+	    case PREMIUM_BRONZE: 	MaxPlayerAFK[playerid] = 12;
+	    case PREMIUM_SILVER: 	MaxPlayerAFK[playerid] = 13;
+		case PREMIUM_GOLD: 		MaxPlayerAFK[playerid] = 15;
+		case PREMIUM_PLATINUM:	MaxPlayerAFK[playerid] = 20;
+		default: 				MaxPlayerAFK[playerid] = 10;    
 	}
 	return 1;
 }

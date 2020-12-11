@@ -182,22 +182,6 @@ Public:HouseStorage_Load()
 
 GetRackLimit(playerid)
 {
-    // TODO: delete this
-    /*
-    switch (PlayerVIP[playerid][pDonateRank])
-    {
-        case 0: // normalan igrac
-            return 1;
-        case 1: // Bronze Donator
-            return 2;
-        case 2: // Silver Donator
-            return 3;
-        case 3: // Gold Donator
-            return 4;
-        case 4: // Platinum Donator
-            return 5;
-    }
-    */
     return (PlayerVIP[playerid][pDonateRank] + 1);
 }
 

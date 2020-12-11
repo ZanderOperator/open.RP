@@ -1745,11 +1745,12 @@ stock ShowPlayerStats(playerid, targetid)
 	);
 	strcat(pDialog,motd, sizeof(pDialog));
 
-	switch( PlayerVIP[targetid][pDonateRank] ) {
-		case 1: format(tmpString, 20, "Bronze");
-		case 2:	format(tmpString, 20, "Silver");
-		case 3:	format(tmpString, 20, "Gold");
-		case 4: format(tmpString, 20, "Platinum");
+	switch( PlayerVIP[targetid][pDonateRank] ) 
+	{
+		case PREMIUM_BRONZE: 	format(tmpString, 20, "Bronze");
+		case PREMIUM_SILVER:	format(tmpString, 20, "Silver");
+		case PREMIUM_GOLD:		format(tmpString, 20, "Gold");
+		case PREMIUM_PLATINUM:	format(tmpString, 20, "Platinum");
 		default:
 			format(tmpString, 20, "Nista");
 	}

@@ -590,49 +590,10 @@ CMD:givepremium(playerid, params[])
 
 	if(strcmp(dLevel,"bronze",true) == 0)
 	{
-		ExpInfo[giveplayerid][ePoints] += BRONZE_EXP_POINTS;
-		ExpInfo[giveplayerid][eAllPoints] += BRONZE_EXP_POINTS;
-		SavePlayerExperience(giveplayerid);
-
-	    PlayerInventory[giveplayerid][pMaskID] = 100000 + random(899999);
-		
-		#if defined MODULE_LOGS
-		Log_Write("/logfiles/masks.txt", "(%s) %s(%s), Mask ID: %d.",
-			ReturnDate(),
-			GetName(giveplayerid, false),
-			ReturnPlayerIP(giveplayerid),
-			PlayerInventory[giveplayerid][pMaskID]
-		);
-		#endif
-		
-		PlayerJob[giveplayerid][pFreeWorks] 	= 25;
-		PlayerInfo[giveplayerid][pRespects] 	+= 10;
-		PlayerInfo[giveplayerid][pChangeTimes] 	+= 2;
-		PlayerInfo[giveplayerid][pLevel] 		+= 1;
-
-		PlayerVIP[giveplayerid][pDonateRank] 	= 1;
-		PlayerVIP[giveplayerid][pDonatorVehPerms] 	= 2;
-		PlayerVIP[giveplayerid][pDonateTime]	= gettimestamp() + 2592000;
-
-		if(PlayerKeys[giveplayerid][pHouseKey] != INVALID_HOUSE_ID)
-			UpdatePremiumHouseFurSlots(giveplayerid, -1, PlayerKeys[giveplayerid][pHouseKey]);
-		if(PlayerKeys[giveplayerid][pBizzKey] != INVALID_BIZNIS_ID)
-			UpdatePremiumBizFurSlots(giveplayerid);
-		
-		SavePlayerVIP(giveplayerid);
-
-		// MySQL Log
-		mysql_fquery(g_SQL, 
-			"INSERT INTO player_vips(player_id, admin_id, rank, created_at, expires_at) VALUES ('%d','%d','%d','%d','%d')",
-			PlayerInfo[giveplayerid][pSQLID],
-			PlayerInfo[playerid][pSQLID],
-			PlayerVIP[giveplayerid][pDonateRank],
-			gettimestamp(),
-			PlayerVIP[giveplayerid][pDonateTime]
-		);
+		SetPlayerPremiumVIP(giveplayerid, PREMIUM_BRONZE);
 
 		#if defined MODULE_LOGS
-		Log_Write("logfiles/a_givepremium.txt", "(%s) Administrator %s gave VIP Bronze %s[SQLID: %d].",
+		Log_Write("logfiles/a_givepremium.txt", "(%s) Administrator %s gave VIP Bronze status to %s[SQLID: %d].",
 			ReturnDate(),
 			GetName(playerid, false),
 			GetName(giveplayerid, false),
@@ -646,48 +607,10 @@ CMD:givepremium(playerid, params[])
     }
     else if(strcmp(dLevel,"silver",true) == 0)
 	{
-		ExpInfo[giveplayerid][ePoints] += SILVER_EXP_POINTS;
-		ExpInfo[giveplayerid][eAllPoints] += SILVER_EXP_POINTS;
-		SavePlayerExperience(giveplayerid);
-
-	    PlayerInventory[giveplayerid][pMaskID] = 100000 + random(899999);
-		
-		#if defined MODULE_LOGS
-		Log_Write("/logfiles/masks.txt", "(%s) %s(%s), Mask ID: %d.",
-			ReturnDate(),
-			GetName(giveplayerid, false),
-			ReturnPlayerIP(giveplayerid),
-			PlayerInventory[giveplayerid][pMaskID]
-		);
-		#endif
-
-		PlayerJob[giveplayerid][pFreeWorks] 	= 25;
-		PlayerInfo[giveplayerid][pRespects] 	+= 20;
-		PlayerInfo[giveplayerid][pLevel] 		+= 2;
-		PlayerInfo[giveplayerid][pChangeTimes] 	+= 3;
-
-		PlayerVIP[giveplayerid][pDonateRank] 	= 2;
-		PlayerVIP[giveplayerid][pDonatorVehPerms] 	= 2;		
-		PlayerVIP[giveplayerid][pDonateTime]	= gettimestamp() + 2592000;
-
-		if(PlayerKeys[giveplayerid][pHouseKey] != INVALID_HOUSE_ID)
-			UpdatePremiumHouseFurSlots(giveplayerid, -1, PlayerKeys[giveplayerid][pHouseKey]);
-		if(PlayerKeys[giveplayerid][pBizzKey] != INVALID_BIZNIS_ID)
-			UpdatePremiumBizFurSlots(giveplayerid);
-		
-		SavePlayerVIP(giveplayerid);
-
-		mysql_fquery(g_SQL, 
-			"INSERT INTO player_vips(player_id, admin_id, rank, created_at, expires_at) VALUES ('%d','%d','%d','%d','%d')",
-			PlayerInfo[giveplayerid][pSQLID],
-			PlayerInfo[playerid][pSQLID],
-			PlayerVIP[giveplayerid][pDonateRank],
-			gettimestamp(),
-			PlayerVIP[giveplayerid][pDonateTime]
-		);
+		SetPlayerPremiumVIP(giveplayerid, PREMIUM_SILVER);
 
 		#if defined MODULE_LOGS
-		Log_Write("logfiles/a_givepremium.txt", "(%s) Administrator %s gave VIP Silver %s[SQLID: %d].",
+		Log_Write("logfiles/a_givepremium.txt", "(%s) Administrator %s gave VIP Silver status to %s[SQLID: %d].",
 			ReturnDate(),
 			GetName(playerid, false),
 			GetName(giveplayerid, false),
@@ -701,53 +624,7 @@ CMD:givepremium(playerid, params[])
     }
     else if(strcmp(dLevel,"gold",true) == 0)
 	{
-		ExpInfo[giveplayerid][ePoints] += GOLD_EXP_POINTS;
-		ExpInfo[giveplayerid][eAllPoints] += GOLD_EXP_POINTS;
-		SavePlayerExperience(giveplayerid);
-
-	    PlayerInventory[giveplayerid][pMaskID] = 100000 + random(899999);
-		
-		#if defined MODULE_LOGS
-		Log_Write("/logfiles/masks.txt", "(%s) %s(%s), Mask ID: %d.",
-			ReturnDate(),
-			GetName(giveplayerid, false),
-			ReturnPlayerIP(giveplayerid),
-			PlayerInventory[giveplayerid][pMaskID]
-		);
-		#endif
-
-		PlayerJob[giveplayerid][pFreeWorks] 	= 30;
-		PlayerInfo[giveplayerid][pRespects] 	+= 30;
-		PlayerInfo[giveplayerid][pLevel] 		+= 3;
-		PlayerInfo[giveplayerid][pChangeTimes] 	+= 5;
-		if(PlayerInfo[giveplayerid][pWarns] >= 1)
-			PlayerInfo[giveplayerid][pWarns] 		-= 1;
-		
-		PlayerVIP[giveplayerid][pDonateRank] 		= 3;
-		PlayerVIP[giveplayerid][pDonatorVehPerms] 	= 2;	
-		PlayerVIP[giveplayerid][pDonateTime]		= gettimestamp() + 2592000;
-
-		LicenseInfo[giveplayerid][pCarLic] 	= 1;
-		LicenseInfo[giveplayerid][pFlyLic] 	= 1;
-		LicenseInfo[giveplayerid][pBoatLic] = 1;
-		LicenseInfo[giveplayerid][pFishLic] = 1;
-		LicenseInfo[giveplayerid][pGunLic]	= 1;
-
-		if(PlayerKeys[giveplayerid][pHouseKey] != INVALID_HOUSE_ID)
-			UpdatePremiumHouseFurSlots(giveplayerid, -1, PlayerKeys[giveplayerid][pHouseKey]);
-		if(PlayerKeys[giveplayerid][pBizzKey] != INVALID_BIZNIS_ID)
-			UpdatePremiumBizFurSlots(giveplayerid);
-		
-		SavePlayerVIP(giveplayerid);
-
-		mysql_fquery(g_SQL, 
-			"INSERT INTO player_vips(player_id, admin_id, rank, created_at, expires_at) VALUES ('%d','%d','%d','%d','%d')",
-			PlayerInfo[giveplayerid][pSQLID],
-			PlayerInfo[playerid][pSQLID],
-			PlayerVIP[giveplayerid][pDonateRank],
-			gettimestamp(),
-			PlayerVIP[giveplayerid][pDonateTime]
-		);
+		SetPlayerPremiumVIP(giveplayerid, PREMIUM_GOLD);
 
 		#if defined MODULE_LOGS
 		Log_Write("logfiles/a_givepremium.txt", "(%s) Administrator %s gave VIP Gold %s[SQLID: %d].",
@@ -765,52 +642,7 @@ CMD:givepremium(playerid, params[])
     }
 	else if(strcmp(dLevel,"platinum",true) == 0)
 	{
-		ExpInfo[giveplayerid][ePoints] += PLATINUM_EXP_POINTS;
-		ExpInfo[giveplayerid][eAllPoints] += PLATINUM_EXP_POINTS;
-		SavePlayerExperience(giveplayerid);
-
-	    PlayerInventory[giveplayerid][pMaskID] = 100000 + random(899999);
-		
-		#if defined MODULE_LOGS
-		Log_Write("/logfiles/masks.txt", "(%s) %s(%s), Mask ID: %d.",
-			ReturnDate(),
-			GetName(giveplayerid, false),
-			ReturnPlayerIP(giveplayerid),
-			PlayerInventory[giveplayerid][pMaskID]
-		);
-		#endif
-
-		PlayerJob[giveplayerid][pFreeWorks] 		= 50;
-		PlayerInfo[giveplayerid][pRespects] 		+= 50;
-		PlayerInfo[giveplayerid][pLevel] 			+= 4;
-		PlayerInfo[giveplayerid][pChangeTimes] 		+= 7;
-		PlayerInfo[giveplayerid][pWarns]			= 0;
-
-		PlayerVIP[giveplayerid][pDonateRank] 		= 4;
-		PlayerVIP[giveplayerid][pDonatorVehPerms] 	= 2;
-		PlayerVIP[giveplayerid][pDonateTime]		= gettimestamp() + 3888000; // 45 dana
-
-		LicenseInfo[giveplayerid][pCarLic] 	= 1;
-		LicenseInfo[giveplayerid][pFlyLic] 	= 1;
-		LicenseInfo[giveplayerid][pBoatLic] = 1;
-		LicenseInfo[giveplayerid][pFishLic] = 1;
-		LicenseInfo[giveplayerid][pGunLic] 	= 2;
-
-		if(PlayerKeys[giveplayerid][pHouseKey] != INVALID_HOUSE_ID)
-			UpdatePremiumHouseFurSlots(giveplayerid, -1, PlayerKeys[giveplayerid][pHouseKey]);
-		if(PlayerKeys[giveplayerid][pBizzKey] != INVALID_BIZNIS_ID)
-			UpdatePremiumBizFurSlots(giveplayerid);
-		
-		SavePlayerVIP(giveplayerid);
-
-		mysql_fquery(g_SQL, 
-			"INSERT INTO player_vips(player_id, admin_id, rank, created_at, expires_at) VALUES ('%d','%d','%d','%d','%d')",
-			PlayerInfo[giveplayerid][pSQLID],
-			PlayerInfo[playerid][pSQLID],
-			PlayerVIP[giveplayerid][pDonateRank],
-			gettimestamp(),
-			PlayerVIP[giveplayerid][pDonateTime]
-		);
+		SetPlayerPremiumVIP(giveplayerid, PREMIUM_PLATINUM);
 
 		#if defined MODULE_LOGS
 		Log_Write("logfiles/a_givepremium.txt", "(%s) Administrator %s gave VIP Platinum %s[SQLID: %d].",

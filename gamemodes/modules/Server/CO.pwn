@@ -521,7 +521,7 @@ stock BuyVehicle(playerid, bool:credit_activated = false)
 		{	
 			modelid = AirVehicles[PreviewType[playerid]][viModelid];			
 			price = AirVehicles[PreviewType[playerid]][viPrice];  
-			if(PlayerVIP[playerid][pDonateRank] == 4 && AirVehicles[PreviewType[playerid]][viModelid] == 469)
+			if(PlayerVIP[playerid][pDonateRank] == PREMIUM_PLATINUM && AirVehicles[PreviewType[playerid]][viModelid] == 469)
 				price /= 2;
 			engineType = AirVehicles[PreviewType[playerid]][viEngineType]; 
 		}
@@ -723,7 +723,7 @@ stock ResetCarBuyVars(playerid)
 
 stock CheckVehicleList(playerid)
 {
-	if(PlayerVIP[playerid][pDonateRank] == 4)
+	if(PlayerVIP[playerid][pDonateRank] == PREMIUM_PLATINUM)
 	{
 		if( VehicleInfoModel[playerid][0] != -1 && VehicleInfoModel[playerid][1] != -1 && VehicleInfoModel[playerid][2] != -1 && VehicleInfoModel[playerid][3] != -1 && VehicleInfoModel[playerid][4] != -1 &&
 			VehicleInfoModel[playerid][5] != -1 && VehicleInfoModel[playerid][6] != -1 && VehicleInfoModel[playerid][7] != -1 && VehicleInfoModel[playerid][8] != -1 && VehicleInfoModel[playerid][9] != -1)
@@ -3374,6 +3374,44 @@ stock GetNearestGasBiznis(playerid)
 	return gbizid;
 }
 
+static CalculateFuelPrice(playerid, type, amount, price)
+{
+	new
+		moneys;
+
+	switch( type ) 
+	{
+		case 0:  
+		{ 	// Gasoline
+			moneys = (amount * price);
+			switch( PlayerVIP[playerid][pDonateRank] ) 
+			{
+				case PREMIUM_BRONZE:
+					moneys /= 4;
+				case PREMIUM_SILVER:
+					moneys /= 2;
+				case PREMIUM_GOLD, PREMIUM_PLATINUM:
+					moneys = 0;
+			}
+		}
+		case 1:  
+		{	// Diesel
+			moneys = (amount * price);
+			switch( PlayerVIP[playerid][pDonateRank] ) 
+			{
+				case PREMIUM_BRONZE:
+					moneys /= 4;
+				case PREMIUM_SILVER:
+					moneys /= 2;
+				case PREMIUM_GOLD, PREMIUM_PLATINUM:
+					moneys = 0;
+			}
+		}
+	}
+	moneys = floatround(moneys);
+	return moneys;
+}
+
 /*
 	######## #### ##     ## ######## ########   ######
 	   ##     ##  ###   ### ##       ##     ## ##    ##
@@ -3951,7 +3989,7 @@ hook OnPlayerClickPlayerTD(playerid, PlayerText:playertextid)
 				}
 				case VEH_DEALER_PLANE:
 				{
-					if(PlayerVIP[playerid][pDonateRank] == 4 && AirVehicles[PreviewType[playerid]][viModelid] == 469) // Premium Diamond Sparrow
+					if(PlayerVIP[playerid][pDonateRank] == PREMIUM_PLATINUM && AirVehicles[PreviewType[playerid]][viModelid] == 469) // Premium Diamond Sparrow
 					{
 						if(CalculatePlayerBuyMoney(playerid, BUY_TYPE_VEHICLE) < (AirVehicles[PreviewType[playerid]][viPrice]/2)) 
 							return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Diamond VIP pokriva samo polovinu vrijednosti ovog vozila!");
@@ -3964,26 +4002,43 @@ hook OnPlayerClickPlayerTD(playerid, PlayerText:playertextid)
 					buyprice = AirVehicles[PreviewType[playerid]][viPrice];
 				}
 			}
-			if(LandVehicles[PreviewType[playerid]][viPremium] == 1 && PlayerVIP[playerid][pDonateRank] != 1) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste VIP Bronze korisnik!");
-			if(LandVehicles[PreviewType[playerid]][viPremium] == 2 && PlayerVIP[playerid][pDonateRank] != 2) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste VIP Silver korisnik!");
-			if(LandVehicles[PreviewType[playerid]][viPremium] == 3 && PlayerVIP[playerid][pDonateRank] != 3) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste VIP Gold korisnik!");
-			if(LandVehicles[PreviewType[playerid]][viPremium] == 4 && PlayerVIP[playerid][pDonateRank] != 4) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste VIP Platinum korisnik!");
+			if(LandVehicles[PreviewType[playerid]][viPremium] == 1 && PlayerVIP[playerid][pDonateRank] < PREMIUM_BRONZE) 
+				return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste VIP Bronze korisnik!");
+			if(LandVehicles[PreviewType[playerid]][viPremium] == 2 && PlayerVIP[playerid][pDonateRank] < PREMIUM_SILVER) 
+				return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste VIP Silver korisnik!");
+			if(LandVehicles[PreviewType[playerid]][viPremium] == 3 && PlayerVIP[playerid][pDonateRank] < PREMIUM_GOLD)
+				return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste VIP Gold korisnik!");
+			if(LandVehicles[PreviewType[playerid]][viPremium] == 4 && PlayerVIP[playerid][pDonateRank] < PREMIUM_PLATINUM) 
+				return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste VIP Platinum korisnik!");
 
-			if(LandVehicles[PreviewType[playerid]][viPremium] && PlayerVIP[playerid][pDonatorVehPerms] == 0) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nije vam ostalo vise mjesta za donator vozila");
+			if(LandVehicles[PreviewType[playerid]][viPremium] && PlayerVIP[playerid][pDonatorVehPerms] == 0) 
+				return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nije vam ostalo vise mjesta za donator vozila");
 
 			Bit1_Set(gr_PreviewCar, playerid, false);
 			paymentBuyPrice[playerid] = buyprice;
 			GetPlayerPaymentOption(playerid, BUY_TYPE_VEHICLE);
 			CancelSelectTextDraw(playerid);
 		}
-		if(playertextid == TryButton[playerid]) {
-			switch(PlayerDealer[playerid]) {
-				case VEH_DEALER_CARS: {
-					if(AC_GetPlayerMoney(playerid) < LandVehicles[PreviewType[playerid]][viPrice]) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Moras imati dovoljno novca da bi testirao ovo auto!");
-					if(LandVehicles[PreviewType[playerid]][viPremium] == 1 && PlayerVIP[playerid][pDonateRank] != 1 && PlayerVIP[playerid][pDonatorVehPerms] == 0) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste VIP Bronze korisnik!");
-					if(LandVehicles[PreviewType[playerid]][viPremium] == 2 && PlayerVIP[playerid][pDonateRank] != 2 && PlayerVIP[playerid][pDonatorVehPerms] == 0) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste VIP Silver korisnik!");
-					if(LandVehicles[PreviewType[playerid]][viPremium] == 3 && PlayerVIP[playerid][pDonateRank] != 3 && PlayerVIP[playerid][pDonatorVehPerms] == 0) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste VIP Gold korisnik!");
-					if(LandVehicles[PreviewType[playerid]][viPremium] == 4 && PlayerVIP[playerid][pDonateRank] != 4 && PlayerVIP[playerid][pDonatorVehPerms] == 0) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste VIP Platinum korisnik!");
+		if(playertextid == TryButton[playerid]) 
+		{
+			switch(PlayerDealer[playerid]) 
+			{
+				case VEH_DEALER_CARS: 
+				{
+					if(AC_GetPlayerMoney(playerid) < LandVehicles[PreviewType[playerid]][viPrice]) 
+						return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Moras imati dovoljno novca da bi testirao ovo auto!");
+					if(LandVehicles[PreviewType[playerid]][viPremium] == 1 && PlayerVIP[playerid][pDonateRank] < PREMIUM_BRONZE 
+						&& PlayerVIP[playerid][pDonatorVehPerms] == 0) 
+						return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste VIP Bronze korisnik!");
+					if(LandVehicles[PreviewType[playerid]][viPremium] == 2 && PlayerVIP[playerid][pDonateRank] < PREMIUM_SILVER
+						&& PlayerVIP[playerid][pDonatorVehPerms] == 0) 
+						return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste VIP Silver korisnik!");
+					if(LandVehicles[PreviewType[playerid]][viPremium] == 3 && PlayerVIP[playerid][pDonateRank] < PREMIUM_GOLD
+						&& PlayerVIP[playerid][pDonatorVehPerms] == 0) 
+						return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste VIP Gold korisnik!");
+					if(LandVehicles[PreviewType[playerid]][viPremium] == 4 && PlayerVIP[playerid][pDonateRank] < PREMIUM_PLATINUM
+						&& PlayerVIP[playerid][pDonatorVehPerms] == 0) 
+						return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste VIP Platinum korisnik!");
 				}
 				case VEH_DEALER_BOAT: {
 					if(AC_GetPlayerMoney(playerid) < SeaVehicles[PreviewType[playerid]][viPrice]) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Moras imati dovoljno novca da bi testirao ovo auto!");
@@ -5023,25 +5078,25 @@ CMD:car(playerid, params[])
 			if(IsPlayerInVehicle(i, vehicleid)) 
 				return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Netko vec koristi vase vozilo.");
 		}
-		if(PlayerVIP[playerid][pDonateRank] < 2)
+		if(PlayerVIP[playerid][pDonateRank] < PREMIUM_SILVER)
 		{
 			if(AC_GetPlayerMoney(playerid) < 1000) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate dovoljno novca za naknadu za vucu od 1000$!");
 			PlayerToFactionMoneyTAX(playerid, 1, 1000); // Novac ide PDu uz porez koji ide drzavi
 		}
 		// Timer
 		PlayerCarTow[playerid] = true;
-		
-		if(PlayerVIP[playerid][pDonateRank] == 0)
-			PlayerTowTimer[playerid] = gettimestamp() + VEHICLE_TOW_TIME;
-		else
+
+		switch(PlayerVIP[playerid][pDonateRank])
 		{
-			if(PlayerVIP[playerid][pDonateRank] == 1)
+			case 0:	
+				PlayerTowTimer[playerid] = gettimestamp() + VEHICLE_TOW_TIME;
+			case PREMIUM_BRONZE:
 				PlayerTowTimer[playerid] = gettimestamp() + BRONZE_VEHICLE_TOW_TIME;
-			else if(PlayerVIP[playerid][pDonateRank] == 2)
+			case PREMIUM_SILVER:
 				PlayerTowTimer[playerid] = gettimestamp() + SILVER_VEHICLE_TOW_TIME;
-			else if(PlayerVIP[playerid][pDonateRank] == 3)
-				PlayerTowTimer[playerid] = gettimestamp() + GOLD_VEHICLE_TOW_TIME;
-			else if(PlayerVIP[playerid][pDonateRank] == 4)
+			case PREMIUM_GOLD:
+ 				PlayerTowTimer[playerid] = gettimestamp() + GOLD_VEHICLE_TOW_TIME;
+			case PREMIUM_PLATINUM:
 				PlayerTowTimer[playerid] = gettimestamp() + PLATINUM_VEHICLE_TOW_TIME;
 		}
 		new duration = (PlayerTowTimer[playerid] - gettimestamp()) / 60;
@@ -5082,7 +5137,8 @@ CMD:car(playerid, params[])
 			vehicleid = PlayerKeys[playerid][pVehicleKey];
 		if(vehicleid == -1) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste spawnali vozilo!");
 		if(!IsPlayerInVehicle(playerid, vehicleid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste u svome automobilu!");
-		if(AC_GetPlayerMoney(playerid) < 100 && PlayerVIP[playerid][pDonateRank] < 3) return SendMessage(playerid, MESSAGE_TYPE_ERROR, " Nemate 100$!");
+		if(AC_GetPlayerMoney(playerid) < 100 && PlayerVIP[playerid][pDonateRank] < PREMIUM_GOLD) 
+			return SendMessage(playerid, MESSAGE_TYPE_ERROR, " Nemate 100$!");
 
 		new
 			Float:X, Float:Y, Float:Z;
@@ -5109,7 +5165,8 @@ CMD:car(playerid, params[])
 			VehicleInfo[vehicleid][vSQLID]
 		);
 
-		if(PlayerVIP[playerid][pDonateRank] < 3) {
+		if(PlayerVIP[playerid][pDonateRank] < PREMIUM_GOLD) 
+		{
 			PlayerToBudgetMoney(playerid, 100); // Novac ide u proracun
 			GameTextForPlayer(playerid, "~r~-100$", 5000, 1);
 		}
@@ -5479,13 +5536,15 @@ CMD:fill(playerid, params[])
 {
 	new
 		vehicleid = GetPlayerVehicleID(playerid),
-		fuel;
+		fuel,
+		type;
 
 	new bizid = GetNearestBizz(playerid, BIZZ_TYPE_GASSTATION);
 	if( bizid == INVALID_BIZNIS_ID ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, " Niste u blizini benzinske postaje!");
 	if( ( vehicleid == 0 || vehicleid == -1 ) || IsABike( GetVehicleModel( vehicleid ) ) ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, " Nepravilno vozilo!");
-	if( sscanf(params, "i", fuel ) ) {
-		SendClientMessage(playerid, COLOR_RED, "[ ? ]: /fill [litara]");
+	if( sscanf(params, "ii", fuel,type) ) 
+	{
+		SendClientMessage(playerid, COLOR_RED, "[ ? ]: /fill [0 - Gasoline, 1 - Diesel][amount of liters]");
 		return 1;
 	}
 	#if defined EVENTSTARTED
@@ -5493,13 +5552,33 @@ CMD:fill(playerid, params[])
 	return 1;
 	#endif
 	if( fuel > ( 100 - VehicleInfo[ vehicleid ][ vFuel ] ) ) return SendClientMessage(playerid, COLOR_RED, "U vase vozilo ne moze stati toliko goriva.");
-	if( 1 <= fuel <= 100 ) {
-	    if(AC_GetPlayerMoney(playerid) < BizzInfo[bizid][bGasPrice]) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate toliko novca!");
-        PlayerToBusinessMoneyTAX(playerid, bizid, BizzInfo[bizid][bGasPrice] * fuel);
+	if( 1 <= fuel <= 100 ) 
+	{
+		new 
+			moneys = CalculateFuelPrice(playerid, type, fuel, BizzInfo[bizid][bGasPrice]);
+
+	    if(AC_GetPlayerMoney(playerid) < moneys) 
+			return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate toliko novca!");
+
+		if(moneys > 0)
+        	PlayerToBusinessMoneyTAX(playerid, bizid, moneys);
+
 		VehicleInfo[ vehicleid ][ vFuel ] += fuel;
+
 		GameTextForPlayer( playerid, "~g~Napunili se gorivo", 2000, 1 );
 
-	} else SendMessage(playerid, MESSAGE_TYPE_ERROR, " Unos mora biti izmedju 1 i 100!");
+		if( type == ENGINE_TYPE_PETROL ) 
+		{
+			if( VehicleInfo[ vehicleid ][ vEngineType ] == ENGINE_TYPE_DIESEL )
+				VehicleInfo[ vehicleid ][ vEngineLife ] -= 25.0;
+		}
+		else if( type == ENGINE_TYPE_DIESEL ) 
+		{
+			if( VehicleInfo[ vehicleid ][ vEngineType ] == ENGINE_TYPE_PETROL )
+				VehicleInfo[ vehicleid ][ vEngineLife ] -= 25.0;
+		}
+	} 
+	else SendMessage(playerid, MESSAGE_TYPE_ERROR, " Unos mora biti izmedju 1 i 100!");
 	return 1;
 }
 
@@ -6005,6 +6084,7 @@ CMD:cl(playerid, params[])
 	}
 	return 1;
 }
+
 CMD:bonnet(playerid, params[])
 {
     new engine,lights,alarm,doors,bonnet,boot,objective,vehicle = GetPlayerVehicleID(playerid),modelid = GetVehicleModel(vehicle);
@@ -6050,51 +6130,31 @@ CMD:get(playerid, params[])
 {
 	new
 		param[6];
-	if( sscanf( params, "s[6] ", param ) ) {
+	if( sscanf( params, "s[6] ", param ) ) 
+	{
 		SendClientMessage(playerid, COLOR_RED, "[ ? ]: /get [opcija]");
 		SendClientMessage(playerid, COLOR_RED, "[ ! ] fuel");
 	}
 	if( !strcmp( param, "fuel", true ) )
 	{
 		new
-			type, fuel, total;
+			type, fuel;
 			
-		if( sscanf( params, "s[6]ii", param, type, fuel ) ) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /get fuel [0 - Benzin, 1 - Dizel][kolicina]");
-		if( GetNearestBizz(playerid, BIZZ_TYPE_GASSTATION) == INVALID_BIZNIS_ID ) 
+		if( sscanf( params, "s[6]ii", param, type, fuel ) ) 
+			return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /get fuel [0 - Gasoline, 1 - Diesel][kolicina]");
+		
+		new bizzid = GetNearestBizz(playerid, BIZZ_TYPE_GASSTATION);
+		if( bizzid == INVALID_BIZNIS_ID ) 
 			return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste blizu benzinske stanice!");
-		total = CarnisterLiters[playerid] + fuel;
-		if (total > 25 ) return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "Maksimalno 25 litara, treutno imate %d", CarnisterLiters[playerid]);
-		if( type > 1 || type < 0 ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Tip mora biti izmedju 0 i 1!");
+
+		if ((CarnisterLiters[playerid] + fuel) > 25 ) 
+			return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "Maksimalno 25 litara, treutno imate %d", CarnisterLiters[playerid]);
+		if( type > 1 || type < 0 ) 
+			return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Tip mora biti izmedju 0 i 1!");
 		if( 1 <= fuel <= 25 ) 
 		{
-			new
-				moneys;
-			switch( type ) 
-			{
-				case 0:  { // Benzin
-					moneys = (fuel * 4);
-					switch( PlayerVIP[playerid][pDonateRank] ) {
-						case 1:
-							moneys /= 4;
-						case 2:
-							moneys /= 2;
-						case 3,4:
-							moneys = 0;
-					}
-				}
-				case 1:  {// Dizel
-					moneys = (fuel * 3);
-					switch( PlayerVIP[playerid][pDonateRank] ) {
-						case 1:
-							moneys /= 4;
-						case 2:
-							moneys /= 2;
-						case 3,4:
-							moneys = 0;
-					}
-				}
-			}
-			moneys = floatround(moneys);
+			new 
+				moneys = CalculateFuelPrice(playerid, type, fuel, BizzInfo[bizzid][bGasPrice]);
 			if( AC_GetPlayerMoney( playerid ) <  moneys) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate toliko novca!");
 			new bizid = GetNearestBizz(playerid, BIZZ_TYPE_GASSTATION);
 			if( bizid == INVALID_BIZNIS_ID ) 
