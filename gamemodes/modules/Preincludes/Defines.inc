@@ -1,5 +1,3 @@
-#include <YSI_Coding\y_hooks>
-
 // -Macros
 
 #define Public:%0(%1) \
