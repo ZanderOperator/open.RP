@@ -8,7 +8,6 @@
 #include "modules/Player\SaveLoad/player_fitness.pwn"
 #include "modules/Player\SaveLoad/player_appearance.pwn"
 #include "modules/Player\SaveLoad/player_vip_status.pwn"
-#include "modules/Player\SaveLoad/player_licenses.pwn"
 #include "modules/Player\SaveLoad/player_jail.pwn"
 #include "modules/Player\SaveLoad/player_job.pwn"
 #include "modules/Player\SaveLoad/player_taxi.pwn"
@@ -17,7 +16,6 @@
 #include "modules/Player\SaveLoad/player_credits.pwn"
 #include "modules/Player\SaveLoad/player_faction.pwn"
 #include "modules/Player\SaveLoad/player_radio.pwn"
-#include "modules/Player\SaveLoad/player_admin_msg.pwn"
 #include "modules/Player\SaveLoad/player_fishes.pwn"
 #include "modules/Player\SaveLoad/player_cooldowns.pwn"
 
@@ -256,6 +254,7 @@ public LoadPlayerData(playerid)
 		cache_get_value_name_int(0,  "changetimes"	, PlayerInfo[playerid][pChangeTimes]);
 		cache_get_value_name_int(0,  "handMoney"	, PlayerInfo[playerid][pMoney]);
 		cache_get_value_name_int(0,  "bankMoney"	, PlayerInfo[playerid][pBank]);
+		cache_get_value_name_int(0,  "rentkey"		, PlayerKeys[playerid][pRentKey]);
 		cache_get_value_name_int(0,	"playaUnbanTime", unban_time);
 		cache_get_value_name(0, 	"playaBanReason", ban_reason							, 32);
 		cache_get_value_name_int(0,	"voted"			, PlayerInfo[playerid][pVoted]);
@@ -477,10 +476,12 @@ public OnAccountFinish(playerid)
 	PlayerInfo[playerid][pHelper] 			= 0; 
 	PlayerCoolDown[playerid][pCasinoCool]		= 5;
 	PlayerCoolDown[playerid][pCasinoCool]		= 5;
-	PlayerKeys[playerid][pHouseKey]			= 9999;
-	PlayerKeys[playerid][pBizzKey]			= 999;
-	PlayerKeys[playerid][pComplexRoomKey]	= 999;
-	PlayerKeys[playerid][pComplexKey]		= 999;
+
+	PlayerKeys[playerid][pHouseKey]			= INVALID_HOUSE_ID;
+	PlayerKeys[playerid][pRentKey]			= INVALID_HOUSE_ID;
+	PlayerKeys[playerid][pBizzKey]			= INVALID_BIZNIS_ID;
+	PlayerKeys[playerid][pComplexRoomKey]	= INVALID_COMPLEX_ID;
+	PlayerKeys[playerid][pComplexKey]		= INVALID_COMPLEX_ID;
 	PlayerKeys[playerid][pVehicleKey]		= -1;
 	
 	UpdateRegisteredPassword(playerid);
