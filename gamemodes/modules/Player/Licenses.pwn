@@ -466,7 +466,7 @@ CMD:takedriving(playerid, params[])
 	if( !IsPlayerInRangeOfPoint( playerid, 5.0, 1779.8975, -1721.5961, 12.5387 ) ) 
 		return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste blizu auto skole!");
 	
-	SendMessage(playerid,  MESSAGE_TYPE_SUCESS, "~Uzeli ste papire za polaganje.~n~Idite u vozilo iza i krenite sa ispitom!");
+	SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "~Uzeli ste papire za polaganje.~n~Idite u vozilo iza i krenite sa ispitom!");
 	PlayerToBudgetMoney(playerid, CAR_LICENSE_PRICE);
 	Bit1_Set( gr_TookDriving, playerid, true );
 	return 1;

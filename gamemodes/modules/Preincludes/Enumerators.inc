@@ -357,7 +357,6 @@ enum E_SAFE_EXIT
 	Float:giZ,
 	Float:giRZ
 }
-
 new 
 	PlayerSafeExit[ MAX_PLAYERS ][E_SAFE_EXIT];
 
