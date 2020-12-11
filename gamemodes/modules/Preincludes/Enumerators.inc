@@ -48,8 +48,6 @@ enum E_PLAYER_DATA
 	pExtraFurniture,
 	pVoted,
 		
-	pCanisterLiters, // TODO: transition to local var in CO.pwn 
-	pCanisterType, // TODO: transition to local var in CO.pwn
 	pGrafID, // TODO: transition to local var in Graffiti.pwn
 	pTagID, // TODO: transition to local var in Graffiti.pwn
 	packageordered, // TODO: transition to local var in WepPackage.pwn

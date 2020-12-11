@@ -412,7 +412,9 @@ static stock
 		PlayerSellingPrice	[MAX_PLAYERS],
 		PlayerCarSeller		[MAX_PLAYERS],
 		PlayerModel			[MAX_PLAYERS],
-		PlayerEngine		[MAX_PLAYERS];
+		PlayerEngine		[MAX_PLAYERS],
+		CarnisterLiters		[MAX_PLAYERS],
+		CarnisterType		[MAX_PLAYERS];
 
 // Vehicle vars
 new
@@ -3648,6 +3650,13 @@ timer ParkPlayerVehicle[5000](playerid, vehicleid)
 	return 1;
 }
 
+hook ResetPlayerVariables(playerid)
+{
+	CarnisterLiters[playerid] = 0;
+	CarnisterType[playerid] = -1;
+	return 1;
+}
+
 hook LoadPlayerStats(playerid)
 {
 	GetPlayerVehicleList(playerid);
@@ -6028,25 +6037,25 @@ CMD:bonnet(playerid, params[])
 
 CMD:fillcar(playerid, params[])
 {
-	if( !PlayerInfo[ playerid ][ pCanisterLiters ] || PlayerInfo[ playerid ][ pCanisterType ] == -1 ) return SendClientMessage( playerid, COLOR_RED, "[GRESKA]: Niste usipali nista u svoj kanister!");
+	if( !CarnisterLiters[playerid] || CarnisterType[playerid] == -1 ) return SendClientMessage( playerid, COLOR_RED, "[GRESKA]: Niste usipali nista u svoj kanister!");
 	new
 		vehicleid = GetPlayerVehicleID(playerid);
 	if( ( vehicleid == 0 || vehicleid == INVALID_VEHICLE_ID ) || IsABike( GetVehicleModel( vehicleid ) ) ) return SendClientMessage( playerid, COLOR_RED, "[GRESKA]: Nepravilno vozilo!" );
 	if( VehicleInfo[ vehicleid ][ vFuel ] >= 75 ) return SendClientMessage( playerid, COLOR_RED, "[GRESKA]: Vase vozilo moze voziti!");
 	
-	if( PlayerInfo[ playerid ][ pCanisterType ] == ENGINE_TYPE_PETROL ) 
+	if( CarnisterType[playerid] == ENGINE_TYPE_PETROL ) 
 	{
 		if( VehicleInfo[ vehicleid ][ vEngineType ] == ENGINE_TYPE_DIESEL )
 			VehicleInfo[ vehicleid ][ vEngineLife ] -= 25.0;
 	}
-	else if( PlayerInfo[ playerid ][ pCanisterType ] == ENGINE_TYPE_DIESEL ) 
+	else if( CarnisterType[playerid] == ENGINE_TYPE_DIESEL ) 
 	{
 		if( VehicleInfo[ vehicleid ][ vEngineType ] == ENGINE_TYPE_PETROL )
 			VehicleInfo[ vehicleid ][ vEngineLife ] -= 25.0;
 	}
-	VehicleInfo[ vehicleid ][ vFuel ] += PlayerInfo[ playerid ][ pCanisterLiters ];
-	PlayerInfo[ playerid ][ pCanisterLiters ] 	= 0;
-	PlayerInfo[ playerid ][ pCanisterType ] 	= -1;
+	VehicleInfo[ vehicleid ][ vFuel ] += CarnisterLiters[playerid];
+	CarnisterLiters[playerid] 	= 0;
+	CarnisterType[playerid] 	= -1;
 	return 1;
 }
 
@@ -6066,8 +6075,8 @@ CMD:get(playerid, params[])
 		if( sscanf( params, "s[6]ii", param, type, fuel ) ) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /get fuel [0 - Benzin, 1 - Dizel][kolicina]");
 		if( GetNearestBizz(playerid, BIZZ_TYPE_GASSTATION) == INVALID_BIZNIS_ID ) 
 			return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste blizu benzinske stanice!");
-		total = PlayerInfo[ playerid ][ pCanisterLiters ] + fuel;
-		if (total > 25 ) return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "Maksimalno 25 litara, treutno imate %d", PlayerInfo[ playerid ][ pCanisterLiters ]);
+		total = CarnisterLiters[playerid] + fuel;
+		if (total > 25 ) return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "Maksimalno 25 litara, treutno imate %d", CarnisterLiters[playerid]);
 		if( type > 1 || type < 0 ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Tip mora biti izmedju 0 i 1!");
 		if( 1 <= fuel <= 25 ) 
 		{
@@ -6111,8 +6120,8 @@ CMD:get(playerid, params[])
 				BizzInfo[ bizid ][bSQLID]
 			);
 
-			PlayerInfo[ playerid ][ pCanisterLiters ] 	+= fuel;
-			PlayerInfo[ playerid ][ pCanisterType ] 	= type;
+			CarnisterLiters[playerid] 	+= fuel;
+			CarnisterType[playerid] 	= type;
 			va_SendClientMessage( playerid, COLOR_RED, "[ ! ] Uspjesno ste napunili kanister s %d litara. Mozete koristiti /fillcar unutar zeljena vozila!", fuel);
 		} 
 		else return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Unos mora biti izmedju 1 i 25 litara!");
