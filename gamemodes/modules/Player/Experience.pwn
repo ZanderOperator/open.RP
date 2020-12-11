@@ -346,7 +346,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 					SendFormatMessage(playerid, MESSAGE_TYPE_SUCCESS, "Iskoristili ste %d EXP-a za %d Furniture slotova. Preostalo: %d EXP", MAX_FURSLOTS_EXP, FURNITURE_PREMIUM_OBJECTS, ExpInfo[playerid][ePoints]);
 					return 1;
 				}
-				case 2: // Premium Bronze paket na mjesec dana
+				case 2: // Premium Bronze VIP paket na mjesec dana
 				{
 					if(ExpInfo[playerid][ePoints] < PREMIUM_BRONZE_EXP)
 						return va_SendClientMessage(playerid,COLOR_RED, "Potrebno je %d EXP-a da bi dobili Premium Bronze paket!", PREMIUM_BRONZE_EXP);
@@ -357,49 +357,13 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 						PlayerInfo[playerid][pSQLID]
 					);
 				
-					// Premium Bronze
-					PlayerInventory[playerid][pMaskID] = 100000 + random(899999);
-					
-					#if defined MODULE_LOGS
-					Log_Write("/logfiles/masks.txt", "(%s) %s(%s), Mask ID: %d.",
-						ReturnDate(),
-						GetName(playerid, false),
-						ReturnPlayerIP(playerid),
-						PlayerInventory[playerid][pMaskID]
-					);
-					#endif
-					
-					PlayerJob[playerid][pFreeWorks] 	= 25;
-					PlayerVIP[playerid][pDonateRank] 	= 1;
-					PlayerInfo[playerid][pRespects] 	+= 10;
-					PlayerInfo[playerid][pChangeTimes] 	+= 2;
-					PlayerInfo[playerid][pLevel] 		+= 1;
-					PlayerVIP[playerid][pDonateTime]	= gettimestamp() + 2592000;
-					BudgetToPlayerMoney(playerid, 15000); // budjet - igrac
-					
-					if(PlayerKeys[playerid][pHouseKey] != INVALID_HOUSE_ID)
-						UpdatePremiumHouseFurSlots(playerid, -1, PlayerKeys[playerid][pHouseKey]);
-					if(PlayerKeys[playerid][pBizzKey] != INVALID_BIZNIS_ID)
-						UpdatePremiumBizFurSlots(playerid);
-					
-					SavePlayerVIP(playerid);					
-					
-					// MySQL Log
-					mysql_fquery(g_SQL, 
-						"INSERT INTO player_vips(player_id, admin_id, rank, created_at, expires_at) \n\
-							VALUES ('%d','%d','%d','%d','%d')",
-						PlayerInfo[playerid][pSQLID],
-						PlayerInfo[playerid][pSQLID],
-						PlayerVIP[playerid][pDonateRank],
-						gettimestamp(),
-						PlayerVIP[playerid][pDonateTime]
-					);
+					SetPlayerPremiumVIP(playerid, PREMIUM_BRONZE);
 					
 					SendFormatMessage(playerid, MESSAGE_TYPE_SUCCESS, "Iskoristili ste %d EXP-a za Premium Bronze. Preostalo: %d EXP", PREMIUM_BRONZE_EXP, ExpInfo[playerid][ePoints]);
 					SendClientMessage(playerid, COLOR_RED, "[SERVER]  Iskrene cestitke na Premium paketu! Vas Premium paket traje sljedecih mjesec dana.");
 					return 1;
 				}
-				case 3: // Premium Bronze paket na mjesec dana
+				case 3: // Premium Silver VIP paket na mjesec dana
 				{
 					if(ExpInfo[playerid][ePoints] < PREMIUM_SILVER_EXP)
 						return va_SendClientMessage(playerid,COLOR_RED, "Potrebno je %d EXP-a da bi dobili Premium Silver paket!", PREMIUM_SILVER_EXP);
@@ -410,42 +374,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 						PlayerInfo[playerid][pSQLID]
 					);
 					
-					PlayerInventory[playerid][pMaskID] = 100000 + random(899999);
-					
-					#if defined MODULE_LOGS
-					Log_Write("/logfiles/masks.txt", "(%s) %s(%s), Mask ID: %d.",
-						ReturnDate(),
-						GetName(playerid, false),
-						ReturnPlayerIP(playerid),
-						PlayerInventory[playerid][pMaskID]
-					);
-					#endif
-					
-					PlayerJob[playerid][pFreeWorks] 	= 25;
-					PlayerVIP[playerid][pDonateRank] 	= 2;
-					PlayerInfo[playerid][pRespects] 	+= 20;
-					PlayerInfo[playerid][pLevel] 		+= 2;
-					PlayerInfo[playerid][pChangeTimes] 	+= 3;
-					PlayerVIP[playerid][pDonateTime]	= gettimestamp() + 2592000;
-					BudgetToPlayerMoney(playerid, 30000); // budjet - igrac
-					
-					if(PlayerKeys[playerid][pHouseKey] != INVALID_HOUSE_ID)
-						UpdatePremiumHouseFurSlots(playerid, -1, PlayerKeys[playerid][pHouseKey]);
-					if(PlayerKeys[playerid][pBizzKey] != INVALID_BIZNIS_ID)
-						UpdatePremiumBizFurSlots(playerid);
-					
-					SavePlayerVIP(playerid);
-					
-					// MySQL Log
-					mysql_fquery(g_SQL, 
-						"INSERT INTO player_vips(player_id, admin_id, rank, created_at, expires_at) \n\
-							VALUES ('%d','%d','%d','%d','%d')",
-						PlayerInfo[playerid][pSQLID],
-						PlayerInfo[playerid][pSQLID],
-						PlayerVIP[playerid][pDonateRank],
-						gettimestamp(),
-						PlayerVIP[playerid][pDonateTime]
-					);
+					SetPlayerPremiumVIP(playerid, PREMIUM_SILVER);
 					
 					SendFormatMessage(playerid, MESSAGE_TYPE_SUCCESS, "Iskoristili ste %d EXP-a za Premium Silver. Preostalo: %d EXP", PREMIUM_SILVER_EXP, ExpInfo[playerid][ePoints]);
 					SendClientMessage(playerid,COLOR_RED, "[SERVER] Iskrene cestitke na Premium paketu! Vas Premium paket traje sljedecih mjesec dana.");
@@ -462,47 +391,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 						PlayerInfo[playerid][pSQLID]
 					);
 					
-					PlayerInventory[playerid][pMaskID] = 100000 + random(899999);
-					
-					#if defined MODULE_LOGS
-					Log_Write("/logfiles/masks.txt", "(%s) %s(%s), Mask ID: %d.",
-						ReturnDate(),
-						GetName(playerid, false),
-						ReturnPlayerIP(playerid),
-						PlayerInventory[playerid][pMaskID]
-					);
-					#endif
-					
-					PlayerJob[playerid][pFreeWorks] 	= 30;
-					PlayerVIP[playerid][pDonateRank] 	= 3;
-					PlayerInfo[playerid][pRespects] 	+= 30;
-					PlayerInfo[playerid][pLevel] 		+= 3;
-					PlayerInfo[playerid][pChangeTimes] 	+= 5;
-					PlayerVIP[playerid][pDonateTime]	= gettimestamp() + 2592000;
-					BudgetToPlayerMoney(playerid, 40000); // budjet - igrac
-					
-					LicenseInfo[playerid][pCarLic] 	= 1;
-					LicenseInfo[playerid][pFlyLic] 	= 1;
-					LicenseInfo[playerid][pBoatLic] 	= 1;
-					LicenseInfo[playerid][pFishLic]  = 1;
-					
-					if(PlayerKeys[playerid][pHouseKey] != INVALID_HOUSE_ID)
-						UpdatePremiumHouseFurSlots(playerid, -1, PlayerKeys[playerid][pHouseKey]);
-					if(PlayerKeys[playerid][pBizzKey] != INVALID_BIZNIS_ID)
-						UpdatePremiumBizFurSlots(playerid);
-					
-					SavePlayerVIP(playerid);
-					
-					// MySQL Log
-					mysql_fquery(g_SQL, 
-						"INSERT INTO player_vips(player_id, admin_id, rank, created_at, expires_at) \n\
-							VALUES ('%d','%d','%d','%d','%d')",
-						PlayerInfo[playerid][pSQLID],
-						PlayerInfo[playerid][pSQLID],
-						PlayerVIP[playerid][pDonateRank],
-						gettimestamp(),
-						PlayerVIP[playerid][pDonateTime]
-					);
+					SetPlayerPremiumVIP(playerid, PREMIUM_GOLD);
 					
 					SendFormatMessage(playerid, MESSAGE_TYPE_SUCCESS, "Iskoristili ste %d EXP-a za Premium Gold. Preostalo: %d EXP", PREMIUM_GOLD_EXP, ExpInfo[playerid][ePoints]);
 					SendClientMessage(playerid, COLOR_RED, "[SERVER]  Iskrene cestitke na Premium paketu! Vas Premium paket traje sljedecih mjesec dana.");

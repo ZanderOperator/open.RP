@@ -1600,7 +1600,7 @@ hook OnPlayerSpawn(playerid)
 			Player_SetUsingMask(playerid, false);
 			if( PlayerInventory[playerid][pMaskID])
 			{
-				if( PlayerVIP[playerid][pDonateRank] < 2)
+				if( PlayerVIP[playerid][pDonateRank] < PREMIUM_BRONZE)
 					PlayerInventory[playerid][pMaskID] = 0;
 			}
 
@@ -1624,7 +1624,7 @@ hook OnPlayerSpawn(playerid)
 			Player_SetUsingMask(playerid, false);
 			if( PlayerInventory[playerid][pMaskID])
 			{
-				if( PlayerVIP[playerid][pDonateRank] < 2)
+				if( PlayerVIP[playerid][pDonateRank] < PREMIUM_BRONZE)
 					PlayerInventory[playerid][pMaskID] = 0;
 			}
 

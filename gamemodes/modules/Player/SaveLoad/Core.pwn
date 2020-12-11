@@ -5,7 +5,6 @@
 #include "modules/Player\SaveLoad/player_crashes.pwn"
 #include "modules/Player\SaveLoad/player_health.pwn"
 #include "modules/Player\SaveLoad/player_appearance.pwn"
-#include "modules/Player\SaveLoad/player_vip_status.pwn"
 #include "modules/Player\SaveLoad/player_jail.pwn"
 #include "modules/Player\SaveLoad/player_cooldowns.pwn"
 

@@ -2191,25 +2191,25 @@ GetPokerTableLimit(playerid)
 						return 1;
 					else SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "Maksimum Poker stolova u vasoj kuci je %d!", PREMIUM_NONE_POKER_TABLES);
 				}
-				case 1:
+				case PREMIUM_BRONZE:
 				{
 					if(tableCount < PREMIUM_BRONZE_POKER_TABLES)
 						return 1;
 					else SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "Maksimum Poker stolova u vasoj kuci je %d!", PREMIUM_BRONZE_POKER_TABLES);
 				}
-				case 2:
+				case PREMIUM_SILVER:
 				{
 					if(tableCount < PREMIUM_SILVER_POKER_TABLES)
 						return 1;
 					else SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "Maksimum Poker stolova u vasoj kuci je %d!", PREMIUM_SILVER_POKER_TABLES);
 				}
-				case 3:
+				case PREMIUM_GOLD:
 				{
 					if(tableCount < PREMIUM_GOLD_POKER_TABLES)
 						return 1;
 					else SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "Maksimum Poker stolova u vasoj kuci je %d!", PREMIUM_GOLD_POKER_TABLES);
 				}
-				case 4:
+				case PREMIUM_PLATINUM:
 				{
 					if(tableCount < PREMIUM_PLATINUM_POKER_TABLES)
 						return 1;
