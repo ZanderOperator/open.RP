@@ -150,7 +150,7 @@
 #include "modules/Preincludes/Defines.inc"
 // Enumerator Declarations
 #include "modules/Preincludes/Enumerators.inc"
-// Main Header file - purpose is overriding the include order
+// Main Header file - purpose is bypassing the include order
 #include "modules/Preincludes/Header.inc"
 
 // Main Database Connection Handler
@@ -789,8 +789,6 @@ ResetPlayerVariables(playerid)
 	PlayerKeys[playerid][pIllegalGarageKey]	= -1;
 	PlayerKeys[playerid][pVehicleKey]		= -1;
 
-	PlayerInfo[playerid][pCanisterLiters] 	= 0;
-	PlayerInfo[playerid][pCanisterType] 	= -1;
 	PlayerInfo[playerid][pGrafID]			= -1;
 	PlayerInfo[playerid][pTagID]			= -1;
 
