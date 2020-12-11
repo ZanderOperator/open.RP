@@ -392,6 +392,7 @@ hook ResetPlayerVariables(playerid)
     }
     FactionListID[playerid] = -1;
     GovMDC[playerid] = INVALID_PLAYER_ID;
+    return 1;
 }
 
 hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])

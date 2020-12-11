@@ -15,9 +15,6 @@
 #define PlayerNewUser_Set(%0,%1) \
 		Bit1_Set(gr_NewUser,%0,%1)
 
-#define COLOR_RADIO		(0xFFEC8BFF)
-#define COLOR_RADIOEX	(0xB5AF8FFF)
-
 #define CP_JOB_GPS		(150)
 
 // Player Module Includes at the bottom
@@ -1939,6 +1936,7 @@ hook ResetPlayerVariables(playerid)
     HasFood[playerid] = false;
     FakeGunLic[playerid] = false;
     PlayerGroceries[playerid] = 0;
+	return 1;
 }
 /*
 public OnPlayerPause(playerid)

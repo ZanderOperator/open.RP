@@ -91,7 +91,7 @@ stock ListBestOverallEXP(playerid)
 	return 1;
 }
 
-stock LoadPlayerExperience(playerid)
+LoadPlayerExperience(playerid)
 {	
 	mysql_tquery(g_SQL, 
 		va_fquery(g_SQL, "SELECT * FROM experience WHERE sqlid = '%d'", PlayerInfo[playerid][pSQLID]), 
@@ -126,6 +126,12 @@ Public:OnPlayerLoadExperience(playerid)
 	}
 }
 
+hook LoadPlayerStats(playerid)
+{
+	LoadPlayerExperience(playerid);
+	return 1;
+}
+
 stock SavePlayerExperience(playerid)
 {
 	if( !SafeSpawned[playerid] )	
@@ -142,6 +148,12 @@ stock SavePlayerExperience(playerid)
 		ExpInfo[playerid][eMonthPayDays],
 		PlayerInfo[playerid][pSQLID]
 	);
+	return 1;
+}
+
+hook SavePlayerData(playerid)
+{
+	SavePlayerExperience(playerid);
 	return 1;
 }
 
@@ -279,18 +291,6 @@ stock RewardPlayerForActivity(sqlid, amount)
 		amount, 
 		sqlid
 	);
-	return 1;
-}
-
-hook LoadPlayerStats(playerid)
-{
-	LoadPlayerExperience(playerid);
-	return 1;
-}
-
-hook SavePlayerData(playerid)
-{
-	SavePlayerExperience(playerid);
 	return 1;
 }
 

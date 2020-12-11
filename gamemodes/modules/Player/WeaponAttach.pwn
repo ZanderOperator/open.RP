@@ -144,7 +144,6 @@ stock SavePlayerWeaponSettings(playerid, weaponid)
 	new index = GetWeaponObjectEnum(weaponid);
 	if(WeaponSettings[playerid][index][wsSQLID] == -1)
 	{
-		
         mysql_tquery(g_SQL, 
 			va_fquery(g_SQL, "INSERT INTO weaponsettings (playerid, WeaponID, Bone) VALUES ('%d', %d, %d)", 
 				PlayerInfo[playerid][pSQLID], 
@@ -174,14 +173,14 @@ stock LoadPlayerWeaponSettings(playerid)
 	
     mysql_tquery(g_SQL, 
 		va_fquery(g_SQL, "SELECT * FROM weaponsettings WHERE playerid = '%d'", PlayerInfo[playerid][pSQLID]),
-		"OnWeaponsLoaded", 
+		"OnWeaponSettingsLoaded", 
 		"i", 
 		playerid
 	);
 	return 1;
 }
 
-Public:OnWeaponsLoaded(playerid)
+Public:OnWeaponSettingsLoaded(playerid)
 {
     new rows, weaponid, index;
     cache_get_row_count(rows);
@@ -202,6 +201,12 @@ Public:OnWeaponsLoaded(playerid)
 
         cache_get_value_name_int(i, "Bone", WeaponSettings[playerid][index][Bone]);
     }
+	return 1;
+}
+
+hook LoadPlayerStats(playerid)
+{
+	LoadPlayerWeaponSettings(playerid);
 	return 1;
 }
 
@@ -238,12 +243,6 @@ Public:OPEAW(playerid, response, index, modelid, boneid, Float:foX, Float:foY, F
 		}
     }
     return 1;
-}
-
-hook LoadPlayerStats(playerid)
-{
-	LoadPlayerWeaponSettings(playerid);
-	return 1;
 }
 
 hook OnPlayerUpdate(playerid)

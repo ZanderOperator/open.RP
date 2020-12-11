@@ -115,8 +115,15 @@ static stock
 	return 1;
 }*/
 
-hook OnPlayerDisconnect(playerid, reason)
+
+
+hook ResetPlayerVariables(playerid)
 {
+    PlayerGym[playerid][pMuscle] = 0;
+    PlayerGym[playerid][pGymTimes] = 0;
+    PlayerGym[playerid][pGymCounter] = 0;
+    PlayerGym[playerid][pFightStyle] = FIGHT_STYLE_NORMAL;
+
 	ResetGymVars(playerid);
 	
 	static
@@ -706,20 +713,6 @@ hook OnPlayerSpawn(playerid)
 	return 1;
 }
 
-CMD:rgym(playerid, params[])
-{
-	if(!PlayerInfo[playerid][pAdmin])
-		return 0;
-	
-	new
-		pid;
-	
-	if(sscanf(params, "u", pid)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /rgym [ID/Ime]");
-	
-	ResetGymVars(pid);
-	return 1;
-}
-
 ResetGymVars(playerid)
 {
 	if(GymInfo[playerid][gmMode] != 0) 
@@ -984,4 +977,74 @@ hook OnPlayerPickUpDynPickup(playerid, pickupid)
 		defer FadeRuletWagesTD(playerid);
 	}
 	return 1;
+}
+
+/*
+
+                                                                      
+	88b           d88              ad88888ba    ,ad8888ba,   88           
+	888b         d888             d8"     "8b  d8"'    `"8b  88           
+	88`8b       d8'88             Y8,         d8'        `8b 88           
+	88 `8b     d8' 88 8b       d8 `Y8aaaaa,   88          88 88           
+	88  `8b   d8'  88 `8b     d8'   `"""""8b, 88          88 88           
+	88   `8b d8'   88  `8b   d8'          `8b Y8,    "88,,8P 88           
+	88    `888'    88   `8b,d8'   Y8a     a8P  Y8a.    Y88P  88           
+	88     `8'     88     Y88'     "Y88888P"    `"Y8888Y"Y8a 88888888888  
+						d8'                                             
+						d8'                             
+
+*/
+
+LoadPlayerFitness(playerid)
+{
+    mysql_pquery(g_SQL, 
+        va_fquery(g_SQL, "SELECT * FROM player_fitness WHERE sqlid = '%d'", PlayerInfo[playerid][pSQLID]),
+        "LoadingPlayerFitness", 
+        "i", 
+        playerid
+    );
+    return 1;
+}
+
+Public: LoadingPlayerFitness(playerid)
+{
+    if(!cache_num_rows())
+    {
+        mysql_fquery_ex(g_SQL, 
+            "INSERT INTO player_fitness(sqlid, muscle, gymtimes, gymcounter, fightstyle) \n\
+                VALUES('%d', '0', '0', '0', '0')",
+            PlayerInfo[playerid][pSQLID]
+        );
+        return 1;
+    }
+    cache_get_value_name_int(0, "muscle"		, PlayerGym[playerid][pMuscle]);
+    cache_get_value_name_int(0,	"gymtimes"		, PlayerGym[playerid][pGymTimes]);
+	cache_get_value_name_int(0,	"gymcounter"	, PlayerGym[playerid][pGymCounter]);
+    cache_get_value_name_int(0,	"fightstyle"	, PlayerGym[playerid][pFightStyle]);
+    return 1;
+}
+
+hook LoadPlayerStats(playerid)
+{
+    LoadPlayerFitness(playerid);
+    return 1;
+}
+
+SavePlayerFitness(playerid)
+{
+    mysql_fquery_ex(g_SQL,
+        "UPDATE player_fitness SET muscle = '%d', gymtimes = '%d', gymcounter = '%d', fightstyle = '%d' WHERE sqlid = '%d'",
+        PlayerGym[playerid][pMuscle],
+        PlayerGym[playerid][pGymTimes],
+        PlayerGym[playerid][pGymCounter],
+        PlayerGym[playerid][pFightStyle],
+        PlayerInfo[playerid][pSQLID]
+    );
+    return 1;
+}
+
+hook SavePlayerStats(playerid)
+{
+    SavePlayerFitness(playerid);
+    return 1;
 }

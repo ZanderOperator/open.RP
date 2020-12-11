@@ -39,8 +39,72 @@ new JobData[E_JOBS_DATA];
 static bool:IsWorkingJob[MAX_PLAYERS] = {false, ...};
 
 /*
-	- MySQL
+
+																		
+	88b           d88              ad88888ba    ,ad8888ba,   88           
+	888b         d888             d8"     "8b  d8"'    `"8b  88           
+	88`8b       d8'88             Y8,         d8'        `8b 88           
+	88 `8b     d8' 88 8b       d8 `Y8aaaaa,   88          88 88           
+	88  `8b   d8'  88 `8b     d8'   `"""""8b, 88          88 88           
+	88   `8b d8'   88  `8b   d8'          `8b Y8,    "88,,8P 88           
+	88    `888'    88   `8b,d8'   Y8a     a8P  Y8a.    Y88P  88           
+	88     `8'     88     Y88'     "Y88888P"    `"Y8888Y"Y8a 88888888888  
+						d8'                                             
+						d8'                             
+
 */
+
+LoadPlayerJob(playerid)
+{
+    mysql_pquery(g_SQL, 
+        va_fquery(g_SQL, "SELECT * FROM player_job WHERE sqlid = '%d'", PlayerInfo[playerid][pSQLID]),
+        "LoadingPlayerJob", 
+        "i", 
+        playerid
+    );
+    return 1;
+}
+
+Public: LoadingPlayerJob(playerid)
+{
+    if(!cache_num_rows())
+    {
+        mysql_fquery_ex(g_SQL, 
+            "INSERT INTO player_job(sqlid, jobkey, contracttime, freeworks) \n\
+                VALUES('%d', '0', '0', '0')",
+            PlayerInfo[playerid][pSQLID]
+        );
+        return 1;
+    }
+    cache_get_value_name_int(0,  "jobkey"		, PlayerJob[playerid][pJob]);
+    cache_get_value_name_int(0,  "contracttime"	, PlayerJob[playerid][pContractTime]);
+    cache_get_value_name_int(0,  "freeworks"	, PlayerJob[playerid][pFreeWorks]);
+    return 1;
+}
+
+hook LoadPlayerStats(playerid)
+{
+    LoadPlayerJob(playerid);
+    return 1;
+}
+
+SavePlayerJob(playerid)
+{
+    mysql_fquery_ex(g_SQL,
+        "UPDATE player_job SET jobkey = '%d', contracttime = '%d', freeworks = '%d' WHERE sqlid = '%d'",
+        PlayerJob[playerid][pJob],
+        PlayerJob[playerid][pContractTime],
+        PlayerJob[playerid][pFreeWorks],
+        PlayerInfo[playerid][pSQLID]
+    );
+    return 1;
+}
+
+hook SavePlayerStats(playerid)
+{
+    SavePlayerJob(playerid);
+    return 1;
+}
 
 SaveJobData() 
 {
@@ -85,6 +149,12 @@ Public: OnServerJobsLoaded()
 	cache_get_value_name_int(0, "Impounder", JobData[IMPOUNDER]);
 	cache_get_value_name_int(0, "Transporter", JobData[TRANSPORTER]);
 	return (true);
+}
+
+hook LoadServerData()
+{
+	LoadServerJobs();
+	return 1;
 }
 
 /*
@@ -175,10 +245,14 @@ JobsList() {
 	- hooks
 */	
 
-hook LoadServerData()
+hook ResetPlayerVariables(playerid)
 {
-	LoadServerJobs();
-	return 1;
+    PlayerJob[playerid][pJob] = 0;
+    PlayerJob[playerid][pContractTime] = 0;
+    PlayerJob[playerid][pFreeWorks] = 0;
+
+	IsWorkingJob[playerid] = false;
+    return 1;
 }
 
 hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
@@ -311,11 +385,6 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 		}
 	}
 	return 0;
-}
-
-hook ResetPlayerVariables(playerid)
-{
-	IsWorkingJob[playerid] = false;
 }
 
 /*

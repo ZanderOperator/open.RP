@@ -58,4 +58,5 @@ stock Player_SetOnEvent(playerid, bool:v)
 hook ResetPlayerVariables(playerid)
 {
     OnEvent[playerid] = false;
+    return 1;
 }

@@ -1,7 +1,82 @@
 #include <YSI_Coding\y_hooks>
 
-hook OnPlayerEnterCheckpoint(playerid) {
+/*
+                                                                      
+	88b           d88              ad88888ba    ,ad8888ba,   88           
+	888b         d888             d8"     "8b  d8"'    `"8b  88           
+	88`8b       d8'88             Y8,         d8'        `8b 88           
+	88 `8b     d8' 88 8b       d8 `Y8aaaaa,   88          88 88           
+	88  `8b   d8'  88 `8b     d8'   `"""""8b, 88          88 88           
+	88   `8b d8'   88  `8b   d8'          `8b Y8,    "88,,8P 88           
+	88    `888'    88   `8b,d8'   Y8a     a8P  Y8a.    Y88P  88           
+	88     `8'     88     Y88'     "Y88888P"    `"Y8888Y"Y8a 88888888888  
+						d8'                                             
+						d8'              
 
+*/
+
+LoadPlayerFishes(playerid)
+{
+    mysql_pquery(g_SQL, 
+        va_fquery(g_SQL, "SELECT * FROM player_fishes WHERE sqlid = '%d'", PlayerInfo[playerid][pSQLID]),
+        "LoadingPlayerFishes", 
+        "i", 
+        playerid
+    );
+    return 1;
+}
+
+Public: LoadingPlayerFishes(playerid)
+{
+    if(!cache_num_rows())
+    {
+        mysql_fquery_ex(g_SQL, 
+            "INSERT INTO player_fishes(sqlid, fishworks, fishweight, fishingskill) \n\
+                VALUES('%d', '0', '0', '0')",
+            PlayerInfo[playerid][pSQLID]
+        );
+        return 1;
+    }
+    cache_get_value_name_int(0,  "fishworks"	    , PlayerFish[playerid][pFishWorks]);
+    cache_get_value_name_int(0,  "fishweight"	    , PlayerFish[playerid][pFishWeight]);
+    cache_get_value_name_int(0,  "fishingskill"     , PlayerFish[playerid][pFishingSkill]);
+    return 1;
+}
+
+hook LoadPlayerStats(playerid)
+{
+    LoadPlayerFishes(playerid);
+    return 1;
+}
+
+SavePlayerFishes(playerid)
+{
+    mysql_fquery_ex(g_SQL,
+        "UPDATE player_fishes SET fishworks = '%d', fishweight = '%d', fishingskill = '%d' WHERE sqlid = '%d'",
+        PlayerFish[playerid][pFishWorks],
+        PlayerFish[playerid][pFishWeight],
+        PlayerFish[playerid][pFishingSkill],
+        PlayerInfo[playerid][pSQLID]
+    );
+    return 1;
+}
+
+hook SavePlayerStats(playerid)
+{
+    SavePlayerFishes(playerid);
+    return 1;
+}
+
+hook ResetPlayerVariables(playerid)
+{
+    PlayerFish[playerid][pFishWorks] = 0;
+    PlayerFish[playerid][pFishWeight] = 0;
+    PlayerFish[playerid][pFishingSkill] = 0;
+    return 1;
+}
+
+hook OnPlayerEnterCheckpoint(playerid) 
+{
     if(GetPVarInt(playerid, "pSellingFish"))
     {
         DisablePlayerCheckpoint(playerid);
@@ -11,8 +86,10 @@ hook OnPlayerEnterCheckpoint(playerid) {
     return 1;
 }
 
-stock IsAFBoat(carid) {
-	switch(GetVehicleModel(carid)) {
+stock IsAFBoat(carid) 
+{
+	switch(GetVehicleModel(carid)) 
+	{
 		case 472, 473, 493, 484, 430, 454, 453, 452, 446, 595: return 1;
 	}
 	return 0;

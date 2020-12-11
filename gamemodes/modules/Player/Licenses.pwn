@@ -138,6 +138,12 @@ Public: LoadingPlayerLicenses(playerid)
     return 1;
 }
 
+hook LoadPlayerStats(playerid)
+{
+    LoadPlayerLicenses(playerid);
+    return 1;
+}
+
 SavePlayerLicenses(playerid)
 {
     mysql_fquery_ex(g_SQL,
@@ -154,6 +160,12 @@ SavePlayerLicenses(playerid)
     return 1;
 }
 
+hook SavePlayerStats(playerid)
+{
+    SavePlayerLicenses(playerid);
+    return 1;
+}
+
 /*
 	##     ##  #######   #######  ##    ## 
 	##     ## ##     ## ##     ## ##   ##  
@@ -163,18 +175,6 @@ SavePlayerLicenses(playerid)
 	##     ## ##     ## ##     ## ##   ##  
 	##     ##  #######   #######  ##    ## 
 */
-
-hook LoadPlayerStats(playerid)
-{
-    LoadPlayerLicenses(playerid);
-    return 1;
-}
-
-hook SavePlayerStats(playerid)
-{
-    SavePlayerLicenses(playerid);
-    return 1;
-}
 
 hook ResetPlayerVariables(playerid)
 {

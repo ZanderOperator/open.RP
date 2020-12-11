@@ -5,10 +5,96 @@
 #endif
 #define MODULE_PAY_DAY
 
-#define SOCIAL_HELP 		(1000) // Taggano sa SOCIAL_HELP
-#define PD_SD_SALARY 		(700) // Glavnica za PD/SD placu
-#define FD_LSN_SALARY 		(800) // Glavnica za FD/LSN placu
-#define GOV_SALARY	 		(1000) // Glavnica za GOV placu
+#define SOCIAL_HELP 		(1000) 
+#define PD_SD_SALARY 		(700)
+#define FD_LSN_SALARY 		(800) 
+#define GOV_SALARY	 		(1000) 
+
+/*
+                                                                      
+	88b           d88              ad88888ba    ,ad8888ba,   88           
+	888b         d888             d8"     "8b  d8"'    `"8b  88           
+	88`8b       d8'88             Y8,         d8'        `8b 88           
+	88 `8b     d8' 88 8b       d8 `Y8aaaaa,   88          88 88           
+	88  `8b   d8'  88 `8b     d8'   `"""""8b, 88          88 88           
+	88   `8b d8'   88  `8b   d8'          `8b Y8,    "88,,8P 88           
+	88    `888'    88   `8b,d8'   Y8a     a8P  Y8a.    Y88P  88           
+	88     `8'     88     Y88'     "Y88888P"    `"Y8888Y"Y8a 88888888888  
+						d8'                                             
+						d8'                             
+
+*/
+
+LoadPlayerPayday(playerid)
+{
+    mysql_pquery(g_SQL, 
+        va_fquery(g_SQL, "SELECT * FROM player_job WHERE sqlid = '%d'", PlayerInfo[playerid][pSQLID]),
+        "LoadingPlayerPayday", 
+        "i", 
+        playerid
+    );
+    return 1;
+}
+
+Public: LoadingPlayerPayday(playerid)
+{
+    if(!cache_num_rows())
+    {
+        mysql_fquery_ex(g_SQL, 
+            "INSERT INTO player_job(sqlid, payday, paydaymoney, paydayhad, profit, dialog, date) \n\
+                VALUES('%d', '0', '0', '0', '0', ' ', ' ')",
+            PlayerInfo[playerid][pSQLID]
+        );
+        return 1;
+    }
+    cache_get_value_name_int(0, "payday"	    , PaydayInfo[playerid][pPayDay]);	
+    cache_get_value_name_int(0, "paydaymoney"	, PaydayInfo[playerid][pPayDayMoney]);
+    cache_get_value_name_int(0, "paydayhad"	    , PaydayInfo[playerid][pPayDayHad]);
+    cache_get_value_name_int(0, "profit"		, PaydayInfo[playerid][pProfit]);
+    cache_get_value_name(0, 	"dialog"	    , PaydayInfo[playerid][pPayDayDialog], 1536);
+    cache_get_value_name(0, 	"date"	        , PaydayInfo[playerid][pPayDayDate], 32);
+    return 1;
+}
+
+hook LoadPlayerStats(playerid)
+{
+    LoadPlayerPayday(playerid);
+    return 1;
+}
+
+SavePlayerPayday(playerid)
+{
+    mysql_fquery_ex(g_SQL,
+        "UPDATE player_payday SET payday = '%d', paydaymoney = '%d', paydayhad = '%d', profit = '%d',\n\
+            dialog = '%e', date = '%e' WHERE sqlid = '%d'",
+        PaydayInfo[playerid][pPayDay],
+        PaydayInfo[playerid][pPayDayMoney],
+        PaydayInfo[playerid][pPayDayHad],
+        PaydayInfo[playerid][pProfit],
+        PaydayInfo[playerid][pPayDayDialog],
+        PaydayInfo[playerid][pPayDayDate],
+        PlayerInfo[playerid][pSQLID]
+    );
+    return 1;
+}
+
+hook SavePlayerStats(playerid)
+{
+    SavePlayerPayday(playerid);
+    return 1;
+}
+
+hook ResetPlayerVariables(playerid)
+{
+    PaydayInfo[playerid][pPayDay] = 0;
+    PaydayInfo[playerid][pPayDayMoney] = 0;
+    PaydayInfo[playerid][pPayDayHad] = 0;
+    PaydayInfo[playerid][pProfit] = 0;
+    PaydayInfo[playerid][pPayDayDialog][0] = EOS;
+    PaydayInfo[playerid][pPayDayDate][0] = EOS;
+    return 1;
+}
+
 
 
 /*
@@ -20,6 +106,7 @@
 	##       ##     ## ##   ### ##    ##    ##     ##  ##     ## ##   ### ##    ##
 	##        #######  ##    ##  ######     ##    ####  #######  ##    ##  ######
 */
+
 GivePlayerPayCheck(playerid)
 {
 	//CheckCityBudget(); // Provjera stanja legalnog i ilegalnog proracuna

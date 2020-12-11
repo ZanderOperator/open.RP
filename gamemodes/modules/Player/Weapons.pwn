@@ -96,17 +96,18 @@ stock AC_LoadPlayerWeapons(playerid)
 	return 1;
 }
 
+hook LoadPlayerStats(playerid)
+{
+	AC_LoadPlayerWeapons(playerid);
+	return 1;
+}
+
 stock AC_SavePlayerWeapon(playerid, slotid)
 {
-	if(PlayerWeapons[playerid][pwAmmo][slotid] <= 0 || PlayerWeapons[playerid][pwWeaponId][slotid] <= 0) return 1;
-	new weapons[13][2];
-	for (new i = 0; i <= 12; i++)
-	{
-		GetPlayerWeaponData(playerid, i, weapons[i][0], weapons[i][1]);
-		if(weapons[i][0] == PlayerWeapons[playerid][pwWeaponId][slotid] && (PlayerWeapons[playerid][pwAmmo][slotid] + 5) <= weapons[i][1]) // + 5 bullets in case of lagg
-			return 1;
-	}
-	if( !SafeSpawned[playerid] )  return 1;
+	if(PlayerWeapons[playerid][pwAmmo][slotid] <= 0 || PlayerWeapons[playerid][pwWeaponId][slotid] <= 0) 
+		return 1;
+	if( !SafeSpawned[playerid] )  
+		return 1;
 
 	if(PlayerWeapons[playerid][pwSQLID][slotid] != -1 && PlayerWeapons[playerid][pwAmmo][slotid] > 0)
 	{
@@ -140,13 +141,19 @@ stock AC_SavePlayerWeapon(playerid, slotid)
 	return 1;
 }
 
-stock AC_SavePlayerWeapons(playerid)
+AC_SavePlayerWeapons(playerid)
 {
 	foreach(new wslot: P_Weapons[playerid])
 	{
 		AC_SavePlayerWeapon(playerid, wslot);
 	}
 	return 1;
+}
+
+hook SavePlayerData(playerid)
+{
+    AC_SavePlayerWeapons(playerid);
+    return 1;
 }
 
 stock AC_DecreasePlayerWeaponAmmo(playerid, weaponid, amount)
@@ -176,7 +183,8 @@ stock AC_GivePlayerWeapon(playerid, weaponid, ammo, bool:base_update=true, bool:
 	PlayerWeapons[playerid][pwAmmo][slot] 		+= ammo;
 	PlayerWeapons[playerid][pwHidden][slot] 	= 0;
 
-	
+	Iter_Add(P_Weapons[playerid], slot);
+
 	//Real Give Func
 	if(SafeSpawned[playerid])
 		GivePlayerWeapon(playerid, weaponid, ammo);
@@ -285,7 +293,7 @@ stock AC_SetPlayerAmmo(playerid, weaponid, ammo)
 stock AC_SetPlayerWeapons(playerid)
 {
 	ResetPlayerWeapons(playerid);
-	for (new i = 0; i <= 12; i++) 
+	foreach(new i: P_Weapons[playerid])
 	{
 		if(PlayerWeapons[playerid][pwAmmo][i] <= 0) continue;
 		GivePlayerWeapon(playerid, PlayerWeapons[playerid][pwWeaponId][i], PlayerWeapons[playerid][pwAmmo][i]);
@@ -312,7 +320,7 @@ stock AC_ResetPlayerWeapons(playerid, bool:base_reset=true)
 {
 	ResetPlayerWeapons(playerid);
 	ResetWeaponSlots(playerid);
-	for (new slot = 0; slot <= 12; slot++)
+	foreach(new slot: P_Weapons[playerid])
 	{
 		if(base_reset)
 			PlayerWeapons[playerid][pwSQLID][slot] = -1;
@@ -386,18 +394,6 @@ stock AC_ResetPlayerWeapon(playerid, weaponid, bool:base_update=true)
 	##     ## ##     ## ##     ## ##   ##  ##    ##
 	##     ##  #######   #######  ##    ##  ######
 */
-
-hook LoadPlayerStats(playerid)
-{
-	AC_LoadPlayerWeapons(playerid);
-	return 1;
-}
-
-hook SavePlayerData(playerid)
-{
-    AC_SavePlayerWeapons(playerid);
-    return 1;
-}
 
 hook OnPlayerWeaponShot(playerid, weaponid, hittype, hitid, Float:fX, Float:fY, Float:fZ)
 {

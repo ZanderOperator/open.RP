@@ -1,5 +1,7 @@
 // Player folder modules represents ONLY database storing features.
 
+#include "modules/Player/Gym.pwn"
+#include "modules/Player/Radio.pwn"
 #include "modules/Player/Licenses.pwn"
 #include "modules/Player/Weapons.pwn"
 #include "modules/Player/Death.pwn"
@@ -12,8 +14,8 @@
 #include "modules/Player/Experience.pwn"
 #include "modules/Player/WeaponAttach.pwn"
 #include "modules/Player/WepPackage.pwn"
-
 #include "modules/Player/Tracking.pwn"
+
 #include "modules/Player/Security.pwn"
 #include "modules/Player/Functions.pwn"
 // Jobs
