@@ -442,9 +442,9 @@ public RegisterPlayer(playerid) // TODO: mandatory checkup!
 	format(PlayerInfo[playerid][pLastLogin], 24, ReturnDate());
     mysql_pquery(g_SQL,
 		va_fquery(g_SQL, 
-			"INSERT INTO accounts (registered,register_date,name,password,teampin,email,\n\
+			"INSERT INTO accounts (online,registered,register_date,name,password,teampin,email,\n\
 				secawnser,levels,age,sex,handMoney,bankMoney,casinocool) \n\
-				VALUES ('0','%e','%e','%e','','%e','','%d','%d','%d','%d','%d','%d')",
+				VALUES ('1','0','%e','%e','%e','','%e','','%d','%d','%d','%d','%d','%d')",
 			PlayerInfo[playerid][pLastLogin],
 			GetName(playerid, false),
 			PlayerInfo[playerid][pPassword],
@@ -499,7 +499,24 @@ public OnAccountFinish(playerid)
     return 1;
 }
 
-//Stocks
+SetPlayerOnlineStatus(playerid, bool:status)
+{
+	if(status)
+	{
+		mysql_fquery(g_SQL, 
+			"UPDATE accounts set online = '1' WHERE sqlid = '%d'", 
+			PlayerInfo[playerid][pSQLID]
+		);
+	}
+	else
+	{
+		mysql_fquery(g_SQL, 
+			"UPDATE accounts set online = '0' WHERE sqlid = '%d'", 
+			PlayerInfo[playerid][pSQLID]
+		);
+	}
+}
+
 stock IsEMailInDB(const email[])
 {
 	new 
@@ -831,6 +848,7 @@ hook OnPlayerDisconnect(playerid, reason)
 	if( Bit1_Get(gr_LoginChecksOn, playerid ) )
 		stop LoginCheckTimer[playerid];
 
+	SetPlayerOnlineStatus(playerid, false);
 	return 1;
 }
 

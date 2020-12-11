@@ -71,6 +71,8 @@ timer SetPlayerCrash[6000](playerid)
 	CheckPlayerInteriors(playerid);
 	CheckPlayerInactivity(playerid);
 	CheckPlayerMasks(playerid);
+
+	SetPlayerOnlineStatus(playerid, true);
 	return 1;
 }
 

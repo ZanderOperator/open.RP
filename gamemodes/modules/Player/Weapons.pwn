@@ -30,9 +30,12 @@ new
 	   ###    ##     ## ##     ##  ######
 */
 
-// BustAim
-new AimWarns[MAX_PLAYERS] = 0,
-	AimWarnStamp[MAX_PLAYERS] = 0; //Needs to be reset on OnPlayerConnect
+
+static 
+	PrimaryWeapon[MAX_PLAYERS],
+	SecondaryWeapon[MAX_PLAYERS],
+	AimWarns[MAX_PLAYERS],
+	AimWarnStamp[MAX_PLAYERS]; 
 
 
 /*
@@ -201,16 +204,16 @@ stock ResetWeaponSlot(playerid, weaponid)
 	new slot = SortWeaponSlot(weaponid);
 	switch (slot)
 	{
-		case 1: PlayerInfo[playerid][pPrimaryWeapon] = 0;
-		case 2: PlayerInfo[playerid][pSecondaryWeapon] = 0;
+		case 1: PrimaryWeapon[playerid] = 0;
+		case 2: SecondaryWeapon[playerid] = 0;
 	}
 	return 1;
 }
 
 stock ResetWeaponSlots(playerid)
 {
-	PlayerInfo[playerid][pPrimaryWeapon] = 0;
-	PlayerInfo[playerid][pSecondaryWeapon] = 0;
+	PrimaryWeapon[playerid] = 0;
+	SecondaryWeapon[playerid] = 0;
 	return 1;
 }
 
@@ -229,34 +232,34 @@ stock CheckPlayerWeapons(playerid, weaponid, bool:hidden_fetch=false)
 		case 0: value = true;
 		case 1:
 		{
-			if(PlayerInfo[playerid][pPrimaryWeapon] != 0 && PlayerInfo[playerid][pPrimaryWeapon] != weaponid)
+			if(PrimaryWeapon[playerid] != 0 && PrimaryWeapon[playerid] != weaponid)
 			{
 				SendMessage(playerid, MESSAGE_TYPE_ERROR, "Primary Weapon Slot Vam je zauzet. Oslobodite ga da bi mogli uzeti novi Shotgun/Assuault/Rifle/SMG.");
 				value = false;
 			}
-			else if(PlayerInfo[playerid][pPrimaryWeapon] == 0)
+			else if(PrimaryWeapon[playerid] == 0)
 			{
-				PlayerInfo[playerid][pPrimaryWeapon] = weaponid;
+				PrimaryWeapon[playerid] = weaponid;
 				value = true;
 			}
-			else if(PlayerInfo[playerid][pPrimaryWeapon] == weaponid)
+			else if(PrimaryWeapon[playerid] == weaponid)
 				value = true;
 		}
 		case 2:
 		{
 			if (!Player_HasTaserGun(playerid))
 			{
-				if(PlayerInfo[playerid][pSecondaryWeapon] != 0 && PlayerInfo[playerid][pSecondaryWeapon] != weaponid)
+				if(SecondaryWeapon[playerid] != 0 && SecondaryWeapon[playerid] != weaponid)
 				{
 					SendMessage(playerid, MESSAGE_TYPE_ERROR, "Secondary Weapon Slot Vam je zauzet. Oslobodite ga da bi mogli uzeti novi sidearm pistolj.");
 					value = false;
 				}
-				else if(PlayerInfo[playerid][pSecondaryWeapon] == 0)
+				else if(SecondaryWeapon[playerid] == 0)
 				{
-					PlayerInfo[playerid][pSecondaryWeapon] = weaponid;
+					SecondaryWeapon[playerid] = weaponid;
 					value = true;
 				}
-				else if(PlayerInfo[playerid][pSecondaryWeapon] == weaponid)
+				else if(SecondaryWeapon[playerid] == weaponid)
 					value = true;
 			}
 			else if( weaponid == WEAPON_SILENCED )
@@ -421,11 +424,15 @@ hook OnPlayerWeaponShot(playerid, weaponid, hittype, hitid, Float:fX, Float:fY, 
     return 1;
 }
 
-hook OnPlayerConnect(playerid)
+hook ResetPlayerVariables(playerid)
 {
+	Iter_Clear(P_Weapons[playerid]);
+	
+	PrimaryWeapon[playerid] = 0;
+	SecondaryWeapon[playerid] = 0;
+
 	AimWarns[playerid] = 0;
 	AimWarnStamp[playerid] = 0;
-	Iter_Clear(P_Weapons[playerid]);
 	return 1;
 }
 

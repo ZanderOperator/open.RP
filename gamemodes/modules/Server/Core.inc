@@ -22,6 +22,5 @@
 #include "modules/Server/VehFuncs.pwn"
 #include "modules/Server/Tuning.pwn"
 #include "modules/Server/NOS.pwn"
-#include "modules/Server/Speedo.pwn"
 #include "modules/Server/Vehicles.pwn"
 #include "modules/Server/CO.pwn"

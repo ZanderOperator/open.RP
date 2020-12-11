@@ -46,3 +46,6 @@ forward Player_SetIsTied(playerid, bool:v);
 // Mobile Phone
 forward Player_PhoneLine(playerid);
 forward Player_SetPhoneLine(playerid, v);
+
+forward bool:Player_MobileOn(playerid);
+forward Player_SetMobileOn(playerid, bool:v);

@@ -19,11 +19,22 @@ static stock
 	PlayerText:Speed[MAX_PLAYERS]		= { PlayerText:INVALID_TEXT_DRAW, ... },
 	PlayerText:GasText[MAX_PLAYERS]		= { PlayerText:INVALID_TEXT_DRAW, ... },
 	PlayerText:LockedText[MAX_PLAYERS]	= { PlayerText:INVALID_TEXT_DRAW, ... },
-	PlayerText:SpeedVar[MAX_PLAYERS]	= { PlayerText:INVALID_TEXT_DRAW, ... };
+	PlayerText:SpeedVar[MAX_PLAYERS]	= { PlayerText:INVALID_TEXT_DRAW, ... },
+	bool:UsingSpeedometer[MAX_PLAYERS];
+
+stock bool:Player_UsingSpeedometer(playerid)
+{
+	return UsingSpeedometer[playerid];
+}
+
+stock Player_SetSpeedometer(playerid, bool:v)
+{
+	UsingSpeedometer[playerid] = v;
+}
 
 stock CreateSpeedoTextDraws(playerid)
 {
-    Bit1_Set( gr_PlayerUsingSpeedo, playerid, true );
+    Player_SetSpeedometer(playerid, true);
 
 	VehicleName[playerid] = CreatePlayerTextDraw(playerid, 552.500732, 399.250274, "veh");
 	PlayerTextDrawLetterSize(playerid, VehicleName[playerid], 0.172497, 1.136247);
@@ -92,7 +103,7 @@ stock CreateSpeedoTextDraws(playerid)
 
 stock DestroySpeedoTextDraws(playerid)
 {
-	Bit1_Set( gr_PlayerUsingSpeedo, playerid, false );
+	Player_SetSpeedometer(playerid, false);
 
 	PlayerTextDrawDestroy(playerid, VehicleName[playerid]);
 	PlayerTextDrawDestroy(playerid, Speed[playerid]);
@@ -104,7 +115,9 @@ stock DestroySpeedoTextDraws(playerid)
 	Speed[playerid]			= PlayerText:INVALID_TEXT_DRAW;
 	GasText[playerid]		= PlayerText:INVALID_TEXT_DRAW;
 	LockedText[playerid]	= PlayerText:INVALID_TEXT_DRAW;
-	SpeedVar[playerid]	= PlayerText:INVALID_TEXT_DRAW;
+	SpeedVar[playerid]		= PlayerText:INVALID_TEXT_DRAW;
+	
+	Player_SetSpeedometer(playerid, false);
 	return 1;
 }
 
@@ -124,6 +137,12 @@ Float:GetVSpeed(playerid, pvid=0)
 	return floatmul(floatmul(rtn, 100), 1.959);
 }
 
+hook ResetPlayerVariables(playerid)
+{
+	Player_SetSpeedometer(playerid, false);
+ 	return 1;
+}
+
 hook OnPlayerUpdate(playerid) // PHONE_HIDE = 0
 {
 	if( IsPlayerInAnyVehicle(playerid) )
@@ -134,7 +153,7 @@ hook OnPlayerUpdate(playerid) // PHONE_HIDE = 0
 				tmpstring[12],
 				pvid = GetPlayerVehicleID(playerid);
 
-			if(!Bit1_Get(gr_PlayerUsingSpeedo, playerid))
+			if(!Player_UsingSpeedometer(playerid))
 				CreateSpeedoTextDraws(playerid);
 				
             new vehicleName[MAX_VEHICLE_NAME];
@@ -163,12 +182,9 @@ hook OnPlayerStateChange(playerid, newstate, oldstate)
 			model = GetVehicleModel(GetPlayerVehicleID(playerid));
 		if( IsAHelio(model) || IsAPlane(model) || IsABike(model)) return 1;
 		CreateSpeedoTextDraws(playerid);
-		PlayerInfo[playerid][pSpeedo] = 1;
 	}
-	else if(newstate == PLAYER_STATE_ONFOOT && Bit1_Get(gr_PlayerUsingSpeedo, playerid ))
-	{
+	else if(newstate == PLAYER_STATE_ONFOOT && Player_UsingSpeedometer(playerid))
 		DestroySpeedoTextDraws(playerid);
-		PlayerInfo[playerid][pSpeedo] = 0;
-	}
+		
 	return 1;
 }

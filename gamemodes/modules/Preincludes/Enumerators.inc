@@ -46,25 +46,7 @@ enum E_PLAYER_DATA
 	pMoney,
 	pBank,
 	pExtraFurniture,
-	pVoted,
-		
-	pGrafID, // TODO: transition to local var in Graffiti.pwn
-	pTagID, // TODO: transition to local var in Graffiti.pwn
-	packageordered, // TODO: transition to local var in WepPackage.pwn
-	//bool:approved,
-	hWhistle, // TODO: transition to local var in Hunter.pwn
-	 
-	pPrimaryWeapon, // TODO: transition to local var in Player/Weapons.pwn
-	pSecondaryWeapon, // TODO: transition to local var in Player/Weapons.pwn
-	
-	pAddingRoadblock, // TODO: transition to local var in Labels.pwn
-	pRoadblockObject, // TODO: transition to local var in Labels.pwn
-	pRoadblockModel, // TODO: transition to local var in Labels.pwn
- 	//speedo
- 	pSpeedo, // TODO: transition to local var in Speedo.pwn
-	//pm
-	pPMText[128], // TODO: transition to local var in Player/CMD.pwn
-	pPMing // TODO: transition to local var in Player/CMD.pwn
+	pVoted
 }
 new 
 	PlayerInfo[ MAX_PLAYERS ][ E_PLAYER_DATA ];
@@ -348,14 +330,6 @@ enum E_PLAYER_TICKS
 new 
 	PlayerTick[MAX_PLAYERS][E_PLAYER_TICKS];
 
-// TODO: move to Mobile.pwn local var!
-enum E_VICTIM_DATA
-{
-	pVictimLocation[100],
-}
-new 
-	PlayerInjured[MAX_PLAYERS][E_VICTIM_DATA];
-
 #define MAX_PHONE_LINES								10
 enum E_PHONE_NEWS_DATA 
 {
@@ -371,7 +345,7 @@ enum E_CRIME_DATA
 	pAccusing[32],
 	pAccusedof[32],
 	pVictim[32],
-	pLocation[32]
+	pLocation[100]
 };
 new 
 	PlayerCrime[MAX_PLAYERS][E_CRIME_DATA];
@@ -1055,17 +1029,14 @@ enum
 	DIALOG_CONFIRM_SYS,
 	DIALOG_REPORTS,
 
-	//adminmsg
+	// adminmsg
 	DIALOG_ADMIN_MSG,
 	
-	//CreateObjects,
+	// CreateObjects,
 	DIALOG_CREATE_COBJECT,
 	DIALOG_DELETE_COBJECT,
 	DIALOG_ADMIN_DEL_COBJECT,
 	DIALOG_EDIT_COBJECT,
-
-	//Pm
-	DIALOG_ADMINPM,
 
 	//
     DIALOG_ACTORHELP,
