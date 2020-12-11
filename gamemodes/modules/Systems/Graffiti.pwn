@@ -137,6 +137,8 @@ static
     bool:GrafEditStarted  [MAX_PLAYERS] = {false, ...},
     bool:GrafApproved     [MAX_PLAYERS] = {false, ...},
 
+    GraffitiID[MAX_PLAYERS],
+    TagID[MAX_PLAYERS],
     LastPlayerTag[MAX_PLAYERS],
     LastPlayerGraffiti[MAX_PLAYERS],
     GraffitiObjectEdit[MAX_PLAYERS],
@@ -207,6 +209,7 @@ forward OnGraffitCreate(grafid);
 public OnGraffitCreate(grafid)
 {
     GraffitInfo[grafid][gId] = cache_insert_id();
+    return 1;
 }
 
 stock GetGraffitIdFromPlaya(playerid, Float:radius)
@@ -807,7 +810,7 @@ stock UpdateSprayTagProgress(playerid, tagid)
         GetPlayerPos(playerid, X, Y, Z);
 
         CreateSprayTagCheckpoint(playerid,tagid,X,Y,Z);
-        PlayerInfo[playerid][pTagID] = tagid;
+        TagID[playerid] = tagid;
         TagCPInfo[tagid][tProgress] += GRAFFIT_SPRAYING_UP;
         TagCreateStarted[playerid] = true;
     }
@@ -867,7 +870,7 @@ Public:SprayingBarChecker(playerid)
     }
     else if (TagCreateStarted[playerid])
     {
-        new tagid = PlayerInfo[playerid][pTagID];
+        new tagid = TagID[playerid];
         if (!IsPlayerInRangeOfPoint(playerid, 2.5, TagCPInfo[tagid][tCPX], TagCPInfo[tagid][tCPY], TagCPInfo[tagid][tCPZ]))
             HidePlayerProgressBar(playerid, tProgressBar[playerid]);
     }
@@ -885,7 +888,7 @@ Public:SprayingTaggTimer(playerid)
         {
             if (TagCreateStarted[playerid] && !GrafCreateStarted[playerid])
             {
-                new tagid = PlayerInfo[playerid][pTagID];
+                new tagid = TagID[playerid];
                 if (!IsPlayerInRangeOfPoint(playerid, 1.5, TagCPInfo[tagid][tCPX], TagCPInfo[tagid][tCPY], TagCPInfo[tagid][tCPZ])) return 1;
                 UpdateSprayTagProgress(playerid, tagid);
                 SetPlayerProgressBarValue(playerid, tProgressBar[playerid], TagCPInfo[tagid][tProgress]);
@@ -904,7 +907,7 @@ Public:SprayingTaggTimer(playerid)
             }
             if (GrafCreateStarted[playerid])
             {
-                new grafid = PlayerInfo[playerid][pGrafID];
+                new grafid = GraffitiID[playerid];
                 if (!IsPlayerInRangeOfPoint(playerid, 1.5, GraffitCPInfo[playerid][gCPX], GraffitCPInfo[playerid][gCPY], GraffitCPInfo[playerid][gCPZ])) return 1;
 
                 UpdateGraffitProgress(playerid, grafid);
@@ -934,6 +937,12 @@ hook LoadServerData()
     return 1;
 }
 
+hook ResetPlayerVariables(playerid)
+{
+    GraffitiID[playerid]	= -1;
+	TagID[playerid] = -1;
+}
+
 hook OnPlayerDisconnect(playerid, reason)
 {
     if (GrafCreateStarted[playerid])
@@ -944,7 +953,7 @@ hook OnPlayerDisconnect(playerid, reason)
     if (TagCreateStarted[playerid])
     {
         TagCreateStarted[playerid] = false;
-        DestroySprayTagCheckpoint(PlayerInfo[playerid][pTagID]);
+        DestroySprayTagCheckpoint(TagID[playerid]);
     }
     return 1;
 }
@@ -958,8 +967,8 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
             if (!response)
             {
                 new next;
-                Iter_SafeRemove(Graffits, PlayerInfo[playerid][pGrafID], next);
-                PlayerInfo[playerid][pGrafID] = -1;
+                Iter_SafeRemove(Graffits, GraffitiID[playerid], next);
+                GraffitiID[playerid] = -1;
                 return 1;
             }
             if (listitem < 0 || listitem > 9/*sizeof graffiti_colours*/)
@@ -967,7 +976,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                 // TODO: print not in range or silently fail?
                 return 1;
             }
-            new grafid = PlayerInfo[playerid][pGrafID];
+            new grafid = GraffitiID[playerid];
             // TODO: grafid limits check
             static const graffiti_colours[][20] =
             {
@@ -1000,7 +1009,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                 // TODO: print not in range or silently fail?
                 return 1;
             }
-            new grafid = PlayerInfo[playerid][pGrafID];
+            new grafid = GraffitiID[playerid];
             // TODO: grafid limits check
             static const graffiti_fonts[][22] =
             {
@@ -1034,7 +1043,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                 // TODO: print not in range or silently fail?
                 return 1;
             }
-            new grafid = PlayerInfo[playerid][pGrafID];
+            new grafid = GraffitiID[playerid];
             // TODO: grafid limits check
             static const graffiti_fontsizes[] =
             {
@@ -1065,7 +1074,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                 return 1;
             }
 
-            new grafid = PlayerInfo[playerid][pGrafID];
+            new grafid = GraffitiID[playerid];
             // TODO: grafid limits check
             // TODO: use strcpy
             format(GraffitInfo[grafid][gText], 32, "%s", inputtext);
@@ -1212,13 +1221,12 @@ CMD:spraytag(playerid, params[])
     return 1;
 }
 
-// TODO: spelling of "grafit" in English is graffiti (both singular and plural)
-CMD:graffit(playerid, params[])
+CMD:graffiti(playerid, params[])
 {
     new pick[9];
     if (sscanf(params, "s[9] ", pick))
     {
-        SendClientMessage(playerid, COLOR_RED, "[ ? ]: /graffit [odabir] (create)");
+        SendClientMessage(playerid, COLOR_RED, "[ ? ]: /graffiti [odabir] (create)");
         SendClientMessage(playerid, COLOR_WHITE, "[Odabir]: create, edit, delete, adelete, author, approve");
         return 1;
     }
@@ -1228,8 +1236,8 @@ CMD:graffit(playerid, params[])
         if (!GrafApproved[playerid]) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nemas dozvolu za grafite!");
         if (GetGraffitIdFromPlaya(playerid, 5.0) != -1) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne smijes postavljati tako blizu grafite!");
 
-        PlayerInfo[playerid][pGrafID] = Iter_Free(Graffits);
-        Iter_Add(Graffits, PlayerInfo[playerid][pGrafID]);
+        GraffitiID[playerid] = Iter_Free(Graffits);
+        Iter_Add(Graffits, GraffitiID[playerid]);
         ShowPlayerDialog(playerid, DIALOG_GRAF_COLOR, DIALOG_STYLE_LIST, "Odaberi boju", "{141414}Crna\nBijela\n{0000A1}Tamno plava\n{3C82FF}Svijetlo plava\n{329D32}Zelena\n{BE0A0A}Crvena\n{502800}Smeda\n{FF732D}Narandasta\n{FFD700}Zlatna\n{C0C0C0}Srebrna", "Choose", "Abort");
         return 1;
     }

@@ -1,6 +1,7 @@
 #include <YSI_Coding\y_hooks>
 
 // -Macros
+
 #define Public:%0(%1) \
 		forward %0(%1); \
 		public %0(%1)
@@ -74,7 +75,7 @@
 #define PREMIUM_GOLD_EXP						(250)
 
 // Furniture Texture & Color Slots 
-#define MAX_COLOR_TEXT_SLOTS					(5) //  1 Furniture Object - 5 Colors & 5 Textures
+#define MAX_COLOR_TEXT_SLOTS					(5)
 
 // House Interior Furniture
 #define FURNITURE_PREMIUM_OBJECTS				(700) // => CMD: /afurniture setpremium [player_id] [house_id]
@@ -107,13 +108,13 @@
 
 // Weapon Packages
 #define MAX_PLAYER_PACKAGES 					(10)
-#define MAX_LISTED_WEAPONS						(11)	// maximalno oruzja za kupnju - /warehouse getgun.
-#define MAX_PACKAGE_AMOUNT						(200)	// maximalno municije u jednom paketu.
-#define MAX_PACKAGES							(10)	// maximalno narucenih paketa.
-#define PACKAGE_COOLDOWN						(120)	// Svakih '?' koliko ce se moci narucit paket.
-#define MINUTES_TILL_PACKAGE_ARRIVE			 	(10) // Koliko minuta treba da paket dodje u warehouse.
-#define INVALID_PACKAGE_ID						(-1)	// Invalid ID
-#define PACKAGE_PANCIR							(60)	// Pancir Package (random id)
+#define MAX_LISTED_WEAPONS						(11)	
+#define MAX_PACKAGE_AMOUNT						(200)
+#define MAX_PACKAGES							(10)	
+#define PACKAGE_COOLDOWN						(120)	
+#define MINUTES_TILL_PACKAGE_ARRIVE			 	(10) 
+#define INVALID_PACKAGE_ID						(-1)	
+#define PACKAGE_PANCIR							(60)	
 
 // Drugs
 #define MAX_PLAYER_DRUGS						(5)
@@ -184,6 +185,6 @@
 
 // Warehouse
 #define MAX_WAREHOUSE_WEAPONS					(100)
-#define ROBBERY_DURATION						(1500) // SEKUNDE
-#define MIN_ROBBERS								(5) // Minimalni broj pljackasa(clanova suparnicke fakcije) koja je potrebna da se pokrene pljacka
-#define MIN_DEFENDERS							(5) // Minimalni broj clanova fakcije koji trebaju biti online da bi se pokrenula pljacka
+#define ROBBERY_DURATION						(1500) 
+#define MIN_ROBBERS								(5) 
+#define MIN_DEFENDERS							(5) 

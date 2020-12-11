@@ -2678,7 +2678,8 @@ hook OnPlayerText(playerid, text[])
 				SendClientMessage(playerid, COLOR_ALLDEPT, "HITNA LINIJA: Oprostite ali ne razumijem?");
 				return 0;
 			}
-			strmid(PlayerInjured[playerid][pVictimLocation], text, 0, strlen(text), 255);
+			PlayerCrime[playerid][pLocation][0] = EOS;
+			strcat(PlayerCrime[playerid][pLocation], text, 100);
 			SendClientMessage(playerid, 0xFF8282AA, "HITNA LINIJA:Molimo vas ukratko opisite incident.");
 			CallingId[ playerid ] =  915;
 			return 0;
@@ -2701,7 +2702,7 @@ hook OnPlayerText(playerid, text[])
 			SendRadioMessage(2, COLOR_WHITE, wanted);
 			format(wanted, sizeof(wanted), "Incident: %s",text);
 			SendRadioMessage(2, COLOR_WHITE, wanted);
-			format(wanted, sizeof(wanted), "Prijavljena lokacija: %s",PlayerInjured[playerid][pVictimLocation]);
+			format(wanted, sizeof(wanted), "Prijavljena lokacija: %s", PlayerCrime[playerid][pLocation]);
 			SendRadioMessage(2, COLOR_WHITE, wanted);
 			format(wanted, sizeof(wanted), "Lokacija broja: %s", zone);
 			SendRadioMessage(2, COLOR_WHITE, wanted);
@@ -2752,7 +2753,8 @@ hook OnPlayerText(playerid, text[])
 				SendClientMessage(playerid, COLOR_ALLDEPT, "HITNA LINIJA: Oprostite ali ne razumijem?");
 				return 0;
 			}
-			strmid(PlayerCrime[playerid][pLocation], text, 0, strlen(text), 255);
+			PlayerCrime[playerid][pLocation][0] = EOS;
+			strcat(PlayerCrime[playerid][pLocation], text, 100);
 			SendClientMessage(playerid, 0xFF8282AA, "HITNA LINIJA:Molimo vas ukratko opisite zlocin.");
 			CallingId[ playerid ] =  913;
 			return 0;
@@ -3343,18 +3345,10 @@ hook OnPlayerUpdate(playerid)
 		{
 			if(PhoneStatus[playerid] == PHONE_SHOW)
 			{
-
-	   			if(PlayerInfo[playerid][pSpeedo] == 0) return 0;
-				if(Bit1_Get( gr_PlayerUsingSpeedo, playerid ))
-				{
+				if(Player_UsingSpeedometer(playerid))
 					DestroySpeedoTextDraws(playerid);
-					PlayerInfo[playerid][pSpeedo] = 0;
-				}
-				else if(!Bit1_Get( gr_PlayerUsingSpeedo, playerid ))
-				{
-						CreateSpeedoTextDraws(playerid);
-						PlayerInfo[playerid][pSpeedo] = 1;
-				}
+				else if(!Player_UsingSpeedometer(playerid))
+					CreateSpeedoTextDraws(playerid);
 			}
 		}
 	}

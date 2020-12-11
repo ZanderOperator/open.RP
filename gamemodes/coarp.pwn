@@ -310,7 +310,6 @@ new
 	Bit1:   gr_Blind                <MAX_PLAYERS>  = Bit1: false,
 	Bit1:   gr_BlindFold            <MAX_PLAYERS>  = Bit1: false,
 	Bit1:	gr_PlayerTrunkEdit		<MAX_PLAYERS>  = Bit1: false,
-	Bit1: 	gr_PlayerUsingSpeedo	<MAX_PLAYERS>  = Bit1: false,
 	Bit1:   gr_ImpoundApproval      <MAX_PLAYERS>  = Bit1: false,
 	Bit1:   gr_HaveOffer        	<MAX_PLAYERS>  = Bit1: false,
 	Bit1:	gr_UsingMechanic 		<MAX_PLAYERS>  = Bit1: false,
@@ -587,7 +586,6 @@ ResetPlayerVariables(playerid)
 	ResetPlayerWounded(playerid);
 	adminfly[playerid] = 0;
 	playeReport[playerid] = -1;
-	PlayerInfo[playerid][pAddingRoadblock] = 0;
     GotRod[playerid] = 0;
 	//
 	PhoneStatus[playerid] = 0;
@@ -788,13 +786,8 @@ ResetPlayerVariables(playerid)
 	PlayerKeys[playerid][pGarageKey]		= -1;
 	PlayerKeys[playerid][pIllegalGarageKey]	= -1;
 	PlayerKeys[playerid][pVehicleKey]		= -1;
-
-	PlayerInfo[playerid][pGrafID]			= -1;
-	PlayerInfo[playerid][pTagID]			= -1;
-
-	PlayerInfo[playerid][pPrimaryWeapon] 	= 0;
-	PlayerInfo[playerid][pSecondaryWeapon] 	= 0;
 	PlayerKeys[playerid][pWarehouseKey] 	= -1;
+
 	PlayerInfo[playerid][pMustRead]			= false;
 	
 	//Floats
@@ -900,10 +893,6 @@ ResetPlayerVariables(playerid)
 	ResetRuletTable(playerid);
 	//ResetBlackJack(playerid);
 	
-	foreach(new i : Player)
-	{
-		CanPMAdmin[playerid][i] = 0;
-	}
 	return 1;
 }
 
@@ -1398,15 +1387,6 @@ hook OnPlayerDisconnect(playerid, reason)
 			szDisconnectReason[ reason ]
 		);
 		ProxDetector(10.0, playerid, szString, COLOR_FADE1, COLOR_FADE2, COLOR_FADE3, COLOR_FADE4, COLOR_FADE5);
-	}
-
-	//PM
-	foreach (new i : Player)
-	{
-		if(CanPMAdmin[i][playerid] == 1)
-		{
-			CanPMAdmin[i][playerid] = 0;
-		}
 	}
 
 	if( !isnull(PlayerExName[playerid]) ) SetPlayerName(playerid, PlayerExName[playerid]);

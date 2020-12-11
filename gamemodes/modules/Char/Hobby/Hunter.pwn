@@ -57,11 +57,13 @@ enum deerenum
 };
 new DeerInfo[deerenum];
 
-new
+static
+    Whistle[MAX_PLAYERS],
     WhistleTime[MAX_PLAYERS],
     Timer:CutTimer,
     CutTime,
     pMeat[MAX_PLAYERS];
+
 /*
                            _____  _____        __     _______
                      /\   |  __ \|  __ \     /\\ \   / / ____|
@@ -413,7 +415,7 @@ hook OnPlayerConnect(playerid)
     return 1;
 }
 
-hook OnPlayerDisconnect(playerid, reason)
+hook ResetPlayerVariables(playerid)
 {
     if(DeerInfo[pCutting] == playerid && CutTime > 0)
     {
@@ -421,6 +423,7 @@ hook OnPlayerDisconnect(playerid, reason)
         DeerInfo[pCutting] = -1;
         CutTime = 0;
     }
+    Whistle[playerid] = 0;
     WhistleTime[playerid] = 0;
     pMeat[playerid] = 0;
     return 1;
@@ -806,11 +809,11 @@ CMD:buywhistle(playerid, params[])
 	if(GetPlayerMoney(playerid) < 20)
 		return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nemas dovoljno novca za kupovinu zvizdaljke (20$)");
 
-	if(PlayerInfo[playerid][hWhistle] >= 1)
+	if(Whistle[playerid] >= 1)
 		return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Vec imas zvizdaljku.");
 	
 	PlayerToBudgetMoney(playerid, 50); // novac od kupljene zvizdaljke ide u proracun
-	PlayerInfo[playerid][hWhistle] = 1;
+	Whistle[playerid] = 1;
 	SendClientMessage(playerid, COLOR_RED, "[ ! ] Kupio si zvizdaljku za 20$.");
 	
 	return 1;
@@ -818,7 +821,7 @@ CMD:buywhistle(playerid, params[])
 
 CMD:usewhistle(playerid, params[])
 {
-    if(!PlayerInfo[playerid][hWhistle])
+    if(!Whistle[playerid])
         return SendMessage(playerid, MESSAGE_TYPE_ERROR, "NemaS zviZdaljku za jelene!");
 
     if (WhistleTime[playerid] > gettimestamp())

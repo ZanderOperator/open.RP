@@ -13,8 +13,14 @@ enum E_RPTEXT_DATA
 	RoadblockWorld,
 	RoadblockInterior
 }
+static 
+	Labels[40][E_RPTEXT_DATA];
 
-new Labels[40][E_RPTEXT_DATA];
+static 
+	bool:AddingRoadblock[MAX_PLAYERS],
+	RoadblockObject[MAX_PLAYERS],
+	RoadblockModel[MAX_PLAYERS];
+
 
 /*
 	 ######  ########  #######   ######  ##    ##
@@ -29,12 +35,12 @@ new Labels[40][E_RPTEXT_DATA];
 
 hook OnPlayerEditDynObject(playerid, objectid, response, Float:x, Float:y, Float:z, Float:rx, Float:ry, Float:rz)
 {
-    if(PlayerInfo[playerid][pAddingRoadblock])
+    if(AddingRoadblock[playerid])
 	{
 		if(response == EDIT_RESPONSE_CANCEL)
 		{
-			DestroyDynamicObject(PlayerInfo[playerid][pRoadblockObject]);
-			PlayerInfo[playerid][pAddingRoadblock] = 0;
+			DestroyDynamicObject(RoadblockObject[playerid]);
+			AddingRoadblock[playerid] = false;
 		}
 		else if(response == EDIT_RESPONSE_FINAL)
 		{
@@ -53,43 +59,45 @@ hook OnPlayerEditDynObject(playerid, objectid, response, Float:x, Float:y, Float
 
 			if(id == -1)
 			{
-				SendClientMessage(playerid, COLOR_RED, "Ne mo�ete vi�e spawnati ovdje.");
+				SendClientMessage(playerid, COLOR_RED, "Ne mozete vise spawnati ovdje.");
 
-				DestroyDynamicObject(PlayerInfo[playerid][pRoadblockObject]);
-				PlayerInfo[playerid][pAddingRoadblock] = 0;
+				DestroyDynamicObject(RoadblockObject[playerid]);
+				AddingRoadblock[playerid] = false;
 				return 1;
 			}
 
-			DestroyDynamicObject(PlayerInfo[playerid][pRoadblockObject]);
+			DestroyDynamicObject(RoadblockObject[playerid]);
 
-			format(str, sizeof(str), "** HQ: %s %s je dodao '%s' na lokaciji %s! **", ReturnPlayerRankName(playerid), GetName(playerid), GetRoadblockNameFromModel(PlayerInfo[playerid][pRoadblockModel]), GetPlayerStreet(playerid));
+			format(str, sizeof(str), "** HQ: %s %s je dodao '%s' na lokaciji %s! **", ReturnPlayerRankName(playerid), GetName(playerid), GetRoadblockNameFromModel(RoadblockModel[playerid]), GetPlayerStreet(playerid));
 			SendLawMessage(COLOR_COP, str);
 
 			format(Labels[id][RoadblockLocation], 40, "%s", GetPlayerStreet(playerid));
 			format(Labels[id][RoadblockPlacedBy], 34, "%s", GetName(playerid));
 
 			Labels[id][RoadblockExists] = true;
-			Labels[id][LabelsModelID] = PlayerInfo[playerid][pRoadblockModel];
+			Labels[id][LabelsModelID] = RoadblockModel[playerid];
 
 			Labels[id][RoadblockPos][0] = x;
 			Labels[id][RoadblockPos][1] = y;
 			Labels[id][RoadblockPos][2] = z;
 
-			Labels[id][RoadblockObject] = CreateDynamicObject(PlayerInfo[playerid][pRoadblockModel], x, y, z, rx, ry, rz, GetPlayerVirtualWorld(playerid), GetPlayerInterior(playerid));
+			Labels[id][RoadblockObject] = CreateDynamicObject(RoadblockModel[playerid], x, y, z, rx, ry, rz, GetPlayerVirtualWorld(playerid), GetPlayerInterior(playerid));
 			Labels[id][RoadblockWorld] = GetPlayerVirtualWorld(playerid);
 			Labels[id][RoadblockInterior] = GetPlayerInterior(playerid);
 
-			PlayerInfo[playerid][pAddingRoadblock] = 0;
-			PlayerInfo[playerid][pRoadblockModel] = 0;
+			AddingRoadblock[playerid] = false;
+			RoadblockModel[playerid] = 0;
 		}
 		//printf("pEditingRoadblock called for %s.", GetName(playerid));
 	}
   	return 1;
 }
 
-hook OnPlayerConnect(playerid)
+hook ResetPlayerVariables(playerid)
 {
-
+	AddingRoadblock[playerid] = false;
+	RoadblockObject[playerid] = 0;
+	RoadblockModel[playerid] = 0;
     return 1;
 }
 
@@ -164,10 +172,10 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                     Float:z, str[128];
                 GetPlayerPos(playerid, x, y, z);
 
-                PlayerInfo[playerid][pRoadblockObject] = CreateDynamicObject(g_aLabels[listitem][RoadblockModel], x + 2, y, z, 0.0, 0.0, 0.0, GetPlayerVirtualWorld(playerid), GetPlayerInterior(playerid), playerid);
-                PlayerInfo[playerid][pAddingRoadblock] = 1;
-                PlayerInfo[playerid][pRoadblockModel] = g_aLabels[listitem][RoadblockModel];
-                EditDynamicObject(playerid, PlayerInfo[playerid][pRoadblockObject]);
+                RoadblockObject[playerid] = CreateDynamicObject(g_aLabels[listitem][RoadblockModel], x + 2, y, z, 0.0, 0.0, 0.0, GetPlayerVirtualWorld(playerid), GetPlayerInterior(playerid), playerid);
+                AddingRoadblock[playerid] = true;
+                RoadblockModel[playerid] = g_aLabels[listitem][RoadblockModel];
+                EditDynamicObject(playerid, RoadblockObject[playerid]);
 
                 format(str, 128, "Spawnali ste {ADC3E7}%s blokadu.  Podesite lokaciju da je spawnujete.", GetRoadblockNameFromModel(g_aLabels[listitem][RoadblockModel]));
                 SendClientMessage(playerid, -1, str);
@@ -247,7 +255,7 @@ CMD:roadblock(playerid, params[])
 {
 	if( !IsACop(playerid) && !IsASD(playerid) && !IsFDMember(playerid) && !IsAFM(playerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, " Niste policajac!");
 
-	if(PlayerInfo[playerid][pAddingRoadblock])
+	if(AddingRoadblock[playerid])
 		return SendClientMessage(playerid, COLOR_RED, "Prvo prestanite postavljati prepreku...");
 
 	ShowPlayerDialog(playerid, DIALOG_Labels, DIALOG_STYLE_LIST, "Labels Menu", "Postavi Roadblock\nRoadblock List", "Choose", "Abort");

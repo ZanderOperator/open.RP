@@ -44,6 +44,10 @@ forward Player_SetInPickup(playerid, v);
 // Events
 #include "modules/Systems\Events/Header.inc"
 
+// GPS
+forward bool:Player_GpsActivated(playerid);
+forward Player_SetGpsActivated(playerid, bool:v);
+
 
 // Miscellaneous
 forward bool:Player_IsDJ(playerid);

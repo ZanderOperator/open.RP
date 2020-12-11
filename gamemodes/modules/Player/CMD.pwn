@@ -3,8 +3,6 @@
 new
 	Text3D:NameText[MAX_PLAYERS];
 	
-new CanPMAdmin[MAX_PLAYERS][MAX_PLAYERS];
-
 timer DeleteKillTimer[5000](playerid)
 {
 	PlayerTick[ playerid ][ ptKill ] = 0;
@@ -20,70 +18,6 @@ hook OnPlayerDisconnect(playerid, reason)
 	}
 	RemovePlayerScreenFade(playerid);
 	return 1;
-}
-
-hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
-{
-	switch( dialogid )
-	{
-		case DIALOG_ADMINPM:
-        {
-            if(response)
-            {
-                new
-                    name_colorA[60],
-                    name_colorB[60];
-
-                new text[128], giveplayerid;
-                format(text, 128, "%s", PlayerInfo[playerid][pPMText]);
-                giveplayerid = PlayerInfo[playerid][pPMing];
-
-                if (!Bit1_Get(a_AdminOnDuty, playerid))
-                    format(name_colorA, 60, "{FF9900}%s", GetName(playerid));
-                else format(name_colorA, 60, "%s", GetName(playerid));
-
-                if (!Bit1_Get(a_AdminOnDuty, playerid))
-                    format(name_colorB, 60, "{FF9900}%s", GetName(giveplayerid));
-                else format(name_colorB, 60, "%s", GetName(giveplayerid));
-
-                if(strlen(text) > 75)
-                {
-                    va_SendClientMessage(playerid, COLOR_YELLOW, "(( PM za %s[%i]: %.75s... ))", GetName(giveplayerid, false), giveplayerid, text);
-                    va_SendClientMessage(playerid, COLOR_YELLOW, "(( PM za %s[%i]: ...%s ))", GetName(giveplayerid, false), giveplayerid, text[75]);
-
-                    va_SendClientMessage(giveplayerid, COLOR_NICEYELLOW,  "(( PM od %s[%i]: %.75s... ))", GetName(playerid, false), playerid, text);
-                    va_SendClientMessage(giveplayerid, COLOR_NICEYELLOW,  "(( PM od %s[%i]: ...%s ))", GetName(playerid, false), playerid, text[75]);
-                }
-                else
-                {
-                    va_SendClientMessage(playerid, COLOR_YELLOW, "(( PM za %s[%i]: %s ))", GetName(giveplayerid, false), giveplayerid, text);
-                    va_SendClientMessage(giveplayerid, COLOR_NICEYELLOW,  "(( PM od %s[%i]: %s ))", GetName(playerid, false), playerid, text);
-                }
-                foreach (new i : Player)
-				{
-					if (PlayerInfo[i][pAdmin] >= 2 && Bit1_Get(a_PMears, i))
-					{
-						va_SendClientMessage(i, 0xFFD1D1FF, "%s[%i] PM za %s[%i]: %s", GetName(playerid, false), playerid, GetName(giveplayerid, false), giveplayerid, text);
-					}
-				}
-				
-                CanPMAdmin[playerid][giveplayerid] = 1;
-
-				#if defined MODULE_LOGS
-				Log_Write("/logfiles/a_pm.txt", "(%s) %s(%s) for %s: %s",
-					ReturnDate(),
-					GetName(playerid, false),
-					ReturnPlayerIP(playerid),
-					GetName(giveplayerid, false),
-					text
-				);
-				#endif
-            }
-            else format(PlayerInfo[playerid][pPMText], 128, "");
-            return 1;
-        }
-	}
-	return 0;
 }
 
 /*
@@ -622,21 +556,38 @@ CMD:pm(playerid, params[])
 	if(playerid == giveplayerid) return SendClientMessage(playerid, COLOR_RED, "Fali ti prijatelja, ne mozes pisati sam sebi.");
 	if(PlayerInfo[giveplayerid][pAdmin] && !PlayerInfo[playerid][pAdmin])
 	{
-		new bool:Confirmed;
+		new
+			name_colorA[60],
+			name_colorB[60];
 
-		for(new i = 0; i < MAX_PLAYERS; i++)
+		if (!Bit1_Get(a_AdminOnDuty, playerid))
+			format(name_colorA, 60, "{FF9900}%s", GetName(playerid));
+		else format(name_colorA, 60, "%s", GetName(playerid));
+
+		if (!Bit1_Get(a_AdminOnDuty, playerid))
+			format(name_colorB, 60, "{FF9900}%s", GetName(giveplayerid));
+		else format(name_colorB, 60, "%s", GetName(giveplayerid));
+
+		va_SendClientMessage(playerid, COLOR_YELLOW, "(( PM za %s[%i]: %s ))", GetName(giveplayerid, false), giveplayerid, text);
+		va_SendClientMessage(giveplayerid, COLOR_NICEYELLOW,  "(( PM od %s[%i]: %s ))", GetName(playerid, false), playerid, text);
+	
+		foreach (new i : Player)
 		{
-			if(CanPMAdmin[playerid][giveplayerid] == 1)
+			if (PlayerInfo[i][pAdmin] >= 2 && Bit1_Get(a_PMears, i))
 			{
-				Confirmed = true;
+				va_SendClientMessage(i, 0xFFD1D1FF, "%s[%i] PM za %s[%i]: %s", GetName(playerid, false), playerid, GetName(giveplayerid, false), giveplayerid, text);
 			}
 		}
-		if(!Confirmed)
-		{
-			format(PlayerInfo[playerid][pPMText], 128, "%s", text);
-			PlayerInfo[playerid][pPMing] = giveplayerid;
-			return ShowPlayerDialog(playerid, DIALOG_ADMINPM, DIALOG_STYLE_MSGBOX, "{FA5656}WARNING", "Igac kojem zelite poslati private message je {FE9934}Game Admin.\n\nUkoliko imate bilo kakve nedoumice koristite komandu /report.\n\n{FA5656}NOTE:\n{FE9934}Game Admin nije mehanicar, snajder, niti ista tome slicno!", "Send", "Abort");
-		}
+		
+		#if defined MODULE_LOGS
+		Log_Write("/logfiles/a_pm.txt", "(%s) %s(%s) for %s: %s",
+			ReturnDate(),
+			GetName(playerid, false),
+			ReturnPlayerIP(playerid),
+			GetName(giveplayerid, false),
+			text
+		);
+		#endif
 	}
 
 	if(strlen(text) > 75)
