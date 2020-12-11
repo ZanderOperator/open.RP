@@ -27,11 +27,6 @@ new
 	Admin_Vehicle[MAX_PLAYERS][MAX_ADMIN_VEHICLES],
 	Admin_vCounter[MAX_PLAYERS];
 
-// TODO: don't use global strings, use local
-static stock
-    globalstring[128],
-    cstring[40];
-
 new
 	Timer:CountingTimer,
 	cseconds,
@@ -1831,10 +1826,11 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 				SetPlayerInterior(PortedPlayer[playerid], GetPlayerInterior(playerid));
 				SetPlayerVirtualWorld(PortedPlayer[playerid], GetPlayerVirtualWorld(playerid));
 			}
-			format(globalstring, sizeof(globalstring), "Teleportiran si od strane admina/helpera %s", GetName(playerid,false));
-			SendClientMessage(PortedPlayer[playerid], COLOR_GREY, globalstring);
-			format(globalstring, sizeof(globalstring), "Teleportirao si %s, ID %d", GetName(PortedPlayer[playerid],false), PortedPlayer[playerid]);
-			SendClientMessage(playerid, COLOR_GREY, globalstring);
+            new string[100];
+			format(string, sizeof(string), "Teleportiran si od strane admina/helpera %s", GetName(playerid,false));
+			SendClientMessage(PortedPlayer[playerid], COLOR_GREY, string);
+			format(string, sizeof(string), "Teleportirao si %s, ID %d", GetName(PortedPlayer[playerid],false), PortedPlayer[playerid]);
+			SendClientMessage(playerid, COLOR_GREY, string);
 			return 1;
 		}
 		case DIALOG_ADMIN_MSG:

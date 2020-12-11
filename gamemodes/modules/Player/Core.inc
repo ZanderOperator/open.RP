@@ -1,7 +1,5 @@
 // Player folder modules represents ONLY database storing features.
 
-#include <YSI_Coding\y_hooks>
-
 #include "modules/Player/Licenses.pwn"
 #include "modules/Player/Weapons.pwn"
 #include "modules/Player/Death.pwn"

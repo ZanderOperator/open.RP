@@ -500,22 +500,14 @@ public OnAccountFinish(playerid)
     return 1;
 }
 
-SetPlayerOnlineStatus(playerid, bool:status)
+SetPlayerOnlineStatus(playerid, status)
 {
-	if(status)
-	{
-		mysql_fquery(g_SQL, 
-			"UPDATE accounts set online = '1' WHERE sqlid = '%d'", 
-			PlayerInfo[playerid][pSQLID]
-		);
-	}
-	else
-	{
-		mysql_fquery(g_SQL, 
-			"UPDATE accounts set online = '0' WHERE sqlid = '%d'", 
-			PlayerInfo[playerid][pSQLID]
-		);
-	}
+	mysql_fquery(g_SQL, 
+		"UPDATE accounts set online = '%d' WHERE sqlid = '%d'", 
+		status,
+		PlayerInfo[playerid][pSQLID]
+	);
+	return 1;
 }
 
 stock IsEMailInDB(const email[])
@@ -849,7 +841,7 @@ hook OnPlayerDisconnect(playerid, reason)
 	if( Bit1_Get(gr_LoginChecksOn, playerid ) )
 		stop LoginCheckTimer[playerid];
 
-	SetPlayerOnlineStatus(playerid, false);
+	SetPlayerOnlineStatus(playerid, 0);
 	return 1;
 }
 

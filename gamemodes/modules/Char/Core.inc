@@ -1,12 +1,9 @@
 // Char folder modules represent non database storing features.
 
-#include <YSI_Coding\y_hooks>
-
-// Hobbies Core
+// Hobbies
 #include "modules/Char/Hobby/Fisher.pwn"
 #include "modules/Char/Hobby/Hunter.pwn"
 
-// Misc
 #include "modules/Char/ActorSystem.pwn"
 #include "modules/Char/Hotel.pwn"
 #include "modules/Char/Bombs.pwn"

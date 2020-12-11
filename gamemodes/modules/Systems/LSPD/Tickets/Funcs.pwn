@@ -33,7 +33,7 @@ enum E_TICKET_DATA
     ##        #######  ##    ##  ######   ######  
 */
 
-stock SaveVehicleTicketStatus(vehicleid, ticket_slot)
+static SaveVehicleTicketStatus(vehicleid, ticket_slot)
 {
     mysql_fquery(g_SQL, "UPDATE cocars_tickets SET isShown = '%d' WHERE id = '%d'", 
         VehicleInfo[vehicleid][vTicketShown][ticket_slot],

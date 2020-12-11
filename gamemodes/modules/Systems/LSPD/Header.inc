@@ -1,5 +1,3 @@
-#include <YSI_Coding\y_hooks>
-
 // Header file where functions should be declared that can be used/accessed from other modules
 
 // ANPR

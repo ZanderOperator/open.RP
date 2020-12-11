@@ -1,5 +1,3 @@
-#include <YSI_Coding\y_hooks>
-
 // House
 #include "modules/Systems/Furniture.pwn"
 #include "modules/Systems/ExteriorFurniture.pwn"

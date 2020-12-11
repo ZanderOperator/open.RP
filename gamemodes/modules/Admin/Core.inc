@@ -1,5 +1,4 @@
-
-#include <YSI_Coding\y_hooks>
+// Admin Folder represents Game Admin/Helper/Team related code/modules
 
 #include "modules/Admin/Funcs.pwn"
 #include "modules/Admin/CMD.pwn"
