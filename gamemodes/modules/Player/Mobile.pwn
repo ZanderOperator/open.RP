@@ -406,6 +406,12 @@ UpdatePlayerMobile(playerid)
 	return 1;
 }
 
+hook SavePlayerData(playerid)
+{
+	UpdatePlayerMobile(playerid);
+	return 1;
+}
+
 stock LoadPlayerMobile(playerid)
 {
 	mysql_tquery(g_SQL, 
@@ -415,18 +421,6 @@ stock LoadPlayerMobile(playerid)
 		playerid
 	);
 	return 1;
-}
-
-stock PhoneMessage(playerid, phonestring[])
-{
-	foreach (new i : Player)
-	{
-	    if( ProxDetectorS(5.0, playerid, i) && playerid != i)
-	    {
-	    	SendClientMessage(i, COLOR_FADE1, phonestring);
-	    }
-    }
-    return 1;
 }
 
 forward OnPlayerMobileLoad(playerid);
@@ -457,6 +451,25 @@ public OnPlayerMobileLoad(playerid)
 		}
 	}
 	return 1;
+}
+
+
+hook LoadPlayerStats(playerid)
+{
+	LoadPlayerMobile(playerid);
+	return 1;
+}
+
+stock PhoneMessage(playerid, phonestring[])
+{
+	foreach (new i : Player)
+	{
+	    if( ProxDetectorS(5.0, playerid, i) && playerid != i)
+	    {
+	    	SendClientMessage(i, COLOR_FADE1, phonestring);
+	    }
+    }
+    return 1;
 }
 
 stock CreateTowerObject(towerid)
@@ -2596,18 +2609,6 @@ hook LoadServerData()
 hook OnGameModeInit()
 {
 	PhoneTDVars();
-	return 1;
-}
-
-hook LoadPlayerStats(playerid)
-{
-	LoadPlayerMobile(playerid);
-	return 1;
-}
-
-hook SavePlayerData(playerid)
-{
-	UpdatePlayerMobile(playerid);
 	return 1;
 }
 

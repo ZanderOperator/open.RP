@@ -1,6 +1,101 @@
 
 #include <YSI_Coding\y_hooks>
 
+#define COLOR_RADIO		(0xFFEC8BFF)
+#define COLOR_RADIOEX	(0xB5AF8FFF)
+
+/*
+
+																		
+	88b           d88              ad88888ba    ,ad8888ba,   88           
+	888b         d888             d8"     "8b  d8"'    `"8b  88           
+	88`8b       d8'88             Y8,         d8'        `8b 88           
+	88 `8b     d8' 88 8b       d8 `Y8aaaaa,   88          88 88           
+	88  `8b   d8'  88 `8b     d8'   `"""""8b, 88          88 88           
+	88   `8b d8'   88  `8b   d8'          `8b Y8,    "88,,8P 88           
+	88    `888'    88   `8b,d8'   Y8a     a8P  Y8a.    Y88P  88           
+	88     `8'     88     Y88'     "Y88888P"    `"Y8888Y"Y8a 88888888888  
+						d8'                                             
+						d8'                             
+
+*/
+
+LoadPlayerRadio(playerid)
+{
+    mysql_pquery(g_SQL, 
+        va_fquery(g_SQL, "SELECT * FROM player_radio WHERE sqlid = '%d'", PlayerInfo[playerid][pSQLID]),
+        "LoadingPlayerRadio", 
+        "i", 
+        playerid
+    );
+    return 1;
+}
+
+Public: LoadingPlayerRadio(playerid)
+{
+    if(!cache_num_rows())
+    {
+        mysql_fquery_ex(g_SQL, 
+            "INSERT INTO player_radio(sqlid, HasRadio, MainSlot, Radio1, Slot1, Radio2, Slot2, Radio3, Slot3) \n\
+                VALUES('%d', '0', '0', '0', '0', '0', '0', '0', '0')",
+            PlayerInfo[playerid][pSQLID]
+        );
+        return 1;
+    }
+    cache_get_value_name_int(0,	"HasRadio"	, PlayerRadio[playerid][pHasRadio]);
+	cache_get_value_name_int(0, "MainSlot"  , PlayerRadio[playerid][pMainSlot]);
+    cache_get_value_name_int(0, "Radio1"    , PlayerRadio[playerid][pRadio][1]);
+    cache_get_value_name_int(0, "Slot1"     , PlayerRadio[playerid][pRadioSlot][1]);
+    cache_get_value_name_int(0, "Radio2"    , PlayerRadio[playerid][pRadio][2]);
+    cache_get_value_name_int(0, "Slot2"     , PlayerRadio[playerid][pRadioSlot][2]);
+    cache_get_value_name_int(0, "Radio3"    , PlayerRadio[playerid][pRadio][3]);
+    cache_get_value_name_int(0, "Slot3"     , PlayerRadio[playerid][pRadioSlot][3]);
+    return 1;
+}
+
+hook LoadPlayerStats(playerid)
+{
+    LoadPlayerRadio(playerid);
+    return 1;
+}
+
+SavePlayerRadio(playerid)
+{
+    mysql_fquery_ex(g_SQL,
+        "UPDATE player_radio SET HasRadio = '%d', MainSlot = '%d', \n\
+            Radio1 = '%d', Slot1 = '%d', \n\
+            Radio2 = '%d', Slot2 = '%d', \n\
+            Radio3 = '%d', Slot3 = '%d' \n\
+            WHERE sqlid = '%d'",
+        PlayerRadio[playerid][pHasRadio],
+        PlayerRadio[playerid][pMainSlot],
+        PlayerRadio[playerid][pRadio][1], PlayerRadio[playerid][pRadioSlot][1],
+        PlayerRadio[playerid][pRadio][2], PlayerRadio[playerid][pRadioSlot][2],
+        PlayerRadio[playerid][pRadio][3], PlayerRadio[playerid][pRadioSlot][3],
+        PlayerInfo[playerid][pSQLID]
+    );
+    return 1;
+}
+
+hook SavePlayerStats(playerid)
+{
+    SavePlayerRadio(playerid);
+    return 1;
+}
+
+hook ResetPlayerVariables(playerid)
+{
+    PlayerRadio[playerid][pHasRadio] = 0;
+    PlayerRadio[playerid][pMainSlot] = 0;
+    PlayerRadio[playerid][pRadio][1] = 0; 
+    PlayerRadio[playerid][pRadioSlot][1] = 0;
+    PlayerRadio[playerid][pRadio][2] = 0;
+    PlayerRadio[playerid][pRadioSlot][2] = 0;
+    PlayerRadio[playerid][pRadio][3] = 0; 
+    PlayerRadio[playerid][pRadioSlot][3] = 0;
+    return 1;
+}
+
 CMD:radio(playerid, params[])
 {
 	if (!PlayerRadio[playerid][pHasRadio])

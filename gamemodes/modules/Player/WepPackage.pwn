@@ -95,18 +95,6 @@ LoadPlayerPackage(playerid)
 	return (true);
 }
 
-Public:StorePackageInDB(vehicleid, slot) 
-{
-	VehicleInfo[vehicleid][packSQLID][slot] = cache_insert_id();
-	return (true);
-}
-
-Public:StorePPackageInDB(playerid, slot) 
-{
-	PlayerPackage[playerid][p_SQLID][slot] = cache_insert_id();
-	return (true);
-}
-
 Public: LoadingPlayerPackages(playerid) 
 {
 	if(cache_num_rows()) 
@@ -124,6 +112,25 @@ Public: LoadingPlayerPackages(playerid)
 	return (true);
 }
 
+hook LoadPlayerStats(playerid)
+{
+	LoadPlayerPackage(playerid);
+	return 1;
+}
+
+stock LoadVehiclePackage(vehicleid) 
+{
+	mysql_tquery(g_SQL, 
+		va_fquery(g_SQL, "SELECT * FROM cocars_wpackages WHERE vehicleid = '%d' LIMIT %d", 
+			VehicleInfo[vehicleid][vSQLID],
+			MAX_PACKAGE_VEHICLE
+		), 
+		"LoadingVehiclePackages", 
+		"i", 
+		vehicleid
+	);
+	return 1;
+}
 Public: LoadingVehiclePackages(vehicleid) 
 {
 	if(cache_num_rows()) 
@@ -160,6 +167,12 @@ SavePlayerPackages(playerid, slot)
 	return (true);
 }
 
+Public:StorePPackageInDB(playerid, slot) 
+{
+	PlayerPackage[playerid][p_SQLID][slot] = cache_insert_id();
+	return (true);
+}
+
 SaveVehiclePackages(vehicleid, slot) 
 {
 	mysql_tquery(g_SQL, 
@@ -176,9 +189,16 @@ SaveVehiclePackages(vehicleid, slot)
 	return (true);
 }
 
+Public:StorePackageInDB(vehicleid, slot) 
+{
+	VehicleInfo[vehicleid][packSQLID][slot] = cache_insert_id();
+	return (true);
+}
+
 ResetPlayerPackages(playerid) 
 {
-	foreach(new slots: P_PACKAGES[playerid]) {
+	foreach(new slots: P_PACKAGES[playerid]) 
+	{
 		PlayerPackage[playerid][p_SQLID][slots] = -1;
 		PlayerPackage[playerid][p_weapon][slots] = 0;
 		PlayerPackage[playerid][p_amount][slots] = 0;
@@ -347,12 +367,6 @@ timer CreatePackage[1000](playerid)
 /*
 	- hooks
 */
-
-hook LoadPlayerStats(playerid)
-{
-	LoadPlayerPackage(playerid);
-	return 1;
-}
 
 hook OnPlayerEnterCheckpoint(playerid) 
 {

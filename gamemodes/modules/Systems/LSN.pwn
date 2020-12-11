@@ -175,6 +175,7 @@ hook ResetPlayerVariables(playerid)
     }
 
     OnLive[playerid] = false;
+    return 1;
 }
 
 hook OnPlayerConnect(playerid)

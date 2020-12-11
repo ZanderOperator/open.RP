@@ -1254,19 +1254,6 @@ stock ResetPlayerWeaponList(playerid)
 	return 1;
 }
 
-stock LoadVehiclePackage(vehicleid) 
-{
-	mysql_tquery(g_SQL, 
-		va_fquery(g_SQL, "SELECT * FROM cocars_wpackages WHERE vehicleid = '%d' LIMIT %d", 
-			VehicleInfo[vehicleid][vSQLID],
-			MAX_PACKAGE_VEHICLE
-		), 
-		"LoadingVehiclePackages", 
-		"i", 
-		vehicleid
-	);
-	return 1;
-}
 
 stock LoadVehicleWeapons(vehicleid)
 {

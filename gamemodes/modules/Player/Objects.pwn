@@ -705,6 +705,44 @@ stock LoadPlayerObjects(playerid)
 	return 1;
 }
 
+forward OnPlayerObjectsLoad(playerid);
+public OnPlayerObjectsLoad(playerid)
+{
+	#if defined MOD_DEBUG
+		printf("DEBUG OBJECTS: count(%d)", cache_num_rows());
+	#endif
+
+	if(cache_num_rows()) 
+	{
+	    for( new i = 0; i < cache_num_rows(); i++ ) 
+		{
+			cache_get_value_name_int(i, 	"sqlid"	, PlayerObject[playerid][i][poSQLID]);
+			cache_get_value_name_int(i, 	"model"	, PlayerObject[playerid][i][poModelid]);
+			cache_get_value_name_int(i, 	"placed"	, PlayerObject[playerid][i][poPlaced]);
+			cache_get_value_name_int(i, 	"bone"		, PlayerObject[playerid][i][poBoneId]);
+			cache_get_value_name_float(i, 	"posX"		, PlayerObject[playerid][i][poPosX]);
+			cache_get_value_name_float(i, 	"posY"		, PlayerObject[playerid][i][poPosY]);
+			cache_get_value_name_float(i, 	"posZ"		, PlayerObject[playerid][i][poPosZ]);
+			cache_get_value_name_float(i, 	"rotX"		, PlayerObject[playerid][i][poRotX]);
+			cache_get_value_name_float(i, 	"rotY"		, PlayerObject[playerid][i][poRotY]);
+			cache_get_value_name_float(i, 	"rotZ"		, PlayerObject[playerid][i][poRotZ]);
+			cache_get_value_name_float(i, 	"sizeX"		, PlayerObject[playerid][i][poScaleX]);
+			cache_get_value_name_float(i, 	"sizeY"		, PlayerObject[playerid][i][poScaleY]);
+			cache_get_value_name_float(i, 	"sizeZ"		, PlayerObject[playerid][i][poScaleZ]);
+			cache_get_value_name_int(i, 	"color1"	, PlayerObject[playerid][i][poColor1]);
+			cache_get_value_name_int(i, 	"color2"	, PlayerObject[playerid][i][poColor2]);
+		}
+	}
+	SetPlayerObjects(playerid);
+	return 1;
+}
+
+hook LoadPlayerStats(playerid)
+{
+	LoadPlayerObjects(playerid);
+	return 1;
+}
+
 stock InsertObjectSlot(playerid, slot)
 {
 	if(PlayerObject[playerid][slot][poSQLID] == -1)
@@ -726,6 +764,15 @@ stock InsertObjectSlot(playerid, slot)
 	}
 	return 1;
 }
+
+forward OnPlayerObjectInsert(playerid, slot);
+public OnPlayerObjectInsert(playerid, slot)
+{
+	PlayerObject[playerid][slot][poSQLID] = cache_insert_id();
+	SaveObjectSlot(playerid, slot);
+	return 1;
+}
+
 stock SaveObjectSlot(playerid, slot)
 {
 	if(PlayerObject[playerid][slot][poSQLID] != -1 && PlayerObject[playerid][slot][poModelid] != -1)
@@ -904,55 +951,6 @@ stock ResetObjectEnum(playerid, slotid)
 	return 1;
 }
 
-/*
-	 ######     ###    ##       ##       ########     ###     ######  ##    ##  ######  
-	##    ##   ## ##   ##       ##       ##     ##   ## ##   ##    ## ##   ##  ##    ## 
-	##        ##   ##  ##       ##       ##     ##  ##   ##  ##       ##  ##   ##       
-	##       ##     ## ##       ##       ########  ##     ## ##       #####     ######  
-	##       ######### ##       ##       ##     ## ######### ##       ##  ##         ## 
-	##    ## ##     ## ##       ##       ##     ## ##     ## ##    ## ##   ##  ##    ## 
-	 ######  ##     ## ######## ######## ########  ##     ##  ######  ##    ##  ######  
-*/
-
-forward OnPlayerObjectsLoad(playerid);
-public OnPlayerObjectsLoad(playerid)
-{
-	#if defined MOD_DEBUG
-		printf("DEBUG OBJECTS: count(%d)", cache_num_rows());
-	#endif
-
-	if(cache_num_rows()) 
-	{
-	    for( new i = 0; i < cache_num_rows(); i++ ) 
-		{
-			cache_get_value_name_int(i, 	"sqlid"	, PlayerObject[playerid][i][poSQLID]);
-			cache_get_value_name_int(i, 	"model"	, PlayerObject[playerid][i][poModelid]);
-			cache_get_value_name_int(i, 	"placed"	, PlayerObject[playerid][i][poPlaced]);
-			cache_get_value_name_int(i, 	"bone"		, PlayerObject[playerid][i][poBoneId]);
-			cache_get_value_name_float(i, 	"posX"		, PlayerObject[playerid][i][poPosX]);
-			cache_get_value_name_float(i, 	"posY"		, PlayerObject[playerid][i][poPosY]);
-			cache_get_value_name_float(i, 	"posZ"		, PlayerObject[playerid][i][poPosZ]);
-			cache_get_value_name_float(i, 	"rotX"		, PlayerObject[playerid][i][poRotX]);
-			cache_get_value_name_float(i, 	"rotY"		, PlayerObject[playerid][i][poRotY]);
-			cache_get_value_name_float(i, 	"rotZ"		, PlayerObject[playerid][i][poRotZ]);
-			cache_get_value_name_float(i, 	"sizeX"		, PlayerObject[playerid][i][poScaleX]);
-			cache_get_value_name_float(i, 	"sizeY"		, PlayerObject[playerid][i][poScaleY]);
-			cache_get_value_name_float(i, 	"sizeZ"		, PlayerObject[playerid][i][poScaleZ]);
-			cache_get_value_name_int(i, 	"color1"	, PlayerObject[playerid][i][poColor1]);
-			cache_get_value_name_int(i, 	"color2"	, PlayerObject[playerid][i][poColor2]);
-		}
-	}
-	SetPlayerObjects(playerid);
-	return 1;
-}
-
-forward OnPlayerObjectInsert(playerid, slot);
-public OnPlayerObjectInsert(playerid, slot)
-{
-	PlayerObject[playerid][slot][poSQLID] = cache_insert_id();
-	SaveObjectSlot(playerid, slot);
-	return 1;
-}
 
 /*
 	##     ##  #######   #######  ##    ## 
@@ -963,12 +961,6 @@ public OnPlayerObjectInsert(playerid, slot)
 	##     ## ##     ## ##     ## ##   ##  
 	##     ##  #######   #######  ##    ## 
 */
-
-hook LoadPlayerStats(playerid)
-{
-	LoadPlayerObjects(playerid);
-	return 1;
-}
 
 hook OnPlayerDeath(playerid, killerid, reason)
 {

@@ -3,20 +3,10 @@
 // Save/Load Player related func. modules - named after adjacent database tables
 #include "modules/Player\SaveLoad/player_inventory.pwn"
 #include "modules/Player\SaveLoad/player_crashes.pwn"
-#include "modules/Player\SaveLoad/player_drug_stats.pwn"
 #include "modules/Player\SaveLoad/player_health.pwn"
-#include "modules/Player\SaveLoad/player_fitness.pwn"
 #include "modules/Player\SaveLoad/player_appearance.pwn"
 #include "modules/Player\SaveLoad/player_vip_status.pwn"
 #include "modules/Player\SaveLoad/player_jail.pwn"
-#include "modules/Player\SaveLoad/player_job.pwn"
-#include "modules/Player\SaveLoad/player_taxi.pwn"
-#include "modules/Player\SaveLoad/player_payday.pwn"
-#include "modules/Player\SaveLoad/player_savings.pwn"
-#include "modules/Player\SaveLoad/player_credits.pwn"
-#include "modules/Player\SaveLoad/player_faction.pwn"
-#include "modules/Player\SaveLoad/player_radio.pwn"
-#include "modules/Player\SaveLoad/player_fishes.pwn"
 #include "modules/Player\SaveLoad/player_cooldowns.pwn"
 
 /*

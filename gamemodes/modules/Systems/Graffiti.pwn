@@ -941,6 +941,7 @@ hook ResetPlayerVariables(playerid)
 {
     GraffitiID[playerid]	= -1;
 	TagID[playerid] = -1;
+    return 1;
 }
 
 hook OnPlayerDisconnect(playerid, reason)

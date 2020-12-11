@@ -8,6 +8,113 @@
 static stock Bit16:r_SavingsMoney<MAX_PLAYERS> = {Bit16:0, ...};
 
 /*
+                                                                      
+	88b           d88              ad88888ba    ,ad8888ba,   88           
+	888b         d888             d8"     "8b  d8"'    `"8b  88           
+	88`8b       d8'88             Y8,         d8'        `8b 88           
+	88 `8b     d8' 88 8b       d8 `Y8aaaaa,   88          88 88           
+	88  `8b   d8'  88 `8b     d8'   `"""""8b, 88          88 88           
+	88   `8b d8'   88  `8b   d8'          `8b Y8,    "88,,8P 88           
+	88    `888'    88   `8b,d8'   Y8a     a8P  Y8a.    Y88P  88           
+	88     `8'     88     Y88'     "Y88888P"    `"Y8888Y"Y8a 88888888888  
+						d8'                                             
+						d8'                             
+
+*/
+
+LoadPlayerCredit(playerid)
+{
+	inline OnPlayerCreditLoad()
+	{
+		if(!cache_num_rows())
+		{
+			mysql_fquery_ex(g_SQL, 
+				"INSERT INTO player_credits(sqlid, type, rate, amount, unpaid, used, timestamp) \n\
+					VALUES ('%d', '0', '0', '0', '0', '0', '0')",
+				PlayerInfo[ playerid ][ pSQLID ]
+			);
+			return 1;
+		}
+		cache_get_value_name_int(0, "type"		, CreditInfo[playerid][cCreditType]);
+		cache_get_value_name_int(0, "rate"		, CreditInfo[playerid][cRate]);
+		cache_get_value_name_int(0, "amount"	, CreditInfo[playerid][cAmount]);
+		cache_get_value_name_int(0, "unpaid"	, CreditInfo[playerid][cUnpaid]);
+		cache_get_value_name_int(0, "used"		, CreditInfo[playerid][cUsed]);
+		cache_get_value_name_int(0, "timestamp"	, CreditInfo[playerid][cTimestamp]);
+		return 1;
+	}
+	MySQL_PQueryInline(g_SQL,  
+		using inline OnPlayerCreditLoad, 
+		va_fquery(g_SQL, "SELECT * FROM player_credits WHERE sqlid = '%d'", PlayerInfo[playerid][pSQLID]),
+		"i", 
+		playerid
+	);
+	return 1;
+}
+
+SavePlayerCredit(playerid)
+{
+	mysql_fquery_ex(g_SQL, 
+		"UPDATE player_credits SET rate = '%d', type = '%d', amount = '%d',\n\
+			unpaid = '%d', used = '%d', timestamp = '%d' WHERE sqlid = '%d'",
+		CreditInfo[playerid][cRate],
+		CreditInfo[playerid][cCreditType],
+		CreditInfo[playerid][cAmount],
+		CreditInfo[playerid][cUnpaid],
+		CreditInfo[playerid][cUsed],
+		CreditInfo[playerid][cTimestamp],
+		PlayerInfo[playerid][pSQLID]
+	);
+	return 1;
+}
+
+LoadPlayerSavings(playerid)
+{
+    mysql_pquery(g_SQL, 
+        va_fquery(g_SQL, "SELECT * FROM player_savings WHERE sqlid = '%d'", PlayerInfo[playerid][pSQLID]),
+        "LoadingPlayerSavings", 
+        "i", 
+        playerid
+    );
+    return 1;
+}
+
+Public: LoadingPlayerSavings(playerid)
+{
+    if(!cache_num_rows())
+    {
+        mysql_fquery_ex(g_SQL, 
+            "INSERT INTO player_savings(sqlid, savings_cool, savings_time, savings_type, savings_money) \n\
+                VALUES('%d', '0', '0', '0', '0')",
+            PlayerInfo[playerid][pSQLID]
+        );
+        return 1;
+    }
+    
+    cache_get_value_name_int(0,	"savings_cool"	, PlayerSavings[playerid][pSavingsCool]);
+    cache_get_value_name_int(0,	"savings_time"	, PlayerSavings[playerid][pSavingsTime]);
+    cache_get_value_name_int(0,	"savings_type"	, PlayerSavings[playerid][pSavingsType]);
+    cache_get_value_name_int(0,	"savings_money"	, PlayerSavings[playerid][pSavingsMoney]);
+   
+    return 1;
+}
+
+SavePlayerSavings(playerid)
+{
+    mysql_fquery_ex(g_SQL,
+        "UPDATE player_savings SET savings_cool = '%d', savings_time = '%d', savings_type = '%d',\n\
+            savings_money = '%d' WHERE sqlid = '%d'",
+        PlayerSavings[playerid][pSavingsCool],
+        PlayerSavings[playerid][pSavingsTime],
+        PlayerSavings[playerid][pSavingsType],
+        PlayerSavings[playerid][pSavingsMoney],
+        PlayerInfo[playerid][pSQLID]
+    );
+    return 1;
+}
+
+
+/*
 	####  ######     ###    ######## 
 	 ##  ##    ##   ## ##      ##    
 	 ##  ##        ##   ##     ##    
@@ -30,8 +137,26 @@ stock IsAtBank(playerid) {
 	##     ##  #######   #######  ##    ## 
 */
 
+
+hook LoadPlayerStats(playerid)
+{
+	LoadPlayerCredit(playerid);
+	LoadPlayerSavings(playerid);
+	return 1;
+}
+
+hook SavePlayerStats(playerid)
+{
+	SavePlayerCredit(playerid);
+	SavePlayerSavings(playerid);
+	return 1;
+}
+
+
 hook ResetPlayerVariables(playerid)
 {
+	ResetCreditVars(playerid);
+	ResetSavingsVars(playerid);
 	Bit16_Set(r_SavingsMoney, playerid, 0);
 	return 1;
 }
@@ -416,7 +541,7 @@ GetValuablePropertyType(playerid)
 		new houseid = PlayerKeys[playerid][pHouseKey];
 		housevalue = HouseInfo[houseid][hValue];
 	}
-	if(PlayerKeys[playerid][pBizzKey] != INVALID_HOUSE_ID)
+	if(PlayerKeys[playerid][pBizzKey] != INVALID_BIZNIS_ID)
 	{
 		new bizzid = PlayerKeys[playerid][pBizzKey];
 		bizvalue = BizzInfo[bizzid][bBuyPrice];

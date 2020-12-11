@@ -18,8 +18,6 @@
 #include "modules/Char/Ads.pwn"
 #include "modules/Char/CreateObjects.pwn"
 #include "modules/Char/Travel.pwn"
-#include "modules/Char/Gym.pwn"
-#include "modules/Char/Radio.pwn"
 #include "modules/Char/Toll.pwn"
 #include "modules/Char/Speedo.pwn"
 #include "modules/Char/Rentveh.pwn"
