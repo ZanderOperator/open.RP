@@ -2632,11 +2632,17 @@ hook OnPlayerDisconnect(playerid, reason)
 	PhoneAction(playerid, PHONE_HIDE);
 	PhoneStatus[playerid] = PHONE_HIDE;
 	CancelSelectTextDraw(playerid);
-	ResetMobileVariables(playerid);
+	
 	if (PlayerCallPlayer[playerid] != INVALID_PLAYER_ID)
-	{
 		PlayerHangup(playerid);
-	}
+
+	ResetMobileVariables(playerid);
+	ResetMobileContacts(playerid);
+	
+	PlayerMobile[playerid][pCryptoNumber]		= 0;
+	PlayerMobile[playerid][pMobileNumber]		= 0;
+	PlayerMobile[playerid][pMobileModel]		= 0;
+	PlayerMobile[playerid][pMobileCost] 		= 0;
 	return 1;
 }
 

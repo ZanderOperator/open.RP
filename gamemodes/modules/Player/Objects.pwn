@@ -972,9 +972,38 @@ hook OnPlayerDeath(playerid, killerid, reason)
     return 1;
 }
 
-hook OnPlayerDisconnect(playerid, reason)
+hook ResetPlayerVariables(playerid, reason)
 {
 	ResetObjectsVariables(playerid);
+	
+	for(new i = 0; i < MAX_CUSTOMIZED_OBJECTS; i++)
+	{
+		PlayerObject[ playerid ][i][poSQLID]		= -1;
+		PlayerObject[ playerid ][i][ poModelid ]	= -1;
+		PlayerObject[ playerid ][i][ poBoneId ]		= 0;
+		PlayerObject[ playerid ][i][ poPlaced ]		= false;
+		PlayerObject[ playerid ][i][ poPosX ]   	= 0.0;
+		PlayerObject[ playerid ][i][ poPosY ]		= 0.0;
+		PlayerObject[ playerid ][i][ poPosZ ]		= 0.0;
+		PlayerObject[ playerid ][i][ poRotX ]		= 0.0;
+		PlayerObject[ playerid ][i][ poRotY ]		= 0.0;
+		PlayerObject[ playerid ][i][ poRotZ ]		= 0.0;
+		PlayerObject[ playerid ][i][ poScaleX ]		= 1.0;
+		PlayerObject[ playerid ][i][ poScaleY ]		= 1.0;
+		PlayerObject[ playerid ][i][ poScaleZ ]		= 1.0;
+		PlayerObject[ playerid ][i][ poColor1 ] 	= 0;
+		PlayerObject[ playerid ][i][ poColor2 ] 	= 0;
+
+		if( IsPlayerAttachedObjectSlotUsed(playerid, i) )
+			RemovePlayerAttachedObject( playerid, i );
+	}
+	if( IsPlayerAttachedObjectSlotUsed(playerid, 7) )
+		RemovePlayerAttachedObject( playerid, 7 );
+	if( IsPlayerAttachedObjectSlotUsed(playerid, 8) )
+		RemovePlayerAttachedObject( playerid, 8 );
+	if( IsPlayerAttachedObjectSlotUsed(playerid, 9) )
+		RemovePlayerAttachedObject( playerid, 9 );
+
 	return 1;
 }
 

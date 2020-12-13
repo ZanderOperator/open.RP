@@ -366,7 +366,7 @@ hook LoadPlayerStats(playerid)
 	return 1;
 }
 
-hook OnPlayerDisconnect(playerid, reason)
+hook ResetPlayerVariables(playerid)
 {
 	if( Bit1_Get( gr_DeathCountStarted, playerid ) ) 
 	{
@@ -376,6 +376,14 @@ hook OnPlayerDisconnect(playerid, reason)
 		Bit8_Set( gr_DeathCountSeconds, playerid, 0 );
 	}
 	ResetDeathVars(playerid);
+
+	PlayerDeath[playerid][pKilled]			= 0;
+	PlayerDeath[playerid][pDeathInt] 		= 0;
+	PlayerDeath[playerid][pDeathVW] 		= 0;
+	PlayerDeath[playerid][pDeathX] 			= 0.0;
+	PlayerDeath[playerid][pDeathY] 			= 0.0;
+	PlayerDeath[playerid][pDeathZ] 			= 0.0;
+	
 	return 1;
 }
 

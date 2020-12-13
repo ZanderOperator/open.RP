@@ -139,7 +139,7 @@ Float:GetVSpeed(playerid, pvid=0)
 
 hook ResetPlayerVariables(playerid)
 {
-	Player_SetSpeedometer(playerid, false);
+	DestroySpeedoTextDraws(playerid);
  	return 1;
 }
 

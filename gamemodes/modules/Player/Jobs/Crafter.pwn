@@ -222,6 +222,7 @@ timer OnCraftingObjectMove[100](playerid, type)
 	##    ##    ##    ##     ## ##    ## ##   ##  
 	 ######     ##     #######   ######  ##    ## 
 */
+
 stock ResetFactoryVariables(playerid)
 {
 	PlayerCraftId[ playerid ]			= -1;
@@ -408,9 +409,16 @@ hook OnGameModeInit()
 	return 1;
 }
 
-public OnPlayerEnterCheckpoint(playerid)
+hook ResetPlayerVariables(playerid)
 {
-	if( Bit4_Get( gr_CraftingGeneratorId, playerid ) == 1 ) {
+	ResetFactoryVariables(playerid);
+	return 1;
+}
+
+hook OnPlayerEnterCheckpoint(playerid)
+{
+	if( Bit4_Get( gr_CraftingGeneratorId, playerid ) == 1 )
+	{
 		GameTextForPlayer( playerid, "~w~Generator #1 ~g~upaljen", 1500, 1 );
 		
 		TogglePlayerControllable(playerid, false);
@@ -422,7 +430,8 @@ public OnPlayerEnterCheckpoint(playerid)
 		Streamer_Update(playerid);
 		Bit4_Set( gr_CraftingGeneratorId, playerid, 2 );
 	}
-	else if( Bit4_Get( gr_CraftingGeneratorId, playerid ) == 2 ) {
+	else if( Bit4_Get( gr_CraftingGeneratorId, playerid ) == 2 ) 
+	{
 		GameTextForPlayer( playerid, "~w~Generator #2 ~g~upaljen", 1500, 1 );
 		
 		TogglePlayerControllable(playerid, false);
@@ -434,7 +443,8 @@ public OnPlayerEnterCheckpoint(playerid)
 		Streamer_Update(playerid);
 		Bit4_Set( gr_CraftingGeneratorId, playerid, 3 );
 	}
-	else if( Bit4_Get( gr_CraftingGeneratorId, playerid ) == 3 ) {
+	else if( Bit4_Get( gr_CraftingGeneratorId, playerid ) == 3 ) 
+	{
 		GameTextForPlayer( playerid, "~w~Generator #3 ~g~upaljen", 1500, 1 );
 		
 		TogglePlayerControllable(playerid, false);
@@ -443,7 +453,8 @@ public OnPlayerEnterCheckpoint(playerid)
 		CraftingTimer[ playerid ] = defer OnPlayerCrafting[2500](playerid, CRAFTING_TYPE_GENERATOR);
 		Bit1_Set( gr_CraftingTimer, playerid, true );
 	}
-	if( Bit4_Get( gr_CraftingCPId, playerid ) == 1 ) {
+	if( Bit4_Get( gr_CraftingCPId, playerid ) == 1 ) 
+	{
 		GameTextForPlayer( playerid, "~w~Pricekajte 1 minutu~n~da zavrsite s raspakiravanjem", 40000, 1 );
 		RemovePlayerAttachedObject(playerid, 9);
 		PlayerCraftingObject[ playerid ] = CreatePlayerObject(playerid, 1271, 2575.8855, -1352.7737, 1044.4000, 0.0, 0.0, 0.0 );
@@ -461,7 +472,8 @@ public OnPlayerEnterCheckpoint(playerid)
 		CraftingTimer[ playerid ] = defer OnPlayerCrafting[CRAFTING_TIME](playerid, CRAFTING_TYPE_UNPACK);
 		Bit1_Set( gr_CraftingTimer, playerid, true );
 	}
-	else if( Bit4_Get( gr_CraftingCPId, playerid ) == 2 ) {
+	else if( Bit4_Get( gr_CraftingCPId, playerid ) == 2 ) 
+	{
 		DisablePlayerCheckpoint(playerid);
 		DestroyDynamicPickup(CraftingPick[ playerid ]);
 	
@@ -472,7 +484,8 @@ public OnPlayerEnterCheckpoint(playerid)
 		CraftingTimer[ playerid ] = defer OnPlayerCrafting[CRAFTING_TIME](playerid, CRAFTING_TYPE_BOXING);
 		Bit1_Set( gr_CraftingTimer, playerid, true );
 	}
-	else if( Bit4_Get( gr_CraftingCPId, playerid ) == 3 ) {
+	else if( Bit4_Get( gr_CraftingCPId, playerid ) == 3 ) 
+	{
 		DisablePlayerCheckpoint(playerid);
 		RemovePlayerAttachedObject(playerid, 9);
 		
@@ -484,7 +497,8 @@ public OnPlayerEnterCheckpoint(playerid)
 		CrafingObjectMoveTimer[ playerid ] = repeat OnCraftingObjectMove[500](playerid, 1);
 		Bit1_Set( gr_ObjectMoveTimer, playerid, true );
 	}
-	else if( Bit4_Get( gr_CraftingCPId, playerid ) == 4 ) {
+	else if( Bit4_Get( gr_CraftingCPId, playerid ) == 4 ) 
+	{
 		DisablePlayerCheckpoint(playerid);
 		DestroyPlayerObject(playerid, PlayerCraftingObject[ playerid ]);
 		
@@ -499,7 +513,8 @@ public OnPlayerEnterCheckpoint(playerid)
 		Streamer_Update(playerid);			
 		Bit4_Set( gr_CraftingCPId, playerid, 5 );
 	}
-	else if( Bit4_Get( gr_CraftingCPId, playerid ) == 5 ) {
+	else if( Bit4_Get( gr_CraftingCPId, playerid ) == 5 ) 
+	{
 		DisablePlayerCheckpoint(playerid);
 		RemovePlayerAttachedObject(playerid, 9);
 		
@@ -512,7 +527,8 @@ public OnPlayerEnterCheckpoint(playerid)
 		Bit1_Set( gr_ObjectMoveTimer, playerid, true );
 		GameTextForPlayer( playerid, "~g~Resursi se preradjuju", 3000, 1 );
 	}
-	else if( Bit4_Get( gr_CraftingCPId, playerid ) == 6 ) {
+	else if( Bit4_Get( gr_CraftingCPId, playerid ) == 6 ) 
+	{
 		DisablePlayerCheckpoint(playerid);
 		DestroyPlayerObject(playerid, PlayerCraftingObject[ playerid ]);
 		
@@ -532,7 +548,8 @@ public OnPlayerEnterCheckpoint(playerid)
 		CraftingPick[ playerid ] 	= CreateDynamicPickup(1318, 2, 2584.2083, -1355.1130, 1044.5500, -1, -1, playerid);
 		Bit4_Set( gr_CraftingCPId, playerid, 7 );
 	}
-	else if( Bit4_Get( gr_CraftingCPId, playerid ) == 7 ) {
+	else if( Bit4_Get( gr_CraftingCPId, playerid ) == 7 ) 
+	{
 		DisablePlayerCheckpoint(playerid);
 		DestroyDynamicPickup(CraftingPick[ playerid ]);
 		RemovePlayerAttachedObject(playerid, 9);

@@ -199,16 +199,18 @@ stock PutWeaponInWarehouse(playerid, weaponid, ammo)
 
     Iter_Add(WhWeapons[whid], wslot);
 
-    new wname[32];
-    GetWeaponName(weaponid, wname, sizeof(wname));
-    SendFormatMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uspjesno ste pohranili %s(%d) u Warehouse %s.", wname, ammo, FactionInfo[fid][fName]);
+    SendFormatMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uspjesno ste pohranili %s(%d) u Warehouse %s.", 
+        GetWeaponNameEx(weaponid), 
+        ammo, 
+        FactionInfo[fid][fName]
+    );
 
     #if defined MODULE_LOGS
     Log_Write("logfiles/warehouse_put.txt", "(%s) %s[SQL:%d] stored %s(%d) in Warehouse %s[SQL:%d].",
         ReturnDate(),
         GetName(playerid, false),
         PlayerInfo[playerid][pSQLID],
-        wname,
+        GetWeaponNameEx(weaponid),
         ammo,
         FactionInfo[fid][fName],
         FactionInfo[fid][fID]
@@ -226,22 +228,24 @@ Public:OnWarehouseWeaponInsert(warehouseid, wslot)
 
 stock ListPlayerWarehouseWeapons(playerid, whid)
 {
-    new buffer[1744], motd[64], wname[32], counter = 0;
+    new 
+        buffer[1744], 
+        motd[64], 
+        counter = 0,
+        bool:broken = false;
+
     foreach(new wslot: WhWeapons[whid])
     {
-        GetWeaponName(WarehouseWeapons[whid][wslot][whWeaponId], wname, sizeof(wname));
-
-        if (wslot == Iter_Last(WhWeapons[whid]))
-        {
-            format(motd, sizeof(motd), ""COL_WHITE"%s(%d)", wname, WarehouseWeapons[whid][wslot][whAmmo]);
-        }
-        else
-        {
-            format(motd, sizeof(motd), ""COL_WHITE"%s(%d)\n", wname, WarehouseWeapons[whid][wslot][whAmmo]);
-        }
+        format(motd, sizeof(motd), "%s"COL_WHITE"%s(%d)", 
+            (broken) ? ("\n") : (""),
+            GetWeaponNameEx(WarehouseWeapons[whid][wslot][whWeaponId]), 
+            WarehouseWeapons[whid][wslot][whAmmo]
+        );
+       
         strcat(buffer, motd, sizeof(buffer));
         WeaponToList[playerid][counter] = wslot;
         counter++;
+        broken = true; 
     }
     return buffer;
 }
@@ -1086,9 +1090,13 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 
             if (!CheckPlayerWeapons(playerid, weaponid)) return 1;
             AC_GivePlayerWeapon(playerid, weaponid, ammo);
-            GetWeaponName(weaponid, wname, sizeof(wname));
 
-            SendFormatMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uspjesno ste uzeli %s(%d) iz warehousea.", wname, ammo);
+            SendFormatMessage(playerid, MESSAGE_TYPE_SUCCESS, 
+                "Uspjesno ste uzeli %s(%d) iz warehousea.", 
+                GetWeaponNameEx(weaponid), 
+                ammo
+            );
+
             format(string, sizeof(string), "* %s uzima %s iz skladista.", GetName(playerid, true), wname);
             SetPlayerChatBubble(playerid, string, COLOR_PURPLE, 20, 8000);
 

@@ -831,7 +831,11 @@ CMD:showlicenses(playerid, params[])
 }
 CMD:frisk(playerid, params[])
 {
-    new giveplayerid, weapon[13],bullets[13], weapon_name[16];
+    new 
+		giveplayerid, 
+		weapon[13],
+		bullets[13];
+		
     if( sscanf(params, "u", giveplayerid) ) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /frisk [ID/Dio Imena]");
 	if( giveplayerid == INVALID_PLAYER_ID ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Taj igrac nije online !"); 
 	if( giveplayerid == playerid ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne mozes pretrest sam sebe!");
@@ -854,13 +858,16 @@ CMD:frisk(playerid, params[])
 	if(HiddenWeapon[giveplayerid][pwWeaponId] != 0)
 		va_SendClientMessage(playerid, COLOR_WHITE, "	[Sakriveno ispod odjece]: %s, Metaka: %d.", WeapNames[HiddenWeapon[giveplayerid][pwWeaponId]], HiddenWeapon[playerid][pwAmmo]);
 	va_SendClientMessage(playerid, COLOR_LIGHTBLUE, "*______________ [ %s - Weapon Packages ] ______________*", GetName(giveplayerid));
-	foreach(new i : P_PACKAGES[giveplayerid]) {
-		if(PlayerPackage[giveplayerid][p_weapon][i] != 0) {
-			GetWeaponName(PlayerPackage[giveplayerid][p_weapon][i], weapon_name, 16);
-			if(PlayerPackage[giveplayerid][p_weapon][i] != PACKAGE_PANCIR)
-				va_SendClientMessage(playerid, COLOR_WHITE, "(%d). %s (%d/%d).", i, weapon_name, PlayerPackage[giveplayerid][p_amount][i], MAX_PACKAGE_AMOUNT);
-			if(PlayerPackage[giveplayerid][p_weapon][i] == PACKAGE_PANCIR)
-				va_SendClientMessage(playerid, COLOR_WHITE, "(%d). Pancir.", i);	
+	foreach(new i : P_PACKAGES[giveplayerid]) 
+	{
+		if(PlayerPackage[giveplayerid][p_weapon][i] != 0)
+		 {
+			va_SendClientMessage(playerid, COLOR_WHITE, "(%d). %s (%d/%d).", 
+				i, 
+				GetWeaponNameEx(PlayerPackage[giveplayerid][p_weapon][i]), 
+				PlayerPackage[giveplayerid][p_amount][i], 
+				MAX_PACKAGE_AMOUNT
+			);
 		}
 	}
 	va_SendClientMessage(playerid, COLOR_LIGHTBLUE, "*___________________ [ %s - Droga ] ___________________*", GetName(giveplayerid));

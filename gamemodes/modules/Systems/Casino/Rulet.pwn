@@ -1064,6 +1064,13 @@ timer FadeRuletWagesTD[5000](playerid)
 	##     ##  #######   #######  ##    ## 
 */
 
+hook ResetPlayerVariables(playerid)
+{
+	ResetRuletArrays(playerid);
+	ResetRuletTable(playerid);
+	return 1;
+}
+
 hook OnGameModeInit()
 {
 	InitRuletTables();

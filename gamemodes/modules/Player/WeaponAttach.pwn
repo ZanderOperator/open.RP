@@ -218,9 +218,7 @@ Public:OPEAW(playerid, response, index, modelid, boneid, Float:foX, Float:foY, F
     {
         if (response)
         {
-            new enum_index = GetWeaponObjectEnum(weaponid), weaponname[18];
-
-            GetWeaponName(weaponid, weaponname, sizeof(weaponname));
+            new enum_index = GetWeaponObjectEnum(weaponid);
 
             WeaponSettings[playerid][enum_index][Position][0] = foX;
             WeaponSettings[playerid][enum_index][Position][1] = foY;
@@ -231,7 +229,11 @@ Public:OPEAW(playerid, response, index, modelid, boneid, Float:foX, Float:foY, F
 
             SetPlayerAttachedObject(playerid, GetWeaponObjectSlot(weaponid), GetWeaponModel(weaponid), WeaponSettings[playerid][enum_index][Bone], foX, foY, foZ, frX, frY, frZ, 1.0, 1.0, 1.0);
 
-			SendFormatMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uspjesno ste promjenili poziciju od %s.", weaponname);
+			SendFormatMessage(playerid, 
+				MESSAGE_TYPE_SUCCESS, 
+				"Uspjesno ste promjenili poziciju od %s.", 
+				GetWeaponNameEx(weaponid)
+			);
 
             SavePlayerWeaponSettings(playerid, weaponid);
 			EditingWeapon[playerid] = 0;
@@ -282,12 +284,16 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
     {
         if (response)
         {
-            new weaponid = EditingWeapon[playerid], weaponname[18],
+            new 
+				weaponid = EditingWeapon[playerid], 
 				enum_index = GetWeaponObjectEnum(weaponid);
-            GetWeaponName(weaponid, weaponname, sizeof(weaponname));
-            WeaponSettings[playerid][enum_index][Bone] = listitem + 1;
 
-			SendFormatMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uspjesno ste promjenili bone oruzja %s.", weaponname);
+            WeaponSettings[playerid][enum_index][Bone] = listitem + 1;
+			SendFormatMessage(playerid, 
+				MESSAGE_TYPE_SUCCESS, 
+				"Uspjesno ste promjenili bone oruzja %s.", 
+				GetWeaponNameEx(weaponid)
+			);
             SavePlayerWeaponSettings(playerid, weaponid);
         }
         EditingWeapon[playerid] = 0;
@@ -339,7 +345,7 @@ CMD:weapon(playerid, params[])
 		if (EditingWeapon[playerid])
 			return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne mozes sakriti oruzje kada ga editas.");
 
-		new weaponname[32], string[150];
+		new string[150];
 
 		if (HiddenWeapon[playerid][pwWeaponId] != 0)
 		{
@@ -349,18 +355,25 @@ CMD:weapon(playerid, params[])
 			if(!CheckPlayerWeapons(playerid, HiddenWeapon[playerid][pwWeaponId], true))
 				return 1;
 
-			GetWeaponName(HiddenWeapon[playerid][pwWeaponId], weaponname, sizeof(weaponname));
-			SendFormatMessage(playerid, MESSAGE_TYPE_INFO, "Izvadili ste svoj sakriveni %s.", weaponname);
+			SendFormatMessage(playerid, MESSAGE_TYPE_INFO, 
+				"Izvadili ste svoj sakriveni %s.", 
+				GetWeaponNameEx(HiddenWeapon[playerid][pwWeaponId])
+			);
 			#if defined MODULE_LOGS
 			Log_Write("logfiles/weapon_hide.txt", "(%s) %s[SQL:%d] takes out his hidden %s(%d) with /weapon hide.",
 				ReturnDate(),
 				GetName(playerid, false),
 				PlayerInfo[playerid][pSQLID],
-				weaponname,
+				GetWeaponNameEx(HiddenWeapon[playerid][pwWeaponId]),
 				HiddenWeapon[playerid][pwAmmo]
 			);
 			#endif
-			format( string, sizeof(string), "* %s vadi sakriveni %s ispod odjece.", GetName(playerid, true), weaponname );
+
+			format( string, sizeof(string), 
+				"* %s vadi sakriveni %s ispod odjece.", 
+				GetName(playerid, true), 
+				GetWeaponNameEx(HiddenWeapon[playerid][pwWeaponId]) 
+			);
 			SetPlayerChatBubble(playerid, string, COLOR_PURPLE, 20, 8000);
 
 			new	puzavac = IsCrounching(playerid);
@@ -382,9 +395,8 @@ CMD:weapon(playerid, params[])
 			if (IsPlayerAttachedObjectSlotUsed(playerid, GetWeaponObjectSlot(weaponid)))
 				RemovePlayerAttachedObject(playerid, GetWeaponObjectSlot(weaponid));
 
-			GetWeaponName(weaponid, weaponname, sizeof(weaponname));
-			SendFormatMessage(playerid, MESSAGE_TYPE_INFO, "Sakrili ste svoj %s.", weaponname);
-			format( string, sizeof(string), "* %s sakriva %s ispod odjece.", GetName(playerid, true), weaponname );
+			SendFormatMessage(playerid, MESSAGE_TYPE_INFO, "Sakrili ste svoj %s.", GetWeaponNameEx(weaponid));
+			format( string, sizeof(string), "* %s sakriva %s ispod odjece.", GetName(playerid, true), GetWeaponNameEx(weaponid));
 			SetPlayerChatBubble(playerid, string, COLOR_PURPLE, 20, 8000);
 
 			new slot = GetWeaponSlot(weaponid);
