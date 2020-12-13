@@ -1085,7 +1085,7 @@ public OnGameModeInit()
 	mysql_log(ERROR | WARNING);
 	print("Report: MySQL Connection & Log Mode Established.");
 
-	MapAndreas_Init(MAP_ANDREAS_MODE_MINIMAL, "scriptfiles/SAmin.hmap");
+	MapAndreas_Init(MAP_ANDREAS_MODE_FULL, "scriptfiles/SAmin.hmap");
 	print("Report: MapAndreas Initialised.");
 
 	// Streamer config
@@ -1206,14 +1206,6 @@ public OnQueryError(errorid, const error[], const callback[], const query[], MyS
     GetAmxBacktrace(backtrace, sizeof(backtrace));
     Log_Write("logfiles/AMX_Query_Log.txt", "\n[%s] - MySQL Error ID: %d\nError %s: Callback %s\nQuery: %s\n%s", ReturnDate(), errorid, error, callback, query, backtrace);
     printf("[%s] - MySQL Error ID: %d\nError %s: Callback %s\nQuery: %s\n%s", ReturnDate(), errorid, error, callback, query, backtrace);
-    return 1;
-}
-
-// TODO: should be a part of Poker module, hooked
-public OnPlayerEditDynamicObject(playerid, objectid, response, Float:x, Float:y, Float:z, Float:rx, Float:ry, Float:rz)
-{
-    PokerTableEdit(playerid, objectid, response, x, y, z, rx, ry, rz);
-    StorageObjectEdit(playerid, objectid, response, x, y, z, rx, ry, rz);
     return 1;
 }
 

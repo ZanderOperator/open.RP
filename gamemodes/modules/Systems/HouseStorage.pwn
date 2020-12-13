@@ -114,7 +114,7 @@ HouseStorage_SaveWep(storage_id, wepid)
     return 1;
 }
 
-Public:StorageObjectEdit(playerid, objectid, response, Float:fX, Float:fY, Float:fZ, Float:fRotX, Float:fRotY, Float:fRotZ)
+hook OnPlayerEditDynObject(playerid, objectid, response, Float:x, Float:y, Float:z, Float:rx, Float:ry, Float:rz)
 {
     if (response == EDIT_RESPONSE_FINAL)
     {
@@ -122,10 +122,10 @@ Public:StorageObjectEdit(playerid, objectid, response, Float:fX, Float:fY, Float
         {
             if (HouseStorage[p_EditRack[playerid]][storageExists])
             {
-                HouseStorage[p_EditRack[playerid]][storagePos][0] = fX;
-                HouseStorage[p_EditRack[playerid]][storagePos][1] = fY;
-                HouseStorage[p_EditRack[playerid]][storagePos][2] = fZ;
-                HouseStorage[p_EditRack[playerid]][storagePos][3] = fRotZ;
+                HouseStorage[p_EditRack[playerid]][storagePos][0] = x;
+                HouseStorage[p_EditRack[playerid]][storagePos][1] = y;
+                HouseStorage[p_EditRack[playerid]][storagePos][2] = z;
+                HouseStorage[p_EditRack[playerid]][storagePos][3] = rz;
                 ShowPlayerDialog(playerid, DIALOG_HSTORAGE_EDIT, DIALOG_STYLE_MSGBOX, "{3C95C2}House Storage - Stalak", "\nJeste li sigurni da zelite ovdje postaviti Stalak?\n[!] - Nakon postavljanja, stalku vise ne mozete promijeniti poziciju.", "OK", "Close");
             }
         }
@@ -136,10 +136,10 @@ Public:StorageObjectEdit(playerid, objectid, response, Float:fX, Float:fY, Float
         {
             if (HouseStorage[p_EditRack[playerid]][storageExists])
             {
-                HouseStorage[p_EditRack[playerid]][storagePos][0] = fX;
-                HouseStorage[p_EditRack[playerid]][storagePos][1] = fY;
-                HouseStorage[p_EditRack[playerid]][storagePos][2] = fZ;
-                HouseStorage[p_EditRack[playerid]][storagePos][3] = fRotZ;
+                HouseStorage[p_EditRack[playerid]][storagePos][0] = x;
+                HouseStorage[p_EditRack[playerid]][storagePos][1] = y;
+                HouseStorage[p_EditRack[playerid]][storagePos][2] = z;
+                HouseStorage[p_EditRack[playerid]][storagePos][3] = rz;
                 ShowPlayerDialog(playerid, DIALOG_HSTORAGE_EDIT, DIALOG_STYLE_MSGBOX, "{3C95C2}House Storage - Stalak", "\nJeste li sigurni da zelite ovdje postaviti Stalak?\n[!] - Nakon postavljanja, stalku vise ne mozete promijeniti poziciju.", "OK", "Close");
             }
         }

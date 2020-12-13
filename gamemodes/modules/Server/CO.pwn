@@ -3677,8 +3677,27 @@ timer ParkPlayerVehicle[5000](playerid, vehicleid)
 
 hook ResetPlayerVariables(playerid)
 {
+	ResetCarOwnershipVariables(playerid);
 	CarnisterLiters[playerid] = 0;
 	CarnisterType[playerid] = -1;
+	
+	if(Bit1_Get(gr_PlayerBreakingTrunk, playerid)) {
+		BreakTrunkVehicleID[playerid] 	= INVALID_VEHICLE_ID;
+		BreakTrunkKickTick[playerid]		= gettimestamp();
+		Bit1_Set(gr_PlayerBreakingTrunk, playerid, false);
+	}
+	if( Bit2_Get(gr_PlayerLockBreaking, playerid) == 2 ) {
+		BreakLockVehicleID[playerid] 	= INVALID_VEHICLE_ID;
+		BreakLockKickTick[playerid]		= gettimestamp();
+		Bit2_Set(gr_PlayerLockBreaking, playerid, 0);
+	}
+
+	EditingTrunkWeaponObject[playerid] = 0;
+	EditingTrunkWeaponModel[playerid] = 0;
+	
+	PlayerParkLocation[playerid] = 0;
+	DisablePlayerCheckpoint(playerid);
+	ResetCarBuyVars(playerid);
 	return 1;
 }
 
@@ -3915,12 +3934,6 @@ hook OnPlayerUpdate(playerid)
 		GetVehicleTravel(GetPlayerVehicleID(playerid));
 	}
     return 1;
-}
-
-hook OnPlayerConnect(playerid)
-{
-	ResetCarOwnershipVariables(playerid);
-	return 1;
 }
 
 hook OnVehicleStreamIn(vehicleid, forplayerid)
@@ -4597,28 +4610,6 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 		}
 	}
     return 0;
-}
-
-hook OnPlayerDisconnect(playerid, reason)
-{
-	if(Bit1_Get(gr_PlayerBreakingTrunk, playerid)) {
-		BreakTrunkVehicleID[playerid] 	= INVALID_VEHICLE_ID;
-		BreakTrunkKickTick[playerid]		= gettimestamp();
-		Bit1_Set(gr_PlayerBreakingTrunk, playerid, false);
-	}
-	if( Bit2_Get(gr_PlayerLockBreaking, playerid) == 2 ) {
-		BreakLockVehicleID[playerid] 	= INVALID_VEHICLE_ID;
-		BreakLockKickTick[playerid]		= gettimestamp();
-		Bit2_Set(gr_PlayerLockBreaking, playerid, 0);
-	}
-
-	EditingTrunkWeaponObject[playerid] = 0;
-	EditingTrunkWeaponModel[playerid] = 0;
-	
-	PlayerParkLocation[playerid] = 0;
-	DisablePlayerCheckpoint(playerid);
-	ResetCarBuyVars(playerid);
-	return 1;
 }
 
 hook OnPlayerEditObject(playerid, playerobject, objectid, response, Float:fX, Float:fY, Float:fZ, Float:fRotX, Float:fRotY, Float:fRotZ)

@@ -2839,7 +2839,7 @@ CMD:unjail(playerid, params[])
 		SendClientMessage(playerid, COLOR_RED, globalstring);
 		format(globalstring, sizeof(globalstring), "* Oslobodio vas je Admin %s.", GetName(playerid,false));
 		SendClientMessage(giveplayerid, COLOR_RED, globalstring);
-		SetPVarInt(giveplayerid, "WantedPoints", 0);
+
 		AC_SetPlayerWeapons(giveplayerid);
 		PlayerJail[giveplayerid][pJailed] = 0;
 		PlayerJail[giveplayerid][pJailTime] = 0;

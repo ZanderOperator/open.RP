@@ -434,7 +434,7 @@ CMD:helpers(playerid, params[])
 	        count++;
 		    if(isnull(PlayerInfo[i][pForumName]))
 		    {
-		       if(GetPVarInt(playerid, "HelperDuty"))
+		       if(IsOnHelperDuty(i))
 		        {
 					format( tmpString, sizeof( tmpString ), "%s\n{ed673b}%s - Helper Level %d - Onduty",
 					    tmpString,
@@ -453,7 +453,7 @@ CMD:helpers(playerid, params[])
 			}
 			else
 			{
-			    if(GetPVarInt(playerid, "HelperDuty"))
+			    if(IsOnHelperDuty(i))
 			    {
 				    format( tmpString, sizeof( tmpString ), "%s\n{ed673b}%s(%s) - Helper Level %d - Onduty",
 				        tmpString,

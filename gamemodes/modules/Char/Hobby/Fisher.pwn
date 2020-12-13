@@ -1,5 +1,11 @@
 #include <YSI_Coding\y_hooks>
 
+
+static
+	bool:SellingFish[MAX_PLAYERS],
+	FishingStamp[MAX_PLAYERS],
+	FishSellStamp[MAX_PLAYERS];
+
 /*
                                                                       
 	88b           d88              ad88888ba    ,ad8888ba,   88           
@@ -72,15 +78,19 @@ hook ResetPlayerVariables(playerid)
     PlayerFish[playerid][pFishWorks] = 0;
     PlayerFish[playerid][pFishWeight] = 0;
     PlayerFish[playerid][pFishingSkill] = 0;
+
+	SellingFish[playerid] = false;
+	FishingStamp[playerid] = 0;
+	FishSellStamp[playerid] = 0;
     return 1;
 }
 
 hook OnPlayerEnterCheckpoint(playerid) 
 {
-    if(GetPVarInt(playerid, "pSellingFish"))
+    if(SellingFish[playerid])
     {
         DisablePlayerCheckpoint(playerid);
-        DeletePVar(playerid, "pSellingFish");
+        SellingFish[playerid] = false;
         SendClientMessage(playerid, COLOR_RED, "[ ! ] Stigli ste na destinaciju. Kucajte /sellfish [kolicina] da prodate ribu.");
     }
     return 1;
@@ -123,8 +133,8 @@ stock IsAtFishPlace(playerid)
 	return 0;
 }
 
-UpgradeFishingLevel(playerid) {
-
+UpgradeFishingLevel(playerid) 
+{
     PlayerFish[playerid][pFishingSkill] += 1;
     return 1;
 }
@@ -136,7 +146,7 @@ DockFishing(playerid)
 	{
 		if(PlayerFish[playerid][pFishWeight] <= 100)
 		{
-			if(GetPVarInt(playerid, "pFishTime") < gettime())
+			if(FishingStamp[playerid] < gettimestamp())
 			{
 				switch(PlayerFish[playerid][pFishingSkill])
 				{
@@ -150,7 +160,7 @@ DockFishing(playerid)
 								SetPlayerChatBubble(playerid, fstring, COLOR_PURPLE, 30.0, 4000);
 								SendClientMessage(playerid, COLOR_PURPLE, fstring);
 
-								SetPVarInt(playerid, "pFishTime", gettime() + 3);
+								FishingStamp[playerid] = gettimestamp() + 3;
 								UpgradeFishingLevel(playerid);
 							}
 							case 1:
@@ -160,7 +170,7 @@ DockFishing(playerid)
 								SendClientMessage(playerid, COLOR_PURPLE, fstring);
 
 								PlayerFish[playerid][pFishWeight] += 2;
-								SetPVarInt(playerid, "pFishTime", gettime() + 3);
+								FishingStamp[playerid] = gettimestamp() + 3;
 								UpgradeFishingLevel(playerid);
 							}
 							case 2:
@@ -171,7 +181,7 @@ DockFishing(playerid)
 
 								PlayerFish[playerid][pFishWeight] += 3;
 
-								SetPVarInt(playerid, "pFishTime", gettime() + 3);
+								FishingStamp[playerid] = gettimestamp() + 3;
 								UpgradeFishingLevel(playerid);
 							}
 						}
@@ -186,7 +196,7 @@ DockFishing(playerid)
 								SetPlayerChatBubble(playerid, fstring, COLOR_PURPLE, 30.0, 4000);
 								SendClientMessage(playerid, COLOR_PURPLE, fstring);
 
-								SetPVarInt(playerid, "pFishTime", gettime() + 3);
+								FishingStamp[playerid] = gettimestamp() + 3;
 								UpgradeFishingLevel(playerid);
 							}
 							case 1:
@@ -197,7 +207,7 @@ DockFishing(playerid)
 
 								PlayerFish[playerid][pFishWeight] += 2;
 
-								SetPVarInt(playerid, "pFishTime", gettime() + 3);
+								FishingStamp[playerid] = gettimestamp() + 3;
 								UpgradeFishingLevel(playerid);
 							}
 							case 2:
@@ -207,7 +217,7 @@ DockFishing(playerid)
 								SendClientMessage(playerid, COLOR_PURPLE, fstring);
 								PlayerFish[playerid][pFishWeight] += 3;
 
-								SetPVarInt(playerid, "pFishTime", gettime() + 3);
+								FishingStamp[playerid] = gettimestamp() + 3;
 								UpgradeFishingLevel(playerid);
 							}
 							case 3:
@@ -218,7 +228,7 @@ DockFishing(playerid)
 
 								PlayerFish[playerid][pFishWeight] += 6;
 
-								SetPVarInt(playerid, "pFishTime", gettime() + 3);
+								FishingStamp[playerid] = gettimestamp() + 3;
 								UpgradeFishingLevel(playerid);
 							}
 							case 4:
@@ -229,7 +239,7 @@ DockFishing(playerid)
 
 								PlayerFish[playerid][pFishWeight] += 8;
 
-								SetPVarInt(playerid, "pFishTime", gettime() + 3);
+								FishingStamp[playerid] = gettimestamp() + 3;
 								UpgradeFishingLevel(playerid);
 							}
 						}
@@ -244,7 +254,7 @@ DockFishing(playerid)
 								SetPlayerChatBubble(playerid, fstring, COLOR_PURPLE, 30.0, 4000);
 								SendClientMessage(playerid, COLOR_PURPLE, fstring);
 
-								SetPVarInt(playerid, "pFishTime", gettime() + 3);
+								FishingStamp[playerid] = gettimestamp() + 3;
 								UpgradeFishingLevel(playerid);
 							}
 							case 1:
@@ -255,7 +265,7 @@ DockFishing(playerid)
 
 								PlayerFish[playerid][pFishWeight] += 2;
 
-								SetPVarInt(playerid, "pFishTime", gettime() + 3);
+								FishingStamp[playerid] = gettimestamp() + 3;
 								UpgradeFishingLevel(playerid);
 							}
 							case 2:
@@ -266,7 +276,7 @@ DockFishing(playerid)
 
 								PlayerFish[playerid][pFishWeight] += 3;
 
-								SetPVarInt(playerid, "pFishTime", gettime() + 3);
+								FishingStamp[playerid] = gettimestamp() + 3;
 								UpgradeFishingLevel(playerid);
 							}
 							case 3:
@@ -277,7 +287,7 @@ DockFishing(playerid)
 
 								PlayerFish[playerid][pFishWeight] += 6;
 
-								SetPVarInt(playerid, "pFishTime", gettime() + 3);
+								FishingStamp[playerid] = gettimestamp() + 3;
 								UpgradeFishingLevel(playerid);
 							}
 							case 4:
@@ -288,7 +298,7 @@ DockFishing(playerid)
 
 								PlayerFish[playerid][pFishWeight] += 8;
 
-								SetPVarInt(playerid, "pFishTime", gettime() + 3);
+								FishingStamp[playerid] = gettimestamp() + 3;
 								UpgradeFishingLevel(playerid);
 							}
 							case 5:
@@ -299,7 +309,7 @@ DockFishing(playerid)
 
 								PlayerFish[playerid][pFishWeight] += 10;
 
-								SetPVarInt(playerid, "pFishTime", gettime() + 3);
+								FishingStamp[playerid] = gettimestamp() + 3;
 								UpgradeFishingLevel(playerid);
 							}
 						}
@@ -319,9 +329,9 @@ BoatFishing(playerid)
     new fstring[512];
     if(IsPlayerInRangeOfPoint(playerid, 250.0, 580.4959,-2114.1504,5.4900) || IsPlayerInRangeOfPoint(playerid, 250.0, 93.3936,-2086.8057,-0.3839))
 	{
-  if(PlayerFish[playerid][pFishWeight] <= 200)
+  		if(PlayerFish[playerid][pFishWeight] <= 200)
 		{
-			if(GetPVarInt(playerid, "pFishTime") < gettime())
+			if(FishingStamp[playerid] < gettimestamp())
 			{
 				switch(PlayerFish[playerid][pFishingSkill])
 				{
@@ -335,7 +345,7 @@ BoatFishing(playerid)
 								SetPlayerChatBubble(playerid, fstring, COLOR_PURPLE, 30.0, 4000);
 								SendClientMessage(playerid, COLOR_PURPLE, fstring);
 
-								SetPVarInt(playerid, "pFishTime", gettime() + 3);
+								FishingStamp[playerid] = gettimestamp() + 3;
 								UpgradeFishingLevel(playerid);
 							}
 							case 1:
@@ -345,7 +355,7 @@ BoatFishing(playerid)
 								SendClientMessage(playerid, COLOR_PURPLE, fstring);
 
 								PlayerFish[playerid][pFishWeight] += 2;
-								SetPVarInt(playerid, "pFishTime", gettime() + 3);
+								FishingStamp[playerid] = gettimestamp() + 3;
 								UpgradeFishingLevel(playerid);
 							}
 							case 2:
@@ -356,7 +366,7 @@ BoatFishing(playerid)
 
 								PlayerFish[playerid][pFishWeight] += 3;
 
-								SetPVarInt(playerid, "pFishTime", gettime() + 3);
+								FishingStamp[playerid] = gettimestamp() + 3;
 								UpgradeFishingLevel(playerid);
 							}
 						}
@@ -371,7 +381,7 @@ BoatFishing(playerid)
 								SetPlayerChatBubble(playerid, fstring, COLOR_PURPLE, 30.0, 4000);
 								SendClientMessage(playerid, COLOR_PURPLE, fstring);
 
-								SetPVarInt(playerid, "pFishTime", gettime() + 3);
+								FishingStamp[playerid] = gettimestamp() + 3;
 								UpgradeFishingLevel(playerid);
 							}
 							case 1:
@@ -382,7 +392,7 @@ BoatFishing(playerid)
 
 								PlayerFish[playerid][pFishWeight] += 2;
 
-								SetPVarInt(playerid, "pFishTime", gettime() + 3);
+								FishingStamp[playerid] = gettimestamp() + 3;
 								UpgradeFishingLevel(playerid);
 							}
 							case 2:
@@ -392,7 +402,7 @@ BoatFishing(playerid)
 								SendClientMessage(playerid, COLOR_PURPLE, fstring);
 								PlayerFish[playerid][pFishWeight] += 3;
 
-								SetPVarInt(playerid, "pFishTime", gettime() + 3);
+								FishingStamp[playerid] = gettimestamp() + 3;
 								UpgradeFishingLevel(playerid);
 							}
 							case 3:
@@ -403,7 +413,7 @@ BoatFishing(playerid)
 
 								PlayerFish[playerid][pFishWeight] += 6;
 
-								SetPVarInt(playerid, "pFishTime", gettime() + 3);
+								FishingStamp[playerid] = gettimestamp() + 3;
 								UpgradeFishingLevel(playerid);
 							}
 							case 4:
@@ -414,7 +424,7 @@ BoatFishing(playerid)
 
 								PlayerFish[playerid][pFishWeight] += 8;
 
-								SetPVarInt(playerid, "pFishTime", gettime() + 3);
+								FishingStamp[playerid] = gettimestamp() + 3;
 								UpgradeFishingLevel(playerid);
 							}
 						}
@@ -428,7 +438,7 @@ BoatFishing(playerid)
 								format(fstring, sizeof fstring, "{C2A2DA}* %s zabacuju mamac nazad u vodu, ne izvlaceci plijen.", GetName( playerid, false ));
 								SetPlayerChatBubble(playerid, fstring, COLOR_PURPLE, 30.0, 4000);
 								SendClientMessage(playerid, COLOR_PURPLE, fstring);
-								SetPVarInt(playerid, "pFishTime", gettime() + 3);
+								FishingStamp[playerid] = gettimestamp() + 3;
 								UpgradeFishingLevel(playerid);
 							}
 							case 1:
@@ -437,7 +447,7 @@ BoatFishing(playerid)
 								SetPlayerChatBubble(playerid, fstring, COLOR_PURPLE, 30.0, 4000);
 								SendClientMessage(playerid, COLOR_PURPLE, fstring);
 								PlayerFish[playerid][pFishWeight] += 2;
-								SetPVarInt(playerid, "pFishTime", gettime() + 3);
+								FishingStamp[playerid] = gettimestamp() + 3;
 								UpgradeFishingLevel(playerid);
 							}
 							case 2:
@@ -448,7 +458,7 @@ BoatFishing(playerid)
 
 								PlayerFish[playerid][pFishWeight] += 3;
 
-								SetPVarInt(playerid, "pFishTime", gettime() + 3);
+								FishingStamp[playerid] = gettimestamp() + 3;
 								UpgradeFishingLevel(playerid);
 							}
 							case 3:
@@ -459,7 +469,7 @@ BoatFishing(playerid)
 
 								PlayerFish[playerid][pFishWeight] += 6;
 
-								SetPVarInt(playerid, "pFishTime", gettime() + 3);
+								FishingStamp[playerid] = gettimestamp() + 3;
 								UpgradeFishingLevel(playerid);
 							}
 							case 4:
@@ -470,7 +480,7 @@ BoatFishing(playerid)
 
 								PlayerFish[playerid][pFishWeight] += 8;
 
-								SetPVarInt(playerid, "pFishTime", gettime() + 3);
+								FishingStamp[playerid] = gettimestamp() + 3;
 								UpgradeFishingLevel(playerid);
 							}
 							case 5:
@@ -479,7 +489,7 @@ BoatFishing(playerid)
 								SetPlayerChatBubble(playerid, fstring, COLOR_PURPLE, 30.0, 4000);
 								SendClientMessage(playerid, COLOR_PURPLE, fstring);
 								PlayerFish[playerid][pFishWeight] += 10;
-								SetPVarInt(playerid, "pFishTime", gettime() + 3);
+								FishingStamp[playerid] = gettimestamp() + 3;
 								UpgradeFishingLevel(playerid);
 							}
 							case 6:
@@ -490,7 +500,7 @@ BoatFishing(playerid)
 
 								PlayerFish[playerid][pFishWeight] += 13;
 
-								SetPVarInt(playerid, "pFishTime", gettime() + 3);
+								FishingStamp[playerid] = gettimestamp() + 3;
 								UpgradeFishingLevel(playerid);
 							}
 							case 7:
@@ -501,7 +511,7 @@ BoatFishing(playerid)
 
 								PlayerFish[playerid][pFishWeight] += 15;
 
-								SetPVarInt(playerid, "pFishTime", gettime() + 3);
+								FishingStamp[playerid] = gettimestamp() + 3;
 								UpgradeFishingLevel(playerid);
 							}
 							case 8:
@@ -512,7 +522,7 @@ BoatFishing(playerid)
 
 								PlayerFish[playerid][pFishWeight] += 18;
 
-								SetPVarInt(playerid, "pFishTime", gettime() + 3);
+								FishingStamp[playerid] = gettimestamp() + 3;
 								UpgradeFishingLevel(playerid);
 							}
 						}
@@ -527,7 +537,7 @@ BoatFishing(playerid)
 								SetPlayerChatBubble(playerid, fstring, COLOR_PURPLE, 30.0, 4000);
 								SendClientMessage(playerid, COLOR_PURPLE, fstring);
 
-								SetPVarInt(playerid, "pFishTime", gettime() + 3);
+								FishingStamp[playerid] = gettimestamp() + 3;
 								UpgradeFishingLevel(playerid);
 							}
 							case 1:
@@ -537,7 +547,7 @@ BoatFishing(playerid)
 								SendClientMessage(playerid, COLOR_PURPLE, fstring);
 								PlayerFish[playerid][pFishWeight] += 2;
 
-								SetPVarInt(playerid, "pFishTime", gettime() + 3);
+								FishingStamp[playerid] = gettimestamp() + 3;
 								UpgradeFishingLevel(playerid);
 							}
 							case 2:
@@ -548,7 +558,7 @@ BoatFishing(playerid)
 
 								PlayerFish[playerid][pFishWeight] += 3;
 
-								SetPVarInt(playerid, "pFishTime", gettime() + 3);
+								FishingStamp[playerid] = gettimestamp() + 3;
 								UpgradeFishingLevel(playerid);
 							}
 							case 3:
@@ -559,7 +569,7 @@ BoatFishing(playerid)
 
 								PlayerFish[playerid][pFishWeight] += 6;
 
-								SetPVarInt(playerid, "pFishTime", gettime() + 3);
+								FishingStamp[playerid] = gettimestamp() + 3;
 								UpgradeFishingLevel(playerid);
 							}
 							case 4:
@@ -570,7 +580,7 @@ BoatFishing(playerid)
 
 								PlayerFish[playerid][pFishWeight] += 8;
 
-								SetPVarInt(playerid, "pFishTime", gettime() + 3);
+								FishingStamp[playerid] = gettimestamp() + 3;
 								UpgradeFishingLevel(playerid);
 							}
 							case 5:
@@ -581,7 +591,7 @@ BoatFishing(playerid)
 
 								PlayerFish[playerid][pFishWeight] += 10;
 
-								SetPVarInt(playerid, "pFishTime", gettime() + 3);
+								FishingStamp[playerid] = gettimestamp() + 3;
 								UpgradeFishingLevel(playerid);
 							}
 							case 6:
@@ -592,7 +602,7 @@ BoatFishing(playerid)
 
 								PlayerFish[playerid][pFishWeight] += 13;
 
-								SetPVarInt(playerid, "pFishTime", gettime() + 3);
+								FishingStamp[playerid] = gettimestamp() + 3;
 								UpgradeFishingLevel(playerid);
 							}
 							case 7:
@@ -603,7 +613,7 @@ BoatFishing(playerid)
 
 								PlayerFish[playerid][pFishWeight] += 15;
 
-								SetPVarInt(playerid, "pFishTime", gettime() + 3);
+								FishingStamp[playerid] = gettimestamp() + 3;
 								UpgradeFishingLevel(playerid);
 							}
 							case 8:
@@ -614,7 +624,7 @@ BoatFishing(playerid)
 
 								PlayerFish[playerid][pFishWeight] += 18;
 
-								SetPVarInt(playerid, "pFishTime", gettime() + 3);
+								FishingStamp[playerid] = gettimestamp() + 3;
 								UpgradeFishingLevel(playerid);
 							}
 							case 9:
@@ -625,7 +635,7 @@ BoatFishing(playerid)
 
 								PlayerFish[playerid][pFishWeight] += 31;
 
-								SetPVarInt(playerid, "pFishTime", gettime() + 3);
+								FishingStamp[playerid] = gettimestamp() + 3;
 								UpgradeFishingLevel(playerid);
 							}
 							case 10:
@@ -635,7 +645,7 @@ BoatFishing(playerid)
 								SendClientMessage(playerid, COLOR_PURPLE, fstring);
 
 								PlayerFish[playerid][pFishWeight] += 35;
-								SetPVarInt(playerid, "pFishTime", gettime() + 3);
+								FishingStamp[playerid] = gettimestamp() + 3;
 								UpgradeFishingLevel(playerid);
 							}
 							case 11:
@@ -646,7 +656,7 @@ BoatFishing(playerid)
 
 								PlayerFish[playerid][pFishWeight] += 37;
 
-								SetPVarInt(playerid, "pFishTime", gettime() + 3);
+								FishingStamp[playerid] = gettimestamp() + 3;
 								UpgradeFishingLevel(playerid);
 							}
 						}
@@ -661,7 +671,7 @@ BoatFishing(playerid)
 								SetPlayerChatBubble(playerid, fstring, COLOR_PURPLE, 30.0, 4000);
 								SendClientMessage(playerid, COLOR_PURPLE, fstring);
 
-								SetPVarInt(playerid, "pFishTime", gettime() + 3);
+								FishingStamp[playerid] = gettimestamp() + 3;
 								UpgradeFishingLevel(playerid);
 							}
 							case 1:
@@ -672,7 +682,7 @@ BoatFishing(playerid)
 
 								PlayerFish[playerid][pFishWeight] += 2;
 
-								SetPVarInt(playerid, "pFishTime", gettime() + 3);
+								FishingStamp[playerid] = gettimestamp() + 3;
 								UpgradeFishingLevel(playerid);
 							}
 							case 2:
@@ -683,7 +693,7 @@ BoatFishing(playerid)
 
 								PlayerFish[playerid][pFishWeight] += 3;
 
-								SetPVarInt(playerid, "pFishTime", gettime() + 3);
+								FishingStamp[playerid] = gettimestamp() + 3;
 								UpgradeFishingLevel(playerid);
 							}
 							case 3:
@@ -694,7 +704,7 @@ BoatFishing(playerid)
 
 								PlayerFish[playerid][pFishWeight] += 6;
 
-								SetPVarInt(playerid, "pFishTime", gettime() + 3);
+								FishingStamp[playerid] = gettimestamp() + 3;
 								UpgradeFishingLevel(playerid);
 							}
 							case 4:
@@ -705,7 +715,7 @@ BoatFishing(playerid)
 
 								PlayerFish[playerid][pFishWeight] += 8;
 
-								SetPVarInt(playerid, "pFishTime", gettime() + 3);
+								FishingStamp[playerid] = gettimestamp() + 3;
 								UpgradeFishingLevel(playerid);
 							}
 							case 5:
@@ -716,7 +726,7 @@ BoatFishing(playerid)
 
 								PlayerFish[playerid][pFishWeight] += 10;
 
-								SetPVarInt(playerid, "pFishTime", gettime() + 3);
+								FishingStamp[playerid] = gettimestamp() + 3;
 								UpgradeFishingLevel(playerid);
 							}
 							case 6:
@@ -727,7 +737,7 @@ BoatFishing(playerid)
 
 								PlayerFish[playerid][pFishWeight] += 13;
 
-								SetPVarInt(playerid, "pFishTime", gettime() + 3);
+								FishingStamp[playerid] = gettimestamp() + 3;
 								UpgradeFishingLevel(playerid);
 							}
 							case 7:
@@ -738,7 +748,7 @@ BoatFishing(playerid)
 
 								PlayerFish[playerid][pFishWeight] += 15;
 
-								SetPVarInt(playerid, "pFishTime", gettime() + 3);
+								FishingStamp[playerid] = gettimestamp() + 3;
 								UpgradeFishingLevel(playerid);
 							}
 							case 8:
@@ -749,7 +759,7 @@ BoatFishing(playerid)
 
 								PlayerFish[playerid][pFishWeight] += 18;
 
-								SetPVarInt(playerid, "pFishTime", gettime() + 3);
+								FishingStamp[playerid] = gettimestamp() + 3;
 								UpgradeFishingLevel(playerid);
 							}
 							case 9:
@@ -760,7 +770,7 @@ BoatFishing(playerid)
 
 								PlayerFish[playerid][pFishWeight] += 31;
 
-								SetPVarInt(playerid, "pFishTime", gettime() + 3);
+								FishingStamp[playerid] = gettimestamp() + 3;
 								UpgradeFishingLevel(playerid);
 							}
 							case 10:
@@ -771,7 +781,7 @@ BoatFishing(playerid)
 
 								PlayerFish[playerid][pFishWeight] += 35;
 
-								SetPVarInt(playerid, "pFishTime", gettime() + 3);
+								FishingStamp[playerid] = gettimestamp() + 3;
 								UpgradeFishingLevel(playerid);
 							}
 							case 11:
@@ -782,7 +792,7 @@ BoatFishing(playerid)
 
 								PlayerFish[playerid][pFishWeight] += 37;
 
-								SetPVarInt(playerid, "pFishTime", gettime() + 3);
+								FishingStamp[playerid] = gettimestamp() + 3;
 								UpgradeFishingLevel(playerid);
 							}
 							case 12:
@@ -793,7 +803,7 @@ BoatFishing(playerid)
 
 								PlayerFish[playerid][pFishWeight] += 90;
 
-								SetPVarInt(playerid, "pFishTime", gettime() + 3);
+								FishingStamp[playerid] = gettimestamp() + 3;
 								UpgradeFishingLevel(playerid);
 							}
 						}
@@ -853,11 +863,12 @@ CMD:myfish(playerid, params[]) {
 	return 1;
 }
 
-CMD:sellfish(playerid, params[]) {
+CMD:sellfish(playerid, params[]) 
+{
 
 	new amount;
 	new fstring[512];
-    if(GetPVarInt(playerid, "pFishSellTime") < gettime())
+    if(FishSellStamp[playerid] < gettimestamp())
     {
         if(PlayerFish[playerid][pFishWeight] < 20) return SendClientMessage(playerid, COLOR_GREY, "Morate imati minimalno 20kg, kako bi ih mogli prodati.");
         if(IsPlayerInRangeOfPoint(playerid, 30.0, 2623.5898,-2470.8184,3.0000))
@@ -880,7 +891,7 @@ CMD:sellfish(playerid, params[]) {
 
 				SendClientMessage(playerid, COLOR_RED, fstring);
 
-				SetPVarInt(playerid, "pFishSellTime", gettime() + 300);
+				FishSellStamp[playerid] = gettimestamp() + 300;
 			}
 			else return SendClientMessage(playerid, COLOR_RED, " [ ! ] Nemate toliku kolicu ribe!");
 		}
@@ -889,7 +900,7 @@ CMD:sellfish(playerid, params[]) {
             DisablePlayerCheckpoint(playerid);
 
 		    GameTextForPlayer(playerid, "~b~WAYPOINT SET", 5000, 4);
-            SetPVarInt(playerid, "pSellingFish", 1);
+            SellingFish[playerid] = true;
 		    SetPlayerCheckpoint(playerid, 2623.5898,-2470.8184,3.0000, 10.0);
 			return SendClientMessage(playerid, COLOR_RED, "[ ! ] Uputite se ka mjestu za prodaju ribe");
 		}
