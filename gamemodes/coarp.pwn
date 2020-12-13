@@ -1085,7 +1085,7 @@ public OnGameModeInit()
 	mysql_log(ERROR | WARNING);
 	print("Report: MySQL Connection & Log Mode Established.");
 
-	MapAndreas_Init(MAP_ANDREAS_MODE_FULL, "scriptfiles/SAmin.hmap");
+	MapAndreas_Init(MAP_ANDREAS_MODE_FULL, "scriptfiles/SAfull.hmap");
 	print("Report: MapAndreas Initialised.");
 
 	// Streamer config
