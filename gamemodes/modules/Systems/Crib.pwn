@@ -1392,6 +1392,12 @@ hook OnGameModeInit()
     return 1;
 }
 
+hook ResetPlayerVariables(playerid)
+{
+    ResetHouseVariables(playerid);
+    return 1;
+}
+
 hook OnPlayerEnterDynamicCP(playerid, checkpointid)
 {
     new house = (checkpointid - 1);

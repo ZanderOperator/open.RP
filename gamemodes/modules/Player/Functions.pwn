@@ -1052,11 +1052,6 @@ Public:PlayerMinuteTask(playerid)
 {
 	PlayerTick[playerid][ptMainTimer] = gettimestamp() + 60;
 	
-	if(GetPlayerState(playerid) != PLAYER_STATE_DRIVER && LastVehicle[playerid] != INVALID_VEHICLE_ID) 
-	{
-		LastVehicleDriver[LastVehicle[playerid]] = INVALID_PLAYER_ID;
-		LastVehicle[playerid] = INVALID_VEHICLE_ID;
-	}
 	if( (CreditInfo[playerid][cCreditType] == 5 || CreditInfo[playerid][cCreditType] == 6 || CreditInfo[playerid][cCreditType] == 7) && !CreditInfo[playerid][cUsed] && gettimestamp() >= CreditInfo[playerid][cTimestamp]) 
 	{
 		ResetCreditVars(playerid);
@@ -1145,8 +1140,6 @@ timer PlayerGlobalTask[1000](playerid)
 	
 	if((pcar = GetPlayerVehicleID(playerid)) != INVALID_VEHICLE_ID && GetPlayerState(playerid) == PLAYER_STATE_DRIVER)
 	{
-		LastVehicle[playerid] = GetPlayerVehicleID(playerid);
-		LastVehicleDriver[LastVehicle[playerid]] = playerid;		
 		static
 			Float:vhealth;
 

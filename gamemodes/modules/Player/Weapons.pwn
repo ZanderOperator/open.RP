@@ -429,18 +429,35 @@ hook ResetPlayerVariables(playerid)
 
 	AimWarns[playerid] = 0;
 	AimWarnStamp[playerid] = 0;
+
+	for(new wslot = 0; wslot < MAX_PLAYER_WEAPON_SLOTS; wslot++)
+	{
+		PlayerWeapons[playerid][pwSQLID][wslot] = -1;
+		PlayerWeapons[playerid][pwWeaponId][wslot] = 0;
+		PlayerWeapons[playerid][pwAmmo][wslot] = 0;
+		PlayerWeapons[playerid][pwHidden][wslot] = 0;
+	}
+	HiddenWeapon[playerid][pwSQLID] = -1;
+	HiddenWeapon[playerid][pwWeaponId] = 0;
+	HiddenWeapon[playerid][pwAmmo] = 0;
+	
 	return 1;
 }
 
-public OnPlayerSuspectedForAimbot(playerid,hitid,weaponid,warnings)
+public OnPlayerSuspectedForAimbot(playerid, hitid, weaponid, warnings)
 {
-	new str[144], wname[32];
+	new str[144];
 	
 	AimWarns[playerid]++;
-	GetWeaponName(weaponid,wname,sizeof(wname));
 	if(warnings & WARNING_OUT_OF_RANGE_SHOT)
 	{
-	    format(str,sizeof(str),"[%d. warn]%s(%d) je ispucao metak izvan dometa oruzja %s. (Normal Range:%f)",AimWarns[playerid],GetName(playerid,false),playerid,wname,BustAim::GetNormalWeaponRange(weaponid));
+	    format(str,sizeof(str),"[%d. warn]%s(%d) je ispucao metak izvan dometa oruzja %s. (Normal Range:%f)",
+			AimWarns[playerid],
+			GetName(playerid,false),
+			playerid,
+			GetWeaponNameEx(weaponid),
+			BustAim::GetNormalWeaponRange(weaponid)
+		);
 		if(gettimestamp() >= AimWarnStamp[playerid])
 			ABroadCast(COLOR_YELLOW,str,1);
 		AimWarnStamp[playerid] = gettimestamp() + 5;
@@ -448,7 +465,11 @@ public OnPlayerSuspectedForAimbot(playerid,hitid,weaponid,warnings)
 	}
 	if(warnings & WARNING_PROAIM_TELEPORT)
 	{
-	    format(str,sizeof(str),"[%d. warn]%s(%d) je potencijalni korisnik ProAima (Teleport detektiran)",AimWarns[playerid],GetName(playerid,false),playerid);
+	    format(str,sizeof(str),"[%d. warn]%s(%d) je potencijalni korisnik ProAima (Teleport detektiran)",
+			AimWarns[playerid],
+			GetName(playerid,false),
+			playerid
+		);
 		if(gettimestamp() >= AimWarnStamp[playerid])
 			ABroadCast(COLOR_YELLOW,str,1);
 		AimWarnStamp[playerid] = gettimestamp() + 5;
@@ -456,7 +477,12 @@ public OnPlayerSuspectedForAimbot(playerid,hitid,weaponid,warnings)
 	}
 	if(warnings & WARNING_RANDOM_AIM)
 	{
-	    format(str,sizeof(str),"[%d. warn]%s(%d) je potencijalni korisnik AimBota (Random Aim pogodak sa %s).",AimWarns[playerid],GetName(playerid,false),playerid,wname);
+	    format(str,sizeof(str),"[%d. warn]%s(%d) je potencijalni korisnik AimBota (Random Aim pogodak sa %s).",
+			AimWarns[playerid],
+			GetName(playerid,false),
+			playerid,
+			GetWeaponNameEx(weaponid)
+		);
 		if(gettimestamp() >= AimWarnStamp[playerid])
 			ABroadCast(COLOR_YELLOW,str,1);
 		AimWarnStamp[playerid] = gettimestamp() + 5;
@@ -464,7 +490,14 @@ public OnPlayerSuspectedForAimbot(playerid,hitid,weaponid,warnings)
 	}
 	if(warnings & WARNING_CONTINOUS_SHOTS)
 	{
-	    format(str,sizeof(str),"[%d. warn]%s(%d) je ispucao 10 metaka za redom koji su pogodili %s(%d) sa %s.", AimWarns[playerid],GetName(playerid,false),playerid, GetName(hitid, false), hitid, wname);
+	    format(str,sizeof(str),"[%d. warn]%s(%d) je ispucao 10 metaka za redom koji su pogodili %s(%d) sa %s.", 
+			AimWarns[playerid],
+			GetName(playerid,false),
+			playerid, 
+			GetName(hitid, false), 
+			hitid, 
+			GetWeaponNameEx(weaponid)
+		);
 		if(gettimestamp() >= AimWarnStamp[playerid])
 			ABroadCast(COLOR_YELLOW,str,1);
 		AimWarnStamp[playerid] = gettimestamp() + 5;

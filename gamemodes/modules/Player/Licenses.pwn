@@ -178,6 +178,7 @@ hook SavePlayerStats(playerid)
 
 hook ResetPlayerVariables(playerid)
 {
+	ResetPlayerDrivingVars(playerid);
     LicenseInfo[playerid][pCarLic] = 0;
     LicenseInfo[playerid][pGunLic] = 0;
     LicenseInfo[playerid][pBoatLic] = 0;

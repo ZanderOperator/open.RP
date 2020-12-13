@@ -11,6 +11,7 @@ static
 	Float:AdminMark4[MAX_PLAYERS][3],
 	Float:AdminMark5[MAX_PLAYERS][3];
 
+
 /*
 	 ######  ##     ## ########   ######  
 	##    ## ###   ### ##     ## ##    ## 
@@ -3390,12 +3391,8 @@ CMD:ninja(playerid, params[])
 CMD:fly(playerid,params[])
 {
 	#pragma unused params
-	new
-	    Float:X,
-		Float:Y,
-		Float:Z;
-		
-    if (PlayerInfo[playerid][pAdmin] < 1) return SendClientMessage(playerid, COLOR_RED, "Niste autorizovani. [MAYDAY]");
+    if (PlayerInfo[playerid][pAdmin] < 1) 
+		return SendClientMessage(playerid, COLOR_RED, "Niste autorizovani. [MAYDAY]");
 
 	if(adminfly[playerid] == 0)
 	{
@@ -3405,16 +3402,13 @@ CMD:fly(playerid,params[])
 	}
 	else if(adminfly[playerid] == 1)
 	{
-	    GetPlayerPos(playerid, X, Y, Z);
-		ACPosX[playerid] = X;
-		ACPosY[playerid] = Y;
-		ACPosZ[playerid] = Z;
 		StopFly(playerid);
 		adminfly[playerid] = 0;
 		SetPlayerHealth(playerid, 100);
 	}
 	return true;
 }
+
 CMD:lt(playerid, params[])
 {
 	#pragma unused params

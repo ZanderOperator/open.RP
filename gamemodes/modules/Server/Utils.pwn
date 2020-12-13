@@ -1221,7 +1221,7 @@ stock GetWeaponNameEx(weaponid)
 		case 54: strcpy(weaponName, "Falling Death", sizeof(weaponName));
 		case PACKAGE_PANCIR: strcpy(weaponName, "Kevlar Vest", sizeof(weaponName));
 		case 255: strcpy(weaponName, "Suicide", sizeof(weaponName));
-		default: strcpy(weaponName, "Unknown", sizeof(weaponName));
+		default: strcpy(weaponName, "Empty", sizeof(weaponName));
 	}
 	return weaponName;
 }

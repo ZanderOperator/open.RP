@@ -249,7 +249,8 @@ stock ChangePlayerInputKey(playerid)
 public OnPlayerDisconnect(playerid, reason)
 {
 	if( Bit1_Get(PlayerUsingKeyInput, playerid) )
-		DisablePlayerKeyInput(playerid);	
+		DisablePlayerKeyInput(playerid);
+			
     return 1;
 }
 

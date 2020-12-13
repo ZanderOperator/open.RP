@@ -186,18 +186,16 @@ CMD:gunrack(playerid, params[])
         if (GunrackInUse[vehicleid]) return SendClientMessage(playerid, COLOR_RED, "Pokusaj kasnije.");
         GunrackInUse[vehicleid] = true;
 
-        new str[156],
-            gun1[32],
-            gun2[32];
-        GetWeaponName(GunrackWeapon[vehicleid][0], gun1, sizeof(gun1));
-        GetWeaponName(GunrackWeapon[vehicleid][1], gun2, sizeof(gun2));
-        // TODO: use strcpy for copying strings
-        if(isnull(gun1))
-            format(gun1, sizeof(gun1), "Prazno");
-        if(isnull(gun2))
-            format(gun2, sizeof(gun2), "Prazno");
+        new 
+            str[156];
 
-        format(str, sizeof(str), "Weapon\tAmmo\n\%s\t%i\n%s\t%i", gun1, GunrackAmmo[vehicleid][0], gun2, GunrackAmmo[vehicleid][1]);
+        format(str, sizeof(str), 
+            "Weapon\tAmmo\n\%s\t%i\n%s\t%i", 
+            GetWeaponNameEx(GunrackWeapon[vehicleid][0]),
+            GunrackAmmo[vehicleid][0], 
+            GetWeaponNameEx(GunrackWeapon[vehicleid][1]),
+            GunrackAmmo[vehicleid][1]
+        );
         ShowPlayerDialog(playerid, DIALOG_GUNRACK, DIALOG_STYLE_TABLIST_HEADERS, "Police Gunrack", str, "Choose", "Abort");
     }
     else SendClientMessage(playerid, COLOR_RED, "Niste u vozilu LSPDa.");

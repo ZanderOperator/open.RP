@@ -940,11 +940,13 @@ stock PutPlayerWeaponInTrunk(playerid, vehicleid, weaponid)
 	{
 		if (!IsWeaponHideable(VehicleInfo[vehicleid][vWeaponId][slot]))
 			return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Mozete sakriti samo manja oruzja(microSMG/Tec-9/Colt/Deagle).");
-		new wname[32],
-			carname[36];
-		GetWeaponName(VehicleInfo[vehicleid][vWeaponId][slot], wname, 32);
-		strunpack(carname, Model_Name(VehicleInfo[vehicleid][vModel]));
-		SendFormatMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uspjesno ste pohranili %s(%d metaka) u %s.", wname, VehicleInfo[vehicleid][vWeaponAmmo][slot], carname);
+		
+		SendFormatMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uspjesno ste pohranili %s(%d metaka) u %s.", 
+			GetWeaponNameEx(VehicleInfo[vehicleid][vWeaponId][slot]), 
+			VehicleInfo[vehicleid][vWeaponAmmo][slot], 
+			ReturnVehicleName(VehicleInfo[vehicleid][vModel])
+		);
+
 		StoreWeaponInTrunk(playerid, vehicleid, slot);
 		CheckVehicleWeaponTrunkSpace(playerid, vehicleid);
 	}
@@ -955,13 +957,14 @@ stock PutPlayerWeaponInTrunk(playerid, vehicleid, weaponid)
 stock StoreWeaponInTrunk(playerid, vehicleid, slot)
 {
 	new weaponid = AC_GetPlayerWeapon(playerid),
-		ammo = AC_GetPlayerAmmo(playerid),
-		gunname[32];
-		
-	GetWeaponName(weaponid, gunname, sizeof(gunname));
-	
-	if(AC_GetPlayerAmmo(playerid) <= 0) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate oruzje u rukama!");
-	if(AC_GetPlayerWeapon(playerid) == 0) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate oruzje u rukama!");
+		ammo = AC_GetPlayerAmmo(playerid);
+
+
+	if(AC_GetPlayerAmmo(playerid) <= 0) 
+		return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate oruzje u rukama!");
+	if(AC_GetPlayerWeapon(playerid) == 0) 
+		return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate oruzje u rukama!");
+
 	VehicleInfo[vehicleid][vWeaponId][slot] 	= weaponid;
 	VehicleInfo[vehicleid][vWeaponAmmo][slot] 	+= ammo;
 	AC_ResetPlayerWeapon(playerid, weaponid);
@@ -984,7 +987,7 @@ stock StoreWeaponInTrunk(playerid, vehicleid, slot)
 		ReturnDate(), 
 		GetName(playerid),
 		VehicleInfo[vehicleid][vSQLID],
-		gunname,
+		GetWeaponNameEx(weaponid),
 		ammo,
 		ReturnVehicleName(GetVehicleModel(vehicleid)),
 		slot
@@ -997,11 +1000,9 @@ stock StoreWeaponInTrunk(playerid, vehicleid, slot)
 
 stock TakePlayerWeaponFromTrunk(playerid, vehicleid, slot)
 {	
-	new	
-		gunname[32],
-		carname[36];
+	if (! CheckPlayerWeapons(playerid, VehicleInfo[vehicleid][vWeaponId][slot])) 
+		return 1;
 	
-	if (! CheckPlayerWeapons(playerid, VehicleInfo[vehicleid][vWeaponId][slot])) return 1;
 	AC_GivePlayerWeapon(playerid, VehicleInfo[vehicleid][vWeaponId][slot], VehicleInfo[vehicleid][vWeaponAmmo][slot]);
 	new	puzavac = IsCrounching(playerid);
 	SetAnimationForWeapon(playerid, VehicleInfo[vehicleid][vWeaponId][slot], puzavac);
@@ -1011,22 +1012,24 @@ stock TakePlayerWeaponFromTrunk(playerid, vehicleid, slot)
 		VehicleInfo[vehicleid][vWeaponSQLID][slot]
 	);
 	
-	GetWeaponName(VehicleInfo[vehicleid][vWeaponId][slot], gunname, sizeof(gunname));
-	
 	#if defined MODULE_LOGS
 	Log_Write("logfiles/weapon_trunktake.txt", "(%s) %s [Vehicle SQLID:%d] took %s with %d bullets from %s(Slot %d).", 
 		ReturnDate(), 
 		GetName(playerid),
 		VehicleInfo[vehicleid][vSQLID],
-		gunname,
+		GetWeaponNameEx(VehicleInfo[vehicleid][vWeaponId][slot]),
 		VehicleInfo[vehicleid][vWeaponAmmo][slot],
 		ReturnVehicleName(GetVehicleModel(vehicleid)),
 		slot
 	);
 	#endif
 	
-	strunpack(carname, Model_Name(VehicleInfo[vehicleid][vModel]));
-	SendFormatMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uspjesno ste uzeli %s(%d metaka) iz %s-a.", gunname, VehicleInfo[vehicleid][vWeaponAmmo][slot], carname);
+	SendFormatMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uspjesno ste uzeli %s(%d metaka) iz %s.", 
+		GetWeaponNameEx(VehicleInfo[vehicleid][vWeaponId][slot]), 
+		VehicleInfo[vehicleid][vWeaponAmmo][slot], 
+		ReturnVehicleName(VehicleInfo[vehicleid][vModel])
+	);
+
 	DeleteWeaponObject(vehicleid, slot);
 	ClearWeaponObject(vehicleid, slot);
 	
@@ -1320,17 +1323,23 @@ Public:LoadingVehicleWeapons(vehicleid)
 
 stock ListPlayerVehicleWeapons(playerid, vehicleid)
 {
-	new buffer[756], wname[32], counter = 0;
+	new 
+		bool:broken = false,
+		buffer[756], 
+		motd[64], 
+		counter = 0;
+
 	foreach(new wslot: VehWeapon[vehicleid])
 	{
-		GetWeaponName(VehicleInfo[vehicleid][vWeaponId][wslot], wname, 32);
-		format(buffer, 756, "%s"COL_WHITE"%s(%d metaka)\n", 
+		format(motd, 64, ""COL_WHITE"%s%s(%d metaka)\n", 
+			(broken) ? ("\n") : (""),
 			buffer,
-			wname,
+			GetWeaponNameEx(VehicleInfo[vehicleid][vWeaponId][wslot]),
 			VehicleInfo[vehicleid][vWeaponAmmo][wslot]
 		);
 		WeaponToList[playerid][counter] = wslot;
 		counter++;
+		broken = true;
 	}
 	return buffer;
 }
@@ -4690,11 +4699,13 @@ hook OnPlayerEditObject(playerid, playerobject, objectid, response, Float:fX, Fl
 					EditingTrunkWeaponModel[playerid] = 0;
 					Bit1_Set(gr_PlayerTrunkEdit, playerid, false);
 					Streamer_Update(playerid);
-					new wname[32],
-						carname[36];
-					GetWeaponName(VehicleInfo[AttachVehID][vWeaponId][wslot], wname, 32);
-					strunpack(carname, Model_Name(VehicleInfo[AttachVehID][vModel]));
-					SendFormatMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uspjesno ste pohranili %s(%d metaka) u prtljaznik %s-a.", wname, VehicleInfo[AttachVehID][vWeaponAmmo][wslot], carname);
+					
+					SendFormatMessage(playerid, MESSAGE_TYPE_SUCCESS, 
+						"Uspjesno ste pohranili %s(%d metaka) u prtljaznik %s-a.", 
+						GetWeaponNameEx(VehicleInfo[AttachVehID][vWeaponId][wslot]),
+						VehicleInfo[AttachVehID][vWeaponAmmo][wslot], 
+						ReturnVehicleName(VehicleInfo[AttachVehID][vModel])
+					);
 					CheckVehicleWeaponTrunkSpace(playerid, AttachVehID);
 				}
 			}
