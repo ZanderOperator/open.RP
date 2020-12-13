@@ -88,8 +88,7 @@ Public: OnPasswordUpdate(playerid)
 	new password[BCRYPT_HASH_LENGTH];
 	bcrypt_get_hash(password);
 	
-	PlayerInfo[playerid][pPassword][0] = EOS;
-	strcat(PlayerInfo[playerid][pPassword], password, BCRYPT_HASH_LENGTH);
+	strcpy(PlayerInfo[playerid][pPassword], password, BCRYPT_HASH_LENGTH);
 	
 	mysql_fquery(g_SQL, "UPDATE accounts SET password = '%e' WHERE sqlid = '%d'",
 		password,
@@ -220,8 +219,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 				return 1;
 			}
 			
-			PlayerInfo[playerid][pSecQuestAnswer][0] = EOS;
-			strcat(PlayerInfo[playerid][pSecQuestAnswer], inputtext, 31);
+			strcpy(PlayerInfo[playerid][pSecQuestAnswer], inputtext, 31);
 			
 			mysql_fquery(g_SQL, "UPDATE accounts SET secquestion = '%d', secawnser = '%e' WHERE sqlid = '%d'",
 				PlayerInfo[playerid][pSecQuestion],
@@ -256,8 +254,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 			if(strlen(inputtext) > MAX_PLAYER_MAIL-1) return ShowPlayerDialog(playerid, DIALOG_SEC_MAIL, DIALOG_STYLE_INPUT, "UNOS E-MAIL ADRESE", "Unesite novu e-mail adresu.\n"COL_RED"Prevelik unos e-mail adrese!", "Input", "Abort");
 			if(!IsValidEMail(inputtext)) return ShowPlayerDialog(playerid, DIALOG_SEC_MAIL, DIALOG_STYLE_INPUT, "UNOS E-MAIL ADRESE", "Unesite novu e-mail adresu.\n"COL_RED"Tu adresu netko koristi ili nije po standardima (obrati se adminima)!", "Input", "Abort");
 			
-			PlayerInfo[playerid][pEmail][0] = EOS;
-			strcat(PlayerInfo[playerid][pEmail], inputtext, MAX_PLAYER_MAIL);
+			strcpy(PlayerInfo[playerid][pEmail], inputtext, MAX_PLAYER_MAIL);
 			
 			mysql_fquery(g_SQL, "UPDATE accounts SET email = '%e' WHERE sqlid = '%d'",
 				PlayerInfo[playerid][pEmail],
@@ -284,16 +281,18 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 			if( strfind(inputtext, "%", true) != -1 || strfind(inputtext, "\n", true) != -1 || strfind(inputtext, "=", true) != -1 || strfind(inputtext, "+", true) != -1 || strfind(inputtext, "'", true) != -1 || strfind(inputtext, ">", true) != -1 || strfind(inputtext, "^", true) != -1 || strfind(inputtext, "|", true) != -1 || strfind(inputtext, "?", true) != -1 || strfind(inputtext, "*", true) != -1 || strfind(inputtext, "#", true) != -1 || strfind(inputtext, "!", true) != -1 || strfind(inputtext, "$", true) != -1 )
 				return ShowPlayerDialog(playerid, DIALOG_SEC_PASS, DIALOG_STYLE_PASSWORD, "UNOS NOVE SIFRE", "Unesite novu sifru:\n"COL_RED"Nedozvoljeni znakovi u unesenoj sifri!\n\n"COL_RED"NAPOMENA: Dobro spremite svoju sifru, ako ju izgubite obratite se administraciji!", "Input", "Abort");
 			
-			if(strlen(inputtext) < 3) { //Mala Sifra
+			if(strlen(inputtext) < 3) 
+			{ //Mala Sifra
 				ShowPlayerDialog(playerid, DIALOG_SEC_PASS, DIALOG_STYLE_PASSWORD, "UNOS NOVE SIFRE", "Unesite novu sifru:\n"COL_RED"Premali unos sifre (manji od 3)\n\n"COL_RED"NAPOMENA: Dobro spremite svoju sifru, ako ju izgubite obratite se administraciji!", "Input", "Abort");
 				return 1;
 			}
-			else if(strlen(inputtext) > 15) { //Prevelika
+			else if(strlen(inputtext) > 15) 
+			{ //Prevelika
 				ShowPlayerDialog(playerid, DIALOG_SEC_PASS, DIALOG_STYLE_PASSWORD, "UNOS NOVE SIFRE", "Unesite novu sifru:\n"COL_RED"Prevelik unos sifre (veca od 10)\n\n"COL_RED"NAPOMENA: Dobro spremite svoju sifru, ako ju izgubite obratite se administraciji!", "Input", "Abort");
 				return 1;
 			}
-			PlayerInfo[playerid][pPassword][0] = EOS;
-			strcat(PlayerInfo[playerid][pPassword], inputtext, BCRYPT_COST);
+
+			strcpy(PlayerInfo[playerid][pPassword], inputtext, BCRYPT_COST);
 			UpdateRegisteredPassword(playerid);
 
 			ShowPlayerDialog(playerid, 0, DIALOG_STYLE_MSGBOX, "USPJESAN UNOS", "Uspjesno ste unijeli vas novi password!\nZapisite ga negdje jer ce vam trebati!", "Ok", "");			

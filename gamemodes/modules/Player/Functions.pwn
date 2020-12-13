@@ -230,8 +230,7 @@ Public:CheckAccountsForInactivity()
 			cid = INVALID_COMPLEX_ID;
 			crid = INVALID_COMPLEX_ID;
 			garageid = INVALID_HOUSE_ID;
-			logString[0] = EOS;
-			
+
 			cache_get_value_name_int(i, "sqlid", sqlid);
 			cache_get_value_name(i, 	"name"	, playername, 24);
 			cache_get_value_name_int(i, "lastloginstamp", loginstamp);
@@ -258,7 +257,7 @@ Public:CheckAccountsForInactivity()
 				continue;
 			}
 			
-			strcat(logString, GetPlayerAdminMessage(sqlid), sizeof(logString)); 
+			strcpy(logString, GetPlayerAdminMessage(sqlid), sizeof(logString)); 
 			if(isnull(logString))
 				d = false;
 			else d = true;
@@ -516,14 +515,13 @@ Public:CheckAccountsForInactivity()
 				cid = INVALID_COMPLEX_ID;
 				crid = INVALID_COMPLEX_ID;
 				garageid = INVALID_HOUSE_ID;
-				logString[0] = EOS;
 			
 				cache_get_value_name_int(i, "sqlid", sqlid);
 
 				format(playername, sizeof(playername), "%s", ConvertSQLIDToName(sqlid));
 				donaterank = GetPlayerVIP(sqlid);
 				
-				strcat(logString, GetPlayerAdminMessage(sqlid), sizeof(logString)); 
+				strcpy(logString, GetPlayerAdminMessage(sqlid), sizeof(logString)); 
 				if(isnull(logString))
 					d = false;
 				else d = true;

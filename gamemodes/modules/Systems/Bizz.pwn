@@ -644,7 +644,7 @@ stock GetDrinkName(drinkid)
         case DRINKS_BLUE_LAGOON:                format(string, 33, "Blue Lagoon"              );
         case DRINKS_VIAGRA:                     format(string, 33, "Viagra "                  );
         case DRINKS_BLOOD_MARY:                 format(string, 33, "Blood Mary"               );
-        default: strcat(string, "Prazno", sizeof(string));
+        default: strcpy(string, "Prazno", sizeof(string));
     }
     return string;
 }

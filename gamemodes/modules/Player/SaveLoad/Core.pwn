@@ -876,7 +876,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 				return 1;
 			}
 			new input_password[12];
-			strcat(input_password, inputtext, 12);
+			strcpy(input_password, inputtext, 12);
 			inline PasswordForQuery()
 			{
 				new sqlid, sql_password[BCRYPT_HASH_LENGTH];

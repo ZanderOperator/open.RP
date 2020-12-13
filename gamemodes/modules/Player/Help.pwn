@@ -311,15 +311,17 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext [])
 			else
 			{
 				new casinostring [1024];
-				strcat(casinostring, "Za pocetak igra pokera, potrebna su dva ili vise igraca. Igru mora pokrenuti dealer(/poker table), nakon cega pravi podesavanja sobe.\n\
-					Ostali ucesnici kucaju /poker play, te kolicinu novca s kojom zele sudjelovati. \n\
-					Nakon toga, runda zapocinje i morate sacekati 15sekundi.\n\
-					Nakon 15 sekundi dolaze karte, pojavljuje vam se kratak dialog sa CHECK,RAISE i FOLD.  \n\
-					CHECK je potvrdjivanje i nastavak ide bez ulaganja. \n\
-					RAISE ukoliko zelite da podignete ulog na stolu.\n\
-					FOLD ukoliko zelite da vratite karte i odustanete od runde. \n\
-					Da biste zapoceli rulet u prostoriji kasina pored stola za rulet kucate komandu /rulet, nakon toga vam ne trebaju dodatne komande i nastavljate igru po zelji.", 
-					sizeof(casinostring)
+				strcat(casinostring, 
+					"Za pocetak igra pokera, potrebna su dva ili vise igraca. Igru mora pokrenuti dealer(/poker table), \n\
+						nakon cega pravi podesavanja sobe.\n\
+						Ostali ucesnici kucaju /poker play, te kolicinu novca s kojom zele sudjelovati. \n\
+						Nakon toga, runda zapocinje i morate sacekati 15sekundi.\n\
+						Nakon 15 sekundi dolaze karte, pojavljuje vam se kratak dialog sa CHECK,RAISE i FOLD.  \n\
+						CHECK je potvrdjivanje i nastavak ide bez ulaganja. \n\
+						RAISE ukoliko zelite da podignete ulog na stolu.\n\
+						FOLD ukoliko zelite da vratite karte i odustanete od runde. \n\
+						Da biste zapoceli rulet u prostoriji kasina pored stola za rulet kucate komandu /rulet, \n\
+						nakon toga vam ne trebaju dodatne komande i nastavljate igru po zelji."
 				);
 				ShowPlayerDialog(playerid,DIALOG_KASINO, DIALOG_STYLE_MSGBOX, "KASINO", casinostring , "Close", "");
 			}

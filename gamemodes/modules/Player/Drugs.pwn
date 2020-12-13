@@ -311,15 +311,15 @@ ReturnDrugQuality(Float:dqf)
 		dq[11];
 
 	if(dqf >= 1.0 && dqf <= 9.9)
-		strcat(dq, "Vrlo Losa", sizeof(dq));
+		strcpy(dq, "Vrlo Losa", sizeof(dq));
 	else if(dqf >= 10.0 && dqf <= 19.9)
-		strcat(dq, "Losa", sizeof(dq));
+		strcpy(dq, "Losa", sizeof(dq));
 	else if(dqf >= 20.0 && dqf <= 29.9)
-		strcat(dq, "Dobra", sizeof(dq));
+		strcpy(dq, "Dobra", sizeof(dq));
 	else if(dqf >= 30.0 && dqf <= 39.9)
-		strcat(dq, "Vrlo Dobra", sizeof(dq));
+		strcpy(dq, "Vrlo Dobra", sizeof(dq));
 	else if(dqf >= 40.0 && dqf <= 50.0)
-		strcat(dq, "Odlicna", sizeof(dq));
+		strcpy(dq, "Odlicna", sizeof(dq));
 	
 	return dq;
 }
@@ -588,21 +588,13 @@ CMD:drug(playerid, params[])
 			return SendClientMessage(playerid, COLOR_RED, "[GRESKA]: Taj slot je prazan!");
 		
 		new
-			druq[11],
 			Float:def = PlayerDrugs[playerid][dEffect][slot];
 		
-		if(def >= 1.0 && def <= 9.9)
-			strcat(druq, "Vrlo Losa", sizeof(druq));
-		else if(def >= 10.0 && def <= 19.9)
-			strcat(druq, "Losa", sizeof(druq));
-		else if(def >= 20.0 && def <= 29.9)
-			strcat(druq, "Dobra", sizeof(druq));
-		else if(def >= 30.0 && def <= 39.9)
-			strcat(druq, "Vrlo Dobra", sizeof(druq));
-		else if(def >= 40.0 && def <= 50.0)
-			strcat(druq, "Odlicna", sizeof(druq));
-		
-		va_SendClientMessage(playerid, COLOR_GREEN, "Kvaliteta droge %s u slotu %d je %s!", drugs[PlayerDrugs[playerid][dCode][slot]][dName], slot+1, druq);
+		va_SendClientMessage(playerid, COLOR_GREEN, "Kvaliteta droge %s u slotu %d je %s!", 
+			drugs[PlayerDrugs[playerid][dCode][slot]][dName], 
+			slot+1, 
+			ReturnDrugQuality(def)
+		);
 		return 1;
 	}
 	else if(!strcmp(item, "view", true))

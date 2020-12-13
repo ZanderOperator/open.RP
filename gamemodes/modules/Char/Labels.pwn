@@ -103,7 +103,8 @@ hook ResetPlayerVariables(playerid)
 
 hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 {
-	switch(dialogid) {
+	switch(dialogid) 
+	{
 	    case DIALOG_Labels:
         {
             if(response)
