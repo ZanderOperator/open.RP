@@ -346,7 +346,9 @@ hook OnObjectMoved(objectid)
 					{
 						MoveObject(BasketInfo[basketid][lopta], 2316.9099,-1514.1183,25.3438, 12.5+random(4));
 						BasketInfo[basketid][LoptaState] = LOPTATOKOS;
-						new Float:distance = GetPlayerDistanceFromPoint(BasketInfo[basketid][bShooter], 2316.9099,-1514.1183,25.3438);
+						new Float:z;
+						MapAndreas_FindAverageZ(2316.9099, -1514.1183, z);
+						new Float:distance = GetPlayerDistanceFromPoint(BasketInfo[basketid][bShooter], 2316.9099,-1514.1183,z);
 						GiveBasketTeamScore(BasketID[BasketInfo[basketid][bShooter]], 2, distance); 
 						
 					}
@@ -354,7 +356,9 @@ hook OnObjectMoved(objectid)
 					{
 						MoveObject(BasketInfo[basketid][lopta], 2316.9814, -1541.4727, 25.2309, 12.5+random(4));
 						BasketInfo[basketid][LoptaState] = LOPTATOKOS;
-						new Float:distance = GetPlayerDistanceFromPoint(BasketInfo[basketid][bShooter], 2316.9099,-1514.1183,25.3438);
+						new Float:z;
+						MapAndreas_FindAverageZ(2316.9099, -1514.1183, z);
+						new Float:distance = GetPlayerDistanceFromPoint(BasketInfo[basketid][bShooter], 2316.9099,-1514.1183,z);
 						GiveBasketTeamScore(BasketID[BasketInfo[basketid][bShooter]], 1, distance);
 					}
 					else if(ObjectToPoint(1.5, 5, BasketInfo[basketid][lopta], 2534.0366,-1667.5900,15.1655))//Grove Street KOS
@@ -367,14 +371,18 @@ hook OnObjectMoved(objectid)
 					{
 						MoveObject(BasketInfo[basketid][lopta], 2768.0012,-2019.6448,13.5547, 12.5+random(4));
 						BasketInfo[basketid][LoptaState] = LOPTATOKOS;
-						new Float:distance = GetPlayerDistanceFromPoint(BasketInfo[basketid][bShooter], 2768.0012,-2019.6448,13.5547);
+						new Float:z;
+						MapAndreas_FindAverageZ(2768.0012, -2019.6448, z);
+						new Float:distance = GetPlayerDistanceFromPoint(BasketInfo[basketid][bShooter], 2768.0012,-2019.6448,z);
 						GiveBasketTeamScore(BasketID[BasketInfo[basketid][bShooter]], 2, distance); 
 					}
 					else if(ObjectToPoint(1.5, 5, BasketInfo[basketid][lopta], 2795.0542,-2019.5787,13.5547))//Seville KOS 2
 					{
 						MoveObject(BasketInfo[basketid][lopta], 2795.0542,-2019.5787,13.5547, 12.5+random(4));
 						BasketInfo[basketid][LoptaState] = LOPTATOKOS;
-						new Float:distance = GetPlayerDistanceFromPoint(BasketInfo[basketid][bShooter], 2795.0542,-2019.5787,13.5547);
+						new Float:z;
+						MapAndreas_FindAverageZ(2768.0012, -2019.6448, z);
+						new Float:distance = GetPlayerDistanceFromPoint(BasketInfo[basketid][bShooter], 2795.0542,-2019.5787,z);
 						GiveBasketTeamScore(BasketID[BasketInfo[basketid][bShooter]], 1, distance); 
 					}				
 					else
