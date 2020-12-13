@@ -9,9 +9,15 @@ enum E_REPORT_DATA
 	reportReason[128],
 	reportTime
 }
-new ReportData[MAX_REPORTS][E_REPORT_DATA];
+static ReportData[MAX_REPORTS][E_REPORT_DATA];
 
-new PlayerReport[MAX_PLAYERS][128];
+static 
+	PlayerReport[MAX_PLAYERS][128];
+
+static 
+	DialogArgs[MAX_PLAYERS],
+	DialogCallback[MAX_PLAYERS][32],
+	DialogParamHash[MAX_PLAYERS][64];
 
 hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 {
@@ -58,6 +64,7 @@ hook OnPlayerDisconnect(playerid)
 		ClearReport(playeReport[playerid]);
 		playeReport[playerid] = -1;
 	}
+	DialogArgs[playerid] = 0;
     return 1;
 }
 
@@ -118,30 +125,36 @@ public OnSelectReport(playerid, response, id)
 
 
 // CONFIRM DIALOG by mmartin // NE DIRAJ SJEBAT CES SVE
-stock ConfirmDialog(playerid, caption[], info[], callback[], ...){
+stock ConfirmDialog(playerid, caption[], info[], callback[], ...)
+{
 	new n = numargs(), 		// number of arguments, static + optional
 		szParamHash[64];	// variable where the passed arguments will be stored
-	for(new arg = 4; arg < n; arg++){	// loop all additional arguments
+	
+	for(new arg = 4; arg < n; arg++){
+			// loop all additional arguments
 		format(szParamHash, sizeof(szParamHash), "%s%d|", szParamHash, getarg(arg)); // store them in szParamHash
 	}
-	SetPVarInt(playerid, "confDialogArgs", n -4);			// store the amount of additional arguments
-	SetPVarString(playerid, "confDialCallback", callback);	// store the callback that needs to be called after response
-	SetPVarString(playerid, "confDialog_arg", szParamHash);	// store the additional arguments
+
+	DialogArgs[playerid] = n - 4; // store the amount of additional arguments
+	strcpy(DialogCallback[playerid], callback, 32);
+	strcpy(DialogParamHash[playerid], szParamHash, 64);
 
 	ShowPlayerDialog(playerid, DIALOG_CONFIRM_SYS, DIALOG_STYLE_MSGBOX, caption, info, "Yes", "No"); // display the dialog message itself
 
 	return;
 }
 
-stock ConfirmDialog_Response(playerid, response){
-	new szCallback[33],		// variable to fetch our callback to
+stock ConfirmDialog_Response(playerid, response)
+{
+	new 
+		szCallback[32],		// variable to fetch our callback to
 		szParamHash[64], 	// variable to check raw compressed argument string
 		n,					// variable to fetch the amount of additional arguments
 		szForm[12];			// variable to generate the CallLocalFunction() "format" argument
 
-	n = GetPVarInt(playerid, "confDialogArgs");	// Fetch the amount of additional arguments
-	GetPVarString(playerid, "confDialCallback", szCallback, sizeof(szCallback));	// fetch the callback
-	GetPVarString(playerid, "confDialog_arg", szParamHash, sizeof(szParamHash));	// fetch the raw compressed additional arguments
+	n = DialogArgs[playerid];
+	strcpy(szCallback, DialogCallback[playerid], 32);
+	strcpy(szParamHash, DialogParamHash[playerid], 64);
 
 	new hashDecoded[12];	// variable to store extracted additional arguments from the ConfirmDialog() generated string
 
@@ -185,10 +198,9 @@ stock ConfirmDialog_Response(playerid, response){
 	#emit ADD
 	#emit SCTRL 4
 
-	// Clear used PVars
-	DeletePVar(playerid, "confDialCallback");
-	DeletePVar(playerid, "confDialog_arg");
-	DeletePVar(playerid, "confDialogArgs");
+	DialogArgs[playerid] = 0;
+	DialogCallback[playerid][0] = EOS;
+	DialogParamHash[playerid][0] = EOS;
 
 	return;
 }
