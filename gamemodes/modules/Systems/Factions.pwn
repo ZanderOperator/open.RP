@@ -2216,9 +2216,7 @@ CMD:carsign(playerid, params[])
             return 1;
         }
 
-        // TODO: use strcpy
-        VehicleInfo[vehicleid][vText][0] = EOS;
-        strcat(VehicleInfo[vehicleid][vText], text, 23);
+        strcpy(VehicleInfo[vehicleid][vText], text, 23);
 
         DestroyDynamic3DTextLabel(VehicleInfo[vehicleid][vFactionText]);
         VehicleInfo[vehicleid][vFactionText] = CreateDynamic3DTextLabel(VehicleInfo[vehicleid][vText], 0xD2D2D2FF, -0.6969, -2.8092, -0.3000, 10.0, INVALID_PLAYER_ID, vehicleid, 0, -1, -1, -1, 15.0);

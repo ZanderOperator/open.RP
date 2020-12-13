@@ -550,8 +550,7 @@ Public: OnHelperPINHashed(playerid, level)
 		saltedPin[BCRYPT_HASH_LENGTH];
 	bcrypt_get_hash(saltedPin);
 
-	PlayerInfo[playerid][pTeamPIN][0] = EOS;
-	strcat(PlayerInfo[playerid][pTeamPIN], saltedPin, BCRYPT_HASH_LENGTH);
+	strcpy(PlayerInfo[playerid][pTeamPIN], saltedPin, BCRYPT_HASH_LENGTH);
 
 	mysql_fquery(g_SQL, "UPDATE accounts SET teampin = '%e', helper = '%d' WHERE sqlid = '%d' LIMIT 1", 
 		saltedPin, 
@@ -567,8 +566,7 @@ Public: OnAdminPINHashed(playerid, level)
 		saltedPin[BCRYPT_HASH_LENGTH];
 	bcrypt_get_hash(saltedPin);
 
-	PlayerInfo[playerid][pTeamPIN][0] = EOS;
-	strcat(PlayerInfo[playerid][pTeamPIN], saltedPin, BCRYPT_HASH_LENGTH);
+	strcpy(PlayerInfo[playerid][pTeamPIN], saltedPin, BCRYPT_HASH_LENGTH);
 	
 	mysql_fquery(g_SQL, "UPDATE accounts SET teampin = '%e', adminLvl = '%d' WHERE sqlid = '%d' LIMIT 1", 
 		saltedPin, 
@@ -584,8 +582,7 @@ Public: OnTeamPINHashed(playerid)
 		saltedPin[BCRYPT_HASH_LENGTH];
 	bcrypt_get_hash(saltedPin);
 	
-	PlayerInfo[playerid][pTeamPIN][0] = EOS;
-	strcat(PlayerInfo[playerid][pTeamPIN], saltedPin, BCRYPT_HASH_LENGTH);
+	strcpy(PlayerInfo[playerid][pTeamPIN], saltedPin, BCRYPT_HASH_LENGTH);
 
 	mysql_fquery(g_SQL, "UPDATE accounts SET teampin = '%e' WHERE sqlid = '%d' LIMIT 1", 
 		saltedPin, 

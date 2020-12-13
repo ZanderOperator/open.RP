@@ -1201,26 +1201,27 @@ stock GetWeaponNameEx(weaponid)
 	new 
 		weaponName[ 32 ];
 
-	switch(weaponid) {
-		case 0:  strcat(weaponName, "Fists", sizeof(weaponName));
+	switch(weaponid) 
+	{
+		case 0:  strcpy(weaponName, "Fists", sizeof(weaponName));
 		case 1 .. 17: GetWeaponName(weaponid, weaponName, sizeof(weaponName));
-		case 18: strcat(weaponName, "Molotov Cocktail", sizeof(weaponName));
+		case 18: strcpy(weaponName, "Molotov Cocktail", sizeof(weaponName));
 		case 22..38: GetWeaponName(weaponid, weaponName, sizeof(weaponName)); // Vatrena oruzja
-		case 39: strcat(weaponName, "Detonated Bomb", sizeof(weaponName));
-		case 40: strcat(weaponName, "Detonated Bomb", sizeof(weaponName));
-		case 41: strcat(weaponName, "Spray Can", sizeof(weaponName));
-		case 42: strcat(weaponName, "Fire Extinguisher", sizeof(weaponName));
-		case 43: strcat(weaponName, "Camera", sizeof(weaponName));
-		case 44: strcat(weaponName, "Night Vision Goggles", sizeof(weaponName));
-		case 45: strcat(weaponName, "Thermal Goggles", sizeof(weaponName));
-		case 49: strcat(weaponName, "Vehicle", sizeof(weaponName));
-		case 50: strcat(weaponName, "Helicopter Blades", sizeof(weaponName));
-		case 51: strcat(weaponName, "Explosion", sizeof(weaponName));
-		case 53: strcat(weaponName, "Drowning", sizeof(weaponName));
-		case 54: strcat(weaponName, "Falling Death", sizeof(weaponName));
-		case PACKAGE_PANCIR: strcat(weaponName, "Kevlar Vest", sizeof(weaponName));
-		case 255: strcat(weaponName, "Suicide", sizeof(weaponName));
-		default: strcat(weaponName, "Unknown", sizeof(weaponName));
+		case 39: strcpy(weaponName, "Detonated Bomb", sizeof(weaponName));
+		case 40: strcpy(weaponName, "Detonated Bomb", sizeof(weaponName));
+		case 41: strcpy(weaponName, "Spray Can", sizeof(weaponName));
+		case 42: strcpy(weaponName, "Fire Extinguisher", sizeof(weaponName));
+		case 43: strcpy(weaponName, "Camera", sizeof(weaponName));
+		case 44: strcpy(weaponName, "Night Vision Goggles", sizeof(weaponName));
+		case 45: strcpy(weaponName, "Thermal Goggles", sizeof(weaponName));
+		case 49: strcpy(weaponName, "Vehicle", sizeof(weaponName));
+		case 50: strcpy(weaponName, "Helicopter Blades", sizeof(weaponName));
+		case 51: strcpy(weaponName, "Explosion", sizeof(weaponName));
+		case 53: strcpy(weaponName, "Drowning", sizeof(weaponName));
+		case 54: strcpy(weaponName, "Falling Death", sizeof(weaponName));
+		case PACKAGE_PANCIR: strcpy(weaponName, "Kevlar Vest", sizeof(weaponName));
+		case 255: strcpy(weaponName, "Suicide", sizeof(weaponName));
+		default: strcpy(weaponName, "Unknown", sizeof(weaponName));
 	}
 	return weaponName;
 }

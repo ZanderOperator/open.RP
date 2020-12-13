@@ -28,7 +28,8 @@ CMD:ahelp(playerid, params[])
 
 	if(PlayerInfo[playerid][pAdmin] == 0)
 		return SendClientMessage(playerid, COLOR_RED, "Niste ovlasteni za koristenje ove komande!");
-    if (PlayerInfo[playerid][pAdmin] >= 1) {
+    if (PlayerInfo[playerid][pAdmin] >= 1)
+	{
 		format(f_dialog,sizeof(f_dialog), "\n{FF9933}[A 1]: /alogin, /forumname, /lastdriver, /toga, /bhears, /a, /houseo, /bizo, /complexo, /checknetstats.");
 		strcat(p_dialog,f_dialog, sizeof(p_dialog));
 		format(f_dialog,sizeof(f_dialog), "\n{FF9933}[A 1]: /rtc, /gotopos, /goto, /checklastlogin, /fly, /lt, /rt, /checkoffline, /count, /akill.");
@@ -40,7 +41,8 @@ CMD:ahelp(playerid, params[])
 		format(f_dialog,sizeof(f_dialog), "\n{FF9933}[A 1]: /house_id, /biznis_id, /complex_id, /afurniture, /atoll, /adminmsg\n");
 		strcat(p_dialog,f_dialog, sizeof(p_dialog));
 	}
-	if (PlayerInfo[playerid][pAdmin] >= 2) {
+	if (PlayerInfo[playerid][pAdmin] >= 2) 
+	{
 		format(f_dialog,sizeof(f_dialog), "\n{FF9933}[A 2]: /getcar, /gotomark, /mark, /getip, /iptoname, /prisonex, /warnex, /ban, /unprison, /prison.");
 		strcat(p_dialog,f_dialog, sizeof(p_dialog));
 		format(f_dialog,sizeof(f_dialog), "\n{FF9933}[A 2]: /charge, /gotocar, /unbanip, /rtcinradius, /weatherall, /prisoned, /banex, /jailex, /jail, /unjail.");
@@ -48,13 +50,15 @@ CMD:ahelp(playerid, params[])
 		format(f_dialog,sizeof(f_dialog), "\n{FF9933}[A 2]: /gethere, /unban, /warn, /pmears, /rtcacar(radius), /cnn, /givebullet, /rears, /checkfreq, /banip.\n");
 		strcat(p_dialog,f_dialog, sizeof(p_dialog));
     }
-	if (PlayerInfo[playerid][pAdmin] >= 3) {
+	if (PlayerInfo[playerid][pAdmin] >= 3) 
+	{
 		format(f_dialog,sizeof(f_dialog), "\n{FF9933}[A 3]: /skin, /sethp, /pns, /blockreport, /fpm, /fpmed, /entercar, /checkcostats.");
 		strcat(p_dialog,f_dialog, sizeof(p_dialog));
 		format(f_dialog, sizeof(f_dialog), "\n{FF9933}[A 3]: /check_gunrack, /check_hdrugs, /putplayerincar, /refillnos, /flipcar\n");
 		strcat(p_dialog,f_dialog, sizeof(p_dialog));
 	}
-	if (PlayerInfo[playerid][pAdmin] >= 4) {
+	if (PlayerInfo[playerid][pAdmin] >= 4) 
+	{
 		format(f_dialog,sizeof(f_dialog), "\n{FF9933}[A 4]: /aname, /rac, /setarmour, /veh, /veh_spawned, /undie, /unfreezearound, /freezearound, /setarmouraround.");
 		strcat(p_dialog,f_dialog, sizeof(p_dialog));
 		format(f_dialog,sizeof(f_dialog), "\n{FF9933}[A 4]: /sethparound, /fixveh, /aunlock, /atake, /mutearound, /togreport, /fire, /deletevehicle, /bizinfo, /hidestatus.\n");
@@ -1098,7 +1102,7 @@ CMD:forumname(playerid, params[])
 	if(isnull(params))
 	    return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /forumname [nick]");
 	else if(isnull(PlayerInfo[playerid][pForumName]))
-		strcat(PlayerInfo[playerid][pForumName], params, 24);
+		strcpy(PlayerInfo[playerid][pForumName], params, 24);
 	else
 		return strdel(PlayerInfo[playerid][pForumName], 0, 24), SendClientMessage(playerid, COLOR_RED, "[ ! ] Obrisao si svoj forum nick!");
 		

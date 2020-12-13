@@ -411,13 +411,13 @@ GetWoodName(wtype)
 
 	switch(wtype)
 	{
-	    case 1: strcat(wname, "Javor", sizeof(wname));
-	    case 2: strcat(wname, "Hrast", sizeof(wname));
-	    case 3: strcat(wname, "Jela", sizeof(wname));
-	    case 4: strcat(wname, "Bukva", sizeof(wname));
-	    case 5: strcat(wname, "Bor", sizeof(wname));
-	    case 6: strcat(wname, "Kesten", sizeof(wname));
-	    default: strcat(wname, "Prazno", sizeof(wname));
+	    case 1: strcpy(wname, "Javor", sizeof(wname));
+	    case 2: strcpy(wname, "Hrast", sizeof(wname));
+	    case 3: strcpy(wname, "Jela", sizeof(wname));
+	    case 4: strcpy(wname, "Bukva", sizeof(wname));
+	    case 5: strcpy(wname, "Bor", sizeof(wname));
+	    case 6: strcpy(wname, "Kesten", sizeof(wname));
+	    default: strcpy(wname, "Prazno", sizeof(wname));
 	}
 	return wname;
 }

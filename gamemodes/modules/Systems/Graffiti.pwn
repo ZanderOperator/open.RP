@@ -451,7 +451,7 @@ stock CreateGraffit(playerid=INVALID_PLAYER_ID, grafid=-1, text[], Float:X, Floa
     Streamer_SetFloatData(STREAMER_TYPE_OBJECT, GraffitInfo[grafid][gObject], E_STREAMER_DRAW_DISTANCE, GRAFFIT_DRAW_DISTANCE);
 
     new string[MAX_GRAFFIT_INPUT];
-    strcat(string, GraffitInfo[grafid][gText], MAX_GRAFFIT_INPUT);
+    strcpy(string, GraffitInfo[grafid][gText], MAX_GRAFFIT_INPUT);
     FixText(string);
     SetDynamicObjectMaterialText(GraffitInfo[grafid][gObject], 0, string, OBJECT_MATERIAL_SIZE_512x512, GetGrafFont(GraffitInfo[grafid][gFont]), GraffitInfo[grafid][gFontSize], 0, GetGrafColor(GraffitInfo[grafid][gColor]), 0, OBJECT_MATERIAL_TEXT_ALIGN_CENTER);
     Streamer_UpdateEx(playerid, GraffitInfo[grafid][gPosX], GraffitInfo[grafid][gPosY], GraffitInfo[grafid][gPosZ], 0);

@@ -709,14 +709,14 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 					
 					if(BasketInfo[i][pTeam1][0] == EOS)
 					{
-						strcat(BasketInfo[i][pTeam1], inputtext);
+						strcpy(BasketInfo[i][pTeam1], inputtext);
 						Update3DTextLabelText(BasketInfo[i][pTeam1Text], -1, BasketInfo[i][pTeam1]);
 						PlayerBasketTeam[playerid] = CreateDynamic3DTextLabel(BasketInfo[i][pTeam1], 0x18B4C0FF, 0, 0, -20, 25, playerid);
 						Streamer_SetFloatData(STREAMER_TYPE_3D_TEXT_LABEL, PlayerBasketTeam[playerid] , E_STREAMER_ATTACH_OFFSET_Z, 0.18);
 					}
 					else
 					{
-						strcat(BasketInfo[i][pTeam2], inputtext);
+						strcpy(BasketInfo[i][pTeam2], inputtext);
 						Update3DTextLabelText(BasketInfo[i][pTeam2Text], -1, BasketInfo[i][pTeam2]);
 						PlayerBasketTeam[playerid] = CreateDynamic3DTextLabel(BasketInfo[i][pTeam2], 0xFF8040FF, 0, 0, -20, 25, playerid);
 						Streamer_SetFloatData(STREAMER_TYPE_3D_TEXT_LABEL, PlayerBasketTeam[playerid] , E_STREAMER_ATTACH_OFFSET_Z, 0.18);

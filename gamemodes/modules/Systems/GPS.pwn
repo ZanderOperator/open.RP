@@ -356,8 +356,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 
             new free_id = -1, Float:X, Float:Y, Float:Z, gpsname[24];
             GetPlayerPos(playerid, X, Y, Z);
-            // TODO: use strcpy
-            strcat(gpsname, inputtext);
+            strcpy(gpsname, inputtext);
             free_id = Create_GPS(gpsname, X, Y, Z);
             if (free_id == -1)
             {

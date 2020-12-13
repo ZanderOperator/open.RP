@@ -122,8 +122,7 @@ GivePlayerPayCheck(playerid)
 		p_dialog[2048],
 		f_dialog[256];
 	
-	PaydayInfo[playerid][pPayDayDate][0] = EOS;
-	strcat(PaydayInfo[playerid][pPayDayDate], ReturnDate(), 32);
+	strcpy(PaydayInfo[playerid][pPayDayDate], ReturnDate(), 32);
 	
 	format(p_dialog, sizeof(p_dialog), "\t %s - Financijsko izvjesce - %s", PaydayInfo[playerid][pPayDayDate], GetName(playerid));
 	
@@ -575,8 +574,7 @@ GivePlayerPayCheck(playerid)
 	else if(IsPlayerInVehicle(playerid, GetPlayerVehicleID(playerid))) {
 		SendMessage(playerid, MESSAGE_TYPE_INFO, "Stigao vam je PayDay (( /payday ))");
 	}
-	PaydayInfo[playerid][pPayDayDialog] = EOS;
-	strcat(PaydayInfo[playerid][pPayDayDialog], p_dialog, 1536);
+	strcpy(PaydayInfo[playerid][pPayDayDialog], p_dialog, 1536);
 	PaydayInfo[playerid][pPayDayMoney] = 0;
 	return 1;
 }

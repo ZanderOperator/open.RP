@@ -448,7 +448,7 @@ task PokerPulse[1000]()
 								cards[0] = GetCardNativeIndex(FirstCard[playerid]);
 								cards[1] = GetCardNativeIndex(SecondCard[playerid]);
 								Result[playerid] = calculate_hand_worth(cards, 7);
-								strcat(ResultString[playerid], HAND_RANKS[Result[playerid] >> 12], 16);
+								strcpy(ResultString[playerid], HAND_RANKS[Result[playerid] >> 12], 16);
 							}
 						}
 					}
@@ -1000,7 +1000,7 @@ PokerRaiseHand(playerid)
 PokerCheckHand(playerid)
 {
 	if(ActiveHand[playerid]) 
-		strcat(StatusString[playerid], "Check", 16);
+		strcpy(StatusString[playerid], "Check", 16);
 	
 	// Animation
 	ApplyAnimation(playerid, "CASINO", "cards_raise", 4.1, 0, 1, 1, 1, 1, 1);
@@ -1018,7 +1018,7 @@ PokerFoldHand(playerid)
 
 		PokerTable[PlayingTableID[playerid]][pkrActiveHands]--;
 
-		strcat(StatusString[playerid], "Fold", 16);
+		strcpy(StatusString[playerid], "Fold", 16);
 
 		// SFX
 		GlobalPlaySound(5602, PokerTable[PlayingTableID[playerid]][pkrX], PokerTable[PlayingTableID[playerid]][pkrY], PokerTable[PlayingTableID[playerid]][pkrZ]);
@@ -1130,7 +1130,7 @@ PokerAssignBlinds(tableid)
 			if(bigBlindSlot != tmpPos && dealerSlot != tmpPos && smallBlindSlot != tmpPos)
 			{
 				Dealer[playerid] = true;
-				strcat(StatusString[playerid], "Dealer", 16);
+				strcpy(StatusString[playerid], "Dealer", 16);
 				roomDealer = true;
 				dealerSlot = tmpPos;
 			}
@@ -3023,7 +3023,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 					CurrentBet[playerid] = PokerTable[tableid][pkrActiveBet];
 				}
 
-				strcat(StatusString[playerid], "Call", 16);
+				strcpy(StatusString[playerid], "Call", 16);
 				PokerRotateActivePlayer(tableid);
 
 				ApplyAnimation(playerid, "CASINO", "cards_raise", 4.1, 0, 1, 1, 1, 1, 1);
@@ -3047,7 +3047,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 
 					PokerTable[tableid][pkrActiveBet] = strval(inputtext);
 					CurrentBet[playerid] = PokerTable[tableid][pkrActiveBet];
-					strcat(StatusString[playerid], "Raise", 16);
+					strcpy(StatusString[playerid], "Raise", 16);
 
 					PokerTable[tableid][pkrRotations] = 0;
 					PokerRotateActivePlayer(tableid);

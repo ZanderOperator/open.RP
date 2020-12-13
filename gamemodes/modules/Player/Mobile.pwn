@@ -349,7 +349,7 @@ stock GetMobileName(modelid)
 	{
 		if(PhoneModels[i][phModelID] == modelid)
 		{
-			strcat(mobilename, PhoneModels[i][phModelName], 30);
+			strcpy(mobilename, PhoneModels[i][phModelName], 30);
 			found = true;
 			break;
 		}
@@ -2679,8 +2679,7 @@ hook OnPlayerText(playerid, text[])
 				SendClientMessage(playerid, COLOR_ALLDEPT, "HITNA LINIJA: Oprostite ali ne razumijem?");
 				return 0;
 			}
-			PlayerCrime[playerid][pLocation][0] = EOS;
-			strcat(PlayerCrime[playerid][pLocation], text, 100);
+			strcpy(PlayerCrime[playerid][pLocation], text, 100);
 			SendClientMessage(playerid, 0xFF8282AA, "HITNA LINIJA:Molimo vas ukratko opisite incident.");
 			CallingId[ playerid ] =  915;
 			return 0;
@@ -2750,12 +2749,12 @@ hook OnPlayerText(playerid, text[])
 		}
 		if(CallingId[ playerid ] == 912) 
 		{
-			if(!strlen(tmp)) {
+			if(!strlen(tmp)) 
+			{
 				SendClientMessage(playerid, COLOR_ALLDEPT, "HITNA LINIJA: Oprostite ali ne razumijem?");
 				return 0;
 			}
-			PlayerCrime[playerid][pLocation][0] = EOS;
-			strcat(PlayerCrime[playerid][pLocation], text, 100);
+			strcpy(PlayerCrime[playerid][pLocation], text, 100);
 			SendClientMessage(playerid, 0xFF8282AA, "HITNA LINIJA:Molimo vas ukratko opisite zlocin.");
 			CallingId[ playerid ] =  913;
 			return 0;
@@ -2770,7 +2769,8 @@ hook OnPlayerText(playerid, text[])
 		}
 		if( CallingId[ playerid ] == 32715 ) 
 		{
-			if(!strlen(tmp)) {
+			if(!strlen(tmp))
+			{
 				SendClientMessage(playerid, COLOR_YELLOW, "Maska 64361 kaze (mobitel): Priblizi se tom telefonu kurca te ne cujem.");
 				return 0;
 			}

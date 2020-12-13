@@ -3547,6 +3547,7 @@ task VehicleGlobalTask[1000]()
 						}
 					}
 				}
+
 				if(IsAHelio(GetVehicleModel(vehicleid)) || IsAPlane(GetVehicleModel(vehicleid)) || IsABike(GetVehicleModel(vehicleid)) ||
 					VehicleInfo[vehicleid][vUsage] == VEHICLE_USAGE_NORMAL || VehicleInfo[vehicleid][vUsage] == VEHICLE_USAGE_JOB ||
 					VehicleInfo[vehicleid][vUsage] ==  VEHICLE_USAGE_LICENSE) continue;
@@ -3575,7 +3576,8 @@ task VehicleGlobalTask[1000]()
 
 					if(VehicleInfo[vehicleid][vFuel] > 0)
 						VehicleInfo[vehicleid][vFuel]--;
-					if(VehicleInfo[vehicleid][vFuel] == 0) {
+					if(VehicleInfo[vehicleid][vFuel] == 0) 
+					{
 						GameTextForPlayer(GetVehicleDriver(vehicleid), "~r~Ostali ste bez goriva...", 1000, 1);
 						new
 							engine, lights, alarm, doors, bonnet, boot, objective;
@@ -3595,9 +3597,10 @@ task VehicleGlobalTask[1000]()
 		VehicleTimer = gettimestamp() + 60;
 		foreach(new vehicleid : Vehicles[VEHICLE_USAGE_PRIVATE])
 		{
-			if(VehicleInfo[vehicleid][vEngineRunning]) CheckVehicleEngine(vehicleid);
+			if(VehicleInfo[vehicleid][vEngineRunning]) 
+				CheckVehicleEngine(vehicleid);
 			if(!IsVehicleOccupied(vehicleid))
-			CheckEngineHeat(vehicleid);
+				CheckEngineHeat(vehicleid);
 		}
 		return 1;
 	}
@@ -3616,8 +3619,10 @@ task VehicleGlobalTask[1000]()
 					new
 						Float:health;
 					GetVehicleHealth(vehicleid, health);
-					if(health <= 390.0) {
-						if(!VehicleInfo[vehicleid][vDestroyed]) {
+					if(health <= 390.0) 
+					{
+						if(!VehicleInfo[vehicleid][vDestroyed]) 
+						{
 							SendClientMessage(GetVehicleDriver(vehicleid), COLOR_RED, "Vase je vozilo unisteno, zovite mehanicara!");
 							AC_SetVehicleHealth(vehicleid, 390.0);
 							VehicleInfo[vehicleid][vDestroyed] = true;
@@ -3680,13 +3685,15 @@ hook ResetPlayerVariables(playerid)
 	ResetCarOwnershipVariables(playerid);
 	CarnisterLiters[playerid] = 0;
 	CarnisterType[playerid] = -1;
-	
-	if(Bit1_Get(gr_PlayerBreakingTrunk, playerid)) {
+
+	if(Bit1_Get(gr_PlayerBreakingTrunk, playerid)) 
+	{
 		BreakTrunkVehicleID[playerid] 	= INVALID_VEHICLE_ID;
 		BreakTrunkKickTick[playerid]		= gettimestamp();
 		Bit1_Set(gr_PlayerBreakingTrunk, playerid, false);
 	}
-	if( Bit2_Get(gr_PlayerLockBreaking, playerid) == 2 ) {
+	if( Bit2_Get(gr_PlayerLockBreaking, playerid) == 2 ) 
+	{
 		BreakLockVehicleID[playerid] 	= INVALID_VEHICLE_ID;
 		BreakLockKickTick[playerid]		= gettimestamp();
 		Bit2_Set(gr_PlayerLockBreaking, playerid, 0);
@@ -5336,9 +5343,7 @@ CMD:car(playerid, params[])
 		if(!IsPlayerInRangeOfPoint(playerid, 50.0, VehicleBuyPos[0][0],VehicleBuyPos[0][1],VehicleBuyPos[0][2])) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste blizu Wang Carsa.");
 		if(VehicleInfo[PlayerKeys[playerid][pVehicleKey]][vNumberPlate][0] == '0') return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Vozilo nije registrirano!");
 
-		strdel(VehicleInfo[PlayerKeys[playerid][pVehicleKey]][vNumberPlate], 0, 8);
-
-		strcat(VehicleInfo[PlayerKeys[playerid][pVehicleKey]][vNumberPlate], "0", 8);
+		strcpy(VehicleInfo[PlayerKeys[playerid][pVehicleKey]][vNumberPlate], "0", 8);
 
 		SetVehicleNumberPlate(GetPlayerVehicleID(playerid), "");
 
