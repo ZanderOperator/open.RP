@@ -4466,7 +4466,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 			ResetVehicleList(playerid);
 
 			DeleteVehicleTuning(PlayerKeys[playerid][pVehicleKey]);
-			ResetTuning(PlayerKeys[playerid][pVehicleKey]);
+			ResetVehicleTuning(PlayerKeys[playerid][pVehicleKey]);
 			DeleteVehicleDrug(PlayerKeys[playerid][pVehicleKey], -1);
 			
 			// SQL
@@ -4606,7 +4606,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 			ResetVehicleList(playerid);
 
 			DeleteVehicleTuning(PlayerKeys[playerid][pVehicleKey]);
-			ResetTuning(PlayerKeys[playerid][pVehicleKey]); 
+			ResetVehicleTuning(PlayerKeys[playerid][pVehicleKey]); 
 			
 			// SQL
 			DeleteVehicleFromBase(VehicleInfo[PlayerKeys[playerid][pVehicleKey]][vSQLID]);
@@ -4718,7 +4718,7 @@ hook OnVehicleSpawn(vehicleid)
 	if(VehicleInfo[vehicleid][vUsage] == VEHICLE_USAGE_PRIVATE) 
 	{
 		CheckVehicleInsurance(vehicleid);
-		SetTune(vehicleid);
+		SetVehicleTuning(vehicleid);
 		RespawnTrunkObjects(vehicleid);
 	}
 	return 1;
@@ -4726,23 +4726,19 @@ hook OnVehicleSpawn(vehicleid)
 
 hook OnPlayerClickTextDraw(playerid, Text:clickedid)
 {
-	if(  Bit2_Get(gr_PlayerLockBreaking, playerid ) != 0 &&
-		!Bit1_Get( gr_PlayerHotWiring, playerid ) &&
-		!Bit1_Get(gr_PreviewCar, playerid)  &&
-		!Bit1_Get( gr_PlayerInTuningMode, playerid ) &&
-		!Bit1_Get( gr_PlayerPickingJack, playerid ) &&
-		!Bit1_Get( gr_PlayerJackSure, playerid ) )
-	return 0;
-
-	if(clickedid == Text:INVALID_TEXT_DRAW)
+	if( Bit2_Get(gr_PlayerLockBreaking, playerid ) != 0)
 	{
-		if( Bit1_Get( gr_PlayerHotWiring, playerid ) ) {
-			ResetHotWireVars(playerid);
-			PlayerPlaySound(playerid, 1085, 0.0, 0.0, 0.0);
-		}
-		else if( Bit1_Get( gr_PreviewCar, playerid ) ) {
-			DestroyPreviewScene(playerid);
-			PlayerPlaySound(playerid, 1085, 0.0, 0.0, 0.0);
+		if(clickedid == Text:INVALID_TEXT_DRAW)
+		{
+			if( Bit1_Get( gr_PlayerHotWiring, playerid ) ) 
+			{
+				ResetHotWireVars(playerid);
+				PlayerPlaySound(playerid, 1085, 0.0, 0.0, 0.0);
+			}
+			else if( Bit1_Get( gr_PreviewCar, playerid ) ) {
+				DestroyPreviewScene(playerid);
+				PlayerPlaySound(playerid, 1085, 0.0, 0.0, 0.0);
+			}
 		}
 	}
 	return 1;

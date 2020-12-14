@@ -881,6 +881,12 @@ stock SetPlayerSpawnInfo(playerid)
 	##     ##  #######   #######  ##    ##  ######  
 */
 
+hook OnPlayerConnect(playerid)
+{
+	SetPlayerColor(playerid, COLOR_PLAYER);
+	return 1;
+}
+
 #include <YSI_Coding\y_hooks>
 hook OnPlayerDisconnect(playerid, reason)
 {
@@ -890,7 +896,265 @@ hook OnPlayerDisconnect(playerid, reason)
 	SigningIn[playerid] = false;
 	Player_SetSecurityBreach(playerid, false);
 	SetPlayerOnlineStatus(playerid, 0);
+
+	if(IsPlayerLogging(playerid))
+		stop FinishPlayerSpawn(playerid);
+
+	format(PlayerInfo[playerid][pLastLogin], 24, ReturnDate());
+
+	RemovePlayerFromVehicle(playerid);
+
+	new
+		szString[ 73 ],
+		szDisconnectReason[3][] = 
+		{
+			"Timeout/Crash",
+			"Quit",
+			"Kick/Ban"
+		};
+
+	if( !IsPlayerReconing(playerid) && GMX == 0) 
+	{
+		format( szString, sizeof szString, "(( %s[%d] just left the server. (%s) ))",
+			GetName(playerid, false ),
+			playerid,
+			szDisconnectReason[ reason ]
+		);
+		ProxDetector(10.0, playerid, szString, COLOR_FADE1, COLOR_FADE2, COLOR_FADE3, COLOR_FADE4, COLOR_FADE5);
+	}
+
+	CheckPlayerCrash(playerid, reason);
+
+	// Main Player Data Save Func.
+	SavePlayerData(playerid);
+	
+	// Player Sets
+	if(GMX == 1) 
+	{
+		SendClientMessage(playerid, COLOR_RED, "[OBAVIJEST] Spremljeni su Vasi podaci. Server Vas je automatski kickao.");
+		KickMessage(playerid);
+	}
+	defer SafeResetPlayerVariables(playerid);
 	return 1;
+}
+
+hook OnPlayerSpawn(playerid)
+{	
+    StopAudioStreamForPlayer(playerid);
+    ResetPlayerMoney(playerid);
+    SetCameraBehindPlayer(playerid);
+    SetPlayerFightingStyle(playerid, PlayerGym[playerid][pFightStyle]);
+	
+    SetPlayerSkillLevel(playerid, WEAPONSKILL_AK47,             999);
+    SetPlayerSkillLevel(playerid, WEAPONSKILL_M4,               999);
+    SetPlayerSkillLevel(playerid, WEAPONSKILL_MP5,              999);
+    SetPlayerSkillLevel(playerid, WEAPONSKILL_SHOTGUN,          999);
+    SetPlayerSkillLevel(playerid, WEAPONSKILL_SPAS12_SHOTGUN,   999);
+
+    SetPlayerSkillLevel(playerid, WEAPONSKILL_PISTOL,           1);
+    SetPlayerSkillLevel(playerid, WEAPONSKILL_MICRO_UZI,        1);
+    SetPlayerSkillLevel(playerid, WEAPONSKILL_SAWNOFF_SHOTGUN,  1);
+    AC_SetPlayerMoney(playerid, PlayerInfo[playerid][pMoney]);
+
+   	SetPlayerArmour(playerid, PlayerHealth[playerid][pArmour]);
+
+	if(PlayerVIP[playerid][pDonateRank] != 0)
+		SetPlayerHealth(playerid, 99.0);
+	else SetPlayerHealth(playerid, 50.0);
+
+	TogglePlayerAllDynamicCPs(playerid, true);
+	foreach(new i : Houses)
+	{
+		TogglePlayerDynamicCP(playerid, HouseInfo[ i ][ hEnterCP ], true);
+	}
+
+	new
+		hour, minute;
+	gettime(hour, minute);
+	hour += 1;
+	minute -= 1;
+	SetPlayerTime(playerid,hour,minute);
+
+	if( Bit1_Get( gr_FristSpawn, playerid ) )
+	{
+		CreateZonesTD(playerid);
+		Bit1_Set( gr_FristSpawn, playerid, false );
+	}
+	SetPlayerSkin(playerid, PlayerAppearance[playerid][pSkin]);
+
+    if(IsANewUser(playerid))
+	{
+        // Tutorial
+        SendPlayerOnFirstTimeTutorial(playerid, 1);
+        TogglePlayerSpectating(playerid, 1);
+    }
+	else
+	{
+        TogglePlayerSpectating(playerid, 0);
+        Bit1_Set(gr_PlayerAlive, playerid, true);
+
+		if(PlayerDeath[playerid][pKilled] == 1)
+		{
+			SetPlayerInterior(playerid, PlayerDeath[playerid][pDeathInt]);
+			SetPlayerVirtualWorld(playerid, PlayerDeath[playerid][pDeathVW]);
+			SetPlayerPos(playerid, PlayerDeath[playerid][pDeathX] , PlayerDeath[playerid][pDeathY] , PlayerDeath[playerid][pDeathZ] );
+			Streamer_UpdateEx(playerid, PlayerDeath[playerid][pDeathX], PlayerDeath[playerid][pDeathY], PlayerDeath[playerid][pDeathZ], PlayerDeath[playerid][pDeathVW], PlayerDeath[playerid][pDeathInt]);
+
+			SendClientMessage(playerid, COLOR_LIGHTRED, "** You are returned to position where you were wounded. **");
+			SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "** You can't use /l chat and /me command. /c, /ame i /do are allowed during RP **");
+
+			Player_SetUsingMask(playerid, false);
+			if( PlayerInventory[playerid][pMaskID])
+			{
+				if( PlayerVIP[playerid][pDonateRank] < PREMIUM_BRONZE)
+					PlayerInventory[playerid][pMaskID] = 0;
+			}
+
+			TogglePlayerControllable(playerid, 0);
+			CreateDeathInfos(playerid);
+			SetPlayerHealth(playerid,10.0);
+			PlayerWoundedAnim[playerid] = true;
+			ApplyAnimation(playerid, "PED", "KO_shot_stom", 4.1,0,1,1,1,0,1);
+			return 1;
+		}
+		else if(PlayerDeath[playerid][pKilled] == 2)
+		{
+			SetPlayerInterior(playerid, PlayerDeath[playerid][pDeathInt]);
+			SetPlayerVirtualWorld(playerid, PlayerDeath[playerid][pDeathVW]);
+			SetPlayerPos(playerid, PlayerDeath[playerid][pDeathX] , PlayerDeath[playerid][pDeathY] , PlayerDeath[playerid][pDeathZ] );
+			Streamer_UpdateEx(playerid, PlayerDeath[playerid][pDeathX], PlayerDeath[playerid][pDeathY], PlayerDeath[playerid][pDeathZ], PlayerDeath[playerid][pDeathVW], PlayerDeath[playerid][pDeathInt]);
+
+			SendClientMessage(playerid, COLOR_LIGHTRED, "You are in Death Mode. You have been returned to location of your death.**");
+			SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "** You can't use /l chat and /me command. /c, /ame i /do are allowed during RP **");
+
+			Player_SetUsingMask(playerid, false);
+			if( PlayerInventory[playerid][pMaskID])
+			{
+				if( PlayerVIP[playerid][pDonateRank] < PREMIUM_BRONZE)
+					PlayerInventory[playerid][pMaskID] = 0;
+			}
+
+			TogglePlayerControllable(playerid, 0);
+			CreateDeathInfos(playerid);
+			SetPlayerHealth(playerid,10.0);
+   			PlayerWoundedAnim[playerid] = true;
+			ApplyAnimation(playerid, "PED", "KO_shot_stom", 4.1,0,1,1,1,0,1);
+			return 1;
+		}
+		else if(PlayerDeath[playerid][pKilled] == 0)
+		{
+			if( PlayerJail[playerid][pJailed] > 0)
+			{
+				PutPlayerInJail(playerid, PlayerJail[playerid][pJailTime], PlayerJail[playerid][pJailed]);
+				SetPlayerHealth(playerid, 100);
+				return 1;
+			}
+			else 
+			{
+				if(SafeSpawned[playerid])
+					AC_SetPlayerWeapons(playerid);
+					
+				switch( PlayerInfo[ playerid ][ pSpawnChange ] )
+				{
+					case 0: 
+					{
+						SetPlayerPosEx(playerid, SPAWN_X, SPAWN_Y, SPAWN_Z, 0, 0, false);
+						SetPlayerFacingAngle(playerid, 90.00);
+						SetPlayerInterior(playerid, 0);
+						SetPlayerVirtualWorld(playerid, 0);
+						SetPlayerHealth(playerid, 100);
+					}
+					case 1: 
+					{
+						if( PlayerKeys[playerid][pHouseKey] != INVALID_HOUSE_ID || PlayerKeys[playerid][pRentKey] != INVALID_HOUSE_ID ) {
+							new
+								house;
+							if(  PlayerKeys[playerid][pHouseKey] != INVALID_HOUSE_ID )
+								house = PlayerKeys[playerid][pHouseKey];
+							else if( PlayerKeys[playerid][pRentKey] != INVALID_HOUSE_ID )
+								house = PlayerKeys[playerid][pRentKey];
+
+							SetPlayerInterior( playerid, 0);
+							SetPlayerVirtualWorld( playerid, 0);
+
+							SetPlayerPosEx(playerid, HouseInfo[ house ][ hEnterX ], HouseInfo[ house ][ hEnterY ], HouseInfo[ house ][ hEnterZ ], 0, 0, true);
+							SetPlayerHealth(playerid, 100);
+							return 1;
+						}
+					}
+					case 2:
+					{
+						if(PlayerFaction[playerid][pMember] > 0)
+						{
+							switch(PlayerFaction[playerid][pMember])
+							{
+								case 1:
+								{
+									SetPlayerFacingAngle(playerid, 90.00);
+								}
+								case 2:
+								{
+									SetPlayerFacingAngle(playerid, 134.4510);
+								}
+								case 3:
+								{
+									SetPlayerFacingAngle(playerid, 270.0);
+								}
+								case 4:
+								{
+									SetPlayerFacingAngle(playerid, 293.4950);
+								}
+								case 5:
+								{
+									SetPlayerFacingAngle(playerid, 47.8250);
+								}
+							}
+							SetPlayerInterior(playerid, 0);
+							SetPlayerVirtualWorld(playerid, 0);
+							SetPlayerHealth(playerid, 100);
+						}
+						else
+						{
+							SetPlayerInterior(playerid, 0);
+							SetPlayerVirtualWorld(playerid, 0);
+							SetPlayerHealth(playerid, 100);
+						}
+						return 1;
+					}
+					case 3:
+					{
+						if(PlayerKeys[playerid][pComplexRoomKey] != INVALID_COMPLEX_ID)
+						{
+							new complex = PlayerKeys[playerid][pComplexRoomKey];
+							SetPlayerPosEx(playerid, ComplexRoomInfo[ complex ][ cExitX ], ComplexRoomInfo[ complex ][ cExitY ], ComplexRoomInfo[ complex ][ cExitZ ], 0, 0, true);
+							SetPlayerInterior( playerid, ComplexRoomInfo[ complex ][ cInt ] );
+							SetPlayerVirtualWorld( playerid, ComplexRoomInfo[ complex ][ cViwo ]);
+							Player_SetInApartmentRoom(playerid, complex);
+							SetPlayerHealth(playerid, 100);
+							return 1;
+						}
+					}
+					case 4:
+					{
+						SetPlayerInterior(playerid, 0);
+						SetPlayerVirtualWorld(playerid, 0);
+						SetPlayerHealth(playerid, 100);
+					}
+				}
+				if( Bit1_Get( gr_PlayerInTrunk, playerid ) )
+				{
+					Bit1_Set( gr_PlayerInTrunk, playerid, false );
+					VehicleTrunk[ playerid ] = INVALID_VEHICLE_ID;
+
+					SetPlayerPosEx(playerid, PlayerTrunkPos[playerid][0], PlayerTrunkPos[playerid][1], PlayerTrunkPos[playerid][2], 0, 0, false);
+					TogglePlayerControllable( playerid, 1 );
+					SendClientMessage( playerid, COLOR_RED, "[ ! ]: You exited the trunk.");
+					SetPlayerHealth(playerid, 100);
+				}
+			}
+		}
+	}
+    return 1;
 }
 
 hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
