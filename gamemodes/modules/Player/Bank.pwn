@@ -569,7 +569,7 @@ TakePlayerProperty(playerid)
 				ResetVehicleList(playerid);
 
 				DeleteVehicleTuning(PlayerKeys[playerid][pVehicleKey]);
-				ResetTuning(PlayerKeys[playerid][pVehicleKey]);
+				ResetVehicleTuning(PlayerKeys[playerid][pVehicleKey]);
 				DeleteVehicleDrug(PlayerKeys[playerid][pVehicleKey], -1);
 				
 				// SQL

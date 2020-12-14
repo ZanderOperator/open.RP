@@ -291,7 +291,7 @@ stock ResetVehicleInfo(vehicleid)
 	ResetVehicleAlarm(vehicleid);
 	
 	ClearVehicleMusic(vehicleid);	
-	ResetTuning(vehicleid);
+	ResetVehicleTuning(vehicleid);
 	
 	// Ints
 	VehicleInfo[ vehicleid ][ vSQLID ]					= -1;
@@ -515,7 +515,7 @@ stock AC_SetVehicleToRespawn(vehicleid)
 	if( VehicleInfo[vehicleid][vUsage] == 2 )  // VEHICLE_USAGE_PRIVATE
 	{
 		CheckVehicleInsurance(vehicleid);
-		SetTune(vehicleid);
+		SetVehicleTuning(vehicleid);
 		RespawnTrunkObjects(vehicleid);
 	}
 	if(VehicleInfo[ vehicleid ][ vImpounded ] == 1)

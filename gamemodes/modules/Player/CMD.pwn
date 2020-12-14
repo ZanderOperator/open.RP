@@ -20,12 +20,13 @@ hook ResetPlayerVariables(playerid)
 	Entering[playerid] = false;
 	Exiting[playerid] = false;
 
-	if (Player_UsingMask(playerid) && IsValidDynamic3DTextLabel(NameText[playerid]))
+	if (IsValidDynamic3DTextLabel(NameText[playerid]))
 	{
 		DestroyDynamic3DTextLabel(NameText[playerid]);
 		NameText[playerid] = Text3D:INVALID_3DTEXT_ID;
-		Player_SetUsingMask(playerid, false);
+		
 	}
+	Player_SetUsingMask(playerid, false);
 	return 1;
 }
 
@@ -45,6 +46,33 @@ hook OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
             TogglePlayerControllable(playerid, true);
             return 1;
         }
+	}
+	if( PRESSED(KEY_SECONDARY_ATTACK) ) 
+	{
+        if( Bit1_Get( gr_SmokingCiggy, playerid ) )
+		{
+	        SetPlayerSpecialAction(playerid,0);
+	        Bit1_Set( gr_SmokingCiggy, playerid, false );
+
+			new
+				tmpString[ 50 ];
+		  	format(tmpString, sizeof(tmpString), "* %s puts out a cigarette.",
+				GetName(playerid, true)
+			);
+		  	ProxDetector(15.0, playerid, tmpString, COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE);
+		}
+		if(Player_HasDrink(playerid))
+		{
+	        SetPlayerSpecialAction(playerid,0);
+	        Player_SetHasDrink(playerid, false);
+
+			new
+				tmpString[ 50 ];
+		  	format(tmpString, sizeof(tmpString), "* %s puts his drink aside.",
+				GetName(playerid, true)
+			);
+		  	ProxDetector(15.0, playerid, tmpString, COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE);
+		}
 	}
 	return 1;
 }
