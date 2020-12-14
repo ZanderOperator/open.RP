@@ -13,6 +13,12 @@ stock ResetPlayerExperience(playerid)
 	return 1;
 }
 
+hook ResetPlayerVariables(playerid)
+{
+	ResetPlayerExperience(playerid);
+	return 1;
+}
+
 stock ListBestTemporaryEXP(playerid)
 {
 	new dialogstring[2056];

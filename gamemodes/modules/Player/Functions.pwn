@@ -57,7 +57,9 @@ static
     bool:HasDrink[MAX_PLAYERS],
     bool:HasFood[MAX_PLAYERS],
     bool:FakeGunLic[MAX_PLAYERS],
-    PlayerGroceries[MAX_PLAYERS];
+    PlayerGroceries[MAX_PLAYERS],
+	bool:PlayerGlobalTaskTimer[ MAX_PLAYERS ],
+	Timer:PlayerTask[ MAX_PLAYERS ];
 
 new
     AdoLabels[MAX_ADO_LABELS][E_ADO_LABEL_INFO];
@@ -1165,9 +1167,6 @@ timer PlayerGlobalTask[1000](playerid)
 	CheckHouseInfoTextDraws(playerid); // House Info Textdraw removal if not in checkpoint 
 	CheckWoundedPlayer(playerid);
 	
-	if(PlayerCarTow[playerid])
-		VehicleTowTimer(PlayerKeys[playerid][pVehicleKey], playerid);
-	
 	SprayingBarChecker(playerid);
 	SprayingTaggTimer(playerid);
 	
@@ -1879,13 +1878,6 @@ stock IllegalFactionJobCheck(factionid, jobid)
 	##     ## ##     ## ##     ## ##   ##  ##    ## 
 	##     ##  #######   #######  ##    ##  ######  
 */
-hook OnPlayerConnect(playerid) 
-{
-    PlayerDrunkLevel[playerid]	= 0;
-    PlayerFPS[playerid]       	= 0;
-	PlayerFPSUnix[playerid]		= gettimestamp();
-	return 1;
-}
 
 hook OnPlayerDisconnect(playerid, reason)
 {
@@ -1918,6 +1910,12 @@ hook OnPlayerDisconnect(playerid, reason)
 
 hook ResetPlayerVariables(playerid)
 {
+	PlayerGlobalTaskTimer[ playerid ] = false;
+	
+	PlayerDrunkLevel[playerid]	= 0;
+    PlayerFPS[playerid]       	= 0;
+	PlayerFPSUnix[playerid]		= gettimestamp();
+
     // TODO: should be moved to Systems/LSN.pwn module along with getter/setter impl.
     BlockedLive[playerid] = false;
     BlockedOOC[playerid] = false;
@@ -1930,16 +1928,6 @@ hook ResetPlayerVariables(playerid)
     PlayerGroceries[playerid] = 0;
 	return 1;
 }
-/*
-public OnPlayerPause(playerid)
-{
-	if(SafeSpawned[playerid])
-	{
-		stop PlayerTask[playerid];
-		PlayerGlobalTaskTimer[playerid] = false;
-	}
-	return 1;
-}*/
 
 hook OnPlayerUpdate(playerid) 
 {

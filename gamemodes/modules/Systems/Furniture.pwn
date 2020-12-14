@@ -878,15 +878,6 @@ new const ObjectsArmChair[][E_ARMCHAIR_OBJECT_DATA] =
     {2572,    "Bijele hotelske fotelje1"   ,    200}
 };
 
-/* TODO: UNUSED
-enum E_TABLE_OBJECTS_DATA
-{
-    tabId,
-    tabName[32],
-    tabPrice
-}
-*/
-
 enum E_CABINETS_OBJECT_DATA
 {
     cabId,
@@ -2027,6 +2018,7 @@ new const ObjectsFood[][E_FOOD_OBJECTS_DATA] =
 };
 
 static
+    texture_buffer      [10256],
     PreviewingInterior  [MAX_PLAYERS] = {-1, ...},
     EditState           [MAX_PLAYERS] = {-1, ...},
 

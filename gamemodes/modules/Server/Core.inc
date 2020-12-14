@@ -3,7 +3,6 @@
 #include "modules/Server/Checkpoints.pwn"
 #include "modules/Server/Artconfig.pwn"
 #include "modules/Server/PopupMessage.pwn"
-#include "modules/Server/Updates.pwn"
 #include "modules/Server/Animations.pwn"
 #include "modules/Server/Streets.pwn"
 #include "modules/Server/Zones.pwn"

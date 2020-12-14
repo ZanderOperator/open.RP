@@ -192,6 +192,16 @@ new Iterator: MobileContacts[MAX_PLAYERS]<MAX_MOBILE_CONTACTS>;
 	 ######     ##     #######   ######  ##    ##  ######
 */
 
+stock Player_PhoneStatus(playerid)
+{
+	return PhoneStatus[playerid];
+}
+
+stock Player_SetPhoneStatus(playerid, status)
+{
+	PhoneStatus[playerid] = status;
+}
+
 stock bool:Player_MobileOn(playerid)
 {
     return MobileOn[playerid];
@@ -529,6 +539,25 @@ stock DeleteTower(towerid)
 	TowerInfo[ towerid ][ twRadius ] = 0.0;
 
 	mysql_fquery(g_SQL, "DELETE FROM signaltowers WHERE id = '%d' LIMIT 1", TowerInfo[ towerid ][ twSQLID ]);
+	return 1;
+}
+
+stock RemovePlayerMobile(playerid)
+{
+	PlayerMobile[playerid][pMobileModel] = 0;
+	PlayerMobile[playerid][pMobileNumber] = 0;
+	PlayerMobile[playerid][pMobileCost] = 0;
+
+	PhoneAction(playerid, PHONE_HIDE); 
+	Player_SetPhoneStatus(playerid, PHONE_HIDE);
+	
+	CancelSelectTextDraw(playerid);
+	DeletePlayerContacts(playerid);
+	
+	mysql_fquery(g_SQL,
+		 "DELETE FROM player_phones WHERE player_id = '%d' AND type = '1'", 
+		 PlayerInfo[playerid][pSQLID]
+	);
 	return 1;
 }
 
@@ -1965,7 +1994,7 @@ public PhoneAction(playerid, phaction)
 	}
 	else if(phaction == PHONE_NEXT)
 	{
-		PhoneStatus[playerid] = PHONE_NEXT;
+		Player_SetPhoneStatus(playerid, PHONE_NEXT);
 		for(new i = 0; i < PHONE_TEXTDRAWS; i++)
 	    {
 	        PlayerTextDrawHide(playerid, PhoneTD[playerid][i]);
@@ -1976,7 +2005,8 @@ public PhoneAction(playerid, phaction)
 	}
 	else if(phaction == PHONE_ON || phaction == PHONE_OFF)
 	{
-	    if(PhoneStatus[playerid] == PHONE_SHOW) PhoneAction(playerid, PHONE_SHOW);
+	    if(Player_PhoneStatus(playerid) == PHONE_SHOW) 
+			PhoneAction(playerid, PHONE_SHOW);
 	}
 	return 1;
 }
@@ -2113,11 +2143,12 @@ stock ResetMobileVariables(playerid)
 	StartCallTimestamp[ playerid ] = 0;
 	PlayerCallPlayer[ playerid ] 	= INVALID_PLAYER_ID;
 	SpeakerPhone[ playerid ] 		= false;
-	PhoneStatus[ playerid ]    	= PHONE_HIDE;
 	PhoneTDAction[ playerid ]	= PTD_ACTION_HOME;
 	ContactEditing[ playerid ]  = -1;
-	PhoneAction(playerid, PHONE_HIDE);
 	PhoneUpdateTick[playerid]	= 0;
+
+	Player_SetPhoneStatus(playerid, PHONE_HIDE);
+	PhoneAction(playerid, PHONE_HIDE);
 
 	ReloadSMS(playerid);
 
@@ -2508,7 +2539,7 @@ stock CancelPlayerPhone(playerid)
 	if(IsPlayerAttachedObjectSlotUsed(playerid, MOBILE_OBJECT_SLOT))
 		RemovePlayerAttachedObject( playerid, MOBILE_OBJECT_SLOT );
 	PhoneAction(playerid, PHONE_HIDE);
-	PhoneStatus[playerid] = PHONE_HIDE;
+	Player_SetPhoneStatus(playerid, PHONE_HIDE);
 	PhoneTDAction[playerid] = PTD_ACTION_HOME;
 	CancelSelectTextDraw(playerid);
 	return 1;
@@ -2612,25 +2643,16 @@ hook OnGameModeInit()
 	return 1;
 }
 
-hook ResetPlayerVariables(playerid)
-{
-	PlayerMobile[playerid][pCryptoNumber]		= 0;
-	PlayerMobile[playerid][pMobileNumber]		= 0;
-	PlayerMobile[playerid][pMobileModel]		= 0;
-	PlayerMobile[playerid][pMobileCost] 		= 0;
-	return 1;
-}
-
 hook OnPlayerConnect(playerid)
 {
 	StartCallTimestamp[playerid] = 0;
 	return 1;
 }
 
-hook OnPlayerDisconnect(playerid, reason)
+hook ResetPlayerVariables(playerid)
 {
 	PhoneAction(playerid, PHONE_HIDE);
-	PhoneStatus[playerid] = PHONE_HIDE;
+	Player_SetPhoneStatus(playerid, PHONE_HIDE);
 	CancelSelectTextDraw(playerid);
 	
 	if (PlayerCallPlayer[playerid] != INVALID_PLAYER_ID)
@@ -2643,6 +2665,8 @@ hook OnPlayerDisconnect(playerid, reason)
 	PlayerMobile[playerid][pMobileNumber]		= 0;
 	PlayerMobile[playerid][pMobileModel]		= 0;
 	PlayerMobile[playerid][pMobileCost] 		= 0;
+	PlayerMobile[playerid][pPhoneBG] 			= -1263225696;
+	PlayerMobile[playerid][pPhoneMask] 			= 0;
 	return 1;
 }
 
@@ -3126,7 +3150,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 			else PlayerMobile[playerid][pPhoneBG] = BackgroundColors[listitem][0];
 		    PlayerTextDrawColor(playerid, PhoneTD[playerid][7], PlayerMobile[playerid][pPhoneBG]);
 			PhoneAction(playerid, PHONE_SHOW);
-			PhoneStatus[playerid] = PHONE_SHOW;
+			Player_SetPhoneStatus(playerid, PHONE_SHOW);
 		}
 		case DIALOG_MOBILE_MASKS: {
 			if(listitem == 0) PlayerMobile[playerid][pPhoneMask] = 0;
@@ -3134,7 +3158,8 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 		    PlayerTextDrawColor(playerid, PhoneTD[playerid][101], PlayerMobile[playerid][pPhoneMask]);
 		    PlayerTextDrawColor(playerid, PhoneTD[playerid][102], PlayerMobile[playerid][pPhoneMask]);
 		    PlayerTextDrawColor(playerid, PhoneTD[playerid][103], PlayerMobile[playerid][pPhoneMask]);
-		    if(PhoneStatus[playerid] == PHONE_SHOW) PhoneAction(playerid, PHONE_SHOW);
+		    if(Player_PhoneStatus(playerid) == PHONE_SHOW) 
+				PhoneAction(playerid, PHONE_SHOW);
 		}
 		case DIALOG_MOBILE_CONTACTS_MAIN: 
 		{
@@ -3330,9 +3355,9 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 }
 hook OnPlayerUpdate(playerid)
 {
-	if(PhoneStatus[playerid] == PHONE_SHOW)
+	if(Player_PhoneStatus(playerid) == PHONE_SHOW)
 	{
-		if( IsPlayerAlive(playerid) && PhoneStatus[ playerid ] == PHONE_ON && PhoneUpdateTick[playerid] < gettimestamp())
+		if( IsPlayerAlive(playerid) && PhoneUpdateTick[playerid] < gettimestamp())
 		{
 			SetTDTime(playerid);
 			SetTDSignal(playerid);
@@ -3350,7 +3375,7 @@ hook OnPlayerUpdate(playerid)
 	{
 		if( GetPlayerState(playerid) == PLAYER_STATE_DRIVER )
 		{
-			if(PhoneStatus[playerid] == PHONE_SHOW)
+			if(Player_PhoneStatus(playerid) == PHONE_SHOW)
 			{
 				if(Player_UsingSpeedometer(playerid))
 					DestroySpeedoTextDraws(playerid);
@@ -3364,7 +3389,9 @@ hook OnPlayerUpdate(playerid)
 
 hook OnPlayerClickTextDraw(playerid, Text:clickedid)
 {
-	if(Text:INVALID_TEXT_DRAW == clickedid && (PhoneStatus[playerid] == PHONE_SHOW || PhoneStatus[playerid] == PHONE_NEXT) && PhoneTDAction[playerid] != PTD_ACTION_CALL)
+	if(Text:INVALID_TEXT_DRAW == clickedid
+		&& (Player_PhoneStatus(playerid) == PHONE_SHOW || Player_PhoneStatus(playerid) == PHONE_NEXT) 
+		&& PhoneTDAction[playerid] != PTD_ACTION_CALL)
 		CancelPlayerPhone(playerid);
 
 	return 1;
@@ -3809,7 +3836,8 @@ CMD:togphone(playerid, params[])
 
 CMD:ph(playerid, params[])
 {
-    if(PhoneStatus[playerid] == PHONE_HIDE) return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR,"Prvo izvadite mobitel!");
+    if(Player_PhoneStatus(playerid) == PHONE_HIDE) 
+		return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR,"Prvo izvadite mobitel!");
     SelectTextDraw(playerid, 0xA3B4C5FF);
 	return 1;
 }
@@ -3819,16 +3847,16 @@ CMD:phone(playerid, params[])
 	if( PlayerDeath[playerid][pKilled] ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne mozes koristiti ovu komandu dok si u DeathModeu!");
 	if( !PlayerMobile[playerid][pMobileNumber] ) return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR,"Nemate mobitel!");
 	PhoneTDAction[playerid] = PTD_ACTION_HOME;
-	if(PhoneStatus[playerid] == PHONE_SHOW || PhoneStatus[playerid] == PHONE_NEXT)
+	if(Player_PhoneStatus(playerid) == PHONE_SHOW || Player_PhoneStatus(playerid) == PHONE_NEXT)
 	{
 		CancelPlayerPhone(playerid);
 		return 1;
 	}
-	else if(PhoneStatus[playerid] == PHONE_HIDE)
+	else if(Player_PhoneStatus(playerid) == PHONE_HIDE)
 	{
 
 		PhoneAction(playerid, PHONE_SHOW);
-		PhoneStatus[playerid] = PHONE_SHOW;
+		Player_SetPhoneStatus(playerid, PHONE_SHOW);
 	    SelectTextDraw(playerid, 0xA3B4C5FF);
 		if(!IsPlayerAttachedObjectSlotUsed(playerid, MOBILE_OBJECT_SLOT))
 			SetPlayerAttachedObject(playerid, MOBILE_OBJECT_SLOT, PlayerMobile[playerid][pMobileModel], 6, 0.101469, 0.000639, -0.008395, 73.051651, 171.894165, 0.000000, 1.000000, 1.000000, 1.000000);

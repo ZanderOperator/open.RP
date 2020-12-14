@@ -1,5 +1,13 @@
 // Header file where functions should be declared that can be used/accessed from other modules
 
+// SaveLoad/Core.pwn
+forward bool:Player_SecurityBreach(playerid);
+forward Player_SetSecurityBreach(playerid, bool:v);
+
+// Updates
+forward bool:Player_Reward(playerid);
+forward Player_SetReward(playerid, bool:v);
+
 // Miscelleneous
 forward Player_GetLastVehicle(playerid);
 forward Player_SetLastVehicle(playerid, v);
@@ -42,6 +50,9 @@ forward bool:Player_IsTied(playerid);
 forward Player_SetIsTied(playerid, bool:v);
 
 // Mobile Phone
+forward Player_PhoneStatus(playerid);
+forward Player_SetPhoneStatus(playerid, status);
+
 forward Player_PhoneLine(playerid);
 forward Player_SetPhoneLine(playerid, v);
 

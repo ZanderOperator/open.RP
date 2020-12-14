@@ -15,9 +15,20 @@ static
 	PlayerReport[MAX_PLAYERS][128];
 
 static 
+	ReportID[MAX_PLAYERS],
 	DialogArgs[MAX_PLAYERS],
 	DialogCallback[MAX_PLAYERS][32],
 	DialogParamHash[MAX_PLAYERS][64];
+
+stock Player_ReportID(playerid)
+{
+	return ReportID[playerid];
+}
+
+stock Player_SetReportID(playerid, id)
+{
+	ReportID[playerid] = id;
+}
 
 hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 {
@@ -57,14 +68,16 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 	return 0;
 }
 
-hook OnPlayerDisconnect(playerid)
+hook ResetPlayerVariables(playerid)
 {
-    if(playeReport[playerid] != -1)
+    if(Player_ReportID(playerid) != -1)
 	{
-		ClearReport(playeReport[playerid]);
-		playeReport[playerid] = -1;
+		ClearReport(Player_ReportID(playerid));
+		Player_SetReportID(playerid, -1);
 	}
 	DialogArgs[playerid] = 0;
+	DialogCallback[playerid][0] = EOS;
+	DialogParamHash[playerid][0] = EOS;
     return 1;
 }
 
@@ -105,7 +118,7 @@ public OnPlayerReport(playerid, response)
 			}
 		}
 		//PlayerTick[playerid][ptReport] = gettimestamp() + 120;
-        playeReport[playerid] = id;
+		Player_SetReportID(playerid, id);
 		SendMessage(playerid, MESSAGE_TYPE_INFO, "[ ! ]: Your query has been sent to Game Admins.");
 	}
 	return 1;
@@ -216,7 +229,7 @@ ClearReport(id)
 	if(pid != INVALID_PLAYER_ID || IsPlayerConnected(pid))
 	{
 		if(pid != -1)
-			playeReport[pid] = -1;
+			Player_SetReportID(pid, -1);
 	}
 	ReportData[id][reportExists] = false;
 	ReportData[id][reportBy] = EOS;
@@ -243,7 +256,7 @@ stock SecondsToMinute(seconds)
 CMD:report(playerid, params[])
 {
     if(Bit1_Get(gr_Blockedreport, playerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne mozes slati reporte.");
-	if(playeReport[playerid] != -1)
+	if(Player_ReportID(playerid) != -1)
 		return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Vec si poslao report! Pricekaj da ti admini odgovore na isti.");
 
 	new	string[678];

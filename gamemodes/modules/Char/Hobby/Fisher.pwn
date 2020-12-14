@@ -3,6 +3,7 @@
 
 static
 	bool:SellingFish[MAX_PLAYERS],
+	bool:GotRod[MAX_PLAYERS],
 	FishingStamp[MAX_PLAYERS],
 	FishSellStamp[MAX_PLAYERS];
 
@@ -909,13 +910,14 @@ CMD:sellfish(playerid, params[])
 	return 1;
 }
 
-CMD:rentarod(playerid, params[]){
-    if(IsPlayerInRangeOfPoint(playerid, 15.0, 375.0699,-2069.2192,7.8359)){
-
+CMD:rentarod(playerid, params[])
+{
+    if(IsPlayerInRangeOfPoint(playerid, 15.0, 375.0699,-2069.2192,7.8359))
+	{
         PlayerToBudgetMoney(playerid, 150);
         SendClientMessage(playerid, COLOR_RED, "[ ! ] Iznajmili ste stap za pecanje. (150$)");
         SendClientMessage(playerid, COLOR_RED, "[ ! ] Upamtite da ce log out obrisati ovu funkciju.");
-        GotRod[playerid] = 1;
+        GotRod[playerid] = true;
 	}
     else return SendClientMessage(playerid, COLOR_RED, "[ ! ] Niste na mjestu za iznajmljivanje stapa za pecanje.");
 	return 1;

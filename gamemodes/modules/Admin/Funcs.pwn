@@ -1596,7 +1596,6 @@ hook ResetPlayerVariables(playerid)
 	
 	// rBits
 	Bit1_Set(a_PlayerReconed, playerid, false);
-	Bit1_Set(gr_SaveArmour, playerid, false);
     Bit1_Set(a_AdminChat, playerid, false);
     Bit1_Set(a_PMears, playerid, false);
     Bit1_Set(a_AdNot, playerid, false);

@@ -1,10 +1,8 @@
 #include <YSI_Coding\y_hooks>
 
 static 
-	globalstring[144];
-
-// Floats
-static
+	globalstring[144],
+	bool:AdminFly[MAX_PLAYERS],
 	Float:AdminMark1[MAX_PLAYERS][3],
 	Float:AdminMark2[MAX_PLAYERS][3],
 	Float:AdminMark3[MAX_PLAYERS][3],
@@ -1620,7 +1618,6 @@ CMD:setarmour(playerid, params[])
 	if (armour < 0.0 || armour > 99.9) return SendClientMessage(playerid, COLOR_RED, "Minimalan unos je 0, a maksimalan 99.9!");
     if (!IsPlayerConnected(giveplayerid)) return SendClientMessage(playerid, COLOR_RED, "Taj igraè nije online!");
 	SetPlayerArmour(giveplayerid, armour);
-	Bit1_Set(gr_SaveArmour, giveplayerid, true);
 	return 1;
 }
 
@@ -1888,9 +1885,10 @@ CMD:setarmoraround(playerid, params[])
 	GetPlayerPos(playerid, X, Y, Z);
     foreach (new i : Player)
 	{
-	    if (IsPlayerConnected(i))
+	    if (SafeSpawned[i])
 	    {
-	        if (IsPlayerInRangeOfPoint(i, 20.0, X, Y, Z) && i != playerid) { SetPlayerArmour(i, amount); Bit1_Set(gr_SaveArmour, playerid, true); }
+	        if (IsPlayerInRangeOfPoint(i, 20.0, X, Y, Z) && i != playerid) 
+				SetPlayerArmour(i, amount); 
 	    }
 	}
     return 1;
@@ -3394,16 +3392,16 @@ CMD:fly(playerid,params[])
     if (PlayerInfo[playerid][pAdmin] < 1) 
 		return SendClientMessage(playerid, COLOR_RED, "Niste autorizovani. [MAYDAY]");
 
-	if(adminfly[playerid] == 0)
+	if(!AdminFly[playerid])
 	{
 		StartFly(playerid);
-		adminfly[playerid] = 1;
+		AdminFly[playerid] = true;
 		SetPlayerHealth(playerid, 99999);
 	}
-	else if(adminfly[playerid] == 1)
+	else
 	{
 		StopFly(playerid);
-		adminfly[playerid] = 0;
+		AdminFly[playerid] = false;
 		SetPlayerHealth(playerid, 100);
 	}
 	return true;
@@ -4057,10 +4055,10 @@ CMD:apm(playerid, params[])
 		Bit16_Set( gr_LastPMId, giveplayerid, playerid );
 	}
 	
-	if(playeReport[giveplayerid] != -1)
+	if(Player_ReportID(giveplayerid) != -1)
 	{
-		ClearReport(playeReport[giveplayerid]);
-		playeReport[giveplayerid] = -1;
+		ClearReport(Player_ReportID(giveplayerid));
+		Player_SetReportID(giveplayerid, -1);
 		
 		new str[128];
 		format(str, sizeof(str), "[REPORT] %s je odgovorio na report ID od %s", GetName(playerid, false), GetName(giveplayerid, false));
@@ -4468,6 +4466,8 @@ CMD:setservertime(playerid, params[])
 
 hook ResetPlayerVariables(playerid)
 {
+	AdminFly[playerid] = false;
+
 	AdminMark1[playerid][0] = 0.0;
 	AdminMark1[playerid][1] = 0.0;
 	AdminMark1[playerid][2] = 0.0;

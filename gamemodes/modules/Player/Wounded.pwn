@@ -147,6 +147,12 @@ stock ResetPlayerWounded(playerid)
 	return 1;
 }
 
+hook ResetPlayerVariables(playerid)
+{
+	ResetPlayerWounded(playerid);
+	return 1;
+}
+
 stock InflictPlayerDamage(playerid, issuerid, bodypart, Float:damage)
 {
 	if(PlayerDeath[playerid][pKilled] != 2 && KilledBy[playerid] == INVALID_PLAYER_ID)

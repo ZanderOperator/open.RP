@@ -17,9 +17,11 @@
 	 ## ##   ##     ##  ##    ##  ##    ## 
 	  ###    ##     ##  ##     ##  ######  
 */
-static stock 
-			dialogtext[MAX_DIALOG_TEXT],
-			Timer:LoginCheckTimer[MAX_PLAYERS];
+static  
+		dialogtext[MAX_DIALOG_TEXT],
+		Timer:LoginCheckTimer[MAX_PLAYERS],
+		bool:SigningIn[MAX_PLAYERS],
+		bool:SecurityBreach[MAX_PLAYERS];
 
 /*
 	######## ##     ## ##    ##  ######  ######## ####  #######  ##    ##  ######  
@@ -30,6 +32,16 @@ static stock
 	##       ##     ## ##   ### ##    ##    ##     ##  ##     ## ##   ### ##    ## 
 	##        #######  ##    ##  ######     ##    ####  #######  ##    ##  ######  
 */
+
+stock bool:Player_SecurityBreach(playerid)
+{
+	return SecurityBreach[playerid];
+}
+
+stock Player_SetSecurityBreach(playerid, bool:v)
+{
+	SecurityBreach[playerid] = v;
+}
 
 // Timers
 timer FinishPlayerSpawn[5000](playerid)
@@ -160,7 +172,7 @@ public CheckPlayerInBase(playerid)
 		);
 		
 		Bit8_Set(gr_LoginInputs, playerid, 0);
-		Bit1_Set(gr_LoginChecksOn, playerid, true);
+		SigningIn[playerid] = true;
 		LoginCheckTimer[playerid] = defer LoginCheck(playerid);
 	} 
 	else 
@@ -215,7 +227,7 @@ public LoadPlayerData(playerid)
     if(rows)
 	{
 		stop LoginCheckTimer[playerid];
-		Bit1_Set(gr_LoginChecksOn, playerid, false);
+		SigningIn[playerid] = false;
 
 		cache_get_value_name_int(0, "sqlid"			, PlayerInfo[playerid][pSQLID]);
 		cache_get_value_name(0, 	"password"		, PlayerInfo[playerid][pPassword]		, BCRYPT_HASH_LENGTH);
@@ -396,7 +408,7 @@ public LoadPlayerData(playerid)
             gpci(playerid, n_gpci, 128);
             if(strcmp(n_gpci, PlayerInfo[playerid][pSAMPid])) 
 			{
-                OnSecurityBreach[playerid] = true;
+                Player_SetSecurityBreach(playerid, true);
                 
 				va_SendClientMessage(playerid, 
 					COLOR_RED, 
@@ -537,10 +549,8 @@ SafeSpawnPlayer(playerid)
 	);
 	#endif
 	
-	OnSecurityBreach[playerid] = false;
+	Player_SetSecurityBreach(playerid, false);
 	
-	SafeSpawning[playerid] = true;
-
 	mysql_fquery(g_SQL,
 		"INSERT INTO player_connects(player_id, time, aip) VALUES ('%d','%d','%e')",
 		PlayerInfo[playerid][pSQLID],
@@ -651,6 +661,53 @@ public SavePlayerData(playerid)
 	SavePlayerStats(playerid); // Saving data non-related to 'accounts' database table.
 
 	mysql_pquery(g_SQL, "COMMIT");
+	return 1;
+}
+
+#include <YSI_Coding\y_hooks>
+hook ResetPlayerVariables(playerid)
+{
+	PlayerInfo[playerid][pForumName] 		= EOS;
+	PlayerInfo[playerid][pLastLogin] 		= EOS;
+	PlayerInfo[playerid][pSAMPid] 			= EOS;
+	PlayerInfo[playerid][pEmail][0] 		= EOS;
+
+	PlayerInfo[playerid][pSecQuestAnswer][0]= EOS;
+	PlayerInfo[playerid][pLastUpdateVer] 	= EOS;
+
+	PlayerInfo[playerid][pSQLID] 			= 0; 	//Integer
+	PlayerInfo[playerid][pLastLoginTimestamp] = 0;
+	PlayerInfo[playerid][pRegistered] 		= 0;
+	PlayerInfo[playerid][pSecQuestion] 		= -1;
+	PlayerInfo[playerid][pBanned]			= 0;
+	PlayerInfo[playerid][pWarns]			= 0;
+	PlayerInfo[playerid][pLevel]			= 0;
+	PlayerInfo[playerid][pAdmin]			= 0;
+	PlayerInfo[playerid][pTempRank][0]		= 0;
+	PlayerInfo[playerid][pTempRank][1]		= 0;
+	PlayerInfo[playerid][pHelper]			= 0;
+	PlayerInfo[playerid][pConnectTime]		= 0;
+	PlayerInfo[playerid][pMuted]			= 0;
+	PlayerInfo[playerid][pRespects]			= 0;
+	PlayerInfo[playerid][pSex]				= 0;
+	PlayerInfo[playerid][pAge]				= 0;
+	PlayerInfo[playerid][pChangenames]		= 0;
+	PlayerInfo[playerid][pChangeTimes]		= 0;
+	PlayerInfo[playerid][pMoney]			= 0;
+	PlayerInfo[playerid][pBank]				= 0;	
+	
+	PlayerKeys[playerid][pHouseKey]			= INVALID_HOUSE_ID;
+	PlayerKeys[playerid][pRentKey]			= INVALID_HOUSE_ID;
+	PlayerKeys[playerid][pBizzKey]			= INVALID_BIZNIS_ID;
+	PlayerKeys[playerid][pComplexKey]		= INVALID_COMPLEX_ID;
+	PlayerKeys[playerid][pComplexRoomKey]	= INVALID_COMPLEX_ID;
+	PlayerKeys[playerid][pGarageKey]		= -1;
+	PlayerKeys[playerid][pIllegalGarageKey]	= -1;
+	PlayerKeys[playerid][pVehicleKey]		= -1;
+	PlayerKeys[playerid][pWarehouseKey] 	= -1;
+	PlayerInfo[playerid][pVoted]	 		= false;
+	PlayerInfo[playerid][pMustRead]			= false;
+
 	return 1;
 }
 
@@ -827,9 +884,11 @@ stock SetPlayerSpawnInfo(playerid)
 #include <YSI_Coding\y_hooks>
 hook OnPlayerDisconnect(playerid, reason)
 {
-	if( Bit1_Get(gr_LoginChecksOn, playerid ) )
+	if(SigningIn[playerid])
 		stop LoginCheckTimer[playerid];
 
+	SigningIn[playerid] = false;
+	Player_SetSecurityBreach(playerid, false);
 	SetPlayerOnlineStatus(playerid, 0);
 	return 1;
 }
@@ -914,7 +973,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 			    
             if(!strcmp(inputtext, PlayerInfo[playerid][pSecQuestAnswer]))
             {
-				OnSecurityBreach[playerid] = false;
+				Player_SetSecurityBreach(playerid, false);
 
 				#if defined MODULE_LOGS
                 Log_Write("logfiles/GPCI.txt", 
