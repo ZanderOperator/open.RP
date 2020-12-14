@@ -424,99 +424,6 @@ StartGMX()
 }
 #endif
 
-RegisterPlayerDeath(playerid, killerid) // funkcija
-{
-	new
-		tmpString[135];
-	format(tmpString, 135, "KillWarn: Player %s[%d] killed player %s[%d] with %s!",
-		GetName( killerid, false ),
-		killerid,
-		GetName( playerid, false ),
-		playerid,
-		GetWeaponNameEx(killerid)
-	);
-	DMERSBroadCast(COLOR_RED, tmpString, 1);
-
-	mysql_fquery(g_SQL, "INSERT INTO server_deaths (killer_id, death_id, weaponid, date) \n\
-		VALUES ('%d','%d','%d','%d')",
-		PlayerInfo[ KilledBy[playerid] ][ pSQLID ],
-		PlayerInfo[ playerid ][ pSQLID ],
-		KilledReason[playerid],
-		gettimestamp()
-	);
-	
-	#if defined MODULE_LOGS
-	Log_Write("logfiles/kills.txt", "(%s) %s{%d}(%s) has killed %s{%d}(%s) with %s(%d).",
-		ReturnDate(),
-		GetName(killerid, false),
-		PlayerInfo[killerid][pSQLID],
-		ReturnPlayerIP(killerid),
-		GetName(playerid, false),
-		PlayerInfo[playerid][pSQLID],
-		ReturnPlayerIP(playerid),
-		GetWeaponNameEx(KilledReason[playerid]),
-		KilledReason[playerid]
-	);
-	#endif
-	
-	new
-		Float:X, Float:Y, Float:Z;
-	GetPlayerPos(playerid, X, Y, Z);
-
-	PlayerDeath[playerid][pDeathX] 	= X;
-	PlayerDeath[playerid][pDeathY] 	= Y;
-	PlayerDeath[playerid][pDeathZ] 	= Z;
-	PlayerDeath[playerid][pDeathInt] 	= GetPlayerInterior( playerid );
-	PlayerDeath[playerid][pDeathVW] 		= GetPlayerVirtualWorld( playerid );
-
-	// FIRST DEATH
-	if( DeathData[ playerid ][ ddOverall ] > 0)
-	{
-		DeathTime[playerid] = gettimestamp() + 60;
-		//DropPlayerMoney(playerid); // Gubitak novca
-
-		//DropPlayerWeapons(playerid, X, Y);
-		//DropPlayerDrugs(playerid, X, Y, true);
-
-		mysql_fquery_ex(g_SQL, "INSERT INTO player_deaths(player_id, killed, pos_x, pos_y, pos_z, interior, viwo, time) \n\
-			VALUES ('%d','%f','%f','%f','%d','%d','%d')",
-			PlayerInfo[playerid][pSQLID],
-			PlayerDeath[playerid][pKilled],
-			PlayerDeath[playerid][pDeathX],
-			PlayerDeath[playerid][pDeathY],
-			PlayerDeath[playerid][pDeathZ],
-			PlayerDeath[playerid][pDeathInt],
-			PlayerDeath[playerid][pDeathVW],
-			gettimestamp()
-		);
-	}
-	AC_ResetPlayerWeapons(playerid);
-
-	HiddenWeapon[playerid][pwSQLID] = -1;
-	HiddenWeapon[playerid][pwWeaponId] = 0;
-	HiddenWeapon[playerid][pwAmmo] = 0;
-
-	// Mobile Dissapear
-	PhoneAction(playerid, PHONE_HIDE);
-	Player_SetPhoneStatus(playerid, PHONE_HIDE);
-	CancelSelectTextDraw(playerid);
-
-	if (Player_UsingMask(playerid) && IsValidDynamic3DTextLabel(NameText[playerid]))
-	{
-		DestroyDynamic3DTextLabel(NameText[playerid]);
-		NameText[playerid] = Text3D:INVALID_3DTEXT_ID;
-		Player_SetUsingMask(playerid, false);
-	}
-	KilledBy[playerid] = INVALID_PLAYER_ID;
-	WoundedBy[playerid] = INVALID_PLAYER_ID;
-	KilledReason[playerid] = -1;
-
-	PlayerDeath[playerid][pKilled] = 0;
-
-	Bit1_Set(gr_PlayerAlive, 	playerid, true);
-	return 1;
-}
-
 stock ResetPlayerEnumerator()
 {
 	for(new p=0; p<MAX_PLAYERS; p++)
@@ -1414,21 +1321,5 @@ hook OnPlayerUpdate(playerid)
 
 public OnPlayerInteriorChange(playerid, newinteriorid, oldinteriorid)
 {
-	return 1;
-}
-
-// TODO: should be a part of mask module
-public OnPlayerStreamIn(playerid, forplayerid)
-{
-    if (Player_UsingMask(forplayerid))
-    {
-        if (PlayerInfo[playerid][pAdmin] > 0 && Bit1_Get(a_AdminOnDuty, playerid))
-            ShowPlayerNameTagForPlayer(playerid, forplayerid, true);
-        else
-            ShowPlayerNameTagForPlayer(playerid, forplayerid, false);
-    }
-    else
-        ShowPlayerNameTagForPlayer(playerid, forplayerid, true);
-    
 	return 1;
 }
