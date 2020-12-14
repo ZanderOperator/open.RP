@@ -52,7 +52,6 @@ enum E_ADO_LABEL_INFO
 static
     bool:BlockedLive[MAX_PLAYERS],
     bool:BlockedOOC[MAX_PLAYERS],
-    bool:UsingMask[MAX_PLAYERS],
     bool:HasDice[MAX_PLAYERS],
     bool:HasDrink[MAX_PLAYERS],
     bool:HasFood[MAX_PLAYERS],
@@ -162,16 +161,6 @@ stock bool:Player_HasFood(playerid)
 stock Player_SetHasFood(playerid, bool:v)
 {
     HasFood[playerid] = v;
-}
-
-stock bool:Player_UsingMask(playerid)
-{
-    return UsingMask[playerid];
-}
-
-stock Player_SetUsingMask(playerid, bool:v)
-{
-    UsingMask[playerid] = v;
 }
 
 ResetMonthPaydays()
@@ -851,17 +840,6 @@ Public:CheckAccountsForInactivity()
 			""
 		);
 		return 1;
-	}
-	return 1;
-}
-
-// TODO: should be a part of mask module
-stock CheckPlayerMasks(playerid)
-{
-	foreach(new i : Player) 
-	{
-		if (Player_UsingMask(i))
-			ShowPlayerNameTagForPlayer(playerid, i, 0);
 	}
 	return 1;
 }
@@ -1919,7 +1897,6 @@ hook ResetPlayerVariables(playerid)
     // TODO: should be moved to Systems/LSN.pwn module along with getter/setter impl.
     BlockedLive[playerid] = false;
     BlockedOOC[playerid] = false;
-    UsingMask[playerid] = false;
 
     HasDice[playerid] = false;
     HasDrink[playerid] = false;

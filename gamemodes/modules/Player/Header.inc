@@ -33,7 +33,7 @@ forward Player_SetHasDrink(playerid, bool:v);
 forward bool:Player_HasFood(playerid);
 forward Player_SetHasFood(playerid, bool:v);
 
-// TODO: mask module
+// Mask
 forward bool:Player_UsingMask(playerid);
 forward Player_SetUsingMask(playerid, bool:v);
 

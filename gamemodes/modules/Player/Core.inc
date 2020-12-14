@@ -1,5 +1,6 @@
 // Player folder modules represents ONLY database storing features.
 
+#include "modules/Player/Mask.pwn"
 #include "modules/Player/Updates.pwn"
 #include "modules/Player/VIP.pwn"
 #include "modules/Player/Gym.pwn"

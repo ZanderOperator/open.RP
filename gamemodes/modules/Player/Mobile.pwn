@@ -542,16 +542,23 @@ stock DeleteTower(towerid)
 	return 1;
 }
 
+stock HidePlayerMobile(playerid)
+{
+	PhoneAction(playerid, PHONE_HIDE);
+	Player_SetPhoneStatus(playerid, PHONE_HIDE);
+	CancelSelectTextDraw(playerid);
+	PhoneTDAction[playerid] = PTD_ACTION_HOME;
+	return 1;
+}
+
 stock RemovePlayerMobile(playerid)
 {
 	PlayerMobile[playerid][pMobileModel] = 0;
 	PlayerMobile[playerid][pMobileNumber] = 0;
 	PlayerMobile[playerid][pMobileCost] = 0;
 
-	PhoneAction(playerid, PHONE_HIDE); 
-	Player_SetPhoneStatus(playerid, PHONE_HIDE);
-	
-	CancelSelectTextDraw(playerid);
+	HidePlayerMobile(playerid);
+
 	DeletePlayerContacts(playerid);
 	
 	mysql_fquery(g_SQL,
@@ -2143,12 +2150,10 @@ stock ResetMobileVariables(playerid)
 	StartCallTimestamp[ playerid ] = 0;
 	PlayerCallPlayer[ playerid ] 	= INVALID_PLAYER_ID;
 	SpeakerPhone[ playerid ] 		= false;
-	PhoneTDAction[ playerid ]	= PTD_ACTION_HOME;
 	ContactEditing[ playerid ]  = -1;
 	PhoneUpdateTick[playerid]	= 0;
 
-	Player_SetPhoneStatus(playerid, PHONE_HIDE);
-	PhoneAction(playerid, PHONE_HIDE);
+	HidePlayerMobile(playerid);
 
 	ReloadSMS(playerid);
 
@@ -2538,10 +2543,8 @@ stock CancelPlayerPhone(playerid)
 	SetPlayerSpecialAction( playerid, SPECIAL_ACTION_STOPUSECELLPHONE );
 	if(IsPlayerAttachedObjectSlotUsed(playerid, MOBILE_OBJECT_SLOT))
 		RemovePlayerAttachedObject( playerid, MOBILE_OBJECT_SLOT );
-	PhoneAction(playerid, PHONE_HIDE);
-	Player_SetPhoneStatus(playerid, PHONE_HIDE);
-	PhoneTDAction[playerid] = PTD_ACTION_HOME;
-	CancelSelectTextDraw(playerid);
+	
+	HidePlayerMobile(playerid);
 	return 1;
 }
 
@@ -2651,9 +2654,7 @@ hook OnPlayerConnect(playerid)
 
 hook ResetPlayerVariables(playerid)
 {
-	PhoneAction(playerid, PHONE_HIDE);
-	Player_SetPhoneStatus(playerid, PHONE_HIDE);
-	CancelSelectTextDraw(playerid);
+	HidePlayerMobile(playerid);
 	
 	if (PlayerCallPlayer[playerid] != INVALID_PLAYER_ID)
 		PlayerHangup(playerid);
@@ -3854,7 +3855,6 @@ CMD:phone(playerid, params[])
 	}
 	else if(Player_PhoneStatus(playerid) == PHONE_HIDE)
 	{
-
 		PhoneAction(playerid, PHONE_SHOW);
 		Player_SetPhoneStatus(playerid, PHONE_SHOW);
 	    SelectTextDraw(playerid, 0xA3B4C5FF);
