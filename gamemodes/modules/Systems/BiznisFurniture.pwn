@@ -394,6 +394,7 @@ static const ObjectsParticles[][E_PARTICLES_OBJECTS_DATA] =
 };
 
 static
+    texture_buffer          [10256],
     BizzEditState           [MAX_PLAYERS] = {-1, ...},
     BizzViewingInterior     [MAX_PLAYERS] = {-1, ...},
 

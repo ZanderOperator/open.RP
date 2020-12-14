@@ -402,6 +402,7 @@ static stock
 		PreviewModel		[MAX_PLAYERS],
 		PreviewCar			[MAX_PLAYERS],
 		PlayerTowTimer		[MAX_PLAYERS],
+		bool:PlayerCarTow	[MAX_PLAYERS],
 		CopStreamVeh		[MAX_PLAYERS],
 		PlayerInputHotWire	[MAX_PLAYERS][3],
 		PlayerHotWire		[MAX_PLAYERS][5],
@@ -3431,19 +3432,16 @@ static CalculateFuelPrice(playerid, type, amount, price)
 	   ##    #### ##     ## ######## ##     ##  ######
 */
 ///////////////////////////////////////////////////////////////////
-stock VehicleTowTimer(vehicleid, playerid)
+timer VehicleTowTimer[VEHICLE_TOW_TIME](vehicleid, playerid)
 {
 	if(PlayerKeys[playerid][pVehicleKey] == -1)
 		return 1;
 	
-	if(gettimestamp() >= PlayerTowTimer[playerid])
-	{
-		PlayerCarTow[playerid] = false;
-		PlayerTowTimer[playerid] = 0;
-		SetVehiclePos(vehicleid, VehicleInfo[vehicleid][vParkX], VehicleInfo[vehicleid][vParkY], VehicleInfo[vehicleid][vParkZ]);
-		SetVehicleZAngle(vehicleid, VehicleInfo[vehicleid][vAngle]);
-		SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "Vase vozilo je dostavljeno na zeljenu lokaciju!");
-	}
+	PlayerCarTow[playerid] = false;
+	PlayerTowTimer[playerid] = 0;
+	SetVehiclePos(vehicleid, VehicleInfo[vehicleid][vParkX], VehicleInfo[vehicleid][vParkY], VehicleInfo[vehicleid][vParkZ]);
+	SetVehicleZAngle(vehicleid, VehicleInfo[vehicleid][vAngle]);
+	SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "Vase vozilo je dostavljeno na zeljenu lokaciju!");
 	return 1;
 }
 
@@ -5094,7 +5092,6 @@ CMD:car(playerid, params[])
 		}
 		// Timer
 		PlayerCarTow[playerid] = true;
-
 		switch(PlayerVIP[playerid][pDonateRank])
 		{
 			case 0:	
@@ -5109,6 +5106,7 @@ CMD:car(playerid, params[])
 				PlayerTowTimer[playerid] = gettimestamp() + PLATINUM_VEHICLE_TOW_TIME;
 		}
 		new duration = (PlayerTowTimer[playerid] - gettimestamp()) / 60;
+		defer VehicleTowTimer[PlayerTowTimer[playerid]](PlayerKeys[playerid][pVehicleKey], playerid);
 		SendFormatMessage(playerid, MESSAGE_TYPE_INFO, "Vase vozilo ce biti dovuceno za %d minuta!", duration);
 	}
 	else if(!strcmp(pick, "delete", true)) // brisanje bez spawnanja vozila to ti je fix za onaj bug sa osobom koja spawna nakon brisanja vozila auto

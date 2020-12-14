@@ -2,6 +2,10 @@
 
 new
 	Text3D:NameText[MAX_PLAYERS];
+
+static 
+	bool:Entering[MAX_PLAYERS],
+	bool:Exiting[MAX_PLAYERS];
 	
 timer DeleteKillTimer[5000](playerid)
 {
@@ -9,14 +13,39 @@ timer DeleteKillTimer[5000](playerid)
 	return 1;
 }
 
-hook OnPlayerDisconnect(playerid, reason)
+hook ResetPlayerVariables(playerid)
 {
-	if(IsValidDynamic3DTextLabel(NameText[playerid]))
+	RemovePlayerScreenFade(playerid);
+
+	Entering[playerid] = false;
+	Exiting[playerid] = false;
+
+	if (Player_UsingMask(playerid) && IsValidDynamic3DTextLabel(NameText[playerid]))
 	{
 		DestroyDynamic3DTextLabel(NameText[playerid]);
 		NameText[playerid] = Text3D:INVALID_3DTEXT_ID;
+		Player_SetUsingMask(playerid, false);
 	}
-	RemovePlayerScreenFade(playerid);
+	return 1;
+}
+
+hook OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
+{
+	if (PRESSED(KEY_NO))
+    {
+        if (Entering[playerid])
+        {
+            Entering[playerid] = false;
+            TogglePlayerControllable(playerid, true);
+            return 1;
+        }
+        else if (Exiting[playerid])
+        {
+            Exiting[playerid] = false;
+            TogglePlayerControllable(playerid, true);
+            return 1;
+        }
+	}
 	return 1;
 }
 
@@ -29,6 +58,369 @@ hook OnPlayerDisconnect(playerid, reason)
 	##    ## ##     ## ##     ## ##    ## 
 	 ######  ##     ## ########   ######  
 */
+
+CMD:enter(playerid, params[])
+{
+    if (IsPlayerInRangeOfPoint(playerid, 10.0, 366.544769, 158.641189, 1008.382812))
+    {
+        SetPlayerPosEx(playerid, 1122.9961, -2036.8920, 1701.0578, 25, 2, true);
+        return 1;
+    }
+    //if (Bit1_Get(r_PlayerDoorPeek, playerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne mozete uci u kucu dok virite kroz vrata!");
+
+    new
+        biznis = GetNearestBizz(playerid),
+        pickup = -1,
+        complex = INVALID_COMPLEX_ID,
+        rcomplex = INVALID_COMPLEX_ID,
+        viwo = GetPlayerVirtualWorld(playerid),
+        interior = GetPlayerInterior(playerid);
+
+    foreach(new c : Complex)
+    {
+        if (IsPlayerInRangeOfPoint(playerid, 3.0, ComplexInfo[c][cEnterX], ComplexInfo[c][cEnterY], ComplexInfo[c][cEnterZ]))
+        {
+            complex = c;
+            break;
+        }
+    }
+    foreach(new x : Pickups)
+    {
+        if (IsPlayerInRangeOfPoint(playerid, 3.0, PickupInfo[x][epEntrancex], PickupInfo[x][epEntrancey], PickupInfo[x][epEntrancez]))
+        {
+            pickup = x;
+            break;
+        }
+    }
+    foreach(new c : ComplexRooms)
+    {
+        if (IsPlayerInRangeOfPoint(playerid, 2.0, ComplexRoomInfo[c][cEnterX], ComplexRoomInfo[c][cEnterY], ComplexRoomInfo[c][cEnterZ])
+            && interior == ComplexRoomInfo[c][cIntExit] && viwo == ComplexRoomInfo[c][cVWExit])
+        {
+            rcomplex = c;
+            break;
+        }
+    }
+
+    if (pickup != -1)
+    {
+        if (PickupInfo[pickup][epCanEnter] == 1)
+        {
+            if (PlayerFaction[playerid][pMember] == PickupInfo[pickup][epOrganizations] ||
+                PlayerFaction[playerid][pLeader] == PickupInfo[pickup][epOrganizations] ||
+                PlayerJob[playerid][pJob] == PickupInfo[pickup][epJob] ||
+                PickupInfo[pickup][epOrganizations] == 255 ||
+                PickupInfo[pickup][epJob] == 255)
+            {
+                SetPlayerPosEx(playerid,PickupInfo[pickup][epExitx],PickupInfo[pickup][epExity],PickupInfo[pickup][epExitz],PickupInfo[pickup][epViwo],PickupInfo[pickup][epInt],true);
+                GameTextForPlayer(playerid, PickupInfo[pickup][epDiscription], 500, 1);
+                Player_SetInPickup(playerid, pickup);
+
+                Entering[playerid] = true;
+                TogglePlayerControllable(playerid, false);
+                SendMessage(playerid, MESSAGE_TYPE_INFO, "Pritisnite tipku 'N' ukoliko vam se mapa loadala");
+                return 1;
+            }
+            else
+            {
+                GameTextForPlayer(playerid, "~r~Zakljucano", 5000, 1);
+            }
+        }
+    }
+    else if (biznis != INVALID_BIZNIS_ID)
+    {
+        if (!BizzInfo[biznis][bCanEnter]) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne mozete uci u biznis bez inta!");
+
+        if (PlayerKeys[playerid][pBizzKey] != biznis || BizzInfo[biznis][bLocked])
+        {
+            GameTextForPlayer(playerid, "~r~Zakljucano", 1000, 1);
+            return 1;
+        }
+        if (BizzInfo[biznis][bEntranceCost] != 0 && PlayerKeys[playerid][pBizzKey] != biznis)
+        {
+            if (AC_GetPlayerMoney(playerid) < BizzInfo[biznis][bEntranceCost]) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate dovoljno novca da platite ulaz!");
+
+            PlayerToBusinessMoneyTAX(playerid, biznis, BizzInfo[biznis][bEntranceCost]); // Novac ide u blagajnu od biznisa, a oporezivi dio drZavi
+        }
+        if (!isnull(BizzInfo[biznis][bMusicURL]))
+        {
+            StopAudioStreamForPlayer(playerid);
+            PlayAudioStreamForPlayer(playerid, BizzInfo[biznis][bMusicURL]);
+        }
+        if (BizzInfo[biznis][bFurLoaded] == false) ReloadBizzFurniture(biznis);
+        SetPlayerPosEx(playerid, BizzInfo[biznis][bExitX], BizzInfo[biznis][bExitY], BizzInfo[biznis][bExitZ], BizzInfo[biznis][bVirtualWorld], BizzInfo[biznis][bInterior], true);
+        Player_SetInBusiness(playerid, biznis);
+        DestroyBizzInfoTD(playerid);
+
+        Entering[playerid] = true;
+        TogglePlayerControllable(playerid, false);
+        SendMessage(playerid, MESSAGE_TYPE_INFO, "Pritisnite tipku 'N' ukoliko vam se mapa loadala");
+        return 1;
+    }
+    else if (rcomplex != INVALID_COMPLEX_ID)
+    {
+        if (!ComplexRoomInfo[rcomplex][cActive]) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Soba nije u funkciji!");
+
+        if (PlayerKeys[playerid][pComplexRoomKey] != rcomplex || !IsOnAdminDuty(playerid) || ComplexRoomInfo[rcomplex][cLock])
+        {
+            GameTextForPlayer(playerid, "~r~Zakljucano", 1000, 1);
+            return 1;
+        }
+
+        SetPlayerPosEx(playerid, ComplexRoomInfo[rcomplex][cExitX], ComplexRoomInfo[rcomplex][cExitY], ComplexRoomInfo[rcomplex][cExitZ], ComplexRoomInfo[rcomplex][cViwo], ComplexRoomInfo[rcomplex][cInt], true);
+        Player_SetInApartmentRoom(playerid, rcomplex);
+        if (PlayerKeys[playerid][pComplexRoomKey] == rcomplex)
+        {
+            GameTextForPlayer(playerid, "Dobrodosli!", 500, 1);
+        }
+        return 1;
+    }
+    else if (complex != INVALID_COMPLEX_ID)
+    {
+        SetPlayerPosEx(playerid, ComplexInfo[complex][cExitX], ComplexInfo[complex][cExitY], ComplexInfo[complex][cExitZ], ComplexInfo[complex][cViwo], ComplexInfo[complex][cInt], true);
+        Player_SetInApartmentComplex(playerid, complex);
+        if (PlayerKeys[playerid][pComplexKey] == complex)
+        {
+            GameTextForPlayer(playerid, "Dobrodosli u svoj Complex!", 500, 1);
+        }
+
+        Entering[playerid] = true;
+        TogglePlayerControllable(playerid, false);
+        SendMessage(playerid, MESSAGE_TYPE_INFO, "Pritisnite tipku 'N' ukoliko vam se mapa loadala");
+        return 1;
+    }
+    else if (rob_started[playerid] == true)
+    {
+        PlayStorageAlarm(playerid, false);
+    }
+    else if (IsPlayerInDynamicCP(playerid, Player_GetHouseCP(playerid)))
+    {
+        new house = Player_InfrontHouse(playerid);
+        if (house == INVALID_HOUSE_ID) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ispred kuce (niste u checkpointu)!");
+
+        if (HouseInfo[house][h3dViwo] != GetPlayerVirtualWorld(playerid))
+        {
+            SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ispred biznisa ili kuce!");
+            return 1;
+        }
+        if (HouseInfo[house][hDoorCrashed]) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Vrata su stradala u pozaru, vatrogasac mora koristiti /ramdoors!");
+        if (PlayerKeys[playerid][pHouseKey] != house || !IsOnAdminDuty(playerid) || HouseInfo[house][hLock] || PlayerKeys[playerid][pRentKey] != house)
+        {
+            GameTextForPlayer(playerid, "~r~Zakljucano", 1000, 1);
+            return 1;
+        }
+
+        if (HouseInfo[house][hOwnerID] == PlayerInfo[playerid][pSQLID])
+        {
+            GameTextForPlayer(playerid, "~w~Dobrodosli kuci", 800, 1);
+        }
+        if (HouseInfo[house][hFurLoaded] == false)
+        {
+            ReloadHouseFurniture(house);
+        }
+        SetPlayerPosEx(playerid, HouseInfo[house][hExitX], HouseInfo[house][hExitY], HouseInfo[house][hExitZ], HouseInfo[house][hVirtualWorld], HouseInfo[house][hInt], true);
+
+        Player_SetInHouse(playerid, house);
+        DestroyHouseInfoTD(playerid);
+
+        if (IsHousePlayingMusic(house))
+        {
+            StopAudioStreamForPlayer(playerid);
+            new url[256];
+            format(url, sizeof(url), "%s",ReturnHouseMusicURL(house));
+            PlayAudioStreamForPlayer(playerid, url);
+        }
+
+        Entering[playerid] = true;
+        TogglePlayerControllable(playerid, false);
+        SendMessage(playerid, MESSAGE_TYPE_INFO, "Pritisnite tipku 'N' ukoliko vam se mapa loadala");
+    }
+    return 1;
+}
+
+CMD:exit(playerid, params[])
+{
+    if (IsPlayerInRangeOfPoint(playerid, 10.0, 1122.9961, -2036.8920, 1701.0578 ))
+    {
+        SetPlayerPosEx(playerid, 366.544769, 158.641189, 1008.382812, 0, 3, true);
+        return 1;
+    }
+
+    new
+        pickup = -1,
+        complex = INVALID_COMPLEX_ID;
+
+    foreach(new x : Pickups)
+    {
+        if (IsPlayerInRangeOfPoint(playerid,5.0,PickupInfo[x][epExitx], PickupInfo[x][epExity], PickupInfo[x][epExitz])
+            && GetPlayerInterior(playerid) == PickupInfo[x][epInt]
+            && GetPlayerVirtualWorld(playerid) == PickupInfo[x][epViwo])
+        {
+            pickup = x;
+            break;
+        }
+    }
+    foreach(new c : Complex)
+    {
+        if (IsPlayerInRangeOfPoint(playerid, 5.0, ComplexInfo[c][cExitX], ComplexInfo[c][cExitY], ComplexInfo[c][cExitZ])
+            && GetPlayerInterior(playerid) == ComplexInfo[c][cInt]
+            && GetPlayerVirtualWorld(playerid) == ComplexInfo[c][cViwo])
+        {
+            complex = c;
+            break;
+        }
+    }
+
+    new
+        house    = Player_InHouse(playerid),
+        biznis   = Player_InBusiness(playerid),
+        rcomplex = Player_InApartmentRoom(playerid),
+        garage   = Player_InGarage(playerid);
+
+    if (pickup != -1)
+    {
+        Player_SetInPickup(playerid, -1);
+        SetPlayerPosEx(playerid,PickupInfo[pickup][epEntrancex], PickupInfo[pickup][epEntrancey], PickupInfo[pickup][epEntrancez], PickupInfo[pickup][epEnterViwo], PickupInfo[pickup][epEnterInt], true);
+
+        Exiting[playerid] = false;
+        TogglePlayerControllable(playerid, false);
+        SendMessage(playerid, MESSAGE_TYPE_INFO, "Pritisnite tipku 'N' ukoliko vam se mapa loadala");
+        return 1;
+    }
+    else if (complex != INVALID_COMPLEX_ID)
+    {
+        Player_SetInApartmentComplex(playerid, INVALID_COMPLEX_ID);
+
+        /*if (aprilfools[playerid])
+            complex = random(MAX_COMPLEX/2);*/
+        SetPlayerPosEx(playerid, ComplexInfo[complex][cEnterX], ComplexInfo[complex][cEnterY], ComplexInfo[complex][cEnterZ], 0, 0, false);
+
+        Exiting[playerid] = false;
+        TogglePlayerControllable(playerid, false);
+        SendMessage(playerid, MESSAGE_TYPE_INFO, "Pritisnite tipku 'N' ukoliko vam se mapa loadala");
+        return 1;
+    }
+    else if (biznis != INVALID_BIZNIS_ID && biznis < MAX_BIZZS)
+    {
+        if (IsPlayerInRangeOfPoint(playerid, 2.0, BizzInfo[biznis][bExitX], BizzInfo[biznis][bExitY], BizzInfo[biznis][bExitZ]))
+        {
+            if (GetPlayerSkin(playerid) != PlayerAppearance[playerid][pSkin] && !Player_OnLawDuty(playerid))
+            {
+                new biztype = BizzInfo[biznis][bType];
+                if (biztype == BIZZ_TYPE_SUBURBAN || biztype == BIZZ_TYPE_PROLAPS || biztype == BIZZ_TYPE_ZIP || biztype == BIZZ_TYPE_BINCO)
+                {
+                    SendClientMessage(playerid, COLOR_RED, "[ ! ] Izasli ste iz biznisa te ste odustali od kupnje skina!");
+                    ResetBuySkin(playerid);
+                }
+            }
+
+            /*if (aprilfools[playerid])
+                biznis = random(MAX_BIZZS/2);*/
+            SetPlayerPosEx(playerid, BizzInfo[biznis][bEntranceX], BizzInfo[biznis][bEntranceY], BizzInfo[biznis][bEntranceZ], 0, 0, false);
+            SetPlayerInterior(playerid, 0);
+            SetPlayerVirtualWorld(playerid, 0);
+            Player_SetInBusiness(playerid, INVALID_BIZNIS_ID);
+            StopAudioStreamForPlayer(playerid);
+
+            Exiting[playerid] = false;
+            TogglePlayerControllable(playerid, false);
+            SendMessage(playerid, MESSAGE_TYPE_INFO, "Pritisnite tipku 'N' ukoliko vam se mapa loadala");
+            return 1;
+        }
+    }
+    else if (rcomplex != INVALID_COMPLEX_ID && rcomplex < MAX_COMPLEX_ROOMS)
+    {
+        if (IsPlayerInRangeOfPoint(playerid, 2.0, ComplexRoomInfo[rcomplex][cExitX], ComplexRoomInfo[rcomplex][cExitY], ComplexRoomInfo[rcomplex][cExitZ]))
+        {
+            SetPlayerPosEx(playerid, ComplexRoomInfo[rcomplex][cEnterX], ComplexRoomInfo[rcomplex][cEnterY], ComplexRoomInfo[rcomplex][cEnterZ], ComplexRoomInfo[rcomplex][cVWExit], ComplexRoomInfo[rcomplex][cIntExit]);
+            Player_SetInApartmentRoom(playerid, INVALID_COMPLEX_ID);
+            StopAudioStreamForPlayer(playerid);
+
+            Exiting[playerid] = false;
+            TogglePlayerControllable(playerid, false);
+            SendMessage(playerid, MESSAGE_TYPE_INFO, "Pritisnite tipku 'N' ukoliko vam se mapa loadala");
+        }
+        return 1;
+    }
+    else if (garage != INVALID_HOUSE_ID)
+    {
+        if (IsPlayerInRangeOfPoint(playerid, 10.0, GarageInfo[garage][gExitX], GarageInfo[garage][gExitY], GarageInfo[garage][gExitZ]))
+        {
+            StopAudioStreamForPlayer(playerid);
+            if (!IsPlayerInAnyVehicle(playerid) || GetPlayerState(playerid) != PLAYER_STATE_DRIVER )
+            {
+                SetPlayerPosEx(playerid, GarageInfo[garage][gEnterX], GarageInfo[garage][gEnterY], GarageInfo[garage][gEnterZ], 0, 0, true);
+            }
+            else if (IsPlayerInAnyVehicle(playerid) || GetPlayerState(playerid) == PLAYER_STATE_DRIVER )
+            {
+                new vehicleid = GetPlayerVehicleID(playerid);
+
+                SetVehiclePos(vehicleid, PlayerSafeExit[playerid][giX],PlayerSafeExit[playerid][giY],PlayerSafeExit[playerid][giZ]);
+                SetVehicleZAngle(vehicleid, PlayerSafeExit[playerid][giRZ]);
+                foreach(new i : Player)
+                {
+                    if (IsPlayerInVehicle(i, vehicleid))
+                    {
+                        SetPlayerVirtualWorld(i, 0);
+                    }
+                }
+
+                PlayerSafeExit[playerid][giX] = 0;
+                PlayerSafeExit[playerid][giY] = 0;
+                PlayerSafeExit[playerid][giZ] = 0;
+                PlayerSafeExit[playerid][giRZ] = 0;
+
+                SetVehicleVirtualWorld(vehicleid, 0);
+                LinkVehicleToInterior(vehicleid, 0);
+
+                SetPlayerInterior(playerid, 0);
+                SetPlayerVirtualWorld(playerid, 0);
+            }
+            Player_SetInGarage(playerid, INVALID_HOUSE_ID);
+        }
+        return 1;
+    }
+    else if (house != INVALID_HOUSE_ID && house >= 0)
+    {
+        if (IsPlayerInRangeOfPoint(playerid, 10.0, HouseInfo[house][hExitX], HouseInfo[house][hExitY], HouseInfo[house][hExitZ]))
+        {
+            if (IsPlayerSafeBreaking(playerid))
+                return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne mozete izaci van dok ne obijete sef!");
+
+            StopAudioStreamForPlayer(playerid);
+
+            /*if (aprilfools[playerid])
+                house = random(MAX_HOUSES/2);*/
+
+            if (HouseInfo[house][h3dViwo] > 0)
+            { // Apartman
+                Streamer_ToggleIdleUpdate(playerid, 1);
+                TogglePlayerControllable(playerid, 0);
+                defer InstantStreamerUpdate(playerid);
+
+                SetPlayerVirtualWorld(playerid, HouseInfo[house][h3dViwo]);
+                SetPlayerInterior(playerid, 20);
+                SetPlayerPosEx(playerid, HouseInfo[house][hEnterX], HouseInfo[house][hEnterY]+1.0, HouseInfo[house][hEnterZ], HouseInfo[house][h3dViwo], 20, true);
+
+                Exiting[playerid] = false;
+                TogglePlayerControllable(playerid, false);
+                SendMessage(playerid, MESSAGE_TYPE_INFO, "Pritisnite tipku 'N' ukoliko vam se mapa loadala");
+            }
+            else
+            {
+                SetPlayerPosEx(playerid, HouseInfo[house][hEnterX], HouseInfo[house][hEnterY], HouseInfo[house][hEnterZ], 0, 0, false);
+                Exiting[playerid] = false;
+                TogglePlayerControllable(playerid, false);
+                SendMessage(playerid, MESSAGE_TYPE_INFO, "Pritisnite tipku 'N' ukoliko vam se mapa loadala");
+            }
+
+
+            Player_SetInHouse(playerid, INVALID_HOUSE_ID);
+            return 1;
+        }
+    }
+    return 1;
+}
 
 CMD:time(playerid, params[])
 {
@@ -835,7 +1227,7 @@ CMD:frisk(playerid, params[])
 		giveplayerid, 
 		weapon[13],
 		bullets[13];
-		
+
     if( sscanf(params, "u", giveplayerid) ) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /frisk [ID/Dio Imena]");
 	if( giveplayerid == INVALID_PLAYER_ID ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Taj igrac nije online !"); 
 	if( giveplayerid == playerid ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne mozes pretrest sam sebe!");
@@ -885,7 +1277,8 @@ CMD:frisk(playerid, params[])
     return 1;
 }
 
-CMD:refresh(playerid, params[]) {
+CMD:refresh(playerid, params[]) 
+{
 
 	if(!IsPlayerAlive(playerid) )
         return SendMessage(playerid, MESSAGE_TYPE_ERROR,"Mrtvi ste, ne mozete koristit ovu komandu.");
@@ -1643,15 +2036,7 @@ CMD:dump(playerid, params[])
 	{
 		if(PlayerMobile[playerid][pMobileNumber] > 0)
 		{
-		    PlayerMobile[playerid][pMobileModel] = 0;
-			PlayerMobile[playerid][pMobileNumber] = 0;
-			PlayerMobile[playerid][pMobileCost] = 0;
-			PhoneAction(playerid, 0); // PHONE_HIDE
-			PhoneStatus[playerid] = 0;
-			CancelSelectTextDraw(playerid);
-			DeletePlayerContacts(playerid);
-			
-			mysql_fquery(g_SQL, "DELETE FROM player_phones WHERE player_id = '%d' AND type = '1'", PlayerInfo[playerid][pSQLID]);
+			RemovePlayerMobile(playerid);
 			
 			SendClientMessage(playerid, COLOR_LIGHTBLUE, "** Bacio si mobitel!");
 	        format(tmpString, sizeof(tmpString), "* %s baca mobitel u daljinu.", GetName(playerid, true));

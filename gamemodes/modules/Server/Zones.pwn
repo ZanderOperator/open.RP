@@ -404,10 +404,6 @@ static const ZoneInfo[][E_ZONE_INFO] =
 
 new
 	PlayerText:ZoneInfoTextDraw[MAX_PLAYERS] = { PlayerText:INVALID_TEXT_DRAW, ...},
-	g_ZoneUpdateTick[MAX_PLAYERS],
-	LastPlayerZone[ MAX_PLAYERS ];
-
-new
 	Iterator:Areas<367>;
 
 
@@ -435,7 +431,6 @@ public OnPlayerEnterDynamicArea(playerid, areaid)
 	        zone_id = GetZoneArea(areaid);
 
 	    PlayerTextDrawSetString(playerid, ZoneInfoTextDraw[playerid], ZoneInfo[zone_id][zName]);
-	    LastPlayerZone[playerid] = zone_id;
 	}
 	return 1;
 }
@@ -517,6 +512,12 @@ stock DestroyZonesTD(playerid)
 		PlayerTextDrawDestroy(playerid, ZoneInfoTextDraw[playerid]);
 		ZoneInfoTextDraw[playerid] = PlayerText:INVALID_TEXT_DRAW;
 	}
+	return 1;
+}
+
+hook ResetPlayerVariables(playerid)
+{
+	DestroyZonesTD(playerid);
 	return 1;
 }
 

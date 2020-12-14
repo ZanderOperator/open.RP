@@ -51,7 +51,7 @@ timer SetPlayerCrash[6000](playerid)
 	else if(strcmp(PlayerInfo[playerid][pLastUpdateVer], SCRIPT_VERSION, true) != 0 && (PlayerAdminMessage[playerid][pAdmMsgConfirm] || isnull(PlayerAdminMessage[playerid][pAdminMsg])))
 	{
 		if(strcmp(PlayerInfo[playerid][pLastUpdateVer], SCRIPT_VERSION, true) != 0)
-			PlayerReward[playerid] = true;
+			Player_SetReward(playerid, true);
 		ShowPlayerUpdateList(playerid);
 		goto spawn_end;
 	}

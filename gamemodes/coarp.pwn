@@ -188,16 +188,6 @@ new
 	   ###    ##     ## ##     ##  ######
 */
 
-new adminfly[MAX_PLAYERS];
-
-new texture_buffer[10256];
-new PlayerUpdatePage[MAX_PLAYERS] = 0;
-
-new playeReport[MAX_PLAYERS] = { -1, ... };
-
-new entering[MAX_PLAYERS];
-new onexit[MAX_PLAYERS];
-
 new
 	ghour 					= 0,
 	GMX 					= 0,
@@ -206,16 +196,10 @@ new
 	HappyHours				= 0,
 	HappyHoursLVL			= 0,
 	PlayerText:GlobalForumLink[MAX_PLAYERS] = { PlayerText:INVALID_TEXT_DRAW, ... },
-	PlayerText:MechanicTD[MAX_PLAYERS] = { PlayerText:INVALID_TEXT_DRAW, ... },
-	bool:PlayerCarTow	[MAX_PLAYERS];
+	PlayerText:MechanicTD[MAX_PLAYERS] = { PlayerText:INVALID_TEXT_DRAW, ... };
 
 // Players 32 bit
 new
-	//_QuickTimer[MAX_PLAYERS] = 0,
-	PhoneStatus[ MAX_PLAYERS ],
-	GlobalMapIcon[MAX_PLAYERS],
-	bool:OnSecurityBreach[MAX_PLAYERS] = false,
-	bool:FDArrived[MAX_PLAYERS],
 	Float:PlayerTrunkPos[MAX_PLAYERS][3],
 	GlobalSellingPlayerID[ MAX_PLAYERS ] = { 0, ... },
 	GlobalSellingPrice[ MAX_PLAYERS ] = { 0, ... },
@@ -228,11 +212,7 @@ new
 	bool:PlayerWounded[ MAX_PLAYERS ],
 	PlayerWoundedSeconds[ MAX_PLAYERS ],
 	PlayerWTripTime[ MAX_PLAYERS ],
-	Timer:PlayerTask[ MAX_PLAYERS ],
-	bool:PlayerGlobalTaskTimer[ MAX_PLAYERS ],
-	bool:SafeSpawning[ MAX_PLAYERS ],
 	bool:SafeSpawned[ MAX_PLAYERS ],
-	bool:PlayerReward[ MAX_PLAYERS ],
 	bool:PlayerCrashed[ MAX_PLAYERS ],
 	bool:PlayerSyncs[ MAX_PLAYERS ],
 	bool:Frozen[ MAX_PLAYERS ],
@@ -252,9 +232,6 @@ new
 	Text3D:TrunkHealth3DText[MAX_VEHICLES];
 	//bool:aprilfools[MAX_PLAYERS] = true;
 
-//fisher
-new GotRod[MAX_PLAYERS];
-
 // Bank Credits
 new paymentBuyPrice[MAX_PLAYERS],
 	buyBizID[MAX_PLAYERS];
@@ -268,8 +245,6 @@ new
 //Players Vars
 //(rBits)
 new
-	Bit1:	gr_LoginChecksOn		<MAX_PLAYERS>  = Bit1: false,
-	Bit1: 	gr_SaveArmour 			<MAX_PLAYERS>,
 	Bit1: 	gr_PlayerPickingJack 	<MAX_PLAYERS> =  Bit1: false,
 	Bit1:	gr_PlayerJackSure 		<MAX_PLAYERS> =  Bit1: false,
 	Bit1:	gr_CreateObject			<MAX_PLAYERS> =	 Bit1: false,
@@ -523,7 +498,7 @@ RegisterPlayerDeath(playerid, killerid) // funkcija
 
 	// Mobile Dissapear
 	PhoneAction(playerid, PHONE_HIDE);
-	PhoneStatus[playerid] = PHONE_HIDE;
+	Player_SetPhoneStatus(playerid, PHONE_HIDE);
 	CancelSelectTextDraw(playerid);
 
 	if (Player_UsingMask(playerid) && IsValidDynamic3DTextLabel(NameText[playerid]))
@@ -936,7 +911,7 @@ public e_COMMAND_ERRORS:OnPlayerCommandReceived(playerid, cmdtext[], e_COMMAND_E
 			if(!IsPlayerConnected(playerid))
 				return COMMAND_ZERO_RET;
 
-			if(!SafeSpawned[playerid] || OnSecurityBreach[playerid])
+			if(!SafeSpawned[playerid] || Player_SecurityBreach(playerid))
 			{
 				SendMessage(playerid, MESSAGE_TYPE_ERROR,"You're not safely spawned, you can't use commands!");
 				return COMMAND_ZERO_RET;
@@ -1021,14 +996,11 @@ hook OnPlayerConnect(playerid)
 #include <YSI_Coding\y_hooks>
 hook OnPlayerDisconnect(playerid, reason)
 {
-	entering[playerid] = 0;
-	onexit[playerid] = 0;
 	if(IsPlayerLogging(playerid))
 		stop FinishPlayerSpawn(playerid);
 	// Login Time && IP fetch
 	format(PlayerInfo[playerid][pLastLogin], 24, ReturnDate());
 
-	GotRod[playerid] = 0;
 	RemovePlayerFromVehicle(playerid);
 	new Float:armour;
  	GetPlayerArmour(playerid, armour);
@@ -1114,7 +1086,6 @@ public OnPlayerRequestClass(playerid, classid)
 			KickMessage(playerid);
 			return 0;
 		}
-		SafeSpawning[ playerid ] = true;
 
 		//PlayerSets
 		SetPlayerColor(playerid, 	COLOR_PLAYER);
@@ -1160,7 +1131,6 @@ public OnPlayerRequestDownload(playerid, type, crc)
 	{
 		Bit1_Set(gr_PlayerLoggedIn, playerid, false);
 		Bit1_Set(gr_PlayerDownloading, playerid, true);
-		SafeSpawning[playerid] = true;
 	}
 
 	new fullurl[256+1];
@@ -1231,9 +1201,6 @@ hook OnPlayerSpawn(playerid)
 	if( Bit1_Get( gr_FristSpawn, playerid ) )
 	{
 		CreateZonesTD(playerid);
-		g_ZoneUpdateTick[playerid] = gettimestamp();
-
-		SafeSpawning[ playerid ] = true;
 		Bit1_Set( gr_FristSpawn, playerid, false );
 	}
 	SetPlayerSkin(playerid, PlayerAppearance[playerid][pSkin]);
@@ -1465,7 +1432,7 @@ hook OnPlayerText(playerid, text[])
 	if(!IsPlayerLogged(playerid) || !IsPlayerConnected(playerid) )
 		return 0;
 
-	if(!SafeSpawned[playerid] || OnSecurityBreach[playerid])
+	if(!SafeSpawned[playerid] || Player_SecurityBreach(playerid))
 	{
 		SendMessage(playerid, MESSAGE_TYPE_ERROR,"You can't use chat if you're not safely spawned!");
 		return 0;
@@ -1513,18 +1480,7 @@ hook OnPlayerText(playerid, text[])
 // TODO: should be a part of Player module
 Public: ResetPlayerVariables(playerid)
 {	
-	//aprilfools[playerid] = false;
-	PlayerUpdatePage[playerid] = 0;
-    entering[playerid] = 0;
-    onexit[playerid] = 0;
    	TWorking[playerid] = 0;
-	ResetPlayerExperience(playerid);
-	ResetPlayerWounded(playerid);
-	adminfly[playerid] = 0;
-	playeReport[playerid] = -1;
-    GotRod[playerid] = 0;
-	//
-	PhoneStatus[playerid] = 0;
 
 	//rBits
 	Bit1_Set( gr_PlayerDownloading		, playerid, false );
@@ -1590,9 +1546,6 @@ Public: ResetPlayerVariables(playerid)
 	Bit1_Set( gr_PlayerTakingSelfie		, playerid, false );
 	Bit8_Set( gr_RingingTime			, playerid, 0 );
 
-	// Admin
-	Bit1_Set(gr_SaveArmour, 	playerid, false);
-
 	// Administrator
 	Bit1_Set(a_AdminChat, 		playerid, true);
 	Bit1_Set(a_PlayerReconed,	playerid, false);
@@ -1615,21 +1568,12 @@ Public: ResetPlayerVariables(playerid)
 	AntiSpamInfo[ playerid ][ asDoorShout ] 	= 0;
 
 
-	PlayerMobile[playerid][pPhoneBG] = -1263225696;
-	PlayerMobile[playerid][pPhoneMask] = 0;
-
-	// Ulice
-	DestroyZonesTD(playerid);
-	LastPlayerZone[playerid] = -1;
-	g_ZoneUpdateTick[playerid] = gettimestamp();
-
-	// Fire
-	// ResetFireArrays(playerid);
 	PlayerTextDrawDestroy(playerid, GlobalForumLink[playerid]);
 	GlobalForumLink[playerid] = PlayerText:INVALID_TEXT_DRAW;
 
 	// Tut
-	if( Bit1_Get( gr_PlayerOnTutorial, playerid ) ) {
+	if( Bit1_Get( gr_PlayerOnTutorial, playerid ) ) 
+	{
 		Bit1_Set(gr_PlayerOnTutorial, playerid, false);
 		stop TutTimer[playerid];
 	}
@@ -1678,7 +1622,6 @@ Public: ResetPlayerVariables(playerid)
 	PlayerInfo[playerid][pChangeTimes]		= 0;
 	PlayerInfo[playerid][pMoney]			= 0;
 	PlayerInfo[playerid][pBank]				= 0;	
-
 	
 	PlayerKeys[playerid][pHouseKey]			= INVALID_HOUSE_ID;
 	PlayerKeys[playerid][pRentKey]			= INVALID_HOUSE_ID;
@@ -1689,7 +1632,7 @@ Public: ResetPlayerVariables(playerid)
 	PlayerKeys[playerid][pIllegalGarageKey]	= -1;
 	PlayerKeys[playerid][pVehicleKey]		= -1;
 	PlayerKeys[playerid][pWarehouseKey] 	= -1;
-
+	PlayerInfo[playerid][pVoted]	 		= false;
 	PlayerInfo[playerid][pMustRead]			= false;
 	
 	//Floats
@@ -1697,7 +1640,6 @@ Public: ResetPlayerVariables(playerid)
 	PlayerTrunkPos[playerid][1] 			= 0.0;
 	PlayerTrunkPos[playerid][2] 			= 0.0;
 	
-
 	// Previous Info(/learn, etc.)
 	ResetPlayerPreviousInfo(playerid);
 
@@ -1721,13 +1663,8 @@ Public: ResetPlayerVariables(playerid)
 	carjob[playerid]= 0;
 
 	// Bools
-	PlayerGlobalTaskTimer[ playerid ] = false;
 	PlayerCrashed[ playerid ] 	= false;
 	SafeSpawned[ playerid ] 	= false;
-	OnSecurityBreach[ playerid ] = false;
-	FDArrived[ playerid ] 		= false;
-	PlayerReward[ playerid ] 	= false;
-	SafeSpawning[ playerid ] 	= false;
 	PlayerSyncs[ playerid ] 	= false;
 	PlayerBlocked[ playerid ] 	= false;
 

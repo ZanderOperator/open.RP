@@ -8,7 +8,19 @@ static
 		page3[1280],
 		page4[1280],
 		updatestring[1280*4],
-		updateCaption[80];
+		updateCaption[80],
+		PlayerUpdatePage[MAX_PLAYERS],
+		bool:PlayerReward[MAX_PLAYERS];
+
+stock bool:Player_Reward(playerid)
+{
+	return PlayerReward[playerid];
+}
+
+stock Player_SetReward(playerid, bool:v)
+{
+	PlayerReward[playerid] = v;
+}
 
 stock LoadUpdateList()
 {
@@ -49,7 +61,7 @@ stock ShowPlayerUpdateList(playerid)
 
 stock RewardPlayer(playerid)
 {
-	if(PlayerInfo[playerid][pLevel] >= 3 && PlayerReward[playerid])
+	if(PlayerInfo[playerid][pLevel] >= 3 && Player_Reward(playerid))
 	{
 		new rand = random(100);
 		switch(rand)
@@ -74,7 +86,7 @@ stock RewardPlayer(playerid)
 				SendFormatMessage(playerid, MESSAGE_TYPE_SUCCESS, "Povodom novog updatea, nagradjeni ste sa 5 EXP bodova. Ugodnu igru zeli Vam %s Team!", SERVER_NAME);
 			}
 		}
-		PlayerReward[playerid] = false;
+		Player_SetReward(playerid, false);
 	}
 	return 1;
 }
@@ -185,10 +197,17 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 	return 1;
 }
 
+hook ResetPlayerVariables(playerid)
+{
+	Player_SetReward(playerid, false);
+	PlayerUpdatePage[playerid] = 0;
+	return 1;
+}
+
 CMD:update(playerid, params[])
 {
 	if(strcmp(PlayerInfo[playerid][pLastUpdateVer], SCRIPT_VERSION, true) != 0)
-		PlayerReward[playerid] = true;
+		Player_SetReward(playerid, true);
 		
 	ShowPlayerUpdateList(playerid);
 	return 1;

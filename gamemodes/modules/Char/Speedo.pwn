@@ -147,7 +147,7 @@ hook OnPlayerUpdate(playerid) // PHONE_HIDE = 0
 {
 	if( IsPlayerInAnyVehicle(playerid) )
 	{
-		if(GetPlayerState(playerid) == PLAYER_STATE_DRIVER && PhoneStatus[playerid] == 0)
+		if(GetPlayerState(playerid) == PLAYER_STATE_DRIVER && Player_PhoneStatus(playerid) == 0)
 		{
 			new
 				tmpstring[12],
