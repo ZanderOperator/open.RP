@@ -27,9 +27,21 @@ new
 	  ## ##   ##     ## ##    ##  ##    ## 
 	   ###    ##     ## ##     ##  ######  
 */
-new 
+
+static 
 	Float:PlayerCurrentPos[MAX_PLAYERS][3],
-	MaxPlayerAFK[MAX_PLAYERS];
+	MaxPlayerAFK[MAX_PLAYERS],
+	PlayerAFK[MAX_PLAYERS];
+
+Player_GetAFK(playerid)
+{
+	return PlayerAFK[playerid];
+}
+
+Player_SetAFK(playerid, amount)
+{
+	PlayerAFK[playerid] = amount;
+}
 
 	
 /*
@@ -42,10 +54,10 @@ new
 	##     ##  #######   #######  ##    ##  ######  
 */
 
-hook OnPlayerConnect(playerid)
+hook ResetPlayerVariables(playerid)
 {
 	MaxPlayerAFK[playerid] = 10;
-    PlayerAFK[playerid] = 0;
+    Player_SetAFK(playerid, 0);
     PlayerCurrentPos[playerid][0] = 0;
 	PlayerCurrentPos[playerid][1] = 0;
 	PlayerCurrentPos[playerid][2] = 0;
@@ -54,19 +66,19 @@ hook OnPlayerConnect(playerid)
 
 hook OnPlayerText(playerid, text[])
 {
- 	PlayerAFK[playerid] = 0;
+ 	Player_SetAFK(playerid, 0);
 	return 0;
 }
 
 hook OnPlayerStateChange(playerid, newstate, oldstate)
 {
-	PlayerAFK[playerid] = 0;
+	Player_SetAFK(playerid, 0);
 	return 1;
 }
 
 hook OnPlayerCommandReceived(playerid, cmdtext[], e_COMMAND_ERRORS:success)
 {
-	PlayerAFK[playerid] = 0;
+	Player_SetAFK(playerid, 0);
 	return 1;
 }
 
@@ -102,19 +114,15 @@ stock AFKCheck(playerid)
 		
     GetPlayerPos(playerid, PlayerCurrentPos[playerid][0], PlayerCurrentPos[playerid][1], PlayerCurrentPos[playerid][2]);
     if(!floatcmp(PlayerCurrentPos[playerid][0], PlayerLastPos[playerid][plpX]) && !floatcmp(PlayerCurrentPos[playerid][1], PlayerLastPos[playerid][plpY]))
-	{
-        PlayerAFK[playerid]++;
-	}
+		Player_SetAFK(playerid, (Player_GetAFK(playerid) + 1));
 	else
-	{
-        PlayerAFK[playerid] = 0;
-	}
+        Player_SetAFK(playerid, 0);
 	
  	PlayerLastPos[playerid][plpX] = PlayerCurrentPos[playerid][0];
 	PlayerLastPos[playerid][plpY] = PlayerCurrentPos[playerid][1];
 	PlayerLastPos[playerid][plpZ] = PlayerCurrentPos[playerid][2];
 
-	if(PlayerAFK[playerid] >= MaxPlayerAFK[playerid])
+	if(Player_GetAFK(playerid) >= MaxPlayerAFK[playerid])
 	{
 		va_SendClientMessage(playerid, COLOR_RED, "[SERVER] Predugo ste bili AFK (%d minuta), stoga ste dobili kick!", MaxPlayerAFK[playerid]);
 		KickMessage(playerid);

@@ -194,7 +194,7 @@ static stock
 
 // 32bit
 static stock
-	PlayerJackerCoolDown[ MAX_PLAYERS ],
+	PlayerText:JackerTD[MAX_PLAYERS] = { PlayerText:INVALID_TEXT_DRAW, ... },
 	DestroyedCar[ MAX_PLAYERS ],
 	JackerMoney[ MAX_PLAYERS ],
 	JackerIlegalGarage[ MAX_PLAYERS ],
@@ -311,41 +311,17 @@ stock static IsVehicleOnList(garage, index)
 {
 	new
 		returning = 0;
-	for( new i=0; i < 6; i++ ) {
-		if( IlegalGarage[ garage ][ igVehicleIds ][ i ] == index ) {
+	for( new i=0; i < 6; i++ ) 
+	{
+		if( IlegalGarage[ garage ][ igVehicleIds ][ i ] == index ) 
+		{
 			returning = 1;
 			break;
 		}
 	}
 	return returning;
 }
-/*
-static stock GetVehicleByModel(modelid)
-{
-	for(new i = 0; i < sizeof(LandVehicles); i++)
-	{
-		if(LandVehicles[i][viModelid] == modelid)
-		{
-			return i;
-		}
-	}
-	for(new i = 0; i < sizeof(SeaVehicles); i++)
-	{
-		if(SeaVehicles[i][viModelid] == modelid)
-		{
-			return i;
-		}
-	}
-	for(new i = 0; i < sizeof(AirVehicles); i++)
-	{
-		if(AirVehicles[i][viModelid] == modelid)
-		{
-			return i;
-		}
-	}
-	return -1;
-}
-*/
+
 stock CountVehicleKinds()
 {
 	new Iterator: VehicleTypes<MAX_VEHICLES>,
@@ -502,275 +478,17 @@ stock static ResetCarJackerVariables(playerid)
 	Bit1_Set(gr_PlayerPickingJack, 		playerid, false);
 	Bit1_Set(gr_PlayerJackSure, 		playerid, false);
 	Bit8_Set(r_DestroyingCarSecs, 		playerid, 0);
+
+	DestroyJackerTextDraw(playerid);
 	
 	// 32bit
-	PlayerJackerCoolDown[ playerid ]	= 0;
 	DestroyedCar[ playerid ]			= 0;
 	PlayerJackingCar[ playerid ]		= -1;
 	JackerIlegalGarage[ playerid ]		= -1;
 	JackerMoney[ playerid ]				= 0;
 	stop DestroyingCarTimer[ playerid ];
-	// TextDraws
-//	DestroyJackerInfoPickTD(playerid);
-//	DestroyJackerInterfaceTD(playerid);
-}
-/*stock DestroyJackerInterfaceTD(playerid)
-{
-	if( JackerArrow1[ playerid ] != PlayerText:INVALID_TEXT_DRAW ) {
-		PlayerTextDrawDestroy(playerid, JackerArrow1[ playerid ]);
-		JackerArrow1[ playerid ] = PlayerText:INVALID_TEXT_DRAW;
-	}
-	if( JackerArrow2[ playerid ] != PlayerText:INVALID_TEXT_DRAW ) {
-		PlayerTextDrawDestroy(playerid, JackerArrow2[ playerid ]);
-		JackerArrow2[ playerid ] = PlayerText:INVALID_TEXT_DRAW;
-	}
-	if( JackerArrow3[ playerid ] != PlayerText:INVALID_TEXT_DRAW ) {
-		PlayerTextDrawDestroy(playerid, JackerArrow3[ playerid ]);
-		JackerArrow3[ playerid ] = PlayerText:INVALID_TEXT_DRAW;
-	}
-	if( JackerArrow4[ playerid ] != PlayerText:INVALID_TEXT_DRAW ) {
-		PlayerTextDrawDestroy(playerid, JackerArrow4[ playerid ]);
-		JackerArrow4[ playerid ] = PlayerText:INVALID_TEXT_DRAW;
-	}
-	if( JackerArrow5[ playerid ] != PlayerText:INVALID_TEXT_DRAW ) {
-		PlayerTextDrawDestroy(playerid, JackerArrow5[ playerid ]);
-		JackerArrow5[ playerid ] = PlayerText:INVALID_TEXT_DRAW;
-	}
-	if( JackerArrow6[ playerid ] != PlayerText:INVALID_TEXT_DRAW ) {
-		PlayerTextDrawDestroy(playerid, JackerArrow6[ playerid ]);
-		JackerArrow6[ playerid ] = PlayerText:INVALID_TEXT_DRAW;
-	}
 	return 1;
 }
-
-stock static ShowJackerInterfaceTD(playerid)
-{
-	DestroyJackerInterfaceTD(playerid);
-	JackerArrow1[playerid] = CreatePlayerTextDraw(playerid, 38.9, 121.1, "LD_BEAT:right");
-	PlayerTextDrawLetterSize(playerid, JackerArrow1[playerid], 0.000000, 0.100000);
-	PlayerTextDrawTextSize(playerid, JackerArrow1[playerid], 31.0, 34.6);
-	PlayerTextDrawAlignment(playerid, JackerArrow1[playerid], 1);
-	PlayerTextDrawColor(playerid, JackerArrow1[playerid], -1);
-	PlayerTextDrawSetShadow(playerid, JackerArrow1[playerid], 0);
-	PlayerTextDrawSetOutline(playerid, JackerArrow1[playerid], 0);
-	PlayerTextDrawFont(playerid, JackerArrow1[playerid], 4);
-	PlayerTextDrawSetSelectable(playerid, JackerArrow1[playerid], true);
-	PlayerTextDrawShow(playerid, JackerArrow1[playerid]);
-
-	JackerArrow2[playerid] = CreatePlayerTextDraw(playerid, 38.9, 235.5, "LD_BEAT:right");
-	PlayerTextDrawLetterSize(playerid, JackerArrow2[playerid], 0.000000, 0.000000);
-	PlayerTextDrawTextSize(playerid, JackerArrow2[playerid], 31.0, 34.6);
-	PlayerTextDrawAlignment(playerid, JackerArrow2[playerid], 1);
-	PlayerTextDrawColor(playerid, JackerArrow2[playerid], -1);
-	PlayerTextDrawSetShadow(playerid, JackerArrow2[playerid], 0);
-	PlayerTextDrawSetOutline(playerid, JackerArrow2[playerid], 0);
-	PlayerTextDrawFont(playerid, JackerArrow2[playerid], 4);
-	PlayerTextDrawSetSelectable(playerid, JackerArrow2[playerid], true);
-	PlayerTextDrawShow(playerid, JackerArrow2[playerid]);
-
-	JackerArrow3[playerid] = CreatePlayerTextDraw(playerid, 38.9, 361.0, "LD_BEAT:right");
-	PlayerTextDrawLetterSize(playerid, JackerArrow3[playerid], 0.000000, 0.000000);
-	PlayerTextDrawTextSize(playerid, JackerArrow3[playerid], 31.0, 34.6);
-	PlayerTextDrawAlignment(playerid, JackerArrow3[playerid], 1);
-	PlayerTextDrawColor(playerid, JackerArrow3[playerid], -1);
-	PlayerTextDrawSetShadow(playerid, JackerArrow3[playerid], 0);
-	PlayerTextDrawSetOutline(playerid, JackerArrow3[playerid], 0);
-	PlayerTextDrawFont(playerid, JackerArrow3[playerid], 4);
-	PlayerTextDrawSetSelectable(playerid, JackerArrow3[playerid], true);
-	PlayerTextDrawShow(playerid, JackerArrow3[playerid]);
-
-	JackerArrow4[playerid] = CreatePlayerTextDraw(playerid, 319.9, 134.3, "LD_BEAT:right");
-	PlayerTextDrawLetterSize(playerid, JackerArrow4[playerid], 0.000000, 0.000000);
-	PlayerTextDrawTextSize(playerid, JackerArrow4[playerid], 31.0, 34.6);
-	PlayerTextDrawAlignment(playerid, JackerArrow4[playerid], 1);
-	PlayerTextDrawColor(playerid, JackerArrow4[playerid], -1);
-	PlayerTextDrawSetShadow(playerid, JackerArrow4[playerid], 0);
-	PlayerTextDrawSetOutline(playerid, JackerArrow4[playerid], 0);
-	PlayerTextDrawFont(playerid, JackerArrow4[playerid], 4);
-	PlayerTextDrawSetSelectable(playerid, JackerArrow4[playerid], true);
-	PlayerTextDrawShow(playerid, JackerArrow4[playerid]);
-
-	JackerArrow5[playerid] = CreatePlayerTextDraw(playerid, 319.9, 235.6, "LD_BEAT:right");
-	PlayerTextDrawLetterSize(playerid, JackerArrow5[playerid], 0.000000, 0.000000);
-	PlayerTextDrawTextSize(playerid, JackerArrow5[playerid], 31.0, 34.6);
-	PlayerTextDrawAlignment(playerid, JackerArrow5[playerid], 1);
-	PlayerTextDrawColor(playerid, JackerArrow5[playerid], -1);
-	PlayerTextDrawSetShadow(playerid, JackerArrow5[playerid], 0);
-	PlayerTextDrawSetOutline(playerid, JackerArrow5[playerid], 0);
-	PlayerTextDrawFont(playerid, JackerArrow5[playerid], 4);
-	PlayerTextDrawSetSelectable(playerid, JackerArrow5[playerid], true);
-	PlayerTextDrawShow(playerid, JackerArrow5[playerid]);
-
-	JackerArrow6[playerid] = CreatePlayerTextDraw(playerid, 319.9, 353.8, "LD_BEAT:right");
-	PlayerTextDrawLetterSize(playerid, JackerArrow6[playerid], 0.000000, 0.000000);
-	PlayerTextDrawTextSize(playerid, JackerArrow6[playerid], 31.0, 34.6);
-	PlayerTextDrawAlignment(playerid, JackerArrow6[playerid], 1);
-	PlayerTextDrawColor(playerid, JackerArrow6[playerid], -1);
-	PlayerTextDrawSetShadow(playerid, JackerArrow6[playerid], 0);
-	PlayerTextDrawSetOutline(playerid, JackerArrow6[playerid], 0);
-	PlayerTextDrawFont(playerid, JackerArrow6[playerid], 4);
-	PlayerTextDrawSetSelectable(playerid, JackerArrow6[playerid], true);
-	PlayerTextDrawShow(playerid, JackerArrow6[playerid]);
-}*/
-/*
-stock DestroyJackerInfoPickTD(playerid)
-{
-	if( JackerPickBcg1[playerid]	!= PlayerText:INVALID_TEXT_DRAW ) {
-		PlayerTextDrawDestroy(playerid, JackerPickBcg1[playerid]);
-		JackerPickBcg1[playerid] = PlayerText:INVALID_TEXT_DRAW;
-	}
-	if( JackerPickBcg2[playerid]	!= PlayerText:INVALID_TEXT_DRAW ) {
-		PlayerTextDrawDestroy(playerid, JackerPickBcg2[playerid]);
-		JackerPickBcg2[playerid] = PlayerText:INVALID_TEXT_DRAW;
-	}
-	if( JackerPickTitle[playerid] 	!= PlayerText:INVALID_TEXT_DRAW ) {
-		PlayerTextDrawDestroy(playerid, JackerPickTitle[playerid]);
-		JackerPickTitle[playerid] = PlayerText:INVALID_TEXT_DRAW;
-	}
-	if( JackerPickVehicle[playerid] != PlayerText:INVALID_TEXT_DRAW ) {
-		PlayerTextDrawDestroy(playerid, JackerPickVehicle[playerid]);
-		JackerPickVehicle[playerid] = PlayerText:INVALID_TEXT_DRAW;
-	}
-	if( JackerPickText[playerid] 	!= PlayerText:INVALID_TEXT_DRAW ) {
-		PlayerTextDrawDestroy(playerid, JackerPickText[playerid]);
-		JackerPickText[playerid] = PlayerText:INVALID_TEXT_DRAW;
-	}
-	if( JackerPickInfo[playerid] 	!= PlayerText:INVALID_TEXT_DRAW ) {
-		PlayerTextDrawDestroy(playerid, JackerPickInfo[playerid]);
-		JackerPickInfo[playerid] = PlayerText:INVALID_TEXT_DRAW;
-	}
-	if( JackerPickTake[playerid] 	!= PlayerText:INVALID_TEXT_DRAW ) {
-		PlayerTextDrawDestroy(playerid, JackerPickTake[playerid]);
-		JackerPickTake[playerid] = PlayerText:INVALID_TEXT_DRAW;
-	}
-	if( JackerPickLeave[playerid]	!= PlayerText:INVALID_TEXT_DRAW ) {
-		PlayerTextDrawDestroy(playerid, JackerPickLeave[playerid]);
-		JackerPickLeave[playerid] = PlayerText:INVALID_TEXT_DRAW;
-	}
-	return 1;
-}	*/
-
-/*stock static CreateJackerInfoPickTD(playerid, carid)
-{
-	DestroyJackerInfoPickTD(playerid);
-	PlayerJackingCar[ playerid ] = carid;
-	
-	JackerPickBcg1[playerid] = CreatePlayerTextDraw(playerid, 473.4, 177.7, "usebox");
-	PlayerTextDrawLetterSize(playerid, JackerPickBcg1[playerid], 0.000000, 16.9);
-	PlayerTextDrawTextSize(playerid, JackerPickBcg1[playerid], 185.4, 0.000000);
-	PlayerTextDrawAlignment(playerid, JackerPickBcg1[playerid], 1);
-	PlayerTextDrawColor(playerid, JackerPickBcg1[playerid], -1);
-	PlayerTextDrawUseBox(playerid, JackerPickBcg1[playerid], true);
-	PlayerTextDrawBoxColor(playerid, JackerPickBcg1[playerid], 102);
-	PlayerTextDrawSetShadow(playerid, JackerPickBcg1[playerid], 0);
-	PlayerTextDrawSetOutline(playerid, JackerPickBcg1[playerid], 0);
-	PlayerTextDrawFont(playerid, JackerPickBcg1[playerid], 0);
-	PlayerTextDrawShow(playerid, JackerPickBcg1[playerid]);
-
-	JackerPickBcg2[playerid] = CreatePlayerTextDraw(playerid, 473.7, 178.5, "usebox");
-	PlayerTextDrawLetterSize(playerid, JackerPickBcg2[playerid], 0.000000, 1.4);
-	PlayerTextDrawTextSize(playerid, JackerPickBcg2[playerid], 185.599990, 0.000000);
-	PlayerTextDrawAlignment(playerid, JackerPickBcg2[playerid], 1);
-	PlayerTextDrawColor(playerid, JackerPickBcg2[playerid], 0);
-	PlayerTextDrawUseBox(playerid, JackerPickBcg2[playerid], true);
-	PlayerTextDrawBoxColor(playerid, JackerPickBcg2[playerid], 102);
-	PlayerTextDrawSetShadow(playerid, JackerPickBcg2[playerid], 0);
-	PlayerTextDrawSetOutline(playerid, JackerPickBcg2[playerid], 0);
-	PlayerTextDrawFont(playerid, JackerPickBcg2[playerid], 0);
-	PlayerTextDrawShow(playerid, JackerPickBcg2[playerid]);
-
-	JackerPickTitle[playerid] = va_CreatePlayerTextDraw(playerid, 285.5, 77.5, "Uzimate %s misiju?", GetVehicleName(LandVehicles[ carid ][ viModelid ], true));
-	PlayerTextDrawLetterSize(playerid, JackerPickTitle[playerid], 0.4, 1.4);
-	PlayerTextDrawAlignment(playerid, JackerPickTitle[playerid], 1);
-	PlayerTextDrawColor(playerid, JackerPickTitle[playerid], -1);
-	PlayerTextDrawSetShadow(playerid, JackerPickTitle[playerid], 0);
-	PlayerTextDrawSetOutline(playerid, JackerPickTitle[playerid], 1);
-	PlayerTextDrawBackgroundColor(playerid, JackerPickTitle[playerid], 51);
-	PlayerTextDrawFont(playerid, JackerPickTitle[playerid], 1);
-	PlayerTextDrawSetProportional(playerid, JackerPickTitle[playerid], 1);
-	PlayerTextDrawShow(playerid, JackerPickTitle[playerid]);
-
-	JackerPickText[playerid] = CreatePlayerTextDraw(playerid, 276.2, 202.9, "OSNOVNE INFORMACIJE");
-	PlayerTextDrawLetterSize(playerid, JackerPickText[playerid], 0.4, 1.2);
-	PlayerTextDrawAlignment(playerid, JackerPickText[playerid], 2);
-	PlayerTextDrawColor(playerid, JackerPickText[playerid], -1);
-	PlayerTextDrawSetShadow(playerid, JackerPickText[playerid], 0);
-	PlayerTextDrawSetOutline(playerid, JackerPickText[playerid], 1);
-	PlayerTextDrawBackgroundColor(playerid, JackerPickText[playerid], 51);
-	PlayerTextDrawFont(playerid, JackerPickText[playerid], 1);
-	PlayerTextDrawSetProportional(playerid, JackerPickText[playerid], 1);
-	PlayerTextDrawShow(playerid, JackerPickText[playerid]);
-
-	JackerPickVehicle[playerid] = CreatePlayerTextDraw(playerid, 211.1, 225.9, "_");
-	PlayerTextDrawLetterSize(playerid, JackerPickVehicle[playerid], 0.0, 0.0);
-	PlayerTextDrawTextSize(playerid, JackerPickVehicle[playerid], 77.8, 76.9);
-	PlayerTextDrawSetPreviewModel(playerid, JackerPickVehicle[playerid], LandVehicles[ carid ][ viModelid ]);
-	PlayerTextDrawAlignment(playerid, JackerPickVehicle[playerid], 1);
-	PlayerTextDrawColor(playerid, JackerPickVehicle[playerid], -1);
-	PlayerTextDrawSetShadow(playerid, JackerPickVehicle[playerid], 0);
-	PlayerTextDrawSetOutline(playerid, JackerPickVehicle[playerid], 0);
-	PlayerTextDrawFont(playerid, JackerPickVehicle[playerid], TEXT_DRAW_FONT_MODEL_PREVIEW);
-	PlayerTextDrawShow(playerid, JackerPickVehicle[playerid]);
-
-
-	JackerPickInfo[playerid] = va_CreatePlayerTextDraw(playerid, 313.4, 231.7, "~y~Naziv: ~w~%s~n~~y~Modelid: ~w~%d~n~~y~Sjedala: ~w~%d~n~~y~Cijena: ~w~%d~g~$", GetVehicleName(LandVehicles[ carid ][ viModelid ], true), LandVehicles[ carid ][ viModelid ], LandVehicles[ carid ][ viSeats ], LandVehicles[ carid ][ viCarJackerPrice ]);
-	PlayerTextDrawLetterSize(playerid, JackerPickInfo[playerid], 0.4, 1.4);
-	PlayerTextDrawAlignment(playerid, JackerPickInfo[playerid], 1);
-	PlayerTextDrawColor(playerid, JackerPickInfo[playerid], -1);
-	PlayerTextDrawSetShadow(playerid, JackerPickInfo[playerid], 0);
-	PlayerTextDrawSetOutline(playerid, JackerPickInfo[playerid], 1);
-	PlayerTextDrawBackgroundColor(playerid, JackerPickInfo[playerid], 51);
-	PlayerTextDrawFont(playerid, JackerPickInfo[playerid], 1);
-	PlayerTextDrawSetProportional(playerid, JackerPickInfo[playerid], 1);
-	PlayerTextDrawShow(playerid, JackerPickInfo[playerid]);
-
-	JackerPickTake[playerid] = CreatePlayerTextDraw(playerid, 390.1, 316.4, "UZIMAM");
-	PlayerTextDrawLetterSize(playerid, JackerPickTake[playerid], 0.3, 1.3);
-	PlayerTextDrawTextSize(playerid, JackerPickTake[playerid], 997.6, 44.1);
-	PlayerTextDrawAlignment(playerid, JackerPickTake[playerid], 2);
-	PlayerTextDrawColor(playerid, JackerPickTake[playerid], -1);
-	PlayerTextDrawUseBox(playerid, JackerPickTake[playerid], true);
-	PlayerTextDrawBoxColor(playerid, JackerPickTake[playerid], 255);
-	PlayerTextDrawSetShadow(playerid, JackerPickTake[playerid], 0);
-	PlayerTextDrawSetOutline(playerid, JackerPickTake[playerid], 1);
-	PlayerTextDrawBackgroundColor(playerid, JackerPickTake[playerid], 51);
-	PlayerTextDrawFont(playerid, JackerPickTake[playerid], 1);
-	PlayerTextDrawSetProportional(playerid, JackerPickTake[playerid], 1);
-	PlayerTextDrawSetSelectable(playerid, JackerPickTake[playerid], true);
-	PlayerTextDrawShow(playerid, JackerPickTake[playerid]);
-
-	JackerPickLeave[playerid] = CreatePlayerTextDraw(playerid, 442.7, 316.5, "Abort");
-	PlayerTextDrawLetterSize(playerid, JackerPickLeave[playerid], 0.3, 1.3);
-	PlayerTextDrawTextSize(playerid, JackerPickLeave[playerid], 48.8, 53.0);
-	PlayerTextDrawAlignment(playerid, JackerPickLeave[playerid], 2);
-	PlayerTextDrawColor(playerid, JackerPickLeave[playerid], -1);
-	PlayerTextDrawUseBox(playerid, JackerPickLeave[playerid], true);
-	PlayerTextDrawBoxColor(playerid, JackerPickLeave[playerid], 255);
-	PlayerTextDrawSetShadow(playerid, JackerPickLeave[playerid], 0);
-	PlayerTextDrawSetOutline(playerid, JackerPickLeave[playerid], 1);
-	PlayerTextDrawBackgroundColor(playerid, JackerPickLeave[playerid], 51);
-	PlayerTextDrawFont(playerid, JackerPickLeave[playerid], 1);
-	PlayerTextDrawSetProportional(playerid, JackerPickLeave[playerid], 1);
-	PlayerTextDrawSetSelectable(playerid, JackerPickLeave[playerid], true);
-	PlayerTextDrawShow(playerid, JackerPickLeave[playerid]);
-}*/
-
-/*stock static InitJackerInterface(playerid)
-{
-	new
-		garage = JackerIlegalGarage[ playerid ];
-	// Player sets
-	SelectTextDraw(playerid, 0xFFFFFFFF);
-	//SetPlayerVirtualWorld(playerid, playerid);
-	//InterpolateCameraPos(playerid, IlegalGarage[ garage ][ igCameraPos ][ 0 ], IlegalGarage[ garage ][ igCameraPos ][ 1 ], IlegalGarage[ garage ][ igCameraPos ][ 2 ], IlegalGarage[ garage ][ igCameraPos ][ 0 ], IlegalGarage[ garage ][ igCameraPos ][ 1 ], IlegalGarage[ garage ][ igCameraPos ][ 2 ], 1000000);
-	//InterpolateCameraLookAt(playerid, IlegalGarage[ garage ][ igCameraLookAt ][ 0 ], IlegalGarage[ garage ][ igCameraLookAt ][ 1 ], IlegalGarage[ garage ][ igCameraLookAt ][ 2 ], IlegalGarage[ garage ][ igCameraLookAt ][ 0 ], IlegalGarage[ garage ][ igCameraLookAt ][ 1 ], IlegalGarage[ garage ][ igCameraLookAt ][ 2 ], 1000000);
-	//SetPlayerPos(playerid, IlegalGarage[ garage ][ igCameraPos ][ 0 ] - 5.0, IlegalGarage[ garage ][ igCameraPos ][ 1 ] - 10.0, IlegalGarage[ garage ][ igCameraPos ][ 2 ]);
-
-    //CreateJackerInfoPickTD(playerid, IlegalGarage[ garage ][ igVehicleIds ][ 0 ]);
-	ShowJackerInterfaceTD(playerid);
-	Bit1_Set(gr_PlayerPickingJack, playerid, true);
-	SendMessage(playerid, MESSAGE_TYPE_INFO, "Odaberite vozilo koje zelite!");
-}*/
 
 stock static IsVehicleMission(playerid, modelid)
 	return ( LandVehicles[ PlayerJackingCar[ playerid ] ][ viModelid ] == modelid ? 1 : 0 );
@@ -792,14 +510,14 @@ timer DestroyingCar[1000](playerid, vehicleid)
 {
 	if(JackerIlegalGarage[playerid] == -1)
 	{
-		DestroyMechanicTextDraw(playerid);
+		DestroyJackerTextDraw(playerid);
 		stop DestroyingCarTimer[playerid];
 		SendMessage(playerid, MESSAGE_TYPE_ERROR, "Radnja je prekinuta zbog greske!");
 		return 0;
 	}
 	if( !IsPlayerInRangeOfVehicle(playerid, vehicleid, 18.0) ) 
 	{
-		DestroyMechanicTextDraw(playerid);
+		DestroyJackerTextDraw(playerid);
 		stop DestroyingCarTimer[playerid];
 		SendMessage(playerid, MESSAGE_TYPE_ERROR, "Radnja je prekinuta jer niste blizu vozila!");
 		return 1;			
@@ -810,7 +528,7 @@ timer DestroyingCar[1000](playerid, vehicleid)
 	new
 		tmpString[ 69 ];
 	format(tmpString, 69, "~w~Rastavljanje vozila u tijeku~r~... ~n~~w~Preostalo sekundi: ~r~%d", Bit8_Get( r_DestroyingCarSecs, playerid ));
-	PlayerTextDrawSetString(playerid, MechanicTD[playerid], tmpString);
+	PlayerTextDrawSetString(playerid, JackerTD[playerid], tmpString);
 	
 	if( !Bit8_Get( r_DestroyingCarSecs, playerid ) ) {
 		new 
@@ -849,7 +567,7 @@ timer DestroyingCar[1000](playerid, vehicleid)
 		//SendPoliceAlertMessage(vehicleid, garage);
 		DestroyedCar[playerid] = GetVehicleModel(vehicleid);
 		Bit1_Set(r_CarDestroyed, playerid, true);
-		DestroyMechanicTextDraw(playerid);
+		DestroyJackerTextDraw(playerid);
 		stop DestroyingCarTimer[playerid];
 		
 		SendClientMessage(playerid,COLOR_RED, "Uspjesno ste rastavili vozilo. Sakrijte ga da biste dobili svoj novac! (/jacker leave)");
@@ -902,6 +620,27 @@ stock static SendPoliceAlertMessage(vehicleid, garage)
 	return 1;
 }
 
+stock static DestroyJackerTextDraw(playerid)
+{
+	if( JackerTD[playerid] != PlayerText:INVALID_TEXT_DRAW ) 
+	{
+		PlayerTextDrawDestroy( playerid, JackerTD[playerid] );
+		JackerTD[playerid] = PlayerText:INVALID_TEXT_DRAW;
+	}
+	return 1;
+}
+
+stock static CreateJackerTextDraw(playerid)
+{
+	DestroyJackerTextDraw(playerid);
+	JackerTD[playerid] = CreatePlayerTextDraw(playerid, 100.0, 310.0, "              ");
+    PlayerTextDrawFont(playerid, 		JackerTD[playerid], 2);
+    PlayerTextDrawLetterSize(playerid, 	JackerTD[playerid], 0.249, 1.000000);
+    PlayerTextDrawSetShadow(playerid, 	JackerTD[playerid], 1);
+	PlayerTextDrawShow(playerid, 		JackerTD[playerid]);
+	return 1;
+}
+
 /*
 	##     ##  #######   #######  ##    ##  ######  
 	##     ## ##     ## ##     ## ##   ##  ##    ## 
@@ -940,41 +679,14 @@ hook OnPlayerConnect(playerid)
 	RemoveBuildingForPlayer(playerid, 3708, 2539.179, -2424.359, 20.492, 0.250);
 	RemoveBuildingForPlayer(playerid, 3578, 2546.046, -2396.593, 13.171, 0.250);
 	RemoveBuildingForPlayer(playerid, 3578, 2571.164, -2421.132, 13.171, 0.250);
-	
+	return 1;
+}
+
+hook ResetPlayerVariables(playerid)
+{
 	ResetCarJackerVariables(playerid);
 	return 1;
 }
-/*
-hook OnPlayerClickPlayerTD(playerid, PlayerText:playertextid)
-{
-	if(Bit1_Get(gr_PlayerJackSure, playerid))
-	{
-		if( playertextid != PlayerText:INVALID_TEXT_DRAW )
-		{
-	//		new
-	//			garage = JackerIlegalGarage[ playerid ];
-
-				CancelSelectTextDraw(playerid);
-				SendFormatMessage(playerid, MESSAGE_TYPE_SUCCESS, "Odabrali ste %s misiju. Ona se prekida kada odete offline!", GetVehicleName(LandVehicles[ PlayerJackingCar[ playerid ] ][ viModelid ], true));
-				DestroyJackerInfoPickTD(playerid);
-				//SetCameraBehindPlayer(playerid);
-				//SetPlayerPos(playerid, IlegalGarage[ garage ][ igCameraPos ][ 0 ], IlegalGarage[ garage ][ igCameraPos ][ 1 ], IlegalGarage[ garage ][ igCameraPos ][ 2 ] - 1.0);
-				//SetPlayerVirtualWorld(playerid, 0);
-				Bit1_Set( gr_PlayerJackSure, playerid, false);
-		}
-		if( playertextid == PlayerText:JackerPickLeave[playerid] )
-		{
-				CancelSelectTextDraw(playerid);
-				PlayerJackingCar[ playerid ] = -1;
-				DestroyJackerInfoPickTD(playerid);
-				//SetCameraBehindPlayer(playerid);
-				//SetPlayerPos(playerid, IlegalGarage[ garage ][ igCameraPos ][ 0 ], IlegalGarage[ garage ][ igCameraPos ][ 1 ], IlegalGarage[ garage ][ igCameraPos ][ 2 ] - 1.0);
-				//SetPlayerVirtualWorld(playerid, 0);
-				Bit1_Set( gr_PlayerJackSure, playerid, false);
-		}
-	}
-	return 1;
-}*/
 
 hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 {
@@ -1004,13 +716,11 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 			GetVehicleNameByModel(LandVehicles[ PlayerJackingCar[ playerid ] ][ viModelid ], vehicleName, MAX_VEHICLE_NAME);
 	        SendFormatMessage(playerid, MESSAGE_TYPE_SUCCESS, "Odabrali ste %s misiju. Ona se prekida kada odete offline!", vehicleName);
 		}
-		case DIALOG_JACKER_SURE_2: {
+		case DIALOG_JACKER_SURE_2: 
+		{
 			if( !response ) return 1;			
 			SendMessage(playerid, MESSAGE_TYPE_ERROR, "Uspjesno ste prekinuli Car Jacker misiju!");
 			PlayerJackingCar[ playerid ] = -1;
-			new Hour, Minute, Second;
-			gettime(Hour, Minute, Second);
-			PlayerJackerCoolDown[ playerid ] = Hour + 1;
 			UpdateIlegalGarages(JackerIlegalGarage[playerid]);
 			return 1;
 		}
@@ -1054,10 +764,12 @@ CMD:jacker(playerid, params[])
 	new
 		param[ 7 ];
 	if( sscanf( params, "s[7] ", param ) ) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /jacker [pick/chop/leave/stop]");
-	if( !strcmp(param, "pick", true) ) {
+	if( !strcmp(param, "pick", true) ) 
+	{
 		JackerIlegalGarage[ playerid ] = GetJackerIlegalGarage(playerid);
 		if( JackerIlegalGarage[ playerid ] == -1 ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste kod pickupa za ostavljanje vozila!");
-		if( PlayerCoolDown[playerid][pJackerCool] == 1) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Mora proci 60 minuta za novu misiju!");
+		if( PlayerCoolDown[playerid][pJackerCool] <= gettimestamp()) 
+			return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Mora proci 60 minuta od zadnje isporuke za novu misiju!");
 		if( PlayerJackingCar[ playerid ] != -1) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Vasa misija i dalje traje! Kucajte /jacker stop za odustanak.");
 
 		new
@@ -1108,8 +820,8 @@ CMD:jacker(playerid, params[])
 		RemovePlayerFromVehicle(playerid);
 		SetVehiclePos(vehicleid, 2520.0364, -2412.6516, 13.7);
 		Bit8_Set(r_DestroyingCarSecs, playerid, 30);
-		CreateMechanicTextDraw(playerid);
-		PlayerTextDrawSetString(playerid, MechanicTD[playerid], "~w~Rastavljanje vozila u tijeku~r~... ~n~~w~Preostalo sekundi: ~r~30");
+		CreateJackerTextDraw(playerid);
+		PlayerTextDrawSetString(playerid, JackerTD[playerid], "~w~Rastavljanje vozila u tijeku~r~... ~n~~w~Preostalo sekundi: ~r~30");
 		DestroyingCarTimer[playerid] = repeat DestroyingCar(playerid, vehicleid);
 	}
 	else if( !strcmp(param, "leave", true) ) {
@@ -1135,8 +847,7 @@ CMD:jacker(playerid, params[])
 				
 		PlayerJackingCar[ playerid ] = -1;
 		JackerMoney[ playerid ]	= 0;
-		//PlayerJackerCoolDown[ playerid ] = gettimestamp() + 2699999;
-		PlayerCoolDown[playerid][pJackerCool] = 1; // svakih sat vremena moze odradit jedan posao.
+		PlayerCoolDown[playerid][pJackerCool] = gettimestamp(); // svakih sat vremena moze odradit jedan posao.
 		UpdateIlegalGarages(garage);
 		CheckForGarageWantedLevel(garage, true);
 		UpgradePlayerSkill(playerid);

@@ -45,6 +45,7 @@ static
     PlayerText:GarageCMDTD   [MAX_PLAYERS] = {PlayerText:INVALID_TEXT_DRAW, ...};
 
 static
+    InGarage[MAX_PLAYERS] = {INVALID_HOUSE_ID, ...},
     Timer:HideGarageTD[MAX_PLAYERS],
     bool:HideGarageTimerActive[MAX_PLAYERS] = {false, ...},
     GarageSeller[MAX_PLAYERS],
@@ -61,6 +62,16 @@ static
     ##       ##     ## ##   ### ##    ## ##    ## 
     ##        #######  ##    ##  ######   ######  
 */
+
+Player_InGarage(playerid)
+{
+    return InGarage[playerid];
+}
+
+Player_SetInGarage(playerid, v)
+{
+    InGarage[playerid] = v;
+}
 
 Public:OnGarageCreates(garageid)
 {
@@ -442,7 +453,7 @@ hook OnGameModeInit()
     return 1;
 }
 
-hook OnPlayerDisconnect(playerid, reason)
+hook ResetPlayerVariables(playerid)
 {
     if (HideGarageTimerActive[playerid])
     {
@@ -463,6 +474,7 @@ hook OnPlayerDisconnect(playerid, reason)
         GarageSeller[playerid] = INVALID_PLAYER_ID;
         GaragePrice [playerid] = 0;
     }
+    Player_SetInGarage(playerid, INVALID_HOUSE_ID);
     return 1;
 }
 
@@ -573,9 +585,8 @@ CMD:create_garage(playerid, params[])
     GarageInfo[garage][gExitY]              = GaragesIntInfo[type][giY];
     GarageInfo[garage][gExitZ]              = GaragesIntInfo[type][giZ];
     strreplace(adress, '_', ' ');
-    // TODO: strcpy
-    format(GarageInfo[garage][gAdress], 16, adress);
-
+    
+    strcpy(GarageInfo[garage][gAdress], adress, 16);
     
     mysql_pquery(g_SQL, 
         va_fquery(g_SQL, 

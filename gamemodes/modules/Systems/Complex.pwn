@@ -37,7 +37,9 @@
 
 static
     Timer:PlayerCMPTimer[MAX_PLAYERS],
-    SelectedRoom[MAX_PLAYERS];
+    SelectedRoom[MAX_PLAYERS],
+    InApartmentComplex[MAX_PLAYERS] = {INVALID_COMPLEX_ID, ...},
+    InApartmentRoom   [MAX_PLAYERS] = {INVALID_COMPLEX_ID, ...};
 
 static
     PlayerText:CompBcg1    [MAX_PLAYERS] = {PlayerText:INVALID_TEXT_DRAW, ...},
@@ -56,6 +58,33 @@ static
     ##       ##     ## ##   ### ##    ## ##    ## 
     ##        #######  ##    ##  ######   ######  
 */
+
+Player_InApartmentComplex(playerid)
+{
+    return InApartmentComplex[playerid];
+}
+
+Player_SetInApartmentComplex(playerid, v)
+{
+    InApartmentComplex[playerid] = v;
+}
+
+Player_InApartmentRoom(playerid)
+{
+    return InApartmentRoom[playerid];
+}
+
+Player_SetInApartmentRoom(playerid, v)
+{
+    InApartmentRoom[playerid] = v;
+}
+
+hook ResetPlayerVariables(playerid)
+{
+    Player_SetInApartmentComplex(playerid, INVALID_COMPLEX_ID);
+    Player_SetInApartmentRoom   (playerid, INVALID_COMPLEX_ID);
+    return 1;
+}
 
 stock DestroyCompInfoTD(playerid)
 {

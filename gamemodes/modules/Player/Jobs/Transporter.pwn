@@ -69,7 +69,7 @@ hook OnPlayerEnterCheckpoint(playerid)
 	        {
 	            if(EarlyDeliveryTimer[playerid] == 1) return FailedToDeliver(playerid);
 	            TDone[playerid] = 0;
-		        ShowPlayerDialog(playerid, DIALOG_ADRIAPOSAO, DIALOG_STYLE_MSGBOX, "{FA5656}TRANSPORTER", "Zelis li ponovo da krenes da dostavljas proizvode?", "Yes", "No");
+		        ShowPlayerDialog(playerid, DIALOG_TRANSPORTER, DIALOG_STYLE_MSGBOX, "{FA5656}TRANSPORTER", "Zelis li ponovo da krenes da dostavljas proizvode?", "Yes", "No");
 		        TWorking[playerid] = 0;
 		        TCarry[playerid] = 0;
 		        DisablePlayerCheckpoint(playerid);
@@ -141,7 +141,7 @@ hook OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
 
 hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 {
-    if (dialogid == DIALOG_ADRIAPOSAO)
+    if (dialogid == DIALOG_TRANSPORTER)
     {
         if (response)
         {
@@ -246,7 +246,7 @@ CMD:transporter(playerid, params[])
 		if(PlayerJob[playerid][pFreeWorks] < 1)
 			return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Odradio si dovoljno za ovaj payday! Pricekaj iduci.");
 
-		ShowPlayerDialog(playerid, DIALOG_ADRIAPOSAO, DIALOG_STYLE_MSGBOX, "{FA5656}Transporter", "Jeste li sigurni da zelite zapoceti dostavu?", "Yes", "No");
+		ShowPlayerDialog(playerid, DIALOG_TRANSPORTER, DIALOG_STYLE_MSGBOX, "{FA5656}Transporter", "Jeste li sigurni da zelite zapoceti dostavu?", "Yes", "No");
 	}
 	else if( !strcmp(param, "stop", true) ) 
 	{

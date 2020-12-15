@@ -71,15 +71,18 @@ new Float:RandomVehicleRentSpawn[3][4] =
 	 ######     ##     #######   ######  ##    ##  ######  
 */
 /////////////////////////////////////////////////////////////
-stock DestroyRentVehicle(vehicleid)
+
+hook AC_DestroyVehicle(vehicleid)
 {
-	ResetVehicleInfo(vehicleid);
-	foreach(new i: Player)
+	if(VehicleInfo[vehicleid][vUsage] == 5) // VEHICLE_USAGE_RENT
 	{
-		if(rentedVehID[i] == vehicleid)
+		foreach(new i: Player)
 		{
-			rentedVehicle[i] = false;
-			rentedVehID[i] = INVALID_VEHICLE_ID;
+			if(rentedVehID[i] == vehicleid)
+			{
+				rentedVehicle[i] = false;
+				rentedVehID[i] = INVALID_VEHICLE_ID;
+			}
 		}
 	}
 	return 1;
@@ -91,7 +94,6 @@ stock static PlayerRentVehicle(playerid, modelid, price)
 		color1 = random(6),
 		color2 = random(6);
 	rentedVehID[playerid] = AC_CreateVehicle(modelid, RandomVehicleRentSpawn[rvPos][0], RandomVehicleRentSpawn[rvPos][1], RandomVehicleRentSpawn[rvPos][2], RandomVehicleRentSpawn[rvPos][3], random(6), random(6), -1, 0);
-	ResetVehicleInfo(rentedVehID[playerid]);
 	rentedVehicle[playerid] = true;
 
 	VehicleInfo[ rentedVehID[playerid] ][ vModel ]				= modelid;
@@ -214,7 +216,6 @@ hook OnVehicleDeath(vehicleid, killerid)
 				
 				DestroyFarmerObjects(playerid);
 				AC_DestroyVehicle(rentedVehID[playerid]);
-				ResetVehicleInfo( rentedVehID[playerid] );
 				
 				rentedVehicle[playerid] 	= false;
 				rentedVehID[playerid] 		= -1;
@@ -293,7 +294,6 @@ CMD:rentveh(playerid, params[])
 		
 		rentedVehicle[playerid] = false;
 		AC_DestroyVehicle(rentedVehID[playerid]);
-		ResetVehicleInfo( rentedVehID[playerid] );
 		rentedVehID[playerid] = INVALID_VEHICLE_ID;
 		GameTextForPlayer(playerid, "~g~Vraceno rentano vozilo", 1000, 1);
 	}

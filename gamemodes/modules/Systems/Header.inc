@@ -1,5 +1,9 @@
 // Header file where functions should be declared that can be used/accessed from other modules
 
+// Pickups
+forward Player_InPickup(playerid);
+forward Player_SetInPickup(playerid, v);
+
 // Faction - Law Duty
 forward bool:Player_OnLawDuty(playerid);
 forward Player_SetLawDuty(playerid, bool:v);
@@ -34,10 +38,6 @@ forward Player_SetInApartmentRoom(playerid, v);
 // Garage
 forward Player_InGarage(playerid);
 forward Player_SetInGarage(playerid, v);
-
-// Dynamic Pickup
-forward Player_InPickup(playerid);
-forward Player_SetInPickup(playerid, v);
 
 // Events
 #include "modules/Systems\Events/Header.inc"

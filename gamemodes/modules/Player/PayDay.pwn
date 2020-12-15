@@ -528,8 +528,7 @@ GivePlayerPayCheck(playerid)
 	
 	// CoolDown Reset
 	PlayerCoolDown[playerid][pCasinoCool] = 10;	
-	PlayerCoolDown[playerid][pJackerCool] = 0;
-
+	
 	// Experience
 	
 	new currentday, day;

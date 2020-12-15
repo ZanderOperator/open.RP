@@ -1,10 +1,37 @@
 #include <YSI_Coding\y_hooks>
 
-new PlayerText:ConnectTextDraw[MAX_PLAYERS] = { PlayerText:INVALID_TEXT_DRAW, ... },
+static
+	PlayerText:WebURLTextDraw[MAX_PLAYERS] = { PlayerText:INVALID_TEXT_DRAW, ... },
+	PlayerText:ConnectTextDraw[MAX_PLAYERS] = { PlayerText:INVALID_TEXT_DRAW, ... },
     PlayerText:CopyrightTextDraw[MAX_PLAYERS] = { PlayerText:INVALID_TEXT_DRAW, ... },
     PlayerText:CoATextDraw[MAX_PLAYERS] = { PlayerText:INVALID_TEXT_DRAW, ... },
 	PlayerText:RPTextDraw[MAX_PLAYERS] = { PlayerText:INVALID_TEXT_DRAW, ... };
-	
+
+stock CreateWebTD(playerid)
+{
+	DestroyWebTD(playerid);
+	WebURLTextDraw[playerid] = CreatePlayerTextDraw(playerid, 501.700073, 9.744050, WEB_URL);
+	PlayerTextDrawLetterSize(playerid, WebURLTextDraw[playerid], 0.248749, 1.020959);
+	PlayerTextDrawAlignment(playerid, WebURLTextDraw[playerid], 1);
+	PlayerTextDrawColor(playerid, WebURLTextDraw[playerid], 0xBAD4D8AA);
+	PlayerTextDrawSetShadow(playerid, WebURLTextDraw[playerid], 1);
+	PlayerTextDrawSetOutline(playerid, WebURLTextDraw[playerid], 0);
+	PlayerTextDrawBackgroundColor(playerid, WebURLTextDraw[playerid], 255);
+	PlayerTextDrawFont(playerid, WebURLTextDraw[playerid], 1);
+	PlayerTextDrawSetProportional(playerid, WebURLTextDraw[playerid], 1);
+	PlayerTextDrawShow(playerid, WebURLTextDraw[playerid]);
+}
+
+stock DestroyWebTD(playerid)
+{
+	if(WebURLTextDraw[playerid] != PlayerText:INVALID_TEXT_DRAW) 
+	{
+		PlayerTextDrawDestroy(playerid, WebURLTextDraw[playerid]);
+		WebURLTextDraw[playerid] = PlayerText:INVALID_TEXT_DRAW;
+	}
+	return 1;
+}
+
 stock CreateLoginTextdraws(playerid)
 {
 	// Connect background TextDraw
@@ -47,16 +74,16 @@ stock CreateLoginTextdraws(playerid)
     PlayerTextDrawSetProportional(playerid, RPTextDraw[playerid], 1);
 	PlayerTextDrawAlignment(playerid, RPTextDraw[playerid], 2);
 	
-	GlobalForumLink[playerid] = CreatePlayerTextDraw(playerid, 501.700073, 9.744050, WEB_URL);
-	PlayerTextDrawLetterSize(playerid, GlobalForumLink[playerid], 0.248749, 1.020959);
-	PlayerTextDrawAlignment(playerid, GlobalForumLink[playerid], 1);
-	PlayerTextDrawColor(playerid, GlobalForumLink[playerid], 0xFFFFFFAA);
-	PlayerTextDrawSetShadow(playerid, GlobalForumLink[playerid], 1);
-	PlayerTextDrawSetOutline(playerid, GlobalForumLink[playerid], 0);
-	PlayerTextDrawBackgroundColor(playerid, GlobalForumLink[playerid], 255);
-	PlayerTextDrawFont(playerid, GlobalForumLink[playerid], 1);
-	PlayerTextDrawSetProportional(playerid, GlobalForumLink[playerid], 1);
-	PlayerTextDrawShow(playerid, GlobalForumLink[playerid]);
+	WebURLTextDraw[playerid] = CreatePlayerTextDraw(playerid, 501.700073, 9.744050, WEB_URL);
+	PlayerTextDrawLetterSize(playerid, WebURLTextDraw[playerid], 0.248749, 1.020959);
+	PlayerTextDrawAlignment(playerid, WebURLTextDraw[playerid], 1);
+	PlayerTextDrawColor(playerid, WebURLTextDraw[playerid], 0xFFFFFFAA);
+	PlayerTextDrawSetShadow(playerid, WebURLTextDraw[playerid], 1);
+	PlayerTextDrawSetOutline(playerid, WebURLTextDraw[playerid], 0);
+	PlayerTextDrawBackgroundColor(playerid, WebURLTextDraw[playerid], 255);
+	PlayerTextDrawFont(playerid, WebURLTextDraw[playerid], 1);
+	PlayerTextDrawSetProportional(playerid, WebURLTextDraw[playerid], 1);
+	PlayerTextDrawShow(playerid, WebURLTextDraw[playerid]);
 	
 	ShowLoginTextDraws(playerid);
 	return 1;
@@ -73,8 +100,8 @@ stock DestroyLoginTextdraws(playerid)
 	CoATextDraw[playerid] = PlayerText:INVALID_TEXT_DRAW;
 	PlayerTextDrawDestroy(playerid, RPTextDraw[playerid]);
 	RPTextDraw[playerid] = PlayerText:INVALID_TEXT_DRAW;
-	PlayerTextDrawDestroy(playerid, GlobalForumLink[playerid]);
-	GlobalForumLink[playerid] = PlayerText:INVALID_TEXT_DRAW;
+	PlayerTextDrawDestroy(playerid, WebURLTextDraw[playerid]);
+	WebURLTextDraw[playerid] = PlayerText:INVALID_TEXT_DRAW;
 	return 1;
 }
 
@@ -92,7 +119,7 @@ stock ShowLoginTextDraws(playerid)
 	PlayerTextDrawShow(playerid, CopyrightTextDraw[playerid]);
 	PlayerTextDrawShow(playerid, CoATextDraw[playerid]);
 	PlayerTextDrawShow(playerid, RPTextDraw[playerid]);
-	PlayerTextDrawShow(playerid, GlobalForumLink[playerid]);
+	PlayerTextDrawShow(playerid, WebURLTextDraw[playerid]);
 }
 
 hook OnPlayerRequestClass(playerid, classid)
@@ -104,5 +131,39 @@ hook OnPlayerRequestClass(playerid, classid)
 hook OnPlayerDisconnect(playerid, reason)
 {
 	DestroyLoginTextdraws(playerid);
+	return 1;
+}
+
+hook OnAccountFinish(playerid)
+{
+	DestroyLoginTextdraws(playerid);
+	CreateWebTD(playerid);
+	return 1;
+}
+
+hook SafeSpawnPlayer(playerid)
+{
+	DestroyLoginTextdraws(playerid);
+	CreateWebTD(playerid);
+	return 1;
+}
+
+CMD:toghud(playerid, params[])
+{
+	new 
+		option[4];
+	if(sscanf(params, "s[4]", option)) 
+		return SendClientMessage(playerid, -1, "[?]: /toghud (on/off)");
+
+	if(!strcmp(option, "on")) 
+	{
+		DestroyWebTD(playerid);
+		DestroyZonesTD(playerid);
+	}
+	else if(!strcmp(option, "off")) 
+	{
+		CreateWebTD(playerid);
+		CreateZonesTD(playerid);
+	}
 	return 1;
 }

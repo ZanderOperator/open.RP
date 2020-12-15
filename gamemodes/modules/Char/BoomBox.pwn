@@ -160,6 +160,13 @@ stock ResetMusicVars(playerid)
 	##     ## ##     ## ##     ## ##   ##
 	##     ##  #######   #######  ##    ##
 */
+
+hook ResetVehicleInfo(vehicleid)
+{
+	ClearVehicleMusic(vehicleid);
+	return 1;
+}
+
 hook OnPlayerEnterVehicle(playerid, vehicleid, ispassenger)
 {
 	if( VehiclePlayingMusic[ vehicleid ] ) {

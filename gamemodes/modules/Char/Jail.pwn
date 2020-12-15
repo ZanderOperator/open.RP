@@ -19,9 +19,6 @@
 #define GATES_OPEN    	2
 #define GATES_OPENING   3
 
-#define D_JAILJOB 440
-
-
 /*
 	######## ##    ## ##     ## ##     ##  ######
 	##       ###   ## ##     ## ###   ### ##    ##
@@ -6818,7 +6815,7 @@ hook OnPlayerConnect(playerid)
 
 hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 {
-    if(dialogid == D_JAILJOB)
+    if(dialogid == DIALOG_JAILJOB)
 	{
 	    if(PlayerJail[playerid][pJailJob] != 0) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Vec si zaposlen u zatvoru!");
 		if(!response)
@@ -6941,7 +6938,7 @@ hook OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
 	    	{
 	    	    if(PlayerJail[playerid][pJailJob] != 0) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Imas zatvorski posao!");
 	    	    if(PlayerJail[playerid][pJailed] != 1) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nije te PD uhapsiom, zato ne mozes raditi zatvorski posao!");
-				ShowPlayerDialog(playerid, D_JAILJOB, DIALOG_STYLE_MSGBOX, "{FBE204}Zatvorski posao", "Da li zelite da radite kao smecar u zatvoru?\nDobijate honorarnu platu, plus vam se smanjuje kazna.", "Yes", "No");
+				ShowPlayerDialog(playerid, DIALOG_JAILJOB, DIALOG_STYLE_MSGBOX, "{FBE204}Zatvorski posao", "Da li zelite da radite kao smecar u zatvoru?\nDobijate honorarnu platu, plus vam se smanjuje kazna.", "Yes", "No");
 			}
 		}
 		else if( IsPlayerInRangeOfPoint(playerid, 5.0, 69.644668, -227.206695, 1.308123)) {

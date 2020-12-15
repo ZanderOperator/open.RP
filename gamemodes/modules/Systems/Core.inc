@@ -1,3 +1,5 @@
+#include "modules/Systems/Pickups.pwn"
+
 // House
 #include "modules/Systems/Furniture.pwn"
 #include "modules/Systems/ExteriorFurniture.pwn"

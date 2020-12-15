@@ -123,10 +123,8 @@ enum
 static
     HouseCP[MAX_PLAYERS],
     bool:HouseAlarmActive[MAX_HOUSES],
-    // House door picklocking
     bool:PickingLock[MAX_PLAYERS],
     PickLockSlot[MAX_PLAYERS],
-    // House door ram
     RammingDoor[MAX_PLAYERS] = {DOOR_RAM_NONE, ...};
 
 static
@@ -145,17 +143,9 @@ static
     PlayerText:FootKickingBcg2  [MAX_PLAYERS] = {PlayerText:INVALID_TEXT_DRAW, ...},
     PlayerText:FootKickingText  [MAX_PLAYERS] = {PlayerText:INVALID_TEXT_DRAW, ...};
 
-// TODO: figure out the best place for these variables, ideally, they should be
-// placed in their own modules
 static
     InHouse           [MAX_PLAYERS] = {INVALID_HOUSE_ID, ...},
-    InfrontHouse      [MAX_PLAYERS] = {INVALID_HOUSE_ID, ...},
-    InGarage          [MAX_PLAYERS] = {INVALID_HOUSE_ID, ...},
-    InBusiness        [MAX_PLAYERS] = {INVALID_BIZNIS_ID, ...},
-    InApartmentComplex[MAX_PLAYERS] = {INVALID_COMPLEX_ID, ...},
-    InApartmentRoom   [MAX_PLAYERS] = {INVALID_COMPLEX_ID, ...},
-    InPickup          [MAX_PLAYERS] = {-1, ...};
-
+    InfrontHouse      [MAX_PLAYERS] = {INVALID_HOUSE_ID, ...};
 
 /*
     ######## ##     ## ##    ##  ######   ######  
@@ -167,7 +157,6 @@ static
     ##        #######  ##    ##  ######   ######  
 */
 
-// TODO: some of these should be moved
 Player_InHouse(playerid)
 {
     return InHouse[playerid];
@@ -186,56 +175,6 @@ Player_InfrontHouse(playerid)
 Player_SetInfrontHouse(playerid, v)
 {
     InfrontHouse[playerid] = v;
-}
-
-Player_InApartmentComplex(playerid)
-{
-    return InApartmentComplex[playerid];
-}
-
-Player_SetInApartmentComplex(playerid, v)
-{
-    InApartmentComplex[playerid] = v;
-}
-
-Player_InApartmentRoom(playerid)
-{
-    return InApartmentRoom[playerid];
-}
-
-Player_SetInApartmentRoom(playerid, v)
-{
-    InApartmentRoom[playerid] = v;
-}
-
-Player_InGarage(playerid)
-{
-    return InGarage[playerid];
-}
-
-Player_SetInGarage(playerid, v)
-{
-    InGarage[playerid] = v;
-}
-
-Player_InBusiness(playerid)
-{
-    return InBusiness[playerid];
-}
-
-Player_SetInBusiness(playerid, v)
-{
-    InBusiness[playerid] = v;
-}
-
-Player_InPickup(playerid)
-{
-    return InPickup[playerid];
-}
-
-Player_SetInPickup(playerid, v)
-{
-    InPickup[playerid] = v;
 }
 
 Player_GetHouseCP(playerid)
@@ -265,7 +204,6 @@ stock House_GetSqlid(houseid)
     {
         return -1;
     }
-
     return HouseInfo[houseid][hSQLID];
 }
 
@@ -275,7 +213,6 @@ stock House_GetAddress(houseid)
     {
         return "(None)";
     }
-
     return HouseInfo[houseid][hAdress];
 }
 
@@ -367,13 +304,13 @@ stock ResetHouseVariables(playerid)
     DestroyHouseInfoTD(playerid);
     stop PlayerClosedTimer[playerid];
 
-    // Lockpicking
     ResetLockPickVars(playerid);
     ResetDoorKickingVars(playerid);
 
     RammingDoor[playerid] = DOOR_RAM_NONE;
     PickingLock[playerid] = false;
     PickLockSlot[playerid] = 3;
+    
     Player_SetInHouse       (playerid, INVALID_HOUSE_ID);
     Player_SetInfrontHouse  (playerid, INVALID_HOUSE_ID);
     return 1;

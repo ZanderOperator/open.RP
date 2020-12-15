@@ -1096,16 +1096,14 @@ GiveVehicleDrug(vehicleid, dtyp, Float:damnt, Float:dqua)
 	return emptyslot;
 }
 
-DeleteVehicleDrug(vehicleid, slot = -1) // pripazi kako koristis, slot -1 znaci da ce obrisat komplet drogu u tom vozilu
+DeleteVehicleDrug(vehicleid, slot = -1) 
 {
 	if(slot > MAX_VEHICLE_DRUGS || slot < -1)
 		return 0;
 	
-	
 	if(slot == -1)
 	{
 		mysql_fquery(g_SQL, "DELETE FROM cocars_drugs WHERE vehicle_id = '%d'", VehicleInfo[vehicleid][vSQLID]);
-		
 		ResetVehicleDrugs(vehicleid);
 	}
 	else
