@@ -133,7 +133,6 @@ static
     PlayerText:BiznisCMDTD [MAX_PLAYERS] = {PlayerText:INVALID_TEXT_DRAW, ...};
 
 static
-    Timer:PlayerTDTimer[MAX_PLAYERS],
     VeronaSkinRectangle,
     bool:IsDJ[MAX_PLAYERS],
     DJBizzKey[MAX_PLAYERS],
@@ -143,7 +142,9 @@ static
     PlayerSkinPrice[MAX_PLAYERS],
     PlayerSkinStore[MAX_PLAYERS],
     FreeBizzID[MAX_PLAYERS],
-    InBusiness[MAX_PLAYERS] = {INVALID_BIZNIS_ID, ...};
+    InBusiness[MAX_PLAYERS],
+    BizzCP[MAX_PLAYERS],
+    InfrontBizz[MAX_PLAYERS];
 
 static const BizzTypesNames[MAX_BIZZ_TYPES][20] =
 {
@@ -186,6 +187,26 @@ Player_InBusiness(playerid)
 Player_SetInBusiness(playerid, v)
 {
     InBusiness[playerid] = v;
+}
+
+Player_InfrontBizz(playerid)
+{
+    return InfrontBizz[playerid];
+}
+
+Player_SetInfrontBizz(playerid, v)
+{
+    InfrontBizz[playerid] = v;
+}
+
+Player_GetBizzCP(playerid)
+{
+    return BizzCP[playerid];
+}
+
+Player_SetBizzCP(playerid, v)
+{
+    BizzCP[playerid] = v;
 }
 
 stock bool:Player_IsDJ(playerid)
@@ -305,15 +326,13 @@ public OnServerBizzesLoad()
         cache_get_value_name_int  (b,    "fur_slots"     , BizzInfo[b][bFurSlots]);
         cache_get_value_name_int  (b,    "gasprice"      , BizzInfo[b][bGasPrice]);
 
-        // External Loads
         LoadBiznisProducts(b);
         LoadBiznisVips(b);
         LoadBiznisFurnitureObjects(b);
+        CreateBizzEnter(b);
 
         if (BizzInfo[b][bVipEnter][0] != 0.0 && BizzInfo[b][bVipEnter][1] != 0.0)
-        {
             BizzInfo[b][bVipCP] = CreateDynamicCP(BizzInfo[b][bVipEnter][0], BizzInfo[b][bVipEnter][1], BizzInfo[b][bVipEnter][2]-1, 3.0, BizzInfo[b][bVirtualWorld], BizzInfo[b][bInterior], -1, 5.0);
-        }
 
         BizzInfo[b][bEnterPickup] = CreateDynamicPickup(1272, 2, BizzInfo[b][bEntranceX], BizzInfo[b][bEntranceY], BizzInfo[b][bEntranceZ], -1, -1, -1, 100.0);
         Iter_Add(Bizzes, b);
@@ -522,8 +541,6 @@ static stock CreateBizzInfoTD(playerid)
 
 Public:DestroyBizzInfoTD(playerid)
 {
-    stop PlayerTDTimer[playerid];
-
     PlayerTextDrawDestroy(playerid, BiznisBcg1[playerid]);
     PlayerTextDrawDestroy(playerid, BiznisBcg2[playerid]);
     PlayerTextDrawDestroy(playerid, BizzInfoText[playerid]);
@@ -791,6 +808,38 @@ Public:OnBiznisProductInsert(bizz, id)
     return 1;
 }
 
+stock CP_GetBizzID(checkpointid)
+{
+    new bizzid = INVALID_BIZNIS_ID;
+    foreach(new bizz: Bizzes)
+    {
+        if(BizzInfo[bizz][bEnterCP] == checkpointid)
+        {
+            bizzid = bizz;
+            break;
+        }
+    }
+    return bizzid;
+}
+
+stock TogglePlayerBizzCPs(playerid, bool:toggle)
+{
+    TogglePlayerAllDynamicCPs(playerid, toggle);
+    foreach(new i : Bizzes)
+    {
+        TogglePlayerDynamicCP(playerid, BizzInfo[i][bEnterCP], toggle);
+    }
+}
+
+static CreateBizzEnter(bizzid)
+{
+    if (IsValidDynamicCP(BizzInfo[bizzid][bEnterCP]))
+        DestroyDynamicCP(BizzInfo[bizzid][bEnterCP]);
+    
+    BizzInfo[bizzid][bEnterCP] = CreateDynamicCP(BizzInfo[bizzid][bEntranceX], BizzInfo[bizzid][bEntranceY], BizzInfo[bizzid][bEntranceZ]-1.0, 2.0, -1, -1, -1, 5.0);
+    return 1;
+}
+
 static stock GetStoreProducts(bizz)
 {
     new buffer[870];
@@ -855,9 +904,11 @@ stock ResetBizzInfo(bizz, bool:server_startup = false)
     BizzInfo[bizz][bFurSlots] = 0;
     BizzInfo[bizz][bGasPrice] = 0;
     if (IsValidDynamicPickup(BizzInfo[bizz][bEnterPickup]))
-    {
         DestroyDynamicPickup(BizzInfo[bizz][bEnterPickup]);
-    }
+    
+    if(IsValidDynamicCP(BizzInfo[bizz][bEnterCP]))
+        DestroyDynamicCP(BizzInfo[bizz][bEnterCP]);
+
     Iter_Clear(BizzFurniture[bizz]);
     return 1;
 }
@@ -1006,44 +1057,60 @@ hook LoadServerData()
     return 1;
 }
 
-hook OnPlayerPickUpDynPickup(playerid, pickupid)
+hook OnPlayerConnect(playerid)
 {
-    foreach(new bizz : Bizzes)
+	TogglePlayerBizzCPs(playerid, true);
+	return 1;
+}
+
+hook OnPlayerEnterDynamicCP(playerid, checkpointid)
+{
+    new bizz = CP_GetBizzID(checkpointid);
+    if (!Iter_Contains(Bizzes, bizz))
+        return 1;
+
+    new string[128];
+    CreateBizzInfoTD(playerid);
+    if (BizzInfo[bizz][bOwnerID] != 0)
     {
-        if (BizzInfo[bizz][bEnterPickup] == pickupid)
-        {
-            // TODO: refactor
-            new string[128];
-
-            CreateBizzInfoTD(playerid);
-            if (BizzInfo[bizz][bOwnerID] != 0)
-            {
-                format(string, sizeof(string), "Naziv: %s~n~Vlasnik: %s~n~Tip: %s~n~Vrata: %s~n~~w~Cijena ulaza: %d~g~$~n~~w~Unisten: %s",
-                    BizzInfo[bizz][bMessage],
-                    GetPlayerNameFromSQL(BizzInfo[bizz][bOwnerID]),
-                    GetBiznisType(BizzInfo[bizz][bType]),
-                    BizzInfo[bizz][bLocked] == 1 ? ("~r~ZAKLJUCANA") : ("~g~OTKLJUCANA"),
-                    BizzInfo[bizz][bEntranceCost],
-                    BizzInfo[bizz][bDestroyed] ? ("Da") : ("Ne")
-               );
-            }
-            else
-            {
-                format(string, sizeof(string), "Biznis je na prodaju~n~Naziv: %s~n~Tip: %s~n~Cijena: %d~g~$~n~~w~Level: %d~n~Unisten: %s",
-                    BizzInfo[bizz][bMessage],
-                    GetBiznisType(BizzInfo[bizz][bType]),
-                    BizzInfo[bizz][bBuyPrice],
-                    BizzInfo[bizz][bLevelNeeded],
-                    BizzInfo[bizz][bDestroyed] ? ("Da") : ("Ne")
-               );
-                PlayerTextDrawSetString(playerid, BiznisCMDTD[playerid], "Raspolozive komande:~n~      /enter, /buybiznis");
-            }
-
-            PlayerTextDrawSetString(playerid, BizzInfoTD[playerid], string);
-            PlayerTDTimer[playerid] = defer PlayerBiznisInfo(playerid);
-            break;
-        }
+        format(string, sizeof(string), "Naziv: %s~n~Vlasnik: %s~n~Tip: %s~n~Vrata: %s~n~~w~Cijena ulaza: %d~g~$~n~~w~Unisten: %s",
+            BizzInfo[bizz][bMessage],
+            GetPlayerNameFromSQL(BizzInfo[bizz][bOwnerID]),
+            GetBiznisType(BizzInfo[bizz][bType]),
+            BizzInfo[bizz][bLocked] == 1 ? ("~r~ZAKLJUCANA") : ("~g~OTKLJUCANA"),
+            BizzInfo[bizz][bEntranceCost],
+            BizzInfo[bizz][bDestroyed] ? ("Da") : ("Ne")
+        );
     }
+    else
+    {
+        format(string, sizeof(string), "Biznis je na prodaju~n~Naziv: %s~n~Tip: %s~n~Cijena: %d~g~$~n~~w~Level: %d~n~Unisten: %s",
+            BizzInfo[bizz][bMessage],
+            GetBiznisType(BizzInfo[bizz][bType]),
+            BizzInfo[bizz][bBuyPrice],
+            BizzInfo[bizz][bLevelNeeded],
+            BizzInfo[bizz][bDestroyed] ? ("Da") : ("Ne")
+        );
+        PlayerTextDrawSetString(playerid, BiznisCMDTD[playerid], "Raspolozive komande:~n~      /enter, /buybiznis");
+    }
+    PlayerTextDrawSetString(playerid, BizzInfoTD[playerid], string);
+    
+    Player_SetBizzCP(playerid, checkpointid);
+    Player_SetInfrontBizz(playerid, bizz);
+    return 1;
+}
+
+hook OnPlayerLeaveDynamicCP(playerid, checkpointid)
+{
+    new 
+        bizz = CP_GetBizzID(checkpointid);
+    
+    if (!Iter_Contains(Bizzes, bizz) || Player_GetBizzCP(playerid) != bizz)
+        return 1;
+
+    DestroyBizzInfoTD(playerid);
+    Player_SetBizzCP(playerid, -1);
+    Player_SetInfrontBizz(playerid, INVALID_HOUSE_ID);
     return 1;
 }
 
@@ -1102,7 +1169,6 @@ hook OnPlayerLeaveDynArea(playerid, areaid)
 hook ResetPlayerVariables(playerid)
 {
     DestroyBizzInfoTD(playerid);
-    stop PlayerTDTimer[playerid];
 
     FreeBizzID     [playerid] = INVALID_BIZNIS_ID;
     ArticleSlot    [playerid] = 0;
@@ -1112,6 +1178,9 @@ hook ResetPlayerVariables(playerid)
     Player_SetIsDJ(playerid, false);
     Player_SetDJBizzKey(playerid, INVALID_BIZNIS_ID);
     Player_SetInBusiness(playerid, INVALID_BIZNIS_ID);
+
+    InfrontBizz[playerid] = INVALID_BIZNIS_ID;
+    BizzCP[playerid] = INVALID_BIZNIS_ID;
     return 1;
 }
 
@@ -3058,24 +3127,6 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
     return 0;
 }
 
-
-/*
-    ######## #### ##     ## ######## ########   ######  
-       ##     ##  ###   ### ##       ##     ## ##    ## 
-       ##     ##  #### #### ##       ##     ## ##       
-       ##     ##  ## ### ## ######   ########   ######  
-       ##     ##  ##     ## ##       ##   ##         ## 
-       ##     ##  ##     ## ##       ##    ##  ##    ## 
-       ##    #### ##     ## ######## ##     ##  ######  
-*/
-
-timer PlayerBiznisInfo[5000](playerid)
-{
-    stop PlayerTDTimer[playerid];
-    DestroyBizzInfoTD(playerid);
-}
-
-
 /*
      ######  ##     ## ########  
     ##    ## ###   ### ##     ## 
@@ -3703,7 +3754,7 @@ CMD:menu(playerid, params[])
 CMD:buybiznis(playerid, params[])
 {
     if (PlayerKeys[playerid][pBizzKey] != INVALID_BIZNIS_ID) return SendClientMessage(playerid, COLOR_RED, "Vec posjedujete biznis!");
-    new bizz = GetNearestBizz(playerid);
+    new bizz = Player_InfrontBizz(playerid);
     if(bizz == INVALID_BIZNIS_ID)
         return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You are not near any business!");
 
@@ -3922,8 +3973,14 @@ CMD:bizentrance(playerid, params[])
     DestroyDynamicPickup(BizzInfo[proplev][bEnterPickup]);
     BizzInfo[proplev][bEnterPickup] = CreateDynamicPickup(1272, 2, BizzInfo[proplev][bEntranceX], BizzInfo[proplev][bEntranceY], BizzInfo[proplev][bEntranceZ], -1, -1, -1, 100.0);
 
+    Streamer_SetFloatData(STREAMER_TYPE_CP, BizzInfo[proplev][bEnterCP], E_STREAMER_X, BizzInfo[proplev][bEntranceX]);
+    Streamer_SetFloatData(STREAMER_TYPE_CP, BizzInfo[proplev][bEnterCP], E_STREAMER_Y, BizzInfo[proplev][bEntranceY]);
+    Streamer_SetFloatData(STREAMER_TYPE_CP, BizzInfo[proplev][bEnterCP], E_STREAMER_Z, BizzInfo[proplev][bEntranceZ]);
+    Streamer_Update(playerid);
+
     new
         string[92];
+
     format(string,sizeof(string),"[ADMIN]: %s je premjestio biznis [%d] na [%f - %f - %f].",
         GetName(playerid, false),
         proplev,
@@ -3947,8 +4004,9 @@ CMD:bizinfo(playerid, params[])
 {
     if (PlayerInfo[playerid][pAdmin] < 4) return SendClientMessage(playerid, COLOR_RED, "Nisi administrator!");
 
-    new bizz = GetNearestBizz(playerid);
-    if (bizz == INVALID_BIZNIS_ID) return SendClientMessage(playerid, COLOR_RED, "You are not near any business!");
+    new bizz = Player_InfrontBizz(playerid);
+    if (bizz == INVALID_BIZNIS_ID) 
+        return SendClientMessage(playerid, COLOR_RED, "You are not near any business!");
 
     va_SendClientMessage(playerid, COLOR_YELLOW, "[INFO] Bizz ID: %d | Bizz MySQL ID: %d", bizz, BizzInfo[bizz][bSQLID]);
     va_SendClientMessage(playerid, COLOR_RED, "[INFO] Stanje u blagajni biznisa: %d$", BizzInfo[bizz][bTill]);
@@ -4126,6 +4184,7 @@ CMD:createbiz(playerid, params[])
     BizzInfo[freeslot][bFurSlots] = BIZZ_FURNITURE_VIP_NONE;
     BizzInfo[freeslot][bGasPrice] = 3;
     BizzInfo[freeslot][bEnterPickup] = CreateDynamicPickup(1272, 2, BizzInfo[freeslot][bEntranceX], BizzInfo[freeslot][bEntranceY], BizzInfo[freeslot][bEntranceZ], -1, -1, -1, 100.0);
+    CreateBizzEnter(freeslot);
 
     ShowPlayerDialog(playerid, DIALOG_NEWBIZNIS_NAME, DIALOG_STYLE_INPUT, "Unos imena biznisa:", "Molimo Vas unesite ime novog biznisa.", "Input", "Exit");
     return 1;
@@ -4136,7 +4195,7 @@ CMD:deletebiz(playerid, params[])
     if (PlayerInfo[playerid][pAdmin] < 1338)
         return SendClientMessage(playerid, COLOR_RED, "Niste Administrator Level 1338");
 
-    new bizz = GetNearestBizz(playerid);
+    new bizz = Player_InfrontBizz(playerid);
     if (bizz == INVALID_BIZNIS_ID)
         return SendClientMessage(playerid, COLOR_RED, "Niste u blizini nijednog biznisa!");
 

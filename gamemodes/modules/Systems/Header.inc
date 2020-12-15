@@ -15,6 +15,12 @@ forward Player_SetLawDuty(playerid, bool:v);
 forward Player_InBusiness(playerid);
 forward Player_SetInBusiness(playerid, v);
 
+forward Player_InfrontBizz(playerid);
+forward Player_SetInfrontBizz(playerid, v);
+
+forward Player_GetBizzCP(playerid);
+forward Player_SetBizzCP(playerid, v);
+
 // House
 forward Player_InHouse(playerid);
 forward Player_SetInHouse(playerid, v);
@@ -45,7 +51,6 @@ forward Player_SetInGarage(playerid, v);
 // GPS
 forward bool:Player_GpsActivated(playerid);
 forward Player_SetGpsActivated(playerid, bool:v);
-
 
 // Miscellaneous
 forward bool:Player_IsDJ(playerid);

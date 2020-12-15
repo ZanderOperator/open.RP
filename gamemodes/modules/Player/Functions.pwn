@@ -1142,7 +1142,6 @@ timer PlayerGlobalTask[1000](playerid)
 	if(Player_GpsActivated(playerid))
 		gps_GetDistance(playerid, GPSInfo[playerid][gGPSID], GPSInfo[playerid][gX], GPSInfo[playerid][gY], GPSInfo[playerid][gZ]);
 	
-	CheckHouseInfoTextDraws(playerid); // House Info Textdraw removal if not in checkpoint 
 	CheckWoundedPlayer(playerid);
 	
 	SprayingBarChecker(playerid);

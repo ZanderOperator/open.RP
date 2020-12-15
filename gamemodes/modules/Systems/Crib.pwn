@@ -122,6 +122,8 @@ enum
 
 static
     HouseCP[MAX_PLAYERS],
+    InHouse[MAX_PLAYERS], 
+    InfrontHouse[MAX_PLAYERS],
     bool:HouseAlarmActive[MAX_HOUSES],
     bool:PickingLock[MAX_PLAYERS],
     PickLockSlot[MAX_PLAYERS],
@@ -141,11 +143,7 @@ static
     PlayerText:PickLockTime     [MAX_PLAYERS] = {PlayerText:INVALID_TEXT_DRAW, ...},
     PlayerText:FootKickingBcg1  [MAX_PLAYERS] = {PlayerText:INVALID_TEXT_DRAW, ...},
     PlayerText:FootKickingBcg2  [MAX_PLAYERS] = {PlayerText:INVALID_TEXT_DRAW, ...},
-    PlayerText:FootKickingText  [MAX_PLAYERS] = {PlayerText:INVALID_TEXT_DRAW, ...};
-
-static
-    InHouse           [MAX_PLAYERS] = {INVALID_HOUSE_ID, ...},
-    InfrontHouse      [MAX_PLAYERS] = {INVALID_HOUSE_ID, ...};
+    PlayerText:FootKickingText  [MAX_PLAYERS] = {PlayerText:INVALID_TEXT_DRAW, ...};   
 
 /*
     ######## ##     ## ##    ##  ######   ######  
@@ -241,21 +239,6 @@ stock UpdateHouseVirtualWorld(houseid)
         HouseInfo[houseid][hVirtualWorld],
         HouseInfo[houseid][hSQLID]
     );
-    return 1;
-}
-
-stock CheckHouseInfoTextDraws(playerid)
-{
-    new houseid = Player_InfrontHouse(playerid);
-    if (!Iter_Contains(Houses, houseid))
-        return 1;
-
-    if (!IsPlayerInDynamicCP(playerid, HouseInfo[houseid][hEnterCP]))
-    {
-        DestroyHouseInfoTD(playerid);
-        Player_SetHouseCP(playerid, -1);
-        Player_SetInfrontHouse(playerid, INVALID_HOUSE_ID);
-    }
     return 1;
 }
 
@@ -488,21 +471,16 @@ static stock InsertHouseInDB(houseid, playerid) // Dodavanje nove kuce
     return 1;
 }
 
-stock CreateHouseEnter(houseid)
+static CreateHouseEnter(houseid)
 {
     if (IsValidDynamicCP(HouseInfo[houseid][hEnterCP]))
-    {
         DestroyDynamicCP(HouseInfo[houseid][hEnterCP]);
-    }
 
     if (HouseInfo[houseid][h3dViwo] > 0)
-    {
         HouseInfo[houseid][hEnterCP] = CreateDynamicCP(HouseInfo[houseid][hEnterX], HouseInfo[houseid][hEnterY], HouseInfo[houseid][hEnterZ]-1.0, 2.0, HouseInfo[houseid][h3dViwo], 5, -1, 5.0);
-    }
     else
-    {
         HouseInfo[houseid][hEnterCP] = CreateDynamicCP(HouseInfo[houseid][hEnterX], HouseInfo[houseid][hEnterY], HouseInfo[houseid][hEnterZ]-1.0, 2.0, -1, -1, -1, 5.0);
-    }
+   
     return 1;
 }
 
@@ -759,10 +737,8 @@ stock ResetHouseInfo(houseid)
     HouseInfo[houseid][hExitX]              = 0.0;
     HouseInfo[houseid][hExitY]              = 0.0;
     HouseInfo[houseid][hExitZ]              = 0.0;
-    HouseInfo[houseid][hEnterCP]            = -1;
     HouseInfo[houseid][hOwnerID]            = 0;
-    // TODO: strcpy
-    format(HouseInfo[houseid][hAdress],     32, "None");
+    strcpy(HouseInfo[houseid][hAdress], "None", 32);
     HouseInfo[houseid][hValue]              = 0;
     HouseInfo[houseid][hInt]                = 0;
     HouseInfo[houseid][hVirtualWorld]       = 0;
@@ -784,6 +760,9 @@ stock ResetHouseInfo(houseid)
     HouseInfo[houseid][hDoorLevel]          = 0;
     HouseInfo[houseid][hAlarm]              = 0;
     HouseInfo[houseid][hLockLevel]          = 0;
+    
+    if(IsValidDynamicCP(HouseInfo[houseid][hEnterCP]))
+        DestroyDynamicCP(HouseInfo[houseid][hEnterCP]);
 
     if (HouseAlarmActive[houseid])
     {
@@ -805,6 +784,20 @@ Public:ResetHouseEnumerator()
         ResetHouseInfo(i);
     }
     return 1;
+}
+
+stock CP_GetHouseID(checkpointid)
+{
+    new houseid = INVALID_HOUSE_ID;
+    foreach(new house: Houses)
+    {
+        if(HouseInfo[house][hEnterCP] == checkpointid)
+        {
+            houseid = house;
+            break;
+        }
+    }
+    return houseid;
 }
 
 stock BuyHouse(playerid, bool:credit_activated = false)
@@ -1315,6 +1308,12 @@ hook LoadServerData()
     return 1;
 }
 
+hook OnPlayerConnect(playerid)
+{
+	TogglePlayerHouseCPs(playerid, true);
+	return 1;
+}
+
 hook ResetPlayerVariables(playerid)
 {
     ResetHouseVariables(playerid);
@@ -1323,11 +1322,9 @@ hook ResetPlayerVariables(playerid)
 
 hook OnPlayerEnterDynamicCP(playerid, checkpointid)
 {
-    new house = (checkpointid - 1);
+    new house = CP_GetHouseID(checkpointid);
     if (!Iter_Contains(Houses, house))
-    {
         return 1;
-    }
 
     CreateHouseInfoTD(playerid);
     new string[128];
@@ -1376,11 +1373,11 @@ hook OnPlayerEnterDynamicCP(playerid, checkpointid)
 
 hook OnPlayerLeaveDynamicCP(playerid, checkpointid)
 {
-    new house = checkpointid - 1;
-    if (!Iter_Contains(Houses, house))
-    {
+    new 
+        house = CP_GetHouseID(checkpointid);
+    
+    if (!Iter_Contains(Houses, house) || Player_GetHouseCP(playerid) != house)
         return 1;
-    }
 
     DestroyHouseInfoTD(playerid);
     Player_SetHouseCP(playerid, -1);
@@ -1561,7 +1558,7 @@ hook OnPlayerWeaponShot(playerid, weaponid, hittype, hitid, Float:fX, Float:fY, 
     {
         if (AC_GetPlayerWeapon(playerid) != WEAPON_SHOTGUN && AC_GetPlayerWeapon(playerid) != WEAPON_SHOTGSPA)
             return 1;
-            
+
         if (!IsACop(playerid))
             PlayHouseAlarm(houseid);
 

@@ -227,12 +227,6 @@ stock H_DestroyDynamicCP(checkpointid)
 #endif
 #define DestroyDynamicCP H_DestroyDynamicCP
 
-hook OnPlayerConnect(playerid)
-{
-	TogglePlayerHouseCPs(playerid, true);
-	return 1;
-}
-
 hook OnPlayerDisconnect(playerid, reason)
 {
 	ResetPlayerCheckpoints(playerid);
