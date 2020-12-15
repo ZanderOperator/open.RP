@@ -85,7 +85,6 @@ CMD:enter(playerid, params[])
     //if (Bit1_Get(r_PlayerDoorPeek, playerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne mozete uci u kucu dok virite kroz vrata!");
 
     new
-        biznis = GetNearestBizz(playerid),
         pickup = -1,
         complex = INVALID_COMPLEX_ID,
         rcomplex = INVALID_COMPLEX_ID,
@@ -138,14 +137,14 @@ CMD:enter(playerid, params[])
                 return 1;
             }
             else
-            {
                 GameTextForPlayer(playerid, "~r~Zakljucano", 5000, 1);
-            }
         }
     }
-    else if (biznis != INVALID_BIZNIS_ID)
+    else if (IsPlayerInDynamicCP(playerid, Player_GetBizzCP(playerid)))
     {
-        if (!BizzInfo[biznis][bCanEnter]) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne mozete uci u biznis bez inta!");
+		new biznis = Player_InfrontBizz(playerid);
+        if (!BizzInfo[biznis][bCanEnter]) 
+			return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne mozete uci u ovaj biznis!");
 
         if (PlayerKeys[playerid][pBizzKey] != biznis || BizzInfo[biznis][bLocked])
         {
@@ -329,9 +328,7 @@ CMD:exit(playerid, params[])
                     ResetBuySkin(playerid);
                 }
             }
-
-            /*if (aprilfools[playerid])
-                biznis = random(MAX_BIZZS/2);*/
+			
             SetPlayerPosEx(playerid, BizzInfo[biznis][bEntranceX], BizzInfo[biznis][bEntranceY], BizzInfo[biznis][bEntranceZ], 0, 0, false);
             SetPlayerInterior(playerid, 0);
             SetPlayerVirtualWorld(playerid, 0);
