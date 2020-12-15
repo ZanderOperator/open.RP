@@ -71,13 +71,7 @@ hook OnPlayerStateChange(playerid, newstate, oldstate)
     return 1;
 }
 
-hook OnPlayerConnect(playerid, reason)
-{
-    Player_SetLastVehicle(playerid, INVALID_VEHICLE_ID);
-    return 1;
-}
-
-hook OnPlayerDisconnect(playerid, reason)
+hook ResetPlayerVariables(playerid)
 {
     Player_SetLastVehicle(playerid, INVALID_VEHICLE_ID);
     return 1;

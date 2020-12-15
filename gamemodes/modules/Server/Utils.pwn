@@ -542,20 +542,17 @@ stock SetObjectFaceCoords3D(iObject, Float: fX, Float: fY, Float: fZ, Float: fRo
 	SetDynamicObjectRot(iObject, fRollOffset, fPitch + fPitchOffset, fZ + fYawOffset);
 }
 
-stock CustomStreamObject(modelid, Float:x, Float:y, Float:z, Float:rx, Float:ry, Float:rz, worldid = -1, interiorid = -1, playerid = -1, Float:streamdistance = 200.0, Float:drawdistance = 0.0)
+stock Float:GetDistanceBetweenPoints3D(Float:x1,Float:y1,Float:z1,Float:x2,Float:y2,Float:z2)
 {
-	if( streamdistance == 0.0 || streamdistance == 200.0 ) 
-		streamdistance = (50.0 + GetColSphereRadius(modelid));
-	if( drawdistance == 0.0 ) 
-		drawdistance = (50.0 + GetColSphereRadius(modelid));
-    return CreateDynamicObject(modelid, x, y, z, rx, ry, rz, worldid, interiorid, playerid, streamdistance, drawdistance);
+    return VectorSize(x1-x2,y1-y2,z1-z2);
 }
 
-stock damagePlayer(playerid, Float: fDamage) {
+stock damagePlayer(playerid, Float: fDamage) 
+{
     new
         Float: fHealth,
-        Float: fArmour
-    ;
+        Float: fArmour;
+
     GetPlayerHealth(playerid, fHealth);
     GetPlayerArmour(playerid, fArmour);
     

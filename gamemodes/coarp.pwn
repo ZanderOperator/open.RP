@@ -217,21 +217,14 @@ new
 	bool:PlayerBlocked[MAX_PLAYERS],
 	bool:PlayerWoundedAnim[MAX_PLAYERS],
 	bool:rob_started[MAX_PLAYERS] = false,
-	bool:blockedNews[MAX_PLAYERS] = false,
 	KilledBy[MAX_PLAYERS],
 	WoundedBy[MAX_PLAYERS],
 	KilledReason[MAX_PLAYERS],
 	gStartedWork[MAX_PLAYERS],
 	InjectPlayer[MAX_PLAYERS],
-	CallingId[ MAX_PLAYERS ] = { 999, ... };
-// Bank Credits
-new paymentBuyPrice[MAX_PLAYERS],
+	CallingId[ MAX_PLAYERS ] = { 999, ... },
 	buyBizID[MAX_PLAYERS];
 
-// Vehicles
-new
-	rentedVehID[MAX_PLAYERS],
-	LastVehicleDriver[ MAX_VEHICLES ] = INVALID_PLAYER_ID;
 
 //Players Vars
 //(rBits)
@@ -298,8 +291,6 @@ new
 new
     secquestattempt[MAX_PLAYERS] = 3,
 	EditingWeapon[MAX_PLAYERS] = 0,
-	EnteringVehicle[MAX_PLAYERS] = -1,
-	FreeBizzID[MAX_PLAYERS] = INVALID_BIZNIS_ID,
 	ServicePrice[MAX_PLAYERS] = 0,
 	WeaponListID[MAX_PLAYERS],
 	WeaponToList[MAX_PLAYERS][MAX_WAREHOUSE_WEAPONS],
@@ -1089,8 +1080,6 @@ hook OnPlayerText(playerid, text[])
 // TODO: should be a part of Player module
 Public: ResetPlayerVariables(playerid)
 {	
-   	TWorking[playerid] = 0;
-
 	//rBits
 	Bit1_Set( gr_PlayerDownloading		, playerid, false );
 	Bit1_Set( gr_FristSpawn				, playerid, false );
@@ -1115,7 +1104,6 @@ Public: ResetPlayerVariables(playerid)
 	// TODO: Player/Char module
 	Bit1_Set( gr_Blind					, playerid, false );
 	Bit1_Set( gr_BlindFold				, playerid, false );
-	Player_SetIsTied(playerid, false);
 	Bit1_Set( gr_ImpoundApproval		, playerid, false );
 	Bit2_Set( gr_BikeBunnyHop			, playerid, 0 );
 	Bit2_Set( gr_PlayerJumps			, playerid, 0 );
@@ -1126,20 +1114,13 @@ Public: ResetPlayerVariables(playerid)
 	Bit8_Set( gr_RegisterInputs			, playerid, 0 );
 	Bit8_Set( gr_ShakeStyle				, playerid, 0 );
 	Bit16_Set( gr_ShakeOffer			, playerid, 999 );
-	Player_SetLastVehicle(playerid, INVALID_VEHICLE_ID);
 	Bit16_Set( gr_LastPMId				, playerid, 999 );
-	Player_SetAmbulanceId(playerid, INVALID_VEHICLE_ID);
-
-	blockedNews[playerid] = false;
 
 	// Exiting Vars
 	PlayerSafeExit[playerid][giX] = 0;
 	PlayerSafeExit[playerid][giY] = 0;
 	PlayerSafeExit[playerid][giZ] = 0;
 	PlayerSafeExit[playerid][giRZ] = 0;
-
-	// Weapons
-	AC_ResetPlayerWeapons(playerid, false);
 
 	Bit1_Set( gr_PlayerUsingPhonebooth			, playerid, false );
 	Bit1_Set( gr_PlayerTakingSelfie		, playerid, false );
@@ -1173,62 +1154,13 @@ Public: ResetPlayerVariables(playerid)
 		stop TutTimer[playerid];
 	}
 
-
-	// Rent Veh
-	rentedVehicle[playerid] 	= false;
-	rentedVehID[playerid] 		= -1;
-	locatedRentedVeh[playerid] 	= false;
-	EnteringVehicle[playerid] = -1;
-	FreeBizzID[playerid] = INVALID_BIZNIS_ID,
-
 	// Ticks
 	PlayerTick[playerid][ptReport]			= gettimestamp();
 	PlayerTick[playerid][ptMoney]			= gettimestamp();
 	PlayerTick[playerid][ptHelperHelp]		= gettimestamp();
 	PlayerTick[playerid][ptKill]			= gettimestamp();
 	PlayerTick[playerid][ptMainTimer] 		= gettimestamp();
-
-	//Enums	
-	PlayerInfo[playerid][pForumName] 		= EOS;
-	PlayerInfo[playerid][pLastLogin] 		= EOS;
-	PlayerInfo[playerid][pSAMPid] 			= EOS;
-	PlayerInfo[playerid][pEmail][0] 		= EOS;
-
-	PlayerInfo[playerid][pSecQuestAnswer][0]= EOS;
-	PlayerInfo[playerid][pLastUpdateVer] 	= EOS;
-
-	PlayerInfo[playerid][pSQLID] 			= 0; 	//Integer
-	PlayerInfo[playerid][pLastLoginTimestamp] = 0;
-	PlayerInfo[playerid][pRegistered] 		= 0;
-	PlayerInfo[playerid][pSecQuestion] 		= -1;
-	PlayerInfo[playerid][pBanned]			= 0;
-	PlayerInfo[playerid][pWarns]			= 0;
-	PlayerInfo[playerid][pLevel]			= 0;
-	PlayerInfo[playerid][pAdmin]			= 0;
-	PlayerInfo[playerid][pTempRank][0]		= 0;
-	PlayerInfo[playerid][pTempRank][1]		= 0;
-	PlayerInfo[playerid][pHelper]			= 0;
-	PlayerInfo[playerid][pConnectTime]		= 0;
-	PlayerInfo[playerid][pMuted]			= 0;
-	PlayerInfo[playerid][pRespects]			= 0;
-	PlayerInfo[playerid][pSex]				= 0;
-	PlayerInfo[playerid][pAge]				= 0;
-	PlayerInfo[playerid][pChangenames]		= 0;
-	PlayerInfo[playerid][pChangeTimes]		= 0;
-	PlayerInfo[playerid][pMoney]			= 0;
-	PlayerInfo[playerid][pBank]				= 0;	
 	
-	PlayerKeys[playerid][pHouseKey]			= INVALID_HOUSE_ID;
-	PlayerKeys[playerid][pRentKey]			= INVALID_HOUSE_ID;
-	PlayerKeys[playerid][pBizzKey]			= INVALID_BIZNIS_ID;
-	PlayerKeys[playerid][pComplexKey]		= INVALID_COMPLEX_ID;
-	PlayerKeys[playerid][pComplexRoomKey]	= INVALID_COMPLEX_ID;
-	PlayerKeys[playerid][pGarageKey]		= -1;
-	PlayerKeys[playerid][pIllegalGarageKey]	= -1;
-	PlayerKeys[playerid][pVehicleKey]		= -1;
-	PlayerKeys[playerid][pWarehouseKey] 	= -1;
-	PlayerInfo[playerid][pVoted]	 		= false;
-	PlayerInfo[playerid][pMustRead]			= false;
 	
 	//Floats
 	PlayerTrunkPos[playerid][0] 			= 0.0;
@@ -1248,14 +1180,6 @@ Public: ResetPlayerVariables(playerid)
 	KilledReason[playerid]			= -1;
 
 	PlayerAction[playerid]			= 0;
-
-	PlayerInfo[playerid][pIP] = EOS;
-
-	//Transporter
-	TCarry[playerid] = 0;
-	TDone[playerid] = 0;
-	TWorking[playerid] = 0;
-	carjob[playerid]= 0;
 
 	// Bools
 	PlayerCrashed[ playerid ] 	= false;

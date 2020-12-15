@@ -4,6 +4,9 @@
 forward bool:Player_SecurityBreach(playerid);
 forward Player_SetSecurityBreach(playerid, bool:v);
 
+// Bank
+forward Player_SetBuyPrice(playerid, amount);
+
 // Updates
 forward bool:Player_Reward(playerid);
 forward Player_SetReward(playerid, bool:v);

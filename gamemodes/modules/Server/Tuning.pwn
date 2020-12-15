@@ -570,9 +570,7 @@ stock RemoveAllVehicleTuning(vehicleid)
 	{
 		componentid = GetVehicleComponentInSlot(vehicleid, i);
 		if (componentid != 0)
-		{
 			RemoveVehicleComponent(vehicleid, componentid);
-		}
 	}
 	return 1;
 }

@@ -422,6 +422,7 @@ hook OnPlayerWeaponShot(playerid, weaponid, hittype, hitid, Float:fX, Float:fY, 
 
 hook ResetPlayerVariables(playerid)
 {
+	AC_ResetPlayerWeapons(playerid, false);
 	Iter_Clear(P_Weapons[playerid]);
 	
 	PrimaryWeapon[playerid] = 0;

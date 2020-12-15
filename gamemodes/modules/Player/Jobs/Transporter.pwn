@@ -2,11 +2,12 @@
 
 #define TRANSPORTER_ID	(18)
 
-new TWorking[MAX_PLAYERS];
-new TCarry[MAX_PLAYERS];
-new TDone[MAX_PLAYERS];
-new EarlyDeliveryTimer[MAX_PLAYERS];
-new carjob[MAX_PLAYERS];
+static
+	TWorking[MAX_PLAYERS],
+	TCarry[MAX_PLAYERS],
+	TDone[MAX_PLAYERS],
+	EarlyDeliveryTimer[MAX_PLAYERS],
+	carjob[MAX_PLAYERS];
 
 enum E_TRANSPORTER_DATA
 {
@@ -31,8 +32,8 @@ static const PossibleTransports[][E_TRANSPORTER_DATA] = {
 new TransportSpot[MAX_PLAYERS];
 
 
-hook OnPlayerDisconnect(playerid){
-
+hook ResetPlayerVariables(playerid)
+{
 	TCarry[playerid] = 0;
 	TDone[playerid] = 0;
 	TWorking[playerid] = 0;
@@ -40,8 +41,8 @@ hook OnPlayerDisconnect(playerid){
 	return 1;
 }
 
-hook OnPlayerDeath(playerid){
-
+hook OnPlayerDeath(playerid, killerid, reason)
+{
     TCarry[playerid] = 0;
     TDone[playerid] = 0;
 	TWorking[playerid] = 0;

@@ -398,7 +398,8 @@ new
 	PlayerParkLocation	[MAX_PLAYERS],
 	PlayerGiveBackCP	[MAX_PLAYERS];	// Global CP
 
-static stock
+static
+		LastVehicleDriver[MAX_VEHICLES],
 		Text3D:DoorHealth3DText[MAX_VEHICLES],
 		Text3D:TrunkHealth3DText[MAX_VEHICLES],
 		PreviewModel		[MAX_PLAYERS],
@@ -3850,6 +3851,14 @@ hook ResetPrivateVehicleInfo(vehicleid)
 	return 1;
 }
 
+hook OnPlayerEnterVehicle(playerid, vehicleid, ispassenger)
+{
+	if(!ispassenger)
+		LastVehicleDriver[vehicleid] = playerid;
+	
+	return 1;
+}
+
 hook OnPlayerEnterCheckpoint(playerid)
 {
 	if(Bit1_Get(gr_PlayerLocateVeh, playerid)) 
@@ -3948,13 +3957,14 @@ hook OnPlayerStateChange(playerid, newstate, oldstate)
 				SendMessage(playerid, MESSAGE_TYPE_ERROR, " Izasli ste iz vozila!");
 			}
 		}
+		LastVehicleDriver[ GetPlayerVehicleID(playerid) ] = playerid;
 	}
 	if (oldstate == PLAYER_STATE_ONFOOT && newstate == PLAYER_STATE_DRIVER) 
 	{
 		new vehicleid = GetPlayerVehicleID(playerid);
 		if(vehicleid == PlayerKeys[playerid][pVehicleKey])
 			CheckVehicleTickets(playerid, vehicleid);
-		if(VehicleInfo[GetPlayerVehicleID(playerid)][vUsage] == VEHICLE_USAGE_PRIVATE && VehicleInfo[GetPlayerVehicleID(playerid)][vImpounded])
+		if(VehicleInfo[vehicleid][vUsage] == VEHICLE_USAGE_PRIVATE && VehicleInfo[vehicleid][vImpounded])
 			SendClientMessage(playerid, COLOR_RED, "[ ! ] Vozilo je impoundano, morate platiti 1.000$ da biste mogli voziti ovo vozilo! Koristite /payimpound.");
 	}
     return 1;
@@ -4061,7 +4071,7 @@ hook OnPlayerClickPlayerTD(playerid, PlayerText:playertextid)
 				return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nije vam ostalo vise mjesta za donator vozila");
 
 			Bit1_Set(gr_PreviewCar, playerid, false);
-			paymentBuyPrice[playerid] = buyprice;
+			Player_SetBuyPrice(playerid, buyprice);
 			GetPlayerPaymentOption(playerid, BUY_TYPE_VEHICLE);
 			CancelSelectTextDraw(playerid);
 		}
@@ -5548,10 +5558,6 @@ CMD:fill(playerid, params[])
 		SendClientMessage(playerid, COLOR_RED, "[ ? ]: /fill [0 - Gasoline, 1 - Diesel][amount of liters]");
 		return 1;
 	}
-	#if defined EVENTSTARTED
-	SendClientMessage( playerid, COLOR_RED, "** Nema struje u pumpi **");
-	return 1;
-	#endif
 	if( fuel > ( 100 - VehicleInfo[ vehicleid ][ vFuel ] ) ) return SendClientMessage(playerid, COLOR_RED, "U vase vozilo ne moze stati toliko goriva.");
 	if( 1 <= fuel <= 100 ) 
 	{
@@ -5751,8 +5757,6 @@ CMD:engine(playerid, params[])
 	if((enginet[playerid] > gettime()) && VehicleInfo[vehicleid][vDestroyed])
 		return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Pricekajte prije ponovnog paljenja vozila!");
 	
-	new EngineChance = 1;
-
 	if( PlayerWoundedAnim[playerid] ) 				return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ranjeni ste, trenutno niste u stanju upravljati vozilom!");
 	if( IsABike(GetVehicleModel(vehicleid) ) ) 		return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nepravilno vozilo!");
 	if( !IsPlayerInVehicle(playerid, vehicleid)) 	return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste unutar vozila!");
@@ -5804,60 +5808,46 @@ CMD:engine(playerid, params[])
 
 				VehicleInfo[vehicleid][vBatteryLife] 	-= 0.001;
 				if(0.001 <= VehicleInfo[vehicleid][vBatteryLife] <= 5000.0) {
-					switch(random(50)) {
-						case 0 .. 25: { // Ne�e se uklju�iti
+					switch(random(50))
+					{
+						case 0 .. 25: 
+						{ 
 							GameTextForPlayer(playerid, "~r~Motor nije upalio radi slabog akumulatora", 3000, 1);
-
 							GetVehicleParamsEx(vehicleid, engine, lights, alarm, doors, bonnet, boot, objective);
 							SetVehicleParamsEx(vehicleid, VEHICLE_PARAMS_OFF, lights, alarm, doors, bonnet, boot, objective);
 							VehicleInfo[vehicleid][vEngineRunning] = 0;
 						}
-						case 26 .. 50: { // Ho�e
-							#if defined EVENTSTARTED
-							EngineChance = random(2);
-							#endif
-							if(EngineChance == 1)
+						case 26 .. 50: 
+						{ 
+							GameTextForPlayer(playerid, "~g~Motor ukljucen", 3000, 4);
+							GetVehicleParamsEx(vehicleid, engine, lights, alarm, doors, bonnet, boot, objective);
+							SetVehicleParamsEx(vehicleid, VEHICLE_PARAMS_ON, lights, alarm, doors, bonnet, boot, objective);
+							VehicleInfo[vehicleid][vEngineRunning] = 1;
+						}
+					}
+				} 
+				else 
+				{
+					if(VehicleInfo[vehicleid][vEngineLife] > 10000) 
+					{
+						GameTextForPlayer(playerid, "~g~Motor ukljucen", 3000, 4);
+						GetVehicleParamsEx(vehicleid, engine, lights, alarm, doors, bonnet, boot, objective);
+						SetVehicleParamsEx(vehicleid, VEHICLE_PARAMS_ON, lights, alarm, doors, bonnet, boot, objective);
+						VehicleInfo[vehicleid][vEngineRunning] = 1;
+					}
+					else if(1 <= VehicleInfo[vehicleid][vEngineLife] <= 10000)
+					{
+						switch(random(50)) 
+						{
+							case 0 .. 25: 
 							{
 								GameTextForPlayer(playerid, "~g~Motor ukljucen", 3000, 4);
 								GetVehicleParamsEx(vehicleid, engine, lights, alarm, doors, bonnet, boot, objective);
 								SetVehicleParamsEx(vehicleid, VEHICLE_PARAMS_ON, lights, alarm, doors, bonnet, boot, objective);
 								VehicleInfo[vehicleid][vEngineRunning] = 1;
 							}
-							else return GameTextForPlayer(playerid, "~r~Motor nije upalio~n~Problem s elektronikom~n~~g~Pokusajte opet", 3000, 1);
-						}
-					}
-				} else { // Akumulator je u savrsenom stanju!
-
-					if(VehicleInfo[vehicleid][vEngineLife] > 10000) {
-						#if defined EVENTSTARTED
-						EngineChance = random(2);
-						#endif
-						if(EngineChance == 1)
-						{
-							GameTextForPlayer(playerid, "~g~Motor ukljucen", 3000, 4);
-							GetVehicleParamsEx(vehicleid, engine, lights, alarm, doors, bonnet, boot, objective);
-							SetVehicleParamsEx(vehicleid, VEHICLE_PARAMS_ON, lights, alarm, doors, bonnet, boot, objective);
-							VehicleInfo[vehicleid][vEngineRunning] = 1;
-						}
-						else return GameTextForPlayer(playerid, "~r~Motor nije upalio~n~Problem s elektronikom~n~~g~Pokusajte opet", 3000, 1);
-					}
-					else if(1 <= VehicleInfo[vehicleid][vEngineLife] <= 10000)
-					{
-						switch(random(50)) {
-							case 0 .. 25: {
-								#if defined EVENTSTARTED
-								EngineChance = random(2);
-								#endif
-								if(EngineChance == 1)
-								{
-									GameTextForPlayer(playerid, "~g~Motor ukljucen", 3000, 4);
-									GetVehicleParamsEx(vehicleid, engine, lights, alarm, doors, bonnet, boot, objective);
-									SetVehicleParamsEx(vehicleid, VEHICLE_PARAMS_ON, lights, alarm, doors, bonnet, boot, objective);
-									VehicleInfo[vehicleid][vEngineRunning] = 1;
-								}
-								else return GameTextForPlayer(playerid, "~r~Motor nije upalio~n~Problem s elektronikom~n~~g~Pokusajte opet", 3000, 1);
-							}
-							case 26 .. 50: {
+							case 26 .. 50: 
+							{
 								GameTextForPlayer(playerid, "~r~Motor nije upalio radi loseg motora", 3000, 1);
 								GetVehicleParamsEx(vehicleid, engine, lights, alarm, doors, bonnet, boot, objective);
 								SetVehicleParamsEx(vehicleid, VEHICLE_PARAMS_OFF, lights, alarm, doors, bonnet, boot, objective);
@@ -5865,34 +5855,31 @@ CMD:engine(playerid, params[])
 							}
 						}
 					}
-
 				}
 			}
-		} else {
+		}
+		else 
+		{
 			switch( VehicleInfo[ vehicleid ][ vUsage ] )
 			{
 				case VEHICLE_USAGE_PRIVATE:
 					StartHotWiring( playerid, vehicleid );
-				case VEHICLE_USAGE_NORMAL, VEHICLE_USAGE_FACTION, VEHICLE_USAGE_JOB, VEHICLE_USAGE_LICENSE: {
+				case VEHICLE_USAGE_NORMAL, VEHICLE_USAGE_FACTION, VEHICLE_USAGE_JOB, VEHICLE_USAGE_LICENSE: 
+				{
          			GameTextForPlayer(playerid, "~g~Motor ukljucen", 3000, 4);
 					GetVehicleParamsEx(vehicleid, engine, lights, alarm, doors, bonnet, boot, objective);
 					SetVehicleParamsEx(vehicleid, VEHICLE_PARAMS_ON, lights, alarm, doors, bonnet, boot, objective);
 					VehicleInfo[vehicleid][vEngineRunning] = 1;
 				}
-				case VEHICLE_USAGE_RENT: {
-					if( rentedVehID[playerid] == vehicleid ) {
-						#if defined EVENTSTARTED
-						EngineChance = random(2);
-						#endif
-						if(EngineChance == 1)
-						{
-							GameTextForPlayer(playerid, "~g~Motor ukljucen", 3000, 4);
-							GetVehicleParamsEx(vehicleid, engine, lights, alarm, doors, bonnet, boot, objective);
-							SetVehicleParamsEx(vehicleid, VEHICLE_PARAMS_ON, lights, alarm, doors, bonnet, boot, objective);
-							VehicleInfo[vehicleid][vEngineRunning] = 1;
-						}
-						else return GameTextForPlayer(playerid, "~r~Motor nije upalio~n~Problem s elektronikom~n~~g~Pokusajte opet", 3000, 1);
-					} else return SendMessage(playerid, MESSAGE_TYPE_ERROR, " Nemate kljuc od ovog vozila!");
+				case VEHICLE_USAGE_RENT: 
+				{
+					if(Player_RentVehicle(playerid) != vehicleid)
+						return SendMessage(playerid, MESSAGE_TYPE_ERROR, " Nemate kljuc od ovog vozila!");
+
+					GameTextForPlayer(playerid, "~g~Motor ukljucen", 3000, 4);
+					GetVehicleParamsEx(vehicleid, engine, lights, alarm, doors, bonnet, boot, objective);
+					SetVehicleParamsEx(vehicleid, VEHICLE_PARAMS_ON, lights, alarm, doors, bonnet, boot, objective);
+					VehicleInfo[vehicleid][vEngineRunning] = 1;
 				}
 			}
 		}
@@ -5909,10 +5896,15 @@ CMD:lock(playerid, params[])
 		string[ 47 ];
 	GetVehicleParamsEx( vehicleid, engine, lights, alarm, doors, bonnet, boot, objective );
 
-	switch( VehicleInfo[ vehicleid ][ vUsage ] ) {
-		case VEHICLE_USAGE_PRIVATE: {
-			if( PlayerKeys[playerid][pVehicleKey] != vehicleid && VehicleInfo[ vehicleid ][ vSpareKey1 ] != PlayerInfo[playerid][pSQLID] && VehicleInfo[ vehicleid ][ vSpareKey2 ] != PlayerInfo[playerid][pSQLID] ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, " Nemate kljuc od ovoga vozila!");
-			if( !VehicleInfo[ vehicleid ][ vLocked ] ) {
+	switch( VehicleInfo[ vehicleid ][ vUsage ] )
+	{
+		case VEHICLE_USAGE_PRIVATE: 
+		{
+			if( PlayerKeys[playerid][pVehicleKey] != vehicleid && VehicleInfo[ vehicleid ][ vSpareKey1 ] != PlayerInfo[playerid][pSQLID] && VehicleInfo[ vehicleid ][ vSpareKey2 ] != PlayerInfo[playerid][pSQLID] ) 
+				return SendMessage(playerid, MESSAGE_TYPE_ERROR, " Nemate kljuc od ovoga vozila!");
+			
+			if( !VehicleInfo[ vehicleid ][ vLocked ] ) 
+			{
 				GameTextForPlayer( playerid, "~w~Vozilo ~r~zakljucano", 800, 4 );
 				SetVehicleParamsEx( vehicleid, engine, lights, alarm, 1, bonnet, boot, objective );
 				VehicleInfo[ vehicleid ][ vLocked ] = true;
@@ -5920,7 +5912,9 @@ CMD:lock(playerid, params[])
 				format( string, sizeof(string), "* %s zakljucava vozilo.", GetName(playerid, true) );
 				SetPlayerChatBubble(playerid, string, COLOR_PURPLE, 20, 20000);
 			
-			} else {
+			} 
+			else 
+			{
 				GameTextForPlayer( playerid, "~w~Vozilo ~g~otkljucano", 800, 4 );
 				SetVehicleParamsEx( vehicleid, engine, lights, alarm, 0, bonnet, boot, objective );
 				VehicleInfo[ vehicleid ][ vLocked ] = false;
@@ -5929,16 +5923,22 @@ CMD:lock(playerid, params[])
 				SetPlayerChatBubble(playerid, string, COLOR_PURPLE, 20, 20000);
 			}
 		}
-		case VEHICLE_USAGE_JOB: {
-			if( VehicleInfo[ vehicleid ][ vJob ] != PlayerJob[playerid][pJob] ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, " Nemate kljuc od ovog vozila!");
-			if( !VehicleInfo[ vehicleid ][ vLocked ] ) {
+		case VEHICLE_USAGE_JOB:
+		 {
+			if( VehicleInfo[ vehicleid ][ vJob ] != PlayerJob[playerid][pJob] ) 
+				return SendMessage(playerid, MESSAGE_TYPE_ERROR, " Nemate kljuc od ovog vozila!");
+			
+			if( !VehicleInfo[ vehicleid ][ vLocked ] ) 
+			{
 				GameTextForPlayer( playerid, "~w~Vozilo ~r~zakljucano", 800, 4 );
 				SetVehicleParamsEx( vehicleid, engine, lights, alarm, 1, bonnet, boot, objective );
 				VehicleInfo[ vehicleid ][ vLocked ] = true;
 
 				format( string, sizeof(string), "* %s zakljucava vozilo.", GetName(playerid, true) );
 				SetPlayerChatBubble(playerid, string, COLOR_PURPLE, 20, 20000);
-			} else {
+			} 
+			else 
+			{
 				GameTextForPlayer( playerid, "~w~Vozilo ~g~otkljucano", 800, 4 );
 				SetVehicleParamsEx( vehicleid, engine, lights, alarm, 0, bonnet, boot, objective );
 				VehicleInfo[ vehicleid ][ vLocked ] = false;
@@ -5951,14 +5951,18 @@ CMD:lock(playerid, params[])
 			if( VehicleInfo[ vehicleid ][ vFaction ] != 
 				( !PlayerFaction[playerid ][ pLeader ] ? PlayerFaction[playerid ][ pMember ] : PlayerFaction[playerid ][ pLeader ] ) ) 
 				return SendMessage(playerid, MESSAGE_TYPE_ERROR, " Nemate kljuc od ovog vozila!");
-			if( !VehicleInfo[ vehicleid ][ vLocked ] ) {
+			
+			if( !VehicleInfo[ vehicleid ][ vLocked ] ) 
+			{
 				GameTextForPlayer( playerid, "~w~Vozilo ~r~zakljucano", 800, 4 );
 				SetVehicleParamsEx( vehicleid, engine, lights, alarm, 1, bonnet, boot, objective );
 				VehicleInfo[ vehicleid ][ vLocked ] = true;
 
 				format( string, sizeof(string), "* %s zakljucava vozilo.", GetName(playerid, true) );
 				SetPlayerChatBubble(playerid, string, COLOR_PURPLE, 20, 20000);
-			} else {
+			} 
+			else 
+			{
 				GameTextForPlayer( playerid, "~w~Vozilo ~g~otkljucano", 800, 4 );
 				SetVehicleParamsEx( vehicleid, engine, lights, alarm, 0, bonnet, boot, objective );
 				VehicleInfo[ vehicleid ][ vLocked ] = false;
@@ -5967,16 +5971,22 @@ CMD:lock(playerid, params[])
 				SetPlayerChatBubble(playerid, string, COLOR_PURPLE, 20, 20000);
 			}
 		}
-		case VEHICLE_USAGE_RENT: {
-			if( rentedVehID[playerid] != vehicleid ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, " Nemate kljuc od ovog vozila!");
-			if( !VehicleInfo[ vehicleid ][ vLocked ] ) {
+		case VEHICLE_USAGE_RENT: 
+		{
+			if( Player_RentVehicle(playerid) != vehicleid ) 
+				return SendMessage(playerid, MESSAGE_TYPE_ERROR, " Nemate kljuc od ovog vozila!");
+			
+			if( !VehicleInfo[ vehicleid ][ vLocked ] ) 
+			{
 				GameTextForPlayer( playerid, "~w~Vozilo ~r~zakljucano", 800, 4 );
 				SetVehicleParamsEx( vehicleid, engine, lights, alarm, 1, bonnet, boot, objective );
 				VehicleInfo[ vehicleid ][ vLocked ] = true;
 
 				format( string, sizeof(string), "* %s zakljucava vozilo.", GetName(playerid, true) );
 				SetPlayerChatBubble(playerid, string, COLOR_PURPLE, 20, 20000);
-			} else {
+			} 
+			else 
+			{
 				GameTextForPlayer( playerid, "~w~Vozilo ~g~otkljucano", 800, 4 );
 				SetVehicleParamsEx( vehicleid, engine, lights, alarm, 0, bonnet, boot, objective );
 				VehicleInfo[ vehicleid ][ vLocked ] = false;

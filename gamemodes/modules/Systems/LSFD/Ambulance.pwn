@@ -585,3 +585,9 @@ hook OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
     }
     return 1;
 }
+
+hook ResetPlayerVariables(playerid)
+{
+    Player_SetAmbulanceId(playerid, INVALID_VEHICLE_ID);
+    return 1;
+}

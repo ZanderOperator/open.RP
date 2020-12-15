@@ -36,6 +36,7 @@
 
 
 static
+    bool:blockedNews[MAX_PLAYERS],
     bool:OnLive[MAX_PLAYERS],
     NewsText[MAX_NEWS_LINES][MAX_NEWS_STR_SIZE],
     Text:NewsLineTextDraw[MAX_NEWS_LINES],
@@ -173,7 +174,7 @@ hook ResetPlayerVariables(playerid)
         NewsPhone[lineIndex][npPlayerID] = -1;
         Player_SetPhoneLine(playerid, -1);
     }
-
+    blockedNews[playerid] = false;
     OnLive[playerid] = false;
     return 1;
 }
