@@ -457,29 +457,7 @@ public OnPlayerLeaveDynamicArea(playerid, areaid)
 
 /// ---------------- COA LOGO --------------------------------
 
-stock CreateLogoTD(playerid)
-{
-	DestroyLogoTD(playerid);
-	GlobalForumLink[playerid] = CreatePlayerTextDraw(playerid, 501.700073, 9.744050, WEB_URL);
-	PlayerTextDrawLetterSize(playerid, GlobalForumLink[playerid], 0.248749, 1.020959);
-	PlayerTextDrawAlignment(playerid, GlobalForumLink[playerid], 1);
-	PlayerTextDrawColor(playerid, GlobalForumLink[playerid], 0xBAD4D8AA);
-	PlayerTextDrawSetShadow(playerid, GlobalForumLink[playerid], 1);
-	PlayerTextDrawSetOutline(playerid, GlobalForumLink[playerid], 0);
-	PlayerTextDrawBackgroundColor(playerid, GlobalForumLink[playerid], 255);
-	PlayerTextDrawFont(playerid, GlobalForumLink[playerid], 1);
-	PlayerTextDrawSetProportional(playerid, GlobalForumLink[playerid], 1);
-	PlayerTextDrawShow(playerid, GlobalForumLink[playerid]);
-}
 
-stock DestroyLogoTD(playerid)
-{
-	if(GlobalForumLink[playerid] != PlayerText:INVALID_TEXT_DRAW) {
-		PlayerTextDrawDestroy(playerid, GlobalForumLink[playerid]);
-		GlobalForumLink[playerid] = PlayerText:INVALID_TEXT_DRAW;
-	}
-	return 1;
-}
 
 // ----------------------------------
 
@@ -605,19 +583,4 @@ stock IsPlayerInZone(playerid)
 	        return 1;
 	}
 	return 0;
-}
-
-CMD:toghud(playerid, params[])
-{
-	new option[4];
-	if(sscanf(params, "s[4]", option)) return SendClientMessage(playerid, -1, "[KORISTENJE]: /toghud (on/off)");
-	if(!strcmp(option, "on")) {
-		DestroyLogoTD(playerid);
-		DestroyZonesTD(playerid);
-	}
-	else if(!strcmp(option, "off")) {
-		CreateLogoTD(playerid);
-		CreateZonesTD(playerid);
-	}
-	return 1;
 }

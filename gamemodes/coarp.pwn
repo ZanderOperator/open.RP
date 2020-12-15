@@ -194,9 +194,7 @@ new
 	WeatherTimer 			= 0,
 	WeatherSys 				= 10,
 	HappyHours				= 0,
-	HappyHoursLVL			= 0,
-	PlayerText:GlobalForumLink[MAX_PLAYERS] = { PlayerText:INVALID_TEXT_DRAW, ... },
-	PlayerText:MechanicTD[MAX_PLAYERS] = { PlayerText:INVALID_TEXT_DRAW, ... };
+	HappyHoursLVL			= 0;
 
 // Players 32 bit
 new
@@ -225,13 +223,7 @@ new
 	KilledReason[MAX_PLAYERS],
 	gStartedWork[MAX_PLAYERS],
 	InjectPlayer[MAX_PLAYERS],
-	CallingId[ MAX_PLAYERS ] = { 999, ... },
-	PlayerAFK[MAX_PLAYERS],
-	PlayerTuningVehicle[ MAX_PLAYERS ] = INVALID_VEHICLE_ID,
-	Text3D:DoorHealth3DText[MAX_VEHICLES],
-	Text3D:TrunkHealth3DText[MAX_VEHICLES];
-	//bool:aprilfools[MAX_PLAYERS] = true;
-
+	CallingId[ MAX_PLAYERS ] = { 999, ... };
 // Bank Credits
 new paymentBuyPrice[MAX_PLAYERS],
 	buyBizID[MAX_PLAYERS];
@@ -239,8 +231,7 @@ new paymentBuyPrice[MAX_PLAYERS],
 // Vehicles
 new
 	rentedVehID[MAX_PLAYERS],
-	LastVehicleDriver[ MAX_VEHICLES ] = INVALID_PLAYER_ID,
-	SirenObject[MAX_VEHICLES]	= { INVALID_OBJECT_ID, ... };
+	LastVehicleDriver[ MAX_VEHICLES ] = INVALID_PLAYER_ID;
 
 //Players Vars
 //(rBits)
@@ -828,7 +819,6 @@ public e_COMMAND_ERRORS:OnPlayerCommandReceived(playerid, cmdtext[], e_COMMAND_E
 				Kick(playerid); // Because it's impossible to send valid NULL command
 				return COMMAND_ZERO_RET;
 			}
-			PlayerAFK[playerid] = 0;
 
 			#if defined MODULE_LOGS
 			if(!IsPlayerAdmin(playerid))
@@ -1140,16 +1130,6 @@ Public: ResetPlayerVariables(playerid)
 	Bit16_Set( gr_LastPMId				, playerid, 999 );
 	Player_SetAmbulanceId(playerid, INVALID_VEHICLE_ID);
 
-    // TODO: these should be moved to their own modules and hooking ResetPlayerVariables
-    Player_SetInBusiness        (playerid, INVALID_BIZNIS_ID);
-    Player_SetInApartmentComplex(playerid, INVALID_COMPLEX_ID);
-    Player_SetInApartmentRoom   (playerid, INVALID_COMPLEX_ID);
-    Player_SetInHouse           (playerid, INVALID_HOUSE_ID);
-    Player_SetInfrontHouse      (playerid, INVALID_HOUSE_ID);
-    Player_SetInGarage          (playerid, INVALID_HOUSE_ID);
-    Player_SetInPickup          (playerid, -1);
-
-
 	blockedNews[playerid] = false;
 
 	// Exiting Vars
@@ -1185,10 +1165,6 @@ Public: ResetPlayerVariables(playerid)
 	AntiSpamInfo[ playerid ][ asHouseWeapon ] 	= 0;
 	AntiSpamInfo[ playerid ][ asBuying ] 		= 0;
 	AntiSpamInfo[ playerid ][ asDoorShout ] 	= 0;
-
-
-	PlayerTextDrawDestroy(playerid, GlobalForumLink[playerid]);
-	GlobalForumLink[playerid] = PlayerText:INVALID_TEXT_DRAW;
 
 	// Tut
 	if( Bit1_Get( gr_PlayerOnTutorial, playerid ) ) 

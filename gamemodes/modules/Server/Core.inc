@@ -7,7 +7,6 @@
 #include "modules/Server/Streets.pwn"
 #include "modules/Server/Zones.pwn"
 #include "modules/Server/Utils.pwn"
-#include "modules/Server/Pickups.pwn"
 #include "modules/Server/Logo.pwn"
 #include "modules/Server/KeyInput.pwn"
 #include "modules/Server/Player.pwn"

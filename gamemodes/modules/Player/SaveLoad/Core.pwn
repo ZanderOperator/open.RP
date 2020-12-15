@@ -493,9 +493,6 @@ public OnAccountFinish(playerid)
 	
 	PlayerNewUser_Set(playerid,true);
 	Bit1_Set(gr_PlayerLoggedIn, playerid, true);
-	DestroyLoginTextdraws(playerid);
-	
-	CreateLogoTD(playerid);
 	
 	SpawnPlayer(playerid);
     return 1;
@@ -523,22 +520,18 @@ stock IsEMailInDB(const email[])
 	return counts;
 }
 
-SafeSpawnPlayer(playerid)
+Public: SafeSpawnPlayer(playerid)
 {
 	new currentday, day;
 	TimeFormat(Timestamp:gettimestamp(), DAY_OF_MONTH, "%d", currentday);
 	TimeFormat(Timestamp:ExpInfo[playerid][eLastPayDayStamp], DAY_OF_MONTH, "%d", day);
+	
 	if(currentday != day)
 	{
 		ExpInfo[playerid][eGivenEXP] = false;
 		ExpInfo[playerid][eDayPayDays] = 0;
 	}
 
-	// Micanje ulaznih textdrawova
-	DestroyLoginTextdraws(playerid);
-	// Forum URL Textdraw
-	CreateLogoTD(playerid);
-	// AFK Timer
 	SetPlayerAFKLimit(playerid);
 
 	#if defined MODULE_LOGS

@@ -74,6 +74,8 @@ static const g_AbovePresets[][E_ABOVESIREN_INFO] =
     {407, -0.0, -3.01, 1.350000} //FIRETRUCK
 };
 
+static SirenObject[MAX_VEHICLES] = { INVALID_OBJECT_ID, ... };
+
 /*
     ######## ##     ## ##    ##  ######   ######  
     ##       ##     ## ###   ## ##    ## ##    ## 
@@ -84,7 +86,27 @@ static const g_AbovePresets[][E_ABOVESIREN_INFO] =
     ##        #######  ##    ##  ######   ######  
 */
 
-// Empty, for now...
+DestroyVehicleSiren(vehicleid)
+{
+	if( SirenObject[ vehicleid ] != INVALID_OBJECT_ID ) 
+    {
+		DestroyDynamicObject(SirenObject[ vehicleid ]);
+		SirenObject[ vehicleid ] = INVALID_OBJECT_ID;
+	}
+	return 1;
+}
+
+hook ResetVehicleInfo(vehicleid)
+{
+    DestroyVehicleSiren(vehicleid);
+    return 1;
+}
+
+hook AC_DestroyVehicle(vehicleid)
+{
+    DestroyVehicleSiren(vehicleid);
+    return 1;
+}
 
 
 /*

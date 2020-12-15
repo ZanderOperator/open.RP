@@ -141,7 +141,8 @@ static
     ArticleIdInput[MAX_PLAYERS],
     PlayerSkinId[MAX_PLAYERS],
     PlayerSkinPrice[MAX_PLAYERS],
-    PlayerSkinStore[MAX_PLAYERS];
+    PlayerSkinStore[MAX_PLAYERS],
+    InBusiness[MAX_PLAYERS] = {INVALID_BIZNIS_ID, ...};
 
 static const BizzTypesNames[MAX_BIZZ_TYPES][20] =
 {
@@ -176,8 +177,16 @@ static const BizzTypesNames[MAX_BIZZ_TYPES][20] =
     ##       ##     ## ##   ### ##    ## ##    ## 
     ##        #######  ##    ##  ######   ######  
 */
+Player_InBusiness(playerid)
+{
+    return InBusiness[playerid];
+}
 
-// TODO: Move to Player module, make a job or w/e
+Player_SetInBusiness(playerid, v)
+{
+    InBusiness[playerid] = v;
+}
+
 stock bool:Player_IsDJ(playerid)
 {
     return IsDJ[playerid];
@@ -198,7 +207,6 @@ stock Player_SetDJBizzKey(playerid, v)
     DJBizzKey[playerid] = v;
 }
 
-// TODO: bool
 stock GetNearestBizz(playerid, BIZZ_TYPE = -1)
 {
 	new 
@@ -1090,7 +1098,7 @@ hook OnPlayerLeaveDynArea(playerid, areaid)
     return 1;
 }
 
-hook OnPlayerDisconnect(playerid, reason)
+hook ResetPlayerVariables(playerid)
 {
     DestroyBizzInfoTD(playerid);
     stop PlayerTDTimer[playerid];

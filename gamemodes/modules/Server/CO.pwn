@@ -399,6 +399,8 @@ new
 	PlayerGiveBackCP	[MAX_PLAYERS];	// Global CP
 
 static stock
+		Text3D:DoorHealth3DText[MAX_VEHICLES],
+		Text3D:TrunkHealth3DText[MAX_VEHICLES],
 		PreviewModel		[MAX_PLAYERS],
 		PreviewCar			[MAX_PLAYERS],
 		PlayerTowTimer		[MAX_PLAYERS],
@@ -531,7 +533,6 @@ stock BuyVehicle(playerid, bool:credit_activated = false)
 		price -= CreditInfo[playerid][cAmount];
 	new
 		cCar = AC_CreateVehicle(modelid, VehicleBuyPos[PlayerDealer[playerid]][0],VehicleBuyPos[PlayerDealer[playerid]][1],VehicleBuyPos[PlayerDealer[playerid]][2],VehicleBuyPos[PlayerDealer[playerid]][3], PreviewColor1[playerid], PreviewColor2[playerid], -1, 0);
-	ResetVehicleInfo(cCar);
 
 	PlayerKeys[playerid][pVehicleKey] 	= cCar;
 	PlayerModel[playerid]				= modelid;
@@ -741,6 +742,7 @@ stock CheckVehicleList(playerid)
 
 stock DeleteVehicleFromBase(vsqlid)
 {
+	mysql_fquery(g_SQL, "DELETE FROM vehicle_tuning WHERE vehid ='%d'", vsqlid);
 	mysql_fquery(g_SQL, "DELETE FROM cocars_drugs WHERE vehicle_id = '%d'", vsqlid);
 	mysql_fquery(g_SQL, "DELETE FROM cocars_weapons WHERE vehicle_id = '%d'", vsqlid);
 	mysql_fquery(g_SQL, "DELETE FROM cocars_wobjects WHERE vehicle_id = '%d'", vsqlid);
@@ -2467,16 +2469,7 @@ stock ParkVehicleInfo(vehicleid)
 		VehicleInfo[vehicleid][vNOSCap],
 		VehicleInfo[vehicleid][vSQLID]
 	);
-
-	// Unistavanje vozila
 	AC_DestroyVehicle(vehicleid);
-
-	// Resetiranje Enuma
-	ResetVehicleTrunkWeapons(vehicleid);
-	ResetVehiclePackages(vehicleid);
-	ResetVehicleInfo(vehicleid);
-	ResetVehicleDrugs(vehicleid);
-
 	return 1;
 }
 
@@ -2497,7 +2490,8 @@ stock SpawnVehicleInfo(playerid, pick)
 {
 	inline SpawningPlayerVehicle()
 	{
-		if(cache_num_rows()) {
+		if(cache_num_rows()) 
+		{
 			new
 				modelid,
 				color[2],
@@ -2508,7 +2502,6 @@ stock SpawnVehicleInfo(playerid, pick)
 				interior,
 				viwo;		
 			
-			// Load
 			cache_get_value_name_int(0,  	"modelid"	, modelid);
 			cache_get_value_name_int(0,  	"color1"	, color[0]);
 			cache_get_value_name_int(0,  	"color2"	, color[1]);
@@ -2519,15 +2512,11 @@ stock SpawnVehicleInfo(playerid, pick)
 			cache_get_value_name_int(0,  	"interior"	, interior);
 			cache_get_value_name_int(0,  	"viwo"		, viwo);
 
-			// Kreiranje vozila
 			vehicleid = AC_CreateVehicle(modelid, Pos[0], Pos[1], Pos[2], Pos[3], color[0], color[1], -1, 0);
-			// Resetiranje varijabli
-			ResetVehicleInfo(vehicleid);
 			
 			LinkVehicleToInterior(vehicleid, interior);
 			SetVehicleVirtualWorld(vehicleid, GetPlayerVirtualWorld(playerid)); //viwo??
 
-			// Popunjavanje enuma
 			cache_get_value_name_int(0,  "id", VehicleInfo[vehicleid][vSQLID]);
 			VehicleInfo[vehicleid][vModel] 		= 	modelid;
 			VehicleInfo[vehicleid][vColor1] 	= 	color[0];
@@ -2563,7 +2552,6 @@ stock SpawnVehicleInfo(playerid, pick)
 		    	VOSDelay(vehicleid);
 			}
 			
-			// Ostatak loada
 			cache_get_value_name_int(0,  "ownerid", VehicleInfo[vehicleid][vOwnerID]);
 			cache_get_value_name(0,  "numberplate", string);
 			format(VehicleInfo[vehicleid][vNumberPlate], 8, string);
@@ -2601,7 +2589,6 @@ stock SpawnVehicleInfo(playerid, pick)
 			cache_get_value_name_int(0,  	"tuned"				, VehicleInfo[vehicleid][vTuned]);
 			cache_get_value_name_int(0,  	"nos"				, VehicleInfo[vehicleid][vNOSCap]);
 			
-			// Vehicle Sets
 			AC_SetVehicleHealth(vehicleid, health);
 			UpdateVehicleDamageStatus(vehicleid, VehicleInfo[vehicleid][vPanels], VehicleInfo[vehicleid][vDoors], VehicleInfo[vehicleid][vLights], VehicleInfo[vehicleid][vTires]);
 
@@ -2609,8 +2596,10 @@ stock SpawnVehicleInfo(playerid, pick)
 				SetVehicleNumberPlate(vehicleid, " ");
 			else
 				SetVehicleNumberPlate(vehicleid, VehicleInfo[vehicleid][vNumberPlate]);
+			
 			new
 				engine,lights,alarm,doors,bonnet,boot,objective;
+
 			GetVehicleParamsEx(vehicleid,engine,lights,alarm,doors,bonnet,boot,objective);
 			if(IsABike(modelid) || IsAPlane(modelid) || IsABike(modelid)) {
 				SetVehicleParamsEx(vehicleid,VEHICLE_PARAMS_ON,VEHICLE_PARAMS_OFF,alarm,VEHICLE_PARAMS_OFF,VEHICLE_PARAMS_OFF,VEHICLE_PARAMS_OFF,objective);
@@ -2629,7 +2618,6 @@ stock SpawnVehicleInfo(playerid, pick)
 			LoadVehicleTickets(vehicleid);
 			LoadVehicleDrugs(vehicleid);
 
-			//
 			Iter_Add(Vehicles[VEHICLE_USAGE_PRIVATE], vehicleid);
 			PlayerKeys[playerid][pVehicleKey] = vehicleid;
 		} 
@@ -2670,6 +2658,16 @@ stock static GetVehicleTravel(vehicleid)
 	88  .8D 8b  d8' 8b  d8' 88 88.     			88   88 88.     88   88 88booo.    88    88   88
 	Y8888D'  Y88P'   Y88P'  88   YD      			YP   YP Y88888P YP   YP Y88888P    YP    YP   YP
 */
+
+DestroyDoorHealth3DText(vehicleid)
+{
+	if(DoorHealth3DText[vehicleid] != Text3D:INVALID_3DTEXT_ID)
+	{
+		DestroyDynamic3DTextLabel(DoorHealth3DText[vehicleid]);
+		DoorHealth3DText[vehicleid] = Text3D:INVALID_3DTEXT_ID;
+	}
+	return 1;
+}
 
 stock static CheckVehicleDoorHealth(playerid, vehicleid)
 {
@@ -2712,6 +2710,16 @@ stock static CheckVehicleDoorHealth(playerid, vehicleid)
 		UpdateVehicleDamageStatus(vehicleid, panels, doors, lights, tires);
 	}
 	if(1.0 <= VehicleInfo[vehicleid][vDoorHealth] <= 100.0) StartVehicleAlarm(vehicleid);
+	return 1;
+}
+
+DestroyTrunkHealth3DText(vehicleid)
+{
+	if(TrunkHealth3DText[vehicleid] != Text3D:INVALID_3DTEXT_ID)
+	{
+		DestroyDynamic3DTextLabel(TrunkHealth3DText[vehicleid]);
+		TrunkHealth3DText[vehicleid] = Text3D:INVALID_3DTEXT_ID;
+	}
 	return 1;
 }
 
@@ -3724,7 +3732,6 @@ hook LoadPlayerStats(playerid)
 hook OnVehicleDeath(vehicleid, killerid)
 {
 	RemovePlayerFromVehicle(killerid);
-	
 	new driverid = LastVehicleDriver[vehicleid];
 	
 	if(driverid == INVALID_PLAYER_ID)
@@ -3763,19 +3770,13 @@ hook OnVehicleDeath(vehicleid, killerid)
 				}
 				else if(mod == 1 && VehicleInfo[vehicleid][vInsurance] == 0)
 				{
-					// Vehicle List Reset
-					ResetVehicleList(driverid);
-
-					// SQL
 					DeleteVehicleFromBase(VehicleInfo[PlayerKeys[driverid][pVehicleKey]][vSQLID]);
 					
-					// Brisanje vozila
 					DestroyFarmerObjects(driverid);
 					AC_DestroyVehicle(PlayerKeys[driverid][pVehicleKey]);
-					ResetVehicleInfo(PlayerKeys[driverid][pVehicleKey]);
 					PlayerKeys[driverid][pVehicleKey] = -1;
 
-					// List
+					ResetVehicleList(driverid);
 					GetPlayerVehicleList(driverid);
 
 					// Message
@@ -3830,6 +3831,24 @@ hook OnVehicleDeath(vehicleid, killerid)
 */
 ///////////////////////////////////////////////////////////////////
 
+hook AC_DestroyVehicle(vehicleid)
+{
+	RemoveAllVehicleTuning(vehicleid);
+	ResetVehicleAlarm(vehicleid);
+	RemoveTrunkObjects(vehicleid);
+	return 1;
+}
+
+hook ResetPrivateVehicleInfo(vehicleid)
+{
+	ResetVehicleTrunkWeapons(vehicleid);
+	ResetVehiclePackages(vehicleid);
+	ResetVehicleDrugs(vehicleid);
+	ResetVehicleAlarm(vehicleid);
+	DestroyDoorHealth3DText(vehicleid);
+	DestroyTrunkHealth3DText(vehicleid);
+	return 1;
+}
 
 hook OnPlayerEnterCheckpoint(playerid)
 {
@@ -4462,14 +4481,6 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 		{
 			if(!response) return 1;
 			
-			// Vehicle List Reset
-			ResetVehicleList(playerid);
-
-			DeleteVehicleTuning(PlayerKeys[playerid][pVehicleKey]);
-			ResetVehicleTuning(PlayerKeys[playerid][pVehicleKey]);
-			DeleteVehicleDrug(PlayerKeys[playerid][pVehicleKey], -1);
-			
-			// SQL
 			DeleteVehicleFromBase(VehicleInfo[PlayerKeys[playerid][pVehicleKey]][vSQLID]);
 
 			#if defined MODULE_LOGS
@@ -4480,22 +4491,20 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 			);
 			#endif
 
-			// Brisanje vozila
 			DestroyFarmerObjects(playerid);
 			AC_DestroyVehicle(PlayerKeys[playerid][pVehicleKey]);
-			ResetVehicleInfo(PlayerKeys[playerid][pVehicleKey]);
 
 			PlayerKeys[playerid][pVehicleKey] = -1;
 
-			// List
+			ResetVehicleList(playerid);
 			GetPlayerVehicleList(playerid);
 
-			// Message
 			SendClientMessage(playerid, COLOR_RED, "[ ! ] Uspjesno ste obrisali vozilo iz databaze!");
 		}
 		case DIALOG_VEH_COLORS:
 			return 1;
-		case DIALOG_VEH_SELLING: {
+		case DIALOG_VEH_SELLING: 
+		{
 			if(!response) {
 				SendClientMessage(playerid, COLOR_RED, "[ ! ] Odustali ste od kupovine vozila!");
 				PlayerCarSeller[playerid] 	= INVALID_PLAYER_ID;
@@ -4601,24 +4610,15 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 				moneys
 			);
 			#endif
-			
-			// Vehicle List Reset
-			ResetVehicleList(playerid);
 
-			DeleteVehicleTuning(PlayerKeys[playerid][pVehicleKey]);
-			ResetVehicleTuning(PlayerKeys[playerid][pVehicleKey]); 
-			
-			// SQL
 			DeleteVehicleFromBase(VehicleInfo[PlayerKeys[playerid][pVehicleKey]][vSQLID]);
 			
-			// Brisanje vozila
 			DestroyFarmerObjects(playerid);
 			AC_DestroyVehicle(PlayerKeys[playerid][pVehicleKey]);
-			ResetVehicleInfo(PlayerKeys[playerid][pVehicleKey]);
 
 			PlayerKeys[playerid][pVehicleKey] = -1;
 			
-			// List
+			ResetVehicleList(playerid);
 			GetPlayerVehicleList(playerid);
 			return 1;
 		}
@@ -6002,7 +6002,6 @@ CMD:createvehicle(playerid, params[])
 	GetPlayerFacingAngle(playerid, Angle);
 
 	vehCarId = AC_CreateVehicle(model, X, Y, Z, floatround(Angle), color1, color2, respawndelay, sirenon);
-	ResetVehicleInfo(vehCarId);
 
 	VehicleInfo[vehCarId][vModel]		= model;
 	VehicleInfo[vehCarId][vParkX] 		= X;

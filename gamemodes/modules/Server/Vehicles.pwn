@@ -30,11 +30,14 @@ static
 Public:OnServerVehicleLoad()
 {
 	if( !cache_num_rows() ) return printf("MySQL Report: No cars exist to load.");
+	
 	new
 		carLoad[E_VEHICLE_DATA],
 		vCarID,
 		tmp[9],rmp[15];
-	for(new b = 0; b < cache_num_rows(); b++) {
+
+	for(new b = 0; b < cache_num_rows(); b++) 
+	{
 		cache_get_value_name_int(b, 	"model"		, carLoad[vModel]);
 		cache_get_value_name_float(b, 	"parkX"		, carLoad[vParkX]);
 		cache_get_value_name_float(b, 	"parkY"		, carLoad[vParkY]);
@@ -46,7 +49,6 @@ Public:OnServerVehicleLoad()
 		cache_get_value_name_int(b, 	"sirenon"	, carLoad[vSirenon]);
 
 		vCarID = AC_CreateVehicle( carLoad[vModel], carLoad[vParkX], carLoad[vParkY], carLoad[vParkZ], carLoad[vAngle], carLoad[vColor1], carLoad[vColor2], carLoad[vRespawn], carLoad[vSirenon] );
-		ResetVehicleInfo(vCarID);
 
 		VehicleInfo[ vCarID ][ vModel ] 			= carLoad[ vModel ];
 		VehicleInfo[ vCarID ][ vParkX ] 			= carLoad[ vParkX ];
@@ -57,7 +59,6 @@ Public:OnServerVehicleLoad()
 		VehicleInfo[ vCarID ][ vColor2 ] 			= carLoad[ vColor2 ];
 		VehicleInfo[ vCarID ][ vRespawn ] 			= carLoad[ vRespawn ];
 		VehicleInfo[ vCarID ][ vSirenon ] 			= carLoad[ vSirenon ];
-		
 
 		cache_get_value_name_int(b, 	"id"		, VehicleInfo[ vCarID ][ vSQLID ]);
 		cache_get_value_name_int(b, 	"type"		, VehicleInfo[ vCarID ][ vType ]);
@@ -89,9 +90,13 @@ Public:OnServerVehicleLoad()
 		cache_get_value_name(b, "text", rmp);
 		format( VehicleInfo[ vCarID ][ vText ], 13, rmp );
 		if(VehicleInfo[vCarID][vFaction] > 0 || VehicleInfo[vCarID][vJob] > 0) VehicleInfo[vCarID][vAudio] = 1;
-		switch( VehicleInfo[vCarID][vFaction] ) {
-			case 1: {
-				if( !(model == 497 || model == 469 || model == 430 || model == 431) ) {
+		
+		switch( VehicleInfo[vCarID][vFaction] ) 
+		{
+			case 1: 
+			{
+				if( !(model == 497 || model == 469 || model == 430 || model == 431) ) 
+				{
 					if( isnull(VehicleInfo[vCarID][vText]) )
 						format(VehicleInfo[vCarID][vText], 13, "LSPD");
 					if( VehicleInfo[vCarID][vText][0] != '0' ) {
@@ -100,20 +105,25 @@ Public:OnServerVehicleLoad()
 					}
 				}
 			}
-			case 3: {
-				if( !(model == 497 || model == 469 || model == 430 || model == 431) ) {
+			case 3: 
+			{
+				if( !(model == 497 || model == 469 || model == 430 || model == 431) ) 
+				{
 					if( isnull(VehicleInfo[vCarID][vText]) )
 						format(VehicleInfo[vCarID][vText], 13, "LSSD");
-					if( VehicleInfo[vCarID][vText][0] != '0' ) {
+					if( VehicleInfo[vCarID][vText][0] != '0' ) 
+					{
 						VehicleInfo[vCarID][vFactionText] = CreateDynamic3DTextLabel(VehicleInfo[vCarID][vText], 0xD2D2D2FF, -0.6969, -2.8092, -0.3000, 10.0, INVALID_PLAYER_ID, vCarID, 0, -1, -1, -1, 15.0 );
 						VehicleInfo[vCarID][vFactionTextOn] = 1;
 					}
 				}
 			}
-			case 4: {
+			case 4: 
+			{
 				if( isnull(VehicleInfo[vCarID][vText]) )
 					format(VehicleInfo[vCarID][vText], 13, "GOV");
-				if( VehicleInfo[vCarID][vText][0] != '0' ) {
+				if( VehicleInfo[vCarID][vText][0] != '0' ) 
+				{
 					VehicleInfo[vCarID][vFactionText] = CreateDynamic3DTextLabel(VehicleInfo[vCarID][vText], 0xD2D2D2FF, -0.6969, -2.8092, -0.3000, 10.0, INVALID_PLAYER_ID, vCarID, 0, -1, -1, -1, 15.0 );
 					VehicleInfo[vCarID][vFactionTextOn] = 1;
 				}
@@ -285,14 +295,15 @@ Public:OnServerVehicleCreate(vehicleid)
 	 ######     ##     #######   ######  ##    ##
 */
 
-stock ResetVehicleInfo(vehicleid)
+Public: ResetPrivateVehicleInfo(vehicleid)
 {
-	VehicleObjectCheck(vehicleid);
-	ResetVehicleAlarm(vehicleid);
-	
-	ClearVehicleMusic(vehicleid);	
-	ResetVehicleTuning(vehicleid);
-	
+	return 1;
+}
+
+Public: ResetVehicleInfo(vehicleid)
+{	
+	ResetPrivateVehicleInfo(vehicleid);
+
 	// Ints
 	VehicleInfo[ vehicleid ][ vSQLID ]					= -1;
 	VehicleInfo[ vehicleid ][ vModel ]                  = 400;
@@ -375,8 +386,6 @@ stock ResetVehicleInfo(vehicleid)
 	VehicleInfo[ vehicleid ][ vTicketShown ][ 3 ]		= true;
 	VehicleInfo[ vehicleid ][ vTicketShown ][ 4 ]		= true;
 		
-	SirenObject[ vehicleid ]							= INVALID_OBJECT_ID;
-
 	// Strings
 	VehicleInfo[ vehicleid ][ vOwner ][ 0 ]				= EOS;
 	VehicleInfo[ vehicleid ][ vNumberPlate ][ 0 ]		= EOS;
@@ -411,57 +420,39 @@ stock ResetVehicleInfo(vehicleid)
 		VehicleInfo[ vehicleid ][ vVehicleAdId ] = Text3D:INVALID_3DTEXT_ID;
 	}
 	
-	if(DoorHealth3DText[vehicleid] != Text3D:INVALID_3DTEXT_ID)
-	{
-		DestroyDynamic3DTextLabel(DoorHealth3DText[vehicleid]);
-		DoorHealth3DText[vehicleid] = Text3D:INVALID_3DTEXT_ID;
-	}
-	
-	if(TrunkHealth3DText[vehicleid] != Text3D:INVALID_3DTEXT_ID)
-	{
-		DestroyDynamic3DTextLabel(TrunkHealth3DText[vehicleid]);
-		TrunkHealth3DText[vehicleid] = Text3D:INVALID_3DTEXT_ID;
-	}
 	Iter_Clear(VehWeapon[vehicleid]);
 	Iter_Clear(VehWeaponObject[vehicleid]);
 
 	Bit1_Set( gr_VehicleAttachedBomb, vehicleid, false );
 	Bit16_Set( gr_LastDriver, vehicleid, INVALID_PLAYER_ID );
+
+	return 1;
 }
 
 stock AC_CreateVehicle(vehicletype, Float:x, Float:y, Float:z, Float:rotation, color1, color2, respawn_delay = -1, sirenon = 0)
 {
 	new
 		id = CreateVehicle(vehicletype, Float:x, Float:y, Float:z, Float:rotation, color1, color2, respawn_delay, sirenon);
-
+	ResetVehicleInfo(id);
 	VehicleInfo[id][vModel] = vehicletype;
 	VehicleInfo[id][vRespawn] = respawn_delay;
 	VehicleInfo[id][vViwo] = GetVehicleVirtualWorld(id);
-
-	CheckVehicleObjects(id);
 	return id;
 }
 
-stock AC_DestroyVehicle(vehicleid)
+Public: AC_DestroyVehicle(vehicleid)
 {
 	if( vehicleid == INVALID_VEHICLE_ID ) 		return 0;
 	if( !IsValidVehicle(vehicleid) )	
 		return 0;
-
-	RemoveAllVehicleTuning(vehicleid);
-	VehicleObjectCheck(vehicleid);
-	ResetVehicleAlarm(vehicleid);
-	ClearVehicleMusic(vehicleid);
-	RemoveTrunkObjects(vehicleid);
-	if(VehicleInfo[vehicleid][vUsage] == 5) // VEHICLE_USAGE_RENT
-		DestroyRentVehicle(vehicleid);
 
 	VehicleInfo[vehicleid][vEngineRunning] = 0;
 	VehicleAlarmStarted[vehicleid] = false;
 	DestroyVehicle(vehicleid);
 	if(Iter_Contains(Vehicles[VehicleInfo[vehicleid][vUsage]], vehicleid))
 		Iter_Remove(Vehicles[VehicleInfo[vehicleid][vUsage]], vehicleid);
-		
+	
+	ResetVehicleInfo(vehicleid);
 	return 1;
 }
 
@@ -504,7 +495,7 @@ stock AC_SetVehicleToRespawn(vehicleid)
 	if(vehicleid == INVALID_VEHICLE_ID)	return 0;
 	if( !Iter_Contains(Vehicles[VehicleInfo[vehicleid][vUsage]], vehicleid) ) return 0;
 	RemoveAllVehicleTuning(vehicleid);
-	VehicleObjectCheck(vehicleid);
+	DestroyVehicleSiren(vehicleid);
 	ResetVehicleAlarm(vehicleid);
 	ClearVehicleMusic(vehicleid);
 	RemoveTrunkObjects(vehicleid);
@@ -651,15 +642,6 @@ stock static SaveVehicle(vehicleid)
 	);
 }
 
-stock VehicleObjectCheck(vehicleid)
-{
-	if( SirenObject[ vehicleid ] != INVALID_OBJECT_ID ) {
-		DestroyDynamicObject( SirenObject[ vehicleid ] );
-		SirenObject[ vehicleid ] = INVALID_OBJECT_ID;
-	}
-	return 1;
-}
-
 Public:ResetVehicleEnumerator()
 {
 	for(new i=0; i<MAX_VEHICLES; i++)
@@ -712,15 +694,6 @@ stock CreateNewVehicle(playerid, vehicleid)
 		GetName(playerid, false),
 		VehicleInfo[ vehicleid ][ vSQLID ]
 	);
-	return 1;
-}
-
-stock CheckVehicleObjects(vehicleid)
-{
-	if( SirenObject[ vehicleid ] != INVALID_OBJECT_ID ) {
-		DestroyDynamicObject(SirenObject[ vehicleid ]);
-		SirenObject[ vehicleid ] = INVALID_OBJECT_ID;
-	}
 	return 1;
 }
 

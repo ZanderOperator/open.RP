@@ -776,7 +776,7 @@ hook OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
 		if(GymInfo[playerid][gmMode] != 0 && GymInfo[playerid][gmCount] > 0 && GymInfo[playerid][gmCount] != (Bit8_Get(r_PreviousGymCount, playerid)))
 		{
 			Bit8_Set(r_PreviousGymCount, playerid, GymInfo[playerid][gmCount]);
-			PlayerAFK[playerid] = 0;
+			Player_SetAFK(playerid, 0);
 		}
 		if( 5 <= GymInfo[ playerid ][ gmMode ] <= 9 )
 		 {

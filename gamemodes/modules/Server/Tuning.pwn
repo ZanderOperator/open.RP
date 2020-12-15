@@ -10,7 +10,8 @@
 
 static 
 	PlayerText:TuningBuy[ MAX_PLAYERS ][ 14 ] = { PlayerText:INVALID_TEXT_DRAW, ... },
-	bool:ClickedTuningTD[MAX_PLAYERS] = false;
+	bool:ClickedTuningTD[MAX_PLAYERS] = false,
+	PlayerTuningVehicle[ MAX_PLAYERS ] = INVALID_VEHICLE_ID;
 
 enum vPaintjobInfo 
 {
@@ -468,7 +469,7 @@ stock LoadVehicleTuning(vehicleid)
 
 stock DeleteVehicleTuning(vehicleid)
 {
-	mysql_fquery(g_SQL, "DELETE FROM vehicle_tuning WHERE vehid='%d'", VehicleInfo[ vehicleid ][ vSQLID ] );
+	mysql_fquery(g_SQL, "DELETE FROM vehicle_tuning WHERE vehid ='%d'", VehicleInfo[ vehicleid ][ vSQLID ] );
 	return 1;
 }
 
@@ -1009,7 +1010,6 @@ hook ResetPlayerVariables( playerid )
 	return 1;
 }
 
-//==============================================================================
 hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) 
 {
 	switch( dialogid ) 
@@ -1778,6 +1778,12 @@ hook OnPlayerClickTextDraw(playerid, Text:clickedid)
 		SetCameraBehindPlayer( playerid );
 		DeletePlayerTuningTD(playerid);
 	}
+	return 1;
+}
+
+hook ResetPrivateVehicleInfo(vehicleid)
+{
+	ResetVehicleTuning(vehicleid);
 	return 1;
 }
 

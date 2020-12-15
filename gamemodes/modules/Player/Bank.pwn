@@ -565,14 +565,7 @@ TakePlayerProperty(playerid)
 			if(PlayerKeys[playerid][pVehicleKey] != -1) // The proud owner of private vehicle which bank will instantly seize
 			{
 				va_SendClientMessage(playerid, COLOR_RED, "[ ! ]: The Bank seized your %s as payment of credit costs.", ReturnVehicleName(VehicleInfo[PlayerKeys[playerid][pVehicleKey]][vModel]));
-				// Vehicle List Reset
-				ResetVehicleList(playerid);
-
-				DeleteVehicleTuning(PlayerKeys[playerid][pVehicleKey]);
-				ResetVehicleTuning(PlayerKeys[playerid][pVehicleKey]);
-				DeleteVehicleDrug(PlayerKeys[playerid][pVehicleKey], -1);
 				
-				// SQL
 				DeleteVehicleFromBase(VehicleInfo[PlayerKeys[playerid][pVehicleKey]][vSQLID]);
 
 				#if defined MODULE_LOGS
@@ -583,16 +576,12 @@ TakePlayerProperty(playerid)
 				);
 				#endif
 
-				// Brisanje vozila
 				DestroyFarmerObjects(playerid);
 				AC_DestroyVehicle(PlayerKeys[playerid][pVehicleKey]);
-				ResetVehicleInfo(PlayerKeys[playerid][pVehicleKey]);
-
 				PlayerKeys[playerid][pVehicleKey] = -1;
 
-				// List
+				ResetVehicleList(playerid);
 				GetPlayerVehicleList(playerid);
-				
 			}
 			else return 1;
 		}

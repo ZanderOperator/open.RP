@@ -31,12 +31,12 @@ enum E_PICKUP_INFO
 	epEnterInt,
 	epEnterViwo
 }
-stock	
+new	
 	PickupInfo[MAX_PICKUP][E_PICKUP_INFO];
 
-// Vars
-new
-	NewPickupID[MAX_PLAYERS];
+static
+	NewPickupID[MAX_PLAYERS],
+	InPickup[MAX_PLAYERS] = {-1, ...};
 
 /*
 	 ######  ########  #######   ######  ##    ##  ######  
@@ -47,6 +47,16 @@ new
 	##    ##    ##    ##     ## ##    ## ##   ##  ##    ## 
 	 ######     ##     #######   ######  ##    ##  ###### 
 */
+
+Player_InPickup(playerid)
+{
+    return InPickup[playerid];
+}
+
+Player_SetInPickup(playerid, v)
+{
+    InPickup[playerid] = v;
+}
 
 stock LoadPickups()
 {
@@ -176,6 +186,12 @@ stock static GetPickupID()
 hook LoadServerData()
 {
 	LoadPickups();
+	return 1;
+}
+
+hook ResetPlayerVariables(playerid)
+{
+	Player_SetInPickup(playerid, -1);
 	return 1;
 }
 
