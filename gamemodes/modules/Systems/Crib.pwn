@@ -197,6 +197,7 @@ Player_SetRammingDoor(playerid, v)
     RammingDoor[playerid] = v;
 }
 
+
 // TODO: finish getters/setters and move HouseInfo from coarp.pwn to this module
 stock House_GetSqlid(houseid)
 {
@@ -229,12 +230,6 @@ Public:OnHouseInsertInDB(houseid, playerid)
         ShowPlayerDialog(playerid, DIALOG_VIWO_PICK, DIALOG_STYLE_INPUT, "Odabir Virtual Worlda", "Molimo Vas unesite Virtual World(viwo) u kojem je kuca namappana:", "Input", "Exit");
     }
     return 1;
-}
-
-// TODO: move to general helper functions file
-stock Float:GetDistanceBetweenPoints3D(Float:x1,Float:y1,Float:z1,Float:x2,Float:y2,Float:z2)
-{
-    return VectorSize(x1-x2,y1-y2,z1-z2);
 }
 
 stock UpdateHouseVirtualWorld(houseid)
@@ -1558,23 +1553,17 @@ hook OnPlayerKeyInputEnds(playerid, type, succeeded)
 
 hook OnPlayerWeaponShot(playerid, weaponid, hittype, hitid, Float:fX, Float:fY, Float:fZ)
 {
-    if (AC_GetPlayerWeapon(playerid) != 25 && AC_GetPlayerWeapon(playerid) != 27)
-    {
-        return 1;
-    }
-    // TODO: revise bounds checking for houseid. houseid = 0 should be a valid array index, don't harcode sqlids!!!
     new houseid = GetNearestHouse(playerid);
     if (houseid == INVALID_HOUSE_ID || !HouseInfo[houseid][hLock])
-    {
         return 1;
-    }
 
     if (GetDistanceBetweenPoints3D(HouseInfo[houseid][hEnterX], HouseInfo[houseid][hEnterY], HouseInfo[houseid][hEnterZ], fX, fY, fZ) <= 2.5)
     {
+        if (AC_GetPlayerWeapon(playerid) != WEAPON_SHOTGUN && AC_GetPlayerWeapon(playerid) != WEAPON_SHOTGSPA)
+            return 1;
+            
         if (!IsACop(playerid))
-        {
             PlayHouseAlarm(houseid);
-        }
 
         new string[100];
         format(string, sizeof(string), "* Vrata su probijena sacmaricom. ((%s))", GetName(playerid, true));
@@ -2762,7 +2751,7 @@ CMD:buyhouse(playerid, params[])
     if (CalculatePlayerBuyMoney(playerid, BUY_TYPE_HOUSE) < HouseInfo[house][hValue])
         return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nemas dovoljno novca za kupovinu ove kuce!");
 
-    paymentBuyPrice[playerid] = HouseInfo[house][hValue];
+    Player_SetBuyPrice(playerid, HouseInfo[house][hValue]);
     GetPlayerPaymentOption(playerid, BUY_TYPE_HOUSE);
     return 1;
 }

@@ -50,9 +50,11 @@ static stock
 		{"Faggio",			462, 100}
 };
 
-new bool:rentedVehicle[MAX_PLAYERS],
+static 
+	bool:rentedVehicle[MAX_PLAYERS],
 	bool:locatedRentedVeh[MAX_PLAYERS],
-	_RentPrice[MAX_PLAYERS] = 0;
+	_RentPrice[MAX_PLAYERS] = 0,
+	rentedVehID[MAX_PLAYERS];
 
 new Float:RandomVehicleRentSpawn[3][4] =
 {
@@ -71,6 +73,16 @@ new Float:RandomVehicleRentSpawn[3][4] =
 	 ######     ##     #######   ######  ##    ##  ######  
 */
 /////////////////////////////////////////////////////////////
+Player_RentVehicle(playerid)
+{
+	return rentedVehID[playerid];
+}
+
+
+Player_SetRentVehicle(playerid, vehicleid)
+{
+	rentedVehID[playerid] = vehicleid;
+}
 
 hook AC_DestroyVehicle(vehicleid)
 {
@@ -78,10 +90,10 @@ hook AC_DestroyVehicle(vehicleid)
 	{
 		foreach(new i: Player)
 		{
-			if(rentedVehID[i] == vehicleid)
+			if(Player_RentVehicle(i) == vehicleid)
 			{
 				rentedVehicle[i] = false;
-				rentedVehID[i] = INVALID_VEHICLE_ID;
+				Player_SetRentVehicle(i, INVALID_VEHICLE_ID);
 			}
 		}
 	}
@@ -93,31 +105,33 @@ stock static PlayerRentVehicle(playerid, modelid, price)
 	new rvPos = random(sizeof(RandomVehicleRentSpawn)),
 		color1 = random(6),
 		color2 = random(6);
-	rentedVehID[playerid] = AC_CreateVehicle(modelid, RandomVehicleRentSpawn[rvPos][0], RandomVehicleRentSpawn[rvPos][1], RandomVehicleRentSpawn[rvPos][2], RandomVehicleRentSpawn[rvPos][3], random(6), random(6), -1, 0);
+	
+	new vehicleid = AC_CreateVehicle(modelid, RandomVehicleRentSpawn[rvPos][0], RandomVehicleRentSpawn[rvPos][1], RandomVehicleRentSpawn[rvPos][2], RandomVehicleRentSpawn[rvPos][3], random(6), random(6), -1, 0);
 	rentedVehicle[playerid] = true;
+	Player_SetRentVehicle(playerid, vehicleid);
 
-	VehicleInfo[ rentedVehID[playerid] ][ vModel ]				= modelid;
-	VehicleInfo[ rentedVehID[playerid] ][ vParkX ]				= RandomVehicleRentSpawn[rvPos][0];
-	VehicleInfo[ rentedVehID[playerid] ][ vParkY ]				= RandomVehicleRentSpawn[rvPos][1];
-	VehicleInfo[ rentedVehID[playerid] ][ vParkZ ]				= RandomVehicleRentSpawn[rvPos][2];
-	VehicleInfo[ rentedVehID[playerid] ][ vAngle ]				= RandomVehicleRentSpawn[rvPos][3];
+	VehicleInfo[ vehicleid ][ vModel ]				= modelid;
+	VehicleInfo[ vehicleid ][ vParkX ]				= RandomVehicleRentSpawn[rvPos][0];
+	VehicleInfo[ vehicleid ][ vParkY ]				= RandomVehicleRentSpawn[rvPos][1];
+	VehicleInfo[ vehicleid ][ vParkZ ]				= RandomVehicleRentSpawn[rvPos][2];
+	VehicleInfo[ vehicleid ][ vAngle ]				= RandomVehicleRentSpawn[rvPos][3];
 
-	VehicleInfo[ rentedVehID[playerid] ][ vUsage ]				= VEHICLE_USAGE_RENT;
-	VehicleInfo[ rentedVehID[playerid] ][ vColor1 ]				= color1;
-	VehicleInfo[ rentedVehID[playerid] ][ vColor2 ]				= color2;
-	VehicleInfo[ rentedVehID[playerid] ][ vInt ]				= GetPlayerInterior(playerid);
-	VehicleInfo[ rentedVehID[playerid] ][ vViwo ]				= GetPlayerVirtualWorld(playerid);
+	VehicleInfo[ vehicleid ][ vUsage ]				= VEHICLE_USAGE_RENT;
+	VehicleInfo[ vehicleid ][ vColor1 ]				= color1;
+	VehicleInfo[ vehicleid ][ vColor2 ]				= color2;
+	VehicleInfo[ vehicleid ][ vInt ]				= GetPlayerInterior(playerid);
+	VehicleInfo[ vehicleid ][ vViwo ]				= GetPlayerVirtualWorld(playerid);
 	
-	VehicleInfo[ rentedVehID[playerid] ][ vFuel ] 				= 100;
-	VehicleInfo[ rentedVehID[playerid] ][ vCanStart ]       	= 1;
-	VehicleInfo[ rentedVehID[playerid] ][ vParts ]          	= 0;
-	VehicleInfo[ rentedVehID[playerid] ][ vTimesDestroy ]		= 0;
-	VehicleInfo[ rentedVehID[playerid] ][ vUsage ] 				= 5;
-	VehicleInfo[ rentedVehID[playerid] ][ vEngineRunning ]		= 0;
+	VehicleInfo[ vehicleid ][ vFuel ] 				= 100;
+	VehicleInfo[ vehicleid ][ vCanStart ]       	= 1;
+	VehicleInfo[ vehicleid ][ vParts ]          	= 0;
+	VehicleInfo[ vehicleid ][ vTimesDestroy ]		= 0;
+	VehicleInfo[ vehicleid ][ vUsage ] 				= 5;
+	VehicleInfo[ vehicleid ][ vEngineRunning ]		= 0;
 	
-	Iter_Add(Vehicles[VEHICLE_USAGE_RENT], rentedVehID[playerid]);
+	Iter_Add(Vehicles[VEHICLE_USAGE_RENT], vehicleid);
 
-	PlayerToBusinessMoneyTAX(playerid, 76, price); // Novac ide u biznis 76
+	PlayerToBusinessMoneyTAX(playerid, 76, price); // TODO: ???
 	
 	new tmpString[15], buffer[70], vehName[32];
 	strunpack(vehName, Model_Name(modelid));
@@ -142,12 +156,11 @@ stock static PlayerRentVehicle(playerid, modelid, price)
 hook OnPlayerDisconnect(playerid, reason)
 {
 	if(rentedVehicle[playerid] == true)
-	{
- 		AC_DestroyVehicle(rentedVehID[playerid]);
-	}
-	rentedVehicle[playerid] = false;
-	rentedVehID[playerid] = -1;
-	locatedRentedVeh[playerid] = false;
+ 		AC_DestroyVehicle(Player_RentVehicle(playerid));
+
+	Player_SetRentVehicle(playerid, INVALID_VEHICLE_ID);
+	rentedVehicle[playerid] 	= false;
+	locatedRentedVeh[playerid] 	= false;
 	return 1;
 }
 
@@ -209,16 +222,16 @@ hook OnVehicleDeath(vehicleid, killerid)
 	{
 		if( rentedVehicle[playerid] ) 
 		{
-			if( vehicleid == rentedVehID[playerid] ) 
+			if( Player_RentVehicle(playerid) == vehicleid ) 
 			{
 				SendMessage(playerid, MESSAGE_TYPE_ERROR, "Unistili ste rentano vozilo i kaznjeni ste s 250$ kazne!");
-				PlayerToBusinessMoneyTAX(playerid, 76, 250);// Novac ide u biznis 76
+				PlayerToBusinessMoneyTAX(playerid, 76, 250); // TODO: ???
 				
 				DestroyFarmerObjects(playerid);
-				AC_DestroyVehicle(rentedVehID[playerid]);
+				AC_DestroyVehicle(Player_RentVehicle(playerid));
 				
 				rentedVehicle[playerid] 	= false;
-				rentedVehID[playerid] 		= -1;
+				Player_SetRentVehicle(playerid, INVALID_VEHICLE_ID);
 			}
 		}
 	}
@@ -271,8 +284,11 @@ CMD:rentveh(playerid, params[])
 		if(gStartedWork[playerid]) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne smijete to koristiti dok radite!");
 	    if(locatedRentedVeh[playerid] == false)
 		{
-			if(rentedVehicle[playerid] == false) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Vi niste iznajmili vozilo!");
-		    new rvID = rentedVehID[playerid], Float:rPositions[3];
+			new rvID = Player_RentVehicle(playerid);
+			if(rvID == INVALID_VEHICLE_ID) 
+				return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Vi niste iznajmili vozilo!");
+		    new 
+				Float:rPositions[3];
 		    locatedRentedVeh[playerid] = true;
 		    GetVehiclePos(rvID, rPositions[0], rPositions[1], rPositions[2]);
 			SetPlayerCheckpoint(playerid, rPositions[0], rPositions[1], rPositions[2], 3.5);
@@ -288,31 +304,39 @@ CMD:rentveh(playerid, params[])
 	}
 	else if(!strcmp(param, "giveback", true))
 	{
-		if( !IsPlayerInRangeOfPoint(playerid, 7.5, RENT_POS)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste na mjestu za rentanje vozila!");
-		if(rentedVehicle[playerid] == false) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Vi niste iznajmili vozilo!");
-		if(GetPlayerVehicleID(playerid) != rentedVehID[playerid]) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Moras biti u iznajmljenom vozilu!");
+		if( !IsPlayerInRangeOfPoint(playerid, 7.5, RENT_POS)) 
+			return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste na mjestu za rentanje vozila!");
+		if(rentedVehicle[playerid] == false) 
+			return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Vi niste iznajmili vozilo!");
+		if(GetPlayerVehicleID(playerid) != Player_RentVehicle(playerid)) 
+			return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Moras biti u iznajmljenom vozilu!");
 		
 		rentedVehicle[playerid] = false;
-		AC_DestroyVehicle(rentedVehID[playerid]);
-		rentedVehID[playerid] = INVALID_VEHICLE_ID;
-		GameTextForPlayer(playerid, "~g~Vraceno rentano vozilo", 1000, 1);
+		AC_DestroyVehicle(Player_RentVehicle(playerid));
+		Player_SetRentVehicle(playerid, INVALID_VEHICLE_ID);
+		SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uspjesno ste vratili rentano vozilo!");
 	}
 	else if(!strcmp(param, "trunk", true))
 	{
 		new
-			rent_vID = rentedVehID[playerid],
+			rent_vID = Player_RentVehicle(playerid),
 			engine, lights, alarm, doors, bonnet, boot, objective;
 
-		if( !IsPlayerInRangeOfVehicle(playerid, rent_vID, 5.0) ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, " Niste blizu svoga vozila!");
-		if(IsVehicleWithoutTrunk(GetVehicleModel(rent_vID))) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ovo vozilo nema prtljaznik!");
-		if(GetPlayerState(playerid) != PLAYER_STATE_ONFOOT) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Morate biti na nogama da biste zatvorili/otvorili prtljaznik.");
+		if( !IsPlayerInRangeOfVehicle(playerid, rent_vID, 5.0) ) 
+			return SendMessage(playerid, MESSAGE_TYPE_ERROR, " Niste blizu svoga vozila!");
+		if(IsVehicleWithoutTrunk(GetVehicleModel(rent_vID))) 
+			return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ovo vozilo nema prtljaznik!");
+		if(GetPlayerState(playerid) != PLAYER_STATE_ONFOOT) 
+			return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Morate biti na nogama da biste zatvorili/otvorili prtljaznik.");
 		GetVehicleParamsEx(rent_vID, engine, lights, alarm, doors, bonnet, boot, objective);
-		if(VehicleInfo[rent_vID][vTrunk] == VEHICLE_PARAMS_OFF) {
+		if(VehicleInfo[rent_vID][vTrunk] == VEHICLE_PARAMS_OFF) 
+		{
 			SetVehicleParamsEx(rent_vID, engine, lights, alarm, doors, bonnet, VEHICLE_PARAMS_ON, objective);
 			VehicleInfo[rent_vID][vTrunk] = VEHICLE_PARAMS_ON;
 			GameTextForPlayer(playerid, "~w~gepek otvoren", 1000, 3);
 		}
-		else if(VehicleInfo[rent_vID][vTrunk] == VEHICLE_PARAMS_ON) {
+		else if(VehicleInfo[rent_vID][vTrunk] == VEHICLE_PARAMS_ON) 
+		{
 			SetVehicleParamsEx(rent_vID, engine, lights, alarm, doors, bonnet, VEHICLE_PARAMS_OFF, objective);
 			VehicleInfo[rent_vID][vTrunk] = VEHICLE_PARAMS_OFF;
 			GameTextForPlayer(playerid, "~w~gepek zatvoren", 1000, 3);

@@ -851,7 +851,8 @@ hook OnPlayerDisconnect(playerid, reason)
 
 hook OnPlayerStateChange(playerid, newstate, oldstate)
 {
-	if( newstate == PLAYER_STATE_DRIVER && oldstate == PLAYER_STATE_ONFOOT ) {
+	if( newstate == PLAYER_STATE_DRIVER && oldstate == PLAYER_STATE_ONFOOT ) 
+	{
 		new
 			vehicleid = GetPlayerVehicleID(playerid);
 
@@ -891,13 +892,6 @@ hook OnPlayerStateChange(playerid, newstate, oldstate)
 			SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste pripadnik organizacije da mozete voziti organizacijska vozila!");
 			return 1;
 		}
-		/*switch( VehicleInfo[ vehicleid ][ vFaction ] ) {
-			case 1: // LSPD
-				PlayAudioStreamForPlayer( playerid, "http://www.broadcastify.com/scripts/playlists/1/17145/-5616135480.m3u");
-			case 2: // LSFD
-				PlayAudioStreamForPlayer( playerid, "http://www.broadcastify.com/scripts/playlists/1/2846/-5616135992.m3u");
-		}*/
-		LastVehicleDriver[ vehicleid ] = playerid;
 	}
 	if( ( newstate == PLAYER_STATE_ONFOOT && oldstate == PLAYER_STATE_DRIVER ) && Bit1_Get( gr_JackedPlayer, playerid ) ) {
 	

@@ -664,11 +664,12 @@ hook ResetPlayerVariables(playerid)
 	PlayerInfo[playerid][pLastLogin] 		= EOS;
 	PlayerInfo[playerid][pSAMPid] 			= EOS;
 	PlayerInfo[playerid][pEmail][0] 		= EOS;
+	PlayerInfo[playerid][pIP][0] = EOS;
 
 	PlayerInfo[playerid][pSecQuestAnswer][0]= EOS;
 	PlayerInfo[playerid][pLastUpdateVer] 	= EOS;
 
-	PlayerInfo[playerid][pSQLID] 			= 0; 	//Integer
+	PlayerInfo[playerid][pSQLID] 			= 0; 	
 	PlayerInfo[playerid][pLastLoginTimestamp] = 0;
 	PlayerInfo[playerid][pRegistered] 		= 0;
 	PlayerInfo[playerid][pSecQuestion] 		= -1;
@@ -687,7 +688,9 @@ hook ResetPlayerVariables(playerid)
 	PlayerInfo[playerid][pChangenames]		= 0;
 	PlayerInfo[playerid][pChangeTimes]		= 0;
 	PlayerInfo[playerid][pMoney]			= 0;
-	PlayerInfo[playerid][pBank]				= 0;	
+	PlayerInfo[playerid][pBank]				= 0;
+	PlayerInfo[playerid][pVoted]	 		= false;
+	PlayerInfo[playerid][pMustRead]			= false;	
 	
 	PlayerKeys[playerid][pHouseKey]			= INVALID_HOUSE_ID;
 	PlayerKeys[playerid][pRentKey]			= INVALID_HOUSE_ID;
@@ -698,9 +701,7 @@ hook ResetPlayerVariables(playerid)
 	PlayerKeys[playerid][pIllegalGarageKey]	= -1;
 	PlayerKeys[playerid][pVehicleKey]		= -1;
 	PlayerKeys[playerid][pWarehouseKey] 	= -1;
-	PlayerInfo[playerid][pVoted]	 		= false;
-	PlayerInfo[playerid][pMustRead]			= false;
-
+	
 	return 1;
 }
 

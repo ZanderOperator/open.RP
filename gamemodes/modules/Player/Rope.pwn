@@ -81,6 +81,12 @@ hook OnPlayerEnterVehicle(playerid, vehicleid, ispassenger)
     return 1;
 }
 
+hook ResetPlayerVariables(playerid)
+{
+    Player_SetIsTied(playerid, false);
+    return 1;
+}
+
 
 /*
      ######  ##     ## ########

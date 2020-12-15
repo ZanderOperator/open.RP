@@ -102,12 +102,6 @@ hook ResetVehicleInfo(vehicleid)
     return 1;
 }
 
-hook AC_DestroyVehicle(vehicleid)
-{
-    DestroyVehicleSiren(vehicleid);
-    return 1;
-}
-
 
 /*
      ######  ##     ## ########

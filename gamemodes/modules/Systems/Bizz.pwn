@@ -142,6 +142,7 @@ static
     PlayerSkinId[MAX_PLAYERS],
     PlayerSkinPrice[MAX_PLAYERS],
     PlayerSkinStore[MAX_PLAYERS],
+    FreeBizzID[MAX_PLAYERS],
     InBusiness[MAX_PLAYERS] = {INVALID_BIZNIS_ID, ...};
 
 static const BizzTypesNames[MAX_BIZZ_TYPES][20] =
@@ -3714,7 +3715,7 @@ CMD:buybiznis(playerid, params[])
         return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nemas dovoljno novca za kupovinu ovog biznisa!");
 
     buyBizID[playerid] = bizz;
-    paymentBuyPrice[playerid] = BizzInfo[bizz][bBuyPrice];
+    Player_SetBuyPrice(playerid, BizzInfo[bizz][bBuyPrice]);
     GetPlayerPaymentOption(playerid, BUY_TYPE_BIZZ);
     return 1;
 }

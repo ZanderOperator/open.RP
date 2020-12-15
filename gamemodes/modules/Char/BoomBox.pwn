@@ -59,7 +59,7 @@ static stock
 	Bit1: gr_MusicApproved <MAX_PLAYERS>  = Bit1: false,
 	Bit1: gr_MusicPlaying <MAX_PLAYERS>  = Bit1: false;
 
-new
+static
 	HouseMusicURL[ MAX_HOUSES ][ 256 ],
 	bool:HousePlayingMusic[ MAX_HOUSES ];
 
