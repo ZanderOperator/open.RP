@@ -16,6 +16,7 @@ enum E_PICKUP_INFO
 	epPickupModel,
 	epPickupType,
 	epCanEnter,
+	epEnterCP,
 	Float:epEntrancex,
 	Float:epEntrancey,
 	Float:epEntrancez,
@@ -32,11 +33,14 @@ enum E_PICKUP_INFO
 	epEnterViwo
 }
 new	
-	PickupInfo[MAX_PICKUP][E_PICKUP_INFO];
+	PickupInfo[MAX_DYNAMIC_PICKUPS][E_PICKUP_INFO];
 
 static
+	Iterator:PickupsIter<MAX_DYNAMIC_PICKUPS>,
 	NewPickupID[MAX_PLAYERS],
-	InPickup[MAX_PLAYERS] = {-1, ...};
+	InPickup[MAX_PLAYERS] = {-1, ...},
+	InfrontPickup[MAX_PLAYERS] = {-1, ...},
+	PickupCP[MAX_PLAYERS] = {-1, ...};
 
 /*
 	 ######  ########  #######   ######  ##    ##  ######  
@@ -56,6 +60,26 @@ Player_InPickup(playerid)
 Player_SetInPickup(playerid, v)
 {
     InPickup[playerid] = v;
+}
+
+Player_InfrontPickup(playerid)
+{
+    return InfrontPickup[playerid];
+}
+
+Player_SetInfrontPickup(playerid, v)
+{
+    InfrontPickup[playerid] = v;
+}
+
+Player_GetPickupCP(playerid)
+{
+    return PickupCP[playerid];
+}
+
+Player_SetPickupCP(playerid, v)
+{
+    PickupCP[playerid] = v;
 }
 
 stock LoadPickups()
@@ -100,13 +124,44 @@ public OnPickupsLoad()
 		cache_get_value_name_int(b, "enterViwo"			, PickupInfo[b][epEnterViwo]);
 
 		PickupInfo[b][epID] = CreateDynamicPickup(PickupInfo[b][epPickupModel], PickupInfo[b][epPickupType], PickupInfo[b][epEntrancex], PickupInfo[b][epEntrancey], PickupInfo[b][epEntrancez], -1, -1, -1, 80.0);
-		Iter_Add(Pickups, b);
+		Iter_Add(PickupsIter, b);
+		if(PickupInfo[b][epCanEnter])
+		{
+			CreatePickupEnter(b);
+			Iter_Add(Pickups[PICKUP_TYPE_ENTERABLE], b);
+		}
+		else Iter_Add(Pickups[PICKUP_TYPE_NON_ENTERABLE], b);
 	}
-	printf("MySQL Report: Pickups Loaded (%d)!", Iter_Count(Pickups));
+	printf("MySQL Report: Pickups Loaded (%d)!", Iter_Count(PickupsIter));
 	return 1;
 }
 
-//Pickups
+stock CP_GetPickupID(checkpointid)
+{
+    new pickupid = -1;
+    foreach(new pickup: Pickups[PICKUP_TYPE_ENTERABLE])
+    {
+        if(PickupInfo[pickup][epEnterCP] == checkpointid)
+        {
+            pickupid = pickup;
+            break;
+        }
+    }
+    return pickupid;
+}
+
+static CreatePickupEnter(pid)
+{
+	if(!PickupInfo[pid][epCanEnter])
+		return 1;
+
+    if (IsValidDynamicCP(PickupInfo[pid][epEnterCP]))
+        DestroyDynamicCP(PickupInfo[pid][epEnterCP]);
+    
+	PickupInfo[pid][epEnterCP] = CreateDynamicCP(PickupInfo[pid][epEntrancex], PickupInfo[pid][epEntrancey], PickupInfo[pid][epEntrancez]-1.0, 2.0, -1, -1, -1, 5.0);
+    return 1;
+}
+
 stock static ClearInputsPick(playerid)
 {
     new
@@ -126,13 +181,11 @@ stock static ClearInputsPick(playerid)
 	PickupInfo[pickup][epEntrancey] 		= 0.0;
 	PickupInfo[pickup][epEntrancez] 		= 0.0;
 	NewPickupID[playerid] = 0;
-
 	return 1;
 }
 
 stock static CreateNewPickup(playerid, pickup)
 {
-
 	mysql_pquery(g_SQL, "BEGIN");
 
 	mysql_pquery(g_SQL,
@@ -162,15 +215,23 @@ stock static CreateNewPickup(playerid, pickup)
 	);
 	mysql_pquery(g_SQL, "COMMIT");
 		
-    PickupInfo[pickup][ epID ] = CreateDynamicPickup(PickupInfo[pickup][epPickupModel], PickupInfo[pickup][epPickupType], PickupInfo[pickup][epEntrancex], PickupInfo[pickup][epEntrancey], PickupInfo[pickup][epEntrancez], -1, -1, -1);
-	Iter_Add(Pickups, pickup);
+    PickupInfo[pickup][epID] = CreateDynamicPickup(PickupInfo[pickup][epPickupModel], PickupInfo[pickup][epPickupType], PickupInfo[pickup][epEntrancex], PickupInfo[pickup][epEntrancey], PickupInfo[pickup][epEntrancez], -1, -1, -1);
+	
+	Iter_Add(PickupsIter, pickup);
+	if(PickupInfo[pickup][epCanEnter])
+	{
+		CreatePickupEnter(pickup);
+		Iter_Add(Pickups[PICKUP_TYPE_ENTERABLE], pickup);
+	}
+	else Iter_Add(Pickups[PICKUP_TYPE_NON_ENTERABLE], pickup);
+
     NewPickupID[playerid] = 0;
     return 1;
 }
 
 stock static GetPickupID()
-{
-	return Iter_Free(Pickups);
+{	
+	return Iter_Free(PickupsIter);
 }
 
 /*
@@ -189,6 +250,32 @@ hook LoadServerData()
 	return 1;
 }
 
+hook OnPlayerEnterDynamicCP(playerid, checkpointid)
+{
+    new pickupid = CP_GetPickupID(checkpointid);
+    if (!Iter_Contains(Pickups[PICKUP_TYPE_ENTERABLE], pickupid))
+        return 1;
+
+    Player_SetPickupCP(playerid, checkpointid);
+    Player_SetInfrontPickup(playerid, pickupid);
+    return 1;
+}
+
+hook OnPlayerLeaveDynamicCP(playerid, checkpointid)
+{
+    new 
+        pickupid = CP_GetBizzID(checkpointid);
+    
+    if (!Iter_Contains(Pickups[PICKUP_TYPE_ENTERABLE], pickupid) 
+		|| Player_GetPickupCP(playerid) != pickupid)
+        return 1;
+
+    Player_SetPickupCP(playerid, -1);
+    Player_SetInfrontPickup(playerid, -1);
+    return 1;
+}
+
+
 hook ResetPlayerVariables(playerid)
 {
 	Player_SetInPickup(playerid, -1);
@@ -197,14 +284,10 @@ hook ResetPlayerVariables(playerid)
 
 hook OnPlayerPickUpDynPickup(playerid, pickupid)
 {
-	foreach(new b : Pickups)
-	{
-		if( PickupInfo[b][epID] == pickupid ) 
-		{
-			GameTextForPlayer(playerid, PickupInfo[b][epEnterDiscription], 3100, 5);
-			break;
-		}
-	}
+	new pid = Player_InfrontPickup(playerid);
+	if( PickupInfo[pid][epID] == pickupid ) 
+		GameTextForPlayer(playerid, PickupInfo[pid][epEnterDiscription], 3100, 5);
+	
 	return 1;
 }
 
@@ -259,9 +342,12 @@ CMD:createpickup(playerid, params[])
 	if(PlayerInfo[playerid][pAdmin] < 1338) return SendClientMessage(playerid, COLOR_RED, "Nisi ovlasten za koristenje komande!");
 	if(sscanf(params, "iiifffiiii", model,type,canenter,exitx,exity,exitz, \
 	    viwo,org,job,interior)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /createpickup [model][type][canenter][exitx][exity][exitz][viwo][org][job][int]");
-    NewPickupID[playerid] = GetPickupID();
-	if(NewPickupID[playerid] >= (MAX_PICKUP-1)) {
-		SendClientMessage(playerid, COLOR_RED, "MySQL: Baza je puna! Povecajte MAX_PICKUP u 'defines.inc'!");
+    
+	NewPickupID[playerid] = GetPickupID();
+
+	if(NewPickupID[playerid] >= (MAX_DYNAMIC_PICKUPS-1)) 
+	{
+		SendClientMessage(playerid, COLOR_RED, "MySQL: Baza je puna! Povecajte MAX_DYNAMIC_PICKUPS u 'defines.inc'!");
 		NewPickupID[playerid] = -1;
 		return 1;
  	}
@@ -286,16 +372,16 @@ CMD:createpickup(playerid, params[])
 CMD:deletepickup(playerid, params[])
 {
 	if(PlayerInfo[playerid][pAdmin] < 1338) return SendClientMessage(playerid, COLOR_RED, "Nisi ovlasten za koristenje komande!");
-	new 
-		pickup = -1;
-	foreach(new i:Pickups) {
-	    if(IsPlayerInRangeOfPoint(playerid, 5.0, PickupInfo[i][epEntrancex], PickupInfo[i][epEntrancey], PickupInfo[i][epEntrancez])) {
-			pickup = i;
-			break;
-		}
-	}
-	if(pickup == -1) return SendClientMessage(playerid, COLOR_RED, "Nema pickupova u tvojoj blizini!");
 	
+	new pickup = Player_InfrontPickup(playerid);
+	if(pickup == -1) 
+		return SendClientMessage(playerid, COLOR_RED, "Niste blizu pickupa!");
+
+	Iter_Remove(PickupsIter, pickup);
+	if(PickupInfo[pickup][epCanEnter])
+		Iter_Remove(Pickups[PICKUP_TYPE_ENTERABLE], pickup);
+	else Iter_Remove(Pickups[PICKUP_TYPE_NON_ENTERABLE], pickup);
+
 	PickupInfo[pickup][epPickupModel] 	= 0;
 	PickupInfo[pickup][epEntrancex] 	= 0.0;
 	PickupInfo[pickup][epEntrancey] 	= 0.0;
@@ -307,6 +393,11 @@ CMD:deletepickup(playerid, params[])
 	mysql_fquery(g_SQL, "DELETE FROM server_pickups WHERE id = '%d'", PickupInfo[pickup][epSQLID]);
 	
 	DestroyDynamicPickup(PickupInfo[pickup][epID]);
+
+	if (IsValidDynamicCP(PickupInfo[pickup][epEnterCP]))
+        DestroyDynamicCP(PickupInfo[pickup][epEnterCP]);
+
+	SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "Pickup je uspjesno unisten!");
 	return 1;
 }
 CMD:pickupint(playerid, params[])

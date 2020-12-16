@@ -41,7 +41,7 @@
 #define MAX_PLAYER_PASSWORD             		(BCRYPT_HASH_LENGTH)
 #define MAX_PLAYER_CIDR							(32)
 #define MAX_WARNS								(3)
-#define MAX_PICKUP								(500)
+#define MAX_DYNAMIC_PICKUPS						(500)
 #define MAX_HOUSES                      		(1500)
 #define	MAX_COMPLEX_ROOMS                       (50)
 #define MAX_COMPLEX                             (10)

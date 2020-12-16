@@ -399,7 +399,6 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 				SendFormatMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uspjesno ste iskoristili %d$ namjenskog kredita te ste ga aktivirali. Ostatak od %d$ ce Vam se naplatiti iz ruku!", creditamount, (PaymentBuyPrice[playerid] - creditamount));
 				BuyBiznis(playerid, true);
 				PaymentBuyPrice[playerid] = 0;
-				buyBizID[playerid] = -1;
 				SavePlayerCredit(playerid);
 			}
 			else
@@ -641,7 +640,6 @@ ResetCreditVars(playerid)
 	CreditInfo[playerid][cUsed]			= false;
 	CreditInfo[playerid][cTimestamp]	= 0;
 	PaymentBuyPrice[playerid] 			= 0;
-	buyBizID[playerid] 					= -1;
 	return 1;
 }
 

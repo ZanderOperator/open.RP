@@ -572,6 +572,7 @@ enum E_COMPLEX_INFO
 {
 	cSQLID,
 	cPickup,
+	cEnterCP,
 	cOwnerID,
 	cName[25],
 	cTill,
@@ -589,9 +590,11 @@ enum E_COMPLEX_INFO
 new 
 	ComplexInfo[MAX_COMPLEX][E_COMPLEX_INFO];
 
-enum E_COMPLEX_ROOM_INFO {
+enum E_COMPLEX_ROOM_INFO 
+{
 	cSQLID,
 	cRPickup,
+	cEnterCP,
 	cComplexID,
 	cActive,
 	Float:cEnterX,
@@ -728,6 +731,27 @@ enum
 	BIZZ_TYPE_MAX
 }
 #define MAX_BIZZ_TYPES					(BIZZ_TYPE_MAX)
+
+/*
+
+88888888ba  88   ,ad8888ba,  88      a8P 88        88 88888888ba   ad88888ba   
+88      "8b 88  d8"'    `"8b 88    ,88'  88        88 88      "8b d8"     "8b  
+88      ,8P 88 d8'           88  ,88"    88        88 88      ,8P Y8,          
+88aaaaaa8P' 88 88            88,d88'     88        88 88aaaaaa8P' `Y8aaaaa,    
+88""""""'   88 88            8888"88,    88        88 88""""""'     `"""""8b,  
+88          88 Y8,           88P   Y8b   88        88 88                  `8b  
+88          88  Y8a.    .a8P 88     "88, Y8a.    .a8P 88          Y8a     a8P  
+88          88   `"Y8888Y"'  88       Y8b `"Y8888Y"'  88           "Y88888P"   
+                                                                               
+*/
+
+enum
+{
+	PICKUP_TYPE_NON_ENTERABLE = 0,
+	PICKUP_TYPE_ENTERABLE,
+	PICKUP_TYPE_MAX
+}
+#define MAX_PICKUP_TYPES				(PICKUP_TYPE_MAX)
 
 /*
 

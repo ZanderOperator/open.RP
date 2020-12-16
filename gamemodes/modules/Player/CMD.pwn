@@ -82,79 +82,46 @@ CMD:enter(playerid, params[])
         SetPlayerPosEx(playerid, 1122.9961, -2036.8920, 1701.0578, 25, 2, true);
         return 1;
     }
-    //if (Bit1_Get(r_PlayerDoorPeek, playerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne mozete uci u kucu dok virite kroz vrata!");
 
-    new
-        pickup = -1,
-        complex = INVALID_COMPLEX_ID,
-        rcomplex = INVALID_COMPLEX_ID,
-        viwo = GetPlayerVirtualWorld(playerid),
-        interior = GetPlayerInterior(playerid);
+    if (IsPlayerInDynamicCP(playerid, Player_GetPickupCP(playerid)))
+    {
+		new 
+			pickup = Player_InfrontPickup(playerid);
+		if (pickup == -1) 
+			return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ispred pickupa (niste u checkpointu)!");
+		if (PlayerFaction[playerid][pMember] == PickupInfo[pickup][epOrganizations] ||
+			PlayerFaction[playerid][pLeader] == PickupInfo[pickup][epOrganizations] ||
+			PlayerJob[playerid][pJob] == PickupInfo[pickup][epJob] ||
+			PickupInfo[pickup][epOrganizations] == 255 ||
+			PickupInfo[pickup][epJob] == 255)
+		{
+			SetPlayerPosEx(playerid,PickupInfo[pickup][epExitx],PickupInfo[pickup][epExity],PickupInfo[pickup][epExitz],PickupInfo[pickup][epViwo],PickupInfo[pickup][epInt],true);
+			GameTextForPlayer(playerid, PickupInfo[pickup][epDiscription], 500, 1);
+			Player_SetInPickup(playerid, pickup);
 
-    foreach(new c : Complex)
-    {
-        if (IsPlayerInRangeOfPoint(playerid, 3.0, ComplexInfo[c][cEnterX], ComplexInfo[c][cEnterY], ComplexInfo[c][cEnterZ]))
-        {
-            complex = c;
-            break;
-        }
-    }
-    foreach(new x : Pickups)
-    {
-        if (IsPlayerInRangeOfPoint(playerid, 3.0, PickupInfo[x][epEntrancex], PickupInfo[x][epEntrancey], PickupInfo[x][epEntrancez]))
-        {
-            pickup = x;
-            break;
-        }
-    }
-    foreach(new c : ComplexRooms)
-    {
-        if (IsPlayerInRangeOfPoint(playerid, 2.0, ComplexRoomInfo[c][cEnterX], ComplexRoomInfo[c][cEnterY], ComplexRoomInfo[c][cEnterZ])
-            && interior == ComplexRoomInfo[c][cIntExit] && viwo == ComplexRoomInfo[c][cVWExit])
-        {
-            rcomplex = c;
-            break;
-        }
-    }
-
-    if (pickup != -1)
-    {
-        if (PickupInfo[pickup][epCanEnter] == 1)
-        {
-            if (PlayerFaction[playerid][pMember] == PickupInfo[pickup][epOrganizations] ||
-                PlayerFaction[playerid][pLeader] == PickupInfo[pickup][epOrganizations] ||
-                PlayerJob[playerid][pJob] == PickupInfo[pickup][epJob] ||
-                PickupInfo[pickup][epOrganizations] == 255 ||
-                PickupInfo[pickup][epJob] == 255)
-            {
-                SetPlayerPosEx(playerid,PickupInfo[pickup][epExitx],PickupInfo[pickup][epExity],PickupInfo[pickup][epExitz],PickupInfo[pickup][epViwo],PickupInfo[pickup][epInt],true);
-                GameTextForPlayer(playerid, PickupInfo[pickup][epDiscription], 500, 1);
-                Player_SetInPickup(playerid, pickup);
-
-                Entering[playerid] = true;
-                TogglePlayerControllable(playerid, false);
-                SendMessage(playerid, MESSAGE_TYPE_INFO, "Pritisnite tipku 'N' ukoliko vam se mapa loadala");
-                return 1;
-            }
-            else
-                GameTextForPlayer(playerid, "~r~Zakljucano", 5000, 1);
-        }
+			Entering[playerid] = true;
+			TogglePlayerControllable(playerid, false);
+			SendMessage(playerid, MESSAGE_TYPE_INFO, "Pritisnite tipku 'N' ukoliko vam se mapa loadala");
+		}
+		else GameTextForPlayer(playerid, "~r~Zakljucano", 5000, 1);
     }
     else if (IsPlayerInDynamicCP(playerid, Player_GetBizzCP(playerid)))
     {
 		new biznis = Player_InfrontBizz(playerid);
+		if (biznis == INVALID_BIZNIS_ID) 
+			return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ispred biznisa (niste u checkpointu)!");
         if (!BizzInfo[biznis][bCanEnter]) 
 			return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne mozete uci u ovaj biznis!");
 
-        if (PlayerKeys[playerid][pBizzKey] != biznis || BizzInfo[biznis][bLocked])
+        if (PlayerKeys[playerid][pBizzKey] != biznis && BizzInfo[biznis][bLocked])
         {
             GameTextForPlayer(playerid, "~r~Zakljucano", 1000, 1);
             return 1;
         }
-        if (BizzInfo[biznis][bEntranceCost] != 0 && PlayerKeys[playerid][pBizzKey] != biznis)
+        if (BizzInfo[biznis][bEntranceCost] != 0 && !IsOnAdminDuty(playerid) && PlayerKeys[playerid][pBizzKey] != biznis)
         {
-            if (AC_GetPlayerMoney(playerid) < BizzInfo[biznis][bEntranceCost]) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate dovoljno novca da platite ulaz!");
-
+            if (AC_GetPlayerMoney(playerid) < BizzInfo[biznis][bEntranceCost]) 
+				return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate dovoljno novca da platite ulaz!");
             PlayerToBusinessMoneyTAX(playerid, biznis, BizzInfo[biznis][bEntranceCost]); // Novac ide u blagajnu od biznisa, a oporezivi dio drZavi
         }
         if (!isnull(BizzInfo[biznis][bMusicURL]))
@@ -170,69 +137,67 @@ CMD:enter(playerid, params[])
         Entering[playerid] = true;
         TogglePlayerControllable(playerid, false);
         SendMessage(playerid, MESSAGE_TYPE_INFO, "Pritisnite tipku 'N' ukoliko vam se mapa loadala");
-        return 1;
     }
-    else if (rcomplex != INVALID_COMPLEX_ID)
+    else if (IsPlayerInDynamicCP(playerid, Player_GetComplexCP(playerid)))
     {
-        if (!ComplexRoomInfo[rcomplex][cActive]) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Soba nije u funkciji!");
+		new 
+			complex = Player_InfrontComplex(playerid);
+		if (complex == INVALID_COMPLEX_ID) 
+			return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ispred Complexa (niste u checkpointu)!");
+        
+		SetPlayerPosEx(playerid, ComplexInfo[complex][cExitX], ComplexInfo[complex][cExitY], ComplexInfo[complex][cExitZ], ComplexInfo[complex][cViwo], ComplexInfo[complex][cInt], true);
+        Player_SetInApartmentComplex(playerid, complex);
+       
+	    if (PlayerKeys[playerid][pComplexKey] == complex)
+            GameTextForPlayer(playerid, "Dobrodosli u svoj Complex!", 500, 1);
 
-        if (PlayerKeys[playerid][pComplexRoomKey] != rcomplex || !IsOnAdminDuty(playerid) || ComplexRoomInfo[rcomplex][cLock])
+        Entering[playerid] = true;
+        TogglePlayerControllable(playerid, false);
+        SendMessage(playerid, MESSAGE_TYPE_INFO, "Pritisnite tipku 'N' ukoliko vam se mapa loadala");
+    }
+	else if (IsPlayerInDynamicCP(playerid, Player_GetApartmentCP(playerid)))
+    {
+		new 
+			rcomplex = Player_InfrontApartment(playerid);
+		if (rcomplex == INVALID_COMPLEX_ID) 
+			return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ispred stana (niste u checkpointu)!");
+        if (!ComplexRoomInfo[rcomplex][cActive]) 
+			return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Soba nije u funkciji!");
+
+        if (PlayerKeys[playerid][pComplexRoomKey] != rcomplex && !IsOnAdminDuty(playerid) && ComplexRoomInfo[rcomplex][cLock])
         {
             GameTextForPlayer(playerid, "~r~Zakljucano", 1000, 1);
             return 1;
         }
 
-        SetPlayerPosEx(playerid, ComplexRoomInfo[rcomplex][cExitX], ComplexRoomInfo[rcomplex][cExitY], ComplexRoomInfo[rcomplex][cExitZ], ComplexRoomInfo[rcomplex][cViwo], ComplexRoomInfo[rcomplex][cInt], true);
-        Player_SetInApartmentRoom(playerid, rcomplex);
-        if (PlayerKeys[playerid][pComplexRoomKey] == rcomplex)
-        {
-            GameTextForPlayer(playerid, "Dobrodosli!", 500, 1);
-        }
-        return 1;
-    }
-    else if (complex != INVALID_COMPLEX_ID)
-    {
-        SetPlayerPosEx(playerid, ComplexInfo[complex][cExitX], ComplexInfo[complex][cExitY], ComplexInfo[complex][cExitZ], ComplexInfo[complex][cViwo], ComplexInfo[complex][cInt], true);
-        Player_SetInApartmentComplex(playerid, complex);
-        if (PlayerKeys[playerid][pComplexKey] == complex)
-        {
-            GameTextForPlayer(playerid, "Dobrodosli u svoj Complex!", 500, 1);
-        }
+		if (PlayerKeys[playerid][pComplexRoomKey] == rcomplex)
+        	GameTextForPlayer(playerid, "Dobrodosli!", 500, 1);
 
-        Entering[playerid] = true;
-        TogglePlayerControllable(playerid, false);
-        SendMessage(playerid, MESSAGE_TYPE_INFO, "Pritisnite tipku 'N' ukoliko vam se mapa loadala");
-        return 1;
-    }
-    else if (rob_started[playerid] == true)
-    {
-        PlayStorageAlarm(playerid, false);
+        SetPlayerPosEx(playerid, ComplexRoomInfo[rcomplex][cExitX], ComplexRoomInfo[rcomplex][cExitY], ComplexRoomInfo[rcomplex][cExitZ], ComplexRoomInfo[rcomplex][cViwo], ComplexRoomInfo[rcomplex][cInt], true);
+        Player_SetInApartmentRoom(playerid, rcomplex);	
     }
     else if (IsPlayerInDynamicCP(playerid, Player_GetHouseCP(playerid)))
     {
-        new house = Player_InfrontHouse(playerid);
-        if (house == INVALID_HOUSE_ID) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ispred kuce (niste u checkpointu)!");
-
+        new 
+			house = Player_InfrontHouse(playerid);
+        if (house == INVALID_HOUSE_ID) 
+			return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ispred kuce (niste u checkpointu)!");
         if (HouseInfo[house][h3dViwo] != GetPlayerVirtualWorld(playerid))
         {
             SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ispred biznisa ili kuce!");
             return 1;
         }
-        if (HouseInfo[house][hDoorCrashed]) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Vrata su stradala u pozaru, vatrogasac mora koristiti /ramdoors!");
-        if (PlayerKeys[playerid][pHouseKey] != house || !IsOnAdminDuty(playerid) || HouseInfo[house][hLock] || PlayerKeys[playerid][pRentKey] != house)
-        {
-            GameTextForPlayer(playerid, "~r~Zakljucano", 1000, 1);
-            return 1;
-        }
+        if (HouseInfo[house][hDoorCrashed]) 
+			return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Vrata su stradala u pozaru, vatrogasac mora koristiti /ramdoors!");
+		if (PlayerKeys[playerid][pHouseKey] != house && !IsOnAdminDuty(playerid) && HouseInfo[house][hLock] && PlayerKeys[playerid][pRentKey] != house)
+            return GameTextForPlayer(playerid, "~r~Zakljucano", 1000, 1);
 
         if (HouseInfo[house][hOwnerID] == PlayerInfo[playerid][pSQLID])
-        {
             GameTextForPlayer(playerid, "~w~Dobrodosli kuci", 800, 1);
-        }
+        
         if (HouseInfo[house][hFurLoaded] == false)
-        {
             ReloadHouseFurniture(house);
-        }
+        
         SetPlayerPosEx(playerid, HouseInfo[house][hExitX], HouseInfo[house][hExitY], HouseInfo[house][hExitZ], HouseInfo[house][hVirtualWorld], HouseInfo[house][hInt], true);
 
         Player_SetInHouse(playerid, house);
@@ -249,6 +214,9 @@ CMD:enter(playerid, params[])
         Entering[playerid] = true;
         TogglePlayerControllable(playerid, false);
         SendMessage(playerid, MESSAGE_TYPE_INFO, "Pritisnite tipku 'N' ukoliko vam se mapa loadala");
+
+		if (rob_started[playerid] == true)
+        	PlayStorageAlarm(playerid, false);
     }
     return 1;
 }
@@ -262,37 +230,14 @@ CMD:exit(playerid, params[])
     }
 
     new
-        pickup = -1,
-        complex = INVALID_COMPLEX_ID;
+        house    	= Player_InHouse(playerid),
+        biznis   	= Player_InBusiness(playerid),
+		complex		= Player_InApartmentComplex(playerid),
+        rcomplex 	= Player_InApartmentRoom(playerid),
+        garage   	= Player_InGarage(playerid),
+		pickup 		= Player_InPickup(playerid);
 
-    foreach(new x : Pickups)
-    {
-        if (IsPlayerInRangeOfPoint(playerid,5.0,PickupInfo[x][epExitx], PickupInfo[x][epExity], PickupInfo[x][epExitz])
-            && GetPlayerInterior(playerid) == PickupInfo[x][epInt]
-            && GetPlayerVirtualWorld(playerid) == PickupInfo[x][epViwo])
-        {
-            pickup = x;
-            break;
-        }
-    }
-    foreach(new c : Complex)
-    {
-        if (IsPlayerInRangeOfPoint(playerid, 5.0, ComplexInfo[c][cExitX], ComplexInfo[c][cExitY], ComplexInfo[c][cExitZ])
-            && GetPlayerInterior(playerid) == ComplexInfo[c][cInt]
-            && GetPlayerVirtualWorld(playerid) == ComplexInfo[c][cViwo])
-        {
-            complex = c;
-            break;
-        }
-    }
-
-    new
-        house    = Player_InHouse(playerid),
-        biznis   = Player_InBusiness(playerid),
-        rcomplex = Player_InApartmentRoom(playerid),
-        garage   = Player_InGarage(playerid);
-
-    if (pickup != -1)
+    if (Iter_Contains(Pickups[PICKUP_TYPE_ENTERABLE], pickup))
     {
         Player_SetInPickup(playerid, -1);
         SetPlayerPosEx(playerid,PickupInfo[pickup][epEntrancex], PickupInfo[pickup][epEntrancey], PickupInfo[pickup][epEntrancez], PickupInfo[pickup][epEnterViwo], PickupInfo[pickup][epEnterInt], true);
@@ -302,12 +247,9 @@ CMD:exit(playerid, params[])
         SendMessage(playerid, MESSAGE_TYPE_INFO, "Pritisnite tipku 'N' ukoliko vam se mapa loadala");
         return 1;
     }
-    else if (complex != INVALID_COMPLEX_ID)
+    else if (Iter_Contains(Complex, complex))
     {
         Player_SetInApartmentComplex(playerid, INVALID_COMPLEX_ID);
-
-        /*if (aprilfools[playerid])
-            complex = random(MAX_COMPLEX/2);*/
         SetPlayerPosEx(playerid, ComplexInfo[complex][cEnterX], ComplexInfo[complex][cEnterY], ComplexInfo[complex][cEnterZ], 0, 0, false);
 
         Exiting[playerid] = false;
@@ -315,7 +257,7 @@ CMD:exit(playerid, params[])
         SendMessage(playerid, MESSAGE_TYPE_INFO, "Pritisnite tipku 'N' ukoliko vam se mapa loadala");
         return 1;
     }
-    else if (biznis != INVALID_BIZNIS_ID && biznis < MAX_BIZZS)
+    else if (Iter_Contains(Bizzes, biznis))
     {
         if (IsPlayerInRangeOfPoint(playerid, 2.0, BizzInfo[biznis][bExitX], BizzInfo[biznis][bExitY], BizzInfo[biznis][bExitZ]))
         {
@@ -341,7 +283,7 @@ CMD:exit(playerid, params[])
             return 1;
         }
     }
-    else if (rcomplex != INVALID_COMPLEX_ID && rcomplex < MAX_COMPLEX_ROOMS)
+    else if (Iter_Contains(ComplexRooms, rcomplex))
     {
         if (IsPlayerInRangeOfPoint(playerid, 2.0, ComplexRoomInfo[rcomplex][cExitX], ComplexRoomInfo[rcomplex][cExitY], ComplexRoomInfo[rcomplex][cExitZ]))
         {
@@ -355,7 +297,7 @@ CMD:exit(playerid, params[])
         }
         return 1;
     }
-    else if (garage != INVALID_HOUSE_ID)
+    else if (Iter_Contains(Garages, garage))
     {
         if (IsPlayerInRangeOfPoint(playerid, 10.0, GarageInfo[garage][gExitX], GarageInfo[garage][gExitY], GarageInfo[garage][gExitZ]))
         {
@@ -393,7 +335,7 @@ CMD:exit(playerid, params[])
         }
         return 1;
     }
-    else if (house != INVALID_HOUSE_ID && house >= 0)
+    else if (Iter_Contains(Houses, house))
     {
         if (IsPlayerInRangeOfPoint(playerid, 10.0, HouseInfo[house][hExitX], HouseInfo[house][hExitY], HouseInfo[house][hExitZ]))
         {
@@ -402,11 +344,8 @@ CMD:exit(playerid, params[])
 
             StopAudioStreamForPlayer(playerid);
 
-            /*if (aprilfools[playerid])
-                house = random(MAX_HOUSES/2);*/
-
-            if (HouseInfo[house][h3dViwo] > 0)
-            { // Apartman
+            if (HouseInfo[house][h3dViwo] > 0) // Apartments
+            {
                 Streamer_ToggleIdleUpdate(playerid, 1);
                 TogglePlayerControllable(playerid, 0);
                 defer InstantStreamerUpdate(playerid);
@@ -426,8 +365,6 @@ CMD:exit(playerid, params[])
                 TogglePlayerControllable(playerid, false);
                 SendMessage(playerid, MESSAGE_TYPE_INFO, "Pritisnite tipku 'N' ukoliko vam se mapa loadala");
             }
-
-
             Player_SetInHouse(playerid, INVALID_HOUSE_ID);
             return 1;
         }

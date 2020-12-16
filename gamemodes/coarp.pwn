@@ -160,7 +160,7 @@ new MySQL:g_SQL;
 new
 	Iterator:Vehicles[MAX_VEHICLE_TYPES]<MAX_VEHICLES>,
 	Iterator:Skins<MAX_MENU_ITEMS>,
-	Iterator:Pickups<MAX_PICKUP>,
+	Iterator:Pickups[MAX_PICKUP_TYPES]<MAX_DYNAMIC_PICKUPS>,
 	Iterator:Factions<MAX_FACTIONS>,
 	Iterator:Houses<MAX_HOUSES>,
 	Iterator:HouseFurInt[MAX_HOUSES]<MAX_FURNITURE_SLOTS>,
@@ -222,8 +222,7 @@ new
 	KilledReason[MAX_PLAYERS],
 	gStartedWork[MAX_PLAYERS],
 	InjectPlayer[MAX_PLAYERS],
-	CallingId[ MAX_PLAYERS ] = { 999, ... },
-	buyBizID[MAX_PLAYERS];
+	CallingId[ MAX_PLAYERS ] = { 999, ... };
 
 
 //Players Vars
@@ -417,7 +416,6 @@ stock ResetPlayerEnumerator()
 Public:ResetIterators()
 {
 	Iter_Clear(Player);
-	Iter_Clear(Pickups);
 	Iter_Clear(Factions);
 	Iter_Clear(Houses);
 	Iter_Clear(Bizzes);

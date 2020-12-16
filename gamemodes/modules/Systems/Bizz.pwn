@@ -557,7 +557,7 @@ Public:DestroyBizzInfoTD(playerid)
 
 stock BuyBiznis(playerid, bool:credit_activated = false)
 {
-    new bizz = buyBizID[playerid];
+    new bizz = Player_InfrontBizz(playerid);
     if (bizz < 0 || bizz >= MAX_BIZZS) return 0;
 
     PlayerKeys[playerid][pBizzKey] = bizz;
@@ -822,15 +822,6 @@ stock CP_GetBizzID(checkpointid)
     return bizzid;
 }
 
-stock TogglePlayerBizzCPs(playerid, bool:toggle)
-{
-    TogglePlayerAllDynamicCPs(playerid, toggle);
-    foreach(new i : Bizzes)
-    {
-        TogglePlayerDynamicCP(playerid, BizzInfo[i][bEnterCP], toggle);
-    }
-}
-
 static CreateBizzEnter(bizzid)
 {
     if (IsValidDynamicCP(BizzInfo[bizzid][bEnterCP]))
@@ -1057,12 +1048,6 @@ hook LoadServerData()
     return 1;
 }
 
-hook OnPlayerConnect(playerid)
-{
-	TogglePlayerBizzCPs(playerid, true);
-	return 1;
-}
-
 hook OnPlayerEnterDynamicCP(playerid, checkpointid)
 {
     new bizz = CP_GetBizzID(checkpointid);
@@ -1110,7 +1095,7 @@ hook OnPlayerLeaveDynamicCP(playerid, checkpointid)
 
     DestroyBizzInfoTD(playerid);
     Player_SetBizzCP(playerid, -1);
-    Player_SetInfrontBizz(playerid, INVALID_HOUSE_ID);
+    Player_SetInfrontBizz(playerid, INVALID_BIZNIS_ID);
     return 1;
 }
 
@@ -3753,7 +3738,8 @@ CMD:menu(playerid, params[])
 
 CMD:buybiznis(playerid, params[])
 {
-    if (PlayerKeys[playerid][pBizzKey] != INVALID_BIZNIS_ID) return SendClientMessage(playerid, COLOR_RED, "Vec posjedujete biznis!");
+    if (PlayerKeys[playerid][pBizzKey] != INVALID_BIZNIS_ID) 
+        return SendClientMessage(playerid, COLOR_RED, "Vec posjedujete biznis!");
     new bizz = Player_InfrontBizz(playerid);
     if(bizz == INVALID_BIZNIS_ID)
         return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You are not near any business!");
@@ -3765,7 +3751,6 @@ CMD:buybiznis(playerid, params[])
     if (CalculatePlayerBuyMoney(playerid, BUY_TYPE_BIZZ) < BizzInfo[bizz][bBuyPrice])
         return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nemas dovoljno novca za kupovinu ovog biznisa!");
 
-    buyBizID[playerid] = bizz;
     Player_SetBuyPrice(playerid, BizzInfo[bizz][bBuyPrice]);
     GetPlayerPaymentOption(playerid, BUY_TYPE_BIZZ);
     return 1;
