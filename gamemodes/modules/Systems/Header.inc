@@ -34,10 +34,19 @@ forward Player_SetHouseCP(playerid, v);
 forward Player_GetRammingDoor(playerid);
 forward Player_SetRammingDoor(playerid, v);
 
-// Apartment
+// Complex
+forward Player_GetComplexCP(playerid);
+forward Player_SetComplexCP(playerid, v);
+forward Player_InfrontComplex(playerid);
+forward Player_SetInfrontComplex(playerid, v);
 forward Player_InApartmentComplex(playerid);
 forward Player_SetInApartmentComplex(playerid, v);
 
+// Apartments in Complex
+forward Player_GetApartmentCP(playerid);
+forward Player_SetApartmentCP(playerid, v);
+forward Player_InfrontApartment(playerid);
+forward Player_SetInfrontApartment(playerid, v);
 forward Player_InApartmentRoom(playerid);
 forward Player_SetInApartmentRoom(playerid, v);
 

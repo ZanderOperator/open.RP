@@ -866,7 +866,7 @@ stock CheckPlayerInteriors(playerid)
 			return 1;
 		}
 	}
-	foreach(new pickup: Pickups)
+	foreach(new pickup: Pickups[PICKUP_TYPE_ENTERABLE])
 	{
 		if(IsPlayerInRangeOfPoint(playerid, 100.0, PickupInfo[pickup][epExitx],PickupInfo[pickup][epExity],PickupInfo[pickup][epExitz]) && PickupInfo[pickup][epInt] == interior && PickupInfo[pickup][epViwo] == virtualworld)
 		{

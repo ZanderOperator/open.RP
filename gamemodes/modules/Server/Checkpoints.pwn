@@ -227,6 +227,12 @@ stock H_DestroyDynamicCP(checkpointid)
 #endif
 #define DestroyDynamicCP H_DestroyDynamicCP
 
+hook OnPlayerConnect(playerid)
+{
+	TogglePlayerAllDynamicRaceCPs(playerid, false);
+	TogglePlayerAllDynamicCPs(playerid, true);
+}
+
 hook OnPlayerDisconnect(playerid, reason)
 {
 	ResetPlayerCheckpoints(playerid);
@@ -242,6 +248,7 @@ hook OnPlayerDisconnect(playerid, reason)
 	##    ## ##     ## ##     ## ##    ## 
 	 ######  ##     ## ########   ######  
 */
+
 CMD:resetcp(playerid, params[])
 {	
 	if(LastCPInfo[playerid][lcpLastCP] == 0) return SendClientMessage(playerid, COLOR_RED, "Nemate aktivne CPove!");

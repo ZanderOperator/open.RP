@@ -294,15 +294,6 @@ stock ResetHouseVariables(playerid)
     return 1;
 }
 
-stock TogglePlayerHouseCPs(playerid, bool:toggle)
-{
-    TogglePlayerAllDynamicCPs(playerid, toggle);
-    foreach(new i : Houses)
-    {
-        TogglePlayerDynamicCP(playerid, HouseInfo[i][hEnterCP], toggle);
-    }
-}
-
 stock CreateHouseInfoTD(playerid)
 {
     DestroyHouseInfoTD(playerid);
@@ -1306,12 +1297,6 @@ hook LoadServerData()
 {
     LoadHouses();
     return 1;
-}
-
-hook OnPlayerConnect(playerid)
-{
-	TogglePlayerHouseCPs(playerid, true);
-	return 1;
 }
 
 hook ResetPlayerVariables(playerid)
@@ -2728,7 +2713,8 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 
 CMD:buyhouse(playerid, params[])
 {
-    if (!IsPlayerInDynamicCP(playerid, Player_GetHouseCP(playerid))) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ispred kuce (niste u checkpointu)!");
+    if (!IsPlayerInDynamicCP(playerid, Player_GetHouseCP(playerid))) 
+        return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ispred kuce (niste u checkpointu)!");
 
     new house = Player_InfrontHouse(playerid);
     if (house == INVALID_HOUSE_ID) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ispred kuce (niste u checkpointu)!");

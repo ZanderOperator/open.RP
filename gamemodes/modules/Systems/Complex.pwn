@@ -36,10 +36,15 @@
 */
 
 static
-    Timer:PlayerCMPTimer[MAX_PLAYERS],
     SelectedRoom[MAX_PLAYERS],
+    // Complex Vars
     InApartmentComplex[MAX_PLAYERS] = {INVALID_COMPLEX_ID, ...},
-    InApartmentRoom   [MAX_PLAYERS] = {INVALID_COMPLEX_ID, ...};
+    InfrontComplex[MAX_PLAYERS] = {INVALID_COMPLEX_ID, ...},
+    ComplexCP[MAX_PLAYERS] = {INVALID_COMPLEX_ID, ...},
+    // Complex Room Vars
+    InApartmentRoom[MAX_PLAYERS] = {INVALID_COMPLEX_ID, ...},
+    InfrontApartment[MAX_PLAYERS] = {INVALID_COMPLEX_ID, ...},
+    ApartmentCP[MAX_PLAYERS] = {INVALID_COMPLEX_ID, ...};
 
 static
     PlayerText:CompBcg1    [MAX_PLAYERS] = {PlayerText:INVALID_TEXT_DRAW, ...},
@@ -59,6 +64,7 @@ static
     ##        #######  ##    ##  ######   ######  
 */
 
+// Complex Vars
 Player_InApartmentComplex(playerid)
 {
     return InApartmentComplex[playerid];
@@ -69,6 +75,27 @@ Player_SetInApartmentComplex(playerid, v)
     InApartmentComplex[playerid] = v;
 }
 
+Player_InfrontComplex(playerid)
+{
+    return InfrontComplex[playerid];
+}
+
+Player_SetInfrontComplex(playerid, v)
+{
+    InfrontComplex[playerid] = v;
+}
+
+Player_GetComplexCP(playerid)
+{
+    return ComplexCP[playerid];
+}
+
+Player_SetComplexCP(playerid, v)
+{
+    ComplexCP[playerid] = v;
+}
+
+// Complex Room Vars
 Player_InApartmentRoom(playerid)
 {
     return InApartmentRoom[playerid];
@@ -77,6 +104,26 @@ Player_InApartmentRoom(playerid)
 Player_SetInApartmentRoom(playerid, v)
 {
     InApartmentRoom[playerid] = v;
+}
+
+Player_InfrontApartment(playerid)
+{
+    return InfrontApartment[playerid];
+}
+
+Player_SetInfrontApartment(playerid, v)
+{
+    InfrontApartment[playerid] = v;
+}
+
+Player_GetApartmentCP(playerid)
+{
+    return ApartmentCP[playerid];
+}
+
+Player_SetApartmentCP(playerid, v)
+{
+    ApartmentCP[playerid] = v;
 }
 
 hook ResetPlayerVariables(playerid)
@@ -88,7 +135,6 @@ hook ResetPlayerVariables(playerid)
 
 stock DestroyCompInfoTD(playerid)
 {
-    stop PlayerCMPTimer[playerid];
     PlayerTextDrawDestroy(playerid, CompBcg1[playerid]);
     PlayerTextDrawDestroy(playerid, CompBcg2[playerid]);
     PlayerTextDrawDestroy(playerid, CompInfoText[playerid]);
@@ -192,22 +238,64 @@ stock GetComplexEnumID(roomid)
     return value;
 }
 
+stock CP_GetComplexID(checkpointid)
+{
+    new complexid = INVALID_COMPLEX_ID;
+    foreach(new complex: Complex)
+    {
+        if(ComplexInfo[complex][cEnterCP] == checkpointid)
+        {
+            complexid = complex;
+            break;
+        }
+    }
+    return complexid;
+}
+
 static stock CreateComplexEnter(complex_id)
 {
     if (complex_id == INVALID_COMPLEX_ID) return 0;
-
-    DestroyDynamicPickup(ComplexInfo[complex_id][cPickup]);
+    
+    if(IsValidDynamicPickup(ComplexInfo[complex_id][cPickup]))
+        DestroyDynamicPickup(ComplexInfo[complex_id][cPickup]);
+        
     ComplexInfo[complex_id][cPickup] = CreateDynamicPickup(1273, 2, ComplexInfo[complex_id][cEnterX], ComplexInfo[complex_id][cEnterY], ComplexInfo[complex_id][cEnterZ], -1, -1, -1, 100.0);
+    
+    if (IsValidDynamicCP(ComplexInfo[complex_id][cEnterCP]))
+        DestroyDynamicCP(ComplexInfo[complex_id][cEnterCP]);
+    
+    ComplexInfo[complex_id][cEnterCP] = CreateDynamicCP(ComplexInfo[complex_id][cEnterX], ComplexInfo[complex_id][cEnterY], ComplexInfo[complex_id][cEnterZ]-1.0, 2.0, -1, -1, -1, 5.0);
     return 1;
+}
+
+stock CP_GetComplexRoomID(checkpointid)
+{
+    new complexid = INVALID_COMPLEX_ID;
+    foreach(new complex: ComplexRooms)
+    {
+        if(ComplexRoomInfo[complex][cEnterCP] == checkpointid)
+        {
+            complexid = complex;
+            break;
+        }
+    }
+    return complexid;
 }
 
 static stock CreateCRoomEnter(complex_id)
 {
     if (complex_id == INVALID_COMPLEX_ID) return 0;
     if (!ComplexRoomInfo[complex_id][cActive]) return 0;
-
-    DestroyDynamicPickup(ComplexRoomInfo[complex_id][cRPickup]);
+    
+    if(IsValidDynamicPickup(ComplexRoomInfo[complex_id][cRPickup]))
+        DestroyDynamicPickup(ComplexRoomInfo[complex_id][cRPickup]);
+    
     ComplexRoomInfo[complex_id][cRPickup] = CreateDynamicPickup(1273, 2, ComplexRoomInfo[complex_id][cEnterX], ComplexRoomInfo[complex_id][cEnterY], ComplexRoomInfo[complex_id][cEnterZ], ComplexRoomInfo[complex_id][cVWExit], ComplexRoomInfo[complex_id][cIntExit], -1, 30.0);
+    
+    if (IsValidDynamicCP(ComplexInfo[complex_id][cEnterCP]))
+        DestroyDynamicCP(ComplexInfo[complex_id][cEnterCP]);
+    
+    ComplexRoomInfo[complex_id][cEnterCP] = CreateDynamicCP(ComplexRoomInfo[complex_id][cEnterX], ComplexRoomInfo[complex_id][cEnterY], ComplexRoomInfo[complex_id][cEnterZ]-1.0, 2.0, ComplexRoomInfo[complex_id][cVWExit], ComplexRoomInfo[complex_id][cIntExit], -1, 5.0);
     return 1;
 }
 
@@ -386,7 +474,6 @@ public OnServerComplexLoad()
     return 1;
 }
 
-
 /*
     ##     ##  #######   #######  ##    ##  ######
     ##     ## ##     ## ##     ## ##   ##  ##    ##
@@ -404,72 +491,96 @@ hook LoadServerData()
     return 1;
 }
 
-hook OnPlayerPickUpDynPickup(playerid, pickupid)
+hook OnPlayerEnterDynamicCP(playerid, checkpointid)
 {
-    new string[128];
-    foreach(new complex : Complex)
+    new 
+        string[128];
+    
+    new 
+        complex_id = CP_GetComplexID(checkpointid);
+    if (Iter_Contains(Complex, complex_id))
     {
-        if (ComplexInfo[complex][cPickup] == pickupid)
+        CreateCompInfoTD(playerid);
+        if (ComplexInfo[complex_id][cOwnerID] != -1)
         {
-            CreateCompInfoTD(playerid);
-            // TODO: refactor this BS if possible, reduce code duplication
-            if (ComplexInfo[complex][cOwnerID] != -1)
-            {
-                format(string, sizeof(string), "Naziv: %s~n~Vlasnik: %s~n~Cijena: %d~g~$~n~~w~Broj soba: %s",
-                    ComplexInfo[complex][cName],
-                    GetPlayerNameFromSQL(ComplexInfo[complex][cOwnerID]),
-                    ComplexInfo[complex][cPrice],
-                    GetComplexRooms(ComplexInfo[complex][cSQLID])
-                );
-                PlayerTextDrawSetString(playerid, CompCMDTD[playerid], "Raspolozive komande:~n~      /enter");
-            }
-            else
-            {
-                format(string, sizeof(string), "Complex je na prodaju~n~Naziv: %s~n~Cijena: %d~g~$~n~~w~Level: %d~n~Broj soba: %s",
-                    ComplexInfo[complex][cName],
-                    ComplexInfo[complex][cPrice],
-                    ComplexInfo[complex][cLevel],
-                    GetComplexRooms(ComplexInfo[complex][cSQLID])
-                );
-                PlayerTextDrawSetString(playerid, CompCMDTD[playerid], "Raspolozive komande:~n~      /enter, /buycomplex");
-            }
-
-            PlayerTextDrawSetString(playerid, CompInfoTD[playerid], string);
-            PlayerCMPTimer[playerid] = defer PlayerComplexInfo(playerid);
-            break;
+            format(string, sizeof(string), "Naziv: %s~n~Vlasnik: %s~n~Cijena: %d~g~$~n~~w~Broj soba: %s",
+                ComplexInfo[complex_id][cName],
+                GetPlayerNameFromSQL(ComplexInfo[complex_id][cOwnerID]),
+                ComplexInfo[complex_id][cPrice],
+                GetComplexRooms(ComplexInfo[complex_id][cSQLID])
+            );
+            PlayerTextDrawSetString(playerid, CompCMDTD[playerid], "Raspolozive komande:~n~      /enter");
         }
+        else
+        {
+            format(string, sizeof(string), "Complex je na prodaju~n~Naziv: %s~n~Cijena: %d~g~$~n~~w~Level: %d~n~Broj soba: %s",
+                ComplexInfo[complex_id][cName],
+                ComplexInfo[complex_id][cPrice],
+                ComplexInfo[complex_id][cLevel],
+                GetComplexRooms(ComplexInfo[complex_id][cSQLID])
+            );
+            PlayerTextDrawSetString(playerid, CompCMDTD[playerid], "Raspolozive komande:~n~      /enter, /buycomplex");
+        }
+
+        PlayerTextDrawSetString(playerid, CompInfoTD[playerid], string);
+
+        Player_SetComplexCP(playerid, checkpointid);
+        Player_SetInfrontComplex(playerid, complex_id);
+        return 1;
     }
-
-    foreach(new complex : ComplexRooms)
+    new 
+        croom_id = CP_GetComplexRoomID(checkpointid);
+    if(Iter_Contains(ComplexRooms, croom_id))
     {
-        if (ComplexRoomInfo[complex][cRPickup] == pickupid)
-        {
-            CreateCompInfoTD(playerid);
-            // TODO: reduce code duplication
-            if (ComplexRoomInfo[complex][cOwnerID] != -1)
-            {
-                format(string, sizeof(string), "Vlasnik: %s~n~Adresa: %s~n~Cijena renta: %d~g~$~n~~w~Ocjena: %d",
-                    GetPlayerNameFromSQL(ComplexRoomInfo[complex][cOwnerID]),
-                    ComplexRoomInfo[complex][cAdress],
-                    ComplexRoomInfo[complex][cValue],
-                    ComplexRoomInfo[complex][cQuality]
-                );
-                PlayerTextDrawSetString(playerid, CompCMDTD[playerid], "Raspolozive komande:~n~      /enter");
-            }
-            else {
-                format(string, sizeof(string), "Soba je na prodaju~n~Adresa: %s~n~Cijena renta: %d~g~$~n~~w~Level: %d~n~Ocjena: %d",
-                    ComplexRoomInfo[complex][cAdress],
-                    ComplexRoomInfo[complex][cValue],
-                    ComplexRoomInfo[complex][cLevel],
-                    ComplexRoomInfo[complex][cQuality]
-                );
-                PlayerTextDrawSetString(playerid, CompCMDTD[playerid], "Raspolozive komande:~n~      /enter, /rentroom");
-            }
+        CreateCompInfoTD(playerid);
 
-            PlayerTextDrawSetString(playerid, CompInfoTD[playerid], string);
-            PlayerCMPTimer[playerid] = defer PlayerComplexInfo(playerid);
-            break;
+        if (ComplexRoomInfo[croom_id][cOwnerID] != -1)
+        {
+            format(string, sizeof(string), "Vlasnik: %s~n~Adresa: %s~n~Cijena renta: %d~g~$~n~~w~Ocjena: %d",
+                GetPlayerNameFromSQL(ComplexRoomInfo[croom_id][cOwnerID]),
+                ComplexRoomInfo[croom_id][cAdress],
+                ComplexRoomInfo[croom_id][cValue],
+                ComplexRoomInfo[croom_id][cQuality]
+            );
+            PlayerTextDrawSetString(playerid, CompCMDTD[playerid], "Raspolozive komande:~n~      /enter");
         }
+        else 
+        {
+            format(string, sizeof(string), "Soba je na prodaju~n~Adresa: %s~n~Cijena renta: %d~g~$~n~~w~Level: %d~n~Ocjena: %d",
+                ComplexRoomInfo[croom_id][cAdress],
+                ComplexRoomInfo[croom_id][cValue],
+                ComplexRoomInfo[croom_id][cLevel],
+                ComplexRoomInfo[croom_id][cQuality]
+            );
+            PlayerTextDrawSetString(playerid, CompCMDTD[playerid], "Raspolozive komande:~n~      /enter, /rentroom");
+        }
+
+        PlayerTextDrawSetString(playerid, CompInfoTD[playerid], string);
+        
+        Player_SetApartmentCP(playerid, checkpointid);
+        Player_SetInfrontApartment(playerid, croom_id);
+        return 1;
+    }
+    return 1;
+}
+
+hook OnPlayerLeaveDynamicCP(playerid, checkpointid)
+{
+    new 
+        complex_id = CP_GetComplexID(checkpointid);
+    if(Iter_Contains(Complex, complex_id))
+    {
+        DestroyCompInfoTD(playerid);
+        Player_SetComplexCP(playerid, -1);
+        Player_SetInfrontComplex(playerid, INVALID_COMPLEX_ID);
+    }
+    new 
+        croom_id = CP_GetComplexRoomID(checkpointid);
+    if(Iter_Contains(ComplexRooms, croom_id))
+    {
+        DestroyCompInfoTD(playerid);
+        Player_SetApartmentCP(playerid, -1);
+        Player_SetInfrontApartment(playerid, INVALID_COMPLEX_ID);
     }
     return 1;
 }
@@ -840,23 +951,6 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
         }
     }
     return 0;
-}
-
-
-/*
-    ######## #### ##     ## ######## ########   ######  
-       ##     ##  ###   ### ##       ##     ## ##    ## 
-       ##     ##  #### #### ##       ##     ## ##       
-       ##     ##  ## ### ## ######   ########   ######  
-       ##     ##  ##     ## ##       ##   ##         ## 
-       ##     ##  ##     ## ##       ##    ##  ##    ## 
-       ##    #### ##     ## ######## ##     ##  ######  
-*/
-
-timer PlayerComplexInfo[5000](playerid)
-{
-    stop PlayerCMPTimer[playerid];
-    DestroyCompInfoTD(playerid);
 }
 
 
