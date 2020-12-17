@@ -105,6 +105,43 @@ CMD:enter(playerid, params[])
 		}
 		else GameTextForPlayer(playerid, "~r~Zakljucano", 5000, 1);
     }
+	else if (IsPlayerInDynamicArea(playerid, Player_GarageArea(playerid)))
+	{
+		new 
+			garage = Player_InfrontGarage(playerid);
+		if(garage == 1)
+			return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ispred garaze!");
+
+		if (PlayerInfo[playerid][pSQLID] != GarageInfo[garage][gOwnerID] && !IsOnAdminDuty(playerid) && !GarageInfo[garage][gLocked])
+		{
+			GameTextForPlayer(playerid, "~r~Zakljucano", 1000, 1);
+			return 1;
+		}
+
+		if (GarageInfo[garage][gOwnerID] == PlayerInfo[playerid][pSQLID])
+			GameTextForPlayer(playerid, "~w~Dobrodosli u garazu", 800, 1);
+		
+		new vehicleid = GetPlayerVehicleID(playerid);
+		if (GetPlayerState(playerid) != PLAYER_STATE_DRIVER || vehicleid == INVALID_VEHICLE_ID)
+			SetPlayerPosEx(playerid, GarageInfo[garage][gExitX], GarageInfo[garage][gExitY], GarageInfo[garage][gExitZ], GarageInfo[garage][gSQLID], 5, true);
+		else
+		{
+			TogglePlayerControllable(playerid, 0);
+
+			new Float:X, Float:Y, Float:Z, Float:A;
+			GetVehiclePos(vehicleid, X, Y, Z);
+			GetVehicleZAngle(vehicleid, A);
+
+			PlayerSafeExit[playerid][giX] = X;
+			PlayerSafeExit[playerid][giY] = Y;
+			PlayerSafeExit[playerid][giZ] = Z;
+			PlayerSafeExit[playerid][giRZ] = A;
+			SetVehiclePosEx(playerid, GarageInfo[garage][gExitX], GarageInfo[garage][gExitY] + 1.5, GarageInfo[garage][gExitZ], GarageInfo[garage][gSQLID], 5, true);
+			SetVehicleZAngle(vehicleid, 90.0);
+		}
+		Player_SetInGarage(playerid, garage);
+		DestroyGarageInfoTD(playerid);
+	}
     else if (IsPlayerInDynamicCP(playerid, Player_GetBizzCP(playerid)))
     {
 		new biznis = Player_InfrontBizz(playerid);
@@ -147,6 +184,7 @@ CMD:enter(playerid, params[])
         
 		SetPlayerPosEx(playerid, ComplexInfo[complex][cExitX], ComplexInfo[complex][cExitY], ComplexInfo[complex][cExitZ], ComplexInfo[complex][cViwo], ComplexInfo[complex][cInt], true);
         Player_SetInApartmentComplex(playerid, complex);
+		DestroyCompInfoTD(playerid);
        
 	    if (PlayerKeys[playerid][pComplexKey] == complex)
             GameTextForPlayer(playerid, "Dobrodosli u svoj Complex!", 500, 1);
@@ -174,7 +212,8 @@ CMD:enter(playerid, params[])
         	GameTextForPlayer(playerid, "Dobrodosli!", 500, 1);
 
         SetPlayerPosEx(playerid, ComplexRoomInfo[rcomplex][cExitX], ComplexRoomInfo[rcomplex][cExitY], ComplexRoomInfo[rcomplex][cExitZ], ComplexRoomInfo[rcomplex][cViwo], ComplexRoomInfo[rcomplex][cInt], true);
-        Player_SetInApartmentRoom(playerid, rcomplex);	
+        Player_SetInApartmentRoom(playerid, rcomplex);
+		DestroyCompInfoTD(playerid);
     }
     else if (IsPlayerInDynamicCP(playerid, Player_GetHouseCP(playerid)))
     {

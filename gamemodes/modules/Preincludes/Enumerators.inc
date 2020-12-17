@@ -465,6 +465,7 @@ enum E_GARAGE_DATA
 	gOwnerID,
 	gAdress[16],
 	gEnterPck,
+	gAreaID,
 	gPrice,
 	gLocked,
 	Float:gEnterX,

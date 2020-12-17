@@ -51,6 +51,10 @@ forward Player_InApartmentRoom(playerid);
 forward Player_SetInApartmentRoom(playerid, v);
 
 // Garage
+forward Player_GarageArea(playerid);
+forward Player_SetGarageArea(playerid, v);
+forward Player_InfrontGarage(playerid);
+forward Player_SetInfrontGarage(playerid, v);
 forward Player_InGarage(playerid);
 forward Player_SetInGarage(playerid, v);
 

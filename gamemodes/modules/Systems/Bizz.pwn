@@ -1162,10 +1162,10 @@ hook ResetPlayerVariables(playerid)
     PlayerSkinPrice[playerid] = 0;
     Player_SetIsDJ(playerid, false);
     Player_SetDJBizzKey(playerid, INVALID_BIZNIS_ID);
-    Player_SetInBusiness(playerid, INVALID_BIZNIS_ID);
 
-    InfrontBizz[playerid] = INVALID_BIZNIS_ID;
-    BizzCP[playerid] = INVALID_BIZNIS_ID;
+    Player_SetBizzCP(playerid, INVALID_BIZNIS_ID);
+    Player_SetInfrontBizz(playerid, INVALID_BIZNIS_ID);
+    Player_SetInBusiness(playerid, INVALID_BIZNIS_ID);
     return 1;
 }
 

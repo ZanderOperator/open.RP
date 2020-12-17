@@ -291,6 +291,7 @@ stock ResetHouseVariables(playerid)
     
     Player_SetInHouse       (playerid, INVALID_HOUSE_ID);
     Player_SetInfrontHouse  (playerid, INVALID_HOUSE_ID);
+    Player_SetHouseCP       (playerid, INVALID_HOUSE_ID);
     return 1;
 }
 
