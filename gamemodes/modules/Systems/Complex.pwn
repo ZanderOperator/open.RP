@@ -129,7 +129,12 @@ Player_SetApartmentCP(playerid, v)
 hook ResetPlayerVariables(playerid)
 {
     Player_SetInApartmentComplex(playerid, INVALID_COMPLEX_ID);
-    Player_SetInApartmentRoom   (playerid, INVALID_COMPLEX_ID);
+    Player_SetInfrontComplex(playerid, INVALID_COMPLEX_ID);
+    Player_SetComplexCP(playerid, INVALID_COMPLEX_ID);
+
+    Player_SetInApartmentRoom(playerid, INVALID_COMPLEX_ID);
+    Player_SetInfrontApartment(playerid, INVALID_COMPLEX_ID);
+    Player_SetApartmentCP(playerid, INVALID_COMPLEX_ID);
     return 1;
 }
 
@@ -725,7 +730,6 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                     }
                 }
             }
-            // TODO: call one va_ShowPlayerDialog and use ternary logic
             if (ComplexRoomInfo[SelectedRoom[playerid]][cActive])
                 ShowPlayerDialog(playerid, DIALOG_COMPLEX_ROOM_INFO, DIALOG_STYLE_LIST, "COMPLEX MENU", "Promjeni cijenu\nRenoviraj interijer(7500$)", "Enter", "Close");
             else

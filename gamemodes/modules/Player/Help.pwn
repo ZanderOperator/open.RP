@@ -172,7 +172,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext [])
 					case 14: ShowPlayerDialog(playerid, DIALOG_HELP, DIALOG_STYLE_MSGBOX, "Weapon", "/weapon\n/buygun", "Ok", "");
 					case 15: ShowPlayerDialog(playerid, DIALOG_HELP, DIALOG_STYLE_MSGBOX, "Chats", "/me\n/do\n/ame\n/c(lose)\n/s(hout)\n/carwhisper\n/w(hisper)\n/b\n/blockb\n/pm\n/accent\n/mic\n/clearmychat\n/attempt", "Ok", "");
 					case 16: ShowPlayerDialog(playerid, DIALOG_JOBHELP, DIALOG_STYLE_LIST, "Poslovi", "Tvornicki radnik\nCistac ulice\nSmecar\nTransporter\nImpounder\nDrvosjeca\nMehanicar\nFarmer\nTaksista\nDrug dealer\nCar jacker\nLopov", "Choose","Back");
-					case 17: ShowPlayerDialog(playerid, DIALOG_HELP, DIALOG_STYLE_MSGBOX, "Garage", "/garage\n/genter", "Ok", "");
+					case 17: ShowPlayerDialog(playerid, DIALOG_HELP, DIALOG_STYLE_MSGBOX, "Garage", "/garage\n/enter", "Ok", "");
 					case 18: ShowPlayerDialog(playerid, DIALOG_HELP, DIALOG_STYLE_MSGBOX, "Complex", "/buycomplex\n/complex\n/rentroom\n/unrentroom", "Ok", "");
 					case 19: ShowPlayerDialog(playerid, DIALOG_HELP, DIALOG_STYLE_MSGBOX, "House&Furniture", "/house\n/bint\n/buyhouse\n/ring\n/knock\n/doorshout\n/renthouse\n/unrenthouse\n/furniture", "Ok", "");
 					case 20: ShowPlayerDialog(playerid, DIALOG_HELP, DIALOG_STYLE_MSGBOX, "Roleplay", "/rphelp\n/toganimchat\n/blindfold\n/screenfade\n/tie\n/frisk\n/handshake\n/accept\n/time\n/prisontime\n/coin\n/dice\n/dump\n/get\n/give\n/graffit\n/examine\n/putintrunk\n/entertrunk\n/exittrunk\n/paperdivorce\n/marry\n/rand\n/card\n/mycigars\n/taxcalculator\n/animations", "Ok", "");

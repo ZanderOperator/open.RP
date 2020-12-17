@@ -256,6 +256,8 @@ hook OnPlayerEnterDynamicCP(playerid, checkpointid)
     if (!Iter_Contains(Pickups[PICKUP_TYPE_ENTERABLE], pickupid))
         return 1;
 
+	GameTextForPlayer(playerid, PickupInfo[pickupid][epEnterDiscription], 3100, 5);
+
     Player_SetPickupCP(playerid, checkpointid);
     Player_SetInfrontPickup(playerid, pickupid);
     return 1;
@@ -266,8 +268,7 @@ hook OnPlayerLeaveDynamicCP(playerid, checkpointid)
     new 
         pickupid = CP_GetBizzID(checkpointid);
     
-    if (!Iter_Contains(Pickups[PICKUP_TYPE_ENTERABLE], pickupid) 
-		|| Player_GetPickupCP(playerid) != pickupid)
+    if (!Iter_Contains(Pickups[PICKUP_TYPE_ENTERABLE], pickupid))
         return 1;
 
     Player_SetPickupCP(playerid, -1);
@@ -279,15 +280,8 @@ hook OnPlayerLeaveDynamicCP(playerid, checkpointid)
 hook ResetPlayerVariables(playerid)
 {
 	Player_SetInPickup(playerid, -1);
-	return 1;
-}
-
-hook OnPlayerPickUpDynPickup(playerid, pickupid)
-{
-	new pid = Player_InfrontPickup(playerid);
-	if( PickupInfo[pid][epID] == pickupid ) 
-		GameTextForPlayer(playerid, PickupInfo[pid][epEnterDiscription], 3100, 5);
-	
+	Player_SetInfrontPickup(playerid, -1);
+	Player_SetPickupCP(playerid, -1);
 	return 1;
 }
 

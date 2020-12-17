@@ -11,6 +11,7 @@
 
 #include <YSI_Coding\y_hooks>
 
+#define GARAGE_PARAMETER_SIZE               (15.0)
 
 /*
     ##     ##    ###    ########   ######
@@ -45,9 +46,9 @@ static
     PlayerText:GarageCMDTD   [MAX_PLAYERS] = {PlayerText:INVALID_TEXT_DRAW, ...};
 
 static
-    InGarage[MAX_PLAYERS] = {INVALID_HOUSE_ID, ...},
-    Timer:HideGarageTD[MAX_PLAYERS],
-    bool:HideGarageTimerActive[MAX_PLAYERS] = {false, ...},
+    InGarage[MAX_PLAYERS] = {-1, ...},
+    InfrontGarage[MAX_PLAYERS] = {-1, ...},
+    GarageAreaID[MAX_PLAYERS] = {-1, ...},
     GarageSeller[MAX_PLAYERS],
     GarageBuyer[MAX_PLAYERS],
     GaragePrice[MAX_PLAYERS];
@@ -73,24 +74,30 @@ Player_SetInGarage(playerid, v)
     InGarage[playerid] = v;
 }
 
+Player_InfrontGarage(playerid)
+{
+    return InfrontGarage[playerid];
+}
+
+Player_SetInfrontGarage(playerid, v)
+{
+    InfrontGarage[playerid] = v;
+}
+
+Player_GarageArea(playerid)
+{
+    return GarageAreaID[playerid];
+}
+
+Player_SetGarageArea(playerid, v)
+{
+    GarageAreaID[playerid] = v;
+}
+
 Public:OnGarageCreates(garageid)
 {
     GarageInfo[garageid][gSQLID] = cache_insert_id();
     return 1;
-}
-
-static stock GetNearGarage(playerid, Float:range)
-{
-    new index = -1;
-    foreach(new i: Garages)
-    {
-        if (IsPlayerInRangeOfPoint(playerid, range, GarageInfo[i][gEnterX], GarageInfo[i][gEnterY], GarageInfo[i][gEnterZ]))
-        {
-            index = i;
-            break;
-        }
-    }
-    return index;
 }
 
 stock DestroyGarageInfoTD(playerid)
@@ -106,6 +113,18 @@ stock DestroyGarageInfoTD(playerid)
     GarageInfoText[playerid] = PlayerText:INVALID_TEXT_DRAW;
     GarageInfoTD  [playerid] = PlayerText:INVALID_TEXT_DRAW;
     GarageCMDTD   [playerid] = PlayerText:INVALID_TEXT_DRAW;
+    return 1;
+}
+
+static CreateGarageEnter(g_id)
+{
+    if(IsValidDynamicPickup(GarageInfo[g_id][gEnterPck]))
+        DestroyDynamicPickup(GarageInfo[g_id][gEnterPck]);
+    GarageInfo[g_id][gEnterPck] = CreateDynamicPickup(19522, 2, GarageInfo[g_id][gEnterX], GarageInfo[g_id][gEnterY], GarageInfo[g_id][gEnterZ], -1, -1, -1, 100.0);
+
+    if(IsValidDynamicArea(GarageInfo[g_id][gAreaID]))
+        DestroyDynamicArea(GarageInfo[g_id][gAreaID]);
+    GarageInfo[g_id][gAreaID] = CreateDynamicCircle(GarageInfo[g_id][gEnterX], GarageInfo[g_id][gEnterY], GARAGE_PARAMETER_SIZE);
     return 1;
 }
 
@@ -202,18 +221,25 @@ public OnHouseGaragesLoad()
         cache_get_value_name_float(row,  "exitY"  ,    GarageInfo[row][gExitY]);
         cache_get_value_name_float(row,  "exitZ"  ,    GarageInfo[row][gExitZ]);
 
-        GarageInfo[row][gEnterPck] = CreateDynamicPickup(19522, 2, GarageInfo[row][gEnterX], GarageInfo[row][gEnterY], GarageInfo[row][gEnterZ], -1, -1, -1, 100.0);
+        CreateGarageEnter(row);
         Iter_Add(Garages, row);
     }
     printf("MySQL Report: Garages Loaded (%d)!", num_rows);
     return 1;
 }
 
-timer HideGaragesTDs[3000](playerid)
+static Area_GetGarageID(areaid)
 {
-    HideGarageTimerActive[playerid] = false;
-    DestroyGarageInfoTD(playerid);
-    return 1;
+    new garageid = -1;
+    foreach(new garage: Garages)
+    {
+        if(GarageInfo[garage][gAreaID] == areaid)
+        {
+            garageid = garage;
+            break;
+        }
+    }
+    return garageid;
 }
 
 
@@ -455,11 +481,6 @@ hook OnGameModeInit()
 
 hook ResetPlayerVariables(playerid)
 {
-    if (HideGarageTimerActive[playerid])
-    {
-        stop HideGarageTD[playerid];
-        HideGarageTimerActive[playerid] = false;
-    }
     if (GarageBuyer[playerid] != INVALID_PLAYER_ID)
     {
         new buyer = GarageBuyer[playerid];
@@ -474,7 +495,59 @@ hook ResetPlayerVariables(playerid)
         GarageSeller[playerid] = INVALID_PLAYER_ID;
         GaragePrice [playerid] = 0;
     }
-    Player_SetInGarage(playerid, INVALID_HOUSE_ID);
+    Player_SetInGarage(playerid, -1);
+	Player_SetInfrontGarage(playerid, -1);
+	Player_SetGarageArea(playerid, -1);
+    return 1;
+}
+
+hook OnPlayerEnterDynArea(playerid, areaid)
+{
+    new garage = Area_GetGarageID(areaid);
+    if (!Iter_Contains(Garages, garage))
+        return 1;
+    
+    new
+        string[128];
+
+    CreateGarageInfoTD(playerid);
+    if (!GarageInfo[garage][gOwnerID])            
+    {
+        format(string, sizeof(string), "Garaza je na prodaju~n~Adresa: %s~n~Cijena: %d~g~$~n~",
+            GarageInfo[garage][gAdress],
+            GarageInfo[garage][gPrice]
+        );
+        PlayerTextDrawSetString(playerid, GarageCMDTD[playerid], "Raspolozive komande:~n~      /enter, /garage buy");
+    }
+    else
+    {
+        format(string, sizeof(string), "Vlasnik: %s~n~Adresa: %s~n~Cijena: %d~g~$",
+            GetPlayerNameFromSQL(GarageInfo[garage][gOwnerID]),
+            GarageInfo[garage][gAdress],
+            GarageInfo[garage][gPrice]
+        );
+        PlayerTextDrawSetString(playerid, GarageCMDTD[playerid], "Raspolozive komande:~n~      /enter, /garage lock (vlasnik)");
+    }
+    PlayerTextDrawSetString(playerid, GarageInfoTD[playerid], string);
+
+    Player_SetGarageArea(playerid, areaid);
+    Player_SetInfrontGarage(playerid, garage);
+    return 1;
+}
+
+hook OnPlayerLeaveDynArea(playerid, areaid)
+{
+    new 
+        garage = Area_GetGarageID(areaid);
+    
+    if (!Iter_Contains(Garages, garage)) 
+        return 1;
+
+    DestroyGarageInfoTD(playerid);
+
+    Player_SetGarageArea(playerid, -1);
+    Player_SetInfrontGarage(playerid, -1);
+
     return 1;
 }
 
@@ -511,43 +584,6 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
     }
     return 0;
 }
-
-hook OnPlayerPickUpDynPickup(playerid, pickupid)
-{
-    new string[128];
-    foreach(new garage : Garages)
-    {
-        if (GarageInfo[garage][gEnterPck] == pickupid)
-        {
-            if (!GarageInfo[garage][gOwnerID])
-            {
-                CreateGarageInfoTD(playerid);
-                format(string, sizeof(string), "Garaza je na prodaju~n~Adresa: %s~n~Cijena: %d~g~$~n~",
-                       GarageInfo[garage][gAdress],
-                       GarageInfo[garage][gPrice]
-                );
-                PlayerTextDrawSetString(playerid, GarageCMDTD[playerid], "Raspolozive komande:~n~      /enter, /garage buy");
-            }
-            else
-            {
-                CreateGarageInfoTD(playerid);
-                format(string, sizeof(string), "Vlasnik: %s~n~Adresa: %s~n~Cijena: %d~g~$",
-                       GetPlayerNameFromSQL(GarageInfo[garage][gOwnerID]),
-                       GarageInfo[garage][gAdress],
-                       GarageInfo[garage][gPrice]
-                );
-                PlayerTextDrawSetString(playerid, GarageCMDTD[playerid], "Raspolozive komande:~n~      /genter, /garage lock (vlasnik)");
-            }
-
-            PlayerTextDrawSetString(playerid, GarageInfoTD[playerid], string);
-            HideGarageTimerActive[playerid] = true;
-            HideGarageTD[playerid] = defer HideGaragesTDs(playerid);
-            break;
-        }
-    }
-    return 1;
-}
-
 
 /*
      ######  ##     ## ########
@@ -637,28 +673,22 @@ CMD:garage(playerid, params[])
             SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste blizu svoje garaze!");
             return 1;
         }
-        // TODO: reduce code duplication, I can't be arsed.
+
+        new string[64];
         if (!GarageInfo[garage][gLocked])
         {
             GarageInfo[garage][gLocked] = 1;
             GameTextForPlayer(playerid, "~r~Garaza zakljucana", 2000, 1);
-
-            new string[64];
             format(string, sizeof(string), "* %s zakljucava garazu.", GetName(playerid));
-            SendClientMessage(playerid, COLOR_PURPLE, string);
-            SetPlayerChatBubble(playerid, string, COLOR_PURPLE, 20, 20000);
         }
         else if (GarageInfo[garage][gLocked])
         {
             GarageInfo[garage][gLocked] = 0;
             GameTextForPlayer(playerid, "~g~Garaza otkljucana", 2000, 1);
-
-            new string[64];
             format(string, sizeof(string), "* %s otkljucava garazu.", GetName(playerid));
-            SendClientMessage(playerid, COLOR_PURPLE, string);
-            SetPlayerChatBubble(playerid, string, COLOR_PURPLE, 20, 20000);
         }
-        return 1;
+        SendClientMessage(playerid, COLOR_PURPLE, string);
+        SetPlayerChatBubble(playerid, string, COLOR_PURPLE, 20, 20000);
     }
     else if (!strcmp(param, "buy", true))
     {
@@ -668,10 +698,11 @@ CMD:garage(playerid, params[])
             return 1;
         }
 
-        new nearGarage = GetNearGarage(playerid, 5.0);
+        new 
+            nearGarage = Player_InfrontGarage(playerid);
         if (nearGarage == -1)
         {
-            SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste blizu garaza!");
+            SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste blizu garaze!");
             return 1;
         }
         if (AC_GetPlayerMoney(playerid) < GarageInfo[nearGarage][gPrice])
@@ -769,28 +800,18 @@ CMD:garage(playerid, params[])
     else if (!strcmp(param, "delete", true))
     {
         if (PlayerInfo[playerid][pAdmin] < 1337) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ovlasteni za koristenje ove komande!");
-
-        // TODO: GetNearestGarage
-        new garageid = -1;
-        foreach(new x : Garages)
-        {
-            if (GarageInfo[x][gEnterX] != 0.0)
-            {
-                if (IsPlayerInRangeOfPoint(playerid, 5.0, GarageInfo[x][gEnterX], GarageInfo[x][gEnterY], GarageInfo[x][gEnterZ]))
-                {
-                    garageid = x;
-                    break;
-                }
-            }
-        }
+        new 
+            garageid = Player_InfrontGarage(playerid);
         if (garageid == -1) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste blizu garaze!");
 
         mysql_fquery(g_SQL, "DELETE FROM server_garages WHERE id = '%d' LIMIT 1", GarageInfo[garageid][gSQLID]);
 
         if (IsValidDynamicPickup(GarageInfo[garageid][gEnterPck]))
-        {
             DestroyDynamicPickup(GarageInfo[garageid][gEnterPck]);
-        }
+        
+        if(IsValidDynamicArea(GarageInfo[garageid][gAreaID]))
+            DestroyDynamicArea(GarageInfo[garageid][gAreaID]);
+        
         Iter_Remove(Garages, garageid);
 
         GarageInfo[garageid][gOwnerID] = 0;
@@ -811,62 +832,7 @@ CMD:garage(playerid, params[])
         return 1;
     }
     return 1;
-}
-
-CMD:genter(playerid, params[])
-{
-    // TODO: GetNearestGarage
-    new garage = -1;
-    foreach (new x : Garages)
-    {
-        if (GarageInfo[x][gEnterX] != 0.0)
-        {
-            if (IsPlayerInRangeOfPoint(playerid, 5.0, GarageInfo[x][gEnterX], GarageInfo[x][gEnterY], GarageInfo[x][gEnterZ]))
-            {
-                garage = x;
-                break;
-            }
-        }
-    }
-    if (garage == -1)
-    {
-        return 1;
-    }
-
-    if (PlayerInfo[playerid][pSQLID] != GarageInfo[garage][gOwnerID] || !GarageInfo[garage][gLocked])
-    {
-        GameTextForPlayer(playerid, "~r~Zakljucano", 1000, 1);
-        return 1;
-    }
-
-    if (GarageInfo[garage][gOwnerID] == PlayerInfo[playerid][pSQLID])
-    {
-        GameTextForPlayer(playerid, "~w~Dobrodosli u garazu", 800, 1);
-    }
-    new vehicleid = GetPlayerVehicleID(playerid);
-    if (GetPlayerState(playerid) != PLAYER_STATE_DRIVER || vehicleid == INVALID_VEHICLE_ID)
-    {
-        SetPlayerPosEx(playerid, GarageInfo[garage][gExitX], GarageInfo[garage][gExitY], GarageInfo[garage][gExitZ], GarageInfo[garage][gSQLID], 5, true);
-    }
-    else
-    {
-        TogglePlayerControllable(playerid, 0);
-
-        new Float:X, Float:Y, Float:Z, Float:A;
-        GetVehiclePos(vehicleid, X, Y, Z);
-        GetVehicleZAngle(vehicleid, A);
-
-        PlayerSafeExit[playerid][giX] = X;
-        PlayerSafeExit[playerid][giY] = Y;
-        PlayerSafeExit[playerid][giZ] = Z;
-        PlayerSafeExit[playerid][giRZ] = A;
-        SetVehiclePosEx(playerid, GarageInfo[garage][gExitX], GarageInfo[garage][gExitY] + 1.5, GarageInfo[garage][gExitZ], GarageInfo[garage][gSQLID], 5, true);
-        SetVehicleZAngle(vehicleid, 90.0);
-    }
-    Player_SetInGarage(playerid, garage);
-    DestroyGarageInfoTD(playerid);
-    return 1;
-}
+} 
 
 CMD:garageo(playerid, params[])
 {
@@ -882,12 +848,7 @@ CMD:garageo(playerid, params[])
         SendClientMessage(playerid, COLOR_RED, "[ ? ]: /garageo [garageid]");
         return 1;
     }
-    if (garage < 0 && garage >= MAX_GARAGES)
-    {
-        SendClientMessage(playerid, COLOR_RED, "[ ? ]: /garageo [garageid]");
-        return 1;
-    }
-    if (GarageInfo[garage][gSQLID] == 0)
+    if (!Iter_Contains(Garages, garage))
     {
         SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ta garaza ne postoji!");
         return 1;
@@ -897,7 +858,6 @@ CMD:garageo(playerid, params[])
     return 1;
 }
 
-//khawaja garages
 CMD:garageentrance(playerid, params[])
 {
     if (PlayerInfo[playerid][pAdmin] < 1337)
@@ -925,10 +885,10 @@ CMD:garageentrance(playerid, params[])
     GarageInfo[proplev][gEnterY] = Y;
     GarageInfo[proplev][gEnterZ] = Z;
 
-    DestroyDynamicPickup(GarageInfo[proplev][gEnterPck]);
-    GarageInfo[proplev][gEnterPck] = CreateDynamicPickup(19522, 2, GarageInfo[proplev][gEnterX], GarageInfo[proplev][gEnterY], GarageInfo[proplev][gEnterZ], -1, -1, -1, 100.0);
+    CreateGarageEnter(proplev);
 
-    mysql_fquery(g_SQL, "UPDATE server_garages SET enterX = '%f', enterY = '%f', enterZ = '%f' WHERE id = '%d'",
+    mysql_fquery(g_SQL, 
+        "UPDATE server_garages SET enterX = '%f', enterY = '%f', enterZ = '%f' WHERE id = '%d'",
         X,
         Y,
         Z,
