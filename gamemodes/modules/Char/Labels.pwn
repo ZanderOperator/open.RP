@@ -93,12 +93,12 @@ hook OnPlayerEditDynObject(playerid, objectid, response, Float:x, Float:y, Float
   	return 1;
 }
 
-hook ResetPlayerVariables(playerid)
+hook function ResetPlayerVariables(playerid)
 {
 	AddingRoadblock[playerid] = false;
 	RoadblockObject[playerid] = 0;
 	RoadblockModel[playerid] = 0;
-    return 1;
+	return continue(playerid);
 }
 
 hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])

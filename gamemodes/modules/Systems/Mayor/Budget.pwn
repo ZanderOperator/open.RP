@@ -384,7 +384,7 @@ hook OnGameModeInit()
     return 1;
 }
 
-hook ResetPlayerVariables(playerid)
+hook function ResetPlayerVariables(playerid)
 {
     for (new i = 0; i != 10; i++)
     {
@@ -392,7 +392,7 @@ hook ResetPlayerVariables(playerid)
     }
     FactionListID[playerid] = -1;
     GovMDC[playerid] = INVALID_PLAYER_ID;
-    return 1;
+	return continue(playerid);
 }
 
 hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])

@@ -3696,7 +3696,7 @@ timer ParkPlayerVehicle[5000](playerid, vehicleid)
 	return 1;
 }
 
-hook ResetPlayerVariables(playerid)
+hook function ResetPlayerVariables(playerid)
 {
 	ResetCarOwnershipVariables(playerid);
 	CarnisterLiters[playerid] = 0;
@@ -3721,13 +3721,13 @@ hook ResetPlayerVariables(playerid)
 	PlayerParkLocation[playerid] = 0;
 	DisablePlayerCheckpoint(playerid);
 	ResetCarBuyVars(playerid);
-	return 1;
+	return continue(playerid);
 }
 
-hook LoadPlayerStats(playerid)
+hook function LoadPlayerStats(playerid)
 {
 	GetPlayerVehicleList(playerid);
-	return 1;
+	return continue(playerid);
 }
 
 hook OnVehicleDeath(vehicleid, killerid)
@@ -3832,15 +3832,15 @@ hook OnVehicleDeath(vehicleid, killerid)
 */
 ///////////////////////////////////////////////////////////////////
 
-hook AC_DestroyVehicle(vehicleid)
+hook function AC_DestroyVehicle(vehicleid)
 {
 	RemoveAllVehicleTuning(vehicleid);
 	ResetVehicleAlarm(vehicleid);
 	RemoveTrunkObjects(vehicleid);
-	return 1;
+	return continue(vehicleid);
 }
 
-hook ResetPrivateVehicleInfo(vehicleid)
+hook function ResetPrivateVehicleInfo(vehicleid)
 {
 	ResetVehicleTrunkWeapons(vehicleid);
 	ResetVehiclePackages(vehicleid);
@@ -3848,7 +3848,7 @@ hook ResetPrivateVehicleInfo(vehicleid)
 	ResetVehicleAlarm(vehicleid);
 	DestroyDoorHealth3DText(vehicleid);
 	DestroyTrunkHealth3DText(vehicleid);
-	return 1;
+	return continue(vehicleid);
 }
 
 hook OnPlayerEnterVehicle(playerid, vehicleid, ispassenger)

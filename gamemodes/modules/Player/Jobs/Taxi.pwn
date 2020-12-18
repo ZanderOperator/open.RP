@@ -67,10 +67,10 @@ Public: LoadingPlayerTaxiStats(playerid)
     return 1;
 }
 
-hook LoadPlayerStats(playerid)
+hook function LoadPlayerStats(playerid)
 {
     LoadPlayerTaxiStats(playerid);
-    return 1;
+	return continue(playerid);
 }
 
 SavePlayerTaxiStats(playerid)
@@ -84,10 +84,10 @@ SavePlayerTaxiStats(playerid)
     return 1;
 }
 
-hook SavePlayerStats(playerid)
+hook function SavePlayerStats(playerid)
 {
     SavePlayerTaxiStats(playerid);
-    return 1;
+	return continue(playerid);
 }
 
 /*
@@ -296,12 +296,12 @@ Taxi_Biznis(playerid, taxi_points, fare) {
 	- hooks
 */
 
-hook ResetPlayerVariables(playerid)
+hook function ResetPlayerVariables(playerid)
 {
 	TaxiInfo[playerid][pTaxiPoints] = 0;
     TaxiInfo[playerid][pTaxiVoted] = 0;
 	ResetTaxiVariables(playerid);
-	return 1;
+	return continue(playerid);
 }
 
 hook OnPlayerStateChange(playerid, newstate, oldstate)

@@ -54,14 +54,14 @@ Player_SetAFK(playerid, amount)
 	##     ##  #######   #######  ##    ##  ######  
 */
 
-hook ResetPlayerVariables(playerid)
+hook function ResetPlayerVariables(playerid)
 {
 	MaxPlayerAFK[playerid] = 10;
     Player_SetAFK(playerid, 0);
     PlayerCurrentPos[playerid][0] = 0;
 	PlayerCurrentPos[playerid][1] = 0;
 	PlayerCurrentPos[playerid][2] = 0;
-	return 1;
+	return continue(playerid);
 }
 
 hook OnPlayerText(playerid, text[])

@@ -1002,10 +1002,10 @@ hook OnPlayerDisconnect(playerid)
 	return 1;
 }
 
-hook ResetPlayerVariables( playerid ) 
+hook function ResetPlayerVariables( playerid ) 
 {
     ResetTuningInfo( playerid );
-	return 1;
+	return continue(playerid);
 }
 
 hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[]) 
@@ -1779,10 +1779,10 @@ hook OnPlayerClickTextDraw(playerid, Text:clickedid)
 	return 1;
 }
 
-hook ResetPrivateVehicleInfo(vehicleid)
+hook function ResetPrivateVehicleInfo(vehicleid)
 {
 	ResetVehicleTuning(vehicleid);
-	return 1;
+	return continue(vehicleid);
 }
 
 CMD:tuning(playerid, params[]) 

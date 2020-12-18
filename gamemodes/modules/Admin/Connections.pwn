@@ -85,10 +85,10 @@ Public:OnAdminConnectionTimeExLoad(playerid)
 	return 1;
 }
 
-hook SavePlayerData(playerid)
+hook function SavePlayerStats(playerid)
 {
 	SaveAdminConnectionTime(playerid);
-	return 1;
+	return continue(playerid);
 }
 
 /*

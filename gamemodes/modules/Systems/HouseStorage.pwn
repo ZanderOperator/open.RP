@@ -452,10 +452,11 @@ Public:OnRackCreated(storageid, playerid)
     ##     ##  #######   #######  ##    ##  ######
 */
 
-hook LoadServerData()
+hook function LoadServerData()
 {
     LoadHouseStorages();
-    return 1;
+	return continue();
+
 }
 
 hook OnPlayerConnect(playerid, reason)

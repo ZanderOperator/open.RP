@@ -415,7 +415,7 @@ hook OnPlayerConnect(playerid)
     return 1;
 }
 
-hook ResetPlayerVariables(playerid)
+hook function ResetPlayerVariables(playerid)
 {
     if(DeerInfo[pCutting] == playerid && CutTime > 0)
     {
@@ -426,7 +426,7 @@ hook ResetPlayerVariables(playerid)
     Whistle[playerid] = 0;
     WhistleTime[playerid] = 0;
     pMeat[playerid] = 0;
-    return 1;
+	return continue(playerid);
 }
 
 hook OnPlayerShootDynamicObj(playerid, weaponid, objectid, Float:x, Float:y, Float:z)

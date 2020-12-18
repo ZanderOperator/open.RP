@@ -55,8 +55,8 @@ stock Player_SetOnEvent(playerid, bool:v)
     ##     ##  #######   #######  ##    ## 
 */
 
-hook ResetPlayerVariables(playerid)
+hook function ResetPlayerVariables(playerid)
 {
     OnEvent[playerid] = false;
-    return 1;
+	return continue(playerid);
 }

@@ -96,10 +96,10 @@ stock AC_LoadPlayerWeapons(playerid)
 	return 1;
 }
 
-hook LoadPlayerStats(playerid)
+hook function LoadPlayerStats(playerid)
 {
 	AC_LoadPlayerWeapons(playerid);
-	return 1;
+	return continue(playerid);
 }
 
 stock AC_SavePlayerWeapon(playerid, slotid)
@@ -150,10 +150,10 @@ AC_SavePlayerWeapons(playerid)
 	return 1;
 }
 
-hook SavePlayerData(playerid)
+hook function SavePlayerStats(playerid)
 {
     AC_SavePlayerWeapons(playerid);
-    return 1;
+	return continue(playerid);
 }
 
 stock AC_DecreasePlayerWeaponAmmo(playerid, weaponid, amount)
@@ -420,7 +420,7 @@ hook OnPlayerWeaponShot(playerid, weaponid, hittype, hitid, Float:fX, Float:fY, 
     return 1;
 }
 
-hook ResetPlayerVariables(playerid)
+hook function ResetPlayerVariables(playerid)
 {
 	AC_ResetPlayerWeapons(playerid, false);
 	Iter_Clear(P_Weapons[playerid]);
@@ -442,7 +442,7 @@ hook ResetPlayerVariables(playerid)
 	HiddenWeapon[playerid][pwWeaponId] = 0;
 	HiddenWeapon[playerid][pwAmmo] = 0;
 	
-	return 1;
+	return continue(playerid);
 }
 
 public OnPlayerSuspectedForAimbot(playerid, hitid, weaponid, warnings)

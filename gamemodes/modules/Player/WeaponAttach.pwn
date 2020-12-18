@@ -204,10 +204,10 @@ Public:OnWeaponSettingsLoaded(playerid)
 	return 1;
 }
 
-hook LoadPlayerStats(playerid)
+hook function LoadPlayerStats(playerid)
 {
 	LoadPlayerWeaponSettings(playerid);
-	return 1;
+	return continue(playerid);
 }
 
 

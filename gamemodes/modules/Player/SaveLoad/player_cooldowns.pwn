@@ -29,10 +29,10 @@ Public: LoadingPlayerCooldowns(playerid)
     return 1;
 }
 
-hook LoadPlayerStats(playerid)
+hook function LoadPlayerStats(playerid)
 {
     LoadPlayerCooldowns(playerid);
-    return 1;
+	return continue(playerid);
 }
 
 SavePlayerCoolDowns(playerid)
@@ -48,16 +48,16 @@ SavePlayerCoolDowns(playerid)
     return 1;
 }
 
-hook SavePlayerStats(playerid)
+hook function SavePlayerStats(playerid)
 {
     SavePlayerCoolDowns(playerid);
-    return 1;
+	return continue(playerid);
 }
 
-hook ResetPlayerVariables(playerid)
+hook function ResetPlayerVariables(playerid)
 {
     PlayerCoolDown[playerid][pCasinoCool] = 10;
     PlayerCoolDown[playerid][pJackerCool] = 0;
     PlayerCoolDown[playerid][pAmmuCool] = 0;
-    return 1;
+	return continue(playerid);
 }

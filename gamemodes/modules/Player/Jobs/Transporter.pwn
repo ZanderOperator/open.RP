@@ -32,13 +32,13 @@ static const PossibleTransports[][E_TRANSPORTER_DATA] = {
 new TransportSpot[MAX_PLAYERS];
 
 
-hook ResetPlayerVariables(playerid)
+hook function ResetPlayerVariables(playerid)
 {
 	TCarry[playerid] = 0;
 	TDone[playerid] = 0;
 	TWorking[playerid] = 0;
 	carjob[playerid]= 0;
-	return 1;
+	return continue(playerid);
 }
 
 hook OnPlayerDeath(playerid, killerid, reason)

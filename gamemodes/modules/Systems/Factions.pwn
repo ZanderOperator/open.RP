@@ -154,10 +154,10 @@ Public: LoadingPlayerFaction(playerid)
     return 1;
 }
 
-hook LoadPlayerStats(playerid)
+hook function LoadPlayerStats(playerid)
 {
     LoadPlayerFaction(playerid);
-    return 1;
+	return continue(playerid);
 }
 
 SavePlayerFaction(playerid)
@@ -172,10 +172,10 @@ SavePlayerFaction(playerid)
     return 1;
 }
 
-hook SavePlayerStats(playerid)
+hook function SavePlayerStats(playerid)
 {
     SavePlayerFaction(playerid);
-    return 1;
+	return continue(playerid);
 }
 
 stock LoadFactions()
@@ -807,7 +807,7 @@ public OnFactionCountings(playerid)
     ##     ##  #######   #######  ##    ##  ######  
 */
 
-hook ResetPlayerVariables(playerid)
+hook function ResetPlayerVariables(playerid)
 {
     PlayerFaction[playerid][pLeader] = 0;
     PlayerFaction[playerid][pMember] = 0;
@@ -816,13 +816,14 @@ hook ResetPlayerVariables(playerid)
     RequestingBackup[playerid] = 0;
     FactionChatOn[playerid] = true;
     Player_SetLawDuty(playerid, false);
-    return 1;
+	return continue(playerid);
 }
 
-hook LoadServerData()
+hook function LoadServerData()
 {
     LoadFactions();
-    return 1;
+	return continue();
+
 }
 
 hook OnGameModeInit()

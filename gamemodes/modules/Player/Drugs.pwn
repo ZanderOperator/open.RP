@@ -60,13 +60,13 @@ new
 	DrugPackage[MAX_PLAYERS][pckg_Drugs];
 	
 
-hook ResetPlayerVariables(playerid)
+hook function ResetPlayerVariables(playerid)
 {
 	ResetPlayerDrugs(playerid);
 	PlayerDrugStatus[playerid][pDrugUsed] = 0;
     PlayerDrugStatus[playerid][pDrugSeconds] = 0;
     PlayerDrugStatus[playerid][pDrugOrder] = 0;
-	return 1;
+	return continue(playerid);
 }
 
 hook OnPlayerDisconnect(playerid, reason)
@@ -190,11 +190,11 @@ LoadPlayerDrugStats(playerid)
 	return 1;
 }
 
-hook LoadPlayerStats(playerid)
+hook function LoadPlayerStats(playerid)
 {
 	LoadPlayerDrugs(playerid);
 	LoadPlayerDrugStats(playerid);
-	return 1;
+	return continue(playerid);
 }
 
 SavePlayerDrugStats(playerid)
@@ -210,10 +210,10 @@ SavePlayerDrugStats(playerid)
 	return 1;
 }
 
-hook SavePlayerStats(playerid)
+hook function SavePlayerStats(playerid)
 {
 	SavePlayerDrugStats(playerid);
-	return 1;
+	return continue(playerid);
 }
 	
 ResetVehicleDrugs(vehicleid)

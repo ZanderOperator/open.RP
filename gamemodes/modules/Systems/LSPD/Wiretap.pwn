@@ -378,7 +378,7 @@ CMD:tracenumber(playerid, params[])
 */
 
 // Gets called under OnPlayerDisconnect etc
-hook ResetPlayerVariables(playerid)
+hook function ResetPlayerVariables(playerid)
 {
     // Bug device / Mole
     Player_SetHasListeningDevice   (playerid, false);
@@ -391,9 +391,8 @@ hook ResetPlayerVariables(playerid)
 
     // Wiretap
     if (Player_TappedBy(playerid) != INVALID_PLAYER_ID)
-    {
         SendClientMessage(Player_TappedBy(playerid), COLOR_RED, "[ ! ]: Line is busy (( Player is offline ))!");
-    }
+    
     Player_SetTappedBy(playerid, INVALID_PLAYER_ID);
     Player_SetTappingCall(playerid, false);
     Player_SetTappingSMS(playerid, false);
@@ -406,7 +405,7 @@ hook ResetPlayerVariables(playerid)
         Player_SetTracingNumber(playerid, false);
         TracingNumberZone [playerid] = -1;
     }
-    return 1;
+	return continue(playerid);
 }
 
 hook OnPlayerText(playerid, text[])

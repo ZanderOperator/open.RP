@@ -930,18 +930,19 @@ Public:SprayingTaggTimer(playerid)
     ##     ##  #######   #######  ##    ##  ######  
 */
 
-hook LoadServerData()
+hook function LoadServerData()
 {
     LoadGraffits();
 	LoadTags();
-    return 1;
+	return continue();
+
 }
 
-hook ResetPlayerVariables(playerid)
+hook function ResetPlayerVariables(playerid)
 {
     GraffitiID[playerid]	= -1;
 	TagID[playerid] = -1;
-    return 1;
+	return continue(playerid);
 }
 
 hook OnPlayerDisconnect(playerid, reason)

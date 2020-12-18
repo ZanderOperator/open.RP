@@ -33,10 +33,10 @@ Public: LoadingPlayerInventory(playerid)
     return 1;
 }
 
-hook LoadPlayerStats(playerid)
+hook function LoadPlayerStats(playerid)
 {
     LoadPlayerInventory(playerid);
-    return 1;
+	return continue(playerid);
 }
 
 SavePlayerInventory(playerid)
@@ -57,13 +57,13 @@ SavePlayerInventory(playerid)
     return 1;
 }
 
-hook SavePlayerStats(playerid)
+hook function SavePlayerStats(playerid)
 {
     SavePlayerInventory(playerid);
-    return 1;
+	return continue(playerid);
 }
 
-hook ResetPlayerVariables(playerid)
+hook function ResetPlayerVariables(playerid)
 {
     PlayerInventory[playerid][pMaskID] = -1;
     PlayerInventory[playerid][pToolkit] = 0;
@@ -73,5 +73,5 @@ hook ResetPlayerVariables(playerid)
     PlayerInventory[playerid][pParts] = 0;
     PlayerInventory[playerid][pRope] = 0;
     PlayerInventory[playerid][pBoomBox] = 0;
-    return 1;
+	return continue(playerid);
 }

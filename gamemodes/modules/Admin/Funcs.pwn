@@ -1548,16 +1548,16 @@ timer OnPlayerReconing[1000](playerid, targetid)
 	##     ##  #######   #######  ##    ## 
 */
 
-hook LoadPlayerStats(playerid)
+hook function LoadPlayerStats(playerid)
 {
     LoadPlayerAdminMessage(playerid);
-    return 1;
+	return continue(playerid);
 }
 
-hook SavePlayerStats(playerid)
+hook function SavePlayerStats(playerid)
 {
     SavePlayerAdminMessage(playerid);
-    return 1;
+	return continue(playerid);
 }
 
 hook OnPlayerConnect(playerid)
@@ -1578,7 +1578,7 @@ hook OnPlayerDisconnect(playerid, reason)
     return 1;
 }
 
-hook ResetPlayerVariables(playerid)
+hook function ResetPlayerVariables(playerid)
 {
     PlayerAdminMessage[playerid][pAdminMsg][0] = EOS;
     PlayerAdminMessage[playerid][pAdminMsgBy][0] = EOS;
@@ -1614,7 +1614,7 @@ hook ResetPlayerVariables(playerid)
 		DestroyReconTextDraws(playerid);
 		Bit4_Set(gr_SpecateId, playerid, 0);
 	}
-	return 1;
+	return continue(playerid);
 }
 
 public OnPlayerClickMap(playerid, Float:fX, Float:fY, Float:fZ)

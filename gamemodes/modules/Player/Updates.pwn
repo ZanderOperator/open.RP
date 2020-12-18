@@ -197,11 +197,11 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 	return 1;
 }
 
-hook ResetPlayerVariables(playerid)
+hook function ResetPlayerVariables(playerid)
 {
 	Player_SetReward(playerid, false);
 	PlayerUpdatePage[playerid] = 0;
-	return 1;
+	return continue(playerid);
 }
 
 CMD:update(playerid, params[])

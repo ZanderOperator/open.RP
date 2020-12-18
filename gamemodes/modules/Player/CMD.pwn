@@ -10,12 +10,12 @@ timer DeleteKillTimer[5000](playerid)
 	return 1;
 }
 
-hook ResetPlayerVariables(playerid)
+hook function ResetPlayerVariables(playerid)
 {
 	RemovePlayerScreenFade(playerid);
 	Entering[playerid] = false;
 	Exiting[playerid] = false;
-	return 1;
+	return continue(playerid);
 }
 
 hook OnPlayerKeyStateChange(playerid, newkeys, oldkeys)

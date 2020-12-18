@@ -4457,7 +4457,7 @@ CMD:setservertime(playerid, params[])
 	return 1;
 }
 
-hook ResetPlayerVariables(playerid)
+hook function ResetPlayerVariables(playerid)
 {
 	AdminFly[playerid] = false;
 
@@ -4481,5 +4481,5 @@ hook ResetPlayerVariables(playerid)
 	AdminMark5[playerid][1] = 0.0;
 	AdminMark5[playerid][2] = 0.0;
 	
-	return 1;
+	return continue(playerid);
 }

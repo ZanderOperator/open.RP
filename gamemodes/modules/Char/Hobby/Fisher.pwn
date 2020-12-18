@@ -50,10 +50,10 @@ Public: LoadingPlayerFishes(playerid)
     return 1;
 }
 
-hook LoadPlayerStats(playerid)
+hook function LoadPlayerStats(playerid)
 {
     LoadPlayerFishes(playerid);
-    return 1;
+	return continue(playerid);
 }
 
 SavePlayerFishes(playerid)
@@ -68,13 +68,13 @@ SavePlayerFishes(playerid)
     return 1;
 }
 
-hook SavePlayerStats(playerid)
+hook function SavePlayerStats(playerid)
 {
     SavePlayerFishes(playerid);
-    return 1;
+	return continue(playerid);
 }
 
-hook ResetPlayerVariables(playerid)
+hook function ResetPlayerVariables(playerid)
 {
     PlayerFish[playerid][pFishWorks] = 0;
     PlayerFish[playerid][pFishWeight] = 0;
@@ -83,7 +83,7 @@ hook ResetPlayerVariables(playerid)
 	SellingFish[playerid] = false;
 	FishingStamp[playerid] = 0;
 	FishSellStamp[playerid] = 0;
-    return 1;
+	return continue(playerid);
 }
 
 hook OnPlayerEnterCheckpoint(playerid) 

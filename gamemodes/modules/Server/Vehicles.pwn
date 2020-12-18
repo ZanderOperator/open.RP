@@ -442,7 +442,8 @@ stock AC_CreateVehicle(vehicletype, Float:x, Float:y, Float:z, Float:rotation, c
 
 Public: AC_DestroyVehicle(vehicleid)
 {
-	if( vehicleid == INVALID_VEHICLE_ID ) 		return 0;
+	if( vehicleid == INVALID_VEHICLE_ID ) 		
+		return 0;
 	if( !IsValidVehicle(vehicleid) )	
 		return 0;
 
@@ -713,10 +714,11 @@ timer JackerUnfreeze[3000](playerid)
 	##   	##  #######   #######  ##    ##  ######
 */
 
-hook LoadServerData()
+hook function LoadServerData()
 {
 	LoadServerVehicles();
-	return 1;
+	return continue();
+
 }
 
 hook OnVehicleDeath(vehicleid, killerid)

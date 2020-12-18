@@ -96,10 +96,10 @@ DestroyVehicleSiren(vehicleid)
 	return 1;
 }
 
-hook ResetVehicleInfo(vehicleid)
+hook function ResetVehicleInfo(vehicleid)
 {
     DestroyVehicleSiren(vehicleid);
-    return 1;
+    return continue(vehicleid);
 }
 
 
