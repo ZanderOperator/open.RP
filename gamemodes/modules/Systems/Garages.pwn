@@ -504,7 +504,8 @@ hook function ResetPlayerVariables(playerid)
 
 hook OnPlayerEnterDynArea(playerid, areaid)
 {
-    new garage = Area_GetGarageID(areaid);
+    new 
+        garage = Area_GetGarageID(areaid);
     if (!Iter_Contains(Garages, garage))
         return 1;
     

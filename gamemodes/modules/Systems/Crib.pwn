@@ -24,8 +24,6 @@
 #define ZONE_WIDTH              150.0
 #define ZONE_HEIGHT             195.0
 
-#define MAX_NEAR_HOUSE_RANGE    25.0
-
 #define CP_TYPE_HOUSE       (1)
 
 
@@ -121,6 +119,7 @@ enum
 };
 
 static
+    HouseAreaID[MAX_PLAYERS],
     HouseCP[MAX_PLAYERS],
     InHouse[MAX_PLAYERS], 
     InfrontHouse[MAX_PLAYERS],
@@ -185,6 +184,16 @@ Player_SetHouseCP(playerid, v)
     HouseCP[playerid] = v;
 }
 
+Player_HouseArea(playerid)
+{
+    return HouseAreaID[playerid];
+}
+
+Player_SetHouseArea(playerid, v)
+{
+    HouseAreaID[playerid] = v;
+}
+
 Player_GetRammingDoor(playerid)
 {
     return RammingDoor[playerid];
@@ -240,31 +249,6 @@ stock UpdateHouseVirtualWorld(houseid)
         HouseInfo[houseid][hSQLID]
     );
     return 1;
-}
-
-stock GetNearestHouse(playerid)
-{
-	new 
-		houseid = INVALID_BIZNIS_ID,
-		slotid = 0,
-		Float:hX, Float:hY, Float:hZ,
-		close_houses[MAX_SUBJECTS_IN_RANGE][E_CLOSEST_SUBJECTS];
-	
-	foreach(new i : Houses)
-	{
-		if(slotid >= MAX_SUBJECTS_IN_RANGE)
-			break;
-		
-		if(IsPlayerInRangeOfPoint(playerid, MAX_NEAR_HOUSE_RANGE,  HouseInfo[i][hEnterX], HouseInfo[i][hEnterY], HouseInfo[i][hEnterZ]))
-		{
-			close_houses[slotid][cDistance] = GetPlayerDistanceFromPoint(playerid, hX, hY, hZ);
-			close_houses[slotid][cID] = i;
-			slotid++;
-		}
-	}
-	SortNearestRangeID(close_houses, slotid);
-	houseid = close_houses[0][cID];	
-	return houseid;
 }
 
 stock ResetHouseVariables(playerid)
@@ -467,12 +451,20 @@ static CreateHouseEnter(houseid)
 {
     if (IsValidDynamicCP(HouseInfo[houseid][hEnterCP]))
         DestroyDynamicCP(HouseInfo[houseid][hEnterCP]);
+    
+    if(IsValidDynamicArea(HouseInfo[houseid][hAreaID]))
+        DestroyDynamicArea(HouseInfo[houseid][hAreaID]);
 
     if (HouseInfo[houseid][h3dViwo] > 0)
+    {
         HouseInfo[houseid][hEnterCP] = CreateDynamicCP(HouseInfo[houseid][hEnterX], HouseInfo[houseid][hEnterY], HouseInfo[houseid][hEnterZ]-1.0, 2.0, HouseInfo[houseid][h3dViwo], 5, -1, 5.0);
+        HouseInfo[houseid][hAreaID] = CreateDynamicCircle(HouseInfo[houseid][hEnterX], HouseInfo[houseid][hEnterY], 15.0, HouseInfo[houseid][h3dViwo], -1, -1);
+    }
     else
+    {
         HouseInfo[houseid][hEnterCP] = CreateDynamicCP(HouseInfo[houseid][hEnterX], HouseInfo[houseid][hEnterY], HouseInfo[houseid][hEnterZ]-1.0, 2.0, -1, -1, -1, 5.0);
-   
+        HouseInfo[houseid][hAreaID] = CreateDynamicCircle(HouseInfo[houseid][hEnterX], HouseInfo[houseid][hEnterY], 15.0, -1, -1, -1);
+    }
     return 1;
 }
 
@@ -756,6 +748,9 @@ stock ResetHouseInfo(houseid)
     if(IsValidDynamicCP(HouseInfo[houseid][hEnterCP]))
         DestroyDynamicCP(HouseInfo[houseid][hEnterCP]);
 
+    if(IsValidDynamicArea(HouseInfo[houseid][hAreaID]))
+        DestroyDynamicArea(HouseInfo[houseid][hAreaID]);
+
     if (HouseAlarmActive[houseid])
     {
         GangZoneDestroy(HouseAlarmZone[houseid]);
@@ -778,7 +773,21 @@ Public:ResetHouseEnumerator()
     return 1;
 }
 
-stock CP_GetHouseID(checkpointid)
+static Area_GetHouseID(areaid)
+{
+    new houseid = INVALID_HOUSE_ID;
+    foreach(new house: Houses)
+    {
+        if(HouseInfo[house][hAreaID] == areaid)
+        {
+            houseid = house;
+            break;
+        }
+    }
+    return houseid;
+}
+
+static CP_GetHouseID(checkpointid)
 {
     new houseid = INVALID_HOUSE_ID;
     foreach(new house: Houses)
@@ -1372,6 +1381,24 @@ hook OnPlayerLeaveDynamicCP(playerid, checkpointid)
     return 1;
 }
 
+hook OnPlayerEnterDynArea(playerid, areaid)
+{
+    if (!Iter_Contains(Houses, Area_GetHouseID(areaid)))
+        return 1;
+
+    Player_SetHouseArea(playerid, areaid);
+    return 1;
+}
+
+hook OnPlayerLeaveDynArea(playerid, areaid)
+{
+    if (!Iter_Contains(Houses, Area_GetHouseID(areaid))) 
+        return 1;
+
+    Player_SetHouseArea(playerid, INVALID_HOUSE_ID);
+    return 1;
+}
+
 public OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
 {
     if ((newkeys & KEY_SPRINT) && !(oldkeys & KEY_SPRINT))
@@ -1537,10 +1564,13 @@ hook OnPlayerKeyInputEnds(playerid, type, succeeded)
 
 hook OnPlayerWeaponShot(playerid, weaponid, hittype, hitid, Float:fX, Float:fY, Float:fZ)
 {
-    new houseid = GetNearestHouse(playerid);
-    if (houseid == INVALID_HOUSE_ID || !HouseInfo[houseid][hLock])
+    new 
+        houseid = Player_HouseArea(playerid);
+    if(!Iter_Contains(Houses, houseid))
         return 1;
-
+    if(!HouseInfo[houseid][hLock])
+        return 1;
+        
     if (GetDistanceBetweenPoints3D(HouseInfo[houseid][hEnterX], HouseInfo[houseid][hEnterY], HouseInfo[houseid][hEnterZ], fX, fY, fZ) <= 2.5)
     {
         if (AC_GetPlayerWeapon(playerid) != WEAPON_SHOTGUN && AC_GetPlayerWeapon(playerid) != WEAPON_SHOTGSPA)
@@ -2760,12 +2790,7 @@ CMD:houseentrance(playerid, params[])
     HouseInfo[houseid][hEnterZ] = Z-0.8;
     HouseInfo[houseid][h3dViwo] = GetPlayerVirtualWorld(playerid);
 
-    Streamer_SetFloatData(STREAMER_TYPE_CP, HouseInfo[houseid][hEnterCP], E_STREAMER_X          , HouseInfo[houseid][hEnterX]);
-    Streamer_SetFloatData(STREAMER_TYPE_CP, HouseInfo[houseid][hEnterCP], E_STREAMER_Y          , HouseInfo[houseid][hEnterY]);
-    Streamer_SetFloatData(STREAMER_TYPE_CP, HouseInfo[houseid][hEnterCP], E_STREAMER_Z          , HouseInfo[houseid][hEnterZ]);
-    Streamer_SetIntData(STREAMER_TYPE_CP,   HouseInfo[houseid][hEnterCP], E_STREAMER_WORLD_ID   , HouseInfo[houseid][h3dViwo]);
-    Streamer_SetIntData(STREAMER_TYPE_CP,   HouseInfo[houseid][hEnterCP], E_STREAMER_INTERIOR_ID, GetPlayerInterior(playerid));
-    Streamer_Update(playerid);
+    CreateHouseEnter(houseid);
 
     mysql_fquery(g_SQL, 
         "UPDATE houses SET enterX = '%f', enterY = '%f', enterZ = '%f', viwoexit = '%d' WHERE id = '%d'",

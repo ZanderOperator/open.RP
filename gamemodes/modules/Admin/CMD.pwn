@@ -769,7 +769,7 @@ CMD:edit(playerid, params[])
 		SendClientMessage(playerid, COLOR_RED, "|____________________________________________|");
 		return 1;
 	}
-	i = GetNearestBizz(playerid);
+	i = Player_InfrontBizz(playerid);
 	if(i != INVALID_BIZNIS_ID)
 	{
 		if(proplev >= 0)
@@ -821,7 +821,7 @@ CMD:edit(playerid, params[])
 		if(proptype != 0 && propid != -1)
 			return va_SendClientMessage(playerid, COLOR_RED, "[ ! ]: You just adjusted %s on Bizz ID %d[SQLID: %d][Name: %s] on value %d.", x_job, propid, BizzInfo[propid][bSQLID], BizzInfo[propid][bMessage], proplev);
 	}
-    i = GetNearestHouse(playerid);
+    i = Player_InfrontHouse(playerid);
 	if(i != INVALID_HOUSE_ID)
 	{
 		if(proplev > 0)

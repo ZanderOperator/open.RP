@@ -492,7 +492,8 @@ new
 
 */
 
-enum E_HOUSES_INFO {
+enum E_HOUSES_INFO 
+{
 	hSQLID,
 	Float:hEnterX,
 	Float:hEnterY,
@@ -501,6 +502,7 @@ enum E_HOUSES_INFO {
 	Float:hExitY,
 	Float:hExitZ,
 	hEnterCP,
+	hAreaID,
 	hOwnerID,
 	hAdress[32],
 	hValue,
@@ -684,6 +686,7 @@ enum E_BIZNIS_INFO
 	bMusic,
 	bEnterPickup,
 	bEnterCP,
+	bAreaID,
 	bFurSlots,
 	bFurSQL[ BIZZ_FURNITURE_VIP_GOLD_OBJCTS ],
 	bFurModelid[ BIZZ_FURNITURE_VIP_GOLD_OBJCTS ],
