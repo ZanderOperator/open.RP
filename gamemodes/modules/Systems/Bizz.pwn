@@ -1042,10 +1042,11 @@ Public:ResetBuySkin(playerid)
     ##     ##  #######   #######  ##    ##  ######
 */
 
-hook LoadServerData()
+hook function LoadServerData()
 {
     LoadBizzes();
-    return 1;
+	return continue();
+
 }
 
 hook OnPlayerEnterDynamicCP(playerid, checkpointid)
@@ -1151,7 +1152,7 @@ hook OnPlayerLeaveDynArea(playerid, areaid)
     return 1;
 }
 
-hook ResetPlayerVariables(playerid)
+hook function ResetPlayerVariables(playerid)
 {
     DestroyBizzInfoTD(playerid);
 
@@ -1166,7 +1167,7 @@ hook ResetPlayerVariables(playerid)
     Player_SetBizzCP(playerid, INVALID_BIZNIS_ID);
     Player_SetInfrontBizz(playerid, INVALID_BIZNIS_ID);
     Player_SetInBusiness(playerid, INVALID_BIZNIS_ID);
-    return 1;
+	return continue(playerid);
 }
 
 hook OnPlayerKeyStateChange(playerid, newkeys, oldkeys)

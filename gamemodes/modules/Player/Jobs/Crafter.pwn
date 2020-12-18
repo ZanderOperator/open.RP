@@ -409,10 +409,10 @@ hook OnGameModeInit()
 	return 1;
 }
 
-hook ResetPlayerVariables(playerid)
+hook function ResetPlayerVariables(playerid)
 {
 	ResetFactoryVariables(playerid);
-	return 1;
+	return continue(playerid);
 }
 
 hook OnPlayerEnterCheckpoint(playerid)

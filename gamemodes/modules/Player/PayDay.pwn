@@ -56,10 +56,10 @@ Public: LoadingPlayerPayday(playerid)
     return 1;
 }
 
-hook LoadPlayerStats(playerid)
+hook function LoadPlayerStats(playerid)
 {
     LoadPlayerPayday(playerid);
-    return 1;
+	return continue(playerid);
 }
 
 SavePlayerPayday(playerid)
@@ -78,13 +78,13 @@ SavePlayerPayday(playerid)
     return 1;
 }
 
-hook SavePlayerStats(playerid)
+hook function SavePlayerStats(playerid)
 {
     SavePlayerPayday(playerid);
-    return 1;
+	return continue(playerid);
 }
 
-hook ResetPlayerVariables(playerid)
+hook function ResetPlayerVariables(playerid)
 {
     PaydayInfo[playerid][pPayDay] = 0;
     PaydayInfo[playerid][pPayDayMoney] = 0;
@@ -92,7 +92,7 @@ hook ResetPlayerVariables(playerid)
     PaydayInfo[playerid][pProfit] = 0;
     PaydayInfo[playerid][pPayDayDialog][0] = EOS;
     PaydayInfo[playerid][pPayDayDate][0] = EOS;
-    return 1;
+	return continue(playerid);
 }
 
 

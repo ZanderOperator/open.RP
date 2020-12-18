@@ -512,11 +512,11 @@ timer MechCountForPlayer[1000](playerid, giveplayerid, service)
 	return 1;
 }
 
-hook ResetPlayerVariables(playerid)
+hook function ResetPlayerVariables(playerid)
 {
 	ResetMechanicVariables(playerid);
 	MechanicDuty[playerid] = (false);
-	return 1;
+	return continue(playerid);
 }
 
 hook OnGameModeInit() 

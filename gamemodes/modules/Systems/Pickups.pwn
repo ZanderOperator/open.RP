@@ -9,6 +9,7 @@
 	##       ##   ### ##     ## ##     ## 
 	######## ##    ##  #######  ##     ## 
 */
+
 enum E_PICKUP_INFO
 {
 	epSQLID,
@@ -244,10 +245,11 @@ stock static GetPickupID()
 	##     ##  #######   #######  ##    ##  ######  
 */
 
-hook LoadServerData()
+hook function LoadServerData()
 {
 	LoadPickups();
-	return 1;
+	return continue();
+
 }
 
 hook OnPlayerEnterDynamicCP(playerid, checkpointid)
@@ -277,12 +279,12 @@ hook OnPlayerLeaveDynamicCP(playerid, checkpointid)
 }
 
 
-hook ResetPlayerVariables(playerid)
+hook function ResetPlayerVariables(playerid)
 {
 	Player_SetInPickup(playerid, -1);
 	Player_SetInfrontPickup(playerid, -1);
 	Player_SetPickupCP(playerid, -1);
-	return 1;
+	return continue(playerid);
 }
 
 hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])

@@ -144,28 +144,28 @@ stock IsAtBank(playerid) {
 */
 
 
-hook LoadPlayerStats(playerid)
+hook function LoadPlayerStats(playerid)
 {
 	LoadPlayerCredit(playerid);
 	LoadPlayerSavings(playerid);
-	return 1;
+	return continue(playerid);
 }
 
-hook SavePlayerStats(playerid)
+hook function SavePlayerStats(playerid)
 {
 	SavePlayerCredit(playerid);
 	SavePlayerSavings(playerid);
-	return 1;
+	return continue(playerid);
 }
 
 
-hook ResetPlayerVariables(playerid)
+hook function ResetPlayerVariables(playerid)
 {
 	ResetCreditVars(playerid);
 	ResetSavingsVars(playerid);
 	PaymentBuyPrice[playerid] = 0;
 	Bit16_Set(r_SavingsMoney, playerid, 0);
-	return 1;
+	return continue(playerid);
 }
 
 hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])

@@ -165,7 +165,7 @@ hook OnPlayerSpawn(playerid)
     return 1;
 }
 
-hook ResetPlayerVariables(playerid)
+hook function ResetPlayerVariables(playerid)
 {
     new lineIndex = Player_PhoneLine(playerid);
     if (lineIndex != -1)
@@ -176,7 +176,7 @@ hook ResetPlayerVariables(playerid)
     }
     blockedNews[playerid] = false;
     OnLive[playerid] = false;
-    return 1;
+	return continue(playerid);
 }
 
 hook OnPlayerConnect(playerid)

@@ -82,10 +82,10 @@ Public: LoadingPlayerJob(playerid)
     return 1;
 }
 
-hook LoadPlayerStats(playerid)
+hook function LoadPlayerStats(playerid)
 {
     LoadPlayerJob(playerid);
-    return 1;
+	return continue(playerid);
 }
 
 SavePlayerJob(playerid)
@@ -100,10 +100,10 @@ SavePlayerJob(playerid)
     return 1;
 }
 
-hook SavePlayerStats(playerid)
+hook function SavePlayerStats(playerid)
 {
     SavePlayerJob(playerid);
-    return 1;
+	return continue(playerid);
 }
 
 SaveJobData() 
@@ -151,10 +151,11 @@ Public: OnServerJobsLoaded()
 	return (true);
 }
 
-hook LoadServerData()
+hook function LoadServerData()
 {
 	LoadServerJobs();
-	return 1;
+	return continue();
+
 }
 
 /*
@@ -245,14 +246,14 @@ JobsList() {
 	- hooks
 */	
 
-hook ResetPlayerVariables(playerid)
+hook function ResetPlayerVariables(playerid)
 {
     PlayerJob[playerid][pJob] = 0;
     PlayerJob[playerid][pContractTime] = 0;
     PlayerJob[playerid][pFreeWorks] = 0;
 
 	IsWorkingJob[playerid] = false;
-    return 1;
+	return continue(playerid);
 }
 
 hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])

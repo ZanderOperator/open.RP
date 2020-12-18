@@ -658,7 +658,7 @@ public SavePlayerData(playerid)
 }
 
 #include <YSI_Coding\y_hooks>
-hook ResetPlayerVariables(playerid)
+hook function ResetPlayerVariables(playerid)
 {
 	PlayerInfo[playerid][pForumName] 		= EOS;
 	PlayerInfo[playerid][pLastLogin] 		= EOS;
@@ -702,7 +702,7 @@ hook ResetPlayerVariables(playerid)
 	PlayerKeys[playerid][pVehicleKey]		= -1;
 	PlayerKeys[playerid][pWarehouseKey] 	= -1;
 	
-	return 1;
+	return continue(playerid);
 }
 
 stock SetPlayerSpawnInfo(playerid)

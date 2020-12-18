@@ -29,10 +29,10 @@ Public: LoadingPlayerVIP(playerid)
     return 1;
 }
 
-hook LoadPlayerStats(playerid)
+hook function LoadPlayerStats(playerid)
 {
     LoadPlayerVIP(playerid);
-    return 1;
+	return continue(playerid);
 }
 
 SavePlayerVIP(playerid)
@@ -48,19 +48,19 @@ SavePlayerVIP(playerid)
     return 1;
 }
 
-hook SavePlayerStats(playerid)
+hook function SavePlayerStats(playerid)
 {
     SavePlayerVIP(playerid);
-    return 1;
+	return continue(playerid);
 }
 
-hook ResetPlayerVariables(playerid)
+hook function ResetPlayerVariables(playerid)
 {
     PlayerVIP[playerid][pDonateRank]		= 0;
     PlayerVIP[playerid][pDonateTime]		= 0;
     PlayerVIP[playerid][pDonatorVehicle] 	= 0;
 	PlayerVIP[playerid][pDonatorVehPerms] 	= 0;
-    return 1;
+	return continue(playerid);
 }
 
 SetPlayerPremiumVIP(playerid, level)

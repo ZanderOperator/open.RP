@@ -35,10 +35,10 @@ RemovePlayerMask(playerid)
     return 1;
 }
 
-hook ResetPlayerVariables(playerid)
+hook function ResetPlayerVariables(playerid)
 {
     RemovePlayerMask(playerid);
-    return 1;
+	return continue(playerid);
 }
 
 hook OnPlayerStreamIn(playerid, forplayerid)

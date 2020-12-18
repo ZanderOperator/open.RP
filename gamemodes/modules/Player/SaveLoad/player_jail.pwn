@@ -29,10 +29,10 @@ Public: LoadingPlayerJailStats(playerid)
     return 1;
 }
 
-hook LoadPlayerStats(playerid)
+hook function LoadPlayerStats(playerid)
 {
     LoadPlayerJailStats(playerid);
-    return 1;
+	return continue(playerid);
 }
 
 SavePlayerJailStats(playerid)
@@ -48,18 +48,18 @@ SavePlayerJailStats(playerid)
     return 1;
 }
 
-hook SavePlayerStats(playerid)
+hook function SavePlayerStats(playerid)
 {
     SavePlayerJailStats(playerid);
-    return 1;
+	return continue(playerid);
 }
 
-hook ResetPlayerVariables(playerid)
+hook function ResetPlayerVariables(playerid)
 {
     PlayerJail[playerid][pJailed]		= 0;
     PlayerJail[playerid][pJailTime]		= 0;
     PlayerJail[playerid][pArrested] 	= 0;
 	PlayerJail[playerid][pBailPrice] 	= 0;
     PlayerJail[playerid][pJailJob]      = 0;
-    return 1;
+	return continue(playerid);
 }

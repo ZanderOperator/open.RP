@@ -137,10 +137,10 @@ Float:GetVSpeed(playerid, pvid=0)
 	return floatmul(floatmul(rtn, 100), 1.959);
 }
 
-hook ResetPlayerVariables(playerid)
+hook function ResetPlayerVariables(playerid)
 {
 	DestroySpeedoTextDraws(playerid);
- 	return 1;
+	return continue(playerid);
 }
 
 hook OnPlayerUpdate(playerid) // PHONE_HIDE = 0

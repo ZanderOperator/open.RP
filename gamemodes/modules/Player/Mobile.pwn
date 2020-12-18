@@ -416,10 +416,10 @@ UpdatePlayerMobile(playerid)
 	return 1;
 }
 
-hook SavePlayerData(playerid)
+hook function SavePlayerStats(playerid)
 {
 	UpdatePlayerMobile(playerid);
-	return 1;
+	return continue(playerid);
 }
 
 stock LoadPlayerMobile(playerid)
@@ -464,10 +464,10 @@ public OnPlayerMobileLoad(playerid)
 }
 
 
-hook LoadPlayerStats(playerid)
+hook function LoadPlayerStats(playerid)
 {
 	LoadPlayerMobile(playerid);
-	return 1;
+	return continue(playerid);
 }
 
 stock PhoneMessage(playerid, phonestring[])
@@ -2634,10 +2634,11 @@ stock PlayerHangup(playerid)
 	##     ##  #######   #######  ##    ##  ######
 */
 
-hook LoadServerData()
+hook function LoadServerData()
 {
 	LoadTowerData();
-	return 1;
+	return continue();
+
 }
 
 hook OnGameModeInit()
@@ -2652,7 +2653,7 @@ hook OnPlayerConnect(playerid)
 	return 1;
 }
 
-hook ResetPlayerVariables(playerid)
+hook function ResetPlayerVariables(playerid)
 {
 	HidePlayerMobile(playerid);
 	
@@ -2668,7 +2669,7 @@ hook ResetPlayerVariables(playerid)
 	PlayerMobile[playerid][pMobileCost] 		= 0;
 	PlayerMobile[playerid][pPhoneBG] 			= -1263225696;
 	PlayerMobile[playerid][pPhoneMask] 			= 0;
-	return 1;
+	return continue(playerid);
 }
 
 hook OnPlayerText(playerid, text[])

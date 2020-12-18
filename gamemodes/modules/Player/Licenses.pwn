@@ -138,10 +138,10 @@ Public: LoadingPlayerLicenses(playerid)
     return 1;
 }
 
-hook LoadPlayerStats(playerid)
+hook function LoadPlayerStats(playerid)
 {
     LoadPlayerLicenses(playerid);
-    return 1;
+	return continue(playerid);
 }
 
 SavePlayerLicenses(playerid)
@@ -160,10 +160,10 @@ SavePlayerLicenses(playerid)
     return 1;
 }
 
-hook SavePlayerStats(playerid)
+hook function SavePlayerStats(playerid)
 {
     SavePlayerLicenses(playerid);
-    return 1;
+	return continue(playerid);
 }
 
 /*
@@ -176,7 +176,7 @@ hook SavePlayerStats(playerid)
 	##     ##  #######   #######  ##    ## 
 */
 
-hook ResetPlayerVariables(playerid)
+hook function ResetPlayerVariables(playerid)
 {
 	ResetPlayerDrivingVars(playerid);
     LicenseInfo[playerid][pCarLic] = 0;
@@ -185,7 +185,7 @@ hook ResetPlayerVariables(playerid)
     LicenseInfo[playerid][pFishLic] = 0;
     LicenseInfo[playerid][pFlyLic] = 0,
     LicenseInfo[playerid][pPassport] = 0;
-    return 1;
+	return continue(playerid);
 }
 
 hook OnPlayerStateChange(playerid, newstate, oldstate)

@@ -253,10 +253,11 @@ static Area_GetGarageID(areaid)
     ##     ##  #######   #######  ##    ##  ######
 */
 
-hook LoadServerData()
+hook function LoadServerData()
 {
     LoadHouseGarages();
-    return 1;
+	return continue();
+
 }
 
 hook OnGameModeInit()
@@ -479,7 +480,7 @@ hook OnGameModeInit()
     return 1;
 }
 
-hook ResetPlayerVariables(playerid)
+hook function ResetPlayerVariables(playerid)
 {
     if (GarageBuyer[playerid] != INVALID_PLAYER_ID)
     {
@@ -498,7 +499,7 @@ hook ResetPlayerVariables(playerid)
     Player_SetInGarage(playerid, -1);
 	Player_SetInfrontGarage(playerid, -1);
 	Player_SetGarageArea(playerid, -1);
-    return 1;
+	return continue(playerid);
 }
 
 hook OnPlayerEnterDynArea(playerid, areaid)

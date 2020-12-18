@@ -84,7 +84,7 @@ Player_SetRentVehicle(playerid, vehicleid)
 	rentedVehID[playerid] = vehicleid;
 }
 
-hook AC_DestroyVehicle(vehicleid)
+hook function AC_DestroyVehicle(vehicleid)
 {
 	if(VehicleInfo[vehicleid][vUsage] == 5) // VEHICLE_USAGE_RENT
 	{
@@ -97,7 +97,7 @@ hook AC_DestroyVehicle(vehicleid)
 			}
 		}
 	}
-	return 1;
+	return continue(vehicleid);
 }
 
 stock static PlayerRentVehicle(playerid, modelid, price)

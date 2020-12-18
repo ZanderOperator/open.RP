@@ -177,10 +177,11 @@ static stock PlayerAmmunationBuyTime(playerid, days)
     ##     ##  #######   #######  ##    ##
 */
 
-hook LoadServerData()
+hook function LoadServerData()
 {
     LoadAmmunation();
-    return 1;
+	return continue();
+
 }
 
 hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])

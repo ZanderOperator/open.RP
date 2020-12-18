@@ -117,7 +117,7 @@ static stock
 
 
 
-hook ResetPlayerVariables(playerid)
+hook function ResetPlayerVariables(playerid)
 {
     PlayerGym[playerid][pMuscle] = 0;
     PlayerGym[playerid][pGymTimes] = 0;
@@ -140,7 +140,7 @@ hook ResetPlayerVariables(playerid)
 	Bit1_Set( r_PlayerExitingGym, playerid, false);
 	Bit4_Set(r_PlayerGymMachine, playerid, 0);
 	Bit8_Set(r_PreviousGymCount, playerid, 0);
-	return 1;
+	return continue(playerid);
 }
 
 timer StartGymBench[50](playerid, mode) 
@@ -1024,10 +1024,10 @@ Public: LoadingPlayerFitness(playerid)
     return 1;
 }
 
-hook LoadPlayerStats(playerid)
+hook function LoadPlayerStats(playerid)
 {
     LoadPlayerFitness(playerid);
-    return 1;
+	return continue(playerid);
 }
 
 SavePlayerFitness(playerid)
@@ -1043,8 +1043,8 @@ SavePlayerFitness(playerid)
     return 1;
 }
 
-hook SavePlayerStats(playerid)
+hook function SavePlayerStats(playerid)
 {
     SavePlayerFitness(playerid);
-    return 1;
+	return continue(playerid);
 }

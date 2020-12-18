@@ -311,7 +311,7 @@ SendFDChannelMessage(color = COLOR_WHITE, message[], fdchannel_id)
 */
 
 // Also called on OnPlayerDisconnect
-hook ResetPlayerVariables(playerid)
+hook function ResetPlayerVariables(playerid)
 {
     Player_SetIsCuffed(playerid, false);
     Player_SetIsTased(playerid, false);
@@ -326,7 +326,7 @@ hook ResetPlayerVariables(playerid)
 
     PoliceWeapon[playerid] = 0;
     PoliceAmmo  [playerid] = 0;
-    return 1;
+	return continue(playerid);
 }
 
 hook OnPlayerSpawn(playerid)

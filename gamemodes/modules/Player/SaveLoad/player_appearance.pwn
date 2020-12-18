@@ -29,10 +29,10 @@ Public: LoadingPlayerAppearance(playerid)
     return 1;
 }
 
-hook LoadPlayerStats(playerid)
+hook function LoadPlayerStats(playerid)
 {
     LoadPlayerAppearance(playerid);
-    return 1;
+	return continue(playerid);
 }
 
 SavePlayerAppearance(playerid)
@@ -49,18 +49,18 @@ SavePlayerAppearance(playerid)
     return 1;
 }
 
-hook SavePlayerStats(playerid)
+hook function SavePlayerStats(playerid)
 {
     SavePlayerAppearance(playerid);
-    return 1;
+	return continue(playerid);
 }
 
-hook ResetPlayerVariables(playerid)
+hook function ResetPlayerVariables(playerid)
 {
     PlayerAppearance[playerid][pTmpSkin] = 0;
     PlayerAppearance[playerid][pSkin] = 0;
     PlayerAppearance[playerid][pWalkStyle] = 0;
     PlayerAppearance[playerid][pAccent][0] = EOS;
     PlayerAppearance[playerid][pLook][0] = EOS;
-    return 1;
+	return continue(playerid);
 }

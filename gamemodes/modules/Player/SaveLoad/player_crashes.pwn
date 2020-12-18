@@ -178,14 +178,14 @@ ResetPlayerCrash(playerid)
     return 1;
 }
 
-hook LoadPlayerStats(playerid)
+hook function LoadPlayerStats(playerid)
 {
     LoadPlayerCrashes(playerid);
-    return 1;
+	return continue(playerid);
 }
 
-hook ResetPlayerVariables(playerid)
+hook function ResetPlayerVariables(playerid)
 {
     ResetPlayerCrash(playerid);
-    return 1;
+	return continue(playerid);
 }

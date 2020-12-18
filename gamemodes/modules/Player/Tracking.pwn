@@ -71,8 +71,8 @@ hook OnPlayerStateChange(playerid, newstate, oldstate)
     return 1;
 }
 
-hook ResetPlayerVariables(playerid)
+hook function ResetPlayerVariables(playerid)
 {
     Player_SetLastVehicle(playerid, INVALID_VEHICLE_ID);
-    return 1;
+	return continue(playerid);
 }

@@ -360,13 +360,13 @@ public LoadingPlayerDeaths(playerid)
 	##     ##  #######   #######  ##    ## 
 */
 
-hook LoadPlayerStats(playerid)
+hook function LoadPlayerStats(playerid)
 {
 	LoadPlayerDeath(playerid);
-	return 1;
+	return continue(playerid);
 }
 
-hook ResetPlayerVariables(playerid)
+hook function ResetPlayerVariables(playerid)
 {
 	if( Bit1_Get( gr_DeathCountStarted, playerid ) ) 
 	{
@@ -384,7 +384,7 @@ hook ResetPlayerVariables(playerid)
 	PlayerDeath[playerid][pDeathY] 			= 0.0;
 	PlayerDeath[playerid][pDeathZ] 			= 0.0;
 	
-	return 1;
+	return continue(playerid);
 }
 
 hook OnPlayerTakeDamage(playerid, issuerid, Float: amount, weaponid, bodypart)

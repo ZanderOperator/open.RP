@@ -625,7 +625,7 @@ stock IsPlayerFacingPoint(playerid, Float:dOffset, Float:pX, Float:pY, Float:pZ)
 	return false;
 }
 
-hook ResetPlayerVariables(playerid)
+hook function ResetPlayerVariables(playerid)
 {
 	if(Bit1_Get(PlayingBBall, playerid))
 	{
@@ -648,7 +648,7 @@ hook ResetPlayerVariables(playerid)
 		BasketID[playerid] = NONE;
 		Bit1_Set(PlayingBBall, playerid, false);
 	}
-	return 1;
+	return continue(playerid);
 }
 
 hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])

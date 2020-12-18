@@ -28,10 +28,10 @@ Public: LoadingPlayerAdminMessage(playerid)
     return 1;
 }
 
-hook LoadPlayerStats(playerid)
+hook function LoadPlayerStats(playerid)
 {
     LoadPlayerAdminMessage(playerid);
-    return 1;
+	return continue(playerid);
 }
 
 SavePlayerAdminMessage(playerid)
@@ -47,18 +47,18 @@ SavePlayerAdminMessage(playerid)
     return 1;
 }
 
-hook SavePlayerStats(playerid)
+hook function SavePlayerStats(playerid)
 {
     SavePlayerAdminMessage(playerid);
-    return 1;
+	return continue(playerid);
 }
 
-hook ResetPlayerVariables(playerid)
+hook function ResetPlayerVariables(playerid)
 {
     PlayerAdminMessage[playerid][pAdminMsg][0] = EOS;
     PlayerAdminMessage[playerid][pAdminMsgBy][0] = EOS;
     PlayerAdminMessage[playerid][pAdmMsgConfirm] = false;
-    return 1;
+	return continue(playerid);
 }
 
 hook OnPlayerDisconnect(playerid, reason)

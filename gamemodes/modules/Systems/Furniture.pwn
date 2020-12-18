@@ -2455,23 +2455,15 @@ stock ResetHouseFurnitureEnum(houseid)
 static stock GetPlayerFurnitureHouse(playerid)
 {
     new houseid = INVALID_HOUSE_ID;
-    if (PlayerEditingHouse[playerid] != INVALID_HOUSE_ID)
+    if (Iter_Contains(Houses, PlayerEditingHouse[playerid]))
     {
-        new house = PlayerEditingHouse[playerid];
-        if (IsPlayerInRangeOfPoint(playerid, 250.0, HouseInfo[house][hExitX], HouseInfo[house][hExitY], HouseInfo[house][hExitZ])
-            && GetPlayerInterior(playerid) == HouseInfo[house][hInt] && GetPlayerVirtualWorld(playerid) == HouseInfo[house][hVirtualWorld])
-        {
-            houseid = house;
-        }
+        if(Player_InHouse(playerid) == PlayerEditingHouse[playerid])
+            houseid = PlayerEditingHouse[playerid];
     }
-    if (PlayerKeys[playerid][pHouseKey] != INVALID_HOUSE_ID)
+    else if (Iter_Contains(Houses, PlayerKeys[playerid][pHouseKey]))
     {
-        new house = PlayerKeys[playerid][pHouseKey];
-        if (IsPlayerInRangeOfPoint(playerid, 250.0, HouseInfo[house][hExitX], HouseInfo[house][hExitY], HouseInfo[house][hExitZ])
-            && GetPlayerInterior(playerid) == HouseInfo[house][hInt] && GetPlayerVirtualWorld(playerid) == HouseInfo[house][hVirtualWorld])
-        {
-            houseid = house;
-        }
+        if(Player_InHouse(playerid) == PlayerKeys[playerid][pHouseKey])
+            houseid = PlayerKeys[playerid][pHouseKey];
     }
     return houseid;
 }
@@ -3121,11 +3113,8 @@ static stock SetFurnitureObjectColor(playerid, slot, index, slotid)
     PlayerEditTxtIndex[playerid]                = -1;
     HouseInfo[houseid][hFurColId][slotid][slot] = index;
 
-    new tmpslot = slot + 1;
-    if (tmpslot >= 5) tmpslot = 4;
-
     mysql_fquery(g_SQL, "UPDATE furniture SET color_%d = '%d' WHERE sqlid = '%d'",
-        tmpslot,
+        (slot + 1),
         HouseInfo[houseid][hFurColId][slotid][slot],
         HouseInfo[houseid][hFurSQL][slotid]
     );
@@ -4672,8 +4661,8 @@ CMD:furniture(playerid, params[])
         }
         new
             houseid = GetPlayerFurnitureHouse(playerid);
-        // TODO: why are some house IDs hardcoded here? remove this
-        if (houseid == INVALID_HOUSE_ID || (556 < houseid < 575)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Morate posjedovati kucu ili posjedujete apartman.");
+        if (Iter_Contains(Houses, houseid)) 
+            return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Morate posjedovati kucu ili posjedujete apartman.");
         if (!IsPlayerInRangeOfPoint(playerid, 150.0, HouseInfo[houseid][hExitX], HouseInfo[houseid][hExitY], HouseInfo[houseid][hExitZ])) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Morate biti unutar kuce!");
 
         ShowPlayerDialog(playerid, DIALOG_FURNITURE_MENU, DIALOG_STYLE_LIST, "Furniture", "Kupi objekt\nUredi", "Choose", "Abort");

@@ -586,9 +586,9 @@ main()
 }
 
 // Database Load Function used for hooking in OnGameModeInit callback
-forward LoadServerData();
-public LoadServerData() 
+Public: LoadServerData() 
 {
+	print("Report: MySQL Loading Stage Initialized.");
 	return 1;
 }
 
@@ -687,7 +687,6 @@ public OnGameModeInit()
 	cseconds = SERVER_UNLOCK_TIME; 
 
 	// Global Loads - Database Load Functions
-	print("Report: MySQL Loading Stage Initialized.");
 	LoadServerData();
 	print("Report: MySQL Loading Stage Finished.");
 

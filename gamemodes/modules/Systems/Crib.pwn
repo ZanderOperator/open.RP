@@ -1294,16 +1294,17 @@ timer DestroyGlobalMapIcon[480000]()
     ##     ##  #######   #######  ##    ##  ######
 */
 
-hook LoadServerData()
+hook function LoadServerData()
 {
     LoadHouses();
-    return 1;
+	return continue();
+
 }
 
-hook ResetPlayerVariables(playerid)
+hook function ResetPlayerVariables(playerid)
 {
     ResetHouseVariables(playerid);
-    return 1;
+	return continue(playerid);
 }
 
 hook OnPlayerEnterDynamicCP(playerid, checkpointid)

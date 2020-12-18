@@ -28,10 +28,10 @@ Public: LoadingPlayerHealth(playerid)
     return 1;
 }
 
-hook LoadPlayerStats(playerid)
+hook function LoadPlayerStats(playerid)
 {
     LoadPlayerHealth(playerid);
-    return 1;
+	return continue(playerid);
 }
 
 SavePlayerHealth(playerid)
@@ -46,16 +46,16 @@ SavePlayerHealth(playerid)
     return 1;
 }
 
-hook SavePlayerStats(playerid)
+hook function SavePlayerStats(playerid)
 {
     SavePlayerHealth(playerid);
-    return 1;
+	return continue(playerid);
 }
 
-hook ResetPlayerVariables(playerid)
+hook function ResetPlayerVariables(playerid)
 {
     PlayerHealth[playerid][pHealth] = 100.0;
     PlayerHealth[playerid][pArmour] = 0.0;
     PlayerHealth[playerid][pHunger] = 5.0;
-    return 1;
+	return continue(playerid);
 }

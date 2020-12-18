@@ -147,10 +147,10 @@ stock ResetPlayerWounded(playerid)
 	return 1;
 }
 
-hook ResetPlayerVariables(playerid)
+hook function ResetPlayerVariables(playerid)
 {
 	ResetPlayerWounded(playerid);
-	return 1;
+	return continue(playerid);
 }
 
 RegisterPlayerDeath(playerid, killerid) // funkcija

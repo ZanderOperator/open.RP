@@ -737,10 +737,10 @@ public OnPlayerObjectsLoad(playerid)
 	return 1;
 }
 
-hook LoadPlayerStats(playerid)
+hook function LoadPlayerStats(playerid)
 {
 	LoadPlayerObjects(playerid);
-	return 1;
+	return continue(playerid);
 }
 
 stock InsertObjectSlot(playerid, slot)
@@ -972,7 +972,7 @@ hook OnPlayerDeath(playerid, killerid, reason)
     return 1;
 }
 
-hook ResetPlayerVariables(playerid, reason)
+hook function ResetPlayerVariables(playerid)
 {
 	ResetObjectsVariables(playerid);
 	
@@ -1004,7 +1004,7 @@ hook ResetPlayerVariables(playerid, reason)
 	if( IsPlayerAttachedObjectSlotUsed(playerid, 9) )
 		RemovePlayerAttachedObject( playerid, 9 );
 
-	return 1;
+	return continue(playerid);
 }
 
 hook OnFSelectionResponse(playerid, fselectid, modelid, response)

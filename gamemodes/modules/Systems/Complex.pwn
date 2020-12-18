@@ -126,7 +126,7 @@ Player_SetApartmentCP(playerid, v)
     ApartmentCP[playerid] = v;
 }
 
-hook ResetPlayerVariables(playerid)
+hook function ResetPlayerVariables(playerid)
 {
     Player_SetInApartmentComplex(playerid, INVALID_COMPLEX_ID);
     Player_SetInfrontComplex(playerid, INVALID_COMPLEX_ID);
@@ -135,7 +135,8 @@ hook ResetPlayerVariables(playerid)
     Player_SetInApartmentRoom(playerid, INVALID_COMPLEX_ID);
     Player_SetInfrontApartment(playerid, INVALID_COMPLEX_ID);
     Player_SetApartmentCP(playerid, INVALID_COMPLEX_ID);
-    return 1;
+
+	return continue(playerid);
 }
 
 stock DestroyCompInfoTD(playerid)
@@ -297,8 +298,8 @@ static stock CreateCRoomEnter(complex_id)
     
     ComplexRoomInfo[complex_id][cRPickup] = CreateDynamicPickup(1273, 2, ComplexRoomInfo[complex_id][cEnterX], ComplexRoomInfo[complex_id][cEnterY], ComplexRoomInfo[complex_id][cEnterZ], ComplexRoomInfo[complex_id][cVWExit], ComplexRoomInfo[complex_id][cIntExit], -1, 30.0);
     
-    if (IsValidDynamicCP(ComplexInfo[complex_id][cEnterCP]))
-        DestroyDynamicCP(ComplexInfo[complex_id][cEnterCP]);
+    if (IsValidDynamicCP(ComplexRoomInfo[complex_id][cEnterCP]))
+        DestroyDynamicCP(ComplexRoomInfo[complex_id][cEnterCP]);
     
     ComplexRoomInfo[complex_id][cEnterCP] = CreateDynamicCP(ComplexRoomInfo[complex_id][cEnterX], ComplexRoomInfo[complex_id][cEnterY], ComplexRoomInfo[complex_id][cEnterZ]-1.0, 2.0, ComplexRoomInfo[complex_id][cVWExit], ComplexRoomInfo[complex_id][cIntExit], -1, 5.0);
     return 1;
@@ -489,11 +490,12 @@ public OnServerComplexLoad()
     ##     ##  #######   #######  ##    ##  ######
 */
 
-hook LoadServerData()
+hook function LoadServerData()
 {
     LoadComplexes();
     LoadComplexRooms();
-    return 1;
+	return continue();
+
 }
 
 hook OnPlayerEnterDynamicCP(playerid, checkpointid)

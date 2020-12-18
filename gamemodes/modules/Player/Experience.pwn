@@ -13,10 +13,10 @@ stock ResetPlayerExperience(playerid)
 	return 1;
 }
 
-hook ResetPlayerVariables(playerid)
+hook function ResetPlayerVariables(playerid)
 {
 	ResetPlayerExperience(playerid);
-	return 1;
+	return continue(playerid);
 }
 
 stock ListBestTemporaryEXP(playerid)
@@ -132,10 +132,10 @@ Public:OnPlayerLoadExperience(playerid)
 	}
 }
 
-hook LoadPlayerStats(playerid)
+hook function LoadPlayerStats(playerid)
 {
 	LoadPlayerExperience(playerid);
-	return 1;
+	return continue(playerid);
 }
 
 stock SavePlayerExperience(playerid)
@@ -157,10 +157,10 @@ stock SavePlayerExperience(playerid)
 	return 1;
 }
 
-hook SavePlayerData(playerid)
+hook function SavePlayerStats(playerid)
 {
 	SavePlayerExperience(playerid);
-	return 1;
+	return continue(playerid);
 }
 
 stock CanPlayerGiveExp(playerid)

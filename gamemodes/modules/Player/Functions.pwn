@@ -1885,7 +1885,7 @@ hook OnPlayerDisconnect(playerid, reason)
 	return 1;
 }
 
-hook ResetPlayerVariables(playerid)
+hook function ResetPlayerVariables(playerid)
 {
 	PlayerGlobalTaskTimer[ playerid ] = false;
 	
@@ -1902,7 +1902,7 @@ hook ResetPlayerVariables(playerid)
     HasFood[playerid] = false;
     FakeGunLic[playerid] = false;
     PlayerGroceries[playerid] = 0;
-	return 1;
+	return continue(playerid);
 }
 
 hook OnPlayerKeyStateChange(playerid, newkeys, oldkeys)

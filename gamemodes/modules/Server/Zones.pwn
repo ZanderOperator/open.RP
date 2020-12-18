@@ -493,10 +493,10 @@ stock DestroyZonesTD(playerid)
 	return 1;
 }
 
-hook ResetPlayerVariables(playerid)
+hook function ResetPlayerVariables(playerid)
 {
 	DestroyZonesTD(playerid);
-	return 1;
+	return continue(playerid);
 }
 
 stock GetVehicleZone(vehicleid)

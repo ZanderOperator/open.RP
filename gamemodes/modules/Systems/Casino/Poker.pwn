@@ -2632,17 +2632,18 @@ CMD:poker(playerid, params[])
 	return 1;
 }
 
-hook LoadServerData()
+hook function LoadServerData()
 {
 	InitPokerTables();
-	return 1;
+	return continue();
+
 }
 
-hook ResetPlayerVariables(playerid)
+hook function ResetPlayerVariables(playerid)
 {
 	ResetPokerVariables(playerid);
 	CancelSelectTextDraw(playerid);
-	return 1;
+	return continue(playerid);
 }
 
 hook OnPlayerDisconnect(playerid)

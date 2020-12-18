@@ -68,7 +68,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 	return 0;
 }
 
-hook ResetPlayerVariables(playerid)
+hook function ResetPlayerVariables(playerid)
 {
     if(Player_ReportID(playerid) != -1)
 	{
@@ -78,7 +78,7 @@ hook ResetPlayerVariables(playerid)
 	DialogArgs[playerid] = 0;
 	DialogCallback[playerid][0] = EOS;
 	DialogParamHash[playerid][0] = EOS;
-    return 1;
+	return continue(playerid);
 }
 
 forward OnPlayerReport(playerid, response);

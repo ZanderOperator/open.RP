@@ -112,10 +112,10 @@ Public: LoadingPlayerPackages(playerid)
 	return (true);
 }
 
-hook LoadPlayerStats(playerid)
+hook function LoadPlayerStats(playerid)
 {
 	LoadPlayerPackage(playerid);
-	return 1;
+	return continue(playerid);
 }
 
 stock LoadVehiclePackage(vehicleid) 

@@ -53,10 +53,10 @@ Public: LoadingPlayerRadio(playerid)
     return 1;
 }
 
-hook LoadPlayerStats(playerid)
+hook function LoadPlayerStats(playerid)
 {
     LoadPlayerRadio(playerid);
-    return 1;
+	return continue(playerid);
 }
 
 SavePlayerRadio(playerid)
@@ -77,13 +77,13 @@ SavePlayerRadio(playerid)
     return 1;
 }
 
-hook SavePlayerStats(playerid)
+hook function SavePlayerStats(playerid)
 {
     SavePlayerRadio(playerid);
-    return 1;
+	return continue(playerid);
 }
 
-hook ResetPlayerVariables(playerid)
+hook function ResetPlayerVariables(playerid)
 {
     PlayerRadio[playerid][pHasRadio] = 0;
     PlayerRadio[playerid][pMainSlot] = 0;
@@ -93,7 +93,7 @@ hook ResetPlayerVariables(playerid)
     PlayerRadio[playerid][pRadioSlot][2] = 0;
     PlayerRadio[playerid][pRadio][3] = 0; 
     PlayerRadio[playerid][pRadioSlot][3] = 0;
-    return 1;
+	return continue(playerid);
 }
 
 CMD:radio(playerid, params[])

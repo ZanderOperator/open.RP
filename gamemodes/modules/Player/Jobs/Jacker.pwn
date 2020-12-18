@@ -651,10 +651,11 @@ stock static CreateJackerTextDraw(playerid)
 	##     ##  #######   #######  ##    ##  ######  
 */
 
-hook LoadServerData()
+hook function LoadServerData()
 {
 	LoadIlegalGarages();
-	return 1;
+	return continue();
+
 }
 
 hook OnGameModeInit()
@@ -682,10 +683,10 @@ hook OnPlayerConnect(playerid)
 	return 1;
 }
 
-hook ResetPlayerVariables(playerid)
+hook function ResetPlayerVariables(playerid)
 {
 	ResetCarJackerVariables(playerid);
-	return 1;
+	return continue(playerid);
 }
 
 hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
