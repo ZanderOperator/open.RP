@@ -450,17 +450,10 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
             {
                 case 0:
                 { // Bizz Info
-                    // TODO: helper function GetNearestBizzForPlayer(playerid)
-                    new biznis = INVALID_BIZNIS_ID;
-                    foreach(new i : Bizzes)
-                    {
-                        if (IsPlayerInRangeOfPoint(playerid, 8.0, BizzInfo[i][bEntranceX], BizzInfo[i][bEntranceY], BizzInfo[i][bEntranceZ]))
-                        {
-                            biznis = i;
-                            break;
-                        }
-                    }
-                    if (biznis == INVALID_BIZNIS_ID) return SendClientMessage(playerid, COLOR_RED, "Ne nalazis se ispred ulaza biznisa.");
+                    new 
+                        biznis = Player_InfrontBizz(playerid);
+                    if (biznis == INVALID_BIZNIS_ID) 
+                        return SendClientMessage(playerid, COLOR_RED, "Ne nalazis se ispred ulaza biznisa.");
 
                     va_SendClientMessage(playerid, COLOR_RED, "[ ! ] Bizz ID: %d | Bizz MySQL ID: %d", biznis, BizzInfo[biznis][bSQLID]);
                     va_SendClientMessage(playerid, COLOR_RED, "[ ! ] Stanje u blagajni biznisa: %d$", BizzInfo[biznis][bTill]);
@@ -522,19 +515,12 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
             return 1;
         }
         case DIALOG_CITY_BIZDEPOSIT:
-        { // Stavljanje novca na biznis blagajnu
+        {
             if (!response) return ShowPlayerDialog(playerid, DIALOG_CITY_BIZNIS, DIALOG_STYLE_LIST, "Odaberite opciju:", "Biznis Info\nStavi novac u blagajnu\nDigni novac iz blagajne", "Choose", "Exit");
-            // TODO: helper function GetNearestBizzForPlayer(playerid)
-            new biznis = INVALID_BIZNIS_ID;
-            foreach(new i : Bizzes)
-            {
-                if (IsPlayerInRangeOfPoint(playerid, 8.0, BizzInfo[i][bEntranceX], BizzInfo[i][bEntranceY], BizzInfo[i][bEntranceZ]))
-                {
-                    biznis = i;
-                    break;
-                }
-            }
-            if (biznis == INVALID_BIZNIS_ID) return SendClientMessage(playerid, COLOR_RED, "Ne nalazis se ispred ulaza biznisa.");
+            new 
+                biznis = Player_InfrontBizz(playerid);
+            if (biznis == INVALID_BIZNIS_ID) 
+                return SendClientMessage(playerid, COLOR_RED, "Ne nalazis se ispred ulaza biznisa.");
 
             new
                 putMoney = strval(inputtext);
@@ -563,15 +549,10 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
         }
         case DIALOG_CITY_BIZWITHDRAW:
         { // Dizanje novca iz biznis blagajne
-            if (!response) return ShowPlayerDialog(playerid, DIALOG_CITY_BIZNIS, DIALOG_STYLE_LIST, "Odaberite opciju:", "Biznis Info\nStavi novac u blagajnu\nDigni novac iz blagajne", "Choose", "Exit");
-            // TODO: helper function GetNearestBizzForPlayer(playerid)
-            new biznis = INVALID_BIZNIS_ID;
-            foreach(new i : Bizzes) {
-                if (IsPlayerInRangeOfPoint(playerid, 8.0, BizzInfo[i][bEntranceX], BizzInfo[i][bEntranceY], BizzInfo[i][bEntranceZ])) {
-                    biznis = i;
-                    break;
-                }
-            }
+            if (!response) 
+                return ShowPlayerDialog(playerid, DIALOG_CITY_BIZNIS, DIALOG_STYLE_LIST, "Odaberite opciju:", "Biznis Info\nStavi novac u blagajnu\nDigni novac iz blagajne", "Choose", "Exit");
+            new 
+                biznis = Player_InfrontBizz(playerid);
             if (biznis == INVALID_BIZNIS_ID) return SendClientMessage(playerid, COLOR_RED, "Ne nalazis se ispred ulaza biznisa.");
 
             new

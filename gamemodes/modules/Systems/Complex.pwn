@@ -211,25 +211,6 @@ static stock GetComplexInfoID(ownerid)
     return complex_id;
 }
 
-static stock GetNearestRoom(playerid)
-{
-    new
-        viwo = GetPlayerVirtualWorld(playerid),
-        interior = GetPlayerInterior(playerid),
-        cmID = INVALID_COMPLEX_ID;
-    foreach(new c : ComplexRooms)
-    {
-        if (IsPlayerInRangeOfPoint(playerid, 2.0, ComplexRoomInfo[c][cEnterX], ComplexRoomInfo[c][cEnterY], ComplexRoomInfo[c][cEnterZ])
-            && ComplexRoomInfo[c][cIntExit] == interior
-            && ComplexRoomInfo[c][cVWExit] == viwo)
-        {
-            cmID = c;
-            break;
-        }
-    }
-    return cmID;
-}
-
 stock GetComplexEnumID(roomid)
 {
     new value;
@@ -688,7 +669,8 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                 }
                 case 5: // 27.07.2019 - L3o
                 {
-                    new complex = GetNearestRoom(playerid);
+                    new 
+                        complex = Player_InfrontApartment(playerid);
                     if (complex == INVALID_COMPLEX_ID) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Morate se nalaziti ispred stana od stanara.");
 
                     va_SendClientMessage(playerid, COLOR_RED, "[ ! ] Uspjesno ste izbacili %s iz vaseg Complex-a!", GetPlayerNameFromSQL(ComplexRoomInfo[complex][cOwnerID]));
@@ -978,7 +960,8 @@ CMD:buycomplex(playerid, params[])
         return 1;
     }
 
-    new complex = GetNearestRoom(playerid);
+    new 
+        complex = Player_InfrontApartment(playerid);
     if (complex == INVALID_COMPLEX_ID) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nema soba complexa u blizini.");
     if (ComplexInfo[complex][cOwnerID] != -1) return 1;
 
@@ -1040,8 +1023,10 @@ CMD:rentroom(playerid, params[])
         return 1;
     }
 
-    new complex = GetNearestRoom(playerid);
-    if (complex == INVALID_COMPLEX_ID) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nema soba complexa u blizini.");
+    new 
+        complex = Player_InfrontApartment(playerid);
+    if (complex == INVALID_COMPLEX_ID) 
+        return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne nalazite se ispred stana u Complexu.");
 
     if (ComplexRoomInfo[complex][cOwnerID] != -1)
     {
