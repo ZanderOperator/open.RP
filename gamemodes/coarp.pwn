@@ -40,7 +40,7 @@
 // #define COA_UCP
 
 // GMT Zone
-#define GMT_ZONE_DIFFERENCE						(7200)		// GMT + 2
+#define GMT_ZONE_DIFFERENCE						(3600)			// GMT + 1
 
 // 0.3DL
 #define NEGATIVE_MODEL_ID 						-40000 // Negativna vrijednost radi Custom Object Modela koji su u minusu
@@ -152,6 +152,8 @@
 #include "modules/Preincludes/Enumerators.inc"
 // Main Header file - purpose is bypassing the include order
 #include "modules/Preincludes/Header.inc"
+// Custom Functions Declaration file - purpose is declaring custom funcs that will be hooked
+#include "modules/Preincludes/CustomHooks.inc"
 
 // Main Database Connection Handler
 new MySQL:g_SQL;
@@ -585,13 +587,6 @@ main()
 	AntiDeAMX();
 }
 
-// Database Load Function used for hooking in OnGameModeInit callback
-Public: LoadServerData() 
-{
-	print("Report: MySQL Loading Stage Initialized.");
-	return 1;
-}
-
 public OnGameModeInit()
 {
 	SendRconCommand("password 6325234hbbzfg12312313gz313"); // Server Lock while everything loads
@@ -688,9 +683,8 @@ public OnGameModeInit()
 
 	// Global Loads - Database Load Functions
 	LoadServerData();
-	print("Report: MySQL Loading Stage Finished.");
 
-	printf("Report: GameMode Time Set on %s. %s Loaded Sucessfully!", 
+	printf("Report: GameMode Time Set on %s", 
 		ReturnTime(),
 		SERVER_NAME
 	);
@@ -1075,7 +1069,8 @@ hook OnPlayerText(playerid, text[])
 
 
 // TODO: should be a part of Player module
-Public: ResetPlayerVariables(playerid)
+#include <YSI_Coding\y_hooks>
+hook function ResetPlayerVariables(playerid)
 {	
 	//rBits
 	Bit1_Set( gr_PlayerDownloading		, playerid, false );
@@ -1184,7 +1179,7 @@ Public: ResetPlayerVariables(playerid)
 	PlayerSyncs[ playerid ] 	= false;
 	PlayerBlocked[ playerid ] 	= false;
 
-	return 1;
+	return continue(playerid);
 }
 
 public OnPlayerActionChange(playerid, oldaction, newaction) // Callbacks.inc by Emmet
