@@ -442,6 +442,7 @@ stock gettimestamp()
 stock GetServerTime(&hours=0, &minutes=0, &seconds=0)
 {
 	gettime(hours,minutes,seconds);
+	hours += (GMT_ZONE_DIFFERENCE/3600);
 	if(hours == 24) hours = 0;
 	if(minutes <= 0) minutes = 0;
 }

@@ -295,12 +295,7 @@ Public:OnServerVehicleCreate(vehicleid)
 	 ######     ##     #######   ######  ##    ##
 */
 
-Public: ResetPrivateVehicleInfo(vehicleid)
-{
-	return 1;
-}
-
-Public: ResetVehicleInfo(vehicleid)
+hook function ResetVehicleInfo(vehicleid)
 {	
 	ResetPrivateVehicleInfo(vehicleid);
 
@@ -426,7 +421,7 @@ Public: ResetVehicleInfo(vehicleid)
 	Bit1_Set( gr_VehicleAttachedBomb, vehicleid, false );
 	Bit16_Set( gr_LastDriver, vehicleid, INVALID_PLAYER_ID );
 
-	return 1;
+	return continue(vehicleid);
 }
 
 stock AC_CreateVehicle(vehicletype, Float:x, Float:y, Float:z, Float:rotation, color1, color2, respawn_delay = -1, sirenon = 0)
@@ -440,7 +435,7 @@ stock AC_CreateVehicle(vehicletype, Float:x, Float:y, Float:z, Float:rotation, c
 	return id;
 }
 
-Public: AC_DestroyVehicle(vehicleid)
+hook AC_DestroyVehicle(vehicleid)
 {
 	if( vehicleid == INVALID_VEHICLE_ID ) 		
 		return 0;
@@ -454,7 +449,7 @@ Public: AC_DestroyVehicle(vehicleid)
 		Iter_Remove(Vehicles[VehicleInfo[vehicleid][vUsage]], vehicleid);
 	
 	ResetVehicleInfo(vehicleid);
-	return 1;
+	return continue(vehicleid);
 }
 
 stock SetRespawnedVehicleParams(vehicleid)

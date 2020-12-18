@@ -61,10 +61,7 @@ timer SafeHealPlayer[250](playerid)
 
 // Forwards
 forward CheckPlayerInBase(playerid);
-forward LoadPlayerStats(playerid); // Loading all data non-related to 'accounts' database table
-forward SavePlayerStats(playerid); // Saving all data non-related to 'accounts database table
 forward LoadPlayerData(playerid);
-forward SavePlayerData(playerid); 
 forward RegisterPlayer(playerid);
 forward OnAccountFinish(playerid);
 
@@ -209,11 +206,6 @@ public CheckPlayerInBase(playerid)
 			KickMessage(playerid);
 		}
 	}
-	return 1;
-}
-
-public LoadPlayerStats(playerid) // Main func. for hooking database loads
-{
 	return 1;
 }
 
@@ -617,12 +609,7 @@ Public: SafeSpawnPlayer(playerid)
 	return 1;
 }
 
-public SavePlayerStats(playerid) // Main func. for hooking database updates 
-{
-	return 1;
-}
-
-public SavePlayerData(playerid)
+SavePlayerData(playerid)
 {
     if( !SafeSpawned[playerid] )	
 		return 1;
