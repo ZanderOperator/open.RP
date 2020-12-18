@@ -174,7 +174,9 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 	{	
 		case DIALOG_CREDIT:
 		{	
-			if( !response ) return 1;
+			if( !response ) 
+				return 1;
+
 			new 
 				string[144];
 			switch(listitem) 
@@ -786,7 +788,8 @@ CMD:bank(playerid, params[])
 			money, 
 			cashdeposit;
 			
-		if (sscanf(params, "s[15]i", pick, cashdeposit)) {
+		if (sscanf(params, "s[15]i", pick, cashdeposit)) 
+		{
 			SendClientMessage(playerid, COLOR_RED, "[ ? ]: /bank paycredit [kolicina rata]");
 			if(CreditInfo[playerid][cUnpaid] > 0)
 				va_SendClientMessage(playerid, COLOR_LIGHTRED, "[BANKA]: Imate %d neplacenih rata kredita, tako da se prvo ona podmiruju!", CreditInfo[playerid][cUnpaid]);
@@ -814,84 +817,26 @@ CMD:bank(playerid, params[])
 		}
 		switch(CreditInfo[playerid][cCreditType])
 		{
-			case 1:
-			{
-				money = cashdeposit * 50;
-				if(AC_GetPlayerMoney(playerid) >= money) {
-					PlayerToBudgetMoney(playerid, money); // novac dolazi u proracun
-					CreditInfo[playerid][cRate] += cashdeposit;
-					SendFormatMessage(playerid, MESSAGE_TYPE_INFO, "Platili ste %d rata za $%d.", cashdeposit, money);
-					if(CreditInfo[playerid][cRate] >= 250) {
-						CreditInfo[playerid][cRate] = 0;
-						CreditInfo[playerid][cCreditType] = 0;
-						SendClientMessage(playerid, COLOR_NICERED, "Upravo ste otplatili zadnju ratu kredita! Mozete dignuti novi kredit!");
-					}
-				}
-				else return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "Trebate imati %d$ da bi otplatili %d rata !", money, cashdeposit);
-			}
-			case 2:
-			{
-				money = cashdeposit * 100;
-				if(AC_GetPlayerMoney(playerid) >= money)
-				{
-					PlayerToBudgetMoney(playerid, money); // novac dolazi u proracun
-					CreditInfo[playerid][cRate] += cashdeposit;
-					SendFormatMessage(playerid, MESSAGE_TYPE_INFO, "Platili ste %d rata za $%d.", cashdeposit, money);
-					if(CreditInfo[playerid][cRate] >= 250)
-					{
-						CreditInfo[playerid][cRate] = 0;
-						CreditInfo[playerid][cCreditType] = 0;
-						SendClientMessage(playerid, COLOR_RED, "[ ! ] Upravo ste otplatili zadnju ratu kredita! Mozete dignuti novi kredit!");
-					}
-				}
-				else return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "Trebate imati %d$ da bi otplatili %d rata !", money, cashdeposit);
-			}
-			case 3:
-			{
-				money = cashdeposit * 250;
-				if(AC_GetPlayerMoney(playerid) >= money)
-				{
-					PlayerToBudgetMoney(playerid, money); // novac dolazi u proracun
-					CreditInfo[playerid][cRate] += cashdeposit;
-					SendFormatMessage(playerid, MESSAGE_TYPE_INFO, "Platili ste %d rata za $%d.", cashdeposit, money);
-					if(CreditInfo[playerid][cRate] >= 250) {
-						ResetCreditVars(playerid);
-						SendClientMessage(playerid, COLOR_RED, "[ ! ] Upravo ste otplatili zadnju ratu kredita! Mozete dignuti novi kredit!");
-					}
-				}
-				else return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "Trebate imati %d$ da bi otplatili %d rata !", money, cashdeposit);
-			}
-			case 4:
-			{
-				money = cashdeposit * 500;
-				if(AC_GetPlayerMoney(playerid) >= money)
-				{
-					PlayerToBudgetMoney(playerid, money); // novac dolazi u proracun
-					CreditInfo[playerid][cRate] += cashdeposit;
-					SendFormatMessage(playerid, MESSAGE_TYPE_INFO, "Platili ste %d rata za $%d.", cashdeposit, money);
-					if(CreditInfo[playerid][cRate] >= 250) {
-						ResetCreditVars(playerid);
-						SendClientMessage(playerid, COLOR_RED, "[ ! ] Upravo ste otplatili zadnju ratu kredita! Mozete dignuti novi kredit!");
-					}
-				}
-				else return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "Trebate imati %d$ da bi otplatili %d rata !", money, cashdeposit);
-			}
-			case 5 .. 7:
-			{
-				if (cashdeposit > rest || cashdeposit < 1) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate toliko rata kredita !");
-				money = cashdeposit * (CreditInfo[playerid][cAmount] / 250);
-				if(AC_GetPlayerMoney(playerid) >= money) 
-				{
-					PlayerToBudgetMoney(playerid, money); // novac dolazi u proracun
-					CreditInfo[playerid][cRate] += cashdeposit;
-					SendFormatMessage(playerid, MESSAGE_TYPE_INFO, "Platili ste %d rata namjenskog kredita za $%d.", cashdeposit, money);
-				}
-				else return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "Trebate imati %d$ da bi otplatili %d rata kredita!", money, cashdeposit);
-			}
+			case 1: money = cashdeposit * 50;
+			case 2: money = cashdeposit * 100;
+			case 3: money = cashdeposit * 250;
+			case 4: money = cashdeposit * 500;
+			case 5 .. 7: money = cashdeposit * (CreditInfo[playerid][cAmount] / 250);
 		}
+		if(AC_GetPlayerMoney(playerid) < money)
+			return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "Trebate imati %d$ da bi otplatili %d rata !", money, cashdeposit);
+
+		PlayerToBudgetMoney(playerid, money);
+		CreditInfo[playerid][cRate] += cashdeposit;
+		SendFormatMessage(playerid, MESSAGE_TYPE_INFO, "Platili ste %d rata za $%d.", cashdeposit, money);
+
+		if(CreditInfo[playerid][cRate] >= 250)
+		{
+			ResetCreditVars(playerid);
+			SendClientMessage(playerid, COLOR_RED, "[ ! ] Upravo ste otplatili zadnju ratu kredita! Mozete dignuti novi kredit!");
+		}
+
 		mysql_save:
-		
-		
 		SavePlayerCredit(playerid);
 		
 		#if defined MODULE_LOGS
