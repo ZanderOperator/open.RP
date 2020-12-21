@@ -21,6 +21,9 @@
 	   ###    ##     ## ##     ##  ######  
 */
 
+static
+	Iterator:IllegalGarage<MAX_ILEGAL_GARAGES>;
+
 enum 
 {
 	ENGINE_TYPE_NONE		= 0,
@@ -241,6 +244,21 @@ new
 	  \_____|______|_| \_|______|_|  \_\/_/    \_\______|
 */
 /////////////////////////////////////////////////////
+GetIllegalGarageFromSQL(sqlid)
+{
+	new
+		garageid = -1;
+	foreach(new igarage : IllegalGarage)
+	{
+		if(IlegalGarage[ igarage ][ igOwner ] == sqlid)
+		{
+			garageid = igarage;
+			break;
+		}
+	}
+	return garageid;
+}
+
 stock LoadIlegalGarages()
 {
 	mysql_pquery(g_SQL, 
@@ -273,7 +291,7 @@ public OnServerIlegalGaragesLoad()
 		cache_get_value_name_float( row, "lookZ"	, IlegalGarage[ row ][ igCameraLookAt ][ 2 ]);
 		
 		InitIlegalGarage(row);
-		Iter_Add(IllegalGarages, row);
+		Iter_Add(IllegalGarage, row);
 	}
 	printf("MySQL Report: Ilegal Garages Loaded (%d)!", cache_num_rows());
 	return 1;

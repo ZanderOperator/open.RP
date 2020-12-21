@@ -12,6 +12,8 @@ forward Player_SetLawDuty(playerid, bool:v);
 #include "modules/Systems\LSPD/Header.inc"
 
 // Bizz
+forward bool: Bizz_Exists(bizzid);
+
 forward Player_InBusiness(playerid);
 forward Player_SetInBusiness(playerid, v);
 
@@ -22,6 +24,8 @@ forward Player_GetBizzCP(playerid);
 forward Player_SetBizzCP(playerid, v);
 
 // House
+forward bool: House_Exists(houseid);
+
 forward Player_InHouse(playerid);
 forward Player_SetInHouse(playerid, v);
 
@@ -58,6 +62,8 @@ forward Player_InApartmentRoom(playerid);
 forward Player_SetInApartmentRoom(playerid, v);
 
 // Garage
+forward bool: Garage_Exists(garageid);
+
 forward Player_GarageArea(playerid);
 forward Player_SetGarageArea(playerid, v);
 

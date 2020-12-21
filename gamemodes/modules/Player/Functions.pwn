@@ -282,7 +282,7 @@ Public:CheckAccountsForInactivity()
 			{				
 				houseid = GetHouseFromSQL(sqlid);
 				bizzid = GetBizzFromSQL(sqlid);
-
+				garageid = GetGarageFromSQL(sqlid);
 				foreach(new c: Complex)
 				{
 					if(ComplexInfo[c][cOwnerID] == sqlid)
@@ -296,14 +296,6 @@ Public:CheckAccountsForInactivity()
 					if(ComplexRoomInfo[cr][cOwnerID] == sqlid)
 					{
 						crid = cr;
-						break;
-					}
-				}
-				foreach(new g: Garages)
-				{
-					if(GarageInfo[g][gOwnerID] == sqlid)
-					{
-						garageid = g;
 						break;
 					}
 				}
@@ -521,7 +513,7 @@ Public:CheckAccountsForInactivity()
 				
 				houseid = GetHouseFromSQL(sqlid);
 				bizzid = GetBizzFromSQL(sqlid);
-
+				garageid = GetGarageFromSQL(sqlid);
 				foreach(new c: Complex)
 				{
 					if(ComplexInfo[c][cOwnerID] == sqlid)
@@ -535,14 +527,6 @@ Public:CheckAccountsForInactivity()
 					if(ComplexRoomInfo[cr][cOwnerID] == sqlid)
 					{
 						crid = cr;
-						break;
-					}
-				}
-				foreach(new g: Garages)
-				{
-					if(GarageInfo[g][gOwnerID] == sqlid)
-					{
-						garageid = g;
 						break;
 					}
 				}
@@ -826,6 +810,7 @@ stock CheckPlayerInteriors(playerid)
 
 	CheckPlayerHouseInt(playerid, interior, virtualworld);
 	CheckPlayerBizzInt(playerid, interior, virtualworld);
+	CheckPlayerGarageInt(playerid);
 	
 	foreach(new pickup: Pickups[PICKUP_TYPE_ENTERABLE])
 	{
@@ -851,14 +836,7 @@ stock CheckPlayerInteriors(playerid)
 			return 1;
 		}
 	}
-	foreach(new garage: Garages)
-	{
-		if(IsPlayerInRangeOfPoint(playerid, 250.0, GarageInfo[ garage ][ gExitX ], GarageInfo[ garage ][ gExitY ], GarageInfo[ garage ][ gExitZ ]))
-		{
-			Player_SetInGarage(playerid, garage);
-			return 1;
-		}
-	}
+
 	return 1;
 }
 		

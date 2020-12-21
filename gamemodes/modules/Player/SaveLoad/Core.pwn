@@ -320,10 +320,10 @@ public LoadPlayerData(playerid)
 		
 		PlayerKeys[playerid][pHouseKey] = INVALID_HOUSE_ID;
 		PlayerKeys[playerid][pBizzKey] 	= INVALID_BIZNIS_ID;
-		PlayerKeys[playerid][pComplexKey] = INVALID_COMPLEX_ID;
-		PlayerKeys[playerid][pComplexRoomKey] = INVALID_COMPLEX_ID;
 		PlayerKeys[playerid][pGarageKey] = -1;
 		PlayerKeys[playerid][pIllegalGarageKey]	= -1;
+		PlayerKeys[playerid][pComplexKey] = INVALID_COMPLEX_ID;
+		PlayerKeys[playerid][pComplexRoomKey] = INVALID_COMPLEX_ID;
 		PlayerKeys[playerid][pVehicleKey] = -1;
 		
 		new 
@@ -339,6 +339,16 @@ public LoadPlayerData(playerid)
 			ReloadBizzFurniture(bizz);
 		}
 		
+		new 
+			garage = GetGarageFromSQL(PlayerInfo[playerid][pSQLID]);
+		if(garage != -1)
+			PlayerKeys[playerid][pGarageKey] = garage;
+
+		new 
+			igarage = GetIllegalGarageFromSQL(PlayerInfo[playerid][pSQLID]);
+		if(igarage != -1)
+			PlayerKeys[playerid][pIllegalGarageKey] = igarage;
+
 		foreach(new complex : Complex)
 		{
 			if(ComplexInfo[complex][cOwnerID] == PlayerInfo[playerid][pSQLID]) 
@@ -357,22 +367,6 @@ public LoadPlayerData(playerid)
 			}
 		}
 		
-		foreach(new igarage : IllegalGarages)
-		{
-			if(IlegalGarage[ igarage ][ igOwner ] == PlayerInfo[playerid][pSQLID])
-			{
-				PlayerKeys[playerid][pIllegalGarageKey] = igarage;
-				break;
-			}
-		}
-		foreach(new garage : Garages)
-		{
-			if(GarageInfo[garage][gOwnerID] == PlayerInfo[playerid][pSQLID]) 
-			{
-				PlayerKeys[playerid][pGarageKey] = garage;
-				break;
-			}
-		}
 		foreach(new vehicleid : Vehicles[VEHICLE_USAGE_PRIVATE])
 		{
 			if(VehicleInfo[vehicleid][vOwnerID] == PlayerInfo[playerid][pSQLID])

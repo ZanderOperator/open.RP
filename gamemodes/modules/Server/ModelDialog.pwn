@@ -2,10 +2,10 @@
 
 #include <YSI_Coding\y_hooks>
 
-// fSelection index fetcher
 static 
 	ModelToID[MAX_PLAYERS][MAX_MENU_ITEMS],
-	Iterator: SelectionModels[MAX_PLAYERS]<MAX_MENU_ITEMS>;
+	Iterator: Skin<MAX_MENU_ITEMS>,
+	Iterator: SelectionModel[MAX_PLAYERS]<MAX_MENU_ITEMS>;
 
 
 stock ResetModelShuntVar(playerid)
@@ -13,13 +13,13 @@ stock ResetModelShuntVar(playerid)
 	for(new i = 0; i < MAX_MENU_ITEMS; i++)
 		ModelToID[playerid][i] = -1;
 
-	Iter_Clear(SelectionModels[playerid]);
+	Iter_Clear(SelectionModel[playerid]);
 	return 1;
 }
 
 stock ShowSkinModelDialog(playerid)
 {
-    foreach(new i: Skins)
+    foreach(new i: Skin)
 	{
 		fselection_add_item(playerid, ServerSkins[sSkinID][i]);
 		Player_ModelToIndexSet(playerid, i, ServerSkins[sSkinID][i]);
@@ -31,7 +31,7 @@ stock ShowSkinModelDialog(playerid)
 Player_ModelToIndex(playerid, modelid)
 {
 	static index = 0;
-	foreach(new mid: SelectionModels[playerid])
+	foreach(new mid: SelectionModel[playerid])
 	{
 		if(ModelToID[playerid][mid] == modelid)
 		{
@@ -44,9 +44,9 @@ Player_ModelToIndex(playerid, modelid)
 
 Player_ModelToIndexSet(playerid, i, value)
 {
-	new id = Iter_Free(SelectionModels[playerid]);
+	new id = Iter_Free(SelectionModel[playerid]);
 	ModelToID[playerid][id] = value;
-	Iter_Add(SelectionModels[playerid], i);
+	Iter_Add(SelectionModel[playerid], i);
 	return 1;
 }
 
@@ -73,17 +73,27 @@ LoadServerSkins(f_name[])
 		ServerSkins[sSkinID][idx] = strval(strtok(line,idxx));
 		ServerSkins[sPrice][idx] = strval(strtok(line,idxx));
 
-		Iter_Add(Skins, idx);
+		Iter_Add(Skin, idx);
         idx++;
     }
 	printf("[scriptfiles/skins.txt]: Sucessfully Loaded Server Skins. (%d / %d)", idx, MAX_SERVER_SKINS);
     return 1;
 }
 
-hook OnPlayerDisconnect(playerid, reason)
+hook function ResetIterators()
+{
+	Iter_Clear(Skin);
+	for(new i = 0; i < MAX_PLAYERS; i++)
+	{
+		Iter_Clear(SelectionModel[i]);
+	}
+	return continue();
+}
+
+hook function ResetPlayerVariables(playerid)
 {
     ResetModelShuntVar(playerid);
-    return 1;
+    return continue(playerid);
 }
 
 hook OnFSelectionResponse(playerid, fselectid, modelid, response)

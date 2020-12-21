@@ -157,6 +157,11 @@ static
     ##        #######  ##    ##  ######   ######  
 */
 
+bool: House_Exists(houseid)
+{
+    return Iter_Contains(House, houseid);
+}
+
 Player_InHouse(playerid)
 {
     return InHouse[playerid];

@@ -741,13 +741,14 @@ CMD:giveallmoney(playerid, params[])
 }
 
 // Administrator Level 1337
+
 CMD:address(playerid, params[])
 {
 	if(PlayerInfo[playerid][pAdmin] < 1337) return SendClientMessage(playerid, COLOR_RED, "Niste ovlasteni !");
 	new id, address[32];
 	if( sscanf(params, "is[32] ", id, address) ) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /address [houseid] [adresa]");
 	if( strlen(address) > 32 ) return SendClientMessage( playerid, COLOR_RED, "Maksimalna velicina adrese je 11 znakova!");
-	if( !(0 >= id && id < MAX_HOUSES ) ) return SendClientMessage(playerid, COLOR_RED, "Nevaljan ID kuce!");
+	if( !House_Exists(id) ) return SendClientMessage(playerid, COLOR_RED, "Nevaljan ID kuce!");
 	if( !IsPlayerInRangeOfPoint(playerid, 15.0, HouseInfo[ id ][ hEnterX ], HouseInfo[ id ][ hEnterY ], HouseInfo[ id ][ hEnterZ ] ) ) return SendClientMessage( playerid, COLOR_RED, "Morate biti blizu kuce!");
 	
 	format(HouseInfo[id][hAdress], 32, address);
@@ -755,13 +756,15 @@ CMD:address(playerid, params[])
 	va_SendClientMessage(playerid, COLOR_RED, "[ ! ] Promjenili ste adresu kuce u %s", address);
 	return 1;
 }
+
 CMD:edit(playerid, params[])
 {
 	if(PlayerInfo[playerid][pAdmin] < 1337) 
 		return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You don't have premissions to use this command!");
 
 	new i, x_job[32], proplev, proptype = 0, propid = -1;
-	if (sscanf(params, "s[32]i", x_job, proplev)) {
+	if (sscanf(params, "s[32]i", x_job, proplev)) 
+	{
 		SendClientMessage(playerid, COLOR_RED, "|___________ Edit Houses/Business ___________|");
 		SendClientMessage(playerid, COLOR_RED, "[ ? ]: /edit [option] [value]");
 		SendClientMessage(playerid, COLOR_RED, "[ ! ] Level, Price, Funds, Locked, BizViwo");
@@ -937,7 +940,8 @@ CMD:asellgarage(playerid, params[])
 
     if(sscanf(params, "i", garage)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /asellgarage [garageid]");
 	
-	if(!Iter_Contains(Garages, garage)) return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "Garage ID %d doesn't exist!", garage);
+	if(!Garage_Exists(garage)) 
+		return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "Garage ID %d doesn't exist!", garage);
 		
 	foreach(new i : Player)
 	{
@@ -3153,7 +3157,7 @@ CMD:houseo(playerid, params[])
 		house;
 	if( sscanf( params, "i", house ) ) return SendClientMessage(playerid, COLOR_RED, "[ ? ]:  /houseo [houseid]" );
 	
-	if(house < 0 || house > MAX_HOUSES-1) 
+	if(!House_Exists(house))
 		return SendClientMessage(playerid, COLOR_RED, "[ ? ]:  /houseo [houseid]" );
 	
 	if(HouseInfo[ house ][ hEnterX ] == 0.0)
@@ -3171,11 +3175,8 @@ CMD:bizo(playerid, params[])
 		
 	if( sscanf( params, "i", biznis ) ) return SendClientMessage(playerid, COLOR_RED, "[ ? ]:  /bizo [biznisid]" );
 	
-	if(biznis < 0 || biznis > MAX_BIZZES-1) 
-		return SendClientMessage(playerid, COLOR_RED, "[ ? ]:  /bizo [biznisid]" );
-	
-	if(BizzInfo[ biznis ][ bEntranceX ] == 0.0)
-		return SendClientMessage(playerid, COLOR_RED, "Taj biznis ne postoji!");
+	if(!Bizz_Exists(biznis))
+		return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "Business ID %d doesn't exist!", biznis);
 	
 	SetPlayerPosEx(playerid, BizzInfo[ biznis ][ bEntranceX ], BizzInfo[ biznis ][ bEntranceY ], BizzInfo[ biznis ][ bEntranceZ ], 0, 0, true);
 	
