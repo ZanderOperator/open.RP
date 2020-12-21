@@ -1290,7 +1290,8 @@ public CheckOffline(playerid, sqlid, const name[])
 	
 	housekey = GetHouseFromSQL(sqlid);
 	bizkey = GetBizzFromSQL(sqlid);
-
+	garagekey = GetGarageFromSQL(sqlid);
+	
 	foreach(new complexr : ComplexRooms)
 	{
 		if(ComplexRoomInfo[complexr][cOwnerID] == sqlid) 
@@ -1299,14 +1300,6 @@ public CheckOffline(playerid, sqlid, const name[])
 			break;
 		}
 	}
-	foreach(new garage: Garages)
-	{
-		if(GarageInfo[ garage ][ gOwnerID ] == sqlid) 
-		{
-			garagekey = garage;
-			break;
-		}
-	}	
 	
 	foreach(new complex : Complex)
 	{

@@ -22,6 +22,8 @@
       ## ##   ##     ## ##    ##  ##    ##
        ###    ##     ## ##     ##  ######
 */
+static
+    Iterator: Garage <MAX_GARAGES>;
 
 enum E_GARAGE_INT_DATA
 {
@@ -63,6 +65,11 @@ static
     ##       ##     ## ##   ### ##    ## ##    ## 
     ##        #######  ##    ##  ######   ######  
 */
+
+bool: Garage_Exists(garageid)
+{
+    return Iter_Contains(Garage, garageid);
+}
 
 Player_InGarage(playerid)
 {
@@ -222,7 +229,7 @@ public OnHouseGaragesLoad()
         cache_get_value_name_float(row,  "exitZ"  ,    GarageInfo[row][gExitZ]);
 
         CreateGarageEnter(row);
-        Iter_Add(Garages, row);
+        Iter_Add(Garage, row);
     }
     printf("MySQL Report: Garages Loaded (%d)!", num_rows);
     return 1;
@@ -231,7 +238,7 @@ public OnHouseGaragesLoad()
 static Area_GetGarageID(areaid)
 {
     new garageid = -1;
-    foreach(new garage: Garages)
+    foreach(new garage: Garage)
     {
         if(GarageInfo[garage][gAreaID] == areaid)
         {
@@ -239,6 +246,33 @@ static Area_GetGarageID(areaid)
             break;
         }
     }
+    return garageid;
+}
+
+CheckPlayerGarageInt(playerid)
+{
+    foreach(new garage: Garage)
+	{
+		if(IsPlayerInRangeOfPoint(playerid, 250.0, GarageInfo[ garage ][ gExitX ], GarageInfo[ garage ][ gExitY ], GarageInfo[ garage ][ gExitZ ]))
+		{
+			Player_SetInGarage(playerid, garage);
+			break;
+		}
+	}
+    return 1;
+}
+
+GetGarageFromSQL(sqlid)
+{
+    new garageid = -1;
+    foreach(new garage: Garage)
+	{
+		if(GarageInfo[ garage ][ gOwnerID ] == sqlid) 
+		{
+			garageid = garage;
+			break;
+		}
+	}	
     return garageid;
 }
 
@@ -506,7 +540,7 @@ hook OnPlayerEnterDynArea(playerid, areaid)
 {
     new 
         garage = Area_GetGarageID(areaid);
-    if (!Iter_Contains(Garages, garage))
+    if (!Iter_Contains(Garage, garage))
         return 1;
     
     new
@@ -542,7 +576,7 @@ hook OnPlayerLeaveDynArea(playerid, areaid)
     new 
         garage = Area_GetGarageID(areaid);
     
-    if (!Iter_Contains(Garages, garage)) 
+    if (!Iter_Contains(Garage, garage)) 
         return 1;
 
     DestroyGarageInfoTD(playerid);
@@ -607,7 +641,7 @@ CMD:create_garage(playerid, params[])
 
     new
         type, price, houseid,
-        garage = Iter_Free(Garages),
+        garage = Iter_Free(Garage),
         adress[16];
 
     if (sscanf(params, "ddds[16]", type, price, houseid, adress)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /create_garage [tip][cijena][houseid][adresa]");
@@ -646,7 +680,7 @@ CMD:create_garage(playerid, params[])
         garage
     );
     GarageInfo[garage][gEnterPck] = CreateDynamicPickup(19522, 2, GarageInfo[garage][gEnterX], GarageInfo[garage][gEnterY], GarageInfo[garage][gEnterZ], -1, -1, -1, 100.0);
-    Iter_Add(Garages, garage);
+    Iter_Add(Garage, garage);
     return 1;
 }
 
@@ -786,7 +820,7 @@ CMD:garage(playerid, params[])
             return 1;
         }
         if (type > 3 || type < 0) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /garage changeint [tip (0-3)]");
-        if (!Iter_Contains(Garages, garageid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Taj ID garaze ne postoji!");
+        if (!Iter_Contains(Garage, garageid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Taj ID garaze ne postoji!");
 
         GarageInfo[garageid][gExitX] = GaragesIntInfo[type][giX];
         GarageInfo[garageid][gExitY] = GaragesIntInfo[type][giY];
@@ -814,7 +848,7 @@ CMD:garage(playerid, params[])
         if(IsValidDynamicArea(GarageInfo[garageid][gAreaID]))
             DestroyDynamicArea(GarageInfo[garageid][gAreaID]);
         
-        Iter_Remove(Garages, garageid);
+        Iter_Remove(Garage, garageid);
 
         GarageInfo[garageid][gOwnerID] = 0;
         GarageInfo[garageid][gPrice] = 0;
@@ -850,7 +884,7 @@ CMD:garageo(playerid, params[])
         SendClientMessage(playerid, COLOR_RED, "[ ? ]: /garageo [garageid]");
         return 1;
     }
-    if (!Iter_Contains(Garages, garage))
+    if (!Iter_Contains(Garage, garage))
     {
         SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ta garaza ne postoji!");
         return 1;
@@ -874,7 +908,7 @@ CMD:garageentrance(playerid, params[])
         SendClientMessage(playerid, COLOR_RED, "[ ? ]: /garageentrance [garageid]");
         return 1;
     }
-    if (!Iter_Contains(Garages, proplev))
+    if (!Iter_Contains(Garage, proplev))
     {
         SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "Garage ID %d doesn't exist!", proplev);
         return 1;

@@ -182,6 +182,12 @@ static const BizzTypesNames[MAX_BIZZ_TYPES][20] =
     ##       ##     ## ##   ### ##    ## ##    ## 
     ##        #######  ##    ##  ######   ######  
 */
+
+bool: Bizz_Exists(bizzid)
+{
+    return Iter_Contains(Business, bizzid);
+}
+
 Player_InBusiness(playerid)
 {
     return InBusiness[playerid];
@@ -436,7 +442,8 @@ static stock GetBiznisTypeList()
 
 static stock PrintBizInfo(playerid, bizz)
 {
-    if (bizz < 0 || bizz >= MAX_BIZZES) return 0;
+    if (!Bizz_Exists(bizz)) 
+        return 0;
 
     SendClientMessage(playerid, COLOR_LIGHTBLUE,"_______________________________________");
     va_SendClientMessage(playerid, COLOR_WHITE, "Naziv biznisa: %s | Vlasnik: %s", BizzInfo[bizz][bMessage], GetPlayerNameFromSQL(BizzInfo[bizz][bOwnerID]));
@@ -576,8 +583,10 @@ UpdateBizzFurnitureSlots(playerid)
 
 stock BuyBiznis(playerid, bool:credit_activated = false)
 {
-    new bizz = Player_InfrontBizz(playerid);
-    if (bizz < 0 || bizz >= MAX_BIZZES) return 0;
+    new 
+        bizz = Player_InfrontBizz(playerid);
+    if (!Bizz_Exists(bizz)) 
+        return 0;
 
     PlayerKeys[playerid][pBizzKey] = bizz;
     //BizzInfo[bizz][bTill]        = 0;
@@ -697,10 +706,6 @@ stock GetDrinkName(drinkid)
 static stock GetArticleList(bizz)
 {
     new buffer[1744];
-    if (bizz < 0 || bizz >= MAX_BIZZES)
-    {
-        return buffer;
-    }
 
     new bizz_type = BizzInfo[bizz][bType];
     if (bizz_type == BIZZ_TYPE_DUCAN)
@@ -731,7 +736,9 @@ static stock GetArticleList(bizz)
 
 static stock IsValidArticle(bizz, article)
 {
-    if (bizz < 0 || bizz >= MAX_BIZZES) return 0;
+    if (!Bizz_Exists(bizz)) 
+        return 0;
+
     if (article < 0 || article >= MAX_BIZZ_ARTICLES) return 0;
 
     for (new i = 0; i < MAX_BIZZ_ARTICLES; i++)
@@ -746,7 +753,9 @@ static stock IsValidArticle(bizz, article)
 
 static stock RemoveStoreArticle(bizz, article)
 {
-    if (bizz < 0 || bizz >= MAX_BIZZES) return 0;
+    if (!Bizz_Exists(bizz)) 
+        return 0;
+
     if (article < 0 || article >= MAX_BIZZ_ARTICLES) return 0;
 
     mysql_fquery(g_SQL, "DELETE FROM server_biznis_products WHERE biznis_id = '%d' AND id = '%d' AND type='%d'",
@@ -764,7 +773,8 @@ static stock RemoveStoreArticle(bizz, article)
 
 static stock GetEmptyProductSlot(bizz)
 {
-    if (bizz < 0 || bizz >= MAX_BIZZES) return 0;
+    if (!Bizz_Exists(bizz)) 
+        return 0;
 
     for (new i = 0 ; i < MAX_BIZZ_ARTICLES; i++)
     {
@@ -778,7 +788,8 @@ static stock GetEmptyProductSlot(bizz)
 
 static stock SetStoreProductOnSale(bizz, product, price)
 {
-    if (bizz < 0 || bizz >= MAX_BIZZES) return 0;
+    if (!Bizz_Exists(bizz)) 
+        return 0;
     if (product == INVALID_PRODUCT_ID || product < 100) return 0;
 
     new id = GetEmptyProductSlot(bizz);
@@ -821,7 +832,8 @@ static stock UpdateBizzProduct(bizz, productid)
 
 Public:OnBiznisProductInsert(bizz, id)
 {
-    if (bizz < 0 || bizz >= MAX_BIZZES) return 0;
+    if (!Bizz_Exists(bizz)) 
+        return 0;
 
     BiznisProducts[bizz][bpSQLID][id] = cache_insert_id();
     return 1;
@@ -916,7 +928,8 @@ static stock GetStoreProducts(bizz)
 
 stock ResetBizzInfo(bizz, bool:server_startup = false)
 {
-    if (bizz < 0 || bizz >= MAX_BIZZES) return 0;
+    if (!Bizz_Exists(bizz)) 
+        return 0;
 
     BizzInfo[bizz][bOwnerID] = 0;
     BizzInfo[bizz][bMessage][0] = EOS;
@@ -964,7 +977,8 @@ Public:ResetBizzEnumerator()
 
 stock InsertNewBizz(playerid, bizz)
 {
-    if (bizz < 0 || bizz >= MAX_BIZZES) return 0;
+    if (!Bizz_Exists(bizz)) 
+        return 0;
 
     mysql_pquery(g_SQL, 
         va_fquery(g_SQL, 
@@ -991,7 +1005,8 @@ stock InsertNewBizz(playerid, bizz)
 
 Public:OnBizzInsertQuery(playerid, bizz)
 {
-    if (bizz < 0 || bizz >= MAX_BIZZES) return 0;
+    if (!Bizz_Exists(bizz)) 
+        return 0;
 
     BizzInfo[bizz][bSQLID] = cache_insert_id();
 

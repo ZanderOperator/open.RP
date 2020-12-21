@@ -161,13 +161,10 @@ new MySQL:g_SQL;
 // Server Iterators
 new
 	Iterator:Vehicles[MAX_VEHICLE_TYPES]<MAX_VEHICLES>,
-	Iterator:Skins<MAX_MENU_ITEMS>,
 	Iterator:Pickups[MAX_PICKUP_TYPES]<MAX_DYNAMIC_PICKUPS>,
 	Iterator:Factions<MAX_FACTIONS>,
 	Iterator:Complex<MAX_COMPLEX>,
-	Iterator:ComplexRooms<MAX_COMPLEX_ROOMS>,
-	Iterator:Garages<MAX_GARAGES>,
-	Iterator:IllegalGarages<MAX_ILEGAL_GARAGES>;
+	Iterator:ComplexRooms<MAX_COMPLEX_ROOMS>;
 
 /*
 	##     ##    ###    ########   ######

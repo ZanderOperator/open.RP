@@ -336,7 +336,7 @@ CMD:exit(playerid, params[])
         }
         return 1;
     }
-    else if (Iter_Contains(Garages, garage))
+    else if (Garage_Exists(garage))
     {
         if (IsPlayerInRangeOfPoint(playerid, 10.0, GarageInfo[garage][gExitX], GarageInfo[garage][gExitY], GarageInfo[garage][gExitZ]))
         {
@@ -374,7 +374,7 @@ CMD:exit(playerid, params[])
         }
         return 1;
     }
-    else if (0 >= house && house < MAX_HOUSES)
+    else if (House_Exists(house))
     {
         if (IsPlayerInRangeOfPoint(playerid, 10.0, HouseInfo[house][hExitX], HouseInfo[house][hExitY], HouseInfo[house][hExitZ]))
         {

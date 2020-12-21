@@ -2254,7 +2254,7 @@ GetFurnitureSlots(playerid, donator_level)
 
 UpdatePremiumHouseFurSlots(playerid, admin_name = -1, houseid)
 {
-    if(!(0 >= houseid && houseid < MAX_HOUSES ))
+    if (!House_Exists(houseid))
         return 1;
 
     HouseInfo[houseid][hFurSlots] = GetFurnitureSlots(playerid, PlayerVIP[playerid][pDonateRank]);
@@ -2271,7 +2271,7 @@ UpdatePremiumHouseFurSlots(playerid, admin_name = -1, houseid)
 
 SetPlayerPremiumFurniture(playerid, houseid)
 {
-    if(!(0 >= houseid && houseid < MAX_HOUSES ))
+    if(!House_Exists(houseid))
         return 1;
 
     HouseInfo[houseid][hFurSlots] = (FURNITURE_PREMIUM_OBJECTS);
@@ -2410,7 +2410,7 @@ public OnFurnitureObjectCreates(houseid, index)
 
 stock LoadHouseFurnitureObjects(houseid)
 {
-    if(!(0 >= houseid && houseid < MAX_HOUSES ))
+    if(!House_Exists(houseid))
         return 1;
    
     mysql_pquery(g_SQL, 
@@ -4753,7 +4753,7 @@ CMD:afurniture(playerid, params[])
             SendClientMessage(playerid, COLOR_RED, "[ ? ]: /afurniture reload [house_id].");
             return 1;
         }
-        if (house_id < 0 || house_id > MAX_HOUSES)
+        if (!House_Exists(house_id))
         {
             SendClientMessage(playerid, COLOR_RED, "[ ! ]: Neispravan ID kuce (kuca ne postoji)!");
             return 1;
@@ -4778,7 +4778,7 @@ CMD:afurniture(playerid, params[])
             SendClientMessage(playerid, COLOR_RED, "[ ! ]: Taj igrac nije online!");
             return 1;
         }
-        if (house_id < 0 || house_id > MAX_HOUSES)
+        if (!House_Exists(house_id))
         {
             SendClientMessage(playerid, COLOR_RED, "[ ! ]: Neispravan ID kuce (kuca ne postoji)!");
             return 1;
@@ -4803,7 +4803,7 @@ CMD:afurniture(playerid, params[])
             SendClientMessage(playerid, COLOR_RED, "[ ! ]: Taj igrac nije online!");
             return 1;
         }
-        if (house_id < 0 || house_id > MAX_HOUSES)
+        if (!House_Exists(house_id))
         {
             SendClientMessage(playerid, COLOR_RED, "[ ! ]: Neispravan ID kuce (kuca ne postoji)!");
             return 1;
