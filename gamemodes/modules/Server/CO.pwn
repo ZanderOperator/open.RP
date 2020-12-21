@@ -5438,10 +5438,7 @@ CMD:car(playerid, params[])
 }
 
 CMD:trunk(playerid, params[])
-{
-	if(strlen(params) >= 10)
-		return SendClientMessage(playerid, -1, "[ ? ]: /trunk [open/take/put/break]");
-		
+{	
 	new
 		vehicleid = GetNearestVehicle(playerid, VEHICLE_USAGE_PRIVATE),
 		engine, lights, alarm, doors, bonnet, boot, objective,

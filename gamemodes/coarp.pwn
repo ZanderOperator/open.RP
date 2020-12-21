@@ -388,7 +388,8 @@ StartGMX()
 		SendClientMessageToAll(-1, "\n");
 	}
 	cseconds = 30;
-	foreach (new i : Player) {
+	foreach (new i : Player) 
+	{
 		// Player Camera
 		TogglePlayerControllable(i, false);
 		SetPlayerPos(i, 1433.4633, -974.7463, 58.0000);
@@ -435,7 +436,8 @@ Public:SaveAll()
 	printf("[SERVER]: Automatic scheduled restart initiated. Storing data into MySQL database.");
 	if(Iter_Count(Player) > 0)
 	{
-		foreach (new i : Player) {
+		foreach (new i : Player) 
+		{
 			if (Bit1_Get(gr_PlayerLoggedIn, i) != 0)
 				Kick(i);
 		}
@@ -541,8 +543,10 @@ Public:GMXTimer()
 		{
 			GMX = 0;
 			stop CountingTimer;
-			foreach(new i : Player) {
-				if(PlayerInfo[i][pAdmin] >= 1338) {
+			foreach(new i : Player) 
+			{
+				if(PlayerInfo[i][pAdmin] >= 1338) 
+				{
 					SendClientMessage(i, COLOR_RED, "[INFO]: Storing the data in server is done. Restarting Server...");
 					KickMessage(i);
 				}

@@ -1178,14 +1178,17 @@ timer OnAdminCountDown[1000]()
 {
 	va_GameTextForAll("~w~%d", 1000, 4, cseconds - 1);
 	
-	foreach(new playerid : Player) {
+	foreach(new playerid : Player) 
+	{
 		PlayerPlaySound(playerid, 1056, 0.0, 0.0, 0.0);
 	}
 	cseconds--;
-	if( !cseconds ) {
+	if( !cseconds ) 
+	{
 		count_started = false;
 		GameTextForAll("~g~GO GO GO", 2500, 4);
-		foreach(new playerid : Player) {
+		foreach(new playerid : Player) 
+		{
 			PlayerPlaySound(playerid, 1057, 0.0, 0.0, 0.0);
 		}
 		stop CountingTimer;

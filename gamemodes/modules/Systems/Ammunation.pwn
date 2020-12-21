@@ -73,8 +73,7 @@ Public:OnAmmuWeaponInsert(slot)
 Public:OnAmmuWeaponsLoaded()
 {
     new
-        rows = cache_num_rows(),
-        tmp[64];
+        rows = cache_num_rows();
 
     if (!rows)
     {
@@ -85,9 +84,7 @@ Public:OnAmmuWeaponsLoaded()
     for (new slotid = 0; slotid < rows; slotid++)
     {
         cache_get_value_name_int(slotid, "id", AmmuInfo[slotid][aiSQLID]);
-        cache_get_value_name(slotid, "name", tmp); // TODO: why not directly use the AmmuInfo var?
-        // TODO: use strcpy for copying strings
-        format(AmmuInfo[slotid][aiName], 64, tmp);
+        cache_get_value_name(slotid, "name", AmmuInfo[slotid][aiName], 64);
         cache_get_value_name_int(slotid, "weapon", AmmuInfo[slotid][aiWeapon]);
         cache_get_value_name_int(slotid, "price", AmmuInfo[slotid][aiPrice]);
         cache_get_value_name_int(slotid, "license", AmmuInfo[slotid][aiLicense]);

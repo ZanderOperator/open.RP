@@ -481,31 +481,13 @@ static stock ResetPlayerExteriorVars(playerid)
 
 static stock FindExteriorObjectId(playerid, Float:radius)
 {
-    // TODO: test the new algorithm
-    /*
-    foreach(new h : Houses)
-    {
-        if (IsPlayerInRangeOfPoint(playerid, 40.0, HouseInfo[h][hEnterX], HouseInfo[h][hEnterY], HouseInfo[h][hEnterZ]))
-        {
-            foreach(new i: HouseFurExt[h])
-            {
-                if (IsPlayerInRangeOfPoint(playerid, radius, ExteriorInfo[h][hePosX][i], ExteriorInfo[h][hePosY][i], ExteriorInfo[h][hePosZ][i]))
-                {
-                    return i;
-                }
-            }
-        }
-    }
-    */
-    new houseid = -1, objid = -1;
-    foreach(new h : Houses)
-    {
-        if (IsPlayerInRangeOfPoint(playerid, 40.0, HouseInfo[h][hEnterX], HouseInfo[h][hEnterY], HouseInfo[h][hEnterZ]))
-        {
-            houseid = h;
-            break;
-        }
-    }
+    new 
+        houseid = Player_HouseArea(playerid),
+        objid = -1;
+
+    if(houseid == INVALID_HOUSE_ID)
+        return INVALID_HOUSE_ID;
+
     foreach(new i: HouseFurExt[houseid])
     {
         if (IsPlayerInRangeOfPoint(playerid, radius, ExteriorInfo[houseid][hePosX][i], ExteriorInfo[houseid][hePosY][i], ExteriorInfo[houseid][hePosZ][i]))
@@ -515,29 +497,6 @@ static stock FindExteriorObjectId(playerid, Float:radius)
         }
     }
     return objid;
-}
-
-static stock FindExteriorObjectHouse(playerid, Float:radius)
-{
-    // TODO: test the new algorithm, same as function above except it returned "h"
-    new houseid = -1, ret = -1;
-    foreach(new h : Houses)
-    {
-        if (IsPlayerInRangeOfPoint(playerid, 40.0, HouseInfo[h][hEnterX], HouseInfo[h][hEnterY], HouseInfo[h][hEnterZ]))
-        {
-            houseid = h;
-            break;
-        }
-    }
-    foreach(new i: HouseFurExt[houseid])
-    {
-        if (IsPlayerInRangeOfPoint(playerid, radius, ExteriorInfo[houseid][hePosX][i], ExteriorInfo[houseid][hePosY][i], ExteriorInfo[houseid][hePosZ][i]))
-        {
-            ret = houseid;
-            break;
-        }
-    }
-    return ret;
 }
 
 Public:OnHouseExteriorLoad(houseid)
@@ -941,24 +900,16 @@ CMD:exterior(playerid, params[])
 
 CMD:deleteext(playerid, params[])
 {
-    if (PlayerInfo[playerid][pAdmin] < 2) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ovlasteni za koristenje ove komande!");
+    if (PlayerInfo[playerid][pAdmin] < 2) 
+        return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ovlasteni za koristenje ove komande!");
+    new 
+        index = FindExteriorObjectId(playerid, 5.0);
+    if (index == INVALID_HOUSE_ID)
+        return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste u blizini kuce!");
+    if (index == -1) 
+        return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste blizu eksterijer objekta!");
 
-    new index = FindExteriorObjectId(playerid, 5.0);
-    new houseid = FindExteriorObjectHouse(playerid, 5.0);
-    if (index == -1) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste blizu eksterijer objekta!");
-
-    DeleteExteriorObject(houseid, index);
+    DeleteExteriorObject(Player_HouseArea(playerid), index);
     SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uspjesno ste obrisali objekt pored sebe!");
-    return 1;
-}
-
-CMD:checkextowner(playerid, params[])
-{
-    if (PlayerInfo[playerid][pAdmin] < 2) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ovlasteni za koristenje ove komande!");
-
-    new index = FindExteriorObjectHouse(playerid, 5.0);
-    if (index == -1) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste blizu eksterijer objekta!");
-
-    SendFormatMessage(playerid, MESSAGE_TYPE_INFO, "Vlasnik ovog objekta je %s (houseid %d).", GetPlayerNameFromSQL(HouseInfo[index][hOwnerID]), index);
     return 1;
 }

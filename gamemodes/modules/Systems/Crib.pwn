@@ -276,6 +276,7 @@ stock ResetHouseVariables(playerid)
     Player_SetInHouse       (playerid, INVALID_HOUSE_ID);
     Player_SetInfrontHouse  (playerid, INVALID_HOUSE_ID);
     Player_SetHouseCP       (playerid, INVALID_HOUSE_ID);
+    Player_SetHouseArea     (playerid, INVALID_HOUSE_ID);
     return 1;
 }
 
@@ -458,12 +459,12 @@ static CreateHouseEnter(houseid)
     if (HouseInfo[houseid][h3dViwo] > 0)
     {
         HouseInfo[houseid][hEnterCP] = CreateDynamicCP(HouseInfo[houseid][hEnterX], HouseInfo[houseid][hEnterY], HouseInfo[houseid][hEnterZ]-1.0, 2.0, HouseInfo[houseid][h3dViwo], 5, -1, 5.0);
-        HouseInfo[houseid][hAreaID] = CreateDynamicCircle(HouseInfo[houseid][hEnterX], HouseInfo[houseid][hEnterY], 15.0, HouseInfo[houseid][h3dViwo], -1, -1);
+        HouseInfo[houseid][hAreaID] = CreateDynamicCircle(HouseInfo[houseid][hEnterX], HouseInfo[houseid][hEnterY], HOUSE_EXTERIOR_RADIUS, HouseInfo[houseid][h3dViwo], -1, -1);
     }
     else
     {
         HouseInfo[houseid][hEnterCP] = CreateDynamicCP(HouseInfo[houseid][hEnterX], HouseInfo[houseid][hEnterY], HouseInfo[houseid][hEnterZ]-1.0, 2.0, -1, -1, -1, 5.0);
-        HouseInfo[houseid][hAreaID] = CreateDynamicCircle(HouseInfo[houseid][hEnterX], HouseInfo[houseid][hEnterY], 15.0, -1, -1, -1);
+        HouseInfo[houseid][hAreaID] = CreateDynamicCircle(HouseInfo[houseid][hEnterX], HouseInfo[houseid][hEnterY], HOUSE_EXTERIOR_RADIUS, -1, -1, -1);
     }
     return 1;
 }
@@ -843,16 +844,6 @@ stock BuyHouse(playerid, bool:credit_activated = false)
 
     SendClientMessage(playerid, COLOR_RED, "[ ! ] Ukucajte /help da bi ste vidjeli sve komande vezane uz kucu !");
     return 1;
-}
-
-static stock GetLastHouseSQLID()
-{
-    new id = -1;
-    foreach(new h : Houses)
-    {
-        if (HouseInfo[h][hSQLID] == 0) return id;
-    }
-    return id;
 }
 
 static stock RemoveHouse(houseid)
@@ -1383,10 +1374,12 @@ hook OnPlayerLeaveDynamicCP(playerid, checkpointid)
 
 hook OnPlayerEnterDynArea(playerid, areaid)
 {
-    if (!Iter_Contains(Houses, Area_GetHouseID(areaid)))
+    new 
+        house = Area_GetHouseID(areaid);
+    if (!Iter_Contains(Houses, house))
         return 1;
 
-    Player_SetHouseArea(playerid, areaid);
+    Player_SetHouseArea(playerid, house);
     return 1;
 }
 

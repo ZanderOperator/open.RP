@@ -943,11 +943,8 @@ hook OnPlayerSpawn(playerid)
 		SetPlayerHealth(playerid, 99.0);
 	else SetPlayerHealth(playerid, 50.0);
 
+	TogglePlayerAllDynamicRaceCPs(playerid, false);
 	TogglePlayerAllDynamicCPs(playerid, true);
-	foreach(new i : Houses)
-	{
-		TogglePlayerDynamicCP(playerid, HouseInfo[ i ][ hEnterCP ], true);
-	}
 
 	new
 		hour, minute;

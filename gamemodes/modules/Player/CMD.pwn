@@ -109,7 +109,7 @@ CMD:enter(playerid, params[])
 	{
 		new 
 			garage = Player_InfrontGarage(playerid);
-		if(garage == 1)
+		if(garage == -1)
 			return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ispred garaze!");
 
 		if (PlayerInfo[playerid][pSQLID] != GarageInfo[garage][gOwnerID] && !IsOnAdminDuty(playerid) && !GarageInfo[garage][gLocked])

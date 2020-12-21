@@ -336,11 +336,10 @@ CMD:togradio(playerid, params[])
 
 CMD:channel(playerid, params[])
 {
-	if ( !IsPlayerLogged(playerid) || !IsPlayerConnected(playerid) ) return SendErrorMessage(playerid, "Niste ulogirani!");
-
-	if(strlen(params) >= 16)
-		return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Opcija ne smije imati vise od 16 znakova!");
-	new choice[16];
+	if ( !IsPlayerLogged(playerid) || !IsPlayerConnected(playerid) ) 
+		return SendErrorMessage(playerid, "Niste ulogirani!");
+	new 
+		choice[16];
 	if(sscanf(params, "s[16] ", choice)) 
 	{
 		SendClientMessage(playerid, -1, "[ ? ]: /channel [opcija]");

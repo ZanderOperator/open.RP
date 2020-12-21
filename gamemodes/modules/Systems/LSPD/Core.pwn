@@ -2774,14 +2774,14 @@ CMD:pa(playerid, params[])
 
 CMD:hq(playerid, params[])
 {
-    if (strlen(params) >= 86)
-        return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Tekst ne smije imati vise od 86 znakova!");
+    if (strlen(params) >= 110)
+        return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Tekst ne smije imati vise od 110 znakova!");
 
     if (!IsACop(playerid) && !IsASD(playerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste LSPD/SASD!");
 
     new
-        string[156], result[86];
-    if (sscanf(params, "s[86]", result)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /hq [text]");
+        string[144], result[110];
+    if (sscanf(params, "s[110]", result)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /hq [text]");
 
     format(string, sizeof(string), "[HQ] %s %s: %s", ReturnPlayerRankName(playerid), GetName(playerid, false), result);
     SendRadioMessage(PlayerFaction[playerid][pMember], COLOR_SKYBLUE, string);
