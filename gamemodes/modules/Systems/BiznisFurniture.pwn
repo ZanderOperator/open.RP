@@ -40,6 +40,8 @@
        ###    ##     ## ##     ##  ######
 */
 
+static Iterator:BizzFurniture[MAX_BIZZS]<MAX_BIZNIS_FURNITURE_SLOTS>;
+
 enum E_BLANK_BIZZ_INTERIORS
 {
     iName[23],
@@ -711,7 +713,7 @@ public OnBizzFurnitureObjectCreate(biznisid, index)
 // Stocks
 stock LoadBiznisFurnitureObjects(biznisid)
 {
-    if(!Iter_Contains(Bizzes, biznisid)) return 1;
+    if(biznisid == INVALID_BIZNIS_ID) return 1;
 
     mysql_pquery(g_SQL, 
         va_fquery(g_SQL, "SELECT * FROM biznis_furniture WHERE biznisid = '%d'", BizzInfo[biznisid][bSQLID]), 
@@ -985,7 +987,7 @@ static stock GetFurnitureObjectModel(playerid, index)
     return modelid;
 }
 
-static stock GetPlayerFurnitureSlots(playerid)
+GetPlayerBizzFurSlots(playerid)
 {
     switch (PlayerVIP[playerid][pDonateRank])
     {
@@ -1492,7 +1494,7 @@ static stock DestroyAllFurnitureObjects(playerid, biznisid)
             }
         }
     }
-    BizzInfo[biznisid][bFurSlots] = GetPlayerFurnitureSlots(playerid);
+    BizzInfo[biznisid][bFurSlots] = GetPlayerBizzFurSlots(playerid);
 
     mysql_pquery(g_SQL, "BEGIN");
     mysql_fquery_ex(g_SQL, "DELETE FROM biznis_furniture WHERE biznisid = '%d'", BizzInfo[biznisid][bSQLID]);
@@ -1504,6 +1506,22 @@ static stock DestroyAllFurnitureObjects(playerid, biznisid)
     );
 
     Iter_Clear(BizzFurniture[biznisid]);
+    return 1;
+}
+
+RotateBizzFurDoor(biznisid, playerid)
+{
+    foreach(new i: BizzFurniture[biznisid])
+    {
+        if (BizzInfo[biznisid][bFurDoor][i])
+        {
+            if (IsPlayerInRangeOfPoint(playerid, 3.0, BizzInfo[biznisid][bFurPosX][i], BizzInfo[biznisid][bFurPosY][i], BizzInfo[biznisid][bFurPosZ][i] ))
+            {
+                SetFurnitureDoorRotation(biznisid, i);
+                return 1;
+            }
+        }
+    }
     return 1;
 }
 
@@ -1553,23 +1571,6 @@ static stock SetFurnitureDoorRotation(biznisid, index)
     return 1;
 }
 
-stock UpdatePremiumBizFurSlots(playerid)
-{
-    foreach(new biznisid: Bizzes)
-    {
-        if (PlayerInfo[playerid][pSQLID] == BizzInfo[biznisid][bOwnerID])
-        {
-            BizzInfo[biznisid][bFurSlots] = GetPlayerFurnitureSlots(playerid);
-            mysql_fquery(g_SQL, "UPDATE bizzes SET fur_slots = '%d' WHERE id = '%d'", 
-                BizzInfo[biznisid][bFurSlots], 
-                BizzInfo[biznisid][bSQLID]
-            );
-            return 1;
-        }
-    }
-    return 1;
-}
-
 stock ReloadBizzFurniture(biznisid)
 {
     foreach(new index: BizzFurniture[biznisid])
@@ -1614,6 +1615,15 @@ stock ReloadBizzFurniture(biznisid)
     ##     ## ##     ## ##     ## ##   ##  ##    ##
     ##     ##  #######   #######  ##    ##  ######
 */
+
+hook function ResetIterators()
+{
+    for(new i = 0; i < MAX_BIZZS; i++)
+    {
+        Iter_Clear(BizzFurniture[i]);
+    }
+    return continue();
+}
 
 hook OnGameModeInit()
 {

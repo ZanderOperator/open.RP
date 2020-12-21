@@ -41,6 +41,8 @@
        ###    ##     ## ##     ##  ######  
 */
 
+static Iterator:Bizzes<MAX_BIZZS>;
+
 enum
 {
     PRODUCT_WATER = 100,
@@ -228,7 +230,6 @@ stock Player_SetDJBizzKey(playerid, v)
 {
     DJBizzKey[playerid] = v;
 }
-
 stock GetNearestBizz(playerid, BIZZ_TYPE = -1)
 {
 	new 
@@ -555,6 +556,23 @@ Public:DestroyBizzInfoTD(playerid)
     return 1;
 }
 
+UpdateBizzFurnitureSlots(playerid)
+{
+    foreach(new biznisid: Bizzes)
+    {
+        if (PlayerInfo[playerid][pSQLID] == BizzInfo[biznisid][bOwnerID])
+        {
+            BizzInfo[biznisid][bFurSlots] = GetPlayerBizzFurSlots(playerid);
+            mysql_fquery(g_SQL, "UPDATE bizzes SET fur_slots = '%d' WHERE id = '%d'", 
+                BizzInfo[biznisid][bFurSlots], 
+                BizzInfo[biznisid][bSQLID]
+            );
+            return 1;
+        }
+    }
+    return 1;
+}
+
 stock BuyBiznis(playerid, bool:credit_activated = false)
 {
     new bizz = Player_InfrontBizz(playerid);
@@ -808,6 +826,37 @@ Public:OnBiznisProductInsert(bizz, id)
     return 1;
 }
 
+CheckPlayerBizzInt(playerid, interior, viwo)
+{
+    foreach(new b: Bizzes)
+	{
+		if(IsPlayerInRangeOfPoint(playerid, 250.0, BizzInfo[b][bExitX], BizzInfo[b][bExitY], BizzInfo[b][bExitZ]) 
+            && BizzInfo[b][bInterior] == interior
+            && BizzInfo[b][bVirtualWorld] == viwo)
+		{
+			Player_SetInBusiness(playerid, b);
+			return 1;
+		}
+	}
+    return 1;
+}
+
+GetBizzFromSQL(sqlid)
+{
+    new 
+        bizzid = INVALID_BIZNIS_ID;
+
+    foreach(new bizz : Bizzes) 
+	{
+		if(BizzInfo[bizz][bOwnerID] == sqlid) 
+		{
+			bizzid = bizz;
+			break;
+		}
+	}
+    return bizzid;
+}
+
 stock CP_GetBizzID(checkpointid)
 {
     new bizzid = INVALID_BIZNIS_ID;
@@ -900,7 +949,6 @@ stock ResetBizzInfo(bizz, bool:server_startup = false)
     if(IsValidDynamicCP(BizzInfo[bizz][bEnterCP]))
         DestroyDynamicCP(BizzInfo[bizz][bEnterCP]);
 
-    Iter_Clear(BizzFurniture[bizz]);
     return 1;
 }
 
@@ -1041,6 +1089,12 @@ Public:ResetBuySkin(playerid)
     ##     ## ##     ## ##     ## ##   ##  ##    ##
     ##     ##  #######   #######  ##    ##  ######
 */
+
+hook function ResetIterators()
+{
+    Iter_Clear(Bizzes);
+    return continue();
+}
 
 hook function LoadServerData()
 {
@@ -3780,8 +3834,9 @@ CMD:buy(playerid, params[])
     }
     else
     {
-        new bizz = Player_InBusiness(playerid);
-        if (bizz == INVALID_BIZNIS_ID || bizz > MAX_BIZZS)
+        new 
+            bizz = Player_InBusiness(playerid);
+        if (!Iter_Contains(Bizzes, bizz))
         {
             SendClientMessage(playerid, COLOR_RED, "Niste u biznisu!");
             return 1;
@@ -3794,17 +3849,15 @@ CMD:buy(playerid, params[])
         {
             case BIZZ_TYPE_DUCAN:
             {
-                if (IsAt247(playerid))
-                {
-                    if (AntiSpamInfo[playerid][asBuying] > gettime()) return va_SendClientMessage(playerid, COLOR_RED, "[ANTI-SPAM]: Ne spamajte sa komandom! Pricekajte %d sekundi pa nastavite!", ANTI_SPAM_BUY_TIME);
 
-                    new string[870];
-                    format(string, sizeof(string), "%s", GetStoreProducts(Player_InBusiness(playerid)));
-                    if (isnull(string)) return SendClientMessage(playerid, COLOR_RED, "[ ! ]  Prodavaonica nije napravila ponudu artikala!");
+                if (AntiSpamInfo[playerid][asBuying] > gettime()) return va_SendClientMessage(playerid, COLOR_RED, "[ANTI-SPAM]: Ne spamajte sa komandom! Pricekajte %d sekundi pa nastavite!", ANTI_SPAM_BUY_TIME);
 
-                    ShowPlayerDialog(playerid, DIALOG_BIZNIS_BUYING, DIALOG_STYLE_LIST, "KUPOVINA", string, "Buy", "Abort");
-                    AntiSpamInfo[playerid][asBuying] = gettime() + ANTI_SPAM_BUY_TIME;
-                }
+                new string[870];
+                format(string, sizeof(string), "%s", GetStoreProducts(Player_InBusiness(playerid)));
+                if (isnull(string)) return SendClientMessage(playerid, COLOR_RED, "[ ! ]  Prodavaonica nije napravila ponudu artikala!");
+
+                ShowPlayerDialog(playerid, DIALOG_BIZNIS_BUYING, DIALOG_STYLE_LIST, "KUPOVINA", string, "Buy", "Abort");
+                AntiSpamInfo[playerid][asBuying] = gettime() + ANTI_SPAM_BUY_TIME;
             }
             case BIZZ_TYPE_SUBURBAN, BIZZ_TYPE_PROLAPS, BIZZ_TYPE_ZIP, BIZZ_TYPE_BINCO:
             {
@@ -4090,23 +4143,13 @@ CMD:bizwithdraw(playerid, params[])
 CMD:bizbank(playerid, params[])
 {
     new
-        bouse,
+        bouse = PlayerKeys[playerid][pBizzKey],
         cashdeposit;
 
-    if (PlayerKeys[playerid][pBizzKey] == INVALID_BIZNIS_ID)
+    if (bouse == INVALID_BIZNIS_ID)
     {
         SendClientMessage(playerid, COLOR_RED, "Ne posjedujes biznis.");
         return 1;
-    }
-
-    // TODO: why not just reuse PlayerKeys[playerid][pBizzKey] as the index to BizzInfo array?
-    foreach(new i : Bizzes)
-    {
-        if (PlayerInfo[playerid][pSQLID] == BizzInfo[i][bOwnerID])
-        {
-            bouse = i;
-            break;
-        }
     }
     if (sscanf(params, "i", cashdeposit))
     {

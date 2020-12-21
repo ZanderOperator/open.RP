@@ -154,17 +154,11 @@ static
 
 stock GetPlayerCasinoID(playerid)
 {
-	new bizid = INVALID_BIZNIS_ID;
-	foreach(new bizzid: Bizzes) 
-	{
-		if(BizzInfo[bizzid][bType] == BIZZ_TYPE_CASINO && IsPlayerInRangeOfPoint(playerid, 200.0, BizzInfo[bizzid][bExitX], BizzInfo[bizzid][bExitY], BizzInfo[bizzid][bExitZ]) 
-		&& GetPlayerInterior(playerid) == BizzInfo[bizzid][bInterior] && GetPlayerVirtualWorld(playerid) == BizzInfo[bizzid][bVirtualWorld])
-		{
-			bizid = bizzid;
-			break;
-		}
-	}
-	return bizid;
+	new 
+		bizzid = Player_InBusiness(playerid);
+	if(BizzInfo[bizzid][bType] == BIZZ_TYPE_CASINO)
+		return bizzid;
+	return INVALID_BIZNIS_ID;
 }
 
 stock InitRuletWorkers()
@@ -275,19 +269,19 @@ stock PlayerToRouletteMoney(playerid, money)
 	RoulettWholeBet[ playerid ] += money;
 	PlayerPlaySound( playerid, 1083, 0.0, 0.0, 0.0 );
 	
-	// Update Casino blagajne
-	foreach(new bizzid: Bizzes) 
+	new 
+		bizzid = Player_InBusiness(playerid);
+	if(bizzid == INVALID_BIZNIS_ID)
+		return 1;
+
+	if(BizzInfo[bizzid][bType] == BIZZ_TYPE_CASINO)
 	{
-		if(BizzInfo[bizzid][bType] == BIZZ_TYPE_CASINO && IsPlayerInRangeOfPoint(playerid, 200.0, BizzInfo[bizzid][bExitX], BizzInfo[bizzid][bExitY], BizzInfo[bizzid][bExitZ]) 
-		&& GetPlayerInterior(playerid) == BizzInfo[bizzid][bInterior] && GetPlayerVirtualWorld(playerid) == BizzInfo[bizzid][bVirtualWorld])
-		{
-			BizzInfo[bizzid][bTill] += money;				// Biznisu idu pare ulozene na rulet
-			mysql_fquery(g_SQL, "UPDATE bizzes SET till = '%d' WHERE id = '%d'",
-				BizzInfo[bizzid][bTill],
-				BizzInfo[bizzid][bSQLID]
-			);
-			break;
-		}
+		BizzInfo[bizzid][bTill] += money;				
+
+		mysql_fquery(g_SQL, "UPDATE bizzes SET till = '%d' WHERE id = '%d'",
+			BizzInfo[bizzid][bTill],
+			BizzInfo[bizzid][bSQLID]
+		);
 	}
 	return 1;
 }
