@@ -36,6 +36,10 @@
 */
 
 static
+    Iterator: ComplexRoom <MAX_COMPLEX_ROOMS>,
+    Iterator: Complex <MAX_COMPLEX>;
+
+static
     SelectedRoom[MAX_PLAYERS],
     // Complex Vars
     InApartmentComplex[MAX_PLAYERS] = {INVALID_COMPLEX_ID, ...},
@@ -65,6 +69,11 @@ static
 */
 
 // Complex Vars
+bool: Complex_Exists(complex_id)
+{
+    return Iter_Contains(Complex, complex_id);
+}
+
 Player_InApartmentComplex(playerid)
 {
     return InApartmentComplex[playerid];
@@ -96,6 +105,12 @@ Player_SetComplexCP(playerid, v)
 }
 
 // Complex Room Vars
+
+bool: ComplexRoom_Exists(room_id)
+{
+    return Iter_Contains(ComplexRoom, room_id);
+}
+
 Player_InApartmentRoom(playerid)
 {
     return InApartmentRoom[playerid];
@@ -175,6 +190,66 @@ stock LoadComplexRooms()
     return 1;
 }
 
+CheckPlayerComplexInt(playerid, int, viwo)
+{
+    foreach(new c: Complex) 
+	{
+		if(IsPlayerInRangeOfPoint(playerid, 250.0, ComplexInfo[c][cExitX], ComplexInfo[c][cExitY], ComplexInfo[c][cExitZ]) 
+            && ComplexInfo[c][cInt] == int 
+            && ComplexInfo[c][cViwo] == viwo) 
+		{
+			Player_SetInApartmentComplex(playerid, c);
+			break;
+		}
+	}
+    return 1;
+}
+
+CheckPlayerComplexRoomInt(playerid, int, viwo)
+{
+    foreach(new cr: ComplexRoom)
+	{
+		if(IsPlayerInRangeOfPoint(playerid, 250.0, ComplexRoomInfo[cr][cExitX], ComplexRoomInfo[cr][cExitY], ComplexRoomInfo[cr][cEnterZ]) 
+            && int == ComplexRoomInfo[cr][cIntExit] 
+            && viwo == ComplexRoomInfo[cr][cVWExit] ) 
+		{
+			Player_SetInApartmentRoom(playerid, cr);
+			break;
+		}
+	}
+    return 1;
+}
+
+GetComplexFromSQL(sqlid)
+{
+    new 
+        complex_id = INVALID_COMPLEX_ID;
+    foreach(new complex : Complex)
+	{
+		if(ComplexInfo[complex][cOwnerID] == sqlid) 
+		{
+			complex_id = complex;
+			break;
+		}
+	}
+    return complex_id;
+}
+
+GetComplexRoomFromSQL(sqlid)
+{
+    new 
+        complex_room = INVALID_COMPLEX_ID;
+    foreach(new complexr : ComplexRoom)
+	{
+		if(ComplexRoomInfo[complexr][cOwnerID] == sqlid) 
+		{
+			complex_room = complexr;
+			break;
+		}
+	}
+    return complex_room;
+}
+
 stock GetComplexRooms(sqlid)
 {
     new dest[MAX_PLAYER_NAME];
@@ -200,7 +275,7 @@ stock GetComplexRooms(sqlid)
 static stock GetComplexInfoID(ownerid)
 {
     new complex_id = INVALID_COMPLEX_ID;
-    foreach(new cid: ComplexRooms)
+    foreach(new cid: ComplexRoom)
     {
         if (ComplexRoomInfo[cid][cOwnerID] == ownerid)
         {
@@ -258,7 +333,7 @@ static stock CreateComplexEnter(complex_id)
 stock CP_GetComplexRoomID(checkpointid)
 {
     new complexid = INVALID_COMPLEX_ID;
-    foreach(new complex: ComplexRooms)
+    foreach(new complex: ComplexRoom)
     {
         if(ComplexRoomInfo[complex][cEnterCP] == checkpointid)
         {
@@ -425,9 +500,9 @@ public OnComplexRoomsLoad()
             }
         }
         CreateCRoomEnter(row);
-        Iter_Add(ComplexRooms, row);
+        Iter_Add(ComplexRoom, row);
     }
-    printf("MySQL Report: Complex rooms Loaded (%d)!", Iter_Count(ComplexRooms));
+    printf("MySQL Report: Complex rooms Loaded (%d)!", Iter_Count(ComplexRoom));
     return 1;
 }
 
@@ -518,7 +593,7 @@ hook OnPlayerEnterDynamicCP(playerid, checkpointid)
     }
     new 
         croom_id = CP_GetComplexRoomID(checkpointid);
-    if(Iter_Contains(ComplexRooms, croom_id))
+    if(Iter_Contains(ComplexRoom, croom_id))
     {
         CreateCompInfoTD(playerid);
 
@@ -564,7 +639,7 @@ hook OnPlayerLeaveDynamicCP(playerid, checkpointid)
     }
     new 
         croom_id = CP_GetComplexRoomID(checkpointid);
-    if(Iter_Contains(ComplexRooms, croom_id))
+    if(Iter_Contains(ComplexRoom, croom_id))
     {
         DestroyCompInfoTD(playerid);
         Player_SetApartmentCP(playerid, -1);
@@ -605,7 +680,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                     new
                         string[2048] = "Address\tQuality\tPricing\tStatus\n",
                         row[74];
-                    foreach(new c : ComplexRooms)
+                    foreach(new c : ComplexRoom)
                     {
                         if (ComplexRoomInfo[c][cComplexID] == ComplexInfo[PlayerKeys[playerid][pComplexKey]][cSQLID])
                         {
@@ -703,7 +778,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                 complex = PlayerKeys[playerid][pComplexKey],
                 item = listitem + 1,
                 count = 0;
-            foreach(new c : ComplexRooms)
+            foreach(new c : ComplexRoom)
             {
                 if (ComplexRoomInfo[c][cComplexID] == ComplexInfo[complex][cSQLID])
                 {

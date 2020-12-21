@@ -686,25 +686,36 @@ CMD:achangename(playerid, params[])
 	return 1;
 }
 
-CMD:aname(playerid, params[]) {
-	if( !isnull(PlayerExName[playerid]) ) {
+CMD:aname(playerid, params[]) 
+{
+	if( !isnull(PlayerExName[playerid]) ) 
+	{
 		SetPlayerName(playerid, PlayerExName[playerid]);
 		SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uspjesno ste vratili svoj prijasnji nick!");
 		PlayerExName[playerid][0] = EOS;
-		return (true);
+		return 1;
 	}
-	new newName[ MAX_PLAYER_NAME ];
-	if( sscanf(params, "s[24]", newName) ) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /aname [novi nick].");
-	if( !IsValidName(newName) ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nepravilan roleplay nick!");
-	if (PlayerInfo[playerid][pAdmin] < 2) return SendClientMessage(playerid, COLOR_RED, "Niste ovlasteni za koristenje ove komande!");
-	format(PlayerExName[playerid], 24, GetName(playerid, false));
+	new 
+		newName[ MAX_PLAYER_NAME ];
+	if( sscanf(params, "s[24]", newName) ) 
+		return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /aname [novi nick].");
+	if( !IsValidName(newName) ) 
+		return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nepravilan roleplay nick!");
+	if (PlayerInfo[playerid][pAdmin] < 2) 
+		return SendClientMessage(playerid, COLOR_RED, "Niste ovlasteni za koristenje ove komande!");
+	
+	strcpy(PlayerExName[playerid], GetName(playerid, false), MAX_PLAYER_NAME);
 		
-	switch( SetPlayerName(playerid, newName) ) {
-		case -1: SendMessage(playerid, MESSAGE_TYPE_ERROR, "Vec netko na serveru posjeduje taj nick!");
-		case 0: SendMessage(playerid, MESSAGE_TYPE_ERROR, "Vec posjedujete taj nick!");
-		case 1: SendFormatMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uspjesno ste promjenili nick u %s", newName); 
+	switch( SetPlayerName(playerid, newName) ) 
+	{
+		case -1: 
+			SendMessage(playerid, MESSAGE_TYPE_ERROR, "Vec netko na serveru posjeduje taj nick!");
+		case 0: 
+			SendMessage(playerid, MESSAGE_TYPE_ERROR, "Vec posjedujete taj nick!");
+		case 1: 
+			SendFormatMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uspjesno ste promjenili nick u %s", newName); 
 	}
-	return (true);
+	return 1;
 } 
 
 CMD:givemoney(playerid, params[])

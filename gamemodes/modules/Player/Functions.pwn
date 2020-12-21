@@ -283,22 +283,9 @@ Public:CheckAccountsForInactivity()
 				houseid = GetHouseFromSQL(sqlid);
 				bizzid = GetBizzFromSQL(sqlid);
 				garageid = GetGarageFromSQL(sqlid);
-				foreach(new c: Complex)
-				{
-					if(ComplexInfo[c][cOwnerID] == sqlid)
-					{
-						cid = c;
-						break;
-					}
-				}
-				foreach(new cr: ComplexRooms)
-				{
-					if(ComplexRoomInfo[cr][cOwnerID] == sqlid)
-					{
-						crid = cr;
-						break;
-					}
-				}
+				cid = GetComplexFromSQL(sqlid);
+				crid = GetComplexRoomFromSQL(sqlid);
+
 				if(houseid != INVALID_HOUSE_ID)
 				{
 					bankmoney = HouseInfo[houseid][hValue];
@@ -514,22 +501,9 @@ Public:CheckAccountsForInactivity()
 				houseid = GetHouseFromSQL(sqlid);
 				bizzid = GetBizzFromSQL(sqlid);
 				garageid = GetGarageFromSQL(sqlid);
-				foreach(new c: Complex)
-				{
-					if(ComplexInfo[c][cOwnerID] == sqlid)
-					{
-						cid = c;
-						break;
-					}
-				}
-				foreach(new cr: ComplexRooms)
-				{
-					if(ComplexRoomInfo[cr][cOwnerID] == sqlid)
-					{
-						crid = cr;
-						break;
-					}
-				}
+				cid = GetComplexFromSQL(sqlid);
+				crid = GetComplexRoomFromSQL(sqlid);
+
 				if(houseid != INVALID_HOUSE_ID)
 				{
 					bankmoney = HouseInfo[houseid][hValue];
@@ -820,23 +794,8 @@ stock CheckPlayerInteriors(playerid)
 			return 1;
 		}
 	}
-	foreach(new c: Complex) 
-	{
-		if(IsPlayerInRangeOfPoint(playerid, 250.0, ComplexInfo[c][cExitX], ComplexInfo[c][cExitY], ComplexInfo[c][cExitZ]) && ComplexInfo[c][cInt] == interior && ComplexInfo[c][cViwo] == virtualworld) 
-		{
-			Player_SetInApartmentComplex(playerid, c);
-			return 1;
-		}
-	}
-	foreach(new cr: ComplexRooms)
-	{
-		if(IsPlayerInRangeOfPoint(playerid, 250.0, ComplexRoomInfo[cr][cExitX], ComplexRoomInfo[cr][cExitY], ComplexRoomInfo[cr][cEnterZ]) && interior == ComplexRoomInfo[cr][cIntExit] && virtualworld == ComplexRoomInfo[cr][cVWExit] ) 
-		{
-			Player_SetInApartmentRoom(playerid, cr);
-			return 1;
-		}
-	}
-
+	CheckPlayerComplexInt(playerid, interior, virtualworld);
+	CheckPlayerComplexRoomInt(playerid, interior, virtualworld);
 	return 1;
 }
 		
