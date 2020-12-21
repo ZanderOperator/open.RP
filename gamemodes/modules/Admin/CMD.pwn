@@ -3677,11 +3677,10 @@ CMD:onrecon(playerid, params[])
 {
 	if(!(PlayerInfo[playerid][pAdmin] >= 1337) && IsPlayerAdmin(playerid) == 0)
 		return SendClientMessage(playerid, COLOR_RED, "Niste ovlasteni za koristenje ove komande!");
-	foreach (new h : Player) {
-		if( IsPlayerReconing(h) ) {
-			
+	foreach (new h : Player) 
+	{
+		if( IsPlayerReconing(h) ) 		
 			va_SendClientMessage(playerid, 0x7A93BCFF, "RECON: Admin %s [%s] -> %s", GetName(h,false), PlayerInfo[h][pForumName] ,GetName(ReconingPlayer[h],false));
-		}
 	}
 	return 1;
 }
@@ -4155,39 +4154,36 @@ CMD:givebullet(playerid, params[])
 CMD:house_id(playerid, params[])
 {
 	if(PlayerInfo[playerid][pAdmin] < 1) return SendClientMessage(playerid, COLOR_RED, "Niste ovlasteni!");
-	foreach(new i:Houses)
-	{
-		if (IsPlayerInRangeOfPoint(playerid, 3.0, HouseInfo[i][hEnterX], HouseInfo[i][hEnterY], HouseInfo[i][hEnterZ]) && HouseInfo[i][h3dViwo] == GetPlayerVirtualWorld(playerid))
-		{
-			va_SendClientMessage(playerid, COLOR_RED, "[ ! ] House ID: %d", i);
-		}
-	}
+	new	
+		houseid = Player_InfrontHouse(playerid);
+	if(houseid == INVALID_HOUSE_ID)
+		return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You are not in front of any house!");
+	
+	va_SendClientMessage(playerid, COLOR_RED, "[ ! ]: House ID: %d", houseid);
 	return 1;
 }
 
 CMD:biznis_id(playerid, params[])
 {
 	if(PlayerInfo[playerid][pAdmin] < 1) return SendClientMessage(playerid, COLOR_RED, "Niste ovlasteni!");
-	foreach(new i:Bizzes)
-	{
-		if (IsPlayerInRangeOfPoint(playerid,3,BizzInfo[i][bEntranceX], BizzInfo[i][bEntranceY], BizzInfo[i][bEntranceZ]))
-		{
-			va_SendClientMessage(playerid, COLOR_RED, "[ ! ] Biz ID: %d", i);
-		}
-	}
+	new	
+		bizzid = Player_InfrontBizz(playerid);
+	if(bizzid == INVALID_BIZNIS_ID)
+		return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You are not in front of any business!");
+		
+	va_SendClientMessage(playerid, COLOR_RED, "[ ! ]: Business ID: %d", bizzid);
 	return 1;
 }
 
 CMD:complex_id(playerid, params[])
 {
 	if(PlayerInfo[playerid][pAdmin] < 1) return SendClientMessage(playerid, COLOR_RED, "Niste ovlasteni!");
-	foreach(new i:Complex)
-	{
-		if (IsPlayerInRangeOfPoint(playerid,3,ComplexInfo[i][cEnterX], ComplexInfo[i][cEnterY], ComplexInfo[i][cEnterZ]))
-		{
-			va_SendClientMessage(playerid, COLOR_RED, "[ ! ] Complex ID: %d", i);
-		}
-	}
+	new	
+		complexid = Player_InfrontComplex(playerid);
+	if(complexid == INVALID_COMPLEX_ID)
+		return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You are not in front of any complex!");
+	
+	va_SendClientMessage(playerid, COLOR_RED, "[ ! ] Complex ID: %d", complexid);
 	return 1;
 }
 

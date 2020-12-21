@@ -80,7 +80,7 @@ timer OnPlayerDrivingLesson[1000](playerid)
 {
 	if( GetPlayerSpeed(playerid,true) >= 110.0 ) 
 	{
-		SendClientMessage( playerid, COLOR_RED, "[GRESKA]: Vozili ste preko 110kmh!");
+		SendClientMessage( playerid, COLOR_RED, "[GRESKA]: Vozili ste preko 110km/h, pali ste vozacki!");
 		
 		DisablePlayerCheckpoint(playerid);
 		stop DrivingTimer[playerid];
@@ -89,7 +89,6 @@ timer OnPlayerDrivingLesson[1000](playerid)
 		RemovePlayerFromVehicle(playerid);
 		Bit1_Set( gr_DrivingStarted, playerid, false );
 		Bit1_Set( gr_TookDriving, playerid, false );
-		TogglePlayerAllDynamicCPs(playerid, true);
 	}
 }
 
@@ -217,8 +216,6 @@ hook OnPlayerStateChange(playerid, newstate, oldstate)
 				}
 				else 
 				{					
-					TogglePlayerAllDynamicCPs(playerid, false);
-				
 					DisablePlayerCheckpoint(playerid);
 					SetPlayerCheckpoint(playerid, BoatDrivingCP[0][0],BoatDrivingCP[0][1],BoatDrivingCP[0][2], 5.0);
 					
@@ -264,8 +261,6 @@ hook OnPlayerEnterCheckpoint(playerid)
 				
 				Bit1_Set( gr_DrivingStarted, playerid, false );
 				stop DrivingTimer[playerid];
-				
-				TogglePlayerAllDynamicCPs(playerid, true);
 			}
 			return 1;
 		}
@@ -296,9 +291,7 @@ hook OnPlayerEnterCheckpoint(playerid)
 				);
 				
 				Bit1_Set( gr_DrivingStarted, playerid, false );
-				stop DrivingTimer[playerid];
-				
-				TogglePlayerAllDynamicCPs(playerid, true);
+				stop DrivingTimer[playerid];			
 			}
 			return 1;
 		}
@@ -316,10 +309,8 @@ hook OnPlayerExitVehicle(playerid, vehicleid)
 		SetVehicleToRespawn(vehicleid);
 		RemovePlayerFromVehicle(playerid);
 		Bit1_Set( gr_DrivingStarted, playerid, false );
-		Bit1_Set( gr_TookDriving, playerid, false );
-		TogglePlayerAllDynamicCPs(playerid, true);
-		
-		SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne smijete izlaziti iz vozila dok polazete!");
+		Bit1_Set( gr_TookDriving, playerid, false );		
+		SendMessage(playerid, MESSAGE_TYPE_ERROR, "Pali ste vozacki. Ne smijete izlaziti iz vozila dok polazete!");
 	}
 	return 1;
 }
@@ -415,9 +406,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 				{ // 130kmh
 					SendClientMessage( playerid, COLOR_RED, "[ ! ] Tocan odgovor! Upalite vozilo i krenite prema checkpointima!");					
 					SendClientMessage( playerid, COLOR_RED, "[ ! ] Nemojte voziti preko 110kmh!");
-					
-					TogglePlayerAllDynamicCPs(playerid, false);
-					
+										
 					DisablePlayerCheckpoint(playerid);
 					DrivingCP[playerid] = 1;
 					SetPlayerCheckpoint(playerid, CarDrivingCP[0][0],CarDrivingCP[0][1],CarDrivingCP[0][2], 5.0);

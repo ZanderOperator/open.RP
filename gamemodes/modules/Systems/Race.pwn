@@ -396,10 +396,10 @@ hook OnPlayerEnterRaceCP(playerid)
         }
 
         ResetRacerVars(playerid);
-
-        TogglePlayerAllDynamicCPs(playerid, true);
+        
         PlayerPlaySound(playerid, 1097, 0.0, 0.0, 0.0);
         DisablePlayerRaceCheckpoint(playerid);
+        TogglePlayerAllDynamicCPs(playerid, true);
 
         defer StopRacingSound(playerid);
     }

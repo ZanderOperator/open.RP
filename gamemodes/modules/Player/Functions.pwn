@@ -852,7 +852,7 @@ stock CheckPlayerInteriors(playerid)
 
 	foreach(new h: Houses)
 	{
-		if(IsPlayerInRangeOfPoint(playerid, 100.0, HouseInfo[h][hExitX], HouseInfo[h][hExitY], HouseInfo[h][hExitZ]) && HouseInfo[h][hInt] == interior && HouseInfo[h][hVirtualWorld] == virtualworld)
+		if(IsPlayerInRangeOfPoint(playerid, 250.0, HouseInfo[h][hExitX], HouseInfo[h][hExitY], HouseInfo[h][hExitZ]) && HouseInfo[h][hInt] == interior && HouseInfo[h][hVirtualWorld] == virtualworld)
 		{
 			Player_SetInHouse(playerid, h);
 			return 1;
@@ -860,7 +860,7 @@ stock CheckPlayerInteriors(playerid)
 	}
 	foreach(new b: Bizzes)
 	{
-		if(IsPlayerInRangeOfPoint(playerid, 100.0, BizzInfo[b][bExitX], BizzInfo[b][bExitY], BizzInfo[b][bExitZ]) && BizzInfo[b][bInterior] == interior && BizzInfo[b][bVirtualWorld] == virtualworld)
+		if(IsPlayerInRangeOfPoint(playerid, 250.0, BizzInfo[b][bExitX], BizzInfo[b][bExitY], BizzInfo[b][bExitZ]) && BizzInfo[b][bInterior] == interior && BizzInfo[b][bVirtualWorld] == virtualworld)
 		{
 			Player_SetInBusiness(playerid, b);
 			return 1;
@@ -868,7 +868,7 @@ stock CheckPlayerInteriors(playerid)
 	}
 	foreach(new pickup: Pickups[PICKUP_TYPE_ENTERABLE])
 	{
-		if(IsPlayerInRangeOfPoint(playerid, 100.0, PickupInfo[pickup][epExitx],PickupInfo[pickup][epExity],PickupInfo[pickup][epExitz]) && PickupInfo[pickup][epInt] == interior && PickupInfo[pickup][epViwo] == virtualworld)
+		if(IsPlayerInRangeOfPoint(playerid, 250.0, PickupInfo[pickup][epExitx],PickupInfo[pickup][epExity],PickupInfo[pickup][epExitz]) && PickupInfo[pickup][epInt] == interior && PickupInfo[pickup][epViwo] == virtualworld)
 		{
 			Player_SetInPickup(playerid, pickup);
 			return 1;
@@ -876,7 +876,7 @@ stock CheckPlayerInteriors(playerid)
 	}
 	foreach(new c: Complex) 
 	{
-		if(IsPlayerInRangeOfPoint(playerid, 100.0, ComplexInfo[c][cExitX], ComplexInfo[c][cExitY], ComplexInfo[c][cExitZ]) && ComplexInfo[c][cInt] == interior && ComplexInfo[c][cViwo] == virtualworld) 
+		if(IsPlayerInRangeOfPoint(playerid, 250.0, ComplexInfo[c][cExitX], ComplexInfo[c][cExitY], ComplexInfo[c][cExitZ]) && ComplexInfo[c][cInt] == interior && ComplexInfo[c][cViwo] == virtualworld) 
 		{
 			Player_SetInApartmentComplex(playerid, c);
 			return 1;
@@ -884,7 +884,7 @@ stock CheckPlayerInteriors(playerid)
 	}
 	foreach(new cr: ComplexRooms)
 	{
-		if(IsPlayerInRangeOfPoint(playerid, 100.0, ComplexRoomInfo[cr][cExitX], ComplexRoomInfo[cr][cExitY], ComplexRoomInfo[cr][cEnterZ]) && interior == ComplexRoomInfo[cr][cIntExit] && virtualworld == ComplexRoomInfo[cr][cVWExit] ) 
+		if(IsPlayerInRangeOfPoint(playerid, 250.0, ComplexRoomInfo[cr][cExitX], ComplexRoomInfo[cr][cExitY], ComplexRoomInfo[cr][cEnterZ]) && interior == ComplexRoomInfo[cr][cIntExit] && virtualworld == ComplexRoomInfo[cr][cVWExit] ) 
 		{
 			Player_SetInApartmentRoom(playerid, cr);
 			return 1;
@@ -892,7 +892,7 @@ stock CheckPlayerInteriors(playerid)
 	}
 	foreach(new garage: Garages)
 	{
-		if(IsPlayerInRangeOfPoint(playerid, 100.0, GarageInfo[ garage ][ gExitX ], GarageInfo[ garage ][ gExitY ], GarageInfo[ garage ][ gExitZ ]))
+		if(IsPlayerInRangeOfPoint(playerid, 250.0, GarageInfo[ garage ][ gExitX ], GarageInfo[ garage ][ gExitY ], GarageInfo[ garage ][ gExitZ ]))
 		{
 			Player_SetInGarage(playerid, garage);
 			return 1;

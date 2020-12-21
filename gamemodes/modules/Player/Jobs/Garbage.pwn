@@ -143,7 +143,6 @@ stock static CheckGarbages(playerid)
 		DisablePlayerCheckpoint(playerid);
 		Bit8_Set( gr_TrashPickuped, playerid, 0 );
 		Player_SetIsWorkingJob(playerid, false);
-		TogglePlayerAllDynamicCPs(playerid, true);
 		return 1;
 	}
 	
@@ -324,7 +323,6 @@ hook OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
 			SendMessage(playerid, MESSAGE_TYPE_INFO, "[ ! ] Na mapi vam je oznacena lokacija deponije smeca.");
 			va_SendClientMessage( playerid, COLOR_RED, "[ ! ] Ubacili ste vrecu smeca u kamion sada ima %d/10 mozete ih odmah odvuci na deponiju ili skupljati jos pa onda.", pBoxes[playerid]);
 			
-			TogglePlayerAllDynamicCPs(playerid, false);
 			SetPlayerCheckpoint(playerid, 2183.8972, -1981.6560, 13.2578, 4.0);
 			RemovePlayerAttachedObject(playerid, 0);
 			gGarbagePicked[playerid] = false;
@@ -358,7 +356,6 @@ hook OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
 					gStartedWork[playerid] = 0;
 					pOnDepony[playerid] = 0;
 					gHasGarbage[playerid] = false;
-					TogglePlayerAllDynamicCPs(playerid, true);
 					DisablePlayerCheckpoint(playerid);
 				}
 			}
@@ -477,7 +474,6 @@ CMD:garbage(playerid, params[])
 		if( !pTakedWC[playerid] ) return SendClientMessage( playerid, COLOR_RED, "Prvo morate koristiti /garbage clothes!");
 		if( gStartedWork[playerid] != 0 ) return SendClientMessage( playerid, COLOR_RED, "Vec radite neki posao! Kucajte /garbage stop!");
 		
-		TogglePlayerAllDynamicCPs(playerid, false);
 		new Pos = random(sizeof(randomTrashPos));
 		gStartedWork[playerid] = 1;
 		Player_SetIsWorkingJob(playerid, true);
@@ -539,7 +535,6 @@ CMD:garbage(playerid, params[])
 			RemovePlayerAttachedObject(playerid, 0);
 		
 		Bit8_Set( gr_TrashPickuped, playerid, 0 );
-		TogglePlayerAllDynamicCPs(playerid, true);
 		DisablePlayerCheckpoint(playerid);
 		Player_SetIsWorkingJob(playerid, false);
 		SendClientMessage( playerid, COLOR_RED, "[ ! ] Uspjesno ste prekinuli posao smetlara!");

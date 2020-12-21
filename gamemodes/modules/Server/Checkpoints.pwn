@@ -227,12 +227,6 @@ stock H_DestroyDynamicCP(checkpointid)
 #endif
 #define DestroyDynamicCP H_DestroyDynamicCP
 
-hook OnPlayerConnect(playerid)
-{
-	TogglePlayerAllDynamicRaceCPs(playerid, false);
-	TogglePlayerAllDynamicCPs(playerid, true);
-}
-
 hook OnPlayerDisconnect(playerid, reason)
 {
 	ResetPlayerCheckpoints(playerid);

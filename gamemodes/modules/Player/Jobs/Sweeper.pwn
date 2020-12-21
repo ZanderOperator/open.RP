@@ -77,7 +77,8 @@ hook OnPlayerEnterCheckpoint(playerid)
 			if(!IsVehicleASweep(vID)) return SendClientMessage( playerid, COLOR_RED, "Ne cistite ulice sa Sweeperom!");
 			DisablePlayerCheckpoint(playerid);
 			PlayerCleanerCP[playerid]++;
-			if( PlayerCleanerCP[playerid] == 13 ) {
+			if( PlayerCleanerCP[playerid] == 13 ) 
+			{
 				DisablePlayerCheckpoint(playerid);
 				new 
 					money = minrand(400, 450) + (GetPlayerSkillLevel(playerid, 2) * 25); 
@@ -89,15 +90,10 @@ hook OnPlayerEnterCheckpoint(playerid)
 				PlayerJob[playerid][pFreeWorks] -= 5;
 				Bit1_Set( r_Sweeping, playerid, false );
 				Player_SetIsWorkingJob(playerid, false);
-				TogglePlayerAllDynamicCPs(playerid, true);
 				PlayerCleanerCP[playerid] = 0;
-				
-				foreach(new i : Houses) 
-				{
-					TogglePlayerDynamicCP(playerid, HouseInfo[ i ][ hEnterCP ], true);
-				}
 				return 1;
-			} else SetPlayerCheckpoint(playerid, cleanerCP[ PlayerCleanerCP[playerid] ][ 0 ], cleanerCP[ PlayerCleanerCP[playerid] ][ 1 ], cleanerCP[ PlayerCleanerCP[playerid] ][ 2 ], 6.0);
+			} 
+			else SetPlayerCheckpoint(playerid, cleanerCP[ PlayerCleanerCP[playerid] ][ 0 ], cleanerCP[ PlayerCleanerCP[playerid] ][ 1 ], cleanerCP[ PlayerCleanerCP[playerid] ][ 2 ], 6.0);
 		}
     }
     return 1;
@@ -129,10 +125,6 @@ CMD:sweep(playerid, params[])
 			PlayerCleanerCP[playerid] = 0;
 			
 			DisablePlayerCheckpoint(playerid);
-			foreach(new i : Houses) 
-			{
-				TogglePlayerDynamicCP(playerid, HouseInfo[ i ][ hEnterCP ], false);
-			}
 			SetPlayerCheckpoint(playerid, cleanerCP[ 0 ][ 0 ], cleanerCP[ 0 ][ 1 ], cleanerCP[ 0 ][ 2 ], 6.0 );
 			SendMessage(playerid, MESSAGE_TYPE_INFO, "Poceli ste sa poslom! Vas cilj je prolazenje kroz checkpointe i ciscenje grada!");
 		}
@@ -149,13 +141,7 @@ CMD:sweep(playerid, params[])
 			PlayerJob[playerid][pFreeWorks] -= 5;
 			Bit1_Set( r_Sweeping, playerid, false );
 			Player_SetIsWorkingJob(playerid, false);
-			TogglePlayerAllDynamicCPs(playerid, true);
 			DisablePlayerCheckpoint(playerid);
-			
-			foreach(new i : Houses) 
-			{
-				TogglePlayerDynamicCP(playerid, HouseInfo[ i ][ hEnterCP ], true);
-			}
 			SetVehicleToRespawn( vehicleID );
 		}
 		else 
