@@ -162,9 +162,7 @@ new MySQL:g_SQL;
 new
 	Iterator:Vehicles[MAX_VEHICLE_TYPES]<MAX_VEHICLES>,
 	Iterator:Pickups[MAX_PICKUP_TYPES]<MAX_DYNAMIC_PICKUPS>,
-	Iterator:Factions<MAX_FACTIONS>,
-	Iterator:Complex<MAX_COMPLEX>,
-	Iterator:ComplexRooms<MAX_COMPLEX_ROOMS>;
+	Iterator:Factions<MAX_FACTIONS>;
 
 /*
 	##     ##    ###    ########   ######

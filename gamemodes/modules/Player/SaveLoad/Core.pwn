@@ -349,23 +349,15 @@ public LoadPlayerData(playerid)
 		if(igarage != -1)
 			PlayerKeys[playerid][pIllegalGarageKey] = igarage;
 
-		foreach(new complex : Complex)
-		{
-			if(ComplexInfo[complex][cOwnerID] == PlayerInfo[playerid][pSQLID]) 
-			{
-				PlayerKeys[playerid][pComplexKey] = complex;
-				break;
-			}
-		}
-		
-		foreach(new complexr : ComplexRooms)
-		{
-			if(ComplexRoomInfo[complexr][cOwnerID] == PlayerInfo[playerid][pSQLID]) 
-			{
-				PlayerKeys[playerid][pComplexRoomKey] = complexr;
-				break;
-			}
-		}
+		new 
+			complex_id = GetComplexRoomFromSQL(PlayerInfo[playerid][pSQLID]);
+		if(complex_id != INVALID_COMPLEX_ID)
+			PlayerKeys[playerid][pComplexKey] = complex_id;
+	
+		new 
+			complex_room = GetComplexRoomFromSQL(PlayerInfo[playerid][pSQLID]);
+		if(complex_room != INVALID_COMPLEX_ID)
+			PlayerKeys[playerid][pComplexRoomKey] = complex_room;
 		
 		foreach(new vehicleid : Vehicles[VEHICLE_USAGE_PRIVATE])
 		{

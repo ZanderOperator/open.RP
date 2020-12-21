@@ -42,6 +42,8 @@ forward Player_GetRammingDoor(playerid);
 forward Player_SetRammingDoor(playerid, v);
 
 // Complex
+forward bool: Complex_Exists(complex_id);
+
 forward Player_GetComplexCP(playerid);
 forward Player_SetComplexCP(playerid, v);
 
@@ -52,6 +54,8 @@ forward Player_InApartmentComplex(playerid);
 forward Player_SetInApartmentComplex(playerid, v);
 
 // Apartments in Complex
+forward bool: ComplexRoom_Exists(room_id);
+
 forward Player_GetApartmentCP(playerid);
 forward Player_SetApartmentCP(playerid, v);
 

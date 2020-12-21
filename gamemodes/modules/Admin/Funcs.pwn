@@ -1291,24 +1291,8 @@ public CheckOffline(playerid, sqlid, const name[])
 	housekey = GetHouseFromSQL(sqlid);
 	bizkey = GetBizzFromSQL(sqlid);
 	garagekey = GetGarageFromSQL(sqlid);
-	
-	foreach(new complexr : ComplexRooms)
-	{
-		if(ComplexRoomInfo[complexr][cOwnerID] == sqlid) 
-		{
-			cmplxroomkey = complexr;
-			break;
-		}
-	}
-	
-	foreach(new complex : Complex)
-	{
-		if(ComplexInfo[complex][cOwnerID] == sqlid) 
-		{
-			complexkey = complex;
-			break;
-		}
-	}
+	complexkey = GetComplexFromSQL(sqlid);
+	cmplxroomkey = GetComplexRoomFromSQL(sqlid);
 	
 	va_SendClientMessage(playerid, COLOR_ORANGE, "Name: %s - Level: %d - Org: %s[Rank %d] - Cash: %d$ - Bank: %d$",
 		aname,

@@ -286,7 +286,7 @@ CMD:exit(playerid, params[])
         SendMessage(playerid, MESSAGE_TYPE_INFO, "Pritisnite tipku 'N' ukoliko vam se mapa loadala");
         return 1;
     }
-    else if (Iter_Contains(Complex, complex))
+    else if (Complex_Exists(complex))
     {
         Player_SetInApartmentComplex(playerid, INVALID_COMPLEX_ID);
         SetPlayerPosEx(playerid, ComplexInfo[complex][cEnterX], ComplexInfo[complex][cEnterY], ComplexInfo[complex][cEnterZ], 0, 0, false);
@@ -296,7 +296,21 @@ CMD:exit(playerid, params[])
         SendMessage(playerid, MESSAGE_TYPE_INFO, "Pritisnite tipku 'N' ukoliko vam se mapa loadala");
         return 1;
     }
-    else if (biznis != INVALID_BIZNIS_ID)
+	else if (ComplexRoom_Exists(rcomplex))
+    {
+        if (IsPlayerInRangeOfPoint(playerid, 2.0, ComplexRoomInfo[rcomplex][cExitX], ComplexRoomInfo[rcomplex][cExitY], ComplexRoomInfo[rcomplex][cExitZ]))
+        {
+            SetPlayerPosEx(playerid, ComplexRoomInfo[rcomplex][cEnterX], ComplexRoomInfo[rcomplex][cEnterY], ComplexRoomInfo[rcomplex][cEnterZ], ComplexRoomInfo[rcomplex][cVWExit], ComplexRoomInfo[rcomplex][cIntExit]);
+            Player_SetInApartmentRoom(playerid, INVALID_COMPLEX_ID);
+            StopAudioStreamForPlayer(playerid);
+
+            Exiting[playerid] = false;
+            TogglePlayerControllable(playerid, false);
+            SendMessage(playerid, MESSAGE_TYPE_INFO, "Pritisnite tipku 'N' ukoliko vam se mapa loadala");
+        }
+        return 1;
+    }
+    else if (Bizz_Exists(biznis))
     {
         if (IsPlayerInRangeOfPoint(playerid, 2.0, BizzInfo[biznis][bExitX], BizzInfo[biznis][bExitY], BizzInfo[biznis][bExitZ]))
         {
@@ -321,20 +335,6 @@ CMD:exit(playerid, params[])
             SendMessage(playerid, MESSAGE_TYPE_INFO, "Pritisnite tipku 'N' ukoliko vam se mapa loadala");
             return 1;
         }
-    }
-    else if (Iter_Contains(ComplexRooms, rcomplex))
-    {
-        if (IsPlayerInRangeOfPoint(playerid, 2.0, ComplexRoomInfo[rcomplex][cExitX], ComplexRoomInfo[rcomplex][cExitY], ComplexRoomInfo[rcomplex][cExitZ]))
-        {
-            SetPlayerPosEx(playerid, ComplexRoomInfo[rcomplex][cEnterX], ComplexRoomInfo[rcomplex][cEnterY], ComplexRoomInfo[rcomplex][cEnterZ], ComplexRoomInfo[rcomplex][cVWExit], ComplexRoomInfo[rcomplex][cIntExit]);
-            Player_SetInApartmentRoom(playerid, INVALID_COMPLEX_ID);
-            StopAudioStreamForPlayer(playerid);
-
-            Exiting[playerid] = false;
-            TogglePlayerControllable(playerid, false);
-            SendMessage(playerid, MESSAGE_TYPE_INFO, "Pritisnite tipku 'N' ukoliko vam se mapa loadala");
-        }
-        return 1;
     }
     else if (Garage_Exists(garage))
     {
