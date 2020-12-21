@@ -69,7 +69,6 @@ SetPlayerPremiumVIP(playerid, level)
 	{
 		ExpInfo[playerid][ePoints] += BRONZE_EXP_POINTS;
 		ExpInfo[playerid][eAllPoints] += BRONZE_EXP_POINTS;
-		SavePlayerExperience(playerid);
 
 	    PlayerInventory[playerid][pMaskID] = 100000 + random(899999);
 		
@@ -90,19 +89,11 @@ SetPlayerPremiumVIP(playerid, level)
 		PlayerVIP[playerid][pDonateRank]    	= PREMIUM_BRONZE;
 		PlayerVIP[playerid][pDonatorVehPerms]   = 2;
 		PlayerVIP[playerid][pDonateTime]	    = gettimestamp() + 2592000;
-
-		if(PlayerKeys[playerid][pHouseKey] != INVALID_HOUSE_ID)
-			UpdatePremiumHouseFurSlots(playerid, -1, PlayerKeys[playerid][pHouseKey]);
-		if(PlayerKeys[playerid][pBizzKey] != INVALID_BIZNIS_ID)
-			UpdatePremiumBizFurSlots(playerid);
-		
-		SavePlayerVIP(playerid);
     }
     else if(level == 2)
 	{
 		ExpInfo[playerid][ePoints] += SILVER_EXP_POINTS;
 		ExpInfo[playerid][eAllPoints] += SILVER_EXP_POINTS;
-		SavePlayerExperience(playerid);
 
 	    PlayerInventory[playerid][pMaskID] = 100000 + random(899999);
 		
@@ -123,19 +114,11 @@ SetPlayerPremiumVIP(playerid, level)
 		PlayerVIP[playerid][pDonateRank] 	    = PREMIUM_SILVER;
 		PlayerVIP[playerid][pDonatorVehPerms] 	= 2;		
 		PlayerVIP[playerid][pDonateTime]	    = gettimestamp() + 2592000;
-
-		if(PlayerKeys[playerid][pHouseKey] != INVALID_HOUSE_ID)
-			UpdatePremiumHouseFurSlots(playerid, -1, PlayerKeys[playerid][pHouseKey]);
-		if(PlayerKeys[playerid][pBizzKey] != INVALID_BIZNIS_ID)
-			UpdatePremiumBizFurSlots(playerid);
-		
-		SavePlayerVIP(playerid);
     }
     else if(level == 3)
 	{
 		ExpInfo[playerid][ePoints] += GOLD_EXP_POINTS;
 		ExpInfo[playerid][eAllPoints] += GOLD_EXP_POINTS;
-		SavePlayerExperience(playerid);
 
 	    PlayerInventory[playerid][pMaskID] = 100000 + random(899999);
 		
@@ -164,19 +147,11 @@ SetPlayerPremiumVIP(playerid, level)
 		LicenseInfo[playerid][pBoatLic] = 1;
 		LicenseInfo[playerid][pFishLic] = 1;
 		LicenseInfo[playerid][pGunLic]	= 1;
-
-		if(PlayerKeys[playerid][pHouseKey] != INVALID_HOUSE_ID)
-			UpdatePremiumHouseFurSlots(playerid, -1, PlayerKeys[playerid][pHouseKey]);
-		if(PlayerKeys[playerid][pBizzKey] != INVALID_BIZNIS_ID)
-			UpdatePremiumBizFurSlots(playerid);
-		
-		SavePlayerVIP(playerid);
     }
 	else if(level == 4)
 	{
 		ExpInfo[playerid][ePoints] += PLATINUM_EXP_POINTS;
 		ExpInfo[playerid][eAllPoints] += PLATINUM_EXP_POINTS;
-		SavePlayerExperience(playerid);
 
 	    PlayerInventory[playerid][pMaskID] = 100000 + random(899999);
 		
@@ -204,13 +179,16 @@ SetPlayerPremiumVIP(playerid, level)
 		LicenseInfo[playerid][pBoatLic] = 1;
 		LicenseInfo[playerid][pFishLic] = 1;
 		LicenseInfo[playerid][pGunLic] 	= 2;
-
-		if(PlayerKeys[playerid][pHouseKey] != INVALID_HOUSE_ID)
-			UpdatePremiumHouseFurSlots(playerid, -1, PlayerKeys[playerid][pHouseKey]);
-		if(PlayerKeys[playerid][pBizzKey] != INVALID_BIZNIS_ID)
-			UpdatePremiumBizFurSlots(playerid);
-		
-		SavePlayerVIP(playerid);
     }
+
+	if(PlayerKeys[playerid][pHouseKey] != INVALID_HOUSE_ID)
+		UpdatePremiumHouseFurSlots(playerid, -1, PlayerKeys[playerid][pHouseKey]);
+	if(PlayerKeys[playerid][pBizzKey] != INVALID_BIZNIS_ID)
+		UpdateBizzFurnitureSlots(playerid);
+	
+	SavePlayerExperience(playerid);
+	SavePlayerInventory(playerid);
+	SavePlayerLicenses(playerid);
+	SavePlayerVIP(playerid);
     return 1;
 }

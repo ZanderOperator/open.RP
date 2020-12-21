@@ -334,15 +334,13 @@ public LoadPlayerData(playerid)
 				break;
 			}
 		}
-
-		foreach(new biznis : Bizzes) 
+		
+		new 
+			bizz = GetBizzFromSQL(PlayerInfo[playerid][pSQLID]);
+		if(bizz != INVALID_BIZNIS_ID)
 		{
-			if(BizzInfo[biznis][bOwnerID] == PlayerInfo[playerid][pSQLID]) 
-			{
-				PlayerKeys[playerid][pBizzKey] = biznis;
-				ReloadBizzFurniture(biznis);
-				break;
-			}
+			PlayerKeys[playerid][pBizzKey] = bizz;
+			ReloadBizzFurniture(bizz);
 		}
 		
 		foreach(new complex : Complex)
@@ -560,7 +558,7 @@ Public: SafeSpawnPlayer(playerid)
 		PlayerVIP[playerid][pDonateTime] = 0;
 		PlayerVIP[playerid][pDonateRank] = 0;
 		if(PlayerKeys[playerid][pBizzKey] != INVALID_BIZNIS_ID)
-			UpdatePremiumBizFurSlots(playerid);
+			UpdateBizzFurnitureSlots(playerid);
 		if(PlayerKeys[playerid][pHouseKey] != INVALID_HOUSE_ID)
 			UpdatePremiumHouseFurSlots(playerid, -1, PlayerKeys[playerid][pHouseKey]);
 		SavePlayerVIP(playerid);

@@ -1288,14 +1288,7 @@ public CheckOffline(playerid, sqlid, const name[])
 	cache_get_value_name_int(0,"facMemId",org);
 	cache_get_value_name_int(0,"facRank",rank);
 	
-	foreach(new biznis : Bizzes) 
-	{
-		if(BizzInfo[biznis][bOwnerID] == sqlid) 
-		{
-			bizkey = biznis;
-			break;
-		}
-	}
+	bizkey = GetBizzFromSQL(sqlid);
 	
 	foreach(new house : Houses) 
 	{
@@ -1658,12 +1651,8 @@ public OnPlayerClickPlayer(playerid, clickedplayerid, source)
 		);
 		if(PlayerKeys[clickedplayerid][pBizzKey] != INVALID_BIZNIS_ID)
 		{
-			new biznis;
-			foreach(new i : Bizzes)
-			{
-				if(PlayerInfo[clickedplayerid][pSQLID] == BizzInfo[i][bOwnerID])
-					biznis = i;
-			}
+			new 
+				biznis = GetBizzFromSQL(PlayerInfo[clickedplayerid][pSQLID]);
 			va_SendClientMessage(playerid, 0xCED490FF, "BIZNIS: ID: [%d] - Naziv: [%s] ", biznis, BizzInfo[biznis][bMessage]);
 		}	
 	}

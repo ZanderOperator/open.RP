@@ -481,32 +481,20 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                 }
                 case 1:
                 { // Stavljanje novca na biznis blagajnu
-                    new biznis = INVALID_BIZNIS_ID;
-                    foreach(new i : Bizzes)
-                    {
-                        if (IsPlayerInRangeOfPoint(playerid, 8.0, BizzInfo[i][bEntranceX], BizzInfo[i][bEntranceY], BizzInfo[i][bEntranceZ]))
-                        {
-                            biznis = i;
-                            break;
-                        }
-                    }
-                    if (biznis == INVALID_BIZNIS_ID) return SendClientMessage(playerid, COLOR_RED, "Ne nalazis se ispred ulaza biznisa.");
+                    new 
+                        biznis = Player_InfrontBizz(playerid);
+                    if (biznis == INVALID_BIZNIS_ID) 
+                        return SendClientMessage(playerid, COLOR_RED, "Ne nalazis se ispred ulaza biznisa.");
 
                     va_SendClientMessage(playerid, COLOR_RED, "[ ! ] Stanje u blagajni biznisa: %d$", BizzInfo[biznis][bTill]);
                     ShowPlayerDialog(playerid, DIALOG_CITY_BIZDEPOSIT, DIALOG_STYLE_INPUT, "Stavljanje novca u blagajnu biznisa", "Molimo Vas unesite iznos koji zelite staviti u biznis:", "Input", "Exit");
                 }
                 case 2:
                 { // Dizanje novca iz biznis blagajne
-                    new biznis = INVALID_BIZNIS_ID;
-                    foreach(new i : Bizzes)
-                    {
-                        if (IsPlayerInRangeOfPoint(playerid, 8.0, BizzInfo[i][bEntranceX], BizzInfo[i][bEntranceY], BizzInfo[i][bEntranceZ]))
-                        {
-                            biznis = i;
-                            break;
-                        }
-                    }
-                    if (biznis == INVALID_BIZNIS_ID) return SendClientMessage(playerid, COLOR_RED, "Ne nalazis se ispred ulaza biznisa.");
+                    new 
+                        biznis = Player_InfrontBizz(playerid);
+                    if (biznis == INVALID_BIZNIS_ID) 
+                        return SendClientMessage(playerid, COLOR_RED, "Ne nalazis se ispred ulaza biznisa.");
 
                     va_SendClientMessage(playerid, COLOR_RED, "[ ! ] Stanje u blagajni biznisa: %d$", BizzInfo[biznis][bTill]);
                     ShowPlayerDialog(playerid, DIALOG_CITY_BIZWITHDRAW, DIALOG_STYLE_INPUT, "Uzimanje novca iz blagajne biznisa", "Molimo Vas unesite iznos koji zelite dignuti iz biznisa:", "Input", "Exit");

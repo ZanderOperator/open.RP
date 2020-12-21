@@ -288,14 +288,9 @@ Public:CheckAccountsForInactivity()
 						break;
 					}
 				}
-				foreach(new b: Bizzes)
-				{
-					if(BizzInfo[b][bOwnerID] == sqlid)
-					{
-						bizzid = b;
-						break;
-					}
-				}
+
+				bizzid = GetBizzFromSQL(sqlid);
+
 				foreach(new c: Complex)
 				{
 					if(ComplexInfo[c][cOwnerID] == sqlid)
@@ -540,14 +535,9 @@ Public:CheckAccountsForInactivity()
 						break;
 					}
 				}
-				foreach(new b: Bizzes)
-				{
-					if(BizzInfo[b][bOwnerID] == sqlid)
-					{
-						bizzid = b;
-						break;
-					}
-				}
+
+				bizzid = GetBizzFromSQL(sqlid);
+
 				foreach(new c: Complex)
 				{
 					if(ComplexInfo[c][cOwnerID] == sqlid)
@@ -858,14 +848,9 @@ stock CheckPlayerInteriors(playerid)
 			return 1;
 		}
 	}
-	foreach(new b: Bizzes)
-	{
-		if(IsPlayerInRangeOfPoint(playerid, 250.0, BizzInfo[b][bExitX], BizzInfo[b][bExitY], BizzInfo[b][bExitZ]) && BizzInfo[b][bInterior] == interior && BizzInfo[b][bVirtualWorld] == virtualworld)
-		{
-			Player_SetInBusiness(playerid, b);
-			return 1;
-		}
-	}
+
+	CheckPlayerBizzInt(playerid, interior, virtualworld);
+	
 	foreach(new pickup: Pickups[PICKUP_TYPE_ENTERABLE])
 	{
 		if(IsPlayerInRangeOfPoint(playerid, 250.0, PickupInfo[pickup][epExitx],PickupInfo[pickup][epExity],PickupInfo[pickup][epExitz]) && PickupInfo[pickup][epInt] == interior && PickupInfo[pickup][epViwo] == virtualworld)

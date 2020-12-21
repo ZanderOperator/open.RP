@@ -3376,23 +3376,6 @@ stock static CheckHotWireInput(playerid, bool:endtick = false)
 	return 1;
 }
 
-stock GetNearestGasBiznis(playerid)
-{
-	new gbizid = INVALID_BIZNIS_ID;
-	foreach(new bizid: Bizzes)
-	{
-		if(BizzInfo[bizid][bType] == BIZZ_TYPE_GASSTATION)
-		{
-			if(IsPlayerInRangeOfPoint(playerid, 50.0, BizzInfo[bizid][bEntranceX], BizzInfo[bizid][bEntranceY], BizzInfo[bizid][bEntranceZ]))
-			{
-				gbizid = bizid;
-				break;
-			}	
-		}
-	}
-	return gbizid;
-}
-
 static CalculateFuelPrice(playerid, type, amount, price)
 {
 	new

@@ -4716,19 +4716,8 @@ CMD:door(playerid, params[])
         }
     }
     else if (biznisid != INVALID_BIZNIS_ID)
-    {
-        foreach(new i: BizzFurniture[biznisid])
-        {
-            if (BizzInfo[biznisid][bFurDoor][i])
-            {
-                if (IsPlayerInRangeOfPoint(playerid, 3.0, BizzInfo[biznisid][bFurPosX][i], BizzInfo[biznisid][bFurPosY][i], BizzInfo[biznisid][bFurPosZ][i] ))
-                {
-                    SetFurnitureDoorRotation(biznisid, i);
-                    break;
-                }
-            }
-        }
-    }
+        RotateBizzFurDoor(biznisid, playerid);
+        
     return 1;
 }
 

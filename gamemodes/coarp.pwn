@@ -167,8 +167,6 @@ new
 	Iterator:Houses<MAX_HOUSES>,
 	Iterator:HouseFurInt[MAX_HOUSES]<MAX_FURNITURE_SLOTS>,
 	Iterator:HouseFurExt[MAX_HOUSES]<EXTERIOR_OBJS_VIP_GOLD>,
-	Iterator:BizzFurniture[MAX_BIZZS]<MAX_BIZNIS_FURNITURE_SLOTS>,
-	Iterator:Bizzes<MAX_BIZZS>,
 	Iterator:Complex<MAX_COMPLEX>,
 	Iterator:ComplexRooms<MAX_COMPLEX_ROOMS>,
 	Iterator:Garages<MAX_GARAGES>,
@@ -415,21 +413,6 @@ stock ResetPlayerEnumerator()
 
 	return 1;
 }
-
-Public:ResetIterators()
-{
-	Iter_Clear(Player);
-	Iter_Clear(Factions);
-	Iter_Clear(Houses);
-	Iter_Clear(Bizzes);
-	Iter_Clear(Complex);
-	Iter_Clear(ComplexRooms);
-	Iter_Clear(Garages);
-	Iter_Clear(IllegalGarages);
-	return 1;
-}
-
-
 
 Public:SaveAll()
 {

@@ -296,7 +296,7 @@ CMD:exit(playerid, params[])
         SendMessage(playerid, MESSAGE_TYPE_INFO, "Pritisnite tipku 'N' ukoliko vam se mapa loadala");
         return 1;
     }
-    else if (Iter_Contains(Bizzes, biznis))
+    else if (biznis != INVALID_BIZNIS_ID)
     {
         if (IsPlayerInRangeOfPoint(playerid, 2.0, BizzInfo[biznis][bExitX], BizzInfo[biznis][bExitY], BizzInfo[biznis][bExitZ]))
         {
