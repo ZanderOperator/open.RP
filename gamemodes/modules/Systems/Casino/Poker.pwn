@@ -2273,7 +2273,7 @@ DoesHavePokerTablePerm(playerid, tableid)
 		if(HouseInfo[houseid][hOwnerID] == PlayerInfo[playerid][pSQLID] && HouseInfo[houseid][hInt] == PokerTable[tableid][pkrInt] && HouseInfo[houseid][hVirtualWorld] == PokerTable[tableid][pkrVW])
 			return 1;
 	}
-	else if (bizzid != INVALID_BIZNIS_ID && bizzid < MAX_BIZZS)
+	else if (bizzid != INVALID_BIZNIS_ID && bizzid < MAX_BIZZES)
 	{
 		if( (BizzInfo[bizzid][bOwnerID] == PlayerInfo[playerid][pSQLID]) && BizzInfo[bizzid][bInterior] == PokerTable[tableid][pkrInt] && BizzInfo[bizzid][bVirtualWorld] == PokerTable[tableid][pkrVW])
 			return 1;

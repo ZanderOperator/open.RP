@@ -43,6 +43,9 @@
 */
 
 static
+    Iterator:HouseFurExt[MAX_HOUSES]<EXTERIOR_OBJS_VIP_GOLD>;
+
+static
     ExteriorEditType [MAX_PLAYERS],
     ExteriorObjectsId[MAX_PLAYERS],
     ExteriorEditId   [MAX_PLAYERS],

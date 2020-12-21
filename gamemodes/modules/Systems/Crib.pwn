@@ -37,6 +37,9 @@
        ###    ##     ## ##     ##  ######
 */
 
+static 
+    Iterator: House<MAX_HOUSES>;
+
 enum E_HOUSE_INTS
 {
     Float:iEnterX,
@@ -204,24 +207,34 @@ Player_SetRammingDoor(playerid, v)
     RammingDoor[playerid] = v;
 }
 
-
-// TODO: finish getters/setters and move HouseInfo from coarp.pwn to this module
-stock House_GetSqlid(houseid)
+GetHouseFromSQL(sqlid)
 {
-    if (!Iter_Contains(Houses, houseid))
-    {
-        return -1;
-    }
-    return HouseInfo[houseid][hSQLID];
+    new 
+        housekey = INVALID_HOUSE_ID;
+    foreach(new house : House) 
+	{
+		if(HouseInfo[house][hOwnerID] == sqlid) 
+		{
+			housekey = house;
+			break;
+		}
+	}
+    return housekey;
 }
 
-stock House_GetAddress(houseid)
+CheckPlayerHouseInt(playerid, int, viwo)
 {
-    if (!Iter_Contains(Houses, houseid))
-    {
-        return "(None)";
-    }
-    return HouseInfo[houseid][hAdress];
+    foreach(new h: House)
+	{
+		if(IsPlayerInRangeOfPoint(playerid, 250.0, HouseInfo[h][hExitX], HouseInfo[h][hExitY], HouseInfo[h][hExitZ]) 
+            && HouseInfo[h][hInt] == int 
+            && HouseInfo[h][hVirtualWorld] == viwo)
+		{
+			Player_SetInHouse(playerid, h);
+			break;
+		}
+	}
+    return 1;
 }
 
 Public:OnHouseInsertInDB(houseid, playerid)
@@ -233,15 +246,14 @@ Public:OnHouseInsertInDB(houseid, playerid)
         UpdateHouseVirtualWorld(houseid);
     }
     else
-    {
         ShowPlayerDialog(playerid, DIALOG_VIWO_PICK, DIALOG_STYLE_INPUT, "Odabir Virtual Worlda", "Molimo Vas unesite Virtual World(viwo) u kojem je kuca namappana:", "Input", "Exit");
-    }
+
     return 1;
 }
 
 stock UpdateHouseVirtualWorld(houseid)
 {
-    if (!Iter_Contains(Houses, houseid))
+    if (!Iter_Contains(House, houseid))
         return 1;
 
     mysql_fquery(g_SQL, "UPDATE houses SET viwo = '%d' WHERE id = '%d'",
@@ -416,9 +428,9 @@ Public:OnServerHousesLoad()
         HouseInfo[row][hFurLoaded] = false;
         LoadHouseExterior(row);
         CreateHouseEnter(row);
-        Iter_Add(Houses, row);
+        Iter_Add(House, row);
     }
-    printf("MySQL Report: Houses Loaded (%d / %d)!", Iter_Count(Houses), MAX_HOUSES);
+    printf("MySQL Report: Houses Loaded (%d / %d)!", Iter_Count(House), MAX_HOUSES);
     return 1;
 }
 
@@ -759,9 +771,6 @@ stock ResetHouseInfo(houseid)
         HouseAlarmActive[houseid] = false;
     }
     stop GlobalMapIconT[houseid];
-
-    Iter_Clear(HouseFurInt[houseid]);
-    Iter_Clear(HouseFurExt[houseid]);
     return 1;
 }
 
@@ -777,7 +786,7 @@ Public:ResetHouseEnumerator()
 static Area_GetHouseID(areaid)
 {
     new houseid = INVALID_HOUSE_ID;
-    foreach(new house: Houses)
+    foreach(new house: House)
     {
         if(HouseInfo[house][hAreaID] == areaid)
         {
@@ -791,7 +800,7 @@ static Area_GetHouseID(areaid)
 static CP_GetHouseID(checkpointid)
 {
     new houseid = INVALID_HOUSE_ID;
-    foreach(new house: Houses)
+    foreach(new house: House)
     {
         if(HouseInfo[house][hEnterCP] == checkpointid)
         {
@@ -851,7 +860,7 @@ static stock RemoveHouse(houseid)
     if (houseid == INVALID_HOUSE_ID) return 0;
     mysql_fquery(g_SQL, "DELETE FROM houses WHERE id = '%d'", HouseInfo[houseid][hSQLID]);
     ResetHouseInfo(houseid);
-    Iter_Remove(Houses, houseid);
+    Iter_Remove(House, houseid);
     return 1;
 }
 
@@ -1310,7 +1319,7 @@ hook function ResetPlayerVariables(playerid)
 hook OnPlayerEnterDynamicCP(playerid, checkpointid)
 {
     new house = CP_GetHouseID(checkpointid);
-    if (!Iter_Contains(Houses, house))
+    if (!Iter_Contains(House, house))
         return 1;
 
     CreateHouseInfoTD(playerid);
@@ -1363,7 +1372,7 @@ hook OnPlayerLeaveDynamicCP(playerid, checkpointid)
     new 
         house = CP_GetHouseID(checkpointid);
     
-    if (!Iter_Contains(Houses, house) || Player_GetHouseCP(playerid) != house)
+    if (!Iter_Contains(House, house) || Player_GetHouseCP(playerid) != house)
         return 1;
 
     DestroyHouseInfoTD(playerid);
@@ -1376,7 +1385,7 @@ hook OnPlayerEnterDynArea(playerid, areaid)
 {
     new 
         house = Area_GetHouseID(areaid);
-    if (!Iter_Contains(Houses, house))
+    if (!Iter_Contains(House, house))
         return 1;
 
     Player_SetHouseArea(playerid, house);
@@ -1385,7 +1394,7 @@ hook OnPlayerEnterDynArea(playerid, areaid)
 
 hook OnPlayerLeaveDynArea(playerid, areaid)
 {
-    if (!Iter_Contains(Houses, Area_GetHouseID(areaid))) 
+    if (!Iter_Contains(House, Area_GetHouseID(areaid))) 
         return 1;
 
     Player_SetHouseArea(playerid, INVALID_HOUSE_ID);
@@ -1403,7 +1412,7 @@ public OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
             new
                 house = Player_InfrontHouse(playerid),
                 Float:tmpHealth;
-            if (!Iter_Contains(Houses, house))
+            if (!Iter_Contains(House, house))
             {
                 return 1;
             }
@@ -1559,7 +1568,7 @@ hook OnPlayerWeaponShot(playerid, weaponid, hittype, hitid, Float:fX, Float:fY, 
 {
     new 
         houseid = Player_HouseArea(playerid);
-    if(!Iter_Contains(Houses, houseid))
+    if(!Iter_Contains(House, houseid))
         return 1;
     if(!HouseInfo[houseid][hLock])
         return 1;
@@ -2769,7 +2778,7 @@ CMD:houseentrance(playerid, params[])
     new houseid;
     if (PlayerInfo[playerid][pAdmin] < 1337) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ovlasteni!");
     if (sscanf(params, "i", houseid)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /houseentrance [houseid]");
-    if (!Iter_Contains(Houses, houseid)) return SendClientMessage(playerid, COLOR_RED, "Morate unijeti valjani houseid!");
+    if (!Iter_Contains(House, houseid)) return SendClientMessage(playerid, COLOR_RED, "Morate unijeti valjani houseid!");
 
     va_SendClientMessage(playerid, COLOR_RED, "[ ! ] Premjestili ste ulaz od kuce %d na ovo mjesto!",houseid);
 
@@ -2808,7 +2817,7 @@ CMD:customhouseint(playerid, params[])
         SendClientMessage(playerid, COLOR_GREY, "NOTE: Taj ID MORA biti u skripti!");
         return 1;
     }
-    if (!Iter_Contains(Houses, houseid)) return SendClientMessage(playerid, COLOR_RED, "Morate unijeti valjani houseid!");
+    if (!Iter_Contains(House, houseid)) return SendClientMessage(playerid, COLOR_RED, "Morate unijeti valjani houseid!");
 
     HouseInfo[houseid][hExitX]      = iX;
     HouseInfo[houseid][hExitY]      = iY;
@@ -3508,7 +3517,7 @@ CMD:createhouse(playerid, params[])
     va_SendClientMessage(playerid, COLOR_RED, "[ ! ] Kreirao si kucu level [%i], cijena[%i], adresa[%s]", level, price, address);
     va_SendClientMessage(playerid, COLOR_RED, "[ ! ] interior [%s]. ", HouseInts[interior][iDescription]);
 
-    freeslot = Iter_Free(Houses);
+    freeslot = Iter_Free(House);
     HouseInfo[freeslot][hLevel] = level;
     HouseInfo[freeslot][hValue] = price;
     format(HouseInfo[freeslot][hAdress], 32, "%s", address);
@@ -3521,7 +3530,7 @@ CMD:createhouse(playerid, params[])
     HouseInfo[freeslot][hInt] = HouseInts[interior][iInterior];
 
     CreatingHouseID[playerid] = freeslot;
-    Iter_Add(Houses, freeslot);
+    Iter_Add(House, freeslot);
     InsertHouseInDB(freeslot, playerid);
     CreateHouseEnter(freeslot);
     return 1;

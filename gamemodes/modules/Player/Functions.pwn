@@ -280,15 +280,7 @@ Public:CheckAccountsForInactivity()
 			propertytimestamp = gettimestamp() - MAX_INACTIVITY_TIME;
 			if(loginstamp <= propertytimestamp)
 			{				
-				foreach(new h: Houses)
-				{
-					if(HouseInfo[h][hOwnerID] == sqlid)
-					{
-						houseid = h;
-						break;
-					}
-				}
-
+				houseid = GetHouseFromSQL(sqlid);
 				bizzid = GetBizzFromSQL(sqlid);
 
 				foreach(new c: Complex)
@@ -527,15 +519,7 @@ Public:CheckAccountsForInactivity()
 					continue;
 				}
 				
-				foreach(new h: Houses)
-				{
-					if(HouseInfo[h][hOwnerID] == sqlid)
-					{
-						houseid = h;
-						break;
-					}
-				}
-
+				houseid = GetHouseFromSQL(sqlid);
 				bizzid = GetBizzFromSQL(sqlid);
 
 				foreach(new c: Complex)
@@ -840,15 +824,7 @@ stock CheckPlayerInteriors(playerid)
 	interior = GetPlayerInterior(playerid);
 	virtualworld = GetPlayerVirtualWorld(playerid);
 
-	foreach(new h: Houses)
-	{
-		if(IsPlayerInRangeOfPoint(playerid, 250.0, HouseInfo[h][hExitX], HouseInfo[h][hExitY], HouseInfo[h][hExitZ]) && HouseInfo[h][hInt] == interior && HouseInfo[h][hVirtualWorld] == virtualworld)
-		{
-			Player_SetInHouse(playerid, h);
-			return 1;
-		}
-	}
-
+	CheckPlayerHouseInt(playerid, interior, virtualworld);
 	CheckPlayerBizzInt(playerid, interior, virtualworld);
 	
 	foreach(new pickup: Pickups[PICKUP_TYPE_ENTERABLE])

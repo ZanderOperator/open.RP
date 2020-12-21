@@ -374,7 +374,7 @@ CMD:exit(playerid, params[])
         }
         return 1;
     }
-    else if (Iter_Contains(Houses, house))
+    else if (0 >= house && house < MAX_HOUSES)
     {
         if (IsPlayerInRangeOfPoint(playerid, 10.0, HouseInfo[house][hExitX], HouseInfo[house][hExitY], HouseInfo[house][hExitZ]))
         {
@@ -1147,10 +1147,7 @@ CMD:showlicenses(playerid, params[])
 CMD:frisk(playerid, params[])
 {
     new 
-		giveplayerid, 
-		weapon[13],
-		bullets[13];
-
+		giveplayerid;
     if( sscanf(params, "u", giveplayerid) ) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /frisk [ID/Dio Imena]");
 	if( giveplayerid == INVALID_PLAYER_ID ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Taj igrac nije online !"); 
 	if( giveplayerid == playerid ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne mozes pretrest sam sebe!");
@@ -1163,28 +1160,10 @@ CMD:frisk(playerid, params[])
 	va_SendClientMessage(playerid, COLOR_WHITE, "	Toolkit: %s", PlayerInventory[giveplayerid][pToolkit] ? ("Da") : ("Ne"));
 	va_SendClientMessage(playerid, COLOR_WHITE, "	Sat: %s", PlayerInventory[giveplayerid][pWatch] ? ("Da") : ("Ne"));
 	va_SendClientMessage(playerid, COLOR_WHITE, "	Mobitel: %s", GetMobileName(PlayerMobile[giveplayerid][pMobileModel]));
-	SendClientMessage(playerid, COLOR_LIGHTBLUE, "*_________________________ ORUZJA _________________________*");
-	foreach(new slot: P_Weapons[giveplayerid])
-	{
-		GetPlayerWeaponData(giveplayerid, slot, weapon[slot], bullets[slot]);
-		if(weapon[slot] > 0 && bullets[slot] > 0)
-			va_SendClientMessage(playerid, COLOR_WHITE, "	Oruzje: %s, Metaka: %d.", WeapNames[weapon[slot]], bullets[slot]);
-	}
-	if(HiddenWeapon[giveplayerid][pwWeaponId] != 0)
-		va_SendClientMessage(playerid, COLOR_WHITE, "	[Sakriveno ispod odjece]: %s, Metaka: %d.", WeapNames[HiddenWeapon[giveplayerid][pwWeaponId]], HiddenWeapon[playerid][pwAmmo]);
-	va_SendClientMessage(playerid, COLOR_LIGHTBLUE, "*______________ [ %s - Weapon Packages ] ______________*", GetName(giveplayerid));
-	foreach(new i : P_PACKAGES[giveplayerid]) 
-	{
-		if(PlayerPackage[giveplayerid][p_weapon][i] != 0)
-		 {
-			va_SendClientMessage(playerid, COLOR_WHITE, "(%d). %s (%d/%d).", 
-				i, 
-				GetWeaponNameEx(PlayerPackage[giveplayerid][p_weapon][i]), 
-				PlayerPackage[giveplayerid][p_amount][i], 
-				MAX_PACKAGE_AMOUNT
-			);
-		}
-	}
+	
+	ListPlayerWeapons(giveplayerid, playerid);
+	ListPlayerPackages(giveplayerid, playerid);
+
 	va_SendClientMessage(playerid, COLOR_LIGHTBLUE, "*___________________ [ %s - Droga ] ___________________*", GetName(giveplayerid));
 	for(new s = 0; s < MAX_PLAYER_DRUGS; ++s)
 	{

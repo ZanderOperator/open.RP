@@ -144,15 +144,7 @@ static OnPlayerMDCDataLoad(playerid, const playername[], sqlid)
         cache_get_value_name_int(0, "char"          , lookInfo[pTmpSkin]);
         cache_get_value_name    (0, "look"          , lookInfo[pLook]);
 
-        // Load House Key
-        foreach(new house : Houses)
-        {
-            if (HouseInfo[house][hOwnerID] == loadInfo[pSQLID])
-            {
-                housekey = house;
-                break;
-            }
-        }
+        housekey = GetHouseFromSQL(loadInfo[pSQLID]);
 
         new
             mdcString[512],

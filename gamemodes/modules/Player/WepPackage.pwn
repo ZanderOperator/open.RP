@@ -1,16 +1,11 @@
-/*
-*	  Weapon Package - Gun Dealing
-*			player + vehicle
-*	 www.cityofangels-roleplay.com
-*	    created and coded by L3o
-	  Revamped and fixed by Khawaja
-*	      All rights reserved.
-*	     	   (c) 2019
-*/
-
 #include <YSI_Coding\y_hooks>
 
-enum E_PACKAGE_DATA {
+static
+	Iterator:P_PACKAGES[MAX_PLAYERS]<MAX_PLAYER_PACKAGES>,
+	Iterator:V_PACKAGES[MAX_VEHICLES]<MAX_PACKAGE_VEHICLE>;
+
+enum E_PACKAGE_DATA 
+{
 	faction_ID,
 	PackageAmount,
 	PackageWeapon
@@ -150,6 +145,26 @@ Public: LoadingVehiclePackages(vehicleid)
 /*
 	- functions
 */
+ListPlayerPackages(playerid, forplayerid)
+{
+	va_SendClientMessage(forplayerid, COLOR_LIGHTBLUE, 
+		"*______________ [ %s - Weapon Packages ] ______________*", 
+		GetName(playerid)
+	);
+	foreach(new i : P_PACKAGES[playerid]) 
+	{
+		if(PlayerPackage[playerid][p_weapon][i] != 0)
+		 {
+			va_SendClientMessage(forplayerid, COLOR_WHITE, "(%d). %s (%d/%d).", 
+				i, 
+				GetWeaponNameEx(PlayerPackage[playerid][p_weapon][i]), 
+				PlayerPackage[playerid][p_amount][i], 
+				MAX_PACKAGE_AMOUNT
+			);
+		}
+	}
+	return 1;
+}
 
 SavePlayerPackages(playerid, slot) 
 {
@@ -165,6 +180,17 @@ SavePlayerPackages(playerid, slot)
 		slot
 	);
 	return (true);
+}
+
+RemoveWeaponPackages(playerid)
+{
+	foreach(new i : P_PACKAGES[playerid])
+	{
+		if (PlayerPackage[playerid][p_weapon][i] != 0)
+			DeletePlayerPackage(playerid, i);
+	}
+	Iter_Clear(P_PACKAGES[playerid]);
+	return 1;
 }
 
 Public:StorePPackageInDB(playerid, slot) 
@@ -205,6 +231,18 @@ ResetPlayerPackages(playerid)
 	}
 	Iter_Clear(P_PACKAGES[playerid]);
 	return (true);
+}
+
+ResetVehiclePackages(vehicleid) 
+{
+	foreach(new slots: V_PACKAGES[vehicleid]) 
+	{
+		VehicleInfo[vehicleid][packSQLID] = -1;
+		VehicleInfo[vehicleid][packWepID][slots] = 0;
+		VehicleInfo[vehicleid][packAmmo][slots] = 0;
+	}
+	Iter_Clear(V_PACKAGES[vehicleid]);
+	return 1;
 }
 
 PutPackageVehicle(playerid, vehicleid, vslot, pslot) 

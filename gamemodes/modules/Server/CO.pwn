@@ -1241,18 +1241,6 @@ stock CheckVehicleWeaponTrunkSpace(playerid, vehicleid)
 	return 1;
 }
 
-stock ResetVehiclePackages(vehicleid) 
-{
-	foreach(new slots: V_PACKAGES[vehicleid]) 
-	{
-		VehicleInfo[vehicleid][packSQLID] = -1;
-		VehicleInfo[vehicleid][packWepID][slots] = 0;
-		VehicleInfo[vehicleid][packAmmo][slots] = 0;
-	}
-	Iter_Clear(V_PACKAGES[vehicleid]);
-	return (true);
-}
-
 stock ResetPlayerWeaponList(playerid)
 {
 	WeaponListID[playerid] = -1;

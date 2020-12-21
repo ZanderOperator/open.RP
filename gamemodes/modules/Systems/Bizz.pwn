@@ -41,7 +41,8 @@
        ###    ##     ## ##     ##  ######  
 */
 
-static Iterator:Bizzes<MAX_BIZZS>;
+static 
+    Iterator:Business<MAX_BIZZES>;
 
 enum
 {
@@ -125,7 +126,7 @@ enum E_BIZNIS_PRODUCTS_DATA
     bpPrice,
     bpAmount
 }
-static BiznisProducts[MAX_BIZZS][E_BIZNIS_PRODUCTS_DATA][MAX_BIZZ_ARTICLES];
+static BiznisProducts[MAX_BIZZES][E_BIZNIS_PRODUCTS_DATA][MAX_BIZZ_ARTICLES];
 
 static
     PlayerText:BiznisBcg1  [MAX_PLAYERS] = {PlayerText:INVALID_TEXT_DRAW, ...},
@@ -238,7 +239,7 @@ stock GetNearestBizz(playerid, BIZZ_TYPE = -1)
 		Float:bX, Float:bY, Float:bZ,
 		close_bizzes[MAX_SUBJECTS_IN_RANGE][E_CLOSEST_SUBJECTS];
 	
-	foreach(new i : Bizzes)
+	foreach(new i : Business)
 	{
 		if(slotid >= MAX_SUBJECTS_IN_RANGE)
 			break;
@@ -268,7 +269,7 @@ stock IsAt247(playerid)
     }
 
     new bool:value = false;
-    foreach(new bizzid: Bizzes)
+    foreach(new bizzid: Business)
     {
         if (IsPlayerInRangeOfPoint(playerid, 3.0, BizzInfo[bizzid][bExitX], BizzInfo[bizzid][bExitY], BizzInfo[bizzid][bExitZ])
            && GetPlayerInterior(playerid) == BizzInfo[bizzid][bInterior]
@@ -336,16 +337,16 @@ public OnServerBizzesLoad()
             BizzInfo[b][bVipCP] = CreateDynamicCP(BizzInfo[b][bVipEnter][0], BizzInfo[b][bVipEnter][1], BizzInfo[b][bVipEnter][2]-1, 3.0, BizzInfo[b][bVirtualWorld], BizzInfo[b][bInterior], -1, 5.0);
 
         BizzInfo[b][bEnterPickup] = CreateDynamicPickup(1272, 2, BizzInfo[b][bEntranceX], BizzInfo[b][bEntranceY], BizzInfo[b][bEntranceZ], -1, -1, -1, 100.0);
-        Iter_Add(Bizzes, b);
+        Iter_Add(Business, b);
     }
 
-    printf("MySQL Report: Businesses Loaded (%d)!", Iter_Count(Bizzes));
+    printf("MySQL Report: Businesses Loaded (%d)!", Iter_Count(Business));
     return 1;
 }
 
 stock LoadBiznisProducts(bizz_id)
 {
-    if(!Iter_Contains(Bizzes, bizz_id))
+    if(!Iter_Contains(Business, bizz_id))
         return 0;
 
     mysql_pquery(g_SQL, 
@@ -359,7 +360,7 @@ stock LoadBiznisProducts(bizz_id)
 
 stock LoadBiznisVips(bizz_id)
 {
-    if(!Iter_Contains(Bizzes, bizz_id))
+    if(!Iter_Contains(Business, bizz_id))
         return 1;
 
     mysql_pquery(g_SQL,
@@ -435,7 +436,7 @@ static stock GetBiznisTypeList()
 
 static stock PrintBizInfo(playerid, bizz)
 {
-    if (bizz < 0 || bizz >= MAX_BIZZS) return 0;
+    if (bizz < 0 || bizz >= MAX_BIZZES) return 0;
 
     SendClientMessage(playerid, COLOR_LIGHTBLUE,"_______________________________________");
     va_SendClientMessage(playerid, COLOR_WHITE, "Naziv biznisa: %s | Vlasnik: %s", BizzInfo[bizz][bMessage], GetPlayerNameFromSQL(BizzInfo[bizz][bOwnerID]));
@@ -558,7 +559,7 @@ Public:DestroyBizzInfoTD(playerid)
 
 UpdateBizzFurnitureSlots(playerid)
 {
-    foreach(new biznisid: Bizzes)
+    foreach(new biznisid: Business)
     {
         if (PlayerInfo[playerid][pSQLID] == BizzInfo[biznisid][bOwnerID])
         {
@@ -576,7 +577,7 @@ UpdateBizzFurnitureSlots(playerid)
 stock BuyBiznis(playerid, bool:credit_activated = false)
 {
     new bizz = Player_InfrontBizz(playerid);
-    if (bizz < 0 || bizz >= MAX_BIZZS) return 0;
+    if (bizz < 0 || bizz >= MAX_BIZZES) return 0;
 
     PlayerKeys[playerid][pBizzKey] = bizz;
     //BizzInfo[bizz][bTill]        = 0;
@@ -696,7 +697,7 @@ stock GetDrinkName(drinkid)
 static stock GetArticleList(bizz)
 {
     new buffer[1744];
-    if (bizz < 0 || bizz >= MAX_BIZZS)
+    if (bizz < 0 || bizz >= MAX_BIZZES)
     {
         return buffer;
     }
@@ -730,7 +731,7 @@ static stock GetArticleList(bizz)
 
 static stock IsValidArticle(bizz, article)
 {
-    if (bizz < 0 || bizz >= MAX_BIZZS) return 0;
+    if (bizz < 0 || bizz >= MAX_BIZZES) return 0;
     if (article < 0 || article >= MAX_BIZZ_ARTICLES) return 0;
 
     for (new i = 0; i < MAX_BIZZ_ARTICLES; i++)
@@ -745,7 +746,7 @@ static stock IsValidArticle(bizz, article)
 
 static stock RemoveStoreArticle(bizz, article)
 {
-    if (bizz < 0 || bizz >= MAX_BIZZS) return 0;
+    if (bizz < 0 || bizz >= MAX_BIZZES) return 0;
     if (article < 0 || article >= MAX_BIZZ_ARTICLES) return 0;
 
     mysql_fquery(g_SQL, "DELETE FROM server_biznis_products WHERE biznis_id = '%d' AND id = '%d' AND type='%d'",
@@ -763,7 +764,7 @@ static stock RemoveStoreArticle(bizz, article)
 
 static stock GetEmptyProductSlot(bizz)
 {
-    if (bizz < 0 || bizz >= MAX_BIZZS) return 0;
+    if (bizz < 0 || bizz >= MAX_BIZZES) return 0;
 
     for (new i = 0 ; i < MAX_BIZZ_ARTICLES; i++)
     {
@@ -777,7 +778,7 @@ static stock GetEmptyProductSlot(bizz)
 
 static stock SetStoreProductOnSale(bizz, product, price)
 {
-    if (bizz < 0 || bizz >= MAX_BIZZS) return 0;
+    if (bizz < 0 || bizz >= MAX_BIZZES) return 0;
     if (product == INVALID_PRODUCT_ID || product < 100) return 0;
 
     new id = GetEmptyProductSlot(bizz);
@@ -805,7 +806,7 @@ static stock SetStoreProductOnSale(bizz, product, price)
 
 static stock UpdateBizzProduct(bizz, productid)
 {
-    if (!Iter_Contains(Bizzes, bizz)) 
+    if (!Iter_Contains(Business, bizz)) 
         return 1;
 
     mysql_fquery(g_SQL, 
@@ -820,7 +821,7 @@ static stock UpdateBizzProduct(bizz, productid)
 
 Public:OnBiznisProductInsert(bizz, id)
 {
-    if (bizz < 0 || bizz >= MAX_BIZZS) return 0;
+    if (bizz < 0 || bizz >= MAX_BIZZES) return 0;
 
     BiznisProducts[bizz][bpSQLID][id] = cache_insert_id();
     return 1;
@@ -828,7 +829,7 @@ Public:OnBiznisProductInsert(bizz, id)
 
 CheckPlayerBizzInt(playerid, interior, viwo)
 {
-    foreach(new b: Bizzes)
+    foreach(new b: Business)
 	{
 		if(IsPlayerInRangeOfPoint(playerid, 250.0, BizzInfo[b][bExitX], BizzInfo[b][bExitY], BizzInfo[b][bExitZ]) 
             && BizzInfo[b][bInterior] == interior
@@ -846,7 +847,7 @@ GetBizzFromSQL(sqlid)
     new 
         bizzid = INVALID_BIZNIS_ID;
 
-    foreach(new bizz : Bizzes) 
+    foreach(new bizz : Business) 
 	{
 		if(BizzInfo[bizz][bOwnerID] == sqlid) 
 		{
@@ -860,7 +861,7 @@ GetBizzFromSQL(sqlid)
 stock CP_GetBizzID(checkpointid)
 {
     new bizzid = INVALID_BIZNIS_ID;
-    foreach(new bizz: Bizzes)
+    foreach(new bizz: Business)
     {
         if(BizzInfo[bizz][bEnterCP] == checkpointid)
         {
@@ -884,7 +885,7 @@ static stock GetStoreProducts(bizz)
 {
     new buffer[870];
 
-    if (bizz < 0 || bizz >= MAX_BIZZS)
+    if (bizz < 0 || bizz >= MAX_BIZZES)
     {
         return buffer;
     }
@@ -915,7 +916,7 @@ static stock GetStoreProducts(bizz)
 
 stock ResetBizzInfo(bizz, bool:server_startup = false)
 {
-    if (bizz < 0 || bizz >= MAX_BIZZS) return 0;
+    if (bizz < 0 || bizz >= MAX_BIZZES) return 0;
 
     BizzInfo[bizz][bOwnerID] = 0;
     BizzInfo[bizz][bMessage][0] = EOS;
@@ -954,7 +955,7 @@ stock ResetBizzInfo(bizz, bool:server_startup = false)
 
 Public:ResetBizzEnumerator()
 {
-    for (new i = 0; i < MAX_BIZZS; i++)
+    for (new i = 0; i < MAX_BIZZES; i++)
     {
         ResetBizzInfo(i, true);
     }
@@ -963,7 +964,7 @@ Public:ResetBizzEnumerator()
 
 stock InsertNewBizz(playerid, bizz)
 {
-    if (bizz < 0 || bizz >= MAX_BIZZS) return 0;
+    if (bizz < 0 || bizz >= MAX_BIZZES) return 0;
 
     mysql_pquery(g_SQL, 
         va_fquery(g_SQL, 
@@ -990,7 +991,7 @@ stock InsertNewBizz(playerid, bizz)
 
 Public:OnBizzInsertQuery(playerid, bizz)
 {
-    if (bizz < 0 || bizz >= MAX_BIZZS) return 0;
+    if (bizz < 0 || bizz >= MAX_BIZZES) return 0;
 
     BizzInfo[bizz][bSQLID] = cache_insert_id();
 
@@ -1006,10 +1007,10 @@ Public:OnBizzInsertQuery(playerid, bizz)
 
 stock DeleteBiznis(bizz)
 {
-    if (!Iter_Contains(Bizzes, bizz)) return 1;
+    if (!Iter_Contains(Business, bizz)) return 1;
     mysql_fquery(g_SQL, "DELETE FROM bizzes WHERE id = '%d'", BizzInfo[bizz][bSQLID]);
     ResetBizzInfo(bizz);
-    Iter_Remove(Bizzes, bizz);
+    Iter_Remove(Business, bizz);
     return 1;
 }
 
@@ -1092,7 +1093,7 @@ Public:ResetBuySkin(playerid)
 
 hook function ResetIterators()
 {
-    Iter_Clear(Bizzes);
+    Iter_Clear(Business);
     return continue();
 }
 
@@ -1106,7 +1107,7 @@ hook function LoadServerData()
 hook OnPlayerEnterDynamicCP(playerid, checkpointid)
 {
     new bizz = CP_GetBizzID(checkpointid);
-    if (!Iter_Contains(Bizzes, bizz))
+    if (!Iter_Contains(Business, bizz))
         return 1;
 
     new string[128];
@@ -1145,7 +1146,7 @@ hook OnPlayerLeaveDynamicCP(playerid, checkpointid)
     new 
         bizz = CP_GetBizzID(checkpointid);
     
-    if (!Iter_Contains(Bizzes, bizz) || Player_GetBizzCP(playerid) != bizz)
+    if (!Iter_Contains(Business, bizz) || Player_GetBizzCP(playerid) != bizz)
         return 1;
 
     DestroyBizzInfoTD(playerid);
@@ -1228,7 +1229,7 @@ hook OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
 {
     if (newkeys & KEY_SECONDARY_ATTACK) // ENTER
     {
-        foreach(new i : Bizzes)
+        foreach(new i : Business)
         {
             if (IsPlayerInRangeOfPoint(playerid, 3.0, BizzInfo[i][bVipEnter][0], BizzInfo[i][bVipEnter][1], BizzInfo[i][bVipEnter][2])
                 && BizzInfo[i][bVipType] != 0
@@ -1288,7 +1289,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
             }
 
             BizzInfo[bizz][bType] = listitem;
-            Iter_Add(Bizzes, bizz);
+            Iter_Add(Business, bizz);
             InsertNewBizz(playerid, bizz);
             FreeBizzID[playerid] = INVALID_BIZNIS_ID;
             return 1;
@@ -1761,7 +1762,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                 gplayerid = strval(inputtext),
                 bizz = PlayerKeys[playerid][pBizzKey];
 
-            if (bizz < 0 || bizz >= MAX_BIZZS) return 1;
+            if (bizz < 0 || bizz >= MAX_BIZZES) return 1;
 
             if (!IsPlayerInRangeOfPoint(playerid, 10.0, BizzInfo[bizz][bEntranceX], BizzInfo[bizz][bEntranceY], BizzInfo[bizz][bEntranceZ]))
             {
@@ -2054,7 +2055,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                 bizz = Player_InBusiness(playerid),
                 bizz_type = BizzInfo[bizz][bType];
 
-            if (!Iter_Contains(Bizzes, bizz)) return 1;
+            if (!Iter_Contains(Business, bizz)) return 1;
 
             if (bizz_type == BIZZ_TYPE_DUCAN)
             {
@@ -2308,7 +2309,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                 string[47],
                 bizz = Player_InBusiness(playerid);
 
-            if (bizz < 0 || bizz >= MAX_BIZZS) return 1;
+            if (bizz < 0 || bizz >= MAX_BIZZES) return 1;
 
             switch (listitem)
             {
@@ -2402,7 +2403,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                 string[48],
                 bizz = Player_InBusiness(playerid);
 
-            if (bizz < 0 || bizz >= MAX_BIZZS) return 1;
+            if (bizz < 0 || bizz >= MAX_BIZZES) return 1;
 
             switch (listitem)
             {
@@ -2749,7 +2750,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                 string[51],
                 bizz = Player_InBusiness(playerid);
 
-            if (bizz < 0 || bizz >= MAX_BIZZS) return 1;
+            if (bizz < 0 || bizz >= MAX_BIZZES) return 1;
 
             switch (listitem)
             {
@@ -3097,7 +3098,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
             if (isnull(inputtext)) return ShowPlayerDialog(playerid, DIALOG_BIZNIS_MUSIC, DIALOG_STYLE_INPUT, "BIZNIS MUSIC", "Unesite live streaming link.\nNPR. shoutcast, listen2myradio, ...", "Input", "Abort");
 
             new bizz = Player_IsDJ(playerid) ? Player_GetDJBizzKey(playerid) : bouse;
-            if (bizz < 0 || bizz >= MAX_BIZZS) return 1;
+            if (bizz < 0 || bizz >= MAX_BIZZES) return 1;
             // TODO: strcpy
             format(BizzInfo[bizz][bMusicURL], 96, inputtext);
 
@@ -3145,7 +3146,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
             );
 
             // Raspodjela novca Biznis ili Proracun
-            if (bizz != INVALID_BIZNIS_ID && bizz < MAX_BIZZS)
+            if (bizz != INVALID_BIZNIS_ID && bizz < MAX_BIZZES)
                 PlayerToBusinessMoneyTAX(playerid, bizz, skin_price); // Ako je igrac u biznisu, novac ide u biznis
             else
                 PlayerToBudgetMoney(playerid, skin_price); // Posto je VERONA MALL novac ide u budget
@@ -3383,7 +3384,7 @@ CMD:setfuelprice(playerid, params[])
     new bizz, fuelprice;
     if (PlayerInfo[playerid][pAdmin] < 3) return SendClientMessage(playerid, COLOR_RED, "GRESKA: Niste ovlasteni za koristenje ove komande!");
     if (sscanf(params, "ii", bizz, fuelprice)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /setfuelprice [biznisid][naftaprice]");
-    if (!Iter_Contains(Bizzes, bizz)) return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "Biznis sa ID-em %d ne postoji na serveru!", bizz);
+    if (!Iter_Contains(Business, bizz)) return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "Biznis sa ID-em %d ne postoji na serveru!", bizz);
     if (BizzInfo[bizz][bType] != BIZZ_TYPE_GASSTATION) return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "Biznis %s[ID %d] nije benzinska postaja!", BizzInfo[bizz][bMessage], bizz);
     if (fuelprice < 1 || fuelprice > 10) return SendClientMessage(playerid, COLOR_RED, "Krivi odabir (1-10)!");
 
@@ -3401,7 +3402,7 @@ CMD:bizint(playerid, params[])
     if (PlayerInfo[playerid][pAdmin] < 1338) return SendClientMessage(playerid, COLOR_RED, "  GRESKA: Niste ovlasteni za koristenje ove komande!");
     if (sscanf(params, "ii", bizz, pick)) return SendClientMessage(playerid, COLOR_WHITE, "[ ? ]: /bizint [biznisid][pick] (0 - brisanje)");
     if (pick < 0 || pick > 37) return SendClientMessage(playerid, COLOR_RED, "Krivi odabir (1-37)!");
-    if (!Iter_Contains(Bizzes, bizz)) return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "Biznis ID %d ne postoji na serveru!", bizz);
+    if (!Iter_Contains(Business, bizz)) return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "Biznis ID %d ne postoji na serveru!", bizz);
     // TODO: remove redundant check below, if statement above this check will stop this one from executing if true
     if (bizz > sizeof(BizzInfo) || bizz <= 0) return SendClientMessage(playerid, COLOR_RED, "Pogresan biznis ID!");
 
@@ -3705,7 +3706,7 @@ CMD:custombizint(playerid, params[])
         SendClientMessage(playerid, COLOR_WHITE, "[ ? ]: /custombizint [bizid][Interior ID][Virtual World ID][X][Y][Z]");
         return 1;
     }
-    if (!Iter_Contains(Bizzes, bizz)) return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "Biznis ID %d ne postoji na serveru!", bizz);
+    if (!Iter_Contains(Business, bizz)) return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "Biznis ID %d ne postoji na serveru!", bizz);
 
     BizzInfo[bizz][bExitX] = iX;
     BizzInfo[bizz][bExitY] = iY;
@@ -3836,7 +3837,7 @@ CMD:buy(playerid, params[])
     {
         new 
             bizz = Player_InBusiness(playerid);
-        if (!Iter_Contains(Bizzes, bizz))
+        if (!Iter_Contains(Business, bizz))
         {
             SendClientMessage(playerid, COLOR_RED, "Niste u biznisu!");
             return 1;
@@ -3925,7 +3926,7 @@ CMD:bmusic(playerid, params[])
 
     // TODO: why not just reuse PlayerKeys[playerid][pBizzKey] as the index to BizzInfo array?
     new bouse;
-    foreach(new i : Bizzes)
+    foreach(new i : Business)
     {
         if (PlayerInfo[playerid][pSQLID] == BizzInfo[i][bOwnerID])
             bouse = i;
@@ -3934,7 +3935,7 @@ CMD:bmusic(playerid, params[])
     new
         bizz = Player_IsDJ(playerid) ? Player_GetDJBizzKey(playerid) : bouse;
 
-    if (bizz == INVALID_BIZNIS_ID || bizz > MAX_BIZZS)
+    if (bizz == INVALID_BIZNIS_ID || bizz > MAX_BIZZES)
     {
         return 1;
     }
@@ -3965,7 +3966,7 @@ CMD:makedj(playerid, params[])
 
     // TODO: why not just reuse PlayerKeys[playerid][pBizzKey] as the index to BizzInfo array?
     new bouse;
-    foreach(new i : Bizzes)
+    foreach(new i : Business)
     {
         if (PlayerInfo[playerid][pSQLID] == BizzInfo[i][bOwnerID])
         bouse = i;
@@ -3998,7 +3999,7 @@ CMD:bizentrance(playerid, params[])
     new proplev;
     if (PlayerInfo[playerid][pAdmin] < 1338) return SendClientMessage(playerid, COLOR_RED, "Nisi 1338!");
     if (sscanf(params, "i", proplev)) return SendClientMessage(playerid, COLOR_WHITE, "[ ? ]: /bizentrance [bizid] - izmjena ulaza biznisa");
-    if (!Iter_Contains(Bizzes, proplev))
+    if (!Iter_Contains(Business, proplev))
         return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "Biznis ID %d ne postoji na serveru!", proplev);
 
     new
@@ -4088,7 +4089,7 @@ CMD:bizwithdraw(playerid, params[])
     }
 
     // TODO: why not just reuse PlayerKeys[playerid][pBizzKey] as the index to BizzInfo array?
-    foreach(new i : Bizzes)
+    foreach(new i : Business)
     {
         if (PlayerInfo[playerid][pSQLID] == BizzInfo[i][bOwnerID])
         {
@@ -4197,7 +4198,7 @@ CMD:createbiz(playerid, params[])
     new Float:x, Float:y, Float:z, freeslot;
     GetPlayerPos(playerid, x, y, z);
 
-    freeslot = Iter_Free(Bizzes);
+    freeslot = Iter_Free(Business);
     FreeBizzID[playerid] = freeslot;
     BizzInfo[freeslot][bOwnerID] = 0;
     BizzInfo[freeslot][bCanEnter] = canenter;
