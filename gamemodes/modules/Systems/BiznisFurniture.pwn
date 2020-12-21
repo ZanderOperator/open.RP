@@ -40,7 +40,8 @@
        ###    ##     ## ##     ##  ######
 */
 
-static Iterator:BizzFurniture[MAX_BIZZS]<MAX_BIZNIS_FURNITURE_SLOTS>;
+static 
+    Iterator:BizzFurniture[MAX_BIZZES]<MAX_BIZNIS_FURNITURE_SLOTS>;
 
 enum E_BLANK_BIZZ_INTERIORS
 {
@@ -1618,7 +1619,7 @@ stock ReloadBizzFurniture(biznisid)
 
 hook function ResetIterators()
 {
-    for(new i = 0; i < MAX_BIZZS; i++)
+    for(new i = 0; i < MAX_BIZZES; i++)
     {
         Iter_Clear(BizzFurniture[i]);
     }

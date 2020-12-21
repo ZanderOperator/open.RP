@@ -1258,8 +1258,8 @@ public CheckOffline(playerid, sqlid, const name[])
 		rank,
 		cash,
 		bank,
-		housekey = 9999,
-		bizkey = 999,
+		housekey = INVALID_HOUSE_ID,
+		bizkey = INVALID_BIZNIS_ID,
 		garagekey = -1,
 		admin,
 		helper,
@@ -1288,17 +1288,9 @@ public CheckOffline(playerid, sqlid, const name[])
 	cache_get_value_name_int(0,"facMemId",org);
 	cache_get_value_name_int(0,"facRank",rank);
 	
+	housekey = GetHouseFromSQL(sqlid);
 	bizkey = GetBizzFromSQL(sqlid);
-	
-	foreach(new house : Houses) 
-	{
-		if(HouseInfo[house][hOwnerID] == sqlid) 
-		{
-			housekey = house;
-			break;
-		}
-	}
-	
+
 	foreach(new complexr : ComplexRooms)
 	{
 		if(ComplexRoomInfo[complexr][cOwnerID] == sqlid) 

@@ -45,7 +45,7 @@
 #define MAX_HOUSES                      		(1500)
 #define	MAX_COMPLEX_ROOMS                       (50)
 #define MAX_COMPLEX                             (10)
-#define MAX_BIZZS         						(500)
+#define MAX_BIZZES         						(500)
 #define MAX_PLANTS								(200)
 #define MAX_CUSTOMIZED_OBJECTS          		(7)
 #define MAX_SERVER_FLAMES						(200)
@@ -136,10 +136,10 @@
 // Private Vehicles - CarOwnership.pwn
 #define MAX_PLAYER_CARS							(10)
 
+// TODO: when rBits removed, change value to -1
 // Invalids
 #define INVALID_BIZNIS_ID     					(999)
 #define INVALID_HOUSE_ID						(9999)
-// TODO: when rBits removed, change value to -1
 #define INVALID_COMPLEX_ID                      (999)
 
 // Streaming

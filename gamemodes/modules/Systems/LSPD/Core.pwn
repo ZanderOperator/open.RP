@@ -2119,13 +2119,7 @@ CMD:take(playerid, params[])
         format(tmpString, sizeof(tmpString), "* Policajac %s vam je oduzeo weapon pakete.", GetName(playerid));
         SendClientMessage(giveplayerid, COLOR_LIGHTBLUE, tmpString);
 
-        // reset packages
-        foreach(new i : P_PACKAGES[giveplayerid])
-        {
-            if (PlayerPackage[giveplayerid][p_weapon][i] != 0)
-                DeletePlayerPackage(giveplayerid, i);
-        }
-        Iter_Clear(P_PACKAGES[giveplayerid]);
+        RemoveWeaponPackages(giveplayerid);
     }
     else if (strcmp(opcija,"flyinglicense",true) == 0)
     {
@@ -2845,7 +2839,13 @@ CMD:housetake(playerid, params[])
         HouseStorage_Save(id);
 
         #if defined MODULE_LOGS
-        Log_Write("/logfiles/pd_housetakes.txt", "(%s) %s emptied out all weapons from storage[ID: %d] of house[Address: %s | SQLID: %d]", ReturnDate(), GetName(playerid, false), Storage_GetId(id), House_GetAddress(house), House_GetSqlid(house));
+        Log_Write("/logfiles/pd_housetakes.txt", "(%s) %s emptied out all weapons from storage[ID: %d] of house[Address: %s | SQLID: %d]", 
+            ReturnDate(), 
+            GetName(playerid, false), 
+            Storage_GetId(id), 
+            HouseInfo[house][hAdress],
+            HouseInfo[house][hSQLID]
+        );
         #endif
 
         new

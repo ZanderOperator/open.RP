@@ -38,7 +38,12 @@
        ###    ##     ## ##     ##  ######
 */
 
-static FreeFurniture_Slot[MAX_PLAYERS] = {INVALID_OBJECT_ID, ...};
+static
+    Iterator:HouseFurInt[MAX_HOUSES]<MAX_FURNITURE_SLOTS>;
+
+
+static 
+    FreeFurniture_Slot[MAX_PLAYERS] = {INVALID_OBJECT_ID, ...};
 
 enum E_BLANK_INTERIORS
 {
@@ -2249,7 +2254,7 @@ GetFurnitureSlots(playerid, donator_level)
 
 UpdatePremiumHouseFurSlots(playerid, admin_name = -1, houseid)
 {
-    if(!Iter_Contains(Houses, houseid))
+    if(!(0 >= houseid && houseid < MAX_HOUSES ))
         return 1;
 
     HouseInfo[houseid][hFurSlots] = GetFurnitureSlots(playerid, PlayerVIP[playerid][pDonateRank]);
@@ -2266,7 +2271,7 @@ UpdatePremiumHouseFurSlots(playerid, admin_name = -1, houseid)
 
 SetPlayerPremiumFurniture(playerid, houseid)
 {
-    if(!Iter_Contains(Houses, houseid))
+    if(!(0 >= houseid && houseid < MAX_HOUSES ))
         return 1;
 
     HouseInfo[houseid][hFurSlots] = (FURNITURE_PREMIUM_OBJECTS);
@@ -2405,7 +2410,8 @@ public OnFurnitureObjectCreates(houseid, index)
 
 stock LoadHouseFurnitureObjects(houseid)
 {
-    if (!Iter_Contains(Houses, houseid)) return 1;
+    if(!(0 >= houseid && houseid < MAX_HOUSES ))
+        return 1;
    
     mysql_pquery(g_SQL, 
         va_fquery(g_SQL, "SELECT * FROM furniture WHERE houseid = '%d'", HouseInfo[houseid][hSQLID]), 
@@ -2454,13 +2460,14 @@ stock ResetHouseFurnitureEnum(houseid)
 
 static stock GetPlayerFurnitureHouse(playerid)
 {
-    new houseid = INVALID_HOUSE_ID;
-    if (Iter_Contains(Houses, PlayerEditingHouse[playerid]))
+    new 
+        houseid = INVALID_HOUSE_ID;
+    if (PlayerEditingHouse[playerid] != INVALID_HOUSE_ID)
     {
         if(Player_InHouse(playerid) == PlayerEditingHouse[playerid])
             houseid = PlayerEditingHouse[playerid];
     }
-    else if (Iter_Contains(Houses, PlayerKeys[playerid][pHouseKey]))
+    else if (PlayerKeys[playerid][pHouseKey] != INVALID_HOUSE_ID)
     {
         if(Player_InHouse(playerid) == PlayerKeys[playerid][pHouseKey])
             houseid = PlayerKeys[playerid][pHouseKey];
@@ -2716,6 +2723,21 @@ static stock GetFurnitureObjectModel(playerid, index)
         }
     }
     return modelid;
+}
+
+RotateHouseFurDoor(houseid, playerid)
+{
+    foreach(new i: HouseFurInt[houseid])
+    {
+        if (HouseInfo[houseid][hFurDoor][i])
+        {
+            if (IsPlayerInRangeOfPoint(playerid, 3.0, HouseInfo[houseid][hFurPosX][i], HouseInfo[houseid][hFurPosY][i], HouseInfo[houseid][hFurPosZ][i] ))
+            {
+                SetFurnitureDoorRotation(houseid, i);
+                break;
+            }
+        }
+    }
 }
 
 // TODO: Erm, I think I saw this exact pieces of code somewhere else...
@@ -4658,9 +4680,8 @@ CMD:furniture(playerid, params[])
         }
         new
             houseid = GetPlayerFurnitureHouse(playerid);
-        if (Iter_Contains(Houses, houseid)) 
+        if (houseid == INVALID_HOUSE_ID) 
             return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Morate posjedovati kucu ili posjedujete apartman.");
-        if (!IsPlayerInRangeOfPoint(playerid, 150.0, HouseInfo[houseid][hExitX], HouseInfo[houseid][hExitY], HouseInfo[houseid][hExitZ])) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Morate biti unutar kuce!");
 
         ShowPlayerDialog(playerid, DIALOG_FURNITURE_MENU, DIALOG_STYLE_LIST, "Furniture", "Kupi objekt\nUredi", "Choose", "Abort");
         return 1;
@@ -4702,22 +4723,10 @@ CMD:door(playerid, params[])
         biznisid = Player_InBusiness(playerid);
 
     if (houseid != INVALID_HOUSE_ID)
-    {
-        foreach(new i: HouseFurInt[houseid])
-        {
-            if (HouseInfo[houseid][hFurDoor][i])
-            {
-                if (IsPlayerInRangeOfPoint(playerid, 3.0, HouseInfo[houseid][hFurPosX][i], HouseInfo[houseid][hFurPosY][i], HouseInfo[houseid][hFurPosZ][i] ))
-                {
-                    SetFurnitureDoorRotation(houseid, i);
-                    break;
-                }
-            }
-        }
-    }
+        RotateHouseFurDoor(houseid, playerid);
     else if (biznisid != INVALID_BIZNIS_ID)
         RotateBizzFurDoor(biznisid, playerid);
-        
+    
     return 1;
 }
 
@@ -4744,7 +4753,6 @@ CMD:afurniture(playerid, params[])
             SendClientMessage(playerid, COLOR_RED, "[ ? ]: /afurniture reload [house_id].");
             return 1;
         }
-        // TODO: Or just use Iter_Contains(Houses, house_id)
         if (house_id < 0 || house_id > MAX_HOUSES)
         {
             SendClientMessage(playerid, COLOR_RED, "[ ! ]: Neispravan ID kuce (kuca ne postoji)!");
@@ -4770,7 +4778,6 @@ CMD:afurniture(playerid, params[])
             SendClientMessage(playerid, COLOR_RED, "[ ! ]: Taj igrac nije online!");
             return 1;
         }
-        // TODO: Or just use Iter_Contains(Houses, house_id)
         if (house_id < 0 || house_id > MAX_HOUSES)
         {
             SendClientMessage(playerid, COLOR_RED, "[ ! ]: Neispravan ID kuce (kuca ne postoji)!");
@@ -4796,7 +4803,6 @@ CMD:afurniture(playerid, params[])
             SendClientMessage(playerid, COLOR_RED, "[ ! ]: Taj igrac nije online!");
             return 1;
         }
-        // TODO: Or just use Iter_Contains(Houses, house_id)
         if (house_id < 0 || house_id > MAX_HOUSES)
         {
             SendClientMessage(playerid, COLOR_RED, "[ ! ]: Neispravan ID kuce (kuca ne postoji)!");

@@ -164,19 +164,10 @@ new
 	Iterator:Skins<MAX_MENU_ITEMS>,
 	Iterator:Pickups[MAX_PICKUP_TYPES]<MAX_DYNAMIC_PICKUPS>,
 	Iterator:Factions<MAX_FACTIONS>,
-	Iterator:Houses<MAX_HOUSES>,
-	Iterator:HouseFurInt[MAX_HOUSES]<MAX_FURNITURE_SLOTS>,
-	Iterator:HouseFurExt[MAX_HOUSES]<EXTERIOR_OBJS_VIP_GOLD>,
 	Iterator:Complex<MAX_COMPLEX>,
 	Iterator:ComplexRooms<MAX_COMPLEX_ROOMS>,
 	Iterator:Garages<MAX_GARAGES>,
-	Iterator:IllegalGarages<MAX_ILEGAL_GARAGES>,
-	Iterator:V_PACKAGES[MAX_VEHICLES]<MAX_PACKAGE_VEHICLE>;
-
-// Player Iterators
-new 
-	Iterator:P_PACKAGES[MAX_PLAYERS]<MAX_PLAYER_PACKAGES>,
-	Iterator:P_Weapons[MAX_PLAYERS]<MAX_PLAYER_WEAPON_SLOTS>;
+	Iterator:IllegalGarages<MAX_ILEGAL_GARAGES>;
 
 /*
 	##     ##    ###    ########   ######

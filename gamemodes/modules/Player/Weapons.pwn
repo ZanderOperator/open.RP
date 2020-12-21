@@ -10,6 +10,9 @@
 	######## ##    ##  #######  ##     ##
 */
 
+static
+	Iterator:P_Weapons[MAX_PLAYERS]<MAX_PLAYER_WEAPON_SLOTS>;
+
 enum E_PLAYER_WEAPONS
 {
 	pwSQLID[13],
@@ -47,6 +50,26 @@ static
 	##  ##  ## ##       ##     ## ##        ##     ## ##   ### ##    ##
 	 ###  ###  ######## ##     ## ##         #######  ##    ##  ######
  */
+
+ListPlayerWeapons(playerid, forplayerid)
+{
+	SendClientMessage(forplayerid, COLOR_LIGHTBLUE, "*_________________________ ORUZJA _________________________*");
+	foreach(new slot: P_Weapons[playerid])
+	{
+		if(PlayerWeapons[playerid][pwWeaponId][slot] > 0 && PlayerWeapons[playerid][pwAmmo][slot] > 0)
+			va_SendClientMessage(forplayerid, COLOR_WHITE, 
+				"	Oruzje: %s, Metaka: %d.", 
+				WeapNames[PlayerWeapons[playerid][pwWeaponId][slot]], 
+				PlayerWeapons[playerid][pwAmmo][slot]
+			);
+	}
+	if(HiddenWeapon[playerid][pwWeaponId] != 0)
+		va_SendClientMessage(forplayerid, COLOR_WHITE, 
+			"	[Sakriveno ispod odjece]: %s, Metaka: %d.", 
+			WeapNames[HiddenWeapon[playerid][pwWeaponId]], 
+			HiddenWeapon[playerid][pwAmmo]
+		);
+}
  
 Public:LoadPlayerWeapons(playerid)
 {

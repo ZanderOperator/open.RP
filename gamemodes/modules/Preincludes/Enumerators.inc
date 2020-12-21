@@ -705,7 +705,7 @@ enum E_BIZNIS_INFO
     bGasPrice
 }
 new 
-	BizzInfo[MAX_BIZZS][E_BIZNIS_INFO];
+	BizzInfo[MAX_BIZZES][E_BIZNIS_INFO];
 
 #define bFurTxtId][%1][%2] bFurTxtId][((%1)*5)+(%2)]
 #define bFurColId][%1][%2] bFurColId][((%1)*5)+(%2)]

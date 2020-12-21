@@ -598,7 +598,7 @@ stock SignalStrength(playerid, towerid)
 		houseid  = Player_InHouse(playerid),
 		bizzid   = Player_InBusiness(playerid),
 		garageid = Player_InGarage(playerid);
-	if (bizzid >= 0 && bizzid != INVALID_BIZNIS_ID && bizzid < MAX_BIZZS)
+	if (bizzid >= 0 && bizzid != INVALID_BIZNIS_ID && bizzid < MAX_BIZZES)
 	{
 		return 5;
 	}

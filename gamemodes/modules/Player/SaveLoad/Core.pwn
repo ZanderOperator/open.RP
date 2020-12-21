@@ -326,14 +326,10 @@ public LoadPlayerData(playerid)
 		PlayerKeys[playerid][pIllegalGarageKey]	= -1;
 		PlayerKeys[playerid][pVehicleKey] = -1;
 		
-		foreach(new house : Houses)
-		{
-			if(HouseInfo[house][hOwnerID] == PlayerInfo[playerid][pSQLID]) 
-			{
-				PlayerKeys[playerid][pHouseKey] = house;
-				break;
-			}
-		}
+		new 
+			house = GetHouseFromSQL(PlayerInfo[playerid][pSQLID]);
+		if(house != INVALID_HOUSE_ID)
+			PlayerKeys[playerid][pHouseKey] = house;
 		
 		new 
 			bizz = GetBizzFromSQL(PlayerInfo[playerid][pSQLID]);

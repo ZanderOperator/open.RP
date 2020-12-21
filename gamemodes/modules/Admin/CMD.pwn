@@ -747,7 +747,7 @@ CMD:address(playerid, params[])
 	new id, address[32];
 	if( sscanf(params, "is[32] ", id, address) ) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /address [houseid] [adresa]");
 	if( strlen(address) > 32 ) return SendClientMessage( playerid, COLOR_RED, "Maksimalna velicina adrese je 11 znakova!");
-	if( !Iter_Contains(Houses, id) ) return SendClientMessage(playerid, COLOR_RED, "Morate biti blizu kuce!");
+	if( !(0 >= id && id < MAX_HOUSES ) ) return SendClientMessage(playerid, COLOR_RED, "Nevaljan ID kuce!");
 	if( !IsPlayerInRangeOfPoint(playerid, 15.0, HouseInfo[ id ][ hEnterX ], HouseInfo[ id ][ hEnterY ], HouseInfo[ id ][ hEnterZ ] ) ) return SendClientMessage( playerid, COLOR_RED, "Morate biti blizu kuce!");
 	
 	format(HouseInfo[id][hAdress], 32, address);
@@ -3171,7 +3171,7 @@ CMD:bizo(playerid, params[])
 		
 	if( sscanf( params, "i", biznis ) ) return SendClientMessage(playerid, COLOR_RED, "[ ? ]:  /bizo [biznisid]" );
 	
-	if(biznis < 0 || biznis > MAX_BIZZS-1) 
+	if(biznis < 0 || biznis > MAX_BIZZES-1) 
 		return SendClientMessage(playerid, COLOR_RED, "[ ? ]:  /bizo [biznisid]" );
 	
 	if(BizzInfo[ biznis ][ bEntranceX ] == 0.0)
