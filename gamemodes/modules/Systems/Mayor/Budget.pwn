@@ -48,6 +48,11 @@ static
     ##        #######  ##    ##  ######   ######  
 */
 
+Player_SetFactionList(playerid, slot, factionid)
+{
+    FactionToList[playerid][slot] = factionid;
+}
+
 stock LoadCityStuff()
 {
     mysql_pquery(g_SQL, "SELECT * FROM city WHERE 1", "OnCityLoaded");
@@ -201,22 +206,6 @@ stock ShowGovMDC(playerid, targetid)
 stock ResetFactionListIDs(playerid)
 {
     FactionListID[playerid] = -1;
-    return 1;
-}
-
-stock SaveFactionBanks()
-{
-    foreach(new fid : Factions)
-    {
-        if (FactionInfo[fid][fType] == FACTION_TYPE_LAW || FactionInfo[fid][fType] == FACTION_TYPE_LAW2 ||
-            FactionInfo[fid][fType] == FACTION_TYPE_FD || FactionInfo[fid][fType] == FACTION_TYPE_NEWS)
-        {
-            mysql_fquery(g_SQL, "UPDATE server_factions SET factionbank = '%d' WHERE id = '%d'", 
-                FactionInfo[fid][fFactionBank], 
-                FactionInfo[fid][fID]
-            );
-        }
-    }
     return 1;
 }
 
@@ -418,23 +407,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                     ShowPlayerDialog(playerid, DIALOG_CITY_TAX, DIALOG_STYLE_INPUT, "GRADSKI PRORACUN - POREZ", string, "Input", "Abort");
                 }
                 case 2:
-                { // Faction Bank
-                    new
-                        buffer[512] = "Organizacija\tFaction Bank\n",
-                        counter = 0;
-                    foreach(new faciter: Factions)
-                    {
-                        if (FactionInfo[faciter][fType] == FACTION_TYPE_LAW || FactionInfo[faciter][fType] == FACTION_TYPE_LAW2 ||
-                            FactionInfo[faciter][fType] == FACTION_TYPE_FD  || FactionInfo[faciter][fType] == FACTION_TYPE_NEWS)
-                        {
-                            // TODO: strcat into buffer
-                            format(buffer, sizeof(buffer), "%s%s\t {00E600}%d$\n", buffer, FactionInfo[faciter][fName], FactionInfo[faciter][fFactionBank]);
-                            FactionToList[playerid][counter] = faciter;
-                            counter++;
-                        }
-                    }
-                    ShowPlayerDialog(playerid, DIALOG_CITY_FACTIONBANK, DIALOG_STYLE_TABLIST_HEADERS, "PRORACUN ORGANIZACIJA", buffer, "Choose", "Abort");
-                }
+                    ShowPlayerFactionBanks(playerid);
                 case 3:
                 { // Mayor Business Regulation (Info && Deposit/Withdraw)
                     ShowPlayerDialog(playerid, DIALOG_CITY_BIZNIS, DIALOG_STYLE_LIST, "Odaberite opciju:", "Biznis Info\nStavi novac u blagajnu\nDigni novac iz blagajne", "Choose", "Exit");
