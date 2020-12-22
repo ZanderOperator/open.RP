@@ -785,15 +785,7 @@ stock CheckPlayerInteriors(playerid)
 	CheckPlayerHouseInt(playerid, interior, virtualworld);
 	CheckPlayerBizzInt(playerid, interior, virtualworld);
 	CheckPlayerGarageInt(playerid);
-	
-	foreach(new pickup: Pickups[PICKUP_TYPE_ENTERABLE])
-	{
-		if(IsPlayerInRangeOfPoint(playerid, 250.0, PickupInfo[pickup][epExitx],PickupInfo[pickup][epExity],PickupInfo[pickup][epExitz]) && PickupInfo[pickup][epInt] == interior && PickupInfo[pickup][epViwo] == virtualworld)
-		{
-			Player_SetInPickup(playerid, pickup);
-			return 1;
-		}
-	}
+	CheckPlayerPickupInt(playerid, interior, virtualworld);
 	CheckPlayerComplexInt(playerid, interior, virtualworld);
 	CheckPlayerComplexRoomInt(playerid, interior, virtualworld);
 	return 1;

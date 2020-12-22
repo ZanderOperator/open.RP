@@ -1,7 +1,6 @@
 // >> Made by Runner!
 #include <YSI_Coding\y_hooks>
 						
-#define DAYS_NEEDED		259200 // 3 dana u sekundama!
 #define IMPOUNDER_ID	(17)
 
 enum e_ipound_info

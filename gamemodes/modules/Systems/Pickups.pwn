@@ -1,14 +1,8 @@
 #include <YSI_Coding\y_hooks>
 
-/*
-	######## ##    ## ##     ## ##     ## 
-	##       ###   ## ##     ## ###   ### 
-	##       ####  ## ##     ## #### #### 
-	######   ## ## ## ##     ## ## ### ## 
-	##       ##  #### ##     ## ##     ## 
-	##       ##   ### ##     ## ##     ## 
-	######## ##    ##  #######  ##     ## 
-*/
+static 
+	Iterator:Pickup[MAX_PICKUP_TYPES] <MAX_DYNAMIC_PICKUPS>;
+
 
 enum E_PICKUP_INFO
 {
@@ -52,6 +46,11 @@ static
 	##    ##    ##    ##     ## ##    ## ##   ##  ##    ## 
 	 ######     ##     #######   ######  ##    ##  ###### 
 */
+
+bool:Pickup_Exists(type, pickupid)
+{
+	return Iter_Contains(Pickup[type], pickupid);
+}
 
 Player_InPickup(playerid)
 {
@@ -129,18 +128,33 @@ public OnPickupsLoad()
 		if(PickupInfo[b][epCanEnter])
 		{
 			CreatePickupEnter(b);
-			Iter_Add(Pickups[PICKUP_TYPE_ENTERABLE], b);
+			Iter_Add(Pickup[PICKUP_TYPE_ENTERABLE], b);
 		}
-		else Iter_Add(Pickups[PICKUP_TYPE_NON_ENTERABLE], b);
+		else Iter_Add(Pickup[PICKUP_TYPE_NON_ENTERABLE], b);
 	}
 	printf("MySQL Report: Pickups Loaded (%d)!", Iter_Count(PickupsIter));
+	return 1;
+}
+
+CheckPlayerPickupInt(playerid, int, viwo)
+{
+	foreach(new pickup: Pickup[PICKUP_TYPE_ENTERABLE])
+	{
+		if(IsPlayerInRangeOfPoint(playerid, 250.0, PickupInfo[pickup][epExitx],PickupInfo[pickup][epExity],PickupInfo[pickup][epExitz]) 
+			&& PickupInfo[pickup][epInt] == int 
+			&& PickupInfo[pickup][epViwo] == viwo)
+		{
+			Player_SetInPickup(playerid, pickup);
+			break;
+		}
+	}
 	return 1;
 }
 
 stock CP_GetPickupID(checkpointid)
 {
     new pickupid = -1;
-    foreach(new pickup: Pickups[PICKUP_TYPE_ENTERABLE])
+    foreach(new pickup: Pickup[PICKUP_TYPE_ENTERABLE])
     {
         if(PickupInfo[pickup][epEnterCP] == checkpointid)
         {
@@ -222,9 +236,9 @@ stock static CreateNewPickup(playerid, pickup)
 	if(PickupInfo[pickup][epCanEnter])
 	{
 		CreatePickupEnter(pickup);
-		Iter_Add(Pickups[PICKUP_TYPE_ENTERABLE], pickup);
+		Iter_Add(Pickup[PICKUP_TYPE_ENTERABLE], pickup);
 	}
-	else Iter_Add(Pickups[PICKUP_TYPE_NON_ENTERABLE], pickup);
+	else Iter_Add(Pickup[PICKUP_TYPE_NON_ENTERABLE], pickup);
 
     NewPickupID[playerid] = 0;
     return 1;
@@ -255,7 +269,7 @@ hook function LoadServerData()
 hook OnPlayerEnterDynamicCP(playerid, checkpointid)
 {
     new pickupid = CP_GetPickupID(checkpointid);
-    if (!Iter_Contains(Pickups[PICKUP_TYPE_ENTERABLE], pickupid))
+    if (!Iter_Contains(Pickup[PICKUP_TYPE_ENTERABLE], pickupid))
         return 1;
 
 	GameTextForPlayer(playerid, PickupInfo[pickupid][epEnterDiscription], 3100, 5);
@@ -270,7 +284,7 @@ hook OnPlayerLeaveDynamicCP(playerid, checkpointid)
     new 
         pickupid = CP_GetBizzID(checkpointid);
     
-    if (!Iter_Contains(Pickups[PICKUP_TYPE_ENTERABLE], pickupid))
+    if (!Iter_Contains(Pickup[PICKUP_TYPE_ENTERABLE], pickupid))
         return 1;
 
     Player_SetPickupCP(playerid, -1);
@@ -375,8 +389,8 @@ CMD:deletepickup(playerid, params[])
 
 	Iter_Remove(PickupsIter, pickup);
 	if(PickupInfo[pickup][epCanEnter])
-		Iter_Remove(Pickups[PICKUP_TYPE_ENTERABLE], pickup);
-	else Iter_Remove(Pickups[PICKUP_TYPE_NON_ENTERABLE], pickup);
+		Iter_Remove(Pickup[PICKUP_TYPE_ENTERABLE], pickup);
+	else Iter_Remove(Pickup[PICKUP_TYPE_NON_ENTERABLE], pickup);
 
 	PickupInfo[pickup][epPickupModel] 	= 0;
 	PickupInfo[pickup][epEntrancex] 	= 0.0;
