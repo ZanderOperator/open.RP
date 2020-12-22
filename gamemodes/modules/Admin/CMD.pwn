@@ -1138,12 +1138,10 @@ CMD:healcar(playerid, params[])
 
 CMD:fuelcars(playerid, params[])
 {
-	if (PlayerInfo[playerid][pAdmin] < 1337) return SendClientMessage(playerid, COLOR_RED, "Niste ovlasteni za koristenje ove komande!");
-	for(new i = 0; i < MAX_VEHICLE_TYPES; i++)
-	{
-		foreach(new c: Vehicles[i])
-			VehicleInfo[c][vFuel] = 100;
-	}
+	if (PlayerInfo[playerid][pAdmin] < 1337)
+		return SendClientMessage(playerid, COLOR_RED, "Niste ovlasteni za koristenje ove komande!");
+	
+	RefillVehicles();
 	SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "All Vehicles are now 100% full of gas.");
 	return 1;
 }
@@ -1559,16 +1557,11 @@ CMD:fstyle(playerid, params[])
 // Administrator Level 4
 CMD:rac(playerid, params[])
 {
-	if (PlayerInfo[playerid][pAdmin] < 4) return SendClientMessage(playerid, COLOR_RED, "Niste ovlasteni za koristenje ove komande!");
+	if (PlayerInfo[playerid][pAdmin] < 4) 
+		return SendClientMessage(playerid, COLOR_RED, "Niste ovlasteni za koristenje ove komande!");
+	
+	RespawnVehicles();
 	va_SendClientMessageToAll(COLOR_LIGHTRED, "[AdmCmd]: Admin %s je respawnao sva non-occupied vozila na serveru.", GetName(playerid));
-	for(new i = 0; i < MAX_VEHICLE_TYPES; i++)
-	{
-		foreach(new c : Vehicles[i]) 
-		{
-			if( !IsVehicleOccupied(c) )
-				SetVehicleToRespawn(c);
-		}
-	}
 	return 1;
 }
 
@@ -1670,7 +1663,7 @@ CMD:veh(playerid, params[])
 	GetVehicleParamsEx(carid,engine,lights,alarm,doors,bonnet,boot,objective);
 	SetVehicleParamsEx(carid,VEHICLE_PARAMS_ON,lights,alarm,doors,bonnet,boot,objective);
 	PutPlayerInVehicle(playerid, carid, 0);
-	Iter_Add(Vehicles[VEHICLE_USAGE_NORMAL], carid);
+	Vehicle_Add(VEHICLE_USAGE_NORMAL, carid);
 	CreateAdminVehicles(playerid, carid);
 	
 	format(globalstring, sizeof(globalstring), "[ ! ] Spawnali ste vozilo ID %d, Model: %d. (/veh)", carid, car);
@@ -2652,28 +2645,25 @@ CMD:rtcinradius(playerid, params[])
 	new
 		engine, lights, alarm, doors, bonnet, boot, objective;
 	
-	for(new i = 0; i < MAX_VEHICLE_TYPES; i++)
+	foreach(new c: StreamedVehicle[playerid])
 	{
-		foreach(new c: Vehicles[i])
+		if(IsPlayerInRangeOfVehicle(playerid, c, radius))
 		{
-			if(IsPlayerInRangeOfVehicle(playerid, c, radius))
+			if( !IsPlayerInVehicle(playerid, c) ) 
 			{
-				if( !IsPlayerInVehicle(playerid, c) ) 
+				if( VehicleInfo[ c ][ vUsage ] == VEHICLE_USAGE_EVENT ) 
 				{
-					if( VehicleInfo[ c ][ vUsage ] == VEHICLE_USAGE_EVENT ) 
-					{
-						GetVehicleParamsEx(c, engine, lights, alarm, doors, bonnet, boot, objective);
-						SetVehicleParamsEx(c, VEHICLE_PARAMS_ON, lights, alarm, doors, bonnet, boot, objective);
-						SetVehicleToRespawn(c);
-						LinkVehicleToInterior(c, 0);
-					} 
-					else 
-					{
-						GetVehicleParamsEx(c, engine, lights, alarm, doors, bonnet, boot, objective);
-						SetVehicleParamsEx(c, engine, lights, alarm, doors, bonnet, boot, objective);
-						SetVehicleToRespawn(c);
-						LinkVehicleToInterior(c, 0);
-					}
+					GetVehicleParamsEx(c, engine, lights, alarm, doors, bonnet, boot, objective);
+					SetVehicleParamsEx(c, VEHICLE_PARAMS_ON, lights, alarm, doors, bonnet, boot, objective);
+					SetVehicleToRespawn(c);
+					LinkVehicleToInterior(c, 0);
+				} 
+				else 
+				{
+					GetVehicleParamsEx(c, engine, lights, alarm, doors, bonnet, boot, objective);
+					SetVehicleParamsEx(c, engine, lights, alarm, doors, bonnet, boot, objective);
+					SetVehicleToRespawn(c);
+					LinkVehicleToInterior(c, 0);
 				}
 			}
 		}

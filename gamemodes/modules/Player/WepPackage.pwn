@@ -723,7 +723,7 @@ CMD:package(playerid, params[])
 			SendClientMessage(playerid, COLOR_RED, "[ ? ]: /package checkveh [vehicleid].");
 			return (true);
 		}
-		if(!Iter_Contains(Vehicles[VEHICLE_USAGE_PRIVATE], vehicleid))
+		if(!Vehicle_Exists(VEHICLE_USAGE_PRIVATE, vehicleid))
 			return SendMessage(playerid, MESSAGE_TYPE_ERROR, "The vehicle must be private!");
 
 		va_SendClientMessage(playerid, COLOR_RED, "[ ! ] |________ [ %s - Weapon Packages ] ________|", ReturnVehicleName(vehicleid));

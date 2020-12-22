@@ -1,5 +1,6 @@
 #include <YSI_Coding\y_hooks>
 
+#define MIN_TICKET_TIME		            (259200) // 3 days in seconds
 #define MAX_TICKET_REASON_LEN           (100)   
 #define MAX_TICKET_MONEY_VAL            (10000)
 
@@ -32,6 +33,28 @@ enum E_TICKET_DATA
     ##       ##     ## ##   ### ##    ## ##    ## 
     ##        #######  ##    ##  ######   ######  
 */
+
+bool:IsVehicleImpoundable(vehicleid)
+{
+    new 
+        bool: value = true;
+
+    for(new i = 0; i < MAX_VEHICLE_TICKETS; i++)
+    {
+        if(VehicleInfo[vehicleid][vTickets][i] == 0)
+        {
+            value = false;
+            break;
+        }
+        else if(VehicleInfo[vehicleid][vTicketStamp][i] > (gettimestamp() - MIN_TICKET_TIME) 
+            || IsVehicleOccupied(vehicleid))
+        {
+            value = false;
+            break;
+        }
+    }
+    return value;
+}
 
 static SaveVehicleTicketStatus(vehicleid, ticket_slot)
 {

@@ -325,6 +325,14 @@ stock static CheckForGarageWantedLevel(garage, bool:save=false)
 	UpdateDynamic3DTextLabelText(IlegalGarage[ garage ][ ig3dText ], -1, tmpString);
 }
 
+bool: IsVehicleJackable(carid)
+{
+	new bool: value = true;
+	if(!LandVehicles[carid][viCarJackerPrice])
+		value = false;
+	return value;
+}
+
 stock static IsVehicleOnList(garage, index)
 {
 	new
@@ -340,33 +348,9 @@ stock static IsVehicleOnList(garage, index)
 	return returning;
 }
 
-stock CountVehicleKinds()
-{
-	new Iterator: VehicleTypes<MAX_VEHICLES>,
-		carid,
-		model;
-		
-	Iter_Clear(VehicleTypes);
-	
-	if(Iter_Count(Vehicles[VEHICLE_USAGE_PRIVATE]) == 0)
-		return 0;
-		
-	foreach(new vehicleid: Vehicles[VEHICLE_USAGE_PRIVATE])
-	{
-		model = GetVehicleModel(vehicleid);
-		carid = GetVehicleByModel(model);
-		if( carid == -1 ) continue;
-		if( IsABike(model) || IsABoat(model) || IsAMotorBike(model) || IsAPlane(model) || IsAHelio(model) ) continue;
-		if( !LandVehicles[ carid ][ viCarJackerPrice ] ) continue;
-		if( Iter_Contains(VehicleTypes, model) ) continue;
-		Iter_Add(VehicleTypes, model);
-	}
-	return Iter_Count(VehicleTypes);
-}
-
 stock GetVehiclesForIlegalGarages(garage)
 {
-	new vehkinds = CountVehicleKinds();
+	new vehkinds = CountVehicleModels();
 	if(vehkinds >= 6) 
 	{
 		new vehid, carid;
@@ -374,7 +358,7 @@ stock GetVehiclesForIlegalGarages(garage)
 		{
 			CARID_GET:
 			
-			vehid = Iter_Random(Vehicles[VEHICLE_USAGE_PRIVATE]),
+			vehid = Vehicle_Random(VEHICLE_USAGE_PRIVATE),
 			carid = GetVehicleByModel(GetVehicleModel(vehid));
 				
 			if( carid == -1 ) goto CARID_GET;
@@ -825,7 +809,7 @@ CMD:jacker(playerid, params[])
 		
 		if( PlayerJackingCar[ playerid ] == -1 ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Morate uzeti misiju!");
 		if( vehicleid == PlayerKeys[playerid][pVehicleKey] ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne mozete svoje vozilo uzeti!");
-		if( !Iter_Contains(Vehicles[VEHICLE_USAGE_PRIVATE], vehicleid) ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Vozilo koje ste ukrali treba biti privatno, a ne iznajmljeno ili organizacijsko!");
+		if( !Vehicle_Exists(VEHICLE_USAGE_PRIVATE, vehicleid) ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Vozilo koje ste ukrali treba biti privatno, a ne iznajmljeno ili organizacijsko!");
 		if( !IsPlayerInAnyVehicle(playerid) ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste unutar vozila!");
 		if( health < 550.0 ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Vozilo mora biti u boljem stanju (550+ HPa)!");
 		

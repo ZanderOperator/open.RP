@@ -1116,7 +1116,6 @@ hook function LoadServerData()
 {
     LoadBizzes();
 	return continue();
-
 }
 
 hook OnPlayerEnterDynamicCP(playerid, checkpointid)

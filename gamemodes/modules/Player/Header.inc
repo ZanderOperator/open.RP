@@ -4,6 +4,9 @@
 forward bool:Player_SecurityBreach(playerid);
 forward Player_SetSecurityBreach(playerid, bool:v);
 
+// Jobs/Jacker
+forward bool:IsVehicleJackable(carid);
+
 // Bank
 forward Player_SetBuyPrice(playerid, amount);
 

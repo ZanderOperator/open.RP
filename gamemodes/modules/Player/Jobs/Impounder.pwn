@@ -63,41 +63,12 @@ CMD:jobimpound(playerid, params[])
 		return SendClientMessage(playerid, COLOR_RED, "[GRESKA]: Trebas biti u Tow Trucku kako bi zapoceo posao!");
 		
 	new
-		c = 0;
-	
-	foreach(new v : Vehicles[VEHICLE_USAGE_PRIVATE])
-	{
-		if(!VehicleInfo[v][vImpounded])
-		{
-			if(VehicleInfo[v][vTickets][0] != 0 || VehicleInfo[v][vTickets][1] != 0 || VehicleInfo[v][vTickets][2] != 0 || VehicleInfo[v][vTickets][3] != 0 || VehicleInfo[v][vTickets][4] != 0)
-			{
-				for(new i = 0; i < MAX_VEHICLE_TICKETS; i++)
-				{
-					if(VehicleInfo[v][vTickets][i] != 0 && VehicleInfo[v][vTicketStamp][i] < (gettime() - DAYS_NEEDED) && !IsVehicleOccupied(v))
-					{
-						++c;
-						
-						va_SendClientMessage(playerid, COLOR_GREEN, "[IMPOUNDER DISPATCH]: Vozilo s neplacenim kaznama marke %s pronadjeno!", ReturnVehicleName(GetVehicleModel(v)));
-						va_SendClientMessage(playerid, COLOR_GREEN, "[IMPOUNDER DISPATCH]: Otidji do vozila i impoundaj ga! Vozilo se nalazi na %s!", GetVehicleStreet(v));
-						SendClientMessage(playerid, COLOR_GREEN, "(( Ukoliko vozila nema na checkpointu vlasnik je uzeo isti. Koristite /stopimpound te ponovno pokrenite posao! ))");
-						
-						ImpounderJob[playerid][ivID] = v;
-						
-						new
-							Float:tX,
-							Float:tY,
-							Float:tZ;
-						
-						GetVehiclePos(v, tX, tY, tZ);
-						SetPlayerCheckpoint(playerid, tX, tY, tZ, 10.0);
-						
-						return 1;
-					}
-				}
-			}
-		}
-	}
-	if(c == 0)
+		vehicleid = INVALID_VEHICLE_ID;
+	vehicleid = FindImpoundableVehicle(playerid);
+
+	if(vehicleid != INVALID_VEHICLE_ID)
+		ImpounderJob[playerid][ivID] = vehicleid;
+	else
 	{
 		new
 			vmodel;
@@ -136,7 +107,7 @@ CMD:jobimpound(playerid, params[])
 		ImpounderJob[playerid][ivID] = vehicle;
 		
 		SetVehicleNumberPlate(vehicle, "FCK FIVEO");
-		Iter_Add(Vehicles[VEHICLE_USAGE_JOB], vehicle);
+		Vehicle_Add(VEHICLE_USAGE_JOB, vehicle);
 		
 		va_SendClientMessage(playerid, COLOR_GREEN, "[IMPOUNDER DISPATCH]: Vozilo s neplacenim kaznama marke %s pronadjeno!", ReturnVehicleName(vmodel));
 		va_SendClientMessage(playerid, COLOR_GREEN, "[IMPOUNDER DISPATCH]: Otidji do vozila i impoundaj ga! Vozilo se nalazi na %s!", GetVehicleStreet(vehicle));

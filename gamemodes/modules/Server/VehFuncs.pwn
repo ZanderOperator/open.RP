@@ -92,7 +92,7 @@ stock GetVehicleOffset(vehicleid, type, &Float:x, &Float:y, &Float:z)
 {
     new Float:fPos[4], Float:fSize[3];
  
-    if (!Iter_Contains(Vehicles[VehicleInfo[vehicleid][vUsage]], vehicleid))
+    if (!Vehicle_Exists(VehicleInfo[vehicleid][vUsage], vehicleid))
     {
         x = 0.0;
         y = 0.0;

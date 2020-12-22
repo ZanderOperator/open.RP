@@ -334,10 +334,7 @@ public LoadPlayerData(playerid)
 		new 
 			bizz = GetBizzFromSQL(PlayerInfo[playerid][pSQLID]);
 		if(bizz != INVALID_BIZNIS_ID)
-		{
 			PlayerKeys[playerid][pBizzKey] = bizz;
-			ReloadBizzFurniture(bizz);
-		}
 		
 		new 
 			garage = GetGarageFromSQL(PlayerInfo[playerid][pSQLID]);
@@ -359,14 +356,7 @@ public LoadPlayerData(playerid)
 		if(complex_room != INVALID_COMPLEX_ID)
 			PlayerKeys[playerid][pComplexRoomKey] = complex_room;
 		
-		foreach(new vehicleid : Vehicles[VEHICLE_USAGE_PRIVATE])
-		{
-			if(VehicleInfo[vehicleid][vOwnerID] == PlayerInfo[playerid][pSQLID])
-			{
-				PlayerKeys[playerid][pVehicleKey] = vehicleid;
-				break;
-			}
-		}
+		GetPlayerPrivateVehicle(playerid);
 		
 		Bit1_Set( gr_PlayerLoggingIn, playerid, true );
   		SetPlayerSpawnInfo(playerid);

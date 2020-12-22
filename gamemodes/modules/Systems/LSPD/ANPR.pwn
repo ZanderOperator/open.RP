@@ -62,68 +62,67 @@ timer ANPRTimer[2000](playerid)
         Float:vX, Float:vY, Float:vZ,
         string[86];
 
-    foreach(new i : Vehicles[VEHICLE_USAGE_PRIVATE])
+    foreach(new i : StreamedVehicle[playerid])
     {
-        if (!IsPlayerInVehicle(playerid, i) && IsVehicleStreamedIn(i, playerid))
+        if (IsPlayerInVehicle(playerid, i))
+            continue;
+        
+        GetVehiclePos(i, vX, vY, vZ);
+        if (GetPlayerDistanceFromPoint(playerid, vX, vY, vZ) <= 20.0)
         {
-            GetVehiclePos(i, vX, vY, vZ);
+            new count = 0;
 
-            if (GetPlayerDistanceFromPoint(playerid, vX, vY, vZ) <= 20.0)
+            static
+                Float:fPX, Float:fPY, Float:fPZ,
+                Float:fVX, Float:fVY, Float:fVZ;
+
+            GetPlayerCameraPos(playerid, fPX, fPY, fPZ);
+            GetPlayerCameraFrontVector(playerid, fVX, fVY, fVZ);
+
+            fPX += floatmul(fVX, 5.0);
+            fPY += floatmul(fVY, 5.0);
+
+            if (GetPlayerDistanceFromPoint(playerid, fPX, fPY, vZ) <= 15.0)
             {
-                new count = 0;
+                if (VehicleInfo[i][vTickets][0] != 0)
+                    count++;
+                if (VehicleInfo[i][vTickets][1] != 0)
+                    count++;
+                if (VehicleInfo[i][vTickets][2]  != 0)
+                    count++;
+                if (VehicleInfo[i][vTickets][3] != 0)
+                    count++;
+                if (VehicleInfo[i][vTickets][4] != 0)
+                    count++;
 
-                static
-                    Float:fPX, Float:fPY, Float:fPZ,
-                    Float:fVX, Float:fVY, Float:fVZ;
-
-                GetPlayerCameraPos(playerid, fPX, fPY, fPZ);
-                GetPlayerCameraFrontVector(playerid, fVX, fVY, fVZ);
-
-                fPX += floatmul(fVX, 5.0);
-                fPY += floatmul(fVY, 5.0);
-
-                if (GetPlayerDistanceFromPoint(playerid, fPX, fPY, vZ) <= 15.0)
+                if (VehicleInfo[i][vNumberPlate][0] != '0')
                 {
-                    if (VehicleInfo[i][vTickets][0] != 0)
-                        count++;
-                    if (VehicleInfo[i][vTickets][1] != 0)
-                        count++;
-                    if (VehicleInfo[i][vTickets][2]  != 0)
-                        count++;
-                    if (VehicleInfo[i][vTickets][3] != 0)
-                        count++;
-                    if (VehicleInfo[i][vTickets][4] != 0)
-                        count++;
+                    format(string, sizeof(string), "~y~Registracija: ~w~%s~n~~y~Owner: ~w~%s~n~~y~Kazne: ~w~%d",
+                        VehicleInfo[i][vNumberPlate],
+                        GetPlayerNameFromSQL(VehicleInfo[i][vOwnerID]),
+                        count
+                    );
 
-                    if (VehicleInfo[i][vNumberPlate][0] != '0')
-                    {
-                        format(string, sizeof(string), "~y~Registracija: ~w~%s~n~~y~Owner: ~w~%s~n~~y~Kazne: ~w~%d",
-                            VehicleInfo[i][vNumberPlate],
-                            GetPlayerNameFromSQL(VehicleInfo[i][vOwnerID]),
-                            count
-                        );
-
-                        PlayerTextDrawSetString(playerid,AnprInfo[playerid], string);
-                    }
-                    // TODO: all of these else statements can be removed and text draw formatting done
-                    // at the end, with variable assignments for strings based on player distance
-                    // which will reduce code duplication and deep nesting
-                    else
-                    {
-                        PlayerTextDrawSetString(playerid, AnprInfo[playerid], "~y~Registracija: ~w~None~n~~y~Owner: ~w~None~n~~y~Kazne: ~w~0");
-                    }
-
-                    break;
+                    PlayerTextDrawSetString(playerid,AnprInfo[playerid], string);
                 }
+                // TODO: all of these else statements can be removed and text draw formatting done
+                // at the end, with variable assignments for strings based on player distance
+                // which will reduce code duplication and deep nesting
                 else
                 {
                     PlayerTextDrawSetString(playerid, AnprInfo[playerid], "~y~Registracija: ~w~None~n~~y~Owner: ~w~None~n~~y~Kazne: ~w~0");
                 }
+
+                break;
             }
             else
             {
                 PlayerTextDrawSetString(playerid, AnprInfo[playerid], "~y~Registracija: ~w~None~n~~y~Owner: ~w~None~n~~y~Kazne: ~w~0");
             }
+        }
+        else
+        {
+            PlayerTextDrawSetString(playerid, AnprInfo[playerid], "~y~Registracija: ~w~None~n~~y~Owner: ~w~None~n~~y~Kazne: ~w~0");
         }
     }
 }
