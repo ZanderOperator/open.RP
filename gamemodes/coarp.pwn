@@ -157,10 +157,7 @@
 
 // Main Database Connection Handler
 new MySQL:g_SQL;
-
-// Server Iterators
-new
-	Iterator:Factions<MAX_FACTIONS>;
+	
 
 /*
 	##     ##    ###    ########   ######

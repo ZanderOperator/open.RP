@@ -87,6 +87,11 @@ static RobberyInfo[E_ROBBERY_INFO];
     ##        #######  ##    ##  ######   ######  
 */
 
+Warehouse_FactionSQL(warehouseid)
+{
+    return WarehouseInfo[warehouseid][whFactionSQLID];
+}
+
 stock ResetWarehouseEnum(wh)
 {
     DestroyDynamicPickup(WarehouseInfo[wh][whPickupID]);
@@ -110,6 +115,17 @@ stock ResetWarehouseEnum(wh)
 
 stock LoadFactionWarehouse(factionid)
 {
+    new 
+        wh = Iter_Free(Warehouses);
+    ResetWarehouseEnum(wh);
+
+    for (new i = 0; i < MAX_WAREHOUSE_WEAPONS; i++)
+    {
+        WarehouseWeapons[wh][i][whWeaponSQL]    = -1;
+        WarehouseWeapons[wh][i][whFactionSQLID] = -1;
+        WarehouseWeapons[wh][i][whWeaponId]     = 0;
+        WarehouseWeapons[wh][i][whAmmo]         = 0;
+    }
     mysql_pquery(g_SQL, 
         va_fquery(g_SQL, "SELECT * FROM server_warehouses WHERE fid = '%d'", FactionInfo[factionid][fID]), 
         "OnWarehouseLoaded", 
@@ -505,37 +521,6 @@ static stock IsAtWarehouseVault(playerid)
     return whid;
 }
 
-stock FetchFactionEnumFromWarehouse(warehouseid)
-{
-    new facid;
-    foreach(new f: Factions)
-    {
-        // TODO: this won't do. make it modular. make a getter for faction sqlid from faction id.
-        if (WarehouseInfo[warehouseid][whFactionSQLID] == FactionInfo[f][fID])
-        {
-            facid = f;
-            break;
-        }
-    }
-    return facid;
-}
-
-// TODO: rename to GetFactionIDFromSqlid
-// TODO: should also be moved to Factions.pwn
-stock FetchFactionEnumFromSQLID(sqlid)
-{
-    new fid = -1;
-    foreach(new f: Factions)
-    {
-        if (FactionInfo[f][fID] == sqlid)
-        {
-            fid = f;
-            break;
-        }
-    }
-    return fid;
-}
-
 stock CountOnlineMembers(factionid)
 {
     new count = 0;
@@ -652,7 +637,7 @@ stock StartWarehouseRobbery(playerid, warehouseid)
     RobberyInfo[whExtractionArea] = -1;
     RobberyInfo[whRobberFaction] = fid;
     RobberyInfo[whRobberWarehouse] = FetchWarehouseEnumFromFaction(FactionInfo[fid][fID]);
-    RobberyInfo[whVictimFaction] = FetchFactionEnumFromWarehouse(warehouseid);
+    RobberyInfo[whVictimFaction] = GetFactionIDFromWarehouse(warehouseid);
     RobberyInfo[whVictimWarehouse] = warehouseid;
 
     CheckRobbersInRadius(warehouseid, fid);
@@ -886,26 +871,6 @@ static stock IsAtValidWarehouse(playerid, whid) // Provjerava da li igrac pred w
     }
     return false;
 }
-
-stock LoadWarehouses()
-{
-    foreach(new f: Factions)
-    {
-        new wh = Iter_Free(Warehouses);
-        ResetWarehouseEnum(wh);
-
-        for (new i = 0; i < MAX_WAREHOUSE_WEAPONS; i++)
-        {
-            WarehouseWeapons[wh][i][whWeaponSQL]    = -1;
-            WarehouseWeapons[wh][i][whFactionSQLID] = -1;
-            WarehouseWeapons[wh][i][whWeaponId]     = 0;
-            WarehouseWeapons[wh][i][whAmmo]         = 0;
-        }
-        LoadFactionWarehouse(f);
-    }
-    return 1;
-}
-
 
 /*
     ##     ##  #######   #######  ##    ##  ######
@@ -1156,7 +1121,7 @@ CMD:warehouse(playerid, params[])
             return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Popis inventara moze vidjeti samo Leader/osoba kojoj je leader povjerio kljuceve!");
 
         new motd[2048],
-            f = FetchFactionEnumFromWarehouse(wh);
+            f = GetFactionIDFromWarehouse(wh);
         // TODO: "f" bounds checking
         format(motd, sizeof(motd), "%s Warehouse\n        Financijsko stanje: %d$\n        %s\n        %s", FactionInfo[f][fName], WarehouseInfo[wh][whMoney], ListWarehouseWeapons(wh));
         ShowPlayerDialog(playerid, DIALOG_WAREHOUSE_INFO, DIALOG_STYLE_MSGBOX, "Popis inventara", motd, "Close", "");
@@ -1329,7 +1294,7 @@ CMD:awarehouse(playerid, params[])
         new buffer[4096], motd[2048];
         foreach(new wh: Warehouses)
         {
-            new f = FetchFactionEnumFromWarehouse(wh);
+            new f = GetFactionIDFromWarehouse(wh);
             // TODO: "f" bounds checking
             format(motd, sizeof(motd), "Faction ID: %d | %s Warehouse\n        Financijsko stanje: %d$\n        %s\n        %s", FactionInfo[f][fID], FactionInfo[f][fName], WarehouseInfo[wh][whMoney], ListWarehouseWeapons(wh));
             strcat(buffer, motd, sizeof(buffer));

@@ -42,6 +42,9 @@
        ###    ##     ## ##     ##  ######
 */
 
+static 
+    Iterator:Faction <MAX_FACTIONS>;
+
 static
     bool:LawDuty[MAX_PLAYERS] = {false, ...},
     deletingFaction[MAX_PLAYERS],
@@ -82,7 +85,7 @@ Public:FetchPlayerFaction(playerid)
 
 Public:FetchPlayerFactionType(playerid)
 {
-    if (!Iter_Contains(Factions, PlayerFaction[playerid][pMember]))
+    if (!Iter_Contains(Faction, PlayerFaction[playerid][pMember]))
     {
         return 0;
     }
@@ -120,7 +123,7 @@ stock DeleteFaction(orgid)
 
     RemoveLeaders(orgid);
     RemoveMembers(orgid);
-    Iter_Remove(Factions, orgid);
+    Iter_Remove(Faction, orgid);
 
     ResetFaction(orgid);
     return 1;
@@ -275,10 +278,10 @@ public OnFactionLoaded()
         cache_get_value_name_int(i, "factionbank", FactionInfo[tmpId][fFactionBank]);
 
         LoadFactionPermissions(tmpId);
-        Iter_Add(Factions, tmpId);
+        LoadFactionWarehouse(tmpId);
+        Iter_Add(Faction, tmpId);
     }
-    printf("MySQL Report: Factions loaded (%d)!", Iter_Count(Factions));
-    LoadWarehouses();
+    printf("MySQL Report: Factions loaded (%d)!", Iter_Count(Faction));
     return 1;
 }
 
@@ -542,6 +545,214 @@ stock SendLawMessage(color, sstring[])
             SendClientMessage(i, color, sstring);
         }
     }
+}
+
+stock PlayerToFactionMoney ( playerid, ftype, money )
+{
+	new safemoney = floatround(floatabs(money));
+
+	AC_GivePlayerMoney(playerid, -safemoney); 					
+
+	foreach(new i : Faction) 
+	{
+		if(FactionInfo[i][fType] == ftype)
+		{
+			FactionInfo[i][ fFactionBank ] += safemoney;
+			mysql_fquery(g_SQL, "UPDATE server_factions SET factionbank = '%d' WHERE id = '%d'",
+				FactionInfo[ i ][ fFactionBank ],
+				FactionInfo[ i ][ fID ]
+			);
+			break;
+		}
+	}
+	return 1;
+}
+
+stock PlayerToFactionMoneyTAX ( playerid, ftype, money )
+{
+	new 
+		safemoney = floatround(floatabs(money)), 				
+		TAX = CityInfo[cTax], 									
+		Float:taxmoneyfloat =  safemoney * floatdiv(TAX,100), 
+		taxmoney = floatround(taxmoneyfloat),					
+		finalmoney = safemoney - taxmoney;
+	
+	AC_GivePlayerMoney(playerid, -safemoney); 					
+	
+	CityInfo[cBudget] += taxmoney;
+	mysql_fquery(g_SQL, "UPDATE city SET budget = '%d'", CityInfo[cBudget]);
+
+	foreach(new i : Faction) 								
+	{
+		if(FactionInfo[i][fType] == ftype)
+		{
+			FactionInfo[ i ][ fFactionBank ] += finalmoney;		
+			mysql_fquery(g_SQL, "UPDATE server_factions SET factionbank = '%d' WHERE id = '%d'",
+				FactionInfo[ i ][ fFactionBank ],
+				FactionInfo[ i ][ fID ]
+			);
+			break;
+		}
+	}
+	return 1;
+}
+
+stock FactionToPlayerMoney ( playerid, ftype, money )
+{
+	new safemoney = floatround(floatabs(money));
+
+	foreach(new i : Faction) 
+	{
+		if(FactionInfo[i][fType] == ftype)
+		{
+			FactionInfo[ i ][ fFactionBank ] -= safemoney;		
+			mysql_fquery(g_SQL, "UPDATE server_factions SET factionbank = '%d' WHERE id = '%d'",
+				FactionInfo[ i ][ fFactionBank ],
+				FactionInfo[ i ][ fID ]
+			);
+			break;
+		}
+	}
+	AC_GivePlayerMoney(playerid, safemoney); 				
+	return 1;
+}
+
+stock FactionToPlayerMoneyTAX ( playerid, ftype, money )
+{
+	new 
+		safemoney = floatround(floatabs(money)), 				
+		TAX = CityInfo[cTax], 									
+		Float:taxmoneyfloat =  safemoney * floatdiv(TAX,100), 	
+		taxmoney = floatround(taxmoneyfloat),					
+		finalmoney = safemoney - taxmoney;
+		
+	CityInfo[cBudget] += taxmoney; 	
+	mysql_fquery(g_SQL,, "UPDATE city SET budget = '%d'", CityInfo[cBudget]);
+
+	foreach(new i : Faction) 
+	{
+		if(FactionInfo[i][fType] == ftype)
+		{
+			FactionInfo[ i ][ fFactionBank ] -= safemoney;		
+			mysql_fquery(g_SQL, "UPDATE server_factions SET factionbank = '%d' WHERE id = '%d'",
+				FactionInfo[ i ][ fFactionBank ],
+				FactionInfo[ i ][ fID ]
+			);
+			break;
+		}
+	}
+	AC_GivePlayerMoney(playerid, finalmoney); 	
+	return 1;
+}
+
+stock FactionToPlayerBankMoney ( playerid, ftype, money )
+{
+	new safemoney = floatround(floatabs(money));
+		
+	foreach(new i : Faction) 
+	{
+		if(FactionInfo[i][fType] == ftype)
+		{
+			FactionInfo[ i ][ fFactionBank ] -= safemoney;		
+			mysql_fquery(g_SQL, "UPDATE server_factions SET factionbank = '%d' WHERE id = '%d'",
+				FactionInfo[ i ][ fFactionBank ],
+				FactionInfo[ i ][ fID ]
+			);
+			break;
+		}
+	}
+	PlayerInfo[playerid][pBank] += safemoney; 
+	mysql_fquery(g_SQL, "UPDATE accounts SET bankMoney = '%d' WHERE sqlid = '%d'", 
+		PlayerInfo[playerid][pBank],
+		PlayerInfo[playerid][pSQLID]
+	);
+	return 1;
+}
+
+stock BudgetToFactionMoney ( ftype, money )
+{
+	new safemoney = floatround(floatabs(money));
+	
+	CityInfo[cBudget] -= safemoney;
+	mysql_fquery(g_SQL,  "UPDATE city SET budget = '%d'", CityInfo[cBudget]);
+
+	foreach(new i : Faction)
+	{
+		if(FactionInfo[i][fType] == ftype)
+		{
+			FactionInfo[ i ][ fFactionBank ] += safemoney;		
+			mysql_fquery(g_SQL, "UPDATE server_factions SET factionbank = '%d' WHERE id = '%d'",
+				FactionInfo[ i ][ fFactionBank ],
+				FactionInfo[ i ][ fID ]
+			);
+			break;
+		}
+	}
+	return 1;
+}
+
+stock FactionToBudgetMoney ( ftype, money )
+{
+	new safemoney = floatround(floatabs(money));
+	
+	foreach(new i : Faction)
+	{
+		if(FactionInfo[i][fType] == ftype)
+		{
+			FactionInfo[ i ][ fFactionBank ] -= safemoney;		
+			mysql_fquery(g_SQL, "UPDATE server_factions SET factionbank = '%d' WHERE id = '%d'",
+				FactionInfo[ i ][ fFactionBank ],
+				FactionInfo[ i ][ fID ]
+			);
+			break;
+		}
+	}
+	CityInfo[cBudget] += safemoney;
+	mysql_fquery(g_SQL,  "UPDATE city SET budget = '%d'", CityInfo[cBudget]);
+	return 1;
+}
+
+ShowPlayerFactionBanks(playerid)
+{
+    new
+        bool:newline = false,
+        buffer[512] = "Organizacija\tFaction Bank\n",
+        motd[64],
+        counter = 0;
+        
+    foreach(new faciter : Faction)
+    {
+        if (FactionInfo[faciter][fType] == FACTION_TYPE_LAW || FactionInfo[faciter][fType] == FACTION_TYPE_LAW2 ||
+            FactionInfo[faciter][fType] == FACTION_TYPE_FD  || FactionInfo[faciter][fType] == FACTION_TYPE_NEWS)
+        {
+            // TODO: strcat into buffer
+            format(motd, sizeof(motd), "%s%s\t {00E600}%d$", 
+                (newline) ? ("\n") : (""), 
+                FactionInfo[faciter][fName], 
+                FactionInfo[faciter][fFactionBank]
+            );
+            strcat(buffer, motd, 512);
+            Player_SetFactionList(playerid, counter, faciter);
+            counter++;
+            newline = true;
+        }
+    }
+    ShowPlayerDialog(playerid, DIALOG_CITY_FACTIONBANK, DIALOG_STYLE_TABLIST_HEADERS, "PRORACUN ORGANIZACIJA", buffer, "Choose", "Abort");
+    return 1;
+}
+
+GetFactionIDFromWarehouse(warehouseid)
+{
+    new facid;
+    foreach(new f: Faction)
+    {
+        if (Warehouse_FactionSQL(warehouseid) == FactionInfo[f][fID])
+        {
+            facid = f;
+            break;
+        }
+    }
+    return facid;
 }
 
 stock CountMembers(orgid)
@@ -892,7 +1103,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
             creatingFaction = 0;
 
             SaveFaction(fcid);
-            Iter_Add(Factions, fcid);
+            Iter_Add(Faction, fcid);
             return 1;
         }
         case DIALOG_FDELETE:
@@ -1089,7 +1300,7 @@ CMD:afaction(playerid, params[])
         new
             tip[16],
             count = 0;
-        foreach(new i : Factions)
+        foreach(new i : Faction)
         {
             // TODO: extract to helper function, GetFactionName(factionid)
             if (FactionInfo[i][fType] == FACTION_TYPE_NONE)      { tip = "Nema"; }
