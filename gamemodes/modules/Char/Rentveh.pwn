@@ -129,7 +129,7 @@ stock static PlayerRentVehicle(playerid, modelid, price)
 	VehicleInfo[ vehicleid ][ vUsage ] 				= 5;
 	VehicleInfo[ vehicleid ][ vEngineRunning ]		= 0;
 	
-	Iter_Add(Vehicles[VEHICLE_USAGE_RENT], vehicleid);
+	Vehicle_Add(VEHICLE_USAGE_RENT, vehicleid);
 
 	PlayerToBusinessMoneyTAX(playerid, 76, price); // TODO: ???
 	

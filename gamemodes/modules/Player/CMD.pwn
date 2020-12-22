@@ -166,7 +166,9 @@ CMD:enter(playerid, params[])
             StopAudioStreamForPlayer(playerid);
             PlayAudioStreamForPlayer(playerid, BizzInfo[biznis][bMusicURL]);
         }
-        if (BizzInfo[biznis][bFurLoaded] == false) ReloadBizzFurniture(biznis);
+        if (BizzInfo[biznis][bFurLoaded] == false) 
+			ReloadBizzFurniture(biznis);
+
         SetPlayerPosEx(playerid, BizzInfo[biznis][bExitX], BizzInfo[biznis][bExitY], BizzInfo[biznis][bExitZ], BizzInfo[biznis][bVirtualWorld], BizzInfo[biznis][bInterior], true);
         Player_SetInBusiness(playerid, biznis);
         DestroyBizzInfoTD(playerid);
@@ -2312,40 +2314,39 @@ CMD:tow(playerid, params[])
 		bool:found = false,
 		pvid = GetPlayerVehicleID(playerid);	
 	
-	for(new i = 0; i < MAX_VEHICLE_TYPES; i++)
+
+	foreach(new vid : StreamedVehicle[playerid])
 	{
-		foreach(new vid : Vehicles[i])
+		if(IsPlayerInRangeOfVehicle(playerid, vid, 7.0) && (vid != pvid))
 		{
-			if(IsPlayerInRangeOfVehicle(playerid, vid, 7.0) && (vid != pvid))
+			found = true;
+			if(IsTrailerAttachedToVehicle(pvid))
 			{
-				found = true;
-				if(IsTrailerAttachedToVehicle(pvid))
+				if(ImpounderJob[playerid][ivID] != 0)
 				{
-					if(ImpounderJob[playerid][ivID] != 0)
-					{
-						if(ImpounderJob[playerid][ivID] == vid)
-							OPUnTowIV(playerid, vid);
-					}
-					DetachTrailerFromVehicle(pvid);
+					if(ImpounderJob[playerid][ivID] == vid)
+						OPUnTowIV(playerid, vid);
 				}
-				else
-				{
-					if(ImpounderJob[playerid][ivID] != 0)
-					{
-						if(ImpounderJob[playerid][ivID] != vid)
-						{	
-							SendClientMessage(playerid, COLOR_RED, "[GRESKA]: Ovo vozilo nije na tvojoj impound listi!");
-							return 1;
-						}
-						else
-							OPTowIV(playerid, vid);
-					}
-					AttachTrailerToVehicle(vid, pvid);
-				}
-				break;
+				DetachTrailerFromVehicle(pvid);
 			}
+			else
+			{
+				if(ImpounderJob[playerid][ivID] != 0)
+				{
+					if(ImpounderJob[playerid][ivID] != vid)
+					{	
+						SendClientMessage(playerid, COLOR_RED, "[GRESKA]: Ovo vozilo nije na tvojoj impound listi!");
+						return 1;
+					}
+					else
+						OPTowIV(playerid, vid);
+				}
+				AttachTrailerToVehicle(vid, pvid);
+			}
+			break;
 		}
 	}
+	
 	if(!found) SendClientMessage(playerid,COLOR_RED, "Nema automobila okolo.");
 	return 1;
 }

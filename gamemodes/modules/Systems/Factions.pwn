@@ -1734,17 +1734,12 @@ CMD:faction(playerid, params[])
     }
     else if (!strcmp(option, "resetcars", true))
     {
-        new fid = PlayerFaction[playerid][pLeader];
-        if (!fid) return SendClientMessage(playerid, COLOR_RED, "Da bi koristili ovu komandu morate biti lider!");
-
-        foreach(new x : Vehicles[VEHICLE_USAGE_FACTION])
-        {
-            if (VehicleInfo[x][vFaction] == fid)
-            {
-                if (!IsVehicleOccupied(x))
-                    SetVehicleToRespawn(x);
-            }
-        }
+        new 
+            fid = PlayerFaction[playerid][pLeader];
+        if (!fid) 
+            return SendClientMessage(playerid, COLOR_RED, "Da bi koristili ovu komandu morate biti lider!");
+   
+        RespawnFactionVehicles(fid);
         SendClientMessage(playerid, COLOR_WHITE, "Respawnao si sva vozila u organizaciji!");
         return 1;
     }

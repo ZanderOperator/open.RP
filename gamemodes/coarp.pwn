@@ -160,7 +160,6 @@ new MySQL:g_SQL;
 
 // Server Iterators
 new
-	Iterator:Vehicles[MAX_VEHICLE_TYPES]<MAX_VEHICLES>,
 	Iterator:Pickups[MAX_PICKUP_TYPES]<MAX_DYNAMIC_PICKUPS>,
 	Iterator:Factions<MAX_FACTIONS>;
 

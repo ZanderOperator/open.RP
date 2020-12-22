@@ -546,12 +546,18 @@ public OnServerComplexLoad()
     ##     ##  #######   #######  ##    ##  ######
 */
 
+hook function ResetIterators()
+{
+    Iter_Clear(Complex);
+    Iter_Clear(ComplexRoom);
+    return continue();
+}
+
 hook function LoadServerData()
 {
     LoadComplexes();
     LoadComplexRooms();
 	return continue();
-
 }
 
 hook OnPlayerEnterDynamicCP(playerid, checkpointid)

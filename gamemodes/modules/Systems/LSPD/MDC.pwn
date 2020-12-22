@@ -1343,7 +1343,8 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 
             if (1 <= strval(inputtext) <= MAX_VEHICLES)
             {
-                if (!Iter_Contains(Vehicles[VEHICLE_USAGE_PRIVATE], strval(inputtext))) return ShowPlayerDialog(playerid, DIALOG_MDC_VEHICLE, DIALOG_STYLE_INPUT, "MDC - VEHICLE", "Unesite vehicleid od vozila\nNAPOMENA: Vozilo mora biti CO!", "Input", "Abort");
+                if (!Vehicle_Exists(VEHICLE_USAGE_PRIVATE, strval(inputtext))) 
+                    return ShowPlayerDialog(playerid, DIALOG_MDC_VEHICLE, DIALOG_STYLE_INPUT, "MDC - VEHICLE", "Unesite vehicleid od vozila\nNAPOMENA: Vozilo mora biti CO!", "Input", "Abort");
                 GetVehicleMDCInfo(playerid, strval(inputtext));
             }
             else ShowPlayerDialog(playerid, DIALOG_MDC_VEHICLE, DIALOG_STYLE_INPUT, "MDC - VEHICLE", "Unesite vehicleid od vozila\nNAPOMENA: Da biste dobili vehicleid koristite komandu /dl!", "Input", "Abort");

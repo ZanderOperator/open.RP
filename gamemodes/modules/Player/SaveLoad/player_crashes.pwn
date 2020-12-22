@@ -66,8 +66,6 @@ timer SetPlayerCrash[6000](playerid)
 
 	AC_SetPlayerWeapons(playerid);
 
-	// Player Checks
-	CheckPlayerVehicle(playerid);
 	CheckPlayerInteriors(playerid);
 	CheckPlayerInactivity(playerid);
 	CheckPlayerMasks(playerid);

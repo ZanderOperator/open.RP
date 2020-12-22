@@ -1308,6 +1308,12 @@ timer DestroyGlobalMapIcon[480000]()
     ##     ##  #######   #######  ##    ##  ######
 */
 
+hook function ResetIterators()
+{
+    Iter_Clear(House);
+    return continue();
+}
+
 hook function LoadServerData()
 {
     LoadHouses();
