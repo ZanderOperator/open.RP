@@ -1,6 +1,8 @@
 // Header file where functions should be declared that can be used/accessed from other modules
 
 // Pickups
+forward bool:PickupExists(type, pickupid);
+
 forward Player_InPickup(playerid);
 forward Player_SetInPickup(playerid, v);
 

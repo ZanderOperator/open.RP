@@ -278,7 +278,7 @@ CMD:exit(playerid, params[])
         garage   	= Player_InGarage(playerid),
 		pickup 		= Player_InPickup(playerid);
 
-    if (Iter_Contains(Pickups[PICKUP_TYPE_ENTERABLE], pickup))
+    if (Pickup_Exists(PICKUP_TYPE_ENTERABLE, pickup))
     {
         Player_SetInPickup(playerid, -1);
         SetPlayerPosEx(playerid,PickupInfo[pickup][epEntrancex], PickupInfo[pickup][epEntrancey], PickupInfo[pickup][epEntrancez], PickupInfo[pickup][epEnterViwo], PickupInfo[pickup][epEnterInt], true);
