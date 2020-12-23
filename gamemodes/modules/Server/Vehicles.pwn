@@ -301,73 +301,70 @@ task VehicleGlobalTask[1000]()
 	{
 		VehicleTimer = gettimestamp() + 100;
 		GlobalVehicleStamp = gettimestamp() + 45;
-		for(new i = 0; i < MAX_VEHICLE_TYPES; i++)
+		foreach(new vehicleid : Vehicle)
 		{
-			foreach(new vehicleid : ServerVehicle[i])
+			if(VehicleInfo[vehicleid][vUsage] == VEHICLE_USAGE_PRIVATE)
 			{
-				if(i == VEHICLE_USAGE_PRIVATE)
+				if(VehicleInfo[vehicleid][vEngineRunning]) CheckVehicleEngine(vehicleid);
+				if(!IsVehicleOccupied(vehicleid))
+				CheckEngineHeat(vehicleid);
+				
+				if(VehicleInfo[ vehicleid ][ vBodyArmor ] == 1)
 				{
-					if(VehicleInfo[vehicleid][vEngineRunning]) CheckVehicleEngine(vehicleid);
-					if(!IsVehicleOccupied(vehicleid))
-					CheckEngineHeat(vehicleid);
-					
-					if(VehicleInfo[ vehicleid ][ vBodyArmor ] == 1)
+					new Float:Vhealth;
+					GetVehicleHealth(vehicleid, Vhealth);
+					if(Vhealth > 600.00)
 					{
-						new Float:Vhealth;
-						GetVehicleHealth(vehicleid, Vhealth);
-						if(Vhealth > 600.00)
-						{
-							static 
-								vcpanels, 
-								vcdoors, 
-								vclights, 
-								vctires;
+						static 
+							vcpanels, 
+							vcdoors, 
+							vclights, 
+							vctires;
+						
+						GetVehicleDamageStatus(vehicleid, vcpanels, vcdoors, vclights, vctires); // pripazi
+						UpdateVehicleDamageStatus(vehicleid, 0, 0, 0, vctires);
+					}
+				}
+			}
+
+			if(IsAHelio(GetVehicleModel(vehicleid)) || IsAPlane(GetVehicleModel(vehicleid)) || IsABike(GetVehicleModel(vehicleid)) ||
+				VehicleInfo[vehicleid][vUsage] == VEHICLE_USAGE_NORMAL || VehicleInfo[vehicleid][vUsage] == VEHICLE_USAGE_JOB ||
+				VehicleInfo[vehicleid][vUsage] ==  VEHICLE_USAGE_LICENSE) continue;
+				
+			if(VehicleInfo[vehicleid][vEngineRunning])
+			{
+				new
+					Float:health;
+				GetVehicleHealth(vehicleid, health);
+				if(health <= 390.0) {
+					if(!VehicleInfo[vehicleid][vDestroyed]) {
+						new
+							playerid = GetVehicleDriver(vehicleid);
 							
-							GetVehicleDamageStatus(vehicleid, vcpanels, vcdoors, vclights, vctires); // pripazi
-							UpdateVehicleDamageStatus(vehicleid, 0, 0, 0, vctires);
-						}
+						SendClientMessage(playerid, COLOR_RED, "Vase je vozilo unisteno, zovite mehanicara!");
+						AC_SetVehicleHealth(vehicleid, 390.0);
+						VehicleInfo[vehicleid][vDestroyed] = true;
+
+						new
+							engine, lights, alarm, doors, bonnet, boot, objective;
+						GetVehicleParamsEx(vehicleid, engine, lights, alarm, doors, bonnet, boot, objective);
+						SetVehicleParamsEx(vehicleid, 0, lights, alarm, doors, bonnet, boot, objective);
+						VehicleInfo[vehicleid][vEngineRunning] = false;
 					}
 				}
 
-				if(IsAHelio(GetVehicleModel(vehicleid)) || IsAPlane(GetVehicleModel(vehicleid)) || IsABike(GetVehicleModel(vehicleid)) ||
-					VehicleInfo[vehicleid][vUsage] == VEHICLE_USAGE_NORMAL || VehicleInfo[vehicleid][vUsage] == VEHICLE_USAGE_JOB ||
-					VehicleInfo[vehicleid][vUsage] ==  VEHICLE_USAGE_LICENSE) continue;
-					
-				if(VehicleInfo[vehicleid][vEngineRunning])
+				if(VehicleInfo[vehicleid][vFuel] > 0)
+					VehicleInfo[vehicleid][vFuel]--;
+				if(VehicleInfo[vehicleid][vFuel] == 0) 
 				{
+					GameTextForPlayer(GetVehicleDriver(vehicleid), "~r~Ostali ste bez goriva...", 1000, 1);
 					new
-						Float:health;
-					GetVehicleHealth(vehicleid, health);
-					if(health <= 390.0) {
-						if(!VehicleInfo[vehicleid][vDestroyed]) {
-							new
-								playerid = GetVehicleDriver(vehicleid);
-								
-							SendClientMessage(playerid, COLOR_RED, "Vase je vozilo unisteno, zovite mehanicara!");
-							AC_SetVehicleHealth(vehicleid, 390.0);
-							VehicleInfo[vehicleid][vDestroyed] = true;
+						engine, lights, alarm, doors, bonnet, boot, objective;
 
-							new
-								engine, lights, alarm, doors, bonnet, boot, objective;
-							GetVehicleParamsEx(vehicleid, engine, lights, alarm, doors, bonnet, boot, objective);
-							SetVehicleParamsEx(vehicleid, 0, lights, alarm, doors, bonnet, boot, objective);
-							VehicleInfo[vehicleid][vEngineRunning] = false;
-						}
-					}
+					GetVehicleParamsEx(vehicleid, engine, lights, alarm, doors, bonnet, boot, objective);
+					SetVehicleParamsEx(vehicleid, 0, lights, alarm, doors, bonnet, boot, objective);
 
-					if(VehicleInfo[vehicleid][vFuel] > 0)
-						VehicleInfo[vehicleid][vFuel]--;
-					if(VehicleInfo[vehicleid][vFuel] == 0) 
-					{
-						GameTextForPlayer(GetVehicleDriver(vehicleid), "~r~Ostali ste bez goriva...", 1000, 1);
-						new
-							engine, lights, alarm, doors, bonnet, boot, objective;
-
-						GetVehicleParamsEx(vehicleid, engine, lights, alarm, doors, bonnet, boot, objective);
-						SetVehicleParamsEx(vehicleid, 0, lights, alarm, doors, bonnet, boot, objective);
-
-						VehicleInfo[vehicleid][vEngineRunning] = false;
-					}
+					VehicleInfo[vehicleid][vEngineRunning] = false;
 				}
 			}
 		}
@@ -388,46 +385,43 @@ task VehicleGlobalTask[1000]()
 	if(gettimestamp() >= GlobalVehicleStamp)
 	{
 		GlobalVehicleStamp = gettimestamp() + 90;
-		for(new i = 0; i < MAX_VEHICLE_TYPES; i++)
+		foreach(new vehicleid : Vehicle)
 		{
-			foreach(new vehicleid : ServerVehicle[i])
+			if(IsAHelio(GetVehicleModel(vehicleid)) || IsAPlane(GetVehicleModel(vehicleid)) || IsABike(GetVehicleModel(vehicleid)) ||
+				VehicleInfo[vehicleid][vUsage] == VEHICLE_USAGE_NORMAL || VehicleInfo[vehicleid][vUsage] == VEHICLE_USAGE_JOB ||
+				VehicleInfo[vehicleid][vUsage] ==  VEHICLE_USAGE_LICENSE) continue;
+			if(VehicleInfo[vehicleid][vEngineRunning])
 			{
-				if(IsAHelio(GetVehicleModel(vehicleid)) || IsAPlane(GetVehicleModel(vehicleid)) || IsABike(GetVehicleModel(vehicleid)) ||
-					VehicleInfo[vehicleid][vUsage] == VEHICLE_USAGE_NORMAL || VehicleInfo[vehicleid][vUsage] == VEHICLE_USAGE_JOB ||
-					VehicleInfo[vehicleid][vUsage] ==  VEHICLE_USAGE_LICENSE) continue;
-				if(VehicleInfo[vehicleid][vEngineRunning])
+				new
+					Float:health;
+				GetVehicleHealth(vehicleid, health);
+				if(health <= 390.0) 
 				{
-					new
-						Float:health;
-					GetVehicleHealth(vehicleid, health);
-					if(health <= 390.0) 
+					if(!VehicleInfo[vehicleid][vDestroyed]) 
 					{
-						if(!VehicleInfo[vehicleid][vDestroyed]) 
-						{
-							SendClientMessage(GetVehicleDriver(vehicleid), COLOR_RED, "Vase je vozilo unisteno, zovite mehanicara!");
-							AC_SetVehicleHealth(vehicleid, 390.0);
-							VehicleInfo[vehicleid][vDestroyed] = true;
+						SendClientMessage(GetVehicleDriver(vehicleid), COLOR_RED, "Vase je vozilo unisteno, zovite mehanicara!");
+						AC_SetVehicleHealth(vehicleid, 390.0);
+						VehicleInfo[vehicleid][vDestroyed] = true;
 
-							new
-								engine, lights, alarm, doors, bonnet, boot, objective;
-							GetVehicleParamsEx(vehicleid, engine, lights, alarm, doors, bonnet, boot, objective);
-							SetVehicleParamsEx(vehicleid, 0, lights, alarm, doors, bonnet, boot, objective);
-							VehicleInfo[vehicleid][vEngineRunning] = false;
-						}
-					}
-
-					if(VehicleInfo[vehicleid][vFuel] > 0)
-						VehicleInfo[vehicleid][vFuel]--;
-					if(VehicleInfo[vehicleid][vFuel] == 0) {
-						GameTextForPlayer(GetVehicleDriver(vehicleid), "~r~Ostali ste bez goriva...", 1000, 1);
 						new
 							engine, lights, alarm, doors, bonnet, boot, objective;
-
 						GetVehicleParamsEx(vehicleid, engine, lights, alarm, doors, bonnet, boot, objective);
 						SetVehicleParamsEx(vehicleid, 0, lights, alarm, doors, bonnet, boot, objective);
-
 						VehicleInfo[vehicleid][vEngineRunning] = false;
 					}
+				}
+
+				if(VehicleInfo[vehicleid][vFuel] > 0)
+					VehicleInfo[vehicleid][vFuel]--;
+				if(VehicleInfo[vehicleid][vFuel] == 0) {
+					GameTextForPlayer(GetVehicleDriver(vehicleid), "~r~Ostali ste bez goriva...", 1000, 1);
+					new
+						engine, lights, alarm, doors, bonnet, boot, objective;
+
+					GetVehicleParamsEx(vehicleid, engine, lights, alarm, doors, bonnet, boot, objective);
+					SetVehicleParamsEx(vehicleid, 0, lights, alarm, doors, bonnet, boot, objective);
+
+					VehicleInfo[vehicleid][vEngineRunning] = false;
 				}
 			}
 		}
@@ -490,23 +484,18 @@ GetPlayerPrivateVehicle(playerid)
 
 RefillVehicles()
 {
-	for(new i = 0; i < MAX_VEHICLE_TYPES; i++)
-	{
-		foreach(new c: ServerVehicle[i])
-			VehicleInfo[c][vFuel] = 100;
-	}
+	foreach(new vehicleid : Vehicle)
+		VehicleInfo[vehicleid][vFuel] = 100;
+	
 	return 1;
 }
 
 RespawnVehicles()
 {
-	for(new i = 0; i < MAX_VEHICLE_TYPES; i++)
+	foreach(new vehicleid : Vehicle)
 	{
-		foreach(new c : ServerVehicle[i]) 
-		{
-			if( !IsVehicleOccupied(c) )
-				SetVehicleToRespawn(c);
-		}
+		if( !IsVehicleOccupied(vehicleid) )
+			SetVehicleToRespawn(vehicleid);
 	}
 	return 1;
 }
@@ -524,8 +513,10 @@ RespawnFactionVehicles(factionid)
 	return 1;
 }
 
-FindImpoundableVehicle(playerid)
+FindImpoundableVehicle()
 {
+	new
+		vehicleid = INVALID_VEHICLE_ID;
 	foreach(new v : ServerVehicle[VEHICLE_USAGE_PRIVATE])
 	{
 		if(VehicleInfo[v][vImpounded])
@@ -534,20 +525,10 @@ FindImpoundableVehicle(playerid)
 		if(!IsVehicleImpoundable(v))
 			continue;
 		
-		va_SendClientMessage(playerid, COLOR_GREEN, "[IMPOUNDER DISPATCH]: Vozilo s neplacenim kaznama marke %s pronadjeno!", ReturnVehicleName(GetVehicleModel(v)));
-		va_SendClientMessage(playerid, COLOR_GREEN, "[IMPOUNDER DISPATCH]: Otidji do vozila i impoundaj ga! Vozilo se nalazi na %s!", GetVehicleStreet(v));
-		SendClientMessage(playerid, COLOR_GREEN, "(( Ukoliko vozila nema na checkpointu vlasnik je uzeo isti. Koristite /stopimpound te ponovno pokrenite posao! ))");
-		
-		new
-			Float:tX,
-			Float:tY,
-			Float:tZ;
-		
-		GetVehiclePos(v, tX, tY, tZ);
-		SetPlayerCheckpoint(playerid, tX, tY, tZ, 10.0);
+		vehicleid = v;
 		break;
 	}
-	return 1;
+	return vehicleid;
 }
 
 hook function ResetVehicleInfo(vehicleid)
