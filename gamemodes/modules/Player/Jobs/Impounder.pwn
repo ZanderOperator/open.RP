@@ -62,11 +62,30 @@ CMD:jobimpound(playerid, params[])
 		return SendClientMessage(playerid, COLOR_RED, "[GRESKA]: Trebas biti u Tow Trucku kako bi zapoceo posao!");
 		
 	new
-		vehicleid = INVALID_VEHICLE_ID;
-	vehicleid = FindImpoundableVehicle(playerid);
+		vehicleid = FindImpoundableVehicle();
 
 	if(vehicleid != INVALID_VEHICLE_ID)
+	{
+		va_SendClientMessage(playerid, COLOR_GREEN, 
+			"[IMPOUNDER DISPATCH]: Vozilo s neplacenim kaznama marke %s pronadjeno!", 
+			ReturnVehicleName(GetVehicleModel(vehicleid))
+		);
+		va_SendClientMessage(playerid, COLOR_GREEN, 
+			"[IMPOUNDER DISPATCH]: Otidji do vozila i impoundaj ga! Vozilo se nalazi na %s!", 
+			GetVehicleStreet(vehicleid)
+		);
+		SendClientMessage(playerid, COLOR_GREEN, "(( Ukoliko vozila nema na checkpointu vlasnik je uzeo isti. Koristite /stopimpound te ponovno pokrenite posao! ))");
+		
+		new
+			Float:tX,
+			Float:tY,
+			Float:tZ;
+
 		ImpounderJob[playerid][ivID] = vehicleid;
+		
+		GetVehiclePos(vehicleid, tX, tY, tZ);
+		SetPlayerCheckpoint(playerid, tX, tY, tZ, 10.0);
+	}
 	else
 	{
 		new
