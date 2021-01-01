@@ -1176,24 +1176,6 @@ stock Float:frandom(Float:max, Float:min = 0.0, dp = 4)
 	return float(random(imax - imin) + imin) / mul;
 }
 
-/**
-    <summary>
-        Uzima naziv oruzja iz danog weaponida
-    </summary>
-	
-	<param name="weaponid">
-       Id oruZja od kojeg se uzima naziv
-    </param>
-	
-    <returns>
-        Naziv oruZja
-    </returns>
-
-    <remarks>
-       -
-    </remarks>
-*/
-
 stock GetWeaponNameEx(weaponid)
 {
 	new 
@@ -1224,23 +1206,6 @@ stock GetWeaponNameEx(weaponid)
 	return weaponName;
 }
 
-/**
-    <summary>
-        Provjerava dali je unos(string) numerican
-    </summary>
-	
-	<param name="string">
-       String kojeg se provjerava
-    </param>
-	
-    <returns>
-        1 - Numerican je, 0 - Nije numerican
-    </returns>
-
-    <remarks>
-       -
-    </remarks>
-*/
 stock IsNumeric(const string[])
 {
 	for(new i = 0, j = strlen(string); i < j; i++)
@@ -1605,17 +1570,6 @@ public UnfreezePlayer(playerid)
 	TogglePlayerControllable(playerid, true);
 }
 
-
-/*
-	##     ## ######## ######## ########  
-	##     ##    ##       ##    ##     ## 
-	##     ##    ##       ##    ##     ## 
-	#########    ##       ##    ########  
-	##     ##    ##       ##    ##        
-	##     ##    ##       ##    ##        
-	##     ##    ##       ##    ##        
-*/
-
 stock SetPlayerLookAt(playerid, Float:X, Float:Y)
 {
     new
@@ -1697,46 +1651,12 @@ ReturnName(playerid)
 	return p_name;
 }
 
-ReturnJob(jobid)
-{
-	new tmpString[20];
-	switch(jobid)  
-	{
-		case 1:  format(tmpString, 20, "Cistac ulica");
-		case 2:  format(tmpString, 20, "Pizza Boy");
-		case 3:  format(tmpString, 20, "Mehanicar");
-		case 4:  format(tmpString, 20, "Kosac trave");
-		case 5:  format(tmpString, 20, "Tvornicki radnik");
-		case 6:  format(tmpString, 20, "Taksist");
-		case 7:  format(tmpString, 20, "Farmer");
-		case 8:  format(tmpString, 20, "Nepoznato");
-		case 9:  format(tmpString, 20, "Nepoznato");
-		case 12: format(tmpString, 20, "Gun Dealer");
-		case 13: format(tmpString, 20, "Car Jacker");
-		case 14: format(tmpString, 20, "Drvosjeca");
-		case 15: format(tmpString, 20, "Nepoznato");
-		case 16: format(tmpString, 20, "Smetlar");
-		case 17: format(tmpString, 20, "Vehicle Impounder");
-		case 18: format(tmpString, 20, "Transporter");
-		case 19: format(tmpString, 20, "Nepoznato");
-		case 20: format(tmpString, 20, "Nepoznato");
-		case 21: format(tmpString, 20, "Nepoznato");
-		case 22: format(tmpString, 20, "Nepoznato");
-		case 23: format(tmpString, 20, "Nepoznato");
-		case 24: format(tmpString, 20, "Nepoznato");
-		case 25: format(tmpString, 20, "Nepoznato");
-		default: format(tmpString, 20, "Nezaposlen");
-	}
-	return tmpString;
-}
-
 enum E_CLOSEST_SUBJECTS
 {
 	cID,
 	Float:cDistance
 }
-
-stock SortNearestRangeID(v[MAX_SUBJECTS_IN_RANGE][E_CLOSEST_SUBJECTS], pool_size)
+SortNearestRangeID(v[MAX_SUBJECTS_IN_RANGE][E_CLOSEST_SUBJECTS], pool_size)
 {
 	new tmp = INVALID_VEHICLE_ID, bool:swapped;
 	do
