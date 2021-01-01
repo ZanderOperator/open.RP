@@ -10,11 +10,14 @@
 #include <YSI_Coding\y_hooks>
 /*
 	- enumerator & defines
-*/	
+*/
 
-enum {
-	NORMAL_JOBS_EMPLOYERS = (25),  /* OOC POSLOVI */
-	OFFICIAL_JOBS_EMPLOYERS = (20), /* IC POSLOVI */
+#define MAX_JOB_NAME_LEN		(20)
+
+enum 
+{
+	NORMAL_JOBS_EMPLOYERS 		= (25),  /* OOC POSLOVI */
+	OFFICIAL_JOBS_EMPLOYERS 	= (20), /* IC POSLOVI */
 	
 	NORMAL_FREE_WORKS 		  	= (15),
 	BRONZE_DONATOR_FREE_WORKS 	= (20),
@@ -23,7 +26,30 @@ enum {
 	PLATINUM_DONATOR_FREE_WORKS	= (50)
 };
 
-enum E_JOBS_DATA {
+enum E_JOB_NAME_INFO
+{
+	jID,
+	jName[MAX_JOB_NAME_LEN]
+}
+static
+   JobNames[][E_JOB_NAME_INFO] = {
+	{ 0, "Unemployed" },
+	{ 1, "Sweeper" },
+	{ 2, "Pizza Boy" }, 
+	{ 3, "Mechanic" }, 
+	{ 4, "Mower" },
+	{ 5, "Fabric Worker" },
+	{ 6, "Taxi Driver" },
+	{ 7, "Farmer" },
+	{ 13, "Car Jacker" },
+	{ 14, "Lumberjack" },
+	{ 16, "Trashman" },
+	{ 17, "Vehicle Impounder" },
+	{ 18, "Transporter" }
+};
+
+enum E_JOBS_DATA 
+{
 	SWEEPER,    /* [id:1] */
 	MECHANIC,   /* [id:3] */
 	CRAFTER,    /* [id:5] */
@@ -34,9 +60,11 @@ enum E_JOBS_DATA {
 	IMPOUNDER,  /* [id:17] */
 	TRANSPORTER /* [id:18] */
 }
-new JobData[E_JOBS_DATA];
+static 
+	JobData[E_JOBS_DATA];
 
 static bool:IsWorkingJob[MAX_PLAYERS] = {false, ...};
+
 
 /*
 
@@ -172,8 +200,25 @@ stock Player_SetIsWorkingJob(playerid, bool:v)
 	IsWorkingJob[playerid] = v;
 }
 
-SetPlayerJob(playerid, job_id) {
-	switch(job_id) {
+ReturnJob(job_id)
+{
+	new 
+		id = -1;
+	for(new i = 0; i < sizeof(JobNames); i++)
+	{
+		if(JobNames[i][jID] == job_id)
+		{
+			id = i;
+			break;
+		}
+	}
+	return JobNames[id][jName];
+}
+
+SetPlayerJob(playerid, job_id) 
+{
+	switch(job_id) 
+	{
 		case 1: JobData[SWEEPER] ++;
 		case 3: JobData[MECHANIC] ++;
 		case 5: JobData[CRAFTER] ++;
@@ -187,7 +232,7 @@ SetPlayerJob(playerid, job_id) {
 	PlayerJob[playerid][pJob] = job_id;
 	PlayerJob[playerid][pContractTime] = 0;
 	SaveJobData();
-	return (true);
+	return 1;
 }
 
 RemovePlayerJob(playerid) {

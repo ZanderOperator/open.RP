@@ -244,7 +244,7 @@ CMD:inactivity(playerid, params[])
 				}
 			}
 		}
-		mysql_fquery(g_SQL, 
+		mysql_fquery_ex(g_SQL, 
 			"INSERT INTO inactive_accounts(sqlid, startstamp, endstamp, reason) VALUES ('%d','%d','%d','%e')",
 			sqlid,
 			startstamp,

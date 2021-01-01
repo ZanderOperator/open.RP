@@ -357,7 +357,8 @@ timer UnpackPackage[1000](playerid, package_id)
 	new crouch = IsCrounching(playerid), Float: get_armor;
 	GetPlayerArmour(playerid, get_armor);
 
-	if(PlayerPackage[playerid][p_weapon][package_id] != PACKAGE_PANCIR) {
+	if(PlayerPackage[playerid][p_weapon][package_id] != PACKAGE_PANCIR) 
+	{
 		SetAnimationForWeapon(playerid, PlayerPackage[playerid][p_weapon][package_id], crouch);
 		AC_GivePlayerWeapon(playerid, PlayerPackage[playerid][p_weapon][package_id], PlayerPackage[playerid][p_amount][package_id], true, true);
 	}

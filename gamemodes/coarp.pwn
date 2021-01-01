@@ -98,14 +98,15 @@
 #define MAX_COMMANDS			(1024)		// Internal Define - y_commands
 
 #include <YSI_Coding\y_hooks>
+#include <YSI_Coding\y_inline>
 #include <YSI_Coding\y_timers>
+#include <YSI_Coding\y_va>
 #include <YSI_Data\y_iterate>
+#include <YSI_Server\y_flooding>
 #include <YSI_Visual\y_commands>
 #include <YSI_Game\y_vehicledata>
-#include <YSI_Server\y_flooding>
-#include <YSI_Coding\y_va>
 
-// Bcrypt by lassir
+// BCrypt by lassir
 #include <bcrypt>
 #define BCRYPT_COST 12
 
@@ -121,9 +122,9 @@
 
 #include <vSync>
 
-// MySQL
+// MySQL & Inline Query Callbacks/Funcs
 #include <a_mysql>
-#include <YSI_Coding\y_inline>
+#include <YSI_Extra\y_inline_mysql>
 
 // SHA-1 of latest commit - GIT_REV define
 #include "revision.inc"
@@ -277,57 +278,7 @@ new
 	regenabled = false;
 
 
-new
-	WeapNames[][32] = {
-		"Unarmed",
-		"Brass Knuckles",
-		"Golf Club",
-		"Night Stick",
-		"Knife",
-		"Baseball Bat",
-		"Shovel",
-		"Pool Cue",
-		"Katana",
-		"Chainsaw",
-		"Purple Dildo",
-		"Big White Vibrator",
-		"Medium White Vibrator",
-		"Small White Vibrator",
-		"Flowers",
-		"Cane",
-		"Grenade",
-		"Tear Gas",
-		"Molotov",
-		"Invalid Weapon",
-		"Invalid Weapon",
-		"Invalid Weapon",
-		"Colt 45",
-		"Silenced Colt 45",
-		"Desert Eagle",
-		"Shotgun",
-		"Sawnoff Shotgun",
-		"Combat Shotgun",
-		"Micro SMG",
-		"SMG",
-		"AK47",
-		"M4",
-		"Tec9",
-		"Country Rifle",
-		"Sniper Rifle",
-		"Rocket Launcher",
-		"HS Rocket Launcher",
-		"Flamethrower",
-		"Minigun",
-		"Satchel Charge",
-		"Detonator",
-		"Spray Can",
-		"Fire Extinguisher",
-		"Camera",
-		"Night Vision Goggles",
-		"Infrared Vision Goggles",
-		"Parachute",
-		"Fake Pistol"
-};
+
 
 /*
 	##     ##  #######  ########  ##     ## ##       ########  ######
