@@ -59,7 +59,11 @@ stock GenerateQuestion(playerid)
 	{
 		SendClientMessage(playerid, COLOR_RED, "[ ! ] Previse puta ste netocno odgovorili na pitanja te ste zbog toga kickani!");
 		SendClientMessage(playerid, COLOR_RED, "Uzitak na nasem serveru ovisi upravo o postivanju pravila i simulaciji pravog zivota.");
-		SendClientMessage(playerid, COLOR_RED, "SAVJET: Ukoliko niste uspjeli pohvatati RP pravila naseg servera, posjetite forum.cityofangels-roleplay.com");
+		va_SendClientMessage(playerid, 
+			COLOR_RED, 
+			"SAVJET: If you didn't catch rules of our server, please visit %s.", 
+			WEB_URL
+		);
 		KickMessage(playerid);
 		return 1;
 	}
@@ -117,7 +121,11 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 			{
 				SendClientMessage(playerid, COLOR_RED, "[OBAVIJEST]: Kickani ste sa servera jer ste odbili poloziti RP kviz.");
 				SendClientMessage(playerid, COLOR_RED, "Uzitak na nasem serveru ovisi upravo o postivanju pravila i simulaciji pravog zivota.");
-				va_SendClientMessage(playerid, COLOR_RED, "SAVJET: Ukoliko niste uspjeli pohvatati RP pravila naseg servera, posjetite forum.cityofangels-roleplay.com");
+				va_SendClientMessage(playerid, 
+					COLOR_RED, 
+					"SAVJET: If you didn't catch rules of our server, please visit %s.", 
+					WEB_URL
+				);
 				KickMessage(playerid);
 			}
 			else

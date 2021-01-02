@@ -76,7 +76,7 @@ LoadServerSkins(f_name[])
 		Iter_Add(Skin, idx);
         idx++;
     }
-	printf("[scriptfiles/skins.txt]: Sucessfully Loaded Server Skins. (( %d / %d ))", idx, MAX_SERVER_SKINS);
+	printf("[scriptfiles/skins.txt]: Sucessfully Loaded Server Skins. [%d/%d]", idx, MAX_SERVER_SKINS);
     return 1;
 }
 

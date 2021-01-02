@@ -1,12 +1,3 @@
-/* 
-*	  		  Job System
-*	 www.cityofangels-roleplay.com
-*	    created and coded by L3o.
-*		 credits: CoA dev team.
-*	      All rights reserved.
-*	     	   (c) 2019
-*/
-
 #include <YSI_Coding\y_hooks>
 /*
 	- enumerator & defines

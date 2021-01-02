@@ -1,5 +1,7 @@
-City of Angels v18.6.0. - 11.11.2020 - Critical BugFix
-- Huge backend code improvements(iterators, timers, small translations etc.)
-- Server Crash on /makeadmin/helper/teampin fixed
-- /buy in Verona Mall for skins fixed
-- Various bugfixes
+open.RP 0.5 Beta Changelog
+- Huge code improvements
+- Loops, iterators, Overall Load/Save + Database code rewritten
+- Further modularity improvements
+- Memory improvements and variables cleanup progress
+
+For further info, please visit repository commits!

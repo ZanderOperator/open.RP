@@ -1,10 +1,9 @@
 /*
 =============================================================================================
 
-	City of Angels Role Play v18.5.5.
-	Authors:  cofi(Jacob_Williams), Logan, Woo, B-Matt, kiddo, ShadY, hodza, Runner, Khawaja
-	(c) 2020 City of Angels - All Rights Reserved.
-	Web: www.cityofangels-roleplay.com
+	open.RP Role Play v0.5.5.
+	Authors:  v1rtuality, Zander Operator, cofi, Woo, B-Matt, kiddo, ShadY, hodza, Runner, Khawaja
+	Web: https://open.mp/
 =============================================================================================
 */
 
@@ -140,12 +139,10 @@
 */
 
 // Server Informations - When chaning SCRIPT_VERSION, you MUST upload new "Changelog.txt" in /scriptfiles
-#define HOSTNAME 								"CoA.RP [0.3DL] - Summer Update"
-#define SERVER_NAME								"City of Angels"
-#define COPYRIGHT                           	"Copyright (c) 2020 City of Angels Roleplay"
-#define WEB_URL									"forum.cityofangels-roleplay.com"
-#define SCRIPT_VERSION							"CoA RP v18.6.0.-"#GIT_REV
-#define DEV_NAME   								"Woo-Logan"
+#define SERVER_NAME								"open.RP"
+#define HOSTNAME 								#SERVER_NAME"[0.3DL] - Summer Update"
+#define WEB_URL									"https://open.mp/"
+#define SCRIPT_VERSION							#SERVER_NAME" v18.6.0.-"#GIT_REV
 
 // The rest of the defines
 #include "modules/Preincludes/Defines.inc"
@@ -328,7 +325,7 @@ StartGMX()
 	}
 	GMX = 1;
 	new rconstring[100];
-	format(rconstring, sizeof(rconstring), "hostname CoA.RP [Pohrana podataka u MySQL bazu]");
+	format(rconstring, sizeof(rconstring), "hostname %s [Database Saving in Process]", SERVER_NAME);
 	SendRconCommand(rconstring);
 	SendRconCommand("password devtest");
 	SendClientMessageToAll(COLOR_RED, "[SERVER]: Server Restart procedure initiated. Please stay in game until server stores your data...");

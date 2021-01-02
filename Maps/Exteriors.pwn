@@ -1,4 +1,4 @@
-/*	www.cityofangels-roleplay || Exteriors Maps  */
+/*	Exteriors Maps  */
 
 #include <YSI_Coding\y_hooks>
 

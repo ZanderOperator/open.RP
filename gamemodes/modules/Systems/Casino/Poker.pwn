@@ -1445,7 +1445,7 @@ Public:OnPokerTablesLoaded()
 			PokerTable[i][pkrInt]
 		);
 	}
-	printf("MySQL Report: Poker Tables Loaded. (( %d / %d ))", rows, MAX_POKERTABLES);
+	printf("MySQL Report: Poker Tables Loaded. [%d/%d]", rows, MAX_POKERTABLES);
 	return 1;
 }
 
@@ -2260,7 +2260,7 @@ JoinPokerTable(playerid, tableid)
 			}
 		}
 	}
-	else SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "Sva mjesta su za ovim stolom popunjena! (( %d / %d ))", PokerTable[tableid][pkrPlayers], PokerTable[tableid][pkrLimit]);
+	else SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "Sva mjesta su za ovim stolom popunjena! [%d/%d]", PokerTable[tableid][pkrPlayers], PokerTable[tableid][pkrLimit]);
 	return 1;
 }
 

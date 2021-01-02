@@ -1,4 +1,4 @@
-	/*	www.cityofangels-roleplay || Business Maps
+	/*	Business Maps
 					clubs & bars & restaurants	*/
 
 	#include <YSI_Coding\y_hooks>

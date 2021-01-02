@@ -2199,7 +2199,12 @@ CMD:changename(playerid, params[])
 					return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "Potrosili ste sve dodatne changenameove koje ste dobili sa Premium Paketom. Izmjena dostupna za %s.", UnixTimestampToTime(PlayerInfo[ playerid ][ pChangenames ]));
 			}
 			else 
-				return SendClientMessage(playerid, COLOR_LIGHTRED, "Niste vlasnik Premium Donator paketa. Vise o donacijama na forum.cityofangels-roleplay.com");
+				return va_SendClientMessage(playerid, 
+							COLOR_LIGHTRED, 
+							"Niste vlasnik Premium Donator paketa. Vise o donacijama \n\
+								na %s", 
+							WEB_URL
+						);
 		}
 	}
 	if( strlen(novoime) > 20 || strlen(novoime) < 0 )

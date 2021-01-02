@@ -1,6 +1,3 @@
-// www.cityofangels-roleplay.com - House Storage system - by L3o & Logan
-// last edited 28.04.2019 - by L3o
-
 /*
     #### ##    ##  ######  ##       ##     ## ########  ######## 
      ##  ###   ## ##    ## ##       ##     ## ##     ## ##       
@@ -185,7 +182,7 @@ Public:HouseStorage_Load()
         Storage_RackRefresh(i);
         Iter_Add(HStorage_Iter, i);
     }
-    printf("MySQL Report: House Storage Racks Loaded. (( %d / %d ))", Iter_Count(HStorage_Iter), MAX_HOUSE_STORAGE);
+    printf("MySQL Report: House Storage Racks Loaded. [%d/%d]", Iter_Count(HStorage_Iter), MAX_HOUSE_STORAGE);
     return 1;
 }
 

@@ -62,11 +62,11 @@ timer OnPlayerFirstTimeEnter[12000](playerid, step)
 			stop TutTimer[playerid];
 			ClearChatBox(playerid);
 			TutorialStep[playerid] = step;
-			SendClientMessage(playerid, COLOR_GREY, "Dobrodosli na City of Angels roleplay server!"); 
+			va_SendClientMessage(playerid, COLOR_GREY, "Dobrodosli na %s server!", SERVER_NAME); 
 			SendClientMessage(playerid, COLOR_GREY, "Nadamo se da ces igrati sa uzitkom i roleplayati bez ikakvih smetnji."); 
-			SendClientMessage(playerid, COLOR_GREY, "Ovo je kraci tutorial City of Angels Roleplay zajednice.");
+			va_SendClientMessage(playerid, COLOR_GREY, "Ovo je kraci tutorial %s Servera.", SERVER_NAME);
 			SendClientMessage(playerid, COLOR_GREY, "Ovim putem cete na brzinu saznati nesto o serveru, lokacijama na mapi i jos o necemu.");
-			SendClientMessage(playerid, COLOR_GREY, "City of Angels Administrator Team!");
+			va_SendClientMessage(playerid, COLOR_GREY, "Greetings from %s Administrator Team!", SERVER_NAME);
 			TutTimer[playerid] = defer OnPlayerFirstTimeEnter(playerid, step + 1);
 		} 
 		case 2: { 
@@ -89,7 +89,7 @@ timer OnPlayerFirstTimeEnter[12000](playerid, step)
 			SendClientMessage(playerid, COLOR_GREY, "Na serveru postoji jedna law organizacija a to je upravo Los Santos Police Department.");
 			SendClientMessage(playerid, COLOR_GREY, "Zgrada se nalazi u samom centru grada, na podrucju Pershing Squarea.");
 			SendClientMessage(playerid, COLOR_GREY, "Pripadnike ove organizacije cete redovno gledati na serveru a i sami se mozete prijaviti za istu preko naseg foruma:");
-			SendClientMessage(playerid, COLOR_GREY, "forum.cityofangels-roleplay.com");
+			va_SendClientMessage(playerid, COLOR_GREY, "%s", WEB_URL);
 			TutTimer[playerid] =defer OnPlayerFirstTimeEnter(playerid, step + 1);
 		}
 		case 4: {
@@ -172,7 +172,7 @@ timer OnPlayerFirstTimeEnter[12000](playerid, step)
 			ClearChatBox(playerid);
 			TutorialStep[playerid] = step;
 			SendClientMessage(playerid, COLOR_GREY, "Ovo je bio kraci tutorial u kojem ste, nadamo se, naucili nesto novo o nasem serveru.");
-			SendClientMessage(playerid, COLOR_GREY, "Sve opsirnije mozete procitati na nasem forumu > forum.cityofangels-roleplay.com");
+			va_SendClientMessage(playerid, COLOR_GREY, "For more informations, please visit %s", WEB_URL);
 			SendClientMessage(playerid, COLOR_GREY, "Ukoliko trazite neki tutorial najvjerovatnije je da cete ga pronaci u Pravila i Upute > Sluzbeni tutorijali i upute.");
 			TutTimer[playerid] = defer OnPlayerFirstTimeEnter(playerid, step + 1);
 		}

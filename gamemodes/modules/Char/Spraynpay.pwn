@@ -37,14 +37,15 @@ hook OnGameModeInit(){
     return (true);
 }
 
-CMD:enterspray( playerid, params[] ) {
+CMD:enterspray( playerid, params[] ) 
+{
 	if(pns_garages == false) 
 		return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "Admini su trenutno ugasili mogucnost koristenja ove komande.");
     if( GetPlayerState( playerid ) != PLAYER_STATE_DRIVER ) return SendMessage( playerid, MESSAGE_TYPE_ERROR, "Morate biti na mjestu vozaca." );
     
     new 
 		vehicleid = GetPlayerVehicleID(playerid),
-		price = getPriceFromVehicleHealth(vehicleid); // * 2 za poduplavanje cijene radi https://forum.cityofangels-roleplay.com/index.php?topic=158410.msg2177842;topicseen#msg2177842 ~ Runner
+		price = getPriceFromVehicleHealth(vehicleid); 
 		
 	pnscolor1 = VehicleInfo[vehicleid][vColor1];
 	pnscolor2 = VehicleInfo[vehicleid][vColor2];

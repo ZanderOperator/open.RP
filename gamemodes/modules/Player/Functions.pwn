@@ -683,11 +683,16 @@ Public:CheckAccountsForInactivity()
 							(currentmonth - 1),
 							monthpaydays
 						);
-						format(logString, sizeof(logString), "[%s] - Dobili ste %d EXP-a kao najaktivniji igrac %d. mjeseca sa %d paydayova.\nOvom nagradom mozete iskoristiti brojne pogodnosti koje Vam server nudi sa komandom /exp buy.\nVelike cestitke od City of Angels Teama!",
+						format(logString, sizeof(logString), 
+							"[%s] - Dobili ste %d EXP-a kao najaktivniji igrac %d. mjeseca \n\
+								sa %d paydayova.\nOvom nagradom mozete iskoristiti brojne pogodnosti \n\
+								koje Vam server nudi sa komandom /exp buy.\n\
+								Velike cestitke od %s Teama!",
 							ReturnDate(),
 							PREMIUM_GOLD_EXP,
 							(currentmonth - 1),
-							monthpaydays
+							monthpaydays, 
+							SERVER_NAME
 						);
 						SendServerMessage(sql, logString);
 					}
@@ -700,11 +705,16 @@ Public:CheckAccountsForInactivity()
 							(currentmonth - 1),
 							monthpaydays
 						);
-						format(logString, sizeof(logString), "[%s] - Dobili ste %d EXP-a kao 2. najaktivniji igrac %d. mjeseca sa %d paydayova.\nOvom nagradom mozete iskoristiti brojne pogodnosti koje Vam server nudi sa komandom /exp buy.\nVelike cestitke od City of Angels Teama!",
+						format(logString, sizeof(logString), 
+							"[%s] - Dobili ste %d EXP-a kao 2. najaktivniji igrac %d. mjeseca \n\
+								sa %d paydayova.\nOvom nagradom mozete iskoristiti brojne pogodnosti \n\
+								koje Vam server nudi sa komandom /exp buy.\n\
+								Velike cestitke od %s Teama!",
 							ReturnDate(),
 							100,
 							(currentmonth - 1),
-							monthpaydays
+							monthpaydays, 
+							SERVER_NAME
 						);
 						SendServerMessage(sql, logString);
 					}
@@ -717,11 +727,16 @@ Public:CheckAccountsForInactivity()
 							(currentmonth - 1),
 							monthpaydays
 						);
-						format(logString, sizeof(logString), "[%s] - Dobili ste %d EXP-a kao 3. najaktivniji igrac %d. mjeseca sa %d paydayova.\nOvom nagradom mozete iskoristiti brojne pogodnosti koje Vam server nudi sa komandom /exp buy.\nVelike cestitke od City of Angels Teama!",
+						format(logString, sizeof(logString), 
+							"[%s] - Dobili ste %d EXP-a kao 3. najaktivniji igrac %d. mjeseca \n\
+								sa %d paydayova.\nOvom nagradom mozete iskoristiti brojne pogodnosti \n\
+								koje Vam server nudi sa komandom /exp buy.\n\
+								Velike cestitke od %s Teama!",
 							ReturnDate(),
 							75,
 							(currentmonth - 1),
-							monthpaydays
+							monthpaydays, 
+							SERVER_NAME
 						);
 						SendServerMessage(sql, logString);
 					}
@@ -734,11 +749,16 @@ Public:CheckAccountsForInactivity()
 							(currentmonth - 1),
 							monthpaydays
 						);
-						format(logString, sizeof(logString), "[%s] - Dobili ste %d EXP-a kao 4. najaktivniji igrac %d. mjeseca sa %d paydayova.\nOvom nagradom mozete iskoristiti brojne pogodnosti koje Vam server nudi sa komandom /exp buy.\nVelike cestitke od City of Angels Teama!",
+						format(logString, sizeof(logString), 
+							"[%s] - Dobili ste %d EXP-a kao 4. najaktivniji igrac %d. mjeseca \n\
+								sa %d paydayova.\nOvom nagradom mozete iskoristiti brojne pogodnosti \n\
+								koje Vam server nudi sa komandom /exp buy.\n\
+								Velike cestitke od %s Teama!",
 							ReturnDate(),
 							50,
 							(currentmonth - 1),
-							monthpaydays
+							monthpaydays, 
+							SERVER_NAME
 						);
 						SendServerMessage(sql, logString);
 					}
@@ -751,11 +771,16 @@ Public:CheckAccountsForInactivity()
 							(currentmonth - 1),
 							monthpaydays
 						);
-						format(logString, sizeof(logString), "[%s] - Dobili ste %d EXP-a kao 5. najaktivniji igrac %d. mjeseca sa %d paydayova.\nOvom nagradom mozete iskoristiti brojne pogodnosti koje Vam server nudi sa komandom /exp buy.\nVelike cestitke od City of Angels Teama!",
+						format(logString, sizeof(logString), 
+							"[%s] - Dobili ste %d EXP-a kao 5. najaktivniji igrac %d. mjeseca \n\
+								sa %d paydayova.\nOvom nagradom mozete iskoristiti brojne pogodnosti \n\
+								koje Vam server nudi sa komandom /exp buy.\n\
+								Velike cestitke od %s Teama!",
 							ReturnDate(),
 							25,
 							(currentmonth - 1),
-							monthpaydays
+							monthpaydays, 
+							SERVER_NAME
 						);
 						SendServerMessage(sql, logString);
 					}

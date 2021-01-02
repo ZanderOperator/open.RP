@@ -1,10 +1,3 @@
-/*
-*           Flashbang Shells
-*    www.cityofangels-roleplay.com
-*       created and coded by Khawaja.
-*         All rights reserved.
-*              (c) 2020
-*/
 #if defined MODULE_FLASHBANG
     #endinput
 #endif

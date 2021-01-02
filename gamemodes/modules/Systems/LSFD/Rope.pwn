@@ -1,5 +1,4 @@
 /*
-	City of Angels
  	    FD Rope
  	Autor: Khawaja
 	Released: 2020

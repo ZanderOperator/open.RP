@@ -3668,7 +3668,7 @@ public OnTowerLoaded()
 		cache_get_value_name_float(twslotid, "radius", TowerInfo[ twslotid ][ twRadius ]);
 		CreateTowerObject(twslotid);
 	}
-	printf("MySQL Report: Signal Towers Loaded. (( %d / %d ))", rows, MAX_TOWERS);
+	printf("MySQL Report: Signal Towers Loaded. [%d/%d]", rows, MAX_TOWERS);
 	return 1;
 }
 

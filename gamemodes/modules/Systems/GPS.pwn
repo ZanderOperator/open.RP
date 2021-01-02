@@ -1,12 +1,4 @@
 /*
-*            GPS System
-*    www.cityofangels-roleplay.com
-*       created and coded by L3o.
-*         All rights reserved.
-*              (c) 2019
-*/
-
-/*
     #### ##    ##  ######  ##       ##     ## ########  ######## 
      ##  ###   ## ##    ## ##       ##     ## ##     ## ##       
      ##  ####  ## ##       ##       ##     ## ##     ## ##       
@@ -148,7 +140,7 @@ Public: GPS_Load()
 
         Iter_Add(GPS_location, i);
     }
-    printf("MySQL Report: GPS Locations Loaded. (( %d / %d ))", Iter_Count(GPS_location), MAX_GPS_LOCATIONS);
+    printf("MySQL Report: GPS Locations Loaded. [%d/%d]", Iter_Count(GPS_location), MAX_GPS_LOCATIONS);
     return 1;
 }
 
