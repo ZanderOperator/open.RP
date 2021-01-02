@@ -293,7 +293,7 @@ public OnServerIlegalGaragesLoad()
 		InitIlegalGarage(row);
 		Iter_Add(IllegalGarage, row);
 	}
-	printf("MySQL Report: Ilegal Garages Loaded (%d)!", cache_num_rows());
+	printf("MySQL Report: Ilegal Garages Loaded. (( %d / %d ))", cache_num_rows(), MAX_ILEGAL_GARAGES);
 	return 1;
 }
 

@@ -91,8 +91,7 @@ Public:OnAmmuWeaponsLoaded()
         cache_get_value_name_int(slotid, "maxbullets", AmmuInfo[slotid][aiMaxBullets]);
         Iter_Add(AmmuIterator, slotid);
     }
-
-    printf("MySQL Report: Ammunation weapons loaded (%d)!", rows);
+    printf("MySQL Report: Ammunation Weapons Loaded. (( %d / %d ))", rows, MAX_AMMU_SLOTS);
     return 1;
 }
 

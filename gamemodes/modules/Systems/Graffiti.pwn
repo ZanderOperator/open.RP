@@ -22,7 +22,6 @@
 */
 
 // TODO: use Gang/Organisation not Faction naming throughout this file. Or unite the two "Faction" systems
-#define MAX_ORGANISATIONS                   (13)
 
 // Ints
 #define MAX_GRAFS                           (500)
@@ -96,7 +95,7 @@ enum E_FACTION_TAGS_DATA
     ftTagCount
 }
 static
-    FactionTagCount[MAX_ORGANISATIONS][E_FACTION_TAGS_DATA];
+    FactionTagCount[MAX_FACTIONS][E_FACTION_TAGS_DATA];
 
 enum E_TAG_DATA
 {
@@ -177,13 +176,10 @@ public OnGraffitsLoad()
         return 1;
     }
 
-    new tmp[32];
     for (new b = 0; b < rows; b++)
     {
-        cache_get_value_name_int(b,         "id",       GraffitInfo[b][gId]);
-        cache_get_value_name(b, "text", tmp);
-        // TODO: don't use format for copying strings, also, why not directly store to gText?
-        format(GraffitInfo[b][gText], sizeof(tmp), tmp);
+        cache_get_value_name_int(b,         "id"        , GraffitInfo[b][gId]);
+        cache_get_value_name(b,             "text"      , GraffitInfo[b][gText], 32);
         cache_get_value_name_int(b,         "font"      , GraffitInfo[b][gFont]);
         cache_get_value_name_int(b,         "fontsize"  , GraffitInfo[b][gFontSize]);
         cache_get_value_name_int(b,         "fontcolor" , GraffitInfo[b][gColor]);
@@ -193,15 +189,13 @@ public OnGraffitsLoad()
         cache_get_value_name_float(b,       "rotx"      , GraffitInfo[b][gRotX]);
         cache_get_value_name_float(b,       "roty"      , GraffitInfo[b][gRotY]);
         cache_get_value_name_float(b,       "rotz"      , GraffitInfo[b][gRotZ]);
-        cache_get_value_name(b, "author", tmp);
-        // same here as previous comment
-        format(GraffitInfo[b][gAuthor], sizeof(tmp), tmp);
+        cache_get_value_name(b,             "author"    , GraffitInfo[b][gAuthor], MAX_PLAYER_NAME);
 
         GraffitInfo[b][gObject] = CreateDynamicObject(GROVE_TAG,GraffitInfo[b][gPosX],GraffitInfo[b][gPosY],GraffitInfo[b][gPosZ],GraffitInfo[b][gRotX],GraffitInfo[b][gRotY],GraffitInfo[b][gRotZ], 0, 0, -1, GRAFFIT_DRAW_DISTANCE);
         SetDynamicObjectMaterialText(GraffitInfo[b][gObject], 0, GraffitInfo[b][gText], OBJECT_MATERIAL_SIZE_512x256, GetGrafFont(GraffitInfo[b][gFont]), GraffitInfo[b][gFontSize], 0, GetGrafColor(GraffitInfo[b][gColor]), 0, OBJECT_MATERIAL_TEXT_ALIGN_CENTER);
         Iter_Add(Graffits, b);
     }
-    printf("MySQL Report: Graffits Loaded (%d)!", Iter_Count(Graffits));
+    printf("MySQL Report: Graffitis Loaded. (( %d / %d ))!", Iter_Count(Graffits), MAX_GRAFS);
     return 1;
 }
 
@@ -556,28 +550,25 @@ public OnTagsLoaded()
         return 1;
     }
 
-    new tmp[32];
     for (new b = 0; b < rows; b++)
     {
-        cache_get_value_name_int  (b,  "id"       , TagInfo[b][tId]);
-        cache_get_value_name_int  (b,  "modelid"  , TagInfo[b][tModelid]);
-        cache_get_value_name_float(b,  "posx"     , TagInfo[b][tPosX]);
-        cache_get_value_name_float(b,  "posy"     , TagInfo[b][tPosY]);
-        cache_get_value_name_float(b,  "posz"     , TagInfo[b][tPosZ]);
-        cache_get_value_name_float(b,  "rotx"     , TagInfo[b][tRotX]);
-        cache_get_value_name_float(b,  "roty"     , TagInfo[b][tRotY]);
-        cache_get_value_name_float(b,  "rotz"     , TagInfo[b][tRotZ]);
-        cache_get_value_name_int  (b,  "faction"  , TagInfo[b][tFaction]);
-        // copy to array directly or use strcpy
-        cache_get_value_name(b, "author", tmp);
-        format(TagInfo[b][tAuthor] , 32, tmp);
+        cache_get_value_name_int  (b,   "id"        , TagInfo[b][tId]);
+        cache_get_value_name_int  (b,   "modelid"   , TagInfo[b][tModelid]);
+        cache_get_value_name_float(b,   "posx"      , TagInfo[b][tPosX]);
+        cache_get_value_name_float(b,   "posy"      , TagInfo[b][tPosY]);
+        cache_get_value_name_float(b,   "posz"      , TagInfo[b][tPosZ]);
+        cache_get_value_name_float(b,   "rotx"      , TagInfo[b][tRotX]);
+        cache_get_value_name_float(b,   "roty"      , TagInfo[b][tRotY]);
+        cache_get_value_name_float(b,   "rotz"      , TagInfo[b][tRotZ]);
+        cache_get_value_name_int  (b,   "faction"   , TagInfo[b][tFaction]);
+        cache_get_value_name(b,         "author"    , TagInfo[b][tAuthor], MAX_PLAYER_NAME);
 
         SetFactionTagCount(TagInfo[b][tFaction], 1);
         TagInfo[b][tgObject] = CreateDynamicObject(TagInfo[b][tModelid], TagInfo[b][tPosX], TagInfo[b][tPosY], TagInfo[b][tPosZ],
                                                    TagInfo[b][tRotX], TagInfo[b][tRotY], TagInfo[b][tRotZ], 0, 0, -1, GRAFFIT_DRAW_DISTANCE);
         Iter_Add(SprayTags, b);
     }
-    printf("MySQL Report: Spray Tags Loaded (%d)!", Iter_Count(SprayTags));
+    printf("MySQL Report: Spray Tags Loaded. (( %d / %d ))", Iter_Count(SprayTags), MAX_TAGS);
     return 1;
 }
 
@@ -632,7 +623,7 @@ stock GetPlayerOrganisation(playerid)
 
 stock ClearFactionTagCount()
 {
-    for (new i = 0; i < MAX_ORGANISATIONS; i++)
+    for (new i = 0; i < MAX_FACTIONS; i++)
     {
         FactionTagCount[i][ftTagCount] = 0;
     }
@@ -640,7 +631,7 @@ stock ClearFactionTagCount()
 
 stock GetFactionTagCount(factionid)
 {
-    if (factionid < 1 || factionid > MAX_ORGANISATIONS)
+    if (factionid < 1 || factionid > MAX_FACTIONS)
         return 0;
 
     return FactionTagCount[factionid-1][ftTagCount];
@@ -648,7 +639,7 @@ stock GetFactionTagCount(factionid)
 
 stock SetFactionTagCount(factionid, amount)
 {
-    if (factionid < 1 || factionid > MAX_ORGANISATIONS)
+    if (factionid < 1 || factionid > MAX_FACTIONS)
         return 0;
 
     FactionTagCount[factionid-1][ftTagCount] += amount;

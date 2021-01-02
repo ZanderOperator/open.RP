@@ -285,7 +285,7 @@ Public:OnServerVehicleLoad()
 
 		Iter_Add(ServerVehicle[VehicleInfo[vCarID][vUsage]], vCarID);
 	}
-	printf("MySQL Report: Vehicles Loaded (%d / %d)!", cache_num_rows(), MAX_VEHICLES);
+	printf("MySQL Report: Vehicles Loaded. (( %d / %d ))", cache_num_rows(), MAX_VEHICLES);
 	return 1;
 }
 

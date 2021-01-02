@@ -149,6 +149,15 @@ hook OnPlayerEditDynObject(playerid, objectid, response, Float:x, Float:y, Float
 
 Public:HouseStorage_Load()
 {
+    new 
+        rows = cache_num_rows();
+
+    if(!rows)
+    {
+        print("MySQL Report: There are no House Storage Racks to load from database!");
+        return 1;
+    }
+
     for (new i = 0; i < cache_num_rows(); i++)
     {
         HouseStorage[i][storageExists] = true;
@@ -176,7 +185,7 @@ Public:HouseStorage_Load()
         Storage_RackRefresh(i);
         Iter_Add(HStorage_Iter, i);
     }
-    printf("MySQL Report: House Storage Racks Loaded (%d/%d).", Iter_Count(HStorage_Iter), MAX_HOUSE_STORAGE);
+    printf("MySQL Report: House Storage Racks Loaded. (( %d / %d ))", Iter_Count(HStorage_Iter), MAX_HOUSE_STORAGE);
     return 1;
 }
 

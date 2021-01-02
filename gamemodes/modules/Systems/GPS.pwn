@@ -131,7 +131,8 @@ LoadGPS()
 Public: GPS_Load()
 {
     new rows = cache_num_rows();
-    if (rows == 0) return 1;
+    if (!rows) 
+        return print("MySQL Report: There are no GPS Locations in database to load!");
 
     for (new i = 0; i < rows; i++)
     {
@@ -147,7 +148,7 @@ Public: GPS_Load()
 
         Iter_Add(GPS_location, i);
     }
-    printf("MySQL Report: GPS Locations Loaded: %d.", Iter_Count(GPS_location));
+    printf("MySQL Report: GPS Locations Loaded. (( %d / %d ))", Iter_Count(GPS_location), MAX_GPS_LOCATIONS);
     return 1;
 }
 

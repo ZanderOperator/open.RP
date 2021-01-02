@@ -435,7 +435,7 @@ Public:OnServerHousesLoad()
         CreateHouseEnter(row);
         Iter_Add(House, row);
     }
-    printf("MySQL Report: Houses Loaded (%d / %d)!", Iter_Count(House), MAX_HOUSES);
+    printf("MySQL Report: Houses Loaded. (( %d / %d ))", Iter_Count(House), MAX_HOUSES);
     return 1;
 }
 
