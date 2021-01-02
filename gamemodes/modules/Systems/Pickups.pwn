@@ -131,7 +131,7 @@ public OnPickupsLoad()
 		}
 		else Iter_Add(Pickup[PICKUP_TYPE_NON_ENTERABLE], b);
 	}
-	printf("MySQL Report: Pickups Loaded. (( %d / %d ))", Iter_Count(PickupsIter), MAX_PICKUPS);
+	printf("MySQL Report: Pickups Loaded. [%d/%d]", Iter_Count(PickupsIter), MAX_PICKUPS);
 	return 1;
 }
 

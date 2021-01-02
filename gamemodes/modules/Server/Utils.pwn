@@ -853,11 +853,9 @@ stock IsValidNick(name[])
 		FirstLetterOfFirstname,
 		FirstLetterOfLastname,
 		ThirdLetterOfLastname,
-		imedeva[24],
 		Underscore;
 	
 	split(name, namesplit, '_');
-	if(strcmp(imedeva, DEV_NAME, true)) return 1;
     if (strlen(namesplit[0]) > 1 && strlen(namesplit[1]) > 1)
     {
         // Firstname and Lastname contains more than 1 character + it there are separated with '_' char. Continue...

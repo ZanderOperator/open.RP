@@ -1,7 +1,3 @@
-// City of Angels Role Play Server Maps Filterscript
-// Maps created by beatiful people FOR CoA-RP
-// (c) Copyright, City of Angels Role Play
-
 #include <a_samp>
 //#include <zcmd>
 #include <streamer>

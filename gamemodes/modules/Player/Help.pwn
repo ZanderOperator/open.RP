@@ -1,6 +1,6 @@
 #include <YSI_Coding\y_hooks>
-// Help module by broox. & wizzcyco for City of Angels
 
+// Help module by broox. & wizzcyco
 CMD:animations(playerid,params[])
 {
 	new

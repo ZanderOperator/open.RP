@@ -259,12 +259,24 @@ CMD:report(playerid, params[])
 	if(Player_ReportID(playerid) != -1)
 		return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Vec si poslao report! Pricekaj da ti admini odgovore na isti.");
 
-	new	string[678];
 	if(isnull(params))
 		return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /report [tekst]");
-	format(PlayerReport[playerid], 128, "%s", params);
-
-	format(string, sizeof(string), "{5CD2FE}WARNING:\nPoruka koju saljete ce biti prikazana svi online adminima.\n\nRazlog: %s\n\nUkoliko vam je neko nanio stetu predlazemo da prijavite na forumu.\nUkoliko admin nije prisustvovao situaciji on ne mo�e ni�ta uraditi bez valjanih dokaza.\nUkoliko vam je potreban teleport, unfreeze, slap, ili nesto slicno morate navesti valjan razlog.\nGeneralno bi trebali slati reporte u kojima je navedeno sto vise detalja kako bi vam admin mogao sto prije pomoci\n\nforum.cityofangels-roleplay.com", params);
+	
+	strcpy(PlayerReport[playerid], params, 128);
+	new	
+		string[678];
+	format(string, 
+		sizeof(string), 
+		"{5CD2FE}WARNING:\nPoruka koju saljete ce biti prikazana svi online adminima.\n\
+			Razlog: %s\n\nUkoliko vam je neko nanio stetu predlazemo da prijavite na forumu.\n\
+			Ukoliko Admin nije prisustvovao situaciji on ne moze nista uraditi bez valjanih dokaza.\n\
+			Ukoliko vam je potreban teleport, unfreeze, slap, ili nesto slicno morate \n\
+			navesti valjan razlog.\nGeneralno bi trebali slati reporte u kojima je navedeno \n\
+			sto vise detalja kako bi vam admin mogao sto prije pomoci.\n\
+			\n%s", 
+		PlayerReport[playerid],
+		WEB_URL
+	);
 	ConfirmDialog(playerid, "{5CD2FE}REPORT WARNING", string, "OnPlayerReport", params);
 	return true;
 }

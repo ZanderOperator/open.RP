@@ -1,11 +1,3 @@
-/* 
-*		   AntiBunnyHop - AC
-*	 www.cityofangels-roleplay.com
-*	    created and coded by L3o.
-*	      All rights reserved.
-*	     	   (c) 2019
-*/
-
 // reminder: Na svakom PayDay-u se resetiraju varijable.
 #include <YSI_Coding\y_hooks>
 

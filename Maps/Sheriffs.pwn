@@ -1,4 +1,4 @@
-/*	www.cityofangels-roleplay || Sheriffs Maps  */
+/* Sheriffs Maps  */
 
 #include <YSI_Coding\y_hooks>
 

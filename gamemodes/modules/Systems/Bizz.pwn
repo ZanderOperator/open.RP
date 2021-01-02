@@ -346,7 +346,7 @@ public OnServerBizzesLoad()
         Iter_Add(Business, b);
     }
 
-    printf("MySQL Report: Businesses Loaded. (( %d / %d ))!", Iter_Count(Business), MAX_BIZZES);
+    printf("MySQL Report: Businesses Loaded. [%d/%d]!", Iter_Count(Business), MAX_BIZZES);
     return 1;
 }
 

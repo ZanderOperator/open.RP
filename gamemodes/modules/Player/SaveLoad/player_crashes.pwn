@@ -44,7 +44,13 @@ timer SetPlayerCrash[6000](playerid)
 	}
 	if(strcmp(PlayerInfo[playerid][pLastUpdateVer], SCRIPT_VERSION, true) != 0 && !isnull(PlayerAdminMessage[playerid][pAdminMsg]) && !PlayerAdminMessage[playerid][pAdmMsgConfirm])
 	{
-		va_SendClientMessage(playerid, COLOR_LIGHTBLUE, "[City of Angels]: "COL_WHITE"Server je updatean na verziju "COL_LIGHTBLUE"%s"COL_WHITE", za vise informacija - /update.", SCRIPT_VERSION);
+		va_SendClientMessage(playerid, 
+			COLOR_LIGHTBLUE, 
+			"[%s]: "COL_WHITE"Server je updatean na verziju "COL_LIGHTBLUE"%s"COL_WHITE", \n\
+				za vise informacija - /update.", 
+			SERVER_NAME,
+			SCRIPT_VERSION
+		);
 		ShowAdminMessage(playerid);
 		goto spawn_end;
 	}

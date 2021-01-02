@@ -1,4 +1,4 @@
-/*	www.cityofangels-roleplay || Other Maps */
+/* Other Maps */
 
 #include <YSI_Coding\y_hooks>
 

@@ -1,4 +1,4 @@
-/*	www.cityofangels-roleplay || LSN Maps  */
+/* LSN Maps  */
 
 #include <YSI_Coding\y_hooks>
 

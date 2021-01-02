@@ -1,5 +1,3 @@
-/* www.cityofangels-roleplay.com - Prostitute system - by L3o */
-
 #include <YSI_Coding\y_hooks>
 
 /*

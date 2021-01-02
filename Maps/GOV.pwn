@@ -1,4 +1,4 @@
-/*	www.cityofangels-roleplay || GoV Maps  */
+/*	GoV Maps  */
 
 #include <YSI_Coding\y_hooks>
 

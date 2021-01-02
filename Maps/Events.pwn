@@ -1,4 +1,4 @@
-/*	www.cityofangels-roleplay || Events Maps  */
+/*	Events Maps  */
 
 #include <YSI_Coding\y_hooks>
 

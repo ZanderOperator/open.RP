@@ -1,4 +1,4 @@
-/*	www.cityofangels-roleplay || Fire & Medic Maps  */
+/*	Fire & Medic Maps  */
 
 #include <YSI_Coding\y_hooks>
 

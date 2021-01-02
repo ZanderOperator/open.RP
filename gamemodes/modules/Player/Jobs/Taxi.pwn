@@ -1,11 +1,3 @@
-/* 
-*	  	Taxi Job - Taxi Meter...
-*	 www.cityofangels-roleplay.com
-*	    created and coded by L3o.
-*	      All rights reserved.
-*	     	   (c) 2019
-*/
-
 #include <YSI_Coding\y_hooks>
 
 /*

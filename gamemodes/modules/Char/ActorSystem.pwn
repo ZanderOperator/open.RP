@@ -1,9 +1,7 @@
 /*
-	City of Angels
  	Actor System
  	Autor: Khawaja
 	Released: 2020
-
 */
 #include <YSI_Coding\y_hooks>
 #define MAX_LABELS 1000

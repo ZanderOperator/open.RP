@@ -1,4 +1,4 @@
-/*	www.cityofangels-roleplay || Police Maps  */
+/* Police Maps  */
 
 #include <YSI_Coding\y_hooks>
 

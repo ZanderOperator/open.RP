@@ -1,4 +1,4 @@
-/*	www.cityofangels-roleplay || Jobs Maps  */
+/* Jobs Maps  */
 
 #include <YSI_Coding\y_hooks>
 

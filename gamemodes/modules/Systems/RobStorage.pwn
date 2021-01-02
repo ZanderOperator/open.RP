@@ -1,5 +1,3 @@
-// www.cityofangels-roleplay.com - House Storage 'Rob' system - by L3o
-
 /*
     #### ##    ##  ######  ##       ##     ## ########  ######## 
      ##  ###   ## ##    ## ##       ##     ## ##     ## ##       

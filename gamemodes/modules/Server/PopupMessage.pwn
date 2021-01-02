@@ -46,13 +46,15 @@ CreateMessage(playerid, bool: status) {
 	return (true);
 }
 
-GetMessagePrefix(MESSAGE_TYPE = MESSAGE_TYPE_NONE) {
-	new prefix[21];
-	switch(MESSAGE_TYPE) {
+GetMessagePrefix(MESSAGE_TYPE = MESSAGE_TYPE_NONE) 
+{
+	new 
+		prefix[21];
+	switch(MESSAGE_TYPE) 
+	{
 		case MESSAGE_TYPE_ERROR: prefix = "~r~~h~[ ! ]";
 		case MESSAGE_TYPE_INFO: prefix = "~y~[ ! ]";
 		case MESSAGE_TYPE_SUCCESS: prefix = "~g~~h~[ ! ]";
-		default: prefix = "~b~~h~~h~~h~[CoA.RP]";
 	}
 	return prefix;
 }

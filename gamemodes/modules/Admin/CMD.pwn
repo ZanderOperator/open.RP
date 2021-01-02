@@ -514,7 +514,9 @@ CMD:happyhours(playerid, params[])
 			new
 				level;
 			if( sscanf( params, "ii", happy, level ) ) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /happyhours 1-stavi [level]");
-			format(gstring, sizeof(gstring), "hostname City of Angels RP [Happy Hours do %d level]", level);
+			format(gstring, sizeof(gstring), "hostname %s [Happy Hours do %d level]", 
+				SERVER_NAME,
+				level);
 			SendRconCommand(gstring);
 			HappyHoursLVL = level;
 		} else {

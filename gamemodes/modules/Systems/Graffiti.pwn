@@ -195,7 +195,7 @@ public OnGraffitsLoad()
         SetDynamicObjectMaterialText(GraffitInfo[b][gObject], 0, GraffitInfo[b][gText], OBJECT_MATERIAL_SIZE_512x256, GetGrafFont(GraffitInfo[b][gFont]), GraffitInfo[b][gFontSize], 0, GetGrafColor(GraffitInfo[b][gColor]), 0, OBJECT_MATERIAL_TEXT_ALIGN_CENTER);
         Iter_Add(Graffits, b);
     }
-    printf("MySQL Report: Graffitis Loaded. (( %d / %d ))!", Iter_Count(Graffits), MAX_GRAFS);
+    printf("MySQL Report: Graffitis Loaded. [%d/%d]!", Iter_Count(Graffits), MAX_GRAFS);
     return 1;
 }
 
@@ -568,7 +568,7 @@ public OnTagsLoaded()
                                                    TagInfo[b][tRotX], TagInfo[b][tRotY], TagInfo[b][tRotZ], 0, 0, -1, GRAFFIT_DRAW_DISTANCE);
         Iter_Add(SprayTags, b);
     }
-    printf("MySQL Report: Spray Tags Loaded. (( %d / %d ))", Iter_Count(SprayTags), MAX_TAGS);
+    printf("MySQL Report: Spray Tags Loaded. [%d/%d]", Iter_Count(SprayTags), MAX_TAGS);
     return 1;
 }
 

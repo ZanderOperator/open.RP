@@ -1,4 +1,4 @@
-/*	www.cityofangels-roleplay || Gangs Maps  */
+/* Gangs Maps  */
 
 #include <YSI_Coding\y_hooks>
 

@@ -1,4 +1,4 @@
-/*	www.cityofangels-roleplay || Interiors Maps  */
+/*	Interiors Maps  */
 
 #include <YSI_Coding\y_hooks>
 

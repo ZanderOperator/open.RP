@@ -1,8 +1,6 @@
 /*
  * $cd /Jobs/$hunter.pwn
- * -----------------------------------------------------------------------------
- *              All copyrights reserved to City Of Angels Roleplay!
- * -----------------------------------------------------------------------------
+
  * Script name:         Deer Hunter
  * Script made by:      Runner
  * Script version:      1.3g HF
@@ -18,9 +16,6 @@
  * Enumator(s) created: 1
  * Command(s) created:  3 + 1(debugging)
  * About script:        Some ultra-wide text goes here!
- * -----------------------------------------------------------------------------
- *                        forum.cityofangels-roleplay.com
- * -----------------------------------------------------------------------------
  */
 
 #include <YSI_Coding\y_hooks>
