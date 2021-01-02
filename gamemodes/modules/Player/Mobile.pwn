@@ -3650,24 +3650,25 @@ forward OnTowerLoaded();
 public OnTowerLoaded()
 {
 	new
-		rows = cache_num_rows(),
-		tmp[ 24 ];
-	if(rows) {
-	    for(new twslotid = 0; twslotid < rows; twslotid++) {
-			cache_get_value_name_int(twslotid, "id", TowerInfo[ twslotid ][ twSQLID ]);
-			cache_get_value_name(twslotid, "network", tmp);
-			format(TowerInfo[ twslotid ][ twNetwork ], 24, tmp);
-	        cache_get_value_name_float(twslotid, "posx", TowerInfo[ twslotid ][ twPosX ]);
-	        cache_get_value_name_float(twslotid, "posy", TowerInfo[ twslotid ][ twPosY ]);
-	        cache_get_value_name_float(twslotid, "posz", TowerInfo[ twslotid ][ twPosZ ]);
-	        cache_get_value_name_float(twslotid, "posrx", TowerInfo[ twslotid ][ twPosRX ]);
-	        cache_get_value_name_float(twslotid, "posry", TowerInfo[ twslotid ][ twPosRY ]);
-	        cache_get_value_name_float(twslotid, "posrz", TowerInfo[ twslotid ][ twPosRZ ]);
-	        cache_get_value_name_float(twslotid, "radius", TowerInfo[ twslotid ][ twRadius ]);
-	        CreateTowerObject(twslotid);
-		}
-		printf("MySQL Report: Signal Tower data loaded (%d)!", rows);
-	} else print("MySQL Report: No Signal Tower data exist to load.");
+		rows = cache_num_rows();
+
+	if(!rows)
+		return print("MySQL Report: No Signal Tower data exist to load.");
+	
+	for(new twslotid = 0; twslotid < rows; twslotid++) 
+	{
+		cache_get_value_name_int(twslotid, "id", TowerInfo[ twslotid ][ twSQLID ]);
+		cache_get_value_name(twslotid, "network", TowerInfo[ twslotid ][ twNetwork ], 24);
+		cache_get_value_name_float(twslotid, "posx", TowerInfo[ twslotid ][ twPosX ]);
+		cache_get_value_name_float(twslotid, "posy", TowerInfo[ twslotid ][ twPosY ]);
+		cache_get_value_name_float(twslotid, "posz", TowerInfo[ twslotid ][ twPosZ ]);
+		cache_get_value_name_float(twslotid, "posrx", TowerInfo[ twslotid ][ twPosRX ]);
+		cache_get_value_name_float(twslotid, "posry", TowerInfo[ twslotid ][ twPosRY ]);
+		cache_get_value_name_float(twslotid, "posrz", TowerInfo[ twslotid ][ twPosRZ ]);
+		cache_get_value_name_float(twslotid, "radius", TowerInfo[ twslotid ][ twRadius ]);
+		CreateTowerObject(twslotid);
+	}
+	printf("MySQL Report: Signal Towers Loaded. (( %d / %d ))", rows, MAX_TOWERS);
 	return 1;
 }
 

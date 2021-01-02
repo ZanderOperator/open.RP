@@ -502,7 +502,7 @@ public OnComplexRoomsLoad()
         CreateCRoomEnter(row);
         Iter_Add(ComplexRoom, row);
     }
-    printf("MySQL Report: Complex rooms Loaded (%d)!", Iter_Count(ComplexRoom));
+    printf("MySQL Report: Complex Rooms Loaded. (( %d / %d ))", Iter_Count(ComplexRoom), MAX_COMPLEX_ROOMS);
     return 1;
 }
 
@@ -532,7 +532,7 @@ public OnServerComplexLoad()
         CreateComplexEnter(row);
         Iter_Add(Complex, row);
     }
-    printf("MySQL Report: Complex Loaded (%d)!", Iter_Count(Complex));
+    printf("MySQL Report: Complexes Loaded. (( %d / %d ))", Iter_Count(Complex), MAX_COMPLEX);
     return 1;
 }
 

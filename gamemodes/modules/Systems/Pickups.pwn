@@ -96,10 +96,11 @@ forward OnPickupsLoad();
 public OnPickupsLoad() 
 {
 	new
-		value[ 64 ],
-		count;	
-	cache_get_row_count(count);
-	if( !count ) return printf("MySQL Report: No pickups exist to load.");
+		count = cache_num_rows();	
+
+	if( !count ) 
+		return print("MySQL Report: No pickups exist to load.");
+
  	for(new b = 0; b < count; b++) 
 	 {
 		cache_get_value_name_int(b, 	"id"			, PickupInfo[b][epSQLID]);
@@ -112,10 +113,8 @@ public OnPickupsLoad()
 		cache_get_value_name_float(b, 	"exitx"			, PickupInfo[b][epExitx]);
 		cache_get_value_name_float(b, 	"exity"			, PickupInfo[b][epExity]);
 		cache_get_value_name_float(b, 	"exitz"			, PickupInfo[b][epExitz]);
-		cache_get_value_name(b, "enterdiscription", value); 		
-		format(PickupInfo[b][epEnterDiscription], 64, value);
-		cache_get_value_name(b, "discription", value); 						
-		format(PickupInfo[b][epDiscription], 64, value);
+		cache_get_value_name(b, "enterdiscription", PickupInfo[b][epEnterDiscription], 64); 		
+		cache_get_value_name(b, "discription", PickupInfo[b][epDiscription], 64); 						
 		cache_get_value_name_int(b, "viwo"				, PickupInfo[b][epViwo]);
 		cache_get_value_name_int(b, "organizations"		, PickupInfo[b][epOrganizations]);
 		cache_get_value_name_int(b, "job"				, PickupInfo[b][epJob]);
@@ -132,7 +131,7 @@ public OnPickupsLoad()
 		}
 		else Iter_Add(Pickup[PICKUP_TYPE_NON_ENTERABLE], b);
 	}
-	printf("MySQL Report: Pickups Loaded (%d)!", Iter_Count(PickupsIter));
+	printf("MySQL Report: Pickups Loaded. (( %d / %d ))", Iter_Count(PickupsIter), MAX_PICKUPS);
 	return 1;
 }
 

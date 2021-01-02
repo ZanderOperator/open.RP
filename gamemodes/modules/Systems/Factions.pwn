@@ -281,7 +281,7 @@ public OnFactionLoaded()
         LoadFactionWarehouse(tmpId);
         Iter_Add(Faction, tmpId);
     }
-    printf("MySQL Report: Factions loaded (%d)!", Iter_Count(Faction));
+    printf("MySQL Report: Factions Loaded. (( %d / %d ))", Iter_Count(Faction), MAX_FACTIONS);
     return 1;
 }
 
