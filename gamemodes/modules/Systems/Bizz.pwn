@@ -446,7 +446,7 @@ static stock PrintBizInfo(playerid, bizz)
         return 0;
 
     SendClientMessage(playerid, COLOR_LIGHTBLUE,"_______________________________________");
-    va_SendClientMessage(playerid, COLOR_WHITE, "Naziv biznisa: %s | Vlasnik: %s", BizzInfo[bizz][bMessage], GetPlayerNameFromSQL(BizzInfo[bizz][bOwnerID]));
+    va_SendClientMessage(playerid, COLOR_WHITE, "Naziv biznisa: %s | Vlasnik: %s", BizzInfo[bizz][bMessage], ConvertSQLIDToName(BizzInfo[bizz][bOwnerID]));
     va_SendClientMessage(playerid, COLOR_WHITE, "Novac u Blagajni: %d | Cijena usluge: %d", BizzInfo[bizz][bTill], BizzInfo[bizz][bEntranceCost]);
     va_SendClientMessage(playerid, COLOR_WHITE, "Cijena: %d | Level: %d", BizzInfo[bizz][bBuyPrice],BizzInfo[bizz][bLevelNeeded]);
     va_SendClientMessage(playerid, COLOR_WHITE, "Vrata: %s", (BizzInfo[bizz][bLocked]) ? ("Zakljucano") : ("Otkljucano"));
@@ -1130,7 +1130,7 @@ hook OnPlayerEnterDynamicCP(playerid, checkpointid)
     {
         format(string, sizeof(string), "Naziv: %s~n~Vlasnik: %s~n~Tip: %s~n~Vrata: %s~n~~w~Cijena ulaza: %d~g~$~n~~w~Unisten: %s",
             BizzInfo[bizz][bMessage],
-            GetPlayerNameFromSQL(BizzInfo[bizz][bOwnerID]),
+            ConvertSQLIDToName(BizzInfo[bizz][bOwnerID]),
             GetBiznisType(BizzInfo[bizz][bType]),
             BizzInfo[bizz][bLocked] == 1 ? ("~r~ZAKLJUCANA") : ("~g~OTKLJUCANA"),
             BizzInfo[bizz][bEntranceCost],

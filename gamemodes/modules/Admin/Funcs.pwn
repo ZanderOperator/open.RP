@@ -1093,7 +1093,7 @@ stock CheckInactivePlayer(playerid, sql)
 		TimeFormat(Timestamp:endstamp, ISO6801_TIME, endtime);
 		
 		format(motd, sizeof(motd), "%s - [SQLID: %d] | Pocetak: %s %s | Traje do: %s %s | Razlog: %s\n",
-			GetPlayerNameFromSQL(sqlid),
+			ConvertSQLIDToName(sqlid),
 			sqlid,
 			startdate,
 			starttime,
@@ -1150,7 +1150,7 @@ stock ListInactivePlayers(playerid)
 				TimeFormat(Timestamp:endstamp, ISO6801_TIME, endtime);
 				
 				format(motd, sizeof(motd), "%s - [SQLID: %d] | Pocetak: %s %s | Traje do: %s %s | Razlog: %s\n",
-					GetPlayerNameFromSQL(sqlid),
+					ConvertSQLIDToName(sqlid),
 					sqlid,
 					startdate,
 					starttime,

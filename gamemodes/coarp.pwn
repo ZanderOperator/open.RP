@@ -156,8 +156,7 @@
 // Custom Functions Declaration file - purpose is declaring custom funcs that will be hooked
 #include "modules/Preincludes/CustomHooks.inc"
 
-// Main Database Connection Handler
-new MySQL:g_SQL;
+
 	
 
 /*
@@ -521,16 +520,6 @@ public OnGameModeInit()
 	LoadCustomModels();
 	print("Report: Custom Models Loaded.");
 
-	// SQL stuff
-	g_SQL = mysql_connect_file();
-	if(g_SQL == MYSQL_INVALID_HANDLE)
-	{
-		print("[SERVER ERROR]: Failed to connect MySQL Database!");
-		return 1;
-	}
-	mysql_log(ERROR | WARNING);
-	print("Report: MySQL Connection & Log Mode Established.");
-
 	MapAndreas_Init(MAP_ANDREAS_MODE_FULL, "scriptfiles/SAfull.hmap");
 	print("Report: MapAndreas Initialised.");
 
@@ -600,9 +589,6 @@ public OnGameModeInit()
 	GMX = 2;
 	cseconds = SERVER_UNLOCK_TIME; 
 
-	// Global Loads - Database Load Functions
-	LoadServerData();
-
 	printf("Report: GameMode Time Set on %s", 
 		ReturnTime(),
 		SERVER_NAME
@@ -626,12 +612,6 @@ timer SafeResetPlayerVariables[3000](playerid)
 
 hook OnGameModeExit()
 {
-    // Actors
-    //DestroyRuletWorkers();
-
-    // SQL stuff
-    mysql_close();
-
     for (new i; i < MAX_OBJECTS; i++)
     {
         if (IsValidDynamicObject(i))
@@ -640,16 +620,6 @@ hook OnGameModeExit()
         if (IsValidObject(i))
             DestroyObject(i);
     }
-
-    return 1;
-}
-
-public OnQueryError(errorid, const error[], const callback[], const query[], MySQL:handle)
-{
-    new backtrace[2048];
-    GetAmxBacktrace(backtrace, sizeof(backtrace));
-    Log_Write("logfiles/AMX_Query_Log.txt", "\n[%s] - MySQL Error ID: %d\nError %s: Callback %s\nQuery: %s\n%s", ReturnDate(), errorid, error, callback, query, backtrace);
-    printf("[%s] - MySQL Error ID: %d\nError %s: Callback %s\nQuery: %s\n%s", ReturnDate(), errorid, error, callback, query, backtrace);
     return 1;
 }
 

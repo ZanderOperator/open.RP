@@ -592,7 +592,7 @@ static GetVehicleMDCInfo(playerid, vehicleid)
         tmpString[32];
 
     if (strlen(VehicleInfo[vehicleid][vNumberPlate]) > 1)
-        format(VehOwner, sizeof(VehOwner), GetPlayerNameFromSQL(VehicleInfo[vehicleid][vOwnerID]));
+        format(VehOwner, sizeof(VehOwner), ConvertSQLIDToName(VehicleInfo[vehicleid][vOwnerID]));
     else
         format(VehOwner, sizeof(VehOwner), "Unknown");
 
@@ -1232,7 +1232,7 @@ hook OnPlayerClickPlayerTD(playerid, PlayerText:playertextid)
         }
         if (playertextid == MDCGeneralButton[playerid])
         {
-            new player_sqlid = GetSQLFromPlayerName(TargetName[playerid]);
+            new player_sqlid = ConvertNameToSQLID(TargetName[playerid]);
             if(player_sqlid == -1)
                 return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "%s ne postoji registriran u bazi!", 
                     TargetName[playerid]
@@ -1250,7 +1250,7 @@ hook OnPlayerClickPlayerTD(playerid, PlayerText:playertextid)
         }
         if (playertextid == MDCVehButton[playerid])
         {
-            new player_sqlid = GetSQLFromPlayerName(TargetName[playerid]);
+            new player_sqlid = ConvertNameToSQLID(TargetName[playerid]);
             if(player_sqlid == -1)
                 return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "%s ne postoji registriran u bazi!", 
                     TargetName[playerid]
@@ -1311,7 +1311,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                 cache_get_value_name_int(0, "model", modelid);
 
                 new motd[150];
-                format(motd, sizeof(motd), "\t\tLS Telefonica - %s\nBroj mobitela: %d\nModel mobitela: %s\nVlasnik mobitela: %s", ReturnDate(), mobilenumber, GetMobileName(modelid), GetPlayerNameFromSQL(playersql));
+                format(motd, sizeof(motd), "\t\tLS Telefonica - %s\nBroj mobitela: %d\nModel mobitela: %s\nVlasnik mobitela: %s", ReturnDate(), mobilenumber, GetMobileName(modelid), ConvertSQLIDToName(playersql));
                 ShowPlayerDialog(playerid, DIALOG_MDC_PHONE_INFO, DIALOG_STYLE_MSGBOX, "MDC - MOBILE", motd, "Close", "");
             }
             MySQL_TQueryInline(g_SQL,  
@@ -1327,7 +1327,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
             if (strfind(inputtext, "_", true) == -1) 
                 return ShowPlayerDialog(playerid, DIALOG_MDC_PLAYER, DIALOG_STYLE_INPUT, "Mobile Data Computer - PLAYER", "Unesite ime i prezime osobe\nNAPOMENA: Mora biti s znakom '_'!", "Input", "Abort");
             
-            new player_sqlid = GetSQLFromPlayerName(TargetName[playerid]);
+            new player_sqlid = ConvertNameToSQLID(TargetName[playerid]);
             if(player_sqlid == -1)
                 return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "%s ne postoji registriran u bazi!", 
                     TargetName[playerid]

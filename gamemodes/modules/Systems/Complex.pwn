@@ -574,7 +574,7 @@ hook OnPlayerEnterDynamicCP(playerid, checkpointid)
         {
             format(string, sizeof(string), "Naziv: %s~n~Vlasnik: %s~n~Cijena: %d~g~$~n~~w~Broj soba: %s",
                 ComplexInfo[complex_id][cName],
-                GetPlayerNameFromSQL(ComplexInfo[complex_id][cOwnerID]),
+                ConvertSQLIDToName(ComplexInfo[complex_id][cOwnerID]),
                 ComplexInfo[complex_id][cPrice],
                 GetComplexRooms(ComplexInfo[complex_id][cSQLID])
             );
@@ -606,7 +606,7 @@ hook OnPlayerEnterDynamicCP(playerid, checkpointid)
         if (ComplexRoomInfo[croom_id][cOwnerID] != -1)
         {
             format(string, sizeof(string), "Vlasnik: %s~n~Adresa: %s~n~Cijena renta: %d~g~$~n~~w~Ocjena: %d",
-                GetPlayerNameFromSQL(ComplexRoomInfo[croom_id][cOwnerID]),
+                ConvertSQLIDToName(ComplexRoomInfo[croom_id][cOwnerID]),
                 ComplexRoomInfo[croom_id][cAdress],
                 ComplexRoomInfo[croom_id][cValue],
                 ComplexRoomInfo[croom_id][cQuality]
@@ -754,7 +754,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                         complex = Player_InfrontApartment(playerid);
                     if (complex == INVALID_COMPLEX_ID) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Morate se nalaziti ispred stana od stanara.");
 
-                    va_SendClientMessage(playerid, COLOR_RED, "[ ! ] Uspjesno ste izbacili %s iz vaseg Complex-a!", GetPlayerNameFromSQL(ComplexRoomInfo[complex][cOwnerID]));
+                    va_SendClientMessage(playerid, COLOR_RED, "[ ! ] Uspjesno ste izbacili %s iz vaseg Complex-a!", ConvertSQLIDToName(ComplexRoomInfo[complex][cOwnerID]));
 
                     mysql_fquery(g_SQL, "UPDATE server_complex_rooms SET ownerid = '0' WHERE id = '%d'",
                         ComplexRoomInfo[complex][cSQLID]
