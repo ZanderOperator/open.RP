@@ -2,10 +2,12 @@
 =============================================================================================
 
 	open.RP Role Play v0.5.5.
-	Authors:  v1rtuality, Zander Operator, cofi, Woo, B-Matt, kiddo, ShadY, hodza, Runner, Khawaja
+	Authors: v1rtuality, Zander Operator, cofi, Woo, B-Matt, kiddo, ShadY, hodza, Runner, Khawaja
 	Web: https://open.mp/
+
 =============================================================================================
 */
+
 
 // Disable const correctness warnings on the community compiler
 #pragma warning disable 239
@@ -61,8 +63,6 @@
 #define	MAX_IP_CONNECTS 			3
 #define FIX_file_inc 				0
 
-// Script Mode settings
-//#define COA_TEST
 
 /*
 	#### ##    ##  ######  ##       ##     ## ########  ########  ######
@@ -73,6 +73,8 @@
 	 ##  ##   ### ##    ## ##       ##     ## ##     ## ##       ##    ##
 	#### ##    ##  ######	########  #######  ########  ########  ######
 */
+
+
 // Fixes
 #include <fixes>
 
@@ -128,6 +130,7 @@
 // SHA-1 of latest commit - GIT_REV define
 #include "revision.inc"
 
+
 /*
 	########  ######## ######## #### ##    ## ########  ######
 	##     ## ##       ##        ##  ###   ## ##       ##    ##
@@ -138,11 +141,12 @@
 	########  ######## ##       #### ##    ## ########  ######
 */
 
+
 // Server Informations - When chaning SCRIPT_VERSION, you MUST upload new "Changelog.txt" in /scriptfiles
 #define SERVER_NAME								"open.RP"
-#define HOSTNAME 								#SERVER_NAME"[0.3DL] - Summer Update"
+#define HOSTNAME 								#SERVER_NAME"[0.3DL]"
 #define WEB_URL									"https://open.mp/"
-#define SCRIPT_VERSION							#SERVER_NAME" v18.6.0.-"#GIT_REV
+#define SCRIPT_VERSION							#SERVER_NAME" v0.5.0.-"#GIT_REV
 
 // The rest of the defines
 #include "modules/Preincludes/Defines.inc"
@@ -152,8 +156,6 @@
 #include "modules/Preincludes/Header.inc"
 // Custom Functions Declaration file - purpose is declaring custom funcs that will be hooked
 #include "modules/Preincludes/CustomHooks.inc"
-
-
 	
 
 /*
@@ -165,6 +167,7 @@
 	  ## ##   ##     ## ##    ##  ##    ##
 	   ###    ##     ## ##     ##  ######
 */
+
 
 new
 	ghour 					= 0,
@@ -274,8 +277,6 @@ new
 	regenabled = false;
 
 
-
-
 /*
 	##     ##  #######  ########  ##     ## ##       ########  ######
 	###   ### ##     ## ##     ## ##     ## ##       ##       ##    ##
@@ -286,11 +287,13 @@ new
 	##     ##  #######  ########   #######  ######## ########  ######
 */
 
+
 #include "modules/Server/Core.inc"
 #include "modules/Systems/Core.inc"
 #include "modules/Admin/Core.inc"
 #include "modules/Player/Core.inc"
 #include "modules/Char/Core.inc"
+
 
 /*
 	########    ###     ######  ##    ##  ######
@@ -301,6 +304,7 @@ new
 	   ##    ##     ## ##    ## ##   ##  ##    ##
 	   ##    ##     ##  ######  ##    ##  ######
 */
+
 
 #if defined AUTO_RESTART_SEQ
 StartGMX()
@@ -488,6 +492,7 @@ public ServerRestartRequest(index, response_code, data[])
         printf("[ERROR]: Automatic Server Restart via API was unsucessful! Response Code: %d", response_code);
 }
 
+
 /*
 	######## ##     ## ##    ##  ######  ######## ####  #######  ##    ##  ######
 	##       ##     ## ###   ## ##    ##    ##     ##  ##     ## ###   ## ##    ##
@@ -501,6 +506,7 @@ main()
 {
 	AntiDeAMX();
 }
+
 
 public OnGameModeInit()
 {
@@ -569,7 +575,6 @@ public OnGameModeInit()
 	SendRconCommand("messageholelimit 9000");
 	SendRconCommand("ackslimit 11000");
 	print("Report: GameMode Settings Loaded.");
-
 
 	// Server Informations
 	new gstring[64];
@@ -952,7 +957,6 @@ hook OnPlayerText(playerid, text[])
 	}
 	return 0;
 }
-
 
 // TODO: should be a part of Player module
 #include <YSI_Coding\y_hooks>
