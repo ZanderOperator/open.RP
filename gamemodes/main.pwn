@@ -78,6 +78,10 @@
 // Fixes
 #include <fixes>
 
+// bcrypt encription
+#include <bcrypt>
+#define BCRYPT_COST 12
+
 // New SA-MP callbacks by Emmet
 #include <callbacks> // legacy
 
@@ -106,10 +110,6 @@
 #include <YSI_Server\y_flooding>
 #include <YSI_Visual\y_commands>
 #include <YSI_Game\y_vehicledata>
-
-// BCrypt by lassir
-#include <bcrypt>
-#define BCRYPT_COST 12
 
 // Other pre-includes
 #include <OnPlayerSlowUpdate>
@@ -142,7 +142,11 @@
 */
 
 
-// Server Informations - When chaning SCRIPT_VERSION, you MUST upload new "Changelog.txt" in /scriptfiles
+/* 
+	Server Informations 
+		- When chaning SCRIPT_VERSION, you MUST upload new "Changelog.txt" 
+			in /scriptfiles in order for players to see what's new InGame
+*/
 #define SERVER_NAME								"open.RP"
 #define HOSTNAME 								#SERVER_NAME"[0.3DL]"
 #define WEB_URL									"https://open.mp/"
