@@ -2398,7 +2398,7 @@ CMD:prisonex(playerid, params[])
     if (sscanf(params,"s[24]is[20]", targetname, sati, reason)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /prisonex [Ime] [minute] [Razlog]");
     if (strlen(reason) < 1 || strlen(reason) > 20) return SendClientMessage(playerid, COLOR_RED, "Ne mozete ispod 0 ili preko 20 znakova za razlog!");
 
-	new sqlid = GetSQLFromPlayerName(targetname);
+	new sqlid = ConvertNameToSQLID(targetname);
 	if(sqlid == -1)
 		return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "Account %s doesn't exist.", targetname);
 
@@ -2953,7 +2953,7 @@ CMD:unban(playerid, params[])
     if (PlayerInfo[playerid][pAdmin] < 2) return SendClientMessage(playerid, COLOR_RED, "Niste ovlasteni za koristenje ove komande!");
 	new targetname[MAX_PLAYER_NAME];
 	if(sscanf(params, "s[24]", targetname )) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /unban [Igracev Nick]");
-	new sqlid = GetSQLFromPlayerName(targetname);
+	new sqlid = ConvertNameToSQLID(targetname);
 	if(sqlid == -1)
 		SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "Account %s doesn't exist in database!", targetname);
 
@@ -3439,7 +3439,7 @@ CMD:checkoffline(playerid, params[])
 	if (sscanf(params, "s[24]", targetname)) 
 		return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /checkoffline [nickname]");
     
-	new sqlid = GetSQLFromPlayerName(targetname);
+	new sqlid = ConvertNameToSQLID(targetname);
 	if(sqlid == -1)
 		return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "Account %s doesn't exist in database!", targetname);
 

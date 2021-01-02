@@ -558,7 +558,7 @@ hook OnPlayerEnterDynArea(playerid, areaid)
     else
     {
         format(string, sizeof(string), "Vlasnik: %s~n~Adresa: %s~n~Cijena: %d~g~$",
-            GetPlayerNameFromSQL(GarageInfo[garage][gOwnerID]),
+            ConvertSQLIDToName(GarageInfo[garage][gOwnerID]),
             GarageInfo[garage][gAdress],
             GarageInfo[garage][gPrice]
         );

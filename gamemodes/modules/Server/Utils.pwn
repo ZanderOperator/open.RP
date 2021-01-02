@@ -2,8 +2,6 @@
 
 #define MAX_SUBJECTS_IN_RANGE			(15)
 
-// Main MySQL query string
-new va_query[2048];
 
 /*
 	##     ##    ###     ######  ########   #######   ######  
@@ -141,40 +139,6 @@ stock GetName(playerid, bool:replace=true)
 			strreplace(name, '_', ' ');
 	}
 	return name;
-}
-
-stock GetSQLFromPlayerName(const playername[])
-{
-	new 
-		sqlid = -1,
-		Cache:result = mysql_query(g_SQL, va_fquery(g_SQL, "SELECT sqlid FROM accounts WHERE name = '%e'", playername));
-
-	new rows;
-	cache_get_row_count(rows);
-	if(!rows)
-		return -1;
-
-	cache_get_value_name_int(0, "sqlid", sqlid);
-	cache_delete(result);
-	return sqlid;
-}
-
-stock GetPlayerNameFromSQL(sqlid)
-{
-    new
-		dest[MAX_PLAYER_NAME];
-	if( sqlid > 0 ) {
-	    new	Cache:result,
-			playerQuery[ 128 ];
-
-		format(playerQuery, sizeof(playerQuery), "SELECT name FROM accounts WHERE sqlid = '%d'", sqlid);
-		result = mysql_query(g_SQL, playerQuery);
-		cache_get_value_index(0, 0, dest);
-		cache_delete(result);
-	} else {
-		format(dest, MAX_PLAYER_NAME, "None");
-	}
-	return dest;
 }
 
 GetVehicleDriver(vehicleid)
@@ -1392,27 +1356,44 @@ stock CheckStringForIP(text[])
 	return false;
 }
 
-stock ConvertNameToSQLID(const name[])
+ConvertNameToSQLID(const playername[])
 {
-	new sqlid = -1;
-	
 	new 
-		Cache:result = mysql_query(g_SQL, va_fquery(g_SQL, "SELECT sqlid FROM accounts WHERE name = '%e'", name));
+		sqlid = -1,
+		Cache:result = mysql_query(g_SQL, 
+							va_fquery(g_SQL, 
+								"SELECT sqlid FROM accounts WHERE name = '%e'", 
+								playername
+							)),
+		rows;
+
+	cache_get_row_count(rows);
+	if(!rows)
+		return -1;
+
 	cache_get_value_name_int(0, "sqlid", sqlid);
 	cache_delete(result);
 	return sqlid;
 }
 
+
 stock ConvertSQLIDToName(id)
 {
-	new nick[24], 
-		sqlquery[128];
-	format( sqlquery, sizeof(sqlquery), "SELECT name FROM accounts WHERE sqlid = '%d'", id);
-	
 	new 
-		Cache:result = mysql_query(g_SQL, sqlquery);
-	cache_get_value_name(0, "name", nick, 24);
-	cache_delete(result);
+		nick[MAX_PLAYER_NAME];
+		
+	new 
+		Cache:result = 	mysql_query(g_SQL, 
+							va_fquery(g_SQL, "SELECT name FROM acounts WHERE sqlid = '%d'", id)
+						);
+	
+	if(cache_num_rows() == 0)
+		strcpy(nick, "None", MAX_PLAYER_NAME);
+	else
+	{
+		cache_get_value_name(0, "name", nick, MAX_PLAYER_NAME);
+		cache_delete(result);
+	}
 	return nick;
 }
 
@@ -1620,27 +1601,6 @@ stock GetXYInFrontOfObject(objectid, &Float:x, &Float:y, Float:distance, bool:ro
 
 stock randomEx(min, max)
     return random(max - min) + min;
-
-// Formated mysq_tquery
-mysql_fquery(MySQL:connectionHandle, const fquery[], va_args<>)
-{
-	mysql_format(connectionHandle, va_query, sizeof(va_query), fquery, va_start<2>);
-	return mysql_tquery(connectionHandle, va_query);
-}
-
-// Formated mysql_pquery
-mysql_fquery_ex(MySQL:connectionHandle, const fquery[], va_args<>)
-{
-	mysql_format(connectionHandle, va_query, sizeof(va_query), fquery, va_start<2>);
-	return mysql_pquery(connectionHandle, va_query);
-}
-
-// Formated mysql_format with direct string returning
-va_fquery(MySQL:connectionHandle, const fquery[], va_args<>)
-{
-	mysql_format(connectionHandle, va_query, sizeof(va_query), fquery, va_start<2>);
-	return va_query;
-}
 
 ReturnName(playerid)
 {

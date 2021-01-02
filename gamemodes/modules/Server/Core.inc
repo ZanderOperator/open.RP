@@ -1,3 +1,4 @@
+#include "modules/Server/MySQL.pwn"
 #include "modules/Server/ModelDialog.pwn"
 #include "modules/Server/Color.pwn"
 #include "modules/Server/Checkpoints.pwn"

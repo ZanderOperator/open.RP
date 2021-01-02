@@ -99,7 +99,7 @@ timer ANPRTimer[2000](playerid)
                 {
                     format(string, sizeof(string), "~y~Registracija: ~w~%s~n~~y~Owner: ~w~%s~n~~y~Kazne: ~w~%d",
                         VehicleInfo[i][vNumberPlate],
-                        GetPlayerNameFromSQL(VehicleInfo[i][vOwnerID]),
+                        ConvertSQLIDToName(VehicleInfo[i][vOwnerID]),
                         count
                     );
 

@@ -988,7 +988,7 @@ public OnFactionMembersList(playerid)
     {
         cache_get_value_name_int( row, "sqlid", sqlid);
         cache_get_value_name_int( row, "facRank", memberRank);
-        va_SendClientMessage(playerid, COLOR_WHITE, "[IME]: %s | [RANK]: %d", GetPlayerNameFromSQL(sqlid), memberRank);
+        va_SendClientMessage(playerid, COLOR_WHITE, "[IME]: %s | [RANK]: %d", ConvertSQLIDToName(sqlid), memberRank);
     }
     return 1;
 }
@@ -1901,7 +1901,7 @@ CMD:faction(playerid, params[])
         new targetname[MAX_PLAYER_NAME];
         if (sscanf(params, "s[16]s[24]", option, targetname)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /faction uninviteex [ime]");
         if (!IsValidNick(targetname)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Morate unijeti roleplay nick!");
-        new sqlid = GetSQLFromPlayerName(targetname);
+        new sqlid = ConvertNameToSQLID(targetname);
         if(sqlid == -1)
             return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "Korisnik %s ne postoji u bazi podataka.", targetname);
 

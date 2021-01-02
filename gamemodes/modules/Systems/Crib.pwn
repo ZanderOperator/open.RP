@@ -489,7 +489,7 @@ static CreateHouseEnter(houseid)
 static stock ShowHouseInfo(playerid, house)
 {
     // TODO: maybe convert this to dialog
-    va_SendClientMessage(playerid, COLOR_WHITE, "Vlasnik: %s", GetPlayerNameFromSQL(HouseInfo[house][hOwnerID]));
+    va_SendClientMessage(playerid, COLOR_WHITE, "Vlasnik: %s", ConvertSQLIDToName(HouseInfo[house][hOwnerID]));
     va_SendClientMessage(playerid, COLOR_WHITE, "Sef: "COL_GREEN"%s", (HouseInfo[house][hSafe]) ? ("DA") : ("NE"));
     if (!HouseInfo[house][hAlarm])
     {
@@ -1342,7 +1342,7 @@ hook OnPlayerEnterDynamicCP(playerid, checkpointid)
         {
             format(string, sizeof(string), "ID: %d~n~Vlasnik: %s~n~Adresa: %s~n~Cijena: %d~g~$~n~~w~Rent: %d~g~$~n~~w~Level: %d",
                 house,
-                GetPlayerNameFromSQL(HouseInfo[house][hOwnerID]),
+                ConvertSQLIDToName(HouseInfo[house][hOwnerID]),
                 HouseInfo[house][hAdress],
                 HouseInfo[house][hValue],
                 HouseInfo[house][hRent],
@@ -1353,7 +1353,7 @@ hook OnPlayerEnterDynamicCP(playerid, checkpointid)
         {
             format(string, sizeof(string), "ID: %d~n~Vlasnik: %s~n~Adresa: %s~n~Cijena: %d~g~$~n~~w~Level: %d",
                 house,
-                GetPlayerNameFromSQL(HouseInfo[house][hOwnerID]),
+                ConvertSQLIDToName(HouseInfo[house][hOwnerID]),
                 HouseInfo[house][hAdress],
                 HouseInfo[house][hValue],
                 HouseInfo[house][hLevel]
