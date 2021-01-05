@@ -20,7 +20,7 @@
     ########  ######## ##       #### ##    ## ######## 
 */
 
-#define MAX_GPS_LOCATIONS                   (80)
+const MAX_GPS_LOCATIONS = 80;
 
 /*
     ##     ##    ###    ########   ######
@@ -45,7 +45,9 @@ enum ENUM_GPS_DATA
 {
     gpsExists,
     gpsID,
-    Float:gpsPos[3],
+    Float:gpsPosX,
+    Float:gpsPosY,
+    Float:gpsPosZ,
     gpsName[32],
     gpsMapIcon,
     gpsAdmin
@@ -114,9 +116,9 @@ Public: GPS_Loaded()
 
         cache_get_value_name_int  (i,    "id"        ,    GPS_data[i][gpsID]);
         cache_get_value_name      (i,    "gpsName"   ,    GPS_data[i][gpsName], 32);
-        cache_get_value_name_float(i,    "gpsPosX"   ,    GPS_data[i][gpsPos][0]);
-        cache_get_value_name_float(i,    "gpsPosY"   ,    GPS_data[i][gpsPos][1]);
-        cache_get_value_name_float(i,    "gpsPosZ"   ,    GPS_data[i][gpsPos][2]);
+        cache_get_value_name_float(i,    "gpsPosX"   ,    GPS_data[i][gpsPosX]);
+        cache_get_value_name_float(i,    "gpsPosY"   ,    GPS_data[i][gpsPosY]);
+        cache_get_value_name_float(i,    "gpsPosZ"   ,    GPS_data[i][gpsPosZ]);
         cache_get_value_name_int  (i,    "gpsMapIcon",    GPS_data[i][gpsMapIcon]);
         cache_get_value_name_int  (i,    "admin_gps" ,    GPS_data[i][gpsAdmin]);
 
@@ -132,9 +134,9 @@ static GPS_Save(gpsid)
         "UPDATE gps SET gpsName = '%e', gpsPosX = '%.4f', gpsPosY = '%.4f', gpsPosZ = '%.4f',\n\
             gpsMapIcon = '%d', admin_gps = '%d' WHERE id = '%d'",
         GPS_data[gpsid][gpsName],
-        GPS_data[gpsid][gpsPos][0],
-        GPS_data[gpsid][gpsPos][1],
-        GPS_data[gpsid][gpsPos][2],
+        GPS_data[gpsid][gpsPosX],
+        GPS_data[gpsid][gpsPosY],
+        GPS_data[gpsid][gpsPosZ],
         GPS_data[gpsid][gpsMapIcon],
         GPS_data[gpsid][gpsAdmin],
         GPS_data[gpsid][gpsID]
@@ -150,9 +152,9 @@ static GPS_Create(gps_name[], Float:X, Float:Y, Float:Z)
         return -1;
 
     GPS_data[free_id][gpsExists] = true;
-    GPS_data[free_id][gpsPos][0]   = X;
-    GPS_data[free_id][gpsPos][1]   = Y;
-    GPS_data[free_id][gpsPos][2]   = Z;
+    GPS_data[free_id][gpsPosX]   = X;
+    GPS_data[free_id][gpsPosY]   = Y;
+    GPS_data[free_id][gpsPosZ]   = Z;
     GPS_data[free_id][gpsMapIcon]  = -1;
     GPS_data[free_id][gpsAdmin]    = 0;
 
@@ -356,9 +358,9 @@ hook OnPlayerSpawn(playerid)
         {
             SetPlayerMapIcon(playerid, 
                 GPS_data[i][gpsID],     
-                GPS_data[i][gpsPos][0], 
-                GPS_data[i][gpsPos][1], 
-                GPS_data[i][gpsPos][2], 
+                GPS_data[i][gpsPosX], 
+                GPS_data[i][gpsPosY], 
+                GPS_data[i][gpsPosZ], 
                 GPS_data[i][gpsMapIcon], 
                 0, 
                 MAPICON_LOCAL
@@ -468,14 +470,14 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
             GPS_DistanceTD(playerid, true);
 
             GPSInfo[playerid][gGPSID] = enum_id;
-            GPSInfo[playerid][gX] = GPS_data[enum_id][gpsPos][0];
-            GPSInfo[playerid][gY] = GPS_data[enum_id][gpsPos][1];
-            GPSInfo[playerid][gZ] = GPS_data[enum_id][gpsPos][2];
+            GPSInfo[playerid][gX] = GPS_data[enum_id][gpsPosX];
+            GPSInfo[playerid][gY] = GPS_data[enum_id][gpsPosY];
+            GPSInfo[playerid][gZ] = GPS_data[enum_id][gpsPosZ];
 
             SetPlayerCheckpoint(playerid, 
-                GPS_data[enum_id][gpsPos][0], 
-                GPS_data[enum_id][gpsPos][1], 
-                GPS_data[enum_id][gpsPos][2], 
+                GPS_data[enum_id][gpsPosX], 
+                GPS_data[enum_id][gpsPosY], 
+                GPS_data[enum_id][gpsPosZ], 
                 5.0
             );
             SendFormatMessage(playerid, 
@@ -494,10 +496,10 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                 portedid = playerid;
             
             if (!IsPlayerInAnyVehicle(portedid))
-                SetPlayerPosEx(portedid, GPS_data[listitem][gpsPos][0], GPS_data[listitem][gpsPos][1], GPS_data[listitem][gpsPos][2]);
+                SetPlayerPosEx(portedid, GPS_data[listitem][gpsPosX], GPS_data[listitem][gpsPosY], GPS_data[listitem][gpsPosZ]);
             
             if (GetPlayerState(portedid) == PLAYER_STATE_DRIVER)
-                AC_SetVehiclePos(GetPlayerVehicleID(portedid), GPS_data[listitem][gpsPos][0], GPS_data[listitem][gpsPos][1], GPS_data[listitem][gpsPos][2]);
+                AC_SetVehiclePos(GetPlayerVehicleID(portedid), GPS_data[listitem][gpsPosX], GPS_data[listitem][gpsPosY], GPS_data[listitem][gpsPosZ]);
                         
             if(portedid != playerid)
             {		        
@@ -546,7 +548,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
             if (mapicon != -1)
             {
                 foreach(new i: Player)
-                    SetPlayerMapIcon(i, GPS_data[gpsid][gpsID], GPS_data[gpsid][gpsPos][0], GPS_data[gpsid][gpsPos][1], GPS_data[gpsid][gpsPos][2], GPS_data[gpsid][gpsMapIcon], 0, MAPICON_LOCAL);
+                    SetPlayerMapIcon(i, GPS_data[gpsid][gpsID], GPS_data[gpsid][gpsPosX], GPS_data[gpsid][gpsPosY], GPS_data[gpsid][gpsPosZ], GPS_data[gpsid][gpsMapIcon], 0, MAPICON_LOCAL);
                 
                 SendFormatMessage(playerid,
                     MESSAGE_TYPE_SUCCESS,
@@ -583,9 +585,9 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                 Float:Z;
 
             GetPlayerPos(playerid, X, Y, Z);
-            GPS_data[gpsid][gpsPos][0] = X;
-            GPS_data[gpsid][gpsPos][1] = Y;
-            GPS_data[gpsid][gpsPos][2] = Z;
+            GPS_data[gpsid][gpsPosX] = X;
+            GPS_data[gpsid][gpsPosY] = Y;
+            GPS_data[gpsid][gpsPosZ] = Z;
             GPS_Save(gpsid);
 
             SendFormatMessage(playerid,
