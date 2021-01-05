@@ -15,8 +15,6 @@
 #define PlayerNewUser_Set(%0,%1) \
 		Bit1_Set(gr_NewUser,%0,%1)
 
-#define CP_JOB_GPS		(150)
-
 // Player Module Includes at the bottom
 
 
@@ -30,7 +28,8 @@
 	   ##    #### ##     ## ######## ##     ##  ######        ###    ##     ## ##     ##  ######  
 */
 
-new ADOText[MAX_PLAYERS],
+static 
+	ADOText[MAX_PLAYERS],
 	PlayerText:BlindTD[MAX_PLAYERS] = { PlayerText:INVALID_TEXT_DRAW, ... };
 
 /*
@@ -50,7 +49,6 @@ enum E_ADO_LABEL_INFO
 }
 
 static
-    bool:BlockedLive[MAX_PLAYERS],
     bool:BlockedOOC[MAX_PLAYERS],
     bool:HasDice[MAX_PLAYERS],
     bool:HasDrink[MAX_PLAYERS],
@@ -68,19 +66,7 @@ new
     PlayerFPS[MAX_PLAYERS],
     PlayerFPSUnix[MAX_PLAYERS];
 
-enum E_DATA_TAXI 
-{
-	bool: eTaxiDuty,
-	bool: eTaxiActive,
-	eTaxiDriver,
-	eTaxiPassanger,
-	eTaxiMetersFare,
-	eTaxiTraveled,
-	eTaxiFare,
-	eTaxiPayment,
-	Float: eTaxiStartPos[3],
-}
-new TaxiData[MAX_PLAYERS][E_DATA_TAXI];
+
 	
 /*
 	######## ##     ## ##    ##  ######  ######## ####  #######  ##    ##  ######  
@@ -91,17 +77,6 @@ new TaxiData[MAX_PLAYERS][E_DATA_TAXI];
 	##       ##     ## ##   ### ##    ##    ##     ##  ##     ## ##   ### ##    ## 
 	##        #######  ##    ##  ######     ##    ####  #######  ##    ##  ######  
 */
-
-// TODO: "BlockedLive" / OnAirBlocked should be moved to Systems/LSN.pwn module
-stock bool:Player_OnAirBlocked(playerid)
-{
-    return BlockedLive[playerid];
-}
-
-stock Player_SetOnAirBlocked(playerid, bool:v)
-{
-    BlockedLive[playerid] = v;
-}
 
 stock bool:Player_HasBlockedOOCChat(playerid)
 {
@@ -1021,10 +996,6 @@ timer PlayerGlobalTask[1000](playerid)
 	if( gettimestamp() >= PlayerTick[playerid][ptMainTimer] )
 		PlayerMinuteTask(playerid);	
 	
-	if(TaxiData[playerid][eTaxiActive] == true) 
-		_TaximeterCount(playerid);
-
-	
 	PlayerSyncs[ playerid ] = false;
 	new tmphour,tmpmins,tmpsecs;
 	GetServerTime(tmphour,tmpmins,tmpsecs);
@@ -1053,16 +1024,7 @@ timer PlayerGlobalTask[1000](playerid)
 			
 			VehicleInfo[pcar][vEngineRunning] = false;
 		}
-	}
-	if(Player_GpsActivated(playerid))
-		gps_GetDistance(playerid, GPSInfo[playerid][gGPSID], GPSInfo[playerid][gX], GPSInfo[playerid][gY], GPSInfo[playerid][gZ]);
-	
-	CheckWoundedPlayer(playerid);
-	
-	SprayingBarChecker(playerid);
-	SprayingTaggTimer(playerid);
-	
-	PackageLossCheck(playerid);
+	}	
 	return 1;
 }
 
@@ -1105,7 +1067,8 @@ stock ChangePlayerName(playerid, newname[], type, bool:admin_cn = false)
 	#endif
 	
 	// MySQL
-	mysql_fquery(g_SQL, "INSERT INTO player_changenames(player_id, old_name, new_name) VALUES ('%d','%e','%e')",
+	mysql_fquery(g_SQL, 
+		"INSERT INTO player_changenames(player_id, old_name, new_name) VALUES ('%d','%e','%e')",
 		PlayerInfo[ playerid ][ pSQLID ],
 		oldname,
 		newname
@@ -1808,8 +1771,6 @@ hook function ResetPlayerVariables(playerid)
     PlayerFPS[playerid]       	= 0;
 	PlayerFPSUnix[playerid]		= gettimestamp();
 
-    // TODO: should be moved to Systems/LSN.pwn module along with getter/setter impl.
-    BlockedLive[playerid] = false;
     BlockedOOC[playerid] = false;
 
     HasDice[playerid] = false;

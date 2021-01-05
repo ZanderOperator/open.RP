@@ -852,7 +852,17 @@ stock UpdateSprayTagProgress(playerid, tagid)
        ##    #### ##     ## ######## ##     ##  ######  
 */
 
-Public:SprayingBarChecker(playerid)
+ptask GraffitiTimer[1000](playerid)
+{
+    if(!SafeSpawned[playerid])
+        return 1;
+        
+    SprayingBarChecker(playerid);
+    SprayingTaggTimer(playerid);
+    return 1;
+}
+
+static SprayingBarChecker(playerid)
 {
     if (GrafCreateStarted[playerid])
     {
@@ -868,7 +878,7 @@ Public:SprayingBarChecker(playerid)
     return 1;
 }
 
-Public:SprayingTaggTimer(playerid)
+static SprayingTaggTimer(playerid)
 {
     new newkeys, ud, lf; // lf = left-right=lr
     GetPlayerKeys(playerid, newkeys, ud, lf);
@@ -1288,7 +1298,7 @@ CMD:graffiti(playerid, params[])
     {
         new giveplayerid;
         if (PlayerInfo[playerid][pAdmin] < 3) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ovlasteni za koristenje ove komande!");
-        if (sscanf(params, "s[9]u", pick, giveplayerid)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /graffit aprove [playerid/dio imena]");
+        if (sscanf(params, "s[9]u", pick, giveplayerid)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /graffit aprove [playerid / Part of name]");
         if (giveplayerid == INVALID_PLAYER_ID) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Krivi playerid!");
 
         GrafApproved[giveplayerid] = true;

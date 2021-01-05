@@ -1406,7 +1406,7 @@ CMD:afaction(playerid, params[])
     else if (!strcmp(option, "makeleader", true))
     {
         new targetid, fid;
-        if (sscanf(params, "s[16]ui", option, targetid, fid)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /afaction makeleader [ID/Dio Imena] [ID Organizacije]");
+        if (sscanf(params, "s[16]ui", option, targetid, fid)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /afaction makeleader [ID / Part of name] [ID Organizacije]");
         if (targetid == INVALID_PLAYER_ID) return SendClientMessage(playerid, COLOR_RED, "Invalidan ID igraca!");
         if (fid < 1 || fid > MAX_FACTIONS) return SendClientMessage(playerid, COLOR_RED, "Invalidan ID fakcije");
 
@@ -1447,7 +1447,7 @@ CMD:afaction(playerid, params[])
     else if (!strcmp(option, "removeleader", true))
     {
         new targetid;
-        if (sscanf(params, "s[16]u", option, targetid)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /afaction removeleader [ID/Dio Imena]");
+        if (sscanf(params, "s[16]u", option, targetid)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /afaction removeleader [ID / Part of name]");
         if (targetid == INVALID_PLAYER_ID) return SendClientMessage(playerid, COLOR_RED, "Invalidan ID igraca!");
         if (PlayerFaction[targetid][pLeader] == 0) return SendClientMessage(playerid, COLOR_RED, "Taj igrac nije lider!");
 
@@ -1576,7 +1576,7 @@ CMD:faction(playerid, params[])
     {
         new targetid;
         if (!PlayerFaction[playerid][pLeader]) return SendClientMessage(playerid, COLOR_RED, "Da bi koristili ovu komandu morate biti lider!");
-        if (sscanf(params, "s[16]u", option, targetid)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /faction invite [ID/DioImena]");
+        if (sscanf(params, "s[16]u", option, targetid)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /faction invite [ID / Part of name]");
         if (targetid == INVALID_PLAYER_ID) return SendClientMessage(playerid, COLOR_RED, "Invalidan ID igraca!");
         if (PlayerFaction[targetid][pMember] != 0) return SendClientMessage(playerid, COLOR_RED, "Taj igrac je vec u nekoj organizaciji!");
 
@@ -1719,7 +1719,7 @@ CMD:faction(playerid, params[])
     {
         new playername[MAX_PLAYER_NAME], targetname[MAX_PLAYER_NAME], targetid;
         if (PlayerFaction[playerid][pLeader] == 0) return SendClientMessage(playerid, COLOR_RED, "Da bi koristili ovu komandu morate biti lider!");
-        if (sscanf(params, "s[16]u", option, targetid)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /faction uninvite [ID/DioImena]");
+        if (sscanf(params, "s[16]u", option, targetid)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /faction uninvite [ID / Part of name]");
         if (targetid == INVALID_PLAYER_ID) return SendClientMessage(playerid, COLOR_RED, "Invalidan ID igraca!");
         if (PlayerFaction[targetid][pMember] != PlayerFaction[playerid][pLeader]) return SendClientMessage(playerid, COLOR_RED, "Taj igrac nije u tvojoj organizaciji!");
 
@@ -1786,7 +1786,7 @@ CMD:faction(playerid, params[])
     {
         new playername[MAX_PLAYER_NAME], targetname[MAX_PLAYER_NAME], targetid, rank;
         if (PlayerFaction[playerid][pLeader] == 0) return SendClientMessage(playerid, COLOR_RED, "Da bi koristili ovu komandu morate biti lider!");
-        if (sscanf(params, "s[16]ui", option, targetid, rank)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /faction setrank [ID/DioImena] [Broj ranka]");
+        if (sscanf(params, "s[16]ui", option, targetid, rank)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /faction setrank [ID / Part of name] [Broj ranka]");
         if (targetid == INVALID_PLAYER_ID) return SendClientMessage(playerid, COLOR_RED, "Invalidan ID igraca!");
         if (PlayerFaction[targetid][pMember] != PlayerFaction[playerid][pLeader]) return SendClientMessage(playerid, COLOR_RED, "Taj igrac nije u tvojoj organizaciji!");
         if (rank < 1 || rank > FactionInfo[PlayerFaction[playerid][pLeader]][fRanks]) return SendClientMessage(playerid, COLOR_RED, "Nepravilan rank!");
@@ -1972,7 +1972,7 @@ CMD:faction(playerid, params[])
     {
         new targetid, skin;
         if (!PlayerFaction[playerid][pLeader]) return SendClientMessage(playerid, COLOR_RED, "Da bi koristili ovu komandu morate biti lider!");
-        if (sscanf(params, "s[16]ui", option, targetid, skin)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /faction skin [ID/DioImena] [ID SKINA]");
+        if (sscanf(params, "s[16]ui", option, targetid, skin)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /faction skin [ID / Part of name] [ID SKINA]");
         if (PlayerFaction[targetid][pMember] != PlayerFaction[playerid][pLeader]) return SendClientMessage(playerid, COLOR_RED, "Taj igrac nije u tvojoj organizaciji!");
         if (targetid == INVALID_PLAYER_ID) return SendClientMessage(playerid, COLOR_RED, "Invalidan ID igraca!");
 
@@ -2088,7 +2088,7 @@ CMD:m(playerid, params[])
     // TODO: max client message is 144 (143 characters), unless this is circumvented by some split text functionality...
     new motd[256], playername[MAX_PLAYER_NAME];
     if (isnull(params)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: (/m)egaphone [megaphone chat]");
-    if (PlayerInfo[playerid][pMuted] == 1) return SendClientMessage(playerid, COLOR_RED, "Nemozete pricati, usutkani ste");
+    if (PlayerInfo[playerid][pMuted]) return SendClientMessage(playerid, COLOR_RED, "Nemozete pricati, usutkani ste");
 
     GetPlayerName(playerid, playername, sizeof(playername));
     if (IsACop(playerid) || IsASD(playerid))
@@ -2319,7 +2319,7 @@ CMD:emsbk(playerid, params[])
 CMD:gov(playerid, params[])
 {
     if (isnull(params)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /gov [text]");
-    if (PlayerInfo[playerid][pMuted] == 1) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nemozete pricati, usutkani ste");
+    if (PlayerInfo[playerid][pMuted]) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nemozete pricati, usutkani ste");
 
     if ((IsACop(playerid)     && PlayerFaction[playerid][pRank] >= 4) ||
         (IsFDMember(playerid) && PlayerFaction[playerid][pRank] >= 4) ||
@@ -2344,7 +2344,7 @@ CMD:showbadge(playerid, params[])
 {
     new member = PlayerFaction[playerid][pMember], giveplayerid;
     if (sscanf(params, "u", giveplayerid))
-        return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /showbadge [ID/Dio Imena]");
+        return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /showbadge [ID / Part of name]");
     if (member == 0)
         return SendClientMessage(playerid, COLOR_RED, "Moras biti clan organizacije da bi koristio ovu komandu!");
     if (giveplayerid == INVALID_PLAYER_ID || !IsPlayerNearPlayer(playerid, giveplayerid, 5.0))
@@ -2365,7 +2365,7 @@ CMD:showaccreditation(playerid, params[])
 {
     new member = PlayerFaction[playerid][pMember], giveplayerid;
     if (sscanf(params, "u", giveplayerid))
-        return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /showaccreditation [ID/Dio Imena]");
+        return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /showaccreditation [ID / Part of name]");
     if (member == 0)
         return SendClientMessage(playerid, COLOR_RED, "Moras biti clan LSN organizacije da bi koristio ovu komandu!");
     if (giveplayerid == INVALID_PLAYER_ID || !IsPlayerNearPlayer(playerid, giveplayerid, 5.0))
@@ -2474,7 +2474,7 @@ CMD:callsign(playerid, params[])
         if (PlayerFaction[playerid][pLeader] == 1 || PlayerFaction[playerid][pLeader] == 2 || PlayerFaction[playerid][pLeader] == 3 || PlayerFaction[playerid][pLeader] == 4)
         {
             new sign[26], gplayerid;
-            if (sscanf(params, "s[6]us[20]", pick, gplayerid, sign)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /callsign set [playerid/dio imena][text]");
+            if (sscanf(params, "s[6]us[20]", pick, gplayerid, sign)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /callsign set [playerid / Part of name][text]");
             if (gplayerid == INVALID_PLAYER_ID) return SendClientMessage(playerid, COLOR_RED, "Krivi playerid!");
             if ((PlayerInfo[gplayerid][pMember] != 1 && PlayerInfo[gplayerid][pRank] < 1) && PlayerFaction[playerid][pLeader] == 1) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "On nije pripadnik LSPDa ili nema rank 1+!");
             else if ((PlayerInfo[gplayerid][pMember] != 2 && PlayerInfo[gplayerid][pRank] < 1) && PlayerFaction[playerid][pLeader] == 2) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "On nije pripadnik LSFDa ili nema rank 1+!");
@@ -2497,7 +2497,7 @@ CMD:callsign(playerid, params[])
         if (IsACop(playerid))
         {
             new gplayerid;
-            if (sscanf(params, "s[6]u", pick, gplayerid)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /callsign show [playerid/dio imena]");
+            if (sscanf(params, "s[6]u", pick, gplayerid)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /callsign show [playerid / Part of name]");
             if (gplayerid == INVALID_PLAYER_ID) return SendClientMessage(playerid, COLOR_RED, "Krivi playerid!");
             if (strlen(PlayerInfo[gplayerid][pSign]) < 3) return SendClientMessage(playerid, COLOR_WHITE, "Nema stavljen callsign!");
             format(globalstring, sizeof(globalstring), "* %s callsign: %s *", GetName(gplayerid), PlayerInfo[gplayerid][pSign]);
@@ -2506,7 +2506,7 @@ CMD:callsign(playerid, params[])
         else if (IsFDMember(playerid))
         {
             new gplayerid;
-            if (sscanf(params, "s[6]u", pick, gplayerid)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /callsign show [playerid/dio imena]");
+            if (sscanf(params, "s[6]u", pick, gplayerid)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /callsign show [playerid / Part of name]");
             if (gplayerid == INVALID_PLAYER_ID) return SendClientMessage(playerid, COLOR_RED, "Krivi playerid!");
             if (strlen(PlayerInfo[gplayerid][pSign]) < 3) return SendClientMessage(playerid, COLOR_WHITE, "Nema stavljen callsign!");
             format(globalstring, sizeof(globalstring), "* %s callsign: %s *", GetName(gplayerid), PlayerInfo[gplayerid][pSign]);

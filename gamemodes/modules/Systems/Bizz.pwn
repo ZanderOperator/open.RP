@@ -3214,7 +3214,7 @@ CMD:createvip(playerid, params[])
         pick,
         bizz = Player_InBusiness(playerid);
 
-    if (PlayerInfo[playerid][pAdmin] < 1337) return SendClientMessage(playerid, COLOR_RED, "Niste ovlasteni za koristenje ove komande!");
+    if (PlayerInfo[playerid][pAdmin] < 1337) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You are not authorized to use this command!");
     if (bizz == INVALID_BIZNIS_ID) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne nalazite se unutar biznisa!");
     if (sscanf( params, "i", pick)) return SendClientMessage(playerid, -1, "[ ? ]: /createvip [0-9] (0 za micanje sobe)");
     if (pick < 0 || pick > 9) 
@@ -4200,7 +4200,7 @@ CMD:bizbank(playerid, params[])
 
 CMD:createbiz(playerid, params[])
 {
-    if (PlayerInfo[playerid][pAdmin] < 1338) return SendClientMessage(playerid, COLOR_RED, "Niste ovlasteni za koristenje ove komande!");
+    if (PlayerInfo[playerid][pAdmin] < 1338) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You are not authorized to use this command!");
 
     new
         level, canenter, price;
@@ -4262,7 +4262,7 @@ CMD:microphone(playerid, params[])
         return 1;
     }
 
-    if (PlayerInfo[playerid][pMuted] == 1)
+    if (PlayerInfo[playerid][pMuted])
     {
         SendClientMessage(playerid, COLOR_RED, "Nemozete pricati, usutkani ste");
         return 1;

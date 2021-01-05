@@ -119,12 +119,13 @@ Public: AddAdminMessage(playerid, user_name[], reason[])
 	return 1;
 }
 
-SendServerMessage(sqlid, reason[])
+SendServerMessage(sqlid, const reason[], const sender[] = 'Server')
 {
 	mysql_fquery(g_SQL, 
-		"UPDATE player_admin_msg SET AdminMessage = '%e', AdminMessageBy = 'Server', AdmMessageConfirm = '0' \n\
-			WHERE sqlid = '%d'",
-		reason, 
+		"UPDATE player_admin_msg SET AdminMessage = '%e', AdminMessageBy = '%e', \n\
+			AdmMessageConfirm = '0' WHERE sqlid = '%d'",
+		reason,
+		sender 
 		sqlid
 	);
 	return 1;

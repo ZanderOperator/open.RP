@@ -1234,7 +1234,7 @@ CMD:warehouse(playerid, params[])
             wh = FetchWarehouseEnumFromFaction(FactionInfo[fid][fID]),
             giveplayerid;
 
-        if (sscanf(params, "s[16]u", option, giveplayerid)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /warehouse givekeys [ID/DioImena]");
+        if (sscanf(params, "s[16]u", option, giveplayerid)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /warehouse givekeys [ID / Part of name]");
         if (giveplayerid == playerid)
             return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne mozete sami sebi dati kljuceve!");
         if (!DoesWarehouseExist(FactionInfo[fid][fID]))

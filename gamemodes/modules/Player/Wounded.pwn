@@ -557,8 +557,10 @@ timer ApplyVehicleFallOutAnim[2600](playerid)
 	return 1;
 }
 
-stock CheckWoundedPlayer(playerid)
+ptask WoundedPlayerCheck[1000](playerid)
 {
+	if(!SafeSpawned[playerid])
+		return 1;
 	if(!PlayerWoundedAnim[playerid] || PlayerDeath[playerid][pKilled] != 0)
 		return 1;
 	

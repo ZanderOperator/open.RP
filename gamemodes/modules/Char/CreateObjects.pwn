@@ -20,7 +20,8 @@ static stock
 static stock
 	Bit4: r_PlayerObjectEditState<MAX_PLAYERS>  = {Bit4:0, ... };
 	
-static stock
+static
+	bool:CreateObjReq[MAX_PLAYERS],
 	chosenpObject[MAX_PLAYERS],
 	chosenpID[MAX_PLAYERS],
 	PlayerEditPOObject[MAX_PLAYERS],
@@ -29,7 +30,8 @@ static stock
 	PlayerPrwsPOModel[MAX_PLAYERS],
 	PlayerEditPOIndex[MAX_PLAYERS];
 
-new Iterator:PlayerCreateObjects[MAX_PLAYERS]<MAX_PLAYER_OBJECTS>;
+static 
+	Iterator:PlayerCreateObjects[MAX_PLAYERS]<MAX_PLAYER_OBJECTS>;
 	
 static objects[] =
 {
@@ -277,7 +279,7 @@ stock GetFreeObjectSlot( playerid )
 */
 /////////////////////////////////////////////////////////////
 
-hook OnPlayerDisconnect(playerid, reason)
+hook function ResetPlayerVariables(playerid)
 {
 	foreach(new cobjid: PlayerCreateObjects[playerid])
 	{
@@ -287,6 +289,7 @@ hook OnPlayerDisconnect(playerid, reason)
 	
 	Bit4_Set(r_PlayerObjectEditState, playerid, 0);
 	
+	CreateObjReq[playerid]			= false;
 	chosenpObject[playerid]			= 0;
 	chosenpID[playerid] 			= 0;
 	PlayerEditPOObject[playerid] 	= 0;
@@ -296,7 +299,7 @@ hook OnPlayerDisconnect(playerid, reason)
 	PlayerEditPOIndex[playerid] 	= 0;
 
 	Iter_Clear(PlayerCreateObjects[playerid]);
-    return 1;
+    return continue(playerid);
 }
 
 
@@ -508,12 +511,39 @@ CMD:editobject(playerid, params[])
 	return 1;
 }
 
+CMD:approveobjects(playerid, params[]) 
+{
+	if (PlayerInfo[playerid][pAdmin] < 3) 
+		return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You are not authorized to use this command!");
+	new 
+		giveplayerid;	
+    if( sscanf(params, "u", giveplayerid)) 
+		return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /approveobjects [ID / Part of name]");
+    if( !IsPlayerConnected(giveplayerid) ) 
+		return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Wrong player ID input!");
+	
+	CreateObjReq[giveplayerid] = !CreateObjReq[giveplayerid];
+	
+	SendFormatMessage(giveplayerid, 
+		MESSAGE_TYPE_INFO, "Game Admin %s has %s you to use /createobject.", 
+		GetName(playerid, false),
+		(CreateObjReq[giveplayerid]) ? ("allowed") : ("forbid")
+	);
+	SendAdminMessage(COLOR_LIGHTBLUE, 
+		"AdmCMD: %s has %s %s to use /createobject.", 
+		GetName(playerid,false),
+		(CreateObjReq[giveplayerid]) ? ("allowed") : ("forbid"),
+		GetName(giveplayerid,false)
+	);
+	return 1;
+}
+
 CMD:createobject(playerid, params[])
 {
 	if(PlayerJail[playerid][pJailed])
 	    return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Trenutno ne mozete koristiti ovu komandu!");
 				
-	if(!Bit1_Get( gr_CreateObject, playerid)) 
+	if(!CreateObjReq[playerid]) 
 		return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate dozvolu od admina za /createobject komandu.");
 
 	if(isnull(params))
@@ -578,7 +608,7 @@ CMD:checkplayerobjects(playerid, params[]) {
 		po_name[24];
 		
 	if(sscanf(params, "u", giveplayerid))
-		return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /checkplayerobjects [playerid/dio imena]");
+		return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /checkplayerobjects [playerid / Part of name]");
 
 	if(!IsPlayerConnected(giveplayerid))
 		return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Taj igrac nije online.");

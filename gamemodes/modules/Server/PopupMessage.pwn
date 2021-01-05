@@ -119,9 +119,10 @@ SendTextDrawMessage(playerid, MESSAGE_TYPE, const message[])
 	return PlayerTextDrawSetString(playerid, MessageTextdraw[playerid], final_msg);
 }
 
-SendFormatMessage(playerid, MESSAGE_TYPE = MESSAGE_TYPE_NONE, const message[],  va_args<>) {	
-	new format_message[192];
-	
+SendFormatMessage(playerid, MESSAGE_TYPE = MESSAGE_TYPE_NONE, const message[], va_args<>) 
+{	
+	new 
+		format_message[192];
 	if(MESSAGE_TYPE == MESSAGE_TYPE_NONE)
 		return (true);
 	

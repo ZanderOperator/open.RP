@@ -1,28 +1,10 @@
 #include <YSI_Coding\y_hooks>
 
-stock GetPlayerPacketloss(playerid, &Float:packetloss)
+ptask PackageLossCheck[500](playerid)
 {
-	if(!IsPlayerConnected(playerid))
+	if(!SafeSpawned[playerid])
 		return 0;
-
-	new
-		nstats[401],
-		nstats_loss[20],
-		start,
-		end;
-
-	GetPlayerNetworkStats(playerid, nstats, sizeof(nstats));
-
-	start = strfind(nstats,"packetloss",true);
-	end = strfind(nstats,"%",true,start);
-
-	strmid(nstats_loss, nstats, start+12, end, sizeof(nstats_loss));
-	packetloss = floatstr(nstats_loss);
-	return 1;
-}
-
-stock PackageLossCheck(playerid)
-{
+		
 	new Float:packetLoss;
 	GetPlayerPacketloss(playerid, packetLoss);
 	if(packetLoss >= 40.0)
@@ -47,6 +29,26 @@ stock PackageLossCheck(playerid)
 	return 1;
 }
 
+stock GetPlayerPacketloss(playerid, &Float:packetloss)
+{
+	if(!IsPlayerConnected(playerid))
+		return 0;
+
+	new
+		nstats[401],
+		nstats_loss[20],
+		start,
+		end;
+
+	GetPlayerNetworkStats(playerid, nstats, sizeof(nstats));
+
+	start = strfind(nstats,"packetloss",true);
+	end = strfind(nstats,"%",true,start);
+
+	strmid(nstats_loss, nstats, start+12, end, sizeof(nstats_loss));
+	packetloss = floatstr(nstats_loss);
+	return 1;
+}
 
 stock AC_TogglePlayerControllable(playerid, toggle)
 {

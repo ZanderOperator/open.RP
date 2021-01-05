@@ -638,7 +638,7 @@ hook function ResetPlayerVariables(playerid)
 	PlayerInfo[playerid][pTempRank][1]		= 0;
 	PlayerInfo[playerid][pHelper]			= 0;
 	PlayerInfo[playerid][pConnectTime]		= 0;
-	PlayerInfo[playerid][pMuted]			= 0;
+	PlayerInfo[playerid][pMuted]			= false;
 	PlayerInfo[playerid][pRespects]			= 0;
 	PlayerInfo[playerid][pSex]				= 0;
 	PlayerInfo[playerid][pAge]				= 0;

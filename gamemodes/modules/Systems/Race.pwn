@@ -567,7 +567,7 @@ CMD:race(playerid, params[])
     else if (!strcmp(param, "invite", true))
     {
         new giveplayerid;
-        if (sscanf(params, "s[8]i", param, giveplayerid)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /race invite [playerid/dio imena]");
+        if (sscanf(params, "s[8]i", param, giveplayerid)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /race invite [playerid / Part of name]");
         if (giveplayerid == INVALID_PLAYER_ID) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Unijeli ste nevaljan playerid!");
         if (giveplayerid == playerid) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne mozete sami sebe zvati, vase je mjesto osigurano!");
 

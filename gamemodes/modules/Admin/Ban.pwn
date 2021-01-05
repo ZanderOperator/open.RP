@@ -185,9 +185,14 @@ stock UnbanPlayerName(const playername[], adminid)
 
 stock UnbanPlayerIP(const playerip[], adminid)
 {
-	new dformat[64];
+	new 
+		dformat[64];
 	format(dformat,sizeof dformat,"unbanip %s",playerip);
+	// Ensuring proper IP unban
 	SendRconCommand(dformat);
+	SendRconCommand(dformat);
+	SendRconCommand(dformat);
+	
 	va_SendClientMessage( adminid, COLOR_RED, "[ ! ]: You have sucessfully unbanned IP %s", playerip);
 
 	#if defined MODULE_LOGS

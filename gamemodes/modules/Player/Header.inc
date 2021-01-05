@@ -15,14 +15,14 @@ forward bool:Player_Reward(playerid);
 forward Player_SetReward(playerid, bool:v);
 
 // Miscelleneous
+forward bool:Player_ForbiddenPM(playerid);
+forward Player_SetForbiddenPM(playerid, bool:v);
+
 forward Player_GetLastVehicle(playerid);
 forward Player_SetLastVehicle(playerid, v);
 
 forward bool:Player_HasBlockedOOCChat(playerid);
 forward Player_SetHasBlockedOOCChat(playerid, bool:v);
-
-forward bool:Player_OnAirBlocked(playerid);
-forward Player_SetOnAirBlocked(playerid, bool:v);
 
 forward bool:Player_HasDice(playerid);
 forward Player_SetHasDice(playerid, bool:v);
@@ -50,6 +50,8 @@ forward Player_SetGpsActivated(playerid, bool:v);
 // Jobs
 forward bool:Player_IsWorkingJob(playerid);
 forward Player_SetIsWorkingJob(playerid, bool:v);
+
+forward bool:Player_TaxiDuty(playerid);
 
 // Rope
 forward bool:Player_IsTied(playerid);

@@ -2106,24 +2106,7 @@ stock ShowGPS(playerid)
 		Player_SetGpsActivated(playerid, false);
 		return 1;
 	}
-	new buff[MAX_GPS_LOCATIONS*32],
-		motd[50],
-		counter = 0;
-
-	foreach(new int: GPS_location)
-	{
-		if(GPS_data[int][gpsAdmin] == 0)
-		{
-			if(int == 0)
-				format(motd, sizeof(motd), "{3C95C2}(%d) - %s.", int, GPS_data[int][gpsName]);
-			else
-				format(motd, sizeof(motd), "\n{3C95C2}(%d) - %s.", int, GPS_data[int][gpsName]);
-			strcat(buff, motd);
-			GPSToList[playerid][counter] = int;
-			counter++;
-		}
-	}
-	ShowPlayerDialog(playerid, DIALOG_LOCATIONSGPS, DIALOG_STYLE_LIST, "{3C95C2}* GPS", buff, "Pick", "Exit");
+	GPS_DialogShow(playerid);
 	return (true);
 }
 

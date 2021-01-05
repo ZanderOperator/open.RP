@@ -42,8 +42,8 @@ CreateProstitute(playerid, skin_id, free_id) {
 	ProstituteData[free_id][prSkin] 				= (skin_id);
 	ProstituteData[free_id][prEarned] 				= (0);
 	ProstituteData[free_id][TipMoney] 				= (0);
-	SetString(ProstituteData[free_id][prName],  	("None"));
-	SetString(ProstituteData[free_id][prOwner], 	GetName(playerid));
+	strcpy(ProstituteData[free_id][prName], "None");
+	strcpy(ProstituteData[free_id][prOwner], "None");
 	ProstituteName[free_id] 						= (false);
 
 	GetPlayerPos(playerid, ProstituteData[free_id][prPos][0], ProstituteData[free_id][prPos][1], ProstituteData[free_id][prPos][2]);
@@ -118,12 +118,12 @@ CheckProstitute(prost_id) {
 /*
 	- prostitute functions
 */
-SetProstituteName(playerid, prostitute_id, prostitute_name[]) {
+SetProstituteName(playerid, prostitute_id, prostitute_name[]) 
+{
 	ProstituteName[prostitute_id] = (true);
-	SetString(ProstituteData[prostitute_id][prName], prostitute_name);
-	if(!strcmp(ProstituteData[prostitute_id][prName], "None", (true))) {
+	strcpy(ProstituteData[prostitute_id][prName], prostitute_name);
+	if(!strcmp(ProstituteData[prostitute_id][prName], "None", (true))) 
 		ProstituteName[prostitute_id] = (false);
-	}
 
 	new buffer[64];
 	if(ProstituteData[prostitute_id][TipMoney] != 0 && ProstituteName[prostitute_id] == (true))

@@ -20,9 +20,7 @@
     ########  ######## ##       #### ##    ## ######## 
 */
 
-#define MAX_GPS_LOCATIONS       (80)
-#define PLAYER_NEARBY_LOCATION  (10.0)
-
+#define MAX_GPS_LOCATIONS                   (80)
 
 /*
     ##     ##    ###    ########   ######
@@ -63,16 +61,14 @@ enum
     DIALOG_MOVEGPS
 }
 
-new
+static
     GPS_data[MAX_GPS_LOCATIONS][ENUM_GPS_DATA],
     GPSInfo[MAX_PLAYERS][PLAYER_GPS_DATA],
     GPSToList[MAX_PLAYERS][MAX_GPS_LOCATIONS],
-
     PlayerText:gps_Meters[MAX_PLAYERS] = {PlayerText:INVALID_TEXT_DRAW, ...},
-
+    bool:GPSActivated[MAX_PLAYERS] = {false, ...},
+    GPS_PortPlayer[MAX_PLAYERS],
     Iterator:GPS_location<MAX_GPS_LOCATIONS>;
-
-static bool:GPSActivated[MAX_PLAYERS] = {false, ...};
 
 
 /*
@@ -85,42 +81,28 @@ static bool:GPSActivated[MAX_PLAYERS] = {false, ...};
     ##        #######  ##    ##  ######   ######  
 */
 
-stock bool:Player_GpsActivated(playerid)
+bool:Player_GpsActivated(playerid)
 {
     return GPSActivated[playerid];
 }
 
-stock Player_SetGpsActivated(playerid, bool:v)
+Player_SetGpsActivated(playerid, bool:v)
 {
     GPSActivated[playerid] = v;
 }
 
-// TODO: horrible naming, keep it consistent
-forward on_GPScreate(gps_id);
-public on_GPScreate(gps_id)
-{
-    if (gps_id == -1 || !GPS_data[gps_id][gpsExists])
-        return 1;
-
-    GPS_data[gps_id][gpsID] = cache_insert_id();
-    Iter_Add(GPS_location, gps_id);
-
-    GPS_Save(gps_id);
-    return 1;
-}
-
-LoadGPS()
+static GPS_Load()
 {
     Iter_Clear(GPS_location);
     mysql_pquery(g_SQL, 
         va_fquery(g_SQL, "SELECT * FROM gps WHERE 1"), 
-        "GPS_Load", 
+        "GPS_Loaded", 
         ""
     );
     return 1;
 }
 
-Public: GPS_Load()
+Public: GPS_Loaded()
 {
     new rows = cache_num_rows();
     if (!rows) 
@@ -144,7 +126,7 @@ Public: GPS_Load()
     return 1;
 }
 
-GPS_Save(gpsid)
+static GPS_Save(gpsid)
 {
     mysql_fquery(g_SQL, 
         "UPDATE gps SET gpsName = '%e', gpsPosX = '%.4f', gpsPosY = '%.4f', gpsPosZ = '%.4f',\n\
@@ -160,28 +142,43 @@ GPS_Save(gpsid)
     return 1;
 }
 
-Create_GPS(gps_name[], Float:X, Float:Y, Float:Z)
+static GPS_Create(gps_name[], Float:X, Float:Y, Float:Z)
 {
-    new free_id = Iter_Free(GPS_location);
-    GPS_data[free_id][gpsExists] = true;
+    new 
+        free_id = Iter_Free(GPS_location);
+    if(free_id == -1)
+        return -1;
 
+    GPS_data[free_id][gpsExists] = true;
     GPS_data[free_id][gpsPos][0]   = X;
     GPS_data[free_id][gpsPos][1]   = Y;
     GPS_data[free_id][gpsPos][2]   = Z;
     GPS_data[free_id][gpsMapIcon]  = -1;
     GPS_data[free_id][gpsAdmin]    = 0;
 
-    SetString(GPS_data[free_id][gpsName], gps_name);
+    strcpy(GPS_data[free_id][gpsName], gps_name);
     mysql_tquery(g_SQL, 
         "INSERT INTO gps (gpsCreated) VALUES(1)", 
-        "on_GPScreate", 
+        "GPS_Created", 
         "i", 
         free_id
     );
     return free_id;
 }
 
-Delete_GPS(gpsid)
+Public: GPS_Created(gps_id)
+{
+    if (gps_id == -1 || !GPS_data[gps_id][gpsExists])
+        return 1;
+
+    GPS_data[gps_id][gpsID] = cache_insert_id();
+    Iter_Add(GPS_location, gps_id);
+
+    GPS_Save(gps_id);
+    return 1;
+}
+
+static GPS_Delete(gpsid)
 {
     foreach(new i : Player)
     {
@@ -191,8 +188,7 @@ Delete_GPS(gpsid)
 
     mysql_fquery(g_SQL, "DELETE FROM gps WHERE id = '%d'", GPS_data[gpsid][gpsID]);
 
-    // TODO: SetString?! use strcpy
-    SetString(GPS_data[gpsid][gpsName], "None");
+    strcpy(GPS_data[gpsid][gpsName], "None");
     GPS_data[gpsid][gpsMapIcon] = -1;
     GPS_data[gpsid][gpsExists] = false;
     GPS_data[gpsid][gpsID] = 0;
@@ -200,39 +196,25 @@ Delete_GPS(gpsid)
     return 1;
 }
 
-DisableGPS(playerid)
+static GPS_Disable(playerid)
 {
     if (Player_GpsActivated(playerid))
     {
         DisablePlayerCheckpoint(playerid);
-        gps_DistanceTD(playerid, bool:false);
+        GPS_DistanceTD(playerid, bool:false);
         Player_SetGpsActivated(playerid, false);
 
         foreach(new i : GPS_location)
         {
             if (GPS_data[i][gpsMapIcon] != -1)
-            {
                 RemovePlayerMapIcon(playerid, GPS_data[i][gpsMapIcon]);
-            }
-            ResetPlayerGPSList(playerid);
+            GPS_ResetList(playerid);
         }
     }
     return 1;
 }
 
-GPS_Active_Check(playerid)
-{
-    return Player_GpsActivated(playerid);
-}
-
-// TODO: delete
-SetString(obj[], string[]) // credits samp
-{
-    strmid(obj, string, 0, strlen(string), 255);
-    return 1;
-}
-
-ResetPlayerGPSList(playerid)
+static GPS_ResetList(playerid)
 {
     for (new i = 0; i < MAX_GPS_LOCATIONS; i++)
     {
@@ -241,7 +223,7 @@ ResetPlayerGPSList(playerid)
     return 1;
 }
 
-gps_DistanceTD(playerid, bool:show)
+static GPS_DistanceTD(playerid, bool:show)
 {
     if (show)
     {
@@ -265,23 +247,83 @@ gps_DistanceTD(playerid, bool:show)
     return 1;
 }
 
-Public:gps_GetDistance(playerid, gpsid, Float:X, Float:Y, Float:Z)
+static GPS_GetDistance(playerid, gpsid, Float:X, Float:Y, Float:Z)
 {
-    if (Player_GpsActivated(playerid))
-    {
-        new Float:gpsLocation, buffer[64];
-        gpsLocation = GetPlayerDistanceFromPoint(playerid, X, Y, Z);
+    if (!Player_GpsActivated(playerid))
+        GPS_DistanceTD(playerid, false);
+    
+    new 
+        Float:gpsLocation = GetPlayerDistanceFromPoint(playerid, X, Y, Z), 
+        buffer[64];
 
-        format(buffer, sizeof(buffer), "~w~(GPS)_~y~%s - %0.2f_meters...", GPS_data[gpsid][gpsName], gpsLocation);
-        PlayerTextDrawSetString(playerid, gps_Meters[playerid], buffer);
-    }
-    else
+    format(buffer, sizeof(buffer), 
+        "~w~(GPS)_~y~%s - %0.2f_meters...", 
+        GPS_data[gpsid][gpsName], 
+        gpsLocation
+    );
+    PlayerTextDrawSetString(playerid, gps_Meters[playerid], buffer);
+    return 1;
+}
+
+ptask NavigationTimer[1000](playerid)
+{
+    if(!SafeSpawned[playerid])
+        return 1;
+
+    if(Player_GpsActivated(playerid))
     {
-        gps_DistanceTD(playerid, false);
+		GPS_GetDistance(playerid, 
+            GPSInfo[playerid][gGPSID], 
+            GPSInfo[playerid][gX], 
+            GPSInfo[playerid][gY], 
+            GPSInfo[playerid][gZ]
+        );
     }
     return 1;
 }
 
+GPS_DialogShow(playerid, bool:admin = false)
+{
+    new
+        motd[44],
+        buff[44 * MAX_GPS_LOCATIONS],
+        counter = 0;
+
+    foreach(new i : GPS_location)
+    {
+        if (i == 0)
+            format(motd, sizeof(motd), "{3C95C2}(%d) - %s.", i, GPS_data[i][gpsName]);
+        else
+            format(motd, sizeof(motd), "\n{3C95C2}(%d) - %s.", i, GPS_data[i][gpsName]);
+        strcat(buff, motd);
+        GPSToList[playerid][counter] = i;
+        counter++;
+    }
+
+    if(admin)
+    {
+        ShowPlayerDialog(playerid, 
+            DIALOG_ALOCATIONSGPS, 
+            DIALOG_STYLE_LIST, 
+            "{3C95C2}* PORT - LOCATIONS", 
+            buff, 
+            "Port", 
+            "Close"
+        );
+    }
+    else
+    {
+        ShowPlayerDialog(playerid, 
+            DIALOG_LOCATIONSGPS, 
+            DIALOG_STYLE_LIST, 
+            "{3C95C2}* GPS", 
+            buff, 
+            "Pick", 
+            "Exit"
+        );
+    }
+    return 1;
+}
 
 /*
     ##     ##  #######   #######  ##    ##  ######
@@ -295,15 +337,15 @@ Public:gps_GetDistance(playerid, gpsid, Float:X, Float:Y, Float:Z)
 
 hook function LoadServerData()
 {
-    LoadGPS();
+    GPS_Load();
 	return continue();
-
 }
 
-hook OnPlayerDisconnect(playerid, reason)
+hook function ResetPlayerVariables(playerid)
 {
-    DisableGPS(playerid);
-    return 1;
+    GPS_Disable(playerid);
+    GPS_PortPlayer[playerid] = INVALID_PLAYER_ID;
+    return continue(playerid);
 }
 
 hook OnPlayerSpawn(playerid)
@@ -312,7 +354,15 @@ hook OnPlayerSpawn(playerid)
     {
         if (GPS_data[i][gpsMapIcon] != -1)
         {
-            SetPlayerMapIcon(playerid, GPS_data[i][gpsID], GPS_data[i][gpsPos][0], GPS_data[i][gpsPos][1], GPS_data[i][gpsPos][2], GPS_data[i][gpsMapIcon], 0, MAPICON_LOCAL);
+            SetPlayerMapIcon(playerid, 
+                GPS_data[i][gpsID],     
+                GPS_data[i][gpsPos][0], 
+                GPS_data[i][gpsPos][1], 
+                GPS_data[i][gpsPos][2], 
+                GPS_data[i][gpsMapIcon], 
+                0, 
+                MAPICON_LOCAL
+            );
         }
     }
     return 1;
@@ -323,10 +373,9 @@ hook OnPlayerEnterCheckpoint(playerid)
     if (Player_GpsActivated(playerid))
     {
         DisablePlayerCheckpoint(playerid);
-        gps_DistanceTD(playerid, false);
+        GPS_DistanceTD(playerid, false);
         Player_SetGpsActivated(playerid, false);
-
-        GameTextForPlayer(playerid, "~g~Stigli ste na odrediste!", 1500, 1);
+        SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "You have reached your destination!");
     }
     return 1;
 }
@@ -334,101 +383,189 @@ hook OnPlayerEnterCheckpoint(playerid)
 hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 {
     if (!response)
-    {
         return 1;
-    }
 
     switch (dialogid)
     {
         case DIALOG_CREATEGPS:
         {
-            if (strlen(inputtext) < 3 || strlen(inputtext) > 24)
+            if (strlen(inputtext) < 3 || strlen(inputtext) > 32)
             {
-                ShowPlayerDialog(playerid, DIALOG_CREATEGPS, DIALOG_STYLE_INPUT, "{3C95C2}* Create GPS.", "\nIspod morate unesti ime lokacije koja ce se nalazit na /gps.\n{3C95C2}[!]: Naziv mjesta ne smije biti duzi od 24 slova.","Create", "Close");
+                ShowPlayerDialog(playerid, 
+                    DIALOG_CREATEGPS, 
+                    DIALOG_STYLE_INPUT, 
+                    "{3C95C2}* Create GPS.", 
+                    "\nPlease input location name that'll be shown on /gps.\n\
+                        {3C95C2}[!]: Location name can't be longer than 32 chars.",
+                    "Create", 
+                    "Close"
+                );
                 return 1;
             }
 
-            new free_id = -1, Float:X, Float:Y, Float:Z, gpsname[24];
+            new 
+                free_id = -1, 
+                Float:X, 
+                Float:Y, 
+                Float:Z, 
+                gpsname[32];
+
             GetPlayerPos(playerid, X, Y, Z);
             strcpy(gpsname, inputtext);
-            free_id = Create_GPS(gpsname, X, Y, Z);
+            free_id = GPS_Create(gpsname, X, Y, Z);
             if (free_id == -1)
             {
-                SendClientMessage(playerid, 0xFF6347AA, "[ERROR]: Na serveru je vec kreirano maximalan broj GPS lokacija.");
+                SendFormatMessage(playerid, 
+                    MESSAGE_TYPE_ERROR, 
+                    "Maximum number of GPS locations reached (%d)!",
+                    MAX_GPS_LOCATIONS
+                );
                 return 1;
             }
-            va_SendClientMessage(playerid, COLOR_RED, "[ ! ] Kreirali ste novu GPS lokaciju, naziv: %s - ID: %d.", gpsname, free_id);
+
+            SendAdminMessage(COLOR_RED, 
+                "AdmCMD: %s created new GPS Location: %s [ID %d].",
+                gpsname,
+                free_id
+            );
+            SendFormatMessage(playerid, 
+                MESSAGE_TYPE_SUCCESS, 
+                "You have sucessfully created new GPS Location: %s - ID %d.",
+                gpsname, 
+                free_id
+            );
             return 1;
         }
         case DIALOG_DELETEGPS:
         {
-            new gpsid = strval(inputtext);
+            new 
+                gpsid = strval(inputtext);
             if (!Iter_Contains(GPS_location, gpsid))
             {
-                SendClientMessage(playerid, 0xFF6347AA, "[ERROR]: Unijeli ste nepoznati ID lokacije sa GPS-a.");
+                SendMessage(playerid, MESSAGE_TYPE_ERROR, "That GPS ID doesn't exist!");
                 return 1;
             }
 
-            va_SendClientMessage(playerid, COLOR_RED, "[ ! ] Uspjesno ste obrisali lokaciju %s[ID: %d] sa GPS-a", GPS_data[gpsid][gpsName], gpsid);
-            Delete_GPS(gpsid);
+            SendAdminMessage(COLOR_RED, 
+                "AdmCMD: %s deleted GPS Location: %s [ID %d].",
+                GPS_data[gpsid][gpsName],
+                gpsid
+            );
+            SendFormatMessage(playerid, 
+                MESSAGE_TYPE_SUCCESS, 
+                "You have sucessfully deleted GPS Location: %s - ID %d.",                
+                GPS_data[gpsid][gpsName],
+                gpsid
+            );
+            GPS_Delete(gpsid);
             return 1;
         }
         case DIALOG_LOCATIONSGPS:
         {
-            new enum_id = GPSToList[playerid][listitem];
+            new 
+                enum_id = GPSToList[playerid][listitem];
             Player_SetGpsActivated(playerid, true);
-            gps_DistanceTD(playerid, true);
+            GPS_DistanceTD(playerid, true);
 
             GPSInfo[playerid][gGPSID] = enum_id;
             GPSInfo[playerid][gX] = GPS_data[enum_id][gpsPos][0];
             GPSInfo[playerid][gY] = GPS_data[enum_id][gpsPos][1];
             GPSInfo[playerid][gZ] = GPS_data[enum_id][gpsPos][2];
 
-            SetPlayerCheckpoint(playerid, GPS_data[enum_id][gpsPos][0], GPS_data[enum_id][gpsPos][1], GPS_data[enum_id][gpsPos][2], 5.0);
-            SendFormatMessage(playerid, MESSAGE_TYPE_SUCCESS, "Na mapi vam je prikazana lokacija %s crvenim markerom.", GPS_data[enum_id][gpsName]);
-            ResetPlayerGPSList(playerid);
+            SetPlayerCheckpoint(playerid, 
+                GPS_data[enum_id][gpsPos][0], 
+                GPS_data[enum_id][gpsPos][1], 
+                GPS_data[enum_id][gpsPos][2], 
+                5.0
+            );
+            SendFormatMessage(playerid, 
+                MESSAGE_TYPE_SUCCESS, 
+                "GPS on location %s sucessfully marked on radar.", 
+                GPS_data[enum_id][gpsName]
+            );
+            GPS_ResetList(playerid);
             return 1;
         }
         case DIALOG_ALOCATIONSGPS:
         {
-            if (!IsPlayerInAnyVehicle(playerid))
-            {
-                SetPlayerPosEx(playerid, GPS_data[listitem][gpsPos][0], GPS_data[listitem][gpsPos][1], GPS_data[listitem][gpsPos][2]);
+            new 
+                portedid = GPS_PortPlayer[playerid];
+            if(portedid == INVALID_PLAYER_ID)
+                portedid = playerid;
+            
+            if (!IsPlayerInAnyVehicle(portedid))
+                SetPlayerPosEx(portedid, GPS_data[listitem][gpsPos][0], GPS_data[listitem][gpsPos][1], GPS_data[listitem][gpsPos][2]);
+            
+            if (GetPlayerState(portedid) == PLAYER_STATE_DRIVER)
+                AC_SetVehiclePos(GetPlayerVehicleID(portedid), GPS_data[listitem][gpsPos][0], GPS_data[listitem][gpsPos][1], GPS_data[listitem][gpsPos][2]);
+                        
+            if(portedid != playerid)
+            {		        
+                SendAdminMessage(COLOR_RED, 
+                    "AdmCMD: %s has teleported %s on location %s.", 
+                    GetName(playerid,false), 
+                    GetName(portedid,false),
+                    GPS_data[listitem][gpsName]
+                );
             }
-            if (GetPlayerState(playerid) == PLAYER_STATE_DRIVER)
-            {
-                AC_SetVehiclePos(GetPlayerVehicleID(playerid), GPS_data[listitem][gpsPos][0], GPS_data[listitem][gpsPos][1], GPS_data[listitem][gpsPos][2]);
-            }
-            SendFormatMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uspjesno ste portani do %s.", GPS_data[listitem][gpsName]);
+            SendFormatMessage(portedid, 
+                MESSAGE_TYPE_SUCCESS, 
+                "You have been teleported to %s.", 
+                GPS_data[listitem][gpsName]
+            );
             return 1;
         }
         case DIALOG_GPSMAPICON:
         {
-            new gpsid, mapicon;
+            new 
+                gpsid, 
+                mapicon;
             if (sscanf(inputtext, "ii", gpsid, mapicon))
             {
-                ShowPlayerDialog(playerid, DIALOG_GPSMAPICON, DIALOG_STYLE_INPUT, "{3C95C2}* Mapicon GPS.", "\nIspod morate unesti ID lokacije(/gps) i zeljeni id mapicon-a.\n{3C95C2}[!] Primjer: 1(gps id) 56(mapicon) -1(U slucaju da ne zelite mapicon).", "Input", "Close");
+                ShowPlayerDialog(playerid, 
+                    DIALOG_GPSMAPICON, 
+                    DIALOG_STYLE_INPUT, 
+                    "{3C95C2}* Map Icon GPS.", 
+                    "\nPlease input GPS ID(/gps) and Map Icon ID. \n\
+                        {3C95C2}[!] EXAMPLE: 1(GPS ID) 56(Map Icon) \n\
+                        Please input -1 if you want to remove Map Icon from GPS.", 
+                    "Input", 
+                    "Close"
+                );
                 return 1;
             }
-
             if (!Iter_Contains(GPS_location, gpsid))
             {
-                SendClientMessage(playerid, 0xFF6347AA, "[ERROR]: Unijeli ste nepoznati ID lokacije sa GPS-a.");
+                SendMessage(playerid, MESSAGE_TYPE_ERROR, "That GPS ID doesn't exist!");
                 return 1;
             }
 
             GPS_data[gpsid][gpsMapIcon] = mapicon;
-            va_SendClientMessage(playerid, COLOR_RED, "[ ! ] Uspjesno ste postavili/promjenili mapicon na lokaciji %s u ID %d.", GPS_data[gpsid][gpsName], mapicon);
             GPS_Save(gpsid);
+
             if (mapicon != -1)
             {
                 foreach(new i: Player)
                     SetPlayerMapIcon(i, GPS_data[gpsid][gpsID], GPS_data[gpsid][gpsPos][0], GPS_data[gpsid][gpsPos][1], GPS_data[gpsid][gpsPos][2], GPS_data[gpsid][gpsMapIcon], 0, MAPICON_LOCAL);
+                
+                SendFormatMessage(playerid,
+                    MESSAGE_TYPE_SUCCESS,
+                    "You have sucessfully set Map Icon ID %d on location %s.", 
+                    mapicon,
+                    GPS_data[gpsid][gpsName]
+                );
             }
-            else // -1 = Brisanje postojece map icone
+            else
             {
                 foreach(new i: Player)
                     RemovePlayerMapIcon(playerid, GPS_data[gpsid][gpsID]);
+
+                SendFormatMessage(playerid,
+                    MESSAGE_TYPE_SUCCESS,
+                    "You have sucessfully removed Map Icon on location %s.", 
+                    mapicon,
+                    GPS_data[gpsid][gpsName]
+                );
             }
             return 1;
         }
@@ -437,18 +574,25 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
             new gpsid = strval(inputtext);
             if (!Iter_Contains(GPS_location, gpsid))
             {
-                SendClientMessage(playerid, 0xFF6347AA, "[ERROR]: Unijeli ste nepoznati ID lokacije sa GPS-a.");
+                SendMessage(playerid, MESSAGE_TYPE_ERROR, "That GPS ID doesn't exist!");            
                 return 1;
             }
+            new 
+                Float:X, 
+                Float:Y, 
+                Float:Z;
 
-            new Float:X, Float:Y, Float:Z;
             GetPlayerPos(playerid, X, Y, Z);
             GPS_data[gpsid][gpsPos][0] = X;
             GPS_data[gpsid][gpsPos][1] = Y;
             GPS_data[gpsid][gpsPos][2] = Z;
             GPS_Save(gpsid);
 
-            va_SendClientMessage(playerid, COLOR_RED, "[ ! ] Uspjesno ste promjenili poziciju lokacije %s na vasu trenutnu.", GPS_data[gpsid][gpsName]);
+            SendFormatMessage(playerid,
+                MESSAGE_TYPE_SUCCESS,
+                "You have sucessfully changed position of GPS location %s.",
+                GPS_data[gpsid][gpsName]
+            );
             return 1;
         }
     }
@@ -470,66 +614,47 @@ CMD:gps(playerid, params[])
 {
     if (Player_IsWorkingJob(playerid))
     {
-        SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne mozete koristiti GPS dok radite!");
+        SendMessage(playerid, MESSAGE_TYPE_ERROR, "You can't use GPS while you work!");
         return 1;
     }
-
     if (Player_GpsActivated(playerid))
     {
         DisablePlayerCheckpoint(playerid);
-        gps_DistanceTD(playerid, bool:false);
+        GPS_DistanceTD(playerid, bool:false);
         Player_SetGpsActivated(playerid, false);
-
-        SendClientMessage(playerid, COLOR_RED, "[ ! ] Deaktivirali ste stari GPS.");
+        SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "You have deactivated GPS from your radar.");
         return 1;
     }
-
-    new
-        buff[MAX_GPS_LOCATIONS*32],
-        motd[50],
-        counter = 0;
-    // TODO: this is repetitive code, extract it to a general helper function
-    foreach(new i : GPS_location)
-    {
-        if (GPS_data[i][gpsAdmin] == 0)
-        {
-            if (i == 0)
-                format(motd, sizeof(motd), "{3C95C2}(%d) - %s.", i, GPS_data[i][gpsName]);
-            else
-                format(motd, sizeof(motd), "\n{3C95C2}(%d) - %s.", i, GPS_data[i][gpsName]);
-            strcat(buff, motd);
-            GPSToList[playerid][counter] = i;
-            counter++;
-        }
-    }
-    ShowPlayerDialog(playerid, DIALOG_LOCATIONSGPS, DIALOG_STYLE_LIST, "{3C95C2}* GPS", buff, "Pick", "Exit");
+    GPS_DialogShow(playerid);
     return 1;
+}
+
+CMD:portplayer(playerid, params[])
+{
+	new 
+        giveplayerid;
+
+	if(PlayerInfo[playerid][pAdmin] < 1) 
+        return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You are not Game Admin 1+!");
+	if(sscanf(params, "u", giveplayerid))
+	 	return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /portplayer [playerid / Part of name]");
+	if(IsPlayerConnected(playerid))
+        return SendMessage(playerid, MESSAGE_TYPE_ERROR, "That player ID isn't connected!");
+    
+    GPS_PortPlayer[playerid] = giveplayerid;
+    GPS_DialogShow(playerid, true);
+	return 1;
 }
 
 CMD:port(playerid, params[])
 {
-    new
-        buff[MAX_GPS_LOCATIONS*32],
-        motd[50],
-        counter = 0;
-
     if (PlayerInfo[playerid][pAdmin] < 1 && PlayerInfo[playerid][pHelper] < 2)
     {
-        SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ovlasteni za koristenje ove komande!");
+        SendMessage(playerid, MESSAGE_TYPE_ERROR, "You are not authorized to use this command!");
         return 1;
     }
-    // TODO: this is repetitive code, extract it to a general helper function
-    foreach(new i : GPS_location)
-    {
-        if (i == 0)
-            format(motd, sizeof(motd), "{3C95C2}(%d) - %s.", i, GPS_data[i][gpsName]);
-        else
-            format(motd, sizeof(motd), "\n{3C95C2}(%d) - %s.", i, GPS_data[i][gpsName]);
-        strcat(buff, motd);
-        GPSToList[playerid][counter] = i;
-        counter++;
-    }
-    ShowPlayerDialog(playerid, DIALOG_ALOCATIONSGPS, DIALOG_STYLE_LIST, "{3C95C2}* PORT - LOCATIONS", buff, "Port", "Close");
+    GPS_PortPlayer[playerid] = INVALID_PLAYER_ID;
+    GPS_DialogShow(playerid, true);
     return 1;
 }
 
@@ -537,42 +662,46 @@ CMD:agps(playerid, params[])
 {
     if (PlayerInfo[playerid][pAdmin] < 1337)
     {
-        SendClientMessage(playerid,COLOR_RED, "Niste ovlasteni za koristenje ove komande.");
+        SendMessage(playerid, MESSAGE_TYPE_ERROR, "You are not authorized to use this command!");
         return 1;
     }
-
-    new action[15];
+    new 
+        action[15];
     if (sscanf(params, "s[15] ", action))
     {
         SendClientMessage(playerid, COLOR_RED, "[ ! ] /agps [option].");
-        SendClientMessage(playerid, 0xAFAFAFAA, "(options): create, delete, setadmin, mapicon, goto, move, rename.");
+        SendClientMessage(playerid, -1, "OPTS: create, delete, setadmin, mapicon, goto, move, rename.");
         return 1;
     }
     if (!strcmp(action, "create", true))
     {
-        ShowPlayerDialog(playerid, DIALOG_CREATEGPS, DIALOG_STYLE_INPUT, "{3C95C2}* Create GPS.", "\nIspod morate unesti ime lokacije koja ce se nalazit na /gps.\n{3C95C2}[!]: Naziv mjesta ne smije biti duzi od 24 slova.", "Create", "Close");
-        return 1;
+        ShowPlayerDialog(playerid, 
+            DIALOG_CREATEGPS, 
+            DIALOG_STYLE_INPUT, 
+            "{3C95C2}* Create GPS.", 
+            "\nPlease input location name that'll be shown on /gps.\n\
+                {3C95C2}[!]: Location name can't be longer than 32 chars.",
+            "Create", 
+            "Close"
+        );
     }
     if (!strcmp(action, "move", true))
     {
-        ShowPlayerDialog(playerid, DIALOG_MOVEGPS, DIALOG_STYLE_INPUT, "{3C95C2}* Move GPS.", "\nIspod morate unesti id lokacije kojoj zelite promijeniti poziciju.\n{3C95C2}[!]: Listu lokacija mozete pronaci na /gps.", "Move", "Close");
+        ShowPlayerDialog(playerid, 
+            DIALOG_MOVEGPS, 
+            DIALOG_STYLE_INPUT, 
+            "{3C95C2}* Move GPS.", 
+            "\nPlease enter GPS ID of location that you want to relocate. \n\
+                {3C95C2}[!]: List of all GPS ID's can be found on /agps goto.", 
+            "Move", 
+            "Close"
+        );
         return 1;
     }
     if (!strcmp(action, "goto", true))
     {
-        // TODO: this is repetitive code, extract it to a general helper function
-        new
-            buff[MAX_GPS_LOCATIONS*32],
-            motd[50];
-        foreach(new i : GPS_location)
-        {
-            if (i == 0)
-                format(motd, sizeof(motd), "{3C95C2}(%d) - %s.", i, GPS_data[i][gpsName]);
-            else
-                format(motd, sizeof(motd), "\n{3C95C2}(%d) - %s.", i, GPS_data[i][gpsName]);
-            strcat(buff, motd);
-        }
-        ShowPlayerDialog(playerid, DIALOG_ALOCATIONSGPS, DIALOG_STYLE_LIST, "{3C95C2}* GPS", buff, "Select", "Close");
+        GPS_PortPlayer[playerid] = INVALID_PLAYER_ID;
+        GPS_DialogShow(playerid, true);
         return 1;
     }
     if (!strcmp(action, "setadmin", true))
@@ -580,32 +709,54 @@ CMD:agps(playerid, params[])
         new gpsid, adminloc;
         if (sscanf(params, "s[15]ii", action, gpsid, adminloc))
         {
-            SendClientMessage(playerid, COLOR_RED, "[ ! ] /agps setadmin [gpsid] [0 = za sve igrace | 1 = samo za /agps goto]");
+            SendClientMessage(playerid, 
+                COLOR_RED, 
+                "[ ! ] /agps setadmin [gpsid] \n\
+                    [0 = for all players | 1 = only for Team Staff]"
+                );
             return 1;
         }
         if (!Iter_Contains(GPS_location, gpsid))
-            return SendErrorMessage(playerid, "Krivi GPS ID! Koristite /agps goto da bi vidjeli sve GPS-ove.");
+            return SendMessage(playerid, MESSAGE_TYPE_ERROR, "That GPS ID doesn't exist!");
 
         if (adminloc < 0 || adminloc > 1)
-            return SendErrorMessage(playerid, "Vrijednost ne moze biti manja od 0 ili veca od 1!");
+            return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Location status can be only 1 or 0!");
 
         GPS_data[gpsid][gpsAdmin] = adminloc;
         GPS_Save(gpsid);
-        if (adminloc)
-            SendFormatMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uspjesno ste postavili vidljivost lokacije %s[ID: %d] samo za Team Staff.", GPS_data[gpsid][gpsName], gpsid);
-        else
-            SendFormatMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uspjesno ste postavili vidljivost lokacije %s[ID: %d] za sve.", GPS_data[gpsid][gpsName], gpsid);
-        return 1;
+
+        SendFormatMessage(playerid, 
+            MESSAGE_TYPE_SUCCESS, 
+            "You have sucessfully set GPS location %s[ID: %d] available %s.", 
+            GPS_data[gpsid][gpsName], 
+            gpsid,
+            (!adminloc) ? ("for everyone") : ("for Team Staff only")
+        );
     }
     if (!strcmp(action, "mapicon", true))
     {
-        ShowPlayerDialog(playerid, DIALOG_GPSMAPICON, DIALOG_STYLE_INPUT, "{3C95C2}* Mapicon GPS.", "\nIspod morate unesti ID lokacije(/agps goto) i zeljeni ID mapicon-a.\n{3C95C2}[!] Format: [GPS ID] [mapicon ID - (56 - zuta tacka)/(-1 ako ne zelite map icon)].", "Input", "Close");
-        return 1;
+       ShowPlayerDialog(playerid, 
+            DIALOG_GPSMAPICON, 
+            DIALOG_STYLE_INPUT, 
+            "{3C95C2}* Map Icon GPS.", 
+            "\nPlease input GPS ID(/gps) and Map Icon ID. \n\
+                {3C95C2}[!] EXAMPLE: 1(GPS ID) 56(Map Icon) \n\
+                Please input -1 if you want to remove Map Icon from GPS.", 
+            "Input", 
+            "Close"
+        );
     }
     if (!strcmp(action, "delete", true))
     {
-        ShowPlayerDialog(playerid, DIALOG_DELETEGPS, DIALOG_STYLE_INPUT, "{3C95C2}* Delete GPS.", "\nIspod morate unesti ID lokacije koja se nalazi na /gps.\n{3C95C2}[!]: Sve ID-ove lokacija mozete pronaci na /agps goto.", "Delete", "Close");
-        return 1;
+        ShowPlayerDialog(playerid, 
+            DIALOG_DELETEGPS, 
+            DIALOG_STYLE_INPUT, 
+            "{3C95C2}* Delete GPS.", 
+            "\nPlease input GPS ID you wish to delete from /gps.\n\
+                {3C95C2}[!]: You can find all GPS ID's on /agps goto(/port).", 
+            "Delete", 
+            "Close"
+        );
     }
     return 1;
 }

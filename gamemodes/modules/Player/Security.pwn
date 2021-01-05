@@ -378,7 +378,7 @@ CMD:changepass(playerid, params[])
 {
 	new Cache: mysql_search, usersql, usernick[MAX_PLAYER_NAME], passnew[32];
 	
-	if( !IsPlayerAdmin(playerid) && PlayerInfo[playerid][pAdmin] < 1338 ) return SendClientMessage(playerid, COLOR_RED, "Niste ovlasteni za koristenje ove komande!");
+	if( !IsPlayerAdmin(playerid) && PlayerInfo[playerid][pAdmin] < 1338 ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You are not authorized to use this command!");
 	if(sscanf(params, "s[24]s[32]", usernick, passnew)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /changepass [Ime_Prezime] [password].");
 	
 	// mysql search

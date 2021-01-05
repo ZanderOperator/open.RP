@@ -61,21 +61,29 @@ IllegalToLegalBudgetMoney (money)
 
 */
 
-// Function for evidenting transasctions of valuable estate(vehicles, houses, businesses, complexes, garages etc.)
+/*
+	Function for evidenting transasctions of valuable estate
+		- vehicles, houses, businesses, 
+		complexes, garages etc.
+*/
+
 stock LogTransaction ( playerid, giveplayerid, money, logtype )
 {
 	new desc[64];
 	switch(logtype)
 	{
-		case LOG_TYPE_BIZSELL: {
+		case LOG_TYPE_BIZSELL: 
+		{
 			new biznis = PlayerKeys[playerid][pBizzKey];
 			format(desc, sizeof(desc), "Naziv firme: %s", BizzInfo[biznis][bMessage]);
 		}
-		case LOG_TYPE_HOUSESELL: {
+		case LOG_TYPE_HOUSESELL: 
+		{
 			new house = PlayerKeys[playerid][pHouseKey];
 			format(desc, sizeof(desc), "Adresa kuce: %s", HouseInfo[house][hAdress]);
 		}
-		case LOG_TYPE_VEHICLESELL: {
+		case LOG_TYPE_VEHICLESELL: 
+		{
 			new vehid 	= PlayerKeys[playerid][pVehicleKey], vehicleName[MAX_VEHICLE_NAME];
 			GetVehicleNameById(vehid, vehicleName, MAX_VEHICLE_NAME);
 			if( !strcmp(VehicleInfo[vehid][vNumberPlate],"0",true) ) 
@@ -83,11 +91,13 @@ stock LogTransaction ( playerid, giveplayerid, money, logtype )
 			else
 				format(desc, sizeof(desc), "Model: %s | Broj tablice: %s", vehicleName, VehicleInfo[vehid][vNumberPlate]);
 		}
-		case LOG_TYPE_COMPLEXSELL: {
+		case LOG_TYPE_COMPLEXSELL: 
+		{
 			new complex = PlayerKeys[playerid][pComplexKey];
 			format(desc, sizeof(desc), "Naziv kompleksa: %s", ComplexInfo[complex][cName]);
 		}
-		case LOG_TYPE_GARAGESELL: {
+		case LOG_TYPE_GARAGESELL: 
+		{
 			new garage = PlayerKeys[playerid][pGarageKey];
 			format(desc, sizeof(desc), "Adresa garaze: %s", GarageInfo[garage][gAdress]);
 		}

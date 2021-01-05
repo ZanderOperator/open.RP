@@ -36,6 +36,7 @@
 
 
 static
+    bool:blockedLive[MAX_PLAYERS],
     bool:blockedNews[MAX_PLAYERS],
     bool:OnLive[MAX_PLAYERS],
     NewsText[MAX_NEWS_LINES][MAX_NEWS_STR_SIZE],
@@ -54,6 +55,12 @@ static
     ##       ##     ## ##   ### ##    ## ##    ## 
     ##        #######  ##    ##  ######   ######  
 */
+
+stock bool:Player_OnAirBlocked(playerid)
+{
+    return blockedLive[playerid];
+}
+
 
 stock bool:Player_IsOnAir(playerid)
 {
@@ -174,6 +181,7 @@ hook function ResetPlayerVariables(playerid)
         NewsPhone[lineIndex][npPlayerID] = -1;
         Player_SetPhoneLine(playerid, -1);
     }
+    blockedLive[playerid] = false;
     blockedNews[playerid] = false;
     OnLive[playerid] = false;
 	return continue(playerid);
@@ -232,13 +240,50 @@ task NewsLineTask[1000]()
      ######  ##     ## ########
 */
 
+CMD:toglive(playerid, params[])
+{
+	new
+		bool:status = !blockedLive[playerid];
+    
+    blockedLive[playerid] = status;
+
+	SendFormatMessage(playerid, MESSAGE_TYPE_SUCCESS, "%s si News Live chat!", 
+		(status) ? ("Ukljucio") : ("Iskljucio")
+	);
+	return 1;
+}
+
+CMD:mic(playerid, params[])
+{
+	if (!Player_IsOnAir(playerid)) 
+        return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You are not LIVE in News!");
+        
+    foreach(new i: Player)
+    {
+        if(blockedLive[i])
+            continue;
+
+        va_SendClientMessage(i, 
+            COLOR_ORANGE, 
+            "** %s (LIVE) %s: %s", 
+            IsANews(playerid) ? ("REPORTER") : ("GUEST"), 
+            GetName(playerid), 
+            params
+        );
+    }
+	return 1;
+}
+
 CMD:lsncamera(playerid, params[])
 {
     if (!IsANews(playerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, " Niste novinar!");
     if (AC_GetPlayerWeapon(playerid) == WEAPON_CAMERA) return SendClientMessage(playerid, COLOR_RED, "[ANTI-BAN]: Vec imate kameru u rukama!");
     if (IsPlayerInAnyVehicle(playerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Morate biti izvan vozila!");
+    if (VehicleInfo[GetPlayerVehicleID(playerid)][vUsage] != VEHICLE_USAGE_FACTION)
+        return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste u LSN vozilu!");
 
     AC_GivePlayerWeapon(playerid, WEAPON_CAMERA, 50);
+    SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "Dobili ste kameru sa 50 bliceva u njoj!");
     return 1;
 }
 
@@ -246,7 +291,7 @@ CMD:live(playerid, params[])
 {
     if (!IsANews(playerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, " Niste novinar!");
     new giveplayerid, playerName[MAX_PLAYER_NAME], newsName[MAX_PLAYER_NAME];
-    if (sscanf(params, "u", giveplayerid)) return SendClientMessage(playerid, COLOR_WHITE, "[ ? ]: /live [playerid/dio imena]");
+    if (sscanf(params, "u", giveplayerid)) return SendClientMessage(playerid, COLOR_WHITE, "[ ? ]: /live [playerid / Part of name]");
     if (giveplayerid == INVALID_PLAYER_ID) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Krivi ste ID unijeli!");
 
     GetPlayerName(playerid, playerName, MAX_PLAYER_NAME);

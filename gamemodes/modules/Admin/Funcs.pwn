@@ -24,11 +24,9 @@
 new
 	bool: pns_garages = true,
 	bool: count_started = false,
-	Admin_Vehicle[MAX_PLAYERS][MAX_ADMIN_VEHICLES],
-	Admin_vCounter[MAX_PLAYERS];
-
-new
 	Timer:CountingTimer,
+	Admin_Vehicle[MAX_PLAYERS][MAX_ADMIN_VEHICLES],
+	Admin_vCounter[MAX_PLAYERS],
 	cseconds,
 	Timer:LearnTimer[MAX_PLAYERS],
 	LastDriver[MAX_VEHICLES][MAX_PLAYER_NAME],
@@ -235,17 +233,21 @@ Public: AddAdminMessage(playerid, user_name[], reason[])
 		
 		if(on != INVALID_PLAYER_ID && IsPlayerConnected(on) && SafeSpawned[on])
 		{
-			va_SendClientMessage(on, COLOR_NICEYELLOW, "(( PM od %s[%d]: %s ))", 
+			va_SendClientMessage(on, COLOR_NICEYELLOW, "(( PM from %s[%d]: %s ))", 
 				GetName(playerid, false), 
 				playerid, 
 				reason
 			);
-			va_SendClientMessage(playerid, COLOR_RED, "(( PM za %s[%d]: %s ))", 
+			va_SendClientMessage(playerid, COLOR_RED, "(( PM for %s[%d]: %s ))", 
 				user_name, 
 				on, 
 				reason
 			);
-			SendClientMessage(playerid, COLOR_RED, "[!] Navedeni korisnik je bio in-game te mu je poslana poruka.");
+			SendFormatMessage(playerid, 
+				MESSAGE_TYPE_SUCCESS, 
+				"%s is currently online, so you sent him an PM.",
+				user_name
+			);
 			return 1;
 		}
 	}	
@@ -283,11 +285,21 @@ ShowAdminMessage(playerid)
 
 ShowPlayerCars(playerid, playersqlid, player_name[])
 {
-	new owner_name[MAX_PLAYER_NAME];
-	SetString(owner_name, player_name);
+	new 
+		owner_name[MAX_PLAYER_NAME];
+	strcpy(owner_name, player_name, MAX_PLAYER_NAME);
 
 	inline OnLoadPlayerVehicles()
 	{
+		if(!cache_num_rows())
+		{
+			SendFormatMessage(playerid, 
+				MESSAGE_TYPE_ERROR, 
+				"%s doesn't own any vehicles.",
+				owner_name
+			);
+			return 1;
+		}
 		new 
 			tmpModelID,
 			tmpCarMysqlID,
@@ -302,8 +314,6 @@ ShowPlayerCars(playerid, playersqlid, player_name[])
 			strunpack(vehName, Model_Name(tmpModelID) );
 			va_SendClientMessage(playerid, COLOR_WHITE,"[slot %d] %s [MySQL ID: %d].", i+1, vehName, tmpCarMysqlID);
 		}
-		if(!cache_num_rows()) 
-			SendClientMessage(playerid, COLOR_WHITE,"- Ovaj igrac ne posjeduje vozila.");
 	}
 	MySQL_TQueryInline(g_SQL,  
 		using inline OnLoadPlayerVehicles,
@@ -423,13 +433,17 @@ stock HighAdminBroadCast(color,const string[],level)
 	return 1;
 }
 
-stock SendAdminMessage(color, string[])
+stock SendAdminMessage(color, string[], va_args<>)
 {
+	new 
+		format_message[144];
+	va_format(format_message, sizeof (format_message), string, va_start<2>);
 	foreach (new i : Player)
 	{
 		if( PlayerInfo[i][pAdmin] >= 1 && Bit1_Get( a_AdminChat, i ) )
-			SendClientMessage(i, color, string);
+			SendClientMessage(i, color, format_message);
 	}
+	return 1;
 }
 
 stock SendAdminNotification(color, string[])
@@ -961,9 +975,6 @@ timer LearnPlayer[1000](playerid, learnid)
 	        SendClientMessage(playerid, COLOR_WHITE, " ");
 	        SendClientMessage(playerid, COLOR_WHITE, "Nadamo se da ste naucili nesto iz nasega tutoriala!");
 	        SendClientMessage(playerid, COLOR_WHITE, "Takodjer se nadamo, da vise necete krsiti RolePlay pravila.");
-	        SendClientMessage(playerid, COLOR_WHITE, "Uskoro slijedi kviz od deset pitanja.");
-	        SendClientMessage(playerid, COLOR_WHITE, "Mozete maksimalno dati krivi odgovor dva puta na jedno pitanje.");
-			StartKnowledgeQuiz(playerid);
 		}
 	}
 	return 1;
@@ -1647,128 +1658,6 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 {
 	switch(dialogid)
 	{
-		case DIALOG_PORT: {
-			if( !response ) return 1;
-			switch(listitem) {
-				case 0:
-				{
-					if( IsPlayerInAnyVehicle(playerid ) ) SetVehiclePos(GetPlayerVehicleID(playerid), 1481.0739,-1741.8704,13.5469);
-					else SetPlayerPos(playerid, 1481.0739,-1741.8704,13.5469);
-					SendClientMessage(playerid, COLOR_RED, "[ ! ] Uspjesno ste teleportirani do Vijecnice.");
-				}
-				case 1:
-				{
-					if( IsPlayerInAnyVehicle(playerid ) ) SetVehiclePos(GetPlayerVehicleID(playerid), 2105.6372,-1783.6501,13.3877);
-					else SetPlayerPos(playerid, 2105.6372,-1783.6501,13.3877);
-					SendClientMessage(playerid, COLOR_RED, "[ ! ] Uspjesno ste teleportirani do Pizza Stack.");
-				}
-				case 2:
-				{
-					if( IsPlayerInAnyVehicle(playerid ) ) SetVehiclePos(GetPlayerVehicleID(playerid), 1464.8783,-1024.6019,23.8281);
-					else SetPlayerPos(playerid, 1464.8783,-1024.6019,23.8281);
-					SendClientMessage(playerid, COLOR_RED, "[ ! ] Uspjesno ste teleportirani do Banke.");
-				}
-				case 3:
-				{
-					if( IsPlayerInAnyVehicle(playerid ) ) SetVehiclePos(GetPlayerVehicleID(playerid), 1697.6630,-1758.7987,13.5469);
-					else SetPlayerPos(playerid, 1697.6630,-1758.7987,13.5469);
-					SendClientMessage(playerid, COLOR_RED, "[ ! ] Uspjesno ste teleportirani do Wang Cars.");
-				}
-				case 4:
-				{
-					if( IsPlayerInAnyVehicle(playerid ) ) SetVehiclePos(GetPlayerVehicleID(playerid), 1962.2717,-2181.4526,13.5469);
-					else SetPlayerPos(playerid, 1962.2717,-2181.4526,13.5469);
-					SendClientMessage(playerid, COLOR_RED, "[ ! ] Uspjesno ste teleportirani do Aerodroma.");
-				}
-				case 5:
-				{
-					if( IsPlayerInAnyVehicle(playerid ) ) SetVehiclePos(GetPlayerVehicleID(playerid), 1714.5166,1484.5803,10.8128);
-					else SetPlayerPos(playerid, 1714.5166,1484.5803,10.8128);
-					SendClientMessage(playerid, COLOR_RED, "[ ! ] Uspjesno ste teleportirani do Las Venturasa.");
-					return 1;
-				}
-				case 6:
-				{
-					if( IsPlayerInAnyVehicle(playerid ) ) SetVehiclePos(GetPlayerVehicleID(playerid), 404.0537,2529.1179,16.5852);
-					else SetPlayerPos(playerid, 404.0537,2529.1179,16.5852);
-					SendClientMessage(playerid, COLOR_RED, "[ ! ] Uspjesno ste teleportirani do Desert.");
-				}
-				case 7:
-				{
-					if( IsPlayerInAnyVehicle(playerid ) ) SetVehiclePos(GetPlayerVehicleID(playerid), 106.6820,1920.7625,18.5006);
-					else SetPlayerPos(playerid, 106.6820,1920.7625,18.5006);
-					SendClientMessage(playerid, COLOR_RED, "[ ! ] Uspjesno ste teleportirani do Area 51.");
-				}
-				case 8:
-				{
-					if( IsPlayerInAnyVehicle(playerid ) ) SetVehiclePos(GetPlayerVehicleID(playerid), -1417.0,-295.8,14.1);
-					else SetPlayerPos(playerid, -1417.0,-295.8,14.1);
-					SendClientMessage(playerid, COLOR_RED, "[ ! ] Uspjesno ste teleportirani do San Fierro.");
-				}
-				case 9:
-				{
-					if( IsPlayerInAnyVehicle(playerid ) ) SetVehiclePos(GetPlayerVehicleID(playerid), 1212.3516,-926.2313,42.9175);
-					else SetPlayerPos(playerid, 1212.3516,-926.2313,42.9175);
-					SendClientMessage(playerid, COLOR_RED, "[ ! ] Uspjesno ste teleportirani do Burg.");
-				}
-				case 10:
-				{
-					if( IsPlayerInAnyVehicle(playerid ) ) SetVehiclePos(GetPlayerVehicleID(playerid), 1774.0024,-1726.3906,13.5469);
-					else SetPlayerPos(playerid, 1774.0024,-1726.3906,13.5469);
-					SendClientMessage(playerid, COLOR_RED, "[ ! ] Uspjesno ste teleportirani do Auto skole.");
-				}
-				case 11:
-				{
-					if( IsPlayerInAnyVehicle(playerid ) ) SetVehiclePos(GetPlayerVehicleID(playerid), 1140.2682,-1413.2601,13.6546);
-					else SetPlayerPos(playerid, 1140.2682,-1413.2601,13.6546);
-					SendClientMessage(playerid, COLOR_RED, "[ ! ] Uspjesno ste teleportirani do Verona Malla.");
-				}
-				case 12:
-				{
-					if( IsPlayerInAnyVehicle(playerid ) ) SetVehiclePos(GetPlayerVehicleID(playerid), 1310.6077,-1388.9838,13.5152);
-					else SetPlayerPos(playerid, 1310.6077,-1388.9838,13.5152);
-					SendClientMessage(playerid, COLOR_RED, "[ ! ] Uspjesno ste teleportirani do Casina.");
-				}
-				case 13: { // Rudnik
-					if( IsPlayerInAnyVehicle(playerid ) ) SetVehiclePos(GetPlayerVehicleID(playerid), 894.9913, -87.2169, 21.9249);
-					else SetPlayerPos(playerid, 894.9913, -87.2169, 21.9249);
-					SendClientMessage(playerid, COLOR_RED, "[ ! ] Uspjesno ste teleportirani do Rudnika.");
-				}
-				case 14: { // Bolnica
-					if( IsPlayerInAnyVehicle(playerid ) ) SetVehiclePos(GetPlayerVehicleID(playerid), 2030.5457,-1417.9918,16.9922);
-					else SetPlayerPos(playerid, 2030.5457,-1417.9918,16.9922);
-					SendClientMessage(playerid, COLOR_RED, "[ ! ] Uspjesno ste teleportirani do Bolnice.");
-				}
-				case 15: { // LS Jail
-					if( IsPlayerInAnyVehicle(playerid ) ) SetVehiclePos(GetPlayerVehicleID(playerid), 1806.6238,-1577.1790,13.4619);
-					else SetPlayerPos(playerid, 1806.6238,-1577.1790,13.4619);
-					SendClientMessage(playerid, COLOR_RED, "[ ! ] Uspjesno ste teleportirani do LS Jaila.");
-				}
-				case 16: { // Mehanicarska garaza
-					if( IsPlayerInAnyVehicle(playerid ) ) SetVehiclePos(GetPlayerVehicleID(playerid), 2266.7559,-2041.4342,13.5469);
-					else SetPlayerPos(playerid, 2266.7559,-2041.4342,13.5469);
-					SendClientMessage(playerid, COLOR_RED, "[ ! ] Uspjesno ste teleportirani do Mehanicarske garaze.");
-				}
-				case 17: { // LS Oglasnik
-					if( IsPlayerInAnyVehicle(playerid ) ) SetVehiclePos(GetPlayerVehicleID(playerid), 645.2079,-1357.5244,13.5714);
-					else SetPlayerPos(playerid, 645.2079,-1357.5244,13.5714);
-					SendClientMessage(playerid, COLOR_RED, "[ ! ] Uspjesno ste teleportirani do LS Oglasnika.");
-				}
-				case 18: { // LSSD
-					if( IsPlayerInAnyVehicle(playerid ) ) SetVehiclePos(GetPlayerVehicleID(playerid), 618.8765,-584.8453,17.2266);
-					else SetPlayerPos(playerid, 618.8765,-584.8453,17.2266);
-					SendClientMessage(playerid, COLOR_RED, "[ ! ] Uspjesno ste teleportirani do LSSDa.");
-				}
-			}
-			SetPlayerVirtualWorld( playerid, 0 );
-			SetPlayerInterior( playerid, 0 );
-			
-			if( IsPlayerInAnyVehicle(playerid ) ) {
-				LinkVehicleToInterior( GetPlayerVehicleID(playerid), 0);
-				SetVehicleVirtualWorld( GetPlayerVehicleID(playerid), 0 );
-			}
-			return 1;
-		}
 		case DIALOG_JAIL_GETHERE:
 		{
 			if( !response ) return 1;
