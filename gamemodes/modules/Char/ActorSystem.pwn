@@ -67,7 +67,7 @@ new ActorText[MAX_ACTORS];
 // Commands
 CMD:spawnactor(playerid, params[])
 {
- 	if (PlayerInfo[playerid][pAdmin] < 1337) return SendClientMessage(playerid, COLOR_RED, "Niste ovlasteni za koristenje ove komande!");
+ 	if (PlayerInfo[playerid][pAdmin] < 1337) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You are not authorized to use this command!");
 	new Float:Pos[3],skinid,invulnerability,Float:Angle;
     if(sscanf(params,"il",skinid,invulnerability)) return SendClientMessage(playerid,COLOR_RED, "[ ? ]: /spawnactor [skinid] [[ ! ] Ranjivost (0: DISABLED | 1: ENABLED)]");
     if(invulnerability != 1 && invulnerability != 0) return SendClientMessage(playerid,COLOR_RED,"[ ! ] Ranjivost (0: DISABLED | 1: ENABLED)");
@@ -113,7 +113,7 @@ CMD:spawnactor(playerid, params[])
 
 CMD:removeactor(playerid, params[])
 {
-	if (PlayerInfo[playerid][pAdmin] < 1337) return SendClientMessage(playerid, COLOR_RED, "Niste ovlasteni za koristenje ove komande!");
+	if (PlayerInfo[playerid][pAdmin] < 1337) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You are not authorized to use this command!");
 	new actorid,str[256];
     if(sscanf(params,"i",actorid)) return SendClientMessage(playerid,COLOR_RED, "[ ? ]: /removeactor [actor id]");
     format(str,sizeof(str),"[ ! ] Actor %d je obrisan.",actorid);
@@ -129,7 +129,7 @@ CMD:removeactor(playerid, params[])
 
 CMD:removeallactors(playerid, params[])
 {
-	if (PlayerInfo[playerid][pAdmin] < 1337) return SendClientMessage(playerid, COLOR_RED, "Niste ovlasteni za koristenje ove komande!");
+	if (PlayerInfo[playerid][pAdmin] < 1337) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You are not authorized to use this command!");
     for(new i = 0, j = GetActorPoolSize(); i <= j; i++)
     {
         if(IsValidActor(i))
@@ -143,7 +143,7 @@ CMD:removeallactors(playerid, params[])
 
 CMD:gotoactor(playerid, params[])
 {
-	if (PlayerInfo[playerid][pAdmin] < 1337) return SendClientMessage(playerid, COLOR_RED, "Niste ovlasteni za koristenje ove komande!");
+	if (PlayerInfo[playerid][pAdmin] < 1337) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You are not authorized to use this command!");
     new Float:Pos[3],actorid;
     if(sscanf(params,"i",actorid)) return SendClientMessage(playerid,COLOR_RED,"[ ? ]: /gotoactor [actor id]");
     if(IsValidActor(actorid))
@@ -158,7 +158,7 @@ CMD:gotoactor(playerid, params[])
 
 CMD:allactors(playerid, params[])
 {
-	if (PlayerInfo[playerid][pAdmin] < 1337) return SendClientMessage(playerid, COLOR_RED, "Niste ovlasteni za koristenje ove komande!");
+	if (PlayerInfo[playerid][pAdmin] < 1337) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You are not authorized to use this command!");
 	SendClientMessage(playerid,COLOR_RED,"_______________________________________________");
     for(new i = 0, j = GetActorPoolSize(); i <= j; i++)
     {
@@ -178,7 +178,7 @@ CMD:allactors(playerid, params[])
 
 CMD:setactoranim(playerid, params[])
 {
-	if (PlayerInfo[playerid][pAdmin] < 1337) return SendClientMessage(playerid, COLOR_RED, "Niste ovlasteni za koristenje ove komande!");
+	if (PlayerInfo[playerid][pAdmin] < 1337) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You are not authorized to use this command!");
 	new animation[256],actorid;
 	if(sscanf(params,"is[100]",actorid,animation)) return SendClientMessage(playerid,COLOR_RED,"[ ? ]:/setactoranim [actor id] [animation]");
 	if(IsValidActor(actorid))
@@ -279,7 +279,7 @@ CMD:setactoranim(playerid, params[])
 
 CMD:cancelactoranim(playerid, params[])
 {
-	if (PlayerInfo[playerid][pAdmin] < 1337) return SendClientMessage(playerid, COLOR_RED, "Niste ovlasteni za koristenje ove komande!");
+	if (PlayerInfo[playerid][pAdmin] < 1337) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You are not authorized to use this command!");
 	new actorid;
 	if(sscanf(params,"i",actorid)) return SendClientMessage(playerid,COLOR_RED,"[ ? ]: /cancelactoranim [actor id]");
 	if(IsValidActor(actorid))
@@ -293,7 +293,7 @@ CMD:cancelactoranim(playerid, params[])
 
 CMD:cancelallactorsanim(playerid, params[])
 {
-	if (PlayerInfo[playerid][pAdmin] < 1337) return SendClientMessage(playerid, COLOR_RED, "Niste ovlasteni za koristenje ove komande!");
+	if (PlayerInfo[playerid][pAdmin] < 1337) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You are not authorized to use this command!");
     for(new i = 0, j = GetActorPoolSize(); i <= j; i++)
     {
     	ClearActorAnimations(i);
@@ -304,7 +304,7 @@ CMD:cancelallactorsanim(playerid, params[])
 
 CMD:getactor(playerid, params[])
 {
-	if (PlayerInfo[playerid][pAdmin] < 1337) return SendClientMessage(playerid, COLOR_RED, "Niste ovlasteni za koristenje ove komande!");
+	if (PlayerInfo[playerid][pAdmin] < 1337) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You are not authorized to use this command!");
 	new actorid,str[256],Float:pPos[3],Float:aPos[3],Float:newPos[3];
 	if(sscanf(params,"i",actorid)) return SendClientMessage(playerid,COLOR_RED,"[ ? ]: /getactor [actor id]");
 	if(IsValidActor(actorid))
@@ -336,7 +336,7 @@ CMD:getactor(playerid, params[])
 
 CMD:actorstext(playerid,params[])
 {
-	if (PlayerInfo[playerid][pAdmin] < 1337) return SendClientMessage(playerid, COLOR_RED, "Niste ovlasteni za koristenje ove komande!");
+	if (PlayerInfo[playerid][pAdmin] < 1337) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You are not authorized to use this command!");
 	for(new i = 0, j = GetActorPoolSize(); i <= j; i++)
 	{
 		if(ActorText[i] == 0)
@@ -359,7 +359,7 @@ CMD:actorstext(playerid,params[])
 
 CMD:updateactor(playerid,params[])
 {
-    if (PlayerInfo[playerid][pAdmin] < 1337) return SendClientMessage(playerid, COLOR_RED, "Niste ovlasteni za koristenje ove komande!");
+    if (PlayerInfo[playerid][pAdmin] < 1337) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You are not authorized to use this command!");
     new actorid,skinid,invulnerability,Float:Pos[3],Float:Angle,str2[256];
     if(sscanf(params,"iil",actorid,skinid,invulnerability)) return SendClientMessage(playerid,COLOR_RED,"[ ! ] [ ? ]: /updateactor [actor id] [skin id] [ranjivost]");
     if(!IsValidActor(actorid)) return SendClientMessage(playerid,COLOR_RED,"Pogre�an actor ID");
@@ -400,7 +400,7 @@ CMD:updateactor(playerid,params[])
 }
 CMD:actorhelp(playerid,params[])
 {
-    if (PlayerInfo[playerid][pAdmin] < 1337) return SendClientMessage(playerid, COLOR_RED, "Niste ovlasteni za koristenje ove komande!");
+    if (PlayerInfo[playerid][pAdmin] < 1337) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You are not authorized to use this command!");
     new text[500],text2[500],text3[500],everything[1000];
     format(text,sizeof(text),"{A9A9A9}** {ff0000}/spawnactor [skin id] [Ranjivost (0: DISABLED / 1: ENABLED)] > Spawna Actora tamo gdje igrac gleda\n{A9A9A9}** {ff0000}/removeactor [actor id] > Uklanja odredjenog actora.\n{A9A9A9}** {ff0000}/removeallactors > Uklanja sve actore");
     format(text2,sizeof(text2),"\n{A9A9A9}** {ff0000}/gotoactor [actor id] > Porta vas do actora\n{A9A9A9}** {ff0000}/setactoranim [anim] > Postavlja animaciju na actora\n{ff0000}    ANIMACIJE: handsup / lean / sit / injured / dance / laugh / hide / dealstance / crossarms / riotchant / wave / talk / fucku / tired");

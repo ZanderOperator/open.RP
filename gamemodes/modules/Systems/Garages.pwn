@@ -752,7 +752,7 @@ CMD:garage(playerid, params[])
             return 1;
         }
 
-        PlayerToBudgetMoney(playerid, GarageInfo[nearGarage][gPrice]); // Novac ide u proracun
+        PlayerToBudgetMoney(playerid, GarageInfo[nearGarage][gPrice]);
         PlayerKeys[playerid][pGarageKey] = nearGarage;
         GarageInfo[nearGarage][gOwnerID] = PlayerInfo[playerid][pSQLID];
         GarageInfo[nearGarage][gLocked] = 1;
@@ -781,7 +781,7 @@ CMD:garage(playerid, params[])
             giveplayerid,
             price;
         if (sscanf(params, "s[10]ud", param, giveplayerid, price))
-            return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /garage sell [playerid/dio imena][cijena]");
+            return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /garage sell [playerid / Part of name][cijena]");
         if (!IsPlayerConnected(giveplayerid) || !SafeSpawned[giveplayerid])
             return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Taj igrac nije sigurno spawnan/online!");
         if (!ProxDetectorS(5.0, playerid, giveplayerid))

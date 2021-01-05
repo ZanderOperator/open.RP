@@ -38,7 +38,6 @@
 
 #include "modules/Player/AFKTimer.pwn"
 #include "modules/Player/Tutorial.pwn"
-#include "modules/Player/RPQuiz.pwn"
 #include "modules/Player/PayDay.pwn"
 #include "modules/Player/CMD.pwn"
 #include "modules/Player/Help.pwn"

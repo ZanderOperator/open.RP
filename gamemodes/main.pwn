@@ -215,7 +215,6 @@ new
 new
 	Bit1: 	gr_PlayerPickingJack 	<MAX_PLAYERS> =  Bit1: false,
 	Bit1:	gr_PlayerJackSure 		<MAX_PLAYERS> =  Bit1: false,
-	Bit1:	gr_CreateObject			<MAX_PLAYERS> =	 Bit1: false,
 	Bit1:	gr_PlayerDownloading	<MAX_PLAYERS>  = Bit1: false,
 	// TODO: misspelled, FirstSpawn
 	Bit1:	gr_FristSpawn			<MAX_PLAYERS>  = Bit1: false,
@@ -226,19 +225,16 @@ new
 	Bit1: 	gr_VehicleWindows 		<MAX_VEHICLES> = Bit1: false,
 	Bit1:	gr_VehicleAttachedBomb	<MAX_VEHICLES> = Bit1: false,
 	Bit1: 	gr_PlayerTimeOut		<MAX_PLAYERS>  = Bit1: false,
-	Bit1:	gr_ForbiddenPM			<MAX_PLAYERS>  = Bit1: false,
 	Bit1:	gr_BlockedPM			<MAX_PLAYERS>  = Bit1: false,
 	Bit1:	gr_PlayerAlive			<MAX_PLAYERS>  = Bit1: false,
 	Bit1:	gr_MobileSpeaker		<MAX_PLAYERS>  = Bit1: false,
 	Bit1:	gr_SmokingCiggy			<MAX_PLAYERS>  = Bit1: false,
 	Bit1:	gr_HasRubber			<MAX_PLAYERS>  = Bit1: false,
-	Bit1:	gr_PlayerSendKill		<MAX_PLAYERS>  = Bit1: false,
 	Bit1:	gr_PlayerRadio			<MAX_PLAYERS>  = Bit1: true,
 	Bit1:	gr_TrunkOffer			<MAX_PLAYERS>  = Bit1: false,
 	Bit1:	gr_PlayerInTrunk		<MAX_PLAYERS>  = Bit1: false,
 	Bit1:	gr_PlayerOnTutorial		<MAX_PLAYERS>  = Bit1: false,
 	Bit1:   gr_animchat             <MAX_PLAYERS>  = Bit1: false,
-	Bit1:	gr_Blockedreport		<MAX_PLAYERS>  = Bit1: false,
     // TODO: should be part of Player/Char module
 	Bit1:   gr_Blind                <MAX_PLAYERS>  = Bit1: false,
 	Bit1:   gr_BlindFold            <MAX_PLAYERS>  = Bit1: false,
@@ -973,15 +969,11 @@ hook function ResetPlayerVariables(playerid)
 	Bit1_Set( gr_PlayerLoggedIn 		, playerid, false );
 	Bit1_Set( gr_NewUser				, playerid, false );
 	Bit1_Set( gr_PlayerTimeOut			, playerid, false );
-	Bit1_Set( gr_ForbiddenPM			, playerid, false );
 	Bit1_Set( gr_BlockedPM				, playerid, false );
-	Bit1_Set( gr_CreateObject			, playerid, false );
-	Bit1_Set( gr_Blockedreport			, playerid, false );
 	Bit1_Set( gr_PlayerAlive			, playerid, true  );
 	Bit1_Set( gr_MobileSpeaker			, playerid, false );
 	Bit1_Set( gr_SmokingCiggy			, playerid, false );
 	Bit1_Set( gr_HasRubber				, playerid, false );
-	Bit1_Set( gr_PlayerSendKill			, playerid, false );
 	Bit1_Set( gr_animchat               , playerid, false );
 	Bit1_Set( gr_PlayerRadio			, playerid, true );
 	Bit1_Set( gr_TrunkOffer				, playerid, false );

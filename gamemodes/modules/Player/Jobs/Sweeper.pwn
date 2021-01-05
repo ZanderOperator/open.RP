@@ -71,7 +71,7 @@ hook OnPlayerEnterCheckpoint(playerid)
 {
 	if(PlayerJob[playerid][pJob] == SWEEPER_ID) 
 	{
-		if( Bit1_Get( r_Sweeping, playerid ) && GPS_Active_Check(playerid)) 
+		if( Bit1_Get( r_Sweeping, playerid ) && Player_GpsActivated(playerid)) 
 		{
 			new vID = GetPlayerVehicleID(playerid);
 			if(!IsVehicleASweep(vID)) return SendClientMessage( playerid, COLOR_RED, "Ne cistite ulice sa Sweeperom!");

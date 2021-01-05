@@ -718,7 +718,7 @@ CMD:bank(playerid, params[])
 	else if( !strcmp( pick, "transfer", true ) ) {
 		new
 			moneys, giveplayerid;
-		if( sscanf( params, "s[15]ui", pick, giveplayerid, moneys ) ) return SendClientMessage(playerid, COLOR_RED, "[ ? ]:  /bank transfer [Playerid/DioImena][iznos]");
+		if( sscanf( params, "s[15]ui", pick, giveplayerid, moneys ) ) return SendClientMessage(playerid, COLOR_RED, "[ ? ]:  /bank transfer [Playerid / Part of name][iznos]");
 		if( PlayerInfo[ playerid ][ pLevel ] < 2 ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Morate biti level 2+!");
 		if( giveplayerid == INVALID_PLAYER_ID) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Taj igrac nije online.");
 		if( moneys > 0 && PlayerInfo[ playerid ][ pBank ] >= moneys ) 

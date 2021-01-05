@@ -363,10 +363,15 @@ PlayerStartRob(playerid, storage_id, rob_timer = MAX_ROB_TIME, house_id)
     PlayerJob[playerid][pFreeWorks] -= 15;
     TogglePlayerControllable(playerid, false);
 
-    new send_message[128], buffer[35+5];
-    format(send_message, sizeof(send_message), "[WARNING]: Igrac %s je upravo zapoceo storage-rob, storage id: %d.", GetName(playerid, false), storage_id);
-    SendAdminMessage(COLOR_YELLOW, send_message);
+    
+    SendAdminMessage(COLOR_YELLOW, 
+        "AdmWarn: %s has just started storage rob, storage ID: %d.", 
+        GetName(playerid, false), 
+        storage_id
+    );
 
+    new 
+        buffer[35+5];
     PlayerTextDrawSetString(playerid, srobTD[playerid][8], "~y~(COMBINATION):~w~_??_??_??");
     format(buffer, sizeof(buffer), "~y~(time)~w~_%d_seconds_remain...", rob_timer);
     PlayerTextDrawSetString(playerid, srobTD[playerid][13], buffer);

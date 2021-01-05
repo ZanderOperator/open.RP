@@ -1639,7 +1639,7 @@ CMD:arrest(playerid, params[])
     if (!IsAtArrestPoint(playerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste na mjestu za uhicenje!");
     if (sscanf(params, "uiis[24]", giveplayerid, moneys, jailtime, reason))
     {
-        SendClientMessage(playerid, COLOR_RED, "[ ? ]: /arrest [playerid][cijena][minute][razlog]");
+        SendClientMessage(playerid, COLOR_RED, "[ ? ]: /arrest [playerid][cijena][minute][reason]");
         return 1;
     }
     if (!IsPlayerConnected(giveplayerid))    return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Uneseni igrac nije online!");
@@ -1720,7 +1720,7 @@ CMD:unfree(playerid, params[])
         return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "Morate biti rank %d kako bi ste mogli koristiti ovu komandu!", FactionInfo[PlayerFaction[playerid][pMember]][rUnFree]);
 
     new giveplayerid, string[128];
-    if (sscanf(params, "u", giveplayerid)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /unfree [playerid/dio imena]");
+    if (sscanf(params, "u", giveplayerid)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /unfree [playerid / Part of name]");
 
     if (giveplayerid == INVALID_PLAYER_ID)
     {
@@ -1759,7 +1759,7 @@ CMD:cuff(playerid, params[])
     }
 
     new giveplayerid;
-    if (sscanf(params, "u", giveplayerid)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /cuff [playerid/dio imena]");
+    if (sscanf(params, "u", giveplayerid)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /cuff [playerid / Part of name]");
     if (giveplayerid == INVALID_PLAYER_ID) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Taj igrac nije na serveru.");
     //if (Player_IsCuffed(giveplayerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Osoba vec ima lisice!");
     if (!ProxDetectorS(2.5, playerid, giveplayerid) && IsPlayerInAnyVehicle(playerid) && IsPlayerInAnyVehicle(giveplayerid))
@@ -1797,7 +1797,7 @@ CMD:uncuff(playerid, params[])
     }
 
     new giveplayerid;
-    if (sscanf(params, "u", giveplayerid)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /cuff [playerid/dio imena]");
+    if (sscanf(params, "u", giveplayerid)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /cuff [playerid / Part of name]");
     if (giveplayerid == INVALID_PLAYER_ID) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Taj igrac nije na serveru.");
     if (!ProxDetectorS(5.0, playerid, giveplayerid))
     {
@@ -2015,7 +2015,7 @@ CMD:suspend(playerid, params[])
     new giveplayerid, string[128];
     if ((PlayerFaction[playerid][pLeader] == 1 || (PlayerFaction[playerid][pRank] >= 11 && PlayerFaction[playerid][pMember] == 1)) || PlayerFaction[playerid][pLeader] == 5)
     {
-        if (sscanf(params, "u", giveplayerid)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /suspend [playerid/dio imena]");
+        if (sscanf(params, "u", giveplayerid)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /suspend [playerid / Part of name]");
         if (giveplayerid == INVALID_PLAYER_ID) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Taj igrac nije na serveru.");
 
         PlayerFaction[giveplayerid][pRank] = 0;
@@ -2027,7 +2027,7 @@ CMD:suspend(playerid, params[])
     }
     else if (PlayerFaction[playerid][pLeader] == 4)
     {
-        if (sscanf(params, "u", giveplayerid)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /suspend [playerid/dio imena]");
+        if (sscanf(params, "u", giveplayerid)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /suspend [playerid / Part of name]");
         if (giveplayerid == INVALID_PLAYER_ID) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Taj igrac nije na serveru.");
 
         PlayerFaction[giveplayerid][pRank] = 0;

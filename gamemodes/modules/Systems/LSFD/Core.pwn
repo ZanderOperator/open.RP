@@ -900,7 +900,7 @@ CMD:treatment(playerid, params[])
         giveplayerid, time;
 
     if (!IsFDMember(playerid)) return SendClientMessage(playerid, COLOR_RED, "Niste doktor!");
-    if (sscanf( params, "ui", giveplayerid, time)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /treatment [playerid/dio imena][minute]");
+    if (sscanf( params, "ui", giveplayerid, time)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /treatment [playerid / Part of name][minute]");
     if (giveplayerid == INVALID_PLAYER_ID) return SendMessage(playerid, MESSAGE_TYPE_ERROR, " Unijeli ste krivi playerid!");
     if (time < 0 || time > 100) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nevaljan unos vremena tretmana!");
     if (giveplayerid == playerid) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne mozete sami sebe stavljati na tretman!");
@@ -1007,7 +1007,7 @@ CMD:injectp(playerid, params[])
     new
         giveplayerid;
 
-    if (sscanf(params, "u", giveplayerid)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /injectp [playerid/dio imena]");
+    if (sscanf(params, "u", giveplayerid)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /injectp [playerid / Part of name]");
     if (giveplayerid == INVALID_PLAYER_ID) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Krivi playerid!");
     if (giveplayerid == playerid) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne mozete sami sebe lije�iti.");
     if (!ProxDetectorS(5.0, playerid, giveplayerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nisi blizu tog igraca!");

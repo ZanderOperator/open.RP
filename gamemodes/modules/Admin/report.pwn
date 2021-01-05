@@ -14,18 +14,29 @@ static ReportData[MAX_REPORTS][E_REPORT_DATA];
 static 
 	PlayerReport[MAX_PLAYERS][128];
 
-static 
+static
+	bool:BlockedReport[MAX_PLAYERS],
 	ReportID[MAX_PLAYERS],
 	DialogArgs[MAX_PLAYERS],
 	DialogCallback[MAX_PLAYERS][32],
 	DialogParamHash[MAX_PLAYERS][64];
 
-stock Player_ReportID(playerid)
+bool:Player_BlockedReport(playerid)
+{
+	return BlockedReport[playerid];
+}
+
+Player_SetBlockedReport(playerid, bool:v)
+{
+	BlockedReport[playerid] = v;
+}
+
+Player_ReportID(playerid)
 {
 	return ReportID[playerid];
 }
 
-stock Player_SetReportID(playerid, id)
+Player_SetReportID(playerid, id)
 {
 	ReportID[playerid] = id;
 }
@@ -75,6 +86,7 @@ hook function ResetPlayerVariables(playerid)
 		ClearReport(Player_ReportID(playerid));
 		Player_SetReportID(playerid, -1);
 	}
+	BlockedReport[playerid] = false; 
 	DialogArgs[playerid] = 0;
 	DialogCallback[playerid][0] = EOS;
 	DialogParamHash[playerid][0] = EOS;
@@ -255,7 +267,8 @@ stock SecondsToMinute(seconds)
 
 CMD:report(playerid, params[])
 {
-    if(Bit1_Get(gr_Blockedreport, playerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne mozes slati reporte.");
+    if(Player_BlockedReport(playerid)) 
+		return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne mozes slati reporte.");
 	if(Player_ReportID(playerid) != -1)
 		return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Vec si poslao report! Pricekaj da ti admini odgovore na isti.");
 

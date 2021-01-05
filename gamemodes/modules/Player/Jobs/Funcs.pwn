@@ -490,9 +490,10 @@ CMD:jobduty(playerid, params[])
 	SendClientMessage(playerid, COLOR_RED, "[ ! ]  Taxi Company:");
 	foreach(new i: Player) 
 	{
-		if(TaxiData[i][eTaxiDuty] == true) 
+		if(bool:Player_TaxiDuty(playerid)) 
 		{
-			new Float: t_overall = float(TaxiInfo[i][pTaxiPoints]) / float(TaxiInfo[i][pTaxiVoted]);
+			new 
+				Float: t_overall = float(TaxiInfo[i][pTaxiPoints]) / float(TaxiInfo[i][pTaxiVoted]);
 			va_SendClientMessage(playerid, -1, "Ime: %s // Taxi Rating: %.1f // Kontakt broj: %d.", 
 				GetName(i), 
 				t_overall, 

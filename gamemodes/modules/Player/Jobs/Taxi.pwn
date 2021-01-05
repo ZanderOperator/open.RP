@@ -12,9 +12,30 @@
 	- Vars
 */
 
-new	
+enum E_DATA_TAXI 
+{
+	bool: eTaxiDuty,
+	bool: eTaxiActive,
+	eTaxiDriver,
+	eTaxiPassanger,
+	eTaxiMetersFare,
+	eTaxiTraveled,
+	eTaxiFare,
+	eTaxiPayment,
+	Float: eTaxiStartPos[3],
+}
+static 
+	TaxiData[MAX_PLAYERS][E_DATA_TAXI];
+
+static	
 	PlayerText:Taximeter[MAX_PLAYERS][10];
 
+ptask TaxiMeter[1000](playerid)
+{
+	if(SafeSpawned[playerid] && TaxiData[playerid][eTaxiActive]) 
+		_TaximeterCount(playerid);
+	return 1;
+}
 
 /*
                                                                       
@@ -85,6 +106,12 @@ hook function SavePlayerStats(playerid)
 /*
 	- Functions
 */
+
+bool: Player_TaxiDuty(playerid)
+{
+	return TaxiData[playerid][eTaxiDuty];
+}
+
 IsATaxi(model)
 {
     if( model == 420 || model == 438 )

@@ -501,7 +501,7 @@ CMD:alldamages(playerid, params[])
 		
 	if (sscanf(params, "u", gplayerid))
 	{
-		SendClientMessage(playerid, COLOR_RED, "[ ? ]: /alldamages [PlayerID/DioImena]");
+		SendClientMessage(playerid, COLOR_RED, "[ ? ]: /alldamages [PlayerID / Part of name]");
 		return 1;
 	}
 	if( !IsPlayerConnected(gplayerid) ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Pogresan ID igraca/nick!!");

@@ -872,7 +872,7 @@ CMD:setcity(playerid, params[])
 
 CMD:city(playerid, params[])
 {
-    if (PlayerInfo[playerid][pAdmin] < 1338) return SendClientMessage(playerid, COLOR_RED, "Niste ovlasteni za koristenje ove komande!");
+    if (PlayerInfo[playerid][pAdmin] < 1338) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You are not authorized to use this command!");
     // if (!IsAtBank(playerid)) return SendClientMessage(playerid, COLOR_RED, "Morate biti u banci da bi ste mogli koristiti ovu komandu !");
 
     ShowPlayerDialog(playerid, DIALOG_CITY_MAIN, DIALOG_STYLE_LIST, "GRAD", "Proracun\nPorez\nFaction Bank\nBiznis Info", "Choose", "Abort");
@@ -946,7 +946,7 @@ CMD:govmdc(playerid, params[])
     if (PlayerFaction[playerid][pMember] != 4) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ovlasteni za koristenje ove komande!");
 
     new giveplayerid;
-    if (sscanf(params, "u", giveplayerid)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /govmdc [ID/DioImena]");
+    if (sscanf(params, "u", giveplayerid)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /govmdc [ID / Part of name]");
     if (giveplayerid == INVALID_PLAYER_ID || !IsPlayerLogged(giveplayerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Taj igrac nije ulogiran!");
 
     GovMDC[playerid] = giveplayerid;

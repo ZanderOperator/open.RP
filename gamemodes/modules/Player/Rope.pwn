@@ -103,7 +103,7 @@ CMD:tie(playerid, params[])
     new
         giveplayerid;
     if (sscanf(params, "u", giveplayerid))
-         return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /tie [Playerid/DioImena]");
+         return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /tie [Playerid / Part of name]");
 
     if (!ProxDetectorS(3.0, playerid, giveplayerid))
         return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Igrac nije dovoljno blizu vas!");
