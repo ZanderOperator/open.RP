@@ -1076,15 +1076,15 @@ stock ChangePlayerName(playerid, newname[], type, bool:admin_cn = false)
 		newname
 	);
 	
-	mysql_fquery(g_SQL, "UPDATE accounts SET name = '%e', sex = '%d' WHERE sqlid = '%d'",
+	mysql_fquery(g_SQL, "UPDATE accounts SET name = '%e', sex = '%d', age = '%d' WHERE sqlid = '%d'",
 		newname,
-		PlayerInfo[ playerid ][pAge],
+		PlayerInfo[ playerid ][ pSex ],
+		PlayerInfo[ playerid ][ pAge ],
 		PlayerInfo[ playerid ][ pSQLID ]
 	);
 	
 	PlayerJail[ playerid ][ pArrested ] = 0;
 	LicenseInfo[playerid][pGunLic] 	= 0;
-	SavePlayerData(playerid);
 	
 	if(admin_cn == (false)) {
 		if( !PlayerVIP[playerid][pDonateRank] )
