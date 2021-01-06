@@ -223,7 +223,7 @@ Public:CheckAccountsForInactivity()
 				continue;
 			}
 			
-			strcpy(logString, GetPlayerAdminMessage(sqlid), sizeof(logString)); 
+			strcpy(logString, GetAdminMessage(sqlid), sizeof(logString)); 
 			if(isnull(logString))
 				d = false;
 			else d = true;
@@ -453,7 +453,7 @@ Public:CheckAccountsForInactivity()
 				format(playername, sizeof(playername), "%s", ConvertSQLIDToName(sqlid));
 				donaterank = GetPlayerVIP(sqlid);
 				
-				strcpy(logString, GetPlayerAdminMessage(sqlid), sizeof(logString)); 
+				strcpy(logString, GetAdminMessage(sqlid), sizeof(logString)); 
 				if(isnull(logString))
 					d = false;
 				else d = true;
@@ -817,7 +817,8 @@ public BanPlayer(playerid)
 	return 1;
 }
 
-stock GetAdoFreeLabelSlot() {
+stock GetAdoFreeLabelSlot() 
+{
 	for(new i = 0; i < MAX_ADO_LABELS; i++)
 	{
 	    if(!AdoLabels[i][label])
@@ -827,6 +828,7 @@ stock GetAdoFreeLabelSlot() {
 	}
 	return -1;
 }
+
 stock ResetAdoLabelSlot(playerid, type, value)
 {
 	switch(type)
@@ -1209,199 +1211,8 @@ IsValidName(name[])
 	return 1; // All check are ok, Name is valid...
 }
 
-/**
-    <summary>
-        Daje informacije o igracevu FPSu.
-    </summary>
-	
-	<param name="playerid">
-        Playerid od igraca.
-    </param>
-
-    <returns>
-        Igracev FPS.
-    </returns>
-
-    <remarks>
-        -
-    </remarks>
-*/
 stock GetPlayerFPS(playerid)
 	return PlayerFPS[playerid];
-
-/**
-    <summary>
-        Daje igracev nick od njegovog MySQL IDa
-    </summary>
-	
-	<param name="sqlid">
-        MySQL ID od igraca
-    </param>
-
-    <returns>
-        Igracev nick
-    </returns>
-
-    <remarks>
-        -
-    </remarks>
-*/
-
-stock GetPlayerAdminMessage(id)
-{
-	new message[2048];
-	
-	new 
-		Cache:result = mysql_query(g_SQL, va_fquery(g_SQL, "SELECT AdminMessage FROM accounts WHERE sqlid = '%d'", id));
-	cache_get_value_name(0, "AdminMessage", message, 2048);
-	cache_delete(result);
-	return message;
-}
-
-stock GetPlayerVIP(sqlid)
-{
-	new	Cache:result,
-		value = 0;
-
-	result = mysql_query(g_SQL, va_fquery(g_SQL, "SELECT vipRank FROM player_vip_status WHERE sqlid = '%d'", sqlid));
-	 
-	if(!cache_num_rows())
-		value = 0;
-	else
-		cache_get_value_name_int(0, "vipRank", value);
-	
-	cache_delete(result);
-	return value;
-}
-
-stock GetPlayerPaydayCount(sqlid)
-{
-	new	Cache:result,
-		value = 0;
-
-	result = mysql_query(g_SQL, va_fquery(g_SQL, "SELECT monthpaydays FROM experience WHERE sqlid = '%d'", sqlid));
-	if(!cache_num_rows())
-		value = 0;
-	else
-		cache_get_value_name_int(0, "monthpaydays", value);
-	
-	cache_delete(result);
-	return value;
-}
-
-stock GetPlayerJobKey(sqlid)
-{
-	new	Cache:result,
-		value = 0;
-
-	result = mysql_query(g_SQL, va_fquery(g_SQL, "SELECT jobkey FROM player_job WHERE sqlid = '%d'", sqlid));
-	if(!cache_num_rows())
-		value = 0;
-	else
-		cache_get_value_name_int(0, "jobkey", value);
-	
-	cache_delete(result);
-	return value;
-}
-
-stock GetPlayerContractTime(sqlid)
-{
-	new	Cache:result,
-		value = 0;
-
-	result = mysql_query(g_SQL, va_fquery(g_SQL, "SELECT contracttime FROM player_job WHERE sqlid = '%d'", sqlid));
-	if(!cache_num_rows())
-		value = 0;
-	else
-		cache_get_value_name_int(0, "contracttime", value);
-	
-	cache_delete(result);
-	return value;
-}
-
-stock IsAccountTeamStaff(sqlid)
-{
-	new	Cache:result,
-		bool:value = false,
-		admin = 0,
-		helper = 0;
-
-	result = mysql_query(g_SQL, va_fquery(g_SQL, "SELECT adminLvl, helper FROM accounts WHERE sqlid = '%d'", sqlid));
-
-	if(!cache_num_rows())
-		value = false;
-	else
-	{
-		cache_get_value_name_int(0, "adminLvl", admin);
-		cache_get_value_name_int(0, "helper", helper);
-		if(admin > 0 || helper > 0)
-			value = true;
-	}
-	cache_delete(result);
-	return value;
-}
-
-stock IsValidInactivity(sqlid)
-{
-	new	Cache:result,
-		bool:value = false,
-		endstamp;
-
-	
-	result = mysql_query(g_SQL, va_fquery(g_SQL, 
-				"SELECT sqlid, endstamp FROM inactive_accounts WHERE sqlid = '%d'", sqlid)
-			);
-
-	if(!cache_num_rows())
-		value = false;
-	else
-	{
-		cache_get_value_name_int(0, "endstamp", endstamp);
-		if(endstamp >= gettimestamp()) // Prijavljena neaktivnost jos uvijek traje
-			value = true;
-		else // Prijavljena neaktivnost je istekla
-		{
-			mysql_fquery(g_SQL, "DELETE FROM inactive_accounts WHERE sqlid = '%d'", sqlid);
-			value = false;
-		}
-	}
-	cache_delete(result);
-	return value;
-}
-
-/**
-    <summary>
-        Daje igracev broj od njegovog MySQL IDa
-    </summary>
-	
-	<param name="sqlid">
-        MySQL ID od igraca
-    </param>
-
-    <returns>
-        Igracev broj
-    </returns>
-
-    <remarks>
-        -
-    </remarks>
-*/
-stock GetPlayerMobileNumberFromSQL(sqlid)
-{
-    new
-		dest = 0;
-	
-	if( sqlid > 0 ) 
-	{
-	    new	Cache:result;
-		result = mysql_query(g_SQL, 
-					va_fquery(g_SQL, "SELECT number FROM player_phones WHERE player_id = '%d' AND type = '1'", sqlid)
-				);
-  		cache_get_value_index_int(0, 0, dest);
-		cache_delete(result);
-	} 
-	return dest;
-}
 
 ////////
 PrintAccent(playerid)

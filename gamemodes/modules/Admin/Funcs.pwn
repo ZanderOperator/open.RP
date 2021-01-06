@@ -171,116 +171,55 @@ bool:StopFly(playerid)
 	return true;
 }
 
-LoadPlayerAdminMessage(playerid)
-{
-    mysql_pquery(g_SQL, 
-        va_fquery(g_SQL, "SELECT * FROM player_admin_msg WHERE sqlid = '%d'", PlayerInfo[playerid][pSQLID]),
-        "LoadingPlayerAdminMessage", 
-        "i", 
-        playerid
-    );
-    return 1;
-}
 
-Public: LoadingPlayerAdminMessage(playerid)
+IsValidInactivity(sqlid)
 {
-    if(!cache_num_rows())
-    {
-        mysql_fquery_ex(g_SQL, 
-            "INSERT INTO player_admin_msg(sqlid, AdminMessage, AdminMessageBy, AdmMessageConfirm) \n\
-                VALUES('%d', '', '', '0')",
-            PlayerInfo[playerid][pSQLID]
-        );
-        return 1;
-    }
-    cache_get_value_name(0, "AdminMessage", PlayerAdminMessage[playerid][pAdminMsg], 1536);
-    cache_get_value_name(0, "AdminMessageBy", PlayerAdminMessage[playerid][pAdminMsgBy], 60);
-    cache_get_value_name_int(0, "AdmMessageConfirm", PlayerAdminMessage[playerid][pAdmMsgConfirm]);
-    return 1;
-}
+	new	Cache:result,
+		bool:value = false,
+		endstamp;
 
-SavePlayerAdminMessage(playerid)
-{
-    mysql_fquery_ex(g_SQL,
-        "UPDATE player_admin_msg SET AdminMessage = '%e', AdminMessageBy = '%e', AdmMessageConfirm = '%d' \n\
-            WHERE sqlid = '%d'",
-        PlayerAdminMessage[playerid][pAdminMsg],
-        PlayerAdminMessage[playerid][pAdminMsgBy],
-        PlayerAdminMessage[playerid][pAdmMsgConfirm],
-        PlayerInfo[playerid][pSQLID]
-    );
-    return 1;
-}
+	
+	result = mysql_query(g_SQL, va_fquery(g_SQL, 
+				"SELECT sqlid, endstamp FROM inactive_accounts WHERE sqlid = '%d'", sqlid)
+			);
 
-Public: AddAdminMessage(playerid, user_name[], reason[])
-{
-	new rows;
-	
-    cache_get_row_count(rows);
-	if(!rows)
-	 	return SendClientMessage(playerid, COLOR_RED, "[GRESKA - MySQL]: Ne postoji korisnik s tim nickom!");
-	
-	new
-		on,
-		sqlid;
-	
-	cache_get_value_name_int(0, "sqlid" , sqlid);
-	cache_get_value_name_int(0, "online" , on);
-	
-	if(on)
+	if(!cache_num_rows())
+		value = false;
+	else
 	{
-		sscanf(user_name, "u", on);
-		
-		if(on != INVALID_PLAYER_ID && IsPlayerConnected(on) && SafeSpawned[on])
+		cache_get_value_name_int(0, "endstamp", endstamp);
+		if(endstamp >= gettimestamp()) // Prijavljena neaktivnost jos uvijek traje
+			value = true;
+		else // Prijavljena neaktivnost je istekla
 		{
-			va_SendClientMessage(on, COLOR_NICEYELLOW, "(( PM from %s[%d]: %s ))", 
-				GetName(playerid, false), 
-				playerid, 
-				reason
-			);
-			va_SendClientMessage(playerid, COLOR_RED, "(( PM for %s[%d]: %s ))", 
-				user_name, 
-				on, 
-				reason
-			);
-			SendFormatMessage(playerid, 
-				MESSAGE_TYPE_SUCCESS, 
-				"%s is currently online, so you sent him an PM.",
-				user_name
-			);
-			return 1;
+			mysql_fquery(g_SQL, "DELETE FROM inactive_accounts WHERE sqlid = '%d'", sqlid);
+			value = false;
 		}
-	}	
-	mysql_fquery(g_SQL,
-		"UPDATE player_admin_msg SET AdminMessage = '%e', AdminMessageBy = '%e', AdmMessageConfirm = '0' WHERE sqlid = '%d'",
-		reason, 
-		GetName(playerid, true), 
-		sqlid
-	);
-
-	SendFormatMessage(playerid, MESSAGE_TYPE_SUCCESS, "You have sucessfully left %s a message: %s", user_name, reason);
-	return 1;
+	}
+	cache_delete(result);
+	return value;
 }
 
-SendServerMessage(sqlid, reason[])
+IsAccountTeamStaff(sqlid)
 {
-	mysql_fquery(g_SQL, 
-		"UPDATE player_admin_msg SET AdminMessage = '%e', AdminMessageBy = 'Server', AdmMessageConfirm = '0' \n\
-			WHERE sqlid = '%d'",
-		reason, 
-		sqlid
-	);
-	return 1;
-}
+	new	Cache:result,
+		bool:value = false,
+		admin = 0,
+		helper = 0;
 
-ShowAdminMessage(playerid)
-{
-	new 
-		string[2048];
-		
-	format(string, sizeof(string), "Obavijest od %s\n%s", PlayerAdminMessage[playerid][pAdminMsgBy], PlayerAdminMessage[playerid][pAdminMsg]);
-	ShowPlayerDialog(playerid, DIALOG_ADMIN_MSG, DIALOG_STYLE_MSGBOX, "Admin Message", string, "Ok", "");
-	return 1;
+	result = mysql_query(g_SQL, va_fquery(g_SQL, "SELECT adminLvl, helper FROM accounts WHERE sqlid = '%d'", sqlid));
+
+	if(!cache_num_rows())
+		value = false;
+	else
+	{
+		cache_get_value_name_int(0, "adminLvl", admin);
+		cache_get_value_name_int(0, "helper", helper);
+		if(admin > 0 || helper > 0)
+			value = true;
+	}
+	cache_delete(result);
+	return value;
 }
 
 ShowPlayerCars(playerid, playersqlid, player_name[])

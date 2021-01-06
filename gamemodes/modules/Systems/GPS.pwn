@@ -269,18 +269,15 @@ static GPS_GetDistance(playerid, gpsid, Float:X, Float:Y, Float:Z)
 
 ptask NavigationTimer[1000](playerid)
 {
-    if(!SafeSpawned[playerid])
+    if(!SafeSpawned[playerid] || !Player_GpsActivated(playerid))
         return 1;
 
-    if(Player_GpsActivated(playerid))
-    {
-		GPS_GetDistance(playerid, 
-            GPSInfo[playerid][gGPSID], 
-            GPSInfo[playerid][gX], 
-            GPSInfo[playerid][gY], 
-            GPSInfo[playerid][gZ]
-        );
-    }
+    GPS_GetDistance(playerid, 
+        GPSInfo[playerid][gGPSID], 
+        GPSInfo[playerid][gX], 
+        GPSInfo[playerid][gY], 
+        GPSInfo[playerid][gZ]
+    );
     return 1;
 }
 
@@ -645,6 +642,12 @@ CMD:portplayer(playerid, params[])
     
     GPS_PortPlayer[playerid] = giveplayerid;
     GPS_DialogShow(playerid, true);
+
+    SendFormatMessage(playerid,
+        MESSAGE_TYPE_INFO, 
+        "You chose to teleport %s. Please pick a location.", 
+        GetName(giveplayerid, false)
+    );
 	return 1;
 }
 

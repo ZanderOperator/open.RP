@@ -3,7 +3,10 @@
 LoadPlayerAdminMessage(playerid)
 {
     mysql_pquery(g_SQL, 
-        va_fquery(g_SQL, "SELECT * FROM player_admin_msg WHERE sqlid = '%d'", PlayerInfo[playerid][pSQLID]),
+        va_fquery(g_SQL, 
+			"SELECT * FROM player_admin_msg WHERE sqlid = '%d'", 
+			PlayerInfo[playerid][pSQLID]
+		),
         "LoadingPlayerAdminMessage", 
         "i", 
         playerid
@@ -119,13 +122,13 @@ Public: AddAdminMessage(playerid, user_name[], reason[])
 	return 1;
 }
 
-SendServerMessage(sqlid, const reason[], const sender[] = 'Server')
+SendServerMessage(sqlid, const reason[])
 {
 	mysql_fquery(g_SQL, 
 		"UPDATE player_admin_msg SET AdminMessage = '%e', AdminMessageBy = '%e', \n\
 			AdmMessageConfirm = '0' WHERE sqlid = '%d'",
 		reason,
-		sender 
+		SERVER_NAME,
 		sqlid
 	);
 	return 1;
@@ -134,9 +137,24 @@ SendServerMessage(sqlid, const reason[], const sender[] = 'Server')
 ShowAdminMessage(playerid)
 {
 	new 
-		string[2048];
+		string[1600];
 		
 	format(string, sizeof(string), "Obavijest od %s\n%s", PlayerAdminMessage[playerid][pAdminMsgBy], PlayerAdminMessage[playerid][pAdminMsg]);
 	ShowPlayerDialog(playerid, DIALOG_ADMIN_MSG, DIALOG_STYLE_MSGBOX, "Admin Message", string, "Ok", "");
 	return 1;
+}
+
+GetAdminMessage(id)
+{
+	new 
+		message[1536], 
+		Cache:result;
+		
+	result = mysql_query(g_SQL, 
+				va_fquery(g_SQL, "SELECT AdminMessage FROM player_admin_msg WHERE sqlid = '%d'", id)
+			 );
+			
+	cache_get_value_name(0, "AdminMessage", message, 2048);
+	cache_delete(result);
+	return message;
 }

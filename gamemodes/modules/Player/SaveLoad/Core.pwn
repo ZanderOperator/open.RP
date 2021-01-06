@@ -1,6 +1,7 @@
 #include <YSI_Coding\y_hooks>
 
 // Save/Load Player related func. modules - named after adjacent database tables
+#include "modules/Player\SaveLoad/player_admin_msg.pwn"
 #include "modules/Player\SaveLoad/player_inventory.pwn"
 #include "modules/Player\SaveLoad/player_crashes.pwn"
 #include "modules/Player\SaveLoad/player_health.pwn"
