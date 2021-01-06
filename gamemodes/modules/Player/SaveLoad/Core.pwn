@@ -22,6 +22,7 @@ static
 		dialogtext[MAX_DIALOG_TEXT],
 		Timer:LoginCheckTimer[MAX_PLAYERS],
 		bool:SigningIn[MAX_PLAYERS],
+		bool:FirstSaving[MAX_PLAYERS],
 		bool:SecurityBreach[MAX_PLAYERS];
 
 /*
@@ -301,7 +302,9 @@ public LoadPlayerData(playerid)
 		} 
 		else 
 		{
-			new date[12], time[12];
+			new 
+				date[12], 
+				time[12];
 			TimeFormat(Timestamp:unban_time, HUMAN_DATE, date);
 			TimeFormat(Timestamp:unban_time, ISO6801_TIME, time);
 	
@@ -402,7 +405,7 @@ public LoadPlayerData(playerid)
 
 public RegisterPlayer(playerid) // TODO: mandatory checkup!
 {
-	format(PlayerInfo[playerid][pLastLogin], 24, ReturnDate());
+	strcpy(PlayerInfo[playerid][pLastLogin], ReturnDate());
     mysql_pquery(g_SQL,
 		va_fquery(g_SQL, 
 			"INSERT INTO accounts (online,registered,register_date,name,password,teampin,email,\n\
@@ -427,11 +430,10 @@ public RegisterPlayer(playerid) // TODO: mandatory checkup!
 
 public OnAccountFinish(playerid)
 {	
-	//Enum set
 	PlayerInfo[playerid][pSQLID] 			= cache_insert_id();
 	PlayerInfo[playerid][pRegistered] 		= 0;
 	PlayerInfo[playerid][pLevel] 			= 1;
-	PlayerAppearance[playerid][pSkin] 			= 29;
+	PlayerAppearance[playerid][pSkin] 		= 29;
 	PaydayInfo[playerid][pPayDayMoney] 		= 0;
 	PaydayInfo[playerid][pProfit]			= 0;
 	PlayerJob[playerid][pFreeWorks] 		= 15;
@@ -449,6 +451,8 @@ public OnAccountFinish(playerid)
 	PlayerKeys[playerid][pVehicleKey]		= -1;
 	
 	UpdateRegisteredPassword(playerid);
+	FirstSaving[playerid] = true; 
+	SavePlayerData(playerid);
 	
 	TogglePlayerSpectating(playerid, 0);
 	SetCameraBehindPlayer(playerid);
@@ -582,9 +586,10 @@ Public: SafeSpawnPlayer(playerid)
 
 SavePlayerData(playerid)
 {
-    if( !SafeSpawned[playerid] )	
+	// When newly registered player isn't safely spawned, FirstSaving it is.
+    if( !SafeSpawned[playerid] && !FirstSaving[playerid] )	
 		return 1;
-	
+
 	mysql_pquery(g_SQL, "START TRANSACTION");
 
 	mysql_fquery_ex(g_SQL, 
@@ -612,6 +617,7 @@ SavePlayerData(playerid)
 	SavePlayerStats(playerid); // Saving data non-related to 'accounts' database table.
 
 	mysql_pquery(g_SQL, "COMMIT");
+	FirstSaving[playerid] = false;
 	return 1;
 }
 
@@ -846,13 +852,15 @@ hook OnPlayerDisconnect(playerid, reason)
 		stop LoginCheckTimer[playerid];
 
 	SigningIn[playerid] = false;
+	FirstSaving[playerid] = false;
+
 	Player_SetSecurityBreach(playerid, false);
 	SetPlayerOnlineStatus(playerid, 0);
 
 	if(IsPlayerLogging(playerid))
 		stop FinishPlayerSpawn(playerid);
 
-	format(PlayerInfo[playerid][pLastLogin], 24, ReturnDate());
+	strcpy(PlayerInfo[playerid][pLastLogin], ReturnDate());
 
 	RemovePlayerFromVehicle(playerid);
 
@@ -1571,8 +1579,8 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 			}
 			switch(listitem)
 			{
-				case 0: PlayerInfo[playerid][pSex] = 1; //musko
-				case 1: PlayerInfo[playerid][pSex] = 2; //zensko
+				case 0: PlayerInfo[playerid][pSex] = 1; // Male
+				case 1: PlayerInfo[playerid][pSex] = 2; // Female
 			}
 			ShowPlayerDialog(playerid, 
 				DIALOG_REG_AGE, 
