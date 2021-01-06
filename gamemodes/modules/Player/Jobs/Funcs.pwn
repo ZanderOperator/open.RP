@@ -226,8 +226,10 @@ SetPlayerJob(playerid, job_id)
 	return 1;
 }
 
-RemovePlayerJob(playerid) {
-	switch(PlayerJob[playerid][pJob]) {
+RemovePlayerJob(playerid) 
+{
+	switch(PlayerJob[playerid][pJob]) 
+	{
 		case 1: JobData[SWEEPER] --;
 		case 3: JobData[MECHANIC] --;
 		case 5: JobData[CRAFTER] --;
@@ -246,7 +248,8 @@ RemovePlayerJob(playerid) {
 
 RemoveOfflineJob(jobid)
 {
-	switch(jobid) {
+	switch(jobid) 
+	{
 		case 1: JobData[SWEEPER] --;
 		case 3: JobData[MECHANIC] --;
 		case 5: JobData[CRAFTER] --;
@@ -261,9 +264,11 @@ RemoveOfflineJob(jobid)
 	return (true);
 }
 
-JobsList() {
-	new buffer[512];
-			
+JobsList() 
+{
+	new 
+		buffer[512];
+
 	format(buffer, sizeof(buffer), "{3C95C2}Job\t{3C95C2}Workers\nCistac ulica\t[%d/%d]\nMehanicar\t[%d/%d]\nTvornicki radnik\t[%d/%d]\nTaksista\t[%d/%d]\nFarmer\t[%d/%d]\nDrvosjeca\t[%d/%d]\nSmetlar\t[%d/%d]\nVehicle Impounder[%d/%d]\nTransporter[%d/%d]",
 		JobData[SWEEPER], NORMAL_JOBS_EMPLOYERS,
 		JobData[MECHANIC], OFFICIAL_JOBS_EMPLOYERS,
@@ -276,6 +281,36 @@ JobsList() {
 		JobData[TRANSPORTER], NORMAL_JOBS_EMPLOYERS
 	);
 	return (buffer);
+}
+
+GetPlayerJobKey(sqlid)
+{
+	new	Cache:result,
+		value = 0;
+
+	result = mysql_query(g_SQL, va_fquery(g_SQL, "SELECT jobkey FROM player_job WHERE sqlid = '%d'", sqlid));
+	if(!cache_num_rows())
+		value = 0;
+	else
+		cache_get_value_name_int(0, "jobkey", value);
+	
+	cache_delete(result);
+	return value;
+}
+
+GetPlayerContractTime(sqlid)
+{
+	new	Cache:result,
+		value = 0;
+
+	result = mysql_query(g_SQL, va_fquery(g_SQL, "SELECT contracttime FROM player_job WHERE sqlid = '%d'", sqlid));
+	if(!cache_num_rows())
+		value = 0;
+	else
+		cache_get_value_name_int(0, "contracttime", value);
+	
+	cache_delete(result);
+	return value;
 }
 
 /*

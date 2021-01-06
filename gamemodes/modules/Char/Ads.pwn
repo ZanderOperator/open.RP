@@ -96,7 +96,7 @@ stock static ShowPlayerAdsList()
 		{
 			format(motd, 200, ""COL_WHITE"%s\t%d\t%s\t"COL_GREEN"%d$\n",
 				GetAdStyleString(AdsInfo[i][adStyle]),
-				GetPlayerMobileNumberFromSQL(AdsInfo[i][adSenderId]),
+				GetMobileNumberFromSQL(AdsInfo[i][adSenderId]),
 				AdsInfo[i][adText],
 				AdsInfo[i][adPrice]
 			);
@@ -146,21 +146,21 @@ stock static SendAdMessage(index)
 			format(buffer, sizeof(buffer), "[%s] %s (cijena PO DOGOVORU) | Kontakt: [%d]",
 				GetAdStyleString(AdsInfo[index][adStyle]),
 				AdsInfo[index][adText],
-				GetPlayerMobileNumberFromSQL(AdsInfo[index][adSenderId])
+				GetMobileNumberFromSQL(AdsInfo[index][adSenderId])
 			);
 		} else {
 			format(buffer, sizeof(buffer), "[%s] %s (cijena %d$) | Kontakt: [%d]",
 				GetAdStyleString(AdsInfo[index][adStyle]),
 				AdsInfo[index][adText],
 				AdsInfo[index][adPrice],
-				GetPlayerMobileNumberFromSQL(AdsInfo[index][adSenderId])
+				GetMobileNumberFromSQL(AdsInfo[index][adSenderId])
 			);
 		}
 	} else {
 		format(buffer, sizeof(buffer), "[%s] %s | Kontakt: [%d]",
 			GetAdStyleString(AdsInfo[index][adStyle]),
 			AdsInfo[index][adText],
-			GetPlayerMobileNumberFromSQL(AdsInfo[index][adSenderId])
+			GetMobileNumberFromSQL(AdsInfo[index][adSenderId])
 		);
 	}
 	

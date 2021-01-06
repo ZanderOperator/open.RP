@@ -335,6 +335,23 @@ stock SavePlayerMobile(playerid, type=1)
 	return 1;
 }
 
+GetMobileNumberFromSQL(sqlid)
+{
+    new
+		dest = 0;
+	
+	if( sqlid > 0 ) 
+	{
+	    new	Cache:result;
+		result = mysql_query(g_SQL, 
+					va_fquery(g_SQL, "SELECT number FROM player_phones WHERE player_id = '%d' AND type = '1'", sqlid)
+				);
+  		cache_get_value_index_int(0, 0, dest);
+		cache_delete(result);
+	} 
+	return dest;
+}
+
 stock ListPhonesForSale()
 {
 	new dMobileString[1024],
