@@ -1,9 +1,5 @@
 #include <YSI_Coding\y_hooks>
 
-#if defined MODULE_MUSIC
-	#endinput
-#endif
-#define MODULE_MUSIC
 /*
 
 		  ___    _   ___ ___ ___    ___ _____ _ _____ ___ ___  _  _ ___
@@ -28,6 +24,7 @@
 #define MORRISON_RADIO_URL 			"http://freeuk30.listen2myradio.com:37080/"
 #define COOLRADIO_RADIO_URL 		"https://www.internet-radio.com/servers/tools/playlistgenerator/?u=http://live.coolradio.rs:80/cool192.m3u&t=.pls"
 #define FREEBROOKLYN_RADIO_URL 		"https://www.internet-radio.com/servers/tools/playlistgenerator/?u=http://us1.internet-radio.com:8155/live.m3u&t=.pls"
+
 /*
 	##     ##    ###    ########   ######
 	##     ##   ## ##   ##     ## ##    ##
@@ -38,7 +35,8 @@
 	   ###    ##     ## ##     ##  ######
 */
 
-enum E_BOOMBOX_DATA {
+enum E_BOOMBOX_DATA 
+{
 	Float:mX,
 	Float:mY,
 	Float:mZ,
@@ -46,23 +44,21 @@ enum E_BOOMBOX_DATA {
 	mType,
 	mURL[256]
 }
-new MusicInfo[MAX_PLAYERS][E_BOOMBOX_DATA];
+static 
+	MusicInfo[MAX_PLAYERS][E_BOOMBOX_DATA];
 
-static stock
+static
+	HouseMusicURL[ MAX_HOUSES ][ 256 ],
+	bool:HousePlayingMusic[ MAX_HOUSES ],
 	bool:VehiclePlayingMusic[ MAX_VEHICLES ],
 	MusicCircle[ MAX_PLAYERS ],
 	BoomBoxVehURL[ MAX_VEHICLES ][ 256 ],
 	BoomBoxDialogPos[ MAX_PLAYERS ][ 12 ],
-
 	//rBits
 	Bit1: gr_AttachedBoombox <MAX_PLAYERS>  = Bit1: false,
 	Bit1: gr_MusicApproved <MAX_PLAYERS>  = Bit1: false,
 	Bit1: gr_MusicPlaying <MAX_PLAYERS>  = Bit1: false;
-
-static
-	HouseMusicURL[ MAX_HOUSES ][ 256 ],
-	bool:HousePlayingMusic[ MAX_HOUSES ];
-
+	
 
 /*
 	 ######  ########  #######   ######  ##    ##

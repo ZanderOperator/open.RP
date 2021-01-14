@@ -1126,6 +1126,7 @@ CMD:asellhouse(playerid, params[])
 		if(SafeSpawned[playerid] && PlayerInfo[i][pSQLID] == HouseInfo[house][hOwnerID])
 		{
 			PlayerKeys[i][pHouseKey] = INVALID_HOUSE_ID;
+
 			va_SendClientMessage(i, 
 				COLOR_RED, 
 				"[ ! ]: Your house has been moved out by Game Admin %s, you got \n\
@@ -1134,6 +1135,14 @@ CMD:asellhouse(playerid, params[])
 				FormatNumber(HouseInfo[house][hValue])
 			);
 			BudgetToPlayerMoney(i, HouseInfo[house][hValue]);
+
+			PlayerInfo[i][pSpawnChange] = 0;
+			mysql_fquery(g_SQL, "UPDATE accounts SET spawnchange = '%d' WHERE sqlid = '%d'",
+				PlayerInfo[i][pSpawnChange],
+				PlayerInfo[i][pSQLID]
+			);
+			SetPlayerSpawnInfo(i);
+
 			foundonline = true;
 			break;
 		}				
@@ -1294,28 +1303,30 @@ CMD:asellcomplexroom(playerid, params[])
 	{
 		if(SafeSpawned[playerid] && PlayerInfo[i][pSQLID] == ComplexRoomInfo[complex][cOwnerID]) 
 		{
-			PlayerKeys[i][pComplexKey] = INVALID_COMPLEX_ID;
+			PlayerKeys[i][pComplexRoomKey] = INVALID_COMPLEX_ID;
+
 			va_SendClientMessage(i, 
 				COLOR_RED, 
 				"[ ! ]: You got moved out of Complex Room on adress %s by Game Admin %s!", 
 				ComplexRoomInfo[complex][cAdress], 
 				GetName(playerid, false)
 			);
+
+			PlayerInfo[i][pSpawnChange] = 0;
+			mysql_fquery(g_SQL, "UPDATE accounts SET spawnchange = '%d' WHERE sqlid = '%d'",
+				PlayerInfo[i][pSpawnChange],
+				PlayerInfo[i][pSQLID]
+			);
+			SetPlayerSpawnInfo(i);
 			break;
 		}
 	}
 	
-	PlayerKeys[playerid][pComplexRoomKey] = INVALID_COMPLEX_ID;
-	PlayerInfo[playerid][pSpawnChange] = 3;
-
 	ComplexRoomInfo[complex][cOwnerID] = -1;
 	
-	// SQL
-	mysql_fquery(g_SQL, "UPDATE server_complex_rooms SET ownerid = '0' WHERE id = '%d'", ComplexRoomInfo[ complex ][cSQLID]);
-	
-	mysql_fquery(g_SQL, "UPDATE accounts SET spawnchange = '%d' WHERE sqlid = '%d'", 
-		PlayerInfo[playerid][pSpawnChange],
-		PlayerInfo[playerid][pSQLID]
+	mysql_fquery(g_SQL, 
+		"UPDATE server_complex_rooms SET ownerid = '0' WHERE id = '%d'", 
+		ComplexRoomInfo[complex][cSQLID]
 	);
 
 	va_SendClientMessage(playerid, COLOR_RED, 

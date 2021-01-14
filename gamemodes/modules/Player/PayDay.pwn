@@ -135,22 +135,19 @@ GivePlayerPayCheck(playerid)
 		profit 				= 0,
 		p_dialog[2048],
 		f_dialog[256];
+		
+	format(p_dialog, sizeof(p_dialog), "\t{3C95C2}Financijsko izvjesce - %s", GetName(playerid));
 	
-	strcpy(PaydayInfo[playerid][pPayDayDate], ReturnDate(), 32);
-	
-	format(p_dialog, sizeof(p_dialog), "\t %s - Financijsko izvjesce - %s", PaydayInfo[playerid][pPayDayDate], GetName(playerid));
-	
-	// Pretplata na CRYPTO 50 dolara
 	if(PlayerMobile[playerid][pCryptoNumber] != 0 || PlayerMobile[playerid][pMobileCost] > 0)
 	{
 		format(f_dialog,sizeof(f_dialog), "\n{3C95C2}Troskovi pretplate:");
 		strcat(p_dialog,f_dialog, sizeof(p_dialog));
 	}
-	if(PlayerMobile[playerid][pCryptoNumber] != 0){
-
+	if(PlayerMobile[playerid][pCryptoNumber] != 0)
+	{
 		format(f_dialog,sizeof(f_dialog), "\n\tCrypto pretplata: -50$");
 		strcat(p_dialog,f_dialog, sizeof(p_dialog));
-		PlayerToIllegalBudgetMoney(playerid, 50);
+		PlayerToIllegalBudgetMoney(playerid, 25);
 		profit -= 50;
 	}
 
@@ -486,7 +483,11 @@ GivePlayerPayCheck(playerid)
 		else
 			PlayerInfo[playerid][pRespects]++;
  	}
-	format(f_dialog,sizeof(f_dialog), "\nUkupni profit: "COL_GREEN"+%s "COL_RED"(Izracun ne sadrzi troskove kredita i dobitke stednje)", FormatNumber(profit));
+	format(f_dialog,
+		sizeof(f_dialog), 
+		"\nUkupni profit: %s%s "COL_RED"(Izracun ne sadrzi troskove kredita i dobitke stednje)", 
+		(profit > 0) ? (""COL_GREEN"+") : (""COL_LRED"-"),
+		FormatNumber(profit));
 	strcat(p_dialog,f_dialog, sizeof(p_dialog));
 	PaydayInfo[playerid][pProfit] = profit;
 
@@ -560,21 +561,15 @@ GivePlayerPayCheck(playerid)
 	// CoolDown Reset
 	PlayerCoolDown[playerid][pCasinoCool] = 10;	
 	
-	// Experience
-	
+		
 	new currentday, day;
 	TimeFormat(Timestamp:gettimestamp(), DAY_OF_MONTH, "%d", currentday);
 	TimeFormat(Timestamp:ExpInfo[playerid][eLastPayDayStamp], DAY_OF_MONTH, "%d", day);
 	ExpInfo[playerid][eLastPayDayStamp] = gettimestamp();
 	ExpInfo[playerid][eMonthPayDays]++;
-	if((ExpInfo[playerid][eMonthPayDays] % 2) == 0)
-		PlayerInfo[playerid][pLastLoginTimestamp] = gettimestamp();
 
 	if(currentday == day)
-	{
-		PlayerInfo[playerid][pLastLoginTimestamp] = gettimestamp();
 		ExpInfo[playerid][eDayPayDays] ++;
-	}
 	else
 	{
 		ExpInfo[playerid][eGivenEXP] = false;
@@ -596,15 +591,27 @@ GivePlayerPayCheck(playerid)
 	SavePlayerExperience(playerid);
 	
 	// Dialog - Payday
-	new title[64];
-	if(!IsPlayerInVehicle(playerid, GetPlayerVehicleID(playerid))) {
-		format(title, sizeof(title), "* Placa");
-		ShowPlayerDialog(playerid, 0, DIALOG_STYLE_MSGBOX, title, p_dialog, "Close", "");
-	}
-	else if(IsPlayerInVehicle(playerid, GetPlayerVehicleID(playerid))) {
-		SendMessage(playerid, MESSAGE_TYPE_INFO, "Stigao vam je PayDay (( /payday ))");
-	}
+	strcpy(PaydayInfo[playerid][pPayDayDate], ReturnDate(), 32);
+
+	if(!IsPlayerInAnyVehicle(playerid))
+		ShowPlayerDialog(playerid, 0, DIALOG_STYLE_MSGBOX, PaydayInfo[playerid][pPayDayDate], p_dialog, "Close", "");
+	else 
+		SendMessage(playerid, MESSAGE_TYPE_INFO, "Stigao vam je PayDay. (( /payday ))");
+
 	strcpy(PaydayInfo[playerid][pPayDayDialog], p_dialog, 1536);
 	PaydayInfo[playerid][pPayDayMoney] = 0;
+	return 1;
+}
+
+CMD:payday(playerid, params[])
+{
+	ShowPlayerDialog(playerid, 
+		0, 
+		DIALOG_STYLE_MSGBOX, 
+		PaydayInfo[playerid][pPayDayDate], 
+		PaydayInfo[playerid][pPayDayDialog], 
+		"Close", 
+		""
+	);
 	return 1;
 }

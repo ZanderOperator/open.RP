@@ -1068,14 +1068,6 @@ stock ChangePlayerName(playerid, newname[], type, bool:admin_cn = false)
 	);
 	#endif
 	
-	// MySQL
-	mysql_fquery(g_SQL, 
-		"INSERT INTO player_changenames(player_id, old_name, new_name) VALUES ('%d','%e','%e')",
-		PlayerInfo[ playerid ][ pSQLID ],
-		oldname,
-		newname
-	);
-	
 	mysql_fquery(g_SQL, "UPDATE accounts SET name = '%e', sex = '%d', age = '%d' WHERE sqlid = '%d'",
 		newname,
 		PlayerInfo[ playerid ][ pSex ],

@@ -736,14 +736,6 @@ CMD:admins(playerid, params[])
 	return 1;
 }
 
-CMD:payday(playerid, params[])
-{
-	new title[64];
-	format(title, sizeof(title), "* [%s] - %s", PaydayInfo[playerid][pPayDayDate], GetName(playerid));
-	ShowPlayerDialog(playerid, 0, DIALOG_STYLE_MSGBOX, title, PaydayInfo[playerid][pPayDayDialog], "Close", "");
-	return 1;
-}
-
 CMD:helpers(playerid, params[])
 {
 	/*

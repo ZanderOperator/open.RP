@@ -114,7 +114,6 @@ stock NotFDSkin(playerid)
 stock DeleteFaction(orgid)
 {
     mysql_fquery(g_SQL, "DELETE FROM server_factions WHERE id = '%d'", FactionInfo[orgid][fID]);
-    mysql_fquery(g_SQL, "DELETE FROM faction_logs WHERE faction_id = '%d'", FactionInfo[orgid][fID]);
     
     FactionInfo[orgid][fUsed] = 0;
     FactionInfo[orgid][fType] = 0;
@@ -1405,7 +1404,9 @@ CMD:afaction(playerid, params[])
     }
     else if (!strcmp(option, "makeleader", true))
     {
-        new targetid, fid;
+        new 
+            targetid, 
+            fid;
         if (sscanf(params, "s[16]ui", option, targetid, fid)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /afaction makeleader [ID / Part of name] [ID Organizacije]");
         if (targetid == INVALID_PLAYER_ID) return SendClientMessage(playerid, COLOR_RED, "Invalidan ID igraca!");
         if (fid < 1 || fid > MAX_FACTIONS) return SendClientMessage(playerid, COLOR_RED, "Invalidan ID fakcije");
@@ -1432,14 +1433,7 @@ CMD:afaction(playerid, params[])
             PlayerFaction[targetid][pRank],
             PlayerInfo[targetid][pSQLID]
         );
-
-        format(otext, sizeof(otext), "%s je postao lider %s", GetName(playerid, false), FactionInfo[fid][fName]);
-       
-        mysql_fquery(g_SQL, "INSERT INTO faction_logs(faction_id, log_text, time) VALUES ('%d','%e',NOW())",
-            FactionInfo[fid][fID],
-            otext
-        );
-
+        
         va_SendClientMessage(playerid, COLOR_LIGHTBLUE, "Postavio si %s (ID: %d) za lidera organizacije ID %d (%s).", GetName(targetid, true), targetid, fid, FactionInfo[fid][fName]);
         va_SendClientMessage(targetid, COLOR_LIGHTBLUE, "Postavljen si za lidera organizacije %s od strane Admina %s.", FactionInfo[fid][fName], GetName(playerid, true));
         return 1;
@@ -1594,13 +1588,7 @@ CMD:faction(playerid, params[])
             PlayerInfo[targetid][pSQLID]
         );
 
-        new logText[100];
-        format(logText, sizeof(logText), "%s je pozvao %s u %s", GetName(playerid,false), GetName(targetid,false), FactionInfo[PlayerFaction[targetid][pMember]][fName]);
-        
-        mysql_fquery(g_SQL, "INSERT INTO faction_logs(faction_id, log_text, time) VALUES ('%d','%e',NOW())",
-            PlayerFaction[targetid][pMember],
-            logText
-        );
+
         #if defined MODULE_LOGS
         Log_Write("/logfiles/orgs_invite.txt", "(%s) %s(%s) invited %s(%s) to join %s.", 
             GetName(playerid,false), 
@@ -1727,9 +1715,7 @@ CMD:faction(playerid, params[])
         GetPlayerName(targetid, targetname, sizeof(targetname));
 
         if (IsACop(targetid) || IsASD(targetid) || IsFDMember(targetid) || IsAGov(targetid))
-        {
             AC_ResetPlayerWeapons(targetid);
-        }
 
         PlayerFaction[targetid][pMember] = 0;
         PlayerFaction[targetid][pRank] = 0;
@@ -1760,12 +1746,12 @@ CMD:faction(playerid, params[])
             PlayerInfo[targetid][pSQLID]
         );
 
-        new logText[100];
-        format(logText, sizeof(logText), "%s je izbacio %s iz %s", GetName(playerid,false), GetName(targetid,false), FactionInfo[ PlayerFaction[playerid][pLeader] ][fName]);
-        mysql_fquery(g_SQL, "INSERT INTO faction_logs(faction_id, log_text, time) VALUES ('%d','%e',NOW())",
-            PlayerFaction[playerid][pLeader],
-            logText
+        PlayerInfo[targetid][pSpawnChange] = 0;
+        mysql_fquery(g_SQL, "UPDATE accounts SET spawnchange = '%d' WHERE sqlid = '%d'",
+            PlayerInfo[targetid][pSpawnChange],
+            PlayerInfo[targetid][pSQLID]
         );
+        SetPlayerSpawnInfo(targetid);
 
         #if defined MODULE_LOGS
         Log_Write("/logfiles/orgs_invite.txt", "(%s) %s(%s) kicked out %s(%s) from %s.", 
@@ -1809,18 +1795,6 @@ CMD:faction(playerid, params[])
         mysql_fquery(g_SQL, "UPDATE player_faction SET facRank = '%d' WHERE sqlid = '%d'",
             PlayerFaction[targetid][pRank],
             PlayerInfo[targetid][pSQLID]
-        );
-
-        new
-            logText[100];
-        format(logText, sizeof(logText), "%s je stavio %s rank %d", 
-            GetName(playerid,false), 
-            GetName(targetid,false), 
-            PlayerFaction[targetid][pRank]
-        );
-        mysql_fquery(g_SQL, "INSERT INTO faction_logs(faction_id, log_text, time) VALUES ('%d','%e',NOW())",
-            PlayerFaction[playerid][pLeader],
-            logText
         );
 
         va_SendClientMessage(targetid, COLOR_LIGHTBLUE, "Postavljen ti je Rank (%s)[%d] na organizaciji %s od strane %s %s.",
@@ -2038,24 +2012,17 @@ CMD:quitfaction(playerid, params[])
     SendMessage(playerid, MESSAGE_TYPE_INFO, "Napustili ste organizaciju i sada ste civil.");
 
     if (10 <= PlayerJob[playerid][pJob] <= 12)
-    {
         PlayerJob[playerid][pJob] = 0;
-    }
+    
     if (IsACop(playerid) || IsASD(playerid) || IsFDMember(playerid) || IsAGov(playerid))
-    {
         AC_ResetPlayerWeapons(playerid);
-    }
 
-    mysql_fquery(g_SQL, "UPDATE accounts SET spawnchange = '0' WHERE sqlid = '%d'",
+    PlayerInfo[playerid][pSpawnChange] = 0;
+    mysql_fquery(g_SQL, "UPDATE accounts SET spawnchange = '%d' WHERE sqlid = '%d'",
+        PlayerInfo[playerid][pSpawnChange],
         PlayerInfo[playerid][pSQLID]
     );
-
-    new logText[80];
-    format(logText, sizeof(logText), "%s je izasao iz %s", GetName(playerid,false), FactionInfo[PlayerFaction[playerid][pLeader]][fName]);
-    mysql_fquery(g_SQL, "INSERT INTO faction_logs(faction_id, log_text, time) VALUES ('%d','%e',NOW())",
-        PlayerFaction[playerid][pMember],
-        logText
-    );
+    SetPlayerSpawnInfo(playerid);
 
     #if defined MODULE_LOGS
     Log_Write("logfiles/faction_quit.txt", "(%s) Player %s quitted faction %s.",

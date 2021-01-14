@@ -2456,13 +2456,14 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                     HouseToPlayerMoney(playerid, house, HouseInfo[house][hTakings]); // Dobiva sav novac iz house takingsa
 
                     PlayerKeys[playerid][pHouseKey] = INVALID_HOUSE_ID;
-                    PlayerInfo[playerid][pSpawnChange] = 0;
                     PlayerInfo[playerid][pExtraFurniture] = 0;
 
+                    PlayerInfo[playerid][pSpawnChange] = 0;
                     mysql_fquery(g_SQL, "UPDATE accounts SET spawnchange = '%d' WHERE sqlid = '%d'",
                         PlayerInfo[playerid][pSpawnChange],
                         PlayerInfo[playerid][pSQLID]
                     );
+                    SetPlayerSpawnInfo(playerid);
 
                     if (GetPlayerVirtualWorld(playerid) == HouseInfo[house][hVirtualWorld])
                         SetPlayerPosEx(playerid, HouseInfo[house][hEnterX], HouseInfo[house][hEnterY], HouseInfo[house][hEnterZ]);
