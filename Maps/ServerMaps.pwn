@@ -134,7 +134,6 @@ stock CreateMapIcons()
 	CreateDynamicMapIcon(592.6005, -1236.4147, 18.5241, 52, 0, -1, -1, -1, 300.0, MAPICON_LOCAL); 	// Banka
 	CreateDynamicMapIcon(546.5988, -1287.6221, 17.3315, 46, 0, -1, -1, -1, 300.0, MAPICON_LOCAL); 	// Wangs
 	CreateDynamicMapIcon(327.37140, -620.70010, 8.70690, 11, 0, -1, -1, -1, 300.0, MAPICON_LOCAL); 	// Rudnik
-	CreateDynamicMapIcon(1328.3898, 272.4136, 19.3820, 51, 0, -1, -1, -1, 300.0, MAPICON_LOCAL); //Transporter
 	CreateDynamicMapIcon(1154.2377,-1770.3418,16.5938, 55, 0, -1, -1, -1, 300.0, MAPICON_LOCAL); //DMV
 	CreateDynamicMapIcon(1126.3856,-2036.8966,69.8837, 42, 0, -1, -1, -1, 300.0, MAPICON_LOCAL); //GOVERNORS MANSION
 	return 1;

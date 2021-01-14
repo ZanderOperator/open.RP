@@ -5,10 +5,9 @@ const JOB_CRAFTER  		= 5;
 const JOB_FARMER 		= 7;
 const JOB_CARJACKER		= 13;
 const JOB_GABAGEMAN 	= 16;
-const JOB_TRANSPORTER 	= 18;
 const SKILL_BURGLAR		= 50;
 
-#define MAX_SKILLS			7
+#define MAX_SKILLS			6
 
 enum E_SKILLS_INFO
 {

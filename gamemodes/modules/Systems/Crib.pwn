@@ -3198,25 +3198,25 @@ CMD:doorshout(playerid, params[])
         new
             string[144],
             color = COLOR_FADE1;
-        if (IsOnAdminDuty(playerid))
+        if (Admin_OnDuty(playerid))
         {
             format(string, sizeof(string), "(( Admin %s se dere[VRATA]: %s))", GetName(playerid, true), result);
             ProxDetector(30.0, playerid, string, COLOR_ORANGE,COLOR_ORANGE,COLOR_ORANGE,COLOR_ORANGE,COLOR_ORANGE);
             color = COLOR_ORANGE;
         }
-        if (IsOnHelperDuty(playerid))
+        if (Helper_OnDuty(playerid))
         {
             format(string, sizeof(string), "(( Helper %s se dere[VRATA]: %s))", GetName(playerid, true), result);
             ProxDetector(30.0, playerid, string, COLOR_HELPER,COLOR_HELPER,COLOR_HELPER,COLOR_HELPER,COLOR_HELPER);
             color = COLOR_ORANGE;
         }
-        if (Player_UsingMask(playerid) && !IsOnAdminDuty(playerid))
+        if (Player_UsingMask(playerid) && !Admin_OnDuty(playerid))
         {
             format(string, sizeof(string), "Maska_%d se dere[VRATA]: %s !!", PlayerInventory[playerid][pMaskID], result);
             ProxDetector(30.0, playerid, string, COLOR_FADE1,COLOR_FADE2,COLOR_FADE3,COLOR_FADE4,COLOR_FADE5);
             color = COLOR_FADE1;
         }
-        if (!IsOnAdminDuty(playerid) && !Player_UsingMask(playerid))
+        if (!Admin_OnDuty(playerid) && !Player_UsingMask(playerid))
         {
             format(string, sizeof(string), "%s se dere[VRATA]: %s !!", GetName(playerid, true), result);
             ProxDetector(30.0, playerid, string, COLOR_FADE1,COLOR_FADE2,COLOR_FADE3,COLOR_FADE4,COLOR_FADE5);
@@ -3249,25 +3249,25 @@ CMD:doorshout(playerid, params[])
             new
                 string[144],
                 color = COLOR_FADE1;
-            if (IsOnAdminDuty(playerid))
+            if (Admin_OnDuty(playerid))
             {
                 format(string, sizeof(string), "(( Admin %s se dere[VRATA]: %s))", GetName(playerid, true), result);
                 ProxDetector(30.0, playerid, string, COLOR_ORANGE,COLOR_ORANGE,COLOR_ORANGE,COLOR_ORANGE,COLOR_ORANGE);
                 color = COLOR_ORANGE;
             }
-            if (IsOnHelperDuty(playerid))
+            if (Helper_OnDuty(playerid))
             {
                 format(string, sizeof(string), "(( Helper %s se dere[VRATA]: %s))", GetName(playerid, true), result);
                 ProxDetector(30.0, playerid, string, COLOR_HELPER,COLOR_HELPER,COLOR_HELPER,COLOR_HELPER,COLOR_HELPER);
                 color = COLOR_ORANGE;
             }
-            if (Player_UsingMask(playerid) && !IsOnAdminDuty(playerid))
+            if (Player_UsingMask(playerid) && !Admin_OnDuty(playerid))
             {
                 format(string, sizeof(string), "Maska_%d se dere[VRATA]: %s !!", PlayerInventory[playerid][pMaskID], result);
                 ProxDetector(30.0, playerid, string, COLOR_FADE1,COLOR_FADE2,COLOR_FADE3,COLOR_FADE4,COLOR_FADE5);
                 color = COLOR_FADE1;
             }
-            if (!IsOnAdminDuty(playerid) && !Player_UsingMask(playerid))
+            if (!Admin_OnDuty(playerid) && !Player_UsingMask(playerid))
             {
                 format(string, sizeof(string), "%s se dere[VRATA]: %s !!", GetName(playerid, true), result);
                 ProxDetector(30.0, playerid, string, COLOR_FADE1,COLOR_FADE2,COLOR_FADE3,COLOR_FADE4,COLOR_FADE5);

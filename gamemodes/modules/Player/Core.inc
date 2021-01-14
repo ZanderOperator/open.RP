@@ -30,7 +30,6 @@
 #include "modules/Player/Jobs/Jacker.pwn"
 #include "modules/Player/Jobs/Logger.pwn"
 #include "modules/Player/Jobs/Impounder.pwn"
-#include "modules/Player/Jobs/Transporter.pwn"
 #include "modules/Player/Jobs/Taxi.pwn"
 #include "modules/Player/Jobs/Funcs.pwn"
 

@@ -552,11 +552,17 @@ GivePlayerPayCheck(playerid)
 	}
 
 	new expamount = (PlayerInfo[playerid][pLevel] + 1) * 4;
-	if (PlayerInfo[playerid][pRespects] == expamount) {
+	if (PlayerInfo[playerid][pRespects] == expamount) 
+	{
 		LevelUp(playerid);
-		va_GameTextForPlayer(playerid,"~g~LEVEL UP!~n~%s -> %s",5000,1, PlayerInfo[playerid][pLevel], PlayerInfo[playerid][pLevel]+1);
+		va_GameTextForPlayer(playerid,
+			"~g~LEVEL UP!~n~%s -> %s",
+			5000,
+			1, 
+			PlayerInfo[playerid][pLevel], 
+			PlayerInfo[playerid][pLevel] + 1
+		);
 	}
-	ResetBH_Script(playerid);
 	
 	// CoolDown Reset
 	PlayerCoolDown[playerid][pCasinoCool] = 10;	

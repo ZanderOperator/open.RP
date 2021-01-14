@@ -43,7 +43,7 @@ CMD:help(playerid,params[])
 
 CMD:jobhelp(playerid, params[]) 
 {
-	ShowPlayerDialog(playerid, DIALOG_JOBHELP, DIALOG_STYLE_LIST, "Poslovi", "Tvornicki radnik\nCistac ulice\nSmecar\nTransporter\nImpounder\nDrvosjeca\nMehanicar\nFarmer\nTaksista\nDrug dealer\nCar jacker\nLopov", "Choose","Back");
+	ShowPlayerDialog(playerid, DIALOG_JOBHELP, DIALOG_STYLE_LIST, "Poslovi", "Tvornicki radnik\nCistac ulice\nSmecar\nImpounder\nDrvosjeca\nMehanicar\nFarmer\nTaksista\nDrug dealer\nCar jacker\nLopov", "Choose","Back");
 	return (true);
 }
 
@@ -110,12 +110,6 @@ CMD:jobcmds(playerid, params[])
 			SendClientMessage(playerid, -1, "\t IMPOUNDER: /jobimpound - /stopimpound - /tow");
 			SendClientMessage(playerid, COLOR_LIGHTBLUE, "* ______________________________________________________________ *");
 		}
-		case 18:
-		{
-			SendClientMessage(playerid, COLOR_LIGHTBLUE, "* _______________________ JOB COMMANDS _______________________ *");
-			SendClientMessage(playerid, -1, "\t TRANSPORTER: /transporter");
-			SendClientMessage(playerid, COLOR_LIGHTBLUE, "* ______________________________________________________________ *");
-		}
 		default:
 			SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate posao!");
 	}
@@ -171,7 +165,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext [])
 					case 13: ShowPlayerDialog(playerid, DIALOG_HELP, DIALOG_STYLE_MSGBOX, "Skills", "/skills", "Ok", "");
 					case 14: ShowPlayerDialog(playerid, DIALOG_HELP, DIALOG_STYLE_MSGBOX, "Weapon", "/weapon\n/buygun", "Ok", "");
 					case 15: ShowPlayerDialog(playerid, DIALOG_HELP, DIALOG_STYLE_MSGBOX, "Chats", "/me\n/do\n/ame\n/c(lose)\n/s(hout)\n/carwhisper\n/w(hisper)\n/b\n/blockb\n/pm\n/accent\n/mic\n/clearmychat\n/attempt", "Ok", "");
-					case 16: ShowPlayerDialog(playerid, DIALOG_JOBHELP, DIALOG_STYLE_LIST, "Poslovi", "Tvornicki radnik\nCistac ulice\nSmecar\nTransporter\nImpounder\nDrvosjeca\nMehanicar\nFarmer\nTaksista\nDrug dealer\nCar jacker\nLopov", "Choose","Back");
+					case 16: ShowPlayerDialog(playerid, DIALOG_JOBHELP, DIALOG_STYLE_LIST, "Poslovi", "Tvornicki radnik\nCistac ulice\nSmecar\nImpounder\nDrvosjeca\nMehanicar\nFarmer\nTaksista\nDrug dealer\nCar jacker\nLopov", "Choose","Back");
 					case 17: ShowPlayerDialog(playerid, DIALOG_HELP, DIALOG_STYLE_MSGBOX, "Garage", "/garage\n/enter", "Ok", "");
 					case 18: ShowPlayerDialog(playerid, DIALOG_HELP, DIALOG_STYLE_MSGBOX, "Complex", "/buycomplex\n/complex\n/rentroom\n/unrentroom", "Ok", "");
 					case 19: ShowPlayerDialog(playerid, DIALOG_HELP, DIALOG_STYLE_MSGBOX, "House&Furniture", "/house\n/bint\n/buyhouse\n/ring\n/knock\n/doorshout\n/renthouse\n/unrenthouse\n/furniture", "Ok", "");
@@ -358,19 +352,24 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext [])
 			}
 			return 1;
 		}
-		case DIALOG_JOBHELP: {
-			if(!response) return (true);
-			new jstring[4096];
+		case DIALOG_JOBHELP: 
+		{
+			if(!response) 
+				return 1;
+			new 
+				jstring[4096];
     		switch(listitem) 
 			{
-    			case 0: {
+    			case 0: 
+				{
     				strcat(jstring, "Lokacija tvornickog radnika je u blizini El Corone.(/GPS)\n");
     				strcat(jstring, "Ovaj posao je jednostavan, jer je potrebno samo da pratite checkpointe koje vam skripta izbacuje. Koristite komandu /craft kako biste zapoceli posao.\n");
     				strcat(jstring, "Pocetna zarada na ovom poslu je 350$, a svakih 50 delivera vam se povecava za 25$.\n");
     				strcat(jstring, "Maksimalan broj delivera u jednom satu je 3.\n");
     				ShowPlayerDialog(playerid, 0, DIALOG_STYLE_MSGBOX, "TVORNICKI RADNIK", jstring, "U redu", "");
     			}
-    			case 1: {
+    			case 1: 
+				{
     				strcat(jstring, "Posao se uzima u vijecnici sa komandom /takejob.(/GPS)\n");
     				strcat(jstring, "Nakon toga odlazite iza iste, gdje cete vidjeti male sweepere u koji ulazite i komandom /sweep start zapocinjete posao.\n");
     				strcat(jstring, "Sve sto je dalje potrebno jeste pratiti markere/checkpointe kroz grad.\n");
@@ -378,7 +377,8 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext [])
     				strcat(jstring, "HINT: Izlaskom iz vozila NE PONISTAVA se vasa ruta.\n");
     				ShowPlayerDialog(playerid, 0, DIALOG_STYLE_MSGBOX, "CISTAC ULICE", jstring, "U redu", "");
     			}
-    			case 2: {
+    			case 2: 
+				{
     				strcat(jstring, "Smecar sam po sebi daje nam na izbor da obavljamo kao /garbage foot ili /garbage truck.(/GPS)\n");
     				strcat(jstring, "Sa skill levelom 0 ostaje nam odabir samog /garbage foot kojeg mozemo obavljati osobnim automobilom.\n");
     				strcat(jstring, "Prije samog pocetka, moramo uzeti odjecu komandom /garbage clothes na istoj lokaciji gdje se nalaze sami smetlarski kamioni (iza vijecnice),\nna serveru je prikazan pickup majice gdje kucate tu komandu.\n");
@@ -391,16 +391,8 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext [])
     				ShowPlayerDialog(playerid, 0, DIALOG_STYLE_MSGBOX, "SMECAR", jstring, "U redu", "");
     			
     			}
-				case 3: { 
-    				strcat(jstring, "Kada se zaposlite kao transporter, lokaciju posla vidite na /GPS.\n");
-					strcat(jstring, "Kada dodjete na lokaciju, vidjet cete truckere s kojim obavljate posao.\n");
-					strcat(jstring, "Nakon pokretanja vozila, koristite komandu da krenete s poslom. (/transporter start)\n");
-					strcat(jstring, "Krenite sa rutom, stanite kod obliznjeg skladista i desnim klikom uzimate kutiju.\n");
-					strcat(jstring, "Kutiju pospremite u prtljaznik vozila, te se zaputite na marker na mapi gdje dostavljate kutiju.\n");
-					strcat(jstring, "Kada zelite prestati raditi, kucajte komandu /transporter stop.\n");
-    				ShowPlayerDialog(playerid, 0, DIALOG_STYLE_MSGBOX, "Transporter", jstring, "U redu", "");
-    			}
-				case 4: { 
+				case 3: 
+				{ 
     				strcat(jstring, "Posao imponudera uzimate u CityHallu.\n");
 					strcat(jstring, "Nakon sto ste uzeli posao, odlazite na lokaciju posla. (/GPS)\n");
 					strcat(jstring, "Na lokaciji posla, nalaze se vasa vozila s kojim obavljate posao. (/jobimpound)\n");
@@ -410,7 +402,8 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext [])
 					strcat(jstring, "Ukoliko zelite prestati raditi posao, potrebno je da ukucate komandu /stopimpound , kojom ce se prekinuti vasa radnja.\n");
     				ShowPlayerDialog(playerid, 0, DIALOG_STYLE_MSGBOX, "Impounder", jstring, "U redu", "");
     			}
-				case 5: {
+				case 4: 
+				{
     				strcat(jstring, "Kada uzmete posao drvosjece, idete do Palomino Creek farme kako bi sjekli drvece.(/GPS)\n");
     				strcat(jstring, "Stanete pored izmapanog drveta, te kucate /cuttree. Nakon 60 sekundi drvo pada, te idete na drugi checkpoint kako bi isjekli grane (proces traje 30 sekundi).\n");
     				strcat(jstring, "Poslije toga kucate /pickupwood, te otvara gepek vaseg vozila i kucate /putwood. Poslije toga se vozite do lokacije The Paonopticon gdje stajete na zuti marker.\n");
@@ -418,17 +411,18 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext [])
     				strcat(jstring, "HINT: Za ovaj posao je potrebno posjedovati vozilo marke Bobcat, Sadler, Picador, Yosemite ili Walton.\n");
     				ShowPlayerDialog(playerid, 0, DIALOG_STYLE_MSGBOX, "DRVOSJECA", jstring, "U redu", "");
     			}
-    			case 6: {
+    			case 5:
+				{
     				strcat(jstring, "Posao mozete obavljati u mehanicarskoj garazi (/GPS) u Jeffersonu ili bilo gdje ako se nalazite u tow trucku (s tim da imate dovoljno dijelova).\n");
     				strcat(jstring, "Za obavljanje posla su vam potrebni mehanicarski dijelovi koji se kupuju iza tvornice pored junkyarda, oni se kupuju komandom /parts buy.\n");
     				strcat(jstring, "Vozila popravljate sa /repair, a blindirate sa /armorcar. Imate tri vrste popravki; popravka motora (/repair engine),\npopravka limarije (/repair bodykit) i skidanje unistenja (/repair dents).\n");
     				strcat(jstring, "Svaka popravka oduzima odredjen broj dijelova, na duznosti idete /mechanic onduty/offduty.\n");
     				ShowPlayerDialog(playerid, 0, DIALOG_STYLE_MSGBOX, "MEHANICAR", jstring, "U redu", "");
     			}
-    			case 7: {
+    			case 6: 
     				ShowPlayerDialog(playerid, DIALOG_FARMERHELP, DIALOG_STYLE_LIST, "FARMER", "Milk Man\nEgg Picker\nPlanter\nTransporter\nCombine Driver", "U redu", "");
-    			}
-    			case 8: {
+    			case 7: 
+				{
     				strcat(jstring, "Za posao taksiste vam je potrebno vozilo koje se kupuje u Grottiu ili posudjuje iz firme.(/GPS)\n");
     				strcat(jstring, "Kada uzmete vozilo pocinjete sa radom i cekate klijente. Kad vas neko od klijenata pozove, odlazite na lokaciju.\n");
     				strcat(jstring, "Od trenutka kada klijent udje u vozilo prijavite duznost (taxi start)-(taksimetar koji ce vam ocitavati potrebne podatke).\n");
@@ -436,7 +430,8 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext [])
     				ShowPlayerDialog(playerid, 0, DIALOG_STYLE_MSGBOX, "TAKSISTA", jstring, "U redu", "");
     			
     			}
-    			case 9: {
+    			case 8: 
+				{
     				strcat(jstring, "Kod ovog posla imate jednu osnovnu komandu, a to je /drug, ona vam ispise sve potrebne komande.\n\n");
     				strcat(jstring, "Sa ovim poslom mozete saditi marihuanu na nekom vasem tajnom mjestu, ali prethodno morate kupiti sjemenke u East Los Santos.\n");
     				strcat(jstring, "Takodje, mozete kuhati metamfetamin u svojoj kuci, ali naravno morate uzeti u Magic Shop klorovodicnu kiselinu, mravlju kiselinu i klorovodicni hidroksid.\n");
@@ -444,7 +439,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext [])
     				ShowPlayerDialog(playerid, 0, DIALOG_STYLE_MSGBOX, "DRUG-DEALER", jstring, "U redu", "");
     			
     			}
-    			case 10: {
+    			case 9: {
     				strcat(jstring, "Sjediste ovog posla jeste kao mehanicarska garaza koja se nalazi na Ocean Docks.\n\n");
     				strcat(jstring, "U njoj se nalazi tabla sa vozilima koja su potrebna da se ukradu.\n");
     				strcat(jstring, "Koristite komandu /jacker gdje imate pick da izaberete vozilo, chop da isjecete vozilo kad ga dovucete, leave da napustite misiju i stop da pauzirate misiju.\n");
@@ -462,10 +457,14 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext [])
     			}*/
     		}
     	}
-    	case DIALOG_FARMERHELP: {
-			new jstring[4096];
-    		switch(listitem) {
-    			case 0: {
+    	case DIALOG_FARMERHELP: 
+		{
+			new 
+				jstring[4096];
+    		switch(listitem) 
+			{
+    			case 0: 
+				{
     				strcat(jstring, "Milk Man:\n\n");
     				strcat(jstring, "/takebucket > Uzeti kantu za mlijeko, /dropbucket -> Baciti kantu ako vam vise ne treba.\n");
     				strcat(jstring, "/milk milking > Idete do jedne od krava unutar stale i zapocnete proces muzenja krave.\nPrilikom muzenja morate stiskati Y/N ovisno koje vam se pojavi na ekranu.\n");
@@ -475,7 +474,8 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext [])
     				strcat(jstring, "/dropcanister > Da bacite kanister, ako ga ne zelite ili ne mozete spremiti u spremiste.\n");
     				ShowPlayerDialog(playerid, 0, DIALOG_STYLE_MSGBOX, "MILK-MAN", jstring, "U redu", "");
     			}
-    			case 1: {
+    			case 1: 
+				{
     				strcat(jstring, "Egg Picker:\n\n");
     				strcat(jstring, "/takecarton > Idete do kutija za jaja, te uzmete jednu. /dropcarton -> Baciti kutiju ako vam ne treba ili je prazna.\n");
     				strcat(jstring, "/eggs collect > Idete do kucica sa strane u kojima su kokoske i tu skupljate jaja.\n");
@@ -483,7 +483,8 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext [])
     				strcat(jstring, "/eggs store > Nakon procesiranja odete do skladista i tamo spremite kutiju sa jajima.\n");
     				ShowPlayerDialog(playerid, 0, DIALOG_STYLE_MSGBOX, "EGG-PICKER", jstring, "U redu", "");
     			}
-    			case 2: {
+    			case 2: 
+				{
     				strcat(jstring, "Planter:\n\n");
     				strcat(jstring, "/seeds take > Idete do kutija sa sjemenkama i uzmete sjemenke iz kutije.\n");
     				strcat(jstring, "/seeds put > Zatim idete do prikolica za traktor, te stavite sjemenke u prikolicu.\n");
@@ -497,14 +498,16 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext [])
     				strcat(jstring, "/crops store -> Nakon toga idete do spremista za usjeve i spremite vrecu.\n");
     				ShowPlayerDialog(playerid, 0, DIALOG_STYLE_MSGBOX, "PLANTER", jstring, "U redu", "");
     			}
-    			case 3: {
+    			case 3: 
+				{
     				strcat(jstring, "Transporter:\n\n");
     				strcat(jstring, "/transport -> Prvo odaberete jednu od 3 proizvoda za transportirati.\n/transport 1 je za usjeve, 2 za mlijeko, a /transport 3 je za jaja.\nZa transport morate koristiti svoje vlastito vozilo.\nVozila koja mozete koristiti su Walton, Sadler i Bobcat.\n");
     				strcat(jstring, "/stoptransport -> Koristite ako u bilo kojem trenutku zelite prestati sa transportom proizvoda.\n/eggs take -> /milk take - /crops take - Nakon sto ste odabrali sto zelite transportirati, odete do spremista za taj proizvod, te uzmete proizvod.\n/eggs put -> /milk put - /crops put - Nakon sto ste uzeli proizvod, odete do vaseg vozila i stavite proizvod na njega.\n");
     				strcat(jstring, "/eggs check -> /milk check - /crops check - Za provjeriti koliko se proizvoda nalazi na vasem vozilu.\n/eggs sell -> /milk sell - /crops sell - Nakon sto ste napunili vase vozilo, krenete prema Los Santosu.\nKada dodjete tamo, idete do jedne od 3 lokacije, ovisno o tome sto transportirate.\nSve 3 lokacije su na Ocean Docksima, prikazace vam checkpoint pa cete ih lako naci.\n");
     				ShowPlayerDialog(playerid, 0, DIALOG_STYLE_MSGBOX, "TRANSPORTER", jstring, "U redu", "");
     			}
-    			case 4: {
+    			case 4: 
+				{
     				strcat(jstring, "Combine Driver:\n\n");
     				strcat(jstring, "/work - Udjete u vas kombajn i odete na polje predvidjeno za zanje zita. Kada dodjete do polja, vidjecete da se na polju nalaze objekti zita.\n");
     				strcat(jstring, "Potrebno je proci preko njih, ali pritom morate paziti da ne vozite prebrzo, jer vam se inace nece priznati, te cete morati opet preci preko njih.\n");

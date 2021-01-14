@@ -35,8 +35,7 @@ static
 	{ 13, "Car Jacker" },
 	{ 14, "Lumberjack" },
 	{ 16, "Trashman" },
-	{ 17, "Vehicle Impounder" },
-	{ 18, "Transporter" }
+	{ 17, "Vehicle Impounder" }
 };
 
 enum E_JOBS_DATA 
@@ -49,7 +48,6 @@ enum E_JOBS_DATA
 	LOGGER,     /* [id:14] */
 	GARBAGE,    /* [id:16] */
 	IMPOUNDER,  /* [id:17] */
-	TRANSPORTER /* [id:18] */
 }
 static 
 	JobData[E_JOBS_DATA];
@@ -129,7 +127,7 @@ SaveJobData()
 {
 	mysql_fquery(g_SQL, 
 		"UPDATE server_jobs SET Sweeper = '%d', Mechanic = '%d', Crafter = '%d', Taxi = '%d', Farmer = '%d',\n\
-		Logger = '%d', Garbage = '%d', Impounder = '%d', Transporter = '%d' WHERE 1",
+		Logger = '%d', Garbage = '%d', Impounder = '%d' WHERE 1",
 		JobData[SWEEPER],
 		JobData[MECHANIC],
 		JobData[CRAFTER],
@@ -137,8 +135,7 @@ SaveJobData()
 		JobData[FARMER],
 		JobData[LOGGER],
 		JobData[GARBAGE],
-		JobData[IMPOUNDER],
-		JobData[TRANSPORTER]
+		JobData[IMPOUNDER]
 	);
 	return 1;
 }
@@ -166,8 +163,7 @@ Public: OnServerJobsLoaded()
 	cache_get_value_name_int(0, "Logger", JobData[LOGGER]);
 	cache_get_value_name_int(0, "Garbage", JobData[GARBAGE]);
 	cache_get_value_name_int(0, "Impounder", JobData[IMPOUNDER]);
-	cache_get_value_name_int(0, "Transporter", JobData[TRANSPORTER]);
-	return (true);
+	return 1;
 }
 
 hook function LoadServerData()
@@ -218,7 +214,6 @@ SetPlayerJob(playerid, job_id)
 		case 14: JobData[LOGGER] ++;
 		case 16: JobData[GARBAGE] ++;
 		case 17: JobData[IMPOUNDER] ++;
-		case 18: JobData[TRANSPORTER] ++;
 	}
 	PlayerJob[playerid][pJob] = job_id;
 	PlayerJob[playerid][pContractTime] = 0;
@@ -238,7 +233,6 @@ RemovePlayerJob(playerid)
 		case 14: JobData[LOGGER] --;
 		case 16: JobData[GARBAGE] --;
 		case 17: JobData[IMPOUNDER] --;
-		case 18: JobData[TRANSPORTER] --;
 	}
 	PlayerJob[playerid][pJob] = 0;
 	PlayerJob[playerid][pContractTime] = 0;
@@ -258,7 +252,6 @@ RemoveOfflineJob(jobid)
 		case 14: JobData[LOGGER] --;
 		case 16: JobData[GARBAGE] --;
 		case 17: JobData[IMPOUNDER] --;
-		case 18: JobData[TRANSPORTER] --;
 	}
 	SaveJobData();
 	return (true);
@@ -269,7 +262,7 @@ JobsList()
 	new 
 		buffer[512];
 
-	format(buffer, sizeof(buffer), "{3C95C2}Job\t{3C95C2}Workers\nCistac ulica\t[%d/%d]\nMehanicar\t[%d/%d]\nTvornicki radnik\t[%d/%d]\nTaksista\t[%d/%d]\nFarmer\t[%d/%d]\nDrvosjeca\t[%d/%d]\nSmetlar\t[%d/%d]\nVehicle Impounder[%d/%d]\nTransporter[%d/%d]",
+	format(buffer, sizeof(buffer), "{3C95C2}Job\t{3C95C2}Workers\nCistac ulica\t[%d/%d]\nMehanicar\t[%d/%d]\nTvornicki radnik\t[%d/%d]\nTaksista\t[%d/%d]\nFarmer\t[%d/%d]\nDrvosjeca\t[%d/%d]\nSmetlar\t[%d/%d]\nVehicle Impounder[%d/%d]",
 		JobData[SWEEPER], NORMAL_JOBS_EMPLOYERS,
 		JobData[MECHANIC], OFFICIAL_JOBS_EMPLOYERS,
 		JobData[CRAFTER], NORMAL_JOBS_EMPLOYERS,
@@ -277,8 +270,7 @@ JobsList()
 		JobData[FARMER], NORMAL_JOBS_EMPLOYERS,
 		JobData[LOGGER], NORMAL_JOBS_EMPLOYERS,
 		JobData[GARBAGE], NORMAL_JOBS_EMPLOYERS,
-		JobData[IMPOUNDER], OFFICIAL_JOBS_EMPLOYERS,
-		JobData[TRANSPORTER], NORMAL_JOBS_EMPLOYERS
+		JobData[IMPOUNDER], OFFICIAL_JOBS_EMPLOYERS
 	);
 	return (buffer);
 }
@@ -405,13 +397,6 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 					
 					SetPlayerJob(playerid, 17);
 					SendMessage( playerid, MESSAGE_TYPE_INFO, "Zaposlili ste se kao impounder!");
-				}
-				case 8:
-				{
-					if(JobData[GARBAGE] >= NORMAL_JOBS_EMPLOYERS)
-						return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ova firma trenutno ne prima radnike, pokusajte kada bude slobodnih mjesta.");
-					SetPlayerJob(playerid, 18);
-					SendMessage( playerid, MESSAGE_TYPE_INFO, "Zaposlili ste se kao transporter!");
 				}
 			}
 			switch(PlayerVIP[playerid][pDonateRank])
