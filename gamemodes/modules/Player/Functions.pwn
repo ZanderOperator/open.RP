@@ -1049,15 +1049,13 @@ stock ChangePlayerName(playerid, newname[], type, bool:admin_cn = false)
 	counts = cache_num_rows();
 	cache_delete(result);
 	
-	if( counts ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Taj nick vec postoji!");
+	if( counts ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "That nickname already exists!");
 	
 	new
 		oldname[MAX_PLAYER_NAME];
 	format( oldname, MAX_PLAYER_NAME, GetName(playerid, false) );
 	
-	new log[100];
-	format( log, sizeof(log), "[ChangeName Report]: Stari nick: %s, novi nick: %s", oldname, newname);
-	SendAdminMessage(COLOR_RED, log);
+	SendAdminMessage(COLOR_RED, "AdmWarn: [ChangeName Report] - Old Nick: %s, New Nick: %s", oldname, newname);
 	
 	#if defined MODULE_LOGS
 	Log_Write("logfiles/namechange.txt", "(%s) {%d} Old nickname: %s | New nickname: %s",
@@ -1085,17 +1083,24 @@ stock ChangePlayerName(playerid, newname[], type, bool:admin_cn = false)
 	if(type == 1)
 	{
 		if(PlayerInfo[playerid][pLevel] < 10)
-			PlayerInfo[ playerid ][ pChangenames ] = gettimestamp() + 172800; // 2 dana
+			PlayerInfo[ playerid ][ pChangenames ] = gettimestamp() + 172800; 
 		else if(PlayerInfo[playerid][pLevel] >= 10 && PlayerInfo[playerid][pLevel] < 20)
-			PlayerInfo[ playerid ][ pChangenames ] = gettimestamp() + 86400; // 1 dan
+			PlayerInfo[ playerid ][ pChangenames ] = gettimestamp() + 86400; 
 	}
 	else if(type == 2)
 		PlayerInfo[playerid][pChangeTimes]--;
 	
-	// Poruka
-	va_SendClientMessage( playerid, COLOR_RED, "[ ! ] Uspjesno ste promjenili ime u %s, ponovno se logirajte s novim imenom!", newname);
+	va_SendClientMessage( playerid, 
+		COLOR_RED, 
+		"[ ! ]: You sucessfully changed your nickname to %s, please relog with new nickname!", 
+		newname
+	);
 	if(PlayerVIP[playerid][pDonateRank] > 0)
-		va_SendClientMessage( playerid, COLOR_RED, "[ ! ] Preostalo Vam je %d besplatnih changenameova.", PlayerInfo[playerid][pChangeTimes]);
+	{
+		va_SendClientMessage( playerid, COLOR_RED, "[ ! ]: You have %d free changenames left.", 
+			PlayerInfo[playerid][pChangeTimes]
+		);
+	}
 	KickMessage(playerid);
 	return 1;
 }

@@ -118,7 +118,7 @@ CMD:enter(playerid, params[])
 		if(garage == -1)
 			return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ispred garaze!");
 
-		if (PlayerInfo[playerid][pSQLID] != GarageInfo[garage][gOwnerID] && !IsOnAdminDuty(playerid) && !GarageInfo[garage][gLocked])
+		if (PlayerInfo[playerid][pSQLID] != GarageInfo[garage][gOwnerID] && !Admin_OnDuty(playerid) && !GarageInfo[garage][gLocked])
 		{
 			GameTextForPlayer(playerid, "~r~Zakljucano", 1000, 1);
 			return 1;
@@ -161,7 +161,7 @@ CMD:enter(playerid, params[])
             GameTextForPlayer(playerid, "~r~Zakljucano", 1000, 1);
             return 1;
         }
-        if (BizzInfo[biznis][bEntranceCost] != 0 && !IsOnAdminDuty(playerid) && PlayerKeys[playerid][pBizzKey] != biznis)
+        if (BizzInfo[biznis][bEntranceCost] != 0 && !Admin_OnDuty(playerid) && PlayerKeys[playerid][pBizzKey] != biznis)
         {
             if (AC_GetPlayerMoney(playerid) < BizzInfo[biznis][bEntranceCost]) 
 				return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate dovoljno novca da platite ulaz!");
@@ -210,7 +210,7 @@ CMD:enter(playerid, params[])
         if (!ComplexRoomInfo[rcomplex][cActive]) 
 			return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Soba nije u funkciji!");
 
-        if (PlayerKeys[playerid][pComplexRoomKey] != rcomplex && !IsOnAdminDuty(playerid) && ComplexRoomInfo[rcomplex][cLock])
+        if (PlayerKeys[playerid][pComplexRoomKey] != rcomplex && !Admin_OnDuty(playerid) && ComplexRoomInfo[rcomplex][cLock])
         {
             GameTextForPlayer(playerid, "~r~Zakljucano", 1000, 1);
             return 1;
@@ -236,7 +236,7 @@ CMD:enter(playerid, params[])
         }
         if (HouseInfo[house][hDoorCrashed]) 
 			return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Vrata su stradala u pozaru, vatrogasac mora koristiti /ramdoors!");
-		if (PlayerKeys[playerid][pHouseKey] != house && !IsOnAdminDuty(playerid) && HouseInfo[house][hLock] && PlayerKeys[playerid][pRentKey] != house)
+		if (PlayerKeys[playerid][pHouseKey] != house && !Admin_OnDuty(playerid) && HouseInfo[house][hLock] && PlayerKeys[playerid][pRentKey] != house)
             return GameTextForPlayer(playerid, "~r~Zakljucano", 1000, 1);
 
         if (HouseInfo[house][hOwnerID] == PlayerInfo[playerid][pSQLID])
@@ -695,9 +695,9 @@ CMD:b(playerid, params[])
 		playerid, 
 		params
 	);
-	if( Bit1_Get( a_AdminOnDuty, playerid ) && PlayerInfo[playerid][pAdmin] >= 1 )
+	if( Admin_OnDuty(playerid) && PlayerInfo[playerid][pAdmin] >= 1 )
 		OOCProxDetector(10.0, playerid, tmpString, COLOR_ORANGE,COLOR_ORANGE,COLOR_ORANGE,COLOR_ORANGE,COLOR_ORANGE);
-	else if( IsOnHelperDuty(playerid) && PlayerInfo[playerid][pHelper] >= 1 )
+	else if( Helper_OnDuty(playerid) && PlayerInfo[playerid][pHelper] >= 1 )
 		OOCProxDetector(10.0, playerid, tmpString, COLOR_HELPER,COLOR_HELPER,COLOR_HELPER,COLOR_HELPER,COLOR_HELPER);
 	else
 		OOCProxDetector(10.0, playerid, tmpString, COLOR_FADEB1,COLOR_FADEB2,COLOR_FADEB3,COLOR_FADEB4,COLOR_FADEB5);
@@ -707,152 +707,81 @@ CMD:b(playerid, params[])
 CMD:admins(playerid, params[])
 {
 	new
-		tmpString[652];
+		buffer[768],
+		motd[128];
+
 	foreach(new i : Player)
 	{
-	    if(PlayerInfo[i][pAdmin] >= 1)
-	    {
-			if(Bit1_Get(a_AdminOnDuty, i))
-			{
-				format( tmpString, sizeof( tmpString ), "%s\n%s(%s) - Admin Level %d - Onduty",
-					tmpString,
-					GetName(i,false),
-					PlayerInfo[i][pForumName],
-					PlayerInfo[i][pAdmin]
-				);
-			}
-			else
-			{
-				format( tmpString, sizeof( tmpString ), "%s\n%s(%s) - Admin Level %d - Offduty",
-					tmpString,
-					GetName(i,false),
-					PlayerInfo[i][pForumName],
-					PlayerInfo[i][pAdmin]
-				);
-			}
-		}
+	    if(!PlayerInfo[i][pAdmin])
+			continue;
+
+		format(motd, 128, ""COL_WHITE"\n%s(%s) - Admin Level %d - %s",
+			GetName(i,false),
+			PlayerInfo[i][pForumName],
+			PlayerInfo[i][pAdmin],
+			(Admin_OnDuty(i)) ? (""COL_GREEN"On Duty") : (""COL_RED"Off Duty")
+		);
+		strcat(buffer, motd, 768);
 	}
-	ShowPlayerDialog(playerid, DIALOG_ALERT, DIALOG_STYLE_MSGBOX, "\tADMINS ONLINE", tmpString, "Close","");
+	ShowPlayerDialog(playerid, DIALOG_ALERT, DIALOG_STYLE_MSGBOX, "\tADMINS ONLINE", buffer, "Close","");
 	return 1;
 }
 
 CMD:helpers(playerid, params[])
 {
-	/*
 	new
-		tmpString[652],
-		count;
+		buffer[768],
+		motd[128];	
+	
 	foreach(new i : Player)
 	{
-	    if(PlayerInfo[i][pHelper])
-	    {
-	        count++;
-		    if(isnull(PlayerInfo[i][pForumName]))
-		    {
-		       if(IsOnHelperDuty(i))
-		        {
-					format( tmpString, sizeof( tmpString ), "%s\n{ed673b}%s - Helper Level %d - Onduty",
-					    tmpString,
-						GetName(i,false),
-						PlayerInfo[ i ][ pHelper ]
-					);
-				}
-				else
-				{
-					format( tmpString, sizeof( tmpString ), "%s\n%s - Helper Level %d - Offduty",
-					    tmpString,
-						GetName(i,false),
-						PlayerInfo[ i ][ pHelper ]
-					);
-				}
-			}
-			else
-			{
-			    if(IsOnHelperDuty(i))
-			    {
-				    format( tmpString, sizeof( tmpString ), "%s\n{ed673b}%s(%s) - Helper Level %d - Onduty",
-				        tmpString,
-						GetName(i,false),
-						PlayerInfo[i][pForumName],
-						PlayerInfo[i][pHelper]
-					);
-				}
-				else
-				{
-				    format( tmpString, sizeof( tmpString ), "%s\n%s(%s) - Helper Level %d - Offduty",
-				        tmpString,
-						GetName(i,false),
-						PlayerInfo[i][pForumName],
-						PlayerInfo[i][pHelper]
-					);
-				}
-			}
-		}
+	    if(!PlayerInfo[i][pHelper])
+	    	continue;
+
+		format(motd, 128, ""COL_WHITE"\n%s(%s) - Helper Level %d - %s",
+			GetName(i,false),
+			PlayerInfo[i][pForumName],
+			PlayerInfo[i][pHelper],
+			(Helper_OnDuty(i)) ? (""COL_GREEN"On Duty") : (""COL_RED"Off Duty")
+		);
+		strcat(buffer, motd, 768);
 	}
-	if(count != 0)
-		ShowPlayerDialog(playerid, DIALOG_ALERT, DIALOG_STYLE_MSGBOX, "\tHELPERS ONLINE:", tmpString, "Close","");
-    else
-		ShowPlayerDialog(playerid, DIALOG_ALERT, DIALOG_STYLE_MSGBOX, "\tHELPERS ONLINE:", "Nema Game Helpera online.", "Close","");
-	*/
-	SendClientMessage(playerid, COLOR_RED, "[ ! ] Game Helper pozicija je uklonjena");
+	ShowPlayerDialog(playerid, DIALOG_ALERT, DIALOG_STYLE_MSGBOX, "\tHELPERS ONLINE:", buffer, "Close","");
 	return 1;
 }
 
 CMD:hh(playerid, params[])
 {
-    SendClientMessage(playerid, COLOR_RED, "[ ! ]  Koritite /report, helperi su izbaceni!");
-    /*if( !Bit1_Get(gr_PlayerLoggedIn,playerid) )	return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Morate se ulogirati da saljete HH!");
-	if( PlayerTick[playerid][ptHelperHelp] > gettimestamp() ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Pricekajte 20 sekundi za ponovno slanje HHa!");
-	Bit1_Set( a_NeedHelp, playerid, true );
-	new
-		tmpString[ 89 ];
-	format( tmpString, 89, "[ ! ] %s treba pomoc Admina, koristite /ach %d za reagiranje!",
+    if( !Bit1_Get(gr_PlayerLoggedIn,playerid) )	
+		return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Morate se ulogirati da saljete HH!");
+	if( PlayerTick[playerid][ptHelperHelp] > gettimestamp() ) 
+		return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Pricekajte 20 sekundi za ponovno slanje HHa!");
+
+	Player_SetNeedHelp(playerid, true);
+
+	SendHelperMessage(COLOR_HELPER,
+		"[ ! ]: %s treba pomoc Helpera, koristite /ach %d za reagiranje!",
 		GetName(playerid, false), 
 		playerid 
 	);
-	SendAdminMessage(COLOR_HELPER,tmpString);
-	SendClientMessage( playerid, COLOR_RED, "[ ! ] Uspjesno ste poslali poziv u pomoc!");
-	PlayerTick[playerid][ptHelperHelp] = gettimestamp() + 19;*/
+	SendClientMessage( playerid, COLOR_RED, "[ ! ]: Uspjesno ste poslali poziv u pomoc!");
+	PlayerTick[playerid][ptHelperHelp] = gettimestamp() + 19;
 	return 1;
 }
 
 CMD:helpme(playerid, params[])
 {
-	SendClientMessage(playerid, COLOR_RED, "[ ! ]  Koritite /report, helperi su izbaceni!");
+	new 
+		result[144];	
+	if (sscanf(params, "s[144]", result)) 
+		return SendClientMessage(playerid, COLOR_RED, "[ ? ]: \"/helpme <text>\"");
 
-	/*new result[180], string[256];
-	if (sscanf(params, "s[180]", result)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: \"/helpme <tekst>\"");
+	SendHelperMessage(0x5DCF8AFF, "HelpMe by %s[%d]: "COL_SERVER"%s", GetName(playerid, true), playerid, result);
+    SendAdminMessage(0x5DCF8AFF, "HelpMe by %s[%d]: "COL_SERVER"%s", GetName(playerid, true), playerid, result);
 
-	format(string, sizeof(string), "HELP %s[%d]: %s", GetName(playerid, true), playerid, result);
-	//SendHelperMessage(0x5DCF8AFF,string,1); - Nema helpera, a igra�i �alju poruke
-    SendAdminMessage(0x5DCF8AFF,string);
-
-	format(string,sizeof(string),"Poslani HelpMe glasi: "COL_SERVER"%s",result);
-	SendClientMessage(playerid,0x5DCF8AFF,string);*/
+	va_SendClientMessage(playerid,0x5DCF8AFF, "Poslani HelpMe glasi: "COL_SERVER"%s",result);
    	return 1;
 }
-/*
-CMD:report(playerid, params[])
-{
-	if( !Bit1_Get(gr_PlayerLoggedIn,playerid) )	
-		return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Morate se ulogirati da saljete report!");
-	if(Player_BlockedReport(playerid)) 
-		return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne mozes slati reporte.");
-	if( PlayerTick[playerid][ptReport] >= gettimestamp() ) return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "Pricekajte %d sekundi za ponovno slanje reporta!", PlayerTick[playerid][ptReport] - gettimestamp());
-	if(isnull(params)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: \report [tekst]");
-
-	new
-		result[256];
-
-	format(result, sizeof(result), "REPORT %s[%d]: %s", GetName(playerid, false), playerid, params);
-	ReportMessage( COLOR_SKYBLUE, result, 1 );
-	
-	SendMessage(playerid, MESSAGE_TYPE_INFO, "Vas report je poslan online adminima i helperima.");
-	PlayerTick[playerid][ptReport] = gettimestamp() + 30;
-	
-   	return 1;
-}
-*/
 
 CMD:stats(playerid,params[]) 
 {
@@ -880,11 +809,11 @@ CMD:pm(playerid, params[])
 			name_colorA[60],
 			name_colorB[60];
 
-		if (!Bit1_Get(a_AdminOnDuty, playerid))
+		if (!Admin_OnDuty(playerid))
 			format(name_colorA, 60, "{FF9900}%s", GetName(playerid));
 		else format(name_colorA, 60, "%s", GetName(playerid));
 
-		if (!Bit1_Get(a_AdminOnDuty, playerid))
+		if (!Admin_OnDuty(playerid))
 			format(name_colorB, 60, "{FF9900}%s", GetName(giveplayerid));
 		else format(name_colorB, 60, "%s", GetName(giveplayerid));
 

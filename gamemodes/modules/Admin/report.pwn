@@ -99,9 +99,7 @@ public OnPlayerReport(playerid, response)
 	if(response)
 	{
 		new
-			id = -1,
-			str[128];
-
+			id = -1;
 		for(new i = 1; i < sizeof(ReportData); i++) if(!ReportData[i][reportExists])
 		{
 			id = i;
@@ -109,7 +107,7 @@ public OnPlayerReport(playerid, response)
 		}
 
 		if(id == -1)
-			return SendClientMessage(playerid, COLOR_RED, "Na�alost dogodila se gre�ka. Poku�ajte kontaktirati admina putem /pma.");
+			return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Too many reports at the moment. Try again later!");
 
 		ReportData[id][reportExists] = true;
 		GetPlayerName(playerid, ReportData[id][reportBy], 24);
@@ -117,19 +115,19 @@ public OnPlayerReport(playerid, response)
 		format(ReportData[id][reportReason], 128, "%s", PlayerReport[playerid]);
 		ReportData[id][reportTime] = gettime();
 
-
-		format(str, sizeof(str), "[REPORT: %d] %s(%d): %s", id, GetName(playerid, false), playerid, PlayerReport[playerid]);
-		SendAdminMessage(COLOR_SKYBLUE, str);
+		SendAdminMessage(COLOR_SKYBLUE, 
+			"[REPORT: %d] %s(%d): %s", 
+			id, 
+			GetName(playerid, false), 
+			playerid, 
+			PlayerReport[playerid]
+		);
 
 		if(strfind(PlayerReport[playerid], "hack", true) != -1 || strfind(PlayerReport[playerid], "cheat", true) != -1 || strfind(PlayerReport[playerid], "hax", true) != -1 || strfind(PlayerReport[playerid], "cheater", true) != -1  || strfind(PlayerReport[playerid], "citer", true) != -1)
 		{
-
 			foreach(new i : Player)
-			{
 				if(PlayerInfo[i][pAdmin]) GameTextForPlayer(i, "~y~~h~PRIORITY REPORT", 4000, 1);
-			}
 		}
-		//PlayerTick[playerid][ptReport] = gettimestamp() + 120;
 		Player_SetReportID(playerid, id);
 		SendMessage(playerid, MESSAGE_TYPE_INFO, "[ ! ]: Your query has been sent to Game Admins.");
 	}

@@ -45,7 +45,7 @@ hook OnPlayerStreamIn(playerid, forplayerid)
 {
     if (Player_UsingMask(forplayerid))
     {
-        if (PlayerInfo[playerid][pAdmin] > 0 && Bit1_Get(a_AdminOnDuty, playerid))
+        if (PlayerInfo[playerid][pAdmin] > 0 && Admin_OnDuty(playerid))
             ShowPlayerNameTagForPlayer(playerid, forplayerid, true);
         else
             ShowPlayerNameTagForPlayer(playerid, forplayerid, false);

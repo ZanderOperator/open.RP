@@ -36,7 +36,9 @@ new
 	AdminLoginTry[MAX_PLAYERS],
     oldskin[MAX_PLAYERS],
 	PortedPlayer[MAX_PLAYERS],
-	
+	bool:AdminDuty[MAX_PLAYERS],
+	bool:HelperDuty[MAX_PLAYERS],
+	bool:NeedHelp[MAX_PLAYERS],
 	// Player
 	Bit1: 	a_PlayerReconed	<MAX_PLAYERS>,
     Bit1: 	a_AdminChat 	<MAX_PLAYERS>,
@@ -45,10 +47,7 @@ new
     Bit1: 	a_REars 		<MAX_PLAYERS>,
 	Bit1: 	a_BHears 		<MAX_PLAYERS>,
     Bit1: 	a_DMCheck 		<MAX_PLAYERS>,
-    Bit1: 	a_AdminOnDuty 	<MAX_PLAYERS>,
-	Bit1: 	h_HelperOnDuty 	<MAX_PLAYERS>,
 	Bit1:	a_BlockedHChat	<MAX_PLAYERS>,
-	Bit1:	a_NeedHelp		<MAX_PLAYERS>,
 	Bit1:	a_TogReports	<MAX_PLAYERS>;
 	
 // TextDraws
@@ -77,14 +76,34 @@ forward bool:StopFly(playerid);						// stop flying
 	 ######     ##     #######   ######  ##    ##  ######  
 */
 
-stock IsOnAdminDuty(playerid)
+bool:Admin_OnDuty(playerid)
 {
-	return Bit1_Get(a_AdminOnDuty, playerid);
+	return AdminDuty[playerid];
 }
 
-stock IsOnHelperDuty(playerid)
+Admin_SetOnDuty(playerid, bool:v)
 {
-	return Bit1_Get(h_HelperOnDuty, playerid);
+	AdminDuty[playerid] = v;
+}
+
+bool:Helper_OnDuty(playerid)
+{
+	return HelperDuty[playerid];
+}
+
+Helper_SetOnDuty(playerid, bool:v)
+{
+	HelperDuty[playerid] = v;
+}
+
+bool:Player_NeedsHelp(playerid)
+{
+	return NeedHelp[playerid];
+}
+
+Player_SetNeedHelp(playerid, bool:v)
+{
+	NeedHelp[playerid] = v;
 }
 
 InitFly(playerid)
@@ -297,18 +316,6 @@ stock REarsBroadCast(color,const string[], level)
 	return 1;
 }
 
-stock SendHelperMessage(color,const string[],level)
-{
-	foreach (new i : Player)
-	{
-		if(PlayerInfo[i][pHelper] >= level)
-  		{
-			SendClientMessage(i, color, string);
-		}
-	}
-	return 1;
-}
-
 stock SendDirectiveMessage(color,const string[],level)
 {
 	foreach (new i : Player)
@@ -372,14 +379,27 @@ stock HighAdminBroadCast(color,const string[],level)
 	return 1;
 }
 
-stock SendAdminMessage(color, string[], va_args<>)
+SendAdminMessage(color, string[], va_args<>)
 {
 	new 
 		format_message[144];
-	va_format(format_message, sizeof (format_message), string, va_start<2>);
+	va_format(format_message, sizeof(format_message), string, va_start<2>);
 	foreach (new i : Player)
 	{
 		if( PlayerInfo[i][pAdmin] >= 1 && Bit1_Get( a_AdminChat, i ) )
+			SendClientMessage(i, color, format_message);
+	}
+	return 1;
+}
+
+SendHelperMessage(color, string[], va_args<>)
+{
+	new 
+		format_message[144];
+	va_format(format_message, sizeof(format_message), string, va_start<2>);
+	foreach (new i : Player)
+	{
+		if( PlayerInfo[i][pHelper] >= 1 )
 			SendClientMessage(i, color, format_message);
 	}
 	return 1;
@@ -1508,8 +1528,11 @@ hook function ResetPlayerVariables(playerid)
 	stop ReconTimer[playerid];
 	AdminLoginTry[playerid] = 0;
 	PortedPlayer[playerid] = -1;
-	
-	// rBits
+
+	AdminDuty[playerid] = false;
+	HelperDuty[playerid] = false;
+	NeedHelp[playerid] = false;	
+
 	Bit1_Set(a_PlayerReconed, playerid, false);
     Bit1_Set(a_AdminChat, playerid, false);
     Bit1_Set(a_PMears, playerid, false);
@@ -1517,10 +1540,7 @@ hook function ResetPlayerVariables(playerid)
     Bit1_Set(a_REars, playerid, false);
 	Bit1_Set(a_BHears, playerid, false);
     Bit1_Set(a_DMCheck, playerid, false);
-    Bit1_Set(a_AdminOnDuty, playerid, false);
-	Bit1_Set(h_HelperOnDuty, playerid, false);
 	Bit1_Set(a_BlockedHChat, playerid, false);
-	Bit1_Set(a_NeedHelp, playerid, false);
 	Bit1_Set(a_TogReports, playerid, false);
 
 	if( IsPlayerReconing(playerid) ) 

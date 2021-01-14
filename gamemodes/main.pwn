@@ -1011,9 +1011,7 @@ hook function ResetPlayerVariables(playerid)
 	Bit1_Set(a_AdNot, 			playerid, true);
 	Bit1_Set(a_DMCheck, 		playerid, true);
 	
-	Bit1_Set(a_AdminOnDuty, 	playerid, false);
 	Bit1_Set(a_BlockedHChat, 	playerid, false);
-	Bit1_Set(a_NeedHelp,		playerid, false);
 	Bit1_Set(a_TogReports, 		playerid, false );
 	
 

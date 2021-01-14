@@ -322,12 +322,12 @@ CMD:inactivity(playerid, params[])
 
 CMD:hon(playerid, params[])
 {
-	if(Bit1_Get(h_HelperOnDuty, playerid))
+	if(Helper_OnDuty(playerid))
 		return SendClientMessage(playerid,COLOR_RED, "Vec ste na Helper duznosti!");
     if(PlayerInfo[playerid][pHelper] >= 1)
 	{
 		SendClientMessage(playerid,COLOR_RED, "[ ! ] Sada si na Helper duznosti!");
-		Bit1_Set(h_HelperOnDuty, playerid, true);
+		Helper_SetOnDuty(playerid, true);
         SetPlayerColor(playerid, COLOR_HELPER);
 		SetPlayerHealth(playerid, 100);
 		SetPlayerArmour(playerid, 100);
@@ -340,12 +340,12 @@ CMD:hon(playerid, params[])
 
 CMD:hoff(playerid, params[])
 {
-    if(!Bit1_Get(h_HelperOnDuty, playerid))
+    if(!Helper_OnDuty(playerid))
 		return SendClientMessage(playerid,COLOR_RED, "Niste ste na Helper duznosti!");
     if(PlayerInfo[playerid][pHelper] >= 1)
 	{
 		SendClientMessage(playerid,COLOR_RED, "[ ! ] Vise nisi na Helper duznosti!");
-		Bit1_Set(h_HelperOnDuty, playerid, false);
+		Helper_SetOnDuty(playerid, false);
         SetPlayerColor(playerid,TEAM_HIT_COLOR);
 		SetPlayerArmour(playerid, 0);
 		SetPlayerHealth(playerid, 100);
@@ -358,7 +358,7 @@ CMD:hoff(playerid, params[])
 
 CMD:hm(playerid, params[])
 {
-	if(!Bit1_Get(h_HelperOnDuty, playerid))
+	if(!Helper_OnDuty(playerid))
 		return SendClientMessage(playerid,COLOR_RED, "Niste ste na Helper duznosti!");
 	if (Player_UsingMask(playerid))
 		return SendClientMessage(playerid,COLOR_RED, "Skinite masku prije nego sto koristite /hm!");
@@ -378,17 +378,23 @@ CMD:hm(playerid, params[])
 
 CMD:ach(playerid, params[]) 
 {
-	new targetid;
-	//if(!Bit1_Get(h_HelperOnDuty, playerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ste na Helper duznosti!");
-	if(sscanf(params, "d", targetid)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /ach [target_id].");
-	if(!Bit1_Get(a_NeedHelp, targetid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR,"Ta osoba nije pozvala pomoc helpera.");
+	new 
+		targetid;
+	if(!Helper_OnDuty(playerid)) 
+		return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You are not on Helper Duty!");
+	if(sscanf(params, "d", targetid)) 
+		return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /ach [target_id].");
+	if(!Player_NeedsHelp(targetid)) 
+		return SendMessage(playerid, MESSAGE_TYPE_ERROR,"That player didn't request help.");
 	
-	SendFormatMessage(targetid, MESSAGE_TYPE_INFO, "Admin %s je prihvatio vas poziv za pomoc.", GetName(playerid));
-	format(globalstring, sizeof(globalstring), "[ ! ] Admin %s je prihvatio pomoc od %s.",GetName(playerid, true), GetName(targetid, true));
-	SendHelperMessage(COLOR_RED, globalstring, 1);
-	
-	Bit1_Set(a_NeedHelp, targetid, (false));
-	return (true);
+	SendFormatMessage(targetid, MESSAGE_TYPE_INFO, "Helper %s accepted your help request.", GetName(playerid));
+	SendHelperMessage(COLOR_RED, 
+		"[ ! ]: Helper %s accepted help request from %s.",
+		GetName(playerid, true), 
+		GetName(targetid, true)
+	);
+	Player_SetNeedHelp(targetid, false);
+	return 1;
 }
 
 CMD:playercars(playerid, params[]) 
@@ -4191,13 +4197,14 @@ CMD:return(playerid, params[])
 CMD:aon(playerid, params[])
 {
     if (PlayerInfo[playerid][pAdmin] < 1) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You are not authorized to use this command!");
-	if (!Bit1_Get(a_AdminOnDuty, playerid))
+	if (!Admin_OnDuty(playerid))
 	{
 	    SetPlayerColor(playerid, COLOR_ORANGE);
 		SetPlayerHealth(playerid, 100, true);
 		SetPlayerArmour(playerid, 100, true);
 		
-	    Bit1_Set(a_AdminOnDuty, playerid, true);
+		Admin_SetOnDuty(playerid, true);
+
 	    SendClientMessage(playerid, -1, "Sada ste na admin duznosti!");
 	    foreach (new i : Player)
 		{
@@ -4209,7 +4216,8 @@ CMD:aon(playerid, params[])
 	    SetPlayerColor(playerid, COLOR_PLAYER);
 		SetPlayerHealth(playerid, PlayerHealth[playerid][pHealth]);
 		SetPlayerArmour(playerid, PlayerHealth[playerid][pArmour]);
-		Bit1_Set(a_AdminOnDuty, playerid, false);
+
+		Admin_SetOnDuty(playerid, false);
 
 		SendClientMessage(playerid, -1, "Vise niste na admin duznosti!");
 		foreach (new i : Player)
@@ -4650,16 +4658,18 @@ CMD:kickall(playerid, params[])
     return true;
 }
 
-CMD:banip(playerid,params[]) {
+CMD:banip(playerid,params[]) 
+{
 	if(PlayerInfo[playerid][pAdmin] < 2) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You are not authorized to use this command!");
 	if(isnull(params)) return SendClientMessage(playerid, COLOR_RED,"[ ? ]: /banip [ip]");
 	new string[128];
 	format(string,sizeof string,"banip %s",params);
 	SendRconCommand(string);
 	SendRconCommand("reloadbans");
-	format(string,sizeof string,"[ ! ] Uspje�no ste banovali IP.");
+	format(string,sizeof string,"[ ! ] Uspjesno ste banovali IP.");
 	return SendClientMessage(playerid,-1,string);
 }
+
 CMD:ptp(playerid, params[])
 {
     if(PlayerInfo[playerid][pAdmin] < 2) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You are not authorized to use this command!");
@@ -4676,44 +4686,57 @@ CMD:ptp(playerid, params[])
     va_SendClientMessage(playerid, COLOR_RED, "[ ! ] Uspje�no ste teleportovali %s do %s", GetName(giveplayerid), GetName(targetid));
 	return 1;
 }
+
 CMD:forceduty(playerid, params[])
 {
 	if(PlayerInfo[playerid][pAdmin] < 1337) 
 		return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You are not authorized to use this command!");
  	new
  		giveplayerid;
-	if(sscanf(params, "us[128]", giveplayerid))
+	if(sscanf(params, "u", giveplayerid))
 		return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /forceduty [playerid / Part of name]");
 	if(!IsPlayerConnected(giveplayerid))
 		return SendMessage(playerid, MESSAGE_TYPE_ERROR, "That player ID isn't online!");
 	if(!PlayerInfo[giveplayerid][pAdmin])
 		return SendMessage(playerid, MESSAGE_TYPE_ERROR, "That player isn't Game Admin!");
-	new
-		str[128];
 
-	if (!Bit1_Get(a_AdminOnDuty, playerid))
+	if (!Admin_OnDuty(giveplayerid))
 	{
-		Bit1_Set(a_AdminOnDuty, playerid, true);
+		Admin_SetOnDuty(giveplayerid, true);
 
-		format(str, sizeof(str), "AdmCMD: %s je sada na admin duznosti (forced by %s).", GetName(giveplayerid, false), GetName(playerid, false));
-		SendAdminMessage(COLOR_RED, str);
+		SetPlayerHealth(giveplayerid, 100, true);
+		SetPlayerArmour(giveplayerid, 100, true);
+
 		SetPlayerColor(giveplayerid, COLOR_ORANGE);
-		Streamer_Update(giveplayerid);
-
+	    foreach (new i : Player)
+	  		SetPlayerMarkerForPlayer(i, giveplayerid, COLOR_ORANGE);
 	}
 	else
 	{
-		Bit1_Set(a_AdminOnDuty, playerid, false);
+		Admin_SetOnDuty(giveplayerid, false);
 
-		format(str, sizeof(str), "AdmCmd: %s vise nije na admin duznosti (forced by %s).", GetName(giveplayerid, false), GetName(playerid, false));
-		SendAdminMessage(COLOR_RED, str);
+		SetPlayerHealth(giveplayerid, PlayerHealth[playerid][pHealth]);
+		SetPlayerArmour(giveplayerid, PlayerHealth[playerid][pArmour]);
 
 		SetPlayerColor(giveplayerid, COLOR_PLAYER);
-		Streamer_Update(giveplayerid);
-
-		SetPlayerHealth(giveplayerid, 100);
+	    foreach (new i : Player)
+	  		SetPlayerMarkerForPlayer(i, giveplayerid, COLOR_PLAYER);
 	}
-	return true;
+	SendAdminMessage(COLOR_RED, 
+		"AdmCMD: %s is now %s Admin Duty (Forced by %s).", 
+		GetName(giveplayerid, false), 
+		(Admin_OnDuty(giveplayerid)) ? ("on") : ("off"),	 
+		GetName(playerid, false)
+	);
+	SendFormatMessage(giveplayerid,
+		MESSAGE_TYPE_INFO,
+		"Game Admin %s forced you %s Admin Duty.", 
+		(Admin_OnDuty(giveplayerid)) ? ("on") : ("off"),	 
+		GetName(playerid, false)
+	);
+
+	Streamer_Update(giveplayerid);
+	return 1;
 }
 
 CMD:togreg(playerid, params[])

@@ -176,38 +176,34 @@ timer OnPlayerFirstTimeEnter[12000](playerid, step)
 			SendClientMessage(playerid, COLOR_GREY, "Ukoliko trazite neki tutorial najvjerovatnije je da cete ga pronaci u Pravila i Upute > Sluzbeni tutorijali i upute.");
 			TutTimer[playerid] = defer OnPlayerFirstTimeEnter(playerid, step + 1);
 		}
-		case 11: { 
+		case 11:
+		 { 
 			stop TutTimer[playerid];
 			PlayerNewUser_Set(playerid, false);
 			Bit1_Set( gr_PlayerOnTutorial, playerid, false);
 			ClearChatBox(playerid);
-			//Dobija novce jer je novi igrac
-			PlayerInfo[playerid][pBank] 		= NEW_PLAYER_BANK; 
-			AC_GivePlayerMoney(playerid, 		NEW_PLAYER_MONEY);
-			
-			//Enum set
-			PlayerInfo[playerid][pRegistered] 	= 1;
-			PlayerInfo[playerid][pLevel] 		= 1;
-			PlayerAppearance[playerid][pTmpSkin] 		= 29;
+
+			AC_GivePlayerMoney(playerid, 			NEW_PLAYER_MONEY);
+			PlayerInfo[playerid][pBank] 			= NEW_PLAYER_BANK; 
+			PlayerInfo[playerid][pRegistered] 		= 1;
+			PlayerInfo[playerid][pLevel] 			= 1;
+			PlayerAppearance[playerid][pTmpSkin] 	= 29;
 			PlayerAppearance[playerid][pSkin] 		= 29;
-			PaydayInfo[playerid][pPayDayMoney] 	= 0;
-			PlayerJob[playerid][pFreeWorks] 	= 15;
-			PlayerInfo[playerid][pMuted] 		= false;
-			PlayerInfo[playerid][pAdmin] 		= 0;
-			PlayerInfo[playerid][pHelper] 		= 0; 
+			PaydayInfo[playerid][pPayDayMoney] 		= 0;
+			PlayerJob[playerid][pFreeWorks] 		= 15;
+			PlayerInfo[playerid][pMuted] 			= false;
+			PlayerInfo[playerid][pAdmin] 			= 0;
+			PlayerInfo[playerid][pHelper] 			= 0; 
 			PlayerCoolDown[playerid][pCasinoCool]	= 5;
 			
 			SendClientMessage(playerid, COLOR_SAMP_GREEN, "[HINT]: Ukoliko trebate prijevoz koristite /calltaxi!");
 			
-			new
-				tmpString[ 128 ];
-			
-			format( tmpString, sizeof(tmpString), "AdmWarn: %s[%d] se tek registrirao na server! IP: %s", 
+			SendAdminMessage(COLOR_RED, 
+				"AdmWarn: %s[%d] has just registered on server! IP: %s", 
 				GetName(playerid,false), 
 				playerid, 
 				ReturnPlayerIP(playerid)
 			);
-			SendAdminMessage(COLOR_RED, tmpString);
 			
 			ClearChatBox(playerid); 
 			SetPlayerVirtualWorld(playerid, 0); 
@@ -218,6 +214,8 @@ timer OnPlayerFirstTimeEnter[12000](playerid, step)
 			SpawnPlayer(playerid);
 			TogglePlayerControllable(playerid, 1);
 			TutorialStep[playerid] = 0;
+
+			SavePlayerData(playerid);
 		} 
 	}
 	return 1;

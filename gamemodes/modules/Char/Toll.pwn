@@ -1,18 +1,15 @@
 #include <YSI_Coding\y_hooks>
 
-//---------VARIJABLE---------
-new LockToll[8];
-//---------------------------
+const MAX_LOCKABLE_BOOTHS = 8;
+const MAX_TOOL_BOOTHS = 19; 
 
-//---OBJEKTI---
-new Toll[19];
-//-------------
+new 
+	LockToll[MAX_LOCKABLE_BOOTHS],
+	Toll[MAX_TOOL_BOOTHS];
 
-//---------------------------------------FUNKCIJE---------------------------------------
 
-//--------------------------------------------------------------------------------------
 
-hook OnGameModeInit() //Prebaciti u funkciju koja ucitava objekte
+hook OnGameModeInit()
 {
 	Toll[1] = CreateDynamicObject(968,1683.41284180,418.20925903,30.52388000,359.99865723,90.09484863,342.51824951,-1,-1,-1,200.0); //LS-LV ( autocesta, kapija 1 )
 	Toll[2] = CreateDynamicObject(968,1692.31713867,415.22802734,30.52388000,359.99450684,90.09338379,342.51525879,-1,-1,-1,200.0); //LS-LV ( autocesta, kapija 2 )
@@ -137,8 +134,8 @@ CMD:locktoll(playerid, params[])
 	if(!IsACop(playerid) && !IsASD(playerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate pristup ovoj komandi!");
 	if(sscanf(params, "d", tollid))
 	{
-	    SendClientMessage(playerid, -1, "{AFAFAF}[ ? ]: /locktoll [ID naplatne kucice]");
-	    SendClientMessage(playerid, -1, "Naplatne kucice: {BFC0C2}1) LS-LV Highway | 2) LS-SF Tunnel | 3) LS-SF Airport | 4) LS-LV Bridge");
+	    SendClientMessage(playerid, -1, "{AFAFAF}[ ? ]: /locktoll [Toll Booth ID]");
+	    SendClientMessage(playerid, -1, "Toll Booths: {BFC0C2}1) LS-LV Highway | 2) LS-SF Tunnel | 3) LS-SF Airport | 4) LS-LV Bridge");
 	    SendClientMessage(playerid, -1, "{BFC0C2} | 5) LS-LV Optional pass | 6) LS-SF Heavy pass | 7) LS-SF Highway | 8) Lock All | 9) Unlock All");
 	    return 1;
 	}
@@ -264,7 +261,7 @@ CMD:locktoll(playerid, params[])
 	}
 	else if(tollid == 8)
 	{
-        for(new i = 0; i< 7; i++)
+        for(new i = 0; i < MAX_LOCKABLE_BOOTHS; i++)
 		{
 			LockToll[i] = 1;
 		}
@@ -274,7 +271,7 @@ CMD:locktoll(playerid, params[])
 	}
 	else if(tollid == 9)
 	{
-		for(new i = 0; i< 7; i++)
+		for(new i = 0; i < MAX_LOCKABLE_BOOTHS; i++)
 		{
 			LockToll[i] = 0;
 		}
@@ -288,34 +285,27 @@ CMD:locktoll(playerid, params[])
 
 CMD:atoll(playerid, params[])
 {
-	new tollid;
- 	if (PlayerInfo[playerid][pAdmin] < 1) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You are not authorized to use this command!");
-	if(sscanf(params, "d", tollid))
+	if (PlayerInfo[playerid][pAdmin] < 1) 
+	 	return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You are not authorized to use this command!");
+	new 
+		lock;
+	if(sscanf(params, "d", lock))
 	{
-	    SendClientMessage(playerid, COLOR_RED, "[ ? ]: /locktoll [ID naplatne kucice]");
-	    SendClientMessage(playerid, -1, "Tool ID 1 - Lock all || Toll ID 2 - Unlock all");
+	    SendClientMessage(playerid, COLOR_RED, "[ ? ]: /atool [Lock ID]");
+	    SendClientMessage(playerid, -1, "Lock ID 0 - Unlock all || Lock ID 1 - Lock all");
 	    return 1;
 	}
-	new LTStr[256];
-	if(tollid == 1)
-	{
-        for(new i = 0; i< 7; i++)
-		{
-			LockToll[i] = 1;
-		}
-        format(LTStr, sizeof(LTStr), "Game Admin %s  je zakljucao sve naplatne kucice.", GetName(playerid, false));
-		SendAdminMessage(COLOR_RED, LTStr);
-	}
-	else if(tollid == 2)
-	{
-		for(new i = 0; i< 7; i++)
-		{
-			LockToll[i] = 0;
-		}
-        format(LTStr, sizeof(LTStr), "Game Admin %s  je otkljucao sve naplatne kucice.", GetName(playerid, false));
-		SendAdminMessage(COLOR_RED, LTStr);
-	}
-	else SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nepoznat ID naplatne kucice!");
+	if(lock < 0 || lock > 1)
+		return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nepoznat ID naplatne kucice!");
+
+	for(new i = 0; i < MAX_LOCKABLE_BOOTHS; i++)
+		LockToll[i] = lock;
+
+	SendAdminMessage(COLOR_RED, 
+		"Game Admin %s %s all tool booths.", 
+		GetName(playerid, false),
+		(!lock) ? ("unlocked") : ("locked")
+	);
 	return 1;
 }
 
