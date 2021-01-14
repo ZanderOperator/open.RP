@@ -1162,14 +1162,20 @@ CMD:unrentroom(playerid, params[])
     PlayerKeys[playerid][pComplexRoomKey] = INVALID_COMPLEX_ID;
 
     if (PlayerFaction[playerid][pMember] != 0 || PlayerFaction[playerid][pLeader] != 0)
-    {
         PlayerInfo[playerid][pSpawnChange] = 2;
-    }
     else
-    {
         PlayerInfo[playerid][pSpawnChange] = 0;
-    }
 
-    SendClientMessage(playerid, COLOR_RED, "[ ! ] Vise ne zakupljujete sobu.");
+    mysql_fquery(g_SQL, "UPDATE accounts SET spawnchange = '%d' WHERE sqlid = '%d'",
+        PlayerInfo[playerid][pSpawnChange],
+        PlayerInfo[playerid][pSQLID]
+    );
+    SetPlayerSpawnInfo(playerid);
+
+    va_SendClientMessage(playerid, 
+        COLOR_LIGHTRED, 
+        "Prekinuli ste najam sobe na adresi %s.",
+        ComplexRoomInfo[complex_id][cAdress]
+    );
     return 1;
 }

@@ -861,6 +861,7 @@ hook OnPlayerDisconnect(playerid, reason)
 		stop FinishPlayerSpawn(playerid);
 
 	strcpy(PlayerInfo[playerid][pLastLogin], ReturnDate());
+	PlayerInfo[playerid][pLastLoginTimestamp] = gettimestamp();
 
 	RemovePlayerFromVehicle(playerid);
 
@@ -1607,7 +1608,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 				return 1;
 			}
 			
-			if (!strlen(inputtext)) // Nothing typed in
+			if (!strlen(inputtext))
 			{
 				ShowPlayerDialog(playerid, 
 					DIALOG_REG_AGE, 

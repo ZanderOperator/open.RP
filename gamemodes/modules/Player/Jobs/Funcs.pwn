@@ -240,7 +240,7 @@ RemovePlayerJob(playerid)
 		case 17: JobData[IMPOUNDER] --;
 		case 18: JobData[TRANSPORTER] --;
 	}
-	PlayerJob[playerid][pJob] 	= 0;
+	PlayerJob[playerid][pJob] = 0;
 	PlayerJob[playerid][pContractTime] = 0;
 	SaveJobData();
 	return (true);
