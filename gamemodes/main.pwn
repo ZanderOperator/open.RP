@@ -85,6 +85,9 @@
 // New SA-MP callbacks by Emmet
 #include <callbacks> 
 
+// SA-MP Map Zones by kristoisberg
+#include <map-zones> 
+
 // Modern Pawn library for working with dates and times - TimeFormat
 #include <chrono> 
 

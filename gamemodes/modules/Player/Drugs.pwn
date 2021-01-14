@@ -1257,7 +1257,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 					(drugs[ttDrug][dEffect] < 4) ? ("grama") : ("tableta"), 
 					drugs[ttDrug][dName], 
 					DrugPackage[playerid][pPrice], 
-					GetXYZZoneName(bag[ran][0], bag[ran][1], bag[ran][2])
+					GetZoneFromXYZ(bag[ran][0], bag[ran][1], bag[ran][2])
 				);
 				
 				SetPlayerCheckpoint(playerid, bag[ran][0], bag[ran][1], bag[ran][2] - 1, 6.0);

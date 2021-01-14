@@ -2853,9 +2853,11 @@ stock static SendPlayerGTAMessage(playerid)
 
 stock static SendAlarmMessageToPolice(vehicleid, bool:streaming)
 {
-	if(vehicleid == -1) return 0;
+	if(!Vehicle_Exists(VEHICLE_USAGE_PRIVATE, vehicleid)) 
+		return 0;
 
-	foreach(new playerid : Player) {
+	foreach(new playerid : Player) 
+	{
 		if(IsACop(playerid) || IsASD(playerid) && Player_OnLawDuty(playerid))
 		{
 			new vehicleName[MAX_VEHICLE_NAME];

@@ -599,7 +599,7 @@ stock PlayHouseAlarm(houseid)
             SendPoliceMessage(COLOR_LIGHTBLUE, "*__________ EMERGENCY CALL (911) __________*");
             SendPoliceMessage(COLOR_LIGHTBLUE, "* Pozivatelj: Osiguravajuca kompanija || Locirani broj: 555-6935");
             format(string, sizeof(string), "Location: %s || Adress: %s",
-                GetXYZZoneName(HouseInfo[houseid][hEnterX], HouseInfo[houseid][hEnterY], HouseInfo[houseid][hEnterZ]),
+                GetZoneFromXYZ(HouseInfo[houseid][hEnterX], HouseInfo[houseid][hEnterY], HouseInfo[houseid][hEnterZ]),
                 HouseInfo[houseid][hAdress]
             );
             SendPoliceMessage(COLOR_LIGHTBLUE, string);
@@ -632,7 +632,7 @@ stock PlayHouseAlarm(houseid)
             SendPoliceMessage(COLOR_LIGHTBLUE, "*__________ EMERGENCY CALL (911) __________*");
             SendPoliceMessage(COLOR_LIGHTBLUE, "* Pozivatelj: Osiguravajuca kompanija || Locirani broj: 555-6935");
             format(string, sizeof(string), "Location: %s || Adress: %s",
-                GetXYZZoneName(HouseInfo[houseid][hEnterX], HouseInfo[houseid][hEnterY], HouseInfo[houseid][hEnterZ]),
+                GetZoneFromXYZ(HouseInfo[houseid][hEnterX], HouseInfo[houseid][hEnterY], HouseInfo[houseid][hEnterZ]),
                 HouseInfo[houseid][hAdress]
             );
             SendPoliceMessage(COLOR_LIGHTBLUE, string);
@@ -679,7 +679,7 @@ stock PlayHouseAlarm(houseid)
             SendPoliceMessage(COLOR_LIGHTBLUE, "*____________ EMERGENCY CALL (911) ____________*");
             SendPoliceMessage(COLOR_LIGHTBLUE, "* Pozivatelj: Osiguravajuca kompanija || Locirani broj: 555-6935");
             format(string, sizeof(string), "Location: %s || Adress: %s",
-                GetXYZZoneName(HouseInfo[houseid][hEnterX], HouseInfo[houseid][hEnterY], HouseInfo[houseid][hEnterZ]),
+                GetZoneFromXYZ(HouseInfo[houseid][hEnterX], HouseInfo[houseid][hEnterY], HouseInfo[houseid][hEnterZ]),
                 HouseInfo[houseid][hAdress]
             );
             SendPoliceMessage(COLOR_LIGHTBLUE, string);

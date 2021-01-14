@@ -463,6 +463,17 @@ stock BubbleSort(a[], size)
 	} while(swapped);
 }
 
+CreateGangZoneAroundPoint(Float:X, Float:Y, Float:width, Float:height)
+{
+	new
+		Float:minX = ( X - width  / 2 ),
+		Float:minY = ( Y - height / 2 ),
+		Float:maxX = ( X + width  / 2 ),
+		Float:maxY = ( Y + height / 2 );
+
+	return GangZoneCreate(minX, minY, maxX, maxY);
+}
+
 stock OOCNews(color, const string[])
 {
 	foreach (new i : Player) 

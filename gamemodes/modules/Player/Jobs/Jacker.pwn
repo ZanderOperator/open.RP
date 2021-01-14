@@ -584,7 +584,7 @@ stock static GetJackerIlegalGarage(playerid)
 	if( IsPlayerInRangeOfPoint(playerid, 10.0, 2534.1411, -2412.6609, 12.6190) ) index = 0;
 	return index;
 }
-
+/*
 stock static SendPoliceAlertMessage(vehicleid, garage)
 {
 	if( IlegalGarage[ garage ][ igWantedLevel ] < 2 ) {
@@ -621,7 +621,7 @@ stock static SendPoliceAlertMessage(vehicleid, garage)
 	}
 	return 1;
 }
-
+*/
 stock static DestroyJackerTextDraw(playerid)
 {
 	if( JackerTD[playerid] != PlayerText:INVALID_TEXT_DRAW ) 
