@@ -2860,14 +2860,29 @@ stock static SendAlarmMessageToPolice(vehicleid, bool:streaming)
 	{
 		if(IsACop(playerid) || IsASD(playerid) && Player_OnLawDuty(playerid))
 		{
-			new vehicleName[MAX_VEHICLE_NAME];
-			GetVehicleNameById(vehicleid, vehicleName, MAX_VEHICLE_NAME);
-			SendClientMessage(playerid, COLOR_LIGHTBLUE, "*________________________ [GTA IN PROGRESS] ________________________*");
-			va_SendClientMessage(playerid, -1, "\tModel vozila: %s | Registracija: %s", vehicleName, VehicleInfo[vehicleid][vNumberPlate]);
-			va_SendClientMessage(playerid, -1, "\tBoja vozila: %d %d", VehicleInfo[vehicleid][vColor1], VehicleInfo[vehicleid][vColor2]);
-			va_SendClientMessage(playerid, -1, "\tLokacija vozila: %s", GetVehicleZone(vehicleid));
-			SendClientMessage(playerid, COLOR_LIGHTBLUE, "*____________________________________________________________________*");
-			if(streaming) CopStreamVeh[playerid] = vehicleid;
+			SendClientMessage(playerid, 
+				COLOR_LIGHTBLUE, 
+				"*________________________ [GTA IN PROGRESS] ________________________*"
+			);
+			va_SendClientMessage(playerid, 
+				-1, 
+				"\tModel: %s | License plates: %s", 
+				ReturnVehicleName(VehicleInfo[vehicleid][vModel]), 
+				VehicleInfo[vehicleid][vNumberPlate]
+			);
+			va_SendClientMessage(playerid, 
+				-1, 
+				"\tVehicle Color: %d %d", 
+				VehicleInfo[vehicleid][vColor1], 
+				VehicleInfo[vehicleid][vColor2]
+			);
+			va_SendClientMessage(playerid, -1, "\tVehicle Location: %s", GetVehicleZone(vehicleid));
+			SendClientMessage(playerid, 
+				COLOR_LIGHTBLUE, 
+				"*____________________________________________________________________*"
+			);
+			if(streaming) 
+				CopStreamVeh[playerid] = vehicleid;
 		}
 	}
 	return 1;
