@@ -83,7 +83,7 @@
 #define BCRYPT_COST 12
 
 // New SA-MP callbacks by Emmet
-#include <callbacks> // legacy
+#include <callbacks> 
 
 // Modern Pawn library for working with dates and times - TimeFormat
 #include <chrono> 

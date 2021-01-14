@@ -63,7 +63,6 @@ new
 
 new
     PlayerDrunkLevel[MAX_PLAYERS],
-    PlayerFPS[MAX_PLAYERS],
     PlayerFPSUnix[MAX_PLAYERS];
 
 
@@ -1208,9 +1207,6 @@ IsValidName(name[])
 	return 1; // All check are ok, Name is valid...
 }
 
-stock GetPlayerFPS(playerid)
-	return PlayerFPS[playerid];
-
 ////////
 PrintAccent(playerid)
 {
@@ -1553,7 +1549,6 @@ hook OnPlayerDisconnect(playerid, reason)
 	RemovePlayerScreenFade(playerid);
 	DisablePlayerCheckpoint(playerid);
     PlayerDrunkLevel[playerid]	= 0;
-    PlayerFPS[playerid]       	= 0;
 	PlayerFPSUnix[playerid]		= 0;
 	if(ADOText[playerid])
 	{
@@ -1576,7 +1571,6 @@ hook function ResetPlayerVariables(playerid)
 	PlayerGlobalTaskTimer[ playerid ] = false;
 	
 	PlayerDrunkLevel[playerid]	= 0;
-    PlayerFPS[playerid]       	= 0;
 	PlayerFPSUnix[playerid]		= gettimestamp();
 
     BlockedOOC[playerid] = false;
@@ -1676,17 +1670,14 @@ hook OnPlayerUpdate(playerid)
 		
 	if( PlayerFPSUnix[playerid] < gettimestamp() ) 
 	{
-		new drunkLevel = GetPlayerDrunkLevel(playerid);
-		if( drunkLevel < 100 ) {
+		new 
+			drunkLevel = GetPlayerDrunkLevel(playerid);
+		if( drunkLevel < 100 ) 
 			SetPlayerDrunkLevel(playerid, 2000);
-		} else {
-			if( PlayerDrunkLevel[playerid] != drunkLevel ) {
-				new 
-					restFPS = PlayerDrunkLevel[playerid] - drunkLevel;
-				if( ( restFPS > 0 ) && ( restFPS < 200 ) )
-					PlayerFPS[playerid] = restFPS;
+		else 
+		{
+			if( PlayerDrunkLevel[playerid] != drunkLevel ) 
 				PlayerDrunkLevel[playerid] = drunkLevel;
-			}
 		}
 		PlayerFPSUnix[playerid] = gettimestamp();
 	}

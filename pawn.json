@@ -16,6 +16,7 @@
 		"Southclaws/OnPlayerSlowUpdate",
 		"AGraber/samp-plugin-mapandreas",
 		"RIDE-2DAY/vSync",
+		"MySekwel/New-SA-MP-callbacks",
 		"roesanne26/fSelection"
 	],
 	"dev_dependencies": [
