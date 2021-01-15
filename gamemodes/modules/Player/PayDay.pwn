@@ -287,11 +287,13 @@ GivePlayerPayCheck(playerid)
 		if(PlayerInfo[playerid][pBank] < kreditlost)
 		{
 			CreditInfo[playerid][cUnpaid]++;
-			if(CreditInfo[playerid][cUnpaid] > 3) // Ukoliko ima 3 neplacene rate kredita, 4. payday mu automatski naplacuje potrazivanje iz imovine
+			if(CreditInfo[playerid][cUnpaid] > 3) 
 			{	
-				TakePlayerProperty(playerid);
-				ResetCreditVars(playerid);
-				SavePlayerCredit(playerid);
+				if(TakePlayerProperty(playerid))
+				{
+					ResetCreditVars(playerid);
+					SavePlayerCredit(playerid);
+				}
 			}
 			else
 			{

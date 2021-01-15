@@ -59,6 +59,50 @@ stock GetNearestVehicle(playerid, VEHICLE_TYPE = -1, VEHICLE_FACTION = -1)
 	return vehicleid;
 }
 
+GetVehicleByModel(modelid, bool:price = false)
+{
+	for(new i = 0; i < sizeof(LandVehicles); i++)
+	{
+		if(LandVehicles[i][viModelid] == modelid)
+		{
+			if(price)
+				return LandVehicles[i][viPrice];
+			return i;
+		}
+	}
+	for(new i = 0; i < sizeof(SeaVehicles); i++)
+	{
+		if(SeaVehicles[i][viModelid] == modelid)
+		{
+			if(price)
+				return SeaVehicles[i][viPrice];
+			return i;
+		}
+	}
+	for(new i = 0; i < sizeof(AirVehicles); i++)
+	{
+		if(AirVehicles[i][viModelid] == modelid)
+		{
+			if(price)
+				return AirVehicles[i][viPrice];
+			return i;
+		}
+	}
+	return -1;
+}
+
+GetVehicleCapacityByModel(modelid)
+{
+	for(new i = 0; i < sizeof(LandVehicles); i++)
+	{
+		if(LandVehicles[i][viModelid] == modelid)
+		{
+			return LandVehicles[i][viSlots];
+		}
+	}
+	return -1;
+}
+
 WeaponModels(weaponid) 
 {
     new const g_aWeaponModels[] = {

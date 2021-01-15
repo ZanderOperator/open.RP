@@ -893,45 +893,6 @@ stock GetVehicleInfoOwner(vehicleid)
 	return playerid;
 }
 
-stock GetVehicleByModel(modelid)
-{
-	for(new i = 0; i < sizeof(LandVehicles); i++)
-	{
-		if(LandVehicles[i][viModelid] == modelid)
-		{
-			return i;
-		}
-	}
-	for(new i = 0; i < sizeof(SeaVehicles); i++)
-	{
-		if(SeaVehicles[i][viModelid] == modelid)
-		{
-			return i;
-		}
-	}
-	for(new i = 0; i < sizeof(AirVehicles); i++)
-	{
-		if(AirVehicles[i][viModelid] == modelid)
-		{
-			return i;
-		}
-	}
-	return -1;
-}
-
-stock GetVehicleCapacityByModel(modelid)
-{
-	for(new i = 0; i < sizeof(LandVehicles); i++)
-	{
-		if(LandVehicles[i][viModelid] == modelid)
-		{
-			return LandVehicles[i][viSlots];
-		}
-	}
-	return -1;
-}
-
-
 stock ResetCarOwnershipVariables(playerid)
 {
 	if(Bit1_Get(gr_PreviewCar, 	playerid))

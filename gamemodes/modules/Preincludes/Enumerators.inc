@@ -790,6 +790,132 @@ new
 
 */
 
+new 
+	vTireHP[MAX_VEHICLES][4];
+
+enum E_VEHICLE_DATA
+{
+	vSQLID,
+	vModel,
+	vOwner[MAX_PLAYER_NAME],
+	vOwnerID,
+	vNumberPlate[8],
+	vColor1,
+	vColor2,
+	Float:vParkX,
+	Float:vParkY,
+	Float:vParkZ,
+	Float:vAngle,
+	vEngineType,
+	vEngineLife,
+	vEngineScrewed,
+	vEngineRunning,
+	vCanStart,
+	vParts,
+	vTimesDestroy,
+	Float:vHeat,
+	vOverHeated,
+	vBatteryType,
+	Float:vBatteryLife,
+	vFuel,
+	vInsurance,
+	vPanels,
+	vDoors,
+	vTires,
+	vLights,
+	vBonnets,
+	Float:vTravel,
+	vTrunk,
+	vWeaponObjectID[MAX_WEAPON_SLOTS],
+	vWeaponSQLID[MAX_WEAPON_SLOTS],
+	vWeaponId[MAX_WEAPON_SLOTS],
+	vWeaponAmmo[MAX_WEAPON_SLOTS],
+	packSQLID[MAX_PACKAGE_VEHICLE],
+	packWepID[MAX_PACKAGE_VEHICLE],
+	packAmmo[MAX_PACKAGE_VEHICLE],
+	vLock,
+	vLocked,
+	Float:vDoorHealth,
+	Float:vTrunkHealth,
+	vAlarm,
+	vImmob,
+	vAudio,
+	vDestroys,
+	vUsage,
+	vType,
+	vFaction,
+	vJob,
+	vInt,
+	vViwo,
+	Float:vHealth,
+	bool:vDestroyed,
+	vRespawn,
+	bool:vGPS,
+	bool:vTuned,
+	vSpoiler,
+	vHood,
+	vRoof,
+	vSkirt,
+	vLamps,
+	vNitro,
+	vExhaust,
+	vWheels,
+	vStereo,
+	vHydraulics,
+	vFrontBumper,
+	vRearBumper,
+	vRightVent,
+	vLeftVent,
+	vSirenon,
+	vPaintJob,
+	vImpounded,
+	vText[23],
+	Text3D:vFactionText,
+ 	vFactionTextOn,
+	vVehicleAdText[20],
+	Text3D:vVehicleAdId,
+	vTicketsSQLID[MAX_VEHICLE_TICKETS],
+	vTickets[MAX_VEHICLE_TICKETS],
+	bool:vTicketShown[MAX_VEHICLE_TICKETS],
+	vTicketStamp[MAX_VEHICLE_TICKETS],
+	Float:vOffsetx[MAX_WEAPON_SLOTS],
+	Float:vOffsety[MAX_WEAPON_SLOTS],
+	Float:vOffsetz[MAX_WEAPON_SLOTS],
+	Float:vOffsetxR[MAX_WEAPON_SLOTS],
+	Float:vOffsetyR[MAX_WEAPON_SLOTS],
+	Float:vOffsetzR[MAX_WEAPON_SLOTS],
+	vSpareKey1,
+	vSpareKey2,
+	vTireArmor,
+	vBodyArmor,
+	vNOSCap
+}
+new 
+	VehicleInfo[MAX_VEHICLES][E_VEHICLE_DATA];
+
+enum 
+{
+	VEHICLE_USAGE_NORMAL 	= 1,
+	VEHICLE_USAGE_PRIVATE	= 2,
+	VEHICLE_USAGE_FACTION	= 3,
+	VEHICLE_USAGE_JOB		= 4,
+	VEHICLE_USAGE_RENT		= 5,
+	VEHICLE_USAGE_PREMIUM	= 6,
+	VEHICLE_USAGE_LICENSE	= 7,
+	VEHICLE_USAGE_NEWBIES	= 8,
+	VEHICLE_USAGE_EVENT		= 9
+}
+
+enum
+{
+	VEHICLE_TYPE_CAR		= 10,
+	VEHICLE_TYPE_MOTOR		= 11,
+	VEHICLE_TYPE_BIKE		= 12,
+	VEHICLE_TYPE_BOAT		= 13,
+	VEHICLE_TYPE_PLANE		= 14,
+	VEHICLE_TYPE_TRAIN		= 15
+}
+
 enum 
 {
 	ENGINE_TYPE_NONE		= 0,
@@ -989,132 +1115,6 @@ new
 	{	593, "Dodo",      	217500,    0, 2, 100.0, 	ENGINE_TYPE_NONE   }
 };
 
-
-new 
-	vTireHP[MAX_VEHICLES][4];
-
-enum E_VEHICLE_DATA
-{
-	vSQLID,
-	vModel,
-	vOwner[MAX_PLAYER_NAME],
-	vOwnerID,
-	vNumberPlate[8],
-	vColor1,
-	vColor2,
-	Float:vParkX,
-	Float:vParkY,
-	Float:vParkZ,
-	Float:vAngle,
-	vEngineType,
-	vEngineLife,
-	vEngineScrewed,
-	vEngineRunning,
-	vCanStart,
-	vParts,
-	vTimesDestroy,
-	Float:vHeat,
-	vOverHeated,
-	vBatteryType,
-	Float:vBatteryLife,
-	vFuel,
-	vInsurance,
-	vPanels,
-	vDoors,
-	vTires,
-	vLights,
-	vBonnets,
-	Float:vTravel,
-	vTrunk,
-	vWeaponObjectID[MAX_WEAPON_SLOTS],
-	vWeaponSQLID[MAX_WEAPON_SLOTS],
-	vWeaponId[MAX_WEAPON_SLOTS],
-	vWeaponAmmo[MAX_WEAPON_SLOTS],
-	packSQLID[MAX_PACKAGE_VEHICLE],
-	packWepID[MAX_PACKAGE_VEHICLE],
-	packAmmo[MAX_PACKAGE_VEHICLE],
-	vLock,
-	vLocked,
-	Float:vDoorHealth,
-	Float:vTrunkHealth,
-	vAlarm,
-	vImmob,
-	vAudio,
-	vDestroys,
-	vUsage,
-	vType,
-	vFaction,
-	vJob,
-	vInt,
-	vViwo,
-	Float:vHealth,
-	bool:vDestroyed,
-	vRespawn,
-	bool:vGPS,
-	bool:vTuned,
-	vSpoiler,
-	vHood,
-	vRoof,
-	vSkirt,
-	vLamps,
-	vNitro,
-	vExhaust,
-	vWheels,
-	vStereo,
-	vHydraulics,
-	vFrontBumper,
-	vRearBumper,
-	vRightVent,
-	vLeftVent,
-	vSirenon,
-	vPaintJob,
-	vImpounded,
-	vText[23],
-	Text3D:vFactionText,
- 	vFactionTextOn,
-	vVehicleAdText[20],
-	Text3D:vVehicleAdId,
-	vTicketsSQLID[MAX_VEHICLE_TICKETS],
-	vTickets[MAX_VEHICLE_TICKETS],
-	bool:vTicketShown[MAX_VEHICLE_TICKETS],
-	vTicketStamp[MAX_VEHICLE_TICKETS],
-	Float:vOffsetx[MAX_WEAPON_SLOTS],
-	Float:vOffsety[MAX_WEAPON_SLOTS],
-	Float:vOffsetz[MAX_WEAPON_SLOTS],
-	Float:vOffsetxR[MAX_WEAPON_SLOTS],
-	Float:vOffsetyR[MAX_WEAPON_SLOTS],
-	Float:vOffsetzR[MAX_WEAPON_SLOTS],
-	vSpareKey1,
-	vSpareKey2,
-	vTireArmor,
-	vBodyArmor,
-	vNOSCap
-}
-new 
-	VehicleInfo[MAX_VEHICLES][E_VEHICLE_DATA];
-
-enum 
-{
-	VEHICLE_USAGE_NORMAL 	= 1,
-	VEHICLE_USAGE_PRIVATE	= 2,
-	VEHICLE_USAGE_FACTION	= 3,
-	VEHICLE_USAGE_JOB		= 4,
-	VEHICLE_USAGE_RENT		= 5,
-	VEHICLE_USAGE_PREMIUM	= 6,
-	VEHICLE_USAGE_LICENSE	= 7,
-	VEHICLE_USAGE_NEWBIES	= 8,
-	VEHICLE_USAGE_EVENT		= 9
-}
-
-enum
-{
-	VEHICLE_TYPE_CAR		= 10,
-	VEHICLE_TYPE_MOTOR		= 11,
-	VEHICLE_TYPE_BIKE		= 12,
-	VEHICLE_TYPE_BOAT		= 13,
-	VEHICLE_TYPE_PLANE		= 14,
-	VEHICLE_TYPE_TRAIN		= 15
-}
 
 /*
 

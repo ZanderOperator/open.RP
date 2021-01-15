@@ -2,6 +2,7 @@
 
 #define PROPERTY_TYPE_HOUSE			(1)
 #define PROPERTY_TYPE_BIZZ			(2)
+#define PROPERTY_TYPE_VEHICLE		(3)
 
 #define MAX_CREDIT_USAGE_TIME		(3600*3) // 3h
 
@@ -543,20 +544,32 @@ IsPlayerCredible(playerid, amount)
 
 GetValuablePropertyType(playerid)
 {
-	new housevalue = 0, bizvalue = 0;
+	new 
+		housevalue = 0, 
+		bizvalue = 0,
+		vehvalue = 0;
 	if(PlayerKeys[playerid][pHouseKey] != INVALID_HOUSE_ID)
 	{
-		new houseid = PlayerKeys[playerid][pHouseKey];
+		new 
+			houseid = PlayerKeys[playerid][pHouseKey];
 		housevalue = HouseInfo[houseid][hValue];
 	}
 	if(PlayerKeys[playerid][pBizzKey] != INVALID_BIZNIS_ID)
 	{
-		new bizzid = PlayerKeys[playerid][pBizzKey];
+		new 
+			bizzid = PlayerKeys[playerid][pBizzKey];
 		bizvalue = BizzInfo[bizzid][bBuyPrice];
 	}
-	if(housevalue > bizvalue)
+	if(PlayerKeys[playerid][pVehicleKey] != -1)
+		vehvalue = GetVehicleByModel(VehicleInfo[PlayerKeys[playerid][pVehicleKey]][vModel], true);  
+	
+	if(housevalue > bizvalue && housevalue > vehvalue)
 		return PROPERTY_TYPE_HOUSE;	
-	else return PROPERTY_TYPE_BIZZ;
+	else if(bizvalue > housevalue && bizvalue > vehvalue)
+		return PROPERTY_TYPE_BIZZ;
+	else if(vehvalue > housevalue && vehvalue > bizvalue)
+		return PROPERTY_TYPE_VEHICLE;
+	return 0;
 }
 
 TakePlayerProperty(playerid)
@@ -564,35 +577,12 @@ TakePlayerProperty(playerid)
 	if(PlayerKeys[playerid][pHouseKey] == INVALID_HOUSE_ID && PlayerKeys[playerid][pBizzKey] == INVALID_BIZNIS_ID)
 		return 1;
 	
-	new type = GetValuablePropertyType(playerid);
+	new 
+		type = GetValuablePropertyType(playerid);
 		
 	switch(type)
 	{
-		case 0: // No House/Business
-		{
-			if(PlayerKeys[playerid][pVehicleKey] != -1) // The proud owner of private vehicle which bank will instantly seize
-			{
-				va_SendClientMessage(playerid, COLOR_RED, "[ ! ]: The Bank seized your %s as payment of credit costs.", ReturnVehicleName(VehicleInfo[PlayerKeys[playerid][pVehicleKey]][vModel]));
-				
-				DeleteVehicleFromBase(VehicleInfo[PlayerKeys[playerid][pVehicleKey]][vSQLID]);
-
-				#if defined MODULE_LOGS
-				Log_Write("/logfiles/car_delete.txt", "(%s) %s lost his %s because of credit loan debt.",
-					ReturnDate(),
-					GetName(playerid,false),
-					ReturnVehicleName(GetVehicleModel(PlayerKeys[playerid][pVehicleKey]))
-				);
-				#endif
-
-				DestroyFarmerObjects(playerid);
-				AC_DestroyVehicle(PlayerKeys[playerid][pVehicleKey]);
-				PlayerKeys[playerid][pVehicleKey] = -1;
-
-				ResetVehicleList(playerid);
-				GetPlayerVehicleList(playerid);
-			}
-			else return 1;
-		}
+		case 0: return 0;	// No House/Business/vehicle
 		case PROPERTY_TYPE_HOUSE:
 		{
 			new house = PlayerKeys[playerid][pHouseKey];
@@ -628,6 +618,27 @@ TakePlayerProperty(playerid)
 			BizzInfo[biz][bOwnerID] = 0;
 			
 			mysql_fquery(g_SQL, "UPDATE bizzes SET ownerid = '0', co_ownerid = '0' WHERE id = '%d'", BizzInfo[ biz ][bSQLID]);
+		}
+		case PROPERTY_TYPE_VEHICLE:
+		{
+			va_SendClientMessage(playerid, COLOR_RED, "[ ! ]: The Bank seized your %s as payment of credit costs.", ReturnVehicleName(VehicleInfo[PlayerKeys[playerid][pVehicleKey]][vModel]));
+				
+			DeleteVehicleFromBase(VehicleInfo[PlayerKeys[playerid][pVehicleKey]][vSQLID]);
+
+			#if defined MODULE_LOGS
+			Log_Write("/logfiles/car_delete.txt", "(%s) %s lost his %s because of credit loan debt.",
+				ReturnDate(),
+				GetName(playerid,false),
+				ReturnVehicleName(GetVehicleModel(PlayerKeys[playerid][pVehicleKey]))
+			);
+			#endif
+
+			DestroyFarmerObjects(playerid);
+			AC_DestroyVehicle(PlayerKeys[playerid][pVehicleKey]);
+			PlayerKeys[playerid][pVehicleKey] = -1;
+
+			ResetVehicleList(playerid);
+			GetPlayerVehicleList(playerid);
 		}
 	}
 	return 1;
