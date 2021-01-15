@@ -32,7 +32,7 @@
 		        \/     \/      \/     \/     \/
 
 		  Developed By Dan 'GhoulSlayeR' Reed | Rewritten by Logan
-			     mrdanreed@gmail.com
+			     mrdanreed@gmail.com 
 
 ===========================================================
 This software was written for the sole purpose to not be
@@ -41,17 +41,18 @@ developer.
 
 Changelog:
 
-1.0.0 - Inital Release
+1.1.0 - Updated Release
 ===========================================================
 
 */
 
-//Card rank = (array index % 13) | Card native index = 4 * rank + suit
+#include <YSI_Coding\y_hooks>
+
+// Card rank = (array index % 13) | Card native index = 4 * rank + suit
 #define GetCardNativeIndex(%0) 			((4*((%0) % 13))+_:CardData[(%0)][E_CARD_SUIT])
 
 native calculate_hand_worth(const hands[], count = sizeof(hands));
 
-#include <YSI_Coding\y_hooks>
 
 // Objects
 #define OBJ_POKER_TABLE 					19474
@@ -81,12 +82,11 @@ native calculate_hand_worth(const hands[], count = sizeof(hands));
 #define	ONE_PAIR			6
 #define	HIGH_CARD			7
 
-#define IsNull(%1) \
-((!(%1[0])) || (((%1[0]) == '\1') && (!(%1[1]))))
+static
+	 Iterator: PokerTables <MAX_POKERTABLES>;
 
-new Iterator: PokerTables <MAX_POKERTABLES>;
-
-new PlayerText:PlayerPokerUI[MAX_PLAYERS][MAX_PLAYERPOKERUI];
+static 
+	PlayerText:PlayerPokerUI[MAX_PLAYERS][MAX_PLAYERPOKERUI];
 
 enum pkrInfo
 {
@@ -131,18 +131,11 @@ enum pkrInfo
 	pkrWinners,
 	pkrWinnerID,
 };
-new PokerTable[MAX_POKERTABLES][pkrInfo];
+static 
+	PokerTable[MAX_POKERTABLES][pkrInfo];
 
-/*new Float:PokerTableMiscObjOffsets[MAX_POKERTABLEMISCOBJS][6] = {
-{-1.25, 0.470, 0.1, 0.0, 0.0, 180.0}, // (Slot 1)
-{-1.25, -0.470, 0.1, 0.0, 0.0, 180.0}, // (Slot 2)
-{-0.01, -1.85, 0.1, 0.0, 0.0, -90.0}, // (Slot 3)
-{1.25, -0.470, 0.1, 0.0, 0.0, 0.0}, // (Slot 4)
-{1.25, 0.470, 0.1, 0.0, 0.0, 0.0}, // (Slot 5)
-{0.01, 1.85, 0.1, 0.0, 0.0, 90.0}  // (Slot 6)
-};*/
-
-new Float:PokerTableMiscObjOffsets[MAX_POKERTABLEMISCOBJS][6] = {
+static 
+	Float:PokerTableMiscObjOffsets[MAX_POKERTABLEMISCOBJS][6] = {
 {-1.25, -0.470, 0.1, 0.0, 0.0, 180.0}, // (Slot 2)
 {-1.25, 0.470, 0.1, 0.0, 0.0, 180.0}, // (Slot 1)
 {0.01, 1.85, 0.1, 0.0, 0.0, 90.0},  // (Slot 6)
@@ -151,7 +144,8 @@ new Float:PokerTableMiscObjOffsets[MAX_POKERTABLEMISCOBJS][6] = {
 {-0.01, -1.85, 0.1, 0.0, 0.0, -90.0} // (Slot 3)
 };
 
-new const HAND_RANKS[][] =
+static 
+	const HAND_RANKS[][] =
 {
 	{"Undefined"}, //will never occur
 	{"High Card"},
@@ -180,9 +174,8 @@ enum E_CARD_DATA
 	E_CARD_SUITS:E_CARD_SUIT,
 	E_CARD_RANK
 };
-
-
-new const CardData[ 52 ] [E_CARD_DATA] = {
+static 
+	const CardData[ 52 ] [E_CARD_DATA] = {
 
 	//Spades
     {"LD_CARD:cd2s", 		"Two of Spades", 		SUIT_SPADES,		0},
@@ -245,6 +238,7 @@ new const CardData[ 52 ] [E_CARD_DATA] = {
     {"LD_CARD:cd1d", 		"Ace of Diamonds", 		SUIT_DIAMONDS, 		12}
 };
 
+// Player Vars
 static
 	EditingTableID[MAX_PLAYERS],
 	PlayingTableID[MAX_PLAYERS],
@@ -355,8 +349,8 @@ task PokerPulse[1000]()
 			for(new i = 0; i < 6; i++) {
 				new playerid = PokerTable[tableid][pkrSlot][i];
 
-				if(playerid != -1) {
-
+				if(playerid != -1) 
+				{
 					// Disable Weapons
 					SetPlayerArmedWeapon(playerid,0);
 
@@ -1374,13 +1368,11 @@ Public:InitPokerTables()
 		PokerTable[i][pkrPlaced] = 0;
 		PokerTable[i][pkrObjectID] = 0;
 
-		for(new c = 0; c < MAX_POKERTABLEMISCOBJS; c++) {
+		for(new c = 0; c < MAX_POKERTABLEMISCOBJS; c++) 
 			PokerTable[i][pkrMiscObjectID][c] = 0;
-		}
 
-		for(new s = 0; s < 6; s++) {
+		for(new s = 0; s < 6; s++) 
 			PokerTable[i][pkrSlot][s] = -1;
-		}
 
 		PokerTable[i][pkrX] = 0.0;
 		PokerTable[i][pkrY] = 0.0;
@@ -2181,9 +2173,10 @@ DestroyPokerTable(tableid)
 			DestroyDynamic3DTextLabel(PokerTable[tableid][pkrText3DID]);
 
 		// Delete Misc Obj
-		for(new c = 0; c < MAX_POKERTABLEMISCOBJS; c++) {
-			if(IsValidObject(PokerTable[tableid][pkrMiscObjectID][c])) DestroyObject(PokerTable[tableid][pkrMiscObjectID][c]);
-		}
+		for(new c = 0; c < MAX_POKERTABLEMISCOBJS; c++) 
+			if(IsValidObject(PokerTable[tableid][pkrMiscObjectID][c])) 
+				DestroyObject(PokerTable[tableid][pkrMiscObjectID][c]);
+		
 	}
 
 	for(new s = 0; s < 6; s++)

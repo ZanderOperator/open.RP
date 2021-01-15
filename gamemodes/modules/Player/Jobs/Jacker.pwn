@@ -24,168 +24,19 @@
 static
 	Iterator:IllegalGarage<MAX_ILEGAL_GARAGES>;
 
-enum 
+enum E_ILEGAL_GARAGES 
 {
-	ENGINE_TYPE_NONE		= 0,
-	ENGINE_TYPE_DIESEL,
-	ENGINE_TYPE_PETROL
-}
-
-enum E_JACKER_LAND_VEHS 
-{
-	viModelid,
-	viName[18],
-	viPrice,
-	viCarJackerPrice,
-	viSeats,
-	Float:viFuel,
-	viEngineType,
-	viPremium,
-	viSlots
-};
-
-static
-   LandVehicles[123][E_JACKER_LAND_VEHS] = {
-	{ 400, "Landstalker",      72500, 7050,   4,   65.0,    ENGINE_TYPE_PETROL, 0, 4 },
-	{ 401, "Bravura",          33437,    3698,   2,   40.0,    ENGINE_TYPE_DIESEL, 0, 2  },
-	{ 402, "Buffalo",          129625, 8241,   2,   70.0,    ENGINE_TYPE_PETROL, 0, 2  },
-	{ 404, "Perrenial",         6000,    2222,    4,   40.0,    ENGINE_TYPE_DIESEL, 0, 4  },
-	{ 405, "Sentinel",         64500,    6759,   4,   55.0,    ENGINE_TYPE_DIESEL, 0, 4 },
-	{ 408, "Trashmaster",      4875,    0,      2,   85.0,    ENGINE_TYPE_PETROL, 0, 0  },
-	{ 409, "Stretch",          300752, 8969,   4,   50.0,    ENGINE_TYPE_DIESEL, 0, 4  },
-	{ 410, "Manana",         10250,    2329,    2,   45.0,    ENGINE_TYPE_DIESEL, 0, 2  },
-	{ 411, "Infernus",         0,      9955,   2,    70.0,    ENGINE_TYPE_PETROL, 3, 1  },//{ 411, "Infernus",          0,      9955,   2,    70.0,    ENGINE_TYPE_PETROL, 3, 1  },
-	{ 412, "Voodoo",          12500,    2420,   2,   55.0,    ENGINE_TYPE_DIESEL, 0, 2  },
-	{ 413, "Pony",             18500,    2826,   2,   55.0,    ENGINE_TYPE_PETROL, 0, 7  },
-	{ 414, "Mule",             15300,    2818,   2,   60.0,    ENGINE_TYPE_PETROL, 0,  8 },
-	{ 415, "Cheetah",          0,     9824,   2,   60.0,    ENGINE_TYPE_PETROL, 3, 1  },
-	{ 418, "Moonbeam",          14000,    2500,   4,   55.0,    ENGINE_TYPE_DIESEL, 0, 6  },
-	{ 419, "Esperanto",         16750,    2690,   2,   58.0,    ENGINE_TYPE_DIESEL, 0, 2  },
-	{ 420, "Taxi",             14750,    2805,   4,   47.0,    ENGINE_TYPE_DIESEL, 0, 4  },
-	{ 421, "Washington",      40250,    4283,    4,    58.0,    ENGINE_TYPE_DIESEL, 0, 4  },
-	{ 422, "Bobcat",          12500,    2404,   2,   65.0,    ENGINE_TYPE_PETROL, 0, 6  },
-	{ 423, "Mr Whoopee",       13500,    2398,   2,    65.0,    ENGINE_TYPE_DIESEL, 0, 3 },
-	{ 424, "BF Injection",       84062, 7589,    2,   20.0,    ENGINE_TYPE_PETROL, 0, 1  },
-	{ 426, "Premier",          89200, 7779,   4,   50.0,    ENGINE_TYPE_DIESEL, 0, 4  },
-	{ 429, "Banshee",          281500, 8690,   2,   60.0,    ENGINE_TYPE_PETROL, 0, 1  },
-	{ 434, "Hotknife",          20250, 2904,   2,   56.0,    ENGINE_TYPE_PETROL, 0, 1  },
-	{ 436, "Previon",          14000,    2474,   2,   50.0,    ENGINE_TYPE_DIESEL, 0, 2  },
-	{ 438, "Cabbie",          13500,    2391,   4,   47.0,    ENGINE_TYPE_DIESEL, 0, 4  },
-	{ 439, "Stallion",          45587,    5405,   2,   49.0,    ENGINE_TYPE_DIESEL, 0, 2  },
-	{ 440, "Rumpo",          13500,    2381,   2,   55.0,    ENGINE_TYPE_PETROL, 0, 7  },
-	{ 442, "Romero",          17750,    2792,   4,   40.0,    ENGINE_TYPE_DIESEL, 0, 5  },
-	{ 445, "Admiral",          28250,    2960,   4,   55.0,    ENGINE_TYPE_DIESEL, 0, 4  },
-	{ 448, "Pizzaboy",         7000,    0,       1,   5.0,     ENGINE_TYPE_DIESEL, 0, 1  },
-	{ 451, "Turismo",          0,       9728,    2,   60.0,    ENGINE_TYPE_PETROL, 2, 1  },
-	{ 456, "Yankee",          25750,    2933,    2,   68.0,    ENGINE_TYPE_PETROL, 0, 9  },
-	{ 458, "Solair",          27800,    2960,   4,   40.0,    ENGINE_TYPE_DIESEL, 0, 6 },
-	{ 459, "Berkley's Van",      15000,    0,       2,   55.0,    ENGINE_TYPE_PETROL, 0, 7   },
-	{ 461, "PCJ-600",          61693,    0,      2,   7.0,     ENGINE_TYPE_PETROL, 0, 1  },
-	{ 462, "Faggio",          8500,    0,       1,   5.0,     ENGINE_TYPE_DIESEL, 0, 1  },
-	{ 463, "Freeway",          7500,    0,      2,   7.0,     ENGINE_TYPE_PETROL, 0, 1   },
-	{ 466, "Glendale",          14250,    2455,    4,   47.0,    ENGINE_TYPE_DIESEL, 0, 4  },
-	{ 467, "Oceanic",          17250,    2687,   4,   48.0,    ENGINE_TYPE_DIESEL, 0, 4  },
-	{ 468, "Sanchez",          11250,    0,      2,   5.0,     ENGINE_TYPE_PETROL, 0, 1  },
-	{ 470, "Patriot",          0,       9668,   4,   80.0,    ENGINE_TYPE_PETROL, 1, 6  },
-	{ 471, "Quad",             16250,    0,       1,   6.0,     ENGINE_TYPE_PETROL, 0, 1   },
-	{ 474, "Hermes",          17250,    2658,    2,   50.0,    ENGINE_TYPE_DIESEL, 0, 2  },
-	{ 475, "Sabre",          41500,    4642,   2,   80.0,    ENGINE_TYPE_PETROL, 0, 2  },
-	{ 477, "ZR-350",          0,       9634,   2,   105.0,    ENGINE_TYPE_PETROL, 1, 2  },
-	{ 478, "Walton",          13500,    2362,    2,   40.0,    ENGINE_TYPE_DIESEL, 0, 6   },
-	{ 479, "Regina",          7500,    2259,    4,   43.0,    ENGINE_TYPE_DIESEL, 0, 5  },
-	{ 480, "Comet",          180250, 8247,   2,   96.0,    ENGINE_TYPE_PETROL, 0, 1   },
-	{ 481, "BMX",             500,    2017,     1,   0.0 ,    ENGINE_TYPE_NONE  , 0, 1   },
-	{ 482, "Burrito",          26750,    2936,    2,   73.0,    ENGINE_TYPE_PETROL, 0, 7   },
-	{ 483, "Camper",          25800,    2936,   2,   51.0,    ENGINE_TYPE_PETROL, 0, 8  },
-	{ 489, "Rancher",          38500,    3958,   2,   62.0,    ENGINE_TYPE_PETROL, 0, 4  },
-	{ 491, "Virgo",          24100,    2930,    2,   30.0,    ENGINE_TYPE_DIESEL, 0, 2  },
-	{ 492, "Greenwood",         14800,    2617,   4,   42.0,    ENGINE_TYPE_DIESEL, 0, 4  },
-	{ 496, "Blista Compact",   17750,    2774,    2,   40.0,    ENGINE_TYPE_PETROL, 0, 2  },
-	{ 498, "Boxville",          16500,    0,   2,      46.0,    ENGINE_TYPE_PETROL, 0, 8  },
-	{ 499, "Benson",          30000,    0,     2,   40.0,    ENGINE_TYPE_PETROL, 0, 8  },
-	{ 500, "Mesa",             35750,    3906,   2,   54.0,    ENGINE_TYPE_PETROL, 0, 2  },
-	{ 505, "Rancher",          36500,    0,     2,   69.0,    ENGINE_TYPE_PETROL, 0,  4 },
-	{ 506, "Super GT",          405187, 9078,   2,   81.0,    ENGINE_TYPE_PETROL, 0, 1 },
-	{ 507, "Elegant",          44750,    5252,   4,   78.0,    ENGINE_TYPE_DIESEL, 0, 4  },
-	{ 508, "Journey",          33500,    3332,   2,   60.0,    ENGINE_TYPE_PETROL, 0,  9 },
-	{ 509, "Bike",             500,    2000,     1,   0.0,    ENGINE_TYPE_NONE  , 0, 1  },
-	{ 510, "Mountain Bike",      750,    2069,     1,   0.0,    ENGINE_TYPE_NONE  , 0, 1  },
-	{ 516, "Nebula",          17037,    2691,   4,   72.0,    ENGINE_TYPE_DIESEL, 0, 4  },
-	{ 517, "Majestic",          20500,    2921,   2,   44.0,    ENGINE_TYPE_DIESEL, 0, 2  },
-	{ 518, "Buccaneer",         16500,    2591,   2,   30.0,    ENGINE_TYPE_DIESEL, 0, 2  },
-	{ 521, "FCR-900",          280750,   0,      2,   10.0,    ENGINE_TYPE_PETROL, 0, 1  },
-	{ 522, "NRG-500",          0, 0,      2,   11.0,    ENGINE_TYPE_PETROL, 4, 1   },
-	{ 524, "Cement Truck",      9750,    0,        2,   66.0,    ENGINE_TYPE_PETROL, 0, 5 },
-	{ 525, "Tow Truck",         6000,   2198,   2,   50.0,    ENGINE_TYPE_PETROL, 0, 5 },
-	{ 526, "Fortune",          19500,   2905,    2,   63.0,    ENGINE_TYPE_DIESEL, 0, 2 },
-	{ 527, "Cadrona",          15600,   2504,   2,   56.0,    ENGINE_TYPE_DIESEL, 0, 2  },
-	{ 529, "Willard",          20250,   2893,    4,   60.0,    ENGINE_TYPE_DIESEL, 0, 4  },
-	{ 530, "Forklift",         4500,    0,      1,   25.0,    ENGINE_TYPE_DIESEL, 0, 1  },
-	{ 531, "Tractor",          4500,    0,      1,   26.0,    ENGINE_TYPE_DIESEL, 0, 1  },
-	{ 532, "Combine",          9750,    0,      1,   40.0,    ENGINE_TYPE_PETROL, 0, 1  },
-	{ 533, "Feltzer",          40250,    4168,   2,    55.0,    ENGINE_TYPE_PETROL, 0, 2  },
-	{ 534, "Remington",         13160,    2369,    2,    64.0,    ENGINE_TYPE_DIESEL, 0, 2  },
-	{ 535, "Slamvan",          50700,    5426,   2,    58.0,    ENGINE_TYPE_PETROL, 0, 3  },
-	{ 536, "Blade",          13500,    2376,    4,    45.0,    ENGINE_TYPE_DIESEL, 0, 2  },
-	{ 540, "Vincent",          21400,    2910,    4,    40.0,    ENGINE_TYPE_DIESEL, 0, 4  },
-	{ 541, "Bullet",          0,      9459,   2,   67.0,    ENGINE_TYPE_PETROL, 2, 1  },
-	{ 542, "Clover",          16000,    2653,    2,    40.0,    ENGINE_TYPE_PETROL, 0, 2  },
-	{ 543, "Sadler",          12750,    2340,    2,    45.0,    ENGINE_TYPE_PETROL, 0 , 5   },
-	{ 545, "Hustler",          59250,    6151,   2,    43.0,    ENGINE_TYPE_PETROL, 0, 2  },
-	{ 546, "Intruder",          13000,    2433,    4,   40.0,    ENGINE_TYPE_DIESEL, 0, 4  },
-	{ 547, "Primo",          21000,    2928,    4,    40.0,    ENGINE_TYPE_DIESEL, 0, 4  },
-	{ 549, "Tampa",          7500,    2257,    2,    37.0,    ENGINE_TYPE_DIESEL, 0, 2  },
-	{ 550, "Sunrise",          25325,    2934,    4,    46.0,    ENGINE_TYPE_DIESEL, 0, 4  },
-	{ 551, "Merit",          26785,    2939,   4,    42.0,    ENGINE_TYPE_DIESEL, 0, 4  },
-	{ 552, "Utility",          24750,    2930,    2,    74.0,    ENGINE_TYPE_PETROL, 0, 1  },
-	{ 554, "Yosemite",          35000,    3787,    2,    70.0,    ENGINE_TYPE_PETROL, 0, 5  },
-	{ 555, "Windsor",          126500, 8229,   2,   55.0,    ENGINE_TYPE_PETROL, 0, 2  },
-	{ 558, "Uranus",          188750, 8608,   2,   58.0,    ENGINE_TYPE_PETROL, 0, 2  },
-	{ 559, "Jester",          289875, 8894,   2,   55.0,    ENGINE_TYPE_PETROL, 0, 2  },
-	{ 560, "Sultan",          402820, 9031,   4,   60.0,    ENGINE_TYPE_PETROL, 0, 4  },
-	{ 561, "Stratum",          40750,    4619,   4,   58.0,    ENGINE_TYPE_PETROL, 0, 4   },
-	{ 562, "Elegy",          212700, 8616,   2,   64.0,    ENGINE_TYPE_PETROL, 0, 2  },
-	{ 565, "Flash",          110375, 8041,   2,   55.0,    ENGINE_TYPE_PETROL, 0, 2  },
-	{ 566, "Tahoma",          14750,    2524,    4,   42.0,    ENGINE_TYPE_DIESEL, 0, 4  },
-	{ 567, "Savanna",          14500,    2501,    4,    43.0,    ENGINE_TYPE_DIESEL, 0, 4   },
-	{ 568, "Bandito",          80750, 7312,   1,    30.0,    ENGINE_TYPE_PETROL, 0, 1   },
-	{ 572, "Mower",          4500,    2094,    1,    10.0,    ENGINE_TYPE_DIESEL, 0, 1   },
-	{ 574, "Sweeper",          3750,    2085,    1,    20.0,    ENGINE_TYPE_DIESEL, 0, 1   },
-	{ 575, "Broadway",          19000,    2851,    2,    43.0,    ENGINE_TYPE_DIESEL, 0, 2  },
-	{ 576, "Tornado",          7500,    2236,    2,    43.0,    ENGINE_TYPE_DIESEL, 0, 2  },
-	{ 578, "DFT-30",          44000,    0,      2,    101.0,    ENGINE_TYPE_PETROL, 0, 6 },
-	{ 579, "Huntley",          51500,    5655,   4,    75.0,    ENGINE_TYPE_PETROL, 0, 5  },
-	{ 580, "Stafford",          32500,    3175,   4,    50.0,    ENGINE_TYPE_DIESEL, 0, 4  },
-	{ 581, "BF-400",          53500,    0,       2,    6.0,     ENGINE_TYPE_PETROL, 0, 1  },
-	{ 585, "Emperor",          20250,    2869,    4,    45.0,    ENGINE_TYPE_DIESEL, 0, 4  },
-	{ 586, "Wayfarer",          11200,  0,       2,   7.0,    ENGINE_TYPE_PETROL, 0, 1  },
-	{ 587, "Euros",          60500,    5972,   2,    60.0,    ENGINE_TYPE_PETROL, 0, 2  },
-	{ 588, "Hotdog",          9500,    0,      2,    45.0,    ENGINE_TYPE_DIESEL, 0, 5  },
-	{ 589, "Club",             20900,    2921,   2,    44.0,    ENGINE_TYPE_PETROL, 0, 2  },
-	{ 600, "Picador",          6000,    2165,    2,    20.0,    ENGINE_TYPE_DIESEL, 0, 2 },
-	{ 602, "Alpha",          91875, 7786,   2,   55.0,    ENGINE_TYPE_PETROL, 0, 2  },
-	{ 603, "Phoenix",         89500, 7669,   2,   60.0,    ENGINE_TYPE_PETROL, 0, 2  },
-	{ 609, "Boxville",          17750,    0,      2,  70.0,    ENGINE_TYPE_PETROL, 0, 8  },
-	{ 403, "Linerunner",       75000, 6812,   2,  100.0,    ENGINE_TYPE_PETROL, 0, 1  },
-	{ 514, "Tanker",          60000,    6105,   2,  100.0,    ENGINE_TYPE_PETROL, 0, 2  },
-	{ 515, "Roadtrain",       61750,    6392,   2,  100.0,    ENGINE_TYPE_PETROL, 0, 1   }
-};
-
-
-// Enums
-enum E_ILEGAL_GARAGES {
 	igSQLID,
 	igName[ 32 ],
-	igOwner,	// Spremamo njegov MySQL ID
+	igOwner,
 	igVehicleIds[ 6 ],
 	igBoard,
+	igHeader,
 	igText[ 6 ],
 	igCarsJacked,
 	igWantedLevel,
 	Text3D:ig3dText,
-	Float:ig3dTextPos[ 3 ],
-	Float:igCameraPos[ 3 ],
-	Float:igCameraLookAt[ 3 ]
+	Float:ig3dTextPos[ 4 ]
 }
 new
 	IlegalGarage[ MAX_ILEGAL_GARAGES ][ E_ILEGAL_GARAGES ];
@@ -275,21 +126,15 @@ public OnServerIlegalGaragesLoad()
 	if( !cache_num_rows() ) return printf( "MySQL Report: No ilegal garages exist to load.");
 	for( new row = 0; row < cache_num_rows(); row++ ) 
 	{
-		cache_get_value_name_int( row, "id"		, IlegalGarage[ row ][ igSQLID ]);
-		cache_get_value_name_int( row, "owner"		, IlegalGarage[ row ][ igOwner ]);
-		cache_get_value_name( row, "name"			, IlegalGarage[ row ][ igName ], 32 );
-		cache_get_value_name_int( row, "jackedcars", IlegalGarage[ row ][ igCarsJacked ]);
-		cache_get_value_name_int( row, "jackedcars", IlegalGarage[ row ][ igWantedLevel ]);
-		cache_get_value_name_float( row, "3dtextX"	, IlegalGarage[ row ][ ig3dTextPos ][ 0 ]);
-		cache_get_value_name_float( row, "3dtextY"	, IlegalGarage[ row ][ ig3dTextPos ][ 1 ]);
-		cache_get_value_name_float( row, "3dtextZ"	, IlegalGarage[ row ][ ig3dTextPos ][ 2 ]);
-		cache_get_value_name_float( row, "cameraX"	, IlegalGarage[ row ][ igCameraPos ][ 0 ]);
-		cache_get_value_name_float( row, "cameraY"	, IlegalGarage[ row ][ igCameraPos ][ 1 ]);
-		cache_get_value_name_float( row, "cameraZ"	, IlegalGarage[ row ][ igCameraPos ][ 2 ]);
-		cache_get_value_name_float( row, "lookX"	, IlegalGarage[ row ][ igCameraLookAt ][ 0 ]);
-		cache_get_value_name_float( row, "lookY"	, IlegalGarage[ row ][ igCameraLookAt ][ 1 ]);
-		cache_get_value_name_float( row, "lookZ"	, IlegalGarage[ row ][ igCameraLookAt ][ 2 ]);
-		
+		cache_get_value_name_int( row, 		"id"		, IlegalGarage[ row ][ igSQLID ]);
+		cache_get_value_name_int( row, 		"owner"		, IlegalGarage[ row ][ igOwner ]);
+		cache_get_value_name( row, 			"name"		, IlegalGarage[ row ][ igName ], 32 );
+		cache_get_value_name_int( row, 		"jackedcars", IlegalGarage[ row ][ igCarsJacked ]);
+		cache_get_value_name_int( row, 		"jackedcars", IlegalGarage[ row ][ igWantedLevel ]);
+		cache_get_value_name_float( row, 	"3dtextX"	, IlegalGarage[ row ][ ig3dTextPos ][ 0 ]);
+		cache_get_value_name_float( row, 	"3dtextY"	, IlegalGarage[ row ][ ig3dTextPos ][ 1 ]);
+		cache_get_value_name_float( row, 	"3dtextZ"	, IlegalGarage[ row ][ ig3dTextPos ][ 2 ]);
+		cache_get_value_name_float( row, 	"rotZ"		, IlegalGarage[ row ][ ig3dTextPos ][ 2 ]);
 		InitIlegalGarage(row);
 		Iter_Add(IllegalGarage, row);
 	}
@@ -354,7 +199,7 @@ stock GetVehiclesForIlegalGarages(garage)
 	if(vehkinds >= 6) 
 	{
 		new vehid, carid;
-		for( new i=0; i < 6; i++ ) 
+		for( new i = 0; i < 6; i++ ) 
 		{
 			CARID_GET:
 			
@@ -442,21 +287,41 @@ stock UpdateIlegalGarages(garage)
 }
 
 stock static InitIlegalGarage(garage)
-{
-	IlegalGarage[ garage ][ igBoard ] = CreateDynamicObject(3077,2534.141,-2412.661,12.619,0.000,0.000,1.799,-1,-1,-1,300.000,300.000);
-	IlegalGarage[ garage ][ igText ][ 0 ] = CreateDynamicObject(18659,2534.196,-2412.609,15.439,0.000,0.000,-87.900,-1,-1,-1,300.000,300.000);
-	SetDynamicObjectMaterialText(IlegalGarage[ garage ][ igText ][ 0 ], 0, "Wanted List", 140, "courier", 42, 1, -1, 0, 1);
-	IlegalGarage[ garage ][ igText ][ 0 ] = CreateDynamicObject(18659,2535.047,-2412.577,14.969,0.000,0.000,-87.900,-1,-1,-1,300.000,300.000);
-	SetDynamicObjectMaterialText(IlegalGarage[ garage ][ igText ][ 0 ], 0, "1", 140, "courier", 38, 1, -1, 0, 1);
-	IlegalGarage[ garage ][ igText ][ 1 ] = CreateDynamicObject(18659,2535.047,-2412.577,14.519,0.000,0.000,-87.900,-1,-1,-1,300.000,300.000);
+{ 	
+	new
+		Float: bX = IlegalGarage[ garage ][ ig3dTextPos ][ 0 ],
+		Float: bY = IlegalGarage[ garage ][ ig3dTextPos ][ 1 ] - 1.0,
+		Float: bZ = IlegalGarage[ garage ][ ig3dTextPos ][ 2 ] - 1.0,
+		Float: brZ = IlegalGarage[ garage ][ ig3dTextPos ][ 3 ];
+
+	IlegalGarage[ garage ][ igBoard ] = CreateDynamicObject(3077, bX, bY, bZ, 0.000, 0.000, brZ, -1,- 1, -1,300.000, 300.000);
+
+	// Total: 6 board texts in 3 rows on jacker board
+	new 
+		Float: ltX = IlegalGarage[ garage ][ ig3dTextPos ][ 0 ] - 0.8, // Left aligned board text
+		Float: rtX = IlegalGarage[ garage ][ ig3dTextPos ][ 0 ] + 0.8, // Right aligned board text
+		Float: hZ = IlegalGarage[ garage ][ ig3dTextPos ][ 2 ] + 2.0, // Header board text - "Wanted List"
+		Float: Z1 = IlegalGarage[ garage ][ ig3dTextPos ][ 2 ] + 1.5, // First row of board text
+		Float: Z2 = IlegalGarage[ garage ][ ig3dTextPos ][ 2 ] + 1.0, // Second row of board text
+		Float: Z3 = IlegalGarage[ garage ][ ig3dTextPos ][ 2 ] + 0.5, // Third row of board text
+		Float: rotZ = IlegalGarage[ garage ][ ig3dTextPos ][ 3 ] - 90.0; 
+
+
+	IlegalGarage[ garage ][ igHeader ] = CreateDynamicObject(18659, bX, bY, hZ, 0.000, 0.000, brZ,-1,-1,-1,300.000,300.000);
+	SetDynamicObjectMaterialText(IlegalGarage[ garage ][ igHeader ], 0, "Wanted List", 140, "courier", 42, 1, -1, 0, 1);
+	
+	IlegalGarage[ garage ][ igText ][ 0 ] = CreateDynamicObject(18659, ltX, bY, Z1, 0.000, 0.000, rotZ,-1,-1,-1,300.000,300.000);
+	SetDynamicObjectMaterialText(IlegalGarage[ garage ][ igText ][ 0 ], 0, "1", 140, "courier", 38, 1, -1, 0, 1);	
+	IlegalGarage[ garage ][ igText ][ 1 ] = CreateDynamicObject(18659, ltX, bY, Z2, 0.000, 0.000, rotZ,-1,-1,-1,300.000,300.000);
 	SetDynamicObjectMaterialText(IlegalGarage[ garage ][ igText ][ 1 ], 0, "2", 140, "courier", 38, 1, -1, 0, 1);
-	IlegalGarage[ garage ][ igText ][ 2 ] = CreateDynamicObject(18659,2535.047,-2412.577,14.019,0.000,0.000,-87.900,-1,-1,-1,300.000,300.000);
+	IlegalGarage[ garage ][ igText ][ 2 ] = CreateDynamicObject(18659, ltX, bY, Z3, 0.000, 0.000, rotZ,-1,-1,-1,300.000,300.000);
 	SetDynamicObjectMaterialText(IlegalGarage[ garage ][ igText ][ 2 ], 0, "3", 140, "courier", 38, 1, -1, 0, 1);
-	IlegalGarage[ garage ][ igText ][ 3 ] = CreateDynamicObject(18659,2533.346,-2412.641,14.019,0.000,0.000,-87.900,-1,-1,-1,300.000,300.000);
+	
+	IlegalGarage[ garage ][ igText ][ 3 ] = CreateDynamicObject(18659, rtX, bY, Z1, 0.000, 0.000, rotZ, -1, -1, -1,300.000, 300.000);
 	SetDynamicObjectMaterialText(IlegalGarage[ garage ][ igText ][ 3 ], 0, "6", 140, "courier", 38, 1, -1, 0, 1);
-	IlegalGarage[ garage ][ igText ][ 4 ] = CreateDynamicObject(18659,2533.346,-2412.641,14.509,0.000,0.000,-87.900,-1,-1,-1,300.000,300.000);
+	IlegalGarage[ garage ][ igText ][ 4 ] = CreateDynamicObject(18659, rtX, bY, Z2, 0.000, 0.000, rotZ, -1, -1,-1, 300.000, 300.000);
 	SetDynamicObjectMaterialText(IlegalGarage[ garage ][ igText ][ 4 ], 0, "5", 140, "courier", 38, 1, -1, 0, 1);
-	IlegalGarage[ garage ][ igText ][ 5 ] = CreateDynamicObject(18659,2533.346,-2412.641,14.959,0.000,0.000,-87.900,-1,-1,-1,300.000,300.000);
+	IlegalGarage[ garage ][ igText ][ 5 ] = CreateDynamicObject(18659, rtX, bY, Z3, 0.000, 0.000, rotZ, -1, -1, -1, 300.000, 300.000);
 	SetDynamicObjectMaterialText(IlegalGarage[ garage ][ igText ][ 5 ], 0, "4", 140, "courier", 38, 1, -1, 0, 1);
 	UpdateIlegalGarages(garage);
 	
@@ -554,6 +419,10 @@ timer DestroyingCar[1000](playerid, vehicleid)
 			value = ( ( LandVehicles[ PlayerJackingCar[ playerid ] ][ viCarJackerPrice ] + skillmoney )  - ( decrease * 15 ) );
 		
 		IlegalGarage[ garage ][ igCarsJacked ]++;
+		mysql_fquery(g_SQL, "UPDATE ilegal_garages SET jackedcars = '%d' WHERE id = '%d'", 
+			IlegalGarage[ garage ][ igCarsJacked ], 
+			IlegalGarage[ garage ][ igSQLID ]
+		);
 		
 		// Damage
 		VehicleInfo[ vehicleid ][ vPanels ]		= encode_panels(1, 1, 1, 1, 3, 3, 3); 
@@ -566,7 +435,7 @@ timer DestroyingCar[1000](playerid, vehicleid)
 	
 		// Finish
 		JackerMoney[ playerid ] = value; // priprema novca koji pise sa leave
-		//SendPoliceAlertMessage(vehicleid, garage);
+		SendPoliceAlertMessage(vehicleid, garage);
 		DestroyedCar[playerid] = GetVehicleModel(vehicleid);
 		Bit1_Set(r_CarDestroyed, playerid, true);
 		DestroyJackerTextDraw(playerid);
@@ -577,51 +446,60 @@ timer DestroyingCar[1000](playerid, vehicleid)
 	return 1;
 }
 
-stock static GetJackerIlegalGarage(playerid)
+static GetJackerIlegalGarage(playerid)
 {
 	new
 		index = -1;
-	if( IsPlayerInRangeOfPoint(playerid, 10.0, 2534.1411, -2412.6609, 12.6190) ) index = 0;
+	foreach(new garage: IllegalGarage)
+	{
+		if(IsPlayerInRangeOfPoint(playerid, 
+			20.0, 
+			IlegalGarage[garage][ig3dTextPos][0], 
+			IlegalGarage[garage][ig3dTextPos][1], 
+			IlegalGarage[garage][ig3dTextPos][2])) 
+		{
+			index = garage;
+			break;
+		}
+	}
 	return index;
 }
-/*
-stock static SendPoliceAlertMessage(vehicleid, garage)
+
+static SendPoliceAlertMessage(vehicleid, garage)
 {
-	if( IlegalGarage[ garage ][ igWantedLevel ] < 2 ) {
-		switch( random(random(20)) ) {
-			case 1, 3, 8, 10, 12, 17: {
-				foreach(new playerid : Player) {
-					if( IsACop(playerid) ) {
-						new vehicleName[MAX_VEHICLE_NAME];
-						GetVehicleNameById(vehicleid, vehicleName, MAX_VEHICLE_NAME);
-
-						SendClientMessage( playerid, COLOR_LIGHTBLUE, "*________________________ [ CAR STEAL] ________________________*");
-						va_SendClientMessage(playerid, -1, "\tModel vozila: %s", vehicleName);
-						va_SendClientMessage(playerid, -1, "\tBoja vozila: %d %d", VehicleColor1[vehicleid], VehicleColor2[vehicleid]);
-						va_SendClientMessage(playerid, -1, "\tLokacija vozila: %s", GetVehicleZone( vehicleid ));
-						SendClientMessage( playerid, COLOR_LIGHTBLUE, "*____________________________________________________________________*");
-					}
-				}
-			}
+	if( IlegalGarage[ garage ][ igWantedLevel ] < 2 ) 
+	{
+		switch( random(5) )  
+		{
+			case 0,2,4: return 1;
+			case 1,3: goto end_mark; // 20% chance of Police Alert
 		}
-	} else {
-		foreach(new playerid : Player) {
-			if( IsACop(playerid) ) 
-			{
-				new vehicleName[MAX_VEHICLE_NAME];
-				GetVehicleNameById(vehicleid, vehicleName, MAX_VEHICLE_NAME);
-
-				SendClientMessage( playerid, COLOR_LIGHTBLUE, "*________________________ [ CAR STEAL ] ________________________*");
-				va_SendClientMessage(playerid, -1, "\tModel vozila: %s", vehicleName);
-				va_SendClientMessage(playerid, -1, "\tBoja vozila: %d %d", VehicleColor1[vehicleid], VehicleColor2[vehicleid]);
-				va_SendClientMessage(playerid, -1, "\tLokacija vozila: %s", GetVehicleZone( vehicleid ));
-				SendClientMessage( playerid, COLOR_LIGHTBLUE, "*____________________________________________________________________*");
-			}
-		}
+	} 
+	else goto end_mark;
+	end_mark:
+	foreach(new playerid : Player) 
+	{
+		if(!IsACop(playerid)) 
+			continue;
+			
+		SendClientMessage(playerid, 
+			COLOR_LIGHTBLUE, 
+			"*________________________ [ VEHICLE CHOPPING ] ________________________*"
+		);
+		va_SendClientMessage(playerid, -1, "\tModel: %s", ReturnVehicleName(VehicleInfo[vehicleid][vModel]));
+		va_SendClientMessage(playerid, -1, "\tVehicle color: %d %d", 
+			VehicleInfo[vehicleid][vColor1], 
+			VehicleInfo[vehicleid][vColor2]
+		);
+		va_SendClientMessage(playerid, -1, "\tLocation: %s", GetVehicleZone(vehicleid));
+		SendClientMessage(playerid, 
+			COLOR_LIGHTBLUE, 
+			"*____________________________________________________________________*"
+		);
 	}
 	return 1;
 }
-*/
+
 stock static DestroyJackerTextDraw(playerid)
 {
 	if( JackerTD[playerid] != PlayerText:INVALID_TEXT_DRAW ) 
@@ -727,7 +605,8 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 			UpdateIlegalGarages(JackerIlegalGarage[playerid]);
 			return 1;
 		}
-		case DIALOG_JACKER_BRIBE: {
+		case DIALOG_JACKER_BRIBE: 
+		{
 			if( !response ) return 1;
 			IlegalGarage[ PlayerKeys[playerid][pIllegalGarageKey] ][ igWantedLevel ]	= 0;
 			IlegalGarage[ PlayerKeys[playerid][pIllegalGarageKey] ][ igCarsJacked ]	= 0;
@@ -804,7 +683,7 @@ CMD:jacker(playerid, params[])
 		new
 			Float:health,
 			vehicleid = GetPlayerVehicleID(playerid);
-			//garage = JackerIlegalGarage[ playerid ];
+
 		GetVehicleHealth(vehicleid, health);
 		
 		if( PlayerJackingCar[ playerid ] == -1 ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Morate uzeti misiju!");
@@ -837,13 +716,7 @@ CMD:jacker(playerid, params[])
 			garage = JackerIlegalGarage[ playerid ],
 			vehicleName[MAX_VEHICLE_NAME];	
 
-		IllegalBudgetToPlayerMoney(playerid, JackerMoney[ playerid ]); // ilegalni budget se updatea i igrac dobiva novce
-		
-		IlegalGarage[ garage ][ igCarsJacked ]++;
-		mysql_fquery(g_SQL, "UPDATE ilegal_garages SET jackedcars = '%d' WHERE id = '%d'", 
-			IlegalGarage[ garage ][ igCarsJacked ], 
-			IlegalGarage[ garage ][ igSQLID ]
-		);
+		IllegalBudgetToPlayerMoney(playerid, JackerMoney[ playerid ]); // ilegalni budget se updatea i igrac dobiva novce		
 				
 		GetVehicleNameByModel(LandVehicles[ PlayerJackingCar[ playerid ] ][ viModelid ], vehicleName, MAX_VEHICLE_NAME);
 		SendFormatMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uspjesno ste zavrsili %s jacker misiju i zaradili %i$.", vehicleName, JackerMoney[ playerid ]);
@@ -866,12 +739,14 @@ CMD:igarage(playerid, params[])
 {
 	new
 		param[ 8 ];
-	if( sscanf( params, "s[8] ", param ) ) {
+	if( sscanf( params, "s[8] ", param ) )
+	{
 		SendClientMessage(playerid, COLOR_RED, "[ ? ]: /igarage [options]");
 		SendClientMessage(playerid, COLOR_RED, "[ ! ] buy - info - bribe");
 		return 1;
 	}
-	if( !strcmp(param, "buy", true) ) {
+	if( !strcmp(param, "buy", true) ) 
+	{
 		if( PlayerKeys[playerid][pIllegalGarageKey] != -1 ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Vec imate ilegalnu garazu!");
 		if( AC_GetPlayerMoney(playerid) < 60000 ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate dovoljno novca za kupovinu ilegalne garaze (60.000$)!");
 		new
@@ -883,14 +758,16 @@ CMD:igarage(playerid, params[])
 		CheckForGarageWantedLevel(garage, true);
 		PlayerToIllegalBudgetMoney(playerid, 60000); // Novac dolazi u ilegalni proracun
 	}
-	else if( !strcmp(param, "info", true) ) {
+	else if( !strcmp(param, "info", true) ) 
+	{
 		if( PlayerKeys[playerid][pIllegalGarageKey] == -1 ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne posjedujete ilegalnu garazu!");
 		new
 			garage = GetJackerIlegalGarage(playerid);
 		if( garage == -1 || IlegalGarage[ garage ][ igOwner ] != PlayerInfo[ playerid ][ pSQLID ] ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste blizu svoje car jacker garaze/Nemate garazu!");
 		va_ShowPlayerDialog(playerid, 0, DIALOG_STYLE_TABLIST, "Ilegal Garage - Info", "Ime:\t%s\nWanted level:\t%d\nAuta ukradeno:\t%d", "OK", "", IlegalGarage[ garage ][ igName ], IlegalGarage[ garage ][ igWantedLevel ], IlegalGarage[ garage ][ igCarsJacked ]);
 	}
-	else if( !strcmp(param, "bribe", true) ) {
+	else if( !strcmp(param, "bribe", true) ) 
+	{
 		if( PlayerKeys[playerid][pIllegalGarageKey] == -1 ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne posjedujete ilegalnu garazu!");
 		new
 			garage = GetJackerIlegalGarage(playerid);
@@ -900,8 +777,9 @@ CMD:igarage(playerid, params[])
 			money = ( IlegalGarage[ garage ][ igWantedLevel ] * ( random(random(250)) + 1 ) ) + ( IlegalGarage[ garage ][ igCarsJacked ] * 1000 );
 		PlayerBribeMoney[ playerid ] = money;
 		va_ShowPlayerDialog(playerid, DIALOG_JACKER_BRIBE, DIALOG_STYLE_MSGBOX, "Ilegal Garage - Bribe", "Zelite li podmititi policiju da vam spuste wanted level na 0?\nOna ce kostati %d$!", "Bribe", "Abort", money);
-	}
-	/*else if( !strcmp(param, "money", true) ) {
+	}/*
+	else if( !strcmp(param, "money", true) ) 
+	{
 		new
 			garage = GetJackerIlegalGarage(playerid),
 			pick[ 4 ],
@@ -909,7 +787,8 @@ CMD:igarage(playerid, params[])
 		
 		if( garage == -1 || IlegalGarage[ garage ][ igOwner ] != PlayerInfo[ playerid ][ pSQLID ] ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste blizu svoje car jacker garaze ili nemate garazu!");
 		if( sscanf( params, "s[8]s[8]i", param, pick, money ) ) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /igarage money [take/put][kolicina]");
-		if( !strcmp(pick, "take", true) ) {
+		if( !strcmp(pick, "take", true) ) 
+		{
 			if( money >  IlegalGarage[ garage ][ igMoney ] || money < 1 ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate toliko novaca u garazi!");
 			
 			IlegalGarage[ garage ][ igMoney ] -= money;

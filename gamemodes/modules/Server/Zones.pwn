@@ -1,7 +1,7 @@
 #include <YSI_Coding\y_hooks>
 
 static
-	PlayerText:ZoneInfoTextDraw[MAX_PLAYERS] = { PlayerText:INVALID_TEXT_DRAW, ...};
+	PlayerText:ZoneInfoTextDraw[MAX_PLAYERS] = { PlayerText:INVALID_TEXT_DRAW, ... };
 
 ptask MapZoneCheck[1000](playerid)
 {
