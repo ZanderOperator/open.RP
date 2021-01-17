@@ -3,7 +3,7 @@
 #define MAX_SUBJECTS_IN_RANGE			(15)
 
 // Main Player/Commands/Action/Internal Security Logger
-stock Log_Write(const path[], const str[], {Float,_}:...)
+Log_Write(const path[], const str[], {Float,_}:...)
 {
 		
 	static
@@ -78,37 +78,13 @@ FormatNumber(number, prefix[] = "$")
 	return value;
 }
 
-stock abs(int)
-{
-    if (int < 0)
-        return -int;
-    else
-        return int;
-}
-
-stock strreplace(sstring[], find, replace)
+strreplace(sstring[], find, replace)
 {
     for(new i=0; sstring[i] != EOS; i++) 
 	{
         if(sstring[i] == find)
            sstring[i] = replace;
     }
-}
-
-stock StringReverse(const string[], dest[], len = sizeof (dest))
-{
-	new
-		i = strlen(string),
-		j = 0;
-	if (i >= len)
-	{
-		i = len - 1;
-	}
-	while (i--)
-	{
-		dest[j++] = string[i];
-	}
-	dest[j] = '\0';
 }
 
 strcount(const string[], const sub[], bool:ignorecase = false, bool:count_overlapped = false) 
@@ -126,23 +102,14 @@ strcount(const string[], const sub[], bool:ignorecase = false, bool:count_overla
 	return count;
 }
 
-/*
-	##     ## ######## #### ##        ######  
-	##     ##    ##     ##  ##       ##    ## 
-	##     ##    ##     ##  ##       ##       
-	##     ##    ##     ##  ##        ######  
-	##     ##    ##     ##  ##             ## 
-	##     ##    ##     ##  ##       ##    ## 
-	 #######     ##    #### ########  ######  
-*/
 
-stock gettimestamp()
+gettimestamp()
 {
 	new timestamp = gettime() + GMT_ZONE_DIFFERENCE;
 	return timestamp;
 }
 
-stock GetServerTime(&hours=0, &minutes=0, &seconds=0)
+GetServerTime(&hours=0, &minutes=0, &seconds=0)
 {
 	gettime(hours,minutes,seconds);
 	hours += (GMT_ZONE_DIFFERENCE/3600);
@@ -150,9 +117,9 @@ stock GetServerTime(&hours=0, &minutes=0, &seconds=0)
 	if(minutes <= 0) minutes = 0;
 }
 
-stock ReturnDate()
+ReturnDate()
 {
-	static
+	new
 	    date[36];
 
 	getdate(date[2], date[1], date[0]);
@@ -162,10 +129,11 @@ stock ReturnDate()
 	return date;
 }
 
-stock ReturnTime()
+ReturnTime()
 {
-	new time[12];
-	new tmphour, tmpmins, tmpsecs;
+	new 
+		time[12],
+		tmphour, tmpmins, tmpsecs;
 	GetServerTime(tmphour, tmpmins, tmpsecs);
 	format(time, 12, "%s%d:%s%d:%s%d",
 		(tmphour >= 10) ? ("") : ("0"),
@@ -178,30 +146,6 @@ stock ReturnTime()
 	return time;
 }
 
-stock wait(ms)
-{
-    ms += GetTickCount();
-    while(GetTickCount() < ms) {}
-}
-
-stock BubbleSort(a[], size)
-{
-	new tmp=0, bool:swapped;
-
-	do
-	{
-		swapped = false;
-		for(new i=1; i < size; i++) {
-			if(a[i-1] > a[i]) {
-				tmp = a[i];
-				a[i] = a[i-1];
-				a[i-1] = tmp;
-				swapped = true;
-			}
-		}
-	} while(swapped);
-}
-
 CreateGangZoneAroundPoint(Float:X, Float:Y, Float:width, Float:height)
 {
 	new
@@ -211,66 +155,6 @@ CreateGangZoneAroundPoint(Float:X, Float:Y, Float:width, Float:height)
 		Float:maxY = ( Y + height / 2 );
 
 	return GangZoneCreate(minX, minY, maxX, maxY);
-}
-
-/*
-stock SetObjectFaceCoords3D(iObject, Float: fX, Float: fY, Float: fZ, Float: fRollOffset = 0.0, Float: fPitchOffset = 0.0, Float: fYawOffset = 0.0) 
-{
-	new
-		Float: fOX,
-		Float: fOY,
-		Float: fOZ,
-		Float: fPitch
-	;
-	GetDynamicObjectPos(iObject, fOX, fOY, fOZ);
-	
-	fPitch = floatsqroot(floatpower(fX - fOX, 2.0) + floatpower(fY - fOY, 2.0));
-	fPitch = floatabs(atan2(fPitch, fZ - fOZ));
-	
-	fZ = atan2(fY - fOY, fX - fOX) - 90.0; // Yaw
-	
-	SetDynamicObjectRot(iObject, fRollOffset, fPitch + fPitchOffset, fZ + fYawOffset);
-}
-*/
-
-stock GetXYInFrontOfPoints(&Float:x, &Float:y, Float:angle, Float:distance)
-{	
-	x += (distance * floatsin(-angle, degrees));
-	y += (distance * floatcos(-angle, degrees));
-}
-
-stock GetXYInFrontOfPlayer(playerid, &Float:x, &Float:y, Float:distance)
-{
-	new Float:a;
-	GetPlayerPos(playerid, x, y, a);
-	GetPlayerFacingAngle(playerid, a);
-	if (GetPlayerVehicleID(playerid))
-	{
-	    GetVehicleZAngle(GetPlayerVehicleID(playerid), a);
-	}
-	x += (distance * floatsin(-a, degrees));
-	y += (distance * floatcos(-a, degrees));
-}
-
-stock GetXYBehindVehicle(vehicleid, &Float:x2, &Float:y2, Float:distance)
-{
-    new Float:a;
-    GetVehiclePos(vehicleid, x2, y2, a);
-    GetVehicleZAngle(vehicleid, a);
-    x2 += (distance * floatsin(-a+180, degrees));
-    y2 += (distance * floatcos(-a+180, degrees));
-}
-
-stock GetPosBehindVehicle(vehicleid, &Float:x, &Float:y, &Float:z, Float:offset=0.5)
-{
-    new Float:vehicleSize[3], Float:vehiclePos[3];
-    GetVehiclePos(vehicleid, vehiclePos[0], vehiclePos[1], vehiclePos[2]);
-    GetVehicleModelInfo(GetVehicleModel(vehicleid), VEHICLE_MODEL_INFO_SIZE, vehicleSize[0], vehicleSize[1], vehicleSize[2]);
-    GetXYBehindVehicle(vehicleid, vehiclePos[0], vehiclePos[1], (vehicleSize[1]/2)+offset);
-    x = vehiclePos[0];
-    y = vehiclePos[1];
-    z = vehiclePos[2];
-    return 1;
 }
 
 stock SendErrorMessage(playerid, smsgstring[])
@@ -520,129 +404,7 @@ stock IsValidNick(name[])
 	return 1; // All check are ok, Name is valid...
 }
 
-ProxDetector(Float:radi, playerid, string[], col1, col2, col3, col4, col5, bool:isDualChat = false)
-{
-
-	new Float:posx,
-		Float:posy,
-		Float:posz,
-		Float:oldposx,
-		Float:oldposy,
-		Float:oldposz,
-		Float:tempposx,
-		Float:tempposy,
-		Float:tempposz;
-
-	GetPlayerPos(playerid, oldposx, oldposy, oldposz);
-
-	foreach (new i : Player)
-	{
-		if(isDualChat == true && i == playerid)
-			continue;
-
-		
-		if(GetPlayerVirtualWorld(playerid) == GetPlayerVirtualWorld(i)) {
-			GetPlayerPos(i, posx, posy, posz);
-			tempposx = (oldposx -posx);
-			tempposy = (oldposy -posy);
-			tempposz = (oldposz -posz);
-
-			if (((tempposx < radi/16) && (tempposx > -radi/16)) && ((tempposy < radi/16) && (tempposy > -radi/16)) && ((tempposz < radi/16) && (tempposz > -radi/16)))
-			{
-				SendClientMessage(i, col1, string);
-			}
-			else if (((tempposx < radi/8) && (tempposx > -radi/8)) && ((tempposy < radi/8) && (tempposy > -radi/8)) && ((tempposz < radi/8) && (tempposz > -radi/8)))
-			{
-				SendClientMessage(i, col2, string);
-			}
-			else if (((tempposx < radi/4) && (tempposx > -radi/4)) && ((tempposy < radi/4) && (tempposy > -radi/4)) && ((tempposz < radi/4) && (tempposz > -radi/4)))
-			{
-				SendClientMessage(i, col3, string);
-			}
-			else if (((tempposx < radi/2) && (tempposx > -radi/2)) && ((tempposy < radi/2) && (tempposy > -radi/2)) && ((tempposz < radi/2) && (tempposz > -radi/2)))
-			{
-				SendClientMessage(i, col4, string);
-			}
-			else if (((tempposx < radi) && (tempposx > -radi)) && ((tempposy < radi) && (tempposy > -radi)) && ((tempposz < radi) && (tempposz > -radi)))
-			{
-				SendClientMessage(i, col5, string);
-			}
-		}
-	}
-	return 1;
-}
-
-RealProxDetector(Float:radi, playerid, string[],col1,col2,col3,col4,col5)
-{
-	if(IsPlayerConnected(playerid))
-	{
-		new Float:posx,
-		    Float:posy,
-			Float:posz,
-		    Float:oldposx,
-		    Float:oldposy,
-			Float:oldposz,
-		    Float:tempposx,
-			Float:tempposy,
-			Float:tempposz,
-			vehicleid = GetPlayerVehicleID(playerid),
-			modelid = GetVehicleModel(vehicleid),
-			vehicleid2,
-			modelid2;
-
-		GetPlayerPos(playerid, oldposx, oldposy, oldposz);
-
-		foreach (new i : Player)
-		{
-			if(GetPlayerVirtualWorld(playerid) == GetPlayerVirtualWorld(i))
-			{
-				GetPlayerPos(i, posx, posy, posz);
-				tempposx = (oldposx -posx);
-				tempposy = (oldposy -posy);
-				tempposz = (oldposz -posz);
-
-				if(IsPlayerInAnyVehicle(playerid) && !IsACabrio(modelid) && !Bit1_Get( gr_VehicleWindows, vehicleid ))
-				{
-					if(IsPlayerInVehicle(i, vehicleid))
-					{
-						SendClientMessage(i,col1,string); //skoci
-					}
-				}
-				else
-				{
-					vehicleid2 = GetPlayerVehicleID(i);
-					modelid2 = GetVehicleModel(vehicleid2);
-
-					if(!IsPlayerInAnyVehicle(i) || IsACabrio(modelid2) || Bit1_Get( gr_VehicleWindows, vehicleid2 )) {
-						if (((tempposx < radi/16) && (tempposx > -radi/16)) && ((tempposy < radi/16) && (tempposy > -radi/16)) && ((tempposz < radi/16) && (tempposz > -radi/16)))
-						{
-							SendClientMessage(i, col1, string);
-						}
-						else if (((tempposx < radi/8) && (tempposx > -radi/8)) && ((tempposy < radi/8) && (tempposy > -radi/8)) && ((tempposz < radi/8) && (tempposz > -radi/8)))
-						{
-							SendClientMessage(i, col2, string);
-						}
-						else if (((tempposx < radi/4) && (tempposx > -radi/4)) && ((tempposy < radi/4) && (tempposy > -radi/4)) && ((tempposz < radi/4) && (tempposz > -radi/4)))
-						{
-							SendClientMessage(i, col3, string);
-						}
-						else if (((tempposx < radi/2) && (tempposx > -radi/2)) && ((tempposy < radi/2) && (tempposy > -radi/2)) && ((tempposz < radi/2) && (tempposz > -radi/2)))
-						{
-							SendClientMessage(i, col4, string);
-						}
-						else if (((tempposx < radi) && (tempposx > -radi)) && ((tempposy < radi) && (tempposy > -radi)) && ((tempposz < radi) && (tempposz > -radi)))
-						{
-							SendClientMessage(i, col5, string);
-						}
-					}
-				}
-			}
-		}
-	}
-	return 1;
-}
-
-minrand(min, max) //By Alex "Y_Less" Cole
+minrand(min, max) 
 {
     return random(max - min) + min;
 }
@@ -692,93 +454,7 @@ UnixTimestampToTime(timestamp, compare = -1)
     return returnstr;
 }
 
-PlayerPlayTrackSound(playerid)
-{
-	defer StopPlayerTrackSound(playerid);
-	PlayerPlaySound(playerid, 1068, 0.0, 0.0, 0.0);
-}
-
-stock CarProxDetector(vehicleid, playerid, const string[], color)
-{
-	foreach(new i : Player) {
-		if( IsPlayerInVehicle( i, vehicleid ) && i != playerid )
-			SendClientMessage( playerid, color, string );
-	}
-	return 1;
-}
-
-stock HouseProxDetector(houseid, Float:radius, const string[], color)
-{
-	foreach(new i : Player) 
-	{
-		if( IsPlayerInRangeOfPoint(i, radius, HouseInfo[ houseid ][ hEnterX ], HouseInfo[ houseid ][ hEnterY ], HouseInfo[ houseid ][ hEnterZ ] ) )
-			SendClientMessage(i, color, string);
-	}
-	return 1;
-}
-
-stock SendJobMessage(job, color, string[])
-{
-	foreach (new i : Player) 
-	{
-		if(PlayerJob[i][pJob] == job)
-			SendClientMessage(i, color, string);
-	}
-}
-
-stock ProxDetectorS(Float:radi, playerid, targetid)
-{
-    if(IsPlayerConnected(playerid) && IsPlayerConnected(targetid))
-	{
-		if( ( GetPlayerVehicleID(playerid) == GetPlayerVehicleID(targetid) ) && GetPlayerVehicleID(playerid) != 0 ) 
-			return 1;
-			
-	    if(GetPlayerVirtualWorld(playerid) == GetPlayerVirtualWorld(targetid))
-		{
-			new Float:posx,
-			    Float:posy,
-				Float:posz,
-			    Float:oldposx,
-				Float:oldposy,
-				Float:oldposz,
-			    Float:tempposx,
-				Float:tempposy,
-				Float:tempposz;
-
-			GetPlayerPos(playerid, oldposx, oldposy, oldposz);
-
-			GetPlayerPos(targetid, posx, posy, posz);
-			tempposx = (oldposx -posx);
-			tempposy = (oldposy -posy);
-			tempposz = (oldposz -posz);
-
-			if (((tempposx < radi) && (tempposx > -radi)) && ((tempposy < radi) && (tempposy > -radi)) && ((tempposz < radi) && (tempposz > -radi)))
-				return 1;
-		}
-	}
-	return 0;
-}
-
-stock GetPlayerSpeed(playerid, bool:kmh)
-{
-    new Float:Vx,Float:Vy,Float:Vz,Float:rtn;
-    if(IsPlayerInAnyVehicle(playerid)) GetVehicleVelocity(GetPlayerVehicleID(playerid),Vx,Vy,Vz); else GetPlayerVelocity(playerid,Vx,Vy,Vz);
-    rtn = floatsqroot(floatabs(floatpower(Vx + Vy + Vz,2)));
-    return kmh?floatround(rtn * 100 * 1.61):floatround(rtn * 100);
-}
-
-stock PlaySoundForPlayersInRange(soundid, Float:range, Float:x, Float:y, Float:z)
-{
-	foreach(new i: Player)
-	{
-	    if(IsPlayerConnected(i) && IsPlayerInRangeOfPoint(i,range,x,y,z))
-	    {
-		    PlayerPlaySound(i, soundid, x, y, z);
-	    }
-	}
-}
-
-stock CheckStringForIP(text[])
+CheckStringForIP(text[])
 {
 	new
 			string[16], position, ipnum[4];
@@ -806,48 +482,8 @@ stock CheckStringForIP(text[])
 	return false;
 }
 
-ConvertNameToSQLID(const playername[])
-{
-	new 
-		sqlid = -1,
-		Cache:result = mysql_query(g_SQL, 
-							va_fquery(g_SQL, 
-								"SELECT sqlid FROM accounts WHERE name = '%e'", 
-								playername
-							)),
-		rows;
 
-	cache_get_row_count(rows);
-	if(!rows)
-		return -1;
-
-	cache_get_value_name_int(0, "sqlid", sqlid);
-	cache_delete(result);
-	return sqlid;
-}
-
-
-stock ConvertSQLIDToName(id)
-{
-	new 
-		nick[MAX_PLAYER_NAME];
-		
-	new 
-		Cache:result = 	mysql_query(g_SQL, 
-							va_fquery(g_SQL, "SELECT name FROM acounts WHERE sqlid = '%d'", id)
-						);
-	
-	if(cache_num_rows() == 0)
-		strcpy(nick, "None", MAX_PLAYER_NAME);
-	else
-	{
-		cache_get_value_name(0, "name", nick, MAX_PLAYER_NAME);
-		cache_delete(result);
-	}
-	return nick;
-}
-
-stock CheckStringForURL(text[])
+CheckStringForURL(text[])
 {
 	new
 		URL_Advert[21][] =
@@ -882,86 +518,13 @@ stock CheckStringForURL(text[])
 	return false;
 }
 
-stock AntiDeAMX()
-{
-    new a[][] =
-    {
-        "Unarmed (Fist)",
-        "Brass K"
-    };
-    #pragma unused a
-}
-
-stock decode_lights(lights, &light1, &light2, &light3, &light4)
-{
-    light1 = lights & 1;
-    light2 = lights >> 1 & 1;
-    light3 = lights >> 2 & 1;
-    light4 = lights >> 3 & 1;
-}
- 
-decode_panels(panels, &front_left_panel, &front_right_panel, &rear_left_panel, &rear_right_panel, &windshield, &front_bumper, &rear_bumper)
-{
-    front_left_panel = panels & 15;
-    front_right_panel = panels >> 4 & 15;
-    rear_left_panel = panels >> 8 & 15;
-    rear_right_panel = panels >> 12 & 15;
-    windshield = panels >> 16 & 15;
-    front_bumper = panels >> 20 & 15;
-    rear_bumper = panels >> 24 & 15;
-}
- 
-stock decode_doors(doors, &bonnet, &boot, &driver_door, &passenger_door)
-{
-    bonnet = doors & 7;
-    boot = doors >> 8 & 7;
-    driver_door = doors >> 16 & 7;
-    passenger_door = doors >> 24 & 7;
-}
- 
-stock decode_tires(tires, &tire1, &tire2, &tire3, &tire4)
-{
-    tire1 = tires & 1;
-    tire2 = tires >> 1 & 1;
-    tire3 = tires >> 2 & 1;
-    tire4 = tires >> 3 & 1;
-}
-
-
-/*
-	####  ######        ###       ######## ##     ## ##    ##  ######   ######  
-	 ##  ##    ##      ## ##      ##       ##     ## ###   ## ##    ## ##    ## 
-	 ##  ##           ##   ##     ##       ##     ## ####  ## ##       ##       
-	 ##   ######     ##     ##    ######   ##     ## ## ## ## ##        ######  
-	 ##        ##    #########    ##       ##     ## ##  #### ##             ## 
-	 ##  ##    ##    ##     ##    ##       ##     ## ##   ### ##    ## ##    ## 
-	####  ######     ##     ##    ##        #######  ##    ##  ######   ######  
-*/
-
-stock IsACabrio(model)
-{
-	switch(model) {
-		case 424, 429, 430, 439, 446, 448, 452, 453, 454, 457, 461, 462, 463, 468, 471, 472, 473, 476, 480, 481, 484, 485, 486, 493, 500, 506, 509, 510, 512, 513, 521, 522, 523, 530, 531, 533, 536, 539, 555, 567, 568, 571, 572, 575, 581, 586:
-			return 1;
-		default:
-			return 0;
-	}
-	return 0;
-}
-
-stock IsAAirCraft(modelid)
-{
-	switch(modelid) {
-		case 417, 425, 447, 460, 469, 476, 487, 488, 497, 511, 512, 513, 519, 520, 548, 553, 563, 577, 592, 593: return 1;
-	}
-	return 0;
-}
-
-stock IsSafeForTextDraw(str[])
+IsSafeForTextDraw(str[])
 {
 	new safetil = -5;
-	for (new i = 0; i < strlen(str); i++) {
-		if ((str[i] == 126) && (i > safetil)) {
+	for (new i = 0; i < strlen(str); i++) 
+	{
+		if ((str[i] == 126) && (i > safetil))
+		{
 			if (i >= strlen(str) - 1) // not enough room for the tag to end at all. 
 				return false;
 			if (str[i + 1] == 126)
@@ -972,51 +535,6 @@ stock IsSafeForTextDraw(str[])
 		}
 	}
 	return true;
-}
-
-/*
-######## #### ##     ## ######## ########   ######  
-   ##     ##  ###   ### ##       ##     ## ##    ## 
-   ##     ##  #### #### ##       ##     ## ##       
-   ##     ##  ## ### ## ######   ########   ######  
-   ##     ##  ##     ## ##       ##   ##         ## 
-   ##     ##  ##     ## ##       ##    ##  ##    ## 
-   ##    #### ##     ## ######## ##     ##  ######  
-*/
-
-timer StopPlayerTrackSound[5000](playerid)
-{
-	PlayerPlaySound(playerid, 1069, 0.0, 0.0, 0.0);
-}
-
-timer InstantStreamerUpdate[4000](playerid)
-{
-	Streamer_ToggleIdleUpdate(playerid, 0);
-	TogglePlayerControllable(playerid, 1);
-}
-
-forward UnfreezePlayer(playerid);
-public UnfreezePlayer(playerid)
-{
-	TogglePlayerControllable(playerid, true);
-}
-
-stock SetPlayerLookAt(playerid, Float:X, Float:Y)
-{
-    new
-        Float:Px,
-        Float:Py,
-        Float:Pa;
-
-    GetPlayerPos(playerid, Px, Py, Pa);
-
-    Pa = floatabs(atan((Y-Py)/(X-Px)));
-    if(X <= Px && Y >= Py) Pa = floatsub(180, Pa);
-    else if(X < Px && Y < Py) Pa = floatadd(Pa, 180);
-    else if(X >= Px && Y <= Py) Pa = floatsub(360.0, Pa);
-    Pa = floatsub(Pa, 90.0);
-    if(Pa >= 360.0) Pa = floatsub(Pa, 360.0);
-    SetPlayerFacingAngle(playerid, Pa);
 }
 
 stock GetXYInFrontOfObject(objectid, &Float:x, &Float:y, Float:distance, bool:rotation = false)
@@ -1051,15 +569,6 @@ stock GetXYInFrontOfObject(objectid, &Float:x, &Float:y, Float:distance, bool:ro
 
 stock randomEx(min, max)
     return random(max - min) + min;
-
-ReturnName(playerid)
-{
-	new
-	    p_name[24];
-	    
-	GetPlayerName(playerid, p_name, 24);
-	return p_name;
-}
 
 enum E_CLOSEST_SUBJECTS
 {

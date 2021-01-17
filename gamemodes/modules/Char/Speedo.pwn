@@ -121,7 +121,7 @@ stock DestroySpeedoTextDraws(playerid)
 	return 1;
 }
 
-Float:GetVSpeed(playerid, pvid=0)
+Float:GetPlayerVehicleSpeed(playerid, pvid=0)
 {
 	if(!pvid)
 		pvid = GetPlayerVehicleID(playerid);
@@ -160,7 +160,7 @@ hook OnPlayerUpdate(playerid) // PHONE_HIDE = 0
             GetVehicleNameById(GetPlayerVehicleID(playerid), vehicleName, MAX_VEHICLE_NAME);
   			PlayerTextDrawSetString(playerid, VehicleName[playerid], vehicleName);
 
-			format(tmpstring, 12, "%.0f", GetVSpeed(playerid, pvid));
+			format(tmpstring, 12, "%.0f", GetPlayerVehicleSpeed(playerid, pvid));
 			PlayerTextDrawSetString(playerid, Speed[playerid], tmpstring);
 
 			format(tmpstring, 12, "%d%", VehicleInfo[pvid][vFuel]);

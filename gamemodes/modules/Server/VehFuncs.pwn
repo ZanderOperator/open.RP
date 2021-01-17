@@ -284,6 +284,17 @@ IsAHelio(model)
  	return 0;
 }
 
+IsACabrio(model)
+{
+	switch(model) {
+		case 424, 429, 430, 439, 446, 448, 452, 453, 454, 457, 461, 462, 463, 468, 471, 472, 473, 476, 480, 481, 484, 485, 486, 493, 500, 506, 509, 510, 512, 513, 521, 522, 523, 530, 531, 533, 536, 539, 555, 567, 568, 571, 572, 575, 581, 586:
+			return 1;
+		default:
+			return 0;
+	}
+	return 0;
+}
+
 IsHaveNoNumberPlate(model)
 {
     switch(model)
@@ -316,13 +327,51 @@ encode_tires(tires1, tires2, tires3, tires4)
 	return tires1 | (tires2 << 1) | (tires3 << 2) | (tires4 << 3);
 }
 
+
+decode_lights(lights, &light1, &light2, &light3, &light4)
+{
+    light1 = lights & 1;
+    light2 = lights >> 1 & 1;
+    light3 = lights >> 2 & 1;
+    light4 = lights >> 3 & 1;
+}
+ 
+decode_panels(panels, &front_left_panel, &front_right_panel, &rear_left_panel, &rear_right_panel, &windshield, &front_bumper, &rear_bumper)
+{
+    front_left_panel = panels & 15;
+    front_right_panel = panels >> 4 & 15;
+    rear_left_panel = panels >> 8 & 15;
+    rear_right_panel = panels >> 12 & 15;
+    windshield = panels >> 16 & 15;
+    front_bumper = panels >> 20 & 15;
+    rear_bumper = panels >> 24 & 15;
+}
+ 
+decode_doors(doors, &bonnet, &boot, &driver_door, &passenger_door)
+{
+    bonnet = doors & 7;
+    boot = doors >> 8 & 7;
+    driver_door = doors >> 16 & 7;
+    passenger_door = doors >> 24 & 7;
+}
+ 
+decode_tires(tires, &tire1, &tire2, &tire3, &tire4)
+{
+    tire1 = tires & 1;
+    tire2 = tires >> 1 & 1;
+    tire3 = tires >> 2 & 1;
+    tire4 = tires >> 3 & 1;
+}
+
+
 getTire(vehid, tireid)
 {
-    new panels,doors,lights,tires,t1,t2,t3,t4,ret;//121 line
+    new 
+		panels,doors,lights,tires,t1,t2,t3,t4,ret;
     GetVehicleDamageStatus(vehid, panels, doors, lights, tires);
-	decode_tires(tires, t1, t2, t3, t4);//123
-	switch(tireid)//124
-	{//125
+	decode_tires(tires, t1, t2, t3, t4);
+	switch(tireid)
+	{
 	    case F_L_TIRE:
 	    {
  			ret = t1;
@@ -345,14 +394,15 @@ getTire(vehid, tireid)
 
 setTire(vehid, tireid, stat)
 {
-	new panels,doors,lights,tires,t1,t2,t3,t4;
+	new 
+		panels,doors,lights,tires,t1,t2,t3,t4;
 	GetVehicleDamageStatus(vehid, panels, doors, lights, tires);
 	t1 = getTire(vehid, F_L_TIRE);
-	t2 = getTire(vehid, B_L_TIRE);//151
+	t2 = getTire(vehid, B_L_TIRE);
 	t3 = getTire(vehid, F_R_TIRE);
-	t4 = getTire(vehid, B_R_TIRE);//153
-	switch(tireid)//154
-	{//155
+	t4 = getTire(vehid, B_R_TIRE);
+	switch(tireid)//
+	{
 	    case F_L_TIRE:
 	    {
  			UpdateVehicleDamageStatus(vehid, panels, doors, lights, encode_tires(stat, t2, t3, t4));

@@ -504,7 +504,7 @@ public ServerRestartRequest(index, response_code, data[])
 */
 main()
 {
-	AntiDeAMX();
+	
 }
 
 

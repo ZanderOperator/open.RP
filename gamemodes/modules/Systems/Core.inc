@@ -3,7 +3,7 @@
 // House
 #include "modules/Systems/Furniture.pwn"
 #include "modules/Systems/ExteriorFurniture.pwn"
-#include "modules/Systems/Crib.pwn"
+#include "modules/Systems/House.pwn"
 #include "modules/Systems/Garages.pwn"
 #include "modules/Systems/HouseStorage.pwn"
 #include "modules/Systems/RobStorage.pwn"

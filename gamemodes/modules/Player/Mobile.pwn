@@ -2625,6 +2625,15 @@ stock PlayerHangup(playerid)
 	return 1;
 }
 
+static SendJobMessage(job, color, string[])
+{
+	foreach (new i : Player) 
+	{
+		if(PlayerJob[i][pJob] == job)
+			SendClientMessage(i, color, string);
+	}
+}
+
 /*
 	##     ##  #######   #######  ##    ##  ######
 	##     ## ##     ## ##     ## ##   ##  ##    ##

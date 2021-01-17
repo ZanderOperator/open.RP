@@ -860,13 +860,23 @@ stock BuyHouse(playerid, bool:credit_activated = false)
     return 1;
 }
 
-static stock RemoveHouse(houseid)
+stock RemoveHouse(houseid) // TODO: make /ahouse create/delete/changeint/etc. cmd
 {
     if (houseid == INVALID_HOUSE_ID) return 0;
     mysql_fquery(g_SQL, "DELETE FROM houses WHERE id = '%d'", HouseInfo[houseid][hSQLID]);
     ResetHouseInfo(houseid);
     Iter_Remove(House, houseid);
     return 1;
+}
+
+HouseProxDetector(houseid, Float:radius, const string[], color)
+{
+	foreach(new i : Player) 
+	{
+		if( IsPlayerInRangeOfPoint(i, radius, HouseInfo[ houseid ][ hEnterX ], HouseInfo[ houseid ][ hEnterY ], HouseInfo[ houseid ][ hEnterZ ] ) )
+			SendClientMessage(i, color, string);
+	}
+	return 1;
 }
 
 /*

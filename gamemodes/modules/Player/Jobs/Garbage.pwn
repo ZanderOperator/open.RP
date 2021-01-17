@@ -72,33 +72,6 @@ new
 	 ######     ##     #######   ######  ##    ##  ######  
 */
 
-stock getXYBehindVehicle(vehicleid, &Float:q, &Float:w, Float:distance)
-{
-    new Float:a;
-    GetVehiclePos(vehicleid, q, w, a);
-    GetVehicleZAngle(vehicleid, a);
-    q += (distance * -floatsin(-a, degrees));
-    w += (distance * -floatcos(-a, degrees));
-	return;
-}
-stock getPosBehindVehicle(vehicleid, &Float:x, &Float:y, &Float:z, Float:offset = 0.5)
-{
-	if (vehicleid == INVALID_VEHICLE_ID) return;
-
-    new
-		Float:vehicleSize[3],
-		Float:vehiclePos[3];
-
-    GetVehiclePos(vehicleid, vehiclePos[0], vehiclePos[1], vehiclePos[2]);
-    GetVehicleModelInfo(GetVehicleModel(vehicleid), VEHICLE_MODEL_INFO_SIZE, vehicleSize[0], vehicleSize[1], vehicleSize[2]);
-    getXYBehindVehicle(vehicleid, vehiclePos[0], vehiclePos[1], (vehicleSize[1]/2)+offset);
-
-    x = vehiclePos[0];
-    y = vehiclePos[1];
-    z = vehiclePos[2];
-    return;
-}
-
 stock GetNearestContainer(pID)
 {
 	new Float:objPos[3];
@@ -309,12 +282,10 @@ hook OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
 		}
 		else if(gGarbagePicked[playerid] == true && gStartedWork[playerid] == 2)
 		{
-			new vID = GetNearestVehicle(playerid, VEHICLE_USAGE_JOB),
-				Float:vehPos[3];
-			getPosBehindVehicle(vID, vehPos[0], vehPos[1], vehPos[2], 0.5);
+			new 
+				vID = GetNearestVehicle(playerid, VEHICLE_USAGE_JOB);			
 			if(!IsVehicleATrashTruck(vID)) return SendClientMessage( playerid, COLOR_RED, "Ne ubacujete smece u TrashMastera!");
-			
-			if( !IsPlayerInRangeOfPoint(playerid, 1.5, vehPos[0], vehPos[1], vehPos[2])) return 1;
+			if(!IsPlayerNearTrunk(playerid, vID)) return 1;
 			
 			if(pBoxes[playerid] == 10) return SendClientMessage( playerid, COLOR_RED, "Vec ste utovarili 10 vreca! Odvezite kamion na deponij!");
 			pBoxes[playerid] += 1;
@@ -368,31 +339,31 @@ hook OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
 	    {
 			if(gDeponyEmpty[playerid] == 1)
 			{
-			    new vID = GetNearestVehicle(playerid, VEHICLE_USAGE_JOB),
-					Float:vehPos[3];
-				if(!IsVehicleATrashTruck(vID)) return SendClientMessage( playerid, COLOR_RED, "Ne vadite smece iz Trash Mastera!");
-				getPosBehindVehicle(vID, vehPos[0], vehPos[1], vehPos[2], 0.5);
-				if (IsPlayerInRangeOfPoint(playerid, 2.2, vehPos[0], vehPos[1], vehPos[2]))
+			    new
+				 	vID = GetNearestVehicle(playerid, VEHICLE_USAGE_JOB);				
+				if(!IsVehicleATrashTruck(vID)) 
+					return SendClientMessage( playerid, COLOR_RED, "Ne vadite smece iz Trash Mastera!");
+				if(!IsPlayerNearTrunk(playerid, vID)) 
+					return 1;
+			
+				if(pBoxes[playerid] > 0)
 				{
-					if(pBoxes[playerid] > 0)
-					{
-	   					pOnDepony[playerid] = 1;
-						SetPlayerAttachedObject(playerid, 0, 1264, 5, 0.352547, -0.205320, 0.184597, 212.175216, 292.318084, 151.621368, 1.000000, 1.000000, 1.000000); // vreca
-						
-						new
-							tmpString[ 10 ];
-						format( tmpString, 10, "~w~%d/%d", 
-							pBoxes[playerid],
-							Bit8_Get( gr_GarbageBoxesAll, playerid )
-						);
-						GameTextForPlayer(playerid, tmpString, 2000, 1);
-						SendMessage(playerid, MESSAGE_TYPE_INFO, "Uzeli ste vrecu smeca iz kamiona, sad je bacite na otpad. (( Lijevi klik misa kod otpada ))");
-					}
-					else if(pBoxes[playerid] == 0)
-					{
-			   			gDeponyEmpty[playerid] = 0;
-						SendMessage(playerid, MESSAGE_TYPE_ERROR, "U vozilu nema vise vreca sa smecem.");
-					}
+					pOnDepony[playerid] = 1;
+					SetPlayerAttachedObject(playerid, 0, 1264, 5, 0.352547, -0.205320, 0.184597, 212.175216, 292.318084, 151.621368, 1.000000, 1.000000, 1.000000); // vreca
+					
+					new
+						tmpString[ 10 ];
+					format( tmpString, 10, "~w~%d/%d", 
+						pBoxes[playerid],
+						Bit8_Get( gr_GarbageBoxesAll, playerid )
+					);
+					GameTextForPlayer(playerid, tmpString, 2000, 1);
+					SendMessage(playerid, MESSAGE_TYPE_INFO, "Uzeli ste vrecu smeca iz kamiona, sad je bacite na otpad. (( Lijevi klik misa kod otpada ))");
+				}
+				else if(pBoxes[playerid] == 0)
+				{
+					gDeponyEmpty[playerid] = 0;
+					SendMessage(playerid, MESSAGE_TYPE_ERROR, "U vozilu nema vise vreca sa smecem.");
 				}
 			}
 	    }

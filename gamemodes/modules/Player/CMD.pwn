@@ -1414,7 +1414,7 @@ CMD:id(playerid, params[])
 		if(!IsPlayerConnected(gpid))
 		    return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Taj igrac nije online!");
 
-        va_SendClientMessage(playerid, -1, "[/id] %s[%d], Level: %d", ReturnName(gpid), gpid, PlayerInfo[gpid][pLevel]);
+        va_SendClientMessage(playerid, -1, "[/id] %s[%d], Level: %d", GetName(gpid, false), gpid, PlayerInfo[gpid][pLevel]);
 		return 1;
 	}
 	else
@@ -1427,9 +1427,9 @@ CMD:id(playerid, params[])
 
 		foreach(new i : Player)
 		{
-			if(strfind(ReturnName(i), params, true) != -1)
+			if(strfind(GetName(i, false), params, true) != -1)
 			{
-				va_SendClientMessage(playerid, -1, "[/id] #%d - %s[%d], Level: %d", count, ReturnName(i), i, PlayerInfo[i][pLevel]);
+				va_SendClientMessage(playerid, -1, "[/id] #%d - %s[%d], Level: %d", count, GetName(i, false), i, PlayerInfo[i][pLevel]);
 				count++;
 			}
 		}

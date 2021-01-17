@@ -78,7 +78,7 @@ stock ResetPlayerDrivingVars(playerid)
 */
 timer OnPlayerDrivingLesson[1000](playerid)
 {
-	if( GetPlayerSpeed(playerid,true) >= 110.0 ) 
+	if( GetPlayerVehicleSpeed(playerid) >= 110.0 ) 
 	{
 		SendClientMessage( playerid, COLOR_RED, "[GRESKA]: Vozili ste preko 110km/h, pali ste vozacki!");
 		
