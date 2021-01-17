@@ -1002,7 +1002,7 @@ CMD:asellbiz(playerid, params[])
 	}
 	
 	mysql_fquery(g_SQL, 
-		"UPDATE bizzes SET ownerid = '0', co_ownerid = '0' WHERE id = '%d'", 
+		"UPDATE bizzes SET ownerid = '0' WHERE id = '%d'", 
 		BizzInfo[biz][bSQLID]
 	);
 

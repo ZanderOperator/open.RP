@@ -548,6 +548,7 @@ GetValuablePropertyType(playerid)
 		housevalue = 0, 
 		bizvalue = 0,
 		vehvalue = 0;
+
 	if(PlayerKeys[playerid][pHouseKey] != INVALID_HOUSE_ID)
 	{
 		new 
@@ -561,8 +562,11 @@ GetValuablePropertyType(playerid)
 		bizvalue = BizzInfo[bizzid][bBuyPrice];
 	}
 	if(PlayerKeys[playerid][pVehicleKey] != -1)
-		vehvalue = GetVehicleByModel(VehicleInfo[PlayerKeys[playerid][pVehicleKey]][vModel], true);  
-	
+	{
+		new
+			vehicleid = PlayerKeys[playerid][pVehicleKey];
+		vehvalue = GetVehicleByModel(VehicleInfo[vehicleid][vModel], true);  
+	}
 	if(housevalue > bizvalue && housevalue > vehvalue)
 		return PROPERTY_TYPE_HOUSE;	
 	else if(bizvalue > housevalue && bizvalue > vehvalue)
@@ -574,9 +578,11 @@ GetValuablePropertyType(playerid)
 
 TakePlayerProperty(playerid)
 {
-	if(PlayerKeys[playerid][pHouseKey] == INVALID_HOUSE_ID && PlayerKeys[playerid][pBizzKey] == INVALID_BIZNIS_ID)
-		return 1;
 	
+	if(PlayerKeys[playerid][pHouseKey] == INVALID_HOUSE_ID 
+		&& PlayerKeys[playerid][pBizzKey] == INVALID_BIZNIS_ID
+		&& PlayerKeys[playerid][pVehicleKey] == -1)
+		return 0;
 	new 
 		type = GetValuablePropertyType(playerid);
 		
@@ -585,13 +591,16 @@ TakePlayerProperty(playerid)
 		case 0: return 0;	// No House/Business/vehicle
 		case PROPERTY_TYPE_HOUSE:
 		{
-			new house = PlayerKeys[playerid][pHouseKey];
-			
-			va_SendClientMessage(playerid, COLOR_LIGHTRED, "[BANKA]: Oduzeta vam je kuca na adresi %s zbog potrazivanja banke od %d$ radi neplacanja kredita.", 
+			new 
+				house = PlayerKeys[playerid][pHouseKey];
+
+			va_SendClientMessage(playerid, 
+				COLOR_LIGHTRED, 
+				"[BANK]: Your house on adress %s has been seized by bank. \n\
+					Reason: %s credit debt", 
 				HouseInfo[house][hAdress],
-				CreditInfo[playerid][cAmount]
+				FormatNumber(CreditInfo[playerid][cAmount])
 			);
-			PlayerKeys[playerid][pHouseKey] = INVALID_HOUSE_ID;
 			
 			HouseInfo[house][hOwnerID]		= 0;
 			HouseInfo[house][hLock] 		= 1;
@@ -599,37 +608,60 @@ TakePlayerProperty(playerid)
 			HouseInfo[house][hSafeStatus] 	= 0;
 			HouseInfo[house][hOrmar] 		= 0;
 				
-			mysql_fquery(g_SQL, "UPDATE houses SET ownerid = '0' WHERE ownerid = '%d'", PlayerInfo[playerid][pSQLID]);
+			mysql_fquery(g_SQL, 
+				"UPDATE houses SET ownerid = '0' WHERE ownerid = '%d'", 
+				PlayerInfo[playerid][pSQLID]
+			);
+			PlayerKeys[playerid][pHouseKey] = INVALID_HOUSE_ID;
 
+			PlayerInfo[playerid][pSpawnChange] = 0;
+			mysql_fquery(g_SQL, "UPDATE accounts SET spawnchange = '%d' WHERE sqlid = '%d'",
+				PlayerInfo[playerid][pSpawnChange],
+				PlayerInfo[playerid][pSQLID]
+			);
 			SetPlayerSpawnInfo(playerid);
-			
 		}
 		case PROPERTY_TYPE_BIZZ:
 		{
-			new biz = PlayerKeys[playerid][pBizzKey];
+			new 
+				biz = PlayerKeys[playerid][pBizzKey];
 			
-			va_SendClientMessage(playerid, COLOR_LIGHTRED, "[BANKA]: Oduzet vam je biznis %s zbog potrazivanja banke od %d$ radi neplacanja kredita.", 
+			va_SendClientMessage(playerid, 
+				COLOR_LIGHTRED, 
+				"[BANK]: Your business %s has been seized by bank. Reason: %s credit debt.", 
 				BizzInfo[biz][bMessage],
-				CreditInfo[playerid][cAmount]
+				FormatNumber(CreditInfo[playerid][cAmount])
 			);
-			PlayerKeys[playerid][pBizzKey] = INVALID_BIZNIS_ID;
 			
 			BizzInfo[biz][bLocked] 	= 1;
 			BizzInfo[biz][bOwnerID] = 0;
-			
-			mysql_fquery(g_SQL, "UPDATE bizzes SET ownerid = '0', co_ownerid = '0' WHERE id = '%d'", BizzInfo[ biz ][bSQLID]);
+
+			PlayerKeys[playerid][pBizzKey] = INVALID_BIZNIS_ID;
+			mysql_fquery(g_SQL, 
+				"UPDATE bizzes SET ownerid = '0' WHERE id = '%d'", 
+				BizzInfo[biz][bSQLID]
+			);
 		}
 		case PROPERTY_TYPE_VEHICLE:
 		{
-			va_SendClientMessage(playerid, COLOR_RED, "[ ! ]: The Bank seized your %s as payment of credit costs.", ReturnVehicleName(VehicleInfo[PlayerKeys[playerid][pVehicleKey]][vModel]));
+			new 
+				vehicleid = PlayerKeys[playerid][pVehicleKey];
+			va_SendClientMessage(playerid, 
+				COLOR_RED, 
+				"[ ! ]: The Bank seized your %s as payment of credit costs (%s).", 
+				ReturnVehicleName(VehicleInfo[vehicleid][vModel]),
+				FormatNumber(CreditInfo[playerid][cAmount])
+			);
 				
-			DeleteVehicleFromBase(VehicleInfo[PlayerKeys[playerid][pVehicleKey]][vSQLID]);
+			DeleteVehicleFromBase(VehicleInfo[vehicleid][vSQLID]);
 
 			#if defined MODULE_LOGS
-			Log_Write("/logfiles/car_delete.txt", "(%s) %s lost his %s because of credit loan debt.",
+			Log_Write("/logfiles/car_delete.txt", 
+				"(%s) %s lost his %s because of credit loan debt(%s).",
 				ReturnDate(),
 				GetName(playerid,false),
-				ReturnVehicleName(GetVehicleModel(PlayerKeys[playerid][pVehicleKey]))
+				ReturnVehicleName(VehicleInfo[vehicleid][vModel]),
+				FormatNumber(CreditInfo[playerid][cAmount])
 			);
 			#endif
 

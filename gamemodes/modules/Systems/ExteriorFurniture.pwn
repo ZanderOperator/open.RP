@@ -145,7 +145,6 @@ static ExteriorFurniture[][E_EXTERIOR_FURNITURE_DATA] =
     {1712,     "Kauc",                200}
 };
 
-
 enum E_EXTERIOR_MISC_DATA
 {
     emModelid,
@@ -269,19 +268,18 @@ static stock GetPlayerExteriorSlots(playerid)
     return EXTERIOR_OBJS_VIP_NONE;
 }
 
-// TODO: rename, make more descriptive
-static stock FindFreeSlot(houseid)
+static ExteriorFur_FreeSlot(houseid)
 {
     return Iter_Free(HouseFurExt[houseid]);
 }
 
-static stock CreateExteriorObject(playerid)
+static CreateExteriorObject(playerid)
 {
     if (ExteriorEditType[playerid] != EXT_EDIT_TYPE_BUY) return 0;
 
     new
         houseid = PlayerKeys[playerid][pHouseKey],
-        index = FindFreeSlot(houseid);
+        index = ExteriorFur_FreeSlot(houseid);
 
     if (index == -1)
     {
@@ -724,7 +722,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                         SendErrorMessage(playerid, "Niste vlasnik kuce!");
                         return 1;
                     }
-                    if (FindFreeSlot(PlayerKeys[playerid][pHouseKey]) == -1)
+                    if (ExteriorFur_FreeSlot(PlayerKeys[playerid][pHouseKey]) == -1)
                     {
                         SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate slobodnih slotova, razmislite da uplatite VIP za vise slotova!");
                         return 1;

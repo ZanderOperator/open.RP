@@ -290,9 +290,10 @@ stock GivePlayerExperience(playerid, playername[])
 	return 1;
 }
 
-stock RewardPlayerForActivity(sqlid, amount)
+RewardPlayerForActivity(sqlid, amount)
 {	
-	mysql_fquery(g_SQL, "UPDATE experience SET points = points +'%d', allpoints = allpoints + '%d' WHERE sqlid = '%d'", 
+	mysql_fquery(g_SQL, 
+		"UPDATE experience SET points = points +'%d', allpoints = allpoints + '%d' WHERE sqlid = '%d'", 
 		amount, 
 		amount, 
 		sqlid

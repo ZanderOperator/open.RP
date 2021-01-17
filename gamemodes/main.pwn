@@ -159,6 +159,8 @@
 #include "modules/Preincludes/Defines.inc"
 // Enumerator Declarations
 #include "modules/Preincludes/Enumerators.inc"
+// Globally used Arrays declarations
+#include "modules/Arrays/Core.inc"
 // Main Header file - purpose is bypassing the include order
 #include "modules/Preincludes/Header.inc"
 // Custom Functions Declaration file - purpose is declaring custom funcs that will be hooked

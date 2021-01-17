@@ -1,7 +1,3 @@
-#if defined _vehfuncs_included
-    #undef _vehfuncs_included
-#endif
-
 #include <YSI_Coding\y_hooks>
 
 #define MAX_VEHICLES_IN_RANGE		(15)

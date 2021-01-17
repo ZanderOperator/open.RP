@@ -624,7 +624,7 @@ Public:CheckAccountsForInactivity()
 			va_fquery(g_SQL, "SELECT * FROM experience WHERE monthpaydays < '%d'", MIN_MONTH_PAYDAYS),
 			""
 		);
-
+		
 		// Monthly EXP rewards for top 5 players with most paydays in previous month
 		inline OnRewardActivePlayers()
 		{
@@ -650,7 +650,8 @@ Public:CheckAccountsForInactivity()
 					case 1: 
 					{
 						RewardPlayerForActivity(sql, PREMIUM_GOLD_EXP);
-						Log_Write("logfiles/rewarded_players.txt", "(%s) - %s got awarded with %d EXP as most active player of %d. month with %d paydays.", 
+						Log_Write("logfiles/rewarded_players.txt", 
+							"(%s) - %s got awarded with %d EXP as most active player of %d. month with %d paydays.", 
 							ReturnDate(),
 							ConvertSQLIDToName(sql),
 							PREMIUM_GOLD_EXP,
@@ -673,7 +674,8 @@ Public:CheckAccountsForInactivity()
 					case 2: 
 					{
 						RewardPlayerForActivity(sql, 100);
-						Log_Write("logfiles/rewarded_players.txt", "(%s) - %s got awarded 100 EXP as an award for second most active player of %d. month with %d paydays.", 
+						Log_Write("logfiles/rewarded_players.txt", 
+							"(%s) - %s got awarded 100 EXP (2. most active player of %d. month with %d paydays)", 
 							ReturnDate(),
 							ConvertSQLIDToName(sql),
 							(currentmonth - 1),
@@ -695,7 +697,8 @@ Public:CheckAccountsForInactivity()
 					case 3: 
 					{
 						RewardPlayerForActivity(sql, 75);
-						Log_Write("logfiles/rewarded_players.txt", "(%s) - %s got awarded with 75 EXP as an award for third most active player of %d. month with %d paydays.", 
+						Log_Write("logfiles/rewarded_players.txt", 
+							"(%s) - %s got awarded with 75 EXP (3. most active player of %d. month with %d paydays)", 
 							ReturnDate(),
 							ConvertSQLIDToName(sql),
 							(currentmonth - 1),
@@ -717,7 +720,8 @@ Public:CheckAccountsForInactivity()
 					case 4: 
 					{
 						RewardPlayerForActivity(sql, 50);
-						Log_Write("logfiles/rewarded_players.txt", "(%s) - %s got awarded with 50 EXP as an award for fourth most active player of %d. month with %d paydays.", 
+						Log_Write("logfiles/rewarded_players.txt", 
+							"(%s) - %s got awarded with 50 EXP (4. most active player of %d. month with %d paydays)", 
 							ReturnDate(),
 							ConvertSQLIDToName(sql),
 							(currentmonth - 1),
@@ -739,7 +743,8 @@ Public:CheckAccountsForInactivity()
 					case 5: 
 					{
 						RewardPlayerForActivity(sql, 25);
-						Log_Write("logfiles/rewarded_players.txt", "(%s) - %s got awarded with 25 EXP as an award for fifth most active player of %d. month with %d paydays.", 
+						Log_Write("logfiles/rewarded_players.txt", 
+							"(%s) - %s got awarded with 25 EXP (5. most active player of %d. month with %d paydays)", 
 							ReturnDate(),
 							ConvertSQLIDToName(sql),
 							(currentmonth - 1),
