@@ -505,7 +505,8 @@ GetPlayerPaymentOption(playerid, type)
 
 IsPlayerCredible(playerid, amount)
 {
-	new bool:value = false;
+	new 
+		bool:value = false;
 	if(PlayerFaction[playerid][pMember] > 0)
 	{
 		new fid = PlayerFaction[playerid][pMember];
@@ -517,7 +518,8 @@ IsPlayerCredible(playerid, amount)
 			goto end_point;
 		}
 	}
-	if((PlayerJob[playerid][pJob] >= 1 && PlayerJob[playerid][pJob] <= 7) || (PlayerJob[playerid][pJob] >= 14 && PlayerJob[playerid][pJob] <= 18))
+	// Legal Employment
+	if(PlayerJob[playerid][pJob] >= 0 && !IsIllegalJob(playerid))
 	{
 		if(PlayerJob[playerid][pContractTime] > 15)
 		{

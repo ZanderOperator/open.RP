@@ -1,16 +1,4 @@
 #include <YSI_Coding\y_hooks>
-
-/*
-	########  ######## ######## #### ##    ## ########  ######  
-	##     ## ##       ##        ##  ###   ## ##       ##    ## 
-	##     ## ##       ##        ##  ####  ## ##       ##       
-	##     ## ######   ######    ##  ## ## ## ######    ######  
-	##     ## ##       ##        ##  ##  #### ##             ## 
-	##     ## ##       ##        ##  ##   ### ##       ##    ## 
-	########  ######## ##       #### ##    ## ########  ######  
-*/
-#define SWEEPER_ID      					(1) 	// ID posla smecara zamjeni sa kojim zelis
-
 /*
 	##     ##    ###    ########   ######  
 	##     ##   ## ##   ##     ## ##    ## 
@@ -69,7 +57,7 @@ hook OnPlayerDisconnect(playerid, reason)
 
 hook OnPlayerEnterCheckpoint(playerid)
 {
-	if(PlayerJob[playerid][pJob] == SWEEPER_ID) 
+	if(PlayerJob[playerid][pJob] == JOB_SWEEPER) 
 	{
 		if( Bit1_Get( r_Sweeping, playerid ) && Player_GpsActivated(playerid)) 
 		{
@@ -110,7 +98,7 @@ hook OnPlayerEnterCheckpoint(playerid)
 */
 CMD:sweep(playerid, params[])
 {
-	if(PlayerJob[playerid][pJob] != SWEEPER_ID) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste zaposleni kao smecar!");
+	if(PlayerJob[playerid][pJob] != JOB_SWEEPER) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste zaposleni kao smecar!");
 	new
 		vehicleID = GetPlayerVehicleID(playerid),
 		pick[ 8 ];

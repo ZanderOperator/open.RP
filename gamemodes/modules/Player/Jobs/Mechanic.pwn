@@ -10,8 +10,6 @@
 	   ###    ##     ## ##     ##  ######
 */
 
-#define MECHANIC_ID			(3)
-
 new
 	bool: MechanicDuty[MAX_PLAYERS] = false,
 	bool: Repairing[MAX_PLAYERS] = false,
@@ -547,7 +545,7 @@ hook OnGameModeInit()
 hook OnPlayerKeyStateChange(playerid, newkeys, oldkeys) {
 	if( PRESSED(KEY_YES) ) {
 		if(IsPlayerInRangeOfPoint(playerid, 4.0, 2313.87354, -1342.76282, 26.31350)) {
-			if(PlayerJob[playerid][pJob] != MECHANIC_ID) return (true);
+			if(PlayerJob[playerid][pJob] != JOB_MECHANIC) return (true);
 			
 			if(vgatestatus[0] == 0) {
 				SetDynamicObjectRot(vgate[0], 91.0000, 0.0000, 90.0000);
@@ -559,7 +557,7 @@ hook OnPlayerKeyStateChange(playerid, newkeys, oldkeys) {
 			}
 		}
 		if(IsPlayerInRangeOfPoint(playerid, 4.0, 2313.97339, -1351.76880, 26.31350)) {
-			if(PlayerJob[playerid][pJob] != MECHANIC_ID) return (true);
+			if(PlayerJob[playerid][pJob] != JOB_MECHANIC) return (true);
 			
 			if(vgatestatus[1] == 0) {
 				SetDynamicObjectRot(vgate[1], 91.0000, 0.0000, 90.0000);
@@ -571,7 +569,7 @@ hook OnPlayerKeyStateChange(playerid, newkeys, oldkeys) {
 			}
 		}
 		if(IsPlayerInRangeOfPoint(playerid, 4.0, 2314.09351, -1360.75024, 26.31350)) {
-			if(PlayerJob[playerid][pJob] != MECHANIC_ID) return (true);
+			if(PlayerJob[playerid][pJob] != JOB_MECHANIC) return (true);
 			
 			if(vgatestatus[2] == 0) {
 				SetDynamicObjectRot(vgate[2], 91.0000, 0.0000, 90.0000);
@@ -583,7 +581,7 @@ hook OnPlayerKeyStateChange(playerid, newkeys, oldkeys) {
 			}
 		}
 		if(IsPlayerInRangeOfPoint(playerid, 4.0, 2314.15674, -1369.75586, 26.31350)) {
-			if(PlayerJob[playerid][pJob] != MECHANIC_ID) return (true);
+			if(PlayerJob[playerid][pJob] != JOB_MECHANIC) return (true);
 			
 			if(vgatestatus[3] == 0) {
 				SetDynamicObjectRot(vgate[3], 91.0000, 0.0000, 90.0000);
@@ -595,7 +593,7 @@ hook OnPlayerKeyStateChange(playerid, newkeys, oldkeys) {
 			}
 		}
 		if(IsPlayerInRangeOfPoint(playerid, 4.0, 2321.979736, -1342.699462, 21.290500)) {
-			if(PlayerJob[playerid][pJob] != MECHANIC_ID) return (true);
+			if(PlayerJob[playerid][pJob] != JOB_MECHANIC) return (true);
 			if(vrampastatus[0] == 0) {
 				MoveDynamicObject(vrampa[0], 2321.9797, -1342.6995, 22.9415,1.4, 0.0000, 0.0000, 90.0000);
 				vrampastatus[0] = 1;
@@ -606,7 +604,7 @@ hook OnPlayerKeyStateChange(playerid, newkeys, oldkeys) {
 			}
 		}
 		if(IsPlayerInRangeOfPoint(playerid, 4.5, 2321.979736, -1351.880493, 21.290500)) {
-			if(PlayerJob[playerid][pJob] != MECHANIC_ID) return (true);
+			if(PlayerJob[playerid][pJob] != JOB_MECHANIC) return (true);
 			if(vrampastatus[1] == 0) {
 				MoveDynamicObject(vrampa[1], 2321.9797, -1351.8805, 23.0373,1.4, 0.0000, 0.0000, 90.0000);
 				vrampastatus[1] = 1;
@@ -617,7 +615,7 @@ hook OnPlayerKeyStateChange(playerid, newkeys, oldkeys) {
 			}
 		}
 		if(IsPlayerInRangeOfPoint(playerid, 4.0, 2322.4639, -1367.4045, 23.0931)) {
-			if(PlayerJob[playerid][pJob] != MECHANIC_ID) return (true);
+			if(PlayerJob[playerid][pJob] != JOB_MECHANIC) return (true);
 			if(vrampastatus[2] == 0) {
 				MoveDynamicObject(vrampa[3], 2319.1965, -1368.9713, 25.0708, 1.4, -16.0000, 0.0000, 90.0000);
 				MoveDynamicObject(vrampa[4], 2319.3303, -1371.2729, 25.0708, 1.4, -16.0000, 0.0000, 90.0000);
@@ -644,7 +642,7 @@ hook OnPlayerKeyStateChange(playerid, newkeys, oldkeys) {
 */
 
 CMD:armorcar(playerid, params[]) {
-	if(PlayerJob[playerid][pJob] != MECHANIC_ID) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste Mehanicar!");
+	if(PlayerJob[playerid][pJob] != JOB_MECHANIC) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste Mehanicar!");
 	if(MechanicDuty[playerid] == false) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nisi na duznosti kao mehanicar!");
 	new
 		item[12], playa, price;
@@ -705,7 +703,7 @@ CMD:armorcar(playerid, params[]) {
 
 CMD:repair(playerid, params[])
 {
-	if(PlayerJob[playerid][pJob] != MECHANIC_ID) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste Mehanicar!");
+	if(PlayerJob[playerid][pJob] != JOB_MECHANIC) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste Mehanicar!");
 	if(MechanicDuty[playerid] == false) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nisi na duznosti kao mehanicar!");
 	if(Repairing[playerid] == (true)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Vec popravljate vozilo, sacekajte da prvo popravite vozilo.");
 	new
@@ -850,7 +848,7 @@ CMD:parts(playerid, params[])
 	{
         if(sscanf(params, "s[16]i", item, ammount)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /parts buy [kolicina]");
 		if( ammount < 1 || ammount > 500 ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne mozes uzeti manje od 1 i vise od 500 paketa odjednom!");
-		if( PlayerJob[playerid][pJob] != MECHANIC_ID ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nisi mehanicar!");
+		if( PlayerJob[playerid][pJob] != JOB_MECHANIC ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nisi mehanicar!");
 		//if(MechanicDuty[playerid] == false) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nisi na duznosti kao mehanicar!");
 		if( !IsPlayerInRangeOfPoint(playerid,5.0, 2075.6326,-2033.3313,13.5469) ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste blizu mjesta za kupovinu dijelova!");
 
@@ -940,7 +938,7 @@ CMD:parts(playerid, params[])
 	}
 	else if(strcmp(item,"check",true) == 0)
 	{
-		if( PlayerJob[playerid][pJob] != MECHANIC_ID ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nisi mehanicar!");
+		if( PlayerJob[playerid][pJob] != JOB_MECHANIC ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nisi mehanicar!");
 		SendClientMessage(playerid, COLOR_RED, "[ ! ] Mehanicarski djelovi **");
 		SendFormatMessage(playerid, MESSAGE_TYPE_INFO, "Imate %d mehanicarskih djelova kod sebe.",
 			PlayerInventory[playerid][pParts]
@@ -950,7 +948,7 @@ CMD:parts(playerid, params[])
 }
 
 CMD:mechanic(playerid, params[]) {		
-	if(PlayerJob[playerid][pJob] != MECHANIC_ID) 
+	if(PlayerJob[playerid][pJob] != JOB_MECHANIC) 
 		return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Moras biti zaposlen kao mehanicar da bi mogao koristiti komandu!");
 			
 	new action[18];

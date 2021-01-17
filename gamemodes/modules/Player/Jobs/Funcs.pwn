@@ -17,42 +17,22 @@ enum
 	PLATINUM_DONATOR_FREE_WORKS	= (50)
 };
 
-enum E_JOB_NAME_INFO
-{
-	jID,
-	jName[MAX_JOB_NAME_LEN]
-}
-static
-   JobNames[][E_JOB_NAME_INFO] = {
-	{ 0, "Unemployed" },
-	{ 1, "Sweeper" },
-	{ 2, "Pizza Boy" }, 
-	{ 3, "Mechanic" }, 
-	{ 4, "Mower" },
-	{ 5, "Fabric Worker" },
-	{ 6, "Taxi Driver" },
-	{ 7, "Farmer" },
-	{ 13, "Car Jacker" },
-	{ 14, "Lumberjack" },
-	{ 16, "Trashman" },
-	{ 17, "Vehicle Impounder" }
-};
-
 enum E_JOBS_DATA 
 {
-	SWEEPER,    /* [id:1] */
-	MECHANIC,   /* [id:3] */
-	CRAFTER,    /* [id:5] */
-	TAXI, 	    /* [id:6] */
-	FARMER,     /* [id:7] */
-	LOGGER,     /* [id:14] */
-	GARBAGE,    /* [id:16] */
-	IMPOUNDER,  /* [id:17] */
-}
+	SWEEPER,
+	MECHANIC,
+	CRAFTER,
+	TAXI,
+	FARMER,
+	LOGGER,
+	GARBAGE,
+	IMPOUNDER
+};
 static 
 	JobData[E_JOBS_DATA];
 
-static bool:IsWorkingJob[MAX_PLAYERS] = {false, ...};
+static 
+	bool:IsWorkingJob[MAX_PLAYERS] = {false, ...};
 
 
 /*
@@ -177,43 +157,55 @@ hook function LoadServerData()
 	- Functions
 */
 
-stock bool:Player_IsWorkingJob(playerid)
+bool:Player_IsWorkingJob(playerid)
 {
 	return IsWorkingJob[playerid];
 }
 
-stock Player_SetIsWorkingJob(playerid, bool:v)
+Player_SetIsWorkingJob(playerid, bool:v)
 {
 	IsWorkingJob[playerid] = v;
 }
 
+bool:IsIllegalJob(playerid)
+{
+	return (PlayerJob[playerid][pJob] == JOB_BURGLAR || PlayerJob[playerid][pJob] == JOB_JACKER);
+}
+
 ReturnJob(job_id)
 {
-	new 
-		id = -1;
-	for(new i = 0; i < sizeof(JobNames); i++)
+	new
+		job_name[24];
+	switch(job_id) 
 	{
-		if(JobNames[i][jID] == job_id)
-		{
-			id = i;
-			break;
-		}
+		case 0: 			strcpy(job_name, "Unemployed", 24);
+		case JOB_SWEEPER: 	strcpy(job_name, "Street Sweeper", 24);
+		case JOB_MECHANIC: 	strcpy(job_name, "Mechanic", 24);
+		case JOB_CRAFTER: 	strcpy(job_name, "Fabric Crafter", 24);
+		case JOB_TAXI: 		strcpy(job_name, "Taxi Driver", 24);
+		case JOB_FARMER:	strcpy(job_name, "Farmer", 24);
+		case JOB_LOGGER: 	strcpy(job_name, "Logger", 24);
+		case JOB_GARBAGE: 	strcpy(job_name, "Garbage Man", 24);
+		case JOB_IMPOUNDER: strcpy(job_name, "Vehicle Impounder", 24);
+		case JOB_BURGLAR: 	strcpy(job_name, "Burglar", 24);
+		case JOB_JACKER:	strcpy(job_name, "Car Jacker", 24);
 	}
-	return JobNames[id][jName];
+	return job_name;
 }
 
 SetPlayerJob(playerid, job_id) 
 {
 	switch(job_id) 
 	{
-		case 1: JobData[SWEEPER] ++;
-		case 3: JobData[MECHANIC] ++;
-		case 5: JobData[CRAFTER] ++;
-		case 6: JobData[TAXI] ++;
-		case 7: JobData[FARMER] ++;
-		case 14: JobData[LOGGER] ++;
-		case 16: JobData[GARBAGE] ++;
-		case 17: JobData[IMPOUNDER] ++;
+		case JOB_SWEEPER: 	JobData[SWEEPER] ++;
+		case JOB_MECHANIC: 	JobData[MECHANIC] ++;
+		case JOB_CRAFTER: 	JobData[CRAFTER] ++;
+		case JOB_TAXI: 		JobData[TAXI] ++;
+		case JOB_FARMER:	JobData[FARMER] ++;
+		case JOB_LOGGER: 	JobData[LOGGER] ++;
+		case JOB_GARBAGE: 	JobData[GARBAGE] ++;
+		case JOB_IMPOUNDER: JobData[IMPOUNDER] ++;
+		default: return 1;
 	}
 	PlayerJob[playerid][pJob] = job_id;
 	PlayerJob[playerid][pContractTime] = 0;
@@ -225,36 +217,36 @@ RemovePlayerJob(playerid)
 {
 	switch(PlayerJob[playerid][pJob]) 
 	{
-		case 1: JobData[SWEEPER] --;
-		case 3: JobData[MECHANIC] --;
-		case 5: JobData[CRAFTER] --;
-		case 6: JobData[TAXI] --;
-		case 7: JobData[FARMER] --;
-		case 14: JobData[LOGGER] --;
-		case 16: JobData[GARBAGE] --;
-		case 17: JobData[IMPOUNDER] --;
+		case JOB_SWEEPER: 	JobData[SWEEPER] --;
+		case JOB_MECHANIC: 	JobData[MECHANIC] --;
+		case JOB_CRAFTER: 	JobData[CRAFTER] --;
+		case JOB_TAXI: 		JobData[TAXI] --;
+		case JOB_FARMER: 	JobData[FARMER] --;
+		case JOB_LOGGER: 	JobData[LOGGER] --;
+		case JOB_GARBAGE: 	JobData[GARBAGE] --;
+		case JOB_IMPOUNDER: JobData[IMPOUNDER] --;
 	}
 	PlayerJob[playerid][pJob] = 0;
 	PlayerJob[playerid][pContractTime] = 0;
 	SaveJobData();
-	return (true);
+	return 1;
 }
 
 RemoveOfflineJob(jobid)
 {
 	switch(jobid) 
 	{
-		case 1: JobData[SWEEPER] --;
-		case 3: JobData[MECHANIC] --;
-		case 5: JobData[CRAFTER] --;
-		case 6: JobData[TAXI] --;
-		case 7: JobData[FARMER] --;
-		case 14: JobData[LOGGER] --;
-		case 16: JobData[GARBAGE] --;
-		case 17: JobData[IMPOUNDER] --;
+		case JOB_SWEEPER: 	JobData[SWEEPER] --;
+		case JOB_MECHANIC: 	JobData[MECHANIC] --;
+		case JOB_CRAFTER: 	JobData[CRAFTER] --;
+		case JOB_TAXI: 		JobData[TAXI] --;
+		case JOB_FARMER: 	JobData[FARMER] --;
+		case JOB_LOGGER: 	JobData[LOGGER] --;
+		case JOB_GARBAGE: 	JobData[GARBAGE] --;
+		case JOB_IMPOUNDER: JobData[IMPOUNDER] --;
 	}
 	SaveJobData();
-	return (true);
+	return 1;
 }
 
 JobsList() 
@@ -327,7 +319,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 					if(JobData[SWEEPER] >= NORMAL_JOBS_EMPLOYERS)
 						return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ova firma trenutno ne prima radnike, pokusajte kada bude slobodnih mjesta.");
 
-					SetPlayerJob(playerid, 1);
+					SetPlayerJob(playerid, JOB_SWEEPER);
 					SendMessage( playerid, MESSAGE_TYPE_INFO, "Zaposlili ste se kao cistac ulica!");
 				}
 				case 1: 
@@ -337,7 +329,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 
 					if( PlayerInfo[ playerid ][ pLevel ] < 3 ) return SendClientMessage( playerid, COLOR_RED, "Morate biti level 3+ za ovaj posao (treba vozilo)!");
 
-					SetPlayerJob(playerid, 3);
+					SetPlayerJob(playerid, JOB_MECHANIC);
 					SendMessage( playerid, MESSAGE_TYPE_INFO, "Zaposlili ste se kao mehanicar!");
 				}
 				case 2: 
@@ -345,7 +337,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 					if(JobData[CRAFTER] >= NORMAL_JOBS_EMPLOYERS)
 						return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ova firma trenutno ne prima radnike, pokusajte kada bude slobodnih mjesta.");
 
-					SetPlayerJob(playerid, 5);
+					SetPlayerJob(playerid, JOB_CRAFTER);
 					SendMessage( playerid, MESSAGE_TYPE_INFO, "Zaposlili ste se kao tvornicki radnik!");
 				}
 				case 3: 
@@ -354,7 +346,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 					if(JobData[TAXI] >= OFFICIAL_JOBS_EMPLOYERS)
 						return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ova firma trenutno ne prima radnike, pokusajte kada bude slobodnih mjesta.");
 
-					SetPlayerJob(playerid, 6);
+					SetPlayerJob(playerid, JOB_TAXI);
 					SendMessage( playerid, MESSAGE_TYPE_INFO, "Zaposlili ste se kao taksista!");
 				}
 				case 4: 
@@ -362,7 +354,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 					if(JobData[FARMER] >= NORMAL_JOBS_EMPLOYERS)
 						return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ova firma trenutno ne prima radnike, pokusajte kada bude slobodnih mjesta.");
 
-					SetPlayerJob(playerid, 7);
+					SetPlayerJob(playerid, JOB_FARMER);
 					SendMessage( playerid, MESSAGE_TYPE_INFO, "Zaposlili ste se kao farmer!");
 				}
 				case 5: 
@@ -370,7 +362,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 					if(JobData[LOGGER] >= NORMAL_JOBS_EMPLOYERS)
 						return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ova firma trenutno ne prima radnike, pokusajte kada bude slobodnih mjesta.");
 
-					SetPlayerJob(playerid, 14);
+					SetPlayerJob(playerid, JOB_LOGGER);
 					SendMessage( playerid, MESSAGE_TYPE_INFO, "Zaposlili ste se kao drvosjeca!");
 				}
 				case 6: 
@@ -378,16 +370,16 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 					if(JobData[GARBAGE] >= NORMAL_JOBS_EMPLOYERS)
 						return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ova firma trenutno ne prima radnike, pokusajte kada bude slobodnih mjesta.");
 
-					SetPlayerJob(playerid, 16);
+					SetPlayerJob(playerid, JOB_GARBAGE);
 					SendMessage( playerid, MESSAGE_TYPE_INFO, "Zaposlili ste se kao smetlar!");
 				}
 				case 7:
 				{
 					if( PlayerInfo[ playerid ][ pLevel ] < 5 ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Samo igraci level 5+ mogu biti veh impounderi.");
-					if(JobData[GARBAGE] >= OFFICIAL_JOBS_EMPLOYERS)
+					if(JobData[IMPOUNDER] >= OFFICIAL_JOBS_EMPLOYERS)
 						return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ova firma trenutno ne prima radnike, pokusajte kada bude slobodnih mjesta.");
 					
-					SetPlayerJob(playerid, 17);
+					SetPlayerJob(playerid, JOB_IMPOUNDER);
 					SendMessage( playerid, MESSAGE_TYPE_INFO, "Zaposlili ste se kao impounder!");
 				}
 			}
@@ -416,7 +408,8 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 				{
 					if( PlayerInfo[ playerid ][ pLevel ] < 3 ) 
 						return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Samo igraci level 3+ mogu biti lopovi.");
-					PlayerJob[playerid][pJob] 			= 9;
+					
+					PlayerJob[playerid][pJob] = JOB_BURGLAR;
 					if(PlayerVIP[playerid][pDonateRank] == 0)
 						PlayerJob[playerid][pFreeWorks] = NORMAL_FREE_WORKS;	
 					else if(PlayerVIP[playerid][pDonateRank] == 1)
@@ -451,7 +444,7 @@ CMD:takejob(playerid, params[])
 		ShowPlayerDialog(playerid, DIALOG_JOBS, DIALOG_STYLE_TABLIST_HEADERS, "{3C95C2}* Lista i kvote poslova", JobsList(), "Choose", "Abort");
 		
 	else SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste blizu mjesta za uzimanje posla!");
-	return (true);
+	return 1;
 }
 
 CMD:quitjob(playerid, params[])
@@ -493,7 +486,7 @@ CMD:quitjob(playerid, params[])
 			RemovePlayerJob(playerid);
 		}
 	}
-	return (true);
+	return 1;
 }
 
 CMD:jobduty(playerid, params[]) 
@@ -521,5 +514,5 @@ CMD:jobduty(playerid, params[])
 			va_SendClientMessage(playerid, -1, "Ime: %s // Kontakt broj: %d.", GetName(i), PlayerMobile[i][pMobileNumber]);
 		
 	}
-	return (true);
+	return 1;
 }

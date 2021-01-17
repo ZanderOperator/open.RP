@@ -422,45 +422,52 @@ GivePlayerPayCheck(playerid)
 			strcat(p_dialog,f_dialog, sizeof(p_dialog));
 		}
 	}
-	if(PlayerJob[playerid][pJob] == 6 || PlayerJob[playerid][pJob] == 3) { // IC POSLOVI
-		if(PlayerJob[playerid][pJob] == 6) {
-			new taxi_job = PlayerJob[playerid][pContractTime] * 8, calculate = 0;
-			if(taxi_job > 700)
-				taxi_job = 700;
+	if(PlayerJob[playerid][pJob] == JOB_TAXI || PlayerJob[playerid][pJob] == JOB_MECHANIC) 
+	{ 
+		if(PlayerJob[playerid][pJob] == JOB_TAXI) 
+		{
+			new 
+				taxi_bonus = PlayerJob[playerid][pContractTime] * 8;
+			if(taxi_bonus > 700)
+				taxi_bonus = 700;
 				
-			BudgetToPlayerBankMoney(playerid, taxi_job);  // bonus
+			BudgetToPlayerBankMoney(playerid, taxi_bonus);  
 
-			profit += taxi_job;
-			format(f_dialog,sizeof(f_dialog), "\n\tTaxi Company bonus: %s", FormatNumber(calculate));
+			profit += taxi_bonus;
+			format(f_dialog,sizeof(f_dialog), "\n\tTaxi Company bonus: %s", FormatNumber(taxi_bonus));
 			strcat(p_dialog,f_dialog, sizeof(p_dialog));
 			PaydayInfo[playerid][pPayDayMoney] = 0;
 		}
-		else if(PlayerJob[playerid][pJob] == 3) {
-			new workingbonus = PlayerJob[playerid][pContractTime] * 8;
-			if(workingbonus > 700)
-				workingbonus = 700;
+		else if(PlayerJob[playerid][pJob] == JOB_MECHANIC) 
+		{
+			new 
+				mech_bonus = PlayerJob[playerid][pContractTime] * 8;
+			if(mech_bonus > 700)
+				mech_bonus = 700;
 
-			profit += workingbonus;
-			BudgetToPlayerBankMoney(playerid, workingbonus); // bonus
-			format(f_dialog,sizeof(f_dialog), "\n\tMechanic Company bonus: %s", FormatNumber(workingbonus));
+			profit += mech_bonus;
+			BudgetToPlayerBankMoney(playerid, mech_bonus);
+			format(f_dialog,sizeof(f_dialog), "\n\tMechanic Company bonus: %s", FormatNumber(mech_bonus));
 			strcat(p_dialog,f_dialog, sizeof(p_dialog));
 		}
+		goto happy_hours;
 	}
-	if(PlayerJob[playerid][pJob] > 0 && PlayerJob[playerid][pContractTime] >= 1) // OOC poslovi
+	if(PlayerJob[playerid][pJob] > 0 && PlayerJob[playerid][pContractTime] >= 1)
 	{
-		if(PlayerJob[playerid][pJob] != 9 && PlayerJob[playerid][pJob] != 10 && PlayerJob[playerid][pJob] != 12 && PlayerJob[playerid][pJob] != 13 && PlayerJob[playerid][pJob] != 6 && PlayerJob[playerid][pJob] != 3)
+		if(!IsIllegalJob(playerid))	
 		{
 			new workingbonus;
 			workingbonus = PlayerJob[playerid][pContractTime] * 10;
 			if(workingbonus > 500)
-				workingbonus = 500; // Maksimum je 500$ po paydayu
-			BudgetToPlayerBankMoney(playerid, workingbonus); // treba prebaciti na bankovni racun
+				workingbonus = 500; 
+			BudgetToPlayerBankMoney(playerid, workingbonus);
 			profit += workingbonus;
 			format(f_dialog,sizeof(f_dialog), "\n\tPoticaj na radni staz: %s", FormatNumber(workingbonus));
 			strcat(p_dialog,f_dialog, sizeof(p_dialog));
 		}
 	}
-	// HAPPY HOURS
+
+	happy_hours:
 	if( HappyHours )
 		PlayerInfo[playerid][pRespects] += ( PlayerInfo[playerid][pLevel] < HappyHoursLVL ) ? 2 : 1;
 	else 
@@ -470,6 +477,7 @@ GivePlayerPayCheck(playerid)
 		else
 			PlayerInfo[playerid][pRespects]++;
  	}
+
 	format(f_dialog,
 		sizeof(f_dialog), 
 		"\nUkupni profit: %s%s "COL_RED"(Izracun ne sadrzi troskove kredita i dobitke stednje)", 
@@ -500,15 +508,15 @@ GivePlayerPayCheck(playerid)
 
 	PlayerFish[playerid][pFishWorks] 	= 0;
 
-	// Dodavanje sati ugvora za posao
 	if(PlayerJob[playerid][pJob] != 0)
 		PlayerJob[playerid][pContractTime]++;
 
 
-	// GYM izgled
-	if( ++PlayerGym[playerid][pGymCounter] >= 6 ) {
+	if( ++PlayerGym[playerid][pGymCounter] >= 6 ) 
+	{
 		PlayerGym[playerid][pMuscle]--;
-		if( PlayerGym[playerid][pMuscle] <= 0 ) PlayerGym[playerid][pMuscle] = 0;
+		if( PlayerGym[playerid][pMuscle] <= 0 ) 
+			PlayerGym[playerid][pMuscle] = 0;
 		else
 		{
 			format(f_dialog,sizeof(f_dialog), "\n{3C95C2}(MUSCLE) Zbog nemara vas se Muscle Level spustio na %d!", PlayerGym[playerid][pMuscle]);
@@ -538,7 +546,8 @@ GivePlayerPayCheck(playerid)
 		}
 	}
 
-	new expamount = (PlayerInfo[playerid][pLevel] + 1) * 4;
+	new 
+		expamount = (PlayerInfo[playerid][pLevel] + 1) * 4;
 	if (PlayerInfo[playerid][pRespects] == expamount) 
 	{
 		LevelUp(playerid);
@@ -551,9 +560,7 @@ GivePlayerPayCheck(playerid)
 		);
 	}
 	
-	// CoolDown Reset
 	PlayerCoolDown[playerid][pCasinoCool] = 10;	
-	
 		
 	new currentday, day;
 	TimeFormat(Timestamp:gettimestamp(), DAY_OF_MONTH, "%d", currentday);
@@ -583,7 +590,6 @@ GivePlayerPayCheck(playerid)
 	}
 	SavePlayerExperience(playerid);
 	
-	// Dialog - Payday
 	strcpy(PaydayInfo[playerid][pPayDayDate], ReturnDate(), 32);
 
 	if(!IsPlayerInAnyVehicle(playerid))

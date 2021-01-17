@@ -10,7 +10,6 @@
 	########  ######## ##       #### ##    ## ########  ######  
 */
 
-#define PLAYER_JOB_CRAFTER			(5)
 #define CRAFTING_TIME				(57000)
 #define CRAFTING_CP_SIZE			1.5
 #define CRAFT_OBJECT_MOVE			0.35
@@ -580,7 +579,7 @@ hook OnPlayerEnterCheckpoint(playerid)
 */
 CMD:craft(playerid, params[])
 {
-	if( PlayerJob[playerid][pJob] != PLAYER_JOB_CRAFTER ) 	return SendClientMessage( playerid, COLOR_RED, "Niste zaposleni kao crafter!");
+	if( PlayerJob[playerid][pJob] != JOB_CRAFTER ) 	return SendClientMessage( playerid, COLOR_RED, "Niste zaposleni kao crafter!");
 	if( Bit1_Get( gr_PlayerWorkCrafting, playerid ) ) {	
 		Bit4_Set( gr_CraftingCPId, 			playerid, 0 );
 		Bit4_Set( gr_CraftingGeneratorId, 	playerid, 0 );

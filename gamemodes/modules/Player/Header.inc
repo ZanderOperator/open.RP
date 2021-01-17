@@ -1,11 +1,15 @@
 // Header file where functions should be declared that can be used/accessed from other modules
 
+// Jobs/Funcs
+forward bool:IsIllegalJob(playerid);
+
+// Jobs/Jacker
+forward bool:IsVehicleJackable(carid);
+
 // SaveLoad/Core.pwn
 forward bool:Player_SecurityBreach(playerid);
 forward Player_SetSecurityBreach(playerid, bool:v);
 
-// Jobs/Jacker
-forward bool:IsVehicleJackable(carid);
 
 // Bank
 forward Player_SetBuyPrice(playerid, amount);

@@ -2994,7 +2994,7 @@ stock static CheckHotWireInput(playerid, bool:endtick = false)
 				}
 				case 26 .. 50: 
 				{ // HoÄ‡e
-					if(PlayerJob[playerid][pJob] == 13)
+					if(PlayerJob[playerid][pJob] == JOB_JACKER)
 					{
 						GameTextForPlayer(playerid, "~g~Motor ukljucen, GPS lokator i alarm iskljuceni", 5000, 4);
 						VehicleInfo[vehicleid][vGPS] = false;
@@ -3007,8 +3007,9 @@ stock static CheckHotWireInput(playerid, bool:endtick = false)
 			}
 		} else { // Akumulator je u savrÅ¡enom stanju!
 
-			if(VehicleInfo[vehicleid][vEngineLife] > 10000) {
-				if(PlayerJob[playerid][pJob] == 13)
+			if(VehicleInfo[vehicleid][vEngineLife] > 10000) 
+			{
+				if(PlayerJob[playerid][pJob] == JOB_JACKER)
 				{
 					GameTextForPlayer(playerid, "~g~Motor ukljucen, GPS lokator i alarm iskljuceni", 5000, 4);
 					VehicleInfo[vehicleid][vGPS] = false;
@@ -3020,9 +3021,11 @@ stock static CheckHotWireInput(playerid, bool:endtick = false)
 			}
 			else if(1 <= VehicleInfo[vehicleid][vEngineLife] <= 10000)
 			{
-				switch(random(50)) {
-					case 0 .. 25: {
-						if(PlayerJob[playerid][pJob] == 13)
+				switch(random(50)) 
+				{
+					case 0 .. 25: 
+					{
+						if(PlayerJob[playerid][pJob] == JOB_JACKER)
 						{
 							GameTextForPlayer(playerid, "~g~Motor ukljucen, GPS lokator i alarm iskljuceni", 5000, 4);
 							VehicleInfo[vehicleid][vGPS] = false;
@@ -3032,7 +3035,8 @@ stock static CheckHotWireInput(playerid, bool:endtick = false)
 						engine = VEHICLE_PARAMS_ON;
 						VehicleInfo[vehicleid][vEngineRunning] = 1;
 					}
-					case 26 .. 50: {
+					case 26 .. 50: 
+					{
 						GameTextForPlayer(playerid, "~r~Motor nije upalio radi loseg motora", 3000, 1);
 						engine = VEHICLE_PARAMS_OFF;
 						VehicleInfo[vehicleid][vEngineRunning] = 0;
@@ -5383,10 +5387,17 @@ CMD:engine(playerid, params[])
 		GetVehicleParamsEx(vehicleid, engine, lights, alarm, doors, bonnet, boot, objective);
 		SetVehicleParamsEx(vehicleid, VEHICLE_PARAMS_OFF, VEHICLE_PARAMS_OFF, VEHICLE_PARAMS_OFF, doors, bonnet, boot, objective);
 		VehicleInfo[vehicleid][vEngineRunning] = 0;
-	} else {
-		if( !VehicleInfo[ vehicleid ][ vFuel ] ) 	return SendMessage(playerid, MESSAGE_TYPE_ERROR, " Vozilo je ostalo bez goriva!");
-		if( !VehicleInfo[ vehicleid ][ vCanStart ] && VehicleInfo[vehicleid][vGPS] && PlayerJob[playerid][pJob] != 13) return SendMessage(playerid, MESSAGE_TYPE_ERROR, " Vozilo je unisteno! Zovite mehanicara na /call 555!");
-		if( VehicleInfo[ vehicleid ][ vImpounded ] ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, " Vozilo je zaplijenjeno od strane policije!");
+	} 
+	else 
+	{
+		if( !VehicleInfo[ vehicleid ][ vFuel ] ) 	
+			return SendMessage(playerid, MESSAGE_TYPE_ERROR, " Vozilo je ostalo bez goriva!");
+		if( !VehicleInfo[ vehicleid ][ vCanStart ] 
+			&& VehicleInfo[vehicleid][vGPS] 
+			&& PlayerJob[playerid][pJob] != JOB_JACKER) 
+			return SendMessage(playerid, MESSAGE_TYPE_ERROR, " Vozilo je unisteno! Zovite mehanicara na /call 555!");
+		if( VehicleInfo[ vehicleid ][ vImpounded ] ) 
+			return SendMessage(playerid, MESSAGE_TYPE_ERROR, " Vozilo je zaplijenjeno od strane policije!");
 
 		#if defined MODULE_BOMBS
 		foreach(new i : Player) {

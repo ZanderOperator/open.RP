@@ -1,12 +1,14 @@
 #include <YSI_Coding\y_hooks>
 
-const JOB_SWEEPER		= 1;
-const JOB_CRAFTER  		= 5;
-const JOB_FARMER 		= 7;
-const JOB_CARJACKER		= 13;
-const JOB_GABAGEMAN 	= 16;
-const SKILL_BURGLAR		= 50;
-
+/*
+	Skills for:
+		JOB_SWEEPER
+		JOB_CRAFTER  		
+		JOB_FARMER 		
+		JOB_JACKER	
+		JOB_GABAGE 	
+		JOB_BURGLAR
+*/
 #define MAX_SKILLS			6
 
 enum E_SKILLS_INFO
@@ -63,9 +65,6 @@ static stock ReturnSkillID(playerid)
 	return value;
 }
 
-static stock ReturnSkillName(playerid, skillid)
-	return ReturnJob(PlayerSkills[playerid][sJob][skillid]);
-
 static stock CreatePlayerSkill(playerid)
 {
 	new value;
@@ -73,9 +72,7 @@ static stock CreatePlayerSkill(playerid)
 	{
 		if(PlayerSkills[playerid][sJob][i] == 0)
 		{
-			if(PlayerJob[playerid][pJob] == 0) // The ONLY skill in gamemode that's not job constrainted.
-				PlayerSkills[playerid][sJob][i] = SKILL_BURGLAR; 
-			else PlayerSkills[playerid][sJob][i] = PlayerJob[playerid][pJob];
+			PlayerSkills[playerid][sJob][i] = PlayerJob[playerid][pJob];
 			value = i;
 			break;
 		}
@@ -275,17 +272,17 @@ CMD:setskill(playerid, params[])
 		return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Wrong skill ID! Ask player again for a skill ID he wants to have adjusted!");
 
 	PlayerSkills[giveplayerid][sSkill][skillid] = value;
-	SavePlayerSkill(playerid, skillid);
+	SavePlayerSkill(giveplayerid, skillid);
 
 	SendFormatMessage(playerid, MESSAGE_TYPE_SUCCESS, "You've sucessfully set %d %s Skill Points to player %s!", 
 		value,
-		ReturnSkillName(giveplayerid, skillid),
+		ReturnJob(PlayerSkills[giveplayerid][sJob][skillid]),
 		GetName(giveplayerid, false)
 	);
 
 	va_SendClientMessage(giveplayerid, COLOR_RED, "[ ! ] Game Admin %s adjusted your %s Skill Points to %d(Level %d)!", 
 		GetName(playerid, false),
-		ReturnSkillName(giveplayerid, skillid),
+		ReturnJob(PlayerSkills[giveplayerid][sJob][skillid]),
 		value,
 		GetPlayerSkillLevel(giveplayerid, skillid)
 	);

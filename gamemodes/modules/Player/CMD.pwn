@@ -1695,7 +1695,7 @@ CMD:give(playerid, params[])
     new 
 		x_nr[32],
 		giveplayerid,
-		posao[32],
+		job[32],
 		moneys,
 		globalstring[128];
 		
@@ -1914,32 +1914,36 @@ CMD:give(playerid, params[])
     }
     else if(strcmp(x_nr,"job",true) == 0)
 	{
-    	if (sscanf(params, "s[32]us[32]", x_nr, giveplayerid, posao))
+    	if (sscanf(params, "s[32]us[32]", x_nr, giveplayerid, job))
 		{
 			SendClientMessage(playerid, COLOR_RED, "[ ? ]: /give job [Playerid / Part of name] [Posao]");
-			SendClientMessage(playerid, COLOR_WHITE, "Poslovi: gundealer - carjacker");
+			SendClientMessage(playerid, COLOR_WHITE, "Jobs: carjacker");
 			return 1;
 		}
 		
-		if(Bit1_Get(gr_PlayerLoggedIn, giveplayerid) != 0) {
-  			if(giveplayerid != INVALID_PLAYER_ID) {
-     			if (ProxDetectorS(3.0, playerid, giveplayerid))  {
-     			    if(PlayerJob[giveplayerid][pJob] != 0) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Taj igrac vec ima posao!");
-     			    if( PlayerFaction[giveplayerid][pMember] != PlayerFaction[playerid][pLeader] ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Igrac mora biti u vasoj organizaciji!");
-				 	if(strcmp(posao,"carjacker",true) == 0) {
-			            if( FactionInfo[PlayerFaction[playerid][pLeader]][fType] == 4 || FactionInfo[PlayerFaction[playerid][pLeader]][fType] == 6 ) { 
-							if( IllegalFactionJobCheck(PlayerFaction[playerid][pLeader], 13) >= 5) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Maksimalan broj car jackera po organizaciji je 5!");
-						   	PlayerJob[giveplayerid][pJob] = 13;
+		if(SafeSpawned[giveplayerid])
+			return SendMessage(playerid, MESSAGE_TYPE_ERROR, "That player isn't online!");
+		if(giveplayerid != INVALID_PLAYER_ID)
+			return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You can't give yourself a job!");
+	
+		if(!ProxDetectorS(5.0, playerid, giveplayerid))  
+			return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You aren't close enough to player.");
+		if(PlayerJob[giveplayerid][pJob] != 0) 
+			return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Player already has a job!");
+		if( PlayerFaction[giveplayerid][pMember] != PlayerFaction[playerid][pLeader] ) 
+			return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Player has to be in your faction!");
+		if(strcmp(job,"carjacker",true) == 0) 
+		{
+			if( FactionInfo[PlayerFaction[playerid][pLeader]][fType] == 4 || FactionInfo[PlayerFaction[playerid][pLeader]][fType] == 6 ) 
+			{ 
+				if( IllegalFactionJobCheck(PlayerFaction[playerid][pLeader], 13) >= 5) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Maksimalan broj car jackera po organizaciji je 5!");
+				PlayerJob[giveplayerid][pJob] = JOB_JACKER;
 
-							SendFormatMessage(playerid, MESSAGE_TYPE_SUCCESS, "Dali ste posao car jackera igracu %s.", GetName(giveplayerid, true));
-							va_SendClientMessage(giveplayerid, COLOR_RED, "[ ! ] Igrac %s vam je dao posao car jacker.", GetName(playerid, true));
-						}
-						else SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nisi ovlasten!");
-			        }
-				}
- 			}
+				SendFormatMessage(playerid, MESSAGE_TYPE_SUCCESS, "Dali ste posao car jackera igracu %s.", GetName(giveplayerid, true));
+				va_SendClientMessage(giveplayerid, COLOR_RED, "[ ! ] Igrac %s vam je dao posao car jacker.", GetName(playerid, true));
+			}
+			else SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nisi ovlasten!");
 		}
-		else SendMessage(playerid, MESSAGE_TYPE_ERROR, "Taj igrac nije online !");
 		return 1;
   	}
    	else if(strcmp(x_nr,"lighter",true) == 0)

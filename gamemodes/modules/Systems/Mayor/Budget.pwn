@@ -88,40 +88,9 @@ stock SaveCityInfo()
 stock ShowGovMDC(playerid, targetid)
 {
     new
-        string[30],
-        motd[160];
-    // TODO: make a helper function returning player job name from const array of strings, no need for switch
-    switch (PlayerJob[targetid][pJob])
-    {
-         case 1:  format(string, sizeof(string), "Cistac ulica");
-         case 2:  format(string, sizeof(string), "Pizza Boy");
-         case 3:  format(string, sizeof(string), "Mehanicar");
-         case 4:  format(string, sizeof(string), "Kosac trave");
-         case 5:  format(string, sizeof(string), "Tvornicki radnik");
-         case 6:  format(string, sizeof(string), "Taksist");
-         case 7:  format(string, sizeof(string), "Farmer");
-         case 8:  format(string, sizeof(string), "Nepoznato");
-         case 9:  format(string, sizeof(string), "Nepoznato");
-         case 10: format(string, sizeof(string), "Nepoznato");
-         case 11: format(string, sizeof(string), "Nepoznato");
-         case 12: format(string, sizeof(string), "Nepoznato");
-         case 13: format(string, sizeof(string), "Nepoznato");
-         case 14: format(string, sizeof(string), "Drvosjeca");
-         case 15: format(string, sizeof(string), "Kamiondzija");
-         case 16: format(string, sizeof(string), "Smetlar");
-         case 17: format(string, sizeof(string), "Nepoznato");
-         case 18: format(string, sizeof(string), "Nepoznato");
-         case 19: format(string, sizeof(string), "Nepoznato");
-         case 20: format(string, sizeof(string), "Nepoznato");
-         case 21: format(string, sizeof(string), "Nepoznato");
-         case 22: format(string, sizeof(string), "Nepoznato");
-         case 23: format(string, sizeof(string), "Nepoznato");
-         case 24: format(string, sizeof(string), "Nepoznato");
-         case 25: format(string, sizeof(string), "Nepoznato");
-         default: format(string, sizeof(string), "Nezaposlen");
-    }
+        motd[128],
+        govDialog[1024];
 
-    new govDialog[1024];
     format(motd, sizeof(motd),"{C9C9C9}PERSONAL PROFILE:\n\n{DCE4ED}Ime: %s\nSpol: %s\nGodine: %d\n",
         GetName(targetid,true),
         PlayerInfo[targetid][pSex] == 1 ? ("Musko") : ("Zensko"),
@@ -131,7 +100,7 @@ stock ShowGovMDC(playerid, targetid)
 
     format(motd, sizeof(motd),"{DCE4ED}Broj telefona: %d\nPosao: %s\nUhicivan puta: %d\n\n",
         PlayerMobile[targetid][pMobileNumber],
-        string,
+        (IsIllegalJob(playerid)) ? ("Unemployed"): ReturnJob(PlayerJob[targetid][pJob]),
         PlayerJail[targetid][pArrested]
     );
     strcat(govDialog, motd, sizeof(govDialog));

@@ -642,7 +642,7 @@ CMD:update_garage(playerid,params[])
 
 CMD:jacker(playerid, params[])
 {
-	if( PlayerJob[playerid][pJob] != JACKER_JOB_ID ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste car jacker!");
+	if( PlayerJob[playerid][pJob] != JOB_JACKER ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste car jacker!");
 	new
 		param[ 7 ];
 	if( sscanf( params, "s[7] ", param ) ) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /jacker [pick/chop/leave/stop]");

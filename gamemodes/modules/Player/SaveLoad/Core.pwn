@@ -531,7 +531,8 @@ Public: SafeSpawnPlayer(playerid)
 	);
 	
 	
-	if( ( 10 <= PlayerJob[playerid][pJob] <= 12 ) && ( !PlayerFaction[playerid][pMember] && !PlayerFaction[playerid][pLeader])  )
+	if( PlayerJob[playerid][pJob] == JOB_JACKER 
+		&& (!PlayerFaction[playerid][pMember] && !PlayerFaction[playerid][pLeader]) )
 		PlayerJob[playerid][pJob] = 0;
 
 	if( !PlayerInfo[playerid][pRegistered] )

@@ -6,7 +6,6 @@
 
 #define DEFAULT_TAXI_FARE		 (2)
 #define DEFAULT_TAXI_METERS_FARE (500)
-#define PLAYER_JOB_TAXI     	 (6)
 #define TAXI_MAX_SKILL			 (400)
 /*
 	- Vars
@@ -325,9 +324,12 @@ hook function ResetPlayerVariables(playerid)
 
 hook OnPlayerStateChange(playerid, newstate, oldstate)
 {
-	if(oldstate == PLAYER_STATE_ONFOOT && newstate == PLAYER_STATE_DRIVER) {
-		if(IsATaxi(GetVehicleModel(GetPlayerVehicleID(playerid))) ) {
-			if( PlayerJob[playerid][pJob] == PLAYER_JOB_TAXI ) {
+	if(oldstate == PLAYER_STATE_ONFOOT && newstate == PLAYER_STATE_DRIVER) 
+	{
+		if(IsATaxi(GetVehicleModel(GetPlayerVehicleID(playerid))) ) 
+		{
+			if( PlayerJob[playerid][pJob] == JOB_TAXI ) 
+			{
 				if(TaxiData[playerid][eTaxiDuty] == true)
 					return CreateTaximeter(playerid, true);
 			}
@@ -412,7 +414,7 @@ hook OnPlayerExitVehicle(playerid, vehicleid) {
 
 CMD:taxi(playerid, params[]) 
 {		
-	if(PlayerJob[playerid][pJob] != PLAYER_JOB_TAXI) 
+	if(PlayerJob[playerid][pJob] != JOB_TAXI) 
 		return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Moras biti clan taxi sluzbe da bi mogao koristiti komandu!");
 			
 	new action[18],

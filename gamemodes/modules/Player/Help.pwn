@@ -51,28 +51,33 @@ CMD:jobcmds(playerid, params[])
 {
 	switch(PlayerJob[playerid][pJob])
 	{
-		case 1: {
+		case JOB_SWEEPER: 
+		{
 			SendClientMessage(playerid, COLOR_LIGHTBLUE, "* _______________________ JOB COMMANDS _______________________ *");
 			SendClientMessage(playerid, -1, "\t CISTAC ULICA: /sweep");
 			SendClientMessage(playerid, COLOR_LIGHTBLUE, "* ______________________________________________________________ *");
 		}
-		case 3: {
+		case JOB_MECHANIC: 
+		{
 			SendClientMessage(playerid, COLOR_LIGHTBLUE, "* _______________________ JOB COMMANDS _______________________ *");		
 			SendClientMessage(playerid, -1, "\t MEHANICAR: 'Y - otvaranje garaze' - /repair - /parts - /armorcar");
 			SendClientMessage(playerid, -1, "\t MEHANICAR: /mechanic - /tow");
 			SendClientMessage(playerid, COLOR_LIGHTBLUE, "* ______________________________________________________________ *");
 		}
-		case 5: {
+		case JOB_CRAFTER: 
+		{
 			SendClientMessage(playerid, COLOR_LIGHTBLUE, "* _______________________ JOB COMMANDS _______________________ *");
 			SendClientMessage(playerid, -1, "\t TVORNICKI RADNIK: /craft");
 			SendClientMessage(playerid, COLOR_LIGHTBLUE, "* ______________________________________________________________ *");
 		}
-		case 6: {
+		case JOB_TAXI: 
+		{
 			SendClientMessage(playerid, COLOR_LIGHTBLUE, "* _______________________ JOB COMMANDS _______________________ *");
 			SendClientMessage(playerid, -1, "\t TAKSIST: /taxi");
 			SendClientMessage(playerid, COLOR_LIGHTBLUE, "* ______________________________________________________________ *");
 		}
-		case 7: {
+		case JOB_FARMER:
+		{
 			SendClientMessage(playerid, COLOR_LIGHTBLUE, "* _______________________ JOB COMMANDS _______________________ *");			
 			SendClientMessage(playerid, -1, "\t FARMER: /work - /finish - /takebucket - /dropbucket - /milk - /dropcanister");
 			SendClientMessage(playerid, -1, "\t FARMER: /seeds - /attach_trailer - /detach_trailer - /plant");
@@ -81,30 +86,34 @@ CMD:jobcmds(playerid, params[])
 			SendClientMessage(playerid, -1, "\t FARMER: /transport - /stoptransport");
 			SendClientMessage(playerid, COLOR_LIGHTBLUE, "* ______________________________________________________________ *");
 		}
-		case 9: {
+		case JOB_BURGLAR: 
+		{
 			SendClientMessage(playerid, COLOR_LIGHTBLUE, "* _______________________ JOB COMMANDS _______________________ *");
 			SendClientMessage(playerid, -1, "\t LOPOV: /stolengoods - /pocketsteal - /sellgoods - /picklock - /doorram");
 			SendClientMessage(playerid, -1, "\t LOPOV: /crack_alarm - /stealitems - /dropitem - /takeitem - /stealmoney");
 			SendClientMessage(playerid, -1, "\t HOUSE: /gunrack_rob(gunrack) - /storage_rob(drugs)");
 			SendClientMessage(playerid, COLOR_LIGHTBLUE, "* ______________________________________________________________ *");
 		}
-		case 13: {
+		case JOB_JACKER: 
+		{
 			SendClientMessage(playerid, COLOR_LIGHTBLUE, "* _______________________ JOB COMMANDS _______________________ *");			
 			SendClientMessage(playerid, -1, "\t CAR JACKER: /jacker - /igarage");
 			SendClientMessage(playerid, COLOR_LIGHTBLUE, "* ______________________________________________________________ *");
 		}
-		case 14: {
+		case JOB_LOGGER: 
+		{
 			SendClientMessage(playerid, COLOR_LIGHTBLUE, "* _______________________ JOB COMMANDS _______________________ *");		
 			SendClientMessage(playerid, -1, "\t DRVOSJECA: /cuttree - /stopcuttree - /treeinfo - /putwood - /checkvehwood");
 			SendClientMessage(playerid, -1, "\t DRVOSJECA: /checkmywood - /pickupwood - /takewood - /sellwood");
 			SendClientMessage(playerid, COLOR_LIGHTBLUE, "* ______________________________________________________________ *");
 		}
-		case 16: {
+		case JOB_GARBAGE: 
+		{
 			SendClientMessage(playerid, COLOR_LIGHTBLUE, "* _______________________ JOB COMMANDS _______________________ *");
 			SendClientMessage(playerid, -1, "\t SMETLAR: /garbage");
 			SendClientMessage(playerid, COLOR_LIGHTBLUE, "* ______________________________________________________________ *");
 		}
-		case 17:
+		case JOB_IMPOUNDER:
 		{
 			SendClientMessage(playerid, COLOR_LIGHTBLUE, "* _______________________ JOB COMMANDS _______________________ *");
 			SendClientMessage(playerid, -1, "\t IMPOUNDER: /jobimpound - /stopimpound - /tow");

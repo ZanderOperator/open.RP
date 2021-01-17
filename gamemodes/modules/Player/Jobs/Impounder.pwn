@@ -1,8 +1,6 @@
 // >> Made by Runner!
 #include <YSI_Coding\y_hooks>
 						
-#define IMPOUNDER_ID	(17)
-
 enum e_ipound_info
 {
 	ivID,
@@ -49,7 +47,7 @@ ResetImpoundVars(playerid)
 
 CMD:jobimpound(playerid, params[])
 {
-	if(PlayerJob[playerid][pJob] != IMPOUNDER_ID)
+	if(PlayerJob[playerid][pJob] != JOB_IMPOUNDER)
 		return SendClientMessage(playerid, COLOR_RED, "[GRESKA]: Nemas posao impoundera!");
 	
 	if(ImpounderJob[playerid][ivID] != 0)
@@ -137,7 +135,7 @@ CMD:jobimpound(playerid, params[])
 
 CMD:stopimpound(playerid, params[])
 {
-	if(PlayerJob[playerid][pJob] != IMPOUNDER_ID)
+	if(PlayerJob[playerid][pJob] != JOB_IMPOUNDER)
 		return SendClientMessage(playerid, COLOR_RED, "[GRESKA]: Nemas posao impoundera!");
 
 	ResetImpoundVars(playerid);

@@ -1,3 +1,30 @@
+/*
+
+			88   ,ad8888ba,   88888888ba   ad88888ba   
+			88  d8"'    `"8b  88      "8b d8"     "8b  
+			88 d8'        `8b 88      ,8P Y8,          
+			88 88          88 88aaaaaa8P' `Y8aaaaa,    
+			88 88          88 88""""""8b,   `"""""8b,  
+			88 Y8,        ,8P 88      `8b         `8b  
+	88,   ,d88  Y8a.    .a8P  88      a8P Y8a     a8P  
+	"Y8888P"    `"Y8888Y"'   88888888P"   "Y88888P"   
+
+ */
+
+enum
+{
+	JOB_SWEEPER 	= 1,
+	JOB_MECHANIC,
+	JOB_CRAFTER,
+	JOB_TAXI,
+	JOB_FARMER,
+	JOB_LOGGER,
+	JOB_GARBAGE,
+	JOB_IMPOUNDER,
+	JOB_JACKER,
+	JOB_BURGLAR
+};
+
 /*      
 
 	88888888ba  88                 db   8b        d8 88888888888 88888888ba   

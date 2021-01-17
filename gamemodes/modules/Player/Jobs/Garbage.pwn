@@ -9,7 +9,7 @@
 	##     ## ##       ##        ##  ##   ### ##       ##    ## 
 	########  ######## ##       #### ##    ## ########  ######  
 */
-#define PLAYER_JOB_GARBAGE      			(16) 	// ID posla smecara zamjeni sa kojim zelis
+
 #define TRASH_PRICE                         (43) 	// ovo je cijena vrece smeca u randomu
 #define PRICE_TRASH                         (50) 	// cijena vrece dobijat ce jos random(150)
 #define MAX_GARBAGE_CONTAINERS				(88)
@@ -254,7 +254,7 @@ hook OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
 {
 	if(PRESSED(KEY_FIRE))
 	{
-	    if(PlayerJob[playerid][pJob] != PLAYER_JOB_GARBAGE) return 1;
+	    if(PlayerJob[playerid][pJob] != JOB_GARBAGE) return 1;
 		if(gHasGarbage[playerid] == true && gStartedWork[playerid] == 1)
 		{
 			new nContainer = GetNearestContainer(playerid);
@@ -335,7 +335,7 @@ hook OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
 	}
 	if(PRESSED(KEY_NO))
 	{
-	    if(PlayerJob[playerid][pJob] == PLAYER_JOB_GARBAGE)
+	    if(PlayerJob[playerid][pJob] == JOB_GARBAGE)
 	    {
 			if(gDeponyEmpty[playerid] == 1)
 			{
@@ -373,7 +373,7 @@ hook OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
 
 hook OnPlayerEnterCheckpoint(playerid)
 {
-	if(PlayerJob[playerid][pJob] == PLAYER_JOB_GARBAGE) 
+	if(PlayerJob[playerid][pJob] == JOB_GARBAGE) 
 	{	
 		if( gStartedWork[playerid] == 1 ) 
 		{
@@ -436,7 +436,7 @@ CMD:garbage(playerid, params[])
 {
 	new
 		pick[ 8 ];
-	if(PlayerJob[playerid][pJob] != PLAYER_JOB_GARBAGE) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste zaposleni kao smetlar!");
+	if(PlayerJob[playerid][pJob] != JOB_GARBAGE) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste zaposleni kao smetlar!");
 	if( sscanf( params, "s[8] ", pick ) ) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /garbage [foot/truck/clothes/stop]");
 	
 	if( !strcmp( pick, "foot", true ) ) 
