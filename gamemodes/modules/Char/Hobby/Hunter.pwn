@@ -23,7 +23,6 @@
 
 #define DEER_STREAM_DIST        (100.0)
 #define DEER_RESPAWN_TIME       (3)
-//#define SCRIPT_DEBUGGING
 
 
 /*

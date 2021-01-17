@@ -708,10 +708,6 @@ stock LoadPlayerObjects(playerid)
 forward OnPlayerObjectsLoad(playerid);
 public OnPlayerObjectsLoad(playerid)
 {
-	#if defined MOD_DEBUG
-		printf("DEBUG OBJECTS: count(%d)", cache_num_rows());
-	#endif
-
 	if(cache_num_rows()) 
 	{
 	    for( new i = 0; i < cache_num_rows(); i++ ) 

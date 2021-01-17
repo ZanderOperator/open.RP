@@ -220,12 +220,6 @@ stock SetPlayerKeyInput(playerid, total_score, key_time, whole_time, type)
 	
 	format(tmpString, 32, "SCORE: %d/%d", InputInfo[ playerid ][ piTempScore ], InputInfo[ playerid ][ piTotalScore ]);
 	PlayerTextDrawSetString(playerid, KeyInputScoreTD[playerid], tmpString);
-	#if defined MOD_DEBUG
-		printf("DEBUG: id(%d) | text(%d)",
-			playerid,
-			GameTextForPlayer(playerid, InputInfo[ playerid ][ piKey ] ? ("~g~~k~~CONVERSATION_YES~") : ("~r~~k~~CONVERSATION_NO~"), InputInfo[ playerid ][ piKeyTime ], 4)
-		);
-	#endif
 	return 1;
 }
 

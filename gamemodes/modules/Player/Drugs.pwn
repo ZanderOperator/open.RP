@@ -36,7 +36,6 @@ enum e_V_DRUGS
 	vtype[MAX_VEHICLE_DRUGS],
 	Float:vamount[MAX_VEHICLE_DRUGS],
 	Float:vquality[MAX_VEHICLE_DRUGS],
-	vtimestamp[MAX_VEHICLE_DRUGS]
 }
 
 new
@@ -104,10 +103,6 @@ Public:LoadVehicleDrugs(vehicleid)
 forward LoadingVehicleDrugs(vehicleid);
 public LoadingVehicleDrugs(vehicleid)
 {
-	#if defined MOD_DEBUG
-		printf("DEBUG COCARS DRUGS: count(%d)", cache_num_rows());
-	#endif
-
 	if(cache_num_rows()) 
 	{
 	    for(new i = 0; i < cache_num_rows(); i++) 
@@ -116,7 +111,6 @@ public LoadingVehicleDrugs(vehicleid)
 			cache_get_value_name_int(i, "code", VehicleDrugs[vehicleid][vtype][i]);
 			cache_get_value_name_float(i, "amount", VehicleDrugs[vehicleid][vamount][i]); 
 			cache_get_value_name_float(i, "quality", VehicleDrugs[vehicleid][vquality][i]);
-			//cache_get_value_name_int(i, "timestamp", VehicleDrugs[vehicleid][vtimestamp][i]);
 		}
 	}
 	return 1;
@@ -139,10 +133,6 @@ public LoadingPlayerDrugs(playerid)
 	new
 		numrows = cache_num_rows();
 	
-	#if defined MOD_DEBUG
-		printf("DEBUG DRUGS: count(%d)", numrows);
-	#endif
-
 	if(numrows) 
 	{
 	    for(new i = 0; i < numrows; i++) 
@@ -1074,7 +1064,6 @@ GiveVehicleDrug(vehicleid, dtyp, Float:damnt, Float:dqua)
 	VehicleDrugs[vehicleid][vtype][emptyslot] = dtyp;
 	VehicleDrugs[vehicleid][vamount][emptyslot] = damnt;
 	VehicleDrugs[vehicleid][vquality][emptyslot] = dqua;
-	VehicleDrugs[vehicleid][vtimestamp][emptyslot] = gettime();
 	
 	mysql_tquery(g_SQL, 
 		va_fquery(g_SQL, 
@@ -1117,7 +1106,6 @@ DeleteVehicleDrug(vehicleid, slot = -1)
 		VehicleDrugs[vehicleid][vtype][slot] = 0;
 		VehicleDrugs[vehicleid][vamount][slot] = 0;
 		VehicleDrugs[vehicleid][vquality][slot] = 0;
-		VehicleDrugs[vehicleid][vtimestamp][slot] = 0;
 	}
 	return 1;
 }

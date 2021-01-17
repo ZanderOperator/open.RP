@@ -1030,12 +1030,10 @@ stock LoadVehicleWeaponPos(vehicleid)
 
 Public:LoadingPlayerVehicle(playerid)
 {
-	#if defined MOD_DEBUG
-		printf("DEBUG CARS: count(%d)", cache_num_rows());
-	#endif
 	if(cache_num_rows()) 
 	{
-	    for(new i = 0; i < cache_num_rows(); i++) {
+	    for(new i = 0; i < cache_num_rows(); i++) 
+		{
 			cache_get_value_name_int(i, 	"id"		, VehicleInfoSQLID[playerid][i]);
 			cache_get_value_name_int(i, 	"modelid"	, VehicleInfoModel[playerid][i]);
 			cache_get_value_name_float(i,  	"parkX"		, VehicleInfoParkX[playerid][i]);
@@ -4106,14 +4104,15 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 			ResetVehicleList(playerid);
 			GetPlayerVehicleList(playerid);
 
-			SendClientMessage(playerid, COLOR_RED, "[ ! ] Uspjesno ste obrisali vozilo iz databaze!");
+			SendClientMessage(playerid, COLOR_RED, "[ ! ]: Uspjesno ste obrisali vozilo iz databaze!");
 		}
 		case DIALOG_VEH_COLORS:
 			return 1;
 		case DIALOG_VEH_SELLING: 
 		{
-			if(!response) {
-				SendClientMessage(playerid, COLOR_RED, "[ ! ] Odustali ste od kupovine vozila!");
+			if(!response) 
+			{
+				SendClientMessage(playerid, COLOR_RED, "[ ! ]: Odustali ste od kupovine vozila!");
 				PlayerCarSeller[playerid] 	= INVALID_PLAYER_ID;
 				PlayerSellingPrice[playerid] 	= 0;
 				return 1;
@@ -4125,31 +4124,33 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 				sellerid 	= PlayerCarSeller[playerid],
 				sellVehid 	= PlayerKeys[sellerid][pVehicleKey];
 
-			if(sellerid == INVALID_PLAYER_ID) {
+			if(sellerid == INVALID_PLAYER_ID) 
+			{
 				SendMessage(playerid, MESSAGE_TYPE_ERROR, " Nitko vam nije ponudio prodaju vozila!");
 				PlayerCarSeller[playerid] = INVALID_PLAYER_ID;
 				return 1;
 			}
-			if(!IsPlayerConnected(sellerid)) {
+			if(!IsPlayerConnected(sellerid)) 
+			{
 				SendMessage(playerid, MESSAGE_TYPE_ERROR, " Ponuditelj prodaje vozila nije online!");
 				PlayerCarSeller[playerid] = INVALID_PLAYER_ID;
 				return 1;
 			}
-			if(AC_GetPlayerMoney(playerid) < PlayerSellingPrice[playerid]) return SendMessage(playerid, MESSAGE_TYPE_ERROR, " Nemate toliko novca!");
+			if(AC_GetPlayerMoney(playerid) < PlayerSellingPrice[playerid]) 
+				return SendMessage(playerid, MESSAGE_TYPE_ERROR, " Nemate toliko novca!");
+			
 			PlayerKeys[sellerid][pVehicleKey] = -1;
 
-			// Vehicle List Reset
 			ResetVehicleList(playerid);
 			ResetVehicleList(sellerid);
 			
-			// Vehicleid
-			PlayerKeys[playerid][pVehicleKey] 	= sellVehid;
+			PlayerKeys[playerid][pVehicleKey] = sellVehid;
 			
 			new sellprice = PlayerSellingPrice[playerid];
 			PlayerToPlayerMoneyTAX (playerid, sellerid, sellprice, true, LOG_TYPE_VEHICLESELL);
 
 			#if defined MODULE_LOGS
-			Log_Write("logfiles/car_carsell.txt", "(%s) %s{%d} sold %s{%d} %s[SQLID: %d] for %d$.",
+			Log_Write("logfiles/car_carsell.txt", "(%s) %s{%d} sold %s{%d} %s[SQLID: %d] for %s.",
 				ReturnDate(),
 				GetName(sellerid, false),
 				PlayerInfo[sellerid][pSQLID],
@@ -4157,16 +4158,24 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 				PlayerInfo[playerid][pSQLID],
 				ReturnVehicleName(GetVehicleModel(sellVehid)),
 				VehicleInfo[sellVehid][vSQLID],
-				PlayerSellingPrice[playerid]
+				FormatNumber(PlayerSellingPrice[playerid])
 			);
 			#endif
-			
-			PlayerSellingPrice[playerid] 	= 0;
-			PlayerCarSeller[playerid]		= -1;
 
-			SendClientMessage(playerid, COLOR_RED, "[ ! ] Uspjesno ste kupili vozilo, odmah kupite parking!");
-			SendClientMessage(sellerid, COLOR_RED, "[ ! ] Uspjesno ste prodali vozilo!");
-
+			va_SendClientMessage(playerid, 
+				COLOR_RED, 
+				"[ ! ]: Uspjesno ste kupili %s od %s za %s, odmah kupite parking (( /car buypark ))!",
+				ReturnVehicleName(VehicleInfo[sellVehid][vModel]),
+				GetName(sellerid),
+				FormatNumber(PlayerSellingPrice[playerid])
+			);
+			va_SendClientMessage(sellerid, 
+				COLOR_RED, 
+				"[ ! ]: Uspjesno ste prodali %s osobi %s za %s!",
+				ReturnVehicleName(VehicleInfo[sellVehid][vModel]),
+				GetName(playerid),
+				FormatNumber(PlayerSellingPrice[playerid])
+			);
 			// SQL
 			mysql_fquery(g_SQL, "UPDATE cocars SET ownerid = '%d' WHERE id = '%d'",
 				PlayerInfo[playerid][pSQLID],
@@ -4175,16 +4184,9 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 
 			VehicleInfo[sellVehid][vOwnerID] 	= PlayerInfo[playerid][pSQLID];
 			PlayerKeys[sellerid][pVehicleKey] 	= -1;
-			#if defined MOD_DEBUG
-			    printf("[COCARS DEBUG]: ids(s:%d, b:%d) | sql(s:%d, b:%d) | vehicleid(%d)",
-					sellerid,
-					playerid,
-					PlayerInfo[sellerid][pSQLID],
-					PlayerInfo[playerid][pSQLID],
-					sellVehid
-				);
-				printf("[COCARS DEBUG]: query(%s)", tmpQuery);
-			#endif
+
+			PlayerSellingPrice[playerid] 	= 0;
+			PlayerCarSeller[playerid]		= -1;
 
 			GetPlayerVehicleList(playerid);
 			GetPlayerVehicleList(sellerid);

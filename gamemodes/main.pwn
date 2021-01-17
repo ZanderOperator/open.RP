@@ -31,9 +31,6 @@
 #define MAX_VEHICLES                      		(1000)
 
 //#define 	MODULE_LOGS											// Player/Game Admin Command/Actions logging feature 
-//#define	WC_DEBUG								false
-//#define 	_DEBUG									0 			// YSI
-//#define 	MOD_DEBUG								true  		// Gamemode Debug
 
 // MySQL inline query functions
 #define MYSQL_USE_YINLINE						true

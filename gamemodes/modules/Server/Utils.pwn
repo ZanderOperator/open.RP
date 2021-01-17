@@ -2,54 +2,6 @@
 
 #define MAX_SUBJECTS_IN_RANGE			(15)
 
-
-/*
-	##     ##    ###     ######  ########   #######   ######  
-	###   ###   ## ##   ##    ## ##     ## ##     ## ##    # 
-	#### ####  ##   ##  ##       ##     ## ##     ## ##       
-	## ### ## ##     ## ##       ########  ##     ##  ######  
-	##     ## ######### ##       ##   ##   ##     ##       ## 
-	##     ## ##     ## ##    ## ##    ##  ##     ## ##    ## 
-	##     ## ##     ##  ######  ##     ##  #######   ######  
-*/
-
-// Debug
-#if defined MOD_DEBUG
-	stock CreateDynamicObject_DEBUG(modelid, Float:x, Float:y, Float:z, Float:rx, Float:ry, Float:rz, worldid = -1, interiorid = -1, playerid = -1, Float:streamdistance = 200.0, Float:drawdistance = 0.0)
-	{
-		new
-			objectid = CreateDynamicObject(modelid, x, y, z, rx, ry, rz, worldid, interiorid, playerid, streamdistance, drawdistance);
-		#if defined MOD_DEBUG
-			//printf("[DEBUG] CreateDynamicObject: objectid(%d)", objectid);
-		#endif
-		return objectid;
-	}
-
-	#define CreateDynamicObject CreateDynamicObject_DEBUG
-
-	stock DestroyDynamicObject_DEBUG(objectid)
-	{
-		if( !IsValidDynamicObject(objectid) ) 
-			return 0;
-		#if defined MOD_DEBUG
-			printf("[DEBUG] DestroyDynamicObject: objectid(%d)", objectid);
-		#endif
-		return DestroyDynamicObject(objectid);
-	}
-
-	#define DestroyDynamicObject DestroyDynamicObject_DEBUG
-
-	stock EditDynamicObject_DEBUG(playerid, objectid)
-	{
-		if( !IsValidDynamicObject(objectid) ) return 0;
-		#if defined MOD_DEBUG
-			printf("[DEBUG] EditDynamicObject: playerid(%d) | objectid(%d)", playerid, objectid);
-		#endif
-		return EditDynamicObject(playerid, objectid);
-	}
-	#define EditDynamicObject EditDynamicObject_DEBUG
-#endif
-
 // Main Player/Commands/Action/Internal Security Logger
 stock Log_Write(const path[], const str[], {Float,_}:...)
 {
@@ -340,7 +292,8 @@ stock abs(int)
 
 stock strreplace(sstring[], find, replace)
 {
-    for(new i=0; sstring[i] != EOS; i++) {
+    for(new i=0; sstring[i] != EOS; i++) 
+	{
         if(sstring[i] == find)
            sstring[i] = replace;
     }

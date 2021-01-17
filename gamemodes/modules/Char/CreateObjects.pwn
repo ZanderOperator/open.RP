@@ -107,21 +107,10 @@ stock static CreatePlayerObjectsObject(playerid, modelid, Float:x, Float:y, Floa
 	PlayerObjectsInfo[playerid][index][poInterior] 	= GetPlayerInterior(playerid);
 
 	PlayerObjectsInfo[playerid][index][poObjectid] 	= CreateDynamicObject(modelid, x, y, z, rx, ry, rz, PlayerObjectsInfo[playerid][index][poViwo], PlayerObjectsInfo[playerid][index][poInterior], -1, 150.0, PO_DRAW_DIST);
-	Iter_Add(PlayerCreateObjects[playerid], index);
+	Iter_Add(PlayerCreateObjects[playerid], index);	
+	UpdateStreamerAroundPlayer(playerid);
 
 	SendFormatMessage(playerid, MESSAGE_TYPE_SUCCESS, "Odabrali ste objekat ID: %d. Ukoliko Zelite promjeniti poziciju koristite /editobject.", modelid);
-	#if defined MOD_DEBUG
-		printf("[DEBUG] CREATE_OBJECTS CREATE: player(%s) | index(%d) | modelid(%d) | pos(%.2f, %.2f, %.2f)", 
-			GetName(playerid,false),
-			index,
-			PlayerObjectsInfo[playerid][index][poModelid ],
-			PlayerObjectsInfo[playerid][index][poPos][0],
-			PlayerObjectsInfo[playerid][index][poPos][1],
-			PlayerObjectsInfo[playerid][index][poPos][2]
-		);			
-	#endif
-	
-	UpdateStreamerAroundPlayer(playerid);
 	return index;
 }
 

@@ -3682,11 +3682,8 @@ public OnTowerCreated(towerid)
 forward OnPlayerContactsLoad(playerid);
 public OnPlayerContactsLoad(playerid)
 {
-
-	#if defined MOD_DEBUG
-		printf("DEBUG CONTACTS: count(%d)", cache_num_rows());
-	#endif
-	new rows = cache_num_rows();
+	new 
+		rows = cache_num_rows();
 	if(!rows)
 		return 1;
 	

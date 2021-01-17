@@ -280,8 +280,11 @@ static stock ExitBlankInteriorPreview(playerid)
 
     DestroyFurnitureBlankIntTDs(playerid);
 
-    new house = PlayerKeys[playerid][pHouseKey];
-    // TODO: house bounds check
+    new 
+        house = PlayerKeys[playerid][pHouseKey];
+    if(!House_Exists(house))
+        return 1;
+
     SetPlayerPosEx(playerid, HouseInfo[house][hEnterX], HouseInfo[house][hEnterY], HouseInfo[house][hEnterZ], 0, 0, true);
     SendMessage(playerid, MESSAGE_TYPE_INFO, "Uspjesno ste izasli iz pregleda interijera!");
     PreviewingInterior[playerid] = -1;
@@ -290,7 +293,6 @@ static stock ExitBlankInteriorPreview(playerid)
 
 GetHouseFurnitureSlot(playerid, houseid)
 {
-    // TODO: houseid bounds check
     FreeFurniture_Slot[playerid] = Iter_Free(HouseFurInt[houseid]);
     return FreeFurniture_Slot[playerid];
 }
@@ -310,9 +312,6 @@ GetFurnitureSlots(playerid, donator_level)
             return FURNITURE_VIP_SILVER_OBJCTS;
         case 3,4:
             return FURNITURE_VIP_GOLD_OBJCTS;
-        default:
-            // TODO: this will return "1" for "GetFurnitureSlots" -- is this wanted behaviour?
-            return SendClientMessage(playerid, COLOR_LIGHTRED, "Furniture.");
     }
     return FURNITURE_VIP_NONE;
 }
@@ -462,13 +461,6 @@ static stock InsertFurnitureObject(houseid, index)
 
 public OnFurnitureObjectCreates(houseid, index)
 {
-    // TODO: houseid, index bounds check
-    #if defined MOD_DEBUG
-    printf("[DEBUG] FURNITURE MYSQL CREATE: index(%d) | houseid(%d)",
-        index,
-        houseid
-    );
-    #endif
     HouseInfo[houseid][hFurSQL][index] = cache_insert_id();
     Iter_Add(HouseFurInt[houseid], index);
 }
@@ -941,17 +933,18 @@ static stock CreateFurnitureObject(playerid, modelid, Float:x, Float:y, Float:z,
 {
     if (playerid == INVALID_PLAYER_ID) return 0;
 
-    new houseid = GetPlayerFurnitureHouse(playerid);
+    new 
+        houseid = GetPlayerFurnitureHouse(playerid);
     if (houseid == INVALID_HOUSE_ID)
         return SendErrorMessage(playerid, "Niste u svojoj kuci / nemate dozvolu za postavljanje namjestaja.");
 
-    new index = GetHouseFurnitureSlot(playerid, houseid);
-    if (HouseInfo[houseid][hFurCounter] == GetFurnitureSlots(playerid, PlayerVIP[playerid][pDonateRank]))
+    new 
+        index = GetHouseFurnitureSlot(playerid, houseid);
+    if(index == -1)
         return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate dovoljno mjesta za objekte!");
-
-    // TODO: index bounds check
-    //if (index <= -1) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate dovoljno mjesta za objekte!");
-
+    if (HouseInfo[houseid][hFurCounter] >= GetFurnitureSlots(playerid, PlayerVIP[playerid][pDonateRank]))
+        return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate dovoljno mjesta za objekte!");
+    
     HouseInfo[houseid][hFurModelid][index]  = modelid;
     HouseInfo[houseid][hFurPosX][index]     = x;
     HouseInfo[houseid][hFurPosY][index]     = y;

@@ -365,12 +365,6 @@ stock InsertBizzFurnitureObject(biznisid, index)
 
 public OnBizzFurnitureObjectCreate(biznisid, index)
 {
-    #if defined MOD_DEBUG
-    printf("[DEBUG] FURNITURE MYSQL CREATE: index(%d) | biznisid(%d)",
-        index,
-        biznisid
-    );
-    #endif
     BizzInfo[biznisid][bFurSQL][index] = cache_insert_id();
     Iter_Add(BizzFurniture[biznisid], index);
     return 1;
@@ -799,8 +793,8 @@ static stock GetBiznisFurnitureSlot(biznisid)
 
 static stock CreateBiznisFurnitureObject(playerid, modelid, Float:x, Float:y, Float:z, Float:rx, Float:ry, Float:rz, bool:doors)
 {
-    if (playerid == INVALID_PLAYER_ID) return 0;
-
+    if (playerid == INVALID_PLAYER_ID) 
+        return 0;
     new
         biznisid = GetPlayerFurnitureBiznis(playerid),
         index   = GetBiznisFurnitureSlot(biznisid);
@@ -835,73 +829,30 @@ static stock CreateBiznisFurnitureObject(playerid, modelid, Float:x, Float:y, Fl
     }
     
     InsertBizzFurnitureObject(biznisid, index);
-    
-    #if defined MOD_DEBUG
-    printf("[DEBUG] FURNITURE BUY: player(%s) | index(%d) | biznisid(%d) | modelid(%d) | pos(%.2f, %.2f, %.2f)",
-        GetName(playerid,false),
-        index,
-        biznisid,
-        BizzInfo[biznisid][bFurModelid][index],
-        BizzInfo[biznisid][bFurPosX][index],
-        BizzInfo[biznisid][bFurPosY][index],
-        BizzInfo[biznisid][bFurPosZ][index]
+    BizzInfo[biznisid][bFurObjectid][index] = CreateDynamicObject(modelid, x, y, z, rx, ry, rz, GetPlayerVirtualWorld(playerid), GetPlayerInterior(playerid), -1, FURNITURE_OBJECT_DRAW_DISTANCE, FURNITURE_OBJECT_DRAW_DISTANCE);
+    new 
+        price = GetFurnitureObjectPrice(playerid, BizzPlayerPrwsIndex[playerid]);
+    PlayerToBudgetMoney(playerid, price); // Novac ide u proracun
+
+    va_SendClientMessage(playerid, COLOR_GREEN, "[INFO]: Kupili ste objekt za %d$ i stavili ga u slot %d!", price, index + 1);
+
+    #if defined MODULE_LOGS
+    Log_Write("/logfiles/furniture_buy.txt", "(%s) Player %s bought an object(modelid: %d) for %d$ in Business Furniture and placed it into slot %d.",
+        ReturnDate(),
+        GetName(playerid, false),
+        modelid,
+        price,
+        index
     );
     #endif
 
-    if (!mysql_errno() || mysql_errno() == 1064)
-    {
-        BizzInfo[biznisid][bFurObjectid][index] = CreateDynamicObject(modelid, x, y, z, rx, ry, rz, GetPlayerVirtualWorld(playerid), GetPlayerInterior(playerid), -1, FURNITURE_OBJECT_DRAW_DISTANCE, FURNITURE_OBJECT_DRAW_DISTANCE);
-
-        // Money settings
-        new price = GetFurnitureObjectPrice(playerid, BizzPlayerPrwsIndex[playerid]);
-        va_SendClientMessage(playerid, COLOR_GREEN, "[INFO]: Kupili ste objekt za %d$ i stavili ga u slot %d!", price, index + 1);
-        PlayerToBudgetMoney(playerid, price); // Novac ide u proracun
-        BizzEditState[playerid] = -1;
-
-        #if defined MODULE_LOGS
-        Log_Write("/logfiles/furniture_buy.txt", "(%s) Player %s bought an object(modelid: %d) for %d$ in Business Furniture and placed it into slot %d.",
-            ReturnDate(),
-            GetName(playerid, false),
-            modelid,
-            price,
-            index
-        );
-        #endif
-
-        BizzPlayerPrwsObject[playerid] = INVALID_OBJECT_ID;
-        BizzPlayerPrwsIndex [playerid] = -1;
-        BizzPlayerPrwsModel [playerid] = 0;
-        BizzFurObjectSection[playerid] = 0;
-        BizzFurnObjectsType [playerid] = 0;
-    }
-    else
-    {
-        if (IsValidDynamicObject(BizzInfo[biznisid][bFurObjectid][index]))
-        {
-            DestroyDynamicObject(BizzInfo[biznisid][bFurObjectid][index]);
-            BizzInfo[biznisid][bFurObjectid][index] = INVALID_OBJECT_ID;
-        }
-        if (BizzInfo[biznisid][bFurSQL][index] > 0)
-            mysql_fquery(g_SQL, "DELETE FROM biznis_furniture WHERE sqlid = '%d'", BizzInfo[biznisid][bFurSQL][index]);
-        
-
-        // TODO: helper function, this is repeated more than once
-        BizzInfo[biznisid][bFurModelid][index] = 0;
-        BizzInfo[biznisid][bFurPosX][index]    = 0.0;
-        BizzInfo[biznisid][bFurPosY][index]    = 0.0;
-        BizzInfo[biznisid][bFurPosZ][index]    = 0.0;
-        BizzInfo[biznisid][bFurRotX][index]    = 0.0;
-        BizzInfo[biznisid][bFurRotY][index]    = 0.0;
-        BizzInfo[biznisid][bFurRotZ][index]    = 0.0;
-
-        for (new i = 0; i < MAX_COLOR_TEXT_SLOTS; i++)
-        {
-            BizzInfo[biznisid][bFurTxtId][index][i] = 0;
-            BizzInfo[biznisid][bFurColId][index][i] = -1;
-        }
-
-        va_SendClientMessage(playerid, COLOR_RED, "[MySQL ERROR #%d]: Dogodila se pogreska prilikom spremanja objekta (index: %d) u bazu podataka! Vasi novci nisu oduzeti, pokusajte ponovno kasnije!", mysql_errno(), index);
-    }
+    BizzPlayerPrwsObject[playerid] = INVALID_OBJECT_ID;
+    BizzPlayerPrwsIndex [playerid] = -1;
+    BizzPlayerPrwsModel [playerid] = 0;
+    BizzFurObjectSection[playerid] = 0;
+    BizzFurnObjectsType [playerid] = 0;
+    BizzEditState[playerid] = -1;
+    
     Streamer_Update(playerid);
     return index;
 }
