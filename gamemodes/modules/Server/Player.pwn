@@ -124,3 +124,126 @@ stock AC_TogglePlayerSpectating(playerid, yon)
     #define _ALS_TogglePlayerSpectating
 #endif
 #define TogglePlayerSpectating AC_TogglePlayerSpectating
+
+static SendSplitMessage(playerid, color, const msgstring[])
+{
+    new len = strlen(msgstring);
+    if(len >= EX_SPLITLENGTH)
+    {
+		new buffer[EX_SPLITLENGTH+10],
+			colorstring[9] = EOS, colorstart = 0, colorend = 0,	
+			buffer2[128], spacepos = 0, bool:broken = false;
+
+		for(new j = 60; j < len; j++)
+		{
+			if(msgstring[j] == '{')
+				colorstart = j;
+				
+			if(msgstring[j] == '}')
+				colorend = j + 1;
+
+			if(msgstring[j] == ' ')
+				spacepos = j;
+
+			if(j >= EX_SPLITLENGTH && spacepos >= 60 && (colorstart == 0 || (colorstart != 0 && colorend > colorstart)))
+			{
+				broken = true;
+				if(colorstart != 0 && colorend != 0)
+					strmid(colorstring, msgstring, colorstart, colorend, sizeof(colorstring));
+				strmid(buffer, msgstring, 0, spacepos);
+				format(buffer, sizeof(buffer), "%s...", buffer);
+				SendClientMessage(playerid, color, buffer);
+				strmid(buffer2, msgstring, spacepos+1, len);
+				format(buffer2, sizeof(buffer2), "%s...%s", colorstring, buffer2);
+				SendClientMessage(playerid, color, buffer2);
+				return 1;
+			}
+		}
+		if(!broken)
+			SendClientMessage(playerid, color, msgstring);
+	}
+    else return SendClientMessage(playerid, color, msgstring);
+	return 1;
+}
+
+static SendSplitMessageToAll(color, const msgstring[])
+{
+    new len = strlen(msgstring);
+    if(len >= EX_SPLITLENGTH)
+    {
+		new buffer[EX_SPLITLENGTH+10],
+			colorstring[9] = EOS, colorstart = 0, colorend = 0,	
+			buffer2[128], spacepos = 0, bool:broken=false;
+
+		for(new j = 60; j < len; j++)
+		{
+			if(msgstring[j] == ' ')
+				spacepos = j;
+			
+			if(msgstring[j] == '{')
+				colorstart = j;
+				
+			if(msgstring[j] == '}')
+				colorend = j + 1;
+
+			if(j >= EX_SPLITLENGTH && spacepos >= 60 && (colorstart == 0 || (colorstart != 0 && colorend > colorstart)))
+			{
+				broken = true;
+				if(colorstart != 0 && colorend != 0)
+					strmid(colorstring, msgstring, colorstart, colorend, sizeof(colorstring));
+				strmid(buffer, msgstring, 0, spacepos);
+				format(buffer, sizeof(buffer), "%s...", buffer);
+				SendClientMessageToAll(color, buffer);
+				strmid(buffer2, msgstring, spacepos+1, len);
+				format(buffer2, sizeof(buffer2), "%s...%s", colorstring, buffer2);
+				SendClientMessageToAll(color, buffer2);
+				return 1;
+			}
+		}
+		if(!broken)
+			SendClientMessageToAll(color, msgstring);
+	}
+    else return SendClientMessageToAll(color, msgstring);
+	return 1;
+}
+
+AC_SendClientMessageToAll(color, const message[])
+{
+	SendSplitMessageToAll(color, message);
+	return 1;
+}
+#if defined _ALS_SendClientMessageToAll
+    #undef SendClientMessageToAll
+#else
+    #define _ALS_SendClientMessageToAll
+#endif
+#define SendClientMessageToAll AC_SendClientMessageToAll
+
+AC_SendClientMessage(playerid, color, const message[])
+{
+	SendSplitMessage(playerid, color, message);
+	return 1;
+}
+#if defined _ALS_SendClientMessage
+    #undef SendClientMessage
+#else
+    #define _ALS_SendClientMessage
+#endif
+#define SendClientMessage AC_SendClientMessage
+
+va_ShowPlayerDialog(playerid, dialogid, style, caption[], fmat[], button1[], button2[], va_args<>)
+{
+	new d_string[4096];
+	va_format(d_string, sizeof(d_string), fmat, va_start<7>);
+	return ShowPlayerDialog(playerid, dialogid, style, caption, d_string, button1, button2);
+}
+
+SendErrorMessage(playerid, smsgstring[])
+{
+	return SendMessage(playerid, MESSAGE_TYPE_ERROR, smsgstring);
+}
+
+SendInfoMessage(playerid, smsgstring[])
+{
+	return SendMessage(playerid, MESSAGE_TYPE_INFO, smsgstring);
+}
