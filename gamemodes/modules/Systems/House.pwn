@@ -1703,7 +1703,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
             new pID = strval(inputtext),
                 houseid = PlayerKeys[playerid][pHouseKey];
             // TODO: use defines and don't use high numbers for invalid ID's (unless required), typically, use -1
-            if (houseid == 9999)
+            if (houseid == INVALID_HOUSE_ID)
                 return 1;
 
             if (!IsPlayerInRangeOfPoint(playerid, 10.0, HouseInfo[houseid][hEnterX], HouseInfo[houseid][hEnterY], HouseInfo[houseid][hEnterZ])) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Morate biti blizu vase kuce!");
@@ -2864,285 +2864,42 @@ CMD:customhouseint(playerid, params[])
 
 CMD:houseint(playerid, params[])
 {
-    // TODO: proplev and id2... jebeno. make more readable names
-    new proplev, id2;
-    if (PlayerInfo[playerid][pAdmin] < 1338) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nisi 1338!");
-    if (sscanf(params, "ii", proplev, id2)) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /houseint [houseid][id (1-42)]");
-    if (proplev > sizeof(HouseInfo) || proplev < 0) return SendClientMessage(playerid, COLOR_RED, "House ID mora biti izmedju 0 i 558");
-    if (id2 < 1 || id2 > 42) return SendClientMessage(playerid, COLOR_RED, "[GRESKA:] INTERIORI MOGU BITI OD 1-42.");
-
-    // TODO: these switch statements are starting to iritate me although they are one of my favourite constructs.
-    // fking make an array of house exit positions, message descriptions (for interiors) and of interior ID's
-    // and then index right into it.
-    switch (id2)
+    new 
+        houseid, 
+        int;
+    if (PlayerInfo[playerid][pAdmin] < 1338) 
+        return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You are not Head Administrator!");
+    if (sscanf(params, "ii", houseid, int)) 
+        return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /houseint [houseid][id (1-42)]");
+    if (!Iter_Contains(House, houseid)) 
+        return SendMessage(playerid, MESSAGE_TYPE_ERROR, "House with that ID doesn't exist");
+    if (int < 0 || int > sizeof(HouseInts)) 
     {
-        case 1:
-        {
-            HouseInfo[proplev][hExitX] = 235.3054;
-            HouseInfo[proplev][hExitY] = 1186.6835;
-            HouseInfo[proplev][hExitZ] = 1080.2578;
-            HouseInfo[proplev][hInt] = 3;
-            SendFormatMessage(playerid, MESSAGE_TYPE_INFO, "Interijer(houseid %d): Large/2 story/3 bedrooms/clone of House 9.", proplev);
-        }
-        case 2:
-        {//225.756989,1240.000000,1082.149902
-            HouseInfo[proplev][hExitX] = 225.756989;
-            HouseInfo[proplev][hExitY] = 1240.000000;
-            HouseInfo[proplev][hExitZ] = 1082.149902;
-            HouseInfo[proplev][hInt] = 2;
-            SendFormatMessage(playerid, MESSAGE_TYPE_INFO, "Interijer(houseid %d): Medium/1 story/1 bedroom.", proplev);
-        }
-        case 3:
-        {//223.1929,1287.0780,1082.1406,
-            HouseInfo[proplev][hExitX] = 223.1929;
-            HouseInfo[proplev][hExitY] = 1287.0780;
-            HouseInfo[proplev][hExitZ] = 1082.1406;
-            HouseInfo[proplev][hInt] = 1;
-            SendFormatMessage(playerid, MESSAGE_TYPE_INFO, "Interijer(houseid %d): Small/1 story/1 bedroom.", proplev);
-        }
-        case 4:
-        {
-            HouseInfo[proplev][hExitX] = 225.630997; HouseInfo[proplev][hExitY] = 1022.479980; HouseInfo[proplev][hExitZ] = 1084.069946;
-            HouseInfo[proplev][hInt] = 7;
-            SendFormatMessage(playerid, MESSAGE_TYPE_INFO, "Interijer(houseid %d): VERY Large/2 story/4 bedrooms.", proplev);
-        }
-        case 5:
-        {
-            HouseInfo[proplev][hExitX] = 295.138977; HouseInfo[proplev][hExitY] = 1474.469971; HouseInfo[proplev][hExitZ] = 1080.519897;
-            HouseInfo[proplev][hInt] = 15;
-            SendFormatMessage(playerid, MESSAGE_TYPE_INFO, "Interijer(houseid %d): Small/1 story/2 bedrooms.", proplev);
-        }
-        case 6:
-        {
-            HouseInfo[proplev][hExitX] = 328.1066; HouseInfo[proplev][hExitY] = 1478.0106; HouseInfo[proplev][hExitZ] = 1084.4375;//328.1066,1478.0106,1084.4375
-            HouseInfo[proplev][hInt] = 15;
-            SendFormatMessage(playerid, MESSAGE_TYPE_INFO, "Interijer(houseid %d): Small/1 story/2 bedrooms.", proplev);
-        }
-        case 7:
-        {
-            HouseInfo[proplev][hExitX] = 385.803986; HouseInfo[proplev][hExitY] = 1471.769897; HouseInfo[proplev][hExitZ] = 1080.209961;
-            HouseInfo[proplev][hInt] = 15;
-            SendFormatMessage(playerid, MESSAGE_TYPE_INFO, "Interijer(houseid %d): Small/1 story/1 bedroom/NO BATHROOM.", proplev);
-        }
-        case 8:
-        {
-            HouseInfo[proplev][hExitX] = 375.971985; HouseInfo[proplev][hExitY] = 1417.269897; HouseInfo[proplev][hExitZ] = 1081.409912;
-            HouseInfo[proplev][hInt] = 15;
-            SendFormatMessage(playerid, MESSAGE_TYPE_INFO, "Interijer(houseid %d): Small/1 story/1 bedroom.", proplev);
-        }
-        case 9:
-        {
-            HouseInfo[proplev][hExitX] = 490.810974; HouseInfo[proplev][hExitY] = 1401.489990; HouseInfo[proplev][hExitZ] = 1080.339966;
-            HouseInfo[proplev][hInt] = 2;
-            SendFormatMessage(playerid, MESSAGE_TYPE_INFO, "Interijer(houseid %d): Large/2 story/3 bedrooms.", proplev);
-        }
-        case 10:
-        {
-            HouseInfo[proplev][hExitX] = 446.8264; HouseInfo[proplev][hExitY] = 1397.3435; HouseInfo[proplev][hExitZ] = 1084.3047;
-            HouseInfo[proplev][hInt] = 2;
-            SendFormatMessage(playerid, MESSAGE_TYPE_INFO, "Interijer(houseid %d): Medium/1 story/2 bedrooms.", proplev);
-        }
-        case 11:
-        {
-            HouseInfo[proplev][hExitX] = 227.722992; HouseInfo[proplev][hExitY] = 1114.389893; HouseInfo[proplev][hExitZ] = 1081.189941;
-            HouseInfo[proplev][hInt] = 5;
-            SendFormatMessage(playerid, MESSAGE_TYPE_INFO, "Interijer(houseid %d): Large/2 story/4 bedrooms.", proplev);
-        }
-        case 12:
-        {
-            HouseInfo[proplev][hExitX] = 260.983978; HouseInfo[proplev][hExitY] = 1286.549927; HouseInfo[proplev][hExitZ] = 1080.299927;//260.983978,1286.549927,1080.299927
-            HouseInfo[proplev][hInt] = 4;
-            SendFormatMessage(playerid, MESSAGE_TYPE_INFO, "Interijer(houseid %d): Small/1 story/1 bedroom.", proplev);
-        }
-        case 13:
-        {
-            HouseInfo[proplev][hExitX] = 221.7330; HouseInfo[proplev][hExitY] = 1140.5146; HouseInfo[proplev][hExitZ] = 1082.6094;//221.7330,1140.5146,1082.6094,
-            HouseInfo[proplev][hInt] = 4;
-            SendFormatMessage(playerid, MESSAGE_TYPE_INFO, "Interijer(houseid %d): Small/1 story/1 bedroom/NO BATHROOM!", proplev);
-        }
-        case 14:
-        {
-            HouseInfo[proplev][hExitX] = 23.9878; HouseInfo[proplev][hExitY] = 1340.3865; HouseInfo[proplev][hExitZ] = 1084.3750;
-            HouseInfo[proplev][hInt] = 10;
-            SendFormatMessage(playerid, MESSAGE_TYPE_INFO, "Interijer(houseid %d): Medium/2 story/1 bedroom.", proplev);
-        }
-        case 15:
-        {
-            HouseInfo[proplev][hExitX] = -262.601990; HouseInfo[proplev][hExitY] = 1456.619995; HouseInfo[proplev][hExitZ] = 1084.449951;//-262.601990,1456.619995,1084.449951,
-            HouseInfo[proplev][hInt] = 4;
-            SendFormatMessage(playerid, MESSAGE_TYPE_INFO, "Interijer(houseid %d): Large/2 story/1 bedroom/NO BATHROOM!", proplev);
-        }
-        case 16:
-        {//22.778299,1404.959961,1084.449951,
-            HouseInfo[proplev][hExitX] = 22.778299; HouseInfo[proplev][hExitY] = 1404.959961; HouseInfo[proplev][hExitZ] = 1084.449951;
-            HouseInfo[proplev][hInt] = 5;
-            SendFormatMessage(playerid, MESSAGE_TYPE_INFO, "Interijer(houseid %d): Medium/1 story/2 bedrooms/NO BATHROOM or DOORS!", proplev);
-        }
-        case 17:
-        {
-            HouseInfo[proplev][hExitX] = 140.2267; HouseInfo[proplev][hExitY] = 1365.9246; HouseInfo[proplev][hExitZ] = 1083.8594;
-            HouseInfo[proplev][hInt] = 5;
-            SendFormatMessage(playerid, MESSAGE_TYPE_INFO, "Interijer(houseid %d): Large/2 story/4 bedrooms/NO BATHROOM!", proplev);
-        }
-        case 18:
-        {
-            HouseInfo[proplev][hExitX] = 234.045990; HouseInfo[proplev][hExitY] = 1064.879883; HouseInfo[proplev][hExitZ] = 1084.309937;
-            HouseInfo[proplev][hInt] = 6;
-            SendFormatMessage(playerid, MESSAGE_TYPE_INFO, "Interijer(houseid %d): Large/2 story/3 bedrooms.", proplev);
-        }
-        case 19:
-        {//-68.294098,1353.469971,1080.279907,
-            HouseInfo[proplev][hExitX] = -68.294098; HouseInfo[proplev][hExitY] = 1353.469971; HouseInfo[proplev][hExitZ] = 1080.279907;
-            HouseInfo[proplev][hInt] = 6;
-            SendFormatMessage(playerid, MESSAGE_TYPE_INFO, "Interijer(houseid %d): Small/1 story/NO BEDROOM!", proplev);
-        }
-        case 20:
-        {
-            HouseInfo[proplev][hExitX] = -285.548981; HouseInfo[proplev][hExitY] = 1470.979980; HouseInfo[proplev][hExitZ] = 1084.449951;
-            HouseInfo[proplev][hInt] = 15;
-            SendFormatMessage(playerid, MESSAGE_TYPE_INFO, "Interijer(houseid %d): 1 bedroom/living room/kitchen/NO BATHROOM", proplev);
-        }
-        case 21:
-        {//-42.581997,1408.109985,1084.449951,
-            HouseInfo[proplev][hExitX] = -42.581997; HouseInfo[proplev][hExitY] = 1408.109985; HouseInfo[proplev][hExitZ] = 1084.449951;
-            HouseInfo[proplev][hInt] = 8;
-            SendFormatMessage(playerid, MESSAGE_TYPE_INFO, "Interijer(houseid %d): Small/1 story/NO BEDROOM!", proplev);
-        }
-        case 22:
-        {
-            HouseInfo[proplev][hExitX] = 83.345093; HouseInfo[proplev][hExitY] = 1324.439941; HouseInfo[proplev][hExitZ] = 1083.889893;
-            HouseInfo[proplev][hInt] = 9;
-            SendFormatMessage(playerid, MESSAGE_TYPE_INFO, "Interijer(houseid %d): Medium/2 story/2 bedrooms", proplev);
-        }
-        case 23:
-        {//260.941986,1238.509888,1084.259888,
-            HouseInfo[proplev][hExitX] = 260.941986; HouseInfo[proplev][hExitY] = 1238.509888; HouseInfo[proplev][hExitZ] = 1084.259888;// INT ZA STAN..
-            HouseInfo[proplev][hInt] = 9;
-            SendFormatMessage(playerid, MESSAGE_TYPE_INFO, "Interijer(houseid %d): Small/1 story/1 bedroom", proplev);
-        }
-        case 24:
-        {//244.411987,305.032990,999.231995,
-            HouseInfo[proplev][hExitX] = 244.411987; HouseInfo[proplev][hExitY] = 305.032990; HouseInfo[proplev][hExitZ] = 999.231995;
-            HouseInfo[proplev][hInt] = 1;
-            SendFormatMessage(playerid, MESSAGE_TYPE_INFO, "Interijer(houseid %d): Denise's Bedroom", proplev);
-        }
-        case 25:
-        {
-            HouseInfo[proplev][hExitX] = 266.4986; HouseInfo[proplev][hExitY] = 305.0700; HouseInfo[proplev][hExitZ] = 999.1484;
-            HouseInfo[proplev][hInt] = 2;
-            SendFormatMessage(playerid, MESSAGE_TYPE_INFO, "Interijer(houseid %d): Katie's Bedroom", proplev);
-        }
-        case 26:
-        {
-            HouseInfo[proplev][hExitX] = 291.282990; HouseInfo[proplev][hExitY] = 310.031982; HouseInfo[proplev][hExitZ] = 999.154968;
-            HouseInfo[proplev][hInt] = 3;
-            SendFormatMessage(playerid, MESSAGE_TYPE_INFO, "Interijer(houseid %d): Helena's Bedroom (barn) - limited movement.", proplev);
-        }
-        case 27:
-        {
-            HouseInfo[proplev][hExitX] = 302.181000; HouseInfo[proplev][hExitY] = 300.722992; HouseInfo[proplev][hExitZ] = 999.231995;
-            HouseInfo[proplev][hInt] = 4;
-            SendFormatMessage(playerid, MESSAGE_TYPE_INFO, "Interijer(houseid %d): Michelle's Bedroom.", proplev);
-        }
-        case 28:
-        {
-            HouseInfo[proplev][hExitX] = 322.197998; HouseInfo[proplev][hExitY] = 302.497986; HouseInfo[proplev][hExitZ] = 999.231995;
-            HouseInfo[proplev][hInt] = 5;
-            SendFormatMessage(playerid, MESSAGE_TYPE_INFO, "Interijer(houseid %d): Barbara's Bedroom.", proplev);
-        }
-        case 29:
-        {
-            HouseInfo[proplev][hExitX] = 343.7173; HouseInfo[proplev][hExitY] = 304.9440; HouseInfo[proplev][hExitZ] = 999.1484;
-            HouseInfo[proplev][hInt] = 6;
-            SendFormatMessage(playerid, MESSAGE_TYPE_INFO, "Interijer(houseid %d): Millie's Bedroom.", proplev);
-        }
-        case 30:
-        {
-            HouseInfo[proplev][hExitX] = 2495.6416; HouseInfo[proplev][hExitY] = -1692.2361; HouseInfo[proplev][hExitZ] = 1014.7422;//2495.6416,-1692.2361,1014.7422,
-            HouseInfo[proplev][hInt] = 3;
-            SendFormatMessage(playerid, MESSAGE_TYPE_INFO, "Interijer(houseid %d): CJ's Mom's House.", proplev);
-        }
-        case 31:
-        {
-            HouseInfo[proplev][hExitX] = 1263.079956; HouseInfo[proplev][hExitY] = -785.308960; HouseInfo[proplev][hExitZ] = 1091.959961;
-            HouseInfo[proplev][hInt] = 5;
-            SendFormatMessage(playerid, MESSAGE_TYPE_INFO, "Interijer(houseid %d): Madd Dogg's Mansion (West door).", proplev);
-        }
-        case 32:
-        {
-            HouseInfo[proplev][hExitX] = 2468.4502; HouseInfo[proplev][hExitY] = -1698.4801; HouseInfo[proplev][hExitZ] = 1013.5078;//2468.4502,-1698.4801,1013.5078,
-            HouseInfo[proplev][hInt] = 2;
-            SendFormatMessage(playerid, MESSAGE_TYPE_INFO, "Interijer(houseid %d): Ryder's house.", proplev);
-        }
-        case 33:
-        {
-            HouseInfo[proplev][hExitX] = 2526.459961; HouseInfo[proplev][hExitY] = -1679.089966; HouseInfo[proplev][hExitZ] = 1015.500000;
-            HouseInfo[proplev][hInt] = 1;
-            SendFormatMessage(playerid, MESSAGE_TYPE_INFO, "Interijer(houseid %d): Sweet's House (South side of house is fucked).", proplev);
-        }
-        case 34:
-        {
-            HouseInfo[proplev][hExitX] = 2543.659912; HouseInfo[proplev][hExitY] = -1303.629883; HouseInfo[proplev][hExitZ] = 1025.069946;
-            HouseInfo[proplev][hInt] = 2;
-            SendFormatMessage(playerid, MESSAGE_TYPE_INFO, "Interijer(houseid %d): Big Smoke's Crack Factory (Ground Floor).", proplev);
-        }
-        case 35:
-        {
-            HouseInfo[proplev][hExitX] = 744.542969; HouseInfo[proplev][hExitY] = 1437.669922; HouseInfo[proplev][hExitZ] = 1102.739990;
-            HouseInfo[proplev][hInt] = 6;
-            SendFormatMessage(playerid, MESSAGE_TYPE_INFO, "Interijer(houseid %d): Fanny Batter's Whore House.", proplev);
-        }
-        case 36:
-        {
-            HouseInfo[proplev][hExitX] = 964.106995; HouseInfo[proplev][hExitY] = -53.205498; HouseInfo[proplev][hExitZ] = 1001.179993;
-            HouseInfo[proplev][hInt] = 3;
-            SendFormatMessage(playerid, MESSAGE_TYPE_INFO, "Interijer(houseid %d): Tiger Skin Rug Brothel.", proplev);
-        }
-        case 37:
-        {
-            HouseInfo[proplev][hExitX] = 2350.339844; HouseInfo[proplev][hExitY] = -1181.649902; HouseInfo[proplev][hExitZ] = 1028.000000;
-            HouseInfo[proplev][hInt] = 5;
-            SendFormatMessage(playerid, MESSAGE_TYPE_INFO, "Interijer(houseid %d): Burning Desire Gang House.", proplev);
-        }
-        case 38:
-        {
-            HouseInfo[proplev][hExitX] = 2807.9172; HouseInfo[proplev][hExitY] = -1174.4333; HouseInfo[proplev][hExitZ] = 1025.5703;
-            HouseInfo[proplev][hInt] = 8;
-            SendFormatMessage(playerid, MESSAGE_TYPE_INFO, "Interijer(houseid %d): Colonel Furhberger's House.", proplev);
-        }
-        case 39:
-        {//CRACK HOUSE
-            HouseInfo[proplev][hExitX] = 318.6453; HouseInfo[proplev][hExitY] = 1114.4795; HouseInfo[proplev][hExitZ] = 1083.8828;//318.7010,1114.7716,1083.8828,
-            HouseInfo[proplev][hInt] = 5;
-            SendFormatMessage(playerid, MESSAGE_TYPE_INFO, "Interijer(houseid %d): Crack Den.", proplev);
-        }
-        case 40:
-        {
-            HouseInfo[proplev][hExitX] = 2324.3267; HouseInfo[proplev][hExitY] = -1149.1440; HouseInfo[proplev][hExitZ] = 1050.7101;
-            HouseInfo[proplev][hInt] = 12;
-            SendFormatMessage(playerid, MESSAGE_TYPE_INFO, "Interijer(houseid %d): Unused Safe House.", proplev);
-        }
-        case 41:
-        {
-            HouseInfo[proplev][hExitX] = 446.5014; HouseInfo[proplev][hExitY] = 507.0295; HouseInfo[proplev][hExitZ] = 1001.4195;
-            HouseInfo[proplev][hInt] = 12;
-            SendFormatMessage(playerid, MESSAGE_TYPE_INFO, "Interijer(houseid %d): Budget Inn Motel Room.", proplev);
-        }
-        case 42:
-        {
-            HouseInfo[proplev][hExitX] = 2216.3398; HouseInfo[proplev][hExitY] = -1150.5099; HouseInfo[proplev][hExitZ] = 1025.7969;
-            HouseInfo[proplev][hInt] = 15;
-            SendFormatMessage(playerid, MESSAGE_TYPE_INFO, "Interijer(houseid %d): Jefferson Motel. (REALLY EXPENSIVE)", proplev);
-        }
+        return SendFormatMessage(playerid, 
+            MESSAGE_TYPE_ERROR, 
+            "Interior ID's can't go below 0 or above %d!", 
+            sizeof(HouseInts)
+        );
     }
+    HouseInfo[houseid][hExitX] = HouseInts[int][iEnterX];
+    HouseInfo[houseid][hExitY] = HouseInts[int][iEnterY];
+    HouseInfo[houseid][hExitZ] = HouseInts[int][iEnterZ];
+    HouseInfo[houseid][hInt] = HouseInts[int][iInterior];    
+    
+    SendFormatMessage(playerid, 
+        MESSAGE_TYPE_INFO, 
+        "Interior(House ID %d): %s.", 
+        houseid,
+        HouseInts[int][iDescription]
+    );
 
     mysql_fquery(g_SQL,
-        "UPDATE houses SET exitX='%f',exitY='%f',exitZ='%f',int='%d' WHERE id = '%d'",
-        HouseInfo[proplev][hExitX],
-        HouseInfo[proplev][hExitY],
-        HouseInfo[proplev][hExitZ],
-        HouseInfo[proplev][hInt],
-        HouseInfo[proplev][hSQLID]
+        "UPDATE houses SET exitX = '%f', exitY = '%f', exitZ= '%f', int= '%d' WHERE id = '%d'",
+        HouseInfo[houseid][hExitX],
+        HouseInfo[houseid][hExitY],
+        HouseInfo[houseid][hExitZ],
+        HouseInfo[houseid][hInt],
+        HouseInfo[houseid][hSQLID]
     );
     return 1;
 }

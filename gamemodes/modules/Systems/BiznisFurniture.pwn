@@ -1042,16 +1042,6 @@ static stock SetFurnitureObjectColor(playerid, slot, index, slotid)
     return 1;
 }
 
-static stock LoadFurnitureObjectTextures(biznisid, objectid, index)
-{
-    // TODO: bounds checking, biznisid, index, slot
-    for (new i = 0; i < MAX_COLOR_TEXT_SLOTS; i++)
-    {
-        new slot = BizzInfo[biznisid][bFurTxtId][index][i];
-        SetDynamicObjectMaterial(objectid, i, ObjectTextures[slot][tModel], ObjectTextures[slot][tTXDName], ObjectTextures[slot][tName], 0);
-    }
-    return 1;
-}
 static stock DeleteFurnitureObject(biznisid, index, playerid)
 {
     // TODO: bounds checking, biznisid, index

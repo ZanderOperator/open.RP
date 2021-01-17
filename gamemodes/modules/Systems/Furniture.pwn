@@ -1,4 +1,3 @@
-// TODO: write at the top how many objects, removebuildings.. this module uses etc
 /*
     #### ##    ##  ######  ##       ##     ## ########  ######## 
      ##  ###   ## ##    ## ##       ##     ## ##     ## ##       
@@ -1041,7 +1040,8 @@ static stock CopyFurnitureObject(playerid, copyid)
     HouseInfo[houseid][hFurObjectid][index] = CreateDynamicObject(HouseInfo[houseid][hFurModelid][index], HouseInfo[houseid][hFurPosX][index], HouseInfo[houseid][hFurPosY][index], HouseInfo[houseid][hFurPosZ][index], HouseInfo[houseid][hFurRotX][index], HouseInfo[houseid][hFurRotY][index], HouseInfo[houseid][hFurRotZ][index], HouseInfo[houseid][hVirtualWorld], HouseInfo[houseid][hInt], -1, FURNITURE_OBJECT_DRAW_DISTANCE, FURNITURE_OBJECT_DRAW_DISTANCE);
 
     // TODO: helper function, this is repetitive code, I saw it somewhere else...
-    new colorid;
+    new 
+        colorid;
     for (new colslot = 0; colslot < MAX_COLOR_TEXT_SLOTS; colslot++)
     {
         if (HouseInfo[houseid][hFurColId][index][colslot] > -1)
@@ -1050,9 +1050,7 @@ static stock CopyFurnitureObject(playerid, copyid)
             SetDynamicObjectMaterial(HouseInfo[houseid][hFurObjectid][index], colslot, ObjectTextures[ HouseInfo[houseid][hFurTxtId][index][colslot] ][tModel], ObjectTextures[ HouseInfo[houseid][hFurTxtId][index][colslot] ][tTXDName], ObjectTextures[ HouseInfo[houseid][hFurTxtId][index][colslot] ][tName], colorid);
         }
         else
-        {
             SetDynamicObjectMaterial(HouseInfo[houseid][hFurObjectid][index], colslot, ObjectTextures[ HouseInfo[houseid][hFurTxtId][index][colslot] ][tModel], ObjectTextures[ HouseInfo[houseid][hFurTxtId][index][colslot] ][tTXDName], ObjectTextures[ HouseInfo[houseid][hFurTxtId][index][colslot] ][tName], 0);
-        }
     }
 
     InsertFurnitureObject(houseid, index);
@@ -1198,17 +1196,6 @@ static stock SetFurnitureObjectColor(playerid, slot, index, slotid)
         HouseInfo[houseid][hFurColId][slotid][slot],
         HouseInfo[houseid][hFurSQL][slotid]
     );
-    return 1;
-}
-
-static stock LoadFurnitureObjectTextures(houseid, objectid, index)
-{
-    for (new i = 0; i < MAX_COLOR_TEXT_SLOTS; i++)
-    {
-        // TODO: houseid, index, slot bounds check
-        new slot = HouseInfo[houseid][hFurTxtId][index][i];
-        SetDynamicObjectMaterial(objectid, i, ObjectTextures[slot][tModel], ObjectTextures[slot][tTXDName], ObjectTextures[slot][tName], 0);
-    }
     return 1;
 }
 
@@ -2313,7 +2300,8 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
         {
             if (!response) return ShowPlayerDialog(playerid, DIALOG_FURNITURE_EDIT_LIST, DIALOG_STYLE_LIST, "Furniture - Uredjivanje", "Uredjivanje (UI)\nTeksture\nBoje\nKopiraj objekt\nObrisi objekt\nObrisi teksture i boje", "Choose", "Abort");
 
-            new houseid = GetPlayerFurnitureHouse(playerid);
+            new 
+                houseid = GetPlayerFurnitureHouse(playerid);
             if (houseid == INVALID_HOUSE_ID)
                 return SendErrorMessage(playerid, "Niste u svojoj kuci / nemate dozvolu za postavljanje namjestaja.");
 

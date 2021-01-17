@@ -454,9 +454,9 @@ enum E_DRUG_INFO
 new const drugs[][E_DRUG_INFO] = 
 {
 	{"Prazno", 		DRUG_TYPE_NONE,   0, 0, 0},
-	{"Marihuana", 	DRUG_TYPE_SMOKE,  8, 25, 70},
-	{"Kokain", 		DRUG_TYPE_SNORT,  12, 30, 110},
-	{"Heroin", 		DRUG_TYPE_INJECT, 15, 35, 90},
+	{"Marijuana", 	DRUG_TYPE_SMOKE,  8, 25, 70},
+	{"Cocaine", 	DRUG_TYPE_SNORT,  12, 30, 110},
+	{"Heroine", 	DRUG_TYPE_INJECT, 15, 35, 90},
 	{"Xanax",		DRUG_TYPE_TABLET, 15, 40, 145},
 	{"LSD", 		DRUG_TYPE_TABLET, 15, 50, 160},
 	{"MDMA",		DRUG_TYPE_TABLET, 15, 75, 175}
