@@ -934,6 +934,7 @@ timer LearnPlayer[1000](playerid, learnid)
 	        SendClientMessage(playerid, COLOR_WHITE, " ");
 	        SendClientMessage(playerid, COLOR_WHITE, "Nadamo se da ste naucili nesto iz nasega tutoriala!");
 	        SendClientMessage(playerid, COLOR_WHITE, "Takodjer se nadamo, da vise necete krsiti RolePlay pravila.");
+			SetPlayerPreviousInfo(playerid);
 		}
 	}
 	return 1;

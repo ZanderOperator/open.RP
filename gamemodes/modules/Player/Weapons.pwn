@@ -51,6 +51,105 @@ static
 	 ###  ###  ######## ##     ## ##         #######  ##    ##  ######
  */
 
+GetWeaponNameEx(weaponid)
+{
+	new 
+		weaponName[ 32 ];
+
+	switch(weaponid) 
+	{
+		case 0:  strcpy(weaponName, "Fists", sizeof(weaponName));
+		case 1 .. 17: GetWeaponName(weaponid, weaponName, sizeof(weaponName));
+		case 18: strcpy(weaponName, "Molotov Cocktail", sizeof(weaponName));
+		case 22..38: GetWeaponName(weaponid, weaponName, sizeof(weaponName)); // Vatrena oruzja
+		case 39: strcpy(weaponName, "Detonated Bomb", sizeof(weaponName));
+		case 40: strcpy(weaponName, "Detonated Bomb", sizeof(weaponName));
+		case 41: strcpy(weaponName, "Spray Can", sizeof(weaponName));
+		case 42: strcpy(weaponName, "Fire Extinguisher", sizeof(weaponName));
+		case 43: strcpy(weaponName, "Camera", sizeof(weaponName));
+		case 44: strcpy(weaponName, "Night Vision Goggles", sizeof(weaponName));
+		case 45: strcpy(weaponName, "Thermal Goggles", sizeof(weaponName));
+		case 49: strcpy(weaponName, "Vehicle", sizeof(weaponName));
+		case 50: strcpy(weaponName, "Helicopter Blades", sizeof(weaponName));
+		case 51: strcpy(weaponName, "Explosion", sizeof(weaponName));
+		case 53: strcpy(weaponName, "Drowning", sizeof(weaponName));
+		case 54: strcpy(weaponName, "Falling Death", sizeof(weaponName));
+		case KEVLAR_VEST: strcpy(weaponName, "Kevlar Vest", sizeof(weaponName));
+		case 255: strcpy(weaponName, "Suicide", sizeof(weaponName));
+		default: strcpy(weaponName, "Empty", sizeof(weaponName));
+	}
+	return weaponName;
+}
+
+GetWeaponSlot(weaponid)
+{
+	new 
+		slot;
+	switch(weaponid) 
+	{
+		case 0,1: 			slot = 0;
+		case 2 .. 9: 		slot = 1;
+		case 10 .. 15: 		slot = 10;
+		case 16 .. 18, 39: 	slot = 8;
+		case 22 .. 24: 		slot = 2;
+		case 25 .. 27: 		slot = 3;
+		case 28, 29, 32:	slot = 4;
+		case 30, 31: 		slot = 5;
+		case 33, 34: 		slot = 6;
+		case 35 .. 38: 		slot = 7;
+		case 40: 			slot = 12;
+		case 41 .. 43: 		slot = 9;
+		case 44 .. 46: 		slot = 11;
+	}
+	return slot;
+}
+
+
+IsCrounching(playerid) 
+	return (GetPlayerAnimationIndex(playerid) == 1159 || GetPlayerAnimationIndex(playerid) == 1274 ? true : false);  
+
+SetAnimationForWeapon(playerid, weaponid, crounch=false) 
+{ 
+     switch(weaponid) 
+     { 
+		case 22: 
+        { 
+            if(crounch) ApplyAnimationEx(playerid, "COLT45", "python_crouchreload", 8.2,0,0,0,0,0, 1, 0);
+            else ApplyAnimationEx(playerid, "COLT45", "colt45_reload", 8.2,0,0,0,0,0, 1, 0);
+        } 
+        case 23: 
+        { 
+            if(crounch) ApplyAnimationEx(playerid, "SILENCED", "CrouchReload", 8.2,0,0,0,0,0, 1, 0);
+            else ApplyAnimationEx(playerid, "SILENCED", "Silence_reload", 8.2,0,0,0,0,0, 1, 0);
+        } 
+        case 24: 
+        { 
+            if(crounch) ApplyAnimationEx(playerid, "PYTHON", "python_crouchreload", 8.2,0,0,0,0,0, 1, 0);
+            else ApplyAnimationEx(playerid, "PYTHON", "python_reload", 8.2,0,0,0,0,0, 1, 0);
+        } 
+        case 25, 27: 
+        { 
+            if(crounch) ApplyAnimationEx(playerid, "BUDDY", "buddy_crouchreload", 8.2,0,0,0,0,0, 1, 0);
+            else ApplyAnimationEx(playerid, "BUDDY", "buddy_reload", 8.2,0,0,0,0,0, 1, 0);
+        } 
+        case 26: 
+        { 
+            if(crounch) ApplyAnimationEx(playerid, "COLT45", "colt45_crouchreload", 8.2,0,0,0,0,0, 1, 0);
+            else ApplyAnimationEx(playerid, "COLT45", "colt45_reload", 8.2,0,0,0,0,0, 1, 0);
+        } 
+        case 29..31, 33, 34: 
+        { 
+            if(crounch) ApplyAnimationEx(playerid, "RIFLE", "RIFLE_crouchload", 8.2,0,0,0,0,0, 1, 0); 
+            else ApplyAnimationEx(playerid, "RIFLE", "rifle_load", 8.2,0,0,0,0,0, 1, 0);
+        } 
+        case 28, 32: 
+        { 
+            if(crounch) ApplyAnimationEx(playerid, "TEC", "TEC_crouchreload", 8.2,0,0,0,0,0, 1, 0);
+            else ApplyAnimationEx(playerid, "TEC", "tec_reload", 8.2,0,0,0,0,0, 1, 0);
+        } 
+    }
+} 
+
 ListPlayerWeapons(playerid, forplayerid)
 {
 	SendClientMessage(forplayerid, COLOR_LIGHTBLUE, "*_________________________ ORUZJA _________________________*");

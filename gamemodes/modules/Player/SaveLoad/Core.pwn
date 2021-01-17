@@ -46,6 +46,20 @@ stock Player_SetSecurityBreach(playerid, bool:v)
 }
 
 // Timers
+timer LoginCheck[60000](playerid)
+{
+	if( !IsPlayerLogged(playerid) && IsPlayerConnected(playerid) )
+	{
+		va_SendClientMessage(playerid, 
+			COLOR_RED, 
+			"[%s]: You got kicked for not logging in after 60 seconds!",
+			SERVER_NAME
+		);
+		KickMessage(playerid);
+	}
+	return 1;
+}
+
 timer FinishPlayerSpawn[5000](playerid)
 {
 	if(Bit1_Get(gr_PlayerLoggedIn, playerid))
@@ -61,13 +75,12 @@ timer SafeHealPlayer[250](playerid)
 }
 
 
-// Forwards
 forward CheckPlayerInBase(playerid);
 forward LoadPlayerData(playerid);
 forward RegisterPlayer(playerid);
 forward OnAccountFinish(playerid);
 
-// Publics
+
 CheckPlayerInactivity(playerid)
 {
 	inline OnPlayerInactivityCheck()
@@ -364,7 +377,6 @@ public LoadPlayerData(playerid)
 		
 		Bit1_Set( gr_PlayerLoggingIn, playerid, true );
   		SetPlayerSpawnInfo(playerid);
-        Bit1_Set( gr_FristSpawn, playerid, true );
 
         if(!isnull(PlayerInfo[playerid][pSAMPid]) && PlayerInfo[playerid][pSecQuestion] != 1 
 			&& !isnull(PlayerInfo[playerid][pSecQuestAnswer]))
@@ -567,7 +579,6 @@ Public: SafeSpawnPlayer(playerid)
 	FinalPlayerCheck(playerid); // Crash, Private Vehicle, Mask, Interiors and Inactivity Check 
 
 	Streamer_SetVisibleItems(STREAMER_TYPE_OBJECT, OBJECT_STREAM_LIMIT, playerid);
-	Bit1_Set( gr_FristSpawn, playerid, true );
 	Bit1_Set(gr_PlayerLoggedIn, playerid, true);
 	Bit1_Set(gr_PlayerLoggingIn, playerid, false);
 	TogglePlayerSpectating(playerid, 0);
@@ -669,7 +680,36 @@ hook function ResetPlayerVariables(playerid)
 	return continue(playerid);
 }
 
-stock SetPlayerSpawnInfo(playerid)
+RandomPlayerCameraView(playerid)
+{
+	new choosecamera = random(3);
+	SetPlayerVirtualWorld(playerid, random(9999));
+	
+ 	switch(choosecamera)
+  	{
+  		case 0:
+  		{
+  		    SetPlayerPos(playerid, 1148.4430,-1344.8217,13.6616);
+  		    InterpolateCameraPos(playerid, 927.724792, -1286.564941, 51.656623, 1397.496093, -1415.905517, 32.533592, 30000);
+			InterpolateCameraLookAt(playerid, 932.431823, -1288.218383, 51.324836, 1392.709960, -1414.556640, 32.011108, 30000);
+       	}
+       	case 1:
+  		{
+  		    SetPlayerPos(playerid, 2275.1340,-1700.6871,13.6479);
+  		    InterpolateCameraPos(playerid, 2042.767822, -1470.297851, 54.489799, 2546.400146, -1771.930541, 41.233219, 30000);
+			InterpolateCameraLookAt(playerid, 2047.054321, -1472.868164, 54.349193, 2542.777832, -1768.697875, 40.037876, 30000);
+       	}
+       	case 2:
+  		{
+  		    SetPlayerPos(playerid, 2411.5686,-1106.1973,40.1652);
+  		    InterpolateCameraPos(playerid, 2515.796142, -1008.902709, 88.511833, 2062.358886, -1379.888061, 46.693622, 30000);
+			InterpolateCameraLookAt(playerid, 2511.572509, -1011.466735, 87.745338, 2063.165771, -1375.001464, 46.008289, 30000);
+       	}
+    }
+	return (true);
+}
+
+SetPlayerSpawnInfo(playerid)
 {
 	if(PlayerJail[playerid][pJailed] == 2)
 	{
@@ -928,16 +968,9 @@ hook OnPlayerSpawn(playerid)
 
 	new
 		hour, minute;
-	gettime(hour, minute);
-	hour += 1;
-	minute -= 1;
+	GetServerTime(hour, minute, _);
 	SetPlayerTime(playerid,hour,minute);
 
-	if( Bit1_Get( gr_FristSpawn, playerid ) )
-	{
-		CreateZonesTD(playerid);
-		Bit1_Set( gr_FristSpawn, playerid, false );
-	}
 	SetPlayerSkin(playerid, PlayerAppearance[playerid][pSkin]);
 
     if(IsANewUser(playerid))

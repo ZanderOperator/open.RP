@@ -142,7 +142,7 @@ public OnServerIlegalGaragesLoad()
 	return 1;
 }
 
-stock static CheckForGarageWantedLevel(garage, bool:save=false)
+static CheckForGarageWantedLevel(garage, bool:save=false)
 {
 	new
 		tmpStars[ 5 ];
@@ -165,7 +165,7 @@ stock static CheckForGarageWantedLevel(garage, bool:save=false)
 		IlegalGarage[ garage ][ igName ],
 		tmpStars,
 		CityInfo[cIllegalBudget],
-		( IlegalGarage[ garage ][ igOwner ] != 0 ? (GetPlayerNameFromID(IlegalGarage[ garage ][ igOwner ])) : ("Na prodaju (/garage buy)") )
+		( IlegalGarage[ garage ][ igOwner ] != 0 ? (ConvertSQLIDToName(IlegalGarage[ garage ][ igOwner ])) : ("Na prodaju (/garage buy)") )
 	);
 	UpdateDynamic3DTextLabelText(IlegalGarage[ garage ][ ig3dText ], -1, tmpString);
 }

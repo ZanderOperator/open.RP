@@ -107,21 +107,6 @@ hook function ResetPlayerVariables(playerid)
 	##        #######  ##    ##  ######     ##    ####  #######  ##    ##  ######
 */
 
-GetPlayerPaydayCount(sqlid)
-{
-	new	Cache:result,
-		value = 0;
-
-	result = mysql_query(g_SQL, va_fquery(g_SQL, "SELECT monthpaydays FROM experience WHERE sqlid = '%d'", sqlid));
-	if(!cache_num_rows())
-		value = 0;
-	else
-		cache_get_value_name_int(0, "monthpaydays", value);
-	
-	cache_delete(result);
-	return value;
-}
-
 GivePlayerPayCheck(playerid)
 {
 	new

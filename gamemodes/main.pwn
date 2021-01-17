@@ -218,8 +218,6 @@ new
 	Bit1: 	gr_PlayerPickingJack 	<MAX_PLAYERS> =  Bit1: false,
 	Bit1:	gr_PlayerJackSure 		<MAX_PLAYERS> =  Bit1: false,
 	Bit1:	gr_PlayerDownloading	<MAX_PLAYERS>  = Bit1: false,
-	// TODO: misspelled, FirstSpawn
-	Bit1:	gr_FristSpawn			<MAX_PLAYERS>  = Bit1: false,
 	Bit1: 	gr_SafeBreaking			<MAX_PLAYERS>  = Bit1: false,
 	Bit1: 	gr_PlayerLoggedIn 		<MAX_PLAYERS>  = Bit1: false,
 	Bit1: 	gr_PlayerLoggingIn 		<MAX_PLAYERS>  = Bit1: false,
@@ -583,10 +581,6 @@ public OnGameModeInit()
 	format(gstring, sizeof(gstring), "hostname %s", HOSTNAME);
 	SendRconCommand(gstring);
  	SetGameModeText(SCRIPT_VERSION);
-	for(new i = 0; i < 312; i++) {
-        if(IsValidSkin(i))
-            AddPlayerClass(i,0.0,0.0,0.0,0.0,-1,-1,-1,-1,-1,-1);
-    }
 	print("Report: Server Info Loaded.");
 
 	// Auto Unlock Settings
@@ -966,7 +960,6 @@ hook function ResetPlayerVariables(playerid)
 {	
 	//rBits
 	Bit1_Set( gr_PlayerDownloading		, playerid, false );
-	Bit1_Set( gr_FristSpawn				, playerid, false );
 	Bit1_Set( gr_PlayerLoggingIn 		, playerid, false );
 	Bit1_Set( gr_PlayerLoggedIn 		, playerid, false );
 	Bit1_Set( gr_NewUser				, playerid, false );

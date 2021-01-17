@@ -11,7 +11,57 @@ new Iterator:VehWeapon[MAX_VEHICLES]<MAX_WEAPON_SLOTS>,
 	bool:VehicleBlinking[MAX_VEHICLES],
 	bool:VehicleAlarmStarted[MAX_VEHICLES];
 
-stock bool:IsPlayerInRangeOfVehicle(playerid, vehicleid, Float:range)
+GetVehicleDriver(vehicleid)
+{
+	new
+		playerid = INVALID_PLAYER_ID;
+
+	foreach(new i : Player) {
+		if( IsPlayerInVehicle(i, vehicleid) && GetPlayerState(playerid) == PLAYER_STATE_DRIVER ) {
+			playerid = i;
+			break;
+		}
+	}
+	return playerid;
+}
+
+DoesVehicleHavePlayers(vehicleid)
+{
+	foreach(new i:  Player)
+	{
+		if(IsPlayerInVehicle(i, vehicleid))
+			return 1;
+	}
+	return 0;
+}
+
+IsVehicleOccupied(vehicleid) 
+{
+    foreach(new i : Player) 
+	{
+        if(IsPlayerInAnyVehicle(i))  
+		{
+            if(GetPlayerVehicleID(i) == vehicleid)
+                return 1;
+        }
+    }
+	return 0;
+}
+
+RemovePlayersFromVehicle(vehicleid)
+{
+	foreach(new i : Player)
+	{
+		if(IsPlayerInVehicle(i, vehicleid))
+		{
+			RemovePlayerFromVehicle(i);
+			SendMessage(i, MESSAGE_TYPE_INFO, "Vozilo je u procesu sigurnog parkiranja. Molimo nemojte ulaziti u njega 5 sekundi!");
+		}
+	}
+	return 1;
+}
+
+bool:IsPlayerInRangeOfVehicle(playerid, vehicleid, Float:range)
 {
 	new Float:vX, Float:vY, Float: vZ;
 	GetVehiclePos(vehicleid, vX, vY, vZ);
@@ -19,7 +69,7 @@ stock bool:IsPlayerInRangeOfVehicle(playerid, vehicleid, Float:range)
 	return false;
 }
 
-stock GetNearestVehicle(playerid, VEHICLE_TYPE = -1, VEHICLE_FACTION = -1)
+GetNearestVehicle(playerid, VEHICLE_TYPE = -1, VEHICLE_FACTION = -1)
 {
 	new 
 		vehicleid = INVALID_VEHICLE_ID,
@@ -113,7 +163,7 @@ WeaponModels(weaponid)
 	return 0;
 }
 
-stock IsVehicleWithoutTrunk(modelid)
+IsVehicleWithoutTrunk(modelid)
 {
 	switch(modelid) {
 	    case 403,406,407,408,416,417,423,424,425,430,432,434,435,441,443,444,446,447,449,450,452,453,454,457,460,464,465,469,472,473,476,481,485,486,493,494,495,501,502,503,504,505,509,510,512,513,514,515,520,524,525,528,530,531,532,537,538,539,544,552,556,557,564,568,569,570,571,572,573,574,578,583,584, 590,591,592,593,594,595,601,606,607,608,610,611:
@@ -122,13 +172,14 @@ stock IsVehicleWithoutTrunk(modelid)
 	return false;
 }
 
-enum e_OffsetTypes {
+enum e_OffsetTypes 
+{
     VEHICLE_OFFSET_BOOT,
     VEHICLE_OFFSET_HOOD,
     VEHICLE_OFFSET_ROOF
 };
 
-stock GetVehicleOffset(vehicleid, type, &Float:x, &Float:y, &Float:z)
+GetVehicleOffset(vehicleid, type, &Float:x, &Float:y, &Float:z)
 {
     new Float:fPos[4], Float:fSize[3];
  
@@ -171,7 +222,7 @@ stock GetVehicleOffset(vehicleid, type, &Float:x, &Float:y, &Float:z)
     return 1;
 }
 
-stock IsPlayerNearDoor(playerid, vehicleid)
+IsPlayerNearDoor(playerid, vehicleid)
 {
 	new Float:X, Float:Y, Float:Z;
 	GetVehiclePos(vehicleid, X, Y, Z);
@@ -182,7 +233,7 @@ stock IsPlayerNearDoor(playerid, vehicleid)
 	return 0;
 }
 
-stock IsPlayerNearTrunk(playerid, vehicleid)
+IsPlayerNearTrunk(playerid, vehicleid)
 {
 	new Float:X, Float:Y, Float:Z;
 	GetVehicleOffset(vehicleid, VEHICLE_OFFSET_BOOT, X, Y, Z);
@@ -190,30 +241,32 @@ stock IsPlayerNearTrunk(playerid, vehicleid)
 	return 0;
 }
 
-stock IsABike(model)
+IsABike(model)
 {
-	switch(model) {
+	switch(model) 
+	{
 		case 509, 481, 510: return 1;
 	}
 	return 0;
 }
 
-stock IsABoat(modelid)
+IsABoat(modelid)
 {
-	switch(modelid) {
+	switch(modelid) 
+	{
 		case 430, 446, 452, 453, 454, 472, 473, 484, 493, 595:
 			return 1;
 	}
 	return 0;
 }
 
-stock IsAMotorBike(modelid)
+IsAMotorBike(modelid)
 {
     if(modelid ==581 || modelid ==522 || modelid ==521 || modelid ==523 || modelid ==586 || modelid ==462 || modelid ==448 || modelid ==461 || modelid ==463 || modelid ==468 || modelid ==471) return 1;
     else return 0;
 }
 
-stock IsAPlane(model)
+IsAPlane(model)
 {
 	switch(model) {
 		case 592, 577, 511, 512, 593, 520, 553, 476, 519, 460, 513, 548, 425, 417, 487, 488, 497, 563, 447, 469:
@@ -222,16 +275,7 @@ stock IsAPlane(model)
 	return 0;
 }
 
-stock IsALowrider(modelid)
-{
-	switch( modelid ) {
-		case 412, 534, 535, 536, 567, 575, 576: return 1;
-		default: return 0;
-	}
-	return 0;
-}
-
-stock IsAHelio(model)
+IsAHelio(model)
 {
  	switch(model) {
 		case 548, 425, 417, 487, 488, 497, 563, 447, 469:
@@ -240,7 +284,7 @@ stock IsAHelio(model)
  	return 0;
 }
 
-stock IsHaveNoNumberPlate(model)
+IsHaveNoNumberPlate(model)
 {
     switch(model)
 	{
@@ -326,5 +370,31 @@ setTire(vehid, tireid, stat)
  			UpdateVehicleDamageStatus(vehid, panels, doors, lights, encode_tires(t1, t2, t3, stat));
 	    }
 	}
+	return 1;
+}
+
+SetVehiclePosEx(playerid, Float:x, Float:y, Float:z, viwo=0, interior=0, bool:update=true)
+{
+    new 
+		vehicleid = GetPlayerVehicleID(playerid);
+	if(vehicleid == INVALID_VEHICLE_ID)
+		return 0;
+	
+	TogglePlayerControllable(playerid, 0);
+	Streamer_ToggleIdleUpdate(playerid, 1);
+	
+	SetVehiclePos(vehicleid, x, y, z);
+	Streamer_UpdateEx(playerid, x, y, z, viwo, interior);
+	
+	SetVehicleVirtualWorld(vehicleid, viwo);
+	LinkVehicleToInterior(vehicleid, interior);
+	SetPlayerInterior(playerid, 	interior);
+	SetPlayerVirtualWorld(playerid, viwo);
+	PutPlayerInVehicle(playerid, vehicleid, 0);
+
+	if(update)
+		defer InstantStreamerUpdate(playerid);
+	else InstantStreamerUpdate(playerid);
+	
 	return 1;
 }

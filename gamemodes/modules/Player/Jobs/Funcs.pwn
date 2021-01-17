@@ -275,34 +275,26 @@ JobsList()
 	return (buffer);
 }
 
-GetPlayerJobKey(sqlid)
+IllegalFactionJobCheck(factionid, jobid) 
 {
-	new	Cache:result,
-		value = 0;
+    new	Cache:result,
+		counts;
 
-	result = mysql_query(g_SQL, va_fquery(g_SQL, "SELECT jobkey FROM player_job WHERE sqlid = '%d'", sqlid));
-	if(!cache_num_rows())
-		value = 0;
-	else
-		cache_get_value_name_int(0, "jobkey", value);
-	
+	result = mysql_query(g_SQL, 
+				va_fquery(g_SQL, 
+					"SELECT sqlid \n\
+						FROM player_jobs, player_faction \n\
+						WHERE player_jobs.jobkey = '%d' \n\
+						AND (player_faction.facMemId = '%d' OR player_faction.facLeadId = '%d')", 
+					jobid, 
+					factionid, 
+					factionid
+				)
+			);
+
+	counts = cache_num_rows();
 	cache_delete(result);
-	return value;
-}
-
-GetPlayerContractTime(sqlid)
-{
-	new	Cache:result,
-		value = 0;
-
-	result = mysql_query(g_SQL, va_fquery(g_SQL, "SELECT contracttime FROM player_job WHERE sqlid = '%d'", sqlid));
-	if(!cache_num_rows())
-		value = 0;
-	else
-		cache_get_value_name_int(0, "contracttime", value);
-	
-	cache_delete(result);
-	return value;
+	return counts;
 }
 
 /*

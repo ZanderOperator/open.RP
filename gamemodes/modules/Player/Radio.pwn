@@ -4,6 +4,16 @@
 #define COLOR_RADIO		(0xFFEC8BFF)
 #define COLOR_RADIOEX	(0xB5AF8FFF)
 
+
+static GetChannelSlot(playerid, channel)
+{
+	if(channel == PlayerRadio[playerid][pRadio][1])return 1;
+	if(channel == PlayerRadio[playerid][pRadio][2])return 2;
+	if(channel == PlayerRadio[playerid][pRadio][3])return 3;
+
+	return false;
+}
+
 /*
 
 																		

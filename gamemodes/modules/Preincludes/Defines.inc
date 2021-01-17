@@ -120,7 +120,7 @@
 #define PACKAGE_COOLDOWN						(120)	
 #define MINUTES_TILL_PACKAGE_ARRIVE			 	(10) 
 #define INVALID_PACKAGE_ID						(-1)	
-#define PACKAGE_PANCIR							(60)	
+#define KEVLAR_VEST							(60)	
 
 // Drugs
 #define MAX_PLAYER_DRUGS						(5)

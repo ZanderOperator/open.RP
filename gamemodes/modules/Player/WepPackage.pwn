@@ -357,7 +357,7 @@ timer UnpackPackage[1000](playerid, package_id)
 	new crouch = IsCrounching(playerid), Float: get_armor;
 	GetPlayerArmour(playerid, get_armor);
 
-	if(PlayerPackage[playerid][p_weapon][package_id] != PACKAGE_PANCIR) 
+	if(PlayerPackage[playerid][p_weapon][package_id] != KEVLAR_VEST) 
 	{
 		SetAnimationForWeapon(playerid, PlayerPackage[playerid][p_weapon][package_id], crouch);
 		AC_GivePlayerWeapon(playerid, PlayerPackage[playerid][p_weapon][package_id], PlayerPackage[playerid][p_amount][package_id], true, true);
@@ -902,7 +902,7 @@ CMD:package(playerid, params[])
 		}
 
 		// message
-		if(PlayerPackage[playerid][p_weapon][package_id] != PACKAGE_PANCIR)
+		if(PlayerPackage[playerid][p_weapon][package_id] != KEVLAR_VEST)
 			format(buffer, sizeof(buffer), "> %s pocinje da sklapa oruzje.", GetName(playerid)), SendFormatMessage(playerid, MESSAGE_TYPE_INFO, "[PACKAGE]: Poceli ste da raspakujete paket oruzja, ne pomerajte se %d sekundi.", seconds);
 
 		SendClientMessage(playerid, COLOR_PURPLE, buffer);

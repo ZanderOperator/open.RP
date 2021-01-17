@@ -63,23 +63,6 @@ hook function ResetPlayerVariables(playerid)
 	return continue(playerid);
 }
 
-GetPlayerVIP(sqlid)
-{
-	new	Cache:result,
-		value = 0;
-
-	result = mysql_query(g_SQL, va_fquery(g_SQL, "SELECT vipRank FROM player_vip_status WHERE sqlid = '%d'", sqlid));
-	 
-	if(!cache_num_rows())
-		value = 0;
-	else
-		cache_get_value_name_int(0, "vipRank", value);
-	
-	cache_delete(result);
-	return value;
-}
-
-
 SetPlayerPremiumVIP(playerid, level)
 {
     if(level == 1)

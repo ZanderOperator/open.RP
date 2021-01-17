@@ -78,210 +78,6 @@ FormatNumber(number, prefix[] = "$")
 	return value;
 }
 
-
-stock GetName(playerid, bool:replace=true)
-{
-	new name[MAX_PLAYER_NAME];
-	GetPlayerName(playerid, name, sizeof(name));
-	
-	if( replace ) {
-		if (Player_UsingMask(playerid))
-			format(name, sizeof(name), "Maska_%d", PlayerInventory[playerid][pMaskID] );
-		else 
-			strreplace(name, '_', ' ');
-	}
-	return name;
-}
-
-GetVehicleDriver(vehicleid)
-{
-	new
-		playerid = INVALID_PLAYER_ID;
-
-	foreach(new i : Player) {
-		if( IsPlayerInVehicle(i, vehicleid) && GetPlayerState(playerid) == PLAYER_STATE_DRIVER ) {
-			playerid = i;
-			break;
-		}
-	}
-	return playerid;
-}
-
-DoesVehicleHavePlayers(vehicleid)
-{
-	foreach(new i:  Player)
-	{
-		if(IsPlayerInVehicle(i, vehicleid))
-			return 1;
-	}
-	return 0;
-}
-
-stock IsPlayerFalling(playerid)
-{
-	if(GetPlayerAnimationIndex(playerid) == 1195 || GetPlayerAnimationIndex(playerid) == 1197 || GetPlayerAnimationIndex(playerid) == 1133 || GetPlayerAnimationIndex(playerid) == 1130)
-	{
-		new Float:Z;
-		GetPlayerVelocity(playerid, Z, Z, Z);
-		if(Z != 0)
-		{
-		    return 1;
-		}
-	}
-	return 0;
-}
-
-stock GetPlayerPreviousInfo(playerid)
-{
-	GetPlayerPos(playerid, PlayerPrevInfo[playerid][oPosX], PlayerPrevInfo[playerid][oPosY], PlayerPrevInfo[playerid][oPosZ]);
-	PlayerPrevInfo[playerid][oInt] = GetPlayerInterior(playerid);
-	PlayerPrevInfo[playerid][oViwo] = GetPlayerVirtualWorld(playerid);
-	return 1;
-}
-
-stock SetPlayerPreviousInfo(playerid)
-{
-	SetPlayerPos(playerid, PlayerPrevInfo[playerid][oPosX], PlayerPrevInfo[playerid][oPosY], PlayerPrevInfo[playerid][oPosZ]);
-	SetPlayerInterior(playerid, PlayerPrevInfo[playerid][oInt]);
-	SetPlayerVirtualWorld(playerid, PlayerPrevInfo[playerid][oViwo]);
-	SetCameraBehindPlayer(playerid);
-	ResetPlayerPreviousInfo(playerid);
-	return 1;
-}
-
-stock ResetPlayerPreviousInfo(playerid)
-{
-	PlayerPrevInfo[playerid][oPosX]			= 0.0;
-	PlayerPrevInfo[playerid][oPosY]			= 0.0;
-	PlayerPrevInfo[playerid][oPosZ]			= 0.0;
-	PlayerPrevInfo[playerid][oInt]			= 0;
-	PlayerPrevInfo[playerid][oViwo]			= 0;
-	return 1;
-}
-
-stock RandomPlayerCameraView(playerid)
-{
-	new choosecamera = random(3);
-	SetPlayerVirtualWorld(playerid, random(9999));
-	
- 	switch(choosecamera)
-  	{
-  		case 0:
-  		{
-  		    SetPlayerPos(playerid, 1148.4430,-1344.8217,13.6616);
-  		    InterpolateCameraPos(playerid, 927.724792, -1286.564941, 51.656623, 1397.496093, -1415.905517, 32.533592, 30000);
-			InterpolateCameraLookAt(playerid, 932.431823, -1288.218383, 51.324836, 1392.709960, -1414.556640, 32.011108, 30000);
-       	}
-       	case 1:
-  		{
-  		    SetPlayerPos(playerid, 2275.1340,-1700.6871,13.6479);
-  		    InterpolateCameraPos(playerid, 2042.767822, -1470.297851, 54.489799, 2546.400146, -1771.930541, 41.233219, 30000);
-			InterpolateCameraLookAt(playerid, 2047.054321, -1472.868164, 54.349193, 2542.777832, -1768.697875, 40.037876, 30000);
-       	}
-       	case 2:
-  		{
-  		    SetPlayerPos(playerid, 2411.5686,-1106.1973,40.1652);
-  		    InterpolateCameraPos(playerid, 2515.796142, -1008.902709, 88.511833, 2062.358886, -1379.888061, 46.693622, 30000);
-			InterpolateCameraLookAt(playerid, 2511.572509, -1011.466735, 87.745338, 2063.165771, -1375.001464, 46.008289, 30000);
-       	}
-    }
-	return (true);
-}
-
-stock IsValidSkin(skinid)
-	return (0 <= skinid <= 311);
-
-stock IsVehicleOccupied(vehicleid) // Returns 1 if there is anyone in the vehicle
-{
-    foreach(new i : Player) 
-	{
-        if(IsPlayerInAnyVehicle(i))  
-		{
-            if(GetPlayerVehicleID(i) == vehicleid)
-                return 1;
-        }
-    }
-	return 0;
-}
-
-stock RemovePlayersFromVehicle(vehicleid)
-{
-	foreach(new i : Player)
-	{
-		if(IsPlayerInVehicle(i, vehicleid))
-		{
-			RemovePlayerFromVehicle(i);
-			SendMessage(i, MESSAGE_TYPE_INFO, "Vozilo je u procesu sigurnog parkiranja. Molimo nemojte ulaziti u njega 5 sekundi!");
-		}
-	}
-	return 1;
-}
-
-stock GetWeaponSlot(weaponid)
-{
-	new 
-		slot;
-	switch(weaponid) {
-		case 0,1: 			slot = 0;
-		case 2 .. 9: 		slot = 1;
-		case 10 .. 15: 		slot = 10;
-		case 16 .. 18, 39: 	slot = 8;
-		case 22 .. 24: 		slot = 2;
-		case 25 .. 27: 		slot = 3;
-		case 28, 29, 32:	slot = 4;
-		case 30, 31: 		slot = 5;
-		case 33, 34: 		slot = 6;
-		case 35 .. 38: 		slot = 7;
-		case 40: 			slot = 12;
-		case 41 .. 43: 		slot = 9;
-		case 44 .. 46: 		slot = 11;
-	}
-	return slot;
-}
-stock IsCrounching(playerid) return (GetPlayerAnimationIndex(playerid) == 1159 || GetPlayerAnimationIndex(playerid) == 1274 ? true : false);  
-
-stock SetAnimationForWeapon(playerid, weaponid, crounch=false) // ApplyAnimation(playerid, animlib[], animname[], Float:fDelta, loop, lockx, locky, freeze, time, forcesync); 
-{ 
-     switch(weaponid) 
-     { 
-		case 22: 
-        { 
-            if(crounch) ApplyAnimationEx(playerid, "COLT45", "python_crouchreload", 8.2,0,0,0,0,0, 1, 0);
-            else ApplyAnimationEx(playerid, "COLT45", "colt45_reload", 8.2,0,0,0,0,0, 1, 0);
-        } 
-        case 23: 
-        { 
-            if(crounch) ApplyAnimationEx(playerid, "SILENCED", "CrouchReload", 8.2,0,0,0,0,0, 1, 0);
-            else ApplyAnimationEx(playerid, "SILENCED", "Silence_reload", 8.2,0,0,0,0,0, 1, 0);
-        } 
-        case 24: 
-        { 
-            if(crounch) ApplyAnimationEx(playerid, "PYTHON", "python_crouchreload", 8.2,0,0,0,0,0, 1, 0);
-            else ApplyAnimationEx(playerid, "PYTHON", "python_reload", 8.2,0,0,0,0,0, 1, 0);
-        } 
-        case 25, 27: 
-        { 
-            if(crounch) ApplyAnimationEx(playerid, "BUDDY", "buddy_crouchreload", 8.2,0,0,0,0,0, 1, 0);
-            else ApplyAnimationEx(playerid, "BUDDY", "buddy_reload", 8.2,0,0,0,0,0, 1, 0);
-        } 
-        case 26: 
-        { 
-            if(crounch) ApplyAnimationEx(playerid, "COLT45", "colt45_crouchreload", 8.2,0,0,0,0,0, 1, 0);
-            else ApplyAnimationEx(playerid, "COLT45", "colt45_reload", 8.2,0,0,0,0,0, 1, 0);
-        } 
-        case 29..31, 33, 34: 
-        { 
-            if(crounch) ApplyAnimationEx(playerid, "RIFLE", "RIFLE_crouchload", 8.2,0,0,0,0,0, 1, 0); 
-            else ApplyAnimationEx(playerid, "RIFLE", "rifle_load", 8.2,0,0,0,0,0, 1, 0);
-        } 
-        case 28, 32: 
-        { 
-            if(crounch) ApplyAnimationEx(playerid, "TEC", "TEC_crouchreload", 8.2,0,0,0,0,0, 1, 0);
-            else ApplyAnimationEx(playerid, "TEC", "tec_reload", 8.2,0,0,0,0,0, 1, 0);
-        } 
-    }
-} 
-
 stock abs(int)
 {
     if (int < 0)
@@ -315,9 +111,7 @@ stock StringReverse(const string[], dest[], len = sizeof (dest))
 	dest[j] = '\0';
 }
 
-// Strlib by Slice
-forward strcount(const string[], const sub[], bool:ignorecase = false, bool:count_overlapped = false);
-stock strcount(const string[], const sub[], bool:ignorecase = false, bool:count_overlapped = false) 
+strcount(const string[], const sub[], bool:ignorecase = false, bool:count_overlapped = false) 
 {
 	new
 		increment = count_overlapped ? 1 : strlen(sub),
@@ -330,14 +124,6 @@ stock strcount(const string[], const sub[], bool:ignorecase = false, bool:count_
 		count++;
 	
 	return count;
-}
-
-forward bool:isempty(const string[]);
-stock bool:isempty(const string[]) {
-	if (ispacked(string))
-		return string{0} == '\0';
-	else
-		return string[0] == '\0';
 }
 
 /*
@@ -427,32 +213,7 @@ CreateGangZoneAroundPoint(Float:X, Float:Y, Float:width, Float:height)
 	return GangZoneCreate(minX, minY, maxX, maxY);
 }
 
-stock OOCNews(color, const string[])
-{
-	foreach (new i : Player) 
-	{
-		if( IsPlayerLogged(i) || IsPlayerConnected(playerid) )
-			SendClientMessage(i, color, string);
-	}
-}
-
-stock bool:IsPlayerMoving(playerid)
-{
-    new Float:Velocity[3];
-    GetPlayerVelocity(playerid, Velocity[0], Velocity[1], Velocity[2]);
-    if(Velocity[0] == 0 && Velocity[1] == 0 && Velocity[2] == 0) return false;
-    return true;
-}
-
-stock IsValidVehicleModel(model)
-{
-    if(model >= 400 && model <= 611)
-    {
-        return true;
-    }
-    return false;
-}
-
+/*
 stock SetObjectFaceCoords3D(iObject, Float: fX, Float: fY, Float: fZ, Float: fRollOffset = 0.0, Float: fPitchOffset = 0.0, Float: fYawOffset = 0.0) 
 {
 	new
@@ -470,35 +231,7 @@ stock SetObjectFaceCoords3D(iObject, Float: fX, Float: fY, Float: fZ, Float: fRo
 	
 	SetDynamicObjectRot(iObject, fRollOffset, fPitch + fPitchOffset, fZ + fYawOffset);
 }
-
-stock Float:GetDistanceBetweenPoints3D(Float:x1,Float:y1,Float:z1,Float:x2,Float:y2,Float:z2)
-{
-    return VectorSize(x1-x2,y1-y2,z1-z2);
-}
-
-stock damagePlayer(playerid, Float: fDamage) 
-{
-    new
-        Float: fHealth,
-        Float: fArmour;
-
-    GetPlayerHealth(playerid, fHealth);
-    GetPlayerArmour(playerid, fArmour);
-    
-    fHealth += fArmour - fDamage;
-    
-    SetPlayerArmour(playerid, (fHealth > 100.0) ? (fHealth - 100.0) : (0.0));
-    SetPlayerHealth(playerid, (fHealth > 100.0) ? (100.0) : (fHealth));
-}
-
-stock GivePlayerHealth(playerid,Float:Health)
-{
-	new Float:health; GetPlayerHealth(playerid,health);
-	if ( health >= 100.0 )
-		SetPlayerHealth(playerid, 150.0);
-	else
-		SetPlayerHealth(playerid,health+Health);
-}
+*/
 
 stock GetXYInFrontOfPoints(&Float:x, &Float:y, Float:angle, Float:distance)
 {	
@@ -693,87 +426,6 @@ stock va_ShowPlayerDialog(playerid, dialogid, style, caption[], fmat[], button1[
 	return ShowPlayerDialog(playerid, dialogid, style, caption, d_string, button1, button2);
 }
 
-stock SetPlayerPosEx(playerid, Float:x, Float:y, Float:z, viwo=0, interior=0, bool:update=true)
-{
-	//StreamerSettings
-	Streamer_ToggleIdleUpdate(playerid, 1);
-	// Admin/Helper unfreeze
-	if((PlayerInfo[playerid][pAdmin] > 0 || PlayerInfo[playerid][pHelper] > 0) && interior == 0 && viwo == 0)
-		TogglePlayerControllable(playerid, 1);
-	else TogglePlayerControllable(playerid, 0);
-	
-	//PlayerSets
-	SetPlayerInterior(playerid, 	interior);
-	SetPlayerVirtualWorld(playerid, viwo);
-	
-	//SettingPos
-	SetPlayerPos(playerid, x, y, z);
-	Streamer_UpdateEx(playerid, x, y, z, viwo, interior);
-	
-	if(update) defer InstantStreamerUpdate(playerid);
-	else InstantStreamerUpdate(playerid);
-	
-	return 1;
-}
-
-// Isto ko SetPlayerPosEx
-stock SetVehiclePosEx(playerid, Float:x, Float:y, Float:z, viwo=0, interior=0, bool:update=true)
-{
-    new vehicleid = GetPlayerVehicleID(playerid);
-	if(!vehicleid)
-		return 0;
-		
-	
-	//StreamerSettings
-	TogglePlayerControllable(playerid, 0);
-	Streamer_ToggleIdleUpdate(playerid, 1);
-	
-	//SettingPos
-	SetVehiclePos(vehicleid, x, y, z);
-	Streamer_UpdateEx(playerid, x, y, z, viwo, interior);
-	
-	
-	
-	//Vehicle Sets
-	SetVehicleVirtualWorld(vehicleid, viwo);
-	LinkVehicleToInterior(vehicleid, interior);
-	SetPlayerInterior(playerid, 	interior);
-	SetPlayerVirtualWorld(playerid, viwo);
-
-	PutPlayerInVehicle(playerid, vehicleid, 0);
-	if(update) defer InstantStreamerUpdate(playerid);
-	else InstantStreamerUpdate(playerid);
-	
-	return 1;
-}
-
-/*stock IsVehicleOccupied(vehicleid)
-{
-    foreach(new i : Player)
-    {
-		if(IsPlayerInVehicle(i, vehicleid )) return i;
-    }
-    return 0;
-}*/
-
-/**
-    <summary>
-        Provjeravamo dali uneseni E-Mail ima '@' i domain dio.
-    </summary>
-	
-	<param name="email">
-        String u koji unosimo igracev e-mail!
-    </param>
-
-    <returns>
-        1 - Dobar e-mail, 0 - Nevaljan e-mail
-    </returns>
-
-    <remarks>
-        Najbolje koristiti za provjere unosa E-Mail adrese!
-    </remarks>
-*/
-
 stock IsValidEMail(email[])
 {
 	if(strlen(email) < 2) return 0;
@@ -868,62 +520,7 @@ stock IsValidNick(name[])
 	return 1; // All check are ok, Name is valid...
 }
 
-/**
-    <summary>
-        Ukoliko je string veci od 128 prebacuje ga u novi red (ostatak)
-    </summary>
-	
-	<param name="playerid">
-       Samo objaSnjivo
-    </param>
-	
-	<param name="color">
-       Boja teksta
-    </param>
-	
-	<param name="message">
-       Poruka koju cemo ispisati
-    </param>
-
-    <returns>
-        1
-    </returns>
-
-    <remarks>
-       -
-    </remarks>
-*/
-
-/**
-    <summary>
-        Svima u odredenome radiusu prikazuje tekst s bojama.
-    </summary>
-	
-	<param name="radi">
-       Radius u kojem ce drugi igraci moci vidjeti poruku
-    </param>
-	
-	<param name="playerid">
-       Samo objaSnjivo
-    </param>
-	
-	<param name="string">
-       Poruka koju ispisujemo
-    </param>
-	
-	<param name="color">
-       Boja teksta
-    </param>
-	
-    <returns>
-        Uvijek 1
-    </returns>
-
-    <remarks>
-       -
-    </remarks>
-*/
-stock ProxDetector(Float:radi, playerid, string[], col1, col2, col3, col4, col5, bool:isDualChat = false)
+ProxDetector(Float:radi, playerid, string[], col1, col2, col3, col4, col5, bool:isDualChat = false)
 {
 
 	new Float:posx,
@@ -975,7 +572,7 @@ stock ProxDetector(Float:radi, playerid, string[], col1, col2, col3, col4, col5,
 	return 1;
 }
 
-stock RealProxDetector(Float:radi, playerid, string[],col1,col2,col3,col4,col5)
+RealProxDetector(Float:radi, playerid, string[],col1,col2,col3,col4,col5)
 {
 	if(IsPlayerConnected(playerid))
 	{
@@ -1045,94 +642,12 @@ stock RealProxDetector(Float:radi, playerid, string[],col1,col2,col3,col4,col5)
 	return 1;
 }
 
-/**
-    <summary>
-        Vraca broj unutar nekog rangea.
-    </summary>
-	
-	<param name="min">
-       Minimalni broj u rasponu
-    </param>
-	
-	<param name="max">
-       Maksimalan broj u rasponu
-    </param>
-	
-    <returns>
-        Nasumican broj iz raspona
-    </returns>
-
-    <remarks>
-       -
-    </remarks>
-*/
-stock minrand(min, max) //By Alex "Y_Less" Cole
+minrand(min, max) //By Alex "Y_Less" Cole
 {
     return random(max - min) + min;
 }
 
-
-/**
-    <summary>
-        Vraca nasumican broj u rasponu
-    </summary>
-	
-	<param name="min">
-       Minimalni broj u rasponu (float)
-    </param>
-	
-	<param name="max">
-       Maksimalan broj u rasponu (float)
-    </param>
-	
-    <returns>
-        Nasumican broj iz raspona (float)
-    </returns>
-
-    <remarks>
-       -
-    </remarks>
-*/
-stock Float:frandom(Float:max, Float:min = 0.0, dp = 4)
-{
-	new
-		Float:mul = floatpower(10.0, dp),
-		imin = floatround(min * mul),
-		imax = floatround(max * mul);
-	return float(random(imax - imin) + imin) / mul;
-}
-
-stock GetWeaponNameEx(weaponid)
-{
-	new 
-		weaponName[ 32 ];
-
-	switch(weaponid) 
-	{
-		case 0:  strcpy(weaponName, "Fists", sizeof(weaponName));
-		case 1 .. 17: GetWeaponName(weaponid, weaponName, sizeof(weaponName));
-		case 18: strcpy(weaponName, "Molotov Cocktail", sizeof(weaponName));
-		case 22..38: GetWeaponName(weaponid, weaponName, sizeof(weaponName)); // Vatrena oruzja
-		case 39: strcpy(weaponName, "Detonated Bomb", sizeof(weaponName));
-		case 40: strcpy(weaponName, "Detonated Bomb", sizeof(weaponName));
-		case 41: strcpy(weaponName, "Spray Can", sizeof(weaponName));
-		case 42: strcpy(weaponName, "Fire Extinguisher", sizeof(weaponName));
-		case 43: strcpy(weaponName, "Camera", sizeof(weaponName));
-		case 44: strcpy(weaponName, "Night Vision Goggles", sizeof(weaponName));
-		case 45: strcpy(weaponName, "Thermal Goggles", sizeof(weaponName));
-		case 49: strcpy(weaponName, "Vehicle", sizeof(weaponName));
-		case 50: strcpy(weaponName, "Helicopter Blades", sizeof(weaponName));
-		case 51: strcpy(weaponName, "Explosion", sizeof(weaponName));
-		case 53: strcpy(weaponName, "Drowning", sizeof(weaponName));
-		case 54: strcpy(weaponName, "Falling Death", sizeof(weaponName));
-		case PACKAGE_PANCIR: strcpy(weaponName, "Kevlar Vest", sizeof(weaponName));
-		case 255: strcpy(weaponName, "Suicide", sizeof(weaponName));
-		default: strcpy(weaponName, "Empty", sizeof(weaponName));
-	}
-	return weaponName;
-}
-
-stock IsNumeric(const string[])
+IsNumeric(const string[])
 {
 	for(new i = 0, j = strlen(string); i < j; i++)
 	{
@@ -1141,7 +656,7 @@ stock IsNumeric(const string[])
 	return 1;
 }
 
-stock UnixTimestampToTime(timestamp, compare = -1) 
+UnixTimestampToTime(timestamp, compare = -1) 
 {
     if (compare == -1) {
         compare = gettimestamp();
@@ -1177,35 +692,7 @@ stock UnixTimestampToTime(timestamp, compare = -1)
     return returnstr;
 }
 
-stock intdiffabs(tick1, tick2)
-{
-	if(tick1 > tick2)
-		return abs(tick1 - tick2);
-
-	else
-		return abs(tick2 - tick1);
-}
-
-stock GetTickCountDifference(a, b)
-{
-	if ((a < 0) && (b > 0))
-	{
-
-		new dist;
-
-		dist = intdiffabs(a, b);
-
-		if(dist > 2147483647)
-			return intdiffabs(a - 2147483647, b - 2147483647);
-
-		else
-			return dist;
-	}
-
-	return intdiffabs(a, b);
-}
-
-stock PlayerPlayTrackSound(playerid)
+PlayerPlayTrackSound(playerid)
 {
 	defer StopPlayerTrackSound(playerid);
 	PlayerPlaySound(playerid, 1068, 0.0, 0.0, 0.0);
@@ -1222,7 +709,8 @@ stock CarProxDetector(vehicleid, playerid, const string[], color)
 
 stock HouseProxDetector(houseid, Float:radius, const string[], color)
 {
-	foreach(new i : Player) {
+	foreach(new i : Player) 
+	{
 		if( IsPlayerInRangeOfPoint(i, radius, HouseInfo[ houseid ][ hEnterX ], HouseInfo[ houseid ][ hEnterY ], HouseInfo[ houseid ][ hEnterZ ] ) )
 			SendClientMessage(i, color, string);
 	}
