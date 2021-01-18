@@ -26,7 +26,7 @@ const DESTROYING_CAR_TIME		= 45; // 45 seconds
 static
 	Iterator:IllegalGarage<MAX_ILLEGAL_GARAGES>;
 
-enum E_Illegal_GARAGES 
+enum E_ILLEGAL_GARAGES 
 {
 	igSQLID,
 	igName[ 32 ],
@@ -42,7 +42,7 @@ enum E_Illegal_GARAGES
 	Float:ig3dTextPos[ 4 ]
 }
 static
-	IllegalGarage[ MAX_ILLEGAL_GARAGES ][ E_Illegal_GARAGES ];
+	IllegalGarage[ MAX_ILLEGAL_GARAGES ][ E_ILLEGAL_GARAGES ];
 	
 static 
 	PlayerText:JackerTD[MAX_PLAYERS] = { PlayerText:INVALID_TEXT_DRAW, ... },
@@ -62,6 +62,35 @@ static
 	  \_____|______|_| \_|______|_|  \_\/_/    \_\______|
 */
 /////////////////////////////////////////////////////
+
+static ResetIllegalGarage(garage)
+{
+	IllegalGarage[ garage ][ igSQLID ] = -1;
+	IllegalGarage[ garage ][ igName ][ 0 ] = EOS;
+	IllegalGarage[ garage ][ igOwner ] = 0;
+
+	if(IsValidDynamicObject(IllegalGarage[ garage ][ igBoard ]))
+		DestroyDynamicObject(IllegalGarage[ garage ][ igBoard ]);
+	if(IsValidDynamicObject(IllegalGarage[ garage ][ igHeader ]))
+		DestroyDynamicObject(IllegalGarage[ garage ][ igHeader ]);
+	for(new i = 0; i < 6; i++)
+	{
+		IllegalGarage[ garage ][ igVehicleIds] [ i ] = -1;
+		if(IsValidDynamicObject(IllegalGarage[ garage ][ igText ][ i ]))
+			DestroyDynamicObject(IllegalGarage[ garage ][ igText ][ i ]);
+	}
+	if(IsValidDynamic3DTextLabel(IllegalGarage[ garage ][ ig3dText ]))
+		DestroyDynamic3DTextLabel(IllegalGarage[ garage ][ ig3dText ]);
+
+	IllegalGarage[ garage ][ igMoney ] = 0;
+	IllegalGarage[ garage ][ igCarsJacked ] = 0;
+	IllegalGarage[ garage ][ igWantedLevel ] = 0;
+	IllegalGarage[ garage ][ ig3dTextPos ] [ 0 ] = 0.0;
+	IllegalGarage[ garage ][ ig3dTextPos ] [ 1 ] = 0.0;
+	IllegalGarage[ garage ][ ig3dTextPos ] [ 2 ] = 0.0;
+	IllegalGarage[ garage ][ ig3dTextPos ] [ 3 ] = 0.0;
+	return 1;
+}
 GetIllegalGarageFromSQL(sqlid)
 {
 	new
@@ -77,10 +106,47 @@ GetIllegalGarageFromSQL(sqlid)
 	return garageid;
 }
 
-stock LoadIllegalGarages()
+static DeleteIllegalGarage(garage)
 {
+	mysql_fquery(g_SQL,
+		"DELETE FROM illegal_garages WHERE id = '%d'",
+		IllegalGarage[ garage ][ igSQLID ]);
+	ResetIllegalGarage(garage);
+}
+
+static CreateIllegalGarage(garage)
+{
+	mysql_pquery(g_SQL,
+		va_fquery(g_SQL,
+			"INSERT INTO illegal_garages (owner, name, jackedcars, wantedlevel, 3dtextX, 3dtextY, 3dtextZ, rotZ) \n\
+				VALUES ('0', '%e', '0', '0', '%f', '%f', '%f', '%f')",
+			IllegalGarage[ garage ][ igName ],
+			IllegalGarage[ garage ][ ig3dTextPos ][ 0 ],
+			IllegalGarage[ garage ][ ig3dTextPos ][ 1 ],
+			IllegalGarage[ garage ][ ig3dTextPos ][ 2 ],
+			IllegalGarage[ garage ][ ig3dTextPos ][ 3 ]
+		),
+		"OnIllegalGarageCreated",
+		"i",
+		garage
+	);
+	return 1;
+}
+
+forward OnIllegalGarageCreated(garageid);
+public OnIllegalGarageCreated(garageid)
+{
+	IllegalGarage[ garageid ][ igSQLID ] = cache_insert_id();
+	Iter_Add(IllegalGarage, garageid);
+	InitIllegalGarage(garageid);
+	return 1;
+}
+
+static LoadIllegalGarages()
+{
+	Iter_Init(IlegalGarage);
 	mysql_pquery(g_SQL, 
-		va_fquery(g_SQL, "SELECT * FROM Illegal_garages WHERE 1"), 
+		va_fquery(g_SQL, "SELECT * FROM illegal_garages WHERE 1"), 
 		"OnServerIllegalGaragesLoad",
 		""
 	);
@@ -97,7 +163,7 @@ public OnServerIllegalGaragesLoad()
 		cache_get_value_name_int( row, 		"owner"		, IllegalGarage[ row ][ igOwner ]);
 		cache_get_value_name( row, 			"name"		, IllegalGarage[ row ][ igName ], 32 );
 		cache_get_value_name_int( row, 		"jackedcars", IllegalGarage[ row ][ igCarsJacked ]);
-		cache_get_value_name_int( row, 		"jackedcars", IllegalGarage[ row ][ igWantedLevel ]);
+		cache_get_value_name_int( row, 		"wantedlevel", IllegalGarage[ row ][ igWantedLevel ]);
 		cache_get_value_name_float( row, 	"3dtextX"	, IllegalGarage[ row ][ ig3dTextPos ][ 0 ]);
 		cache_get_value_name_float( row, 	"3dtextY"	, IllegalGarage[ row ][ ig3dTextPos ][ 1 ]);
 		cache_get_value_name_float( row, 	"3dtextZ"	, IllegalGarage[ row ][ ig3dTextPos ][ 2 ]);
@@ -117,11 +183,11 @@ static CheckForGarageWantedLevel(garage, bool:save=false)
 	switch( IllegalGarage[ garage ][ igCarsJacked ] ) {
 		case 55 .. 95:   { IllegalGarage[ garage ][ igWantedLevel ] 	= 1; tmpStars = "*";   }
 		case 96 .. 136:  { IllegalGarage[ garage ][ igWantedLevel ] 	= 2; tmpStars = "**";  }
-		case 137 .. 177: { IllegalGarage[ garage ][ igWantedLevel ]	= 3; tmpStars = "***"; }
+		case 137 .. 177: { IllegalGarage[ garage ][ igWantedLevel ]		= 3; tmpStars = "***"; }
 	}
 	if( !save ) 
 	{
-		mysql_fquery(g_SQL, "UPDATE Illegal_garages SET wanted = '%d' WHERE id = '%d'", 
+		mysql_fquery(g_SQL, "UPDATE illegal_garages SET wanted = '%d' WHERE id = '%d'", 
 			IllegalGarage[ garage ][ igWantedLevel ], 
 			IllegalGarage[ garage ][ igSQLID ]
 		);
@@ -318,7 +384,7 @@ static IllegalGarageToPlayerMoney(playerid, money)
 		garage  = JackerIllegalGarage[playerid];
 	IllegalGarage[garage][igMoney] -= money;
 	mysql_fquery(g_SQL,
-		"UPDATE Illegal_garages SET money = '%d' WHERE id = '%d'",
+		"UPDATE illegal_garages SET money = '%d' WHERE id = '%d'",
 		IllegalGarage[ garage ][ igMoney ],
 		IllegalGarage[ garage ][ igSQLID ]
 	);
@@ -412,7 +478,7 @@ timer DestroyingCar[1000](playerid, vehicleid)
 			value = ( ( LandVehicles[ PlayerJackingCar[ playerid ] ][ viCarJackerPrice ] + skillmoney )  - ( decrease * 15 ) );
 		
 		IllegalGarage[ garage ][ igCarsJacked ]++;
-		mysql_fquery(g_SQL, "UPDATE Illegal_garages SET jackedcars = '%d' WHERE id = '%d'", 
+		mysql_fquery(g_SQL, "UPDATE illegal_garages SET jackedcars = '%d' WHERE id = '%d'", 
 			IllegalGarage[ garage ][ igCarsJacked ], 
 			IllegalGarage[ garage ][ igSQLID ]
 		);
@@ -438,7 +504,7 @@ timer DestroyingCar[1000](playerid, vehicleid)
 
 		IllegalGarage[ garage ][ igMoney ] += (LandVehicles[ PlayerJackingCar[playerid] ][ viCarJackerPrice ] * 3);
 		mysql_fquery(g_SQL,
-			"UPDATE Illegal_garages SET money = '%d' WHERE id = '%d'",
+			"UPDATE illegal_garages SET money = '%d' WHERE id = '%d'",
 			IllegalGarage[ garage ][ igMoney ],
 			IllegalGarage[ garage ][ igSQLID ] 
 		);
@@ -655,17 +721,6 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 	 ######  ##     ## ########   ######  
 */
 
-CMD:update_garage(playerid,params[])
-{
-	if( PlayerInfo[ playerid ][ pAdmin ] < 1338 ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste ovlasteni!");
-	new
-		garage;
-	if( sscanf(params, "i", garage) ) return SendClientMessage(playerid, COLOR_RED, "[ ? ]: /update_garage [garageid]");
-	UpdateIllegalGarages(garage);
-	SendFormatMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uspjesno ste updejtali garazu id %d.", garage);
-	return 1;
-}
-
 CMD:jacker(playerid, params[])
 {
 	if( PlayerJob[playerid][pJob] != JOB_JACKER ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste car jacker!");
@@ -750,8 +805,77 @@ CMD:igarage(playerid, params[])
 	if( sscanf( params, "s[8] ", param ) )
 	{
 		SendClientMessage(playerid, COLOR_RED, "[ ? ]: /igarage [options]");
-		SendClientMessage(playerid, COLOR_RED, "[ ! ] buy - info - bribe");
+		SendClientMessage(playerid, COLOR_RED, "[ ! ]: buy - info - bribe");
+		if(PlayerInfo[playerid][pAdmin] == 1338)
+			SendClientMessage(playerid, COLOR_RED, "[ ! ]: add - remove");
 		return 1;
+	}
+	if( !strcmp(param, "add", true) )
+	{
+		if(PlayerInfo[playerid][pAdmin] != 1338)
+			return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You are not Head Administrator!");
+		new 
+			garage_name[32];
+		if( sscanf( params, "s[8]s[32]", param, garage_name ) )
+			return SendClientMessage(playerid, -1, "[ ! ]: /igarage add [garage_name]");
+		new
+			garage = Iter_Free(IllegalGarage);
+		if(garage == -1)
+		{
+			SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "Maximum limit of Illegal Garages reached. (%d)", MAX_ILLEGAL_GARAGES);
+			return 1;
+		}
+		new 
+			Float:x, Float:y, Float:z;
+		GetPlayerPos(playerid, x, y, z);
+
+		IllegalGarage[ garage ][ ig3dTextPos ][ 0 ]	= x;
+		IllegalGarage[ garage ][ ig3dTextPos ][ 1 ] = y;
+		IllegalGarage[ garage ][ ig3dTextPos ][ 2 ] = z;
+		IllegalGarage[ garage ][ ig3dTextPos ][ 3 ] = 0.0;
+		strcpy(IllegalGarage[ garage ][ igName ], garage_name, 32);
+		
+		CreateIllegalGarage(garage);
+
+		SendAdminMessage(COLOR_RED, 
+			"%s has created Illegal Garage %s[ID %d].",
+			garage_name,
+			garage
+		);
+		SendFormatMessage(playerid, 
+			MESSAGE_TYPE_SUCCESS, 
+			"You have sucessfully created Illegal Garage %s[ID %d].", 
+			garage_name,
+			garage
+		);
+	}
+	if( !strcmp(param, "remove", true) )
+	{
+		if(PlayerInfo[playerid][pAdmin] != 1338)
+			return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You are not Head Administrator!");
+		new 
+			garage;		
+		if( sscanf( params, "s[8]i", param, garage ) )
+			return SendClientMessage(playerid, -1, "[ ! ]: /igarage add [garage_name]");
+		if(Iter_Contains(IllegalGarage, garage))
+		{
+			SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "Illegal Garage %d doesn't exist!", garage);
+			return 1;
+		}
+
+		SendAdminMessage(COLOR_RED, 
+			"%s has deleted Illegal Garage %s[ID %d].",
+			IllegalGarage[ garage ][ igName ],
+			garage
+		);
+		SendFormatMessage(playerid, 
+			MESSAGE_TYPE_SUCCESS, 
+			"You have sucessfully deleted Illegal Garage %s[ID %d].", 
+			IllegalGarage[ garage ][ igName ],
+			garage
+		);
+
+		DeleteIllegalGarage(garage);
 	}
 	if( !strcmp(param, "buy", true) ) 
 	{
@@ -760,7 +884,7 @@ CMD:igarage(playerid, params[])
 		new
 			garage = GetJackerIllegalGarage(playerid);
 		if( garage == -1 ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste blizu car jacker garaze!");
-		if( IllegalGarage[ garage ][ igOwner ] != 0 || IllegalGarage[ garage ][ igOwner ] != 9999 ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Garaza nije na prodaju!");
+		if( IllegalGarage[ garage ][ igOwner ] != 0 ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Garaza nije na prodaju!");
 		PlayerKeys[playerid][pIllegalGarageKey] = garage;
 		IllegalGarage[ garage ][ igOwner ] = PlayerInfo[ playerid ][ pSQLID ];
 		CheckForGarageWantedLevel(garage, true);
