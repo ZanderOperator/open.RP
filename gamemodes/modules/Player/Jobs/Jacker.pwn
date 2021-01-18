@@ -9,7 +9,9 @@
 	##     ## ##       ##        ##  ##   ### ##       ##    ## 
 	########  ######## ##       #### ##    ## ########  ######  
 */
-#define JACKER_JOB_ID			(13)
+
+const MAX_ILLEGAL_GARAGES		= 10;
+const DESTROYING_CAR_TIME		= 45; // 45 seconds
 
 /*
 	##     ##    ###    ########   ######  
@@ -22,7 +24,7 @@
 */
 
 static
-	Iterator:IllegalGarage<MAX_ILEGAL_GARAGES>;
+	Iterator:IllegalGarage<MAX_ILLEGAL_GARAGES>;
 
 enum E_ILEGAL_GARAGES 
 {
@@ -39,53 +41,18 @@ enum E_ILEGAL_GARAGES
 	Text3D:ig3dText,
 	Float:ig3dTextPos[ 4 ]
 }
-new
-	IlegalGarage[ MAX_ILEGAL_GARAGES ][ E_ILEGAL_GARAGES ];
+static
+	IlegalGarage[ MAX_ILLEGAL_GARAGES ][ E_ILEGAL_GARAGES ];
 	
-// rBits
-static stock
-	Bit1: r_CarDestroyed 		<MAX_PLAYERS> = { Bit1:false, ... },
-	Bit8: r_DestroyingCarSecs 	<MAX_PLAYERS> = { Bit8:0, ... };
-
-// 32bit
-static stock
+static 
 	PlayerText:JackerTD[MAX_PLAYERS] = { PlayerText:INVALID_TEXT_DRAW, ... },
 	DestroyedCar[ MAX_PLAYERS ],
 	JackerIlegalGarage[ MAX_PLAYERS ],
 	Timer:DestroyingCarTimer[ MAX_PLAYERS ],
-	PlayerBribeMoney[ MAX_PLAYERS ];
-
-// TextDraws
-/*static stock
-	PlayerText:JackerArrow1[ MAX_PLAYERS ] 		= { PlayerText:INVALID_TEXT_DRAW, ... }, // Arrows
-	PlayerText:JackerArrow2[ MAX_PLAYERS ] 		= { PlayerText:INVALID_TEXT_DRAW, ... },
-	PlayerText:JackerArrow3[ MAX_PLAYERS ] 		= { PlayerText:INVALID_TEXT_DRAW, ... },
-	PlayerText:JackerArrow4[ MAX_PLAYERS ] 		= { PlayerText:INVALID_TEXT_DRAW, ... },
-	PlayerText:JackerArrow5[ MAX_PLAYERS ] 		= { PlayerText:INVALID_TEXT_DRAW, ... },
-	PlayerText:JackerArrow6[ MAX_PLAYERS ] 		= { PlayerText:INVALID_TEXT_DRAW, ... },
-	PlayerText:JackerPickBcg1[MAX_PLAYERS]		= { PlayerText:INVALID_TEXT_DRAW, ... }, // Picking
-	PlayerText:JackerPickBcg2[MAX_PLAYERS]		= { PlayerText:INVALID_TEXT_DRAW, ... },
-	PlayerText:JackerPickTitle[MAX_PLAYERS]		= { PlayerText:INVALID_TEXT_DRAW, ... },
-	PlayerText:JackerPickVehicle[MAX_PLAYERS]	= { PlayerText:INVALID_TEXT_DRAW, ... },
-	PlayerText:JackerPickText[MAX_PLAYERS]		= { PlayerText:INVALID_TEXT_DRAW, ... },
-	PlayerText:JackerPickInfo[MAX_PLAYERS]		= { PlayerText:INVALID_TEXT_DRAW, ... },
-	PlayerText:JackerPickTake[MAX_PLAYERS]		= { PlayerText:INVALID_TEXT_DRAW, ... },
-	PlayerText:JackerPickLeave[MAX_PLAYERS]		= { PlayerText:INVALID_TEXT_DRAW, ... };*/
-
-// Globals
-new
-	// 32 bit
+	DestroyingCarCount[ MAX_PLAYERS ],
+	PlayerBribeMoney[ MAX_PLAYERS ],
 	PlayerJackingCar[ MAX_PLAYERS ];
 
-/*
-	 ######  ########  #######   ######  ##    ##  ######  
-	##    ##    ##    ##     ## ##    ## ##   ##  ##    ## 
-	##          ##    ##     ## ##       ##  ##   ##       
-	 ######     ##    ##     ## ##       #####     ######  
-		  ##    ##    ##     ## ##       ##  ##         ## 
-	##    ##    ##    ##     ## ##    ## ##   ##  ##    ## 
-	 ######     ##     #######   ######  ##    ##  ######  
-*/
 /*
 	   _____ ______ _   _ ______ _____            _      
 	  / ____|  ____| \ | |  ____|  __ \     /\   | |     
@@ -138,7 +105,7 @@ public OnServerIlegalGaragesLoad()
 		InitIlegalGarage(row);
 		Iter_Add(IllegalGarage, row);
 	}
-	printf("MySQL Report: Ilegal Garages Loaded. [%d/%d]", cache_num_rows(), MAX_ILEGAL_GARAGES);
+	printf("MySQL Report: Ilegal Garages Loaded. [%d/%d]", cache_num_rows(), MAX_ILLEGAL_GARAGES);
 	return 1;
 }
 
@@ -369,12 +336,6 @@ static IllegalGarageToPlayerMoney(playerid, money)
 */
 stock static ResetCarJackerVariables(playerid)
 {
-	// rBits
-	Bit1_Set(r_CarDestroyed, 			playerid, false);
-	Bit1_Set(gr_PlayerPickingJack, 		playerid, false);
-	Bit1_Set(gr_PlayerJackSure, 		playerid, false);
-	Bit8_Set(r_DestroyingCarSecs, 		playerid, 0);
-
 	DestroyJackerTextDraw(playerid);
 	
 	// 32bit
@@ -382,6 +343,7 @@ stock static ResetCarJackerVariables(playerid)
 	PlayerJackingCar[ playerid ]		= -1;
 	JackerIlegalGarage[ playerid ]		= -1;
 	stop DestroyingCarTimer[ playerid ];
+	DestroyingCarCount[ playerid ] 		= -1;
 	return 1;
 }
 
@@ -418,14 +380,15 @@ timer DestroyingCar[1000](playerid, vehicleid)
 		return 1;			
 	}
 	
-	Bit8_Set( r_DestroyingCarSecs, playerid, Bit8_Get( r_DestroyingCarSecs, playerid )-1 );
+	DestroyingCarCount[ playerid ] -= 1;	
 	
-	new
-		tmpString[ 69 ];
-	format(tmpString, 69, "~w~Rastavljanje vozila u tijeku~r~... ~n~~w~Preostalo sekundi: ~r~%d", Bit8_Get( r_DestroyingCarSecs, playerid ));
-	PlayerTextDrawSetString(playerid, JackerTD[playerid], tmpString);
+	va_PlayerTextDrawSetString(playerid, 
+		JackerTD[playerid], 
+		 "~w~Rastavljanje vozila u tijeku~r~... ~n~~w~Preostalo sekundi: ~r~%d", 
+		 DestroyingCarCount[ playerid ]
+	);
 	
-	if( !Bit8_Get( r_DestroyingCarSecs, playerid ) ) 
+	if( DestroyingCarCount[ playerid ] <= 0 ) 
 	{
 		new 
 			panels, doors, lights, tires,
@@ -465,7 +428,7 @@ timer DestroyingCar[1000](playerid, vehicleid)
 	
 		SendPoliceAlertMessage(vehicleid, garage);
 		DestroyedCar[playerid] = GetVehicleModel(vehicleid);
-		Bit1_Set(r_CarDestroyed, playerid, true);
+		
 		DestroyJackerTextDraw(playerid);
 		stop DestroyingCarTimer[playerid];
 		
@@ -742,7 +705,8 @@ CMD:jacker(playerid, params[])
 		ShowPlayerDialog(playerid, DIALOG_JACKER_PICK, DIALOG_STYLE_LIST, "Odaberite vozilo", vehicles_str, "Choose", "Abort");
 		SendClientMessage(playerid, COLOR_RED, "[ ! ] Odaberite vozilo koje zelite ukrasti!");
 	}
-	else if( !strcmp(param, "chop", true) ) {
+	else if( !strcmp(param, "chop", true) ) 
+	{
 		new
 			Float:health,
 			vehicleid = GetPlayerVehicleID(playerid);
@@ -760,12 +724,18 @@ CMD:jacker(playerid, params[])
 		
 		RemovePlayerFromVehicle(playerid);
 		SetVehiclePos(vehicleid, 2520.0364, -2412.6516, 13.7);
-		Bit8_Set(r_DestroyingCarSecs, playerid, 30);
+
+		DestroyingCarCount[ playerid ] = DESTROYING_CAR_TIME;
 		CreateJackerTextDraw(playerid);
-		PlayerTextDrawSetString(playerid, JackerTD[playerid], "~w~Rastavljanje vozila u tijeku~r~... ~n~~w~Preostalo sekundi: ~r~30");
+		va_PlayerTextDrawSetString(playerid, 
+			JackerTD[playerid], 
+			"~w~Rastavljanje vozila u tijeku~r~... ~n~~w~Preostalo sekundi: ~r~%d",
+			DestroyingCarCount[ playerid ]
+		);
 		DestroyingCarTimer[playerid] = repeat DestroyingCar(playerid, vehicleid);
 	}
-	else if( !strcmp(param, "stop", true) ) {
+	else if( !strcmp(param, "stop", true) ) 
+	{
 		if( PlayerJackingCar[ playerid ] == -1) 
 			return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate aktivnu misiju!");
 		ShowPlayerDialog(playerid, DIALOG_JACKER_SURE_2, DIALOG_STYLE_MSGBOX, "Jacker misija", "Zelite li odustati od misije?\n"COL_RED"NAPOMENA: Ukoliko odustanete cooldown od 45 minuta se primjenuje!", "Quit", "Back");

@@ -57,7 +57,6 @@
 #define MAX_VEHICLE_TYPES						(10)
 #define MAX_GARAGES                 			(1500)
 #define MAX_SERVER_SKINS						(800)
-#define MAX_ILEGAL_GARAGES						(10)
 
 // Premium VIP 
 #define PREMIUM_BRONZE							(1)

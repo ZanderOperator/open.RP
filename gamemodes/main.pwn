@@ -215,8 +215,6 @@ new
 //Players Vars
 //(rBits)
 new
-	Bit1: 	gr_PlayerPickingJack 	<MAX_PLAYERS> =  Bit1: false,
-	Bit1:	gr_PlayerJackSure 		<MAX_PLAYERS> =  Bit1: false,
 	Bit1:	gr_PlayerDownloading	<MAX_PLAYERS>  = Bit1: false,
 	Bit1: 	gr_SafeBreaking			<MAX_PLAYERS>  = Bit1: false,
 	Bit1: 	gr_PlayerLoggedIn 		<MAX_PLAYERS>  = Bit1: false,
