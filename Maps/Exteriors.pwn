@@ -4259,7 +4259,7 @@ hook OnFilterScriptInit() {
     exterior_maps = CreateDynamicObject(2828, 704.877990, -311.213806, 8.597624, 0.000000, 0.000000, -111.699943, -1, -1, -1, 300.00, 300.00);
     exterior_maps = CreateDynamicObject(2238, 707.572692, -318.428588, 10.081885, 0.000000, 0.000000, 0.000000, -1, -1, -1, 300.00, 300.00);
 
-	// Ilegal garage - WizzCycann
+	// Illegal garage - WizzCycann
     CreateDynamicObject(13027, 2632.24341, -2104.02515, 15.74290,   0.00000, 0.00000, 180.00000);
     CreateDynamicObject(3292, 2636.93750, -2101.82617, 12.51060,   0.00000, 0.00000, -180.00000);
     CreateDynamicObject(19435, 2634.52466, -2112.61450, 14.25800,   0.00000, 0.00000, 0.00000);

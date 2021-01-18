@@ -365,7 +365,7 @@ Public:GlobalServerTimer()
 
 	if( (tmphour > ghour) || (tmphour == 0 && ghour == 23) )
 	{
-		UpdateIlegalGarages(0);
+		UpdateIllegalGarages(0);
 		//SetWorldTime(tmphour);
 		ghour = tmphour;
 	}
