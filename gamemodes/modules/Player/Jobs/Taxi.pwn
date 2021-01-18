@@ -26,6 +26,14 @@ enum E_DATA_TAXI
 static 
 	TaxiData[MAX_PLAYERS][E_DATA_TAXI];
 
+enum E_P_TAXI_INFO
+{
+	pTaxiPoints,
+	pTaxiVoted
+}
+static 	
+	TaxiInfo[ MAX_PLAYERS ][ E_P_TAXI_INFO ];
+
 static	
 	PlayerText:Taximeter[MAX_PLAYERS][10];
 
@@ -109,6 +117,16 @@ hook function SavePlayerStats(playerid)
 bool: Player_TaxiDuty(playerid)
 {
 	return TaxiData[playerid][eTaxiDuty];
+}
+
+Player_TaxiPoints(playerid)
+{
+	return TaxiInfo[playerid][pTaxiPoints];
+}
+
+Player_TaxiVoted(playerid)
+{
+	return TaxiInfo[playerid][pTaxiVoted];
 }
 
 IsATaxi(model)

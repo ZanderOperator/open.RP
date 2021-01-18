@@ -193,14 +193,6 @@ enum E_P_MOBILE_INFO
 new 
 	PlayerMobile[ MAX_PLAYERS ][ E_P_MOBILE_INFO ];
 
-enum E_P_TAXI_INFO
-{
-	pTaxiPoints,
-	pTaxiVoted
-}
-new 	
-	TaxiInfo[ MAX_PLAYERS ][ E_P_TAXI_INFO ];
-
 enum E_VIP_INFO
 {
 	pDonateRank,

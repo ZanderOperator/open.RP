@@ -495,16 +495,16 @@ CMD:jobduty(playerid, params[])
 	SendClientMessage(playerid, COLOR_RED, "[ ! ]  Taxi Company:");
 	foreach(new i: Player) 
 	{
-		if(bool:Player_TaxiDuty(playerid)) 
-		{
-			new 
-				Float: t_overall = float(TaxiInfo[i][pTaxiPoints]) / float(TaxiInfo[i][pTaxiVoted]);
-			va_SendClientMessage(playerid, -1, "Ime: %s // Taxi Rating: %.1f // Kontakt broj: %d.", 
-				GetName(i), 
-				t_overall, 
-				PlayerMobile[i][pMobileNumber]
-			);
-		}
+		if(!Player_TaxiDuty(i)) 
+			continue;
+			
+		new 
+			Float: t_overall = float(Player_TaxiPoints(i)) / float(Player_TaxiVoted(i));
+		va_SendClientMessage(playerid, -1, "Ime: %s // Taxi Rating: %.1f // Kontakt broj: %d.", 
+			GetName(i), 
+			t_overall, 
+			PlayerMobile[i][pMobileNumber]
+		);
 	}
 	SendClientMessage(playerid, COLOR_RED, "[ ! ]  ");
 	SendClientMessage(playerid, COLOR_RED, "[ ! ]  Mechanic Company:");
