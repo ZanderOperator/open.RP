@@ -72,16 +72,6 @@ native calculate_hand_worth(const hands[], count = sizeof(hands));
 #define DRAWDISTANCE_POKER_MISC 			50.0
 #define CAMERA_POKER_INTERPOLATE_SPEED		5000 // ms (longer = slower)
 
-// High Card Enumerator
-#define	ROYAL_FLUSH			0
-#define	FLUSH				1
-#define	FOUR_KIND			2
-#define	STRAIGHT			3
-#define	THREE_KIND			4
-#define	TWO_PAIR			5
-#define	ONE_PAIR			6
-#define	HIGH_CARD			7
-
 static
 	 Iterator: PokerTables <MAX_POKERTABLES>;
 
@@ -144,8 +134,7 @@ static
 {-0.01, -1.85, 0.1, 0.0, 0.0, -90.0} // (Slot 3)
 };
 
-static 
-	const HAND_RANKS[][] =
+static const HAND_RANKS[][] =
 {
 	{"Undefined"}, //will never occur
 	{"High Card"},
@@ -174,9 +163,7 @@ enum E_CARD_DATA
 	E_CARD_SUITS:E_CARD_SUIT,
 	E_CARD_RANK
 };
-static 
-	const CardData[ 52 ] [E_CARD_DATA] = {
-
+static const CardData[ 52 ] [E_CARD_DATA] = {
 	//Spades
     {"LD_CARD:cd2s", 		"Two of Spades", 		SUIT_SPADES,		0},
     {"LD_CARD:cd3s", 		"Three of Spades", 		SUIT_SPADES,		1},
@@ -238,7 +225,6 @@ static
     {"LD_CARD:cd1d", 		"Ace of Diamonds", 		SUIT_DIAMONDS, 		12}
 };
 
-// Player Vars
 static
 	EditingTableID[MAX_PLAYERS],
 	PlayingTableID[MAX_PLAYERS],
@@ -264,19 +250,7 @@ static
 	ResultString[MAX_PLAYERS][16];
 //------------------------------------------------
 
-hook OnGameModeExit()
-{
-	if(Iter_Count(PokerTables) == 0)
-		return 1;
-
-	foreach(new t: PokerTables)
-		ResetPokerTableEnum(t);
-
-	Iter_Clear(PokerTables);
-	return 1;
-}
-
-BubbleSort(a[], size)
+static BubbleSort(a[], size)
 {
 	new tmp=0, bool:swapped;
 
@@ -294,7 +268,7 @@ BubbleSort(a[], size)
 	} while(swapped);
 }
 
-SetPlayerPosObjectOffset(objectid, playerid, Float:offset_x, Float:offset_y, Float:offset_z)
+static SetPlayerPosObjectOffset(objectid, playerid, Float:offset_x, Float:offset_y, Float:offset_z)
 {
 	new Float:object_px,
         Float:object_py,
@@ -321,7 +295,7 @@ SetPlayerPosObjectOffset(objectid, playerid, Float:offset_x, Float:offset_y, Flo
 	SetPlayerPos(playerid, x, y, z);
 }
 
-ResetPokerVariables(playerid)
+static ResetPokerVariables(playerid)
 {
 	EditingTableID[playerid] = -1;
 	PlayingTableID[playerid] = -1;
@@ -933,7 +907,7 @@ task PokerPulse[1000]()
 	return 1;
 }
 
-CameraRadiusSetPos(playerid, Float:x, Float:y, Float:z, Float:degree = 0.0, Float:height = 3.0, Float:radius = 8.0)
+static CameraRadiusSetPos(playerid, Float:x, Float:y, Float:z, Float:degree = 0.0, Float:height = 3.0, Float:radius = 8.0)
 {
 	new Float:deltaToX = x + radius * floatsin(-degree, degrees);
 	new Float:deltaToY = y + radius * floatcos(-degree, degrees);
@@ -943,7 +917,7 @@ CameraRadiusSetPos(playerid, Float:x, Float:y, Float:z, Float:degree = 0.0, Floa
 	SetPlayerCameraLookAt(playerid, x, y, z);
 }
 
-GlobalPlaySound(soundid, Float:x, Float:y, Float:z)
+static GlobalPlaySound(soundid, Float:x, Float:y, Float:z)
 {
 	foreach(new i: Player)
 	{
@@ -953,7 +927,7 @@ GlobalPlaySound(soundid, Float:x, Float:y, Float:z)
 	}
 }
 
-PokerOptions(playerid, option)
+static PokerOptions(playerid, option)
 {
 	switch(option)
 	{
@@ -999,17 +973,17 @@ PokerOptions(playerid, option)
 	}
 }
 
-PokerCallHand(playerid)
+static PokerCallHand(playerid)
 {
 	ShowCasinoGamesMenu(playerid, DIALOG_CGAMESCALLPOKER);
 }
 
-PokerRaiseHand(playerid)
+static PokerRaiseHand(playerid)
 {
 	ShowCasinoGamesMenu(playerid, DIALOG_CGAMESRAISEPOKER);
 }
 
-PokerCheckHand(playerid)
+static PokerCheckHand(playerid)
 {
 	if(ActiveHand[playerid]) 
 		strcpy(StatusString[playerid], "Check", 16);
@@ -1018,7 +992,7 @@ PokerCheckHand(playerid)
 	ApplyAnimation(playerid, "CASINO", "cards_raise", 4.1, 0, 1, 1, 1, 1, 1);
 }
 
-PokerFoldHand(playerid)
+static PokerFoldHand(playerid)
 {
 	if(ActiveHand[playerid]) 
 	{
@@ -1040,7 +1014,7 @@ PokerFoldHand(playerid)
 	}
 }
 
-PokerDealHands(tableid)
+static PokerDealHands(tableid)
 {
 	new tmp = 0;
 
@@ -1080,7 +1054,7 @@ PokerDealHands(tableid)
 	}
 }
 
-PokerShuffleDeck(tableid)
+static PokerShuffleDeck(tableid)
 {
 	// SFX
 	GlobalPlaySound(5600, PokerTable[tableid][pkrX], PokerTable[tableid][pkrY], PokerTable[tableid][pkrZ]);
@@ -1101,7 +1075,7 @@ PokerShuffleDeck(tableid)
 	}
 }
 
-PokerFindPlayerOrder(tableid, index)
+static PokerFindPlayerOrder(tableid, index)
 {
 	new tmpIndex = -1;
 	for(new i = 0; i < 6; i++) 
@@ -1120,13 +1094,15 @@ PokerFindPlayerOrder(tableid, index)
 	return -1;
 }
 
-PokerAssignBlinds(tableid)
+static PokerAssignBlinds(tableid)
 {
-	// Find where to start & distubute blinds.
-	new bool:roomDealer = false, bool:roomBigBlind = false, bool:roomSmallBlind = false,
-	dealerSlot = -1,
-	bigBlindSlot = -1,
-	smallBlindSlot = -1;
+	new 
+		bool:roomDealer = false, 
+		bool:roomBigBlind = false, 
+		bool:roomSmallBlind = false,
+		dealerSlot = -1,
+		bigBlindSlot = -1,
+		smallBlindSlot = -1;
 
 	// Find the Dealer.
 	new tmpPos = PokerTable[tableid][pkrPos];
@@ -1234,7 +1210,7 @@ PokerAssignBlinds(tableid)
 	return 1;
 }
 
-PokerRotateActivePlayer(tableid)
+static PokerRotateActivePlayer(tableid)
 {
 	if(PokerTable[tableid][pkrActivePlayers] <= 1)
 		return 1;
@@ -1377,8 +1353,10 @@ PokerRotateActivePlayer(tableid)
 	return 1;
 }
 
-Public:InitPokerTables()
+static InitPokerTables()
 {
+	Iter_Init(PokerTables);
+
 	for(new i = 0; i < MAX_POKERTABLES; i++) 
 	{
 		PokerTable[i][pkrSQL] = -1;
@@ -1422,13 +1400,14 @@ Public:InitPokerTables()
 	return 1;
 }
 
-stock LoadPokerTables()
+static LoadPokerTables()
 {
 	mysql_pquery(g_SQL, "SELECT * FROM poker_tables WHERE 1", "OnPokerTablesLoaded", "");
 	return 1;
 }
 
-Public:OnPokerTablesLoaded()
+forward OnPokerTablesLoaded();
+public OnPokerTablesLoaded()
 {
 	new rows = cache_num_rows();
 	if(!rows) return 1;
@@ -1459,7 +1438,7 @@ Public:OnPokerTablesLoaded()
 	return 1;
 }
 
-SavePokerTable(idx)
+static SavePokerTable(idx)
 {
 	if(PokerTable[idx][pkrSQL] == -1)
 	{
@@ -1500,13 +1479,14 @@ SavePokerTable(idx)
 	return 1;
 }
 
-Public:OnPokerTableInsert(tableid)
+forward OnPokerTableInsert(tableid);
+public OnPokerTableInsert(tableid)
 {
 	PokerTable[tableid][pkrSQL] = cache_insert_id();
 	return 1;
 }
 
-ResetPokerRound(tableid)
+static ResetPokerRound(tableid)
 {
 	PokerTable[tableid][pkrRound] = 0;
 	PokerTable[tableid][pkrStage] = 0;
@@ -1549,12 +1529,10 @@ ResetPokerRound(tableid)
 	}
 	return 1;
 }
-ResetPokerTable(tableid)
-{
-	new szString[32];
-	format(szString, sizeof(szString), "");
-	strmid(PokerTable[tableid][pkrPass], szString, 0, strlen(szString), 64);
 
+static ResetPokerTable(tableid)
+{
+	PokerTable[tableid][pkrPass][0] = EOS;
 	PokerTable[tableid][pkrActive] = 0;
 	PokerTable[tableid][pkrLimit] = 6;
 	PokerTable[tableid][pkrBuyInMax] = 1000;
@@ -1576,12 +1554,9 @@ ResetPokerTable(tableid)
 	return 1;
 }
 
-ResetPokerTableEnum(tableid)
+static ResetPokerTableEnum(tableid)
 {
-	new szString[32];
-	format(szString, sizeof(szString), "");
-	strmid(PokerTable[tableid][pkrPass], szString, 0, strlen(szString), 32);
-
+	PokerTable[tableid][pkrPass][0] = EOS;
 	PokerTable[tableid][pkrSQL] = -1;
 	PokerTable[tableid][pkrActive] = 0;
 	PokerTable[tableid][pkrPlaced] = 0;
@@ -1624,7 +1599,7 @@ ResetPokerTableEnum(tableid)
 	return 1;
 }
 
-CreatePokerGUI(playerid)
+static CreatePokerGUI(playerid)
 {
 	PlayerPokerUI[playerid][0] = CreatePlayerTextDraw(playerid, 390.000000, 263.000000, " "); // Seat 2 (SEAT 1)
 	PlayerTextDrawAlignment(playerid, PlayerPokerUI[playerid][0], 2);
@@ -2120,22 +2095,21 @@ CreatePokerGUI(playerid)
 	PlayerTextDrawSetShadow(playerid, PlayerPokerUI[playerid][42], 0);
 }
 
-ShowPokerGUI(playerid)
+static ShowPokerGUI(playerid)
 {
 	for(new i = 0; i < MAX_PLAYERPOKERUI; i++) 
 		PlayerTextDrawShow(playerid, PlayerPokerUI[playerid][i]);
-
 	return 1;
 }
 
-DestroyPokerGUI(playerid)
+static DestroyPokerGUI(playerid)
 {
-	for(new i = 0; i < MAX_PLAYERPOKERUI; i++) {
+	for(new i = 0; i < MAX_PLAYERPOKERUI; i++) 
 		PlayerTextDrawDestroy(playerid, PlayerPokerUI[playerid][i]);
-	}
+	return 1;	
 }
 
-PlacePokerTable(tableid, skipmisc, Float:x, Float:y, Float:z, Float:rx, Float:ry, Float:rz, virtualworld, interior)
+static PlacePokerTable(tableid, skipmisc, Float:x, Float:y, Float:z, Float:rx, Float:ry, Float:rz, virtualworld, interior)
 {
 	PokerTable[tableid][pkrPlaced] = 1;
 	PokerTable[tableid][pkrX] = x;
@@ -2162,7 +2136,8 @@ PlacePokerTable(tableid, skipmisc, Float:x, Float:y, Float:z, Float:rx, Float:ry
 	}
 
 	// Create 3D Text Label
-	new tmpString[256];
+	new 
+		tmpString[256];
 	format(tmpString, sizeof(tmpString), "Poker stol\n\n Buy-In Maximum/Minimum: {00FF00}$%d{FFFFFF}/{00FF00}$%d{FFFFFF}\n\n[/poker play]", PokerTable[tableid][pkrBuyInMax], PokerTable[tableid][pkrBuyInMin]);
 	if( !IsValidDynamic3DTextLabel(PokerTable[tableid][pkrText3DID]) )
 		PokerTable[tableid][pkrText3DID] = CreateDynamic3DTextLabel(tmpString, COLOR_YELLOW, PokerTable[tableid][pkrX], PokerTable[tableid][pkrY], PokerTable[tableid][pkrZ], 25.0, INVALID_PLAYER_ID,INVALID_VEHICLE_ID, 0, PokerTable[tableid][pkrVW], PokerTable[tableid][pkrInt], -1);
@@ -2171,16 +2146,17 @@ PlacePokerTable(tableid, skipmisc, Float:x, Float:y, Float:z, Float:rx, Float:ry
 		DestroyDynamic3DTextLabel(PokerTable[tableid][pkrText3DID]);
 		PokerTable[tableid][pkrText3DID] = CreateDynamic3DTextLabel(tmpString, COLOR_YELLOW, PokerTable[tableid][pkrX], PokerTable[tableid][pkrY], PokerTable[tableid][pkrZ], 25.0, INVALID_PLAYER_ID,INVALID_VEHICLE_ID, 0, PokerTable[tableid][pkrVW], PokerTable[tableid][pkrInt], -1);
 	}
+
 	if(!Iter_Contains(PokerTables, tableid))
 		Iter_Add(PokerTables, tableid);
 	SavePokerTable(tableid);
-
 	return PokerTable[tableid][pkrObjectID];
 }
 
-DestroyPokerTable(tableid)
+static DestroyPokerTable(tableid)
 {
-	if(PokerTable[tableid][pkrPlaced] == 1) {
+	if(PokerTable[tableid][pkrPlaced] == 1) 
+	{
 
 		// Delete Table
 		if(IsValidDynamicObject(PokerTable[tableid][pkrObjectID]))
@@ -2206,13 +2182,13 @@ DestroyPokerTable(tableid)
 	return tableid;
 }
 
-RemovePokerTable(tableid)
+static RemovePokerTable(tableid)
 {
 	mysql_fquery(g_SQL, "DELETE FROM poker_tables WHERE sqlid = '%d'", PokerTable[ tableid ][ pkrSQL ]);
 	return 1;
 }
 
-JoinPokerTable(playerid, tableid)
+static JoinPokerTable(playerid, tableid)
 {
 	// Check if there is room for the player
 	if(PokerTable[tableid][pkrPlayers] < PokerTable[tableid][pkrLimit])
@@ -2275,24 +2251,24 @@ JoinPokerTable(playerid, tableid)
 	return 1;
 }
 
-DoesHavePokerTablePerm(playerid, tableid)
+static bool:DoesHavePokerTablePerm(playerid, tableid)
 {
 	new houseid = Player_InHouse(playerid),
 		bizzid  = Player_InBusiness(playerid);
 	if (houseid != INVALID_HOUSE_ID && houseid >= 0)
 	{
 		if(HouseInfo[houseid][hOwnerID] == PlayerInfo[playerid][pSQLID] && HouseInfo[houseid][hInt] == PokerTable[tableid][pkrInt] && HouseInfo[houseid][hVirtualWorld] == PokerTable[tableid][pkrVW])
-			return 1;
+			return true;
 	}
 	else if (bizzid != INVALID_BIZNIS_ID && bizzid < MAX_BIZZES)
 	{
 		if( (BizzInfo[bizzid][bOwnerID] == PlayerInfo[playerid][pSQLID]) && BizzInfo[bizzid][bInterior] == PokerTable[tableid][pkrInt] && BizzInfo[bizzid][bVirtualWorld] == PokerTable[tableid][pkrVW])
-			return 1;
+			return true;
 	}
-	return 0;
+	return false;
 }
 
-DetectPokerTable(playerid)
+static DetectPokerTable(playerid)
 {
 	foreach(new i: PokerTables)
 	{
@@ -2302,7 +2278,7 @@ DetectPokerTable(playerid)
 	return -1;
 }
 
-CountHousePokerTables(houseid)
+static CountHousePokerTables(houseid)
 {
 	new tablecount = 0;
 	foreach(new t: PokerTables)
@@ -2313,7 +2289,7 @@ CountHousePokerTables(houseid)
 	return tablecount;
 }
 
-GetPokerTableLimit(playerid)
+static GetPokerTableLimit(playerid)
 {
 	new houseid = Player_InHouse(playerid),
 		bizzid  = Player_InBusiness(playerid);
@@ -2357,10 +2333,7 @@ GetPokerTableLimit(playerid)
 				}
 			}
 		}
-		else
-		{
-			SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste vlasnik kuce u kojoj se nalazite!");
-		}
+		else SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste vlasnik kuce u kojoj se nalazite!");
 	}
 	else if (bizzid != INVALID_BIZNIS_ID)
 	{
@@ -2369,17 +2342,15 @@ GetPokerTableLimit(playerid)
 		{
 			return 1;
 		}
-		else
-		{
-			SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste vlasnik/suvlasnik kasina / biznis nije kasino!");
-		}
+		else SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste vlasnik/suvlasnik kasina / biznis nije kasino!");
 	}
 	return 0;
 }
 
-LeavePokerTable(playerid)
+static LeavePokerTable(playerid)
 {
-	new tableid = PlayingTableID[playerid];
+	new 
+		tableid = PlayingTableID[playerid];
 	if(!Iter_Contains(PokerTables, tableid))
 		return 1;
 
@@ -2397,7 +2368,8 @@ LeavePokerTable(playerid)
 	PokerTable[tableid][pkrSlot][PlayingTableSlot[playerid]] = -1;
 
 	// Sprijecavanje da counter igraca ide u minus/da se smanjuje vise nego sto bi se trebao
-	new players = 0, activeplayers = 0;
+	new 
+		players = 0, activeplayers = 0;
 	for(new i = 0; i < 6; i++)
 	{
 		if(PokerTable[tableid][pkrSlot][i] != -1)
@@ -2443,7 +2415,7 @@ LeavePokerTable(playerid)
 	return 1;
 }
 
-ShowCasinoGamesMenu(playerid, dialogid)
+static ShowCasinoGamesMenu(playerid, dialogid)
 {
 	switch(dialogid)
 	{
@@ -2670,25 +2642,25 @@ hook OnPlayerEditDynObject(playerid, objectid, response, Float:x, Float:y, Float
 		SetDynamicObjectPos(objectid, x, y, z);
 		SetDynamicObjectRot(objectid, rx, ry, rz);
 
+		new 
+			tableid = EditingTableID[playerid];
 		if(response == EDIT_RESPONSE_FINAL)
 		{
-
-			new tableid = EditingTableID[playerid];
-
 			PlacePokerTable(tableid, 1, x, y, z, rx, ry, rz, 
 				GetPlayerVirtualWorld(playerid), 
 				GetPlayerInterior(playerid)
 			);
 
 			EditingTableID[playerid] = -1;
-			SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uspjesno ste postavili poker stol! Koristite /poker play da bi zapoceli sa igrom.");
+			SendMessage(playerid, 
+				MESSAGE_TYPE_SUCCESS, 
+				"Uspjesno ste postavili poker stol! Koristite /poker play da bi zapoceli sa igrom."
+			);
 			return 1;
 		}
-
-		if(response == EDIT_RESPONSE_CANCEL)
+		else if(response == EDIT_RESPONSE_CANCEL)
 		{
-			new 
-				tableid = EditingTableID[playerid];
+			
 
 			PlacePokerTable(tableid, 0, 
 				PokerTable[tableid][pkrX],

@@ -51,7 +51,8 @@ static
 	Timer:DestroyingCarTimer[ MAX_PLAYERS ],
 	DestroyingCarCount[ MAX_PLAYERS ],
 	PlayerBribeMoney[ MAX_PLAYERS ],
-	PlayerJackingCar[ MAX_PLAYERS ];
+	PlayerJackingCar[ MAX_PLAYERS ],
+	EditingBoardID[ MAX_PLAYERS ];
 
 /*
 	   _____ ______ _   _ ______ _____            _      
@@ -342,7 +343,8 @@ stock static InitIllegalGarage(garage)
 		Float: bZ = IllegalGarage[ garage ][ ig3dTextPos ][ 2 ] - 1.0,
 		Float: brZ = IllegalGarage[ garage ][ ig3dTextPos ][ 3 ];
 
-	IllegalGarage[ garage ][ igBoard ] = CreateDynamicObject(3077, bX, bY, bZ, 0.000, 0.000, brZ, -1,- 1, -1,300.000, 300.000);
+	if(!IsValidDynamicObject(IllegalGarage[ garage ][ igBoard ]))
+		IllegalGarage[ garage ][ igBoard ] = CreateDynamicObject(3077, bX, bY, bZ, 0.000, 0.000, brZ, -1,- 1, -1,300.000, 300.000);
 
 	// Total: 6 board texts in 3 rows on jacker board
 	new 
@@ -358,6 +360,7 @@ stock static InitIllegalGarage(garage)
 	IllegalGarage[ garage ][ igHeader ] = CreateDynamicObject(18659, bX, bY, hZ, 0.000, 0.000, brZ,-1,-1,-1,300.000,300.000);
 	SetDynamicObjectMaterialText(IllegalGarage[ garage ][ igHeader ], 0, "Wanted List", 140, "courier", 42, 1, -1, 0, 1);
 	
+	// Left column 
 	IllegalGarage[ garage ][ igText ][ 0 ] = CreateDynamicObject(18659, ltX, bY, Z1, 0.000, 0.000, rotZ,-1,-1,-1,300.000,300.000);
 	SetDynamicObjectMaterialText(IllegalGarage[ garage ][ igText ][ 0 ], 0, "1", 140, "courier", 38, 1, -1, 0, 1);	
 	IllegalGarage[ garage ][ igText ][ 1 ] = CreateDynamicObject(18659, ltX, bY, Z2, 0.000, 0.000, rotZ,-1,-1,-1,300.000,300.000);
@@ -365,12 +368,13 @@ stock static InitIllegalGarage(garage)
 	IllegalGarage[ garage ][ igText ][ 2 ] = CreateDynamicObject(18659, ltX, bY, Z3, 0.000, 0.000, rotZ,-1,-1,-1,300.000,300.000);
 	SetDynamicObjectMaterialText(IllegalGarage[ garage ][ igText ][ 2 ], 0, "3", 140, "courier", 38, 1, -1, 0, 1);
 	
+	// Right column
 	IllegalGarage[ garage ][ igText ][ 3 ] = CreateDynamicObject(18659, rtX, bY, Z1, 0.000, 0.000, rotZ, -1, -1, -1,300.000, 300.000);
-	SetDynamicObjectMaterialText(IllegalGarage[ garage ][ igText ][ 3 ], 0, "6", 140, "courier", 38, 1, -1, 0, 1);
+	SetDynamicObjectMaterialText(IllegalGarage[ garage ][ igText ][ 3 ], 0, "4", 140, "courier", 38, 1, -1, 0, 1);
 	IllegalGarage[ garage ][ igText ][ 4 ] = CreateDynamicObject(18659, rtX, bY, Z2, 0.000, 0.000, rotZ, -1, -1,-1, 300.000, 300.000);
 	SetDynamicObjectMaterialText(IllegalGarage[ garage ][ igText ][ 4 ], 0, "5", 140, "courier", 38, 1, -1, 0, 1);
 	IllegalGarage[ garage ][ igText ][ 5 ] = CreateDynamicObject(18659, rtX, bY, Z3, 0.000, 0.000, rotZ, -1, -1, -1, 300.000, 300.000);
-	SetDynamicObjectMaterialText(IllegalGarage[ garage ][ igText ][ 5 ], 0, "4", 140, "courier", 38, 1, -1, 0, 1);
+	SetDynamicObjectMaterialText(IllegalGarage[ garage ][ igText ][ 5 ], 0, "6", 140, "courier", 38, 1, -1, 0, 1);
 	UpdateIllegalGarages(garage);
 	
 	IllegalGarage[ garage ][ ig3dText ] = CreateDynamic3DTextLabel("*", -1, IllegalGarage[ garage ][ ig3dTextPos ][ 0 ], IllegalGarage[ garage ][ ig3dTextPos ][ 1 ], IllegalGarage[ garage ][ ig3dTextPos ][ 2 ], 30.0, INVALID_PLAYER_ID, INVALID_VEHICLE_ID, 1, -1, -1, -1, 30.0);
@@ -404,12 +408,12 @@ stock static ResetCarJackerVariables(playerid)
 {
 	DestroyJackerTextDraw(playerid);
 	
-	// 32bit
-	DestroyedCar[ playerid ]			= 0;
+	DestroyedCar[ playerid ]			= -1;
 	PlayerJackingCar[ playerid ]		= -1;
 	JackerIllegalGarage[ playerid ]		= -1;
 	stop DestroyingCarTimer[ playerid ];
 	DestroyingCarCount[ playerid ] 		= -1;
+	EditingBoardID[ playerid ] 			= -1;
 	return 1;
 }
 
@@ -647,6 +651,56 @@ hook function ResetPlayerVariables(playerid)
 	return continue(playerid);
 }
 
+hook OnPlayerEditDynObject(playerid, objectid, response, Float:x, Float:y, Float:z, Float:rx, Float:ry, Float:rz)
+{
+	if(EditingBoardID[ playerid ] != -1)
+	{
+		SetDynamicObjectPos(objectid, x, y, z);
+		SetDynamicObjectRot(objectid, rx, ry, rz);
+
+		new 
+			garage = EditingBoardID[playerid];
+		if(response == EDIT_RESPONSE_FINAL)
+		{
+			IllegalGarage[ garage ][ ig3dTextPos ][ 0 ]	= x;
+			IllegalGarage[ garage ][ ig3dTextPos ][ 1 ] = y - 1.0;
+			IllegalGarage[ garage ][ ig3dTextPos ][ 2 ] = z - 1.0;
+			IllegalGarage[ garage ][ ig3dTextPos ][ 3 ] = rz;
+			
+			CreateIllegalGarage(garage);
+
+			SendAdminMessage(COLOR_RED, 
+				"AdmCMD: %s has created Illegal Garage %s[ID %d].",
+				IllegalGarage[ garage ][ igName ],
+				garage
+			);
+			SendFormatMessage(playerid, 
+				MESSAGE_TYPE_SUCCESS, 
+				"You have sucessfully created Illegal Garage %s[ID %d].", 
+				IllegalGarage[ garage ][ igName ],
+				garage
+			);
+	
+			EditingBoardID[playerid] = -1;
+
+			SendFormatMessage(playerid,
+				MESSAGE_TYPE_SUCCESS,
+				"You have sucessfully created Illegal Garage %s!",
+				IllegalGarage[ garage ][ igName ]
+			);
+			return 1;
+		}
+		else if(response == EDIT_RESPONSE_CANCEL)
+		{
+			ResetIllegalGarage(garage);
+			EditingBoardID[playerid] = -1;
+			SendMessage(playerid, MESSAGE_TYPE_INFO, "You have aborted Illegal Garage creation.");
+			return 1;
+		}
+	}
+	return 1;
+}
+
 hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 {
 	switch(dialogid)
@@ -825,28 +879,26 @@ CMD:igarage(playerid, params[])
 			SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "Maximum limit of Illegal Garages reached. (%d)", MAX_ILLEGAL_GARAGES);
 			return 1;
 		}
+
+		strcpy(IllegalGarage[ garage ][ igName ], garage_name, 32);
 		new 
 			Float:x, Float:y, Float:z;
 		GetPlayerPos(playerid, x, y, z);
 
-		IllegalGarage[ garage ][ ig3dTextPos ][ 0 ]	= x;
-		IllegalGarage[ garage ][ ig3dTextPos ][ 1 ] = y;
-		IllegalGarage[ garage ][ ig3dTextPos ][ 2 ] = z;
-		IllegalGarage[ garage ][ ig3dTextPos ][ 3 ] = 0.0;
-		strcpy(IllegalGarage[ garage ][ igName ], garage_name, 32);
-		
-		CreateIllegalGarage(garage);
+		IllegalGarage[ garage ][ igBoard ] = CreateDynamicObject(3077, x, y, z + 2.0, 0.000, 0.000, 0.000, -1,- 1, -1,300.000, 300.000);
 
-		SendAdminMessage(COLOR_RED, 
-			"%s has created Illegal Garage %s[ID %d].",
-			garage_name,
-			garage
+		EditingBoardID[ playerid ] = garage;
+		EditDynamicObject(playerid, IllegalGarage[ garage ][ igBoard ]);
+
+		va_SendClientMessage(playerid, 
+			COLOR_WHITE, 
+			"You have placed main board for Illegal Garage %s.",
+			garage_name
 		);
-		SendFormatMessage(playerid, 
-			MESSAGE_TYPE_SUCCESS, 
-			"You have sucessfully created Illegal Garage %s[ID %d].", 
-			garage_name,
-			garage
+		SendClientMessage(playerid, 
+			COLOR_WHITE, 
+			"Place board on desireable place to save progress. \n\
+				Use '{3399FF}~k~~PED_SPRINT~{FFFFFF}' to move camera."
 		);
 	}
 	if( !strcmp(param, "remove", true) )
