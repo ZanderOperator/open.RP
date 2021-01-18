@@ -497,7 +497,7 @@ CMD:jobduty(playerid, params[])
 	{
 		if(!Player_TaxiDuty(i)) 
 			continue;
-			
+
 		new 
 			Float: t_overall = float(Player_TaxiPoints(i)) / float(Player_TaxiVoted(i));
 		va_SendClientMessage(playerid, -1, "Ime: %s // Taxi Rating: %.1f // Kontakt broj: %d.", 
@@ -510,7 +510,7 @@ CMD:jobduty(playerid, params[])
 	SendClientMessage(playerid, COLOR_RED, "[ ! ]  Mechanic Company:");
 	foreach(new i: Player) 
 	{
-		if(MechanicDuty[i] == true ) 
+		if(Player_MechanicDuty(playerid) == true) 
 			va_SendClientMessage(playerid, -1, "Ime: %s // Kontakt broj: %d.", GetName(i), PlayerMobile[i][pMobileNumber]);
 		
 	}

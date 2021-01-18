@@ -10,7 +10,7 @@
 	   ###    ##     ## ##     ##  ######
 */
 
-new
+static
 	bool: MechanicDuty[MAX_PLAYERS] = false,
 	bool: Repairing[MAX_PLAYERS] = false,
 	vgate[4],
@@ -19,20 +19,13 @@ new
 	vrampastatus[3],
 	Timer:MechanicTimer[MAX_PLAYERS],
 	PlayerRepairVehicle[ MAX_PLAYERS ],
-	PlayerMechanicVehicle[ MAX_PLAYERS ];
-
-static 
+	PlayerMechanicVehicle[ MAX_PLAYERS ],
 	PlayerText:MechanicTD[MAX_PLAYERS] = { PlayerText:INVALID_TEXT_DRAW, ... };
 
-/*
-	 ######  ########  #######   ######  ##    ##  ######
-	##    ##    ##    ##     ## ##    ## ##   ##  ##    ##
-	##          ##    ##     ## ##       ##  ##   ##
-	 ######     ##    ##     ## ##       #####     ######
-		  ##    ##    ##     ## ##       ##  ##         ##
-	##    ##    ##    ##     ## ##    ## ##   ##  ##    ##
-	 ######     ##     #######   ######  ##    ##  ######
-*/
+bool:Player_MechanicDuty(playerid)
+{
+	return MechanicDuty[playerid];
+}
 
 stock ResetMechanicVariables(playerid)
 {

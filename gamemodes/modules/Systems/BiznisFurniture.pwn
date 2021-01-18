@@ -2510,7 +2510,7 @@ hook OnFSelectionResponse(playerid, fselectid, modelid, response)
                 }
                 switch (BizzFurnObjectsType[playerid])
                 {
-                    case 1: ShowPlayerDialog(playerid, DIALOG_BIZZ_FURN_OBJCS, DIALOG_STYLE_LIST, "Biznis Furniture - Bars & Clubs", "Kauci\nFotelje\nStolovi\nOrmarici\nTelevizori\nHi-Fi\nZvucnici\nTepisi\nSvijetla\nVrata\nFrizideri\nPica\nFun\n", "Choose", "Abort");
+                    case 1: ShowPlayerDialog(playerid, DIALOG_BIZZ_FURN_OBJCS, DIALOG_STYLE_LIST, "Biznis Furniture - Bars & Clubs", "Kauci\nFotelje\nStolovi\nOrmarici\nTelevizori\nHi-Fi\nZvucnici\nTepisi\nSvijetla\nVrata\nFrizideri\nPica\nFun", "Choose", "Abort");
                     case 2: ShowPlayerDialog(playerid, DIALOG_BIZZ_FURN_OBJCS, DIALOG_STYLE_LIST, "Biznis Furniture - 24/7", "Frizideri\nPica\nHrana\nBlagajna\nSvjetla\nKatne\nOstalo", "Choose", "Abort");
                     case 3: ShowPlayerDialog(playerid, DIALOG_BIZZ_FURN_OBJCS, DIALOG_STYLE_LIST, "Biznis Furniture - Restoran", "Stolovi\nKauci\nFotelje\nFrizideri\nPica\nHrana\nBlagajna\nPosudje\nMirkovalna\nPeci\nKuhinjski elementi\nSudoper", "Choose", "Abort");
                     case 4: ShowPlayerDialog(playerid, DIALOG_BIZZ_FURN_OBJCS, DIALOG_STYLE_LIST, "Biznis Furniture - Clothing", "Police\nBlagajna\nOdjeca", "Choose", "Abort");
