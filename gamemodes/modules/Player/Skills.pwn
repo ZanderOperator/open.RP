@@ -1,15 +1,6 @@
 #include <YSI_Coding\y_hooks>
 
-/*
-	Skills for:
-		JOB_SWEEPER
-		JOB_CRAFTER  		
-		JOB_FARMER 		
-		JOB_JACKER	
-		JOB_GABAGE 	
-		JOB_BURGLAR
-*/
-#define MAX_SKILLS			6
+const MAX_SKILLS 	= (MAX_JOBS - 1); // Because first Job ID in enumerator starts with 1, not 0.
 
 enum E_SKILLS_INFO
 {
@@ -53,7 +44,8 @@ stock LoadPlayerSkills(playerid)
 
 static stock ReturnSkillID(playerid)
 {
-	new value = -1;
+	new 
+		value = -1;
 	for(new i = 0; i < MAX_SKILLS; i++)
 	{
 		if(PlayerSkills[playerid][sJob][i] == PlayerJob[playerid][pJob])
@@ -82,7 +74,8 @@ static stock CreatePlayerSkill(playerid)
 
 stock UpgradePlayerSkill(playerid, points = 1)
 {
-	new skillid = ReturnSkillID(playerid);
+	new 
+		skillid = ReturnSkillID(playerid);
 	if(skillid == -1)
 		skillid = CreatePlayerSkill(playerid);
 
@@ -117,11 +110,15 @@ Public: OnPlayerSkillInsert(playerid, skillid)
 	return 1;
 }
 
-stock GetPlayerSkillLevel(playerid, skillid)
+stock GetPlayerSkillLevel(playerid)
 {
 	new 
-		skilllevel;
-	skilllevel = floatround((PlayerSkills[playerid][sSkill][skillid] / 50), floatround_floor);
+		skillid = ReturnSkillID(playerid);
+	if(skillid == -1)
+		return 0;
+
+	new
+		skilllevel = floatround((PlayerSkills[playerid][sSkill][skillid] / 50), floatround_floor);
 	if(skilllevel == 0)
 		skilllevel = 1;
 	if(skilllevel >= 5)
@@ -235,13 +232,16 @@ CMD:skills(playerid, params[])
 
 	for(new i = 0; i < MAX_SKILLS; i++)
 	{
+		if(PlayerSkills[playerid][sJob][i] == 0)
+			continue;
+			
 		format(motd, 64,  "%s ID: %d | %s | (%d/%d, Level %d) %s", 
 			(!tabtag) ? ("") : ("\n"), 
 			i,
 			ReturnJob(PlayerSkills[playerid][sJob][i]),
 			PlayerSkills[playerid][sSkill][i],
-			GetPlayerSkillLevel(playerid, i) * 50,
-			GetPlayerSkillLevel(playerid, i),
+			GetPlayerSkillLevel(playerid) * 50,
+			GetPlayerSkillLevel(playerid),
 			(i != (MAX_SKILLS-1)) ? ("\n") : ("")
 		);
 		strcat(dstring, motd, 512);
@@ -284,7 +284,7 @@ CMD:setskill(playerid, params[])
 		GetName(playerid, false),
 		ReturnJob(PlayerSkills[giveplayerid][sJob][skillid]),
 		value,
-		GetPlayerSkillLevel(giveplayerid, skillid)
+		GetPlayerSkillLevel(giveplayerid)
 	);
 	return 1;
 }

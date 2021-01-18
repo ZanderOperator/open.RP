@@ -170,7 +170,7 @@ static CheckForGarageWantedLevel(garage, bool:save=false)
 	UpdateDynamic3DTextLabelText(IlegalGarage[ garage ][ ig3dText ], -1, tmpString);
 }
 
-bool: IsVehicleJackable(carid)
+static bool: IsVehicleJackable(carid)
 {
 	new bool: value = true;
 	if(!LandVehicles[carid][viCarJackerPrice])
@@ -208,7 +208,7 @@ stock GetVehiclesForIlegalGarages(garage)
 				
 			if( carid == -1 ) goto CARID_GET;
 			if( IsABike(GetVehicleModel(vehid)) || IsABoat(GetVehicleModel(vehid)) || IsAMotorBike(GetVehicleModel(vehid)) || IsAPlane(GetVehicleModel(vehid)) || IsAHelio(GetVehicleModel(vehid)) ) goto CARID_GET;
-			if( !LandVehicles[ carid ][ viCarJackerPrice ] ) goto CARID_GET;
+			if( !IsVehicleJackable(carid) ) goto CARID_GET;
 			if( IsVehicleOnList(garage, carid) ) goto CARID_GET;
 			IlegalGarage[ garage ][ igVehicleIds ][ i ] = carid;
 		}
@@ -227,7 +227,7 @@ stock GetVehiclesForIlegalGarages(garage)
 			if( carid > 119 ) goto CARID1_GET;
 			if( caridmodel == -1 ) goto CARID1_GET;
 			if( IsABike(model) || IsABoat(model) || IsAMotorBike(model) || IsAPlane(model) || IsAHelio(model) ) goto CARID1_GET;
-			if( !LandVehicles[ caridmodel ][ viCarJackerPrice ] ) goto CARID1_GET;
+			if( !IsVehicleJackable(carid) ) goto CARID_GET;			
 			if( IsVehicleOnList(garage, caridmodel) ) goto CARID1_GET;
 			IlegalGarage[ garage ][ igVehicleIds ][ i ] = caridmodel;
 		}	
@@ -413,7 +413,7 @@ timer DestroyingCar[1000](playerid, vehicleid)
 	
 		// Money
 		new
-			skillmoney = ((GetPlayerSkillLevel(playerid, 6) + 2) * 10),
+			skillmoney = ((GetPlayerSkillLevel(playerid) + 2) * 10),
 			garage = JackerIlegalGarage[ playerid ],
 			decrease = front_left_panel + front_right_panel + rear_left_panel + rear_right_panel + windshield + front_bumper + rear_bumper + bonnet + boot + driver_door + passenger_door + light1 + light2 + light3 + light4 + tire1 + tire2 + tire3 + tire4,
 			value = ( ( LandVehicles[ PlayerJackingCar[ playerid ] ][ viCarJackerPrice ] + skillmoney )  - ( decrease * 15 ) );

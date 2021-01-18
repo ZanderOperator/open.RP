@@ -102,7 +102,7 @@ stock static CheckGarbages(playerid)
 	
 	if( Bit8_Get( gr_TrashPickuped, playerid ) == 8 )
 	{
-		new money = (TRASH_PRICE * 10) + (GetPlayerSkillLevel(playerid, 2) * 25); 
+		new money = (TRASH_PRICE * 10) + (GetPlayerSkillLevel(playerid) * 25); 
 		va_SendClientMessage(playerid, COLOR_RED, "[ ! ] Zaradio si $%d, placa ti je sjela na racun.", money);
 
 		BudgetToPlayerBankMoney (playerid, money ); // novac sjeda na radnu knjizicu iz proracuna
@@ -317,7 +317,7 @@ hook OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
 						case 7 .. 8:    money = random(255)  + PRICE_TRASH;
 						case 9 .. 10:   money = random(350) + PRICE_TRASH;
 					}
-					money += (GetPlayerSkillLevel(playerid, 2) * 30);
+					money += (GetPlayerSkillLevel(playerid) * 30);
 					va_SendClientMessage(playerid, COLOR_RED, "[ ! ] Zaradio si $%d, placa ti je sjela na racun.", money);
 
 					BudgetToPlayerBankMoney (playerid, money ); // novac sjeda na radnu knjizicu iz proracuna
@@ -458,7 +458,7 @@ CMD:garbage(playerid, params[])
 	{
 		if( PlayerJob[playerid][pFreeWorks] < 1 ) return SendClientMessage( playerid, COLOR_RED, "Ne mozes vise raditi!");
 		if( !pTakedWC[playerid] ) return SendClientMessage( playerid, COLOR_RED, "Prvo morate koristiti /garbage clothes!");
-		if( GetPlayerSkillLevel(playerid, 2) < 1 ) return SendClientMessage( playerid, COLOR_RED, "Niste smetlar skill 1!");
+		if( GetPlayerSkillLevel(playerid) < 1 ) return SendClientMessage( playerid, COLOR_RED, "Niste smetlar skill 1!");
 		new vID = GetPlayerVehicleID(playerid);
 		if(!IsVehicleATrashTruck(vID)) return SendClientMessage( playerid, COLOR_RED, "Niste u TrashMasteru!");
 		gStartedWork[playerid] = 2;

@@ -924,7 +924,7 @@ CMD:sellwood(playerid, params[])
 		return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste na lokaciji gdje se prodaju drva!");
 	
 	// Placa
-	new money = pWood[playerid] + 200 + (GetPlayerSkillLevel(playerid, 4) * 25);
+	new money = pWood[playerid] + 200 + (GetPlayerSkillLevel(playerid) * 25);
 	va_SendClientMessage(playerid, COLOR_RED, "[ ! ] Zaradio si $%d, placa ti je sjela na racun.", money);
 	BudgetToPlayerBankMoney(playerid, money); // novac sjeda na racun iz proracuna
 	PaydayInfo[playerid][pPayDayMoney] += money;

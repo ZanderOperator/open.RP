@@ -69,7 +69,7 @@ hook OnPlayerEnterCheckpoint(playerid)
 			{
 				DisablePlayerCheckpoint(playerid);
 				new 
-					money = minrand(400, 450) + (GetPlayerSkillLevel(playerid, 2) * 25); 
+					money = minrand(400, 450) + (GetPlayerSkillLevel(playerid) * 25); 
 				va_SendClientMessage(playerid, COLOR_RED, "[ ! ] Zaradio si $%d, placa ti je sjela na racun.", money);
 
 				BudgetToPlayerBankMoney(playerid, money); // dobiva novac na knjizicu iz proracuna

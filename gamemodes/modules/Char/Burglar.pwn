@@ -237,7 +237,7 @@ stock static InitPlayerPocket(playerid, targetid)
 		buffer[ 256 ],
 		dialogPos = 0;
 		
-	if( AC_GetPlayerMoney(targetid) >  50 ) {//( ( GetPlayerSkillLevel(playerid, 5) + 1 ) * 10 ) ) {
+	if( AC_GetPlayerMoney(targetid) >  50 ) {//( ( GetPlayerSkillLevel(playerid) + 1 ) * 10 ) ) {
 		format( buffer, 256, "Novac (%d$)\n", AC_GetPlayerMoney(targetid) );
 		PocketDialog[ playerid ][ dialogPos ] = DIALOG_TYPE_MONEY;
 		dialogPos++;
@@ -291,7 +291,7 @@ stock static PickPocketTargetPlayer(playerid, type)
 			if( succeed == 3 ) 
 			{
 				new
-					money = 51;//( ( GetPlayerSkillLevel(playerid, 5) + 1 ) * 10 );
+					money = 51;//( ( GetPlayerSkillLevel(playerid) * 10 );
 				PlayerToPlayerMoney( targetid, playerid, money); // Playerid krade od targetida (zato je targetid na prvom mjestu, njemu se oduzima)
 				
 				new
@@ -892,7 +892,8 @@ CMD:sellgoods(playerid, params[])
 // SKILL 2 - HOUSE
 CMD:crack_alarm(playerid, params[])
 {
-	if( ( PlayerJob[playerid][pJob] != JOB_BURGLAR ) || GetPlayerSkillLevel(playerid, 5) < 2) return SendClientMessage( playerid, COLOR_RED, "Niste lopov ili nemate dovoljan skill level!");
+	if( ( PlayerJob[playerid][pJob] != JOB_BURGLAR ) || GetPlayerSkillLevel(playerid) < 2) 
+		return SendClientMessage( playerid, COLOR_RED, "Niste lopov ili nemate dovoljan skill level!");
 	new
 		house = Player_InfrontHouse(playerid);
 	if( !IsPlayerInDynamicCP(playerid, Player_GetHouseCP(playerid) ) ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Morate biti unutar house checkpointa!");
@@ -917,7 +918,8 @@ CMD:crack_alarm(playerid, params[])
 
 CMD:stealitems(playerid, params[])
 {
-	if( ( PlayerJob[playerid][pJob] != JOB_BURGLAR ) || GetPlayerSkillLevel(playerid, 5) < 2 ) return SendClientMessage( playerid, COLOR_RED, "Niste lopov ili nemate dovoljan skill level!");
+	if( ( PlayerJob[playerid][pJob] != JOB_BURGLAR ) || GetPlayerSkillLevel(playerid) < 2 ) 
+		return SendClientMessage( playerid, COLOR_RED, "Niste lopov ili nemate dovoljan skill level!");
 	new
 		house = Player_InHouse(playerid);
 	if( house == INVALID_HOUSE_ID || !house ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste u kuci!");
@@ -1027,7 +1029,8 @@ CMD:takeitem(playerid, params[])
 // SKILL 3 - HOUSE MONEY
 CMD:stealmoney(playerid, params[])
 {
-	if( ( PlayerJob[playerid][pJob] != JOB_BURGLAR ) || GetPlayerSkillLevel(playerid, 5) < 3 ) return SendClientMessage( playerid, COLOR_RED, "Niste lopov ili nemate dovoljan skill level!");
+	if( ( PlayerJob[playerid][pJob] != JOB_BURGLAR ) || GetPlayerSkillLevel(playerid) < 3 ) 
+		return SendClientMessage( playerid, COLOR_RED, "Niste lopov ili nemate dovoljan skill level!");
 	if( PlayerJob[playerid][pFreeWorks] < 1 ) 	return SendClientMessage( playerid, COLOR_RED, "Ne mozes vise krasti (cekajte payday)!");
 	new
 		house = Player_InHouse(playerid);

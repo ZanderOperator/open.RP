@@ -158,7 +158,7 @@ timer OnPlayerCrafting[1000](playerid, type)
 			Bit4_Set( gr_CraftingGeneratorId, 	playerid, 0 );
 			
 			new
-				money = 350 + (GetPlayerSkillLevel(playerid,3) * 25);
+				money = 350 + (GetPlayerSkillLevel(playerid) * 25);
 			va_SendClientMessage(playerid, COLOR_RED, "[ ! ] Zaradio si $%d, placa ti je sjela na bankovni racun.", money);
 			UpgradePlayerSkill(playerid);
 			BudgetToPlayerBankMoney(playerid, money); // sjeda mu placa na bankovni racun iz proracuna

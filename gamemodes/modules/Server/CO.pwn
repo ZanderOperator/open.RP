@@ -327,8 +327,18 @@ stock BuyVehicle(playerid, bool:credit_activated = false)
 
 	switch(PlayerDealer[playerid])
 	{
-		case VEH_DEALER_CARS: { 	modelid = LandVehicles[PreviewType[playerid]][viModelid]; price = LandVehicles[PreviewType[playerid]][viPrice]; engineType = LandVehicles[PreviewType[playerid]][viEngineType]; }
-		case VEH_DEALER_BOAT: {		modelid = SeaVehicles[PreviewType[playerid]][viModelid];  price = SeaVehicles[PreviewType[playerid]][viPrice];  engineType = SeaVehicles[PreviewType[playerid]][viEngineType]; }
+		case VEH_DEALER_CARS: 
+		{ 	
+			modelid = LandVehicles[PreviewType[playerid]][viModelid]; 
+			price = LandVehicles[PreviewType[playerid]][viPrice]; 
+			engineType = LandVehicles[PreviewType[playerid]][viEngineType]; 
+		}
+		case VEH_DEALER_BOAT: 
+		{		
+			modelid = SeaVehicles[PreviewType[playerid]][viModelid];  
+			price = SeaVehicles[PreviewType[playerid]][viPrice];  
+			engineType = SeaVehicles[PreviewType[playerid]][viEngineType]; 
+		}
 		case VEH_DEALER_PLANE: 
 		{	
 			modelid = AirVehicles[PreviewType[playerid]][viModelid];			

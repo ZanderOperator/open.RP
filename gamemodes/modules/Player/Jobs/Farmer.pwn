@@ -426,7 +426,7 @@ timer CombineCheck[200](playerid)
 		
 		DisablePlayerCheckpoint(playerid);
 		CombineInfo[playerid][cWork] = 0;
-		new Profit = (random(650) + 505) + (GetPlayerSkillLevel(playerid, 0) * 20);
+		new Profit = (random(650) + 505) + (GetPlayerSkillLevel(playerid) * 20);
 		va_SendClientMessage(playerid, COLOR_RED, "[ ! ] Zaradio si $%d, placa ti je sjela na racun.", Profit);
 		ResetFarmerVars(playerid);
 		UpgradePlayerSkill(playerid);
@@ -831,7 +831,7 @@ CMD:milk(playerid, params[])
 		MilkInfo[playerid][mCanister] = 0;
 		RemovePlayerAttachedObject(playerid, 9);
 		SetPlayerSpecialAction(playerid, 0);
-		new moneys = (MilkInfo[playerid][mLiters] * 150) + (GetPlayerSkillLevel(playerid, 0) * 20);
+		new moneys = (MilkInfo[playerid][mLiters] * 150) + (GetPlayerSkillLevel(playerid) * 20);
 		BudgetToPlayerBankMoney (playerid, moneys); // sjeda na radnu knjizicu
 		PlayerJob[playerid][pFreeWorks] -= 5;
 		
@@ -984,7 +984,7 @@ CMD:milk(playerid, params[])
 			DestroyDynamicObject(TruckInfo[playerid][t1Object][j]);
 		}
 
-		new moneys = (TruckInfo[playerid][tLiters] * 10) + (GetPlayerSkillLevel(playerid, 0) * 20);
+		new moneys = (TruckInfo[playerid][tLiters] * 10) + (GetPlayerSkillLevel(playerid) * 20);
 		TruckInfo[playerid][tLiters] = 0;
 		TruckInfo[playerid][tLimit] = 0;
 		TruckInfo[playerid][tXOffes] = 0.0;
@@ -1317,7 +1317,7 @@ CMD:crops(playerid, params[])
 		SeedInfo[playerid][sHarvested] = 0;
 		
 		if( !SeedInfo[playerid][sPlantsNumber]) {
-			new moneys = SeedInfo[playerid][sStored] * 20 + (GetPlayerSkillLevel(playerid, 0) * 20);
+			new moneys = SeedInfo[playerid][sStored] * 20 + (GetPlayerSkillLevel(playerid) * 20);
 			PlayerJob[playerid][pFreeWorks] -= 5;
 			BudgetToPlayerBankMoney (playerid, moneys); // sjeda novac na knjizicu
 			PaydayInfo[playerid][pPayDayMoney] += moneys;
@@ -1494,7 +1494,7 @@ CMD:crops(playerid, params[])
 			DestroyDynamicObject(TruckInfo[playerid][t1Object][j]);
 		}
 
-		moneys = TruckInfo[playerid][tCropNumber] + (GetPlayerSkillLevel(playerid, 0) * 20);
+		moneys = TruckInfo[playerid][tCropNumber] + (GetPlayerSkillLevel(playerid) * 20);
 		TruckInfo[playerid][tCropNumber] = 0;
 		TruckInfo[playerid][tLimit] = 0;
 		TruckInfo[playerid][tXOffes] = 0.0;
@@ -1804,7 +1804,7 @@ CMD:eggs(playerid, params[])
 				DestroyDynamicObject(TruckInfo[playerid][t1Object][j]);
 		}
 
-		Profit = TruckInfo[playerid][tEggsNumber] * (random(4) + 7) + (GetPlayerSkillLevel(playerid, 0) * 20);
+		Profit = TruckInfo[playerid][tEggsNumber] * (random(4) + 7) + (GetPlayerSkillLevel(playerid) * 20);
 		TruckInfo[playerid][tEggsNumber] = 0;
 		TruckInfo[playerid][tLimit] = 0;
 		TruckInfo[playerid][tXOffes] = 0.0;
