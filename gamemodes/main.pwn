@@ -365,13 +365,12 @@ Public:GlobalServerTimer()
 
 	if( (tmphour > ghour) || (tmphour == 0 && ghour == 23) )
 	{
-		UpdateIllegalGarages(0);
-		//SetWorldTime(tmphour);
+		SetWorldTime(tmphour);
 		ghour = tmphour;
 	}
-	if(GMX != 1 && tmphour == 5 && tmpmins == 5 && tmpsecs < 10)//if(tmphour == 5 && tmpmins == 5 && tmpsecs == 10)
+	if(GMX != 1 && tmphour == 5 && tmpmins == 5 && tmpsecs < 10)
 	{
-		CheckAccountsForInactivity(); // Skidanje posla i imovine neaktivnim igracima
+		CheckAccountsForInactivity();
 		#if defined AUTO_RESTART_SEQ
 		GMX = 1;
 		StartGMX();

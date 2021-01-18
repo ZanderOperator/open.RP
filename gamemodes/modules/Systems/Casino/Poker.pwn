@@ -2656,12 +2656,9 @@ hook OnPlayerEditDynObject(playerid, objectid, response, Float:x, Float:y, Float
 				MESSAGE_TYPE_SUCCESS, 
 				"Uspjesno ste postavili poker stol! Koristite /poker play da bi zapoceli sa igrom."
 			);
-			return 1;
 		}
 		else if(response == EDIT_RESPONSE_CANCEL)
 		{
-			
-
 			PlacePokerTable(tableid, 0, 
 				PokerTable[tableid][pkrX],
 				PokerTable[tableid][pkrY],
@@ -2674,7 +2671,6 @@ hook OnPlayerEditDynObject(playerid, objectid, response, Float:x, Float:y, Float
 			);
 
 			EditingTableID[playerid] = -1;
-			return 1;
 		}
 	}
 	return 1;
