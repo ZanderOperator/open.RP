@@ -831,7 +831,7 @@ CMD:jacker(playerid, params[])
 
 		new
 			garage = JackerIllegalGarage[ playerid ],
-			vehicles_str[104];				
+			vehicles_str[128];				
 
 		format(vehicles_str, sizeof(vehicles_str), "%s\n%s\n%s\n%s\n%s\n%s",
 		    ReturnVehicleName(LandVehicles[ IllegalGarage[ garage ][ igVehicleIds ][ 0 ] ][ viModelid ]),

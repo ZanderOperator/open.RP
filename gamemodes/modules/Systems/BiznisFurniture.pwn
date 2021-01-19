@@ -1652,7 +1652,14 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
             {
                 case 0:
                 { // Nocni klub/bar
-                    ShowPlayerDialog(playerid, DIALOG_BIZZ_FURN_OBJCS, DIALOG_STYLE_LIST, "Biznis Furniture - Bars & Clubs", "Kauci\nFotelje\nStolovi\nOrmarici\nTelevizori\nHi-Fi\nZvucnici\nTepisi\nSvijetla\nVrata\nFrizideri\nPica\nFun\n", "Choose", "Abort");
+                    ShowPlayerDialog(playerid, 
+                        DIALOG_BIZZ_FURN_OBJCS, 
+                        DIALOG_STYLE_LIST, 
+                        "Biznis Furniture - Bars & Clubs", 
+                        "Chairs\nKauci\nFotelje\nStolovi\nOrmarici\nTelevizori\nHi-Fi\nZvucnici\nTepisi\nSvijetla\nVrata\nFrizideri\nPica\nFun", 
+                        "Choose", 
+                        "Abort"
+                    );
                     BizzFurnObjectsType[playerid] = 1;
                 }
                 case 1:
@@ -1662,7 +1669,14 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                 }
                 case 2:
                 { // Restoran
-                    ShowPlayerDialog(playerid, DIALOG_BIZZ_FURN_OBJCS, DIALOG_STYLE_LIST, "Biznis Furniture - Restoran", "Stolovi\nKauci\nFotelje\nFrizideri\nPica\nHrana\nBlagajna\nPosudje\nMirkovalna\nPeci\nKuhinjski elementi\nSudoper", "Choose", "Abort");
+                    ShowPlayerDialog(playerid, 
+                        DIALOG_BIZZ_FURN_OBJCS, 
+                        DIALOG_STYLE_LIST, 
+                        "Biznis Furniture - Restoran", 
+                        "Chairs\nStolovi\nKauci\nFotelje\nFrizideri\nPica\nHrana\nBlagajna\nPosudje\nMirkovalna\nPeci\nKuhinjski elementi\nSudoper", 
+                        "Choose", 
+                        "Abort"
+                    );
                     BizzFurnObjectsType[playerid] = 3;
                 }
                 case 3:
@@ -1689,6 +1703,17 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                     switch (listitem)
                     {
                         case 0:
+                        {  
+                            for (new i = 0; i < sizeof(ObjectsChair); i++)
+                            {
+                                if (ObjectsChair[i][chId] != 0)
+                                {
+                                    Player_ModelToIndexSet(playerid, i, ObjectsChair[i][chId]);
+                                    fselection_add_item(playerid, ObjectsChair[i][chId]);
+                                }
+                            }
+                        }
+                        case 1:
                         {
                             for (new i = 0; i < sizeof(ObjectsCouch); i++)
                             {
@@ -1699,8 +1724,8 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                                 }
                             }
                         }
-                        case 1:
-                        { // Fotelje
+                        case 2:
+                        { 
                             for (new i = 0; i < sizeof(ObjectsArmChair); i++)
                             {
                                 if (ObjectsArmChair[i][armId] != 0)
@@ -1710,8 +1735,8 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                                 }
                             }
                         }
-                        case 2:
-                        { // Stolovi
+                        case 3:
+                        { 
                             for (new i = 0; i < sizeof(ObjectsTables); i++)
                             {
                                 if (ObjectsTables[i][tablId] != 0)
@@ -1721,8 +1746,8 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                                 }
                             }
                         }
-                        case 3:
-                        { // Ormarici
+                        case 4:
+                        { 
                             for (new i = 0; i < sizeof(ObjectsCabinets); i++)
                             {
                                 if (ObjectsCabinets[i][cabId] != 0)
@@ -1732,8 +1757,8 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                                 }
                             }
                         }
-                        case 4:
-                        { // Televizori
+                        case 5:
+                        {
                             for (new i = 0; i < sizeof(ObjectsTelevision); i++)
                             {
                                 if (ObjectsTelevision[i][tvId] != 0)
@@ -1743,8 +1768,8 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                                 }
                             }
                         }
-                        case 5:
-                        { // Hi-Fi
+                        case 6:
+                        {
                             for (new i = 0; i < sizeof(ObjectsHiFi); i++)
                             {
                                 if (ObjectsHiFi[i][hfId] != 0)
@@ -1754,8 +1779,8 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                                 }
                             }
                         }
-                        case 6:
-                        { // Zvucnici
+                        case 7:
+                        { 
                             for (new i = 0; i < sizeof(ObjectsStereo); i++)
                             {
                                 if (ObjectsStereo[i][stId] != 0)
@@ -1765,8 +1790,8 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                                 }
                             }
                         }
-                        case 7:
-                        { // Tepisi
+                        case 8:
+                        {
                             for (new i = 0; i < sizeof(ObjectsRugs); i++)
                             {
                                 if (ObjectsRugs[i][rId] != 0)
@@ -1776,8 +1801,8 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                                 }
                             }
                         }
-                        case 8:
-                        { // Svijetla
+                        case 9:
+                        {
                             for (new i = 0; i < sizeof(ObjectsLights); i++)
                             {
                                 if (ObjectsLights[i][lgtId] != 0)
@@ -1787,8 +1812,8 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                                 }
                             }
                         }
-                        case 9:
-                        { // Vrata
+                        case 10:
+                        { 
                             for (new i = 0; i < sizeof(ObjectsDoor); i++)
                             {
                                 if (ObjectsDoor[i][doorId] != 0)
@@ -1798,8 +1823,8 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                                 }
                             }
                         }
-                        case 10:
-                        { // Hladnjace
+                        case 11:
+                        { 
                             for (new i = 0; i < sizeof(ObjectsRefrigerators); i++)
                             {
                                 if (ObjectsRefrigerators[i][refId] != 0)
@@ -1809,8 +1834,8 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                                 }
                             }
                         }
-                        case 11:
-                        { // Pica
+                        case 12:
+                        { 
                             for (new i = 0; i < sizeof(ObjectsBarDrinks); i++)
                             {
                                 if (ObjectsBarDrinks[i][bardId] != 0)
@@ -1820,8 +1845,8 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                                 }
                             }
                         }
-                        case 12:
-                        { // Fun
+                        case 13:
+                        { 
                             for (new i = 0; i < sizeof(ObjectsFun); i++)
                             {
                                 if (ObjectsFun[i][fnId] != 0)
@@ -1918,12 +1943,23 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                     }
                     BizzFurObjectSection[playerid] = listitem;
                 }
-                case 3:     // Restoran
+                case 3: // Restoran
                 {
                     switch (listitem)
                     {
                         case 0:
-                        { // Stolovi
+                        {  
+                            for (new i = 0; i < sizeof(ObjectsChair); i++)
+                            {
+                                if (ObjectsChair[i][chId] != 0)
+                                {
+                                    Player_ModelToIndexSet(playerid, i, ObjectsChair[i][chId]);
+                                    fselection_add_item(playerid, ObjectsChair[i][chId]);
+                                }
+                            }
+                        }
+                        case 1:
+                        { 
                             for (new i = 0; i < sizeof(ObjectsTables); i++)
                             {
                                 if (ObjectsTables[i][tablId] != 0)
@@ -1933,8 +1969,8 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                                 }
                             }
                         }
-                        case 1:
-                        { // Kauci
+                        case 2:
+                        { 
                             for (new i = 0; i < sizeof(ObjectsCouch); i++)
                             {
                                 if (ObjectsCouch[i][ceId] != 0)
@@ -1944,8 +1980,8 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                                 }
                             }
                         }
-                        case 2:
-                        { // Fotelje
+                        case 3:
+                        { 
                             for (new i = 0; i < sizeof(ObjectsArmChair); i++)
                             {
                                 if (ObjectsArmChair[i][armId] != 0)
@@ -1955,8 +1991,8 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                                 }
                             }
                         }
-                        case 3:
-                        { // Frizider
+                        case 4:
+                        { 
                             for (new i = 0; i < sizeof(ObjectsRefrigerators); i++)
                             {
                                 if (ObjectsRefrigerators[i][refId] != 0)
@@ -1966,8 +2002,8 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                                 }
                             }
                         }
-                        case 4:
-                        { // Pica
+                        case 5:
+                        { 
                             for (new i = 0; i < sizeof(ObjectsDrinks); i++)
                             {
                                 if (ObjectsDrinks[i][drnksId] != 0)
@@ -1977,8 +2013,8 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                                 }
                             }
                         }
-                        case 5:
-                        { // Hrana
+                        case 6:
+                        { 
                             for (new i = 0; i < sizeof(ObjectsFood); i++)
                             {
                                 if (ObjectsFood[i][foodId] != 0)
@@ -1988,8 +2024,8 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                                 }
                             }
                         }
-                        case 6:
-                        { // Kasa
+                        case 7:
+                        { 
                             for (new i = 0; i < sizeof(ObjectsCashRegister); i++)
                             {
                                 if (ObjectsCashRegister[i][crId] != 0)
@@ -1999,8 +2035,8 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                                 }
                             }
                         }
-                        case 7:
-                        { // Posudje
+                        case 8:
+                        { 
                             for (new i = 0; i < sizeof(ObjectsKitchenDishes); i++)
                             {
                                 if (ObjectsKitchenDishes[i][dishId] != 0)
@@ -2010,8 +2046,8 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                                 }
                             }
                         }
-                        case 8:
-                        { // Mikrovalna
+                        case 9:
+                        { 
                             for (new i = 0; i < sizeof(ObjectsMicroWave); i++)
                             {
                                 if (ObjectsMicroWave[i][mwId] != 0)
@@ -2021,8 +2057,8 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                                 }
                             }
                         }
-                        case 9:
-                        { // Peci
+                        case 10:
+                        { 
                             for (new i = 0; i < sizeof(ObjectsStove); i++)
                             {
                                 if (ObjectsStove[i][stId] != 0)
@@ -2032,8 +2068,8 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                                 }
                             }
                         }
-                        case 10:
-                        { // Elementi
+                        case 11:
+                        { 
                             for (new i = 0; i < sizeof(ObjectsKitchenCabinets); i++)
                             {
                                 if (ObjectsKitchenCabinets[i][kcId] != 0)
@@ -2043,8 +2079,8 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                                 }
                             }
                         }
-                        case 11:
-                        { // Sudoper
+                        case 12:
+                        { 
                             for (new i = 0; i < sizeof(ObjectsSink); i++)
                             {
                                 if (ObjectsSink[i][snkId] != 0)
