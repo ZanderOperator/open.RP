@@ -121,22 +121,24 @@ new
 	88  88  88 88   88   .88.   88  V888 
 	YP  YP  YP YP   YP Y888888P VP   V8P
 */
-stock static GetStolenGoodName(type)
+
+static GetStolenGoodName(type)
 {
 	new
 		buffer[ 64 ];
 		
-	switch( type ) {
-		case DIALOG_TYPE_WATCH:     buffer = "Sat";
-		case DIALOG_TYPE_MOBILE:    buffer = "Mobitel";
-		case DIALOG_TYPE_CRYPTO:     buffer = "Crypto";
-		case DIALOG_TYPE_MASK:      buffer = "Maska";
-		default:					buffer = "Prazno";
+	switch( type ) 
+	{
+		case DIALOG_TYPE_WATCH:     buffer = "Watch";
+		case DIALOG_TYPE_MOBILE:    buffer = "Cellphone";
+		case DIALOG_TYPE_CRYPTO:    buffer = "Crypto";
+		case DIALOG_TYPE_MASK:      buffer = "Mask";
+		default:					buffer = "Empty";
 	}
 	return buffer;
 }
 
-stock EmptyPlayerInventory(playerid)
+static EmptyPlayerInventory(playerid)
 {
 	RobbingInfo[ playerid ][ rbSlotsGoods ][ 0 ] = 0;
 	RobbingInfo[ playerid ][ rbSlotsGoods ][ 1 ] = 0;
@@ -145,13 +147,14 @@ stock EmptyPlayerInventory(playerid)
 	RobbingInfo[ playerid ][ rbSlotsGoods ][ 4 ] = 0;
 }
 
-stock static ListStolenGoods(playerid)
+static ListStolenGoods(playerid)
 {
 	new
 		buffer[ 256 ],
 		i = 0;
 		
-	while( i < 5 ) {
+	while( i < 5 ) 
+	{
 		format( buffer, sizeof(buffer), "%s#%d %s\n",
 			buffer,
 			i + 1,
@@ -162,7 +165,7 @@ stock static ListStolenGoods(playerid)
 	return buffer;
 }
 
-stock static CalculateGoodsMoney(playerid)
+static CalculateGoodsMoney(playerid)
 {
 	new
 		count = 0;
@@ -188,11 +191,12 @@ stock static CalculateGoodsMoney(playerid)
 	return count;
 }
 
-stock static SetStolenGoodInInventory(playerid, type)
+static SetStolenGoodInInventory(playerid, type)
 {
 	new
 		i = 0;
-	while( i < 5 ) {
+	while( i < 5 ) 
+	{
 		if( !RobbingInfo[ playerid ][ rbSlotsGoods ][ i ] ) {
 			RobbingInfo[ playerid ][ rbSlotsGoods ][ i ] = type;
 			Bit8_Set( gr_ActiveGoodSlot, playerid, i );
@@ -211,16 +215,20 @@ stock static SetStolenGoodInInventory(playerid, type)
 	db   8D 88 88.   .88.   88booo. 88booo.   88 
 	8888Y' YP   YD Y888888P Y88888P Y88888P   VP
 */
-stock static GetPocketDialogLists(playerid, listitem)
+
+static GetPocketDialogLists(playerid, listitem)
 {
-	if( playerid == INVALID_PLAYER_ID ) return -1;
+	if( playerid == INVALID_PLAYER_ID ) 
+		return -1;
 	
 	new
 		type = -1,
 		i = 0;
 	
-	while( i < 5 ) {
-		if( i == listitem ) {
+	while( i < 5 ) 
+	{
+		if( i == listitem ) 
+		{
 			type = PocketDialog[ playerid ][ i ];
 			break;
 		}
@@ -229,15 +237,16 @@ stock static GetPocketDialogLists(playerid, listitem)
 	return type;
 }
 
-stock static InitPlayerPocket(playerid, targetid)
+static InitPlayerPocket(playerid, targetid)
 {
-	if( targetid == INVALID_PLAYER_ID ) return 0;
+	if( targetid == INVALID_PLAYER_ID ) 
+		return 0;
 	
 	new
 		buffer[ 256 ],
 		dialogPos = 0;
 		
-	if( AC_GetPlayerMoney(targetid) >  50 ) {//( ( GetPlayerSkillLevel(playerid) + 1 ) * 10 ) ) {
+	if( AC_GetPlayerMoney(targetid) >  50 ) {
 		format( buffer, 256, "Novac (%d$)\n", AC_GetPlayerMoney(targetid) );
 		PocketDialog[ playerid ][ dialogPos ] = DIALOG_TYPE_MONEY;
 		dialogPos++;
@@ -275,7 +284,7 @@ stock static InitPlayerPocket(playerid, targetid)
 	return 1;
 }
 
-stock static PickPocketTargetPlayer(playerid, type)
+static PickPocketTargetPlayer(playerid, type)
 {
 	if( PickPocketPlayer[ playerid ] == INVALID_PLAYER_ID ) return 1;
 	
@@ -291,12 +300,12 @@ stock static PickPocketTargetPlayer(playerid, type)
 			if( succeed == 3 ) 
 			{
 				new
-					money = 51;//( ( GetPlayerSkillLevel(playerid) * 10 );
-				PlayerToPlayerMoney( targetid, playerid, money); // Playerid krade od targetida (zato je targetid na prvom mjestu, njemu se oduzima)
+					money = 51;
+				PlayerToPlayerMoney( targetid, playerid, money);
 				
 				new
 					tmpString[ 108 ];
-				format(tmpString, 108, "* %s zavlaci svoju ruku u %s djep i stavlja novce u svoj djep.", 
+				format(tmpString, 108, "* %s puts his hands in %s's pocket and grabs his money.", 
 					GetName(playerid), 
 					GetName(targetid) 
 				);

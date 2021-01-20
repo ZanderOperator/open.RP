@@ -40,7 +40,6 @@ enum PLAYER_GPS_DATA
     Float:gZ
 };
 
-
 enum ENUM_GPS_DATA
 {
     gpsExists,
@@ -97,14 +96,15 @@ static GPS_Load()
 {
     Iter_Clear(GPS_location);
     mysql_pquery(g_SQL, 
-        va_fquery(g_SQL, "SELECT * FROM gps WHERE 1"), 
+        va_fquery(g_SQL, "SELECT * FROM gps"), 
         "GPS_Loaded", 
         ""
     );
     return 1;
 }
 
-Public: GPS_Loaded()
+forward GPS_Loaded();
+public GPS_Loaded()
 {
     new rows = cache_num_rows();
     if (!rows) 
@@ -168,7 +168,8 @@ static GPS_Create(gps_name[], Float:X, Float:Y, Float:Z)
     return free_id;
 }
 
-Public: GPS_Created(gps_id)
+forward GPS_Created(gps_id);
+public GPS_Created(gps_id)
 {
     if (gps_id == -1 || !GPS_data[gps_id][gpsExists])
         return 1;
@@ -294,6 +295,7 @@ GPS_DialogShow(playerid, bool:admin = false)
             format(motd, sizeof(motd), "{3C95C2}(%d) - %s.", i, GPS_data[i][gpsName]);
         else
             format(motd, sizeof(motd), "\n{3C95C2}(%d) - %s.", i, GPS_data[i][gpsName]);
+
         strcat(buff, motd);
         GPSToList[playerid][counter] = i;
         counter++;
