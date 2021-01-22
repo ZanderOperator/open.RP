@@ -195,7 +195,7 @@ CMD:gunrack(playerid, params[])
             GunrackAmmo[vehicleid][0], 
             GetWeaponNameEx(GunrackWeapon[vehicleid][1]),
             GunrackAmmo[vehicleid][1]
-        );
+       );
         ShowPlayerDialog(playerid, DIALOG_GUNRACK, DIALOG_STYLE_TABLIST_HEADERS, "Police Gunrack", str, "Choose", "Abort");
     }
     else SendClientMessage(playerid, COLOR_RED, "Niste u vozilu LSPDa.");

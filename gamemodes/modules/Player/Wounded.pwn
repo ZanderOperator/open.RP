@@ -127,7 +127,7 @@ stock ApplyWoundedAnimation(playerid, bodypart)
 
 stock ResetPlayerWounded(playerid)
 {
-	if(Bit8_Get( r_PlayerWounded, playerid ) != 0 ) 
+	if(Bit8_Get( r_PlayerWounded, playerid) != 0) 
 		stop PlayerBleedTimer[playerid];
 	
 	DestroyPlayerWoundedTDs(playerid);
@@ -158,9 +158,9 @@ RegisterPlayerDeath(playerid, killerid) // funkcija
 	new
 		tmpString[135];
 	format(tmpString, 135, "KillWarn: Player %s[%d] killed player %s[%d] with %s!",
-		GetName( killerid, false ),
+		GetName( killerid, false),
 		killerid,
-		GetName( playerid, false ),
+		GetName( playerid, false),
 		playerid,
 		GetWeaponNameEx(killerid)
 	);
@@ -195,8 +195,8 @@ RegisterPlayerDeath(playerid, killerid) // funkcija
 	PlayerDeath[playerid][pDeathX] 	= X;
 	PlayerDeath[playerid][pDeathY] 	= Y;
 	PlayerDeath[playerid][pDeathZ] 	= Z;
-	PlayerDeath[playerid][pDeathInt] 	= GetPlayerInterior( playerid );
-	PlayerDeath[playerid][pDeathVW] 		= GetPlayerVirtualWorld( playerid );
+	PlayerDeath[playerid][pDeathInt] 	= GetPlayerInterior( playerid);
+	PlayerDeath[playerid][pDeathVW] 		= GetPlayerVirtualWorld( playerid);
 
 	// FIRST DEATH
 	if(DeathData[playerid][ddOverall] > 0)
@@ -285,9 +285,9 @@ stock InflictPlayerDamage(playerid, issuerid, bodypart, Float:damage)
 				new
 					wndString[135];
 				format(wndString, 135, "KillWarn: Igrac %s[%d] je bacio u wounded mode igraca %s[%d] oruzjem %s!",
-					GetName( issuerid, false ),
+					GetName( issuerid, false),
 					issuerid,
-					GetName( playerid, false ),
+					GetName( playerid, false),
 					playerid,
 					GetWeaponNameEx(AC_GetPlayerWeapon(issuerid))
 				);
@@ -314,8 +314,8 @@ stock InflictPlayerDamage(playerid, issuerid, bodypart, Float:damage)
 				PlayerDeath[playerid][pDeathX] 	= X;
 				PlayerDeath[playerid][pDeathY] 	= Y;
 				PlayerDeath[playerid][pDeathZ] 	= Z;
-				PlayerDeath[playerid][pDeathInt] 	= GetPlayerInterior( playerid );
-				PlayerDeath[playerid][pDeathVW] 		= GetPlayerVirtualWorld( playerid );
+				PlayerDeath[playerid][pDeathInt] 	= GetPlayerInterior( playerid);
+				PlayerDeath[playerid][pDeathVW] 		= GetPlayerVirtualWorld( playerid);
 				if(DeathData[playerid][ddOverall] > 0)
 				{
 					DeathTime[playerid] = gettimestamp() + 60;
@@ -403,9 +403,9 @@ stock DealDamage(playerid, issuerid, Float: health, Float: armour, Float: damage
 				new
 					wndString[135];
 				format(wndString, 135, "KillWarn: Igrac %s[%d] je bacio u wounded mode igraca %s[%d] oruzjem %s!",
-					GetName( issuerid, false ),
+					GetName( issuerid, false),
 					issuerid,
-					GetName( playerid, false ),
+					GetName( playerid, false),
 					playerid,
 					GetWeaponNameEx(AC_GetPlayerWeapon(issuerid))
 				);
@@ -432,8 +432,8 @@ stock DealDamage(playerid, issuerid, Float: health, Float: armour, Float: damage
 				PlayerDeath[playerid][pDeathX] 	= X;
 				PlayerDeath[playerid][pDeathY] 	= Y;
 				PlayerDeath[playerid][pDeathZ] 	= Z;
-				PlayerDeath[playerid][pDeathInt] 	= GetPlayerInterior( playerid );
-				PlayerDeath[playerid][pDeathVW] 		= GetPlayerVirtualWorld( playerid );
+				PlayerDeath[playerid][pDeathInt] 	= GetPlayerInterior( playerid);
+				PlayerDeath[playerid][pDeathVW] 		= GetPlayerVirtualWorld( playerid);
 				if(DeathData[playerid][ddOverall] > 0)
 				{
 					DeathTime[playerid] = gettimestamp() + 60;
@@ -465,11 +465,11 @@ stock DealDamage(playerid, issuerid, Float: health, Float: armour, Float: damage
 
 stock static DestroyPlayerWoundedTDs(playerid)
 {
-	if(WndedBcg[playerid] != PlayerText:INVALID_TEXT_DRAW ) {
+	if(WndedBcg[playerid] != PlayerText:INVALID_TEXT_DRAW) {
 		PlayerTextDrawDestroy(playerid, WndedBcg[playerid]);
 		WndedBcg[playerid] = PlayerText:INVALID_TEXT_DRAW;
 	}
-	if(WndedText[playerid] != PlayerText:INVALID_TEXT_DRAW ) {
+	if(WndedText[playerid] != PlayerText:INVALID_TEXT_DRAW) {
 		PlayerTextDrawDestroy(playerid, WndedText[playerid]);
 		WndedText[playerid] = PlayerText:INVALID_TEXT_DRAW;
 	}
@@ -513,24 +513,24 @@ stock static CreatePlayerWoundedTDs(playerid)
 */
 stock static SetPlayerBleeding(playerid, type)
 {
-	if(playerid == INVALID_PLAYER_ID ) return 0;
+	if(playerid == INVALID_PLAYER_ID) return 0;
 	new
 		Float:health;
 	GetPlayerHealth(playerid, health);
 	switch(type) {
 		case PLAYER_WOUNDED_LEG: {
-			SetPlayerHealth(playerid, health - WOUND_LEGS_AMOUNT );
+			SetPlayerHealth(playerid, health - WOUND_LEGS_AMOUNT);
 		}
 		case PLAYER_WOUNDED_ARMS: {
-			SetPlayerHealth(playerid, health - WOUND_ARMS_AMOUNT );
+			SetPlayerHealth(playerid, health - WOUND_ARMS_AMOUNT);
 			PlayerBleedTimer[playerid] = repeat OnPlayerBleed[3500](playerid);
 		}
 		case PLAYER_WOUNDED_TORSO, PLAYER_WOUNDED_GROIN: {
-			SetPlayerHealth(playerid, health - WOUND_BODY_AMOUNT );
+			SetPlayerHealth(playerid, health - WOUND_BODY_AMOUNT);
 			PlayerBleedTimer[playerid] = repeat OnPlayerBleed[2200](playerid);
 		}
 		 case PLAYER_WOUNDED_HEAD: {
-			SetPlayerHealth(playerid, health - WOUND_HEAD_AMOUNT );
+			SetPlayerHealth(playerid, health - WOUND_HEAD_AMOUNT);
 			PlayerBleedTimer[playerid] = repeat OnPlayerBleed[1500](playerid);
 		}
 	}
@@ -582,7 +582,7 @@ timer OnPlayerBleed[500](playerid)
 	{
 		case PLAYER_WOUNDED_ARMS: 
 		{
-			if(( health - WOUND_ARMS_AMOUNT ) <= 10.0 ) 
+			if(( health - WOUND_ARMS_AMOUNT) <= 10.0) 
 			{
 				stop PlayerBleedTimer[playerid];
 				Bit8_Set(r_PlayerWounded, playerid, 0);
@@ -598,23 +598,23 @@ timer OnPlayerBleed[500](playerid)
 		}
 		case PLAYER_WOUNDED_TORSO, PLAYER_WOUNDED_GROIN: 
 		{			
-			if(( health - WOUND_BODY_AMOUNT ) <= 10.0 ) 
+			if(( health - WOUND_BODY_AMOUNT) <= 10.0) 
 			{
 				stop PlayerBleedTimer[playerid];
 				Bit8_Set(r_PlayerWounded, playerid, 0);
 				return 1;
 			}
-			SetPlayerHealth(playerid, health - WOUND_BODY_AMOUNT );
+			SetPlayerHealth(playerid, health - WOUND_BODY_AMOUNT);
 		}
 		case PLAYER_WOUNDED_HEAD: 
 		{
-			if(( health - WOUND_HEAD_AMOUNT ) <= 10.0 ) 
+			if(( health - WOUND_HEAD_AMOUNT) <= 10.0) 
 			{
 				stop PlayerBleedTimer[playerid];
 				Bit8_Set(r_PlayerWounded, playerid, 0);
 				return 1;
 			}
-			SetPlayerHealth(playerid, health - WOUND_HEAD_AMOUNT );
+			SetPlayerHealth(playerid, health - WOUND_HEAD_AMOUNT);
 		}
 	}
 	return 1;
@@ -799,7 +799,7 @@ hook OnPlayerTakeDamage(playerid, issuerid, Float: amount, weaponid, bodypart)
 			}
 	    }
 	}
-	else if(issuerid != INVALID_PLAYER_ID && (bodypart == BODY_PART_GROIN || bodypart == BODY_PART_LEFT_LEG || bodypart == BODY_PART_RIGHT_LEG || bodypart == BODY_PART_RIGHT_ARM || bodypart == BODY_PART_LEFT_ARM ))
+	else if(issuerid != INVALID_PLAYER_ID && (bodypart == BODY_PART_GROIN || bodypart == BODY_PART_LEFT_LEG || bodypart == BODY_PART_RIGHT_LEG || bodypart == BODY_PART_RIGHT_ARM || bodypart == BODY_PART_LEFT_ARM))
 	{
 		switch(weaponid)
 		{
@@ -1047,7 +1047,7 @@ hook OnPlayerTakeDamage(playerid, issuerid, Float: amount, weaponid, bodypart)
 			}
 	    }
 	}
-	else if(issuerid != INVALID_PLAYER_ID && (bodypart == BODY_PART_GROIN || bodypart == BODY_PART_LEFT_LEG || bodypart == BODY_PART_RIGHT_LEG || bodypart == BODY_PART_RIGHT_ARM || bodypart == BODY_PART_LEFT_ARM )) // POGODAK U NOGE,RUKE...
+	else if(issuerid != INVALID_PLAYER_ID && (bodypart == BODY_PART_GROIN || bodypart == BODY_PART_LEFT_LEG || bodypart == BODY_PART_RIGHT_LEG || bodypart == BODY_PART_RIGHT_ARM || bodypart == BODY_PART_LEFT_ARM)) // POGODAK U NOGE,RUKE...
 	{
 		switch(weaponid)
 	    {

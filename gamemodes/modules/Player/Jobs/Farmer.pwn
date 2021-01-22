@@ -173,7 +173,7 @@ hook OnGameModeInit()
 
 hook OnPlayerDisconnect(playerid, reason)
 {
-	for( new i=0; i < 90; i++ ) {
+	for( new i=0; i < 90; i++) {
 		if(IsValidDynamicObject(CombineInfo[playerid][cPlant][i]))
 			DestroyDynamicObject(CombineInfo[playerid][cPlant][i]);
 	}
@@ -191,7 +191,7 @@ hook OnPlayerDisconnect(playerid, reason)
 	CombineInfo[playerid][cPlantNumber] = 0;
 	CombineInfo[playerid][cWork] = 0;
 
-	for( new i=0; i < 90; i++ ) {
+	for( new i=0; i < 90; i++) {
 		if(IsValidDynamicObject(CombineInfo[playerid][cPlant][i]))
 			DestroyDynamicObject(CombineInfo[playerid][cPlant][i]);
 	}
@@ -247,7 +247,7 @@ hook OnPlayerEnterCheckpoint(playerid)
 
 hook OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
 {
-	if(( newkeys & KEY_FIRE ) && !( oldkeys & KEY_FIRE )) 
+	if(( newkeys & KEY_FIRE) && !( oldkeys & KEY_FIRE)) 
 	{
 		if(SeedInfo[playerid][sWork]) 
 		{
@@ -262,7 +262,7 @@ hook OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
 					Float:X, Float:Y, Float:Z;
 				if(SeedInfo[playerid][sPlantsNumber]) {
 					GetDynamicObjectPos(SeedInfo[playerid][sPlant][SeedInfo[playerid][sPlantsNumber]-1], X, Y, Z);
-					if(GetVehicleDistanceFromPoint(GetPlayerVehicleID(playerid), X, Y, Z) <= 15.0 )
+					if(GetVehicleDistanceFromPoint(GetPlayerVehicleID(playerid), X, Y, Z) <= 15.0)
 					return 1;
 				}
 
@@ -324,7 +324,7 @@ hook OnPlayerLeaveDynArea(playerid, areaid)
 	    	CombineInfo[playerid][cPlantNumber] = 0;
 	    	CombineInfo[playerid][cWork] = 0;
 
-			for( new i=0; i < 90; i++ ) {
+			for( new i=0; i < 90; i++) {
 			    if(IsValidDynamicObject(CombineInfo[playerid][cPlant][i]))
 	        		DestroyDynamicObject(CombineInfo[playerid][cPlant][i]);
 			}
@@ -339,7 +339,7 @@ hook OnPlayerLeaveDynArea(playerid, areaid)
 
 hook OnPlayerKeyInputEnds(playerid, type, succeeded)
 {
-	if(!succeeded ) return 1;
+	if(!succeeded) return 1;
 	new 
 		string[50];
 	if(type == 4) {
@@ -365,7 +365,7 @@ hook OnPlayerKeyInputEnds(playerid, type, succeeded)
 		SendClientMessage(playerid, COLOR_RED, "[!] Idite do masine, te upisite /eggs process kako bi procesirali jaja.");
 		DisablePlayerKeyInput(playerid);
 	}
-	else if(type == 5 ) {
+	else if(type == 5) {
 		ClearAnimations(playerid);
 		TogglePlayerControllable(playerid, 1);
 		MilkInfo[playerid][mLiters] = minrand(1, 2);
@@ -439,7 +439,7 @@ timer CombineCheck[200](playerid)
 	    	if(GetVehicleModel(GetPlayerVehicleID(playerid)) == 532) 
 			{
             	GetVehicleVelocity(GetPlayerVehicleID(playerid), vx, vy, vz);
-            	if(( floatsqroot( ( ( vx * vx ) + ( vy * vy )) + ( vz * vz )) * 181.5 ) >= 40.0 ) 
+            	if(( floatsqroot( ( ( vx * vx) + ( vy * vy)) + ( vz * vz)) * 181.5) >= 40.0) 
 				{
 					GameTextForPlayer(playerid, "~r~Vozite Prebrzo!", 500, 6);
 					return 1;
@@ -447,7 +447,7 @@ timer CombineCheck[200](playerid)
 				for(new j=0;j<90;j++) {
 					GetDynamicObjectPos(CombineInfo[playerid][cPlant][j], X, Y, Z);
 	            
-	            	if(GetVehicleDistanceFromPoint(GetPlayerVehicleID(playerid), X, Y, Z) <= 4.0 ) {
+	            	if(GetVehicleDistanceFromPoint(GetPlayerVehicleID(playerid), X, Y, Z) <= 4.0) {
 						if(IsValidDynamicObject(CombineInfo[playerid][cPlant][j]))
 							DestroyDynamicObject(CombineInfo[playerid][cPlant][j]);
 							
@@ -765,13 +765,13 @@ CMD:dropbucket(playerid, params[])
 
 CMD:milk(playerid, params[])
 {
-	if(PlayerJob[playerid][pJob] != JOB_FARMER ) return SendClientMessage( playerid, COLOR_RED, "Niste farmer!");
+	if(PlayerJob[playerid][pJob] != JOB_FARMER) return SendClientMessage( playerid, COLOR_RED, "Niste farmer!");
 	if(PlayerJob[playerid][pFreeWorks] < 5) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne mozete vise raditi! Pricekajte payday.");
 	if(!MilkInfo[playerid][mTransporting] && IsPlayerInAnyVehicle(playerid))	 	return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Prvo izadite iz vozila!");
 	
 	new
 		param[9];
-	if(sscanf( params, "s[9] ", param )) {
+	if(sscanf( params, "s[9] ", param)) {
 		SendClientMessage(playerid, COLOR_RED, "[?]: /milk [odabir]");
 		SendClientMessage(playerid, COLOR_GREY, "[ODABIR]: milking - transfer - store - take - put - check - sell - stop");
 		return 1;
@@ -805,7 +805,7 @@ CMD:milk(playerid, params[])
 		if(!IsPlayerInRangeOfPoint(playerid, 1.0, -85.3304, -38.0246, 3.1172)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne nalazite se blizu kanistera!");
 		if(!MilkInfo[playerid][mEmptyBucket] && !MilkInfo[playerid][mFullBucket]) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate kantu pri sebi!");
 		if(MilkInfo[playerid][mEmptyBucket]) 	return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate mlijeka u kanti za preliti u kanister!");
-		if(MilkInfo[playerid][mTransfering] ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Vec prijenosite mlijeko iz kante u karnister!");
+		if(MilkInfo[playerid][mTransfering]) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Vec prijenosite mlijeko iz kante u karnister!");
 		
 		MilkInfo[playerid][mTransfering] = 1;
 		TogglePlayerControllable(playerid, 0);
@@ -817,7 +817,7 @@ CMD:milk(playerid, params[])
 	}
 	else if(!strcmp(param, "store", true)) 
 	{
-		if(PlayerJob[playerid][pJob] != JOB_FARMER ) return SendClientMessage( playerid, COLOR_RED, "Niste farmer!");
+		if(PlayerJob[playerid][pJob] != JOB_FARMER) return SendClientMessage( playerid, COLOR_RED, "Niste farmer!");
 		if(PlayerJob[playerid][pFreeWorks] < 5) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne mozete vise raditi! Pricekajte payday.");
 		if(!IsPlayerInRangeOfPoint(playerid, 8.0, -1.3600, 74.3902, 3.1172)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne nalazite se blizu spremista!");
 		if(MilkInfo[playerid][mFullBucket]) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Prvo prelite mlijeko u kanister!");
@@ -842,7 +842,7 @@ CMD:milk(playerid, params[])
 	}
 	else if(!strcmp(param, "take", true)) 
 	{
-		if(PlayerJob[playerid][pJob] != JOB_FARMER ) return SendClientMessage( playerid, COLOR_RED, "Niste farmer!");
+		if(PlayerJob[playerid][pJob] != JOB_FARMER) return SendClientMessage( playerid, COLOR_RED, "Niste farmer!");
 		if(!MilkInfo[playerid][mTransporting]) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne transportirate mlijeko!");
 		if(!IsPlayerInRangeOfPoint(playerid, 8.0, -1.3600, 74.3902, 3.1172)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne nalazite se blizu spremista!");
     	if(MilkInfo[playerid][mCanister] || MilkInfo[playerid][mStorageCanister]) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Vec imate kanister s mlijekom kod sebe!");
@@ -863,7 +863,7 @@ CMD:milk(playerid, params[])
 		new
 			VehicleModel;
 
-    	if(PlayerJob[playerid][pJob] != JOB_FARMER ) return SendClientMessage( playerid, COLOR_RED, "Niste farmer!");
+    	if(PlayerJob[playerid][pJob] != JOB_FARMER) return SendClientMessage( playerid, COLOR_RED, "Niste farmer!");
 		if(MilkInfo[playerid][mCanister]) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne mozete spremiti taj kanister pri sebi!");
 		if(!MilkInfo[playerid][mStorageCanister]) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate kanister pri sebi!");
 		if(IsPlayerInAnyVehicle(playerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Prvo izadite iz vozila!");
@@ -969,7 +969,7 @@ CMD:milk(playerid, params[])
 	else if(!strcmp(param, "sell", true)) {
 		new
 			VehicleModel;
-    	if(PlayerJob[playerid][pJob] != JOB_FARMER ) return SendClientMessage( playerid, COLOR_RED, "Niste farmer!");
+    	if(PlayerJob[playerid][pJob] != JOB_FARMER) return SendClientMessage( playerid, COLOR_RED, "Niste farmer!");
 		if(!IsPlayerInRangeOfPoint(playerid, 10.0, 2362.4734, -2099.7356, 13.5469)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne nalazite se blizu tvornice!");
 		if(PlayerKeys[playerid][pVehicleKey] == -1) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate spawnano vozilo!");
 
@@ -1050,10 +1050,10 @@ CMD:dropcanister(playerid, params[])
 // Sadnja
 CMD:seeds(playerid, params[])
 {
-	if(PlayerJob[playerid][pJob] != JOB_FARMER ) return SendClientMessage( playerid, COLOR_RED, "Niste zaposleni kao farmer.");
+	if(PlayerJob[playerid][pJob] != JOB_FARMER) return SendClientMessage( playerid, COLOR_RED, "Niste zaposleni kao farmer.");
 	new 
 		param[6];
-	if(sscanf(params, "s[6] ", param )) {
+	if(sscanf(params, "s[6] ", param)) {
 		SendClientMessage(playerid, COLOR_RED, "[?]: /seeds [odabir]");
 		SendClientMessage(playerid, COLOR_GREY, "[ODABIR]: take - drop - check - put");
 		return 1;
@@ -1085,11 +1085,11 @@ CMD:seeds(playerid, params[])
 		if(PlayerJob[playerid][pFreeWorks] < 5) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne mozete vise raditi! Pricekajte payday.");
 		foreach(new i: StreamedVehicle[playerid])
 		{
-			if(GetVehicleModel(i) == 610 ) 
+			if(GetVehicleModel(i) == 610) 
 			{
 				if(IsPlayerInRangeOfVehicle(playerid, i, 5.0)) 
 				{
-					if(!SeedInfo[playerid][sSeeds] ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate sjemenke kod sebe!");
+					if(!SeedInfo[playerid][sSeeds]) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate sjemenke kod sebe!");
 					SeedInfo[playerid][sSeeds] 			= 0;
 					SeedInfo[playerid][sTrailerSeeds] 	+= 10;
 					SendMessage(playerid, MESSAGE_TYPE_INFO, "Uspjesno ste stavili sjemenke u prikolicu!");
@@ -1107,7 +1107,7 @@ CMD:tow2(playerid, params[])
 { // brooks
 	new vehicleid = GetPlayerVehicleID(playerid),
 		Float:X, Float:Y, Float:Z;
-	if(PlayerJob[playerid][pJob] != JOB_FARMER ) return SendClientMessage( playerid, COLOR_RED, "Niste zaposleni kao farmer.");
+	if(PlayerJob[playerid][pJob] != JOB_FARMER) return SendClientMessage( playerid, COLOR_RED, "Niste zaposleni kao farmer.");
  	
 	if(IsTrailerAttachedToVehicle(vehicleid)) {
 		DetachTrailerFromVehicle(vehicleid);
@@ -1136,7 +1136,7 @@ CMD:attach_trailer(playerid, params[])
 	new
 		Float:X, Float:Y, Float:Z;
 	
-    if(PlayerJob[playerid][pJob] != JOB_FARMER ) return SendClientMessage( playerid, COLOR_RED, "Niste zaposleni kao farmer.");
+    if(PlayerJob[playerid][pJob] != JOB_FARMER) return SendClientMessage( playerid, COLOR_RED, "Niste zaposleni kao farmer.");
 
 	if(IsPlayerInAnyVehicle(playerid)) 
 	{
@@ -1176,7 +1176,7 @@ CMD:detach_trailer(playerid, params[])
 
 CMD:plant(playerid, params[])
 {
-	if(SeedInfo[playerid][sWork] ) {
+	if(SeedInfo[playerid][sWork]) {
 		SeedInfo[playerid][sWork] = 0;
 		if(IsValidDynamicArea(SeedInfo[playerid][sZone]))
 			DestroyDynamicArea(SeedInfo[playerid][sZone]);
@@ -1185,7 +1185,7 @@ CMD:plant(playerid, params[])
 		return 1;
 	}
 	
-    if(PlayerJob[playerid][pJob] != JOB_FARMER ) return SendClientMessage( playerid, COLOR_RED, "Niste zaposleni kao farmer.");
+    if(PlayerJob[playerid][pJob] != JOB_FARMER) return SendClientMessage( playerid, COLOR_RED, "Niste zaposleni kao farmer.");
 	if(PlayerJob[playerid][pFreeWorks] < 5) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne mozete vise raditi! Pricekajte payday.");
 	
 	if(GetVehicleModel(GetPlayerVehicleID(playerid)) != 531) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste u traktoru!");
@@ -1203,10 +1203,10 @@ CMD:plant(playerid, params[])
 
 CMD:checkplant(playerid, params[])
 {
-    if(PlayerJob[playerid][pJob] != JOB_FARMER ) return SendClientMessage( playerid, COLOR_RED, "Niste zaposleni kao farmer.");
+    if(PlayerJob[playerid][pJob] != JOB_FARMER) return SendClientMessage( playerid, COLOR_RED, "Niste zaposleni kao farmer.");
 	new
 		Float:X, Float:Y, Float:Z;
-	for( new i = 0; i < SeedInfo[playerid][sPlantsNumber]; i++ ) {
+	for( new i = 0; i < SeedInfo[playerid][sPlantsNumber]; i++) {
 		GetDynamicObjectPos(SeedInfo[playerid][sPlant][i], X, Y, Z);
 		if(IsPlayerInRangeOfPoint(playerid, 3.0, X, Y, Z+1.5)) {
 		    if(IsDynamicObjectMoving(SeedInfo[playerid][sPlant][i])) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Usjev jos nije spreman za zetvu.");
@@ -1221,7 +1221,7 @@ CMD:checkplant(playerid, params[])
 
 CMD:takespade(playerid, params[])
 {
-    if(PlayerJob[playerid][pJob] != JOB_FARMER ) return SendClientMessage( playerid, COLOR_RED, "Niste zaposleni kao farmer.");
+    if(PlayerJob[playerid][pJob] != JOB_FARMER) return SendClientMessage( playerid, COLOR_RED, "Niste zaposleni kao farmer.");
 	if(!IsPlayerInRangeOfPoint(playerid, 1.0, -69.2246, 42.0311, 3.1172)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne nalazite se blizu mjesta za uzimanje lopate!");
 	if(MilkInfo[playerid][mEmptyBucket] || MilkInfo[playerid][mFullBucket]) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Vec imate kantu kod sebe! Bacite ju kako bi mogli uzeti lopatu!");
 	if(MilkInfo[playerid][mCanister] || MilkInfo[playerid][mStorageCanister]) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Vec imate kanister kod sebe! Bacite ga kako bi mogli uzeti lopatu!");
@@ -1248,7 +1248,7 @@ CMD:dropspade(playerid, params[])
 
 CMD:harvest(playerid, params[])
 {
-	if(SeedInfo[playerid][sHarvesting] ) {
+	if(SeedInfo[playerid][sHarvesting]) {
 		ClearAnimations(playerid);
 		TogglePlayerControllable(playerid, 1);
 		SeedInfo[playerid][sHarvesting] = 0;
@@ -1257,7 +1257,7 @@ CMD:harvest(playerid, params[])
 		return 1;
 	}
 	
-    if(PlayerJob[playerid][pJob] != JOB_FARMER ) return SendClientMessage( playerid, COLOR_RED, "Niste zaposleni kao farmer.");
+    if(PlayerJob[playerid][pJob] != JOB_FARMER) return SendClientMessage( playerid, COLOR_RED, "Niste zaposleni kao farmer.");
 	if(PlayerJob[playerid][pFreeWorks] < 5) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne mozete vise raditi! Pricekajte payday.");
 	if(SeedInfo[playerid][sHarvested]) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Vec imate vrecu sa usjevom kod sebe!");
 	if(!SeedInfo[playerid][sSpade]) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate lopatu kod sebe!");
@@ -1266,7 +1266,7 @@ CMD:harvest(playerid, params[])
 		Float:X, Float:Y, Float:Z;
 	
 	for(new i=0;i<50;i++) {
-        if(SeedInfo[playerid][sPlant][i] != INVALID_OBJECT_ID )
+        if(SeedInfo[playerid][sPlant][i] != INVALID_OBJECT_ID)
 			GetDynamicObjectPos(SeedInfo[playerid][sPlant][i], X, Y, Z);
 
 		if(IsPlayerInRangeOfPoint(playerid, 4.0, X, Y, Z))
@@ -1291,10 +1291,10 @@ CMD:harvest(playerid, params[])
 
 CMD:crops(playerid, params[])
 {
-	if(PlayerJob[playerid][pJob] != JOB_FARMER ) return SendClientMessage( playerid, COLOR_RED, "Niste zaposleni kao farmer.");
+	if(PlayerJob[playerid][pJob] != JOB_FARMER) return SendClientMessage( playerid, COLOR_RED, "Niste zaposleni kao farmer.");
 	new
 		param[7];
-	if(sscanf( params, "s[7] ", param )) {
+	if(sscanf( params, "s[7] ", param)) {
 		SendClientMessage(playerid, COLOR_RED, "[?]: /crops [odabir]");
 	    SendClientMessage(playerid, COLOR_GREY, "[ODABIR]: drop - store - take - put - check - sell");
 		return 1;
@@ -1308,8 +1308,8 @@ CMD:crops(playerid, params[])
 	}
 	else if(!strcmp(param, "store", true)) {	
 		if(!IsPlayerInRangeOfPoint(playerid, 8.0, -9.4406, 54.8088, 3.1172)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne nalazite se blizu spremista!");
-		if(SeedInfo[playerid][sStorageCrops] ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne mozete spremiti tu vrecu sa usjevom!");
-		if(!SeedInfo[playerid][sHarvested] ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate vrecu sa usjevom kod sebe!");
+		if(SeedInfo[playerid][sStorageCrops]) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne mozete spremiti tu vrecu sa usjevom!");
+		if(!SeedInfo[playerid][sHarvested]) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate vrecu sa usjevom kod sebe!");
 
 		RemovePlayerAttachedObject(playerid, 8);
 		SeedInfo[playerid][sStored]++;
@@ -1329,7 +1329,7 @@ CMD:crops(playerid, params[])
 		SendFormatMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uspjesno ste spremili vrecu sa usjevom u spremiste!");
 	}
 	else if(!strcmp(param, "take", true)) {
-		if(PlayerJob[playerid][pJob] != JOB_FARMER ) return SendClientMessage( playerid, COLOR_RED, "Niste farmer!");
+		if(PlayerJob[playerid][pJob] != JOB_FARMER) return SendClientMessage( playerid, COLOR_RED, "Niste farmer!");
 		if(PlayerJob[playerid][pFreeWorks] < 5) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne mozete vise raditi! Pricekajte payday.");
 		if(!SeedInfo[playerid][sTransporting]) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne transportirate usjeve!");
 		if(!IsPlayerInRangeOfPoint(playerid, 8.0, -9.4406, 54.8088, 3.1172)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne nalazite se blizu spremista!");
@@ -1348,7 +1348,7 @@ CMD:crops(playerid, params[])
 	{
 		new VehicleModel;
 
-    	if(PlayerJob[playerid][pJob] != JOB_FARMER ) 
+    	if(PlayerJob[playerid][pJob] != JOB_FARMER) 
 			return SendClientMessage( playerid, COLOR_RED, "Niste farmer!");
 		if(SeedInfo[playerid][sHarvested]) 
 			return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne mozete spremiti tu vrecu na kamion!");
@@ -1478,7 +1478,7 @@ CMD:crops(playerid, params[])
 		new
 			moneys, VehicleModel;
 
-    	if(PlayerJob[playerid][pJob] != JOB_FARMER ) return SendClientMessage( playerid, COLOR_RED, "Niste farmer!");
+    	if(PlayerJob[playerid][pJob] != JOB_FARMER) return SendClientMessage( playerid, COLOR_RED, "Niste farmer!");
 		if(PlayerJob[playerid][pFreeWorks] < 5) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne mozete vise raditi! Pricekajte payday.");
 		if(!IsPlayerInRangeOfPoint(playerid, 5.0, 2454.6055, -2455.7285, 13.6491)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne nalazite se blizu tvornice!");
 		if(PlayerKeys[playerid][pVehicleKey] == -1) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate spawnano vozilo!");
@@ -1520,7 +1520,7 @@ CMD:crops(playerid, params[])
 // Jaja
 CMD:takecarton(playerid, params[])
 {
-    if(PlayerJob[playerid][pJob] != JOB_FARMER ) return SendClientMessage( playerid, COLOR_RED, "Niste farmer!");
+    if(PlayerJob[playerid][pJob] != JOB_FARMER) return SendClientMessage( playerid, COLOR_RED, "Niste farmer!");
 	if(PlayerJob[playerid][pFreeWorks] < 5) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne mozete vise raditi! Pricekajte payday.");
 	if(!IsPlayerInRangeOfPoint(playerid, 5.0, -56.1417, 47.6496, 3.1172)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne nalazite se blizu mjesta za uzimanje kutije!");
 	if(SeedInfo[playerid][sHarvested] || SeedInfo[playerid][sStorageCrops]) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Vec imate vrecu u ruci! Bacite ju kako bi mogli uzeti kutiju!");
@@ -1552,13 +1552,13 @@ CMD:dropcarton(playerid, params[])
 
 CMD:eggs(playerid, params[])
 {
-	if(PlayerJob[playerid][pJob] != JOB_FARMER ) return SendClientMessage( playerid, COLOR_RED, "Niste farmer!");
+	if(PlayerJob[playerid][pJob] != JOB_FARMER) return SendClientMessage( playerid, COLOR_RED, "Niste farmer!");
 	if(PlayerJob[playerid][pFreeWorks] < 5) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne mozete vise raditi! Pricekajte payday.");
 	if(!EggInfo[playerid][eTransporting]&& IsPlayerInAnyVehicle(playerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Prvo izadite iz vozila!");
 
 	new 
 		param[8];
-	if(sscanf( params, "s[8] ", param )) {
+	if(sscanf( params, "s[8] ", param)) {
 		SendClientMessage(playerid, COLOR_RED, "[?]: /eggs [odabir]");
 		SendClientMessage(playerid, COLOR_GREY, "[ODABIR]: collect - process - store - take - put - check - sell");
 		return 1;
@@ -1578,7 +1578,7 @@ CMD:eggs(playerid, params[])
 		if(!IsPlayerInRangeOfPoint(playerid, 5.0, -71.1010, 53.4408, 3.1172) && !IsPlayerInRangeOfPoint(playerid, 1.0, -77.9046, 55.6308, 3.1172) && !IsPlayerInRangeOfPoint(playerid, 1.0, -75.8616, 51.6856, 3.1172) && !IsPlayerInRangeOfPoint(playerid, 1.0, -72.7300, 46.8216, 3.1172) && !IsPlayerInRangeOfPoint(playerid, 1.0, -81.5432, 50.4941, 3.1172)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne nalazite se ispred kucice sa kokosima!");
 		if(!EggInfo[playerid][eEmptyCarton] && !EggInfo[playerid][eFullCarton]) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate kutiju kod sebe!");
 		if(EggInfo[playerid][eFullCarton]) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Vec imate kutiju s jajima kod sebe!");
-		if(EggInfo[playerid][eCollecting] ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Vec sakupljate jaja u kutiju!");
+		if(EggInfo[playerid][eCollecting]) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Vec sakupljate jaja u kutiju!");
 		
 		Player_SetIsWorkingJob(playerid, true);
 		EggInfo[playerid][eCollecting] = 1;
@@ -1600,7 +1600,7 @@ CMD:eggs(playerid, params[])
 		if(!IsPlayerInRangeOfPoint(playerid, 1.0, -132.3292 , -99.2501, 3.1172)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne nalazite se blizu stroja za procesiranje jaja!");
 		if(!EggInfo[playerid][eEmptyCarton] && !EggInfo[playerid][eFullCarton]) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate kutiju kod sebe!");
 		if(EggInfo[playerid][eEmptyCarton]) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate jaja u kutiji za procesirati!");
-		if(EggInfo[playerid][eProcessing] ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Vec ste zapoceli procesiranje jaja!");
+		if(EggInfo[playerid][eProcessing]) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Vec ste zapoceli procesiranje jaja!");
 		if(EggInfo[playerid][eProcessed]) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Vec ste procesirali ta jaja!");
 		
 		EggInfo[playerid][eProcessing] = 1;
@@ -1634,7 +1634,7 @@ CMD:eggs(playerid, params[])
 	}
 	else if(!strcmp(param, "take", true))
 	{
-		if(PlayerJob[playerid][pJob] != JOB_FARMER ) return SendClientMessage( playerid, COLOR_RED, "Niste farmer!");
+		if(PlayerJob[playerid][pJob] != JOB_FARMER) return SendClientMessage( playerid, COLOR_RED, "Niste farmer!");
 		if(PlayerJob[playerid][pFreeWorks] < 5) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne mozete vise raditi! Pricekajte payday.");
 		if(!EggInfo[playerid][eTransporting]) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne transportirate jaja!");
 		if(!IsPlayerInRangeOfPoint(playerid, 5.0, -79.3684, 90.7796, 3.1172)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne nalazite se blizu spremista!");
@@ -1655,7 +1655,7 @@ CMD:eggs(playerid, params[])
 		new
 			VehicleModel;
 
-    	if(PlayerJob[playerid][pJob] != JOB_FARMER ) 
+    	if(PlayerJob[playerid][pJob] != JOB_FARMER) 
 			return SendClientMessage( playerid, COLOR_RED, "Niste farmer!");
 		if(EggInfo[playerid][eFullCarton]) 
 			return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne mozete spremiti tu kutiju na kamion!");
@@ -1789,7 +1789,7 @@ CMD:eggs(playerid, params[])
 		new
 			Profit, VehicleModel;
 
-    	if(PlayerJob[playerid][pJob] != JOB_FARMER ) return SendClientMessage( playerid, COLOR_RED, "Niste farmer!");
+    	if(PlayerJob[playerid][pJob] != JOB_FARMER) return SendClientMessage( playerid, COLOR_RED, "Niste farmer!");
 		if(!IsPlayerInRangeOfPoint(playerid, 8.0, 2271.2578, -2351.6902, 13.5469)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne nalazite se blizu tvornice!");
     	if(PlayerKeys[playerid][pVehicleKey] == -1) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate spawnano vozilo!");
 
@@ -1832,8 +1832,8 @@ CMD:transport(playerid, params[])
 {
 	new transportchoice;
 	
-    if(PlayerJob[playerid][pJob] != JOB_FARMER ) return SendClientMessage( playerid, COLOR_RED, "Niste farmer!");
-    if(PlayerJob[playerid][pFreeWorks] < 5 ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne mozete vise raditi! Pricekajte payday.");
+    if(PlayerJob[playerid][pJob] != JOB_FARMER) return SendClientMessage( playerid, COLOR_RED, "Niste farmer!");
+    if(PlayerJob[playerid][pFreeWorks] < 5) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne mozete vise raditi! Pricekajte payday.");
 	if(sscanf(params, "i", transportchoice)) return SendClientMessage(playerid, COLOR_RED, "[?]: /transport [1(usjevi) / 2(mlijeko) / 3(jaja)]");
 	if(SeedInfo[playerid][sTransporting] || MilkInfo[playerid][mTransporting] || EggInfo[playerid][eTransporting]) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Vec ste zapoceli sa transportiranjem!");
 	

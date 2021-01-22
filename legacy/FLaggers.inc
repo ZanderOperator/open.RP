@@ -19,9 +19,9 @@ IsPlayerDesynced(playerid);
 -=-=-=-=-=-=-=-=-=-=-=-=-=-=
 Defeinitions to use:
 -=-=-=-=-=-=-=-=-=-=
-#define FL_MAX_WAIT_TIME		[number]			( max wait time for the lags check  )
-#define FL_MAX_LAG_PING		 [number]			( max ping to set a warning		 )
-#define FL_MAX_WARNINGS		 [number]			( max warnings to call the callback )
+#define FL_MAX_WAIT_TIME		[number]			( max wait time for the lags check )
+#define FL_MAX_LAG_PING		 [number]			( max ping to set a warning		)
+#define FL_MAX_WARNINGS		 [number]			( max warnings to call the callback)
 -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 */
 
@@ -279,7 +279,7 @@ public FL_CheckStats(playerid)
 
 			else if(FLaggers_Player[playerid][FLPing] != FL_INVALID_PLAYER_STATS && FL_PING + FL_ADDED_VALUE < FLaggers_Player[playerid][FLPing]) 
 			{
-				if(FLaggers_Player[playerid][FLwarns] > 0 ) FLaggers_Player[playerid][FLwarns]--;
+				if(FLaggers_Player[playerid][FLwarns] > 0) FLaggers_Player[playerid][FLwarns]--;
 				FLaggers_Player[playerid][FLPing] = FL_INVALID_PLAYER_STATS;
 			}
 

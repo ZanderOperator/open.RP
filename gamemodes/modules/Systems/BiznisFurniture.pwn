@@ -238,7 +238,7 @@ static stock BuyBlankInterior(playerid, biznisid)
         BizzInfo[biznisid][bInterior],
         BizzInfo[biznisid][bVirtualWorld],
         BizzInfo[biznisid][bSQLID]
-    );
+   );
 
     DestroyFurnitureBlankIntTDs(playerid);
     PlayerToBudgetMoney(playerid, BlankBiznisInts[interior][iPrice]); // Novac ide u proracun
@@ -246,7 +246,7 @@ static stock BuyBlankInterior(playerid, biznisid)
     va_SendClientMessage(playerid, COLOR_GREEN, "[INFO]: Uspjesno ste kupili interijer %s za %d$!",
         BlankBiznisInts[interior][iName],
         BlankBiznisInts[interior][iPrice]
-    );
+   );
     DestroyAllFurnitureObjects(playerid, biznisid);
     SetPlayerPosEx(playerid, BizzInfo[biznisid][bExitX], BizzInfo[biznisid][bExitY], BizzInfo[biznisid][bExitZ], BizzInfo[biznisid][bVirtualWorld], BizzInfo[biznisid][bInterior], true);
     return 1;
@@ -354,12 +354,12 @@ stock InsertBizzFurnitureObject(biznisid, index)
             BizzInfo[biznisid][bFurColId][index][2],
             BizzInfo[biznisid][bFurColId][index][3],
             BizzInfo[biznisid][bFurColId][index][4]
-        ), 
+       ), 
         "OnBizzFurnitureObjectCreate", 
         "ii", 
         biznisid, 
         index
-    );
+   );
     return 1;
 }
 
@@ -380,7 +380,7 @@ stock LoadBiznisFurnitureObjects(biznisid)
         "OnBizzFurnitureObjectsLoad", 
         "i", 
         biznisid
-    );
+   );
     return 1;
 }
 
@@ -674,7 +674,7 @@ static stock ShowPlayerTextureList(playerid)
             ObjectTextures[i][tModel],
             ObjectTextures[i][tTXDName],
             ObjectTextures[i][tName]
-        );
+       );
         strcat(texture_buffer, motd, sizeof(texture_buffer));
 
         if(ObjectTextures[i][tModel] == 1319)
@@ -704,7 +704,7 @@ static stock ShowSearchedTextureList(playerid, string[])
                 ObjectTextures[i][tModel],
                 ObjectTextures[i][tTXDName],
                 ObjectTextures[i][tName]
-            );
+           );
             strcat(texture_buffer, motd, sizeof(texture_buffer));
 
             if(ObjectTextures[i][tModel] == 1319)
@@ -735,7 +735,7 @@ static stock ShowModelSearchedTextureList(playerid, modelid)
                 ObjectTextures[i][tModel],
                 ObjectTextures[i][tTXDName],
                 ObjectTextures[i][tName]
-            );
+           );
             strcat(texture_buffer, motd, sizeof(texture_buffer));
 
             if(ObjectTextures[i][tModel] == 1319)
@@ -843,7 +843,7 @@ static stock CreateBiznisFurnitureObject(playerid, modelid, Float:x, Float:y, Fl
         modelid,
         price,
         index
-    );
+   );
     #endif
 
     BizzPlayerPrwsObject[playerid] = INVALID_OBJECT_ID;
@@ -968,7 +968,7 @@ static stock SetFurnitureObjectPos(playerid, Float:x, Float:y, Float:z, Float:rx
         ry,
         rz,
         BizzInfo[biznisid][bFurSQL][index]
-    );
+   );
 
     // TODO: this is repetitive code, extract it to a helper function
     new colorid;
@@ -1012,7 +1012,7 @@ static stock SetFurnitureObjectTexture(playerid, slot, index, slotid)
         slot + 1,
         BizzInfo[biznisid][bFurTxtId][slotid][slot],
         BizzInfo[biznisid][bFurSQL][slotid]
-    );
+   );
     return 1;
 }
 
@@ -1038,7 +1038,7 @@ static stock SetFurnitureObjectColor(playerid, slot, index, slotid)
         slot + 1,
         BizzInfo[biznisid][bFurColId][slotid][slot],
         BizzInfo[biznisid][bFurSQL][slotid]
-    );
+   );
     return 1;
 }
 
@@ -1110,7 +1110,7 @@ static stock DestroyAllFurnitureObjects(playerid, biznisid)
     mysql_fquery(g_SQL, "UPDATE bizzes SET fur_slots = '%d' WHERE id = '%d'", 
         BizzInfo[biznisid][bFurSlots], 
         BizzInfo[biznisid][bSQLID]
-    );
+   );
 
     Iter_Clear(BizzFurniture[biznisid]);
     return 1;
@@ -1122,7 +1122,7 @@ RotateBizzFurDoor(biznisid, playerid)
     {
         if(BizzInfo[biznisid][bFurDoor][i])
         {
-            if(IsPlayerInRangeOfPoint(playerid, 3.0, BizzInfo[biznisid][bFurPosX][i], BizzInfo[biznisid][bFurPosY][i], BizzInfo[biznisid][bFurPosZ][i] ))
+            if(IsPlayerInRangeOfPoint(playerid, 3.0, BizzInfo[biznisid][bFurPosX][i], BizzInfo[biznisid][bFurPosY][i], BizzInfo[biznisid][bFurPosZ][i]))
             {
                 SetFurnitureDoorRotation(biznisid, i);
                 return 1;
@@ -1162,7 +1162,7 @@ static stock SetFurnitureDoorRotation(biznisid, index)
                 BizzInfo[biznisid][bFurRotX][index],
                 BizzInfo[biznisid][bFurRotY][index],
                 rot
-            );
+           );
 
             BizzInfo[biznisid][bFurDoorZ][index]  = -1.0;
             return 1;
@@ -1172,7 +1172,7 @@ static stock SetFurnitureDoorRotation(biznisid, index)
             BizzInfo[biznisid][bFurRotX][index],
             BizzInfo[biznisid][bFurRotY][index],
             BizzInfo[biznisid][bFurRotZ][index]
-        );
+       );
         BizzInfo[biznisid][bFurDoorZ][index]  = BizzInfo[biznisid][bFurRotZ][index];
     }
     return 1;
@@ -1659,7 +1659,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                         "Chairs\nKauci\nFotelje\nStolovi\nOrmarici\nTelevizori\nHi-Fi\nZvucnici\nTepisi\nSvijetla\nVrata\nFrizideri\nPica\nFun", 
                         "Choose", 
                         "Abort"
-                    );
+                   );
                     BizzFurnObjectsType[playerid] = 1;
                 }
                 case 1:
@@ -1676,7 +1676,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                         "Chairs\nStolovi\nKauci\nFotelje\nFrizideri\nPica\nHrana\nBlagajna\nPosudje\nMirkovalna\nPeci\nKuhinjski elementi\nSudoper", 
                         "Choose", 
                         "Abort"
-                    );
+                   );
                     BizzFurnObjectsType[playerid] = 3;
                 }
                 case 3:
@@ -2217,7 +2217,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                             ObjectTextures[i][tModel],
                             ObjectTextures[i][tTXDName],
                             ObjectTextures[i][tName]
-                        );
+                       );
                         strcat(texture_buffer, motd, sizeof(texture_buffer));
                         BizzTextureDialogItem[playerid][dialogPos] = i;
                         dialogPos++;
@@ -2236,7 +2236,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                         format(motd, sizeof(motd), "%s%s\n",
                             ColorList[i][clEmbedCol],
                             ColorList[i][clName]
-                        );
+                       );
                         strcat(buffer, motd, sizeof(buffer));
                     }
                     ShowPlayerDialog(playerid, DIALOG_BIZZ_FURN_COL_LIST, DIALOG_STYLE_LIST, "Furniture - Odabir boja", buffer, "Choose", "Abort");
@@ -2381,7 +2381,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                     format(motd, sizeof(motd), "%s%s\n",
                         ColorList[i][clEmbedCol],
                         ColorList[i][clName]
-                    );
+                   );
                     strcat(buffer, motd, sizeof(buffer));
                 }
                 ShowPlayerDialog(playerid, DIALOG_BIZZ_FURN_COL_LIST, DIALOG_STYLE_LIST, "Furniture - Odabir boja", buffer, "Choose", "Abort");
@@ -2447,7 +2447,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                 slot + 1,
                 slot + 1,
                 BizzInfo[biznisid][bFurSQL][slot]
-            );
+           );
 
             SetDynamicObjectMaterial(BizzInfo[biznisid][bFurObjectid][BizzPlayerEditIndex[playerid]], slot, -1, "none", "none", 0);
 
@@ -2609,7 +2609,7 @@ CMD:biznis_bint(playerid, params[])
             format(row, sizeof(row), "%s\t%d$\n",
                 BlankBiznisInts[i][iName],
                 BlankBiznisInts[i][iPrice]
-            );
+           );
             strcat(buffer, row);
         }
         ShowPlayerDialog(playerid, DIALOG_BIZZ_BLANK_INTS_LIST, DIALOG_STYLE_TABLIST_HEADERS, "Blank Interiors", buffer, "Choose", "Abort");

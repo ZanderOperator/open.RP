@@ -512,9 +512,9 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 				package_wep = get_PackageWeapon[playerid],
 				package_price = show_WeaponList[package_wep][wep_Price] * (package_amount);
 
-			if(Iter_Count(PACKAGES) == 10 )
+			if(Iter_Count(PACKAGES) == 10)
 				return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Trenutno je aktivno previse posiljka, pricekajte neko vrijeme da mozete naruciti posiljku.");
-			if(AC_GetPlayerMoney(playerid) < package_price ){
+			if(AC_GetPlayerMoney(playerid) < package_price){
 				SendClientMessage(playerid, COLOR_YELLOW, "Maska 64361 kaze (mobitel): Nema� ni centa, a u neke bi vece �eme, hah.");
 				PlayerHangup(playerid);
 				return 0;
@@ -573,9 +573,9 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 			if(!response)
 				return SendClientMessage(playerid, COLOR_YELLOW, "Maska 64361 kaze (mobitel): Ej kume daj se sa sobom dogovorili, jel hoces ili neces?!");
 		
-			if(Iter_Count(P_PACKAGES[playerid]) == MAX_PLAYER_PACKAGES )
+			if(Iter_Count(P_PACKAGES[playerid]) == MAX_PLAYER_PACKAGES)
 				return va_SendClientMessage(playerid, COLOR_RED, "[!] Vi vec imate maximum(%d) broj paketa kod sebe.", MAX_PLAYER_PACKAGES);
-			if(PlayerInfo[playerid][pLevel] == 1 )
+			if(PlayerInfo[playerid][pLevel] == 1)
 				return SendMessage(playerid, COLOR_RED, "[!] Ne mozete naruciti package jer ste level 1!");
 
 			new i = Iter_Free(P_PACKAGES[playerid]),
@@ -663,7 +663,7 @@ CMD:package(playerid, params[])
 			SendClientMessage(playerid, COLOR_RED, "[?]: /package givepackage [targetid][weapon_id](Armour ID: 60) [ammo_amount].");
 			return (true);
 		}
-		if(Iter_Count(P_PACKAGES[targetid]) == MAX_PLAYER_PACKAGES )
+		if(Iter_Count(P_PACKAGES[targetid]) == MAX_PLAYER_PACKAGES)
 			return va_SendClientMessage(playerid, COLOR_RED, "[!] Igrac vec ima maximum(%d) broj paketa kod sebe.", MAX_PLAYER_PACKAGES);
 
 		new i = Iter_Free(P_PACKAGES[targetid]);
@@ -772,9 +772,9 @@ CMD:package(playerid, params[])
 			SendClientMessage(playerid, 0xAFAFAFAA, "[=>] package_id provjeravate na /package vehstats.");
 			return (true);
 		}
-		if(vehicleid == INVALID_VEHICLE_ID )
+		if(vehicleid == INVALID_VEHICLE_ID)
 			return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste blizu privatnog vozila!");
-		if(VehicleInfo[vehicleid][vTrunk] == VEHICLE_PARAMS_OFF )
+		if(VehicleInfo[vehicleid][vTrunk] == VEHICLE_PARAMS_OFF)
 			return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Prtljaznik nije otvoren!");
 		if(!IsPlayerNearTrunk(playerid, vehicleid))
 			return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Morate biti kod prtljaznika vozila.");
@@ -803,9 +803,9 @@ CMD:package(playerid, params[])
 			SendClientMessage(playerid, 0xAFAFAFAA, "[=>] package_id provjeravate na /package stats.");
 			return (true);
 		}
-		if(vehicleid == INVALID_VEHICLE_ID )
+		if(vehicleid == INVALID_VEHICLE_ID)
 			return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste blizu privatnog vozila!");
-		if(VehicleInfo[vehicleid][vTrunk] == VEHICLE_PARAMS_OFF )
+		if(VehicleInfo[vehicleid][vTrunk] == VEHICLE_PARAMS_OFF)
 			return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Prtljaznik nije otvoren!");
 		if(!IsPlayerNearTrunk(playerid, vehicleid))
 			return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Morate biti kod prtljaznika vozila.");
@@ -844,9 +844,9 @@ CMD:package(playerid, params[])
 			return SendClientMessage(playerid, COLOR_RED, "[!] Taj igrac nije blizu vas !");
 		if(PlayerUnpacking[playerid] == true)
 			return SendClientMessage(playerid, COLOR_RED, "[!] Ne mozete to sada, vec raspakujete paket.");
-		if(PlayerInfo[targetid][pLevel] == 1 )
+		if(PlayerInfo[targetid][pLevel] == 1)
 			return SendMessage(playerid, COLOR_RED, "[!] Ne mozete dati package osobi koja je level 1!");
-		if(Iter_Count(P_PACKAGES[targetid]) == MAX_PLAYER_PACKAGES )
+		if(Iter_Count(P_PACKAGES[targetid]) == MAX_PLAYER_PACKAGES)
 			return va_SendClientMessage(playerid, COLOR_RED, "[!] Igrac vec ima maximum broj(%d) paketa kod sebe.", MAX_PLAYER_PACKAGES);
 		if(gettimestamp() < quickw_timer[playerid])
 			return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Morate sacekati 2 sekundi.");

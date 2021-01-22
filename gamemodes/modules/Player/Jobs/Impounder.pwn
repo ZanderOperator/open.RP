@@ -72,7 +72,7 @@ CMD:jobimpound(playerid, params[])
 			"[IMPOUNDER DISPATCH]: Otidji do vozila i impoundaj ga! Vozilo se nalazi na %s!", 
 			GetVehicleStreet(vehicleid)
 		);
-		SendClientMessage(playerid, COLOR_GREEN, "(( Ukoliko vozila nema na checkpointu vlasnik je uzeo isti. Koristite /stopimpound te ponovno pokrenite posao! ))");
+		SendClientMessage(playerid, COLOR_GREEN, "(( Ukoliko vozila nema na checkpointu vlasnik je uzeo isti. Koristite /stopimpound te ponovno pokrenite posao!))");
 		
 		new
 			Float:tX,
@@ -161,7 +161,7 @@ OPTowIV(playerid, veh)
 	{
 		DisablePlayerCheckpoint(playerid);
 		
-		SendClientMessage(playerid, COLOR_GREEN, "[IMPOUND DISPATCH]: Towao si vozilo, odvezi ga na impound lot! (( Na ulazu u Los Santos Airport ))");
+		SendClientMessage(playerid, COLOR_GREEN, "[IMPOUND DISPATCH]: Towao si vozilo, odvezi ga na impound lot! (( Na ulazu u Los Santos Airport))");
 		SetPlayerCheckpoint(playerid, 1962.2467, -2193.0901, 12.5427, 10.0);
 	}
 	return 1;

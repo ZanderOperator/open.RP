@@ -32,16 +32,16 @@ stock ResetMechanicVariables(playerid)
 	Repairing[playerid] = (false);
 	MechanicDuty[playerid] = (false);
 	DestroyMechanicTextDraw(playerid);
-	Bit8_Set( gr_MechanicSecs, 		playerid, 0 );
-	Bit16_Set( gr_IdMehanicara, playerid, INVALID_PLAYER_ID );
-	Bit4_Set( gr_TipUsluge, 	playerid, 0 );
+	Bit8_Set( gr_MechanicSecs, 		playerid, 0);
+	Bit16_Set( gr_IdMehanicara, playerid, INVALID_PLAYER_ID);
+	Bit4_Set( gr_TipUsluge, 	playerid, 0);
 	return 1;
 }
 
 stock DestroyMechanicTextDraw(playerid)
 {
-	if(MechanicTD[playerid] != PlayerText:INVALID_TEXT_DRAW ) {
-		PlayerTextDrawDestroy( playerid, MechanicTD[playerid] );
+	if(MechanicTD[playerid] != PlayerText:INVALID_TEXT_DRAW) {
+		PlayerTextDrawDestroy( playerid, MechanicTD[playerid]);
 		MechanicTD[playerid] = PlayerText:INVALID_TEXT_DRAW;
 	}
 	return 0;
@@ -67,9 +67,9 @@ StartMechanicService(playerid)
 	
 	if(repairman == 999) 							
 		return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nitko vam nije ponudio mehanicarsku uslugu!");
-	if(Bit1_Get( gr_UsingMechanic, playerid )) 	
+	if(Bit1_Get( gr_UsingMechanic, playerid)) 	
 		return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Vec koristite mehanicarsku uslugu!");
-	if(Bit1_Get( gr_UsingMechanic, repairman )) 	
+	if(Bit1_Get( gr_UsingMechanic, repairman)) 	
 		return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Mehanicar je vec u poslu!");
 	if(!IsPlayerInAnyVehicle(playerid)) 			
 		return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste u vozilu!");
@@ -79,7 +79,7 @@ StartMechanicService(playerid)
 		return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste blizu mehanicara!");
 	if(!Bit4_Get( gr_TipUsluge, playerid)) 		
 		return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nitko vam nije ponudio uslugu!");
-	if(AC_GetPlayerMoney(playerid) < price )		
+	if(AC_GetPlayerMoney(playerid) < price)		
 		return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate toliko novca!");
 	
 	PlayerToPlayerMoneyTAX(playerid, repairman, price, false);
@@ -98,16 +98,16 @@ StartMechanicService(playerid)
 			PlayerTextDrawSetString(playerid, 	MechanicTD[playerid], 	"~w~Mehanicarska usluga u tijeku~r~... ~n~~w~Preostalo sekundi: ~r~15");
 			PlayerTextDrawSetString(repairman, 	MechanicTD[repairman], 	"~w~Mehanicarska usluga u tijeku~r~... ~n~~w~Preostalo sekundi: ~r~15");
 			
-			SendClientMessage(repairman, COLOR_ORANGE, "(( Izadjite iz vozila i krenite rp-ati popravljanje, nemojte se previse udaljavati od vozila ))");
+			SendClientMessage(repairman, COLOR_ORANGE, "(( Izadjite iz vozila i krenite rp-ati popravljanje, nemojte se previse udaljavati od vozila))");
 			
-			Bit8_Set( gr_MechanicSecs, playerid, 15 );
+			Bit8_Set( gr_MechanicSecs, playerid, 15);
 			MechanicTimer[playerid] = repeat MechCountForPlayer(playerid, repairman, 1);
 			PlayerRepairVehicle[playerid] = givevehicleid;
 			PlayerMechanicVehicle[playerid] = GetPlayerVehicleID(playerid);
-			Bit1_Set( gr_UsingMechanic, 	repairman, 	true );
-			Bit1_Set( gr_UsingMechanic, 	playerid, 	true );
-			Bit4_Set( gr_TipUsluge, 		playerid, 	0 );
-			Bit16_Set( gr_IdMehanicara, 		playerid, 	999 );
+			Bit1_Set( gr_UsingMechanic, 	repairman, 	true);
+			Bit1_Set( gr_UsingMechanic, 	playerid, 	true);
+			Bit4_Set( gr_TipUsluge, 		playerid, 	0);
+			Bit16_Set( gr_IdMehanicara, 		playerid, 	999);
 			Repairing[repairman] = (true);
 		}
 		case 2: 
@@ -121,16 +121,16 @@ StartMechanicService(playerid)
 			PlayerTextDrawSetString(playerid, 	MechanicTD[playerid], 	"~w~Mehanicarska usluga u tijeku~r~... ~n~~w~Preostalo sekundi: ~r~15");
 			PlayerTextDrawSetString(repairman, 	MechanicTD[repairman], 	"~w~Mehanicarska usluga u tijeku~r~... ~n~~w~Preostalo sekundi: ~r~15");
 			
-			SendClientMessage(repairman, COLOR_ORANGE, "(( Izadjite iz vozila i krenite rp-ati popravljanje, nemojte se previse udaljavati od vozila ))");
+			SendClientMessage(repairman, COLOR_ORANGE, "(( Izadjite iz vozila i krenite rp-ati popravljanje, nemojte se previse udaljavati od vozila))");
 			
-			Bit8_Set( gr_MechanicSecs, playerid, 15 );
+			Bit8_Set( gr_MechanicSecs, playerid, 15);
 			MechanicTimer[playerid] = repeat MechCountForPlayer(playerid, repairman, 2);
 			PlayerRepairVehicle[playerid] = givevehicleid;
 			PlayerMechanicVehicle[playerid] = GetPlayerVehicleID(playerid);
-			Bit1_Set( gr_UsingMechanic, 	repairman, 	true );
-			Bit1_Set( gr_UsingMechanic, 	playerid, 	true );
-			Bit4_Set( gr_TipUsluge, 		playerid, 	0 );
-			Bit16_Set( gr_IdMehanicara, 	playerid, 	999 );
+			Bit1_Set( gr_UsingMechanic, 	repairman, 	true);
+			Bit1_Set( gr_UsingMechanic, 	playerid, 	true);
+			Bit4_Set( gr_TipUsluge, 		playerid, 	0);
+			Bit16_Set( gr_IdMehanicara, 	playerid, 	999);
 			Repairing[repairman] = (true);
 		}
 		case 3: 
@@ -144,16 +144,16 @@ StartMechanicService(playerid)
 			PlayerTextDrawSetString(playerid, 	MechanicTD[playerid], 	"~w~Mehanicarska usluga u tijeku~r~... ~n~~w~Preostalo sekundi: ~r~15");
 			PlayerTextDrawSetString(repairman, 	MechanicTD[repairman], 	"~w~Mehanicarska usluga u tijeku~r~... ~n~~w~Preostalo sekundi: ~r~15");
 			
-			SendClientMessage(repairman, COLOR_ORANGE, "(( Izadjite iz vozila i krenite rp-ati popravljanje, nemojte se previse udaljavati od vozila ))");
+			SendClientMessage(repairman, COLOR_ORANGE, "(( Izadjite iz vozila i krenite rp-ati popravljanje, nemojte se previse udaljavati od vozila))");
 			
-			Bit8_Set( gr_MechanicSecs, playerid, 15 );
+			Bit8_Set( gr_MechanicSecs, playerid, 15);
 			MechanicTimer[playerid] = repeat MechCountForPlayer(playerid, repairman, 3);
 			PlayerRepairVehicle[playerid] = givevehicleid;
 			PlayerMechanicVehicle[playerid] = GetPlayerVehicleID(playerid);
-			Bit1_Set( gr_UsingMechanic, 	repairman, 	true );
-			Bit1_Set( gr_UsingMechanic, 	playerid, 	true );
-			Bit4_Set( gr_TipUsluge, 		playerid, 	0 );
-			Bit16_Set( gr_IdMehanicara, 	playerid, 	999 );
+			Bit1_Set( gr_UsingMechanic, 	repairman, 	true);
+			Bit1_Set( gr_UsingMechanic, 	playerid, 	true);
+			Bit4_Set( gr_TipUsluge, 		playerid, 	0);
+			Bit16_Set( gr_IdMehanicara, 	playerid, 	999);
 			Repairing[repairman] = (true);
 		}
 		case 4: 
@@ -167,16 +167,16 @@ StartMechanicService(playerid)
 			PlayerTextDrawSetString(playerid, 	MechanicTD[playerid], 	"~w~Mehanicarska usluga u tijeku~r~... ~n~~w~Preostalo sekundi: ~r~15");
 			PlayerTextDrawSetString(repairman, 	MechanicTD[repairman], 	"~w~Mehanicarska usluga u tijeku~r~... ~n~~w~Preostalo sekundi: ~r~15");
 			
-			SendClientMessage(repairman, COLOR_ORANGE, "(( Izadjite iz vozila i krenite rp-ati popravljanje, nemojte se previse udaljavati od vozila ))");
+			SendClientMessage(repairman, COLOR_ORANGE, "(( Izadjite iz vozila i krenite rp-ati popravljanje, nemojte se previse udaljavati od vozila))");
 			
-			Bit8_Set( gr_MechanicSecs, playerid, 15 );
+			Bit8_Set( gr_MechanicSecs, playerid, 15);
 			MechanicTimer[playerid] = repeat MechCountForPlayer(playerid, repairman, 4);
 			PlayerRepairVehicle[playerid] = givevehicleid;
 			PlayerMechanicVehicle[playerid] = GetPlayerVehicleID(playerid);
-			Bit1_Set( gr_UsingMechanic, 	repairman, 	true );
-			Bit1_Set( gr_UsingMechanic, 	playerid, 	true );
-			Bit4_Set( gr_TipUsluge, 		playerid, 	0 );
-			Bit16_Set( gr_IdMehanicara, 	playerid, 	999 );
+			Bit1_Set( gr_UsingMechanic, 	repairman, 	true);
+			Bit1_Set( gr_UsingMechanic, 	playerid, 	true);
+			Bit4_Set( gr_TipUsluge, 		playerid, 	0);
+			Bit16_Set( gr_IdMehanicara, 	playerid, 	999);
 			Repairing[repairman] = (true);
 		}
 		case 6: 
@@ -190,16 +190,16 @@ StartMechanicService(playerid)
 			PlayerTextDrawSetString(playerid, 	MechanicTD[playerid], 	"~w~Mehanicarska usluga u tijeku~r~... ~n~~w~Preostalo sekundi: ~r~300");
 			PlayerTextDrawSetString(repairman, 	MechanicTD[repairman], 	"~w~Mehanicarska usluga u tijeku~r~... ~n~~w~Preostalo sekundi: ~r~300");
 
-			SendClientMessage(repairman, COLOR_ORANGE, "(( Izadjite iz vozila i krenite rp-ati popravljanje, nemojte se previse udaljavati od vozila ))");
+			SendClientMessage(repairman, COLOR_ORANGE, "(( Izadjite iz vozila i krenite rp-ati popravljanje, nemojte se previse udaljavati od vozila))");
 
-			Bit8_Set( gr_MechanicSecs, playerid, 300 );
+			Bit8_Set( gr_MechanicSecs, playerid, 300);
 			MechanicTimer[playerid] = repeat MechCountForPlayer(playerid, repairman, 6);
 			PlayerRepairVehicle[playerid] = givevehicleid;
 			PlayerMechanicVehicle[playerid] = GetPlayerVehicleID(playerid);
-			Bit1_Set( gr_UsingMechanic, 	repairman, 	true );
-			Bit1_Set( gr_UsingMechanic, 	playerid, 	true );
-			Bit4_Set( gr_TipUsluge, 		playerid, 	0 );
-			Bit16_Set( gr_IdMehanicara, 		playerid, 	999 );
+			Bit1_Set( gr_UsingMechanic, 	repairman, 	true);
+			Bit1_Set( gr_UsingMechanic, 	playerid, 	true);
+			Bit4_Set( gr_TipUsluge, 		playerid, 	0);
+			Bit16_Set( gr_IdMehanicara, 		playerid, 	999);
 			Repairing[repairman] = (true);
 		}
 		case 7: 
@@ -213,16 +213,16 @@ StartMechanicService(playerid)
 			PlayerTextDrawSetString(playerid, 	MechanicTD[playerid], 	"~w~Mehanicarska usluga u tijeku~r~... ~n~~w~Preostalo sekundi: ~r~500");
 			PlayerTextDrawSetString(repairman, 	MechanicTD[repairman], 	"~w~Mehanicarska usluga u tijeku~r~... ~n~~w~Preostalo sekundi: ~r~500");
 
-			SendClientMessage(repairman, COLOR_ORANGE, "(( Izadjite iz vozila i krenite rp-ati popravljanje, nemojte se previse udaljavati od vozila ))");
+			SendClientMessage(repairman, COLOR_ORANGE, "(( Izadjite iz vozila i krenite rp-ati popravljanje, nemojte se previse udaljavati od vozila))");
 
-			Bit8_Set( gr_MechanicSecs, playerid, 500 );
+			Bit8_Set( gr_MechanicSecs, playerid, 500);
 			MechanicTimer[playerid] = repeat MechCountForPlayer(playerid, repairman, 7);
 			PlayerRepairVehicle[playerid] = givevehicleid;
 			PlayerMechanicVehicle[playerid] = GetPlayerVehicleID(playerid);
-			Bit1_Set( gr_UsingMechanic, 	repairman, 	true );
-			Bit1_Set( gr_UsingMechanic, 	playerid, 	true );
-			Bit4_Set( gr_TipUsluge, 		playerid, 	0 );
-			Bit16_Set( gr_IdMehanicara, 		playerid, 	999 );
+			Bit1_Set( gr_UsingMechanic, 	repairman, 	true);
+			Bit1_Set( gr_UsingMechanic, 	playerid, 	true);
+			Bit4_Set( gr_TipUsluge, 		playerid, 	0);
+			Bit16_Set( gr_IdMehanicara, 		playerid, 	999);
 			Repairing[repairman] = (true);
 		}
 		case 8: 
@@ -236,16 +236,16 @@ StartMechanicService(playerid)
 			PlayerTextDrawSetString(playerid, 	MechanicTD[playerid], 	"~w~Mehanicarska usluga u tijeku~r~... ~n~~w~Preostalo sekundi: ~r~300");
 			PlayerTextDrawSetString(repairman, 	MechanicTD[repairman], 	"~w~Mehanicarska usluga u tijeku~r~... ~n~~w~Preostalo sekundi: ~r~300");
 
-			SendClientMessage(repairman, COLOR_ORANGE, "(( Izadjite iz vozila i krenite rp-ati popravljanje, nemojte se previse udaljavati od vozila ))");
+			SendClientMessage(repairman, COLOR_ORANGE, "(( Izadjite iz vozila i krenite rp-ati popravljanje, nemojte se previse udaljavati od vozila))");
 
-			Bit8_Set( gr_MechanicSecs, playerid, 300 );
+			Bit8_Set( gr_MechanicSecs, playerid, 300);
 			MechanicTimer[playerid] = repeat MechCountForPlayer(playerid, repairman, 8);
 			PlayerRepairVehicle[playerid] = givevehicleid;
 			PlayerMechanicVehicle[playerid] = GetPlayerVehicleID(playerid);
-			Bit1_Set( gr_UsingMechanic, 	repairman, 	true );
-			Bit1_Set( gr_UsingMechanic, 	playerid, 	true );
-			Bit4_Set( gr_TipUsluge, 		playerid, 	0 );
-			Bit16_Set( gr_IdMehanicara, 		playerid, 	999 );
+			Bit1_Set( gr_UsingMechanic, 	repairman, 	true);
+			Bit1_Set( gr_UsingMechanic, 	playerid, 	true);
+			Bit4_Set( gr_TipUsluge, 		playerid, 	0);
+			Bit16_Set( gr_IdMehanicara, 		playerid, 	999);
 			Repairing[repairman] = (true);
 		}
 	}
@@ -272,24 +272,24 @@ timer MechCountForPlayer[1000](playerid, giveplayerid, service)
 		DestroyMechanicTextDraw(giveplayerid);
 		stop MechanicTimer[playerid];
 
-		Bit1_Set( gr_UsingMechanic, playerid, 		false );
-		Bit1_Set( gr_UsingMechanic, giveplayerid, 	false );
+		Bit1_Set( gr_UsingMechanic, playerid, 		false);
+		Bit1_Set( gr_UsingMechanic, giveplayerid, 	false);
 		Repairing[giveplayerid] = (false);
 
 		SendMessage(playerid, MESSAGE_TYPE_ERROR, "Izasli ste iz vozila i time prekinuli mehanicarsku uslugu/niste u radioni!");
 		return 1;
 	}
-	if(Bit8_Get( gr_MechanicSecs, playerid ) > 0) {
+	if(Bit8_Get( gr_MechanicSecs, playerid) > 0) {
 		new
 			tmpSecs[74];
 		format(tmpSecs, sizeof(tmpSecs), "~w~Mehanicarska usluga u tijeku~r~... ~n~~w~Preostalo sekundi: ~r~%d",
-			Bit8_Get( gr_MechanicSecs, playerid )-1
+			Bit8_Get( gr_MechanicSecs, playerid)-1
 		);
-		PlayerTextDrawSetString( playerid, 		MechanicTD[playerid], 	tmpSecs );
-		PlayerTextDrawSetString( giveplayerid, 	MechanicTD[giveplayerid], tmpSecs );
-		PlayerPlaySound( playerid, 		1056, 0.0, 0.0, 0.0 );
-		PlayerPlaySound( giveplayerid, 	1056, 0.0, 0.0, 0.0 );
-		Bit8_Set( gr_MechanicSecs, playerid, Bit8_Get( gr_MechanicSecs, playerid )-1 );
+		PlayerTextDrawSetString( playerid, 		MechanicTD[playerid], 	tmpSecs);
+		PlayerTextDrawSetString( giveplayerid, 	MechanicTD[giveplayerid], tmpSecs);
+		PlayerPlaySound( playerid, 		1056, 0.0, 0.0, 0.0);
+		PlayerPlaySound( giveplayerid, 	1056, 0.0, 0.0, 0.0);
+		Bit8_Set( gr_MechanicSecs, playerid, Bit8_Get( gr_MechanicSecs, playerid)-1);
 	}
 	else
 	{
@@ -297,8 +297,8 @@ timer MechCountForPlayer[1000](playerid, giveplayerid, service)
 		DestroyMechanicTextDraw(giveplayerid);
 		stop MechanicTimer[playerid];
 
-		Bit1_Set( gr_UsingMechanic, playerid, false );
-		Bit1_Set( gr_UsingMechanic, giveplayerid, false );
+		Bit1_Set( gr_UsingMechanic, playerid, false);
+		Bit1_Set( gr_UsingMechanic, giveplayerid, false);
 		Repairing[giveplayerid] = (false);
 
 		new
@@ -331,10 +331,10 @@ timer MechCountForPlayer[1000](playerid, giveplayerid, service)
 				new
 					engineString[79];
 				format(engineString, sizeof(engineString), "[!] Vas motor je popravljen od strane mehanicara %s.",
-					GetName( giveplayerid, true )
+					GetName( giveplayerid, true)
 				);
 				SendClientMessage(playerid, COLOR_RED, engineString);
-				GameTextForPlayer( giveplayerid, "~g~Popravljen motor!", 1000, 1 );
+				GameTextForPlayer( giveplayerid, "~g~Popravljen motor!", 1000, 1);
 				
 				if(VehicleInfo[vehicleid][vNitro] != -1)
 				{
@@ -360,10 +360,10 @@ timer MechCountForPlayer[1000](playerid, giveplayerid, service)
 					bodyString[81];
 
 				format(bodyString, sizeof(bodyString), "[!] Vas bodykit je popravljen od strane mehanicara %s.",
-					GetName( giveplayerid, true )
+					GetName( giveplayerid, true)
 				);
 				SendClientMessage(playerid, COLOR_RED, bodyString);
-				GameTextForPlayer( giveplayerid, "~g~Popravljen bodykit!", 1000, 1 );
+				GameTextForPlayer( giveplayerid, "~g~Popravljen bodykit!", 1000, 1);
 
 				PlayerInventory[giveplayerid][pParts] -= 3;
 			}
@@ -378,12 +378,12 @@ timer MechCountForPlayer[1000](playerid, giveplayerid, service)
 				new
 					destroyString[92];
 				format(destroyString, sizeof(destroyString), "[!] Skinuta vam je jedna steta na vozilu od strane mehanicara %s.",
-					GetName( giveplayerid, true )
+					GetName( giveplayerid, true)
 				);
 				Bit1_Set( gr_HaveOffer, playerid, false);
 				SendClientMessage(playerid, COLOR_RED, destroyString);
-				GameTextForPlayer( giveplayerid, "~g~Maknuo si jedno unistenje!", 1000, 1 );
-				if(--VehicleInfo[GetPlayerVehicleID(playerid)][vDestroys] < 2 )
+				GameTextForPlayer( giveplayerid, "~g~Maknuo si jedno unistenje!", 1000, 1);
+				if(--VehicleInfo[GetPlayerVehicleID(playerid)][vDestroys] < 2)
 					VehicleInfo[GetPlayerVehicleID(playerid)][vDestroys] = 0;
 
 				PlayerInventory[giveplayerid][pParts] -= 5;
@@ -406,10 +406,10 @@ timer MechCountForPlayer[1000](playerid, giveplayerid, service)
 				new
 					stereoString[87];
 				format(stereoString, sizeof(stereoString), "[!] Ugradjen vam je stereo u vozilo od strane mehanicara %s.",
-					GetName( giveplayerid, true )
+					GetName( giveplayerid, true)
 				);
 				SendClientMessage(playerid, COLOR_RED, stereoString);
-				GameTextForPlayer( giveplayerid, "~g~Ugradili ste stereo!", 1000, 1 );
+				GameTextForPlayer( giveplayerid, "~g~Ugradili ste stereo!", 1000, 1);
 
 				PlayerInventory[giveplayerid][pParts] -= 2;
 
@@ -437,11 +437,11 @@ timer MechCountForPlayer[1000](playerid, giveplayerid, service)
 				new
 					tireString[87];
 				format(tireString, sizeof(tireString), "[!] Blindirane su vam gume na vozilu od strane mehanicara %s.",
-					GetName( giveplayerid, true )
+					GetName( giveplayerid, true)
 				);
 
 				SendClientMessage(playerid, COLOR_RED, tireString);
-				GameTextForPlayer( giveplayerid, "~g~Blindirali ste gume vozila!", 1000, 1 );
+				GameTextForPlayer( giveplayerid, "~g~Blindirali ste gume vozila!", 1000, 1);
 
 
 				PlayerInventory[giveplayerid][pParts] -= 4000;
@@ -466,10 +466,10 @@ timer MechCountForPlayer[1000](playerid, giveplayerid, service)
 				new
 					bodyaString[87];
 				format(bodyaString, sizeof(bodyaString), "[!] Blindirana vam je karoserija na vozilu od strane mehanicara %s.",
-					GetName( giveplayerid, true )
+					GetName( giveplayerid, true)
 				);
 				SendClientMessage(playerid, COLOR_RED, bodyaString);
-				GameTextForPlayer( giveplayerid, "~g~Blindirali ste karoseriju vozila!", 1000, 1 );
+				GameTextForPlayer( giveplayerid, "~g~Blindirali ste karoseriju vozila!", 1000, 1);
 
 				PlayerInventory[giveplayerid][pParts] -= 7000;
 
@@ -490,10 +490,10 @@ timer MechCountForPlayer[1000](playerid, giveplayerid, service)
 				new
 					bodyaString[100];
 				format(bodyaString, sizeof(bodyaString), "[!] Mehanicar %s je uspjesno popravio GPS lokator na vasem vozilu.",
-					GetName( giveplayerid, true )
+					GetName( giveplayerid, true)
 				);
 				SendClientMessage(playerid, COLOR_RED, bodyaString);
-				GameTextForPlayer( giveplayerid, "~g~GPS online!", 1000, 1 );
+				GameTextForPlayer( giveplayerid, "~g~GPS online!", 1000, 1);
 
 				PlayerInventory[giveplayerid][pParts] -= 5;
 			}
@@ -650,46 +650,46 @@ CMD:armorcar(playerid, params[]) {
 		if(sscanf(params, "s[12]ui", item, playa, price)) return SendClientMessage(playerid, COLOR_RED, "[?]: /armorcar tires [ID igraca][Cijena nadogradnje]");
 	    if(PlayerInventory[playerid][pParts] < 4000) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Za blindiranje guma potrebno je najmanje 4000 mehanicarskih dijelova kod sebe ili tow trucku!");
 		if(playa == INVALID_PLAYER_ID) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Igrac nije na serveru!");
-		if(PlayerInfo[playa][pLevel] < 2 ) return SendClientMessage( playerid, COLOR_RED, "Igrac mora biti veci od level 1!");
+		if(PlayerInfo[playa][pLevel] < 2) return SendClientMessage( playerid, COLOR_RED, "Igrac mora biti veci od level 1!");
    		if(price > 70000 || price < 10) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Krivi unos cijene! (10$-70.000$)");
    		if(!ProxDetectorS(5.0, playerid, playa) || !IsPlayerInAnyVehicle(playa)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Taj igrac nije blizu vas / nije u autu.");
 
 		if(playa == playerid) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne mozes sam sebi ponuditi blindiranje vozila!");
 
 		va_SendClientMessage(playerid, COLOR_RED, "[!] Ponudili ste %s blindiranje guma za %d$.",
-			GetName( playa, true ),
+			GetName( playa, true),
 			price
 		);
 		va_SendClientMessage(playa, COLOR_RED, "[!] Automehanicar %s zeli vam blindirati gume na vozilu za %d$, (ukucajte /accept mechanic) da bi ste prihvatili.",
-			GetName( playerid, true ),
+			GetName( playerid, true),
 			price
 		);
 		ServicePrice[playa] = price;
-		Bit16_Set( gr_IdMehanicara, playa, playerid );
-		Bit4_Set( gr_TipUsluge, 	playa, 6 );
+		Bit16_Set( gr_IdMehanicara, playa, playerid);
+		Bit4_Set( gr_TipUsluge, 	playa, 6);
 	}
 	else if(strcmp(item,"body",true) == 0) {
 		if(sscanf(params, "s[12]ui", item, playa, price)) return SendClientMessage(playerid, COLOR_RED, "[?]: /armorcar body [ID igraca][Cijena nadogradnje]");
 	    if(PlayerInventory[playerid][pParts] < 7000) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Za blindiranje karoserije potrebno je najmanje 7000 mehanicarskih dijelova kod sebe ili tow trucku!");
 		if(playa == INVALID_PLAYER_ID) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Igrac nije na serveru!");
-		if(PlayerInfo[playa][pLevel] < 2 ) return SendClientMessage( playerid, COLOR_RED, "Igrac mora biti veci od level 1!");
+		if(PlayerInfo[playa][pLevel] < 2) return SendClientMessage( playerid, COLOR_RED, "Igrac mora biti veci od level 1!");
    		if(price > 100000 || price < 10) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Krivi unos cijene! (10$-100.000$)");
    		if(!ProxDetectorS(5.0, playerid, playa) || !IsPlayerInAnyVehicle(playa)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Taj igrac nije blizu vas / nije u autu.");
 
 		if(playa == playerid) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne mozes sam sebi ponuditi blindiranje vozila!");
 
 		va_SendClientMessage(playerid, COLOR_RED, "[!] Ponudili ste %s blindiranje karoserije za %d$.",
-			GetName( playa, true ),
+			GetName( playa, true),
 			price
 		);
 		va_SendClientMessage(playa, COLOR_RED, "[!] Automehanicar %s zeli vam blindirati karoseriju na vozilu za %d$, (ukucajte /accept mechanic) da bi ste prihvatili.",
-			GetName( playerid, true ),
+			GetName( playerid, true),
 			price
 		);
 
 		ServicePrice[playa] = price;
-		Bit16_Set( gr_IdMehanicara, playa, playerid );
-		Bit4_Set( gr_TipUsluge, 	playa, 7 );
+		Bit16_Set( gr_IdMehanicara, playa, playerid);
+		Bit4_Set( gr_TipUsluge, 	playa, 7);
 	}
 	return 1;
 }
@@ -712,7 +712,7 @@ CMD:repair(playerid, params[])
 	    if(sscanf(params, "s[12]ui", item, playa, price)) return SendClientMessage(playerid, COLOR_RED, "[?]: /repair engine [ID igraca][Cijena popravka]");
 	    if(PlayerInventory[playerid][pParts] < 3) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Za popravak motora potrebno je najmanje 3 mehanicarska dijela kod sebe!");
 		if(playa == INVALID_PLAYER_ID) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Igrac nije na serveru!");
-		if(PlayerInfo[playa][pLevel] < 2 ) return SendClientMessage( playerid, COLOR_RED, "Igrac mora biti veci od level 1!");
+		if(PlayerInfo[playa][pLevel] < 2) return SendClientMessage( playerid, COLOR_RED, "Igrac mora biti veci od level 1!");
    		if(price > 250 || price < 10) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Krivi unos cijene! (10$-250$)");
    		if(!ProxDetectorS(5.0, playerid, playa) || !IsPlayerInAnyVehicle(playa)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Taj igrac nije blizu vas / nije u autu.");
 
@@ -725,24 +725,24 @@ CMD:repair(playerid, params[])
  		    return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Motor vozila mora biti izgaSen kako bi ga mogli popraviti!");
 
 		va_SendClientMessage(playerid, COLOR_RED, "[!] Ponudili ste %s popravak enginea vozila za %d$.",
-			GetName( playa, true ),
+			GetName( playa, true),
 			price
 		);
 		va_SendClientMessage(playa, COLOR_RED, "[!] Automehanicar %s zeli vam popravit engine od vozila za %d$, (ukucajte /accept mechanic) da bi ste prihvatili.",
-			GetName( playerid, true ),
+			GetName( playerid, true),
 			price
 		);
 
 		ServicePrice[playa] = price;
-		Bit16_Set( gr_IdMehanicara, playa, playerid );
-		Bit4_Set( gr_TipUsluge, 	playa, 1 );
+		Bit16_Set( gr_IdMehanicara, playa, playerid);
+		Bit4_Set( gr_TipUsluge, 	playa, 1);
 	}
     else if(strcmp(item,"bodykit",true) == 0)
 	{
         if(sscanf(params, "s[12]ui", item, playa, price)) return SendClientMessage(playerid, COLOR_RED, "[?]: /repair bodykit [ID igraca][Cijena bodikita]");
 	    if(PlayerInventory[playerid][pParts] < 3) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Za popravak motora potrebno je najmanje 3 mehanicarska dijela kod sebe!");
    		if(playa == INVALID_PLAYER_ID) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Igrac nije na serveru!");
-   		if(PlayerInfo[playa][pLevel] < 2 ) return SendClientMessage( playerid, COLOR_RED, "Igrac mora biti veci od level 1!");
+   		if(PlayerInfo[playa][pLevel] < 2) return SendClientMessage( playerid, COLOR_RED, "Igrac mora biti veci od level 1!");
 		if(price > 250 || price < 10) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Krivi unos cijene! (10$-250$)");
    		if(!ProxDetectorS(5.0, playerid, playa) || !IsPlayerInAnyVehicle(playa)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Taj igrac nije blizu vas / nije u autu.");
 
@@ -751,30 +751,30 @@ CMD:repair(playerid, params[])
 		if(playa == playerid) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne mozes sam sebi ponuditi popravak bodykita na vozilu!");
 
 		va_SendClientMessage(playerid, COLOR_RED, "[!] Ponudili ste %s popravak bodykita na vozilu za %d$.",
-			GetName( playa, true ),
+			GetName( playa, true),
 			price
 		);
 
 		va_SendClientMessage(playa, COLOR_RED, "[!] Automehanicar %s zeli vam popravit bodykit na vozilu za %d$, (ukucajte /accept mechanic) da bi ste prihvatili.",
-			GetName( playerid, true ),
+			GetName( playerid, true),
 			price
 		);
 
 		ServicePrice[playa] = price;
-		Bit16_Set( gr_IdMehanicara, playa, playerid );
-		Bit4_Set( gr_TipUsluge,		playa, 2 );
+		Bit16_Set( gr_IdMehanicara, playa, playerid);
+		Bit4_Set( gr_TipUsluge,		playa, 2);
     }
     else if(strcmp(item,"destroys",true) == 0)
 	{
-        if(PlayerJob[playerid][pContractTime] < 100 ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate dovoljno iskustva!");
+        if(PlayerJob[playerid][pContractTime] < 100) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate dovoljno iskustva!");
         if(sscanf(params, "s[12]ui", item, playa, price)) return SendClientMessage(playerid, COLOR_RED, "[?]: /repair destroys [ID igraca][Cijena skidanja]");
 	    if(PlayerInventory[playerid][pParts] < 3) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Za popravak motora potrebno je najmanje 3 mehanicarska dijela kod sebe!");
-   		if(playa == INVALID_PLAYER_ID ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Igrac nije na serveru!");
+   		if(playa == INVALID_PLAYER_ID) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Igrac nije na serveru!");
 		if(Bit1_Get( gr_HaveOffer, playa, false)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Igracu je vec ponudjena mehanicarska usluga.");
-		if(PlayerInfo[playa][pLevel] < 2 ) return SendClientMessage( playerid, COLOR_RED, "Igrac mora biti veci od level 1!");
-		if(price > 250 || price < 10 ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Krivi unos cijene! (10$-250$)");
+		if(PlayerInfo[playa][pLevel] < 2) return SendClientMessage( playerid, COLOR_RED, "Igrac mora biti veci od level 1!");
+		if(price > 250 || price < 10) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Krivi unos cijene! (10$-250$)");
    		if(!ProxDetectorS(5.0, playerid, playa) || !IsPlayerInAnyVehicle(playa)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Taj igrac nije blizu vas / nije u autu.");
-   		if(VehicleInfo[GetPlayerVehicleID(playa)][vDestroys] <= 2 ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Vozilo ima 2 ili manje unistenja i ne mozete ih vise brisati!");
+   		if(VehicleInfo[GetPlayerVehicleID(playa)][vDestroys] <= 2) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Vozilo ima 2 ili manje unistenja i ne mozete ih vise brisati!");
 
 		givevehicleid = GetPlayerVehicleID(playa);
  		model = GetVehicleModel(givevehicleid);
@@ -783,28 +783,28 @@ CMD:repair(playerid, params[])
  		if(playa == playerid) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne mozes sam sebi ponuditi ovu uslugu!");
 
 		va_SendClientMessage(playerid, COLOR_RED, "[!] Ponudili ste %s brisanje unistenja na vozilu za %d$.",
-			GetName( playa, true ),
+			GetName( playa, true),
 			price
 		);
 		va_SendClientMessage(playa, COLOR_RED, "[!] Automehanicar %s zeli vam pobrisati unistenja na vozilu za %d$, (ukucajte /accept mechanic) da bi ste prihvatili.",
-			GetName( playerid, true ),
+			GetName( playerid, true),
 			price
 		);
-		Bit1_Set( gr_HaveOffer, 	playa, true );
+		Bit1_Set( gr_HaveOffer, 	playa, true);
 		ServicePrice[playa] = price;
-		Bit16_Set( gr_IdMehanicara, playa, playerid );
-		Bit4_Set( gr_TipUsluge, 	playa, 3 );
+		Bit16_Set( gr_IdMehanicara, playa, playerid);
+		Bit4_Set( gr_TipUsluge, 	playa, 3);
     }
 	 else if(strcmp(item,"gps",true) == 0)
 	{
         if(sscanf(params, "s[12]ui", item, playa, price)) return SendClientMessage(playerid, COLOR_RED, "[?]: /repair gps [ID igraca][Cijena popravka]");
 	    if(PlayerInventory[playerid][pParts] < 3) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Za popravak motora potrebno je najmanje 3 mehanicarska dijela kod sebe!");
-   		if(playa == INVALID_PLAYER_ID ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Igrac nije na serveru!");
+   		if(playa == INVALID_PLAYER_ID) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Igrac nije na serveru!");
 		if(Bit1_Get( gr_HaveOffer, playa, false)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Igracu je vec ponudjena mehanicarska usluga.");
-		if(PlayerInfo[playa][pLevel] < 2 ) return SendClientMessage( playerid, COLOR_RED, "Igrac mora biti veci od level 1!");
-		if(price > 250 || price < 10 ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Krivi unos cijene! (10$-250$)");
+		if(PlayerInfo[playa][pLevel] < 2) return SendClientMessage( playerid, COLOR_RED, "Igrac mora biti veci od level 1!");
+		if(price > 250 || price < 10) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Krivi unos cijene! (10$-250$)");
    		if(!ProxDetectorS(5.0, playerid, playa) || !IsPlayerInAnyVehicle(playa)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Taj igrac nije blizu vas / nije u autu.");
-   		if(VehicleInfo[GetPlayerVehicleID(playa)][vGPS] ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Vozilo ima ispravan GPS lokator!");
+   		if(VehicleInfo[GetPlayerVehicleID(playa)][vGPS]) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Vozilo ima ispravan GPS lokator!");
 
 		givevehicleid = GetPlayerVehicleID(playa);
  		model = GetVehicleModel(givevehicleid);
@@ -813,17 +813,17 @@ CMD:repair(playerid, params[])
  		if(playa == playerid) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne mozes sam sebi ponuditi ovu uslugu!");
 
 		va_SendClientMessage(playerid, COLOR_RED, "[!] Ponudili ste %s popravak GPS-a na vozilu za %d$.",
-			GetName( playa, true ),
+			GetName( playa, true),
 			price
 		);
 		va_SendClientMessage(playa, COLOR_RED, "[!] Automehanicar %s zeli vam popraviti GPS na vozilu za %d$, (ukucajte /accept mechanic) da bi ste prihvatili.",
-			GetName( playerid, true ),
+			GetName( playerid, true),
 			price
 		);
-		Bit1_Set( gr_HaveOffer, 	playa, true );
+		Bit1_Set( gr_HaveOffer, 	playa, true);
 		ServicePrice[playa] = price;
-		Bit16_Set( gr_IdMehanicara, playa, playerid );
-		Bit4_Set( gr_TipUsluge, 	playa, 8 );
+		Bit16_Set( gr_IdMehanicara, playa, playerid);
+		Bit4_Set( gr_TipUsluge, 	playa, 8);
     }
 	return 1;
 }
@@ -840,8 +840,8 @@ CMD:parts(playerid, params[])
     if(strcmp(item,"buy",true) == 0)
 	{
         if(sscanf(params, "s[16]i", item, ammount)) return SendClientMessage(playerid, COLOR_RED, "[?]: /parts buy [kolicina]");
-		if(ammount < 1 || ammount > 500 ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne mozes uzeti manje od 1 i vise od 500 paketa odjednom!");
-		if(PlayerJob[playerid][pJob] != JOB_MECHANIC ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nisi mehanicar!");
+		if(ammount < 1 || ammount > 500) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne mozes uzeti manje od 1 i vise od 500 paketa odjednom!");
+		if(PlayerJob[playerid][pJob] != JOB_MECHANIC) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nisi mehanicar!");
 		//if(MechanicDuty[playerid] == false) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nisi na duznosti kao mehanicar!");
 		if(!IsPlayerInRangeOfPoint(playerid,5.0, 2075.6326,-2033.3313,13.5469)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste blizu mjesta za kupovinu dijelova!");
 
@@ -859,31 +859,31 @@ CMD:parts(playerid, params[])
 	}
 	else if(strcmp(item,"give",true) == 0)
 	{
-	    if(Bit1_Get( gr_UsingMechanic, playerid )) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne mo�eS davati dijelove dok popravljaS vozilo!");
+	    if(Bit1_Get( gr_UsingMechanic, playerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne mo�eS davati dijelove dok popravljaS vozilo!");
 		if(Repairing[playerid] == (true)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Trenutno popravljate vozilo, sacekajte da prvo popravite vozilo.");
 
 	    new
 			giveplayerid;
 	    if(sscanf(params, "s[16]ui", item, giveplayerid, ammount)) return SendClientMessage(playerid, COLOR_RED, "[?]: /parts give [ID/Ime][kolicina]");
         if(!ProxDetectorS(5.0, playerid, giveplayerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nisi dovoljno blizu tog igraca!");
-	    if(ammount < 1 || ammount > PlayerInventory[playerid][pParts] ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate toliko mehanicarskih dijelova kod sebe !");
-		if(giveplayerid == INVALID_PLAYER_ID ) return SendClientMessage( playerid, COLOR_RED, "Igrac nije online!");
+	    if(ammount < 1 || ammount > PlayerInventory[playerid][pParts]) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate toliko mehanicarskih dijelova kod sebe !");
+		if(giveplayerid == INVALID_PLAYER_ID) return SendClientMessage( playerid, COLOR_RED, "Igrac nije online!");
 
 		va_SendClientMessage(playerid, COLOR_RED, "[!] Dali ste %s %d mehanicarskih djelova.",
-			GetName( giveplayerid, true ),
+			GetName( giveplayerid, true),
 			ammount
 		);
 
 		va_SendClientMessage(giveplayerid, COLOR_RED, "[!] %s vam je dao %d mehanicarskih djelova.",
-			GetName( playerid, true ),
+			GetName( playerid, true),
 			ammount
 		);
 
 		new
 			tmpString[64];
 		format(tmpString, sizeof(tmpString), "* %s daje nesto %s.",
-			GetName( playerid, true ),
-			GetName( giveplayerid, true )
+			GetName( playerid, true),
+			GetName( giveplayerid, true)
 		);
         SetPlayerChatBubble(playerid, tmpString, COLOR_PURPLE, 20, 5000);
 
@@ -892,7 +892,7 @@ CMD:parts(playerid, params[])
 	}
 	else if(strcmp(item,"put",true) == 0)
 	{
-	    if(Bit1_Get( gr_UsingMechanic, playerid )) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne mozes davati dijelove dok popravljas vozilo!");
+	    if(Bit1_Get( gr_UsingMechanic, playerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne mozes davati dijelove dok popravljas vozilo!");
 		if(Repairing[playerid] == (true)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Trenutno popravljate vozilo, sacekajte da prvo popravite vozilo.");
 
 	    vehicleid = GetPlayerVehicleID(playerid);
@@ -901,18 +901,18 @@ CMD:parts(playerid, params[])
 	    if(GetVehicleModel(vehicleid) != 525) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste u towtrucku !");
 	    if(sscanf(params, "s[16]i", item, ammount)) return SendClientMessage(playerid, COLOR_RED, "[?]: /parts put [kolicina]");
 	    if(ammount < 1 || ammount > PlayerInventory[playerid][pParts]) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate toliko mehanicarskih dijelova kod sebe !");
-		va_GameTextForPlayer( playerid, "~g~+%d dijelova u trucku", 1500, 1, ammount );
+		va_GameTextForPlayer( playerid, "~g~+%d dijelova u trucku", 1500, 1, ammount);
 
 		VehicleInfo[vehicleid][vParts] += ammount;
 		PlayerInventory[playerid][pParts] -= ammount;
 	}
 	else if(strcmp(item,"take",true) == 0)
 	{
-	    if(Bit1_Get( gr_UsingMechanic, playerid )) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nesmijes vaditi dijelove ako popravljas auto!");
+	    if(Bit1_Get( gr_UsingMechanic, playerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nesmijes vaditi dijelove ako popravljas auto!");
         if(!IsPlayerInAnyVehicle(playerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste u vozilu !");
 		vehicleid = GetPlayerVehicleID(playerid);
-        if(GetVehicleModel(vehicleid) != 525 ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste u towtrucku !");
-        if(sscanf( params, "s[16]i", item, ammount ))
+        if(GetVehicleModel(vehicleid) != 525) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste u towtrucku !");
+        if(sscanf( params, "s[16]i", item, ammount))
 		{
 			SendClientMessage(playerid, COLOR_RED, "[?]: /parts take [kolicina]");
 			SendFormatMessage(playerid, MESSAGE_TYPE_INFO, "U ovom vozilu ima %d mehanicarskih djelova.",
@@ -931,7 +931,7 @@ CMD:parts(playerid, params[])
 	}
 	else if(strcmp(item,"check",true) == 0)
 	{
-		if(PlayerJob[playerid][pJob] != JOB_MECHANIC ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nisi mehanicar!");
+		if(PlayerJob[playerid][pJob] != JOB_MECHANIC) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nisi mehanicar!");
 		SendClientMessage(playerid, COLOR_RED, "[!] Mehanicarski djelovi **");
 		SendFormatMessage(playerid, MESSAGE_TYPE_INFO, "Imate %d mehanicarskih djelova kod sebe.",
 			PlayerInventory[playerid][pParts]
@@ -961,7 +961,7 @@ CMD:mechanic(playerid, params[]) {
 			MechanicDuty[playerid] = true;
 			
 			SendMessage(playerid, MESSAGE_TYPE_INFO,"Sada si na duznosti kao Mehanicar!");
-			format(string, sizeof(string), "* Mehanicar %s je sada na duznosti. (( /jobduty ))", GetName(playerid, false));
+			format(string, sizeof(string), "* Mehanicar %s je sada na duznosti. (( /jobduty))", GetName(playerid, false));
 			SendClientMessageToAll(COLOR_YELLOW, string);
 			
 			if(PlayerInfo[playerid][pSex] == 1) SetPlayerSkin(playerid, 50);

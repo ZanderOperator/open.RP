@@ -35,12 +35,12 @@ stock HOOK_Ban(playerid, adminid, const reason[], days=-1, bool:anticheat=false)
 		forumname[MAX_PLAYER_NAME],
 		banString[128];
 
-	if(adminid == INVALID_PLAYER_ID ) 
+	if(adminid == INVALID_PLAYER_ID) 
 	{
 		if(days != -3)
 		{
 			format( banString, 128, "AdmCMD: %s is banned by Anti-Cheat. Reason: %s",
-				GetName( playerid, false ),
+				GetName( playerid, false),
 				reason
 			);
 			format( forumname, MAX_PLAYER_NAME, "Anti-Cheat");
@@ -48,32 +48,32 @@ stock HOOK_Ban(playerid, adminid, const reason[], days=-1, bool:anticheat=false)
 		else
 		{
 		    format( banString, 128, "AdmCMD: Account %s je is automatically locked by the server. Reason: %s",
-				GetName( playerid, false ),
+				GetName( playerid, false),
 				reason
 			);
 			format( forumname, MAX_PLAYER_NAME, "AutoServerLock");
 		}
 	}
-	else if(adminid != INVALID_PLAYER_ID ) 
+	else if(adminid != INVALID_PLAYER_ID) 
 	{
-		if(strlen(reason) > MAX_REASON_LEN || strlen(reason) < MIN_REASON_LEN ) 
+		if(strlen(reason) > MAX_REASON_LEN || strlen(reason) < MIN_REASON_LEN) 
 		{
 			SendFormatMessage(adminid, MESSAGE_TYPE_ERROR, "Invalid reason input (%d[min]-%d[max] chars required).", MIN_REASON_LEN, MAX_REASON_LEN);
 			return 1;
 		}
 		format( banString, 128, "AdmCMD: %s is banned by Game Admin %s(%s). Reason: %s",
-			GetName( playerid, false ),
+			GetName( playerid, false),
 			PlayerInfo[adminid][pForumName],
 			GetName( adminid, false),
 			reason
 		);
 	}
-	SendClientMessageToAll( COLOR_RED, banString );
+	SendClientMessageToAll( COLOR_RED, banString);
 
 	new
 		unban_time;
 
-	if(days == -1 )
+	if(days == -1)
 		unban_time = -1;
 	else if(days == -3)
 	    unban_time = -3;
@@ -96,8 +96,8 @@ stock HOOK_Ban(playerid, adminid, const reason[], days=-1, bool:anticheat=false)
 		"INSERT INTO bans (player_id, name, player_ip, forumname, reason, date, unban) \n\
 			VALUES ('%d', '%e', '%e', '%e', '%e', '%e', '%d')",
 		PlayerInfo[playerid][pSQLID],
-		GetName( playerid, false ),
-		ReturnPlayerIP( playerid ),
+		GetName( playerid, false),
+		ReturnPlayerIP( playerid),
 		PlayerInfo[playerid][pForumName],
 		reason,
 		date,
@@ -108,19 +108,19 @@ stock HOOK_Ban(playerid, adminid, const reason[], days=-1, bool:anticheat=false)
 	ExpInfo[playerid][eAllPoints] = 0;
 
 	PlayerInfo[playerid][pBanned] 	= 1;
-	BanMessage( playerid );
+	BanMessage( playerid);
 	return 1;
 }
 
 stock HOOK_BanEx(playerid, const playername[], const playerip[], adminid, const reason[], days=-1)
 {
-	if(strlen(reason) > MAX_REASON_LEN || strlen(reason) < MIN_REASON_LEN ) 
+	if(strlen(reason) > MAX_REASON_LEN || strlen(reason) < MIN_REASON_LEN) 
 	{
 		SendFormatMessage(adminid, MESSAGE_TYPE_ERROR, "Invalid reason input (%d[min]-%d[max] chars required).", MIN_REASON_LEN, MAX_REASON_LEN);
 		return 1;
 	}
 	va_SendClientMessageToAll( COLOR_RED,"AdmCMD: %s is banned by Game Admin %s(%s). Reason: %s",
-		GetName( playerid, false ),
+		GetName( playerid, false),
 		PlayerInfo[adminid][pForumName],
 		GetName( adminid, false),
 		reason
@@ -129,7 +129,7 @@ stock HOOK_BanEx(playerid, const playername[], const playerip[], adminid, const 
 	new
 		unban_time;
 
-	if(days == -1 )
+	if(days == -1)
 		unban_time = -1;
 	else {
 		unban_time = days * 60 * 60 * 24;
@@ -174,8 +174,8 @@ stock UnbanPlayerName(const playername[], adminid)
 	Log_Write("/logfiles/a_unban.txt", "[%s] Game Admin %s[%s](%s) unbanned account %s.",
 		ReturnDate(),
 		PlayerInfo[adminid][pForumName],
-		GetName( adminid, false ),
-		ReturnPlayerIP( adminid ),
+		GetName( adminid, false),
+		ReturnPlayerIP( adminid),
 		playername
 	);
 	#endif
@@ -198,8 +198,8 @@ stock UnbanPlayerIP(const playerip[], adminid)
 	#if defined MODULE_LOGS
 	Log_Write("/logfiles/a_unban.txt", "[%s] Game Admin %s(%s) unbanned IP %s",
 		ReturnDate(),
-		GetName( adminid, false ),
-		ReturnPlayerIP( adminid ),
+		GetName( adminid, false),
+		ReturnPlayerIP( adminid),
 		playerip
 	);
 	#endif

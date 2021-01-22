@@ -263,7 +263,7 @@ stock Indirect_Call(func, tag, GLOBAL_TAG_TYPES:...)
 			lTag[32];
 		// Skip the `F@_@` prefix.
 		GetTagNameFromID(INDIRECTION_TAG, lTag);
-		if(lTag[0]) for (i = 4; ; )
+		if(lTag[0]) for (i = 4; ;)
 		{
 			switch (lTag[i++])
 			{
@@ -373,7 +373,7 @@ stock string:Indirect_Callstring(func, tag, GLOBAL_TAG_TYPES:...)
 			lTag[32];
 		// Skip the `F@_@` prefix.
 		GetTagNameFromID(INDIRECTION_TAG, lTag);
-		if(lTag[0]) for (i = 4; ; )
+		if(lTag[0]) for (i = 4; ;)
 		{
 			switch (lTag[i++])
 			{
@@ -477,7 +477,7 @@ stock void:Indirect_Callvoid(func, tag, GLOBAL_TAG_TYPES:...)
 			lTag[32];
 		// Skip the `F@_@` prefix.
 		GetTagNameFromID(INDIRECTION_TAG, lTag);
-		if(lTag[0]) for (i = 4; ; )
+		if(lTag[0]) for (i = 4; ;)
 		{
 			switch (lTag[i++])
 			{
@@ -597,7 +597,7 @@ stock Indirect_Array(func, tag, const params[], size = sizeof (params))
 			lTag[32];
 		// Skip the `F@_@` prefix.
 		GetTagNameFromID(INDIRECTION_TAG, lTag);
-		if(lTag[0]) for (i = 4; ; )
+		if(lTag[0]) for (i = 4; ;)
 		{
 			switch (lTag[i++])
 			{

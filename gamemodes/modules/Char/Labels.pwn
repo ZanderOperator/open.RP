@@ -1,6 +1,6 @@
 #include <YSI_Coding\y_hooks>
 
-#define MAX_Labels                ( 200 )
+#define MAX_Labels                ( 200)
 
 enum E_RPTEXT_DATA
 {

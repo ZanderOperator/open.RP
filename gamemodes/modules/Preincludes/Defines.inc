@@ -26,7 +26,7 @@
 #define IsPlayerLogged(%0) 						Bit1_Get(gr_PlayerLoggedIn,%0)
 #define IsPlayerLogging(%0) 					Bit1_Get(gr_PlayerLoggingIn,%0)
 #define IsPlayerAlive(%0) 						Bit1_Get(gr_PlayerAlive, %0)
-#define IsPlayerSafeBreaking(%0)				Bit1_Get( gr_SafeBreaking, playerid )
+#define IsPlayerSafeBreaking(%0)				Bit1_Get( gr_SafeBreaking, playerid)
 #define IsPlayerReconing(%0) 					Bit4_Get(gr_SpecateId, %0)
 
 // Limits - https://www.open.mp/docs/scripting/resources/limits

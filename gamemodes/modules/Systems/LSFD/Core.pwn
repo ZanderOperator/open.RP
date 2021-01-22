@@ -795,10 +795,10 @@ CMD:recover(playerid, params[])
 
     va_SendClientMessage(giveplayerid, COLOR_RED, "[!] Bolnicar %s vas je izlijecio i vise niste u post death stanju!",
         GetName(playerid)
-    );
+   );
     va_SendClientMessage(playerid, COLOR_RED, "[!] Izlijecili ste %s i on vise nije u post death stanju!",
         GetName(giveplayerid)
-    );
+   );
     return 1;
 }
 

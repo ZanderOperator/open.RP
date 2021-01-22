@@ -16,7 +16,7 @@
 */
 stock SaveAdminConnectionTime(playerid)
 {
-	if(!PlayerInfo[playerid][pAdmin] && !PlayerInfo[playerid][pHelper] )
+	if(!PlayerInfo[playerid][pAdmin] && !PlayerInfo[playerid][pHelper])
 		return 1;
 
 	new Cache:result;
@@ -41,7 +41,7 @@ stock SaveAdminConnectionTime(playerid)
 		mysql_fquery(g_SQL, "INSERT INTO stats_admins (sqlid, date, times) VALUES ('%d',CURDATE(),'%d')", 
 			PlayerInfo[playerid][pSQLID],
 			ExpInfo[playerid][eMonthPayDays]
-		 );
+		);
 	}
 	cache_delete(result);
 	return 1;
@@ -49,7 +49,7 @@ stock SaveAdminConnectionTime(playerid)
 
 stock static GetAdminConnectionTime(playerid, giveplayerid)
 {
-	if(giveplayerid == INVALID_PLAYER_ID ) return SendClientMessage(playerid, COLOR_RED, "Nevaljan unos playerid!");
+	if(giveplayerid == INVALID_PLAYER_ID) return SendClientMessage(playerid, COLOR_RED, "Nevaljan unos playerid!");
 	va_SendClientMessage(playerid, COLOR_RED, "[!] Game Admin spent %d hours of gameplay on server this month.",  
 		ExpInfo[playerid][eMonthPayDays]
 	);
@@ -107,7 +107,7 @@ CMD:admactivity(playerid, params[])
 		
 	new
 		giveplayerid;
-	if(sscanf( params, "u", giveplayerid )) return SendClientMessage(playerid, COLOR_RED, "[?]: /admactivity [dio imena/playerid]");
+	if(sscanf( params, "u", giveplayerid)) return SendClientMessage(playerid, COLOR_RED, "[?]: /admactivity [dio imena/playerid]");
 	GetAdminConnectionTime(playerid, giveplayerid);
 	return 1;
 }
@@ -118,7 +118,7 @@ CMD:admactivityex(playerid, params[])
 		
 	new
 		sqlid;
-	if(sscanf( params, "s[24]", sqlid )) return SendClientMessage(playerid, COLOR_RED, "[?]: /admactivityex [sqlid]");
+	if(sscanf( params, "s[24]", sqlid)) return SendClientMessage(playerid, COLOR_RED, "[?]: /admactivityex [sqlid]");
 	GetAdminConnectionTimeEx(playerid, sqlid);
 	return 1;
 }

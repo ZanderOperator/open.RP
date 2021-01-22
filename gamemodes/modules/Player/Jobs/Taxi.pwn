@@ -66,7 +66,7 @@ LoadPlayerTaxiStats(playerid)
         "LoadingPlayerSavings", 
         "i", 
         playerid
-    );
+   );
     return 1;
 }
 
@@ -78,7 +78,7 @@ Public: LoadingPlayerTaxiStats(playerid)
             "INSERT INTO player_taxi(sqlid, taxiPoints, taxiVoted) \n\
                 VALUES('%d', '0', '0')",
             PlayerInfo[playerid][pSQLID]
-        );
+       );
         return 1;
     }
     cache_get_value_name_int(0, "taxiPoints"	, TaxiInfo[playerid][pTaxiPoints]);
@@ -100,7 +100,7 @@ SavePlayerTaxiStats(playerid)
         TaxiInfo[playerid][pTaxiPoints],
         TaxiInfo[playerid][pTaxiVoted],
         PlayerInfo[playerid][pSQLID]
-    );
+   );
     return 1;
 }
 
@@ -131,7 +131,7 @@ Player_TaxiVoted(playerid)
 
 IsATaxi(model)
 {
-    if(model == 420 || model == 438 )
+    if(model == 420 || model == 438)
 		return (true);
 	return (false);
 }
@@ -346,7 +346,7 @@ hook OnPlayerStateChange(playerid, newstate, oldstate)
 	{
 		if(IsATaxi(GetVehicleModel(GetPlayerVehicleID(playerid)))) 
 		{
-			if(PlayerJob[playerid][pJob] == JOB_TAXI ) 
+			if(PlayerJob[playerid][pJob] == JOB_TAXI) 
 			{
 				if(TaxiData[playerid][eTaxiDuty] == true)
 					return CreateTaximeter(playerid, true);
@@ -459,7 +459,7 @@ CMD:taxi(playerid, params[])
 		new passanger_id, destination[32], Float: X, Float: Y, Float: Z,
 			buffer_l[32], buffer_p[MAX_PLAYER_NAME], buffer_t[MAX_PLAYER_NAME], buffer_f[12];
 		
-        if(PlayerJob[playerid][pFreeWorks] < 1 ) 
+        if(PlayerJob[playerid][pFreeWorks] < 1) 
 			return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne mozes vise raditi!");
 			
     	if(TaxiData[playerid][eTaxiDuty] == false) 
@@ -493,7 +493,7 @@ CMD:taxi(playerid, params[])
 		format(buffer_t, sizeof(buffer_t), "Taxist:_%s", GetName(playerid));
 		format(buffer_f, sizeof(buffer_f), "Fare:_~g~%s", FormatNumber(TaxiData[playerid][eTaxiFare]));
 		
-        format(string, sizeof(string), "** Taximetar je upaljen, spreman je za brojanje udaljenosti (( %s )).", GetName(playerid));
+        format(string, sizeof(string), "** Taximetar je upaljen, spreman je za brojanje udaljenosti (( %s)).", GetName(playerid));
 		ProxDetector(10.0, playerid, string, COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE);
 		
 		// format
@@ -539,7 +539,7 @@ CMD:taxi(playerid, params[])
 	if(strcmp(action,"setfare",true) == 0) {
 		new fare, buffer_f[12], meters;
 		
-        if(PlayerJob[playerid][pFreeWorks] < 1 ) 
+        if(PlayerJob[playerid][pFreeWorks] < 1) 
 			return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne mozes vise raditi!");
 			
     	if(TaxiData[playerid][eTaxiDuty] == false) 
@@ -552,11 +552,11 @@ CMD:taxi(playerid, params[])
 			return SendClientMessage( playerid, -1, "[KORISTI]: /taxi setfare [fare][meters]."), SendClientMessage(playerid, 0xAFAFAFAA, "=> Fare je koliko cete zaraditi dolara svakih '?' metara."), 
 				SendClientMessage(playerid, 0xAFAFAFAA, "=> 'Meters' je na koliko odvozenih metara ce te dobiti novac.");
 		
-		if(fare < DEFAULT_TAXI_FARE ) 
+		if(fare < DEFAULT_TAXI_FARE) 
 			return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "Fare ne smije biti manji od defualt postavljenog (%s = defualt).", DEFAULT_TAXI_FARE);		
-		if(meters < 500 ) 
+		if(meters < 500) 
 			return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Meters ne smije biti manji od 500(m).");	
-		if(fare > 10 ) 
+		if(fare > 10) 
 			return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Fare ne smije biti veci od 10$.");	
 				
 		TaxiData[playerid][eTaxiFare] = fare;
@@ -572,7 +572,7 @@ CMD:taxi(playerid, params[])
 			return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste u taksiju!");
 			
   		if(TaxiData[playerid][eTaxiDuty] == false) {
-			if(PlayerJob[playerid][pFreeWorks] < 1 ) 
+			if(PlayerJob[playerid][pFreeWorks] < 1) 
 				return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne mozes vise raditi!");
 			
 			// Vars
@@ -595,7 +595,7 @@ CMD:taxi(playerid, params[])
 			
 			// Msg
 			SendMessage(playerid, MESSAGE_TYPE_INFO,"Sada si na duznosti kao taxi vozac, postavite vasu cijenu na /taxi setfare!");
-			format(string, sizeof(string), "* Taxist %s je sada na duznosti. (( /jobduty ))", GetName(playerid, false));
+			format(string, sizeof(string), "* Taxist %s je sada na duznosti. (( /jobduty))", GetName(playerid, false));
 			SendClientMessageToAll(COLOR_YELLOW, string);
 		}
 		else if(TaxiData[playerid][eTaxiDuty] == true) {		

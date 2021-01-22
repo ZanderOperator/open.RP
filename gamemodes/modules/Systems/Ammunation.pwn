@@ -101,7 +101,7 @@ stock LoadAmmunation()
         "SELECT * FROM ammunation_weapons WHERE 1", 
         "OnAmmuWeaponsLoaded",
         ""
-    );
+   );
     return 1;
 }
 
@@ -115,7 +115,7 @@ static stock UpdateAmmuWeapon(slotid) // Updateanje ourzja u listi
         AmmuInfo[slotid][aiLicense],
         AmmuInfo[slotid][aiMaxBullets],
         AmmuInfo[slotid][aiSQLID]
-    );
+   );
     return 1;
 }
 
@@ -135,11 +135,11 @@ static stock InsertAmmuWeapon(slotid) // Dodavanje novog oruzja
             AmmuInfo[slotid][aiPrice],
             AmmuInfo[slotid][aiLicense],
             AmmuInfo[slotid][aiMaxBullets]
-        ), 
+       ), 
         "OnAmmuWeaponInsert", 
         "i", 
         slotid
-    );
+   );
     return 1;
 }
 
@@ -159,7 +159,7 @@ static stock PlayerAmmunationBuyTime(playerid, days)
         days,
         date,
         time
-    );
+   );
 }
 
 
@@ -240,14 +240,14 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                 AmmuInfo[index][aiName],
                 safe_bullets,
                 money
-            );
+           );
             #endif
 
             SendFormatMessage(playerid, MESSAGE_TYPE_SUCCESS, "Kupili ste %s sa %d metaka za %d$!",
                 AmmuInfo[index][aiName],
                 safe_bullets,
                 money
-            );
+           );
             return 1;
         }
     }
@@ -299,7 +299,7 @@ CMD:buyweapon(playerid, params[])
         va_SendClientMessage(playerid, COLOR_RED, "[!] Your purchase cannot be authorised until %s %s",
             date,
             time
-        );
+       );
     }
     return 1;
 }
@@ -337,7 +337,7 @@ CMD:ammunation(playerid, params[])
             price,
             license,
             maxbullets
-        );
+       );
     }
     else if(!strcmp(pick, "delete", true))
     {
@@ -380,7 +380,7 @@ CMD:ammunation(playerid, params[])
             price,
             license,
             maxbullets
-        );
+       );
     }
     else if(!strcmp(pick, "list", true))
     {
@@ -397,7 +397,7 @@ CMD:ammunation(playerid, params[])
                 AmmuInfo[i][aiPrice],
                 AmmuInfo[i][aiLicense],
                 AmmuInfo[i][aiMaxBullets]
-            );
+           );
         }
     }
     else if(!strcmp(pick, "rpt", true))

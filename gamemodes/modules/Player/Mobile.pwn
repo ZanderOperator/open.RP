@@ -340,7 +340,7 @@ GetMobileNumberFromSQL(sqlid)
     new
 		dest = 0;
 	
-	if(sqlid > 0 ) 
+	if(sqlid > 0) 
 	{
 	    new	Cache:result;
 		result = mysql_query(g_SQL, 
@@ -455,7 +455,7 @@ public OnPlayerMobileLoad(playerid)
 {
 	if(cache_num_rows())
 	{
-	    for( new i = 0; i < cache_num_rows(); i++ )
+	    for( new i = 0; i < cache_num_rows(); i++)
 		{
 			new
 				mobileType;
@@ -2008,7 +2008,7 @@ public PhoneAction(playerid, phaction)
 	else if(phaction == PHONE_HIDE)
 	{
 		if(IsPlayerAttachedObjectSlotUsed(playerid, MOBILE_OBJECT_SLOT))
-			RemovePlayerAttachedObject( playerid, MOBILE_OBJECT_SLOT );
+			RemovePlayerAttachedObject( playerid, MOBILE_OBJECT_SLOT);
 	    for(new i = 0; i < PHONE_TEXTDRAWS; i++)
 	    {
 	        PlayerTextDrawHide(playerid, PhoneTD[playerid][i]);
@@ -2159,10 +2159,10 @@ stock ResetMobileVariables(playerid)
 	ReloadSMS(playerid);
 
     Player_SetMobileOn(playerid, true);
-	Bit1_Set( gr_PlayerTakingSelfie , playerid, false );
-	Bit1_Set( gr_PlayerUsingPhonebooth		, playerid, false );
-	Bit8_Set( gr_RingingTime		, playerid, 0 );
-	Bit8_Set( gr_MobileContactSlot 	, playerid, 0 );
+	Bit1_Set( gr_PlayerTakingSelfie , playerid, false);
+	Bit1_Set( gr_PlayerUsingPhonebooth		, playerid, false);
+	Bit8_Set( gr_RingingTime		, playerid, 0);
+	Bit8_Set( gr_MobileContactSlot 	, playerid, 0);
 	return 1;
 }
 
@@ -2182,10 +2182,10 @@ stock static GetPlayerTalkingOnPhone(extradata = -1)
 {
 	new
 		playerid = -1;
-	if(extradata == -1 )
+	if(extradata == -1)
 		return -1;
 
-	if(CallingId[extradata] != 999 || PlayerCallPlayer[extradata] != INVALID_PLAYER_ID )
+	if(CallingId[extradata] != 999 || PlayerCallPlayer[extradata] != INVALID_PLAYER_ID)
 		playerid = extradata;
 	return playerid;
 }
@@ -2195,7 +2195,7 @@ stock IsAtGovornica(playerid)
     if(IsPlayerConnected(playerid))
 	{
         if(IsPlayerInRangeOfPoint(playerid,3.0,	1723.0785,-1721.2642,13.5469) 	||
-			IsPlayerInRangeOfPoint(playerid,3.0,	1808.5774,-1599.2645,13.5469 ) 	||
+			IsPlayerInRangeOfPoint(playerid,3.0,	1808.5774,-1599.2645,13.5469) 	||
 			IsPlayerInRangeOfPoint(playerid,3.0,	1804.7942,-1571.2401,13.4530) 	||
 			IsPlayerInRangeOfPoint(playerid,3.0,	2069.4841,-1766.6123,13.5627) 	||
 			IsPlayerInRangeOfPoint(playerid,3.0,	638.0044,-1227.5542,18.1385) 	||
@@ -2239,20 +2239,20 @@ stock SendSMS(playerid, recnumber, smsmessage[])
 	//if(PlayerInfo[playerid][pMobileMoney] <= 0) return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR,"Nemate dovoljno novaca na racunu!");
 
     new gplayerid = INVALID_PLAYER_ID;
-	if(recnumber == PlayerMobile[playerid][pMobileNumber] ) return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR,"Ne mozete poslati poruku sami sebi!");
+	if(recnumber == PlayerMobile[playerid][pMobileNumber]) return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR,"Ne mozete poslati poruku sami sebi!");
 	foreach(new i : Player)
 	{
-		if(PlayerMobile[i][pMobileNumber] ) 
+		if(PlayerMobile[i][pMobileNumber]) 
 		{
-			if(PlayerMobile[i][pMobileNumber] == recnumber ) 
+			if(PlayerMobile[i][pMobileNumber] == recnumber) 
 			{
 				gplayerid = i;
 				break;
 			}
 		}
 	}
-	if(gplayerid == INVALID_PLAYER_ID ) return SendMessage( playerid, MESSAGE_TYPE_ERROR, "** Linija je zauzeta (( Igrac je offline )) **");
-	if(GetPlayerSignal(gplayerid) < 1) return SendMessage( playerid, MESSAGE_TYPE_ERROR, "** Povratna poruka (( Primatelj nema signala )) **");
+	if(gplayerid == INVALID_PLAYER_ID) return SendMessage( playerid, MESSAGE_TYPE_ERROR, "** Linija je zauzeta (( Igrac je offline)) **");
+	if(GetPlayerSignal(gplayerid) < 1) return SendMessage( playerid, MESSAGE_TYPE_ERROR, "** Povratna poruka (( Primatelj nema signala)) **");
 
 	new
 		Float:mobPos[3];
@@ -2405,9 +2405,9 @@ stock PhoneCall(playerid, callnumber)
     new PTDTextString[12],
 		callstr[8];
 
-	if(!Bit1_Get( gr_PlayerUsingPhonebooth, playerid ))
+	if(!Bit1_Get( gr_PlayerUsingPhonebooth, playerid))
 	{
-		if(!PlayerMobile[playerid][pMobileNumber] ) return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR,"Nemate mobitel!");
+		if(!PlayerMobile[playerid][pMobileNumber]) return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR,"Nemate mobitel!");
 		if(GetPlayerSignal(playerid) < 1 && callnumber != 911) return SendMessage( playerid, MESSAGE_TYPE_ERROR, "** No signal **");
 	}
 	if(callnumber == 911) 
@@ -2417,26 +2417,26 @@ stock PhoneCall(playerid, callnumber)
 		SendClientMessage(playerid, COLOR_WHITE, "HINT: Sada mozete koristiti T da bi ste razgovarali na telefon, ukucajte /hangup da bi ste prekinuli poziv");
 		SendClientMessage(playerid, COLOR_ALLDEPT, "HITNA LINIJA: Za policiju recite 'police'{FF8282},a za Hitnu pomoc/Vatrogasce recite 'ambulance'");
 		CallingId[playerid] =  911;
-		Bit1_Set( gr_CanHangup, playerid, true );
+		Bit1_Set( gr_CanHangup, playerid, true);
 		return 1;
 	}
-	if(callnumber == 444 ) 
+	if(callnumber == 444) 
 	{ // Taxisti
 		SetPlayerSpecialAction(playerid, SPECIAL_ACTION_USECELLPHONE);
 		SendClientMessage(playerid, COLOR_RED, "Taxi Dispatcher: Pozdrav, recite nam vasu lokaciju?");
 		CallingId[playerid] =  444;
-		Bit1_Set( gr_CanHangup, playerid, true );
+		Bit1_Set( gr_CanHangup, playerid, true);
 		return 1;
 	}
-	if(callnumber == 555 ) 
+	if(callnumber == 555) 
 	{ // Mehanicari
 		SetPlayerSpecialAction(playerid, SPECIAL_ACTION_USECELLPHONE);
 		SendClientMessage(playerid, COLOR_RED, "Dispatcher: Pozdrav, recite tip vaseg kvara.?");
 		CallingId[playerid] =  555;
-		Bit1_Set( gr_CanHangup, playerid, true );
+		Bit1_Set( gr_CanHangup, playerid, true);
 		return 1;
 	}
-	if(callnumber == 32715 ) // Weapon Package Order
+	if(callnumber == 32715) // Weapon Package Order
 	{ 
 		if(IsACop(playerid) || IsASD(playerid) || IsFDMember(playerid))
 			return SendClientMessage(playerid, COLOR_RED, "[!] Ne smijete to koristiti!");
@@ -2445,22 +2445,22 @@ stock PhoneCall(playerid, callnumber)
 		SetPlayerSpecialAction(playerid, SPECIAL_ACTION_USECELLPHONE);
 		SendClientMessage(playerid, COLOR_YELLOW, "Maska 64361 kaze (mobitel): Los Santos Sanitary, izvolite?");
 		CallingId[playerid] =  32715;
-		Bit1_Set( gr_CanHangup, playerid, true );
+		Bit1_Set( gr_CanHangup, playerid, true);
 		return 1;
 	}
-	if(callnumber == 222 ) 
+	if(callnumber == 222) 
 	{
 		new
 			lineIndex = -1;
-		for( new i = 0; i < 10; i++ ) 
+		for( new i = 0; i < 10; i++) 
 		{
-			if(!NewsPhone[i][npNumber] ) 
+			if(!NewsPhone[i][npNumber]) 
 			{
 				lineIndex = i;
 				break;
 			}
 		}
-		if(lineIndex == -1 ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Sve su linije zauzte!");
+		if(lineIndex == -1) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Sve su linije zauzte!");
 		SetPlayerSpecialAction(playerid, SPECIAL_ACTION_USECELLPHONE);
 		SendClientMessage(playerid, COLOR_RED, "Tajnica: Trenutno cekate svoj red za eter!");
 		CallingId[playerid] = 222;
@@ -2470,21 +2470,21 @@ stock PhoneCall(playerid, callnumber)
 		return 1;
 	}
 	valstr(callstr, callnumber);
-	if(strlen(callstr) == 6 ) 
+	if(strlen(callstr) == 6) 
 	{
 		new
 			gplayerid = INVALID_PLAYER_ID;
 
-		if(callnumber == PlayerMobile[playerid][pMobileNumber] ) 
+		if(callnumber == PlayerMobile[playerid][pMobileNumber]) 
 			return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "Ne mozete zvati sami sebe!");
 		
 		foreach(new i : Player) 
 		{
-			if(PlayerMobile[i][pMobileNumber] == callnumber && callnumber != 0 ) 
+			if(PlayerMobile[i][pMobileNumber] == callnumber && callnumber != 0) 
 			{
 				gplayerid = i;
 
-				if(PlayerJail[gplayerid][pJailed] != 0 ) 
+				if(PlayerJail[gplayerid][pJailed] != 0) 
 					return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR,"Osoba se ne moze javiti.");
 				if(GetPlayerSignal(gplayerid) < 1 || IsPlayerReconing(gplayerid) || GetPlayerTalkingOnPhone(gplayerid) != -1 || !Player_MobileOn(gplayerid))
 				{
@@ -2499,20 +2499,20 @@ stock PhoneCall(playerid, callnumber)
 				// Var set
 				PlayerCallPlayer[playerid] = gplayerid;
 				PlayerCallPlayer[gplayerid] = playerid;
-				Bit8_Set( gr_RingingTime, gplayerid, 15 );
-				Bit1_Set( gr_CanHangup, playerid, true );
+				Bit8_Set( gr_RingingTime, gplayerid, 15);
+				Bit1_Set( gr_CanHangup, playerid, true);
 				PlayerMobileRingTimer[gplayerid] = repeat MobileRinging(gplayerid);
 				new tmpString[70];
 
-				if(Bit1_Get( gr_PlayerUsingPhonebooth, playerid ))
+				if(Bit1_Get( gr_PlayerUsingPhonebooth, playerid))
 				{
-					format(tmpString, 70, "* %s uzima slusalicu sa govornice i stavlja na uho.", GetName( playerid, true ));
+					format(tmpString, 70, "* %s uzima slusalicu sa govornice i stavlja na uho.", GetName( playerid, true));
 					ProxDetector(30.0, playerid, tmpString, COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE);
 					format(tmpString, 70, "Vas mobitel zvoni, ukucajte (/Pickup) Broj: Govornica");
 					SendClientMessage(gplayerid, COLOR_YELLOW, tmpString);
 				}
 				else {
-					format(tmpString, 70, "* %s vadi mobitel i stavlja ga na uho.", GetName( playerid, true ));
+					format(tmpString, 70, "* %s vadi mobitel i stavlja ga na uho.", GetName( playerid, true));
 					ProxDetector(30.0, playerid, tmpString, COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE);
 					format(tmpString, 70, "Vas mobitel zvoni, ukucajte (/Pickup) | Kontakt: %s", GetContactNumberNameEx(gplayerid, PlayerMobile[playerid][pMobileNumber]));
 					SendClientMessage(gplayerid, COLOR_YELLOW, tmpString);
@@ -2541,9 +2541,9 @@ stock PhoneCall(playerid, callnumber)
 
 stock CancelPlayerPhone(playerid)
 {
-	SetPlayerSpecialAction( playerid, SPECIAL_ACTION_STOPUSECELLPHONE );
+	SetPlayerSpecialAction( playerid, SPECIAL_ACTION_STOPUSECELLPHONE);
 	if(IsPlayerAttachedObjectSlotUsed(playerid, MOBILE_OBJECT_SLOT))
-		RemovePlayerAttachedObject( playerid, MOBILE_OBJECT_SLOT );
+		RemovePlayerAttachedObject( playerid, MOBILE_OBJECT_SLOT);
 	
 	HidePlayerMobile(playerid);
 	return 1;
@@ -2598,8 +2598,8 @@ stock PlayerHangup(playerid)
 	new giveplayerid = PlayerCallPlayer[playerid];
 	
 	// pozvatelj
-	Bit8_Set( gr_RingingTime, playerid, 0 );
-	Bit1_Set( gr_CanHangup, playerid, false );
+	Bit8_Set( gr_RingingTime, playerid, 0);
+	Bit1_Set( gr_CanHangup, playerid, false);
 	stop PlayerMobileRingTimer[playerid];
 	CallingId[playerid] 	=  999;
 	StartCallTimestamp[playerid] = 0;
@@ -2607,13 +2607,13 @@ stock PlayerHangup(playerid)
 	CancelPlayerPhone(playerid);
 	SendClientMessage( playerid, COLOR_YELLOW, "** Poziv zavrsen **");
 	PlayerCallPlayer[playerid] = INVALID_PLAYER_ID;
-	Bit1_Set( gr_PlayerUsingPhonebooth		, playerid, false );
+	Bit1_Set( gr_PlayerUsingPhonebooth		, playerid, false);
 
 	// osoba koju je nazvao
 	if(giveplayerid == INVALID_PLAYER_ID) return 1;
 	if(!IsPlayerConnected(giveplayerid)) return 1;
-	Bit8_Set( gr_RingingTime, giveplayerid, 0 );
-	Bit1_Set( gr_CanHangup, giveplayerid, false );
+	Bit8_Set( gr_RingingTime, giveplayerid, 0);
+	Bit1_Set( gr_CanHangup, giveplayerid, false);
 	stop PlayerMobileRingTimer[giveplayerid];
 	CallingId[giveplayerid] 	=  999;
 	StartCallTimestamp[giveplayerid] = 0;
@@ -2621,7 +2621,7 @@ stock PlayerHangup(playerid)
 	CancelPlayerPhone(giveplayerid);
 	SendClientMessage( giveplayerid, COLOR_YELLOW, "** Poziv zavrsen **");
 	PlayerCallPlayer[giveplayerid] = INVALID_PLAYER_ID;
-	Bit1_Set( gr_PlayerUsingPhonebooth	, giveplayerid, false );
+	Bit1_Set( gr_PlayerUsingPhonebooth	, giveplayerid, false);
 	return 1;
 }
 
@@ -2684,7 +2684,7 @@ hook function ResetPlayerVariables(playerid)
 
 hook OnPlayerText(playerid, text[])
 {
-	if(CallingId[playerid] != 999 )
+	if(CallingId[playerid] != 999)
 	{
 		if(strlen(text) > 100)
 			return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Tekst ne smije imati vise od 100 znakova!");
@@ -2693,7 +2693,7 @@ hook OnPlayerText(playerid, text[])
 			idx,
 			tmp[128];
 		tmp = strtok(text, idx);
-		if(CallingId[playerid] == 911 ) 
+		if(CallingId[playerid] == 911) 
 		{
 			if(!strlen(tmp)) {
 				SendClientMessage(playerid, COLOR_ALLDEPT, "HITNA LINIJA: Oprostite ne razumijem, da li trebate policiju ili hitnu pomoc?");
@@ -2740,7 +2740,7 @@ hook OnPlayerText(playerid, text[])
 			SendClientMessage(playerid, COLOR_WHITE, "HITNA LINIJA: Obavijestili smo sve jedinice.");
 			SendClientMessage(playerid, COLOR_WHITE, "Jedinica dolazi u sto kracem mogucem roku!");
 			SendRadioMessage(2, COLOR_LIGHTRED,"*__________ EMERGENCY CALL (911) __________*");
-			format(wanted, sizeof(wanted), "* Pozivatelj: %s || Locirani broj: %d",turner, ( !IsAtGovornica(playerid) ? PlayerMobile[playerid][pMobileNumber] : 0 ));
+			format(wanted, sizeof(wanted), "* Pozivatelj: %s || Locirani broj: %d",turner, ( !IsAtGovornica(playerid) ? PlayerMobile[playerid][pMobileNumber] : 0));
 			SendRadioMessage(2, COLOR_WHITE, wanted);
 			format(wanted, sizeof(wanted), "Incident: %s",text);
 			SendRadioMessage(2, COLOR_WHITE, wanted);
@@ -2771,7 +2771,7 @@ hook OnPlayerText(playerid, text[])
 			SendClientMessage(playerid, COLOR_WHITE, "Zahvaljujemo na prijavi zlocina.");
          	SendRadioMessage(1, 0x418BFBFF,"* ________ EMERGENCY CALL (911) __________ *");
 			SendRadioMessage(3, 0x418BFBFF,"* ________ EMERGENCY CALL (911) __________ *");
-			format(wanted, sizeof(wanted), "* Prijavio: %s || Locirani broj: %d", turner, ( !IsAtGovornica(playerid) ? PlayerMobile[playerid][pMobileNumber] : 0 ));
+			format(wanted, sizeof(wanted), "* Prijavio: %s || Locirani broj: %d", turner, ( !IsAtGovornica(playerid) ? PlayerMobile[playerid][pMobileNumber] : 0));
 			SendRadioMessage(1, COLOR_WHITE, wanted);
 			SendRadioMessage(3, COLOR_WHITE, wanted);
 			format(wanted, sizeof(wanted), "Stanje: %s",PlayerCrime[playerid][pAccusing]);
@@ -2801,7 +2801,7 @@ hook OnPlayerText(playerid, text[])
 			CallingId[playerid] =  913;
 			return 0;
 		}
-		if(CallingId[playerid] == 555 ) 
+		if(CallingId[playerid] == 555) 
 		{
 			if(!strlen(tmp)) return SendClientMessage(playerid, COLOR_YELLOW, "Dispatcher: Oprostite ali ne razumijem?"), 0;
 			strmid(PlayerCrime[playerid][pAccusing], text, 0, strlen(text), 255);
@@ -2809,7 +2809,7 @@ hook OnPlayerText(playerid, text[])
 			CallingId[playerid] = 556;
 			return 0;
 		}
-		if(CallingId[playerid] == 32715 ) 
+		if(CallingId[playerid] == 32715) 
 		{
 			if(!strlen(tmp))
 			{
@@ -2821,7 +2821,7 @@ hook OnPlayerText(playerid, text[])
                 new buffer[512],
 					motd[64];
 				format(buffer, sizeof(buffer), "{3C95C2}Weapon\t{3C95C2}Price per bullet\n");
-				for( new i = 0; i < MAX_LISTED_WEAPONS; i++ )
+				for( new i = 0; i < MAX_LISTED_WEAPONS; i++)
 				{
 					format(motd, sizeof(motd), "%s\t%s\n", show_WeaponList[i][wep_Name], FormatNumber(show_WeaponList[i][wep_Price]));
 					strcat(buffer, motd, sizeof(buffer));
@@ -2845,7 +2845,7 @@ hook OnPlayerText(playerid, text[])
 					motd[64];
 				
 				format(buffer, sizeof(buffer), "{3C95C2}Drugs\t{3C95C2}Price per gram\n");
-				for( new i = 1; i < sizeof(drugs); i++ )
+				for( new i = 1; i < sizeof(drugs); i++)
 				{
 					format(motd, sizeof(motd), "%s\t%s\n", drugs[i][dName], FormatNumber(drugs[i][dPricePG]));
 					strcat(buffer, motd, sizeof(buffer));
@@ -2868,7 +2868,7 @@ hook OnPlayerText(playerid, text[])
 				return 0;
 			}
 		}
-		if(CallingId[playerid] == 556 ) {
+		if(CallingId[playerid] == 556) {
 			if(!strlen(tmp)) return SendClientMessage(playerid, COLOR_YELLOW, "Dispatcher: Oprostite ali ne razumijem?"), 0;
 			new
 				wanted[37];
@@ -2885,7 +2885,7 @@ hook OnPlayerText(playerid, text[])
 			PlayerHangup(playerid);
 			return 0;
 		}
-		if(CallingId[playerid] == 444 ) {
+		if(CallingId[playerid] == 444) {
 			if(!strlen(tmp)) return SendClientMessage(playerid, COLOR_YELLOW, "Dispatcher: Oprostite ali ne razumijem?"), 0;
 			new dispatcher[37];
 			SendJobMessage(6, COLOR_YELLOW, "* ________ DISPATCHER CALL (444) __________ *");
@@ -2903,25 +2903,25 @@ hook OnPlayerText(playerid, text[])
 			gplayerid = CallingId[playerid],
 			mobileText[144];
 
-		if(Bit1_Get( gr_PlayerUsingPhonebooth, playerid ))
+		if(Bit1_Get( gr_PlayerUsingPhonebooth, playerid))
 			format( mobileText, 144, "%s %s(govornica): %s",
-				GetName( playerid, true ),
-				PrintAccent( playerid ),
+				GetName( playerid, true),
+				PrintAccent( playerid),
 				text
 			);
 		else
 			format( mobileText, 144, "%s %s(mobitel): %s",
-				GetName( playerid, true ),
-				PrintAccent( playerid ),
+				GetName( playerid, true),
+				PrintAccent( playerid),
 				text
 			);
 
 		RealProxDetector(5.0, playerid, mobileText,COLOR_FADE1,COLOR_FADE2,COLOR_FADE3,COLOR_FADE4,COLOR_FADE5);
 
-		if(Bit1_Get( gr_PlayerUsingPhonebooth, playerid ))
+		if(Bit1_Get( gr_PlayerUsingPhonebooth, playerid))
 		{
 			format( mobileText, 144, "%s(govornica): %s",
-				PrintAccent( playerid ),
+				PrintAccent( playerid),
 				text
 			);
 		}
@@ -2929,7 +2929,7 @@ hook OnPlayerText(playerid, text[])
 		{
 			format( mobileText, 144, "[%d] %s(mobitel): %s",
 				PlayerMobile[playerid][pMobileNumber],
-				PrintAccent( playerid ),
+				PrintAccent( playerid),
 				text
 			);
 		}
@@ -2944,12 +2944,12 @@ hook OnPlayerText(playerid, text[])
         }
 		format( mobileText, 144, "[%s] %s(mobitel): %s",
 			GetContactNumberNameEx(gplayerid, PlayerMobile[playerid][pMobileNumber]),
-			PrintAccent( playerid ),
+			PrintAccent( playerid),
 			text
 		);
 		
 		if(!SpeakerPhone[gplayerid])
-			SendClientMessage( gplayerid, COLOR_YELLOW, mobileText );
+			SendClientMessage( gplayerid, COLOR_YELLOW, mobileText);
 		else RealProxDetector(7.5, gplayerid, mobileText,COLOR_YELLOW,COLOR_YELLOW,COLOR_YELLOW,COLOR_YELLOW,COLOR_YELLOW);
 	}
 	return 0;
@@ -2982,17 +2982,17 @@ hook OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
 {
 	if((newkeys & KEY_ANALOG_RIGHT) && !(oldkeys & KEY_ANALOG_RIGHT))
 	{
-		if(Bit1_Get( gr_PlayerTakingSelfie, playerid ))
+		if(Bit1_Get( gr_PlayerTakingSelfie, playerid))
 		{
 			SelfieAngle[playerid] += 0.5;
-			if(SelfieAngle[playerid] >= 360.0 )
+			if(SelfieAngle[playerid] >= 360.0)
 				SelfieAngle[playerid] = 1.5;
 
 			new
 				Float:PlayerX, Float:PlayerY, Float:PlayerZ,
 				Float:CameraX, Float:CameraY, Float:CameraZ,
 				Float:Turn;
-			GetPlayerPos( playerid, PlayerX, PlayerY, PlayerZ );
+			GetPlayerPos( playerid, PlayerX, PlayerY, PlayerZ);
 
 			Turn = 180.0 - SelfieAngle[playerid];
 
@@ -3000,24 +3000,24 @@ hook OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
 			CameraY = PlayerY + ( SELFIE_DISTANCE * floatsin(Turn, degrees));
 			CameraZ = PlayerZ + SelfieHeight[playerid];
 
-			SetPlayerFacingAngle( playerid, 90.0 - SelfieAngle[playerid] );
-			InterpolateCameraPos( playerid, 	CameraX, CameraY, CameraZ, CameraX, CameraY, CameraZ, 100000, CAMERA_CUT );
-			InterpolateCameraLookAt( playerid, 	PlayerX, PlayerY, PlayerZ + 1.0, PlayerX, PlayerY, PlayerZ + SelfieHeight[playerid], 100000, CAMERA_CUT );
+			SetPlayerFacingAngle( playerid, 90.0 - SelfieAngle[playerid]);
+			InterpolateCameraPos( playerid, 	CameraX, CameraY, CameraZ, CameraX, CameraY, CameraZ, 100000, CAMERA_CUT);
+			InterpolateCameraLookAt( playerid, 	PlayerX, PlayerY, PlayerZ + 1.0, PlayerX, PlayerY, PlayerZ + SelfieHeight[playerid], 100000, CAMERA_CUT);
 		}
 	}
 	if((newkeys & KEY_ANALOG_LEFT) && !(oldkeys & KEY_ANALOG_LEFT))
 	{
-		if(Bit1_Get( gr_PlayerTakingSelfie, playerid ))
+		if(Bit1_Get( gr_PlayerTakingSelfie, playerid))
 		{
 			SelfieAngle[playerid] -= 0.5;
-			if(SelfieAngle[playerid] <= 0.0 )
+			if(SelfieAngle[playerid] <= 0.0)
 				SelfieAngle[playerid] = 0.0;
 
 			new
 				Float:PlayerX, Float:PlayerY, Float:PlayerZ,
 				Float:CameraX, Float:CameraY, Float:CameraZ,
 				Float:Turn;
-			GetPlayerPos( playerid, PlayerX, PlayerY, PlayerZ );
+			GetPlayerPos( playerid, PlayerX, PlayerY, PlayerZ);
 
 			Turn = 180.0 - SelfieAngle[playerid];
 
@@ -3025,24 +3025,24 @@ hook OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
 			CameraY = PlayerY + ( SELFIE_DISTANCE * floatsin(Turn, degrees));
 			CameraZ = PlayerZ + SelfieHeight[playerid];
 
-			SetPlayerFacingAngle( playerid, 90.0 - SelfieAngle[playerid] );
-			InterpolateCameraPos( playerid, 	CameraX, CameraY, CameraZ, CameraX, CameraY, CameraZ, 100000, CAMERA_CUT );
-			InterpolateCameraLookAt( playerid, 	PlayerX, PlayerY, PlayerZ + 1.0, PlayerX, PlayerY, PlayerZ + SelfieHeight[playerid], 100000, CAMERA_CUT );
+			SetPlayerFacingAngle( playerid, 90.0 - SelfieAngle[playerid]);
+			InterpolateCameraPos( playerid, 	CameraX, CameraY, CameraZ, CameraX, CameraY, CameraZ, 100000, CAMERA_CUT);
+			InterpolateCameraLookAt( playerid, 	PlayerX, PlayerY, PlayerZ + 1.0, PlayerX, PlayerY, PlayerZ + SelfieHeight[playerid], 100000, CAMERA_CUT);
 		}
 	}
 	if(PRESSED(KEY_JUMP))
 	{
-		if(Bit1_Get( gr_PlayerTakingSelfie, playerid ))
+		if(Bit1_Get( gr_PlayerTakingSelfie, playerid))
 		{
 			SelfieHeight[playerid] += 0.05;
-			if(SelfieHeight[playerid] >= 2.5 )
+			if(SelfieHeight[playerid] >= 2.5)
 				SelfieHeight[playerid] = SELFIE_HEIGHT;
 
 			new
 				Float:PlayerX, Float:PlayerY, Float:PlayerZ,
 				Float:CameraX, Float:CameraY, Float:CameraZ,
 				Float:Turn;
-			GetPlayerPos( playerid, PlayerX, PlayerY, PlayerZ );
+			GetPlayerPos( playerid, PlayerX, PlayerY, PlayerZ);
 
 			Turn = 180.0 - SelfieAngle[playerid];
 
@@ -3050,24 +3050,24 @@ hook OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
 			CameraY = PlayerY + ( SELFIE_DISTANCE * floatsin(Turn, degrees));
 			CameraZ = PlayerZ + SelfieHeight[playerid];
 
-			SetPlayerFacingAngle( playerid, 90.0 - SelfieAngle[playerid] );
-			InterpolateCameraPos( playerid, 	CameraX, CameraY, CameraZ, CameraX, CameraY, CameraZ, 100000, CAMERA_CUT );
-			InterpolateCameraLookAt( playerid, 	PlayerX, PlayerY, PlayerZ + 1.0, PlayerX, PlayerY, PlayerZ + SelfieHeight[playerid], 100000, CAMERA_CUT );
+			SetPlayerFacingAngle( playerid, 90.0 - SelfieAngle[playerid]);
+			InterpolateCameraPos( playerid, 	CameraX, CameraY, CameraZ, CameraX, CameraY, CameraZ, 100000, CAMERA_CUT);
+			InterpolateCameraLookAt( playerid, 	PlayerX, PlayerY, PlayerZ + 1.0, PlayerX, PlayerY, PlayerZ + SelfieHeight[playerid], 100000, CAMERA_CUT);
 		}
 	}
 	if(PRESSED(KEY_CROUCH))
 	{
-		if(Bit1_Get( gr_PlayerTakingSelfie, playerid ))
+		if(Bit1_Get( gr_PlayerTakingSelfie, playerid))
 		{
 			SelfieHeight[playerid] -= 0.05;
-			if(SelfieHeight[playerid] <= 0.0 )
+			if(SelfieHeight[playerid] <= 0.0)
 				SelfieHeight[playerid] = SELFIE_HEIGHT;
 
 			new
 				Float:PlayerX, Float:PlayerY, Float:PlayerZ,
 				Float:CameraX, Float:CameraY, Float:CameraZ,
 				Float:Turn;
-			GetPlayerPos( playerid, PlayerX, PlayerY, PlayerZ );
+			GetPlayerPos( playerid, PlayerX, PlayerY, PlayerZ);
 
 			Turn = 180.0 - SelfieAngle[playerid];
 
@@ -3075,9 +3075,9 @@ hook OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
 			CameraY = PlayerY + ( SELFIE_DISTANCE * floatsin(Turn, degrees));
 			CameraZ = PlayerZ + SelfieHeight[playerid];
 
-			SetPlayerFacingAngle( playerid, 90.0 - SelfieAngle[playerid] );
-			InterpolateCameraPos( playerid, 	CameraX, CameraY, CameraZ, CameraX, CameraY, CameraZ, 100000, CAMERA_CUT );
-			InterpolateCameraLookAt( playerid, 	PlayerX, PlayerY, PlayerZ + 1.0, PlayerX, PlayerY, PlayerZ + SelfieHeight[playerid], 100000, CAMERA_CUT );
+			SetPlayerFacingAngle( playerid, 90.0 - SelfieAngle[playerid]);
+			InterpolateCameraPos( playerid, 	CameraX, CameraY, CameraZ, CameraX, CameraY, CameraZ, 100000, CAMERA_CUT);
+			InterpolateCameraLookAt( playerid, 	PlayerX, PlayerY, PlayerZ + 1.0, PlayerX, PlayerY, PlayerZ + SelfieHeight[playerid], 100000, CAMERA_CUT);
 		}
 	}
 	return 1;
@@ -3096,7 +3096,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 	        if(!response) return 1;
 	        if(strlen(inputtext) < 2 || strlen(inputtext) > 63) return va_ShowPlayerDialog( playerid, DIALOG_MOBILE_SMS_TEXT, DIALOG_STYLE_INPUT, "MOBITEL - SMS", "** SMS text mora biti u rasponu od 2 do 63 slova! **\n\nUpisite poruku:", "Send", "Abort");
 			new pInputNumber = strval(DialogInputNumber[playerid]);
-			if(strlen(DialogInputNumber[playerid]) == 6 ) SendSMS(playerid, pInputNumber, inputtext);
+			if(strlen(DialogInputNumber[playerid]) == 6) SendSMS(playerid, pInputNumber, inputtext);
 			else SendFormatMessage(playerid, MESSAGE_TYPE_ERROR,"Niste unijeli broj mobitela!");
 	    }
 	    case DIALOG_MOBILE_CALL_CONTACT: {
@@ -3107,8 +3107,8 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 			PhoneCall(playerid, CallNo);
 	    }
 		case DIALOG_MOBILE_MAIN: {
-			if(!response ) return 1;
-			switch( listitem ) {
+			if(!response) return 1;
+			switch( listitem) {
 				case 0:
 				{
 				    if(!Player_MobileOn(playerid))
@@ -3127,12 +3127,12 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
       					return SendMessage(playerid, MESSAGE_TYPE_ERROR, "VaS mobitel je trenutno iskljucen!");
 
 
-					if(Bit1_Get( gr_MobileSpeaker, playerid )) {
-						GameTextForPlayer( playerid, "~r~Zvucnik iskljucen!", 1000, 1 );
-						Bit1_Set( gr_MobileSpeaker, playerid, false );
+					if(Bit1_Get( gr_MobileSpeaker, playerid)) {
+						GameTextForPlayer( playerid, "~r~Zvucnik iskljucen!", 1000, 1);
+						Bit1_Set( gr_MobileSpeaker, playerid, false);
 					} else {
-						GameTextForPlayer( playerid, "~g~Zvucnik ukljucen!", 1000, 1 );
-						Bit1_Set( gr_MobileSpeaker, playerid, true );
+						GameTextForPlayer( playerid, "~g~Zvucnik ukljucen!", 1000, 1);
+						Bit1_Set( gr_MobileSpeaker, playerid, true);
 					}
 				}
 				case 2:
@@ -3152,10 +3152,10 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 		    {
 			    new
 					tmpString[52];
-				if(Bit1_Get( gr_MobileSpeaker, playerid ))
-					format( tmpString, sizeof( tmpString ), "Stanje racuna\nZvucnik: "COL_GREEN"On\nPozadina");
+				if(Bit1_Get( gr_MobileSpeaker, playerid))
+					format( tmpString, sizeof( tmpString), "Stanje racuna\nZvucnik: "COL_GREEN"On\nPozadina");
 				else
-					format( tmpString, sizeof( tmpString ), "Stanje racuna\nZvucnik: "COL_RED"Off\nPozadina");
+					format( tmpString, sizeof( tmpString), "Stanje racuna\nZvucnik: "COL_RED"Off\nPozadina");
 				return ShowPlayerDialog( playerid, DIALOG_MOBILE_MAIN, DIALOG_STYLE_LIST, "MOBITEL - MENU", tmpString, "Choose", "Abort");
 			}
 			if(listitem == 0) PlayerMobile[playerid][pPhoneBG] = -1263225696;
@@ -3175,8 +3175,8 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 		}
 		case DIALOG_MOBILE_CONTACTS_MAIN: 
 		{
-			if(!response ) return 1;
-			switch( listitem ) 
+			if(!response) return 1;
+			switch( listitem) 
 			{
 				case 0: 
 				{
@@ -3239,9 +3239,9 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 				{
 				    new
 						slotid = ContactEditing[playerid];
-				    if(0 <= ContactEditing[playerid] <= 9 ) {
+				    if(0 <= ContactEditing[playerid] <= 9) {
 				        if(PlayerContactNumber[playerid][slotid] == 0) return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR,"Slot u imeniku je slobodan!");
-						Bit8_Set( gr_MobileContactSlot, playerid, ContactEditing[playerid] );
+						Bit8_Set( gr_MobileContactSlot, playerid, ContactEditing[playerid]);
 						ShowPlayerDialog( playerid, DIALOG_MOBILE_EDITNAME, DIALOG_STYLE_INPUT, "MOBITEL - KONTAKTI UREDJIVANJE", "Unesite naziv slota:", "Input", "Abort");
 					}
 				}
@@ -3250,13 +3250,13 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 		}
 		case DIALOG_MOBILE_ADDSLOT: 
 		{
-			if(!IsNumeric(inputtext) && response ) return ShowPlayerDialog( playerid, DIALOG_MOBILE_ADDSLOT, DIALOG_STYLE_INPUT, "MOBILE - KONTAKTI DODAVANJE", "Unesite slot u koji zelite dodati kontakt:\n"COL_RED"Unos mora biti u brojevima!", "Input", "Abort");
+			if(!IsNumeric(inputtext) && response) return ShowPlayerDialog( playerid, DIALOG_MOBILE_ADDSLOT, DIALOG_STYLE_INPUT, "MOBILE - KONTAKTI DODAVANJE", "Unesite slot u koji zelite dodati kontakt:\n"COL_RED"Unos mora biti u brojevima!", "Input", "Abort");
 			
-			new slotid = strval( inputtext );
-			if(1 <= slotid <= MAX_MOBILE_CONTACTS ) 
+			new slotid = strval( inputtext);
+			if(1 <= slotid <= MAX_MOBILE_CONTACTS) 
 			{
-				if(PlayerContactNumber[playerid][(slotid-1)] != 0 ) SendFormatMessage(playerid, MESSAGE_TYPE_ERROR,"Slot je popunjen, ako nastavite onda cete obrisati postojece podatke!");
-				Bit8_Set( gr_MobileContactSlot, playerid, slotid-1 );
+				if(PlayerContactNumber[playerid][(slotid-1)] != 0) SendFormatMessage(playerid, MESSAGE_TYPE_ERROR,"Slot je popunjen, ako nastavite onda cete obrisati postojece podatke!");
+				Bit8_Set( gr_MobileContactSlot, playerid, slotid-1);
 				ShowPlayerDialog( playerid, DIALOG_MOBILE_ADDNAME, DIALOG_STYLE_INPUT, "MOBILE - KONTAKTI DODAVANJE", "Unesite naziv kontakta:", "Input", "Abort");
 			} 
 			else 
@@ -3267,9 +3267,9 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 		}
 		case DIALOG_MOBILE_ADDNAME: 
 		{
-			if(1 <= strlen( inputtext ) <= MAX_CONTACT_LEN )
+			if(1 <= strlen( inputtext) <= MAX_CONTACT_LEN)
 			{
-				format( PlayerContactName[playerid][Bit8_Get( gr_MobileContactSlot, playerid )], MAX_CONTACT_LEN, inputtext );
+				format( PlayerContactName[playerid][Bit8_Get( gr_MobileContactSlot, playerid)], MAX_CONTACT_LEN, inputtext);
 				ShowPlayerDialog( playerid, DIALOG_MOBILE_ADDNUM, DIALOG_STYLE_INPUT, "MOBILE - KONTAKTI DODAVANJE", "Unesite telefonski broj u slot:", "Input", "Abort");
 			}
 			else
@@ -3281,11 +3281,11 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 		case DIALOG_MOBILE_ADDNUM:
 		{
 
-			if(!response ) return 1;
+			if(!response) return 1;
 			if(isnull(inputtext)) return ShowPlayerDialog( playerid, DIALOG_MOBILE_ADDNUM, DIALOG_STYLE_INPUT, "MOBILE - KONTAKTI UNOS", "Unesite telefonski broj u slot:", "Input", "Abort");
 
 			new
-				slotid = Bit8_Get( gr_MobileContactSlot, playerid );
+				slotid = Bit8_Get( gr_MobileContactSlot, playerid);
 			PlayerContactNumber[playerid][slotid] = strval(inputtext);
 			SendInfoMessage(playerid, "Uspjesno ste dodali kontakt.");
 			SetContactVars(playerid);
@@ -3313,8 +3313,8 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 		case DIALOG_MOBILE_EDITSLOT:
 		{
 			new slotid = ContactEditing[playerid];
-			if(0 <= slotid <= 9 ) {
-				Bit8_Set( gr_MobileContactSlot, playerid, slotid );
+			if(0 <= slotid <= 9) {
+				Bit8_Set( gr_MobileContactSlot, playerid, slotid);
 				ShowPlayerDialog( playerid, DIALOG_MOBILE_EDITNAME, DIALOG_STYLE_INPUT, "MOBITEL - KONTAKTI UREDJIVANJE", "Unesite naziv slota:", "Input", "Abort");
 			} else ShowPlayerDialog( playerid, DIALOG_MOBILE_EDITSLOT, DIALOG_STYLE_INPUT, "MOBILE - KONTAKTI UREDJIVANJE", "Unesite slot koji zelite urediti:", "Input", "Abort");
 			return 1;
@@ -3323,7 +3323,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 		{
 			if(isnull(inputtext)) return ShowPlayerDialog( playerid, DIALOG_MOBILE_EDITNAME, DIALOG_STYLE_INPUT, "MOBITEL - KONTAKTI UREDJIVANJE", "Unesite naziv slota:", "Input", "Abort");
 
-			format( PlayerContactName[playerid][Bit8_Get( gr_MobileContactSlot, playerid )], MAX_CONTACT_LEN, inputtext );
+			format( PlayerContactName[playerid][Bit8_Get( gr_MobileContactSlot, playerid)], MAX_CONTACT_LEN, inputtext);
 			ShowPlayerDialog( playerid, DIALOG_MOBILE_EDITNUM, DIALOG_STYLE_INPUT, "MOBITEL - KONTAKTI UREDJIVANJE", "Unesite telefonski broj:", "Input", "Abort");
 			return 1;
 		}
@@ -3332,7 +3332,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 			if(isnull(inputtext)) return ShowPlayerDialog( playerid, DIALOG_MOBILE_EDITNAME, DIALOG_STYLE_INPUT, "MOBITEL - KONTAKTI UREDJIVANJE", "Unesite naziv slota:", "Input", "Abort");
 
 			new
-				slotid = Bit8_Get( gr_MobileContactSlot, playerid );
+				slotid = Bit8_Get( gr_MobileContactSlot, playerid);
 			PlayerContactNumber[playerid][slotid] = strval(inputtext);
 			SetContactVars(playerid);
 			SavePlayerContact(playerid, slotid);
@@ -3349,15 +3349,15 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 		}
 		case DIALOG_MOBILE_CONTACTS: 
 		{
-			if(!response ) return 1;
-			Bit8_Set( gr_MobileContactSlot, playerid, listitem );
+			if(!response) return 1;
+			Bit8_Set( gr_MobileContactSlot, playerid, listitem);
 			ShowPlayerDialog( playerid, DIALOG_MOBILE_CONTACTS_CALL, DIALOG_STYLE_MSGBOX, "MOBILE - KONTAKTI", "Zelite li nazvati trazenog kontakta?", "Call", "Abort");
 			return 1;
 		}
 		case DIALOG_MOBILE_CONTACTS_CALL: 
 		{
-			if(!response ) return 1;
-			new slotid = Bit8_Get( gr_MobileContactSlot, playerid );
+			if(!response) return 1;
+			new slotid = Bit8_Get( gr_MobileContactSlot, playerid);
 			PhoneCall(playerid, PlayerContactNumber[playerid][slotid]);
 			return 1;
 		}
@@ -3385,7 +3385,7 @@ hook OnPlayerUpdate(playerid)
 	}
 	if(IsPlayerInAnyVehicle(playerid))
 	{
-		if(GetPlayerState(playerid) == PLAYER_STATE_DRIVER )
+		if(GetPlayerState(playerid) == PLAYER_STATE_DRIVER)
 		{
 			if(Player_PhoneStatus(playerid) == PHONE_SHOW)
 			{
@@ -3416,7 +3416,7 @@ hook OnPlayerClickPlayerTD(playerid, PlayerText:playertextid)
 	{
 		CancelSelectTextDraw(playerid);
 		va_ShowPlayerDialog( playerid, DIALOG_MOBILE_MAIN, DIALOG_STYLE_LIST, "MOBITEL - MENU", "Stanje racuna\nZvucnik: %s\nPozadina", "Choose", "Abort",
-		Bit1_Get( gr_MobileSpeaker, playerid ) ? (""COL_GREEN"On") : (""COL_RED"Off")
+		Bit1_Get( gr_MobileSpeaker, playerid) ? (""COL_GREEN"On") : (""COL_RED"Off")
 		);
 	}
 	else if(playertextid == PhoneTD[playerid][23] && PlayerTextDrawCreated[playerid][23] == 1) //SMS
@@ -3454,14 +3454,14 @@ hook OnPlayerClickPlayerTD(playerid, PlayerText:playertextid)
 		CancelSelectTextDraw(playerid);
 		PhoneAction(playerid, PHONE_NEXT);
 
-		if(!Bit1_Get( gr_PlayerTakingSelfie, playerid ))
+		if(!Bit1_Get( gr_PlayerTakingSelfie, playerid))
 		{
-			TogglePlayerControllable( playerid, false );
+			TogglePlayerControllable( playerid, false);
 			new
 				Float:PlayerX, Float:PlayerY, Float:PlayerZ,
 				Float:CameraX, Float:CameraY, Float:CameraZ,
 				Float:Turn;
-			GetPlayerPos( playerid, PlayerX, PlayerY, PlayerZ );
+			GetPlayerPos( playerid, PlayerX, PlayerY, PlayerZ);
 
 			SelfieAngle[playerid] = 1.25;
 			SelfieHeight[playerid] = SELFIE_HEIGHT;
@@ -3472,22 +3472,22 @@ hook OnPlayerClickPlayerTD(playerid, PlayerText:playertextid)
 			CameraY = PlayerY + ( SELFIE_DISTANCE * floatsin(Turn, degrees));
 			CameraZ = PlayerZ + SelfieHeight[playerid];
 
-			SetPlayerFacingAngle( playerid, 90.0 - SelfieAngle[playerid] );
-			InterpolateCameraPos( playerid, 	CameraX, CameraY, CameraZ, CameraX, CameraY, CameraZ, 100000, CAMERA_CUT );
-			InterpolateCameraLookAt( playerid, 	PlayerX, PlayerY, PlayerZ + 1.0, PlayerX, PlayerY, PlayerZ + SelfieHeight[playerid], 100000, CAMERA_CUT );
+			SetPlayerFacingAngle( playerid, 90.0 - SelfieAngle[playerid]);
+			InterpolateCameraPos( playerid, 	CameraX, CameraY, CameraZ, CameraX, CameraY, CameraZ, 100000, CAMERA_CUT);
+			InterpolateCameraLookAt( playerid, 	PlayerX, PlayerY, PlayerZ + 1.0, PlayerX, PlayerY, PlayerZ + SelfieHeight[playerid], 100000, CAMERA_CUT);
 
 			SendClientMessage(playerid, COLOR_SAMP_GREEN, "[TIP]: Koristite ~k~~GO_FORWARD~, ~k~~PED_DUCK~, ~k~~PED_JUMPING~, ~k~~VEHICLE_LOOKRIGHT~ za micanje kamere, a F8 za slikanje.");
 
-			ApplyAnimationEx( playerid, "PED", "gang_gunstand", 4.1, 1, 1, 1, 1, 1, 1, 0 );
-			Bit1_Set( gr_PlayerTakingSelfie, playerid, true );
+			ApplyAnimationEx( playerid, "PED", "gang_gunstand", 4.1, 1, 1, 1, 1, 1, 1, 0);
+			Bit1_Set( gr_PlayerTakingSelfie, playerid, true);
 		}
-		else if(Bit1_Get( gr_PlayerTakingSelfie, playerid ))
+		else if(Bit1_Get( gr_PlayerTakingSelfie, playerid))
 		{
-			TogglePlayerControllable( playerid, true );
-			SetCameraBehindPlayer( playerid );
-			ApplyAnimationEx( playerid, "PED", "ATM", 4.1, 0, 1, 1, 0, 1, 1, 0 );
+			TogglePlayerControllable( playerid, true);
+			SetCameraBehindPlayer( playerid);
+			ApplyAnimationEx( playerid, "PED", "ATM", 4.1, 0, 1, 1, 0, 1, 1, 0);
 			SelfieAngle[playerid] = 0.0;
-			Bit1_Set( gr_PlayerTakingSelfie, playerid, false );
+			Bit1_Set( gr_PlayerTakingSelfie, playerid, false);
 		}
 	}
 	else if(playertextid == PhoneTD[playerid][29] && PlayerTextDrawCreated[playerid][29] == 1) //Contacts
@@ -3707,23 +3707,23 @@ public OnPlayerContactsLoad(playerid)
 
 timer MobileRinging[15000](playerid)
 {
-	if(CallingId[playerid] == 999 ) {
+	if(CallingId[playerid] == 999) {
 		Bit8_Set( gr_RingingTime, playerid, 0);
 		stop PlayerMobileRingTimer[playerid];
 		return;
 	}
-	Bit8_Set( gr_RingingTime, playerid, Bit8_Get( gr_RingingTime, playerid ) - 1 );
+	Bit8_Set( gr_RingingTime, playerid, Bit8_Get( gr_RingingTime, playerid) - 1);
 
 	new
 		tmpString[70];
-	format( tmpString, 70, "** Mobitel bi zvonio u djepu od hlaca (( %s ))", GetName(playerid,true));
+	format( tmpString, 70, "** Mobitel bi zvonio u djepu od hlaca (( %s))", GetName(playerid,true));
 	ProxDetector(10.0, playerid, tmpString, COLOR_PURPLE, COLOR_PURPLE, COLOR_PURPLE, COLOR_PURPLE, COLOR_PURPLE);
 	static
 		Float:mobPos[3];
 	GetPlayerPos(playerid, mobPos[0], mobPos[1], mobPos[2]);
 	PlayerPlaySound(playerid, 20600, mobPos[0], mobPos[1], mobPos[2]);
 
-	if(Bit8_Get( gr_RingingTime, playerid ) <= 0 ) {
+	if(Bit8_Get( gr_RingingTime, playerid) <= 0) {
 		Bit8_Set( gr_RingingTime, playerid, 0);
 		new
 			gplayerid = CallingId[playerid];
@@ -3731,34 +3731,34 @@ timer MobileRinging[15000](playerid)
 		stop PlayerMobileRingTimer[gplayerid];
 
 		SendClientMessage( gplayerid, COLOR_RED, "** (mobitel) Ne javlja se.**");
-		SetPlayerSpecialAction( gplayerid, SPECIAL_ACTION_STOPUSECELLPHONE );
+		SetPlayerSpecialAction( gplayerid, SPECIAL_ACTION_STOPUSECELLPHONE);
 		CallingId[gplayerid] = 999;
 		if(IsPlayerAttachedObjectSlotUsed(gplayerid, MOBILE_OBJECT_SLOT))
-			RemovePlayerAttachedObject( gplayerid, MOBILE_OBJECT_SLOT );
+			RemovePlayerAttachedObject( gplayerid, MOBILE_OBJECT_SLOT);
 		return;
 	}
 }
 
-stock HexBoja( hexsstring[] )
+stock HexBoja( hexsstring[])
 {
-	if(hexsstring[0] == 0 ) return ( 0 );
+	if(hexsstring[0] == 0) return ( 0);
 
 	new hxcur = 1;
 	new hxres = 0;
-	for( new i = strlen( hexsstring ); i > 0; i -- )
+	for( new i = strlen( hexsstring); i > 0; i --)
 	{
-		if(hexsstring[i - 1] < 58 )
+		if(hexsstring[i - 1] < 58)
 		{
-			hxres = hxres + hxcur * ( hexsstring[i - 1] - 48 );
+			hxres = hxres + hxcur * ( hexsstring[i - 1] - 48);
 		}
 		else
 		{
-			hxres = hxres + hxcur * ( hexsstring[i - 1] - 65 + 10 );
+			hxres = hxres + hxcur * ( hexsstring[i - 1] - 65 + 10);
 			hxcur = hxcur * 16;
 		}
 	}
 
-	return ( hxres );
+	return ( hxres);
 }
 
 forward TowerSQLID(towerid);
@@ -3854,8 +3854,8 @@ CMD:ph(playerid, params[])
 
 CMD:phone(playerid, params[])
 {
-	if(PlayerDeath[playerid][pKilled] ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne mozes koristiti ovu komandu dok si u DeathModeu!");
-	if(!PlayerMobile[playerid][pMobileNumber] ) return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR,"Nemate mobitel!");
+	if(PlayerDeath[playerid][pKilled]) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne mozes koristiti ovu komandu dok si u DeathModeu!");
+	if(!PlayerMobile[playerid][pMobileNumber]) return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR,"Nemate mobitel!");
 	PhoneTDAction[playerid] = PTD_ACTION_HOME;
 	if(Player_PhoneStatus(playerid) == PHONE_SHOW || Player_PhoneStatus(playerid) == PHONE_NEXT)
 	{
@@ -3877,16 +3877,16 @@ CMD:phone(playerid, params[])
 CMD:pcall(playerid, params[])
 {
 	if(!IsAtGovornica(playerid)) 			return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR,"Nisi kod telefonske govornice!");
-	if(AC_GetPlayerMoney(playerid) < 10 ) 	return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR,"Nemate 10$!");
+	if(AC_GetPlayerMoney(playerid) < 10) 	return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR,"Nemate 10$!");
 	new
 		number;
 
-	if(sscanf( params, "i", number )) {
+	if(sscanf( params, "i", number)) {
 		SendClientMessage(playerid, COLOR_RED, "[?]: /pcall [broj]");
 		SendClientMessage(playerid, COLOR_GREY, "HITNI POZIVI: 555 (mehanicari), 911 (LSPD/LSFD), 444 (taxi)");
 		return 1;
 	}
-	Bit1_Set( gr_PlayerUsingPhonebooth	, playerid, true );
+	Bit1_Set( gr_PlayerUsingPhonebooth	, playerid, true);
 	PhoneCall(playerid, number);
 	PlayerToBudgetMoney(playerid, 10);
 	return 1;
@@ -3913,19 +3913,19 @@ CMD:call(playerid, params[])
 
 CMD:pickup(playerid, params[])
 {
-	if(IsPlayerAttachedObjectSlotUsed(playerid, 6 )) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Imate objekt u desnoj ruci!");
-	if(CallingId[playerid] != 999 ) return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR,"Vec ste u razogovu!");
+	if(IsPlayerAttachedObjectSlotUsed(playerid, 6)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Imate objekt u desnoj ruci!");
+	if(CallingId[playerid] != 999) return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR,"Vec ste u razogovu!");
 
 	foreach(new i : Player)
 	{
-		if(IsPlayerLogged( i )  && IsPlayerConnected(playerid))
+		if(IsPlayerLogged( i)  && IsPlayerConnected(playerid))
 		{
-			if(PlayerCallPlayer[i] == playerid )
+			if(PlayerCallPlayer[i] == playerid)
 			{
 				Bit8_Set( gr_RingingTime, playerid, 0);
 				stop PlayerMobileRingTimer[playerid];
 				stop PlayerMobileRingTimer[i];
-				Bit1_Set( gr_CanHangup, playerid, true );
+				Bit1_Set( gr_CanHangup, playerid, true);
 
 				CallingId[i] 			= playerid;
 				CallingId[playerid] 	=  i;
@@ -3945,9 +3945,9 @@ CMD:pickup(playerid, params[])
 
 CMD:sms(playerid, params[])
 {
-	if(PlayerDeath[playerid][pKilled] )
+	if(PlayerDeath[playerid][pKilled])
 		return SendClientMessage(playerid,COLOR_RED, "ERROR: Ne mozes koristiti ovu komandu dok imas opciju /die!");
-	if(!PlayerMobile[playerid][pMobileNumber] )
+	if(!PlayerMobile[playerid][pMobileNumber])
 		return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR,"Nemate mobitel!");
 	if(isnull(params)) return SendClientMessage(playerid, COLOR_RED, "[?]: /sms  [broj][tekst]");
 	if(strlen(params) > 110) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Prevelika poruka (max. 110 znakova)!");
@@ -3957,10 +3957,10 @@ CMD:sms(playerid, params[])
 		string[8],
 		smsText[110];
 
-	if(sscanf( params, "is[110]", number, smsText )) return SendClientMessage(playerid, COLOR_RED, "[?]: /sms [broj][text]");
-	if(strlen(smsText) < 2 || strlen(smsText) > 110 ) return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR,"SMS text mora biti u rasponu od 2 do 110 slova!");
+	if(sscanf( params, "is[110]", number, smsText)) return SendClientMessage(playerid, COLOR_RED, "[?]: /sms [broj][text]");
+	if(strlen(smsText) < 2 || strlen(smsText) > 110) return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR,"SMS text mora biti u rasponu od 2 do 110 slova!");
 	valstr(string, number);
-	if(strlen(string) == 6 )
+	if(strlen(string) == 6)
 	{
 		SendSMS(playerid, number, smsText);
 		va_SendClientMessage(playerid, COLOR_YELLOW, "SMS poslan! [%s]: %s", GetContactNumberNameEx(playerid, number), smsText);
@@ -3980,9 +3980,9 @@ CMD:sms(playerid, params[])
 
 CMD:speakerphone(playerid, params[])
 {
-	if(!PlayerMobile[playerid][pMobileNumber] )
+	if(!PlayerMobile[playerid][pMobileNumber])
 		return SendMessage(playerid, MESSAGE_TYPE_ERROR,"Nemate mobitel!");
-	if(CallingId[playerid] == 999 ) 
+	if(CallingId[playerid] == 999) 
 		return SendMessage(playerid, MESSAGE_TYPE_ERROR,"Niste u razgovoru!");
 	
 	new
@@ -4009,7 +4009,7 @@ CMD:speakerphone(playerid, params[])
 
 CMD:hangup(playerid, params[])
 {
-	if(!Bit1_Get( gr_CanHangup, playerid )) return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR,"Ne razgovaras na telefon.");
+	if(!Bit1_Get( gr_CanHangup, playerid)) return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR,"Ne razgovaras na telefon.");
 	if(PlayerVIP[playerid][pDonateRank] == 0)
 	{
 		if(StartCallTimestamp[playerid] != 0)

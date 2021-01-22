@@ -257,7 +257,7 @@ static stock BuyBlankInterior(playerid, house)
         HouseInfo[house][hExitY],
         HouseInfo[house][hExitZ],
         HouseInfo[house][hSQLID]
-    );
+   );
 
     DestroyFurnitureBlankIntTDs(playerid);
     PlayerToBudgetMoney(playerid, BlankInts[interior][iPrice]); // Novac ide u proracun
@@ -265,7 +265,7 @@ static stock BuyBlankInterior(playerid, house)
     SendFormatMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uspjesno ste kupili interijer %s za %d$!",
         BlankInts[interior][iName],
         BlankInts[interior][iPrice]
-    );
+   );
     DestroyAllFurnitureObjects(playerid, house);
     Storage_DeleteHouseRacks(playerid);
     SpawnPlayer(playerid);
@@ -325,7 +325,7 @@ UpdatePremiumHouseFurSlots(playerid, admin_name = -1, houseid)
     mysql_fquery(g_SQL, "UPDATE houses SET fur_slots = '%d' WHERE id = '%d'", 
         HouseInfo[houseid][hFurSlots], 
         HouseInfo[houseid][hSQLID]
-    );
+   );
 
     if(admin_name != -1)
         va_SendClientMessage(playerid, COLOR_RED, "[!] Game Admin %s adjusted your House Furniture Slots, now you have %d slots available.", GetName(admin_name, true), HouseInfo[houseid][hFurSlots]);
@@ -343,7 +343,7 @@ SetPlayerPremiumFurniture(playerid, houseid)
     mysql_fquery(g_SQL, "UPDATE houses SET fur_slots = '%d' WHERE id = '%d'", 
         HouseInfo[houseid][hFurSlots], 
         HouseInfo[houseid][hSQLID]
-    );
+   );
     return 1;
 }
 
@@ -449,12 +449,12 @@ static stock InsertFurnitureObject(houseid, index)
             HouseInfo[houseid][hFurColId][index][2],
             HouseInfo[houseid][hFurColId][index][3],
             HouseInfo[houseid][hFurColId][index][4]
-        ), 
+       ), 
         "OnFurnitureObjectCreates", 
         "ii", 
         houseid, 
         index
-    );
+   );
     return 1;
 }
 
@@ -474,7 +474,7 @@ stock LoadHouseFurnitureObjects(houseid)
         "OnFurnitureObjectsLoad", 
         "i", 
         houseid
-    );
+   );
     return 1;
 }
 
@@ -787,7 +787,7 @@ RotateHouseFurDoor(houseid, playerid)
     {
         if(HouseInfo[houseid][hFurDoor][i])
         {
-            if(IsPlayerInRangeOfPoint(playerid, 3.0, HouseInfo[houseid][hFurPosX][i], HouseInfo[houseid][hFurPosY][i], HouseInfo[houseid][hFurPosZ][i] ))
+            if(IsPlayerInRangeOfPoint(playerid, 3.0, HouseInfo[houseid][hFurPosX][i], HouseInfo[houseid][hFurPosY][i], HouseInfo[houseid][hFurPosZ][i]))
             {
                 SetFurnitureDoorRotation(houseid, i);
                 break;
@@ -813,7 +813,7 @@ static stock ShowPlayerTextureList(playerid)
             ObjectTextures[i][tModel],
             ObjectTextures[i][tTXDName],
             ObjectTextures[i][tName]
-        );
+       );
         strcat(texture_buffer, motd);
 
         if(ObjectTextures[i][tModel] == 1319)
@@ -844,7 +844,7 @@ static stock ShowSearchedTextureList(playerid, string[])
                 ObjectTextures[i][tModel],
                 ObjectTextures[i][tTXDName],
                 ObjectTextures[i][tName]
-            );
+           );
             strcat(texture_buffer, motd);
 
             if(ObjectTextures[i][tModel] == 1319)
@@ -876,7 +876,7 @@ static stock ShowModelSearchedTextureList(playerid, modelid)
                 ObjectTextures[i][tModel],
                 ObjectTextures[i][tTXDName],
                 ObjectTextures[i][tName]
-            );
+           );
             strcat(texture_buffer, motd);
 
             if(ObjectTextures[i][tModel] == 1319)
@@ -993,7 +993,7 @@ static stock CreateFurnitureObject(playerid, modelid, Float:x, Float:y, Float:z,
         modelid,
         price,
         index
-    );
+   );
     #endif
     PlayerPrwsObject[playerid] = INVALID_OBJECT_ID;
     PlayerPrwsIndex [playerid] = -1;
@@ -1121,7 +1121,7 @@ static stock SetFurnitureObjectPos(playerid, Float:x, Float:y, Float:z, Float:rx
         ry,
         rz,
         HouseInfo[houseid][hFurSQL][index]
-    );
+   );
 
     // TODO: repetitive code, helper function
     new colorid;
@@ -1165,7 +1165,7 @@ static stock SetFurnitureObjectTexture(playerid, slot, index, slotid)
         (slot+1),
         HouseInfo[houseid][hFurTxtId][slotid][slot],
         HouseInfo[houseid][hFurSQL][slotid]
-    );
+   );
 
     SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uspjesno ste postavili texturu na vas namjestaj.");
     return 1;
@@ -1195,7 +1195,7 @@ static stock SetFurnitureObjectColor(playerid, slot, index, slotid)
         (slot + 1),
         HouseInfo[houseid][hFurColId][slotid][slot],
         HouseInfo[houseid][hFurSQL][slotid]
-    );
+   );
     return 1;
 }
 
@@ -1284,7 +1284,7 @@ static stock DestroyAllFurnitureObjects(playerid, houseid)
     mysql_fquery(g_SQL, "UPDATE houses SET fur_slots = '%d' WHERE id = '%d'", 
         HouseInfo[houseid][hFurSlots], 
         HouseInfo[houseid][hSQLID]
-    );
+   );
     return 1;
 }
 
@@ -1320,7 +1320,7 @@ static stock SetFurnitureDoorRotation(houseid, index)
             HouseInfo[houseid][hFurRotX][index],
             HouseInfo[houseid][hFurRotY][index],
             rot
-        );
+       );
         HouseInfo[houseid][hFurDoorZ][index] = -1.0;
         return 1;
     }
@@ -1329,7 +1329,7 @@ static stock SetFurnitureDoorRotation(houseid, index)
         HouseInfo[houseid][hFurRotX][index],
         HouseInfo[houseid][hFurRotY][index],
         HouseInfo[houseid][hFurRotZ][index]
-    );
+   );
     HouseInfo[houseid][hFurDoorZ][index] = HouseInfo[houseid][hFurRotZ][index];
     return 1;
 }
@@ -2251,7 +2251,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                             ObjectTextures[i][tModel],
                             ObjectTextures[i][tTXDName],
                             ObjectTextures[i][tName]
-                        );
+                       );
                         strcat(texture_buffer, motd);
 
                         TextureDialogItem[playerid][dialogPos] = i;
@@ -2271,7 +2271,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                         format(motd, sizeof(motd), "%s%s\n",
                             ColorList[i][clEmbedCol],
                             ColorList[i][clName]
-                        );
+                       );
                         strcat(buffer, motd, sizeof(buffer));
                     }
                     ShowPlayerDialog(playerid, DIALOG_FURNITURE_COL_LIST, DIALOG_STYLE_LIST, "Furniture - Odabir boja", buffer, "Choose", "Abort");
@@ -2429,7 +2429,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                     format(motd, sizeof(motd), "%s%s\n",
                         ColorList[i][clEmbedCol],
                         ColorList[i][clName]
-                    );
+                   );
                     strcat(buffer, motd, sizeof(buffer));
                 }
 
@@ -2506,7 +2506,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                 (slot+1),
                 (slot+1),
                 HouseInfo[houseid][hFurSQL][edit_index]
-            );
+           );
 
             SetDynamicObjectMaterial(HouseInfo[houseid][hFurObjectid][edit_index], slot, -1, "none", "none", 0);
             SendFormatMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uspjesno ste obrisali teksturu i boju na Slotu %d za odabrani objekt.", slot);

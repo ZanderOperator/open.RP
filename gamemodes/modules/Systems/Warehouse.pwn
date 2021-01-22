@@ -41,7 +41,7 @@ enum // U coarp.amx
 
 enum whInfo
 {
-    whFactionSQLID, // SQL ID of Faction that warehouse belongs to (( FactionInfo[factionid][fID] ))
+    whFactionSQLID, // SQL ID of Faction that warehouse belongs to (( FactionInfo[factionid][fID]))
     Float:whEnter[3],
     Float:whExit[3],
     Float:whVault[3],
@@ -56,7 +56,7 @@ static WarehouseInfo[MAX_FACTIONS][whInfo];
 enum WH_WEAPON_INFO
 {
     whWeaponSQL,
-    whFactionSQLID, // SQL ID of Faction that weapon belongs to (( FactionInfo[factionid][fID] ))
+    whFactionSQLID, // SQL ID of Faction that weapon belongs to (( FactionInfo[factionid][fID]))
     whWeaponId,
     whAmmo
 }
@@ -131,7 +131,7 @@ stock LoadFactionWarehouse(factionid)
         "OnWarehouseLoaded", 
         "i", 
         factionid
-    );
+   );
 }
 
 Public:OnWarehouseLoaded(factionid)
@@ -169,7 +169,7 @@ stock LoadWarehouseWeapons(factid)
         "OnWarehouseWeaponsLoaded", 
         "i", 
         whid
-    );
+   );
 }
 
 Public:OnWarehouseWeaponsLoaded(whid)
@@ -177,7 +177,7 @@ Public:OnWarehouseWeaponsLoaded(whid)
     new rows = cache_num_rows();
     if(!rows) return 0;
 
-    for (new i = 0; i < rows; i++ )
+    for (new i = 0; i < rows; i++)
     {
         cache_get_value_name_int(i, "id"        , WarehouseWeapons[whid][i][whWeaponSQL]);
         cache_get_value_name_int(i, "fid"       , WarehouseWeapons[whid][i][whFactionSQLID]);
@@ -206,12 +206,12 @@ stock PutWeaponInWarehouse(playerid, weaponid, ammo)
             FactionInfo[fid][fID],
             weaponid,
             ammo
-        ), 
+       ), 
         "OnWarehouseWeaponInsert", 
         "ii", 
         whid, 
         wslot
-    );
+   );
 
     Iter_Add(WhWeapons[whid], wslot);
 
@@ -219,7 +219,7 @@ stock PutWeaponInWarehouse(playerid, weaponid, ammo)
         GetWeaponNameEx(weaponid), 
         ammo, 
         FactionInfo[fid][fName]
-    );
+   );
 
     #if defined MODULE_LOGS
     Log_Write("logfiles/warehouse_put.txt", "(%s) %s[SQL:%d] stored %s(%d) in Warehouse %s[SQL:%d].",
@@ -230,7 +230,7 @@ stock PutWeaponInWarehouse(playerid, weaponid, ammo)
         ammo,
         FactionInfo[fid][fName],
         FactionInfo[fid][fID]
-    );
+   );
     #endif
 
     return 1;
@@ -256,7 +256,7 @@ stock ListPlayerWarehouseWeapons(playerid, whid)
             (broken) ? ("\n") : (""),
             GetWeaponNameEx(WarehouseWeapons[whid][wslot][whWeaponId]), 
             WarehouseWeapons[whid][wslot][whAmmo]
-        );
+       );
        
         strcat(buffer, motd, sizeof(buffer));
         WeaponToList[playerid][counter] = wslot;
@@ -361,7 +361,7 @@ stock RemoveWeaponFromWarehouse(whid, weaponslot)
 {
     mysql_fquery(g_SQL, "DELETE FROM warehouse_weapons WHERE id = '%d'", 
         WarehouseWeapons[whid][weaponslot][whWeaponSQL]
-    );
+   );
 
     WarehouseWeapons[whid][weaponslot][whWeaponSQL] = -1;
     WarehouseWeapons[whid][weaponslot][whFactionSQLID] = -1;
@@ -378,7 +378,7 @@ stock RemoveWeaponsFromWarehouse(whid)
     {
         mysql_fquery(g_SQL, "DELETE FROM warehouse_weapons WHERE id = '%d'", 
             WarehouseWeapons[whid][weaponslot][whWeaponSQL]
-        );
+       );
 
         WarehouseWeapons[whid][weaponslot][whWeaponSQL] = -1;
         WarehouseWeapons[whid][weaponslot][whFactionSQLID] = -1;
@@ -394,7 +394,7 @@ stock UpdateWarehouseLock(wh)
     mysql_fquery(g_SQL, "UPDATE server_warehouses SET lock='%d' WHERE fid='%d'",
         WarehouseInfo[wh][whLocked],
         WarehouseInfo[wh][whFactionSQLID]
-    );
+   );
 
     return 1;
 }
@@ -404,7 +404,7 @@ stock UpdateWarehouseMoney(wh)
     mysql_fquery(g_SQL, "UPDATE server_warehouses SET money='%d' WHERE fid='%d'",
         WarehouseInfo[wh][whMoney],
         WarehouseInfo[wh][whFactionSQLID]
-    );
+   );
     return 1;
 }
 
@@ -419,7 +419,7 @@ stock MoveWarehouse(wh, Float:x, Float:y, Float:z)
         y,
         z,
         WarehouseInfo[wh][whFactionSQLID]
-    );
+   );
     return 1;
 }
 
@@ -458,7 +458,7 @@ stock AddWarehouse(wh, factionid, Float:x, Float:y, Float:z)
         WarehouseInfo[wh][whViwo],
         WarehouseInfo[wh][whLocked],
         WarehouseInfo[wh][whMoney]
-    );
+   );
     Iter_Add(Warehouses, wh);
     return 1;
 }
@@ -731,7 +731,7 @@ stock TransferWarehouseGoods(rwhid, vwhid)
         mysql_fquery(g_SQL, "UPDATE warehouse_weapons SET fid='%d' WHERE fid='%d'",
             FactionInfo[robberfid][fID],
             WarehouseInfo[vwhid][whFactionSQLID]
-        );
+       );
         foreach(new wslot: WhWeapons[vwhid])
         {
             
@@ -973,7 +973,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                 amount,
                 FactionInfo[fid][fName],
                 FactionInfo[fid][fID]
-            );
+           );
             #endif
         }
         case WAREHOUSE_MONEY_TAKE:
@@ -1004,7 +1004,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                 amount,
                 FactionInfo[fid][fName],
                 FactionInfo[fid][fID]
-            );
+           );
             #endif
         }
         case WAREHOUSE_TAKE_MENU:
@@ -1060,7 +1060,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                 "Uspjesno ste uzeli %s(%d) iz warehousea.", 
                 GetWeaponNameEx(weaponid), 
                 ammo
-            );
+           );
 
             format(string, sizeof(string), "* %s uzima %s iz skladista.", GetName(playerid, true), wname);
             SetPlayerChatBubble(playerid, string, COLOR_PURPLE, 20, 8000);
@@ -1079,7 +1079,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                 ammo,
                 FactionInfo[fid][fName],
                 FactionInfo[fid][fID]
-            );
+           );
             #endif
         }
     }

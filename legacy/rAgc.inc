@@ -9,7 +9,7 @@ playerid = the cheater
 weaponid = the weapon used
 ammo 	 = the ammo used
 hacktype 1 = weapon cheat 	   (spoofed weapon)
-hacktype 2 = ammo cheat   	   (spoofed ammo  )
+hacktype 2 = ammo cheat   	   (spoofed ammo )
 hacktype 3 = freeze ammo cheat (self explained)
 hacktype 4 = Rapid fire 	   (also super fast cbugging)
 -=-=-=-=-=-=-=-=-=-=
@@ -143,7 +143,7 @@ public OnPlayerWeaponShot(playerid, weaponid, hittype, hitid, Float:fX, Float:fY
 	rAgcTempWeap = GetPlayerWeapon(playerid);
 	rAgcTempAmmos= GetPlayerAmmo(playerid);
 
-	if(rAgc_Player[playerid][rAgcSecondTick] == 0 && rAgc_Player[playerid][rAgcFirstTick] ==0 )
+	if(rAgc_Player[playerid][rAgcSecondTick] == 0 && rAgc_Player[playerid][rAgcFirstTick] ==0)
 	{ //First call of the callback
 		rAgc_Player[playerid][rAgcFirstTick] = GetTickCount(); 
 		rAgc_Player[playerid][rAgcFirstShot] = rAgcTempAmmos;
@@ -155,7 +155,7 @@ public OnPlayerWeaponShot(playerid, weaponid, hittype, hitid, Float:fX, Float:fY
 		rAgc_Player[playerid][rAgcSecondShot] = rAgcTempAmmos;
 	} 
 	
-	else if(rAgc_Player[playerid][rAgcFirstTick] != 0 && rAgc_Player[playerid][rAgcSecondTick] != 0 ) 
+	else if(rAgc_Player[playerid][rAgcFirstTick] != 0 && rAgc_Player[playerid][rAgcSecondTick] != 0) 
 	{ //After the second call of the callback
 		if(rAgc_Player[playerid][rAgcSecondTick] - rAgc_Player[playerid][rAgcFirstTick] < RAGC_MAX_RAPID_TIME_NORMAL && rAgc_Player[playerid][rAgcConstWep] == rAgcTempWeap && !rAgc_IsWepRapid(rAgcTempWeap) && GetPlayerState(playerid) != 3)
 		{//Anti rapid fire for slow weapons
@@ -380,10 +380,10 @@ public rAgc_ProtHandler(handleid, handletype)
 }
 
 static rAgc_IsWeaponAmmoable(Weapon)
-	return ( 22 <= Weapon <= 43 || 16 <= Weapon <= 18  );
+	return ( 22 <= Weapon <= 43 || 16 <= Weapon <= 18 );
 
 static rAgc_IsWeaponValid(Weapon)
-	return ( 0 <= Weapon <= 18 || 22 <= Weapon <= 46   );
+	return ( 0 <= Weapon <= 18 || 22 <= Weapon <= 46  );
 
 static rAgc_IsWeaponSys(Weapon)
 	return (Weapon == 46 || Weapon == 0 || Weapon == 40);

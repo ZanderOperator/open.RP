@@ -690,8 +690,8 @@ public ActPutPlayerInVehicle(playerid, vehicleid, seatid)
 	if(ActVehicle[vehicleid][ActETPBugFix]) ClearAnimations(ActVehicle[vehicleid][ActVehEnterer]);
 	ActPlayer[playerid][ActProtectFalse] = true;
 
-	if(seatid != 0 ) ActPlayer[playerid][ActOVeh] = vehicleid;
-	if(seatid == 0 )  ActPlayer[playerid][ActRealCar] = vehicleid;
+	if(seatid != 0) ActPlayer[playerid][ActOVeh] = vehicleid;
+	if(seatid == 0)  ActPlayer[playerid][ActRealCar] = vehicleid;
 
 	if(GetPlayerState(playerid) == 2 || GetPlayerState(playerid) == 3)
 	{

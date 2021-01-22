@@ -80,7 +80,7 @@ CheckAccountsForInactivity()
 	{
 		new rows;
 		cache_get_row_count(rows);
-		if(rows == 0 ) 
+		if(rows == 0) 
 			return Log_Write("logfiles/inactive_players.txt", "(%s) - Accounts for property/job removal due to inactivity currently don't exist.", ReturnDate());
 			
 		new 
@@ -107,7 +107,7 @@ CheckAccountsForInactivity()
 			
 		Data = cache_save();
 			
-		for( new i=0; i < rows; i++ ) 
+		for( new i=0; i < rows; i++) 
 		{
 			d = false;
 			donaterank = 0;

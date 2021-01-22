@@ -180,11 +180,11 @@ static LoadIllegalGarages()
 		if(!cache_num_rows()) 
 			return print("MySQL Report: No Illegal Garages exist to load.");
 		
-		for( new row = 0; row < cache_num_rows(); row++ ) 
+		for( new row = 0; row < cache_num_rows(); row++) 
 		{
 			cache_get_value_name_int(row, 		"id"		, IllegalGarage[row][igSQLID]);
 			cache_get_value_name_int(row, 		"owner"		, IllegalGarage[row][igOwner]);
-			cache_get_value_name(row, 			"name"		, IllegalGarage[row][igName], 32 );
+			cache_get_value_name(row, 			"name"		, IllegalGarage[row][igName], 32);
 			cache_get_value_name_int(row, 		"jackedcars", IllegalGarage[row][igCarsJacked]);
 			cache_get_value_name_int(row, 		"wantedlevel", IllegalGarage[row][igWantedLevel]);
 			cache_get_value_name_float(row, 	"3dtextX"	, IllegalGarage[row][ig3dTextPos][0]);
@@ -210,7 +210,7 @@ static CheckGarageWantedLevel(garage, bool:save=false)
 	new
 		tmpStars[5];
 	tmpStars = "None";
-	switch( IllegalGarage[garage][igCarsJacked] ) 
+	switch( IllegalGarage[garage][igCarsJacked]) 
 	{
 		case 55 .. 95:   
 		{ 
@@ -228,7 +228,7 @@ static CheckGarageWantedLevel(garage, bool:save=false)
 			tmpStars = "***"; 
 		}
 	}
-	if(!save ) 
+	if(!save) 
 	{
 		mysql_fquery(g_SQL, "UPDATE illegal_garages SET wanted = '%d' WHERE id = '%d'", 
 			IllegalGarage[garage][igWantedLevel], 
@@ -269,9 +269,9 @@ static bool:IsVehicleOnList(garage, index)
 	
 	new
 		bool:value = false;
-	for( new i=0; i < 6; i++ ) 
+	for( new i=0; i < 6; i++) 
 	{
-		if(IllegalGarage[garage][igVehicleIds][i] == index ) 
+		if(IllegalGarage[garage][igVehicleIds][i] == index) 
 		{
 			value = true;
 			break;
@@ -302,12 +302,12 @@ static GetVehiclesForIllegalGarages(garage)
 	new 
 		vehid, 
 		carid;
-	for( new i = 0; i < 6; i++ ) 
+	for( new i = 0; i < 6; i++) 
 	{
 		CARID_GET:
 		vehid = Vehicle_Random(VEHICLE_USAGE_PRIVATE),
 		carid = GetVehicleByModel(GetVehicleModel(vehid));	
-		if(carid == -1 ) 
+		if(carid == -1) 
 			goto CARID_GET;
 		if(IsABike(GetVehicleModel(vehid)) 
 			|| IsABoat(GetVehicleModel(vehid)) 
@@ -326,7 +326,7 @@ static GetVehiclesForIllegalGarages(garage)
 
 static UpdateIllegalGarage(garage)
 {
-	for(new i = 0; i < 6; i++ )
+	for(new i = 0; i < 6; i++)
 		IllegalGarage[garage][igVehicleIds][i] = 0;
 	
 	if(!GetVehiclesForIllegalGarages(garage))
@@ -476,7 +476,7 @@ static ResetCarJackerVariables(playerid)
 }
 
 static IsVehicleMission(playerid, modelid)
-	return ( LandVehicles[PlayerJackingCar[playerid]][viModelid] == modelid ? 1 : 0 );
+	return ( LandVehicles[PlayerJackingCar[playerid]][viModelid] == modelid ? 1 : 0);
 	
 timer DestroyingCar[1000](playerid, vehicleid)
 {
@@ -494,7 +494,7 @@ timer DestroyingCar[1000](playerid, vehicleid)
 		ReturnVehicleName(LandVehicles[PlayerJackingCar[playerid]][viModelid]),
 		DestroyingCarCount[playerid]
 	);
-	if(DestroyingCarCount[playerid] <= 0 ) 
+	if(DestroyingCarCount[playerid] <= 0) 
 	{
 		new 
 			panels, doors, lights, tires,
@@ -512,7 +512,7 @@ timer DestroyingCar[1000](playerid, vehicleid)
 			skillmoney = ((GetPlayerSkillLevel(playerid) + 2) * 10),
 			garage = JackerIllegalGarage[playerid],
 			decrease = front_left_panel + front_right_panel + rear_left_panel + rear_right_panel + windshield + front_bumper + rear_bumper + bonnet + boot + driver_door + passenger_door + light1 + light2 + light3 + light4 + tire1 + tire2 + tire3 + tire4,
-			value = ( ( LandVehicles[PlayerJackingCar[playerid]][viCarJackerPrice] + skillmoney )  - ( decrease * 15 ));
+			value = ( ( LandVehicles[PlayerJackingCar[playerid]][viCarJackerPrice] + skillmoney)  - ( decrease * 15));
 		
 		IllegalGarage[garage][igCarsJacked]++;
 		mysql_fquery(g_SQL, "UPDATE illegal_garages SET jackedcars = '%d' WHERE id = '%d'", 
@@ -585,7 +585,7 @@ static GetJackerIllegalGarage(playerid)
 
 static SendPoliceAlertMessage(vehicleid, garage)
 {
-	if(IllegalGarage[garage][igWantedLevel] < 2 ) 
+	if(IllegalGarage[garage][igWantedLevel] < 2) 
 	{
 		switch( random(5))  
 		{
@@ -620,9 +620,9 @@ static SendPoliceAlertMessage(vehicleid, garage)
 
 static DestroyJackerTextDraw(playerid)
 {
-	if(JackerTD[playerid] != PlayerText:INVALID_TEXT_DRAW ) 
+	if(JackerTD[playerid] != PlayerText:INVALID_TEXT_DRAW) 
 	{
-		PlayerTextDrawDestroy( playerid, JackerTD[playerid] );
+		PlayerTextDrawDestroy( playerid, JackerTD[playerid]);
 		JackerTD[playerid] = PlayerText:INVALID_TEXT_DRAW;
 	}
 	return 1;
@@ -791,7 +791,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 		}
 		case DIALOG_JACKER_SURE_2: 
 		{
-			if(!response ) 
+			if(!response) 
 				return 1;			
 			SendMessage(playerid, 
 				MESSAGE_TYPE_INFO, 
@@ -801,7 +801,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 		}
 		case DIALOG_JACKER_BRIBE: 
 		{
-			if(!response ) return 1;
+			if(!response) return 1;
 			IllegalGarage[PlayerKeys[playerid][pIllegalGarageKey]][igWantedLevel]	= 0;
 			IllegalGarage[PlayerKeys[playerid][pIllegalGarageKey]][igCarsJacked]	= 0;
 			SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "You have sucessfully dropped heat with police to 0!");
@@ -827,16 +827,16 @@ Y8,           88   `8b d8'   88 88         8P         `8b
 
 CMD:jacker(playerid, params[])
 {
-	if(PlayerJob[playerid][pJob] != JOB_JACKER ) 
+	if(PlayerJob[playerid][pJob] != JOB_JACKER) 
 		return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You are not Car Jacker!");
 	new
 		param[7];
-	if(sscanf( params, "s[7] ", param )) 
+	if(sscanf( params, "s[7] ", param)) 
 		return SendClientMessage(playerid, COLOR_RED, "[?]: /jacker [pick/chop/stop]");
 	if(!strcmp(param, "pick", true)) 
 	{
 		JackerIllegalGarage[playerid] = GetJackerIllegalGarage(playerid);
-		if(JackerIllegalGarage[playerid] == -1 ) 
+		if(JackerIllegalGarage[playerid] == -1) 
 			return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You are not near any illegal garage!");
 		if(PlayerCoolDown[playerid][pJackerCool] <= gettimestamp()) 
 			return SendMessage(playerid, MESSAGE_TYPE_ERROR, "60 minutes from last Jacking Mission finishing must pass!");
@@ -875,22 +875,22 @@ CMD:jacker(playerid, params[])
 		new
 			vehicleid = GetPlayerVehicleID(playerid),
 			garageid = GetJackerIllegalGarage(playerid);
-		if(garageid == -1 ) 
+		if(garageid == -1) 
 			return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You are not near Illegal Garage!");
-		if(JackerIllegalGarage[playerid] != garageid )
+		if(JackerIllegalGarage[playerid] != garageid)
 			return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You must deliver the vehicle in garage you took mission in.");
-		if(PlayerJackingCar[playerid] == -1 ) 
+		if(PlayerJackingCar[playerid] == -1) 
 			return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You must pick your mission first!");
 		if(!IsPlayerInAnyVehicle(playerid)) 
 			return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You are not in vehicle!");
-		if(vehicleid == PlayerKeys[playerid][pVehicleKey] ) 
+		if(vehicleid == PlayerKeys[playerid][pVehicleKey]) 
 			return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You can't dissasemble your own vehicle!");
 		if(!Vehicle_Exists(VEHICLE_USAGE_PRIVATE, vehicleid)) 
 			return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Vehicle you stole must be a private property, not rented!");
 		new 
 			Float:health;
 		GetVehicleHealth(vehicleid, health);
-		if(health < 550.0 ) 
+		if(health < 550.0) 
 			return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Vehicle has to be in better state! (Min. 550+ HP)");
 		if(!IsVehicleMission(playerid, GetVehicleModel(vehicleid)))
 		{
@@ -937,7 +937,7 @@ CMD:igarage(playerid, params[])
 {
 	new
 		param[8];
-	if(sscanf( params, "s[8] ", param ))
+	if(sscanf( params, "s[8] ", param))
 	{
 		SendClientMessage(playerid, COLOR_RED, "[?]: /igarage [options]");
 		SendClientMessage(playerid, COLOR_RED, "[!]: buy - info - bribe");
@@ -951,7 +951,7 @@ CMD:igarage(playerid, params[])
 			return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You are not Head Administrator!");
 		new 
 			garage_name[32];
-		if(sscanf( params, "s[8]s[32]", param, garage_name ))
+		if(sscanf( params, "s[8]s[32]", param, garage_name))
 			return SendClientMessage(playerid, -1, "[!]: /igarage add [garage_name]");
 		new
 			garage = Iter_Free(IllegalGarage);
@@ -992,7 +992,7 @@ CMD:igarage(playerid, params[])
 			return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You are not Head Administrator!");
 		new 
 			garage;		
-		if(sscanf( params, "s[8]i", param, garage ))
+		if(sscanf( params, "s[8]i", param, garage))
 			return SendClientMessage(playerid, -1, "[!]: /igarage add [garage_name]");
 		if(Iter_Contains(IllegalGarage, garage))
 		{
@@ -1016,9 +1016,9 @@ CMD:igarage(playerid, params[])
 	}
 	if(!strcmp(param, "buy", true)) 
 	{
-		if(PlayerKeys[playerid][pIllegalGarageKey] != -1 ) 
+		if(PlayerKeys[playerid][pIllegalGarageKey] != -1) 
 			return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You already own an illegal garage!");
-		if(AC_GetPlayerMoney(playerid) < CHOP_SHOP_PRICE ) 
+		if(AC_GetPlayerMoney(playerid) < CHOP_SHOP_PRICE) 
 		{
 			SendFormatMessage(playerid, 
 				MESSAGE_TYPE_ERROR, 
@@ -1029,9 +1029,9 @@ CMD:igarage(playerid, params[])
 		}
 		new
 			garage = GetJackerIllegalGarage(playerid);
-		if(garage == -1 ) 
+		if(garage == -1) 
 			return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You are not near Illegal Garage!");
-		if(IllegalGarage[garage][igOwner] != 0 ) 
+		if(IllegalGarage[garage][igOwner] != 0) 
 			return SendMessage(playerid, MESSAGE_TYPE_ERROR, "This Illegal Garage is already owned by somebody!");
 		
 		PlayerKeys[playerid][pIllegalGarageKey] = garage;		
@@ -1054,11 +1054,11 @@ CMD:igarage(playerid, params[])
 	}
 	else if(!strcmp(param, "info", true)) 
 	{
-		if(PlayerKeys[playerid][pIllegalGarageKey] == -1 ) 
+		if(PlayerKeys[playerid][pIllegalGarageKey] == -1) 
 			return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You don't own an illegal garage!");
 		new
 			garage = GetJackerIllegalGarage(playerid);
-		if(garage == -1 || IllegalGarage[garage][igOwner] != PlayerInfo[playerid][pSQLID] ) 
+		if(garage == -1 || IllegalGarage[garage][igOwner] != PlayerInfo[playerid][pSQLID]) 
 			return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You are not near Illegal Garage / you don't own it!");
 		va_ShowPlayerDialog(playerid, 
 			0, 
@@ -1074,17 +1074,17 @@ CMD:igarage(playerid, params[])
 	}
 	else if(!strcmp(param, "bribe", true)) 
 	{
-		if(PlayerKeys[playerid][pIllegalGarageKey] == -1 ) 
+		if(PlayerKeys[playerid][pIllegalGarageKey] == -1) 
 			return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You don't own an illegal garage!");
 		new
 			garage = GetJackerIllegalGarage(playerid);
-		if(garage == -1 || IllegalGarage[garage][igOwner] != PlayerInfo[playerid][pSQLID] ) 
+		if(garage == -1 || IllegalGarage[garage][igOwner] != PlayerInfo[playerid][pSQLID]) 
 			return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You are not near Illegal Garage / you don't own it!");
-		if(IllegalGarage[garage][igWantedLevel] < 2 ) 
+		if(IllegalGarage[garage][igWantedLevel] < 2) 
 			return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You got to have at least 2+ stars.");
 		new
-			money = ( IllegalGarage[garage][igWantedLevel] * ( random(random(250)) + 1 )) 
-				+ ( IllegalGarage[garage][igCarsJacked] * 1000 );
+			money = ( IllegalGarage[garage][igWantedLevel] * ( random(random(250)) + 1)) 
+				+ ( IllegalGarage[garage][igCarsJacked] * 1000);
 		PlayerBribeMoney[playerid] = money;
 		
 		va_ShowPlayerDialog(playerid, 
@@ -1104,13 +1104,13 @@ CMD:igarage(playerid, params[])
 			pick[4],
 			money;
 
-		if(garage == -1 || IllegalGarage[garage][igOwner] != PlayerInfo[playerid][pSQLID] ) 
+		if(garage == -1 || IllegalGarage[garage][igOwner] != PlayerInfo[playerid][pSQLID]) 
 			return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You are not near Illegal Garage / you don't own it!");
-		if(sscanf( params, "s[8]s[8]i", param, pick, money )) 
+		if(sscanf( params, "s[8]s[8]i", param, pick, money)) 
 			return SendClientMessage(playerid, COLOR_RED, "[?]: /igarage money [take/put][anizbt]");
 		if(!strcmp(pick, "take", true)) 
 		{
-			if(money >  IllegalGarage[garage][igMoney] || money < 1 ) 
+			if(money >  IllegalGarage[garage][igMoney] || money < 1) 
 				return SendMessage(playerid, MESSAGE_TYPE_ERROR, "You don't have that much money with you!");
 			
 			IllegalGarageToPlayerMoney(playerid, garage, money);

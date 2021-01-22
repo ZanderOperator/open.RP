@@ -368,7 +368,7 @@ PlayerStartRob(playerid, storage_id, rob_timer = MAX_ROB_TIME, house_id)
         "AdmWarn: %s has just started storage rob, storage ID: %d.", 
         GetName(playerid, false), 
         storage_id
-    );
+   );
 
     new 
         buffer[35+5];

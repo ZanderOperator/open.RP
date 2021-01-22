@@ -269,7 +269,7 @@ CMD:mic(playerid, params[])
             IsANews(playerid) ? ("REPORTER") : ("GUEST"), 
             GetName(playerid), 
             params
-        );
+       );
     }
 	return 1;
 }
@@ -390,7 +390,7 @@ CMD:reset_news(playerid, params[])
         return 1;
     }
     // TODO: ClearNewsText(playerid)
-    for (new i = 0; i < 5; i++ )
+    for (new i = 0; i < 5; i++)
     {
         TextDrawSetString(NewsLineTextDraw[i], "\n");
         format(NewsText[i], 97, "\n"); // TODO: strcpy
@@ -410,7 +410,7 @@ CMD:callnews(playerid,params[])
     format(string, sizeof(string), "** [REDAKCIJA - POZIV] Mobitel broj: %d - Stanje: %s",
         PlayerMobile[playerid][pMobileNumber],
         result
-    );
+   );
     SendWalkieTalkieMessage(5, 0x42C8F5FF, string);
 
     format(string, sizeof(string), "* %s vadi mobitel i stavlja ga na uho.", GetName(playerid));
@@ -422,7 +422,7 @@ CMD:callnews(playerid,params[])
     mysql_fquery(g_SQL, "UPDATE player_phones SET money = '%d' WHERE player_id = '%d' AND type = '1'",
         PlayerMobile[playerid][pMobileCost],
         PlayerInfo[playerid][pSQLID]
-    );
+   );
     return 1;
 }
 

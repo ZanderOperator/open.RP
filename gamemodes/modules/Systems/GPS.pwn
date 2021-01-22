@@ -99,7 +99,7 @@ static GPS_Load()
         va_fquery(g_SQL, "SELECT * FROM gps"), 
         "GPS_Loaded", 
         ""
-    );
+   );
     return 1;
 }
 
@@ -140,7 +140,7 @@ static GPS_Save(gpsid)
         GPS_data[gpsid][gpsMapIcon],
         GPS_data[gpsid][gpsAdmin],
         GPS_data[gpsid][gpsID]
-    );
+   );
     return 1;
 }
 
@@ -164,7 +164,7 @@ static GPS_Create(gps_name[], Float:X, Float:Y, Float:Z)
         "GPS_Created", 
         "i", 
         free_id
-    );
+   );
     return free_id;
 }
 
@@ -263,7 +263,7 @@ static GPS_GetDistance(playerid, gpsid, Float:X, Float:Y, Float:Z)
         "~w~(GPS)_~y~%s - %0.2f_meters...", 
         GPS_data[gpsid][gpsName], 
         gpsLocation
-    );
+   );
     PlayerTextDrawSetString(playerid, gps_Meters[playerid], buffer);
     return 1;
 }
@@ -278,7 +278,7 @@ ptask NavigationTimer[1000](playerid)
         GPSInfo[playerid][gX], 
         GPSInfo[playerid][gY], 
         GPSInfo[playerid][gZ]
-    );
+   );
     return 1;
 }
 
@@ -310,7 +310,7 @@ GPS_DialogShow(playerid, bool:admin = false)
             buff, 
             "Port", 
             "Close"
-        );
+       );
     }
     else
     {
@@ -321,7 +321,7 @@ GPS_DialogShow(playerid, bool:admin = false)
             buff, 
             "Pick", 
             "Exit"
-        );
+       );
     }
     return 1;
 }
@@ -363,7 +363,7 @@ hook OnPlayerSpawn(playerid)
                 GPS_data[i][gpsMapIcon], 
                 0, 
                 MAPICON_LOCAL
-            );
+           );
         }
     }
     return 1;
@@ -400,7 +400,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                         {3C95C2}[!]: Location name can't be longer than 32 chars.",
                     "Create", 
                     "Close"
-                );
+               );
                 return 1;
             }
 
@@ -420,7 +420,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                     MESSAGE_TYPE_ERROR, 
                     "Maximum number of GPS locations reached (%d)!",
                     MAX_GPS_LOCATIONS
-                );
+               );
                 return 1;
             }
 
@@ -428,13 +428,13 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                 "AdmCMD: %s created new GPS Location: %s [ID %d].",
                 gpsname,
                 free_id
-            );
+           );
             SendFormatMessage(playerid, 
                 MESSAGE_TYPE_SUCCESS, 
                 "You have sucessfully created new GPS Location: %s - ID %d.",
                 gpsname, 
                 free_id
-            );
+           );
             return 1;
         }
         case DIALOG_DELETEGPS:
@@ -451,13 +451,13 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                 "AdmCMD: %s deleted GPS Location: %s [ID %d].",
                 GPS_data[gpsid][gpsName],
                 gpsid
-            );
+           );
             SendFormatMessage(playerid, 
                 MESSAGE_TYPE_SUCCESS, 
                 "You have sucessfully deleted GPS Location: %s - ID %d.",                
                 GPS_data[gpsid][gpsName],
                 gpsid
-            );
+           );
             GPS_Delete(gpsid);
             return 1;
         }
@@ -478,12 +478,12 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                 GPS_data[enum_id][gpsPosY], 
                 GPS_data[enum_id][gpsPosZ], 
                 5.0
-            );
+           );
             SendFormatMessage(playerid, 
                 MESSAGE_TYPE_SUCCESS, 
                 "GPS on location %s sucessfully marked on radar.", 
                 GPS_data[enum_id][gpsName]
-            );
+           );
             GPS_ResetList(playerid);
             return 1;
         }
@@ -507,13 +507,13 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                     GetName(playerid,false), 
                     GetName(portedid,false),
                     GPS_data[listitem][gpsName]
-                );
+               );
             }
             SendFormatMessage(portedid, 
                 MESSAGE_TYPE_SUCCESS, 
                 "You have been teleported to %s.", 
                 GPS_data[listitem][gpsName]
-            );
+           );
             return 1;
         }
         case DIALOG_GPSMAPICON:
@@ -532,7 +532,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                         Please input -1 if you want to remove Map Icon from GPS.", 
                     "Input", 
                     "Close"
-                );
+               );
                 return 1;
             }
             if(!Iter_Contains(GPS_location, gpsid))
@@ -554,7 +554,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                     "You have sucessfully set Map Icon ID %d on location %s.", 
                     mapicon,
                     GPS_data[gpsid][gpsName]
-                );
+               );
             }
             else
             {
@@ -566,7 +566,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                     "You have sucessfully removed Map Icon on location %s.", 
                     mapicon,
                     GPS_data[gpsid][gpsName]
-                );
+               );
             }
             return 1;
         }
@@ -593,7 +593,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                 MESSAGE_TYPE_SUCCESS,
                 "You have sucessfully changed position of GPS location %s.",
                 GPS_data[gpsid][gpsName]
-            );
+           );
             return 1;
         }
     }
@@ -649,7 +649,7 @@ CMD:portplayer(playerid, params[])
         MESSAGE_TYPE_INFO, 
         "You chose to teleport %s. Please pick a location.", 
         GetName(giveplayerid, false)
-    );
+   );
 	return 1;
 }
 
@@ -690,7 +690,7 @@ CMD:agps(playerid, params[])
                 {3C95C2}[!]: Location name can't be longer than 32 chars.",
             "Create", 
             "Close"
-        );
+       );
     }
     if(!strcmp(action, "move", true))
     {
@@ -702,7 +702,7 @@ CMD:agps(playerid, params[])
                 {3C95C2}[!]: List of all GPS ID's can be found on /agps goto.", 
             "Move", 
             "Close"
-        );
+       );
         return 1;
     }
     if(!strcmp(action, "goto", true))
@@ -720,7 +720,7 @@ CMD:agps(playerid, params[])
                 COLOR_RED, 
                 "[!] /agps setadmin [gpsid] \n\
                     [0 = for all players | 1 = only for Team Staff]"
-                );
+               );
             return 1;
         }
         if(!Iter_Contains(GPS_location, gpsid))
@@ -738,7 +738,7 @@ CMD:agps(playerid, params[])
             GPS_data[gpsid][gpsName], 
             gpsid,
             (!adminloc) ? ("for everyone") : ("for Team Staff only")
-        );
+       );
     }
     if(!strcmp(action, "mapicon", true))
     {
@@ -751,7 +751,7 @@ CMD:agps(playerid, params[])
                 Please input -1 if you want to remove Map Icon from GPS.", 
             "Input", 
             "Close"
-        );
+       );
     }
     if(!strcmp(action, "delete", true))
     {
@@ -763,7 +763,7 @@ CMD:agps(playerid, params[])
                 {3C95C2}[!]: You can find all GPS ID's on /agps goto(/port).", 
             "Delete", 
             "Close"
-        );
+       );
     }
     return 1;
 }

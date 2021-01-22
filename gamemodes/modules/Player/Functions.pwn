@@ -142,9 +142,9 @@ GetName(playerid, bool:replace=true)
 	new name[MAX_PLAYER_NAME];
 	GetPlayerName(playerid, name, sizeof(name));
 	
-	if(replace ) {
+	if(replace) {
 		if(Player_UsingMask(playerid))
-			format(name, sizeof(name), "Maska_%d", PlayerInventory[playerid][pMaskID] );
+			format(name, sizeof(name), "Maska_%d", PlayerInventory[playerid][pMaskID]);
 		else 
 			strreplace(name, '_', ' ');
 	}
@@ -235,7 +235,7 @@ stock LevelUp(playerid)
 	if(PlayerInfo[playerid][pLevel] > 0)
 	{
 		new
-			expamount = ( PlayerInfo[playerid][pLevel] + 1 ) * 4;
+			expamount = ( PlayerInfo[playerid][pLevel] + 1) * 4;
 		if(PlayerInfo[playerid][pRespects] < expamount) {
 			return 0;
 		}
@@ -352,28 +352,28 @@ PlayerMinuteTask(playerid)
 		
 	if(PlayerJail[playerid][pJailTime] > 0)
 		PlayerJail[playerid][pJailTime] -= 1;
-	else if(PlayerJail[playerid][pJailTime] == 0 )
+	else if(PlayerJail[playerid][pJailTime] == 0)
 	{
-		if(PlayerJail[playerid][pJailed] == 1 )
+		if(PlayerJail[playerid][pJailed] == 1)
 		{
 			SetPlayerPosEx(playerid, 90.6552, -236.3789, 1.5781, 0, 0, false);
 			SetPlayerWorldBounds(playerid, 20000.0000, -20000.0000, 20000.0000, -20000.0000);
 			SetPlayerColor(playerid, COLOR_PLAYER);
 			SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "Slobodni ste, platili ste svoj dug drustvu!");
 		}
-		else if(PlayerJail[playerid][pJailed] == 2 )
+		else if(PlayerJail[playerid][pJailed] == 2)
 		{
 			SetPlayerPosEx(playerid, 1482.7426, -1740.1372, 13.7500, 0, 0, false);
 			SetPlayerWorldBounds(playerid, 20000.0000, -20000.0000, 20000.0000, -20000.0000);
 			SetPlayerColor(playerid, COLOR_PLAYER);
 			SendClientMessage(playerid, COLOR_LIGHTBLUE, "Pusten si iz Fort DeMorgana, pripazi na ponasanje i server pravila!");
 		}
-		else if(PlayerJail[playerid][pJailed] == 3 )
+		else if(PlayerJail[playerid][pJailed] == 3)
 		{
 			SetPlayerPosEx(playerid, 636.7744,-601.3240,16.3359, 0, 0, false);
 			SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "Slobodni ste, platili ste svoj dug drustvu!");
 		}
-		else if(PlayerJail[playerid][pJailed] == 5 ) // Treatment
+		else if(PlayerJail[playerid][pJailed] == 5) // Treatment
 		{
 			TogglePlayerControllable(playerid, 1);
 			ClearAnim(playerid);
@@ -411,7 +411,7 @@ timer PlayerGlobalTask[1000](playerid)
 	if(!SafeSpawned[playerid] || !IsPlayerConnected(playerid)) 
 		return 1;
 	
-	if(gettimestamp() >= PlayerTick[playerid][ptMainTimer] )
+	if(gettimestamp() >= PlayerTick[playerid][ptMainTimer])
 		PlayerMinuteTask(playerid);	
 	
 	PlayerSyncs[playerid] = false;
@@ -468,7 +468,7 @@ ChangePlayerName(playerid, newname[], type, bool:admin_cn = false)
 	counts = cache_num_rows();
 	cache_delete(result);
 	
-	if(counts ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "That nickname already exists!");
+	if(counts) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "That nickname already exists!");
 	
 	new
 		oldname[MAX_PLAYER_NAME];
@@ -496,7 +496,7 @@ ChangePlayerName(playerid, newname[], type, bool:admin_cn = false)
 	LicenseInfo[playerid][pGunLic] 	= 0;
 	
 	if(admin_cn == (false)) {
-		if(!PlayerVIP[playerid][pDonateRank] )
+		if(!PlayerVIP[playerid][pDonateRank])
 			PlayerToBudgetMoney( playerid, 10000);
 	}
 	if(type == 1)
@@ -531,12 +531,12 @@ static HungerCheck(playerid)
 		
 	new 
 		Float:health;	
-	if(PlayerHealth[playerid][pHunger] < 0.0 ) {
-		if(PlayerGym[playerid][pMuscle] > 10 ) {
+	if(PlayerHealth[playerid][pHunger] < 0.0) {
+		if(PlayerGym[playerid][pMuscle] > 10) {
 			PlayerHealth[playerid][pHunger] -= 0.001;
 		} else PlayerHealth[playerid][pHunger] -= 0.006;
 		
-		if(PlayerHealth[playerid][pHunger] < -5.0 ) 
+		if(PlayerHealth[playerid][pHunger] < -5.0) 
 			PlayerHealth[playerid][pHunger] = -5.0;
 	}
 	else PlayerHealth[playerid][pHunger] -= 0.002;
@@ -731,7 +731,7 @@ RealProxDetector(Float:radi, playerid, string[],col1,col2,col3,col4,col5)
 				tempposy = (oldposy -posy);
 				tempposz = (oldposz -posz);
 
-				if(IsPlayerInAnyVehicle(playerid) && !IsACabrio(modelid) && !Bit1_Get( gr_VehicleWindows, vehicleid ))
+				if(IsPlayerInAnyVehicle(playerid) && !IsACabrio(modelid) && !Bit1_Get( gr_VehicleWindows, vehicleid))
 				{
 					if(IsPlayerInVehicle(i, vehicleid))
 					{
@@ -743,7 +743,7 @@ RealProxDetector(Float:radi, playerid, string[],col1,col2,col3,col4,col5)
 					vehicleid2 = GetPlayerVehicleID(i);
 					modelid2 = GetVehicleModel(vehicleid2);
 
-					if(!IsPlayerInAnyVehicle(i) || IsACabrio(modelid2) || Bit1_Get( gr_VehicleWindows, vehicleid2 )) {
+					if(!IsPlayerInAnyVehicle(i) || IsACabrio(modelid2) || Bit1_Get( gr_VehicleWindows, vehicleid2)) {
 						if(((tempposx < radi/16) && (tempposx > -radi/16)) && ((tempposy < radi/16) && (tempposy > -radi/16)) && ((tempposz < radi/16) && (tempposz > -radi/16)))
 						{
 							SendClientMessage(i, col1, string);
@@ -775,8 +775,8 @@ RealProxDetector(Float:radi, playerid, string[],col1,col2,col3,col4,col5)
 CarProxDetector(vehicleid, playerid, const string[], color)
 {
 	foreach(new i : Player) {
-		if(IsPlayerInVehicle( i, vehicleid ) && i != playerid )
-			SendClientMessage( playerid, color, string );
+		if(IsPlayerInVehicle( i, vehicleid) && i != playerid)
+			SendClientMessage( playerid, color, string);
 	}
 	return 1;
 }
@@ -785,7 +785,7 @@ ProxDetectorS(Float:radi, playerid, targetid)
 {
     if(IsPlayerConnected(playerid) && IsPlayerConnected(targetid))
 	{
-		if(( GetPlayerVehicleID(playerid) == GetPlayerVehicleID(targetid)) && GetPlayerVehicleID(playerid) != 0 ) 
+		if(( GetPlayerVehicleID(playerid) == GetPlayerVehicleID(targetid)) && GetPlayerVehicleID(playerid) != 0) 
 			return 1;
 			
 	    if(GetPlayerVirtualWorld(playerid) == GetPlayerVirtualWorld(targetid))
@@ -942,7 +942,7 @@ ShowPlayerStats(playerid, targetid)
 	);
 	strcat(pDialog,motd, sizeof(pDialog));
 
-	switch( PlayerVIP[targetid][pDonateRank] ) 
+	switch( PlayerVIP[targetid][pDonateRank]) 
 	{
 		case PREMIUM_BRONZE: 	format(tmpString, 20, "Bronze");
 		case PREMIUM_SILVER:	format(tmpString, 20, "Silver");
@@ -958,14 +958,14 @@ ShowPlayerStats(playerid, targetid)
 		tmpString,
 		PlayerInfo[targetid][pConnectTime],
 		PlayerInfo[targetid][pRespects],
-		( PlayerInfo[targetid][pLevel] + 1 ) * 4
+		( PlayerInfo[targetid][pLevel] + 1) * 4
 	);
     strcat(pDialog,motd, sizeof(pDialog));
 
     format(motd, sizeof(motd),""COL_WHITE"Muscle lvl: [%d] | Warnings: [%d/3] | Vrijeme do place: [%d minuta] | VIP Vozilo: [%d] | Donator Veh Perms: [%d] | Mobile Bill: [%d$]\n",
 		PlayerGym[targetid][pMuscle],
 		PlayerInfo[targetid][pWarns],
-		( 60 - PaydayInfo[targetid][pPayDay] ),
+		( 60 - PaydayInfo[targetid][pPayDay]),
 		PlayerVIP[targetid][pDonatorVehicle],
 		PlayerVIP[targetid][pDonatorVehPerms],
 		PlayerMobile[targetid][pMobileCost]
@@ -988,7 +988,7 @@ ShowPlayerStats(playerid, targetid)
 		PlayerKeys[targetid][pComplexRoomKey]
 	);
 	strcat(pDialog,motd, sizeof(pDialog));
-	if(PlayerInfo[playerid][pAdmin] >= 1 )
+	if(PlayerInfo[playerid][pAdmin] >= 1)
 	{
 
 		format(motd, sizeof(motd), ""COL_COABLUE"WEAPONS STATS:\n\n"COL_WHITE"Gun #1: [%d] | Gun #2: [%d] | Gun #3: [%d] | Gun #4: [%d] | Gun #5: [%d]\nGun #6: [%d] | Gun #7: [%d] | Gun #8: [%d] | Gun #9: [%d] | Gun #10: [%d]\n",
@@ -1265,11 +1265,11 @@ hook OnPlayerUpdate(playerid)
 	{
 		new 
 			drunkLevel = GetPlayerDrunkLevel(playerid);
-		if(drunkLevel < 100 ) 
+		if(drunkLevel < 100) 
 			SetPlayerDrunkLevel(playerid, 2000);
 		else 
 		{
-			if(PlayerDrunkLevel[playerid] != drunkLevel ) 
+			if(PlayerDrunkLevel[playerid] != drunkLevel) 
 				PlayerDrunkLevel[playerid] = drunkLevel;
 		}
 		PlayerFPSUnix[playerid] = gettimestamp();
@@ -1283,7 +1283,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 	{
 		case DIALOG_RULES: 
 		{
-			if(!response ) return 1;
+			if(!response) return 1;
 			switch(listitem) 
 			{
 				case 0: 

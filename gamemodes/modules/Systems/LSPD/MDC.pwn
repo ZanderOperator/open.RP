@@ -176,7 +176,7 @@ static OnPlayerMDCDataLoad(playerid, const playername[], sqlid)
             loadInfo[pAge],
             tmpLook,
             tmpLook2
-        );
+       );
 
         tmpGunLic = (licInfo[pGunLic] == 1) ? ("~b~CCW~l~") : ((licInfo[pGunLic] == 2) ? ("~g~CCW~l~") : ("~r~No~l~"));
         format(mdcString2, sizeof(mdcString2),
@@ -191,7 +191,7 @@ static OnPlayerMDCDataLoad(playerid, const playername[], sqlid)
             licInfo[pFishLic] >= 1 ? ("~g~Yes~l~") : ("~r~No~l~"),
             licInfo[pFlyLic]  >= 1 ? ("~g~Yes~l~") : ("~r~No~l~"),
             licInfo[pPassport]  >= 1 ? ("~g~Yes~l~") : ("~r~No~l~")
-        );
+       );
 
         CreateMDCTextDraws(playerid, lookInfo[pTmpSkin], false);
         PlayerTextDrawSetString(playerid, MDCProfileText[playerid], mdcString);
@@ -213,7 +213,7 @@ static OnPlayerMDCDataLoad(playerid, const playername[], sqlid)
                 WHERE accounts.sqlid = player_jail.sqlid = player_licenses.sqlid = \n\
                 player_appearance.sqlid = '%d'",
             sqlid
-        ),
+       ),
 		""
 	);
     return 1;
@@ -254,7 +254,7 @@ static OnPlayerArrestDataLoad(playerid, const playername[])
                     tmpJail[jReason],
                     tmpJail[jTime],
                     tmpJail[jDate]
-                );
+               );
                 strcat(buffer, motd, sizeof(buffer));
             }
         }
@@ -318,7 +318,7 @@ static OnPlayerTicketsLoad(playerid, const playername[])
                     tmpRazlog,
                     tmpNovac,
                     tmpDatum
-                );
+               );
                 strcat(buffer, motd, sizeof(buffer));
             }
         }
@@ -382,7 +382,7 @@ static OnPlayerCoVehsLoad(playerid, playersqlid)
                     tmpColor1,
                     tmpColor2,
                     tmpImpounded ? ("~g~Yes~l~") : ("~r~No~l~")
-                );
+               );
                 strcat(buffer, motd, sizeof(buffer));
             }
         }
@@ -403,7 +403,7 @@ static OnPlayerCoVehsLoad(playerid, playersqlid)
                 WHERE ownerid = '%d' AND numberplate != '' AND numberplate != '0' LIMIT %d",
             playersqlid,
             MAX_PLAYER_CARS
-        ),
+       ),
 		""
 	);
 
@@ -449,7 +449,7 @@ static OnPlayerAPBLoad(playerid, const playername[])
                     aPDname,
                     aDiscription,
                     GetAPBType(aType)
-                );
+               );
                 strcat(buffer, motd, sizeof(motd));
             }
         }
@@ -513,7 +513,7 @@ static GetAPBList(playerid)
                 aPDname,
                 aDiscription,
                 GetAPBType(aType)
-            );
+           );
             strcat(buffer, motd, sizeof(buffer));
         }
         ShowPlayerDialog(playerid, 0, DIALOG_STYLE_MSGBOX, "[APB List]", buffer, "Close", "");
@@ -565,7 +565,7 @@ static GetSuspectAPB(playerid, const playername[])
                 aPDname,
                 aDiscription,
                 GetAPBType(aType)
-            );
+           );
             strcat(buffer, motd, sizeof(buffer));
         }
 
@@ -606,7 +606,7 @@ static GetVehicleMDCInfo(playerid, vehicleid)
         VehicleInfo[vehicleid][vColor1],
         VehicleInfo[vehicleid][vColor2],
         VehicleInfo[vehicleid][vImpounded] ? ("~g~Yes~l~") : ("~r~No~l~")
-    );
+   );
 
     new motd[128];
     for (new i = 0; i < MAX_VEHICLE_TICKETS; i++)
@@ -624,7 +624,7 @@ static GetVehicleMDCInfo(playerid, vehicleid)
                     (i+1),
                     GetVehicleTicketReason(VehicleInfo[vehicleid][vTicketsSQLID][i]),
                     VehicleInfo[vehicleid][vTickets][i]
-                );
+               );
                 strcat(mdcString2, motd, sizeof(mdcString2));
             }
         }
@@ -662,7 +662,7 @@ stock InsertPlayerMDCCrime(playerid, giveplayerid, reason[], jailtime)
         Hours,
         Mins,
         Secs
-    );
+   );
 
     mysql_pquery(g_SQL, "BEGIN");
 
@@ -673,7 +673,7 @@ stock InsertPlayerMDCCrime(playerid, giveplayerid, reason[], jailtime)
         JailInfo[giveplayerid][jReason],
         JailInfo[giveplayerid][jTime],
         JailInfo[giveplayerid][jDate]
-    );
+   );
 
     mysql_pquery(g_SQL, "COMMIT");
     return 1;
@@ -694,7 +694,7 @@ static InsertAPBInfo(playerid, const suspect[], const description[], type)
         description,
         type,
         GetName(playerid, true)
-    );
+   );
     return 1;
 }
 
@@ -754,7 +754,7 @@ static GetPlayerMDCRecord(playerid, const playername[])
                 tmpJail[jReason],
                 tmpJail[jTime],
                 tmpJail[jDate]
-            );
+           );
         }
 
         new string[64];
@@ -1236,7 +1236,7 @@ hook OnPlayerClickPlayerTD(playerid, PlayerText:playertextid)
             if(player_sqlid == -1)
                 return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "%s ne postoji registriran u bazi!", 
                     TargetName[playerid]
-                );
+               );
 
             OnPlayerMDCDataLoad(playerid, TargetName[playerid], player_sqlid);
         }
@@ -1254,7 +1254,7 @@ hook OnPlayerClickPlayerTD(playerid, PlayerText:playertextid)
             if(player_sqlid == -1)
                 return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "%s ne postoji registriran u bazi!", 
                     TargetName[playerid]
-                );
+               );
 
             OnPlayerCoVehsLoad(playerid, player_sqlid);
         }
@@ -1318,7 +1318,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                 using inline OnMobileNumberCheck, 
                 va_fquery(g_SQL, "SELECT player_id, model FROM player_phones WHERE number = '%d'", mobilenumber),
                 ""
-            );
+           );
         }
         case DIALOG_MDC_PLAYER:
         {
@@ -1331,7 +1331,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
             if(player_sqlid == -1)
                 return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "%s ne postoji registriran u bazi!", 
                     TargetName[playerid]
-                );
+               );
 
             format(TargetName[playerid], MAX_PLAYER_NAME, "%s", inputtext);
             OnPlayerMDCDataLoad(playerid, TargetName[playerid], player_sqlid);

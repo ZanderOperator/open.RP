@@ -1153,7 +1153,7 @@ stock strfrombin(output[], const input[], inputlength = sizeof(input), maxlength
 		
 		new input_cell = input[i];
 		
-		output[outlen++] = hex_chars[(input_cell             ) >>> 28];
+		output[outlen++] = hex_chars[(input_cell            ) >>> 28];
 		output[outlen++] = hex_chars[(input_cell & 0x0F000000) >>> 24];
 		output[outlen++] = hex_chars[(input_cell & 0x00F00000) >>> 20];
 		output[outlen++] = hex_chars[(input_cell & 0x000F0000) >>> 16];

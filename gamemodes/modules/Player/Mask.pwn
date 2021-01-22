@@ -58,8 +58,8 @@ hook OnPlayerStreamIn(playerid, forplayerid)
 
 CMD:mask(playerid, params[])
 {
-	if(PlayerInventory[playerid][pMaskID] == -1 || PlayerInventory[playerid][pMaskID] == 0 )
-		return SendClientMessage( playerid, COLOR_RED, "[GRESKA]: Ne posjedujes masku!" );
+	if(PlayerInventory[playerid][pMaskID] == -1 || PlayerInventory[playerid][pMaskID] == 0)
+		return SendClientMessage( playerid, COLOR_RED, "[GRESKA]: Ne posjedujes masku!");
 
 	new buffer[80];
 	if(!Player_UsingMask(playerid))

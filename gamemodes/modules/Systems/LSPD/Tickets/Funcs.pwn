@@ -61,7 +61,7 @@ static SaveVehicleTicketStatus(vehicleid, ticket_slot)
     mysql_fquery(g_SQL, "UPDATE cocars_tickets SET isShown = '%d' WHERE id = '%d'", 
         VehicleInfo[vehicleid][vTicketShown][ticket_slot],
         VehicleInfo[vehicleid][vTicketsSQLID][ticket_slot]
-    );
+   );
     return 1;
 }
 
@@ -74,7 +74,7 @@ stock CheckVehicleTickets(playerid, vehicleid)
             va_SendClientMessage(playerid, COLOR_ORANGE, "* You got a vehicle ticket worth %s. Reason: %s",
                 FormatNumber(VehicleInfo[vehicleid][vTickets][i]),
                 GetVehicleTicketReason(VehicleInfo[vehicleid][vTicketsSQLID][i])
-            );
+           );
             VehicleInfo[vehicleid][vTicketShown][i] = true;
             SaveVehicleTicketStatus(vehicleid, i);
         }
@@ -108,7 +108,7 @@ stock InsertPlayerTicket(playerid, giveplayerid, money, const reason[])
         money,
         reason,
         ReturnDate()
-    );
+   );
 
     mysql_tquery(g_SQL, "COMMIT");
 
@@ -136,11 +136,11 @@ stock LoadVehicleTickets(vehicleid)
         va_fquery(g_SQL, "SELECT * FROM cocars_tickets WHERE vehicle_id = '%d' LIMIT 0,%d",
             VehicleInfo[vehicleid][vSQLID],
             MAX_VEHICLE_TICKETS
-        ), 
+       ), 
         "LoadingVehicleTickets", 
         "i", 
         vehicleid
-    );
+   );
     return 1;
 }
 
@@ -187,7 +187,7 @@ stock LoadPlayerTickets(playerid, const playername[])
                 tickets[tkOfficer],
                 FormatNumber(tickets[tkMoney]),
                 tickets[tkReason]
-            );
+           );
             strcat(buffer, motd, sizeof(buffer));
         }
 
@@ -217,7 +217,7 @@ stock ShowVehicleTickets(playerid, vehicleid)
                 (i+1),
                 FormatNumber(VehicleInfo[vehicleid][vTickets][i]),
                 GetVehicleTicketReason(VehicleInfo[vehicleid][vTicketsSQLID][i])
-            );
+           );
             strcat(buffer, motd, sizeof(buffer));
         }
     }

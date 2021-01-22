@@ -29,7 +29,7 @@ LoadPlayerFishes(playerid)
         "LoadingPlayerFishes", 
         "i", 
         playerid
-    );
+   );
     return 1;
 }
 
@@ -41,7 +41,7 @@ Public: LoadingPlayerFishes(playerid)
             "INSERT INTO player_fishes(sqlid, fishworks, fishweight, fishingskill) \n\
                 VALUES('%d', '0', '0', '0')",
             PlayerInfo[playerid][pSQLID]
-        );
+       );
         return 1;
     }
     cache_get_value_name_int(0,  "fishworks"	    , PlayerFish[playerid][pFishWorks]);
@@ -64,7 +64,7 @@ SavePlayerFishes(playerid)
         PlayerFish[playerid][pFishWeight],
         PlayerFish[playerid][pFishingSkill],
         PlayerInfo[playerid][pSQLID]
-    );
+   );
     return 1;
 }
 
@@ -157,7 +157,7 @@ DockFishing(playerid)
 						{
 							case 0:
 							{
-								format(fstring, sizeof fstring, "{C2A2DA}* %s zabacuju mamac nazad u vodu, ne izvlaceci plijen.", GetName( playerid, false ));
+								format(fstring, sizeof fstring, "{C2A2DA}* %s zabacuju mamac nazad u vodu, ne izvlaceci plijen.", GetName( playerid, false));
 								SetPlayerChatBubble(playerid, fstring, COLOR_PURPLE, 30.0, 4000);
 								SendClientMessage(playerid, COLOR_PURPLE, fstring);
 
@@ -166,7 +166,7 @@ DockFishing(playerid)
 							}
 							case 1:
 							{
-								format(fstring, sizeof fstring, "{C2A2DA}* %s zabacuju mamac nazad u vodu, te izvlaci Sheep Head.", GetName( playerid, false ));
+								format(fstring, sizeof fstring, "{C2A2DA}* %s zabacuju mamac nazad u vodu, te izvlaci Sheep Head.", GetName( playerid, false));
 								SetPlayerChatBubble(playerid, fstring, COLOR_PURPLE, 30.0, 4000);
 								SendClientMessage(playerid, COLOR_PURPLE, fstring);
 
@@ -176,7 +176,7 @@ DockFishing(playerid)
 							}
 							case 2:
 							{
-								format(fstring, sizeof fstring, "{C2A2DA}* %s zabacuju mamac nazad u vodu, te izvlaci White Fish.", GetName( playerid, false ));
+								format(fstring, sizeof fstring, "{C2A2DA}* %s zabacuju mamac nazad u vodu, te izvlaci White Fish.", GetName( playerid, false));
 								SetPlayerChatBubble(playerid, fstring, COLOR_PURPLE, 30.0, 4000);
 								SendClientMessage(playerid, COLOR_PURPLE, fstring);
 
@@ -193,7 +193,7 @@ DockFishing(playerid)
 						{
 							case 0:
 							{
-								format(fstring, sizeof fstring, "{C2A2DA}* %s zabacuju mamac nazad u vodu, ne izvlaceci plijen.", GetName( playerid, false ));
+								format(fstring, sizeof fstring, "{C2A2DA}* %s zabacuju mamac nazad u vodu, ne izvlaceci plijen.", GetName( playerid, false));
 								SetPlayerChatBubble(playerid, fstring, COLOR_PURPLE, 30.0, 4000);
 								SendClientMessage(playerid, COLOR_PURPLE, fstring);
 
@@ -202,7 +202,7 @@ DockFishing(playerid)
 							}
 							case 1:
 							{
-								format(fstring, sizeof fstring, "{C2A2DA}* %s zabacuju mamac nazad u vodu, te izvlaci Sheep Head.", GetName( playerid, false ));
+								format(fstring, sizeof fstring, "{C2A2DA}* %s zabacuju mamac nazad u vodu, te izvlaci Sheep Head.", GetName( playerid, false));
 								SetPlayerChatBubble(playerid, fstring, COLOR_PURPLE, 30.0, 4000);
 								SendClientMessage(playerid, COLOR_PURPLE, fstring);
 
@@ -213,7 +213,7 @@ DockFishing(playerid)
 							}
 							case 2:
 							{
-								format(fstring, sizeof fstring, "{C2A2DA}* %s zabacuju mamac nazad u vodu, te izvlaci White Fish.", GetName( playerid, false ));
+								format(fstring, sizeof fstring, "{C2A2DA}* %s zabacuju mamac nazad u vodu, te izvlaci White Fish.", GetName( playerid, false));
 								SetPlayerChatBubble(playerid, fstring, COLOR_PURPLE, 30.0, 4000);
 								SendClientMessage(playerid, COLOR_PURPLE, fstring);
 								PlayerFish[playerid][pFishWeight] += 3;
@@ -223,7 +223,7 @@ DockFishing(playerid)
 							}
 							case 3:
 							{
-								format(fstring, sizeof fstring, "{C2A2DA}* %s zabacuju mamac nazad u vodu, te izvlaci Rockfish.", GetName( playerid, false ));
+								format(fstring, sizeof fstring, "{C2A2DA}* %s zabacuju mamac nazad u vodu, te izvlaci Rockfish.", GetName( playerid, false));
 								SetPlayerChatBubble(playerid, fstring, COLOR_PURPLE, 30.0, 4000);
 								SendClientMessage(playerid, COLOR_PURPLE, fstring);
 
@@ -234,7 +234,7 @@ DockFishing(playerid)
 							}
 							case 4:
 							{
-								format(fstring, sizeof fstring, "{C2A2DA}* %s zabacuju mamac nazad u vodu, te izvlaci catfish.", GetName( playerid, false ));
+								format(fstring, sizeof fstring, "{C2A2DA}* %s zabacuju mamac nazad u vodu, te izvlaci catfish.", GetName( playerid, false));
 								SetPlayerChatBubble(playerid, fstring, COLOR_PURPLE, 30.0, 4000);
 								SendClientMessage(playerid, COLOR_PURPLE, fstring);
 
@@ -251,7 +251,7 @@ DockFishing(playerid)
 						{
 							case 0:
 							{
-								format(fstring, sizeof fstring, "{C2A2DA}* %s zabacuju mamac nazad u vodu, ne izvlaceci plijen.", GetName( playerid, false ));
+								format(fstring, sizeof fstring, "{C2A2DA}* %s zabacuju mamac nazad u vodu, ne izvlaceci plijen.", GetName( playerid, false));
 								SetPlayerChatBubble(playerid, fstring, COLOR_PURPLE, 30.0, 4000);
 								SendClientMessage(playerid, COLOR_PURPLE, fstring);
 
@@ -260,7 +260,7 @@ DockFishing(playerid)
 							}
 							case 1:
 							{
-								format(fstring, sizeof fstring, "{C2A2DA}* %s zabacuju mamac nazad u vodu, te izvlaci Sheep Head.", GetName( playerid, false ));
+								format(fstring, sizeof fstring, "{C2A2DA}* %s zabacuju mamac nazad u vodu, te izvlaci Sheep Head.", GetName( playerid, false));
 								SetPlayerChatBubble(playerid, fstring, COLOR_PURPLE, 30.0, 4000);
 								SendClientMessage(playerid, COLOR_PURPLE, fstring);
 
@@ -271,7 +271,7 @@ DockFishing(playerid)
 							}
 							case 2:
 							{
-								format(fstring, sizeof fstring, "{C2A2DA}* %s zabacuju mamac nazad u vodu, te izvlaci White Fish.", GetName( playerid, false ));
+								format(fstring, sizeof fstring, "{C2A2DA}* %s zabacuju mamac nazad u vodu, te izvlaci White Fish.", GetName( playerid, false));
 								SetPlayerChatBubble(playerid, fstring, COLOR_PURPLE, 30.0, 4000);
 								SendClientMessage(playerid, COLOR_PURPLE, fstring);
 
@@ -282,7 +282,7 @@ DockFishing(playerid)
 							}
 							case 3:
 							{
-								format(fstring, sizeof fstring, "{C2A2DA}* %s zabacuju mamac nazad u vodu, te izvlaci Rockfish.", GetName( playerid, false ));
+								format(fstring, sizeof fstring, "{C2A2DA}* %s zabacuju mamac nazad u vodu, te izvlaci Rockfish.", GetName( playerid, false));
 								SetPlayerChatBubble(playerid, fstring, COLOR_PURPLE, 30.0, 4000);
 								SendClientMessage(playerid, COLOR_PURPLE, fstring);
 
@@ -293,7 +293,7 @@ DockFishing(playerid)
 							}
 							case 4:
 							{
-								format(fstring, sizeof fstring, "{C2A2DA}* %s zabacuju mamac nazad u vodu, te izvlaci catfish.", GetName( playerid, false ));
+								format(fstring, sizeof fstring, "{C2A2DA}* %s zabacuju mamac nazad u vodu, te izvlaci catfish.", GetName( playerid, false));
 								SetPlayerChatBubble(playerid, fstring, COLOR_PURPLE, 30.0, 4000);
 								SendClientMessage(playerid, COLOR_PURPLE, fstring);
 
@@ -304,7 +304,7 @@ DockFishing(playerid)
 							}
 							case 5:
 							{
-								format(fstring, sizeof fstring, "{C2A2DA}* %s zabacuju mamac nazad u vodu, te izvlaci Bocaccio.", GetName( playerid, false ));
+								format(fstring, sizeof fstring, "{C2A2DA}* %s zabacuju mamac nazad u vodu, te izvlaci Bocaccio.", GetName( playerid, false));
 								SetPlayerChatBubble(playerid, fstring, COLOR_PURPLE, 30.0, 4000);
 								SendClientMessage(playerid, COLOR_PURPLE, fstring);
 
@@ -342,7 +342,7 @@ BoatFishing(playerid)
 						{
 							case 0:
 							{
-								format(fstring, sizeof fstring, "{C2A2DA}* %s zabacuju mamac nazad u vodu, ne izvlaceci plijen.", GetName( playerid, false ));
+								format(fstring, sizeof fstring, "{C2A2DA}* %s zabacuju mamac nazad u vodu, ne izvlaceci plijen.", GetName( playerid, false));
 								SetPlayerChatBubble(playerid, fstring, COLOR_PURPLE, 30.0, 4000);
 								SendClientMessage(playerid, COLOR_PURPLE, fstring);
 
@@ -351,7 +351,7 @@ BoatFishing(playerid)
 							}
 							case 1:
 							{
-								format(fstring, sizeof fstring, "{C2A2DA}* %s zabacuju mamac nazad u vodu, te izvlaci Sheep Head.", GetName( playerid, false ));
+								format(fstring, sizeof fstring, "{C2A2DA}* %s zabacuju mamac nazad u vodu, te izvlaci Sheep Head.", GetName( playerid, false));
 								SetPlayerChatBubble(playerid, fstring, COLOR_PURPLE, 30.0, 4000);
 								SendClientMessage(playerid, COLOR_PURPLE, fstring);
 
@@ -361,7 +361,7 @@ BoatFishing(playerid)
 							}
 							case 2:
 							{
-								format(fstring, sizeof fstring, "{C2A2DA}* %s zabacuju mamac nazad u vodu, te izvlaci White Fish.", GetName( playerid, false ));
+								format(fstring, sizeof fstring, "{C2A2DA}* %s zabacuju mamac nazad u vodu, te izvlaci White Fish.", GetName( playerid, false));
 								SetPlayerChatBubble(playerid, fstring, COLOR_PURPLE, 30.0, 4000);
 								SendClientMessage(playerid, COLOR_PURPLE, fstring);
 
@@ -378,7 +378,7 @@ BoatFishing(playerid)
 						{
 							case 0:
 							{
-								format(fstring, sizeof fstring, "{C2A2DA}* %s zabacuju mamac nazad u vodu, ne izvlaceci plijen.", GetName( playerid, false ));
+								format(fstring, sizeof fstring, "{C2A2DA}* %s zabacuju mamac nazad u vodu, ne izvlaceci plijen.", GetName( playerid, false));
 								SetPlayerChatBubble(playerid, fstring, COLOR_PURPLE, 30.0, 4000);
 								SendClientMessage(playerid, COLOR_PURPLE, fstring);
 
@@ -387,7 +387,7 @@ BoatFishing(playerid)
 							}
 							case 1:
 							{
-								format(fstring, sizeof fstring, "{C2A2DA}* %s zabacuju mamac nazad u vodu, te izvlaci Sheep Head.", GetName( playerid, false ));
+								format(fstring, sizeof fstring, "{C2A2DA}* %s zabacuju mamac nazad u vodu, te izvlaci Sheep Head.", GetName( playerid, false));
 								SetPlayerChatBubble(playerid, fstring, COLOR_PURPLE, 30.0, 4000);
 								SendClientMessage(playerid, COLOR_PURPLE, fstring);
 
@@ -398,7 +398,7 @@ BoatFishing(playerid)
 							}
 							case 2:
 							{
-								format(fstring, sizeof fstring, "{C2A2DA}* %s zabacuju mamac nazad u vodu, te izvlaci White Fish.", GetName( playerid, false ));
+								format(fstring, sizeof fstring, "{C2A2DA}* %s zabacuju mamac nazad u vodu, te izvlaci White Fish.", GetName( playerid, false));
 								SetPlayerChatBubble(playerid, fstring, COLOR_PURPLE, 30.0, 4000);
 								SendClientMessage(playerid, COLOR_PURPLE, fstring);
 								PlayerFish[playerid][pFishWeight] += 3;
@@ -408,7 +408,7 @@ BoatFishing(playerid)
 							}
 							case 3:
 							{
-								format(fstring, sizeof fstring, "{C2A2DA}* %s zabacuju mamac nazad u vodu, te izvlaci Rockfish.", GetName( playerid, false ));
+								format(fstring, sizeof fstring, "{C2A2DA}* %s zabacuju mamac nazad u vodu, te izvlaci Rockfish.", GetName( playerid, false));
 								SetPlayerChatBubble(playerid, fstring, COLOR_PURPLE, 30.0, 4000);
 								SendClientMessage(playerid, COLOR_PURPLE, fstring);
 
@@ -419,7 +419,7 @@ BoatFishing(playerid)
 							}
 							case 4:
 							{
-								format(fstring, sizeof fstring, "{C2A2DA}* %s zabacuju mamac nazad u vodu, te izvlaci catfish.", GetName( playerid, false ));
+								format(fstring, sizeof fstring, "{C2A2DA}* %s zabacuju mamac nazad u vodu, te izvlaci catfish.", GetName( playerid, false));
 								SetPlayerChatBubble(playerid, fstring, COLOR_PURPLE, 30.0, 4000);
 								SendClientMessage(playerid, COLOR_PURPLE, fstring);
 
@@ -436,7 +436,7 @@ BoatFishing(playerid)
 						{
 							case 0:
 							{
-								format(fstring, sizeof fstring, "{C2A2DA}* %s zabacuju mamac nazad u vodu, ne izvlaceci plijen.", GetName( playerid, false ));
+								format(fstring, sizeof fstring, "{C2A2DA}* %s zabacuju mamac nazad u vodu, ne izvlaceci plijen.", GetName( playerid, false));
 								SetPlayerChatBubble(playerid, fstring, COLOR_PURPLE, 30.0, 4000);
 								SendClientMessage(playerid, COLOR_PURPLE, fstring);
 								FishingStamp[playerid] = gettimestamp() + 3;
@@ -444,7 +444,7 @@ BoatFishing(playerid)
 							}
 							case 1:
 							{
-								format(fstring, sizeof fstring, "{C2A2DA}* %s zabacuju mamac nazad u vodu, te izvlaci Sheep Head.", GetName( playerid, false ));
+								format(fstring, sizeof fstring, "{C2A2DA}* %s zabacuju mamac nazad u vodu, te izvlaci Sheep Head.", GetName( playerid, false));
 								SetPlayerChatBubble(playerid, fstring, COLOR_PURPLE, 30.0, 4000);
 								SendClientMessage(playerid, COLOR_PURPLE, fstring);
 								PlayerFish[playerid][pFishWeight] += 2;
@@ -453,7 +453,7 @@ BoatFishing(playerid)
 							}
 							case 2:
 							{
-								format(fstring, sizeof fstring, "{C2A2DA}* %s zabacuju mamac nazad u vodu, te izvlaci White Fish.", GetName( playerid, false ));
+								format(fstring, sizeof fstring, "{C2A2DA}* %s zabacuju mamac nazad u vodu, te izvlaci White Fish.", GetName( playerid, false));
 								SetPlayerChatBubble(playerid, fstring, COLOR_PURPLE, 30.0, 4000);
 								SendClientMessage(playerid, COLOR_PURPLE, fstring);
 
@@ -464,7 +464,7 @@ BoatFishing(playerid)
 							}
 							case 3:
 							{
-								format(fstring, sizeof fstring, "{C2A2DA}* %s zabacuju mamac nazad u vodu, te izvlaci Rockfish.", GetName( playerid, false ));
+								format(fstring, sizeof fstring, "{C2A2DA}* %s zabacuju mamac nazad u vodu, te izvlaci Rockfish.", GetName( playerid, false));
 								SetPlayerChatBubble(playerid, fstring, COLOR_PURPLE, 30.0, 4000);
 								SendClientMessage(playerid, COLOR_PURPLE, fstring);
 
@@ -475,7 +475,7 @@ BoatFishing(playerid)
 							}
 							case 4:
 							{
-								format(fstring, sizeof fstring, "{C2A2DA}* %s zabacuju mamac nazad u vodu, te izvlaci catfish.", GetName( playerid, false ));
+								format(fstring, sizeof fstring, "{C2A2DA}* %s zabacuju mamac nazad u vodu, te izvlaci catfish.", GetName( playerid, false));
 								SetPlayerChatBubble(playerid, fstring, COLOR_PURPLE, 30.0, 4000);
 								SendClientMessage(playerid, COLOR_PURPLE, fstring);
 
@@ -486,7 +486,7 @@ BoatFishing(playerid)
 							}
 							case 5:
 							{
-								format(fstring, sizeof fstring, "{C2A2DA}* %s zabacuju mamac nazad u vodu, te izvlaci Bocaccio.", GetName( playerid, false ));
+								format(fstring, sizeof fstring, "{C2A2DA}* %s zabacuju mamac nazad u vodu, te izvlaci Bocaccio.", GetName( playerid, false));
 								SetPlayerChatBubble(playerid, fstring, COLOR_PURPLE, 30.0, 4000);
 								SendClientMessage(playerid, COLOR_PURPLE, fstring);
 								PlayerFish[playerid][pFishWeight] += 10;
@@ -495,7 +495,7 @@ BoatFishing(playerid)
 							}
 							case 6:
 							{
-								format(fstring, sizeof fstring, "{C2A2DA}* %s zabacuju mamac nazad u vodu, te izvlaci Red Snapper.", GetName( playerid, false ));
+								format(fstring, sizeof fstring, "{C2A2DA}* %s zabacuju mamac nazad u vodu, te izvlaci Red Snapper.", GetName( playerid, false));
 								SetPlayerChatBubble(playerid, fstring, COLOR_PURPLE, 30.0, 4000);
 								SendClientMessage(playerid, COLOR_PURPLE, fstring);
 
@@ -506,7 +506,7 @@ BoatFishing(playerid)
 							}
 							case 7:
 							{
-								format(fstring, sizeof fstring, "{C2A2DA}* %s zabacuju mamac nazad u vodu, te izvlaci Mackerel.", GetName( playerid, false ));
+								format(fstring, sizeof fstring, "{C2A2DA}* %s zabacuju mamac nazad u vodu, te izvlaci Mackerel.", GetName( playerid, false));
 								SetPlayerChatBubble(playerid, fstring, COLOR_PURPLE, 30.0, 4000);
 								SendClientMessage(playerid, COLOR_PURPLE, fstring);
 
@@ -517,7 +517,7 @@ BoatFishing(playerid)
 							}
 							case 8:
 							{
-								format(fstring, sizeof fstring, "{C2A2DA}* %s zabacuju mamac nazad u vodu, te izvlaci Salema.", GetName( playerid, false ));
+								format(fstring, sizeof fstring, "{C2A2DA}* %s zabacuju mamac nazad u vodu, te izvlaci Salema.", GetName( playerid, false));
 								SetPlayerChatBubble(playerid, fstring, COLOR_PURPLE, 30.0, 4000);
 								SendClientMessage(playerid, COLOR_PURPLE, fstring);
 
@@ -534,7 +534,7 @@ BoatFishing(playerid)
 						{
 							case 0:
 							{
-								format(fstring, sizeof fstring, "{C2A2DA}* %s zabacuju mamac nazad u vodu, ne izvlaceci plijen.", GetName( playerid, false ));
+								format(fstring, sizeof fstring, "{C2A2DA}* %s zabacuju mamac nazad u vodu, ne izvlaceci plijen.", GetName( playerid, false));
 								SetPlayerChatBubble(playerid, fstring, COLOR_PURPLE, 30.0, 4000);
 								SendClientMessage(playerid, COLOR_PURPLE, fstring);
 
@@ -543,7 +543,7 @@ BoatFishing(playerid)
 							}
 							case 1:
 							{
-								format(fstring, sizeof fstring, "{C2A2DA}* %s zabacuju mamac nazad u vodu, te izvlaci Sheep Head.", GetName( playerid, false ));
+								format(fstring, sizeof fstring, "{C2A2DA}* %s zabacuju mamac nazad u vodu, te izvlaci Sheep Head.", GetName( playerid, false));
 								SetPlayerChatBubble(playerid, fstring, COLOR_PURPLE, 30.0, 4000);
 								SendClientMessage(playerid, COLOR_PURPLE, fstring);
 								PlayerFish[playerid][pFishWeight] += 2;
@@ -553,7 +553,7 @@ BoatFishing(playerid)
 							}
 							case 2:
 							{
-								format(fstring, sizeof fstring, "{C2A2DA}* %s zabacuju mamac nazad u vodu, te izvlaci White Fish.", GetName( playerid, false ));
+								format(fstring, sizeof fstring, "{C2A2DA}* %s zabacuju mamac nazad u vodu, te izvlaci White Fish.", GetName( playerid, false));
 								SetPlayerChatBubble(playerid, fstring, COLOR_PURPLE, 30.0, 4000);
 								SendClientMessage(playerid, COLOR_PURPLE, fstring);
 
@@ -564,7 +564,7 @@ BoatFishing(playerid)
 							}
 							case 3:
 							{
-								format(fstring, sizeof fstring, "{C2A2DA}* %s zabacuju mamac nazad u vodu, te izvlaci Rockfish.", GetName( playerid, false ));
+								format(fstring, sizeof fstring, "{C2A2DA}* %s zabacuju mamac nazad u vodu, te izvlaci Rockfish.", GetName( playerid, false));
 								SetPlayerChatBubble(playerid, fstring, COLOR_PURPLE, 30.0, 4000);
 								SendClientMessage(playerid, COLOR_PURPLE, fstring);
 
@@ -575,7 +575,7 @@ BoatFishing(playerid)
 							}
 							case 4:
 							{
-								format(fstring, sizeof fstring, "{C2A2DA}* %s zabacuju mamac nazad u vodu, te izvlaci catfish.", GetName( playerid, false ));
+								format(fstring, sizeof fstring, "{C2A2DA}* %s zabacuju mamac nazad u vodu, te izvlaci catfish.", GetName( playerid, false));
 								SetPlayerChatBubble(playerid, fstring, COLOR_PURPLE, 30.0, 4000);
 								SendClientMessage(playerid, COLOR_PURPLE, fstring);
 
@@ -586,7 +586,7 @@ BoatFishing(playerid)
 							}
 							case 5:
 							{
-								format(fstring, sizeof fstring, "{C2A2DA}* %s zabacuju mamac nazad u vodu, te izvlaci Bocaccio.", GetName( playerid, false ));
+								format(fstring, sizeof fstring, "{C2A2DA}* %s zabacuju mamac nazad u vodu, te izvlaci Bocaccio.", GetName( playerid, false));
 								SetPlayerChatBubble(playerid, fstring, COLOR_PURPLE, 30.0, 4000);
 								SendClientMessage(playerid, COLOR_PURPLE, fstring);
 
@@ -597,7 +597,7 @@ BoatFishing(playerid)
 							}
 							case 6:
 							{
-								format(fstring, sizeof fstring, "{C2A2DA}* %s zabacuju mamac nazad u vodu, te izvlaci Red Snapper.", GetName( playerid, false ));
+								format(fstring, sizeof fstring, "{C2A2DA}* %s zabacuju mamac nazad u vodu, te izvlaci Red Snapper.", GetName( playerid, false));
 								SetPlayerChatBubble(playerid, fstring, COLOR_PURPLE, 30.0, 4000);
 								SendClientMessage(playerid, COLOR_PURPLE, fstring);
 
@@ -608,7 +608,7 @@ BoatFishing(playerid)
 							}
 							case 7:
 							{
-								format(fstring, sizeof fstring, "{C2A2DA}* %s zabacuju mamac nazad u vodu, te izvlaci Mackerel.", GetName( playerid, false ));
+								format(fstring, sizeof fstring, "{C2A2DA}* %s zabacuju mamac nazad u vodu, te izvlaci Mackerel.", GetName( playerid, false));
 								SetPlayerChatBubble(playerid, fstring, COLOR_PURPLE, 30.0, 4000);
 								SendClientMessage(playerid, COLOR_PURPLE, fstring);
 
@@ -619,7 +619,7 @@ BoatFishing(playerid)
 							}
 							case 8:
 							{
-								format(fstring, sizeof fstring, "{C2A2DA}* %s zabacuju mamac nazad u vodu, te izvlaci Salema.", GetName( playerid, false ));
+								format(fstring, sizeof fstring, "{C2A2DA}* %s zabacuju mamac nazad u vodu, te izvlaci Salema.", GetName( playerid, false));
 								SetPlayerChatBubble(playerid, fstring, COLOR_PURPLE, 30.0, 4000);
 								SendClientMessage(playerid, COLOR_PURPLE, fstring);
 
@@ -630,7 +630,7 @@ BoatFishing(playerid)
 							}
 							case 9:
 							{
-								format(fstring, sizeof fstring, "{C2A2DA}* %s zabacuju mamac nazad u vodu, te izvlaci swordfish.", GetName( playerid, false ));
+								format(fstring, sizeof fstring, "{C2A2DA}* %s zabacuju mamac nazad u vodu, te izvlaci swordfish.", GetName( playerid, false));
 								SetPlayerChatBubble(playerid, fstring, COLOR_PURPLE, 30.0, 4000);
 								SendClientMessage(playerid, COLOR_PURPLE, fstring);
 
@@ -641,7 +641,7 @@ BoatFishing(playerid)
 							}
 							case 10:
 							{
-								format(fstring, sizeof fstring, "{C2A2DA}* %s zabacuju mamac nazad u vodu, te izvlaci Raza.", GetName( playerid, false ));
+								format(fstring, sizeof fstring, "{C2A2DA}* %s zabacuju mamac nazad u vodu, te izvlaci Raza.", GetName( playerid, false));
 								SetPlayerChatBubble(playerid, fstring, COLOR_PURPLE, 30.0, 4000);
 								SendClientMessage(playerid, COLOR_PURPLE, fstring);
 
@@ -651,7 +651,7 @@ BoatFishing(playerid)
 							}
 							case 11:
 							{
-								format(fstring, sizeof fstring, "{C2A2DA}* %s zabacuju mamac nazad u vodu, te izvlaci Lemon shark.", GetName( playerid, false ));
+								format(fstring, sizeof fstring, "{C2A2DA}* %s zabacuju mamac nazad u vodu, te izvlaci Lemon shark.", GetName( playerid, false));
 								SetPlayerChatBubble(playerid, fstring, COLOR_PURPLE, 30.0, 4000);
 								SendClientMessage(playerid, COLOR_PURPLE, fstring);
 
@@ -668,7 +668,7 @@ BoatFishing(playerid)
 						{
 							case 0:
 							{
-								format(fstring, sizeof fstring, "{C2A2DA}* %s zabacuju mamac nazad u vodu, ne izvlaceci plijen.", GetName( playerid, false ));
+								format(fstring, sizeof fstring, "{C2A2DA}* %s zabacuju mamac nazad u vodu, ne izvlaceci plijen.", GetName( playerid, false));
 								SetPlayerChatBubble(playerid, fstring, COLOR_PURPLE, 30.0, 4000);
 								SendClientMessage(playerid, COLOR_PURPLE, fstring);
 
@@ -677,7 +677,7 @@ BoatFishing(playerid)
 							}
 							case 1:
 							{
-								format(fstring, sizeof fstring, "{C2A2DA}* %s zabacuju mamac nazad u vodu, te izvlaci Sheep Head.", GetName( playerid, false ));
+								format(fstring, sizeof fstring, "{C2A2DA}* %s zabacuju mamac nazad u vodu, te izvlaci Sheep Head.", GetName( playerid, false));
 								SetPlayerChatBubble(playerid, fstring, COLOR_PURPLE, 30.0, 4000);
 								SendClientMessage(playerid, COLOR_PURPLE, fstring);
 
@@ -688,7 +688,7 @@ BoatFishing(playerid)
 							}
 							case 2:
 							{
-								format(fstring, sizeof fstring, "{C2A2DA}* %s zabacuju mamac nazad u vodu, te izvlaci White Fish.", GetName( playerid, false ));
+								format(fstring, sizeof fstring, "{C2A2DA}* %s zabacuju mamac nazad u vodu, te izvlaci White Fish.", GetName( playerid, false));
 								SetPlayerChatBubble(playerid, fstring, COLOR_PURPLE, 30.0, 4000);
 								SendClientMessage(playerid, COLOR_PURPLE, fstring);
 
@@ -699,7 +699,7 @@ BoatFishing(playerid)
 							}
 							case 3:
 							{
-								format(fstring, sizeof fstring, "{C2A2DA}* %s zabacuju mamac nazad u vodu, te izvlaci Rockfish.", GetName( playerid, false ));
+								format(fstring, sizeof fstring, "{C2A2DA}* %s zabacuju mamac nazad u vodu, te izvlaci Rockfish.", GetName( playerid, false));
 								SetPlayerChatBubble(playerid, fstring, COLOR_PURPLE, 30.0, 4000);
 								SendClientMessage(playerid, COLOR_PURPLE, fstring);
 
@@ -710,7 +710,7 @@ BoatFishing(playerid)
 							}
 							case 4:
 							{
-								format(fstring, sizeof fstring, "{C2A2DA}* %s zabacuju mamac nazad u vodu, te izvlaci catfish.", GetName( playerid, false ));
+								format(fstring, sizeof fstring, "{C2A2DA}* %s zabacuju mamac nazad u vodu, te izvlaci catfish.", GetName( playerid, false));
 								SetPlayerChatBubble(playerid, fstring, COLOR_PURPLE, 30.0, 4000);
 								SendClientMessage(playerid, COLOR_PURPLE, fstring);
 
@@ -721,7 +721,7 @@ BoatFishing(playerid)
 							}
 							case 5:
 							{
-								format(fstring, sizeof fstring, "{C2A2DA}* %s zabacuju mamac nazad u vodu, te izvlaci Bocaccio.", GetName( playerid, false ));
+								format(fstring, sizeof fstring, "{C2A2DA}* %s zabacuju mamac nazad u vodu, te izvlaci Bocaccio.", GetName( playerid, false));
 								SetPlayerChatBubble(playerid, fstring, COLOR_PURPLE, 30.0, 4000);
 								SendClientMessage(playerid, COLOR_PURPLE, fstring);
 
@@ -732,7 +732,7 @@ BoatFishing(playerid)
 							}
 							case 6:
 							{
-								format(fstring, sizeof fstring, "{C2A2DA}* %s zabacuju mamac nazad u vodu, te izvlaci Red Snapper.", GetName( playerid, false ));
+								format(fstring, sizeof fstring, "{C2A2DA}* %s zabacuju mamac nazad u vodu, te izvlaci Red Snapper.", GetName( playerid, false));
 								SetPlayerChatBubble(playerid, fstring, COLOR_PURPLE, 30.0, 4000);
 								SendClientMessage(playerid, COLOR_PURPLE, fstring);
 
@@ -743,7 +743,7 @@ BoatFishing(playerid)
 							}
 							case 7:
 							{
-								format(fstring, sizeof fstring, "{C2A2DA}* %s zabacuju mamac nazad u vodu, te izvlaci Mackerel.", GetName( playerid, false ));
+								format(fstring, sizeof fstring, "{C2A2DA}* %s zabacuju mamac nazad u vodu, te izvlaci Mackerel.", GetName( playerid, false));
 								SetPlayerChatBubble(playerid, fstring, COLOR_PURPLE, 30.0, 4000);
 								SendClientMessage(playerid, COLOR_PURPLE, fstring);
 
@@ -754,7 +754,7 @@ BoatFishing(playerid)
 							}
 							case 8:
 							{
-								format(fstring, sizeof fstring, "{C2A2DA}* %s zabacuju mamac nazad u vodu, te izvlaci Salema.", GetName( playerid, false ));
+								format(fstring, sizeof fstring, "{C2A2DA}* %s zabacuju mamac nazad u vodu, te izvlaci Salema.", GetName( playerid, false));
 								SetPlayerChatBubble(playerid, fstring, COLOR_PURPLE, 30.0, 4000);
 								SendClientMessage(playerid, COLOR_PURPLE, fstring);
 
@@ -765,7 +765,7 @@ BoatFishing(playerid)
 							}
 							case 9:
 							{
-								format(fstring, sizeof fstring, "{C2A2DA}* %s zabacuju mamac nazad u vodu, te izvlaci swordfish.", GetName( playerid, false ));
+								format(fstring, sizeof fstring, "{C2A2DA}* %s zabacuju mamac nazad u vodu, te izvlaci swordfish.", GetName( playerid, false));
 								SetPlayerChatBubble(playerid, fstring, COLOR_PURPLE, 30.0, 4000);
 								SendClientMessage(playerid, COLOR_PURPLE, fstring);
 
@@ -776,7 +776,7 @@ BoatFishing(playerid)
 							}
 							case 10:
 							{
-								format(fstring, sizeof fstring, "{C2A2DA}* %s zabacuju mamac nazad u vodu, te izvlaci Raza.", GetName( playerid, false ));
+								format(fstring, sizeof fstring, "{C2A2DA}* %s zabacuju mamac nazad u vodu, te izvlaci Raza.", GetName( playerid, false));
 								SetPlayerChatBubble(playerid, fstring, COLOR_PURPLE, 30.0, 4000);
 								SendClientMessage(playerid, COLOR_PURPLE, fstring);
 
@@ -787,7 +787,7 @@ BoatFishing(playerid)
 							}
 							case 11:
 							{
-								format(fstring, sizeof fstring, "{C2A2DA}* %s zabacuju mamac nazad u vodu, te izvlaci Lemon shark.", GetName( playerid, false ));
+								format(fstring, sizeof fstring, "{C2A2DA}* %s zabacuju mamac nazad u vodu, te izvlaci Lemon shark.", GetName( playerid, false));
 								SetPlayerChatBubble(playerid, fstring, COLOR_PURPLE, 30.0, 4000);
 								SendClientMessage(playerid, COLOR_PURPLE, fstring);
 
@@ -798,7 +798,7 @@ BoatFishing(playerid)
 							}
 							case 12:
 							{
-								format(fstring, sizeof fstring, "{C2A2DA}* %s zabacuju mamac nazad u vodu, te izvlaci Kraken.", GetName( playerid, false ));
+								format(fstring, sizeof fstring, "{C2A2DA}* %s zabacuju mamac nazad u vodu, te izvlaci Kraken.", GetName( playerid, false));
 								SetPlayerChatBubble(playerid, fstring, COLOR_PURPLE, 30.0, 4000);
 								SendClientMessage(playerid, COLOR_PURPLE, fstring);
 

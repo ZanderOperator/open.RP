@@ -94,18 +94,18 @@ stock IsVehicleATrashTruck(id)
 }
 stock static CheckGarbages(playerid)
 {
-	Bit8_Set( gr_TrashPickuped, playerid, Bit8_Get( gr_TrashPickuped, playerid ) + 1 );
+	Bit8_Set( gr_TrashPickuped, playerid, Bit8_Get( gr_TrashPickuped, playerid) + 1);
 	new
 		tmpString[16];
-	format( tmpString, sizeof(tmpString), "~y~%d stavljeno", Bit8_Get( gr_TrashPickuped, playerid ));
-	GameTextForPlayer(playerid, tmpString, 1500, 1 );
+	format( tmpString, sizeof(tmpString), "~y~%d stavljeno", Bit8_Get( gr_TrashPickuped, playerid));
+	GameTextForPlayer(playerid, tmpString, 1500, 1);
 	
-	if(Bit8_Get( gr_TrashPickuped, playerid ) == 8 )
+	if(Bit8_Get( gr_TrashPickuped, playerid) == 8)
 	{
 		new money = (TRASH_PRICE * 10) + (GetPlayerSkillLevel(playerid) * 25); 
 		va_SendClientMessage(playerid, COLOR_RED, "[!] Zaradio si $%d, placa ti je sjela na racun.", money);
 
-		BudgetToPlayerBankMoney (playerid, money ); // novac sjeda na radnu knjizicu iz proracuna
+		BudgetToPlayerBankMoney (playerid, money); // novac sjeda na radnu knjizicu iz proracuna
 		PaydayInfo[playerid][pPayDayMoney] += money;
 		PlayerJob[playerid][pFreeWorks] -= 5;
 		UpgradePlayerSkill(playerid);
@@ -114,7 +114,7 @@ stock static CheckGarbages(playerid)
 		DestroyPlayerObject(playerid, tObject[playerid]);
 		tObject[playerid] = INVALID_OBJECT_ID;
 		DisablePlayerCheckpoint(playerid);
-		Bit8_Set( gr_TrashPickuped, playerid, 0 );
+		Bit8_Set( gr_TrashPickuped, playerid, 0);
 		Player_SetIsWorkingJob(playerid, false);
 		return 1;
 	}
@@ -245,7 +245,7 @@ hook OnPlayerDisconnect(playerid, reason)
     pOnDepony[playerid] = 0;
     gDeponyEmpty[playerid] = 0;
     pBoxes[playerid] = 0;
-	Bit8_Set( gr_TrashPickuped, playerid, 0 );
+	Bit8_Set( gr_TrashPickuped, playerid, 0);
 	return 1;
 }
 
@@ -277,7 +277,7 @@ hook OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
 				gGarbagePicked[playerid] = true;
 				garbageContainersTrash[nContainer] = 0;
 				SetPlayerAttachedObject(playerid, 0, 1264, 5, 0.352547, -0.205320, 0.184597, 212.175216, 292.318084, 151.621368, 1.000000, 1.000000, 1.000000); // vreca
-				SendMessage(playerid, MESSAGE_TYPE_INFO, "Pokupili ste smece, sada ga odnesite do vaseg kamiona. (( Lijevi klik misa kod kamiona )) ");
+				SendMessage(playerid, MESSAGE_TYPE_INFO, "Pokupili ste smece, sada ga odnesite do vaseg kamiona. (( Lijevi klik misa kod kamiona)) ");
 			}
 		}
 		else if(gGarbagePicked[playerid] == true && gStartedWork[playerid] == 2)
@@ -289,7 +289,7 @@ hook OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
 			
 			if(pBoxes[playerid] == 10) return SendClientMessage( playerid, COLOR_RED, "Vec ste utovarili 10 vreca! Odvezite kamion na deponij!");
 			pBoxes[playerid] += 1;
-			Bit8_Set( gr_GarbageBoxesAll, playerid, pBoxes[playerid] );
+			Bit8_Set( gr_GarbageBoxesAll, playerid, pBoxes[playerid]);
 			
 			SendMessage(playerid, MESSAGE_TYPE_INFO, "[!] Na mapi vam je oznacena lokacija deponije smeca.");
 			va_SendClientMessage( playerid, COLOR_RED, "[!] Ubacili ste vrecu smeca u kamion sada ima %d/10 mozete ih odmah odvuci na deponiju ili skupljati jos pa onda.", pBoxes[playerid]);
@@ -302,14 +302,14 @@ hook OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
 		{
 			if(IsPlayerInRangeOfPoint(playerid, 5.0, 2178.7537, -1992.0636, 13.5469))
 			{
-				if(IsPlayerAttachedObjectSlotUsed( playerid, 0 ))
+				if(IsPlayerAttachedObjectSlotUsed( playerid, 0))
 					RemovePlayerAttachedObject(playerid, 0);
 				
 				pBoxes[playerid]--;
-				if(!pBoxes[playerid] ) {
+				if(!pBoxes[playerid]) {
 					new 
 						money;
-					switch( Bit8_Get( gr_GarbageBoxesAll, playerid ))
+					switch( Bit8_Get( gr_GarbageBoxesAll, playerid))
 					{
 						case 1 .. 2:	money = PRICE_TRASH;
 						case 3 .. 4:	money = random(100)  + PRICE_TRASH;
@@ -320,7 +320,7 @@ hook OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
 					money += (GetPlayerSkillLevel(playerid) * 30);
 					va_SendClientMessage(playerid, COLOR_RED, "[!] Zaradio si $%d, placa ti je sjela na racun.", money);
 
-					BudgetToPlayerBankMoney (playerid, money ); // novac sjeda na radnu knjizicu iz proracuna
+					BudgetToPlayerBankMoney (playerid, money); // novac sjeda na radnu knjizicu iz proracuna
 					PaydayInfo[playerid][pPayDayMoney] += money;
 					PlayerJob[playerid][pFreeWorks] -= 5;
 					UpgradePlayerSkill(playerid);
@@ -355,10 +355,10 @@ hook OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
 						tmpString[10];
 					format( tmpString, 10, "~w~%d/%d", 
 						pBoxes[playerid],
-						Bit8_Get( gr_GarbageBoxesAll, playerid )
+						Bit8_Get( gr_GarbageBoxesAll, playerid)
 					);
 					GameTextForPlayer(playerid, tmpString, 2000, 1);
-					SendMessage(playerid, MESSAGE_TYPE_INFO, "Uzeli ste vrecu smeca iz kamiona, sad je bacite na otpad. (( Lijevi klik misa kod otpada ))");
+					SendMessage(playerid, MESSAGE_TYPE_INFO, "Uzeli ste vrecu smeca iz kamiona, sad je bacite na otpad. (( Lijevi klik misa kod otpada))");
 				}
 				else if(pBoxes[playerid] == 0)
 				{
@@ -375,7 +375,7 @@ hook OnPlayerEnterCheckpoint(playerid)
 {
 	if(PlayerJob[playerid][pJob] == JOB_GARBAGE) 
 	{	
-		if(gStartedWork[playerid] == 1 ) 
+		if(gStartedWork[playerid] == 1) 
 		{
 	        if(IsPlayerInAnyVehicle(playerid)) return SendClientMessage( playerid, COLOR_RED, "Ne smijete biti u vozilu!");
 			DisablePlayerCheckpoint(playerid);
@@ -437,13 +437,13 @@ CMD:garbage(playerid, params[])
 	new
 		pick[8];
 	if(PlayerJob[playerid][pJob] != JOB_GARBAGE) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste zaposleni kao smetlar!");
-	if(sscanf( params, "s[8] ", pick )) return SendClientMessage(playerid, COLOR_RED, "[?]: /garbage [foot/truck/clothes/stop]");
+	if(sscanf( params, "s[8] ", pick)) return SendClientMessage(playerid, COLOR_RED, "[?]: /garbage [foot/truck/clothes/stop]");
 	
-	if(!strcmp( pick, "foot", true )) 
+	if(!strcmp( pick, "foot", true)) 
 	{
-		if(PlayerJob[playerid][pFreeWorks] < 1 ) return SendClientMessage( playerid, COLOR_RED, "Ne mozes vise raditi!");
-		if(!pTakedWC[playerid] ) return SendClientMessage( playerid, COLOR_RED, "Prvo morate koristiti /garbage clothes!");
-		if(gStartedWork[playerid] != 0 ) return SendClientMessage( playerid, COLOR_RED, "Vec radite neki posao! Kucajte /garbage stop!");
+		if(PlayerJob[playerid][pFreeWorks] < 1) return SendClientMessage( playerid, COLOR_RED, "Ne mozes vise raditi!");
+		if(!pTakedWC[playerid]) return SendClientMessage( playerid, COLOR_RED, "Prvo morate koristiti /garbage clothes!");
+		if(gStartedWork[playerid] != 0) return SendClientMessage( playerid, COLOR_RED, "Vec radite neki posao! Kucajte /garbage stop!");
 		
 		new Pos = random(sizeof(randomTrashPos));
 		gStartedWork[playerid] = 1;
@@ -451,26 +451,26 @@ CMD:garbage(playerid, params[])
 		tObject[playerid] = CreatePlayerObject(playerid, 2672, randomTrashPos[Pos][0], randomTrashPos[Pos][1], randomTrashPos[Pos][2], 0.00000, 0.00000, 0.00000, 300.0);
 		SetPlayerCheckpoint(playerid, randomTrashPos[Pos][0], randomTrashPos[Pos][1], randomTrashPos[Pos][2], 2.0);
         SendMessage(playerid, MESSAGE_TYPE_INFO, "Smece vam je oznaceno crvenim na mapi, a kontenjeri rozim covjecicima.");
-		Bit8_Set( gr_TrashPickuped, playerid, 0 );
+		Bit8_Set( gr_TrashPickuped, playerid, 0);
 		return 1;
 	}
-	if(!strcmp( pick, "truck", true ))
+	if(!strcmp( pick, "truck", true))
 	{
-		if(PlayerJob[playerid][pFreeWorks] < 1 ) return SendClientMessage( playerid, COLOR_RED, "Ne mozes vise raditi!");
-		if(!pTakedWC[playerid] ) return SendClientMessage( playerid, COLOR_RED, "Prvo morate koristiti /garbage clothes!");
-		if(GetPlayerSkillLevel(playerid) < 1 ) return SendClientMessage( playerid, COLOR_RED, "Niste smetlar skill 1!");
+		if(PlayerJob[playerid][pFreeWorks] < 1) return SendClientMessage( playerid, COLOR_RED, "Ne mozes vise raditi!");
+		if(!pTakedWC[playerid]) return SendClientMessage( playerid, COLOR_RED, "Prvo morate koristiti /garbage clothes!");
+		if(GetPlayerSkillLevel(playerid) < 1) return SendClientMessage( playerid, COLOR_RED, "Niste smetlar skill 1!");
 		new vID = GetPlayerVehicleID(playerid);
 		if(!IsVehicleATrashTruck(vID)) return SendClientMessage( playerid, COLOR_RED, "Niste u TrashMasteru!");
 		gStartedWork[playerid] = 2;
 		SendClientMessage( playerid, COLOR_RED, "[!] Krenite s praznjenjem kontenjera! Potrazite kotenjere sa smecem!");
 		return 1;
 	}
-	if(!strcmp( pick, "clothes", true ))
+	if(!strcmp( pick, "clothes", true))
 	{
-		if(!IsPlayerInRangeOfPoint(playerid, 5.0, 2199.1487,-1972.6333,13.5581 )) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste blizu pickupa za presvlacenje!");
+		if(!IsPlayerInRangeOfPoint(playerid, 5.0, 2199.1487,-1972.6333,13.5581)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste blizu pickupa za presvlacenje!");
 		if(pTakedWC[playerid] == false)
 		{
-			if(PlayerJob[playerid][pFreeWorks] < 1 ) return SendClientMessage( playerid, COLOR_RED, "Ne mozes vise raditi!");
+			if(PlayerJob[playerid][pFreeWorks] < 1) return SendClientMessage( playerid, COLOR_RED, "Ne mozes vise raditi!");
 			pTakedWC[playerid] = true;
 			SetPlayerSkin(playerid, 16);
 			SendMessage(playerid, MESSAGE_TYPE_INFO, "Obukli ste radnu odjecu, koristite /garbage foot ili truck da krenete raditi!");		
@@ -486,11 +486,11 @@ CMD:garbage(playerid, params[])
 			DisablePlayerCheckpoint(playerid);
 			SendMessage(playerid, MESSAGE_TYPE_INFO, "Ostavili ste radnu odjecu te zavrsili posao.");
 			Player_SetIsWorkingJob(playerid, false);
-			Bit8_Set( gr_TrashPickuped, playerid, 0 );
+			Bit8_Set( gr_TrashPickuped, playerid, 0);
 		}
 		return 1;
 	}
-	if(!strcmp( pick, "stop", true )) 
+	if(!strcmp( pick, "stop", true)) 
 	{
 		pTakedWC[playerid] 			= false;
 		gStartedWork[playerid] 		= 0;
@@ -505,7 +505,7 @@ CMD:garbage(playerid, params[])
 		if(IsPlayerAttachedObjectSlotUsed(playerid, 0))
 			RemovePlayerAttachedObject(playerid, 0);
 		
-		Bit8_Set( gr_TrashPickuped, playerid, 0 );
+		Bit8_Set( gr_TrashPickuped, playerid, 0);
 		DisablePlayerCheckpoint(playerid);
 		Player_SetIsWorkingJob(playerid, false);
 		SendClientMessage( playerid, COLOR_RED, "[!] Uspjesno ste prekinuli posao smetlara!");

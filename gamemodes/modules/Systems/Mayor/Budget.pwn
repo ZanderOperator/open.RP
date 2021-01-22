@@ -79,7 +79,7 @@ stock SaveCityInfo()
         CityInfo[cBudget],
         CityInfo[cIllegalBudget],
         CityInfo[cTax]
-    );
+   );
     return 1;
 }
 
@@ -95,19 +95,19 @@ stock ShowGovMDC(playerid, targetid)
         GetName(targetid,true),
         PlayerInfo[targetid][pSex] == 1 ? ("Musko") : ("Zensko"),
         PlayerInfo[targetid][pAge]
-    );
+   );
     strcat(govDialog, motd, sizeof(govDialog));
 
     format(motd, sizeof(motd),"{DCE4ED}Broj telefona: %d\nPosao: %s\nUhicivan puta: %d\n\n",
         PlayerMobile[targetid][pMobileNumber],
         (IsIllegalJob(playerid)) ? ("Unemployed"): ReturnJob(PlayerJob[targetid][pJob]),
         PlayerJail[targetid][pArrested]
-    );
+   );
     strcat(govDialog, motd, sizeof(govDialog));
 
     format(motd, sizeof(motd),"{C9C9C9}POSSESIONS:\n\n{DCE4ED}Bank. racun: %d$ \n",
         PlayerInfo[targetid][pBank]
-    );
+   );
     strcat(govDialog, motd, sizeof(govDialog));
 
     new bool:property = false,
@@ -118,7 +118,7 @@ stock ShowGovMDC(playerid, targetid)
             HouseInfo[PlayerKeys[targetid][pHouseKey]][hAdress],
             PlayerKeys[targetid][pHouseKey],
             HouseInfo[PlayerKeys[targetid][pHouseKey]][hValue]
-        );
+       );
         strcat(govDialog, motd, sizeof(govDialog));
         property = true;
     }
@@ -128,7 +128,7 @@ stock ShowGovMDC(playerid, targetid)
             ComplexRoomInfo[PlayerKeys[targetid][pComplexRoomKey]][cAdress],
             PlayerKeys[targetid][pComplexRoomKey],
             ComplexRoomInfo[PlayerKeys[targetid][pComplexRoomKey]][cValue]
-        );
+       );
         strcat(govDialog, motd, sizeof(govDialog));
         property = true;
     }
@@ -139,7 +139,7 @@ stock ShowGovMDC(playerid, targetid)
             PlayerKeys[targetid][pComplexKey],
             ComplexInfo[PlayerKeys[targetid][pComplexKey]][cPrice],
             ComplexInfo[PlayerKeys[targetid][pComplexKey]][cTill]
-        );
+       );
         strcat(govDialog, motd, sizeof(govDialog));
         property = true;
     }
@@ -156,7 +156,7 @@ stock ShowGovMDC(playerid, targetid)
             bizzid,
             BizzInfo[bizzid][bBuyPrice],
             BizzInfo[bizzid][bTill]
-        );
+       );
         strcat(govDialog, motd, sizeof(govDialog));
         bizz = true;
     }
@@ -186,12 +186,12 @@ stock CheckPlayerTransactions(playerid, const name[])
         va_fquery(g_SQL, "SELECT * FROM server_transactions WHERE sendername = '%e' OR recievername = '%e' ORDER BY id DESC",
             name,
             name
-        ), 
+       ), 
         "OnPlayerTransactionFinish", 
         "is", 
         playerid, 
         name
-    );
+   );
     return 1;
 }
 
@@ -216,7 +216,7 @@ public OnPlayerTransactionFinish(playerid, const searchednick[])
         sqlid,
         lenleft;
 
-    for (new i = 0; i < rows; i++ )
+    for (new i = 0; i < rows; i++)
     {
         lenleft = sizeof(dialogstring) - strlen(dialogstring);
         if(lenleft < sizeof(motd))
@@ -248,7 +248,7 @@ public OnPlayerTransactionFinish(playerid, const searchednick[])
             seller,
             amount,
             descstring
-        );
+       );
         strcat(dialogstring, motd, sizeof(dialogstring));
     }
     // TODO: why format a global variable here, investigate this
@@ -266,7 +266,7 @@ stock ListServerTransactions(playerid, type)
         "ii", 
         playerid, 
         type
-    );
+   );
     return 1;
 }
 
@@ -289,7 +289,7 @@ public OnTransListQueryFinish(playerid, logtype)
         sqlid,
         lenleft;
 
-    for (new i = 0; i < rows; i++ )
+    for (new i = 0; i < rows; i++)
     {
         lenleft = sizeof(dialogstring) - strlen(dialogstring);
         if(lenleft < sizeof(motd))
@@ -318,7 +318,7 @@ public OnTransListQueryFinish(playerid, logtype)
             seller,
             amount,
             descstring
-        );
+       );
         strcat(dialogstring, motd, sizeof(dialogstring));
     }
     format(dtitle, sizeof(dtitle), "Lista transakcija: %s", typestring);
@@ -372,7 +372,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                     new string[128];
                     format(string, sizeof(string), "Unesite novi porez za gradjane Los Santosa.\nTrenutni porez iznosi: %d"COL_GREEN"%",
                         CityInfo[cTax]
-                    );
+                   );
                     ShowPlayerDialog(playerid, DIALOG_CITY_TAX, DIALOG_STYLE_INPUT, "GRADSKI PRORACUN - POREZ", string, "Input", "Abort");
                 }
                 case 2:
@@ -468,7 +468,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                     BizzInfo[biznis][bMessage],
                     biznis,
                     BizzInfo[biznis][bSQLID]
-                );
+               );
                 #endif
             }
             else
@@ -501,7 +501,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                     BizzInfo[biznis][bMessage],
                     biznis,
                     BizzInfo[biznis][bSQLID]
-                );
+               );
                 #endif
             }
             else
@@ -521,21 +521,21 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                     va_ShowPlayerDialog(playerid, DIALOG_CITY_BUDGET_TAKE, DIALOG_STYLE_INPUT, "GRADSKI PRORACUN - UZIMANJE",
                         "Unesite iznos koji zelite uzeti iz proracuna.\nTrenutno stanje proracuna: %d$", "Input", "Abort",
                         CityInfo[cBudget]
-                    );
+                   );
                 }
                 case 1:
                 { // Stavi
                     va_ShowPlayerDialog(playerid, DIALOG_CITY_BUDGET_PUT, DIALOG_STYLE_INPUT, "GRADSKI PRORACUN - STAVLJANJE",
                         "Unesite iznos koji zelite staviti u proracun.\nTrenutno stanje proracuna: %d$", "Input", "Abort",
                         CityInfo[cBudget]
-                    );
+                   );
                 }
                 case 2:
                 { // Status
                     va_ShowPlayerDialog(playerid, DIALOG_CITY_BUDGET_STAT, DIALOG_STYLE_MSGBOX, "GRADSKI PRORACUN - STATUS",
                         "Trenutno stanje proracuna: %d "COL_GREEN"$", "Input", "Abort",
                         CityInfo[cBudget]
-                    );
+                   );
                 }
             }
             return 1;
@@ -555,7 +555,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                     GetName(playerid),
                     takeMoney,
                     CityInfo[cBudget]
-                );
+               );
                 #endif
             }
             else
@@ -563,7 +563,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                 va_ShowPlayerDialog(playerid, DIALOG_CITY_BUDGET_TAKE, DIALOG_STYLE_INPUT, "GRADSKI PRORACUN - UZIMANJE",
                     "Unesite iznos koji zelite uzeti iz proracuna.\nTrenutno stanje proracuna: "COL_RED"%d$", "Input", "Abort",
                     CityInfo[cBudget]
-                );
+               );
                 return 1;
             }
             return 1;
@@ -586,7 +586,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                     GetName(playerid),
                     takeMoney,
                     CityInfo[cBudget]
-                );
+               );
                 #endif
             }
             else
@@ -594,7 +594,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                 va_ShowPlayerDialog(playerid, DIALOG_CITY_BUDGET_PUT, DIALOG_STYLE_INPUT, "GRADSKI PRORACUN - STAVLJANJE",
                     "Unesite iznos koji zelite staviti u proracun.\nTrenutno stanje proracuna: "COL_RED"%d$", "Input", "Abort",
                     CityInfo[cBudget]
-                );
+               );
                 return 1;
             }
             return 1;
@@ -614,7 +614,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 
             SendFormatMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uspjesno ste promjenili porez u Los Santosu, sada on iznosi %d posto",
                 CityInfo[cTax]
-            );
+           );
             return 1;
         }
         case DIALOG_CITY_FACTIONBANK:
@@ -690,7 +690,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                 PlayerInfo[playerid][pSQLID],
                 money,
                 FactionInfo[fid][fName]
-            );
+           );
             ResetFactionListIDs(playerid);
             return 1;
         }
@@ -720,7 +720,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                 PlayerInfo[playerid][pSQLID],
                 money,
                 FactionInfo[fid][fName]
-            );
+           );
             ResetFactionListIDs(playerid);
             return 1;
         }
@@ -868,7 +868,7 @@ CMD:charity(playerid, params[])
         GetName( playerid, false),
         ReturnPlayerIP(playerid),
         pay
-    );
+   );
     #endif
     SendFormatMessage(playerid, MESSAGE_TYPE_INFO, "Uspjesno ste donirali %d$ gradu!", pay);
     return 1;

@@ -589,7 +589,7 @@ stock LoadModelSelectionMenu(f_name[])
 	new File:f, str[75];
 	format(str, sizeof(str), "%s", f_name);
 	f = fopen(str, io_read);
-	if(!f ) {
+	if(!f) {
 		printf("-mSelection- WARNING: Failed to load list: \"%s\"", f_name);
 		return mS_INVALID_LISTID;
 	}

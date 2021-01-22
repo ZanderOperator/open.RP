@@ -37,7 +37,7 @@ LoadPlayerRadio(playerid)
         "LoadingPlayerRadio", 
         "i", 
         playerid
-    );
+   );
     return 1;
 }
 
@@ -49,7 +49,7 @@ Public: LoadingPlayerRadio(playerid)
             "INSERT INTO player_radio(sqlid, HasRadio, MainSlot, Radio1, Slot1, Radio2, Slot2, Radio3, Slot3) \n\
                 VALUES('%d', '0', '0', '0', '0', '0', '0', '0', '0')",
             PlayerInfo[playerid][pSQLID]
-        );
+       );
         return 1;
     }
     cache_get_value_name_int(0,	"HasRadio"	, PlayerRadio[playerid][pHasRadio]);
@@ -83,7 +83,7 @@ SavePlayerRadio(playerid)
         PlayerRadio[playerid][pRadio][2], PlayerRadio[playerid][pRadioSlot][2],
         PlayerRadio[playerid][pRadio][3], PlayerRadio[playerid][pRadioSlot][3],
         PlayerInfo[playerid][pSQLID]
-    );
+   );
     return 1;
 }
 
@@ -356,7 +356,7 @@ CMD:channel(playerid, params[])
 		SendClientMessage(playerid, -1, "[?] OPCIJE: setslot, leave, set, playerfreq, checkfreq");
 		return 1;
 	}
-	if(!strcmp( choice, "setslot", true )) 
+	if(!strcmp( choice, "setslot", true)) 
 	{
 		new string[128], slotid;
 		if(!PlayerRadio[playerid][pHasRadio])
@@ -372,7 +372,7 @@ CMD:channel(playerid, params[])
 		PlayerRadio[playerid][pMainSlot] = slotid;
         SavePlayerRadio(playerid);
 	}
-	if(!strcmp( choice, "leave", true )) 
+	if(!strcmp( choice, "leave", true)) 
 	{
 		new string[128], slotid;
 		if(!PlayerRadio[playerid][pHasRadio]) 
@@ -391,7 +391,7 @@ CMD:channel(playerid, params[])
 		format(string, sizeof(string), "Napustili ste radio na slotu %d.", slotid);
 		SendClientMessage(playerid, COLOR_RED, string);
 	}
-	if(!strcmp( choice, "set", true )) 
+	if(!strcmp( choice, "set", true)) 
 	{
 		new channel, slotid;
 		if(!PlayerRadio[playerid][pHasRadio]) 
@@ -423,7 +423,7 @@ CMD:channel(playerid, params[])
 
 		va_SendClientMessage(playerid, COLOR_RED, "[!] Sada cete slusati kanal broj %d pod slotom %d.", channel, slotid);
 	}
-	if(!strcmp( choice, "playerfreq", true )) 
+	if(!strcmp( choice, "playerfreq", true)) 
 	{
 		new giveplayerid;
 		if(PlayerInfo[playerid][pAdmin] < 3) 
@@ -443,7 +443,7 @@ CMD:channel(playerid, params[])
 			PlayerRadio[giveplayerid][pRadio][3]
 		);
 	}
-	if(!strcmp( choice, "checkfreq", true )) 
+	if(!strcmp( choice, "checkfreq", true)) 
 	{
 		new channel;
 		if(PlayerInfo[playerid][pAdmin] < 3) 

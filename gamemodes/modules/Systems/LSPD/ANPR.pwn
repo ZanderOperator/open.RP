@@ -101,7 +101,7 @@ timer ANPRTimer[2000](playerid)
                         VehicleInfo[i][vNumberPlate],
                         ConvertSQLIDToName(VehicleInfo[i][vOwnerID]),
                         count
-                    );
+                   );
 
                     PlayerTextDrawSetString(playerid,AnprInfo[playerid], string);
                 }

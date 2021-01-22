@@ -174,7 +174,7 @@ public OnPlayerEnterRaceCheckpoint(playerid)
                 DakarCheckpoints[cp][0],   DakarCheckpoints[cp][1],   DakarCheckpoints[cp][2],
                 DakarCheckpoints[cp+1][0], DakarCheckpoints[cp+1][1], DakarCheckpoints[cp+1][2],
                 DAKAR_CP_SIZE
-            );
+           );
 
             DakarPlayerCP[playerid]++;
         }
@@ -188,7 +188,7 @@ public OnPlayerEnterRaceCheckpoint(playerid)
                 DakarCheckpoints[cp][0], DakarCheckpoints[cp][1], DakarCheckpoints[cp][2],
                 DakarCheckpoints[cp][0], DakarCheckpoints[cp][1], DakarCheckpoints[cp][2],
                 DAKAR_CP_SIZE
-            );
+           );
 
             DakarPlayerCP[playerid]++;
         }
@@ -211,7 +211,7 @@ public OnPlayerEnterRaceCheckpoint(playerid)
                 {
                     va_SendClientMessage(i, COLOR_ORANGE, "[DAKAR EVENT]: %s je pobijedio u Dakar utrci.",
                         GetName(FirstDakarWinner, true)
-                    );
+                   );
                 }
             }
             else if(SecondDakarWinner == INVALID_PLAYER_ID)
@@ -221,7 +221,7 @@ public OnPlayerEnterRaceCheckpoint(playerid)
                 {
                     va_SendClientMessage(i, COLOR_ORANGE, "[DAKAR EVENT]: %s je osvojio drugo mjesto u Dakar utrci.",
                         GetName(SecondDakarWinner, true)
-                    );
+                   );
                 }
             }
             else if(ThirdDakarWinner == INVALID_PLAYER_ID)
@@ -231,7 +231,7 @@ public OnPlayerEnterRaceCheckpoint(playerid)
                 {
                     va_SendClientMessage(i, COLOR_ORANGE, "[DAKAR EVENT]: %s je osvojio trece mjesto u Dakar utrci.",
                         GetName(ThirdDakarWinner, true)
-                    );
+                   );
 
                     if(DakarPlayer[i])
                     {
@@ -350,7 +350,7 @@ timer OnDakarCountDown[1000]()
                 DakarCheckpoints[cp][0],   DakarCheckpoints[cp][1],   DakarCheckpoints[cp][2],
                 DakarCheckpoints[cp+1][0], DakarCheckpoints[cp+1][1], DakarCheckpoints[cp+1][2],
                 DAKAR_CP_SIZE
-            );
+           );
             DakarPlayerCP[i]++;
 
             PlayerPlaySound(i, 1057, 0.0, 0.0, 0.0);
@@ -437,13 +437,13 @@ CMD:dakar(playerid, params[])
             DakarCheckpoints[0][0], DakarCheckpoints[0][1], DakarCheckpoints[0][2],
             DakarCheckpoints[0][0], DakarCheckpoints[0][1], DakarCheckpoints[0][2],
             30.0
-        );
+       );
         /*
         SetPlayerRaceCheckpoint(playerid, 0,
             DakarCheckpoints[0][0], DakarCheckpoints[0][1], DakarCheckpoints[0][2],
             DakarCheckpoints[1][0], DakarCheckpoints[1][1], DakarCheckpoints[1][2],
             30.0
-        );
+       );
         */
         SendClientMessage(playerid, COLOR_RED, "[DAKAR]: Uspjesno ste se prijavili za Dakar event. Udjite u vozilo i stanite na marker.");
         SendClientMessage(playerid, COLOR_RED, "[DAKAR]: Ukoliko zelite odustati, tipkajte /dakar quit.");

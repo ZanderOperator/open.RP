@@ -180,7 +180,7 @@ Public:LoadPlayerWeapons(playerid)
 			ammo = 0,
 			hidden = 0;
 
-	    for( new i = 0; i < cache_num_rows(); i++ )
+	    for( new i = 0; i < cache_num_rows(); i++)
 		{
 			cache_get_value_name_int( i, "sqlid", sqlid);
 			cache_get_value_name_int( i, "weapon_id", weaponid);
@@ -228,7 +228,7 @@ stock AC_SavePlayerWeapon(playerid, slotid)
 {
 	if(PlayerWeapons[playerid][pwAmmo][slotid] <= 0 || PlayerWeapons[playerid][pwWeaponId][slotid] <= 0) 
 		return 1;
-	if(!SafeSpawned[playerid] )  
+	if(!SafeSpawned[playerid])  
 		return 1;
 
 	if(PlayerWeapons[playerid][pwSQLID][slotid] != -1 && PlayerWeapons[playerid][pwAmmo][slotid] > 0)
@@ -283,17 +283,17 @@ stock AC_DecreasePlayerWeaponAmmo(playerid, weaponid, amount)
 	new
 		slot = GetWeaponSlot(weaponid);
 	PlayerWeapons[playerid][pwAmmo][slot] -= amount;
-	if(PlayerWeapons[playerid][pwAmmo][slot] <= 0 )
+	if(PlayerWeapons[playerid][pwAmmo][slot] <= 0)
 		AC_ResetPlayerWeapon(playerid, weaponid);
 	return 1;
 }
 
 stock AC_GivePlayerWeapon(playerid, weaponid, ammo, bool:base_update=true, bool:hidden=false)
 {
-	if(playerid == INVALID_PLAYER_ID ) return 0;
-	if(!weaponid ) return 0;
-	if(!ammo ) 	return 0;
-	if(PlayerInfo[playerid][pLevel] < 2 ) return 0;
+	if(playerid == INVALID_PLAYER_ID) return 0;
+	if(!weaponid) return 0;
+	if(!ammo) 	return 0;
+	if(PlayerInfo[playerid][pLevel] < 2) return 0;
 
 	new
 		slot = GetWeaponSlot(weaponid);
@@ -354,7 +354,7 @@ stock CheckPlayerWeapons(playerid, weaponid, bool:hidden_fetch=false)
 
 	if(HiddenWeapon[playerid][pwWeaponId] == weaponid && !hidden_fetch)
 	{
-		SendMessage(playerid, MESSAGE_TYPE_ERROR, "Vec imate sakriven ovaj tip oruzja. (( /weapon hide )).");
+		SendMessage(playerid, MESSAGE_TYPE_ERROR, "Vec imate sakriven ovaj tip oruzja. (( /weapon hide)).");
 		return 0;
 	}
 	switch(order)
@@ -392,7 +392,7 @@ stock CheckPlayerWeapons(playerid, weaponid, bool:hidden_fetch=false)
 				else if(SecondaryWeapon[playerid] == weaponid)
 					value = true;
 			}
-			else if(weaponid == WEAPON_SILENCED )
+			else if(weaponid == WEAPON_SILENCED)
 				value = true;
 		}
 	}

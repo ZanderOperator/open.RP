@@ -8,7 +8,7 @@ timer SetPlayerCrash[6000](playerid)
 	
 	if(PlayerCrash[playerid][pCrashX] != 0.0 && PlayerCrash[playerid][pCrashInt] != -1)
 	{
-		if(PlayerJail[playerid][pJailed] )
+		if(PlayerJail[playerid][pJailed])
 		{
 			mysql_fquery(g_SQL, "DELETE FROM player_crashes WHERE id = '%d'", PlayerCrash[playerid][pCrashId]);
 			ResetPlayerCrash(playerid);
@@ -28,7 +28,7 @@ timer SetPlayerCrash[6000](playerid)
 		SetPlayerSkin(playerid, PlayerAppearance[playerid][pTmpSkin]);
 		SetPlayerArmour(playerid, PlayerCrash[playerid][pCrashArmour]);
 
-		if(0.0 <= PlayerCrash[playerid][pCrashHealth] <= 6.0 )
+		if(0.0 <= PlayerCrash[playerid][pCrashHealth] <= 6.0)
 			SetPlayerHealth(playerid, 100);
 		else
 			SetPlayerHealth(playerid, PlayerCrash[playerid][pCrashHealth]);
@@ -139,7 +139,7 @@ CheckPlayerCrash(playerid, reason)
                 PlayerCrash[playerid][pCrashX], 
                 PlayerCrash[playerid][pCrashY], 
                 PlayerCrash[playerid][pCrashZ]
-            );
+           );
 
 			mysql_fquery_ex(g_SQL, "INSERT INTO player_crashes(player_id,pos_x,pos_y,pos_z,\n\
                 interior,viwo,armor,health,skin,time) \n\
@@ -161,7 +161,7 @@ CheckPlayerCrash(playerid, reason)
 				format(tmpString, sizeof(tmpString), 
                     "AdmWarn: Player %s just had a Client Crash.",
                     GetName(playerid,false)
-                );
+               );
 				ABroadCast(COLOR_LIGHTRED,tmpString,1);
 			}
 		}

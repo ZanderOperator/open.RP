@@ -99,12 +99,12 @@ stock ClearBoomBoxListItems(playerid)
 stock StopPlayerVehicleMusic(playerid)
 {
 	StopAudioStreamForPlayer(playerid);
-	Bit1_Set( gr_MusicPlaying, playerid, false );
+	Bit1_Set( gr_MusicPlaying, playerid, false);
 	foreach(new i : Player) {
-		if(BoomBoxPlanted[i] ) {
+		if(BoomBoxPlanted[i]) {
 			if(IsPlayerInRangeOfPoint(playerid, MusicInfo[i][mRange], MusicInfo[i][mX], MusicInfo[i][mY], MusicInfo[i][mZ])) {
 				PlayAudioStreamForPlayer(playerid, MusicInfo[i][mURL], MusicInfo[i][mX], MusicInfo[i][mY], MusicInfo[i][mZ], MusicInfo[i][mRange], 1);
-				Bit1_Set( gr_MusicPlaying, playerid, true );
+				Bit1_Set( gr_MusicPlaying, playerid, true);
 			}
 		}
 	}
@@ -114,7 +114,7 @@ stock IsPlayerInMusicCircle(playerid)
 	new bool:circle = false;
 	foreach(new m : Player)
 	{
-		new areaid = Bit4_Get( gr_MusicCircle, playerid );
+		new areaid = Bit4_Get( gr_MusicCircle, playerid);
 		if(MusicCircle[m] == areaid)
 		{
 			circle = true;
@@ -126,7 +126,7 @@ stock IsPlayerInMusicCircle(playerid)
 
 stock ClearVehicleMusic(vehicleid)
 {
-	if(VehiclePlayingMusic[vehicleid] ) {
+	if(VehiclePlayingMusic[vehicleid]) {
 		VehiclePlayingMusic[vehicleid] = false;
 		BoomBoxVehURL[vehicleid][0] = '\0';
 	}
@@ -165,10 +165,10 @@ hook function ResetVehicleInfo(vehicleid)
 
 hook OnPlayerEnterVehicle(playerid, vehicleid, ispassenger)
 {
-	if(VehiclePlayingMusic[vehicleid] ) {
+	if(VehiclePlayingMusic[vehicleid]) {
 		StopAudioStreamForPlayer(playerid);
 		PlayAudioStreamForPlayer(playerid, BoomBoxVehURL[vehicleid]);
-		Bit1_Set( gr_MusicPlaying, playerid, true );
+		Bit1_Set( gr_MusicPlaying, playerid, true);
 	}
 	return 1;
 }
@@ -202,14 +202,14 @@ hook OnPlayerEnterDynArea(playerid, areaid)
 		if(!IsPlayerInAnyVehicle(playerid) || IsABike(model) || IsAMotorBike(model))
 		{
 			PlayAudioStreamForPlayer(playerid, MusicInfo[playerid][mURL], MusicInfo[playerid][mX], MusicInfo[playerid][mY], MusicInfo[playerid][mZ], MusicInfo[playerid][mRange], 1);
-			Bit1_Set( gr_MusicPlaying, playerid, true );
-			Bit4_Set( gr_MusicCircle, playerid, areaid );
+			Bit1_Set( gr_MusicPlaying, playerid, true);
+			Bit4_Set( gr_MusicCircle, playerid, areaid);
 		}
-		else if(driverw == 0 && !VehiclePlayingMusic[veh] || passengerw == 0 && !VehiclePlayingMusic[veh] || backleftw == 0 && !VehiclePlayingMusic[veh] || backrightw == 0 && !VehiclePlayingMusic[veh] )
+		else if(driverw == 0 && !VehiclePlayingMusic[veh] || passengerw == 0 && !VehiclePlayingMusic[veh] || backleftw == 0 && !VehiclePlayingMusic[veh] || backrightw == 0 && !VehiclePlayingMusic[veh])
 		{
 			PlayAudioStreamForPlayer(playerid, MusicInfo[playerid][mURL], MusicInfo[playerid][mX], MusicInfo[playerid][mY], MusicInfo[playerid][mZ], MusicInfo[playerid][mRange], 1);
-			Bit1_Set( gr_MusicPlaying, playerid, true );
-			Bit4_Set( gr_MusicCircle, playerid, areaid );
+			Bit1_Set( gr_MusicPlaying, playerid, true);
+			Bit4_Set( gr_MusicCircle, playerid, areaid);
 		}
 	}
 	return 1;
@@ -225,7 +225,7 @@ hook OnPlayerLeaveDynArea(playerid, areaid)
 		if(!IsPlayerInAnyVehicle(playerid) || IsABike(model) || IsAMotorBike(model))
 		{
 			StopAudioStreamForPlayer(playerid);
-			Bit1_Set( gr_MusicPlaying, playerid, false );
+			Bit1_Set( gr_MusicPlaying, playerid, false);
 		}
 	}
 	return 1;
@@ -240,10 +240,10 @@ hook OnPlayerDisconnect(playerid, reason)
 		StopAudioStreamForPlayer(playerid);
 		BoomBoxPlanted[playerid] = false;
 	}
-	if(Bit1_Get( gr_AttachedBoombox, playerid ))
-	    Bit1_Set( gr_AttachedBoombox, playerid, false );
-	if(Bit1_Get( gr_MusicPlaying, playerid ))
-	    Bit1_Set( gr_MusicPlaying, playerid, false );
+	if(Bit1_Get( gr_AttachedBoombox, playerid))
+	    Bit1_Set( gr_AttachedBoombox, playerid, false);
+	if(Bit1_Get( gr_MusicPlaying, playerid))
+	    Bit1_Set( gr_MusicPlaying, playerid, false);
 	return 1;
 }
 
@@ -258,7 +258,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 	{
 	    case DIALOG_MUSIC_MAIN:
 		{
-			if(!response ) return 1;
+			if(!response) return 1;
 			new url[256];
 			ClearBoomBoxListItems(playerid);
 			// TODO: refactor, make an array of all URLs
@@ -282,18 +282,18 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 			new
 				houseid = Player_InHouse(playerid);
 
-			if(GetPlayerState(playerid) == PLAYER_STATE_ONFOOT )
+			if(GetPlayerState(playerid) == PLAYER_STATE_ONFOOT)
 			{
-				if(houseid != INVALID_HOUSE_ID )
+				if(houseid != INVALID_HOUSE_ID)
 				{
 					HouseMusicURL[houseid][0] = EOS;
 					// TODO: strcpy
 					format(HouseMusicURL[houseid], 256, "%s", url);
 					foreach(new i : Player) {
-						if(IsPlayerInRangeOfPoint(i, 25.0, HouseInfo[houseid][hExitX], HouseInfo[houseid][hExitY],HouseInfo[houseid][hExitZ]) && GetPlayerVirtualWorld( i ) == HouseInfo[houseid][hVirtualWorld] ) {
+						if(IsPlayerInRangeOfPoint(i, 25.0, HouseInfo[houseid][hExitX], HouseInfo[houseid][hExitY],HouseInfo[houseid][hExitZ]) && GetPlayerVirtualWorld( i) == HouseInfo[houseid][hVirtualWorld]) {
 							StopAudioStreamForPlayer(i);
 							PlayAudioStreamForPlayer(i, HouseMusicURL[houseid]);
-							Bit1_Set( gr_MusicPlaying, playerid, true );
+							Bit1_Set( gr_MusicPlaying, playerid, true);
 						}
 					}
 				}
@@ -308,7 +308,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 						if(IsPlayerInRangeOfPoint(i, MusicInfo[playerid][mRange], x, y, z)) {
 							StopAudioStreamForPlayer(i);
 							PlayAudioStreamForPlayer(i, MusicInfo[playerid][mURL], MusicInfo[playerid][mX], MusicInfo[playerid][mY], MusicInfo[playerid][mZ], MusicInfo[playerid][mRange], 1);
-							Bit1_Set( gr_MusicPlaying, i, true );
+							Bit1_Set( gr_MusicPlaying, i, true);
 						}
 					}
 				}
@@ -319,10 +319,10 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 				format(BoomBoxVehURL[vehicleid], 256, "%s", url);
 				foreach(new i : Player)
 				{
-					if(IsPlayerInVehicle(i, vehicleid )) {
+					if(IsPlayerInVehicle(i, vehicleid)) {
 						StopAudioStreamForPlayer(i);
 						PlayAudioStreamForPlayer(i, BoomBoxVehURL[vehicleid]);
-						Bit1_Set( gr_MusicPlaying, i, true );
+						Bit1_Set( gr_MusicPlaying, i, true);
 					}
 				}
 			}
@@ -334,9 +334,9 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 
 hook OnPlayerEditAtObject(playerid, response, index, modelid, boneid, Float:fOffsetX, Float:fOffsetY, Float:fOffsetZ, Float:fRotX, Float:fRotY, Float:fRotZ, Float:fScaleX, Float:fScaleY, Float:fScaleZ)
 {
-	if(modelid == 2226 || modelid == 2103 ) {
-	    if(response )
-	        Bit1_Set( gr_AttachedBoombox, playerid, true );
+	if(modelid == 2226 || modelid == 2103) {
+	    if(response)
+	        Bit1_Set( gr_AttachedBoombox, playerid, true);
 		else
 	        RemovePlayerAttachedObject( playerid, 9);
 	}
@@ -363,7 +363,7 @@ CMD:music(playerid, params[])
 
 	if(!strcmp(option, "put"))
     {
-		if(!PlayerInventory[playerid][pBoomBox] ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Morate imati boombox kako bi mogli koristiti ovu komandu!");
+		if(!PlayerInventory[playerid][pBoomBox]) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Morate imati boombox kako bi mogli koristiti ovu komandu!");
 		if(BoomBoxPlanted[playerid] == false) {
 
 			format(string, sizeof(string), "*%s stavlja svoj boombox na pod.", GetName(playerid, true));
@@ -388,7 +388,7 @@ CMD:music(playerid, params[])
 	}
 	else if(!strcmp(option, "take"))
 	{
-		if(!PlayerInventory[playerid][pBoomBox] ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Morate imati boombox kako bi mogli koristiti ovu komandu!");
+		if(!PlayerInventory[playerid][pBoomBox]) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Morate imati boombox kako bi mogli koristiti ovu komandu!");
 		if(BoomBoxPlanted[playerid] == true) {
 			GetDynamicObjectPos(BoomBoxObject[playerid], ox, oy, oz);
 			if(!IsPlayerInRangeOfPoint(playerid, 2.0, ox, oy, oz)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste blizu postavljenog boom boxa!");
@@ -411,7 +411,7 @@ CMD:music(playerid, params[])
 	else if(!strcmp(option, "approve"))
 	{
 		new giveplayerid;
-		if(sscanf( params, "s[12]u", option, giveplayerid )) return SendClientMessage(playerid, COLOR_RED, "[?]: /music approve [playerid]");
+		if(sscanf( params, "s[12]u", option, giveplayerid)) return SendClientMessage(playerid, COLOR_RED, "[?]: /music approve [playerid]");
 		if(PlayerInfo[playerid][pAdmin] < 2) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste Admin Level 2+");
 		if(Bit1_Get(gr_MusicApproved, giveplayerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Igrac vec ima odobreno pustanje glazbe!");
 		Bit1_Set(gr_MusicApproved, giveplayerid, true);
@@ -428,7 +428,7 @@ CMD:music(playerid, params[])
 		}
 		new
 			url[200], radius;
-		if(sscanf( params, "s[12]s[200]i", option, url, radius )) return SendClientMessage(playerid, COLOR_RED, "[?]: /music url [MP3_download_link/Stream link][radius]");
+		if(sscanf( params, "s[12]s[200]i", option, url, radius)) return SendClientMessage(playerid, COLOR_RED, "[?]: /music url [MP3_download_link/Stream link][radius]");
 		if(radius < 10 || radius > 200) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Radius ne moze biti manji od 10 ni veci od 200!");
 		GetDynamicObjectPos(BoomBoxObject[playerid], ox, oy, oz);
 		if(!IsPlayerInRangeOfPoint(playerid, 2.0, ox, oy, oz)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste blizu postavljenog boom boxa!");
@@ -445,7 +445,7 @@ CMD:music(playerid, params[])
 			if(IsPlayerInRangeOfPoint(i, MusicInfo[playerid][mRange], ox, oy, oz)) {
 				StopAudioStreamForPlayer(i);
 				PlayAudioStreamForPlayer(i, url, ox, oy, oz, MusicInfo[playerid][mRange], 1);
-				Bit1_Set( gr_MusicPlaying, i, true );
+				Bit1_Set( gr_MusicPlaying, i, true);
 			}
 		}
 	}
@@ -453,7 +453,7 @@ CMD:music(playerid, params[])
 	{
 		new
 			url[200];
-		if(sscanf( params, "s[12]s[200]", option, url )) return SendClientMessage(playerid, COLOR_RED, "[?]: /music stream [www.internet-radio.com Stream link]");
+		if(sscanf( params, "s[12]s[200]", option, url)) return SendClientMessage(playerid, COLOR_RED, "[?]: /music stream [www.internet-radio.com Stream link]");
 		if(IsPlayerInMusicCircle(playerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Vec netko u vasoj blizini koristi BoomBox. Udaljite se 20m i pokusajte ponovno!");
 		GetDynamicObjectPos(BoomBoxObject[playerid], ox, oy, oz);
 		if(!IsPlayerInRangeOfPoint(playerid, 2.0, ox, oy, oz)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste blizu postavljenog boom boxa!");
@@ -467,7 +467,7 @@ CMD:music(playerid, params[])
 			if(IsPlayerInRangeOfPoint(i, MusicInfo[i][mRange], ox, oy, oz)) {
 				StopAudioStreamForPlayer(i);
 				PlayAudioStreamForPlayer(i, url, ox, oy, oz, MusicInfo[playerid][mRange], 1);
-				Bit1_Set( gr_MusicPlaying, i, true );
+				Bit1_Set( gr_MusicPlaying, i, true);
 			}
 		}
 	}
@@ -475,9 +475,9 @@ CMD:music(playerid, params[])
 	{
 		new
 			pick;
-		if(sscanf( params, "s[12]i", option, pick )) return SendClientMessage(playerid, COLOR_RED, "[?]: /music play [1-foot/2-auto/3-kuca]");
+		if(sscanf( params, "s[12]i", option, pick)) return SendClientMessage(playerid, COLOR_RED, "[?]: /music play [1-foot/2-auto/3-kuca]");
 
-		if(pick == 1 ) {
+		if(pick == 1) {
 			GetDynamicObjectPos(BoomBoxObject[playerid], ox, oy, oz);
 			if(!IsPlayerInRangeOfPoint(playerid, 2.0, ox, oy, oz)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste blizu postavljenog boom boxa!");
 			ShowPlayerDialog(playerid, DIALOG_MUSIC_MAIN, DIALOG_STYLE_LIST, "Odaberite kategoriju", "Hip Hop\nRap\nGangsta Rap\nBalkan Hip Hop\nTurbo Folk\nClassical Hits\nClassical Rock\nReggae\nTechno\n70s music\n EuroBeat\nMorisson\nCool Radio\nFree Brooklyn", "Choose", "Exit");
@@ -491,11 +491,11 @@ CMD:music(playerid, params[])
 				}
 			}
 		}
-		else if(pick == 2 ) {
-			if(!IsPlayerInAnyVehicle( playerid )) 	return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste u vozilu!");
+		else if(pick == 2) {
+			if(!IsPlayerInAnyVehicle( playerid)) 	return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste u vozilu!");
 			new
 				vehicleid = GetPlayerVehicleID(playerid);
-			if(!VehicleInfo[vehicleid][vAudio] ) 	return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Vozilo nema stereo!");
+			if(!VehicleInfo[vehicleid][vAudio]) 	return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Vozilo nema stereo!");
 
 			ShowPlayerDialog(playerid, DIALOG_MUSIC_MAIN, DIALOG_STYLE_LIST, "Odaberite kategoriju", "Hip Hop\nRap\nGangsta Rap\nBalkan Hip Hop\nTurbo Folk\nClassical Hits\nClassical Rock\nReggae\nTechno\n70s music\nEuro Beat\nMorisson\nCool Radio\nFree Brooklyn", "Choose", "Exit");
 
@@ -504,12 +504,12 @@ CMD:music(playerid, params[])
 
 			VehiclePlayingMusic[GetPlayerVehicleID(playerid)] = true;
 		}
-		else if(pick == 3 ) {
+		else if(pick == 3) {
 			new
 				houseid = Player_InHouse(playerid);
-			if(houseid == INVALID_HOUSE_ID ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste unutar kuce!");
-			if(!IsPlayerInRangeOfPoint(playerid, 25.0, HouseInfo[houseid][hExitX], HouseInfo[houseid][hExitY],HouseInfo[houseid][hExitZ]) && GetPlayerVirtualWorld( playerid ) != HouseInfo[houseid][hVirtualWorld] ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste unutar kuce!");
-			if(!HouseInfo[houseid][hRadio] ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Kuca ne posjeduje radio!");
+			if(houseid == INVALID_HOUSE_ID) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste unutar kuce!");
+			if(!IsPlayerInRangeOfPoint(playerid, 25.0, HouseInfo[houseid][hExitX], HouseInfo[houseid][hExitY],HouseInfo[houseid][hExitZ]) && GetPlayerVirtualWorld( playerid) != HouseInfo[houseid][hVirtualWorld]) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste unutar kuce!");
+			if(!HouseInfo[houseid][hRadio]) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Kuca ne posjeduje radio!");
 			ShowPlayerDialog(playerid, DIALOG_MUSIC_MAIN, DIALOG_STYLE_LIST, "Odaberite kategoriju", "Hip Hop\nRap\nGangsta Rap\nBalkan Hip Hop\nTurbo Folk\nClassical Hits\nClassical Rock\nReggae\nTechno\n70s musi\nEuro Beatc\nMorisson\nCool Radio\nFree Brooklyn", "Choose", "Exit");
 
 			format(string, sizeof(string), "*%s pali radio u kuci, te traZi stanicu.", GetName(playerid, true));
@@ -528,7 +528,7 @@ CMD:music(playerid, params[])
 					houseid = Player_InHouse(playerid);
 				HouseMusicURL[houseid][0] = EOS;
 				foreach(new i : Player) {
-					if(IsPlayerInRangeOfPoint(i, 25.0, HouseInfo[houseid][hExitX], HouseInfo[houseid][hExitY],HouseInfo[houseid][hExitZ]) && GetPlayerVirtualWorld( i ) == HouseInfo[houseid][hVirtualWorld] ) {
+					if(IsPlayerInRangeOfPoint(i, 25.0, HouseInfo[houseid][hExitX], HouseInfo[houseid][hExitY],HouseInfo[houseid][hExitZ]) && GetPlayerVirtualWorld( i) == HouseInfo[houseid][hVirtualWorld]) {
 						StopAudioStreamForPlayer(i);
 					}
 				}
@@ -556,26 +556,26 @@ CMD:music(playerid, params[])
 			VehiclePlayingMusic[GetPlayerVehicleID(playerid)] = false;
 
 			foreach(new i : Player) {
-				if(IsPlayerInVehicle(i, GetPlayerVehicleID(playerid)) )
+				if(IsPlayerInVehicle(i, GetPlayerVehicleID(playerid)))
 					StopAudioStreamForPlayer(i);
 			}
 		}
 	}
 	else if(!strcmp(option, "attach", true)) {
-	    if(!PlayerInventory[playerid][pBoomBox] ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Morate imati boombox kako bi mogli koristiti ovu komandu!");
-	    if(Bit1_Get( gr_AttachedBoombox, playerid )) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Vec imate boombox na sebi!");
+	    if(!PlayerInventory[playerid][pBoomBox]) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Morate imati boombox kako bi mogli koristiti ovu komandu!");
+	    if(Bit1_Get( gr_AttachedBoombox, playerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Vec imate boombox na sebi!");
 
-		SetPlayerAttachedObject(playerid, 9, ( PlayerInventory[playerid][pBoomBox] == 1 ) ? 2226 : 2103, 5);
+		SetPlayerAttachedObject(playerid, 9, ( PlayerInventory[playerid][pBoomBox] == 1) ? 2226 : 2103, 5);
 		EditAttachedObject(playerid, 9);
 		Bit1_Set( gr_AttachedBoombox, playerid, true);
 		SendClientMessage(playerid, COLOR_RED, "[HINT]: Za okretanje kamere koristite ~k~~PED_SPRINT~. Da maknete boombox iz ruke kucajte /music detach!");
 	}
 	else if(!strcmp(option, "detach", true)) {
-	    if(!PlayerInventory[playerid][pBoomBox] ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Morate imati boombox kako bi mogli koristiti ovu komandu!");
-	    if(!Bit1_Get( gr_AttachedBoombox, playerid )) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate boombox na sebi!");
+	    if(!PlayerInventory[playerid][pBoomBox]) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Morate imati boombox kako bi mogli koristiti ovu komandu!");
+	    if(!Bit1_Get( gr_AttachedBoombox, playerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate boombox na sebi!");
 
 		RemovePlayerAttachedObject(playerid, 9);
-		Bit1_Set( gr_AttachedBoombox, playerid, false );
+		Bit1_Set( gr_AttachedBoombox, playerid, false);
 	}
 	return 1;
 }
@@ -586,7 +586,7 @@ CMD:removemusic(playerid, params[])
 		Float:ox, Float:oy, Float:oz;
 	foreach(new i : Player)
  	{
-		if(BoomBoxPlanted[i] )
+		if(BoomBoxPlanted[i])
 		{
 			GetDynamicObjectPos(BoomBoxObject[i], ox, oy, oz);
 			if(IsPlayerInRangeOfPoint(playerid, 10.0, ox, oy, oz))

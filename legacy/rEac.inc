@@ -132,7 +132,7 @@ public OnPlayerDisconnect(playerid, reason)
 public OnVehicleDamageStatusUpdate(vehicleid, playerid)
 {
 	new EacTires, EacLights;
-	GetVehicleDamageStatus(vehicleid, EacLights, EacTires, EacLights, EacTires );
+	GetVehicleDamageStatus(vehicleid, EacLights, EacTires, EacLights, EacTires);
 	if(GetPlayerState(playerid) == 2)
 	{
 		if(EacLights || EacTires) return 1;
@@ -180,8 +180,8 @@ public OnPlayerUpdate(playerid)
 	if(GetPlayerState(playerid) == PLAYER_STATE_DRIVER)
 	{
 		GetVehicleVelocity(EacTempSCar, EacvX, EacvY, EacvZ);
-		if(( EacvX > 3.0 || EacvY > 3.0 || EacvZ > 3.0 || EacvX < -3.0 || EacvY < -3.0 || EacvZ < -3.0 )
-			&& ( EacvX != EacX && EacvY != EacY && EacvZ != EacZ ) && !EAC_Player[playerid][EacCarSpeed])
+		if(( EacvX > 3.0 || EacvY > 3.0 || EacvZ > 3.0 || EacvX < -3.0 || EacvY < -3.0 || EacvZ < -3.0)
+			&& ( EacvX != EacX && EacvY != EacY && EacvZ != EacZ) && !EAC_Player[playerid][EacCarSpeed])
 		{
 			#if defined OnPlayerCarSwing
 				OnPlayerCarSwing(playerid, EacTempSCar);

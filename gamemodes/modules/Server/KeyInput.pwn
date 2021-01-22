@@ -60,7 +60,7 @@ static stock
 ptask WholeKeyInputTimer[1000](playerid)
 {
 	if(Bit1_Get(PlayerUsingKeyInput, playerid)) {
-		if(--InputInfo[playerid][piWholeTime] == 0 ) {
+		if(--InputInfo[playerid][piWholeTime] == 0) {
 			CallLocalFunction("OnPlayerKeyInputEnds", "iii", playerid, InputInfo[playerid][piTask], 0);
 			DisablePlayerKeyInput(playerid);
 			return 1;
@@ -97,23 +97,23 @@ timer KeyInputTimer[100](playerid)
 */
 stock static DestroyKeyInputTDs(playerid)
 {
-	if(KeyInputBcg[playerid] != PlayerText:INVALID_TEXT_DRAW ) {
+	if(KeyInputBcg[playerid] != PlayerText:INVALID_TEXT_DRAW) {
 		PlayerTextDrawDestroy(playerid, KeyInputBcg[playerid]);
 		KeyInputBcg[playerid] = PlayerText:INVALID_TEXT_DRAW;
 	}
-	if(KeyInputBcg1[playerid] != PlayerText:INVALID_TEXT_DRAW ) {
+	if(KeyInputBcg1[playerid] != PlayerText:INVALID_TEXT_DRAW) {
 		PlayerTextDrawDestroy(playerid, KeyInputBcg1[playerid]);
 		KeyInputBcg1[playerid] = PlayerText:INVALID_TEXT_DRAW;
 	}
-	if(KeyInputBcg2[playerid] != PlayerText:INVALID_TEXT_DRAW ) {
+	if(KeyInputBcg2[playerid] != PlayerText:INVALID_TEXT_DRAW) {
 		PlayerTextDrawDestroy(playerid, KeyInputBcg2[playerid]);
 		KeyInputBcg2[playerid] = PlayerText:INVALID_TEXT_DRAW;
 	}
-	if(KeyInputTimeTD[playerid] != PlayerText:INVALID_TEXT_DRAW ) {
+	if(KeyInputTimeTD[playerid] != PlayerText:INVALID_TEXT_DRAW) {
 		PlayerTextDrawDestroy(playerid, KeyInputTimeTD[playerid]);
 		KeyInputTimeTD[playerid] = PlayerText:INVALID_TEXT_DRAW;
 	}
-	if(KeyInputScoreTD[playerid] != PlayerText:INVALID_TEXT_DRAW ) {
+	if(KeyInputScoreTD[playerid] != PlayerText:INVALID_TEXT_DRAW) {
 		PlayerTextDrawDestroy(playerid, KeyInputScoreTD[playerid]);
 		KeyInputScoreTD[playerid] = PlayerText:INVALID_TEXT_DRAW;
 	}
@@ -253,15 +253,15 @@ hook OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
 	new key_time = InputInfo[playerid][piKeyTime];
 	if(PRESSED(KEY_YES)) { 
 		if(Bit1_Get(PlayerUsingKeyInput, playerid)) {
-			if(InputInfo[playerid][piKey] != -1 ) {
-				if(InputInfo[playerid][piInputed] ) return 1;
+			if(InputInfo[playerid][piKey] != -1) {
+				if(InputInfo[playerid][piInputed]) return 1;
 				
-				if(InputInfo[playerid][piKey] ) { // KEY_YES
+				if(InputInfo[playerid][piKey]) { // KEY_YES
 					GameTextForPlayer(playerid, "~n~", 2, 4);
 					InputInfo[playerid][piKey] = -1;
 					InputInfo[playerid][piInputed] = false;
 					
-					if(++InputInfo[playerid][piTempScore] == InputInfo[playerid][piTotalScore] ) {
+					if(++InputInfo[playerid][piTempScore] == InputInfo[playerid][piTotalScore]) {
 						CallLocalFunction("OnPlayerKeyInputEnds", "iii", playerid, InputInfo[playerid][piTask], 1);
 						DisablePlayerKeyInput(playerid);
 					} else
@@ -292,15 +292,15 @@ hook OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
 	}
 	if(PRESSED(KEY_NO)) {
 		if(Bit1_Get(PlayerUsingKeyInput, playerid)) {
-			if(InputInfo[playerid][piKey] != -1 ) {
-				if(InputInfo[playerid][piInputed] ) return 1;
+			if(InputInfo[playerid][piKey] != -1) {
+				if(InputInfo[playerid][piInputed]) return 1;
 				
-				if(!InputInfo[playerid][piKey] ) { // KEY_NO
+				if(!InputInfo[playerid][piKey]) { // KEY_NO
 					GameTextForPlayer(playerid, "~n~", 2, 4);
 					InputInfo[playerid][piKey] = -1;
 					InputInfo[playerid][piInputed] = false;
 					
-					if(++InputInfo[playerid][piTempScore] == InputInfo[playerid][piTotalScore] ) {
+					if(++InputInfo[playerid][piTempScore] == InputInfo[playerid][piTotalScore]) {
 						CallLocalFunction("OnPlayerKeyInputEnds", "iii", playerid, InputInfo[playerid][piTask], 1);
 						DisablePlayerKeyInput(playerid);
 					} else

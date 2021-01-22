@@ -88,7 +88,7 @@ static SirenObject[MAX_VEHICLES] = { INVALID_OBJECT_ID, ... };
 
 DestroyVehicleSiren(vehicleid)
 {
-	if(SirenObject[vehicleid] != INVALID_OBJECT_ID ) 
+	if(SirenObject[vehicleid] != INVALID_OBJECT_ID) 
     {
 		DestroyDynamicObject(SirenObject[vehicleid]);
 		SirenObject[vehicleid] = INVALID_OBJECT_ID;

@@ -214,7 +214,7 @@ stock LoadHouseExterior(houseid)
         "OnHouseExteriorLoad", 
         "i", 
         houseid
-    );
+   );
 }
 
 stock ReloadHouseExterior(houseid)
@@ -300,7 +300,7 @@ static CreateExteriorObject(playerid)
                                                     -1,
                                                     EXTERIOR_DRAW_DISTANCE,
                                                     EXTERIOR_DRAW_DISTANCE
-                                                );
+                                               );
 
     ExteriorInfo[houseid][heHouseId][index]     = HouseInfo[houseid][hSQLID];
     ExteriorInfo[houseid][heModelId][index]     = PlayerExteriorInfo[playerid][peModelId];
@@ -323,12 +323,12 @@ static CreateExteriorObject(playerid)
             PlayerExteriorInfo[playerid][peRotX],
             PlayerExteriorInfo[playerid][peRotY],
             PlayerExteriorInfo[playerid][peRotZ]
-        ), 
+       ), 
         "OnExteriorObjectsInsert", 
         "ii", 
         playerid, 
         index
-    );
+   );
 
     ResetPlayerExteriorVars(playerid);
     return 1;
@@ -357,7 +357,7 @@ static stock SetExteriorObjectPos(playerid, Float:fX, Float:fY, Float:fZ, Float:
         ExteriorInfo[houseid][heRotY][index],
         ExteriorInfo[houseid][heRotZ][index],
         ExteriorInfo[houseid][heSQLID][index]
-    );
+   );
 
     ResetPlayerExteriorVars(playerid);
     Streamer_UpdateEx(playerid, fX, fY, fZ);
@@ -394,7 +394,7 @@ static stock EditExteriorObject(playerid, index)
                                                     PlayerExteriorInfo[playerid][peRotX],
                                                     PlayerExteriorInfo[playerid][peRotY],
                                                     PlayerExteriorInfo[playerid][peRotZ]
-                                                );
+                                               );
 
     ExteriorEditType[playerid] = EXT_EDIT_TYPE_EDIT;
     ExteriorEditId  [playerid] = index;
@@ -422,7 +422,7 @@ static stock ResetExteriorObject(playerid, index)
                                                    -1,
                                                    EXTERIOR_DRAW_DISTANCE,
                                                    EXTERIOR_DRAW_DISTANCE
-                                               );
+                                              );
 
     ResetPlayerExteriorVars(playerid);
     return 1;
@@ -528,7 +528,7 @@ Public:OnHouseExteriorLoad(houseid)
                                                                    -1,
                                                                    EXTERIOR_DRAW_DISTANCE,
                                                                    EXTERIOR_DRAW_DISTANCE
-                                               );
+                                              );
         Iter_Add(HouseFurExt[houseid], i);
     }
     return 1;
@@ -664,7 +664,7 @@ hook OnFSelectionResponse(playerid, fselectid, modelid, response)
                     va_ShowPlayerDialog(playerid, DIALOG_EXTERIOR_SURE, DIALOG_STYLE_MSGBOX, "Exteriors - Sigurni?", ""COL_WHITE"Zelite li kupiti ovaj objekt?\n"COL_CYAN"Ime: "COL_WHITE"%s\n"COL_CYAN"Cijena: "COL_WHITE"%d"COL_GREEN"$", "Buy", "Abort",
                         ExteriorPlants[index][epName],
                         ExteriorPlants[index][epPrice]
-                    );
+                   );
                     ExteriorObjectsId[playerid] = index;
                 }
                 case 1:
@@ -672,7 +672,7 @@ hook OnFSelectionResponse(playerid, fselectid, modelid, response)
                     va_ShowPlayerDialog(playerid, DIALOG_EXTERIOR_SURE, DIALOG_STYLE_MSGBOX, "Exteriors - Sigurni?", ""COL_WHITE"Zelite li kupiti ovaj objekt?\n"COL_CYAN"Ime: "COL_WHITE"%s\n"COL_CYAN"Cijena: "COL_WHITE"%d"COL_GREEN"$", "Buy", "Abort",
                         ExteriorFurniture[index][efName],
                         ExteriorFurniture[index][efPrice]
-                    );
+                   );
                     ExteriorObjectsId[playerid] = index;
                 }
                 case 2:
@@ -680,7 +680,7 @@ hook OnFSelectionResponse(playerid, fselectid, modelid, response)
                     va_ShowPlayerDialog(playerid, DIALOG_EXTERIOR_SURE, DIALOG_STYLE_MSGBOX, "Exteriors - Sigurni?", ""COL_WHITE"Zelite li kupiti ovaj objekt?\n"COL_CYAN"Ime: "COL_WHITE"%s\n"COL_CYAN"Cijena: "COL_WHITE"%d"COL_GREEN"$", "Buy", "Abort",
                         ExteriorMisc[index][emName],
                         ExteriorMisc[index][emPrice]
-                    );
+                   );
                     ExteriorObjectsId[playerid] = index;
                 }
             }
@@ -706,7 +706,7 @@ hook OnFSelectionResponse(playerid, fselectid, modelid, response)
 
 hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 {
-    switch (dialogid )
+    switch (dialogid)
     {
         case DIALOG_EXTERIOR_MENU:
         {

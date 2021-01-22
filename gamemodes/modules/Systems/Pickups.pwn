@@ -98,7 +98,7 @@ public OnPickupsLoad()
 	new
 		count = cache_num_rows();	
 
-	if(!count ) 
+	if(!count) 
 		return print("MySQL Report: No pickups exist to load.");
 
  	for(new b = 0; b < count; b++) 
@@ -302,7 +302,7 @@ hook function ResetPlayerVariables(playerid)
 
 hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 {
-	switch( dialogid ) 
+	switch( dialogid) 
 	{
 		case DIALOG_DYN_PEDISC: 
 		{

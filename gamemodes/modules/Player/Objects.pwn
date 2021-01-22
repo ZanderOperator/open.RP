@@ -560,12 +560,12 @@ new ObjectModel[MAX_PLAYERS] = 0;
 */
 stock HandlePlayerObjectSelection(playerid, item)
 {
-	switch( Bit8_Get( gr_MallType, playerid )) 
+	switch( Bit8_Get( gr_MallType, playerid)) 
 	{
 		case MALL_REGULAR_CLOTHING: {
 			ObjectModel[playerid] = NCObjects[item][ncmodel];
-			Bit8_Set( gr_ObjectPrice, playerid, NCObjects[item][ncprice] );
-			Bit8_Set( gr_HandleItem, playerid, item );
+			Bit8_Set( gr_ObjectPrice, playerid, NCObjects[item][ncprice]);
+			Bit8_Set( gr_HandleItem, playerid, item);
 			
 			new
 				tmpString[128];
@@ -578,8 +578,8 @@ stock HandlePlayerObjectSelection(playerid, item)
 		}
 		case MALL_TOOLKIT_CLOTHING: {
 			ObjectModel[playerid] = TSObjects[item][tsmodel];
-			Bit8_Set( gr_ObjectPrice, playerid, TSObjects[item][tsprice] );
-			Bit8_Set( gr_HandleItem, playerid, item );
+			Bit8_Set( gr_ObjectPrice, playerid, TSObjects[item][tsprice]);
+			Bit8_Set( gr_HandleItem, playerid, item);
 			
 			new
 				tmpString[128];
@@ -592,8 +592,8 @@ stock HandlePlayerObjectSelection(playerid, item)
 		}
 		case MALL_TECHNO_CLOTHING: {
 			ObjectModel[playerid] = TechnoObjects[item][teattachmodel];
-			Bit8_Set( gr_ObjectPrice, playerid, TechnoObjects[item][teprice] );
-			Bit8_Set( gr_HandleItem, playerid, item );
+			Bit8_Set( gr_ObjectPrice, playerid, TechnoObjects[item][teprice]);
+			Bit8_Set( gr_HandleItem, playerid, item);
 			
 			new
 				tmpString[128];
@@ -606,8 +606,8 @@ stock HandlePlayerObjectSelection(playerid, item)
 		}
 		case MALL_SPORTS_CLOTHING: {
 			ObjectModel[playerid] = SportsObjects[item][sportsmodel];
-			Bit8_Set( gr_ObjectPrice, playerid, SportsObjects[item][sportsprice] );
-			Bit8_Set( gr_HandleItem, playerid, item );
+			Bit8_Set( gr_ObjectPrice, playerid, SportsObjects[item][sportsprice]);
+			Bit8_Set( gr_HandleItem, playerid, item);
 			
 			new
 				tmpString[128];
@@ -620,8 +620,8 @@ stock HandlePlayerObjectSelection(playerid, item)
 		}
 		case MALL_PD_CLOTHING: {
 			ObjectModel[playerid] = PDObjects[item][pdmodel];
-			Bit8_Set( gr_ObjectPrice, playerid, PDObjects[item][pdprice] );
-			Bit8_Set( gr_HandleItem, playerid, item );
+			Bit8_Set( gr_ObjectPrice, playerid, PDObjects[item][pdprice]);
+			Bit8_Set( gr_HandleItem, playerid, item);
 			
 			new
 				tmpString[128];
@@ -634,8 +634,8 @@ stock HandlePlayerObjectSelection(playerid, item)
 		}
 		case MALL_FD_CLOTHING: {
 			ObjectModel[playerid] = FDObjects[item][fdmodel];
-			Bit8_Set( gr_ObjectPrice, playerid, FDObjects[item][fdprice] );
-			Bit8_Set( gr_HandleItem, playerid, item );
+			Bit8_Set( gr_ObjectPrice, playerid, FDObjects[item][fdprice]);
+			Bit8_Set( gr_HandleItem, playerid, item);
 			
 			new
 				tmpString[128];
@@ -648,8 +648,8 @@ stock HandlePlayerObjectSelection(playerid, item)
 		}
 		case MALL_GOV_CLOTHING: {
 			ObjectModel[playerid] = GOVObjects[item][govmodel];
-			Bit8_Set( gr_ObjectPrice, playerid, GOVObjects[item][govprice] );
-			Bit8_Set( gr_HandleItem, playerid, item );
+			Bit8_Set( gr_ObjectPrice, playerid, GOVObjects[item][govprice]);
+			Bit8_Set( gr_HandleItem, playerid, item);
 			
 			new
 				tmpString[128];
@@ -662,8 +662,8 @@ stock HandlePlayerObjectSelection(playerid, item)
 		}
 		case MALL_PREM_CLOTHING: {
 			ObjectModel[playerid] = PremiumObjects[item][premmodel];
-			Bit8_Set( gr_ObjectPrice, playerid, PremiumObjects[item][premprice] );
-			Bit8_Set( gr_HandleItem, playerid, item );
+			Bit8_Set( gr_ObjectPrice, playerid, PremiumObjects[item][premprice]);
+			Bit8_Set( gr_HandleItem, playerid, item);
 			
 			new
 				tmpString[128];
@@ -676,8 +676,8 @@ stock HandlePlayerObjectSelection(playerid, item)
 		}
 		case MALL_HALL_CLOTHING: {
 			ObjectModel[playerid] = HLObjects[item][hlmodel];
-			Bit8_Set( gr_ObjectPrice, playerid, HLObjects[item][hlprice] );
-			Bit8_Set( gr_HandleItem, playerid, item );
+			Bit8_Set( gr_ObjectPrice, playerid, HLObjects[item][hlprice]);
+			Bit8_Set( gr_HandleItem, playerid, item);
 			
 			new
 				tmpString[128];
@@ -710,7 +710,7 @@ public OnPlayerObjectsLoad(playerid)
 {
 	if(cache_num_rows()) 
 	{
-	    for( new i = 0; i < cache_num_rows(); i++ ) 
+	    for( new i = 0; i < cache_num_rows(); i++) 
 		{
 			cache_get_value_name_int(i, 	"sqlid"	, PlayerObject[playerid][i][poSQLID]);
 			cache_get_value_name_int(i, 	"model"	, PlayerObject[playerid][i][poModelid]);
@@ -867,7 +867,7 @@ stock IsObjectAttached(playerid, modelid)
 	new 
 		found = -1;
 	for(new i=0; i<MAX_CUSTOMIZED_OBJECTS; i++) {
-		if(PlayerObject[playerid][i][poPlaced] && PlayerObject[playerid][i][poModelid] == modelid ) {
+		if(PlayerObject[playerid][i][poPlaced] && PlayerObject[playerid][i][poModelid] == modelid) {
 			found = i;
 			break;
 		}
@@ -916,10 +916,10 @@ stock SetPlayerObjects(playerid)
 
 stock ResetObjectsVariables(playerid)
 {
-	Bit1_Set( gr_MallPreviewActive	, playerid, false );
-	Bit2_Set( gr_TipEdita			, playerid, 0 );
-	Bit8_Set( gr_HandleItem			, playerid, 0 );
-	Bit8_Set( gr_ObjectPrice		, playerid, 0 );
+	Bit1_Set( gr_MallPreviewActive	, playerid, false);
+	Bit2_Set( gr_TipEdita			, playerid, 0);
+	Bit8_Set( gr_HandleItem			, playerid, 0);
+	Bit8_Set( gr_ObjectPrice		, playerid, 0);
 	ObjectModel[playerid] = 0;
 	return 1;
 }
@@ -991,14 +991,14 @@ hook function ResetPlayerVariables(playerid)
 		PlayerObject[playerid][i][poColor2] 	= 0;
 
 		if(IsPlayerAttachedObjectSlotUsed(playerid, i))
-			RemovePlayerAttachedObject( playerid, i );
+			RemovePlayerAttachedObject( playerid, i);
 	}
 	if(IsPlayerAttachedObjectSlotUsed(playerid, 7))
-		RemovePlayerAttachedObject( playerid, 7 );
+		RemovePlayerAttachedObject( playerid, 7);
 	if(IsPlayerAttachedObjectSlotUsed(playerid, 8))
-		RemovePlayerAttachedObject( playerid, 8 );
+		RemovePlayerAttachedObject( playerid, 8);
 	if(IsPlayerAttachedObjectSlotUsed(playerid, 9))
-		RemovePlayerAttachedObject( playerid, 9 );
+		RemovePlayerAttachedObject( playerid, 9);
 
 	return continue(playerid);
 }
@@ -1019,16 +1019,16 @@ hook OnFSelectionResponse(playerid, fselectid, modelid, response)
 
 hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 {
-	switch( dialogid )
+	switch( dialogid)
 	{
 		case DIALOG_OBJECTS_BUY: {
-			if(!response ) return 1;
+			if(!response) return 1;
 			new
-				money = Bit8_Get( gr_ObjectPrice, playerid );
+				money = Bit8_Get( gr_ObjectPrice, playerid);
 
    			if(PlayerVIP[playerid][pDonateRank] > PREMIUM_BRONZE)
 	   		money = 0;
-			if(AC_GetPlayerMoney(playerid) < money ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate toliko novca!");
+			if(AC_GetPlayerMoney(playerid) < money) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate toliko novca!");
 			
 			new bstring[256];
             for(new x;x<sizeof(AttachmentBones);x++)
@@ -1040,10 +1040,10 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 			return 1;
 		}
 		case DIALOG_OBJECT_BONE_SELECTION: {
-			if(!response ) {
+			if(!response) {
 				new
-					item = Bit8_Get( gr_HandleItem, playerid );
-				switch( Bit8_Get( gr_MallType, playerid )) 
+					item = Bit8_Get( gr_HandleItem, playerid);
+				switch( Bit8_Get( gr_MallType, playerid)) 
 				{
 					case MALL_REGULAR_CLOTHING: {
 						new
@@ -1139,7 +1139,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 			return 1;
 		}
 		case DIALOG_NEWCLOTHING: {
-			if(!response ) return 1;
+			if(!response) return 1;
 			if(PlayerObject[playerid][listitem][poModelid] != -1) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Taj slot vam nije prazan, koritite /objects delete prvo!");
 			else
 			{
@@ -1147,7 +1147,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 				ResetObjectsVariables(playerid);
 				ResetObjectEnum(playerid, listitem);
 				
-				switch( Bit8_Get( gr_MallType, playerid )) 
+				switch( Bit8_Get( gr_MallType, playerid)) 
 				{
 					case MALL_REGULAR_CLOTHING: 
 					{
@@ -1249,13 +1249,13 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 						}
 					}
 				}
-				Bit1_Set( gr_MallPreviewActive, playerid, true );
+				Bit1_Set( gr_MallPreviewActive, playerid, true);
 			}
 			fselection_show(playerid, DIALOG_CLOTHING_BUY, "Clothing");
 			return 1;
 		}
 		case DIALOG_DELETECLOTHING: {
-			if(!response ) return 1;
+			if(!response) return 1;
 			if(PlayerObject[playerid][listitem][poModelid] == -1) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Taj slot vam je prazan, ne mozete ga obrisati!");
 			
 			if(IsPlayerAttachedObjectSlotUsed(playerid, listitem))
@@ -1300,14 +1300,14 @@ public OnPlayerEditAttachedObject(playerid, response, index, modelid, boneid, Fl
 			
 			InsertObjectSlot(playerid, index);
 			SetPlayerAttachedObject(playerid,index,modelid,boneid,fOffsetX,fOffsetY,fOffsetZ,fRotX,fRotY,fRotZ,fScaleX,fScaleY,fScaleZ);
-			PlayerToBudgetMoney(playerid, Bit8_Get( gr_ObjectPrice, playerid ));
+			PlayerToBudgetMoney(playerid, Bit8_Get( gr_ObjectPrice, playerid));
 			
 			SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uspjesno ste kupili objekt!");
 			Bit2_Set(gr_TipEdita, playerid, 0);
-			Bit4_Set( gr_AttachmentIndexSel	, playerid, 0 );
+			Bit4_Set( gr_AttachmentIndexSel	, playerid, 0);
 			
-			Bit1_Set( gr_MallPreviewActive, playerid, false );
-			Bit8_Set( gr_MallType, playerid, 0 );
+			Bit1_Set( gr_MallPreviewActive, playerid, false);
+			Bit8_Set( gr_MallType, playerid, 0);
 		}
 		else if(Bit2_Get(gr_TipEdita, playerid) == 2) { //Editanje
             SendMessage(playerid, MESSAGE_TYPE_INFO, "Uspjesno ste promjenili koordinate objekta!");
@@ -1451,7 +1451,7 @@ CMD:objects(playerid, params[])
 				    else format(tmpString, sizeof(tmpString), "%s Slot %d\n", tmpString, x);
 				}
 	        }		
-			Bit8_Set( gr_MallType, playerid, MALL_REGULAR_CLOTHING );
+			Bit8_Set( gr_MallType, playerid, MALL_REGULAR_CLOTHING);
 	        ShowPlayerDialog(playerid, DIALOG_NEWCLOTHING, DIALOG_STYLE_LIST, \
 	        "{FF0000}Sistem objekata - Izaberite slot", tmpString, "Izaberi", "Izadji");
 	    }
@@ -1470,7 +1470,7 @@ CMD:objects(playerid, params[])
 				    else format(tmpString, sizeof(tmpString), "%s Slot %d\n", tmpString, x);
 				}
 	        }
-			Bit8_Set( gr_MallType, playerid, MALL_TOOLKIT_CLOTHING );
+			Bit8_Set( gr_MallType, playerid, MALL_TOOLKIT_CLOTHING);
 	        ShowPlayerDialog(playerid, DIALOG_NEWCLOTHING, DIALOG_STYLE_LIST, \
 	        "{FF0000}Sistem objekata - Izaberite slot", tmpString, "Izaberi", "Izadji");
 	    }
@@ -1489,7 +1489,7 @@ CMD:objects(playerid, params[])
 				    else format(tmpString, sizeof(tmpString), "%s Slot %d\n", tmpString, x);
 				}
 	        }
-			Bit8_Set( gr_MallType, playerid, MALL_SPORTS_CLOTHING );
+			Bit8_Set( gr_MallType, playerid, MALL_SPORTS_CLOTHING);
 	        ShowPlayerDialog(playerid, DIALOG_NEWCLOTHING, DIALOG_STYLE_LIST, \
 	        "{FF0000}Sistem objekata - Izaberite slot", tmpString, "Izaberi", "Izadji");
 	    }
@@ -1509,7 +1509,7 @@ CMD:objects(playerid, params[])
 				    else format(tmpString, sizeof(tmpString), "%s Slot %d\n", tmpString, x);
 				}
 	        }
-			Bit8_Set( gr_MallType, playerid, MALL_PD_CLOTHING );
+			Bit8_Set( gr_MallType, playerid, MALL_PD_CLOTHING);
 	        ShowPlayerDialog(playerid, DIALOG_NEWCLOTHING, DIALOG_STYLE_LIST, \
 	        "{FF0000}Sistem objekata - Izaberite slot", tmpString, "Izaberi", "Izadji");
 	    }
@@ -1529,7 +1529,7 @@ CMD:objects(playerid, params[])
 				    else format(tmpString, sizeof(tmpString), "%s Slot %d\n", tmpString, x);
 				}
 	        }
-			Bit8_Set( gr_MallType, playerid, MALL_FD_CLOTHING );
+			Bit8_Set( gr_MallType, playerid, MALL_FD_CLOTHING);
 	        ShowPlayerDialog(playerid, DIALOG_NEWCLOTHING, DIALOG_STYLE_LIST, \
 	        "{FF0000}Sistem objekata - Izaberite slot", tmpString, "Izaberi", "Izadji");
 	    }
@@ -1550,7 +1550,7 @@ CMD:objects(playerid, params[])
 				    else format(tmpString, sizeof(tmpString), "%s Slot %d\n", tmpString, x);
 				}
 	        }
-			Bit8_Set( gr_MallType, playerid, MALL_GOV_CLOTHING );
+			Bit8_Set( gr_MallType, playerid, MALL_GOV_CLOTHING);
 	        ShowPlayerDialog(playerid, DIALOG_NEWCLOTHING, DIALOG_STYLE_LIST, \
 	        "{FF0000}Sistem objekata - Izaberite slot", tmpString, "Izaberi", "Izadji");
 		}
@@ -1567,7 +1567,7 @@ CMD:objects(playerid, params[])
 				    else format(tmpString, sizeof(tmpString), "%s Slot %d\n", tmpString, x);
 				}
 	        }
-			Bit8_Set( gr_MallType, playerid, MALL_TECHNO_CLOTHING );
+			Bit8_Set( gr_MallType, playerid, MALL_TECHNO_CLOTHING);
 	        ShowPlayerDialog(playerid, DIALOG_NEWCLOTHING, DIALOG_STYLE_LIST, \
 	        "{FF0000}Sistem objekata - Izaberite slot", tmpString, "Izaberi", "Izadji");
 	    }
@@ -1583,11 +1583,11 @@ CMD:objects(playerid, params[])
 				    else format(tmpString, sizeof(tmpString), "%s Slot %d\n", tmpString, x);
 				}
 	        }
-			Bit8_Set( gr_MallType, playerid, MALL_HALL_CLOTHING );
+			Bit8_Set( gr_MallType, playerid, MALL_HALL_CLOTHING);
 	        ShowPlayerDialog(playerid, DIALOG_NEWCLOTHING, DIALOG_STYLE_LIST, \
 	        "{FF0000}Sistem objekata - Izaberite slot", tmpString, "Izaberi", "Izadji");
 		}
-		else if(PlayerVIP[playerid][pDonateRank] > 0 ) // Premium shop
+		else if(PlayerVIP[playerid][pDonateRank] > 0) // Premium shop
 		{
 	        for(new x;x<MAX_CUSTOMIZED_OBJECTS;x++)
 	        {
@@ -1600,7 +1600,7 @@ CMD:objects(playerid, params[])
 				    else format(tmpString, sizeof(tmpString), "%s Slot %d\n", tmpString, x);
 				}
 	        }
-			Bit8_Set( gr_MallType, playerid, MALL_PREM_CLOTHING );
+			Bit8_Set( gr_MallType, playerid, MALL_PREM_CLOTHING);
 	        ShowPlayerDialog(playerid, DIALOG_NEWCLOTHING, DIALOG_STYLE_LIST, \
 	        "{FF0000}Sistem objekata - Izaberite slot", tmpString, "Izaberi", "Izadji");
 	    }

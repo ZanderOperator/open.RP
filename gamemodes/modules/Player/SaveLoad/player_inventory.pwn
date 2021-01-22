@@ -7,7 +7,7 @@ LoadPlayerInventory(playerid)
         "LoadingPlayerInventory", 
         "i", 
         playerid
-    );
+   );
     return 1;
 }
 
@@ -19,7 +19,7 @@ Public: LoadingPlayerInventory(playerid)
             "INSERT INTO player_inventory(sqlid, mask, toolkit, watch, ciggaretes, lighter, parts, rope, boombox) \n\
                 VALUES('%d', '0', '0', '0', '0', '0', '0', '0', '0')",
             PlayerInfo[playerid][pSQLID]
-        );
+       );
         return 1;
     }
     cache_get_value_name_int(0, "mask"		    , PlayerInventory[playerid][pMaskID]);
@@ -53,7 +53,7 @@ SavePlayerInventory(playerid)
         PlayerInventory[playerid][pRope],
         PlayerInventory[playerid][pBoomBox],
         PlayerInfo[playerid][pSQLID]
-    );
+   );
     return 1;
 }
 

@@ -21,7 +21,7 @@
 		_________               .__
 		\_   ___ \_____    _____|__| ____   ____
 		/    \  \/\__  \  /  ___/  |/    \ /  _ \
-		\     \____/ __ \_\___ \|  |   |  (  <_> )
+		\     \____/ __ \_\___ \|  |   |  (  <_>)
 		 \______  (____  /____  >__|___|  /\____/
 		        \/     \/     \/        \/
 		  ________
@@ -1304,7 +1304,7 @@ static PokerRotateActivePlayer(tableid)
 		{
 			if((CurrentBet[playerid] < PokerTable[tableid][pkrActiveBet] && PokerTable[tableid][pkrActiveBet] != 0) 
 				|| (CurrentBet[playerid] == PokerTable[tableid][pkrActiveBet] && PokerTable[tableid][pkrActiveBet] == 0) 
-				&& Status[playerid] )
+				&& Status[playerid])
 			{
 				nextactiveid = playerid;
 				PokerTable[tableid][pkrActivePlayerID] = playerid;
@@ -2582,7 +2582,7 @@ static ShowCasinoGamesMenu(playerid, dialogid)
 CMD:poker(playerid, params[])
 {
 	new pick[10];
-	if(sscanf( params, "s[10] ", pick )) return SendClientMessage( playerid, -1, "KORISTENJE /poker [play / leave / table]");
+	if(sscanf( params, "s[10] ", pick)) return SendClientMessage( playerid, -1, "KORISTENJE /poker [play / leave / table]");
 
 	if(!strcmp(pick, "play", true))
 	{
@@ -2595,7 +2595,7 @@ CMD:poker(playerid, params[])
 					if(PokerTable[t][pkrPass][0] != EOS)
 					{
 						new password[32];
-						if(sscanf( params, "s[10]s[32]", pick, password ))
+						if(sscanf( params, "s[10]s[32]", pick, password))
 							return SendClientMessage( playerid, -1, "KORISTENJE /poker play [password]");
 						if(!strcmp(password, PokerTable[t][pkrPass], false, 32))
 							return JoinPokerTable(playerid, t);

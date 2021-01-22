@@ -48,7 +48,7 @@ CMD:ticket(playerid, params[])
 
         new ticketId, moneys;
         cache_get_value_name(0, "reciever", tmp, sizeof(tmp));
-        format(reciever, MAX_PLAYER_NAME, tmp );
+        format(reciever, MAX_PLAYER_NAME, tmp);
         cache_get_value_name_int(0, "id"        , ticketId);
         cache_get_value_name_int(0, "money"     , moneys);
 
@@ -95,7 +95,7 @@ CMD:ticket(playerid, params[])
             slot,
             ReturnVehicleName(VehicleInfo[vehicleid][vModel]),
             FormatNumber(VehicleInfo[vehicleid][vTickets][tmpSlot])
-        );
+       );
 
         mysql_fquery(g_SQL, "DELETE FROM cocars_tickets WHERE id = '%d'", VehicleInfo[vehicleid][vTicketsSQLID][tmpSlot]);
 
@@ -146,7 +146,7 @@ CMD:giveticket(playerid, params[])
         SendRadioMessage(PlayerFaction[playerid][pMember], COLOR_COP, tmpString);
 
         va_SendClientMessage(giveplayerid, COLOR_RED, "[!]  Officer %s gave you a %s ticket. Reason: %s", GetName(playerid,false), FormatNumber(moneys), reason);
-        SendClientMessage(giveplayerid, COLOR_RED, "(( Use /ticket to view and pay your tickets. ))");
+        SendClientMessage(giveplayerid, COLOR_RED, "(( Use /ticket to view and pay your tickets.))");
     }
     else if(!strcmp(pick, "vehicle", true))
     {
@@ -178,12 +178,12 @@ CMD:giveticket(playerid, params[])
                         VehicleInfo[vehicleid][vTickets][t],
                         reason,
                         gettime()
-                    ), 
+                   ), 
                     "OnVehicleTicketInsert", 
                     "ii", 
                     vehicleid, 
                     t
-                );
+               );
                 
                 tkts = t;
                 break;
@@ -202,7 +202,7 @@ CMD:giveticket(playerid, params[])
             ReturnVehicleName(VehicleInfo[vehicleid][vModel]),
             VehicleInfo[vehicleid][vOwner],
             FormatNumber(moneys) 
-        );
+       );
         SendRadioMessage(PlayerFaction[playerid][pMember], COLOR_COP, tmpString);
 
         format(tmpString, sizeof(tmpString), "*[HQ] Reason: %s.", reason);

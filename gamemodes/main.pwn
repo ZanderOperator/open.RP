@@ -380,7 +380,7 @@ Public:GlobalServerTimer()
 
 Public:DynamicWeather()
 {
-	if(gettimestamp() >= WeatherTimer )
+	if(gettimestamp() >= WeatherTimer)
 	{
 		WeatherTimer = gettimestamp() + 6000;
 		new tmphour,
@@ -877,7 +877,7 @@ hook OnPlayerDeath(playerid, killerid, reason)
 	if(KilledBy[playerid] == INVALID_PLAYER_ID && killerid == INVALID_PLAYER_ID || playerid == INVALID_PLAYER_ID || !SafeSpawned[playerid])
 		return 1;
 
-	if(!SafeSpawned[KilledBy[playerid]] ) 
+	if(!SafeSpawned[KilledBy[playerid]]) 
 		return SendClientMessage(KilledBy[playerid], COLOR_RED, "[ANTI-CHEAT]: You are not safely spawned, therefore, banned!"), BanMessage(KilledBy[playerid]), 0;
 
 	if(IsPlayerInAnyVehicle(playerid))
@@ -927,7 +927,7 @@ hook OnPlayerText(playerid, text[])
 			format(tmpString, sizeof(tmpString), "%s says%s: %s", GetName(playerid), PrintAccent(playerid), text);
 			RealProxDetector(6.5, playerid, tmpString,COLOR_FADE1,COLOR_FADE2,COLOR_FADE3,COLOR_FADE4,COLOR_FADE5);
 		}
-		if(Bit1_Get( gr_animchat, playerid) && !PlayerAnim[playerid] )
+		if(Bit1_Get( gr_animchat, playerid) && !PlayerAnim[playerid])
 		{
 			TogglePlayerControllable(playerid, 1);
 			if(strlen(text) > 0 && strlen(text) < 10) ApplyAnimationEx(playerid,"PED","IDLE_CHAT",4.0,0,0,0,0,500,1,0);
@@ -955,35 +955,35 @@ hook OnPlayerText(playerid, text[])
 hook function ResetPlayerVariables(playerid)
 {	
 	//rBits
-	Bit1_Set( gr_PlayerDownloading		, playerid, false );
-	Bit1_Set( gr_PlayerLoggingIn 		, playerid, false );
-	Bit1_Set( gr_PlayerLoggedIn 		, playerid, false );
-	Bit1_Set( gr_NewUser				, playerid, false );
-	Bit1_Set( gr_PlayerTimeOut			, playerid, false );
-	Bit1_Set( gr_BlockedPM				, playerid, false );
-	Bit1_Set( gr_PlayerAlive			, playerid, true  );
-	Bit1_Set( gr_MobileSpeaker			, playerid, false );
-	Bit1_Set( gr_SmokingCiggy			, playerid, false );
-	Bit1_Set( gr_HasRubber				, playerid, false );
-	Bit1_Set( gr_animchat               , playerid, false );
-	Bit1_Set( gr_PlayerRadio			, playerid, true );
-	Bit1_Set( gr_TrunkOffer				, playerid, false );
-	Bit1_Set( gr_PlayerTrunkEdit        , playerid, false );
-	Bit1_Set( gr_PlayerInTrunk			, playerid, false );
+	Bit1_Set( gr_PlayerDownloading		, playerid, false);
+	Bit1_Set( gr_PlayerLoggingIn 		, playerid, false);
+	Bit1_Set( gr_PlayerLoggedIn 		, playerid, false);
+	Bit1_Set( gr_NewUser				, playerid, false);
+	Bit1_Set( gr_PlayerTimeOut			, playerid, false);
+	Bit1_Set( gr_BlockedPM				, playerid, false);
+	Bit1_Set( gr_PlayerAlive			, playerid, true );
+	Bit1_Set( gr_MobileSpeaker			, playerid, false);
+	Bit1_Set( gr_SmokingCiggy			, playerid, false);
+	Bit1_Set( gr_HasRubber				, playerid, false);
+	Bit1_Set( gr_animchat               , playerid, false);
+	Bit1_Set( gr_PlayerRadio			, playerid, true);
+	Bit1_Set( gr_TrunkOffer				, playerid, false);
+	Bit1_Set( gr_PlayerTrunkEdit        , playerid, false);
+	Bit1_Set( gr_PlayerInTrunk			, playerid, false);
 	// TODO: Player/Char module
-	Bit1_Set( gr_Blind					, playerid, false );
-	Bit1_Set( gr_BlindFold				, playerid, false );
-	Bit1_Set( gr_ImpoundApproval		, playerid, false );
-	Bit2_Set( gr_BikeBunnyHop			, playerid, 0 );
-	Bit2_Set( gr_PlayerJumps			, playerid, 0 );
-	Bit4_Set( gr_WeaponTrunkEditSlot	, playerid, 0 );
-	Bit4_Set( gr_MusicCircle			, playerid, 0 );
-	Bit4_Set( gr_SpecateId				, playerid, 0 );
-	Bit8_Set( gr_LoginInputs			, playerid, 0 );
-	Bit8_Set( gr_RegisterInputs			, playerid, 0 );
-	Bit8_Set( gr_ShakeStyle				, playerid, 0 );
-	Bit16_Set( gr_ShakeOffer			, playerid, 999 );
-	Bit16_Set( gr_LastPMId				, playerid, 999 );
+	Bit1_Set( gr_Blind					, playerid, false);
+	Bit1_Set( gr_BlindFold				, playerid, false);
+	Bit1_Set( gr_ImpoundApproval		, playerid, false);
+	Bit2_Set( gr_BikeBunnyHop			, playerid, 0);
+	Bit2_Set( gr_PlayerJumps			, playerid, 0);
+	Bit4_Set( gr_WeaponTrunkEditSlot	, playerid, 0);
+	Bit4_Set( gr_MusicCircle			, playerid, 0);
+	Bit4_Set( gr_SpecateId				, playerid, 0);
+	Bit8_Set( gr_LoginInputs			, playerid, 0);
+	Bit8_Set( gr_RegisterInputs			, playerid, 0);
+	Bit8_Set( gr_ShakeStyle				, playerid, 0);
+	Bit16_Set( gr_ShakeOffer			, playerid, 999);
+	Bit16_Set( gr_LastPMId				, playerid, 999);
 
 	// Exiting Vars
 	PlayerSafeExit[playerid][giX] = 0;
@@ -991,9 +991,9 @@ hook function ResetPlayerVariables(playerid)
 	PlayerSafeExit[playerid][giZ] = 0;
 	PlayerSafeExit[playerid][giRZ] = 0;
 
-	Bit1_Set( gr_PlayerUsingPhonebooth			, playerid, false );
-	Bit1_Set( gr_PlayerTakingSelfie		, playerid, false );
-	Bit8_Set( gr_RingingTime			, playerid, 0 );
+	Bit1_Set( gr_PlayerUsingPhonebooth			, playerid, false);
+	Bit1_Set( gr_PlayerTakingSelfie		, playerid, false);
+	Bit8_Set( gr_RingingTime			, playerid, 0);
 
 	// Administrator
 	Bit1_Set(a_AdminChat, 		playerid, true);
@@ -1003,7 +1003,7 @@ hook function ResetPlayerVariables(playerid)
 	Bit1_Set(a_DMCheck, 		playerid, true);
 	
 	Bit1_Set(a_BlockedHChat, 	playerid, false);
-	Bit1_Set(a_TogReports, 		playerid, false );
+	Bit1_Set(a_TogReports, 		playerid, false);
 	
 
 	// Anti Spam
@@ -1015,7 +1015,7 @@ hook function ResetPlayerVariables(playerid)
 	AntiSpamInfo[playerid][asDoorShout] 	= 0;
 
 	// Tut
-	if(Bit1_Get( gr_PlayerOnTutorial, playerid )) 
+	if(Bit1_Get( gr_PlayerOnTutorial, playerid)) 
 	{
 		Bit1_Set(gr_PlayerOnTutorial, playerid, false);
 		stop TutTimer[playerid];
@@ -1077,7 +1077,7 @@ hook OnPlayerUpdate(playerid)
 		{
 			PlayerTick[playerid][ptMoney] = gettimestamp();
 			AC_MoneyDetect(playerid);
-			if(!PlayerSyncs[playerid] ) {
+			if(!PlayerSyncs[playerid]) {
 				PlayerSyncs[playerid] = true;
 			}
 			return 1;

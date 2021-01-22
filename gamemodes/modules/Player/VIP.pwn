@@ -7,7 +7,7 @@ LoadPlayerVIP(playerid)
         "LoadingPlayerVIP", 
         "i", 
         playerid
-    );
+   );
     return 1;
 }
 
@@ -19,7 +19,7 @@ Public: LoadingPlayerVIP(playerid)
             "INSERT INTO player_vip_status(sqlid, vipRank, vipTime, donateveh, dvehperms) \n\
                 VALUES('%d', '0', '0', '0', '0')",
             PlayerInfo[playerid][pSQLID]
-        );
+       );
         return 1;
     }
     cache_get_value_name_int(0, "vipRank"		, PlayerVIP[playerid][pDonateRank]);
@@ -44,7 +44,7 @@ SavePlayerVIP(playerid)
         PlayerVIP[playerid][pDonatorVehicle],
         PlayerVIP[playerid][pDonatorVehPerms],
         PlayerInfo[playerid][pSQLID]
-    );
+   );
     return 1;
 }
 

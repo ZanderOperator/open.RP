@@ -92,7 +92,7 @@ stock static ShowPlayerAdsList()
 	format(buffer, 4096, "Tip\tKontakt\tTekst\tCijena\n");
 	foreach(new i: Ads)
 	{
-	    if(AdsInfo[i][adSenderId] != 0 )
+	    if(AdsInfo[i][adSenderId] != 0)
 		{
 			format(motd, 200, ""COL_WHITE"%s\t%d\t%s\t"COL_GREEN"%d$\n",
 				GetAdStyleString(AdsInfo[i][adStyle]),
@@ -212,7 +212,7 @@ task SendAutomaticAdMessage[1000]()
 		{
 			va_SendClientMessageToAll(COLOR_GREEN, SendAdMessage(i));
 			AdsInfo[i][adTimes]--;
-			AdsInfo[i][adTimeStamp] = gettimestamp() + ( ADS_TIME_DURATION );
+			AdsInfo[i][adTimeStamp] = gettimestamp() + ( ADS_TIME_DURATION);
 			lastAdStamp = gettimestamp();
 			
 			if(AdsInfo[i][adTimes] == 0) 
@@ -290,7 +290,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 		}
 		case DIALOG_ADS_CREATE_STYLE: {
 			if(!response) return ShowPlayerDialog(playerid, DIALOG_ADS_MENU, DIALOG_STYLE_LIST, "LS OGLASNIK", "Predaj oglas\nPregledaj oglase", "Choose", "Close");
-			if(listitem == AD_STYLE_CMRC ) {
+			if(listitem == AD_STYLE_CMRC) {
 				ShowPlayerDialog(playerid, DIALOG_ADS_CREATE_CMRC, DIALOG_STYLE_INPUT, "LS OGLASNIK - Tekst reklame", "Unesite tekst reklame:", "Commit", "Abort");
 			}
 			else if(listitem == AD_STYLE_BUY){
@@ -454,7 +454,7 @@ CMD:carad(playerid, params[])
 	{
 		if(VehicleInfo[vehicleid][vVehicleAdId] != Text3D:INVALID_3DTEXT_ID)
 		{
-			DestroyDynamic3DTextLabel( VehicleInfo[vehicleid][vVehicleAdId] );
+			DestroyDynamic3DTextLabel( VehicleInfo[vehicleid][vVehicleAdId]);
 			VehicleInfo[vehicleid][vVehicleAdId] = Text3D:INVALID_3DTEXT_ID;
 		}
 		SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "Obrisali ste oglas sa svoga vozila!");

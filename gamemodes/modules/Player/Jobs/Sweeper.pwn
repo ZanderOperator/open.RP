@@ -51,7 +51,7 @@ new
 hook OnPlayerDisconnect(playerid, reason)
 {
 	PlayerCleanerCP[playerid] = 0;
-    Bit1_Set( r_Sweeping, playerid, false );
+    Bit1_Set( r_Sweeping, playerid, false);
 	return 1;
 }
 
@@ -59,13 +59,13 @@ hook OnPlayerEnterCheckpoint(playerid)
 {
 	if(PlayerJob[playerid][pJob] == JOB_SWEEPER) 
 	{
-		if(Bit1_Get( r_Sweeping, playerid ) && Player_GpsActivated(playerid)) 
+		if(Bit1_Get( r_Sweeping, playerid) && Player_GpsActivated(playerid)) 
 		{
 			new vID = GetPlayerVehicleID(playerid);
 			if(!IsVehicleASweep(vID)) return SendClientMessage( playerid, COLOR_RED, "Ne cistite ulice sa Sweeperom!");
 			DisablePlayerCheckpoint(playerid);
 			PlayerCleanerCP[playerid]++;
-			if(PlayerCleanerCP[playerid] == 13 ) 
+			if(PlayerCleanerCP[playerid] == 13) 
 			{
 				DisablePlayerCheckpoint(playerid);
 				new 
@@ -76,7 +76,7 @@ hook OnPlayerEnterCheckpoint(playerid)
 				PaydayInfo[playerid][pPayDayMoney] += money;
 				UpgradePlayerSkill(playerid);
 				PlayerJob[playerid][pFreeWorks] -= 5;
-				Bit1_Set( r_Sweeping, playerid, false );
+				Bit1_Set( r_Sweeping, playerid, false);
 				Player_SetIsWorkingJob(playerid, false);
 				PlayerCleanerCP[playerid] = 0;
 				return 1;
@@ -102,18 +102,18 @@ CMD:sweep(playerid, params[])
 	new
 		vehicleID = GetPlayerVehicleID(playerid),
 		pick[8];
-	if(sscanf( params, "s[8] ", pick )) return SendClientMessage(playerid, -1, "[KORISTENJE]: /sweep [start/stop]");
+	if(sscanf( params, "s[8] ", pick)) return SendClientMessage(playerid, -1, "[KORISTENJE]: /sweep [start/stop]");
 	if(strcmp(pick, "start", true) == 0) {
-		if(PlayerJob[playerid][pFreeWorks] < 1 ) return SendClientMessage( playerid, COLOR_RED, "Ne mozes vise raditi!");
+		if(PlayerJob[playerid][pFreeWorks] < 1) return SendClientMessage( playerid, COLOR_RED, "Ne mozes vise raditi!");
 		if(IsVehicleASweep(vehicleID)) 
 		{
-			if(Bit1_Get( r_Sweeping, playerid )) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Vec ste poceli sa poslom!");
-			Bit1_Set( r_Sweeping, playerid, true );
+			if(Bit1_Get( r_Sweeping, playerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Vec ste poceli sa poslom!");
+			Bit1_Set( r_Sweeping, playerid, true);
 			Player_SetIsWorkingJob(playerid, true);
 			PlayerCleanerCP[playerid] = 0;
 			
 			DisablePlayerCheckpoint(playerid);
-			SetPlayerCheckpoint(playerid, cleanerCP[0][0], cleanerCP[0][1], cleanerCP[0][2], 6.0 );
+			SetPlayerCheckpoint(playerid, cleanerCP[0][0], cleanerCP[0][1], cleanerCP[0][2], 6.0);
 			SendMessage(playerid, MESSAGE_TYPE_INFO, "Poceli ste sa poslom! Vas cilj je prolazenje kroz checkpointe i ciscenje grada!");
 		}
 		else 
@@ -124,13 +124,13 @@ CMD:sweep(playerid, params[])
 		if(IsVehicleASweep(vehicleID)) 
 		{
 			if(VehicleInfo[vehicleID][vJob] != 1) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ovo vozilo nije za ovaj posao!");
-			if(!Bit1_Get( r_Sweeping, playerid )) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Vi niste poceli sa poslom!");
+			if(!Bit1_Get( r_Sweeping, playerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Vi niste poceli sa poslom!");
 
 			PlayerJob[playerid][pFreeWorks] -= 5;
-			Bit1_Set( r_Sweeping, playerid, false );
+			Bit1_Set( r_Sweeping, playerid, false);
 			Player_SetIsWorkingJob(playerid, false);
 			DisablePlayerCheckpoint(playerid);
-			SetVehicleToRespawn( vehicleID );
+			SetVehicleToRespawn( vehicleID);
 		}
 		else 
 			SendMessage(playerid, MESSAGE_TYPE_ERROR, "Morate biti unutar vozila za ciscenje!");

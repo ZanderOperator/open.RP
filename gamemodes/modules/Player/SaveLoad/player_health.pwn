@@ -7,7 +7,7 @@ LoadPlayerHealth(playerid)
         "LoadingPlayerHealth", 
         "i", 
         playerid
-    );
+   );
     return 1;
 }
 
@@ -19,7 +19,7 @@ Public: LoadingPlayerHealth(playerid)
             "INSERT INTO player_health(sqlid, health, armour, hunger) \n\
                 VALUES('%d', '100.0', '0.0', '5.0')",
             PlayerInfo[playerid][pSQLID]
-        );
+       );
         return 1;
     }
     cache_get_value_name_float(0,	"health"	, PlayerHealth[playerid][pHealth]);
@@ -42,7 +42,7 @@ SavePlayerHealth(playerid)
         PlayerHealth[playerid][pArmour],
         PlayerHealth[playerid][pHunger],
         PlayerInfo[playerid][pSQLID]
-    );
+   );
     return 1;
 }
 

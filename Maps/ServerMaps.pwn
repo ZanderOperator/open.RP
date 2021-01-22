@@ -1131,41 +1131,41 @@ public OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
 		}
 		else if(IsPlayerInRangeOfPoint(playerid, 2.5, 1948.360351, 773.064453, -6.772177)) { //CELL 1
 			if(hroom1 == 0) {
-				MoveDynamicObject(Hcell[0],1948.360351-1.6, 773.064453, -6.772177, 6.0 );
+				MoveDynamicObject(Hcell[0],1948.360351-1.6, 773.064453, -6.772177, 6.0);
 				hroom1 = 1;
 			}
 			else if(hroom1 == 1) {
-				MoveDynamicObject(Hcell[0],1948.360351, 773.064453, -6.772177, 6.0 );
+				MoveDynamicObject(Hcell[0],1948.360351, 773.064453, -6.772177, 6.0);
 				hroom1 = 0;
 			}
 		}
 		else if(IsPlayerInRangeOfPoint(playerid, 2.5, 1953.041870, 773.064453, -6.772177)) { //CELL 2
 			if(hroom2 == 0) {
-				MoveDynamicObject(Hcell[1],1953.041870-1.6, 773.064453, -6.772177, 6.0 );
+				MoveDynamicObject(Hcell[1],1953.041870-1.6, 773.064453, -6.772177, 6.0);
 				hroom2 = 1;
 			}
 			else if(hroom2== 1) {
-				MoveDynamicObject(Hcell[1],1953.041870, 773.064453, -6.772177, 6.0 );
+				MoveDynamicObject(Hcell[1],1953.041870, 773.064453, -6.772177, 6.0);
 				hroom2 = 0;
 			}
 		}
 		else if(IsPlayerInRangeOfPoint(playerid, 2.5, 1439.514770, 1101.999023, -24.288499)) { //CELL 3
 			if(hroom3 == 0) {
-				MoveDynamicObject(Hcell[2],1439.514770-1.6, 1101.999023, -24.288499, 6.0 );
+				MoveDynamicObject(Hcell[2],1439.514770-1.6, 1101.999023, -24.288499, 6.0);
 				hroom3 = 1;
 			}
 			else if(hroom3 == 1) {
-				MoveDynamicObject(Hcell[2],1439.514770, 1101.999023, -24.288499, 6.0 );
+				MoveDynamicObject(Hcell[2],1439.514770, 1101.999023, -24.288499, 6.0);
 				hroom3 = 0;
 			}
 		}
 		else if(IsPlayerInRangeOfPoint(playerid, 2.5, 1435.624755, 1101.999023, -24.288499)) { //CELL 4
 			if(hroom4 == 0) {
-				MoveDynamicObject(Hcell[3],1435.624755-1.6, 1101.999023, -24.288499, 6.0 );
+				MoveDynamicObject(Hcell[3],1435.624755-1.6, 1101.999023, -24.288499, 6.0);
 				hroom4 = 1;
 			}
 			else if(hroom4 == 1) {
-				MoveDynamicObject(Hcell[3],1435.624755, 1101.999023, -24.288499, 6.0 );
+				MoveDynamicObject(Hcell[3],1435.624755, 1101.999023, -24.288499, 6.0);
 				hroom4 = 0;
 			}
 		}

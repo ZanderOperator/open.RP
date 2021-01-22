@@ -135,7 +135,7 @@ LoadPlayerFaction(playerid)
         "LoadingPlayerFaction", 
         "i", 
         playerid
-    );
+   );
     return 1;
 }
 
@@ -147,7 +147,7 @@ Public: LoadingPlayerFaction(playerid)
             "INSERT INTO player_faction(sqlid, facLeadId, facMemId, facRank) \n\
                 VALUES('%d', '0', '0', '0')",
             PlayerInfo[playerid][pSQLID]
-        );
+       );
         return 1;
     }
     cache_get_value_name_int(0,  "facLeadId"	, PlayerFaction[playerid][pLeader]);
@@ -170,7 +170,7 @@ SavePlayerFaction(playerid)
         PlayerFaction[playerid][pMember],
         PlayerFaction[playerid][pRank],
         PlayerInfo[playerid][pSQLID]
-    );
+   );
     return 1;
 }
 
@@ -186,7 +186,7 @@ stock LoadFactions()
         va_fquery(g_SQL, "SELECT * FROM server_factions WHERE 1"), 
         "OnFactionLoaded",
         ""
-    );
+   );
     return 1;
 }
 
@@ -197,7 +197,7 @@ stock LoadFactionPermissions(factionid)
         "OnFactionPermissionsLoaded", 
         "i", 
         factionid
-    );
+   );
     return 1;
 }
 
@@ -368,11 +368,11 @@ stock SaveFaction(orgid)
             FactionInfo[orgid][fRanks],
             FactionInfo[orgid][fFactionBank]
 
-        ), 
+       ), 
         "OnAdminFactionCreate", 
         "i", 
         orgid
-    );
+   );
     return 1;
 }
 
@@ -399,7 +399,7 @@ stock RemoveLeaders(orgid)
     mysql_fquery(g_SQL, 
         "UPDATE player_faction SET facLeadId = '0', facMemId = '0' WHERE facLeadId = '%d'",
         orgid
-    );
+   );
 
     foreach(new i : Player)
     {
@@ -417,7 +417,7 @@ stock RemoveMembers(orgid)
     mysql_fquery(g_SQL, 
         "UPDATE player_faction SET facMemId = '0' WHERE facMemId = '%d'",
         orgid
-    );
+   );
 
     foreach(new i : Player)
     {
@@ -546,7 +546,7 @@ stock SendLawMessage(color, sstring[])
     }
 }
 
-stock PlayerToFactionMoney ( playerid, ftype, money )
+stock PlayerToFactionMoney ( playerid, ftype, money)
 {
 	new safemoney = floatround(floatabs(money));
 
@@ -567,7 +567,7 @@ stock PlayerToFactionMoney ( playerid, ftype, money )
 	return 1;
 }
 
-stock PlayerToFactionMoneyTAX ( playerid, ftype, money )
+stock PlayerToFactionMoneyTAX ( playerid, ftype, money)
 {
 	new 
 		safemoney = floatround(floatabs(money)), 				
@@ -596,7 +596,7 @@ stock PlayerToFactionMoneyTAX ( playerid, ftype, money )
 	return 1;
 }
 
-stock FactionToPlayerMoney ( playerid, ftype, money )
+stock FactionToPlayerMoney ( playerid, ftype, money)
 {
 	new safemoney = floatround(floatabs(money));
 
@@ -616,7 +616,7 @@ stock FactionToPlayerMoney ( playerid, ftype, money )
 	return 1;
 }
 
-stock FactionToPlayerMoneyTAX ( playerid, ftype, money )
+stock FactionToPlayerMoneyTAX ( playerid, ftype, money)
 {
 	new 
 		safemoney = floatround(floatabs(money)), 				
@@ -644,7 +644,7 @@ stock FactionToPlayerMoneyTAX ( playerid, ftype, money )
 	return 1;
 }
 
-stock FactionToPlayerBankMoney ( playerid, ftype, money )
+stock FactionToPlayerBankMoney ( playerid, ftype, money)
 {
 	new safemoney = floatround(floatabs(money));
 		
@@ -668,7 +668,7 @@ stock FactionToPlayerBankMoney ( playerid, ftype, money )
 	return 1;
 }
 
-stock BudgetToFactionMoney ( ftype, money )
+stock BudgetToFactionMoney ( ftype, money)
 {
 	new safemoney = floatround(floatabs(money));
 	
@@ -690,7 +690,7 @@ stock BudgetToFactionMoney ( ftype, money )
 	return 1;
 }
 
-stock FactionToBudgetMoney ( ftype, money )
+stock FactionToBudgetMoney ( ftype, money)
 {
 	new safemoney = floatround(floatabs(money));
 	
@@ -729,7 +729,7 @@ ShowPlayerFactionBanks(playerid)
                 (newline) ? ("\n") : (""), 
                 FactionInfo[faciter][fName], 
                 FactionInfo[faciter][fFactionBank]
-            );
+           );
             strcat(buffer, motd, 512);
             Player_SetFactionList(playerid, counter, faciter);
             counter++;
@@ -955,12 +955,12 @@ public UninvitePlayer(playerid, const targetname[])
     mysql_fquery(g_SQL, 
         "UPDATE player_faction SET facLeadId = '0', facMemId = '0', facRank = '0' WHERE sqlid = '%d'", 
         playerSQLID
-    );
+   );
 
     mysql_fquery(g_SQL, 
         "UPDATE accounts SET spawnchange = '0' WHERE sqlid = '%d'", 
         playerSQLID
-    );
+   );
 
     mysql_fquery(g_SQL, "DELETE FROM player_weapons WHERE player_id = '%d'", playerSQLID);
 
@@ -1098,7 +1098,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
             SendFormatMessage(playerid, MESSAGE_TYPE_SUCCESS, "Kreirao si fakciju pod IDom %d sa imenom '%s'!",
                 creatingInfoId[playerid] + 1,
                 FactionInfo[fcid][fName]
-            );
+           );
             creatingFaction = 0;
 
             SaveFaction(fcid);
@@ -1189,7 +1189,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                 FactionInfo[fid][fName],
                 PlayerInfo[playerid][pSQLID],
                 money
-            );
+           );
             #endif
             return 1;
         }
@@ -1209,7 +1209,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                 FactionInfo[fid][fName],
                 PlayerInfo[playerid][pSQLID],
                 money
-            );
+           );
             #endif
             return 1;
         }
@@ -1368,7 +1368,7 @@ CMD:afaction(playerid, params[])
         mysql_fquery(g_SQL, "UPDATE server_factions SET type = '%d' WHERE id = '%d'",
             FactionInfo[fid][fType],
             FactionInfo[fid][fID]
-        );
+       );
         return 1;
     }
     else if(!strcmp(option, "changename", true))
@@ -1385,7 +1385,7 @@ CMD:afaction(playerid, params[])
         mysql_fquery(g_SQL, "UPDATE server_factions SET name = '%e' WHERE id = '%d'", 
             newname, 
             FactionInfo[fid][fID]
-        );
+       );
         return 1;
     }
     else if(!strcmp(option, "ranks", true))
@@ -1399,7 +1399,7 @@ CMD:afaction(playerid, params[])
         mysql_fquery(g_SQL, "UPDATE server_factions SET ranks = '%d' WHERE id = '%d'",
             FactionInfo[fid][fRanks],
             FactionInfo[fid][fID]
-        );
+       );
         return 1;
     }
     else if(!strcmp(option, "makeleader", true))
@@ -1424,7 +1424,7 @@ CMD:afaction(playerid, params[])
             GetName(targetid, false),
             ReturnPlayerIP(targetid),
             FactionInfo[fid][fName]
-        );
+       );
         #endif
 
         mysql_fquery(g_SQL, "UPDATE player_faction SET facLeadId = '%d', facMemId = '%d', facRank = '%d' WHERE sqlid = '%d'",
@@ -1432,7 +1432,7 @@ CMD:afaction(playerid, params[])
             PlayerFaction[targetid][pMember],
             PlayerFaction[targetid][pRank],
             PlayerInfo[targetid][pSQLID]
-        );
+       );
         
         va_SendClientMessage(playerid, COLOR_LIGHTBLUE, "Postavio si %s (ID: %d) za lidera organizacije ID %d (%s).", GetName(targetid, true), targetid, fid, FactionInfo[fid][fName]);
         va_SendClientMessage(targetid, COLOR_LIGHTBLUE, "Postavljen si za lidera organizacije %s od strane Admina %s.", FactionInfo[fid][fName], GetName(playerid, true));
@@ -1447,7 +1447,7 @@ CMD:afaction(playerid, params[])
 
         mysql_fquery(g_SQL, "UPDATE player_faction SET facLeadId = '0', facMemId = '0', facRank = '0' WHERE sqlid = '%d'", 
             PlayerInfo[targetid][pSQLID]
-        );
+       );
 
         #if defined MODULE_LOGS
         Log_Write("/logfiles/orgs_leader.txt", "(%s) %s(%s) removed %s(%s) the leader of faction %s status.",
@@ -1457,7 +1457,7 @@ CMD:afaction(playerid, params[])
             GetName(targetid, false),
             ReturnPlayerIP(targetid),
             FactionInfo[PlayerFaction[targetid][pMember]][fName]
-        );
+       );
         #endif
 
         PlayerFaction[targetid][pLeader] = 0;
@@ -1505,7 +1505,7 @@ CMD:afaction(playerid, params[])
             rankid, 
             rankname, 
             FactionInfo[fid][fID]
-        );
+       );
 
         format(string, sizeof(string), "[!] Promjenio si ime ranka fakcije ID %d (ID RANKA: %d) na %s.", fid+1, rankid, rankname);
         SendClientMessage(playerid, COLOR_RED, string);
@@ -1539,7 +1539,7 @@ Rank 6: %s\nRank 7: %s\nRank 8: %s\nRank 9: %s\nRank 10: %s\nRank 11: %s\nRank 1
             FactionInfo[fid][fRankName13],
             FactionInfo[fid][fRankName14],
             FactionInfo[fid][fRankName15]
-        );
+       );
         ShowPlayerDialog(playerid, DIALOG_RLIST, DIALOG_STYLE_MSGBOX, "Rankovi", string, "Close", "");
         return 1;
     }
@@ -1586,7 +1586,7 @@ CMD:faction(playerid, params[])
             PlayerFaction[targetid][pMember],
             PlayerFaction[targetid][pRank],
             PlayerInfo[targetid][pSQLID]
-        );
+       );
 
 
         #if defined MODULE_LOGS
@@ -1596,7 +1596,7 @@ CMD:faction(playerid, params[])
             GetName(targetid,false), 
             ReturnPlayerIP(targetid), 
             FactionInfo[PlayerFaction[playerid][pMember]][fName]
-        );
+       );
         #endif
 
         va_SendClientMessage(targetid, COLOR_LIGHTBLUE, "Dodan si u organizaciju %s od strane lidera %s.",
@@ -1700,7 +1700,7 @@ CMD:faction(playerid, params[])
             cmdname,
             rnk,
             mmbr
-        );
+       );
         return 1;
     }
     else if(!strcmp(option, "uninvite", true))
@@ -1744,13 +1744,13 @@ CMD:faction(playerid, params[])
 
         mysql_fquery(g_SQL, "UPDATE player_faction SET facMemId = '0', facRank = '0' WHERE sqlid = '%d'",
             PlayerInfo[targetid][pSQLID]
-        );
+       );
 
         PlayerInfo[targetid][pSpawnChange] = 0;
         mysql_fquery(g_SQL, "UPDATE accounts SET spawnchange = '%d' WHERE sqlid = '%d'",
             PlayerInfo[targetid][pSpawnChange],
             PlayerInfo[targetid][pSQLID]
-        );
+       );
         SetPlayerSpawnInfo(targetid);
 
         #if defined MODULE_LOGS
@@ -1760,7 +1760,7 @@ CMD:faction(playerid, params[])
             GetName(targetid,false), 
             ReturnPlayerIP(targetid), 
             FactionInfo[PlayerFaction[playerid][pMember]][fName]
-        );
+       );
         #endif
 
         new fid = PlayerFaction[playerid][pLeader];
@@ -1789,13 +1789,13 @@ CMD:faction(playerid, params[])
             ReturnPlayerIP(targetid), 
             rank, 
             FactionInfo[PlayerFaction[playerid][pMember]][fName]
-        );
+       );
         #endif
 
         mysql_fquery(g_SQL, "UPDATE player_faction SET facRank = '%d' WHERE sqlid = '%d'",
             PlayerFaction[targetid][pRank],
             PlayerInfo[targetid][pSQLID]
-        );
+       );
 
         va_SendClientMessage(targetid, COLOR_LIGHTBLUE, "Postavljen ti je Rank (%s)[%d] na organizaciji %s od strane %s %s.",
             ReturnPlayerRankName(targetid),
@@ -1803,12 +1803,12 @@ CMD:faction(playerid, params[])
             FactionInfo[PlayerFaction[playerid][pLeader]][fName],
             ReturnPlayerRankName(playerid),
             GetName(playerid, true)
-        );
+       );
         va_SendClientMessage(playerid, COLOR_LIGHTBLUE, "Postavio si %s Rank (%s)[%d].",
             targetname,
             ReturnPlayerRankName(playerid),
             rank
-        );
+       );
         return 1;
     }
     else if(!strcmp(option, "members", true))
@@ -1838,7 +1838,7 @@ CMD:faction(playerid, params[])
                     PlayerFaction[i][pRank],
                     Player_OnLawDuty(playerid),
                     GetPlayerStreet(i)
-                );
+               );
             }
             else
             {
@@ -1846,7 +1846,7 @@ CMD:faction(playerid, params[])
                     name,
                     ReturnPlayerRankName(i),
                     PlayerFaction[i][pRank]
-                );
+               );
             }
         }
         SendClientMessage(playerid, COLOR_WHITE, "");
@@ -1863,7 +1863,7 @@ CMD:faction(playerid, params[])
         format(string, sizeof(string), "[!] Lider %s je %s chat organizacije!",
             (blockfam[fid]) ? ("upalio") : ("ugasio"),
             name
-        );
+       );
         SendFactionMessage(fid, COLOR_RED, string);
         blockfam[fid] ^= 1; // toggle
         return 1;
@@ -1885,7 +1885,7 @@ CMD:faction(playerid, params[])
             "is", 
             playerid, 
             targetname
-        );
+       );
         return 1;
     }
     else if(!strcmp(option, "allmembers", true))
@@ -1896,11 +1896,11 @@ CMD:faction(playerid, params[])
             va_fquery(g_SQL,  "SELECT sqlid, facRank FROM player_faction WHERE facMemId = '%d' OR facLeadId = '%d'", 
                 PlayerFaction[playerid][pLeader], 
                 PlayerFaction[playerid][pLeader]
-            ), 
+           ), 
             "OnFactionMembersList", 
             "i", 
             playerid
-        );
+       );
         return 1;
     }
     else if(!strcmp(option, "counts", true))
@@ -1910,11 +1910,11 @@ CMD:faction(playerid, params[])
                 "SELECT sqlid FROM player_faction WHERE facMemId = '%d' OR facLeadId = '%d'", 
                 PlayerFaction[playerid][pLeader], 
                 PlayerFaction[playerid][pLeader]
-            ), 
+           ), 
             "OnFactionCountings",
             "i", 
             playerid
-        );
+       );
         return 1;
     }
     else if(!strcmp(option, "resetcars", true))
@@ -1958,7 +1958,7 @@ CMD:faction(playerid, params[])
         mysql_fquery(g_SQL, "UPDATE player_appearance SET skin = '%d' WHERE sqlid = '%d'", 
             PlayerAppearance[targetid][pSkin], 
             PlayerInfo[targetid][pSQLID]
-        );
+       );
     }
     return 1;
 }
@@ -1997,7 +1997,7 @@ CMD:togf(playerid, params[])
     FactionChatOn[playerid] = !FactionChatOn[playerid];
     va_SendClientMessage(playerid, COLOR_RED, "[!] %s vidjeti faction chat!",
         FactionChatOn[playerid] ? ("Sada cete") : ("Vise necete")
-    );
+   );
     return 1;
 }
 
@@ -2021,7 +2021,7 @@ CMD:quitfaction(playerid, params[])
     mysql_fquery(g_SQL, "UPDATE accounts SET spawnchange = '%d' WHERE sqlid = '%d'",
         PlayerInfo[playerid][pSpawnChange],
         PlayerInfo[playerid][pSQLID]
-    );
+   );
     SetPlayerSpawnInfo(playerid);
 
     #if defined MODULE_LOGS
@@ -2029,7 +2029,7 @@ CMD:quitfaction(playerid, params[])
         ReturnDate(),
         GetName(playerid, false),
         FactionInfo[PlayerFaction[playerid][pMember]][fName]
-    );
+   );
     #endif
 
     PlayerFaction[playerid][pLeader]       = 0;
@@ -2398,7 +2398,7 @@ CMD:carsign(playerid, params[])
         mysql_fquery(g_SQL, "UPDATE server_cars SET text = '%e' WHERE id = '%d'",
             text,
             VehicleInfo[vehicleid][vSQLID]
-        );
+       );
 
         va_SendClientMessage(playerid, COLOR_RED, "[!] Uspjesno si promjenio 3dText na automobilu %d u %s.", vehicleid, text);
         return 1;

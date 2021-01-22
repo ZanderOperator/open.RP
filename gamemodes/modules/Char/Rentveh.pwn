@@ -220,9 +220,9 @@ hook OnVehicleDeath(vehicleid, killerid)
 {
 	foreach (new playerid : Player)
 	{
-		if(rentedVehicle[playerid] ) 
+		if(rentedVehicle[playerid]) 
 		{
-			if(Player_RentVehicle(playerid) == vehicleid ) 
+			if(Player_RentVehicle(playerid) == vehicleid) 
 			{
 				SendMessage(playerid, MESSAGE_TYPE_ERROR, "Unistili ste rentano vozilo i kaznjeni ste s 250$ kazne!");
 				PlayerToBusinessMoneyTAX(playerid, 76, 250); // TODO: ???
@@ -260,7 +260,7 @@ CMD:rentveh(playerid, params[])
 	if(!strcmp(param, "take", true)) 
 	{
 		if(!IsPlayerInRangeOfPoint(playerid, 7.5, RENT_POS)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste na mjestu za rentanje vozila!");
-		if(rentedVehicle[playerid] ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Vec ste iznajmili vozilo kucajte /rentveh locate");
+		if(rentedVehicle[playerid]) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Vec ste iznajmili vozilo kucajte /rentveh locate");
 		
 		/*// Get Price by Level - novo by L3o.
 		switch(PlayerInfo[playerid][pLevel]) {

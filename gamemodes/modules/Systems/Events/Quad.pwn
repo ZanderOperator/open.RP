@@ -241,7 +241,7 @@ hook OnPlayerEnterRaceCP(playerid)
                 QuadCheckpoints[cp][0],   QuadCheckpoints[cp][1],   QuadCheckpoints[cp][2],
                 QuadCheckpoints[cp+1][0], QuadCheckpoints[cp+1][1], QuadCheckpoints[cp+1][2],
                 QUAD_CP_SIZE
-            );
+           );
 
             QuadPlayerCP[playerid]++;
         }
@@ -255,7 +255,7 @@ hook OnPlayerEnterRaceCP(playerid)
                 QuadCheckpoints[cp][0], QuadCheckpoints[cp][1], QuadCheckpoints[cp][2],
                 QuadCheckpoints[cp][0], QuadCheckpoints[cp][1], QuadCheckpoints[cp][2],
                 QUAD_CP_SIZE
-            );
+           );
 
             QuadPlayerCP[playerid]++;
         }
@@ -278,7 +278,7 @@ hook OnPlayerEnterRaceCP(playerid)
                 {
                     va_SendClientMessage(i, COLOR_ORANGE, "[QUAD EVENT]: %s je pobijedio u Quad utrci.",
                         GetName(FirstQuadWinner, true)
-                    );
+                   );
                 }
             }
             else if(SecondQuadWinner == INVALID_PLAYER_ID)
@@ -288,7 +288,7 @@ hook OnPlayerEnterRaceCP(playerid)
                 {
                     va_SendClientMessage(i, COLOR_ORANGE, "[QUAD EVENT]: %s je osvojio drugo mjesto u Quad utrci.",
                         GetName(SecondQuadWinner, true)
-                    );
+                   );
                 }
             }
             else if(ThirdQuadWinner == INVALID_PLAYER_ID)
@@ -298,7 +298,7 @@ hook OnPlayerEnterRaceCP(playerid)
                 {
                     va_SendClientMessage(i, COLOR_ORANGE, "[QUAD EVENT]: %s je osvojio trece mjesto u Quad utrci.",
                         GetName(ThirdQuadWinner, true)
-                    );
+                   );
 
                     if(QuadPlayer[i])
                     {
@@ -360,7 +360,7 @@ timer OnQuadCountDown[1000]()
                 QuadCheckpoints[cp][0],   QuadCheckpoints[cp][1],   QuadCheckpoints[cp][2],
                 QuadCheckpoints[cp+1][0], QuadCheckpoints[cp+1][1], QuadCheckpoints[cp+1][2],
                 QUAD_CP_SIZE
-            );
+           );
             QuadPlayerCP[i]++;
 
             PlayerPlaySound(i, 1057, 0.0, 0.0, 0.0);
@@ -447,7 +447,7 @@ CMD:quad(playerid, params[])
             QuadCheckpoints[0][0], QuadCheckpoints[0][1], QuadCheckpoints[0][2],
             QuadCheckpoints[0][0], QuadCheckpoints[0][1], QuadCheckpoints[0][2],
             30.0
-        );
+       );
         SendClientMessage(playerid, COLOR_RED, "[QUAD]: Uspjesno ste se prijavili za Quad event. Udjite u vozilo i stanite na marker.");
         SendClientMessage(playerid, COLOR_RED, "[QUAD]: Ukoliko zelite odustati, tipkajte /quad quit.");
         Player_SetOnEvent(playerid, true);

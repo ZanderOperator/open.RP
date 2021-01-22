@@ -231,7 +231,7 @@ CMD:tap(playerid, params[])
     }
     else if(!strcmp(param, "take", true))
     {
-        if(!IsPlayerInRangeOfPoint(playerid, 5.0, ListeningDevicePos[playerid][0], ListeningDevicePos[playerid][1], ListeningDevicePos[playerid][2] )) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste blizu postavljenog uredaja za prisluskivanje!");
+        if(!IsPlayerInRangeOfPoint(playerid, 5.0, ListeningDevicePos[playerid][0], ListeningDevicePos[playerid][1], ListeningDevicePos[playerid][2])) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste blizu postavljenog uredaja za prisluskivanje!");
 
         ListeningDevicePos[playerid][0] = 0.0;
         ListeningDevicePos[playerid][1] = 0.0;
@@ -391,7 +391,7 @@ hook function ResetPlayerVariables(playerid)
 
     // Wiretap
     if(Player_TappedBy(playerid) != INVALID_PLAYER_ID)
-        SendClientMessage(Player_TappedBy(playerid), COLOR_RED, "[!]: Line is busy (( Player is offline ))!");
+        SendClientMessage(Player_TappedBy(playerid), COLOR_RED, "[!]: Line is busy (( Player is offline))!");
     
     Player_SetTappedBy(playerid, INVALID_PLAYER_ID);
     Player_SetTappingCall(playerid, false);

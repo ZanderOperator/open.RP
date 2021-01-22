@@ -483,7 +483,7 @@
 (18/04/2020, 14:52:30) Anthony_Vendetti(IP: 31.47.26.40) je kickan radi Package Loss-a(52.00 posto).
 (18/04/2020, 14:53:33) Anthony_Vendetti(IP: 31.47.26.40) je kickan radi Package Loss-a(44.79 posto).
 (18/04/2020, 14:56:47) Anthony_Vendetti(IP: 31.47.26.40) je kickan radi Package Loss-a(43.40 posto).
-(18/04/2020, 17:34:23) Wyatt_Callahan(IP: ) je kickan radi Package Loss-a(40.50 posto).
+(18/04/2020, 17:34:23) Wyatt_Callahan(IP:) je kickan radi Package Loss-a(40.50 posto).
 (18/04/2020, 17:47:18) Thomas_Gerbel(IP: 46.217.219.86) je kickan radi Package Loss-a(40.90 posto).
 (18/04/2020, 17:51:39) Miguel_Scott(IP: 79.143.111.164) je kickan radi Package Loss-a(72.59 posto).
 (18/04/2020, 18:17:05) Wyatt_Callahan(IP: 5.43.167.146) je kickan radi Package Loss-a(52.20 posto).
@@ -524,7 +524,7 @@
 (20/04/2020, 11:48:18) Edgar_Hicks(IP: 95.156.140.219) je kickan radi Package Loss-a(47.40 posto).
 (20/04/2020, 13:22:33) Konstantin_Vasilliev(IP: 109.245.127.54) je kickan radi Package Loss-a(42.29 posto).
 (20/04/2020, 14:36:53) Nicholas_Lanzetta(IP: 109.175.97.199) je kickan radi Package Loss-a(41.29 posto).
-(20/04/2020, 15:44:08) Vladan_Vukasinovic(IP: ) je kickan radi Package Loss-a(66.40 posto).
+(20/04/2020, 15:44:08) Vladan_Vukasinovic(IP:) je kickan radi Package Loss-a(66.40 posto).
 (20/04/2020, 15:44:51) Vladan_Vukasinovic(IP: 109.93.191.92) je kickan radi Package Loss-a(45.59 posto).
 (20/04/2020, 15:48:56) Aleksander_Wick(IP: 31.47.29.123) je kickan radi Package Loss-a(60.50 posto).
 (20/04/2020, 15:51:44) Nuwa_Lin(IP: 185.50.59.95) je kickan radi Package Loss-a(55.00 posto).
@@ -551,7 +551,7 @@
 (20/04/2020, 21:43:13) Goran_Milojevic(IP: 176.104.111.86) je kickan radi Package Loss-a(41.29 posto).
 (20/04/2020, 21:43:52) Stewart_Murphy(IP: 109.245.159.255) je kickan radi Package Loss-a(46.59 posto).
 (20/04/2020, 21:44:08) Goran_Milojevic(IP: 176.104.111.86) je kickan radi Package Loss-a(43.50 posto).
-(20/04/2020, 22:37:30) William_Anderson(IP: ) je kickan radi Package Loss-a(40.70 posto).
+(20/04/2020, 22:37:30) William_Anderson(IP:) je kickan radi Package Loss-a(40.70 posto).
 (20/04/2020, 22:38:01) Vuk_Koprivica(IP: 31.216.184.38) je kickan radi Package Loss-a(75.00 posto).
 (20/04/2020, 23:09:41) Wyatt_Callahan(IP: 95.178.228.203) je kickan radi Package Loss-a(40.50 posto).
 (21/04/2020, 01:05:33) Milika_Savic(IP: 31.47.18.201) je kickan radi Package Loss-a(58.40 posto).

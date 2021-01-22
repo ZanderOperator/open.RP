@@ -63,7 +63,7 @@ hook OnPlayerSpawn(playerid)
 stock ApplyAnimationEx(playerid, animlib[], animname[], Float:fDelta, loop, lockx, locky, freeze, time, forcesync = 1, toggleable = 1) // ReWrap
 {
 	forcesync = 1;
-	if(PlayerWounded[playerid] || PlayerDeath[playerid][pKilled] > 0 )
+	if(PlayerWounded[playerid] || PlayerDeath[playerid][pKilled] > 0)
 	   return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne mozete koristiti animacije dok ste u Wounded/Death stanju!");
 	if(GetPlayerSpecialAction(playerid) == SPECIAL_ACTION_CUFFED || Player_IsCuffed(playerid))
 	    return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne mozete koristiti animacije dok ste cuffani!");
@@ -79,7 +79,7 @@ stock ApplyAnimationEx(playerid, animlib[], animname[], Float:fDelta, loop, lock
 
 stock SetPlayerSpecialActionEx(playerid, actionid) // ReWrap
 {
-	if(PlayerWounded[playerid] || PlayerDeath[playerid][pKilled] > 0 )
+	if(PlayerWounded[playerid] || PlayerDeath[playerid][pKilled] > 0)
 	   return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne mozete koristiti animacije dok ste u Wounded/Death stanju!");
 	if(GetPlayerSpecialAction(playerid) == SPECIAL_ACTION_CUFFED || Player_IsCuffed(playerid))
 	    return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne mozete koristiti animacije dok ste cuffani!");

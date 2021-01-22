@@ -90,7 +90,7 @@ public ASC_AntiSpeedCheats(playerid)
 	if(ASC_PlayerASpam{playerid}) return 0;
 	GetPlayerPos(playerid, AscX, AscY, AscZ);
 
-	if(AscZ < 0.0 || ASC_PlayerZFall[playerid] < 0.0 ) return 0; 
+	if(AscZ < 0.0 || ASC_PlayerZFall[playerid] < 0.0) return 0; 
 	if(ASC_PlayerZFall[playerid] - AscZ > 3 && ASC_PlayerFalling{playerid} == 0)
 	{
 		ASC_PlayerFalling{playerid} = 1;

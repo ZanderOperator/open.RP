@@ -458,7 +458,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                                 i + 1,
                                 GetZoneFromXYZ(RacingInfo[playerid][rdPosX][i], RacingInfo[playerid][rdPosY][i], RacingInfo[playerid][rdPosZ][i]),
                                 RacingInfo[playerid][rdPosX][i], RacingInfo[playerid][rdPosY][i], RacingInfo[playerid][rdPosZ][i]
-                            );
+                           );
                             strcat(buffer, row);
                         }
                     }
@@ -491,7 +491,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                             i + 1,
                             GetZoneFromXYZ(RacingInfo[playerid][rdPosX][i], RacingInfo[playerid][rdPosY][i], RacingInfo[playerid][rdPosZ][i]),
                             RacingInfo[playerid][rdPosX][i], RacingInfo[playerid][rdPosY][i], RacingInfo[playerid][rdPosZ][i]
-                        );
+                       );
                         strcat(buffer, row);
                     }
                 }

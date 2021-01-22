@@ -1137,7 +1137,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                 }
                 case 3:
                 {
-                    SendClientMessage(playerid, 0x6F83FFFF, "[PC] Klasa: {FFA05B}4. Krada imovine (novca i drugih predmeta )");
+                    SendClientMessage(playerid, 0x6F83FFFF, "[PC] Klasa: {FFA05B}4. Krada imovine (novca i drugih predmeta)");
                     SendClientMessage(playerid, COLOR_WHITE, "4.1 - Krada do 3000$ - 30 minuta + 3000$");
                     SendClientMessage(playerid, COLOR_WHITE, "4.2 - Krada imovine do 10 000$ - 30 minuta + 5 000$");
                     SendClientMessage(playerid, COLOR_WHITE, "4.3 - Krada imovine od 10 000$ - 100 000$ - 3,5 sati zatvora + 20 000$");
@@ -1270,7 +1270,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                         {3C95C2}[10-70] Potrebno pojacanje.\n\
                         {3C95C2}[10-99] Situacija zavrsena.",
                         "Close", ""
-                    );
+                   );
                 }
                 case 1:
                 {
@@ -1286,7 +1286,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                         {3C95C2}[Code 37]  Ukradeno vozilo.\n\
                         {3C95C2}[Code 77] Oprez na mogucu zasedu.",
                         "Close", ""
-                    );
+                   );
                 }
                 case 2:
                 {
@@ -1296,7 +1296,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                         {3C95C2}[IC 4] Azijat/Asian.\n\
                         {3C95C2}[IC 5] Nepoznat/Unknown.",
                         "Close", ""
-                    );
+                   );
                 }
                 case 3:
                 {
@@ -1312,7 +1312,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                         {3C95C2}[BT] Bomb Threat.\n\
                         {3C95C2}[AC] Aircraft Crash.",
                         "Close", ""
-                    );
+                   );
                 }
             }
         }
@@ -1404,7 +1404,7 @@ hook OnPlayerTakeDamage(playerid, issuerid, Float:amount, weaponid, bodypart)
             format(damageString, sizeof(damageString), "* %s shoots %s with tazer and he falls down!",
                 GetName(issuerid, true),
                 GetName(playerid, true)
-            );
+           );
             ProxDetector(15.0, playerid, damageString, COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE);
             TogglePlayerControllable(playerid, 0);
             ApplyAnimationEx(playerid, "PED", "KO_skid_front", 4.1, 0, 1, 1, 0, 0, 1, 0);
@@ -1429,7 +1429,7 @@ hook OnPlayerTakeDamage(playerid, issuerid, Float:amount, weaponid, bodypart)
             format(damageString, sizeof(damageString), "* %s shoots %s with bean bag bullet and he falls!",
                 GetName(issuerid, true),
                 GetName(playerid, true)
-            );
+           );
             ProxDetector(15.0, playerid, damageString, COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE,COLOR_PURPLE);
             TogglePlayerControllable(playerid, 0);
 
@@ -2269,7 +2269,7 @@ CMD:impound(playerid, params[])
         z_rot,
         VehicleInfo[vehicleid][vImpounded],
         VehicleInfo[vehicleid][vSQLID]
-    );
+   );
 
     new
         engine, lights, alarm, doors, bonnect, boot, objective;
@@ -2291,14 +2291,14 @@ CMD:payimpound(playerid, params[])
     new
         vehicleid = GetPlayerVehicleID(playerid);
     // TODO: array bounds checking
-    if(!VehicleInfo[vehicleid][vImpounded] ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, " Morate biti unutar zaplijenjenog vozila!");
+    if(!VehicleInfo[vehicleid][vImpounded]) return SendMessage(playerid, MESSAGE_TYPE_ERROR, " Morate biti unutar zaplijenjenog vozila!");
 
     VehicleInfo[vehicleid][vImpounded]  = 0;
 
     mysql_fquery(g_SQL, "UPDATE cocars SET impounded = '%d' WHERE id = '%d'",
         VehicleInfo[vehicleid][vImpounded],
         VehicleInfo[vehicleid][vSQLID]
-    );
+   );
 
     PlayerToFactionMoney(playerid, FACTION_TYPE_LAW, IMPOUND_PRICE); // novac igraea ide u factionbank od PDa
 
@@ -2566,7 +2566,7 @@ CMD:pdunlock(playerid, params[])
 
     new
         string[46];
-    GameTextForPlayer( playerid, "~w~Vozilo ~g~otkljucano", 800, 3 );
+    GameTextForPlayer( playerid, "~w~Vozilo ~g~otkljucano", 800, 3);
     format(string, sizeof(string), "* %s otkljucava vozilo.", GetName(playerid, true));
     SetPlayerChatBubble(playerid, string, COLOR_PURPLE, 20, 20000);
     return 1;
@@ -2596,7 +2596,7 @@ CMD:cleartrunk(playerid, params[])
         {
             mysql_fquery(g_SQL, "DELETE FROM cocars_weapons WHERE id = '%d'",
                 VehicleInfo[vehicleid][vWeaponSQLID][wslot]
-            );
+           );
 
             DeleteWeaponObject(vehicleid, wslot);
             ClearWeaponObject(vehicleid, wslot);
@@ -2618,7 +2618,7 @@ CMD:cleartrunk(playerid, params[])
         carname,
         ConvertSQLIDToName(VehicleInfo[vehicleid][vOwner]),
         VehicleInfo[vehicleid][vOwner]
-    );
+   );
     #endif
 
     SendMessage(playerid, MESSAGE_TYPE_INFO, "Uspjesno ste uzeli oruzje iz gepeka.");
@@ -2790,7 +2790,7 @@ CMD:ramdoor(playerid, params[])
     new
         house = Player_InfrontHouse(playerid);
     if(house == INVALID_HOUSE_ID) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne nalazite se pred vratima kuce!");
-    if(!HouseInfo[house][hLock] ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Vrata su otkljucana!");
+    if(!HouseInfo[house][hLock]) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Vrata su otkljucana!");
 
     if(IsCrowbarBreaking(playerid))
     {
@@ -2845,7 +2845,7 @@ CMD:housetake(playerid, params[])
             Storage_GetId(id), 
             HouseInfo[house][hAdress],
             HouseInfo[house][hSQLID]
-        );
+       );
         #endif
 
         new
@@ -2879,7 +2879,7 @@ CMD:returnduty(playerid, params[])
     Player_SetOnPoliceDuty(playerid, true);
 
     new tmpstring[120];
-    format(tmpstring, sizeof(tmpstring), "*[HQ] %s %s je ponovno na duznosti (( Crash )).", ReturnPlayerRankName(playerid), GetName(playerid,false));
+    format(tmpstring, sizeof(tmpstring), "*[HQ] %s %s je ponovno na duznosti (( Crash)).", ReturnPlayerRankName(playerid), GetName(playerid,false));
 
     if(IsACop(playerid))
         SendRadioMessage(1, COLOR_COP, tmpstring);

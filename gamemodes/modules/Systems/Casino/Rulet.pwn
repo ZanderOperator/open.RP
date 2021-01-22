@@ -1,6 +1,6 @@
 #include <YSI_Coding\y_hooks>
 
-#define MAX_RULET_TABLES		( 4 )
+#define MAX_RULET_TABLES		( 4)
 
 /*
 	##     ##    ###    ########   ######  
@@ -185,7 +185,7 @@ stock ResetRuletTable(playerid)
 stock ResetRuletArrays(playerid, bool:autodestruct = false)
 { 
 	// TextDraws
-	if(!autodestruct )
+	if(!autodestruct)
 	{
 		DestroyRouletteTDs(playerid);
 	}
@@ -267,7 +267,7 @@ stock PlayerToRouletteMoney(playerid, money)
 	AC_GivePlayerMoney(playerid, -money);
 	RoulettBet[playerid][RoulettSlot[playerid]] = money;
 	RoulettWholeBet[playerid] += money;
-	PlayerPlaySound( playerid, 1083, 0.0, 0.0, 0.0 );
+	PlayerPlaySound( playerid, 1083, 0.0, 0.0, 0.0);
 	
 	new 
 		bizzid = Player_InBusiness(playerid);
@@ -288,27 +288,27 @@ stock PlayerToRouletteMoney(playerid, money)
 
 static stock ShowRouletteTD(playerid, number)
 {
-	switch( number ) {
+	switch( number) {
 		case 0: {																		// Zelena
 			PlayerTextDrawSetString( playerid, RuletColor[playerid], "LD_ROUL:roulgre");
 			new
 				numString[3];
 			valstr(numString, number, false);
-			PlayerTextDrawSetString( playerid, RuletNumber[playerid], numString );
+			PlayerTextDrawSetString( playerid, RuletNumber[playerid], numString);
 		}
 		case 1, 3, 5, 7, 9, 12, 14, 16, 18, 19, 21, 23, 25, 27, 30, 32, 34, 36: { 		// Crvena
 			PlayerTextDrawSetString( playerid, RuletColor[playerid], "LD_ROUL:roulred");
 			new
 				numString[3];
 			valstr(numString, number, false);
-			PlayerTextDrawSetString( playerid, RuletNumber[playerid], numString );
+			PlayerTextDrawSetString( playerid, RuletNumber[playerid], numString);
 		}
 		case 2, 4, 6, 8, 10, 11, 13, 15, 17, 20, 22, 24, 26, 28, 29, 31, 33, 35: {		// Crna
 			PlayerTextDrawSetString( playerid, RuletColor[playerid], "LD_ROUL:roulbla");
 			new
 				numString[3];
 			valstr(numString, number, false);
-			PlayerTextDrawSetString( playerid, RuletNumber[playerid], numString );
+			PlayerTextDrawSetString( playerid, RuletNumber[playerid], numString);
 		}
 	}
 	return 1;
@@ -317,29 +317,29 @@ static stock ShowRouletteTD(playerid, number)
 stock InitRuletTables()
 {
 	RTable[0][rtPickupid] = CreateDynamicPickup(19300, 2, 793.0489, 415.1578, 1069.9900, RTable[0][rtViwo], RTable[0][rtInt], -1, 10.0);
-	Iter_Add( RuletTables, 0 );
+	Iter_Add( RuletTables, 0);
 
 	RTable[1][rtPickupid] = CreateDynamicPickup(19300, 2, 787.9941, 415.2599, 1069.9900, RTable[1][rtViwo], RTable[1][rtInt], -1, 10.0);
-	Iter_Add( RuletTables, 1 );
+	Iter_Add( RuletTables, 1);
 
 	RTable[2][rtPickupid] = CreateDynamicPickup(19300, 2, 793.1121, 434.3154, 1069.9900, RTable[2][rtViwo], RTable[2][rtInt], -1, 10.0);
-	Iter_Add( RuletTables, 2 );
+	Iter_Add( RuletTables, 2);
 
 	RTable[3][rtPickupid] = CreateDynamicPickup(19300, 2, 788.2350, 434.6027, 1069.9900, RTable[3][rtViwo], RTable[3][rtInt], -1, 10.0);
-	Iter_Add( RuletTables, 3 );
+	Iter_Add( RuletTables, 3);
 	
 	printf("Script Report: %d rulet tables loaded!", Iter_Count(RuletTables));
 	return 1;
 }
 
-static stock IsPlayerInRangeOfRuletTable( playerid )
+static stock IsPlayerInRangeOfRuletTable( playerid)
 {
 	new
 		tableid = -1;
 		
 	foreach(new i : RuletTables)
 	{
-		if(IsPlayerInRangeOfPoint( playerid, 2.5, RTable[i][rtPosX], RTable[i][rtPosY], RTable[i][rtPosZ] )) {
+		if(IsPlayerInRangeOfPoint( playerid, 2.5, RTable[i][rtPosX], RTable[i][rtPosY], RTable[i][rtPosZ])) {
 			tableid = i;
 			break;
 		}
@@ -353,17 +353,17 @@ static stock CreateRuletChips(playerid, slot)
 		number,
 		Float:chip_z;
 		
-	switch( RouletteType[playerid][slot] ) {
+	switch( RouletteType[playerid][slot]) {
 		case ROULETTE_TYPE_NUMBER:
 			number = RouletteNumber[playerid][slot];
 		case ROULETTE_TYPE_COLOR: {
-			if(RouletteColor[playerid][slot] == 0 )
+			if(RouletteColor[playerid][slot] == 0)
 				number = 37;
-			else if(RouletteColor[playerid][slot] == 1 )
+			else if(RouletteColor[playerid][slot] == 1)
 				number = 38;
 		}
 		case ROULETTE_TYPE_TUCET: {
-			switch( RouletteTucet[playerid][slot] )
+			switch( RouletteTucet[playerid][slot])
 			{
 				case 0: number = 39;
 				case 1: number = 40;
@@ -377,7 +377,7 @@ static stock CreateRuletChips(playerid, slot)
 			number = 43;
 		}
 		case ROULETTE_TYPE_STUPAC: {
-			switch( RouletteStupac[playerid][slot] )
+			switch( RouletteStupac[playerid][slot])
 			{
 				case 0: number = 44;
 				case 1: number = 45;
@@ -385,48 +385,48 @@ static stock CreateRuletChips(playerid, slot)
 			}
 		}
 		case ROULETTE_TYPE_PARNEPAR: {
-			if(RouletteParNepar[playerid][slot] == 0 )
+			if(RouletteParNepar[playerid][slot] == 0)
 				number = 47;
-			else if(RouletteParNepar[playerid][slot] == 1 )
+			else if(RouletteParNepar[playerid][slot] == 1)
 				number = 48;
 		}
 	}
 	
-	if(100 <= RoulettBet[playerid][slot] <= 200 ) 			
+	if(100 <= RoulettBet[playerid][slot] <= 200) 			
 		chip_z = RChips[number][rcPosZ];
-	else if(201 <= RoulettBet[playerid][slot] <= 400 ) 			
+	else if(201 <= RoulettBet[playerid][slot] <= 400) 			
 		chip_z = -0.2900;
-	else if(401 <= RoulettBet[playerid][slot] <= 600 )	
+	else if(401 <= RoulettBet[playerid][slot] <= 600)	
 		chip_z = -0.2800;
-	else if(601 <= RoulettBet[playerid][slot] <= 800 )	
+	else if(601 <= RoulettBet[playerid][slot] <= 800)	
 		chip_z = -0.2600;
-	else if(801 <= RoulettBet[playerid][slot] <= 1000 )	
+	else if(801 <= RoulettBet[playerid][slot] <= 1000)	
 		chip_z = -0.2400;
-	else if(1001 <= RoulettBet[playerid][slot] <= 5000 )	
+	else if(1001 <= RoulettBet[playerid][slot] <= 5000)	
 		chip_z = -0.2200;
-	else if(5001 <= RoulettBet[playerid][slot] <= 10000 )
+	else if(5001 <= RoulettBet[playerid][slot] <= 10000)
 		chip_z = -0.2000;
-	else if(5001 <= RoulettBet[playerid][slot] <= 10000 )
+	else if(5001 <= RoulettBet[playerid][slot] <= 10000)
 		chip_z = -0.1900;
-	else if(10001 <= RoulettBet[playerid][slot] <= 30000 )
+	else if(10001 <= RoulettBet[playerid][slot] <= 30000)
 		chip_z = -0.1800;
-	else if(30001 <= RoulettBet[playerid][slot] <= 500000 )	
+	else if(30001 <= RoulettBet[playerid][slot] <= 500000)	
 		chip_z = -0.1700;
-	else if(500001 <= RoulettBet[playerid][slot] <= 1000000 )
+	else if(500001 <= RoulettBet[playerid][slot] <= 1000000)
 		chip_z = -0.16700;
 	
 	RouletteChipObj[playerid][slot] = CreateDynamicObject(1903, RTable[RouletteTable[playerid]][rtPosX] + RChips[number][rcPosX], RTable[RouletteTable[playerid]][rtPosY] + RChips[number][rcPosY], RTable[RouletteTable[playerid]][rtPosZ] + chip_z, 0.0, 0.0, 0.0, -1, -1, playerid);
-	Streamer_UpdateEx(playerid, RTable[RouletteTable[playerid]][rtPosX], RTable[RouletteTable[playerid]][rtPosY], RTable[RouletteTable[playerid]][rtPosZ] );
+	Streamer_UpdateEx(playerid, RTable[RouletteTable[playerid]][rtPosX], RTable[RouletteTable[playerid]][rtPosY], RTable[RouletteTable[playerid]][rtPosZ]);
 	return 1;
 }
 
 static stock IsPlayerWinner(playerid, number)
 {
-	if(RouletteTable[playerid] == -1 ) return 0;
-	for( new x = 0; x <= RoulettSlot[playerid]; x++ ) {
-		switch( RouletteType[playerid][x] ) {
+	if(RouletteTable[playerid] == -1) return 0;
+	for( new x = 0; x <= RoulettSlot[playerid]; x++) {
+		switch( RouletteType[playerid][x]) {
 			case ROULETTE_TYPE_NUMBER: {
-				if(RouletteNumber[playerid][x] == number ) {
+				if(RouletteNumber[playerid][x] == number) {
 					
 					PlayerPlaySound(playerid,1063,0.0,0.0,0.0); 
 					PlayerPlaySound( playerid, 33401,0.0,0.0,0.0); 
@@ -436,7 +436,7 @@ static stock IsPlayerWinner(playerid, number)
 					format( tmpString, 25, "~y~Winner~n~~w~%d$",
 						RoulettBet[playerid][x] * 36
 					);
-					GameTextForPlayer( playerid, tmpString, 1500, 6 );
+					GameTextForPlayer( playerid, tmpString, 1500, 6);
 					BusinessToPlayerMoney(playerid, 104, RoulettBet[playerid][x] * 36); // Igrac dobiva novce od biznisa
 					return 1;
 				}
@@ -444,9 +444,9 @@ static stock IsPlayerWinner(playerid, number)
 			case ROULETTE_TYPE_COLOR: {
 				new
 					moneys = RoulettBet[playerid][x] * 2;
-				switch( number ) {
+				switch( number) {
 					case 1, 3, 5, 7, 9, 12, 14, 16, 18, 19, 21, 23, 25, 27, 30, 32, 34, 36: { 		// Crvena
-						if(RouletteColor[playerid][x] == 0 ) {
+						if(RouletteColor[playerid][x] == 0) {
 							
 							PlayerPlaySound(playerid,1063,0.0,0.0,0.0); 
 							PlayerPlaySound( playerid, 33401,0.0,0.0,0.0); 
@@ -456,13 +456,13 @@ static stock IsPlayerWinner(playerid, number)
 							format( tmpString, 25, "~y~Winner~n~~w~%d$",
 								moneys
 							);
-							GameTextForPlayer( playerid, tmpString, 1500, 6 );
+							GameTextForPlayer( playerid, tmpString, 1500, 6);
 							BusinessToPlayerMoney(playerid, 104, moneys); // Igrac dobiva novce od biznisa
 							return 1;
 						}
 					}
 					case 2, 4, 6, 8, 10, 11, 13, 15, 17, 20, 22, 24, 26, 28, 29, 31, 33, 35: {		// Crna
-						if(RouletteColor[playerid][x] == 1 ) {
+						if(RouletteColor[playerid][x] == 1) {
 							PlayerPlaySound(playerid,1063,0.0,0.0,0.0); 
 							PlayerPlaySound( playerid, 33401,0.0,0.0,0.0); 
 							
@@ -471,7 +471,7 @@ static stock IsPlayerWinner(playerid, number)
 							format( tmpString, 25, "~y~Winner~n~~w~%d$",
 								moneys
 							);
-							GameTextForPlayer( playerid, tmpString, 1500, 6 );
+							GameTextForPlayer( playerid, tmpString, 1500, 6);
 							BusinessToPlayerMoney(playerid, 104, moneys); // Igrac dobiva novce od biznisa
 							return 1;
 						}
@@ -481,9 +481,9 @@ static stock IsPlayerWinner(playerid, number)
 			case ROULETTE_TYPE_PARNEPAR: {
 				new
 					moneys = RoulettBet[playerid][x] * 2;
-				switch( number ) {
+				switch( number) {
 					case 2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30, 32, 34, 36: { 		// Parni
-						if(RouletteParNepar[playerid][x] == 0 ) {
+						if(RouletteParNepar[playerid][x] == 0) {
 							
 							PlayerPlaySound(playerid,1063,0.0,0.0,0.0); 
 							PlayerPlaySound( playerid, 33401,0.0,0.0,0.0); 
@@ -493,13 +493,13 @@ static stock IsPlayerWinner(playerid, number)
 							format( tmpString, 25, "~y~Winner~n~~w~%d$",
 								moneys
 							);
-							GameTextForPlayer( playerid, tmpString, 1500, 6 );
+							GameTextForPlayer( playerid, tmpString, 1500, 6);
 							BusinessToPlayerMoney(playerid, 104, moneys); // Igrac dobiva novce od biznisa
 							return 1;
 						}
 					}
 					case 1, 3, 5, 7, 9, 11, 13, 15, 17, 19, 21, 23, 25, 27, 29, 31, 33, 35: {		// Neparni
-						if(RouletteParNepar[playerid][x] == 1 ) {
+						if(RouletteParNepar[playerid][x] == 1) {
 							PlayerPlaySound(playerid,1063,0.0,0.0,0.0); 
 							PlayerPlaySound( playerid, 33401,0.0,0.0,0.0); 
 							
@@ -508,7 +508,7 @@ static stock IsPlayerWinner(playerid, number)
 							format( tmpString, 25, "~y~Winner~n~~w~%d$",
 								moneys
 							);
-							GameTextForPlayer( playerid, tmpString, 1500, 6 );
+							GameTextForPlayer( playerid, tmpString, 1500, 6);
 							BusinessToPlayerMoney(playerid, 104, moneys); // Igrac dobiva novce od biznisa
 							return 1;
 						}
@@ -518,10 +518,10 @@ static stock IsPlayerWinner(playerid, number)
 			case ROULETTE_TYPE_TUCET: {
 				new
 					moneys = floatround(RoulettBet[playerid][x] * 3);
-				switch( number )
+				switch( number)
 				{
 					case 1 .. 12: {
-						if(RouletteTucet[playerid][x] == 0 ) {
+						if(RouletteTucet[playerid][x] == 0) {
 							
 							PlayerPlaySound(playerid,1063,0.0,0.0,0.0); 
 							PlayerPlaySound( playerid, 33401,0.0,0.0,0.0); 
@@ -531,13 +531,13 @@ static stock IsPlayerWinner(playerid, number)
 							format( tmpString, 25, "~y~Winner~n~~w~%d$",
 								moneys
 							);
-							GameTextForPlayer( playerid, tmpString, 1500, 6 );
+							GameTextForPlayer( playerid, tmpString, 1500, 6);
 							BusinessToPlayerMoney(playerid, 104, moneys); // Igrac dobiva novce od biznisa
 							return 1;
 						}	
 					}
 					case 13 .. 24: {
-						if(RouletteTucet[playerid][x] == 1 ) {
+						if(RouletteTucet[playerid][x] == 1) {
 							
 							PlayerPlaySound(playerid,1063,0.0,0.0,0.0); 
 							PlayerPlaySound( playerid, 33401,0.0,0.0,0.0); 
@@ -547,13 +547,13 @@ static stock IsPlayerWinner(playerid, number)
 							format( tmpString, 25, "~y~Winner~n~~w~%d$",
 								moneys
 							);
-							GameTextForPlayer( playerid, tmpString, 1500, 6 );
+							GameTextForPlayer( playerid, tmpString, 1500, 6);
 							BusinessToPlayerMoney(playerid, 104, moneys); // Igrac dobiva novce od biznisa
 							return 1;
 						}
 					}
 					case 25 .. 36: {
-						if(RouletteTucet[playerid][x] == 2 ) {
+						if(RouletteTucet[playerid][x] == 2) {
 							
 							PlayerPlaySound(playerid,1063,0.0,0.0,0.0); 
 							PlayerPlaySound( playerid, 33401,0.0,0.0,0.0); 
@@ -563,7 +563,7 @@ static stock IsPlayerWinner(playerid, number)
 							format( tmpString, 25, "~y~Winner~n~~w~%d$",
 								moneys
 							);
-							GameTextForPlayer( playerid, tmpString, 1500, 6 );
+							GameTextForPlayer( playerid, tmpString, 1500, 6);
 							BusinessToPlayerMoney(playerid, 104, moneys); // Igrac dobiva novce od biznisa
 							return 1;
 						}
@@ -573,10 +573,10 @@ static stock IsPlayerWinner(playerid, number)
 			case ROULETTE_TYPE_STUPAC: {
 				new
 					moneys = floatround(RoulettBet[playerid][x] * 3);
-				switch( number )
+				switch( number)
 				{
 					case 1,4,7,10,13,16,19,22,25,28,31,34: {
-						if(RouletteStupac[playerid][x] == 0 ) {
+						if(RouletteStupac[playerid][x] == 0) {
 							
 							PlayerPlaySound(playerid,1063,0.0,0.0,0.0); 
 							PlayerPlaySound( playerid, 33401,0.0,0.0,0.0); 
@@ -586,13 +586,13 @@ static stock IsPlayerWinner(playerid, number)
 							format( tmpString, 25, "~y~Winner~n~~w~%d$",
 								moneys
 							);
-							GameTextForPlayer( playerid, tmpString, 1500, 6 );
+							GameTextForPlayer( playerid, tmpString, 1500, 6);
 							BusinessToPlayerMoney(playerid, 104, moneys); // Igrac dobiva novce od biznisa
 							return 1;
 						}	
 					}
 					case 2,5,8,11,14,17,20,23,26,29,32,35: {
-						if(RouletteStupac[playerid][x] == 1 ) {
+						if(RouletteStupac[playerid][x] == 1) {
 							
 							PlayerPlaySound(playerid,1063,0.0,0.0,0.0); 
 							PlayerPlaySound( playerid, 33401,0.0,0.0,0.0); 
@@ -602,13 +602,13 @@ static stock IsPlayerWinner(playerid, number)
 							format( tmpString, 25, "~y~Winner~n~~w~%d$",
 								moneys
 							);
-							GameTextForPlayer( playerid, tmpString, 1500, 6 );
+							GameTextForPlayer( playerid, tmpString, 1500, 6);
 							BusinessToPlayerMoney(playerid, 104, moneys); // Igrac dobiva novce od biznisa
 							return 1;
 						}
 					}
 					case 3,6,9,12,15,18,21,24,27,30,33,36: {
-						if(RouletteStupac[playerid][x] == 2 ) {
+						if(RouletteStupac[playerid][x] == 2) {
 							
 							PlayerPlaySound(playerid,1063,0.0,0.0,0.0); 
 							PlayerPlaySound( playerid, 33401,0.0,0.0,0.0); 
@@ -618,7 +618,7 @@ static stock IsPlayerWinner(playerid, number)
 							format( tmpString, 25, "~y~Winner~n~~w~%d$",
 								moneys
 							);
-							GameTextForPlayer( playerid, tmpString, 1500, 6 );
+							GameTextForPlayer( playerid, tmpString, 1500, 6);
 							BusinessToPlayerMoney(playerid, 104, moneys); // Igrac dobiva novce od biznisa
 							return 1;
 						}
@@ -626,7 +626,7 @@ static stock IsPlayerWinner(playerid, number)
 				}
 			}
 			case ROULETTE_TYPE_18: {
-				switch( number )
+				switch( number)
 				{
 					case 1 .. 18: {
 						PlayerPlaySound(playerid,1063,0.0,0.0,0.0); 
@@ -639,14 +639,14 @@ static stock IsPlayerWinner(playerid, number)
 						format( tmpString, 25, "~y~Winner~n~~w~%d$",
 							moneys
 						);
-						GameTextForPlayer( playerid, tmpString, 1500, 6 );
+						GameTextForPlayer( playerid, tmpString, 1500, 6);
 						BusinessToPlayerMoney(playerid, 104, moneys); // Igrac dobiva novce od biznisa
 						return 1;
 					}
 				}
 			}
 			case ROULETTE_TYPE_36: {
-				switch( number )
+				switch( number)
 				{
 					case 19 .. 36: {
 						PlayerPlaySound(playerid,1063,0.0,0.0,0.0); 
@@ -658,7 +658,7 @@ static stock IsPlayerWinner(playerid, number)
 						format( tmpString, 25, "~y~Winner~n~~w~%d$",
 							moneys
 						);
-						GameTextForPlayer( playerid, tmpString, 1500, 6 );
+						GameTextForPlayer( playerid, tmpString, 1500, 6);
 						BusinessToPlayerMoney(playerid, 104, moneys); // Igrac dobiva novce od biznisa
 						return 1;
 					}
@@ -964,43 +964,43 @@ static stock PlayRouletteNumberSound(playerid, number)
 	// TODO: make a "static const" array, lose the switch case statement, index into
 	// the array, return the number, and make ONE call to PlayerPlaySound.
 	switch(number) {
-		case 0: 	PlayerPlaySound( playerid, 5438, 0.0, 0.0, 0.0 );  // Zero
-		case 1: 	PlayerPlaySound( playerid, 5439, 0.0, 0.0, 0.0 );  // Red - 1
-		case 2: 	PlayerPlaySound( playerid, 5440, 0.0, 0.0, 0.0 );  // Black - 2
-		case 3: 	PlayerPlaySound( playerid, 5441, 0.0, 0.0, 0.0 );  // Red 3
-		case 4: 	PlayerPlaySound( playerid, 5442, 0.0, 0.0, 0.0 );  // Black - 4
-		case 5: 	PlayerPlaySound( playerid, 5443, 0.0, 0.0, 0.0 );  // Red - 5
-		case 6: 	PlayerPlaySound( playerid, 5444, 0.0, 0.0, 0.0 );  // Black - 6
-		case 7: 	PlayerPlaySound( playerid, 5445, 0.0, 0.0, 0.0 );  // Red, 7
-		case 8: 	PlayerPlaySound( playerid, 5446, 0.0, 0.0, 0.0 );  // Black, 8
-		case 9: 	PlayerPlaySound( playerid, 5447, 0.0, 0.0, 0.0 );  // Red - 9
-		case 10: 	PlayerPlaySound( playerid, 5411, 0.0, 0.0, 0.0 );  // Black - 10
-		case 11: 	PlayerPlaySound( playerid, 5412, 0.0, 0.0, 0.0 );  // Black 11
-		case 12: 	PlayerPlaySound( playerid, 5413, 0.0, 0.0, 0.0 );  // Red - 12
-		case 13: 	PlayerPlaySound( playerid, 5414, 0.0, 0.0, 0.0 );  // Black - 13
-		case 14: 	PlayerPlaySound( playerid, 5415, 0.0, 0.0, 0.0 );  // Red 14
-		case 15: 	PlayerPlaySound( playerid, 5416, 0.0, 0.0, 0.0 );  // Black - 15
-		case 16: 	PlayerPlaySound( playerid, 5417, 0.0, 0.0, 0.0 );  // Red - 16
-		case 17: 	PlayerPlaySound( playerid, 5418, 0.0, 0.0, 0.0 );  // Black - 17
-		case 18: 	PlayerPlaySound( playerid, 5419, 0.0, 0.0, 0.0 );  // Red 18
-		case 19: 	PlayerPlaySound( playerid, 5420, 0.0, 0.0, 0.0 );  // Red - 19
-		case 20: 	PlayerPlaySound( playerid, 5421, 0.0, 0.0, 0.0 );  // Black - 20
-		case 21: 	PlayerPlaySound( playerid, 5422, 0.0, 0.0, 0.0 );  // Red - 21
-		case 22: 	PlayerPlaySound( playerid, 5423, 0.0, 0.0, 0.0 );  // Black - 22
-		case 23: 	PlayerPlaySound( playerid, 5424, 0.0, 0.0, 0.0 );  // Red - 23
-		case 24: 	PlayerPlaySound( playerid, 5425, 0.0, 0.0, 0.0 );  // Black - 24
-		case 25: 	PlayerPlaySound( playerid, 5426, 0.0, 0.0, 0.0 );  // Red - 25
-		case 26: 	PlayerPlaySound( playerid, 5427, 0.0, 0.0, 0.0 );  // Black - 26
-		case 27: 	PlayerPlaySound( playerid, 5428, 0.0, 0.0, 0.0 );  // Red - 27
-		case 28: 	PlayerPlaySound( playerid, 5429, 0.0, 0.0, 0.0 );  // Black - 28
-		case 29: 	PlayerPlaySound( playerid, 5430, 0.0, 0.0, 0.0 );  // Black - 29
-		case 30: 	PlayerPlaySound( playerid, 5431, 0.0, 0.0, 0.0 );  // Red - 30
-		case 31: 	PlayerPlaySound( playerid, 5432, 0.0, 0.0, 0.0 );  // Black - 31
-		case 32: 	PlayerPlaySound( playerid, 5433, 0.0, 0.0, 0.0 );  // Red - 32
-		case 33: 	PlayerPlaySound( playerid, 5434, 0.0, 0.0, 0.0 );  // Black - 33
-		case 34: 	PlayerPlaySound( playerid, 5435, 0.0, 0.0, 0.0 );  // Red - 34
-		case 35: 	PlayerPlaySound( playerid, 5436, 0.0, 0.0, 0.0 );  // Black, 35
-		case 36: 	PlayerPlaySound( playerid, 5437, 0.0, 0.0, 0.0 );  // Red - 36
+		case 0: 	PlayerPlaySound( playerid, 5438, 0.0, 0.0, 0.0);  // Zero
+		case 1: 	PlayerPlaySound( playerid, 5439, 0.0, 0.0, 0.0);  // Red - 1
+		case 2: 	PlayerPlaySound( playerid, 5440, 0.0, 0.0, 0.0);  // Black - 2
+		case 3: 	PlayerPlaySound( playerid, 5441, 0.0, 0.0, 0.0);  // Red 3
+		case 4: 	PlayerPlaySound( playerid, 5442, 0.0, 0.0, 0.0);  // Black - 4
+		case 5: 	PlayerPlaySound( playerid, 5443, 0.0, 0.0, 0.0);  // Red - 5
+		case 6: 	PlayerPlaySound( playerid, 5444, 0.0, 0.0, 0.0);  // Black - 6
+		case 7: 	PlayerPlaySound( playerid, 5445, 0.0, 0.0, 0.0);  // Red, 7
+		case 8: 	PlayerPlaySound( playerid, 5446, 0.0, 0.0, 0.0);  // Black, 8
+		case 9: 	PlayerPlaySound( playerid, 5447, 0.0, 0.0, 0.0);  // Red - 9
+		case 10: 	PlayerPlaySound( playerid, 5411, 0.0, 0.0, 0.0);  // Black - 10
+		case 11: 	PlayerPlaySound( playerid, 5412, 0.0, 0.0, 0.0);  // Black 11
+		case 12: 	PlayerPlaySound( playerid, 5413, 0.0, 0.0, 0.0);  // Red - 12
+		case 13: 	PlayerPlaySound( playerid, 5414, 0.0, 0.0, 0.0);  // Black - 13
+		case 14: 	PlayerPlaySound( playerid, 5415, 0.0, 0.0, 0.0);  // Red 14
+		case 15: 	PlayerPlaySound( playerid, 5416, 0.0, 0.0, 0.0);  // Black - 15
+		case 16: 	PlayerPlaySound( playerid, 5417, 0.0, 0.0, 0.0);  // Red - 16
+		case 17: 	PlayerPlaySound( playerid, 5418, 0.0, 0.0, 0.0);  // Black - 17
+		case 18: 	PlayerPlaySound( playerid, 5419, 0.0, 0.0, 0.0);  // Red 18
+		case 19: 	PlayerPlaySound( playerid, 5420, 0.0, 0.0, 0.0);  // Red - 19
+		case 20: 	PlayerPlaySound( playerid, 5421, 0.0, 0.0, 0.0);  // Black - 20
+		case 21: 	PlayerPlaySound( playerid, 5422, 0.0, 0.0, 0.0);  // Red - 21
+		case 22: 	PlayerPlaySound( playerid, 5423, 0.0, 0.0, 0.0);  // Black - 22
+		case 23: 	PlayerPlaySound( playerid, 5424, 0.0, 0.0, 0.0);  // Red - 23
+		case 24: 	PlayerPlaySound( playerid, 5425, 0.0, 0.0, 0.0);  // Black - 24
+		case 25: 	PlayerPlaySound( playerid, 5426, 0.0, 0.0, 0.0);  // Red - 25
+		case 26: 	PlayerPlaySound( playerid, 5427, 0.0, 0.0, 0.0);  // Black - 26
+		case 27: 	PlayerPlaySound( playerid, 5428, 0.0, 0.0, 0.0);  // Red - 27
+		case 28: 	PlayerPlaySound( playerid, 5429, 0.0, 0.0, 0.0);  // Black - 28
+		case 29: 	PlayerPlaySound( playerid, 5430, 0.0, 0.0, 0.0);  // Black - 29
+		case 30: 	PlayerPlaySound( playerid, 5431, 0.0, 0.0, 0.0);  // Red - 30
+		case 31: 	PlayerPlaySound( playerid, 5432, 0.0, 0.0, 0.0);  // Black - 31
+		case 32: 	PlayerPlaySound( playerid, 5433, 0.0, 0.0, 0.0);  // Red - 32
+		case 33: 	PlayerPlaySound( playerid, 5434, 0.0, 0.0, 0.0);  // Black - 33
+		case 34: 	PlayerPlaySound( playerid, 5435, 0.0, 0.0, 0.0);  // Red - 34
+		case 35: 	PlayerPlaySound( playerid, 5436, 0.0, 0.0, 0.0);  // Black, 35
+		case 36: 	PlayerPlaySound( playerid, 5437, 0.0, 0.0, 0.0);  // Red - 36
 	}
 }
 
@@ -1075,7 +1075,7 @@ hook OnPlayerPickUpDynPickup(playerid, pickupid)
 { 
 	foreach(new tableid : RuletTables)
 	{
-		if(pickupid == RTable[tableid][rtPickupid] )
+		if(pickupid == RTable[tableid][rtPickupid])
 		{
 			ShowRuletPickupTDs(playerid);
 			new	
@@ -1101,15 +1101,15 @@ hook OnPlayerPickUpDynPickup(playerid, pickupid)
 
 hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 {
-	switch( dialogid )
+	switch( dialogid)
 	{
 		case DIALOG_CASINO_RULET:
 		{
-			if(!response ) return 1;
+			if(!response) return 1;
 			new
 				ruletString[115];
 				//0 Brojevi\n 1 Boje\n 2 Tuceti\n 3 Stupci\ 4 Par-Nepar\n 5- 1-18\n 6 -19-36
-			switch( listitem ) {
+			switch( listitem) {
 				case 0: ShowPlayerDialog( playerid, DIALOG_CASINO_RNUMBERS, DIALOG_STYLE_LIST, "ODABIR BROJEVA ZA RULET", "0\n1\n2\n3\n4\n5\n6\n7\n8\n9\n10\n11\n12\n13\n14\n15\n16\n17\n18\n19\n20\n21\n22\n23\n24\n25\n26\n27\n28\n29\n30\n31\n32\n33\n34\n35\n36", "Choose", "Abort");
 				case 1: ShowPlayerDialog( playerid, DIALOG_CASINO_RCOLOR, DIALOG_STYLE_LIST, "ODABIR BROJEVA ZA RULET", "Crvena\nCrna", "Choose", "Abort");
 				case 2: ShowPlayerDialog( playerid, DIALOG_CASINO_R12, DIALOG_STYLE_LIST, "ODABIR TUCETA ZA RULET", "Prvi\nDrugi\nTreci", "Choose", "Abort");
@@ -1138,7 +1138,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 		}
 		case DIALOG_CASINO_RNUMBERS:
 		{
-			if(!response ) return ShowPlayerDialog( playerid, DIALOG_CASINO_RULET, DIALOG_STYLE_LIST, "ODABIR TIPA RULETA", "Brojevi\nBoje\nTuceti\nStupci\nPar-Nepar\n1-18\n19-36", "Choose", "Abort");
+			if(!response) return ShowPlayerDialog( playerid, DIALOG_CASINO_RULET, DIALOG_STYLE_LIST, "ODABIR TIPA RULETA", "Brojevi\nBoje\nTuceti\nStupci\nPar-Nepar\n1-18\n19-36", "Choose", "Abort");
 			
 			RouletteType[playerid][RoulettSlot[playerid]] 	= ROULETTE_TYPE_NUMBER;
 			RouletteNumber[playerid][RoulettSlot[playerid]] 	= listitem;
@@ -1156,7 +1156,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 		}
 		case DIALOG_CASINO_RCOLOR:
 		{
-			if(!response ) return ShowPlayerDialog( playerid, DIALOG_CASINO_RULET, DIALOG_STYLE_LIST, "ODABIR TIPA RULETA", "Brojevi\nBoje\nTuceti\nStupci\nPar-Nepar\n1-18\n19-36", "Choose", "Abort");
+			if(!response) return ShowPlayerDialog( playerid, DIALOG_CASINO_RULET, DIALOG_STYLE_LIST, "ODABIR TIPA RULETA", "Brojevi\nBoje\nTuceti\nStupci\nPar-Nepar\n1-18\n19-36", "Choose", "Abort");
 			
 			RouletteType[playerid][RoulettSlot[playerid]] 	= ROULETTE_TYPE_COLOR;
 			RouletteColor[playerid][RoulettSlot[playerid]] 	= listitem;
@@ -1174,7 +1174,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 		}
 		case DIALOG_CASINO_PARNEPAR:
 		{
-			if(!response ) return ShowPlayerDialog( playerid, DIALOG_CASINO_RULET, DIALOG_STYLE_LIST, "ODABIR TIPA RULETA", "Brojevi\nBoje\nTuceti\nStupci\nPar-Nepar\n1-18\n19-36", "Choose", "Abort");
+			if(!response) return ShowPlayerDialog( playerid, DIALOG_CASINO_RULET, DIALOG_STYLE_LIST, "ODABIR TIPA RULETA", "Brojevi\nBoje\nTuceti\nStupci\nPar-Nepar\n1-18\n19-36", "Choose", "Abort");
 			
 			RouletteType[playerid][RoulettSlot[playerid]] 	= ROULETTE_TYPE_PARNEPAR;
 			RouletteParNepar[playerid][RoulettSlot[playerid]] = listitem;
@@ -1191,7 +1191,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 		}
 		case DIALOG_CASINO_R12:
 		{
-			if(!response ) return ShowPlayerDialog( playerid, DIALOG_CASINO_RULET, DIALOG_STYLE_LIST, "ODABIR TIPA RULETA", "Brojevi\nBoje\nTuceti\nStupci\nPar-Nepar\n1-18\n19-36", "Choose", "Abort");
+			if(!response) return ShowPlayerDialog( playerid, DIALOG_CASINO_RULET, DIALOG_STYLE_LIST, "ODABIR TIPA RULETA", "Brojevi\nBoje\nTuceti\nStupci\nPar-Nepar\n1-18\n19-36", "Choose", "Abort");
 			
 			RouletteType[playerid][RoulettSlot[playerid]] 	= ROULETTE_TYPE_TUCET;
 			RouletteTucet[playerid][RoulettSlot[playerid]] 	= listitem;
@@ -1209,7 +1209,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 		}
 		case DIALOG_CASINO_STUPAC:
 		{
-			if(!response ) return ShowPlayerDialog( playerid, DIALOG_CASINO_RULET, DIALOG_STYLE_LIST, "ODABIR TIPA RULETA", "Brojevi\nBoje\nTuceti\nStupci\nPar-Nepar\n1-18\n19-36", "Choose", "Abort");
+			if(!response) return ShowPlayerDialog( playerid, DIALOG_CASINO_RULET, DIALOG_STYLE_LIST, "ODABIR TIPA RULETA", "Brojevi\nBoje\nTuceti\nStupci\nPar-Nepar\n1-18\n19-36", "Choose", "Abort");
 			
 			RouletteType[playerid][RoulettSlot[playerid]] 	= ROULETTE_TYPE_STUPAC;
 			RouletteStupac[playerid][RoulettSlot[playerid]] 	= listitem;
@@ -1227,12 +1227,12 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 		}
 		case DIALOG_CASINO_RBET:
 		{
-			if(!response ) return ShowPlayerDialog( playerid, DIALOG_CASINO_RULET, DIALOG_STYLE_LIST, "ODABIR TIPA RULETA", "Brojevi\nBoje\nTuceti\nStupci\nPar-Nepar\n1-18\n19-36", "Choose", "Abort");
+			if(!response) return ShowPlayerDialog( playerid, DIALOG_CASINO_RULET, DIALOG_STYLE_LIST, "ODABIR TIPA RULETA", "Brojevi\nBoje\nTuceti\nStupci\nPar-Nepar\n1-18\n19-36", "Choose", "Abort");
 			new	
 				inputWage = strval(inputtext);
 			
-			if(RouletteTable[playerid] == -1 ) return SendErrorMessage(playerid, "Dogodila se greska! Koristite rulet ponovno da bi igrali.");
-			if(( RoulettWholeBet[playerid] + inputWage ) > RTable[RouletteTable[playerid]][rtMaxWage] ) {
+			if(RouletteTable[playerid] == -1) return SendErrorMessage(playerid, "Dogodila se greska! Koristite rulet ponovno da bi igrali.");
+			if(( RoulettWholeBet[playerid] + inputWage) > RTable[RouletteTable[playerid]][rtMaxWage]) {
 				new
 					ruletString[85];
 				format( ruletString, 85, "Unesite koliko novca zelite staviti:\n"COL_RED"Min.%d$/%d$ Max. unos novca!",
@@ -1243,11 +1243,11 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 				return 1;
 			}
 
-			if(RTable[RouletteTable[playerid]][rtMinWage] <= inputWage <= RTable[RouletteTable[playerid]][rtMaxWage] )
+			if(RTable[RouletteTable[playerid]][rtMinWage] <= inputWage <= RTable[RouletteTable[playerid]][rtMaxWage])
 			{
-				if(AC_GetPlayerMoney(playerid) < inputWage ) {
-					GameTextForPlayer( playerid, "~r~Nemate toliko novca!", 1200, 1 );
-					PlayerPlaySound( playerid, 1085, 0.0, 0.0, 0.0 );
+				if(AC_GetPlayerMoney(playerid) < inputWage) {
+					GameTextForPlayer( playerid, "~r~Nemate toliko novca!", 1200, 1);
+					PlayerPlaySound( playerid, 1085, 0.0, 0.0, 0.0);
 					return 1;
 				}
 				
@@ -1262,17 +1262,17 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 				format( tmpString, 8, "$%d", 
 					RTable[RouletteTable[playerid]][rtMaxWage]
 				);
-				PlayerTextDrawSetString( playerid, RuletPotMaxInput[playerid], tmpString );
+				PlayerTextDrawSetString( playerid, RuletPotMaxInput[playerid], tmpString);
 				
 				format( tmpString, 8, "$%d", 
 					RoulettWholeBet[playerid]
 				);
-				PlayerTextDrawSetString( playerid, RuletPotWholeInput[playerid], tmpString );
+				PlayerTextDrawSetString( playerid, RuletPotWholeInput[playerid], tmpString);
 				
 				format( tmpString, 8, "$%d", 
 					inputWage
 				);
-				PlayerTextDrawSetString( playerid, RuletPotNowInput[playerid], tmpString );				
+				PlayerTextDrawSetString( playerid, RuletPotNowInput[playerid], tmpString);				
 				
 				if(RuletWaitingForPlayers[playerid])
 				{
@@ -1310,27 +1310,27 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 */
 CMD:rulet(playerid, params[])
 {
-	if(!PlayerCoolDown[playerid][pCasinoCool] ) return SendClientMessage(playerid, COLOR_RED, "[ANTI-ABUSE]: Pricekajte do iduceg paydaya za novo igranje!");
-	if(PlayerInfo[playerid][pLevel] < 3 ) return SendClientMessage(playerid, COLOR_RED, "[ANTI-ABUSE]: Morate biti level 3+ za igranje u kasinu!");
+	if(!PlayerCoolDown[playerid][pCasinoCool]) return SendClientMessage(playerid, COLOR_RED, "[ANTI-ABUSE]: Pricekajte do iduceg paydaya za novo igranje!");
+	if(PlayerInfo[playerid][pLevel] < 3) return SendClientMessage(playerid, COLOR_RED, "[ANTI-ABUSE]: Morate biti level 3+ za igranje u kasinu!");
 	
 	new cbizzid = GetPlayerCasinoID(playerid);
 	if(cbizzid == INVALID_BIZNIS_ID) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne nalazite se u kasinu!");
-	if(BizzInfo[cbizzid][bTill] <= 1000 ) 
+	if(BizzInfo[cbizzid][bTill] <= 1000) 
 		return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Kasino nema dovoljno novaca za nastavak igre!");
 		
 	SendClientMessage(playerid, 0xF4D942AA, "Za pomoc upisite /rulethelp");
 	new
-		tableid = IsPlayerInRangeOfRuletTable( playerid );
-	if(tableid == -1 ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, " Niste blizu stolova za rulet!");
-	if(!IsPlayerInRangeOfPoint( playerid, 2.5, RTable[tableid][rtPosX], RTable[tableid][rtPosY], RTable[tableid][rtPosZ] )) return SendMessage(playerid, MESSAGE_TYPE_ERROR, " Niste blizu svoga stola za rulet!");
+		tableid = IsPlayerInRangeOfRuletTable( playerid);
+	if(tableid == -1) return SendMessage(playerid, MESSAGE_TYPE_ERROR, " Niste blizu stolova za rulet!");
+	if(!IsPlayerInRangeOfPoint( playerid, 2.5, RTable[tableid][rtPosX], RTable[tableid][rtPosY], RTable[tableid][rtPosZ])) return SendMessage(playerid, MESSAGE_TYPE_ERROR, " Niste blizu svoga stola za rulet!");
 	RouletteTable[playerid] = tableid;
-	if(AC_GetPlayerMoney(playerid) < RTable[RouletteTable[playerid]][rtMinWage] ) 
+	if(AC_GetPlayerMoney(playerid) < RTable[RouletteTable[playerid]][rtMinWage]) 
 	{
 		SendMessage(playerid, MESSAGE_TYPE_ERROR, "You don't have enough money!");
-		PlayerPlaySound( playerid, 5406, 0.0, 0.0, 0.0 );
+		PlayerPlaySound( playerid, 5406, 0.0, 0.0, 0.0);
 		return 1;
 	}
-	PlayerPlaySound( playerid, 5401, 0.0, 0.0, 0.0 );
+	PlayerPlaySound( playerid, 5401, 0.0, 0.0, 0.0);
 	ShowPlayerDialog( playerid, DIALOG_CASINO_RULET, DIALOG_STYLE_LIST, "ODABIR TIPA RULETA", "Brojevi\nBoje\nTuceti\nStupci\nPar-Nepar\n1-18\n19-36", "Choose", "Abort");
 	return 1;
 }

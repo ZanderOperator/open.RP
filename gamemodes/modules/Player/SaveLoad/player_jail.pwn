@@ -7,7 +7,7 @@ LoadPlayerJailStats(playerid)
         "LoadingPlayerJailStats", 
         "i", 
         playerid
-    );
+   );
     return 1;
 }
 
@@ -19,7 +19,7 @@ Public: LoadingPlayerJailStats(playerid)
             "INSERT INTO player_jail(sqlid, jailed, jailtime, arrested, bailprice) \n\
                 VALUES('%d', '0', '0', '0', '0')",
             PlayerInfo[playerid][pSQLID]
-        );
+       );
         return 1;
     }
     cache_get_value_name_int(0,  "jailed"		, PlayerJail[playerid][pJailed]);		
@@ -44,7 +44,7 @@ SavePlayerJailStats(playerid)
         PlayerJail[playerid][pArrested],
         PlayerJail[playerid][pBailPrice],
         PlayerInfo[playerid][pSQLID]
-    );
+   );
     return 1;
 }
 

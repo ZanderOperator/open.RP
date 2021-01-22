@@ -6233,7 +6233,7 @@ hook OnFilterScriptInit() {
 }
 
 hook OnPlayerConnect(playerid) {
-	// VATROGASCI ( FIRE DEPARTMENT ) BY CARLOS
+	// VATROGASCI ( FIRE DEPARTMENT) BY CARLOS
 	RemoveBuildingForPlayer(playerid, 5857, 1259.439, -1246.810, 17.109, 0.250);
 	RemoveBuildingForPlayer(playerid, 5967, 1259.439, -1246.810, 17.109, 0.250);
 	RemoveBuildingForPlayer(playerid, 1391, 1238.380, -1258.270, 44.664, 0.250);

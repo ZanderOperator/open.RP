@@ -162,7 +162,7 @@ stock LoadGraffits()
     mysql_pquery(g_SQL,
         va_fquery(g_SQL, "SELECT * FROM graffiti WHERE 1 LIMIT 0,%d", MAX_GRAFS), 
         "OnGraffitsLoad"
-    );
+   );
     return 1;
 }
 
@@ -342,11 +342,11 @@ stock InsertGraffitIntoDB(grafid)
             GraffitInfo[grafid][gRotY],
             GraffitInfo[grafid][gRotZ],
             GraffitInfo[grafid][gAuthor]
-        ), 
+       ), 
         "OnGraffitCreate", 
         "i", 
         grafid
-    );
+   );
 
     mysql_pquery(g_SQL, "COMMIT", "");
     return 1;
@@ -476,7 +476,7 @@ stock EditGraffit(grafid, Float:newX, Float:newY, Float:newZ, Float:newRotX, Flo
         GraffitInfo[grafid][gRotY],
         GraffitInfo[grafid][gRotZ],
         GraffitInfo[grafid][gId]
-    );
+   );
 
     Streamer_SetFloatData(STREAMER_TYPE_OBJECT, GraffitInfo[grafid][gObject], E_STREAMER_DRAW_DISTANCE, GRAFFIT_DRAW_DISTANCE);
 }
@@ -578,7 +578,7 @@ stock LoadTags()
         va_fquery(g_SQL, "SELECT * FROM spraytags WHERE 1 LIMIT 0,%d", MAX_TAGS), 
         "OnTagsLoaded",
         ""
-    );
+   );
     return 1;
 }
 
@@ -676,7 +676,7 @@ stock InsertSprayTagIntoDB(tagid)
         TagInfo[tagid][tRotZ],
         TagInfo[tagid][tFaction],
         TagInfo[tagid][tAuthor]
-    );
+   );
     return 1;
 }
 
@@ -763,7 +763,7 @@ stock EditSprayTag(tagid, Float:newX, Float:newY, Float:newZ, Float:newRotX, Flo
         TagInfo[tagid][tRotY],
         TagInfo[tagid][tRotZ],
         TagInfo[tagid][tId]
-    );
+   );
 
     Streamer_SetFloatData(STREAMER_TYPE_OBJECT, TagInfo[tagid][tgObject], E_STREAMER_DRAW_DISTANCE, GRAFFIT_DRAW_DISTANCE);
 }

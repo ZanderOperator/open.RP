@@ -203,7 +203,7 @@ stock LoadHouseGarages()
         va_fquery(g_SQL, "SELECT * FROM server_garages WHERE 1"), 
         "OnHouseGaragesLoad", 
         ""
-    );
+   );
     return 1;
 }
 
@@ -552,7 +552,7 @@ hook OnPlayerEnterDynArea(playerid, areaid)
         format(string, sizeof(string), "Garaza je na prodaju~n~Adresa: %s~n~Cijena: %d~g~$~n~",
             GarageInfo[garage][gAdress],
             GarageInfo[garage][gPrice]
-        );
+       );
         PlayerTextDrawSetString(playerid, GarageCMDTD[playerid], "Raspolozive komande:~n~      /enter, /garage buy");
     }
     else
@@ -561,7 +561,7 @@ hook OnPlayerEnterDynArea(playerid, areaid)
             ConvertSQLIDToName(GarageInfo[garage][gOwnerID]),
             GarageInfo[garage][gAdress],
             GarageInfo[garage][gPrice]
-        );
+       );
         PlayerTextDrawSetString(playerid, GarageCMDTD[playerid], "Raspolozive komande:~n~      /enter, /garage lock (vlasnik)");
     }
     PlayerTextDrawSetString(playerid, GarageInfoTD[playerid], string);
@@ -606,7 +606,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
             mysql_fquery(g_SQL, "UPDATE server_garages SET ownerid = '%d' WHERE id = '%d'",
                    GarageInfo[garage][gOwnerID],
                    GarageInfo[garage][gSQLID]
-            );
+           );
 
             PlayerToPlayerMoneyTAX(playerid, seller, GaragePrice[playerid], true, LOG_TYPE_GARAGESELL); // prodaja garaze igrac igracu koja se oporezuje
 
@@ -674,11 +674,11 @@ CMD:create_garage(playerid, params[])
             GarageInfo[garage][gExitX],
             GarageInfo[garage][gExitY],
             GarageInfo[garage][gExitZ]
-        ), 
+       ), 
         "OnGarageCreates", 
         "i", 
         garage
-    );
+   );
     GarageInfo[garage][gEnterPck] = CreateDynamicPickup(19522, 2, GarageInfo[garage][gEnterX], GarageInfo[garage][gEnterY], GarageInfo[garage][gEnterZ], -1, -1, -1, 100.0);
     Iter_Add(Garage, garage);
     return 1;
@@ -760,7 +760,7 @@ CMD:garage(playerid, params[])
         mysql_fquery(g_SQL, "UPDATE server_garages SET ownerid = '%d', locked = '1' WHERE id = '%d'",
             GarageInfo[nearGarage][gOwnerID],
             GarageInfo[nearGarage][gSQLID]
-        );
+       );
         SendFormatMessage(playerid, MESSAGE_TYPE_SUCCESS, "Uspjesno ste kupili garazu za (%d$)", GarageInfo[nearGarage][gPrice]);
     }
     else if(!strcmp(param, "sell", true))
@@ -801,7 +801,7 @@ CMD:garage(playerid, params[])
                             GetName(playerid, true),
                             GetName(playerid, true),
                             price
-        );
+       );
     }
     else if(!strcmp(param, "locate", true))
     {
@@ -831,7 +831,7 @@ CMD:garage(playerid, params[])
             GarageInfo[garageid][gExitY],
             GarageInfo[garageid][gExitZ],
             GarageInfo[garageid][gSQLID]
-        );
+       );
     }
     else if(!strcmp(param, "delete", true))
     {
@@ -929,7 +929,7 @@ CMD:garageentrance(playerid, params[])
         Y,
         Z,
         GarageInfo[proplev][gSQLID]
-    );
+   );
     return 1;
 }
 
@@ -965,6 +965,6 @@ CMD:customgarageint(playerid, params[])
         GarageInfo[garageid][gExitY],
         GarageInfo[garageid][gExitZ],
         GarageInfo[garageid][gSQLID]
-    );
+   );
     return 1;
 }

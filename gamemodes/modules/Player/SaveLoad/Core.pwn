@@ -120,7 +120,7 @@ Public: OnPasswordChecked(playerid)
 	else
 	{
 		Bit8_Set(gr_LoginInputs, playerid, Bit8_Get(gr_LoginInputs, playerid) + 1);
-		if(!( MAX_LOGIN_TRIES - Bit8_Get(gr_LoginInputs, playerid)) )
+		if(!( MAX_LOGIN_TRIES - Bit8_Get(gr_LoginInputs, playerid)))
 		{
 			va_SendClientMessage(playerid, COLOR_RED, 
 				"[%s]: You have reached maximum(%d) attempts, you got an IP ban!",
@@ -269,7 +269,7 @@ public LoadPlayerData(playerid)
 		cache_get_value_name_int(0, "FurnPremium"	, PlayerInfo[playerid][pExtraFurniture]); 
 		cache_get_value_name_int(0,	"mustread"		, PlayerInfo[playerid][pMustRead]);
 				
-		if(unban_time == -1 )
+		if(unban_time == -1)
 		{
 			va_SendClientMessage( playerid, COLOR_RED, 
 				"[%s]: You have been banned for life on this server!\n\
@@ -281,7 +281,7 @@ public LoadPlayerData(playerid)
 			BanMessage(playerid);
 			return 1;
 		}
-		else if(unban_time == -2 ) 
+		else if(unban_time == -2) 
 		{
 			va_SendClientMessage( playerid, COLOR_RED, 
 				"[%s]: Your user account has been blocked by the system!\n\
@@ -375,7 +375,7 @@ public LoadPlayerData(playerid)
 		
 		GetPlayerPrivateVehicle(playerid);
 		
-		Bit1_Set( gr_PlayerLoggingIn, playerid, true );
+		Bit1_Set( gr_PlayerLoggingIn, playerid, true);
   		SetPlayerSpawnInfo(playerid);
 
         if(!isnull(PlayerInfo[playerid][pSAMPid]) && PlayerInfo[playerid][pSecQuestion] != 1 
@@ -535,10 +535,10 @@ Public: SafeSpawnPlayer(playerid)
 		&& (!PlayerFaction[playerid][pMember] && !PlayerFaction[playerid][pLeader]))
 		PlayerJob[playerid][pJob] = 0;
 
-	if(!PlayerInfo[playerid][pRegistered] )
+	if(!PlayerInfo[playerid][pRegistered])
 		PlayerNewUser_Set(playerid, true);
 		
-	if(PlayerVIP[playerid][pDonateTime] < gettimestamp() && PlayerVIP[playerid][pDonateRank] > 0 ) 
+	if(PlayerVIP[playerid][pDonateTime] < gettimestamp() && PlayerVIP[playerid][pDonateRank] > 0) 
 	{
 		va_SendClientMessage( playerid, COLOR_ORANGE, 
 			"[%s]: Your InGame Premium VIP status has expired. Please donate again if you want to extend it!",
@@ -599,7 +599,7 @@ Public: SafeSpawnPlayer(playerid)
 SavePlayerData(playerid)
 {
 	// When newly registered player isn't safely spawned, FirstSaving it is.
-    if(!SafeSpawned[playerid] && !FirstSaving[playerid] )	
+    if(!SafeSpawned[playerid] && !FirstSaving[playerid])	
 		return 1;
 
 	mysql_pquery(g_SQL, "START TRANSACTION");
@@ -740,7 +740,7 @@ SetPlayerSpawnInfo(playerid)
 	}
 	else
 	{
-		switch( PlayerInfo[playerid][pSpawnChange] ) 
+		switch( PlayerInfo[playerid][pSpawnChange]) 
 		{
 			case 0: 
 			{
@@ -749,18 +749,18 @@ SetPlayerSpawnInfo(playerid)
 			}
 			case 1:
 			{
-				if(( PlayerKeys[playerid][pHouseKey] != INVALID_HOUSE_ID  ) ||  
-					( PlayerKeys[playerid][pRentKey] != INVALID_HOUSE_ID ))
+				if(( PlayerKeys[playerid][pHouseKey] != INVALID_HOUSE_ID ) ||  
+					( PlayerKeys[playerid][pRentKey] != INVALID_HOUSE_ID))
 				{
 					new house;
-					if( PlayerKeys[playerid][pHouseKey] != INVALID_HOUSE_ID  )
+					if( PlayerKeys[playerid][pHouseKey] != INVALID_HOUSE_ID )
 					{
 						house = PlayerKeys[playerid][pHouseKey];
 						if(!HouseInfo[house][hFurLoaded])
 							ReloadHouseFurniture(house);
 						ReloadHouseExterior(house);
 					}
-					else if(PlayerKeys[playerid][pRentKey] != INVALID_HOUSE_ID )
+					else if(PlayerKeys[playerid][pRentKey] != INVALID_HOUSE_ID)
 					{
 						house = PlayerKeys[playerid][pRentKey];
 						if(!HouseInfo[house][hFurLoaded])
@@ -826,7 +826,7 @@ SetPlayerSpawnInfo(playerid)
 			} 
 			case 3:
 			{
-				if(PlayerKeys[playerid][pComplexRoomKey] != INVALID_COMPLEX_ID )
+				if(PlayerKeys[playerid][pComplexRoomKey] != INVALID_COMPLEX_ID)
 				{
 					new complex = PlayerKeys[playerid][pComplexRoomKey];
 					SetSpawnInfo(playerid, 0, 
@@ -918,7 +918,7 @@ hook OnPlayerDisconnect(playerid, reason)
 	if(!IsPlayerReconing(playerid) && GMX == 0) 
 	{
 		format( szString, sizeof szString, "(( %s[%d] just left the server. (%s)))",
-			GetName(playerid, false ),
+			GetName(playerid, false),
 			playerid,
 			szDisconnectReason[reason]
 		);
@@ -989,7 +989,7 @@ hook OnPlayerSpawn(playerid)
 		{
 			SetPlayerInterior(playerid, PlayerDeath[playerid][pDeathInt]);
 			SetPlayerVirtualWorld(playerid, PlayerDeath[playerid][pDeathVW]);
-			SetPlayerPos(playerid, PlayerDeath[playerid][pDeathX] , PlayerDeath[playerid][pDeathY] , PlayerDeath[playerid][pDeathZ] );
+			SetPlayerPos(playerid, PlayerDeath[playerid][pDeathX] , PlayerDeath[playerid][pDeathY] , PlayerDeath[playerid][pDeathZ]);
 			Streamer_UpdateEx(playerid, PlayerDeath[playerid][pDeathX], PlayerDeath[playerid][pDeathY], PlayerDeath[playerid][pDeathZ], PlayerDeath[playerid][pDeathVW], PlayerDeath[playerid][pDeathInt]);
 
 			SendClientMessage(playerid, COLOR_LIGHTRED, "** You are returned to position where you were wounded. **");
@@ -1013,7 +1013,7 @@ hook OnPlayerSpawn(playerid)
 		{
 			SetPlayerInterior(playerid, PlayerDeath[playerid][pDeathInt]);
 			SetPlayerVirtualWorld(playerid, PlayerDeath[playerid][pDeathVW]);
-			SetPlayerPos(playerid, PlayerDeath[playerid][pDeathX] , PlayerDeath[playerid][pDeathY] , PlayerDeath[playerid][pDeathZ] );
+			SetPlayerPos(playerid, PlayerDeath[playerid][pDeathX] , PlayerDeath[playerid][pDeathY] , PlayerDeath[playerid][pDeathZ]);
 			Streamer_UpdateEx(playerid, PlayerDeath[playerid][pDeathX], PlayerDeath[playerid][pDeathY], PlayerDeath[playerid][pDeathZ], PlayerDeath[playerid][pDeathVW], PlayerDeath[playerid][pDeathInt]);
 
 			SendClientMessage(playerid, COLOR_LIGHTRED, "You are in Death Mode. You have been returned to location of your death.**");
@@ -1046,7 +1046,7 @@ hook OnPlayerSpawn(playerid)
 				if(SafeSpawned[playerid])
 					AC_SetPlayerWeapons(playerid);
 					
-				switch( PlayerInfo[playerid][pSpawnChange] )
+				switch( PlayerInfo[playerid][pSpawnChange])
 				{
 					case 0: 
 					{
@@ -1058,12 +1058,12 @@ hook OnPlayerSpawn(playerid)
 					}
 					case 1: 
 					{
-						if(PlayerKeys[playerid][pHouseKey] != INVALID_HOUSE_ID || PlayerKeys[playerid][pRentKey] != INVALID_HOUSE_ID ) {
+						if(PlayerKeys[playerid][pHouseKey] != INVALID_HOUSE_ID || PlayerKeys[playerid][pRentKey] != INVALID_HOUSE_ID) {
 							new
 								house;
-							if( PlayerKeys[playerid][pHouseKey] != INVALID_HOUSE_ID )
+							if( PlayerKeys[playerid][pHouseKey] != INVALID_HOUSE_ID)
 								house = PlayerKeys[playerid][pHouseKey];
-							else if(PlayerKeys[playerid][pRentKey] != INVALID_HOUSE_ID )
+							else if(PlayerKeys[playerid][pRentKey] != INVALID_HOUSE_ID)
 								house = PlayerKeys[playerid][pRentKey];
 
 							SetPlayerInterior( playerid, 0);
@@ -1119,7 +1119,7 @@ hook OnPlayerSpawn(playerid)
 						{
 							new complex = PlayerKeys[playerid][pComplexRoomKey];
 							SetPlayerPosEx(playerid, ComplexRoomInfo[complex][cExitX], ComplexRoomInfo[complex][cExitY], ComplexRoomInfo[complex][cExitZ], 0, 0, true);
-							SetPlayerInterior( playerid, ComplexRoomInfo[complex][cInt] );
+							SetPlayerInterior( playerid, ComplexRoomInfo[complex][cInt]);
 							SetPlayerVirtualWorld( playerid, ComplexRoomInfo[complex][cViwo]);
 							Player_SetInApartmentRoom(playerid, complex);
 							SetPlayerHealth(playerid, 100);
@@ -1133,13 +1133,13 @@ hook OnPlayerSpawn(playerid)
 						SetPlayerHealth(playerid, 100);
 					}
 				}
-				if(Bit1_Get( gr_PlayerInTrunk, playerid ))
+				if(Bit1_Get( gr_PlayerInTrunk, playerid))
 				{
-					Bit1_Set( gr_PlayerInTrunk, playerid, false );
+					Bit1_Set( gr_PlayerInTrunk, playerid, false);
 					VehicleTrunk[playerid] = INVALID_VEHICLE_ID;
 
 					SetPlayerPosEx(playerid, PlayerTrunkPos[playerid][0], PlayerTrunkPos[playerid][1], PlayerTrunkPos[playerid][2], 0, 0, false);
-					TogglePlayerControllable( playerid, 1 );
+					TogglePlayerControllable( playerid, 1);
 					SendClientMessage( playerid, COLOR_RED, "[!]: You exited the trunk.");
 					SetPlayerHealth(playerid, 100);
 				}
@@ -1179,7 +1179,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 				Bit8_Set(gr_LoginInputs, playerid, Bit8_Get(gr_LoginInputs, playerid) + 1);
 				return 1;
 			}
-			if(!( MAX_LOGIN_TRIES - Bit8_Get(gr_LoginInputs, playerid)) )
+			if(!( MAX_LOGIN_TRIES - Bit8_Get(gr_LoginInputs, playerid)))
 			{
 				//Kick
 				va_SendClientMessage(playerid, COLOR_RED, 
@@ -1218,7 +1218,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 				strfind(inputtext, ">", true) != -1 || strfind(inputtext, "^", true) != -1 || 
 				strfind(inputtext, "|", true) != -1 || strfind(inputtext, "?", true) != -1 || 
 				strfind(inputtext, "*", true) != -1 || strfind(inputtext, "#", true) != -1 || 
-				strfind(inputtext, "!", true) != -1 || strfind(inputtext, "$", true) != -1 )
+				strfind(inputtext, "!", true) != -1 || strfind(inputtext, "$", true) != -1)
 				return Kick(playerid);
 			
 			if(isnull(inputtext))
@@ -1407,7 +1407,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 				strfind(inputtext, "^", true) != -1 || strfind(inputtext, "|", true) != -1 || 
 				strfind(inputtext, "?", true) != -1 || strfind(inputtext, "*", true) != -1 || 
 				strfind(inputtext, "#", true) != -1 || strfind(inputtext, "!", true) != -1 || 
-				strfind(inputtext, "$", true) != -1 )
+				strfind(inputtext, "$", true) != -1)
 			{
 				format(dialogtext, sizeof(dialogtext), 
 					""COL_WHITE"Please enter a password for your account.\n\
@@ -1446,7 +1446,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 				Bit8_Set(gr_RegisterInputs, playerid, 0);
 				return 1;
 			}
-			if((Bit8_Get(gr_RegisterInputs, playerid)) > 3 )
+			if((Bit8_Get(gr_RegisterInputs, playerid)) > 3)
 			{
 				SendClientMessage(playerid, COLOR_RED, 
 					"[!]: You have reached a maximal limit of wrong register inputs. You have been kicked from server.");
@@ -1518,7 +1518,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 				|| strfind(inputtext, "^", true) != -1 || strfind(inputtext, "|", true) != -1 
 				|| strfind(inputtext, "?", true) != -1 || strfind(inputtext, "*", true) != -1 
 				|| strfind(inputtext, "#", true) != -1 || strfind(inputtext, "!", true) != -1 
-				|| strfind(inputtext, "$", true) != -1 )
+				|| strfind(inputtext, "$", true) != -1)
 			{	
 				format(dialogtext, 
 					sizeof(dialogtext), 
@@ -1575,7 +1575,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 				Bit8_Set(gr_RegisterInputs, playerid, Bit8_Get(gr_RegisterInputs, playerid) + 1);
 				return 1;
 			}
-			if((Bit8_Get(gr_RegisterInputs, playerid)) > 3 )
+			if((Bit8_Get(gr_RegisterInputs, playerid)) > 3)
 			{
 				SendClientMessage(playerid, COLOR_RED,
 					"[!]: You have reach maximal limit of wrong inputs on registration. You have been kicked."

@@ -248,7 +248,7 @@ public OnPlayerWeaponShot(playerid, weaponid, hittype, hitid, Float:fX, Float:fY
 	static Float:pX,Float:pY,Float:pZ,Float:hX,Float:hY,Float:hZ,Float:cX,Float:cY,Float:cZ;
 	if(!(21 < weaponid < 35 || weaponid == 38) || !(-1 < hittype < 5))
 		#if defined BustAim_OnPlayerWeaponShot
-			return BustAim_OnPlayerWeaponShot( playerid, weaponid, hittype, hitid, fX, fY, fZ );
+			return BustAim_OnPlayerWeaponShot( playerid, weaponid, hittype, hitid, fX, fY, fZ);
 		#else
 			return 0;
 		#endif

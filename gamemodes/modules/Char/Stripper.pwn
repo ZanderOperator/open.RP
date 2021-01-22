@@ -175,7 +175,7 @@ stock static CreateLapDanceTextDraw(playerid)
 
 stock InitStripperDanceActor(playerid)
 {
-	if(AC_GetPlayerMoney(playerid) < 100 ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate dovoljno novca!");
+	if(AC_GetPlayerMoney(playerid) < 100) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate dovoljno novca!");
 	
 	PlayerToBudgetMoney(playerid, 100);
 	PlayerStripperActor[playerid] = CreateActor(StripperSkins[random(sizeof(StripperSkins))], 1204.1025, 16.6808, 1000.9219, 149.2798);
@@ -192,7 +192,7 @@ stock InitStripperDanceActor(playerid)
 	ApplyAnimation(playerid, "INT_HOUSE", "LOU_Loop", 4.1, 1, 0, 0, 1, 0);
 	InterpolateCameraPos(playerid, StripCamera[0][camX], StripCamera[0][camY], StripCamera[0][camZ], StripCamera[0][camX], StripCamera[0][camY], StripCamera[0][camZ], 100000, CAMERA_MOVE);
 	InterpolateCameraLookAt(playerid, 1204.4751,17.2457,1000.9219, 1204.4751,17.2457,1000.9219, 100000, CAMERA_CUT);
-	Bit1_Set( r_PlayerInLapDance, playerid, true );
+	Bit1_Set( r_PlayerInLapDance, playerid, true);
 	StripperView[playerid] = 0;
 	CreateLapDanceTextDraw(playerid);
 	return 1;
@@ -200,19 +200,19 @@ stock InitStripperDanceActor(playerid)
 
 stock static DestroyLapDanceTextDraw(playerid)
 {
-	if(LapBcg[playerid] != PlayerText:INVALID_TEXT_DRAW ) {
+	if(LapBcg[playerid] != PlayerText:INVALID_TEXT_DRAW) {
 		PlayerTextDrawDestroy(playerid, LapBcg[playerid]);
 		LapBcg[playerid] = PlayerText:INVALID_TEXT_DRAW;
 	}
-	if(LapText[playerid] != PlayerText:INVALID_TEXT_DRAW ) {
+	if(LapText[playerid] != PlayerText:INVALID_TEXT_DRAW) {
 		PlayerTextDrawDestroy(playerid, LapText[playerid]);
 		LapText[playerid] = PlayerText:INVALID_TEXT_DRAW;
 	}
-	if(StripEffect1[playerid] != PlayerText:INVALID_TEXT_DRAW ) {
+	if(StripEffect1[playerid] != PlayerText:INVALID_TEXT_DRAW) {
 		PlayerTextDrawDestroy(playerid, StripEffect1[playerid]);
 		StripEffect1[playerid] = PlayerText:INVALID_TEXT_DRAW;
 	}
-	if(StripEffect2[playerid] != PlayerText:INVALID_TEXT_DRAW ) {
+	if(StripEffect2[playerid] != PlayerText:INVALID_TEXT_DRAW) {
 		PlayerTextDrawDestroy(playerid, StripEffect2[playerid]);
 		StripEffect2[playerid] = PlayerText:INVALID_TEXT_DRAW;
 	}
@@ -238,7 +238,7 @@ hook OnPlayerDisconnect(playerid, reason)
 	if(IsValidActor(PlayerStripperActor[playerid])) {
 		DestroyActor(PlayerStripperActor[playerid]);
 		PlayerStripperActor[playerid] = INVALID_ACTOR_ID;
-		Bit1_Set( r_PlayerInLapDance, playerid, false );
+		Bit1_Set( r_PlayerInLapDance, playerid, false);
 		StripperView[playerid] = 0;
 		DestroyLapDanceTextDraw(playerid);
 	}
@@ -248,7 +248,7 @@ hook OnPlayerDisconnect(playerid, reason)
 hook OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
 {
 	if(PRESSED(KEY_SECONDARY_ATTACK)) {
-		if(Bit1_Get( r_PlayerInLapDance, playerid )) {
+		if(Bit1_Get( r_PlayerInLapDance, playerid)) {
 			if(IsValidActor(PlayerStripperActor[playerid])) {
 				DestroyActor(PlayerStripperActor[playerid]);
 				PlayerStripperActor[playerid] = INVALID_ACTOR_ID;
@@ -259,12 +259,12 @@ hook OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
 			
 			new 
 				biznis = Player_InBusiness(playerid);
-			if(biznis != INVALID_BIZNIS_ID ) {
+			if(biznis != INVALID_BIZNIS_ID) {
 				SetPlayerInterior(playerid, BizzInfo[biznis][bInterior]);
 				SetPlayerVirtualWorld(playerid, BizzInfo[biznis][bVirtualWorld]); 
 			}
 			DestroyLapDanceTextDraw(playerid);
-			Bit1_Set( r_PlayerInLapDance, playerid, false );
+			Bit1_Set( r_PlayerInLapDance, playerid, false);
 		}
 		
 		if(IsPlayerInRangeOfPoint(playerid, 2.0, 1204.7827, 12.2824, 999.9198)) {
@@ -273,10 +273,10 @@ hook OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
 	}
 	
 	if(PRESSED(KEY_SPRINT)) {
-		if(Bit1_Get( r_PlayerInLapDance, playerid )) {
+		if(Bit1_Get( r_PlayerInLapDance, playerid)) {
 			new
 				view = StripperView[playerid];
-			if(++view >= 5 ) 
+			if(++view >= 5) 
 				view = 0;
 			
 			InterpolateCameraPos(playerid, StripCamera[StripperView[playerid]][camX], StripCamera[StripperView[playerid]][camY], StripCamera[StripperView[playerid]][camZ], StripCamera[view][camX], StripCamera[view][camY], StripCamera[view][camZ], 5000, CAMERA_MOVE);
@@ -285,14 +285,14 @@ hook OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
 			PlayerPlaySound(playerid, 1054, 0.0, 0.0, 0.0);
 		}
 
-		if(IsPlayerInRangeOfPoint(playerid, 2.0, 1212.7241, -6.1868, 999.9236) && AC_GetPlayerMoney(playerid) < 25 ) {
+		if(IsPlayerInRangeOfPoint(playerid, 2.0, 1212.7241, -6.1868, 999.9236) && AC_GetPlayerMoney(playerid) < 25) {
 			ApplyAnimation(playerid, "STRIP", "PLY_CASH", 4.0, 0, 1, 1, 1, 1); 
 			PlayerToBudgetMoney(playerid, 25);
 		}
 	}
 	
 	if(PRESSED(KEY_YES)) {
-		if(!Bit1_Get( r_PlayerInLapDance, playerid )) return 1;
+		if(!Bit1_Get( r_PlayerInLapDance, playerid)) return 1;
 		
 		new
 			animId = random(sizeof(StripAnim));

@@ -618,7 +618,7 @@ timer RespawnTree[TREE_RESPAWN_TIME * 60 * 1000](treeid)
 
 CMD:cuttree(playerid, params[])
 {
-	if(PlayerJob[playerid][pJob] != JOB_LOGGER )
+	if(PlayerJob[playerid][pJob] != JOB_LOGGER)
 		return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste drvosjeca!");
 		
     if(PlayerJob[playerid][pFreeWorks] < 1)
@@ -671,7 +671,7 @@ CMD:cuttree(playerid, params[])
 
 CMD:stopcuttree(playerid, params[])
 {
-	if(PlayerJob[playerid][pJob] != JOB_LOGGER )
+	if(PlayerJob[playerid][pJob] != JOB_LOGGER)
 		return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste drvosje�a!");
 		
     if(CuttingTree[playerid] == -1)
@@ -698,7 +698,7 @@ cmd_stopcuttree2(playerid)
 
 CMD:treeinfo(playerid, params[])
 {
-	if(PlayerJob[playerid][pJob] != JOB_LOGGER )
+	if(PlayerJob[playerid][pJob] != JOB_LOGGER)
 		return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste drvosje�a!");
 
 	new
@@ -736,7 +736,7 @@ CMD:gototree(playerid, params[])
 
 CMD:putwood(playerid, params[])
 {
-	if(PlayerJob[playerid][pJob] != JOB_LOGGER )
+	if(PlayerJob[playerid][pJob] != JOB_LOGGER)
 		return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste drvosje�a!");
 
 	if(!pWood[playerid])
@@ -776,7 +776,7 @@ CMD:putwood(playerid, params[])
 
 CMD:checkvehwood(playerid, params[])
 {
-	if(PlayerJob[playerid][pJob] != JOB_LOGGER )
+	if(PlayerJob[playerid][pJob] != JOB_LOGGER)
 		return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste drvosje�a!");
 
 	if(IsPlayerInAnyVehicle(playerid))
@@ -810,7 +810,7 @@ CMD:checkvehwood(playerid, params[])
 
 CMD:checkmywood(playerid, params[])
 {
-	if(PlayerJob[playerid][pJob] != JOB_LOGGER )
+	if(PlayerJob[playerid][pJob] != JOB_LOGGER)
 		return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste drvosje�a!");
 
 	if(!pWood[playerid])
@@ -827,7 +827,7 @@ CMD:checkmywood(playerid, params[])
 
 CMD:pickupwood(playerid, params[])
 {
-	if(PlayerJob[playerid][pJob] != JOB_LOGGER )
+	if(PlayerJob[playerid][pJob] != JOB_LOGGER)
 		return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste drvosje�a!");
 
 	if(IsPlayerInAnyVehicle(playerid))
@@ -850,7 +850,7 @@ CMD:pickupwood(playerid, params[])
 
 CMD:takewood(playerid, params[])
 {
-	if(PlayerJob[playerid][pJob] != JOB_LOGGER )
+	if(PlayerJob[playerid][pJob] != JOB_LOGGER)
 		return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste drvosje�a!");
 
 	if(pWood[playerid])
@@ -911,7 +911,7 @@ CMD:takewood(playerid, params[])
 
 CMD:sellwood(playerid, params[])
 {
-	if(PlayerJob[playerid][pJob] != JOB_LOGGER )
+	if(PlayerJob[playerid][pJob] != JOB_LOGGER)
 		return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste drvosjeca!");
 	    
 	if(IsPlayerInAnyVehicle(playerid))

@@ -354,7 +354,7 @@ public OPBA_AirbrakeTeleport(playerid)
 		OPBA_Player[playerid][RacPause] = 1;
 	}
 	if(OPBA_Player[playerid][RacHoldCheck]) return 0;
-	if(OPBA_Player[playerid][RacBreakImmunity] ) return GetPlayerPos(playerid, OPBA_Player[playerid][RacX], OPBA_Player[playerid][RacY], OPBA_Player[playerid][RacZ]);
+	if(OPBA_Player[playerid][RacBreakImmunity]) return GetPlayerPos(playerid, OPBA_Player[playerid][RacX], OPBA_Player[playerid][RacY], OPBA_Player[playerid][RacZ]);
 	#if !defined OPBA_CUSTOM_INTERIORS
 		if(OpbaTempInt != OPBA_Player[playerid][RacPlayerInt] || OPBA_Player[playerid][RacProtecInt]) return GetPlayerPos(playerid, OPBA_Player[playerid][RacX], OPBA_Player[playerid][RacY], OPBA_Player[playerid][RacZ]);
 	#endif
@@ -1133,7 +1133,7 @@ public OnPlayerUpdate(playerid)
 	}
 	if(GetPlayerState(playerid) == 3 && !OPBA_Player[playerid][RacPassenger])
 		OPBA_Player[playerid][RacPassenger] = true;
-	else if(GetPlayerState(playerid) != 3 && OPBA_Player[playerid][RacPassenger] )
+	else if(GetPlayerState(playerid) != 3 && OPBA_Player[playerid][RacPassenger])
 	{
 		OPBA_Player[playerid][RacPassenger] = false;
 		OPBA_Player[playerid][RacPBFix] = true;

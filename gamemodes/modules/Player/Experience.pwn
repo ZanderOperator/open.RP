@@ -29,13 +29,13 @@ stock ListBestTemporaryEXP(playerid)
 		if(rows)
 		{
 			new sqlid[30], allpoints[30], points[30], motd[64];
-			for( new i = 0; i < rows; i++ ) 
+			for( new i = 0; i < rows; i++) 
 			{
 				cache_get_value_name_int(i, "sqlid"				, sqlid[i]);
 				cache_get_value_name_int(i, "allpoints"			, allpoints[i]);
 				cache_get_value_name_int(i, "points"			, points[i]);
 			}
-			for( new i = 0; i < rows; i++ ) 
+			for( new i = 0; i < rows; i++) 
 			{
 				format(motd, sizeof(motd), "%d EXP | Overall EXP: %d | %s [SQLID: %d]\n",
 					points[i],
@@ -68,13 +68,13 @@ stock ListBestOverallEXP(playerid)
 		if(rows)
 		{
 			new sqlid[30], allpoints[30], points[30], motd[64];
-			for( new i = 0; i < rows; i++ ) 
+			for( new i = 0; i < rows; i++) 
 			{
 				cache_get_value_name_int(i, "sqlid"				, sqlid[i]);
 				cache_get_value_name_int(i, "allpoints"			, allpoints[i]);
 				cache_get_value_name_int(i, "points"			, points[i]);
 			}
-			for( new i = 0; i < rows; i++ ) 
+			for( new i = 0; i < rows; i++) 
 			{
 				format(motd, sizeof(motd), "Overall EXP: %d | %d EXP | %s [SQLID: %d]\n",
 					allpoints[i],
@@ -140,7 +140,7 @@ hook function LoadPlayerStats(playerid)
 
 stock SavePlayerExperience(playerid)
 {
-	if(!SafeSpawned[playerid] )	
+	if(!SafeSpawned[playerid])	
 		return 1;
 	
 	mysql_fquery(g_SQL, 
@@ -330,7 +330,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 					);
 					
 					SetPlayerScore(playerid, PlayerInfo[playerid][pLevel]);
-					GameTextForPlayer( playerid, "~g~Level up!", 1000, 1 );
+					GameTextForPlayer( playerid, "~g~Level up!", 1000, 1);
 					SendFormatMessage(playerid, MESSAGE_TYPE_SUCCESS, "Iskoristili ste %d EXP-a za Level Up opciju. Preostalo: %d EXP", LEVEL_UP_EXP, ExpInfo[playerid][ePoints]);
 					return 1;
 				}

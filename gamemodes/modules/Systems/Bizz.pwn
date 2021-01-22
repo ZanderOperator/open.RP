@@ -294,7 +294,7 @@ stock LoadBizzes()
         va_fquery(g_SQL, "SELECT * FROM bizzes WHERE 1"), 
         "OnServerBizzesLoad", 
         ""
-    );
+   );
     return 1;
 }
 
@@ -360,7 +360,7 @@ stock LoadBiznisProducts(bizz_id)
         "OnServerBiznisProductsLoad", 
         "i", 
         bizz_id
-    );
+   );
     return 1;
 }
 
@@ -374,7 +374,7 @@ stock LoadBiznisVips(bizz_id)
         "OnServerVipsLoad",
         "i",
         bizz_id
-    );
+   );
     return 1;
 }
 
@@ -462,7 +462,7 @@ static stock PrintBizInfo(playerid, bizz)
                 GetStoreProductName(BiznisProducts[bizz][bpType][i]),
                 BiznisProducts[bizz][bpAmount][i],
                 BizzInfo[bizz][bMaxProducts]
-           );
+          );
         }
     }
     else
@@ -574,7 +574,7 @@ UpdateBizzFurnitureSlots(playerid)
             mysql_fquery(g_SQL, "UPDATE bizzes SET fur_slots = '%d' WHERE id = '%d'", 
                 BizzInfo[biznisid][bFurSlots], 
                 BizzInfo[biznisid][bSQLID]
-            );
+           );
             return 1;
         }
     }
@@ -603,7 +603,7 @@ stock BuyBiznis(playerid, bool:credit_activated = false)
         PlayerInfo[playerid][pSQLID],
         BizzInfo[bizz][bTill],
         BizzInfo[bizz][bSQLID]
-    );
+   );
 
     #if defined MODULE_LOGS
     Log_Write("/logfiles/buy_biznis.txt", "(%s) %s bought business %s[SQLID: %d] for %d$. (%s).",
@@ -613,7 +613,7 @@ stock BuyBiznis(playerid, bool:credit_activated = false)
         BizzInfo[bizz][bSQLID],
         BizzInfo[bizz][bBuyPrice],
         ReturnPlayerIP(playerid)
-    );
+   );
     #endif
 
     SendClientMessage(playerid, COLOR_RED, "[!]  Kupili ste biznis, koristite /help za vise informacija!");
@@ -627,31 +627,31 @@ stock GetStoreProductName(product)
         prodname[22];
     switch (product)
     {
-        case PRODUCT_COLA:          format(prodname, 22, "Coca Cola"              );
-        case PRODUCT_PEPSI:         format(prodname, 22, "Pepsi"                  );
-        case PRODUCT_WINE:          format(prodname, 22, "Vino"                   );
-        case PRODUCT_BEER:          format(prodname, 22, "Pivo"                   );
-        case PRODUCT_WATER:         format(prodname, 22, "Voda"                   );
-        case PRODUCT_CIGARS:        format(prodname, 22, "Cigarete"               );
-        case PRODUCT_BURGERS:       format(prodname, 22, "Burgeri"                );
-        case PRODUCT_CAKE:          format(prodname, 22, "Torta"                  );
-        case PRODUCT_HOTDOG:        format(prodname, 22, "Hot Dog"                );
-        case PRODUCT_PIZZA:         format(prodname, 22, "Pizza"                  );
-        case PRODUCT_GROCERIES:     format(prodname, 22, "Namirnice"              );
-        case PRODUCT_MASK:          format(prodname, 22, "Maska"                  );
-        case PRODUCT_FLOWERS:       format(prodname, 22, "Cvijece"                );
-        case PRODUCT_CAMERA:        format(prodname, 22, "Fotoaparat"             );
-        case PRODUCT_BAT:           format(prodname, 22, "Palica"                 );
-        case PRODUCT_SPRAY:         format(prodname, 22, "Spray"                  );
-        case PRODUCT_TOOLKIT:       format(prodname, 22, "Toolkit"                );
-        case PRODUCT_BOOMBOX:       format(prodname, 22, "Kazetofon"              );
-        case PRODUCT_PCREDIT:       format(prodname, 22, "Bon za mobitel"         );
-        case PRODUCT_CLOCK:         format(prodname, 22, "Sat"                    );
-        case PRODUCT_DICE:          format(prodname, 22, "Kocka"                  );
-        case PRODUCT_LIGHTER:       format(prodname, 22, "Upaljac"                );
+        case PRODUCT_COLA:          format(prodname, 22, "Coca Cola"             );
+        case PRODUCT_PEPSI:         format(prodname, 22, "Pepsi"                 );
+        case PRODUCT_WINE:          format(prodname, 22, "Vino"                  );
+        case PRODUCT_BEER:          format(prodname, 22, "Pivo"                  );
+        case PRODUCT_WATER:         format(prodname, 22, "Voda"                  );
+        case PRODUCT_CIGARS:        format(prodname, 22, "Cigarete"              );
+        case PRODUCT_BURGERS:       format(prodname, 22, "Burgeri"               );
+        case PRODUCT_CAKE:          format(prodname, 22, "Torta"                 );
+        case PRODUCT_HOTDOG:        format(prodname, 22, "Hot Dog"               );
+        case PRODUCT_PIZZA:         format(prodname, 22, "Pizza"                 );
+        case PRODUCT_GROCERIES:     format(prodname, 22, "Namirnice"             );
+        case PRODUCT_MASK:          format(prodname, 22, "Maska"                 );
+        case PRODUCT_FLOWERS:       format(prodname, 22, "Cvijece"               );
+        case PRODUCT_CAMERA:        format(prodname, 22, "Fotoaparat"            );
+        case PRODUCT_BAT:           format(prodname, 22, "Palica"                );
+        case PRODUCT_SPRAY:         format(prodname, 22, "Spray"                 );
+        case PRODUCT_TOOLKIT:       format(prodname, 22, "Toolkit"               );
+        case PRODUCT_BOOMBOX:       format(prodname, 22, "Kazetofon"             );
+        case PRODUCT_PCREDIT:       format(prodname, 22, "Bon za mobitel"        );
+        case PRODUCT_CLOCK:         format(prodname, 22, "Sat"                   );
+        case PRODUCT_DICE:          format(prodname, 22, "Kocka"                 );
+        case PRODUCT_LIGHTER:       format(prodname, 22, "Upaljac"               );
         case PRODUCT_ROPE:          strcat( prodname, "Konop", 22);
         case PRODUCT_RADIO:         strcat( prodname, "Radio", 22);
-        default:                    format(prodname, 22, "Nema artikla"           );
+        default:                    format(prodname, 22, "Nema artikla"          );
     }
     return prodname;
 }
@@ -663,41 +663,41 @@ stock GetDrinkName(drinkid)
         string[33];
     switch (drinkid)
     {
-        case DRINKS_WATER:                      format(string, 33, "Voda"                     );
-        case DRINKS_BEER:                       format(string, 33, "Pivo"                     );
-        case DRINKS_PEPSI:                      format(string, 33, "Pepsi"                    );
-        case DRINKS_COCA_COLA:                  format(string, 33, "Coca Cola"                );
-        case DRINKS_SPRITE:                     format(string, 33, "Sprite"                   );
-        case DRINKS_SODA:                       format(string, 33, "Sok"                      );
-        case DRINKS_SVEDKAFLAVORS:              format(string, 33, "Svedka Flavors"           );
-        case DRINKS_KETELONE:                   format(string, 33, "Ketel One"                );
-        case DRINKS_GREYGOOSE:                  format(string, 33, "Grey Goose"               );
-        case DRINKS_BELVEDERE:                  format(string, 33, "Belveredere"              );
-        case DRINKS_BACARDISILVER:              format(string, 33, "Bacardi Silver"           );
-        case DRINKS_CAPTAINMORGAN:              format(string, 33, "Captain Morgan"           );
-        case DRINKS_JAMESON:                    format(string, 33, "Jameson"                  );
-        case DRINKS_JACK_DANIELS:               format(string, 33, "Jack Daniels"             );
-        case DRINKS_JOHNNIE_WALKER_BLACK:       format(string, 33, "Johnnie Walker Black"     );
-        case DRINKS_DOBEL_TEQUILA:              format(string, 33, "Dobel Tequila"            );
-        case DRINKS_AVION:                      format(string, 33, "Avion"                    );
-        case DRINKS_PATRON_SILVER:              format(string, 33, "Patron Silver"            );
-        case DRINKS_KORBEL_BRUT:                format(string, 33, "Korbel Brut"              );
-        case DRINKS_VEUVE_CLICQUOT:             format(string, 33, "Veuve Clicquot"           );
-        case DRINKS_DOM_PERIGNON:               format(string, 33, "Dom Perignon"             );
-        case DRINKS_RASPBERRY_DAIQUIRI:         format(string, 33, "aspberry Daiquiri"        );
-        case DRINKS_MOJITO:                     format(string, 33, "Mojito"                   );
-        case DRINKS_WILD_LATINA:                format(string, 33, "Wild Latina"              );
-        case DRINKS_ILLUSION:                   format(string, 33, "Illusion"                 );
-        case DRINKS_TROPICAL_DELIGHT:           format(string, 33, "Tropical Delight"         );
-        case DRINKS_MIDORI_SPLICE:              format(string, 33, "Midori Splice"            );
-        case DRINKS_MARGARITA:                  format(string, 33, "Margarita "               );
-        case DRINKS_COSMOPOLITAN:               format(string, 33, "Cosmopolitan"             );
-        case DRINKS_CHICHI:                     format(string, 33, "Chi Chi "                 );
-        case DRINKS_PINA_COLADA:                format(string, 33, "Pina Colada"              );
-        case DRINKS_KAMIKAZE:                   format(string, 33, "Kamikaze "                );
-        case DRINKS_BLUE_LAGOON:                format(string, 33, "Blue Lagoon"              );
-        case DRINKS_VIAGRA:                     format(string, 33, "Viagra "                  );
-        case DRINKS_BLOOD_MARY:                 format(string, 33, "Blood Mary"               );
+        case DRINKS_WATER:                      format(string, 33, "Voda"                    );
+        case DRINKS_BEER:                       format(string, 33, "Pivo"                    );
+        case DRINKS_PEPSI:                      format(string, 33, "Pepsi"                   );
+        case DRINKS_COCA_COLA:                  format(string, 33, "Coca Cola"               );
+        case DRINKS_SPRITE:                     format(string, 33, "Sprite"                  );
+        case DRINKS_SODA:                       format(string, 33, "Sok"                     );
+        case DRINKS_SVEDKAFLAVORS:              format(string, 33, "Svedka Flavors"          );
+        case DRINKS_KETELONE:                   format(string, 33, "Ketel One"               );
+        case DRINKS_GREYGOOSE:                  format(string, 33, "Grey Goose"              );
+        case DRINKS_BELVEDERE:                  format(string, 33, "Belveredere"             );
+        case DRINKS_BACARDISILVER:              format(string, 33, "Bacardi Silver"          );
+        case DRINKS_CAPTAINMORGAN:              format(string, 33, "Captain Morgan"          );
+        case DRINKS_JAMESON:                    format(string, 33, "Jameson"                 );
+        case DRINKS_JACK_DANIELS:               format(string, 33, "Jack Daniels"            );
+        case DRINKS_JOHNNIE_WALKER_BLACK:       format(string, 33, "Johnnie Walker Black"    );
+        case DRINKS_DOBEL_TEQUILA:              format(string, 33, "Dobel Tequila"           );
+        case DRINKS_AVION:                      format(string, 33, "Avion"                   );
+        case DRINKS_PATRON_SILVER:              format(string, 33, "Patron Silver"           );
+        case DRINKS_KORBEL_BRUT:                format(string, 33, "Korbel Brut"             );
+        case DRINKS_VEUVE_CLICQUOT:             format(string, 33, "Veuve Clicquot"          );
+        case DRINKS_DOM_PERIGNON:               format(string, 33, "Dom Perignon"            );
+        case DRINKS_RASPBERRY_DAIQUIRI:         format(string, 33, "aspberry Daiquiri"       );
+        case DRINKS_MOJITO:                     format(string, 33, "Mojito"                  );
+        case DRINKS_WILD_LATINA:                format(string, 33, "Wild Latina"             );
+        case DRINKS_ILLUSION:                   format(string, 33, "Illusion"                );
+        case DRINKS_TROPICAL_DELIGHT:           format(string, 33, "Tropical Delight"        );
+        case DRINKS_MIDORI_SPLICE:              format(string, 33, "Midori Splice"           );
+        case DRINKS_MARGARITA:                  format(string, 33, "Margarita "              );
+        case DRINKS_COSMOPOLITAN:               format(string, 33, "Cosmopolitan"            );
+        case DRINKS_CHICHI:                     format(string, 33, "Chi Chi "                );
+        case DRINKS_PINA_COLADA:                format(string, 33, "Pina Colada"             );
+        case DRINKS_KAMIKAZE:                   format(string, 33, "Kamikaze "               );
+        case DRINKS_BLUE_LAGOON:                format(string, 33, "Blue Lagoon"             );
+        case DRINKS_VIAGRA:                     format(string, 33, "Viagra "                 );
+        case DRINKS_BLOOD_MARY:                 format(string, 33, "Blood Mary"              );
         default: strcpy(string, "Prazno", sizeof(string));
     }
     return string;
@@ -717,7 +717,7 @@ static stock GetArticleList(bizz)
                 buffer,
                 GetStoreProductName(x),
                 500
-           );
+          );
         }
     }
     else if(bizz_type == BIZZ_TYPE_BAR || BIZZ_TYPE_STRIP)
@@ -728,7 +728,7 @@ static stock GetArticleList(bizz)
                 buffer,
                 GetDrinkName(x),
                 500
-           );
+          );
         }
     }
     return buffer;
@@ -762,7 +762,7 @@ static stock RemoveStoreArticle(bizz, article)
         BizzInfo[bizz][bSQLID],
         BiznisProducts[bizz][bpSQLID][article],
         BiznisProducts[bizz][bpType][article]
-    );
+   );
 
     BiznisProducts[bizz][bpSQLID][article]  = -1;
     BiznisProducts[bizz][bpType][article]   = INVALID_PRODUCT_ID;
@@ -806,12 +806,12 @@ static stock SetStoreProductOnSale(bizz, product, price)
             BiznisProducts[bizz][bpType][id],
             BiznisProducts[bizz][bpPrice][id],
             BiznisProducts[bizz][bpAmount][id]
-        ), 
+       ), 
         "OnBiznisProductInsert", 
         "ii", 
         bizz, 
         id
-    );
+   );
     return 1;
 }
 
@@ -826,7 +826,7 @@ static stock UpdateBizzProduct(bizz, productid)
         BiznisProducts[bizz][bpPrice][productid],
         BiznisProducts[bizz][bpAmount][productid],
         BiznisProducts[bizz][bpSQLID][productid]
-    );
+   );
     return 1;
 }
 
@@ -915,7 +915,7 @@ static stock GetStoreProducts(bizz)
                     BiznisProducts[bizz][bpPrice][i],
                     BiznisProducts[bizz][bpAmount][i],
                     BizzInfo[bizz][bMaxProducts]
-               );
+              );
             }
             else
             {
@@ -994,12 +994,12 @@ stock InsertNewBizz(playerid, bizz)
             BizzInfo[bizz][bType],
             BizzInfo[bizz][bFurSlots],
             BizzInfo[bizz][bGasPrice]
-        ),
+       ),
         "OnBizzInsertQuery", 
         "ii", 
         playerid, 
         bizz
-    );
+   );
     return 1;
 }
 
@@ -1015,7 +1015,7 @@ Public:OnBizzInsertQuery(playerid, bizz)
         BizzInfo[bizz][bMessage],
         bizz,
         BizzInfo[bizz][bSQLID]
-    );
+   );
     SendClientMessage(playerid, COLOR_YELLOW, "[!]  Da bi ste postavili interijer biznisu, koristite /bizint | /custombizint.");
     return 1;
 }
@@ -1135,7 +1135,7 @@ hook OnPlayerEnterDynamicCP(playerid, checkpointid)
             BizzInfo[bizz][bLocked] == 1 ? ("~r~ZAKLJUCANA") : ("~g~OTKLJUCANA"),
             BizzInfo[bizz][bEntranceCost],
             BizzInfo[bizz][bDestroyed] ? ("Da") : ("Ne")
-        );
+       );
     }
     else
     {
@@ -1145,7 +1145,7 @@ hook OnPlayerEnterDynamicCP(playerid, checkpointid)
             BizzInfo[bizz][bBuyPrice],
             BizzInfo[bizz][bLevelNeeded],
             BizzInfo[bizz][bDestroyed] ? ("Da") : ("Ne")
-        );
+       );
         PlayerTextDrawSetString(playerid, BiznisCMDTD[playerid], "Raspolozive komande:~n~      /enter, /buybiznis");
     }
     PlayerTextDrawSetString(playerid, BizzInfoTD[playerid], string);
@@ -1324,7 +1324,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                 BizzInfo[bizz][bMessage],
                 bizz,
                 BizzInfo[bizz][bSQLID]
-            );
+           );
             DeleteBiznis(bizz);
             FreeBizzID[playerid] = INVALID_BIZNIS_ID;
             return 1;
@@ -1389,7 +1389,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                             mysql_fquery(g_SQL, "UPDATE bizzes SET locked = '%d' WHERE id = '%d'", 
                                 BizzInfo[bouse][bLocked], 
                                 BizzInfo[bouse][bSQLID]
-                            );
+                           );
                         }
                         case 5:
                         {   // Rekonstrukcija
@@ -1437,7 +1437,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                             mysql_fquery(g_SQL, "UPDATE bizzes SET destroyed = '%d' WHERE id = '%d'", 
                                 BizzInfo[bouse][bDestroyed], 
                                 BizzInfo[bouse][bSQLID]
-                            );
+                           );
                         }
                         case 6:
                         {   // Cijena produkta
@@ -1506,12 +1506,12 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                                 return 1;
                             }
                             BizzInfo[bouse][bLocked] ^= 1; // toggle
-                            GameTextForPlayer(playerid, (BizzInfo[bouse][bLocked] ) ? ("~g~Zakljucano") : ("~g~Otkljucano"), 1000, 5);
+                            GameTextForPlayer(playerid, (BizzInfo[bouse][bLocked]) ? ("~g~Zakljucano") : ("~g~Otkljucano"), 1000, 5);
 
                             mysql_fquery(g_SQL, "UPDATE bizzes SET locked= '%d' WHERE id= '%d'", 
                                 BizzInfo[bouse][bLocked], 
                                 BizzInfo[bouse][bSQLID]
-                            );
+                           );
                         }
                         case 6:
                         {   // Rekonstrukcija
@@ -1547,7 +1547,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                             mysql_fquery(g_SQL, "UPDATE bizzes SET destroyed = '%d' WHERE id = '%d'", 
                                 BizzInfo[bouse][bDestroyed], 
                                 BizzInfo[bouse][bSQLID]
-                            );
+                           );
                         }
                         case 7:
                         {   // Cijena produkta
@@ -1617,7 +1617,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                             mysql_fquery(g_SQL, "UPDATE bizzes SET locked = '%d' WHERE id = '%d'", 
                                 BizzInfo[bouse][bLocked], 
                                 BizzInfo[bouse][bSQLID]
-                            );
+                           );
                         }
                         case 5:
                         {   // Rekonstrukcija
@@ -1665,7 +1665,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                             mysql_fquery(g_SQL, "UPDATE bizzes SET destroyed = '%d' WHERE id = '%d'", 
                                 BizzInfo[bouse][bDestroyed], 
                                 BizzInfo[bouse][bSQLID]
-                            );
+                           );
                         }
                         case 6:
                         {   // Ime biznisa
@@ -1694,12 +1694,12 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                                 return 1;
                             }
                             BizzInfo[bouse][bLocked] ^= 1; // toggle
-                            GameTextForPlayer(playerid, (BizzInfo[bouse][bLocked] ) ? ("~g~Zakljucano") : ("~g~Otkljucano"), 1000, 5);
+                            GameTextForPlayer(playerid, (BizzInfo[bouse][bLocked]) ? ("~g~Zakljucano") : ("~g~Otkljucano"), 1000, 5);
 
                             mysql_fquery(g_SQL, "UPDATE bizzes SET locked = '%d' WHERE id = '%d'", 
                                 BizzInfo[bouse][bLocked], 
                                 BizzInfo[bouse][bSQLID]
-                            );
+                           );
                         }
                         case 2:
                         {   // Rekonstrukcija
@@ -1747,7 +1747,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                             mysql_fquery(g_SQL, "UPDATE bizzes SET destroyed = '%d' WHERE id = '%d'", 
                                 BizzInfo[bouse][bDestroyed], 
                                 BizzInfo[bouse][bSQLID]
-                            );
+                           );
                         }
                         case 3:
                         {   // Postavljanje cijene produkta
@@ -1836,7 +1836,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
             mysql_fquery(g_SQL, "UPDATE bizzes SET ownerid = '%d' WHERE id = '%d'",
                 PlayerInfo[playerid][pSQLID],
                 BizzInfo[bizz][bSQLID]
-            );
+           );
 
             BizzInfo[bizz][bOwnerID] = PlayerInfo[playerid][pSQLID];
 
@@ -1859,7 +1859,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                 GetName(pID, false),
                 ReturnPlayerIP(pID),
                 bizPrice
-            );
+           );
             #endif
 
             return 1;
@@ -1905,7 +1905,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 
                 va_SendClientMessage(playerid, COLOR_RED, "[!]  Artikl %s ste stavili na svoje police!",
                     GetStoreProductName(ArticleIdInput[playerid])
-                );
+               );
                 ShowPlayerDialog(playerid, DIALOG_BIZNIS_MAIN, DIALOG_STYLE_LIST, "MOJ BIZNIS", "Info\nPostavi artikl\nSkini artikl\nPostavi cijenu artikla\nVrata\nRekonstrukcija biznisa($20.000)\nPostavi cijenu produkata\nIme Biznisa\nProdaj biznis igracu", "Choose","Exit");
             }
             else if(bizz_type == BIZZ_TYPE_BAR || bizz_type == BIZZ_TYPE_STRIP)
@@ -1914,7 +1914,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 
                 va_SendClientMessage(playerid, COLOR_RED, "[!]  Pice %s je sada u ponudi pica!",
                     GetDrinkName(ArticleIdInput[playerid])
-                );
+               );
                 ShowPlayerDialog(playerid, DIALOG_BIZNIS_MAIN, DIALOG_STYLE_LIST, "MOJ BIZNIS", "Info\nCijena ulaza\nPostavi artikl\nSkini artikl\nPostavi cijenu artikla\nVrata\nRekonstrukcija biznisa($20.000)\nPostavi cijenu produkata\nIme Biznisa\nProdaj biznis igracu", "Choose","Exit");
             }
             return 1;
@@ -1955,14 +1955,14 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
             {
                 va_SendClientMessage(playerid, COLOR_RED, "[!]  Stavili ste novu cijenu na artikl %s!",
                     GetStoreProductName(BiznisProducts[bouse][bpType][slot])
-                );
+               );
                 ShowPlayerDialog(playerid, DIALOG_BIZNIS_MAIN, DIALOG_STYLE_LIST, "MOJ BIZNIS", "Info\nPostavi artikl\nSkini artikl\nPostavi cijenu artikla\nVrata\nRekonstrukcija biznisa($20.000)\nPostavi cijenu produkata\nIme Biznisa\nProdaj biznis igracu", "Choose","Exit");
             }
             else if(bizz_type == BIZZ_TYPE_BAR || bizz_type == BIZZ_TYPE_STRIP)
             {
                 va_SendClientMessage(playerid, COLOR_RED, "[!]  Stavili ste novu cijenu na artikl %s!",
                     GetDrinkName(BiznisProducts[bouse][bpType][slot])
-                );
+               );
                 ShowPlayerDialog(playerid, DIALOG_BIZNIS_MAIN, DIALOG_STYLE_LIST, "MOJ BIZNIS", "Info\nCijena ulaza\nPostavi artikl\nSkini artikl\nPostavi cijenu artikla\nVrata\nRekonstrukcija biznisa($20.000)\nPostavi cijenu produkata\nIme Biznisa\nProdaj biznis igracu", "Choose","Exit");
             }
             return 1;
@@ -2050,7 +2050,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
             mysql_fquery(g_SQL, "UPDATE bizzes SET message = '%e' WHERE id = '%d'", 
                 BizzInfo[bouse][bMessage], 
                 BizzInfo[bouse][bSQLID]
-            );
+           );
 
             switch (BizzInfo[bouse][bType])
             {
@@ -2104,7 +2104,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                             GetName(playerid, false),
                             ReturnPlayerIP(playerid),
                             PlayerInventory[playerid][pMaskID]
-                        );
+                       );
                         #endif
                     }
                     case PRODUCT_FLOWERS:
@@ -2148,7 +2148,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                         mysql_fquery(g_SQL, "UPDATE player_phones SET money = '%d' WHERE player_id = '%d' AND type = '1'",
                             PlayerMobile[playerid][pMobileCost],
                             PlayerInfo[playerid][pSQLID]
-                        );
+                       );
                     }
                     case PRODUCT_CLOCK:
                     {
@@ -2169,7 +2169,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                         mysql_fquery(g_SQL, "UPDATE player_radio SET HasRadio = '%d' WHERE sqlid = '%d'",
                             PlayerRadio[playerid][pHasRadio],
                             PlayerInfo[playerid][pSQLID]
-                        );
+                       );
                     }
                 }
 
@@ -2188,7 +2188,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                 va_SendClientMessage(playerid, COLOR_RED, "[!]  Kupili ste %s za %d$",
                     GetStoreProductName(BiznisProducts[bizz][bpType][listitem]),
                     BiznisProducts[bizz][bpPrice][listitem]
-                );
+               );
             }
             else if(bizz_type == BIZZ_TYPE_BAR || bizz_type == BIZZ_TYPE_STRIP)
             {
@@ -2209,7 +2209,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 
                 va_GameTextForPlayer(playerid, "~g~Pijete %s...", 1000, 1,
                     GetDrinkName(BiznisProducts[bizz][bpType][listitem])
-                );
+               );
                 SetPlayerDrunkLevel(playerid, GetPlayerDrunkLevel(playerid) + 250);
             }
             return 1;
@@ -2276,7 +2276,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 
             va_SendClientMessage(playerid, COLOR_RED, "[!]  Vas novi broj cryptoa je %d",
                 PlayerMobile[playerid][pCryptoNumber]
-            );
+           );
             SendClientMessage(playerid, COLOR_YELLOW, "[!]  Koristite /cryptotext!");
             SavePlayerMobile(playerid, 2);
             return 1;
@@ -2304,7 +2304,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
             mysql_fquery(g_SQL, "UPDATE bizzes SET entrancecost = '%d' WHERE id = '%d'", 
                 BizzInfo[bouse][bEntranceCost], 
                 BizzInfo[bouse][bSQLID]
-            );
+           );
 
             switch (BizzInfo[bouse][bType])
             {
@@ -3035,7 +3035,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                     mysql_fquery(g_SQL, "UPDATE player_phones SET money = '%d' WHERE player_id = '%d' AND type = '1'",
                         PlayerMobile[playerid][pMobileCost],
                         PlayerInfo[playerid][pSQLID]
-                    );
+                   );
                 }
                 case 12:
                 {
@@ -3050,7 +3050,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                     mysql_fquery(g_SQL, "UPDATE player_radio SET HasRadio = '%d' WHERE sqlid = '%d'",
                         PlayerRadio[playerid][pHasRadio],
                         PlayerInfo[playerid][pSQLID]
-                    );
+                   );
                 }
                 case 13:
                 {
@@ -3101,7 +3101,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
             mysql_fquery(g_SQL, "UPDATE bizzes SET priceprod = '%d' WHERE id = '%d'", 
                 BizzInfo[bouse][bPriceProd], 
                 BizzInfo[bouse][bSQLID]
-            );
+           );
 
             return 1;
         }
@@ -3157,7 +3157,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 
             va_GameTextForPlayer(playerid, "~r~-%d$", 1000, 1,
                 skin_price
-            );
+           );
 
             // Raspodjela novca Biznis ili Proracun
             if(bizz != INVALID_BIZNIS_ID && bizz < MAX_BIZZES)
@@ -3174,7 +3174,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
             mysql_fquery(g_SQL, "UPDATE player_appearance SET skin = '%d' WHERE sqlid = '%d'",
                 PlayerAppearance[playerid][pSkin],
                 PlayerInfo[playerid][pSQLID]
-            );
+           );
 
             return 1;
         }
@@ -3204,7 +3204,7 @@ CMD:buyskin(playerid, params[])
         "Zelite li kupiti ovaj skin?\n\tINFO:\nSkinid: %d\nCijena: %d"COL_GREEN"$", "Buy", "Abort",
         GetPlayerSkin(playerid),
         PlayerSkinPrice[playerid]
-    );
+   );
     return 1;
 }
 
@@ -3389,7 +3389,7 @@ CMD:createvip(playerid, params[])
         BizzInfo[bizz][bVipExit][0],
         BizzInfo[bizz][bVipExit][1],
         BizzInfo[bizz][bVipExit][2]
-    );
+   );
     return 1;
 }
 
@@ -3704,7 +3704,7 @@ CMD:bizint(playerid, params[])
         BizzInfo[bizz][bVirtualWorld],
         BizzInfo[bizz][bCanEnter],
         BizzInfo[bizz][bSQLID]
-    );
+   );
 
     return 1;
 }
@@ -3740,7 +3740,7 @@ CMD:custombizint(playerid, params[])
         BizzInfo[bizz][bVirtualWorld],
         BizzInfo[bizz][bCanEnter],
         BizzInfo[bizz][bSQLID]
-    );
+   );
 
     return 1;
 }
@@ -4041,7 +4041,7 @@ CMD:bizentrance(playerid, params[])
         X,
         Y,
         Z
-    );
+   );
     ABroadCast(COLOR_LIGHTRED, string, 4);
 
     mysql_fquery(g_SQL, "UPDATE bizzes SET entrancex = '%f', entrancey = '%f', entrancez = '%f' WHERE id = '%d'",
@@ -4049,7 +4049,7 @@ CMD:bizentrance(playerid, params[])
         Y,
         Z,
         BizzInfo[proplev][bSQLID]
-    );
+   );
 
     return 1;
 }
@@ -4140,7 +4140,7 @@ CMD:bizwithdraw(playerid, params[])
     va_SendClientMessage(playerid, COLOR_RED, "[!]  Podigli ste $%d sa vaseg biznisa. Ukupno: $%d.",
         cashdeposit,
         BizzInfo[bouse][bTill]
-    );
+   );
 
     #if defined MODULE_LOGS
     Log_Write("/logfiles/a_biznis.txt", "(%s) %s(%s) took %d$ from Business %s[SQLID: %d].",
@@ -4150,7 +4150,7 @@ CMD:bizwithdraw(playerid, params[])
         cashdeposit,
         BizzInfo[bouse][bMessage],
         BizzInfo[bouse][bSQLID]
-    );
+   );
     #endif
     return 1;
 }
@@ -4183,7 +4183,7 @@ CMD:bizbank(playerid, params[])
     va_SendClientMessage(playerid, COLOR_RED, "[!]  Stavio si $%d u tvoj biznis. Ukupno: $%d.",
         cashdeposit,
         BizzInfo[bouse][bTill]
-    );
+   );
 
     #if defined MODULE_LOGS
     Log_Write("/logfiles/a_biznis.txt", "(%s) %s(%s) deposited %d$ in Business %s[SQLID: %d].",
@@ -4193,7 +4193,7 @@ CMD:bizbank(playerid, params[])
         cashdeposit,
         BizzInfo[bouse][bMessage],
         BizzInfo[bouse][bSQLID]
-    );
+   );
     #endif
     return 1;
 }

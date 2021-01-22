@@ -359,7 +359,7 @@ stock AHBroadCast(color,const string[],level)
 {
 	foreach (new i : Player)
 	{
-		if(( PlayerInfo[i][pAdmin] >= level || PlayerInfo[i][pHelper] >= level || IsPlayerAdmin(i)) && Bit1_Get( a_AdminChat, i ))
+		if(( PlayerInfo[i][pAdmin] >= level || PlayerInfo[i][pHelper] >= level || IsPlayerAdmin(i)) && Bit1_Get( a_AdminChat, i))
   		{
 			SendClientMessage(i, color, string);
 		}
@@ -371,7 +371,7 @@ stock HighAdminBroadCast(color,const string[],level)
 {
 	foreach (new i : Player)
 	{
-		if(PlayerInfo[i][pAdmin] >= level && Bit1_Get( a_AdminChat, i ))
+		if(PlayerInfo[i][pAdmin] >= level && Bit1_Get( a_AdminChat, i))
   		{
 			SendClientMessage(i, color, string);
 		}
@@ -386,7 +386,7 @@ SendAdminMessage(color, string[], va_args<>)
 	va_format(format_message, sizeof(format_message), string, va_start<2>);
 	foreach (new i : Player)
 	{
-		if(PlayerInfo[i][pAdmin] >= 1 && Bit1_Get( a_AdminChat, i ))
+		if(PlayerInfo[i][pAdmin] >= 1 && Bit1_Get( a_AdminChat, i))
 			SendClientMessage(i, color, format_message);
 	}
 	return 1;
@@ -399,7 +399,7 @@ SendHelperMessage(color, string[], va_args<>)
 	va_format(format_message, sizeof(format_message), string, va_start<2>);
 	foreach (new i : Player)
 	{
-		if(PlayerInfo[i][pHelper] >= 1 )
+		if(PlayerInfo[i][pHelper] >= 1)
 			SendClientMessage(i, color, format_message);
 	}
 	return 1;
@@ -409,7 +409,7 @@ stock SendAdminNotification(color, string[])
 {
 	foreach (new i : Player)
 	{
-		if(PlayerInfo[i][pAdmin] >= 1 && Bit1_Get( a_AdminChat, i ))
+		if(PlayerInfo[i][pAdmin] >= 1 && Bit1_Get( a_AdminChat, i))
 			SendMessage(i, color, string);
 	}
 }
@@ -593,7 +593,7 @@ Public: OnPINChecked(playerid, status)
 		);
 		#endif
 		
-		if(++AdminLoginTry[playerid] && AdminLoginTry[playerid] >= 3 ) {
+		if(++AdminLoginTry[playerid] && AdminLoginTry[playerid] >= 3) {
 			SendClientMessage(playerid, COLOR_RED, "[SERVER]:  You have reached the team login try limit, you're kicked!");
 			KickMessage(playerid);
 		}
@@ -613,19 +613,19 @@ Public: OnPINChecked(playerid, status)
 
 stock DestroyReconTextDraws(playerid)
 {
-	if(ReconBcg1[playerid] != PlayerText:INVALID_TEXT_DRAW ) {
+	if(ReconBcg1[playerid] != PlayerText:INVALID_TEXT_DRAW) {
 		PlayerTextDrawDestroy(playerid, ReconBcg1[playerid]);
 		ReconBcg1[playerid] = PlayerText:INVALID_TEXT_DRAW;
 	}
-	if(ReconBack[playerid] != PlayerText:INVALID_TEXT_DRAW ) {
+	if(ReconBack[playerid] != PlayerText:INVALID_TEXT_DRAW) {
 		PlayerTextDrawDestroy(playerid, ReconBack[playerid]);
 		ReconBack[playerid] = PlayerText:INVALID_TEXT_DRAW;
 	}
-	if(ReconTitle[playerid] != PlayerText:INVALID_TEXT_DRAW ) {
+	if(ReconTitle[playerid] != PlayerText:INVALID_TEXT_DRAW) {
 		PlayerTextDrawDestroy(playerid, ReconTitle[playerid]);
 		ReconTitle[playerid] = PlayerText:INVALID_TEXT_DRAW;
 	}
-	if(ReconText[playerid] != PlayerText:INVALID_TEXT_DRAW ) {
+	if(ReconText[playerid] != PlayerText:INVALID_TEXT_DRAW) {
 		PlayerTextDrawDestroy(playerid, ReconText[playerid]);
 		ReconText[playerid] = PlayerText:INVALID_TEXT_DRAW;
 	}
@@ -715,7 +715,7 @@ SetPlayerReconTarget(playerid, targetid)
 	PlayerTextDrawSetString(playerid, ReconText[playerid], tmpString);
 	format(tmpString, sizeof(tmpString), "%s(%d)", GetName(targetid, false), targetid);
 	PlayerTextDrawSetString(playerid, ReconTitle[playerid], tmpString);
-	Bit1_Set( a_PlayerReconed, playerid, true );
+	Bit1_Set( a_PlayerReconed, playerid, true);
 	ReconTimer[playerid] = repeat OnPlayerReconing(playerid, targetid);
 	return 1;
 }
@@ -895,7 +895,7 @@ timer LearnPlayer[1000](playerid, learnid)
 			SendClientMessage(playerid, COLOR_WHITE, "Primjer: /ame se osmjehuje, /ame klima glavom potvrdno, /ame se naslanja na zid.");
 			SendClientMessage(playerid, COLOR_RED, "[!] /do - komanda kojom se opisuje trenutna IC situacija.");
 			SendClientMessage(playerid, COLOR_WHITE, " /do se pise u trecem licu odnosno u pogledu posmatraca, moze opisivati i okolinu.");
-			SendClientMessage(playerid, COLOR_WHITE, "Primjer: Sta bi se nalazilo ispred Johnnya na stolu? (( Patricia Vargas ))");
+			SendClientMessage(playerid, COLOR_WHITE, "Primjer: Sta bi se nalazilo ispred Johnnya na stolu? (( Patricia Vargas))");
 		    stop LearnTimer[playerid];
 			LearnTimer[playerid] = defer LearnPlayer[28000](playerid, 9);
 		}
@@ -972,7 +972,7 @@ stock static UpdateTargetReconData(playerid, targetid)
 
 	if(ReconingVehicle[playerid] != GetPlayerVehicleID(targetid)) {
 		PlayerSpectateVehicle(playerid, GetPlayerVehicleID(targetid));
-		Bit4_Set(gr_SpecateId, playerid, PLAYER_SPECATE_VEH );
+		Bit4_Set(gr_SpecateId, playerid, PLAYER_SPECATE_VEH);
 		ReconingVehicle[playerid] = GetPlayerVehicleID(targetid);
 	}
 	ReconingPlayer[playerid] = targetid;
@@ -1107,7 +1107,7 @@ stock ListInactivePlayers(playerid)
 				reason[64],
 				motd[150];
 				
-			for( new i = 0; i < rows; i++ ) 
+			for( new i = 0; i < rows; i++) 
 			{
 				cache_get_value_name_int(i, "sqlid"				, sqlid);
 				cache_get_value_name_int(i, "startstamp"		, startstamp);
@@ -1154,7 +1154,7 @@ timer OnAdminCountDown[1000]()
 		PlayerPlaySound(playerid, 1056, 0.0, 0.0, 0.0);
 	}
 	cseconds--;
-	if(!cseconds ) 
+	if(!cseconds) 
 	{
 		count_started = false;
 		GameTextForAll("~g~GO GO GO", 2500, 4);
@@ -1193,7 +1193,7 @@ public LoadPlayerWarns(playerid, targetname[],reason[])
 	new
 		rows;
 	cache_get_row_count(rows);
-	if(!rows ) return SendClientMessage(playerid,COLOR_RED,"[MySQL]: Taj igrac nije u bazi!");
+	if(!rows) return SendClientMessage(playerid,COLOR_RED,"[MySQL]: Taj igrac nije u bazi!");
 	
 	new
 		currentwarns;
@@ -1455,15 +1455,15 @@ public CheckLastLogin(playerid, const name[])
 
 timer OnPlayerReconing[1000](playerid, targetid)
 {
-	if(Bit4_Get(gr_SpecateId, playerid) == PLAYER_SPECATE_VEH ) {
+	if(Bit4_Get(gr_SpecateId, playerid) == PLAYER_SPECATE_VEH) {
 		if(!IsPlayerInAnyVehicle(targetid)) {
 			SetPlayerInterior(playerid, GetPlayerInterior(targetid));
 			SetPlayerVirtualWorld(playerid, GetPlayerVirtualWorld(targetid));
 			PlayerSpectatePlayer(playerid, targetid);
-			Bit4_Set(gr_SpecateId, playerid, PLAYER_SPECATE_PLAYER );
+			Bit4_Set(gr_SpecateId, playerid, PLAYER_SPECATE_PLAYER);
 		}
 	}
-	else if(Bit4_Get(gr_SpecateId, playerid) == PLAYER_SPECATE_PLAYER ) {		
+	else if(Bit4_Get(gr_SpecateId, playerid) == PLAYER_SPECATE_PLAYER) {		
 		if(GetPlayerInterior(playerid) != GetPlayerInterior(targetid)) {
 			SetPlayerInterior(playerid		, GetPlayerInterior(targetid));
 			SetPlayerVirtualWorld(playerid	, GetPlayerVirtualWorld(targetid));
@@ -1509,7 +1509,7 @@ hook OnPlayerDisconnect(playerid, reason)
         mysql_fquery(g_SQL, "UPDATE player_admin_msg SET AdminMessage = '', AdminMessageBy = '', AdmMessageConfirm = '0' \n\
             WHERE sqlid = '%d'", 
             PlayerInfo[playerid][pSQLID]
-        );
+       );
     }
     return 1;
 }
@@ -1620,7 +1620,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 	{
 		case DIALOG_JAIL_GETHERE:
 		{
-			if(!response ) return 1;
+			if(!response) return 1;
 			new
 				Float:X, Float:Y, Float:Z;
 			GetPlayerPos(playerid, X, Y, Z);

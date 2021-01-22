@@ -203,7 +203,7 @@ public OnPlayerSpawn(playerid)
 }
 
 static FKI_IsWeaponValid(Weapon) 
-	return ( 0 <= Weapon <= 18 || 22 <= Weapon <= 46   );
+	return ( 0 <= Weapon <= 18 || 22 <= Weapon <= 46  );
 
 static FKI_IsAPlane(vehicleid)
 {

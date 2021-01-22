@@ -136,7 +136,7 @@ CMD:votes(playerid, params[])
         lockvotes = !lockvotes;
         va_SendClientMessage(playerid, COLOR_RED, "[!] Uspjesno si %s glasovanje.",
             (lockvotes) ? ("zakljucao") : ("otkljucao")
-        );
+       );
         return 1;
     }
     else if(!strcmp(option, "check", true))

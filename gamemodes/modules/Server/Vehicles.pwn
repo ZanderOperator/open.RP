@@ -59,7 +59,7 @@ Public:OnServerVehicleLoad()
 		cache_get_value_name_int(b, 	"respawn"	, carLoad[vRespawn]);
 		cache_get_value_name_int(b, 	"sirenon"	, carLoad[vSirenon]);
 
-		vCarID = AC_CreateVehicle( carLoad[vModel], carLoad[vParkX], carLoad[vParkY], carLoad[vParkZ], carLoad[vAngle], carLoad[vColor1], carLoad[vColor2], carLoad[vRespawn], carLoad[vSirenon] );
+		vCarID = AC_CreateVehicle( carLoad[vModel], carLoad[vParkX], carLoad[vParkY], carLoad[vParkZ], carLoad[vAngle], carLoad[vColor1], carLoad[vColor2], carLoad[vRespawn], carLoad[vSirenon]);
 
 		VehicleInfo[vCarID][vModel] 			= carLoad[vModel];
 		VehicleInfo[vCarID][vParkX] 			= carLoad[vParkX];
@@ -86,23 +86,23 @@ Public:OnServerVehicleLoad()
 		VehicleInfo[vCarID][vTireArmor] 		= carLoad[vTireArmor];
 
 		cache_get_value_name(b, "numberplate", tmp, sizeof(tmp));
-		format( VehicleInfo[vCarID][vNumberPlate], 8, tmp );
+		format( VehicleInfo[vCarID][vNumberPlate], 8, tmp);
 
-		cache_get_value_name_float(b, 	"travel"		, VehicleInfo[vCarID][vTravel] );
+		cache_get_value_name_float(b, 	"travel"		, VehicleInfo[vCarID][vTravel]);
 		cache_get_value_name_int(b, 	"overheated"	, VehicleInfo[vCarID][vOverHeated]);
 		VehicleInfo[vCarID][vFuel] 				= 100;
 		VehicleInfo[vCarID][vTrunk] 			= 1;
 		VehicleInfo[vCarID][vCanStart] 			= 1;
 		VehicleInfo[vCarID][vParts] 			= 0;
 		VehicleInfo[vCarID][vTimesDestroy] 		= 0;
-		SetVehicleHealth( vCarID, VehicleInfo[vCarID][vHealth] );
+		SetVehicleHealth( vCarID, VehicleInfo[vCarID][vHealth]);
 
 		new model = GetVehicleModel(vCarID);
 		cache_get_value_name(b, "text", rmp);
-		format( VehicleInfo[vCarID][vText], 13, rmp );
+		format( VehicleInfo[vCarID][vText], 13, rmp);
 		if(VehicleInfo[vCarID][vFaction] > 0 || VehicleInfo[vCarID][vJob] > 0) VehicleInfo[vCarID][vAudio] = 1;
 		
-		switch( VehicleInfo[vCarID][vFaction] ) 
+		switch( VehicleInfo[vCarID][vFaction]) 
 		{
 			case 1: 
 			{
@@ -110,8 +110,8 @@ Public:OnServerVehicleLoad()
 				{
 					if(isnull(VehicleInfo[vCarID][vText]))
 						format(VehicleInfo[vCarID][vText], 13, "LSPD");
-					if(VehicleInfo[vCarID][vText][0] != '0' ) {
-						VehicleInfo[vCarID][vFactionText] = CreateDynamic3DTextLabel(VehicleInfo[vCarID][vText], 0xD2D2D2FF, -0.6969, -2.8092, -0.3000, 10.0, INVALID_PLAYER_ID, vCarID, 0, -1, -1, -1, 15.0 );
+					if(VehicleInfo[vCarID][vText][0] != '0') {
+						VehicleInfo[vCarID][vFactionText] = CreateDynamic3DTextLabel(VehicleInfo[vCarID][vText], 0xD2D2D2FF, -0.6969, -2.8092, -0.3000, 10.0, INVALID_PLAYER_ID, vCarID, 0, -1, -1, -1, 15.0);
 						VehicleInfo[vCarID][vFactionTextOn] = 1;
 					}
 				}
@@ -122,9 +122,9 @@ Public:OnServerVehicleLoad()
 				{
 					if(isnull(VehicleInfo[vCarID][vText]))
 						format(VehicleInfo[vCarID][vText], 13, "LSSD");
-					if(VehicleInfo[vCarID][vText][0] != '0' ) 
+					if(VehicleInfo[vCarID][vText][0] != '0') 
 					{
-						VehicleInfo[vCarID][vFactionText] = CreateDynamic3DTextLabel(VehicleInfo[vCarID][vText], 0xD2D2D2FF, -0.6969, -2.8092, -0.3000, 10.0, INVALID_PLAYER_ID, vCarID, 0, -1, -1, -1, 15.0 );
+						VehicleInfo[vCarID][vFactionText] = CreateDynamic3DTextLabel(VehicleInfo[vCarID][vText], 0xD2D2D2FF, -0.6969, -2.8092, -0.3000, 10.0, INVALID_PLAYER_ID, vCarID, 0, -1, -1, -1, 15.0);
 						VehicleInfo[vCarID][vFactionTextOn] = 1;
 					}
 				}
@@ -133,9 +133,9 @@ Public:OnServerVehicleLoad()
 			{
 				if(isnull(VehicleInfo[vCarID][vText]))
 					format(VehicleInfo[vCarID][vText], 13, "GOV");
-				if(VehicleInfo[vCarID][vText][0] != '0' ) 
+				if(VehicleInfo[vCarID][vText][0] != '0') 
 				{
-					VehicleInfo[vCarID][vFactionText] = CreateDynamic3DTextLabel(VehicleInfo[vCarID][vText], 0xD2D2D2FF, -0.6969, -2.8092, -0.3000, 10.0, INVALID_PLAYER_ID, vCarID, 0, -1, -1, -1, 15.0 );
+					VehicleInfo[vCarID][vFactionText] = CreateDynamic3DTextLabel(VehicleInfo[vCarID][vText], 0xD2D2D2FF, -0.6969, -2.8092, -0.3000, 10.0, INVALID_PLAYER_ID, vCarID, 0, -1, -1, -1, 15.0);
 					VehicleInfo[vCarID][vFactionTextOn] = 1;
 				}
 				VehicleInfo[vCarID][vBodyArmor] = 1;
@@ -147,8 +147,8 @@ Public:OnServerVehicleLoad()
 						if(isnull(VehicleInfo[vCarID][vText]))
 							format(VehicleInfo[vCarID][vText], 13, "LSFD");
 
-						if(VehicleInfo[vCarID][vText][0] != '0' ) {
-							VehicleInfo[vCarID][vFactionText] = CreateDynamic3DTextLabel(VehicleInfo[vCarID][vText], 0xD2D2D2FF, -0.5361, -3.8234, -0.7254, 10.0, INVALID_PLAYER_ID, vCarID, 0, -1, -1, -1, 15.0 );
+						if(VehicleInfo[vCarID][vText][0] != '0') {
+							VehicleInfo[vCarID][vFactionText] = CreateDynamic3DTextLabel(VehicleInfo[vCarID][vText], 0xD2D2D2FF, -0.5361, -3.8234, -0.7254, 10.0, INVALID_PLAYER_ID, vCarID, 0, -1, -1, -1, 15.0);
 							VehicleInfo[vCarID][vFactionTextOn] = 1;
 						}
 					}
@@ -156,8 +156,8 @@ Public:OnServerVehicleLoad()
 						if(isnull(VehicleInfo[vCarID][vText]))
 							format(VehicleInfo[vCarID][vText], 13, "LSFD");
 
-						if(VehicleInfo[vCarID][vText][0] != '0' ) {
-							VehicleInfo[vCarID][vFactionText] = CreateDynamic3DTextLabel(VehicleInfo[vCarID][vText], 0xD2D2D2FF, -0.5434, -3.6819, -0.4500, 10.0, INVALID_PLAYER_ID, vCarID, 0, -1, -1, -1, 15.0 );
+						if(VehicleInfo[vCarID][vText][0] != '0') {
+							VehicleInfo[vCarID][vFactionText] = CreateDynamic3DTextLabel(VehicleInfo[vCarID][vText], 0xD2D2D2FF, -0.5434, -3.6819, -0.4500, 10.0, INVALID_PLAYER_ID, vCarID, 0, -1, -1, -1, 15.0);
 							VehicleInfo[vCarID][vFactionTextOn] = 1;
 						}
 					}
@@ -165,8 +165,8 @@ Public:OnServerVehicleLoad()
 						if(isnull(VehicleInfo[vCarID][vText]))
 							format(VehicleInfo[vCarID][vText], 13, "LSFD");
 
-						if(VehicleInfo[vCarID][vText][0] != '0' ) {
-							VehicleInfo[vCarID][vFactionText] = CreateDynamic3DTextLabel(VehicleInfo[vCarID][vText], 0xD2D2D2FF, -0.0413, -1.6196, 0.2500, 10.0, INVALID_PLAYER_ID, vCarID, 0, -1, -1, -1, 15.0 );
+						if(VehicleInfo[vCarID][vText][0] != '0') {
+							VehicleInfo[vCarID][vFactionText] = CreateDynamic3DTextLabel(VehicleInfo[vCarID][vText], 0xD2D2D2FF, -0.0413, -1.6196, 0.2500, 10.0, INVALID_PLAYER_ID, vCarID, 0, -1, -1, -1, 15.0);
 							VehicleInfo[vCarID][vFactionTextOn] = 1;
 						}
 					}
@@ -174,8 +174,8 @@ Public:OnServerVehicleLoad()
 						if(isnull(VehicleInfo[vCarID][vText]))
 							format(VehicleInfo[vCarID][vText], 13, "LSFD");
 
-						if(VehicleInfo[vCarID][vText][0] != '0' ) {
-							VehicleInfo[vCarID][vFactionText] = CreateDynamic3DTextLabel(VehicleInfo[vCarID][vText], 0xD2D2D2FF, 0.0442, -3.7343, -0.2000, 10.0, INVALID_PLAYER_ID, vCarID, 0, -1, -1, -1, 15.0 );
+						if(VehicleInfo[vCarID][vText][0] != '0') {
+							VehicleInfo[vCarID][vFactionText] = CreateDynamic3DTextLabel(VehicleInfo[vCarID][vText], 0xD2D2D2FF, 0.0442, -3.7343, -0.2000, 10.0, INVALID_PLAYER_ID, vCarID, 0, -1, -1, -1, 15.0);
 							VehicleInfo[vCarID][vFactionTextOn] = 1;
 						}
 					}
@@ -183,8 +183,8 @@ Public:OnServerVehicleLoad()
 						if(isnull(VehicleInfo[vCarID][vText]))
 							format(VehicleInfo[vCarID][vText], 13, "LSFD");
 
-						if(VehicleInfo[vCarID][vText][0] != '0' ) {
-							VehicleInfo[vCarID][vFactionText] = CreateDynamic3DTextLabel(VehicleInfo[vCarID][vText], 0xD2D2D2FF, -0.6381, -3.2258, -0.3600, 10.0, INVALID_PLAYER_ID, vCarID, 0, -1, -1, -1, 15.0 );
+						if(VehicleInfo[vCarID][vText][0] != '0') {
+							VehicleInfo[vCarID][vFactionText] = CreateDynamic3DTextLabel(VehicleInfo[vCarID][vText], 0xD2D2D2FF, -0.6381, -3.2258, -0.3600, 10.0, INVALID_PLAYER_ID, vCarID, 0, -1, -1, -1, 15.0);
 							VehicleInfo[vCarID][vFactionTextOn] = 1;
 						}
 					}
@@ -192,8 +192,8 @@ Public:OnServerVehicleLoad()
 						if(isnull(VehicleInfo[vCarID][vText]))
 							format(VehicleInfo[vCarID][vText], 13, "LSFD");
 
-						if(VehicleInfo[vCarID][vText][0] != '0' ) {
-							VehicleInfo[vCarID][vFactionText] = CreateDynamic3DTextLabel(VehicleInfo[vCarID][vText], 0xD2D2D2FF, -0.6969, -2.8092, -0.3000, 10.0, INVALID_PLAYER_ID, vCarID, 0, -1, -1, -1, 15.0 );
+						if(VehicleInfo[vCarID][vText][0] != '0') {
+							VehicleInfo[vCarID][vFactionText] = CreateDynamic3DTextLabel(VehicleInfo[vCarID][vText], 0xD2D2D2FF, -0.6969, -2.8092, -0.3000, 10.0, INVALID_PLAYER_ID, vCarID, 0, -1, -1, -1, 15.0);
 							VehicleInfo[vCarID][vFactionTextOn] = 1;
 						}
 					}
@@ -201,8 +201,8 @@ Public:OnServerVehicleLoad()
 						if(isnull(VehicleInfo[vCarID][vText]))
 							format(VehicleInfo[vCarID][vText], 13, "LSFD");
 
-						if(VehicleInfo[vCarID][vText][0] != '0' ) {
-							VehicleInfo[vCarID][vFactionText] = CreateDynamic3DTextLabel(VehicleInfo[vCarID][vText], 0xD2D2D2FF, -0.6504, -2.7506, -0.3600, 10.0, INVALID_PLAYER_ID, vCarID, 0, -1, -1, -1, 15.0 );
+						if(VehicleInfo[vCarID][vText][0] != '0') {
+							VehicleInfo[vCarID][vFactionText] = CreateDynamic3DTextLabel(VehicleInfo[vCarID][vText], 0xD2D2D2FF, -0.6504, -2.7506, -0.3600, 10.0, INVALID_PLAYER_ID, vCarID, 0, -1, -1, -1, 15.0);
 							VehicleInfo[vCarID][vFactionTextOn] = 1;
 						}
 					}
@@ -210,8 +210,8 @@ Public:OnServerVehicleLoad()
 						if(isnull(VehicleInfo[vCarID][vText]))
 							format(VehicleInfo[vCarID][vText], 13, "LSFD");
 
-						if(VehicleInfo[vCarID][vText][0] != '0' ) {
-							VehicleInfo[vCarID][vFactionText] = CreateDynamic3DTextLabel(VehicleInfo[vCarID][vText], 0xD2D2D2FF, -0.9242, -3.0798, 0.0234, 10.0, INVALID_PLAYER_ID, vCarID, 0, -1, -1, -1, 15.0 );
+						if(VehicleInfo[vCarID][vText][0] != '0') {
+							VehicleInfo[vCarID][vFactionText] = CreateDynamic3DTextLabel(VehicleInfo[vCarID][vText], 0xD2D2D2FF, -0.9242, -3.0798, 0.0234, 10.0, INVALID_PLAYER_ID, vCarID, 0, -1, -1, -1, 15.0);
 							VehicleInfo[vCarID][vFactionTextOn] = 1;
 						}
 					}
@@ -219,15 +219,15 @@ Public:OnServerVehicleLoad()
 						if(isnull(VehicleInfo[vCarID][vText]))
 							format(VehicleInfo[vCarID][vText], 13, "LSFD");
 
-						VehicleInfo[vCarID][vFactionText] = CreateDynamic3DTextLabel(VehicleInfo[vCarID][vText], 0xD2D2D2FF, -0.3975, -3.6268, 0.0234, 10.0, INVALID_PLAYER_ID, vCarID, 0, -1, -1, -1, 15.0 );
+						VehicleInfo[vCarID][vFactionText] = CreateDynamic3DTextLabel(VehicleInfo[vCarID][vText], 0xD2D2D2FF, -0.3975, -3.6268, 0.0234, 10.0, INVALID_PLAYER_ID, vCarID, 0, -1, -1, -1, 15.0);
 						VehicleInfo[vCarID][vFactionTextOn] = 1;
 					}
 					case 525: {
 						if(isnull(VehicleInfo[vCarID][vText]))
 							format(VehicleInfo[vCarID][vText], 13, "LSFD");
 
-						if(VehicleInfo[vCarID][vText][0] != '0' ) {
-							VehicleInfo[vCarID][vFactionText] = CreateDynamic3DTextLabel(VehicleInfo[vCarID][vText], 0xD2D2D2FF, -0.6073, -3.0629, -0.1200, 10.0, INVALID_PLAYER_ID, vCarID, 0, -1, -1, -1, 15.0 );
+						if(VehicleInfo[vCarID][vText][0] != '0') {
+							VehicleInfo[vCarID][vFactionText] = CreateDynamic3DTextLabel(VehicleInfo[vCarID][vText], 0xD2D2D2FF, -0.6073, -3.0629, -0.1200, 10.0, INVALID_PLAYER_ID, vCarID, 0, -1, -1, -1, 15.0);
 							VehicleInfo[vCarID][vFactionTextOn] = 1;
 						}
 					}
@@ -235,8 +235,8 @@ Public:OnServerVehicleLoad()
 						if(isnull(VehicleInfo[vCarID][vText]))
 							format(VehicleInfo[vCarID][vText], 13, "LSFD");
 
-						if(VehicleInfo[vCarID][vText][0] != '0' ) {
-							VehicleInfo[vCarID][vFactionText] = CreateDynamic3DTextLabel(VehicleInfo[vCarID][vText], 0xD2D2D2FF, 0.4615, -5.4731, -0.1200, 10.0, INVALID_PLAYER_ID, vCarID, 0, -1, -1, -1, 15.0 );
+						if(VehicleInfo[vCarID][vText][0] != '0') {
+							VehicleInfo[vCarID][vFactionText] = CreateDynamic3DTextLabel(VehicleInfo[vCarID][vText], 0xD2D2D2FF, 0.4615, -5.4731, -0.1200, 10.0, INVALID_PLAYER_ID, vCarID, 0, -1, -1, -1, 15.0);
 							VehicleInfo[vCarID][vFactionTextOn] = 1;
 						}
 					}
@@ -244,8 +244,8 @@ Public:OnServerVehicleLoad()
 						if(isnull(VehicleInfo[vCarID][vText]))
 							format(VehicleInfo[vCarID][vText], 13, "LSFD");
 
-						if(VehicleInfo[vCarID][vText][0] != '0' ) {
-							VehicleInfo[vCarID][vFactionText] = CreateDynamic3DTextLabel(VehicleInfo[vCarID][vText], 0xD2D2D2FF, 0.7704, -4.0637, -0.3000, 10.0, INVALID_PLAYER_ID, vCarID, 0, -1, -1, -1, 15.0 );
+						if(VehicleInfo[vCarID][vText][0] != '0') {
+							VehicleInfo[vCarID][vFactionText] = CreateDynamic3DTextLabel(VehicleInfo[vCarID][vText], 0xD2D2D2FF, 0.7704, -4.0637, -0.3000, 10.0, INVALID_PLAYER_ID, vCarID, 0, -1, -1, -1, 15.0);
 							VehicleInfo[vCarID][vFactionTextOn] = 1;
 						}
 					}
@@ -253,15 +253,15 @@ Public:OnServerVehicleLoad()
 						if(isnull(VehicleInfo[vCarID][vText]))
 							format(VehicleInfo[vCarID][vText], 13, "LSFD");
 
-						if(VehicleInfo[vCarID][vText][0] != '0' ) {
-							VehicleInfo[vCarID][vFactionText] = CreateDynamic3DTextLabel(VehicleInfo[vCarID][vText], 0xD2D2D2FF, -0.1615, -2.0197, -0.2500, 10.0, INVALID_PLAYER_ID, vCarID, 0, -1, -1, -1, 15.0 );
+						if(VehicleInfo[vCarID][vText][0] != '0') {
+							VehicleInfo[vCarID][vFactionText] = CreateDynamic3DTextLabel(VehicleInfo[vCarID][vText], 0xD2D2D2FF, -0.1615, -2.0197, -0.2500, 10.0, INVALID_PLAYER_ID, vCarID, 0, -1, -1, -1, 15.0);
 							VehicleInfo[vCarID][vFactionTextOn] = 1;
 						}
 					}
 				}
 			}
 		}
-		if(VehicleInfo[vCarID][vNumberPlate][0] == '0' )
+		if(VehicleInfo[vCarID][vNumberPlate][0] == '0')
 				SetVehicleNumberPlate(vCarID, "");
 			else
 				SetVehicleNumberPlate(vCarID, VehicleInfo[vCarID][vNumberPlate]);
@@ -453,7 +453,7 @@ CountVehicleModels()
 	{
 		model = GetVehicleModel(vehicleid);
 		carid = GetVehicleByModel(model);
-		if(carid == -1 ) continue;
+		if(carid == -1) continue;
 		if(IsABike(model) || IsABoat(model) || IsAMotorBike(model) || IsAPlane(model) || IsAHelio(model)) continue;
 		if(!IsVehicleJackable(carid)) continue;
 		if(Iter_Contains(VehicleTypes, model)) continue;
@@ -640,21 +640,21 @@ hook function ResetVehicleInfo(vehicleid)
 	// 3d Texts
 	if(VehicleInfo[vehicleid][vFactionText] != Text3D:INVALID_3DTEXT_ID)
 	{
-		DestroyDynamic3DTextLabel( VehicleInfo[vehicleid][vFactionText] );
+		DestroyDynamic3DTextLabel( VehicleInfo[vehicleid][vFactionText]);
 		VehicleInfo[vehicleid][vFactionText] = Text3D:INVALID_3DTEXT_ID;
 	}
 	
 	if(VehicleInfo[vehicleid][vVehicleAdId] != Text3D:INVALID_3DTEXT_ID)
 	{
-		DestroyDynamic3DTextLabel( VehicleInfo[vehicleid][vVehicleAdId] );
+		DestroyDynamic3DTextLabel( VehicleInfo[vehicleid][vVehicleAdId]);
 		VehicleInfo[vehicleid][vVehicleAdId] = Text3D:INVALID_3DTEXT_ID;
 	}
 	
 	Iter_Clear(VehWeapon[vehicleid]);
 	Iter_Clear(VehWeaponObject[vehicleid]);
 
-	Bit1_Set( gr_VehicleAttachedBomb, vehicleid, false );
-	Bit16_Set( gr_LastDriver, vehicleid, INVALID_PLAYER_ID );
+	Bit1_Set( gr_VehicleAttachedBomb, vehicleid, false);
+	Bit16_Set( gr_LastDriver, vehicleid, INVALID_PLAYER_ID);
 
 	return continue(vehicleid);
 }
@@ -672,7 +672,7 @@ stock AC_CreateVehicle(vehicletype, Float:x, Float:y, Float:z, Float:rotation, c
 
 hook AC_DestroyVehicle(vehicleid)
 {
-	if(vehicleid == INVALID_VEHICLE_ID ) 		
+	if(vehicleid == INVALID_VEHICLE_ID) 		
 		return 0;
 	if(!IsValidVehicle(vehicleid))	
 		return 0;
@@ -689,7 +689,7 @@ hook AC_DestroyVehicle(vehicleid)
 
 stock SetRespawnedVehicleParams(vehicleid)
 {
-	if(VehicleInfo[vehicleid][vNumberPlate][0] == '0' )
+	if(VehicleInfo[vehicleid][vNumberPlate][0] == '0')
 		SetVehicleNumberPlate(vehicleid, " ");
 	else
 		SetVehicleNumberPlate(vehicleid, VehicleInfo[vehicleid][vNumberPlate]);
@@ -734,7 +734,7 @@ stock AC_SetVehicleToRespawn(vehicleid)
 	SetVehicleVelocity(vehicleid, 0.0, 0.0, 0.0);
 	LinkVehicleToInterior(vehicleid, VehicleInfo[vehicleid][vInt]);
 	SetVehicleVirtualWorld(vehicleid, VehicleInfo[vehicleid][vViwo]);
-	if(VehicleInfo[vehicleid][vUsage] == 2 )  // VEHICLE_USAGE_PRIVATE
+	if(VehicleInfo[vehicleid][vUsage] == 2)  // VEHICLE_USAGE_PRIVATE
 	{
 		CheckVehicleInsurance(vehicleid);
 		SetVehicleTuning(vehicleid);
@@ -971,7 +971,7 @@ hook OnVehicleDeath(vehicleid, killerid)
 	printf("(%s) OnVehicleDeath debug: vehicleid: %d, killerid: %s[%d]", ReturnDate(), vehicleid, GetName(killerid, false), killerid);
 	printf("(%s) vUsage: %s, GetPlayerVehicleID: %d, vJob = %d, vFaction = %d", ReturnDate(), string, GetPlayerVehicleID(killerid), VehicleInfo[vehicleid][vJob], VehicleInfo[vehicleid][vFaction]);
 	
-	if(VehicleInfo[vehicleid][vUsage] != VEHICLE_USAGE_PRIVATE && VehicleInfo[vehicleid][vUsage] != VEHICLE_USAGE_RENT ) 
+	if(VehicleInfo[vehicleid][vUsage] != VEHICLE_USAGE_PRIVATE && VehicleInfo[vehicleid][vUsage] != VEHICLE_USAGE_RENT) 
 		SetVehicleToRespawn(vehicleid);
 	
 	if(vehicleid == GetPlayerVehicleID(killerid))
@@ -1056,12 +1056,12 @@ hook OnPlayerUpdate(playerid)
 
 hook OnVehicleSpawn(vehicleid)
 {
-	if(VehicleInfo[vehicleid][vInt] != 0 ) 
+	if(VehicleInfo[vehicleid][vInt] != 0) 
 		LinkVehicleToInterior(vehicleid, VehicleInfo[vehicleid][vInt]);
 	else 
 		LinkVehicleToInterior(vehicleid, 0);
 	
-	if(VehicleInfo[vehicleid][vViwo] != 0 ) 
+	if(VehicleInfo[vehicleid][vViwo] != 0) 
 		SetVehicleVirtualWorld(vehicleid, VehicleInfo[vehicleid][vViwo]);
 	else 
 		SetVehicleVirtualWorld(vehicleid, 0);
@@ -1075,7 +1075,7 @@ hook OnVehicleSpawn(vehicleid)
 hook OnPlayerDisconnect(playerid, reason)
 {
 	if(!IsPlayerInAnyVehicle(playerid) && GetPlayerState(playerid) != PLAYER_STATE_DRIVER) return 0;
-	if(GetPlayerVehicleID(playerid) && VehicleInfo[GetPlayerVehicleID(playerid)][vJob] != 0 ) {
+	if(GetPlayerVehicleID(playerid) && VehicleInfo[GetPlayerVehicleID(playerid)][vJob] != 0) {
 		SetVehicleToRespawn(GetPlayerVehicleID(playerid));
 	}
 	return 1;
@@ -1083,53 +1083,53 @@ hook OnPlayerDisconnect(playerid, reason)
 
 hook OnPlayerStateChange(playerid, newstate, oldstate)
 {
-	if(newstate == PLAYER_STATE_DRIVER && oldstate == PLAYER_STATE_ONFOOT ) 
+	if(newstate == PLAYER_STATE_DRIVER && oldstate == PLAYER_STATE_ONFOOT) 
 	{
 		new
 			vehicleid = GetPlayerVehicleID(playerid);
 
-		if(VehicleInfo[vehicleid][vType] == VEHICLE_TYPE_BOAT && !LicenseInfo[playerid][pBoatLic] ) {
+		if(VehicleInfo[vehicleid][vType] == VEHICLE_TYPE_BOAT && !LicenseInfo[playerid][pBoatLic]) {
 			SendMessage(playerid, MESSAGE_TYPE_ERROR, " Ne znate upravljati brodom pa ste izasli!");
 			RemovePlayerFromVehicle(playerid);
 			return 1;
 		}
-		if(( VehicleInfo[vehicleid][vType] == VEHICLE_TYPE_PLANE || IsAHelio( GetVehicleModel( vehicleid )) ) && !LicenseInfo[playerid][pFlyLic] ) {
+		if(( VehicleInfo[vehicleid][vType] == VEHICLE_TYPE_PLANE || IsAHelio( GetVehicleModel( vehicleid))) && !LicenseInfo[playerid][pFlyLic]) {
 			SendMessage(playerid, MESSAGE_TYPE_ERROR, " Ne znate upravljati avionom pa ste izasli!");
 			RemovePlayerFromVehicle(playerid);
 			return 1;
 		}
-		if(( VehicleInfo[vehicleid][vType] == VEHICLE_TYPE_CAR || VehicleInfo[vehicleid][vType] == VEHICLE_TYPE_MOTOR ) && !LicenseInfo[playerid][pCarLic] && !IsABike(vehicleid)) 
+		if(( VehicleInfo[vehicleid][vType] == VEHICLE_TYPE_CAR || VehicleInfo[vehicleid][vType] == VEHICLE_TYPE_MOTOR) && !LicenseInfo[playerid][pCarLic] && !IsABike(vehicleid)) 
 			SendClientMessage( playerid, COLOR_RED, "[!] Nemate vozacku dozvolu pazite se policije!");
 
-		if(VehicleInfo[vehicleid][vJob] != 0 )
+		if(VehicleInfo[vehicleid][vJob] != 0)
 		{
-			if(VehicleInfo[vehicleid][vJob] != PlayerJob[playerid][pJob] ) 
+			if(VehicleInfo[vehicleid][vJob] != PlayerJob[playerid][pJob]) 
 			{
 				SendMessage(playerid, MESSAGE_TYPE_ERROR, " Ne znate voziti ovo vozilo!");
 				RemovePlayerFromVehicle(playerid);
 				return 1;
 			}
 		}
-		if(VehicleInfo[vehicleid][vUsage] == VEHICLE_USAGE_NEWBIES && PlayerInfo[playerid][pLevel] > 3 ) {
+		if(VehicleInfo[vehicleid][vUsage] == VEHICLE_USAGE_NEWBIES && PlayerInfo[playerid][pLevel] > 3) {
 			SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ova vozila su predvidjena za nove igrace (max level 3)!");
 			RemovePlayerFromVehicle(playerid);
 			return 1;
 		}
-		if(VehicleInfo[vehicleid][vDestroyed] )
-			SendClientMessage(GetVehicleDriver( vehicleid ), COLOR_RED, "Vase je vozilo unisteno, zovite mehanicara ili pronadjite obliznji Pay 'n' Spray!");
+		if(VehicleInfo[vehicleid][vDestroyed])
+			SendClientMessage(GetVehicleDriver( vehicleid), COLOR_RED, "Vase je vozilo unisteno, zovite mehanicara ili pronadjite obliznji Pay 'n' Spray!");
 
-		if(vehicleid == INVALID_VEHICLE_ID || vehicleid == 0 ) return 1;
-		if(PlayerFaction[playerid][pMember] != VehicleInfo[vehicleid][vFaction] && VehicleInfo[vehicleid][vFaction] > 0  ) {
+		if(vehicleid == INVALID_VEHICLE_ID || vehicleid == 0) return 1;
+		if(PlayerFaction[playerid][pMember] != VehicleInfo[vehicleid][vFaction] && VehicleInfo[vehicleid][vFaction] > 0 ) {
 			RemovePlayerFromVehicle(playerid);
 			SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste pripadnik organizacije da mozete voziti organizacijska vozila!");
 			return 1;
 		}
 	}
-	if(( newstate == PLAYER_STATE_ONFOOT && oldstate == PLAYER_STATE_DRIVER ) && Bit1_Get( gr_JackedPlayer, playerid )) {
+	if(( newstate == PLAYER_STATE_ONFOOT && oldstate == PLAYER_STATE_DRIVER) && Bit1_Get( gr_JackedPlayer, playerid)) {
 	
-		PutPlayerInVehicle( playerid, Bit16_Get( gr_JackedVehicle, playerid ), 0 );
-		Bit1_Set( gr_JackedPlayer, 		playerid, true );
-		Bit16_Set( gr_JackedVehicle, 	playerid, 999 );
+		PutPlayerInVehicle( playerid, Bit16_Get( gr_JackedVehicle, playerid), 0);
+		Bit1_Set( gr_JackedPlayer, 		playerid, true);
+		Bit16_Set( gr_JackedVehicle, 	playerid, 999);
 	}
 	return 1;
 }
@@ -1138,12 +1138,12 @@ hook OnPlayerEnterVehicle(playerid, vehicleid, ispassenger)
 {
 	if(!ispassenger)
 	{
-		if(VehicleInfo[vehicleid][vLocked] )
+		if(VehicleInfo[vehicleid][vLocked])
 		{
 			new
 				engine, lights, alarm, doors, bonnet, boot, objective;
-			GetVehicleParamsEx( vehicleid, engine, lights, alarm, doors, bonnet, boot, objective );
-			if(doors )
+			GetVehicleParamsEx( vehicleid, engine, lights, alarm, doors, bonnet, boot, objective);
+			if(doors)
 			{
 				new
 					Float:slx,Float:sly,Float:slz;
@@ -1161,15 +1161,15 @@ hook OnPlayerEnterVehicle(playerid, vehicleid, ispassenger)
 			{
 				new Float:slx,Float:sly,Float:slz;
 				TogglePlayerControllable(playerid, 0);
-				SendClientMessage(playerid,COLOR_RED,"(( Freezean si 3 sekunde zbog pokusaja ninja jackanja. ))");
+				SendClientMessage(playerid,COLOR_RED,"(( Freezean si 3 sekunde zbog pokusaja ninja jackanja.))");
 
 				defer JackerUnfreeze(playerid);
 				GetPlayerPos(playerid, 			slx, 	sly, slz);
 				SetPlayerPos(playerid, 			slx, 	sly, slz+5);
 				PlayerPlaySound(playerid, 		1130, 	slx, sly, slz+5);
 
-				Bit1_Set( gr_JackedPlayer, 		i, true );
-				Bit16_Set( gr_JackedVehicle, 	i, vehicleid );
+				Bit1_Set( gr_JackedPlayer, 		i, true);
+				Bit16_Set( gr_JackedVehicle, 	i, vehicleid);
 				break;
 			}
 	 	}
@@ -1179,17 +1179,17 @@ hook OnPlayerEnterVehicle(playerid, vehicleid, ispassenger)
 
 hook OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
 {
-	if(PRESSED(KEY_YES ) && IsPlayerInAnyVehicle( playerid ))
+	if(PRESSED(KEY_YES) && IsPlayerInAnyVehicle( playerid))
 	{
 		new engine,lights,alarm,doors,bonnet,boot,objective,
 			vehicle = GetPlayerVehicleID(playerid),
 			modelid = GetVehicleModel(vehicle);
-		if(GetPlayerState(playerid) != PLAYER_STATE_DRIVER ) return 1;
+		if(GetPlayerState(playerid) != PLAYER_STATE_DRIVER) return 1;
 		if(IsABike(modelid) || IsAPlane(modelid) || IsABoat(modelid)) return 1;
 
 		GetVehicleParamsEx(vehicle,engine,lights,alarm,doors,bonnet,boot,objective);
 
-		if(!VehicleInfo[vehicle][vLights] ) {
+		if(!VehicleInfo[vehicle][vLights]) {
 			VehicleInfo[vehicle][vLights] = 1;
 			SetVehicleParamsEx(vehicle,engine,VEHICLE_PARAMS_ON,alarm,doors,bonnet,boot,objective);
 		} else {

@@ -176,7 +176,7 @@ stock LoadComplexes()
         va_fquery(g_SQL, "SELECT * FROM server_complex WHERE 1"), 
         "OnServerComplexLoad",
         ""
-    );
+   );
     return 1;
 }
 
@@ -186,7 +186,7 @@ stock LoadComplexRooms()
         va_fquery(g_SQL,"SELECT * FROM server_complex_rooms WHERE 1"), 
         "OnComplexRoomsLoad",
         ""
-    );
+   );
     return 1;
 }
 
@@ -211,7 +211,7 @@ CheckPlayerComplexRoomInt(playerid, int, viwo)
 	{
 		if(IsPlayerInRangeOfPoint(playerid, 250.0, ComplexRoomInfo[cr][cExitX], ComplexRoomInfo[cr][cExitY], ComplexRoomInfo[cr][cEnterZ]) 
             && int == ComplexRoomInfo[cr][cIntExit] 
-            && viwo == ComplexRoomInfo[cr][cVWExit] ) 
+            && viwo == ComplexRoomInfo[cr][cVWExit]) 
 		{
 			Player_SetInApartmentRoom(playerid, cr);
 			break;
@@ -577,7 +577,7 @@ hook OnPlayerEnterDynamicCP(playerid, checkpointid)
                 ConvertSQLIDToName(ComplexInfo[complex_id][cOwnerID]),
                 ComplexInfo[complex_id][cPrice],
                 GetComplexRooms(ComplexInfo[complex_id][cSQLID])
-            );
+           );
             PlayerTextDrawSetString(playerid, CompCMDTD[playerid], "Raspolozive komande:~n~      /enter");
         }
         else
@@ -587,7 +587,7 @@ hook OnPlayerEnterDynamicCP(playerid, checkpointid)
                 ComplexInfo[complex_id][cPrice],
                 ComplexInfo[complex_id][cLevel],
                 GetComplexRooms(ComplexInfo[complex_id][cSQLID])
-            );
+           );
             PlayerTextDrawSetString(playerid, CompCMDTD[playerid], "Raspolozive komande:~n~      /enter, /buycomplex");
         }
 
@@ -610,7 +610,7 @@ hook OnPlayerEnterDynamicCP(playerid, checkpointid)
                 ComplexRoomInfo[croom_id][cAdress],
                 ComplexRoomInfo[croom_id][cValue],
                 ComplexRoomInfo[croom_id][cQuality]
-            );
+           );
             PlayerTextDrawSetString(playerid, CompCMDTD[playerid], "Raspolozive komande:~n~      /enter");
         }
         else 
@@ -620,7 +620,7 @@ hook OnPlayerEnterDynamicCP(playerid, checkpointid)
                 ComplexRoomInfo[croom_id][cValue],
                 ComplexRoomInfo[croom_id][cLevel],
                 ComplexRoomInfo[croom_id][cQuality]
-            );
+           );
             PlayerTextDrawSetString(playerid, CompCMDTD[playerid], "Raspolozive komande:~n~      /enter, /rentroom");
         }
 
@@ -695,7 +695,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                                 ComplexRoomInfo[c][cQuality],
                                 ComplexRoomInfo[c][cValue],
                                 (ComplexRoomInfo[c][cActive]) ? ("{0BB716}Active") : ("{B21A27}Inactive")
-                            );
+                           );
                             strcat(string, row, sizeof(string));
                         }
                     }
@@ -736,13 +736,13 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 
                     mysql_fquery(g_SQL, "UPDATE server_complex SET owner_id = 0 WHERE id = '%d'",
                         ComplexInfo[complex][cSQLID]
-                    );
+                   );
 
                     PlayerInfo[playerid][pSpawnChange] = 0;
                     mysql_fquery(g_SQL, "UPDATE accounts SET spawnchange = '%d' WHERE sqlid = '%d'",
                         PlayerInfo[playerid][pSpawnChange],
                         PlayerInfo[playerid][pSQLID]
-                    );
+                   );
 
                     if(GetPlayerVirtualWorld(playerid) == ComplexInfo[complex][cViwo])
                         SetPlayerPosEx(playerid, ComplexInfo[complex][cEnterX], ComplexInfo[complex][cEnterY], ComplexInfo[complex][cEnterZ]);
@@ -758,11 +758,11 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 
                     mysql_fquery(g_SQL, "UPDATE server_complex_rooms SET ownerid = '0' WHERE id = '%d'",
                         ComplexRoomInfo[complex][cSQLID]
-                    );
+                   );
 
                     mysql_fquery(g_SQL, "UPDATE accounts SET spawnchange = '0' WHERE sqlid = '%d'",
                         ComplexRoomInfo[complex][cOwnerID]
-                    );
+                   );
                     ComplexRoomInfo[complex][cOwnerID] = -1;
                 }
             }
@@ -832,7 +832,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                     mysql_fquery(g_SQL, "UPDATE server_complex_rooms SET active = '%d' WHERE id = '%d'",
                         ComplexRoomInfo[room_id][cActive],
                         ComplexRoomInfo[room_id][cSQLID]
-                    );
+                   );
                 }
             }
             return 1;
@@ -865,7 +865,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                     mysql_fquery(g_SQL, "UPDATE server_complex_rooms SET quality = '%d' WHERE id = '%d'",
                         ComplexRoomInfo[room_id][cQuality],
                         ComplexRoomInfo[room_id][cSQLID]
-                    );
+                   );
                 }
             }
             return 1;
@@ -887,7 +887,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
             mysql_fquery(g_SQL,"UPDATE server_complex_rooms SET value = '%d' WHERE id = '%d'",
                 ComplexRoomInfo[room_id][cValue],
                 ComplexRoomInfo[room_id][cSQLID]
-            );
+           );
 
             SendClientMessage(playerid, COLOR_RED, "[!] Uspjesno ste izmjenili cijenu renta sobe.");
             return 1;
@@ -909,7 +909,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
             mysql_fquery(g_SQL, "UPDATE server_complex SET name = '%e' WHERE id = '%d'",
                 ComplexInfo[complex_id][cName],
                 ComplexInfo[complex_id][cSQLID]
-            );
+           );
             return 1;
         }
         case DIALOG_COMPLEX_SELL:
@@ -982,17 +982,17 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                 mysql_fquery(g_SQL, "UPDATE server_complex SET owner_id = '%d' WHERE id = '%d'",
                     ComplexInfo[complex_id][cOwnerID],
                     ComplexInfo[complex_id][cSQLID]
-                );
+               );
 
                 mysql_fquery(g_SQL, "UPDATE accounts SET spawnchange = '%d' WHERE sqlid = '%d'",
                     PlayerInfo[playerid][pSpawnChange],
                     PlayerInfo[playerid][pSQLID]
-                );
+               );
 
                 mysql_fquery(g_SQL, "UPDATE accounts SET spawnchange = '%d' WHERE sqlid = '%d'",
                     PlayerInfo[pID][pSpawnChange],
                     PlayerInfo[pID][pSQLID]
-                );
+               );
 
                 if((PlayerKeys[pID][pHouseKey] != INVALID_HOUSE_ID) || (PlayerKeys[pID][pRentKey] != INVALID_HOUSE_ID))
                     PlayerInfo[pID][pSpawnChange] = 1;
@@ -1013,7 +1013,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                     GetName(pID, false),
                     ReturnPlayerIP(pID),
                     complexprice
-                );
+               );
                 #endif
             }
             return 1;
@@ -1067,7 +1067,7 @@ CMD:buycomplex(playerid, params[])
     mysql_fquery(g_SQL, "UPDATE server_complex SET owner_id = '%d' WHERE id = '%d'",
         PlayerInfo[playerid][pSQLID],
         ComplexInfo[complex][cSQLID]
-    );
+   );
 
     PlayerToBudgetMoney(playerid, ComplexInfo[complex][cPrice]); // Novac od kupljenog complexa na buy ide u proracun
     SendClientMessage(playerid, COLOR_RED, "[!] Kupili ste kompleks, koristite /help za vise informacija!");
@@ -1080,7 +1080,7 @@ CMD:buycomplex(playerid, params[])
         ComplexInfo[complex][cName],
         ComplexInfo[complex][cSQLID],
         ComplexInfo[complex][cPrice]
-    );
+   );
     #endif
     return 1;
 }
@@ -1124,12 +1124,12 @@ CMD:rentroom(playerid, params[])
     mysql_fquery(g_SQL, "UPDATE server_complex_rooms SET ownerid = '%d' WHERE id = '%d'",
         PlayerInfo[playerid][pSQLID],
         ComplexRoomInfo[complex][cSQLID]
-    );
+   );
 
     mysql_fquery(g_SQL, "UPDATE accounts SET spawnchange = '%d' WHERE sqlid = '%d'",
         PlayerInfo[playerid][pSpawnChange],
         PlayerInfo[playerid][pSQLID]
-    );
+   );
 
     new complex_id = GetComplexEnumID(complex);
     PlayerToComplexMoneyTAX(playerid, complex_id, ComplexRoomInfo[complex][cValue]);
@@ -1144,7 +1144,7 @@ CMD:rentroom(playerid, params[])
         ComplexRoomInfo[complex][cSQLID],
         ComplexRoomInfo[complex][cValue],
         ComplexInfo[ComplexRoomInfo[complex][cComplexID]][cName]
-    );
+   );
     #endif
     return 1;
 }
@@ -1156,7 +1156,7 @@ CMD:unrentroom(playerid, params[])
 
     mysql_fquery(g_SQL,"UPDATE server_complex_rooms SET ownerid = '0' WHERE id = '%d'",
         ComplexRoomInfo[complex_id][cSQLID]
-    );
+   );
 
     ComplexRoomInfo[complex_id][cOwnerID] = -1;
     PlayerKeys[playerid][pComplexRoomKey] = INVALID_COMPLEX_ID;
@@ -1169,13 +1169,13 @@ CMD:unrentroom(playerid, params[])
     mysql_fquery(g_SQL, "UPDATE accounts SET spawnchange = '%d' WHERE sqlid = '%d'",
         PlayerInfo[playerid][pSpawnChange],
         PlayerInfo[playerid][pSQLID]
-    );
+   );
     SetPlayerSpawnInfo(playerid);
 
     va_SendClientMessage(playerid, 
         COLOR_LIGHTRED, 
         "Prekinuli ste najam sobe na adresi %s.",
         ComplexRoomInfo[complex_id][cAdress]
-    );
+   );
     return 1;
 }

@@ -7,7 +7,7 @@ LoadPlayerAppearance(playerid)
         "LoadingPlayerAppearance", 
         "i", 
         playerid
-    );
+   );
     return 1;
 }
 
@@ -19,7 +19,7 @@ Public: LoadingPlayerAppearance(playerid)
             "INSERT INTO player_appearance(sqlid, skin, walkstyle, accent, look) \n\
                 VALUES('%d', '21', '0', '', '')",
             PlayerInfo[playerid][pSQLID]
-        );
+       );
         return 1;
     }
     cache_get_value_name_int(0, "skin"		    , PlayerAppearance[playerid][pSkin]);
@@ -45,7 +45,7 @@ SavePlayerAppearance(playerid)
         PlayerAppearance[playerid][pAccent],
         PlayerAppearance[playerid][pLook],
         PlayerInfo[playerid][pSQLID]
-    );
+   );
     return 1;
 }
 

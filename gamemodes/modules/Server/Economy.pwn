@@ -13,49 +13,49 @@ Functions by Woo & Logan
 - Functions with TAX suffix are directly taxable money transactions.
 - Transaction module is used internally for managing money, tax and instant database storage.
 
-PlayerToPlayerMoney ( playerid, giveplayerid, money ) 
-PlayerToPlayerMoneyTAX ( playerid, giveplayerid, money ) 
+PlayerToPlayerMoney ( playerid, giveplayerid, money) 
+PlayerToPlayerMoneyTAX ( playerid, giveplayerid, money) 
 
-PlayerToBusinessMoneyTAX ( playerid, bizid, money ) 
-PlayerToBusinessMoney ( playerid, bizid, money ) 
-BusinessToPlayerMoneyTAX ( playerid, bizid, money ) 
-BusinessToPlayerMoney ( playerid, bizid, money ) 
+PlayerToBusinessMoneyTAX ( playerid, bizid, money) 
+PlayerToBusinessMoney ( playerid, bizid, money) 
+BusinessToPlayerMoneyTAX ( playerid, bizid, money) 
+BusinessToPlayerMoney ( playerid, bizid, money) 
 
-PlayerToBudgetMoney ( playerid, money ) 
-BudgetToPlayerMoney ( playerid, money )
+PlayerToBudgetMoney ( playerid, money) 
+BudgetToPlayerMoney ( playerid, money)
 
-PlayerToComplexMoney ( playerid, complexid, money ) 
-PlayerToComplexMoneyTAX ( playerid, complexid, money )
-PlayerBankToComplexMoney ( playerid, complexid, money )
-PlayerBankToComplexMoneyTAX ( playerid, complexid, money )  
-ComplexToPlayerMoney ( playerid, complexid, money )
-ComplexToPlayerMoneyTAX ( playerid, complexid, money ) 
+PlayerToComplexMoney ( playerid, complexid, money) 
+PlayerToComplexMoneyTAX ( playerid, complexid, money)
+PlayerBankToComplexMoney ( playerid, complexid, money)
+PlayerBankToComplexMoneyTAX ( playerid, complexid, money)  
+ComplexToPlayerMoney ( playerid, complexid, money)
+ComplexToPlayerMoneyTAX ( playerid, complexid, money) 
 
-PlayerToHouseMoney ( playerid, houseid, money )
-PlayerToHouseMoneyTAX ( playerid, houseid, money )  
-PlayerBankToHouseMoneyTAX ( playerid, houseid, money )
-HouseToPlayerMoney ( playerid, houseid, money ) 
-HouseToPlayerMoneyTAX ( playerid, houseid, money ) 
+PlayerToHouseMoney ( playerid, houseid, money)
+PlayerToHouseMoneyTAX ( playerid, houseid, money)  
+PlayerBankToHouseMoneyTAX ( playerid, houseid, money)
+HouseToPlayerMoney ( playerid, houseid, money) 
+HouseToPlayerMoneyTAX ( playerid, houseid, money) 
 
-FactionToPlayerMoneyTAX ( playerid, ftype, money ) 
-FactionToPlayerBankMoney ( playerid, ftype, money )
+FactionToPlayerMoneyTAX ( playerid, ftype, money) 
+FactionToPlayerBankMoney ( playerid, ftype, money)
 
-PlayerToIllegalBudgetMoney ( playerid, money )
-IllegalBudgetToPlayerMoney ( playerid, money )
-WarehouseToIllegalBudgetMoney ( whid, money )
+PlayerToIllegalBudgetMoney ( playerid, money)
+IllegalBudgetToPlayerMoney ( playerid, money)
+WarehouseToIllegalBudgetMoney ( whid, money)
 
-BudgetToPlayerBankMoney (playerid, money )
+BudgetToPlayerBankMoney (playerid, money)
 
-BankToPlayerMoney (playerid, money )
-PlayerToBankMoney (playerid, money )
+BankToPlayerMoney (playerid, money)
+PlayerToBankMoney (playerid, money)
 
-PlayerBankToBudgetMoney ( playerid, money ) 
-BudgetToPlayerBankMoney ( playerid, money ) 
+PlayerBankToBudgetMoney ( playerid, money) 
+BudgetToPlayerBankMoney ( playerid, money) 
 
-BusinessToBudgetMoney ( bizid, money )
+BusinessToBudgetMoney ( bizid, money)
 
-BudgetToFactionMoney ( ftype, money ) 
-FactionToBudgetMoney ( ftype, money ) 
+BudgetToFactionMoney ( ftype, money) 
+FactionToBudgetMoney ( ftype, money) 
 
 IllegalToLegalBudgetMoney (money) 
 
@@ -67,7 +67,7 @@ IllegalToLegalBudgetMoney (money)
 		complexes, garages etc.
 */
 
-stock LogTransaction ( playerid, giveplayerid, money, logtype )
+stock LogTransaction ( playerid, giveplayerid, money, logtype)
 {
 	new desc[64];
 	switch(logtype)
@@ -115,7 +115,7 @@ stock LogTransaction ( playerid, giveplayerid, money, logtype )
 	return 1;
 }
 
-stock PlayerToPlayerMoney ( playerid, giveplayerid, money )
+stock PlayerToPlayerMoney ( playerid, giveplayerid, money)
 {
 	new safemoney = floatround(floatabs(money)); 		
 	
@@ -124,7 +124,7 @@ stock PlayerToPlayerMoney ( playerid, giveplayerid, money )
 	return 1;
 }
 
-stock PlayerToPlayerMoneyTAX ( playerid, giveplayerid, money, bool:log = false, logtype = 0 )
+stock PlayerToPlayerMoneyTAX ( playerid, giveplayerid, money, bool:log = false, logtype = 0)
 {
 	new 
 		safemoney = floatround(floatabs(money)), 				
@@ -140,7 +140,7 @@ stock PlayerToPlayerMoneyTAX ( playerid, giveplayerid, money, bool:log = false, 
 	mysql_fquery(g_SQL, "UPDATE city SET budget = '%d'", CityInfo[cBudget]);
 
 	if(log) 
-		LogTransaction ( playerid, giveplayerid, safemoney, logtype );
+		LogTransaction ( playerid, giveplayerid, safemoney, logtype);
 	return 1;
 }
 
@@ -166,11 +166,11 @@ stock PlayerToBusinessMoneyTAX ( playerid, bizid, money)
 	return 1;
 }
 
-stock PlayerToBusinessMoney ( playerid, bizid, money )
+stock PlayerToBusinessMoney ( playerid, bizid, money)
 {
 	new safemoney = floatround(floatabs(money));
 	
-	AC_GivePlayerMoney( playerid, -safemoney ); 			
+	AC_GivePlayerMoney( playerid, -safemoney); 			
 	
 	BizzInfo[bizid][bTill] += safemoney;				
 	mysql_fquery(g_SQL, "UPDATE bizzes SET till = '%d' WHERE id = '%d'",
@@ -180,7 +180,7 @@ stock PlayerToBusinessMoney ( playerid, bizid, money )
 	return 1;
 }
 
-stock BusinessToPlayerMoneyTAX ( playerid, bizid, money )
+stock BusinessToPlayerMoneyTAX ( playerid, bizid, money)
 {
 	new
 		safemoney = floatround(floatabs(money)), 				
@@ -202,7 +202,7 @@ stock BusinessToPlayerMoneyTAX ( playerid, bizid, money )
 	return 1;
 }
 
-stock BusinessToPlayerMoney ( playerid, bizid, money )
+stock BusinessToPlayerMoney ( playerid, bizid, money)
 {
 	new safemoney = money;
 					
@@ -216,7 +216,7 @@ stock BusinessToPlayerMoney ( playerid, bizid, money )
 	return 1;
 }
 
-stock PlayerToBudgetMoney(playerid, money )
+stock PlayerToBudgetMoney(playerid, money)
 {
 	new safemoney = money;
 	
@@ -227,7 +227,7 @@ stock PlayerToBudgetMoney(playerid, money )
 	return 1;
 }
 
-stock BudgetToPlayerMoney (playerid, money )
+stock BudgetToPlayerMoney (playerid, money)
 {
 	new safemoney = floatround(floatabs(money));
 
@@ -238,7 +238,7 @@ stock BudgetToPlayerMoney (playerid, money )
 	return 1;
 }
 
-stock BudgetToPlayerBankMoney (playerid, money )
+stock BudgetToPlayerBankMoney (playerid, money)
 {
 	new safemoney = floatround(floatabs(money));
 
@@ -253,7 +253,7 @@ stock BudgetToPlayerBankMoney (playerid, money )
 	return 1;
 }
 
-stock PlayerBankToBudgetMoney ( playerid, money )
+stock PlayerBankToBudgetMoney ( playerid, money)
 {
 	new safemoney = floatround(floatabs(money));
 
@@ -268,7 +268,7 @@ stock PlayerBankToBudgetMoney ( playerid, money )
 	return 1;
 }
 
-stock PlayerToComplexMoney (playerid, complexid, money )
+stock PlayerToComplexMoney (playerid, complexid, money)
 {
 	new safemoney = floatround(floatabs(money));
 
@@ -282,7 +282,7 @@ stock PlayerToComplexMoney (playerid, complexid, money )
 	return 1;
 }
 
-stock PlayerToComplexMoneyTAX ( playerid, complexid, money )
+stock PlayerToComplexMoneyTAX ( playerid, complexid, money)
 {
 	new 
 		safemoney = floatround(floatabs(money)), 				
@@ -304,7 +304,7 @@ stock PlayerToComplexMoneyTAX ( playerid, complexid, money )
 	return 1;
 }
 
-stock PlayerBankToComplexMoney ( playerid, complexid, money )
+stock PlayerBankToComplexMoney ( playerid, complexid, money)
 {
 	new safemoney = floatround(floatabs(money));
 					
@@ -322,7 +322,7 @@ stock PlayerBankToComplexMoney ( playerid, complexid, money )
 	return 1;
 }
 
-stock PlayerBankToComplexMoneyTAX ( playerid, complexid, money )
+stock PlayerBankToComplexMoneyTAX ( playerid, complexid, money)
 {
 	new
 		safemoney = floatround(floatabs(money)), 				
@@ -350,7 +350,7 @@ stock PlayerBankToComplexMoneyTAX ( playerid, complexid, money )
 	return 1;
 }
 
-stock ComplexToPlayerMoney (playerid, complexid, money )
+stock ComplexToPlayerMoney (playerid, complexid, money)
 {
 	new safemoney = floatround(floatabs(money));
 				
@@ -364,7 +364,7 @@ stock ComplexToPlayerMoney (playerid, complexid, money )
 	return 1;
 }
 
-stock ComplexToPlayerMoneyTAX ( playerid, complexid, money )
+stock ComplexToPlayerMoneyTAX ( playerid, complexid, money)
 {
 	new 
 		safemoney = floatround(floatabs(money)), 				
@@ -385,7 +385,7 @@ stock ComplexToPlayerMoneyTAX ( playerid, complexid, money )
 	);
 	return 1;
 }
-stock PlayerToHouseMoney ( playerid, houseid, money )
+stock PlayerToHouseMoney ( playerid, houseid, money)
 {
 	new safemoney = floatround(floatabs(money));	
 	AC_GivePlayerMoney(playerid, -safemoney); 
@@ -398,7 +398,7 @@ stock PlayerToHouseMoney ( playerid, houseid, money )
 	return 1;
 }
 
-stock PlayerToHouseMoneyTAX ( playerid, houseid, money )
+stock PlayerToHouseMoneyTAX ( playerid, houseid, money)
 {
 	new
 		safemoney = floatround(floatabs(money)), 				
@@ -419,7 +419,7 @@ stock PlayerToHouseMoneyTAX ( playerid, houseid, money )
 	);
 	return 1;
 }
-stock PlayerBankToHouseMoneyTAX ( playerid, houseid, money )
+stock PlayerBankToHouseMoneyTAX ( playerid, houseid, money)
 {
 	new
 		safemoney = floatround(floatabs(money)), 				
@@ -445,11 +445,11 @@ stock PlayerBankToHouseMoneyTAX ( playerid, houseid, money )
 	return 1;
 }
 
-stock HouseToPlayerMoney ( playerid, houseid, money )
+stock HouseToPlayerMoney ( playerid, houseid, money)
 {
 	new safemoney = floatround(floatabs(money));
 				
-	AC_GivePlayerMoney( playerid, safemoney ); 				
+	AC_GivePlayerMoney( playerid, safemoney); 				
 	
 	HouseInfo[houseid][hTakings] -= safemoney;
 	mysql_fquery(g_SQL, "UPDATE houses SET bank = '%d' WHERE id = '%d'",
@@ -459,7 +459,7 @@ stock HouseToPlayerMoney ( playerid, houseid, money )
 	return 1;
 }
 
-stock HouseToPlayerMoneyTAX ( playerid, houseid, money )
+stock HouseToPlayerMoneyTAX ( playerid, houseid, money)
 {
 	new 
 		safemoney = floatround(floatabs(money)), 				
@@ -481,7 +481,7 @@ stock HouseToPlayerMoneyTAX ( playerid, houseid, money )
 	return 1;
 }
 
-stock PlayerToIllegalBudgetMoney (playerid, money )
+stock PlayerToIllegalBudgetMoney (playerid, money)
 {
 	new safemoney = floatround(floatabs(money));
 	
@@ -492,7 +492,7 @@ stock PlayerToIllegalBudgetMoney (playerid, money )
 	return 1;
 }
 
-stock IllegalBudgetToPlayerMoney (playerid, money )
+stock IllegalBudgetToPlayerMoney (playerid, money)
 {
 	new safemoney = floatround(floatabs(money));
 	
@@ -515,7 +515,7 @@ stock WarehouseToIllegalBudgetMoney(whid, money)
 	return 1;
 }
 
-stock BankToPlayerMoney (playerid, money )
+stock BankToPlayerMoney (playerid, money)
 {
 	new safemoney = floatround(floatabs(money));		
 	
@@ -529,7 +529,7 @@ stock BankToPlayerMoney (playerid, money )
 	return 1;
 }
 
-stock PlayerToBankMoney (playerid, money )
+stock PlayerToBankMoney (playerid, money)
 {
 	new safemoney = floatround(floatabs(money));
 		
@@ -543,7 +543,7 @@ stock PlayerToBankMoney (playerid, money )
 	return 1;
 }
 
-stock BusinessToBudgetMoney ( bizid, money )
+stock BusinessToBudgetMoney ( bizid, money)
 {
 	new safemoney = floatround(floatabs(money));
 
@@ -558,7 +558,7 @@ stock BusinessToBudgetMoney ( bizid, money )
 	return 1;
 }
 
-stock BudgetToBusinessMoney ( bizid, money )
+stock BudgetToBusinessMoney ( bizid, money)
 {
 	new safemoney = floatround(floatabs(money));
 		

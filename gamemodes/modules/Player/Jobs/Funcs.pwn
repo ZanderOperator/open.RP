@@ -58,7 +58,7 @@ LoadPlayerJob(playerid)
         "LoadingPlayerJob", 
         "i", 
         playerid
-    );
+   );
     return 1;
 }
 
@@ -70,7 +70,7 @@ Public: LoadingPlayerJob(playerid)
             "INSERT INTO player_job(sqlid, jobkey, contracttime, freeworks) \n\
                 VALUES('%d', '0', '0', '0')",
             PlayerInfo[playerid][pSQLID]
-        );
+       );
         return 1;
     }
     cache_get_value_name_int(0,  "jobkey"		, PlayerJob[playerid][pJob]);
@@ -93,7 +93,7 @@ SavePlayerJob(playerid)
         PlayerJob[playerid][pContractTime],
         PlayerJob[playerid][pFreeWorks],
         PlayerInfo[playerid][pSQLID]
-    );
+   );
     return 1;
 }
 
@@ -309,10 +309,10 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 	{
 		case DIALOG_JOBS: 
 		{
-			if(!response ) 
+			if(!response) 
 				return 1;
 
-			switch( listitem )
+			switch( listitem)
 			{
 				case 0: 
 				{
@@ -327,7 +327,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 					if(JobData[MECHANIC] >= OFFICIAL_JOBS_EMPLOYERS)
 						return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ova firma trenutno ne prima radnike, pokusajte kada bude slobodnih mjesta.");
 
-					if(PlayerInfo[playerid][pLevel] < 3 ) return SendClientMessage( playerid, COLOR_RED, "Morate biti level 3+ za ovaj posao (treba vozilo)!");
+					if(PlayerInfo[playerid][pLevel] < 3) return SendClientMessage( playerid, COLOR_RED, "Morate biti level 3+ za ovaj posao (treba vozilo)!");
 
 					SetPlayerJob(playerid, JOB_MECHANIC);
 					SendMessage( playerid, MESSAGE_TYPE_INFO, "Zaposlili ste se kao mehanicar!");
@@ -342,7 +342,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 				}
 				case 3: 
 				{
-					if(PlayerInfo[playerid][pLevel] < 3 ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Samo igraci level 3+ mogu biti taksisti.");
+					if(PlayerInfo[playerid][pLevel] < 3) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Samo igraci level 3+ mogu biti taksisti.");
 					if(JobData[TAXI] >= OFFICIAL_JOBS_EMPLOYERS)
 						return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ova firma trenutno ne prima radnike, pokusajte kada bude slobodnih mjesta.");
 
@@ -375,7 +375,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 				}
 				case 7:
 				{
-					if(PlayerInfo[playerid][pLevel] < 5 ) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Samo igraci level 5+ mogu biti veh impounderi.");
+					if(PlayerInfo[playerid][pLevel] < 5) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Samo igraci level 5+ mogu biti veh impounderi.");
 					if(JobData[IMPOUNDER] >= OFFICIAL_JOBS_EMPLOYERS)
 						return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ova firma trenutno ne prima radnike, pokusajte kada bude slobodnih mjesta.");
 					
@@ -406,7 +406,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 			{
 				case 0: 
 				{
-					if(PlayerInfo[playerid][pLevel] < 3 ) 
+					if(PlayerInfo[playerid][pLevel] < 3) 
 						return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Samo igraci level 3+ mogu biti lopovi.");
 					
 					PlayerJob[playerid][pJob] = JOB_BURGLAR;

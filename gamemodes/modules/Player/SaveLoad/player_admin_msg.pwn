@@ -10,7 +10,7 @@ LoadPlayerAdminMessage(playerid)
         "LoadingPlayerAdminMessage", 
         "i", 
         playerid
-    );
+   );
     return 1;
 }
 
@@ -22,7 +22,7 @@ Public: LoadingPlayerAdminMessage(playerid)
             "INSERT INTO player_admin_msg(sqlid, AdminMessage, AdminMessageBy, AdmMessageConfirm) \n\
                 VALUES('%d', '', '', '0')",
             PlayerInfo[playerid][pSQLID]
-        );
+       );
         return 1;
     }
     cache_get_value_name(0, "AdminMessage", PlayerAdminMessage[playerid][pAdminMsg], 1536);
@@ -46,7 +46,7 @@ SavePlayerAdminMessage(playerid)
         PlayerAdminMessage[playerid][pAdminMsgBy],
         PlayerAdminMessage[playerid][pAdmMsgConfirm],
         PlayerInfo[playerid][pSQLID]
-    );
+   );
     return 1;
 }
 
@@ -71,7 +71,7 @@ hook OnPlayerDisconnect(playerid, reason)
         mysql_fquery(g_SQL, "UPDATE player_admin_msg SET AdminMessage = '', AdminMessageBy = '', AdmMessageConfirm = '0' \n\
             WHERE sqlid = '%d'", 
             PlayerInfo[playerid][pSQLID]
-        );
+       );
     }
     return 1;
 }
@@ -97,12 +97,12 @@ Public: AddAdminMessage(playerid, user_name[], reason[])
 		
 		if(on != INVALID_PLAYER_ID && IsPlayerConnected(on) && SafeSpawned[on])
 		{
-			va_SendClientMessage(on, COLOR_NICEYELLOW, "(( PM od %s[%d]: %s ))", 
+			va_SendClientMessage(on, COLOR_NICEYELLOW, "(( PM od %s[%d]: %s))", 
 				GetName(playerid, false), 
 				playerid, 
 				reason
 			);
-			va_SendClientMessage(playerid, COLOR_RED, "(( PM za %s[%d]: %s ))", 
+			va_SendClientMessage(playerid, COLOR_RED, "(( PM za %s[%d]: %s))", 
 				user_name, 
 				on, 
 				reason
@@ -152,7 +152,7 @@ GetAdminMessage(id)
 		
 	result = mysql_query(g_SQL, 
 				va_fquery(g_SQL, "SELECT AdminMessage FROM player_admin_msg WHERE sqlid = '%d'", id)
-			 );
+			);
 			
 	cache_get_value_name(0, "AdminMessage", message, 2048);
 	cache_delete(result);

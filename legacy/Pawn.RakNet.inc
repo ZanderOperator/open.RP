@@ -415,7 +415,7 @@
                     PR_UINT8, data[PR_specialAction],
                     PR_VECTOR, data[PR_velocity],
                     PR_BOOL, hasSurfInfo
-                );
+               );
 
                 BS_UnpackHealthArmour(healthArmour, data[PR_health], data[PR_armour]);
 
@@ -424,7 +424,7 @@
                         bs,
                         PR_UINT16, data[PR_surfingVehicleId],
                         PR_FLOAT3, data[PR_surfingOffsets]
-                    );
+                   );
                 } else {
                     data[PR_surfingVehicleId] = 0;
                 }
@@ -436,7 +436,7 @@
                         bs,
                         PR_INT16, data[PR_animationId],
                         PR_INT16, data[PR_animationFlags]
-                    );
+                   );
                 } else {
                     data[PR_animationId] = 0;
                     data[PR_animationFlags] = 0;
@@ -459,7 +459,7 @@
                     PR_UINT16, data[PR_surfingVehicleId],
                     PR_INT16, data[PR_animationId],
                     PR_INT16, data[PR_animationFlags]
-                );
+               );
             }
         }
 
@@ -482,7 +482,7 @@
                     PR_UINT8, data[PR_weaponId],
                     PR_BOOL, data[PR_sirenState],
                     PR_BOOL, data[PR_landingGearState]
-                );
+               );
 
                 data[PR_vehicleHealth] = float(vehicleHealth);
 
@@ -524,7 +524,7 @@
                     PR_UINT8, data[PR_landingGearState],
                     PR_UINT16, data[PR_trailerId],
                     PR_FLOAT, data[PR_trainSpeed]
-                );
+               );
             }
         }
 
@@ -537,7 +537,7 @@
                 PR_FLOAT4, data[PR_quaternion],
                 PR_FLOAT3, data[PR_velocity],
                 PR_FLOAT3, data[PR_angularVelocity]
-            );
+           );
         }
 
         stock BS_ReadPassengerSync(BitStream:bs, data[PR_PassengerSync])
@@ -555,7 +555,7 @@
                 PR_UINT16, data[PR_udKey],
                 PR_UINT16, data[PR_keys],
                 PR_FLOAT3, data[PR_position]
-            );
+           );
         }
 
         stock BS_ReadUnoccupiedSync(BitStream:bs, data[PR_UnoccupiedSync])
@@ -570,7 +570,7 @@
                 PR_FLOAT3, data[PR_velocity],
                 PR_FLOAT3, data[PR_angularVelocity],
                 PR_FLOAT, data[PR_vehicleHealth]
-            );
+           );
         }
 
         stock BS_ReadAimSync(BitStream:bs, data[PR_AimSync])
@@ -584,7 +584,7 @@
                 PR_BITS, data[PR_weaponState], 2,
                 PR_BITS, data[PR_camZoom], 6,
                 PR_UINT8, data[PR_aspectRatio]
-            );
+           );
         }
 
         stock BS_ReadBulletSync(BitStream:bs, data[PR_BulletSync])
@@ -597,7 +597,7 @@
                 PR_FLOAT3, data[PR_hitPos],
                 PR_FLOAT3, data[PR_offsets],
                 PR_UINT8, data[PR_weaponId]
-            );
+           );
         }
 
         stock BS_ReadSpectatingSync(BitStream:bs, data[PR_SpectatingSync])
@@ -608,7 +608,7 @@
                 PR_UINT16, data[PR_udKey],
                 PR_UINT16, data[PR_keys],
                 PR_FLOAT3, data[PR_position]
-            );
+           );
         }
 
         stock BS_ReadWeaponsUpdate(BitStream:bs, data[PR_WeaponsUpdate])
@@ -625,7 +625,7 @@
                 bs,
                 PR_UINT16, data[PR_targetId],
                 PR_UINT16, data[PR_targetActorId]
-            );
+           );
 
             while (numberOfSlots--) {
                 new slotId, weaponId, ammo;
@@ -635,7 +635,7 @@
                     PR_UINT8, slotId,
                     PR_UINT8, weaponId,
                     PR_UINT16, ammo
-                );
+               );
 
                 if(slotId < PR_MAX_WEAPON_SLOTS) {
                     data[PR_slotWeaponId][slotId] = weaponId;
@@ -651,7 +651,7 @@
                 bs,
                 PR_INT32, data[PR_money],
                 PR_INT32, data[PR_drunkLevel]
-            );
+           );
         }
 
         stock BS_ReadRconCommand(BitStream:bs, data[PR_RconCommand])
@@ -659,7 +659,7 @@
             BS_ReadValue(
                 bs,
                 PR_STRING32, data[PR_command], sizeof(data[PR_command])
-            );
+           );
         }
 
         stock BS_WriteOnFootSync(BitStream:bs, data[PR_OnFootSync], outcoming = false)
@@ -672,7 +672,7 @@
                         bs,
                         PR_BOOL, true,
                         PR_UINT16, data[PR_lrKey]
-                    );
+                   );
                 } else {
                     BS_WriteValue(bs, PR_BOOL, false);
                 }
@@ -682,7 +682,7 @@
                         bs,
                         PR_BOOL, true,
                         PR_UINT16, data[PR_udKey]
-                    );
+                   );
                 } else {
                     BS_WriteValue(bs, PR_BOOL, false);
                 }
@@ -698,7 +698,7 @@
                     PR_UINT8, data[PR_weaponId],
                     PR_UINT8, data[PR_specialAction],
                     PR_VECTOR, data[PR_velocity]
-                );
+               );
 
                 if(data[PR_surfingVehicleId]) {
                     BS_WriteValue(
@@ -706,7 +706,7 @@
                         PR_BOOL, true,
                         PR_UINT16, data[PR_surfingVehicleId],
                         PR_FLOAT3, data[PR_surfingOffsets]
-                    );
+                   );
                 } else {
                     BS_WriteValue(bs, PR_BOOL, false);
                 }
@@ -717,7 +717,7 @@
                         PR_BOOL, true,
                         PR_INT16, data[PR_animationId],
                         PR_INT16, data[PR_animationFlags]
-                    );
+                   );
                 } else {
                     BS_WriteValue(bs, PR_BOOL, false);
                 }
@@ -739,7 +739,7 @@
                     PR_UINT16, data[PR_surfingVehicleId],
                     PR_INT16, data[PR_animationId],
                     PR_INT16, data[PR_animationFlags]
-                );
+               );
             }
         }
 
@@ -764,13 +764,13 @@
                     PR_UINT8, data[PR_weaponId],
                     PR_BOOL, data[PR_sirenState],
                     PR_BOOL, data[PR_landingGearState]
-                );
+               );
 
                 if(data[PR_trainSpeed]) {
                     BS_WriteValue(bs,
                         PR_BOOL, true,
                         PR_FLOAT, data[PR_trainSpeed]
-                    );
+                   );
                 } else {
                     BS_WriteValue(bs, PR_BOOL, false);
                 }
@@ -779,7 +779,7 @@
                     BS_WriteValue(bs,
                         PR_BOOL, true,
                         PR_UINT16, data[PR_trailerId]
-                    );
+                   );
                 } else {
                     BS_WriteValue(bs, PR_BOOL, false);
                 }
@@ -802,7 +802,7 @@
                     PR_UINT8, data[PR_landingGearState],
                     PR_UINT16, data[PR_trailerId],
                     PR_FLOAT, data[PR_trainSpeed]
-                );
+               );
             }
         }
 
@@ -815,7 +815,7 @@
                 PR_FLOAT4, data[PR_quaternion],
                 PR_FLOAT3, data[PR_velocity],
                 PR_FLOAT3, data[PR_angularVelocity]
-            );
+           );
         }
 
         stock BS_WritePassengerSync(BitStream:bs, data[PR_PassengerSync])
@@ -833,7 +833,7 @@
                 PR_UINT16, data[PR_udKey],
                 PR_UINT16, data[PR_keys],
                 PR_FLOAT3, data[PR_position]
-            );
+           );
         }
 
         stock BS_WriteUnoccupiedSync(BitStream:bs, data[PR_UnoccupiedSync])
@@ -848,7 +848,7 @@
                 PR_FLOAT3, data[PR_velocity],
                 PR_FLOAT3, data[PR_angularVelocity],
                 PR_FLOAT, data[PR_vehicleHealth]
-            );
+           );
         }
 
         stock BS_WriteAimSync(BitStream:bs, data[PR_AimSync])
@@ -862,7 +862,7 @@
                 PR_BITS, data[PR_weaponState], 2,
                 PR_BITS, data[PR_camZoom], 6,
                 PR_UINT8, data[PR_aspectRatio]
-            );
+           );
         }
 
         stock BS_WriteBulletSync(BitStream:bs, data[PR_BulletSync])
@@ -875,7 +875,7 @@
                 PR_FLOAT3, data[PR_hitPos],
                 PR_FLOAT3, data[PR_offsets],
                 PR_UINT8, data[PR_weaponId]
-            );
+           );
         }
 
         stock BS_WriteSpectatingSync(BitStream:bs, data[PR_SpectatingSync])
@@ -886,7 +886,7 @@
                 PR_UINT16, data[PR_udKey],
                 PR_UINT16, data[PR_keys],
                 PR_FLOAT3, data[PR_position]
-            );
+           );
         }
 
         stock BS_WriteWeaponsUpdate(BitStream:bs, data[PR_WeaponsUpdate])
@@ -895,7 +895,7 @@
                 bs,
                 PR_UINT16, data[PR_targetId],
                 PR_UINT16, data[PR_targetActorId]
-            );
+           );
 
             for (new slotId; slotId < PR_MAX_WEAPON_SLOTS; ++slotId) {
                 if(!data[PR_slotUpdated][slotId]) {
@@ -907,7 +907,7 @@
                     PR_UINT8, slotId,
                     PR_UINT8, data[PR_slotWeaponId][slotId],
                     PR_UINT16, data[PR_slotWeaponAmmo][slotId]
-                );
+               );
             }
         }
 
@@ -917,7 +917,7 @@
                 bs,
                 PR_INT32, data[PR_money],
                 PR_INT32, data[PR_drunkLevel]
-            );
+           );
         }
 
         stock BS_WriteRconCommand(BitStream:bs, data[PR_RconCommand])
@@ -925,7 +925,7 @@
             BS_WriteValue(
                 bs,
                 PR_STRING32, data[PR_command]
-            );
+           );
         }
 
         stock PR_SendPacketToPlayerStream(BitStream:bs, playerid, PR_PacketPriority:priority = PR_HIGH_PRIORITY, PR_PacketReliability:reliability = PR_RELIABLE_ORDERED)

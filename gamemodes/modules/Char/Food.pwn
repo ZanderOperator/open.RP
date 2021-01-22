@@ -78,15 +78,15 @@ new
 */
 stock static DestroyMealTextDraws(playerid)
 {
-	if(MealBcg[playerid] != PlayerText:INVALID_TEXT_DRAW ) {
+	if(MealBcg[playerid] != PlayerText:INVALID_TEXT_DRAW) {
 		PlayerTextDrawDestroy(playerid, MealBcg[playerid]);
 		MealBcg[playerid] = PlayerText:INVALID_TEXT_DRAW;
 	}
-	if(MealTitle[playerid] != PlayerText:INVALID_TEXT_DRAW ) {
+	if(MealTitle[playerid] != PlayerText:INVALID_TEXT_DRAW) {
 		PlayerTextDrawDestroy(playerid, MealTitle[playerid]);
 		MealTitle[playerid] = PlayerText:INVALID_TEXT_DRAW;
 	}
-	if(MealText[playerid] != PlayerText:INVALID_TEXT_DRAW ) {
+	if(MealText[playerid] != PlayerText:INVALID_TEXT_DRAW) {
 		PlayerTextDrawDestroy(playerid, MealText[playerid]);
 		MealText[playerid] = PlayerText:INVALID_TEXT_DRAW;
 	}
@@ -270,11 +270,11 @@ stock static ChangePlayerMealPreview(playerid)
 
 stock static IsPlayerInRangeOfGarbage(playerid, Float:radius) 
 {
-	if(0 <= Bit8_Get(r_MealIndex, playerid) <= 3 )
+	if(0 <= Bit8_Get(r_MealIndex, playerid) <= 3)
 		return ( IsPlayerInRangeOfPoint(playerid, radius, 2094.0000, -1789.0000, 13.2000) || IsPlayerInRangeOfPoint(playerid, radius, 2128.1716, -1785.8097, 13.2000) || IsPlayerInRangeOfPoint(playerid, radius, 373.6988, -133.4180, 1000.4883) || IsPlayerInRangeOfPoint(playerid, radius, 371.2730, -118.9202, 1000.4883));
-	else if(4 <= Bit8_Get(r_MealIndex, playerid) <= 7 ) // Burg
+	else if(4 <= Bit8_Get(r_MealIndex, playerid) <= 7) // Burg
 		return ( IsPlayerInRangeOfPoint(playerid, radius, 369.8281, -70.1641, 1000.5078) || IsPlayerInRangeOfPoint(playerid, radius, 361.9844, -73.4844, 1000.5078) || IsPlayerInRangeOfPoint(playerid, radius, 379.9219, -73.7813, 1000.5078));
-	else if(8 <= Bit8_Get(r_MealIndex, playerid) <= 11 )
+	else if(8 <= Bit8_Get(r_MealIndex, playerid) <= 11)
 		return ( IsPlayerInRangeOfPoint(playerid, radius, 367.2500, -10.3203, 1001.4766) || IsPlayerInRangeOfPoint(playerid, radius, 363.6172, -6.0859, 1001.4766) || IsPlayerInRangeOfPoint(playerid, radius, 373.2422, -6.0703, 1001.4766)); 
 	return 0;
 }
@@ -368,7 +368,7 @@ hook OnPlayerEditObject(playerid, playerobject, objectid, response, Float:fX, Fl
 hook OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
 {
 	if((newkeys & KEY_JUMP) && !(oldkeys & KEY_JUMP)) { // Odustaje
-		if(REST_TYPE_PIZZA <= Bit4_Get(r_PlayerRestoran, playerid) <= REST_TYPE_CLUCK ) {
+		if(REST_TYPE_PIZZA <= Bit4_Get(r_PlayerRestoran, playerid) <= REST_TYPE_CLUCK) {
 			if(IsValidPlayerObject(playerid, MealPreviewObj[playerid])) {
 				DestroyPlayerObject(playerid,MealPreviewObj[playerid]);
 				MealPreviewObj[playerid] = INVALID_OBJECT_ID;
@@ -382,7 +382,7 @@ hook OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
 		}
 	}
 	if((newkeys & KEY_SPRINT) && !(oldkeys & KEY_SPRINT)) { // Kupuje?
-		if(REST_TYPE_PIZZA <= Bit4_Get(r_PlayerRestoran, playerid) <= REST_TYPE_CLUCK ) {
+		if(REST_TYPE_PIZZA <= Bit4_Get(r_PlayerRestoran, playerid) <= REST_TYPE_CLUCK) {
 			new
 				mealIndex = Bit8_Get(r_MealIndex, playerid);
 			va_ShowPlayerDialog(playerid, DIALOG_MEAL_BUY, DIALOG_STYLE_MSGBOX, "Restoran", "Zelite li kupiti %s za %d$?", "Buy", "Abort", 
@@ -392,20 +392,20 @@ hook OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
 		}
 	}
 	if((newkeys & KEY_ANALOG_RIGHT) && !(oldkeys & KEY_ANALOG_RIGHT)) { // Ide naprijed sa jelom
-		if(REST_TYPE_PIZZA <= Bit4_Get(r_PlayerRestoran, playerid) <= REST_TYPE_CLUCK ) {
+		if(REST_TYPE_PIZZA <= Bit4_Get(r_PlayerRestoran, playerid) <= REST_TYPE_CLUCK) {
 			new
 				mealIndex = Bit8_Get(r_MealIndex, playerid);
-			if(( mealIndex + 1 ) > ( Bit4_Get(r_PlayerRestoran, playerid) * 4 ) - 1 ) return PlayerPlaySound(playerid, 21001, 0.0, 0.0, 0.0);
+			if(( mealIndex + 1) > ( Bit4_Get(r_PlayerRestoran, playerid) * 4) - 1) return PlayerPlaySound(playerid, 21001, 0.0, 0.0, 0.0);
 			mealIndex++;
 			Bit8_Set(r_MealIndex, playerid, mealIndex);
 			ChangePlayerMealPreview(playerid);
 		}
 	}
 	if((newkeys & KEY_ANALOG_LEFT) && !(oldkeys & KEY_ANALOG_LEFT)) { // Ide unatrag sa jelom
-		if(REST_TYPE_PIZZA <= Bit4_Get(r_PlayerRestoran, playerid) <= REST_TYPE_CLUCK ) {
+		if(REST_TYPE_PIZZA <= Bit4_Get(r_PlayerRestoran, playerid) <= REST_TYPE_CLUCK) {
 			new
 				mealIndex = Bit8_Get(r_MealIndex, playerid);
-			if(( mealIndex - 1 ) < ( Bit4_Get(r_PlayerRestoran, playerid) - 1 ) * 4 ) return PlayerPlaySound(playerid, 21001, 0.0, 0.0, 0.0);
+			if(( mealIndex - 1) < ( Bit4_Get(r_PlayerRestoran, playerid) - 1) * 4) return PlayerPlaySound(playerid, 21001, 0.0, 0.0, 0.0);
 			mealIndex--;
 			Bit8_Set(r_MealIndex, playerid, mealIndex);
 			ChangePlayerMealPreview(playerid);
@@ -418,10 +418,10 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 {
 	switch(dialogid) {
 		case DIALOG_MEAL_BUY: {
-			if(!response ) return 1;
+			if(!response) return 1;
 			new
 				mealIndex = Bit8_Get(r_MealIndex, playerid);
-			if(AC_GetPlayerMoney(playerid) < MealInfo[mealIndex][mdPrice] ) return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate dovoljno novaca za kupovinu jela (%d$)!", MealInfo[mealIndex][mdPrice]);
+			if(AC_GetPlayerMoney(playerid) < MealInfo[mealIndex][mdPrice]) return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate dovoljno novaca za kupovinu jela (%d$)!", MealInfo[mealIndex][mdPrice]);
 			PlayerToBudgetMoney(playerid, MealInfo[mealIndex][mdPrice]);
 			
 			// Clear
@@ -469,12 +469,12 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 CMD:order(playerid, params[])
 {
 	if(Bit1_Get(r_PlayerBoughtMeal, playerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Vec ste kupili jelo u restoranu (Pizza/Burg/Cluckin')! Odlozite ga sa /meal dump!");
-	if(IsPlayerInRangeOfPoint(playerid,15.0,375.3066,-118.8028,1001.4995 )) { // Pizza
+	if(IsPlayerInRangeOfPoint(playerid,15.0,375.3066,-118.8028,1001.4995)) { // Pizza
 		SendMessage(playerid, MESSAGE_TYPE_INFO, "Za biranje jela koristite tipke NUM 4 i NUM 6.");
 		TogglePlayerControllable(playerid, false);
 		InitPlayerMealMenu(playerid, REST_TYPE_PIZZA);
 	}
-	else if(IsPlayerInRangeOfPoint( playerid,15.0,368.9718,-6.6316,1001.8516 )) { // Cluckin'
+	else if(IsPlayerInRangeOfPoint( playerid,15.0,368.9718,-6.6316,1001.8516)) { // Cluckin'
 		SendMessage(playerid, MESSAGE_TYPE_INFO, "Za biranje jela koristite tipke NUM 4 i NUM 6.");
 		TogglePlayerControllable(playerid, false);
 		InitPlayerMealMenu(playerid, REST_TYPE_CLUCK);
@@ -492,7 +492,7 @@ CMD:meal(playerid, params[])
 	if(!Bit1_Get(r_PlayerBoughtMeal, playerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste kupili jelo u restoranu (Pizza/Burg/Cluckin')!");
 	new
 		param[5];
-	if(sscanf( params, "s[5] ", param )) return SendClientMessage(playerid, COLOR_RED, "[?]: /meal [edit/put/take/dump]");
+	if(sscanf( params, "s[5] ", param)) return SendClientMessage(playerid, COLOR_RED, "[?]: /meal [edit/put/take/dump]");
 	if(!strcmp(param, "edit", true)) {
 		if(!Bit1_Get(r_CarryMeal, playerid)) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Ne nosite jelo u rukama!");
 		EditAttachedObject(playerid, MEAL_OBJECT_INDEX);

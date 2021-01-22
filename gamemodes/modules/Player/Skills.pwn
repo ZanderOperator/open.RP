@@ -260,7 +260,7 @@ CMD:setskill(playerid, params[])
 		skillid,
 		value;
 		
-	if(sscanf( params, "uii", giveplayerid, skillid, value ))
+	if(sscanf( params, "uii", giveplayerid, skillid, value))
 	{
 		SendClientMessage(playerid, COLOR_RED, "WARNING: Because of the uniqueness of skill ID's, you MUST ask a player for skill ID!");
 		SendClientMessage(playerid, COLOR_RED, "[?]: /setskill [playerid][skillid][points]");

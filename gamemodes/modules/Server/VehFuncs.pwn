@@ -17,7 +17,7 @@ GetVehicleDriver(vehicleid)
 		playerid = INVALID_PLAYER_ID;
 
 	foreach(new i : Player) {
-		if(IsPlayerInVehicle(i, vehicleid) && GetPlayerState(playerid) == PLAYER_STATE_DRIVER ) {
+		if(IsPlayerInVehicle(i, vehicleid) && GetPlayerState(playerid) == PLAYER_STATE_DRIVER) {
 			playerid = i;
 			break;
 		}

@@ -51,7 +51,7 @@ static
 
 public OnPlayerText(playerid, text[]) 
 { 
-	if(Aspa_Player[playerid][AspaTexttwo] == 0 && Aspa_Player[playerid][AspaTextone] ==0 ) Aspa_Player[playerid][AspaTextone] = GetTickCount(); 
+	if(Aspa_Player[playerid][AspaTexttwo] == 0 && Aspa_Player[playerid][AspaTextone] ==0) Aspa_Player[playerid][AspaTextone] = GetTickCount(); 
 	else if(Aspa_Player[playerid][AspaTextone] != 0 && Aspa_Player[playerid][AspaTexttwo] == 0) Aspa_Player[playerid][AspaTexttwo] = GetTickCount(); 
 	
 	else if(Aspa_Player[playerid][AspaTextone] != 0 && Aspa_Player[playerid][AspaTexttwo] != 0 && Aspa_Player[playerid][AspaTexttwo] - Aspa_Player[playerid][AspaTextone] < MAX_WAIT_TIME) 

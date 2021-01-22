@@ -95,7 +95,7 @@ HouseStorage_Save(storage_id)
         HouseStorage[storage_id][storageInterior],
         HouseStorage[storage_id][storageWorld],
         HouseStorage[storage_id][storageID]
-    );
+   );
     return 1;
 }
 
@@ -107,7 +107,7 @@ HouseStorage_SaveWep(storage_id, wepid)
         wepid,
         HouseStorage[storage_id][storageAmmo][wepid],
         HouseStorage[storage_id][storageID]
-    );
+   );
     return 1;
 }
 
@@ -536,7 +536,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                             if(!HouseStorage[storageid][storageWeapons][i])
                                 format(string, sizeof(string), "%s{3C95C2}[SLOT %d]: EMPTY SLOT\n", string, i + 1);
 
-                            else format(string, sizeof(string), "%s{3C95C2}[SLOT %d]:  %s  [ammo: %d/500]\n", string, i + 1,GetWeaponNameEx( HouseStorage[storageid][storageWeapons][i] ), HouseStorage[storageid][storageAmmo][i]);
+                            else format(string, sizeof(string), "%s{3C95C2}[SLOT %d]:  %s  [ammo: %d/500]\n", string, i + 1,GetWeaponNameEx( HouseStorage[storageid][storageWeapons][i]), HouseStorage[storageid][storageAmmo][i]);
                         }
                         ShowPlayerDialog(playerid, DIALOG_WSTORAGE_TAKE, DIALOG_STYLE_LIST, "[HOUSE] - Stalak Uzmi", string, "Pick", "Exit");
                     }
@@ -632,7 +632,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
             // TODO: check if listitem in range
             if(HouseStorage[id][storageWeapons][listitem])
             {
-                if(house == INVALID_HOUSE_ID && HouseInfo[house][hOwnerID] != PlayerInfo[playerid][pSQLID] )
+                if(house == INVALID_HOUSE_ID && HouseInfo[house][hOwnerID] != PlayerInfo[playerid][pSQLID])
                     return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Samo vlasnik kuce moze uzeti oruzje iz sefa!");
 
                 if(!CheckPlayerWeapons(playerid, HouseStorage[id][storageWeapons][listitem])) return 1;
@@ -646,7 +646,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                     HouseStorage[id][storageAmmo][listitem],
                     id,
                     HouseStorage[id][storageID]
-                );
+               );
 
                 HouseStorage[id][storageWeapons][listitem] = 0;
                 HouseStorage[id][storageAmmo][listitem] = 0;
@@ -715,7 +715,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                     HouseStorage[id][storageAmmo][listitem],
                     id,
                     HouseStorage[id][storageID]
-                );
+               );
 
                 Storage_RackRefresh(id);
                 HouseStorage_SaveWep(id, listitem);
