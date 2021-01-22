@@ -170,7 +170,7 @@ stock PlayerToBusinessMoney ( playerid, bizid, money)
 {
 	new safemoney = floatround(floatabs(money));
 	
-	AC_GivePlayerMoney( playerid, -safemoney); 			
+	AC_GivePlayerMoney(playerid, -safemoney); 			
 	
 	BizzInfo[bizid][bTill] += safemoney;				
 	mysql_fquery(g_SQL, "UPDATE bizzes SET till = '%d' WHERE id = '%d'",
@@ -449,7 +449,7 @@ stock HouseToPlayerMoney ( playerid, houseid, money)
 {
 	new safemoney = floatround(floatabs(money));
 				
-	AC_GivePlayerMoney( playerid, safemoney); 				
+	AC_GivePlayerMoney(playerid, safemoney); 				
 	
 	HouseInfo[houseid][hTakings] -= safemoney;
 	mysql_fquery(g_SQL, "UPDATE houses SET bank = '%d' WHERE id = '%d'",

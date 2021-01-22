@@ -5782,7 +5782,7 @@ CMD:get(playerid, params[])
 		{
 			new 
 				moneys = CalculateFuelPrice(playerid, type, fuel, BizzInfo[bizzid][bGasPrice]);
-			if(AC_GetPlayerMoney( playerid) <  moneys) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate toliko novca!");
+			if(AC_GetPlayerMoney(playerid) <  moneys) return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate toliko novca!");
 			new bizid = GetNearestBizz(playerid, BIZZ_TYPE_GASSTATION);
 			if(bizid == INVALID_BIZNIS_ID) 
 				return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste u blizini benzinske postaje!");

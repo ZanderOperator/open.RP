@@ -497,7 +497,7 @@ ChangePlayerName(playerid, newname[], type, bool:admin_cn = false)
 	
 	if(admin_cn == (false)) {
 		if(!PlayerVIP[playerid][pDonateRank])
-			PlayerToBudgetMoney( playerid, 10000);
+			PlayerToBudgetMoney(playerid, 10000);
 	}
 	if(type == 1)
 	{

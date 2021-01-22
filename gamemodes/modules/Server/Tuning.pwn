@@ -1638,7 +1638,7 @@ hook OnPlayerClickPlayerTD(playerid, PlayerText:playertextid)
 				if(cid == -1) return SendErrorMessage(playerid, "Dogodila se greska pri kupnji. Izadjite iz tuning menija sa ESC te pokusajte ponovno.");
 				
 				if(PlayerVIP[playerid][pDonateRank] < PREMIUM_SILVER)
-					if(AC_GetPlayerMoney( playerid) < cInfo[TPInfo[playerid][tID]][cPrice]) return SendErrorMessage( playerid, "Nemate dovoljno novaca.");
+					if(AC_GetPlayerMoney(playerid) < cInfo[TPInfo[playerid][tID]][cPrice]) return SendErrorMessage( playerid, "Nemate dovoljno novaca.");
 
 		        RemoveVehicleComponent( vehicleid, cInfo[TPInfo[playerid][tID]][cID]);
 		        VehicleInfo[vehicleid][vTuned] = true;
@@ -1657,7 +1657,7 @@ hook OnPlayerClickPlayerTD(playerid, PlayerText:playertextid)
 			else if(TPInfo[playerid][tPaintjob] == true) 
 			{
 				if(PlayerVIP[playerid][pDonateRank] < PREMIUM_SILVER)
-					if(AC_GetPlayerMoney( playerid) < pjInfo[TPInfo[playerid][tID]][pPrice]) return SendErrorMessage( playerid, "Nemate dovoljno novaca.");
+					if(AC_GetPlayerMoney(playerid) < pjInfo[TPInfo[playerid][tID]][pPrice]) return SendErrorMessage( playerid, "Nemate dovoljno novaca.");
 			
 			    new 
 					paintid = TPInfo[playerid][tID];

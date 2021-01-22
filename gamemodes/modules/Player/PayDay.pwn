@@ -379,7 +379,7 @@ GivePlayerPayCheck(playerid)
 
 		orgbonus = floatround(factionbank * salarypercent); 											// 0.01$% od FactionBanke organizacije
 		BudgetToPlayerBankMoney(playerid, orgsalary); 													// Novac iz proracuna igracu na bank. racun
-		FactionToPlayerBankMoney( playerid, FactionInfo[PlayerFaction[playerid][pMember]][fType], orgbonus); 		// Novac iz factionbanke igra?u na bank.ra?un.
+		FactionToPlayerBankMoney(playerid, FactionInfo[PlayerFaction[playerid][pMember]][fType], orgbonus); 		// Novac iz factionbanke igra?u na bank.ra?un.
 		orgsalary += orgbonus;
 		profit += orgsalary;
 

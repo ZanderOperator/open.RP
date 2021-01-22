@@ -254,7 +254,7 @@ hook OnPlayerKeyStateChange(playerid, newkeys, oldkeys) {
 			if(IsPlayerInRangeOfPoint(playerid, 5.0, ProstituteData[i][prPos][0], ProstituteData[i][prPos][1], ProstituteData[i][prPos][2])) {
 				if(ProstituteData[i][TipMoney] == 0)
 					return (true);
-				if(AC_GetPlayerMoney( playerid) <  ProstituteData[i][TipMoney])
+				if(AC_GetPlayerMoney(playerid) <  ProstituteData[i][TipMoney])
 					return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate vise novca.");
 				if(gettimestamp() < quick_timer[playerid])
 					return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "Morate sacekati %d sekundi.", QUICK_TIMER_COOLDOWN);

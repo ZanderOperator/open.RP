@@ -53,7 +53,7 @@ CMD:enterspray( playerid, params[])
 	if(PlayerVIP[playerid][pDonateRank] != 0)
 		price = 0;
 		
-	if(AC_GetPlayerMoney( playerid) < price) return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate dovoljno novca( %s).", FormatNumber(price));
+	if(AC_GetPlayerMoney(playerid) < price) return SendFormatMessage(playerid, MESSAGE_TYPE_ERROR, "Nemate dovoljno novca( %s).", FormatNumber(price));
 	if(IsPlayerInRangeOfPoint( playerid, 3.0, 1099.1404, -824.9033, 181.2554)) {
 	
 	    // novac u proracun

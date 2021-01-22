@@ -1947,7 +1947,7 @@ CMD:govrepair(playerid, params[])
                 VehicleInfo[vehicleid][vCanStart] = 1;
                 VehicleInfo[vehicleid][vDestroyed] = false;
                 Player_SetCanRepairGovVehicle(playerid, false);
-                FactionToBudgetMoney( FACTION_TYPE_LAW2, 100); // Novac ide iz factionbank u proraeun
+                FactionToBudgetMoney(FACTION_TYPE_LAW2, 100); // Novac ide iz factionbank u proraeun
                 SendClientMessage(playerid, COLOR_RED, "[!] Vase vozilo je popravljeno i napunjeno gorivom.");
             }
             else return SendMessage(playerid, MESSAGE_TYPE_ERROR, "Niste na mjestu za popravak vozila!");
@@ -1962,7 +1962,7 @@ CMD:govrepair(playerid, params[])
                 VehicleInfo[vehicleid][vCanStart] = 1;
                 VehicleInfo[vehicleid][vDestroyed] = false;
                 Player_SetCanRepairGovVehicle(playerid, false);
-                FactionToBudgetMoney( FACTION_TYPE_NEWS, 100); // Novac ide iz factionbank u proraeun
+                FactionToBudgetMoney(FACTION_TYPE_NEWS, 100); // Novac ide iz factionbank u proraeun
                 SendClientMessage(playerid, COLOR_LIGHTBLUE, "Vase vozilo je popravljeno i napunjeno gorivom.");
             }
             else return SendClientMessage(playerid, COLOR_RED, "[!] Niste na mjestu za popravak vozila!");
@@ -1977,7 +1977,7 @@ CMD:govrepair(playerid, params[])
                 VehicleInfo[vehicleid][vCanStart] = 1;
                 VehicleInfo[vehicleid][vDestroyed] = false;
                 Player_SetCanRepairGovVehicle(playerid, false);
-                FactionToBudgetMoney( FACTION_TYPE_FD, 100); // Novac ide iz factionbank u proraeun
+                FactionToBudgetMoney(FACTION_TYPE_FD, 100); // Novac ide iz factionbank u proraeun
                 SendClientMessage(playerid, COLOR_LIGHTBLUE, "Vase vozilo je popravljeno i napunjeno gorivom.");
             }
             else return SendClientMessage(playerid, COLOR_RED, "[!] Niste na mjestu za popravak vozila!");

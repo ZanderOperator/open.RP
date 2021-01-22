@@ -142,7 +142,8 @@ static DeleteIllegalGarage(garage)
 {
 	mysql_fquery(g_SQL,
 		"DELETE FROM illegal_garages WHERE id = '%d'",
-		IllegalGarage[garage][igSQLID]);
+		IllegalGarage[garage][igSQLID]
+	);
 	ResetIllegalGarage(garage);
 }
 
@@ -186,7 +187,7 @@ static LoadIllegalGarages()
 			cache_get_value_name_int(row, 		"owner"		, IllegalGarage[row][igOwner]);
 			cache_get_value_name(row, 			"name"		, IllegalGarage[row][igName], 32);
 			cache_get_value_name_int(row, 		"jackedcars", IllegalGarage[row][igCarsJacked]);
-			cache_get_value_name_int(row, 		"wantedlevel", IllegalGarage[row][igWantedLevel]);
+			cache_get_value_name_int(row, 		"wantedlevel",IllegalGarage[row][igWantedLevel]);
 			cache_get_value_name_float(row, 	"3dtextX"	, IllegalGarage[row][ig3dTextPos][0]);
 			cache_get_value_name_float(row, 	"3dtextY"	, IllegalGarage[row][ig3dTextPos][1]);
 			cache_get_value_name_float(row, 	"3dtextZ"	, IllegalGarage[row][ig3dTextPos][2]);
@@ -593,8 +594,7 @@ static SendPoliceAlertMessage(vehicleid, garage)
 			case 1,3: goto end_mark; // 20% chance of Police Alert
 		}
 	} 
-	else goto end_mark;
-	end_mark:
+	end_mark: // Wanted Level 2+
 	foreach(new playerid : Player) 
 	{
 		if(!IsACop(playerid)) 
@@ -805,7 +805,7 @@ hook OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 			IllegalGarage[PlayerKeys[playerid][pIllegalGarageKey]][igWantedLevel]	= 0;
 			IllegalGarage[PlayerKeys[playerid][pIllegalGarageKey]][igCarsJacked]	= 0;
 			SendMessage(playerid, MESSAGE_TYPE_SUCCESS, "You have sucessfully dropped heat with police to 0!");
-			PlayerToFactionMoney( playerid, FACTION_TYPE_LAW, PlayerBribeMoney[playerid]);
+			PlayerToFactionMoney(playerid, FACTION_TYPE_LAW, PlayerBribeMoney[playerid]);
 			PlayerBribeMoney[playerid] = 0;
 		}
 	}

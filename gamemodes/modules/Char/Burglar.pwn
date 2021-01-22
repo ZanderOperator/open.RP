@@ -301,7 +301,7 @@ static PickPocketTargetPlayer(playerid, type)
 			{
 				new
 					money = 51;
-				PlayerToPlayerMoney( targetid, playerid, money);
+				PlayerToPlayerMoney(targetid, playerid, money);
 				
 				new
 					tmpString[108];
